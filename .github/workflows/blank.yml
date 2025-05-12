@@ -55,24 +55,28 @@ jobs:
           path: ~/.cache
           key: oleans-${{ hashFiles('lake-manifest.json') }}
 
+      - name: Prepare documentation
+        run: |
+          cd docbuild
+          export MATHLIB_NO_CACHE_ON_UPDATE=1  # avoids "Failed to prune ProofWidgets cloud release: no such file or directory"
+          lake update open_conjectures
+
       - name: Cache documentation
         uses: actions/cache@v4
         with:
-          path: website/docs
+          path: docbuild/.lake/build/doc
           key: MathlibDoc-${{ hashFiles('lake-manifest.json') }}
           restore-keys: MathlibDoc-
 
       - name: Build documentation
         run: |
           cd docbuild
-          export MATHLIB_NO_CACHE_ON_UPDATE=1  # avoids "Failed to prune ProofWidgets cloud release: no such file or directory"
-          lake update open_conjectures
           lake build FormalConjectures:docs
 
       - name: Upload docs
         uses: actions/upload-pages-artifact@v3
         with:
-          path: website/docs
+          path: docbuild/.lake/build/doc
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/master'
