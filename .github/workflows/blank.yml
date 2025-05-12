@@ -31,10 +31,10 @@ jobs:
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
       - name: Set up olean cache
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: ~/.cache
-          key: oleans
+          key: oleans-${{ hashFiles('lake-manifest.json') }}
         
       - name: Get cache
         run: lake exe cache get
@@ -45,7 +45,14 @@ jobs:
       - name: Save olean cache
         run: |
           lake exe cache pack
+          ls ~/.cache
         
+      - name: Set up olean cache
+        uses: actions/cache/save@v3
+        with:
+          path: ~/.cache
+          key: oleans-${{ hashFiles('lake-manifest.json') }}
+
       - name: Cache documentation
         uses: actions/cache@v4
         with:
