@@ -1,7 +1,7 @@
 # Formal Conjectures
 
 A collection of formalized statements of conjectures in
-[lean](https://leanprover.github.io/lean4/doc/whatIsLean.html), using
+[Lean](https://leanprover.github.io/lean4/doc/whatIsLean.html), using
 [mathlib](https://github.com/leanprover-community/mathlib4).
 
 <!--TODO(firsching): insert link to autmatically generated documentation once docgen4 works-->
