@@ -4,7 +4,7 @@ version = "0.1.0"
 packagesDir = "../.lake/packages"
 
 [[require]]
-name = "open_conjectures"
+name = "formal_conjectures"
 path = "../"
 
 [[require]]
