@@ -30,24 +30,26 @@ jobs:
           ./elan-init -y --default-toolchain none
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
-      - name: Set up olean cache
+      - name: Restore ~/.cache/mathlib
         uses: actions/cache/restore@v3
         with:
-          path: ~/.cache
+          path: ~/.cache/mathlib
           key: oleans-${{ hashFiles('lake-manifest.json') }}
         
-      - name: Get cache
-        run: lake exe cache get
+      - name: Get olean cache
+        run: |
+          lake exe cache unpack
+          lake exe cache get
 
       - name: Build project
         run: lake build
 
-      - name: Save olean cache
+      - name: Pack olean cache
         run: |
           lake exe cache pack
-          ls ~/.cache
+          ls ~/.cache/mathlib
         
-      - name: Set up olean cache
+      - name: Save ~/.cache/mathlib
         uses: actions/cache/save@v3
         with:
           path: ~/.cache
