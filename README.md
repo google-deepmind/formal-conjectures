@@ -1,4 +1,4 @@
-## Formal Conjectures
+# Formal Conjectures
 
 A collection of formalized statements of conjectures in
 [lean](https://leanprover.github.io/lean4/doc/whatIsLean.html), using
@@ -54,38 +54,38 @@ There are various ways of contributing to this repository:
     We are also interested in the formalized statement of solved variants of
     open conjectures and solved statements from dedicated problem lists.
 
-2.  **Opening issues with problems that you would like to see formalised.**
-    Such an issue should contain links to suitable references, and
-    ideally a precise informal statement of the conjecture.
+2.  **Opening issues with problems that you would like to see formalised.** Such
+    an issue should contain links to suitable references, and ideally a precise
+    informal statement of the conjecture.
 
-3.  **Improving the referencing and tagging of problems.**
-    For example, adding pointers to references in already existing files, or
-    adding additional relevant `AMS` subject attributes to statements.
+3.  **Improving the referencing and tagging of problems.** For example, adding
+    pointers to references in already existing files, or adding additional
+    relevant `AMS` subject attributes to statements.
 
-4.  **Fixing misformalisations**
-    PRs fixing incorrect formalisations and issues flagging problems are
-    encouraged.
+4.  **Fixing misformalisations** PRs fixing incorrect formalisations and issues
+    flagging problems are encouraged.
 
 ### How to Contribute
 
 Please see [CONTRIBUTING](./CONTRIBUTING) first.
 
-0.  Open an issue on GitHub specifying what you plan to contribute (and assign yourself!)
-1.  Fork the repository on GitHub.
-2.  Add your formalized conjecture(s) in the appropriate file/directory
+1.  Open an issue on GitHub specifying what you plan to contribute (and assign
+    yourself!)
+2.  Fork the repository on GitHub.
+3.  Add your formalized conjecture(s) in the appropriate file/directory
     structure to a branch in your fork.
     *   Include comments linking to the source of the conjecture (paper,
         website, book).
     *   Use the `category` attribute to specify what category each of the
         statements falls into (see below for more details on this.)
-    *   Use the `AMS` attribute to specify what mathematical areas each of
-        the statements are related to.
-3.  Ensure the code builds (`lake build`).
-4.  Submit a Pull Request to the main repository.
+    *   Use the `AMS` attribute to specify what mathematical areas each of the
+        statements are related to.
+4.  Ensure the code builds (`lake build`).
+5.  Submit a Pull Request to the main repository.
 
 ## Usage, Structure & Features
 
-This is a lean 4 project managed with `lake` and a dependency `mathlib`. You
+This is a Lean 4 project managed with `lake` and a dependency `mathlib`. You
 first need to
 [install elan, lake, lean and if you want vscode](https://leanprover-community.github.io/get_started.html)
 and then run
@@ -101,8 +101,8 @@ The directory structure is organized by the type of sources of the conjectures.
 There are two special directories:
 
 -   `Util` contains utilities like the
-    [`category` attribute](./FormalConjectures/Util/Attributes.lean),
-    the [`answer( )` elaborator](./FormalConjectures/Util/Answer.lean) and some
+    [`category` attribute](./FormalConjectures/Util/Attributes.lean), the
+    [`answer( )` elaborator](./FormalConjectures/Util/Answer.lean) and some
     linters.
 -   `ForMathlib` contains code potentially suitable to be upstreamed to
     [mathlib](https://github.com/leanprover-community/mathlib4). Here we follow
@@ -117,17 +117,19 @@ for the following categories:
 
 -   Open research problem: a mathematical problem for which there is no solution
     accepted by the community.
--   Solved research problem: a mathematical problem that has an accepted solution
+-   Solved research problem: a mathematical problem that has an accepted
+    solution
 -   Graduate level problem.
 -   Undergraduate level problem.
 -   High school level problem.
--   API statement: a statement that constructs basic theory around a new definition.
--   Test statement: a statement that serves as a "unit test". These are useful to
-    check e.g new definitions or theorem statements.
+-   API statement: a statement that constructs basic theory around a new
+    definition.
+-   Test statement: a statement that serves as a "unit test". These are useful
+    to check e.g new definitions or theorem statements.
 
-> This repository targets research level problems. As such, graduate/
+This repository targets research level problems. As such, graduate/
 undergraduate/high school level problems should only be contributed if they
-> are directly related to a research level problem (e.g. as a special case,
+are directly related to a research level problem (e.g. as a special case,
 etc.).
 
 The tags should be used as follows:
@@ -147,7 +149,8 @@ theorem bar : FermatLastTheorem := by
 
 The `AMS` tag is intended to provide some information about the mathematical
 subjects a given statement is related to. For simplicity, we use the main
-subjects listed in the [AMS MSC2020](https://mathscinet.ams.org/mathscinet/msc/pdfs/classifications2020.pdf).
+subjects listed in the
+[AMS MSC2020](https://mathscinet.ams.org/mathscinet/msc/pdfs/classifications2020.pdf).
 
 The tag can be used as follows:
 
@@ -157,13 +160,13 @@ theorem flt : FermatLastTheorem := by
   sorry
 ```
 
-> Within a Lean file, you can use the `#AMS` command to list all the possible
+Within a Lean file, you can use the `#AMS` command to list all the possible
 values.
 
-> To determine the subject associated to tag `AMS foo` in VS Code, you can
-hover over `foo`.
+To determine the subject associated to tag `AMS foo` in VS Code, you can hover
+over `foo`.
 
-> The attribute allows multiple parameters, e.g. `@[AMS foo bar]` is valid.
+The attribute allows multiple parameters, e.g. `@[AMS foo bar]` is valid.
 
 #### The `answer( )` elaborator
 
@@ -208,17 +211,32 @@ formal-conjectures is not locked to the mathlib release cadence.
 
 ## Licensing
 
-Copyright 2025 Google LLC
-All software is licensed under the Apache License, Version 2.0 (Apache 2.0); you may not use this file except in compliance with the Apache 2.0 license. You may obtain a copy of the Apache 2.0 license at: https://www.apache.org/licenses/LICENSE-2.0
+Copyright 2025 Google LLC All software is licensed under the Apache License,
+Version 2.0 (Apache 2.0); you may not use this file except in compliance with
+the Apache 2.0 license. You may obtain a copy of the Apache 2.0 license at:
+https://www.apache.org/licenses/LICENSE-2.0
 
-All other materials are licensed under the Creative Commons Attribution 4.0 International License (CC-BY). You may obtain a copy of the CC-BY license at: https://creativecommons.org/licenses/by/4.0/legalcode.
+All other materials are licensed under the Creative Commons Attribution 4.0
+International License (CC-BY). You may obtain a copy of the CC-BY license at:
+https://creativecommons.org/licenses/by/4.0/legalcode.
 
-The content may be based on third party sources and may in some cases include third party content. The original source for each conjecture is indicated by a URL within the source file. Third party content may be subject to different licensing requirements. In particular:
+The content may be based on third party sources and may in some cases include
+third party content. The original source for each conjecture is indicated by a
+URL within the source file. Third party content may be subject to different
+licensing requirements. In particular:
 
- - Material from Wikipedia articles and MathOverflow is released under the Creative Commons Attribution-Share-Alike License 4.0.
- - Material from bbchallenge.org is used under the Creative Commons Attribution 4.0 International License.
- - Material from the Equational Theories Project is used under Apache-2.0.
- - Material from arXiv is used under the licence applicable to the relevant paper, as indicated at the URL within the source file.
+-   Material from Wikipedia articles and MathOverflow is released under the
+    Creative Commons Attribution-Share-Alike License 4.0.
+-   Material from bbchallenge.org is used under the Creative Commons Attribution
+    4.0 International License.
+-   Material from the Equational Theories Project is used under Apache-2.0.
+-   Material from arXiv is used under the licence applicable to the relevant
+    paper, as indicated at the URL within the source file.
 
-Unless required by applicable law or agreed to in writing, all software and materials distributed here under the Apache 2.0 or CC-BY license are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the licenses for the specific language governing permissions and limitations under those licenses.
+Unless required by applicable law or agreed to in writing, all software and
+materials distributed here under the Apache 2.0 or CC-BY license are distributed
+on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied. See the licenses for the specific language governing
+permissions and limitations under those licenses. 
+
 This is not an official Google product.
