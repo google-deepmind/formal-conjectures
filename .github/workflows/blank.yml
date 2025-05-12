@@ -1,0 +1,70 @@
+name: Build Lean project and deploy docs
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build_project:
+    runs-on: ubuntu-latest
+    name: Build project
+    steps:
+
+      - name: Checkout project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install elan
+        run: |
+          set -o pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Set up olean cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache
+          key: oleans
+        
+      - name: Get cache
+        run: lake exe cache get
+
+      - name: Build project
+        run: lake build
+
+      - name: Save olean cache
+        run: |
+          lake exe cache pack
+        
+      - name: Cache documentation
+        uses: actions/cache@v4
+        with:
+          path: website/docs
+          key: MathlibDoc-${{ hashFiles('lake-manifest.json') }}
+          restore-keys: MathlibDoc-
+
+      - name: Build documentation
+        run: |
+          cd docbuild
+          lake update open_conjectures
+          lake build FormalConjectures:docs
+
+      - name: Upload docs
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: website/docs
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        id: deployment
+        uses: actions/deploy-pages@v4
