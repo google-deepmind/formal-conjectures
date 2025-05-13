@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 
 Corollary 4.2 of Chapter 1 states that the sequence $(x^n), n = 1, 2, ... ,$ is equidistributed modulo 1 for
 almost all x > 1. And a little bit further down:
-"one does not know whether sequences such as $(e^n)$, $(π^n)$, or even $((frac 3 2)^n)$"
+"one does not know whether sequences such as $(e^n)$, $(π^n)$, or even $((\frac 3 2)^n)$"
 are equidistributed modulo 1 or not.
 
 *References:*
