@@ -46,7 +46,7 @@ theorem isTranscendenceBasis_ncard_eq_transcendenceDegree (R : Type*) {A ι : Ty
 
 open IntermediateField in
 /--
-If the transcendence degree of $A$ adjoined $\{x_1, ..., x_n\}$ is $\leq n$.
+The transcendence degree of $A$ adjoined $\{x_1, ..., x_n\}$ is $\leq n$.
 -/
 @[category graduate, AMS 12, AMS 13, AMS 14]
 theorem adjoin_transcendenceDegree_le_of_finite {A ι : Type*} [Field A] {S : Set A}
