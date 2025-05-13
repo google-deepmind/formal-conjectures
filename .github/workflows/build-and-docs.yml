@@ -59,7 +59,7 @@ jobs:
         run: |
           cd docbuild
           export MATHLIB_NO_CACHE_ON_UPDATE=1  # avoids "Failed to prune ProofWidgets cloud release: no such file or directory"
-          lake update open_conjectures
+          lake update formal_conjectures
 
       - name: Cache documentation
         uses: actions/cache@v4
