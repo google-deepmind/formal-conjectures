@@ -28,7 +28,7 @@ Is
 $$
   \sum\frac{\sigma(n)}{2^n}
 $$
-irrational? (Here $\sigma(n)$ is the sum of divisors function.)
+irrational? Here $\sigma(n)$ is the sum of divisors function.
 
 Solved by Nesterenko in [Ne96]
 

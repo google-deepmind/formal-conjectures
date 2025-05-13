@@ -29,6 +29,7 @@ import FormalConjectures.Util.ProblemImports
 For $n > 8$, $2^n$ is not the the sum of distinct powers of $3$. Expressed here in terms of the base $3$ digits of $n$.
 
 This conjecture is equivalent to the halting of a $15$-state $2$-symbol Turing Machine.
+
 TODO(lezeau): Formalize the Turing Machine version of this problem.
 
 Source: *Hardness of Busy Beaver Value BB(15)*: https://link.springer.com/chapter/10.1007/978-3-031-72621-7_9

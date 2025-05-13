@@ -47,7 +47,7 @@ theorem erdos_143.parts.i (A : Set ℝ) (h : WellSeparatedSet A):
 Or
 $$
 \sum_{x \in A} \frac{1}{x \log x} < \infty,
-$
+$$
 -/
 @[category research open, AMS 11]
 theorem erdos_143.parts.ii (A : Set ℝ) (h : WellSeparatedSet A):

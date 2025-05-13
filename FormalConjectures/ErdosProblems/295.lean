@@ -42,9 +42,9 @@ private noncomputable abbrev k (N : ℕ) : ℕ := Nat.find (exists_k N)
 
 /--
 Let $k(N)$ denote the smallest $k$ such that there exists
-$N ≤ n_1 < ⋯ < n_k$ with $\frac 1 {n_1} + ... + \frac 1 {n_k} =
+$N ≤ n_1 < ⋯ < n_k$ with $\frac 1 {n_1} + ... + \frac 1 {n_k} = 1$
 
-Is it true that $lim_{N→∞} k(N) - (e - 1)N = ∞$?
+Is it true that $\lim_{N→∞} k(N) - (e - 1)N = ∞$?
 -/
 @[category research open, AMS 5, AMS 11]
 theorem erdos_295 :

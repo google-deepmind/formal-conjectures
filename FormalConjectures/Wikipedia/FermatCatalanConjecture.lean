@@ -25,8 +25,8 @@ open scoped Function
 
 /--
 The set of solutions to the Fermat-Catalan Conjecture, i.e. the
-set of solutions `(a,b,c,m,n,k)` to the equation `a^m + b^n = c^k`
-where `1/m + 1/n + 1/k < 1`.
+set of solutions $(a,b,c,m,n,k)$ to the equation $a^m + b^n = c^k$
+where $\frac 1 m + \frac 1 n + \frac 1 k < 1$.
 -/
 def FermatCatalanSet' : Set (Fin 6 → ℕ) :=
     { f : Fin 6 → ℕ |
@@ -45,9 +45,9 @@ def FermatCatalanConjecture : Prop :=
 
 /--
 The **Fermat–Catalan conjecture** states that the equation
-`a^m + b^n = c^k` has only finitely many solutions `(a,b,c,m,n,k)` with distinct triplets of values
-`(a^m, b^n, c^k)` where `a, b, c` are positive coprime integers and `m, n, k` are positive integers satisfying
-`1/m + 1/n + 1/k < 1`.
+$a^m + b^n = c^k$ has only finitely many solutions $(a,b,c,m,n,k)$ with distinct triplets of values
+$(a^m, b^n, c^k)$ where $a, b, c$ are positive coprime integers and $m, n, k$ are positive integers satisfying
+$\frac 1 m + \frac 1 n + \frac 1 k < 1$.
 -/
 @[category research open, AMS 11]
 theorem fermat_catalan : FermatCatalanConjecture := by
@@ -55,8 +55,8 @@ theorem fermat_catalan : FermatCatalanConjecture := by
 
 /--
 By the **Darmon-Granville** theorem,
-for any fixed choice of positive integers m, n and k satisfying `1/m + 1/n + 1/k < 1`,
-only finitely many coprime triples `(a, b, c)` solving `a^m + b^n = c^k` exist.
+for any fixed choice of positive integers m, n and k satisfying $\frac 1 m + \frac 1 n + \frac 1 k < 1$,
+only finitely many coprime triples $(a, b, c)$ solving $a^m + b^n = c^k$ exist.
 -/
 @[category research solved, AMS 11]
 theorem fermat_catalan.variants.darmon_granville

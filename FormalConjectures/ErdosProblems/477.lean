@@ -32,7 +32,7 @@ theorem erdos_477 (f : Polynomial ℤ) (hf₀ : 2 ≤ f.degree) : ∃ (A : Set �
     ∀ z, ∃! a ∈ A ×ˢ Set.range f.eval, z = a.1 + a.2 := sorry
 
 /--
-Probably there is no such `A` for any polynomial `f`.
+Probably there is no such $A$ for any polynomial $f$.
 -/
 @[category research open, AMS 12]
 theorem erdos_477.variants.strong_negation (f : Polynomial ℤ) (hf₀ : 2 ≤ f.degree) : ¬ ∃ (A : Set ℤ),

@@ -44,7 +44,7 @@ theorem erdos_247 (n : ℕ → ℕ)
 
 /--
 Erdős proved the answer is yes under the stronger condition that
-$\limsup n_k / k^t = \infty$ for all $t\geq 1$.
+$\limsup \frac{n_k}{k^t} = \infty$ for all $t\geq 1$.
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number theory_. Monographies de L'Enseignement Mathematique (1980).
 -/

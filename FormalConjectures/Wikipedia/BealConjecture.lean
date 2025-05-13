@@ -27,8 +27,8 @@ def BealConjecture : Prop := ∀ {A B C x y z : ℕ},
     A^x + B^y = C^z → 1 < Finset.gcd {A, B, C} id
 
 /--
-The **Beal Conjecture**: if we are given positive integers `A, B, C, x, y, z` such that
-`x, y, z > 2` and `A^x + B^y = C^z` then `A, B, C` have a common divisor.
+The **Beal Conjecture**: if we are given positive integers $A, B, C, x, y, z$ such that
+$x, y, z > 2$ and $A^x + B^y = C^z$ then $A, B, C$ have a common divisor.
 -/
 @[category research open, AMS 11]
 theorem beal_conjecture : BealConjecture := by

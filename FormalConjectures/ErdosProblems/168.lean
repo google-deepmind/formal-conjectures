@@ -82,7 +82,7 @@ theorem erdos_168.parts.ii :
 
 /--The limit `F(N)/N` as `N → ∞` exists.
 (proved by Graham, Spencer, and Witsenhausen)-/
-@[category research open, AMS 5, AMS 11]
+@[category research solved, AMS 5, AMS 11]
 theorem erdos_168.variants.limit_exists :
     ∃ x, Filter.Tendsto (fun N => (F N / N : ℝ)) Filter.atTop (𝓝 x) := by
   sorry

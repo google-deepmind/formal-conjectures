@@ -89,7 +89,7 @@ def SecondHardyLittlewoodConjectureFor (x y : ℕ) : Prop :=
     π (x + y) ≤ π x + π y
 
 /--
-For integers $x, y \geq 2
+For integers $x, y \geq 2$,
 $$
   \pi(x + y) \leq \pi(x) + \pi(y),
 $$

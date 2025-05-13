@@ -26,7 +26,7 @@ open Filter
 open scoped Topology Real
 
 /--
-A finite set of naturals $A$ is said to be a sum-distinct set for $N in \mathbb{N}$ if
+A finite set of naturals $A$ is said to be a sum-distinct set for $N \in \mathbb{N}$ if
 $A\subseteq\{1, ..., N\}$ and the sums  $\sum_{a\in S}a$ are distinct for all $S\subseteq A$
 -/
 abbrev IsSumDistinctSet (A : Finset ℕ) (N : ℕ) : Prop :=
@@ -85,7 +85,7 @@ abbrev IsSumDistinctRealSet (A : Finset ℝ) (N : ℕ) : Prop :=
 
 /--
 A generalisation of the problem to sets $A \subseteq (0, N]$ of real numbers, such that the subset
-sums all differ by at least $1$,is proposed in [Er73] and [ErGr80].
+sums all differ by at least $1$ is proposed in [Er73] and [ErGr80].
 
 [Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
 

@@ -32,7 +32,7 @@ def IsMaximalAddFactorsCard (f : ℕ → ℕ) : Prop := ∀ n,
 /--
 Let $f(n)$ be maximal such that if $A\subseteq\mathbb{N}$ has $|A| = n$ then
 $\prod_{a\neq b\in A}(a + b)$ has at least $f(n)$ distinct prime factors.
-Is it true that $f(n)/\log n \to\infty$?
+Is it true that $\frac{f(n)}{\log n} \to\infty$?
 -/
 @[category research open, AMS 11]
 theorem erdos_126
@@ -42,9 +42,9 @@ theorem erdos_126
   sorry
 
 /--
-Erdős and Tur\'{a}n proved [ErTu34] in their first joint paper that
+Erdős and Turán proved [ErTu34] in their first joint paper that
 $$
-  \log n \ll f(n) \ll n/\log n
+  \log n \ll f(n) \ll \frac{n}{\log n}
 $$
 
 [ErTu34] Erdős, Paul and Turan, Paul, _On a Problem in the Elementary Theory of Numbers_. Amer. Math. Monthly (1934), 608-611.
@@ -58,7 +58,7 @@ theorem erdos_126.variants.IsBigO
   sorry
 
 /--
-Erdős says that $f(n) = o(n / \log n)$ has never been proved.
+Erdős says that $f(n) = o(\frac{n}{\log n})$ has never been proved.
 -/
 @[category research open, AMS 11]
 theorem erdos_126.variants.isLittleO

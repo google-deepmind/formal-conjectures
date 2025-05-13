@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/672](https://www.erdosproblems.com/672)
 -/
-/-- Erdős problem 672 conjectures the below holds for all `k ≥ 4` and `l > 1`. -/
+/-- Erdős problem 672 conjectures the below holds for all $k ≥ 4$ and $l > 1$. -/
 def Erdos672With (k l : ℕ) [NeZero k] : Prop :=
   ∀ᵉ (s : Fin k → ℕ), 0 < s 0 → (∃ d > 0, Nat.gcd (s 0) d = 1 ∧ ∀ i, s i = s 0 + i * d) →
   ¬ ∃ q, ∏ i, s i = q ^ l

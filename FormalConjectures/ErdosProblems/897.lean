@@ -67,7 +67,7 @@ theorem erdos_897.variants.log_growth
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
 if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$ and $f(p^k) = f(p)$
 or $f(p^k) = kf(p)$.
-Is it true that $\limsup_n (f(n+1)−f(n))/ log n = ∞$?
+Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 -/
 @[category research open, AMS 11]
 theorem erdos_897.variants.parts.i

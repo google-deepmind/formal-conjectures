@@ -29,7 +29,7 @@ for all large $n$, there is a composite number $m$ such that
 $$
 n + f(n) < m < n + p(m)
 $$
-(Here $p(m)$ is the least prime factor of $m$.)
+Here $p(m)$ is the least prime factor of $m$.
 -/
 @[category research open, AMS 11]
 theorem erdos_463 : ∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),

@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 /--
 The lower asymptotic density of a set $S$ is the $\liminf$ as $n → ∞$ of the
-ratio $\frac{|\{a ∈ S | a < n\}|}{n}$.
+ratio $\frac{|\{a ∈ S \mid  a < n\}|}{n}$.
 -/
 noncomputable def lowerDensity (S : Set ℕ) : ℝ :=
     Filter.atTop.liminf (fun n => (Set.Iio n ∩ S).ncard / n)
@@ -88,7 +88,9 @@ theorem erdos_10.variants.two_pows :
 
 /--
 Bogdan Grechuk has observed that $1117175146$ is not the sum of a prime and at most $3$
-powers of $2$, and pointed out that parity considerations, coupled with the fact that there are many integers not the sum of a prime and $2$ powers of $2$ suggest that there exist infinitely many even integers which are not the sum of a prime and at most $3$ powers of $2$).
+powers of $2$, and pointed out that parity considerations, coupled with the fact that there
+are many integers not the sum of a prime and $2$ powers of $2$ suggest that there exist
+infinitely many even integers which are not the sum of a prime and at most $3$ powers of $2$).
 -/
 @[category research open, AMS 5, AMS 11]
 theorem erdos_10.variants.gretchuk :
