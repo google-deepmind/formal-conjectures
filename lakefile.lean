@@ -31,7 +31,7 @@ lean_lib FormalConjectures where
   globs := #[.submodules `FormalConjectures]
 
 lean_lib Scripts where
-  roots := #[`scripts]
-  globs := #[.submodules `scripts]
+  roots := #[`Scripts]
+  globs := #[.submodules `Scripts]
 
 require mathlib from git "https://github.com/leanprover-community/mathlib4.git" @ "v4.17.0"
