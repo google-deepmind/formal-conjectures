@@ -54,7 +54,7 @@ run_cmd
   Elab.Command.liftCoreM do
   let file := "./.lake/build/doc/index.html"
   let inputHtmlContent ← IO.FS.readFile file
-  let statsString ← getCategoryStatsMarkdown
+  let statsString ← fetchStatsMarkdown
   let markdownBody :=
       s!"# Welcome to the documentation page for *Formal Conjectures*
 ## Problem Category Statistics
