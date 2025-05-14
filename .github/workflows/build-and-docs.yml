@@ -35,7 +35,7 @@ jobs:
         with:
           path: ~/.cache/mathlib
           key: oleans-${{ hashFiles('lake-manifest.json') }}
-        
+
       - name: Get olean cache
         run: |
           lake exe cache unpack
@@ -48,7 +48,7 @@ jobs:
         run: |
           lake exe cache pack
           ls ~/.cache/mathlib
-        
+
       - name: Save ~/.cache/mathlib
         uses: actions/cache/save@v3
         with:
@@ -72,6 +72,12 @@ jobs:
         run: |
           cd docbuild
           lake build FormalConjectures:docs
+
+      - name: Inject stats into index.html
+        run: |
+          cd docbuild
+          lake env lean --run scripts/overwrite_index.lean
+          # TODO, actually use this output to overwrite index.html here
 
       - name: Upload docs
         uses: actions/upload-pages-artifact@v3
