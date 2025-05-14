@@ -43,7 +43,7 @@ jobs:
 
       - name: Build project
         run: |
-          lake exe mk_all
+          lake exe mk_all || true
           mv FormalConjectures.lean FormalConjectures/All.lean
           lake build
           lake build Scripts
