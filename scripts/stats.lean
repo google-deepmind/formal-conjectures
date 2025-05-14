@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
---TODO(firsching): investigage why this import is needed
+--TODO(firsching): investigate why this import is needed
 import FormalConjectures.Other.BusyBeaverAntihydra
 import FormalConjectures.Util.Attributes
 import Lean
@@ -36,7 +36,9 @@ def getCategoryStatsMarkdown : CoreM String := do
 
 
 unsafe def fetchStatsMarkdown : CoreM String := do
-  let moduleImportNames := #[`FormalConjectures]
+  -- This assumes a run of `lake exe mk_all; mv FormalConjectures.lean FormalConjectures/All.lean` took place before.
+  -- TODO(firsching): avoid this by instead using `Lake.Glob.forEachModuleIn` to generate a list of all modules instead.
+  let moduleImportNames := #[`FormalConjectures.All]
   let currentCtx ← read
 
   let modulesToImport : Array Import := moduleImportNames.map ({ module := · })

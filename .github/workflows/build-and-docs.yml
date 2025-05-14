@@ -42,7 +42,11 @@ jobs:
           lake exe cache get
 
       - name: Build project
-        run: lake build
+        run: |
+          lake exe mk_all
+          mv FormalConjectures.lean FormalConjectures/All.lean
+          lake build
+          lake build Scripts
 
       - name: Pack olean cache
         run: |
