@@ -54,20 +54,22 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
     -- Ensure the tags are in the correct order
   if contentStartIndex > bodyCloseTagSubstring.startPos then
     throw <| IO.userError s!"{openTag} content appears invalid (start of content is after start of {closeTag} tag)."
-  else
-    -- Extract the part of the HTML before the original body content (includes "<tag>")
-    let htmlPrefix := inputHtmlContent.extract 0 contentStartIndex
-    -- Extract the part of the HTML from "</tag>" to the end
-    let htmlSuffix := inputHtmlContent.extract bodyCloseTagSubstring.startPos inputHtmlContent.endPos
 
-    -- Construct the new full HTML content
-    let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
-    return finalHtml
+  -- Extract the part of the HTML before the original body content (includes "<tag>")
+  let htmlPrefix := inputHtmlContent.extract 0 contentStartIndex
+  -- Extract the part of the HTML from "</tag>" to the end
+  let htmlSuffix := inputHtmlContent.extract bodyCloseTagSubstring.startPos inputHtmlContent.endPos
+
+  -- Construct the new full HTML content
+  let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
+  return finalHtml
 
 
 unsafe def fetchStatsMarkdown : IO String := do
   -- This assumes a run of `lake exe mk_all; mv FormalConjectures.lean FormalConjectures/All.lean` took place before.
   -- TODO(firsching): avoid this by instead using `Lake.Glob.forEachModuleIn` to generate a list of all modules instead.
+  -- Then it would be easily possible to sort out the statements from the Util dir (in tests),
+  -- which we probably don't want to count here.
   let moduleImportNames := #[`FormalConjectures.All]
   initSearchPath (← findSysroot)
   let modulesToImport : Array Import := moduleImportNames.map ({ module := · })
@@ -89,7 +91,7 @@ overwrites the contents of the `main` tag of a html `file` with a weclome page i
   let inputHtmlContent ← IO.FS.readFile file
   let statsString ← fetchStatsMarkdown
   let markdownBody :=
-     s!"# Welcome to the documentation page for *Formal Conjectures*
+    s!"# Welcome to the documentation page for *Formal Conjectures*
 ## Problem Category Statistics
 {statsString}"
   IO.println markdownBody
