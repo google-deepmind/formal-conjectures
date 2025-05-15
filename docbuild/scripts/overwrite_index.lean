@@ -40,7 +40,7 @@ def getCategoryStatsMarkdown : CoreM String := do
 
 
 -- TODO(firsching): instead of re-inventing the wheel here use some html parsing library?
-def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) : IO String :=
+def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) : IO String := do
     let openTag := s!"<{tag}>"
     let closeTag := s!"</{tag}>"
 
