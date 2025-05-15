@@ -82,7 +82,7 @@ jobs:
       - name: Inject stats into index.html
         run: |
           cd docbuild
-          lake exe overwrite_index ./.lake/build/doc/index.html
+          lake exe overwrite_index ./.lake/build/doc/index.html | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload docs
         uses: actions/upload-pages-artifact@v3

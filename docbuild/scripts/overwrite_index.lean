@@ -92,6 +92,7 @@ overwrites the contents of the `main` tag of a html `file` with a weclome page i
      s!"# Welcome to the documentation page for *Formal Conjectures*
 ## Problem Category Statistics
 {statsString}"
+  IO.println markdownBody
   let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throw <| .userError "Parsing failed"
   let finalHtml ← replaceTag "main" inputHtmlContent newBody
   IO.FS.writeFile file finalHtml
