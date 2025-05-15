@@ -32,8 +32,8 @@ have the same prime factors?
 @[category research open, AMS 11]
 theorem erdos_931 (k₁ k₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂) :
     { (n₁, n₂) | n₁ + k₁ ≤ n₂ ∧
-      (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
-        (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite :=
+    (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
+    (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite :=
   sorry
 
 /--
@@ -43,9 +43,9 @@ It is an open queston if this true permitting a finite number of counterexamples
 -/
 @[category research open, AMS 11]
 theorem erdos_931.variants.additional_condition (k₁ k₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂):
-      {(n₁, n₂) | n₁ + k₁ ≤ n₂ ∧ n₂ ≤ 2 * (n₁ + k₁) ∧
-      (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
-      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Finite :=
+    {(n₁, n₂) | n₁ + k₁ ≤ n₂ ∧ n₂ ≤ 2 * (n₁ + k₁) ∧
+    (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
+    (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Finite :=
   sorry
 
 /--
