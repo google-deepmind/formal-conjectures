@@ -75,16 +75,13 @@ unsafe def fetchStatsMarkdown : IO String := do
   searchPathRef.set compile_time_search_path%
   let modulesToImport : Array Import := moduleImportNames.map ({ module := · })
   let currentCtx := { fileName := "", fileMap := default }
-  let ioProgram : IO String := do
-    Lean.enableInitializersExecution
+  Lean.enableInitializersExecution
 
-    Lean.withImportModules modulesToImport {} 0 fun enrichedEnv => do
-      let coreMActionToRun : CoreM String := getCategoryStatsMarkdown
+  Lean.withImportModules modulesToImport {} 0 fun env => do
+    let coreMActionToRun : CoreM String := getCategoryStatsMarkdown
 
-      let (statsOutputString, _newState) ← Core.CoreM.toIO coreMActionToRun currentCtx { env := enrichedEnv }
-      return statsOutputString
-
-  ioProgram
+    let (statsOutputString, _newState) ← Core.CoreM.toIO coreMActionToRun currentCtx { env := env }
+    return statsOutputString
 
 
 unsafe def main (args : List String) : IO Unit := do
