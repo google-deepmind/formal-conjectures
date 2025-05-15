@@ -50,9 +50,8 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
       let contentStartIndex := bodyOpenTagSubstring.stopPos
 
       -- Find the position of "</tag>"
-      match inputHtmlContent.findSubstr? closeTag with
-      | none => throw <| IO.userError s!"Closing {closeTag} tag not found in inputHtmlContent."
-      | some bodyCloseTagSubstring=>
+      let .some bodyCloseTagSubstring := inputHtmlContent.findSubstr? closeTag
+        | throw <| IO.userError s!"Closing {closeTag} tag not found in inputHtmlContent."
         -- Ensure the tags are in the correct order
         if contentStartIndex > bodyCloseTagSubstring.startPos then
           throw <| IO.userError s!"{openTag} content appears invalid (start of content is after start of {closeTag} tag)."
@@ -85,11 +84,11 @@ unsafe def fetchStatsMarkdown : IO String := do
 
 
 unsafe def main (args : List String) : IO Unit := do
+  let .some file := args.get? 0
+    | IO.println "Usage: stats <file>
+overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."
 
-  match args.get? 0 with
-  | some file =>
     let inputHtmlContent ← IO.FS.readFile file
-
     let statsString ← fetchStatsMarkdown
     let markdownBody :=
        s!"# Welcome to the documentation page for *Formal Conjectures*
@@ -98,5 +97,3 @@ unsafe def main (args : List String) : IO Unit := do
     let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throw <| .userError "Parsing failed"
     let finalHtml ← replaceTag "main" inputHtmlContent newBody
     IO.FS.writeFile file finalHtml
-  | _         => IO.println "Usage: stats <file>
-overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."
