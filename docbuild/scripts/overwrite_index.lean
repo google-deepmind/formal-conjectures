@@ -71,7 +71,7 @@ unsafe def fetchStatsMarkdown : IO String := do
   -- This assumes a run of `lake exe mk_all; mv FormalConjectures.lean FormalConjectures/All.lean` took place before.
   -- TODO(firsching): avoid this by instead using `Lake.Glob.forEachModuleIn` to generate a list of all modules instead.
   let moduleImportNames := #[`FormalConjectures.All]
-  searchPathRef.set compile_time_search_path%
+  initSearchPath (← findSysroot)
   let modulesToImport : Array Import := moduleImportNames.map ({ module := · })
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
