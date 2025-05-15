@@ -53,16 +53,19 @@ There are various ways of contributing to this repository:
 
     We are also interested in the formalized statement of solved variants of
     open conjectures and solved statements from dedicated problem lists.
+    While the main goal is to collect conjecture statements, we appreciate the
+    inclusion of very short proofs for solved items or counterexamples, 
+    especially if they are illuminating and testing the definitions.
 
-2.  **Opening issues with problems that you would like to see formalised.** Such
+3.  **Opening issues with problems that you would like to see formalised.** Such
     an issue should contain links to suitable references, and ideally a precise
     informal statement of the conjecture.
 
-3.  **Improving the referencing and tagging of problems.** For example, adding
+4.  **Improving the referencing and tagging of problems.** For example, adding
     pointers to references in already existing files, or adding additional
     relevant `AMS` subject attributes to statements.
 
-4.  **Fixing misformalisations** PRs fixing incorrect formalisations and issues
+5.  **Fixing misformalisations** PRs fixing incorrect formalisations and issues
     flagging problems are encouraged.
 
 ### How to Contribute
