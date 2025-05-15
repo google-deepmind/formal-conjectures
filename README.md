@@ -57,15 +57,15 @@ There are various ways of contributing to this repository:
     inclusion of very short proofs for solved items or counterexamples, 
     especially if they are illuminating and testing the definitions.
 
-3.  **Opening issues with problems that you would like to see formalised.** Such
+2.  **Opening issues with problems that you would like to see formalised.** Such
     an issue should contain links to suitable references, and ideally a precise
     informal statement of the conjecture.
 
-4.  **Improving the referencing and tagging of problems.** For example, adding
+3.  **Improving the referencing and tagging of problems.** For example, adding
     pointers to references in already existing files, or adding additional
     relevant `AMS` subject attributes to statements.
 
-5.  **Fixing misformalisations** PRs fixing incorrect formalisations and issues
+4.  **Fixing misformalisations** PRs fixing incorrect formalisations and issues
     flagging problems are encouraged.
 
 ### How to Contribute
