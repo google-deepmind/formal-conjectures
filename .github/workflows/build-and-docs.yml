@@ -40,13 +40,15 @@ jobs:
         run: |
           lake exe cache unpack
           lake exe cache get
-
-      - name: Build project
+      
+      - name: Generate All.lean
         run: |
           lake exe mk_all --lib FormalConjectures || true
           mv FormalConjectures.lean FormalConjectures/All.lean
+
+      - name: Build project
+        run: |
           lake build
-          lake build Scripts
 
       - name: Pack olean cache
         run: |
@@ -80,8 +82,7 @@ jobs:
       - name: Inject stats into index.html
         run: |
           cd docbuild
-          lake env lean --run scripts/overwrite_index.lean
-          # TODO, actually use this output to overwrite index.html here
+          lake exe overwrite_index ./.lake/build/doc/index.html
 
       - name: Upload docs
         uses: actions/upload-pages-artifact@v3

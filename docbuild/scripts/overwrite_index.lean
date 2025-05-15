@@ -14,10 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import MD4Lean
-import Scripts.Stats
+import Lean
+import Batteries.Data.String.Matcher
+import FormalConjectures.Util.Attributes
+
 
 open Lean
 open ProblemAttributes
+
+-- TODO(firsching): Consider adding links to identify the different categories like
+-- https://github.com/search?q=repo%3Agoogle-deepmind%2Fformal-conjectures+%22category+research+open%22&type=code
+-- or even better make it possible to search for attributes in doc-gen4
+def getCategoryStatsMarkdown : CoreM String := do
+  let stats ← getCategoryStats
+  return  s!"| Category        | Count |
+| --------------- | ----- |
+| Open Problems   | {stats (Category.research ProblemStatus.open)} |
+| Solved Problems | {stats (Category.research ProblemStatus.solved)} |
+| High School     | {stats (Category.highSchool)} |
+| Undergraduate   | {stats (Category.undergraduate)} |
+| Graduate        | {stats (Category.graduate)} |
+| API             | {stats (Category.API)} |
+| Tests           | {stats (Category.test)} |"
+
 
 
 -- TODO(firsching): instead of re-inventing the wheel here use some html parsing library?
@@ -50,15 +69,38 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
           return finalHtml
 
 
-run_cmd
-  Elab.Command.liftCoreM do
-  let file := "./.lake/build/doc/index.html"
-  let inputHtmlContent ← IO.FS.readFile file
-  let statsString ← fetchStatsMarkdown
-  let markdownBody :=
-      s!"# Welcome to the documentation page for *Formal Conjectures*
+unsafe def fetchStatsMarkdown : IO String := do
+  -- This assumes a run of `lake exe mk_all; mv FormalConjectures.lean FormalConjectures/All.lean` took place before.
+  -- TODO(firsching): avoid this by instead using `Lake.Glob.forEachModuleIn` to generate a list of all modules instead.
+  let moduleImportNames := #[`FormalConjectures.All]
+  searchPathRef.set compile_time_search_path%
+  let modulesToImport : Array Import := moduleImportNames.map ({ module := · })
+  let currentCtx := { fileName := "", fileMap := default }
+  let ioProgram : IO String := do
+    Lean.enableInitializersExecution
+
+    Lean.withImportModules modulesToImport {} 0 fun enrichedEnv => do
+      let coreMActionToRun : CoreM String := getCategoryStatsMarkdown
+
+      let (statsOutputString, _newState) ← Core.CoreM.toIO coreMActionToRun currentCtx { env := enrichedEnv }
+      return statsOutputString
+
+  ioProgram
+
+
+unsafe def main (args : List String) : IO Unit := do
+
+  match args.get? 0 with
+  | some file =>
+    let inputHtmlContent ← IO.FS.readFile file
+
+    let statsString ← fetchStatsMarkdown
+    let markdownBody :=
+       s!"# Welcome to the documentation page for *Formal Conjectures*
 ## Problem Category Statistics
-    {statsString}"
-  let  newBody := MD4Lean.renderHtml markdownBody
-  let finalHtml ← replaceTag "main" inputHtmlContent newBody.get!
-  IO.println finalHtml
+{statsString}"
+    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throw <| .userError "Parsing failed"
+    let finalHtml ← replaceTag "main" inputHtmlContent newBody
+    IO.FS.writeFile file finalHtml
+  | _         => IO.println "Usage: stats <file>
+overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."

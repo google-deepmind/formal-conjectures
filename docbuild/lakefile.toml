@@ -11,3 +11,10 @@ path = "../"
 scope = "leanprover"
 name = "doc-gen4"
 rev = "v4.17.0"
+
+[[lean_exe]]
+name = "overwrite_index"
+srcDir = "scripts"
+root = "overwrite_index"
+exeName = "overwrite_index"
+supportInterpreter = true
