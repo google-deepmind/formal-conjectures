@@ -41,30 +41,28 @@ def getCategoryStatsMarkdown : CoreM String := do
 
 -- TODO(firsching): instead of re-inventing the wheel here use some html parsing library?
 def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) : IO String := do
-    let openTag := s!"<{tag}>"
-    let closeTag := s!"</{tag}>"
+  let openTag := s!"<{tag}>"
+  let closeTag := s!"</{tag}>"
 
-    -- Find the position right after "<tag>"
-    let .some bodyOpenTagSubstring := inputHtmlContent.findSubstr? openTag
-      | throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
-      let contentStartIndex := bodyOpenTagSubstring.stopPos
+  -- Find the position right after "<tag>"
+  let .some bodyOpenTagSubstring := inputHtmlContent.findSubstr? openTag
+    | throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
+  let contentStartIndex := bodyOpenTagSubstring.stopPos
+  -- Find the position of "</tag>"
+  let .some bodyCloseTagSubstring := inputHtmlContent.findSubstr? closeTag
+    | throw <| IO.userError s!"Closing {closeTag} tag not found in inputHtmlContent."
+    -- Ensure the tags are in the correct order
+  if contentStartIndex > bodyCloseTagSubstring.startPos then
+    throw <| IO.userError s!"{openTag} content appears invalid (start of content is after start of {closeTag} tag)."
+  else
+    -- Extract the part of the HTML before the original body content (includes "<tag>")
+    let htmlPrefix := inputHtmlContent.extract 0 contentStartIndex
+    -- Extract the part of the HTML from "</tag>" to the end
+    let htmlSuffix := inputHtmlContent.extract bodyCloseTagSubstring.startPos inputHtmlContent.endPos
 
-      -- Find the position of "</tag>"
-      let .some bodyCloseTagSubstring := inputHtmlContent.findSubstr? closeTag
-        | throw <| IO.userError s!"Closing {closeTag} tag not found in inputHtmlContent."
-        -- Ensure the tags are in the correct order
-        if contentStartIndex > bodyCloseTagSubstring.startPos then
-          throw <| IO.userError s!"{openTag} content appears invalid (start of content is after start of {closeTag} tag)."
-        else
-          -- Extract the part of the HTML before the original body content (includes "<tag>")
-          let htmlPrefix := inputHtmlContent.extract 0 contentStartIndex
-
-          -- Extract the part of the HTML from "</tag>" to the end
-          let htmlSuffix := inputHtmlContent.extract bodyCloseTagSubstring.startPos inputHtmlContent.endPos
-
-          -- Construct the new full HTML content
-          let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
-          return finalHtml
+    -- Construct the new full HTML content
+    let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
+    return finalHtml
 
 
 unsafe def fetchStatsMarkdown : IO String := do
@@ -88,12 +86,12 @@ unsafe def main (args : List String) : IO Unit := do
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."
 
-    let inputHtmlContent ← IO.FS.readFile file
-    let statsString ← fetchStatsMarkdown
-    let markdownBody :=
-       s!"# Welcome to the documentation page for *Formal Conjectures*
+  let inputHtmlContent ← IO.FS.readFile file
+  let statsString ← fetchStatsMarkdown
+  let markdownBody :=
+     s!"# Welcome to the documentation page for *Formal Conjectures*
 ## Problem Category Statistics
 {statsString}"
-    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throw <| .userError "Parsing failed"
-    let finalHtml ← replaceTag "main" inputHtmlContent newBody
-    IO.FS.writeFile file finalHtml
+  let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throw <| .userError "Parsing failed"
+  let finalHtml ← replaceTag "main" inputHtmlContent newBody
+  IO.FS.writeFile file finalHtml
