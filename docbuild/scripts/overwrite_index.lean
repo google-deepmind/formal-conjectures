@@ -45,9 +45,8 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
     let closeTag := s!"</{tag}>"
 
     -- Find the position right after "<tag>"
-    match inputHtmlContent.findSubstr? openTag with
-    | none => throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
-    | some bodyOpenTagSubstring =>
+    let .some bodyOpenTagSubstring := inputHtmlContent.findSubstr? openTag
+      | throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
       let contentStartIndex := bodyOpenTagSubstring.stopPos
 
       -- Find the position of "</tag>"
