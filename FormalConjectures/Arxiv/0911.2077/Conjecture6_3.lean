@@ -47,4 +47,4 @@ theorem arxiv.id0911_2077.conjecture6_3
   (σ : ℝ) (h_σ : σ = (p * (1 - p)).sqrt) :
   ((PMF.binomial (.ofReal p : ℝ≥0∞) hp' (2 * k)).toMeasure (Set.Ici k)).toReal
  ≥ 1 - Φ ((1 / 2 - p) * sqrt (2 * k : ℝ≥0) / σ)
-    + ((2 * k).choose k) * σ.rpow (2 * k) := sorry
+    + (1 / 2) * ((2 * k).choose k) * σ.rpow (2 * k) := sorry
