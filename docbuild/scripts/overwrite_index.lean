@@ -22,22 +22,42 @@ import FormalConjectures.Util.Attributes
 open Lean
 open ProblemAttributes
 
--- TODO(firsching): Consider adding links to identify the different categories like
--- https://github.com/search?q=repo%3Agoogle-deepmind%2Fformal-conjectures+%22category+research+open%22&type=code
--- or even better make it possible to search for attributes in doc-gen4
+-- TODO(firsching): make it possible to search for attributes in doc-gen4, likely depends on
+-- https://github.com/google-deepmind/formal-conjectures/issues/5
 def getCategoryStatsMarkdown : CoreM String := do
   let stats ← getCategoryStats
-  return  s!"| Category        | Count |
-| --------------- | ----- |
-| Open Problems   | {stats (Category.research ProblemStatus.open)} |
-| Solved Problems | {stats (Category.research ProblemStatus.solved)} |
-| High School     | {stats (Category.highSchool)} |
-| Undergraduate   | {stats (Category.undergraduate)} |
-| Graduate        | {stats (Category.graduate)} |
-| API             | {stats (Category.API)} |
-| Tests           | {stats (Category.test)} |"
+  let githubSearchBaseUrl := "https://github.com/search?type=code&q=repo%3Agoogle-deepmind%2Fformal-conjectures+"
+  return  s!"| Count | Category          |
+| ----- | ----------------- |
+| {stats (Category.research ProblemStatus.open)} | [Research (open)]({githubSearchBaseUrl}%22category+research+open%22)|
+| {stats (Category.research ProblemStatus.solved)} | [Research (solved)]({githubSearchBaseUrl}%22category+research+solved%22)|
+| {stats (Category.graduate)} | [Graduate]({githubSearchBaseUrl}%22category+graduate%22)|
+| {stats (Category.undergraduate)} | [Undergraduate]({githubSearchBaseUrl}%22category+undergraduate%22)|
+| {stats (Category.highSchool)} | [High School]({githubSearchBaseUrl}%22category+high_school%22)|
+| {stats (Category.API)} | [API]({githubSearchBaseUrl}%22category+API%22)|
+| {stats (Category.test)} | [Tests]({githubSearchBaseUrl}%22category+tests%22)|"
 
+-- TODO(firsching): make it possible to search for subjects in doc-gen4, likely depends on
+-- https://github.com/google-deepmind/formal-conjectures/issues/5
+def getSubjectStatsMarkdown : CoreM String := do
+  let tags ← getSubjectTags
 
+  let mut counts : Std.HashMap AMS Nat := {}
+  for tag in tags do
+    for subject in tag.subjects do
+      counts := counts.insert subject (counts.getD subject 0 + 1)
+
+  let sortedCounts := counts.toArray.qsort (lt := fun (_, c1) (_, c2) => c2 < c1)
+  let mut markdownTable := "| Count | AMS # | Subject |\n" ++
+                           "| ----- | ----- | ------- |\n "
+
+  for (subject, count) in sortedCounts do
+    if count > 0 then
+      let desc ←  subject.getDesc
+      let num := subject.toCtorIdx;
+      -- TODO(firsching): zero-pad the AMS number here
+      markdownTable := markdownTable.append s!"| {count} | {num} |{desc} |\n"
+  return markdownTable
 
 -- TODO(firsching): instead of re-inventing the wheel here use some html parsing library?
 def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) : IO String := do
@@ -65,7 +85,7 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
   return finalHtml
 
 
-unsafe def fetchStatsMarkdown : IO String := do
+unsafe def fetchStatsMarkdown (markdownGenerator : CoreM String ) : IO String := do
   -- This assumes a run of `lake exe mk_all; mv FormalConjectures.lean FormalConjectures/All.lean` took place before.
   -- TODO(firsching): avoid this by instead using `Lake.Glob.forEachModuleIn` to generate a list of all modules instead.
   -- Then it would be easily possible to sort out the statements from the Util dir (in tests),
@@ -77,23 +97,39 @@ unsafe def fetchStatsMarkdown : IO String := do
   Lean.enableInitializersExecution
 
   Lean.withImportModules modulesToImport {} 0 fun env => do
-    let coreMActionToRun : CoreM String := getCategoryStatsMarkdown
+    let coreMActionToRun : CoreM String := markdownGenerator
 
     let (statsOutputString, _newState) ← Core.CoreM.toIO coreMActionToRun currentCtx { env := env }
     return statsOutputString
-
 
 unsafe def main (args : List String) : IO Unit := do
   let .some file := args.get? 0
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."
-
   let inputHtmlContent ← IO.FS.readFile file
-  let statsString ← fetchStatsMarkdown
+  let categoryStats ← fetchStatsMarkdown getCategoryStatsMarkdown
+  let subjectStats ← fetchStatsMarkdown getSubjectStatsMarkdown
   let markdownBody :=
-    s!"# Welcome to the documentation page for *Formal Conjectures*
+    s!"# Welcome to the *Formal Conjectures* Documentation!
+
+Check out the main
+[Formal Conjectures GitHub repository](https://github.com/google-deepmind/formal-conjectures)
+for more details.
+
+This page provides an overview of the problem categories and subject classifications used
+within the project. For a more detailed explanation of these categories and the AMS subject
+classifications, please refer to the
+[explanation of features in the project's README](https://github.com/google-deepmind/formal-conjectures?tab=readme-ov-file#some-features).
+
+---
+
 ## Problem Category Statistics
-{statsString}"
+{categoryStats}
+
+---
+
+## Subject Category Statistics
+{subjectStats}"
   IO.println markdownBody
   let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throw <| .userError "Parsing failed"
   let finalHtml ← replaceTag "main" inputHtmlContent newBody
