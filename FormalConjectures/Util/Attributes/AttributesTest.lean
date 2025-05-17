@@ -33,7 +33,7 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
   sorry
 
 /--
-info: Current benchmark stats:
+info: Benchmark statistics:
 Open problems: 1
 Solved problems: 1
 High School: 0
@@ -44,6 +44,16 @@ Tests: 1
 -/
 #guard_msgs in
 #category_stats
+
+
+/--
+info: Problem subject statistics:
+ Number theory: 2
+ Special functions: 1
+-/
+#guard_msgs in
+#subject_stats
+
 
 -- The `#AMS` command
 
