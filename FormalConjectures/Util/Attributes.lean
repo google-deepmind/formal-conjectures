@@ -290,6 +290,9 @@ def getCategoryStats : m (Category → Nat) := do
   let cats ← getStatementTags
   return fun c ↦ (cats.map <| fun _ arr ↦ arr.size).getD c 0
 
+def getSubjectTags : m (Array SubjectTag) := do
+  return subjectExt.getState (← MonadEnv.getEnv) |>.toArray
+
 end Helper
 
 end ProblemAttributes
@@ -315,9 +318,37 @@ elab "#category_stats" : command => do
       s!"Graduate: {stats (Category.graduate)}\n" ++
       s!"API: {stats (Category.API)}\n" ++
       s!"Tests: {stats (Category.test)}\n"
-  Lean.logInfo ("Current benchmark stats:\n" ++ out)
+  Lean.logInfo ("Benchmark statistics:\n" ++ out)
 
--- TODO(lezeau): add a `#subject_stats` command that does
--- prints the number of problems per subject (when non-zero)
+/-- Prints the number of problems per AMS subject (when non-zero).
+
+Note that this will depend on what declarations are present in the
+environment at the place where the command is called. -/
+elab "#subject_stats" : command =>  do
+  let tags ← ProblemAttributes.getSubjectTags
+  if tags.isEmpty then
+    Lean.logInfo "No AMS subject tags found in the current environment."
+    return
+
+  let mut counts : Std.HashMap AMS Nat := {}
+  for tag in tags do
+    for subject in tag.subjects do
+      counts := counts.insert subject (counts.getD subject 0 + 1)
+
+  if counts.isEmpty then
+    Lean.logInfo "No problems with AMS subjects found."
+    return
+
+  let sortedCounts := counts.toArray.qsort (lt := fun (_, c1) (_, c2) => c2 < c1)
+
+  Elab.Command.liftCoreM do
+    let mut statLines : Array String := #[]
+    for (subject, count) in sortedCounts do
+        -- Ensure we only print non-zero counts
+        if count > 0 then
+            let desc ←  subject.getDesc
+            statLines := statLines.push s!" {desc}: {count}"
+
+    Lean.logInfo ("Problem subject statistics:\n" ++ ("\n".intercalate statLines.toList))
 
 end Commands
