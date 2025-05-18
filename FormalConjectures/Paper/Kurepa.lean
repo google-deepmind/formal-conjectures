@@ -69,7 +69,7 @@ theorem kurepa_conjecture.gcd_reduction : (∀ n, ∀ h_n : 2 < n, (!n : ℕ) % 
 /--
 Sanity check: for small values we can just compute that the conjecture is true
 -/
-@[category research solved, AMS 11]
+@[category test, AMS 11]
 theorem kurepa_conjecture.variant.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
     (!n : ℕ) % n ≠ 0 := by
   interval_cases n <;> decide
@@ -77,7 +77,7 @@ theorem kurepa_conjecture.variant.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper
 /--
 Sanity check: for small values we can just compute that the conjecture is true.
 -/
-@[category research solved, AMS 11]
+@[category test, AMS 11]
 theorem kurepa_conjecture.variant.gcd.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
     (n !).gcd (! n) = 2 := by
   interval_cases n <;> decide
