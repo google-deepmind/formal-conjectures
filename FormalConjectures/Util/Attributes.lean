@@ -318,6 +318,9 @@ elab "#category_stats" : command => do
       s!"Graduate: {stats (Category.graduate)}\n" ++
       s!"API: {stats (Category.API)}\n" ++
       s!"Tests: {stats (Category.test)}\n"
-  Lean.logInfo ("Benchmark statistics:\n" ++ out)
+  Lean.logInfo ("Current benchmark stats:\n" ++ out)
+
+-- TODO(lezeau): add a `#subject_stats` command that does
+-- prints the number of problems per subject (when non-zero)
 
 end Commands
