@@ -170,11 +170,6 @@ def numToAMSName (n : Nat) : MetaM Name := do
   unless !(← Lean.hasConst nm) do return nm
   throwError "Out of bounds"
 
-def AMS.getDesc (a : AMS) : CoreM String := do
-  let .const n [] := Lean.toExpr a | throwError "this shouldn't happen"
-  let .some doc := ← Lean.findDocString? (← getEnv) n | throwError s!"please add docstring to all AMS categories"
-  return doc.trim
-
 unsafe def numToAMSSubjects (n : Nat) : MetaM AMS := do
   let nm ← numToAMSName n
   Meta.evalExpr AMS q(AMS) (.const nm [])

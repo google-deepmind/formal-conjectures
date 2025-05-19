@@ -290,9 +290,6 @@ def getCategoryStats : m (Category → Nat) := do
   let cats ← getStatementTags
   return fun c ↦ (cats.map <| fun _ arr ↦ arr.size).getD c 0
 
-def getSubjectTags : m (Array SubjectTag) := do
-  return subjectExt.getState (← MonadEnv.getEnv) |>.toArray
-
 end Helper
 
 end ProblemAttributes
