@@ -84,8 +84,11 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
   let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
   return finalHtml
 
-
-unsafe def fetchStatsMarkdown (markdownGenerator : CoreM String ) : IO String := do
+/--
+Runs a `CoreM α` action in an environment where specified modules are imported.
+This is useful for accessing declarations and attributes defined in the project.
+-/
+unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
   -- This assumes a run of `lake exe mk_all; mv FormalConjectures.lean FormalConjectures/All.lean` took place before.
   -- TODO(firsching): avoid this by instead using `Lake.Glob.forEachModuleIn` to generate a list of all modules instead.
   -- Then it would be easily possible to sort out the statements from the Util dir (in tests),
@@ -97,18 +100,22 @@ unsafe def fetchStatsMarkdown (markdownGenerator : CoreM String ) : IO String :=
   Lean.enableInitializersExecution
 
   Lean.withImportModules modulesToImport {} 0 fun env => do
-    let coreMActionToRun : CoreM String := markdownGenerator
-
-    let (statsOutputString, _newState) ← Core.CoreM.toIO coreMActionToRun currentCtx { env := env }
-    return statsOutputString
+    let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
+    return result
 
 unsafe def main (args : List String) : IO Unit := do
   let .some file := args.get? 0
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
-  let categoryStats ← fetchStatsMarkdown getCategoryStatsMarkdown
-  let subjectStats ← fetchStatsMarkdown getSubjectStatsMarkdown
+
+  let (categoryStats, subjectStats) ← runWithImports do
+    let catStats ← getCategoryStatsMarkdown
+    let subjStats ← getSubjectStatsMarkdown
+    return (catStats, subjStats)
+    -- Or more concisely, as you suggested:
+    -- return (← getCategoryStatsMarkdown, ← getSubjectStatsMarkdown)
+
   let markdownBody :=
     s!"# Welcome to the *Formal Conjectures* Documentation!
 
