@@ -85,7 +85,7 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
   return finalHtml
 
 /--
-Runs a `CoreM α` action in an environment where specified modules are imported.
+Runs a `CoreM α` action in an environment where all FormalConjectures modules are imported.
 This is useful for accessing declarations and attributes defined in the project.
 -/
 unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
