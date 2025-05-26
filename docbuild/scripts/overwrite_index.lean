@@ -109,15 +109,12 @@ unsafe def main (args : List String) : IO Unit := do
 overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
 
-  let (categoryStats, subjectStats) ← runWithImports do
-    let catStats ← getCategoryStatsMarkdown
-    let subjStats ← getSubjectStatsMarkdown
-    return (catStats, subjStats)
-    -- Or more concisely, as you suggested:
-    -- return (← getCategoryStatsMarkdown, ← getSubjectStatsMarkdown)
+  runWithImports do
+    let categoryStats ← getCategoryStatsMarkdown
+    let subjectStats ← getSubjectStatsMarkdown
 
-  let markdownBody :=
-    s!"# Welcome to the *Formal Conjectures* Documentation!
+    let markdownBody :=
+      s!"# Welcome to the *Formal Conjectures* Documentation!
 
 Check out the main
 [Formal Conjectures GitHub repository](https://github.com/google-deepmind/formal-conjectures)
@@ -137,7 +134,7 @@ classifications, please refer to the
 
 ## Subject Category Statistics
 {subjectStats}"
-  IO.println markdownBody
-  let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throw <| .userError "Parsing failed"
-  let finalHtml ← replaceTag "main" inputHtmlContent newBody
-  IO.FS.writeFile file finalHtml
+    IO.println markdownBody
+    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throwError "Parsing failed"
+    let finalHtml ← replaceTag "main" inputHtmlContent newBody
+    IO.FS.writeFile file finalHtml
