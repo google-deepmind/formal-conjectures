@@ -10,7 +10,8 @@ path = "../"
 [[require]]
 scope = "leanprover"
 name = "doc-gen4"
-rev = "v4.17.0"
+# TODO(firsching): change this back to the lean-toolchain after bumping to v4.20.0
+rev = "188e831aec3c09baf3951a4ce92ac795a4cb13f9"
 
 [[lean_exe]]
 name = "overwrite_index"
