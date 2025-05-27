@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
+import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
+import FormalConjectures.ForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjectures.ForMathlib.Combinatorics.Basic
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
