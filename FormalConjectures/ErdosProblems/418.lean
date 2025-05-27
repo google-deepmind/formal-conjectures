@@ -51,7 +51,7 @@ $\sigma(n) - n$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.sigma :
-    ∃ (S : Set ℕ) (hS : ∃ α, 0 < α ∧ S.HasDensity α),
+    ∃ (S : Set ℕ) (hS : S.HasPosDensity),
       S ⊆ { (σ 1 n - n : ℕ) | n }ᶜ :=
   sorry
 
