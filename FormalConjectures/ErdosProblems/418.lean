@@ -73,6 +73,6 @@ not of the form $n - \phi(n)$.
 -/
 @[category research open, AMS 11]
 theorem erdos_418.variants.density :
-    ∃ (S : Set ℕ) (hS : ∃ α, 0 < α ∧ S.HasDensity α),
+    ∃ (S : Set ℕ) (hS : S.HasPosDensity),
       S ⊆ { (n - n.totient : ℕ) | n }ᶜ :=
   sorry
