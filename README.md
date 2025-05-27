@@ -167,7 +167,7 @@ theorem flt : FermatLastTheorem := by
 Within a Lean file, you can use the `#AMS` command to list all the possible
 values.
 
-To determine the subject associated to tag `AMS foo` in VS Code, you can hover
+To determine the subject associated to the tag `AMS foo` in VS Code, you can hover
 over `foo`.
 
 The attribute allows multiple parameters, e.g. `@[AMS foo bar]` is valid.
