@@ -39,7 +39,7 @@ example : IsCrystalWithComponents 35 5 7 := by
 -- TODO(firsching): show divisibility properties from section 3.
 
 /--
-If $n = ab$ is a crystal, then there not exists another couple of
+If $n = ab$ is a crystal, then there are no other pairs of
 positive integers $c, d > 1$, different from the couple $a, b$, such that $n = cd$ and
 $B(c, d) ∈ ℕ$, i.e., the components of the crystals are unique.
 -/

@@ -27,7 +27,7 @@ The curling number
 
 Let $S$ be a finite nonempty sequence of integers. By grouping adjacent terms, it is always possible
 to write it as $S = X Y Y . . . Y = X Y^k$, where $X$ and $Y$ are sequences of integers and $Y$ is nonempty
-(4X$ is allowed to be the empty sequence $∅$). There may be several ways to do this: choose the one
+($X$ is allowed to be the empty sequence $∅$). There may be several ways to do this: choose the one
 that maximizes the value of $k$: this $k$ is the curling number of $S$, denoted by $k S$.
 -/
 private noncomputable def k (S : List ℤ) : ℕ :=
