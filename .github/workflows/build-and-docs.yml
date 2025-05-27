@@ -34,7 +34,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: ~/.cache/mathlib
-          key: oleans-${{ hashFiles('lake-manifest.json') }}
+          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
       - name: Get olean cache
         run: |
@@ -62,7 +62,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: ~/.cache
-          key: oleans-${{ hashFiles('lake-manifest.json') }}
+          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
       - name: Prepare documentation
         run: |
@@ -74,7 +74,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: docbuild/.lake/build/doc
-          key: MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}
+          key: MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
           restore-keys: MathlibDoc-
 
       - name: Build documentation
