@@ -27,10 +27,8 @@ Let $n_1 < n_2 < ...$ be an infinite sequence with $\frac{n_{k+1}}{n_k} ≥ c > 
 $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 -/
 @[category research open, AMS 11]
-theorem erdos_267 (n : ℕ → ℕ)
-    (hn : StrictMono n) (c : ℚ) (hc : 1 < c)
-    (hnc : ∀ k, c ≤ n (k+1) / n k) :
-    Irrational (∑' k, 1 / (Nat.fib <| n k) ) ↔ answer(sorry) :=
+theorem erdos_267 : (∀ᵉ (n : ℕ → ℕ) (c > (1 : ℚ)), StrictMono n → (∀ k, c ≤ n (k+1) / n k) →
+    Irrational (∑' k, 1 / (Nat.fib <| n k))) ↔ answer(sorry) :=
   sorry
 
 /--
@@ -39,10 +37,9 @@ Let $n_1 < n_2 < ...$ be an infinite sequence with $\frac {n_k}{k} → ∞$. Mus
 $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 -/
 @[category research open, AMS 11]
-theorem erdos_267.variants.generalisation_ratio_limit_to_infinity (n : ℕ → ℕ)
-    (hn : StrictMono n)
-    (hnc : Filter.Tendsto (fun k => (n (k+1) / k.succ : ℝ)) Filter.atTop Filter.atTop) :
-    Irrational (∑' k, 1 / (Nat.fib <| n k)) ↔ answer(sorry) :=
+theorem erdos_267.variants.generalisation_ratio_limit_to_infinity : (∀ (n : ℕ → ℕ),
+    StrictMono n → Filter.Tendsto (fun k => (n (k+1) / k.succ : ℝ)) Filter.atTop Filter.atTop →
+    Irrational (∑' k, 1 / (Nat.fib <| n k))) ↔ answer(sorry) :=
   sorry
 
 /--

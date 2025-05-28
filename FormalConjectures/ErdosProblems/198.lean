@@ -73,8 +73,8 @@ This can be seen, as pointed out by Thomas Bloom [erdosproblems.com/198](https:/
 by an elementary argument.
 -/
 @[category research solved, AMS 5, AMS 11]
-theorem erdos_198 : (∀ A : ℕ →o ℕ,
-    IsSidon A → (∀ Y, IsAPOfLength Y ⊤ → ((range A) ∩ Y).Nonempty)) ↔ answer(False) := by
+theorem erdos_198 : (∀ A : ℕ →o ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ (range A)ᶜ)) ↔
+    answer(False) := by
   sorry
 
 /--

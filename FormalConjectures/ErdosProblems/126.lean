@@ -35,8 +35,8 @@ $\prod_{a\neq b\in A}(a + b)$ has at least $f(n)$ distinct prime factors.
 Is it true that $\frac{f(n)}{\log n} \to\infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_126 (f : ℕ → ℕ) (hf : IsMaximalAddFactorsCard f) :
-    Tendsto (fun n => f n / Real.log n) atTop atTop ↔ answer(sorry) :=
+theorem erdos_126 : (∀ (f : ℕ → ℕ), IsMaximalAddFactorsCard f →
+    Tendsto (fun n => f n / Real.log n) atTop atTop) ↔ answer(sorry) :=
   sorry
 
 /--
