@@ -27,7 +27,7 @@ open scoped Nat
 Let $k ≥ 2$. Does $((n+k)!)^2∣(2n)!$ hold for infinitely many $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_727 : (∀ᵉ (k ≥ 2),
+theorem erdos_727 : (∀ k ≥ 2,
     Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)}) ↔ answer(sorry) :=
   sorry
 

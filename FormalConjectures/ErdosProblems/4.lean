@@ -34,7 +34,7 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem erdos_4 : (∀ᵉ (C > 0), Erdos4For C) ↔ answer(True) :=
+theorem erdos_4 : (∀ C > 0, Erdos4For C) ↔ answer(True) :=
   sorry
 
 @[category research solved, AMS 11]

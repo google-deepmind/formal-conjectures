@@ -52,6 +52,6 @@ Is $\sum_n \frac{d(n)}{t^n}$ irrational, where $t ≥ 2$ is an integer.
 Solution: True (proved by Erdős, see Erdős Problems website)
 -/
 @[category research solved, AMS 11]
-theorem erdos_258.variants.Constant : (∀ᵉ (t ≥ 2),
+theorem erdos_258.variants.Constant : (∀ t ≥ 2,
     Irrational (∑' (n : ℕ), ((n+1).divisors.card / t^n))) ↔ answer(True) := by
   sorry
