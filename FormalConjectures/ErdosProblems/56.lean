@@ -97,6 +97,6 @@ relatively prime. An example is the set of all multiples of the first $k$ primes
 Is this the largest such set?
 -/
 @[category research solved, AMS 11]
-theorem erdos_56 (N : ℕ) (hN : 2 ≤ N)
-    (k : ℕ) : (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card) ↔ answer(False) := by
+theorem erdos_56 : ∀ᵉ (N ≥ 2) (k), (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card) ↔
+    answer(False) := by
   sorry
