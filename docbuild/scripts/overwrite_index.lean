@@ -17,7 +17,6 @@ import MD4Lean
 import Lean
 import Batteries.Data.String.Matcher
 import FormalConjectures.Util.Attributes
-import Mathlib.Data.String.Defs
 
 
 open Lean
