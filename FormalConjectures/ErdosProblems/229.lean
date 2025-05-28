@@ -38,7 +38,7 @@ theorem erdos_229 :
     letI := Polynomial.algebraPi ℂ ℂ ℂ
     (∀ (S : ℕ → Set ℂ), (∀ (n), derivedSet (S n) = ∅) →
     ∃ (f : ℂ → ℂ), Transcendental (Polynomial ℂ) f ∧ Differentiable ℂ f ∧ ∀ n ≥ 1,
-      ∃ k, ∀ᵉ (z ∈ S n), iteratedDeriv k f z = 0) ↔ answer(True) :=
+      ∃ k, ∀ z ∈ S n, iteratedDeriv k f z = 0) ↔ answer(True) :=
   sorry
 
 /--
