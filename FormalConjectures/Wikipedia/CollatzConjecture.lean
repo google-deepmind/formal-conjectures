@@ -25,11 +25,9 @@ import FormalConjectures.Util.ProblemImports
 /--
 The Collatz step => if `n` is even, halve it, otherwise multiply by three and add one.
 -/
-def collatz_fn : ℕ → ℕ
-| n =>
-  match n % 2 with
-  | 0   => n / 2
-  | _   => 3 * n + 1
+def collatz_fn (n : ℕ) : ℕ :=
+  if Even n then n / 2 else 3 * n + 1
 
 @[category research open, AMS 11]
-theorem collatz_conjecture (n : ℕ) : ∃ m, Nat.iterate collatz_fn m n = 1 := sorry
+theorem collatz_conjecture (n : ℕ) : ∃ m, collatz_fn^[m] n = 1 := by
+  sorry
