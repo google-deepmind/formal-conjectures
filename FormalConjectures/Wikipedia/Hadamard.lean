@@ -77,7 +77,8 @@ example (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamar
 Hadamard asks for which values of $n = 4k$ exists such a Matrix.
 -/
 @[category research open, AMS 15]
-theorem HadamardConjecture (k : ℕ) : ∃ M, IsHadamard (n := 4 * k) M := sorry
+theorem HadamardConjecture (k : ℕ) : ∃ M, IsHadamard (n := 4 * k) M := by
+  sorry
 
 /--
 Hadamard constructs a 12 x 12 matrix ...
@@ -106,4 +107,5 @@ example : IsHadamard H12 := by
 The smallest order for which no Hadamard matrix is presently known is $668 = 4 * 167$.
 -/
 @[category research open, AMS 15]
-theorem HadamardConjecture.variant : ∃ M, IsHadamard (n := 4 * 167) M := sorry
+theorem HadamardConjecture.variant : ∃ M, IsHadamard (n := 4 * 167) M := by
+  sorry

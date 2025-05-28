@@ -44,4 +44,5 @@ are also $0, 1$ polynomials.
 theorem mathoverflow_339137 (P Q R : ℝ[X]) (hP: P.Monic) (hQ : Q.Monic)
     (hp : ∀ c ∈ P.coeffs, 0 ≤ c) (hq : ∀ c ∈ Q.coeffs, 0 ≤ c)
     (h : R = P * Q) (hR : IsZeroOne R) :
-    IsZeroOne P ∧ IsZeroOne Q := sorry
+    IsZeroOne P ∧ IsZeroOne Q := by
+  sorry

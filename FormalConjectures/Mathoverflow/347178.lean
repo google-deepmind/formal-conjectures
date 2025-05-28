@@ -33,19 +33,20 @@ theorem mathoverflow_347178 :
     (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f),
         (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) ∧
         (⨆ x, f x) = ⨆ x, f (x + gradient f x))
-      ↔ answer(sorry) :=
+      ↔ answer(sorry) := by
   sorry
 
 @[category research open]
 theorem mathoverflow_347178.variants.bounded_iff :
     (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f),
         (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))))
-      ↔ answer(sorry)  := sorry
+      ↔ answer(sorry) := by
+  sorry
 
 @[category research open]
 theorem mathoverflow_347178.variants.bounded_only :
     (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f)
         (h : BddAbove (range f)) (h' : BddAbove (range (fun x ↦ f (x + gradient f x)))),
         (⨆ x, f x) = ⨆ x, f (x + gradient f x))
-      ↔ answer(sorry) :=
+      ↔ answer(sorry) := by
   sorry

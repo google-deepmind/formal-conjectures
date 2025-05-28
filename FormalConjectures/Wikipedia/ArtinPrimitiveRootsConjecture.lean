@@ -43,7 +43,7 @@ density inside the set of primes. In particular, `S(a)` is infinite.
 @[category research open, AMS 11]
 theorem artin_primitive_roots.parts.i (a : ℤ)
     (ha : ¬ IsSquare a) (ha' : a ≠ -1) :
-    ∃ x > 0, (S a).HasDensity x {p | p.Prime}  := by
+    ∃ x > 0, (S a).HasDensity x {p | p.Prime} := by
   sorry
 
 /--
@@ -57,7 +57,7 @@ theorem artin_primitive_roots.parts.ii
     (a a_0 b : ℤ) (ha : a = a_0 * b^2)
     (ha' : ∀ n m, m ≠ 1 → a ≠ n^m) (ha_0 : Squarefree a_0)
     (ha_0' : ¬ a_0 ≡ 1 [ZMOD 4]):
-    (S a).HasDensity ArtinConstant {p | p.Prime}  := by
+    (S a).HasDensity ArtinConstant {p | p.Prime} := by
   sorry
 
 /--
