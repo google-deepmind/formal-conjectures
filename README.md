@@ -17,6 +17,9 @@ would be useful for a few reasons. It could
 *   Help clarify the precise meaning of conjectures through formalization.
 *   Encourage the expansion of `mathlib` by highlighting needed definitions.
 
+It is our hope that this initiative will form the seed of a much richer dataset of 
+formalized conjectures.
+
 ### Note on Formalisation Accuracy
 
 Formalizing mathematical statements without proofs is inherently challenging.
@@ -51,12 +54,12 @@ There are various ways of contributing to this repository:
         [the Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book), ...)
     *   ...
 
-    We are also interested in the formalized statement of solved variants of
+    We are also interested in the formalized statements of solved variants of
     open conjectures and solved statements from dedicated problem lists.
     While the main goal is to collect conjecture statements, we appreciate the
     inclusion of very short proofs for solved items or counterexamples, 
     especially if they are illuminating and testing the definitions.
-    Lengthy proofs are are outside the scope of this repository.
+    Lengthy proofs are outside the scope of this repository.
 
 2.  **Opening issues with problems that you would like to see formalised.** Such
     an issue should contain links to suitable references, and ideally a precise
@@ -66,7 +69,7 @@ There are various ways of contributing to this repository:
     pointers to references in already existing files, or adding additional
     relevant `AMS` subject attributes to statements.
 
-4.  **Fixing misformalisations** PRs fixing incorrect formalisations and issues
+4.  **Fixing misformalisations.** PRs fixing incorrect formalisations and issues
     flagging problems are encouraged.
 
 ### How to Contribute
@@ -122,7 +125,9 @@ for the following categories:
 -   Open research problem: a mathematical problem for which there is no solution
     accepted by the community.
 -   Solved research problem: a mathematical problem that has an accepted
-    solution
+    solution (in the sense that it is widely accepted by experts in the field).
+    In particular this does *not* mean that the statement has been proven in the
+    formal setting.
 -   Graduate level problem.
 -   Undergraduate level problem.
 -   High school level problem.
@@ -167,7 +172,7 @@ theorem flt : FermatLastTheorem := by
 Within a Lean file, you can use the `#AMS` command to list all the possible
 values.
 
-To determine the subject associated to tag `AMS foo` in VS Code, you can hover
+To determine the subject associated to the tag `AMS foo` in VS Code, you can hover
 over `foo`.
 
 The attribute allows multiple parameters, e.g. `@[AMS foo bar]` is valid.
@@ -184,9 +189,24 @@ elaborator allows us to formulate the problem without deciding for an answer.
 ```lean
 @[category research open]
 theorem HadwigerNelsonProblem :
-    IsLeast { n : ℕ | ExistsColoring n } answer(sorry) :=
+    IsLeast {n : ℕ | ExistsColoring n} answer(sorry) :=
   sorry
 ```
+
+## Problems that require answers
+
+Note that providing a term inside the `answer( )` elaborator together with a proof that
+the statement is true *does not* by itself mean that the problem has been solved. For example, a question
+of the form "Which natural numbers satisfy the predicate $P$?" might be formalised as
+```lean
+theorem myOpenProblem : {n : ℕ | P n} = answer(sorry) := by
+  sorry
+```
+and one can provide trivial answers that aren't mathemetically interesting, e.g. the set
+`{n : ℕ | P n}` itself.
+
+In particular, the question of whether the answer provided corresponds to a mathematically
+meaningful solution of the problem is outside of the scope of this repository. 
 
 ## Style Guidelines
 
@@ -202,6 +222,23 @@ theorem HadwigerNelsonProblem :
 5.  Every file should come with a reference to where the problem was sourced
     from, and be put in the corresponding directory of the repository, e.g. a
     problem sourced from wikipedia should live in `FormalConjectures/Wikipedia`.
+6.  When a problem is stated as a question in English, the preferred style is to 
+    use `answer(sorry)` in the following way:
+    ```lean
+    /-- English version: "Does P hold ?" -/
+    theorem myConjecture : P ↔ answer(sorry) := by
+      sorry
+    ```
+    If the problem has been solved, `answer(sorry)` should be replaced by 
+    `answer(True)` or `answer(False)` accordingly.
+    If the problem is not stated as a question, the following style is preferred:
+    ```lean
+    /-- English version: "P holds" -/
+    theorem myConjecture : P := by
+      sorry
+    ```
+    If the problem has been solved to the negative, then `P` should be replaced with
+    `¬ P`.
 
 ## Versioning
 

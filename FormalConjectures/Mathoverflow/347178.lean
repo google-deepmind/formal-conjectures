@@ -29,17 +29,23 @@ Let $f\colon ℝ^n → ℝ,  n ≥ 2$ be a $C^1$ function. Is it true that
 $$\sup_{x\in {\bf R}^n}f(x)=\sup_{x\in {\bf R}^n}f(x+\nabla f(x))$$?
 -/
 @[category research open]
-theorem mathoverflow_347178 {n : ℕ} (hn : 2 ≤ n) (f : EuclideanSpace ℝ (Fin n) → ℝ)
-    (hf : ContDiff ℝ 1 f) :
-    (⨆ x, (f x : EReal)) = ⨆ x, (f (x + gradient f x) : EReal) := sorry
+theorem mathoverflow_347178 :
+    (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f),
+        (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) ∧
+        (⨆ x, (f x : EReal)) = ⨆ x, (f (x + gradient f x) : EReal))
+      ↔ answer(sorry) :=
+  sorry
 
 @[category research open]
-theorem mathoverflow_347178.variants.bounded_iff {n : ℕ} (hn : 2 ≤ n)
-    (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f) :
-    (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) := sorry
+theorem mathoverflow_347178.variants.bounded_iff :
+    (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f),
+        (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))))
+      ↔ answer(sorry)  := sorry
 
 @[category research open]
-theorem mathoverflow_347178.variants.bounded {n : ℕ} (hn : 2 ≤ n)
-    (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f)
-    (h : BddAbove (range f)) (h' : BddAbove (range (fun x ↦ f (x + gradient f x)))) :
-    (⨆ x, f x) = ⨆ x, f (x + gradient f x) := sorry
+theorem mathoverflow_347178.variants.bounded_only :
+    (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f)
+        (h : BddAbove (range f)) (h' : BddAbove (range (fun x ↦ f (x + gradient f x)))),
+        (⨆ x, f x) = ⨆ x, f (x + gradient f x))
+      ↔ answer(sorry) :=
+  sorry

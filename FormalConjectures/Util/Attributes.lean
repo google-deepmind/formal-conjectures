@@ -37,6 +37,9 @@ The values of this attribute are
 - `@[category graduate]` : a graduate level math problem.
 - `@[category research open]` : an open reseach level math problem.
 - `@[category research solved]` : a solved reseach level math problem.
+  The criterion for being solved is that there exists an informal solution
+  that is widely accepted by experts in the area. In particular, this
+  does *not* require a formal solution to exist.
 - `@[category test]` : a statement that serves as a sanity check (e.g. for a new definition).
 - `@[category API]` : a statement that constructs basic theory around a new definition
 
@@ -92,7 +95,7 @@ inductive ProblemStatus
   /-- Indicates that a mathematical problem is still open. -/
   | open
   /-- Indicates that a mathematical problem is already solved,
-  i.e. there is a pusblished (informal) proof. -/
+  i.e., there is a published (informal) proof that is widely accepted by experts. -/
   | solved
   deriving Inhabited, BEq, Hashable, ToExpr
 

@@ -30,17 +30,6 @@ jobs:
           ./elan-init -y --default-toolchain none
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
-      - name: Restore ~/.cache/mathlib
-        uses: actions/cache/restore@v3
-        with:
-          path: ~/.cache/mathlib
-          key: oleans-${{ hashFiles('lake-manifest.json') }}
-
-      - name: Get olean cache
-        run: |
-          lake exe cache unpack
-          lake exe cache get
-      
       - name: Generate All.lean
         run: |
           lake exe mk_all --lib FormalConjectures || true
@@ -48,6 +37,20 @@ jobs:
           # stats. This stop-gap should be removed after doing the TODO at
           # `fetchStatsMarkdown` in `docbuild/overwrite-index.lean`.
           grep -v "FormalConjectures\.Util\." FormalConjectures.lean > FormalConjectures/All.lean
+
+      - name: Restore ~/.cache/mathlib
+        uses: actions/cache/restore@v3
+        with:
+          path: ~/.cache/mathlib
+          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          restore-keys: |
+            oleans-${{ hashFiles('lake-manifest.json') }}-
+            oleans-
+
+      - name: Get olean cache
+        run: |
+          lake exe cache unpack
+          lake exe cache get
 
       - name: Build project
         run: |
@@ -62,7 +65,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: ~/.cache
-          key: oleans-${{ hashFiles('lake-manifest.json') }}
+          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
       - name: Prepare documentation
         run: |
@@ -74,8 +77,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: docbuild/.lake/build/doc
-          key: MathlibDoc-${{ hashFiles('lake-manifest.json') }}
-          restore-keys: MathlibDoc-
+          key: MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          restore-keys: |
+            MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-
+            MathlibDoc-
 
       - name: Build documentation
         run: |

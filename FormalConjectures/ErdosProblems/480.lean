@@ -21,7 +21,6 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/480](https://www.erdosproblems.com/480)
 -/
-
 /--
 Let $x_1,x_2,...∈[0, 1]$ be an infinite sequence. Is it true that there are infinitely many $m, n$
 such that $|x_{m+n} - x_n| ≤ \frac 1 {\sqrt 5 n}$?

@@ -35,10 +35,10 @@ def IsZeroOne (P : ℝ[X]) := P.coeffs ⊆ {1}
 
 -- TODO(lezeau): add probabilistic reformulation and statement
 -- that coefficients must at least lie in `[0, 1]`
- /--
- Let $P(x), Q(x) ∈ ℝ[x]$ be two monic polynomials with non-negative coefficients.
- If $R(x) = P(x)Q(x)$ is a $0,1$ polynomial (coefficients only from $\{0,1\}$), then $P(x)$ and $Q(x)$
- are also $0, 1$ polynomials.
+/--
+Let $P(x), Q(x) ∈ ℝ[x]$ be two monic polynomials with non-negative coefficients.
+If $R(x) = P(x)Q(x)$ is a $0,1$ polynomial (coefficients only from $\{0,1\}$), then $P(x)$ and $Q(x)$
+are also $0, 1$ polynomials.
 -/
 @[category research open, AMS 12]
 theorem mathoverflow_339137 (P Q R : ℝ[X]) (hP: P.Monic) (hQ : Q.Monic)

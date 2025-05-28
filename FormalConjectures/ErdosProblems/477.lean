@@ -21,7 +21,6 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/477](https://www.erdosproblems.com/477)
 -/
-
 /--
 Let $f: \mathbb{Z} \rightarrow \mathbb{Z}$ be a polynomial of degree at least $2$.
 

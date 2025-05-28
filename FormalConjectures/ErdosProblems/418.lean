@@ -20,6 +20,8 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 418
 
 *Reference:* [erdosproblems.com/418](https://www.erdosproblems.com/418)
+
+Reviewed by @b-mehta on 2025-05-27
 -/
 open scoped ArithmeticFunction
 
@@ -27,8 +29,7 @@ open scoped ArithmeticFunction
 Are there infinitely many integers not of the form $n - \phi(n)$?
 -/
 @[category research solved, AMS 11]
-theorem erdos_418 :
-    { (n - n.totient : ℕ) | n }ᶜ |>.Infinite :=
+theorem erdos_418 : { (n - n.totient : ℕ) | n }ᶜ.Infinite :=
   sorry
 
 /--
@@ -37,11 +38,9 @@ written as $n - \phi(n)$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.conditional
-    (goldbach : ∀ (n : ℕ) (_ : 2 < n) (_ : Even n),
-      ∃ p q, Prime p ∧ Prime q ∧ n = p + q)
-    (m : ℕ)
-    (h : Odd m) :
-    ∃ n, m + n.totient = n :=
+    (goldbach : ∀ (n : ℕ), 2 < n → Even n → ∃ p q, Prime p ∧ Prime q ∧ n = p + q)
+    (m : ℕ) (h : Odd m) :
+    ∃ n, m + n.totient = n := by
   sorry
 
 /--
@@ -52,7 +51,7 @@ $\sigma(n) - n$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.sigma :
-    ∃ (S : Set ℕ) (hS : ∀ α, S.HasDensity α → 0 < α),
+    ∃ (S : Set ℕ) (hS : S.HasPosDensity),
       S ⊆ { (σ 1 n - n : ℕ) | n }ᶜ :=
   sorry
 
@@ -74,6 +73,6 @@ not of the form $n - \phi(n)$.
 -/
 @[category research open, AMS 11]
 theorem erdos_418.variants.density :
-    ∃ (S : Set ℕ) (hS : ∀ α, S.HasDensity α → 0 < α),
+    ∃ (S : Set ℕ) (hS : S.HasPosDensity),
       S ⊆ { (n - n.totient : ℕ) | n }ᶜ :=
   sorry

@@ -30,6 +30,5 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_826 : ∃ C > (0 : ℝ),
-    { n | ∀ k ≥ 1, σ 0 (n + k) ≤ C * k }.Infinite :=
+theorem erdos_826 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, σ 0 (n + k) ≤ C * k }.Infinite) ↔ answer(sorry) :=
   sorry

@@ -33,19 +33,33 @@ have the same prime factors?
 theorem erdos_931 (k₁ k₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂) :
     { (n₁, n₂) | n₁ + k₁ ≤ n₂ ∧
       (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
-        (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite :=
+      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite :=
   sorry
 
 /--
 Erdős thought perhaps if the two products have the same factors then
 $n_2 > 2(n_1 + k_1)$.
+It is an open question whether this is true when allowing a finite number of counterexamples.
 -/
 @[category research open, AMS 11]
-theorem erdos_931.variants.necessary_cond (k₁ k₂ n₁ n₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂)
-    (h₃ : n₁ + k₁ ≤ n₂) (h₄ : (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
-      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors) :
-    2 * (n₁ + k₁) < n₂ :=
+theorem erdos_931.variants.additional_condition (k₁ k₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂):
+    {(n₁, n₂) | n₁ + k₁ ≤ n₂ ∧ n₂ ≤ 2 * (n₁ + k₁) ∧
+      (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
+      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Finite :=
   sorry
+
+/--
+In fact there exist counterexamples, like this one found by AlphaProof.
+-/
+@[category research solved, AMS 11]
+theorem erdos_931.variants.additional_condition_nonempty : ∃ (k₁ k₂ : ℕ), ∃ (_h₁ : k₂ ≤ k₁), ∃ (_h₂ : 3 ≤ k₂),
+  {(n₁, n₂) | n₁ + k₁ ≤ n₂ ∧ n₂ ≤ 2 * (n₁ + k₁) ∧
+      (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
+      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Nonempty := by
+  use 10, 3, (by norm_num), (by norm_num)
+  use (0, 13)
+  norm_num [Finset.prod_Icc_succ_top]
+  norm_num +decide [Nat.primeFactors, Nat.primeFactorsList]
 
 /--
 Erdős was unable to prove that if the two products have the same factors

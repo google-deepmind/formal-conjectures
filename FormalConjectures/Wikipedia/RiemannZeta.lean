@@ -52,10 +52,10 @@ theorem irrational_eleven : ∃ x, Irrational x ∧ riemannZeta 11 = x :=
   sorry
 
 /--
-$\zeta(2n + 1)$ is irrational for any $n\in\mathbb{N}$.
+$\zeta(2n + 1)$ is irrational for any $n\in\mathbb{N}^{+}$.
 -/
 @[category research open, AMS 11, AMS 33]
-theorem irrational_odd (n : ℕ) : ∃ x, Irrational x ∧ riemannZeta (2 * n + 1) = x :=
+theorem irrational_odd (n : ℕ) (hn : 0 < n) : ∃ x, Irrational x ∧ riemannZeta (2 * n + 1) = x :=
   sorry
 
 /--
