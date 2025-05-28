@@ -54,7 +54,7 @@ There are various ways of contributing to this repository:
         [the Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book), ...)
     *   ...
 
-    We are also interested in the formalized statement of solved variants of
+    We are also interested in the formalized statements of solved variants of
     open conjectures and solved statements from dedicated problem lists.
     While the main goal is to collect conjecture statements, we appreciate the
     inclusion of very short proofs for solved items or counterexamples, 
@@ -69,7 +69,7 @@ There are various ways of contributing to this repository:
     pointers to references in already existing files, or adding additional
     relevant `AMS` subject attributes to statements.
 
-4.  **Fixing misformalisations** PRs fixing incorrect formalisations and issues
+4.  **Fixing misformalisations.** PRs fixing incorrect formalisations and issues
     flagging problems are encouraged.
 
 ### How to Contribute
