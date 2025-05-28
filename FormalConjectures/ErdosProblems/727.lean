@@ -49,7 +49,7 @@ Let $k = 1$. Does $((n+k)!)^2∣(2n)!$ for infinitely many $n$?
 @[category research solved, AMS 11]
 theorem erdos_727_variants.k_1 :
     let k := 1
-    Set.Infinite {n : ℕ | (n + k)! ^ 2 ∣ (2 * n)!} :=
+    Set.Infinite {n : ℕ | (n + k)! ^ 2 ∣ (2 * n)!} ↔ answer(True) :=
   sorry
 
 /--
