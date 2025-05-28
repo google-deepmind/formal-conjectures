@@ -40,7 +40,9 @@ example : radical 17 = 17 := by
 
 @[category test]
 example : radical 12 = 6 := by
-  rw [radical, show 12 = 2^2 * 3 by rfl, Nat.primeFactors_mul (by norm_num) (by norm_num), Nat.primeFactors_pow _ (by norm_num), Nat.Prime.primeFactors (by norm_num), Nat.Prime.primeFactors (by norm_num)]
+  rw [radical, show 12 = 2^2 * 3 by rfl, Nat.primeFactors_mul (by norm_num)
+    (by norm_num), Nat.primeFactors_pow _ (by norm_num),
+    Nat.Prime.primeFactors (by norm_num), Nat.Prime.primeFactors (by norm_num)]
   rfl
 
 /--

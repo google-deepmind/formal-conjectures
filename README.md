@@ -74,7 +74,7 @@ There are various ways of contributing to this repository:
 
 ### How to Contribute
 
-Please see [CONTRIBUTING](./CONTRIBUTING) first.
+Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
 
 1.  Open an issue on GitHub specifying what you plan to contribute (and assign
     yourself!)
@@ -189,7 +189,7 @@ elaborator allows us to formulate the problem without deciding for an answer.
 ```lean
 @[category research open]
 theorem HadwigerNelsonProblem :
-    IsLeast {n : ℕ | ExistsColoring n} answer(sorry) :=
+    IsLeast {n : ℕ | ExistsColoring n} answer(sorry) := by
   sorry
 ```
 

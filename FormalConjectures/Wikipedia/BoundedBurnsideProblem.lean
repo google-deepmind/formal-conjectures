@@ -27,5 +27,5 @@ $g^n = 1$. Is $G$ necessarily finite?
 -/
 @[category research open, AMS 20]
 theorem bounded_burnside_problem (G : Type) [Group G] (fin_gen : Group.FG G)
-    (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1) : Finite G := sorry
-
+    (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1) : Finite G := by
+  sorry

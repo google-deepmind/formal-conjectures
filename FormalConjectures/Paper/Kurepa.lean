@@ -42,29 +42,35 @@ in [Unsolved Problems in Number Theory](https://doi.org/10.1007/978-0-387-26677-
 by *Richard K. Guy*
 -/
 @[category research open, AMS 11]
-theorem kurepa_conjecture (n : ℕ) (h_n : 2 < n) : (!n : ℕ) % n ≠ 0 := sorry
+theorem kurepa_conjecture (n : ℕ) (h_n : 2 < n) : (!n : ℕ) % n ≠ 0 := by
+  sorry
 
 /--
 This statement can be reduced to the prime case only.
 -/
 @[category research open, AMS 11]
-theorem kurepa_conjecture.variant.prime (p : ℕ) (h_p : 2 < p) : p.Prime → (!p : ℕ) % p ≠ 0 := sorry
+theorem kurepa_conjecture.variant.prime (p : ℕ) (h_p : 2 < p) :
+    p.Prime → (!p : ℕ) % p ≠ 0 := by
+  sorry
 
 -- TODO(firsching): show equivalence
 @[category undergraduate]
 theorem kurepa_conjecture.prime_reduction  : (∀ n, ∀ h_n : 2 < n, (!n : ℕ) % n ≠ 0)
-  ↔ (∀ p, ∀ h_p : 2 < p, p.Prime → (!p : ℕ) % p ≠ 0) := sorry
+    ↔ (∀ p, ∀ h_p : 2 < p, p.Prime → (!p : ℕ) % p ≠ 0) := by
+  sorry
 
 /--
 An equivalent formulation in terms of the gcd of $n!$ and $!n$.
 -/
 @[category research open, AMS 11]
-theorem kurepa_conjecture.variant.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 := sorry
+theorem kurepa_conjecture.variant.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 := by
+  sorry
 
 -- TODO(firsching): show equivalence
 @[category undergraduate]
 theorem kurepa_conjecture.gcd_reduction : (∀ n, ∀ h_n : 2 < n, (!n : ℕ) % n ≠ 0)
-  ↔ (∀ n,  2 < n → (n !).gcd (! n) = 2) := sorry
+    ↔ (∀ n,  2 < n → (n !).gcd (! n) = 2) := by
+  sorry
 
 /--
 Sanity check: for small values we can just compute that the conjecture is true
