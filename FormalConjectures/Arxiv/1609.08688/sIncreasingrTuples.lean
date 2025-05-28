@@ -149,24 +149,26 @@ example : maximalLength 1 = 1 := by
   exact ⟨1, ⟨[fun _ => 1], by simp⟩, one_ne_zero⟩
 
 @[category test, AMS 5]
-example : maximalLength 4 = 8 := sorry
+example : maximalLength 4 = 8 := by
+  sorry
 
 /-- In a set of more than $n^2$ triples with coordinates from $\{1, ..., n\}$ we must
 have two triples that are equal in their first two coordinates. -/
 @[category API, AMS 5]
 lemma exists_pair_of_mem_Icc {s : List (Fin 3 → ℕ)} {n : ℕ} (hn : 2 ≤ n)
     (hs₁ : ∀ a ∈ s, Set.range a ⊆ Set.Icc 1 n) (hs₂ : s.length > n ^ 2) :
-    ∃ (i j : Fin s.length), i ≠ j ∧ s[i] 0 = s[j] 0 ∧ s[i] 1 = s[j] 1 :=
+    ∃ (i j : Fin s.length), i ≠ j ∧ s[i] 0 = s[j] 0 ∧ s[i] 1 = s[j] 1 := by
   sorry
 
 /-- For all $n$ we have $F(n) \leq n^2$. -/
 @[category research solved, AMS 5]
-theorem maximalLength_le (n : ℕ) : F n ≤ n ^ 2 := sorry
+theorem maximalLength_le (n : ℕ) : F n ≤ n ^ 2 := by
+  sorry
 
 /-- Moreover, whenever $n$ is a perfect square we have $F(n) \geq n^{3/2}$. -/
 @[category research solved, AMS 5]
 theorem maximalLength_ge_of_isSquare {n : ℕ} (h : IsSquare n) :
-    n.sqrt ^ 3 ≤ F n :=
+    n.sqrt ^ 3 ≤ F n := by
   sorry
 
 /-- Two triples $t_1$ and $t_2$ are $2$-comparable if one of them is $2$-less
@@ -183,7 +185,7 @@ open Filter in
 @[category research solved, AMS 5]
 theorem maximalLength_le_isBigO : ∃ Ω : ℕ → ℝ,
     (fun (n : ℕ) => (Real.iteratedLog n : ℝ)) =O[atTop] Ω ∧
-      ∀ n, F n ≤ n ^ 2 / Real.exp (Ω n) :=
+      ∀ n, F n ≤ n ^ 2 / Real.exp (Ω n) := by
   sorry
 
 /-- We define the product of two triples $(a, b, c)$ and $(d, e, f)$ by
@@ -223,6 +225,7 @@ theorem maximalLength_pow {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) 
 
 /-- $F(n) \leq n^{3/2}$. -/
 @[category research open, AMS 5]
-theorem maximalLength_le_strong (n : ℕ) : F n ≤ Real.sqrt n ^ 3 := sorry
+theorem maximalLength_le_strong (n : ℕ) : F n ≤ Real.sqrt n ^ 3 := by
+  sorry
 
 end Arxiv.id160908688
