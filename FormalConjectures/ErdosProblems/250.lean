@@ -36,7 +36,6 @@ The answer is yes, as shown by Nesterenko [Ne96].
 Mat. Sb. 187 *9* (1996), 1319--1348.
 -/
 @[category research solved, AMS 11]
-theorem erdos_250 (x : ℝ)
-    (h : HasSum (fun (n : ℕ) => σ 1 n / (2 : ℝ) ^ n) x) :
-    Irrational x ↔ answer(True):=
+theorem erdos_250  : (∀ x,  HasSum (fun (n : ℕ) => σ 1 n / (2 : ℝ) ^ n) x → Irrational x) ↔
+    answer(True):=
   sorry

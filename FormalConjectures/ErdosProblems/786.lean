@@ -40,7 +40,7 @@ such that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold whe
 $r = s$?
 -/
 @[category research open, AMS 11]
-theorem erdos_786.parts.i : (∀ᵉ (ε > 0), ε ≤ 1 →
+theorem erdos_786.parts.i : (∀ ε > 0, ε ≤ 1 →
     ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet) ↔ answer(sorry) :=
   sorry
 

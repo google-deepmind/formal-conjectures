@@ -34,17 +34,14 @@ Solved in the affirmative by Barth and Schneider [BaSc72].
 [BaSc72] Barth, K. F. and Schneider, W. J., _On a problem of Erdős concerning the zeros of_
 _the derivatives of an entire function_. Proc. Amer. Math. Soc. (1972), 229--232.-/
 @[category research solved, AMS 30]
-theorem erdos_229
-    (S : ℕ → Set ℂ)
-    (h : ∀ (n), derivedSet (S n) = ∅) :
+theorem erdos_229 :
     letI := Polynomial.algebraPi ℂ ℂ ℂ
-    (∃ (f : ℂ → ℂ), Transcendental (Polynomial ℂ) f ∧ Differentiable ℂ f ∧ ∀ᵉ (n ≥ 1),
-      ∃ (k : ℕ → ℕ), ∀ᵉ (z ∈ S n), iteratedDeriv (k n) f z = 0) ↔ answer(True) :=
+    (∀ (S : ℕ → Set ℂ), (∀ (n), derivedSet (S n) = ∅) →
+    ∃ (f : ℂ → ℂ), Transcendental (Polynomial ℂ) f ∧ Differentiable ℂ f ∧ ∀ n ≥ 1,
+      ∃ k, ∀ᵉ (z ∈ S n), iteratedDeriv k f z = 0) ↔ answer(True) :=
   sorry
 
 /--
-Solved in the affirmative by Barth and Schneider [BaSc72], who proved the following.
-
 Let $\{S_k\}$ be any sequence of sets in the complex plane, each of which has no finite
 limit point. Then there exists a sequence $\{n_k\}$ of positive integers and a
 transcendental entire function $f(z)$ such that $f^{(n_k)}(z) = 0$ if $z \in S_k$.
