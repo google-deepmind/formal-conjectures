@@ -19,9 +19,8 @@ import FormalConjectures.Util.ProblemImports
 open Nat
 
 /-!
-# Erdős Problem 245
-
-*Reference:* [erdosproblems.com/245](https://www.erdosproblems.com/245)
+# Erdős Problem 499
+*Reference:* [erdosproblems.com/499](https://www.erdosproblems.com/499)
 -/
 
 /--
@@ -62,6 +61,9 @@ exists a permutation $σ \in S_n$ with $M_{i, σ(i)} ≠ 0$ and such that
 $$
 \prod_{1 \leq i \leq n} M_{i, σ(i)} \geq 1
 $$
+Proved by Marcus and Ree [MaRe59].
+
+[MaRe59] Marcus, M. and Ree, R., Diagonals of doubly stochastic matrices. Quart. J. Math. Oxford Ser. (2) (1959), 296-302.
 -/
 @[category research solved, AMS 15]
 lemma erdos_499.variants.one_le :
