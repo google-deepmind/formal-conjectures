@@ -25,12 +25,15 @@ import FormalConjectures.Util.ProblemImports
 $\sum_{n \in A} \frac{1}{n} < 2$ then there is a partition $A=A_1 \sqcup A_2$
 such that $\sum_{n \in A_i} \frac{1}{n} < 1$ for $i=1,2$?
 
-Solution: False. -/
+This is not true in general, as shown by Sándor [Sa97].
+
+[Sa97] S\'{A}ndor, Csaba, _On a problem of Erdős_. J. Number Theory (1997), 203-210.
+-/
 @[category research solved, AMS 5, AMS 11]
-theorem erdos_316 : ∃ A : Finset ℕ, 0 ∉ A ∧ 1 ∉ A ∧
-  ∑ n ∈ A, (1 / n : ℚ) < 2 ∧ ∀ (A₁ A₂ : Finset ℕ),
-    Disjoint A₁ A₂ → A = A₁ ∪ A₂ →
-    1 ≤ ∑ n ∈ A₁, (1 / n : ℚ) ∨ 1 ≤ ∑ n ∈ A₂, (1 / n : ℚ) := by
+theorem erdos_316 : (∀ A : Finset ℕ, 0 ∉ A → 1 ∉ A →
+    ∑ n ∈ A, (1 / n : ℚ) < 2 → ∃ (A₁ A₂ : Finset ℕ),
+      Disjoint A₁ A₂ ∧ A = A₁ ∪ A₂ ∧
+      (1 ≤ ∑ n ∈ A₁, (1 / n : ℚ) ∨ 1 ≤ ∑ n ∈ A₂, (1 / n : ℚ))) ↔ answer(False) := by
   sorry
 
 /-- It is not true if `A` is a multiset (easier) -/

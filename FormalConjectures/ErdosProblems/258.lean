@@ -35,7 +35,7 @@ theorem erdos_258
 
 
 /--
-Let $a_n → ∞$ be a monotone sequence of non-zero natural numbers.
+Let $a_n \to \infty$ be a monotone sequence of non-zero natural numbers.
 Is $\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of divisors of $n$?
 
 Solution: True (proved by Erdős and Straus, see Erdős Problems website).
@@ -44,7 +44,7 @@ Solution: True (proved by Erdős and Straus, see Erdős Problems website).
 theorem erdos_258.variants.Monotone
     (a : ℕ → ℤ) (ha : ∀ n, a n ≠ 0) (ha : Monotone a)
     (ha : Filter.Tendsto a Filter.atTop Filter.atTop) :
-    Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i)) := by
+    Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i)) ↔ answer(True) := by
   sorry
 
 
@@ -55,5 +55,5 @@ Solution: True (proved by Erdős, see Erdős Problems website)
 -/
 @[category research solved, AMS 11]
 theorem erdos_258.variants.Constant (t : ℕ) (ht : 2 ≤ t):
-    Irrational (∑' (n : ℕ), ((n+1).divisors.card / t^n)) := by
+    Irrational (∑' (n : ℕ), ((n+1).divisors.card / t^n)) ↔ answer(True) := by
   sorry
