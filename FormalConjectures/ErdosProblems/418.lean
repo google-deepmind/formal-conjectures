@@ -35,6 +35,9 @@ theorem erdos_418 : { (n - n.totient : ℕ) | n }ᶜ.Infinite :=
 /--
 It follows from a slight strengthening of the Goldbach conjecture that every odd number can be
 written as $n - \phi(n)$.
+In particular, we assume that every even number greater than 6 can be written as the sum of two
+*distinct* primes, in contrast to the usual Goldbach conjecture that every even number greater than
+2 can be written as the sum of two primes.
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.conditional
