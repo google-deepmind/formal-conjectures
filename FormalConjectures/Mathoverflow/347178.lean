@@ -32,7 +32,7 @@ $$\sup_{x\in {\bf R}^n}f(x)=\sup_{x\in {\bf R}^n}f(x+\nabla f(x))$$?
 theorem mathoverflow_347178 :
     (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f),
         (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) ∧
-        (⨆ x, f x) = ⨆ x, f (x + gradient f x))
+        (⨆ x, (f x : EReal)) = ⨆ x, (f (x + gradient f x) : EReal))
       ↔ answer(sorry) := by
   sorry
 
