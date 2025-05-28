@@ -30,10 +30,10 @@ $$
 have the same prime factors?
 -/
 @[category research open, AMS 11]
-theorem erdos_931 (k₁ k₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂) :
+theorem erdos_931 : (∀ᵉ (k₁ : ℕ) (k₂ ≥ 3), k₂ ≤ k₁ →
     { (n₁, n₂) | n₁ + k₁ ≤ n₂ ∧
       (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
-      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite ↔ answer(sorry) :=
+      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite) ↔ answer(sorry) :=
   sorry
 
 /--
@@ -42,10 +42,10 @@ $n_2 > 2(n_1 + k_1)$.
 It is an open question whether this is true when allowing a finite number of counterexamples.
 -/
 @[category research open, AMS 11]
-theorem erdos_931.variants.additional_condition (k₁ k₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂):
+theorem erdos_931.variants.additional_condition : (∀ᵉ (k₁ : ℕ) (k₂ ≥ 3), k₂ ≤ k₁ →
     {(n₁, n₂) | n₁ + k₁ ≤ n₂ ∧ n₂ ≤ 2 * (n₁ + k₁) ∧
       (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
-      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Finite ↔ answer(sorry) :=
+      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Finite) ↔ answer(sorry) :=
   sorry
 
 /--
