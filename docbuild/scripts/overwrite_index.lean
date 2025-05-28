@@ -53,10 +53,10 @@ def getSubjectStatsMarkdown : CoreM String := do
 
   for (subject, count) in sortedCounts do
     if count > 0 then
-      let desc ←  subject.getDesc
-      let num := subject.toCtorIdx;
-      -- TODO(firsching): zero-pad the AMS number here
-      markdownTable := markdownTable.append s!"| {count} | {num} |{desc} |\n"
+      let desc ← subject.getDesc
+      let some num := subject.toNat? | throwError "subject not recognised"
+      let numStr := (toString num).leftpad 2 '0';
+      markdownTable := markdownTable.append s!"| {count} | {numStr} |{desc} |\n"
   return markdownTable
 
 -- TODO(firsching): instead of re-inventing the wheel here use some html parsing library?

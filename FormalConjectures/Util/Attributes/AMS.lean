@@ -175,6 +175,10 @@ def AMS.getDesc (a : AMS) : CoreM String := do
   let .some doc := ← Lean.findDocString? (← getEnv) n | throwError m!"{.ofConstName n} is missing a docstring"
   return doc.trim
 
+def AMS.toNat? (a : AMS) : Option Nat := do
+  let .const (.str _ m) [] := Lean.toExpr a | none
+  m.toNat?
+
 unsafe def numToAMSSubjects (n : Nat) : MetaM AMS := do
   let nm ← numToAMSName n
   Meta.evalExpr AMS q(AMS) (.const nm [])
