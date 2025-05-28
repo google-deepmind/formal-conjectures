@@ -89,6 +89,7 @@ jobs:
 
       - name: Inject stats into index.html
         run: |
+          set -o pipefail
           cd docbuild
           lake exe overwrite_index ./.lake/build/doc/index.html | tee -a "$GITHUB_STEP_SUMMARY"
 
