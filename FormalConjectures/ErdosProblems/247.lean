@@ -39,7 +39,7 @@ transcendental?
 theorem erdos_247 (n : ℕ → ℕ)
     (hn : StrictMono n)
     (h : atTop.limsup (fun k => (n k / k.succ : EReal)) = ⊤) :
-    Transcendental ℚ (∑' k, (1 : ℝ) / 2 ^ n k) :=
+    Transcendental ℚ (∑' k, (1 : ℝ) / 2 ^ n k) ↔ answer(sorry) :=
   sorry
 
 /--

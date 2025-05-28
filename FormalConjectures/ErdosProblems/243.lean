@@ -27,7 +27,8 @@ open Filter
 open scoped Topology
 
 /--
-Let $a_1 < a_2 < \dots$ be a sequence of integers such that $\lim_{n\to\infty} \frac{a_n}{a_{n-1}^2} = 1$ and $\sum \frac{1}{a_n} \in \mathbb{Q}$.
+Let $a_1 < a_2 < \dots$ be a sequence of integers such that
+$\lim_{n\to\infty} \frac{a_n}{a_{n-1}^2} = 1$ and $\sum \frac{1}{a_n} \in \mathbb{Q}$.
 
 Then, for all sufficiently large $n \ge 1$, $a_n = a_{n-1}^2 - a_{n-1} + 1$.
 -/

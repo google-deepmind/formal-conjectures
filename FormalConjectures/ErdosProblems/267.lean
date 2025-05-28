@@ -30,7 +30,7 @@ $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 theorem erdos_267 (n : ℕ → ℕ)
     (hn : StrictMono n) (c : ℚ) (hc : 1 < c)
     (hnc : ∀ k, c ≤ n (k+1) / n k) :
-    Irrational <| ∑' k, 1 / (Nat.fib <| n k) :=
+    Irrational (∑' k, 1 / (Nat.fib <| n k) ) ↔ answer(sorry) :=
   sorry
 
 /--
@@ -42,7 +42,7 @@ $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 theorem erdos_267.variants.generalisation_ratio_limit_to_infinity (n : ℕ → ℕ)
     (hn : StrictMono n)
     (hnc : Filter.Tendsto (fun k => (n (k+1) / k.succ : ℝ)) Filter.atTop Filter.atTop) :
-    Irrational <| ∑' k, 1 / (Nat.fib <| n k) :=
+    Irrational (∑' k, 1 / (Nat.fib <| n k)) ↔ answer(sorry) :=
   sorry
 
 /--

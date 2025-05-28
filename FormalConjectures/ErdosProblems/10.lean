@@ -41,7 +41,7 @@ Is there some $k$ such that every integer is the sum of a prime and at most $k$
 powers of $2$?
 -/
 @[category research open, AMS 5,  AMS 11]
-theorem erdos_10 : ∃ k, sumPrimeAndTwoPows k = Set.univ \ {0, 1} := by
+theorem erdos_10 : (∃ k, sumPrimeAndTwoPows k = Set.univ \ {0, 1}) ↔ answer(sorry) := by
   sorry
 
 /--

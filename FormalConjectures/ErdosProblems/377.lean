@@ -40,8 +40,8 @@ $$
 for all $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_377 : ∃ C > (0 : ℝ),
-    ∀ (n : ℕ), sumInvPrimesNotDvdCentralBinom n ≤ C :=
+theorem erdos_377 : (∃ C > (0 : ℝ), ∀ (n : ℕ), sumInvPrimesNotDvdCentralBinom n ≤ C) ↔
+    answer(sorry) :=
   sorry
 
 /--

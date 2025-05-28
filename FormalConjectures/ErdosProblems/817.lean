@@ -76,7 +76,7 @@ $$ -/
 -- Formalisation note : only formalising the "In particular" part
 @[category research open, AMS 5, AMS 11]
 theorem erdos_817 :
-    (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) :=
+    ((fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ)) ↔ answer(sorry) :=
   sorry
 
 /-- A problem of Erdős and Sárközy who proved

@@ -77,8 +77,8 @@ be covered by a set of closed discs the sum of whose radii is $≤ 2$?
 -/
 @[category research open, AMS 30]
 theorem erdos_509
-    (f : ℂ[X]) (hf : f.Monic) (hf' : f.natDegree ≠ 0) : ∃ (ι : Type),
-    Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι) := by
+    (f : ℂ[X]) (hf : f.Monic) (hf' : f.natDegree ≠ 0) : (∃ (ι : Type),
+    Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι)) ↔ answer(sorry) := by
   sorry
 
 /--

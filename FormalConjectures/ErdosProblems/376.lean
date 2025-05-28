@@ -26,8 +26,7 @@ Are there infinitely many $n$ such that ${2n\choose n}$ is
 coprime to $105$?
 -/
 @[category research open, AMS 11]
-theorem erdos_376 :
-    { n | ((2 * n).choose n).Coprime 105 }.Infinite :=
+theorem erdos_376 : { n | ((2 * n).choose n).Coprime 105 }.Infinite ↔ answer(sorry) :=
   sorry
 
 /--

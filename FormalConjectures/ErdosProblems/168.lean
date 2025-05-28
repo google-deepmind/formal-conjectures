@@ -68,19 +68,19 @@ lemma F_eq_card (N : ℕ) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 N)
     F N = S.card := by
   sorry
 
-/--What is the limit `F(N)/N` as `N → ∞`? -/
+/--What is the limit $F(N)/N$ as $N \to \infty$? -/
 @[category research open, AMS 11]
 theorem erdos_168.parts.i :
     Filter.Tendsto (fun N => (F N / N : ℝ)) Filter.atTop (𝓝 answer(sorry)) := by
   sorry
 
-/--Is the limit `F(N)/N` as `N → ∞` irrational? -/
+/--Is the limit $F(N)/N$ as $N \to \infty$ irrational? -/
 @[category research open, AMS 5, AMS 11]
 theorem erdos_168.parts.ii :
-    Irrational <| Filter.atTop.limsup (fun N => (F N / N : ℝ)) := by
+    Irrational (Filter.atTop.limsup (fun N => (F N / N : ℝ))) ↔ answer(sorry):= by
   sorry
 
-/--The limit `F(N)/N` as `N → ∞` exists.
+/--The limit $F(N)/N$ as $N \to \infty$ exists.
 (proved by Graham, Spencer, and Witsenhausen)-/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_168.variants.limit_exists :

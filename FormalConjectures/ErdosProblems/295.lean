@@ -48,7 +48,7 @@ Is it true that $\lim_{N→∞} k(N) - (e - 1)N = ∞$?
 -/
 @[category research open, AMS 5, AMS 11]
 theorem erdos_295 :
-    Filter.atTop.Tendsto (fun N => k N - (rexp 1 - 1)*N) Filter.atTop := by
+    Filter.atTop.Tendsto (fun N => k N - (rexp 1 - 1)*N) Filter.atTop ↔ answer(sorry) := by
   sorry
 
 /--

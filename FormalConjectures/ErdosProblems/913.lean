@@ -30,7 +30,8 @@ is the factorisation into distinct primes then all exponents $k_i$ are distinct?
 -/
 @[category research open, AMS 11]
 theorem erdos_913 :
-    { n | Set.InjOn (n * (n + 1)).factorization (n * (n + 1)).primeFactors }.Infinite :=
+    { n | Set.InjOn (n * (n + 1)).factorization (n * (n + 1)).primeFactors }.Infinite ↔
+    answer(sorry) :=
   sorry
 
 /--

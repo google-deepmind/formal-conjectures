@@ -45,7 +45,7 @@ exactly one solution, that is $\frac{f_{\max}(n)}{f_{\min}(n)} = 1$.
 -/
 @[category research open, AMS 11]
 theorem erdos_694.variants.carmichael :
-    ∃ n > 0, ∃! m, Nat.totient m = n :=
+    (∃ n > 0, ∃! m, Nat.totient m = n) ↔ answer(sorry) :=
   sorry
 
 /--

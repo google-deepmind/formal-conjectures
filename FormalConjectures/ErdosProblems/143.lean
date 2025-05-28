@@ -40,7 +40,7 @@ $$
 -/
 @[category research open, AMS 11]
 theorem erdos_143.parts.i (A : Set ℝ) (h : WellSeparatedSet A):
-    liminf (fun x => (A ∩ (Set.Icc 1 x)).ncard / x) atTop = 0 := by
+    liminf (fun x => (A ∩ (Set.Icc 1 x)).ncard / x) atTop = 0 ↔ answer(sorry) := by
   sorry
 
 /--

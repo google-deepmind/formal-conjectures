@@ -29,7 +29,7 @@ such that $|x_{m+n} - x_n| ≤ \frac 1 {\sqrt 5 n}$?
 @[category research solved, AMS 11]
 theorem erdos_480
     (x : ℕ → ℝ) (hx : ∀ n, x n ∈ Set.Icc 0 1) :
-    {(m, n) | (m) (n) (_ : m ≠ 0) (_ : |x (m + n) - x n| ≤ 1 / (√5 * n))}.Infinite := by
+    {(m, n) | (m) (n) (_ : m ≠ 0) (_ : |x (m + n) - x n| ≤ 1 / (√5 * n))}.Infinite ↔ answer(sorry) := by
   sorry
 
 /--
