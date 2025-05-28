@@ -14,8 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
--- Erdos Problems URL: https://www.erdosproblems.com/319
 import FormalConjectures.Util.ProblemImports
+
+/-!
+# Erdős Problem 319
+
+*Reference:* [erdosproblems.com/319](https://www.erdosproblems.com/319)
+-/
 
 open Filter
 

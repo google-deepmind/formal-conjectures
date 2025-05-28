@@ -17,6 +17,9 @@ would be useful for a few reasons. It could
 *   Help clarify the precise meaning of conjectures through formalization.
 *   Encourage the expansion of `mathlib` by highlighting needed definitions.
 
+It is our hope that this initiative will form the seed of a much richer dataset of 
+formalized conjectures.
+
 ### Note on Formalisation Accuracy
 
 Formalizing mathematical statements without proofs is inherently challenging.
@@ -51,7 +54,7 @@ There are various ways of contributing to this repository:
         [the Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book), ...)
     *   ...
 
-    We are also interested in the formalized statement of solved variants of
+    We are also interested in the formalized statements of solved variants of
     open conjectures and solved statements from dedicated problem lists.
     While the main goal is to collect conjecture statements, we appreciate the
     inclusion of very short proofs for solved items or counterexamples, 
@@ -66,7 +69,7 @@ There are various ways of contributing to this repository:
     pointers to references in already existing files, or adding additional
     relevant `AMS` subject attributes to statements.
 
-4.  **Fixing misformalisations** PRs fixing incorrect formalisations and issues
+4.  **Fixing misformalisations.** PRs fixing incorrect formalisations and issues
     flagging problems are encouraged.
 
 ### How to Contribute
@@ -219,6 +222,23 @@ meaningful solution of the problem is outside of the scope of this repository.
 5.  Every file should come with a reference to where the problem was sourced
     from, and be put in the corresponding directory of the repository, e.g. a
     problem sourced from wikipedia should live in `FormalConjectures/Wikipedia`.
+6.  When a problem is stated as a question in English, the preferred style is to 
+    use `answer(sorry)` in the following way:
+    ```lean
+    /-- English version: "Does P hold ?" -/
+    theorem myConjecture : P ↔ answer(sorry) := by
+      sorry
+    ```
+    If the problem has been solved, `answer(sorry)` should be replaced by 
+    `answer(True)` or `answer(False)` accordingly.
+    If the problem is not stated as a question, the following style is preferred:
+    ```lean
+    /-- English version: "P holds" -/
+    theorem myConjecture : P := by
+      sorry
+    ```
+    If the problem has been solved to the negative, then `P` should be replaced with
+    `¬ P`.
 
 ## Versioning
 

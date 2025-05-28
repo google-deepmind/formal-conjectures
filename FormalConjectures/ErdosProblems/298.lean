@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
--- Erdős Problems URL: https://www.erdosproblems.com/298
 import FormalConjectures.Util.ProblemImports
 
-/--
-Does every set $A \subseteq \mathbb{N}$ of positive density contain some finite $S \subset A$ such
-that $\sum_{n \in S} \frac{1}{n} = 1$?
+/-!
+# Erdős Problem 298
+
+*Reference:* [erdosproblems.com/298](https://www.erdosproblems.com/298)
+-/
+/--Does every set `A ⊆ N` of positive density contain some finite `S ⊂ A` such that `∑ n ∈ S, 1 / n = 1`?
 
 The answer is yes, proved by Bloom [Bl21].
 

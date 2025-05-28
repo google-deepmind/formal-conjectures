@@ -21,7 +21,6 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/247](https://www.erdosproblems.com/247)
 -/
-
 open Filter
 
 /--

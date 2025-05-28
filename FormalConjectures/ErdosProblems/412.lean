@@ -23,7 +23,6 @@ import FormalConjectures.Util.ProblemImports
 
 Reviewed by @b-mehta on 2025-05-27
 -/
-
 open ArithmeticFunction
 
 /--

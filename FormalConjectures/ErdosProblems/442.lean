@@ -21,7 +21,6 @@ open scoped Topology
 
 *Reference:* [erdosproblems.com/442](https://www.erdosproblems.com/442)
 -/
-
 open Filter
 
 noncomputable section
