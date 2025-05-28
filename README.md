@@ -237,7 +237,7 @@ meaningful solution of the problem is outside of the scope of this repository.
     theorem myConjecture : P := by
       sorry
     ```
-    If the problem has been solved to the negative, then `P` should be replace with
+    If the problem has been solved to the negative, then `P` should be replaced with
     `¬ P`.
 
 ## Versioning
