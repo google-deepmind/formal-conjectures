@@ -27,9 +27,14 @@ open scoped ArithmeticFunction
 
 /--
 Are there infinitely many integers not of the form $n - \phi(n)$?
+
+This is true, as shown by Browkin and Schinzel [BrSc95].
+
+[BrSc95] Browkin, J. and Schinzel, A., _On integers not of the form {$n-\phi(n)$}_.
+Colloq. Math. (1995), 55-58.
 -/
 @[category research solved, AMS 11]
-theorem erdos_418 : { (n - n.totient : ℕ) | n }ᶜ.Infinite :=
+theorem erdos_418 : { (n - n.totient : ℕ) | n }ᶜ.Infinite ↔ answer(True) :=
   sorry
 
 /--

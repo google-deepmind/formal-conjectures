@@ -78,16 +78,19 @@ $$
 $$
 as $x\to\infty$?
 
-Note: the informal and formal statements follow the solution paper
-https://arxiv.org/pdf/2407.04226
+Tao [Ta24b] has shown this is false.
+
+[Ta24b] Tao, T., _Dense sets of natural numbers with unusually large least common multiples_.
+arXiv:2407.04226 (2024).
+
+Note: the informal and formal statements follow the solution paper https://arxiv.org/pdf/2407.04226
 -/
 @[category research solved, AMS 11]
-theorem erdos_442
-    (A : Set ℕ)
-    (hA : Tendsto (fun (x : ℝ) =>
-      1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.bdd x, (1 : ℝ) / n) atTop atTop) :
+theorem erdos_442 : (∀ (A : Set ℕ),
+    Tendsto (fun (x : ℝ) =>
+      1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.bdd x, (1 : ℝ) / n) atTop atTop →
     Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 *
-      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop :=
+      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(True) :=
   sorry
 
 /--
