@@ -16,6 +16,11 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Erdős Problem 868
+
+*Reference:* [erdosproblems.com/868](https://www.erdosproblems.com/868)
+-/
 open Filter
 
 open scoped Pointwise
