@@ -28,5 +28,5 @@ Does there exist a composite number $n > 1$ such that Euler’s totient function
 -/
 @[category research open, AMS 11]
 theorem lehmer_totient :
-    (∃ n > 1, ¬Prime n ∧ Nat.totient n ∣ n - 1) ↔ answer(sorry) := by
+    (∃ n > 1, ¬Prime n ∧ φ n ∣ n - 1) ↔ answer(sorry) := by
   sorry
