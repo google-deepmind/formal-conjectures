@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,12 +26,14 @@ def Erdos672With (k l : ℕ) [NeZero k] : Prop :=
   ∀ᵉ (s : Fin k → ℕ), 0 < s 0 → (∃ d > 0, Nat.gcd (s 0) d = 1 ∧ ∀ i, s i = s 0 + i * d) →
   ¬ ∃ q, ∏ i, s i = q ^ l
 
-/-- Can the product of an arithmetic progression of positive integers of length ≥ 4 be a perfect power? -/
+/--
+Can the product of an arithmetic progression of positive integers of length ≥ 4 be a perfect power?
+-/
 @[category research open, AMS 11]
-theorem erdos_672
-    (k l : ℕ) (hk : 4 ≤ k) (hl : 1 < l)
-    (hk' : NeZero k := ⟨Nat.not_eq_zero_of_lt hk⟩) :
-    Erdos672With k l :=
+theorem erdos_672 :
+    (∀ᵉ (k) (l > 1), (hk : k ≥ 4) →
+    letI : NeZero k := ⟨Nat.not_eq_zero_of_lt hk⟩
+    Erdos672With k l) ↔ answer(sorry) :=
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/

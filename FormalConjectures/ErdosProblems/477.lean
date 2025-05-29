@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/477](https://www.erdosproblems.com/477)
 -/
-
 /--
 Let $f: \mathbb{Z} \rightarrow \mathbb{Z}$ be a polynomial of degree at least $2$.
 

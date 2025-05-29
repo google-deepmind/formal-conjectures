@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,8 +32,7 @@ theorem erdos_932 :
   sorry
 
 /--
-Erdős could show that the density of $r$ such that at least one such $n$
-exist is $0$.
+Erdős could show that the density of $r$ such that at least one such $n$ exist is $0$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_932.variants.one_le :

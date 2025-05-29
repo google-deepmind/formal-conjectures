@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -46,4 +46,5 @@ $B(c, d) ∈ ℕ$, i.e., the components of the crystals are unique.
 @[category research open, AMS 11, AMS 26]
 theorem crystals_components_unique (n a b c d : ℕ)
     (hab : IsCrystalWithComponents n a b) (hcd : IsCrystalWithComponents n c d) :
-  ({a, b} : Finset ℕ) = {c, d} := sorry
+    ({a, b} : Finset ℕ) = {c, d} := by
+  sorry

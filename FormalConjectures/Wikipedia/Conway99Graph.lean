@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -55,7 +55,8 @@ one of the two diagonals of a unique 4-cycle.
 The first condition is equivalent to being locally linear.
 -/
 @[category research open, AMS 5]
-theorem Conway99Graph : ∃ G : SimpleGraph (Fin 99), G.LocallyLinear ∧ NonEdgesAreDiagonals G :=
+theorem Conway99Graph : ∃ G : SimpleGraph (Fin 99),
+    G.LocallyLinear ∧ NonEdgesAreDiagonals G := by
   sorry
 
 /--
@@ -108,9 +109,10 @@ example : NonEdgesAreDiagonals Conway9 := by
 
 @[category API, AMS 5]
 lemma completeGraph_boxProd_completeGraph_cliqueSet :
-  ((completeGraph (Fin 3)) □ (completeGraph (Fin 3))).cliqueSet 3 =
-  {({(p, q)| p} : Finset (Fin 3 × Fin 3)) | q } ∪
-  {({(q, p)| p} : Finset (Fin 3 × Fin 3)) | q } := sorry
+    ((completeGraph (Fin 3)) □ (completeGraph (Fin 3))).cliqueSet 3 =
+    {({(p, q)| p} : Finset (Fin 3 × Fin 3)) | q } ∪
+    {({(q, p)| p} : Finset (Fin 3 × Fin 3)) | q } := by
+  sorry
 
 @[category test, AMS 5]
 example : Conway9.LocallyLinear := by

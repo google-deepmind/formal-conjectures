@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import FormalConjectures.Util.ProblemImports
 
 Reviewed by @b-mehta on 2025-05-27
 -/
-
 open ArithmeticFunction
 
 /--

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,8 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
--- Erdos Problems URL: https://www.erdosproblems.com/319
 import FormalConjectures.Util.ProblemImports
+
+/-!
+# Erdős Problem 319
+
+*Reference:* [erdosproblems.com/319](https://www.erdosproblems.com/319)
+-/
 
 open Filter
 

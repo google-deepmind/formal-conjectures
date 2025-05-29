@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -48,4 +48,5 @@ private noncomputable def S (S₀ : List ℤ) (n : ℕ) : List ℤ :=
 The sequence will eventually reach $1$.
 -/
 @[category research open, AMS 11]
-theorem curling_number_conjecture (S₀ : List ℤ) (h : S₀ ≠ []) : ∃ m, k (S S₀ m) = 1 := sorry
+theorem curling_number_conjecture (S₀ : List ℤ) (h : S₀ ≠ []) : ∃ m, k (S S₀ m) = 1 := by
+  sorry
