@@ -40,7 +40,7 @@ Is $\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of
 Solution: True (proved by Erdős and Straus, see Erdős Problems website).
 -/
 @[category research solved, AMS 11]
-theorem erdos_258.variants.Monotone : (∀ (a : ℕ → ℤ), ∀ n, a n ≠ 0 → Monotone a →
+theorem erdos_258.variants.Monotone : (∀ (a : ℕ → ℤ), (∀ n, a n ≠ 0) → Monotone a →
     Filter.Tendsto a Filter.atTop Filter.atTop →
     Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i))) ↔ answer(True) := by
   sorry
