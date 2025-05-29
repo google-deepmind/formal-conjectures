@@ -108,10 +108,19 @@ jobs:
           lake exe overwrite_index ./.lake/build/doc/index.html | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload docs
+        id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
           path: docbuild/.lake/build/doc
 
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
         id: deployment
