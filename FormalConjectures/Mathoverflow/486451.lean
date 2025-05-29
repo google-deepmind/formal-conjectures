@@ -23,12 +23,15 @@ asked by user [*Junyan Xu*](https://mathoverflow.net/users/3332/junyan-xu)
 -/
 
 @[category research solved, AMS 16]
+/-- There exists a semiring with a unique left maximal ideal but more than one right maximal ideals. -/
 theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
     ∃ (R : Type) (_ : Semiring R), (∃! I : Ideal R, I.IsMaximal) ∧
       ∃ I J : Ideal Rᵐᵒᵖ, I.IsMaximal ∧ J.IsMaximal ∧ I ≠ J := by
   sorry
 
 @[category research open, AMS 16]
+/-- There exists a semiring with a unique left maximal ideal and a unique right maximal ideal
+which are not the same as sets. -/
 theorem exists_semiring_unique_left_right_maximal_ne :
     ∃ (R : Type) (_ : Semiring R), (∃! I : Ideal R, I.IsMaximal) ∧
       (∃! J : Ideal Rᵐᵒᵖ, J.IsMaximal) ∧
