@@ -1,5 +1,5 @@
 /-
-Copyright (c) 2025 Bhavik Mehta
+Copyright (c) 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Nat
-
 /-!
 # Erdős Problem 499
 *Reference:* [erdosproblems.com/499](https://www.erdosproblems.com/499)
 -/
+
+open Nat
 
 /--
 Let $M$ be a real $n \times n$ doubly stochastic matrix. Does there exist some $σ \in S_n$ such that
@@ -50,9 +50,8 @@ Proved by Gyires [Gy80], Egorychev [Eg81], and Falikman [Fa81].
 [Fa81] Falikman, D. I., Proof of the van der Waerden conjecture on the permanent of a doubly stochastic matrix. Mat. Zametki (1981), 931-938, 957.
 -/
 @[category research solved, AMS 15]
-lemma vanDerWaerden :
-    (∀ (n : ℕ), ∀ M ∈ doublyStochastic ℝ (Fin n), n ^ (- n : ℤ) * n ! ≤ M.permanent) ↔
-    answer(True) := by
+lemma vanDerWaerden (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) (hM : M ∈ doublyStochastic ℝ (Fin n)) :
+    n ^ (- n : ℤ) * n ! ≤ M.permanent := by
   sorry
 
 /--
