@@ -23,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 /--
-Does there exist a composite number $n > 1$ such that Euler’s totient function $\varphi(n)$ divides $n - 1$?
+Does there exist a composite number $n > 1$ such that Euler’s totient function
+$\varphi(n)$ divides $n - 1$?
 -/
 @[category research open, AMS 11]
 theorem lehmer_totient :
