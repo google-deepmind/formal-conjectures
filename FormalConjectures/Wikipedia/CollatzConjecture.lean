@@ -33,7 +33,7 @@ def collatzStep (n : ℕ) : ℕ :=
 Now form a sequence by performing this operation repeatedly, beginning with any positive integer,
 and taking the result at each step as the input at the next.
 The **Collatz conjecture** states that for any positive integer $n$, there exists a natural number
-$i$ such that the $i$-th term of the sequence is 1.
+$m$ such that the $m$-th term of the sequence is 1.
 -/
 @[category research open, AMS 11]
 theorem CollatzConjecture : ∀ n : ℕ, n > 0 → ∃ m : ℕ, collatzStep^[m] n = 1 := by
