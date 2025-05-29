@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 variable {V : Type} [Fintype V] {G : SimpleGraph V} [DecidableEq V]
 
 /--
-A Pebble distribution is an assigment of zero or more pebbles to each of the vertices.
+A Pebble distribution is an assignment of zero or more pebbles to each of the vertices.
 -/
 def PebbleDistribution (V : Type) := V → ℕ
 

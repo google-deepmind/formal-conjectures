@@ -61,7 +61,7 @@ theorem erdos_350 (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A) :
 If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n^s < 1/(1 - 2^(-s))`, for any `s > 0`.
 Proved by Hanson, Steele, and Stenger.
 
-We exlude here the case `s = 0`, because in the informal formulation then the right hand side is to be interpreted as `∞`, while the left hand side counts the elements in `A`.
+We exclude here the case `s = 0`, because in the informal formulation then the right hand side is to be interpreted as `∞`, while the left hand side counts the elements in `A`.
 -/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_350.variants.strengthening (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A)

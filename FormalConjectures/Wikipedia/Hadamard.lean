@@ -42,7 +42,7 @@ def IsHadamard' {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
 /--
 Both definitions are equivalent.
 
-TOOD(firsching): complete and golf the proof
+TODO(firsching): complete and golf the proof
 -/
 @[category test]
 example (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
@@ -97,7 +97,7 @@ def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
      1,  1, -1,   1, -1,  1,   1, -1, -1,  -1, -1,  1;
      1,  1, -1,   1,  1, -1,  -1,  1, -1,   1, -1, -1 ]
 /--
-which satisifies the condition.
+which satisfies the condition.
 -/
 @[category test]
 example : IsHadamard H12 := by

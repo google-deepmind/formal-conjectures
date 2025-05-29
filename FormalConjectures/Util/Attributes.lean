@@ -35,8 +35,8 @@ The values of this attribute are
 - `@[category high_school]` : a high school level math problem.
 - `@[category undergraduate]` : an undergraduate level math problem.
 - `@[category graduate]` : a graduate level math problem.
-- `@[category research open]` : an open reseach level math problem.
-- `@[category research solved]` : a solved reseach level math problem.
+- `@[category research open]` : an open research level math problem.
+- `@[category research solved]` : a solved research level math problem.
   The criterion for being solved is that there exists an informal solution
   that is widely accepted by experts in the area. In particular, this
   does *not* require a formal solution to exist.
@@ -70,7 +70,7 @@ Provides information about the subject of a mathematical problem, via a
 numeral corresponding to the AMS subject classification of the problem.
 This can be used as follows:
 ```
-@[AMS 11] -- 11 correponds to Number Theory in the AMS classification
+@[AMS 11] -- 11 corresponds to Number Theory in the AMS classification
 theorem FLT : FermatLastTheorem := by
   sorry
 ```
@@ -116,7 +116,7 @@ inductive Category
   | undergraduate
   /-- A graduate level math problem. -/
   | graduate
-  /-- A reseach level math problem. This can be open, or already solved -/
+  /-- A research level math problem. This can be open, or already solved -/
   | research : ProblemStatus → Category
   /-- A test statement that serves as a sanity check (e.g. for a new definition)-/
   | test
@@ -208,8 +208,8 @@ This is used as follows: `@[category my_cat]` where `my_cat` is one of:
 - `high_school` : a high school level math problem.
 - `undergraduate` : an undergraduate level math problem.
 - `graduate` : a graduate level math problem.
-- `research open` : an open reseach level math problem.
-- `research solved` : a solved reseach level math problem.
+- `research open` : an open research level math problem.
+- `research solved` : a solved research level math problem.
 - `test` : a statement that serves as a sanity check (e.g. for a new definition).
 - `API` : a statement that constructs basic theory around a new definition -/
 initialize Lean.registerBuiltinAttribute {
@@ -230,7 +230,7 @@ syntax subjectList := many(num)
 
 /-- Converts a syntax node to an array of `AMS` subjects.
 
-This also annotates the every natural number litteral encountered, with the
+This also annotates the every natural number literal encountered, with the
 description of the corresponding AMS subject (i.e. hovering over the number
 in VS Code will show the subject.)
 -/

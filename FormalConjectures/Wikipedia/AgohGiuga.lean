@@ -46,7 +46,7 @@ def AgohGiugaCongr : Prop :=
 
 /--
 The **Agoh-Giuga Conjecture**, Giuga's formulation.
-An integer `p ≥ 2` is prime if and only if it satifies the congruence
+An integer `p ≥ 2` is prime if and only if it satisfies the congruence
 `∑_{i=1}^{p-1} i^{p-1} ≡ -1 [MOD p]`.
 -/
 def AgohGiugaSum : Prop := ∀ p ≥ 2, p.Prime ↔

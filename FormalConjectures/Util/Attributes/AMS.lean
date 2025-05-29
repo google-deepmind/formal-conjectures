@@ -183,7 +183,7 @@ unsafe def numToAMSSubjects (n : Nat) : MetaM AMS := do
   let nm ← numToAMSName n
   Meta.evalExpr AMS q(AMS) (.const nm [])
 
-/-- The `#AMS` outputs a list of the AMS Math Subjects and their correponding indices -/
+/-- The `#AMS` outputs a list of the AMS Math Subjects and their corresponding indices -/
 elab "#AMS" : command => do
   let env ← Lean.getEnv
   let lines ← (List.range 97).filterMapM fun n => do

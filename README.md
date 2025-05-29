@@ -4,7 +4,7 @@ A collection of formalized statements of conjectures in
 [Lean](https://leanprover.github.io/lean4/doc/whatIsLean.html), using
 [mathlib](https://github.com/leanprover-community/mathlib4).
 
-<!--TODO(firsching): insert link to autmatically generated documentation once docgen4 works-->
+<!--TODO(firsching): insert link to automatically generated documentation once docgen4 works-->
 
 ## Goals
 
@@ -39,7 +39,7 @@ There are various ways of contributing to this repository:
 
 1.  **Adding new problem formalisations**
 
-    Unlike other conjecture lists (the Millenium problems, Smale's list, Yau's
+    Unlike other conjecture lists (the Millennium problems, Smale's list, Yau's
     problems, ...) the problems in this repo can come from various places and we
     encourage all sorts of contributions. For example, conjectures can be
     sourced from various places, including:
@@ -217,7 +217,7 @@ meaningful solution of the problem is outside of the scope of this repository.
     statements. We also encourage contributors to provide some very basic API
     for such definitions as a way to test whether these behave as expected.
 3.  Benchmark problems should be stated with the `theorem` keyword, while for
-    test statements `example` is usually prefered.
+    test statements `example` is usually preferred.
 4.  Every statement should have at least one `AMS` subject tag.
 5.  Every file should come with a reference to where the problem was sourced
     from, and be put in the corresponding directory of the repository, e.g. a

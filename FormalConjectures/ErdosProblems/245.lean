@@ -53,7 +53,7 @@ as $N\to\infty$.
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_245.variants.exists_limit (A : Set ℕ) (h_inf : A.Infinite)
     (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    -- Use `EReal` to disinguish infinite limit from other types of non-existence
+    -- Use `EReal` to distinguish infinite limit from other types of non-existence
     ∃ (α : EReal),
       Tendsto (fun N => (((A + A).bdd N |>.ncard : EReal) / ((A.bdd N).ncard) : EReal)) atTop (𝓝 α) :=
   sorry

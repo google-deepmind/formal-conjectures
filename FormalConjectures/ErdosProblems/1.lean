@@ -68,7 +68,7 @@ theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0
 
 /--
 A number of improvements of the constant $\frac{1}{4}$ have been given, with the current
-record $\sqrt{2 / \pi}$ first provied in unpublished work of Elkies and Gleason.
+record $\sqrt{2 / \pi}$ first proved in unpublished work of Elkies and Gleason.
 -/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_1.variants.lb_strong : ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),

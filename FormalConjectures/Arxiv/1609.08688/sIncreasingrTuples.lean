@@ -34,7 +34,7 @@ namespace Arxiv.id160908688
 /--
 Let $a = (a_1, a_2, a_3)$ and $b = (b_1, b_2, b_3)$ be two triples of integers.
 Say that $a$ is $2$-less than $b$, or $a <_2 b$, if $a_i < b_i$ for at least
-two co-ordinates $i$.
+two coordinates $i$.
 -/
 def lt₂ {α : Type*} [LT α] (a b : Fin 3 → α) : Prop :=
   ∃ (i j : Fin 3), i ≠ j ∧ a i < b i ∧ a j < b j
