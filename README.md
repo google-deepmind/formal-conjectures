@@ -239,8 +239,9 @@ meaningful solution of the problem is outside of the scope of this repository.
     ```
     If the problem has been solved to the negative, then `P` should be replaced with
     `¬ P`.
-7. Copyright header: every file should have the following copyright header: 
-    ```
+7.  Every file should start with the following copyright header: 
+    ```lean
+    /-
     Copyright 2025 The Formal Conjectures Authors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -254,6 +255,7 @@ meaningful solution of the problem is outside of the scope of this repository.
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+    -/
     ```
     Also consider adding yourself to the list of authors in the AUTHORS file.
 
