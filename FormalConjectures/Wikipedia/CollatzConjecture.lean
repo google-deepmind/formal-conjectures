@@ -36,5 +36,5 @@ The **Collatz conjecture** states that for any positive integer $n$, there exist
 $m$ such that the $m$-th term of the sequence is 1.
 -/
 @[category research open, AMS 11, AMS 37]
-theorem CollatzConjecture : ∀ n : ℕ, n > 0 → ∃ m : ℕ, collatzStep^[m] n = 1 := by
+theorem CollatzConjecture (n : ℕ) (hn : n > 0) : ∃ m : ℕ, collatzStep^[m] n = 1 := by
   sorry
