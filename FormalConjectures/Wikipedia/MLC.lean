@@ -81,5 +81,5 @@ theorem MLC : LocallyConnectedSpace mandelbrotSet := by
 Note that we don't need to require `2 ≤ n` because the conjecture holds in the trivial cases `n = 0`
 and `n = 1` too. -/
 @[category research open, AMS 37]
-theorem MLC' n : LocallyConnectedSpace (multibrotSet n) := by
+theorem MLC_general_exponent (n : ℕ) : LocallyConnectedSpace (multibrotSet n) := by
   sorry
