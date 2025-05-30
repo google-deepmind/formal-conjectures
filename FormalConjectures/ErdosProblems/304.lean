@@ -41,7 +41,7 @@ In 1950, Erdős [Er50c] proved the upper bound $$N(b) \ll \log b / \log \log b$$
 @[category research solved, AMS 11]
 theorem erdos_304.variants.upper_1950 :
     (fun b => (smallestCollectionTo b : ℝ)) =O[atTop]
-    (fun b => Real.log b / Real.log (Real.log b)) := by
+      (fun b => Real.log b / Real.log (Real.log b)) := by
   sorry
 
 /--
@@ -51,7 +51,7 @@ In 1950, Erdős [Er50c] proved the lower bound $$\log \log b \ll N(b)$$.
 @[category research solved, AMS 11]
 theorem erdos_304.variants.lower_1950 :
     (fun b : ℕ => Real.log (Real.log b)) =O[atTop]
-    (fun b => (smallestCollectionTo b : ℝ)) := by
+      (fun b => (smallestCollectionTo b : ℝ)) := by
   sorry
 
 /--
@@ -60,7 +60,7 @@ In 1985 Vose [Vo85] proved the upper bound $$N(b) \ll \sqrt{\log b}$$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_304.variants.upper_1985 :
-      (fun b => (smallestCollectionTo b : ℝ)) =O[atTop]
+    (fun b => (smallestCollectionTo b : ℝ)) =O[atTop]
       (fun b => Real.sqrt (Real.log b)) :=
   sorry
 
@@ -68,7 +68,7 @@ theorem erdos_304.variants.upper_1985 :
 Is it true that $$N(b) \ll \log \log b$$?
 -/
 @[category research open, AMS 11]
-theorem erdos_304 :
-    (fun b : ℕ => (sSup {smallestCollection a b | a ∈ Finset.Ico 1 b} : ℝ)) =O[atTop]
+theorem upper_bound :
+    (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop]
       (fun b : ℕ => Real.log (Real.log b)) ↔ answer(sorry) := by
   sorry
