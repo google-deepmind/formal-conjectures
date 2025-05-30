@@ -29,5 +29,5 @@ Steinerberger has pointed out this problem has a trivial solution.
 -/
 @[category research solved, AMS 11]
 theorem erdos_370 :
-    { n | Nat.maxPrimeFac n < √n ∧ Nat.maxPrimeFac (n + 1) < √(n + 1) }.Infinite ↔ answer(True) :=
+    { n | Nat.maxPrimeFac n < √n ∧ Nat.maxPrimeFac (n + 1) < √(n + 1) }.Infinite ↔ answer(True) := by
   sorry

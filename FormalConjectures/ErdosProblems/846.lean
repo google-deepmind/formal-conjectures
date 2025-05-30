@@ -60,5 +60,5 @@ plane is weakly non-trilinar.
 -/
 @[category research open, AMS 11]
 theorem erdos_846 : (∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
-    WeaklyNonTrilinear A) ↔ answer(sorry) :=
+    WeaklyNonTrilinear A) ↔ answer(sorry) := by
   sorry

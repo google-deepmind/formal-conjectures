@@ -35,5 +35,5 @@ Here $p(m)$ is the least prime factor of $m$.
 theorem erdos_463 : (∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
     ∀ᶠ n in atTop,
       ∃ m, ¬m.Prime ∧
-        n + f n < m ∧ m < n + m.minFac) ↔ answer(sorry) :=
+        n + f n < m ∧ m < n + m.minFac) ↔ answer(sorry) := by
   sorry

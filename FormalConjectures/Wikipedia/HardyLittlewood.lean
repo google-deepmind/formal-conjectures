@@ -108,5 +108,5 @@ theorem second_hardy_littlewood_conjecture {x y : ℕ} (hx : 2 ≤ x) (hy : 2 �
 @[category research solved, AMS 11]
 theorem not_first_and_secondHardyLittlewoodConjecture :
     (∀ {k : ℕ} (m : Fin k.succ → ℕ), FirstHardyLittlewoodConjectureFor m) →
-      ¬(∀ {x y : ℕ} (hx : 2 ≤ x) (hy : 2 ≤ y), SecondHardyLittlewoodConjectureFor x y) :=
+      ¬(∀ {x y : ℕ} (hx : 2 ≤ x) (hy : 2 ≤ y), SecondHardyLittlewoodConjectureFor x y) := by
   sorry

@@ -74,7 +74,7 @@ must $A$ contain a minimal additive basis of order $2$? -/
 @[category research open, AMS 5, AMS 11]
 theorem erdos_868.parts.i :
     (∀ (A : Set ℕ), IsAddBasis A 2 → atTop.Tendsto (fun n => ncard_add_repr A 2 n) atTop →
-      ∃ B ⊆ A, IsAddBasis B 2 ∧ ∀ b ∈ B, ¬IsAddBasis (B \ {b}) 2) ↔ answer(sorry) :=
+      ∃ B ⊆ A, IsAddBasis B 2 ∧ ∀ b ∈ B, ¬IsAddBasis (B \ {b}) 2) ↔ answer(sorry) := by
   sorry
 
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
@@ -85,7 +85,8 @@ basis of order $2$? -/
 theorem erdos_868.parts.ii :
     (∀ᵉ (A : Set ℕ) (ε > 0), IsAddBasis A 2 →
     (∀ᶠ (n : ℕ) in atTop, ε * Real.log n < ncard_add_repr A 2 n) →
-    ∃ B ⊆ A, IsAddBasis B 2 ∧ ∀ b ∈ B, ¬IsAddBasis (B \ {b}) 2) ↔ answer(sorry) := sorry
+    ∃ B ⊆ A, IsAddBasis B 2 ∧ ∀ b ∈ B, ¬IsAddBasis (B \ {b}) 2) ↔ answer(sorry) := by
+  sorry
 
 /-- Erdős and Nathanson proved that this is true if $f(n) > (\log\frac{4}{3})^{-1}\log n$ for
 all large $n$. -/
@@ -93,11 +94,12 @@ all large $n$. -/
 theorem erdos_868.variants.fixed_ε :
     (∀ (A : Set ℕ), IsAddBasis A 2 →
     (∀ᶠ (n : ℕ) in atTop, (Real.log (4 / 3))⁻¹ * Real.log n < ncard_add_repr A 2 n) →
-    ∃ B ⊆ A, IsAddBasis B 2 ∧ ∀ b ∈ B, ¬IsAddBasis (B \ {b}) 2) ↔ answer(True) := sorry
+    ∃ B ⊆ A, IsAddBasis B 2 ∧ ∀ b ∈ B, ¬IsAddBasis (B \ {b}) 2) ↔ answer(True) := by
+  sorry
 
 /-- Härtter and Nathanson proved that there exist additive bases which do not contain
 any minimal additive bases. -/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_868.variants.Hartter_Nathanson : ∃ A, ∃ o > 1, IsAddBasis A o ∧
-    ∀ B ⊆ A, IsAddBasis B o → ∃ b ∈ B, IsAddBasis (B \ {b}) o :=
+    ∀ B ⊆ A, IsAddBasis B o → ∃ b ∈ B, IsAddBasis (B \ {b}) o := by
   sorry

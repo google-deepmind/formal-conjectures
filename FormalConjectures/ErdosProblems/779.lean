@@ -33,4 +33,5 @@ where the conjecture is trivially false.]
 -- n ≤ 1000, as well as the conjecture that p ≤ n^O(1)
 @[category research open, AMS 11]
 theorem erdos_779 (n : ℕ) (hn : n ≥ 1): let P := ∏ i ∈ range (n + 1), nth Nat.Prime i
-    ∃ p, p.Prime ∧ (P + p).Prime ∧ nth Nat.Prime n < p ∧ p < P := sorry
+    ∃ p, p.Prime ∧ (P + p).Prime ∧ nth Nat.Prime n < p ∧ p < P := by
+  sorry

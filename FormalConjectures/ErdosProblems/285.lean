@@ -68,5 +68,5 @@ theorem erdos_285.variants.lb (f : ℕ → ℕ)
           (_ : 1 = ∑ i, (1 : ℝ) / n i) }
         (f k)) :
     ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
-      ∀ k ∈ S, (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) ≤ f k :=
+      ∀ k ∈ S, (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) ≤ f k := by
   sorry

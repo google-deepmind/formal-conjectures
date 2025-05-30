@@ -89,7 +89,7 @@ theorem erdos_442 : (∀ (A : Set ℕ),
     Tendsto (fun (x : ℝ) =>
       1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.bdd x, (1 : ℝ) / n) atTop atTop →
     Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 *
-      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(True) :=
+      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(True) := by
   sorry
 
 /--
@@ -116,5 +116,5 @@ theorem erdos_442.variants.tao :
         ∑ n ∈ A.bdd x, (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
         |∑ nm ∈ A.bdd x ×ˢ A.bdd x, (1 : ℝ) / nm.1.lcm nm.2| ≤
-          C * (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 :=
+          C * (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 := by
   sorry

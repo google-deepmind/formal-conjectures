@@ -30,7 +30,7 @@ irrational?
 -/
 @[category research open, AMS 11]
 theorem erdos_257 : (∀ (A : Set ℕ), A.Infinite →
-    Irrational (∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1))) ↔ answer(sorry) :=
+    Irrational (∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1))) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -42,7 +42,7 @@ where $d(n)$ is the number of divisors of $n$.
 -/
 @[category undergraduate]
 theorem erdos_257.variants.tsum_top_eq :
-    ∑' n, 1 / (2 ^ n - 1 : ℝ) = ∑' n, n.divisors.card / (2 ^ n : ℝ) :=
+    ∑' n, 1 / (2 ^ n - 1 : ℝ) = ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
 
 /--
@@ -56,5 +56,5 @@ is irrational.
 -/
 @[category research solved]
 theorem erdos_257.variants.tsum_top :
-    Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) :=
+    Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry

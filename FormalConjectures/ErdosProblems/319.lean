@@ -66,7 +66,7 @@ theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =Θ[atTop] (answer(sorry) : ℕ → ℝ) :=
+    c =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
@@ -85,7 +85,7 @@ theorem erdos_319.variants.isBigO (N : ℕ) (c : ℕ → ℝ)
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =O[atTop] (answer(sorry) : ℕ → ℝ) :=
+    c =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
@@ -104,7 +104,7 @@ theorem erdos_319.variants.isLittleO (N : ℕ) (c : ℕ → ℝ)
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =o[atTop] (answer(sorry) : ℕ → ℝ) :=
+    c =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /-- Adenwalla has observed that a lower bound of
@@ -121,5 +121,5 @@ theorem erdos_319.variants.lb : ∃ o, (o =o[atTop] fun n => (1 : ℝ)) ∧
     ∀ {N : ℕ} {A : Finset ℕ} (hA : A ⊆ Finset.Icc 1 N)
     {δ : ℕ → ℤˣ} (hδ₁ : ∑ n ∈ A, (δ n : ℚ) / n = 0)
     (hδ₂ : ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0),
-      (1 - 1 / rexp 1 + o N) * N ≤ #A :=
+      (1 - 1 / rexp 1 + o N) * N ≤ #A := by
   sorry

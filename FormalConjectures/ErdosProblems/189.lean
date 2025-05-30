@@ -49,7 +49,7 @@ theorem erdos_189 :
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
         line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction)
-      (fun a b c d ↦ dist a b * dist b c) ↔ answer(False) :=
+      (fun a b c d ↦ dist a b * dist b c) ↔ answer(False) := by
   sorry
 
 /-- Graham claims this is "easy to see". -/
@@ -60,7 +60,7 @@ theorem erdos_189.variants.square :
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
         line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧
         dist a b = dist b c)
-      (fun a b c d ↦ dist a b * dist b c) :=
+      (fun a b c d ↦ dist a b * dist b c) := by
   sorry
 
 /--
@@ -72,5 +72,5 @@ theorem erdos_189.variants.parallelogram :
       (fun a b c d ↦
         line[ℝ, a, b] ∥ line[ℝ, c, d] ∧
         line[ℝ, a, d] ∥ line[ℝ, b, c])
-      (fun a b c d ↦ dist a b * dist b c * (∡ a b c).sin) :=
+      (fun a b c d ↦ dist a b * dist b c * (∡ a b c).sin) := by
   sorry

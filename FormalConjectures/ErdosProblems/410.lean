@@ -35,5 +35,5 @@ Erdos, Granville, Pomerance, Spiro
 -/
 @[category research open, AMS 11]
 theorem erdos_410 : (∀ᵉ (n > 1),
-    Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop) ↔ answer(sorry) :=
+    Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop) ↔ answer(sorry) := by
   sorry

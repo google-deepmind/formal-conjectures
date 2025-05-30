@@ -41,7 +41,7 @@ $r = s$?
 -/
 @[category research open, AMS 11]
 theorem erdos_786.parts.i : (∀ ε > 0, ε ≤ 1 →
-    ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet) ↔ answer(sorry) :=
+    ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -52,7 +52,7 @@ $r = s$?
 @[category research open, AMS 11]
 theorem erdos_786.parts.ii : (∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : Tendsto f atTop (𝓝 0)),
     ∀ N, A N ⊆ Set.Icc 1 (N + 1) ∧ (1 - f N) * N ≤ (A N).ncard ∧ (A N).IsMulCardSet) ↔
-    answer(sorry) :=
+    answer(sorry) := by
   sorry
 
 /--
@@ -60,7 +60,7 @@ An example of such a set with density $\frac 1 4$ is given by the integers $\equ
 -/
 @[category undergraduate, AMS 11]
 theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
-    A.HasDensity (1 / 4) ∧ A.IsMulCardSet :=
+    A.HasDensity (1 / 4) ∧ A.IsMulCardSet := by
   sorry
 
 /--
@@ -91,5 +91,5 @@ theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε ≤ 1) :
         ∑ i ∈ Finset.univ.filter (· < Fin.last _), (1 : ℝ) / p i < 1 ∧
           1 < ∑ i, (1 : ℝ) / p i →
     { n | ∃! i < k, p i ∣ n }.HasDensity (1 / Real.exp 1 - ε) ∧
-      { n | ∃! i < k, p i ∣ n }.IsMulCardSet :=
+      { n | ∃! i < k, p i ∣ n }.IsMulCardSet := by
   sorry

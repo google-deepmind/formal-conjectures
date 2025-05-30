@@ -35,7 +35,7 @@ the author claims that by "slightly modifying the method of [his proof]", one ca
 lemma baumgartner_strong (V : Type*) [AddCommGroup V] [Module ℚ V] (k : ℕ) :
     ∃ X : Set V,
       (∀ Y, Y.IsAPOfLength ⊤ → (X ∩ Y).Nonempty) ∧
-      (∀ Y, IsAPOfLength Y k → (X ∩ Y).ncard ≤ 2) :=
+      (∀ Y, IsAPOfLength Y k → (X ∩ Y).ncard ≤ 2) := by
   sorry
 
 /-- The statement for which Baumgartner actually writes a proof. -/

@@ -33,13 +33,13 @@ Can the product of an arithmetic progression of positive integers of length ≥ 
 theorem erdos_672 :
     (∀ᵉ (k) (l > 1), (hk : k ≥ 4) →
     letI : NeZero k := ⟨Nat.not_eq_zero_of_lt hk⟩
-    Erdos672With k l) ↔ answer(sorry) :=
+    Erdos672With k l) ↔ answer(sorry) := by
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/
 @[category research solved, AMS 11]
 lemma erdos_672.variants.euler :
-    Erdos672With 4 2 :=
+    Erdos672With 4 2 := by
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Obláth proved this.
@@ -48,5 +48,5 @@ lemma erdos_672.variants.euler :
 J. Indian Math. Soc. (N.S.) (1951), 135-139. -/
 @[category research solved, AMS 11]
 lemma erdos_672.variants.oblath :
-    Erdos672With 5 2 ∧ Erdos672With 3 3 ∧ Erdos672With 3 4 ∧ Erdos672With 3 5 :=
+    Erdos672With 5 2 ∧ Erdos672With 3 3 ∧ Erdos672With 3 4 ∧ Erdos672With 3 5 := by
   sorry

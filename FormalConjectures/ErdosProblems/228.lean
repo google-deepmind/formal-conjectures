@@ -36,4 +36,5 @@ theorem erdos_228 :
     ∃ p : Polynomial ℂ, p.degree = n ∧
     (∀ i ≤ n, p.coeff i = 1 ∨ p.coeff i = -1) ∧
     ∀ z : ℂ, ‖z‖ = 1 →
-    ( √n < c₁ * ‖p.eval z‖ ∧ ‖p.eval z‖ < c₂ * √n )) ↔ answer(True) := sorry
+    ( √n < c₁ * ‖p.eval z‖ ∧ ‖p.eval z‖ < c₂ * √n )) ↔ answer(True) := by
+  sorry

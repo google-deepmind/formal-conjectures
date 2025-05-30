@@ -52,7 +52,7 @@ $$
 @[category research open, AMS 11]
 theorem erdos_143.parts.ii (A : Set ℝ) (h : WellSeparatedSet A):
     ∃ (s : ℝ),
-      Tendsto (fun n ↦ ∑ x ∈ range n, 1 / (x * Real.log x)) atTop (𝓝 s) :=
+      Tendsto (fun n ↦ ∑ x ∈ range n, 1 / (x * Real.log x)) atTop (𝓝 s) := by
   sorry
 
 

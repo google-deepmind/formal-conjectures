@@ -28,7 +28,7 @@ $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 -/
 @[category research open, AMS 11]
 theorem erdos_267 : (∀ᵉ (n : ℕ → ℕ) (c > (1 : ℚ)), StrictMono n → (∀ k, c ≤ n (k+1) / n k) →
-    Irrational (∑' k, 1 / (Nat.fib <| n k))) ↔ answer(sorry) :=
+    Irrational (∑' k, 1 / (Nat.fib <| n k))) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -39,7 +39,7 @@ $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 @[category research open, AMS 11]
 theorem erdos_267.variants.generalisation_ratio_limit_to_infinity : (∀ (n : ℕ → ℕ),
     StrictMono n → Filter.Tendsto (fun k => (n (k+1) / k.succ : ℝ)) Filter.atTop Filter.atTop →
-    Irrational (∑' k, 1 / (Nat.fib <| n k))) ↔ answer(sorry) :=
+    Irrational (∑' k, 1 / (Nat.fib <| n k))) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -51,7 +51,7 @@ Ref:
 -/
 @[category research solved, AMS 11]
 theorem erdos_267.variants.specialization_pow_two :
-    Irrational <| ∑' k, 1 / (Nat.fib <| 2^k) :=
+    Irrational <| ∑' k, 1 / (Nat.fib <| 2^k) := by
   sorry
 
 
@@ -62,5 +62,5 @@ Ref: André-Jeannin, Richard, _Irrationalité de la somme des inverses de certai
 -/
 @[category research solved, AMS 11]
 theorem erdos_267.variants.fibonacci_inverse_sum :
-    Irrational <| ∑' k, 1 / (Nat.fib k) :=
+    Irrational <| ∑' k, 1 / (Nat.fib k) := by
   sorry
