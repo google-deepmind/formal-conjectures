@@ -32,7 +32,7 @@ Can the product of an arithmetic progression of positive integers of length ≥ 
 @[category research open, AMS 11]
 theorem erdos_672 :
     (∀ᵉ (k) (l > 1), (hk : k ≥ 4) →
-    letI : NeZero k := ⟨Nat.not_eq_zero_of_lt hk⟩
+    letI : NeZero k := ⟨Nat.ne_zero_of_lt hk⟩
     Erdos672With k l) ↔ answer(sorry) :=
   sorry
 
