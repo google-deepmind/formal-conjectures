@@ -255,7 +255,7 @@ meaningful solution of the problem is outside of the scope of this repository.
     See the License for the specific language governing permissions and
     limitations under the License.
     ```
-    Also consider adding yourself to the list of authors in the AUTHORS file
+    Also consider adding yourself to the list of authors in the AUTHORS file.
 
 
 ## Versioning
