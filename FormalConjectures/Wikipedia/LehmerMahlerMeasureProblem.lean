@@ -23,30 +23,29 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Multiset
+open Polynomial
 
 noncomputable section
 
-def max1Abs (z : ℂ) : ℝ := max 1 ‖z‖
-
 /--
-The Mahler measure of f(x) is defined as ‖a‖∏max(1,‖α_i‖),
-where f(x)=a(x-α_1)(x-α_2)...(x-α_n).
+The Mahler measure of `f(X)` is defined as `‖a‖ ∏ᵢ max(1,‖αᵢ‖)`,
+where `f(X)=a(X-α₁)(X-α₂)...(X-αₙ)`.
 -/
-def mahlerMeasure (f : Polynomial ℂ) : ℝ :=
-  ‖f.leadingCoeff‖ * (map max1Abs f.roots).prod
+def mahlerMeasure (f : ℂ[X]) : ℝ :=
+  ‖f.leadingCoeff‖ * (map (max 1 ‖·‖) f.roots).prod
 
-def toC (f : Polynomial ℤ) : Polynomial ℂ :=
+def toC (f : ℤ[X]) : ℂ[X] :=
   f.map (algebraMap ℤ ℂ)
 
-def mahlerMeasureZ (f : Polynomial ℤ) : ℝ :=
+def mahlerMeasureZ (f : ℤ[X]) : ℝ :=
   mahlerMeasure (toC f)
 
 /--
-Let M(f) denote the Mahler measure of f.
-There exists a constant μ>1 such that for any f(x)∈ℤ[x], M(f)>1 → M(f)>μ.
+Let `M(f)` denote the Mahler measure of `f`.
+There exists a constant `μ>1` such that for any `f(x)∈ℤ[x], M(f)>1 → M(f)>μ`.
 -/
 @[category research open, AMS 11]
 theorem lehmer_mahler_measure_problem :
-  ∃ μ : ℝ, ∀ f : Polynomial ℤ,
-  μ > 1 ∧ (mahlerMeasureZ f > 1 → mahlerMeasureZ f > μ) := by
+    ∃ μ : ℝ, ∀ f : ℤ[X],
+    μ > 1 ∧ (mahlerMeasureZ f > 1 → mahlerMeasureZ f > μ) := by
   sorry
