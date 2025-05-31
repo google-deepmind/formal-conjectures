@@ -101,6 +101,16 @@ jobs:
           cd docbuild
           lake build FormalConjectures:docs
 
+      - name: Extract documentation
+        run: |
+          cd docbuild
+          mkdir out
+          lake query FormalConjectures:docs > out-files.txt
+          echo "::group::Generated files" 
+          cat out-files.txt
+          echo "::endgroup::"
+          rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
+
       - name: Inject stats into index.html
         run: |
           set -o pipefail
@@ -111,7 +121,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docbuild/.lake/build/doc
+          path: out
 
   # Deployment job
   deploy:
