@@ -121,7 +121,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: out
+          path: docbuild/out
 
   # Deployment job
   deploy:
