@@ -33,8 +33,16 @@ This is not true in general, as shown by Sándor [Sa97].
 theorem erdos_316 : (∀ A : Finset ℕ, 0 ∉ A → 1 ∉ A →
     ∑ n ∈ A, (1 / n : ℚ) < 2 → ∃ (A₁ A₂ : Finset ℕ),
       Disjoint A₁ A₂ ∧ A = A₁ ∪ A₂ ∧
-      (1 ≤ ∑ n ∈ A₁, (1 / n : ℚ) ∨ 1 ≤ ∑ n ∈ A₂, (1 / n : ℚ))) ↔ answer(False) := by
-  sorry
+      (∑ n ∈ A₁, (1 / n : ℚ) < 1 ∧ ∑ n ∈ A₂, (1 / n : ℚ) < 1)) ↔ answer(False) := by
+  simp only [one_div, iff_false, not_forall, Classical.not_imp, not_exists, not_and, not_lt]
+  let A : Finset ℕ := {2, 3, 4, 5, 6, 7, 10, 11, 13, 14, 15}
+  refine ⟨A, by decide, by decide, by decide +kernel, ?_⟩
+  suffices h : ∀ B ⊆ A, 1 ≤ ∑ n ∈ B, (n : ℚ)⁻¹ ∨ 1 ≤ ∑ n ∈ A \ B, (n : ℚ)⁻¹ by
+    intro B C hBC hA hlt
+    have : C = A \ B := by rw [hA, Finset.union_sdiff_cancel_left hBC]
+    rw [this]
+    exact (h B (by simp [hA])).resolve_left hlt.not_le
+  decide +kernel
 
 /-- It is not true if `A` is a multiset (easier) -/
 @[category high_school, AMS 5, AMS 11]
@@ -44,12 +52,11 @@ lemma erdos_316.variants.multiset : ∃ A : Multiset ℕ, 0 ∉ A ∧ 1 ∉ A �
       1 ≤ (A₁.map ((1 : ℚ) / ·)).sum ∨ 1 ≤ (A₂.map ((1 : ℚ) / ·)).sum := by
   sorry
 
-
 /-- More generally, Sándor shows that for any $n≥2$ there exists a finite set
 $A \subseteq \mathbb{N}∖{1}$ with $\sum_{n \in A} \frac{1}{k} < n$ , and no
 partition into $n$ parts each of which has $\sum_{n \in A_i} \frac{1}{k} < 1$. -/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_316.variants.generalized (n : ℕ) (hn : 2 ≤ n) : ∃ A : Finset ℕ,
-  A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
+    A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
     P.parts.card = n → ∃ p ∈ P.parts, 1 ≤ ∑ n ∈ p, (1 / n : ℚ) := by
   sorry
