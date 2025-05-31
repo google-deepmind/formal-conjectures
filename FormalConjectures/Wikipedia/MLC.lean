@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Local connectivity of the Mandelbrot and Multibrot sets
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mandelbrot_set#Local_connectivity)
+*References:*
+ - [Wikipedia](https://en.wikipedia.org/wiki/Mandelbrot_set#Local_connectivity)
+ - [arxiv/math/9902155](https://arxiv.org/abs/math/9902155)
 -/
 
 open Topology Set Function Filter Bornology Metric
