@@ -29,9 +29,17 @@ noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ
 noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
 
 
-theorem τ_one : τ 1 = 1 := by sorry
+lemma multipliable : Multipliable fun n : ℕ+ ↦ ((1 - X ^ (n : ℕ)) ^ 24 : PowerSeries ℤ) := by
+  sorry
 
-theorem τ_two : τ 2 = -24 := by sorry
+lemma τ_zero : τ 0 = 0 := by simp [τ, Δ]
+
+lemma τ_one : τ 1 = 1 := by
+  obtain ⟨i, hi⟩ := by simpa using ((continuous_constantCoeff ℤ).tendsto _).comp multipliable.hasProd
+  simp [τ, Δ, hi i]
+
+lemma τ_two : τ 2 = -24 := by
+  sorry
 
 
 @[category research solved, AMS 11]
