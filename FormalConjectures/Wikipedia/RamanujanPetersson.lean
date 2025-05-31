@@ -29,6 +29,11 @@ noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ
 noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
 
 
+theorem τ_one : τ 1 = 1 := by sorry
+
+theorem τ_two : τ 2 = -24 := by sorry
+
+
 @[category research solved, AMS 11]
 theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : ℝ) ^ ((11 : ℝ) / 2) := by
   sorry
