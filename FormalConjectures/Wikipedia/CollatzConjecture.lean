@@ -30,8 +30,8 @@ def collatzStep (n : ℕ) : ℕ :=
   if Even n then n / 2 else 3 * n + 1
 
 /--
-Now form a sequence by performing this operation repeatedly, beginning with any positive integer,
-and taking the result at each step as the input at the next.
+Now form a sequence beginning with any positive integer, where each subsequent term is obtained
+by applying the operation defined above to the previous term.
 The **Collatz conjecture** states that for any positive integer $n$, there exists a natural number
 $m$ such that the $m$-th term of the sequence is 1.
 -/
