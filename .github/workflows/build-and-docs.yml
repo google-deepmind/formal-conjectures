@@ -106,6 +106,7 @@ jobs:
           cd docbuild
           mkdir out
           lake query FormalConjectures:docs > out-files.txt
+          sed -i 's|^.*\.lake/build/doc/||' out-files.txt
           echo "::group::Generated files" 
           cat out-files.txt
           echo "::endgroup::"
