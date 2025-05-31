@@ -24,11 +24,11 @@ import FormalConjectures.Util.ProblemImports
 
 open PowerSeries PowerSeries.WithPiTopology
 
-noncomputable def Δ : PowerSeries ℝ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
+noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
 
-noncomputable def τ (n : ℕ) : ℝ := PowerSeries.coeff ℝ n Δ
+noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
 
 
 @[category research solved, AMS 11]
-theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * p ^ ((11 : ℝ) / 2) := by
+theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : ℝ) ^ ((11 : ℝ) / 2) := by
   sorry
