@@ -37,20 +37,28 @@ theorem erdos_316 : (∀ A : Finset ℕ, 0 ∉ A → 1 ∉ A →
   simp only [one_div, iff_false, not_forall, Classical.not_imp, not_exists, not_and, not_lt]
   let A : Finset ℕ := {2, 3, 4, 5, 6, 7, 10, 11, 13, 14, 15}
   refine ⟨A, by decide, by decide, by decide +kernel, ?_⟩
-  suffices h : ∀ B ⊆ A, 1 ≤ ∑ n ∈ B, (n : ℚ)⁻¹ ∨ 1 ≤ ∑ n ∈ A \ B, (n : ℚ)⁻¹ by
-    intro B C hBC hA hlt
+  suffices h : ∀ B ⊆ A, ∑ n ∈ B, (n : ℚ)⁻¹ < 1 → 1 ≤ ∑ n ∈ A \ B, (n : ℚ)⁻¹ by
+    rintro B C hBC hA hlt
     have : C = A \ B := by rw [hA, Finset.union_sdiff_cancel_left hBC]
-    rw [this]
-    exact (h B (by simp [hA])).resolve_left hlt.not_le
+    exact this ▸ h B (by simp [hA]) hlt
   decide +kernel
 
 /-- It is not true if `A` is a multiset (easier) -/
 @[category high_school, AMS 5, AMS 11]
 lemma erdos_316.variants.multiset : ∃ A : Multiset ℕ, 0 ∉ A ∧ 1 ∉ A ∧
-  (A.map ((1 : ℚ) / ·)).sum < 2 ∧ ∀ (A₁ A₂ : Multiset ℕ),
-    A = A₁ + A₂ →
-      1 ≤ (A₁.map ((1 : ℚ) / ·)).sum ∨ 1 ≤ (A₂.map ((1 : ℚ) / ·)).sum := by
-  sorry
+    (A.map ((1 : ℚ) / ·)).sum < 2 ∧ ∀ (A₁ A₂ : Multiset ℕ),
+      A = A₁ + A₂ →
+        1 ≤ (A₁.map ((1 : ℚ) / ·)).sum ∨ 1 ≤ (A₂.map ((1 : ℚ) / ·)).sum := by
+  let A : Multiset ℕ := {2, 3, 3, 5, 5, 5, 5}
+  refine ⟨A, by decide, by decide, by decide +kernel, ?_⟩
+  suffices h : ∀ B ∈ A.powerset, 1 ≤ (B.map (fun x ↦ (x : ℚ)⁻¹)).sum ∨
+      1 ≤ ((A - B).map (fun x ↦ (x : ℚ)⁻¹)).sum by
+    intro B C hBC
+    have : C = A - B := by simp [hBC]
+    simp only [Multiset.pure_def, Multiset.bind_def, Multiset.bind_singleton, Multiset.map_map,
+      Function.comp_apply, one_div] at h ⊢
+    exact this ▸ h B (by simp [hBC])
+  decide +kernel
 
 /-- More generally, Sándor shows that for any $n≥2$ there exists a finite set
 $A \subseteq \mathbb{N}∖{1}$ with $\sum_{n \in A} \frac{1}{k} < n$ , and no
