@@ -24,7 +24,7 @@ open scoped Polynomial
 Is there any polynomial $f(x, y) \in \mathbb{Q}[x, y]$ such that
 $f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 
-*Reference:* [mathoverflow/339137](https://mathoverflow.net/questions/21003)
+*Reference:* [mathoverflow/21003](https://mathoverflow.net/questions/21003)
 asked by user [*Z.H.*](https://mathoverflow.net/users/5098/z-h)
 -/
 
