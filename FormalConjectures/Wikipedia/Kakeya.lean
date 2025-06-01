@@ -38,7 +38,7 @@ def IsKakeya {n : ℕ} (S : Set (Fin n → ℝ)) : Prop :=
 example (n : ℕ) : IsKakeya (closedBall (0 : Fin n → ℝ) 1) := by
   rintro v hv
   use 0
-  intro t ⟨ht₀, ht₁⟩
+  rintro t ⟨ht₀, ht₁⟩
   simp
   rw [norm_smul, hv, mul_one, Real.norm_eq_abs, abs_of_nonneg ht₀]
   exact ht₁
@@ -84,6 +84,7 @@ A finite field variant of the Kakeya problem considers subsets of `𝔽_qⁿ` th
 def IsKakeyaFinite {F : Type*} [Field F] [Fintype F] {n : ℕ} (S : Finset (Fin n → F)) : Prop :=
   ∀ v, v ≠ 0 → ∃ a, ∀ t : F, a + t • v ∈ S
 
+open Fintype in
 /--
 The finite field Kakeya conjecture asserts that any Kakeya set in `𝔽_qⁿ` has size at least `c_n · qⁿ` for some constant `c_n` depending only on `n`.
 This was first proved by Dvir in [Dv08] and the currently best known bound is due to Bukh and Chao [BuCh21].
@@ -94,5 +95,5 @@ This was first proved by Dvir in [Dv08] and the currently best known bound is du
 @[category research solved, AMS 52]
 theorem kakeya_finite {F : Type*} [Field F] [Fintype F] {n : ℕ}
     (K : Finset (Fin n → F)) (hK : IsKakeyaFinite K) :
-    K.card ≥ (Fintype.card F ^ n) / (2 - 1 / Fintype.card F) ^ (n - 1) := by
+    K.card ≥ (card F ^ n) / (2 - 1 / card F) ^ (n - 1) := by
   sorry
