@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,18 +20,15 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 412
 
 *Reference:* [erdosproblems.com/412](https://www.erdosproblems.com/412)
+
+Reviewed by @b-mehta on 2025-05-27
 -/
-/--Let $σ_1(n)=σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k−1}(n))$-/
-abbrev σ (k : ℕ) : ℕ → ℕ := (ArithmeticFunction.sigma 1)^[k]
+open ArithmeticFunction
 
-@[category API, AMS 11]
-lemma sigma_0 : σ 0 = id := rfl
-
-@[category API, AMS 11]
-lemma sigma_1 : σ 1 = ArithmeticFunction.sigma 1 := rfl
-
-/--Is it true that, for every $m, n ≥ 2$, there exist some $i, j$ such that $σ_i(m) = σ_j(n)$?-/
+/--
+Let $σ_1(n)=σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k−1}(n))$.
+Is it true that, for every $m, n ≥ 2$, there exist some $i, j$ such that $σ_i(m) = σ_j(n)$?
+-/
 @[category research open, AMS 11]
-theorem erdos_412 (m n : ℕ) (hm : 2 ≤ m) (hn : 2 ≤ n) :
-    ∃ i j, σ i m = σ j n := by
+theorem erdos_412 : (∀ᵉ (m ≥ 2) (n ≥ 2), ∃ i j, (σ 1)^[i] m = (σ 1)^[j] n) ↔ answer(sorry) := by
   sorry

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,5 +36,5 @@ converge?
 @[category research open, AMS 11]
 theorem erdos_469 :
     letI A := {n : ℕ | 0 < n ∧ n.IsSumDivisors ∧ ∀ m < n, m ∣ n → ¬ m.IsSumDivisors}
-    Summable fun n : A ↦ 1 / (n : ℝ) :=
+    (Summable fun n : A ↦ 1 / (n : ℝ)) ↔ answer(sorry) := by
   sorry

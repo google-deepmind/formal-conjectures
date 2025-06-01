@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,5 +27,6 @@ import FormalConjectures.Util.ProblemImports
 Are there infinitely many primes p such that p + 2 is prime?
 -/
 @[category research open, AMS 11]
-theorem twin_primes : {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite := by
+theorem twin_primes :
+    {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite ↔ answer(sorry) := by
   sorry

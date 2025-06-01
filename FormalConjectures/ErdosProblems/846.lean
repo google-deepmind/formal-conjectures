@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -59,6 +59,6 @@ In other words, prove or disprove the following statement: every infinite `ε`-n
 plane is weakly non-trilinar.
 -/
 @[category research open, AMS 11]
-theorem erdos_846 (A : Set ℝ²) (ε : ℝ) (hε : 0 < ε) (hA : NonTrilinearFor A ε)
-    (hA' : A.Infinite) : WeaklyNonTrilinear A :=
+theorem erdos_846 : (∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
+    WeaklyNonTrilinear A) ↔ answer(sorry) := by
   sorry
