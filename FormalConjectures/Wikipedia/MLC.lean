@@ -36,17 +36,6 @@ set of all parameters `c : ℂ` for which `0` does not escape to infinity under 
 of `z ↦ z ^ 2 + c`. -/
 abbrev mandelbrotSet := multibrotSet 2
 
-@[category API]
-lemma le_add_pow {x y : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y) {n : ℕ} :
-    x ^ n + n * y * x ^ (n - 1) ≤ (x + y) ^ n := by
-  induction' n with n hn
-  · simp
-  · simp_rw [Nat.cast_add, Nat.cast_one, pow_succ, Nat.add_sub_cancel]
-    suffices n * y * x ^ n ≤ n * y * (x ^ (n - 1) * x) by
-      linarith [mul_le_mul_of_nonneg_right hn (add_nonneg hx hy),
-        show 0 ≤ n * y * x ^ (n - 1) * y by positivity]
-    cases n <;> simp [pow_succ]
-
 /-- The `multibrotSet n` is equivalently the set of all parameters `c` for which the orbit of `0`
 under `z ↦ z ^ n + c` does not leave the closed disk of radius `2 ^ (n - 1)⁻¹` around the origin. -/
 @[category API]
@@ -72,8 +61,11 @@ theorem multibrotSet_eq {n : ℕ} [Fact (2 ≤ n)] :
       · simp [a]
       · rw [← add_assoc, iterate_succ_apply']
         refine .trans ?_ <| norm_sub_le_norm_add _ _
-        replace hm := pow_le_pow_left₀ (by positivity) hm n
-        replace hm := (le_add_pow hr.le (by positivity)).trans hm
+        replace hm :
+            r ^ n + a * n ^ m * r ^ (n - 1) * ↑n ≤ ‖(fun z ↦ z ^ n + c)^[k + m] 0‖ ^ n := by
+          refine .trans ?_ (pow_le_pow_left₀ (by positivity) hm n); cases n; simp
+          rw [add_comm r _, add_pow]
+          refine .trans ?_ <| Finset.add_le_sum (by intros; positivity) ?_ ?_ zero_ne_one <;> simp
         rw [norm_pow, pow_succ]
         refine .trans ?_ (sub_le_sub hm h')
         rw [hr', hr'', show ‖(fun z ↦ z ^ n + c)^[k] 0‖ = a + r by simp [a]]
