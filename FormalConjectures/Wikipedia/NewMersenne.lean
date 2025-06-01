@@ -16,26 +16,42 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-def condition1 (p : ℕ) : Prop :=
-∃ k : ℕ, p = 2^k + 1 ∨ p = 2^k - 1 ∨ p = 4^k + 3 ∨ p = 4^k - 3
-
-def condition2 (p : ℕ) : Prop :=
-  Nat.Prime (2^p - 1)
-
-def condition3 (p : ℕ) : Prop :=
-  Nat.Prime ((2^p + 1) / 3)
-
 /-!
 # New Mersenne conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_conjectures)
 -/
+
+/--
+Mersenne prime is a prime number of the form `2ᵖ-1`.
+-/
+def IsGivesMersennePrime (p : ℕ) : Prop :=
+  Nat.Prime (2^p - 1)
+
+/--
+Wagstaff prime is a prime number of the form `(2ᵖ+1)/3`.
+-/
+def IsGivesWagstaffPrime (p : ℕ) : Prop :=
+  Odd p ∧ Nat.Prime ((2^p + 1) / 3)
+
+/--
+Holds when there is exists a number `k` such that `p = 2ᵏ±1` or `p = 4ᵏ±3`.
+-/
+def IsSpecialForm (p : ℕ) : Prop :=
+  ∃ k : ℕ, p = 2^k + 1 ∨ p = 2^k - 1 ∨ p = 4^k + 3 ∨ p = 4^k - 3
+
+/--
+For any odd natural number `p` if two of the following conditions hold,
+then all three must hold:
+1. `2ᵖ-1` is prime
+2. `(2ᵖ+1)/3` is prime
+3. Exists a number `k` such that `p = 2ᵏ±1` or `p = 4ᵏ±3`
+-/
 @[category research open, AMS 11]
-theorem new_mersenne_conjecture :
-  ∀ p : ℕ, Odd p →
+theorem new_mersenne_conjecture (p : ℕ) (hp : Odd p) :
   (
-    (condition1 p ∧ condition2 p → condition3 p) ∧
-    (condition1 p ∧ condition3 p → condition2 p) ∧
-    (condition2 p ∧ condition3 p → condition1 p)
+    (IsGivesMersennePrime p ∧ IsGivesWagstaffPrime p → IsSpecialForm p) ∧
+    (IsGivesMersennePrime p ∧ IsSpecialForm p → IsGivesWagstaffPrime p) ∧
+    (IsGivesWagstaffPrime p ∧ IsSpecialForm p → IsGivesMersennePrime p)
   ) := by
   sorry
