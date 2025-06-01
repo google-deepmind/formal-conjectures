@@ -22,5 +22,5 @@ If available a suggestion of how to fix this misformalization.
 Add any other context about the problem here.
 
 ### Choose either option
-[ ] I plan on working on this issue
-[ ] This issue is up for grabs: I would like to see this misformalization fixed by somebody else
+- [ ] I plan on working on this issue
+- [ ] This issue is up for grabs: I would like to see this misformalization fixed by somebody else
