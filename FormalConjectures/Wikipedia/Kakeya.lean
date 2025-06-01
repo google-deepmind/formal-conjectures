@@ -95,5 +95,5 @@ This was first proved by Dvir in [Dv08] and the currently best known bound is du
 @[category research solved, AMS 52]
 theorem kakeya_finite {F : Type*} [Field F] [Fintype F] {n : ℕ}
     (K : Finset (Fin n → F)) (hK : IsKakeyaFinite K) :
-    K.card ≥ (card F ^ n) / (2 - 1 / card F) ^ (n - 1) := by
+    K.card ≥ card F ^ n / (2 - 1 / card F) ^ (n - 1) := by
   sorry
