@@ -30,5 +30,5 @@ theorem andrica_conjecture :
   ∀ (n : ℕ),
     let prev := n.nth Prime;
     let next := (n+1).nth Prime;
-    Real.sqrt next - Real.sqrt prev < 1 := by
+    next.sqrt - prev.sqrt < 1 := by
   sorry
