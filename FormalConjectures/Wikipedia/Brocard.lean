@@ -19,17 +19,18 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Brocard's Conjecture
 
-For every n ≥ 2, between the squares of the n-th and (n+1)-th primes,
-there are at least four prime numbers.
-
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Brocard%27s_conjecture)
 -/
 
+
+/--
+For every `n ≥ 2`, between the squares of the n-th and (n+1)-th primes,
+there are at least four prime numbers.
+-/
 @[category research open, AMS 11]
-theorem brocard_conjecture :
-  ∀ n : ℕ, n ≥ 2 →
-    let prev := Nat.nth Prime n;
-    let next := Nat.nth Prime (n+1);
+theorem brocard_conjecture (n : ℕ) (hn : n ≥ 1) :
+    let prev := n.nth Prime;
+    let next := (n+1).nth Prime;
     let primesInBetween := (Finset.Ioo (prev^2) (next^2)).filter Nat.Prime
-    primesInBetween.card ≥ 4 := by
+    4 ≤ primesInBetween.card := by
   sorry
