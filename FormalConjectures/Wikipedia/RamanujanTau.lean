@@ -17,9 +17,17 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Ramanujan-Petersson Conjecture
+# Ramanujan τ-function
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Ramanujan%E2%80%93Petersson_conjecture)
+There are two conjectures related to the Ramanujan τ-function:
+
+- Ramanujan-Petersson conjecture: For every prime `p`, the absolute value of the Ramanujan τ-function at `p` is bounded by `2 * p^(11/2)`.
+- Lehmer's conjecture: The Ramanujan τ-function is never zero for any positive integer `n`.
+
+*Reference:*
+
+- [Ramanujan-Petersson conjecture](https://en.wikipedia.org/wiki/Ramanujan%E2%80%93Petersson_conjecture)
+- [Lehmer's conjecture](https://en.wikipedia.org/wiki/Ramanujan_tau_function#Conjectures_on_the_tau_function)
 -/
 
 open PowerSeries PowerSeries.WithPiTopology
@@ -48,4 +56,8 @@ lemma τ_two : τ 2 = -24 := by
 
 @[category research solved, AMS 11]
 theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : ℝ) ^ ((11 : ℝ) / 2) := by
+  sorry
+
+@[category research open, AMS 11]
+theorem lehmer_ramanujan_tau : ∀ n : ℕ+, τ n ≠ 0 := by
   sorry
