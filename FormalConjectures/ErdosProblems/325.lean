@@ -17,8 +17,8 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 304
-*Reference:* [erdosproblems.com/304](https://www.erdosproblems.com/304)
+# Erdős Problem 325
+*Reference:* [erdosproblems.com/325](https://www.erdosproblems.com/325)
 -/
 
 open Asymptotics Filter
