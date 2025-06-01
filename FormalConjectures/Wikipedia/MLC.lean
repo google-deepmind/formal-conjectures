@@ -39,9 +39,9 @@ abbrev mandelbrotSet := multibrotSet 2
 /-- The `multibrotSet n` is equivalently the set of all parameters `c` for which the orbit of `0`
 under `z ↦ z ^ n + c` does not leave the closed disk of radius `2 ^ (n - 1)⁻¹` around the origin. -/
 @[category API]
-theorem multibrotSet_eq {n : ℕ} [Fact (2 ≤ n)] :
+theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
     multibrotSet n = {c | ∀ k, ‖(fun z ↦ z ^ n + c)^[k] 0‖ ≤ 2 ^ (n - 1 : ℝ)⁻¹} := by
-  have hn := one_lt_two.trans_le (Fact.out : 2 ≤ n)
+  replace hn := one_lt_two.trans_le hn
   set r : ℝ := 2 ^ (n - 1 : ℝ)⁻¹
   have hr : 0 < r := by positivity
   have hr' : r ^ (n - 1) = 2 := by
@@ -90,8 +90,7 @@ theorem multibrotSet_eq {n : ℕ} [Fact (2 ≤ n)] :
 under `z ↦ z ^ 2 + c` does not leave the closed disk of radius two around the origin. -/
 @[category API]
 theorem mandelbrotSet_eq : mandelbrotSet = {c | ∀ k, ‖(fun z ↦ z ^ 2 + c)^[k] 0‖ ≤ 2} := by
-  have : Fact (2 ≤ 2) := ⟨le_rfl⟩
-  simpa [show (2 - 1 : ℝ) = 1 by norm_num] using multibrotSet_eq (n := 2)
+  simpa [show (2 - 1 : ℝ) = 1 by norm_num] using multibrotSet_eq le_rfl
 
 /-- The MLC conjecture, stating that the mandelbrot set is locally connected. -/
 @[category research open, AMS 37]
