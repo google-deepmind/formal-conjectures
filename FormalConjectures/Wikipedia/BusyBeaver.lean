@@ -70,7 +70,7 @@ theorem BB_2 : BB 2 = 6 := by
 theorem BB_3 : BB 3 = 21 := by
   sorry
 
-@[category research solved, AMS 3]
+@[category undergraduate, AMS 3]
 theorem BB_4 : BB 4 = 107 := by
   sorry
 
