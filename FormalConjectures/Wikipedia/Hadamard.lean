@@ -72,6 +72,11 @@ example (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamar
       norm_num
   · sorry
 
+/- Note: the conjecture was originally formulated by
+Hadamard as a question: "For which values of $n=4k$ does
+a Hadamard matrix exist." However the expectation seems
+to be that all such matrices are Hadamard, and the
+formalisation has been written with this in mind. -/
 
 /--
 There exists a Hadamard matrix for all $n = 4k$.
