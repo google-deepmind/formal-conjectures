@@ -32,7 +32,7 @@ theorem fermat_number_are_composite : (∀ n > 4, ¬Prime n.fermatNumber) ↔ an
 /--
 Are there infinitely many Fermat primes?
 -/
-@[category research open]
+@[category research open, AMS 11]
 theorem infinite_fermat_primes : Infinite {n : ℕ | Prime n.fermatNumber} ↔ answer(sorry) := by
   sorry
 
