@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Some conjectures about Fermat numbers
+# Open questions about Fermat numbers
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Fermat_number)
 -/
