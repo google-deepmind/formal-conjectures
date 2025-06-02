@@ -60,5 +60,5 @@ Solution: yes.
 Ref: Green, Ben and Tao, Terence, _The primes contain arbitrarily long arithmetic progressions_
 -/
 @[category research solved, AMS 5, AMS 11]
-theorem erdos_219 : ∀ N, ∃ l ∈ primeArithmeticProgressions, N ≤ l.length := by
+theorem erdos_219 : (∀ N, ∃ l ∈ primeArithmeticProgressions, N ≤ l.length) ↔ answer(True) := by
   sorry

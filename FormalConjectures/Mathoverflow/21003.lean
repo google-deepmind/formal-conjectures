@@ -16,21 +16,23 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Erdős Problem 248
+open scoped Polynomial
 
-*Reference:* [erdosproblems.com/248](https://www.erdosproblems.com/248)
+/-!
+# Mathoverflow 21003
+
+Is there any polynomial $f(x, y) \in \mathbb{Q}[x, y]$ such that
+$f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
+
+*Reference:* [mathoverflow/21003](https://mathoverflow.net/questions/21003)
+asked by user [*Z.H.*](https://mathoverflow.net/users/5098/z-h)
 -/
-open scoped ArithmeticFunction
 
 /--
-Are there infinitely many $n$ such that, for all $k\geq 1$
-$$
-  \omega(n + k) \ll k?
-$$
-Here $\omega(n)$ is the number of distinct prime divisors
-of $n$.
+Is there any polynomial $f(x, y) \in \mathbb{Q}[x, y]$ such that
+$f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 -/
-@[category research open, AMS 11]
-theorem erdos_248 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, ω (n + k) ≤ C * k }.Infinite) ↔ answer(sorry) := by
+@[category research open, AMS 12]
+theorem mathoverflow_21003 :
+    (∃ f : MvPolynomial (Fin 2) ℚ, Function.Bijective fun x ↦ f.eval x) ↔ answer(sorry) := by
   sorry

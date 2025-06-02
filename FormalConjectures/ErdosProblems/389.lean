@@ -28,9 +28,9 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_389 (n : ℕ) (h : 1 ≤ n) :
-    ∃ k ≥ 1,
-      ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i) :=
+theorem erdos_389 :
+    (∀ n ≥ 1, ∃ k ≥ 1, ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i)) ↔
+    answer(sorry) := by
   sorry
 
 /--
@@ -41,5 +41,5 @@ For example, the minimal $k$ for $n = 4$ is $207$.
 theorem erdos_389.variants.mehta_four :
     IsLeast
       { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (4 + i) ∣ ∏ i ∈ Finset.range k, (4 + k + i) }
-      207 :=
+      207 := by
   sorry

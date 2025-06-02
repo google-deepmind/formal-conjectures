@@ -35,7 +35,7 @@ the author claims that by "slightly modifying the method of [his proof]", one ca
 lemma baumgartner_strong (V : Type*) [AddCommGroup V] [Module ℚ V] (k : ℕ) :
     ∃ X : Set V,
       (∀ Y, Y.IsAPOfLength ⊤ → (X ∩ Y).Nonempty) ∧
-      (∀ Y, IsAPOfLength Y k → (X ∩ Y).ncard ≤ 2) :=
+      (∀ Y, IsAPOfLength Y k → (X ∩ Y).ncard ≤ 2) := by
   sorry
 
 /-- The statement for which Baumgartner actually writes a proof. -/
@@ -57,14 +57,15 @@ Answer "yes" according to remark on page 23 of:
 - Erdös and Graham, "Old and new problems and results in combinatorial number theory", 1980.
 
 
-"Baumgartner also proved the conjecture of Erdös that if $A$ is a sequence of positive integers with all
-sums $a + a'$ distinct for $a, a' ∈ A$ then the complement of $A$ contains an
+"Baumgartner also proved the conjecture of Erdös that if $A$ is a sequence of positive integers with
+all sums $a + a'$ distinct for $a, a' ∈ A$ then the complement of $A$ contains an
 infinite A.P."
 
 
 But this seems to be a misprint, since the opposite is true:
-There is a sequence of positive integers with all $a + a'$ distinct for $a, a' ∈ A$ such that the complement of $A$ contains no
-infinite A.P., i.e. there is a Sidon set $A$ which intersects all arithmetic progressions.
+There is a sequence of positive integers with all $a + a'$ distinct for $a, a' ∈ A$ such that the
+complement of $A$ contains no infinite A.P., i.e. there is a Sidon set $A$ which intersects all
+arithmetic progressions.
 
 So the answer should be "no".
 
@@ -72,8 +73,8 @@ This can be seen, as pointed out by Thomas Bloom [erdosproblems.com/198](https:/
 by an elementary argument.
 -/
 @[category research solved, AMS 5, AMS 11]
-theorem erdos_198 : ∃ A : ℕ →o ℕ,
-    IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → ((range A) ∩ Y).Nonempty) := by
+theorem erdos_198 : (∀ A : ℕ →o ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ (range A)ᶜ)) ↔
+    answer(False) := by
   sorry
 
 /--

@@ -47,5 +47,5 @@ theorem erdos_348 :
     { (m, n) | (m) (n) (_ : m < n) (a : ℕ → ℕ) (_ : Monotone a)
       (_ : ∀ s, s.card = m → (Function.updateFinset a s 0).IsCompleteNatSeq)
         (_ : ∀ t, t.card = n → ¬(Function.updateFinset a t 0).IsCompleteNatSeq) } =
-    answer(sorry) :=
+    answer(sorry) := by
   sorry

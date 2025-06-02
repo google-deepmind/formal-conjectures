@@ -29,9 +29,9 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_457 : ∃ ε > (0 : ℝ),
+theorem erdos_457 : (∃ ε > (0 : ℝ),
     { (n : ℕ) | ∀ (p : ℕ), p ≤ (2 + ε) * Real.log n → p.Prime →
-      p ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) }.Infinite :=
+      p ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) }.Infinite) ↔ answer(sorry) := by
   sorry
 
 /-- Let $q(n, k)$ denote the least prime which does not divide
@@ -47,8 +47,8 @@ problem asks whether $q(n,\log n)\geq(2+\epsilon)\log n$
 infinitely often.
 -/
 @[category research open, AMS 11]
-theorem erdos_457.variants.qnk : ∃ ε > (0 : ℝ),
-    { (n : ℕ) | (2 + ε) * Real.log n ≤ q n (Real.log n) }.Infinite :=
+theorem erdos_457.variants.qnk : (∃ ε > (0 : ℝ),
+    { (n : ℕ) | (2 + ε) * Real.log n ≤ q n (Real.log n) }.Infinite) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -61,6 +61,6 @@ Can one prove that $q(n,\log n)<(1−\epsilon)(\log n)^2$
 for all large $n$ and some $\epsilon > 0$?
 -/
 @[category research open, AMS 11]
-theorem erdos_457.variants.one_sub : ∃ ε > (0 : ℝ),
-    ∀ᶠ n in Filter.atTop, q n (Real.log n) < (1 - ε) * Real.log n ^ 2 :=
+theorem erdos_457.variants.one_sub : (∃ ε > (0 : ℝ),
+    ∀ᶠ n in Filter.atTop, q n (Real.log n) < (1 - ε) * Real.log n ^ 2) ↔ answer(sorry) := by
   sorry

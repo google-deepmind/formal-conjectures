@@ -27,12 +27,14 @@ Let $f: \mathbb{Z} \rightarrow \mathbb{Z}$ be a polynomial of degree at least $2
 Is there a set $A$ such that every $z \in \mathbb{Z}$ has exactly one representation as $z = a + f(n)$ for some $a \in A$ and $n \in \mathbb{Z}$?
 -/
 @[category research open, AMS 12]
-theorem erdos_477 (f : Polynomial ℤ) (hf₀ : 2 ≤ f.degree) : ∃ (A : Set ℤ),
-    ∀ z, ∃! a ∈ A ×ˢ Set.range f.eval, z = a.1 + a.2 := sorry
+theorem erdos_477 : (∀ (f : Polynomial ℤ), 2 ≤ f.degree →
+    (∃ (A : Set ℤ), ∀ z, ∃! a ∈ A ×ˢ Set.range f.eval, z = a.1 + a.2)) ↔ answer(sorry) := by
+  sorry
 
 /--
 Probably there is no such $A$ for any polynomial $f$.
 -/
 @[category research open, AMS 12]
 theorem erdos_477.variants.strong_negation (f : Polynomial ℤ) (hf₀ : 2 ≤ f.degree) : ¬ ∃ (A : Set ℤ),
-    ∀ z, ∃! a ∈ A ×ˢ Set.range f.eval, z = a.1 + a.2 := sorry
+    ∀ z, ∃! a ∈ A ×ˢ Set.range f.eval, z = a.1 + a.2 := by
+  sorry

@@ -30,7 +30,7 @@ Are there infinitely many pairs of integers $n ≠ m$ such that $\binom{2n}{n}$
 and $\binom{2m}{m}$ have the same set of prime divisors?
 -/
 @[category research open, AMS 11]
-theorem erdos_730 : S.Infinite := by
+theorem erdos_730 : S.Infinite ↔ answer(sorry) := by
   sorry
 
 
@@ -61,7 +61,8 @@ on erdosproblems.com.
 theorem erdos_730.variants.succ_pair_criterion (n : ℕ) (h : 2 < n) :
     (n, n+1) ∈ S ↔ ∀ p ∈ Set.Ioc 2 n, ∀ [hp : Fact p.Prime],
     let kummer_condition: ℕ → Prop := fun n => (p.digits n).Forall (fun m => m ≤ (p - 1) / 2)
-    (kummer_condition n ↔ kummer_condition (n + 1)) := sorry
+    (kummer_condition n ↔ kummer_condition (n + 1)) := by
+  sorry
 
 open scoped Topology in
 /--

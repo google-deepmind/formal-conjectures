@@ -39,8 +39,8 @@ $$
 for all $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_377 : ∃ C > (0 : ℝ),
-    ∀ (n : ℕ), sumInvPrimesNotDvdCentralBinom n ≤ C :=
+theorem erdos_377 : (∃ C > (0 : ℝ), ∀ (n : ℕ), sumInvPrimesNotDvdCentralBinom n ≤ C) ↔
+    answer(sorry) := by
   sorry
 
 /--
@@ -63,7 +63,7 @@ $$
 theorem erdos_377.variants.limit.i (γ₀ : ℝ)
     (hγ₀ : γ₀ = ∑' (k : ℕ), (k + 2 : ℝ).log / 2 ^ (k + 2)) :
     Tendsto (fun (x : ℕ) => (1 : ℝ) / x * ∑ n ∈ Finset.Icc 1 x, sumInvPrimesNotDvdCentralBinom n)
-      atTop (𝓝 γ₀) :=
+      atTop (𝓝 γ₀) := by
   sorry
 
 /--
@@ -106,7 +106,7 @@ then for almost all integers $f(m) = \gamma_0 + o(1)$.
 @[category research solved, AMS 11]
 theorem erdos_377.variants.ae (γ₀ : ℝ) (hγ₀ : γ₀ = ∑' (k : ℕ), (k + 2 : ℝ).log / 2 ^ (k + 2)) :
     ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
-      ∀ᶠ n in cofinite, sumInvPrimesNotDvdCentralBinom n = γ₀ + o n :=
+      ∀ᶠ n in cofinite, sumInvPrimesNotDvdCentralBinom n = γ₀ + o n := by
   sorry
 
 /--
@@ -123,5 +123,5 @@ $$
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.ub : ∃ c < (1 : ℝ),
-      ∀ᶠ n in atTop, sumInvPrimesNotDvdCentralBinom n ≤ c * (n : ℝ).log.log :=
+      ∀ᶠ n in atTop, sumInvPrimesNotDvdCentralBinom n ≤ c * (n : ℝ).log.log := by
   sorry

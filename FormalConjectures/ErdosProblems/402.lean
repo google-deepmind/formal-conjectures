@@ -30,7 +30,7 @@ $$
 $$ -/
 @[category research solved, AMS 11]
 theorem erdos_402 (A : Finset ℕ) (h₁ : 0 ∉ A) (h₂ : A.Nonempty) : ∃ᵉ (a ∈ A) (b ∈ A),
-    a.gcd b ≤ (a / A.card : ℚ) :=
+    a.gcd b ≤ (a / A.card : ℚ) := by
   sorry
 
 /-- A conjecture of Graham [Gr70], who also conjectured that (assuming $A$ itself
@@ -48,7 +48,7 @@ theorem erdos_402.variants.equality (A : Finset ℕ) (h₁ : 0 ∉ A) (h₂ : A.
     (hA : ∀ n, A ≠ Finset.Icc 1 n ∧
     A ≠ ((Finset.Icc 1 n).image fun i => ((Finset.Icc 1 n).lcm id) / i) ∧
     A ≠ {2,3,4,6}) :
-    ∃ᵉ (a ∈ A) (b ∈ A), a.gcd b < (a / A.card : ℚ) :=
+    ∃ᵉ (a ∈ A) (b ∈ A), a.gcd b < (a / A.card : ℚ) := by
   sorry
 
 /-- Proved for all sufficiently large sets (including the sharper version which
@@ -67,5 +67,5 @@ theorem erdos_402.variants.szegedy_zaharescu_weak : ∀ᶠ n in atTop,
       (n ≤ (A ×ˢ A).sup (fun x => x.1 / x.1.gcd x.2)) ∧
       (n = (A ×ˢ A).sup (fun x => x.1 / x.1.gcd x.2) ↔
         ∃ k > 0, A = (Finset.Icc 1 n).image (k * ·) ∨
-          A = (Finset.Icc 1 n).image (k * (Finset.Icc 1 n).lcm id / ·)):=
+          A = (Finset.Icc 1 n).image (k * (Finset.Icc 1 n).lcm id / ·)):= by
   sorry

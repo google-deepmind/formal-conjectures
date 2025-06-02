@@ -35,10 +35,8 @@ $\prod_{a\neq b\in A}(a + b)$ has at least $f(n)$ distinct prime factors.
 Is it true that $\frac{f(n)}{\log n} \to\infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_126
-    (f : ℕ → ℕ)
-    (hf : IsMaximalAddFactorsCard f) :
-    Tendsto (fun n => f n / Real.log n) atTop atTop :=
+theorem erdos_126 : (∀ (f : ℕ → ℕ), IsMaximalAddFactorsCard f →
+    Tendsto (fun n => f n / Real.log n) atTop atTop) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -54,7 +52,7 @@ theorem erdos_126.variants.IsBigO
     (f : ℕ → ℕ)
     (hf : IsMaximalAddFactorsCard f) :
     ((fun (n : ℕ) => Real.log n) =O[atTop] fun (n : ℕ) => (f n : ℝ)) ∧
-      (fun (n : ℕ) => (f n : ℝ)) =O[atTop] fun (n : ℕ) => n / Real.log n :=
+      (fun (n : ℕ) => (f n : ℝ)) =O[atTop] fun (n : ℕ) => n / Real.log n := by
   sorry
 
 /--
@@ -64,5 +62,5 @@ Erdős says that $f(n) = o(\frac{n}{\log n})$ has never been proved.
 theorem erdos_126.variants.isLittleO
     (f : ℕ → ℕ)
     (hf : IsMaximalAddFactorsCard f) :
-    (fun (n : ℕ) => (f n : ℝ)) =o[atTop] (fun (n : ℕ) => n / Real.log n) :=
+    (fun (n : ℕ) => (f n : ℝ)) =o[atTop] (fun (n : ℕ) => n / Real.log n) := by
   sorry

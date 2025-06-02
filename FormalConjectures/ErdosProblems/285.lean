@@ -34,6 +34,10 @@ Is it true that
 $$
   f(k) = (1 + o(1)) \frac{e}{e - 1} k ?
 $$
+
+Proved by Martin [Ma00].
+
+[Ma00] Martin, Greg, _Denser Egyptian fractions_. Acta Arith. (2000), 231-260.
 -/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_285
@@ -46,14 +50,12 @@ theorem erdos_285
         { n (Fin.last k) | (n : Fin k.succ → ℕ) (_ : StrictMono n) (_ : 0 ∉ Set.range n)
           (_ : 1 = ∑ i, (1 : ℝ) / n i) }
         (f k)) :
-    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
-      ∀ k ∈ S, f k = (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) := by
+    (∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+      ∀ k ∈ S, f k = (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1)) ↔ answer(True) := by
   sorry
 
 /--
 It is trivial that $f(k)\geq (1 + o(1)) \frac{e}{e - 1}k$.
-
-[Ma00] Martin, Greg, _Denser Egyptian fractions_. Acta Arith. (2000), 231-260.
 -/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_285.variants.lb (f : ℕ → ℕ)
@@ -66,5 +68,5 @@ theorem erdos_285.variants.lb (f : ℕ → ℕ)
           (_ : 1 = ∑ i, (1 : ℝ) / n i) }
         (f k)) :
     ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
-      ∀ k ∈ S, (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) ≤ f k :=
+      ∀ k ∈ S, (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) ≤ f k := by
   sorry

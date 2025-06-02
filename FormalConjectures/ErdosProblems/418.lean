@@ -27,9 +27,14 @@ open scoped ArithmeticFunction
 
 /--
 Are there infinitely many integers not of the form $n - \phi(n)$?
+
+This is true, as shown by Browkin and Schinzel [BrSc95].
+
+[BrSc95] Browkin, J. and Schinzel, A., _On integers not of the form {$n-\phi(n)$}_.
+Colloq. Math. (1995), 55-58.
 -/
 @[category research solved, AMS 11]
-theorem erdos_418 : { (n - n.totient : ℕ) | n }ᶜ.Infinite :=
+theorem erdos_418 : { (n - n.totient : ℕ) | n }ᶜ.Infinite ↔ answer(True) := by
   sorry
 
 /--
@@ -70,7 +75,7 @@ $\sigma(n) - n$.
 @[category research solved, AMS 11]
 theorem erdos_418.variants.sigma :
     ∃ (S : Set ℕ) (hS : S.HasPosDensity),
-      S ⊆ { (σ 1 n - n : ℕ) | n }ᶜ :=
+      S ⊆ { (σ 1 n - n : ℕ) | n }ᶜ := by
   sorry
 
 /--
@@ -82,7 +87,7 @@ form $n - \phi(n)$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.soln :
-    { 2 ^ (k + 1) * 509203 | k } ⊆ { (n - n.totient : ℕ) | n }ᶜ :=
+    { 2 ^ (k + 1) * 509203 | k } ⊆ { (n - n.totient : ℕ) | n }ᶜ := by
   sorry
 
 /--
@@ -91,6 +96,5 @@ not of the form $n - \phi(n)$.
 -/
 @[category research open, AMS 11]
 theorem erdos_418.variants.density :
-    ∃ (S : Set ℕ) (hS : S.HasPosDensity),
-      S ⊆ { (n - n.totient : ℕ) | n }ᶜ :=
+    (∃ (S : Set ℕ) (hS : S.HasPosDensity), S ⊆ { (n - n.totient : ℕ) | n }ᶜ) ↔ answer(sorry) := by
   sorry

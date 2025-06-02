@@ -34,11 +34,10 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem erdos_4 (C : ℝ) (hC : 0 < C) :
-    Erdos4For C :=
+theorem erdos_4 : (∀ C > 0, Erdos4For C) ↔ answer(True) := by
   sorry
 
 @[category research solved, AMS 11]
 theorem erdos_4.variants.rankin :
-    ∃ C > 0, Erdos4For C :=
+    ∃ C > 0, Erdos4For C := by
   sorry

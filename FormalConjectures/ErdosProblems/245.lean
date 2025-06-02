@@ -35,11 +35,15 @@ Is it true that
 $$
 \limsup_{N\to\infty}\frac{|(A + A)\cap \{1, ..., N\}|}{|A \cap \{1, ..., N\}|} \geq 3?
 $$
+
+The answer is yes, proved by Freiman [Fr73].
+
+[Fr73] Fre\u{\i}man, G. A., _Foundations of a structural theory of set addition_. (1973), vii+108.
 -/
 @[category research solved, AMS 5, AMS 11]
-theorem erdos_245 (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    3 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop :=
+theorem erdos_245 :
+    (∀ (A : Set ℕ), A.Infinite → Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0) →
+    3 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop) ↔ answer(True) := by
   sorry
 
 /--
@@ -55,7 +59,7 @@ theorem erdos_245.variants.exists_limit (A : Set ℕ) (h_inf : A.Infinite)
     (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
     -- Use `EReal` to disinguish infinite limit from other types of non-existence
     ∃ (α : EReal),
-      Tendsto (fun N => (((A + A).bdd N |>.ncard : EReal) / ((A.bdd N).ncard) : EReal)) atTop (𝓝 α) :=
+      Tendsto (fun N => (((A + A).bdd N |>.ncard : EReal) / ((A.bdd N).ncard) : EReal)) atTop (𝓝 α) := by
   sorry
 
 /--
@@ -68,5 +72,5 @@ $$
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
     (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    2 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop :=
+    2 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop := by
   sorry

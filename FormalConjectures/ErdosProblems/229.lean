@@ -28,25 +28,23 @@ exists some $k_n \geq 0$ such that
 $$
   f^{(k_n)}(z) = 0\quad\text{for all $z\in S_n$?}
 $$
--/
+
+Solved in the affirmative by Barth and Schneider [BaSc72].
+
+[BaSc72] Barth, K. F. and Schneider, W. J., _On a problem of Erdős concerning the zeros of_
+_the derivatives of an entire function_. Proc. Amer. Math. Soc. (1972), 229--232.-/
 @[category research solved, AMS 30]
-theorem erdos_229
-    (S : ℕ → Set ℂ)
-    (h : ∀ (n), derivedSet (S n) = ∅) :
+theorem erdos_229 :
     letI := Polynomial.algebraPi ℂ ℂ ℂ
-    ∃ (f : ℂ → ℂ) (k : ℕ → ℕ), Transcendental (Polynomial ℂ) f ∧ Differentiable ℂ f ∧ ∀ (n) (z) (_ : z ∈ S n),
-      iteratedDeriv (k n) f z = 0 :=
+    (∀ (S : ℕ → Set ℂ), (∀ n, derivedSet (S n) = ∅) →
+    ∃ (f : ℂ → ℂ), Transcendental (Polynomial ℂ) f ∧ Differentiable ℂ f ∧ ∀ n ≥ 1,
+      ∃ k, ∀ z ∈ S n, iteratedDeriv k f z = 0) ↔ answer(True) := by
   sorry
 
 /--
-Solved in the affirmative by Barth and Schneider [BaSc72], who proved the following.
-
 Let $\{S_k\}$ be any sequence of sets in the complex plane, each of which has no finite
 limit point. Then there exists a sequence $\{n_k\}$ of positive integers and a
 transcendental entire function $f(z)$ such that $f^{(n_k)}(z) = 0$ if $z \in S_k$.
-
-[BaSc72] Barth, K. F. and Schneider, W. J., _On a problem of Erdős concerning the zeros of_
-_the derivatives of an entire function_. Proc. Amer. Math. Soc. (1972), 229--232.
 -/
 @[category research solved, AMS 30]
 theorem theorem_1
@@ -55,5 +53,5 @@ theorem theorem_1
   letI := Polynomial.algebraPi ℂ ℂ ℂ
   ∃ (f : ℂ → ℂ) (n : ℕ → ℕ),
     Differentiable ℂ f ∧ Transcendental (Polynomial ℂ) f ∧ ∀ k, 0 < n k ∧ ∀ {z} (_: z ∈ S k),
-      iteratedDeriv (n k) f z = 0 :=
+      iteratedDeriv (n k) f z = 0 := by
   sorry

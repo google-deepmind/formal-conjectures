@@ -36,7 +36,7 @@ theorem erdos_694 (max min : ℕ → ℕ)
     (x : ℕ) :
     IsGreatest
       { (max n : ℚ) / min n | (n : ℕ) (_ : n ≤ x) }
-      answer(sorry) :=
+      answer(sorry) := by
   sorry
 
 /--
@@ -45,7 +45,7 @@ exactly one solution, that is $\frac{f_{\max}(n)}{f_{\min}(n)} = 1$.
 -/
 @[category research open, AMS 11]
 theorem erdos_694.variants.carmichael :
-    ∃ n > 0, ∃! m, Nat.totient m = n :=
+    (∃ n > 0, ∃! m, Nat.totient m = n) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -54,5 +54,5 @@ exactly one solution, then there must be infinitely many such $n$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_694.variants.inf_unique (h : ∃ n > 0, ∃! m, Nat.totient m = n) :
-    { n | ∃! m, Nat.totient m = n }.Infinite :=
+    { n | ∃! m, Nat.totient m = n }.Infinite := by
   sorry

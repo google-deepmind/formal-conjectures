@@ -44,5 +44,5 @@ The answer is yes, proved by Ruzsa [Ru78].
 theorem erdos_899 : (∀ (A : Set ℕ), A.Infinite →
     Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0) →
     Tendsto (fun N => ((A - A : Set ℕ).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop atTop) ↔
-    answer(True) :=
+    answer(True) := by
   sorry

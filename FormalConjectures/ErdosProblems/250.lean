@@ -30,13 +30,12 @@ $$
 $$
 irrational? Here $\sigma(n)$ is the sum of divisors function.
 
-Solved by Nesterenko in [Ne96]
+The answer is yes, as shown by Nesterenko [Ne96].
 
 [Ne96] Nesterenko, Yu V., _Modular functions and transcendence questions_,
 Mat. Sb. 187 *9* (1996), 1319--1348.
 -/
 @[category research solved, AMS 11]
-theorem erdos_250 (x : ℝ)
-    (h : HasSum (fun (n : ℕ) => σ 1 n / (2 : ℝ) ^ n) x) :
-    Irrational x :=
+theorem erdos_250  : (∀ x, HasSum (fun (n : ℕ) => σ 1 n / (2 : ℝ) ^ n) x → Irrational x) ↔
+    answer(True):= by
   sorry

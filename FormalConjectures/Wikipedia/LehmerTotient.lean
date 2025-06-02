@@ -17,20 +17,16 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 248
+# Lehmer's totient problem
 
-*Reference:* [erdosproblems.com/248](https://www.erdosproblems.com/248)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_totient_problem)
 -/
-open scoped ArithmeticFunction
 
 /--
-Are there infinitely many $n$ such that, for all $k\geq 1$
-$$
-  \omega(n + k) \ll k?
-$$
-Here $\omega(n)$ is the number of distinct prime divisors
-of $n$.
+Does there exist a composite number $n > 1$ such that Euler’s totient function
+$\varphi(n)$ divides $n - 1$?
 -/
 @[category research open, AMS 11]
-theorem erdos_248 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, ω (n + k) ≤ C * k }.Infinite) ↔ answer(sorry) := by
+theorem lehmer_totient :
+    (∃ n > 1, ¬Prime n ∧ Nat.totient n ∣ n - 1) ↔ answer(sorry) := by
   sorry

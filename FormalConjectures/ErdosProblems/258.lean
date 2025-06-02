@@ -22,28 +22,27 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/258](https://www.erdosproblems.com/258)
 -/
 /--
-Let $a_n → ∞$ be a sequence of non-zero natural numbers. Is $\sum_n \frac{d(n)}{(a_1 ... a_n)}$
-irrational, where $d(n)$ is the number of divisors of $n$?
+Let $a_n \to \infty$ be a sequence of non-zero natural numbers. Is
+$\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of divisors of $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_258
-    (a : ℕ → ℕ) (ha : ∀ n, a n ≠ 0)
-    (ha : Filter.Tendsto a Filter.atTop Filter.atTop) :
-    Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i)) := by
+theorem erdos_258 : (∀ (a : ℕ → ℕ), (∀ n, a n ≠ 0) →
+    Filter.Tendsto a Filter.atTop Filter.atTop →
+    Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i))) ↔
+    answer(sorry) := by
   sorry
 
 
 /--
-Let $a_n → ∞$ be a monotone sequence of non-zero natural numbers.
+Let $a_n \to \infty$ be a monotone sequence of non-zero natural numbers.
 Is $\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of divisors of $n$?
 
 Solution: True (proved by Erdős and Straus, see Erdős Problems website).
 -/
 @[category research solved, AMS 11]
-theorem erdos_258.variants.Monotone
-    (a : ℕ → ℤ) (ha : ∀ n, a n ≠ 0) (ha : Monotone a)
-    (ha : Filter.Tendsto a Filter.atTop Filter.atTop) :
-    Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i)) := by
+theorem erdos_258.variants.Monotone : (∀ (a : ℕ → ℤ), (∀ n, a n ≠ 0) → Monotone a →
+    Filter.Tendsto a Filter.atTop Filter.atTop →
+    Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i))) ↔ answer(True) := by
   sorry
 
 
@@ -53,6 +52,6 @@ Is $\sum_n \frac{d(n)}{t^n}$ irrational, where $t ≥ 2$ is an integer.
 Solution: True (proved by Erdős, see Erdős Problems website)
 -/
 @[category research solved, AMS 11]
-theorem erdos_258.variants.Constant (t : ℕ) (ht : 2 ≤ t):
-    Irrational (∑' (n : ℕ), ((n+1).divisors.card / t^n)) := by
+theorem erdos_258.variants.Constant : (∀ t ≥ 2,
+    Irrational (∑' (n : ℕ), ((n+1).divisors.card / t^n))) ↔ answer(True) := by
   sorry

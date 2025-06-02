@@ -21,12 +21,19 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/303](https://www.erdosproblems.com/303)
 -/
-/--Is it true that in any finite colouring of the integers there exists a monochromatic solution
-to $\frac 1 a = \frac 1 b + \frac 1 c$ with distinct $a, b, c$?-/
+/-- Is it true that in any finite colouring of the integers there exists a monochromatic solution
+to $\frac 1 a = \frac 1 b + \frac 1 c$ with distinct $a, b, c$?
+
+This is true, as proved by Brown and Rödl [BrRo91].
+
+[BrRo91] Brown, Tom C. and Rödl, Voijtech,
+_Monochromatic solutions to equations with unit fractions_.
+Bull. Austral. Math. Soc. (1991), 387-392.
+-/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_303 :
     --For any finite colouring of the integers
-    ∀ (𝓒 : ℤ → ℤ), (Set.range 𝓒).Finite →
+    (∀ (𝓒 : ℤ → ℤ), (Set.range 𝓒).Finite →
       --There exists integers `a, b, c`
       ∃ (a b c : ℤ),
       --that are non-zero and distinct.
@@ -34,5 +41,5 @@ theorem erdos_303 :
       --`a, b, c` satisfy the equation
       (1/a : ℝ) = 1/b + 1/c ∧
       --`a, b, c` have the same color
-      (𝓒 '' {a, b, c}).Subsingleton := by
+      (𝓒 '' {a, b, c}).Subsingleton) ↔ answer(True) := by
   sorry

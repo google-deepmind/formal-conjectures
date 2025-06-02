@@ -31,6 +31,6 @@ private noncomputable abbrev F (a : ℕ → ℕ) (X : ℝ) (k : ℕ) : ℕ∞ :=
 $[a_i,a_{i+1}, … ,a_{i+k−1}] < X$, where the left-hand side is the least common multiple.
 Is it true that, for every $ϵ > 0$, there exists some $k$ such that $F(A,X,k) < X^ϵ$?-/
 @[category research open, AMS 11]
-theorem erdos_873 (a : ℕ → ℕ) (hapos : 0 < a 0) (ha : StrictMono a) (ε : ℝ) (hε : 0 < ε):
-    ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal :=
+theorem erdos_873 : (∀ᵉ (a : ℕ → ℕ) (ε > (0 : ℝ)), 0 < a 0 → StrictMono a →
+    ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal) ↔ answer(sorry) := by
   sorry

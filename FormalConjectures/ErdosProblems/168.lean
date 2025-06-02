@@ -49,7 +49,8 @@ lemma F_2 : F 2 = 2 := rfl
 lemma F_3 : F 3 = 2 := rfl
 
 /--
-Sanity check: elements of `IntervalNonTernarySets N` are precisely non ternary subsets of `{1,...,N}`
+Sanity check: elements of `IntervalNonTernarySets N` are precisely non ternary subsets of
+`{1,...,N}`
 -/
 @[category API, AMS 5, AMS 11]
 lemma mem_IntervalNonTernarySets_iff (N : ℕ) (S : Finset ℕ) :
@@ -60,7 +61,8 @@ lemma mem_IntervalNonTernarySets_iff (N : ℕ) (S : Finset ℕ) :
   exact fun n hn₁ hn₂ hn₃ => h.2 n (h.1 hn₁).1 (h.1 hn₃).2 hn₁ hn₂ hn₃
 
 /--
-Sanity check: if `S` is a maximal non ternary subset of `{1,..., N}` then `F N` is given by the cardinality of `S`
+Sanity check: if `S` is a maximal non ternary subset of `{1,..., N}` then `F N` is given by the
+cardinality of `S`
 -/
 @[category API, AMS 5, AMS 11]
 lemma F_eq_card (N : ℕ) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 N)
@@ -68,20 +70,19 @@ lemma F_eq_card (N : ℕ) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 N)
     F N = S.card := by
   sorry
 
-/--What is the limit `F(N)/N` as `N → ∞`? -/
+/-- What is the limit $F(N)/N$ as $N \to \infty$? -/
 @[category research open, AMS 11]
 theorem erdos_168.parts.i :
     Filter.Tendsto (fun N => (F N / N : ℝ)) Filter.atTop (𝓝 answer(sorry)) := by
   sorry
 
-/--Is the limit `F(N)/N` as `N → ∞` irrational? -/
+/-- Is the limit $F(N)/N$ as $N \to \infty$ irrational? -/
 @[category research open, AMS 5, AMS 11]
 theorem erdos_168.parts.ii :
-    Irrational <| Filter.atTop.limsup (fun N => (F N / N : ℝ)) := by
+    Irrational (Filter.atTop.limsup (fun N => (F N / N : ℝ))) ↔ answer(sorry):= by
   sorry
 
-/--The limit `F(N)/N` as `N → ∞` exists.
-(proved by Graham, Spencer, and Witsenhausen)-/
+/-- The limit $F(N)/N$ as $N \to \infty$ exists. (proved by Graham, Spencer, and Witsenhausen) -/
 @[category research solved, AMS 5, AMS 11]
 theorem erdos_168.variants.limit_exists :
     ∃ x, Filter.Tendsto (fun N => (F N / N : ℝ)) Filter.atTop (𝓝 x) := by

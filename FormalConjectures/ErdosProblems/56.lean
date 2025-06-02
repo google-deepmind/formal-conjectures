@@ -92,11 +92,11 @@ lemma weaklyDivisible_firstPrimesMultiples (N k : ℕ) (hN : 1 ≤ N) :
   sorry
 
 /--
-Suppose `A ⊆ {1,…,N}` is such that there are no `k+1` elements of `A`
-which are relatively prime. An example is the set of all multiples of
-the first `k` primes. Is this the largest such set?
+Suppose $A \subseteq \{1,\dots,N\}$ is such that there are no $k+1$ elements of $A$ which are
+relatively prime. An example is the set of all multiples of the first $k$ primes.
+Is this the largest such set?
 -/
 @[category research solved, AMS 11]
-theorem erdos_56 (N : ℕ) (hN : 2 ≤ N)
-    (k : ℕ) : MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card := by
+theorem erdos_56 : ∀ᵉ (N ≥ 2) (k), (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card) ↔
+    answer(False) := by
   sorry

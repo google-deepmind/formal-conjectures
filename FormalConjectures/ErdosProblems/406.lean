@@ -26,7 +26,7 @@ Is it true that there are only finitely many powers of $2$ which have only the d
 and $1$ when written in base $3$?
 -/
 @[category research open, AMS 11]
-theorem erdos_406 : { n | n.isPowerOfTwo ∧ Nat.digits 3 n ⊆ [0, 1] }.Finite :=
+theorem erdos_406 : { n | n.isPowerOfTwo ∧ Nat.digits 3 n ⊆ [0, 1] }.Finite ↔ answer(sorry) := by
   sorry
 
 /--
@@ -35,5 +35,5 @@ of $2$.
 -/
 @[category research open, AMS 11]
 theorem erdos_406.variants.one_two :
-    IsGreatest { n | n.isPowerOfTwo ∧ Nat.digits 3 n ⊆ [1, 2] } (2 ^ 15) :=
+    IsGreatest { n | n.isPowerOfTwo ∧ Nat.digits 3 n ⊆ [1, 2] } (2 ^ 15) := by
   sorry

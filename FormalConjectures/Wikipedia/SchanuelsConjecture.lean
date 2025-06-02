@@ -155,5 +155,5 @@ theorem sin_exp_transcendental : Transcendental ℚ (Real.sin (rexp 1)) := by
 /-- At least one of $\pi + e$ and $\pi e$ is transcendental. -/
 @[category undergraduate, AMS 11]
 theorem exp_add_pi_or_exp_add_mul_transcendental :
-    Transcendental ℚ (π + rexp 1) ∨ Transcendental ℚ (π * rexp 1) :=
+    Transcendental ℚ (π + rexp 1) ∨ Transcendental ℚ (π * rexp 1) := by
   sorry

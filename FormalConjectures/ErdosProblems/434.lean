@@ -46,7 +46,7 @@ Is it $\{n, n - 1, ..., n - k + 1\}$?
 theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) (h : k ≤ n) :
     IsGreatest
       { Nat.NcardUnrepresentable S | (S : Set ℕ) (_ : S ⊆ Set.Icc 1 n) (_ : S.ncard = k) }
-      (Nat.NcardUnrepresentable <| answer(sorry)) :=
+      (Nat.NcardUnrepresentable <| answer(sorry)) := by
   sorry
 
 /--
@@ -55,8 +55,8 @@ does $A = \{n, n - 1, ..., n - k + 1\}$ maximise the number of integers
 not representable as the sum of finitely many elements from $A$ (with repetitions allowed)?
 -/
 @[category research open, AMS 11]
-theorem erdos_434.parts.ii (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) (h : k ≤ n) :
+theorem erdos_434.parts.ii : (∀ᵉ (n ≥ 1) (k ≥ 1), k ≤ n →
     IsGreatest
       { Nat.NcardUnrepresentable S | (S : Set ℕ) (_ : S ⊆ Set.Icc 1 n) (_ : S.ncard = k) }
-      (Nat.NcardUnrepresentable <| Set.Icc (n - k + 1 : ℕ) n) :=
+      (Nat.NcardUnrepresentable <| Set.Icc (n - k + 1 : ℕ) n)) ↔ answer(sorry) := by
   sorry
