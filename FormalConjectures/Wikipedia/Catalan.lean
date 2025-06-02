@@ -28,5 +28,5 @@ $x, y > 0$ is given by $a = 2$, $b = 3$, $x = 3$, and $y = 2$.
 -/
 @[category research solved, AMS 11]
 theorem catalans_conjecture (a b x y : ℕ) (ha : 1 < a) (hb : 1 < b) (hx : 0 < x) (hy : 0 < y)
-    (x ^ a - y ^ b = 1) : (a = 2 ∧ b = 3 ∧ x = 3 ∧ y = 2) := by
+    (heq : x ^ a - y ^ b = 1) : a = 2 ∧ b = 3 ∧ x = 3 ∧ y = 2 := by
   sorry
