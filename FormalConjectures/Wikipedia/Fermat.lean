@@ -44,9 +44,8 @@ theorem infinite_fermat_composite : Infinite {n : ℕ | ¬Prime n.fermatNumber} 
   sorry
 
 /--
-All Fermat numbers are square-free.
+Are all Fermat numbers are square-free?
 -/
-@[category research open]
-theorem all_fermat_squarefree (n : ℕ) : 
-  Squarefree n.fermatNumber := by
+@[category research open, AMS 11]
+theorem all_fermat_squarefree : (∀ (n : ℕ), Squarefree n.fermatNumber) ↔ answer(sorry) := by
   sorry
