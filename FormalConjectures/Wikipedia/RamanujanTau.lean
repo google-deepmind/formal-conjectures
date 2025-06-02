@@ -21,10 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 There are two conjectures related to the Ramanujan τ-function:
 
-- Ramanujan-Petersson conjecture: For every prime `p`, the absolute value of the Ramanujan τ-function at `p` is bounded by `2 * p^(11/2)`.
+- Ramanujan-Petersson conjecture: For every prime `p`, the absolute value of the
+Ramanujan τ-function at `p` is bounded by `2 * p^(11/2)`.
 - Lehmer's conjecture: The Ramanujan τ-function is never zero for any positive integer `n`.
 
-*Reference:*
+*References:*
 
 - [Ramanujan-Petersson conjecture](https://en.wikipedia.org/wiki/Ramanujan%E2%80%93Petersson_conjecture)
 - [Lehmer's conjecture](https://en.wikipedia.org/wiki/Ramanujan_tau_function#Conjectures_on_the_tau_function)
