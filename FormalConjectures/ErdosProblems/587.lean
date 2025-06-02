@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ def MaxNotSqSum (N : ℕ) : ℕ :=
       ¬ IsSquare (∑ n ∈ S, n)).sup Finset.card
 
 /--
-Nguyen and Vu proved that `|A|≪N^(1/3) * (log N)^O(1)`
+Nguyen and Vu proved that $|A| \ll N^{1/3} (\log N)^{O(1)}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_587.variants.nguyen_vu : ∃ᵉ (O > 0) (O' > 0),

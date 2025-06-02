@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,10 +22,12 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/370](https://www.erdosproblems.com/370)
 -/
 /--
-Are there infinitely many $n$ such that the largest prime factor of $n$ is $< n^{\frac 1 2}$ and
-the largest prime factor of $n + 1$ is $< (n + 1)^{\frac 1 2}$.
+Are there infinitely many $n$ such that the largest prime factor of $n$ is $< n^{\frac{1}{2}}$ and
+the largest prime factor of $n + 1$ is $< (n + 1)^{\frac{1}{2}}$.
+
+Steinerberger has pointed out this problem has a trivial solution.
 -/
 @[category research solved, AMS 11]
 theorem erdos_370 :
-    { n | Nat.maxPrimeFac n < √n ∧ Nat.maxPrimeFac (n + 1) < √(n + 1) }.Infinite :=
+    { n | Nat.maxPrimeFac n < √n ∧ Nat.maxPrimeFac (n + 1) < √(n + 1) }.Infinite ↔ answer(True) := by
   sorry

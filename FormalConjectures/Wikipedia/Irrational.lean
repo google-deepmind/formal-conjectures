@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,35 +31,43 @@ local notation "e" => exp 1
 
 /-- $e + \pi$ is irrational -/
 @[category research open, AMS 33]
-theorem irrational_e_plus_pi : Irrational (e + π) := sorry
+theorem irrational_e_plus_pi : Irrational (e + π) := by
+  sorry
 
 /-- $e \pi$ is irrational -/
 @[category research open, AMS 33]
-theorem irrational_e_times_pi : Irrational (e * π) := sorry
+theorem irrational_e_times_pi : Irrational (e * π) := by
+  sorry
 
 /-- $e ^ e$ is irrational -/
 @[category research open, AMS 33]
-theorem irrational_e_to_e : Irrational (e ^ e) := sorry
+theorem irrational_e_to_e : Irrational (e ^ e) := by
+  sorry
 
 /-- $\pi ^ e$ is irrational -/
 @[category research open, AMS 33]
-theorem irrational_pi_to_e : Irrational (π ^ e) := sorry
+theorem irrational_pi_to_e : Irrational (π ^ e) := by
+  sorry
 
 /-- $\pi ^ \pi$ is irrational -/
 @[category research open, AMS 33]
-theorem irrational_pi_to_pi : Irrational (π ^ π) := sorry
+theorem irrational_pi_to_pi : Irrational (π ^ π) := by
+  sorry
 
 /-- $\ln(\pi)$ is irrational -/
 @[category research open, AMS 33]
-theorem irrational_ln_pi : Irrational (log π) := sorry
+theorem irrational_ln_pi : Irrational (log π) := by
+  sorry
 
 /-- The the difference between harmonic series and natural logarithm, also known
 as Euler-Mascheroni constant $\gamma$ is irrational -/
 @[category research open, AMS 33]
 theorem irrational_euler_mascheroni :
-    Irrational eulerMascheroniConstant := sorry
+    Irrational eulerMascheroniConstant := by
+  sorry
 
 /-- The Catalan constant is irrational -/
 @[category research open, AMS 11, AMS 33]
 theorem irrational_catalan_constant :
-    Irrational (∑' n : ℕ, (-1)^n / (2*n + 1)^2) := sorry
+    Irrational (∑' n : ℕ, (-1)^n / (2*n + 1)^2) := by
+  sorry
