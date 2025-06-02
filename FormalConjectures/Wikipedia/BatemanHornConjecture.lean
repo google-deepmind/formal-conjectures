@@ -38,21 +38,22 @@ def SatisfiesCompatibilityCondition (polys : Finset ℤ[X]) : Prop :=
   ∀ p : ℕ, Nat.Prime p → ∃ n : ℤ, ¬(↑p : ℤ) ∣ (polys.prod id).eval n
 
 -- Count of residue classes mod p where at least one polynomial vanishes
-def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
+noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) [hp : Fact (Nat.Prime p)] : ℕ :=
   Finset.card (Finset.filter (fun n : ZMod p => ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0)
     (Finset.univ : Finset (ZMod p)))
 
 -- The Bateman-Horn constant
 noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
   ∏' p : {p : ℕ // Nat.Prime p},
+    let hp : Fact (Nat.Prime p.val) := ⟨p.property⟩
     (1 - (1 : ℝ) / p.val) ^ (-(polys.card : ℤ)) *
-    (1 - (OmegaP polys p.val : ℝ) / p.val)
+    (1 - (OmegaP polys p.val (hp := hp) : ℝ) / p.val)
 
 -- Count function: number of n ≤ x where all polynomials are prime
-def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : ℕ :=
+noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : ℕ :=
   Finset.card (Finset.filter
-    (fun n : ℕ => n ≤ x.natAbs ∧ ∀ f ∈ polys, (f.eval ↑n).natAbs.Prime)
-    (Finset.range (x.natAbs + 1)))
+    (fun n : ℕ => n ≤ ⌊x⌋₊ ∧ ∀ f ∈ polys, (f.eval ↑n).natAbs.Prime)
+    (Finset.range (⌊x⌋₊ + 1)))
 
 -- Main conjecture statement
 @[category research open, AMS 11]
@@ -60,7 +61,7 @@ theorem bateman_horn_conjecture
   (polys : Finset ℤ[X])
   (h_nonempty : polys.Nonempty)
   (h_irreducible : ∀ f ∈ polys, IsIrreducibleWithPosLeading f)
-  (h_distinct : ∀ f g ∈ polys, f ≠ g)
+  (h_distinct : ∀ f ∈ polys, ∀ g ∈ polys, f ≠ g)
   (h_compat : SatisfiesCompatibilityCondition polys) :
   (fun x : ℝ => (CountSimultaneousPrimes polys x : ℝ)) ~[atTop]
   (fun x : ℝ => BatemanHornConstant polys * x / (Real.log x) ^ polys.card) := by
