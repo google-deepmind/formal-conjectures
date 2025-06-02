@@ -33,16 +33,16 @@ Must there exist $B = \{b_1 < b_2 < \dots\} \subseteq A$ which is also a basis s
 $\lim_{k\to\infty} \frac{b_k}{k^2}$ does not exist?
 -/
 @[category research open, AMS 5, AMS 11]
-theorem erdos_326 (A : Set ℕ) (hA₀ : A.IsAddBasisOfOrder 2) : ∃ (b : ℕ → ℕ),
-    StrictMono b ∧ ∀ n, b n ∈ A ∧ (Set.range b).IsAddBasis ∧
-      ∀ (x : ℝ), ¬ Tendsto (fun n ↦ (b n : ℝ) / n ^ 2) atTop (𝓝 x) := by
+theorem erdos_326 : (∀ (A : Set ℕ), A.IsAddBasisOfOrder 2 →
+    ∃ (b : ℕ → ℕ), StrictMono b ∧ ∀ n, b n ∈ A ∧ (Set.range b).IsAddBasis ∧
+      ∀ (x : ℝ), ¬ Tendsto (fun n ↦ (b n : ℝ) / n ^ 2) atTop (𝓝 x)) ↔ answer(sorry) := by
   sorry
 
 /--
 Erdős originally asked whether this was true with `A = B`, but this was disproved by Cassels.
 -/
 @[category research solved, AMS 5, AMS 11]
-theorem erdos_326.variants.eq (A : Set ℕ) (hA₀ : A.IsAddBasisOfOrder 2) : ∃ (a : ℕ → ℕ),
-    StrictMono a ∧ Set.range a = A ∧
-      ∀ (x : ℝ), ¬ Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x) := by
+theorem erdos_326.variants.eq : (∀ (A : Set ℕ), A.IsAddBasisOfOrder 2 →
+    ∃ (a : ℕ → ℕ), StrictMono a ∧ Set.range a = A ∧
+      ∀ (x : ℝ), ¬ Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x)) ↔ answer(False) := by
   sorry
