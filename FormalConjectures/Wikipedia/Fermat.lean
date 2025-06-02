@@ -41,7 +41,7 @@ theorem infinite_fermat_primes :
 /--
 Are there infinitely many composite Fermat numbers?
 -/
-@[category research open]
+@[category research open, AMS 11]
 theorem infinite_fermat_composite :
   Infinite {n : ℕ | ¬Prime n.fermatNumber} ↔ answer(sorry) := by
   sorry
