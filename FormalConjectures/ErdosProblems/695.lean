@@ -27,7 +27,7 @@ open Filter Finset Real
 Let $q_1 < q_2 < \cdots$ be a sequence of primes such that $q_{i + 1} \equiv 1 \pmod{q_i}$. Is it
 true that
 $$
-\lim_{k \to \infty} q_1^{1/k} = \infty?
+\lim_{k \to \infty} q_k^{1/k} = \infty?
 $$
 -/
 @[category research open, AMS 11]
@@ -42,7 +42,7 @@ theorem erdos_695 :
 /--
 Is there a sequence of primes $q_1 < q_2 < \cdots$ such that $q_{i + 1} \equiv 1 \pmod{q_i}$ and
 $$
-q(k) \leq \exp(k (\log k)^{1 + o(k)})?
+q(k) \leq \exp(k (\log k)^{1 + o(1)})?
 $$
 -/
 @[category research open, AMS 11]
