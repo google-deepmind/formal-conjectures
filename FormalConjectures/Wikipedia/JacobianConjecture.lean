@@ -79,8 +79,8 @@ open RegularFunction
 
 variable {σ τ ι : Type*} [Fintype σ]
 
-/--The evaluation of a regular function `f` over `k` at some point `a` with coordinates
-in some algebra over `k`-/
+/--The evaluation of a regular function `f` over `k` at some point `a`
+with coordinates in some algebra over `k`-/
 noncomputable def RegularFunction.aeval {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
     (F : RegularFunction k σ τ) : (σ → S₁) → τ → S₁ :=
   fun a t ↦ MvPolynomial.aeval a (F t)
@@ -108,7 +108,8 @@ lemma sanity_check_condition_1 (F : RegularFunction k σ σ) :
   sorry
 
 
--- Let's apply the conjecture to a trivial case to make sure things are working as expected.
+-- Let's apply the conjecture to a trivial case to make sure things
+-- are working as expected.
 @[category test, AMS 14]
 example :
     ∃ (G : RegularFunction k σ σ), G.comp (id k σ) = id k σ ∧
