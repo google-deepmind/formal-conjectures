@@ -25,6 +25,7 @@ import FormalConjectures.Util.ProblemImports
 /--
 The inequality `√pₙ₊₁-√pₙ < 1` holds for all `n`.
 -/
-@[category research open, AMS 11]theorem andrica_conjecture (n : ℕ) :
+@[category research open, AMS 11]
+theorem andrica_conjecture (n : ℕ) :
     Real.sqrt ((n+1).nth Prime) - Real.sqrt (n.nth Prime) < 1 := by
   sorry
