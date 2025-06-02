@@ -23,33 +23,33 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 /--
-All Fermat numbers `n > 4` are composite.
+Is Fermat numbers composite for all `n > 4`.
 -/
 @[category research open]
-theorem fermat_number_are_composite (n : ℕ) (hn : n ≥ 4) :
-  ¬Prime n.fermatNumber := by
+theorem fermat_number_are_composite (n : ℕ) (hn : 4 < n) :
+  ¬Prime n.fermatNumber ↔ answer(sorry) := by
   sorry
 
 /--
-There are infinitely many Fermat primes.
+Are there infinitely many Fermat primes?
 -/
 @[category research open]
 theorem infinite_fermat_primes :
-  Infinite {n : ℕ | Prime n.fermatNumber} := by
+  Infinite {n : ℕ | Prime n.fermatNumber} ↔ answer(sorry) := by
   sorry
 
 /--
-There are infinitely many composite Fermat numbers.
+Are there infinitely many composite Fermat numbers?
 -/
 @[category research open]
 theorem infinite_fermat_composite :
-  Infinite {n : ℕ | ¬Prime n.fermatNumber} := by
+  Infinite {n : ℕ | ¬Prime n.fermatNumber} ↔ answer(sorry) := by
   sorry
 
 /--
-There is a Fermat number that is not square-free.
+All Fermat numbers are square-free.
 -/
 @[category research open]
-theorem exists_non_squarefree_fermat_number :
-  ∃ n : ℕ, ¬Squarefree n.fermatNumber := by
+theorem all_fermat_squarefree (n : ℕ) : 
+  Squarefree n.fermatNumber := by
   sorry
