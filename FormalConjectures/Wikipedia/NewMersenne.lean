@@ -51,9 +51,7 @@ then all three must hold:
 -/
 @[category research open, AMS 11]
 theorem new_mersenne_conjecture (p : ℕ) (hp : Odd p) :
-  (
-    (IsGivesMersennePrime p ∧ IsGivesWagstaffPrime p → IsSpecialForm p) ∧
-    (IsGivesMersennePrime p ∧ IsSpecialForm p → IsGivesWagstaffPrime p) ∧
-    (IsGivesWagstaffPrime p ∧ IsSpecialForm p → IsGivesMersennePrime p)
-  ) := by
+    (p.GivesMersennePrime ∧ p.GivesWagstaffPrime → p.IsSpecialForm) ∧
+    (p.GivesMersennePrime ∧ p.IsSpecialForm → p.GivesWagstaffPrime) ∧
+    (p.GivesWagstaffPrime ∧ p.IsSpecialForm → p.GivesMersennePrime) := by
   sorry
