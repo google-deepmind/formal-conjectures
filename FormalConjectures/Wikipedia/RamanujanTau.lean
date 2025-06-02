@@ -60,5 +60,5 @@ theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : �
   sorry
 
 @[category research open, AMS 11]
-theorem lehmer_ramanujan_tau : ∀ n : ℕ+, τ n ≠ 0 := by
+theorem lehmer_ramanujan_tau : ∀ n > 0, τ n ≠ 0 := by
   sorry
