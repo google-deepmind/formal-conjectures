@@ -30,7 +30,7 @@ $$B = \{n \ge 1 : a \nmid n \text{ for all } a \in A\}.$$
 Is it true that, for every $m > n \ge \max(A)$,
 $$\frac{|B \cap [1, m]|}{m} < 2 \frac{|B \cap [1, n]|}{n}?$$
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_488 (A : Finset ℕ) (B : Set ℕ) (hB : B = {n ≥ 1 | ∀ a ∈ A, ¬ a ∣ n}) :
     ∀ᵉ (n : ℕ) (m > n), A.max ≤ n →
       ((Finset.Icc 1 m).filter (· ∈ B)).card / (m : ℚ) <
