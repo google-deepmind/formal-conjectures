@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ $$
 where $p_r$ denotes the $r$th prime?
 -/
 @[category research solved, AMS 11]
-theorem erdos_427 : Erdos427 := by
+theorem erdos_427 : Erdos427 ↔ answer(True) := by
   sorry
 
 /--
@@ -63,7 +63,7 @@ $p_m, ..., p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
 @[category research solved, AMS 11]
-theorem erdos_427.shiu : ShiuTheorem :=
+theorem erdos_427.shiu : ShiuTheorem := by
   sorry
 
 

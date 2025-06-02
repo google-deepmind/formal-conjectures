@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,11 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/421](https://www.erdosproblems.com/421)
 -/
-
 open Set
 
 /--
-Is there a sequence $1 \le d_1 < d_2 < \dots$ with density 1 such that all products $\prod_{u \le i \le v} d_i$ are distinct? -/
+Is there a sequence $1 \le d_1 < d_2 < \dots$ with density 1 such that all products
+$\prod_{u \le i \le v} d_i$ are distinct? -/
 @[category research open, AMS 11]
-theorem erdos_421 : ∃ (d : ℕ → ℕ), StrictMono d ∧ 1 ≤ d 0 ∧ HasDensity (Set.range d) 1 ∧
-    {(u, v) : ℕ × ℕ | u ≤ v}.InjOn fun (u, v) => ∏ i ∈ Finset.Icc u v, d i := by sorry
+theorem erdos_421 : (∃ (d : ℕ → ℕ), StrictMono d ∧ 1 ≤ d 0 ∧ HasDensity (Set.range d) 1 ∧
+    {(u, v) : ℕ × ℕ | u ≤ v}.InjOn fun (u, v) => ∏ i ∈ Finset.Icc u v, d i) ↔ answer(sorry) := by
+  sorry

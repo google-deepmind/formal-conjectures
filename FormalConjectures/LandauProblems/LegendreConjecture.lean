@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import FormalConjectures.Util.ProblemImports
 Does there always exist at least one prime between consecutive perfect squares?
 -/
 @[category research open, AMS 11]
-theorem legendre_conjecture (n : ℕ) (hn : 1 ≤ n) :
-    ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p := by
+theorem legendre_conjecture :
+    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p)
+      ↔ answer(sorry) := by
   sorry

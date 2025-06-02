@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,5 +27,6 @@ import FormalConjectures.Util.ProblemImports
 Are there infinitely many primes $p$ such that $p − 1$ is a perfect square? In other words: Are there infinitely many primes of the form $n^2 + 1$?
 -/
 @[category research open, AMS 11]
-theorem infinite_prime_sq_add_one : {n : ℕ | Prime (n^2 + 1)}.Infinite := by
+theorem infinite_prime_sq_add_one :
+    {n : ℕ | Prime (n^2 + 1)}.Infinite ↔ answer(sorry):= by
   sorry

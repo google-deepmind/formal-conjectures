@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -40,5 +40,6 @@ to the nearest integer.
 -/
 @[category research solved, AMS 11]
 theorem littlewood_conjecture (α β : ℝ) :
-    atTop.liminf (fun (n : ℕ) => n * distToNearestInt (n * α) * distToNearestInt (n * β)) = 0 :=
+    atTop.liminf (fun (n : ℕ) => n * distToNearestInt (n * α)
+      * distToNearestInt (n * β)) = 0 := by
   sorry

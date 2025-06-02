@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,15 +21,16 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/480](https://www.erdosproblems.com/480)
 -/
-
 /--
 Let $x_1,x_2,...∈[0, 1]$ be an infinite sequence. Is it true that there are infinitely many $m, n$
 such that $|x_{m+n} - x_n| ≤ \frac 1 {\sqrt 5 n}$?
+
+This was proved Chung and Graham.
 -/
 @[category research solved, AMS 11]
-theorem erdos_480
-    (x : ℕ → ℝ) (hx : ∀ n, x n ∈ Set.Icc 0 1) :
-    {(m, n) | (m) (n) (_ : m ≠ 0) (_ : |x (m + n) - x n| ≤ 1 / (√5 * n))}.Infinite := by
+theorem erdos_480 : (∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
+    {(m, n) | (m) (n) (_ : m ≠ 0) (_ : |x (m + n) - x n| ≤ 1 / (√5 * n))}.Infinite) ↔
+    answer(True) := by
   sorry
 
 /--

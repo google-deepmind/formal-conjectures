@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ import MD4Lean
 import Lean
 import Batteries.Data.String.Matcher
 import FormalConjectures.Util.Attributes
+import Mathlib.Data.String.Defs
 
 
 open Lean
@@ -53,10 +54,10 @@ def getSubjectStatsMarkdown : CoreM String := do
 
   for (subject, count) in sortedCounts do
     if count > 0 then
-      let desc ←  subject.getDesc
-      let num := subject.toCtorIdx;
-      -- TODO(firsching): zero-pad the AMS number here
-      markdownTable := markdownTable.append s!"| {count} | {num} |{desc} |\n"
+      let desc ← subject.getDesc
+      let some num := subject.toNat? | throwError "subject not recognised"
+      let numStr := (toString num).leftpad 2 '0';
+      markdownTable := markdownTable.append s!"| {count} | {numStr} |{desc} |\n"
   return markdownTable
 
 -- TODO(firsching): instead of re-inventing the wheel here use some html parsing library?
@@ -129,6 +130,8 @@ classifications, please refer to the
 
 ## Problem Category Statistics
 {categoryStats}
+
+(note the links above use GitHub search, and so require logging into GitHub)
 
 ---
 

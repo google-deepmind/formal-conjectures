@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ Is there some $k$ such that every integer is the sum of a prime and at most $k$
 powers of $2$?
 -/
 @[category research open, AMS 5,  AMS 11]
-theorem erdos_10 : ∃ k, sumPrimeAndTwoPows k = Set.univ \ {0, 1} := by
+theorem erdos_10 : (∃ k, sumPrimeAndTwoPows k = Set.univ \ {0, 1}) ↔ answer(sorry) := by
   sorry
 
 /--

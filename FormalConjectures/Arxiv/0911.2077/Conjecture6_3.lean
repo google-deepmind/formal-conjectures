@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@ theorem arxiv.id0911_2077.conjecture6_3
   (σ : ℝ) (h_σ : σ = (p * (1 - p)).sqrt) :
   letI hp' : (.ofReal p : ℝ≥0∞) ≤ 1 := ENNReal.ofReal_le_one.mpr <|
     le_trans (le_of_lt (Set.mem_Ioo.mp h_p).right) (by linarith)
-  ((PMF.binomial (.ofReal p : ℝ≥0∞) hp' (2 * k)).toMeasure (Set.Ici k)).toReal
- ≥ 1 - Φ ((1 / 2 - p) * sqrt (2 * k : ℝ≥0) / σ)
-    + (1 / 2) * ((2 * k).choose k) * σ ^ (2 * k) := sorry
+  1 - Φ ((1 / 2 - p) * sqrt (2 * k : ℝ≥0) / σ)
+    + (1 / 2) * ((2 * k).choose k) * σ ^ (2 * k)
+    ≤ ((PMF.binomial (.ofReal p : ℝ≥0∞) hp' (2 * k)).toMeasure (Set.Ici k)).toReal := by
+  sorry
