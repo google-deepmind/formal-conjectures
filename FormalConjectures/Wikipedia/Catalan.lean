@@ -23,11 +23,10 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 /--
-The only solution to the equation `x^a - y^b = 1` for `a, b > 1` and `x, y > 0`
-is `a = 2`, `b = 3`, `x = 3`, and `y = 2`.
+The only natural number solution to the equation $x^a - y^b = 1$ such that $a, b > 1$ and
+$x, y > 0$ is given by $a = 2$, $b = 3$, $x = 3$, and $y = 2$.
 -/
 @[category research solved, AMS 11]
-theorem catalan_conjecture (a b x y : ℕ) : (1 < a) ∧ (1 < b) ∧ (0 < x) ∧ (0 < y)
-    ∧ (x ^ a - y ^ b = 1)
-    → (a = 2 ∧ b = 3 ∧ x = 3 ∧ y = 2) := by
+theorem catalans_conjecture (a b x y : ℕ) (ha : 1 < a) (hb : 1 < b) (hx : 0 < x) (hy : 0 < y)
+    (x ^ a - y ^ b = 1) : (a = 2 ∧ b = 3 ∧ x = 3 ∧ y = 2) := by
   sorry
