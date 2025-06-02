@@ -69,6 +69,7 @@ The answer is yes, as proved in a strong form by Cambie [Ca24].
 [Ca24] S. Cambie, Resolution of an Erdős' problem on least common multiples. arXiv:2410.09138 (2024).
 -/
 @[category research solved, AMS 11]
-theorem erdos_678 {k : ℕ} (hk : 3 ≤ k) :
-    {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite := by
+theorem erdos_678 :
+    (∀ k, 3 ≤ k → {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite) ↔
+      answer(True) := by
   sorry
