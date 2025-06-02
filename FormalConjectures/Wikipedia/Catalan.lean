@@ -17,18 +17,16 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Bounded Burnside problem
+# Catalan's conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Catalan%27s_conjecture)
 -/
 
 /--
-Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
-$g^n = 1$. Is $G$ necessarily finite?
+The only natural number solution to the equation $x^a - y^b = 1$ such that $a, b > 1$ and
+$x, y > 0$ is given by $a = 2$, $b = 3$, $x = 3$, and $y = 2$.
 -/
-@[category research open, AMS 20]
-theorem bounded_burnside_problem :
-    (∀ (G : Type) [Group G] (fin_gen : Group.FG G)
-      (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G) ↔
-    answer(sorry) := by
+@[category research solved, AMS 11]
+theorem catalans_conjecture (a b x y : ℕ) (ha : 1 < a) (hb : 1 < b) (hx : 0 < x) (hy : 0 < y)
+    (heq : x ^ a - y ^ b = 1) : a = 2 ∧ b = 3 ∧ x = 3 ∧ y = 2 := by
   sorry

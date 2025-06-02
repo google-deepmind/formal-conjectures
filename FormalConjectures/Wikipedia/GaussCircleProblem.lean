@@ -41,8 +41,8 @@ noncomputable section
 namespace GaussCircleProblem
 
 /--
-Let $N(r)$ be thenumber of points $(m, n)$ within a circle of radius $r$, where $m$ and $n$ are both
-integers.
+Let $N(r)$ be the number of points $(m, n)$ within a circle of radius $r$,
+where $m$ and $n$ are both integers.
 -/
 private abbrev N (r : ℝ) : ℕ :=
   { (m, n) : ℤ × ℤ | !₂[↑m, ↑n] ∈ Metric.closedBall (0 : ℝ²) r }.ncard

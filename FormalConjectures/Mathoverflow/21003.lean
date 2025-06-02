@@ -16,19 +16,23 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Bounded Burnside problem
+open scoped Polynomial
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
+/-!
+# Mathoverflow 21003
+
+Is there any polynomial $f(x, y) \in \mathbb{Q}[x, y]$ such that
+$f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
+
+*Reference:* [mathoverflow/21003](https://mathoverflow.net/questions/21003)
+asked by user [*Z.H.*](https://mathoverflow.net/users/5098/z-h)
 -/
 
 /--
-Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
-$g^n = 1$. Is $G$ necessarily finite?
+Is there any polynomial $f(x, y) \in \mathbb{Q}[x, y]$ such that
+$f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 -/
-@[category research open, AMS 20]
-theorem bounded_burnside_problem :
-    (∀ (G : Type) [Group G] (fin_gen : Group.FG G)
-      (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G) ↔
-    answer(sorry) := by
+@[category research open, AMS 12]
+theorem mathoverflow_21003 :
+    (∃ f : MvPolynomial (Fin 2) ℚ, Function.Bijective fun x ↦ f.eval x) ↔ answer(sorry) := by
   sorry
