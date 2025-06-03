@@ -35,7 +35,7 @@ def IsIrreducibleWithPosLeading (f : ℤ[X]) : Prop :=
 
 -- The compatibility condition for Bateman-Horn
 def SatisfiesCompatibilityCondition (polys : Finset ℤ[X]) : Prop :=
-  ∀ p : ℕ, Nat.Prime p → ∃ n : ℤ, ¬(↑p : ℤ) ∣ (polys.prod id).eval n
+  ∀ p : ℕ, Nat.Prime p → ∃ n : ℤ, ¬↑p ∣ (polys.prod id).eval n
 
 -- Count of residue classes mod p where at least one polynomial vanishes
 noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
