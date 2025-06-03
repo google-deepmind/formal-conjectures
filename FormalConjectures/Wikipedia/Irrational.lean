@@ -41,26 +41,27 @@ The sequence calculates the difference between:
 `eulerMascheroniSeq` occurs when `q=1` and `a=1`.
 -/
 noncomputable def eulerLehmerSeq (a : ℕ) (q : ℕ+) (n : ℕ) : ℝ :=
-  let S (x : ℕ) := ∑ k in (Finset.Icc 1 x).filter (· ≡ a [MOD (q : ℕ)]), (1 : ℝ) / k
+  letI S (x : ℕ) := ∑ k in (Finset.Icc 1 x).filter (· ≡ a [MOD (q : ℕ)]), (1 : ℝ) / k
   S n - log n / q
+
 
 /--
 **Euler-Lehmer constant** for residue class `a` modulo `q`.
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Euler%27s_constant#Euler-Lehmer_constants)
+`eulerMascheroniConstant` occurs when `q=1` and `a=1`.
 -/
 noncomputable def eulerLehmerConstant (a : ℕ) (q : ℕ+) : ℝ :=
   limUnder atTop (eulerLehmerSeq a q)
 
 /--
 **Catalan's constant**
-$$G = ∑_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$
+$$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$
 -/
 noncomputable def catalanConstant : ℝ :=
   ∑' n : ℕ, (-1)^n / (2*n + 1)^2
 
 /--
 **Gompertz constant**
-$$\delta = -e * ∫_1^∞ e^{-t}/t dt \approx 0.59634$$
+$$\delta = -e * \int_1^∞ e^{-t}/t dt \approx 0.59634$$
 -/
 noncomputable def gompertzConstant : ℝ :=
   -e * ∫ (t:ℝ) in Set.Ioi 1, exp (-t) / t
@@ -141,7 +142,7 @@ $\Gamma(1/2)$ is irrational.
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
 @[category research solved, AMS 33]
-theorem irrational_gamma_1_2 : Irrational (1/2 : ℝ).Gamma := by
+theorem irrational_gamma_1_2 : Irrational (1 / 2 : ℝ).Gamma := by
   sorry
 
 /--
@@ -150,7 +151,7 @@ $\Gamma(1/3)$ is irrational.
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
 @[category research solved, AMS 33]
-theorem irrational_gamma_1_3 : Irrational (1/3 : ℝ).Gamma := by
+theorem irrational_gamma_1_3 : Irrational (1 / 3 : ℝ).Gamma := by
   sorry
 
 /--
@@ -159,7 +160,7 @@ $\Gamma(1/4)$ is irrational.
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
 @[category research solved, AMS 33]
-theorem irrational_gamma_1_4 : Irrational (1/4 : ℝ).Gamma := by
+theorem irrational_gamma_1_4 : Irrational (1 / 4 : ℝ).Gamma := by
   sorry
 
 /--
@@ -168,7 +169,7 @@ $\Gamma(1/6)$ is irrational.
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
 @[category research solved, AMS 33]
-theorem irrational_gamma_1_6 : Irrational (1/6 : ℝ).Gamma := by
+theorem irrational_gamma_1_6 : Irrational (1 / 6 : ℝ).Gamma := by
   sorry
 
 /--
@@ -176,13 +177,15 @@ $\Gamma(1/n)$ for `n ≥ 2` is irrational.
 -/
 @[category research open, AMS 33]
 theorem irrational_gamma_1_n (n : ℕ) (hn : 1 < n) : Irrational (1 / n : ℝ).Gamma := by
-
   sorry
 
 /--
-$\Gamma(1/n)$ for `n ≥ 2` is irrational.
+Is there rational Euler-Lehmer constant?
+Has been shown that an infinite list of Euler-Lehmer constants contains at most one algebraic number.
+
+[Mu10] Murty, M. Ram; Saradha, N. (2010). Euler–Lehmer constants and a conjecture of Erdös.
 -/
 @[category research open, AMS 33]
-theorem exists_irrational_euler_lehmer_constant (n : ℕ) (hn : 1 < n) :
-  (∃ (q : ℕ+), ∃ (a : ℕ) (ha : a < q), Irrational (eulerLehmerConstant a q)) ↔ answer(sorry) := by
+theorem exists_rational_euler_lehmer_constant (n : ℕ) (hn : 1 < n) :
+  (∃ (q : ℕ+), ∃ (a : ℕ) (ha : a < q), ¬Irrational (eulerLehmerConstant a q)) ↔ answer(sorry) := by
   sorry
