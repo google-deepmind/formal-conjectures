@@ -52,7 +52,7 @@ noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
 -- Count function: number of n ≤ x where all polynomials are prime
 noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : ℕ :=
   Finset.card (Finset.filter
-    (fun n : ℕ => n ≤ ⌊x⌋₊ ∧ ∀ f ∈ polys, (f.eval ↑n).natAbs.Prime)
+    (fun n : ℕ => ∀ f ∈ polys, (f.eval ↑n).natAbs.Prime)
     (Finset.range (⌊x⌋₊ + 1)))
 
 /-- **The Bateman-Horn Conjecture**
