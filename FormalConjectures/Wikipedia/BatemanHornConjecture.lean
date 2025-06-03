@@ -38,7 +38,7 @@ This states that for all primes `p`, there exists an `n` such that `∏ f ∈ S,
 def SatisfiesCompatibilityCondition (polys : Finset ℤ[X]) : Prop :=
   ∀ p : ℕ, Nat.Prime p → ∃ n : ℤ, ¬↑p ∣ (polys.prod id).eval n
 
--- Count of residue classes mod p where at least one polynomial vanishes
+/-- `OmegaP S p` counts the number of residue classes mod `p` where at least one polynomial in `S` vanishes. -/
 noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
   {n : ZMod p | ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0}.ncard 
 
