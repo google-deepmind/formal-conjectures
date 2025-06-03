@@ -29,7 +29,7 @@ https://claude.ai/share/a02c2bba-7f5f-435c-ab0e-58eb5ddc0545
 
 open Polynomial Asymptotics Filter Topology
 
--- Definition of irreducible polynomial with positive leading coefficient
+/-- Definition of irreducible polynomial with positive leading coefficient -/
 def IsIrreducibleWithPosLeading (f : ℤ[X]) : Prop :=
   Irreducible f ∧ 0 < f.leadingCoeff
 
