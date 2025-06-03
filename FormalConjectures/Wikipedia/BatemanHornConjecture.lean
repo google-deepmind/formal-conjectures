@@ -38,9 +38,8 @@ def SatisfiesCompatibilityCondition (polys : Finset ℤ[X]) : Prop :=
   ∀ p : ℕ, Nat.Prime p → ∃ n : ℤ, ¬(↑p : ℤ) ∣ (polys.prod id).eval n
 
 -- Count of residue classes mod p where at least one polynomial vanishes
-noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) [hp : Fact (Nat.Prime p)] : ℕ :=
-  Finset.card (Finset.filter (fun n : ZMod p => ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0)
-    (Finset.univ : Finset (ZMod p)))
+noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
+  {n : ZMod p | ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0}.ncard 
 
 -- The Bateman-Horn constant
 noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
