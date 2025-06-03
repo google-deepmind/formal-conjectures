@@ -35,5 +35,5 @@ theorem erdos_488 : (∀ (A : Finset ℕ),
     letI B := {n ≥ 1 | ∀ a ∈ A, ¬ a ∣ n}
     ∀ᵉ (n : ℕ) (m > n), A.max ≤ n →
       ((Finset.Icc 1 m).filter (· ∈ B)).card / (m : ℚ) <
-        2 * ((Finset.Icc 1 n).filter (· ∈ B)).card / n) ↔ answer(sorry):= by
+        2 * ((Finset.Icc 1 n).filter (· ∈ B)).card / n) ↔ answer(False):= by
   sorry
