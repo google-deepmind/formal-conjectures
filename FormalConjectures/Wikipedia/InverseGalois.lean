@@ -46,7 +46,6 @@ theorem inverse_galois_problem {G : Type*} [Fintype G] [Group G] :
     IsRealizable ℚ G := by
   sorry
 
-
 /--
 Every finite cyclic group is realizable.
 -/
@@ -55,7 +54,6 @@ theorem inverse_galois_problem.variants.cyclic
     {G : Type*} [Fintype G] [Group G] [IsCyclic G] :
     IsRealizable ℚ G := by
   sorry
-
 
 /--
 Every finite abelian group is realizable.
@@ -66,7 +64,6 @@ theorem inverse_galois_problem.variants.abelian
     IsRealizable ℚ G := by
   sorry
 
-
 /--
 Every finite symmetric group is realizable.
 -/
@@ -75,7 +72,6 @@ theorem inverse_galois_problem.variants.symmetric_group
     {S : Type*} [Fintype S] :
     IsRealizable ℚ (S ≃ S) := by
   sorry
-
 
 /--
 Every finite group is realisable over the field of rational functions
@@ -86,7 +82,6 @@ theorem inverse_galois_problem.variants.complex_rational_functions
     {G : Type*} [Fintype G] [Group G] :
     IsRealizable (RatFunc ℂ) G := by
   sorry
-
 
 /--
 Every finite group is realisable over the field of rational functions
