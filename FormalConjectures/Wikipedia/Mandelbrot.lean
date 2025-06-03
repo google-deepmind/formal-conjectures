@@ -17,19 +17,21 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Local connectivity of the Mandelbrot and Multibrot sets
-This file adds two conjectures about the Mandelbrot and Multibrot sets:
+# Conjectures about the Mandelbrot and Multibrot sets
+This file adds three conjectures about the Mandelbrot and Multibrot sets:
 - the *MLC conjecture*, stating that these sets are locally connected
 - the *density of hyperbolicity* conjecture, stating that parameters with attracting cycles are
-  dense in the Mandelbrot and Multibrot sets.
-The conjectures are related in that the former implies the latter.
+  dense in the Mandelbrot and Multibrot sets
+- the conjecture that the boundaries of these sets have zero area.
+The first two conjectures are related in that the former implies the latter.
 
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Mandelbrot_set#Local_connectivity)
  - [arxiv/math/9902155](https://arxiv.org/abs/math/9902155)
+ - [mathoverflow/37229](https://mathoverflow.net/questions/37229/)
 -/
 
-open Topology Set Function Filter Bornology Metric
+open Topology Set Function Filter Bornology Metric MeasureTheory
 
 /-- The Multibrot set of power `n` is the set of all parameters `c : ℂ` for which `0` does not
 escape to infinity under repeated application of `z ↦ z ^ n + c`. -/
@@ -146,4 +148,21 @@ Note that we need to require `2 ≤ n` because the conjecture is trivially false
 @[category research open, AMS 37]
 theorem density_of_hyperbolicity_general_exponent {n : ℕ} (hn : 2 ≤ n) :
     multibrotSet n ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ n - c) n z} := by
+  sorry
+
+/-- The boundary of any Multibrot set is measurable because it is closed, so it makes sense to
+ask about its area. -/
+@[category test]
+example {n : ℕ} : MeasurableSet (frontier (multibrotSet n)) := isClosed_frontier.measurableSet
+
+/-- The boundary of the Mandelbrot set is conjectured to have zero area. -/
+@[category research open, AMS 37]
+theorem volume_frontier_mandelbrotSet_eq_zero : volume (frontier mandelbrotSet) = 0 := by
+  sorry
+
+/-- The boundary of any Multibrot set is conjectured to have zero area.
+Note that we don't need to exclude the trivial cases `n = 0` and `n = 1` because the conjecture
+holds for them. -/
+@[category research open, AMS 37]
+theorem volume_frontier_multibrotSet_eq_zero {n : ℕ} : volume (frontier (multibrotSet n)) = 0 := by
   sorry
