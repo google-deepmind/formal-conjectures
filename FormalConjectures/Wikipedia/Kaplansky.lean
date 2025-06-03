@@ -28,7 +28,7 @@ variable (K : Type*) [Field K]
 variable (G : Type*) [Group G] (hG : Monoid.IsTorsionFree G)
 
 /--
-## The zero-divisor conjecture:
+**The zero-divisor conjecture**
 
 If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero divisors.
 -/
