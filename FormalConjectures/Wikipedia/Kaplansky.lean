@@ -55,7 +55,7 @@ def IsTrivialUnit (u : (MonoidAlgebra K G)ˣ) : Prop :=
   ∃ (k : Kˣ) (g : G), u = MonoidAlgebra.single g (k : K)
 
 /--
-## Unit Conjecture (characteristic ≠ 2)
+**Unit Conjecture (characteristic ≠ 2)**
 
 If `G` is torsion-free and `K` has characteristic different from 2,
 then every unit in `K[G]` is trivial.
