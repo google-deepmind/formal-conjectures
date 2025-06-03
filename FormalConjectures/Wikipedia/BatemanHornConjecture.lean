@@ -44,9 +44,8 @@ noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
 -- The Bateman-Horn constant
 noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
   ∏' p : {p : ℕ // Nat.Prime p},
-    let hp : Fact (Nat.Prime p.val) := ⟨p.property⟩
-    (1 - (1 : ℝ) / p.val) ^ (-(polys.card : ℤ)) *
-    (1 - (OmegaP polys p.val (hp := hp) : ℝ) / p.val)
+    (1 - (1 : ℝ) / p.val) ^ (-polys.card : ℤ) *
+    (1 - (OmegaP polys p.val : ℝ) / p.val)
 
 -- Count function: number of n ≤ x where all polynomials are prime
 noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : ℕ :=
