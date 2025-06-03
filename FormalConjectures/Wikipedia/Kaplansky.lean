@@ -37,7 +37,7 @@ theorem zero_divisor_conjecture : NoZeroDivisors (MonoidAlgebra K G) := by
   sorry
 
 /--
-## The idempotent conjecture:
+**The idempotent conjecture**
 
 If `G` is torsion-free, then `K[G]` has no non-trivial idempotents.
 -/
