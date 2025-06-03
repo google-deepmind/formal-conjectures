@@ -52,5 +52,4 @@ instance : alwaysHaltingMachine.IsHalting where
 -- TODO(Paul-Lez): finish proving this
 instance : haltsAfterOne.IsHalting  where
   halts := by
-  --TODO
     sorry
