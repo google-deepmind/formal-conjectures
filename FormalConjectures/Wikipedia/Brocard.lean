@@ -17,18 +17,19 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Bounded Burnside problem
+# Brocard's Conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Brocard%27s_conjecture)
 -/
 
 /--
-Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
-$g^n = 1$. Is $G$ necessarily finite?
+For every `n ≥ 2`, between the squares of the `n`-th and `(n+1)`-th primes,
+there are at least four prime numbers.
 -/
-@[category research open, AMS 20]
-theorem bounded_burnside_problem :
-    (∀ (G : Type) [Group G] (fin_gen : Group.FG G)
-      (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G) ↔
-    answer(sorry) := by
+@[category research open, AMS 11]
+theorem brocard_conjecture (n : ℕ) (hn : n ≥ 1) :
+    letI prev := n.nth Prime;
+    letI next := (n+1).nth Prime;
+    letI primesInBetween := (Finset.Ioo (prev^2) (next^2)).filter Nat.Prime
+    4 ≤ primesInBetween.card := by
   sorry
