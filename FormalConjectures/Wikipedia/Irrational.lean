@@ -117,7 +117,7 @@ theorem irrational_euler_mascheroni_constant : Irrational eulerMascheroniConstan
 /--
 At least one of Catalan constant and the Gompertz constant is irrational.
 -/
-@[category research solved, AMS 11, AMS 33]
+@[category research solved, AMS 11 33]
 theorem irrational_catalan_or_gompertz : Irrational catalanConstant ∨ Irrational gompertzConstant := by
   sorry
 
