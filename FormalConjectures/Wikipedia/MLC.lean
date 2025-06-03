@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # Local connectivity of the Mandelbrot and Multibrot sets
 This file adds two conjectures about the Mandelbrot and Multibrot sets:
 - the *MLC conjecture*, stating that these sets are locally connected
-- the *density of hyperbolicity* conjecture, stating that parameters with no attracting cycles are
+- the *density of hyperbolicity* conjecture, stating that parameters with attracting cycles are
   dense in the Mandelbrot and Multibrot sets.
 The conjectures are related in that the former implies the latter.
 
