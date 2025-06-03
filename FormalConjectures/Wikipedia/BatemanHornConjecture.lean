@@ -49,7 +49,7 @@ noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
     (1 - (1 : ℝ) / p.val) ^ (-polys.card : ℤ) *
     (1 - (OmegaP polys p.val : ℝ) / p.val)
 
--- Count function: number of n ≤ x where all polynomials are prime
+/-- `CountSimultaneousPrimes S x` counts the number of `n  ≤ x` at which all polynomials in `S` attain a prime value.
 noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : ℕ :=
   Finset.card (Finset.filter
     (fun n : ℕ => ∀ f ∈ polys, (f.eval ↑n).natAbs.Prime)
