@@ -11,7 +11,7 @@ path = "../"
 [[require]]
 name = "doc-gen4"
 git = "https://github.com/eric-wieser/doc-gen4"
-rev = "for-formal-conjectures"
+rev = "3502f05c27ca650492c945307874755a8c2b42e3"
 
 [[lean_exe]]
 name = "overwrite_index"
