@@ -44,7 +44,7 @@ def IsWolstenholmePrime (p : ℕ) : Prop :=
 Equivalently, a prime $p$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
 -/
 @[category API]
-theorem wolstenholme_bernoulli (p : ℕ) : WolstenholmePrime p ↔
+theorem wolstenholme_bernoulli (p : ℕ) : IsWolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑p ∣ (bernoulli' (p - 3)).num := by
   sorry
 
@@ -53,7 +53,7 @@ Another equivalent definition is that a prime $p$ is a Wolstenholme prime
 if it $p^3$ divides the numerator of the harmonic number $H_{p-1}$.
 -/
 @[category test]
-theorem wolstenholme_harmonic (p : ℕ) : WolstenholmePrime p ↔
+theorem wolstenholme_harmonic (p : ℕ) : IsWolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑(p ^ 3) ∣ (harmonic (p - 1)).num := by
   sorry
 
@@ -64,5 +64,5 @@ It is conjectured that there are infinitely many Wolstenholme primes.
 -/
 @[category research open, AMS 11]
 theorem wolstenholme_prime_infinite :
-    {p : ℕ | WolstenholmePrime p}.Infinite := by
+    {p : ℕ | IsWolstenholmePrime p}.Infinite := by
   sorry
