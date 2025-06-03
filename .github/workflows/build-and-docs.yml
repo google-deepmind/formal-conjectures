@@ -113,10 +113,10 @@ jobs:
           rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
 
       - name: Inject stats into index.html
+        shell: bash
         run: |
-          set -o pipefail
           cd docbuild
-          lake exe overwrite_index ./.lake/build/doc/index.html | tee -a "$GITHUB_STEP_SUMMARY"
+          lake exe overwrite_index ./out/index.html | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload docs
         id: deployment
