@@ -103,3 +103,42 @@ and `n = 1` too. -/
 @[category research open, AMS 37]
 theorem MLC_general_exponent (n : ℕ) : LocallyConnectedSpace (multibrotSet n) := by
   sorry
+
+/-- We say that `z : ℂ` is part of an attracting cycle of period `n` of `f : ℂ → ℂ` if it is an
+`n`-periodic point (i.e. `f^[n] z = z`), `f^[n]` is differentiable at `z` and `‖deriv f^[n] z‖` is
+strictly less than one.-/
+@[category API]
+def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
+  f.IsPeriodicPt n z ∧ DifferentiableAt ℂ f^[n] z ∧ ‖deriv f^[n] z‖ < 1
+
+/-- For example, `0` is part of an attracting `2`-cycle of `z ↦ z ^ 2 - 1`. -/
+@[category test]
+example : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
+  ⟨by simp [IsPeriodicPt, IsFixedPt], by fun_prop, by simp [deriv_comp]⟩
+
+/-- On the other hand, while `2` is part of a `1`-cycle of `z ↦ z ^ 2 - 2`, that cycle is not
+attracting. -/
+@[category test]
+example : ¬ IsAttractingCycle (fun z ↦ z ^ 2 - 2) 1 2 := by
+  simp [IsAttractingCycle, show (1 : ℝ) ≤ 2 * 2 by norm_num]
+
+/-- No function has an attracting cycle of period `0`. This is important in that it means we don't
+need to require `0 < n` in the conjectures below. -/
+@[category test]
+example (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttractingCycle f 0 z := by
+  simp [IsAttractingCycle]
+
+/-- The density of hyperbolicity conjecture, stating that the set of all parameters `c` for which
+`fun z ↦ z ^ 2 - c` has an attracting cycle is dense in the Mandelbrot set. -/
+@[category research open, AMS 37]
+theorem density_of_hyperbolicity :
+    mandelbrotSet ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ 2 - c) n z} := by
+  sorry
+
+/-- The density of hyperbolicity conjecture for Multibrot sets, stating that the set of all
+parameters `c` for which `fun z ↦ z ^ n - c` has an attracting cycle is dense in `multibrotSet n`.
+Note that we need to require `2 ≤ n` because the conjecture is trivially false for `n = 1`. -/
+@[category research open, AMS 37]
+theorem density_of_hyperbolicity_general_exponent {n : ℕ} (hn : 2 ≤ n) :
+    multibrotSet n ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ n - c) n z} := by
+  sorry
