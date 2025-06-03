@@ -73,7 +73,7 @@ Here ωₚ is the number of residue classes modulo p for which at least one poly
 The compatibility condition ensures that for each prime p, there exists some integer n 
 such that p does not divide the product f₁(n)·f₂(n)·...·fₖ(n), which guarantees the 
 infinite product converges to a positive value. -/
-@[category research open, AMS 11]
+@[category research open, AMS 11 12]
 theorem bateman_horn_conjecture
     (polys : Finset ℤ[X])
     (h_nonempty : polys.Nonempty)
