@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 /--
-The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} \le 1$ holds for all $n$, where $p_n$ is the nth prime number.
+The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is the nth prime number.
 -/
 @[category research open, AMS 11]
 theorem andrica_conjecture (n : ℕ) :
