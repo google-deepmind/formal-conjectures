@@ -175,7 +175,8 @@ theorem irrational_gamma_1_6 : Irrational (1/6 : ℝ).Gamma := by
 $\Gamma(1/n)$ for `n ≥ 2` is irrational.
 -/
 @[category research open, AMS 33]
-theorem irrational_gamma_1_n (n : ℕ) (hn : 1 < n) : Irrational (1/4 : ℝ).Gamma := by
+theorem irrational_gamma_1_n (n : ℕ) (hn : 1 < n) : Irrational (1 / n : ℝ).Gamma := by
+
   sorry
 
 /--
