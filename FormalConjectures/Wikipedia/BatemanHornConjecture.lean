@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 /-
-Note: This formalization was one-shot (with minimal cleaning) from Claude 4.0; see:
+Note: This formalization was one-shot (with minimal cleaning) from Claude 4.0 Sonnet; see:
 https://claude.ai/share/a02c2bba-7f5f-435c-ab0e-58eb5ddc0545
 -/
 
