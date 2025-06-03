@@ -53,7 +53,24 @@ noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : �
     (fun n : ℕ => n ≤ ⌊x⌋₊ ∧ ∀ f ∈ polys, (f.eval ↑n).natAbs.Prime)
     (Finset.range (⌊x⌋₊ + 1)))
 
--- Main conjecture statement
+/-- **The Bateman-Horn Conjecture**
+
+Given a finite collection of distinct irreducible polynomials f₁, f₂, ..., fₖ ∈ ℤ[X] 
+with positive leading coefficients that satisfy the compatibility condition, the number 
+of positive integers n ≤ x for which all polynomials f₁(n), f₂(n), ..., fₖ(n) are 
+simultaneously prime is asymptotic to:
+
+    C(f₁, f₂, ..., fₖ) · x / (log x)^k
+
+where C(f₁, f₂, ..., fₖ) is the Bateman-Horn constant given by the convergent infinite product:
+
+    C = ∏ₚ (1 - 1/p)^(-k) · (1 - ωₚ/p)
+
+Here ωₚ is the number of residue classes modulo p for which at least one polynomial vanishes.
+
+The compatibility condition ensures that for each prime p, there exists some integer n 
+such that p does not divide the product f₁(n)·f₂(n)·...·fₖ(n), which guarantees the 
+infinite product converges to a positive value. -/
 @[category research open, AMS 11]
 theorem bateman_horn_conjecture
     (polys : Finset ℤ[X])
