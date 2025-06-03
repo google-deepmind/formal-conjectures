@@ -42,7 +42,8 @@ def SatisfiesCompatibilityCondition (polys : Finset ℤ[X]) : Prop :=
 noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
   {n : ZMod p | ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0}.ncard 
 
--- The Bateman-Horn constant
+/-- The Bateman-Horn constant of a set of polynomials `S`. This is defined as the infinite product over all primes: 
+$$\prod_p (1 - \frac{1}{p}) ^ {|S|} (1 - \frac{\omega_p(S)}{p}$$ where $\omega_p(S)}{p}$ is the number of residue classes mod $p$ where at least one polynomial in $S$ vanishes.
 noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
   ∏' p : {p : ℕ // Nat.Prime p},
     (1 - (1 : ℝ) / p.val) ^ (-polys.card : ℤ) *
