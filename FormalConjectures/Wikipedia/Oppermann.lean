@@ -19,18 +19,21 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Oppermann's Conjecture
 
-For every integer `x ≥ 2`,
-1. There exists a prime between `x(x-1)` and `x²`
-2. There exists a prime between `x²` and `x(x+1)`
-
-Moreover, Oppermann's conjecture implies Legendre's conjecture.
-
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Oppermann%27s_conjecture)
 -/
 
+/--
+For every integer `x ≥ 2` there exists a prime between `x(x-1)` and `x²`.
+-/
 @[category research open, AMS 11]
-theorem oppermann_conjecture :
-  ∀ x : ℕ, x ≥ 2 →
-    (∃ p ∈ Finset.Ioo (x * (x - 1)) (x^2), Nat.Prime p) ∧
-    (∃ p ∈ Finset.Ioo (x^2) (x * (x + 1)), Nat.Prime p) := by
+theorem oppermann_conjecture.parts.i (x : ℕ) (hx : x ≥ 2) :
+  ∃ p ∈ Finset.Ioo (x * (x - 1)) (x^2), Prime p := by
+  sorry
+
+/--
+For every integer `x ≥ 2` there exists a prime between `x²` and `x(x+1)`.
+-/
+@[category research open, AMS 11]
+theorem oppermann_conjecture.parts.ii (x : ℕ) (hx : x ≥ 2) :
+  ∃ p ∈ Finset.Ioo (x^2) (x * (x + 1)), Prime p := by
   sorry
