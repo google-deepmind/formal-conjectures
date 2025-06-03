@@ -37,13 +37,13 @@ theorem wolstenholme_theorem (p : ℕ) (h : p > 3) (hp : Nat.Prime p) :
 /--
 A prime $p > 7$ is called a *Wolstenholme prime* if $\binom{2p-1}{p-1} \equiv 1 (\pmod{p^4})$.
 -/
-def WolstenholmePrime (p : ℕ) : Prop :=
-  (p > 7) ∧ Nat.Prime p ∧ (2 * p - 1).choose (p - 1) ≡ 1 [MOD p ^ 4]
+def IsWolstenholmePrime (p : ℕ) : Prop :=
+  p > 7 ∧ p.Prime ∧ (2 * p - 1).choose (p - 1) ≡ 1 [MOD p ^ 4]
 
 /--
 Equivalently, a prime $p$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
 -/
-@[category test]
+@[category API]
 theorem wolstenholme_bernoulli (p : ℕ) : WolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑p ∣ (bernoulli' (p - 3)).num := by
   sorry
