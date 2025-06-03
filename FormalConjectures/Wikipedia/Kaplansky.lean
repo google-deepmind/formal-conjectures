@@ -64,8 +64,8 @@ Note: This conjecture is known to be false when `char(K) = 2` (Gardam, 2021).
 -/
 
 @[category research open, AMS 16]
-theorem unit_conjecture (hK : ringChar K ≠ 2)
-    (u : (MonoidAlgebra K G)ˣ) : IsTrivialUnit K G u :=
+theorem unit_conjecture (hK : ringChar K ≠ 2) (u : (MonoidAlgebra K G)ˣ) :
+    IsTrivialUnit K G u :=
   sorry
 
 end Kaplansky
