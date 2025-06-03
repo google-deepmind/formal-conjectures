@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -72,13 +72,23 @@ example (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamar
       norm_num
   · sorry
 
+/- Note: the conjecture was originally formulated by
+Hadamard as a question: "For which values of $n=4k$ does
+a Hadamard matrix exist." However the expectation seems
+to be that all such matrices are Hadamard, and the
+formalisation has been written with this in mind. -/
 
 /--
-Hadamard asks for which values of $n = 4k$ exists such a Matrix.
+There exists a Hadamard matrix for all $n = 4k$.
 -/
 @[category research open, AMS 15]
 theorem HadamardConjecture (k : ℕ) : ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
+
+@[category test]
+example : ∃ M, IsHadamard (n := 0) M := by
+  use 0
+  simp [IsHadamard]
 
 /--
 Hadamard constructs a 12 x 12 matrix ...

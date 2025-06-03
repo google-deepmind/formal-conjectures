@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -220,7 +220,7 @@ example : [![1, 1, 1]] ⊗₂ [![1, 1, 1]] = toLex [toLex ![(1, 1), (1, 1), (1, 
 large $m$ such that $F(m) \geq m^{\alpha}$. -/
 @[category research solved, AMS 5]
 theorem maximalLength_pow {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) ^ e) :
-    ∀ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ e ≤ F m :=
+    ∀ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ e ≤ F m := by
   sorry
 
 /-- $F(n) \leq n^{3/2}$. -/

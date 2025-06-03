@@ -17,7 +17,7 @@ would be useful for a few reasons. It could
 *   Help clarify the precise meaning of conjectures through formalization.
 *   Encourage the expansion of `mathlib` by highlighting needed definitions.
 
-It is our hope that this initiative will form the seed of a much richer dataset of 
+It is our hope that this initiative will form the seed of a much richer dataset of
 formalized conjectures.
 
 ### Note on Formalisation Accuracy
@@ -57,7 +57,7 @@ There are various ways of contributing to this repository:
     We are also interested in the formalized statements of solved variants of
     open conjectures and solved statements from dedicated problem lists.
     While the main goal is to collect conjecture statements, we appreciate the
-    inclusion of very short proofs for solved items or counterexamples, 
+    inclusion of very short proofs for solved items or counterexamples,
     especially if they are illuminating and testing the definitions.
     Lengthy proofs are outside the scope of this repository.
 
@@ -206,7 +206,7 @@ and one can provide trivial answers that aren't mathemetically interesting, e.g.
 `{n : ℕ | P n}` itself.
 
 In particular, the question of whether the answer provided corresponds to a mathematically
-meaningful solution of the problem is outside of the scope of this repository. 
+meaningful solution of the problem is outside of the scope of this repository.
 
 ## Style Guidelines
 
@@ -222,14 +222,14 @@ meaningful solution of the problem is outside of the scope of this repository.
 5.  Every file should come with a reference to where the problem was sourced
     from, and be put in the corresponding directory of the repository, e.g. a
     problem sourced from wikipedia should live in `FormalConjectures/Wikipedia`.
-6.  When a problem is stated as a question in English, the preferred style is to 
+6.  When a problem is stated as a question in English, the preferred style is to
     use `answer(sorry)` in the following way:
     ```lean
     /-- English version: "Does P hold ?" -/
     theorem myConjecture : P ↔ answer(sorry) := by
       sorry
     ```
-    If the problem has been solved, `answer(sorry)` should be replaced by 
+    If the problem has been solved, `answer(sorry)` should be replaced by
     `answer(True)` or `answer(False)` accordingly.
     If the problem is not stated as a question, the following style is preferred:
     ```lean
@@ -239,6 +239,26 @@ meaningful solution of the problem is outside of the scope of this repository.
     ```
     If the problem has been solved to the negative, then `P` should be replaced with
     `¬ P`.
+7.  Every file should start with the following copyright header: 
+    ```lean
+    /-
+    Copyright 2025 The Formal Conjectures Authors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    -/
+    ```
+    Also consider adding yourself to the list of authors in the AUTHORS file.
+
 
 ## Versioning
 
@@ -252,7 +272,7 @@ formal-conjectures is not locked to the mathlib release cadence.
 
 ## Licensing
 
-Copyright 2025 Google LLC All software is licensed under the Apache License,
+Copyright 2025 The Formal Conjectures Authors. All software is licensed under the Apache License,
 Version 2.0 (Apache 2.0); you may not use this file except in compliance with
 the Apache 2.0 license. You may obtain a copy of the Apache 2.0 license at:
 https://www.apache.org/licenses/LICENSE-2.0
@@ -278,6 +298,6 @@ Unless required by applicable law or agreed to in writing, all software and
 materials distributed here under the Apache 2.0 or CC-BY license are distributed
 on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 express or implied. See the licenses for the specific language governing
-permissions and limitations under those licenses. 
+permissions and limitations under those licenses.
 
 This is not an official Google product.

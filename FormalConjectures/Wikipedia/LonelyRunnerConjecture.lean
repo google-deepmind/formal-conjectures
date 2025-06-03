@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ theorem lonely_runner_conjecture (n : ℕ)
     (lonely_def :
       ∀ r t, lonely r t ↔
         ∀ r2 : Fin n, r2 ≠ r →
-        dist (t * speed r : UnitAddCircle) (t * speed r2) ≥ 1 / n
-    ) :
-    ∀ r : Fin n, ∃ t ≥ 0, lonely r t := by
+        dist (t * speed r : UnitAddCircle) (t * speed r2) ≥ 1 / n)
+    (r : Fin n) : ∃ t ≥ 0, lonely r t := by
   sorry

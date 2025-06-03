@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,11 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
 -/
+
 /--
 Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
 $g^n = 1$. Is $G$ necessarily finite?
 -/
 @[category research open, AMS 20]
-theorem bounded_burnside_problem (G : Type) [Group G] (fin_gen : Group.FG G)
-    (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1) : Finite G := by
+theorem bounded_burnside_problem :
+    (∀ (G : Type) [Group G] (fin_gen : Group.FG G)
+      (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G) ↔
+    answer(sorry) := by
   sorry

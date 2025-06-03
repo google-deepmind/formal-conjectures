@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,4 +31,3 @@ lean_lib FormalConjectures where
   globs := #[.submodules `FormalConjectures]
 
 require mathlib from git "https://github.com/leanprover-community/mathlib4.git" @ "v4.17.0"
-
