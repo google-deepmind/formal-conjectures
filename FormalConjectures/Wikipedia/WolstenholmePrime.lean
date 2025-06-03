@@ -41,6 +41,17 @@ def IsWolstenholmePrime (p : ℕ) : Prop :=
   p > 7 ∧ p.Prime ∧ (2 * p - 1).choose (p - 1) ≡ 1 [MOD p ^ 4]
 
 /--
+Two known Wolstenholme primes: 16843 and 2124679.
+-/
+@[category test]
+theorem wolstenholme_prime_16483 : IsWolstenholmePrime 16843 := by
+  sorry
+
+@[category test]
+theorem wolstenholme_prime_2124679 : IsWolstenholmePrime 2124679 := by
+  sorry
+
+/--
 Equivalently, a prime $p$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
 -/
 @[category API]
