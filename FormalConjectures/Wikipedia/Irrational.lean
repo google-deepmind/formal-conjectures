@@ -131,49 +131,57 @@ theorem irrational_catalan_constant : Irrational catalanConstant := by
 /--
 The Gompertz constant $\delta$ is irrational.
 -/
-@[category research open, AMS 11, AMS 33]
+@[category research open, AMS 33]
 theorem irrational_gompertz_constant : Irrational gompertzConstant := by
   sorry
 
 /--
 $\Gamma(1/2)$ is irrational.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 11, AMS 33]
+@[category research solved, AMS 33]
 theorem irrational_gamma_1_2 : Irrational (1/2 : ℝ).Gamma := by
   sorry
 
 /--
 $\Gamma(1/3)$ is irrational.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 11, AMS 33]
+@[category research solved, AMS 33]
 theorem irrational_gamma_1_3 : Irrational (1/3 : ℝ).Gamma := by
   sorry
 
 /--
 $\Gamma(1/4)$ is irrational.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 11, AMS 33]
+@[category research solved, AMS 33]
 theorem irrational_gamma_1_4 : Irrational (1/4 : ℝ).Gamma := by
   sorry
 
 /--
 $\Gamma(1/6)$ is irrational.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 11, AMS 33]
-theorem irrational_gamma_1_6 : Irrational (1/4 : ℝ).Gamma := by
+@[category research solved, AMS 33]
+theorem irrational_gamma_1_6 : Irrational (1/6 : ℝ).Gamma := by
   sorry
 
 /--
 $\Gamma(1/n)$ for `n ≥ 2` is irrational.
 -/
-@[category research open, AMS 11, AMS 33]
+@[category research open, AMS 33]
 theorem irrational_gamma_1_n (n : ℕ) (hn : 1 < n) : Irrational (1/4 : ℝ).Gamma := by
   sorry
 
 /--
 $\Gamma(1/n)$ for `n ≥ 2` is irrational.
 -/
-@[category research open, AMS 11, AMS 33]
+@[category research open, AMS 33]
 theorem exists_irrational_euler_lehmer_constant (n : ℕ) (hn : 1 < n) :
   (∃ (q : ℕ+), ∃ (a : ℕ) (ha : a < q), Irrational (eulerLehmerConstant a q)) ↔ answer(sorry) := by
   sorry
