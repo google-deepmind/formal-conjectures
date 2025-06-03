@@ -33,8 +33,7 @@ variable (G : Type*) [Group G] (hG : Monoid.IsTorsionFree G)
 If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero divisors.
 -/
 @[category research open, AMS 16]
-theorem zero_divisor_conjecture :
-    NoZeroDivisors (MonoidAlgebra K G) := by
+theorem zero_divisor_conjecture : NoZeroDivisors (MonoidAlgebra K G) := by
   sorry
 
 /--
