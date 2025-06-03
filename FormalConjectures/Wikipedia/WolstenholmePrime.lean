@@ -40,12 +40,11 @@ A prime $p > 7$ is called a *Wolstenholme prime* if $\binom{2p-1}{p-1} \equiv 1 
 def WolstenholmePrime (p : ℕ) : Prop :=
   (p > 7) ∧ Nat.Prime p ∧ (2 * p - 1).choose (p - 1) ≡ 1 [MOD p ^ 4]
 
-
-#check (bernoulli' 3).num
 /--
 Equivalently, a prime $p$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
 -/
-def wolstenholme_bernoulli (p : ℕ) : WolstenholmePrime p ↔
+@[category test]
+theorem wolstenholme_bernoulli (p : ℕ) : WolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑p ∣ (bernoulli' (p - 3)).num := by
   sorry
 
@@ -53,7 +52,8 @@ def wolstenholme_bernoulli (p : ℕ) : WolstenholmePrime p ↔
 Another equivalent definition is that a prime $p$ is a Wolstenholme prime
 if it $p^3$ divides the numerator of the harmonic number $H_{p-1}$.
 -/
-def wolstenholme_harmonic (p : ℕ) : WolstenholmePrime p ↔
+@[category test]
+theorem wolstenholme_harmonic (p : ℕ) : WolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑(p ^ 3) ∣ (harmonic (p - 1)).num := by
   sorry
 
