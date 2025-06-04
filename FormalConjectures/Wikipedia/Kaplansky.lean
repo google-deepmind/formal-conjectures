@@ -54,8 +54,7 @@ def IsTrivialUnit (u : MonoidAlgebra K G) : Prop :=
 
 lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUnit u := by
   rcases h with ⟨k, g, rfl⟩
-  let v := MonoidAlgebra.single g⁻¹ (k⁻¹ : K)
-  apply isUnit_of_mul_eq_one u v
+  apply isUnit_of_mul_eq_one u (MonoidAlgebra.single g⁻¹ (k⁻¹ : K))
   · -- u * v = 1
     rw [MonoidAlgebra.single_mul_single, mul_inv_cancel, Units.mul_inv]
     exact MonoidAlgebra.one_def.symm
