@@ -56,7 +56,7 @@ def is_virtually_nilpotent (G : Type*) [Group G] : Prop :=
 def is_finitely_generated (G : Type*) [Group G] : Prop :=
   ∃ (S : Set G), Set.Finite S ∧ Subgroup.closure S = ⊤
 
-@[category research closed, AMS 20]
+@[category research solved, AMS 20]
 /-- **Gromov's Polynomial Growth Theorem** : A finitely generated group has
     polynomial growth if and only if it is virtually nilpotent. -/
 theorem gromov_polynomial_growth_theorem (G : Type*) [Group G]
