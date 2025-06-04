@@ -75,7 +75,9 @@ There is a counterexample to **Unit Conjecture** in any characteristic.
 [Pe23] Pellone, A. (2023). Counterexamples to Kaplansky’s Unit Conjecture.
 [Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
 -/
-theorem counter_unit_conjecture_strong (p : ℕ) (hp : p = 0 ∨ p.Prime) :
-    ∃ᵉ (K : Type) (G : Type) (_ : Field K) (_ : Group G) (_ : Monoid.IsTorsionFree G) (_ :  CharP K p) 
-    (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit K G u := by
+@[category research solved, AMS 16]
+theorem counter_unit_conjecture_strong:
+    ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G),
+    ∀ (p : ℕ) (hp : p = 0 ∨ p.Prime),
+    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit K G u := by
   sorry
