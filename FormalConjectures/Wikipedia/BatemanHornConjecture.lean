@@ -31,7 +31,7 @@ open Polynomial Asymptotics Filter Topology
 
 /-- Definition of irreducible polynomial with positive leading coefficient -/
 def IsIrreducibleWithPosLeading (f : ℤ[X]) : Prop :=
-  Irreducible f ∧ 0 < f.leadingCoeff
+  Irreducible f ∧ 0 < f.leadingCoeff ∧ 0 < f.natDegree
 
 /-- The compatibility condition for a finite set `S` of polynomials in the Bateman-Horn conjecture.
 This states that for all primes `p`, there exists an `n` such that `∏ f ∈ S, f.eval n` is non-zero modulo `p`. -/
