@@ -35,8 +35,8 @@ def CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) : Set G :=
 
 /-- The `growth_function` of a group `G` with respect to a generating set `S` counts the number
     of group elements that can be reached by words of length at most `n` in the generators. -/
-noncomputable def growth_function {G : Type*} [Group G] (S : Set G) : ℕ → ℕ :=
-  fun n => (cayley_ball S n).ncard
+noncomputable def growth_function {G : Type*} [Group G] (S : Set G) (n : ℕ) : ℕ :=
+  (cayley_ball S n).ncard
 
 /-- A group `has_polynomial_growth` if there exists a finite generating set such that
     the growth function is bounded above by a polynomial. -/
