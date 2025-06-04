@@ -53,14 +53,8 @@ def IsTrivialUnit (u : MonoidAlgebra K G) : Prop :=
   ∃ (k : Kˣ) (g : G), u = MonoidAlgebra.single g (k : K)
 
 lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUnit u := by
-  rcases h with ⟨k, g, rfl⟩
-  apply isUnit_of_mul_eq_one u (MonoidAlgebra.single g⁻¹ (k⁻¹ : K))
-  · -- u * v = 1
-    rw [MonoidAlgebra.single_mul_single, mul_inv_cancel, Units.mul_inv]
-    exact MonoidAlgebra.one_def.symm
-  · -- v * u = 1
-    rw [MonoidAlgebra.single_mul_single, inv_mul_cancel, Units.inv_mul]
-    exact MonoidAlgebra.one_def.symm
+  obtain ⟨k, g, rfl⟩ := h
+  exact (Prod.isUnit_iff (x := (k.1, g)).mpr ⟨k.isUnit, Group.isUnit g⟩).map MonoidAlgebra.singleHom
 
 /--
 The **Unit Conjecture** is false.
