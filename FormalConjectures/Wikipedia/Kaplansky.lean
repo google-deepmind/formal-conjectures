@@ -44,6 +44,7 @@ theorem idempotent_conjecture (a : MonoidAlgebra K G) (h : IsIdempotentElem a) :
     a = 0 ∨ a = 1 := by
   sorry
 
+variable {K G} in
 /--
 A unit in `K[G]` is trivial if it is exactly of the form `kg` where:
 - `k` is a unit in the base field `K`
