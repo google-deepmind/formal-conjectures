@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/1/3%E2%80%932/3_conjecture)
 -/
+
 /--
 Does every finite partially ordered set that is not totally ordered
 contain two elements $x$ and $y$ such that the probability that
@@ -30,9 +31,10 @@ The set of all total order extensions is represented as order preserving
 bijections $P$ of $1, ..., n$.
 -/
 @[category research open, AMS 6]
-theorem conjecture_1_3_to_2_3 (P : Type) [Finite P] [PartialOrder P]
+theorem conjecture_1_3_to_2_3 : (∀ (P : Type) [Finite P] [PartialOrder P]
     (not_total : ¬ IsTotal P (· ≤ ·)) (total_ext : Set <| OrderHom P ℕ)
-    (total_ext_def : ∀ σ, σ ∈ total_ext ↔ Set.range σ = Set.Icc 1 (Nat.card P)) :
+    (total_ext_def : ∀ σ, σ ∈ total_ext ↔ Set.range σ = Set.Icc 1 (Nat.card P)),
     ∃ x y : P, ({σ ∈ total_ext | σ x < σ y}.ncard / total_ext.ncard : ℚ)
-      ∈ Set.Icc (1/3) (2/3) := by
+      ∈ Set.Icc (1/3) (2/3)) ↔
+    answer(sorry ) := by
   sorry
