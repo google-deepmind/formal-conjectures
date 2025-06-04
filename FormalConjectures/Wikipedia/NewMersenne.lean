@@ -43,6 +43,19 @@ def IsSpecialForm (p : ℕ) : Prop :=
 
 end Nat
 /--
+A natural number `p` satisfies the statement of the New Mersenne Conjecture if whenever
+two of the following conditions hold,
+then all three must hold:
+1. `2ᵖ-1` is prime
+2. `(2ᵖ+1)/3` is prime
+3. Exists a number `k` such that `p = 2ᵏ±1` or `p = 4ᵏ±3`
+-/
+def NewMersenneConjectureStatement (p : ℕ) : Prop :=
+  (p.GivesMersennePrime ∧ p.GivesWagstaffPrime → p.IsSpecialForm) ∧
+  (p.GivesMersennePrime ∧ p.IsSpecialForm → p.GivesWagstaffPrime) ∧
+  (p.GivesWagstaffPrime ∧ p.IsSpecialForm → p.GivesMersennePrime)
+
+/--
 For any odd natural number `p` if two of the following conditions hold,
 then all three must hold:
 1. `2ᵖ-1` is prime
@@ -51,7 +64,17 @@ then all three must hold:
 -/
 @[category research open, AMS 11]
 theorem new_mersenne_conjecture (p : ℕ) (hp : Odd p) :
-    (p.GivesMersennePrime ∧ p.GivesWagstaffPrime → p.IsSpecialForm) ∧
-    (p.GivesMersennePrime ∧ p.IsSpecialForm → p.GivesWagstaffPrime) ∧
-    (p.GivesWagstaffPrime ∧ p.IsSpecialForm → p.GivesMersennePrime) := by
+    NewMersenneConjectureStatement p := by
+  sorry
+
+/-- It suffices to check this conjecture for primes -/
+@[category undergraduate, AMS 11]
+theorem new_mersenne_conjecture_of_prime :
+    (∀ p, p.Prime → NewMersenneConjectureStatement p) →
+    ∀ p, Odd p → NewMersenneConjectureStatement p := by
+  sorry
+
+@[category research open, AMS 11]
+theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) :
+    NewMersenneConjectureStatement p := by
   sorry
