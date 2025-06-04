@@ -31,9 +31,7 @@ Claude 4.0 Sonnet: https://claude.ai/share/918bb269-bd28-4c09-b84e-cab579c836e8
 /-- The `cayley_ball` is the ball of radius `n` in the Cayley graph of a group `G` with generating
     set `S`. -/
 def cayley_ball {G : Type*} [Group G] (S : Set G) (n : ℕ) : Set G :=
-  {g : G | ∃ (l : List G), l.length ≤ n ∧
-    (∀ s ∈ l, s ∈ S ∨ s⁻¹ ∈ S) ∧
-    l.prod = g}
+  {g : G | ∃ (l : List G), l.length ≤ n ∧ (∀ s ∈ l, s ∈ S ∨ s⁻¹ ∈ S) ∧ l.prod = g}
 
 /-- The `growth_function` of a group `G` with respect to a generating set `S` counts the number
     of group elements that can be reached by words of length at most `n` in the generators. -/
