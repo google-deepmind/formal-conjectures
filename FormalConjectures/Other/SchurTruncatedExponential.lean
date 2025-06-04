@@ -31,6 +31,7 @@ Note: This was asked by Nick Katz. Quasi-autoformalized using Claude 4.0 Sonnet.
 open Polynomial
 
 open scoped Nat
+
 /--
 The truncated exponential polynomial `truncatedExp n` is
 given by `∑_{j=0}^{n} x^j / j!` over `ℚ`, which is the
