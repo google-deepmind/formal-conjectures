@@ -30,7 +30,7 @@ def GivesMersennePrime (p : ℕ) : Prop :=
   Nat.Prime (2^p - 1)
 
 /--
-Wagstaff prime is a prime number of the form `(2ᵖ+1)/3`.
+A Wagstaff prime is a prime number of the form `(2ᵖ+1)/3`.
 -/
 def GivesWagstaffPrime (p : ℕ) : Prop :=
   Odd p ∧ Nat.Prime ((2^p + 1) / 3)
