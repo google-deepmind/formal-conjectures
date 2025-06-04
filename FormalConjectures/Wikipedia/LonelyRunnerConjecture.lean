@@ -35,7 +35,6 @@ theorem lonely_runner_conjecture (n : ℕ)
     (lonely_def :
       ∀ r t, lonely r t ↔
         ∀ r2 : Fin n, r2 ≠ r →
-        dist (t * speed r : UnitAddCircle) (t * speed r2) ≥ 1 / n
-    ) :
-    ∀ r : Fin n, ∃ t ≥ 0, lonely r t := by
+        dist (t * speed r : UnitAddCircle) (t * speed r2) ≥ 1 / n)
+    (r : Fin n) : ∃ t ≥ 0, lonely r t := by
   sorry

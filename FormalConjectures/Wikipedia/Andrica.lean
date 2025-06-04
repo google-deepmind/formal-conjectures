@@ -17,18 +17,15 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Bounded Burnside problem
+# Andrica's conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
 -/
 
 /--
-Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
-$g^n = 1$. Is $G$ necessarily finite?
+The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is the nth prime number.
 -/
-@[category research open, AMS 20]
-theorem bounded_burnside_problem :
-    (∀ (G : Type) [Group G] (fin_gen : Group.FG G)
-      (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G) ↔
-    answer(sorry) := by
+@[category research open, AMS 11]
+theorem andrica_conjecture (n : ℕ) :
+    Real.sqrt ((n+1).nth Prime) - Real.sqrt (n.nth Prime) < 1 := by
   sorry

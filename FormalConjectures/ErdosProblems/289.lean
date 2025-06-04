@@ -17,18 +17,21 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Bounded Burnside problem
-
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
+# Erdős Problem 289
+*Reference:* [erdosproblems.com/289](https://www.erdosproblems.com/289)
 -/
 
-/--
-Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
-$g^n = 1$. Is $G$ necessarily finite?
+open Asymptotics Filter Finset
+
+/-- Is it true that, for all sufficiently large $k$, there exists finite intervals
+$I_1, \dotsc, I_k \subset \mathbb{N}$ with $|I_i| \geq 2$ for $1 \leq i \leq k$ such that
+$$
+1 = \sum_{i=1}^k \sum_{n \in I_i} \frac{1}{n}.
+$$
 -/
-@[category research open, AMS 20]
-theorem bounded_burnside_problem :
-    (∀ (G : Type) [Group G] (fin_gen : Group.FG G)
-      (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G) ↔
-    answer(sorry) := by
+@[category research open, AMS 11]
+theorem erdos_289 :
+    (∀ᶠ k : ℕ in atTop, ∃ I : Fin k → Finset ℕ,
+      (∀ i, 2 ≤ #(I i) ∧ ∃ a b, 0 < a ∧ I i = Finset.Icc a b) ∧
+      ∑ i, ∑ n ∈ I i, (n⁻¹ : ℚ) = 1) ↔ answer(sorry) := by
   sorry

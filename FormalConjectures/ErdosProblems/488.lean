@@ -17,18 +17,23 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Bounded Burnside problem
+# Erdős Problem 488
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
+*Reference:* [erdosproblems.com/488](https://www.erdosproblems.com/488)
 -/
+
+open Classical
 
 /--
-Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
-$g^n = 1$. Is $G$ necessarily finite?
+Let $A$ be a finite set and
+$$B = \{n \ge 1 : a \nmid n \text{ for all } a \in A\}.$$
+Is it true that, for every $m > n \ge \max(A)$,
+$$\frac{|B \cap [1, m]|}{m} < 2 \frac{|B \cap [1, n]|}{n}?$$
 -/
-@[category research open, AMS 20]
-theorem bounded_burnside_problem :
-    (∀ (G : Type) [Group G] (fin_gen : Group.FG G)
-      (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G) ↔
-    answer(sorry) := by
+@[category research solved, AMS 5 11]
+theorem erdos_488 : (∀ (A : Finset ℕ),
+    letI B := {n ≥ 1 | ∀ a ∈ A, ¬ a ∣ n}
+    ∀ᵉ (n : ℕ) (m > n), A.max ≤ n →
+      ((Finset.Icc 1 m).filter (· ∈ B)).card / (m : ℚ) <
+        2 * ((Finset.Icc 1 n).filter (· ∈ B)).card / n) ↔ answer(False):= by
   sorry
