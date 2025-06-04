@@ -63,8 +63,9 @@ The **Unit Conjecture** is false.
 [Pe23] Pellone, A. (2023). Counterexamples to Kaplansky’s Unit Conjecture.
 [Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
 -/
+@[category research solved, AMS 16]
 theorem counter_unit_conjecture :
-    ∃ᵉ (p : ℕ) (K : Type) (G : Type) (_ : Field K) (_ : Group G) (_ : Monoid.IsTorsionFree G) (_ :  CharP K p) 
+    ∃ (K G : Type) (_ : Field K) (_ : Group G) (_ : Monoid.IsTorsionFree G)
     (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit K G u := by
   sorry
  
