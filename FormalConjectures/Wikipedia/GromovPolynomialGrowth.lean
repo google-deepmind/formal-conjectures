@@ -38,6 +38,57 @@ def CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) : Set G :=
 noncomputable def GrowthFunction {G : Type*} [Group G] (S : Set G) (n : ℕ) : ℕ :=
   (CayleyBall S n).ncard
 
+-- Basic properties of CayleyBall and GrowthFunction (Claude generated statements, human proofs)
+
+/-- The identity is always in the Cayley ball of radius n for any n ≥ 0. -/
+@[category API, AMS 20]
+lemma one_mem_CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) :
+    1 ∈ CayleyBall S n := by
+  simp only [CayleyBall, Set.mem_setOf_eq]
+  use ∅
+  simp
+
+/-- The Cayley ball is monotonic in radius. -/
+@[category API, AMS 20]
+lemma CayleyBall_monotone {G : Type*} [Group G] (S : Set G) {m n : ℕ} (h : m ≤ n) :
+    CayleyBall S m ⊆ CayleyBall S n := by
+  simp only [CayleyBall, Set.setOf_subset_setOf, forall_exists_index, and_imp]
+  exact fun g l lLength LSubS lProdG ↦ ⟨l, by linarith, LSubS, lProdG⟩
+
+/-- Closure property: if g, h ∈ CayleyBall S m, CayleyBall S n respectively,
+    then gh ∈ CayleyBall S (m + n). -/
+@[category API, AMS 20]
+lemma CayleyBall_mul {G : Type*} [Group G] (S : Set G) {g h : G} {m n : ℕ}
+    (hg : g ∈ CayleyBall S m) (hh : h ∈ CayleyBall S n) :
+    g * h ∈ CayleyBall S (m + n) := by
+  simp only [CayleyBall, Set.mem_setOf_eq] at hg hh ⊢
+  obtain ⟨lg, lgLength, lgSubS, lgProd⟩ := hg
+  obtain ⟨lh, lhLength, lhSubS, lhProd⟩ := hh
+  refine ⟨lg ++ lh, ?_, ?_, by simp [lhProd, lgProd]⟩
+  · simp only [List.length_append]
+    linarith
+  · intro s sIn
+    simp only [List.mem_append] at sIn
+    cases sIn with
+    | inl h => simp [lgSubS s h]
+    | inr h => simp [lhSubS s h]
+
+/-- If `g ∈ CayleyBall S n`, then `g⁻¹ ∈ CayleyBall S n`. -/
+@[category API, AMS 20]
+lemma CayleyBall_inv {G : Type*} [Group G] (S : Set G) {g : G} {n : ℕ}
+    (hg : g ∈ CayleyBall S n) :
+    g⁻¹ ∈ CayleyBall S n := by
+  simp only [CayleyBall, Set.mem_setOf_eq] at hg ⊢
+  obtain ⟨lg, lgLength, lgSubS, lgProd⟩ := hg
+  refine ⟨lg.reverse.map (·⁻¹), by simp [lgLength], ?_,
+    by simp [List.prod_inv_reverse, lgProd.symm]⟩
+  intro s sIn
+  simp only [List.map_reverse, List.mem_reverse, List.mem_map, inv_involutive,
+    Function.Involutive.exists_mem_and_apply_eq_iff] at sIn
+  have := lgSubS s⁻¹ sIn
+  simp only [inv_inv] at this
+  exact this.symm
+
 /-- A group `HasPolynomialGrowth` if there exists a finite generating set such that
     the growth function is bounded above by a polynomial. -/
 def HasPolynomialGrowth (G : Type*) [Group G] : Prop :=
