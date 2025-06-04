@@ -50,7 +50,7 @@ exponential polynomial over `ℚ`. Then for `n ≥ 2`:
 -/
 @[category research solved, AMS 12]
 theorem schur_truncatedExp_galoisGroup_equiv (n : ℕ) (hn : n ≥ 2) :
-  let f := truncatedExp n
+  letI f := truncatedExp n
   if n % 4 = 0 then
     -- Galois group is alternating group A_n
     Nonempty (f.Gal ≃* alternatingGroup (Fin n))
