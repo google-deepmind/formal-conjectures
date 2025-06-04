@@ -62,6 +62,7 @@ lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUni
     rw [MonoidAlgebra.single_mul_single, inv_mul_cancel, Units.inv_mul]
     exact MonoidAlgebra.one_def.symm
 
+/--
 The **Unit Conjecture** is false.
 
 [Pe23] Pellone, A. (2023). Counterexamples to Kaplansky’s Unit Conjecture.
