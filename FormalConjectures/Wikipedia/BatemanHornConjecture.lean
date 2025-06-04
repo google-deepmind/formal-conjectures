@@ -83,9 +83,7 @@ The compatibility condition ensures that for each prime p, there exists some int
 such that p does not divide the product f₁(n)·f₂(n)·...·fₖ(n), which guarantees the
 infinite product converges to a positive value.
 
-This conjecture generalizes both Dirichlet's theorem on primes in arithmetic progressions
-(single linear polynomial case) and the Hardy-Littlewood k-tuple conjecture (when all
-polynomials are of the form X + aᵢ). -/
+@[category research open, AMS 11 12]
 theorem bateman_horn_conjecture
     (polys : Finset ℤ[X])
     (h_nonempty : polys.Nonempty)
