@@ -38,7 +38,7 @@ given by `∑_{j=0}^{n} x^j / j!` over `ℚ`, which is the
 `n`-th partial sum of the Taylor series for the exponential function `e^x`.
 -/
 noncomputable def truncatedExp (n : ℕ) : ℚ[X] :=
-  ∑ j ∈ Finset.range (n + 1), (1 / j.factorial : ℚ) • X ^ j
+  ∑ j ∈ Finset.range (n + 1), (1 / j ! : ℚ) • X ^ j
 
 /--
 **Schur's Theorem (1924):**
