@@ -16,6 +16,7 @@ limitations under the License.
 
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
+import FormalConjectures.ForMathlib.Combinatorics.Additive.Basis
 import FormalConjectures.ForMathlib.Combinatorics.Basic
 import FormalConjectures.ForMathlib.Computability.TuringMachine
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
@@ -23,5 +24,6 @@ import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
 import FormalConjectures.ForMathlib.Data.Set.Density
 import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin
+import FormalConjectures.ForMathlib.Order.Filter.Cofinite
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
