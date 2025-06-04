@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Nat
 
 /--
-Mersenne prime is a prime number of the form `2ᵖ-1`.
+A Mersenne prime is a prime number of the form `2ᵖ-1`.
 -/
 def GivesMersennePrime (p : ℕ) : Prop :=
   Nat.Prime (2^p - 1)
