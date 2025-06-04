@@ -60,9 +60,7 @@ lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUni
     rw [MonoidAlgebra.single_mul_single, mul_inv_cancel, Units.mul_inv]
     exact MonoidAlgebra.one_def.symm
   · -- v * u = 1
-    rw [MonoidAlgebra.single_mul_single]
-    rw [inv_mul_cancel]
-    rw [Units.inv_mul]
+    rw [MonoidAlgebra.single_mul_single, inv_mul_cancel, Units.inv_mul]
     exact MonoidAlgebra.one_def.symm
 
 /--
