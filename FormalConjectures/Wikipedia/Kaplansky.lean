@@ -51,7 +51,7 @@ A unit in `K[G]` is trivial if it is exactly of the form `kg` where:
 - `k` is a unit in the base field `K`
 - `g` is an element of the group `G`
 -/
-def IsTrivialUnit (u : (MonoidAlgebra K G)ˣ) : Prop :=
+def IsTrivialUnit (u : MonoidAlgebra K G) : Prop :=
   ∃ (k : Kˣ) (g : G), u = MonoidAlgebra.single g (k : K)
 
 /--
