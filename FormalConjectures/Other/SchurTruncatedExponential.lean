@@ -42,7 +42,7 @@ noncomputable def truncatedExp (n : ℕ) : ℚ[X] :=
 
 /--
 **Schur's Theorem (1924):**
-Let `f_n(x) = ∑_{j=0}^{n-1} x^j/j!` be the `n`-th truncated
+Let `f_n(x) = ∑_{j=0}^n x^j/j!` be the `n`-th truncated
 exponential polynomial over `ℚ`. Then for `n ≥ 2`:
 
 - If `n ≡ 0 (mod 4)`, the Galois group of `f_n` is isomorphic to the alternating group `A_n`
