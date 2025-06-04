@@ -22,8 +22,6 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Kaplansky%27s_conjectures)
 -/
 
-namespace Kaplansky
-
 variable (K : Type*) [Field K]
 variable (G : Type*) [Group G] (hG : Monoid.IsTorsionFree G)
 
@@ -54,18 +52,28 @@ A unit in `K[G]` is trivial if it is exactly of the form `kg` where:
 def IsTrivialUnit (u : MonoidAlgebra K G) : Prop :=
   ∃ (k : Kˣ) (g : G), u = MonoidAlgebra.single g (k : K)
 
+lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUnit u := by
+  rcases h with ⟨k, g, rfl⟩
+  let v := MonoidAlgebra.single g⁻¹ (k⁻¹ : K)
+  apply isUnit_of_mul_eq_one u v
+  · -- u * v = 1
+    rw [MonoidAlgebra.single_mul_single]
+    rw [mul_inv_cancel]
+    rw [Units.mul_inv]
+    exact MonoidAlgebra.one_def.symm
+  · -- v * u = 1
+    rw [MonoidAlgebra.single_mul_single]
+    rw [inv_mul_cancel]
+    rw [Units.inv_mul]
+    exact MonoidAlgebra.one_def.symm
+
 /--
-**Unit Conjecture (characteristic ≠ 2)**
+There is a counterexample to **Unit Conjecture** in any characteristic.
 
-If `G` is torsion-free and `K` has characteristic different from 2,
-then every unit in `K[G]` is trivial.
-
-Note: This conjecture is known to be false when `char(K) = 2` (Gardam, 2021).
+[Pe23] Pellone, A. (2023). Counterexamples to Kaplansky’s Unit Conjecture.
+[Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
 -/
-
-@[category research open, AMS 16]
-theorem unit_conjecture (hK : ringChar K ≠ 2) (u : (MonoidAlgebra K G)ˣ) :
-    IsTrivialUnit K G u :=
+@[category research solved, AMS 16]
+theorem counter_unit_conjecture (k : ℕ) :
+    ∃ /-- I have no idea -/,  ∃ (u : (monoid_algebra K G)ˣ) ¬IsTrivialUnit K G u := by
   sorry
-
-end Kaplansky
