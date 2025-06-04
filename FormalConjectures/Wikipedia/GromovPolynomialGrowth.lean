@@ -45,13 +45,9 @@ def HasPolynomialGrowth (G : Type*) [Group G] : Prop :=
     ∃ (C : ℝ) (d : ℕ), C > 0 ∧
     ∀ n : ℕ, (GrowthFunction S n : ℝ) ≤ C * (n : ℝ) ^ d
 
-/-- A group `IsVirtuallyNilpotent` if it contains a nilpotent subgroup of finite index. -/
-def IsVirtuallyNilpotent (G : Type*) [Group G] : Prop :=
-  ∃ (H : Subgroup G), Group.IsNilpotent H ∧ H.FiniteIndex
-
 /-- **Gromov's Polynomial Growth Theorem** : A finitely generated group has
     polynomial growth if and only if it is virtually nilpotent. -/
 @[category research solved, AMS 20]
 theorem GromovPolynomialGrowthTheorem (G : Type*) [Group G] [Group.FG G] :
-    HasPolynomialGrowth G ↔ IsVirtuallyNilpotent G := by
+    HasPolynomialGrowth G ↔ Group.IsVirtuallyNilpotent G := by
   sorry
