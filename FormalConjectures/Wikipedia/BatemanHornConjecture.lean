@@ -65,7 +65,7 @@ noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : �
 
 /-- **The Bateman-Horn Conjecture**
 
-Given a finite collection of distinct irreducible polynomials f₁, f₂, ..., fₖ ∈ ℤ[X]
+Given a finite collection of distinct, irreducible, non-constant polynomials f₁, f₂, ..., fₖ ∈ ℤ[X]
 with positive leading coefficients that satisfy the compatibility condition, the number
 of positive integers n ≤ x for which all polynomials f₁(n), f₂(n), ..., fₖ(n) are
 simultaneously prime is asymptotic to:
