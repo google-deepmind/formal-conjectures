@@ -42,6 +42,7 @@ def IsSpecialForm (p : ℕ) : Prop :=
   ∃ k : ℕ, p = 2^k + 1 ∨ p = 2^k - 1 ∨ p = 4^k + 3 ∨ p = 4^k - 3
 
 end Nat
+
 /--
 A natural number `p` satisfies the statement of the New Mersenne Conjecture if whenever
 two of the following conditions hold,
