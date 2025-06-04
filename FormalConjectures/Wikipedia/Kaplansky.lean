@@ -57,9 +57,7 @@ lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUni
   let v := MonoidAlgebra.single g⁻¹ (k⁻¹ : K)
   apply isUnit_of_mul_eq_one u v
   · -- u * v = 1
-    rw [MonoidAlgebra.single_mul_single]
-    rw [mul_inv_cancel]
-    rw [Units.mul_inv]
+    rw [MonoidAlgebra.single_mul_single, mul_inv_cancel, Units.mul_inv]
     exact MonoidAlgebra.one_def.symm
   · -- v * u = 1
     rw [MonoidAlgebra.single_mul_single]
