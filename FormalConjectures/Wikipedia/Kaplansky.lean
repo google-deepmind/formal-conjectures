@@ -62,13 +62,23 @@ lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUni
     rw [MonoidAlgebra.single_mul_single, inv_mul_cancel, Units.inv_mul]
     exact MonoidAlgebra.one_def.symm
 
+The **Unit Conjecture** is false.
+
+[Pe23] Pellone, A. (2023). Counterexamples to Kaplansky’s Unit Conjecture.
+[Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
+-/
+theorem counter_unit_conjecture :
+    ∃ᵉ (p : ℕ) (K : Type) (G : Type) (_ : Field K) (_ : Group G) (_ : Monoid.IsTorsionFree G) (_ :  CharP K p) 
+    (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit K G u := by
+  sorry
+ 
 /--
 There is a counterexample to **Unit Conjecture** in any characteristic.
 
 [Pe23] Pellone, A. (2023). Counterexamples to Kaplansky’s Unit Conjecture.
 [Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
 -/
-@[category research solved, AMS 16]
-theorem counter_unit_conjecture (k : ℕ) :
-    ∃ /-- I have no idea -/,  ∃ (u : (monoid_algebra K G)ˣ) ¬IsTrivialUnit K G u := by
+theorem counter_unit_conjecture_strong (p : ℕ) (hp : p = 0 ∨ p.Prime) :
+    ∃ᵉ (K : Type) (G : Type) (_ : Field K) (_ : Group G) (_ : Monoid.IsTorsionFree G) (_ :  CharP K p) 
+    (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit K G u := by
   sorry
