@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schinzel%27s_hypothesis_H)
 -/
 
+open Polynomial
+
 /--
 **Bunyakovsky condition**
 The condition for each polynomial in Schinzel and Bunyakovsky conjectures.
