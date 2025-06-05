@@ -87,7 +87,7 @@ theorem counter_unit_conjecture_strong:
 
 /--
 **The Promislow group**
-$\langle a, b | b^{-1}a^2 b a^2, a^{-1}b^2 a b^2$
+$\langle a, b | b^{-1}a^2 b a^2, a^{-1}b^2 a b^2 \rangle$
 -/
 abbrev PromislowGroup : Type :=
   letI a := FreeGroup.of 0
