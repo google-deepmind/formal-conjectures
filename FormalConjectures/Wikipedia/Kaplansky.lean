@@ -102,7 +102,7 @@ lemma promislow_group_is_torsionfree :
 If $P$ is the Promislow group, then the group ring $\mathbb{F}_p[P]$ has a non-trivial unit.
 -/
 @[category test]
-theorem unit_conjecture.counterexamples.i (p : ℕ) [hp : Fact (p.Prime)] :
+theorem unit_conjecture.counterexamples.i (p : ℕ) [hp : Fact p.Prime] :
     ∃ (u : (MonoidAlgebra (ZMod p) PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
 
