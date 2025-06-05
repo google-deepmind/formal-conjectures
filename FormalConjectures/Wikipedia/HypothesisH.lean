@@ -117,7 +117,7 @@ theorem sexy_primes :
     Infinite {p : ℕ | Prime p ∧ Prime (p + 6)} := by
   sorry
 
-/-!
+/-
 ## Other special cases and consequences
 - Landau's 4th problem (primes and perfect squares)
 - Twin prime conjecture
