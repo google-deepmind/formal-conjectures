@@ -80,7 +80,7 @@ There exist infinitely many composite Mersenne numbers.
 -/
 @[category research open, AMS 11]
 theorem mersenne_composite_infinite :
-  Infinite {n : ℕ | ¬IsGivesMersennePrime n} := by
+  Infinite {n : ℕ | ¬GivesMersennePrime n} := by
   sorry
 
 /--
