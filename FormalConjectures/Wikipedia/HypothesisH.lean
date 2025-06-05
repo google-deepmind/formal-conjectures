@@ -96,7 +96,7 @@ There are infinitely many primes $p$ such that $2p + 1$ is prime.
 -/
 @[category research open, AMS 11]
 theorem safe_primes :
-    Infinite {p : ℕ | Prime p ∧ Prime (p + 4)} := by
+    Infinite {p : ℕ | Prime p ∧ Prime (2*p + 1)} := by
   sorry
 
 /--
