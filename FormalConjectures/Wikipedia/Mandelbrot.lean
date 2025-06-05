@@ -17,14 +17,21 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Local connectivity of the Mandelbrot and Multibrot sets
+# Conjectures about the Mandelbrot and Multibrot sets
+This file adds three conjectures about the Mandelbrot and Multibrot sets:
+- the *MLC conjecture*, stating that these sets are locally connected
+- the *density of hyperbolicity* conjecture, stating that parameters with attracting cycles are
+  dense in the Mandelbrot and Multibrot sets
+- the conjecture that the boundaries of these sets have zero area.
+The first two conjectures are related in that the former implies the latter.
 
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Mandelbrot_set#Local_connectivity)
  - [arxiv/math/9902155](https://arxiv.org/abs/math/9902155)
+ - [mathoverflow/37229](https://mathoverflow.net/questions/37229/)
 -/
 
-open Topology Set Function Filter Bornology Metric
+open Topology Set Function Filter Bornology Metric MeasureTheory
 
 /-- The Multibrot set of power `n` is the set of all parameters `c : ℂ` for which `0` does not
 escape to infinity under repeated application of `z ↦ z ^ n + c`. -/
@@ -102,4 +109,59 @@ Note that we don't need to require `2 ≤ n` because the conjecture holds in the
 and `n = 1` too. -/
 @[category research open, AMS 37]
 theorem MLC_general_exponent (n : ℕ) : LocallyConnectedSpace (multibrotSet n) := by
+  sorry
+
+/-- We say that `z : ℂ` is part of an attracting cycle of period `n` of `f : ℂ → ℂ` if it is an
+`n`-periodic point (i.e. `f^[n] z = z`), `f^[n]` is differentiable at `z` and `‖deriv f^[n] z‖` is
+strictly less than one.-/
+def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
+  f.IsPeriodicPt n z ∧ DifferentiableAt ℂ f^[n] z ∧ ‖deriv f^[n] z‖ < 1
+
+/-- For example, `0` is part of an attracting `2`-cycle of `z ↦ z ^ 2 - 1`. -/
+@[category test]
+example : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
+  ⟨by simp [IsPeriodicPt, IsFixedPt], by fun_prop, by simp [deriv_comp]⟩
+
+/-- On the other hand, while `2` is part of a `1`-cycle of `z ↦ z ^ 2 - 2`, that cycle is not
+attracting. -/
+@[category test]
+example : ¬ IsAttractingCycle (fun z ↦ z ^ 2 - 2) 1 2 := by
+  simp [IsAttractingCycle, show (1 : ℝ) ≤ 2 * 2 by norm_num]
+
+/-- No function has an attracting cycle of period `0`. This is important in that it means we don't
+need to require `0 < n` in the conjectures below. -/
+@[category test]
+example (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttractingCycle f 0 z := by
+  simp [IsAttractingCycle]
+
+/-- The density of hyperbolicity conjecture, stating that the set of all parameters `c` for which
+`fun z ↦ z ^ 2 - c` has an attracting cycle is dense in the Mandelbrot set. -/
+@[category research open, AMS 37]
+theorem density_of_hyperbolicity :
+    mandelbrotSet ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ 2 - c) n z} := by
+  sorry
+
+/-- The density of hyperbolicity conjecture for Multibrot sets, stating that the set of all
+parameters `c` for which `fun z ↦ z ^ n - c` has an attracting cycle is dense in `multibrotSet n`.
+Note that we need to require `2 ≤ n` because the conjecture is trivially false for `n = 1`. -/
+@[category research open, AMS 37]
+theorem density_of_hyperbolicity_general_exponent {n : ℕ} (hn : 2 ≤ n) :
+    multibrotSet n ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ n - c) n z} := by
+  sorry
+
+/-- The boundary of any Multibrot set is measurable because it is closed, so it makes sense to
+ask about its area. -/
+@[category test]
+example {n : ℕ} : MeasurableSet (frontier (multibrotSet n)) := isClosed_frontier.measurableSet
+
+/-- The boundary of the Mandelbrot set is conjectured to have zero area. -/
+@[category research open, AMS 37]
+theorem volume_frontier_mandelbrotSet_eq_zero : volume (frontier mandelbrotSet) = 0 := by
+  sorry
+
+/-- The boundary of any Multibrot set is conjectured to have zero area.
+Note that we don't need to exclude the trivial cases `n = 0` and `n = 1` because the conjecture
+holds for them. -/
+@[category research open, AMS 37]
+theorem volume_frontier_multibrotSet_eq_zero {n : ℕ} : volume (frontier (multibrotSet n)) = 0 := by
   sorry

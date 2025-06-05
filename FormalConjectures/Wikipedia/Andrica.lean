@@ -17,23 +17,15 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 488
+# Andrica's conjecture
 
-*Reference:* [erdosproblems.com/488](https://www.erdosproblems.com/488)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
 -/
-
-open Classical
 
 /--
-Let $A$ be a finite set and
-$$B = \{n \ge 1 : a \nmid n \text{ for all } a \in A\}.$$
-Is it true that, for every $m > n \ge \max(A)$,
-$$\frac{|B \cap [1, m]|}{m} < 2 \frac{|B \cap [1, n]|}{n}?$$
+The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is the nth prime number.
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_488 : (∀ (A : Finset ℕ),
-    letI B := {n ≥ 1 | ∀ a ∈ A, ¬ a ∣ n}
-    ∀ᵉ (n : ℕ) (m > n), A.max ≤ n →
-      ((Finset.Icc 1 m).filter (· ∈ B)).card / (m : ℚ) <
-        2 * ((Finset.Icc 1 n).filter (· ∈ B)).card / n) ↔ answer(False):= by
+@[category research open, AMS 11]
+theorem andrica_conjecture (n : ℕ) :
+    Real.sqrt ((n+1).nth Prime) - Real.sqrt (n.nth Prime) < 1 := by
   sorry
