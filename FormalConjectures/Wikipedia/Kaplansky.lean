@@ -24,6 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 variable (K : Type*) [Field K]
 variable (G : Type*) [Group G] (hG : Monoid.IsTorsionFree G)
+include hG
 
 /--
 **The zero-divisor conjecture**
