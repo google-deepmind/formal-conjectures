@@ -87,7 +87,6 @@ theorem bateman_horn_conjecture
     (polys : Finset ℤ[X])
     (h_nonempty : polys.Nonempty)
     (h_irreducible : ∀ f ∈ polys, IsIrreducibleWithPosLeading f)
-    (h_distinct : ∀ f ∈ polys, ∀ g ∈ polys, f ≠ g)
     (h_compat : SatisfiesCompatibilityCondition polys) :
     (fun x : ℝ => (CountSimultaneousPrimes polys x : ℝ)) ~[atTop]
     (fun x : ℝ => BatemanHornConstant polys * x / (Real.log x) ^ polys.card) := by
