@@ -52,7 +52,7 @@ theorem wolstenholme_prime_2124679 : IsWolstenholmePrime 2124679 := by
   sorry
 
 /--
-Equivalently, a prime $p$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
+Equivalently, a prime $p > 7$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
 -/
 @[category API]
 theorem wolstenholme_bernoulli (p : ℕ) : IsWolstenholmePrime p ↔
@@ -60,7 +60,7 @@ theorem wolstenholme_bernoulli (p : ℕ) : IsWolstenholmePrime p ↔
   sorry
 
 /--
-Another equivalent definition is that a prime $p$ is a Wolstenholme prime
+Another equivalent definition is that a prime $p > 7$ is a Wolstenholme prime
 if it $p^3$ divides the numerator of the harmonic number $H_{p-1}$.
 -/
 @[category test]
