@@ -15,54 +15,15 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-
-/-!
-# Hypothesis H
-
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schinzel%27s_hypothesis_H)
--/
-
 open Polynomial
 
-/--
-**Bunyakovsky condition**
-The condition for each polynomial in Schinzel and Bunyakovsky conjectures.
-Holds for nonconstant irreducible polynomial with positive leading coefficient.
--/
-def BunyakovskyCondition (f : Polynomial ℤ) : Prop :=
-  1 ≤ f.degree ∧ Irreducible f ∧ 0 < f.leadingCoeff
+/-!
+# Dickson's conjecture
 
-/--
-**Schinzel condition**
-The collective condition on polynomials in Schinzel and Bunyakovsky conjectures.
-Holds if for every prime $p$ there exists a natural $n$ such that $p$ not divides $f_i(n)$ for all $f_i$.
+*References*
+- [Wikipedia](https://en.wikipedia.org/wiki/Dickson%27s_conjecture)
+- [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
-def SchinzelCondition (fs : Finset (Polynomial ℤ)) : Prop :=
-  ∀ p : ℕ, p.Prime → ∃ n : ℕ, ∀ f ∈ fs, ¬p ∣ (f.eval (n : ℤ)).natAbs
-
-/--
-**Schinzel conjecture (H hypothesis)**
-If a finite set of polynomials $f_i$ satisfies both Schinzel and Bunyakovsky conditions,
-there exist infinitely many natural numbers $m$ such that $f_i(m)$ are primes for all $i$.
--/
-@[category research open, AMS 11]
-theorem schinzel_conjecture (fs : Finset (Polynomial ℤ)) :
-  (∀ f ∈ fs, BunyakovskyCondition f) ∧ SchinzelCondition fs →
-  Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
-  sorry
-
-/-! ## Special cases -/
-
-/--
-**Bunyakovsky conjecture**
-If a polynomial $f$ over integers satisfies both Schinzel and Bunyakovsky conditions,
-there exist infinitely many natural numbers $m$ such that $f(m)$ is prime.
--/
-@[category research open, AMS 11]
-theorem bunyakovsky_conjecture (f : Polynomial ℤ) :
-  BunyakovskyCondition f ∧ SchinzelCondition {f} →
-  Infinite {n : ℕ | (f.eval (n : ℤ)).natAbs.Prime} := by
-  sorry
 
 /--
 **Dickson's conjecture**
@@ -70,18 +31,12 @@ If a finite set of in linear integer forms $f_i(n) = a_i n+b_i$ satisfies Schinz
 there exist infinitely many natural numbers $m$ such that $f_i(m)$ are primes for all $i$.
 -/
 @[category research open, AMS 11]
-theorem dickson_conjecture (fs : Finset (Polynomial ℤ)) :
+theorem dickson_conjecture (fs : Finset ℤ[X]) :
   (∀ f ∈ fs, f.degree = 1 ∧ BunyakovskyCondition f) ∧ SchinzelCondition fs →
   Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
   sorry
 
-/--
-There exist infinitely many composite Mersenne numbers.
--/
-@[category research open, AMS 11]
-theorem mersenne_composite_infinite :
-  Infinite {n : ℕ | ¬GivesMersennePrime n} := by
-  sorry
+/-! ## Special cases -/
 
 /--
 **Polignac's conjecture**
@@ -123,6 +78,6 @@ theorem sexy_primes :
 ## Other special cases and consequences
 - Landau's 4th problem (primes and perfect squares)
 - Twin prime conjecture
--  Artin’s conjecture
--  Hardy–Littlewood conjecture
+- Artin's conjecture
+- First Hardy–Littlewood conjecture
 -/
