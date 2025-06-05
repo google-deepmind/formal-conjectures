@@ -38,7 +38,7 @@ The collective condition on polynomials in Schinzel and Bunyakovsky conjectures.
 Holds if for every prime $p$ there exists a natural $n$ such that $p$ not divides $f_i(n)$ for all $f_i$.
 -/
 def SchinzelCondition (fs : Finset (Polynomial ℤ)) : Prop :=
-  ∀ p : ℕ, Prime p → ∃ n : ℕ, ∀ f ∈ fs, ¬(p ∣ (f.eval (n : ℤ)).natAbs)
+  ∀ p : ℕ, p.Prime → ∃ n : ℕ, ∀ f ∈ fs, ¬p ∣ (f.eval (n : ℤ)).natAbs
 
 /--
 **Schinzel conjecture (H hypothesis)**
