@@ -29,6 +29,8 @@ that in the literature at primes of bad reduction. For this reason, we state the
 assumption that `p ∤ N`, in order to give an equivalent statement.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
+* [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
+
 -/
 
 
@@ -74,6 +76,7 @@ def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop
             ∀ (p r : ℕ), p.Prime → 2 ≤ r → (N : ZMod p) = 0 →
               a_[p ^ r]f = (a_[p]f) ^ r
 
+/--See [diamondshurman2005] theorem 8.8.1. -/
 def ModularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
   ∃ (N : ℕ+) (f : CuspForm (Gamma0 N) 2), IsNormalisedEigenform f ∧
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
