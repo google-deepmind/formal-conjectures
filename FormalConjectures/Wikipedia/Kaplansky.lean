@@ -30,7 +30,7 @@ variable (G : Type*) [Group G] (hG : Monoid.IsTorsionFree G)
 
 If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero divisors.
 -/
-@[category research open, AMS 16]
+@[category research open, AMS 16 20]
 theorem zero_divisor_conjecture : NoZeroDivisors (MonoidAlgebra K G) := by
   sorry
 
@@ -39,11 +39,12 @@ theorem zero_divisor_conjecture : NoZeroDivisors (MonoidAlgebra K G) := by
 
 If `G` is torsion-free, then `K[G]` has no non-trivial idempotents.
 -/
-@[category research open, AMS 16]
+@[category research open, AMS 16 20]
 theorem idempotent_conjecture (a : MonoidAlgebra K G) (h : IsIdempotentElem a) :
     a = 0 ∨ a = 1 := by
   sorry
 
+variable {K G} in
 /--
 A unit in `K[G]` is trivial if it is exactly of the form `kg` where:
 - `k` is a unit in the base field `K`
@@ -52,6 +53,7 @@ A unit in `K[G]` is trivial if it is exactly of the form `kg` where:
 def IsTrivialUnit (u : MonoidAlgebra K G) : Prop :=
   ∃ (k : Kˣ) (g : G), u = MonoidAlgebra.single g (k : K)
 
+@[category API, AMS 16 20]
 lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUnit u := by
   obtain ⟨k, g, rfl⟩ := h
   exact (Prod.isUnit_iff (x := (k.1, g)).mpr ⟨k.isUnit, Group.isUnit g⟩).map MonoidAlgebra.singleHom
@@ -64,56 +66,50 @@ At least there is a counterexample for any prime and zero characteristic:
 [Pa21] Passman, D. (2021). On the counterexamples to the unit conjecture for group rings.
 [Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
 -/
-@[category research solved, AMS 16]
+@[category research solved, AMS 16 20]
 theorem counter_unit_conjecture :
     ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G),
     ∀ (p : ℕ) (hp : p = 0 ∨ p.Prime),
-    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit K G u := by
+    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val := by
   sorry
 
 /--
 There is a counterexample to **Unit Conjecture** in any characteristic.
 -/
-@[category research open, AMS 16]
+@[category research open, AMS 16 20]
 theorem counter_unit_conjecture_strong:
     ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G),
     ∀ (p : ℕ) (hp : p = 0 ∨ p.Prime),
-    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit K G u := by
+    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val := by
   sorry
 
 /-! ## Counterexamples -/
 
 /--
-**Promislow group**
+**The Promislow group**
 $\langle a, b | b^{-1}a^2 b a^2, a^{-1}b^2 a b^2$
 -/
-def PromislowGroup : Type :=
-  let a := FreeGroup.of 0
-  let b := FreeGroup.of 1
-  PresentedGroup {b⁻¹*a*a*b*a*a, a⁻¹*b*b*a*b*b}
-
-instance : Group (PromislowGroup) :=
-  -- I need help
+abbrev PromislowGroup : Type :=
+  letI a := FreeGroup.of 0
+  letI b := FreeGroup.of 1
+  PresentedGroup {b⁻¹ * a * a * b * a * a, a⁻¹ * b * b * a * b * b}
 
 lemma promislow_group_is_torsionfree :
     Monoid.IsTorsionFree PromislowGroup := by
   sorry
 
 /--
-If $P$ is Promislow group, then group ring $\mathbb{F}_p[P]$ has a non-trivial unit.
+If $P$ is the Promislow group, then the group ring $\mathbb{F}_p[P]$ has a non-trivial unit.
 -/
 @[category test]
-theorem unit_conjecture.counterexamples.i (p : ℕ) (hp : p.Prime) :
-    let K := ZMod p
-    let G := PromislowGroup
-    ∃ (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit K G u /-- It's something wrong -/ := by
+theorem unit_conjecture.counterexamples.i (p : ℕ) [hp : Fact (p.Prime)] :
+    ∃ (u : (MonoidAlgebra (ZMod p) PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
 
 /--
-If $P$ is Promislow group, then group ring $\mathbb{C}[P]$ has a non-trivial unit.
+If $P$ is the Promislow group, then the group ring $\mathbb{C}[P]$ has a non-trivial unit.
 -/
 @[category test]
 theorem unit_conjecture.counterexamples.ii :
-    let G := PromislowGroup
-    ∃ (u : (MonoidAlgebra ℂ G)ˣ), ¬IsTrivialUnit ℂ G u := by
+    ∃ (u : (MonoidAlgebra ℂ PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
