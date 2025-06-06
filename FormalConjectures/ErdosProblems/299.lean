@@ -25,21 +25,27 @@ import FormalConjectures.Util.ProblemImports
 open Filter
 
 /--
-Is there an infinite sequence $a_1 < a_2 < \dots$ such that $a_{i+1} - a_i = O(1)$ and no finite sum of $\frac{1}{a_i}$ is equal to 1? -/
+Is there an infinite sequence $a_1 < a_2 < \dots$ such that $a_{i+1} - a_i = O(1)$ and no finite
+sum of $\frac{1}{a_i}$ is equal to 1?
+-/
 @[category research solved, AMS 11, AMS 40]
-theorem erdos_299 : ∃ (a : ℕ → ℕ), StrictMono a ∧ (∀ n, 0 < a n) ∧
+theorem erdos_299 : (∃ (a : ℕ → ℕ),
+    StrictMono a ∧ (∀ n, 0 < a n) ∧
     (fun n ↦ (a (n + 1) : ℝ) - a n) =O[atTop] (fun n ↦ (1 : ℝ)) ∧
-    ∀ (S : Finset ℕ), ∑ i ∈ S, (1 : ℝ) / (a i) ≠ 1 := by
+    ∀ (S : Finset ℕ), ∑ i ∈ S, (1 : ℝ) / (a i) ≠ 1) ↔ answer(False) := by
   sorry
 
-
 /--
-The following stronger version was proven by T. Bloom:
+The corresponding question is also false if one replaces sequences such that $a_{i+1} - a_i = O(1)$
+with sets of positive density, as follows from [Bl21].
 
-If $A \subset \mathbb{N}$ has positive upper density (and hence certainly if $A$ has positive density) then there is a finite $S \subset A$ such that $\sum_{n \in S} \frac{1}{n} = 1$.
+The statement is as follows:
+If $A \subset \mathbb{N}$ has positive upper density (and hence certainly if $A$ has positive
+density) then there is a finite $S \subset A$ such that $\sum_{n \in S} \frac{1}{n} = 1$.
+
+[Bl21] Bloom, T. F., On a density conjecture about unit fractions.
 -/
--- TODO: UPPER DENSITY, and also in 298!
 @[category research solved, AMS 11, AMS 40]
-theorem erdos_299.variants.density : ∀ (A : Set ℕ), 0 ∉ A → A.HasPosDensity →
+theorem erdos_299.variants.density : ∀ (A : Set ℕ), 0 < A.UpperDensity →
     ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 : ℝ) / n = 1 := by
   sorry
