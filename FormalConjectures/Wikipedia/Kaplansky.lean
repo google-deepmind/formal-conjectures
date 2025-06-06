@@ -78,11 +78,9 @@ theorem counter_unit_conjecture :
 There is a counterexample to **Unit Conjecture** in any characteristic.
 -/
 @[category research open, AMS 16 20]
-theorem counter_unit_conjecture_strong:
+theorem counter_unit_conjecture_weak (n : ℕ) :
     ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G),
-    ∀ (p : ℕ) (hp : p = 0 ∨ p.Prime),
-    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val := by
-  sorry
+    ∃ (_ : Field K) (_ :  Char K n) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val := by
 
 /-! ## Counterexamples -/
 
@@ -91,8 +89,8 @@ theorem counter_unit_conjecture_strong:
 $\langle a, b | b^{-1}a^2 b a^2, a^{-1}b^2 a b^2 \rangle$
 -/
 abbrev PromislowGroup : Type :=
-  letI a := FreeGroup.of 0
-  letI b := FreeGroup.of 1
+  letI a := FreeGroup.of (0 : Fin 2)
+  letI b := FreeGroup.of (1 : Fin 2)
   PresentedGroup {b⁻¹ * a * a * b * a * a, a⁻¹ * b * b * a * b * b}
 
 lemma promislow_group_is_torsionfree :
