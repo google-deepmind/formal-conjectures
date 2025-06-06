@@ -30,7 +30,7 @@ Given a set `S` and an element `b` in an order `β`, where all intervals bounded
 we define the partial density of `S` (relative to a set `A`) to be the proportion of elements in
 `{x ∈ A | x < b}` that lie in `S ∩ A`.
 -/
-noncomputable def PartialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
+noncomputable abbrev PartialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : ℝ :=
   (S ∩ A ∩ Set.Iio b).ncard / (A ∩ Set.Iio b).ncard
 
@@ -62,7 +62,8 @@ When `β = ℕ` this by default defines the natural density of a set
 -/
 def HasDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (α : ℝ) (A : Set β := Set.univ) : Prop :=
-  Tendsto (fun (b : β) => S.PartialDensity A b) atTop (𝓝 α)
+  Tendsto (fun (b : β) => S.PartialDensity A b)
+    atTop (𝓝 α)
 
 /--
 A set `S` in an order `β` where all intervals bounded above are finite is said to have
@@ -94,7 +95,7 @@ example : (@Set.univ ℕ).HasDensity 1 := univ
 @[simp]
 theorem empty {β : Type*} [Preorder β] [LocallyFiniteOrderBot β] (A : Set β := Set.univ) :
     Set.HasDensity (∅ : Set β) 0 A := by
-  simpa [HasDensity] using tendsto_const_nhds
+  simpa [HasDensity, PartialDensity] using tendsto_const_nhds
 
 theorem mono {β : Type*} [PartialOrder β] [LocallyFiniteOrder β] [OrderBot β]
     {S T : Set β} {αS αT : ℝ} [(atTop : Filter β).NeBot] [IsDirected β fun x1 x2 ↦ x1 ≤ x2]
@@ -110,7 +111,7 @@ theorem mono {β : Type*} [PartialOrder β] [LocallyFiniteOrder β] [OrderBot β
 theorem nonneg {β : Type*} [Preorder β] [LocallyFiniteOrderBot β] [(atTop : Filter β).NeBot]
     {S : Set β} {α : ℝ}  (h : S.HasDensity α) :
     0 ≤ α :=
-  le_of_tendsto_of_tendsto' empty h fun b => by simp [div_nonneg]
+  le_of_tendsto_of_tendsto' empty h fun b => by simp [div_nonneg, PartialDensity]
 
 end Set.HasDensity
 
