@@ -54,35 +54,12 @@ A unit in `K[G]` is trivial if it is exactly of the form `kg` where:
 def IsTrivialUnit (u : MonoidAlgebra K G) : Prop :=
   ∃ (k : Kˣ) (g : G), u = MonoidAlgebra.single g (k : K)
 
-omit hG in
+omit hG
+
 @[category API, AMS 16 20]
 lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUnit u := by
   obtain ⟨k, g, rfl⟩ := h
   exact (Prod.isUnit_iff (x := (k.1, g)).mpr ⟨k.isUnit, Group.isUnit g⟩).map MonoidAlgebra.singleHom
-
-/--
-The **Unit Conjecture** is false.
-
-At least there is a counterexample for any prime and zero characteristic:
-[Mu21] Murray, A. (2021). More Counterexamples to the Unit Conjecture for Group Rings.
-[Pa21] Passman, D. (2021). On the counterexamples to the unit conjecture for group rings.
-[Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
--/
-@[category research solved, AMS 16 20]
-theorem counter_unit_conjecture :
-    ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G),
-    ∀ (p : ℕ) (hp : p = 0 ∨ p.Prime),
-    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val := by
-  sorry
-
-/--
-There is a counterexample to **Unit Conjecture** in any characteristic.
--/
-@[category research solved, AMS 16 20]
-theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
-    ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G),
-    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val := by
-  sorry
 
 /-! ## Counterexamples -/
 
@@ -107,7 +84,7 @@ lemma promislow_group_is_torsionfree :
 If $P$ is the Promislow group, then the group ring $\mathbb{F}_p[P]$ has a non-trivial unit.
 -/
 @[category research solved, AMS 16 20]
-theorem unit_conjecture.counterexamples.i (p : ℕ) [hp : Fact p.Prime] :
+theorem UnitConjecture.counterexamples.i (p : ℕ) [hp : Fact p.Prime] :
     ∃ (u : (MonoidAlgebra (ZMod p) PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
 
@@ -115,6 +92,33 @@ theorem unit_conjecture.counterexamples.i (p : ℕ) [hp : Fact p.Prime] :
 If $P$ is the Promislow group, then the group ring $\mathbb{C}[P]$ has a non-trivial unit.
 -/
 @[category research solved, AMS 16 20]
-theorem unit_conjecture.counterexamples.ii :
+theorem UnitConjecture.counterexamples.ii :
     ∃ (u : (MonoidAlgebra ℂ PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
+
+/--
+The **Unit Conjecture** is false.
+
+At least there is a counterexample for any prime and zero characteristic:
+[Mu21] Murray, A. (2021). More Counterexamples to the Unit Conjecture for Group Rings.
+[Pa21] Passman, D. (2021). On the counterexamples to the unit conjecture for group rings.
+[Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
+-/
+@[category research solved, AMS 16 20]
+theorem counter_unit_conjecture :
+    ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G),
+    ∀ (p : ℕ) (_ : p = 0 ∨ p.Prime),
+    ∃ (K : Type) (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val :=
+  ⟨PromislowGroup, _, promislow_group_is_torsionfree, fun p hp ↦
+    hp.by_cases (by rintro rfl; exact ⟨ℂ, _, inferInstance, UnitConjecture.counterexamples.ii⟩)
+      fun h ↦ have := Fact.mk h; ⟨ZMod p, _, inferInstance, UnitConjecture.counterexamples.i p⟩⟩
+
+/--
+There is a counterexample to **Unit Conjecture** in any characteristic.
+-/
+@[category research solved, AMS 16 20]
+theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
+    ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G)
+      (K : Type) (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val :=
+  have ⟨G, _, _, hG⟩ := counter_unit_conjecture
+  ⟨G, _, ‹_›, hG p hp⟩
