@@ -25,22 +25,22 @@ import FormalConjectures.Util.ProblemImports
 /--
 **Euler brick** is a rectangular cuboid whose edges and face diagonals all have integer lengths.
 -/
-def IsEulerBrick (a : ℕ+) (b : ℕ+) (c : ℕ+) : Prop :=
-  ∃ (n : ℕ+) (m : ℕ+) (k : ℕ+), a^2 + b^2 = n^2 ∧ a^2 + c^2 = m^2 ∧ b^2 + c^2 = k^2
+def IsEulerBrick (a b c : ℕ+) : Prop :=
+  ∃ (n m k : ℕ+), a^2 + b^2 = n^2 ∧ a^2 + c^2 = m^2 ∧ b^2 + c^2 = k^2
 
 /--
-Is there a Euler brick with integer diagonal?
+Is there a perfect Euler brick with integer diagonal?
 -/
 @[category research open, AMS 11]
 theorem perfect_euler_brick_existence :
-    (∃ (a : ℕ+) (b : ℕ+) (c : ℕ+) (d : ℕ+), IsEulerBrick a b c ∧ a^2 + b^2 + c^2 = d^2)  ↔ answer(sorry) := by
+    (∃ (a b c d : ℕ+), IsEulerBrick a b c ∧ a^2 + b^2 + c^2 = d^2)  ↔ answer(sorry) := by
   sorry
 
 /--
 Euler hyperbrick generalization for n-dimensional space.
 -/
 def IsEulerHyperBrick (n : ℕ) (edges : Fin n → ℕ+) : Prop :=
-  ∀ (i j : Fin n), i < j → ∃ (k : ℕ+), (edges i : ℕ)^2 + (edges j : ℕ)^2 = (k : ℕ)^2
+  ∀ (i j : Fin n), i < j → ∃ (k : ℕ+), (edges i)^2 + (edges j)^2 = k^2
 
 /--
 Is there a Euler brick in 4 dimentions?
