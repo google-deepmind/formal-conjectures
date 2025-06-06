@@ -12,6 +12,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+open Function
 
 /-!
 # Grimm's conjecture
@@ -20,14 +21,14 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 def IsSetOfPrimes (k : ℕ+) (ps : Fin k → ℕ) : Prop :=
-  (∀ i : Fin k, Prime (ps i)) ∧ (∀ (i : Fin k) (j : Fin k), ps i = ps j → i = j)
+  (∀ i : Fin k, (ps i).Prime) ∧ Injective ps
 
 /--
 If $n, n+1, \dots, n+k-1$ are all composite numbers,
 then there are $k$ distinct primes $p_i$ such that $p_i$ divides $n + i$ for
 -/
 @[category research open, AMS 11]
-theorem grimm_conjecture (n : ℕ+) (k : ℕ+) (h: ∀ (i : Fin k), Prime (n + i)) :
+theorem grimm_conjecture (n k : ℕ+) (h: ∀ (i : Fin k), Prime (n + i)) :
     ∃ (ps : Fin k → ℕ), IsSetOfPrimes k ps ∧ (∀ i : Fin k, ps i ∣ (n + i)) := by
   sorry
 
@@ -36,6 +37,6 @@ If $n, n+1, \dots, n+k-1$ are all composite numbers,
 then their product has at least $k$ distinct prime divisors.
 -/
 @[category research open, AMS 11]
-theorem grimm_conjecture_weak (n : ℕ+) (k : ℕ+) (h: ∀ (i : Fin k), Prime (n + i)) :
+theorem grimm_conjecture_weak (n k : ℕ+) (h: ∀ (i : Fin k), Prime (n + i)) :
     ∃ (ps : Fin k → ℕ), IsSetOfPrimes k ps ∧ (∀ (i : Fin k), ∃ (j : Fin k), ps i ∣ (n + j)) := by
   sorry
