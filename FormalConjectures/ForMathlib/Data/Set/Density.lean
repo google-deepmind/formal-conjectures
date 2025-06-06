@@ -26,6 +26,33 @@ open scoped Topology
 namespace Set
 
 /--
+Given a set `S` and an element `b` in an order `β`, where all intervals bounded above are finite,
+we define the partial density of `S` (relative to a set `A`) to be the proportion of elements in
+`{x ∈ A | x < b}` that lie in `S ∩ A`.
+-/
+noncomputable def PartialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
+    (S : Set β) (A : Set β := Set.univ) (b : β) : ℝ :=
+  (S ∩ A ∩ Set.Iio b).ncard / (A ∩ Set.Iio b).ncard
+
+/--
+Given a set `S` in an order `β`, where all intervals bounded above are finite, we define the upper
+density of `S` (relative to a set `A`) to be the limsup of the partial densities of `S`
+(relative to `A`) for `b → ∞`.
+-/
+noncomputable def UpperDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
+    (S : Set β) (A : Set β := Set.univ) : ℝ :=
+  atTop.limsup (fun (b : β) ↦ S.PartialDensity A b)
+
+/--
+Given a set `S` in an order `β`, where all intervals bounded above are finite, we define the upper
+density of `S` (relative to a set `A`) to be the liminf of the partial densities of `S`
+(relative to `A`) for `b → ∞`.
+-/
+noncomputable def LowerDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
+    (S : Set β) (A : Set β := Set.univ) : ℝ :=
+  atTop.liminf (fun (b : β) ↦ S.PartialDensity A b)
+
+/--
 A set `S` in an order `β` where all intervals bounded above are finite is said to have
 density `α : ℝ` (relative to a set `A`) if the proportion of `x ∈ S` such that `x < n`
 in `A` tends to `α` as `n → ∞`.
@@ -35,8 +62,7 @@ When `β = ℕ` this by default defines the natural density of a set
 -/
 def HasDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (α : ℝ) (A : Set β := Set.univ) : Prop :=
-  Tendsto (fun (b : β) => ((S ∩ A ∩ Set.Iio b).ncard : ℝ) / (A ∩ Set.Iio b).ncard)
-    atTop (𝓝 α)
+  Tendsto (fun (b : β) => S.PartialDensity A b) atTop (𝓝 α)
 
 /--
 A set `S` in an order `β` where all intervals bounded above are finite is said to have
