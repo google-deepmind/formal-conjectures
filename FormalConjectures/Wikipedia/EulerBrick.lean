@@ -33,7 +33,7 @@ Is there a perfect Euler brick with integer diagonal?
 -/
 @[category research open, AMS 11]
 theorem perfect_euler_brick_existence :
-    (∃ (a b c d : ℕ+), IsEulerBrick a b c ∧ a^2 + b^2 + c^2 = d^2)  ↔ answer(sorry) := by
+    (∃ (a b c d : ℕ+), IsEulerBrick a b c ∧ a^2 + b^2 + c^2 = d^2) ↔ answer(sorry) := by
   sorry
 
 /--
