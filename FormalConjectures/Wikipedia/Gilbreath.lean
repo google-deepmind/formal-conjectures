@@ -26,15 +26,15 @@ import FormalConjectures.Util.ProblemImports
 **Gilbreath nth difference**, $d^n$
 Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
 -/
-noncomputable def GilbreathNthDerivative : ℕ → (ℕ → ℕ)
-  | 0 => fun n => n.nth Prime
-  | k + 1 => let prev := GilbreathNthDerivative k
-    fun n => (prev (n + 1) - prev n).natAbs
+noncomputable def gilbreathNthDerivative : ℕ → (ℕ → ℕ)
+  | 0 => fun n ↦ n.nth Nat.Prime
+  | k + 1 => let prev := gilbreathNthDerivative k
+    fun n ↦ Int.natAbs (prev (n + 1) - prev n)
 
 /--
 Gilbreath nth difference sequence begins with 1.
 -/
 @[category research open, AMS 11]
 theorem gilbreath_conjecture (n : ℕ+) :
-    GilbreathNthDerivative n 0 = 1 := by
+    gilbreathNthDerivative n 0 = 1 := by
   sorry
