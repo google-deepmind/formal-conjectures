@@ -34,5 +34,5 @@ such that $p+2q = n$, $2+pq = 2^a+r$, $2p+q = 2^b+s$
 @[category research open, AMS 11]
 theorem lemoine_conjecture_extension (n : ℕ) (hn : 3 < n) :
     ∃ (p q r s a b : ℕ), p.Prime ∧ q.Prime ∧ r.Prime ∧ s.Prime ∧
-    p + 2 * q = 2 * n + 1 ∧ 2 + p * q = Nat.pow 2 a + r ∧ 2 * p + q = Nat.pow 2 b + s := by
+    p + 2 * q = 2 * n + 1 ∧ 2 + p * q = 2 ^ a + r ∧ 2 * p + q = 2 ^ b + s := by
   sorry
