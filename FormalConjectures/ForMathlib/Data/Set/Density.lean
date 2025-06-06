@@ -46,7 +46,7 @@ noncomputable def upperDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot
   atTop.limsup (fun (b : β) ↦ S.partialDensity A b)
 
 /--
-Given a set `S` in an order `β`, where all intervals bounded above are finite, we define the upper
+Given a set `S` in an order `β`, where all intervals bounded above are finite, we define the lower
 density of `S` (relative to a set `A`) to be the liminf of the partial densities of `S`
 (relative to `A`) for `b → ∞`.
 -/
