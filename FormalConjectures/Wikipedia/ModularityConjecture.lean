@@ -44,7 +44,7 @@ def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : �
 
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
 
-/-We need to reduce a rational modulo `p`, in practice we wont be dividing by zero since the
+/-- We need to reduce a rational modulo `p`, in practice we wont be dividing by zero since the
 conductor of the elliptic curve saves us.-/
 def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
   (q.num : ZMod p) * (q.den : ZMod p)⁻¹
