@@ -54,6 +54,7 @@ A unit in `K[G]` is trivial if it is exactly of the form `kg` where:
 def IsTrivialUnit (u : MonoidAlgebra K G) : Prop :=
   ∃ (k : Kˣ) (g : G), u = MonoidAlgebra.single g (k : K)
 
+omit hG in
 @[category API, AMS 16 20]
 lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUnit u := by
   obtain ⟨k, g, rfl⟩ := h
@@ -77,10 +78,11 @@ theorem counter_unit_conjecture :
 /--
 There is a counterexample to **Unit Conjecture** in any characteristic.
 -/
-@[category research open, AMS 16 20]
-theorem counter_unit_conjecture_weak (n : ℕ) :
+@[category research solved, AMS 16 20]
+theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
     ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G),
-    ∃ (_ : Field K) (_ :  Char K n) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val := by
+    ∃ (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val := by
+  sorry
 
 /-! ## Counterexamples -/
 
@@ -93,6 +95,10 @@ abbrev PromislowGroup : Type :=
   letI b := FreeGroup.of (1 : Fin 2)
   PresentedGroup {b⁻¹ * a * a * b * a * a, a⁻¹ * b * b * a * b * b}
 
+/--
+The Promislow group is torsion-free.
+-/
+@[category API, AMS 20]
 lemma promislow_group_is_torsionfree :
     Monoid.IsTorsionFree PromislowGroup := by
   sorry
@@ -100,7 +106,7 @@ lemma promislow_group_is_torsionfree :
 /--
 If $P$ is the Promislow group, then the group ring $\mathbb{F}_p[P]$ has a non-trivial unit.
 -/
-@[category test]
+@[category research solved, AMS 16 20]
 theorem unit_conjecture.counterexamples.i (p : ℕ) [hp : Fact p.Prime] :
     ∃ (u : (MonoidAlgebra (ZMod p) PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
@@ -108,7 +114,7 @@ theorem unit_conjecture.counterexamples.i (p : ℕ) [hp : Fact p.Prime] :
 /--
 If $P$ is the Promislow group, then the group ring $\mathbb{C}[P]$ has a non-trivial unit.
 -/
-@[category test]
+@[category research solved, AMS 16 20]
 theorem unit_conjecture.counterexamples.ii :
     ∃ (u : (MonoidAlgebra ℂ PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
