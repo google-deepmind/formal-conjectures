@@ -66,7 +66,7 @@ infinty on this affine curve we only have `p` -/
 def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
   p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
-/- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. -/
+/-- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. -/
 def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop :=
   a_[1]f = 1 ∧
     ∀ (m n : ℕ), m.Coprime n →
