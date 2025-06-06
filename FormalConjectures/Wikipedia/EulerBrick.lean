@@ -40,14 +40,14 @@ theorem perfect_euler_brick_existence :
 Euler hyperbrick generalization for n-dimensional space.
 -/
 def IsEulerHyperBrick (n : ℕ) (edges : Fin n → ℕ+) : Prop :=
-  ∀ (i j : Fin n), i < j → ∃ (k : ℕ+), (edges i)^2 + (edges j)^2 = k^2
+  ∀ i j : Fin n, i < j → ∃ k : ℕ+, (edges i)^2 + (edges j)^2 = k^2
 
 /--
 Is there a Euler brick in 4 dimentions?
 -/
 @[category research open, AMS 11]
 theorem four_dim_euler_brick_existence :
-    (∃ (edges : Fin 4 → ℕ+), IsEulerHyperBrick 4 edges)  ↔ answer(sorry) := by
+    (∃ edges : Fin 4 → ℕ+, IsEulerHyperBrick 4 edges)  ↔ answer(sorry) := by
   sorry
 
 /--
@@ -55,5 +55,5 @@ Is there a Euler brick in $n>3$ dimentions?
 -/
 @[category research open, AMS 11]
 theorem n_dim_euler_brick_existence (n : ℕ) (hn : 3 < n) :
-    (∃ (edges : Fin n → ℕ+), IsEulerHyperBrick n edges)  ↔ answer(sorry) := by
+    (∃ edges : Fin n → ℕ+, IsEulerHyperBrick n edges)  ↔ answer(sorry) := by
   sorry
