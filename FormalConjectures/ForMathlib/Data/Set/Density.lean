@@ -32,7 +32,7 @@ we define the partial density of `S` (relative to a set `A`) to be the proportio
 
 This definition was inspired from https://github.com/b-mehta/unit-fractions
 -/
-noncomputable abbrev PartialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
+noncomputable abbrev partialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : ℝ :=
   (S ∩ A ∩ Set.Iio b).ncard / (A ∩ Set.Iio b).ncard
 
@@ -41,7 +41,7 @@ Given a set `S` in an order `β`, where all intervals bounded above are finite, 
 density of `S` (relative to a set `A`) to be the limsup of the partial densities of `S`
 (relative to `A`) for `b → ∞`.
 -/
-noncomputable def UpperDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
+noncomputable def upperDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) : ℝ :=
   atTop.limsup (fun (b : β) ↦ S.PartialDensity A b)
 
@@ -50,7 +50,7 @@ Given a set `S` in an order `β`, where all intervals bounded above are finite, 
 density of `S` (relative to a set `A`) to be the liminf of the partial densities of `S`
 (relative to `A`) for `b → ∞`.
 -/
-noncomputable def LowerDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
+noncomputable def lowerDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) : ℝ :=
   atTop.liminf (fun (b : β) ↦ S.PartialDensity A b)
 
