@@ -24,7 +24,7 @@ All odd integers $n > 5$ there are prime numbers $p,q$ such that $n = p+2q$.
 -/
 @[category research open, AMS 11]
 theorem lemoine_conjecture (n : ℕ) (hn : 2 < n) :
-    ∃ (p : ℕ) (q : ℕ), Prime p ∧ Prime q ∧ p + 2 * q = 2 * n + 1 := by
+    ∃ (p q : ℕ), p.Prime ∧ q.Prime ∧ p + 2 * q = 2 * n + 1 := by
   sorry
 
 /--
@@ -33,6 +33,6 @@ such that $p+2q = n$, $2+pq = 2^a+r$, $2p+q = 2^b+s$
 -/
 @[category research open, AMS 11]
 theorem lemoine_conjecture_extension (n : ℕ) (hn : 3 < n) :
-    ∃ (p : ℕ) (q : ℕ) (r : ℕ) (s : ℕ) (a : ℕ+) (b : ℕ+), Prime p ∧ Prime q ∧ Prime r ∧ Prime s ∧
+    ∃ (p q r s a b : ℕ), p.Prime ∧ q.Prime ∧ r.Prime ∧ s.Prime ∧
     p + 2 * q = 2 * n + 1 ∧ 2 + p * q = Nat.pow 2 a + r ∧ 2 * p + q = Nat.pow 2 b + s := by
   sorry
