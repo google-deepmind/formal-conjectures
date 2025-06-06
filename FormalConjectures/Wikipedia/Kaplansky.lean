@@ -64,8 +64,7 @@ lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUni
 /-! ## Counterexamples -/
 
 /--
-**The Promislow group**
-$\langle a, b | b^{-1}a^2 b a^2, a^{-1}b^2 a b^2 \rangle$
+**The Promislow group** ⟨ a, b | b⁻¹a²ba², a⁻¹b²ab² ⟩
 -/
 abbrev PromislowGroup : Type :=
   letI a := FreeGroup.of (0 : Fin 2)
