@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Open questions on existence of some Euler brick
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Euler_brick)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Euler_brick)
+- [stackexchange](https://math.stackexchange.com/questions/2264401/euler-bricks-and-the-4th-dimension)
 -/
 
 /--
@@ -43,11 +45,11 @@ def IsEulerHyperBrick (n : ℕ) (edges : Fin n → ℕ+) : Prop :=
   ∀ i j : Fin n, i < j → ∃ k : ℕ+, (edges i)^2 + (edges j)^2 = k^2
 
 /--
-Is there a Euler brick in 4 dimentions?
+Is there a Euler brick in 4 dimensions?
 -/
 @[category research open, AMS 11]
 theorem four_dim_euler_brick_existence :
-    (∃ edges : Fin 4 → ℕ+, IsEulerHyperBrick 4 edges)  ↔ answer(sorry) := by
+    (∃ edges : Fin 4 → ℕ+, IsEulerHyperBrick 4 edges) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -55,5 +57,5 @@ Is there a Euler brick in $n>3$ dimensions?
 -/
 @[category research open, AMS 11]
 theorem n_dim_euler_brick_existence (n : ℕ) (hn : 3 < n) :
-    (∃ edges : Fin n → ℕ+, IsEulerHyperBrick n edges)  ↔ answer(sorry) := by
+    (∃ edges : Fin n → ℕ+, IsEulerHyperBrick n edges) ↔ answer(sorry) := by
   sorry
