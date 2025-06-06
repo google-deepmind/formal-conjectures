@@ -16,11 +16,16 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Lemoine's conjectures
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/%C3%89mile_Lemoine#Lemoine's_conjecture_and_extensions)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/%C3%89mile_Lemoine#Lemoine's_conjecture_and_extensions)
+- [Ki85] Kiltinen, J. and Young P. (1985). Goldbach, Lemoine, and a Know/Don't Know Problem.
 -/
 
+def OddPrime (n : ℕ) : Prop :=
+  n ≠ 2 ∧ n.Prime
+
 /--
-All odd integers $n > 5$ there are prime numbers $p,q$ such that $n = p+2q$.
+All odd integers $n ≥ 7$ there are prime numbers $p,q$ such that $n = p+2q$.
 -/
 @[category research open, AMS 11]
 theorem lemoine_conjecture (n : ℕ) (hn : 2 < n) :
@@ -28,11 +33,11 @@ theorem lemoine_conjecture (n : ℕ) (hn : 2 < n) :
   sorry
 
 /--
-All odd integers $n > 5$ there are prime numbers $p,q,r,s$ and natural numbers $a,b$
+All odd integers $n ≥ 9$ there are odd prime numbers $p,q,r,s$ and natural numbers $a,b$
 such that $p+2q = n$, $2+pq = 2^a+r$, $2p+q = 2^b+s$
 -/
 @[category research open, AMS 11]
 theorem lemoine_conjecture_extension (n : ℕ) (hn : 3 < n) :
-    ∃ (p q r s a b : ℕ), p.Prime ∧ q.Prime ∧ r.Prime ∧ s.Prime ∧
+    ∃ (p q r s a b : ℕ), OddPrime p ∧ OddPrime q ∧ OddPrime r ∧ OddPrime s ∧
     p + 2 * q = 2 * n + 1 ∧ 2 + p * q = 2 ^ a + r ∧ 2 * p + q = 2 ^ b + s := by
   sorry
