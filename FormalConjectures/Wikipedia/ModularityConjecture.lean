@@ -61,8 +61,8 @@ instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
   rw [setOfPointsModN]
   apply Subtype.fintype _
 
-/-Note that normally this is written as `p + 1 - #E(𝔽ₚ)`, but since we don't have a point at infinty
-on this affine curve we only have `p` -/
+/-- Note that normally this is written as `p + 1 - #E(𝔽ₚ)`, but since we don't have a point at
+infinty on this affine curve we only have `p` -/
 def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
   p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
