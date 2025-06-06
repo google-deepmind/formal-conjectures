@@ -82,4 +82,5 @@ def ModularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
 
 @[category research solved, AMS 11]
-theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : ModularityConjecture E := sorry
+theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : ModularityConjecture E := by
+  sorry
