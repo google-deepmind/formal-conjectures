@@ -62,8 +62,7 @@ When `β = ℕ` this by default defines the natural density of a set
 -/
 def HasDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (α : ℝ) (A : Set β := Set.univ) : Prop :=
-  Tendsto (fun (b : β) => S.PartialDensity A b)
-    atTop (𝓝 α)
+  Tendsto (fun (b : β) => S.PartialDensity A b) atTop (𝓝 α)
 
 /--
 A set `S` in an order `β` where all intervals bounded above are finite is said to have
@@ -84,7 +83,7 @@ elements has density one. -/
 theorem univ {β : Type*} [PartialOrder β] [LocallyFiniteOrder β]
     [OrderBot β] [Nontrivial β] [IsDirected β fun x1 x2 ↦ x1 ≤ x2] :
     (@Set.univ β).HasDensity 1 := by
-  simp [HasDensity]
+  simp [HasDensity, PartialDensity]
   let ⟨b, hb⟩ := Set.Iio_eventually_ncard_ne_zero β
   exact Tendsto.congr'
     (eventually_atTop.2 ⟨b, fun n hn => (div_self <| Nat.cast_ne_zero.2 (hb n hn)).symm⟩)
@@ -123,7 +122,7 @@ open Set
 The natural density of the set of even numbers is `1 / 2`.
 -/
 theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
-  simp [HasDensity]
+  simp [HasDensity, PartialDensity]
   have h {n : ℕ} (hn : 1 ≤ n) : (({n : ℕ | Even n} ∩ Iio n).ncard : ℝ) / n =
       if Even n then 2⁻¹ else (n + 1 : ℝ) /  n * 2⁻¹ := by
     split_ifs with h
@@ -145,7 +144,7 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
 /-- A finite set has natural density zero. -/
 theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) :
     S.HasDensity 0 := by
-  simp [HasDensity]
+  simp [HasDensity, PartialDensity]
   have (n : ℕ) : ((S ∩ Set.Iio n).ncard : ℝ) / n ≤ S.ncard / n := by
     by_cases h₀ : n = 0; simp [← Ico_bot, h₀]
     exact div_le_div₀ (by simp) (by simpa using Set.ncard_inter_le_ncard_left _ _ h)
