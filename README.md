@@ -1,6 +1,6 @@
 # Formal Conjectures
 
-[![.github/workflows/push_master.yml](https://github.com/google-deepmind/formal-conjectures/actions/workflows/push_master.yml/badge.svg)](https://github.com/google-deepmind/formal-conjectures/actions/workflows/push_master.yml)
+[![.github/workflows/push_master.yml](https://github.com/google-deepmind/formal-conjectures/actions/workflows/build-and-docs.yml/badge.svg)](https://github.com/google-deepmind/formal-conjectures/actions/workflows/build-and-docs.yml)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/google-deepmind/formal-conjectures)
 
 A collection of formalized statements of conjectures in
