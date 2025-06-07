@@ -54,7 +54,7 @@ of positive integers n ≤ x for which all polynomials $f_i$ are simultaneously 
 $$C(f_1, f_2, \dots, f_k) x / (log x)^k$$
 where $C$ is the Bateman-Horn constant given by the convergent infinite product:
 $$C = \prod_{p\in\mathbb{P}} (1 - 1/p)^(-k) · (1 - \omega_p/p)$$
-Here $\omega_p/p$ is the number of residue classes modulo p for which at least one polynomial vanishes.
+Here $\omega_p/p$ is the number of residue classes modulo $p$ for which at least one polynomial vanishes.
 -/
 @[category research open, AMS 11 12]
 theorem bateman_horn_conjecture
