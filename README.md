@@ -1,5 +1,8 @@
 # Formal Conjectures
 
+[![.github/workflows/push_master.yml](https://github.com/google-deepmind/formal-conjectures/actions/workflows/push_master.yml/badge.svg)](https://github.com/google-deepmind/formal-conjectures/actions/workflows/push_master.yml)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/google-deepmind/formal-conjectures)
+
 A collection of formalized statements of conjectures in
 [Lean](https://leanprover.github.io/lean4/doc/whatIsLean.html), using
 [mathlib](https://github.com/leanprover-community/mathlib4).
@@ -239,7 +242,7 @@ meaningful solution of the problem is outside of the scope of this repository.
     ```
     If the problem has been solved to the negative, then `P` should be replaced with
     `¬ P`.
-7.  Every file should start with the following copyright header: 
+7.  Every file should start with the following copyright header:
     ```lean
     /-
     Copyright 2025 The Formal Conjectures Authors.
