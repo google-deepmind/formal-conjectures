@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/786](https://www.erdosproblems.com/786)
 -/
+
 open Filter
 
 open scoped Topology
@@ -82,7 +83,7 @@ the set $A$ of all naturals divisible by exactly one of $p_1, ..., p_k$ has
 density $1 / e - \epsilon$ and has the property that $a_1\cdots a_r = b_1\cdots b_s$
 with $a_i, b_j\in A$ can only hold when $r = s$.
 -/
-@[category research solved]
+@[category research solved, AMS 11]
 theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε ≤ 1) :
     -- TODO(mercuris) : I think we want `k` to be allowed to vary somehow as well, but maybe the exists is sufficient
     ∃ (k : ℕ),
