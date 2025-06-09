@@ -33,12 +33,20 @@ open Polynomial Asymptotics Filter Topology
 noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
   {n : ZMod p | ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0}.ncard
 
-/-- The Bateman-Horn constant of a set of polynomials `S`. This is defined as the infinite product over all primes:
-$$\prod_p (1 - \frac{1}{p}) ^ {|S|} (1 - \frac{\omega_p(S)}{p}$$ where $\omega_p(S)}{p}$ is the number of residue classes mod $p$ where at least one polynomial in $S$ vanishes. -/
+/-- The product of degrees of polynomials in a finite set. -/
+def DegreesProduct (polys : Finset ℤ[X]) : ℕ :=
+  polys.prod (fun f => f.natDegree)
+
+/--
+The Bateman-Horn constant of a set of polynomials `S`. This is defined as the infinite product over all primes:
+$$\frac{1}{D} \prod_p (1 - \frac{1}{p})^{-|S|} (1 - \frac{\omega_p(S)}{p})$$
+where $D = \prod_{f \in S} \deg(f)$ is the product of degrees and $\omega_p(S)$ is the number of residue classes mod $p$
+where at least one polynomial in $S$ vanishes.
+-/
 noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
+  (1 : ℝ) / (DegreesProduct polys) *
   ∏' p : {p : ℕ // Nat.Prime p},
-    (1 - (1 : ℝ) / p.val) ^ (-polys.card : ℤ) *
-    (1 - (OmegaP polys p.val : ℝ) / p.val)
+    (1 - (1 : ℝ) / p.val) ^ (-polys.card : ℤ) * (1 - (OmegaP polys p.val : ℝ) / p.val)
 
 /-- `CountSimultaneousPrimes S x` counts the number of `n ≤ x` at which all polynomials in `S` attain a prime value. -/
 noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : ℕ :=
@@ -49,16 +57,17 @@ noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : �
 /--
 **The Bateman-Horn Conjecture**
 Given a finite collection of distinct irreducible polynomials $f_1, f_2, \dots, f_k \in \mathbb{Z}[x]$
-with positive leading coefficients that satisfy the compatibility condition, the number
+with positive leading coefficients that satisfy the Schinzel condition, the number
 of positive integers n ≤ x for which all polynomials $f_i$ are simultaneously prime is asymptotic to:
 $$C(f_1, f_2, \dots, f_k) x / (log x)^k$$
 where $C$ is the Bateman-Horn constant given by the convergent infinite product:
 $$C = \prod_{p\in\mathbb{P}} (1 - 1/p)^(-k) · (1 - \omega_p/p)$$
 Here $\omega_p/p$ is the number of residue classes modulo $p$ for which at least one polynomial vanishes.
 
-The compatibility condition ensures that for each prime $p$, there exists some integer $n$ 
+The Schinzel condition ensures that for each prime $p$, there exists some integer $n$ 
 such that $p$ does not divide the product $f_(n) f_2(n) \dotsb f_(n)$, which guarantees the 
-infinite product converges to a positive value. -/
+infinite product converges to a positive value.
+-/
 @[category research open, AMS 11 12]
 theorem bateman_horn_conjecture
     (polys : Finset ℤ[X])
