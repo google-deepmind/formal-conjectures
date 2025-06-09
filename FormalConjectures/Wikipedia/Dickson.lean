@@ -31,9 +31,8 @@ If a finite set of in linear integer forms $f_i(n) = a_i n+b_i$ satisfies Schinz
 there exist infinitely many natural numbers $m$ such that $f_i(m)$ are primes for all $i$.
 -/
 @[category research open, AMS 11]
-theorem dickson_conjecture (fs : Finset ℤ[X]) :
-  (∀ f ∈ fs, f.degree = 1 ∧ BunyakovskyCondition f) ∧ SchinzelCondition fs →
-  Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
+theorem dickson_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, f.degree = 1 ∧ BunyakovskyCondition f) 
+    (hfs' : SchinzelCondition fs) : Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
   sorry
 
 /-! ## Special cases -/
