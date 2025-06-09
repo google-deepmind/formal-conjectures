@@ -51,7 +51,7 @@ namespace Boxdot
 * `Nec α` is the necessity operator `□α`.
 -/
 inductive Formula : Type
-  /-- `Atom n` is a propositional variable indexed by `n`. -/ 
+  /-- `Atom n` is a propositional variable indexed by `n`. -/
   | Atom : Nat → Formula
   /--  `Falsum` is the constant ⊥. -/
   | Falsum : Formula
@@ -72,7 +72,9 @@ prefix:95 "□" => Nec
 
 
 /--
-`t φ` is the Boxdot translation of a formula `φ`.
+`t φ` is the Boxdot translation of a formula `φ`. Roughly, t is the mapping `φ ↦ t φ`
+from the language of monomodal logic into itself that preserves variables and the logical constant `⊥`,
+commutes with the standard truth-functional operators, and is such that `t □φ` = `□t a & t a`.
 This implementation follows the definition in Steinsvold (AJL).
 -/
 def t (φ : Formula) : Formula :=
