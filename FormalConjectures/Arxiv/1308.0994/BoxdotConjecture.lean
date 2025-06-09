@@ -51,11 +51,16 @@ namespace Boxdot
 * `Nec α` is the necessity operator `□α`.
 -/
 inductive Formula : Type
-| Atom : Nat → Formula
-| Falsum : Formula
-| Imp : Formula → Formula → Formula
-| Conj : Formula → Formula → Formula
-| Nec : Formula → Formula
+  /-- `Atom n` is a propositional variable indexed by `n`. -/ 
+  | Atom : Nat → Formula
+  /--  `Falsum` is the constant ⊥. -/
+  | Falsum : Formula
+  /-- `Imp α β` is implication `(α → β)`. -/
+  | Imp : Formula → Formula → Formula
+  /-- `Conj α β` is conjunction `(α ∧ β)`. -/
+  | Conj : Formula → Formula → Formula
+  /-- `Nec α` is the necessity operator `□α`. -/
+  | Nec : Formula → Formula
 
 open Formula
 
