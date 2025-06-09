@@ -30,6 +30,6 @@ there exist infinitely many natural numbers $m$ such that $f(m)$ is prime.
 -/
 @[category research open, AMS 11]
 theorem bunyakovsky_conjecture (f : ℤ[X]) :
-  BunyakovskyCondition f ∧ SchinzelCondition {f} →
-  Infinite {n : ℕ | (f.eval (n : ℤ)).natAbs.Prime} := by
+    BunyakovskyCondition f ∧ SchinzelCondition {f} →
+    Infinite {n : ℕ | (f.eval (n : ℤ)).natAbs.Prime} := by
   sorry
