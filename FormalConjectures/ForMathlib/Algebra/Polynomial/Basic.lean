@@ -18,9 +18,15 @@ import Mathlib
 
 open Polynomial
 
+/-! 
+
+This file introduces some common assumptions made on polynomials in certain conjectures. Note that these condition (and the terminology) are non-standard.
+
+-/
+
 /--
 **Bunyakovsky condition**
-The condition for each polynomial in Schinzel and Bunyakovsky conjectures.
+A condition on polynomials in the Schinzel and Bunyakovsky conjectures.
 Holds for nonconstant irreducible polynomial with positive leading coefficient.
 -/
 def BunyakovskyCondition (f : ℤ[X]) : Prop :=
@@ -28,8 +34,9 @@ def BunyakovskyCondition (f : ℤ[X]) : Prop :=
 
 /--
 **Schinzel condition**
-The collective condition on polynomials in Schinzel and Bunyakovsky conjectures.
+A condition on sets of polynomials in the Schinzel and Bunyakovsky conjectures.
 Holds if for every prime $p$ there exists a natural $n$ such that $p$ not divides $f_i(n)$ for all $f_i$.
 -/
 def SchinzelCondition (fs : Finset ℤ[X]) : Prop :=
   ∀ p : ℕ, p.Prime → ∃ n : ℕ, ∀ f ∈ fs, ¬p ∣ (f.eval (n : ℤ)).natAbs
+
