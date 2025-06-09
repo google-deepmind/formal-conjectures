@@ -162,8 +162,8 @@ def KT : NormalModalLogic := by
 -/
 @[category research solved, AMS 3]
 theorem BoxdotConjecture (L : NormalModalLogic) :
-  (∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) → L ⊆ KT := by
-    sorry
+    (∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) → L ⊆ KT := by
+  sorry
 
 
 end Boxdot
