@@ -114,8 +114,8 @@ open KTProof
 If `KProof Γ φ`, then `KTProof Γ φ`.  In other words, KT extends K.
 -/
 @[category API, AMS 3]
-lemma KTExtendsK {Γ φ} : KProof Γ φ → KTProof Γ φ := by
-  intro h; apply lift_K; exact h
+lemma KTExtendsK {Γ φ} (h : KProof Γ φ) : KTProof Γ φ :=
+  lift_K h
 
 /--
   A “normal modal logic” L is any `Set Formula` such that:
