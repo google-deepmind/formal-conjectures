@@ -71,10 +71,10 @@ prefix:95 "□" => Nec
 This implementation follows the definition in Steinsvold (AJL).
 -/
 def t (φ : Formula) : Formula :=
-match φ with
-| α ~> β => t α ~> t β
-| □α => □t α & t α
-| _ => φ
+  match φ with
+  | α ~> β => t α ~> t β
+  | □α => □t α & t α
+  | _ => φ
 
 prefix:95 "■" => t
 
