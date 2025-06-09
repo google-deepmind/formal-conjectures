@@ -64,5 +64,5 @@ theorem oppermann_implies_brocard (n : ℕ)
 @[category high_school, AMS 11]
 theorem oppermann_implies_legendre (n : ℕ) (hn : 1 ≤ n)
     (P : type_of% oppermann_conjecture) :
-    ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
+    ∃ p ∈ Finset.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
   sorry
