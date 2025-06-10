@@ -30,17 +30,17 @@ $|y^2 - x^3| > C \sqrt{|x|}$.
 
 open Real
 
-def hall_ineq (C : ℝ) (e : ℝ) : Prop :=
+def HallIneq (C : ℝ) (e : ℝ) : Prop :=
   ∀ x y : ℤ, y ^ 2 ≠ x ^ 3 → |y ^ 2 - x ^ 3| > C * (|x| : ℝ) ^ e
 
-def hall_conjecture_exp (e : ℝ) : Prop := ∃ C : ℝ, C > 0 ∧ hall_ineq C e
+def HallConjectureExp (e : ℝ) : Prop := ∃ C : ℝ, C > 0 ∧ HallIneq C e
 
 
 /--
 Original Hall's conjecture with exponent $1/2$.
 -/
 @[category research open, AMS 11]
-theorem hall_conjecture : hall_conjecture_exp 2⁻¹ := by
+theorem hall_conjecture : HallConjectureExp 2⁻¹ := by
   sorry
 
 /--
@@ -48,11 +48,11 @@ Elkies' example $(x, y) = (5853886516781223, 447884928428402042307918)$ shows th
 less than $0.0215$. Note that simple `linarith` does not work here.
 -/
 @[category test]
-theorem elkies_bound (C : ℝ) : hall_ineq C 2⁻¹ → C < 0.0215 := by
+theorem elkies_bound (C : ℝ) : HallIneq C 2⁻¹ → C < 0.0215 := by
   intro h
   by_cases hC : C ≤ 0
   · linarith
-  · rw [hall_ineq] at h
+  · rw [HallIneq] at h
     specialize h 5853886516781223 447884928428402042307918
     simp at h
     have h1 : 76510695 < (5853886516781223 : ℝ) ^ (2 : ℝ)⁻¹ := by
@@ -70,11 +70,11 @@ In other words, for any $\delta > 0$, there is no positive constant $C$ such tha
 $|y^2 - x^3| > C |x| ^ {1/2 + \delta}$ for all integers $x, y$ with $y^2 \ne x^3$.
 -/
 @[category research solved, AMS 11]
-theorem danilov (δ : ℝ) (h : δ > 0) : ¬ hall_conjecture_exp (2⁻¹ + δ) := by sorry
+theorem danilov (δ : ℝ) (h : δ > 0) : ¬ HallConjectureExp (2⁻¹ + δ) := by sorry
 
 /--
 Weak form of Hall's conjecture: relax the exponent from $1/2$ to $1/2 - \varepsilon$.
 -/
 @[category research open, AMS 11]
-theorem weak_hall_conjecture (ε : ℝ) (hε : ε > 0) : hall_conjecture_exp (2⁻¹ - ε) := by
+theorem weak_hall_conjecture (ε : ℝ) (hε : ε > 0) : HallConjectureExp (2⁻¹ - ε) := by
   sorry
