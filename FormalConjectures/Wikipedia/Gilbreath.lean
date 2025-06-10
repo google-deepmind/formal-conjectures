@@ -35,6 +35,5 @@ open Gilbreath
 Gilbreath nth difference sequence begins with 1.
 -/
 @[category research open, AMS 11]
-theorem gilbreath_conjecture (n : ℕ+) :
-    gilbreathNthDerivative n 0 = 1 := by
+theorem gilbreath_conjecture (k : ℕ) : d k 0 = 1 := by
   sorry
