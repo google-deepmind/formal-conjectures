@@ -30,7 +30,8 @@ $|y^2 - x^3| > C \sqrt{|x|}$.
 
 open Real
 
-def hall_ineq (C : ℝ) (e : ℝ) : Prop := ∀ x y : ℤ, y ^ 2 ≠ x ^ 3 → |y ^ 2 - x ^ 3| > C * (|x| : ℝ) ^ e
+def hall_ineq (C : ℝ) (e : ℝ) : Prop :=
+  ∀ x y : ℤ, y ^ 2 ≠ x ^ 3 → |y ^ 2 - x ^ 3| > C * (|x| : ℝ) ^ e
 
 def hall_conjecture_exp (e : ℝ) : Prop := ∃ C : ℝ, C > 0 ∧ hall_ineq C e
 
@@ -47,7 +48,7 @@ Elkies' example $(x, y) = (5853886516781223, 447884928428402042307918)$ shows th
 less than $0.0215$. Note that simple `linarith` does not work here.
 -/
 @[category test]
-theorem elikies_bound (C : ℝ) : hall_ineq C 2⁻¹ → C < 0.0215 := by
+theorem elkies_bound (C : ℝ) : hall_ineq C 2⁻¹ → C < 0.0215 := by
   intro h
   by_cases hC : C ≤ 0
   · linarith
@@ -57,11 +58,10 @@ theorem elikies_bound (C : ℝ) : hall_ineq C 2⁻¹ → C < 0.0215 := by
     have h1 : 76510695 < (5853886516781223 : ℝ) ^ (2 : ℝ)⁻¹ := by
       norm_num
       rw [← sqrt_eq_rpow]
-      have hsq : (76510695 : ℝ) ^ 2 < 5853886516781223 := by norm_num
-      exact lt_sqrt_of_sq_lt hsq
+      refine lt_sqrt_of_sq_lt ?_
+      norm_num
     have h2 : C * 76510695 < 1641843 := by
-      push_neg at hC
-      exact (mul_lt_mul_of_pos_left h1 hC).trans h
+      nlinarith
     linarith
 
 /--
