@@ -61,16 +61,22 @@ inductive Formula : Type
 
 open Formula
 
-local notation "⊥" => Falsum
+@[inherit_doc Falsum]
+scoped notation "⊥" => Falsum
+
+@[inherit_doc Imp]
 infixr:80 " ~> " => Formula.Imp
-notation:max " ~ " φ => φ ~> ⊥
-prefix:95 "□" => Nec
 
--- We define conjunction in terms of the other logical constants for simplicity.
+/-- `~ α` is the negation of `α`. `~ α` is also equivalent to `α ~> ⊥`. -/
+scoped notation:max " ~ " φ => φ ~> ⊥
+scoped prefix:95 "□" => Nec
+
+/-- `Conj α β` is the conjunction `α ∧ β`. We define `α & β` as `~(α ~> ~β)` for simplicity. -/
 @[reducible]
-def conj (φ ψ : Formula) : Formula := ~(φ ~> ~ψ)
+def Conj (α β : Formula) : Formula := ~(α ~> ~β)
 
-infixr:85 " & " => conj
+@[inherit_doc Conj]
+scoped infixr:85 " & " => Conj
 
 /--
 `t φ` is the Boxdot translation of a formula `φ`. Roughly, t is the mapping `φ ↦ t φ`
@@ -84,7 +90,8 @@ def t (φ : Formula) : Formula :=
   | □α => □t α & t α
   | _ => φ
 
-prefix:95 "■" => t
+@[inherit_doc t]
+scoped prefix:95 "■" => t
 
 
 /--
@@ -92,20 +99,35 @@ prefix:95 "■" => t
 with assumptions drawn from `Γ`.
 -/
 inductive KProof : Set Formula → Formula → Prop
+/-- Assumption rule: if `α ∈ Γ` then `α` is provable from `Γ`. -/
 | ax {Γ} {α} (h : α ∈ Γ) : KProof Γ α
+/-- Ax1: every instance of the schema `α → (β → α)` is a theorem. -/
 | ax1 {Γ} {α β} : KProof Γ (α ~> β ~> α)
+/-- Ax2: every instance of the schema `(α ~> β ~> γ) ~> (α ~> β) ~> (α ~> γ)` is a theorem. -/
 | ax2 {Γ} {α β γ} : KProof Γ ((α ~> β ~> γ) ~> (α ~> β) ~> (α ~> γ))
+/-- Ax3 (contraposition): every instance of the schema `(~α ~> ~β) ~> (β ~> α)` is a theorem. -/
 | ax3 {Γ} {α β} : KProof Γ (((~α) ~> (~β)) ~> (β ~> α))
+/-- Modus Ponens: if `Γ ⊢ α ~> β` and `Γ ⊢ α`, then `Γ ⊢ β`. -/
 | mp {Γ} {α β} (_ : KProof Γ (α ~> β)) (_ : KProof Γ α) : KProof Γ β
+/-- Necessitation: if `⊢ α` then `⊢ □α`. -/
 | nec {Γ} {α} (_ : KProof ∅ α) : KProof Γ (□ α)
+/-- Distribution: every instance of the schema `□(α ~> β) ~> (□α ~> □β)` is a theorem. -/
 | distr {Γ} {α β} : KProof Γ (□ (α ~> β) ~> □ α ~> □ β)
 
 
--- This is an axiomatization of the modal logic KT, which extends K with the T axiom
+/--
+`KTProof Γ φ` denotes that φ is provable from the premises Γ in the normal modal logic KT
+(also called T). KT extends system K by adding the instances of the T-axiom schema `□φ ~> φ` to K’s
+usual axioms and rules of inference.
+-/
 inductive KTProof : Set Formula → Formula → Prop
+/-- Embedding of K proofs into KT. -/
 | lift_K {Γ} {α} (h : KProof Γ α) : KTProof Γ α
+/-- T-axiom schema: every instance of `□α ~> α` is a theorem. -/
 | axT {Γ} {α} : KTProof Γ (□ α ~> α)
+/-- Modus Ponens: if `Γ ⊢ α ~> β` and `Γ ⊢ α`, then `Γ ⊢ β`. -/
 | mp {Γ} {α β} (_ : KTProof Γ (α ~> β)) (_ : KTProof Γ α) : KTProof Γ β
+/-- Necessitation: if `⊢ α` then `⊢ □α`. -/
 | nec {Γ} {α} (_ : KTProof ∅ α) : KTProof Γ (□ α)
 
 
@@ -122,22 +144,28 @@ lemma KTExtendsK {Γ φ} (h : KProof Γ φ) : KTProof Γ φ :=
 
 /--
   A “normal modal logic” L is any `Set Formula` such that:
-    1. If K ⊢ φ, then φ ∈ L            (L extends K)
-    2. If φ ∈ L and (φ → ψ) ∈ L, then ψ ∈ L  (Closed under MP)
-    3. If φ ∈ L, then □φ ∈ L           (Closed under Necessitation)
+    1. If `K ⊢ φ`, then `φ ∈ L`          (L extends K)
+    2. If `φ ∈ L` and `(φ ~> ψ) ∈ L`, then `ψ ∈ L`  (Closed under MP)
+    3. If `φ ∈ L`, then `□φ ∈ L`          (Closed under Necessitation)
 -/
 structure NormalModalLogic : Type where
+  /-- `thms` is the set of formulas proveable in the logic. -/
   thms : Set Formula
+  /-- `extK` means that if `K ⊢ φ`, then `φ ∈ thms`. That is, the logic extends system K. -/
   extK : ∀ {φ}, KProof ∅ φ → φ ∈ thms
+  /-- `mp` means that if `φ ∈ thms` and `(φ ~> ψ) ∈ thms`, then `ψ ∈ thms`. That is, thms is closed
+  under modus ponens.-/
   mp : ∀ {φ ψ}, φ ∈ thms → (φ ~> ψ) ∈ thms → ψ ∈ thms
+  /-- `nec` means that if `φ ∈ thms`, then `□φ ∈ thms`. Equivalently, `thms` is closed under
+  necessitation -/
   nec : ∀ {φ}, φ ∈ thms → □ φ ∈ thms
 
 
 def proves (L : NormalModalLogic) (φ : Formula) := φ ∈ L.thms
 
 
-infixr:85 " ⊢ " => proves
-notation L " ⊆ " L' =>
+scoped infixr:85 " ⊢ " => proves
+scoped notation L " ⊆ " L' =>
   NormalModalLogic.thms L ⊆ NormalModalLogic.thms L'
 
 
