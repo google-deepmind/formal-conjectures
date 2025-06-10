@@ -199,8 +199,7 @@ def KT : NormalModalLogic := by
   by the boxdot translation is included in KT.
 -/
 @[category research solved, AMS 3]
-theorem BoxdotConjecture (L : NormalModalLogic) :
-    (∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) → L ⊆ KT := by
+theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L ⊆ KT := by
   sorry
 
 
