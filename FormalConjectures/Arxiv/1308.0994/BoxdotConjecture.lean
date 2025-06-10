@@ -118,7 +118,7 @@ inductive KProof : Set Formula → Formula → Prop
 
 
 /--
-`KTProof Γ φ` denotes that φ is provable from the premises Γ in the normal modal logic KT
+`KTProof Γ φ` denotes that `φ` is provable from the premises `Γ` in the normal modal logic KT
 (also called T). KT extends system K by adding the instances of the T-axiom schema `□φ ~> φ` to K’s
 usual axioms and rules of inference.
 -/
