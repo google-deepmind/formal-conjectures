@@ -43,7 +43,7 @@ For any integer $k$ there are infinitely many primes $p$ such that $p + 2k$ 
 -/
 @[category research open, AMS 11]
 theorem polignac_conjecture (k : ℕ) :
-    Infinite {p : ℕ | Prime p ∧ Prime (p + 2 * k)} := by
+    Infinite {p : ℕ | p.Prime ∧ (p + 2 * k).Prime} := by
   sorry
 
 /--
