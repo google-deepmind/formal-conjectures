@@ -174,7 +174,7 @@ scoped notation L " ⊆ " L' =>
 `KT` is the specific normal modal logic whose theorems are exactly those provable
 in `KTProof` from the empty context.
 
-This corresponds to K ⊕ (□φ → φ) as in both AJL (Steinsvold) and Jeřábek.
+This corresponds to `K ⊕ (□φ → φ)` as in both AJL (Steinsvold) and Jeřábek.
 -/
 def KT : NormalModalLogic := by
   constructor
