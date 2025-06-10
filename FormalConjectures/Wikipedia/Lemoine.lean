@@ -33,7 +33,7 @@ theorem lemoine_conjecture (n : ℕ) (hn : 2 < n) :
   sorry
 
 /--
-All odd integers $n ≥ 9$ there are odd prime numbers $p,q,r,s$ and natural numbers $a,b$
+For all odd integers $n ≥ 9$ there are odd prime numbers $p,q,r,s$ and natural numbers $a,b$
 such that $p+2q = n$, $2+pq = 2^a+r$, $2p+q = 2^b+s$
 -/
 @[category research open, AMS 11]
