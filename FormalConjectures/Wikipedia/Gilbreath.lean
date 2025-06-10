@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 /--
-**Gilbreath nth difference**, $d^n$
+**Gilbreath's nth difference**, $d^n$
 Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
 -/
 noncomputable def Gilbreath.d : ℕ → (ℕ → ℕ)
@@ -31,9 +31,10 @@ noncomputable def Gilbreath.d : ℕ → (ℕ → ℕ)
   | k + 1 => fun n ↦ Int.natAbs (d k (n + 1) - d k n)
 
 open Gilbreath
+
 /--
-Gilbreath nth difference sequence begins with 1.
+For each integer $n \geq 1$ Gilbreath's nth difference sequence begins with 1, $d^n(0) = 1$.
 -/
 @[category research open, AMS 11]
-theorem gilbreath_conjecture (k : ℕ) : d k 0 = 1 := by
+theorem gilbreath_conjecture (k : ℕ+) : d k 0 = 1 := by
   sorry
