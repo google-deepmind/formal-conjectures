@@ -45,7 +45,7 @@ where at least one polynomial in $S$ vanishes.
 -/
 noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
   (1 : ℝ) / (DegreesProduct polys) *
-  ∏' p : {p : ℕ // Nat.Prime p},
+  ∏' p : {p : ℕ // p.Prime},
     (1 - (1 : ℝ) / p.val) ^ (-polys.card : ℤ) * (1 - (OmegaP polys p.val : ℝ) / p.val)
 
 /-- `CountSimultaneousPrimes S x` counts the number of `n ≤ x` at which all polynomials in `S` attain a prime value. -/
