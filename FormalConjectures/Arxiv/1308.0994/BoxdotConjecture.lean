@@ -195,8 +195,8 @@ def KT : NormalModalLogic := by
 
 
 /--
-  Boxdot Conjecture: every normal modal logic that faithfully interprets KT
-  by the boxdot translation is included in KT.
+Boxdot Conjecture: every normal modal logic that faithfully interprets KT
+by the boxdot translation is included in KT.
 -/
 @[category research solved, AMS 3]
 theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L ⊆ KT := by
