@@ -74,9 +74,9 @@ theorem sexy_primes :
   sorry
 
 /-
-## Other special cases and consequences
+## Other consequences
 - Landau's 4th problem (primes and perfect squares)
 - Twin prime conjecture
-- Artin's conjecture
+- Artin's primitive root conjecture
 - First Hardy–Littlewood conjecture
 -/
