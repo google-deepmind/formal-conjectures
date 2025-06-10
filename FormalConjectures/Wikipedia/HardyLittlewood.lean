@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -79,14 +79,14 @@ $$
 -/
 @[category research open, AMS 11]
 theorem first_hardy_littlewood_conjecture {k : ℕ} (m : Fin k.succ → ℕ) :
-    FirstHardyLittlewoodConjectureFor m :=
+    FirstHardyLittlewoodConjectureFor m := by
   sorry
 
 --Wikipedia URL: https://en.wikipedia.org/wiki/Second_Hardy%E2%80%93Littlewood_conjecture
 /-! ## Second Hardy-Littlewood Conjecture -/
 
 def SecondHardyLittlewoodConjectureFor (x y : ℕ) : Prop :=
-    π (x + y) ≤ π x + π y
+  π (x + y) ≤ π x + π y
 
 /--
 For integers $x, y \geq 2$,
@@ -98,7 +98,7 @@ and including $z$.
 -/
 @[category research open, AMS 11]
 theorem second_hardy_littlewood_conjecture {x y : ℕ} (hx : 2 ≤ x) (hy : 2 ≤ y) :
-    SecondHardyLittlewoodConjectureFor x y :=
+    SecondHardyLittlewoodConjectureFor x y := by
   sorry
 
 /-- Richards [Ri74] showed that only one of the two Hardy-Littlewood conjectures can be true.
@@ -108,5 +108,5 @@ theorem second_hardy_littlewood_conjecture {x y : ℕ} (hx : 2 ≤ x) (hy : 2 �
 @[category research solved, AMS 11]
 theorem not_first_and_secondHardyLittlewoodConjecture :
     (∀ {k : ℕ} (m : Fin k.succ → ℕ), FirstHardyLittlewoodConjectureFor m) →
-      ¬(∀ {x y : ℕ} (hx : 2 ≤ x) (hy : 2 ≤ y), SecondHardyLittlewoodConjectureFor x y) :=
+      ¬(∀ {x y : ℕ} (hx : 2 ≤ x) (hy : 2 ≤ y), SecondHardyLittlewoodConjectureFor x y) := by
   sorry

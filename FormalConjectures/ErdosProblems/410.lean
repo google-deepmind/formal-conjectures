@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,6 +34,6 @@ Erdos, Granville, Pomerance, Spiro
 (page 169 of the book "Analytic Number Theory", 1990).
 -/
 @[category research open, AMS 11]
-theorem erdos_410 (n : ℕ) (hn : 1 < n) :
-    Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop :=
+theorem erdos_410 : (∀ᵉ (n > 1),
+    Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop) ↔ answer(sorry) := by
   sorry
