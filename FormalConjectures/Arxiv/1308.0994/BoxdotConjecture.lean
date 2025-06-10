@@ -47,7 +47,6 @@ namespace Boxdot
 * `Atom n` is a propositional variable indexed by `n`.
 * `Falsum` is the constant ⊥.
 * `Imp α β` is implication `(α → β)`.
-* `Conj α β` is conjunction `(α ∧ β)`.
 * `Nec α` is the necessity operator `□α`.
 -/
 inductive Formula : Type
@@ -57,8 +56,6 @@ inductive Formula : Type
   | Falsum : Formula
   /-- `Imp α β` is implication `(α → β)`. -/
   | Imp : Formula → Formula → Formula
-  /-- `Conj α β` is conjunction `(α ∧ β)`. -/
-  | Conj : Formula → Formula → Formula
   /-- `Nec α` is the necessity operator `□α`. -/
   | Nec : Formula → Formula
 
@@ -66,10 +63,14 @@ open Formula
 
 local notation "⊥" => Falsum
 infixr:80 " ~> " => Formula.Imp
-infixr:85 " & " => Formula.Conj
 notation:max " ~ " φ => φ ~> ⊥
 prefix:95 "□" => Nec
 
+-- We define conjunction in terms of the other logical constants for simplicity.
+@[reducible]
+def conj (φ ψ : Formula) : Formula := ~(φ ~> ~ψ)
+
+infixr:85 " & " => conj
 
 /--
 `t φ` is the Boxdot translation of a formula `φ`. Roughly, t is the mapping `φ ↦ t φ`
