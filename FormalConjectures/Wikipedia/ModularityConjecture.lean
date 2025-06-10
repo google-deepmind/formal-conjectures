@@ -66,7 +66,8 @@ infinty on this affine curve we only have `p` -/
 def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
   p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
-/-- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. -/
+/-- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. See
+ Propositing 5.8.5 of [diamondshurman2005]. -/
 def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop :=
   a_[1]f = 1 ∧
   (∀ (m n : ℕ), m.Coprime n → a_[n * m]f = a_[n]f * a_[m]f) ∧
@@ -74,7 +75,7 @@ def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop
     a_[p ^ r]f = a_[p]f * a_[p ^ (r - 1)]f - p ^ (k - 1) * a_[p ^ (r - 2)]f) ∧
   ∀ (p r : ℕ), p.Prime → 2 ≤ r → (N : ZMod p) = 0 → a_[p ^ r]f = (a_[p]f) ^ r
 
-/-- See [diamondshurman2005] theorem 8.8.1. -/
+/-- See  theorem 8.8.1 of [diamondshurman2005]. -/
 def ModularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
   ∃ (N : ℕ+) (f : CuspForm (Gamma0 N) 2), IsNormalisedEigenform f ∧
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
