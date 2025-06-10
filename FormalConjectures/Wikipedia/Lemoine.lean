@@ -28,8 +28,8 @@ def OddPrime (n : ℕ) : Prop :=
 For all odd integers $n ≥ 7$ there are prime numbers $p,q$ such that $n = p+2q$.
 -/
 @[category research open, AMS 11]
-theorem lemoine_conjecture (n : ℕ) (hn : 2 < n) :
-    ∃ (p q : ℕ), p.Prime ∧ q.Prime ∧ p + 2 * q = 2 * n + 1 := by
+theorem lemoine_conjecture (n : ℕ) (hn : 2 < n) (odd : Odd n) :
+    ∃ (p q : ℕ), p.Prime ∧ q.Prime ∧ p + 2 * q = n := by
   sorry
 
 /--
@@ -37,7 +37,7 @@ For all odd integers $n ≥ 9$ there are odd prime numbers $p,q,r,s$ and natural
 such that $p+2q = n$, $2+pq = 2^a+r$, $2p+q = 2^b+s$
 -/
 @[category research open, AMS 11]
-theorem lemoine_conjecture_extension (n : ℕ) (hn : 3 < n) :
+theorem lemoine_conjecture_extension (n : ℕ) (hn : 3 < n) (odd : Odd n) :
     ∃ (p q r s a b : ℕ), OddPrime p ∧ OddPrime q ∧ OddPrime r ∧ OddPrime s ∧
-    p + 2 * q = 2 * n + 1 ∧ 2 + p * q = 2 ^ a + r ∧ 2 * p + q = 2 ^ b + s := by
+    p + 2 * q = n ∧ 2 + p * q = 2 ^ a + r ∧ 2 * p + q = 2 ^ b + s := by
   sorry
