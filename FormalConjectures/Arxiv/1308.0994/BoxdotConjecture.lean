@@ -69,6 +69,8 @@ infixr:80 " ~> " => Formula.Imp
 
 /-- `~ α` is the negation of `α`. `~ α` is also equivalent to `α ~> ⊥`. -/
 scoped notation:max " ~ " φ => φ ~> ⊥
+
+@[inherit_doc Nec]
 scoped prefix:95 "□" => Nec
 
 /-- `Conj α β` is the conjunction `α ∧ β`. We define `α & β` as `~(α ~> ~β)` for simplicity. -/
