@@ -133,8 +133,7 @@ inductive KTProof : Set Formula → Formula → Prop
 | nec {Γ} {α} (_ : KTProof ∅ α) : KTProof Γ (□ α)
 
 
-open KProof
-open KTProof
+open KProof KTProof
 
 
 /--
