@@ -33,7 +33,8 @@ noncomputable def Gilbreath.d : ℕ → (ℕ → ℕ)
 open Gilbreath
 
 /--
-For each integer $n \geq 1$ Gilbreath's nth difference sequence begins with 1, $d^n(0) = 1$.
+**Gilbreath's conjecture**
+Gilbreaths conjecture states that every term in the sequence $d^k_0$ for $k >0$ is equal to 1.
 -/
 @[category research open, AMS 11]
 theorem gilbreath_conjecture (k : ℕ+) : d k 0 = 1 := by
