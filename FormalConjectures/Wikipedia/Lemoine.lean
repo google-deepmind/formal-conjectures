@@ -31,7 +31,7 @@ def OddPrime (n : ℕ) : Prop :=
 For all odd integers $n ≥ 7$ there are prime numbers $p,q$ such that $n = p+2q$.
 -/
 @[category research open, AMS 11]
-theorem lemoine_conjecture (n : ℕ) (hn : 2 < n) (odd : Odd n) :
+theorem lemoine_conjecture (n : ℕ) (hn : 6 < n) (odd : Odd n) :
     ∃ (p q : ℕ), p.Prime ∧ q.Prime ∧ p + 2 * q = n := by
   sorry
 
