@@ -40,7 +40,7 @@ register_option linter.style.copyright : Bool := {
   descr := "enable the copyright header style linter"
 }
 
-/-- The copyright inter ensures that every file has the right copyright header. -/
+/-- The copyright linter ensures that every file has the right copyright header. -/
 def copyrightLinter : Linter where run := withSetOptionIn fun stx ↦ do
   let source := (← getFileMap).source
   -- Get the syntax corresponding to the first character in the file since that's where the warning
