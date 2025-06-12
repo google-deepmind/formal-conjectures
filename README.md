@@ -68,7 +68,7 @@ There are various ways of contributing to this repository:
     an issue should contain links to suitable references, and ideally a precise
     informal statement of the conjecture.
 
-3. **Formalise a problem already proposed**. You can find a list of problems ready
+3.  **Formalise a problem already proposed**. You can find a list of problems ready
    to be worked on in our [list of unassigned new conjectures](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee+label%3A%22new+conjecture%22).
    Just pick one and comment on the issue (e.g., "I want to work on this") to
    have it assigned to you.
