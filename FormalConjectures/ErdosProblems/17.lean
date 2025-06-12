@@ -21,25 +21,47 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/17](https://www.erdosproblems.com/17)
 -/
 
-/-- A prime $p$ is **good** (Erdős 17) if every even integer
+/-- A prime $p$ is a cluster prime if every even integer
 $n \le p - 3$ can be written as a difference of two primes
 $q_1 - q_2$ with $q_1, q_2 \le p$. -/
-def Erdos17GoodPrime (p : ℕ) : Prop :=
-  Prime p ∧
+def ClusterPrime (p : ℕ) : Prop :=
+  p.Prime ∧
     ∀ {n : ℕ}, Even n → n ≤ p - 3 →
-      ∃ q₁ q₂ : ℕ, Prime q₁ ∧ Prime q₂ ∧
+      ∃ q₁ q₂ : ℕ, q₁.Prime ∧ q₂.Prime ∧
         q₁ ≤ p ∧ q₂ ≤ p ∧ n = q₁ - q₂
 
-/-- **Erdős Problem 17.** Are there infinitely many good primes?
-(The term *good* is defined above.) -/
+/-- **Erdős Problem 17.** Are there infinitely many cluster primes? -/
 @[category research open, AMS 11]
 theorem erdos_17 :
-    ({p : ℕ | Erdos17GoodPrime p}.Infinite) ↔ answer(sorry) := by
+    {p : ℕ | ClusterPrime p}.Infinite ↔ answer(sorry) := by
+  sorry
+
+/-- The counting function of cluster primes $\le x$. -/
+noncomputable def clusterPrimeCount (x : ℕ) : ℕ :=
+  Nat.card {p : ℕ | p ≤ x ∧ ClusterPrime p}
+
+/--
+In 1999 Blecksmith, Erdős, and Selfridge [BES99] proved the upper bound
+$$\pi^{\mathcal{C}}(x) \ll_A x(\log x)^{-A}$$ for every real $A > 0$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_17.variants.upper_BES {A : ℝ} (hA : 0 < A) :
+    ∃ C : ℝ, 0 < C ∧
+      ∀ x : ℕ, (clusterPrimeCount x : ℝ) ≤ C * x / (Real.log x) ^ A := by
   sorry
 
 /--
-The first prime **without** the Erdős 17 property is $97$.
--/
+In 2003, Elsholtz [El03] refined the upper bound to
+$$\pi^{\mathcal{C}}(x) \ll x\,\exp\!\bigl(-c(\log\log x)^2\bigr)$$
+for every real $0 < c < 1/8$. -/
+@[category research solved, AMS 11]
+theorem erdos_17.variants.upper_Elsholtz {c : ℝ} (hc : c < (1 / 8 : ℝ)) :
+    ∃ C : ℝ, 0 < C ∧
+      ∀ x : ℕ, (clusterPrimeCount x : ℝ) ≤
+        C * x * Real.exp (-c * (Real.log (Real.log x)) ^ 2) := by
+  sorry
+
+/-- $97$ is the smallest prime that is not a cluster prime. -/
 @[category test, AMS 11]
-example : Prime 97 ∧ ¬ Erdos17GoodPrime 97 ∧
-    ∀ p, Prime p → p < 97 → Erdos17GoodPrime p := by sorry
+example : IsLeast {p : ℕ | p.Prime ∧ ¬ ClusterPrime p} 97 := by
+  sorry
