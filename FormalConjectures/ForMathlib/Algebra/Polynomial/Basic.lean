@@ -18,7 +18,7 @@ import Mathlib
 
 open Polynomial
 
-/-! 
+/-!
 
 This file introduces some common assumptions made on polynomials in certain conjectures. Note that these condition (and the terminology) are non-standard.
 
@@ -39,4 +39,3 @@ Holds if for every prime $p$ there exists a natural $n$ such that $p$ not divide
 -/
 def SchinzelCondition (fs : Finset ℤ[X]) : Prop :=
   ∀ p : ℕ, p.Prime → ∃ n : ℕ, ∀ f ∈ fs, ¬p ∣ (f.eval (n : ℤ)).natAbs
-
