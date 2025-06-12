@@ -16,6 +16,8 @@ limitations under the License.
 
 import Mathlib.Tactic.Linter.Header
 
+--TODO(Paul-Lez): change this so we don't start getting errors in 2026!
+
 open Lean Elab Meta Command Syntax
 
 def correctCopyrightHeader : String :=
