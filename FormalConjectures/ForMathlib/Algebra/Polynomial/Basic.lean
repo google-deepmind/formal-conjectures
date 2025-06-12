@@ -19,9 +19,8 @@ import Mathlib
 open Polynomial
 
 /-!
-
-This file introduces some common assumptions made on polynomials in certain conjectures. Note that these condition (and the terminology) are non-standard.
-
+This file introduces some common assumptions made on polynomials in certain conjectures.
+Note that the terminology is non-standard.
 -/
 
 /--
@@ -38,4 +37,4 @@ A condition on sets of polynomials in the Schinzel and Bunyakovsky conjectures.
 Holds if for every prime $p$ there exists a natural $n$ such that $p$ not divides $f_i(n)$ for all $f_i$.
 -/
 def SchinzelCondition (fs : Finset ℤ[X]) : Prop :=
-  ∀ p : ℕ, p.Prime → ∃ n : ℕ, ∀ f ∈ fs, ¬p ∣ (f.eval (n : ℤ)).natAbs
+  ∀ p : ℕ, p.Prime → ∃ n : ℕ, ∀ f ∈ fs, ¬(p : ℤ) ∣ f.eval (n : ℤ)
