@@ -84,8 +84,7 @@ There are various ways of contributing to this repository:
 
 Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
 
-1.  Open an issue on GitHub specifying what you plan to contribute (and assign
-    yourself!)
+1.  Open an issue on GitHub specifying what you plan to contribute.
 2.  Fork the repository on GitHub.
 3.  Add your formalized conjecture(s) in the appropriate file/directory
     structure to a branch in your fork.
