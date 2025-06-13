@@ -31,8 +31,8 @@ sum of $\frac{1}{a_i}$ is equal to 1?
 @[category research solved, AMS 11, AMS 40]
 theorem erdos_299 : (∃ (a : ℕ → ℕ),
     StrictMono a ∧ (∀ n, 0 < a n) ∧
-    (fun n ↦ (a (n + 1) : ℝ) - a n) =O[atTop] (fun n ↦ (1 : ℝ)) ∧
-    ∀ (S : Finset ℕ), ∑ i ∈ S, (1 : ℝ) / (a i) ≠ 1) ↔ answer(False) := by
+    (fun n ↦ (a (n + 1) : ℝ) - a n) =O[atTop] (1 : ℕ → ℝ) ∧
+    ∀ S : Finset ℕ, ∑ i ∈ S, (1 : ℝ) / a i ≠ 1) ↔ answer(False) := by
   sorry
 
 /--
@@ -46,6 +46,6 @@ density) then there is a finite $S \subset A$ such that $\sum_{n \in S} \frac{1}
 [Bl21] Bloom, T. F., On a density conjecture about unit fractions.
 -/
 @[category research solved, AMS 11, AMS 40]
-theorem erdos_299.variants.density : ∀ (A : Set ℕ), 0 < A.UpperDensity →
-    ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 : ℝ) / n = 1 := by
+theorem erdos_299.variants.density : ∀ (A : Set ℕ), 0 ∉ A → 0 < A.UpperDensity →
+    ∃ S : Finset ℕ, S.toSet ⊆ A ∧ ∑ n ∈ S, (1 : ℝ) / n = 1 := by
   sorry
