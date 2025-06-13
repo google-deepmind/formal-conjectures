@@ -62,8 +62,8 @@ Herzog and Schönheim conjectured that if $A$ forms a partition of $G$ with $k >
 indices $[G:G_1], \dots, [G:G_k]$ cannot be distinct.
 -/
 @[category research open, AMS 20]
-theorem herzog_schonheim (G : Type*) [Group G] : ∃ (P : Partition (⊤ : Subgroup G)),
-    1 < P.parts.ncard ∧
-    (∀ B ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = B) ∧
-    P.parts.Pairwise fun A B ↦ A.index ≠ B.index := by
+theorem herzog_schonheim (G : Type*) [Group G] : ∀ (P : Partition (⊤ : Subgroup G)),
+    1 < P.parts.ncard →
+    (∀ B ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = B) →
+    ∃ᵉ (A ∈ P.parts) (B ∈ P.parts), A ≠ B ∧ A.index = B.index := by
   sorry
