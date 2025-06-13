@@ -31,10 +31,11 @@ If `G` is an abelian group then can there exist an exact covering of `G` by more
 different sizes? (i.e. each element is contained in exactly one of the cosets.)
 -/
 @[category research open, AMS 20]
-theorem erdos_274 (G : Type*) [CommGroup G] : ∃ (P : Partition (⊤ : Subgroup G)),
-    1 < P.parts.ncard ∧
-    (∀ A ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
-    P.parts.Pairwise fun A B ↦ Nat.card A ≠ Nat.card B := by
+theorem erdos_274 :
+    (∀ (G : Type*), [CommGroup G] →
+    ∃ (P : Partition (⊤ : Subgroup G)), 1 < P.parts.ncard ∧
+      (∀ A ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
+      P.parts.Pairwise fun A B ↦ Nat.card A ≠ Nat.card B) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -44,11 +45,12 @@ In [Er97c] Erdős asks this for finite (not necessarily abelian) groups.
 The mathematics of Paul Erd\H{o}s, I (1997), 47-67.
 -/
 @[category research open, AMS 20]
-theorem erdos_274.variants.nonabelian (G : Type*) [Fintype G] [Group G] :
+theorem erdos_274.variants.nonabelian :
+    (∀ (G : Type*), [Group G] → [Fintype G] →
     ∃ (P : Partition (⊤ : Subgroup G)),
-    1 < P.parts.ncard ∧
-    (∀ A ∈ P.parts, ∃ᵉ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
-    P.parts.Pairwise fun A B ↦ Nat.card A ≠ Nat.card B := by
+      1 < P.parts.ncard ∧
+      (∀ A ∈ P.parts, ∃ᵉ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
+      P.parts.Pairwise fun A B ↦ Nat.card A ≠ Nat.card B) ↔ answer(sorry) := by
   sorry
 
 
