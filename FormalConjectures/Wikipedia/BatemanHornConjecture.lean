@@ -29,22 +29,30 @@ https://claude.ai/share/a02c2bba-7f5f-435c-ab0e-58eb5ddc0545
 
 open Polynomial Asymptotics Filter Topology
 
-/-- Definition of irreducible polynomial with positive leading coefficient -/
+/-- Definition of irreducible, non-constant polynomial with positive leading coefficient -/
 def IsIrreducibleWithPosLeading (f : ℤ[X]) : Prop :=
-  Irreducible f ∧ 0 < f.leadingCoeff
+  Irreducible f ∧ 0 < f.leadingCoeff ∧ 0 < f.natDegree
 
-/-- The compatibility condition for a finite set `S` of polynomials in the Bateman-Horn conjecture. 
+/-- The compatibility condition for a finite set `S` of polynomials in the Bateman-Horn conjecture.
 This states that for all primes `p`, there exists an `n` such that `∏ f ∈ S, f.eval n` is non-zero modulo `p`. -/
 def SatisfiesCompatibilityCondition (polys : Finset ℤ[X]) : Prop :=
   ∀ p : ℕ, Nat.Prime p → ∃ n : ℤ, ¬↑p ∣ (polys.prod id).eval n
 
 /-- `OmegaP S p` counts the number of residue classes mod `p` where at least one polynomial in `S` vanishes. -/
 noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
-  {n : ZMod p | ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0}.ncard 
+  {n : ZMod p | ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0}.ncard
 
-/-- The Bateman-Horn constant of a set of polynomials `S`. This is defined as the infinite product over all primes: 
-$$\prod_p (1 - \frac{1}{p}) ^ {|S|} (1 - \frac{\omega_p(S)}{p}$$ where $\omega_p(S)}{p}$ is the number of residue classes mod $p$ where at least one polynomial in $S$ vanishes. -/
+/-- The product of degrees of polynomials in a finite set. -/
+def DegreesProduct (polys : Finset ℤ[X]) : ℕ :=
+  polys.prod (fun f => f.natDegree)
+
+/-- The Bateman-Horn constant of a set of polynomials `S`. This is defined as the infinite product over all primes:
+
+$$\frac{1}{D} \prod_p (1 - \frac{1}{p})^{-|S|} (1 - \frac{\omega_p(S)}{p})$$
+
+where $D = \prod_{f \in S} \deg(f)$ is the product of degrees and $\omega_p(S)$ is the number of residue classes mod $p$ where at least one polynomial in $S$ vanishes. -/
 noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
+  (1 : ℝ) / (DegreesProduct polys) *
   ∏' p : {p : ℕ // Nat.Prime p},
     (1 - (1 : ℝ) / p.val) ^ (-polys.card : ℤ) *
     (1 - (OmegaP polys p.val : ℝ) / p.val)
@@ -57,21 +65,22 @@ noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : �
 
 /-- **The Bateman-Horn Conjecture**
 
-Given a finite collection of distinct irreducible polynomials f₁, f₂, ..., fₖ ∈ ℤ[X] 
-with positive leading coefficients that satisfy the compatibility condition, the number 
-of positive integers n ≤ x for which all polynomials f₁(n), f₂(n), ..., fₖ(n) are 
+Given a finite collection of distinct, irreducible, non-constant polynomials f₁, f₂, ..., fₖ ∈ ℤ[X]
+with positive leading coefficients that satisfy the compatibility condition, the number
+of positive integers n ≤ x for which all polynomials f₁(n), f₂(n), ..., fₖ(n) are
 simultaneously prime is asymptotic to:
 
     C(f₁, f₂, ..., fₖ) · x / (log x)^k
 
-where C(f₁, f₂, ..., fₖ) is the Bateman-Horn constant given by the convergent infinite product:
+where C(f₁, f₂, ..., fₖ) is the Bateman-Horn constant given by:
 
-    C = ∏ₚ (1 - 1/p)^(-k) · (1 - ωₚ/p)
+    C = (1/D) · ∏ₚ (1 - 1/p)^(-k) · (1 - ωₚ/p)
 
-Here ωₚ is the number of residue classes modulo p for which at least one polynomial vanishes.
+Here D = ∏ᵢ deg(fᵢ) is the product of the degrees of the polynomials, and ωₚ is the
+number of residue classes modulo p for which at least one polynomial vanishes.
 
-The compatibility condition ensures that for each prime p, there exists some integer n 
-such that p does not divide the product f₁(n)·f₂(n)·...·fₖ(n), which guarantees the 
+The compatibility condition ensures that for each prime p, there exists some integer n
+such that p does not divide the product f₁(n)·f₂(n)·...·fₖ(n), which guarantees the
 infinite product converges to a positive value. -/
 @[category research open, AMS 11 12]
 theorem bateman_horn_conjecture
