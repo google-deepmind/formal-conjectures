@@ -46,8 +46,8 @@ $$\pi^{\mathcal{C}}(x) \ll_A x(\log x)^{-A}$$ for every real $A > 0$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_17.variants.upper_BES {A : ℝ} (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧
-      ∀ x : ℕ, (clusterPrimeCount x : ℝ) ≤ C * x / (Real.log x) ^ A := by
+  ∃ C : ℝ, 0 < C ∧
+    ∀ x : ℕ, (clusterPrimeCount x : ℝ) ≤ C * x / (Real.log x) ^ A := by
   sorry
 
 /--
@@ -55,10 +55,10 @@ In 2003, Elsholtz [El03] refined the upper bound to
 $$\pi^{\mathcal{C}}(x) \ll x\,\exp\!\bigl(-c(\log\log x)^2\bigr)$$
 for every real $0 < c < 1/8$. -/
 @[category research solved, AMS 11]
-theorem erdos_17.variants.upper_Elsholtz {c : ℝ} (hc : c < (1 / 8 : ℝ)) :
-    ∃ C : ℝ, 0 < C ∧
-      ∀ x : ℕ, (clusterPrimeCount x : ℝ) ≤
-        C * x * Real.exp (-c * (Real.log (Real.log x)) ^ 2) := by
+theorem erdos_17.variants.upper_Elsholtz {c : ℝ} (hc : 0 < c ∧ c < (1/8 : ℝ)) :
+  ∃ C : ℝ, 0 < C ∧
+    ∀ x : ℕ, (clusterPrimeCount x : ℝ) ≤
+      C * x * Real.exp (-c * (Real.log (Real.log x)) ^ 2) := by
   sorry
 
 /-- $97$ is the smallest prime that is not a cluster prime. -/
