@@ -30,6 +30,9 @@ asked by user [*Sil*](https://mathoverflow.net/users/136794/sil)
 -/
 /--
 The predicate that all coefficients of a polynomial are either zero or one.
+`P.coeffs` is the finite set of all *nonzero* coefficients of the polynomial `P`.
+So `IsZeroOne P` means that every nonzero coefficient of `P` is equal to 1.
+Note that zero coefficients are not included in `P.coeffs`.
 -/
 def IsZeroOne (P : ℝ[X]) := P.coeffs ⊆ {1}
 
