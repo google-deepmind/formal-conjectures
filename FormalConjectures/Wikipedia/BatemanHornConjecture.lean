@@ -61,7 +61,7 @@ with positive leading coefficients that satisfy the Schinzel condition, the numb
 of positive integers n ≤ x for which all polynomials $f_i$ are simultaneously prime is asymptotic to:
 $$C(f_1, f_2, \dots, f_k) x / (log x)^k$$
 where $C$ is the Bateman-Horn constant given by the convergent infinite product:
-$$C = \prod_{p\in\mathbb{P}} (1 - 1/p)^(-k) · (1 - \omega_p/p)$$
+$$C = \frac{1}{D}\prod_{p\in\mathbb{P}} (1 - 1/p)^(-k) · (1 - \omega_p/p)$$
 Here $\omega_p/p$ is the number of residue classes modulo $p$ for which at least one polynomial vanishes.
 
 The Schinzel condition ensures that for each prime $p$, there exists some integer $n$ 
