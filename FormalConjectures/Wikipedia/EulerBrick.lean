@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 /--
-**Euler brick** is a rectangular cuboid whose edges and face diagonals all have integer lengths.
+An **Euler brick** is a rectangular cuboid whose edges and face diagonals all have integer lengths.
 -/
 def IsEulerBrick (a b c : ℕ+) : Prop :=
   ∃ n m k : ℕ+, a^2 + b^2 = n^2 ∧ a^2 + c^2 = m^2 ∧ b^2 + c^2 = k^2
