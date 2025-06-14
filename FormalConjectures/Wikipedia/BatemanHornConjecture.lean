@@ -56,7 +56,7 @@ noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : �
 
 /--
 **The Bateman-Horn Conjecture**
-Given a finite collection of distinct irreducible polynomials $f_1, f_2, \dots, f_k \in \mathbb{Z}[x]$
+Given a finite collection of distinct irreducible polynomials non-constant $f_1, f_2, \dots, f_k \in \mathbb{Z}[x]$
 with positive leading coefficients that satisfy the Schinzel condition, the number
 of positive integers n ≤ x for which all polynomials $f_i$ are simultaneously prime is asymptotic to:
 $$C(f_1, f_2, \dots, f_k) x / (log x)^k$$
