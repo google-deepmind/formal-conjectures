@@ -56,6 +56,6 @@ theorem four_dim_euler_brick_existence :
 Is there a Euler brick in $n>3$ dimensions?
 -/
 @[category research open, AMS 11]
-theorem n_dim_euler_brick_existence (n : ℕ) (hn : 3 < n) :
-    (∃ edges : Fin n → ℕ+, IsEulerHyperBrick n edges) ↔ answer(sorry) := by
+theorem n_dim_euler_brick_existence :
+    (∀ n > 3, ∃ edges : Fin n → ℕ+, IsEulerHyperBrick n edges) ↔ answer(sorry) := by
   sorry
