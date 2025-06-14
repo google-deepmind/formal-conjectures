@@ -32,8 +32,9 @@ If $n, n+1, \dots, n+k-1$ are all composite numbers, then there are $k$ distinct
 such that $p_i$ divides $n + i$ for all $0 \le i \le k-1$.
 -/
 @[category research open, AMS 11]
-theorem grimm_conjecture (n k : ℕ+) (h : ∀ i : Fin k, ¬ (n + i : ℕ).Prime) :
-    ∃ ps : Fin k → ℕ, IsSetOfPrimes k ps ∧ ∀ i : Fin k, ps i ∣ (n + i) := by
+theorem grimm_conjecture (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k)
+    (h : ∀ i : Fin k, ¬ (n + i : ℕ).Prime) :
+    ∃ ps : Fin k ↪ ℕ,  ∀ i : Fin k, (ps i).Prime ∧ ps i ∣ (n + i) := by
   sorry
 
 /--
