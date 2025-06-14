@@ -21,36 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [Wikipedia, Irrational number](https://en.wikipedia.org/wiki/Irrational_number#Open_questions)
-- [Wikipedia, Euler-Lehmer constants](https://en.wikipedia.org/wiki/Euler%27s_constant#Euler-Lehmer_constants)
 - [Wikipedia, Transcendental number](https://en.wikipedia.org/wiki/Transcendental_number)
 -/
 
 open Real Finset Filter
 
 local notation "e" => exp 1
-
-/--
-**Generalized Euler-Lehmer sequence**
-* `a` - residue class modulo `q`
-* `n` - upper bound for summation
-
-The sequence calculates the difference between:
-1. The sum of reciprocals of natural numbers ≤ `n` congruent to `a` modulo `q`
-2. The natural logarithm of `n` scaled by `1/q`
-
-`eulerMascheroniSeq` occurs when `q=1` and `a=1`.
--/
-noncomputable def eulerLehmerSeq (a : ℕ) (q : ℕ+) (n : ℕ) : ℝ :=
-  letI S (x : ℕ) := ∑ k in (Finset.Icc 1 x).filter (· ≡ a [MOD (q : ℕ)]), (1 : ℝ) / k
-  S n - log n / q
-
-
-/--
-**Euler-Lehmer constant** for residue class `a` modulo `q`.
-`eulerMascheroniConstant` occurs when `q=1` and `a=1`.
--/
-noncomputable def eulerLehmerConstant (a : ℕ) (q : ℕ+) : ℝ :=
-  limUnder atTop (eulerLehmerSeq a q)
 
 /--
 **Catalan's constant**
@@ -176,16 +152,5 @@ theorem irrational_gamma_1_6 : Irrational (1 / 6 : ℝ).Gamma := by
 $\Gamma(1/n)$ for `n ≥ 2` is irrational.
 -/
 @[category research open, AMS 33]
-theorem irrational_gamma_1_n (n : ℕ) (hn : 1 < n) : Irrational (1 / n : ℝ).Gamma := by
-  sorry
-
-/--
-Is there rational Euler-Lehmer constant?
-Has been shown that an infinite list of Euler-Lehmer constants contains at most one algebraic number.
-
-[Mu10] Murty, M. Ram; Saradha, N. (2010). Euler–Lehmer constants and a conjecture of Erdös.
--/
-@[category research open, AMS 33]
-theorem exists_rational_euler_lehmer_constant (n : ℕ) (hn : 1 < n) :
-  (∃ (q : ℕ+), ∃ (a : ℕ) (ha : a < q), ¬Irrational (eulerLehmerConstant a q)) ↔ answer(sorry) := by
+theorem irrational_gamma_1_n (n : ℕ) (hn : 2 ≤ n) : Irrational (1 / n : ℝ).Gamma := by
   sorry
