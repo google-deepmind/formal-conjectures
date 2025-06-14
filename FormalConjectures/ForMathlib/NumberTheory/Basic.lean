@@ -47,5 +47,5 @@ def IsWallSunSunPrime (p : ℕ) : Prop :=
 A Lucas–Wieferich prime associated with $(a,b)$ is a prime $p$ such $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$
 where $U(a,b)$ is the Lucas sequence of the first kind and $\varepsilon$ is the Legendre symbol.
 -/
-def IsLucasWieferichPrime (a b p : ℕ) (hp : Fact p.Prime) : Prop :=
-  Prime p ∧ lucasUNumberPQ a b (p - legendreSym p (a ^ 2 - 4 * b)) ≡ 0 [MOD p^2]
+def IsLucasWieferichPrime (a b p : ℕ) : Prop :=
+  p.Prime ∧ lucasUNumberPQ a b (p - legendreSym p (a ^ 2 - 4 * b)) ≡ 0 [MOD p^2]
