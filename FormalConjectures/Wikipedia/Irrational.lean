@@ -43,6 +43,14 @@ noncomputable def gompertzConstant : ℝ :=
   -e * ∫ (t:ℝ) in Set.Ioi 1, exp (-t) / t
 
 /--
+At least one of the numbers $2^t$ and $3^t$ is irrational.
+-/
+@[category research open, AMS 11]
+theorem two_pow_three_pow_irrational (t : ℝ) (h : Irrational t) :
+    Irrational (2 ^ t) ∨ Irrational (3 ^ t) := by
+  sorry
+
+/--
 $e + \pi$ is irrational.
 -/
 @[category research open, AMS 33]
