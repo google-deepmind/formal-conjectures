@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open Function
 
 /-!
 # Grimm's conjecture
@@ -23,8 +22,7 @@ open Function
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Grimm%27s_conjecture)
 -/
 
-def IsSetOfPrimes (k : ℕ+) (ps : Fin k → ℕ) : Prop :=
-  (∀ i : Fin k, (ps i).Prime) ∧ Injective ps
+open Function
 
 /--
 **Grimm's Conjecture**
@@ -38,8 +36,9 @@ theorem grimm_conjecture (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k)
   sorry
 
 /--
-If $n, n+1, \dots, n+k-1$ are all composite numbers,
-then their product has at least $k$ distinct prime divisors.
+**Grimm's Conjecture, weaker version**
+If $n, n+1, \dots, n+k-1$ are all composite numbers, then their product
+has at least $k$ distinct prime divisors.
 -/
 @[category research open, AMS 11]
 theorem grimm_conjecture_weak (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k)
