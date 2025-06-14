@@ -26,7 +26,7 @@ open Polynomial
 /--
 **Schinzel conjecture (H hypothesis)**
 If a finite set of polynomials $f_i$ satisfies both Schinzel and Bunyakovsky conditions,
-there exist infinitely many natural numbers $m$ such that $f_i(m)$ are primes for all $i$.
+there exist infinitely many natural numbers $n$ such that $f_i(n)$ are primes for all $i$.
 -/
 @[category research open, AMS 11]
 theorem schinzel_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, BunyakovskyCondition f) 
