@@ -14,13 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib
+import Mathlib.NumberTheory.LegendreSymbol.Basic
+
+/-!
+# Problem 4.65
+
+*References:*
+- [Wikipedia, Lucas_sequence](https://en.wikipedia.org/wiki/Lucas_sequence)
+- [Wikipedia, Wall–Sun–Sun prime](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
+-/
 
 /--
 **The Lucas numbers**
 $L_0 = 2$, $L_1=1$, $L_{n+2} = L_{n+1}+L_n$
 -/
-def lucasNumber : ℕ → ℕ
+def lucasNumber : ℕ → ℤ
 | 0 => 2
 | 1 => 1
 | (n+2) => lucasNumber (n+1) + lucasNumber n
@@ -29,10 +37,10 @@ def lucasNumber : ℕ → ℕ
 **The Lucas sequence of the first kind**
 $U_0(a,b) = 0$, $U_1(a,b)=1$, $U_{n+2}(a,b)=aU_{n+1}(a,b)-bU_n(a,b)$
 -/
-def lucasUNumberPQ (a b : ℕ) : ℕ → ℕ
+def lucasUNumberPQ (a b : ℕ) : ℕ → ℤ
 | 0 => 0
 | 1 => 1
-| (n+2) => a * lucasNumber (n+1) - b * lucasNumber n
+| (n+2) => a * lucasUNumberPQ a b (n+1) - b * lucasUNumberPQ a b n
 
 /--
 **Wall–Sun–Sun prime**
@@ -40,7 +48,7 @@ A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$
 (One of the equivalent definitions)
 -/
 def IsWallSunSunPrime (p : ℕ) : Prop :=
-  Prime p ∧ lucasNumber p ≡ 1 [MOD p^2]
+  p.Prime ∧ (lucasNumber p).ModEq (p^2) 1
 
 /--
 **Lucas–Wieferich prime**
@@ -48,4 +56,5 @@ A Lucas–Wieferich prime associated with $(a,b)$ is a prime $p$ such $U_{p-\var
 where $U(a,b)$ is the Lucas sequence of the first kind and $\varepsilon$ is the Legendre symbol.
 -/
 def IsLucasWieferichPrime (a b p : ℕ) : Prop :=
-  p.Prime ∧ lucasUNumberPQ a b (p - legendreSym p (a ^ 2 - 4 * b)) ≡ 0 [MOD p^2]
+  letI index := (p : ℤ) - legendreSym p (a^2 - 4*b) -- legendreSym needs [Fact (p.Prime)] 
+  p.Prime ∧ (lucasUNumberPQ a b index.toNat).ModEq (p^2) 1
