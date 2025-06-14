@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.ForMathlib.Algebra.GroupTheory.Basic
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Basis
