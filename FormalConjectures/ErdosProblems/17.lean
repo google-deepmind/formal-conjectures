@@ -21,6 +21,10 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/17](https://www.erdosproblems.com/17)
 -/
 
+open Filter
+
+open scoped Asymptotics
+
 /-- A prime $p$ is a cluster prime if every even natural number
 $n \le p - 3$ can be written as a difference of two primes
 $q_1 - q_2$ with $q_1, q_2 \le p$. -/
@@ -43,22 +47,28 @@ noncomputable def clusterPrimeCount (x : ℕ) : ℕ :=
 /--
 In 1999 Blecksmith, Erdős, and Selfridge [BES99] proved the upper bound
 $$\pi^{\mathcal{C}}(x) \ll_A x(\log x)^{-A}$$ for every real $A > 0$.
+
+[BES99] Blecksmith, Richard and Erd\H os, Paul and Selfridge, J. L., Cluster primes. Amer. Math. Monthly (1999), 43--48.
 -/
 @[category research solved, AMS 11]
 theorem erdos_17.variants.upper_BES {A : ℝ} (hA : 0 < A) :
-  ∃ C : ℝ, 0 < C ∧
-    ∀ x : ℕ, (clusterPrimeCount x : ℝ) ≤ C * x / (Real.log x) ^ A := by
-  sorry
+  (fun x ↦ (clusterPrimeCount x : ℝ)) =O[atTop] fun x ↦ x / (Real.log x) ^ A := by
+    sorry
 
 /--
 In 2003, Elsholtz [El03] refined the upper bound to
 $$\pi^{\mathcal{C}}(x) \ll x\,\exp\!\bigl(-c(\log\log x)^2\bigr)$$
-for every real $0 < c < 1/8$. -/
+for every real $0 < c < 1/8$.
+
+[El03] Elsholtz, Christian, On cluster primes. Acta Arith. (2003), 281--284.
+-/
 @[category research solved, AMS 11]
-theorem erdos_17.variants.upper_Elsholtz {c : ℝ} (hc : 0 < c ∧ c < (1/8 : ℝ)) :
+theorem erdos_17.variants.upper_Elsholtz :
   ∃ C : ℝ, 0 < C ∧
-    ∀ x : ℕ, (clusterPrimeCount x : ℝ) ≤
-      C * x * Real.exp (-c * (Real.log (Real.log x)) ^ 2) := by
+    ∀ c : ℝ, 0 < c → c < (1 / 8 : ℝ) →
+      ∀ᶠ x : ℕ in atTop,
+        (clusterPrimeCount x : ℝ) ≤
+          C * x * Real.exp (-c * (Real.log (Real.log x)) ^ 2) := by
   sorry
 
 /-- $97$ is the smallest prime that is not a cluster prime. -/
