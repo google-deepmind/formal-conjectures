@@ -30,7 +30,7 @@ open Real
 The sequence of $\sqrt[n]{p_n}$ where $p_n$ is the n:th prime number.
 -/
 noncomputable def firoozbakhtSeq (n : ℕ) : ℝ :=
-  (n.nth Prime)^(1/(n+1))
+  (n.nth Prime)^(1/(n + 1) : ℝ)
 
 /--
 **Firoozbakht's conjecture**
