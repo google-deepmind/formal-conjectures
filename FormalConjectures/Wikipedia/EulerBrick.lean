@@ -63,5 +63,5 @@ Is there an Euler brick in n-dimensional space for any n > 3?
 -/
 @[category research open, AMS 11]
 theorem n_dim_euler_brick_existence :
-    ∀ n > 3, ∃ edges : Fin n → ℕ+, IsEulerHyperBrick n edges ↔ answer(sorry) := by
+    (∀ n > 3, ∃ edges : Fin n → ℕ+, IsEulerHyperBrick n edges) ↔ answer(sorry) := by
   sorry
