@@ -104,7 +104,7 @@ was proved by Alon.
 -/
 @[category research solved, AMS 5]
 theorem erdos_624.variants.pow_two_strong {α : Type*} (C : ℝ) (hC : 0 ≤ C) :
-    ∀ᶠ k in atTop, ∀ (X : Finset α) (_ : #X = 2 ^ k) (f : PowersetMapFor X),
+    ∀ᶠ k in atTop, ∀ (X : Finset α) (hX : #X = 2 ^ k) (f : PowersetMapFor X),
       ∃ Y ⊆ X, #Y = k ∧ { f A | A ⊆ Y }.ncard < 2 ^ k - (k : ℝ) ^ C :=
   sorry
 
@@ -118,7 +118,7 @@ $$
 -/
 @[category research solved, AMS 5]
 theorem erdos_624.variants.pow_two_stronger {α : Type*} (ε : ℝ) (hε : 0 < ε) :
-    ∀ᶠ k in atTop, ∀ (X : Finset α) (_ : X.card = 2 ^ k) (f : PowersetMapFor X),
+    ∀ᶠ k in atTop, ∀ (X : Finset α) (hX : X.card = 2 ^ k) (f : PowersetMapFor X),
       ∃ Y ⊆ X, Y.card = k ∧ { f A | A ⊆ Y }.ncard < (1 - ε) * 2 ^ k :=
   sorry
 
@@ -132,7 +132,7 @@ $$
 -/
 @[category research solved, AMS 5]
 theorem erdos_624.variants.pow_two_lb {α : Type*} :
-    ∀ᶠ k in atTop, ∀ (X : Finset α) (_ : X.card = 2 ^ k),
-        ∃ (f : PowersetMapFor X),
-         ∀ Y ⊆ X, Y.card = k ∧ 2 ^ k < 4 * { f A | A ⊆ Y }.ncard :=
+    ∀ᶠ k in atTop, ∀ (X : Finset α) (hX : X.card = 2 ^ k),
+      ∃ (f : PowersetMapFor X),
+        ∀ Y ⊆ X, Y.card = k ∧ 2 ^ k < 4 * { f A | A ⊆ Y }.ncard :=
   sorry
