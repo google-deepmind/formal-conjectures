@@ -27,7 +27,7 @@ import FormalConjectures.Util.ProblemImports
 open Real
 
 /--
-The sequence of $\sqrt[n]{p_n}$ where $p_n$ is a prime number.
+The sequence of $\sqrt[n]{p_n}$ where $p_n$ is the n:th prime number.
 -/
 noncomputable def firoozbakhtSeq (n : ℕ) : ℝ :=
   (n.nth Prime)^(1/(n+1))
