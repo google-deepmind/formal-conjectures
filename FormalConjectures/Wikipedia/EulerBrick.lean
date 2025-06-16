@@ -47,7 +47,7 @@ Is there a perfect Euler brick?
 -/
 @[category research open, AMS 11]
 theorem perfect_euler_brick_existence :
-    ∃ a b c : ℕ+, IsPerfectCuboid a b c  ↔ answer(sorry) := by
+    (∃ a b c : ℕ+, IsPerfectCuboid a b c) ↔ answer(sorry) := by
   sorry
 
 /--
