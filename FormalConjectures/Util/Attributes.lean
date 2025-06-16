@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,6 +37,9 @@ The values of this attribute are
 - `@[category graduate]` : a graduate level math problem.
 - `@[category research open]` : an open reseach level math problem.
 - `@[category research solved]` : a solved reseach level math problem.
+  The criterion for being solved is that there exists an informal solution
+  that is widely accepted by experts in the area. In particular, this
+  does *not* require a formal solution to exist.
 - `@[category test]` : a statement that serves as a sanity check (e.g. for a new definition).
 - `@[category API]` : a statement that constructs basic theory around a new definition
 
@@ -92,7 +95,7 @@ inductive ProblemStatus
   /-- Indicates that a mathematical problem is still open. -/
   | open
   /-- Indicates that a mathematical problem is already solved,
-  i.e. there is a pusblished (informal) proof. -/
+  i.e., there is a published (informal) proof that is widely accepted by experts. -/
   | solved
   deriving Inhabited, BEq, Hashable, ToExpr
 
@@ -290,34 +293,9 @@ def getCategoryStats : m (Category → Nat) := do
   let cats ← getStatementTags
   return fun c ↦ (cats.map <| fun _ arr ↦ arr.size).getD c 0
 
+def getSubjectTags : m (Array SubjectTag) := do
+  return subjectExt.getState (← MonadEnv.getEnv) |>.toArray
+
 end Helper
 
 end ProblemAttributes
-
-section Commands
-
-open ProblemAttributes
-
--- TODO(lezeau): currently this doesn't take examples into
--- account so some `test` statements aren't counted here.
-
-/-- Prints out the number of problems for each category.
-
-Note that this will depend on what declarations are present in the
-environment at the place where the command is called. -/
-elab "#category_stats" : command => do
-  let stats ← ProblemAttributes.getCategoryStats
-  let out : String :=
-      s!"Open problems: {stats (Category.research ProblemStatus.open)}\n" ++
-      s!"Solved problems: {stats (Category.research ProblemStatus.solved)}\n" ++
-      s!"High School: {stats (Category.highSchool)}\n" ++
-      s!"Undergraduate: {stats (Category.undergraduate)}\n" ++
-      s!"Graduate: {stats (Category.graduate)}\n" ++
-      s!"API: {stats (Category.API)}\n" ++
-      s!"Tests: {stats (Category.test)}\n"
-  Lean.logInfo ("Current benchmark stats:\n" ++ out)
-
--- TODO(lezeau): add a `#subject_stats` command that does
--- prints the number of problems per subject (when non-zero)
-
-end Commands

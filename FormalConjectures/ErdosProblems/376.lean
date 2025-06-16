@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,20 +22,18 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/376](https://www.erdosproblems.com/376)
 -/
 /--
-Are there infinitely many $n$ such that ${2n\choose n}$ is
-coprime to $105$?
+Are there infinitely many $n$ such that ${2n\choose n}$ is coprime to $105$?
 -/
 @[category research open, AMS 11]
-theorem erdos_376 :
-    { n | ((2 * n).choose n).Coprime 105 }.Infinite :=
+theorem erdos_376 : { n | ((2 * n).choose n).Coprime 105 }.Infinite ↔ answer(sorry) := by
   sorry
 
 /--
-Erdős, Graham, Ruzsa, and Straus [EGRS75] have shown that, for any two odd primes $p$ and $q$, there are infinite many $n$ such
-that ${2n\choose n}$ is coprime to $pq$.
+Erdős, Graham, Ruzsa, and Straus [EGRS75] have shown that, for any two odd primes $p$ and $q$,
+there are infinite many $n$ such that ${2n\choose n}$ is coprime to $pq$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_376.variants.prime {p q : ℕ} (h₁ : p.Prime)
     (h₂ : Odd p) (h₃ : q.Prime) (h₄ : Odd q) :
-    { n | ((2 * n).choose n).Coprime (p * q) }.Infinite :=
+    { n | ((2 * n).choose n).Coprime (p * q) }.Infinite := by
   sorry

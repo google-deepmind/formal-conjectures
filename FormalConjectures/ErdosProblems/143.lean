@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,8 +39,8 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_143.parts.i (A : Set ℝ) (h : WellSeparatedSet A):
-    liminf (fun x => (A ∩ (Set.Icc 1 x)).ncard / x) atTop = 0 := by
+theorem erdos_143.parts.i : (∀ (A : Set ℝ), WellSeparatedSet A →
+    liminf (fun x => (A ∩ (Set.Icc 1 x)).ncard / x) atTop = 0) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -52,7 +52,7 @@ $$
 @[category research open, AMS 11]
 theorem erdos_143.parts.ii (A : Set ℝ) (h : WellSeparatedSet A):
     ∃ (s : ℝ),
-      Tendsto (fun n ↦ ∑ x ∈ range n, 1 / (x * Real.log x)) atTop (𝓝 s) :=
+      Tendsto (fun n ↦ ∑ x ∈ range n, 1 / (x * Real.log x)) atTop (𝓝 s) := by
   sorry
 
 

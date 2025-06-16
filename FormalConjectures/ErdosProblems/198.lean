@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,11 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/198](https://www.erdosproblems.com/198)
 -/
-open Function Set
+open Function Set Nat
 
 /-- Let $V$ be a vector space over the rationals and let $k$ be a fixed
-positive integer. Then there is a set $X_k ⊆ Y$ such that $X_k$, meets
-every infinite arithmetic progression in $V$ but $X_k$, intersects every
+positive integer. Then there is a set $X_k ⊆ Y$ such that $X_k$ meets
+every infinite arithmetic progression in $V$ but $X_k$ intersects every
 $k$-element arithmetic progression in at most two points.
 
 At the end of:
@@ -35,7 +35,7 @@ the author claims that by "slightly modifying the method of [his proof]", one ca
 lemma baumgartner_strong (V : Type*) [AddCommGroup V] [Module ℚ V] (k : ℕ) :
     ∃ X : Set V,
       (∀ Y, Y.IsAPOfLength ⊤ → (X ∩ Y).Nonempty) ∧
-      (∀ Y, IsAPOfLength Y k → (X ∩ Y).ncard ≤ 2) :=
+      (∀ Y, IsAPOfLength Y k → (X ∩ Y).ncard ≤ 2) := by
   sorry
 
 /-- The statement for which Baumgartner actually writes a proof. -/
@@ -46,42 +46,42 @@ lemma baumgartner_headline (V : Type*) [AddCommGroup V] [Module ℚ V] :
       (∀ Y, IsAPOfLength Y 3 → (X ∩ Y).ncard ≤ 2) :=
   baumgartner_strong V 3
 
-/-- Erdős and Graham, as well as Bloom, report Baumgartner also proved this.
-Erdos and Graham give no citation (though they do cite Baumgartner[75] for
-`baumgartner_headline`) whereas Bloom cites Baumgartner[75] for this.
-
-However this is a result in the _opposite direction_ to `baumgartner_headline`.
-See `baumgartner_sidon_contrapositive` and `IsSidon.avoids_isAPOfLength_three`.
-
-This easily implies `erdos_198` (below). -/
-@[category research solved, AMS 5, AMS 11]
-lemma baumgartner_sidon
-    (A : ℕ →o ℕ) (hA : IsSidon A) :
-    ∃ Y, IsAPOfLength Y ⊤ ∧ range A ∩ Y = ∅ :=
-  sorry
-
-/-- Statement of contrapositive of `baumgartner_sidon` for comparison with
-`baumgartner_headline`: it states that one cannot "upgrade" `baumgartner_headline`
-to replace the statement about avoiding length-3 APs with being Sidon. -/
-@[category research solved, AMS 5, AMS 11]
-lemma baumgartner_sidon_contrapositive :
-    ¬ ∃ A : ℕ →o ℕ,
-      (∀ Y, IsAPOfLength Y ⊤ → ((range A) ∩ Y).Nonempty) ∧
-      IsSidon A := by
-  simp_rw [and_comm]
-  push_neg
-  exact baumgartner_sidon
 
 /--
 If $A ⊆ ℕ$ is a Sidon set then must the complement of $A$ contain an infinite arithmetic
 progression?
 
 Answer "yes" according to remark on page 23 of:
-Erdös and Graham, "Old and new problems and results in combinatorial number theory", 1980.
+
+
+- Erdös and Graham, "Old and new problems and results in combinatorial number theory", 1980.
+
+
+"Baumgartner also proved the conjecture of Erdös that if $A$ is a sequence of positive integers with
+all sums $a + a'$ distinct for $a, a' ∈ A$ then the complement of $A$ contains an
+infinite A.P."
+
+
+But this seems to be a misprint, since the opposite is true:
+There is a sequence of positive integers with all $a + a'$ distinct for $a, a' ∈ A$ such that the
+complement of $A$ contains no infinite A.P., i.e. there is a Sidon set $A$ which intersects all
+arithmetic progressions.
+
+So the answer should be "no".
+
+This can be seen, as pointed out by Thomas Bloom [erdosproblems.com/198](https://www.erdosproblems.com/198),
+by an elementary argument.
 -/
 @[category research solved, AMS 5, AMS 11]
-theorem erdos_198
-    (A : ℕ →o ℕ)
-    (hA : IsSidon A) :
-    ∃ᵉ (a ∈ (range A)ᶜ) (d ≠ 0), ∀ n : ℕ, a + n • d ∈ (range A)ᶜ := by
+theorem erdos_198 : (∀ A : ℕ →o ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ (range A)ᶜ)) ↔
+    answer(False) := by
+  sorry
+
+/--
+In fact one such sequence is $n! + n$. This was found by AlphaProof. It also found $(n + 1)! + n$.
+-/
+@[category research solved, AMS 5, AMS 11]
+theorem erdos_198.variant_concrete :  ∃ A : ℕ →o ℕ,
+    (∀ n, A n = n ! + n) ∧
+    IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → ((range A) ∩ Y).Nonempty) := by
   sorry

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/257](https://www.erdosproblems.com/257)
 -/
+
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set. Is
 $$
@@ -29,8 +30,8 @@ $$
 irrational?
 -/
 @[category research open, AMS 11]
-theorem erdos_257 (A : Set ℕ) (h : A.Infinite) :
-    Irrational <| ∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1) :=
+theorem erdos_257 : (∀ (A : Set ℕ), A.Infinite →
+    Irrational (∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1))) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -40,9 +41,9 @@ $$
 $$
 where $d(n)$ is the number of divisors of $n$.
 -/
-@[category undergraduate]
+@[category undergraduate, AMS 11]
 theorem erdos_257.variants.tsum_top_eq :
-    ∑' n, 1 / (2 ^ n - 1 : ℝ) = ∑' n, n.divisors.card / (2 ^ n : ℝ) :=
+    ∑' n, 1 / (2 ^ n - 1 : ℝ) = ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
 
 /--
@@ -54,7 +55,7 @@ is irrational.
 
 [Er48] Erdős, P., _On arithmetical properties of Lambert series_. J. Indian Math. Soc. (N.S.) (1948), 63-66.
 -/
-@[category research solved]
+@[category research solved, AMS 11]
 theorem erdos_257.variants.tsum_top :
-    Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) :=
+    Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry

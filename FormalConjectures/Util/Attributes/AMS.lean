@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -169,6 +169,15 @@ def numToAMSName (n : Nat) : MetaM Name := do
   let nm : Name := Name.str ``AMS (ToString.toString n)
   unless !(← Lean.hasConst nm) do return nm
   throwError "Out of bounds"
+
+def AMS.getDesc (a : AMS) : CoreM String := do
+  let .const n [] := Lean.toExpr a | throwError "this shouldn't happen"
+  let .some doc := ← Lean.findDocString? (← getEnv) n | throwError m!"{.ofConstName n} is missing a docstring"
+  return doc.trim
+
+def AMS.toNat? (a : AMS) : Option Nat := do
+  let .const (.str _ m) [] := Lean.toExpr a | none
+  m.toNat?
 
 unsafe def numToAMSSubjects (n : Nat) : MetaM AMS := do
   let nm ← numToAMSName n

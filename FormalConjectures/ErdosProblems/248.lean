@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,5 +32,5 @@ Here $\omega(n)$ is the number of distinct prime divisors
 of $n$.
 -/
 @[category research open, AMS 11]
-theorem erdos_248 : ∃ C > (0 : ℝ), { n | ∀ k ≥ 1, ω (n + k) ≤ C * k }.Infinite :=
+theorem erdos_248 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, ω (n + k) ≤ C * k }.Infinite) ↔ answer(sorry) := by
   sorry
