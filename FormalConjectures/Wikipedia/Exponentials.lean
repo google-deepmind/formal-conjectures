@@ -19,38 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Exponentials conjectures and theorems
 
-*References:*
-- [Wikipedia](https://en.wikipedia.org/wiki/Four_exponentials_conjecture)
-- [Wa09] Waldschmidt M. (2009). Variations on the six exponentials Theorem.
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Four_exponentials_conjecture)
 -/
 
 open Complex
-
-/--
-The space of logarithms of algebraic numbers over ℚ.
--/
-def L : Subspace ℚ ℂ := Submodule.span ℚ { x : ℂ | IsAlgebraic ℚ x.exp }
-
-/--
-**Algebraic independence of logarithms of algebraic numbers conjecture**
-Let $\lambda_i$ be $\mathbb Q$-linearly independent elements of $\mathcal L$,
-then $\lambda_i$ are algebraically independent.
--/
-@[category research open, AMS 11]
-theorem algebraic_independence_conjecture (n : ℕ) (x : Fin n → L) (h: LinearIndependent ℚ x) :
-   AlgebraicIndependent ℚ (fun i ↦ (x i : ℂ)) := by
-  sorry
-
-/--
-**Three exponentials conjecture**
-Let $x_0, x_1$ are complex numbers and $\gamma$ a nonzero algebraic number,
-then at least one of the following four numbers is transcendental:
-$$e^{x_0y},e^{x_1y},e^{\gamma x_1/x_2}$$
--/
-@[category research open, AMS 11]
-theorem three_exponentials_conjecture (x : Fin 2 → ℂ) (y γ : ℂ) (hγ : γ ≠ 0 ∧ IsAlgebraic ℚ γ) :
-    ∃ i : Fin 2, Transcendental ℚ (exp (x i * y)) ∨ Transcendental ℚ (exp (γ * x 1 / x 2)) := by
-  sorry
 
 /--
 **Four exponentials conjecture**
@@ -59,30 +31,15 @@ then some $e^{x_i y_j}$ is transcendental.
 -/
 @[category research open, AMS 33]
 theorem four_exponentials_conjecture (x : Fin 2 → ℂ) (y : Fin 2 → ℂ)
-  (h1 : LinearIndependent ℚ x) (h2 : LinearIndependent ℚ y) :
+    (h1 : LinearIndependent ℚ x) (h2 : LinearIndependent ℚ y) :
     ∃ i j : Fin 2, Transcendental ℚ (exp (x i * y j)) := by
   sorry
 
 /--
-**Five exponentials theorem**
-Let $x_0, x_1$ and $y_0, y_1$ be $\mathbb Q$-linearly independent pairs of complex numbers,
-and $\gamma$ a nonzero algebraic number. Then at least one of the following holds:
-1. Some $e^{x_i y_j}$ is transcendental.
-2. $e^{\gamma x_1 / x_0}$ is transcendental.
+The four exponential conjecture would imply that for any irrational number $t$,
+at least one of the numbers $2^t$ and $3^t$ is transcendental.
 -/
-@[category research solved, AMS 33]
-theorem five_exponentials_theorem (x : Fin 2 → ℂ) (y : Fin 2 → ℂ) (γ : ℂ) (hγ : γ ≠ 0 ∧ IsAlgebraic ℚ γ)
-  (h1 : LinearIndependent ℚ x) (h2 : LinearIndependent ℚ y) :
-    (∃ i j : Fin 2, Transcendental ℚ (exp (x i * y j))) ∨ Transcendental ℚ (exp (γ * x 1 / x 0)) := by
-  sorry
-
-/--
-**Six exponentials theorem**
-Let $x_0, x_1, x_2$ and $y_0, y_1$ be $\mathbb Q$-linearly independent tuples of complex numbers,
-then some $e^{x_i y_j}$ is transcendental.
--/
-@[category research solved, AMS 33]
-theorem six_exponentials_theorem (x : Fin 3 → ℂ) (y : Fin 2 → ℂ)
-  (h1 : LinearIndependent ℚ x) (h2 : LinearIndependent ℚ y) :
-    ∃ i : Fin 3, ∃ j : Fin 2, Transcendental ℚ (exp (x i * y j)) := by
+@[category research open, AMS 11]
+theorem exists_transcendental_of_two_pow_irrat_three_pow_irrat (t : ℝ) (h : Irrational t) :
+    Irrational (2 ^ t) ∨ Irrational (3 ^ t) := by
   sorry
