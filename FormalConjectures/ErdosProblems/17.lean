@@ -65,7 +65,7 @@ for every real $0 < c < 1/8$.
 @[category research solved, AMS 11]
 theorem erdos_17.variants.upper_Elsholtz :
   ∃ C : ℝ, 0 < C ∧
-    ∀ c : ℝ, 0 < c → c < (1 / 8 : ℝ) →
+    ∀ c : ℝ, (0 < c ∧ c < (1 / 8 : ℝ)) →
       ∀ᶠ x : ℕ in atTop,
         (clusterPrimeCount x : ℝ) ≤
           C * x * Real.exp (-c * (Real.log (Real.log x)) ^ 2) := by
