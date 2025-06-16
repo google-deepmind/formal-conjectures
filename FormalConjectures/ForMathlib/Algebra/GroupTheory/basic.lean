@@ -37,7 +37,7 @@ class FinitelyPresented (G : Type*) [Group G] : Prop where
 A group is metabelian if it has an abelian normal subgroup with abelian quotient.
 -/
 class Metabelian (G : Type*) [Group G] : Prop :=
-  metabelian : ∃ (N : Subgroup G), N.Normal ∧  N.IsCommutative ∧ CommGroup (G ⧸ N)
+  metabelian : ∃ n : ℕ, n ≤ 2 ∧ derivedSeries G n = ⊥
 
 /-! ## Non-commutative algebraic structures -/
 
