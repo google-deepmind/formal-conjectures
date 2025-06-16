@@ -39,6 +39,7 @@ open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
 
 noncomputable section
 
+/--Then `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
 def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
   (qExpansion N f).coeff ℂ n
 
@@ -49,6 +50,7 @@ conductor of the elliptic curve saves us.-/
 def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
   (q.num : ZMod p) * (q.den : ZMod p)⁻¹
 
+/-- The set of points on an elliptic curve over `ZMod n`. -/
 def setOfPointsModN (E : WeierstrassCurve ℚ) [E.IsElliptic] (n : ℕ) :=
   {P : ZMod n × ZMod n |
     let ⟨x, y⟩ := P
