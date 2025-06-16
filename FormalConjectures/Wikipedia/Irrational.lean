@@ -19,12 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Open questions on irrationality of numbers
 
-*References:*
-- [Wikipedia, Irrational number](https://en.wikipedia.org/wiki/Irrational_number#Open_questions)
-- [Wikipedia, Transcendental number](https://en.wikipedia.org/wiki/Transcendental_number)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Irrational_number#Open_questions)
 -/
 
-open Real Finset Filter
+open Real
 
 local notation "e" => exp 1
 
@@ -36,129 +34,81 @@ noncomputable def catalanConstant : ℝ :=
   ∑' n : ℕ, (-1)^n / (2*n + 1)^2
 
 /--
-**Gompertz constant**
-$$\delta = -e * \int_1^∞ e^{-t}/t dt \approx 0.59634$$
--/
-noncomputable def gompertzConstant : ℝ :=
-  -e * ∫ (t:ℝ) in Set.Ioi 1, exp (-t) / t
-
-/--
-At least one of the numbers $2^t$ and $3^t$ is irrational.
--/
-@[category research open, AMS 11]
-theorem two_pow_three_pow_irrational (t : ℝ) (h : Irrational t) :
-    Irrational (2 ^ t) ∨ Irrational (3 ^ t) := by
-  sorry
-
-/--
-$e + \pi$ is irrational.
+Are $e$ and $\pi$ algebraically independent?
 -/
 @[category research open, AMS 33]
-theorem irrational_e_plus_pi : Irrational (e + π) := by
+theorem algebraic_independent_e_pi :
+    AlgebraicIndependent ℚ ![e, π] ↔ answer(sorry) := by
   sorry
 
 /--
-$e \pi$ is irrational.
+Is $e + \pi$ irrational?
 -/
 @[category research open, AMS 33]
-theorem irrational_e_times_pi : Irrational (e * π) := by
+theorem irrational_e_plus_pi :
+    Irrational (e + π) ↔ answer(sorry) := by
   sorry
 
 /--
-$e ^ e$ is irrational.
+Is $e \pi$ irrational?
 -/
 @[category research open, AMS 33]
-theorem irrational_e_to_e : Irrational (e ^ e) := by
+theorem irrational_e_times_pi :
+    Irrational (e * π) ↔ answer(sorry) := by
   sorry
 
 /--
-$\pi ^ e$ is irrational.
+Is $e ^ e$ irrational?
 -/
 @[category research open, AMS 33]
-theorem irrational_pi_to_e : Irrational (π ^ e) := by
+theorem irrational_e_to_e :
+    Irrational (e ^ e) ↔ answer(sorry) := by
   sorry
 
 /--
-$\pi ^ \pi$ is irrational.
+Is $\pi ^ e$ irrational?
 -/
 @[category research open, AMS 33]
-theorem irrational_pi_to_pi : Irrational (π ^ π) := by
+theorem irrational_pi_to_e :
+    Irrational (π ^ e) ↔ answer(sorry) := by
   sorry
 
 /--
-$\ln(\pi)$ is irrational.
+Is $\pi ^ \pi$ irrational?
 -/
 @[category research open, AMS 33]
-theorem irrational_ln_pi : Irrational (log π) := by
+theorem irrational_pi_to_pi :
+    Irrational (π ^ π) ↔ answer(sorry) := by
   sorry
 
 /--
-Euler-Mascheroni constant $\gamma$ is irrational.
+Is $\ln(\pi)$ irrational?
 -/
 @[category research open, AMS 33]
-theorem irrational_euler_mascheroni_constant : Irrational eulerMascheroniConstant := by
+theorem irrational_ln_pi :
+    Irrational (log π) ↔ answer(sorry) := by
   sorry
 
 /--
-At least one of Catalan constant and the Gompertz constant is irrational.
+Is the Euler-Mascheroni constant $\gamma$ irrational?
 -/
-@[category research solved, AMS 11 33]
-theorem irrational_catalan_or_gompertz : Irrational catalanConstant ∨ Irrational gompertzConstant := by
+@[category research open, AMS 33]
+theorem irrational_euler_mascheroni_constant :
+    Irrational eulerMascheroniConstant ↔ answer(sorry) := by
   sorry
 
 /--
-The Catalan constant $G$ is irrational.
+Is the Catalan constant $G$ irrational?
 -/
 @[category research open, AMS 11, AMS 33]
-theorem irrational_catalan_constant : Irrational catalanConstant := by
+theorem irrational_catalan_constant :
+    Irrational catalanConstant ↔ answer(sorry) := by
   sorry
 
 /--
-The Gompertz constant $\delta$ is irrational.
+Is $\Gamma(n)$ irrational for odd `n ≥ 3`?
 -/
 @[category research open, AMS 33]
-theorem irrational_gompertz_constant : Irrational gompertzConstant := by
-  sorry
-
-/--
-$\Gamma(1/2)$ is irrational.
-
-[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
--/
-@[category research solved, AMS 33]
-theorem irrational_gamma_1_2 : Irrational (1 / 2 : ℝ).Gamma := by
-  sorry
-
-/--
-$\Gamma(1/3)$ is irrational.
-
-[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
--/
-@[category research solved, AMS 33]
-theorem irrational_gamma_1_3 : Irrational (1 / 3 : ℝ).Gamma := by
-  sorry
-
-/--
-$\Gamma(1/4)$ is irrational.
-
-[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
--/
-@[category research solved, AMS 33]
-theorem irrational_gamma_1_4 : Irrational (1 / 4 : ℝ).Gamma := by
-  sorry
-
-/--
-$\Gamma(1/6)$ is irrational.
-
-[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
--/
-@[category research solved, AMS 33]
-theorem irrational_gamma_1_6 : Irrational (1 / 6 : ℝ).Gamma := by
-  sorry
-
-/--
-$\Gamma(1/n)$ for `n ≥ 2` is irrational.
--/
-@[category research open, AMS 33]
-theorem irrational_gamma_1_n (n : ℕ) (hn : 2 ≤ n) : Irrational (1 / n : ℝ).Gamma := by
+theorem irrational_gamma_n (n : ℕ) (hn : Odd n) :
+    Irrational (n : ℝ).Gamma ↔ answer(sorry) := by
   sorry
