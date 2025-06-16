@@ -42,7 +42,7 @@ theorem firoozbakht_conjecture (n : ℕ) :
   sorry
 
 /--
-The inequality $p_{n+1}-p_n < (\log p_n)^2-\log p_n$ holds for all prime numbers $p_n$.
+The inequality $p_{n+1}-p_n < (\log p_n)^2-\log p_n$ holds for all $n>4$.
 A consequence of Firuzbakht's conjecture.
 -/
 @[category research solved, AMS 11]
