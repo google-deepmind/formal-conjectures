@@ -20,7 +20,7 @@ open Polynomial
 /-!
 # Dickson's conjecture
 
-*References*
+*References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Dickson%27s_conjecture)
 - [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
@@ -47,36 +47,38 @@ theorem polignac_conjecture (k : ℕ) :
   sorry
 
 /--
-**Sophie Germain prime conjecture**
+**The infinitude of Sophie Germain primes**
 There are infinitely many primes $p$ such that $2p + 1$ is prime.
 -/
 @[category research open, AMS 11]
-theorem safe_primes :
+theorem infinite_safe_primes :
     Infinite {p : ℕ | Prime p ∧ Prime (2 * p + 1)} := by
   sorry
 
 /--
-**Cousin primes conjecture**
+**The infinitude of cousin primes**
 There are infinitely many primes $p$ such that $p + 4$ is prime.
 -/
 @[category research open, AMS 11]
-theorem cousin_primes :
+theorem infinite_cousin_primes :
     Infinite {p : ℕ | Prime p ∧ Prime (p + 4)} := by
   sorry
 
 /--
-**Sexy primes conjecture**
+**The infinitude of sexy primes**
 There are infinitely many primes $p$ such that $p + 6$ is prime.
 -/
 @[category research open, AMS 11]
-theorem sexy_primes :
+theorem infinite_sexy_primes :
     Infinite {p : ℕ | Prime p ∧ Prime (p + 6)} := by
   sorry
 
 /-
 ## Other consequences
-- Landau's 4th problem (primes and perfect squares)
+- Landau's fourth problem (primes and perfect squares)
 - Twin prime conjecture
 - Artin's primitive root conjecture
 - First Hardy–Littlewood conjecture
+
+*Reference:* [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
