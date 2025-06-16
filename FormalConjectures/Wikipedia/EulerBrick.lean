@@ -55,7 +55,7 @@ Is there an Euler brick in 4-dimensional space?
 -/
 @[category research open, AMS 11]
 theorem four_dim_euler_brick_existence :
-    ∃ edges : Fin 4 → ℕ+, IsEulerHyperBrick 4 edges ↔ answer(sorry) := by
+    (∃ edges : Fin 4 → ℕ+, IsEulerHyperBrick 4 edges) ↔ answer(sorry) := by
   sorry
 
 /--
