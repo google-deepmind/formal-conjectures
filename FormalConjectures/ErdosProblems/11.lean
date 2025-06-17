@@ -37,7 +37,7 @@ is not divisible by 4
 .
 -/
 @[category research open, AMS 11]
-theorem erdos_11_i (n : ℕ) (hn : Odd n) (hn_2 : n % 4 ≠ 0):
+theorem erdos_11_i (n : ℕ) (hn_2 : n % 4 ≠ 0):
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
