@@ -27,7 +27,7 @@ Is every odd n the sum of a squarefree number and a power of 2?
 -/
 
 @[category research open, AMS 11]
-theorem erdos_11 (n : ℕ) (hn : Odd n) :
+theorem erdos_11 (n : ℕ) (h_odd : Odd n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
@@ -45,7 +45,7 @@ theorem erdos_11_i (n : ℕ) (hn : n % 4 ≠ 0):
 Erdős thought that proving this with two powers of 2 is perhaps easy, and could prove that it is true (with a single power of two) for almost all n.
 -/
 @[category research open, AMS 11]
-theorem erdos_11_ii (n : ℕ) (hn : Odd n):
+theorem erdos_11_ii (n : ℕ) (h_odd : Odd n):
     ∃ k l m: ℕ , Squarefree k ∧ n = k + 2^l + 2^m := by
   sorry
 
