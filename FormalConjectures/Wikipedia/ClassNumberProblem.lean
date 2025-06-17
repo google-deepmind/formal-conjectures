@@ -32,7 +32,7 @@ def IsClassNumberOne (d : ℤ) : Prop :=
 There are infinitely many real quadratic fields `ℚ(√d)` with class number one,
 where `d > 1` is a squarefree integer.
 -/
-@[category research open]
+@[category research open, AMS 11]
 theorem class_number_problem :
     { d : ℤ | Squarefree d ∧ d > 1 ∧ IsClassNumberOne d }.Infinite := by
   sorry
@@ -40,7 +40,7 @@ theorem class_number_problem :
 /--
 **Stark–Heegner theorem** : For any squarefree integer `d < 0`, the class number of the imaginary quadratic field Q(√d) is one if and only if `d ∈ {-1, -2, -3, -7, -11, -19, -43, -67, -163}`.
 -/
-@[category research solved]
+@[category research solved, AMS 11]
 theorem class_number_problem.variants.imaginary :
     { d : ℤ | Squarefree d ∧ d < 0 ∧ IsClassNumberOne d } = {-1, -2, -3, -7, -11, -19, -43, -67, -163} := by
   sorry
