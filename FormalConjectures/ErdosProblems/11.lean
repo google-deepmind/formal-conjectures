@@ -42,7 +42,7 @@ theorem erdos_11_i (n : ℕ) (hn : n % 4 ≠ 0):
   sorry
 
 /--
-Erdős thought that proving this with two powers of 2 is perhaps easy, and could prove that it is true (with a single power of two) for almost all n.
+Erdős thought that proving this with two powers of 2 is perhaps easy.
 -/
 @[category research open, AMS 11]
 theorem erdos_11_ii (n : ℕ) (h_odd : Odd n):
