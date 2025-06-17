@@ -31,3 +31,12 @@ irrational?
 theorem erdos_68 :
     Irrational (∑' n : ℕ, 1 / ((n + 2).factorial - 1 : ℝ)) ↔ answer(sorry) := by
   sorry
+
+/--
+$$\sum_{n=2}^\infty \frac{1}{n!-1} = \sum_{n=2}^\infty \sum_{k=1}^\infty \frac{1}{(n!)^k}$$
+-/
+@[category undergraduate, AMS 11]
+theorem sum_factorial_inv_eq_geometric :
+    let f (n k : ℕ) : ℝ := 1 / ((n + 2).factorial : ℝ) ^ (k + 1)
+    ∑' n : ℕ, (1 : ℝ) / ((n + 2).factorial - 1) = ∑' n : ℕ, ∑' k : ℕ, f n k := by
+  sorry
