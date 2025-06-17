@@ -21,9 +21,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/17](https://www.erdosproblems.com/17)
 -/
 
-open Filter
-
-open scoped Asymptotics
+open Filter Asymptotics Real
 
 /-- A prime $p$ is a cluster prime if every even natural number
 $n \le p - 3$ can be written as a difference of two primes
@@ -40,9 +38,9 @@ theorem erdos_17 :
     {p : ℕ | IsClusterPrime p}.Infinite ↔ answer(sorry) := by
   sorry
 
-/-- The counting function of cluster primes $\le x$. -/
-noncomputable def clusterPrimeCount (x : ℕ) : ℕ :=
-  Nat.card {p : ℕ | p ≤ x ∧ IsClusterPrime p}
+/-- The counting function of cluster primes $\le n$. -/
+noncomputable def clusterPrimeCount (n : ℕ) : ℕ :=
+  Nat.card {p : ℕ | p ≤ n ∧ IsClusterPrime p}
 
 /--
 In 1999 Blecksmith, Erdős, and Selfridge [BES99] proved the upper bound
@@ -52,7 +50,7 @@ $$\pi^{\mathcal{C}}(x) \ll_A x(\log x)^{-A}$$ for every real $A > 0$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_17.variants.upper_BES {A : ℝ} (hA : 0 < A) :
-  (fun x ↦ (clusterPrimeCount x : ℝ)) =O[atTop] fun x ↦ x / (Real.log x) ^ A := by
+  (fun x ↦ (clusterPrimeCount x : ℝ)) =O[atTop] fun x ↦ x / (log x) ^ A := by
     sorry
 
 /--
@@ -65,10 +63,9 @@ for every real $0 < c < 1/8$.
 @[category research solved, AMS 11]
 theorem erdos_17.variants.upper_Elsholtz :
   ∃ C : ℝ, 0 < C ∧
-    ∀ c : ℝ, (0 < c ∧ c < (1 / 8 : ℝ)) →
-      ∀ᶠ x : ℕ in atTop,
-        (clusterPrimeCount x : ℝ) ≤
-          C * x * Real.exp (-c * (Real.log (Real.log x)) ^ 2) := by
+    ∀ c ∈ Set.Ioo 0 (1 / 8),
+      IsBigOWith C atTop (fun x ↦ (clusterPrimeCount x : ℝ))
+        (fun x ↦ x * exp (-c * (log (log x)) ^ 2)) := by
   sorry
 
 /-- $97$ is the smallest prime that is not a cluster prime. -/
