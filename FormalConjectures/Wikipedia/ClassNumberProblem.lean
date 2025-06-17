@@ -18,29 +18,29 @@ import FormalConjectures.Util.ProblemImports
 
 open Polynomial
 /-!
-# Class number problem
+# Class number problem for real quadratic fields
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Class_number_problem)
 -/
 
 def IsClassNumberOne (d : ℤ) : Prop :=
-  ∃ (_ : Squarefree d) (h₂ : Irreducible (X ^ 2 - C (d : ℚ))),
+  ∃ (h₂ : Irreducible (X ^ 2 - C (d : ℚ))),
   haveI := Fact.mk h₂
   NumberField.classNumber (AdjoinRoot (X^2 - C (d : ℚ))) = 1
 
 /--
-There are infinitely many real quadratic fields ℚ(√d) with class number one,
-where `d` is a squarefree integer greater than 1.
+There are infinitely many real quadratic fields `ℚ(√d)` with class number one,
+where `d > 1` is a squarefree integer.
 -/
 @[category research open]
 theorem class_number_problem :
-  { d : ℤ | d > 0 ∧ IsClassNumberOne d }.Infinite := by
+    { d : ℤ | Squarefree d ∧ d > 1 ∧ IsClassNumberOne d }.Infinite := by
   sorry
 
 /--
-**Stark–Heegner theorem**
+**Stark–Heegner theorem** : For any squarefree integer `d < 0`, the class number of the imaginary quadratic field Q(√d) is one if and only if `d ∈ {-1, -2, -3, -7, -11, -19, -43, -67, -163}`.
 -/
-@[category research open]
-theorem class_number_problem.variants.imag :
-  { d : ℤ | d < 0 ∧ IsClassNumberOne d } = {-1, -2, -3, -7, -11, -19, -43, -67, -163} := by
+@[category research solved]
+theorem class_number_problem.variants.imaginary :
+    { d : ℤ | Squarefree d ∧ d < 0 ∧ IsClassNumberOne d } = {-1, -2, -3, -7, -11, -19, -43, -67, -163} := by
   sorry
