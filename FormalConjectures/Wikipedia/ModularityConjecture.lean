@@ -39,7 +39,7 @@ open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
 
 noncomputable section
 
-/--Then `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
+/-- The `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
 def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
   (qExpansion N f).coeff ℂ n
 
