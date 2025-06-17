@@ -46,21 +46,21 @@ Erdős thought that proving this with two powers of 2 is perhaps easy.
 -/
 @[category research open, AMS 11]
 theorem erdos_11_ii (n : ℕ) (h_odd : Odd n):
-    ∃ k l m: ℕ , Squarefree k ∧ n = k + 2^l + 2^m := by
+    ∃ k l m : ℕ , Squarefree k ∧ n = k + 2^l + 2^m := by
   sorry
 
 /--
 Odlyzko has checked this up to  10^7.
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.finite_bound1 (n : ℕ) (h_odd : Odd n) (h : n < 10^7)
+theorem erdos_11.variants.finite_bound1 (n : ℕ) (h_odd : Odd n) (h : n < 10^7):
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
-sorry
+  sorry
 
 /--
 Hercher has verified this is true for all odd integers up to 2^50 (approx 1.12*10^15)
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.finite_bound2 (n : ℕ) (h_odd : Odd n) (h : n < 2^50)
+theorem erdos_11.variants.finite_bound2 (n : ℕ) (h_odd : Odd n) (h : n < 2^50):
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
-sorry
+  sorry
