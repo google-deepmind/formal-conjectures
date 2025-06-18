@@ -40,6 +40,6 @@ The four exponential conjecture would imply that for any irrational number $t$,
 at least one of the numbers $2^t$ and $3^t$ is transcendental.
 -/
 @[category research open, AMS 11]
-theorem exists_transcendental_of_two_pow_irrat_three_pow_irrat (t : ℝ) (h : Irrational t) :
-    Irrational (2 ^ t) ∨ Irrational (3 ^ t) := by
+theorem two_pow_three_pow_transcendental (t : ℝ) (h : Irrational t) :
+    Transcendental ℚ (2 ^ t : ℝ) ∨ Transcendental ℚ (3 ^ t : ℝ) := by
   sorry
