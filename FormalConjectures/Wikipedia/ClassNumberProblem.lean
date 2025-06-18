@@ -26,7 +26,7 @@ open Polynomial
 def IsClassNumberOne (d : ℤ) : Prop :=
   ∃ (h₂ : Irreducible (X ^ 2 - C (d : ℚ))),
   haveI := Fact.mk h₂
-  NumberField.classNumber (AdjoinRoot (X^2 - C (d : ℚ))) = 1
+  NumberField.classNumber (AdjoinRoot (X ^ 2 - C (d : ℚ))) = 1
 
 /--
 There are infinitely many real quadratic fields `ℚ(√d)` with class number one,
@@ -38,9 +38,11 @@ theorem class_number_problem :
   sorry
 
 /--
-**Stark–Heegner theorem** : For any squarefree integer `d < 0`, the class number of the imaginary quadratic field Q(√d) is one if and only if `d ∈ {-1, -2, -3, -7, -11, -19, -43, -67, -163}`.
+**Stark–Heegner theorem** : For any squarefree integer `d < 0`, the class number of the imaginary
+quadratic field Q(√d) is one if and only if `d ∈ {-1, -2, -3, -7, -11, -19, -43, -67, -163}`.
 -/
 @[category research solved, AMS 11]
 theorem class_number_problem.variants.imaginary :
-    { d : ℤ | Squarefree d ∧ d < 0 ∧ IsClassNumberOne d } = {-1, -2, -3, -7, -11, -19, -43, -67, -163} := by
+    { d : ℤ | Squarefree d ∧ d < 0 ∧ IsClassNumberOne d } =
+    {-1, -2, -3, -7, -11, -19, -43, -67, -163} := by
   sorry
