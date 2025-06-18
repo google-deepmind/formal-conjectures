@@ -45,7 +45,7 @@ def IsRegularPrime [hp : Fact p.Prime] : Prop :=
 /-- The set of regular primes. -/
 def regularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), @IsRegularPrime p ⟨hp⟩ }
 
-/-- The set of regular primes is infinite. -/
+/-- Conjecture: The set of regular primes is infinite. -/
 def RegularPrimeConjecture : Prop :=
   regularPrimes.Infinite
 
