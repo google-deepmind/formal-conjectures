@@ -43,7 +43,7 @@ theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : n % 4 ≠ 0):
 Erdős thought that proving this with two powers of 2 is perhaps easy.
 -/
 @[category research open, AMS 11]
-theorem erdos_11_ii (n : ℕ) (h_odd : Odd n):
+theorem erdos_11.variants.two_pow_two (n : ℕ) (h_odd : Odd n):
     ∃ k l m : ℕ , Squarefree k ∧ n = k + 2^l + 2^m := by
   sorry
 
