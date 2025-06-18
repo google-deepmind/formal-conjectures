@@ -48,7 +48,7 @@ theorem erdos_11_ii (n : ℕ) (h_odd : Odd n):
   sorry
 
 /--
-Odlyzko has checked this up to  10^7.
+Odlyzko has checked this up to `10^7`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_11.variants.finite_bound1 (n : ℕ) (h_odd : Odd n) (h : n < 10^7):
