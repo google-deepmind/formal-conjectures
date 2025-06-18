@@ -104,11 +104,3 @@ Is the Catalan constant $G$ irrational?
 theorem irrational_catalan_constant :
     Irrational catalanConstant ↔ answer(sorry) := by
   sorry
-
-/--
-Is $\Gamma(n)$ irrational for odd `n ≥ 3`?
--/
-@[category research open, AMS 33]
-theorem irrational_gamma_n (n : ℕ) (hn : Odd n) :
-    Irrational (n : ℝ).Gamma ↔ answer(sorry) := by
-  sorry
