@@ -33,8 +33,7 @@ theorem erdos_11 (n : ℕ) (h_odd : Odd n) :
 
 /--
 Erdős often asked this under the weaker assumption that n
-is not divisible by 4
-.
+is not divisible by 4.
 -/
 @[category research open, AMS 11]
 theorem erdos_11_i (n : ℕ) (hn : n % 4 ≠ 0):
