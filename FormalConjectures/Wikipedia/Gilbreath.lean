@@ -17,16 +17,25 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Andrica's conjecture
+# Gilbreath's conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gilbreath%27s_conjecture)
 -/
 
 /--
-**Andrica's conjecture**
-The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is the nth prime number.
+**Gilbreath's nth difference**, $d^n$
+Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
+-/
+noncomputable def Gilbreath.d : ℕ → (ℕ → ℕ)
+  | 0 => fun n ↦ n.nth Nat.Prime
+  | k + 1 => fun n ↦ Int.natAbs (d k (n + 1) - d k n)
+
+open Gilbreath
+
+/--
+**Gilbreath's conjecture**
+Gilbreath's conjecture states that every term in the sequence $d^k_0$ for $k > 0$ is equal to 1.
 -/
 @[category research open, AMS 11]
-theorem andrica_conjecture (n : ℕ) :
-    Real.sqrt ((n+1).nth Nat.Prime) - Real.sqrt (n.nth Nat.Prime) < 1 := by
+theorem gilbreath_conjecture (k : ℕ+) : d k 0 = 1 := by
   sorry
