@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Data.Nat.Squarefree
 
 /-!
 # Erdős Problem 11
@@ -35,7 +34,7 @@ Erdős often asked this under the weaker assumption that n
 is not divisible by 4.
 -/
 @[category research open, AMS 11]
-theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 | n):
+theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n):
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
