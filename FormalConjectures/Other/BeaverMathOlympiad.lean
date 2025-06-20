@@ -17,9 +17,15 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Busy Beaver Challenge: Antihydra
+# Beaver Math Olympiad (BMO)
 
-*Reference:* [bbchallenge](https://wiki.bbchallenge.org/wiki/Antihydra)
+The Beaver Math Olympiad (BMO) is a set of mathematical reformulations of the halting/nonhalting problem of specific Turing machines from all-0 tape. These problems came from studying small Busy Beaver values. Among these problems is the Collatz-like *Antihydra* problem which is open and coming from a 6-state Turing machine, and a testament to the difficulty of knowing the sixth Busy Beaver value.
+
+*References:*
+
+- [Beaver Math Olympiad wiki page](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad)
+- [Antihydra web page](https://bbchallenge.org/antihydra)
+- [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
 
 /--
@@ -29,22 +35,24 @@ The conjecture states that the cumulative number of odd values in this sequence
 is never more than twice the cumulative number of even values
 
 It is a relatively new open problem with, so it might be solvable, although
-seems quite hard. It is equivalent to non-termination of a particular 6-state
-turing machine.
+seems quite hard. It is equivalent to non-termination of the `1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA` 6-state
+Turing machine.
 -/
 @[category research open, AMS 5, AMS 11]
-theorem busy_beaver_antihydra (a : ℕ → ℕ) (b : ℕ → ℤ)
-    (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*a n/2 : ℕ)) (b_ini : b 0 = 0)
-    (b_rec : ∀ n, b (n+1) = if a n % 2 = 0 then b n + 2 else b n - 1) :
+theorem beaver_math_olympiad_problem_2_antihydra
+    (a : ℕ → ℕ) (b : ℕ → ℤ)
+    (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*a n/2 : ℕ))
+    (b_ini : b 0 = 0) (b_rec : ∀ n, b (n+1) = if a n % 2 = 0 then b n + 2 else b n - 1) :
     ∀ n, b n ≥ 0 := by
   sorry
 
 /--
-Alternative statement of busy_beaver_antihydra
+Alternative statement of beaver_math_olympiad_problem_2_antihydra
 using set size comparison instead of a recurrent sequence b.
 -/
 @[category research open, AMS 5, AMS 11]
-theorem busy_beaver_antihydra.variants.set (a : ℕ → ℕ)
+theorem beaver_math_olympiad_problem_2_antihydra.variants.set
+    (a : ℕ → ℕ)
     (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*a n/2 : ℕ)) :
     ∀ n, ((Finset.Ico 0 n).filter fun x ↦ Odd (a x)).card ≤
         2*((Finset.Ico 0 n).filter fun x ↦ Even (a x)).card := by
