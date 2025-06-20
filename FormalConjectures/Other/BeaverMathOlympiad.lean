@@ -112,3 +112,24 @@ theorem beaver_math_olympiad_problem_4
                                            else ((a n) - 2)/3 + 2^n - 1) :
     ¬ (∃ n, (a n) % 3 = 1) :=
   sorry
+
+/--
+[BMO#5](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#5._1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE_(bbch))
+
+[BMO#5](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#5._1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE_(bbch)) is equivalent to asking whether the 6-state Turing machine [`1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE`](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
+
+There is presently no consensus on whether the machine halts or not, hence the problem is formulated using `↔ answer(sorry)`.
+
+The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor mxdys on August 7th 2024.
+
+The correspondence between the machine's halting problem and the below reformulation has been proven in [Rocq](https://github.com/ccz181078/busycoq/blob/BB6/verify/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE.v).
+-/
+def f (x: ℕ) :=
+  10*2^x - 1
+
+@[category research open, AMS 5, AMS 11, AMS 68]
+theorem beaver_math_olympiad_problem_5 (a : ℕ → ℕ) (b : ℕ → ℕ)
+    (a_ini : a 0 = 0) (a_rec : ∀ n, a (n+1) = if b n ≥ f (a n) then a n + 1 else a n)
+    (b_ini : b 0 = 5) (b_rec : ∀ n, b (n+1) = if b n ≥ f (a n) then b n - f (a n) else 3*b n + a n + 5) :
+    ∃ i, b i = (f (a i)) - 1 ↔ answer(sorry) :=
+  sorry
