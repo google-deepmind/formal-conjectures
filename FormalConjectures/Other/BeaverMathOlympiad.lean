@@ -35,6 +35,8 @@ BMO#1
 
 BMO#1 is equivalent to asking whether the 6-state Turing machine [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
+There is presently no consensus on whether the machine halts or not, hence the problem is formulated using `↔ answer(sorry)`.
+
 The machine was discovered by Jason Yuen on June 25th 2024.
 -/
 @[category research open, AMS 5, AMS 11, AMS 68]
