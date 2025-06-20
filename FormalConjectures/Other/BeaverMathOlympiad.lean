@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Beaver Math Olympiad (BMO)
 
-The Beaver Math Olympiad (BMO) is a set of mathematical reformulations of the halting/nonhalting problem of specific Turing machines from all-0 tape. These problems came from studying small Busy Beaver values. Among these problems is the Collatz-like *Antihydra* problem which is open and coming from a 6-state Turing machine, and a testament to the difficulty of knowing the sixth Busy Beaver value.
+The Beaver Math Olympiad (BMO) is a set of mathematical reformulations of the halting/nonhalting problem of specific Turing machines from all-0 tape. These problems came from studying small Busy Beaver values. Some problems are open and have a conjectured answer, some are open and don't have a conjectured answer, and, some are solved.
+
+Among these problems is the Collatz-like *Antihydra* problem which is open and coming from a 6-state Turing machine, and a testament to the difficulty of knowing the sixth Busy Beaver value.
 
 *References:*
 
@@ -27,6 +29,18 @@ The Beaver Math Olympiad (BMO) is a set of mathematical reformulations of the ha
 - [Antihydra web page](https://bbchallenge.org/antihydra)
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
+
+/--
+BMO#1 is equivalent to asking whether the 6-state Turing machine [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
+
+The machine was discovered by Jason Yuen in June 2024.
+-/
+@[category research open, AMS 5, AMS 11, AMS 68]
+theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
+    (a_ini : a 0 = 1) (a_rec : ∀ n, a (n+1) = if a n ≥ b n then a n - b n else 2*a n + 1)
+    (b_ini : b 0 = 2) (b_rec : ∀ n, b (n+1) = if a n ≥ b n then 4*b n + 2 else b n - a n) :
+    ∃ i, a i = b i ↔ answer(sorry) := by
+  sorry
 
 /--
 Antihydra is a sequence starting at 8, and iterating the function
