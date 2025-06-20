@@ -55,8 +55,7 @@ The conjecture states that the cumulative number of odd values in this sequence
 is never more than twice the cumulative number of even values
 
 It is a relatively new open problem with, so it might be solvable, although
-seems quite hard. It is equivalent to non-termination of the [`1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA`](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state
-Turing machine.
+seems quite hard. It is equivalent to non-termination of the [`1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA`](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state Turing machine (from all-0 tape).
 
 This machine and its mathematical reformulations were found by [bbchallenge.org](bbchallenge.org) contributors mxdys and Rachel Hunter on June 28th 2024.
 -/
@@ -86,10 +85,10 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
 /--
 BMO#3
 
-BMO#3 is equivalent to saying that the 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) does not halt.
+BMO#3 is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
 
-The machine was informally proven not to halt on [bbchallenge.org](bbchallenge.org) Discord's server:
-https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728
+The machine was informally proven not to halt on [bbchallenge.org](bbchallenge.org) Discord's server, see [this discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
+
 -/
 @[category research solved, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_3
