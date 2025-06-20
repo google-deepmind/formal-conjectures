@@ -86,7 +86,7 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
 
 [BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)] is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
 
-The machine was informally proven not to halt on [bbchallenge.org](bbchallenge.org) Discord's server, see [this discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
+The machine was found and informally proven not to halt by [bbchallenge.org](bbchallenge.org) contributor Daniel Yuan on June 18th 2024, see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
 -/
 @[category research solved, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_3
