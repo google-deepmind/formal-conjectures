@@ -33,7 +33,7 @@ Among these problems is the Collatz-like *Antihydra* problem which is open and c
 /--
 BMO#1 is equivalent to asking whether the 6-state Turing machine [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
-The machine was discovered by Jason Yuen in June 2024.
+The machine was discovered by Jason Yuen on June 25th 2024.
 -/
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
@@ -49,10 +49,10 @@ The conjecture states that the cumulative number of odd values in this sequence
 is never more than twice the cumulative number of even values
 
 It is a relatively new open problem with, so it might be solvable, although
-seems quite hard. It is equivalent to non-termination of the `1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA` 6-state
+seems quite hard. It is equivalent to non-termination of the [`1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA`](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state
 Turing machine.
 
-This machine and its mathematical reformulations were found by bbchallenge.org contributors mxdys and Rachel Hunter.
+This machine and its mathematical reformulations were found by bbchallenge.org contributors mxdys and Rachel Hunter on June 28th 2024.
 -/
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_2_antihydra
