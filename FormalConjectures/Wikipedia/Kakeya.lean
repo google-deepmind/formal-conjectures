@@ -86,8 +86,8 @@ open Fintype in
 /--
 The finite field Kakeya conjecture asserts that any Kakeya set in `𝔽_qⁿ` has size at
 least `c_n · qⁿ` for some constant `c_n` depending only on `n`.
-This was first proved by Dvir in [Dv08] and the currently best known bound is due to
-Bukh and Chao [BuCh21].
+This was first proved by Dvir [Dv08]. The best known bound to date, due to Bukh and Chao [BuCh21],
+establishes that any Kakeya set in `𝔽_qⁿ` has size at least `qⁿ / (2 - 1/q)^(n - 1)`.
 
 [Dv08] Dvir, Z., _On the size of Kakeya sets in finite fields_. Journal of the American Mathematical Society 22 (2009), no. 4, 1093–1097.
 [BuCh21] Bukh, B. and Chao, T.-W., _Sharp density bounds on the finite field Kakeya problem_. Discrete Analysis 26 (2021), 9 pp.
@@ -95,5 +95,5 @@ Bukh and Chao [BuCh21].
 @[category research solved, AMS 52]
 theorem kakeya_finite {F : Type*} [Field F] [Fintype F] {n : ℕ}
     (K : Finset (Fin n → F)) (hK : IsKakeyaFinite K) :
-    K.card ≥ card F ^ n / (2 - 1 / card F) ^ (n - 1) := by
+    K.card ≥ card F ^ n / (2 - 1 / card F : ℚ) ^ (n - 1) := by
   sorry
