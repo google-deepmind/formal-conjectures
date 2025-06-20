@@ -23,6 +23,8 @@ The Beaver Math Olympiad (BMO) is a set of mathematical reformulations of the ha
 
 Among these problems is the Collatz-like *Antihydra* problem which is open and coming from a 6-state Turing machine, and a testament to the difficulty of knowing the sixth Busy Beaver value.
 
+For some BMO problem, the equivalence between the mathematical formulation and the corresponding Turing machine non-termination has been formally proved in Rocq, we indicate it when done.
+
 *References:*
 
 - [bbchallenge.org](https://bbchallenge.org)
