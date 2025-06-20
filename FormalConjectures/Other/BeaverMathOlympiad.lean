@@ -53,10 +53,9 @@ theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
 Antihydra is a sequence starting at 8, and iterating the function
 $$H(n) = \left\lfloor \frac {3n}2 \right\rfloor.$$
 The conjecture states that the cumulative number of odd values in this sequence
-is never more than twice the cumulative number of even values
+is never more than twice the cumulative number of even values. It is a relatively new open problem with, so it might be solvable, although seems quite hard because of its Collatz-like flavor. The underlying Collatz-like map has been studied independently in the past, see doi:[10.1017/S0017089508004655](https://doi.org/10.1017/S0017089508004655) (Corollary 4).
 
-It is a relatively new open problem with, so it might be solvable, although
-seems quite hard. It is equivalent to non-termination of the [`1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA`](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state Turing machine (from all-0 tape).
+It is equivalent to non-termination of the [`1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA`](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state Turing machine (from all-0 tape). Note that the conjecture that the machine does not halt is based on [a probabilistic argument](https://wiki.bbchallenge.org/wiki/Antihydra#Trajectory).
 
 This machine and its mathematical reformulations were found by [bbchallenge.org](bbchallenge.org) contributors mxdys and Rachel Hunter on June 28th 2024.
 -/
