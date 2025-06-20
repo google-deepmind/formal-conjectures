@@ -37,9 +37,9 @@ The machine was discovered by Jason Yuen in June 2024.
 -/
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
-    (a_ini : a 0 = 1) (a_rec : ∀ n, a (n+1) = if a n ≥ b n then a n - b n else 2*a n + 1)
-    (b_ini : b 0 = 2) (b_rec : ∀ n, b (n+1) = if a n ≥ b n then 4*b n + 2 else b n - a n) :
-    ∃ i, a i = b i ↔ answer(sorry) := by
+    (a_ini : a 0 = 1) (a_rec : ∀ n, a (n+1) = if (a n) ≥ (b n) then (a n) - (b n) else 2*(a n) + 1)
+    (b_ini : b 0 = 2) (b_rec : ∀ n, b (n+1) = if (a n) ≥ (b n) then 4*(b n) + 2 else (b n) - (a n)) :
+    ∃ i, (a i) = (b i) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -57,9 +57,9 @@ This machine and its mathematical reformulations were found by bbchallenge.org c
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_2_antihydra
     (a : ℕ → ℕ) (b : ℕ → ℤ)
-    (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*a n/2 : ℕ))
-    (b_ini : b 0 = 0) (b_rec : ∀ n, b (n+1) = if a n % 2 = 0 then b n + 2 else b n - 1) :
-    ∀ n, b n ≥ 0 := by
+    (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*(a n)/2 : ℕ))
+    (b_ini : b 0 = 0) (b_rec : ∀ n, b (n+1) = if (a n) % 2 = 0 then (b n) + 2 else (b n) - 1) :
+    ∀ n, (b n) ≥ 0 := by
   sorry
 
 /--
@@ -69,7 +69,7 @@ using set size comparison instead of a recurrent sequence b.
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_2_antihydra.variants.set
     (a : ℕ → ℕ)
-    (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*a n/2 : ℕ)) :
+    (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*(a n)/2 : ℕ)) :
     ∀ n, ((Finset.Ico 0 n).filter fun x ↦ Odd (a x)).card ≤
         2*((Finset.Ico 0 n).filter fun x ↦ Even (a x)).card := by
   sorry
