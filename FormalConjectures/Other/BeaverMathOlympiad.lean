@@ -31,6 +31,8 @@ Among these problems is the Collatz-like *Antihydra* problem which is open and c
 -/
 
 /--
+BMO#1
+
 BMO#1 is equivalent to asking whether the 6-state Turing machine [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
 The machine was discovered by Jason Yuen on June 25th 2024.
@@ -43,6 +45,8 @@ theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
   sorry
 
 /--
+BMO#2
+
 Antihydra is a sequence starting at 8, and iterating the function
 $$H(n) = \left\lfloor \frac {3n}2 \right\rfloor.$$
 The conjecture states that the cumulative number of odd values in this sequence
@@ -63,6 +67,8 @@ theorem beaver_math_olympiad_problem_2_antihydra
   sorry
 
 /--
+BMO#2 formulation variant
+
 Alternative statement of beaver_math_olympiad_problem_2_antihydra
 using set size comparison instead of a recurrent sequence b.
 -/
