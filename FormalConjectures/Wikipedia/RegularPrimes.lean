@@ -44,7 +44,8 @@ def IsRegularPrime [hp : Fact p.Prime] : Prop :=
   p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField ⟨p, hp.out.pos⟩ ℚ)
 
 @[category undergraduate, AMS 11]
-example : ¬ @IsRegularPrime 37 (by decide) := by sorry
+example : ¬ @IsRegularPrime 37 (by decide) := by
+  sorry
 
 /-- The set of regular primes. -/
 def regularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), @IsRegularPrime p ⟨hp⟩ }
@@ -54,20 +55,24 @@ def irregularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), ¬ @IsRegularPrim
 
 @[category undergraduate, AMS 11]
 lemma small_regular_primes :
-  { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31 } ⊆ regularPrimes := by sorry
+    { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31 } ⊆ regularPrimes := by
+  sorry
 
 @[category undergraduate, AMS 11]
-example : ¬ @IsRegularPrime 37 (by decide) := by sorry
+example : ¬ @IsRegularPrime 37 (by decide) := by
+  sorry
 
 /-- An equivanlent definitions of regualr prime `p` is that it does not divide the numerator of the
 first `p-3` Bernoulli numbers. Not in Mathlib. -/
 @[category graduate, AMS 11]
 theorem isRegularPrime_iff_Bernoulli (p : ℕ) [Fact p.Prime] :
-  IsRegularPrime p ↔ ∀ (k : (Finset.Icc (2 : ℕ) (p-3))), ¬ (p : ℤ) ∣ (bernoulli' (k : ℕ)).num := by sorry
+    IsRegularPrime p ↔ ∀ k ∈ Finset.Icc 2 (p - 3), ¬ (p : ℤ) ∣ (bernoulli' k).num := by
+  sorry
 
 /-- The set of irregular primes is infinite. -/
 @[category research solved, AMS 11]
-theorem infinitude_of_irregularprimes : irregularPrimes.Infinite := sorry
+theorem infinitude_of_irregularprimes : irregularPrimes.Infinite := by 
+  sorry
 
 /-- Conjecture: The set of regular primes is infinite. -/
 def RegularPrimeConjecture : Prop :=
@@ -75,4 +80,5 @@ def RegularPrimeConjecture : Prop :=
 
 /-- Conjecture: The set of regular primes is infinite. -/
 @[category research open, AMS 11]
-theorem regularprime_conjecture : RegularPrimeConjecture := sorry
+theorem regularprime_conjecture : RegularPrimeConjecture := by 
+  sorry
