@@ -95,3 +95,19 @@ theorem beaver_math_olympiad_problem_3
     (a_rec : ∀ n, a (n+1) = (a n) + 2 ^ ((padicValNat 2 (a n)) + 2) - 1) :
     ¬ (∃ n k, a n = 4 ^ k) :=
   sorry
+
+/--
+BMO#4
+
+BMO#4 is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB3RB---1LB0LA_2LA4RA3LA4RB1LB`](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) (from all-0 tape).
+
+The machine was informally proven not to halt, see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB).
+-/
+@[category research solved, AMS 5, AMS 11, AMS 68]
+theorem beaver_math_olympiad_problem_4
+    (a : ℕ → ℕ)
+    (a_ini : a 0 = 2)
+    (a_rec : ∀ n, a (n+1) = if (a n)%3 = 0 then (a n)/3 + 2^n + 1
+                                           else ((a n) - 2)/3 + 2^n - 1) :
+    ¬ (∃ n, (a n) % 3 = 1) :=
+  sorry
