@@ -37,8 +37,10 @@ is never more than twice the cumulative number of even values
 It is a relatively new open problem with, so it might be solvable, although
 seems quite hard. It is equivalent to non-termination of the `1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA` 6-state
 Turing machine.
+
+This machine and its mathematical reformulations were found by bbchallenge.org contributors mxdys and Rachel Hunter.
 -/
-@[category research open, AMS 5, AMS 11]
+@[category research open, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_2_antihydra
     (a : ℕ → ℕ) (b : ℕ → ℤ)
     (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*a n/2 : ℕ))
@@ -50,7 +52,7 @@ theorem beaver_math_olympiad_problem_2_antihydra
 Alternative statement of beaver_math_olympiad_problem_2_antihydra
 using set size comparison instead of a recurrent sequence b.
 -/
-@[category research open, AMS 5, AMS 11]
+@[category research open, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_2_antihydra.variants.set
     (a : ℕ → ℕ)
     (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*a n/2 : ℕ)) :
