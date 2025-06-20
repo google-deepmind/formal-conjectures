@@ -81,19 +81,17 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
         2*((Finset.Ico 0 n).filter fun x ↦ Even (a x)).card := by
   sorry
 
-
 /--
 BMO#3
 
 BMO#3 is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
 
 The machine was informally proven not to halt on [bbchallenge.org](bbchallenge.org) Discord's server, see [this discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
-
 -/
 @[category research solved, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_3
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
     (a_rec : ∀ n, a (n+1) = (a n) + 2 ^ ((padicValNat 2 (a n)) + 2) - 1) :
-    ∃ n k, a n = 4 ^ k :=
+    ¬ (∃ n k, a n = 4 ^ k) :=
   sorry
