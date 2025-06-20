@@ -37,7 +37,7 @@ BMO#1 is equivalent to asking whether the 6-state Turing machine [`1RB1RE_1LC0RA
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated using `↔ answer(sorry)`.
 
-The machine was discovered by Jason Yuen on June 25th 2024.
+The machine was discovered by bbchallenge.org contributor Jason Yuen on June 25th 2024.
 -/
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
