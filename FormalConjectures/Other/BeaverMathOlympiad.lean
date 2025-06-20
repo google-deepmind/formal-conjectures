@@ -25,6 +25,7 @@ Among these problems is the Collatz-like *Antihydra* problem which is open and c
 
 *References:*
 
+- [bbchallenge.org](https://bbchallenge.org)
 - [Beaver Math Olympiad wiki page](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad)
 - [Antihydra web page](https://bbchallenge.org/antihydra)
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
