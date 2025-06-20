@@ -31,9 +31,9 @@ Among these problems is the Collatz-like *Antihydra* problem which is open and c
 -/
 
 /--
-BMO#1
+[BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch))
 
-BMO#1 is equivalent to asking whether the 6-state Turing machine [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
+[BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch)) is equivalent to asking whether the 6-state Turing machine [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated using `↔ answer(sorry)`.
 
@@ -47,7 +47,7 @@ theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
   sorry
 
 /--
-BMO#2
+[BMO#2](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#2._Hydra_and_Antihydra)
 
 Antihydra is a sequence starting at 8, and iterating the function
 $$H(n) = \left\lfloor \frac {3n}2 \right\rfloor.$$
@@ -68,7 +68,7 @@ theorem beaver_math_olympiad_problem_2_antihydra
   sorry
 
 /--
-BMO#2 formulation variant
+[BMO#2](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#2._Hydra_and_Antihydra) formulation variant
 
 Alternative statement of beaver_math_olympiad_problem_2_antihydra
 using set size comparison instead of a recurrent sequence b.
@@ -82,9 +82,9 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
   sorry
 
 /--
-BMO#3
+[BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)]
 
-BMO#3 is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
+[BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)] is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
 
 The machine was informally proven not to halt on [bbchallenge.org](bbchallenge.org) Discord's server, see [this discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
 -/
@@ -97,9 +97,10 @@ theorem beaver_math_olympiad_problem_3
   sorry
 
 /--
-BMO#4
+[BMO#4](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#4._1RB3RB---1LB0LA_2LA4RA3LA4RB1LB_(bbch))
 
-BMO#4 is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB3RB---1LB0LA_2LA4RA3LA4RB1LB`](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) (from all-0 tape).
+[BMO#4](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#4._1RB3RB---1LB0LA_2LA4RA3LA4RB1LB_(bbch))
+ is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB3RB---1LB0LA_2LA4RA3LA4RB1LB`](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) (from all-0 tape).
 
 The machine was informally proven not to halt, see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB).
 -/
