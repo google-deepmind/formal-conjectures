@@ -86,7 +86,7 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
 
 [BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)] is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
 
-The machine was found and informally proven not to halt by [bbchallenge.org](bbchallenge.org) contributor Daniel Yuan on June 18th 2024, see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
+The machine was found and informally proven not to halt by [bbchallenge.org](bbchallenge.org) contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
 -/
 @[category research solved, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_3
@@ -102,7 +102,7 @@ theorem beaver_math_olympiad_problem_3
 [BMO#4](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#4._1RB3RB---1LB0LA_2LA4RA3LA4RB1LB_(bbch))
  is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB3RB---1LB0LA_2LA4RA3LA4RB1LB`](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) (from all-0 tape).
 
-The machine was informally proven not to halt, see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB).
+The machine was informally proven not to halt [bbchallenge.org](bbchallenge.org) contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) and [Discord discussion](https://discord.com/channels/960643023006490684/960643023530762343/1263666591900631210).
 -/
 @[category research solved, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_4
