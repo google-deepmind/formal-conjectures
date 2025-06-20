@@ -37,7 +37,7 @@ BMO#1 is equivalent to asking whether the 6-state Turing machine [`1RB1RE_1LC0RA
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated using `↔ answer(sorry)`.
 
-The machine was discovered by bbchallenge.org contributor Jason Yuen on June 25th 2024.
+The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor Jason Yuen on June 25th 2024.
 -/
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
@@ -58,7 +58,7 @@ It is a relatively new open problem with, so it might be solvable, although
 seems quite hard. It is equivalent to non-termination of the [`1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA`](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state
 Turing machine.
 
-This machine and its mathematical reformulations were found by bbchallenge.org contributors mxdys and Rachel Hunter on June 28th 2024.
+This machine and its mathematical reformulations were found by [bbchallenge.org](bbchallenge.org) contributors mxdys and Rachel Hunter on June 28th 2024.
 -/
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_2_antihydra
@@ -88,7 +88,7 @@ BMO#3
 
 BMO#3 is equivalent to saying that the 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) does not halt.
 
-The machine was informally proven not to halt on bbchallenge.org Discord's server:
+The machine was informally proven not to halt on [bbchallenge.org](bbchallenge.org) Discord's server:
 https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728
 -/
 @[category research solved, AMS 5, AMS 11, AMS 68]
