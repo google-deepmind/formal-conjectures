@@ -43,7 +43,7 @@ The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor Jas
 theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 1) (a_rec : ∀ n, a (n+1) = if (a n) ≥ (b n) then (a n) - (b n) else 2*(a n) + 1)
     (b_ini : b 0 = 2) (b_rec : ∀ n, b (n+1) = if (a n) ≥ (b n) then 4*(b n) + 2 else (b n) - (a n)) :
-    ∃ i, (a i) = (b i) ↔ answer(sorry) := by
+    ∃ i, a i = b i ↔ answer(sorry) := by
   sorry
 
 /--
@@ -65,7 +65,7 @@ theorem beaver_math_olympiad_problem_2_antihydra
     (a : ℕ → ℕ) (b : ℕ → ℤ)
     (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*(a n)/2 : ℕ))
     (b_ini : b 0 = 0) (b_rec : ∀ n, b (n+1) = if (a n) % 2 = 0 then (b n) + 2 else (b n) - 1) :
-    ∀ n, (b n) ≥ 0 := by
+    ∀ n, b n ≥ 0 := by
   sorry
 
 /--
