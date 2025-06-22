@@ -31,7 +31,7 @@ import FormalConjectures.Util.ProblemImports
 
 /-- A data structure representing isomoprhism classes of elliptic curves over ℚ.
 Every elliptic curve over ℚ is isomorphic to one with Weierstrass equation `y² = x³ + Ax + B`,
-and the pair `(A,B)` is unique if they satisfy the `reduced` condition below.
+and the pair `(A,B)` is unique if it satisfy the `reduced` condition below.
 See Section 5.1 in [PPVW2016]. -/
 structure RatEllipticCurve : Type where
   A : ℤ
@@ -45,9 +45,9 @@ open Module (finrank)
 /-- The rank of an elliptic curve over a number field is always finite by the Mordell–Weil theorem.
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank. -/
-@[category research solved]
+@[category research solved, AMS 11 14]
 instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic] :
-    AddGroup.FG E⟮K⟯ := by
+    Module.Finite ℤ E⟮K⟯ := by
   sorry
 
 namespace RatEllipticCurve
@@ -66,8 +66,10 @@ instance (E : RatEllipticCurve) : E.toWeierstrass.IsElliptic where
     simp_rw [toWeierstrass, Δ, b₂, b₄, b₆, Int.cast_add, Int.cast_mul, Int.cast_pow]
     ring
 
+/-- The naïve height of an elliptic curve over ℚ. -/
 def naiveHeight (E : RatEllipticCurve) : ℕ := max (4 * E.A.natAbs ^ 3) (27 * E.B.natAbs ^ 2)
 
+/-- The set of elliptic curves over ℚ with naïve height less than or equal to a given height. -/
 def heightLE (H : ℕ) : Set RatEllipticCurve := {E : RatEllipticCurve | E.naiveHeight ≤ H}
 
 open scoped Topology
@@ -76,7 +78,7 @@ open Filter (atTop)
 /-- Conjecture by Goldfeld and Katz–Sarnak: if elliptic curves over ℚ are ordered by their
 heights, then 50% of the curves have rank 0 and 50% have rank 1.
 See p. 28 of https://people.maths.bris.ac.uk/~matyd/BSD2011/bsd2011-Bhargava.pdf. -/
-@[category research open]
+@[category research open, AMS 11 14]
 theorem half_rank_zero_and_half_rank_one (r : ℕ) (hr : r = 0 ∨ r = 1) :
     atTop.Tendsto
       (fun H ↦ ({E ∈ heightLE H | E.rank = r}.ncard / (heightLE H).ncard : ℝ)) (𝓝 (1 / 2)) := by
@@ -84,7 +86,7 @@ theorem half_rank_zero_and_half_rank_one (r : ℕ) (hr : r = 0 ∨ r = 1) :
 
 /-- Theorem 3 of [BS2013]:
 when elliptic curves over ℚ are ordered by height, their average rank is < .885. -/
-@[category research solved]
+@[category research solved, AMS 11 14]
 theorem avg_rank_lt_0885 :
     atTop.limsup (fun H ↦ ((∑ᶠ E : heightLE H, E.1.rank) / (heightLE H).ncard : ℝ)) < 0.885 := by
   sorry
@@ -92,21 +94,21 @@ theorem avg_rank_lt_0885 :
 /-- Theorem 4 of [BS2013]:
 when elliptic curves over ℚ are ordered by height, a density of at least 83.75% have
 rank 0 or 1. -/
-@[category research solved]
+@[category research solved, AMS 11 14]
 theorem _08375_le_density_rank_zero_one : 0.8375 ≤ atTop.liminf
     fun H ↦ ({E ∈ heightLE H | E.rank = 0 ∨ E.rank = 1}.ncard / (heightLE H).ncard : ℝ) := by
   sorry
 
 /-- Theorem 5 of [BS2013]:
 when elliptic curves over ℚ are ordered by height, a density of at least 20.62% have rank 0. -/
-@[category research solved]
+@[category research solved, AMS 11 14]
 theorem _02062_le_density_rank_zero : 0.2062 ≤ atTop.liminf
     fun H ↦ ({E ∈ heightLE H | E.rank = 0}.ncard / (heightLE H).ncard : ℝ) := by
   sorry
 
 /-- From [PPVW2016], Section 3.1: "from the mid-1960s to the present,
 it seems that most experts conjectured unboundedness". -/
-@[category research open]
+@[category research open, AMS 11 14]
 theorem unbounded_rank_conjecture (n : ℕ) : ∃ E : RatEllipticCurve, n ≤ E.rank := by
   sorry
 
@@ -115,19 +117,19 @@ theorem unbounded_rank_conjecture (n : ℕ) : ∃ E : RatEllipticCurve, n ≤ E.
 In other words, there are only finitely many elliptic curves over ℚ (up to isomorphism)
 with rank greater than 21.
 Notice that this contradicts the previous conjecture. -/
-@[category research open]
+@[category research open, AMS 11 14]
 theorem finite_twentyone_lt_finrank : {E : RatEllipticCurve | 21 < E.rank}.Finite := by
   sorry
 
 /-- [PPVW2016] 8.2(b). Note: ℰ_H should be ℰ_{≤H}, see Theorem 7.3.3. -/
-@[category research open]
+@[category research open, AMS 11 14]
 theorem rank_height_count_asymptotic (r : ℕ) (h₁ : 1 ≤ r) (h₂ : r ≤ 20) :
     ∃ f : ℕ+ → ℝ, atTop.Tendsto f (𝓝 0) ∧
       ∀ H : ℕ+, {E ∈ heightLE H | r ≤ E.rank}.ncard = (H : ℝ) ^ ((21 - r) / 24 + f H) := by
   sorry
 
 /-- [PPVW2016] 8.2(c). -/
-@[category research open]
+@[category research open, AMS 11 14]
 theorem twentyone_le_rank_height_count_asymptotic :
     ∃ f : ℕ+ → ℝ, atTop.Tendsto f (𝓝 0) ∧
       ∀ H : ℕ+, {E ∈ heightLE H | 21 ≤ E.rank}.ncard ≤ (H : ℝ) ^ f H := by
@@ -149,7 +151,7 @@ def elkiesKlagsbrun29 : WeierstrassCurve ℚ where
   a₆ := 55258058551342376475736699591118191821521067032535079608372404779149413277716173425636721497
 
 /-- See https://mathoverflow.net/a/478050. -/
-@[category test]
+@[category test, AMS 11 14]
 theorem Δ_elkiesKlagsbrun29 : elkiesKlagsbrun29.Δ =
     -2 ^ 19 * 3 ^ 7 * 5 ^ 7 * 7 ^ 4 * 11 ^ 5 * 13 ^ 3 * 17 ^ 4 * 31 ^ 3 * 41 ^ 2 * 43 ^ 2 * 61 ^ 2 *
     233 * 241 ^ 2 * 4139 * 678146849364709860535420504397393 *
@@ -157,15 +159,15 @@ theorem Δ_elkiesKlagsbrun29 : elkiesKlagsbrun29.Δ =
     4402149008473369392540402625019227412319473055901 := by
   rw [elkiesKlagsbrun29, Δ, b₂, b₄, b₆, b₈]; norm_num
 
-@[category test]
+@[category test, AMS 11 14]
 instance : elkiesKlagsbrun29.IsElliptic where
   isUnit := by rw [Δ_elkiesKlagsbrun29]; norm_num
 
-@[category test]
+@[category test, AMS 11 14]
 theorem twentynine_le_rank_elkiesKlagsbrun29 : 29 ≤ finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ := by
   sorry
 
-@[category research open]
+@[category research open, AMS 11 14]
 theorem rank_elkiesKlagsbrun29 : finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ = 29 := by
   sorry
 
@@ -179,14 +181,14 @@ def elkies28 : WeierstrassCurve ℚ where
   a₆ := 34481611795030556467032985690390720374855944359319180361266008296291939448732243429
 
 /-- See https://mathoverflow.net/a/478050. -/
-@[category test]
+@[category test, AMS 11 14]
 theorem Δ_elkies28 : elkies28.Δ =
     2 ^ 15 * 3 ^ 6 * 5 ^ 6 * 7 ^ 4 * 11 ^ 2 * 13 ^ 4 * 17 ^ 5 * 19 ^ 3 *
     48463 * 20650099 * 315574902691581877528345013999136728634663121 *
     376018840263193489397987439236873583997122096511452343225772113000611087671413 := by
   rw [elkies28, Δ, b₂, b₄, b₆, b₈]; norm_num
 
-@[category test]
+@[category test, AMS 11 14]
 instance : elkies28.IsElliptic where
   isUnit := by rw [Δ_elkies28]; norm_num
 
@@ -194,7 +196,7 @@ instance : elkies28.IsElliptic where
 theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28⟮ℚ⟯ := by
   sorry
 
-@[category research open]
+@[category research open, AMS 11 14]
 theorem rank_elkies28 : finrank ℤ elkies28⟮ℚ⟯ = 28 := by
   sorry
 
