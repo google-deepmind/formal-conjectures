@@ -152,7 +152,7 @@ def f (x: ℕ) :=
 @[category research open, AMS 5, AMS 11, AMS 68]
 theorem beaver_math_olympiad_problem_5 (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 0) (a_rec : ∀ n, a (n+1) = if b n ≥ f (a n) then a n + 1 else a n)
-    (b_ini : b 0 = 5) (b_rec : ∀ n, b (n+1) = if b n ≥ f (a n) then b n - f (a n)
-                                                               else 3*b n + a n + 5) :
+    (b_ini : b 0 = 5) 
+    (b_rec : ∀ n, b (n+1) = if b n ≥ f (a n) then b n - f (a n) else 3 * b n + a n + 5) :
     (∃ i, b i = (f (a i)) - 1) ↔ answer(sorry) :=
   sorry
