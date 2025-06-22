@@ -39,21 +39,6 @@ A group is metabelian if it has an abelian normal subgroup with abelian quotient
 class Metabelian (G : Type*) [Group G] : Prop :=
   metabelian : derivedSeries G 2 = ⊥
 
-/-! ## Non-commutative algebraic structures -/
-
-/-- A magma where multiplication is not commutative. -/
-class NonCommMagma (α : Type*) extends Mul α where
-  mul_noncomm : ¬∀ a b : α, a * b = b * a
-
-/-- A non-commutative semigroup. -/
-class NonCommSemigroup (α : Type*) extends Semigroup α, NonCommMagma α
-
-/-- A non-commutative monoid. -/
-class NonCommMonoid (M : Type*) extends Monoid M, NonCommSemigroup M
-
-/-- A non-commutative group. -/
-class NonCommGroup (G : Type*) extends Group G, NonCommMonoid G
-
 /-! ## Local conditions -/
 
 /--
