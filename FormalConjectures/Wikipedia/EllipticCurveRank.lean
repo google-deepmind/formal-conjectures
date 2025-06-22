@@ -121,14 +121,17 @@ Notice that this contradicts the previous conjecture. -/
 theorem finite_twentyone_lt_finrank : {E : RatEllipticCurve | 21 < E.rank}.Finite := by
   sorry
 
-/-- [PPVW2016] 8.2(b). Note: ℰ_H should be ℰ_{≤H}, see Theorem 7.3.3. -/
+/-- [PPVW2016] 8.2(b): for 1 ≤ r ≤ 20, the number of elliptic curves over ℚ with rank `r` and
+naïve height at most `H` is asymptotically `H ^ ((21 - r) / 24 + o(1))`.
+Note: ℰ_H in 8.2(b) should be ℰ_{≤H}, see the statement of Theorem 7.3.3. -/
 @[category research open, AMS 11 14]
 theorem rank_height_count_asymptotic (r : ℕ) (h₁ : 1 ≤ r) (h₂ : r ≤ 20) :
     ∃ f : ℕ+ → ℝ, atTop.Tendsto f (𝓝 0) ∧
       ∀ H : ℕ+, {E ∈ heightLE H | r ≤ E.rank}.ncard = (H : ℝ) ^ ((21 - r) / 24 + f H) := by
   sorry
 
-/-- [PPVW2016] 8.2(c). -/
+/-- [PPVW2016] 8.2(c): the number of elliptic curves over ℚ with rank ≥ 21 and naïve height
+at most `H` is asymptotically `H ^ o(1)`. -/
 @[category research open, AMS 11 14]
 theorem twentyone_le_rank_height_count_asymptotic :
     ∃ f : ℕ+ → ℝ, atTop.Tendsto f (𝓝 0) ∧
