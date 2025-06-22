@@ -126,8 +126,8 @@ contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbc
 theorem beaver_math_olympiad_problem_4
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
-    (a_rec : ∀ n, a (n+1) = if (a n)%3 = 0 then (a n)/3 + 2^n + 1
-                                           else ((a n) - 2)/3 + 2^n - 1) :
+    (a_rec : ∀ n, a (n+1) 
+      = if (a n) % 3 = 0 then (a n) / 3 + 2^n + 1 else ((a n) - 2) / 3 + 2^n - 1) :
     ¬ (∃ n, (a n) % 3 = 1) :=
   sorry
 
