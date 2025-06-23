@@ -95,5 +95,5 @@ establishes that any Kakeya set in `𝔽_qⁿ` has size at least `qⁿ / (2 - 1/
 @[category research solved, AMS 52]
 theorem kakeya_finite {F : Type*} [Field F] [Fintype F] {n : ℕ}
     (K : Finset (Fin n → F)) (hK : IsKakeyaFinite K) :
-    K.card ≥ card F ^ n / (2 - 1 / card F : ℚ) ^ (n - 1) := by
+    card F ^ n / (2 - 1 / card F : ℚ) ^ (n - 1) ≤ K.card := by
   sorry
