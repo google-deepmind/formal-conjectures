@@ -25,8 +25,7 @@ by *Alec Greene and Steven Damelin*
 -/
 
 /-- The i-th standard basis vector in ℝ⁴. -/
-def stdBasis4 : Fin 4 → EuclideanSpace ℝ (Fin 4) :=
-  fun i => Pi.single i 1
+noncomputable def stdBasis4 : Fin 4 → EuclideanSpace ℝ (Fin 4) := fun i => EuclideanSpace.single i 1
 
 /-- The integer lattice ℤ⁴ as the ℤ-span of the standard basis. -/
 def ℤ4 : Submodule ℤ (EuclideanSpace ℝ (Fin 4)) :=
