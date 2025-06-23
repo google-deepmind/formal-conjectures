@@ -15,18 +15,20 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+open Polynomial
 
 /-!
-# Andrica's conjecture
+# Hypothesis H
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schinzel%27s_hypothesis_H)
 -/
 
 /--
-**Andrica's conjecture**
-The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is the nth prime number.
+**Schinzel conjecture (H hypothesis)**
+If a finite set of polynomials $f_i$ satisfies both Schinzel and Bunyakovsky conditions,
+there exist infinitely many natural numbers $n$ such that $f_i(n)$ are primes for all $i$.
 -/
 @[category research open, AMS 11]
-theorem andrica_conjecture (n : ℕ) :
-    Real.sqrt ((n+1).nth Nat.Prime) - Real.sqrt (n.nth Nat.Prime) < 1 := by
+theorem schinzel_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, BunyakovskyCondition f) 
+    (hfs' : SchinzelCondition fs) : Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
   sorry

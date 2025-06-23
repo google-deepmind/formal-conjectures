@@ -17,16 +17,17 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Andrica's conjecture
+# Erdős Problem 645
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
+*Reference:* [erdosproblems.com/645](https://www.erdosproblems.com/645)
 -/
+
 
 /--
-**Andrica's conjecture**
-The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is the nth prime number.
+If ℕ is $2$-coloured then there must exist a monochromatic three-term arithmetic progression
+$x,x+d,x+2d$ such that $d>x$.
 -/
-@[category research open, AMS 11]
-theorem andrica_conjecture (n : ℕ) :
-    Real.sqrt ((n+1).nth Nat.Prime) - Real.sqrt (n.nth Nat.Prime) < 1 := by
+@[category research solved, AMS 5 11]
+theorem erdos_645 (c : ℕ → Bool) : ∃ x d, 0 < x ∧ x < d ∧
+    (∃ C, c x = C ∧ c (x + d) = C ∧ c (x + 2 * d) = C) := by
   sorry

@@ -15,18 +15,21 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+open Polynomial
 
 /-!
-# Andrica's conjecture
+# Bunyakovsky conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Bunyakovsky_conjecture)
 -/
 
 /--
-**Andrica's conjecture**
-The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is the nth prime number.
+**Bunyakovsky conjecture**
+If a polynomial $f$ over integers satisfies both Schinzel and Bunyakovsky conditions,
+there exist infinitely many natural numbers $m$ such that $f(m)$ is prime.
 -/
 @[category research open, AMS 11]
-theorem andrica_conjecture (n : ℕ) :
-    Real.sqrt ((n+1).nth Nat.Prime) - Real.sqrt (n.nth Nat.Prime) < 1 := by
+theorem bunyakovsky_conjecture (f : ℤ[X]) :
+    BunyakovskyCondition f ∧ SchinzelCondition {f} →
+    Infinite {n : ℕ | (f.eval (n : ℤ)).natAbs.Prime} := by
   sorry

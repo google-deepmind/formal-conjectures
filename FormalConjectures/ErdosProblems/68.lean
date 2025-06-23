@@ -17,27 +17,26 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 4
+# Erdős Problem 68
 
-*Reference:* [erdosproblems.com/4](https://www.erdosproblems.com/4)
+*Reference:* [erdosproblems.com/68](https://www.erdosproblems.com/68)
 -/
-open Real
-
-def Erdos4For (C : ℝ) : Prop :=
-  {n : ℕ | (n + 1).nth Nat.Prime  - n.nth Nat.Prime >
-    C * log (log n) * log (log (log (log n))) / (log (log (log n))) ^ 2 * log n}.Infinite
 
 /--
-Is it true that, for any $C > 0$, there infinitely many $n$ such that:
-$$
-  p_{n + 1} - p_n > C \frac{\log\log n\log\log\log\log n}{(\log\log\log n) ^ 2}\log n
-$$
+Is
+$$\sum_{n=2}^\infty \frac{1}{n!-1}$$
+irrational?
 -/
-@[category research solved, AMS 11]
-theorem erdos_4 : (∀ C > 0, Erdos4For C) ↔ answer(True) := by
+@[category research open, AMS 11]
+theorem erdos_68 :
+    Irrational (∑' n : ℕ, 1 / ((n + 2).factorial - 1 : ℝ)) ↔ answer(sorry) := by
   sorry
 
-@[category research solved, AMS 11]
-theorem erdos_4.variants.rankin :
-    ∃ C > 0, Erdos4For C := by
+/--
+$$\sum_{n=2}^\infty \frac{1}{n!-1} = \sum_{n=2}^\infty \sum_{k=1}^\infty \frac{1}{(n!)^k}$$
+-/
+@[category undergraduate, AMS 11]
+theorem sum_factorial_inv_eq_geometric :
+    let f (n k : ℕ) : ℝ := 1 / ((n + 2).factorial : ℝ) ^ (k + 1)
+    ∑' n : ℕ, (1 : ℝ) / ((n + 2).factorial - 1) = ∑' n : ℕ, ∑' k : ℕ, f n k := by
   sorry
