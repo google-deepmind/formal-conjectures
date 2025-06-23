@@ -21,7 +21,8 @@ import FormalConjectures.Util.ProblemImports
 ## References
 
 * [PPVW2016] Jennifer Park, Bjorn Poonen, John Voight, and Melanie Matchett Wood.
-  A heuristic for boundedness of ranks of elliptic curves, https://arxiv.org/pdf/1602.01431
+  A heuristic for boundedness of ranks of elliptic curves,
+  https://ems.press/journals/jems/articles/16228
 
 * [BS2013] Manjul Bhargava and Arul Shankar. The average size of the 5-Selmer group of
   elliptic curves is 6, and the average rank is less than 1, https://arxiv.org/pdf/1312.7859
@@ -166,7 +167,7 @@ theorem Δ_elkiesKlagsbrun29 : elkiesKlagsbrun29.Δ =
 instance : elkiesKlagsbrun29.IsElliptic where
   isUnit := by rw [Δ_elkiesKlagsbrun29]; norm_num
 
-@[category test, AMS 11 14]
+@[category research solved, AMS 11 14]
 theorem twentynine_le_rank_elkiesKlagsbrun29 : 29 ≤ finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ := by
   sorry
 
@@ -195,7 +196,7 @@ theorem Δ_elkies28 : elkies28.Δ =
 instance : elkies28.IsElliptic where
   isUnit := by rw [Δ_elkies28]; norm_num
 
-@[category test]
+@[category research solved, AMS 11 14]
 theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28⟮ℚ⟯ := by
   sorry
 
