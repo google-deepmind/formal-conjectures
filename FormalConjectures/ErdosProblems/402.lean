@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/402](https://www.erdosproblems.com/402)
 -/
+
 open Filter
 
 /-- Prove that, for any finite set $A\subset\mathbb{N}$, there exist $a, b\in A$ such

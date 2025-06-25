@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/295](https://www.erdosproblems.com/295)
 -/
+
 open Classical
 open scoped Real
 

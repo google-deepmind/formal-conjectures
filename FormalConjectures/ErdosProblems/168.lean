@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/168](https://www.erdosproblems.com/168)
 -/
+
 open scoped Topology
 
 /--Say a finite set of natural numbers is *non ternary* if it contains no

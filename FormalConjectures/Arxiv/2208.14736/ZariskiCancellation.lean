@@ -23,6 +23,7 @@ import FormalConjectures.Util.ProblemImports
 **The Zariski Cancellation Problem and related problems in Affine Algebraic Geometry**
 by *Neena Gupta*
 -/
+
 open Polynomial
 
 /--

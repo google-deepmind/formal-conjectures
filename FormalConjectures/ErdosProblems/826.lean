@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/826](https://www.erdosproblems.com/826)
 -/
+
 open scoped ArithmeticFunction
 
 /--

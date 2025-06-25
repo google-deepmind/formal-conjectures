@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/817](https://www.erdosproblems.com/817)
 -/
+
 open Filter
 
 /-- A finite arithmetic progression of length $k$ and difference $d$ is a set of the form

@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/198](https://www.erdosproblems.com/198)
 -/
+
 open Function Set Nat
 
 /-- Let $V$ be a vector space over the rationals and let $k$ be a fixed

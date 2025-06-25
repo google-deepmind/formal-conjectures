@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/189](https://www.erdosproblems.com/189)
 -/
+
 open Affine EuclideanGeometry
 
 /-- Erdős problem 189 asked whether the below holds for all rectangles. -/

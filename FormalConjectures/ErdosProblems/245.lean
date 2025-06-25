@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/245](https://www.erdosproblems.com/245)
 -/
+
 open Filter
 
 open scoped Pointwise Topology
