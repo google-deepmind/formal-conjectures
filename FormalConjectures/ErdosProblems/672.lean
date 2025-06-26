@@ -23,11 +23,12 @@ import FormalConjectures.Util.ProblemImports
 -/
 /-- Erdős problem 672 conjectures that the below holds for any $k ≥ 4$ and $l > 1$. -/
 def Erdos672With (k l : ℕ) : Prop :=
-  ∀ (s : Finset ℕ), s.Nonempty → s.card = k → ∃ᵉ (n > 0) (d > 0), Set.IsAPOfLengthWith s k n d →
-    ∀ q, ∏ i ∈ s, i ≠ q ^ l
+  ∀ (s : Finset ℕ), s.Nonempty → s.card = k → ∃ᵉ (n > 0) (d > 0), n.gcd d = 1 →
+    Set.IsAPOfLengthWith s k n d → ∀ q, ∏ i ∈ s, i ≠ q ^ l
 
 /--
-Can the product of an arithmetic progression of positive integers of length ≥ 4 be a perfect power?
+Can the product of an arithmetic progression of positive integers $n, n + d, ..., n + (k - 1)d$
+of length ≥ 4, with $(n, d) = 1$, be a perfect power?
 -/
 @[category research open, AMS 11]
 theorem erdos_672 :
