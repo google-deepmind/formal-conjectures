@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Data.Set.Card
-import Mathlib.Order.Defs.PartialOrder
+import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
 
 open Function Set
 
@@ -31,16 +29,6 @@ def IsSidon {ι α : Type*} [Preorder ι] [Preorder α] [Add α] (a : ι →o α
 lemma IsSidon.injective {ι α : Type*} [Preorder ι] [Preorder α] [Add α] (a : ι →o α) (ha : IsSidon a) :
     Injective a :=
   fun i₁ i₂ hi ↦ (ha i₁ i₁ i₂ i₂ (le_refl _) (le_refl _) (by rw [hi])).1
-
-variable {α : Type*} [AddCommMonoid α]
-
-/-- The predicate that a set `s` is an arithmetic progression of length `l` (possibly infinite). -/
-def Set.IsAPOfLength (s : Set α) (l : ℕ∞) : Prop :=
-  ∃ a d : α, d ≠ 0 ∧ s = {a + n • d | (n : ℕ) (_ : n < l)}
-
-lemma Set.IsAPOfLength.card (s : Set α) (l : ℕ∞) (hs : s.IsAPOfLength l) :
-    ENat.card s = l := by
-  sorry
 
 lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [OrderedAddCommMonoid α]
     (A : ℕ →o α) (hA : IsSidon A) :
