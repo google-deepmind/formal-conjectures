@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/402](https://www.erdosproblems.com/402)
 -/
+
 open Filter
 
 /-- Prove that, for any finite set $A\subset\mathbb{N}$, there exist $a, b\in A$ such
@@ -45,10 +46,11 @@ an iff statement.
 -/
 @[category research solved, AMS 11]
 theorem erdos_402.variants.equality (A : Finset ℕ) (h₁ : 0 ∉ A) (h₂ : A.Nonempty)
-    (hA : ∀ n, A ≠ Finset.Icc 1 n ∧
-    A ≠ ((Finset.Icc 1 n).image fun i => ((Finset.Icc 1 n).lcm id) / i) ∧
-    A ≠ {2,3,4,6}) :
-    ∃ᵉ (a ∈ A) (b ∈ A), a.gcd b < (a / A.card : ℚ) := by
+    (h₃ : A.gcd id = 1)
+    (h : ∀ᵉ (a ∈ A) (b ∈ A), (a / A.card : ℚ) ≤ a.gcd b) :
+    A = Finset.Icc 1 A.card ∨
+    A = (Finset.Icc 1 A.card).image ((Finset.Icc 1 A.card).lcm id / ·) ∨
+    A = {2, 3, 4, 6} := by
   sorry
 
 /-- Proved for all sufficiently large sets (including the sharper version which

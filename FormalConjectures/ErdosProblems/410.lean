@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/410](https://www.erdosproblems.com/410)
 -/
+
 open ArithmeticFunction Filter
 
 /--

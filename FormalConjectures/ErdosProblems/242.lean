@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/242](https://www.erdosproblems.com/242)
 -/
+
 open scoped Topology
 
 /--

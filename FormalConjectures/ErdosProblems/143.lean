@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/143](https://www.erdosproblems.com/143)
 -/
+
 open Filter Finset
 open scoped Topology
 
