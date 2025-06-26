@@ -45,9 +45,10 @@ an iff statement.
 -/
 @[category research solved, AMS 11]
 theorem erdos_402.variants.equality (A : Finset ℕ) (h₁ : 0 ∉ A) (h₂ : A.Nonempty)
+    (h₃ : 4 ≤ A.card)
     (hA : ∀ n, A ≠ Finset.Icc 1 n ∧
-    A ≠ ((Finset.Icc 1 n).image fun i => ((Finset.Icc 1 n).lcm id) / i) ∧
-    A ≠ {2,3,4,6}) :
+      A ≠ ((Finset.Icc 1 n).image fun i => ((Finset.Icc 1 n).lcm id) / i) ∧
+      A ≠ {2,3,4,6}) :
     ∃ᵉ (a ∈ A) (b ∈ A), a.gcd b < (a / A.card : ℚ) := by
   sorry
 
