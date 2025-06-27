@@ -23,14 +23,6 @@ import FormalConjectures.Util.ProblemImports
  - It is also a barrier to defining a benchmark from this paper:
  - https://arxiv.org/html/2505.13938v1 (see Figure 8).
  -/
-
--- predicate that is true whenever a natural number n is a Fibonacci number
-def Fibonacci (n : ℕ) := ∃ (i : ℕ), Nat.fib i = n
-
--- define the Fibonacci primes
-def fib_primes := { n : ℕ | Fibonacci n ∧ Prime n }
-
--- state the conjecture
 @[category research open]
-theorem fib_primes_infinite : Infinite fib_primes :=
+theorem fib_primes_infinite : { n : ℕ | n.fib.Prime}.Infinite :=
   by sorry
