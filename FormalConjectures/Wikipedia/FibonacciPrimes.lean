@@ -31,5 +31,6 @@ def Fibonacci (n : ℕ) := ∃ (i : ℕ), Nat.fib i = n
 def fib_primes := { n : ℕ | Fibonacci n ∧ Prime n }
 
 -- state the conjecture
+@[category research open]
 theorem fib_primes_infinite : Infinite fib_primes :=
   by sorry
