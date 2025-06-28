@@ -125,7 +125,7 @@ example : maximalLength 0 = 0 := by
   have (x : ℕ) (s : List (Fin 3 → ℕ)) :
       IsIncreasing₂ s ∧ (∀ a, a ∉ s) ∧ s.length = x ↔ s = [] ∧ x = 0 := by
     refine ⟨fun ⟨ha₁, ha₂, rfl⟩ => ?_, fun ⟨h₁, h₂⟩ => by simp [h₁, h₂]⟩
-    simp only [List.length_eq_zero, and_self]
+    simp only [List.length_eq_zero_iff, and_self]
     refine List.eq_nil_of_subset_nil fun ai hai => ?_
     simpa using ha₂ ai hai
   simp [maximalLength, fun x => exists_congr (this x)]
@@ -138,8 +138,8 @@ example : maximalLength 1 = 1 := by
         s = [fun _ => 1] ∧ x = 1 ∨ s = [] ∧ x = 0 := by
     refine ⟨fun ⟨hs₁, hs₂, hx⟩ => ?_, fun h => by aesop⟩
     have := hx ▸ isIncreasing₂_const_length hs₁ hs₂
-    interval_cases x; simp [hx, List.length_eq_zero.1 hx]; simp
-    obtain ⟨a, rfl⟩ := List.length_eq_one.1 hx
+    interval_cases x; simp [hx, List.length_eq_zero_iff.1 hx]; simp
+    obtain ⟨a, rfl⟩ := List.length_eq_one_iff.1 hx
     simp at hs₂
     rw [show a = fun _ => 1 from funext fun i => by simp [hs₂ i]]
   simp [maximalLength, fun x => exists_congr (this x)]
