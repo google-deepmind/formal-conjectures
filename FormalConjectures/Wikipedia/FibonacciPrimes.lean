@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /--
-This conjecture states that there are infinite Fibonacci primes
+This conjecture states that there are infinitely many Fibonacci primes
 (i.e., Fibonacci numbers that are prime). It is unsolved. It is
 stated on Wikipedia here: https://en.wikipedia.org/wiki/Fibonacci_prime.
 It is also a barrier to defining a benchmark from this paper:
