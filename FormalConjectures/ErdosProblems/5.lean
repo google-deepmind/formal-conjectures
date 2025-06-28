@@ -39,7 +39,7 @@ Since $p_n \sim n \log n$, then $\log n \sim \log p_n$
 @[category research solved, AMS 11]
 theorem infinite_case :
     ∃ p : ℕ → ℕ, StrictMono p ∧ (∀ n : ℕ, (p n).Prime) ∧
-    Tendsto (fun i ↦ (p (i+1)  - p i) / log (p i)) atTop atTop := by
+    Tendsto (fun i ↦ (p (i+1) - p i) / log (p i)) atTop atTop := by
   sorry
 
 /--
