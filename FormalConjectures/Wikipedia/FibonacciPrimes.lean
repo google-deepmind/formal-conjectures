@@ -16,13 +16,13 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-
- - This conjecture states that there are infinite Fibonacci primes
- - (i.e., Fibonacci numbers that are prime). It is unsolved. It is
- - stated on Wikipedia here: https://en.wikipedia.org/wiki/Fibonacci_prime.
- - It is also a barrier to defining a benchmark from this paper:
- - https://arxiv.org/html/2505.13938v1 (see Figure 8).
+/--
+ This conjecture states that there are infinite Fibonacci primes
+ (i.e., Fibonacci numbers that are prime). It is unsolved. It is
+ stated on Wikipedia here: https://en.wikipedia.org/wiki/Fibonacci_prime.
+ It is also a barrier to defining a benchmark from this paper:
+ https://arxiv.org/html/2505.13938v1 (see Figure 8).
  -/
-@[category research open]
-theorem fib_primes_infinite : { n : ℕ | n.fib.Prime}.Infinite :=
-  by sorry
+@[category research open, AMS 11]
+theorem fib_primes_infinite : {n : ℕ | n.fib.Prime}.Infinite := by
+  sorry
