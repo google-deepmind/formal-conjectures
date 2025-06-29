@@ -21,7 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/817](https://www.erdosproblems.com/817)
 -/
+
 open Filter
+
 
 open scoped Classical in
 /-- Define $g_k(n)$ to be the minimal $N$ such that $\{1, ..., N\}$ contains some $A$ of
@@ -45,7 +47,7 @@ $$
   g_3(n) \gg 3^n
 $$ -/
 -- Formalisation note : only formalising the "In particular" part
-@[category research open, AMS 5, AMS 11]
+@[category research open, AMS 5 11]
 theorem erdos_817 :
     ((fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ)) ↔ answer(sorry) := by
   sorry
@@ -54,7 +56,7 @@ theorem erdos_817 :
 $$
   g_3(n) \gg \frac{3^n}{n^{O(1)}}.
 $$ -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_817.variants.bdd_power : ∃ O > (0 : ℝ),
     (fun (n : ℕ) => (3 ^ n : ℝ) / n ^ O) =O[atTop] fun n => (g 3 n : ℝ) := by
   sorry

@@ -27,7 +27,7 @@ The set of arithmetic progressions of primes
 def primeArithmeticProgressions : Set (Set ℕ) :=
   {s | (∀ p ∈ s, p.Prime) ∧ ∃ l > 0, s.IsAPOfLength l}
 
-@[category test, AMS 5, AMS 11]
+@[category test, AMS 5 11]
 example : {3, 5, 7} ∈ primeArithmeticProgressions := by
   simp [primeArithmeticProgressions, Set.IsAPOfLength, Set.IsAPOfLengthWith]
   refine ⟨by norm_num, ⟨3, by norm_num, ?_⟩⟩
@@ -40,21 +40,21 @@ example : {3, 5, 7} ∈ primeArithmeticProgressions := by
     | inl hrl => simpa [hrl] using ⟨1, by simp⟩
     | inr hrr => simpa [hrr] using ⟨2, by simp⟩
 
-@[category test, AMS 5, AMS 11]
+@[category test, AMS 5 11]
 example : ¬{1, 2} ∈ primeArithmeticProgressions := by
   simp [primeArithmeticProgressions]
   norm_num
 
-@[category API, AMS 5, AMS 11]
+@[category API, AMS 5 11]
 example : ∅ ∉ primeArithmeticProgressions := by
   simpa [primeArithmeticProgressions] using fun _ hl ↦ Set.not_isAPOfLength_empty hl
 
-@[category API, AMS 5, AMS 11]
+@[category API, AMS 5 11]
 lemma singleton_mem_primeArithmeticProgressions
     {p : ℕ} (hp : p.Prime) : {p} ∈ primeArithmeticProgressions := by
   simpa [primeArithmeticProgressions, hp] using ⟨1, one_pos, Set.isAPOfLength_singleton p⟩
 
-@[category API, AMS 5, AMS 11]
+@[category API, AMS 5 11]
 lemma pair_mem_primeArithmeticProgressions
     {p q : ℕ} (hp : p.Prime) (hq : q.Prime) (hpq : p < q) :
     {p, q} ∈ primeArithmeticProgressions := by
@@ -66,6 +66,7 @@ Are there arbitrarily long arithmetic progressions of primes?
 Solution: yes.
 Ref: Green, Ben and Tao, Terence, _The primes contain arbitrarily long arithmetic progressions_
 -/
-@[category research solved, AMS 5, AMS 11]
+
+@[category research solved, AMS 5 11]
 theorem erdos_219 : (∀ N, ∃ l ∈ primeArithmeticProgressions, N ≤ ENat.card l) ↔ answer(True) := by
   sorry

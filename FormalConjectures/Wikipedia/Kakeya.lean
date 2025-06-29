@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Kakeya_set)
 -/
+
 open AffineMap MeasureTheory Metric
 
 /--

@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/727](https://www.erdosproblems.com/727)
 -/
+
 open scoped Nat
 
 /--

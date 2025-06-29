@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/868](https://www.erdosproblems.com/868)
 -/
+
 open Filter
 
 open scoped Pointwise
@@ -34,7 +35,7 @@ def ncard_add_repr (A : Set ℕ) (o : ℕ) (n : ℕ) : ℕ :=
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
 $n$ can be written as the sum of two elements from $A$. If $f(n)\to\infty$ as $n\to\infty$, then
 must $A$ contain a minimal additive basis of order $2$? -/
-@[category research open, AMS 5, AMS 11]
+@[category research open, AMS 5 11]
 theorem erdos_868.parts.i :
     (∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
       atTop.Tendsto (fun n => ncard_add_repr A 2 n) atTop → ∃ B ⊆ A,
@@ -46,7 +47,7 @@ theorem erdos_868.parts.i :
 $n$ can be written as the sum of two elements from $A$. If $f(n)>\epsilon\log n$ for large $n$
 and an arbitrary fixed $\epsilon > 0$, then must $A$ contain a minimal additive
 basis of order $2$? -/
-@[category research open, AMS 5, AMS 11]
+@[category research open, AMS 5 11]
 theorem erdos_868.parts.ii :
     (∀ᵉ (A : Set ℕ) (ε > 0), A.IsAsymptoticAddBasisOfOrder 2 →
       (∀ᶠ (n : ℕ) in atTop, ε * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
@@ -56,7 +57,7 @@ theorem erdos_868.parts.ii :
 
 /-- Erdős and Nathanson proved that this is true if $f(n) > (\log\frac{4}{3})^{-1}\log n$ for
 all large $n$. -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_868.variants.fixed_ε :
     (∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
       (∀ᶠ (n : ℕ) in atTop, (Real.log (4 / 3))⁻¹ * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
@@ -66,7 +67,7 @@ theorem erdos_868.variants.fixed_ε :
 
 /-- Härtter and Nathanson proved that there exist additive bases which do not contain
 any minimal additive bases. -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_868.variants.Hartter_Nathanson : ∃ᵉ (A : Set ℕ) (o > 1),
     A.IsAsymptoticAddBasisOfOrder o ∧ ∀ B ⊆ A, B.IsAsymptoticAddBasisOfOrder o →
     ∃ b ∈ B, (B \ {b}).IsAsymptoticAddBasisOfOrder o := by

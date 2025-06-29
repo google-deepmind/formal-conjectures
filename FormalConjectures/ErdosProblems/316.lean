@@ -29,7 +29,7 @@ This is not true in general, as shown by Sándor [Sa97].
 
 [Sa97] S\'{A}ndor, Csaba, _On a problem of Erdős_. J. Number Theory (1997), 203-210.
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_316 : (∀ A : Finset ℕ, 0 ∉ A → 1 ∉ A →
     ∑ n ∈ A, (1 / n : ℚ) < 2 → ∃ (A₁ A₂ : Finset ℕ),
       Disjoint A₁ A₂ ∧ A = A₁ ∪ A₂ ∧
@@ -44,7 +44,7 @@ theorem erdos_316 : (∀ A : Finset ℕ, 0 ∉ A → 1 ∉ A →
   decide +kernel
 
 /-- It is not true if `A` is a multiset (easier) -/
-@[category high_school, AMS 5, AMS 11]
+@[category high_school, AMS 5 11]
 lemma erdos_316.variants.multiset : ∃ A : Multiset ℕ, 0 ∉ A ∧ 1 ∉ A ∧
     (A.map ((1 : ℚ) / ·)).sum < 2 ∧ ∀ (A₁ A₂ : Multiset ℕ),
       A = A₁ + A₂ →
@@ -63,7 +63,7 @@ lemma erdos_316.variants.multiset : ∃ A : Multiset ℕ, 0 ∉ A ∧ 1 ∉ A �
 /-- More generally, Sándor shows that for any $n≥2$ there exists a finite set
 $A \subseteq \mathbb{N}∖{1}$ with $\sum_{n \in A} \frac{1}{k} < n$ , and no
 partition into $n$ parts each of which has $\sum_{n \in A_i} \frac{1}{k} < 1$. -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_316.variants.generalized (n : ℕ) (hn : 2 ≤ n) : ∃ A : Finset ℕ,
     A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
     P.parts.card = n → ∃ p ∈ P.parts, 1 ≤ ∑ n ∈ p, (1 / n : ℚ) := by
