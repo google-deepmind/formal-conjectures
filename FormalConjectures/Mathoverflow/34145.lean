@@ -41,7 +41,7 @@ structure Rectangle : Type where
   start : ℝ × ℝ
   rotation : Angle
 
-/-- A combination of a rotation and a translation to map the a standard rectangle to the desired
+/-- A combination of a rotation and a translation to map the standard rectangle to the desired
 rectangle.
 -/
 noncomputable def rigidMotion (start : ℝ × ℝ) (θ : Angle) (p : ℝ × ℝ) : (ℝ × ℝ) :=
@@ -149,7 +149,7 @@ structure Configuration : Type where
   rect_width (n : ℕ) : (rect n).width = 1 / (n + 1)
   rect_height (n : ℕ) : (rect n).height = 1 / (n + 2)
 
-/-- A "packing" means that the interiors of the rectangles are disjoint. -/
+/-- A "packing" means that the interiors of any two rectangles are disjoint. -/
 def Configuration.IsPacking (c : Configuration) : Prop :=
   Pairwise fun m n ↦ interior (c.rect m).toSet ∩ interior (c.rect n).toSet = ∅
 
