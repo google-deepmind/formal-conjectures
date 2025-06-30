@@ -50,7 +50,7 @@ using `↔ answer(sorry)`.
 The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor Jason Yuen on
 June 25th 2024.
 -/
-@[category research open, AMS 5, AMS 11, AMS 68]
+@[category research open, AMS 5 11 68]
 theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 1) (a_rec : ∀ n, a (n+1) = if (a n) ≥ (b n) then (a n) - (b n) else 2*(a n) + 1)
     (b_ini : b 0 = 2) (b_rec : ∀ n, b (n+1) = if (a n) ≥ (b n) then 4*(b n) + 2 else (b n) - (a n)):
@@ -74,7 +74,7 @@ that the machine does not halt is based on [a probabilistic argument](https://wi
 This machine and its mathematical reformulations were found by [bbchallenge.org](bbchallenge.org)
 contributors mxdys and Rachel Hunter on June 28th 2024.
 -/
-@[category research open, AMS 5, AMS 11, AMS 68]
+@[category research open, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_2_antihydra
     (a : ℕ → ℕ) (b : ℕ → ℤ)
     (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*(a n)/2 : ℕ))
@@ -88,7 +88,7 @@ theorem beaver_math_olympiad_problem_2_antihydra
 Alternative statement of beaver_math_olympiad_problem_2_antihydra
 using set size comparison instead of a recurrent sequence b.
 -/
-@[category research open, AMS 5, AMS 11, AMS 68]
+@[category research open, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_2_antihydra.variants.set
     (a : ℕ → ℕ)
     (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*(a n)/2 : ℕ)) :
@@ -104,7 +104,7 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
 The machine was found and informally proven not to halt by [bbchallenge.org](bbchallenge.org)
 contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
 -/
-@[category research solved, AMS 5, AMS 11, AMS 68]
+@[category research solved, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_3
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
@@ -122,11 +122,11 @@ is equivalent to the non-termination of 2-state 5-symbol Turing machine
 The machine was informally proven not to halt [bbchallenge.org](bbchallenge.org)
 contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) and [Discord discussion](https://discord.com/channels/960643023006490684/960643023530762343/1263666591900631210).
 -/
-@[category research solved, AMS 5, AMS 11, AMS 68]
+@[category research solved, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_4
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
-    (a_rec : ∀ n, a (n+1) 
+    (a_rec : ∀ n, a (n+1)
       = if (a n) % 3 = 0 then (a n) / 3 + 2^n + 1 else ((a n) - 2) / 3 + 2^n - 1) :
     ¬ (∃ n, (a n) % 3 = 1) :=
   sorry
@@ -149,10 +149,10 @@ in [Rocq](https://github.com/ccz181078/busycoq/blob/BB6/verify/1RB0LD_1LC0RA_1RA
 def f (x: ℕ) :=
   10*2^x - 1
 
-@[category research open, AMS 5, AMS 11, AMS 68]
+@[category research open, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_5 (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 0) (a_rec : ∀ n, a (n+1) = if b n ≥ f (a n) then a n + 1 else a n)
-    (b_ini : b 0 = 5) 
+    (b_ini : b 0 = 5)
     (b_rec : ∀ n, b (n+1) = if b n ≥ f (a n) then b n - f (a n) else 3 * b n + a n + 5) :
     (∃ i, b i = (f (a i)) - 1) ↔ answer(sorry) :=
   sorry
