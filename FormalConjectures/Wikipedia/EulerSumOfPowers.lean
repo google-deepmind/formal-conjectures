@@ -21,3 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Euler's_sum_of_powers_conjecture)
 -/
+
+/--
+Euler's sum of powers conjecture states that for integers $n > 1$ and $k > 1$,
+if the sum of $n$ positive integers each raised to the $k$-th power equals another integer
+raised to the $k$-th power, then $n \geq k$.
+
+The conjecture is known to be false for $k = 4$ and $k = 5$,
+but remains open for $k \geq 6$.
+-/
