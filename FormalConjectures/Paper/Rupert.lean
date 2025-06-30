@@ -26,8 +26,13 @@ two affine transforms T₁, T₂ ∈ SE(3) such that π(T₁(X)) ⊆
 int(π(T₂(X))), where π : ℝ³ → ℝ² is the evident projection, and int
 denotes topological interior.
 
-All Platonic solids, and most Archimedean and Catalan solids are known
-to be Rupert.
+Not all convex bodies are Rupert. For example,
+- the unit ball is not Rupert
+- the circular cylinder of unit diameter and height
+  closed on each end by disks is not Rupert
+
+However, many convex polyhedra are Rupert. All Platonic solids, and
+most Archimedean and Catalan solids are known to be Rupert.
 
 Question: are all convex polyhedra with nonempty interior Rupert?
 
