@@ -46,20 +46,17 @@ Question: are all convex polyhedra with nonempty interior Rupert?
 * This problem's name comes from the fact that it is a generalization of [Prince Rupert's Cube](https://en.wikipedia.org/wiki/Prince_Rupert%27s_cube).
 
 -/
-
 open scoped Matrix
 
-notation "ℝ³" => EuclideanSpace ℝ (Fin 3)
-notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
-
-abbrev E (n : ℕ) := EuclideanSpace ℝ (Fin n)
+notation "ℝ³" => Fin 3 → ℝ
+notation "ℝ²" => Fin 2 → ℝ
 
 abbrev SO3 := Matrix.specialOrthogonalGroup (Fin 3) ℝ
 
 /--
 The projection of a vector from 3-space to 2-space by dropping the third coordinate.
 -/
-def proj_xy {k : Type} (v : EuclideanSpace k (Fin 3)) : EuclideanSpace k (Fin 2) :=
+def proj_xy (v : Fin 3 → ℝ) : Fin 2 → ℝ :=
   ![v 0, v 1]
 
 /--
