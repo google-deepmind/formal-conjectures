@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.Util.ProblemImports
+import Mathlib.Analysis.InnerProductSpace.PiL2
 /-!
 # Is Every Convex Polyhedron Rupert?
 
@@ -44,3 +46,42 @@ Question: are all convex polyhedra with nonempty interior Rupert?
 * This problem's name comes from the fact that it is a generalization of [Prince Rupert's Cube](https://en.wikipedia.org/wiki/Prince_Rupert%27s_cube).
 
 -/
+
+open scoped Matrix
+
+notation "ℝ³" => EuclideanSpace ℝ (Fin 3)
+notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
+
+abbrev E (n : ℕ) := EuclideanSpace ℝ (Fin n)
+
+abbrev SO3 := Matrix.specialOrthogonalGroup (Fin 3) ℝ
+
+/--
+The projection of a vector from 3-space to 2-space by dropping the third coordinate.
+-/
+def proj_xy {k : Type} (v : EuclideanSpace k (Fin 3)) : EuclideanSpace k (Fin 2) :=
+  ![v 0, v 1]
+
+/--
+A convex polyhedron (given as a finite collection of vertices) is Rupert if
+there are two rotations in ℝ³ (called "inner" and "outer") and a translation in ℝ²
+such that the "inner shadow" (the projection to ℝ² of the inner rotation applied
+to the polyhedron, then translated) fits in the interior of the "outer shadow"
+(the projection to ℝ² of the outer rotation applied to the polyhedron)
+-/
+def IsRupert {ι : Type} [Fintype ι] (vertices : ι → ℝ³) : Prop :=
+   ∃ inner_rotation ∈ SO3, ∃ inner_offset : ℝ², ∃ outer_rotation ∈ SO3,
+   let hull := convexHull ℝ { vertices i | i }
+   let inner_shadow := { inner_offset + proj_xy (inner_rotation *ᵥ p) | p ∈ hull }
+   let outer_shadow := { proj_xy (outer_rotation *ᵥ p) | p ∈ hull }
+   inner_shadow ⊆ interior outer_shadow
+
+/--
+Does the Rupert property hold of every convex polyhedron with nonempty interior?
+-/
+@[category research open, AMS 52]
+theorem is_every_convex_polyhedron_rupert :
+    (∀ {ι : Type} [Fintype ι] (vertices : ι → ℝ³),
+       (convexHull ℝ { vertices i | i }).Nonempty → IsRupert vertices)
+      ↔ answer(sorry) := by
+ sorry
