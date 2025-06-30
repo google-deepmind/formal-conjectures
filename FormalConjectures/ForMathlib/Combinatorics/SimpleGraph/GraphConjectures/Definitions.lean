@@ -1,3 +1,9 @@
+/-
+Copyright (c) 2025 Henryk Michalewski. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Henryk Michalewski
+-/
+
 import FormalConjectures.GraphConjectures.Imports
 
 namespace SimpleGraph
