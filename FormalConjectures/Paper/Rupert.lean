@@ -39,11 +39,25 @@ most Archimedean and Catalan solids are known to be Rupert.
 Question: are all convex polyhedra with nonempty interior Rupert?
 
 *References:*
-* [Platonic Passages](https://www.researchgate.net/publication/314715434_Platonic_Passages), R. P. Jerrard, J. E. Wetzel, and L. Yuan., Math. Mag., 90(2):87–98, 2017. conjectures ("with a certain hesitancy") that perhaps all convex polyhedra are Rupert.
-* However, [An Algorithmic Approach to Rupert's Problem](https://arxiv.org/pdf/2112.13754#cite.JeWeYu17) describes experimental evidence to suggest that three Archimedean solids may not be Rupert.
-* [Optimizing for the Rupert property](https://arxiv.org/abs/2210.00601) is the source of some of the Catalan solid results, and has more results for Johnson polyhedra as well.
-* [This video by David Renshaw](https://www.youtube.com/watch?v=evKFok65t_E) visualizes known results for Platonic, Archimedean, and Catalan solids.
-* This problem's name comes from the fact that it is a generalization of [Prince Rupert's Cube](https://en.wikipedia.org/wiki/Prince_Rupert%27s_cube).
+
+* [Platonic Passages](https://www.researchgate.net/publication/314715434_Platonic_Passages),
+  R. P. Jerrard, J. E. Wetzel, and L. Yuan., Math. Mag., 90(2):87–98,
+  2017. conjectures ("with a certain hesitancy") that perhaps all
+  convex polyhedra are Rupert.
+
+* However, [An Algorithmic Approach to Rupert's Problem](https://arxiv.org/pdf/2112.13754#cite.JeWeYu17)
+  describes experimental evidence to suggest that three Archimedean
+  solids may not be Rupert.
+
+* [Optimizing for the Rupert property](https://arxiv.org/abs/2210.00601)
+  is the source of some of the Catalan solid results, and has more
+  results for Johnson polyhedra as well.
+
+* [This video by David Renshaw](https://www.youtube.com/watch?v=evKFok65t_E) visualizes
+  known results for Platonic, Archimedean, and Catalan solids.
+
+* This problem's name comes from the fact that it is a generalization
+  of [Prince Rupert's Cube](https://en.wikipedia.org/wiki/Prince_Rupert%27s_cube).
 
 -/
 open scoped Matrix
