@@ -30,3 +30,7 @@ raised to the $k$-th power, then $n \geq k$.
 The conjecture is known to be false for $k = 4$ and $k = 5$,
 but remains open for $k \geq 6$.
 -/
+@[category research open, AMS 11]
+theorem eulers_conjecture (n k b : ℤ) (hn : 1 < n) (hk : 1 < k) (a: ℤ → ℝ)
+    (hsum : ∑ i ∈ Finset.Icc 1 n, (a ^ k) i = b ^ k) : n ≥ k := by
+  sorry
