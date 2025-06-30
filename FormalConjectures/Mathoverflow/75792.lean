@@ -119,8 +119,11 @@ instance Reachable.decide : ∀ m n, Decidable (Reachable m n)
       refine instDecidableAnd (dp := d hm₁) (dq := ?_)
       exact instDecidableAnd (dp := d hm₂)
 
-/-- The [(Mahler-Popken) complexity of `n`](https://en.wikipedia.org/wiki/Integer_complexity): the minimum number of `1`s needed to express a given
-number using only addition and multiplication. E.g. `2 = 1 + 1`, so `complexity 2 = 2`. -/
+/-- 
+The [(Mahler-Popken) complexity of `n`](https://en.wikipedia.org/wiki/Integer_complexity): 
+the minimum number of `1`s needed to express a given number using only addition and 
+multiplication. E.g. `2 = 1 + 1`, so `complexity 2 = 2`. 
+-/
 def complexity (n : ℕ) : ℕ :=
   if h : n = 0 then 0 else Nat.find ⟨n, Reachable.self n <| n.pos_of_ne_zero h⟩
 
