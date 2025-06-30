@@ -30,4 +30,12 @@ lean_lib FormalConjectures where
   roots := #[`FormalConjectures]
   globs := #[.submodules `FormalConjectures]
 
+--
+-- Auxiliary library collecting the graph conjectures modules.
+-- Allows building them separately if needed.
+--
+lean_lib GraphConjectures where
+  roots := #[`FormalConjectures.GraphConjectures]
+  globs := #[.submodules `FormalConjectures.GraphConjectures]
+
 require "leanprover-community" / "mathlib" @ git "v4.17.0"
