@@ -34,3 +34,21 @@ but remains open for $k \geq 6$.
 theorem eulers_sum_of_powers_conjecture (n k b : ℕ) (hn : 1 < n) (hk : 1 < k) (a: Fin n → ℕ)
     (ha : ∀ i, a i > 0) (hsum : ∑ i, (a i) ^ k = b ^ k) : n ≥ k := by
   sorry
+
+@[category research solved, AMS 11]
+theorem eulers_sum_of_powers_conjecture.false_for_k4 : ¬ (∀ (n k b : ℕ), ∀  (hn : 1 < n), ∀ (hk : 1 < k),
+∀  (a: Fin n → ℕ), ∀ (ha : ∀ i, a i > 0), ∀ (hsum : ∑ i, (a i) ^ k = b ^ k), n ≥ k) := by
+  push_neg
+  use 3, 4, 422481
+  norm_num
+  use ![95800, 217519, 414560]
+  decide
+
+@[category research solved, AMS 11]
+theorem eulers_sum_of_powers_conjecture.false_for_k5 : ¬ (∀ (n k b : ℕ), ∀  (hn : 1 < n), ∀ (hk : 1 < k),
+∀  (a: Fin n → ℕ), ∀ (ha : ∀ i, a i > 0), ∀ (hsum : ∑ i, (a i) ^ k = b ^ k), n ≥ k) := by
+  push_neg
+  use 4, 5, 144
+  norm_num
+  use ![27, 84, 110, 133]
+  decide
