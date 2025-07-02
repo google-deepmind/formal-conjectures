@@ -74,6 +74,13 @@ def proj_xy (v : Fin 3 → ℝ) : Fin 2 → ℝ :=
   ![v 0, v 1]
 
 /--
+The result of transforming a subset of ℝ³ by a chosen rotation and offset,
+and then projected to ℝ².
+--/
+def transformed_shadow (X : Set ℝ³) (offset : ℝ²) (rotation : SO3) : Set ℝ² :=
+  (λ p ↦ offset + proj_xy (rotation.1 *ᵥ p)) '' X
+
+/--
 A convex polyhedron (given as a finite collection of vertices) is Rupert if
 there are two rotations in ℝ³ (called "inner" and "outer") and a translation in ℝ²
 such that the "inner shadow" (the projection to ℝ² of the inner rotation applied
@@ -81,14 +88,14 @@ to the polyhedron, then translated) fits in the interior of the "outer shadow"
 (the projection to ℝ² of the outer rotation applied to the polyhedron)
 -/
 def IsRupert {ι : Type} [Fintype ι] (vertices : ι → ℝ³) : Prop :=
-   ∃ inner_rotation ∈ SO3, ∃ inner_offset : ℝ², ∃ outer_rotation ∈ SO3,
+   ∃ (inner_rotation : SO3) (inner_offset : ℝ²) (outer_rotation : SO3),
    let hull := convexHull ℝ { vertices i | i }
-   let inner_shadow := { inner_offset + proj_xy (inner_rotation *ᵥ p) | p ∈ hull }
-   let outer_shadow := { proj_xy (outer_rotation *ᵥ p) | p ∈ hull }
+   let inner_shadow := transformed_shadow hull inner_offset inner_rotation
+   let outer_shadow := transformed_shadow hull 0 outer_rotation
    inner_shadow ⊆ interior outer_shadow
 
 /--
-Does the Rupert property hold of every convex polyhedron with nonempty interior?
+Does the Rupert property hold for every convex polyhedron with nonempty interior?
 -/
 @[category research open, AMS 52]
 theorem is_every_convex_polyhedron_rupert :
