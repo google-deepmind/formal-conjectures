@@ -45,8 +45,8 @@ theorem eulers_sum_of_powers_conjecture.false_for_k4 : ¬ (∀ (n k b : ℕ) (hn
   decide
 
 @[category research solved, AMS 11]
-theorem eulers_sum_of_powers_conjecture.false_for_k5 : ¬ (∀ (n k b : ℕ), ∀  (hn : 1 < n), ∀ (hk : 1 < k),
-∀  (a: Fin n → ℕ), ∀ (ha : ∀ i, a i > 0), ∀ (hsum : ∑ i, (a i) ^ k = b ^ k), n ≥ k) := by
+theorem eulers_sum_of_powers_conjecture.false_for_k5 : ¬ (∀ (n k b : ℕ) (hn : 1 < n) (hk : 1 < k)
+    (a: Fin n → ℕ) (ha : ∀ i, a i > 0) (hsum : ∑ i, (a i) ^ k = b ^ k), k ≤ n) := by
   push_neg
   use 4, 5, 144
   norm_num
