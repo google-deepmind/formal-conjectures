@@ -30,7 +30,7 @@ This is true, as proved by Brown and Rödl [BrRo91].
 _Monochromatic solutions to equations with unit fractions_.
 Bull. Austral. Math. Soc. (1991), 387-392.
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_303 :
     --For any finite colouring of the integers
     (∀ (𝓒 : ℤ → ℤ), (Set.range 𝓒).Finite →

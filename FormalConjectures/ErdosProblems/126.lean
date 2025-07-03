@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/126](https://www.erdosproblems.com/126)
 -/
+
 open Filter
 
 def IsMaximalAddFactorsCard (f : ℕ → ℕ) : Prop := ∀ n,

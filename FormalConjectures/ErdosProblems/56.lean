@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open scoped Finset
+
 /-!
 # Erdős Problem 56
 
@@ -26,44 +28,46 @@ Say a set of natural numbers is `k`-weakly divisible if any `k+1` elements
 of `A` are not relatively prime.
 -/
 def WeaklyDivisible (k : ℕ) (A : Finset ℕ) : Prop :=
-    ∀ s ∈ A.powersetCard (k+1), ¬ Pairwise Nat.Coprime
+    ∀ s ∈ A.powersetCard (k + 1), ¬ Set.Pairwise s Nat.Coprime
 
 @[category API, AMS 11]
 lemma weaklyDivisible_empty (k : ℕ): WeaklyDivisible k {} := by
   simp [WeaklyDivisible]
 
+/-- A singleton is `k`-weakly divisble if `k ≠ 0`. -/
 @[category API, AMS 11]
-lemma weaklyDivisible_one (k : ℕ) : WeaklyDivisible k {1} := by
-  simp [WeaklyDivisible, Pairwise]
-  intro hk
-  use 4, 2
-  norm_num
+lemma weaklyDivisible_singleton {k : ℕ} (hk : k ≠ 0) (l : ℕ) : WeaklyDivisible k {l} := by
+  simp [WeaklyDivisible, hk]
 
---TODO(lezeau): we shouldn't need to open `Classical` here!
-open Classical in
+/-- No singleton is `1`-weakly divisible. -/
+@[category API, AMS 11]
+lemma not_weaklyDivisible_singleton {l : ℕ} : ¬WeaklyDivisible 0 {l} := by
+  simp [WeaklyDivisible]
+
 /--
 `MaxWeaklyDivisible N k` is the size of the largest k-weakly divisible subset of `{1,..., N}`
 -/
 noncomputable def MaxWeaklyDivisible (N : ℕ) (k : ℕ) : ℕ :=
-    (Finset.Icc 1 N).powerset.filter (WeaklyDivisible k) |>.sup
-    Finset.card
+  sSup {#A | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : WeaklyDivisible k A)}
 
 @[category test, AMS 11]
 example (k : ℕ) : MaxWeaklyDivisible 0 k = 0 := by
-  simp [MaxWeaklyDivisible]
-
-open Classical
+  simp [MaxWeaklyDivisible, Nat.sSup_def]
 
 @[category test, AMS 11]
-example (k : ℕ) : MaxWeaklyDivisible 1 k = 1 := by
-  simp [MaxWeaklyDivisible]
-  have : (Finset.filter (WeaklyDivisible k) ({1} : Finset ℕ).powerset) = {{}, {1}} := by
-    show Finset.filter (WeaklyDivisible k) {∅, {1}} = _
-    rw [Finset.filter_insert (WeaklyDivisible k) ({} : Finset ℕ) {{1}}]
-    simp only [weaklyDivisible_empty k, Finset.filter_singleton, weaklyDivisible_one]
-    by_cases hk : k = 0 <;> simp [hk]
-  rw [this]
-  by_cases hk : k = 0 <;> simp [hk]
+example {k : ℕ} (hk : k ≠ 0) : MaxWeaklyDivisible 1 k = 1 := by
+  have : {x | ∃ A, WeaklyDivisible k A ∧ (A = ∅ ∨ A = {1}) ∧ #A = x} = {0, 1} := by
+    refine Set.ext fun _ => ⟨fun _ => by aesop, ?_⟩
+    rintro ⟨_, _⟩
+    · simpa using weaklyDivisible_empty k
+    · exact ⟨{1}, by simp_all [weaklyDivisible_singleton hk 1]⟩
+  simp_all [MaxWeaklyDivisible]
+
+@[category test, AMS 11]
+example : MaxWeaklyDivisible 1 0 = 0 := by
+  have : {x | ∃ A, WeaklyDivisible 0 A ∧ (A = ∅ ∨ A = {1}) ∧ #A = x} = {0} :=
+    Set.ext fun _ => ⟨fun _ => by aesop, fun _ => by simp_all [weaklyDivisible_empty]⟩
+  simp_all [MaxWeaklyDivisible]
 
 /--
 `FirstPrimesMultiples N k` is the set of numbers in `{1,..., N}` that are
