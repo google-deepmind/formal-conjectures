@@ -74,7 +74,7 @@ This can be seen, as pointed out by Thomas Bloom [erdosproblems.com/198](https:/
 by an elementary argument.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_198 : (∀ A : ℕ →o ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ (range A)ᶜ)) ↔
+theorem erdos_198 : (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ Aᶜ)) ↔
     answer(False) := by
   sorry
 
@@ -82,7 +82,6 @@ theorem erdos_198 : (∀ A : ℕ →o ℕ, IsSidon A → (∃ Y, IsAPOfLength Y 
 In fact one such sequence is $n! + n$. This was found by AlphaProof. It also found $(n + 1)! + n$.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_198.variant_concrete :  ∃ A : ℕ →o ℕ,
-    (∀ n, A n = n ! + n) ∧
-    IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → ((range A) ∩ Y).Nonempty) := by
+theorem erdos_198.variant_concrete :  ∃ (A : Set ℕ), A = {n ! + n | n} ∧
+    IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → (A ∩ Y).Nonempty) := by
   sorry

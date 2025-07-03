@@ -50,7 +50,7 @@ def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
 end Prelims
 
 /--
-**Euler Problem 846**
+**Erdős Problem 846**
 Let `A ⊂ ℝ²` be an infinite set for which there exists some `ϵ>0` such that in any subset of `A`
 of size `n` there are always at least `ϵn` with no three on a line.
 Is it true that `A` is the union of a finite number of sets where no three are on a line?
