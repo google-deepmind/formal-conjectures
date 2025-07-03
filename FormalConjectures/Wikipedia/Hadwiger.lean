@@ -26,6 +26,7 @@ Hadwiger's conjecture states that every graph with a chromatic number of at leas
 - [Hadwiger's conjecture](https://en.wikipedia.org/wiki/Hadwiger_conjecture_(graph_theory))
 -/
 
+@[category research open, AMS 05]
 theorem hadwiger_weaker {V : Type*} [Fintype V] (G : SimpleGraph V) (k : ℕ)
     (h : k ≤ G.chromaticNumber) : Nonempty (SimpleGraph.Embedding (completeGraph (Fin k)) G) := by
   sorry
