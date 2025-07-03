@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 /--
 The set of natural numbers that can be expressed as a prime plus two powers of 2.
 -/
-def Erdos9A : Set ℕ := { n | ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
+def Erdos9A : Set ℕ := { n | ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
 
 /--
 Is the upper density of the set of natural numbers that can be expressed as a prime plus
