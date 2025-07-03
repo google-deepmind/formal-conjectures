@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Hadwiger's conjecture
 
-Hadwiger's conjecture states that every graph with a chromatic number of at least $k$ contains a complete graph on $k$ vertices as a minor. This is a generalization of the four color theorem, which states that every planar graph can be colored with at most four colors.
+Hadwiger's conjecture states that every graph with a chromatic number of at least $k$ contains a
+complete graph on $k$ vertices as a minor. This is a generalization of the four color theorem,
+which states that every planar graph can be colored with at most four colors.
 
 *References:*
 
