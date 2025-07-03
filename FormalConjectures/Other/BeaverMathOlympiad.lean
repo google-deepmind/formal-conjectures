@@ -175,9 +175,9 @@ $$(a_{n+1}, b_{n+1}) = \begin{cases}
 (a_n, 3b_n+a_n+5) & \text{if } b_n < f(a_n)
 \end{cases}$$
 
-where $f(x)=10\cdot 2^x-1$
+where $f(x)=10\cdot 2^x-1$ for all non-negative integers $x$.
 
-for all positive integers $n$. Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
+Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
 
 [BMO#5](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#5._1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE`](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
