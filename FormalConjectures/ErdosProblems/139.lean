@@ -40,6 +40,5 @@ theorem erdos_139 (k : ℕ) (hk : 1 ≤ k) :
   sorry
 
 /-
-TODO(lezeau):
-1 - add the various known bounds as variants.
+TODO(lezeau): add the various known bounds as variants.
 -/
