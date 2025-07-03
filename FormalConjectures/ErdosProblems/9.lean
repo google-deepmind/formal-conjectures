@@ -23,12 +23,12 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 /--
-The set of natural numbers that can be expressed as a prime plus two powers of 2.
+The set of odd numbers that cannot be expressed as a prime plus two powers of 2.
 -/
-def Erdos9A : Set ℕ := { n | ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
+def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
 
 /--
-Is the upper density of the set of natural numbers that can be expressed as a prime plus
+Is the upper density of the set of odd numbers that cannot be expressed as a prime plus
 two powers of 2 positive?
 -/
 @[category research open, AMS 5 11]
