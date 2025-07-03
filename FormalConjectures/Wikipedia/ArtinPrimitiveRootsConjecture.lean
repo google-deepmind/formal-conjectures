@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Artin%27s_conjecture_on_primitive_roots)
 -/
+
 open scoped Topology Nat
 
 /--Let `S(a)` be the set of primes such that `a` is a primitive root modulo `p`-/

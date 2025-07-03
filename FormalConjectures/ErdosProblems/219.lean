@@ -49,12 +49,12 @@ example : ¬{1, 2} ∈ primeArithmeticProgressions := by
 example : ∅ ∉ primeArithmeticProgressions := by
   simpa [primeArithmeticProgressions] using fun _ hl ↦ Set.not_isAPOfLength_empty hl
 
-@[category API, AMS 5, AMS 11]
+@[category API, AMS 5 11]
 lemma singleton_mem_primeArithmeticProgressions
     {p : ℕ} (hp : p.Prime) : {p} ∈ primeArithmeticProgressions := by
   simpa [primeArithmeticProgressions, hp] using ⟨1, one_pos, Set.isAPOfLength_singleton p⟩
 
-@[category API, AMS 5, AMS 11]
+@[category API, AMS 5 11]
 lemma pair_mem_primeArithmeticProgressions
     {p q : ℕ} (hp : p.Prime) (hq : q.Prime) (hpq : p < q) :
     {p, q} ∈ primeArithmeticProgressions := by

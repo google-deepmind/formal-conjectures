@@ -118,7 +118,7 @@ Acta Arith. (2001), 99-114.
 -/
 @[category research solved, AMS 5]
 theorem erdos_319.variants.lb : ∃ o, (o =o[atTop] fun n => (1 : ℝ)) ∧
-    ∀ {N : ℕ} {A : Finset ℕ} (hA : A ⊆ Finset.Icc 1 N)
+    ∀ {N : ℕ} {A : Finset ℕ} (hA : A ⊆ Finset.Icc 1 N) (h_nonempty : A.Nonempty)
     {δ : ℕ → ℤˣ} (hδ₁ : ∑ n ∈ A, (δ n : ℚ) / n = 0)
     (hδ₂ : ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0),
       (1 - 1 / rexp 1 + o N) * N ≤ #A := by

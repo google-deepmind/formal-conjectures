@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/4](https://www.erdosproblems.com/4)
 -/
+
 open Real
 
 def Erdos4For (C : ℝ) : Prop :=

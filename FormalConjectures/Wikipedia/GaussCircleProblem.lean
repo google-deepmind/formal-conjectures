@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gauss_circle_problem)
 -/
+
 open Filter
 
 open scoped EuclideanGeometry Real Topology
