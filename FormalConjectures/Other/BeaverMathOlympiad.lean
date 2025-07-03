@@ -41,6 +41,18 @@ Turing machine non-termination has been formally proved in Rocq, we indicate it 
 /--
 [BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch))
 
+Let $(a_n)_{n \ge 1}$ and $(b_n)_{n \ge 1}$ be two sequences such that $(a_1, b_1) = (1, 2)$ and
+
+$$(a_{n+1}, b_{n+1}) = \begin{cases}
+(a_n-b_n, 4b_n+2) & \text{if }a_n \ge b_n \\
+(2a_n+1, b_n-a_n) & \text{if }a_n < b_n
+\end{cases}$$
+
+for all positive integers $n$. Does there exist a positive integer $i$ such that $a_i = b_i$?
+
+The first 10 values of $(a_n, b_n)$ are $(1, 2), (3, 1), (2, 6), (5, 4), (1, 18), (3, 17),
+(7, 14), (15, 7), (8, 30), (17, 22)$.
+
 [BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
@@ -99,6 +111,17 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
 /--
 [BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)]
 
+Let $v_2(n)$ be the largest integer $k$ such that $2^k$ divides $n$.
+Let $(a_n)_{n \ge 0}$ be a sequence such that
+
+$$a_n = \begin{cases}
+2 & \text{if } n=0 \\
+a_{n-1}+2^{v_2(a_{n-1})+2}-1 & \text{if } n \ge 1
+\end{cases}$$
+
+for all non-negative integers $n$. Is there an integer $n$ such that $a_n=4^k$ for
+some positive integer $k$?
+
 [BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)] is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
 
 The machine was found and informally proven not to halt by [bbchallenge.org](bbchallenge.org)
@@ -114,6 +137,17 @@ theorem beaver_math_olympiad_problem_3
 
 /--
 [BMO#4](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#4._1RB3RB---1LB0LA_2LA4RA3LA4RB1LB_(bbch))
+
+Bonnie the beaver was bored, so she tried to construct a sequence of integers $\{a_n\}_{n \ge 0}$.
+She first defined $a_0=2$, then defined $a_{n+1}$ depending on $a_n$ and $n$
+using the following rules:
+
+* If $a_n \equiv 0\text{ (mod 3)}$, then $a_{n+1}=\frac{a_n}{3}+2^n+1$.
+* If $a_n \equiv 2\text{ (mod 3)}$, then $a_{n+1}=\frac{a_n-2}{3}+2^n-1$.
+
+With these two rules alone, Bonnie calculates the first few terms in the sequence: $2, 0, 3, 6, 11,
+18, 39, 78, 155, 306, \dots$. At this point, Bonnie plans to continue writing terms until a term
+becomes $1\text{ (mod 3)}$. If Bonnie sticks to her plan, will she ever finish?
 
 [BMO#4](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#4._1RB3RB---1LB0LA_2LA4RA3LA4RB1LB_(bbch))
 is equivalent to the non-termination of 2-state 5-symbol Turing machine
@@ -133,6 +167,17 @@ theorem beaver_math_olympiad_problem_4
 
 /--
 [BMO#5](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#5._1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE_(bbch))
+
+Let $(a_n)_{n \ge 1}$ and $(b_n)_{n \ge 1}$ be two sequences such that $(a_1, b_1) = (0, 5)$ and
+
+$$(a_{n+1}, b_{n+1}) = \begin{cases}
+(a_n+1, b_n-f(a_n)) & \text{if } b_n \ge f(a_n) \\
+(a_n, 3b_n+a_n+5) & \text{if } b_n < f(a_n)
+\end{cases}$$
+
+where $f(x)=10\cdot 2^x-1$
+
+for all positive integers $n$. Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
 
 [BMO#5](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#5._1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE`](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
