@@ -64,8 +64,10 @@ June 25th 2024.
 -/
 @[category research open, AMS 5 11 68]
 theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
-    (a_ini : a 0 = 1) (a_rec : ∀ n, a (n+1) = if (a n) ≥ (b n) then (a n) - (b n) else 2*(a n) + 1)
-    (b_ini : b 0 = 2) (b_rec : ∀ n, b (n+1) = if (a n) ≥ (b n) then 4*(b n) + 2 else (b n) - (a n)):
+    (a_ini : a 0 = 1)
+    (a_rec : ∀ n, a (n + 1) = if b n ≤ a n then a n - b n else 2 * a n + 1)
+    (b_ini : b 0 = 2)
+    (b_rec : ∀ n, b (n + 1) = if b n ≤ a n then 4 * b n + 2 else b n - a n):
     (∃ i, a i = b i) ↔ answer(sorry) := by
   sorry
 
@@ -89,8 +91,10 @@ contributors mxdys and Rachel Hunter on June 28th 2024.
 @[category research open, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_2_antihydra
     (a : ℕ → ℕ) (b : ℕ → ℤ)
-    (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*(a n)/2 : ℕ))
-    (b_ini : b 0 = 0) (b_rec : ∀ n, b (n+1) = if (a n) % 2 = 0 then (b n) + 2 else (b n) - 1) :
+    (a_ini : a 0 = 8)
+    (a_rec : ∀ n, a (n + 1) = (3 * a n) / 2)
+    (b_ini : b 0 = 0)
+    (b_rec : ∀ n, b (n + 1) = if a n % 2 = 0 then b n + 2 else b n - 1) :
     ∀ n, b n ≥ 0 := by
   sorry
 
@@ -102,10 +106,10 @@ using set size comparison instead of a recurrent sequence b.
 -/
 @[category research open, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_2_antihydra.variants.set
-    (a : ℕ → ℕ)
-    (a_ini : a 0 = 8) (a_rec : ∀ n, a (n+1) = (3*(a n)/2 : ℕ)) :
-    ∀ n, ((Finset.Ico 0 n).filter fun x ↦ Odd (a x)).card ≤
-        2*((Finset.Ico 0 n).filter fun x ↦ Even (a x)).card := by
+    (a : ℕ → ℕ) (a_ini : a 0 = 8)
+    (a_rec : ∀ n, a (n + 1) = (3 * a n) / 2) (n : ℕ) :
+    ((Finset.Ico 0 n).filter fun x ↦ Odd (a x)).card ≤
+      2 * ((Finset.Ico 0 n).filter fun x ↦ Even (a x)).card := by
   sorry
 
 /--
@@ -131,8 +135,8 @@ contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://disc
 theorem beaver_math_olympiad_problem_3
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
-    (a_rec : ∀ n, a (n+1) = (a n) + 2 ^ ((padicValNat 2 (a n)) + 2) - 1) :
-    ¬ (∃ n k, a n = 4 ^ k) :=
+    (a_rec : ∀ n, a (n + 1) = (a n) + 2 ^ ((padicValNat 2 (a n)) + 2) - 1) :
+    ¬ (∃ n k, a n = 4 ^ k) := by
   sorry
 
 /--
@@ -161,8 +165,8 @@ theorem beaver_math_olympiad_problem_4
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
     (a_rec : ∀ n, a (n+1)
-      = if (a n) % 3 = 0 then (a n) / 3 + 2^n + 1 else ((a n) - 2) / 3 + 2^n - 1) :
-    ¬ (∃ n, (a n) % 3 = 1) :=
+      = if a n % 3 = 0 then a n / 3 + 2 ^ n + 1 else (a n - 2) / 3 + 2 ^ n - 1) :
+    ¬ (∃ n, a n % 3 = 1) := by
   sorry
 
 /--
@@ -191,13 +195,11 @@ on August 7th 2024.
 The correspondence between the machine's halting problem and the below reformulation has been proven
 in [Rocq](https://github.com/ccz181078/busycoq/blob/BB6/verify/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE.v).
 -/
-def f (x: ℕ) :=
-  10*2^x - 1
-
 @[category research open, AMS 5 11 68]
-theorem beaver_math_olympiad_problem_5 (a : ℕ → ℕ) (b : ℕ → ℕ)
-    (a_ini : a 0 = 0) (a_rec : ∀ n, a (n+1) = if b n ≥ f (a n) then a n + 1 else a n)
-    (b_ini : b 0 = 5)
-    (b_rec : ∀ n, b (n+1) = if b n ≥ f (a n) then b n - f (a n) else 3 * b n + a n + 5) :
-    (∃ i, b i = (f (a i)) - 1) ↔ answer(sorry) :=
+theorem beaver_math_olympiad_problem_5
+    (a b f : ℕ → ℕ) (hf : f = fun x ↦ 10 * 2 ^ x - 1)
+    (a_ini : a 0 = 0) (b_ini : b 0 = 5)
+    (a_rec : ∀ n, a (n + 1) = if f (a n) ≤ b n then a n + 1 else a n)
+    (b_rec : ∀ n, b (n+1) = if f (a n) ≤ b n then b n - f (a n) else 3 * b n + a n + 5) :
+    (∃ i, b i = (f (a i)) - 1) ↔ answer(sorry) := by
   sorry
