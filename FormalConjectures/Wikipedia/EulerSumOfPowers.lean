@@ -31,7 +31,7 @@ The conjecture is known to be false for $k = 4$ and $k = 5$,
 but remains open for $k \geq 6$.
 -/
 @[category research open, AMS 11]
-theorem eulers_sum_of_powers_conjecture (n k b : ℕ) (hn : 1 < n) (hk : 1 < k) (a: Fin n → ℕ)
+theorem eulers_sum_of_powers_conjecture (n k b : ℕ) (hn : 1 < n) (hk : 5 < k) (a : Fin n → ℕ)
     (ha : ∀ i, a i > 0) (hsum : ∑ i, (a i) ^ k = b ^ k) : k ≤ n := by
   sorry
 
