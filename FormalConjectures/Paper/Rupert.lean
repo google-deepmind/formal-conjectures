@@ -81,6 +81,22 @@ def transformed_shadow (X : Set ℝ³) (offset : ℝ²) (rotation : SO3) : Set �
   (λ p ↦ offset + proj_xy (rotation.1 *ᵥ p)) '' X
 
 /--
+Get the "inner shadow" of a set of vertices, given the rotation and offset for it.
+--/
+def inner_shadow_of_vertices {ι : Type} [Fintype ι] (vertices : ι → ℝ³)
+  (inner_offset : ℝ²) (inner_rotation : SO3) : Set ℝ² :=
+  transformed_shadow (convexHull ℝ { vertices i | i }) inner_offset inner_rotation
+
+/--
+Get the "outer shadow" of a set of vertices, given the rotation and offset for it.
+The outer shadow asymmetrically doesn't require a translation, since it would be
+redundant to specify two, since translation commutes with projection.
+--/
+def outer_shadow_of_vertices {ι : Type} [Fintype ι] (vertices : ι → ℝ³)
+  (outer_rotation : SO3) : Set ℝ² :=
+  transformed_shadow (convexHull ℝ { vertices i | i }) 0 outer_rotation
+
+/--
 A convex polyhedron (given as a finite collection of vertices) is Rupert if
 there are two rotations in ℝ³ (called "inner" and "outer") and a translation in ℝ²
 such that the "inner shadow" (the projection to ℝ² of the inner rotation applied
@@ -89,9 +105,8 @@ to the polyhedron, then translated) fits in the interior of the "outer shadow"
 -/
 def IsRupert {ι : Type} [Fintype ι] (vertices : ι → ℝ³) : Prop :=
    ∃ (inner_rotation : SO3) (inner_offset : ℝ²) (outer_rotation : SO3),
-   let hull := convexHull ℝ { vertices i | i }
-   let inner_shadow := transformed_shadow hull inner_offset inner_rotation
-   let outer_shadow := transformed_shadow hull 0 outer_rotation
+   let inner_shadow := inner_shadow_of_vertices vertices inner_offset inner_rotation
+   let outer_shadow := outer_shadow_of_vertices vertices outer_rotation
    inner_shadow ⊆ interior outer_shadow
 
 /--
