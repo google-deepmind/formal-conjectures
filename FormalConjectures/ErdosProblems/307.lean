@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 307
 
-*Reference:* [erdosproblems.com/307](https://www.erdosproblems.com/304)
+*Reference:* [erdosproblems.com/307](https://www.erdosproblems.com/307)
 -/
 
 /--
@@ -28,11 +28,13 @@ Are there two finite set of primes $P$ and $Q$ such that
 $$
 1 = \left( \sum_{p \in P} \frac{1}{p} \right) \left( \sum_{q \in Q} \frac{1}{q} \right)
 $$
-? Asked by Barbeau.
+?
 
-Ref: Barbeau, E. J., _Computer challenge corner: Problem 477: A brute force program._
+Asked by Barbeau [Ba76].
+
+[Ba76] Barbeau, E. J., _Computer challenge corner: Problem 477: A brute force program._
 -/
-@[category research open, AMS 5 11]
+@[category research open, AMS 11]
 theorem erdos_307 : (∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ (∀ q ∈ Q, q.Prime) ∧
     (1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹))) ↔ answer(sorry) := by
   sorry
