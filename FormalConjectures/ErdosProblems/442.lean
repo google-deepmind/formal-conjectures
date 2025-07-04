@@ -112,7 +112,7 @@ $$
 -/
 @[category research solved, AMS 11]
 theorem erdos_442.variants.tao :
-    ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : Tendsto f atTop (𝓝 0)),
+    ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : f =o[atTop] (1 : ℝ → ℝ)),
       ∀ (x : ℝ),
         ∑ n ∈ A.bdd x, (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
