@@ -29,7 +29,8 @@ be?
 Erdős proved that 1/2 is possible and Krückeberg [Kr61] proved 1/2 is possible.
 Erdős and Turán [ErTu41] have proved this lim sup is always ≤ 1.
 
-The fact that 1 is possible would follow if any finite Sidon set is a subset of a perfect difference set.
+The fact that 1 is possible would follow if any finite Sidon set is a subset of a perfect
+difference set.
 -/
 
 open Function Set Filter
@@ -46,21 +47,22 @@ noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
 The main question: what is the maximum possible upper density of a Sidon set?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = answer(sorry) := by
+theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
+    answer(sorry) := by
   sorry
 
 /--
 Erdős proved that 1/2 is achievable as an upper density.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_329.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
+theorem erdos_329.lower_bound : ∃ᵉ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
   sorry
 
 /--
 Krückeberg [Kr61] proved that 1/2 is achievable.
 -/
 @[category research solved, AMS 5 11]
-theorem kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A = 1/2 := by
+theorem kruckeberg_1961 : ∃ᵉ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A = 1/2 := by
   sorry
 
 /--
@@ -71,7 +73,8 @@ theorem erdos_turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUpperDensity A 
   sorry
 
 /--
-A perfect difference set modulo `n` is a set `D` such that the map `(a, b) ↦ a - b` from `D.offDiag` to `{x : ZMod n | x ≠ 0}` is a bijection.
+A perfect difference set modulo `n` is a set `D` such that the map `(a, b) ↦ a - b` from
+`D.offDiag` to `{x : ZMod n | x ≠ 0}` is a bijection.
 -/
 def IsPerfectDifferenceSet (D : Set ℕ) (n : ℕ) : Prop :=
   D.offDiag.BijOn (fun (a, b) => (a - b : ZMod n)) {x : ZMod n | x ≠ 0}
@@ -82,7 +85,7 @@ then the maximum density would be 1.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_329.perfect_difference_set_implication :
-    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ᵉ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) →
     sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1 := by
   sorry
@@ -94,7 +97,7 @@ can be embedded in a perfect difference set.
 @[category research open, AMS 5 11]
 theorem erdos_329.converse_implication :
     (sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1) →
-    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ᵉ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) := by
   sorry
 
@@ -118,7 +121,7 @@ theorem squares_sidon_density : sidonUpperDensity {n^2 | n : ℕ} = 0 := by
 The greedy construction gives a Sidon set with positive density.
 -/
 @[category undergraduate, AMS 5 11]
-theorem greedy_sidon_construction : ∃ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
+theorem greedy_sidon_construction : ∃ᵉ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
   sorry
 
 /--
