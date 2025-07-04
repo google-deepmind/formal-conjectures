@@ -27,6 +27,33 @@ The set of odd numbers that cannot be expressed as a prime plus two powers of 2.
 -/
 def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
 
+
+@[category test]
+example : 1 ∈ Erdos9A := by
+  constructor
+  · decide
+  · push_neg
+    intro p k l hp
+    linarith [Nat.Prime.two_le hp, @Nat.one_le_two_pow k, @Nat.one_le_two_pow l]
+
+@[category test]
+example : 3 ∈ Erdos9A := by
+  constructor
+  · decide
+  · push_neg
+    intro p k l hp
+    linarith [Nat.Prime.two_le hp, @Nat.one_le_two_pow k, @Nat.one_le_two_pow l]
+
+@[category test]
+example : 5 ∉ Erdos9A := by
+  unfold Erdos9A
+  simp only [exists_and_left, not_exists, not_and, Set.mem_setOf_eq, not_forall, Classical.not_imp,
+    Decidable.not_not]
+  intro
+  use 3, Nat.prime_three, 0, 0
+  simp only [pow_zero, Nat.reduceAdd]
+
+
 /--
 The set is known to be infinite. In [Er77c] Erdős credits Schinzel with proving that there are
 infinitely many odd integers not of this form, but gives no reference.
