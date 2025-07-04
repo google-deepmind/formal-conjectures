@@ -28,10 +28,10 @@ The set of odd numbers that cannot be expressed as a prime plus two powers of 2.
 def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
 
 /--
-The set is known to be infinite. Erdős credits Schinzel with proving that there are
+The set is known to be infinite. In [Er77c] Erdős credits Schinzel with proving that there are
 infinitely many odd integers not of this form, but gives no reference.
 
-Ref: Erdős, P., _Problems and results on combinatorial number theory. III._.
+[Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_9_infinite : Erdos9A.Infinite := by
