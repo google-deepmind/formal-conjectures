@@ -28,15 +28,10 @@ The set of odd numbers that cannot be expressed as a prime plus two powers of 2.
 def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
 
 /--
-The set is known to be infinite. Erdős [Er77c] credits Schinzel with proving that there are
-infinitely many odd integers not of this form, but gives no reference. Crocker [Cr71] has proved
-there are are $\gg \log \log N$ such integers in $\{1, \dots, N\}$.
-Pan [Pa11] improved this to $\gg_\epsilon N^{1 - \epsilon}$ for any $\epsilon > 0$.
+The set is known to be infinite. Erdős credits Schinzel with proving that there are
+infinitely many odd integers not of this form, but gives no reference.
 
-Refs:
-- [Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._.
-- [Cr71] Crocker, R., _On the sum of a prime and of two powers of two_.
-- [Pa11] Pan, H., _On the integers not of the form {$p+2^a+2^b$}_.
+Ref: Erdős, P., _Problems and results on combinatorial number theory. III._.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_9_infinite : Erdos9A.Infinite := by
