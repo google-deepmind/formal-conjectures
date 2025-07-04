@@ -43,42 +43,39 @@ Find the link to the problem [here](https://www.erdosproblems.com/43).
 
 /-- The maximum size of a Sidon set in `{1, ..., N}`. -/
 noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
-  sSup {n | ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ IsSidon A.toSet ∧ A.card = n}
+  sSup {n | ∃ A : Finset ℕ, A ⊆ Finset.Icc 1 N ∧ IsSidon A.toSet ∧ A.card = n}
 
 /--
-If `A` and `B` are Sidon subsets of `{1, ..., N}` with disjoint difference sets,
-is it true that the sum of their pair counts is at most the pair count of the optimal Sidon set,
-up to an additive constant?
+If `A` and `B` are Sidon sets in `{1, ..., N}` with disjoint difference sets,
+is the sum of unordered pair counts bounded by that of an optimal Sidon set up to `O(1)`?
 -/
-@[category research open, AMS 11B]
+@[category research open, AMS 11 05]
 theorem erdos_43 :
-    (∀ (N : ℕ) (A B : Finset ℕ),
-      A ⊆ Icc 1 N →
-      B ⊆ Icc 1 N →
+    ∃ C : ℝ, ∀ (N : ℕ) (A B : Finset ℕ),
+      A ⊆ Finset.Icc 1 N →
+      B ⊆ Finset.Icc 1 N →
       IsSidon A.toSet →
       IsSidon B.toSet →
-      ((A ×ˢ A).image (λ p => p.1 - p.2) ∩
-       (B ×ˢ B).image (λ p => p.1 - p.2)).card = 0 →
-      ∃ C : ℝ,
-        (choose A.card 2 + choose B.card 2 : ℝ) ≤
-          choose (maxSidonSetSize N) 2 + C) ↔ answer(sorry) := by
+      (A ×ˢ A).image (λ p => p.1 - p.2) ∩
+        (B ×ˢ B).image (λ p => p.1 - p.2) = ∅ →
+      ((A.card * (A.card - 1) + B.card * (B.card - 1)) / 2 : ℝ) ≤
+        (maxSidonSetSize N * (maxSidonSetSize N - 1) / 2 : ℝ) + C := by
   sorry
 
 /--
-If `A` and `B` are equal-sized Sidon subsets of `{1, ..., N}` with disjoint differences,
-can we improve the bound to be a strict proportion below the optimal?
+If `A` and `B` are equal-sized Sidon sets with disjoint difference sets,
+can the sum of pair counts be bounded by a strict fraction of the optimum?
 -/
-@[category research open, AMS 11B]
+@[category research open, AMS 11 05]
 theorem erdos_43_equal_size :
-    (∀ (N : ℕ) (A B : Finset ℕ),
-      A ⊆ Icc 1 N →
-      B ⊆ Icc 1 N →
+    ∃ c : ℝ, 0 < c ∧ ∀ (N : ℕ) (A B : Finset ℕ),
+      A ⊆ Finset.Icc 1 N →
+      B ⊆ Finset.Icc 1 N →
       IsSidon A.toSet →
       IsSidon B.toSet →
       A.card = B.card →
-      ((A ×ˢ A).image (λ p => p.1 - p.2) ∩
-       (B ×ˢ B).image (λ p => p.1 - p.2)).card = 0 →
-      ∃ c : ℝ, 0 < c ∧
-        (choose A.card 2 + choose B.card 2 : ℝ) ≤
-          (1 - c) * choose (maxSidonSetSize N) 2) ↔ answer(sorry) := by
+      (A ×ˢ A).image (λ p => p.1 - p.2) ∩
+        (B ×ˢ B).image (λ p => p.1 - p.2) = ∅ →
+      ((A.card * (A.card - 1) + B.card * (B.card - 1)) / 2 : ℝ) ≤
+        (1 - c) * (maxSidonSetSize N * (maxSidonSetSize N - 1) / 2 : ℝ) := by
   sorry
