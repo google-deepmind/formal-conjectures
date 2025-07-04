@@ -44,7 +44,7 @@ Instead of set of primes, ask for all $p \in P$ to be relatively coprime,
 and similarly for $q \in Q$.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_307_coprime : (∃ P Q : Finset ℕ, (∀ p₁ p₂ : P, p₁ ≠ p₂ → Nat.Coprime p₁ p₂) ∧
-    (∀ q₁ q₂ : Q, q₁ ≠ q₂ → Nat.Coprime q₁ q₂) ∧
+theorem erdos_307_coprime : (∃ P Q : Finset ℕ, P.toSet.Pairwise Nat.Coprime ∧
+    Q.toSet.Pairwise Nat.Coprime ∧
     (1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹))) ↔ answer(sorry) := by
   sorry
