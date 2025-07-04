@@ -17,15 +17,27 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Catalan's conjecture
+# Congruent Number
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Catalan%27s_conjecture)
+A natural number $n$ is called a congruent number if there exists a right triangle with rational
+sides $a$, $b$, and hypotenuse $c$ such that the area of the triangle is $\frac{1}{2}ab = n$.
+
+*References:*
+- [Wikipedia (Congruent number)](https://en.wikipedia.org/wiki/Congruent_number)
+- [Wikipedia (Tunnell's theorem)](https://en.wikipedia.org/wiki/Tunnell%27s_theorem)
+- [Keith Conrad's note](https://kconrad.math.uconn.edu/blurbs/ugradnumthy/congnumber.pdf)
 -/
 
 
 def congruentNumber (n : ℕ) : Prop :=
   ∃ (a b c : ℚ), a ^ 2 + b ^ 2 = c ^ 2 ∧ n = (2⁻¹ : ℚ) * a * b
 
+/- 1 is not a congruent number. -/
+@[category test]
+example : ¬ congruentNumber 1 := by
+  sorry
+
+/- 5, 6, 7, and 157 are congruent numbers. -/
 @[category test]
 example : congruentNumber 5 := by
   use 3 / 2, 20 / 3, 41 / 6
@@ -85,7 +97,7 @@ theorem Tunnell_even (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     congruentNumber n → 2 * (C n).ncard = (D n).ncard := by
   sorry
 
-/-- Converse of Tunnell's theorem. True under BSD conjecture. -/
+/-- Converse of Tunnell's theorem. -/
 @[category research open, AMS 11]
 theorem Tunnell_odd_converse (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
     2 * (A n).ncard = (B n).ncard → congruentNumber n := by
