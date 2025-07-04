@@ -34,7 +34,7 @@ open Function Set
 
 /-- The maximum size of a Sidon set in `{1, ..., N}`. -/
 noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
-  sSup {A.card | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
+  sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
 
 /-- The optimal density for Sidon sets is approximately `√N`. -/
 @[category API, AMS 5 11]
@@ -46,46 +46,39 @@ theorem maxSidonSetSize_bound (N : ℕ) (hN : 1 ≤ N) :
 A Sidon set can be extended to achieve density close to optimal.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44 : (∀ (N : ℕ) (A : Finset ℕ) (_ : 1 ≤ N) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet),
-    ∀ ε > 0, ∃ (M : ℕ) (B : Finset ℕ),
-      N < M ∧
-      B ⊆ Finset.Icc (N + 1) M ∧
-      IsSidon (A ∪ B).toSet ∧
-      (1 - ε) * M.sqrt ≤ (A ∪ B).card) ↔ answer(sorry) := by
+theorem erdos_44 : (∀ (N : ℕ) (A : Finset ℕ) (_ : 1 ≤ N) (_ : A ⊆ Finset.Icc 1 N)
+    (_ : IsSidon A.toSet), ∀ (ε : ℝ) (_ : ε > 0), ∃ᵉ (M : ℕ) (B : Finset ℕ),
+      N < M ∧ B ⊆ Finset.Icc (N + 1) M ∧ IsSidon (A ∪ B).toSet ∧
+      (1 - ε) * Real.sqrt M ≤ (A ∪ B).card) ↔ answer(sorry) := by
   sorry
 
 /--
 A variant considering the extension to any larger range.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44.variant : (∀ (N : ℕ) (A : Finset ℕ) (_ : 1 ≤ N) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet),
-    ∀ ε > 0, ∀ M ≥ N, ∃ (B : Finset ℕ),
-      B ⊆ Finset.Icc (N + 1) M ∧
-      IsSidon (A ∪ B).toSet ∧
-      (1 - ε) * M.sqrt ≤ (A ∪ B).card) ↔ answer(sorry) := by
+theorem erdos_44.variant : (∀ (N : ℕ) (A : Finset ℕ) (_ : 1 ≤ N) (_ : A ⊆ Finset.Icc 1 N)
+    (_ : IsSidon A.toSet), ∀ (ε : ℝ) (_ : ε > 0) (M : ℕ) (_ : N ≤ M), ∃ᵉ (B : Finset ℕ),
+      B ⊆ Finset.Icc (N + 1) M ∧ IsSidon (A ∪ B).toSet ∧
+      (1 - ε) * Real.sqrt M ≤ (A ∪ B).card) ↔ answer(sorry) := by
   sorry
 
 /--
 The case where we start with an empty set (constructing large Sidon sets).
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44.empty_start : (∀ ε > 0, ∃ (M : ℕ) (A : Finset ℕ),
-    A ⊆ Finset.Icc 1 M ∧
-    IsSidon A.toSet ∧
-    (1 - ε) * M.sqrt ≤ A.card) ↔ answer(sorry) := by
+theorem erdos_44.empty_start : (∀ (ε : ℝ) (_ : ε > 0), ∃ᵉ (M : ℕ) (A : Finset ℕ),
+    A ⊆ Finset.Icc 1 M ∧ IsSidon A.toSet ∧ (1 - ε) * Real.sqrt M ≤ A.card) ↔
+    answer(sorry) := by
   sorry
 
 /--
 A constructive version asking for explicit bounds on M in terms of ε.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44.constructive : (∃ (f : ℝ → ℕ), ∀ (N : ℕ) (A : Finset ℕ) (_ : 1 ≤ N) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet),
-    ∀ ε > 0, ∃ (M : ℕ) (B : Finset ℕ),
-      M ≤ f ε ∧
-      N < M ∧
-      B ⊆ Finset.Icc (N + 1) M ∧
-      IsSidon (A ∪ B).toSet ∧
-      (1 - ε) * M.sqrt ≤ (A ∪ B).card) ↔ answer(sorry) := by
+theorem erdos_44.constructive : (∃ (f : ℝ → ℕ), ∀ (N : ℕ) (A : Finset ℕ) (_ : 1 ≤ N)
+    (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet), ∀ (ε : ℝ) (_ : ε > 0), ∃ᵉ (M : ℕ) (B : Finset ℕ),
+      M ≤ f ε ∧ N < M ∧ B ⊆ Finset.Icc (N + 1) M ∧ IsSidon (A ∪ B).toSet ∧
+      (1 - ε) * Real.sqrt M ≤ (A ∪ B).card) ↔ answer(sorry) := by
   sorry
 
 /-! ## Related results and examples -/
@@ -102,7 +95,8 @@ For any `N`, there exists a Sidon set of size at least `√N/2`.
 -/
 @[category undergraduate, AMS 5 11]
 theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
-    ∃ (A : Finset ℕ), A ⊆ Finset.Icc 1 N ∧ IsSidon A.toSet ∧ N.sqrt / 2 ≤ A.card := by
+    ∃ (A : Finset ℕ), A ⊆ Finset.Icc 1 N ∧ IsSidon A.toSet ∧
+    N.sqrt / 2 ≤ A.card := by
   sorry
 
 /--
