@@ -37,15 +37,23 @@ def UnitDistancePlaneGraph : SimpleGraph (EuclideanSpace ℝ (Fin 2)) :=
     (by
       intros x
       simp [dist_self])
-
 /--
 The Hadwiger–Nelson problem asks: How many colors are required to color the plane
 such that no two points at distance 1 from each other have the same color?
 
 It is known that 7 colors are sufficient.
-It was established in 2018 that at least 5 colors are required.
 -/
 @[category research open, AMS 52]
 theorem HadwigerNelsonProblem :
     UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+  sorry
+
+/--
+It was established in 2018 that at least 5 colors are required.
+
+See reference: [de Grey 2018](https://arxiv.org/abs/1804.02385)
+-/
+@[category research solved, AMS 52]
+theorem HadwigerNelsonAtLeastFive :
+    5 ≤ UnitDistancePlaneGraph.chromaticNumber := by
   sorry
