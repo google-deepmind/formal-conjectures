@@ -38,6 +38,7 @@ Refs:
 - [Cr71] Crocker, R., _On the sum of a prime and of two powers of two_.
 - [Pa11] Pan, H., _On the integers not of the form {$p+2^a+2^b$}_.
 -/
+@[category research solved, AMS 5 11]
 theorem erdos_9_infinite : Erdos9A.Infinite := by
   sorry
 
