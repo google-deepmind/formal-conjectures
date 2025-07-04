@@ -15,8 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Set.Finite.Basic
 
 /-!
 # Singmaster's conjecture
