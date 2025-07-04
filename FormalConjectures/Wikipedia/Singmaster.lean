@@ -42,4 +42,4 @@ end Singmaster
 @[category research open, AMS 11]
 theorem singmaster:
     ∃ (C : ℕ), ∀ (t : ℕ), t > 1 → (Singmaster.solutions t).Finite ∧ (Singmaster.solutions t).ncard ≤ C := by
-    sorry
+  sorry
