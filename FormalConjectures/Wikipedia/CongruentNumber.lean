@@ -41,17 +41,17 @@ example : ¬ congruentNumber 1 := by
 @[category test]
 example : congruentNumber 5 := by
   use 3 / 2, 20 / 3, 41 / 6
-  constructor <;> norm_num
+  norm_num
 
 @[category test]
 example : congruentNumber 6 := by
   use 3, 4, 5
-  constructor <;> norm_num
+  norm_num
 
 @[category test]
 example : congruentNumber 7 := by
   use 35 / 12, 24 / 5, 337 / 60
-  constructor <;> norm_num
+  norm_num
 
 /- Zagier's example -/
 @[category test]
@@ -60,7 +60,7 @@ example : congruentNumber 157 := by
     6803298487826435051217540 / 411340519227716149383203,
     224403517704336969924557513090674863160948472041 /
       8912332268928859588025535178967163570016480830
-  constructor <;> norm_num
+  norm_num
 
 
 /- Characterize congruent numbers. -/
@@ -92,6 +92,7 @@ def D (n : ℕ) : Set (ℤ × ℤ × ℤ) := { (x, y, z) | n = 8 * x ^ 2 + 2 * y
 theorem Tunnell_odd (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
     congruentNumber n → 2 * (A n).ncard = (B n).ncard := by
   sorry
+
 @[category research solved, AMS 11]
 theorem Tunnell_even (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     congruentNumber n → 2 * (C n).ncard = (D n).ncard := by
