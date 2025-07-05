@@ -73,6 +73,7 @@ end DeleteEdges
 def SimpleGraph'.edgeSet (G : SimpleGraph' V) : Set (Sym2 V) :=
   {e | ∃ u v, s(u, v) = e ∧ G.Adj u v}
 
+@[category API]
 lemma SimpleGraph'.mem_edgeSet (G : SimpleGraph' V) {e : Sym2 V} :
     e ∈ G.edgeSet ↔ ∃ u v, s(u, v) = e ∧ G.Adj u v := by
   simp [SimpleGraph'.edgeSet]
@@ -84,6 +85,8 @@ def SimpleGraph'.contractEdge (G : SimpleGraph' V) {e : Sym2 V} (he : e ∈ G.ed
   verts := G.verts \ {(Quot.out e).1}
   Adj u v :=
     u ≠ v ∧
+    u ≠ (Quot.out e).1 ∧
+    v ≠ (Quot.out e).1 ∧
     (G.Adj u v ∨
      (u = (Quot.out e).2 ∧ G.Adj (Quot.out e).1 v) ∨
      (v = (Quot.out e).2 ∧ G.Adj u (Quot.out e).1))
@@ -93,23 +96,46 @@ def SimpleGraph'.contractEdge (G : SimpleGraph' V) {e : Sym2 V} (he : e ∈ G.ed
     simp only [Set.mem_diff, Set.mem_singleton_iff]
     constructor
     · -- Show u ∈ G.verts \ {(Quot.out e).1}
-      constructor
-      · -- Show u ∈ G.verts
-        cases hadj with
+        refine ⟨?_, hadj.1⟩
+        cases hadj.2.2 with
         | inl h => exact (G.Adj_of_verts u v h).1
         | inr h =>
-          cases h with
-          | inl h =>
-            rw [SimpleGraph'.mem_edgeSet] at he
-            obtain ⟨u₁, v₁, s_eq_e, adj₁⟩ := he
-
-            sorry
-          | inr h => sorry
-      · sorry
-    sorry
+            cases h with
+            | inl h =>
+                rw [SimpleGraph'.mem_edgeSet] at he
+                obtain ⟨u₁, v₁, s_eq_e, adj₁⟩ := he
+                have : e = s((Quot.out e).1, (Quot.out e).2) := by exact (Quot.out_eq e).symm
+                rw [this, Sym2.eq_iff] at s_eq_e
+                have := G.Adj_of_verts u₁ v₁ adj₁
+                cases s_eq_e with
+                | inl hh => convert this.2
+                            exact h.1.trans hh.2.symm
+                | inr hh => convert this.1
+                            exact h.1.trans hh.1.symm
+            | inr h => exact (G.Adj_of_verts u _ h.2).1
+    ·   refine ⟨?_, hadj.2.1⟩
+        cases hadj.2.2 with
+        | inl h => exact (G.Adj_of_verts u v h).2
+        | inr h =>
+            cases h with
+            | inl h => exact (G.Adj_of_verts _ v h.2).2
+            | inr h =>
+                rw [SimpleGraph'.mem_edgeSet] at he
+                obtain ⟨u₁, v₁, s_eq_e, adj₁⟩ := he
+                have : e = s((Quot.out e).1, (Quot.out e).2) := by exact (Quot.out_eq e).symm
+                rw [this, Sym2.eq_iff] at s_eq_e
+                have := G.Adj_of_verts u₁ v₁ adj₁
+                cases s_eq_e with
+                | inl hh => convert this.2
+                            exact h.1.trans hh.2.symm
+                | inr hh => convert this.1
+                            exact h.1.trans hh.1.symm
   symm qu qv h := by
-    sorry
-
+    simp only [ne_eq] at h ⊢
+    refine ⟨Ne.symm h.1, h.2.2.1, h.2.1, ?_⟩
+    convert h.2.2.2 using 1
+    ·   refine ⟨fun adj ↦ G.symm adj, fun adj ↦ G.symm adj⟩
+    ·   sorry
     #exit
                     | mk hu_eq h_adj =>
                     rw [hu_eq]
