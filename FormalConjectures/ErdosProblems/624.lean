@@ -69,6 +69,7 @@ theorem erdos_624 {α : Type*} {H : ℕ → ℕ} {f : PowersetMap α}
     Tendsto (fun n => H n - Real.logb 2 n) atTop atTop :=
   sorry
 
+open Real in
 /--
 Erdős and Hajnal proved that
 $$
@@ -78,8 +79,8 @@ $$
 @[category research solved, AMS 5]
 theorem erdos_624.variants.interval {α : Type*} {H : ℕ → ℕ} {f : PowersetMap α}
     (hf : f.SurjectiveAbove H) :
-    ∃ (o : ℕ → ℕ) (ho : Tendsto o atTop (𝓝 0)), ∀ (n : ℕ),
-        Real.logb 2 n ≤ H n ∧ H n < Real.logb 2 n + (3 + o n) * Real.logb 2 (Real.logb 2 n) :=
+    ∃ (o : ℕ → ℕ) (ho : (fun n => (o n : ℝ)) =o[atTop] (1 : ℕ → ℝ)), ∀ (n : ℕ),
+        logb 2 n ≤ H n ∧ H n < logb 2 n + (3 + o n) * logb 2 (logb 2 n) :=
   sorry
 
 /--
