@@ -63,10 +63,6 @@ example : congruentNumber 157 := by
   norm_num
 
 
-/- Characterize congruent numbers. -/
-theorem congruent_number_problem (n : ℕ+) : congruentNumber n ↔ answer(sorry) := by
-  sorry
-
 /-!
 Tunnell's theorem:
 Let $A_n$, $B_n$, $C_n$, and $D_n$ be the sets defined as follows:
