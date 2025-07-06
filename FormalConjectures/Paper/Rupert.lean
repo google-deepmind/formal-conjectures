@@ -16,6 +16,7 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 import Mathlib.Analysis.InnerProductSpace.PiL2
+
 /-!
 # Is Every Convex Polyhedron Rupert?
 
@@ -68,33 +69,27 @@ notation "ℝ²" => Fin 2 → ℝ
 abbrev SO3 := Matrix.specialOrthogonalGroup (Fin 3) ℝ
 
 /--
-The projection of a vector from 3-space to 2-space by dropping the third coordinate.
--/
-def proj_xy (v : Fin 3 → ℝ) : Fin 2 → ℝ :=
-  ![v 0, v 1]
-
-/--
 The result of transforming a subset of ℝ³ by a chosen rotation and offset,
 and then projected to ℝ².
 --/
 def transformed_shadow (X : Set ℝ³) (offset : ℝ²) (rotation : SO3) : Set ℝ² :=
-  (λ p ↦ offset + proj_xy (rotation.1 *ᵥ p)) '' X
+  (fun p ↦ offset + (rotation *ᵥ p) ∘ Fin.castSucc) '' X
 
 /--
 Get the "inner shadow" of a set of vertices, given the rotation and offset for it.
 --/
-def inner_shadow_of_vertices {ι : Type} [Fintype ι] (vertices : ι → ℝ³)
+def inner_shadow_of_vertices (vertices : Set ℝ³)
   (inner_offset : ℝ²) (inner_rotation : SO3) : Set ℝ² :=
-  transformed_shadow (convexHull ℝ { vertices i | i }) inner_offset inner_rotation
+  transformed_shadow (convexHull ℝ vertices) inner_offset inner_rotation
 
 /--
 Get the "outer shadow" of a set of vertices, given the rotation and offset for it.
 The outer shadow asymmetrically doesn't require a translation, since it would be
 redundant to specify two, since translation commutes with projection.
 --/
-def outer_shadow_of_vertices {ι : Type} [Fintype ι] (vertices : ι → ℝ³)
+def outer_shadow_of_vertices (vertices : Set ℝ³)
   (outer_rotation : SO3) : Set ℝ² :=
-  transformed_shadow (convexHull ℝ { vertices i | i }) 0 outer_rotation
+  transformed_shadow (convexHull ℝ vertices) 0 outer_rotation
 
 /--
 A convex polyhedron (given as a finite collection of vertices) is Rupert if
@@ -102,8 +97,17 @@ there are two rotations in ℝ³ (called "inner" and "outer") and a translation 
 such that the "inner shadow" (the projection to ℝ² of the inner rotation applied
 to the polyhedron, then translated) fits in the interior of the "outer shadow"
 (the projection to ℝ² of the outer rotation applied to the polyhedron)
+
+[Note: The restriction to (polyhedra determined by the convex hulls of)
+*finite* sets of vertices here is deliberate. Were we to generalize to
+arbitrary subsets of ℝⁿ we'd probably want to make the containment
+relation more strict, e.g.
+  closure inner_shadow ⊆ interior outer_shadow
+to rule out, e.g. the open ball being Rupert. However, we didn't
+observe any such generalization in the literature yet, so we stuck to
+what was in the citations above.]
 -/
-def IsRupert {ι : Type} [Fintype ι] (vertices : ι → ℝ³) : Prop :=
+def IsRupert (vertices : Finset ℝ³) : Prop :=
    ∃ (inner_rotation : SO3) (inner_offset : ℝ²) (outer_rotation : SO3),
    let inner_shadow := inner_shadow_of_vertices vertices inner_offset inner_rotation
    let outer_shadow := outer_shadow_of_vertices vertices outer_rotation
@@ -114,7 +118,7 @@ Does the Rupert property hold for every convex polyhedron with nonempty interior
 -/
 @[category research open, AMS 52]
 theorem is_every_convex_polyhedron_rupert :
-    (∀ {ι : Type} [Fintype ι] (vertices : ι → ℝ³),
-       (interior (convexHull ℝ { vertices i | i })).Nonempty → IsRupert vertices)
+    (∀ (vertices : Finset ℝ³),
+       (interior (convexHull ℝ vertices : Set ℝ³)).Nonempty → IsRupert vertices)
       ↔ answer(sorry) := by
  sorry
