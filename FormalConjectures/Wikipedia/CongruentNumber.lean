@@ -61,8 +61,6 @@ example : congruentNumber 157 := by
     224403517704336969924557513090674863160948472041 /
       8912332268928859588025535178967163570016480830
   norm_num
-
-
 /-!
 Tunnell's theorem:
 Let $A_n$, $B_n$, $C_n$, and $D_n$ be the sets defined as follows:
