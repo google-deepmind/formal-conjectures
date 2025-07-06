@@ -67,7 +67,7 @@ example : congruentNumber 157 := by
 theorem congruent_number_problem (n : ℕ+) : congruentNumber n ↔ answer(sorry) := by
   sorry
 
-/--
+/-!
 Tunnell's theorem:
 Let $A_n$, $B_n$, $C_n$, and $D_n$ be the sets defined as follows:
 - $A_n = \{(x, y, z) \in \mathbb{Z}^3 : n = 2x^2 + y^2 + 32z^2\}$
@@ -82,12 +82,13 @@ If $n$ is a squarefree congruent number, then:
 Converse is true under the BSD conjecture.
 -/
 
-def A (n : ℕ) : Set (ℤ × ℤ × ℤ) := { (x, y, z) | n = 2 * x ^ 2 + y ^ 2 + 32 * z ^ 2}
-def B (n : ℕ) : Set (ℤ × ℤ × ℤ) := { (x, y, z) | n = 2 * x ^ 2 + y ^ 2 + 8 * z ^ 2}
-def C (n : ℕ) : Set (ℤ × ℤ × ℤ) := { (x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 64 * z ^ 2}
-def D (n : ℕ) : Set (ℤ × ℤ × ℤ) := { (x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 16 * z ^ 2}
+def A (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 2 * x ^ 2 + y ^ 2 + 32 * z ^ 2}
+def B (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 2 * x ^ 2 + y ^ 2 + 8 * z ^ 2}
+def C (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 64 * z ^ 2}
+def D (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 16 * z ^ 2}
 
-/- Tunnell's theorem. -/
+/-! Tunnell's theorem. -/
+
 @[category research solved, AMS 11]
 theorem Tunnell_odd (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
     congruentNumber n → 2 * (A n).ncard = (B n).ncard := by
@@ -98,7 +99,8 @@ theorem Tunnell_even (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     congruentNumber n → 2 * (C n).ncard = (D n).ncard := by
   sorry
 
-/-- Converse of Tunnell's theorem. -/
+/-! Converse of Tunnell's theorem. -/
+
 @[category research open, AMS 11]
 theorem Tunnell_odd_converse (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
     2 * (A n).ncard = (B n).ncard → congruentNumber n := by
