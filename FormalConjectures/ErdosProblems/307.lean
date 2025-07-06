@@ -40,8 +40,7 @@ theorem erdos_307 : (∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ (∀ q ∈
   sorry
 
 /--
-Instead of set of primes, ask for all $p \in P$ to be relatively coprime,
-and similarly for $q \in Q$.
+Instead of asking for sets of primes, ask only that all primes in the sets be relatively coprime.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_307_coprime : (∃ P Q : Finset ℕ, P.toSet.Pairwise Nat.Coprime ∧
