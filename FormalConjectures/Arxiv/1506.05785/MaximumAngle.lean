@@ -20,25 +20,26 @@ import FormalConjectures.Util.ProblemImports
 # Approximation of Quantum Gates using Lattices
 
 *Reference:* [arxiv/1506.05785](https://arxiv.org/pdf/1506.05785)
-**On the Approximation of Quantum Gates using Lattices**
+_On the Approximation of Quantum Gates using Lattices_
 by *Alec Greene and Steven Damelin*
 -/
 
-/-- The i-th standard basis vector in ℝ⁴. -/
-noncomputable def stdBasis4 : Fin 4 → EuclideanSpace ℝ (Fin 4) := fun i => EuclideanSpace.single i 1
+open scoped EuclideanSpace
 
-/-- The integer lattice ℤ⁴ as the ℤ-span of the standard basis. -/
-def ℤ4 : Submodule ℤ (EuclideanSpace ℝ (Fin 4)) :=
-  Submodule.span ℤ (Set.range stdBasis4)
+/-- The integer lattice ℤ⁴ as the ℤ-span of the standard basis in 4-dimensional Euclidean space. -/
+scoped[EuclideanSpace] notation "ℤ⁴" => Submodule.span ℤ (Set.range (PiLp.basisFun 2 ℝ (Fin 4)))
+
+instance : IsZLattice ℝ ℤ⁴ := ZSpan.isZLattice _
 
 /--
 There exists $0 < \delta < 1$ such that for any $\epsilon > 0$ and $a \in \mathbb{R}^4$,
 there exists $b \in \mathbb{Z}^4$ and $k \in \mathbb{Z}$ such that $\|b\| = 5^k$ and
 $\langle a, \frac{b}{\|b\|} \rangle \geq 1 - 5^{-\frac{k}{2 - \delta}}.$
 -/
+@[category research open, AMS 81 11]
 theorem conjecture_3_4 : ∃ (δ : ℝ), 0 < δ ∧ δ < 1 ∧
     ∀ (ε : ℝ) (hpos : ε > 0) (a : EuclideanSpace ℝ (Fin 4)),
-      ∃ (b : ℤ4) (k : ℤ),
+      ∃ (b : ℤ⁴) (k : ℤ),
         ‖b‖ = 5 ^ k ∧
         inner a (‖b‖⁻¹ • b) ≥ 1 - (5 : ℝ) ^ (-k / (2 - δ)) := by
   sorry
