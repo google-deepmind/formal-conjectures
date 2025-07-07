@@ -29,7 +29,7 @@ open scoped Topology Finset
 supplied finite set `X` to `X`. -/
 structure PowersetMapFor {α : Type*} (X : Finset α) where
   toFun : Finset α → α
-  image : {toFun A | A ⊆ X} ⊆ X
+  image : toFun '' X.powerset ⊆ X
 
 instance {α : Type*} (X : Finset α) : FunLike (PowersetMapFor X) (Finset α) α where
   coe := PowersetMapFor.toFun
@@ -39,7 +39,7 @@ instance {α : Type*} (X : Finset α) : FunLike (PowersetMapFor X) (Finset α) �
 map the powerset of `X` to `X`. -/
 structure PowersetMap (α : Type*) where
   toFun : Finset α → Finset α → α
-  image : ∀ X, {toFun X A | A ⊆ X} ⊆ X
+  image : ∀ X, toFun X '' X.powerset ⊆ X
 
 instance {α : Type*} : FunLike (PowersetMap α) (Finset α) (Finset α → α) where
   coe := PowersetMap.toFun
@@ -49,7 +49,7 @@ instance {α : Type*} : FunLike (PowersetMap α) (Finset α) (Finset α → α) 
 image on the powerset of `Y` is `X` for any `X Y` such that `H #X ≤ #Y`. -/
 def PowersetMap.SurjectiveAbove {α : Type*} (H : ℕ → ℕ)
     (f : PowersetMap α) : Prop :=
-  ∀ X Y, Y ⊆ X → H #X ≤ #Y → {f X A | A ⊆ Y} = X
+  ∀ X Y, Y ⊆ X → H #X ≤ #Y → Set.SurjOn (f X) Y.powerset X
 
 /--
 Let $X$ be a finite set of size $n$ and $H(n)$ be such that there
