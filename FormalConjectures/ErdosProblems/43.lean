@@ -15,35 +15,18 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ForMathlib.Combinatorics.Basic
 
 /-!
-# Erdős Problem 43: Disjoint Differences in Sidon Sets
-
-Let `f(N)` denote the maximum possible size of a Sidon set in `{1, ..., N}`.
-
-Suppose `A, B ⊆ {1, ..., N}` are both Sidon sets and their difference sets are disjoint:
-\[
-(A - A) ∩ (B - B) = ∅
-\]
-
-Is it true that
-\[
-\binom{|A|}{2} + \binom{|B|}{2} ≤ \binom{f(N)}{2} + O(1) ?
-\]
-
-Furthermore, if `|A| = |B|`, can this be improved to
-\[
-\binom{|A|}{2} + \binom{|B|}{2} ≤ (1 - c) \binom{f(N)}{2}
-\]
-for some constant `c > 0`?
-
-Find the link to the problem [here](https://www.erdosproblems.com/43).
+# Erdős Problem 43
+*Reference:* [erdosproblems.com/43](https://www.erdosproblems.com/43)
 
 -/
 
-/-- The maximum size of a Sidon set in `{1, ..., N}`. -/
-noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
-  sSup {n | ∃ A : Finset ℕ, A ⊆ Finset.Icc 1 N ∧ IsSidon A.toSet ∧ A.card = n}
+open scoped Pointwise
+
+/-- The maximum size of a Sidon set in `{1, ..., N}`. This version is computable. -/
+def maxSidonSetSize := maxSidonSetSize'
 
 /--
 If `A` and `B` are Sidon sets in `{1, ..., N}` with disjoint difference sets,
@@ -56,8 +39,7 @@ theorem erdos_43 :
       B ⊆ Finset.Icc 1 N →
       IsSidon A.toSet →
       IsSidon B.toSet →
-      (A ×ˢ A).image (λ p => p.1 - p.2) ∩
-        (B ×ˢ B).image (λ p => p.1 - p.2) = ∅ →
+      (A - A) ∩ (B - B) = ∅ →
       ((A.card * (A.card - 1) + B.card * (B.card - 1)) / 2 : ℝ) ≤
         (maxSidonSetSize N * (maxSidonSetSize N - 1) / 2 : ℝ) + C := by
   sorry
@@ -74,8 +56,7 @@ theorem erdos_43_equal_size :
       IsSidon A.toSet →
       IsSidon B.toSet →
       A.card = B.card →
-      (A ×ˢ A).image (λ p => p.1 - p.2) ∩
-        (B ×ˢ B).image (λ p => p.1 - p.2) = ∅ →
+      (A - A) ∩ (B - B) = ∅ →
       ((A.card * (A.card - 1) + B.card * (B.card - 1)) / 2 : ℝ) ≤
         (1 - c) * (maxSidonSetSize N * (maxSidonSetSize N - 1) / 2 : ℝ) := by
   sorry
