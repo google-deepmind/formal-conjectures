@@ -35,3 +35,6 @@ the database (either `open` or `resolved`).
    `b(G)` the largest induced bipartite subgraph size.
 10. **Conjecture 58 (open).** For a connected graph `G`,
     `f(G) ≥ ceil( b(G) / average l(v) )`.
+
+This README is intended for temporary bookkeeping and we will delete once the development of the
+WrittenOnTheWallII module is complete.
