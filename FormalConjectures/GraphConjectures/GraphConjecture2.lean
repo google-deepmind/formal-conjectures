@@ -34,6 +34,6 @@ the neighbourhoods of the vertices of `G`.
 WOWII conjecture: If G is a simple   connected graph, then L s (G) ≥  2(average of l (v)   - 1)
 -/
 theorem conjecture2 (G : SimpleGraph α) (h : G.Connected) :
-  Ls G ≥ 2 * (l G - 1) := by sorry
+  2 * (l G - 1) ≤ Ls G := by sorry
 
 end SimpleGraph

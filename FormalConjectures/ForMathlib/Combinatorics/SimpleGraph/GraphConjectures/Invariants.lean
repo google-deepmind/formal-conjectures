@@ -39,9 +39,9 @@ noncomputable def temp_v (G : SimpleGraph α) [DecidableRel G.Adj] (v : α) : �
   if n = deg then 0 else (deg : ℝ) / ((n : ℝ) - (deg : ℝ))
 
 /-- Maximum of `temp_v` over all vertices. -/
-noncomputable def max_temp (G : SimpleGraph α) [DecidableRel G.Adj] [Nonempty α] : ℝ :=
+noncomputable def MaxTemp (G : SimpleGraph α) [DecidableRel G.Adj] [Fintype α] [Nonempty α] : ℝ :=
   let temps := Finset.univ.image (temp_v G)
-  if h : temps.Nonempty then temps.max' h else 0
+  temps.max' (Finset.image_nonempty.mpr Finset.univ_nonempty)
 
 /-- Cardinality of the union of the neighbourhoods of the ends of the non-edge `e`. -/
 def non_edge_neighborhood_card (G : SimpleGraph α) [DecidableRel G.Adj] (e : Sym2 α) : ℕ :=
@@ -141,4 +141,3 @@ noncomputable def pathCoverNumber (G : SimpleGraph α) : ℕ :=
 noncomputable def p (G : SimpleGraph α) : ℝ := (pathCoverNumber G : ℝ)
 
 end SimpleGraph
-

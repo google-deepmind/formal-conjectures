@@ -32,7 +32,7 @@ Then
 `path(G) ≥ ceil( distavg(G, center) + distavg(G, maxEccentricityVertices G) )`.
 -/
 theorem conjecture34 [Nonempty α] (G : SimpleGraph α) (h_conn : G.Connected) :
-  (path G : ℤ) ≥ Int.ceil (distavg G (graphCenter G) + distavg G (maxEccentricityVertices G)) := by
+  Int.ceil (distavg G (graphCenter G) + distavg G (maxEccentricityVertices G)) ≤ (path G : ℤ) := by
   sorry
 
 end SimpleGraph
