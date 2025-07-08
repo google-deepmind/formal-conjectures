@@ -18,6 +18,7 @@ import FormalConjectures.GraphConjectures.Imports
 
 namespace SimpleGraph
 
+open Finset
 open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
@@ -25,13 +26,10 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /-- `Ls G` is the maximum number of leaves over all spanning trees of `G`.
 It is defined to be `0` when `G` is not connected. -/
 noncomputable def Ls (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
-  if h : G.Connected then
-    let spanningTrees := { T : Subgraph G | T.IsSpanning ∧ IsTree T.coe }
-    let leaves (T : Subgraph G) := T.verts.toFinset.filter (fun v => T.degree v = 1)
-    let num_leaves (T : Subgraph G) := (leaves T).card
-    sSup (Set.image (fun T => (num_leaves T : ℝ)) spanningTrees)
-  else
-    0
+  letI spanningTrees := { T : Subgraph G | T.IsSpanning ∧ IsTree T.coe }
+  letI leaves (T : Subgraph G) := T.verts.toFinset.filter (fun v => T.degree v = 1)
+  letI num_leaves (T : Subgraph G) := (leaves T).card
+  sSup (Set.image (fun T => (num_leaves T : ℝ)) spanningTrees)
 
 /-- `n G` is the number of vertices of `G` as a real number. -/
 noncomputable def n (_ : SimpleGraph α) : ℝ := Fintype.card α
@@ -41,20 +39,20 @@ noncomputable def m (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 
-/-- `a G` is a quantity defined via independent sets used in Conjecture 6. -/
-noncomputable def a (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
-  let independent_sets := { S : Finset α | IsIndepSet G S }
-  if h_indep : independent_sets.Nonempty then
-    let f (S : Finset α) : ℤ := (S.card : ℤ) - (S.biUnion (fun v => G.neighborFinset v)).card
-    let f_values_real : Set ℝ := Set.image (fun s => (f s : ℝ)) independent_sets
-    if h_fvals : f_values_real.Nonempty then
-      let max_val := sSup f_values_real
-      let critical_independent_sets := { S | S ∈ independent_sets ∧ (f S : ℝ) = max_val }
-      if h_crit : critical_independent_sets.Nonempty then
-        sSup (Set.image (fun S => (S.card : ℝ)) critical_independent_sets)
-      else 0
-    else 0
-  else 0
+/-- The independence number of a graph `G`. -/
+noncomputable def a (G : SimpleGraph α) : ℝ := (G.indepNum : ℝ)
+
+/-- The maximum cardinality among all independent sets `s`
+    that maximize the quantity `|s| - |N(s)|`, where `N(s)`
+    is the neighborhood of the set `s`. -/
+noncomputable def aprime (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
+  letI indep_sets : Finset (Finset α) := univ.powerset.filter (fun s => G.IsIndepSet (s : Set α))
+  letI diff (s : Finset α) : ℤ := (s.card : ℤ) - (⋃ v ∈ (s : Set α), G.neighborSet v).toFinset.card
+  letI max_diff := (indep_sets.image diff).max
+  letI critical_sets := indep_sets.filter (fun s ↦ diff s = max_diff.getD 0)
+  letI max_card := (critical_sets.image Finset.card).max
+  (max_card.getD 0 : ℝ)
+
 
 /-- `largestInducedForestSize G` is the size of a largest induced forest of `G`. -/
 noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
@@ -87,4 +85,3 @@ noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
   (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
 
 end SimpleGraph
-
