@@ -14,23 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Path
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Matching
-import Mathlib.Logic.IsEmpty
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Real.Sqrt
+import FormalConjectures.Util.ProblemImports
 
-/-!
-# Dominating sets and domination numbers
+/-
+Dominating sets and domination numbers
 
 This file introduces dominating sets and related invariants.
 
-## Main definitions
+Main definitions
 
 * `SimpleGraph.IsDominating`   : A set of vertices that dominates all vertices.
 * `SimpleGraph.IsNDominatingSet` : A dominating set with `n` vertices.

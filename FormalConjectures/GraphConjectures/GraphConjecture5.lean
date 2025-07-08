@@ -53,7 +53,8 @@ variable {V : Type*} [Fintype V] [DecidableEq V]
 open Classical
 
 /--
-WOWII Conjecture 5:
+WOWII [Conjecture 5](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+
 For a simple connected graph `G`, `Ls(G)` is bounded below by the maximal size
 of a sphere of radius `radius(G)` around the centres of `G`.
 -/
