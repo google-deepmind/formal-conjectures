@@ -30,16 +30,13 @@ def primeArithmeticProgressions : Set (Set ℕ) :=
 @[category test, AMS 5 11]
 example : {3, 5, 7} ∈ primeArithmeticProgressions := by
   simp [primeArithmeticProgressions, Set.IsAPOfLength, Set.IsAPOfLengthWith]
-  refine ⟨by norm_num, ⟨3, by norm_num, ⟨3, 2, ?_⟩⟩⟩
-  simp only [OfNat.ofNat_ne_zero, not_false_eq_true, true_and, false_and, or_false]
-  ext x
-  simp only [Set.mem_insert_iff, Set.mem_singleton_iff, Nat.cast_lt_ofNat]
+  refine ⟨by norm_num, ⟨3, 2, Set.ext fun x => ?_⟩⟩
   refine ⟨fun h => ?_, fun ⟨w, ⟨hl, hr⟩⟩ => by interval_cases w <;> simp_all⟩
   cases h with
   | inl hl => simp [hl]
   | inr hr => cases hr with
     | inl hrl => simpa [hrl] using ⟨1, by simp⟩
-    | inr hrr => simpa [hrr] using ⟨2, by simp⟩
+    | inr hrr => simpa [hrr] using ⟨2, by aesop⟩
 
 @[category test, AMS 5 11]
 example : ¬{1, 2} ∈ primeArithmeticProgressions := by
