@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,6 +23,12 @@ import Batteries.Lean.Expr
 # The `answer( )` elaborator
 
 This file provides syntax for marking up answers in a problem statement.
+
+Note: certain problems also providing an answer, and can be formalised
+using `answer(sorry)` as a placeholder. While providing a proof simply requires
+finding any way to replace `:= sorry`, providing an answer is not just finding
+any way to replace answer(sorry): it requires evaluation of mathematical meaning,
+which is a job for human mathematicians, not Lean alone.
 -/
 namespace Google
 

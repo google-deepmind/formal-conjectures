@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,10 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/4](https://www.erdosproblems.com/4)
 -/
+
 open Real
 
 def Erdos4For (C : ℝ) : Prop :=
-  {n : ℕ | Nat.nth Prime (n + 1) - Nat.nth Prime n >
+  {n : ℕ | (n + 1).nth Nat.Prime  - n.nth Nat.Prime >
     C * log (log n) * log (log (log (log n))) / (log (log (log n))) ^ 2 * log n}.Infinite
 
 /--
@@ -34,11 +35,10 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem erdos_4 (C : ℝ) (hC : 0 < C) :
-    Erdos4For C :=
+theorem erdos_4 : (∀ C > 0, Erdos4For C) ↔ answer(True) := by
   sorry
 
 @[category research solved, AMS 11]
 theorem erdos_4.variants.rankin :
-    ∃ C > 0, Erdos4For C :=
+    ∃ C > 0, Erdos4For C := by
   sorry

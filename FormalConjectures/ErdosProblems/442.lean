@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -78,16 +78,19 @@ $$
 $$
 as $x\to\infty$?
 
-Note: the informal and formal statements follow the solution paper
-https://arxiv.org/pdf/2407.04226
+Tao [Ta24b] has shown this is false.
+
+[Ta24b] Tao, T., _Dense sets of natural numbers with unusually large least common multiples_.
+arXiv:2407.04226 (2024).
+
+Note: the informal and formal statements follow the solution paper https://arxiv.org/pdf/2407.04226
 -/
 @[category research solved, AMS 11]
-theorem erdos_442
-    (A : Set ℕ)
-    (hA : Tendsto (fun (x : ℝ) =>
-      1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.bdd x, (1 : ℝ) / n) atTop atTop) :
+theorem erdos_442 : (∀ (A : Set ℕ),
+    Tendsto (fun (x : ℝ) =>
+      1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.bdd x, (1 : ℝ) / n) atTop atTop →
     Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 *
-      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop :=
+      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(True) := by
   sorry
 
 /--
@@ -109,10 +112,10 @@ $$
 -/
 @[category research solved, AMS 11]
 theorem erdos_442.variants.tao :
-    ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : Tendsto f atTop (𝓝 0)),
+    ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : f =o[atTop] (1 : ℝ → ℝ)),
       ∀ (x : ℝ),
         ∑ n ∈ A.bdd x, (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
         |∑ nm ∈ A.bdd x ×ˢ A.bdd x, (1 : ℝ) / nm.1.lcm nm.2| ≤
-          C * (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 :=
+          C * (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 := by
   sorry

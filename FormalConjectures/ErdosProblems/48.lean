@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/48](https://www.erdosproblems.com/48)
 -/
+
 open scoped ArithmeticFunction
 
 /--
@@ -28,5 +29,5 @@ Are there infinitely many integers $n, m$ such that $ϕ(n) = σ(m)$?
 -/
 @[category research solved, AMS 11]
 theorem erdos_48 :
-    {(n, m) : ℕ × ℕ | n.totient = σ 1 m}.Infinite := by
+    {(n, m) : ℕ × ℕ | n.totient = σ 1 m}.Infinite ↔ answer(True) := by
   sorry

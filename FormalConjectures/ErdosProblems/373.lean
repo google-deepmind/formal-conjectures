@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/373](https://www.erdosproblems.com/373)
 -/
+
 open scoped Nat
 /--
 Let `S` be the set of non-trivial solutions to the equation `n! = a₁! ··· aₖ!`

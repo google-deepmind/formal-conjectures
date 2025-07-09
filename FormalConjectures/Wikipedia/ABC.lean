@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -40,7 +40,9 @@ example : radical 17 = 17 := by
 
 @[category test]
 example : radical 12 = 6 := by
-  rw [radical, show 12 = 2^2 * 3 by rfl, Nat.primeFactors_mul (by norm_num) (by norm_num), Nat.primeFactors_pow _ (by norm_num), Nat.Prime.primeFactors (by norm_num), Nat.Prime.primeFactors (by norm_num)]
+  rw [radical, show 12 = 2^2 * 3 by rfl, Nat.primeFactors_mul (by norm_num)
+    (by norm_num), Nat.primeFactors_pow _ (by norm_num),
+    Nat.Prime.primeFactors (by norm_num), Nat.Prime.primeFactors (by norm_num)]
   rfl
 
 /--

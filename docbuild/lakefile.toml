@@ -10,8 +10,8 @@ path = "../"
 # using fork here, because it contains a backported fix. Can be dropped after bump to v4.20.0
 [[require]]
 name = "doc-gen4"
-git = "https://github.com/mo271/doc-gen4"
-rev = "04bbe873ae3ffc0f5e62dfa3982600f2e4bc1569"
+git = "https://github.com/eric-wieser/doc-gen4"
+rev = "3502f05c27ca650492c945307874755a8c2b42e3"
 
 [[lean_exe]]
 name = "overwrite_index"

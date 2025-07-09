@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
 end Prelims
 
 /--
-**Euler Problem 846**
+**Erdős Problem 846**
 Let `A ⊂ ℝ²` be an infinite set for which there exists some `ϵ>0` such that in any subset of `A`
 of size `n` there are always at least `ϵn` with no three on a line.
 Is it true that `A` is the union of a finite number of sets where no three are on a line?
@@ -59,6 +59,6 @@ In other words, prove or disprove the following statement: every infinite `ε`-n
 plane is weakly non-trilinar.
 -/
 @[category research open, AMS 11]
-theorem erdos_846 (A : Set ℝ²) (ε : ℝ) (hε : 0 < ε) (hA : NonTrilinearFor A ε)
-    (hA' : A.Infinite) : WeaklyNonTrilinear A :=
+theorem erdos_846 : (∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
+    WeaklyNonTrilinear A) ↔ answer(sorry) := by
   sorry

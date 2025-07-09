@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -47,5 +47,5 @@ theorem erdos_348 :
     { (m, n) | (m) (n) (_ : m < n) (a : ℕ → ℕ) (_ : Monotone a)
       (_ : ∀ s, s.card = m → (Function.updateFinset a s 0).IsCompleteNatSeq)
         (_ : ∀ t, t.card = n → ¬(Function.updateFinset a t 0).IsCompleteNatSeq) } =
-    answer(sorry) :=
+    answer(sorry) := by
   sorry

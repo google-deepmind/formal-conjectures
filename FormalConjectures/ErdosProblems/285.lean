@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/285](https://www.erdosproblems.com/285)
 -/
+
 open Filter
 
 open scoped Topology Real
@@ -34,8 +35,12 @@ Is it true that
 $$
   f(k) = (1 + o(1)) \frac{e}{e - 1} k ?
 $$
+
+Proved by Martin [Ma00].
+
+[Ma00] Martin, Greg, _Denser Egyptian fractions_. Acta Arith. (2000), 231-260.
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_285
     (f : ℕ → ℕ)
     (S : Set ℕ)
@@ -46,16 +51,14 @@ theorem erdos_285
         { n (Fin.last k) | (n : Fin k.succ → ℕ) (_ : StrictMono n) (_ : 0 ∉ Set.range n)
           (_ : 1 = ∑ i, (1 : ℝ) / n i) }
         (f k)) :
-    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
-      ∀ k ∈ S, f k = (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) := by
+    (∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
+      ∀ k ∈ S, f k = (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1)) ↔ answer(True) := by
   sorry
 
 /--
 It is trivial that $f(k)\geq (1 + o(1)) \frac{e}{e - 1}k$.
-
-[Ma00] Martin, Greg, _Denser Egyptian fractions_. Acta Arith. (2000), 231-260.
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_285.variants.lb (f : ℕ → ℕ)
     (S : Set ℕ)
     (hS : S = {k | ∃ (n : Fin k.succ → ℕ), StrictMono n ∧ 0 ∉ Set.range n ∧
@@ -65,6 +68,6 @@ theorem erdos_285.variants.lb (f : ℕ → ℕ)
         { n (Fin.last k) | (n : Fin k.succ → ℕ) (_ : StrictMono n) (_ : 0 ∉ Set.range n)
           (_ : 1 = ∑ i, (1 : ℝ) / n i) }
         (f k)) :
-    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
-      ∀ k ∈ S, (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) ≤ f k :=
+    ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
+      ∀ k ∈ S, (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) ≤ f k := by
   sorry
