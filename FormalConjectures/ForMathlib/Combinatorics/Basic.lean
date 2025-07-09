@@ -17,6 +17,9 @@ limitations under the License.
 import Mathlib.Algebra.Group.Defs
 import Mathlib.Data.Set.Card
 import Mathlib.Order.Defs.PartialOrder
+import Mathlib.Data.Finset.Basic
+import Mathlib.Data.Finset.Powerset
+import Mathlib.Data.Nat.Enat
 
 open Function Set
 
@@ -38,3 +41,23 @@ lemma Set.IsAPOfLength.card (s : Set α) (l : ℕ∞) (hs : s.IsAPOfLength l) :
 lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [AddCommMonoid α] (A : Set ℕ) (hA : IsSidon A) :
     (∀ Y, IsAPOfLength Y 3 → (A ∩ Y).ncard ≤ 2) := by
   sorry
+  
+-- Decidability instance for computable versions
+instance decidableIsSidon (A : Finset ℕ) : Decidable (IsSidon A.toSet) := by
+  unfold IsSidon
+  classical
+  simp only [Set.mem_toSet, emforall, emimp]
+  apply decidable_of_iff _ (by simp)
+  exact decidable_of_iff (∀ i₁ j₁ i₂ j₂ ∈ A, i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)) (by simp)
+
+
+/-- All subset sizes of Sidon sets in `{1, ..., n}`. -/
+def SidonSubsetsSizes (n : ℕ) : Finset ℕ :=
+  Finset.image Finset.card <| (Finset.Icc 1 n).powerset.filter (λ A => IsSidon A.toSet)
+
+lemma SidonSubsetsSizesNonempty (n : ℕ) : (SidonSubsetsSizes n).Nonempty := by
+  use 0
+  simp [SidonSubsetsSizes]
+
+def maxSidonSetSize' (n : ℕ) : ℕ :=
+  (SidonSubsetsSizes n).max' (SidonSubsetsSizesNonempty n)
