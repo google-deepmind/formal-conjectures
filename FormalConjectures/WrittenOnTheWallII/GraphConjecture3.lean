@@ -36,7 +36,7 @@ domination number and `MaxTemp(G)` is `max_v deg(v)/(n(G) - deg(v))`.
 -/
 @[category research solved, AMS 5]
 theorem conjecture3 {G : SimpleGraph α} [DecidableEq α] [DecidableRel G.Adj] [Nonempty α] (h_conn : G.Connected) :
-    gi G * max_temp G ≤ Ls G := by
+    gi G * MaxTemp G ≤ Ls G := by
   sorry
 
 end SimpleGraph
