@@ -17,16 +17,18 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Legendre's conjecture
+# Twin prime conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Legendre%27s_conjecture)
+*References:*
+- [Landau Problems Wikipedia Page](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
+- [Twin Primes Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Twin_prime#Twin_prime_conjecture)
 -/
+
 
 /--
-Does there always exist at least one prime between consecutive perfect squares?
+Are there infinitely many primes p such that p + 2 is prime?
 -/
 @[category research open, AMS 11]
-theorem legendre_conjecture :
-    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p)
-      ↔ answer(sorry) := by
+theorem twin_primes :
+    {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite ↔ answer(sorry) := by
   sorry
