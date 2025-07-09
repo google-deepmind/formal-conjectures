@@ -22,7 +22,6 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Bipartite
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
 
-open BigOperators
 open Classical
 
 namespace SimpleGraph

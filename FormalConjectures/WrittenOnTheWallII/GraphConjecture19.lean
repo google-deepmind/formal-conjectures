@@ -21,7 +21,6 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.D
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
 import FormalConjectures.Util.ProblemImports
 
-open BigOperators
 open Classical
 
 namespace SimpleGraph
