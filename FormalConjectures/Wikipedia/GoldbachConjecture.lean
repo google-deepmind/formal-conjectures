@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Goldbach's conjecture
 
-*Reference:*
+*References:*
 - [Landau Problems Wikipedia Page](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
 - [Goldbach's Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture)
 -/

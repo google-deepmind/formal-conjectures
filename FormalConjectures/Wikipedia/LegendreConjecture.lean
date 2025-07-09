@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Legendre's conjecture
 
-*Reference:*
+*References:*
 - [Landau Problems Wikipedia Page](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
 - [Legendre Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Legendre%27s_conjecture)
 -/
