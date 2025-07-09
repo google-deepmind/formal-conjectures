@@ -231,26 +231,26 @@ theorem isBipartiteWith_sum_degrees_eq (h : G.IsBipartiteWith s t) :
     sum_attach t fun v ↦ #(bipartiteBelow G.Adj s v)]
   exact sum_card_bipartiteAbove_eq_sum_card_bipartiteBelow G.Adj
 
-lemma isBipartiteWith_sum_degrees_eq_twice_card_edges [DecidableEq V] (h : G.IsBipartiteWith s t) :
-    ∑ v ∈ s ∪ t, G.degree v = 2 * #G.edgeFinset := by sorry
+-- This is already proven in Mathlib
+proof_wanted isBipartiteWith_sum_degrees_eq_twice_card_edges
+    [DecidableEq V] (h : G.IsBipartiteWith s t) :
+    ∑ v ∈ s ∪ t, G.degree v = 2 * #G.edgeFinset
 
+-- This is already proven in Mathlib
 /-- The degree-sum formula for bipartite graphs, summing over the "left" part.
 
 See `SimpleGraph.sum_degrees_eq_twice_card_edges` for the general version, and
 `SimpleGraph.isBipartiteWith_sum_degrees_eq_card_edges'` for the version from the "right". -/
-theorem isBipartiteWith_sum_degrees_eq_card_edges (h : G.IsBipartiteWith s t) :
-    ∑ v ∈ s, G.degree v = #G.edgeFinset := by
-  classical
-  rw [← Nat.mul_left_cancel_iff zero_lt_two, ← isBipartiteWith_sum_degrees_eq_twice_card_edges h,
-    sum_union (disjoint_coe.mp h.disjoint), two_mul, add_right_inj]
-  exact isBipartiteWith_sum_degrees_eq h
+proof_wanted isBipartiteWith_sum_degrees_eq_card_edges (h : G.IsBipartiteWith s t) :
+    ∑ v ∈ s, G.degree v = #G.edgeFinset
 
+-- This is already proven in Mathlib
 /-- The degree-sum formula for bipartite graphs, summing over the "right" part.
 
 See `SimpleGraph.sum_degrees_eq_twice_card_edges` for the general version, and
 `SimpleGraph.isBipartiteWith_sum_degrees_eq_card_edges` for the version from the "left". -/
-theorem isBipartiteWith_sum_degrees_eq_card_edges' (h : G.IsBipartiteWith s t) :
-    ∑ v ∈ t, G.degree v = #G.edgeFinset := isBipartiteWith_sum_degrees_eq_card_edges h.symm
+proof_wanted isBipartiteWith_sum_degrees_eq_card_edges' (h : G.IsBipartiteWith s t) :
+    ∑ v ∈ t, G.degree v = #G.edgeFinset
 
 end IsBipartiteWith
 

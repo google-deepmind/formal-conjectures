@@ -95,9 +95,8 @@ lemma eccent_top [Nontrivial α] (u : α) : (⊤ : SimpleGraph α).eccent u = 1 
   intro v
   cases eq_or_ne u v <;> simp_all [edist_top_of_ne]
 
-lemma eq_top_iff_forall_eccent_eq_one [Nontrivial α] :
-    G = ⊤ ↔ ∀ u, G.eccent u = 1 := by
-  sorry
+proof_wanted eq_top_iff_forall_eccent_eq_one [Nontrivial α] :
+    G = ⊤ ↔ ∀ u, G.eccent u = 1
 
 end eccent
 
@@ -108,7 +107,7 @@ this will be `0`.
 lemma diam_eq_zero_of_subsingleton [Subsingleton α] : G.diam = 0 := by
   simp [diam, ediam_eq_zero_iff_subsingleton.mpr (by assumption)]
 
-lemma diam_ne_zero [Nontrivial α] : G.diam ≠ 0 := by sorry
+proof_wanted diam_ne_zero [Nontrivial α] : G.diam ≠ 0
 
 lemma nontrivial_of_diam_ne_zero' (h : G.diam ≠ 0) : Nontrivial α := by
   contrapose! h
@@ -131,7 +130,7 @@ lemma center_def : G.center = {u | G.eccent u = G.radius} := rfl
 lemma radius_le_eccent {u : α} : G.radius ≤ G.eccent u :=
   iInf_le G.eccent u
 
-lemma radius_le_ediam : G.radius ≤ G.ediam := by sorry
+proof_wanted radius_le_ediam : G.radius ≤ G.ediam
 
 lemma exists_eccent_eq_radius_of_finite [Nonempty α] [Finite α] :
     ∃ u, G.eccent u = G.radius :=
@@ -140,18 +139,16 @@ lemma exists_eccent_eq_radius_of_finite [Nonempty α] [Finite α] :
 lemma center_nonempty_of_finite [Nonempty α] [Finite α] : G.center.Nonempty :=
   exists_eccent_eq_radius_of_finite
 
-lemma diam_le_two_mul_radius (h : G.center.Nonempty) : G.diam ≤ 2 * G.radius := by
-  sorry
+proof_wanted diam_le_two_mul_radius (h : G.center.Nonempty) : G.diam ≤ 2 * G.radius
 
 end radius
 
 section Path
 open Path
 
-lemma dist_le_diam_of_mem_path {G : SimpleGraph α} {u v : α} (p : G.Walk u v) (w : α) (hw : w ∈ p.support) : G.dist w u ≤ G.diam := by
-  sorry
+proof_wanted dist_le_diam_of_mem_path {G : SimpleGraph α} {u v : α} (p : G.Walk u v) (w : α)
+    (hw : w ∈ p.support) : G.dist w u ≤ G.diam
 
 end Path
 
 end SimpleGraph
-
