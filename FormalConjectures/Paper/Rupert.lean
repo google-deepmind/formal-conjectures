@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ForMathlib.Geometry.«2d»
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
@@ -62,34 +63,21 @@ Question: are all convex polyhedra with nonempty interior Rupert?
 
 -/
 open scoped Matrix
-
-notation "ℝ³" => Fin 3 → ℝ
-notation "ℝ²" => Fin 2 → ℝ
+open scoped EuclideanGeometry
 
 abbrev SO3 := Matrix.specialOrthogonalGroup (Fin 3) ℝ
+
+scoped[EuclideanGeometry] notation "ℝ³" => EuclideanSpace ℝ (Fin 3)
+
+namespace Rupert
 
 /--
 The result of transforming a subset of ℝ³ by a chosen rotation and offset,
 and then projected to ℝ².
 --/
 def transformed_shadow (X : Set ℝ³) (offset : ℝ²) (rotation : SO3) : Set ℝ² :=
+  let offset : Fin 2 → ℝ := offset
   (fun p ↦ offset + (rotation *ᵥ p) ∘ Fin.castSucc) '' X
-
-/--
-Get the "inner shadow" of a set of vertices, given the rotation and offset for it.
---/
-def inner_shadow_of_vertices (vertices : Set ℝ³)
-  (inner_offset : ℝ²) (inner_rotation : SO3) : Set ℝ² :=
-  transformed_shadow (convexHull ℝ vertices) inner_offset inner_rotation
-
-/--
-Get the "outer shadow" of a set of vertices, given the rotation and offset for it.
-The outer shadow asymmetrically doesn't require a translation, since it would be
-redundant to specify two, since translation commutes with projection.
---/
-def outer_shadow_of_vertices (vertices : Set ℝ³)
-  (outer_rotation : SO3) : Set ℝ² :=
-  transformed_shadow (convexHull ℝ vertices) 0 outer_rotation
 
 /--
 A convex polyhedron (given as a finite collection of vertices) is Rupert if
@@ -109,8 +97,8 @@ what was in the citations above.]
 -/
 def IsRupert (vertices : Finset ℝ³) : Prop :=
    ∃ (inner_rotation : SO3) (inner_offset : ℝ²) (outer_rotation : SO3),
-   let inner_shadow := inner_shadow_of_vertices vertices inner_offset inner_rotation
-   let outer_shadow := outer_shadow_of_vertices vertices outer_rotation
+   let inner_shadow := transformed_shadow (convexHull ℝ vertices) inner_offset inner_rotation
+   let outer_shadow := transformed_shadow (convexHull ℝ vertices) 0 outer_rotation
    inner_shadow ⊆ interior outer_shadow
 
 /--
