@@ -34,6 +34,7 @@ number and `b(G)` is the largest induced bipartite subgraph size.
 -/
 @[category research open, AMS 5]
 theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :
-  f G ≥ ⌈((p G + b G + 1) / 2)⌉ := by sorry
+    ⌈((p G + b G + 1) / 2)⌉ ≤ f G := by
+  sorry
 
 end SimpleGraph

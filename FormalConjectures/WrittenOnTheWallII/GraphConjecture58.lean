@@ -34,6 +34,6 @@ bipartite subgraph and `l(v)` is the independence number of `G.neighborSet v`.
 -/
 @[category research open, AMS 5]
 theorem conjecture58 (hG : G.Connected) :
-  (G.f : ℝ) ≥ Nat.ceil ((G.b : ℝ) / G.l_avg) := by sorry
+    Nat.ceil (G.b / G.l_avg) ≤ G.f := by sorry
 
 end SimpleGraph

@@ -60,11 +60,12 @@ of a sphere of radius `radius(G)` around the centres of `G`.
 -/
 @[category research solved, AMS 5]
 theorem conjecture5 (G : SimpleGraph V) (h_conn : G.Connected) :
-  let centers := { v : V | G.eccent v = G.radius }
-  let r_nat := G.radius.toNat
-  let sphere_verts (v : V) : Set V := { w | G.dist v w = r_nat }
-  let sphere_size (v : V) : ℝ := ↑(Finset.univ.filter (fun w => w ∈ sphere_verts v)).card
-  let max_sphere_size := sSup (sphere_size '' centers)
-  Ls G ≥ max_sphere_size := by sorry
+    letI centers := { v : V | G.eccent v = G.radius }
+    letI r_nat := G.radius.toNat
+    letI sphere_verts (v : V) : Set V := { w | G.dist v w = r_nat }
+    letI sphere_size (v : V) : ℝ := ↑(Finset.univ.filter (fun w => w ∈ sphere_verts v)).card
+    letI max_sphere_size := sSup (sphere_size '' centers)
+    max_sphere_size ≤ Ls G := by
+  sorry
 
 end SimpleGraph

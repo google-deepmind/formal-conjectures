@@ -36,6 +36,7 @@ For a connected graph `G` we have
 -/
 @[category research solved, AMS 5]
 theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-  Ls G ≥ 1 + n G - m G - a G := by sorry
+    1 + n G - m G - a G ≤ Ls G := by
+  sorry
 
 end SimpleGraph

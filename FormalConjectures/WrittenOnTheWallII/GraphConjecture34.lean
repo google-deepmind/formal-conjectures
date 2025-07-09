@@ -38,7 +38,7 @@ Then
 -/
 @[category research open, AMS 5]
 theorem conjecture34 [Nonempty α] (G : SimpleGraph α) (h_conn : G.Connected) :
-  Int.ceil (distavg G (graphCenter G) + distavg G (maxEccentricityVertices G)) ≤ (path G : ℤ) := by
+    Int.ceil (distavg G (graphCenter G) + distavg G (maxEccentricityVertices G)) ≤ (path G : ℤ) := by
   sorry
 
 end SimpleGraph

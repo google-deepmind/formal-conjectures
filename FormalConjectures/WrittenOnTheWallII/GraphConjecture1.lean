@@ -34,5 +34,5 @@ tree satisfies `Ls(G) ≥ n(G) + 1 - 2·m(G)` where `n(G)` counts vertices and
 @[category research solved, AMS 5]
 theorem conjecture1 {α : Type*} [Fintype α] [DecidableEq α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-    (Ls G) ≥ (n G) + 1 - 2 * (m G) := by
+    n G + 1 - 2 * m G ≤ Ls G := by
   sorry

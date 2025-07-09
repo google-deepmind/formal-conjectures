@@ -34,7 +34,7 @@ size of a non-edge of `G`.
 -/
 @[category research solved, AMS 5]
 theorem conjecture4 (G : SimpleGraph α) [DecidableRel G.Adj] [Nonempty α] (h_conn : G.Connected) :
-  (Ls G : ℝ) ≥ NG G - 1 := by
+    NG G - 1 ≤ Ls G := by
   sorry
 
 end SimpleGraph
