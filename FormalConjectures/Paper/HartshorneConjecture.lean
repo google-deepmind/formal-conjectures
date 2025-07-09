@@ -34,30 +34,7 @@ section AlgebraicVectorBundles
 
 variable (S : Scheme.{u})
 
-@[category API, AMS 18]
-theorem WEqualsLocallyBijective_addCommGrp {T : Type u}
-    [TopologicalSpace T] :
-    (Opens.grothendieckTopology T).WEqualsLocallyBijective (AddCommGrp : Type (u + 1)) := by
-  sorry
-
-@[category API, AMS 18]
-theorem WEqualsLocallyBijectiveOver {C : Type v} [Category C]
-    (J : GrothendieckTopology C) (A : Type u') [Category A]
-    {FA : A → A → Type*} {CA : A → Type*} [(X Y : A) → FunLike (FA X Y) (CA X) (CA Y)]
-    [ConcreteCategory A FA] (X : C) [J.WEqualsLocallyBijective A] :
-    (J.over X).WEqualsLocallyBijective A := by
-  sorry
-
-instance instWEqualsLocallyBijectiveOpensAddCommGrp {T : Type*} [TopologicalSpace T] :
-    (Opens.grothendieckTopology T).WEqualsLocallyBijective AddCommGrp :=
-  sorry
-
-instance instWEqualsLocallyBijectiveOver {C : Type v} [Category C]
-    (J : GrothendieckTopology C) (A : Type u') [Category A]
-    {FA : A → A → Type*} {CA : A → Type*} [(X Y : A) → FunLike (FA X Y) (CA X) (CA Y)]
-    [ConcreteCategory A FA] (X : C) [J.WEqualsLocallyBijective A] :
-    (J.over X).WEqualsLocallyBijective A :=
-  WEqualsLocallyBijectiveOver J A X
+attribute [local instance] CategoryTheory.Types.instConcreteCategory
 
 /--
 A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
