@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/373](https://www.erdosproblems.com/373)
 -/
+
 open scoped Nat
 /--
 Let `S` be the set of non-trivial solutions to the equation `n! = a₁! ··· aₖ!`

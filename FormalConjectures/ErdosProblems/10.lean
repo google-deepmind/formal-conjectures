@@ -21,12 +21,6 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/10](https://www.erdosproblems.com/10)
 -/
-/--
-The lower asymptotic density of a set $S$ is the $\liminf$ as $n → ∞$ of the
-ratio $\frac{|\{a ∈ S \mid  a < n\}|}{n}$.
--/
-noncomputable def lowerDensity (S : Set ℕ) : ℝ :=
-    Filter.atTop.liminf (fun n => (Set.Iio n ∩ S).ncard / n)
 
 /--
 The set of natural numbers that can be written as a sum
@@ -40,7 +34,7 @@ abbrev sumPrimeAndTwoPows (k : ℕ) : Set ℕ :=
 Is there some $k$ such that every integer is the sum of a prime and at most $k$
 powers of $2$?
 -/
-@[category research open, AMS 5,  AMS 11]
+@[category research open, AMS 5 11]
 theorem erdos_10 : (∃ k, sumPrimeAndTwoPows k = Set.univ \ {0, 1}) ↔ answer(sorry) := by
   sorry
 
@@ -51,9 +45,9 @@ many powers of $2$ has lower density at least $1 - ϵ$.
 
 Ref: Gallagher, P. X., _Primes and powers of 2_.
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_10.variants.gallagher (ε : ℝ)
-    (hε : 0 < ε) : ∃ k, 1 - ε ≤ lowerDensity (sumPrimeAndTwoPows k) := by
+    (hε : 0 < ε) : ∃ k, 1 - ε ≤ (sumPrimeAndTwoPows k).lowerDensity := by
   sorry
 
 /--
@@ -63,7 +57,7 @@ suffice for all even integers.
 
 Ref: Granville, A. and Soundararajan, K., _A Binary Additive Problem of Erdős and the Order of $2$ mod $p^2$_
 -/
-@[category research open, AMS 5, AMS 11]
+@[category research open, AMS 5 11]
 theorem erdos_10.variants.granville_soundararajan_odd :
     {n : ℕ | Odd n ∧ 1 < n} ⊆ sumPrimeAndTwoPows 3 ∧
       {n : ℕ | Even n ∧ n ≠ 0} ⊆ sumPrimeAndTwoPows 4 := by
@@ -73,7 +67,7 @@ theorem erdos_10.variants.granville_soundararajan_odd :
 Bogdan Grechuk has observed that `1117175146` is not the sum of a prime
 and at most $3$ powers of $2$.
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_10.variants.grechuk_example :
     1117175146 ∉ sumPrimeAndTwoPows 3 := by
   sorry
@@ -81,7 +75,7 @@ theorem erdos_10.variants.grechuk_example :
 /--
 There are infinitely many even integers not the sum of a prime and $2$ powers of $2$
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_10.variants.two_pows :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 2 := by
   sorry
@@ -92,7 +86,7 @@ powers of $2$, and pointed out that parity considerations, coupled with the fact
 are many integers not the sum of a prime and $2$ powers of $2$ suggest that there exist
 infinitely many even integers which are not the sum of a prime and at most $3$ powers of $2$).
 -/
-@[category research open, AMS 5, AMS 11]
+@[category research open, AMS 5 11]
 theorem erdos_10.variants.gretchuk :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 3 := by
   sorry

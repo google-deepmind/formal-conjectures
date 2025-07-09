@@ -28,6 +28,7 @@ are equidistributed modulo 1 or not.
 by *L. Kuipers* and *H. Niederreiter*, 1974
   - [Wikipedia](https://en.wikipedia.org/wiki/Equidistributed_sequence)
 -/
+
 open scoped Topology
 
 /--

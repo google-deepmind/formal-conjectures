@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/421](https://www.erdosproblems.com/421)
 -/
+
 open Set
 
 /--

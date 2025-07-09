@@ -43,7 +43,7 @@ If $n = ab$ is a crystal, then there are no other pairs of
 positive integers $c, d > 1$, different from the couple $a, b$, such that $n = cd$ and
 $B(c, d) ∈ ℕ$, i.e., the components of the crystals are unique.
 -/
-@[category research open, AMS 11, AMS 26]
+@[category research open, AMS 11 26]
 theorem crystals_components_unique (n a b c d : ℕ)
     (hab : IsCrystalWithComponents n a b) (hcd : IsCrystalWithComponents n c d) :
     ({a, b} : Finset ℕ) = {c, d} := by
