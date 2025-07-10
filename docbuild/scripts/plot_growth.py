@@ -11,10 +11,12 @@ conf = {
   'line_width': 3, # Width of line used in the plot
   'title': dict(
     text='Number of files in Formal Conjectures', # Title text
-    font=dict(size=30), # Title font
+    font=dict(size=15), # Title font
     x=0.5, # Center title
     xanchor='center' # Center title
   ),
+  'width': 1000, # Width of plot in px
+  'height': 500, # Height of plot in px
   'start_date': '2025-05-28', # Announcement date is '2025-05-28'
   'xlabel': 'Date', # x-axis label on plot
   'ylabel': 'Number of files', # y-axis label on plot
@@ -55,14 +57,16 @@ def get_file_counts_over_time(start_date, columns):
           tree_command = ['git', 'ls-tree', '-r', '--name-only', sha]
           tree_result = subprocess.run(tree_command, capture_output=True, text=True, check=True)
           files = tree_result.stdout.strip().split('\n')
-          # Only care about files in `FormalConjectures` subdir
-          subdir_pattern = re.compile(r'^FormalConjectures/')
+
+          # Only care about lean files in `FormalConjectures` subdir
+          subdir_pattern = re.compile(r'^FormalConjectures/.*\.lean')
+
           file_count = len([f for f in files if f and subdir_pattern.match(f)])
           data.append([datetime.fromtimestamp(timestamp), file_count])
 
     return pd.DataFrame(data, columns=columns)
 
-def plot_file_counts(df, xlabel, ylabel, line_color, line_width, title, out_path):
+def plot_file_counts(df, xlabel, ylabel, height, width, line_color, line_width, title, out_path):
     """
     Plots the number of files over time.
 
@@ -75,7 +79,7 @@ def plot_file_counts(df, xlabel, ylabel, line_color, line_width, title, out_path
         out_path (str): Save location of html
     """
     fig = px.line(df, xlabel, ylabel)
-    fig.update_layout(title=title)
+    fig.update_layout(title=title, height=height, width=width, autosize=False)
     fig.update_traces(line_color=line_color, line_width=line_width)
     fig.write_html(out_path, full_html=False, include_plotlyjs='cdn')
 
@@ -85,5 +89,14 @@ if __name__ == "__main__":
 
     columns = [conf['xlabel'], conf['ylabel']]
     df = get_file_counts_over_time(conf['start_date'], columns)
-    plot_file_counts(df, conf['xlabel'], conf['ylabel'], conf['line_color'], conf['line_width'],
-      conf['title'], conf['out_path'])
+    plot_file_counts(
+      df=df,
+      xlabel=conf['xlabel'],
+      ylabel=conf['ylabel'],
+      height=conf['height'],
+      width=conf['width'],
+      line_color=conf['line_color'],
+      line_width=conf['line_width'],
+      title=conf['title'],
+      out_path=conf['out_path']
+    )

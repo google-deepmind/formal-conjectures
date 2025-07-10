@@ -132,6 +132,7 @@ classifications, please refer to the
 
 ## Problem Category Statistics
 {categoryStats}
+
 (note the links above use GitHub search, and so require logging into GitHub)
 
 ---
