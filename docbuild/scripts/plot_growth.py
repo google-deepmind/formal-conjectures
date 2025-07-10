@@ -10,16 +10,16 @@ conf = {
   'line_color': '#4285F4', # Color used in plotting
   'line_width': 3, # Width of line used in the plot
   'title': dict(
-    text='Number of files in Formal Conjectures', # Title text
+    text='Number of Lean files in Formal Conjectures', # Title text
     font=dict(size=15), # Title font
     x=0.5, # Center title
     xanchor='center' # Center title
   ),
-  'width': 1000, # Width of plot in px
-  'height': 500, # Height of plot in px
+  'max-width': '1000px', # Width of plot in px
+  'aspect-ratio': 2, # aspect ratio of plot
   'start_date': '2025-05-28', # Announcement date is '2025-05-28'
   'xlabel': 'Date', # x-axis label on plot
-  'ylabel': 'Number of files', # y-axis label on plot
+  'ylabel': 'Number of Lean files', # y-axis label on plot
   'out_path': 'docbuild/out/file_counts.html' # This is used as an arg to overwrite_index.lean in .github/workflows/build-and-docs.yml
 }
 
@@ -66,7 +66,7 @@ def get_file_counts_over_time(start_date, columns):
 
     return pd.DataFrame(data, columns=columns)
 
-def plot_file_counts(df, xlabel, ylabel, height, width, line_color, line_width, title, out_path):
+def plot_file_counts(df, xlabel, ylabel, max_width, aspect_ratio, line_color, line_width, title, out_path):
     """
     Plots the number of files over time.
 
@@ -79,9 +79,18 @@ def plot_file_counts(df, xlabel, ylabel, height, width, line_color, line_width, 
         out_path (str): Save location of html
     """
     fig = px.line(df, xlabel, ylabel)
-    fig.update_layout(title=title, height=height, width=width, autosize=False)
+    fig.update_layout(title=title)
+    fig.update_yaxes(
+       scaleanchor="x",
+       scaleratio=0.5
+    )
     fig.update_traces(line_color=line_color, line_width=line_width)
-    fig.write_html(out_path, full_html=False, include_plotlyjs='cdn')
+    fig_html = f"<div style='max-width: {max_width}; aspect-ratio: {aspect_ratio};'> {
+       fig.to_html(full_html=False, include_plotlyjs='cdn')} </div>"
+    with open(out_path, "w") as f:
+       f.write(fig_html)
+
+    #fig.write_html(out_path, full_html=False, include_plotlyjs='cdn')
 
 if __name__ == "__main__":
     github_url = "https://github.com/google-deepmind/formal-conjectures"
@@ -93,8 +102,8 @@ if __name__ == "__main__":
       df=df,
       xlabel=conf['xlabel'],
       ylabel=conf['ylabel'],
-      height=conf['height'],
-      width=conf['width'],
+      max_width=conf['max-width'],
+      aspect_ratio=conf['aspect-ratio'],
       line_color=conf['line_color'],
       line_width=conf['line_width'],
       title=conf['title'],
