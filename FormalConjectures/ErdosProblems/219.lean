@@ -50,7 +50,7 @@ example : ∅ ∉ primeArithmeticProgressions := by
 @[category API, AMS 5 11]
 lemma singleton_mem_primeArithmeticProgressions
     {p : ℕ} (hp : p.Prime) : {p} ∈ primeArithmeticProgressions := by
-  simpa [primeArithmeticProgressions, hp] using ⟨1, one_pos, Set.isAPOfLength_singleton p⟩
+  simpa [primeArithmeticProgressions, hp] using ⟨1, one_pos, by simp⟩
 
 @[category API, AMS 5 11]
 lemma pair_mem_primeArithmeticProgressions
