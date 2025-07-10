@@ -52,10 +52,9 @@ theorem adjoin_transcendenceDegree_le_of_finite {A ι : Type*} [Field A] {S : Se
   sorry
 
 /--
-Given any set of $n$ complex numbers $\{z_1, ..., z_n\}$ that are linearly
-independent over $\mathbb{Q}$, the field extension
-$\mathbb{Q}(z_1, ..., z_n, e^{z_1}, ..., e^{z_n})$ has transcendence degree
-at least $n$ over $\mathbb{Q}$.
+Given any set of $n$ complex numbers $\{z_1, ..., z_n\}$ that are linearly independent over
+$\mathbb{Q}$, the field extension $\mathbb{Q}(z_1, ..., z_n, e^{z_1}, ..., e^{z_n})$
+has transcendence degree at least $n$ over $\mathbb{Q}$.
 -/
 @[category research open, AMS 11 33]
 theorem schanuel_conjecture (n : ℕ) (z : Fin n → ℂ) (h : LinearIndependent ℚ z) :
