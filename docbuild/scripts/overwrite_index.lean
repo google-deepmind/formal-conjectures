@@ -107,13 +107,15 @@ unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
 unsafe def main (args : List String) : IO Unit := do
   let .some file := args.get? 0
     | IO.println "Usage: stats <file>
-overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."
+overwrites the contents of the `main` tag of a html `file` with a welcome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
+  let .some graphFile := args.get? 1
+    | IO.println "Repository growth graph not supplied, generating docs without graph."
+  let graphHtml ← IO.FS.readFile graphFile
 
   runWithImports do
     let categoryStats ← getCategoryStatsMarkdown
     let subjectStats ← getSubjectStatsMarkdown
-
     let markdownBody :=
       s!"# Welcome to the *Formal Conjectures* Documentation!
 
@@ -136,8 +138,13 @@ classifications, please refer to the
 ---
 
 ## Subject Category Statistics
-{subjectStats}"
+{subjectStats}
+
+---
+
+## Repository growth
+"
     IO.println markdownBody
     let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throwError "Parsing failed"
-    let finalHtml ← replaceTag "main" inputHtmlContent newBody
+    let finalHtml ← replaceTag "main" inputHtmlContent (newBody ++ graphHtml)
     IO.FS.writeFile file finalHtml

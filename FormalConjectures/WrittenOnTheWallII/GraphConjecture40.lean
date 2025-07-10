@@ -16,17 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Legendre's conjecture
+namespace SimpleGraph
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Legendre%27s_conjecture)
--/
+variable {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
 
 /--
-Does there always exist at least one prime between consecutive perfect squares?
+WOWII [Conjecture 40](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+
+For a nontrivial connected graph `G` the size `f(G)` of a largest induced forest
+satisfies `f(G) ≥ ceil((p(G) + b(G) + 1)/2)` where `p(G)` is the path cover
+number and `b(G)` is the largest induced bipartite subgraph size.
 -/
-@[category research open, AMS 11]
-theorem legendre_conjecture :
-    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p)
-      ↔ answer(sorry) := by
+@[category research open, AMS 5]
+theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :
+    ⌈((p G + b G + 1) / 2)⌉ ≤ f G := by
   sorry
+
+end SimpleGraph

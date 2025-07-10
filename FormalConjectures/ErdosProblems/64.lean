@@ -17,15 +17,18 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Goldbach's conjecture
+# Erdős Problem 64
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Goldbach%27s_conjecture)
+*Reference:* [erdosproblems.com/64](https://www.erdosproblems.com/64)
 -/
 
 /--
-Can every even integer greater than 2 be written as the sum of two primes?
+Does every finite graph with minimum degree at least $3$
+contain a cycle of length $2^k$ for some $k \geq 2$?
 -/
-@[category research open, AMS 11]
-theorem goldbach (n : ℕ) (hn : 2 < n) (hn_even : Even n) :
-    ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+@[category research open, AMS 5]
+theorem erdos_64 :
+    (∀ (V : Type*) (G : SimpleGraph V) [Fintype V] [DecidableRel G.Adj],
+        G.minDegree ≥ 3 → ∃ (k : ℕ) (v : V) (c : G.Walk v v),
+            k ≥ 2 ∧ c.IsCycle ∧ c.length = 2^k) ↔ answer(sorry) := by
   sorry
