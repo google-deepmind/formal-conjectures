@@ -36,27 +36,36 @@ A set $S$ is an arithmetic progression of length $l$ with first term $a$ and dif
 if $S = \{a, a + d, ..., a + (l - 1)d\}$, if $l$ if finite, else $S = \{a, a + d, a + 2d, ...\}.
 This can be written as `Set.IsAPOfLengthWith a l a d`, where `l : ℕ∞` may take the infinite
 value `⊤`.
-
-The case `d = 0` is only allowed for singletons and `l = 1`: `Set.IsAPOfLengthWith {a} 1 a 0`
 -/
 def Set.IsAPOfLengthWith (s : Set α) (l : ℕ∞) (a d : α) : Prop :=
   ENat.card s = l ∧ s = {a + n • d | (n : ℕ) (_ : n < l)}
 
+namespace Set.IsAPOfLengthWith
+
+variable {s : Set α} {l : ℕ∞} {a d : α}
+
+theorem card (h : s.IsAPOfLengthWith l a d) : ENat.card s = l := h.1
+theorem eq (h : s.IsAPOfLengthWith l a d) : s = {a + n • d | (n : ℕ) (_ : n < l)} := h.2
+
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
 if the difference is non-zero and `s` is empty. -/
-theorem Set.IsAPOfLengthWith.zero (s : Set α) (a d : α) :
+@[simp]
+theorem Set.IsAPOfLengthWith.zero :
     s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by
   simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length one if and only
 if `s` is a singleton. -/
-theorem Set.IsAPOfLengthWith.one (s : Set α) (a d : α) :
+@[simp]
+theorem Set.IsAPOfLengthWith.one :
     s.IsAPOfLengthWith 1 a d ↔ s = {a} := by
   simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
 
+end Set.IsAPOfLengthWith
+
 /-- In an abelian additive group `α`, the set `{a, b}` with `a ≠ b` is an arithmetic progression of
 length `2` with first term `a` and difference `b - a`. -/
-theorem Set.isAPOfLengthWith_pair {α : Type*} [DecidableEq α] [AddCommGroup α] [IsLeftCancelAdd α]
+theorem Set.isAPOfLengthWith_pair {α : Type*} [DecidableEq α] [AddCommGroup α]
     {a b : α} (hab : a ≠ b) :
     Set.IsAPOfLengthWith {a, b} 2 a (b - a) := by
   simp [IsAPOfLengthWith]
@@ -85,52 +94,56 @@ arithmetic progression.
 def Set.IsAPOfLength (s : Set α) (l : ℕ∞) : Prop :=
   ∃ a d : α, s.IsAPOfLengthWith l a d
 
+namespace Set.IsAPOfLength
+
+open Set.IsAPOfLengthWith
+
+variable {s : Set α} {l : ℕ∞}
+
+theorem card (h : s.IsAPOfLength l) : ENat.card s = l := h.choose_spec.choose_spec.1
+
+theorem eq (h : s.IsAPOfLength l) :
+    ∃ a d : α, s = {a + n • d | (n : ℕ) (_ : n < l)} :=
+  ⟨h.choose, h.choose_spec.choose, h.choose_spec.choose_spec.2⟩
+
 /-- Only the empty set is a finite arithmetic progression of length $0$. -/
-theorem Set.IsAPOfLength.zero {α : Type*} [AddCommMonoidWithOne α] [NeZero (1 : α)] {s : Set α} :
-    s.IsAPOfLength 0 ↔ s = ∅ := by
-  simp [Set.IsAPOfLength, Set.IsAPOfLengthWith.zero]
+@[simp] theorem zero : s.IsAPOfLength 0 ↔ s = ∅ := by simp [Set.IsAPOfLength]
 
 /-- Only singletons are finite arithmetic progressions of length $1$. -/
-theorem Set.IsAPOfLength.one {α : Type*} [AddCommMonoidWithOne α] [NeZero (1 : α)] {s : Set α} :
-    s.IsAPOfLength 1 ↔ ∃ a, s = {a} := by
-  simp [IsAPOfLength, zero_nsmul, IsAPOfLengthWith.one]
+@[simp] theorem one : s.IsAPOfLength 1 ↔ ∃ a, s = {a} := by simp [IsAPOfLength, zero_nsmul]
 
-theorem Set.isAPOfLength_singleton {α : Type*} [AddCommMonoidWithOne α] [NeZero (1 : α)] (a : α) :
-    Set.IsAPOfLength {a} 1 := by
-  simp [IsAPOfLength.one]
+/-- If a set is an arithmetic progression of lengths `l₁` and `l₂`, then the lengths are
+equal. -/
+theorem congr {s : Set α} {l₁ l₂ : ℕ∞}
+    (h₁ : s.IsAPOfLength l₁) (h₂ : s.IsAPOfLength l₂) :
+    l₁ = l₂ := by
+  rw [← h₁.card, h₂.card]
+
+end Set.IsAPOfLength
 
 theorem Set.isAPOfLength_pair {α : Type*} [DecidableEq α] [AddCommGroup α] {a b : α} (hab : a ≠ b) :
-    Set.IsAPOfLength {a, b} 2 := by
-  simpa [IsAPOfLength] using ⟨a, b - a, Set.isAPOfLengthWith_pair hab⟩
+    Set.IsAPOfLength {a, b} 2 :=
+  ⟨a, b - a, Set.isAPOfLengthWith_pair hab⟩
 
 theorem Nat.isAPOfLength_pair {a b : ℕ} (hab : a < b) :
-    Set.IsAPOfLength {a, b} 2 := by
-  simpa [Set.IsAPOfLength] using ⟨a, b - a, Nat.isAPOfLengthWith_pair hab⟩
+    Set.IsAPOfLength {a, b} 2 :=
+  ⟨a, b - a, Nat.isAPOfLengthWith_pair hab⟩
 
 /-- We say that a set `s` is free of arithmetic progressions of length `l` if `s` contains no
 non-trivial arithmetic progressions of length `l`. Written as `Set.IsAPOfLengthFree s l`. --/
 def Set.IsAPOfLengthFree (s : Set α) (l : ℕ∞) : Prop :=
   ∀ t ⊆ s, t.IsAPOfLength l → t.ncard = 1
 
+/-- Any set is free of arithmetic progressions of length `1`, because such APs are all trivial. -/
+theorem Set.IsAPOfLengthFree_one (s : Set α) : s.IsAPOfLengthFree 1 := by
+  simp [Set.IsAPOfLengthFree]
+
 /-- Every set contains an arithmetic progression of length zero. -/
 @[simp]
-theorem Set.not_isAPOfLengthFree_zero {α : Type*} [AddCommMonoidWithOne α] [NeZero (1 : α)]
-    (s : Set α) : ¬s.IsAPOfLengthFree 0 := by
-  simpa [Set.IsAPOfLengthFree, Set.IsAPOfLength.zero] using fun x ↦ by simp [Ne.symm]
-
-lemma Set.IsAPOfLength.card (s : Set α) (l : ℕ∞) (hs : s.IsAPOfLength l) :
-    ENat.card s = l :=
-  hs.choose_spec.choose_spec.1
-
-/-- If a set is an arithmetic progression of lengths `l₁` and `l₂`, then the lengths are
-equal. -/
-theorem Set.IsAPOfLength.congr [IsLeftCancelAdd α] {s : Set α} {l₁ l₂ : ℕ∞}
-    (h₁ : s.IsAPOfLength l₁) (h₂ : s.IsAPOfLength l₂) :
-    l₁ = l₂ := by
-  rw [← h₁.card, h₂.card]
+theorem Set.not_isAPOfLengthFree_zero (s : Set α) : ¬s.IsAPOfLengthFree 0 := by
+  simpa [Set.IsAPOfLengthFree] using fun x ↦ by simp [Ne.symm]
 
 /-- The empty set is not an arithmetic progression of positive length. -/
-theorem Set.not_isAPOfLength_empty {α : Type*} [AddCommMonoidWithOne α] [NeZero (1 : α)]
-    [IsLeftCancelAdd α] {l : ℕ∞} (hl : 0 < l) :
+theorem Set.not_isAPOfLength_empty {l : ℕ∞} (hl : 0 < l) :
     ¬Set.IsAPOfLength (∅ : Set α) l :=
   fun h ↦ by simp_all [h.congr <| Set.IsAPOfLength.zero.2 rfl]
