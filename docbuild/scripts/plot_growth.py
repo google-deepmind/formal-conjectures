@@ -90,8 +90,6 @@ def plot_file_counts(df, xlabel, ylabel, max_width, aspect_ratio, line_color, li
     with open(out_path, "w") as f:
        f.write(fig_html)
 
-    #fig.write_html(out_path, full_html=False, include_plotlyjs='cdn')
-
 if __name__ == "__main__":
     github_url = "https://github.com/google-deepmind/formal-conjectures"
     print(f"Generating growth plots for: {github_url}")
