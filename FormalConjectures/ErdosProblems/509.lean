@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/509](https://www.erdosproblems.com/509)
 -/
+
 open Polynomial
 open scoped Real
 

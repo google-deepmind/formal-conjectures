@@ -58,7 +58,7 @@ lemma vanDerWaerden (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) (hM : M ∈ doubl
 A weaker version of Erdős' problem 499, which asks whether for every doubly stochastic matrix, there
 exists a permutation $σ \in S_n$ with $M_{i, σ(i)} ≠ 0$ and such that
 $$
-\prod_{1 \leq i \leq n} M_{i, σ(i)} \geq 1
+\sum_{1 \leq i \leq n} M_{i, σ(i)} \geq 1
 $$
 Proved by Marcus and Ree [MaRe59].
 
@@ -67,6 +67,6 @@ Proved by Marcus and Ree [MaRe59].
 @[category research solved, AMS 15]
 lemma erdos_499.variants.one_le :
     (∀ (n : ℕ), ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
-      (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∏ i, M i (σ i)) ↔
+      (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∑ i, M i (σ i)) ↔
     answer(True) := by
   sorry
