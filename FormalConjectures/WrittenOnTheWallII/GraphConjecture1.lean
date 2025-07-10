@@ -15,11 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Bipartite
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
 
 open SimpleGraph
 

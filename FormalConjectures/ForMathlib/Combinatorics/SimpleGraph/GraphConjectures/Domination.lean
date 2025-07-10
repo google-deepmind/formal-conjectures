@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Clique
 
 /-
 Dominating sets and domination numbers
