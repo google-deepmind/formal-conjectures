@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Geometry.«2d»
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
@@ -63,20 +62,19 @@ Question: are all convex polyhedra with nonempty interior Rupert?
 
 -/
 open scoped Matrix
-open scoped EuclideanGeometry
 
 abbrev SO3 := Matrix.specialOrthogonalGroup (Fin 3) ℝ
 
-scoped[EuclideanGeometry] notation "ℝ³" => EuclideanSpace ℝ (Fin 3)
-
 namespace Rupert
+
+notation "ℝ²" => Fin 2 → ℝ
+notation "ℝ³" => Fin 3 → ℝ
 
 /--
 The result of transforming a subset of ℝ³ by a chosen rotation and offset,
 and then projected to ℝ².
 --/
 def transformed_shadow (X : Set ℝ³) (offset : ℝ²) (rotation : SO3) : Set ℝ² :=
-  let offset : Fin 2 → ℝ := offset
   (fun p ↦ offset + (rotation *ᵥ p) ∘ Fin.castSucc) '' X
 
 /--
