@@ -50,15 +50,13 @@ theorem eq (h : s.IsAPOfLengthWith l a d) : s = {a + n • d | (n : ℕ) (_ : n 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
 if the difference is non-zero and `s` is empty. -/
 @[simp]
-theorem Set.IsAPOfLengthWith.zero :
-    s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by
+theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by
   simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length one if and only
 if `s` is a singleton. -/
 @[simp]
-theorem Set.IsAPOfLengthWith.one :
-    s.IsAPOfLengthWith 1 a d ↔ s = {a} := by
+theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by
   simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
 
 end Set.IsAPOfLengthWith
@@ -102,8 +100,7 @@ variable {s : Set α} {l : ℕ∞}
 
 theorem card (h : s.IsAPOfLength l) : ENat.card s = l := h.choose_spec.choose_spec.1
 
-theorem eq (h : s.IsAPOfLength l) :
-    ∃ a d : α, s = {a + n • d | (n : ℕ) (_ : n < l)} :=
+theorem eq (h : s.IsAPOfLength l) : ∃ a d : α, s = {a + n • d | (n : ℕ) (_ : n < l)} :=
   ⟨h.choose, h.choose_spec.choose, h.choose_spec.choose_spec.2⟩
 
 /-- Only the empty set is a finite arithmetic progression of length $0$. -/
@@ -129,6 +126,11 @@ theorem Nat.isAPOfLength_pair {a b : ℕ} (hab : a < b) :
     Set.IsAPOfLength {a, b} 2 :=
   ⟨a, b - a, Nat.isAPOfLengthWith_pair hab⟩
 
+/-- The empty set is not an arithmetic progression of positive length. -/
+theorem Set.not_isAPOfLength_empty {l : ℕ∞} (hl : 0 < l) :
+    ¬Set.IsAPOfLength (∅ : Set α) l :=
+  fun h ↦ by simp_all [h.congr <| Set.IsAPOfLength.zero.2 rfl]
+
 /-- We say that a set `s` is free of arithmetic progressions of length `l` if `s` contains no
 non-trivial arithmetic progressions of length `l`. Written as `Set.IsAPOfLengthFree s l`. --/
 def Set.IsAPOfLengthFree (s : Set α) (l : ℕ∞) : Prop :=
@@ -142,8 +144,3 @@ theorem Set.IsAPOfLengthFree_one (s : Set α) : s.IsAPOfLengthFree 1 := by
 @[simp]
 theorem Set.not_isAPOfLengthFree_zero (s : Set α) : ¬s.IsAPOfLengthFree 0 := by
   simpa [Set.IsAPOfLengthFree] using fun x ↦ by simp [Ne.symm]
-
-/-- The empty set is not an arithmetic progression of positive length. -/
-theorem Set.not_isAPOfLength_empty {l : ℕ∞} (hl : 0 < l) :
-    ¬Set.IsAPOfLength (∅ : Set α) l :=
-  fun h ↦ by simp_all [h.congr <| Set.IsAPOfLength.zero.2 rfl]
