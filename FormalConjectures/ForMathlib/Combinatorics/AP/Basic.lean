@@ -134,13 +134,17 @@ theorem Set.not_isAPOfLength_empty {l : ℕ∞} (hl : 0 < l) :
 /-- We say that a set `s` is free of arithmetic progressions of length `l` if `s` contains no
 non-trivial arithmetic progressions of length `l`. Written as `Set.IsAPOfLengthFree s l`. --/
 def Set.IsAPOfLengthFree (s : Set α) (l : ℕ∞) : Prop :=
-  ∀ t ⊆ s, t.IsAPOfLength l → t.ncard = 1
+  ∀ t ⊆ s, t.IsAPOfLength l → l ≤ 1
 
 /-- Any set is free of arithmetic progressions of length `1`, because such APs are all trivial. -/
-theorem Set.IsAPOfLengthFree_one (s : Set α) : s.IsAPOfLengthFree 1 := by
+theorem Set.isAPOfLengthFree_one (s : Set α) : s.IsAPOfLengthFree 1 := by
   simp [Set.IsAPOfLengthFree]
 
-/-- Every set contains an arithmetic progression of length zero. -/
-@[simp]
-theorem Set.not_isAPOfLengthFree_zero (s : Set α) : ¬s.IsAPOfLengthFree 0 := by
-  simpa [Set.IsAPOfLengthFree] using fun x ↦ by simp [Ne.symm]
+/-- Any set is free of arithmetic progressions of length `0`, because such APs are all trivial. -/
+theorem Set.isAPOfLengthFree_zero (s : Set α) : s.IsAPOfLengthFree 0 := by
+  simp [Set.IsAPOfLengthFree]
+
+/-- Any non-trival arithmetic progression cannot be free of arithmetic progressions. -/
+theorem Set.IsAPOfLength.not_isAPOfLengthFree {s : Set α} {l : ℕ∞}
+    (hs : s.IsAPOfLength l) (hl : 1 < l) : ¬s.IsAPOfLengthFree l := by
+  simpa [Set.IsAPOfLengthFree] using ⟨s, le_rfl, ⟨hs, hl⟩⟩
