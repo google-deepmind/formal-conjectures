@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 /-- Erdős problem 672 conjectures that the below holds for any $k ≥ 4$ and $l > 1$. -/
 def Erdos672With (k l : ℕ) : Prop :=
-  ∀ (s : Finset ℕ), s.Nonempty → s.card = k → ∃ᵉ (n > 0) (d > 0), n.gcd d = 1 →
+  ∀ (s : Finset ℕ), s.card = k → ∃ᵉ (n > 0) (d > 0), n.gcd d = 1 →
     Set.IsAPOfLengthWith s k n d → ∀ q, ∏ i ∈ s, i ≠ q ^ l
 
 /--
