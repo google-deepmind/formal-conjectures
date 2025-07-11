@@ -1,10 +1,26 @@
-import OpenConjectures.Util.ProblemImports
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 208
-
 *Reference:* [erdosproblems.com/208](https://www.erdosproblems.com/208)
 -/
+
 open Filter Real
 
 -- TODO: Need to fix wording on website...
@@ -19,7 +35,6 @@ theorem erdos_208.i (s : ℕ → ℕ) (hs₀ : StrictMono s) (hs₁ : ∀ n, Squ
 /--
 Let `s1 < s2 < ⋯` be a sequence of squarefree numbers. Is it true that
 `s (n + 1) - s n ≤ (1 + o(1)) * (π^2 / 6) * log (s n) / log (log (s n))`?
-
 -/
 theorem erdos_208.ii (s : ℕ → ℕ) (hs₀ : StrictMono s) (hs₁ : ∀ n, Squarefree (s n)) :
     ∃ (c : ℕ → ℝ), (c =o[atTop] (fun n ↦ (1 : ℝ))) ∧
