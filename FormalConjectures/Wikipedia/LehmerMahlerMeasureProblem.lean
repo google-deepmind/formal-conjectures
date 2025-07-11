@@ -65,14 +65,15 @@ theorem lehmer_mahler_measure_problem.variants.not_reciprocal (f : ℤ[X])
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^3 - X - 1) := by
   sorry
 
-def AllCoeffsOdd (f : Polynomial ℤ) : Prop :=
-  ∀ i : ℕ, Odd (f.coeff i)
+/-- `Polynomial.HasOddCoeffs f` means that all coefficients of `f : Polynomial ℤ` are odd. -/
+def Polynomial.HasOddCoeffs (f : Polynomial ℤ) : Prop :=
+  ∀ i ∈ f.support, Odd (f.coeff i)
 
 /--
 If all the coefficients of `f` are odd and `M(f)>1`, `M(f) ≥ M(X^2 - X - 1)`.
 -/
 @[category research solved, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])
-    (hf : mahlerMeasureZ f > 1) (hf' : AllCoeffsOdd f) :
+    (hf : mahlerMeasureZ f > 1) (hf' : f.HasOddCoeffs) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^2 - X - 1) := by
   sorry
