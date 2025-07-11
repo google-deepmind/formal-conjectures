@@ -74,7 +74,7 @@ Ref:Maier, Helmut and Pomerance, Carl, _On the number of distinct values of Eule
 @[category research solved, AMS 11]
 theorem erdos_416.variants.Maier_Pomerance :
     let C : ℝ := answer(sorry)
-    ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ → ℝ) ∧
+    0 < C ∧ ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ → ℝ) ∧
       ∀ᶠ x in Filter.atTop, (V x : ℝ) = x / x.log * (rexp <| (C + f x) * x.log.log.log ^ 2) := by
   sorry
 
@@ -86,6 +86,7 @@ Ref: Ford, Kevin, _The distribution of totients_.
 @[category research solved, AMS 11]
 theorem erdos_416.variants.Ford :
     let (C₁, C₂, C₃) : ℝ × ℝ × ℝ := answer(sorry)
+    0 < C₁ ∧ 0 < C₂ ∧ 0 < C₃ ∧
     ∃ (f : ℝ → ℝ) (C : ℝ), (∀ᶠ x in Filter.atTop, |f x| ≤ C) ∧
     let G (x : ℝ) : ℝ := x / x.log* (rexp <| C₁ * (x.log.log.log - x.log.log.log.log) ^ 2
         + C₂* x.log.log.log - C₃ * x.log.log.log.log + f x)
