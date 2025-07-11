@@ -21,18 +21,13 @@ import FormalConjectures.Util.ProblemImports
 by *R. Hartshorne*
 -/
 
-universe u v u' v' w
-
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
-variable (n : Type v) (S : Scheme.{max u v})
-
+variable (n : Type) (S : Scheme)
 
 namespace AlgebraicGeometry.Scheme
 
 section AlgebraicVectorBundles
-
-variable (S : Scheme.{u})
 
 attribute [local instance] CategoryTheory.Types.instConcreteCategory
 
@@ -40,7 +35,7 @@ attribute [local instance] CategoryTheory.Types.instConcreteCategory
 A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
 -/
 structure VectorBundles where
-  carrier : AlgebraicGeometry.Scheme.Modules S
+  carrier : S.Modules
   rank : ℕ
   isLocallyFreeFiniteConstantRank : SheafOfModules.IsVectorBundleWithRank
     (J := Opens.grothendieckTopology S) carrier rank
@@ -51,29 +46,28 @@ instance (S : Scheme) : Coe S.VectorBundles S.Modules where
 /--
 Vector bundles form a category.
 -/
-instance (S : Scheme) : Category (VectorBundles S) :=
+instance : Category (VectorBundles S) :=
   InducedCategory.category VectorBundles.carrier
 
-def VectorBundles.toModule (S : Scheme) : S.VectorBundles ⥤ S.Modules where
+def VectorBundles.toModule : S.VectorBundles ⥤ S.Modules where
   obj 𝓕 := 𝓕.carrier
   map f := f
 
 @[category API, AMS 14]
-theorem hasFiniteCoproductsVectorBundles (S : Scheme) :
-    HasFiniteCoproducts S.VectorBundles :=
+theorem hasFiniteCoproductsVectorBundles : HasFiniteCoproducts S.VectorBundles := by
   sorry
 
-instance (S : Scheme) : HasFiniteCoproducts S.VectorBundles :=
+instance : HasFiniteCoproducts S.VectorBundles :=
   hasFiniteCoproductsVectorBundles S
 
+variable {S} in
 /--
 A splitting of a vector bundle `𝓕` is a non-trivial direct sum decomposition of `𝓕`
 -/
-structure VectorBundles.Splitting
-    {S : Scheme} (𝓕 : VectorBundles S) (ι : Type) [Fintype ι] [Nonempty ι] where
-  (toFun : ι → S.VectorBundles)
-  (iso : 𝓕 ≅ ∐ fun (i : ι) => toFun i)
-  (non_trivial : ∀ i, IsEmpty (toFun i ≅ 𝓕))
+structure VectorBundles.Splitting (𝓕 : VectorBundles S) (ι : Type) [Fintype ι] [Nonempty ι] where
+  toFun : ι → S.VectorBundles
+  iso : 𝓕 ≅ ∐ fun (i : ι) => toFun i
+  non_trivial : ∀ i, IsEmpty (toFun i ≅ 𝓕)
 
 instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] :
     CoeOut (𝓕.Splitting ι) (ι → S.VectorBundles) where

@@ -17,7 +17,7 @@ import Mathlib.AlgebraicGeometry.Limits
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
-universe u v u' v' w
+universe u v
 
 
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
