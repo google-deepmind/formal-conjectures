@@ -37,7 +37,7 @@ open scoped Pointwise
 element from `{1, ..., N}` while preserving the Sidon property. -/
 def IsMaximalSidonSet (A : Set ℕ) (N : ℕ) : Prop :=
   IsSidon A ∧ A ⊆ Set.Icc 1 N ∧
-  ∀ (x : ℕ), x ∈ Set.Icc 1 N → x ∉ A → ¬IsSidon (A ∪ {x})
+  Maximal (fun B => IsSidon B ∧ B ⊆ Set.Icc 1 N) A
 
 /--
 **Erdős Problem 42**: For every maximal Sidon set in `{1, ..., N}`, there exists another
@@ -47,7 +47,7 @@ Sidon set of size M with disjoint difference sets (apart from 0).
 theorem erdos_42 : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
     ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N), ∃ᵉ (B : Set ℕ),
       B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
-      (A - A ∩ B - B) ⊆ {0}) ↔ answer(sorry) := by
+      ((A - A) ∩ (B - B)) ⊆ {0}) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -57,7 +57,7 @@ A variant asking for explicit bounds on how large N needs to be in terms of M.
 theorem erdos_42.constructive : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
     ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N), ∃ᵉ (B : Set ℕ),
       B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
-      (A - A ∩ B - B) ⊆ {0}) ↔ answer(sorry) := by
+      ((A - A) ∩ (B - B)) ⊆ {0}) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -67,7 +67,7 @@ A weaker version where we only require that the intersection is finite.
 theorem erdos_42.weaker : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
     ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N), ∃ᵉ (B : Set ℕ),
       B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
-      (A - A ∩ B - B).Finite) ↔ answer(sorry) := by
+      ((A - A) ∩ (B - B)).Finite) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -78,7 +78,7 @@ disjoint difference set?
 theorem erdos_42.single_element : (∃ (f : ℕ → ℕ), ∀ (N : ℕ) (_ : f 1 ≤ N),
     ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N), ∃ᵉ (x : ℕ),
       x ∈ Set.Icc 1 N ∧ x ∉ A ∧ IsSidon {x} ∧
-      (A - A ∩ {x} - {x}) ⊆ {0}) ↔ answer(sorry) := by
+      ((A - A) ∩ ({x} - {x})) ⊆ {0}) ↔ answer(sorry) := by
   sorry
 
 /-! ## Related results and examples -/
@@ -94,7 +94,7 @@ theorem example_maximal_sidon : IsMaximalSidonSet {1, 2, 4} 4 := by
 The difference set of `{1, 2, 4}` is `{0, 1, 2, 3}`.
 -/
 @[category undergraduate, AMS 5 11]
-theorem example_difference_set : {1, 2, 4} - {1, 2, 4} = {0, 1, 2, 3} := by
+theorem example_difference_set : ({1, 2, 4} : Set ℕ) - {1, 2, 4} = {0, 1, 2, 3} := by
   sorry
 
 /--
@@ -111,7 +111,7 @@ is also a Sidon set.
 -/
 @[category undergraduate, AMS 5 11]
 theorem disjoint_differences_union_sidon (A B : Set ℕ) (hA : IsSidon A) (hB : IsSidon B)
-    (h : (A - A ∩ B - B) ⊆ {0}) : IsSidon (A ∪ B) := by
+    (h : ((A - A) ∩ (B - B)) ⊆ {0}) : IsSidon (A ∪ B) := by
   sorry
 
 /--
