@@ -144,7 +144,7 @@ theorem Set.isAPOfLengthFree_one (s : Set α) : s.IsAPOfLengthFree 1 := by
 theorem Set.isAPOfLengthFree_zero (s : Set α) : s.IsAPOfLengthFree 0 := by
   simp [Set.IsAPOfLengthFree]
 
-/-- Any non-trival arithmetic progression cannot be free of arithmetic progressions. -/
+/-- Any non-trivial arithmetic progression cannot be free of arithmetic progressions. -/
 theorem Set.IsAPOfLength.not_isAPOfLengthFree {s : Set α} {l : ℕ∞}
     (hs : s.IsAPOfLength l) (hl : 1 < l) : ¬s.IsAPOfLengthFree l := by
   simpa [Set.IsAPOfLengthFree] using ⟨s, le_rfl, ⟨hs, hl⟩⟩
