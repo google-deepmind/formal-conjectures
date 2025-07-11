@@ -35,13 +35,16 @@ difference set.
 
 open Function Set Filter
 
-/-- The density of a Sidon set `A` up to `N`. -/
-def sidonDensity (A : Set ℕ) (N : ℕ) : ℝ :=
+/--
+The partial density of a Sidon set `A` up to `N`, normalized by dividing by `√N` instead of `N`.
+This measures how close the set comes to the optimal density for Sidon sets.
+-/
+def sqrtPartialDensity (A : Set ℕ) (N : ℕ) : ℝ :=
   (A ∩ Set.Icc 1 N).ncard / (N : ℝ).sqrt
 
-/-- The upper density of a Sidon set `A`. -/
+/-- The upper density of a Sidon set `A`, normalized by `√N`. -/
 noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
-  limsup (fun N => sidonDensity A N) atTop
+  limsup (fun N => sqrtPartialDensity A N) atTop
 
 /--
 The main question: what is the maximum possible upper density of a Sidon set?
@@ -55,7 +58,7 @@ theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
 Erdős proved that 1/2 is achievable as an upper density.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_329.lower_bound : ∃ᵉ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
+theorem erdos_329.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A = 1/2 := by
   sorry
 
 /--
