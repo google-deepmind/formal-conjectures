@@ -67,8 +67,8 @@ abbrev SO3 := Matrix.specialOrthogonalGroup (Fin 3) ℝ
 
 namespace Rupert
 
-notation "ℝ²" => Fin 2 → ℝ
-notation "ℝ³" => Fin 3 → ℝ
+scoped notation "ℝ²" => Fin 2 → ℝ
+scoped notation "ℝ³" => Fin 3 → ℝ
 
 /--
 The result of transforming a subset of ℝ³ by a chosen rotation and offset,
