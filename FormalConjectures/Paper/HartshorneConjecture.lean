@@ -23,7 +23,7 @@ by *R. Hartshorne*
 
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
-variable (n : Type) (S : Scheme)
+variable (S : Scheme)
 
 namespace AlgebraicGeometry.Scheme
 
@@ -41,12 +41,12 @@ structure VectorBundles where
     (J := Opens.grothendieckTopology S) carrier rank
 
 instance (S : Scheme) : Coe S.VectorBundles S.Modules where
-  coe := fun 𝓕 => 𝓕.carrier
+  coe 𝓕 := 𝓕.carrier
 
 /--
 Vector bundles form a category.
 -/
-instance : Category (VectorBundles S) :=
+instance : Category S.VectorBundles :=
   InducedCategory.category VectorBundles.carrier
 
 def VectorBundles.toModule : S.VectorBundles ⥤ S.Modules where
@@ -64,17 +64,16 @@ variable {S} in
 /--
 A splitting of a vector bundle `𝓕` is a non-trivial direct sum decomposition of `𝓕`
 -/
-structure VectorBundles.Splitting (𝓕 : VectorBundles S) (ι : Type) [Fintype ι] [Nonempty ι] where
+structure VectorBundles.Splitting (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] where
   toFun : ι → S.VectorBundles
   iso : 𝓕 ≅ ∐ fun (i : ι) => toFun i
   non_trivial : ∀ i, IsEmpty (toFun i ≅ 𝓕)
 
 instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] :
     CoeOut (𝓕.Splitting ι) (ι → S.VectorBundles) where
-  coe := fun s => s.toFun
+  coe s := s.toFun
 
---TODO(lezeau): here we would really need some sanity checks and
---easier results.
+--TODO(lezeau): here we would really need some sanity checks and easier results.
 
 end AlgebraicVectorBundles
 
@@ -85,6 +84,6 @@ This is conjecture 6.3 in _VARIETIES OF SMALL CODIMENSION IN PROJECTIVE SPACE_, 
 @[category research open, AMS 14]
 theorem harthshorne_conjecture (n : ℕ) (hn : 7 ≤ n)
     (𝓕 : VectorBundles ℙ(Fin (n + 1); Spec (.of ℂ)))
-    (h𝓕 : VectorBundles.rank 𝓕 = 2) :
-    Nonempty (VectorBundles.Splitting 𝓕 (Fin 2)) :=
+    (h𝓕 : 𝓕.rank = 2) :
+    Nonempty (𝓕.Splitting (Fin 2)) :=
   sorry
