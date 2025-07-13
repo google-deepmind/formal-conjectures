@@ -28,5 +28,6 @@ equation $Ax^n - By^m = C$ when (m, n) ≠ (2, 2).
 -/
 @[category research open, AMS 11]
 theorem pillais_conjecture (a b c : ℕ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    : { (x, y, m, n) : (ℕ × ℕ × ℕ × ℕ) | (m, n) ≠ (2, 2) ∧ A * x^n - B * y^m = C }.Finite := by
+    : { (x, y, m, n) : (ℕ × ℕ × ℕ × ℕ) | (m, n) ≠ (2, 2) ∧ A * x^n - B * y^m = C }.Finite
+      ↔ answer(sorry) := by
   sorry
