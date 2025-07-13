@@ -32,12 +32,13 @@ scoped[EuclideanSpace] notation "ℤ⁴" => Submodule.span ℤ (Set.range (PiLp.
 instance : IsZLattice ℝ ℤ⁴ := ZSpan.isZLattice _
 
 /--
-There exists $0 < \delta < 1$ such that for any $a \in \mathbb{R}^4$,
+*Conjecture 3.4*
+There exists $0 < \delta < 1$ such that for any $a \in \mathbb{S}^3$,
 there exists $b \in \mathbb{Z}^4$ and $k \in \mathbb{Z}$ such that $\|b\| = 5^k$ and
 $\langle a, \frac{b}{\|b\|} \rangle \geq 1 - 5^{-\frac{k}{2 - \delta}}.$
 -/
 @[category research open, AMS 81 11]
 theorem conjecture_3_4 : ∃ (δ : ℝ), 0 < δ ∧ δ < 1 ∧
-    ∀ (a : EuclideanSpace ℝ (Fin 4)), ∃ (b : ℤ⁴) (k : ℤ), ‖b‖ = 5 ^ k ∧
+    ∀ (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1), ∃ (b : ℤ⁴) (k : ℤ), ‖b‖ = 5 ^ k ∧
       inner a (‖b‖⁻¹ • b) ≥ 1 - (5 : ℝ) ^ (-k / (2 - δ)) := by
   sorry
