@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Fermat-Catalan_conjecture)
 -/
+
 open scoped Function
 
 /--
