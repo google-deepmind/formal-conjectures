@@ -43,3 +43,19 @@ to the nearest integer.
 theorem littlewood_conjecture (α β : ℝ) :
     atTop.liminf (fun (n : ℕ) ↦ n * distToNearestInt (n * α) * distToNearestInt (n * β)) = 0 := by
   sorry
+
+open Matrix
+open scoped MatrixGroups
+
+def SpecialLinearGroup.coeHom (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R] :
+    SpecialLinearGroup n R →* Matrix n n R := sorry
+
+-- def DiagonalMatrixSubgroup {n : ℕ} : Subgroup SL(n, ℝ) :=
+--   SpecialLinearGroup.coeHom (Fin n) ℝ |>.comap
+
+/-- Let `n ≥ 3`, `G = SL_n(ℝ)` and `Γ = SL_(ℤ)`, and the subgroup `D` of diagonal matrices in `G`.
+
+Conjecture: for any `g` in `G/Γ` such that `Dg` is relatively compact (in `G/Γ`), then `Dg` is closed.-/
+theorem matrix_group_conjecture {n : ℕ} (hm : 3 ≤ n) (g : SL(n, ℝ))
+    -- let π : SL(n, ℝ) → SL(n, ℝ) ⧸
+    (hg : )
