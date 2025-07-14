@@ -29,7 +29,7 @@ noncomputable def erdos208.s : ℕ → ℕ := Nat.nth Squarefree
 open erdos208
 
 /--
-Let $s_1 < s_2 < ⋯$ be the sequence of squarefree numbers. Is it true that,
+Let $s_1 < s_2 < ⋯$ be the sequence of squarefree numbers. Is it true that
 for any $ϵ > 0$ and large $n$, $s_{n+1} − s_n ≪_ϵ s_n^ε$?
 -/
 @[category research open, AMS 11]
