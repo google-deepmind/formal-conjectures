@@ -27,7 +27,7 @@ for all primes `2 ≤ p ≤ n` such that every integer in `[1,n]`
 satisfies at least two of the congruences `≡ a_p (mod p)`?
 -/
 @[category research open, AMS 11]
-theorem erdos_869 (n : ℕ) (hn : 3 ≤ n) : ∃ a : ℕ → ℕ,
+theorem erdos_689 (n : ℕ) (hn : 3 ≤ n) : ∃ a : ℕ → ℕ,
     ∀ m ∈ Finset.Icc 1 n,
       2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
   sorry
