@@ -34,7 +34,8 @@ for any $ϵ > 0$ and large $n$, $s_{n+1} − s_n ≪_ϵ s_n^ε$?
 -/
 @[category research open, AMS 11]
 theorem erdos_208.i :
-    (∀ ε > 0, ∃ C > 0, ∀ᶠ n in atTop, s (n + 1) - s n < C * (s n)^ε) ↔ answer(sorry) := by sorry
+    (∀ ε > (0 : ℝ), (fun n => (s (n + 1) - s n : ℝ)) =O[atTop] (fun n => (s n : ℝ)^ε)) ↔
+    answer(sorry) := by sorry
 
 /--
 Let $s_1 < s_2 < ⋯$ be the sequence of squarefree numbers. Is it true that
