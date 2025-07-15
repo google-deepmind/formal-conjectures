@@ -24,7 +24,7 @@ open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
 variable (n : Type v) (S : Scheme.{max u v})
 
-local notation3 "ℤ[" n "]" => homogeneousSubmodule n ℤ
+local notation "ℤ[" n "]" => homogeneousSubmodule n ℤ
 local notation3 "ℤ[" n "].{" u "," v "}" => homogeneousSubmodule n (ULift.{max u v} ℤ)
 
 attribute [local instance] MvPolynomial.gradedAlgebra
