@@ -15,11 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Bipartite
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
 
 /-!
 Title: Degree sequences in triangle-free graphs
@@ -129,7 +124,7 @@ theorem theorem1 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 
 /-- **Lemma 3.** For every `n` there exists a bipartite graph with
 `8 n` vertices, minimum degree `n + 1`, and `f = 3`. -/
 @[category research solved, AMS 5]
-lemma lemma3 (n : ℕ) :
+lemma lemma3 (n : ℕ) (hn : 0 < n) :
     ∃ (G : SimpleGraph (Fin (8 * n))) (_ : DecidableRel G.Adj),
       G.IsBipartite ∧ δ G = n + 1 ∧ f G = 3 := by
   sorry
