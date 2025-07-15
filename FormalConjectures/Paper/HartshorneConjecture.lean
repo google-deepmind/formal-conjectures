@@ -66,7 +66,7 @@ A splitting of a vector bundle `𝓕` is a non-trivial direct sum decomposition 
 -/
 structure VectorBundles.Splitting (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] where
   toFun : ι → S.VectorBundles
-  iso : 𝓕 ≅ ∐ fun (i : ι) => toFun i
+  iso : 𝓕 ≅ ∐ toFun
   non_trivial : ∀ i, IsEmpty (toFun i ≅ 𝓕)
 
 instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] :

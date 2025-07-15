@@ -37,10 +37,10 @@ structure VectorBundleData (M : SheafOfModules.{v} R) where
   OpensIndex : Type u
   /-- The indexed family of opens on which the vector bundle is free. -/
   opens : OpensIndex → C
-  /-- The indexed family of types that index local bases for the vector bundle. -/
-  BasisIndex : OpensIndex → Type v
   /-- The indexed family of opens covers the base. -/
   coversTop : J.CoversTop opens
+  /-- The indexed family of types that index local bases for the vector bundle. -/
+  BasisIndex : OpensIndex → Type v
   /-- The restriction of the vector bundle to one of the opens is free. -/
   locallyFree : ∀ i, (M.over <| opens i) ≅ SheafOfModules.free (BasisIndex i)
 
