@@ -65,13 +65,13 @@ variable {S} in
 A splitting of a vector bundle `𝓕` is a non-trivial direct sum decomposition of `𝓕`
 -/
 structure VectorBundles.Splitting (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] where
-  toFun : ι → S.VectorBundles
-  iso : 𝓕 ≅ ∐ toFun
-  non_trivial : ∀ i, IsEmpty (toFun i ≅ 𝓕)
+  components : ι → S.VectorBundles
+  iso : 𝓕 ≅ ∐ components
+  non_trivial : ∀ i, IsEmpty (components i ≅ 𝓕)
 
 instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] :
     CoeOut (𝓕.Splitting ι) (ι → S.VectorBundles) where
-  coe s := s.toFun
+  coe s := s.components
 
 --TODO(lezeau): here we would really need some sanity checks and easier results.
 
