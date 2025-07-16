@@ -67,7 +67,7 @@ cardinality of `S`
 -/
 @[category API, AMS 5 11]
 lemma F_eq_card (N : ℕ) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 N) (hS' : NonTernary S)
-    (hS'' : ∀ T, T ⊆ Finset.Icc 1 N → NonTernary T → S.card ≤ T.card → T = S) :
+    (hS'' : ∀ T, T ⊆ Finset.Icc 1 N → NonTernary T → S.card ≤ T.card → T.card = S.card) :
     F N = S.card := by
   sorry
 
