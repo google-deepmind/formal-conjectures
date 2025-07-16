@@ -19,6 +19,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--name", help="Container name (default: script-<pid>)")
     parser.add_argument("--prep", help="Prepare a single Lean file")
     parser.add_argument(
+        "--pr",
+        dest="pull_request",
+        help="GitHub pull request URL used when preparing a file",
+    )
+    parser.add_argument(
+        "--gh-token",
+        dest="github_token",
+        default=None,
+        help="GitHub token for API access when preparing a file",
+    )
+    parser.add_argument(
         "--export", action="append", default=[], help="Files to export from container"
     )
     parser.add_argument(
@@ -27,6 +38,8 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
     if not args.cmd:
         parser.error("Need Codex command")
+    if args.prep and not args.pull_request:
+        parser.error("--prep requires --pr")
     return args
 
 
@@ -96,13 +109,18 @@ def main() -> int:
         )
 
         if args.prep:
+            prep_cmd = (
+                f"python3 -m scripts.prepare_single_file --lean {shlex.quote(args.prep)} "
+                f"--out tmp_prep --lean-explore-local --pr {shlex.quote(args.pull_request)}"
+            )
+            if args.github_token:
+                prep_cmd += f" --gh-token {shlex.quote(args.github_token)}"
             docker(
                 "exec",
                 cid,
                 "bash",
                 "-euc",
-                f"cd {repo} && "
-                f"python3 -m scripts.prepare_single_file --lean {args.prep} --out tmp_prep --lean-explore-local && "
+                f"cd {repo} && {prep_cmd} && "
                 f"cp tmp_prep/AGENTS_single_task.md AGENTS.md && "
                 f"cp tmp_prep/$(basename {args.prep}) {args.prep}",
             )
