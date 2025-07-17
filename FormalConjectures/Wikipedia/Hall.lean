@@ -23,8 +23,7 @@ There exists a positive number $C$ such that for any integer $x, y$ with $y^2 \n
 $|y^2 - x^3| > C \sqrt{|x|}$.
 
 *References:*
-
-- [Hall's conjecture](https://en.wikipedia.org/wiki/Hall%27s_conjecture)
+- [Wikipedia](https://en.wikipedia.org/wiki/Hall%27s_conjecture)
 - L. Danilov, *The Diophantine equation $x^3 - y^2 = k$ and Hall's conjecture*, Mathematical notes of the Academy of Sciences of the USSR 32 (1982): 617-618
 -/
 
