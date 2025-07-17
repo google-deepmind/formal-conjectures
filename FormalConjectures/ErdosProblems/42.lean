@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 42: Maximal Sidon Sets and Disjoint Difference Sets
