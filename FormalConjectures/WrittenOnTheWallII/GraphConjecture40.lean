@@ -16,17 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Twin prime conjecture
+namespace SimpleGraph
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
--/
-
+variable {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
 
 /--
-Are there infinitely many primes p such that p + 2 is prime?
+WOWII [Conjecture 40](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+
+For a nontrivial connected graph `G` the size `f(G)` of a largest induced forest
+satisfies `f(G) ≥ ceil((p(G) + b(G) + 1)/2)` where `p(G)` is the path cover
+number and `b(G)` is the largest induced bipartite subgraph size.
 -/
-@[category research open, AMS 11]
-theorem twin_primes :
-    {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite ↔ answer(sorry) := by
+@[category research open, AMS 5]
+theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :
+    ⌈((p G + b G + 1) / 2)⌉ ≤ f G := by
   sorry
+
+end SimpleGraph

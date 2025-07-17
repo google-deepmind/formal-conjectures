@@ -18,16 +18,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Some conjectures about ranks of elliptic curves over ℚ
 
-## References
 
-* [PPVW2016] Jennifer Park, Bjorn Poonen, John Voight, and Melanie Matchett Wood.
-  A heuristic for boundedness of ranks of elliptic curves,
-  https://ems.press/journals/jems/articles/16228
-
-* [BS2013] Manjul Bhargava and Arul Shankar. The average size of the 5-Selmer group of
-  elliptic curves is 6, and the average rank is less than 1, https://arxiv.org/pdf/1312.7859
-
-* https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve
+*References:*
+- [PPVW2016] Jennifer Park, Bjorn Poonen, John Voight, and Melanie Matchett Wood.
+    A heuristic for boundedness of ranks of elliptic curves,
+    https://ems.press/journals/jems/articles/16228
+- [BS2013] Manjul Bhargava and Arul Shankar. The average size of the 5-Selmer group of
+   elliptic curves is 6, and the average rank is less than 1, https://arxiv.org/pdf/1312.7859
+- [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
 -/
 
 /-- A data structure representing isomoprhism classes of elliptic curves over ℚ.
