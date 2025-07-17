@@ -47,7 +47,6 @@ lemma baumgartner_headline (V : Type*) [AddCommGroup V] [Module ℚ V] :
       (∀ Y, IsAPOfLength Y 3 → (X ∩ Y).ncard ≤ 2) :=
   baumgartner_strong V 3
 
-
 /--
 If $A ⊆ ℕ$ is a Sidon set then must the complement of $A$ contain an infinite arithmetic
 progression?
