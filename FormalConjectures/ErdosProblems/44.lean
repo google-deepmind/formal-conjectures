@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    https://www.apache.org/licenses/LICENSE/2.0
+    https://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,7 +29,7 @@ noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
   sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
 
 /-- The maximum size of a Sidon set in `{1, ..., N}` is less than or equal to `√N + 1`. -/
-@[category API, AMS 5 11]
+@[category undergraduate, AMS 5 11]
 theorem maxSidonSetSize_bound (N : ℕ) (hN : 1 ≤ N) :
     maxSidonSetSize N ≤ N.sqrt + 1 := by
   sorry
@@ -42,7 +42,7 @@ of size at least `(1−ε)M^{1/2}`?
 This problem asks whether any Sidon set can be extended to achieve a density
 arbitrarily close to the optimal density for Sidon sets.
 -/
-@[category research open, AMS 5 11]
+@[category undergraduate, AMS 5 11]
 theorem erdos_44 : (∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon A.toSet →
     ∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M > N) (B ⊆ Finset.Icc (N + 1) M),
       IsSidon (A ∪ B).toSet ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card) ↔ answer(sorry) := by
@@ -51,7 +51,7 @@ theorem erdos_44 : (∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon A.t
 /--
 A variant considering the extension to any larger range.
 -/
-@[category research open, AMS 5 11]
+@[category undergraduate, AMS 5 11]
 theorem erdos_44.variant : (∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon A.toSet →
     ∀ᵉ (ε > (0 : ℝ)) (M ≥ N), ∃ᵉ (B ⊆ Finset.Icc (N + 1) M),
       IsSidon (A ∪ B).toSet ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card) ↔ answer(sorry) := by
