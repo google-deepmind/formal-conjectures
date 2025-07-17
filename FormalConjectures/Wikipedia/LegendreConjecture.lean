@@ -17,15 +17,18 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Goldbach's conjecture
+# Legendre's conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Goldbach%27s_conjecture)
+*References:*
+- [Landau Problems Wikipedia Page](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
+- [Legendre Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Legendre%27s_conjecture)
 -/
 
 /--
-Can every even integer greater than 2 be written as the sum of two primes?
+Does there always exist at least one prime between consecutive perfect squares?
 -/
 @[category research open, AMS 11]
-theorem goldbach (n : ℕ) (hn : 2 < n) (hn_even : Even n) :
-    ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+theorem legendre_conjecture :
+    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p)
+      ↔ answer(sorry) := by
   sorry

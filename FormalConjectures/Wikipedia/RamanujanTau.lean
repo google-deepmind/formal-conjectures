@@ -26,7 +26,6 @@ There are two conjectures related to the Ramanujan τ-function:
 - Lehmer's conjecture: The Ramanujan τ-function is never zero for any positive integer `n`.
 
 *References:*
-
 - [Ramanujan-Petersson conjecture](https://en.wikipedia.org/wiki/Ramanujan%E2%80%93Petersson_conjecture)
 - [Lehmer's conjecture](https://en.wikipedia.org/wiki/Ramanujan_tau_function#Conjectures_on_the_tau_function)
 -/

@@ -28,8 +28,9 @@ Since we don't have the conductor of the elliptic curve, our definition of `a_p(
 that in the literature at primes of bad reduction. For this reason, we state the conjecture with the
 assumption that `p ∤ N`, in order to give an equivalent statement.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
-* [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
+- [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
 
 -/
 
