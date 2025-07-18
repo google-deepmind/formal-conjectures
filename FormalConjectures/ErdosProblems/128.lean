@@ -31,7 +31,8 @@ vertices has more than $n^2/50$ edges. Must G contain a triangle?
 @[category research open, AMS 5]
 theorem erdos_128 :
     ((∀ (G' : G.Subgraph) [Fintype G'.verts] [Fintype G'.edgeSet],
-        2 * G'.verts.toFinset.card ≥ Fintype.card V →
-        50 * G'.edgeSet.toFinset.card > (Fintype.card V)^2) → ¬ (G.CliqueFree 3))
+        letI n := Fintype.card V;
+        2 * G'.verts.toFinset.card ≥ n →
+        50 * G'.edgeSet.toFinset.card > n^2) → ¬ (G.CliqueFree 3))
     ↔ answer(sorry) := by
   sorry
