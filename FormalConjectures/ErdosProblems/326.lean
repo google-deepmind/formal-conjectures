@@ -41,8 +41,10 @@ theorem erdos_326 : (∀ (A : Set ℕ), A.IsAddBasisOfOrder 2 →
 /--
 Erdős originally asked whether this was true with `A = B`, but this was disproved by Cassels.
 -/
+-- Formalisation note: This is trivially true for `x = 0` by taking `a = id`. Cassels' proof
+-- shows it for `0 < x` which is more interesting.
 @[category research solved, AMS 5 11]
-theorem erdos_326.variants.eq : (∀ (A : Set ℕ), A.IsAddBasisOfOrder 2 →
-    ∃ (a : ℕ → ℕ), StrictMono a ∧ Set.range a = A ∧
-      ∀ (x : ℝ), ¬ Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x)) ↔ answer(False) := by
+theorem erdos_326.variants.eq :
+    ∃ (a : ℕ → ℕ) (_ : StrictMono a) (_ : Set.range a |>.IsAddBasisOfOrder 2) (x : ℝ) (_ : 0 < x),
+      Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x) :=
   sorry
