@@ -14,50 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Data.Set.Card
-import Mathlib.Order.Defs.PartialOrder
+import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Nat.Enat
+import Mathlib.Data.Set.Finite
 
 open Function Set
 
 variable {α : Type*} [AddCommMonoid α]
 
-/-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
-coincidences forced by the commutativity of addition. -/
+/-- A Sidon set is a set such that all pairwise sums of elements are distinct,
+apart from coincidences forced by commutativity. -/
 def IsSidon (A : Set α) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
   i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)
-
-/-- The predicate that a set `s` is an arithmetic progression of length `l` (possibly infinite). -/
-def Set.IsAPOfLength (s : Set α) (l : ℕ∞) : Prop :=
-  ∃ a d : α, d ≠ 0 ∧ s = {a + n • d | (n : ℕ) (_ : n < l)}
-
-lemma Set.IsAPOfLength.card (s : Set α) (l : ℕ∞) (hs : s.IsAPOfLength l) :
-    ENat.card s = l := by
-  sorry
 
 lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [AddCommMonoid α] (A : Set ℕ) (hA : IsSidon A) :
     (∀ Y, IsAPOfLength Y 3 → (A ∩ Y).ncard ≤ 2) := by
   sorry
-  
--- Decidability instance for computable versions
-instance decidableIsSidon (A : Finset ℕ) : Decidable (IsSidon A.toSet) := by
-  unfold IsSidon
-  classical
-  simp only [Set.mem_toSet, emforall, emimp]
-  apply decidable_of_iff _ (by simp)
-  exact decidable_of_iff (∀ i₁ j₁ i₂ j₂ ∈ A, i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)) (by simp)
 
+/-- The subsets of `{0, ..., n - 1}` which are Sidon sets. -/
+def SidonSubsets (n : ℕ) : Finset (Finset ℕ) :=
+  (Finset.range n).powerset.filter fun s => IsSidon (s : Set ℕ)
 
-/-- All subset sizes of Sidon sets in `{1, ..., n}`. -/
+/-- The sizes of Sidon subsets of `{0, ..., n - 1}`. -/
 def SidonSubsetsSizes (n : ℕ) : Finset ℕ :=
-  Finset.image Finset.card <| (Finset.Icc 1 n).powerset.filter (λ A => IsSidon A.toSet)
+  (SidonSubsets n).image Finset.card
 
 lemma SidonSubsetsSizesNonempty (n : ℕ) : (SidonSubsetsSizes n).Nonempty := by
   use 0
-  simp [SidonSubsetsSizes]
+  refine ⟨?_zero_card_in, rfl⟩
+  simp only [SidonSubsetsSizes, Finset.mem_image]
+  use ∅
+  simp [SidonSubsets, IsSidon, Set.pairwise, Finset.mem_filter, Finset.mem_powerset, Finset.card_empty]
 
-def maxSidonSetSize' (n : ℕ) : ℕ :=
+/-- The maximum size of a Sidon subset of `{0, ..., n - 1}`. -/
+def maxSidonSetSize (n : ℕ) : ℕ :=
   (SidonSubsetsSizes n).max' (SidonSubsetsSizesNonempty n)

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 43
@@ -25,8 +24,6 @@ import FormalConjectures.ForMathlib.Combinatorics.Basic
 
 open scoped Pointwise
 
-/-- The maximum size of a Sidon set in `{1, ..., N}`. This version is computable. -/
-def maxSidonSetSize := maxSidonSetSize'
 
 /--
 If `A` and `B` are Sidon sets in `{1, ..., N}` with disjoint difference sets,
@@ -40,8 +37,7 @@ theorem erdos_43 :
       IsSidon A.toSet →
       IsSidon B.toSet →
       (A - A) ∩ (B - B) = ∅ →
-      ((A.card * (A.card - 1) + B.card * (B.card - 1)) / 2 : ℝ) ≤
-        (maxSidonSetSize N * (maxSidonSetSize N - 1) / 2 : ℝ) + C := by
+      A.card.choose 2 + B.card.choose 2 ≤ (maxSidonSetSize N).choose 2 + C := by
   sorry
 
 /--
@@ -50,13 +46,12 @@ can the sum of pair counts be bounded by a strict fraction of the optimum?
 -/
 @[category research open, AMS 11 05]
 theorem erdos_43_equal_size :
-    ∃ c : ℝ, 0 < c ∧ ∀ (N : ℕ) (A B : Finset ℕ),
+    ∃ᵉ (c > 0), ∀ (N : ℕ) (A B : Finset ℕ),
       A ⊆ Finset.Icc 1 N →
       B ⊆ Finset.Icc 1 N →
       IsSidon A.toSet →
       IsSidon B.toSet →
       A.card = B.card →
       (A - A) ∩ (B - B) = ∅ →
-      ((A.card * (A.card - 1) + B.card * (B.card - 1)) / 2 : ℝ) ≤
-        (1 - c) * (maxSidonSetSize N * (maxSidonSetSize N - 1) / 2 : ℝ) := by
+      A.card.choose 2 + B.card.choose 2 ≤ (1 - c) *(maxSidonSetSize N).choose 2 := by
   sorry
