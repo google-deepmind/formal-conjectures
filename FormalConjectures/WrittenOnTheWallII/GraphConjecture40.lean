@@ -16,16 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Goldbach's conjecture
+namespace SimpleGraph
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Goldbach%27s_conjecture)
--/
+variable {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
 
 /--
-Can every even integer greater than 2 be written as the sum of two primes?
+WOWII [Conjecture 40](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+
+For a nontrivial connected graph `G` the size `f(G)` of a largest induced forest
+satisfies `f(G) ≥ ceil((p(G) + b(G) + 1)/2)` where `p(G)` is the path cover
+number and `b(G)` is the largest induced bipartite subgraph size.
 -/
-@[category research open, AMS 11]
-theorem goldbach (n : ℕ) (hn : 2 < n) (hn_even : Even n) :
-    ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+@[category research open, AMS 5]
+theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :
+    ⌈((p G + b G + 1) / 2)⌉ ≤ f G := by
   sorry
+
+end SimpleGraph
