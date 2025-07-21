@@ -28,7 +28,7 @@ asked by user [*Fetchinson0234*](https://mathoverflow.net/users/41312/victor-ram
 -/
 
 /-- The unit `n`-sphere, defined as `Metric.sphere 0 1` in `EuclideanSpace ℝ (Fin (n + 1))`. -/
-abbrev unitSphere (n : ℕ) := Metric.sphere (0 : EuclideanSpace ℝ (Fin (n + 1))) 1
+abbrev unitSphere (n : ℕ) : Set (EuclideanSpace ℝ (Fin (n + 1)) := Metric.sphere 0 1
 
 /--
 Does the 6-sphere admit a complex structure, i.e. an atlas of holomorphically compatible charts
@@ -37,5 +37,5 @@ relating it to `EuclideanSpace ℂ (Fin 3)`?
 @[category research open, AMS 32]
 theorem mathoverflow_1973 :
     (∃ atlas : ChartedSpace (EuclideanSpace ℂ (Fin 3)) (unitSphere 6),
-      @IsManifold _ _ _ _ _ _ _ 𝓘(ℂ, _) 1 _ _ atlas) ↔ answer(sorry) := by
+      IsManifold 𝓘(ℂ, EuclideanSpace ℂ (Fin 3)) 1 (unitSphere 6)) ↔ answer(sorry) := by
   sorry
