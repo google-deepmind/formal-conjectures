@@ -64,7 +64,7 @@ Write $M(n, k)$ be the least common multiple of ${n+1, \dotsc, n+k}$.
 Let $k$ be sufficiently large. Are there infinitely many $m, n$ with $m \geq n + k$ such that
 $$
 M(n, k) > M(m, k + 1)
-$$?s
+$$?
 The answer is yes, as proved in a strong form by Cambie [Ca24].
 [Ca24] S. Cambie, Resolution of an Erdős' problem on least common multiples. arXiv:2410.09138 (2024).
 -/
