@@ -28,7 +28,7 @@ asked by user [*Fetchinson0234*](https://mathoverflow.net/users/41312/victor-ram
 -/
 
 /-- The unit `n`-sphere, defined as `Metric.sphere 0 1` in `EuclideanSpace ℝ (Fin (n + 1))`. -/
-abbrev unitSphere (n : ℕ) : Set (EuclideanSpace ℝ (Fin (n + 1)) := Metric.sphere 0 1
+abbrev unitSphere (n : ℕ) : Set (EuclideanSpace ℝ (Fin (n + 1))) := Metric.sphere 0 1
 
 /--
 Does the 6-sphere admit a complex structure, i.e. an atlas of holomorphically compatible charts
