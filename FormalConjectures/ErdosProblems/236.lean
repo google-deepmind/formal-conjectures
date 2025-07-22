@@ -33,6 +33,7 @@ def f (n : ℕ) : ℕ :=
 /--
 Let $f(n)$ count the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$. Show that $f(n)=o(\log n)$.
 -/
+@[category research open, AMS 5 11]
 theorem erdos_236: (fun n : ℝ => (f (Nat.ceil n) : ℝ)) =o[ atTop ] Real.log := by 
   sorry
 
