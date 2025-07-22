@@ -17,11 +17,11 @@ limitations under the License.
 import Mathlib.Data.Nat.Prime.Defs
 
 
-/-- Powerful number is a natural number where for every prime divisor $p$, $p^2$ divides n -/
+/-- Powerful number is a natural number $n$ where for every prime divisor $p$, $p^2$ divides $n$ -/
 def Powerful (n : ℕ) : Prop :=
   ∀ (p : ℕ), p.Prime → p ∣ n → p ^ 2 ∣ n
 
-/-- If n ≡ 2 mod 4, then n is not powerful -/
+/-- If $n \equiv 2 \pmod{4}$, then $n$ is not powerful -/
 theorem not_powerful_of_2mod4 (n : ℕ) (h : n % 4 = 2) : ¬ Powerful n := by
   intro hp
   rw [Powerful] at hp
