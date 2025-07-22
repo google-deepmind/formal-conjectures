@@ -17,14 +17,14 @@ limitations under the License.
 import Mathlib.Data.Nat.Prime.Defs
 
 
-/-- Powerful number is a natural number where for every prime divisor p, p^2 divides n -/
-def powerful (n : ℕ) : Prop :=
+/-- Powerful number is a natural number where for every prime divisor $p$, $p^2$ divides n -/
+def Powerful (n : ℕ) : Prop :=
   ∀ (p : ℕ), p.Prime → p ∣ n → p ^ 2 ∣ n
 
 /-- If n ≡ 2 mod 4, then n is not powerful -/
-theorem powerful_not_2mod4 (n : ℕ) (h : n % 4 = 2) : ¬ powerful n := by
+theorem not_powerful_of_2mod4 (n : ℕ) (h : n % 4 = 2) : ¬ Powerful n := by
   intro hp
-  rw [powerful] at hp
+  rw [Powerful] at hp
   have two_dvd_n : 2 ∣ n := by
     rw [←Nat.div_add_mod n 4, h]
     exact Nat.dvd_add (dvd_mul_of_dvd_left (by decide) (n / 4)) (dvd_refl 2)

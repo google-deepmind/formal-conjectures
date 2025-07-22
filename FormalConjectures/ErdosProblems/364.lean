@@ -27,7 +27,7 @@ import FormalConjectures.ForMathlib.NumberTheory.Powerful
 /-- There is no consecutive triple of powerful numbers. -/
 @[category research open, AMS 11]
 theorem erdos_364 :
-    ¬ ∃ (n : ℕ), powerful n ∧ powerful (n + 1) ∧ powerful (n + 2) := by
+    ¬ ∃ (n : ℕ), Powerful n ∧ Powerful (n + 1) ∧ Powerful (n + 2) := by
   sorry
 
 /--
@@ -35,60 +35,27 @@ Erdős [Er76d] conjectured a stronger statement: if $n_k$ is the $k$th powerful 
 then $n_{k+2} - n_k > n_k^c$ for some constant $c > 0$.
 -/
 @[category research open, AMS 11]
-theorem erdos_364_strong :
+theorem erdos_364.variants.strong :
     ∃ (c : ℝ) (h : c > 0), ∀ (k : ℕ),
-    Nat.nth powerful (k + 2) - Nat.nth powerful k > (Nat.nth powerful k : ℝ) ^ c := by
+    Nat.nth Powerful (k + 2) - Nat.nth Powerful k > (Nat.nth Powerful k : ℝ) ^ c := by
   sorry
-
-/-- At least one of n, n + 1, n + 2, n + 3 is 2 mod 4. -/
-@[category API, AMS 11]
-lemma consecutive_2mod4 (n : ℕ) :
-    (n % 4 = 2) ∨ ((n + 1) % 4 = 2) ∨ ((n + 2) % 4 = 2) ∨ ((n + 3) % 4 = 2) := by
-  set r := n % 4
-  set k := n / 4
-
-  have hr : r < 4 := Nat.mod_lt n (by norm_num : 0 < 4)
-  have hdiv : 4 * k + r = n := Nat.div_add_mod n 4
-
-  interval_cases r
-  · -- r = 0 ⇒ n = 4 * k ⇒ (n + 2) % 4 = 2
-    right; right; left;
-    simp at hdiv
-    calc
-      (n + 2) % 4 = (4 * k + 2) % 4 := by rw [hdiv]
-      _ = 2 := by simp
-  · -- r = 1 ⇒ n = 4 * k + 1 ⇒ (n + 1) % 4 = 2
-    right; left;
-    calc
-      (n + 1) % 4 = (4 * k + 1 + 1) % 4 := by rw [hdiv]
-      _ = (4 * k + (1 + 1)) % 4 := by ring
-      _ = 2 := by norm_num
-  · -- r = 2
-    left;
-    rfl
-  · -- r = 3 ⇒ n = 4 * k + 3 ⇒ (n + 3) % 4 = 2
-    right; right; right;
-    calc
-      (n + 3) % 4 = (4 * k + 3 + 3) % 4 := by rw [hdiv]
-      _ = (4 * k + (3 + 3)) % 4 := by ring
-      _ = 2 := by norm_num
 
 /--
 There is no quadruple of powerful numbers, since at least one of the four numbers must be
-2 mod 4, which cannot be powerful (since 2 divides it, but 2^2 does not).
+$2 \pmod{4}$, which cannot be powerful (since $2$ divides it, but $2^2$ does not).
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_364_weak :
-    ¬ ∃ (n : ℕ), powerful n ∧ powerful (n + 1) ∧ powerful (n + 2) ∧ powerful (n + 3) := by
+theorem erdos_364.variants.weak :
+    ¬ ∃ (n : ℕ), Powerful n ∧ Powerful (n + 1) ∧ Powerful (n + 2) ∧ Powerful (n + 3) := by
   intro h
   obtain ⟨n, hn⟩ := h
-  have h2mod4 := consecutive_2mod4 n
+  have h2mod4 : (n % 4 = 2) ∨ ((n + 1) % 4 = 2) ∨ ((n + 2) % 4 = 2) ∨ ((n + 3) % 4 = 2) := by omega
   cases h2mod4 with
-  | inl h2 => exact (powerful_not_2mod4 n h2) hn.1
+  | inl h2 => exact not_powerful_of_2mod4 n h2 hn.1
   | inr h2 =>
     cases h2 with
-    | inl h2 => exact (powerful_not_2mod4 (n + 1) h2) hn.2.1
+    | inl h2 => exact not_powerful_of_2mod4 (n + 1) h2 hn.2.1
     | inr h2 =>
       cases h2 with
-      | inl h2 => exact powerful_not_2mod4 (n + 2) h2 hn.2.2.1
-      | inr h2 => exact powerful_not_2mod4 (n + 3) h2 hn.2.2.2
+      | inl h2 => exact not_powerful_of_2mod4 (n + 2) h2 hn.2.2.1
+      | inr h2 => exact not_powerful_of_2mod4 (n + 3) h2 hn.2.2.2
