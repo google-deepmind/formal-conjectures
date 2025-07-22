@@ -52,7 +52,7 @@ theorem erdos_11.variants.two_pow_two (n : ℕ) (hn : Odd n) :
 Odlyzko has checked this up to `10^7`.
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.finite_bound1 (n : ℕ) (h_odd : Odd n) (h : n < 10^7):
+theorem erdos_11.variants.finite_bound1 (n : ℕ) (hn : Odd n) (h : n < 10^7) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
