@@ -22,6 +22,7 @@ import Mathlib.Data.Nat.Squarefree
 
 *Reference:* [erdosproblems.com/11](https://www.erdosproblems.com/11)
 -/
+
 /--
 Is every odd n the sum of a squarefree number and a power of 2?
 -/
