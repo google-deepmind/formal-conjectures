@@ -36,7 +36,7 @@ Erdős often asked this under the weaker assumption that n
 is not divisible by 4.
 -/
 @[category research open, AMS 11]
-theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : n % 4 ≠ 0):
+theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
