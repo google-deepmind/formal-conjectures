@@ -1,0 +1,61 @@
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ForMathlib.NumberTheory.Powerful
+
+/-!
+# Erdős Problem 364
+
+*Reference:* [erdosproblems.com/364](https://www.erdosproblems.com/364)
+-/
+
+
+/-- There is no consecutive triple of powerful numbers. -/
+@[category research open, AMS 11]
+theorem erdos_364 :
+    ¬ ∃ (n : ℕ), Powerful n ∧ Powerful (n + 1) ∧ Powerful (n + 2) := by
+  sorry
+
+/--
+Erdős [Er76d] conjectured a stronger statement: if $n_k$ is the $k$th powerful number,
+then $n_{k+2} - n_k > n_k^c$ for some constant $c > 0$.
+-/
+@[category research open, AMS 11]
+theorem erdos_364.variants.strong :
+    ∃ (c : ℝ) (h : c > 0), ∀ (k : ℕ),
+    Nat.nth Powerful (k + 2) - Nat.nth Powerful k > (Nat.nth Powerful k : ℝ) ^ c := by
+  sorry
+
+/--
+There is no quadruple of powerful numbers, since at least one of the four numbers must be
+$2 \pmod{4}$, which cannot be powerful (since $2$ divides it, but $2^2$ does not).
+-/
+@[category undergraduate, AMS 11]
+theorem erdos_364.variants.weak :
+    ¬ ∃ (n : ℕ), Powerful n ∧ Powerful (n + 1) ∧ Powerful (n + 2) ∧ Powerful (n + 3) := by
+  intro h
+  obtain ⟨n, hn⟩ := h
+  have h2mod4 : (n % 4 = 2) ∨ ((n + 1) % 4 = 2) ∨ ((n + 2) % 4 = 2) ∨ ((n + 3) % 4 = 2) := by omega
+  cases h2mod4 with
+  | inl h2 => exact not_powerful_of_2mod4 n h2 hn.1
+  | inr h2 =>
+    cases h2 with
+    | inl h2 => exact not_powerful_of_2mod4 (n + 1) h2 hn.2.1
+    | inr h2 =>
+      cases h2 with
+      | inl h2 => exact not_powerful_of_2mod4 (n + 2) h2 hn.2.2.1
+      | inr h2 => exact not_powerful_of_2mod4 (n + 3) h2 hn.2.2.2
