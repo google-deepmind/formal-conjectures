@@ -38,7 +38,7 @@ open Function Set Filter
 The partial density of a Sidon set `A` up to `N`, normalized by dividing by `√N` instead of `N`.
 This measures how close the set comes to the optimal density for Sidon sets.
 -/
-def sqrtPartialDensity (A : Set ℕ) (N : ℕ) : ℝ :=
+noncomputable def sqrtPartialDensity (A : Set ℕ) (N : ℕ) : ℝ :=
   (A ∩ Set.Icc 1 N).ncard / (N : ℝ).sqrt
 
 /-- The upper density of a Sidon set `A`, normalized by `√N`. -/
@@ -54,10 +54,11 @@ theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
   sorry
 
 /--
-Erdős proved that 1/2 is achievable as an upper density.
+Erdős proved that upper density `1 / 2` can be attained; in particular,
+there exists a Sidon set whose upper density is *at least* `1 / 2`.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_329.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A = 1/2 := by
+theorem erdos_329.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
   sorry
 
 /--
@@ -124,12 +125,4 @@ The greedy construction gives a Sidon set with positive density.
 -/
 @[category undergraduate, AMS 5 11]
 theorem greedy_sidon_construction : ∃ᵉ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
-  sorry
-
-/--
-A Sidon set cannot have density greater than 1.
--/
-@[category undergraduate, AMS 5 11]
-theorem sidon_density_upper_bound (A : Set ℕ) (hA : IsSidon A) :
-    sidonUpperDensity A ≤ 1 := by
   sorry
