@@ -20,16 +20,6 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 329: Maximum Density of Sidon Sets
 
 *Reference:* [erdosproblems.com/329](https://www.erdosproblems.com/329)
-
-Suppose `A ⊆ ℕ` is a Sidon set. How large can
-lim sup_{N→∞} |A ∩ {1,…,N}| / N^{1/2}
-be?
-
-Erdős proved that 1/2 is possible and Krückeberg [Kr61] proved 1/2 is possible.
-Erdős and Turán [ErTu41] have proved this lim sup is always ≤ 1.
-
-The fact that 1 is possible would follow if any finite Sidon set is a subset of a perfect
-difference set.
 -/
 
 open Function Set Filter
@@ -46,7 +36,16 @@ noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
   limsup (fun N => sqrtPartialDensity A N) atTop
 
 /--
-The main question: what is the maximum possible upper density of a Sidon set?
+**Erdős Problem 329.**
+Let `A ⊆ ℕ` be a Sidon set.  How large can
+`lim sup_{N → ∞} |A ∩ {1,…,N}| / N^{1/2}`
+be?
+
+Erdős proved that `1 / 2` is attainable.  Krückeberg ([Kr61]) provided an independent
+construction, and Erdős–Turán ([ErTu41]) established the upper bound `≤ 1`.
+
+If every finite Sidon set embeds into a perfect difference set (Problem 707), then the
+limit superior could reach `1`.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
