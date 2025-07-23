@@ -39,6 +39,6 @@ theorem erdos_298 : (∀ (A : Set ℕ), 0 ∉ A → A.HasPosDensity →
 In [Bl21] it is proved under the weaker assumption that `A` only has positive upper density.
 -/
 @[category research solved, AMS 11]
-theorem erdos_298.variants.upper_density : (∀ (A : Set ℕ), 0 < A.upperDensity →
+theorem erdos_298.variants.upper_density : (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
     ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) ↔ answer(True) := by
   sorry

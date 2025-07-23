@@ -17,16 +17,18 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Twin prime conjecture
+# Erdős Problem 259
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
+*Reference:* [erdosproblems.com/259](https://www.erdosproblems.com/259)
 -/
 
+open scoped ArithmeticFunction
 
 /--
-Are there infinitely many primes p such that p + 2 is prime?
+Is
+$$\sum_{n} \mu(n)^2\frac{n}{2^n}$$
+irrational?
 -/
 @[category research open, AMS 11]
-theorem twin_primes :
-    {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite ↔ answer(sorry) := by
+theorem erdos_259 : Irrational (∑' n : ℕ, (μ n) ^ 2 * n / (2 ^ n)) ↔ answer(sorry) := by
   sorry

@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/198](https://www.erdosproblems.com/198)
 -/
+
 open Function Set Nat
 
 /-- Let $V$ be a vector space over the rationals and let $k$ be a fixed
@@ -45,7 +46,6 @@ lemma baumgartner_headline (V : Type*) [AddCommGroup V] [Module ℚ V] :
       (∀ Y, IsAPOfLength Y ⊤ → (X ∩ Y).Nonempty) ∧
       (∀ Y, IsAPOfLength Y 3 → (X ∩ Y).ncard ≤ 2) :=
   baumgartner_strong V 3
-
 
 /--
 If $A ⊆ ℕ$ is a Sidon set then must the complement of $A$ contain an infinite arithmetic
@@ -72,16 +72,15 @@ So the answer should be "no".
 This can be seen, as pointed out by Thomas Bloom [erdosproblems.com/198](https://www.erdosproblems.com/198),
 by an elementary argument.
 -/
-@[category research solved, AMS 5, AMS 11]
-theorem erdos_198 : (∀ A : ℕ →o ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ (range A)ᶜ)) ↔
+@[category research solved, AMS 5 11]
+theorem erdos_198 : (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ Aᶜ)) ↔
     answer(False) := by
   sorry
 
 /--
 In fact one such sequence is $n! + n$. This was found by AlphaProof. It also found $(n + 1)! + n$.
 -/
-@[category research solved, AMS 5, AMS 11]
-theorem erdos_198.variant_concrete :  ∃ A : ℕ →o ℕ,
-    (∀ n, A n = n ! + n) ∧
-    IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → ((range A) ∩ Y).Nonempty) := by
+@[category research solved, AMS 5 11]
+theorem erdos_198.variant_concrete :  ∃ (A : Set ℕ), A = {n ! + n | n} ∧
+    IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → (A ∩ Y).Nonempty) := by
   sorry

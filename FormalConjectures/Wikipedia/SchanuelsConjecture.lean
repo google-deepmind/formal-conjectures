@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schanuel%27s_conjecture)
 -/
+
 open scoped Real Complex
 
 noncomputable section

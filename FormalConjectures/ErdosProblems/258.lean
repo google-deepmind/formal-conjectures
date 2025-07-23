@@ -28,7 +28,7 @@ $\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of di
 @[category research open, AMS 11]
 theorem erdos_258 : (∀ (a : ℕ → ℕ), (∀ n, a n ≠ 0) →
     Filter.Tendsto a Filter.atTop Filter.atTop →
-    Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i))) ↔
+    Irrational (∑' (n : ℕ), ((n + 1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i))) ↔
     answer(sorry) := by
   sorry
 
@@ -42,7 +42,7 @@ Solution: True (proved by Erdős and Straus, see Erdős Problems website).
 @[category research solved, AMS 11]
 theorem erdos_258.variants.Monotone : (∀ (a : ℕ → ℤ), (∀ n, a n ≠ 0) → Monotone a →
     Filter.Tendsto a Filter.atTop Filter.atTop →
-    Irrational (∑' (n : ℕ), ((n+1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i))) ↔ answer(True) := by
+    Irrational (∑' (n : ℕ), ((n + 1).divisors.card / ∏ i ∈ Finset.Icc 1 n, a i))) ↔ answer(True) := by
   sorry
 
 
@@ -52,6 +52,6 @@ Is $\sum_n \frac{d(n)}{t^n}$ irrational, where $t ≥ 2$ is an integer.
 Solution: True (proved by Erdős, see Erdős Problems website)
 -/
 @[category research solved, AMS 11]
-theorem erdos_258.variants.Constant : (∀ t ≥ 2,
-    Irrational (∑' (n : ℕ), ((n+1).divisors.card / t^n))) ↔ answer(True) := by
+theorem erdos_258.variants.Constant : (∀ t ≥ (2 : ℕ),
+    Irrational (∑' (n : ℕ), ((n + 1).divisors.card / t^n))) ↔ answer(True) := by
   sorry
