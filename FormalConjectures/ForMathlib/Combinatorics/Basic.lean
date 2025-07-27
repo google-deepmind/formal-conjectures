@@ -15,8 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Set.Finite
+import Mathlib.Combinatorics.Enumerative.Bell
+import Mathlib.Combinatorics.SimpleGraph.Finite
 
 open Function Set
 
@@ -31,21 +31,23 @@ lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [AddCommMonoid α] (A : Set
     (∀ Y, IsAPOfLength Y 3 → (A ∩ Y).ncard ≤ 2) := by
   sorry
 
+noncomputable instance IsSidon.decide [AddCommMonoid α] (s : Set α): Decidable (IsSidon s) := by
+  exact Classical.propDecidable _
+
 /-- The subsets of `{0, ..., n - 1}` which are Sidon sets. -/
-def SidonSubsets (n : ℕ) : Finset (Finset ℕ) :=
+noncomputable def SidonSubsets (n : ℕ) : Finset (Finset ℕ) :=
   (Finset.range n).powerset.filter fun s => IsSidon (s : Set ℕ)
 
 /-- The sizes of Sidon subsets of `{0, ..., n - 1}`. -/
-def SidonSubsetsSizes (n : ℕ) : Finset ℕ :=
+noncomputable def SidonSubsetsSizes (n : ℕ) : Finset ℕ :=
   (SidonSubsets n).image Finset.card
 
 lemma SidonSubsetsSizesNonempty (n : ℕ) : (SidonSubsetsSizes n).Nonempty := by
   use 0
-  refine ⟨?_zero_card_in, rfl⟩
   simp only [SidonSubsetsSizes, Finset.mem_image]
   use ∅
-  simp [SidonSubsets, IsSidon, Set.pairwise, Finset.mem_filter, Finset.mem_powerset, Finset.card_empty]
+  simp [SidonSubsets, IsSidon, Set.Pairwise, Finset.mem_filter, Finset.mem_powerset, Finset.card_empty]
 
 /-- The maximum size of a Sidon subset of `{0, ..., n - 1}`. -/
-def maxSidonSetSize (n : ℕ) : ℕ :=
+noncomputable def maxSidonSetSize (n : ℕ) : ℕ :=
   (SidonSubsetsSizes n).max' (SidonSubsetsSizesNonempty n)
