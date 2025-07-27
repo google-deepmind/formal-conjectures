@@ -28,4 +28,4 @@ are rational?
 -/
 @[category research open, AMS 52]
 theorem erdos_212 : (∃ u : Set ℂ,
-  Dense u ∧ (∀ c₁ ∈ u, ∀ c₂ ∈ u, ¬ Irrational ‖c₁ - c₂‖)) ↔ answer(sorry) := by sorry
+  Dense u ∧ u.Pairwise fun c₁ c₂ => dist c₁ c₂ ∈ Set.range Rat.cast) ↔ answer(sorry) := by sorry
