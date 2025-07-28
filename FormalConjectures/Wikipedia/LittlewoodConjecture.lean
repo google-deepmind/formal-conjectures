@@ -43,3 +43,50 @@ to the nearest integer.
 theorem littlewood_conjecture (α β : ℝ) :
     atTop.liminf (fun (n : ℕ) ↦ n * distToNearestInt (n * α) * distToNearestInt (n * β)) = 0 := by
   sorry
+
+section MatrixGroupConjecture
+
+open Matrix
+open scoped MatrixGroups
+
+section
+variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
+
+
+private def Matrix.diagonalHom : (n → Rˣ) →* GeneralLinearGroup n R where
+  toFun := fun d ↦ ⟨Matrix.diagonal (fun i ↦ d i), Matrix.diagonal (fun i ↦ (d i).inv), by simp, by simp⟩
+  map_mul' x y := by ext; simp [-mul_diagonal, -diagonal_mul]
+  map_one' := by ext; simp
+
+/-- The group of invertible diagonal matrices. -/
+private def DiagonalMatricesMultiplicative : Subgroup (GeneralLinearGroup n R) :=
+  Subgroup.map (Matrix.diagonalHom n R) ⊤
+
+/-- The group of invertible diagonal matrices with determinant 1. -/
+private def SpecialDiagonalMatrices : Subgroup (SpecialLinearGroup n R) :=
+  (DiagonalMatricesMultiplicative n R).comap Matrix.SpecialLinearGroup.toGL
+
+-- TODO(Paul-Lez): do we want to upstream this to Mathlib?
+instance : TopologicalSpace (SpecialLinearGroup n ℝ) :=
+  inferInstanceAs (TopologicalSpace { A : Matrix n n ℝ // A.det = 1 })
+
+variable {n R} in
+def Matrix.SpecialLinearGroup.coeIntGroupHom : SpecialLinearGroup n ℤ →* SpecialLinearGroup n R where
+  toFun x := ↑x
+  map_mul' := by simp
+  map_one' := by simp
+
+end
+
+/-- Let `n ≥ 3`, `G = SL_n(ℝ)` and `Γ = SL_(ℤ)`, and the subgroup `D` of diagonal matrices in `G`.
+
+Conjecture: for any `g` in `G/Γ` such that `Dg` is relatively compact (in `G/Γ`), then `Dg` is closed.-/
+@[category research open]
+theorem matrix_group_conjecture {n : ℕ} (hm : 3 ≤ n) (g : SL(n, ℝ))
+    (Dg : Set (SL(n, ℝ) ⧸ (⊤ : Subgroup _).map Matrix.SpecialLinearGroup.coeIntGroupHom))
+    (Dg_def : Dg = { QuotientGroup.mk (d * g) | (d : SL(n, ℝ)) (_ : d ∈ SpecialDiagonalMatrices _ _) })
+    (hg : IsCompact <| closure Dg) :
+    IsClosed Dg :=
+  sorry
+
+end MatrixGroupConjecture
