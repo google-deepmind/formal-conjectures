@@ -52,7 +52,6 @@ open scoped MatrixGroups
 section
 variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
 
-
 private def Matrix.diagonalHom : (n → Rˣ) →* GeneralLinearGroup n R where
   toFun := fun d ↦ ⟨Matrix.diagonal (fun i ↦ d i), Matrix.diagonal (fun i ↦ (d i).inv), by simp, by simp⟩
   map_mul' x y := by ext; simp [-mul_diagonal, -diagonal_mul]
