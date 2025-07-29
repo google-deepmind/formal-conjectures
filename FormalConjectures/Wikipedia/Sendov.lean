@@ -20,6 +20,9 @@ import FormalConjectures.Util.ProblemImports
 # Sendov's conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Sendov%27s_conjecture)
+
+Tags: Sendov Conjecture, Ilieff's Conjecture.
+
 -/
 
 
@@ -29,7 +32,7 @@ open Polynomial
 
 `f.IsSendov` holds if `f` has degree at least 2 and all roots of `f` lie in the unit disc
 of the complex plane. -/
-private def Polynomial.IsSendov {f : ℂ[X]} : Prop :=
+private def Polynomial.IsSendov (f : ℂ[X]) : Prop :=
   2 ≤ f.natDegree ∧ (f.rootSet ℂ ⊆ Metric.closedBall 0 1)
 
 /-- `SatisfiesSendovConjecture n` states that Sendov's conjecture is true for every polynomial of
