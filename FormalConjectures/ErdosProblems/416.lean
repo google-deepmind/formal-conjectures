@@ -50,7 +50,7 @@ theorem erdos_416.parts.ii :
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 Pillai proved `V(x)=o(x)`.
-Ref: S. Sivasankaranarayana, _On some functions connected with {$\phi(n)$_
+Ref: S. Sivasankaranarayana Pillai, _On some functions connected with $\phi(n)$_
 -/
 @[category research solved, AMS 11]
 theorem erdos_416.variants.Pillai : V =o[atTop] id := by
