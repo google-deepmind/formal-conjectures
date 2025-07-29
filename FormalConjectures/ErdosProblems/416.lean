@@ -87,8 +87,7 @@ Ref: Ford, Kevin, _The distribution of totients_.
 theorem erdos_416.variants.Ford :
     let (C₁, C₂, C₃) : ℝ × ℝ × ℝ := answer(sorry)
     0 < C₁ ∧ 0 < C₂ ∧ 0 < C₃ ∧
-    ∃ (f : ℝ → ℝ) (C : ℝ), (∀ᶠ x in Filter.atTop, |f x| ≤ C) ∧
-    let G (x : ℝ) : ℝ := x / x.log* (rexp <| C₁ * (x.log.log.log - x.log.log.log.log) ^ 2
-        + C₂* x.log.log.log - C₃ * x.log.log.log.log + f x)
+    let G (x : ℝ) : ℝ := x / x.log * (rexp <| C₁ * (x.log.log.log - x.log.log.log.log) ^ 2
+        + C₂* x.log.log.log - C₃ * x.log.log.log.log)
     V =Θ[atTop] G := by
   sorry
