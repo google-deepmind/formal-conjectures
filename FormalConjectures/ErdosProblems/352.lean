@@ -29,7 +29,7 @@ Is there some c > 0 such that every measurable A ⊆ ℝ² of measure ≥ c
 -/
 
 @[category research open, AMS 51]
-theorem erdos_325 :
+theorem erdos_352 :
     (∃ c : ℝ, ∀ A : Set ℝ², Measurable A →
        MeasureTheory.MeasureSpace.volume A ≥ c.toEReal
        → (∃ t: Affine.Triangle ℝ ℝ²,
