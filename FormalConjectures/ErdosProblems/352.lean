@@ -32,7 +32,7 @@ Is there some c > 0 such that every measurable A ⊆ ℝ² of measure ≥ c
 theorem erdos_352 :
     (∃ c : ℝ, ∀ A : Set ℝ², Measurable A →
        MeasureTheory.MeasureSpace.volume A ≥ c.toEReal
-       → (∃ t: Affine.Triangle ℝ ℝ²,
+       → (∃ t : Affine.Triangle ℝ ℝ²,
            (∀ p : Fin 3, t.points p ∈ A) ∧
            EuclideanGeometry.triangle_area (t.points 0) (t.points 1) (t.points 2) = 1))
     ↔ answer(sorry) := by
