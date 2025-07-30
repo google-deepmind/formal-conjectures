@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import Mathlib.Algebra.CharZero.Defs
 import Mathlib.Data.Nat.Prime.Defs
-
 
 /-- Powerful number is a natural number $n$ where for every prime divisor $p$, $p^2$ divides $n$ -/
 def Powerful (n : ℕ) : Prop :=
@@ -23,15 +23,12 @@ def Powerful (n : ℕ) : Prop :=
 
 /-- If $n \equiv 2 \pmod{4}$, then $n$ is not powerful -/
 theorem not_powerful_of_2mod4 (n : ℕ) (h : n % 4 = 2) : ¬ Powerful n := by
-  intro hp
-  rw [Powerful] at hp
-  have two_dvd_n : 2 ∣ n := by
-    rw [←Nat.div_add_mod n 4, h]
+  rw [Powerful]
+  push_neg
+  use 2
+  simp only [Nat.prime_two, Nat.reducePow, true_and]
+  constructor
+  · rw [←Nat.div_add_mod n 4, h]
     exact Nat.dvd_add (dvd_mul_of_dvd_left (by decide) (n / 4)) (dvd_refl 2)
-  have four_dvd_n : 4 ∣ n := by
-    have h2 := hp 2 Nat.prime_two two_dvd_n
-    simp only [Nat.reducePow] at h2
-    exact h2
-  have h3 : n % 4 = 0 := by rw [Nat.mod_eq_zero_of_dvd four_dvd_n]
-  rw [h3] at h
-  exact Nat.noConfusion h
+  · intro h
+    simp_all [OfNat.zero_ne_ofNat, Nat.dvd_iff_mod_eq_zero.mp h]
