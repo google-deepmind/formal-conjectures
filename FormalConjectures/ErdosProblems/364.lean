@@ -33,6 +33,8 @@ theorem erdos_364 :
 /--
 Erdős [Er76d] conjectured a stronger statement: if $n_k$ is the $k$th powerful number,
 then $n_{k+2} - n_k > n_k^c$ for some constant $c > 0$.
+
+[Er76d] Erdős, P., Problems and results on number theoretic properties of consecutive integers and related questions. Proceedings of the Fifth Manitoba Conference on Numerical Mathematics (Univ. Manitoba, Winnipeg, Man., 1975) (1976), 25-44.
 -/
 @[category research open, AMS 11]
 theorem erdos_364.variants.strong :
@@ -49,13 +51,6 @@ theorem erdos_364.variants.weak :
     ¬ ∃ (n : ℕ), Powerful n ∧ Powerful (n + 1) ∧ Powerful (n + 2) ∧ Powerful (n + 3) := by
   intro h
   obtain ⟨n, hn⟩ := h
-  have h2mod4 : (n % 4 = 2) ∨ ((n + 1) % 4 = 2) ∨ ((n + 2) % 4 = 2) ∨ ((n + 3) % 4 = 2) := by omega
-  cases h2mod4 with
-  | inl h2 => exact not_powerful_of_2mod4 n h2 hn.1
-  | inr h2 =>
-    cases h2 with
-    | inl h2 => exact not_powerful_of_2mod4 (n + 1) h2 hn.2.1
-    | inr h2 =>
-      cases h2 with
-      | inl h2 => exact not_powerful_of_2mod4 (n + 2) h2 hn.2.2.1
-      | inr h2 => exact not_powerful_of_2mod4 (n + 3) h2 hn.2.2.2
+  have h2mod4 : n % 4 = 2 ∨ (n + 1) % 4 = 2 ∨ (n + 2) % 4 = 2 ∨ (n + 3) % 4 = 2 := by omega
+  rcases h2mod4 with (_|_|_|_) <;>
+  simp_all [not_powerful_of_2mod4]
