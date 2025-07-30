@@ -61,7 +61,7 @@ lemma lcmInterval_lt_example4 : lcmInterval 47 9 < lcmInterval 36 8 := by decide
 
 /--
 Write $M(n, k)$ be the least common multiple of ${n+1, \dotsc, n+k}$.
-Let $k \geq 3$. Are there infinitely many $m, n$ with $m \geq n + k$ such that
+Let $k$ be sufficiently large. Are there infinitely many $m, n$ with $m \geq n + k$ such that
 $$
 M(n, k) > M(m, k + 1)
 $$?
@@ -70,6 +70,6 @@ The answer is yes, as proved in a strong form by Cambie [Ca24].
 -/
 @[category research solved, AMS 11]
 theorem erdos_678 :
-    (∀ k, 3 ≤ k → {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite) ↔
+    (∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite) ↔
       answer(True) := by
   sorry

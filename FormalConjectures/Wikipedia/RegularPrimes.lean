@@ -24,7 +24,6 @@ cardinality of the class group of the `p`-th cyclotomic field. We also state tha
 infinitely many regular primes.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Regular_prime)
-
 -/
 
 open scoped NumberField
@@ -71,7 +70,7 @@ theorem isRegularPrime_iff_Bernoulli (p : ℕ) [Fact p.Prime] :
 
 /-- The set of irregular primes is infinite. -/
 @[category research solved, AMS 11]
-theorem infinitude_of_irregularprimes : irregularPrimes.Infinite := by 
+theorem infinitude_of_irregularprimes : irregularPrimes.Infinite := by
   sorry
 
 /-- Conjecture: The set of regular primes is infinite. -/
@@ -80,5 +79,5 @@ def RegularPrimeConjecture : Prop :=
 
 /-- Conjecture: The set of regular primes is infinite. -/
 @[category research open, AMS 11]
-theorem regularprime_conjecture : RegularPrimeConjecture := by 
+theorem regularprime_conjecture : RegularPrimeConjecture := by
   sorry

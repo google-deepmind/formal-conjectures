@@ -16,16 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Goldbach's conjecture
+namespace SimpleGraph
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Goldbach%27s_conjecture)
--/
+variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /--
-Can every even integer greater than 2 be written as the sum of two primes?
+WOWII [Conjecture 4](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+
+If `G` is a connected graph then the maximum number of leaves over all spanning
+trees satisfies `Ls(G) ≥ NG(G) - 1` where `NG(G)` is the minimal neighbourhood
+size of a non-edge of `G`.
 -/
-@[category research open, AMS 11]
-theorem goldbach (n : ℕ) (hn : 2 < n) (hn_even : Even n) :
-    ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+@[category research solved, AMS 5]
+theorem conjecture4 (G : SimpleGraph α) [DecidableRel G.Adj] [Nonempty α] (h_conn : G.Connected) :
+    NG G - 1 ≤ Ls G := by
   sorry
+
+end SimpleGraph
