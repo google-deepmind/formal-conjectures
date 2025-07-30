@@ -15,17 +15,17 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open scoped EuclideanGeometry
 
 /-!
 # Erdős Problem 352
-
 *Reference:* [erdosproblems.com/352](https://www.erdosproblems.com/352)
 -/
 
+open scoped EuclideanGeometry
+
 /--
 Is there some c > 0 such that every measurable A ⊆ ℝ² of measure ≥ c
- contains the vertices of a triangle of area 1?
+ contains the vertices of a triangle of area 1 ?
 -/
 
 @[category research open, AMS 51]
