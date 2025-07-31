@@ -46,7 +46,7 @@ theorem hall_conjecture : HallConjectureExp 2⁻¹ := by
 Elkies' example $(x, y) = (5853886516781223, 447884928428402042307918)$ shows that such $C$ must be
 less than $0.0215$. Note that simple `linarith` does not work here.
 -/
-@[category test]
+@[category test, AMS 11]
 theorem elkies_bound (C : ℝ) : HallIneq C 2⁻¹ → C < 0.0215 := by
   intro h
   by_cases hC : C ≤ 0

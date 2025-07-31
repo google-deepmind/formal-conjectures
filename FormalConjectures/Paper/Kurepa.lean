@@ -54,7 +54,7 @@ theorem kurepa_conjecture.variant.prime (p : ℕ) (h_p : 2 < p) :
   sorry
 
 -- TODO(firsching): show equivalence
-@[category undergraduate]
+@[category undergraduate, AMS 11]
 theorem kurepa_conjecture.prime_reduction  : (∀ n, ∀ h_n : 2 < n, (!n : ℕ) % n ≠ 0)
     ↔ (∀ p, ∀ h_p : 2 < p, p.Prime → (!p : ℕ) % p ≠ 0) := by
   sorry
@@ -67,7 +67,7 @@ theorem kurepa_conjecture.variant.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 
   sorry
 
 -- TODO(firsching): show equivalence
-@[category undergraduate]
+@[category undergraduate, AMS 11]
 theorem kurepa_conjecture.gcd_reduction : (∀ n, ∀ h_n : 2 < n, (!n : ℕ) % n ≠ 0)
     ↔ (∀ n,  2 < n → (n !).gcd (! n) = 2) := by
   sorry
