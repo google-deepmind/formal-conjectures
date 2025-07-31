@@ -20,40 +20,46 @@ import FormalConjectures.Util.Linters.AMSLinter
 #guard_msgs in
 def foo : Nat := 1
 
-/-- warning: Missing AMS attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 /-- A highly non-trivial theorem -/
 theorem test_theorem : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing AMS attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 theorem test_theorem_with_hypothesis (_ : True) : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing AMS attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 /-- A highly non-trivial theorem with two helpful hypotheses -/
 theorem test_theorem_with_hypotheses (_ : True) (_ : False): 1 + 1 = 2 := by
   rfl
 
 
-/-- warning: Missing AMS attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 lemma test_lemma : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing AMS attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 example : 1 + 1 = 2 := by
   rfl
 
-/-- warning: The problem should have only one AMS attribute -/
+/-- warning: The AMS tag should be formatted as AMS 1 3 rather than AMS 1, AMS 3 -/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
-@[AMS 1, AMS 1]
+@[AMS 1, AMS 3]
 theorem test_theorem_with_docstring : 1 + 1 = 2 := by
+  rfl
+
+#guard_msgs in
+/-- A highly non-trivial theorem with a helpful hypothesis -/
+@[AMS 1 3]
+example: 1 + 1 = 2 := by
   rfl
 
 --The linter is compatible with theorems having other attributes.

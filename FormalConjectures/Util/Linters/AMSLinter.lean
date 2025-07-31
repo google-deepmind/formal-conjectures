@@ -22,15 +22,13 @@ import Mathlib.Tactic.Lemma
 
 The `AMSLinter` is a linter to aid with formatting contributions to
 the Formal Conjectures repository by ensuring that results in a file have
-the appropriate tags in order to distinguish between open/already solved
-problems and background results/sanity checks.
+the appropriate subject tags.
 -/
 
 open Lean Elab Meta Linter Command Parser Term ProblemAttributes
 
 /-- Checks if a command has the `AMS` attribute. -/
-private def toAMS
-  (stx : TSyntax ``Command.declModifiers) :
+private def toAMS (stx : TSyntax ``Command.declModifiers) :
     CommandElabM (Array <| TSyntaxArray `num) := do
   match stx with
   | `(declModifiers| $(_)? @[$[$atts],*] $(_)? $(_)? $(_)? $(_)?) =>
@@ -40,6 +38,8 @@ private def toAMS
       | _ => return none
   | _ => return #[]
 
+private def mkAMSSyntax (nums : TSyntaxArray `num) : CommandElabM <| TSyntax ``attrInstance := do
+  return ← `(attrInstance | AMS $nums*)
 
 /-- The problem category linter checks that every theorem/lemma/example
 has been given an `AMS` attribute. -/
@@ -49,11 +49,19 @@ def AMSLinter : Linter where
       | `(command| $a:declModifiers theorem $_ $_:bracketedBinder* : $_ := $_)
       | `(command| $a:declModifiers lemma $_ $_:bracketedBinder* : $_ := $_)
       | `(command| $a:declModifiers example $_:bracketedBinder* : $_ := $_) =>
-        let prob_status ← toAMS a
-        if prob_status.flatten.isEmpty then
-          logWarningAt stx "Missing AMS attribute"
+        let ams ← toAMS a
+        if ams.size > 1 then
+          let numerals := ams.flatten
+          let outCorrect := m!"{← mkAMSSyntax numerals}"
+          let currentOut := m!", ".joinSep (← ams.mapM fun nums ↦ do return m!"{← mkAMSSyntax nums}").toList
+          logWarningAt stx m!"The AMS tag should be formatted as {outCorrect} rather than {currentOut}"
           return
-        if prob_status.size != 1 then logWarningAt stx "The problem should have only one AMS attribute"
+        if ams.size == 0 then
+          logWarningAt stx "Missing AMS attribute."
+          return
+        if ams.flatten.isEmpty then
+          -- If we're here then there is at least one AMS tag, but it doesn't have any number.
+          logWarningAt stx "The AMS tag should have at least one subject number."
       | _ => return
 
 initialize do
