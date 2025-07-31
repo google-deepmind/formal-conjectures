@@ -42,5 +42,5 @@ theorem CollatzLike (n : ℕ) (hn : 8 < n) : 2 ∈ Nat.digits 3 (2^n) := by
 /--
 For $n = 8$, $2$ is not contained in the base $3$ digits of $n$.
 -/
-@[category test]
+@[category test, AMS 5 11]
 example : 2 ∉ Nat.digits 3 (2^8) := by norm_num
