@@ -16,6 +16,7 @@ limitations under the License.
 
 import FormalConjectures.Util.Attributes
 import Mathlib.Tactic.Lemma
+import Batteries.Data.Array.Merge
 
 
 /-! # The AMS Linter
@@ -62,6 +63,14 @@ def AMSLinter : Linter where
         if ams.flatten.isEmpty then
           -- If we're here then there is at least one AMS tag, but it doesn't have any number.
           logWarningAt stx "The AMS tag should have at least one subject number."
+        -- Check the AMS tags are sorted and do not contain duplicates
+        let ams_sorted := ams.flatten.map TSyntax.getNat |>.qsort
+        if ams_sorted != ams.flatten.map TSyntax.getNat then
+          logWarningAt stx m!"AMS tags are out of order."
+          return
+        if ams_sorted.dedupSorted != ams_sorted then
+          logWarningAt stx m!"AMS tags contain duplicates."
+          return
       | _ => return
 
 initialize do

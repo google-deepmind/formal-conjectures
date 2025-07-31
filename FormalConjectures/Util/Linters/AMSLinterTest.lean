@@ -73,3 +73,15 @@ theorem test_1 : 1 + 1 = 2 := by
 @[AMS 1, simp]
 theorem test_3 : 1 + 1 = 2 := by
   rfl
+
+/-- warning: AMS tags are out of order. -/
+#guard_msgs in
+@[AMS 3 1]
+theorem test_out_of_order : 1 + 1 = 2 := by
+  rfl
+
+/-- warning: AMS tags contain duplicates. -/
+#guard_msgs in
+@[AMS 3 3]
+theorem test_dup : 1 + 1 = 2 := by
+  rfl
