@@ -74,13 +74,13 @@ theorem test_1 : 1 + 1 = 2 := by
 theorem test_3 : 1 + 1 = 2 := by
   rfl
 
-/-- warning: AMS tags are out of order. -/
+/-- warning: The AMS tags should be ordered as AMS 1 3 -/
 #guard_msgs in
 @[AMS 3 1]
 theorem test_out_of_order : 1 + 1 = 2 := by
   rfl
 
-/-- warning: AMS tags contain duplicates. -/
+/-- warning: AMS tags contain duplicates. This should be AMS 3 -/
 #guard_msgs in
 @[AMS 3 3]
 theorem test_dup : 1 + 1 = 2 := by

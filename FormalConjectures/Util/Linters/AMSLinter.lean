@@ -63,14 +63,13 @@ def AMSLinter : Linter where
         if ams.flatten.isEmpty then
           -- If we're here then there is at least one AMS tag, but it doesn't have any number.
           logWarningAt stx "The AMS tag should have at least one subject number."
-        -- Check the AMS tags are sorted and do not contain duplicates
-        let ams_sorted := ams.flatten.map TSyntax.getNat |>.qsort
-        if ams_sorted != ams.flatten.map TSyntax.getNat then
-          logWarningAt stx m!"AMS tags are out of order."
+        -- Check there the AMS tags are sorted and do not contain duplicates
+        let ams_sorted := ams.flatten.qsort (fun n m => n.getNat < m.getNat)
+        if ams_sorted != ams.flatten then
+          logWarningAt stx m!"The AMS tags should be ordered as {← mkAMSSyntax ams_sorted}"
           return
         if ams_sorted.dedupSorted != ams_sorted then
-          logWarningAt stx m!"AMS tags contain duplicates."
-          return
+          logWarningAt stx m!"AMS tags contain duplicates. This should be {← mkAMSSyntax ams_sorted.dedupSorted}"
       | _ => return
 
 initialize do
