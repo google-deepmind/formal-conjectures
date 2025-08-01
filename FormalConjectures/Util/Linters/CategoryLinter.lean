@@ -40,6 +40,7 @@ private def toCategory
       | _ => return false
   | _ => return #[]
 
+#check Command.declModifiers
 
 /-- The problem category linter checks that every theorem/lemma/example
 has been given a problem category attribute. -/
@@ -50,7 +51,11 @@ def problemStatusLinter : Linter where
       | `(command| $a:declModifiers lemma $_ $_:bracketedBinder* : $_ := $_)
       | `(command| $a:declModifiers example $_:bracketedBinder* : $_ := $_) =>
         let prob_status ← toCategory a
-        if prob_status.size == 0 then logWarningAt stx "Missing problem category attribute"
+        if prob_status.size == 0 then
+          let outStx := match a with
+          | `(declModifiers| $(_)? $atts $(_)? $(_)? $(_)? $(_)?) => atts.raw
+          | _ => stx
+          logWarningAt outStx "Missing problem category attribute"
       | _ => return
 
 initialize do

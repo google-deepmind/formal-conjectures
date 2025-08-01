@@ -51,25 +51,28 @@ def AMSLinter : Linter where
       | `(command| $a:declModifiers lemma $_ $_:bracketedBinder* : $_ := $_)
       | `(command| $a:declModifiers example $_:bracketedBinder* : $_ := $_) =>
         let ams ← toAMS a
+        let outStx := match a with
+        | `(declModifiers| $(_)? $atts $(_)? $(_)? $(_)? $(_)?) => atts.raw
+        | _ => stx
         if ams.size > 1 then
           let numerals := ams.flatten
           let outCorrect := m!"{← mkAMSSyntax numerals}"
           let currentOut := m!", ".joinSep (← ams.mapM fun nums ↦ do return m!"{← mkAMSSyntax nums}").toList
-          logWarningAt stx m!"The AMS tag should be formatted as {outCorrect} rather than {currentOut}"
+          logWarningAt outStx m!"The AMS tag should be formatted as {outCorrect} rather than {currentOut}"
           return
         if ams.size == 0 then
-          logWarningAt stx "Missing AMS attribute."
+          logWarningAt outStx "Missing AMS attribute."
           return
         if ams.flatten.isEmpty then
           -- If we're here then there is at least one AMS tag, but it doesn't have any number.
-          logWarningAt stx "The AMS tag should have at least one subject number."
+          logWarningAt outStx "The AMS tag should have at least one subject number."
         -- Check there the AMS tags are sorted and do not contain duplicates
         let ams_sorted := ams.flatten.qsort (fun n m => n.getNat < m.getNat)
         if ams_sorted != ams.flatten then
-          logWarningAt stx m!"The AMS tags should be ordered as {← mkAMSSyntax ams_sorted}"
+          logWarningAt outStx m!"The AMS tags should be ordered as {← mkAMSSyntax ams_sorted}"
           return
         if ams_sorted.dedupSorted != ams_sorted then
-          logWarningAt stx m!"AMS tags contain duplicates. This should be {← mkAMSSyntax ams_sorted.dedupSorted}"
+          logWarningAt outStx m!"AMS tags contain duplicates. This should be {← mkAMSSyntax ams_sorted.dedupSorted}"
       | _ => return
 
 initialize do
