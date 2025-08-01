@@ -32,6 +32,20 @@ open Finset
 
 variable {n : Type*} [DecidableEq n] {A : Finset (Finset n)}
 
+abbrev IsUnionClosed (A : Finset (Finset n)) : Prop :=
+  ∀ᵉ (X ∈ A) (Y ∈ A), X ∪ Y ∈ A
+
+@[category API, AMS 5]
+lemma isUnionClosed_univ (n : Type*) [DecidableEq n] [Fintype n] :
+    IsUnionClosed (univ (α := Finset n)) := by
+  simp [IsUnionClosed]
+
+@[category API, AMS 5]
+lemma isUnionClosed_powerset (S : Finset n) : IsUnionClosed S.powerset := by
+  intro X hX Y hY
+  rw [Finset.mem_powerset] at hX hY ⊢
+  exact union_subset hX hY
+
 /--
 For every finite union-closed family of sets, other than the family containing only the empty set,
 there exists an element that belongs to at least half of the sets in the family.
@@ -39,7 +53,7 @@ there exists an element that belongs to at least half of the sets in the family.
 @[category research open, AMS 5]
 theorem union_closed
     (h_ne_singleton_empty : A ≠ {∅})
-    (h_union_closed : ∀ X ∈ A, ∀ Y ∈ A, X ∪ Y ∈ A) :
+    (hA : IsUnionClosed A) :
     ∃ i : n, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   sorry
 
@@ -51,7 +65,7 @@ Yu [Yu23] showed that the union-closed sets conjecture holds with a constant of 
 @[category research solved, AMS 5]
 theorem union_closed.variants.yu
     (h_ne_singleton_empty : A ≠ {∅})
-    (h_union_closed : ∀ X ∈ A, ∀ Y ∈ A, X ∪ Y ∈ A) :
+    (hA : IsUnionClosed A) :
     ∃ i : n, (0.38234 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   sorry
 
@@ -63,7 +77,7 @@ whose universal set has cardinality at most 12.
 @[category research solved, AMS 5]
 theorem union_closed.variants.univ_card [Fintype n]
     (h_ne_singleton_empty : A ≠ {∅})
-    (h_union_closed : ∀ X ∈ A, ∀ Y ∈ A, X ∪ Y ∈ A)
+    (hA : IsUnionClosed A)
     (hA : Fintype.card n ≤ 12) :
     ∃ i : n, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   sorry
@@ -79,7 +93,7 @@ as well.
 @[category research solved, AMS 5]
 theorem union_closed.variants.family_card
     (h_ne_singleton_empty : A ≠ {∅})
-    (h_union_closed : ∀ X ∈ A, ∀ Y ∈ A, X ∪ Y ∈ A)
+    (hA : IsUnionClosed A)
     (hA : #A ≤ 50) :
     ∃ i : n, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   sorry
@@ -91,7 +105,7 @@ cardinality 2, by brute force.
 @[category research solved, AMS 5]
 theorem union_closed.variants.univ_card_two (A : Finset (Finset (Fin 2)))
     (h_ne_singleton_empty : A ≠ {∅})
-    (h_union_closed : ∀ X ∈ A, ∀ Y ∈ A, X ∪ Y ∈ A) :
+    (hA : IsUnionClosed A) :
     ∃ i, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   decide +revert +kernel
 
@@ -101,7 +115,7 @@ some singleton.
 -/
 @[category research solved, AMS 5]
 theorem union_closed.variants.singleton_mem
-    (h_union_closed : ∀ X ∈ A, ∀ Y ∈ A, X ∪ Y ∈ A)
+    (hA : IsUnionClosed A)
     (i : n) (hi : {i} ∈ A) :
     ∃ i, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   use i
@@ -117,7 +131,7 @@ theorem union_closed.variants.singleton_mem
       and_imp, B, C]
     intro x hx hix
     rw [Finset.insert_eq]
-    exact h_union_closed _ hi _ hx
+    exact hA _ hi _ hx
   have h₃ : #B ≤ #C := Finset.card_le_card_of_injOn _ h₂ h₁
   have h₄ : #C + #B = #A := by rw [filter_card_add_filter_neg_card_eq_card]
   have : #A ≤ 2 * #C := by omega
@@ -130,15 +144,15 @@ any larger constant, then the conjecture fails.
 -/
 @[category research solved, AMS 5]
 theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
-    ¬ (∀ A : Finset (Finset n), A ≠ {∅} → (∀ X ∈ A, ∀ Y ∈ A, X ∪ Y ∈ A) →
+    ¬ (∀ A : Finset (Finset n), A ≠ {∅} → IsUnionClosed A →
         ∃ i : n, c * #A ≤ #{x ∈ A | i ∈ x}) := by
   intro h
   -- We can safely assume `n` is nonempty.
   obtain hn | hn := isEmpty_or_nonempty n
   · specialize h ∅
-    simp only [ne_eq, not_mem_empty, imp_self, implies_true, card_empty, CharP.cast_eq_zero,
-      mul_zero, filter_empty, le_refl, IsEmpty.exists_iff, imp_false, not_true_eq_false,
-      Decidable.not_not] at h
+    simp only [ne_eq, card_empty, CharP.cast_eq_zero, mul_zero, filter_empty, le_refl,
+      IsEmpty.exists_iff, imp_false, not_forall, not_mem_empty, imp_self, implies_true,
+      not_true_eq_false, exists_const, Decidable.not_not] at h
     have : ∅ ∈ (∅ : Finset (Finset n)) := by simp [h]
     simp at this
   -- Use A as the set of all subsets of `n`, which is not singleton empty and is union-closed.
@@ -148,8 +162,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     have : 1 < #A := by simp [this]
     intro h
     simp [h] at this
-  have h_union_closed : ∀ X ∈ A, ∀ Y ∈ A, X ∪ Y ∈ A := by simp [A]
-  obtain ⟨i, hi⟩ := h univ h_ne_singleton_empty h_union_closed
+  obtain ⟨i, hi⟩ := h univ h_ne_singleton_empty (isUnionClosed_univ n)
   have hn : 1 ≤ Fintype.card n := by
     rw [Nat.add_one_le_iff]
     exact Fintype.card_pos
