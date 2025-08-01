@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Irrational_number#Open_questions)
 -/
+
 open Real
 open Finset
 
@@ -67,7 +68,7 @@ theorem irrational_euler_mascheroni :
   sorry
 
 /-- The Catalan constant is irrational -/
-@[category research open, AMS 11, AMS 33]
+@[category research open, AMS 11 33]
 theorem irrational_catalan_constant :
     Irrational (∑' n : ℕ, (-1)^n / (2*n + 1)^2) := by
   sorry

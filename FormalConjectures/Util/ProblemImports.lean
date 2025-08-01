@@ -19,4 +19,6 @@ import Mathlib
 import FormalConjectures.Util.Answer
 import FormalConjectures.Util.Attributes
 import FormalConjectures.Util.ForMathlib
+import FormalConjectures.Util.Linters.AMSLinter
 import FormalConjectures.Util.Linters.CategoryLinter
+import FormalConjectures.Util.Linters.CopyrightLinter

@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/189](https://www.erdosproblems.com/189)
 -/
+
 open Affine EuclideanGeometry
 
 /-- Erdős problem 189 asked whether the below holds for all rectangles. -/
@@ -43,7 +44,7 @@ Vjekoslav Kovač, "Coloring and density theorems for configurations of a given v
 https://arxiv.org/abs/2309.09973
 In fact, Kovač's colouring is even Jordan measurable (the topological boundary of each
 monochromatic region is Lebesgue measurable and has measure zero). -/
-@[category research solved, AMS 5, AMS 51]
+@[category research solved, AMS 5 51]
 theorem erdos_189 :
     Erdos189For
       (fun a b c d ↦
@@ -53,7 +54,7 @@ theorem erdos_189 :
   sorry
 
 /-- Graham claims this is "easy to see". -/
-@[category research solved, AMS 5, AMS 51]
+@[category research solved, AMS 5 51]
 theorem erdos_189.variants.square :
     ¬ Erdos189For
       (fun a b c d ↦
@@ -66,7 +67,7 @@ theorem erdos_189.variants.square :
 /--
 Seems to be open, as of January 2025.
 -/
-@[category research open, AMS 5, AMS 51]
+@[category research open, AMS 5 51]
 theorem erdos_189.variants.parallelogram :
     ¬ Erdos189For
       (fun a b c d ↦

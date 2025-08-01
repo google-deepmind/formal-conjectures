@@ -15,12 +15,24 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
+import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
+import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
+import FormalConjectures.ForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
+import FormalConjectures.ForMathlib.Combinatorics.Additive.Basis
 import FormalConjectures.ForMathlib.Combinatorics.Basic
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Bipartite
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
+import FormalConjectures.ForMathlib.Computability.TuringMachine
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
+import FormalConjectures.ForMathlib.Data.Nat.Full
 import FormalConjectures.ForMathlib.Data.Set.Density
 import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin
+import FormalConjectures.ForMathlib.Order.Filter.Cofinite
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
