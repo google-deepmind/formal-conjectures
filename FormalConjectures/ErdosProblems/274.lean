@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
 -/
 
-open scoped Pointwise
+open scoped Pointwise Cardinal
 
 /--
 If `G` is an abelian group then can there exist an exact covering of `G` by more than one cosets of
@@ -35,7 +35,7 @@ theorem erdos_274 :
     (∀ (G : Type*), [CommGroup G] →
     ∃ (P : Partition (⊤ : Subgroup G)), 1 < P.parts.ncard ∧
       (∀ A ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
-      P.parts.Pairwise fun A B ↦ Nat.card A ≠ Nat.card B) ↔ answer(sorry) := by
+      P.parts.Pairwise fun A B ↦ #A ≠ #B) ↔ answer(sorry) := by
   sorry
 
 /--
