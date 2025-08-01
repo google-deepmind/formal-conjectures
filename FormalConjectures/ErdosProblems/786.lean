@@ -51,7 +51,7 @@ $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when
 $r = s$?
 -/
 @[category research open, AMS 11]
-theorem erdos_786.parts.ii : (∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : Tendsto f atTop (𝓝 0)),
+theorem erdos_786.parts.ii : (∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : f =o[atTop] (1 : ℕ → ℝ)),
     ∀ N, A N ⊆ Set.Icc 1 (N + 1) ∧ (1 - f N) * N ≤ (A N).ncard ∧ (A N).IsMulCardSet) ↔
     answer(sorry) := by
   sorry

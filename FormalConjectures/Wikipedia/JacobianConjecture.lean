@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Jacobian_conjecture)
 -/
+
 open Classical
 
 section Prelims

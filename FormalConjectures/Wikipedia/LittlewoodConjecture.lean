@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Littlewood_conjecture)
 -/
+
 open Filter
 
 -- TODO(mercuris): This is a norm on ℝ/ℤ, show this?

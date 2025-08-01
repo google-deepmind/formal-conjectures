@@ -35,12 +35,12 @@ TODO(lezeau): Formalize the Turing Machine version of this problem.
 Source: *Hardness of Busy Beaver Value BB(15)*: https://link.springer.com/chapter/10.1007/978-3-031-72621-7_9
 This is also https://arxiv.org/abs/2107.12475.
 -/
-@[category research open, AMS 5, AMS 11]
+@[category research open, AMS 5 11]
 theorem CollatzLike (n : ℕ) (hn : 8 < n) : 2 ∈ Nat.digits 3 (2^n) := by
   sorry
 
 /--
 For $n = 8$, $2$ is not contained in the base $3$ digits of $n$.
 -/
-@[category test]
+@[category test, AMS 5 11]
 example : 2 ∉ Nat.digits 3 (2^8) := by norm_num
