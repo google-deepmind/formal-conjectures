@@ -37,19 +37,19 @@ noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ
 noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
 
 
-@[category API]
+@[category API, AMS 11]
 lemma multipliable : Multipliable fun n : ℕ+ ↦ ((1 - X ^ (n : ℕ)) ^ 24 : PowerSeries ℤ) := by
   sorry
 
-@[category test]
+@[category test, AMS 11]
 lemma τ_zero : τ 0 = 0 := by simp [τ, Δ]
 
-@[category test]
+@[category test, AMS 11]
 lemma τ_one : τ 1 = 1 := by
   obtain ⟨i, hi⟩ := by simpa using ((continuous_constantCoeff ℤ).tendsto _).comp multipliable.hasProd
   simp [τ, Δ, hi i]
 
-@[category test]
+@[category test, AMS 11]
 lemma τ_two : τ 2 = -24 := by
   sorry
 

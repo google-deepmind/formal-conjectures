@@ -38,7 +38,7 @@ theorem erdos_409.parts.i (n : ℕ) (hn : 0 < n) :
 
 /-- If $n > 0$, then the iteration $n\mapsto\phi(n) + 1$ necessarily
 reaches a prime. -/
-@[category test]
+@[category test, AMS 11]
 theorem erdos_409.termination (n : ℕ) (hn : 0 < n) :
     ∃ i, (φ · + 1)^[i] n |>.Prime := by
   sorry
@@ -107,7 +107,7 @@ theorem erdos_409.variants.sigma.parts.i (n : ℕ) (hn : n > 1) :
   sorry
 
 /-- If $n > 1$ then the iteration $n\mapsto\sigma(n) - 1$ necessarily reaches a prime. -/
-@[category test]
+@[category test, AMS 11]
 theorem erdos_409.variants.sigma.termination (n : ℕ) (hn : n > 1) :
     ∃ i, (σ 1 · - 1)^[i] n |>.Prime := by
   sorry
