@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ForMathlib.Computability.TuringMachine
+import FormalConjectures.ForMathlib.Computability.TuringMachine.Notation
 import Mathlib
 
 --sanity checks for the definition of halting added in `ForMathlib`.
@@ -49,6 +49,25 @@ instance : alwaysHaltingMachine.IsHalting where
       Part.dom_iff_mem, PFun.mem_fix_iff, Part.mem_some_iff]
     use default
     aesop
+
+example : turing_machine% "------" = fun _ _ => none := by
+  aesop
+
+example : turing_machine% "1RA0LB_0LA---" = fun a b =>
+    match a, b with
+    | .A, 0 => some (some .A, Stmt.write 1 .right)
+    | .A, 1 => some (some .B, Stmt.write 0 .left)
+    | .B, 0 => some (some .A, Stmt.write 0 .left)
+    | .B, 1 => none := by
+  aesop
+
+example : turing_machine% "1RZ0LZ_------" = fun a b =>
+    match a, b with
+    | .A, 0 => some (none, Stmt.write 1 .right)
+    | .A, 1 => some (none, Stmt.write 0 .left)
+    | .B, 0 => none
+    | .B, 1 => none := by
+  aesop
 
 -- TODO(Paul-Lez): finish proving this
 instance : haltsAfterOne.IsHalting  where
