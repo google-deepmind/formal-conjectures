@@ -27,7 +27,7 @@ open scoped ProbabilityTheory
 
 /--
 Is there some c > 0 such that every measurable A ⊆ ℝ² of measure ≥ c
- contains the vertices of a triangle of area 1 ?
+ contains the vertices of a triangle of area 1?
 -/
 @[category research open, AMS 51]
 theorem erdos_352 :
