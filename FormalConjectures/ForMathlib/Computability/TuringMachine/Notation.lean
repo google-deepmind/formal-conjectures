@@ -47,30 +47,45 @@ section Util
 private def Alphabet := ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
   'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
+/-- `Char.toDirSyntax c` outputs the syntax corresponding to the character `c` if `c` is
+`R` or `L` and throws an error in other cases. This is used when parsing the "direction"
+component of turing machine string representations. -/
 private def Char.toDirSyntax : Char → TermElabM Term
   | ⟨82, _⟩ => return ← `(Dir.right)
   | ⟨76, _⟩ => return ← `(Dir.left)
   | char => throwError "Invalid direction {char}."
 
+/-- `Char.toBinarySyntax c` outputs the syntax corresponding to the character `c` if `c` is
+`0` or `1` and throws an error in other cases. This is used when parsing the "symbol"
+component of turing machine string representations. -/
 private def Char.toBinarySyntax : Char → TermElabM Term
   | ⟨48, _⟩ => `(0)
   | ⟨49, _⟩ => `(1)
   | char => panic! s!"Invalid write instruction: {char} is not a binary character."
 
-private def Char.toStateSyntax (c : Char) (stateType : Name) : TermElabM Term := do
+/-- `Char.toStateSyntax c stateName` outputs the syntax of the constructor corresponding to `c`
+if `c` is a capital letter (i.e. something betwen `A` and `Z`.). For example, `A` would output
+the syntax `stateName.A` where `stateName` is the name of the type used to index sets.
+This is used when parsing the "state" component of turing machine string representations. -/
+private def Char.toStateSyntax (c : Char) (stateName : Name) : TermElabM Term := do
   if c.val < 65 || c.val > 90 then
     throwError m!"Invalid state character: {c} should be between A and Z"
   -- The convention is to use the character `Z` to denote the extra halting state.
   if c == 'Z' then
     `(none)
   else
-    `($(Lean.mkIdent <| .str stateType c.toString))
+    `($(Lean.mkIdent <| .str stateName c.toString))
 
+/-- `Nat.toStateSyntax n stateName` outputs the syntax of the `n`-th constructor of the type used to
+index states. -/
 private def Nat.toStateSyntax (n : Nat) (stateName : Name) : TermElabM Term := do
   if n > 25 then
     throwError m!"Invalid state index {n}"
   `($(Lean.mkIdent <| .str stateName Alphabet[n]!.toString))
 
+/-- `String.toStmtSyntax s stateName` parses a component of a Turing machine string representation
+and outputs the syntax of the corresponding (state, statement) pair
+(i.e. term of type `State × Stmt`). -/
 private def String.toStmtSyntax (s : String) (stateName : Name) : TermElabM Term := do
   unless s.length == 3 do
     throwError m!"Invalid transition encoding: {s} should be 3 characters long."
