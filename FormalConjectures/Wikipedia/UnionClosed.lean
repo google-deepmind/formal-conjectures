@@ -53,7 +53,7 @@ there exists an element that belongs to at least half of the sets in the family.
 @[category research open, AMS 5]
 theorem union_closed
     (h_ne_singleton_empty : A ≠ {∅})
-    (hA : IsUnionClosed A) :
+    (h_union_closed : IsUnionClosed A) :
     ∃ i : n, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   sorry
 
@@ -65,7 +65,7 @@ Yu [Yu23] showed that the union-closed sets conjecture holds with a constant of 
 @[category research solved, AMS 5]
 theorem union_closed.variants.yu
     (h_ne_singleton_empty : A ≠ {∅})
-    (hA : IsUnionClosed A) :
+    (h_union_closed : IsUnionClosed A) :
     ∃ i : n, (0.38234 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   sorry
 
@@ -77,8 +77,8 @@ whose universal set has cardinality at most 12.
 @[category research solved, AMS 5]
 theorem union_closed.variants.univ_card [Fintype n]
     (h_ne_singleton_empty : A ≠ {∅})
-    (hA : IsUnionClosed A)
-    (hA : Fintype.card n ≤ 12) :
+    (h_union_closed : IsUnionClosed A)
+    (h_card : Fintype.card n ≤ 12) :
     ∃ i : n, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   sorry
 
@@ -93,7 +93,7 @@ as well.
 @[category research solved, AMS 5]
 theorem union_closed.variants.family_card
     (h_ne_singleton_empty : A ≠ {∅})
-    (hA : IsUnionClosed A)
+    (h_union_closed : IsUnionClosed A)
     (hA : #A ≤ 50) :
     ∃ i : n, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   sorry
@@ -105,7 +105,7 @@ cardinality 2, by brute force.
 @[category research solved, AMS 5]
 theorem union_closed.variants.univ_card_two (A : Finset (Finset (Fin 2)))
     (h_ne_singleton_empty : A ≠ {∅})
-    (hA : IsUnionClosed A) :
+    (h_union_closed : IsUnionClosed A) :
     ∃ i, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   decide +revert +kernel
 
@@ -115,7 +115,7 @@ some singleton.
 -/
 @[category research solved, AMS 5]
 theorem union_closed.variants.singleton_mem
-    (hA : IsUnionClosed A)
+    (h_union_closed : IsUnionClosed A)
     (i : n) (hi : {i} ∈ A) :
     ∃ i, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
   use i
@@ -131,7 +131,7 @@ theorem union_closed.variants.singleton_mem
       and_imp, B, C]
     intro x hx hix
     rw [Finset.insert_eq]
-    exact hA _ hi _ hx
+    exact h_union_closed _ hi _ hx
   have h₃ : #B ≤ #C := Finset.card_le_card_of_injOn _ h₂ h₁
   have h₄ : #C + #B = #A := by rw [filter_card_add_filter_neg_card_eq_card]
   have : #A ≤ 2 * #C := by omega
