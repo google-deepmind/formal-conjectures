@@ -1,101 +1,159 @@
 import FormalConjectures.ForMathlib.Computability.TuringMachine
 
-open Turing BusyBeaver
+/-! # Turing Machine Parser
 
-section
+This module provides a parser for defining a Turing machine from a simple string description.
+The main entry point is the `turing_machine%` elaborator, which takes a string representing the
+machine's transitions and constructs a term of type `Machine (Fin 2) StateType` where `StateType`
+is an inductive type generated on the fly.
+
+## Encoding format
+
+The machine's transitions are encoded as a single string, with each state's transitions
+separated by an underscore (`_`).
+For each state, a 6-character substring defines the behavior:
+- The first 3 characters `"ABC"` describe the action when the head reads `0`:
+  - `A`: The symbol to write (`0` or `1`).
+  - `B`: The direction to move the head (`L` or `R`).
+  - `C`: The new state (`A` through `Z`).
+- The last 3 characters `"DEF"` describe the action when the head reads `1` using the same format.
+
+The character `Z` is reserved for the halting state. The string `"---"` can be used to represent
+a transition to the halting state without writing or moving.
+
+-/
+
+open Turing BusyBeaver
 
 open Lean Elab Meta Parser Command Term Qq
 
+section Util
 
-def Char.toDir (c : Char) : Dir := if c.val == 82 then Dir.right else Dir.left
+private def Alphabet := ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+  'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
---Outputs the alphabet index if `c` is a capital letter, e.g. `A -> 0`, `Z -> 25`
-def Char.toAlphabetNat (c : Char) : Nat :=
-  let AN := (c.val.toNat - 65 : Nat)
-  if AN < 15 then AN else panic! "Bad state encodding"
+private def Char.toDirSyntax : Char → TermElabM Term
+  | ⟨82, _⟩ => return ← `(Dir.right)
+  | ⟨76, _⟩ => return ← `(Dir.left)
+  | char => throwError "Invalid direction {char}."
 
-def Alphabet := ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
-  'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+private def Char.toBinarySyntax : Char → TermElabM Term
+  | ⟨48, _⟩ => `(0)
+  | ⟨49, _⟩ => `(1)
+  | char => panic! s!"Invalid write instruction: {char} is not a binary character."
+
+private def Char.toStateSyntax (c : Char) (stateType : Name) : TermElabM Term := do
+  if c.val < 65 || c.val > 90 then
+    throwError m!"Invalid state character: {c} should be between A and Z"
+  -- The convention is to use the character `Z` to denote the extra halting state.
+  if c == 'Z' then
+    `(none)
+  else
+    `($(Lean.mkIdent <| .str stateType c.toString))
+
+private def Nat.toStateSyntax (n : Nat) (stateName : Name) : TermElabM Term := do
+  if n > 25 then
+    throwError m!"Invalid state index {n}"
+  `($(Lean.mkIdent <| .str stateName Alphabet[n]!.toString))
+
+private def String.toStmtSyntax (s : String) (stateName : Name) : TermElabM Term := do
+  unless s.length == 3 do
+    throwError m!"Invalid transition encoding: {s} should be 3 characters long."
+  if s == "---" then
+    `(none)
+  else
+    let state ← (s.get! ⟨2⟩).toStateSyntax stateName
+    let symbol ← (s.get! ⟨0⟩).toBinarySyntax
+    let direction ← (s.get! ⟨1⟩).toDirSyntax
+    let stmt ← `(Stmt.write $symbol $direction)
+    `(some ($state, $stmt))
+
+end Util
 
 /--
 Take as input a list of strings and return an array of `matchAltExpr` syntaxes
 mapping `(state, symbol)` pairs to actions of a Turing Machine,
 given by a term of type `Option (State n)`.
 -/
-def getStateDict (L : List String) (stateType : Name) : TermElabM (Array (TSyntax ``matchAltExpr)) := do
+def mkMachineMatchAltExpr (L : List String) (stateName : Name) :
+    TermElabM (Array (TSyntax ``matchAltExpr)) := do
   /-
   The encoding of a TM move by a (sub)string `"ABC"` works as follows:
     - The move the TM is currently at (the dictionary's key) is determined
       by the position of the substring
-    - `A` gives the new symbol (`0` or `1`), `B` the direction the head moves (`L` or `R`) and `C` the new state (`0, ..., n-1` or `none`)
+    - `A` gives the new symbol (`0` or `1`), `B` the direction the head moves
+      (`L` or `R`) and `C` the new state (`0, ..., n-1` or `none`)
   -/
-  let dirToStx : Dir → TermElabM Term
-    | .left => do return ← `(Dir.left)
-    | .right => do return ← `(Dir.right)
 
-  let natToStateStx (n : Nat) : TermElabM Term := do
-    let .some stateChar := Alphabet.get? n
-      | throwError "All state characters should be between A and Z"
-    return ← `($(Lean.mkIdent <| .str stateType stateChar.toString))
-
-  let toOptionState (s : String) : TermElabM Term := do
-    if s.length != 3 then return ← `(none) else
-      if '-' ∈ s.toList then return ← `(none) else
-        let state ← natToStateStx (s.get! ⟨2⟩).toAlphabetNat
-        let stmt ← `(Stmt.write $(quote (s.get! ⟨0⟩).toString.toNat!) $(← dirToStx (s.get! ⟨1⟩).toDir))
-        return ← `(some ($state, $stmt))
   --The moves when the TM head read `0`
   let moves0 ← L.toArray.zipIdx.mapM fun (s, i) => do
-    let s_first : Term ← toOptionState (s.extract ⟨0⟩ ⟨2⟩)
-    return ← `(matchAltExpr| | $(← natToStateStx i), (0 : Fin 2) => $s_first)
+    let s_first : Term ← (s.extract ⟨0⟩ ⟨3⟩).toStmtSyntax stateName
+    `(matchAltExpr| | $(← i.toStateSyntax stateName), (0 : Fin 2) => $s_first)
   --The moves when the TM head read `1`
   let moves1 ← L.toArray.zipIdx.mapM fun (s, i) => do
-    let s_first : Term ← toOptionState (s.extract ⟨3⟩ ⟨6⟩)
-    return ← `(matchAltExpr| | $(← natToStateStx i), (1 : Fin 2) => $s_first)
+    let s_first : Term ← (s.extract ⟨3⟩ ⟨6⟩).toStmtSyntax stateName
+    `(matchAltExpr| | $(← i.toStateSyntax stateName), (1 : Fin 2) => $s_first)
   return moves0 ++ moves1
 
-def mkStateType (n : ℕ) : TermElabM Unit := do
-  let stateName := .mkSimple s!"State{n}"
-  if ← hasConst stateName then do return
-  let indName : Ident := Lean.mkIdent <| stateName
-  -- First construct the inductive type
-  let typeConstructors : List (TSyntax ``ctor) ←
-    (List.range n).mapM fun i ↦ `(Command.ctor| | $(Lean.mkIdent <|
-      .mkSimple s!"{Alphabet[i]!}"):ident : $(indName))
-  let typeConstructors := typeConstructors.toArray
-  let stx ← `(command| inductive $(indName) $typeConstructors:ctor*)
-  Lean.liftCommandElabM <| elabCommand stx
-  -- Create the inhabited instance as follows in order to have access to it e.g. in proofs
-  let inhabitedStx ←
-     `(command | instance : Inhabited $(Lean.mkIdent (.mkSimple s!"State{n}"))
-      := ⟨$(Lean.mkIdent <| (.mkStr2 s!"State{n}" "A"))⟩)
-  Lean.liftCommandElabM <| elabCommand inhabitedStx
+-- The following is extracted as a standalone definition in case we want to later change
+-- the naming convention to make clashes harder.
+/-- The name of the state type with `n` constructors `A, B, ...`. -/
+private def Nat.toStateName (n : Nat) : Name := .mkSimple s!"State{n}"
 
+section Main
+
+/-- `mkStateType n` adds to the environment an inductive type with `n` states
+names `State{n}` with constructors the symbols `A, B, ...`, together with the instance
+`Inhabited (State{n})`. -/
+def mkStateType (n : ℕ) (stateName : Name) : TermElabM Unit := do
+  /-
+  We may want to have some smarter check done here, e.g. throw an error if the type of the
+  constant isn't defeq to the one we want? (note that the instance command we elaborate below already
+  implicitely performs a very weak check). -/
+  unless ← hasConst stateName do
+    let indName : Ident := Lean.mkIdent <| stateName
+    -- First construct the inductive type
+    let typeConstructors ← (Array.range n).mapM fun i ↦
+      `(Command.ctor| | $(Lean.mkIdent <|
+        .mkSimple s!"{Alphabet[i]!}"):ident : $(indName))
+    let stx ← `(command| inductive $(indName) $typeConstructors:ctor*)
+    liftCommandElabM <| elabCommand stx
+  -- Create the `inhabited` instance as follows in order to have access to it e.g. in proofs
+  let inhabitedStx ← `(command | instance : Inhabited $(Lean.mkIdent stateName) :=
+    ⟨$(Lean.mkIdent <| (.str stateName "A"))⟩)
+  liftCommandElabM <| elabCommand inhabitedStx
+
+/-- `parseTuring tmStringDescription` outputs the `Expr` corresponding to the Turing
+Machine described by the string `tmStringDescription`.
+
+To do so, it
+1) Runs `mkStateType` to add the state type to the environment
+2) Defines the corresponding Turing Machine as a function using the `match` syntax.
+
+Warning: if a state type (i.e. something with the name `State1, State2, ...`) already
+exists in the environment then this will be reused without checking that this is the right
+inductive type - such checks are left to the user.
+-/
 def parseTuring (descr : String) : TermElabM Expr := do
   let moveListStr := descr.splitOn "_"
-  let nStates := moveListStr.length
-  mkStateType nStates
-  match ← checkTypeQ (.const (.mkSimple s!"State{nStates}") []) q(Type) with
-  | some stateType =>
-    let funConstructors ← getStateDict moveListStr (.mkSimple s!"State{nStates}")
-    let tm ← `(term | fun a b => match a, b with $funConstructors:matchAlt*)
-    -- let defaultEltName := Name.mkStr2 s!"State{nStates}" "A"
-    -- let defaultElt : Q($stateType) := .const defaultEltName []
-    -- let _ : Q(Inhabited $stateType) := q(⟨$defaultElt⟩)
-    let _ ← synthInstanceQ q(Inhabited $stateType)
-    let type := q(Machine (Fin 2) $stateType)
-    try
-      let expr ← elabTermEnsuringTypeQ tm type
-      return (expr : Expr)
-    catch _ =>
-      IO.println "ohno"
-    return default
-  | none => throwError "Invalid state type"
+  let numStates := moveListStr.length
+  let stateName := numStates.toStateName
+  mkStateType numStates stateName
+  let .some stateType ← checkTypeQ (.const stateName []) q(Type)
+    | throwError m!"The constant {stateName} is not a type."
+  let funConstructors ← mkMachineMatchAltExpr moveListStr (numStates.toStateName)
+  let tm ← `(term | fun a b => match a, b with $funConstructors:matchAlt*)
+  let _ ← synthInstanceQ q(Inhabited $stateType)
+  elabTermEnsuringType tm q(Machine (Fin 2) $stateType)
 
-end
+/-- `turing_machine% tmStringDescription` outputs a term of type `Machine Γ Λ`
+where `Γ = Fin 2` and `Λ` is an inductive type constructed on the fly with constructors
+`A, B, ...`, and named `State{n}` where `n` is the number of states of the machine.
 
-elab "turing_machine%" str:Lean.Parser.strLit : term => do
-  Lean.Elab.Term.withDeclName `FindABetterName do
-    parseTuring str.getString
+Warning: if `State{n}` already exists in the environment then this will be reused without checking
+that this is the right inductive type - such checks are left to the user.
+-/
+elab "turing_machine%" str:Lean.Parser.strLit : term =>
+  parseTuring str.getString
 
-#check (turing_machine% "1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA")
+end Main
