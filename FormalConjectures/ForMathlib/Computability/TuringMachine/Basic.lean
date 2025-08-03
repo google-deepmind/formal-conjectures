@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Computability.TuringMachine
+import Mathlib.Computability.TuringMachine.Basic
 import Mathlib.Data.Nat.Lattice
 import Mathlib.Data.Nat.PartENat
 
