@@ -36,13 +36,3 @@ Let $f(n)$ count the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0
 @[category research open, AMS 5 11]
 theorem erdos_236: (fun n => (f n : ℝ)) =o[atTop] (fun n => Real.log (n : ℝ)) := by 
   sorry
-
-/--
-Numbers $n > 2$ such that $n - 2^k$ is a prime for all $k > 0$ with $2^k < n$. 
-Erdős conjectures that these are the only values of n with this property.
-
-https://oeis.org/A039669
--/
-@[category research open, AMS 5 11]
-theorem erdos_236.related: ∀ (n : ℕ), n > 2 → f n = Nat.log2 n → n ∈ [4, 7, 15, 21, 45, 75, 105] := by 
-  sorry
