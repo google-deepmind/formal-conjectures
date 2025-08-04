@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Computability.TuringMachine
-import Mathlib
+import Mathlib.Tactic.DeriveFintype
 
 --sanity checks for the definition of halting added in `ForMathlib`.
 --These should be easy to prove

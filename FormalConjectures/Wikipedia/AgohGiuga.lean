@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open scoped Nat
+
 /-!
 # Agoh-Giuga conjecture
 
@@ -27,6 +29,7 @@ The **Agoh-Giuga Conjecture**.
 
 References:
 * Wikipedia: https://en.wikipedia.org/wiki/Agoh-Giuga_conjecture
+* Wikipedia: https://en.wikipedia.org/wiki/Giuga_number
 * G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 * E. Bedocchi, _Note on a conjecture about prime numbers_
 * D. Borwein, J. M. Borwein, P. B. Borwein, and R. Girgensohn, _Giuga’s conjecture on primality_
@@ -71,7 +74,7 @@ theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
 A Giuga number is a counterexample to Giuga's conjecture.
 -/
 def IsGiuga (p : ℕ) : Prop :=
-    2 ≤ p ∧ ¬ p.Prime ∧ p ∣ 1 + ∑ i ∈ Finset.Ioo 0 p, i^(p - 1 : ℕ)
+    2 ≤ p ∧ ¬ p.Prime ∧ p ∣ 1 + ∑ i ∈ Finset.Ioo 0 p, i ^ φ p
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /--

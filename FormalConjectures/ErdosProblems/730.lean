@@ -46,7 +46,7 @@ theorem erdos_730.variants.explicit_pairs :
 /--
 Show that for all $n$, the binomial coefficient $\binom{2n}{n}$ is even.
 -/
-@[category high_school]
+@[category high_school, AMS 11]
 theorem erdos_730.variants.two_div_forall (n : ℕ) (h : 0 < n) : 2 ∣ (2*n).choose n := by
   sorry
 
