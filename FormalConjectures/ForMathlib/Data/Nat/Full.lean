@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import Mathlib.Algebra.Order.Ring.Nat
+import Mathlib.Algebra.Order.Star.Basic
 import Mathlib.Data.Nat.PrimeFin
-import Mathlib
+
 namespace Nat
 
 /--
