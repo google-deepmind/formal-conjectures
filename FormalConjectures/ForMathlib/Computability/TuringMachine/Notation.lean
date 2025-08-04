@@ -55,13 +55,14 @@ private def Char.toDirSyntax : Char → TermElabM Term
   | ⟨76, _⟩ => return ← `(Dir.left)
   | char => throwError "Invalid direction {char}."
 
-/-- `Char.toBinarySyntax c` outputs the syntax corresponding to the character `c` if `c` is
-`0` or `1` and throws an error in other cases. This is used when parsing the "symbol"
+/-- `Char.toBinarySyntax c` outputs the syntax corresponding to the character `c` if `c` is in
+`0, ..., 9` and throws an error in other cases. This is used when parsing the "symbol"
 component of turing machine string representations. -/
-private def Char.toBinarySyntax : Char → TermElabM Term
-  | ⟨48, _⟩ => `(0)
-  | ⟨49, _⟩ => `(1)
-  | char => panic! s!"Invalid write instruction: {char} is not a binary character."
+private def Char.toNumeralSyntax (c : Char) : TermElabM Term := do
+  unless 48 ≤ c.val && c.val ≤ 57 do
+    throwError m!"Invalid write instruction: {c} is not a binary character."
+  let n := c.val - 48
+  `($(Lean.Quote.quote n.toNat))
 
 /-- `Char.toStateSyntax c stateName` outputs the syntax of the constructor corresponding to `c`
 if `c` is a capital letter (i.e. something betwen `A` and `Z`.). For example, `A` would output
@@ -93,7 +94,7 @@ private def String.toStmtSyntax (s : String) (stateName : Name) : TermElabM Term
     `(none)
   else
     let state ← (s.get! ⟨2⟩).toStateSyntax stateName
-    let symbol ← (s.get! ⟨0⟩).toBinarySyntax
+    let symbol ← (s.get! ⟨0⟩).toNumeralSyntax
     let direction ← (s.get! ⟨1⟩).toDirSyntax
     let stmt ← `(Stmt.write $symbol $direction)
     `(some ($state, $stmt))
@@ -105,7 +106,7 @@ Take as input a list of strings and return an array of `matchAltExpr` syntaxes
 mapping `(state, symbol)` pairs to actions of a Turing Machine,
 given by a term of type `Option (State n)`.
 -/
-def mkMachineMatchAltExpr (L : List String) (stateName : Name) :
+def mkMachineMatchAltExpr (L : List String) (stateName : Name) (numSymbols : Nat):
     TermElabM (Array (TSyntax ``matchAltExpr)) := do
   /-
   The encoding of a TM move by a (sub)string `"ABC"` works as follows:
@@ -115,15 +116,12 @@ def mkMachineMatchAltExpr (L : List String) (stateName : Name) :
       (`L` or `R`) and `C` the new state (`0, ..., n-1` or `none`)
   -/
 
-  --The moves when the TM head read `0`
-  let moves0 ← L.toArray.zipIdx.mapM fun (s, i) => do
-    let s_first : Term ← (s.extract ⟨0⟩ ⟨3⟩).toStmtSyntax stateName
-    `(matchAltExpr| | $(← i.toStateSyntax stateName), (0 : Fin 2) => $s_first)
-  --The moves when the TM head read `1`
-  let moves1 ← L.toArray.zipIdx.mapM fun (s, i) => do
-    let s_first : Term ← (s.extract ⟨3⟩ ⟨6⟩).toStmtSyntax stateName
-    `(matchAltExpr| | $(← i.toStateSyntax stateName), (1 : Fin 2) => $s_first)
-  return moves0 ++ moves1
+  let moves ← L.toArray.zipIdx.mapM fun (s, i) =>
+    Array.range numSymbols |>.mapM fun symbolIdx ↦ do
+      let s_first : Term ← (s.extract ⟨3 * symbolIdx⟩ ⟨3 * (symbolIdx + 1)⟩).toStmtSyntax stateName
+      `(matchAltExpr| | $(← i.toStateSyntax stateName), ($(quote symbolIdx)) => $s_first)
+
+  return moves.flatten
 
 -- The following is extracted as a standalone definition in case we want to later change
 -- the naming convention to make clashes harder.
@@ -167,14 +165,18 @@ inductive type - such checks are left to the user.
 def parseTuring (descr : String) : TermElabM Expr := do
   let moveListStr := descr.splitOn "_"
   let numStates := moveListStr.length
+  let some firstEntry := moveListStr[0]?
+    | throwError "Invalid string description"
+  let numSymbols := firstEntry.length / 3
   let stateName := numStates.toStateName
   mkStateType numStates stateName
   let .some stateType ← checkTypeQ (.const stateName []) q(Type)
     | throwError m!"The constant {stateName} is not a type."
-  let funConstructors ← mkMachineMatchAltExpr moveListStr (numStates.toStateName)
+  let funConstructors ← mkMachineMatchAltExpr moveListStr (numStates.toStateName) numSymbols
   let tm ← `(term | fun a b => match a, b with $funConstructors:matchAlt*)
   let _ ← synthInstanceQ q(Inhabited $stateType)
-  elabTermEnsuringType tm q(Machine (Fin 2) $stateType)
+  let numSymbolsQ : Q(Nat) := ToExpr.toExpr numSymbols
+  elabTermEnsuringType tm q(Machine (Fin $numSymbolsQ) $stateType)
 
 /-- `turing_machine% tmStringDescription` outputs a term of type `Machine Γ Λ`
 where `Γ = Fin 2` and `Λ` is an inductive type constructed on the fly with constructors

@@ -66,8 +66,18 @@ example : turing_machine% "1RZ0LZ_------" = fun a b =>
     | .A, 0 => some (none, Stmt.write 1 .right)
     | .A, 1 => some (none, Stmt.write 0 .left)
     | .B, 0 => none
-    | .B, 1 => none := by
-  aesop
+    | .B, 1 => none :=
+  rfl
+
+example : turing_machine% "1RZ0LZ2LZ_---------" = fun a b =>
+    match a, b with
+      | .A, 0 => some (none, Stmt.write 1 .right)
+      | .A, 1 => some (none, Stmt.write 0 .left)
+      | .A, 2 => some (none, Stmt.write 2 .left)
+      | .B, 0 => none
+      | .B, 1 => none
+      | .B, 2 => none :=
+  rfl
 
 -- TODO(Paul-Lez): finish proving this
 instance : haltsAfterOne.IsHalting  where
