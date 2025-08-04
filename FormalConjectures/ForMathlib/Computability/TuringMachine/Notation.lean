@@ -19,19 +19,20 @@ import FormalConjectures.ForMathlib.Computability.TuringMachine.Basic
 
 This module provides a parser for defining a Turing machine from a simple string description.
 The main entry point is the `turing_machine%` elaborator, which takes a string representing the
-machine's transitions and constructs a term of type `Machine (Fin 2) StateType` where `StateType`
+machine's transitions and constructs a term of type `Machine (Fin m) StateType` where `StateType`
 is an inductive type generated on the fly.
 
 ## Encoding format
 
 The machine's transitions are encoded as a single string, with each state's transitions
 separated by an underscore (`_`).
-For each state, a 6-character substring defines the behavior:
+For each state, a 3m-character substring defines the behavior:
 - The first 3 characters `"ABC"` describe the action when the head reads `0`:
   - `A`: The symbol to write (`0` or `1`).
   - `B`: The direction to move the head (`L` or `R`).
   - `C`: The new state (`A` through `Z`).
-- The last 3 characters `"DEF"` describe the action when the head reads `1` using the same format.
+- The next 3 characters `"DEF"` describe the action when the head reads `1` using the same format.
+- So on...
 
 The character `Z` is reserved for the halting state. The string `"---"` can be used to represent
 a transition to the halting state without writing or moving.
@@ -60,7 +61,7 @@ private def Char.toDirSyntax : Char → TermElabM Term
 component of turing machine string representations. -/
 private def Char.toNumeralSyntax (c : Char) : TermElabM Term := do
   unless 48 ≤ c.val && c.val ≤ 57 do
-    throwError m!"Invalid write instruction: {c} is not a binary character."
+    throwError m!"Invalid write instruction: {c} is not a numeral."
   let n := c.val - 48
   `($(Lean.Quote.quote n.toNat))
 
@@ -165,9 +166,10 @@ inductive type - such checks are left to the user.
 def parseTuring (descr : String) : TermElabM Expr := do
   let moveListStr := descr.splitOn "_"
   let numStates := moveListStr.length
-  let some firstEntry := moveListStr[0]?
-    | throwError "Invalid string description"
-  let numSymbols := firstEntry.length / 3
+  let entryLengths := moveListStr.map String.length |>.dedup
+  unless entryLengths.length == 1 do
+    throwError "Invalid string description"
+  let numSymbols := entryLengths[0]! / 3
   let stateName := numStates.toStateName
   mkStateType numStates stateName
   let .some stateType ← checkTypeQ (.const stateName []) q(Type)
