@@ -58,7 +58,7 @@ theorem kurepa_conjecture.prime_reduction  : (∀ n, 2 < n → (!n : ℕ) % n �
     ↔ (∀ p, 2 < p → p.Prime → (!p : ℕ) % p ≠ 0) := by
   refine ⟨fun h p hp hp_prime ↦ h p hp, fun h n hn h_mod ↦ ?_⟩
   have : n.primeFactorsList.prod ≠ n := by
-    have (p : ℕ) (h_mem: p ∈ n.primeFactorsList) : p = 2 := by
+    have (p : ℕ) (h_mem : p ∈ n.primeFactorsList) : p = 2 := by
       have hp : p.Prime := prime_of_mem_primeFactorsList h_mem
       refine hp.eq_two_or_odd.resolve_right fun _ ↦ ?_
       have : p ∣ ∑ a ∈ range n, (a)! := .trans (by simp [left_factorial])
