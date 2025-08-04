@@ -40,12 +40,6 @@ noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
 Let `A ⊆ ℕ` be a Sidon set.  How large can
 `lim sup_{N → ∞} |A ∩ {1,…,N}| / N^{1/2}`
 be?
-
-Erdős proved that `1 / 2` is attainable.  Krückeberg ([Kr61]) provided an independent
-construction, and Erdős–Turán ([ErTu41]) established the upper bound `≤ 1`.
-
-If every finite Sidon set embeds into a perfect difference set (Problem 707), then the
-limit superior could reach `1`.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
@@ -61,10 +55,13 @@ theorem erdos_329.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensi
   sorry
 
 /--
-Krückeberg [Kr61] proved that 1/2 is achievable.
+Krückeberg ([Kr61]) exhibited an infinite Sidon set `A` with
+`sidonUpperDensity A = 1 / Real.sqrt 2`, improving Erdős’ earlier
+`1 / 2` lower bound.
 -/
 @[category research solved, AMS 5 11]
-theorem kruckeberg_1961 : ∃ᵉ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A = 1/2 := by
+theorem kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧
+    sidonUpperDensity A = 1 / Real.sqrt 2 := by
   sorry
 
 /--
@@ -86,8 +83,8 @@ If any finite Sidon set can be embedded in a perfect difference set,
 then the maximum density would be 1.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_329.perfect_difference_set_implication :
-    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ᵉ (D : Set ℕ) (n : ℕ),
+theorem erdos_329.of_sub_perfectDifferenceSet :
+    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) →
     sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1 := by
   sorry
@@ -99,7 +96,7 @@ can be embedded in a perfect difference set.
 @[category research open, AMS 5 11]
 theorem erdos_329.converse_implication :
     (sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1) →
-    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ᵉ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) := by
   sorry
 
@@ -120,8 +117,8 @@ theorem squares_sidon_density : sidonUpperDensity {n^2 | n : ℕ} = 0 := by
   sorry
 
 /--
-The greedy construction gives a Sidon set with positive density.
+It is possible to construct a Sidon set with positive density.
 -/
 @[category undergraduate, AMS 5 11]
-theorem greedy_sidon_construction : ∃ᵉ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
+theorem exists_sidon_pos_density : ∃ᵉ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
   sorry
