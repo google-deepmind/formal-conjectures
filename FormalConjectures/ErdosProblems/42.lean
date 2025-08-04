@@ -32,12 +32,6 @@ disjoint difference sets (apart from 0).
 open Function Set
 open scoped Pointwise
 
-/-- A Sidon set `A` is maximal in `{1, ..., N}` if it cannot be extended by adding any
-element from `{1, ..., N}` while preserving the Sidon property. -/
-def IsMaximalSidonSet (A : Set ℕ) (N : ℕ) : Prop :=
-  IsSidon A ∧ A ⊆ Set.Icc 1 N ∧
-  Maximal (fun B => IsSidon B ∧ B ⊆ Set.Icc 1 N) A
-
 /--
 **Erdős Problem 42**: For every maximal Sidon set in `{1, ..., N}`, there exists another
 Sidon set of size M with disjoint difference sets (apart from 0).
@@ -60,24 +54,15 @@ theorem erdos_42.constructive : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 �
   sorry
 
 /--
-A weaker version where we only require that the intersection is finite.
+A weaker version where we only require that the intersection is bounded.
+Note: This is trivially true since A and B are finite, making their
+difference sets and intersection finite.
 -/
-@[category research open, AMS 5 11]
+@[category undergraduate, AMS 5 11]
 theorem erdos_42.weaker : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
     ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N), ∃ᵉ (B : Set ℕ),
       B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
-      ((A - A) ∩ (B - B)).Finite) ↔ answer(sorry) := by
-  sorry
-
-/--
-The case where M = 1: can we find a single element that forms a Sidon set with
-disjoint difference set?
--/
-@[category research open, AMS 5 11]
-theorem erdos_42.single_element : (∃ (f : ℕ → ℕ), ∀ (N : ℕ) (_ : f 1 ≤ N),
-    ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N), ∃ᵉ (x : ℕ),
-      x ∈ Set.Icc 1 N ∧ x ∉ A ∧ IsSidon {x} ∧
-      ((A - A) ∩ ({x} - {x})) ⊆ {0}) ↔ answer(sorry) := by
+      ((A - A) ∩ (B - B)).Finite) := by
   sorry
 
 /-! ## Related results and examples -/
@@ -100,8 +85,8 @@ theorem example_difference_set : ({1, 2, 4} : Set ℕ) - {1, 2, 4} = {0, 1, 2, 3
 For any maximal Sidon set, the difference set contains 0.
 -/
 @[category undergraduate, AMS 5 11]
-theorem maximal_sidon_contains_zero (A : Set ℕ) (N : ℕ) (hA : IsMaximalSidonSet A N) :
-    0 ∈ A - A := by
+theorem maximal_sidon_contains_zero (A : Set ℕ) (N : ℕ) (hN : 1 ≤ N)
+    (hA : IsMaximalSidonSet A N) : 0 ∈ A - A := by
   sorry
 
 /--
