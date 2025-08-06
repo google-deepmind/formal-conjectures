@@ -120,5 +120,5 @@ theorem squares_sidon_density : sidonUpperDensity {n^2 | n : ℕ} = 0 := by
 It is possible to construct a Sidon set with positive density.
 -/
 @[category undergraduate, AMS 5 11]
-theorem exists_sidon_pos_density : ∃ᵉ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
+theorem exists_sidon_pos_density : ∃ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
   sorry
