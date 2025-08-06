@@ -54,7 +54,7 @@ theorem kurepa_conjecture.variant.prime (p : ℕ) (h_p : 2 < p) :
   sorry
 
 @[category undergraduate, AMS 11]
-theorem kurepa_conjecture.prime_reduction  : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
+theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
     ↔ (∀ p, 2 < p → p.Prime → (!p : ℕ) % p ≠ 0) := by
   refine ⟨fun h p hp hp_prime ↦ h p hp, fun h n hn h_mod ↦ ?_⟩
   have : n.primeFactorsList.prod ≠ n := by
