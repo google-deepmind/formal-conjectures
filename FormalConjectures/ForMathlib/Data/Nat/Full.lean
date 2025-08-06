@@ -26,6 +26,11 @@ $p^k$ also divides $n$.
 -/
 def Full (k : ℕ) (n : ℕ) : Prop := ∀ p ∈ n.primeFactors, p^k ∣ n
 
+instance Nat.Full.decide : ∀ k n, Decidable (Full k n) := by
+  intro k n
+  dsimp [Full]
+  infer_instance
+
 /--
 A [Powerful number](https://en.wikipedia.org/wiki/Powerful_number) is a natural number $n$ where
 for every prime divisor $p$, $p^2$ divides $n$.
