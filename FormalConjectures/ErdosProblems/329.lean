@@ -58,6 +58,8 @@ theorem erdos_329.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensi
 Krückeberg ([Kr61]) exhibited an infinite Sidon set `A` with
 `sidonUpperDensity A = 1 / Real.sqrt 2`, improving Erdős’ earlier
 `1 / 2` lower bound.
+
+[Kr61] Krückeberg, Fritz, $B\sb{2}$-Folgen und verwandte Zahlenfolgen. J. Reine Angew. Math. (1961), 53-60.
 -/
 @[category research solved, AMS 5 11]
 theorem kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧
@@ -66,6 +68,8 @@ theorem kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧
 
 /--
 Erdős and Turán [ErTu41] proved the upper bound of 1.
+
+[ErTu41] Erdős, P. and Turán, P., On a problem of Sidon in additive number theory, and on some related problems. J. London Math. Soc. (1941), 212-215.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUpperDensity A ≤ 1 := by
