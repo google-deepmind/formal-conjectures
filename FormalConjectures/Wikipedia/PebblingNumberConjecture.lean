@@ -76,7 +76,7 @@ def IsReachable (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
   ExistsPebblePath (IsPebblingMove G) A B
 
 @[simp, category API, AMS 5]
-theorem IsReachable.self (G : SimpleGraph V) (A : PebbleDistribution V) : IsReachable G A A := by
+theorem IsReachable.refl (G : SimpleGraph V) (A : PebbleDistribution V) : IsReachable G A A := by
   tauto
 
 /--
@@ -98,7 +98,7 @@ theorem PebblingNumber_completeGraph [Fintype V] :
   · by_cases h : ∃ w, 2 ≤ D w
     · obtain ⟨w, hw⟩ := h
       by_cases hwv : w = v
-      · exact ⟨D, .self _ _, hwv ▸ Nat.one_le_of_lt hw⟩
+      · exact ⟨D, .refl _ _, hwv ▸ Nat.one_le_of_lt hw⟩
       · exact ⟨fun u => if u = v then D u + 1 else if u = w then D u - 2 else D u,
           ⟨.step (.refl _) (.refl _ _ hw (by simpa))⟩, by simp⟩
     · refine ⟨D, by tauto, not_lt.1 fun hD' => ?_⟩
