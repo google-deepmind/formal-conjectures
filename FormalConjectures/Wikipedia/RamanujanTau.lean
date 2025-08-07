@@ -32,9 +32,9 @@ There are two conjectures related to the Ramanujan τ-function:
 
 open PowerSeries PowerSeries.WithPiTopology
 
-noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
+private noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
 
-noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
+private noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
 
 
 @[category API, AMS 11]
