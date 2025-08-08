@@ -33,6 +33,10 @@ Powerful numbers are also known as "squareful", "square-full", or "$2$-full".
 -/
 abbrev Powerful : ℕ → Prop := (2).Full
 
+instance Nat.Powerful.decide : ∀ n, Decidable (Powerful n) := by
+  intro n
+  dsimp [Powerful, Full]
+  apply Finset.decidableDforallFinset
 
 theorem full_of_le_full (k : ℕ) (n : ℕ) {m : ℕ} (hk : k ≤ m) (h : m.Full n) : k.Full n :=
   fun p a ↦ pow_dvd_of_le_of_pow_dvd hk (h p a)
