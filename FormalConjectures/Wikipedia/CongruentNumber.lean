@@ -31,28 +31,28 @@ def congruentNumber (n : ℕ) : Prop :=
   ∃ (a b c : ℚ), a ^ 2 + b ^ 2 = c ^ 2 ∧ n = (2⁻¹ : ℚ) * a * b
 
 /- 1 is not a congruent number. -/
-@[category test]
+@[category test, AMS 11]
 example : ¬ congruentNumber 1 := by
   sorry
 
 /- 5, 6, 7, and 157 are congruent numbers. -/
-@[category test]
+@[category test, AMS 11]
 example : congruentNumber 5 := by
   use 3 / 2, 20 / 3, 41 / 6
   norm_num
 
-@[category test]
+@[category test, AMS 11]
 example : congruentNumber 6 := by
   use 3, 4, 5
   norm_num
 
-@[category test]
+@[category test, AMS 11]
 example : congruentNumber 7 := by
   use 35 / 12, 24 / 5, 337 / 60
   norm_num
 
 /- Zagier's example -/
-@[category test]
+@[category test, AMS 11]
 example : congruentNumber 157 := by
   use 411340519227716149383203 / 21666555693714761309610,
     6803298487826435051217540 / 411340519227716149383203,

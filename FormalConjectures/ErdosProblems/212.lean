@@ -14,11 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
---A standard set of imports for open problems.
-import Mathlib
-import FormalConjectures.Util.Answer
-import FormalConjectures.Util.Attributes
-import FormalConjectures.Util.ForMathlib
-import FormalConjectures.Util.Linters.AMSLinter
-import FormalConjectures.Util.Linters.CategoryLinter
-import FormalConjectures.Util.Linters.CopyrightLinter
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Erdős Problem 212
+
+*Reference:* [erdosproblems.com/212](https://www.erdosproblems.com/212)
+-/
+
+/--
+Is there a dense subset of ℝ^2 such that all pairwise distances
+are rational?
+-/
+@[category research open, AMS 52]
+theorem erdos_212 : (∃ u : Set ℂ,
+  Dense u ∧ u.Pairwise fun c₁ c₂ => dist c₁ c₂ ∈ Set.range Rat.cast) ↔ answer(sorry) := by sorry

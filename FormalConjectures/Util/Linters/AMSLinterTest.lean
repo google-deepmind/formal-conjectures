@@ -14,60 +14,74 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.Linters.CategoryLinter
+import FormalConjectures.Util.Linters.AMSLinter
 
---Definitions aren't required to have a category attribute
+--Definitions aren't required to have an AMS attribute
 #guard_msgs in
 def foo : Nat := 1
 
-/-- warning: Missing problem category attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 /-- A highly non-trivial theorem -/
 theorem test_theorem : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 theorem test_theorem_with_hypothesis (_ : True) : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 /-- A highly non-trivial theorem with two helpful hypotheses -/
 theorem test_theorem_with_hypotheses (_ : True) (_ : False): 1 + 1 = 2 := by
   rfl
 
 
-/-- warning: Missing problem category attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 lemma test_lemma : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/-- warning: Missing AMS attribute. -/
 #guard_msgs in
 example : 1 + 1 = 2 := by
   rfl
 
+/-- warning: The AMS tag should be formatted as AMS 1 3 rather than AMS 1, AMS 3 -/
+#guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
-@[category research open]
+@[AMS 1, AMS 3]
 theorem test_theorem_with_docstring : 1 + 1 = 2 := by
   rfl
 
 #guard_msgs in
-@[category research open]
-theorem test_2 : 1 + 1 = 2 := by
+/-- A highly non-trivial theorem with a helpful hypothesis -/
+@[AMS 1 3]
+example: 1 + 1 = 2 := by
   rfl
 
 --The linter is compatible with theorems having other attributes.
 #guard_msgs in
-@[simp, category research open]
+@[simp, AMS 1]
 theorem test_1 : 1 + 1 = 2 := by
   rfl
 
 --The order of attributes is irrelevant.
 #guard_msgs in
-@[category research open, simp]
+@[AMS 1, simp]
 theorem test_3 : 1 + 1 = 2 := by
   rfl
 
+/-- warning: The AMS tags should be ordered as AMS 1 3 -/
+#guard_msgs in
+@[AMS 3 1]
+theorem test_out_of_order : 1 + 1 = 2 := by
+  rfl
+
+/-- warning: AMS tags contain duplicates. This should be AMS 3 -/
+#guard_msgs in
+@[AMS 3 3]
+theorem test_dup : 1 + 1 = 2 := by
+  rfl

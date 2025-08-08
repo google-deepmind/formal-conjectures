@@ -29,12 +29,12 @@ The set of `k` for which `a / b` can be expressed as a sum of `k` distinct unit 
 def unitFractionExpressible (a b : ℕ) : Set ℕ :=
   {k | ∃ s : Finset ℕ, s.card = k ∧ (∀ n ∈ s, n > 1) ∧ (a / b : ℚ) = ∑ n ∈ s, (n : ℚ)⁻¹}
 
-@[category API, simp]
+@[category API, simp, AMS 11]
 lemma zero_mem_unitFractionExpressible_iff {a b : ℕ} :
     0 ∈ unitFractionExpressible a b ↔ a = 0 ∨ b = 0 := by
   simp_all [unitFractionExpressible]
 
-@[category API]
+@[category API, AMS 11]
 lemma unitFractionExpressible_of_zero {a b : ℕ} (h : a = 0 ∨ b = 0) :
     unitFractionExpressible a b = {0} := by
   simp only [Set.eq_singleton_iff_unique_mem, zero_mem_unitFractionExpressible_iff, *]
@@ -48,20 +48,20 @@ lemma unitFractionExpressible_of_zero {a b : ℕ} (h : a = 0 ∨ b = 0) :
   intro i hi
   linarith [h i hi, hs i hi]
 
-@[category API]
+@[category API, AMS 11]
 lemma unitFractionExpressible_zero_left {b : ℕ} :
     unitFractionExpressible 0 b = {0} := unitFractionExpressible_of_zero (by simp)
 
-@[category API]
+@[category API, AMS 11]
 lemma unitFractionExpressible_zero_right {a : ℕ} :
     unitFractionExpressible a 0 = {0} := unitFractionExpressible_of_zero (by simp)
 
-@[category API]
+@[category API, AMS 11]
 lemma zero_notMem_unitFractionExpressible {a b : ℕ} :
     0 ∉ unitFractionExpressible a b ↔ a ≠ 0 ∧ b ≠ 0 := by
   simp_all [unitFractionExpressible]
 
-@[category API]
+@[category API, AMS 11]
 lemma eq_inv_of_one_mem_unitFractionExpressible {a b : ℕ}
     (h : 1 ∈ unitFractionExpressible a b) : ∃ m : ℕ, 1 < m ∧ (a / b : ℚ) = (m : ℚ)⁻¹ := by
   simp only [unitFractionExpressible, gt_iff_lt, Set.mem_setOf_eq, Finset.card_eq_one] at h
@@ -69,7 +69,7 @@ lemma eq_inv_of_one_mem_unitFractionExpressible {a b : ℕ}
   simp only [Finset.mem_singleton, forall_eq, Finset.sum_singleton] at h₁ h₂
   use m
 
-@[category API]
+@[category API, AMS 11]
 lemma dvd_of_one_mem_unitFractionExpressible {a b : ℕ}
     (h : 1 ∈ unitFractionExpressible a b) : a ∣ b := by
   obtain ⟨m, hm₁, hm⟩ := eq_inv_of_one_mem_unitFractionExpressible h
@@ -88,7 +88,7 @@ noncomputable def smallestCollection (a b : ℕ) : ℕ := sInf (unitFractionExpr
 
 -- in fact `(unitFractionExpressible a b).Nonempty` should always be true, but we do not prove it
 -- for now
-@[category API]
+@[category API, AMS 11]
 lemma smallestCollection_pos {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
     (h : (unitFractionExpressible a b).Nonempty) :
     0 < smallestCollection a b := by
@@ -97,7 +97,7 @@ lemma smallestCollection_pos {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
   have : 0 ∈ unitFractionExpressible a b := h' ▸ Nat.sInf_mem h
   simp_all
 
-@[category API]
+@[category API, AMS 11]
 lemma smallestCollection_left_one (b : ℕ) (hb : 1 < b) : smallestCollection 1 b = 1 := by
   have : 1 ∈ unitFractionExpressible 1 b := ⟨{b}, by simpa⟩
   have : smallestCollection 1 b ≤ 1 := Nat.sInf_le this
@@ -105,19 +105,19 @@ lemma smallestCollection_left_one (b : ℕ) (hb : 1 < b) : smallestCollection 1 
   have : smallestCollection 1 b ≠ 0 := ne_of_mem_of_not_mem (Nat.sInf_mem ⟨_, ‹_›⟩) this
   omega
 
-@[category API]
+@[category API, AMS 11]
 lemma eq_one_of_smallestCollection_eq_one {a b : ℕ}
     (h : smallestCollection a b = 1) : ∃ m : ℕ, 1 < m ∧ (a / b : ℚ) = (m : ℚ)⁻¹ := by
   have : 1 ∈ unitFractionExpressible a b := h ▸ Nat.sInf_mem (Nat.nonempty_of_sInf_eq_succ h)
   apply eq_inv_of_one_mem_unitFractionExpressible this
 
-@[category API]
+@[category API, AMS 11]
 lemma dvd_of_smallestCollection_eq_one {a b : ℕ}
     (h : smallestCollection a b = 1) : a ∣ b := by
   have : 1 ∈ unitFractionExpressible a b := h ▸ Nat.sInf_mem (Nat.nonempty_of_sInf_eq_succ h)
   apply dvd_of_one_mem_unitFractionExpressible this
 
-@[category test]
+@[category test, AMS 11]
 lemma smallestCollection_two_fifteen : smallestCollection 2 15 = 2 := by
   have h : 2 ∈ unitFractionExpressible 2 15 := by
     use {10, 30}
