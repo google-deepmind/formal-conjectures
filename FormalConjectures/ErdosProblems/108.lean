@@ -28,8 +28,8 @@ variable {V : Type*} [Fintype V]
 
 @[category research open, AMS 05]
 theorem erdos_108 :
-    (∀ (r k : ℕ), r ≥ 4 → k ≥ 2 →
-      ∃ (f : ℕ → ℕ → ℕ), ∀ (G : SimpleGraph V) [DecidableRel G.Adj],
+    (∃ (f : ℕ → ℕ → ℕ), ∀ (r k : ℕ), r ≥ 4 → k ≥ 2 →
+      ∀ (G : SimpleGraph V) [DecidableRel G.Adj],
         G.chromaticNumber ≥ f k r →
         ∃ (H : G.Subgraph), H.coe.girth ≥ r ∧ H.coe.chromaticNumber ≥ k) ↔
     answer(sorry) := by
