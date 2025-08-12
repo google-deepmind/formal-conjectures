@@ -119,14 +119,34 @@ def eval₀ (M : Machine Γ Λ) (s : Cfg Γ Λ) : Part (Cfg Γ Λ) :=
 def eval (M : Machine Γ Λ) (l : List Γ) : Part (ListBlank Γ) :=
   (Turing.eval (step M) (init l)).map fun c ↦ c.tape.right₀
 
+theorem dom_eval_of_dom {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
+    (Turing.eval f ((Turing.eval f s).get H)).Dom := by
+  set C : σ → Prop := fun s ↦ (H : (Turing.eval f s).Dom) →
+    (Turing.eval f ((Turing.eval f s).get H)).Dom with hC
+  have := evalInduction (C := C) (a := s) (h := Part.get_mem H)
+  sorry
+
 theorem eval_dom_iff {σ : Type*} (f : σ → Option σ) (s : σ) (H : (Turing.eval f s).Dom):
     ∃ n, ((Option.bind · f)^[n+1] s).isNone := by
   let b := (Part.get _ H)
-  let C : σ → Prop := fun s ↦ (Turing.eval f s).Dom → ∃ n, ((Option.bind · f)^[n+1] s).isNone
+  set C : σ → Prop := fun s ↦ (Turing.eval f s).Dom →
+    ∃ n, ((Option.bind · f)^[n+1] s).isNone with hC
   have := evalInduction (C := C) (a := s) (h := Part.get_mem H)
   apply this _ H
   intro a ha h
+  rw [hC] at h ⊢
+  simp at h ⊢
+  specialize h (Part.get _ H)
+  have : (Turing.eval f s).get H ∈ (Turing.eval f a) ↔ f a = some ((Turing.eval f s).get H) := by
+    sorry
+  rw [this] at ha
+  specialize h ha (dom_eval_of_dom H)
+  intro
+  obtain ⟨n, hn⟩ := h
+  use n+1
   sorry
+
+
 
 end
 
