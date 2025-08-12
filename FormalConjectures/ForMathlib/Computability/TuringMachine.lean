@@ -111,10 +111,22 @@ def Reaches (M : Machine Γ Λ) : Cfg Γ Λ → Cfg Γ Λ → Prop := ReflTransG
 /-- The initial configuration. -/
 def init (l : List Γ) : Cfg Γ Λ := ⟨default, Tape.mk₁ l⟩
 
+def eval₀ (M : Machine Γ Λ) (s : Cfg Γ Λ) : Part (Cfg Γ Λ) :=
+  (Turing.eval (step M) s)
+
 /-- Evaluate a Turing machine on initial input to a final state,
   if it terminates. -/
 def eval (M : Machine Γ Λ) (l : List Γ) : Part (ListBlank Γ) :=
   (Turing.eval (step M) (init l)).map fun c ↦ c.tape.right₀
+
+theorem eval_dom_iff {σ : Type*} (f : σ → Option σ) (s : σ) (H : (Turing.eval f s).Dom):
+    ∃ n, ((Option.bind · f)^[n+1] s).isNone := by
+  let b := (Part.get _ H)
+  let C : σ → Prop := fun s ↦ (Turing.eval f s).Dom → ∃ n, ((Option.bind · f)^[n+1] s).isNone
+  have := evalInduction (C := C) (a := s) (h := Part.get_mem H)
+  apply this _ H
+  intro a ha h
+  sorry
 
 end
 
@@ -122,40 +134,46 @@ universe u
 
 namespace Machine
 
+variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ] --[Fintype Γ] [Fintype Λ]
+variable (M : Machine Γ Λ)
+
+/--
+`M.IsHaltingInput l` is the predicate that `M` is a halting configuration for `M`.
+-/
+def IsHaltingInput (l : List Γ) : Prop := (eval M l).Dom
+
+
+-- TODO(Paul-Lez): Do we actually need this?
+/--
+`M.HaltsAtConfiguration s` is the predicate that `M` is a halting configuration for `M`.
+-/
+def IsHaltingConfiguration (s : Cfg Γ Λ) : Prop := (step M s).isNone
+
 /--
 The property that a Turing Machine `M` eventually halts when starting from an empty tape
 -/
-class IsHalting {Γ Λ : Type} [Fintype Γ] [Fintype Λ]
-    [Inhabited Λ] [Inhabited Γ] (M : Machine Γ Λ) : Prop where
-  halts : (eval M []).Dom
+class IsHalting : Prop where
+  halts : M.IsHaltingInput []
 
 /--
-The predicate that a Turing machine `M` has reached a halting state after
-`n` steps.
-For `n = 0` this is the predicate that `M` has already halted.
-
-In the BB setup, halting state can be attained in two manners:
-1) The machine can reach a configutation `s` that has no transitions to other states,
-i.e. `step M s = none`
-2) The machine can reach a "halting state configuration" `s`,
-i.e. `s.q = none`.
+The predicate that a machine starting at configuration `s` stops after at most `n` steps.
 -/
-def HaltsAt {Γ Λ : Type} [Fintype Γ] [Fintype Λ]
-    [Inhabited Λ] [Inhabited Γ] (M : Machine Γ Λ) (s : Cfg Γ Λ) (n : ℕ) : Prop :=
-  ((Option.bind · (step M))^[n+1] s = none) ∨ s.q = none
+def HaltsAfter (s : Cfg Γ Λ) (n : ℕ) : Prop :=
+  ((Option.bind · (step M))^[n+1] s).isNone
 
+lemma haltsAfter_zero_iff (s : Cfg Γ Λ) :
+    HaltsAfter M s 0 ↔ step M s = none := by
+  rw [HaltsAfter, Function.iterate_one, Option.some_bind, Option.isNone_iff_eq_none]
 
-lemma haltsAt_zero_iff {Γ Λ : Type} [Fintype Γ] [Fintype Λ]
-    [Inhabited Λ] [Inhabited Γ] (M : Machine Γ Λ) (s : Cfg Γ Λ) :
-    HaltsAt M s 0 ↔ step M s = none ∨ s.q = none := by
-  rw [HaltsAt, Function.iterate_one, Option.some_bind]
+lemma exists_haltsAt_of_isHalting [IsHalting M] : ∃ n, M.HaltsAfter (init []) n := by
+  -- use `eval_dom_iff` here
+  sorry
 
 noncomputable def haltingNumber
-    {Γ Λ : Type} [Fintype Γ] [Fintype Λ] [Inhabited Λ] [Inhabited Γ]
     (M : Machine Γ Λ) : PartENat :=
   --The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
   --If no such `n` exists then this is equal to `⊤`.
-  sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAt M (init []) n) }
+  sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
 
 end Machine
 
