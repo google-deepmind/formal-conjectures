@@ -42,7 +42,7 @@ private def IsZNumber (x : ℝ) : Prop :=
 theorem mahler_conjecture (x : ℝ) (hx : IsZNumber x) : False := by
   sorry
 
-/-- If Mahler's conjecture is true, i.e. there are no `Z` numbers, then `Ω(3/2)` exceeds `1/2`.  -/
+/-- If Mahler's conjecture is true, i.e. there are no Z-numbers, then `Ω(3/2)` exceeds `1/2`.  -/
 @[category undergraduate, AMS 11]
 theorem mahler_conjecture.variants.consequence (H : type_of% mahler_conjecture) :
     1 / 2 < Ω (3 / 2) := by
