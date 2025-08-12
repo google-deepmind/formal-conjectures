@@ -26,12 +26,13 @@ is an inductive type generated on the fly.
 
 The machine's transitions are encoded as a single string, with each state's transitions
 separated by an underscore (`_`).
-For each state, a 3m-character substring defines the behavior:
+For each state, a `3m`-character substring defines the behavior:
 - The first 3 characters `"ABC"` describe the action when the head reads `0`:
-  - `A`: The symbol to write (`0` or `1`).
+  - `A`: The symbol to write (`0, 1, ..., m-1`).
   - `B`: The direction to move the head (`L` or `R`).
   - `C`: The new state (`A` through `Z`).
 - The next 3 characters `"DEF"` describe the action when the head reads `1` using the same format.
+- The next 3 characters `"GHI"` describe the action when the head reads `2` using the same format.
 - So on...
 
 The character `Z` is reserved for the halting state. The string `"---"` can be used to represent
@@ -66,7 +67,7 @@ private def Char.toNumeralSyntax (c : Char) : TermElabM Term := do
   `($(Lean.Quote.quote n.toNat))
 
 /-- `Char.toStateSyntax c stateName` outputs the syntax of the constructor corresponding to `c`
-if `c` is a capital letter (i.e. something betwen `A` and `Z`.). For example, `A` would output
+if `c` is a capital letter (i.e. something between `A` and `Z`.). For example, `A` would output
 the syntax `stateName.A` where `stateName` is the name of the type used to index sets.
 This is used when parsing the "state" component of turing machine string representations. -/
 private def Char.toStateSyntax (c : Char) (stateName : Name) : TermElabM Term := do
