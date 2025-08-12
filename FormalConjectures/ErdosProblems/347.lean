@@ -22,12 +22,14 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/347](https://www.erdosproblems.com/347)
 -/
 
-open Filter Set Real Nat Topology
+open Filter Set Topology
 
 /--
 The set of subset sums of a set `A ⊆ ℕ`.
 -/
-def subsetSums (A : Set ℕ) : Set ℕ := {n | ∃ B : Finset ℕ, B ⊆ A ∧ n = ∑ i ∈ B, i}
+private def subsetSums (A : Set ℕ) : Set ℕ := {n | ∃ B : Finset ℕ, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
+
+local notation "𝓟" A => subsetSums A
 
 /--
 Is there a sequence $A=\{a_1\leq a_2\leq \cdots\}$ of integers with
@@ -40,6 +42,6 @@ has density $1$ for every cofinite subsequence $A'$ of $A$?
 theorem erdos_347 :
     (∃ a : ℕ → ℕ, (StrictMono a) ∧
       (Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (𝓝 2)) ∧
-      (∀ A' ⊆ range a, (range a \ A').Finite → HasDensity (subsetSums A') 1))
+      (∀ A' ⊆ range a, (range a \ A').Finite → HasDensity (𝓟 A') 1))
     ↔ answer(sorry) := by
   sorry
