@@ -149,12 +149,22 @@ lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
     M.multiStep config (n + 1) = Option.bind (M.multiStep config n) M.step := by
   rw [multiStep, Option.bind_iterate, multiStep]
 
-theorem dom_eval_of_dom {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
-    (Turing.eval f ((Turing.eval f s).get H)).Dom := by
-  set C : σ → Prop := fun s ↦ (H : (Turing.eval f s).Dom) →
-    (Turing.eval f ((Turing.eval f s).get H)).Dom with hC
-  have := evalInduction (C := C) (a := s) (h := Part.get_mem H)
-  sorry
+lemma dom_of_apply_eq_none  {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f s = none) :
+    s ∈ Turing.eval f s := by
+  apply PFun.fix_stop
+  simp [hf]
+
+theorem temp  {σ : Type*} {f : σ → Option σ} {s t : σ} (H : t ∈ Turing.eval f s) :
+    Turing.Reaches f s t := by
+  rw [mem_eval] at H
+  exact H.left
+
+@[simp]
+theorem Turing.apply_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
+    f ((Turing.eval f s).get H) = none := by
+  have := Part.get_mem H
+  rw [mem_eval] at this
+  exact this.right
 
 theorem get_eq_get {σ : Type*} (a b : Part σ) (ha : a.Dom) :
     a.get ha ∈ b → a = b := by
@@ -166,11 +176,27 @@ theorem get_eq_get {σ : Type*} (a b : Part σ) (ha : a.Dom) :
   ext c
   rw [← Part.eq_get_iff_mem ha, ← Part.eq_get_iff_mem hb, H]
 
+theorem dom_eval_of_dom {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
+    (Turing.eval f ((Turing.eval f s).get H)).Dom := by
+  suffices Turing.eval f ((Turing.eval f s).get H) = Turing.eval f s by
+    rwa [this]
+  have : (Turing.eval f s).get H ∈ Turing.eval f ((Turing.eval f s).get H) := by
+    apply dom_of_apply_eq_none
+    simp
+  symm
+  apply get_eq_get _ _ H this
+
 theorem eval_eq_eval {σ : Type*} {f : σ → Option σ} {a a' : σ} (H : f a = some a'):
     Turing.eval f a = Turing.eval f a' := by
-  sorry
+  set C : σ → Prop := fun s ↦ f a = some s →Turing.eval f a = Turing.eval f a' with hC
+  apply reaches_eval
+  rw [Turing.Reaches]
+  apply ReflTransGen.single
+  rw [H]
+  rfl
+  -- apply evalInduction (C := C) (a := a') _ H
 
-theorem eval_dom_iff₀ {σ : Type*} (f : σ → Option σ) (s : σ) (H : (Turing.eval f s).Dom):
+theorem eval_dom_iff₀ {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom):
     ∃ n, ((Option.bind · f)^[n+1] s).isNone := by
   let b := (Part.get _ H)
   set C : σ → Prop := fun s ↦ (Turing.eval f s).Dom → ∃ n, ((Option.bind · f)^[n+1] s).isNone with hC
@@ -184,13 +210,8 @@ theorem eval_dom_iff₀ {σ : Type*} (f : σ → Option σ) (s : σ) (H : (Turin
     simp at hn
     simp [Option.bind_iterate', Option.some_bind, ha', Option.bind_iterate', Option.some_bind, hn]
 
-lemma dom_of_apply_eq_none  {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f s = none) :
-    s ∈ Turing.eval f s := by
-  apply PFun.fix_stop
-  simp [hf]
-
-
-theorem eval_dom_iff₁ {σ : Type*} (f : σ → Option σ) (s : σ) (H : ∃ n, ((Option.bind · f)^[n+1] s) = none):
+theorem eval_dom_iff₁ {σ : Type*} (f : σ → Option σ) (s : σ)
+    (H : ∃ n, ((Option.bind · f)^[n+1] s) = none):
     (Turing.eval f s).Dom := by
   obtain ⟨n, hn⟩ := H
   induction n generalizing s with
@@ -239,8 +260,7 @@ lemma haltsAfter_zero_iff (s : Cfg Γ Λ) :
   rw [HaltsAfter, Function.iterate_one, Option.some_bind, Option.isNone_iff_eq_none]
 
 lemma exists_haltsAt_of_isHalting [IsHalting M] : ∃ n, M.HaltsAfter (init []) n := by
-  -- use `eval_dom_iff` here
-  sorry
+  apply eval_dom_iff₀ IsHalting.halts
 
 noncomputable def haltingNumber
     (M : Machine Γ Λ) : PartENat :=
