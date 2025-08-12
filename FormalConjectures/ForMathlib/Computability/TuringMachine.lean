@@ -96,6 +96,8 @@ variable [Inhabited Γ]
 
 instance Cfg.inhabited : Inhabited (Cfg Γ Λ) := ⟨⟨default, default⟩⟩
 
+namespace Machine
+
 /-- Execution semantics of the Turing machine. -/
 def step (M : Machine Γ Λ) : Cfg Γ Λ → Option (Cfg Γ Λ)
 | ⟨none, _⟩ => none
@@ -119,6 +121,34 @@ def eval₀ (M : Machine Γ Λ) (s : Cfg Γ Λ) : Part (Cfg Γ Λ) :=
 def eval (M : Machine Γ Λ) (l : List Γ) : Part (ListBlank Γ) :=
   (Turing.eval (step M) (init l)).map fun c ↦ c.tape.right₀
 
+def multiStep (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) : Option (Cfg Γ Λ) :=
+    (Option.bind · (step M))^[n] config
+
+@[simp]
+lemma multiStep_zero (M : Machine Γ Λ) (config : Cfg Γ Λ) : M.multiStep config 0 = some config :=
+  rfl
+
+@[simp]
+lemma multiStep_one (M : Machine Γ Λ) (config : Cfg Γ Λ) : M.multiStep config 1 = M.step config :=
+  rfl
+
+lemma Option.bind_iterate {α} (f : α → Option α) (a : Option α) (n : ℕ)  :
+    (Option.bind · f)^[n+1] a = Option.bind ((Option.bind · f)^[n] a) f := by
+  induction n with
+  | zero => simp
+  | succ n ih => rw [Function.iterate_succ', Function.comp_apply, ih]
+
+lemma Option.bind_iterate' {α} (f : α → Option α) (a : Option α) (n : ℕ)  :
+    (Option.bind · f)^[n+1] a = (Option.bind · f)^[n] (a.bind f) := by
+  induction n generalizing a with
+  | zero => simp
+  | succ n ih => rw [Function.iterate_succ, Function.comp_apply, ih]
+
+@[simp]
+lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
+    M.multiStep config (n + 1) = Option.bind (M.multiStep config n) M.step := by
+  rw [multiStep, Option.bind_iterate, multiStep]
+
 theorem dom_eval_of_dom {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
     (Turing.eval f ((Turing.eval f s).get H)).Dom := by
   set C : σ → Prop := fun s ↦ (H : (Turing.eval f s).Dom) →
@@ -126,33 +156,56 @@ theorem dom_eval_of_dom {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turin
   have := evalInduction (C := C) (a := s) (h := Part.get_mem H)
   sorry
 
-theorem eval_dom_iff {σ : Type*} (f : σ → Option σ) (s : σ) (H : (Turing.eval f s).Dom):
-    ∃ n, ((Option.bind · f)^[n+1] s).isNone := by
-  let b := (Part.get _ H)
-  set C : σ → Prop := fun s ↦ (Turing.eval f s).Dom →
-    ∃ n, ((Option.bind · f)^[n+1] s).isNone with hC
-  have := evalInduction (C := C) (a := s) (h := Part.get_mem H)
-  apply this _ H
-  intro a ha h
-  rw [hC] at h ⊢
-  simp at h ⊢
-  specialize h (Part.get _ H)
-  have : (Turing.eval f s).get H ∈ (Turing.eval f a) ↔ f a = some ((Turing.eval f s).get H) := by
-    sorry
-  rw [this] at ha
-  specialize h ha (dom_eval_of_dom H)
-  intro
-  obtain ⟨n, hn⟩ := h
-  use n+1
+theorem get_eq_get {σ : Type*} (a b : Part σ) (ha : a.Dom) :
+    a.get ha ∈ b → a = b := by
+  intro H
+  have hb : b.Dom := by
+    rw [Part.dom_iff_mem]
+    use a.get ha
+  rw [← Part.eq_get_iff_mem hb] at H
+  ext c
+  rw [← Part.eq_get_iff_mem ha, ← Part.eq_get_iff_mem hb, H]
+
+theorem eval_eq_eval {σ : Type*} {f : σ → Option σ} {a a' : σ} (H : f a = some a'):
+    Turing.eval f a = Turing.eval f a' := by
   sorry
 
+theorem eval_dom_iff₀ {σ : Type*} (f : σ → Option σ) (s : σ) (H : (Turing.eval f s).Dom):
+    ∃ n, ((Option.bind · f)^[n+1] s).isNone := by
+  let b := (Part.get _ H)
+  set C : σ → Prop := fun s ↦ (Turing.eval f s).Dom → ∃ n, ((Option.bind · f)^[n+1] s).isNone with hC
+  apply evalInduction (C := C) (a := s) (h := Part.get_mem H) _ H
+  intro a ha h HH
+  obtain ha | ⟨a', ha'⟩ := (f a).eq_none_or_eq_some
+  · use 0
+    simp [ha]
+  · obtain ⟨n, hn⟩ := h a' ha' (by rwa [←eval_eq_eval ha'])
+    use n+1
+    simp at hn
+    simp [Option.bind_iterate', Option.some_bind, ha', Option.bind_iterate', Option.some_bind, hn]
+
+lemma dom_of_apply_eq_none  {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f s = none) :
+    s ∈ Turing.eval f s := by
+  apply PFun.fix_stop
+  simp [hf]
 
 
-end
-
-universe u
-
-namespace Machine
+theorem eval_dom_iff₁ {σ : Type*} (f : σ → Option σ) (s : σ) (H : ∃ n, ((Option.bind · f)^[n+1] s) = none):
+    (Turing.eval f s).Dom := by
+  obtain ⟨n, hn⟩ := H
+  induction n generalizing s with
+  | zero =>
+    simp at hn
+    rw [Part.dom_iff_mem]
+    exact ⟨s, dom_of_apply_eq_none hn⟩
+  | succ n ih =>
+    obtain ha | ⟨a', ha'⟩ := (f s).eq_none_or_eq_some
+    · rw [Part.dom_iff_mem]
+      exact ⟨s, dom_of_apply_eq_none ha⟩
+    · simp_rw [Option.bind_iterate', Option.some_bind] at hn ih
+      simp_rw [ha', Option.some_bind] at hn
+      have ih := ih a' hn
+      rwa [eval_eq_eval ha']
 
 variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ] --[Fintype Γ] [Fintype Λ]
 variable (M : Machine Γ Λ)
