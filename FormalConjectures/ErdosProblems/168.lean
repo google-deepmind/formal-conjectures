@@ -26,11 +26,11 @@ open scoped Topology
 
 /--Say a finite set of natural numbers is *non ternary* if it contains no
 3-term arithmetic progression of the form `n, 2n, 3n`.-/
-def NonTernary (S : Finset ℕ) : Prop := ∀ n : ℕ, n ∉ S ∨ 2*n ∉ S ∨ 3*n ∉ S
+private def NonTernary (S : Finset ℕ) : Prop := ∀ n : ℕ, n ∉ S ∨ 2*n ∉ S ∨ 3*n ∉ S
 
 /--`IntervalNonTernarySets N` is the (fin)set of non ternary subsets of `{1,...,N}`.
 The advantage of defining it as below is that some proofs (e.g. that of `F 3 = 2`) become `rfl`.-/
-def IntervalNonTernarySets (N : ℕ) : Finset (Finset ℕ) :=
+private def IntervalNonTernarySets (N : ℕ) : Finset (Finset ℕ) :=
   (Finset.Icc 1 N).powerset.filter
     fun S => ∀ n ∈ Finset.Icc 1 (N / 3 : ℕ), n ∉ S ∨ 2*n ∉ S ∨ 3*n ∉ S
 

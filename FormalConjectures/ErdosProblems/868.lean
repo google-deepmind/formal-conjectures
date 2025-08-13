@@ -29,7 +29,7 @@ open scoped Pointwise
 /-- The number of ways in which a natural `n` can be written as the sum of
 `o` members of the set `A`. -/
 noncomputable
-def ncard_add_repr (A : Set ℕ) (o : ℕ) (n : ℕ) : ℕ :=
+private def ncard_add_repr (A : Set ℕ) (o : ℕ) (n : ℕ) : ℕ :=
   { a : Fin o → ℕ | Set.range a ⊆ A ∧ ∑ i, a i = n }.ncard
 
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which

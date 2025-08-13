@@ -26,7 +26,7 @@ open Asymptotics Filter
 /--
 The set of `k` for which `a / b` can be expressed as a sum of `k` distinct unit fractions.
 -/
-def unitFractionExpressible (a b : ℕ) : Set ℕ :=
+private def unitFractionExpressible (a b : ℕ) : Set ℕ :=
   {k | ∃ s : Finset ℕ, s.card = k ∧ (∀ n ∈ s, n > 1) ∧ (a / b : ℚ) = ∑ n ∈ s, (n : ℚ)⁻¹}
 
 @[category API, simp, AMS 11]
@@ -84,7 +84,7 @@ lemma dvd_of_one_mem_unitFractionExpressible {a b : ℕ}
 /-- Let $$N(a, b)$$, denoted here by `smallestCollection a b` be the minimal k such that there
 exist integers $1 < n_1 < n_2 < ... < n_k$ with
 $$\frac{a}{b} = \sum_{i=1}^k \frac{1}{n_i}$$ -/
-noncomputable def smallestCollection (a b : ℕ) : ℕ := sInf (unitFractionExpressible a b)
+private noncomputable def smallestCollection (a b : ℕ) : ℕ := sInf (unitFractionExpressible a b)
 
 -- in fact `(unitFractionExpressible a b).Nonempty` should always be true, but we do not prove it
 -- for now
@@ -131,7 +131,7 @@ lemma smallestCollection_two_fifteen : smallestCollection 2 15 = 2 := by
   omega
 
 /-- Write $$N(b) = max_{1 \leq a < b} N(a, b)$$. -/
-noncomputable def smallestCollectionTo (b : ℕ) : ℕ :=
+private noncomputable def smallestCollectionTo (b : ℕ) : ℕ :=
   sSup {smallestCollection a b | a ∈ Finset.Ico 1 b}
 
 /--

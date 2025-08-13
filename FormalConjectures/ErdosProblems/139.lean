@@ -26,7 +26,7 @@ open Classical
 open scoped Topology
 
 /--Denote by $r_k(N)$ the size of the largest k-non-arithmetic subset of ${1,...,N}$-/
-noncomputable abbrev r (k : ℕ) (N : ℕ) : ℕ :=
+private noncomputable abbrev r (k : ℕ) (N : ℕ) : ℕ :=
     ((Finset.Icc 1 N).powerset.filter fun S => S.toSet.IsAPOfLengthFree k).sup Finset.card
 
 /--

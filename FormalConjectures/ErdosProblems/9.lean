@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 /--
 The set of odd numbers that cannot be expressed as a prime plus two powers of 2.
 -/
-def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
+private def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
 
 
 @[category test, AMS 5 11]

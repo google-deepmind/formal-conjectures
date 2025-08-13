@@ -22,11 +22,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/350](https://www.erdosproblems.com/350)
 -/
 /--The predicate that all (finite) subsets of `A` have distinct sums-/
-def DistinctSubsetSums {M : Type*} [AddCommMonoid M] (A : Set M) : Prop :=
+private def DistinctSubsetSums {M : Type*} [AddCommMonoid M] (A : Set M) : Prop :=
   Set.Pairwise {X : Finset M | ↑X ⊆ A} fun X Y => X.sum id ≠ Y.sum id
 
 /--The predicate that all (finite) subsets of `A` have distinct sums, decidable version-/
-def DecidableDistinctSubsetSums {M : Type*} [AddCommMonoid M] [DecidableEq M] (A : Finset M) : Prop :=
+private def DecidableDistinctSubsetSums {M : Type*} [AddCommMonoid M] [DecidableEq M] (A : Finset M) : Prop :=
   ∀ X ⊆ A, ∀ Y ⊆ A, X ≠ Y → X.sum id ≠ Y.sum id
 
 @[category test, AMS 5 11]

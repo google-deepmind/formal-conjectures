@@ -27,7 +27,7 @@ open Asymptotics Filter Finset
 Write $M(n, k)$ be the least common multiple of ${n+1, \dotsc, n+k}$, denoted here as
 `lcmInterval n k`.
 -/
-def lcmInterval (n k : ℕ) : ℕ := (Finset.Ioc n (n + k)).lcm id
+private def lcmInterval (n k : ℕ) : ℕ := (Finset.Ioc n (n + k)).lcm id
 
 /--
 The referee of [Er79] found the example $M(96, 7) > M(104, 8)$, showing that there are cases where

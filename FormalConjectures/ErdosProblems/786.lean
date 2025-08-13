@@ -31,7 +31,7 @@ open scoped Topology
 satisfies the property that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$
 can only hold when $r = s$.
 -/
-def Set.IsMulCardSet {α : Type*} [CommMonoid α] (A : Set α) :=
+private def Set.IsMulCardSet {α : Type*} [CommMonoid α] (A : Set α) :=
   ∀ (a b : Finset α) (_ :↑a ⊆ A) (_ : ↑b ⊆ A) (_ : a.prod id = b.prod id),
     a.card = b.card
 
@@ -68,7 +68,7 @@ theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
 `consecutivePrimes p` asserts that `p` is a strictly increasing finite sequences of
 consecutive primes.
 -/
-def consecutivePrimes {k : ℕ} (p : Fin k.succ → ℕ) :=
+private def consecutivePrimes {k : ℕ} (p : Fin k.succ → ℕ) :=
     ∀ i, (p i).Prime ∧ StrictMono p ∧
       ∀ i < k, ∀ m ∈ Set.Ioo (p i) (p (i + 1)), ¬m.Prime
 

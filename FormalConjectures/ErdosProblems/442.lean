@@ -33,7 +33,7 @@ namespace Real
 /--
 The function $\operatorname{Log} x := \max\{log x, 1\}$.
 -/
-def maxLogOne (x : ℝ) := max x.log 1
+private def maxLogOne (x : ℝ) := max x.log 1
 
 end Real
 

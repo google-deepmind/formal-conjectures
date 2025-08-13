@@ -31,8 +31,7 @@ $$
   \langle A\rangle = \left\{\sum_{a \in A} \epsilon_a a : \epsilon_a \in\{0, 1\}\right\}
 $$
 contains no non-trivial $k$-term arithmetic progression. -/
-noncomputable
-def g (k : ℕ) (n : ℕ) : ℕ := sInf { N | ∃ A ⊆ Finset.Icc 1 N, A.card = n ∧
+private noncomputable def g (k : ℕ) (n : ℕ) : ℕ := sInf { N | ∃ A ⊆ Finset.Icc 1 N, A.card = n ∧
     ∀ s, s ⊆ { ∑ a ∈ B, a | B ∈ A.powerset } → s.IsAPOfLengthFree k}
 
 /-- Let $k\geq 3$. Define $g_k(n)$ to be the minimal $N$ such that

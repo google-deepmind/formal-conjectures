@@ -28,7 +28,7 @@ $$
 $$
 where $p_r$ denotes the $r$th prime?
 -/
-def Erdos427 : Prop := ∀ (n d : ℕ),
+private def Erdos427 : Prop := ∀ (n d : ℕ),
     --Need to allow `n = 0` since we're counting primes from `0` rather than `1`
     --`d` needs to be `≠ 0` since the sum is never `0`!
     d ≠ 0 → ∃ k, k ≠ 0 ∧
@@ -52,7 +52,7 @@ $p_m, ..., p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
-def ShiuTheorem : Prop := ∀ (k a q : ℕ), 1 ≤ k → 1 ≤ q → a.gcd q = 1 →
+private def ShiuTheorem : Prop := ∀ (k a q : ℕ), 1 ≤ k → 1 ≤ q → a.gcd q = 1 →
     { m : ℕ | ∀ p ∈ (Finset.Ico m (m + k)).image (Nat.nth Nat.Prime), p ≡ a [MOD q]}.Infinite
 
 

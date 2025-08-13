@@ -27,7 +27,7 @@ open scoped Finset
 Say a set of natural numbers is `k`-weakly divisible if any `k+1` elements
 of `A` are not relatively prime.
 -/
-def WeaklyDivisible (k : ℕ) (A : Finset ℕ) : Prop :=
+private def WeaklyDivisible (k : ℕ) (A : Finset ℕ) : Prop :=
     ∀ s ∈ A.powersetCard (k + 1), ¬ Set.Pairwise s Nat.Coprime
 
 @[category API, AMS 11]
@@ -52,7 +52,7 @@ lemma empty_iff_weaklyDivisible_zero {A : _} : WeaklyDivisible 0 A ↔ A = ∅ :
 /--
 `MaxWeaklyDivisible N k` is the size of the largest k-weakly divisible subset of `{1,..., N}`
 -/
-noncomputable def MaxWeaklyDivisible (N : ℕ) (k : ℕ) : ℕ :=
+private noncomputable def MaxWeaklyDivisible (N : ℕ) (k : ℕ) : ℕ :=
   sSup {#A | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : WeaklyDivisible k A)}
 
 @[category test, AMS 11]
@@ -76,7 +76,7 @@ example (N : ℕ) : MaxWeaklyDivisible N 0 = 0 := by
 `FirstPrimesMultiples N k` is the set of numbers in `{1,..., N}` that are
 a multiple of one of the first `k` primes.
 -/
-noncomputable def FirstPrimesMultiples (N k : ℕ) : Finset ℕ :=
+private noncomputable def FirstPrimesMultiples (N k : ℕ) : Finset ℕ :=
     (Finset.Icc 1 N).filter fun i => ∃ j < k, (j.nth Nat.Prime ∣ i)
 
 @[category test, AMS 11]
