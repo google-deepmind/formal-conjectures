@@ -24,7 +24,6 @@ lemma dom_of_apply_eq_none  {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f
   apply PFun.fix_stop
   simp [hf]
 
-#check PFun.fix
 @[simp]
 theorem Turing.apply_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
     f ((Turing.eval f s).get H) = none := by
