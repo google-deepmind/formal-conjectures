@@ -101,7 +101,7 @@ Yakir proved that almost all Kac polynomials have `n/2+O(n^(9/10))` many roots i
 -/
 @[category research solved, AMS 12 60]
 theorem erdos_522.variants.yakir_solution :
-    ∃ p o : ℕ → ℝ, Filter.Tendsto o Filter.atTop (𝓝 0) ∧ Filter.Tendsto p Filter.atTop (𝓝 0) ∧
+    ∃ p : ℕ → ℝ, Filter.Tendsto p Filter.atTop (𝓝 0) ∧
     ∀ (Ω : Type*) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (n : ℕ) (hn : 2 ≤ n) (f : KacPolynomial n ({-1, 1} : Set ℂ) Ω),
        (ℙ {ω | |(f.roots ω).countP (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ n^(9/10 : ℝ) }).toReal ≤ p n :=
