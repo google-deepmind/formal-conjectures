@@ -133,7 +133,7 @@ lemma multiStep_one (M : Machine Γ Λ) (config : Cfg Γ Λ) : M.multiStep confi
 @[simp]
 lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
     M.multiStep config (n + 1) = Option.bind (M.multiStep config n) M.step := by
-  rw [multiStep, Option.bind_iterate, multiStep]
+  rw [multiStep, Function.iterate_succ', Function.comp_apply, multiStep]
 
 variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ]
 variable (M : Machine Γ Λ)
