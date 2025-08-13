@@ -109,7 +109,7 @@ def step (M : Machine Γ Λ) : Cfg Γ Λ → Option (Cfg Γ Λ)
 def Reaches (M : Machine Γ Λ) : Cfg Γ Λ → Cfg Γ Λ → Prop := ReflTransGen fun a b ↦ b ∈ step M a
 
 /-- The initial configuration. -/
-def init (l : List Γ) : Cfg Γ Λ := ⟨default, Tape.mk₁ l⟩
+def init (l : List Γ) : Cfg Γ Λ := ⟨some default, Tape.mk₁ l⟩
 
 def eval₀ (M : Machine Γ Λ) (s : Cfg Γ Λ) : Part (Cfg Γ Λ) :=
   (Turing.eval (step M) s)
@@ -167,14 +167,19 @@ lemma haltsAfter_zero_iff (s : Cfg Γ Λ) :
     HaltsAfter M s 0 ↔ step M s = none := by
   rw [HaltsAfter, multiStep, Function.iterate_one, Option.some_bind]
 
-lemma exists_haltsAt_of_isHalting [IsHalting M] : ∃ n, M.HaltsAfter (init []) n :=
-  eval_dom_iff.mpr IsHalting.halts
+lemma isHalting_iff_exists_haltsAt : IsHalting M ↔ ∃ n, M.HaltsAfter (init []) n :=
+  ⟨fun _ ↦ eval_dom_iff.mpr IsHalting.halts, fun H ↦ ⟨eval_dom_iff.mp H⟩⟩
 
-noncomputable def haltingNumber
-    (M : Machine Γ Λ) : PartENat :=
+noncomputable def haltingNumber : PartENat :=
   --The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
   --If no such `n` exists then this is equal to `⊤`.
   sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
+
+theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some a)
+    (ha' : M.multiStep (init []) (n + 1) = none) :
+    M.haltingNumber = n := by
+  
+
 
 end Machine
 

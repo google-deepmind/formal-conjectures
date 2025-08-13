@@ -23,13 +23,13 @@ import Mathlib.Tactic.DeriveFintype
 open Turing BusyBeaver Machine
 
 inductive Γ where
-| A
-| B
+  | A
+  | B
 deriving Inhabited, Fintype
 
 inductive Λ where
-| S
-| T
+  | S
+  | T
 deriving Inhabited, Fintype
 
 def alwaysHaltingMachine : Machine Γ Λ := fun _ _ =>
@@ -42,15 +42,22 @@ match l with
 | --If the state is already `T` then halt
   .T => none
 
-instance : alwaysHaltingMachine.IsHalting where
-  halts := by
-    simp_rw (config := { singlePass := true })
-      [IsHaltingInput, BusyBeaver.Machine.eval, Turing.eval, Part.map_Dom, step, alwaysHaltingMachine, Option.map_none',
-      Part.dom_iff_mem, PFun.mem_fix_iff, Part.mem_some_iff]
-    use default
-    aesop
+instance : alwaysHaltingMachine.IsHalting := by
+  rw [isHalting_iff_exists_haltsAt]
+  -- halts after zero steps
+  use 0
+  rw [HaltsAfter, multiStep]
+  simp
+  simp_rw [step, alwaysHaltingMachine, Option.map_none', init]
 
--- TODO(Paul-Lez): finish proving this
-instance : haltsAfterOne.IsHalting  where
-  halts := by
-    sorry
+instance : haltsAfterOne.IsHalting := by
+  rw [isHalting_iff_exists_haltsAt]
+  -- halts after one step
+  use 1
+  unfold HaltsAfter
+  simp_rw [multiStep, Function.iterate_succ', Function.comp_apply, Function.iterate_zero, init,
+    Option.bind]
+  aesop
+
+theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
+  
