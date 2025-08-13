@@ -57,7 +57,7 @@ theorem IsPebblingMove.refl (G : SimpleGraph V) (A : PebbleDistribution V) {v w 
 /--
 A pebble path is a series of pebbling moves.
 -/
-inductive PebblePath {α : Type} (r : α → α → Prop) : α → α → Type
+private inductive PebblePath {α : Type} (r : α → α → Prop) : α → α → Type
   | refl (a : α) : PebblePath r a a
   | step {a b c : α} (p : PebblePath r a b) (h : r b c) : PebblePath r a c
 
@@ -98,9 +98,9 @@ theorem PebblingNumber_completeGraph [Fintype V] :
   · by_cases h : ∃ w, 2 ≤ D w
     · obtain ⟨w, hw⟩ := h
       by_cases hwv : w = v
-      · exact ⟨D, .refl _ _, hwv ▸ Nat.one_le_of_lt hw⟩
+      · exact ⟨D, IsReachable.refl _ _, hwv ▸ Nat.one_le_of_lt hw⟩
       · exact ⟨fun u => if u = v then D u + 1 else if u = w then D u - 2 else D u,
-          ⟨.step (.refl _) (.refl _ _ hw (by simpa))⟩, by simp⟩
+          ⟨.step (.refl _) (IsPebblingMove.refl _ _ hw (by simpa))⟩, by simp⟩
     · refine ⟨D, by tauto, not_lt.1 fun hD' => ?_⟩
       exact Finset.sum_lt_sum (fun a s => Nat.le_of_lt_succ <| not_le.1 (h ⟨a, · ⟩))
         ⟨_, Finset.mem_univ _, hD'⟩ |>.trans_eq Fintype.card_eq_sum_ones.symm |>.ne hD
