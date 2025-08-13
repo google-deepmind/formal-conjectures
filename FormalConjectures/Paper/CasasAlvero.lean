@@ -48,14 +48,14 @@ variable {K L : Type*} [Field K] [Field L] {f : K →+* L}
 A polynomial `P` satisfies the Casas-Alvero property if it shares a factor with each
 of its Hasse derivatives up to order `d-1`, where `d` is the degree of `P`.
 -/
-def HasCasasAlveroProp (P : K[X]) : Prop :=
+private def HasCasasAlveroProp (P : K[X]) : Prop :=
   ∀ i ∈ Finset.range P.natDegree, ¬ IsCoprime P (P.hasseDeriv i)
 
 /-- A stronger version of the Casas-Alvero property, which requires that the polynomial `P`
 shares a root with each of its Hasse derivatives up to order `deg P - 1`.
 The subscript `r` indicates "root" in the definition. -/
 
-def HasCasasAlveroPropᵣ (P : K[X]) : Prop :=
+private def HasCasasAlveroPropᵣ (P : K[X]) : Prop :=
   ∀ i ∈ Finset.range P.natDegree, ∃ α : K, IsRoot P α ∧ IsRoot (P.hasseDeriv i) α
 
 @[category API, AMS 12]

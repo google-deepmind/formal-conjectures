@@ -34,7 +34,7 @@ The predicate that all coefficients of a polynomial are either zero or one.
 So `IsZeroOne P` means that every nonzero coefficient of `P` is equal to 1.
 Note that zero coefficients are not included in `P.coeffs`.
 -/
-def IsZeroOne (P : ℝ[X]) := P.coeffs ⊆ {1}
+private def IsZeroOne (P : ℝ[X]) := P.coeffs ⊆ {1}
 
 -- TODO(lezeau): add probabilistic reformulation and statement
 -- that coefficients must at least lie in `[0, 1]`

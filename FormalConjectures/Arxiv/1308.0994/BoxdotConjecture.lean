@@ -75,7 +75,7 @@ scoped prefix:95 "□" => Nec
 
 /-- `Conj α β` is the conjunction `α ∧ β`. We define `α & β` as `~(α ~> ~β)` for simplicity. -/
 @[reducible]
-def Conj (α β : Formula) : Formula := ~(α ~> ~β)
+private def Conj (α β : Formula) : Formula := ~(α ~> ~β)
 
 @[inherit_doc Conj]
 scoped infixr:85 " & " => Conj
@@ -86,7 +86,7 @@ from the language of monomodal logic into itself that preserves variables and th
 commutes with the standard truth-functional operators, and is such that `t □a` = `□t a & t a`.
 This implementation follows the definition in Steinsvold (AJL).
 -/
-def t (φ : Formula) : Formula :=
+private def t (φ : Formula) : Formula :=
   match φ with
   | α ~> β => t α ~> t β
   | □α => □t α & t α
@@ -162,7 +162,7 @@ structure NormalModalLogic : Type where
   nec : ∀ {φ}, φ ∈ thms → □ φ ∈ thms
 
 
-def proves (L : NormalModalLogic) (φ : Formula) := φ ∈ L.thms
+private def proves (L : NormalModalLogic) (φ : Formula) := φ ∈ L.thms
 
 
 scoped infixr:85 " ⊢ " => proves
@@ -176,7 +176,7 @@ in `KTProof` from the empty context.
 
 This corresponds to `K ⊕ (□φ → φ)` as in both AJL (Steinsvold) and Jeřábek.
 -/
-def KT : NormalModalLogic := by
+private def KT : NormalModalLogic := by
   constructor
   case thms =>
     exact {φ | KTProof ∅ φ}

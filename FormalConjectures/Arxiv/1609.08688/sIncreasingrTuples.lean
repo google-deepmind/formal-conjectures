@@ -36,7 +36,7 @@ Let $a = (a_1, a_2, a_3)$ and $b = (b_1, b_2, b_3)$ be two triples of integers.
 Say that $a$ is $2$-less than $b$, or $a <_2 b$, if $a_i < b_i$ for at least
 two co-ordinates $i$.
 -/
-def lt₂ {α : Type*} [LT α] (a b : Fin 3 → α) : Prop :=
+private def lt₂ {α : Type*} [LT α] (a b : Fin 3 → α) : Prop :=
   ∃ (i j : Fin 3), i ≠ j ∧ a i < b i ∧ a j < b j
 
 local infix:50 " <₂ " => lt₂
@@ -90,7 +90,7 @@ theorem not_trans_lt₂_nat : ∃ (a b c : Fin 3 → ℕ),
 Since the $2$-less relation is not transitive, we make a further definition to
 specify transivity.
 -/
-def IsIncreasing₂ {α : Type*} [LT α] (s : List (Fin 3 → α)) : Prop := s.Pairwise lt₂
+private def IsIncreasing₂ {α : Type*} [LT α] (s : List (Fin 3 → α)) : Prop := s.Pairwise lt₂
 
 @[simp, category API, AMS 5]
 theorem isIncreasing₂_nil {α : Type*} [LT α] : IsIncreasing₂ (α := α) [] := by
@@ -115,7 +115,7 @@ theorem isIncreasing₂_const_length {α : Type*} [LinearOrder α] {val : α} {s
 Let $F(n)$ be the maximal length of a $2$-increasing sequence of triples with each coordinate
 belong to $[n]$ ($= \{1, 2, ..., n\}$).
 -/
-noncomputable def maximalLength (n : ℕ) : ℕ :=
+private noncomputable def maximalLength (n : ℕ) : ℕ :=
   sSup { List.length s | (s) (_ : ∀ a ∈ s, Set.range a ⊆ Set.Icc 1 n) (_ : IsIncreasing₂ s) }
 
 local notation "F" => maximalLength
@@ -173,11 +173,11 @@ theorem maximalLength_ge_of_isSquare {n : ℕ} (h : IsSquare n) :
 
 /-- Two triples $t_1$ and $t_2$ are $2$-comparable if one of them is $2$-less
 than the other. -/
-def IsComparable₂ {α : Type*} [LT α] (t₁ t₂ : Fin 3 → α) : Prop :=
+private def IsComparable₂ {α : Type*} [LT α] (t₁ t₂ : Fin 3 → α) : Prop :=
   t₁ <₂ t₂ ∨ t₂ <₂ t₁
 
 /-- A set of triples is $2$-comparable if any two of them are $2$-comparable. -/
-def IsComparableSet₂ {α : Type*} [LT α] (s : List (Fin 3 → α)) : Prop :=
+private def IsComparableSet₂ {α : Type*} [LT α] (s : List (Fin 3 → α)) : Prop :=
   ∃ t₁ t₂, t₁ ≠ t₂ ∧ t₁ ∈ s ∧ t₂ ∈ s ∧ IsComparable₂ t₁ t₂
 
 open Filter in
@@ -190,7 +190,7 @@ theorem maximalLength_le_isBigO : ∃ Ω : ℕ → ℝ,
 
 /-- We define the product of two triples $(a, b, c)$ and $(d, e, f)$ by
 $((a, d), (b, e), (c, f))$, where the pairs are arranged in lexicographical order. -/
-def tripleProduct {α : Type*} (a b : Fin 3 → α) : Πₗ (_ : Fin 3), α × α := toLex (Pi.prod a b)
+private def tripleProduct {α : Type*} (a b : Fin 3 → α) : Πₗ (_ : Fin 3), α × α := toLex (Pi.prod a b)
 
 @[simp, category API, AMS 5]
 theorem tripleProduct_const {α : Type*} (a : α) :
@@ -207,7 +207,7 @@ theorem tripleProduct_vecConst_const {α : Type*} (a : α) :
 $(d_i, e_i, f_i)$ by the sequence $((a_i, d_j), (b_i, e_j), (c_i, f_j))$, where
 the indices $(i, j)$ are arranged lexicographically, and the pairs are also
 ordered lexicographically. -/
-def sequenceProduct {α : Type*} (s t : List (Fin 3 → α)) : Lex (List (Πₗ (_ : Fin 3), α × α)) :=
+private def sequenceProduct {α : Type*} (s t : List (Fin 3 → α)) : Lex (List (Πₗ (_ : Fin 3), α × α)) :=
   toLex (s.flatMap (fun a => List.map (tripleProduct a) t))
 
 local infix:100 " ⊗₂ " => sequenceProduct

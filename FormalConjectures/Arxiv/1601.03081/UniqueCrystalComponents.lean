@@ -28,7 +28,7 @@ by *Marco Abrate, Stefano Barbero, Umberto Cerruti, Nadir Murru*
 An odd number $n$ is called a crystal if $n = ab$, with $a, b > 1$
 and $B(a, b) ∈ ℕ$, where $B(a, b) := ((a + b)^2 + (a b + 1)^2) / (2 (a + 1) (b + 1))$.
 -/
-def IsCrystalWithComponents (n a b : ℕ) : Prop :=
+private def IsCrystalWithComponents (n a b : ℕ) : Prop :=
   Odd n ∧ 1 < a ∧ 1 < b ∧ n = a * b ∧ 2 * (a + 1) * (b + 1) ∣ (a + b)^2 + (a * b + 1)^2
 
 @[category test, AMS 11]
