@@ -20,7 +20,7 @@ import Mathlib.Tactic.DeriveFintype
 --sanity checks for the definition of halting added in `ForMathlib`.
 --These should be easy to prove
 
-open Turing BusyBeaver
+open Turing BusyBeaver Machine
 
 inductive Γ where
 | A
@@ -45,7 +45,7 @@ match l with
 instance : alwaysHaltingMachine.IsHalting where
   halts := by
     simp_rw (config := { singlePass := true })
-      [BusyBeaver.eval, Turing.eval, Part.map_Dom, step, alwaysHaltingMachine, Option.map_none',
+      [IsHaltingInput, BusyBeaver.Machine.eval, Turing.eval, Part.map_Dom, step, alwaysHaltingMachine, Option.map_none',
       Part.dom_iff_mem, PFun.mem_fix_iff, Part.mem_some_iff]
     use default
     aesop
