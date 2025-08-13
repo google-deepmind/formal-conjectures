@@ -52,40 +52,33 @@ open scoped MatrixGroups
 section
 variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
 
-private def Matrix.diagonalHom : (n → Rˣ) →* GeneralLinearGroup n R where
-  toFun := fun d ↦ ⟨Matrix.diagonal (fun i ↦ d i), Matrix.diagonal (fun i ↦ (d i).inv), by simp, by simp⟩
-  map_mul' x y := by ext; simp [-mul_diagonal, -diagonal_mul]
-  map_one' := by ext; simp
-
-/-- The group of invertible diagonal matrices. -/
-private def DiagonalMatricesMultiplicative : Subgroup (GeneralLinearGroup n R) :=
-  Subgroup.map (Matrix.diagonalHom n R) ⊤
-
-/-- The group of invertible diagonal matrices with determinant 1. -/
-private def SpecialDiagonalMatrices : Subgroup (SpecialLinearGroup n R) :=
-  (DiagonalMatricesMultiplicative n R).comap Matrix.SpecialLinearGroup.toGL
-
--- TODO(Paul-Lez): do we want to upstream this to Mathlib?
+-- This instance can be made more general (this is being done in https://github.com/leanprover-community/mathlib4/pull/27596)
 instance : TopologicalSpace (SpecialLinearGroup n ℝ) :=
   inferInstanceAs (TopologicalSpace { A : Matrix n n ℝ // A.det = 1 })
 
-variable {n R} in
-def Matrix.SpecialLinearGroup.coeIntGroupHom : SpecialLinearGroup n ℤ →* SpecialLinearGroup n R where
-  toFun x := ↑x
-  map_mul' := by simp
-  map_one' := by simp
-
 end
 
-/-- Let `n ≥ 3`, `G = SL_n(ℝ)` and `Γ = SL_(ℤ)`, and the subgroup `D` of diagonal matrices in `G`.
+open Pointwise
 
-Conjecture: for any `g` in `G/Γ` such that `Dg` is relatively compact (in `G/Γ`), then `Dg` is closed.-/
-@[category research open]
-theorem matrix_group_conjecture {n : ℕ} (hm : 3 ≤ n) (g : SL(n, ℝ))
-    (Dg : Set (SL(n, ℝ) ⧸ (⊤ : Subgroup _).map Matrix.SpecialLinearGroup.coeIntGroupHom))
-    (Dg_def : Dg = { QuotientGroup.mk (d * g) | (d : SL(n, ℝ)) (_ : d ∈ SpecialDiagonalMatrices _ _) })
-    (hg : IsCompact <| closure Dg) :
-    IsClosed Dg :=
+/-- `SL_n(ℤ)`, viewed as a subgroup of `SL_n(ℝ)`-/
+private abbrev SpecialLinearGroupIntSubgroup (n : ℕ) : Subgroup SL(n, ℝ) :=
+  (⊤ : Subgroup _).map (SpecialLinearGroup.map (Int.castRingHom ℝ))
+
+/-
+Formalisation note: the original wiki page seems uses left quotients, but it seems (based on
+the existing litterature that one should be taking right quotients. This is what has been done
+here).
+-/
+
+/-- Let `n ≥ 3`, `G = SL_n(ℝ)` and `Γ = SL_n(ℤ)`, and the subgroup `D` of diagonal matrices in `G`.
+
+Conjecture: for any `g` in `Γ\G` such that `Dg` is relatively compact (in `Γ\G`), then `Dg` is closed.-/
+@[category research open, AMS 11 15 22]
+theorem matrix_group_conjecture {n : ℕ} (hn : 3 ≤ n) (g : MulOpposite SL(n, ℝ))
+    (D : Set (MulOpposite SL(n, ℝ) ⧸
+      ((⊤ : Subgroup _).map (SpecialLinearGroup.map (Int.castRingHom ℝ))).op))
+    (D_def : D = QuotientGroup.mk '' (Matrix.SpecialLinearGroup.diagonalSubgroup _ _).op.carrier)
+    (hg : IsCompact <| closure (g • D)) : IsClosed (g • D) :=
   sorry
 
 end MatrixGroupConjecture
