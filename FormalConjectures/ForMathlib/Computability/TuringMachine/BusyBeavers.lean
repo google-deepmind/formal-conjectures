@@ -135,6 +135,13 @@ lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
     M.multiStep config (n + 1) = Option.bind (M.multiStep config n) M.step := by
   rw [multiStep, Function.iterate_succ', Function.comp_apply, multiStep]
 
+lemma multiStep_eq_none_of_le_of_multiStep_eq_none {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
+    (hmn : m ≤ n) (hm : M.multiStep config m = none) : M.multiStep config n = none := by
+  induction n, hmn using Nat.le_induction with
+  | base => exact hm
+  | succ k hmk a => simp [multiStep_succ, a]
+
+
 variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ]
 variable (M : Machine Γ Λ)
 
@@ -175,11 +182,33 @@ noncomputable def haltingNumber : PartENat :=
   --If no such `n` exists then this is equal to `⊤`.
   sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
 
+-- TODO(Paul-Lez): golf this
 theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some a)
     (ha' : M.multiStep (init []) (n + 1) = none) :
     M.haltingNumber = n := by
-  
-
+  rw [haltingNumber]
+  apply IsGLB.sInf_eq
+  apply IsLeast.isGLB
+  constructor
+  · refine ⟨n, by rwa [HaltsAfter], rfl⟩
+  · intro m hm
+    induction m using PartENat.casesOn'
+    · exact le_top
+    · rw [PartENat.le_def]
+      constructor
+      · intro
+        simp only [PartENat.get_natCast']
+        obtain ⟨k, hk, H⟩ := hm
+        obtain ⟨a, ha⟩ := hn
+        by_contra! hc
+        rw [HaltsAfter] at hk
+        have : k + 1 ≤ n := by
+          rw [Nat.succ_le]
+          convert hc
+          simpa [PartENat.some_eq_natCast] using H
+        simp [multiStep_eq_none_of_le_of_multiStep_eq_none (M := M) this hk] at ha
+      intro H
+      exact H
 
 end Machine
 

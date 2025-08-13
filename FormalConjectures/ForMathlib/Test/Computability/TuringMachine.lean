@@ -60,4 +60,7 @@ instance : haltsAfterOne.IsHalting := by
   aesop
 
 theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
-  
+  apply haltingNumber_def
+  · use { q := some Λ.T, tape := ⟨Γ.A, Quotient.mk'' [Γ.A], default⟩}
+    rfl
+  · rfl
