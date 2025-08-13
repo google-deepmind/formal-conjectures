@@ -57,8 +57,9 @@ private abbrev E (r : ℝ) : ℝ := N r - π * r ^ 2
 /--
 Gauss proved that
 $$
-  |E(r)|\leq 2\sqrt{2}\pi r.
+  |E(r)|\leq 2\sqrt{2}\pi r,
 $$
+for sufficiently large $r$.
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67
 -/
