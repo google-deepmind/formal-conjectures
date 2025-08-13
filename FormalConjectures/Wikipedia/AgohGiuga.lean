@@ -42,7 +42,7 @@ The **Agoh-Giuga Conjecture**, Agoh's formulation.
 An integer `p ≥ 2` is prime if and only if we have
 `p*B_{p-1} ≡ -1 [MOD p]`
 -/
-def AgohGiugaCongr : Prop :=
+private def AgohGiugaCongr : Prop :=
   ∀ p ≥ 2, p.Prime ↔ ∃ (k : ℤ),
   let B := bernoulli' (p - 1)
   p * B.num + B.den = k * p
@@ -52,7 +52,7 @@ The **Agoh-Giuga Conjecture**, Giuga's formulation.
 An integer `p ≥ 2` is prime if and only if it satifies the congruence
 `∑_{i=1}^{p-1} i^{p-1} ≡ -1 [MOD p]`.
 -/
-def AgohGiugaSum : Prop := ∀ p ≥ 2, p.Prime ↔
+private def AgohGiugaSum : Prop := ∀ p ≥ 2, p.Prime ↔
   p ∣ 1 + ∑ i ∈ Finset.Ioo 0 p, i^(p - 1 : ℕ)
 
 /--The **Agoh-Giuga Conjecture**, Agoh's formulation-/
@@ -73,7 +73,7 @@ theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
 /--
 A Giuga number is a counterexample to Giuga's conjecture.
 -/
-def IsGiuga (p : ℕ) : Prop :=
+private def IsGiuga (p : ℕ) : Prop :=
     2 ≤ p ∧ ¬ p.Prime ∧ p ∣ 1 + ∑ i ∈ Finset.Ioo 0 p, i ^ φ p
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
@@ -81,7 +81,7 @@ def IsGiuga (p : ℕ) : Prop :=
 A Carmichael number is a composite number `n` such that for all `b ≥ 1`,
 we have `b^n ≡ b (mod n)`.
 -/
-def IsCarmichael (n : ℕ) : Prop :=
+private def IsCarmichael (n : ℕ) : Prop :=
   ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
 
 /-- A composite Carmichael number is squarefree. -/

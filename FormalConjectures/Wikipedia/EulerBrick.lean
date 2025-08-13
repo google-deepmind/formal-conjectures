@@ -27,19 +27,19 @@ import FormalConjectures.Util.ProblemImports
 /--
 An **Euler brick** is a rectangular cuboid where all edges and face diagonals have integer lengths.
 -/
-def IsEulerBrick (a b c : ℕ+) : Prop :=
+private def IsEulerBrick (a b c : ℕ+) : Prop :=
   IsSquare (a^2 + b^2) ∧ IsSquare (a^2 + c^2) ∧ IsSquare (b^2 + c^2)
 
 /--
 A **perfect cuboid** is an Euler brick with an integer space diagonal.
 -/
-def IsPerfectCuboid (a b c : ℕ+) : Prop :=
+private def IsPerfectCuboid (a b c : ℕ+) : Prop :=
   IsEulerBrick a b c ∧ IsSquare (a^2 + b^2 + c^2)
 
 /--
 Generalization of an Euler brick to n-dimensional space.
 -/
-def IsEulerHyperBrick (n : ℕ) (sides : Fin n → ℕ+) : Prop :=
+private def IsEulerHyperBrick (n : ℕ) (sides : Fin n → ℕ+) : Prop :=
   Pairwise fun i j ↦ IsSquare ((sides i)^2 + (sides j)^2)
 
 /--

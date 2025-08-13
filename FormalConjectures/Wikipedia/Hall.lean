@@ -29,10 +29,10 @@ $|y^2 - x^3| > C \sqrt{|x|}$.
 
 open Real
 
-def HallIneq (C : ℝ) (e : ℝ) : Prop :=
+private def HallIneq (C : ℝ) (e : ℝ) : Prop :=
   ∀ x y : ℤ, y ^ 2 ≠ x ^ 3 → |y ^ 2 - x ^ 3| > C * (|x| : ℝ) ^ e
 
-def HallConjectureExp (e : ℝ) : Prop := ∃ C : ℝ, C > 0 ∧ HallIneq C e
+private def HallConjectureExp (e : ℝ) : Prop := ∃ C : ℝ, C > 0 ∧ HallIneq C e
 
 
 /--

@@ -30,7 +30,7 @@ For simplicity, we omit the compactness assumption here.
 For a discussion on the equivalence of definitions with and without compactness, see
 [this paper](https://arxiv.org/pdf/2203.15731).
 -/
-def IsKakeya {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
+private def IsKakeya {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
   ∀ v, ‖v‖ = 1 → ∃ a, affineSegment ℝ a (a + v) ⊆ S
 
 /--
@@ -47,7 +47,7 @@ example (n : ℕ) : IsKakeya (closedBall (0 : EuclideanSpace ℝ (Fin n)) 1) := 
 The **Kakeya set conjecture** in dimension `n`: the statement that every Kakeya set in `ℝⁿ` has
 Hausdorff dimension `n`.
 -/
-def KakeyaSetConjectureDim (n : ℕ) : Prop :=
+private def KakeyaSetConjectureDim (n : ℕ) : Prop :=
   ∀ S : Set (EuclideanSpace ℝ (Fin n)), IsKakeya S → dimH S = n
 
 @[category research open, AMS 42]
@@ -80,7 +80,7 @@ theorem kakeya_3d : KakeyaSetConjectureDim 3 := by
 A finite field variant of the Kakeya problem considers subsets of `𝔽_qⁿ` that contain a line in
 every direction.
 -/
-def IsKakeyaFinite {F : Type*} [Field F] [Fintype F] {n : ℕ} (S : Finset (Fin n → F)) : Prop :=
+private def IsKakeyaFinite {F : Type*} [Field F] [Fintype F] {n : ℕ} (S : Finset (Fin n → F)) : Prop :=
   ∀ v, v ≠ 0 → ∃ a, ∀ t : F, a + t • v ∈ S
 
 open Fintype in

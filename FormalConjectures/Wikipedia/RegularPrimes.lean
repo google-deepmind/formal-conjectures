@@ -39,7 +39,7 @@ instance [hp : Fact p.Prime]  : NumberField (CyclotomicField ⟨p, hp.out.pos⟩
 
 /-- A natural prime number `p` is regular if `p` is coprime with the order of the class group
 of the `p`-th cyclotomic field. -/
-def IsRegularPrime [hp : Fact p.Prime] : Prop :=
+private def IsRegularPrime [hp : Fact p.Prime] : Prop :=
   p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField ⟨p, hp.out.pos⟩ ℚ)
 
 @[category undergraduate, AMS 11]
@@ -47,10 +47,10 @@ example : ¬ @IsRegularPrime 37 (by decide) := by
   sorry
 
 /-- The set of regular primes. -/
-def regularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), @IsRegularPrime p ⟨hp⟩ }
+private def regularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), @IsRegularPrime p ⟨hp⟩ }
 
 /-- The set of irregular primes. -/
-def irregularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), ¬ @IsRegularPrime p ⟨hp⟩ }
+private def irregularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), ¬ @IsRegularPrime p ⟨hp⟩ }
 
 @[category undergraduate, AMS 11]
 lemma small_regular_primes :
@@ -74,7 +74,7 @@ theorem infinitude_of_irregularprimes : irregularPrimes.Infinite := by
   sorry
 
 /-- Conjecture: The set of regular primes is infinite. -/
-def RegularPrimeConjecture : Prop :=
+private def RegularPrimeConjecture : Prop :=
   regularPrimes.Infinite
 
 /-- Conjecture: The set of regular primes is infinite. -/

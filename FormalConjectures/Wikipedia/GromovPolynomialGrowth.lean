@@ -30,12 +30,12 @@ Claude 4.0 Sonnet: https://claude.ai/share/918bb269-bd28-4c09-b84e-cab579c836e8
 
 /-- The `CayleyBall` is the ball of radius `n` in the Cayley graph of a group `G` with generating
     set `S`. -/
-def CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) : Set G :=
+private def CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) : Set G :=
   {g : G | ∃ (l : List G), l.length ≤ n ∧ (∀ s ∈ l, s ∈ S ∨ s⁻¹ ∈ S) ∧ l.prod = g}
 
 /-- The `GrowthFunction` of a group `G` with respect to a set `S` counts the number
     of group elements that can be reached by words of length at most `n` in `S`. -/
-noncomputable def GrowthFunction {G : Type*} [Group G] (S : Set G) (n : ℕ) : ℕ :=
+private noncomputable def GrowthFunction {G : Type*} [Group G] (S : Set G) (n : ℕ) : ℕ :=
   (CayleyBall S n).ncard
 
 -- Basic properties of CayleyBall and GrowthFunction (Claude generated statements, human proofs)
@@ -91,7 +91,7 @@ lemma CayleyBall_inv {G : Type*} [Group G] (S : Set G) {g : G} {n : ℕ}
 
 /-- A group `HasPolynomialGrowth` if there exists a finite generating set such that
     the growth function is bounded above by a polynomial. -/
-def HasPolynomialGrowth (G : Type*) [Group G] : Prop :=
+private def HasPolynomialGrowth (G : Type*) [Group G] : Prop :=
   ∃ (S : Set G), Set.Finite S ∧ Subgroup.closure S = ⊤ ∧
     ∃ (C : ℝ) (d : ℕ), C > 0 ∧
     ∀ n : ℕ, (GrowthFunction S n : ℝ) ≤ C * (n : ℝ) ^ d

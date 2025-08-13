@@ -27,7 +27,7 @@ sides $a$, $b$, and hypotenuse $c$ such that the area of the triangle is $\frac{
 - [Wikipedia (Tunnell's theorem)](https://en.wikipedia.org/wiki/Tunnell%27s_theorem)
 - [Keith Conrad's note](https://kconrad.math.uconn.edu/blurbs/ugradnumthy/congnumber.pdf)
 -/
-def congruentNumber (n : ℕ) : Prop :=
+private def congruentNumber (n : ℕ) : Prop :=
   ∃ (a b c : ℚ), a ^ 2 + b ^ 2 = c ^ 2 ∧ n = (2⁻¹ : ℚ) * a * b
 
 /- 1 is not a congruent number. -/
@@ -74,10 +74,10 @@ If $n$ is a squarefree congruent number, then:
 Converse is true under the BSD conjecture.
 -/
 
-def A (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 2 * x ^ 2 + y ^ 2 + 32 * z ^ 2}
-def B (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 2 * x ^ 2 + y ^ 2 + 8 * z ^ 2}
-def C (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 64 * z ^ 2}
-def D (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 16 * z ^ 2}
+private def A (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 2 * x ^ 2 + y ^ 2 + 32 * z ^ 2}
+private def B (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 2 * x ^ 2 + y ^ 2 + 8 * z ^ 2}
+private def C (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 64 * z ^ 2}
+private def D (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 16 * z ^ 2}
 
 /-! Tunnell's theorem. -/
 

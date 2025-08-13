@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 /--
 The radical of `n` denoted is the product of the distinct prime factors of `n`.
 -/
-def radical (n : ℕ) : ℕ := n.primeFactors.prod id
+private def radical (n : ℕ) : ℕ := n.primeFactors.prod id
 
 @[category test, AMS 11]
 example : radical 16 = 2 := by
@@ -48,7 +48,7 @@ example : radical 12 = 6 := by
 /--
 Quality `q(a, b, c)` of the triple `(a, b, c)` is defined as `q(a,b,c) = log (c) / log (rad(abc))`.
 -/
-noncomputable def quality (a b c : ℕ) : ℝ := (c : ℝ).log / (radical <| a * b * c : ℝ).log
+private noncomputable def quality (a b c : ℕ) : ℝ := (c : ℝ).log / (radical <| a * b * c : ℝ).log
 
 /--
 For every positive real number `ε`, there exist only finitely many triples `(a, b, c)` of coprime positive integers, with `a + b = c`, such that `c > rad(abc)^(1+ε)`

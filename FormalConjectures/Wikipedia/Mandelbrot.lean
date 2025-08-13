@@ -35,7 +35,7 @@ open Topology Set Function Filter Bornology Metric MeasureTheory
 
 /-- The Multibrot set of power `n` is the set of all parameters `c : ℂ` for which `0` does not
 escape to infinity under repeated application of `z ↦ z ^ n + c`. -/
-def multibrotSet (n : ℕ) : Set ℂ :=
+private def multibrotSet (n : ℕ) : Set ℂ :=
   {c | ¬ Tendsto (fun k ↦ (fun z ↦ z ^ n + c)^[k] 0) atTop (cobounded ℂ)}
 
 /-- The Mandelbrot set is the special case of the multibrot set for n = 2. In other words, it is the
@@ -114,7 +114,7 @@ theorem MLC_general_exponent (n : ℕ) : LocallyConnectedSpace (multibrotSet n) 
 /-- We say that `z : ℂ` is part of an attracting cycle of period `n` of `f : ℂ → ℂ` if it is an
 `n`-periodic point (i.e. `f^[n] z = z`), `f^[n]` is differentiable at `z` and `‖deriv f^[n] z‖` is
 strictly less than one.-/
-def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
+private def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
   f.IsPeriodicPt n z ∧ DifferentiableAt ℂ f^[n] z ∧ ‖deriv f^[n] z‖ < 1
 
 /-- For example, `0` is part of an attracting `2`-cycle of `z ↦ z ^ 2 - 1`. -/

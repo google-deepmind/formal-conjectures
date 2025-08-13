@@ -36,12 +36,12 @@ abbrev RegularFunction := τ → MvPolynomial σ k
 namespace RegularFunction
 
 /--The Jacobian of a vector valued polynomial function, viewed as a polynomial.-/
-noncomputable def Jacobian (F : RegularFunction k σ τ) :
+private noncomputable def Jacobian (F : RegularFunction k σ τ) :
     Matrix σ τ (MvPolynomial σ k) :=
   Matrix.of fun i j => MvPolynomial.pderiv i (F j)
 
 /--The composition of two vector valued polynomial functions.-/
-noncomputable def comp
+private noncomputable def comp
     (F : RegularFunction k σ τ) (G : RegularFunction k τ ι) :
     RegularFunction k σ ι :=
   fun (i : ι) ↦ MvPolynomial.bind₁ F (G i)
@@ -82,7 +82,7 @@ variable {σ τ ι : Type*} [Fintype σ]
 
 /--The evaluation of a regular function `f` over `k` at some point `a`
 with coordinates in some algebra over `k`-/
-noncomputable def RegularFunction.aeval {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
+private noncomputable def RegularFunction.aeval {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
     (F : RegularFunction k σ τ) : (σ → S₁) → τ → S₁ :=
   fun a t ↦ MvPolynomial.aeval a (F t)
 

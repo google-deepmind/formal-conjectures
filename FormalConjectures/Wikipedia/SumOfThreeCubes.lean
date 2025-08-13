@@ -29,7 +29,7 @@ asked by user [*David Feldman*](https://mathoverflow.net/users/10909/david-feldm
 -/
 
 /-- The predicate that `n : ℤ` is a sum of three (integer) cubes. -/
-def IsSumOfThreeCubes (n : ℤ) : Prop :=
+private def IsSumOfThreeCubes (n : ℤ) : Prop :=
   ∃ x y z : ℤ, n = x^3 + y^3 + z^3
 
 @[category test, AMS 11]

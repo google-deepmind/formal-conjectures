@@ -26,19 +26,19 @@ variable {V : Type} {G : SimpleGraph V} [DecidableEq V]
 /--
 A Pebble distribution is an assigment of zero or more pebbles to each of the vertices.
 -/
-def PebbleDistribution (V : Type) := V → ℕ
+private def PebbleDistribution (V : Type) := V → ℕ
 
 /--
 The number of pebbles of a distribution is the total number summed over all vertices.
 -/
-def NumberOfPebbles [Fintype V] : (PebbleDistribution V) → ℕ := fun D => ∑ v, D v
+private def NumberOfPebbles [Fintype V] : (PebbleDistribution V) → ℕ := fun D => ∑ v, D v
 
 /--
 A pebbling move on a graph consists of choosing a vertex with at least two pebbles, removing
 two pebbles from it, and adding one to an adjacent vertex (the second removed pebble is discarded
 from play).
 -/
-def IsPebblingMove (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
+private def IsPebblingMove (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
     ∃ v w : V, (A v) ≥ 2 ∧ G.Adj v w ∧
     B = (fun u =>
       if u = w then A u + 1
@@ -65,14 +65,14 @@ inductive PebblePath {α : Type} (r : α → α → Prop) : α → α → Type
 Indicates whether there exists a sequence of pebbling moves transforming one pebble distribution
 to another.
 -/
-def ExistsPebblePath {α : Type} (r : α → α → Prop) (a b : α) : Prop :=
+private def ExistsPebblePath {α : Type} (r : α → α → Prop) (a b : α) : Prop :=
   Nonempty (PebblePath r a b)
 
 /--
 A pebble distribution `B` is reachable from another pebble distribution `A`, if there exists a
 sequence of pebbling moves transforming the first into the second.
 -/
-def IsReachable (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
+private def IsReachable (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
   ExistsPebblePath (IsPebblingMove G) A B
 
 @[simp, category API, AMS 5]
@@ -85,7 +85,7 @@ following condition: Given any target or 'root' vertex in the graph and any init
 pebbles distribution with `n` pebbles on the graph, another pebble distribution is reachable
 in which the designated root vertex has one or more pebbles.
 -/
-noncomputable def PebblingNumber [Fintype V] (G : SimpleGraph V) : ℕ :=
+private noncomputable def PebblingNumber [Fintype V] (G : SimpleGraph V) : ℕ :=
   sInf { n | ∀ D, NumberOfPebbles D = n → ∀ v, ∃ D', IsReachable G D D' ∧ 1 ≤ D' v }
 
 /--

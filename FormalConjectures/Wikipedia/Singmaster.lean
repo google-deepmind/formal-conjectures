@@ -35,7 +35,7 @@ namespace Singmaster
 The set of pairs (n, k) representing the solutions to the equation
 `Nat.choose n k = t` for a given `t`, under the constraint `1 ≤ k < n`.
 -/
-def solutions (t : ℕ) : Set (ℕ × ℕ) :=
+private def solutions (t : ℕ) : Set (ℕ × ℕ) :=
   {(n, k) | 1 ≤ k ∧ k < n ∧ Nat.choose n k = t}
 
 @[category research open, AMS 11]

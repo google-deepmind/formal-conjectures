@@ -43,7 +43,7 @@ variable [DecidableEq V]
 /--
 Each two non-adjacent vertices have exactly two common neighbors.
 -/
-def NonEdgesAreDiagonals (G : SimpleGraph V) : Prop :=
+private def NonEdgesAreDiagonals (G : SimpleGraph V) : Prop :=
    Pairwise fun i j => ¬ G.Adj i j → (G.neighborSet i ∩ G.neighborSet j).ncard = 2
 
 /--
@@ -86,7 +86,7 @@ The box product of two triangles is an example with 9 vertices satisfying the co
 and it is also isomorphic to it and to the Paley graph and the graph of the
 3-3 duoprism)
 -/
-def Conway9 := (completeGraph (Fin 3)) □ (completeGraph (Fin 3))
+private def Conway9 := (completeGraph (Fin 3)) □ (completeGraph (Fin 3))
 
 @[category test, AMS 5]
 example : NonEdgesAreDiagonals Conway9 := by

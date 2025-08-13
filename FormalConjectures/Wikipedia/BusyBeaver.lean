@@ -43,7 +43,7 @@ instance {n : ℕ} {M : Candidate n} : Inhabited M.Λ := M.Λ_inhabited
 `BB(n)` is the `n`-th Busy Beaver number.
 *This is the maximum shifts function*, not the "number of ones function"
 -/
-noncomputable def BB (n : ℕ) : ℕ :=
+private noncomputable def BB (n : ℕ) : ℕ :=
   sSup { N | ∃ C : Candidate n, C.M.haltingNumber = N}
 
 end BusyBeaver
