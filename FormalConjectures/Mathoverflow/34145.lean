@@ -44,7 +44,7 @@ structure Rectangle : Type where
 /-- A combination of a rotation and a translation to map the standard rectangle to the desired
 rectangle.
 -/
-noncomputable def rigidMotion (start : ℝ × ℝ) (θ : Angle) (p : ℝ × ℝ) : (ℝ × ℝ) :=
+private noncomputable def rigidMotion (start : ℝ × ℝ) (θ : Angle) (p : ℝ × ℝ) : (ℝ × ℝ) :=
   (start.1 + p.1 * θ.cos - p.2 * θ.sin, start.2 + p.1 * θ.sin + p.2 * θ.cos)
 
 @[category test, AMS 51]
@@ -55,15 +55,15 @@ lemma rigidMotion_test : rigidMotion (sqrt 2, sqrt 11) (2 * π / 3 : ℝ) (sqrt 
   ring_nf; simp
 
 /-- A scaling to map the unit square to a standard rectangle. -/
-noncomputable def scale (x y : ℝ) (p : ℝ × ℝ) : (ℝ × ℝ) :=
+private noncomputable def scale (x y : ℝ) (p : ℝ × ℝ) : (ℝ × ℝ) :=
   (x * p.1, y * p.2)
 
 /-- The unit square. -/
-def unitSquare : Set (ℝ × ℝ) :=
+private def unitSquare : Set (ℝ × ℝ) :=
   { p | 0 ≤ p.1 ∧ p.1 ≤ 1 ∧ 0 ≤ p.2 ∧ p.2 ≤ 1 }
 
 /-- Converts a rectangle to a set in `ℝ × ℝ`. -/
-def Rectangle.toSet (r : Rectangle) : Set (ℝ × ℝ) :=
+private def Rectangle.toSet (r : Rectangle) : Set (ℝ × ℝ) :=
   rigidMotion r.start r.rotation '' (scale r.width r.height '' unitSquare)
 
 /-- The standard Lebesgue measure on `ℝ²`. -/
@@ -134,7 +134,7 @@ structure Configuration : Type where
   rect_height (n : ℕ) : (rect n).height = 1 / (n + 2)
 
 /-- A "packing" means that the interiors of any two rectangles are disjoint. -/
-def Configuration.IsPacking (c : Configuration) : Prop :=
+private def Configuration.IsPacking (c : Configuration) : Prop :=
   Pairwise fun m n ↦ interior (c.rect m).toSet ∩ interior (c.rect n).toSet = ∅
 
 /-- Can a unit square be covered by rectangles of width `1 / (n + 1)` and height `1 / (n + 2)`? -/

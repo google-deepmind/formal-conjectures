@@ -30,7 +30,7 @@ open Polynomial
 A finitely generated `k`-algebra `A` is cancellative if for all finitely generated `k` algebras `B` such that
 `B[X] ≅ₖ A[X]` we have `B ≅ₖ A`.
 -/
-def IsCancellative (k A : Type*) [Field k]
+private def IsCancellative (k A : Type*) [Field k]
     [CommRing A] [Algebra k A] [Algebra.FiniteType k A] : Prop := ∀ {B : Type*}
     [CommRing B] [Algebra k B] [Algebra.FiniteType k B], Nonempty (A[X] ≃ₐ[k] B[X]) →
     Nonempty (A ≃ₐ[k] B)

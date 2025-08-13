@@ -49,7 +49,7 @@ Vector bundles form a category.
 instance : Category S.VectorBundles :=
   InducedCategory.category VectorBundles.carrier
 
-def VectorBundles.toModule : S.VectorBundles ⥤ S.Modules where
+private def VectorBundles.toModule : S.VectorBundles ⥤ S.Modules where
   obj 𝓕 := 𝓕.carrier
   map f := f
 

@@ -74,7 +74,7 @@ scoped notation "ℝ³" => Fin 3 → ℝ
 The result of transforming a subset of ℝ³ by a chosen rotation and offset,
 and then projected to ℝ².
 --/
-def transformed_shadow (X : Set ℝ³) (offset : ℝ²) (rotation : SO3) : Set ℝ² :=
+private def transformed_shadow (X : Set ℝ³) (offset : ℝ²) (rotation : SO3) : Set ℝ² :=
   (fun p ↦ offset + (rotation *ᵥ p) ∘ Fin.castSucc) '' X
 
 /--
@@ -93,7 +93,7 @@ to rule out, e.g. the open ball being Rupert. However, we didn't
 observe any such generalization in the literature yet, so we stuck to
 what was in the citations above.]
 -/
-def IsRupert (vertices : Finset ℝ³) : Prop :=
+private def IsRupert (vertices : Finset ℝ³) : Prop :=
    ∃ (inner_rotation : SO3) (inner_offset : ℝ²) (outer_rotation : SO3),
    let inner_shadow := transformed_shadow (convexHull ℝ vertices) inner_offset inner_rotation
    let outer_shadow := transformed_shadow (convexHull ℝ vertices) 0 outer_rotation

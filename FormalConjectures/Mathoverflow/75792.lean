@@ -29,7 +29,7 @@ Let `‖n‖` denote the integer complexity of `n > 0`.
 
 We have chosen to formalise this using an inductive type.
 
-*References:* 
+*References:*
  - [mathoverflow/75792](https://mathoverflow.net/a/75792) by user [Harry Altman](https://mathoverflow.net/users/5583)
  - http://arxiv.org/abs/1203.6462 by Jānis Iraids, Kaspars Balodis, Juris Čerņenoks, Mārtiņš Opmanis, Rihards Opmanis, Kārlis Podnieks
  - http://arxiv.org/abs/1207.4841 by Harry Altman, Joshua Zelinsky
@@ -119,12 +119,12 @@ instance Reachable.decide : ∀ m n, Decidable (Reachable m n)
       refine instDecidableAnd (dp := d hm₁) (dq := ?_)
       exact instDecidableAnd (dp := d hm₂)
 
-/-- 
-The [(Mahler-Popken) complexity of `n`](https://en.wikipedia.org/wiki/Integer_complexity): 
-the minimum number of `1`s needed to express a given number using only addition and 
-multiplication. E.g. `2 = 1 + 1`, so `complexity 2 = 2`. 
+/--
+The [(Mahler-Popken) complexity of `n`](https://en.wikipedia.org/wiki/Integer_complexity):
+the minimum number of `1`s needed to express a given number using only addition and
+multiplication. E.g. `2 = 1 + 1`, so `complexity 2 = 2`.
 -/
-def complexity (n : ℕ) : ℕ :=
+private def complexity (n : ℕ) : ℕ :=
   if h : n = 0 then 0 else Nat.find ⟨n, Reachable.self n <| n.pos_of_ne_zero h⟩
 
 @[category test, AMS 11]
