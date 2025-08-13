@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.ForMathlib.Computability.TuringMachine.PostTuringMachine
 import Mathlib.Computability.TuringMachine
 import Mathlib.Data.Nat.Lattice
 import Mathlib.Data.Nat.PartENat
@@ -41,8 +42,6 @@ open Relation
 open Nat
 
 namespace BusyBeaver
-
-section
 
 -- type of tape symbols
 variable (Γ : Type*)
@@ -105,7 +104,6 @@ def step (M : Machine Γ Λ) : Cfg Γ Λ → Option (Cfg Γ Λ)
     fun ⟨q', a⟩ ↦ ⟨q', match a with
     | Stmt.write a d => (T.write a).move d⟩
 
-
 /-- The statement `Reaches M s₁ s₂` means that `s₂` is obtained
   starting from `s₁` after a finite number of steps from `s₂`. -/
 def Reaches (M : Machine Γ Λ) : Cfg Γ Λ → Cfg Γ Λ → Prop := ReflTransGen fun a b ↦ b ∈ step M a
@@ -132,103 +130,12 @@ lemma multiStep_zero (M : Machine Γ Λ) (config : Cfg Γ Λ) : M.multiStep conf
 lemma multiStep_one (M : Machine Γ Λ) (config : Cfg Γ Λ) : M.multiStep config 1 = M.step config :=
   rfl
 
-lemma Option.bind_iterate {α} (f : α → Option α) (a : Option α) (n : ℕ)  :
-    (Option.bind · f)^[n+1] a = Option.bind ((Option.bind · f)^[n] a) f := by
-  induction n with
-  | zero => simp
-  | succ n ih => rw [Function.iterate_succ', Function.comp_apply, ih]
-
-lemma Option.bind_iterate' {α} (f : α → Option α) (a : Option α) (n : ℕ)  :
-    (Option.bind · f)^[n+1] a = (Option.bind · f)^[n] (a.bind f) := by
-  induction n generalizing a with
-  | zero => simp
-  | succ n ih => rw [Function.iterate_succ, Function.comp_apply, ih]
-
 @[simp]
 lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
     M.multiStep config (n + 1) = Option.bind (M.multiStep config n) M.step := by
   rw [multiStep, Option.bind_iterate, multiStep]
 
-lemma dom_of_apply_eq_none  {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f s = none) :
-    s ∈ Turing.eval f s := by
-  apply PFun.fix_stop
-  simp [hf]
-
-theorem temp  {σ : Type*} {f : σ → Option σ} {s t : σ} (H : t ∈ Turing.eval f s) :
-    Turing.Reaches f s t := by
-  rw [mem_eval] at H
-  exact H.left
-
-@[simp]
-theorem Turing.apply_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
-    f ((Turing.eval f s).get H) = none := by
-  have := Part.get_mem H
-  rw [mem_eval] at this
-  exact this.right
-
-theorem get_eq_get {σ : Type*} (a b : Part σ) (ha : a.Dom) :
-    a.get ha ∈ b → a = b := by
-  intro H
-  have hb : b.Dom := by
-    rw [Part.dom_iff_mem]
-    use a.get ha
-  rw [← Part.eq_get_iff_mem hb] at H
-  ext c
-  rw [← Part.eq_get_iff_mem ha, ← Part.eq_get_iff_mem hb, H]
-
-theorem dom_eval_of_dom {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
-    (Turing.eval f ((Turing.eval f s).get H)).Dom := by
-  suffices Turing.eval f ((Turing.eval f s).get H) = Turing.eval f s by
-    rwa [this]
-  have : (Turing.eval f s).get H ∈ Turing.eval f ((Turing.eval f s).get H) := by
-    apply dom_of_apply_eq_none
-    simp
-  symm
-  apply get_eq_get _ _ H this
-
-theorem eval_eq_eval {σ : Type*} {f : σ → Option σ} {a a' : σ} (H : f a = some a'):
-    Turing.eval f a = Turing.eval f a' := by
-  set C : σ → Prop := fun s ↦ f a = some s →Turing.eval f a = Turing.eval f a' with hC
-  apply reaches_eval
-  rw [Turing.Reaches]
-  apply ReflTransGen.single
-  rw [H]
-  rfl
-  -- apply evalInduction (C := C) (a := a') _ H
-
-theorem eval_dom_iff₀ {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom):
-    ∃ n, ((Option.bind · f)^[n+1] s).isNone := by
-  let b := (Part.get _ H)
-  set C : σ → Prop := fun s ↦ (Turing.eval f s).Dom → ∃ n, ((Option.bind · f)^[n+1] s).isNone with hC
-  apply evalInduction (C := C) (a := s) (h := Part.get_mem H) _ H
-  intro a ha h HH
-  obtain ha | ⟨a', ha'⟩ := (f a).eq_none_or_eq_some
-  · use 0
-    simp [ha]
-  · obtain ⟨n, hn⟩ := h a' ha' (by rwa [←eval_eq_eval ha'])
-    use n+1
-    simp at hn
-    simp [Option.bind_iterate', Option.some_bind, ha', Option.bind_iterate', Option.some_bind, hn]
-
-theorem eval_dom_iff₁ {σ : Type*} (f : σ → Option σ) (s : σ)
-    (H : ∃ n, ((Option.bind · f)^[n+1] s) = none):
-    (Turing.eval f s).Dom := by
-  obtain ⟨n, hn⟩ := H
-  induction n generalizing s with
-  | zero =>
-    simp at hn
-    rw [Part.dom_iff_mem]
-    exact ⟨s, dom_of_apply_eq_none hn⟩
-  | succ n ih =>
-    obtain ha | ⟨a', ha'⟩ := (f s).eq_none_or_eq_some
-    · rw [Part.dom_iff_mem]
-      exact ⟨s, dom_of_apply_eq_none ha⟩
-    · simp_rw [Option.bind_iterate', Option.some_bind] at hn ih
-      simp_rw [ha', Option.some_bind] at hn
-      have ih := ih a' hn
-      rwa [eval_eq_eval ha']
-
-variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ] --[Fintype Γ] [Fintype Λ]
+variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ]
 variable (M : Machine Γ Λ)
 
 /--
@@ -250,17 +157,18 @@ class IsHalting : Prop where
   halts : M.IsHaltingInput []
 
 /--
-The predicate that a machine starting at configuration `s` stops after at most `n` steps.
+The predicate that a machine starting at configuration `s` stops after at most `n` steps, i.e.
+reaches a configuration from which there are no defined transitions.
 -/
 def HaltsAfter (s : Cfg Γ Λ) (n : ℕ) : Prop :=
-  ((Option.bind · (step M))^[n+1] s).isNone
+  M.multiStep s (n+1) = none
 
 lemma haltsAfter_zero_iff (s : Cfg Γ Λ) :
     HaltsAfter M s 0 ↔ step M s = none := by
-  rw [HaltsAfter, Function.iterate_one, Option.some_bind, Option.isNone_iff_eq_none]
+  rw [HaltsAfter, multiStep, Function.iterate_one, Option.some_bind]
 
-lemma exists_haltsAt_of_isHalting [IsHalting M] : ∃ n, M.HaltsAfter (init []) n := by
-  apply eval_dom_iff₀ IsHalting.halts
+lemma exists_haltsAt_of_isHalting [IsHalting M] : ∃ n, M.HaltsAfter (init []) n :=
+  eval_dom_iff.mpr IsHalting.halts
 
 noncomputable def haltingNumber
     (M : Machine Γ Λ) : PartENat :=

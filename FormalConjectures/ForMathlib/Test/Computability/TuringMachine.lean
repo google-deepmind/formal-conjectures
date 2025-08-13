@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ForMathlib.Computability.TuringMachine
+import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import Mathlib.Tactic.DeriveFintype
 
 --sanity checks for the definition of halting added in `ForMathlib`.
