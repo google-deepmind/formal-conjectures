@@ -28,10 +28,11 @@ open Function Set
 noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
   sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
 
-/-- The maximum size of a Sidon set in `{1, ..., N}` is less than or equal to `√N + 1`. -/
+-- Reference: https://arxiv.org/pdf/2103.15850
+/-- The maximum size of a Sidon set in `{1, ..., N}` is less than or equal to `2 * √N`. -/
 @[category undergraduate, AMS 5 11]
 theorem maxSidonSetSize_bound (N : ℕ) (hN : 1 ≤ N) :
-    maxSidonSetSize N ≤ N.sqrt + 1 := by
+    maxSidonSetSize N ≤ 2 * N.sqrt := by
   sorry
 
 /--
