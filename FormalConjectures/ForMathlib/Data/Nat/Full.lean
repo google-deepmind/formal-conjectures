@@ -21,8 +21,8 @@ import Mathlib.Data.Nat.PrimeFin
 namespace Nat
 
 /--
-A natural number $n$ is said to be $k$-full if for every prime factor $p$ of $n$, the $k$-th power
-$p^k$ also divides $n$.
+A natural number $n$ is said to be $k$-full (or $k$-powerful) if for every prime factor $p$ of $n$,
+the $k$-th power $p^k$ also divides $n$.
 -/
 def Full (k : ℕ) (n : ℕ) : Prop := ∀ p ∈ n.primeFactors, p^k ∣ n
 
@@ -61,3 +61,13 @@ theorem not_full_of_prime_mod_prime_sq (n : ℕ) (k : ℕ) {p : ℕ} (hp : p.Pri
   · intro h
     simp_all [OfNat.zero_ne_ofNat, Nat.dvd_iff_mod_eq_zero.mp h]
     aesop
+
+
+open Lean Meta Qq in
+/-- Simproc to compute the set `Nat.primeFactors`. -/
+dsimproc primeFactorsEq (Nat.primeFactors _) := fun e ↦ do
+  unless e.isAppOfArity `Nat.primeFactors 1 do return .continue
+  let some n ← fromExpr? e.appArg! | return .continue
+  let outAsList : List Q(ℕ) := (unsafe n.primeFactors.val.unquot).map mkNatLit
+  let outAsFinset : Q(Finset ℕ) := outAsList.foldl (fun s n ↦ q(insert $n $s)) q({})
+  return .done outAsFinset
