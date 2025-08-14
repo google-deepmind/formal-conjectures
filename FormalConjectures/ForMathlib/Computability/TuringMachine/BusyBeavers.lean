@@ -182,33 +182,15 @@ noncomputable def haltingNumber : PartENat :=
   --If no such `n` exists then this is equal to `⊤`.
   sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
 
--- TODO(Paul-Lez): golf this
 theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some a)
     (ha' : M.multiStep (init []) (n + 1) = none) :
     M.haltingNumber = n := by
-  rw [haltingNumber]
-  apply IsGLB.sInf_eq
-  apply IsLeast.isGLB
-  constructor
-  · refine ⟨n, by rwa [HaltsAfter], rfl⟩
-  · intro m hm
-    induction m using PartENat.casesOn'
-    · exact le_top
-    · rw [PartENat.le_def]
-      constructor
-      · intro
-        simp only [PartENat.get_natCast']
-        obtain ⟨k, hk, H⟩ := hm
-        obtain ⟨a, ha⟩ := hn
-        by_contra! hc
-        rw [HaltsAfter] at hk
-        have : k + 1 ≤ n := by
-          rw [Nat.succ_le]
-          convert hc
-          simpa [PartENat.some_eq_natCast] using H
-        simp [multiStep_eq_none_of_le_of_multiStep_eq_none (M := M) this hk] at ha
-      intro H
-      exact H
+  refine IsGLB.sInf_eq (IsLeast.isGLB ⟨⟨n, by rwa [HaltsAfter], rfl⟩, fun m ⟨k, _, _⟩ ↦ ?_⟩)
+  induction m using PartENat.casesOn 
+  · exact le_top
+  · refine ⟨fun h ↦ h, fun _ ↦ ?_⟩ 
+    by_contra! hc
+    simp_all [multiStep_eq_none_of_le_of_multiStep_eq_none (show k + 1 ≤ n by aesop) ‹_›]
 
 end Machine
 

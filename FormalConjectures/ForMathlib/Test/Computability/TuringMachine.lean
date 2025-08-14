@@ -45,19 +45,12 @@ match l with
 instance : alwaysHaltingMachine.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after zero steps
-  use 0
-  rw [HaltsAfter, multiStep]
-  simp
-  simp_rw [step, alwaysHaltingMachine, Option.map_none', init]
+  exact ⟨0, by aesop⟩ 
 
 instance : haltsAfterOne.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after one step
-  use 1
-  unfold HaltsAfter
-  simp_rw [multiStep, Function.iterate_succ', Function.comp_apply, Function.iterate_zero, init,
-    Option.bind]
-  aesop
+  exact ⟨1, by aesop⟩ 
 
 theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
   apply haltingNumber_def
