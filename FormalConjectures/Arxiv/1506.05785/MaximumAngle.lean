@@ -38,7 +38,7 @@ there exists $b \in \mathbb{Z}^4$ and $k \in \mathbb{Z}$ such that $\|b\| = 5^k$
 $\langle a, \frac{b}{\|b\|} \rangle \geq 1 - 5^{-\frac{k}{2 - \delta}}.$
 -/
 @[category research open, AMS 81 11]
-theorem conjecture_3_4 : ∃ (δ : ℝ), 0 < δ ∧ δ < 1 ∧
-    ∀ (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1), ∃ (b : ℤ⁴) (k : ℤ), ‖b‖ = 5 ^ k ∧
+theorem conjecture_3_4 : ∃ δ ∈ Set.Ioo (0 : ℝ) 1,
+    ∀ (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1), ∃ (b : ℤ⁴) (k : ℕ), k > 0 ∧ ‖b‖ = 5 ^ k ∧
       inner a (‖b‖⁻¹ • b) ≥ 1 - (5 : ℝ) ^ (-k / (2 - δ)) := by
   sorry
