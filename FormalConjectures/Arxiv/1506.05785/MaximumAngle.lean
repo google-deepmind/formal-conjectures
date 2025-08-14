@@ -38,5 +38,5 @@ $\langle a, \frac{b}{\|b\|} \rangle \geq 1 - 5^{-\frac{k}{2 - \delta}}.$
 @[category research open, AMS 11 81]
 theorem conjecture_3_4 : ∃ δ ∈ Set.Ioo (0 : ℝ) 1,
     ∀ (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1), ∃ (b : ℤ⁴) (k : ℕ), k > 0 ∧ ‖b‖ = 5 ^ k ∧
-      1 - 5 ^ (-k / (2 - δ)) ≤ ⟪a, (‖b‖⁻¹ • b)⟫ := by
+      1 - 5 ^ (-k / (2 - δ)) ≤ ⟪a, ‖b‖⁻¹ • b⟫ := by
   sorry
