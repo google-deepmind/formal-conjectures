@@ -23,7 +23,7 @@ open Polynomial
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Class_number_problem)
 -/
 
-def IsClassNumberOne (d : ℤ) : Prop :=
+private def IsClassNumberOne (d : ℤ) : Prop :=
   ∃ (h₂ : Irreducible (X ^ 2 - C (d : ℚ))),
   haveI := Fact.mk h₂
   NumberField.classNumber (AdjoinRoot (X ^ 2 - C (d : ℚ))) = 1

@@ -41,18 +41,18 @@ open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
 noncomputable section
 
 /-- The `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
-def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
+private def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
   (qExpansion N f).coeff ℂ n
 
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
 
 /-- We need to reduce a rational modulo `p`, in practice we wont be dividing by zero since the
 conductor of the elliptic curve saves us.-/
-def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
+private def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
   (q.num : ZMod p) * (q.den : ZMod p)⁻¹
 
 /-- The set of points on an elliptic curve over `ZMod n`. -/
-def setOfPointsModN (E : WeierstrassCurve ℚ) [E.IsElliptic] (n : ℕ) :=
+private def setOfPointsModN (E : WeierstrassCurve ℚ) [E.IsElliptic] (n : ℕ) :=
   {P : ZMod n × ZMod n |
     let ⟨x, y⟩ := P
     y ^ 2 + ratRed E.a₁ n * x * y + ratRed E.a₃ n * y =
@@ -66,12 +66,12 @@ instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
 
 /-- Note that normally this is written as `p + 1 - #E(𝔽ₚ)`, but since we don't have a point at
 infinty on this affine curve we only have `p` -/
-def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
+private def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
   p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
 /-- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. See
  Proposition 5.8.5 of [diamondshurman2005]. -/
-def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop :=
+private def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop :=
   a_[1]f = 1 ∧
   (∀ (m n : ℕ), m.Coprime n → a_[n * m]f = a_[n]f * a_[m]f) ∧
   (∀ (p r : ℕ), p.Prime → 2 ≤ r → (N : ZMod p) ≠ 0 →
@@ -79,7 +79,7 @@ def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop
   ∀ (p r : ℕ), p.Prime → 2 ≤ r → (N : ZMod p) = 0 → a_[p ^ r]f = (a_[p]f) ^ r
 
 /-- See  theorem 8.8.1 of [diamondshurman2005]. -/
-def ModularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
+private def ModularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
   ∃ (N : ℕ+) (f : CuspForm (Gamma0 N) 2), IsNormalisedEigenform f ∧
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
 

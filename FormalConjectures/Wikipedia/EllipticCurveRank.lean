@@ -52,7 +52,7 @@ instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic] :
 namespace RatEllipticCurve
 
 /-- Convert the structure `RatEllipticCurve` to a Weierstrass curve. -/
-def toWeierstrass (E : RatEllipticCurve) : WeierstrassCurve ℚ :=
+private def toWeierstrass (E : RatEllipticCurve) : WeierstrassCurve ℚ :=
   { a₁ := 0, a₂ := 0, a₃ := 0, a₄ := E.A, a₆ := E.B }
 
 /-- The rank of an elliptic curve over ℚ. -/
@@ -66,10 +66,10 @@ instance (E : RatEllipticCurve) : E.toWeierstrass.IsElliptic where
     ring
 
 /-- The naïve height of an elliptic curve over ℚ. -/
-def naiveHeight (E : RatEllipticCurve) : ℕ := max (4 * E.A.natAbs ^ 3) (27 * E.B.natAbs ^ 2)
+private def naiveHeight (E : RatEllipticCurve) : ℕ := max (4 * E.A.natAbs ^ 3) (27 * E.B.natAbs ^ 2)
 
 /-- The set of elliptic curves over ℚ with naïve height less than or equal to a given height. -/
-def heightLE (H : ℕ) : Set RatEllipticCurve := {E : RatEllipticCurve | E.naiveHeight ≤ H}
+private def heightLE (H : ℕ) : Set RatEllipticCurve := {E : RatEllipticCurve | E.naiveHeight ≤ H}
 
 open scoped Topology
 open Filter (atTop)
@@ -156,7 +156,7 @@ namespace WeierstrassCurve
 
 /-- The elliptic curve over ℚ of rank at least 29 found by Elkies and Klagsbrun in 2024.
 It has rank exactly 29 assuming the generalized Riemann hypothesis. -/
-def elkiesKlagsbrun29 : WeierstrassCurve ℚ where
+private def elkiesKlagsbrun29 : WeierstrassCurve ℚ where
   a₁ := 1
   a₂ := 0
   a₃ := 0
@@ -186,7 +186,7 @@ theorem rank_elkiesKlagsbrun29 : finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ = 29 := 
 
 /-- The elliptic curve over ℚ of rank at least 28 found by Elkies in 2006.
 It has rank exactly 28 assuming the generalized Riemann hypothesis. -/
-def elkies28 : WeierstrassCurve ℚ where
+private def elkies28 : WeierstrassCurve ℚ where
   a₁ := 1
   a₂ := -1
   a₃ := 1

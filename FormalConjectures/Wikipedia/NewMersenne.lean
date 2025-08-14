@@ -26,19 +26,19 @@ namespace Nat
 /--
 A Mersenne prime is a prime number of the form `2ᵖ-1`.
 -/
-def GivesMersennePrime (p : ℕ) : Prop :=
+private def GivesMersennePrime (p : ℕ) : Prop :=
   Nat.Prime (2^p - 1)
 
 /--
 A Wagstaff prime is a prime number of the form `(2ᵖ+1)/3`.
 -/
-def GivesWagstaffPrime (p : ℕ) : Prop :=
+private def GivesWagstaffPrime (p : ℕ) : Prop :=
   Odd p ∧ Nat.Prime ((2^p + 1) / 3)
 
 /--
 Holds when there is exists a number `k` such that `p = 2ᵏ±1` or `p = 4ᵏ±3`.
 -/
-def IsSpecialForm (p : ℕ) : Prop :=
+private def IsSpecialForm (p : ℕ) : Prop :=
   ∃ k : ℕ, p = 2^k + 1 ∨ p = 2^k - 1 ∨ p = 4^k + 3 ∨ p = 4^k - 3
 
 end Nat
@@ -51,7 +51,7 @@ then all three must hold:
 2. `(2ᵖ+1)/3` is prime
 3. Exists a number `k` such that `p = 2ᵏ±1` or `p = 4ᵏ±3`
 -/
-def NewMersenneConjectureStatement (p : ℕ) : Prop :=
+private def NewMersenneConjectureStatement (p : ℕ) : Prop :=
   (p.GivesMersennePrime ∧ p.GivesWagstaffPrime → p.IsSpecialForm) ∧
   (p.GivesMersennePrime ∧ p.IsSpecialForm → p.GivesWagstaffPrime) ∧
   (p.GivesWagstaffPrime ∧ p.IsSpecialForm → p.GivesMersennePrime)

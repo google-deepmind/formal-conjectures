@@ -30,10 +30,10 @@ noncomputable section
 The Mahler measure of `f(X)` is defined as `‖a‖ ∏ᵢ max(1,‖αᵢ‖)`,
 where `f(X)=a(X-α₁)(X-α₂)...(X-αₙ)`.
 -/
-def mahlerMeasure (f : ℂ[X]) : ℝ :=
+private def mahlerMeasure (f : ℂ[X]) : ℝ :=
   ‖f.leadingCoeff‖ * (f.roots.map (max 1 ‖·‖)).prod
 
-def mahlerMeasureZ (f : ℤ[X]) : ℝ :=
+private def mahlerMeasureZ (f : ℤ[X]) : ℝ :=
   mahlerMeasure (f.map (algebraMap ℤ ℂ))
 
 /--
@@ -46,7 +46,7 @@ theorem lehmer_mahler_measure_problem :
       μ > 1 ∧ (mahlerMeasureZ f > 1 → mahlerMeasureZ f ≥ μ) := by
   sorry
 
-def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1
+private def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1
 
 /--
 `μ=M(X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1)` is the best value for `lehmer_mahler_measure_problem`.
@@ -66,7 +66,7 @@ theorem lehmer_mahler_measure_problem.variants.not_reciprocal (f : ℤ[X])
   sorry
 
 /-- `Polynomial.HasOddCoeffs f` means that all coefficients of `f : Polynomial ℤ` are odd. -/
-def Polynomial.HasOddCoeffs (f : Polynomial ℤ) : Prop :=
+private def Polynomial.HasOddCoeffs (f : Polynomial ℤ) : Prop :=
   ∀ i ∈ f.support, Odd (f.coeff i)
 
 /--

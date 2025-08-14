@@ -27,7 +27,7 @@ import FormalConjectures.Util.ProblemImports
 /--
 A square matrix $M$ with $±1$-entries that satisfies the equality $|M| ≤ n^\frac{n}{2}$ is called a *Hadamard matrix*.
 -/
-def IsHadamard {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
+private def IsHadamard {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
     (∀ (i j : Fin n), M i j ∈ ({1, -1} : Finset ℝ)) ∧
     |M.det| = n ^ ((n : ℝ) / 2)
 
@@ -35,7 +35,7 @@ def IsHadamard {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
 Equivalently, a square matrix $M$ with $±1$-entries $|A| ≤ n^\frac{n}{2}.$ if it satisfies the equality
 $M^TM = n \cdot 1$, where $1$ denotes the unit matrix.
 -/
-def IsHadamard' {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
+private def IsHadamard' {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
     (∀ (i j : Fin n), M i j ∈ ({1, -1} : Finset ℝ)) ∧
     M.transpose * M = ↑n
 
@@ -93,7 +93,7 @@ example : ∃ M, IsHadamard (n := 0) M := by
 /--
 Hadamard constructs a 12 x 12 matrix ...
 -/
-def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
+private def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
 !![  1,  1,  1,   1,  1,  1,   1,  1,  1,   1,  1,  1;
      1,  1,  1,  -1, -1, -1,  -1, -1, -1,   1,  1,  1;
      1,  1,  1,  -1, -1, -1,   1,  1,  1,  -1, -1, -1;

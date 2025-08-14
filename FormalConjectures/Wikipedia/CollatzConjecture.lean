@@ -26,7 +26,7 @@ Consider the following operation on the natural numbers:
 If the number is even, divide it by two.
 If the number is odd, triple it and add one.
 -/
-def collatzStep (n : ℕ) : ℕ :=
+private def collatzStep (n : ℕ) : ℕ :=
   if Even n then n / 2 else 3 * n + 1
 
 /--

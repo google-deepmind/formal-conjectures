@@ -30,11 +30,11 @@ https://claude.ai/share/a02c2bba-7f5f-435c-ab0e-58eb5ddc0545
 open Polynomial Asymptotics Filter Topology
 
 /-- `OmegaP S p` counts the number of residue classes mod `p` where at least one polynomial in `S` vanishes. -/
-noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
+private noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
   {n : ZMod p | ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0}.ncard
 
 /-- The product of degrees of polynomials in a finite set. -/
-def DegreesProduct (polys : Finset ℤ[X]) : ℕ :=
+private def DegreesProduct (polys : Finset ℤ[X]) : ℕ :=
   polys.prod (fun f => f.natDegree)
 
 /--
@@ -43,13 +43,13 @@ $$\frac{1}{D} \prod_p (1 - \frac{1}{p})^{-|S|} (1 - \frac{\omega_p(S)}{p})$$
 where $D = \prod_{f \in S} \deg(f)$ is the product of degrees and $\omega_p(S)$ is the number of residue classes mod $p$
 where at least one polynomial in $S$ vanishes.
 -/
-noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
+private noncomputable def BatemanHornConstant (polys : Finset ℤ[X]) : ℝ :=
   (1 : ℝ) / (DegreesProduct polys) *
   ∏' p : {p : ℕ // p.Prime},
     (1 - (1 : ℝ) / p.val) ^ (-polys.card : ℤ) * (1 - (OmegaP polys p.val : ℝ) / p.val)
 
 /-- `CountSimultaneousPrimes S x` counts the number of `n ≤ x` at which all polynomials in `S` attain a prime value. -/
-noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : ℕ :=
+private noncomputable def CountSimultaneousPrimes (polys : Finset ℤ[X]) (x : ℝ) : ℕ :=
   Finset.card (Finset.filter
     (fun n : ℕ => ∀ f ∈ polys, (f.eval ↑n).natAbs.Prime)
     (Finset.range (⌊x⌋₊ + 1)))
@@ -64,8 +64,8 @@ where $C$ is the Bateman-Horn constant given by the convergent infinite product:
 $$C = \frac{1}{D}\prod_{p\in\mathbb{P}} (1 - 1/p)^(-k) · (1 - \omega_p/p)$$
 Here $\omega_p/p$ is the number of residue classes modulo $p$ for which at least one polynomial vanishes.
 
-The Schinzel condition ensures that for each prime $p$, there exists some integer $n$ 
-such that $p$ does not divide the product $f_(n) f_2(n) \dotsb f_(n)$, which guarantees the 
+The Schinzel condition ensures that for each prime $p$, there exists some integer $n$
+such that $p$ does not divide the product $f_(n) f_2(n) \dotsb f_(n)$, which guarantees the
 infinite product converges to a positive value.
 -/
 @[category research open, AMS 11 12]

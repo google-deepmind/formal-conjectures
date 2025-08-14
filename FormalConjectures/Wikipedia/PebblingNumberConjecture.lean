@@ -26,19 +26,19 @@ variable {V : Type} {G : SimpleGraph V} [DecidableEq V]
 /--
 A Pebble distribution is an assigment of zero or more pebbles to each of the vertices.
 -/
-def PebbleDistribution (V : Type) := V → ℕ
+private def PebbleDistribution (V : Type) := V → ℕ
 
 /--
 The number of pebbles of a distribution is the total number summed over all vertices.
 -/
-def NumberOfPebbles [Fintype V] : (PebbleDistribution V) → ℕ := fun D => ∑ v, D v
+private def NumberOfPebbles [Fintype V] : (PebbleDistribution V) → ℕ := fun D => ∑ v, D v
 
 /--
 A pebbling move on a graph consists of choosing a vertex with at least two pebbles, removing
 two pebbles from it, and adding one to an adjacent vertex (the second removed pebble is discarded
 from play).
 -/
-def IsPebblingMove (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
+private def IsPebblingMove (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
     ∃ v w : V, (A v) ≥ 2 ∧ G.Adj v w ∧
     B = (fun u =>
       if u = w then A u + 1
@@ -57,7 +57,7 @@ theorem IsPebblingMove.refl (G : SimpleGraph V) (A : PebbleDistribution V) {v w 
 /--
 A pebble path is a series of pebbling moves.
 -/
-inductive PebblePath {α : Type} (r : α → α → Prop) : α → α → Type
+private inductive PebblePath {α : Type} (r : α → α → Prop) : α → α → Type
   | refl (a : α) : PebblePath r a a
   | step {a b c : α} (p : PebblePath r a b) (h : r b c) : PebblePath r a c
 
@@ -65,14 +65,14 @@ inductive PebblePath {α : Type} (r : α → α → Prop) : α → α → Type
 Indicates whether there exists a sequence of pebbling moves transforming one pebble distribution
 to another.
 -/
-def ExistsPebblePath {α : Type} (r : α → α → Prop) (a b : α) : Prop :=
+private def ExistsPebblePath {α : Type} (r : α → α → Prop) (a b : α) : Prop :=
   Nonempty (PebblePath r a b)
 
 /--
 A pebble distribution `B` is reachable from another pebble distribution `A`, if there exists a
 sequence of pebbling moves transforming the first into the second.
 -/
-def IsReachable (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
+private def IsReachable (G : SimpleGraph V) (A B : PebbleDistribution V) : Prop :=
   ExistsPebblePath (IsPebblingMove G) A B
 
 @[simp, category API, AMS 5]
@@ -85,7 +85,7 @@ following condition: Given any target or 'root' vertex in the graph and any init
 pebbles distribution with `n` pebbles on the graph, another pebble distribution is reachable
 in which the designated root vertex has one or more pebbles.
 -/
-noncomputable def PebblingNumber [Fintype V] (G : SimpleGraph V) : ℕ :=
+private noncomputable def PebblingNumber [Fintype V] (G : SimpleGraph V) : ℕ :=
   sInf { n | ∀ D, NumberOfPebbles D = n → ∀ v, ∃ D', IsReachable G D D' ∧ 1 ≤ D' v }
 
 /--
@@ -98,9 +98,9 @@ theorem PebblingNumber_completeGraph [Fintype V] :
   · by_cases h : ∃ w, 2 ≤ D w
     · obtain ⟨w, hw⟩ := h
       by_cases hwv : w = v
-      · exact ⟨D, .refl _ _, hwv ▸ Nat.one_le_of_lt hw⟩
+      · exact ⟨D, IsReachable.refl _ _, hwv ▸ Nat.one_le_of_lt hw⟩
       · exact ⟨fun u => if u = v then D u + 1 else if u = w then D u - 2 else D u,
-          ⟨.step (.refl _) (.refl _ _ hw (by simpa))⟩, by simp⟩
+          ⟨.step (.refl _) (IsPebblingMove.refl _ _ hw (by simpa))⟩, by simp⟩
     · refine ⟨D, by tauto, not_lt.1 fun hD' => ?_⟩
       exact Finset.sum_lt_sum (fun a s => Nat.le_of_lt_succ <| not_le.1 (h ⟨a, · ⟩))
         ⟨_, Finset.mem_univ _, hD'⟩ |>.trans_eq Fintype.card_eq_sum_ones.symm |>.ne hD

@@ -48,7 +48,7 @@ We say that a rational extension `L` of `K` has the _Noether Property_
 if for any finite subgroup `H` of the Galois group of `L`, the fixed field
 `L^H` is also a rational extension.
 -/
-def HasNoetherProperty (K L ι : Type) [Field K] [Field L] [Fintype ι]
+private def HasNoetherProperty (K L ι : Type) [Field K] [Field L] [Fintype ι]
     [Algebra K L] [IsRationalExtension K L ι] : Prop :=
   ∀ H : Subgroup (L ≃ₐ[K] L), Finite H → ∃ ι' : Type,
     IsRationalExtension K (IntermediateField.fixedField H) ι'

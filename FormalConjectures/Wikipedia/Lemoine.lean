@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 - [Ki85] Kiltinen, J. and Young P. (1985). Goldbach, Lemoine, and a Know/Don't Know Problem.
 -/
 
-def OddPrime (n : ℕ) : Prop :=
+private def OddPrime (n : ℕ) : Prop :=
   n ≠ 2 ∧ n.Prime
 
 /--
