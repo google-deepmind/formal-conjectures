@@ -29,8 +29,6 @@ open scoped EuclideanSpace RealInnerProductSpace
 /-- The integer lattice ℤ⁴ as the ℤ-span of the standard basis in 4-dimensional Euclidean space. -/
 scoped[EuclideanSpace] notation "ℤ⁴" => Submodule.span ℤ (Set.range (PiLp.basisFun 2 ℝ (Fin 4)))
 
-instance : IsZLattice ℝ ℤ⁴ := ZSpan.isZLattice _
-
 /--
 *Conjecture 3.4*
 There exists $0 < \delta < 1$ such that for any $a \in \mathbb{S}^3$,
