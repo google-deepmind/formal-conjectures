@@ -17,7 +17,20 @@ limitations under the License.
 import Mathlib.Computability.PostTuringMachine
 import Mathlib.Logic.Relation
 
-open Turing
+theorem Part.eq_of_get_eq_get {σ : Type*} {a b : Part σ} (ha : a.Dom) (hb : b.Dom)
+    (hab : a.get ha = b.get hb) : a = b := by
+  ext
+  rw [← Part.eq_get_iff_mem ha, ← Part.eq_get_iff_mem hb, hab]
+
+theorem Part.eq_iff_of_dom {σ : Type*} {a b : Part σ} (ha : a.Dom) (hb : b.Dom) :
+    a.get ha = b.get hb ↔ a = b :=
+  ⟨fun H ↦ Part.eq_of_get_eq_get ha hb H, fun H ↦ Part.get_eq_get_of_eq a ha H⟩
+
+theorem Part.get_eq_get {σ : Type*} {a b : Part σ} (ha : a.Dom) (hb : a.get ha ∈ b) : a = b := by
+  have hb' : b.Dom := Part.dom_iff_mem.mpr ⟨a.get ha, hb⟩
+  rwa [← Part.eq_get_iff_mem hb', Part.eq_iff_of_dom ha hb'] at hb
+
+namespace Turing
 
 lemma dom_of_apply_eq_none  {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f s = none) :
     s ∈ Turing.eval f s := by
@@ -25,29 +38,21 @@ lemma dom_of_apply_eq_none  {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f
   simp [hf]
 
 @[simp]
-theorem Turing.apply_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
+theorem apply_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
     f ((Turing.eval f s).get H) = none := by
   have := Part.get_mem H
   rw [mem_eval] at this
   exact this.right
 
-theorem Part.get_eq_get {σ : Type*} {a b : Part σ} (ha : a.Dom) (hb : a.get ha ∈ b) : a = b := by
-  have hb' : b.Dom := by
-    rw [Part.dom_iff_mem]
-    use a.get ha
-  rw [← Part.eq_get_iff_mem hb'] at hb
-  ext c
-  rw [← Part.eq_get_iff_mem ha, ← Part.eq_get_iff_mem hb', hb]
-
 -- TODO(Paul-Lez): also prove this for `PFun.fix`/golf using the `PFun.fix` API
-theorem Turing.eval_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
+theorem eval_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (Turing.eval f s).Dom) :
     Turing.eval f ((Turing.eval f s).get H) = Turing.eval f s := by
   symm
   apply Part.get_eq_get H (dom_of_apply_eq_none ?_)
   simp
 
 -- TODO(Paul-Lez): also prove this for `PFun.fix`/golf using the `PFun.fix` API
-theorem Turing.eval_eq_eval {σ : Type*} {f : σ → Option σ} {a a' : σ} (H : f a = some a'):
+theorem eval_eq_eval {σ : Type*} {f : σ → Option σ} {a a' : σ} (H : f a = some a'):
     Turing.eval f a = Turing.eval f a' := by
   apply reaches_eval
   rw [Turing.Reaches]
@@ -58,9 +63,8 @@ theorem Turing.eval_eq_eval {σ : Type*} {f : σ → Option σ} {a a' : σ} (H :
 -- TODO(lezeau): this should be generalized to `PFun.fix`
 theorem eval_dom_iff {σ : Type*} {f : σ → Option σ} {s : σ} :
     (∃ n, ((Option.bind · f)^[n+1] s) = none) ↔ (Turing.eval f s).Dom := by
-  refine ⟨fun H ↦ ?_, fun H ↦ ?_⟩
-  · obtain ⟨n, hn⟩ := H
-    induction n generalizing s with
+  refine ⟨fun ⟨n, hn⟩ ↦ ?_, fun H ↦ ?_⟩
+  · induction n generalizing s with
     | zero =>
       rw [zero_add, Function.iterate_one, Option.some_bind] at hn
       simpa [Part.dom_iff_mem] using ⟨s, dom_of_apply_eq_none hn⟩
@@ -69,9 +73,9 @@ theorem eval_dom_iff {σ : Type*} {f : σ → Option σ} {s : σ} :
       · simpa [Part.dom_iff_mem] using ⟨s, dom_of_apply_eq_none ha⟩
       · simp_rw [Function.iterate_succ, Function.comp_apply, Option.some_bind] at hn ih
         simp_rw [ha', Option.some_bind] at hn
-        have ih := @ih a' hn
+        have ih := @ih a' ⟨n, hn⟩ hn
         rwa [Turing.eval_eq_eval ha']
-  · set C : σ → Prop := fun s ↦ (Turing.eval f s).Dom → ∃ n, (Option.bind · f)^[n+1] s = none
+  · let C (s) : Prop := (Turing.eval f s).Dom → ∃ n, (Option.bind · f)^[n+1] s = none
     apply evalInduction (C := C) (a := s) (h := Part.get_mem H) _ H
     intro a ha h HH
     obtain ha | ⟨a', ha'⟩ := (f a).eq_none_or_eq_some
@@ -81,3 +85,5 @@ theorem eval_dom_iff {σ : Type*} {f : σ → Option σ} {s : σ} :
       use n + 1
       simp only [Function.iterate_succ, Function.comp_apply, Option.some_bind] at hn
       simp [ha', hn]
+
+end Turing

@@ -111,9 +111,6 @@ def Reaches (M : Machine Γ Λ) : Cfg Γ Λ → Cfg Γ Λ → Prop := ReflTransG
 /-- The initial configuration. -/
 def init (l : List Γ) : Cfg Γ Λ := ⟨some default, Tape.mk₁ l⟩
 
-def eval₀ (M : Machine Γ Λ) (s : Cfg Γ Λ) : Part (Cfg Γ Λ) :=
-  (Turing.eval (step M) s)
-
 /-- Evaluate a Turing machine on initial input to a final state,
   if it terminates. -/
 def eval (M : Machine Γ Λ) (l : List Γ) : Part (ListBlank Γ) :=
@@ -186,9 +183,9 @@ theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some 
     (ha' : M.multiStep (init []) (n + 1) = none) :
     M.haltingNumber = n := by
   refine IsGLB.sInf_eq (IsLeast.isGLB ⟨⟨n, by rwa [HaltsAfter], rfl⟩, fun m ⟨k, _, _⟩ ↦ ?_⟩)
-  induction m using PartENat.casesOn 
+  induction m using PartENat.casesOn
   · exact le_top
-  · refine ⟨fun h ↦ h, fun _ ↦ ?_⟩ 
+  · refine ⟨fun h ↦ h, fun _ ↦ ?_⟩
     by_contra! hc
     simp_all [multiStep_eq_none_of_le_of_multiStep_eq_none (show k + 1 ≤ n by aesop) ‹_›]
 
