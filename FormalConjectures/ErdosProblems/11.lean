@@ -62,3 +62,12 @@ Hercher has verified this is true for all odd integers up to `2^50` (approx `1.1
 theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
+
+/--
+Suppose that every odd $n$ is the sum of a squarefree number and a power of 2. Then the set of primes
+$p$ such that $2 ^ p ≡ 2 \mod p ^ 2$ is infinite.
+-/
+@[category research solved, AMS 11]
+theorem erdos_11.variants.variants.granville_soundararajan (H : type_of% erdos_11) :
+    {p : ℕ | p.Prime ∧ 2 ^ p ≡ 2 [MOD p ^ 2]}.Infinite := by
+  sorry
