@@ -26,7 +26,7 @@ open Filter Asymptotics Real
 /-- A prime $p$ is a cluster prime if every even natural number
 $n \le p - 3$ can be written as a difference of two primes
 $q_1 - q_2$ with $q_1, q_2 \le p$. -/
-def IsClusterPrime (p : ℕ) : Prop :=
+private def IsClusterPrime (p : ℕ) : Prop :=
   p.Prime ∧
     ∀ {n : ℕ}, Even n → n ≤ (p - 3 : ℤ) →
       ∃ q₁ q₂ : ℕ, q₁.Prime ∧ q₂.Prime ∧
@@ -39,7 +39,7 @@ theorem erdos_17 :
   sorry
 
 /-- The counting function of cluster primes $\le n$. -/
-noncomputable def clusterPrimeCount (n : ℕ) : ℕ :=
+private noncomputable def clusterPrimeCount (n : ℕ) : ℕ :=
   Nat.card {p : ℕ | p ≤ n ∧ IsClusterPrime p}
 
 /--

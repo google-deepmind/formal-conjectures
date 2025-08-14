@@ -24,10 +24,10 @@ import FormalConjectures.Util.ProblemImports
 open Asymptotics Filter
 
 /-- A predicate for $n$ to be the sum of three $k$th powers. -/
-def IsSumThreePower (k n : ℕ) : Prop := ∃ a b c, a ^ k + b ^ k + c ^ k = n
+private def IsSumThreePower (k n : ℕ) : Prop := ∃ a b c, a ^ k + b ^ k + c ^ k = n
 
 /-- The number of integers $\leq x$ which are the sum of three $k$th powers. -/
-noncomputable def cardIsSumThreePowerBelow (k x : ℕ) : ℕ :=
+private noncomputable def cardIsSumThreePowerBelow (k x : ℕ) : ℕ :=
   {n ∈ Set.Iic x | IsSumThreePower k n}.ncard
 
 /--

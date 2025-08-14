@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 open scoped EuclideanGeometry
 
-def Triplewise {α : Type*} (s : Set α) (r : α → α → α → Prop) : Prop :=
+private def Triplewise {α : Type*} (s : Set α) (r : α → α → α → Prop) : Prop :=
   ∀ ⦃x⦄, x ∈ s → ∀ ⦃y⦄, y ∈ s → ∀ ⦃z⦄, z ∈ s → x ≠ y → y ≠ z → x ≠ z → r x y z
 
 
@@ -32,19 +32,19 @@ open Classical
 
 /--We say a subset `A` of points in the plane is non-trilinear if
 it contains no three points that lie on the same line.-/
-def NonTrilinear (A : Set ℝ²) : Prop := ∀ᵉ (x ∈ A) (y ∈ A) (z ∈ A),
+private def NonTrilinear (A : Set ℝ²) : Prop := ∀ᵉ (x ∈ A) (y ∈ A) (z ∈ A),
   Triplewise A (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
 
 
 /--We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
 `B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`.-/
-def NonTrilinearFor (A : Set ℝ²) (ε : ℝ) : Prop :=
+private def NonTrilinearFor (A : Set ℝ²) (ε : ℝ) : Prop :=
   ∀ (B : Finset ℝ²), B.toSet ⊆ A → ∃ C ⊆ B,
     ε * B.card ≤ C.card ∧ NonTrilinear A
 
 /--We say a subset `A` of points in the plane is weakly non-trilinear if it is
 a finite union of non-trilinear sets.-/
-def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
+private def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
   ∃ B : Finset (Set ℝ²), A = sSup B ∧ ∀ b ∈ B, NonTrilinear b
 
 end Prelims

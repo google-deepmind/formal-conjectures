@@ -43,7 +43,7 @@ structure BoundedDiscCover (S : Set M) (r : ℝ) (ι : Type v) where
 
 variable (S : Set M) (r : ℝ)
 
-noncomputable def boundedDiscCover_empty [Nonempty M] (r : ℝ) (hr : 0 < r) :
+private noncomputable def boundedDiscCover_empty [Nonempty M] (r : ℝ) (hr : 0 < r) :
   (BoundedDiscCover (∅ : Set M) r (PUnit : Type v)) where
   C := fun _ => Classical.ofNonempty
   R := fun _ => r

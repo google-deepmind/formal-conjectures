@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 /--
 The set of arithmetic progressions of primes
 -/
-def primeArithmeticProgressions : Set (Set ℕ) :=
+private def primeArithmeticProgressions : Set (Set ℕ) :=
   {s | (∀ p ∈ s, p.Prime) ∧ ∃ l > 0, s.IsAPOfLength l}
 
 @[category test, AMS 5 11]

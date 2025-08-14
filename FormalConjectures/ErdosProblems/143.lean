@@ -29,7 +29,7 @@ open scoped Topology
 Let $A \subseteq (1, \infty)$ be a countably infinite set such that for all $x\neq y\in A$ and
 integers $k \geq 1$ we have $|kx - y| \geq 1$.
 -/
-def WellSeparatedSet (A : Set ℝ) : Prop :=
+private def WellSeparatedSet (A : Set ℝ) : Prop :=
   (A ⊆ (Set.Ioi (1 : ℝ))) ∧ Set.Infinite A ∧ Set.Countable A ∧
   (∀ x ∈ A, ∀ y ∈ A, x ≠ y → (∀ k ≥ (1 : ℕ), 1 ≤ |k * x - y|))
 

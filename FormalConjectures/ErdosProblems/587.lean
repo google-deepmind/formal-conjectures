@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 `{1,...,N}` such that for all non-empty `S ⊆ A`, the sum
 `∑ n ∈ S, n` is not a square.
 -/
-def MaxNotSqSum (N : ℕ) : ℕ :=
+private def MaxNotSqSum (N : ℕ) : ℕ :=
     (Finset.Icc 1 N |>.powerset.filter fun A => ∀ S ⊆ A, S ≠ ⊥ →
       ¬ IsSquare (∑ n ∈ S, n)).sup Finset.card
 

@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/469](https://www.erdosproblems.com/469)
 -/
 /-- The proposition that `n` is a sum of distinct proper divisors. -/
-def Nat.IsSumDivisors (n : ℕ) : Prop :=
+private def Nat.IsSumDivisors (n : ℕ) : Prop :=
   ∃ S ⊆ n.properDivisors, ∑ d ∈ S, d = n
 
 /--

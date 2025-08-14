@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
-def IsMaximalAddFactorsCard (f : ℕ → ℕ) : Prop := ∀ n,
+private def IsMaximalAddFactorsCard (f : ℕ → ℕ) : Prop := ∀ n,
     IsGreatest
       { m | ∀ (A : Finset ℕ), A.card = n →
         m ≤ (∏ ⟨a, b⟩ ∈ A.offDiag, (a + b)).primeFactors.card}
