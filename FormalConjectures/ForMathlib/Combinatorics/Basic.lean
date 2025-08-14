@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
+import Mathlib.Data.Nat.Lattice
 
 open Function Set
 
@@ -28,3 +29,8 @@ def IsSidon (A : Set α) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A)
 lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [AddCommMonoid α] (A : Set ℕ) (hA : IsSidon A) :
     (∀ Y, IsAPOfLength Y 3 → (A ∩ Y).ncard ≤ 2) := by
   sorry
+
+/-- The maximum size of a Sidon set in `{1, ..., N}`. -/
+noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
+  sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
+
