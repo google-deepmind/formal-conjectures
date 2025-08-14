@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 Is every odd n the sum of a squarefree number and a power of 2?
 -/
 @[category research open, AMS 11]
-theorem erdos_11 (n : ℕ) (hn : Odd n) :
+theorem erdos_11 (n : ℕ) (hn : Odd n) (hn' : 1 < n):
     ∃ k l : ℕ, Squarefree k ∧ n = k + 2 ^ l := by
   sorry
 
@@ -35,7 +35,7 @@ Erdős often asked this under the weaker assumption that n
 is not divisible by 4.
 -/
 @[category research open, AMS 11]
-theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n) :
+theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n)  (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
@@ -43,7 +43,7 @@ theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n) :
 Erdős thought that proving this with two powers of 2 is perhaps easy.
 -/
 @[category research open, AMS 11]
-theorem erdos_11.variants.two_pow_two (n : ℕ) (hn : Odd n) :
+theorem erdos_11.variants.two_pow_two (n : ℕ) (hn : Odd n) (hn' : 1 < n) :
     ∃ k l m : ℕ , Squarefree k ∧ n = k + 2^l + 2^m := by
   sorry
 
@@ -51,7 +51,7 @@ theorem erdos_11.variants.two_pow_two (n : ℕ) (hn : Odd n) :
 Odlyzko has checked this up to `10^7`.
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.finite_bound1 (n : ℕ) (hn : Odd n) (h : n < 10^7) :
+theorem erdos_11.variants.finite_bound1 (n : ℕ) (hn : Odd n) (h : n < 10^7) (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
@@ -59,6 +59,6 @@ theorem erdos_11.variants.finite_bound1 (n : ℕ) (hn : Odd n) (h : n < 10^7) :
 Hercher has verified this is true for all odd integers up to `2^50` (approx `1.12*10^15`)
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) :
+theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
