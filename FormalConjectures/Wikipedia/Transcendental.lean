@@ -108,3 +108,75 @@ At least one of $\pi + e$ and $\pi e$ is transcendental.
 theorem exp_add_pi_or_exp_add_mul_transcendental :
     Transcendental ℚ (π + rexp 1) ∨ Transcendental ℚ (π * exp 1) := by
   sorry
+
+/--
+**Gompertz constant**
+$$\delta = -e * \int_1^∞ e^{-t}/t dt \approx 0.59634$$
+-/
+noncomputable def gompertzConstant : ℝ :=
+  -exp 1 * ∫ (t:ℝ) in Set.Ioi 1, exp (-t) / t
+
+/--
+At least one of Catalan constant and the Gompertz constant is transcendental.
+-/
+@[category research solved, AMS 11 33]
+theorem transcendental_catalan_or_gompertz :
+    Transcendental ℚ catalanConstant ∨ Transcendental ℚ gompertzConstant := by
+  sorry
+
+/--
+The Catalan constant $G$ is transcendental.
+-/
+@[category research open, AMS 11, AMS 33]
+theorem transcendental_catalan_constant : Transcendental ℚ catalanConstant := by
+  sorry
+
+/--
+The Gompertz constant $\delta$ is transcendental.
+-/
+@[category research open, AMS 33]
+theorem transcendental_gompertz_constant : Transcendental ℚ gompertzConstant := by
+  sorry
+
+/--
+$\Gamma(1/2)$ is transcendental.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
+-/
+@[category research solved, AMS 33]
+theorem transcendental_gamma_1_2 : Transcendental ℚ (1 / 2 : ℝ).Gamma := by
+  sorry
+
+/--
+$\Gamma(1/3)$ is transcendental.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
+-/
+@[category research solved, AMS 33]
+theorem transcendental_gamma_1_3 : Transcendental ℚ (1 / 3 : ℝ).Gamma := by
+  sorry
+
+/--
+$\Gamma(1/4)$ is transcendental.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
+-/
+@[category research solved, AMS 33]
+theorem transcendental_gamma_1_4 : Transcendental ℚ (1 / 4 : ℝ).Gamma := by
+  sorry
+
+/--
+$\Gamma(1/6)$ is transcendental.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
+-/
+@[category research solved, AMS 33]
+theorem transcendental_gamma_1_6 : Transcendental ℚ (1 / 6 : ℝ).Gamma := by
+  sorry
+
+/--
+$\Gamma(1/n)$ for `n ≥ 2` is transcendental.
+-/
+@[category research open, AMS 33]
+theorem transcendental_gamma_1_n (n : ℕ) (hn : 2 ≤ n) : Transcendental ℚ (1 / n : ℝ).Gamma := by
+  sorry

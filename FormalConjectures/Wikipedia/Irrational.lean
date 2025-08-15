@@ -27,13 +27,6 @@ open Real
 local notation "e" => exp 1
 
 /--
-**Catalan's constant**
-$$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$
--/
-noncomputable def catalanConstant : ℝ :=
-  ∑' n : ℕ, (-1)^n / (2*n + 1)^2
-
-/--
 Are $e$ and $\pi$ algebraically independent?
 -/
 @[category research open, AMS 33]
@@ -98,7 +91,7 @@ theorem irrational_euler_mascheroni_constant :
   sorry
 
 /--
-Is the Catalan constant $G$ irrational?
+Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$ irrational?
 -/
 @[category research open, AMS 11 33]
 theorem irrational_catalan_constant :
