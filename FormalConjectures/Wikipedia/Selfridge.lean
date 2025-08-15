@@ -44,9 +44,9 @@ structure IsSelfridge (p : ℕ) where
 
 /-- A number `p` satisfies the *Pseudo Selfridge condition* if
 1. `p` is odd,
-2. `p ≡ ± 2 (mod 5)`,
+2. `p ≡ ± 1 (mod 5)`,
 3. `2^(p-1) ≡ 1 (mod p)`
-4. `(p+1).fib ≡ 0 (mod p)`
+4. `(p-1).fib ≡ 0 (mod p)`
 
 
 This is a variant of the condition that is tested in the PSW conjecture, and appears in the
