@@ -34,7 +34,7 @@ A set is semi-algebraic in `ℝⁿ` if it can be described by a finite union of 
 of multivariate polynomial equations and inequalities.
 -/
 def IsSemiAlgebraic {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
-  ∃ (ι : Type) (p : ι → MvPolynomial (Fin n) ℝ),
+  ∃ (ι : Type) (p : ι → MvPolynomial (Fin n) ℝ), Finite ι ∧
     S = {x | ∃ i, MvPolynomial.eval x (p i) = 0} ∪ {x | ∃ i, MvPolynomial.eval x (p i) > 0}
 
 /--
@@ -42,7 +42,7 @@ A set is semi-algebraic in `ℝ` if it can be described by a finite boolean comb
 of polynomial equations and inequalities.
 -/
 def IsSemiAlgebraic₁ (S : Set ℝ) : Prop :=
-  ∃ (ι : Type) (p : ι → Polynomial ℝ),
+  ∃ (ι : Type) (p : ι → Polynomial ℝ), Finite ι
     S = {x | ∃ (i : ι), Polynomial.eval x (p i) = 0} ∪
     {x | ∃ (i : ι), Polynomial.eval x (p i) > 0}
 
@@ -58,6 +58,7 @@ polynomial.
 def IsPiecewiseMvPolynomial {n : ℕ} (f : EuclideanSpace ℝ (Fin n) → ℝ) : Prop :=
   ∃ (ι : Type) (P : ι → Set (EuclideanSpace ℝ (Fin n)))
     (g : ι → MvPolynomial (Fin n) ℝ),
+    Finite ι ∧
     (∀ i, IsClosed (P i)) ∧
     (∀ i, IsSemiAlgebraic (P i)) ∧
     (⋃ i, P i) = Set.univ ∧
@@ -71,10 +72,11 @@ polynomial.
 def IsPiecewisePolynomial (f : ℝ → ℝ) : Prop :=
   ∃ (ι : Type) (P : ι → Set ℝ)
     (g : ι → Polynomial ℝ),
+    Finite ι ∧
     (∀ (i : ι), IsClosed (P i)) ∧
     (∀ (i : ι), IsSemiAlgebraic₁ (P i)) ∧
     (⋃ (i : ι), P i) = Set.univ ∧
-    ∀ (i : ι) x, x ∈ P i → f x = Polynomial.eval x (g i)
+    ∀ᵉ (i : ι) (x ∈ P i), f x = Polynomial.eval x (g i)
 
 /--
 The Pierce-Birkhoff conjecture states that for every real piecewise-polynomial function
@@ -83,7 +85,7 @@ The Pierce-Birkhoff conjecture states that for every real piecewise-polynomial f
 -/
 @[category research open, AMS 13]
 theorem pierce_birkhoff_conjecture {n : ℕ} (f : EuclideanSpace ℝ (Fin n) → ℝ)
-    (hf : IsPiecewisePolynomial f) :
+    (hf : IsPiecewiseMvPolynomial f) :
     ∃ (ι κ : Type) (hι : Fintype ι) (hκ : Fintype κ)
       (g : ι → κ → MvPolynomial (Fin n) ℝ),
       ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
@@ -95,7 +97,7 @@ This was proved by Louis Mahé.
 -/
 @[category research solved, AMS 13]
 theorem pierce_birkhoff_conjecture_dim_one (f : ℝ → ℝ)
-    (hf : IsPiecewisePolynomial₁ f) :
+    (hf : IsPiecewisePolynomial f) :
     ∃ (ι κ : Type) (hι : Fintype ι) (hκ : Fintype κ)
       (g : ι → κ → Polynomial ℝ),
       ∀ x, f x = ⨆ i, ⨅ j, Polynomial.eval x (g i j) := by
@@ -108,7 +110,7 @@ This was proved by Louis Mahé.
 @[category research solved, AMS 13]
 theorem pierce_birkhoff_conjecture_dim_two
     (f : EuclideanSpace ℝ (Fin 2) → ℝ)
-    (hf : IsPiecewisePolynomial f) :
+    (hf : IsPiecewiseMvPolynomial f) :
     ∃ (ι κ : Type) (hι : Fintype ι) (hκ : Fintype κ)
       (g : ι → κ → MvPolynomial (Fin 2) ℝ),
       ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
