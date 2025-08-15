@@ -36,7 +36,7 @@ section PrimalityTesting
 This is the condition that is tested in the PSW conjecture.
 Note: this is non-standard terminology. -/
 @[mk_iff]
-structure Nat.IsSelfridge (p : ℕ) where
+structure IsSelfridge (p : ℕ) where
   is_odd : Odd p
   mod_5 : (p ≡ 2 [MOD 5] ∨ p ≡ 3 [MOD 5])
   pow_2 : 2^(p-1) ≡ 1 [MOD p]
@@ -54,7 +54,7 @@ wiki page mentioned above.
 
 Note: this is non-standard terminology. -/
 @[mk_iff]
-structure Nat.IsPseudoSelfridge (p : ℕ) where
+structure IsPseudoSelfridge (p : ℕ) where
   is_odd : Odd p
   mod_5 : (p ≡ 1 [MOD 5] ∨ p ≡ 4 [MOD 5])
   pow_2 : 2^(p-1) ≡ 1 [MOD p]
@@ -66,7 +66,7 @@ Let $p$ be an odd number, with $p \equiv \pm 2 \pmod{5}$, $2^{p-1} \equiv 1 \pmo
 and $F_{p+1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
 -/
 @[category research open, AMS 11]
-theorem selfridge_conjecture (p : ℕ) (hp : p.IsSelfridge) : p.Prime := by
+theorem selfridge_conjecture (p : ℕ) (hp : IsSelfridge p) : p.Prime := by
   sorry
 
 /--
@@ -78,7 +78,7 @@ This test does not work.
 -/
 @[category undergraduate, AMS 11]
 theorem selfridge_conjecture.variants.exist_pseudo_counterexample :
-    ∃ n : ℕ, n.IsPseudoSelfridge ∧ ¬ n.Prime := by
+    ∃ n : ℕ, IsPseudoSelfridge n ∧ ¬ n.Prime := by
   use 6601
   sorry
 
@@ -91,7 +91,7 @@ The number $6601$ is a conterexample to this test satisfying $6601 ≡ 1 \mod 5$
 -/
 @[category high_school, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample :
-    (6601).IsPseudoSelfridge ∧ ¬ (6001).Prime ∧ 6001 ≡ 1 [MOD 5] := by
+    IsPseudoSelfridge 6601 ∧ ¬ (6001).Prime ∧ 6001 ≡ 1 [MOD 5] := by
   sorry
 
 /--
@@ -103,7 +103,7 @@ The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mo
 -/
 @[category high_school, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
-    (30889).IsPseudoSelfridge ∧ ¬ (30889).Prime ∧ 30889 ≡ 3 [MOD 5] := by
+    IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 3 [MOD 5] := by
   sorry
 
 
@@ -127,7 +127,7 @@ Selfridge conjectured that the number of prime factors of the `n`-th Fermat numb
 monotonically in $n$.
 -/
 @[category research open, AMS 11]
-theorem selfridge_seq_conjecture : Monotone fermatFactors := by
+theorem selfridge_seq_conjecture : ¬ Monotone fermatFactors := by
   sorry
 
 /--
