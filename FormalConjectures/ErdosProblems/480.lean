@@ -23,13 +23,13 @@ import FormalConjectures.Util.ProblemImports
 -/
 /--
 Let $x_1,x_2,...∈[0, 1]$ be an infinite sequence. Is it true that there are infinitely many $m, n$
-such that $|x_{m+n} - x_n| ≤ \frac 1 {\sqrt 5 n}$?
+such that $|x_{m+n} - x_m| ≤ \frac 1 {\sqrt 5 n}$?
 
 This was proved Chung and Graham.
 -/
 @[category research solved, AMS 11]
 theorem erdos_480 : (∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
-    {(m, n) | (m) (n) (_ : m ≠ 0) (_ : |x (m + n) - x n| ≤ 1 / (√5 * n))}.Infinite) ↔
+    {(m, n) | (m) (n) (_ : m ≠ 0) (_ : |x (m + n) - x m| ≤ 1 / (√5 * n))}.Infinite) ↔
     answer(True) := by
   sorry
 

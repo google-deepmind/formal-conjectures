@@ -15,7 +15,10 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.Attributes
-import Mathlib
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.NumberTheory.FLT.Basic
+import Mathlib.RingTheory.Algebraic.Defs
+
 
 -- The `Category` and `ProblemSubject` attributes
 

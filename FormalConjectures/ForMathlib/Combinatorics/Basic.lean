@@ -14,35 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Data.Set.Card
-import Mathlib.Order.Defs.PartialOrder
+import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
+import Mathlib.Data.Nat.Lattice
 
 open Function Set
 
-/-- A Sidon sequence (also called a Sidon set) is a sequence of natural numbers $a_0, a_1, ...$
-such that all pairwise sums $a_i + a_j$ are distinct for $i ≤ j$.
-
-In other words, all pairwise sums of elements are distinct apart from coincidences forced by the
-commutativity of addition. -/
-def IsSidon {ι α : Type*} [Preorder ι] [Preorder α] [Add α] (a : ι →o α) : Prop :=
-  ∀ i₁ j₁ i₂ j₂, i₁ ≤ j₁ → i₂ ≤ j₂ → a i₁ + a j₁ = a i₂ + a j₂ → i₁ = i₂ ∧ j₁ = j₂
-
-lemma IsSidon.injective {ι α : Type*} [Preorder ι] [Preorder α] [Add α] (a : ι →o α) (ha : IsSidon a) :
-    Injective a :=
-  fun i₁ i₂ hi ↦ (ha i₁ i₁ i₂ i₂ (le_refl _) (le_refl _) (by rw [hi])).1
-
 variable {α : Type*} [AddCommMonoid α]
 
-/-- The predicate that a set `s` is an arithmetic progression of length `l` (possibly infinite). -/
-def Set.IsAPOfLength (s : Set α) (l : ℕ∞) : Prop :=
-  ∃ a d : α, d ≠ 0 ∧ s = {a + n • d | (n : ℕ) (_ : n < l)}
+/-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
+coincidences forced by the commutativity of addition. -/
+def IsSidon (A : Set α) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
+  i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)
 
-lemma Set.IsAPOfLength.card (s : Set α) (l : ℕ∞) (hs : s.IsAPOfLength l) :
-    ENat.card s = l := by
+lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [AddCommMonoid α] (A : Set ℕ) (hA : IsSidon A) :
+    (∀ Y, IsAPOfLength Y 3 → (A ∩ Y).ncard ≤ 2) := by
   sorry
 
-lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [OrderedAddCommMonoid α]
-    (A : ℕ →o α) (hA : IsSidon A) :
-    (∀ Y, IsAPOfLength Y 3 → ((range A) ∩ Y).ncard ≤ 2) := by
-  sorry
+/-- The maximum size of a Sidon set in `{1, ..., N}`. -/
+noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
+  sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
+

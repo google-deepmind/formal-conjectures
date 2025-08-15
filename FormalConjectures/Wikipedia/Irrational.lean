@@ -100,7 +100,7 @@ theorem irrational_euler_mascheroni_constant :
 /--
 Is the Catalan constant $G$ irrational?
 -/
-@[category research open, AMS 11, AMS 33]
+@[category research open, AMS 11 33]
 theorem irrational_catalan_constant :
     Irrational catalanConstant ↔ answer(sorry) := by
   sorry

@@ -30,7 +30,7 @@ The answer is yes, proved by Balister, Bollobás, Morris, Sahasrabudhe, and Tiba
 
 [BBMST19] Balister, P. and Bollob\'{A}s, B. and Morris, R. and Sahasrabudhe, J. and Tiba, M., _Flat Littlewood Polynomials Exist_. arXiv:907.09464 (2019).
 -/
-@[category research solved, AMS 5, AMS 12, AMS 41] --TODO(lezeau): I'm a little unhappy with the `41` tag
+@[category research solved, AMS 5 12 41] --TODO(lezeau): I'm a little unhappy with the `41` tag
 theorem erdos_228 :
     (∃ (c₁ : ℝ) (c₂ : ℝ), ∀ᶠ n : ℕ in Filter.atTop,
     ∃ p : Polynomial ℂ, p.degree = n ∧

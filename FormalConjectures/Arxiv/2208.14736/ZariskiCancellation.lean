@@ -23,6 +23,7 @@ import FormalConjectures.Util.ProblemImports
 **The Zariski Cancellation Problem and related problems in Affine Algebraic Geometry**
 by *Neena Gupta*
 -/
+
 open Polynomial
 
 /--
@@ -38,7 +39,7 @@ def IsCancellative (k A : Type*) [Field k]
 The **Zariski Cancellation Problem**: every polynomial ring over a field `k` of characteristic
 `0` is cancellative.
 -/
-@[category research open, AMS 13, AMS 14]
+@[category research open, AMS 13 14]
 theorem zariski_cancellation_problem {k : Type*} [Field k]
     [CharZero k] {ι : Type*} [Fintype ι] : IsCancellative k (MvPolynomial ι k) := by
   sorry
@@ -46,7 +47,7 @@ theorem zariski_cancellation_problem {k : Type*} [Field k]
 /--
 The single variable polynomial ring `k[X]` is cancellative in any characteristic
 -/
-@[category research solved, AMS 13, AMS 14]
+@[category research solved, AMS 13 14]
 theorem zariski_cancellation_problem.variants.dim_one
     {k : Type*} [Field k] : IsCancellative k k[X] := by
   sorry
@@ -54,7 +55,7 @@ theorem zariski_cancellation_problem.variants.dim_one
 /--
 The two variable polynomial ring `k[X]` is cancellative in any characteristic
 -/
-@[category research solved, AMS 13, AMS 14]
+@[category research solved, AMS 13 14]
 theorem zariski_cancellation_problem.variants.dim_two {k : Type*} [Field k] :
     IsCancellative k (MvPolynomial (Fin 2) k) := by
   sorry
@@ -62,7 +63,7 @@ theorem zariski_cancellation_problem.variants.dim_two {k : Type*} [Field k] :
 /--
 The positive characteristic case of the Zariski Cancellation Problem is false in dimension `3`
 -/
-@[category research solved, AMS 13, AMS 14]
+@[category research solved, AMS 13 14]
 theorem zariski_cancellation_problem.variants.false_pos_card
     (p : ℕ) [hp : Fact p.Prime] {ι : Type*} [Fintype ι] (hι : Fintype.card ι = 3) :
     ¬ IsCancellative (ZMod p) (MvPolynomial ι (ZMod p)) := by

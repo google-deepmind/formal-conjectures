@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/392](https://www.erdosproblems.com/392)
 -/
+
 open Filter
 
 open scoped Nat
@@ -30,17 +31,17 @@ Let $A(n)$ denote the least value of $t$ such that
 $$
   n! = a_1 \cdots a_t
 $$
-with $a_1 \leq \cdots \leq a_t\leq n^2$. Is it true that
+with $a_1 \leq \cdots \leq a_t\leq n^2$. Then
 $$
-  A(n) = \frac{n}{2} - \frac{n}{2\log n} + o\left(\frac{n}{\log n}\right)?
+  A(n) = \frac{n}{2} - \frac{n}{2\log n} + o\left(\frac{n}{\log n}\right).
 $$
 -/
-@[category research open, AMS 11]
-theorem erdos_392 : (∀ (A : ℕ → ℕ), (∀ n > 0,
+@[category research solved, AMS 11]
+theorem erdos_392 (A : ℕ → ℕ) (h : ∀ n > 0,
     IsLeast { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧ Monotone a ∧ a t ≤ n ^ 2) }
-      (A n)) →
-    ((fun (n : ℕ) => (A n - n / 2 + n / (2 * Real.log n) : ℝ)) =o[atTop] fun n => n / Real.log n))
-    ↔ answer(sorry) := by
+      (A n)) :
+    ((fun (n : ℕ) => (A n - n / 2 + n / (2 * Real.log n) : ℝ)) =o[atTop] fun n => n / Real.log n)
+  := by
   sorry
 
 /--
@@ -55,4 +56,15 @@ theorem erdos_392.variants.lower (A : ℕ → ℕ)
       { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧ Monotone a ∧ a t ≤ n) }
       (A n)) :
     (fun (n : ℕ) => (A n - n + n / Real.log n : ℝ)) =o[atTop] fun n => n / Real.log n := by
+  sorry
+
+
+/--
+Cambie has observed that a positive answer follows from the result above with $a_t \leq n$, simply
+by pairing variables together, e.g. taking $a'_i = a_{2i-1}a_{2i}$ (and the lower bound follows from
+Stirling's approximation).
+-/
+@[category research solved, AMS 11]
+theorem erdos_392.variants.implication (h : type_of% erdos_392) :
+    type_of% erdos_392.variants.lower := by
   sorry
