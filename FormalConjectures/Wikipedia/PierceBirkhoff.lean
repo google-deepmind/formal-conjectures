@@ -30,7 +30,7 @@ The conjecture has been proved for `n = 1` and `n = 2` by Louis Mahé.
 -/
 
 /--
-A set is semi-algebraic in `ℝⁿ` if it can be described by a finite boolean combination
+A set is semi-algebraic in `ℝⁿ` if it can be described by a finite union of sets defined by
 of multivariate polynomial equations and inequalities.
 -/
 def IsSemiAlgebraic {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
@@ -52,21 +52,23 @@ open scoped Polynomial
 
 /--
 A function `f : ℝⁿ → ℝ` is piecewise polynomial if there exists a finite covering of `ℝⁿ` by
-closed semi-algebraic sets such that the restriction of `f` to each set in the covering is polynomial.
+closed semi-algebraic sets such that the restriction of `f` to each set in the covering is
+polynomial.
 -/
-def IsPiecewisePolynomial {n : ℕ} (f : EuclideanSpace ℝ (Fin n) → ℝ) : Prop :=
+def IsPiecewiseMvPolynomial {n : ℕ} (f : EuclideanSpace ℝ (Fin n) → ℝ) : Prop :=
   ∃ (ι : Type) (P : ι → Set (EuclideanSpace ℝ (Fin n)))
     (g : ι → MvPolynomial (Fin n) ℝ),
     (∀ i, IsClosed (P i)) ∧
     (∀ i, IsSemiAlgebraic (P i)) ∧
     (⋃ i, P i) = Set.univ ∧
-    ∀ i x, x ∈ P i → f x = MvPolynomial.eval x (g i)
+    ∀ᵉ (i : ι) (x ∈ P i), f x = MvPolynomial.eval x (g i)
 
 /--
 A function `f : ℝ → ℝ` is piecewise polynomial if there exists a finite covering of `ℝ` by
-closed semi-algebraic sets such that the restriction of `f` to each set in the covering is polynomial.
+closed semi-algebraic sets such that the restriction of `f` to each set in the covering is
+polynomial.
 -/
-def IsPiecewisePolynomial₁ (f : ℝ → ℝ) : Prop :=
+def IsPiecewisePolynomial (f : ℝ → ℝ) : Prop :=
   ∃ (ι : Type) (P : ι → Set ℝ)
     (g : ι → Polynomial ℝ),
     (∀ (i : ι), IsClosed (P i)) ∧
