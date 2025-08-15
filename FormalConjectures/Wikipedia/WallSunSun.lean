@@ -22,21 +22,31 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
 -/
 
+--TODO: add more statements about Wall-Sun-Sun primes from the wiki page.
+
 /--
-Are there infinitely many Wall–Sun–Sun primes?
-A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$, where $L_p$ is Lucas numbers.
+A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$, where $L_p$ is the
+$p$-th Lucas number. It is conjectured that there is at least one Wall–Sun–Sun prime.
 -/
 @[category research open, AMS 11]
-theorem wall_sun_sun_primes_infinite :
-    {p : ℕ | IsWallSunSunPrime p}.Infinite ↔ answer(sorry)  := by
+theorem wall_sun_sun_primes_existence : ∃ p, IsWallSunSunPrime p := by
   sorry
 
 /--
-Are there infinitely many Lucas–Wieferich primes with discriminant $D = a^2-4b$?
-A Lucas–Wieferich prime associated with $(a,b)$ is a prime $p$ such $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$
-where $U(a,b)$ is the Lucas sequence of the first kind and $\varepsilon$ is the Legendre symbol.
+A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$, where $L_p$ is the
+$p$-th Lucas number. It is conjectured that there are infinitely many Wall-Sun-Sun primes.
 -/
 @[category research open, AMS 11]
-theorem wall_sun_sun_primes_with_discriminant_infinite (disc : ℕ+) :
-    {p : ℕ | ∃ a b : ℕ, a ^ 2 - 4 * b = disc ∧ IsLucasWieferichPrime a b p }.Infinite ↔ answer(sorry) := by
+theorem wall_sun_sun_primes_infinite : {p : ℕ | IsWallSunSunPrime p}.Infinite := by
+  sorry
+
+/--
+A Lucas–Wieferich prime associated with $(a,b)$ is a prime $p$ such $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$
+where $U(a,b)$ is the Lucas sequence of the first kind and $\varepsilon$ is the Legendre symbol
+$\left({\tfrac {a^{2}-4b}{p}}\right)$. The discriminant of this number is the quantity $a^2 - 4b$.
+It is conjectured that there are infinitely many Lucas–Wieferich primes of any given discriminant.
+-/
+@[category research open, AMS 11]
+theorem wall_sun_sun_primes_with_discriminant_infinite (D : ℕ+) :
+    {p : ℕ | ∃ a b : ℕ, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p }.Infinite := by
   sorry

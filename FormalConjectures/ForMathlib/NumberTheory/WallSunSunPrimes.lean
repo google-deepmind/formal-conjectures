@@ -55,7 +55,7 @@ structure IsWallSunSunPrime (p : ℕ) : Prop where
 Ref: https://en.wikipedia.org/wiki/Lucas%E2%80%93Wieferich_prime
 A Lucas–Wieferich prime associated with $(a,b)$ is a prime $p$ such $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$
 where $U(a,b)$ is the Lucas sequence of the first kind and $\varepsilon$ is the Legendre symbol
-$\left({\tfrac {P^{2}-4Q}{p}}\right)$
+$\left({\tfrac {a^{2}-4b}{p}}\right)$
 -/
 structure IsLucasWieferichPrime (a b p : ℕ) : Prop where
   prime : p.Prime
