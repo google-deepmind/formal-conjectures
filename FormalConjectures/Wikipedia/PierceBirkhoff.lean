@@ -42,7 +42,7 @@ A set is semi-algebraic in `ℝ` if it can be described by a finite boolean comb
 of polynomial equations and inequalities.
 -/
 def IsSemiAlgebraic₁ (S : Set ℝ) : Prop :=
-  ∃ (ι : Type) (p : ι → Polynomial ℝ), Finite ι
+  ∃ (ι : Type) (p : ι → Polynomial ℝ), Finite ι ∧
     S = {x | ∃ (i : ι), Polynomial.eval x (p i) = 0} ∪
     {x | ∃ (i : ι), Polynomial.eval x (p i) > 0}
 
