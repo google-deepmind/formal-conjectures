@@ -26,7 +26,7 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
-import FormalConjectures.ForMathlib.Computability.TuringMachine
+import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
 import FormalConjectures.ForMathlib.Data.Nat.Full

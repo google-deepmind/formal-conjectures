@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ForMathlib.Computability.TuringMachine
+import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import Mathlib.Tactic.DeriveFintype
 
 --sanity checks for the definition of halting added in `ForMathlib`.
 --These should be easy to prove
 
-open Turing BusyBeaver
+open Turing BusyBeaver Machine
 
 inductive Γ where
-| A
-| B
+  | A
+  | B
 deriving Inhabited, Fintype
 
 inductive Λ where
-| S
-| T
+  | S
+  | T
 deriving Inhabited, Fintype
 
 def alwaysHaltingMachine : Machine Γ Λ := fun _ _ =>
@@ -42,15 +42,18 @@ match l with
 | --If the state is already `T` then halt
   .T => none
 
-instance : alwaysHaltingMachine.IsHalting where
-  halts := by
-    simp_rw (config := { singlePass := true })
-      [BusyBeaver.eval, Turing.eval, Part.map_Dom, step, alwaysHaltingMachine, Option.map_none',
-      Part.dom_iff_mem, PFun.mem_fix_iff, Part.mem_some_iff]
-    use default
-    aesop
+instance : alwaysHaltingMachine.IsHalting := by
+  rw [isHalting_iff_exists_haltsAt]
+  -- halts after zero steps
+  exact ⟨0, by aesop⟩ 
 
--- TODO(Paul-Lez): finish proving this
-instance : haltsAfterOne.IsHalting  where
-  halts := by
-    sorry
+instance : haltsAfterOne.IsHalting := by
+  rw [isHalting_iff_exists_haltsAt]
+  -- halts after one step
+  exact ⟨1, by aesop⟩ 
+
+theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
+  apply haltingNumber_def
+  · use { q := some Λ.T, tape := ⟨Γ.A, Quotient.mk'' [Γ.A], default⟩}
+    rfl
+  · rfl

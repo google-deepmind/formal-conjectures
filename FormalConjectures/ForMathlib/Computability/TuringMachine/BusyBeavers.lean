@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.ForMathlib.Computability.TuringMachine.PostTuringMachine
 import Mathlib.Computability.TuringMachine
 import Mathlib.Data.Nat.Lattice
 import Mathlib.Data.Nat.PartENat
@@ -41,8 +42,6 @@ open Relation
 open Nat
 
 namespace BusyBeaver
-
-section
 
 -- type of tape symbols
 variable (Γ : Type*)
@@ -96,6 +95,8 @@ variable [Inhabited Γ]
 
 instance Cfg.inhabited : Inhabited (Cfg Γ Λ) := ⟨⟨default, default⟩⟩
 
+namespace Machine
+
 /-- Execution semantics of the Turing machine. -/
 def step (M : Machine Γ Λ) : Cfg Γ Λ → Option (Cfg Γ Λ)
 | ⟨none, _⟩ => none
@@ -103,59 +104,90 @@ def step (M : Machine Γ Λ) : Cfg Γ Λ → Option (Cfg Γ Λ)
     fun ⟨q', a⟩ ↦ ⟨q', match a with
     | Stmt.write a d => (T.write a).move d⟩
 
-
 /-- The statement `Reaches M s₁ s₂` means that `s₂` is obtained
   starting from `s₁` after a finite number of steps from `s₂`. -/
 def Reaches (M : Machine Γ Λ) : Cfg Γ Λ → Cfg Γ Λ → Prop := ReflTransGen fun a b ↦ b ∈ step M a
 
 /-- The initial configuration. -/
-def init (l : List Γ) : Cfg Γ Λ := ⟨default, Tape.mk₁ l⟩
+def init (l : List Γ) : Cfg Γ Λ := ⟨some default, Tape.mk₁ l⟩
 
 /-- Evaluate a Turing machine on initial input to a final state,
   if it terminates. -/
 def eval (M : Machine Γ Λ) (l : List Γ) : Part (ListBlank Γ) :=
   (Turing.eval (step M) (init l)).map fun c ↦ c.tape.right₀
 
-end
+def multiStep (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) : Option (Cfg Γ Λ) :=
+    (Option.bind · (step M))^[n] config
 
-universe u
+@[simp]
+lemma multiStep_zero (M : Machine Γ Λ) (config : Cfg Γ Λ) : M.multiStep config 0 = some config :=
+  rfl
 
-namespace Machine
+@[simp]
+lemma multiStep_one (M : Machine Γ Λ) (config : Cfg Γ Λ) : M.multiStep config 1 = M.step config :=
+  rfl
+
+@[simp]
+lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
+    M.multiStep config (n + 1) = Option.bind (M.multiStep config n) M.step := by
+  rw [multiStep, Function.iterate_succ', Function.comp_apply, multiStep]
+
+lemma multiStep_eq_none_of_le_of_multiStep_eq_none {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
+    (hmn : m ≤ n) (hm : M.multiStep config m = none) : M.multiStep config n = none := by
+  induction n, hmn using Nat.le_induction with
+  | base => exact hm
+  | succ k hmk a => simp [multiStep_succ, a]
+
+
+variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ]
+variable (M : Machine Γ Λ)
+
+/--
+`M.IsHaltingInput l` is the predicate that `M` is a halting configuration for `M`.
+-/
+def IsHaltingInput (l : List Γ) : Prop := (eval M l).Dom
+
+
+-- TODO(Paul-Lez): Do we actually need this?
+/--
+`M.HaltsAtConfiguration s` is the predicate that `M` is a halting configuration for `M`.
+-/
+def IsHaltingConfiguration (s : Cfg Γ Λ) : Prop := (step M s).isNone
 
 /--
 The property that a Turing Machine `M` eventually halts when starting from an empty tape
 -/
-class IsHalting {Γ Λ : Type} [Fintype Γ] [Fintype Λ]
-    [Inhabited Λ] [Inhabited Γ] (M : Machine Γ Λ) : Prop where
-  halts : (eval M []).Dom
+class IsHalting : Prop where
+  halts : M.IsHaltingInput []
 
 /--
-The predicate that a Turing machine `M` has reached a halting state after
-`n` steps.
-For `n = 0` this is the predicate that `M` has already halted.
-
-In the BB setup, halting state can be attained in two manners:
-1) The machine can reach a configutation `s` that has no transitions to other states,
-i.e. `step M s = none`
-2) The machine can reach a "halting state configuration" `s`,
-i.e. `s.q = none`.
+The predicate that a machine starting at configuration `s` stops after at most `n` steps, i.e.
+reaches a configuration from which there are no defined transitions.
 -/
-def HaltsAt {Γ Λ : Type} [Fintype Γ] [Fintype Λ]
-    [Inhabited Λ] [Inhabited Γ] (M : Machine Γ Λ) (s : Cfg Γ Λ) (n : ℕ) : Prop :=
-  ((Option.bind · (step M))^[n+1] s = none) ∨ s.q = none
+def HaltsAfter (s : Cfg Γ Λ) (n : ℕ) : Prop :=
+  M.multiStep s (n+1) = none
 
+lemma haltsAfter_zero_iff (s : Cfg Γ Λ) :
+    HaltsAfter M s 0 ↔ step M s = none := by
+  rw [HaltsAfter, multiStep, Function.iterate_one, Option.some_bind]
 
-lemma haltsAt_zero_iff {Γ Λ : Type} [Fintype Γ] [Fintype Λ]
-    [Inhabited Λ] [Inhabited Γ] (M : Machine Γ Λ) (s : Cfg Γ Λ) :
-    HaltsAt M s 0 ↔ step M s = none ∨ s.q = none := by
-  rw [HaltsAt, Function.iterate_one, Option.some_bind]
+lemma isHalting_iff_exists_haltsAt : IsHalting M ↔ ∃ n, M.HaltsAfter (init []) n :=
+  ⟨fun _ ↦ eval_dom_iff.mpr IsHalting.halts, fun H ↦ ⟨eval_dom_iff.mp H⟩⟩
 
-noncomputable def haltingNumber
-    {Γ Λ : Type} [Fintype Γ] [Fintype Λ] [Inhabited Λ] [Inhabited Γ]
-    (M : Machine Γ Λ) : PartENat :=
+noncomputable def haltingNumber : PartENat :=
   --The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
   --If no such `n` exists then this is equal to `⊤`.
-  sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAt M (init []) n) }
+  sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
+
+theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some a)
+    (ha' : M.multiStep (init []) (n + 1) = none) :
+    M.haltingNumber = n := by
+  refine IsGLB.sInf_eq (IsLeast.isGLB ⟨⟨n, by rwa [HaltsAfter], rfl⟩, fun m ⟨k, _, _⟩ ↦ ?_⟩)
+  induction m using PartENat.casesOn
+  · exact le_top
+  · refine ⟨fun h ↦ h, fun _ ↦ ?_⟩
+    by_contra! hc
+    simp_all [multiStep_eq_none_of_le_of_multiStep_eq_none (show k + 1 ≤ n by aesop) ‹_›]
 
 end Machine
 
