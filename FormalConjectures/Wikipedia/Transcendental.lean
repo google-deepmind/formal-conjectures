@@ -110,13 +110,6 @@ theorem exp_add_pi_or_exp_add_mul_transcendental :
   sorry
 
 /--
-**Gompertz constant**
-$$\delta = -e * \int_1^∞ e^{-t}/t dt \approx 0.59634$$
--/
-noncomputable def gompertzConstant : ℝ :=
-  -exp 1 * ∫ (t:ℝ) in Set.Ioi 1, exp (-t) / t
-
-/--
 At least one of Catalan constant and the Gompertz constant is transcendental.
 -/
 @[category research solved, AMS 11 33]
@@ -179,4 +172,11 @@ $\Gamma(1/n)$ for `n ≥ 2` is transcendental.
 -/
 @[category research open, AMS 33]
 theorem transcendental_gamma_1_n (n : ℕ) (hn : 2 ≤ n) : Transcendental ℚ (1 / n : ℝ).Gamma := by
+  sorry
+
+/--
+Catalan's constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2$$ is transcendental.
+-/
+@[category research open, AMS 33]
+theorem transcendental_catalanConstant : Transcendental ℚ catalanConstant := by
   sorry
