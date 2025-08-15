@@ -17,16 +17,48 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Selfridge's conjectures about primality testing
+# Selfridge's conjectures
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/John_Selfridge#Selfridge's_conjecture_about_primality_testing)
 -/
 
-def selfridge_test.variants.i (p : ℕ) : Prop :=
-  Odd p ∧ (p ≡ 2 [MOD 5] ∨ p ≡ 3 [MOD 5]) ∧ 2^(p-1) ≡ 1 [MOD p] ∧ (p+1).fib ≡ 0 [MOD p]
+namespace Selfrige
 
-def selfridge_test.variants.ii (p : ℕ) : Prop :=
-  Odd p ∧ (p ≡ 1 [MOD 5] ∨ p ≡ 4 [MOD 5]) ∧ 2^(p-1) ≡ 1 [MOD p] ∧ (p-1).fib ≡ 0 [MOD p]
+section PrimalityTesting
+
+/-- A number `p` satisfies the *Selfridge condition* if
+1. `p` is odd,
+2. `p ≡ ± 2 (mod 5)`,
+3. `2^(p-1) ≡ 1 (mod p)`
+4. `(p+1).fib ≡ 0 (mod p)`
+
+
+This is the condition that is tested in the PSW conjecture.
+Note: this is non-standard terminology. -/
+@[mk_iff]
+structure Nat.IsSelfridge (p : ℕ) where
+  is_odd : Odd p
+  mod_5 : (p ≡ 2 [MOD 5] ∨ p ≡ 3 [MOD 5])
+  pow_2 : 2^(p-1) ≡ 1 [MOD p]
+  fib : (p+1).fib ≡ 0 [MOD p]
+
+/-- A number `p` satisfies the *Pseudo Selfridge condition* if
+1. `p` is odd,
+2. `p ≡ ± 2 (mod 5)`,
+3. `2^(p-1) ≡ 1 (mod p)`
+4. `(p+1).fib ≡ 0 (mod p)`
+
+
+This is a variant of the condition that is tested in the PSW conjecture, and appears in the
+wiki page mentioned above.
+
+Note: this is non-standard terminology. -/
+@[mk_iff]
+structure Nat.IsPseudoSelfridge (p : ℕ) where
+  is_odd : Odd p
+  mod_5 : (p ≡ 1 [MOD 5] ∨ p ≡ 4 [MOD 5])
+  pow_2 : 2^(p-1) ≡ 1 [MOD p]
+  fib : (p-1).fib ≡ 0 [MOD p]
 
 /--
 **PSW conjecture** (Selfridge's test)
@@ -34,18 +66,50 @@ Let $p$ be an odd number, with $p \equiv \pm 2 \pmod{5}$, $2^{p-1} \equiv 1 \pmo
 and $F_{p+1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
 -/
 @[category research open, AMS 11]
-theorem selfridge_conjecture (p : ℕ) (hp : selfridge_test.variants.i p) :
-    p.Prime := by
+theorem selfridge_conjecture (p : ℕ) (hp : p.IsSelfridge) : p.Prime := by
   sorry
 
 /--
-There is a counterexample to the second version of Selfridge's test.
+Selfridge's test variant:
+Let $p$ be an odd number, with $p \equiv \pm 1 \pmod{5}$, $2^{p-1} \equiv 1 \pmod{p}$
+and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
+
+This test does not work.
 -/
-@[category research solved, AMS 11]
-theorem counter_selfridge_conjecture :
-    ∃ n : ℕ, selfridge_test.variants.ii n ∧ ¬ n.Prime := by
+@[category undergraduate, AMS 11]
+theorem selfridge_conjecture.variants.exist_pseudo_counterexample :
+    ∃ n : ℕ, n.IsPseudoSelfridge ∧ ¬ n.Prime := by
   use 6601
   sorry
+
+/--
+Selfridge's test variant:
+Let $p$ be an odd number, with $p \equiv \pm 1 \pmod{5}$, $2^{p-1} \equiv 1 \pmod{p}$
+and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
+
+The number $6601$ is a conterexample to this test satisfying $6601 ≡ 1 \mod 5$
+-/
+@[category high_school, AMS 11]
+theorem selfridge_conjecture.variants.pseudo_counterexample :
+    (6601).IsPseudoSelfridge ∧ ¬ (6001).Prime ∧ 6001 ≡ 1 [MOD 5] := by
+  sorry
+
+/--
+Selfridge's test variant:
+Let $p$ be an odd number, with $p \equiv \pm 1 \pmod{5}$, $2^{p-1} \equiv 1 \pmod{p}$
+and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
+
+The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mod 5$
+-/
+@[category high_school, AMS 11]
+theorem selfridge_conjecture.variants.pseudo_counterexample' :
+    (30889).IsPseudoSelfridge ∧ ¬ (30889).Prime ∧ 30889 ≡ 3 [MOD 5] := by
+  sorry
+
+
+end PrimalityTesting
+
+section FermatNumbers
 
 /-!
 # Selfridge's conjectures about Fermat numbers
@@ -56,12 +120,28 @@ theorem counter_selfridge_conjecture :
 The number of distinct prime factors of nth Fermat number.
 Known terms: 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 4, 5
 -/
-noncomputable def selfridgeSeq (n : ℕ) : ℕ :=
-  n.fermatNumber.primeFactors.card
+def fermatFactors (n : ℕ) : ℕ := n.fermatNumber.primeFactors.card
 
 /--
-Selfridge conjectured that `selfridgeSeq` is not monotonic.
+Selfridge conjectured that the number of prime factors of the `n`-th Fermat number does not grow
+monotonically in $n$.
 -/
-theorem selfridge_seq_conjecture :
-    (∀ n : ℕ, selfridgeSeq n ≤ selfridgeSeq (n+1))  ↔ answer(sorry) := by
+@[category research open, AMS 11]
+theorem selfridge_seq_conjecture : Monotone fermatFactors := by
   sorry
+
+/--
+Selfridge conjectured that the number of prime factors of the `n`-th Fermat number does not grow
+monotonically in $n$.
+
+A sufficient condition for this conjecture to hold is that there exists a Fermat prime larger than
+65537.
+-/
+@[category research open, AMS 11]
+theorem selfridge_seq_conjecture.variants.sufficient_condition (n : ℕ) (hn : Prime n.fermatNumber)
+    (hn' : n ≥ 5) : type_of% selfridge_seq_conjecture := by
+  sorry
+
+end FermatNumbers
+
+end Selfrige
