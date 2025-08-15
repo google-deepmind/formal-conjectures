@@ -17,20 +17,19 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 64
+# Erdős Problem 142
 
-*Reference:* [erdosproblems.com/64](https://www.erdosproblems.com/64)
+*Reference:* [erdosproblems.com/142](https://www.erdosproblems.com/142)
 -/
+
+open Filter
+
+private noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
 
 /--
-Does every finite graph with minimum degree at least $3$
-contain a cycle of length $2^k$ for some $k \geq 2$?
+Prove an asymptotic formula for $r_k(N)$, the largest possible size of a subset
+of $\{1, \dots, N\}$ that does not contain any non-trivial $k$-term arithmetic progression.
 -/
-@[category research open, AMS 5]
-theorem erdos_64 :
-    (∀ (V : Type*) (G : SimpleGraph V) [Fintype V] [DecidableRel G.Adj],
-        G.minDegree ≥ 3 → ∃ (k : ℕ) (v : V) (c : G.Walk v v),
-            k ≥ 2 ∧ c.IsCycle ∧ c.length = 2^k) ↔ answer(sorry) := by
+@[category research open, AMS 11]
+theorem erdos_142 (k : ℕ) : (fun N => (r k N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
-
--- TODO(firsching): add more context
