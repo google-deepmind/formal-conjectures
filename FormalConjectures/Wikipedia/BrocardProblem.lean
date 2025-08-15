@@ -29,5 +29,5 @@ open Nat
 Does $n! + 1 = m^2$ have integer solutions other than $n = 4, 5, 7$?
 -/
 @[category research open, AMS 11]
-theorem brocard_problem : (∃ n ≥ 8, ∃ m, n ! + 1 = m ^ 2) ↔ answer(sorry) := by
+theorem brocard_problem : {n | ∃ m, n ! + 1 = m ^ 2} = {4, 5, 7} ↔ answer(sorry) := by
   sorry
