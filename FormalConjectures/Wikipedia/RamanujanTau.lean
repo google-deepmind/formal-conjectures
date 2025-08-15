@@ -26,31 +26,30 @@ There are two conjectures related to the Ramanujan τ-function:
 - Lehmer's conjecture: The Ramanujan τ-function is never zero for any positive integer `n`.
 
 *References:*
-
 - [Ramanujan-Petersson conjecture](https://en.wikipedia.org/wiki/Ramanujan%E2%80%93Petersson_conjecture)
 - [Lehmer's conjecture](https://en.wikipedia.org/wiki/Ramanujan_tau_function#Conjectures_on_the_tau_function)
 -/
 
 open PowerSeries PowerSeries.WithPiTopology
 
-noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
+private noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
 
-noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
+private noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
 
 
-@[category API]
+@[category API, AMS 11]
 lemma multipliable : Multipliable fun n : ℕ+ ↦ ((1 - X ^ (n : ℕ)) ^ 24 : PowerSeries ℤ) := by
   sorry
 
-@[category test]
+@[category test, AMS 11]
 lemma τ_zero : τ 0 = 0 := by simp [τ, Δ]
 
-@[category test]
+@[category test, AMS 11]
 lemma τ_one : τ 1 = 1 := by
   obtain ⟨i, hi⟩ := by simpa using ((continuous_constantCoeff ℤ).tendsto _).comp multipliable.hasProd
   simp [τ, Δ, hi i]
 
-@[category test]
+@[category test, AMS 11]
 lemma τ_two : τ 2 = -24 := by
   sorry
 

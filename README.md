@@ -7,7 +7,8 @@ A collection of formalized statements of conjectures in
 [Lean](https://leanprover.github.io/lean4/doc/whatIsLean.html), using
 [mathlib](https://github.com/leanprover-community/mathlib4).
 
-<!--TODO(firsching): insert link to autmatically generated documentation once docgen4 works-->
+Explore the docs: [Formal Conjectures Documentation](https://google-deepmind.github.io/formal-conjectures/)
+
 
 ## Goals
 
@@ -68,19 +69,23 @@ There are various ways of contributing to this repository:
     an issue should contain links to suitable references, and ideally a precise
     informal statement of the conjecture.
 
-3.  **Improving the referencing and tagging of problems.** For example, adding
+3.  **Formalise a problem already proposed**. You can find a list of problems ready
+   to be worked on in our [list of unassigned new conjectures](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee+label%3A%22new+conjecture%22).
+   Just pick one and comment on the issue (e.g., "I want to work on this") to
+   have it assigned to you.
+
+4.  **Improving the referencing and tagging of problems.** For example, adding
     pointers to references in already existing files, or adding additional
     relevant `AMS` subject attributes to statements.
 
-4.  **Fixing misformalisations.** PRs fixing incorrect formalisations and issues
+5.  **Fixing misformalisations.** PRs fixing incorrect formalisations and issues
     flagging problems are encouraged.
 
 ### How to Contribute
 
 Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
 
-1.  Open an issue on GitHub specifying what you plan to contribute (and assign
-    yourself!)
+1.  Open an issue on GitHub specifying what you plan to contribute.
 2.  Fork the repository on GitHub.
 3.  Add your formalized conjecture(s) in the appropriate file/directory
     structure to a branch in your fork.
@@ -192,7 +197,7 @@ elaborator allows us to formulate the problem without deciding for an answer.
 ```lean
 @[category research open]
 theorem HadwigerNelsonProblem :
-    IsLeast {n : ℕ | ExistsColoring n} answer(sorry) := by
+    UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
   sorry
 ```
 

@@ -21,10 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/4](https://www.erdosproblems.com/4)
 -/
+
 open Real
 
 def Erdos4For (C : ℝ) : Prop :=
-  {n : ℕ | Nat.nth Prime (n + 1) - Nat.nth Prime n >
+  {n : ℕ | (n + 1).nth Nat.Prime  - n.nth Nat.Prime >
     C * log (log n) * log (log (log (log n))) / (log (log (log n))) ^ 2 * log n}.Infinite
 
 /--

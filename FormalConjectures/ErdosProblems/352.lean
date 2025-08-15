@@ -17,16 +17,23 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Legendre's conjecture
+# Erdős Problem 352
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Legendre%27s_conjecture)
+*Reference:* [erdosproblems.com/352](https://www.erdosproblems.com/352)
 -/
+
+open scoped EuclideanGeometry
+open scoped ProbabilityTheory
 
 /--
-Does there always exist at least one prime between consecutive perfect squares?
+Is there some c > 0 such that every measurable A ⊆ ℝ² of measure ≥ c
+ contains the vertices of a triangle of area 1?
 -/
-@[category research open, AMS 11]
-theorem legendre_conjecture :
-    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p)
-      ↔ answer(sorry) := by
+@[category research open, AMS 51]
+theorem erdos_352 :
+    (∃ c > (0: ℝ), ∀ A : Set ℝ², MeasurableSet A → ℙ A ≥ c.toEReal
+       → (∃ t : Affine.Triangle ℝ ℝ²,
+           (∀ p : Fin 3, t.points p ∈ A) ∧
+           EuclideanGeometry.triangle_area (t.points 0) (t.points 1) (t.points 2) = 1))
+    ↔ answer(sorry) := by
   sorry

@@ -43,18 +43,18 @@ def IsWolstenholmePrime (p : ℕ) : Prop :=
 /--
 Two known Wolstenholme primes: 16843 and 2124679.
 -/
-@[category test]
+@[category test, AMS 11]
 theorem wolstenholme_prime_16483 : IsWolstenholmePrime 16843 := by
   sorry
 
-@[category test]
+@[category test, AMS 11]
 theorem wolstenholme_prime_2124679 : IsWolstenholmePrime 2124679 := by
   sorry
 
 /--
 Equivalently, a prime $p > 7$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
 -/
-@[category API]
+@[category API, AMS 11]
 theorem wolstenholme_bernoulli (p : ℕ) : IsWolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑p ∣ (bernoulli' (p - 3)).num := by
   sorry
@@ -63,7 +63,7 @@ theorem wolstenholme_bernoulli (p : ℕ) : IsWolstenholmePrime p ↔
 Another equivalent definition is that a prime $p > 7$ is a Wolstenholme prime
 if it $p^3$ divides the numerator of the harmonic number $H_{p-1}$.
 -/
-@[category test]
+@[category test, AMS 11]
 theorem wolstenholme_harmonic (p : ℕ) : IsWolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑(p ^ 3) ∣ (harmonic (p - 1)).num := by
   sorry

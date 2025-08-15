@@ -17,16 +17,18 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Twin prime conjecture
+# Erdős Problem 251
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
+*Reference:* [erdosproblems.com/251](https://www.erdosproblems.com/251)
 -/
-
 
 /--
-Are there infinitely many primes p such that p + 2 is prime?
+Is
+$$\sum_{n} \frac{p_n}{2^n}$$
+irrational? Here $p_n$ is the $n$-th prime. With the convention $p_1 = 2$, the sum in the
+formal statement is half the sum in the informal statement, which doesn't influence the
+irrationality.
 -/
 @[category research open, AMS 11]
-theorem twin_primes :
-    {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite ↔ answer(sorry) := by
+theorem erdos_251 : Irrational (∑' n : ℕ, (Nat.nth Nat.Prime n) / (2 ^ n)) ↔ answer(sorry) := by
   sorry

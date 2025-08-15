@@ -17,15 +17,18 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Goldbach's conjecture
+# Erdős Problem 259
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Landau%27s_problems#Goldbach%27s_conjecture)
+*Reference:* [erdosproblems.com/259](https://www.erdosproblems.com/259)
 -/
+
+open scoped ArithmeticFunction
 
 /--
-Can every even integer greater than 2 be written as the sum of two primes?
+Is
+$$\sum_{n} \mu(n)^2\frac{n}{2^n}$$
+irrational?
 -/
 @[category research open, AMS 11]
-theorem goldbach (n : ℕ) (hn : 2 < n) (hn_even : Even n) :
-    ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+theorem erdos_259 : Irrational (∑' n : ℕ, (μ n) ^ 2 * n / (2 ^ n)) ↔ answer(sorry) := by
   sorry
