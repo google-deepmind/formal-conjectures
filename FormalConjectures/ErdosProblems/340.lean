@@ -31,7 +31,7 @@ and iteratively includes the next smallest integer that preserves the Sidon prop
 -/
 def IsSidon.IsGreedy {a : ℕ → ℕ} (ha : IsSidon (Set.range a)) : Prop :=
   a 0 = 1 ∧ ∀ n, a (n + 1) =
-    Nat.find (ha.subset (Finset.coe_image_subset_range (s := Finset.range n))).exists_insert
+    Nat.find (ha.subset (Finset.coe_image_subset_range (s := Finset.range (n + 1)))).exists_insert
 
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
