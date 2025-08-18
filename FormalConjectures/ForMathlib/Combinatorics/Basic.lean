@@ -15,7 +15,9 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Nat.Lattice
+import Mathlib.Tactic.Linarith
 
 open Function Set
 
@@ -34,3 +36,55 @@ lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [AddCommMonoid α] (A : Set
 noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
   sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
 
+theorem IsSidon.insert {A : Set α} {m : α} [IsRightCancelAdd α] [IsLeftCancelAdd α]
+    (hA : IsSidon A) :
+    IsSidon (A ∪ {m}) ↔ (m ∈ A ∨ ∀ᵉ (a ∈ A) (b ∈ A), m + m ≠ a + b ∧ ∀ c ∈ A, m + a ≠ b + c) := by
+  by_cases h_mem : m ∈ A
+  · exact ⟨fun _ ↦ .inl h_mem, fun _ ↦ by rwa [union_singleton, insert_eq_of_mem h_mem]⟩
+  refine ⟨fun h ↦ .inr fun a ha b hb ↦ ⟨fun hc ↦ ?_, fun c hc h_contr ↦ ?_⟩, fun hm ↦ ?_⟩
+  · exact h m (by simp) a (by simp [ha]) m (by simp) b (by simp [hb]) hc
+      |>.elim (fun _ ↦ by simp_all) (fun _ ↦ by simp_all)
+  · exact h m (by simp) b (by simp [hb]) a (by simp [ha]) c (by simp [hc]) h_contr
+      |>.elim (fun _ ↦ by simp_all) (fun _ ↦ by simp_all)
+  · intro i₁ hi₁
+    rcases hi₁ with (hi₁ | hi₁)
+    · intro j₁ hj₁
+      rcases hj₁ with (hj₁ | hj₁)
+      · intro i₂ hi₂
+        rcases hi₂ with (hi₂ | hi₂)
+        · intro j₂ hj₂
+          rcases hj₂ with (hj₂ | hj₂)
+          · exact fun h ↦ hA i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ h
+          · simp_all
+            exact fun h ↦ by cases (hm j₁ hj₁ i₁ hi₁).2 i₂ hi₂ (add_comm j₁ m ▸ h.symm)
+        · simp_all
+          exact fun a ha h ↦ by cases (hm i₁ hi₁ j₁ hj₁).2 a ha (add_comm i₁ m ▸ h)
+      · simp_all
+        refine ⟨fun b hb h ↦ .inr <| by simp_all [add_comm], fun b hb ↦ ⟨fun h ↦ ?_, ?_⟩⟩
+        · cases (hm i₁ hi₁ b hb).1 h.symm
+        · exact fun c hc h ↦ by cases ((hm c hc i₁ hi₁).2 b hb) h.symm
+    · simp_all
+      exact fun _ _ _ _ _ ↦ by simp_all [add_comm]
+
+theorem IsSidon.exists_insert {A : Finset ℕ} (hA : IsSidon A.toSet) :
+    ∃ m ∉ A, IsSidon (A ∪ {m}) := by
+  by_cases h_empty : A.Nonempty
+  · have h {a b : ℕ} (ha : a ∈ A) (hb : b ∈ A) : a + b < 2 * ∑ a ∈ A, a + 1 := by
+      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') ha
+      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') hb
+      simp_all only [id_eq]
+      linarith
+    have h₁ {a b c : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A) :
+        a + b < 2 * ∑ a ∈ A, a + 1 + c := by
+      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') ha
+      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') hb
+      simp_all only [id_eq]
+      linarith
+    have : 2 * ∑ a ∈ A, a + 1 ∉ A := by
+      refine mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ ?_
+      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') ha
+      simp only [id_eq] at this
+      linarith
+    refine ⟨2 * ∑ a ∈ A, a + 1, this, hA.insert.2 ?_⟩
+    simpa [this] using fun a ha b hb ↦ ⟨by linarith [h ha hb], fun c hc ↦ by linarith [h₁ hc hb ha]⟩
+  · exact ⟨1, by simp_all [IsSidon]⟩
