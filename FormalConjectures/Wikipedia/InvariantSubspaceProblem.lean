@@ -19,7 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Invariant Subspace Problem
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Invariant_subspace_problem)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Invariant_subspace_problem),
+[Chalendar-Partington](https://arxiv.org/abs/2507.21834)
 -/
 
 variable {H : Type*} [NormedAddCommGroup H]
