@@ -52,6 +52,7 @@ there exists an element that belongs to at least half of the sets in the family.
 -/
 @[category research open, AMS 5]
 theorem union_closed
+    [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A) :
     ∃ i : n, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
@@ -64,6 +65,7 @@ Yu [Yu23] showed that the union-closed sets conjecture holds with a constant of 
 -/
 @[category research solved, AMS 5]
 theorem union_closed.variants.yu
+    [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A) :
     ∃ i : n, (0.38234 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
@@ -75,7 +77,8 @@ whose universal set has cardinality at most 12.
 [Vu17] Vuckovic, Bojan; Zivkovic, Miodrag (2017). "The 12-Element Case of Frankl's Conjecture" (PDF). IPSI BGD Transactions on Internet Research. 13 (1): 65.
 -/
 @[category research solved, AMS 5]
-theorem union_closed.variants.univ_card [Fintype n]
+theorem union_closed.variants.univ_card
+    [Fintype n] [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A)
     (h_card : Fintype.card n ≤ 12) :
@@ -92,6 +95,7 @@ as well.
 -/
 @[category research solved, AMS 5]
 theorem union_closed.variants.family_card
+    [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A)
     (hA : #A ≤ 50) :
