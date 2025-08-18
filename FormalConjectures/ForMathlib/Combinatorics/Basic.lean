@@ -71,23 +71,23 @@ theorem IsSidon.insert {A : Set α} {m : α} [IsRightCancelAdd α] [IsLeftCancel
 
 theorem IsSidon.exists_insert {A : Finset ℕ} (hA : IsSidon A.toSet) :
     ∃ m ∉ A, IsSidon (A ∪ {m}) := by
-  by_cases h_empty : A.Nonempty
-  · have h {a b : ℕ} (ha : a ∈ A) (hb : b ∈ A) : a + b < 2 * ∑ a ∈ A, a + 1 := by
-      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') ha
-      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') hb
-      simp_all only [id_eq]
-      linarith
-    have h₁ {a b c : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A) :
-        a + b < 2 * ∑ a ∈ A, a + 1 + c := by
-      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') ha
-      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') hb
-      simp_all only [id_eq]
-      linarith
-    have : 2 * ∑ a ∈ A, a + 1 ∉ A := by
-      refine mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ ?_
-      have := A.single_le_sum (f := id) (fun _ _ ↦ zero_le') ha
-      simp only [id_eq] at this
-      linarith
-    refine ⟨2 * ∑ a ∈ A, a + 1, this, hA.insert.2 ?_⟩
-    simpa [this] using fun a ha b hb ↦ ⟨by linarith [h ha hb], fun c hc ↦ by linarith [h₁ hc hb ha]⟩
+  by_cases h : A.Nonempty
+  · have h₁ {a b c : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A) :
+        a + b < 2 * A.max' h + 1 + c := by linarith [A.le_max' _ ha, A.le_max' _ hb]
+    have : 2 * A.max' h + 1 ∉ A := by
+      refine mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
+        linarith [A.le_max' _ ha]
+    refine ⟨2 * A.max' h + 1, this, hA.insert.2 ?_⟩
+    simpa [this] using fun a ha b hb ↦ ⟨by linarith [A.le_max' _ ha, A.le_max' _ hb],
+      fun c hc ↦ by linarith [h₁ hc hb ha]⟩
   · exact ⟨1, by simp_all [IsSidon]⟩
+
+theorem IsSidon.insert_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A.toSet) :
+    IsSidon (A ∪ {2 * A.max' h + 1}) := by
+  have h₁ {a b c : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A) :
+        a + b < 2 * A.max' h + 1 + c := by linarith [A.le_max' _ ha, A.le_max' _ hb]
+  have : 2 * A.max' h + 1 ∉ A := by
+    refine mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
+      linarith [A.le_max' _ ha]
+  exact hA.insert.2 <| by simpa [this] using fun a ha b hb ↦
+    ⟨by linarith [A.le_max' _ ha, A.le_max' _ hb], fun c hc ↦ by linarith [h₁ hc hb ha]⟩
