@@ -25,14 +25,14 @@ import FormalConjectures.Util.ProblemImports
 open Filter
 open scoped Real Pointwise
 
-instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
+local instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
   decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
 
 private def greedySidon.go (A : Finset ℕ) (m : ℕ) : ℕ :=
   if h : A.Nonempty then
-  if m > 2 * A.max' h then 2 * A.max' h + 1 else
-  if m ∉ A ∧ IsSidon (A ∪ {m}).toSet then m
-  else greedySidon.go A (m + 1)
+    if m > 2 * A.max' h then 2 * A.max' h + 1
+      else if m ∉ A ∧ IsSidon (A ∪ {m}).toSet then m
+        else greedySidon.go A (m + 1)
   else 0
 termination_by if h : A.Nonempty then (2 * A.max' h + 1 - m) else 0
 decreasing_by
