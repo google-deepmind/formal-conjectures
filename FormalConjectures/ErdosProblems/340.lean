@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 open Filter
 open scoped Real Pointwise
 
-local instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
+instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
   decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
 
 private def greedySidon.go (A : Finset ℕ) (m : ℕ) : ℕ :=
@@ -42,11 +42,11 @@ decreasing_by
 
 @[category test, AMS 5]
 example : greedySidon.go {1} 2 = 2 := by
-  native_decide
+  decide +kernel
 
 @[category test, AMS 5]
 example : greedySidon.go {1, 2} 3 = 4 := by
-  native_decide
+  decide +kernel
 
 private def greedySidon.aux (n : ℕ) : (Finset ℕ × ℕ) :=
   match n with
@@ -73,19 +73,19 @@ example : greedySidon 1 = 2 := by
 
 @[category test, AMS 5]
 example : greedySidon 2 = 4 := by
-  native_decide
+  decide +kernel
 
 @[category test, AMS 5]
 example : greedySidon 3 = 8 := by
-  native_decide
+  decide +kernel
 
 @[category test, AMS 5]
 example : greedySidon 4 = 13 := by
-  native_decide
+  decide +kernel
 
 @[category test, AMS 5]
 example : greedySidon 5 = 21 := by
-  native_decide
+  decide +kernel
 
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
