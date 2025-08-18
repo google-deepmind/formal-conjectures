@@ -34,7 +34,7 @@ structure ClosedInvariantSubspace [Module ℂ H] (T : H →L[ℂ] H) where
   is_fixed : toSubspace.map T ≤ toSubspace
 
 /--
-Determine whether every bounded linear operator `T : H → H` in a separable Hilbert space `H` has a
+Show that every bounded linear operator `T : H → H` in a separable Hilbert space `H` has a
 non-trivial closed `T`-invariant subspace: a closed linear subspace `W` of `H`, which is different
 from `{ 0 }` and from `H`, such that `T ( W ) ⊂ W`.-/
 @[category research open, AMS 47]
