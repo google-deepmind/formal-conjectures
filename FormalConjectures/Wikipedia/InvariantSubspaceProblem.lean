@@ -24,11 +24,20 @@ import FormalConjectures.Util.ProblemImports
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] [TopologicalSpace.SeparableSpace H]
 
+/-- `ClosedInvariantSubspace T` is the type of closed subspaces of complex vector space `H`
+that are invariant under the action of linear map `x`. -/
+structure ClosedInvariantSubspace (T : H →L[ℂ] H) where
+  toSubspace : Submodule ℂ H
+  ne_bot : toSubspace ≠ ⊥
+  ne_top : toSubspace ≠ ⊤
+  is_closed : IsClosed (toSubspace : Set H)
+  is_fixed : toSubspace.map T ≤ toSubspace
+
 /--
 Determine whether every bounded linear operator `T : H → H` in a separable Hilbert space `H` has a
 non-trivial closed `T`-invariant subspace: a closed linear subspace `W` of `H`, which is different
 from `{ 0 }` and from `H`, such that `T ( W ) ⊂ W`.-/
 @[category research open, AMS 47]
-theorem Invariant_subspace_problem (x : H →L[ℂ] H) : (∃ (S : Submodule ℂ H), S.carrier ≠ ∅ ∧
-    S.carrier ≠ {0} ∧ S.carrier ≠ Set.univ ∧ IsClosed S.carrier ∧ ∀ v ∈ S, x v ∈ S.carrier) := by
- sorry
+theorem Invariant_subspace_problem (T : H →L[ℂ] H) : Nonempty (ClosedInvariantSubspace T) := by
+  sorry
+
