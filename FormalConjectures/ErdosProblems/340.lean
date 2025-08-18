@@ -29,7 +29,7 @@ open scoped Real Classical Pointwise
 A function `a : ℕ → ℕ` represents the greedy Sidon sequence if it starts with `1`
 and iteratively includes the next smallest integer that preserves the Sidon property.
 -/
-def IsGreedySidonSeq {a : ℕ → ℕ} (ha : IsSidon (Set.range a)) : Prop :=
+def IsSidon.IsGreedy {a : ℕ → ℕ} (ha : IsSidon (Set.range a)) : Prop :=
   a 0 = 1 ∧ ∀ n, a (n + 1) =
     Nat.find (ha.subset (Finset.coe_image_subset_range (s := Finset.range n))).exists_insert
 
@@ -42,7 +42,7 @@ for all $\varepsilon > 0$ and large $N$?
 -/
 @[category research open, AMS 5]
 theorem erdos_340 (ε : ℝ) (hε : ε > 0) (a : ℕ → ℕ) (ha₁ : IsSidon (Set.range a))
-    (ha₂ : IsGreedySidonSeq ha₁) :
+    (ha₂ : ha₁.IsGreedy) :
     (fun n : ℕ ↦ √n / n ^ ε) =o[atTop] fun n : ℕ ↦ ((Set.range a ∩ Set.Iio n).ncard : ℝ) := by
   sorry
 
@@ -51,7 +51,7 @@ It is trivial that this sequence grows at least like $\gg N^{1/3}$.
 -/
 @[category undergraduate, AMS 5]
 theorem erdos_340.variants.third (ε : ℝ) (hε : ε > 0) (a : ℕ → ℕ) (ha₁ : IsSidon (Set.range a))
-    (ha₂ : IsGreedySidonSeq ha₁) :
+    (ha₂ : ha₁.IsGreedy) :
     (fun n : ℕ ↦ (n : ℝ) ^ ((1 : ℝ) / 3)) =o[atTop]
       fun n : ℕ ↦ ((Set.range a ∩ Set.Iio n).ncard : ℝ) := by
   sorry
@@ -65,7 +65,7 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 -/
 @[category research open, AMS 5]
 theorem erdos_340.variants.sub_hasPosDensity (a : ℕ → ℕ) (ha₁ : IsSidon (Set.range a))
-    (ha₂ : IsGreedySidonSeq ha₁) :
+    (ha₂ : ha₁.IsGreedy) :
     Set.HasPosDensity (Set.range a - Set.range a) :=
   sorry
 
@@ -78,7 +78,7 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 -/
 @[category research solved, AMS 5]
 theorem erdos_340.variants._22_mem_sub (a : ℕ → ℕ) (ha₁ : IsSidon (Set.range a))
-    (ha₂ : IsGreedySidonSeq ha₁) :
+    (ha₂ : ha₁.IsGreedy) :
     22 ∈ Set.range a - Set.range a :=
   sorry
 
@@ -87,7 +87,7 @@ The smallest integer which is unknown to be in $A - A$ is $33$.
  -/
 @[category research open, AMS 5]
 theorem erdos_340.variants._33_mem_sub (a : ℕ → ℕ) (ha₁ : IsSidon (Set.range a))
-    (ha₂ : IsGreedySidonSeq ha₁) :
+    (ha₂ : ha₁.IsGreedy) :
     33 ∈ Set.range a - Set.range a ↔ answer(sorry) :=
   sorry
 
@@ -96,6 +96,6 @@ It may be true that all or almost all integers are in $A - A$.
 -/
 @[category research open, AMS 5]
 theorem erdos_340.variants.cofinite_sub (a : ℕ → ℕ) (ha₁ : IsSidon (Set.range a))
-    (ha₂ : IsGreedySidonSeq ha₁) :
+    (ha₂ : ha₁.IsGreedy) :
     (∀ᶠ n in cofinite, n ∈ Set.range a - Set.range a) ↔ answer(sorry) :=
   sorry
