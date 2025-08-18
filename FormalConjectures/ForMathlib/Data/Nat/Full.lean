@@ -26,6 +26,11 @@ $p^k$ also divides $n$.
 -/
 def Full (k : ℕ) (n : ℕ) : Prop := ∀ p ∈ n.primeFactors, p^k ∣ n
 
+instance Nat.Full.decide : ∀ k n, Decidable (Full k n) := by
+  intro k n
+  dsimp [Full]
+  infer_instance
+
 /--
 A [Powerful number](https://en.wikipedia.org/wiki/Powerful_number) is a natural number $n$ where
 for every prime divisor $p$, $p^2$ divides $n$.
@@ -33,6 +38,10 @@ Powerful numbers are also known as "squareful", "square-full", or "$2$-full".
 -/
 abbrev Powerful : ℕ → Prop := (2).Full
 
+instance Nat.Powerful.decide : ∀ n, Decidable (Powerful n) := by
+  intro n
+  dsimp [Powerful, Full]
+  apply Finset.decidableDforallFinset
 
 theorem full_of_le_full (k : ℕ) (n : ℕ) {m : ℕ} (hk : k ≤ m) (h : m.Full n) : k.Full n :=
   fun p a ↦ pow_dvd_of_le_of_pow_dvd hk (h p a)
