@@ -30,7 +30,7 @@ This defines the core property of the problem: For what values of $t,\alpha \in 
 is the sequence $\lfloor t\alpha^n\rfloor$ complete?
 -/
 private def IsGoodPair (t α : ℝ) : Prop :=
-  IsAdditivelyComplete (range (fun n ↦ ⌊t * α ^ n⌋))
+  IsAddComplete (range (fun n ↦ ⌊t * α ^ n⌋))
 
 /--
 For what values of $t,\alpha \in (0,\infty)$ is the sequence $\lfloor t\alpha^n\rfloor$ complete
