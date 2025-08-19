@@ -91,7 +91,7 @@ theorem kurepa_conjecture.variant.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 
 theorem kurepa_conjecture.gcd_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
     ↔ (∀ n, 2 < n → (n)!.gcd (!n) = 2) := by
   refine ⟨fun h n hn ↦ match n with | S + 1 => gcd_eq_iff.2 ?_,
-    fun h n hn _ ↦ n.not_dvd_of_pos_of_lt (by omega) hn <| h n hn ▸ n.dvd_gcd
+    fun h n hn _ ↦ Nat.not_dvd_of_pos_of_lt (by omega) hn <| h n hn ▸ n.dvd_gcd
       (n.dvd_factorial hn.pos le_rfl) (dvd_of_mod_eq_zero ‹_›)⟩
   refine ⟨Nat.factorial_dvd_factorial hn.le, ?_, fun c hc h_dvd ↦ ?_⟩
   · match S with
