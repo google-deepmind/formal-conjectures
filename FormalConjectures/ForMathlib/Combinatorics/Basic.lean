@@ -69,12 +69,32 @@ theorem IsSidon.insert {A : Set α} {m : α} [IsRightCancelAdd α] [IsLeftCancel
     · simp_all
       exact fun _ _ _ _ _ ↦ by simp_all [add_comm]
 
-theorem IsSidon.insert_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A.toSet) :
-    IsSidon (A ∪ {2 * A.max' h + 1}) := by
+/-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
+theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A.toSet) {s : ℕ}
+    (hs : 2 * A.max' h + 1 ≤ s) :
+    IsSidon (A ∪ {s}).toSet := by
   have h₁ {a b c : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A) :
         a + b < 2 * A.max' h + 1 + c := by linarith [A.le_max' _ ha, A.le_max' _ hb]
-  have : 2 * A.max' h + 1 ∉ A := by
-    refine mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
+  have : s ∉ A := by
+    exact mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
       linarith [A.le_max' _ ha]
+  push_cast
   exact hA.insert.2 <| by simpa [this] using fun a ha b hb ↦
     ⟨by linarith [A.le_max' _ ha, A.le_max' _ hb], fun c hc ↦ by linarith [h₁ hc hb ha]⟩
+
+theorem IsSidon.exists_insert {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A.toSet) :
+    ∃ m ∉ A, IsSidon (A ∪ {m}).toSet := by
+  refine ⟨2 * A.max' h + 1, ?_, insert_ge_max' h hA le_rfl⟩
+  exact mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
+    linarith [A.le_max' _ ha]
+
+theorem IsSidon.exists_insert_ge {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A.toSet) (s : ℕ) :
+    ∃ m ≥ s, m ∉ A ∧ IsSidon (A ∪ {m}).toSet := by
+  refine ⟨if s ≥ 2 * A.max' h + 1 then s else 2 * A.max' h + 1, ?_, ?_, ?_⟩
+  · split_ifs <;> linarith
+  · split_ifs <;>
+    exact mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
+      linarith [A.le_max' _ ha]
+  · split_ifs with hs
+    · exact IsSidon.insert_ge_max' h hA hs
+    · exact IsSidon.insert_ge_max' h hA le_rfl

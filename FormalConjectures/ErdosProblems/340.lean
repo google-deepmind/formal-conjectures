@@ -28,64 +28,67 @@ open scoped Real Pointwise
 local instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
   decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
 
-private def greedySidon.go (A : Finset ℕ) (m : ℕ) : ℕ :=
+/-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
+such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
+the lower bound is required to avoid `0` being a contender in some cases. -/
+private def greedySidon.go (A : Finset ℕ) (hA : IsSidon A.toSet) (m : ℕ) :
+    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (A ∪ {m'}).toSet} :=
   if h : A.Nonempty then
-    if m > 2 * A.max' h then 2 * A.max' h + 1
-      else if m ∉ A ∧ IsSidon (A ∪ {m}).toSet then m
-        else greedySidon.go A (m + 1)
-  else 1
-termination_by if h : A.Nonempty then (2 * A.max' h + 1 - m) else 0
-decreasing_by
-  split_ifs
-  simp_all [Nat.sub_add_eq]
-  linarith
+    ⟨Nat.find (IsSidon.exists_insert_ge h hA m), Nat.find_spec (IsSidon.exists_insert_ge h hA m)⟩
+  else ⟨m, by simp_all [IsSidon]⟩
 
 @[category test, AMS 5]
-example : greedySidon.go {1} 2 = 2 := by
-  decide +kernel
+example : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
+  decide
 
 @[category test, AMS 5]
-example : greedySidon.go {1, 2} 3 = 4 := by
-  decide +kernel
+example : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
+  decide
 
-private def greedySidon.aux (n : ℕ) : (Finset ℕ × ℕ) :=
+/-- Main search loop for generating the greedy Sidon sequence. The return value for step `n` is the
+finite set of numbers generated so far, a proof that it is Sidon, and the greatest element of
+the finite set at that point. This is initialised at `{1}`, then `greedySidon.go` is
+called iteratively using the lower bound `max + 1` to find the next smallest Sidon preserving
+number. -/
+private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon A.toSet} × ℕ) :=
   match n with
-  | 0 => ({1}, 2)
+  | 0 => (⟨{1}, by simp [IsSidon]⟩, 1)
   | k + 1 =>
     let (A, s) := greedySidon.aux k
-    let s' := greedySidon.go (A ∪ {s}) (s + 1)
-    (A ∪ {s}, s')
-termination_by n
+    let s := if h : A.1.Nonempty then A.1.max' h + 1 else s
+    let s' := greedySidon.go A.1 A.2 s
+    (⟨A ∪ {s'.1}, s'.2.2.2⟩, s')
 
 /-- `greedySidon` is the sequence obtained by the initial set $\{1\}$ and iteratively obtaining
 then next smallest integer that preserves the Sidon property of the set. This gives the
 sequence `1, 2, 4, 8, 13, 21, 31, ...`. -/
-def greedySidon (n : ℕ) : ℕ := match n with
-  | 0 => 1
-  | m + 1 => greedySidon.aux m |>.2
+def greedySidon (n : ℕ) : ℕ := greedySidon.aux n |>.2
 
 @[category test, AMS 5]
 example : greedySidon 0 = 1 := rfl
 
 @[category test, AMS 5]
 example : greedySidon 1 = 2 := by
-  simp [greedySidon, greedySidon.aux]
+  decide
 
 @[category test, AMS 5]
 example : greedySidon 2 = 4 := by
-  decide +kernel
+  decide
 
 @[category test, AMS 5]
 example : greedySidon 3 = 8 := by
-  decide +kernel
-
+  decide
 @[category test, AMS 5]
 example : greedySidon 4 = 13 := by
-  decide +kernel
+  decide
 
 @[category test, AMS 5]
 example : greedySidon 5 = 21 := by
-  decide +kernel
+  decide
+
+@[category test, AMS 5]
+example : greedySidon 10 = 97 := by
+  decide +native
 
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
