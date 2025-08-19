@@ -31,8 +31,8 @@ such that all pairwise distances are integers?
 @[category research open, AMS 52]
 theorem erdos_213 : ∀ n : ℕ, n ≥ 4 →
     (∃ S : Set ℝ², S.Finite ∧ S.ncard = n ∧
-                   (∀ T : Set ℝ², T ⊆ S ∧ T.ncard = 3 → ¬ Collinear ℝ T) ∧
-                   (∀ Q : Set ℝ², Q ⊆ S ∧ Q.ncard = 4 → ¬ EuclideanGeometry.Cospherical Q) ∧
-                   (S.Pairwise fun p₁ p₂ => dist p₁ p₂ ∈ Set.range Int.cast))
+      (∀ T : Set ℝ², T ⊆ S ∧ T.ncard = 3 → ¬ Collinear ℝ T) ∧
+      (∀ Q : Set ℝ², Q ⊆ S ∧ Q.ncard = 4 → ¬ EuclideanGeometry.Cospherical Q) ∧
+      (S.Pairwise fun p₁ p₂ => dist p₁ p₂ ∈ Set.range Int.cast))
     ↔ answer(sorry) := by
   sorry
