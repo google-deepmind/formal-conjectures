@@ -44,7 +44,7 @@ Both definitions are equivalent.
 
 TOOD(firsching): complete and golf the proof
 -/
-@[category test]
+@[category test, AMS 15]
 example (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
   simp [IsHadamard, IsHadamard']
   intro h
@@ -85,7 +85,7 @@ There exists a Hadamard matrix for all $n = 4k$.
 theorem HadamardConjecture (k : ℕ) : ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
-@[category test]
+@[category test, AMS 15]
 example : ∃ M, IsHadamard (n := 0) M := by
   use 0
   simp [IsHadamard]
@@ -109,7 +109,7 @@ def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
 /--
 which satisifies the condition.
 -/
-@[category test]
+@[category test, AMS 15]
 example : IsHadamard H12 := by
   sorry
 

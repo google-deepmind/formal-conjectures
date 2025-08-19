@@ -17,6 +17,7 @@ limitations under the License.
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
 import Mathlib.Combinatorics.Enumerative.Bell
 import Mathlib.Combinatorics.SimpleGraph.Finite
+import Mathlib.Data.Nat.Lattice
 
 open Function Set
 
@@ -48,6 +49,7 @@ lemma SidonSubsetsSizesNonempty (n : ℕ) : (SidonSubsetsSizes n).Nonempty := by
   use ∅
   simp [SidonSubsets, IsSidon, Set.Pairwise, Finset.mem_filter, Finset.mem_powerset, Finset.card_empty]
 
-/-- The maximum size of a Sidon subset of `{0, ..., n - 1}`. -/
-noncomputable def maxSidonSetSize (n : ℕ) : ℕ :=
-  (SidonSubsetsSizes n).max' (SidonSubsetsSizesNonempty n)
+/-- The maximum size of a Sidon set in `{1, ..., N}`. -/
+noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
+  sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
+
