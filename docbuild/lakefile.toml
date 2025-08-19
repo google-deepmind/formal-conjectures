@@ -7,11 +7,10 @@ packagesDir = "../.lake/packages"
 name = "formal_conjectures"
 path = "../"
 
-# using fork here, because it contains a backported fix. Can be dropped after bump to v4.20.0
 [[require]]
+scope = "leanprover"
 name = "doc-gen4"
-git = "https://github.com/mo271/doc-gen4"
-rev = "b760b91540bcf92c2ab6ac2bc28207e090769da8"
+rev = "v4.20.1"
 
 [[lean_exe]]
 name = "overwrite_index"
