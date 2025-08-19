@@ -17,20 +17,22 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 236
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/236](https://www.erdosproblems.com/236)
 -/
 
-open Nat Filter
+open Filter Asymptotics
 
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
+/-- 
+$f(n)$ counts the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$.
+-/
+private def f (n : ℕ) : ℕ :=
+  ((List.range (Nat.log2 n + 1)).filter (fun k => Nat.Prime (n - 2^k))).length
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+Let $f(n)$ count the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$. Show that $f(n)=o(\log n)$.
 -/
-@[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+@[category research open, AMS 5 11]
+theorem erdos_236: (fun n => (f n : ℝ)) =o[atTop] (fun n => Real.log (n : ℝ)) := by 
   sorry

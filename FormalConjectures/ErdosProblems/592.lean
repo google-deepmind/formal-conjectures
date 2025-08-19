@@ -17,20 +17,22 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 592
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/592](https://www.erdosproblems.com/592)
 -/
 
-open Nat Filter
+open Cardinal Ordinal
 
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
+universe u
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+Determine which countable ordinals $β$ have the property that, if $α = \omega^β$, then in any
+red/blue colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
-@[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+@[category research open, AMS 3]
+theorem erdos_592 (β : Ordinal.{u}) : (β.card ≤ ℵ₀) →
+  OmegaPowerRamsey β 3 ↔ (answer(sorry) : Ordinal.{u} → Prop) β := by
   sorry
+
+-- TODO(firsching): add condition by Galvin and Larson.
