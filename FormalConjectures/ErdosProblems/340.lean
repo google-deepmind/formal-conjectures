@@ -33,7 +33,7 @@ private def greedySidon.go (A : Finset ℕ) (m : ℕ) : ℕ :=
     if m > 2 * A.max' h then 2 * A.max' h + 1
       else if m ∉ A ∧ IsSidon (A ∪ {m}).toSet then m
         else greedySidon.go A (m + 1)
-  else 0
+  else 1
 termination_by if h : A.Nonempty then (2 * A.max' h + 1 - m) else 0
 decreasing_by
   split_ifs
