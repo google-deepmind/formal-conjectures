@@ -43,3 +43,42 @@ to the nearest integer.
 theorem littlewood_conjecture (α β : ℝ) :
     atTop.liminf (fun (n : ℕ) ↦ n * distToNearestInt (n * α) * distToNearestInt (n * β)) = 0 := by
   sorry
+
+section MatrixGroupConjecture
+
+open Matrix
+open scoped MatrixGroups
+
+section
+variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
+
+-- This instance can be made more general (this is being done in https://github.com/leanprover-community/mathlib4/pull/27596)
+instance : TopologicalSpace (SpecialLinearGroup n ℝ) :=
+  inferInstanceAs (TopologicalSpace { A : Matrix n n ℝ // A.det = 1 })
+
+end
+
+open Pointwise
+
+/-- `SL_n(ℤ)`, viewed as a subgroup of `SL_n(ℝ)`-/
+private abbrev SpecialLinearGroupIntSubgroup (n : ℕ) : Subgroup SL(n, ℝ) :=
+  (⊤ : Subgroup _).map (SpecialLinearGroup.map (Int.castRingHom ℝ))
+
+/-
+Formalisation note: the original wiki page seems uses left quotients, but it seems (based on
+the existing litterature that one should be taking right quotients. This is what has been done
+here).
+-/
+
+/-- Let `n ≥ 3`, `G = SL_n(ℝ)` and `Γ = SL_n(ℤ)`, and the subgroup `D` of diagonal matrices in `G`.
+
+Conjecture: for any `g` in `Γ\G` such that `Dg` is relatively compact (in `Γ\G`), then `Dg` is closed.-/
+@[category research open, AMS 11 15 22]
+theorem matrix_group_conjecture {n : ℕ} (hn : 3 ≤ n) (g : MulOpposite SL(n, ℝ))
+    (D : Set (MulOpposite SL(n, ℝ) ⧸
+      ((⊤ : Subgroup _).map (SpecialLinearGroup.map (Int.castRingHom ℝ))).op))
+    (D_def : D = QuotientGroup.mk '' (Matrix.SpecialLinearGroup.diagonalSubgroup _ _).op.carrier)
+    (hg : IsCompact <| closure (g • D)) : IsClosed (g • D) :=
+  sorry
+
+end MatrixGroupConjecture
