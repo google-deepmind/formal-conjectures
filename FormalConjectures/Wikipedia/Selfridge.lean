@@ -56,7 +56,7 @@ Note: this is non-standard terminology. -/
 @[mk_iff]
 structure IsPseudoSelfridge (p : ℕ) where
   is_odd : Odd p
-  mod_5 : (p ≡ 1 [MOD 5] ∨ p ≡ 4 [MOD 5])
+  mod_5 : p ≡ 1 [MOD 5] ∨ p ≡ 4 [MOD 5]
   pow_2 : 2^(p-1) ≡ 1 [MOD p]
   fib : (p-1).fib ≡ 0 [MOD p]
 
