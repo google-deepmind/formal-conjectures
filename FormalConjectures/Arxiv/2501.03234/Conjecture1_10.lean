@@ -24,6 +24,8 @@ by *Yan Yablonovskiy*
 -/
 
 
-open BigOperators
-open Finset
-open Nat
+
+open Nat Finset BigOperators in
+theorem Conjecture1_10 (k: ℕ) (hprim: Nat.Prime k) (hodd: Odd k) : (∑ h ∈ range (k-2), (∑ j ∈ range (h-2),
+    (-1:ℤ)^( (j+1) + 1 + (floor ((h+1)*(j+1) / k)) ) )) > 0 := by
+  sorry
