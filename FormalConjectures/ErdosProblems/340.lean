@@ -99,7 +99,7 @@ for all $\varepsilon > 0$ and large $N$?
 -/
 @[category research open, AMS 5]
 theorem erdos_340 (ε : ℝ) (hε : ε > 0) :
-    (fun n : ℕ ↦ √n / n ^ ε) =o[atTop]
+    (fun n : ℕ ↦ √n / n ^ ε) =O[atTop]
       fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Iio n).ncard : ℝ) := by
   sorry
 
@@ -108,7 +108,7 @@ It is trivial that this sequence grows at least like $\gg N^{1/3}$.
 -/
 @[category undergraduate, AMS 5]
 theorem erdos_340.variants.third (ε : ℝ) (hε : ε > 0) :
-    (fun n : ℕ ↦ (n : ℝ) ^ ((1 : ℝ) / 3)) =o[atTop]
+    (fun n : ℕ ↦ (n : ℝ) ^ ((1 : ℝ) / 3)) =O[atTop]
       fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Iio n).ncard : ℝ) := by
   sorry
 
