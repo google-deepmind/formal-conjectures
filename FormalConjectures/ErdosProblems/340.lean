@@ -100,7 +100,7 @@ for all $\varepsilon > 0$ and large $N$?
 @[category research open, AMS 5]
 theorem erdos_340 (ε : ℝ) (hε : ε > 0) :
     (fun n : ℕ ↦ √n / n ^ ε) =O[atTop]
-      fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Iio n).ncard : ℝ) := by
+      fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ) := by
   sorry
 
 /--
