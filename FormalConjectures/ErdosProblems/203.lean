@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 Is there an integer m with (m, 6) = 1 such that none of 2^k * 3^ℓ * m + 1 are prime,
 for any k, ℓ ≥ 0?
 -/
-@[category research open, AMS 05]
+@[category research open, AMS 5]
 theorem erdos_203 : ∃ m : ℕ, Nat.Coprime m 6 ∧ (∀ k l : ℕ, ¬ Nat.Prime (2^k * 3^l * m + 1))
   ↔ answer(sorry) := by
 sorry
