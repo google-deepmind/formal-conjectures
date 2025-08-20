@@ -26,6 +26,11 @@ by *Yan Yablonovskiy*
 
 
 open Nat Finset BigOperators in
-theorem Conjecture1_10 (k: ℕ) (hprim: Nat.Prime k) (hodd: Odd k) : (∑ h ∈ range (k-2), (∑ j ∈ range (h-2),
-    (-1:ℤ)^( (j+1) + 1 + (floor ((h+1)*(j+1) / k)) ) )) > 0 := by
+/--
+**Conjecture 1.10**: For any odd prime k, the sum associated with the classical theta function θ₃
+is positive.
+-/
+@[category research open, AMS 11]
+theorem Conjecture1_10 (k: ℕ) (hprim: Nat.Prime k) (hodd: k > 2) : (∑ h ∈ range (k-2),
+    (∑ j ∈ range (h-2),(-1:ℤ)^( (j+1) + 1 + ⌊(h + 1) * (j + 1) / k⌋₊ ) ) ) > 0 := by
   sorry
