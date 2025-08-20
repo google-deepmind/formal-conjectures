@@ -27,6 +27,5 @@ Is there an integer m with (m, 6) = 1 such that none of 2^k * 3^ℓ * m + 1 are 
 for any k, ℓ ≥ 0?
 -/
 @[category research open, AMS 5]
-theorem erdos_203 : ∃ m : ℕ, Nat.Coprime m 6 ∧ (∀ k l : ℕ, ¬ Nat.Prime (2^k * 3^l * m + 1))
-  ↔ answer(sorry) := by
-sorry
+theorem erdos_203 : (∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 3^l * m + 1).Prime) ↔ answer(sorry) := by
+  sorry
