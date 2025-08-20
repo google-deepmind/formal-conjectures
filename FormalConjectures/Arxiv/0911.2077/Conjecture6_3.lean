@@ -27,7 +27,7 @@ by *Matus Telgarsky*
 open NNReal ENNReal ProbabilityTheory
 
 
-/-- As usual, let $\Phi$ and $\phi$ be the distribution function and density of the standard normal. -/
+/-- As usual, let $\Phi$ be the distribution function of the standard normal. -/
 local notation "Φ" => cdf (gaussianReal 0 1)
 
 /--
