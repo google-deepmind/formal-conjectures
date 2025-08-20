@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/John_Selfridge#Selfridge's_conjecture_about_primality_testing)
 -/
 
-namespace Selfrige
+namespace Selfridge
 
 section PrimalityTesting
 
@@ -91,7 +91,7 @@ The number $6601$ is a conterexample to this test satisfying $6601 ≡ 1 \mod 5$
 -/
 @[category high_school, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample :
-    IsPseudoSelfridge 6601 ∧ ¬ (6001).Prime ∧ 6001 ≡ 1 [MOD 5] := by
+    IsPseudoSelfridge 6601 ∧ ¬ (6601).Prime ∧ 6601 ≡ 1 [MOD 5] := by
   sorry
 
 /--
@@ -144,4 +144,4 @@ theorem selfridge_seq_conjecture.variants.sufficient_condition (n : ℕ) (hn : P
 
 end FermatNumbers
 
-end Selfrige
+end Selfridge
