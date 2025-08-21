@@ -37,7 +37,7 @@ We say a covering system is strict if all the congruence relations that define i
 a different ideal (or number).
 
 Note: this corresponds to the notion of a covering system that Erdos was using in
-"OLD AND NEW PROBLEMS AND RESULTS IN COMBINATORIAL NUMBER THEORY"
+[ErGr80] Erdős, P. and Graham, R., Old and new problems and results in combinatorial number theory. Monographies de L'Enseignement Mathematique (1980).
 -/
 structure StrictCoveringSystem (R : Type*) [CommSemiring R] extends CoveringSystem R where
   injective_moduli : moduli.Injective
