@@ -17,20 +17,23 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 39
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/39](https://www.erdosproblems.com/39)
 -/
 
-open Nat Filter
-
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
+open Filter
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+Is there an infinite Sidon set $A\subset \mathbb{N}$ such that
+$\lvert A\cap \{1\ldots,N\}\rvert \gg_\epsilon N^{1/2-\epsilon}$
+for all $\varepsilon > 0$?
 -/
 @[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+theorem erdos_39 : (∃ (A : Set ℕ), A.Infinite ∧ IsSidon A ∧
+    ∀ᵉ  (ε  > (0 : ℝ)),
+    (· ^ (1 / 2 - ε) : ℕ → ℝ) =O[atTop] fun N => (((Set.Icc 1 N) ∩ A).ncard : ℝ))
+    ↔ answer(sorry) := by
   sorry
+
+--TODO(firsching): add the various known bounds as variants.

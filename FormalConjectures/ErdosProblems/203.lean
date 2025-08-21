@@ -17,20 +17,17 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 203
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/203](https://www.erdosproblems.com/203)
 -/
-
-open Nat Filter
-
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+Is there an integer m with (m, 6) = 1 such that none of 2^k * 3^ℓ * m + 1 are prime,
+for any k, ℓ ≥ 0?
 -/
-@[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+@[category research open, AMS 5]
+theorem erdos_203 : (∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 3^l * m + 1).Prime) ↔ answer(sorry) := by
   sorry
+
+--TODO(rdivyanshu): add statements about covering system and odd integers `m` such that none of 2^k*m + 1 is prime

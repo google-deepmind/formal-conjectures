@@ -49,6 +49,9 @@ lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
 instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
   decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
 
+instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
+  decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
+
 /-- The maximum size of a Sidon set in `{1, ..., N}`. -/
 noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
   sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
