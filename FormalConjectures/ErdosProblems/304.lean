@@ -41,8 +41,8 @@ lemma unitFractionExpressible_of_zero {a b : ℕ} (h : a = 0 ∨ b = 0) :
     unitFractionExpressible a b = {0} := by
   simp only [Set.eq_singleton_iff_unique_mem, zero_mem_unitFractionExpressible_iff, *]
   have : (a / b : ℚ) = 0 := by simpa
-  simp only [unitFractionExpressible, gt_iff_lt, CharP.cast_eq_zero, div_zero, Set.mem_setOf_eq,
-    forall_exists_index, and_imp, true_and, or_true, this]
+  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_setOf_eq, forall_exists_index, and_imp,
+    true_and, this]
   rintro _ s rfl hs h
   rw [eq_comm, Finset.sum_eq_zero_iff_of_nonneg (fun i hi ↦ by positivity)] at h
   simp only [inv_eq_zero, Nat.cast_eq_zero] at h
