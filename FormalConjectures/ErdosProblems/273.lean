@@ -26,15 +26,15 @@ import FormalConjectures.Util.ProblemImports
 Is there a covering system all of whose moduli are of the form $p-1$ for some primes $p\geq 5$?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_273 : ∃ c : StrictCoveringSystem ℤ, ∀ i, ∃ (p : ℕ), p.Prime ∧ 5 ≤ p ∧
-    c.moduli i = Ideal.span {↑(p - 1)} := by
+theorem erdos_273 : (∃ c : StrictCoveringSystem ℤ, ∀ i, ∃ (p : ℕ), p.Prime ∧ 5 ≤ p ∧
+    c.moduli i = Ideal.span {↑(p - 1)}) ↔ answer(sorry) := by
   sorry
 
 
 /--
 Is there a covering system all of whose moduli are of the form $p-1$ for some primes $p\geq 3$?
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_273.variants.three : ∃ c : StrictCoveringSystem ℕ, ∀ i, ∃ p, p.Prime ∧ 3 ≤ p ∧
-    c.moduli i = Ideal.span {↑(p - 1)} := by
+@[category research open, AMS 5 11]
+theorem erdos_273.variants.three : (∃ c : StrictCoveringSystem ℕ, ∀ i, ∃ p, p.Prime ∧ 3 ≤ p ∧
+    c.moduli i = Ideal.span {↑(p - 1)}) ↔ answer(True) := by
   sorry
