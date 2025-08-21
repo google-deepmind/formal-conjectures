@@ -27,34 +27,32 @@ namespace Erdos358
 open Filter
 
 /-
-Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers.
-`intervalRepresentations A n` is the set of solutions to \[n=\sum_{u\leq i\leq v}a_i.\]
+Let $a$ be an infinite sequence of integers. `intervalRepresentations A n` is the set of solutions
+to \[n=\sum_{u\leq i\leq v}a_i.\]
 -/
 def intervalRepresentations (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
   {(u, v) | n = ∑ i ∈ Finset.Icc u v, A i}
 
 /-
-Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
+Let $a$ be an infinite sequence of integers. Let $f(n)$ count the number of
 solutions to \[n=\sum_{u\leq i\leq v}a_i.\]
 -/
 noncomputable def f (A : ℕ → ℕ) (n : ℕ) : ℕ :=
   Nat.card (intervalRepresentations A n)
 
 /-
-Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers.
-`intervalRepresentations A n` is the set of solutions to \[n=\sum_{u\leq i\leq v}a_i\] such that
-the sum has at least two terms.
+Let $a$ be an infinite sequence of integers. `intervalRepresentationsNonTrivial A n` is the set of
+solutions to \[n=\sum_{u\leq i\leq v}a_i\] such that the sum has at least two terms.
 -/
-def intervalRepresentationsNonTrivial (A : ℕ → ℕ) (n : ℕ) :
-    Set (ℕ × ℕ) :=
+def intervalRepresentationsNonTrivial (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
   {(u, v) | n = ∑ i ∈ Finset.Icc u v, A i ∧ u < v}
 
 /-
-Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $g(n)$ count the number of
+Let $a$ be an infinite sequence of integers. Let $g(n)$ count the number of
 solutions to \[n=\sum_{u\leq i\leq v}a_i.\] such that the sum has at least two terms.
 -/
 noncomputable def g (A : ℕ → ℕ) (n : ℕ) : ℕ :=
-  Nat.card (intervalRepresentations A n)
+  Nat.card (intervalRepresentationsNonTrivial A n)
 
 /--
 When $A_n = n$, the function $f$ defined above counts the number of odd divisors of $n$.
@@ -76,7 +74,7 @@ theorem erdos_358.parts.i :
 /--
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
 solutions to \[n=\sum_{u\leq i\leq v}a_i.\]
-Or even where $f(n)\geq 2$ for all large $n$?
+Is there an $A$ such that $f(n)\geq 2$ for all large $n$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_358.parts.ii :
@@ -102,7 +100,7 @@ theorem erdos_358.variants.prime_set_density_representation :
   sorry
 
 /--
-It is conjecture that if $A =\{a_1 < \cdots\}$ and $g$ counts the number of representations
+It is conjectured that if $A =\{a_1 < \cdots\}$ and $g$ counts the number of representations
 \[n=\sum_{u\leq i\leq v}a_i\] such that the sum has at least two terms, then for all $n$ we have
 $1 \leq g(n)$ for sufficiently large $n$.
 -/
