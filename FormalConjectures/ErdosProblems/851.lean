@@ -24,8 +24,6 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos851
 
-#check Set.upperDensity
-
 /--
 `TwoPowAddSet r` is the set of integers of the form `2^k+n`, where `k ≥ 0` and `n` has at most `r`
 prime divisors.
