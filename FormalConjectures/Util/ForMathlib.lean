@@ -31,6 +31,7 @@ import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Finset
 import FormalConjectures.ForMathlib.Data.Nat.Full
+import FormalConjectures.ForMathlib.Data.Real.Constants
 import FormalConjectures.ForMathlib.Data.Set.Density
 import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin
