@@ -33,6 +33,10 @@ namespace AlgebraicGeometry.Scheme
 
 attribute [local instance] CategoryTheory.Types.instConcreteCategory
 
+
+ instance fix_me :  ∀ (X : TopologicalSpace.Opens ↥S), ((Opens.grothendieckTopology ↥S).over X).WEqualsLocallyBijective AddCommGrp := by
+  sorry
+
 /--
 A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
 -/
