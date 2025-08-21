@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 by *Bruce C. Berndt, Raghavendra N. Bhat, Jeffrey L. Meyer, Likun Xie, Alexandru Zaharescu*
 -/
 
-
+namespace Arxiv.id250103234
 
 open Nat Finset BigOperators in
 
@@ -52,3 +52,5 @@ example : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
 theorem Conjecture1_10 (k : ℕ) (hk : 0 < k) (hprim: Nat.Prime k) (hodd: Odd k) :
     0 < S k := by
   sorry
+
+end Arxiv.id250103234
