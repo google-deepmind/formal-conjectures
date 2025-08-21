@@ -32,6 +32,9 @@ lemma IsSidon.avoids_isAPOfLength_three {α : Type*} [AddCommMonoid α] (A : Set
     (∀ Y, IsAPOfLength Y 3 → (A ∩ Y).ncard ≤ 2) := by
   sorry
 
+instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
+  decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
+
 /-- The maximum size of a Sidon set in `{1, ..., N}`. -/
 noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
   sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
