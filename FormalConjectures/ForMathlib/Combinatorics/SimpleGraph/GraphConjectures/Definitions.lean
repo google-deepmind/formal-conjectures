@@ -88,3 +88,5 @@ noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
   (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
 
 end SimpleGraph
+
+#min_imports
