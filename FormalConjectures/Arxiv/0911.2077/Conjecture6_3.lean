@@ -50,7 +50,7 @@ theorem arxiv.id0911_2077.conjecture6_3
       le_trans (le_of_lt (Set.mem_Ioo.mp h_p).right) (by linarith)
     1 - Φ ((1 / 2 - p) * sqrt (2 * k : ℝ≥0) / σ)
       + (1 / 2) * ((2 * k).choose k) * σ ^ (2 * k)
-      ≤ ((PMF.binomial (.ofReal p : ℝ≥0∞) hp' (2 * k)).toMeasure (Set.Ici k)).toReal := by
+      ≤ ((PMF.binomial (.ofReal p : ℝ≥0∞) hp' (2 * k)).toMeasure (Set.Ici ⟨k, by omega⟩)).toReal := by
   sorry
 
 end Arxiv.«0911.2077»
