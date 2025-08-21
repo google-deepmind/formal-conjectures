@@ -23,7 +23,6 @@ import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Basis
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Convolution
 import FormalConjectures.ForMathlib.Combinatorics.Basic
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Bipartite
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
