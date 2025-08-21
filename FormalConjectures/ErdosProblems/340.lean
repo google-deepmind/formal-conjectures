@@ -157,6 +157,10 @@ theorem erdos_340.variants._33_mem_sub :
     33 ∈ Set.range greedySidon - Set.range greedySidon ↔ answer(sorry) :=
   sorry
 
+-- Formalisation note: there is some slight ambiguity in the meaning of
+-- "almost all" so we provide two variants for "all but finitely many"
+-- and "outside of a set of density zero"; there may be other reasonable
+-- interpretations
 /--
 It may be true that all or almost all integers are in $A - A$.
 -/
