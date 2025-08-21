@@ -18,19 +18,37 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Conjecture 1.10
 
-*Reference:* [arxiv.org/pdf/2501.03234](https://arxiv.org/pdf/2501.03234)
-**THEOREMS AND CONJECTURES ON AN ARITHMETIC SUM ASSOCIATED WITH THE CLASSICAL THETA FUNCTION θ₃**
-by *Yan Yablonovskiy*
+*Reference:* [arxiv/2501.03234](https://arxiv.org/abs/2501.03234)
+**Theorems and Conjectures on an Arithmetic Sum Associated with the Classical Theta Function θ3**
+by *Bruce C. Berndt, Raghavendra N. Bhat, Jeffrey L. Meyer, Likun Xie, Alexandru Zaharescu*
 -/
 
 
 
 open Nat Finset BigOperators in
+
 /--
-**Conjecture 1.10**: For any odd prime k, the sum associated with the classical theta function θ₃
-is positive.
+Define the sum
+$$S'(h, k) := \sum_{j=1}^{k-1}(-1)^{j + 1 + \lfloor \frac{hj}{k}\rfloor}.$$
+-/
+-- Using "S'" instead of "S", like it is in the paper, to avoid overloading function name.
+private def S' (h k : ℕ) : ℤ := ∑ j ∈ Finset.Ico 1 k, (-1 : ℤ) ^ (j + 1 + ⌊(h * j : ℚ) / k⌋₊)
+
+/--
+Define the sum
+$$S(k) := \sum_{h=1}^{k-1}S'(h, k)$$
+-/
+private def S (k : ℕ) : ℤ := ∑ h ∈ Finset.Ico 1 k, S' h k
+
+-- note that in Table 1 in  https://arxiv.org/abs/2501.03234v1, there seems to be an error: 11 appears twice
+example : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
+  unfold S
+  decide +kernel
+
+/--
+**Conjecture 1.10**: For any odd prime k, the sum associated with the classical theta function θ₃, $S(k)$ is positive.
 -/
 @[category research open, AMS 11]
-theorem Conjecture1_10 (k: ℕ) (hprim: Nat.Prime k) (hodd: k > 2) : (∑ h ∈ range (k-2),
-    (∑ j ∈ range (h-2),(-1:ℤ)^( (j+1) + 1 + ⌊(h + 1) * (j + 1) / k⌋₊ ) ) ) > 0 := by
+theorem Conjecture1_10 (k : ℕ) (hk : 0 < k) (hprim: Nat.Prime k) (hodd: Odd k) :
+    0 < S k := by
   sorry
