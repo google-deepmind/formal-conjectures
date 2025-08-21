@@ -95,7 +95,7 @@ def Conway9 := (completeGraph (Fin 3)) □ (completeGraph (Fin 3))
 
 @[category test, AMS 5]
 theorem conway9_nonEdgesAreDiagonals : NonEdgesAreDiagonals Conway9 := by
-  simp only [NonEdgesAreDiagonals, Set.Pairwise]
+  simp only [NonEdgesAreDiagonals]
   have : ∀ i, Fintype ↑(Conway9.neighborSet i) := by
     intro i
     exact Fintype.ofFinite ↑(Conway9.neighborSet i)
@@ -152,7 +152,7 @@ theorem conway9_locallyLinear : Conway9.LocallyLinear := by
         Set.pairwise_singleton, Set.mem_singleton_iff, ne_eq, SimpleGraph.boxProd_adj,
         SimpleGraph.top_adj, forall_eq, Prod.mk.injEq, and_false, imp_self, Set.mem_insert_iff,forall_eq_or_imp, or_false, and_true, not_false_eq_true] at h ⊢
     · fin_cases x1 <;> fin_cases x2 <;> fin_cases y1 <;> fin_cases y2 <;>
-      simp only [not_true_eq_false, or_self, or_false, and_true] at h <;>
+      simp only [not_true_eq_false, or_self, and_true] at h <;>
       decide
 
 end Conway99Graph

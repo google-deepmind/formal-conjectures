@@ -20,6 +20,8 @@ import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
 import Mathlib.Geometry.Euclidean.Triangle
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin.Rotate
 
+import Mathlib
+
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
 open scoped EuclideanGeometry
@@ -161,10 +163,10 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
                   a 1, b 1, c 1;
                   1,   1,   1] / 2 := by
   rw [triangle_area, Orientation.areaForm_to_volumeForm,
-    positiveOrientation.volumeForm_robust (EuclideanSpace.basisFun (Fin 2) ℝ) rfl, Basis.det_apply]
+    positiveOrientation.volumeForm_robust (EuclideanSpace.basisFun (Fin 2) ℝ) rfl, Module.Basis.det_apply]
   suffices (a 0 - c 0) * (b 1 - c 1) - (b 0 - c 0) * (a 1 - c 1) =
       a 0 * b 1 - a 0 * c 1 - b 0 * a 1 + b 0 * c 1 + c 0 * a 1 - c 0 * b 1 by
-    simp [Matrix.det_fin_two, Matrix.det_fin_three, Basis.toMatrix, this]
+    simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
 end EuclideanGeometry

@@ -53,8 +53,8 @@ noncomputable def boundedDiscCover_empty [Nonempty M] (r : ℝ) (hr : 0 < r) :
   h_summable := (hasSum_fintype _).summable
   h_bdd := by
     have := hasSum_fintype fun (_ : (PUnit : Type v)) => if 0 ≤ r then -1 else r
-    simp only [tsum_const, Nat.card_eq_fintype_card, Fintype.card_ofSubsingleton, smul_ite,
-      smul_neg, one_smul, ge_iff_le]
+    simp only [tsum_const, Nat.card_eq_fintype_card, Fintype.card_ofSubsingleton, one_smul,
+      ge_iff_le]
     bound
   h_pos := by aesop
 

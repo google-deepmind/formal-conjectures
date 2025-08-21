@@ -138,7 +138,7 @@ theorem maximalLength_one : maximalLength 1 = 1 := by
         s = [fun _ => 1] ∧ x = 1 ∨ s = [] ∧ x = 0 := by
     refine ⟨fun ⟨hs₁, hs₂, hx⟩ => ?_, fun h => by aesop⟩
     have := hx ▸ isIncreasing₂_const_length hs₁ hs₂
-    interval_cases x; simp [hx, List.length_eq_zero_iff.1 hx]; simp
+    interval_cases x; simp [List.length_eq_zero_iff.1 hx]; simp
     obtain ⟨a, rfl⟩ := List.length_eq_one_iff.1 hx
     simp at hs₂
     rw [show a = fun _ => 1 from funext fun i => by simp [hs₂ i]]

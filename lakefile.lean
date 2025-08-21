@@ -30,4 +30,4 @@ lean_lib FormalConjectures where
   roots := #[`FormalConjectures]
   globs := #[.submodules `FormalConjectures]
 
-require "leanprover-community" / "mathlib" @ git "v4.21.0"
+require "leanprover-community" / "mathlib" @ git "v4.22.0"

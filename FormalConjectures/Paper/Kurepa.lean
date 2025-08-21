@@ -63,7 +63,7 @@ theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠
     have (p : ℕ) (h_mem : p ∈ n.primeFactorsList) : p = 2 := by
       have hp : p.Prime := prime_of_mem_primeFactorsList h_mem
       refine hp.eq_two_or_odd.resolve_right fun _ ↦ ?_
-      have : p ∣ ∑ a ∈ range n, (a)! := .trans (by simp [left_factorial])
+      have : p ∣ ∑ a ∈ range n, (a)! := .trans (by simp)
         (dvd_of_mem_primeFactorsList h_mem |>.trans (dvd_of_mod_eq_zero h_mod))
       rw [← CharP.cast_eq_zero_iff (ZMod p), cast_sum, ← sum_subset (range_subset.2
         (le_of_mem_primeFactorsList h_mem)) (fun _ _ _ ↦ CharP.cast_eq_zero_iff _ p _ |>.2 <|

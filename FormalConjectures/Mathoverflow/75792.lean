@@ -183,7 +183,7 @@ theorem Reachable.five_pow_six : Reachable (5^6) 29 :=
 /-- Is `5n` the complexity of `5^n` for `0 < n`? Answer: No.-/
 @[category research solved, AMS 11]
 theorem complexity_five_pow : (∀ n : ℕ, 0 < n → complexity (5 ^ n) = 5 * n) ↔ answer(False) := by
-  simp only [iff_false, not_forall, Classical.not_imp]
+  simp only [iff_false, not_forall]
   exact ⟨6, by decide, fun h ↦ absurd (h ▸ Reachable.five_pow_six.complexity_le) (by decide)⟩
 
 /-- Is `3n` the complexity of `3^n` for `0 < n`? Answer: Yes, by John Selfridge.

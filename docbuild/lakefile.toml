@@ -10,7 +10,7 @@ path = "../"
 [[require]]
 scope = "leanprover"
 name = "doc-gen4"
-rev = "v4.21.0"
+rev = "v4.22.0"
 
 [[lean_exe]]
 name = "overwrite_index"
