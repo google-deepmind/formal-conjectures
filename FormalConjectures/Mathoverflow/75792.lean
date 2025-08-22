@@ -36,6 +36,8 @@ We have chosen to formalise this using an inductive type.
  - https://oeis.org/A005245 : Mahler-Popken complexity.
 -/
 
+namespace Mathoverflow75792
+
 /-- The inductively defined predicate that `m` is reachable in `n` steps. -/
 inductive Reachable : ℕ → ℕ → Prop
   | one : Reachable 1 1
@@ -194,3 +196,5 @@ theorem complexity_three_pow : (∀ n : ℕ, 0 < n → complexity (3 ^ n) = 3 * 
 @[category research open, AMS 11]
 theorem complexity_two_pow : (∀ n : ℕ, 0 < n → complexity (2 ^ n) = 2 * n) ↔ answer(sorry) := by
   sorry
+
+end Mathoverflow75792
