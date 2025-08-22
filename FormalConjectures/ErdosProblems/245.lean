@@ -26,10 +26,6 @@ open Filter
 
 open scoped Pointwise Topology
 
-/-- If `A` is a set of natural numbers and `N : ℕ`, then `bdd A N` is the
-set `{ n ∈ A | 1 ≤ n ≤ N }`. -/
-private def Set.bdd (A : Set ℕ) (N : ℕ) := A ∩ Set.Icc 1 N
-
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
 Is it true that

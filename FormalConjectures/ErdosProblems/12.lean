@@ -35,10 +35,6 @@ abbrev IsGood (A : Set ℕ) : Prop := A.Infinite ∧
   ∀ᵉ (a ∈ A) (b ∈ A) (c ∈ A), a ∣ b + c → a < b →
   a < c → b = c
 
-/-- Given a set of natural numbers `A`, `Set.bdd A N` is the set `{1,...,N} ∩ A`-/
-private noncomputable def Set.bdd (A : Set ℕ) (N : ℕ) : Finset ℕ :=
-    Finset.Icc 1 N |>.filter (· ∈ A)
-
 /-- The set of $p ^ 2$ where $p \cong 3 \mod 4$ is prime is an example of a good set. -/
 @[category undergraduate, AMS 11]
 theorem isGood_example :
