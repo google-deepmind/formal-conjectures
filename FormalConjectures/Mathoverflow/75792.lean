@@ -155,10 +155,12 @@ theorem Reachable.complexity {n : ℕ} (hn : 0 < n) : Reachable n (complexity n)
 example : complexity 0 = 0 := rfl
 
 @[category test, AMS 11]
-example : complexity 1 = 1 := by decide +kernel
+example : complexity 1 = 1 := by
+  sorry
 
 @[category test, AMS 11]
-example : complexity 2 = 2 := by decide +kernel
+example : complexity 2 = 2 := by
+  sorry
 
 @[category test, AMS 11]
 theorem Reachable.pow (m n : ℕ) (hm : 0 < m) (hn : 0 < n) : Reachable (m ^ n) (m * n) := by

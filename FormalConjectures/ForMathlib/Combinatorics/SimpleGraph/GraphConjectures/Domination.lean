@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import Mathlib.Combinatorics.SimpleGraph.Clique
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 /-
 Dominating sets and domination numbers
