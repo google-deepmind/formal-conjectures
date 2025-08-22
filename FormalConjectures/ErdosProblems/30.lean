@@ -17,24 +17,26 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 30
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/30](https://www.erdosproblems.com/30)
 -/
-
-open Nat Filter
-
-namespace Erdos943
-
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+Let $h(N)$ be the maximum size of a Sidon set in $\{1, \dots, N\}$.
+-/
+noncomputable abbrev h := maxSidonSetSize
+
+
+open Filter
+
+/--
+Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varespilon}(N^\varespilon)
 -/
 @[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+theorem erdos_30 :
+    (∀ᵉ (ε > 0), (fun N => h N - (N : Real).sqrt) =O[atTop] fun N => (N : ℝ)^(ε : ℝ))
+    ↔ answer(sorry) := by
   sorry
 
-end Erdos943
+-- TODO(firsching): add the various known bounds as variants.

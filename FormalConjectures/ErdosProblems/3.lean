@@ -17,24 +17,19 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 3
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/3](https://www.erdosproblems.com/3)
 -/
-
-open Nat Filter
-
-namespace Erdos943
-
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+If $A \subset \mathbb{N} has $\sum_{n \in A}\frac 1 n = \infty$, then must $A$ contain arbitrarily
+long arithmetic progressions?
 -/
 @[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+theorem erdos_3 : (∀ A : Set ℕ,
+    (¬ Summable fun a : A ↦ 1 / (a : ℝ)) →
+    ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k) ↔ answer(sorry) := by
   sorry
 
-end Erdos943
+--TODO(firsching): add the various known bounds as variants.
