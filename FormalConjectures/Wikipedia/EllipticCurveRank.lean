@@ -28,6 +28,8 @@ import FormalConjectures.Util.ProblemImports
 - [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
 -/
 
+namespace EllipticCurveRank
+
 /-- A data structure representing isomoprhism classes of elliptic curves over ℚ.
 Every elliptic curve over ℚ is isomorphic to one with Weierstrass equation `y² = x³ + Ax + B`,
 and the pair `(A,B)` is unique if it satisfy the `reduced` condition below.
@@ -216,3 +218,5 @@ theorem rank_elkies28 : finrank ℤ elkies28⟮ℚ⟯ = 28 := by
 -- TODO: compute the rank of some rank 0 / 1 curve.
 
 end WeierstrassCurve
+
+end EllipticCurveRank

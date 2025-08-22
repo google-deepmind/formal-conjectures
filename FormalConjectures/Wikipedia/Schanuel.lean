@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open scoped Real Complex
 open IntermediateField
 
+namespace Schanuel
+
 /--
 The transcendence degree of an $A$-algebra is the common cardinality of transcendence bases.
 -/
@@ -61,3 +63,5 @@ theorem schanuel_conjecture (n : ℕ) (z : Fin n → ℂ) (h : LinearIndependent
     let hinj := algebraMap ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) |>.injective
     n ≤ transcendenceDegree ℚ hinj := by
   sorry
+
+end Schanuel

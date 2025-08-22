@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 namespace Nat
 
+namespace NewMersenne
+
 /--
 A Mersenne prime is a prime number of the form `2ᵖ-1`.
 -/
@@ -79,3 +81,5 @@ theorem new_mersenne_conjecture_of_prime :
 theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) :
     NewMersenneConjectureStatement p := by
   sorry
+
+end NewMersenne

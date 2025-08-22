@@ -37,6 +37,8 @@ References:
 
 -/
 
+namespace AgohGiuga
+
 /--
 The **Agoh-Giuga Conjecture**, Agoh's formulation.
 An integer `p ≥ 2` is prime if and only if we have
@@ -205,3 +207,5 @@ theorem agoh_giuga.variants.isGiuga_growth
     (G : ℕ → ℕ) (hG : G = fun x => Finset.Icc 1 x |>.filter IsGiuga |>.card) :
     ∃ N O, ∀ n ≥ N, G n ≤ O * (n : ℝ).sqrt * (n : ℝ).log := by
   sorry
+
+end AgohGiuga

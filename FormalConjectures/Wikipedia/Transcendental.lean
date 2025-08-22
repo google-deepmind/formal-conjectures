@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Real
 
+namespace Transcendental
+
 /--
 $e + \pi$ is transcendental.
 -/
@@ -108,3 +110,5 @@ At least one of $\pi + e$ and $\pi e$ is transcendental.
 theorem exp_add_pi_or_exp_add_mul_transcendental :
     Transcendental ℚ (π + rexp 1) ∨ Transcendental ℚ (π * exp 1) := by
   sorry
+
+end Transcendental

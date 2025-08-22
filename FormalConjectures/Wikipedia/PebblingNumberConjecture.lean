@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 variable {V : Type} {G : SimpleGraph V} [DecidableEq V]
 
+namespace PebblingNumberConjecture
+
 /--
 A Pebble distribution is an assigment of zero or more pebbles to each of the vertices.
 -/
@@ -126,3 +128,5 @@ pebbling numbers of the factors.
 theorem pebbling_number_conjecture [Fintype V] (G H : SimpleGraph V) :
     PebblingNumber (G □ H) ≤ PebblingNumber G * PebblingNumber H := by
   sorry
+
+end PebblingNumberConjecture

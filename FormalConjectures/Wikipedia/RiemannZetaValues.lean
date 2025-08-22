@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 namespace RiemannZeta
 
+namespace RiemannZetaValues
+
 /--
 $\zeta(5)$ is irrational.
 -/
@@ -89,3 +91,5 @@ theorem exists_irrational_of_five_seven_nine_eleven :
   sorry
 
 end RiemannZeta
+
+end RiemannZetaValues

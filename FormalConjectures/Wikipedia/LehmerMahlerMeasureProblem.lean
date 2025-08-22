@@ -26,6 +26,8 @@ open Polynomial
 
 noncomputable section
 
+namespace LehmerMahlerMeasureProblem
+
 /--
 The Mahler measure of `f(X)` is defined as `‖a‖ ∏ᵢ max(1,‖αᵢ‖)`,
 where `f(X)=a(X-α₁)(X-α₂)...(X-αₙ)`.
@@ -77,3 +79,5 @@ theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])
     (hf : mahlerMeasureZ f > 1) (hf' : f.HasOddCoeffs) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^2 - X - 1) := by
   sorry
+
+end LehmerMahlerMeasureProblem

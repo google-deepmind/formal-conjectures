@@ -28,6 +28,8 @@ Tags: Sendov Conjecture, Ilieff's Conjecture.
 
 open Polynomial
 
+namespace Sendov
+
 /-- The predicate that a polynomial satisfies the hypotheses of Sendov's conjecture.
 
 `f.IsSendov` holds if `f` has degree at least 2 and all roots of `f` lie in the unit disc
@@ -72,3 +74,5 @@ It has been shown that Sendov's conjecture holds for polynomials of sufficiently
 theorem sendov_conjecture.variants.eventually_true :
     ∀ᶠ (n : ℕ) in Filter.atTop, n.SatisfiesSendovConjecture := by
   sorry
+
+end Sendov

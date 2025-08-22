@@ -38,6 +38,9 @@ noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
 
 
 @[category API, AMS 11]
+
+namespace RamanujanTau
+
 lemma multipliable : Multipliable fun n : ℕ+ ↦ ((1 - X ^ (n : ℕ)) ^ 24 : PowerSeries ℤ) := by
   sorry
 
@@ -61,3 +64,5 @@ theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : �
 @[category research open, AMS 11]
 theorem lehmer_ramanujan_tau : ∀ n > 0, τ n ≠ 0 := by
   sorry
+
+end RamanujanTau

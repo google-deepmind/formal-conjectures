@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Beal_conjecture)
 -/
 
+namespace BealConjecture
+
 def BealConjecture : Prop := ∀ {A B C x y z : ℕ},
     A ≠ 0 → B ≠ 0 → C ≠ 0 → 2 < x → 2 < y → 2 < z →
     A^x + B^y = C^z → 1 < Finset.gcd {A, B, C} id
@@ -62,3 +64,5 @@ theorem flt_of_beal_conjecture (H : BealConjecture) :
   rw [←Finset.gcd_div_id_eq_one (Finset.mem_insert_self x {y, z}) (by trivial),
     Finset.gcd_eq_gcd_image, Finset.image_insert, Finset.image_insert,
     Finset.image_singleton]
+
+end BealConjecture

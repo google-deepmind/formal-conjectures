@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lonely_runner_conjecture)
 -/
+
+namespace LonelyRunnerConjecture
+
 /--
 Consider $n$ runners on a circular track of unit length. At the initial time
 $t = 0$, all runners are at the same position and start to run; the runners'
@@ -38,3 +41,5 @@ theorem lonely_runner_conjecture (n : ℕ)
         dist (t * speed r : UnitAddCircle) (t * speed r2) ≥ 1 / n)
     (r : Fin n) : ∃ t ≥ 0, lonely r t := by
   sorry
+
+end LonelyRunnerConjecture

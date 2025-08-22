@@ -27,6 +27,9 @@ sides $a$, $b$, and hypotenuse $c$ such that the area of the triangle is $\frac{
 - [Wikipedia (Tunnell's theorem)](https://en.wikipedia.org/wiki/Tunnell%27s_theorem)
 - [Keith Conrad's note](https://kconrad.math.uconn.edu/blurbs/ugradnumthy/congnumber.pdf)
 -/
+
+namespace CongruentNumber
+
 def congruentNumber (n : ℕ) : Prop :=
   ∃ (a b c : ℚ), a ^ 2 + b ^ 2 = c ^ 2 ∧ n = (2⁻¹ : ℚ) * a * b
 
@@ -102,3 +105,5 @@ theorem Tunnell_odd_converse (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
 theorem Tunnell_even_converse (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     2 * (C n).ncard = (D n).ncard → congruentNumber n := by
   sorry
+
+end CongruentNumber

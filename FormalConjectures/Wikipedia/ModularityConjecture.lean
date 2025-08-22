@@ -40,6 +40,8 @@ open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
 
 noncomputable section
 
+namespace ModularityConjecture
+
 /-- The `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
 def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
   (qExpansion N f).coeff ℂ n
@@ -86,3 +88,5 @@ def ModularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
 @[category research solved, AMS 11]
 theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : ModularityConjecture E := by
   sorry
+
+end ModularityConjecture
