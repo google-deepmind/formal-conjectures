@@ -25,3 +25,6 @@ import FormalConjectures.Util.ProblemImports
 Let A ⊆ ℕ be an infinite set such that the triple sums a + b + c are all distinct for a, b, c ∈ A (aside from the trivial coincidences). Is it true that lim inf n → ∞ |A ∩ {1, …, N}| / N^(1/3) = 0 ?
 -/
 
+def TripleCondition (A : Set α) : Prop := ∀ᵉ (I : Finset α) (J : Finset α),
+    I.toSet ⊆ A ∧ J.toSet ⊆ A ∧ I.card = 3 ∧ J.card = 3 ∧
+    (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J
