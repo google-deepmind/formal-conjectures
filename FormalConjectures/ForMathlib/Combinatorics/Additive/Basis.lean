@@ -31,15 +31,21 @@ section MulBasis
 A set `A : Set α` is a multiplicative basis of order `n` if for any element
 `a : α`, it can be expressed as a product of `n` elements lying in `A`.
 -/
-@[to_additive "A set `A : Set α` is an additive basis of order `n` if for any element
-`a : α`, it can be expressed as a sum of `n` elements lying in `A`."]
+@[to_additive
+/--
+A set `A : Set α` is an additive basis of order `n` if for any element
+`a : α`, it can be expressed as a sum of `n` elements lying in `A`.
+-/]
 abbrev IsMulBasisOfOrder (A : Set α) (n : ℕ) : Prop :=
     ∀ a, a ∈ A ^ n
 
 /--
 A multiplicative basis of some order.
 -/
-@[to_additive "An additive basis of some order"]
+@[to_additive
+/--
+An additive basis of some order.
+-/]
 abbrev IsMulBasis (A : Set α) : Prop :=
     ∃ n, A.IsMulBasisOfOrder n
 
@@ -54,14 +60,19 @@ theorem isMulBasisOfOrder_iff (A : Set α) (n : ℕ) : A.IsMulBasisOfOrder n ↔
   simp_all [IsMulBasisOfOrder]
 
 /-- A set `A : Set α` is a multiplicative basis of order `2` if every `a : α` belongs to `A + A`. -/
-@[to_additive "A set `A : Set α` is an additive basis of order `2` if every `a : α` belongs to
-`A + A`."]
+@[to_additive
+/--
+A set `A : Set α` is an additive basis of order `2` if every `a : α` belongs to `A + A`.
+-/]
 theorem isMulBasisOfOrder_two_iff (A : Set α) :
     A.IsMulBasisOfOrder 2 ↔ ∀ a, a ∈ A * A := by
   simp [IsMulBasisOfOrder, pow_two]
 
 /-- No set is a multiplicative basis of order `0`. -/
-@[to_additive "No set is an additive basis of order `0`."]
+@[to_additive
+/--
+No set is an additive basis of order `0`.
+-/]
 theorem not_isMulBasisOfOrder_zero [Nontrivial α] [DecidableEq α] (A : Set α) :
     ¬A.IsMulBasisOfOrder 0 := by
   simp [isMulBasisOfOrder_iff, eq_comm]
@@ -80,15 +91,21 @@ section AsymptoticMulBasis
 A set `A : Set α` is an asymptotic multiplicative basis of order `n` if the elements that can
 be expressed as a product of `n` elements lying in `A` is cofinite.
 -/
-@[to_additive "A set `A : Set α` is an asymptotic additive basis of order `n` if the elements that
-can be expressed as a sum of `n` elements lying in `A` is cofinite."]
+@[to_additive
+/--
+A set `A : Set α` is an asymptotic additive basis of order `n` if the elements that
+can be expressed as a sum of `n` elements lying in `A` is cofinite.
+-/]
 abbrev IsAsymptoticMulBasisOfOrder (A : Set α) (n : ℕ) : Prop :=
     ∀ᶠ a in cofinite, a ∈ A ^ n
 
 /--
 An asymptotic multiplicative basis of some order.
 -/
-@[to_additive "An asymptotic additive basis of some order"]
+@[to_additive
+/--
+An asymptotic additive basis of some order.
+-/]
 abbrev IsAsymptoticMulBasis (A : Set α) : Prop :=
     ∃ n, A.IsAsymptoticMulBasisOfOrder n
 
@@ -108,26 +125,38 @@ theorem IsMulBasis.toIsAsymptoticMulBasis {A : Set α} (hA : IsMulBasis A) :
   obtain ⟨n, hn⟩ := hA
   exact ⟨n, Eventually.of_forall hn⟩
 
-/-- A set `A : Set α` is an asymptotic multiplicative basis of order `n` if a cofinite set of
-`a : α` can be written as `a = a₁ * ... * aₙ`, where each `aᵢ ∈ A`. -/
-@[to_additive "A set `A : Set α` is an asymptotic additive basis of order `n` if a cofinite set of
-`a : α` can be written as `a = a₁ + ... + aₙ`, where each `aᵢ ∈ A`."]
+/--
+A set `A : Set α` is an asymptotic multiplicative basis of order `n` if a cofinite set of
+`a : α` can be written as `a = a₁ * ... * aₙ`, where each `aᵢ ∈ A`.
+-/
+@[to_additive
+/--A set `A : Set α` is an asymptotic additive basis of order `n` if a cofinite set of
+`a : α` can be written as `a = a₁ + ... + aₙ`, where each `aᵢ ∈ A`.
+-/]
 theorem isAsymptoticMulBasisOfOrder_iff_prod (A : Set α) (n : ℕ) :
     IsAsymptoticMulBasisOfOrder A n ↔ ∀ᶠ a in cofinite, ∃ (f : Fin n → α) (_ : ∀ i, f i ∈ A),
       ∏ i, f i = a := by
   have := Set.mem_finset_prod (t := .univ) (f := fun _ : Fin n ↦ A)
   simp_all [IsAsymptoticMulBasisOfOrder]
 
-/-- A set `A : Set α` is an asymptotic multiplicative basis of order `2` if a cofinite set of
-`a : α` belongs to `A * A`. -/
-@[to_additive "A set `A : Set α` is an asymptotic additive basis of order `2` if a cofinite set of
-`a : α` belongs to `A + A`."]
+/--
+A set `A : Set α` is an asymptotic multiplicative basis of order `2` if a cofinite set of
+`a : α` belongs to `A * A`.
+-/
+@[to_additive
+/--
+A set `A : Set α` is an asymptotic additive basis of order `2` if a cofinite set of
+`a : α` belongs to `A + A`.
+-/]
 theorem isAsymptoticMulBasisOfOrder_two_iff (A : Set α) :
     IsAsymptoticMulBasisOfOrder A 2 ↔ ∀ᶠ a in cofinite, a ∈ A * A := by
   simp [pow_two]
 
 /-- If `α` is infinite, then no set `A` is an asymptotic multiplicative basis of order `0`. -/
-@[to_additive "If `α` is infinite, then no set `A` is an asymptotic additive basis of order `0`."]
+@[to_additive
+/--
+If `α` is infinite, then no set `A` is an asymptotic additive basis of order `0`.
+-/]
 theorem not_isAsymptoticMulBasisOfOrder_zero [Infinite α] (A : Set α) :
     ¬IsAsymptoticMulBasisOfOrder A 0 := by
   simp only [eventually_cofinite, pow_zero, mem_one, ← not_infinite, not_not]
@@ -136,17 +165,21 @@ theorem not_isAsymptoticMulBasisOfOrder_zero [Infinite α] (A : Set α) :
 
 
 /-- `A : Set α` is an asymptotic basis of order one iff it is cofinite. -/
-@[to_additive "`A : Set α` is an asymptotic basis of order one iff it is cofinite."]
+@[to_additive /--`A : Set α` is an asymptotic basis of order one iff it is cofinite.-/]
 theorem isAsymptoticMulBasisOfOrder_one_iff (A : Set α) :
     IsAsymptoticMulBasisOfOrder A 1 ↔ Aᶜ.Finite := by
   simp only [eventually_cofinite, pow_one]
   rfl
 
-/-- For `α` equipped with a directed order, a set is an asymptotic multiplicative basis of order `1`
+/--
+For `α` equipped with a directed order, a set is an asymptotic multiplicative basis of order `1`
 if it contains an infinite tail of elements.
 -/
-@[to_additive "A set is an asymptotic additive basis of order `1` if it contains an infinite tail
-of consecutive naturals."]
+@[to_additive
+/--
+For `α` equipped with a directed order, a set is an asymptotic additive basis of order `1`
+if it contains an infinite tail of consecutive naturals.
+-/]
 theorem isAsymptoticMulBasisOfOrder_one_iff_Ioi [LinearOrder α] [LocallyFiniteOrder α] [OrderBot α]
     (A : Set α) : IsAsymptoticMulBasisOfOrder A 1 ↔ ∃ a, Set.Ioi a ⊆ A := by
   simp [Filter.HasBasis.eventually_iff cofinite_hasBasis_Ioi, Set.subset_def]
@@ -154,8 +187,11 @@ theorem isAsymptoticMulBasisOfOrder_one_iff_Ioi [LinearOrder α] [LocallyFiniteO
 /-- For `α` equipped with a directed order, a set is an asymptotic multiplicative basis of order `1`
 if it contains an infinite tail of elements.
 -/
-@[to_additive "A set is an asymptotic additive basis of order `1` if it contains an infinite tail
-of consecutive naturals."]
+@[to_additive
+/--
+For `α` equipped with a directed order, a set is an asymptotic additive basis of order `1`
+if it contains an infinite tail of consecutive naturals.
+-/]
 theorem isAsymptoticMulBasisOfOrder_one_iff_Ici [LinearOrder α] [LocallyFiniteOrder α] [OrderBot α]
     [SuccOrder α] [NoMaxOrder α] (A : Set α) :
       IsAsymptoticMulBasisOfOrder A 1 ↔ ∃ a, Set.Ici a ⊆ A := by

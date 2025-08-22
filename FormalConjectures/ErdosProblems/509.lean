@@ -53,8 +53,8 @@ noncomputable def boundedDiscCover_empty [Nonempty M] (r : ℝ) (hr : 0 < r) :
   h_summable := (hasSum_fintype _).summable
   h_bdd := by
     have := hasSum_fintype fun (_ : (PUnit : Type v)) => if 0 ≤ r then -1 else r
-    simp only [tsum_const, Nat.card_eq_fintype_card, Fintype.card_ofSubsingleton, smul_ite,
-      smul_neg, one_smul, ge_iff_le]
+    simp only [tsum_const, Nat.card_eq_fintype_card, Fintype.card_ofSubsingleton, one_smul,
+      ge_iff_le]
     bound
   h_pos := by aesop
 
@@ -65,7 +65,7 @@ lemma BoundedDiscCover.bound_nonneg_of_nonempty
     0 < r := by
   apply lt_of_lt_of_le _ bdc.h_bdd
   suffices Nonempty ι by
-    apply tsum_pos bdc.h_summable (fun j => le_of_lt (bdc.h_pos j)) Classical.ofNonempty (bdc.h_pos _)
+    apply Summable.tsum_pos bdc.h_summable (fun j => le_of_lt (bdc.h_pos j)) Classical.ofNonempty (bdc.h_pos _)
   by_contra!
   apply Set.Nonempty.ne_empty hS (Set.eq_empty_of_subset_empty _)
   convert bdc.h_cover

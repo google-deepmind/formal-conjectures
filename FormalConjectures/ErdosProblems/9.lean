@@ -49,8 +49,7 @@ example : 3 ∈ Erdos9A := by
 @[category test, AMS 5 11]
 example : 5 ∉ Erdos9A := by
   unfold Erdos9A
-  simp only [exists_and_left, not_exists, not_and, Set.mem_setOf_eq, not_forall, Classical.not_imp,
-    Decidable.not_not]
+  simp only [exists_and_left, not_exists, not_and, Set.mem_setOf_eq, not_forall, Decidable.not_not]
   intro
   use 3, Nat.prime_three, 0, 0
   simp only [pow_zero, Nat.reduceAdd]
