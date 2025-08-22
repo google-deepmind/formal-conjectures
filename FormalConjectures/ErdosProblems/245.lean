@@ -22,11 +22,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/245](https://www.erdosproblems.com/245)
 -/
 
-open Filter
+namespace Erdos245
+
+open Filter Erdos245
 
 open scoped Pointwise Topology
-
-namespace Erdos245
 
 /-- If `A` is a set of natural numbers and `N : ℕ`, then `bdd A N` is the
 set `{ n ∈ A | 1 ≤ n ≤ N }`. -/
