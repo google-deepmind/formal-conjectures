@@ -26,6 +26,8 @@ open Filter
 
 open scoped Pointwise Topology
 
+namespace Erdos245
+
 /-- If `A` is a set of natural numbers and `N : ℕ`, then `bdd A N` is the
 set `{ n ∈ A | 1 ≤ n ≤ N }`. -/
 private def Set.bdd (A : Set ℕ) (N : ℕ) := A ∩ Set.Icc 1 N
@@ -75,3 +77,5 @@ theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
     (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
     2 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : EReal) / (A.bdd N).ncard) atTop := by
   sorry
+
+end Erdos245

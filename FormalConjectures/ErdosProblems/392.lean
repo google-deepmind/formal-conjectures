@@ -26,6 +26,8 @@ open Filter
 
 open scoped Nat
 
+namespace Erdos392
+
 /--
 Let $A(n)$ denote the least value of $t$ such that
 $$
@@ -57,3 +59,5 @@ theorem erdos_392.variants.lower (A : ℕ → ℕ)
       (A n)) :
     (fun (n : ℕ) => (A n - n + n / Real.log n : ℝ)) =o[atTop] fun n => n / Real.log n := by
   sorry
+
+end Erdos392

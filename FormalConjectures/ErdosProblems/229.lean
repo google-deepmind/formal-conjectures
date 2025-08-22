@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/229](https://www.erdosproblems.com/229)
 -/
+
+namespace Erdos229
+
 /--
 Let $(S_n)_{n \geq 1}$ be a sequence of sets of complex numbers, none of which have a finite
 limit point. Does there exist an entire transcendental function $f(z)$ such that, for all $n \geq 1$, there
@@ -55,3 +58,5 @@ theorem theorem_1
     Differentiable ℂ f ∧ Transcendental (Polynomial ℂ) f ∧ ∀ k, 0 < n k ∧ ∀ {z} (_: z ∈ S k),
       iteratedDeriv (n k) f z = 0 := by
   sorry
+
+end Erdos229

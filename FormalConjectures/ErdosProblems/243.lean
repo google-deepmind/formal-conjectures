@@ -26,6 +26,8 @@ open Filter
 
 open scoped Topology
 
+namespace Erdos243
+
 /--
 Let $a_1 < a_2 < \dots$ be a sequence of integers such that
 $\lim_{n\to\infty} \frac{a_n}{a_{n-1}^2} = 1$ and $\sum \frac{1}{a_n} \in \mathbb{Q}$.
@@ -38,3 +40,5 @@ theorem erdos_243 (a : ℕ → ℕ) (ha₀ : StrictMono a)
     (ha₂ : Summable ((1 : ℚ) / a ·)) :
       ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := by
   sorry
+
+end Erdos243

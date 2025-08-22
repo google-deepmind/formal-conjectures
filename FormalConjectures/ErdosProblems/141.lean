@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [Wikipedia](https://en.wikipedia.org/wiki/Primes_in_arithmetic_progression#Consecutive_primes_in_arithmetic_progression)
 -/
 
+namespace Erdos141
+
 /--
 The predicate that a set `s` consists of `l` consecutive primes (possibly infinite).
 This predicate does not assert a specific value for the first term.
@@ -112,3 +114,4 @@ theorem erdos_141.variant.infinite_general_case  (k : ℕ) (hk : k ≥ 3) :
     (consecutivePrimeArithmeticProgressions k).Infinite ↔ answer(sorry) :=
   sorry
   
+end Erdos141

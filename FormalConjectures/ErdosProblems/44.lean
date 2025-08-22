@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Function Set
 
+namespace Erdos44
+
 /-- The maximum size of a Sidon set in `{1, ..., N}`. -/
 noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
   sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
@@ -98,3 +100,5 @@ The greedy construction gives a Sidon set of size approximately `√N`.
 theorem greedy_sidon_construction (N : ℕ) (hN : 1 ≤ N) :
     ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon A.toSet ∧ A.card ≥ N.sqrt := by
   sorry
+
+end Erdos44

@@ -31,6 +31,8 @@ universe u v
 
 variable {M : Type u} [MetricSpace M]
 
+namespace Erdos509
+
 /--An $r$-bounded disc cover of a subset of a metric space $M$
 is an indexed family of closed discs whose radii sum to at most $r$.-/
 structure BoundedDiscCover (S : Set M) (r : ℝ) (ι : Type v) where
@@ -117,3 +119,5 @@ theorem erdos_509.variants.Pommerenke_connected : (∀ (f : ℂ[X]), f.Monic →
     IsConnected {z | ‖f.eval z‖ ≤ 1} →
     ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι)) ↔ answer(True) := by
   sorry
+
+end Erdos509

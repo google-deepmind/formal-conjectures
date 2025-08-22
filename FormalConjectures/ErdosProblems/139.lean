@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open Classical
 open scoped Topology
 
+namespace Erdos139
+
 /--Denote by $r_k(N)$ the size of the largest k-non-arithmetic subset of ${1,...,N}$-/
 noncomputable abbrev r (k : ℕ) (N : ℕ) : ℕ :=
     ((Finset.Icc 1 N).powerset.filter fun S => S.toSet.IsAPOfLengthFree k).sup Finset.card
@@ -42,3 +44,5 @@ theorem erdos_139 (k : ℕ) (hk : 1 ≤ k) :
 /-
 TODO(lezeau): add the various known bounds as variants.
 -/
+
+end Erdos139

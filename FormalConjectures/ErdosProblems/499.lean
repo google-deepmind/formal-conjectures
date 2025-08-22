@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Nat
 
+namespace Erdos499
+
 /--
 Let $M$ be a real $n \times n$ doubly stochastic matrix. Does there exist some $σ \in S_n$ such that
 $$
@@ -70,3 +72,5 @@ lemma erdos_499.variants.one_le :
       (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∑ i, M i (σ i)) ↔
     answer(True) := by
   sorry
+
+end Erdos499

@@ -30,6 +30,8 @@ section Prelims
 
 namespace Real
 
+namespace Erdos442
+
 /--
 The function $\operatorname{Log} x := \max\{log x, 1\}$.
 -/
@@ -119,3 +121,5 @@ theorem erdos_442.variants.tao :
         |∑ nm ∈ A.bdd x ×ˢ A.bdd x, (1 : ℝ) / nm.1.lcm nm.2| ≤
           C * (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 := by
   sorry
+
+end Erdos442

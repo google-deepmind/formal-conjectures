@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Nat Filter ArithmeticFunction
 
+namespace Erdos943
+
 def a : ArithmeticFunction ℕ :=
   ⟨fun n => if 0 < n ∧ n.Powerful then 1 else 0, by dsimp [Nat.Powerful, Full]⟩
 
@@ -35,3 +37,5 @@ theorem erdos_943 :
     (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a) n = (n : ℝ)^(o n)) ↔
     answer(sorry) := by
   sorry
+
+end Erdos943

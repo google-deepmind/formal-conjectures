@@ -25,6 +25,8 @@ section Prelims
 
 namespace Function
 
+namespace Erdos348
+
 /--
 A sequence of naturals is complete if any positive natural can be written
 as a finite sum of distinct values in the sequence.
@@ -49,3 +51,5 @@ theorem erdos_348 :
         (_ : ∀ t, t.card = n → ¬(Function.updateFinset a t 0).IsCompleteNatSeq) } =
     answer(sorry) := by
   sorry
+
+end Erdos348
