@@ -21,15 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_99-graph_problem)
 -/
-/-
-Conway's 99-graph problem
--/
---TODO(firsching): Consider using SimpleGraph.IsSRGWith to formulate the conjecture.
-variable {V : Type} {G : SimpleGraph V}
-@[category undergraduate, AMS 5]
 
 namespace Conway99Graph
 
+--TODO(firsching): Consider using SimpleGraph.IsSRGWith to formulate the conjecture.
+variable {V : Type} {G : SimpleGraph V}
+@[category undergraduate, AMS 5]
 lemma completeGraphIsClique (s : Finset V) : (⊤ : SimpleGraph V).IsClique s :=
   Pairwise.set_pairwise (fun _ _ a ↦ a) _
 

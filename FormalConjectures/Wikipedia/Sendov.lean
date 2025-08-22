@@ -25,10 +25,11 @@ Tags: Sendov Conjecture, Ilieff's Conjecture.
 
 -/
 
-
 open Polynomial
 
 namespace Sendov
+
+open Sendov
 
 /-- The predicate that a polynomial satisfies the hypotheses of Sendov's conjecture.
 

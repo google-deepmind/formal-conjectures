@@ -21,7 +21,6 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Particular_values_of_the_Riemann_zeta_function)
 -/
-namespace RiemannZeta
 
 namespace RiemannZetaValues
 
@@ -89,7 +88,5 @@ At least one of $\zeta(5), \zeta(7), \zeta(9)$ or $\zeta(11)$ is irrational.
 theorem exists_irrational_of_five_seven_nine_eleven :
     {5, 7, 9, 11} ∩ { a | ∃ x, Irrational x ∧ riemannZeta a = x} |>.Nonempty := by
   sorry
-
-end RiemannZeta
 
 end RiemannZetaValues

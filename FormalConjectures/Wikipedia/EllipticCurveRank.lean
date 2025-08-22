@@ -30,6 +30,8 @@ import FormalConjectures.Util.ProblemImports
 
 namespace EllipticCurveRank
 
+open EllipticCurveRank
+
 /-- A data structure representing isomoprhism classes of elliptic curves over ℚ.
 Every elliptic curve over ℚ is isomorphic to one with Weierstrass equation `y² = x³ + Ax + B`,
 and the pair `(A,B)` is unique if it satisfy the `reduced` condition below.
@@ -153,6 +155,8 @@ theorem twentyone_le_rank_height_count_asymptotic :
 end RatEllipticCurve
 
 namespace WeierstrassCurve
+
+open _root_.WeierstrassCurve
 
 /-! See https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve#Largest_known_ranks -/
 

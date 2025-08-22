@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Jacobian_conjecture)
 -/
 
+namespace JacobianConjecture
+
 open Classical
 
 section Prelims
@@ -30,8 +32,6 @@ variable {k : Type*} [CommRing k]
 variable {σ τ ι : Type*}
 
 variable (k σ τ) in
-
-namespace JacobianConjecture
 
 /--Implicitly use `σ` as an index set and `k` as coefficient ring. -/
 abbrev RegularFunction := τ → MvPolynomial σ k

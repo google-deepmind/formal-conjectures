@@ -21,9 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_conjectures)
 -/
-namespace Nat
 
 namespace NewMersenne
+
+namespace Nat
 
 /--
 A Mersenne prime is a prime number of the form `2ᵖ-1`.
@@ -44,6 +45,8 @@ def IsSpecialForm (p : ℕ) : Prop :=
   ∃ k : ℕ, p = 2^k + 1 ∨ p = 2^k - 1 ∨ p = 4^k + 3 ∨ p = 4^k - 3
 
 end Nat
+
+open NewMersenne
 
 /--
 A natural number `p` satisfies the statement of the New Mersenne Conjecture if whenever

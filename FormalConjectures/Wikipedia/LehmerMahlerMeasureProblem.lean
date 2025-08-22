@@ -22,11 +22,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_conjecture)
 -/
 
-open Polynomial
+namespace LehmerMahlerMeasureProblem
+
+open Polynomial LehmerMahlerMeasureProblem
 
 noncomputable section
-
-namespace LehmerMahlerMeasureProblem
 
 /--
 The Mahler measure of `f(X)` is defined as `‖a‖ ∏ᵢ max(1,‖αᵢ‖)`,
@@ -79,5 +79,7 @@ theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])
     (hf : mahlerMeasureZ f > 1) (hf' : f.HasOddCoeffs) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^2 - X - 1) := by
   sorry
+
+end
 
 end LehmerMahlerMeasureProblem
