@@ -27,6 +27,8 @@ open IntermediateField
 
 namespace Schanuel
 
+-- TODO : remove and use `Algebra.trdeg` when the version is bumped
+-- https://leanprover-community.github.io/mathlib4_docs/Mathlib/RingTheory/AlgebraicIndependent/Basic.html#Algebra.trdeg
 /--
 The transcendence degree of an $A$-algebra is the common cardinality of transcendence bases.
 -/
