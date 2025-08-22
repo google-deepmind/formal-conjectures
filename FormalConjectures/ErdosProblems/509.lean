@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/509](https://www.erdosproblems.com/509)
 -/
 
+namespace Erdos509
+
 open Polynomial
 open scoped Real
 
@@ -30,8 +32,6 @@ section BoundedDiscCover
 universe u v
 
 variable {M : Type u} [MetricSpace M]
-
-namespace Erdos509
 
 /--An $r$-bounded disc cover of a subset of a metric space $M$
 is an indexed family of closed discs whose radii sum to at most $r$.-/

@@ -28,6 +28,8 @@ namespace Erdos469
 def Nat.IsSumDivisors (n : ℕ) : Prop :=
   ∃ S ⊆ n.properDivisors, ∑ d ∈ S, d = n
 
+open Erdos469
+
 /--
 Let $A$ be the set of all $n$ such that $n = d_1 + ⋯ + d_k$ with $d_i$ distinct
 proper divisors of $n$, but this is not true for any $m ∣ n$ with $m < n$. Does:

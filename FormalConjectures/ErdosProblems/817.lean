@@ -24,8 +24,6 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
-open scoped Classical in
-
 namespace Erdos817
 
 /-- Define $g_k(n)$ to be the minimal $N$ such that $\{1, ..., N\}$ contains some $A$ of

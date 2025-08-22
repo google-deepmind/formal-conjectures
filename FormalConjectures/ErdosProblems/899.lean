@@ -28,6 +28,8 @@ open scoped Pointwise Topology
 
 namespace Erdos899
 
+open Erdos899
+
 /-- If `A` is a set of natural numbers and `N : ℕ`, then `bdd A N` is the
 set `{ n ∈ A | 1 ≤ n ≤ N }`. -/
 def Set.bdd (A : Set ℕ) (N : ℕ) := A ∩ Set.Icc 1 N

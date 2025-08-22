@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos434
 
+open Erdos434
+
 /--
 A natural $n$ is representable as a set $A$ if it can be
 written as the sum of finitely many elements of $A$

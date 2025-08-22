@@ -21,11 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/348](https://www.erdosproblems.com/348)
 -/
+
+namespace Erdos348
+
+open Erdos348
+
 section Prelims
 
 namespace Function
-
-namespace Erdos348
 
 /--
 A sequence of naturals is complete if any positive natural can be written
@@ -38,6 +41,8 @@ end Function
 
 end Prelims
 
+
+
 /--
 For what values of $0 \leq m < n$ is there a complete sequence
 $A = \{a_1 \leq a_2 \leq \cdots\}$ of integers such that
@@ -47,8 +52,8 @@ $A = \{a_1 \leq a_2 \leq \cdots\}$ of integers such that
 @[category research open, AMS 11]
 theorem erdos_348 :
     { (m, n) | (m) (n) (_ : m < n) (a : ℕ → ℕ) (_ : Monotone a)
-      (_ : ∀ s, s.card = m → (Function.updateFinset a s 0).IsCompleteNatSeq)
-        (_ : ∀ t, t.card = n → ¬(Function.updateFinset a t 0).IsCompleteNatSeq) } =
+      (_ : ∀ s, s.card = m → Function.IsCompleteNatSeq (Function.updateFinset a s 0))
+        (_ : ∀ t, t.card = n → ¬Function.IsCompleteNatSeq (Function.updateFinset a t 0)) } =
     answer(sorry) := by
   sorry
 

@@ -47,6 +47,8 @@ theorem isGood_example :
     IsGood {p ^ 2 | (p : ℕ) (_ : p ≡ 3 [MOD 4]) (_ : p.Prime)} := by
   sorry
 
+open Erdos12
+
 /--
 Let $A$ be an infinite set such that there are no distinct $a,b,c \in A$
 such that $a \mid (b+c)$ and $b,c > a$. Is there such an $A$ with

@@ -28,6 +28,8 @@ open scoped Topology
 
 namespace Erdos786
 
+open Erdos786
+
 /--
 `Nat.IsMulCardSet A` means that `A` is a set of natural numbers that
 satisfies the property that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$
