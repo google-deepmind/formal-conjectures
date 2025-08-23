@@ -40,7 +40,9 @@ for all sufficiently large $N$?
 -/
 @[category research open, AMS 5]
 theorem erdos_155 :
-    ∀ᶠ N in atTop, ∀ k ≥ 1, F (N + k) ≤ F N + 1 := by
+    (∀ k ≥ 1, ∀ᶠ N in atTop, F (N + k) ≤ F N + 1) ↔ answer(sorry) := by
   sorry
+
+-- TODO: This may even hold with $k \approx ε * N ^ (1 / 2)$.
 
 end Erdos155
