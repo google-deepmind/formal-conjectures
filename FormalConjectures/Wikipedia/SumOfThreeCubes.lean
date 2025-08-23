@@ -28,24 +28,22 @@ An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and
 asked by user [*David Feldman*](https://mathoverflow.net/users/10909/david-feldman)
 -/
 
-/-- The predicate that `n : ℤ` is a sum of three (integer) cubes. -/
-def IsSumOfThreeCubes (n : ℤ) : Prop :=
-  ∃ x y z : ℤ, n = x^3 + y^3 + z^3
+variable {R : Type*} [Ring R]
 
-/-- The predicate that `n : ℚ` is a sum of three *rational* cubes. -/
-def IsSumOfThreeCubesRat (n : ℚ) : Prop :=
-  ∃ x y z : ℚ, n = x^3 + y^3 + z^3
+/-- The predicate that `n : R` is a sum of three (integer) cubes. -/
+def IsSumOfThreeCubes (n : R) : Prop :=
+  ∃ x y z : R, n = x^3 + y^3 + z^3
 
 @[category test, AMS 11]
-theorem isSumOfThreeCubes_2 : IsSumOfThreeCubes 2 :=
+theorem isSumOfThreeCubes_2 : IsSumOfThreeCubes (2 : ℤ) :=
   ⟨1, 1, 0, by norm_num⟩
 
 @[category test, AMS 11]
-theorem isSumOfThreeCubes_33 : IsSumOfThreeCubes 33 :=
+theorem isSumOfThreeCubes_33 : IsSumOfThreeCubes (33 : ℤ) :=
   ⟨8866128975287528, -8778405442862239, -2736111468807040, by norm_num⟩
 
 @[category test, AMS 11]
-theorem isSumOfThreeCubes_42 : IsSumOfThreeCubes 42 :=
+theorem isSumOfThreeCubes_42 : IsSumOfThreeCubes (42 : ℤ) :=
   ⟨-80538738812075974, 80435758145817515, 12602123297335631, by norm_num⟩
 
 @[category test, AMS 11]
