@@ -39,6 +39,15 @@ def WormCovers : Set (Set (ℝ²)) :=
     {X | MeasurableSet X ∧ ∀ w ∈ Worms, ∃ iso, Isometry iso ∧ w ⊆ iso '' X}
 
 /--
+A disc of radius 1 / 2 is a worm cover.
+
+This follows by translating the center of the disc to the midpoint of the worm.
+-/
+@[category high_school, AMS 52]
+theorem disc_mem_worm_covers : Metric.closedBall 0 0.5 ∈ WormCovers := by
+  sorry
+
+/--
 **Moser's Worm Problem**
 What is the minimal area (or greatest lower bound on the area)
 of a shape that can cover every unit-length curve?
