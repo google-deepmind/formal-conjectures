@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjecture 1.10
+# Conjecture 1.1
 
 *Reference:* [arxiv/2501.03234](https://arxiv.org/abs/2501.03234)
 **Theorems and Conjectures on an Arithmetic Sum Associated with the Classical Theta Function θ3**
@@ -46,10 +46,10 @@ example : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
   decide +kernel
 
 /--
-**Conjecture 1.10**: For any odd prime k, the sum associated with the classical theta function θ₃, $S(k)$ is positive.
+**Conjecture 1.1**: For any odd prime k, the sum associated with the classical theta function θ₃, $S(k)$ is positive.
 -/
 @[category research open, AMS 11]
-theorem Conjecture1_10 (k : ℕ) (hprim: Nat.Prime k) (hodd: Odd k) :
+theorem conjecture_1_1 (k : ℕ) (hprim: Nat.Prime k) (hodd: Odd k) :
     0 < S k := by
   sorry
 
