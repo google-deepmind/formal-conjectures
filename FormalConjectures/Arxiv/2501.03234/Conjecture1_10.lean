@@ -49,7 +49,7 @@ example : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
 **Conjecture 1.10**: For any odd prime k, the sum associated with the classical theta function θ₃, $S(k)$ is positive.
 -/
 @[category research open, AMS 11]
-theorem Conjecture1_10 (k : ℕ) (hk : 0 < k) (hprim: Nat.Prime k) (hodd: Odd k) :
+theorem Conjecture1_10 (k : ℕ) (hprim: Nat.Prime k) (hodd: Odd k) :
     0 < S k := by
   sorry
 
