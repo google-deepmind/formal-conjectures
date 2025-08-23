@@ -28,6 +28,8 @@ An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and
 asked by user [*David Feldman*](https://mathoverflow.net/users/10909/david-feldman)
 -/
 
+namespace SumOfThreeCubes
+
 variable {R : Type*} [Ring R]
 
 /-- The predicate that `n : R` is a sum of three (integer) cubes. -/
@@ -70,11 +72,10 @@ The below parametrization is brought from the MSE answer [MSE].
 [MSE] Kieren MacMillan, Proving that any rational number can be represented as the sum of the cubes of three rational numbers, https://math.stackexchange.com/q/4480969
 -/
 @[category research solved, AMS 11]
-theorem isSumOfThreeCubesRat_any (r : ℚ) : IsSumOfThreeCubesRat r := by
+theorem isSumOfThreeCubesRat_any (r : ℚ) : IsSumOfThreeCubes r := by
   by_cases h : r = 0
   · exact ⟨0, 0, 0, by norm_num; exact h⟩
   · push_neg at h
-    rw [IsSumOfThreeCubesRat]
     let x := (r ^ 6 + 45 * r ^ 4 - 81 * r ^ 2 + 27) / (6 * r * (r ^ 2 + 3) ^ 2)
     let y := (3 - r ^ 2) * (6 * r) / (r ^ 2 + 3) ^ 2
     let z := (r ^ 2 + 6 * r + 3) * (- r ^ 2 + 6 * r - 3) / (6 * r * (r ^ 2 + 3))
@@ -89,3 +90,5 @@ theorem isSumOfThreeCubesRat_any (r : ℚ) : IsSumOfThreeCubesRat r := by
 theorem isSumOfThreeCubes_iff_mod_9 :
     (∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9])) ↔ answer(sorry) := by
   sorry
+
+end SumOfThreeCubes

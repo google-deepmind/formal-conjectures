@@ -30,11 +30,13 @@ There are two conjectures related to the Ramanujan τ-function:
 - [Lehmer's conjecture](https://en.wikipedia.org/wiki/Ramanujan_tau_function#Conjectures_on_the_tau_function)
 -/
 
+namespace RamanujanTau
+
 open PowerSeries PowerSeries.WithPiTopology
 
-private noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
+noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
 
-private noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
+noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
 
 
 @[category API, AMS 11]
@@ -61,3 +63,5 @@ theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : �
 @[category research open, AMS 11]
 theorem lehmer_ramanujan_tau : ∀ n > 0, τ n ≠ 0 := by
   sorry
+
+end RamanujanTau

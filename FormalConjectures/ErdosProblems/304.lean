@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Asymptotics Filter
 
+namespace Erdos304
+
 /--
 The set of `k` for which `a / b` can be expressed as a sum of `k` distinct unit fractions.
 -/
@@ -172,3 +174,5 @@ theorem upper_bound :
     (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop]
       (fun b : ℕ => Real.log (Real.log b)) ↔ answer(sorry) := by
   sorry
+
+end Erdos304

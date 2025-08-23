@@ -29,6 +29,8 @@ allowing to retrieve $\lambda (A)_i$ as ${D_1}_{i,i}$, whereas the current mathl
 doesn't support obtaining the vector of eigenvalues from a general normal
 non-Hermitian matrix. -/
 
+namespace DeterminantalConjecture
+
 /--
 Does the determinant of the sum $A + B$ of two $n \times n$ normal
 complex matrices A and B always lie in the convex hull
@@ -44,3 +46,5 @@ theorem determinantal_conjecture
     (U1 * Matrix.diagonal d1 * star U1 + U2 * Matrix.diagonal d2 * star U2).det
       ∈ convexHull ℝ { ∏ i, (d1 i + d2 (σ i)) | σ : Equiv.Perm n } := by
   sorry
+
+end DeterminantalConjecture

@@ -39,7 +39,7 @@ has been studied in several works. In particular, see:
     Australasian Journal of Logic (AJL).
 -/
 
-namespace Boxdot
+namespace Arxiv.«1308.0994»
 
 /--
 `Formula` is the inductive type of propositional modal formulas:
@@ -201,5 +201,4 @@ by the boxdot translation is included in KT.
 theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L ⊆ KT := by
   sorry
 
-
-end Boxdot
+end Arxiv.«1308.0994»

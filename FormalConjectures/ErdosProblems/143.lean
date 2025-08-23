@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open Filter Finset
 open scoped Topology
 
+namespace Erdos143
+
 /--
 Let $A \subseteq (1, \infty)$ be a countably infinite set such that for all $x\neq y\in A$ and
 integers $k \geq 1$ we have $|kx - y| \geq 1$.
@@ -67,3 +69,5 @@ $$
 \sum_{\substack{x < n \\ x \in A}} \frac{1}{x} \ll \frac{\log x}{\sqrt{\log \log x}}?
 $$
 -/
+
+end Erdos143

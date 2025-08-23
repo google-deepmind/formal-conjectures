@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
  - [Résolution d'une question relative aux déterminants](https://gallica.bnf.fr/ark:/12148/bpt6k486252g/f400.image.r) by *Jacques Hadamard*,  Bull. des sciences math., p.245, 1893
 -/
 
+namespace Hadamard
+
 /--
 A square matrix $M$ with $±1$-entries that satisfies the equality $|M| ≤ n^\frac{n}{2}$ is called a *Hadamard matrix*.
 -/
@@ -119,3 +121,5 @@ The smallest order for which no Hadamard matrix is presently known is $668 = 4 *
 @[category research open, AMS 15]
 theorem HadamardConjecture.variant : ∃ M, IsHadamard (n := 4 * 167) M := by
   sorry
+
+end Hadamard

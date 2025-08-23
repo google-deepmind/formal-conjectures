@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Rational_variety)
 -/
+
+namespace NoetherProblem
+
 /--
 A rational field extension is a field extension `L/K` isomorphic
 to a field of rational functions (in some arbitrary number of indeterminates.)
@@ -106,3 +109,5 @@ theorem noether_problem.variants.forty_seven :
     (_ : IsRationalExtension K L ι),
     Fintype.card ι = 47 ∧ ¬ HasNoetherProperty K L ι := by
   sorry
+
+end NoetherProblem

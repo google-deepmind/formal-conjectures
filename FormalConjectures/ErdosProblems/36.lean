@@ -26,6 +26,8 @@ open Filter
  - [Wikipedial: Minimum overlap problem](https://en.wikipedia.org/wiki/Minimum_overlap_problem)
 -/
 
+namespace Erdos36
+
 /--
 The number of solutions to the equation $a - b = k$, for $a \in A$ and $b \in B$.
 This represents the "overlap" between sets $A$ and $B$ for a given difference $k$.
@@ -205,3 +207,5 @@ Find the value of the limit of `MinOverlapQuotient`!
 @[category research open, AMS 5 11]
 theorem erdos_36 : atTop.Tendsto MinOverlapQuotient (𝓝 answer(sorry)) := by
   sorry
+
+end Erdos36

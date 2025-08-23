@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Finset
 
+namespace Brocard
+
 /--
 **Brocard's Conjecture**
 For every `n ≥ 2`, between the squares of the `n`-th and `(n+1)`-th primes,
@@ -35,3 +37,5 @@ theorem brocard_conjecture (n : ℕ) (hn : 1 ≤ n) :
     letI next := (n+1).nth Nat.Prime;
     4 ≤ ((Ioo (prev^2) (next^2)).filter Nat.Prime).card := by
   sorry
+
+end Brocard

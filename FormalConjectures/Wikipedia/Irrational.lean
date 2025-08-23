@@ -30,6 +30,8 @@ local notation "e" => exp 1
 -- See also corresponding transcendence conjectures
 -- in `FormalConjectures.Wikipedia.SchanuelsConjecture`
 
+namespace Irrational
+
 /-- $e + \pi$ is irrational -/
 @[category research open, AMS 33]
 theorem irrational_e_plus_pi : Irrational (e + π) := by
@@ -72,3 +74,5 @@ theorem irrational_euler_mascheroni :
 theorem irrational_catalan_constant :
     Irrational (∑' n : ℕ, (-1)^n / (2*n + 1)^2) := by
   sorry
+
+end Irrational
