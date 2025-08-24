@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/28](https://www.erdosproblems.com/28)
 -/
 
-open Filter Set
+open Filter Set AdditiveCombinatorics
 open scoped Pointwise
 
 /--
@@ -31,9 +31,7 @@ If $A ⊆ \mathbb{N}$ is such that $A + A$ contains all but finitely many intege
 -/
 @[category research open, AMS 11]
 theorem erdos_28 (A : Set ℕ) (h : (A + A)ᶜ.Finite) :
-    limsup (fun (n : ℕ) =>
-    letI a := PowerSeries.mk (indicator A 1)
-    (a * a).coeff ℕ n) atTop = (⊤ : ℕ∞) := by
+    limsup (fun (n : ℕ) => sumRep A n) atTop = (⊤ : ℕ∞) := by
   sorry
 
 -- TODO(firsching): add the theorems/conjectures for the comments on the page

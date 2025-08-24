@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.ForMathlib.Algebra.Group.Indicator
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
 import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjectures.ForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Basis
+import FormalConjectures.ForMathlib.Combinatorics.Additive.Convolution
 import FormalConjectures.ForMathlib.Combinatorics.Basic
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Bipartite
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra

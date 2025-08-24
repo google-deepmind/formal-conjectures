@@ -13,26 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.Algebra.Group.Indicator
 
-import FormalConjectures.Util.ProblemImports
+namespace Set
 
-/-!
-# Erdős Problem 943
+variable {α R : Type*} [One R] [Zero R] (A : Set α)
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
--/
+/-- A polymorphic indicator function `𝟙_A` which is `1` on `A` and `0` outside. -/
+noncomputable def indicatorOne : α → R := indicator A (fun _ ↦ 1)
 
-open AdditiveCombinatorics Nat Filter
+notation "𝟙_" A:max => indicatorOne A
 
-namespace Erdos943
-
-/--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
--/
-@[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (sumRep Powerful n) = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
-  sorry
-
-end Erdos943
+end Set

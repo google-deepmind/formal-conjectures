@@ -17,22 +17,27 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 66
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/66](https://www.erdosproblems.com/66)
 -/
 
-open AdditiveCombinatorics Nat Filter
 
-namespace Erdos943
+namespace Erdos66
+
+open Filter AdditiveCombinatorics
+open scoped Topology
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+Is there and $A \subset \mathbb{N}$ is such that
+$$\lim_{n\to \infty}\frac{1_A\ast 1_A(n)}{\log n}$$
+exists and is $\ne 0$?
 -/
 @[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (sumRep Powerful n) = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+theorem erdos_66 : (∃ (A : Set ℕ) (c : ℝ), c ≠ 0 ∧
+    Tendsto (fun n ↦ (sumRep A n : ℝ) / Real.log n) atTop (𝓝 c)) ↔ answer(sorry) := by
   sorry
 
-end Erdos943
+-- TODO(firsching): add the theorems/conjectures for the comments on the page
+
+end Erdos66
