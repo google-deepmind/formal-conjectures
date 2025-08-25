@@ -52,4 +52,20 @@ This conjecture has been proved for $n \leq 11$.
 theorem erdos_732.leq_11 : ∀ pp : ProjectivePlane P L, pp.order ≤ 11 → IsPrimePow pp.order := by
   sorry
 
+/--
+It is open whether there exists a projective plane of order 12.
+-/
+@[category research open, AMS 5]
+theorem erdos_732.eq_12 : (∃ pp : ProjectivePlane P L, pp.order = 12) ↔ answer(sorry) :=  by
+  sorry
+
+/--
+Bruck and Ryser have proved that if $n \equiv 1 (\mod 4)$ or $n \equiv 2 (\mod 4)$ then $n$ must be
+the sum of two squares.
+-/
+@[category research solved, AMS 5]
+theorem bruck_ryser (n : ℕ) (pp : ProjectivePlane P L) (hpp : pp.order = n) :
+    (n % 4 = 1 ∨ n % 4 = 2) → ∃ a b, n = a ^ 2 + b ^ 2 := by
+  sorry
+
 end Erdos723
