@@ -55,7 +55,7 @@ of a shape that can cover every unit-length curve?
 @[category research open, AMS 52]
 theorem mosers_worm_problem :
     IsGLB
-      {v | ∃ X ∈ WormCovers, volume X = v }
+      {v | ∃ X ∈ WormCovers, volume X = v}
       answer(sorry) := by
   sorry
 
