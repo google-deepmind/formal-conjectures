@@ -29,7 +29,7 @@ A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$
 $p$-th Lucas number. It is conjectured that there is at least one Wall–Sun–Sun prime.
 -/
 @[category research open, AMS 11]
-theorem wall_sun_sun_primes_existence : ∃ p, IsWallSunSunPrime p := by
+theorem exists_isWallSunSunPrime : ∃ p, IsWallSunSunPrime p := by
   sorry
 
 /--
@@ -37,7 +37,7 @@ A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$
 $p$-th Lucas number. It is conjectured that there are infinitely many Wall-Sun-Sun primes.
 -/
 @[category research open, AMS 11]
-theorem wall_sun_sun_primes_infinite : {p : ℕ | IsWallSunSunPrime p}.Infinite := by
+theorem infinite_isWallSunSunPrime : {p : ℕ | IsWallSunSunPrime p}.Infinite := by
   sorry
 
 /--
@@ -47,6 +47,6 @@ $\left({\tfrac {a^{2}-4b}{p}}\right)$. The discriminant of this number is the qu
 It is conjectured that there are infinitely many Lucas–Wieferich primes of any given discriminant.
 -/
 @[category research open, AMS 11]
-theorem wall_sun_sun_primes_with_discriminant_infinite (D : ℕ+) :
+theorem infinite_isWallSunSunPrime_of_disc_eq (D : ℕ+) :
     {p : ℕ | ∃ a b : ℕ, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p }.Infinite := by
   sorry
