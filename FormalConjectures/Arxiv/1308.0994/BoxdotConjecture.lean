@@ -37,6 +37,11 @@ has been studied in several works. In particular, see:
   - *Cluster Expansion and the Boxdot Conjecture*, Emil Jeřábek, arXiv:1308.0994.
   - *The Boxdot Conjecture and the Generalized McKinsey Axiom*, Christopher Steinsvold,
     Australasian Journal of Logic (AJL).
+
+
+Jeřábek's proof of the Boxdot Conjecture has been formalised in Lean:
+https://github.com/FormalizedFormalLogic/Foundation. Note however that the statement's formalisation
+in that repository is different to the one presented in the current file.
 -/
 
 namespace Boxdot
