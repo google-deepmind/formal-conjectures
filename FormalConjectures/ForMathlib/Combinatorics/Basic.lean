@@ -33,20 +33,20 @@ namespace Set
 lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
     {Y : Set ℕ} (hY : Y.IsAPOfLength 3) :
     (A ∩ Y).ncard ≤ 2 := by
-  simp [Set.IsAPOfLength, Set.IsAPOfLengthWith] at hY
+  simp [IsAPOfLength, IsAPOfLengthWith] at hY
   obtain ⟨hc, ⟨a, d, hY⟩⟩ := hY
-  have hY_card : Y.ncard = 3 := by simp [Set.ncard, Set.encard, hc]
+  have hY_card : Y.ncard = 3 := by simp [ncard, encard, hc]
   by_contra! h
   have hss : Y ⊆ A ∩ Y := by
-    have hY_fin : Finite Y := Set.finite_of_ncard_ne_zero (by linarith)
+    have hY_fin : Finite Y := finite_of_ncard_ne_zero (by linarith)
     rw [Set.eq_of_subset_of_ncard_le (Set.inter_subset_right) (by linarith)]
-  have ha : a ∈ A := Set.mem_of_mem_inter_left <| hss (hY ▸ ⟨0, by norm_num, by simp⟩)
-  have ha₁ : a + d ∈ A := Set.mem_of_mem_inter_left <| hss (hY ▸ ⟨1, by norm_num, by simp⟩)
-  have ha₂ : a + 2 • d ∈ A := Set.mem_of_mem_inter_left <| hss (hY ▸ ⟨2, by norm_num, by simp⟩)
+  have ha : a ∈ A := mem_of_mem_inter_left <| hss (hY ▸ ⟨0, by norm_num, by simp⟩)
+  have ha₁ : a + d ∈ A := mem_of_mem_inter_left <| hss (hY ▸ ⟨1, by norm_num, by simp⟩)
+  have ha₂ : a + 2 • d ∈ A := mem_of_mem_inter_left <| hss (hY ▸ ⟨2, by norm_num, by simp⟩)
   have := hA _ ha _ ha₁ _ ha₂ _ ha₁ (by simp; omega)
   simp at this
-  simp [hY, this.1, Set.setOf_and] at hY_card
-  linarith [Set.ncard_singleton _ ▸ Set.ncard_inter_le_ncard_right {a | ∃ x, x < 3} {a}]
+  simp [hY, this.1, setOf_and] at hY_card
+  linarith [ncard_singleton _ ▸ ncard_inter_le_ncard_right {a | ∃ x, x < 3} {a}]
 
 theorem IsSidon.subset {A B : Set α} (hB : IsSidon B) (hAB : A ⊆ B) : IsSidon A :=
   fun _ _ _ _ _ _ _ _ _ ↦ hB _ (hAB ‹_›) _ (hAB ‹_›) _ (hAB ‹_›) _ (hAB ‹_›) ‹_›
@@ -87,7 +87,7 @@ namespace Finset
 
 @[simp, push_cast]
 theorem isSidon_toSet {A : Finset α} : IsSidon A.toSet ↔ IsSidon A := by
-  simp [_root_.IsSidon]
+  simp [IsSidon]
 
 instance (A : Finset ℕ) : Decidable (IsSidon A) :=
   decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
