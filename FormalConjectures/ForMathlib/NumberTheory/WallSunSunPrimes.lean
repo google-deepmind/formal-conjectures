@@ -60,5 +60,5 @@ $\left({\tfrac {a^{2}-4b}{p}}\right)$
 structure IsLucasWieferichPrime (a b p : ℕ) : Prop where
   prime : p.Prime
   modeq :
-    letI index := (p : ℤ) - jacobiSym p (a^2 - 4*b)
+    letI index := p - jacobiSym p (a^2 - 4*b)
     lucasUNumberPQ a b index.toNat ≡ 0 [ZMOD (p^2)]
