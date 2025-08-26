@@ -81,6 +81,26 @@ theorem pi_pow_pi_pow_pi_transcendental : Transcendental ℚ (π ^ (π ^ π)) :=
   sorry
 
 /--
+$\pi^{\pi^{\pi^\pi}}$ is transcendental.
+-/
+@[category research open, AMS 11 33]
+theorem pi_pow_pi_pow_pi_pow_pi_transcendental : Transcendental ℚ (π ^ (π ^ (π ^ π))) := by
+  sorry
+
+/--
+$\pi^{\pi^{\pi^\pi}}$ is not an integer.
+
+This would follow from $\pi^{\pi^{\pi^\pi}}$ being transcendental,
+but this formulation is of interest in its own right,
+as it could in principle be proven by direct computation.
+
+*Reference:* [YouTube](https://www.youtube.com/watch?v=BdHFLfv-ThQ)
+-/
+@[category research open, AMS 11 33]
+theorem pi_pow_pi_pow_pi_pow_pi_not_integer : ¬ ∃ (n : ℤ), π ^ π ^ π ^ π = n :=
+  sorry
+
+/--
 $\log(\pi)$ is transcendental.
 -/
 @[category research open, AMS 11 33]

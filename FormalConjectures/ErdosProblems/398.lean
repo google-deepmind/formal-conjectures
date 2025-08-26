@@ -17,20 +17,19 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 398
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*References:*
+ - [erdosproblems.com/398](https://www.erdosproblems.com/398)
+ - [Wikipedia: Brocard's problem](https://en.wikipedia.org/wiki/Brocard%27s_problem)
 -/
 
-open Nat Filter
-
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
+open Nat
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+**Brocard's Problem**
+Does $n! + 1 = m^2$ have integer solutions other than $n = 4, 5, 7$?
 -/
 @[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+theorem erdos_398 : {n | ∃ m, n ! + 1 = m ^ 2} = {4, 5, 7} ↔ answer(sorry) := by
   sorry
