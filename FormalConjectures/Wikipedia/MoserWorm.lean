@@ -119,7 +119,5 @@ International Journal of Computational Geometry & Applications,
 -/
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_lower_bound :
-    0.232239 ∈
-      lowerBounds
-      {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v } := by
+    0.232239 ∈ lowerBounds {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} := by
   sorry
