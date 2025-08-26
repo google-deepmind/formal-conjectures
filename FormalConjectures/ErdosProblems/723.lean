@@ -65,7 +65,7 @@ the sum of two squares.
 -/
 @[category research solved, AMS 5]
 theorem bruck_ryser (n : ℕ) (pp : ProjectivePlane P L) (hpp : pp.order = n) :
-    (n % 4 = 1 ∨ n % 4 = 2) → ∃ a b, n = a ^ 2 + b ^ 2 := by
+    (n ≡ 1 [MOD 4] ∨ n ≡ 2 [MOD 4]) → ∃ a b, n = a ^ 2 + b ^ 2 := by
   sorry
 
 end Erdos723
