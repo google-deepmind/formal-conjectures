@@ -21,6 +21,7 @@ import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 *References:*
 - [Wikipedia, Lucas_sequence](https://en.wikipedia.org/wiki/Lucas_sequence)
 - [Wikipedia, Wall–Sun–Sun prime](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
+- [Wikipedia, Wieferich prime](https://en.wikipedia.org/wiki/Lucas%E2%80%93Wieferich_prime)
 -/
 
 /--
@@ -52,7 +53,6 @@ structure IsWallSunSunPrime (p : ℕ) : Prop where
 
 /--
 **Lucas–Wieferich prime**
-Ref: https://en.wikipedia.org/wiki/Lucas%E2%80%93Wieferich_prime
 A Lucas–Wieferich prime associated with $(a,b)$ is a prime $p$ such $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$
 where $U(a,b)$ is the Lucas sequence of the first kind and $\varepsilon$ is the Legendre symbol
 $\left({\tfrac {a^{2}-4b}{p}}\right)$
