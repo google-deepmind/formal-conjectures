@@ -17,20 +17,23 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 28
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/28](https://www.erdosproblems.com/28)
 -/
 
-open Nat Filter
-
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
+open Filter Set
+open scoped Pointwise
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+If $A ⊆ \mathbb{N}$ is such that $A + A$ contains all but finitely many integers then
+ $\limsup 1_A ∗ 1_A(n) = \infty$.
 -/
 @[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+theorem erdos_28 (A : Set ℕ) (h : (A + A)ᶜ.Finite) :
+    limsup (fun (n : ℕ) =>
+    letI a := PowerSeries.mk (indicator A 1)
+    (a * a).coeff ℕ n) atTop = (⊤ : ℕ∞) := by
   sorry
+
+-- TODO(firsching): add the theorems/conjectures for the comments on the page

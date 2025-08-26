@@ -14,23 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import Mathlib
 
-/-!
-# Erdős Problem 943
+/-- A Finset of numbers is coprime, or relatively prime, if its `gcd` is 1. -/
+@[reducible] def Finset.Coprime (S : Finset ℕ) : Prop := S.gcd id = 1
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
--/
-
-open Nat Filter
-
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
-
-/--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
--/
-@[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
-  sorry
+theorem Finset.Coprime_pair_iff (S : Finset ℕ) (a b : ℕ) (h : S = {a, b}) :
+    S.Coprime ↔ Nat.Coprime a b := by
+  simp only [h, Finset.Coprime, Nat.Coprime, gcd_insert, gcd_singleton, normalize_eq]
+  rfl

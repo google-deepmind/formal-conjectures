@@ -17,20 +17,17 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 943
+# Erdős Problem 938
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+*Reference:* [erdosproblems.com/938](https://www.erdosproblems.com/938)
 -/
-
-open Nat Filter
-
-noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
+open Nat
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+Let $A=\{n_1 < n_2 < \cdots\}$ be the sequence of powerful numbers (if $p\mid n$ then $p^2\mid n$).
+Are there only finitely many three-term progressions of consecutive terms $n_k,n_{k+1},n_{k+2}$?
 -/
 @[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
+theorem erdos_938 : {P : Finset ℕ | Set.IsAPOfLength P.toSet 3 ∧ ∃ k,
+    P = {nth Powerful k, nth Powerful (k + 1), nth Powerful (k + 2)}}.Finite ↔ answer(sorry) := by
   sorry

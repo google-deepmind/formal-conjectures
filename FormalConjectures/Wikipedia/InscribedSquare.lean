@@ -79,3 +79,12 @@ theorem exists_inscribed_rectangle_of_smooth (γ : Circle → EuclideanSpace ℝ
     (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) ∞ γ) (r : ℝ) (hr : r > 0) :
     ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r :=
   sorry
+
+/--
+It is also known that every C² Jordan curve admits an inscribed square.
+-/
+@[category research solved, AMS 51]
+theorem exists_inscribed_square_of_C2 (γ : Circle → EuclideanSpace ℝ (Fin 2))
+    (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) 2 γ) :
+    ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 :=
+  sorry
