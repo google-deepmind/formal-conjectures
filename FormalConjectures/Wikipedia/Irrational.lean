@@ -33,7 +33,7 @@ namespace Irrational
 
 /-- Are $e$ and $\pi$ algebraically independent? -/
 @[category research open, AMS 33]
-theorem algebraic_independent_e_pi :
+theorem algebraicIndependent_e_pi :
     AlgebraicIndependent ℚ ![e, π] ↔ answer(sorry) := by
   sorry
 
@@ -89,7 +89,7 @@ theorem irrational_ln_pi :
 Is the Euler-Mascheroni constant $\gamma$ irrational?
 -/
 @[category research open, AMS 33]
-theorem irrational_euler_mascheroni_constant :
+theorem irrational_eulerMascheroniConstant :
     Irrational eulerMascheroniConstant ↔ answer(sorry) := by
   sorry
 
@@ -97,7 +97,7 @@ theorem irrational_euler_mascheroni_constant :
 Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$ irrational?
 -/
 @[category research open, AMS 11 33]
-theorem irrational_catalan_constant :
+theorem irrational_catalanConstant :
     Irrational catalanConstant ↔ answer(sorry) := by
   sorry
 

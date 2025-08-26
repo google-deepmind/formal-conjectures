@@ -135,7 +135,7 @@ theorem exp_add_pi_or_exp_add_mul_transcendental :
 At least one of Catalan constant and the Gompertz constant is transcendental.
 -/
 @[category research solved, AMS 11 33]
-theorem transcendental_catalan_or_gompertz :
+theorem transcendental_catalanConstant_or_gompertzConstant :
     Transcendental ℚ catalanConstant ∨ Transcendental ℚ gompertzConstant := by
   sorry
 
@@ -143,14 +143,14 @@ theorem transcendental_catalan_or_gompertz :
 The Catalan constant $G$ is transcendental.
 -/
 @[category research open, AMS 11, AMS 33]
-theorem transcendental_catalan_constant : Transcendental ℚ catalanConstant := by
+theorem transcendental_catalanConstant : Transcendental ℚ catalanConstant := by
   sorry
 
 /--
 The Gompertz constant $\delta$ is transcendental.
 -/
 @[category research open, AMS 33]
-theorem transcendental_gompertz_constant : Transcendental ℚ gompertzConstant := by
+theorem transcendental_gompertzConstant : Transcendental ℚ gompertzConstant := by
   sorry
 
 /--
@@ -159,7 +159,7 @@ $\Gamma(1/2)$ is transcendental.
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
 @[category research solved, AMS 33]
-theorem transcendental_gamma_1_2 : Transcendental ℚ (1 / 2 : ℝ).Gamma := by
+theorem transcendental_gamma_one_div_two : Transcendental ℚ (1 / 2 : ℝ).Gamma := by
   sorry
 
 /--
@@ -168,7 +168,7 @@ $\Gamma(1/3)$ is transcendental.
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
 @[category research solved, AMS 33]
-theorem transcendental_gamma_1_3 : Transcendental ℚ (1 / 3 : ℝ).Gamma := by
+theorem transcendental_gamma_one_div_three : Transcendental ℚ (1 / 3 : ℝ).Gamma := by
   sorry
 
 /--
@@ -177,7 +177,7 @@ $\Gamma(1/4)$ is transcendental.
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
 @[category research solved, AMS 33]
-theorem transcendental_gamma_1_4 : Transcendental ℚ (1 / 4 : ℝ).Gamma := by
+theorem transcendental_gamma_one_div_four : Transcendental ℚ (1 / 4 : ℝ).Gamma := by
   sorry
 
 /--
@@ -186,14 +186,14 @@ $\Gamma(1/6)$ is transcendental.
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
 @[category research solved, AMS 33]
-theorem transcendental_gamma_1_6 : Transcendental ℚ (1 / 6 : ℝ).Gamma := by
+theorem transcendental_gamma_one_div_six : Transcendental ℚ (1 / 6 : ℝ).Gamma := by
   sorry
 
 /--
 $\Gamma(1/n)$ for `n ≥ 2` is transcendental.
 -/
 @[category research open, AMS 33]
-theorem transcendental_gamma_1_n (n : ℕ) (hn : 2 ≤ n) : Transcendental ℚ (1 / n : ℝ).Gamma := by
+theorem transcendental_gamma_one_div (n : ℕ) (hn : 2 ≤ n) : Transcendental ℚ (1 / n : ℝ).Gamma := by
   sorry
 
 /--
