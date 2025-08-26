@@ -26,9 +26,12 @@ open Real
 
 local notation "e" => exp 1
 
-/--
-Are $e$ and $\pi$ algebraically independent?
--/
+-- See also corresponding transcendence conjectures
+-- in `FormalConjectures.Wikipedia.SchanuelsConjecture`
+
+namespace Irrational
+
+/-- Are $e$ and $\pi$ algebraically independent? -/
 @[category research open, AMS 33]
 theorem algebraic_independent_e_pi :
     AlgebraicIndependent ℚ ![e, π] ↔ answer(sorry) := by
@@ -97,3 +100,5 @@ Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596
 theorem irrational_catalan_constant :
     Irrational catalanConstant ↔ answer(sorry) := by
   sorry
+
+end Irrational

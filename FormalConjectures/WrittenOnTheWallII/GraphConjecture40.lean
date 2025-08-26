@@ -16,7 +16,9 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-namespace SimpleGraph
+namespace WrittenOnTheWallII.GraphConjecture40
+
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
 
@@ -32,4 +34,4 @@ theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α)
     ⌈((p G + b G + 1) / 2)⌉ ≤ f G := by
   sorry
 
-end SimpleGraph
+end WrittenOnTheWallII.GraphConjecture40

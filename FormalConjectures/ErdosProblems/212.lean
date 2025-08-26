@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/212](https://www.erdosproblems.com/212)
 -/
 
+namespace Erdos212
+
 /--
 Is there a dense subset of ℝ^2 such that all pairwise distances
 are rational?
@@ -29,3 +31,5 @@ are rational?
 @[category research open, AMS 52]
 theorem erdos_212 : (∃ u : Set ℂ,
   Dense u ∧ u.Pairwise fun c₁ c₂ => dist c₁ c₂ ∈ Set.range Rat.cast) ↔ answer(sorry) := by sorry
+
+end Erdos212

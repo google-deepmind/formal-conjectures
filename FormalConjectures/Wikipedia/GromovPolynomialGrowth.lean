@@ -28,6 +28,8 @@ Note: this was obtained in work with Kasia Jankiewicz and Catherine Pfaff, and u
 Claude 4.0 Sonnet: https://claude.ai/share/918bb269-bd28-4c09-b84e-cab579c836e8
 -/
 
+namespace GromovPolynomialGrowth
+
 /-- The `CayleyBall` is the ball of radius `n` in the Cayley graph of a group `G` with generating
     set `S`. -/
 def CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) : Set G :=
@@ -102,3 +104,5 @@ def HasPolynomialGrowth (G : Type*) [Group G] : Prop :=
 theorem GromovPolynomialGrowthTheorem (G : Type*) [Group G] [Group.FG G] :
     HasPolynomialGrowth G ↔ Group.IsVirtuallyNilpotent G := by
   sorry
+
+end GromovPolynomialGrowth

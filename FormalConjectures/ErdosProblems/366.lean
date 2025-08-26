@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/366](https://www.erdosproblems.com/366)
 -/
 
+namespace Erdos366
+
 /--
 Are there any $2$-full $n$ such that $n+1$ is $3$-full?
 -/
@@ -51,3 +53,5 @@ Are there any consecutive pairs of $3$-full integers?
 @[category undergraduate, AMS 11]
 theorem erdos_366.variant.weaker : (∃ (n : ℕ), (3).Full n ∧ (3).Full (n + 1))  ↔ answer(sorry) := by
   sorry
+
+end Erdos366

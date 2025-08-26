@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open AffineMap MeasureTheory Metric
 
+namespace Kakeya
+
 /--
 A set `S` in `ℝⁿ` is called a Kakeya set if it contains a unit line segment in every direction.
 For simplicity, we omit the compactness assumption here.
@@ -98,3 +100,5 @@ theorem kakeya_finite {F : Type*} [Field F] [Fintype F] {n : ℕ}
     (K : Finset (Fin n → F)) (hK : IsKakeyaFinite K) :
     card F ^ n / (2 - 1 / card F : ℚ) ^ (n - 1) ≤ K.card := by
   sorry
+
+end Kakeya

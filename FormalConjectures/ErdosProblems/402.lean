@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
+namespace Erdos402
+
 /-- Prove that, for any finite set $A\subset\mathbb{N}$, there exist $a, b\in A$ such
 that
 $$
@@ -71,3 +73,5 @@ theorem erdos_402.variants.szegedy_zaharescu_weak : ∀ᶠ n in atTop,
         ∃ k > 0, A = (Finset.Icc 1 n).image (k * ·) ∨
           A = (Finset.Icc 1 n).image (k * (Finset.Icc 1 n).lcm id / ·)):= by
   sorry
+
+end Erdos402

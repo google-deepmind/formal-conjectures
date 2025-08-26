@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace Arxiv.«0911.2077»
+
 /-!
 # Conjecture 6.3
 
@@ -50,3 +52,5 @@ theorem arxiv.id0911_2077.conjecture6_3
       + (1 / 2) * ((2 * k).choose k) * σ ^ (2 * k)
       ≤ ((PMF.binomial (.ofReal p : ℝ≥0∞) hp' (2 * k)).toMeasure (Set.Ici k)).toReal := by
   sorry
+
+end Arxiv.«0911.2077»

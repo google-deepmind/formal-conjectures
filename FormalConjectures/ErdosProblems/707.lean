@@ -30,6 +30,8 @@ If this conjecture is true, it would imply that the maximum density of Sidon set
 
 open Function Set
 
+namespace Erdos707
+
 /-- `B` is a perfect difference set modulo `n` if every non-zero residue mod `n` can be uniquely
 expressed in the form `a - b`, where `a, b ∈ B`. -/
 def IsPerfectDifferenceSetModulo (B : Set ℕ) (n : ℕ) : Prop :=
@@ -117,3 +119,5 @@ theorem erdos_707.variants.small_sidon_sets (A : Set ℕ) (hA : A.Finite) (h : A
     (hSidon : IsSidon A) : ∃ (B : Set ℕ) (p : ℕ), IsPrimePow p ∧ A ⊆ B ∧
     IsPerfectDifferenceSetModulo B (p^2 + p + 1) := by
   sorry
+
+end Erdos707

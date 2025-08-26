@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/11](https://www.erdosproblems.com/11)
 -/
 
+namespace Erdos11
+
 /--
 Is every odd $n > 1$ the sum of a squarefree number and a power of 2?
 -/
@@ -62,3 +64,5 @@ Every odd $1 < n < 2^50$ is the sum of a squarefree number and a power of 2.
 theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
+
+end Erdos11

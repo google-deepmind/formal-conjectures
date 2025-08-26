@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/219](https://www.erdosproblems.com/219)
 -/
+
+namespace Erdos219
+
 /--
 The set of arithmetic progressions of primes
 -/
@@ -68,3 +71,5 @@ Ref: Green, Ben and Tao, Terence, _The primes contain arbitrarily long arithmeti
 @[category research solved, AMS 5 11]
 theorem erdos_219 : (∀ N, ∃ l ∈ primeArithmeticProgressions, N ≤ ENat.card l) ↔ answer(True) := by
   sorry
+
+end Erdos219

@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mahler%27s_3/2_problem)
 -/
 
+namespace Mahler32
+
 /-- For a real number `α`, define `Ω(α)` as
 $$
 \Omega (\alpha )=\inf _{\theta > 0}\left({\limsup _{n\rightarrow \infty }\left\lbrace
@@ -53,3 +55,5 @@ theorem mahler_conjecture.variants.consequence (H : type_of% mahler_conjecture) 
 theorem mahler_conjecture.variants.flatto_lagarias_pollington (p q : ℕ) (hp : 1 ≤ p) (hq : 1 ≤ q)
     (hpq : p.Coprime q) (hpq' : q < p) : 1 / p < Ω (p / q) := by
   sorry
+
+end Mahler32

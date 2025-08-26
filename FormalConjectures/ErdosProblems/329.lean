@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Function Set Filter
 
+namespace Erdos329
+
 /--
 The partial density of a Sidon set `A` up to `N`, normalized by dividing by `√N` instead of `N`.
 This measures how close the set comes to the optimal density for Sidon sets.
@@ -126,3 +128,5 @@ It is possible to construct a Sidon set with positive density.
 @[category undergraduate, AMS 5 11]
 theorem exists_sidon_pos_density : ∃ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
   sorry
+
+end Erdos329

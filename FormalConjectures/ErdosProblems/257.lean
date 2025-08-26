@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/257](https://www.erdosproblems.com/257)
 -/
 
+namespace Erdos257
+
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set. Is
 $$
@@ -59,3 +61,5 @@ is irrational.
 theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
+
+end Erdos257

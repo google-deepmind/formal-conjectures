@@ -25,6 +25,8 @@ open Polynomial
 - [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
 
+namespace Dickson
+
 /--
 **Dickson's conjecture**
 If a finite set of in linear integer forms $f_i(n) = a_i n+b_i$ satisfies Schinzel condition,
@@ -82,3 +84,5 @@ theorem infinite_sexy_primes :
 
 *Reference:* [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
+
+end Dickson

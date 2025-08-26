@@ -26,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Real
 
+namespace Firoozbakht
+
 /--
 The sequence of $\sqrt[n]{p_n}$ where $p_n$ is the n:th prime number.
 -/
@@ -49,3 +51,5 @@ A consequence of Firuzbakht's conjecture.
 theorem firoozbakht_conjecture_consequence (n : ℕ) (hn : 3 < n) (P : type_of% firoozbakht_conjecture) :
     (n+1).nth Prime - n.nth Prime < (log (n.nth Prime))^2 - log (n.nth Prime) := by
   sorry
+
+end Firoozbakht

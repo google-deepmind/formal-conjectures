@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Real
 
+namespace Transcendental
+
 /--
 $e + \pi$ is transcendental.
 -/
