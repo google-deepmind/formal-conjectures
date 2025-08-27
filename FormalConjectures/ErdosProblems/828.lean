@@ -27,7 +27,7 @@ namespace Erdos828
 open scoped Nat
 
 /--
-Is it true that, for any $a \in \mathbb{Z}$, there are infinitely many $n$ such that
+Is it true that, for any $a \in \mathbb{N}$, there are infinitely many $n$ such that
 $$\phi(n) | n + a$$?
 -/
 @[category research open, AMS 11]
