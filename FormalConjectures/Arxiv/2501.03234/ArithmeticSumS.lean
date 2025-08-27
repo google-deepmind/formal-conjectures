@@ -120,7 +120,7 @@ case of conjecture 4.4 where n = 0. In this case the lower bound would be 0 (for
 -/
 example (hc1_1: conjecture_1_1_def ) : conjecture_4_4_def 0 := by
   simp [conjecture_4_1_def,conjecture_4_4_def, Filter.Eventually] at *
-  refine ⟨0,fun b sb bprim bodd ↦ hc1_1 b bprim bodd⟩
+  exact ⟨0,fun b sb bprim bodd ↦ hc1_1 b bprim bodd⟩
 
 /--
 **Conjecture 4.1 → Conjecture 4.4**: If conjecture 4.1 holds true, then this implies a special
@@ -147,4 +147,5 @@ example (hc4_3: conjecture_4_3_def ) : conjecture_4_4_def 3 := by
   exact ⟨3119+1,fun b sb bprim bodd ↦ hc4_3 b bprim bodd (by linarith)⟩
 
 end Arxiv.«2501.03234»
+
 
