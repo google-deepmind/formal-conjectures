@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+
 import FormalConjectures.Util.ProblemImports
 
 /-!
@@ -120,7 +121,6 @@ example (hc4_2 : conjecture_4_2_def) : conjecture_4_4_def 2 := by
   simp [conjecture_4_4_def, Filter.Eventually]
   exact ⟨233+1, fun b sb bprim bodd ↦ hc4_2 b bprim bodd (by linarith)⟩
 
-
 /--
 **Conjecture 4.3 → Conjecture 4.4**: If conjecture 4.3 holds true, then a special
 case of conjecture 4.4 for n = 3 is obtained, and the lower bound is 3119.
@@ -129,8 +129,8 @@ example (hc4_3: conjecture_4_3_def ) : conjecture_4_4_def 3 := by
   simp [conjecture_4_4_def, Filter.Eventually]
   exact ⟨3119+1, fun b sb bprim bodd ↦ hc4_3 b bprim bodd (by linarith)⟩
 
-
 end Arxiv.«2501.03234»
+
 
 
 
