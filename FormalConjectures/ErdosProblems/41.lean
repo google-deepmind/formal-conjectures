@@ -41,9 +41,9 @@ private noncomputable def Set.bdd (A : Set ℕ) (N : ℕ) : Finset ℕ :=
 Let `A` ⊆ ℕ be an infinite set such that the triple sums `a + b + c` are all distinct for `a, b, c` in `A` (aside from the trivial coincidences). Is it true that `lim inf n → ∞ |A ∩ {1, …, N}| / N^(1/3) = 0`?
 -/
 @[category research open, AMS 11]
-theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.Infinite) : Filter.atTop.liminf (fun N => (A.bdd N).card / (N : ℝ)^(1/3)) = 0
-    := by
-sorry
+theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.Infinite) : 
+    Filter.atTop.liminf (fun N => (A.bdd N).card / (N : ℝ)^(1/3)) = 0 := by
+  sorry
 
 /--
 Erdős proved the following pairwise version.
