@@ -100,7 +100,7 @@ theorem erdos_707.variants.singer_construction (p : ℕ) (hp : IsPrimePow p) :
 The set `{1, 2, 4}` is a Sidon set.
 -/
 @[category undergraduate, AMS 5 11]
-theorem erdos_707.variants.example_sidon_set : IsSidon {1, 2, 4} := by
+theorem erdos_707.variants.example_sidon_set : IsSidon ({1, 2, 4} : Set ℕ) := by
   sorry
 
 /--

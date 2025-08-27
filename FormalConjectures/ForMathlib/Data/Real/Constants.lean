@@ -14,25 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import Mathlib.MeasureTheory.Integral.Bochner
+import Mathlib.MeasureTheory.Measure.Haar.OfBasis
 
-/-!
-# Erdős Problem 943
+/-! # Standard real valued constants
 
-*Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
+This file is for storing the definition of standard real constants that arise in conjectures.
+
 -/
 
-open AdditiveCombinatorics Nat Filter
-
-namespace Erdos943
+open Real
 
 /--
-Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
+**Gompertz constant**
+$$\delta = -e * \int_1^∞ e^{-t}/t dt \approx 0.59634$$
 -/
-@[category research open, AMS 11]
-theorem erdos_943 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (sumRep Powerful n) = (n : ℝ)^(o n)) ↔
-    answer(sorry) := by
-  sorry
+noncomputable def gompertzConstant : ℝ :=
+  -exp 1 * ∫ (t:ℝ) in Set.Ioi 1, exp (-t) / t
 
-end Erdos943
+/--
+**Catalan's constant**
+$$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$
+-/
+noncomputable def catalanConstant : ℝ :=
+  ∑' n : ℕ, (-1)^n / (2*n + 1)^2
