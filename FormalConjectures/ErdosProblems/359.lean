@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos359
 
-open Filter
+open Filter Asymptotics
 
 /-- The predicate that `A 0 = n` and for all `j`, `A (j + 1)` is the smallest natural number that
 cannot be written as a sum of consecutive terms of `A 0, ..., A j` -/
@@ -33,24 +33,43 @@ def IsGoodFor (A : ℕ → ℕ) (n : ℕ) : Prop := A 0 = n ∧
     {m : ℕ | ∀ a b, Finset.Icc a b ⊆ Finset.Iic j → m ≠ ∑ i ∈ Finset.Icc a b, A i}
     (A <| j + 1)
 
+/-- Let $a_1< a_2 < ⋯ $ be an infinite sequence of integers such that $a_1=1$ and $a_{i+1}$ is the
+least integer which is not a sum of consecutive earlier $a_j$s. Show that $a_k / k \to \infty$. -/
 @[category research open, AMS 11]
 theorem erdos_359.parts.i (A : ℕ → ℕ) (hA : IsGoodFor A 1) :
     atTop.Tendsto (fun k ↦ A k / k) atTop := by
   sorry
 
+/-- Let $a_1< a_2 < ⋯ $ be an infinite sequence of integers such that $a_1=1$ and $a_{i+1}$ is the
+least integer which is not a sum of consecutive earlier $a_j$s. Show that $a_k / k ^ {1 + c} \to 0$
+for any $c > 0$. -/
 @[category research open, AMS 11]
 theorem erdos_359.parts.ii (A : ℕ → ℕ) (hA : IsGoodFor A 1) (c : ℝ) (hc : 0 < c):
-    atTop.Tendsto (fun k ↦ A k / k ^ (1 + c)) atTop := by
+    atTop.Tendsto (fun k ↦ A k / (k : ℝ) ^ (1 + c)) atTop := by
   sorry
 
+/-- Suppose sequence $A$ satisfies the following: `A 0 = 1` and for all `j`, `A (j + 1)` is the
+smallest natural number that cannot be written as a sum of consecutive terms of `A 0, ..., A j`.
+Then the first few terms of $A$ are $1,2,4,5,8,10,14,15,...$. -/
 @[category test, AMS 11]
 theorem erdos_359.variants.isGoodFor_1_low_values (A : ℕ → ℕ) (hA : IsGoodFor A 1) :
     A '' (Set.Iic 7) = {1, 2, 4, 5, 8, 10, 14, 15} := by
   sorry
 
+/-- Suppose sequence $A$ satisfies the following: `A 0 = n` and for all `j`, `A (j + 1)` is the
+smallest natural number that cannot be written as a sum of consecutive terms of `A 0, ..., A j`.
+Then $A$ is strictly increasing. -/
 @[category test, AMS 11]
-theorem erdos_359.variants.isGoodFor_1_low_values (A : ℕ → ℕ) (n : ℕ) (hA : IsGoodFor A n) :
+theorem erdos_359.variants.strictMono_of_isGoodFor (A : ℕ → ℕ) (n : ℕ) (hA : IsGoodFor A n) :
     StrictMono A := by
+  sorry
+
+/-- Suppose sequence $A$ satisfies the following: `A 0 = 1` and for all `j`, `A (j + 1)` is the
+smallest natural number that cannot be written as a sum of consecutive terms of `A 0, ..., A j`.
+Then it is conjectured that $$a_k ~ \frac{k \log k}{\log \log k}$$. -/
+@[category research open, AMS 11]
+theorem erdos_359.variants.isGoodFor_1_asymptotic (A : ℕ → ℕ) (hA : IsGoodFor A 1) :
+    (fun k ↦ (A k : ℝ)) ~[atTop] (fun k ↦ k * (k : ℝ).log / (k : ℝ).log.log) := by
   sorry
 
 end Erdos359
