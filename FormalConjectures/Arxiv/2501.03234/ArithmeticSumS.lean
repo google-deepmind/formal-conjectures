@@ -134,9 +134,9 @@ example (hc4_1: conjecture_4_1_def ) : conjecture_4_4_def 1 := by
 **Conjecture 4.2 → Conjecture 4.4**: If conjecture 4.2 holds true, then this implies a special
 case of conjecture 4.4 for n = 2. For this scenario, the lower bound is now 233.
 -/
-example (hc4_1: conjecture_4_2_def ) : conjecture_4_4_def 2 := by
+example (hc4_2: conjecture_4_2_def ) : conjecture_4_4_def 2 := by
   simp [conjecture_4_1_def,conjecture_4_4_def, Filter.Eventually] at *
-  exact ⟨233+1,fun b sb bprim bodd ↦ hc4_1 b bprim bodd (by linarith)⟩
+  exact ⟨233+1,fun b sb bprim bodd ↦ hc4_2 b bprim bodd (by linarith)⟩
 
 /--
 **Conjecture 4.3 → Conjecture 4.4**: If conjecture 4.3 holds true, then a special
@@ -147,3 +147,4 @@ example (hc4_3: conjecture_4_3_def ) : conjecture_4_4_def 3 := by
   exact ⟨3119+1,fun b sb bprim bodd ↦ hc4_3 b bprim bodd (by linarith)⟩
 
 end Arxiv.«2501.03234»
+
