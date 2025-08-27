@@ -28,6 +28,10 @@ coincidences forced by the commutativity of addition. -/
 def IsSidon {S : Type*} [Membership α S] (A : S) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
   i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)
 
+@[simp, push_cast]
+theorem coe {S : Type*} [SetLike S α] {A : S} : IsSidon (A : Set α) ↔ IsSidon A := by
+  simp [IsSidon]
+
 namespace Set
 
 lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
@@ -85,6 +89,7 @@ end Set
 
 namespace Finset
 
+-- TODO: remove once https://github.com/leanprover-community/mathlib4/pull/28241 is merged
 @[simp, push_cast]
 theorem isSidon_toSet {A : Finset α} : IsSidon A.toSet ↔ IsSidon A := by
   simp [IsSidon]
