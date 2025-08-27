@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/258](https://www.erdosproblems.com/258)
 -/
+
+namespace Erdos258
+
 /--
 Let $a_n \to \infty$ be a sequence of non-zero natural numbers. Is
 $\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of divisors of $n$?
@@ -55,3 +58,5 @@ Solution: True (proved by Erdős, see Erdős Problems website)
 theorem erdos_258.variants.Constant : (∀ t ≥ (2 : ℕ),
     Irrational (∑' (n : ℕ), ((n + 1).divisors.card / t^n))) ↔ answer(True) := by
   sorry
+
+end Erdos258

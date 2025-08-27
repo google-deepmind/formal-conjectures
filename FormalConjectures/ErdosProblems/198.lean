@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Function Set Nat
 
+namespace Erdos198
+
 /-- Let $V$ be a vector space over the rationals and let $k$ be a fixed
 positive integer. Then there is a set $X_k ⊆ Y$ such that $X_k$ meets
 every infinite arithmetic progression in $V$ but $X_k$ intersects every
@@ -84,3 +86,5 @@ In fact one such sequence is $n! + n$. This was found by AlphaProof. It also fou
 theorem erdos_198.variant_concrete :  ∃ (A : Set ℕ), A = {n ! + n | n} ∧
     IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → (A ∩ Y).Nonempty) := by
   sorry
+
+end Erdos198

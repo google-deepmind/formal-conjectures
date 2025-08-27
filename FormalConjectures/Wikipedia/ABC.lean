@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Abc_conjecture)
 -/
+
+namespace ABC
+
 /--
 The radical of `n` denoted is the product of the distinct prime factors of `n`.
 -/
@@ -76,3 +79,5 @@ theorem abc.variants.quality (ε : ℝ) (hε : 0 < ε) :
     {(a, b, c) : ℕ × ℕ × ℕ | 0 < a ∧ 0 < b ∧ 0 < c ∧ ({a, b, c} : Set ℕ).Pairwise Nat.Coprime ∧
     a + b = c ∧ quality a b c > (1 + ε)}.Finite := by
   sorry
+
+end ABC

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Real
 
+namespace Erdos200
+
 /--
 The length of the longest arithmetic progression of primes in $\{1,\ldots,n\}$.
 -/
@@ -45,3 +47,5 @@ It follows from the prime number theorem that such a progression has length $\le
 theorem erdos_200.variants.upper : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
     ∀ n, longestPrimeArithmeticProgressions n ≤ (1 + o n) * log n := by
   sorry
+
+end Erdos200

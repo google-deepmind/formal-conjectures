@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/427](https://www.erdosproblems.com/427)
 -/
+
+namespace Erdos427
+
 /--
 The predicate that for every $n$ and $d$, there exists $k$ such that
 $$
@@ -73,3 +76,5 @@ Cedric Pilatte has observed that a positive solution to Erdős Problem 427 follo
 @[category research solved, AMS 11]
 theorem erdos_427.of_shiu (H : ShiuTheorem) : Erdos427 := by
   sorry
+
+end Erdos427

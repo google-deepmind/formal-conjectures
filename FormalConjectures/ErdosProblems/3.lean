@@ -17,21 +17,19 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Brocard's Conjecture
+# Erdős Problem 3
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Brocard%27s_conjecture)
+*Reference:* [erdosproblems.com/3](https://www.erdosproblems.com/3)
 -/
-
-open Finset
 
 /--
-**Brocard's Conjecture**
-For every `n ≥ 2`, between the squares of the `n`-th and `(n+1)`-th primes,
-there are at least four prime numbers.
+If $A \subset \mathbb{N} has $\sum_{n \in A}\frac 1 n = \infty$, then must $A$ contain arbitrarily
+long arithmetic progressions?
 -/
 @[category research open, AMS 11]
-theorem brocard_conjecture (n : ℕ) (hn : 1 ≤ n) :
-    letI prev := n.nth Nat.Prime;
-    letI next := (n+1).nth Nat.Prime;
-    4 ≤ ((Ioo (prev^2) (next^2)).filter Nat.Prime).card := by
+theorem erdos_3 : (∀ A : Set ℕ,
+    (¬ Summable fun a : A ↦ 1 / (a : ℝ)) →
+    ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k) ↔ answer(sorry) := by
   sorry
+
+--TODO(firsching): add the various known bounds as variants.

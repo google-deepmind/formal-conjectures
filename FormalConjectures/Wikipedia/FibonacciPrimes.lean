@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Fibonacci_prime)
 -/
 
+namespace FibonacciPrimes
+
 /--
 There are infinitely many Fibonacci primes, i.e., Fibonacci numbers that are prime
 It is also a barrier to defining a benchmark from this paper:
@@ -59,3 +61,5 @@ theorem indices_infinite_iff_fib_primes_infinite : type_of% fib_primes_infinite.
     · simp_all
     · have := @m.fib_mono a
       omega
+
+end FibonacciPrimes

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - OEIS: [A054377](https://oeis.org/A054377) (Primary pseudoperfect numbers)
 -/
 
+namespace Erdos313
+
 /--
 This set contains all solutions `(m, P)` to the Erdős problem 313.
 A solution is a pair where `m` is an integer `≥ 2` and `P` is a non-empty, finite set of
@@ -70,3 +72,5 @@ There are at least 8 primary pseudoperfect numbers.
 theorem exists_at_least_eight_primary_pseudoperfect :
     8 ≤ (Set.encard {n | IsPrimaryPseudoperfect n}) := by
   sorry
+
+end Erdos313

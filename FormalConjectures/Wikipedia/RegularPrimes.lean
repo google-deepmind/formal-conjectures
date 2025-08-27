@@ -32,6 +32,8 @@ noncomputable section
 
 variable (p : ℕ)
 
+namespace RegularPrimes
+
 /-- TODO: remove this once mathlib is updated as it seems that in this version of mathlib
 we need to do this manually. -/
 instance [hp : Fact p.Prime]  : NumberField (CyclotomicField ⟨p, hp.out.pos⟩ ℚ) :=
@@ -81,3 +83,5 @@ def RegularPrimeConjecture : Prop :=
 @[category research open, AMS 11]
 theorem regularprime_conjecture : RegularPrimeConjecture := by
   sorry
+
+end RegularPrimes

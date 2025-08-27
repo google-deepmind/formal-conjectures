@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Euler's_sum_of_powers_conjecture)
 -/
 
+namespace EulerSumOfPowers
+
 /--
 Euler's sum of powers conjecture states that for integers $n > 1$ and $k > 1$,
 if the sum of $n$ positive integers each raised to the $k$-th power equals another integer
@@ -36,8 +38,8 @@ theorem eulers_sum_of_powers_conjecture (n k b : ℕ) (hn : 1 < n) (hk : 5 < k) 
   sorry
 
 @[category research solved, AMS 11]
-theorem eulers_sum_of_powers_conjecture.false_for_k4 : ¬ (∀ (n b : ℕ) (hn : 1 < n)
-    (a: Fin n → ℕ) (ha : ∀ i, a i > 0) (hsum : ∑ i, (a i) ^ 4 = b ^ 4), 4 ≤ n) := by
+theorem eulers_sum_of_powers_conjecture.false_for_k4 : ¬ (∀ (n b : ℕ) (_ : 1 < n)
+    (a: Fin n → ℕ) (_ : ∀ i, a i > 0) (_ : ∑ i, (a i) ^ 4 = b ^ 4), 4 ≤ n) := by
   push_neg
   use 3, 422481
   norm_num
@@ -45,10 +47,12 @@ theorem eulers_sum_of_powers_conjecture.false_for_k4 : ¬ (∀ (n b : ℕ) (hn :
   decide
 
 @[category research solved, AMS 11]
-theorem eulers_sum_of_powers_conjecture.false_for_k5 : ¬ (∀ (n b : ℕ) (hn : 1 < n)
-    (a: Fin n → ℕ) (ha : ∀ i, a i > 0) (hsum : ∑ i, (a i) ^ 5 = b ^ 5), 5 ≤ n) := by
+theorem eulers_sum_of_powers_conjecture.false_for_k5 : ¬ (∀ (n b : ℕ) (_ : 1 < n)
+    (a: Fin n → ℕ) (_ : ∀ i, a i > 0) (_ : ∑ i, (a i) ^ 5 = b ^ 5), 5 ≤ n) := by
   push_neg
   use 4, 144
   norm_num
   use ![27, 84, 110, 133]
   decide
+
+end EulerSumOfPowers

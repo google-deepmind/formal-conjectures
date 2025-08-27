@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Finset
 
+namespace Oppermann
+
 /--
 For every integer `x ≥ 2` there exists a prime between `x(x-1)` and `x²`.
 -/
@@ -65,3 +67,5 @@ theorem oppermann_implies_brocard (n : ℕ) (hn : 1 ≤ n) (P : type_of% opperma
 theorem oppermann_implies_legendre (n : ℕ) (hn : 1 ≤ n) (P : type_of% oppermann_conjecture) :
     ∃ p ∈ Ioo (n ^ 2) ((n + 1) ^ 2), p.Prime := by
   sorry
+
+end Oppermann

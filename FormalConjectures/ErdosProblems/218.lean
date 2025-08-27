@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/218](https://www.erdosproblems.com/218)
 -/
 
+namespace Erdos218
+
 /--
 The prime gap: the difference between the $n+1$-th and $n$-th prime.
 -/
@@ -51,3 +53,5 @@ length $3$, see `erdos_141.variant.infinite_three`.
 @[category research open, AMS 11]
 theorem erdos_218.variants.infinite_equal_prime_gap : {n | primeGap n = primeGap (n + 1)}.Infinite := by
   sorry
+
+end Erdos218

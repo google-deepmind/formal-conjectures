@@ -1,5 +1,5 @@
 /-
-Copyright 2024 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ open Finset
 
 variable {n : Type*} [DecidableEq n] {A : Finset (Finset n)}
 
+namespace UnionClosed
+
 abbrev IsUnionClosed (A : Finset (Finset n)) : Prop :=
   ∀ᵉ (X ∈ A) (Y ∈ A), X ∪ Y ∈ A
 
@@ -52,6 +54,7 @@ there exists an element that belongs to at least half of the sets in the family.
 -/
 @[category research open, AMS 5]
 theorem union_closed
+    [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A) :
     ∃ i : n, (1 / 2 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
@@ -64,6 +67,7 @@ Yu [Yu23] showed that the union-closed sets conjecture holds with a constant of 
 -/
 @[category research solved, AMS 5]
 theorem union_closed.variants.yu
+    [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A) :
     ∃ i : n, (0.38234 : ℚ) * #A ≤ #{x ∈ A | i ∈ x} := by
@@ -75,7 +79,8 @@ whose universal set has cardinality at most 12.
 [Vu17] Vuckovic, Bojan; Zivkovic, Miodrag (2017). "The 12-Element Case of Frankl's Conjecture" (PDF). IPSI BGD Transactions on Internet Research. 13 (1): 65.
 -/
 @[category research solved, AMS 5]
-theorem union_closed.variants.univ_card [Fintype n]
+theorem union_closed.variants.univ_card
+    [Fintype n] [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A)
     (h_card : Fintype.card n ≤ 12) :
@@ -92,6 +97,7 @@ as well.
 -/
 @[category research solved, AMS 5]
 theorem union_closed.variants.family_card
+    [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A)
     (hA : #A ≤ 50) :
@@ -192,3 +198,5 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     simpa using hc
   have : (0 : ℝ) < 0 := by linear_combination this + hi
   simp at this
+
+end UnionClosed

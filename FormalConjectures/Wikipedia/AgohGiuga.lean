@@ -37,6 +37,8 @@ References:
 
 -/
 
+namespace AgohGiuga
+
 /--
 The **Agoh-Giuga Conjecture**, Agoh's formulation.
 An integer `p ≥ 2` is prime if and only if we have
@@ -70,11 +72,42 @@ theorem agoh_giuga.variants.giuga : AgohGiugaSum := by
 theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
   sorry
 
+-- Formalisation note: refers to a Giuga number in the sense of
+-- https://en.wikipedia.org/wiki/Giuga_number
 /--
-A Giuga number is a counterexample to Giuga's conjecture.
+A (weak) Giuga number is a number $n$ such that
+$$\sum_{i=1}^{n - 1}i^{\varphi(n)} \equiv -1\pmod{n}$$.
 -/
-def IsGiuga (p : ℕ) : Prop :=
-    2 ≤ p ∧ ¬ p.Prime ∧ p ∣ 1 + ∑ i ∈ Finset.Ioo 0 p, i ^ φ p
+def IsWeakGiuga (n : ℕ) : Prop :=
+    2 ≤ n ∧ ¬ n.Prime ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ φ n
+
+-- Formalisation note: refers to a Giuga number in the sense of
+-- https://www.cambridge.org/core/services/aop-cambridge-core/content/view/8A6841B3FDA442A8FAEC89AA702C16F6/S0008439500007244a.pdf/note_on_giugas_conjecture.pdf
+/--
+A (strong) Giuga number is a number $n$ such that
+$$\sum_{i=1}^{n - 1}i^{n - 1} \equiv -1\pmod{n}$$-/
+def IsStrongGiuga (n : ℕ) : Prop :=
+    2 ≤ n ∧ ¬ n.Prime ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
+
+/--
+A number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
+prime divisors $p$ of $n$.
+-/
+@[category research solved, AMS 11]
+theorem isWeakGiuga_iff_prime_dvd (n : ℕ) :
+    IsWeakGiuga n ↔ ∀ p ∈ n.primeFactors, p ∣ (n / p - 1) := by
+  sorry
+
+/--
+A number $n$ is weak Giuga if and only if
+$$
+\sum_{p\mid n} \frac{1}{p} - \frac{1}{n} \in\mathbb{N}.
+$$
+-/
+@[category research solved, AMS 11]
+theorem isWeakGiuga_iff_sum_primeFactors (n : ℕ) :
+    IsWeakGiuga n ↔ ∃ m : ℕ, ∑ p ∈ n.primeFactors, (1 / p : ℚ) - 1 / n = m := by
+  sorry
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /--
@@ -139,21 +172,22 @@ theorem korselts_criterion (a : ℕ) (ha₁ : 1 < a) (ha₂ : ¬a.Prime) :
     · simp_all
 
 /--
-Every Giuga number is a Carmichael number.
--/
-@[category research solved, AMS 11]
-theorem agoh_giuga.variants.isGiuga_implies_nat_fermatPsp
-    (a : ℕ) (ha : IsGiuga a) : IsCarmichael a := by
-  sorry
-
-/--
-Giuga showed that a number `n` is Giuga if and only if it is
-Carmichael and `∑_{p|n} 1/p - 1/n ∈ ℕ`
+Giuga showed that a number `n` is strong Giuga if and only if it is
+Carmichael and `∑_{p|n} 1/p - 1/n ∈ ℕ` (i.e., if and only if it is Carmichael
+and weak Giuga).
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
 @[category research solved, AMS 11]
-theorem agoh_giuga.variants.isGiuga_iff (a : ℕ) :
-    IsGiuga a ↔ IsCarmichael a ∧ ∃ n, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
+theorem isStrongGiuga_iff (a : ℕ) :
+    IsStrongGiuga a ↔ IsCarmichael a ∧ ∃ n : ℕ, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
+  sorry
+
+/--
+Every strong Giuga number is a Carmichael number.
+-/
+@[category research solved, AMS 11]
+theorem agoh_giuga.variants.isStrongGiuga_implies_isCarmichael
+    (a : ℕ) (ha : IsStrongGiuga a) : IsCarmichael a := by
   sorry
 
 /--
@@ -161,17 +195,17 @@ Giuga showed that a Giuga number has at least 9 prime factors.
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
 @[category research solved, AMS 11]
-theorem agoh_giuga.variants.le_primeFactors_card_of_isGiuga
-    (a : ℕ) (ha : IsGiuga a) : 9 ≤ a.primeFactors.card := by
+theorem agoh_giuga.variants.le_primeFactors_card_of_isStrongGiuga
+    (a : ℕ) (ha : IsStrongGiuga a) : 9 ≤ a.primeFactors.card := by
   sorry
 
 /--
-Giuga showed that any Giuga number has at least 1000 digits.
+Giuga showed that a counterexample Giuga number has at least 1000 digits.
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
 @[category research solved, AMS 11]
-theorem agoh_giuga.variants._1000_le_digits_length_of_isGiuga
-    (a : ℕ) (ha : IsGiuga a) : 1000 ≤ (Nat.digits 10 a).length := by
+theorem agoh_giuga.variants._1000_le_digits_length_of_isStrongGiuga
+    (a : ℕ) (ha : IsStrongGiuga a) : 1000 ≤ (Nat.digits 10 a).length := by
   sorry
 
 /--
@@ -179,18 +213,19 @@ Bedocchi showed that any Giuga number has at least 1700 digits.
 Ref: E. Bedocchi, _Note on a conjecture about prime numbers_
 -/
 @[category research solved, AMS 11]
-theorem agoh_giuga.variants._1700_le_digits_length_of_isGiuga
-    (a : ℕ) (ha : IsGiuga a) : 1700 ≤ (Nat.digits 10 a).length := by
+theorem agoh_giuga.variants._1700_le_digits_length_of_isStrongGiuga
+    (a : ℕ) (ha : IsStrongGiuga a) :
+    (Nat.digits 10 a).length > 1700 := by
   sorry
 
 /--
-Borwein, Borwein, Borwein and Girgensohn showed that any Giuga
+Borwein, Borwein, Borwein and Girgensohn showed that any strong Giuga
 number has at least 13000 digits.
 Ref: D. Borwein, J. M. Borwein, P. B. Borwein, and R. Girgensohn, _Giuga’s conjecture on primality_
 -/
 @[category research solved, AMS 11]
-theorem agoh_giuga.variants._13000_le_digits_length_of_isGiuga
-    (a : ℕ) (ha : IsGiuga a) : 13000 ≤ (Nat.digits 10 a).length := by
+theorem agoh_giuga.variants._13000_le_digits_length_of_isStrongGiuga
+    (a : ℕ) (ha : IsStrongGiuga a) : 13000 ≤ (Nat.digits 10 a).length := by
   sorry
 
 open Classical in
@@ -201,7 +236,9 @@ explicit, `G(X) ≪ X^{1/2} log X`.
 Ref: Vicentiu Tipu, _A Note on Giuga’s Conjecture_
 -/
 @[category research solved, AMS 11]
-theorem agoh_giuga.variants.isGiuga_growth
-    (G : ℕ → ℕ) (hG : G = fun x => Finset.Icc 1 x |>.filter IsGiuga |>.card) :
+theorem agoh_giuga.variants.isStrongGiuga_growth
+    (G : ℕ → ℕ) (hG : G = fun x => Finset.Icc 1 x |>.filter IsStrongGiuga |>.card) :
     ∃ N O, ∀ n ≥ N, G n ≤ O * (n : ℝ).sqrt * (n : ℝ).log := by
   sorry
+
+end AgohGiuga

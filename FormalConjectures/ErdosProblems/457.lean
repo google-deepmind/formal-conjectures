@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/457](https://www.erdosproblems.com/457)
 -/
+
+namespace Erdos457
+
 /--
 Is there some $\epsilon > 0$ such that there are infinitely
 many $n$ where all primes $p\leq (2 + \epsilon)\log n$ divide
@@ -64,3 +67,5 @@ for all large $n$ and some $\epsilon > 0$?
 theorem erdos_457.variants.one_sub : (∃ ε > (0 : ℝ),
     ∀ᶠ n in Filter.atTop, q n (Real.log n) < (1 - ε) * Real.log n ^ 2) ↔ answer(sorry) := by
   sorry
+
+end Erdos457
