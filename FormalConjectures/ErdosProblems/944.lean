@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 universe u
 variable {V : Type u}
 
+def SimpleGraph.IsErdos944 (G : SimpleGraph V) (k r : ℕ) : Prop :=  G.IsCritical k ∧
+    (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → r < edges.ncard)
 
 /--
 Let $k \ge 4$ and $r\ge 1$. Must there exist a graph $G$ with chromatic number $k$
@@ -32,8 +34,8 @@ Let $k \ge 4$ and $r\ge 1$. Must there exist a graph $G$ with chromatic number $
 
 -/
 @[category research open, AMS 11]
-theorem erdos_944 : (∀ k ≥ 4, ∀ r ≥ 1, ∃ (G : SimpleGraph V), G.IsCritical k ∧
-    (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → r < edges.ncard)) ↔ answer(sorry) := by
+theorem erdos_944 :
+    (∀ k ≥ 4, ∀ r ≥ 1, ∃ (G : SimpleGraph V), G.IsErdos944 k r) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -43,8 +45,8 @@ such that every vertex is critical, yet every critical set of edges has size $>1
 This was conjectured by Dirac in 1970.
 -/
 @[category research open, AMS 11]
-theorem erdos_944.variants.dirac_conjecture : (∀ k ≥ 4, ∃ (G : SimpleGraph V), G.IsCritical k ∧
-    (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → 1 < edges.ncard)) ↔ answer(sorry) := by
+theorem erdos_944.variants.dirac_conjecture :
+    (∀ k ≥ 4, ∃ (G : SimpleGraph V), G.IsErdos944 k 1) ↔ answer(sorry) := by
   sorry
 
 
@@ -56,8 +58,7 @@ has no critical edge.
 [Br92] Brown, Jason I., A vertex critical graph without critical edges. Discrete Math. (1992), 99--101
 -/
 @[category research solved, AMS 11]
-theorem erdos_944.variants.dirac_conjecture.k_eq_5 : ∃ G : SimpleGraph V, G.IsCritical 5 ∧
-    (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → 1 < edges.ncard) := by
+theorem erdos_944.variants.dirac_conjecture.k_eq_5 : ∃ G : SimpleGraph V, G.IsErdos944 5 1 := by
   sorry
 
 /--
@@ -68,9 +69,7 @@ $k - 1$ is not prime.
 -/
 @[category research solved, AMS 11]
 theorem erdos_944.variants.dirac_conjecture.k_sub_one_not_prime (k : ℕ) (hk : 4 ≤ k)
-    (h : ¬ (k - 1).Prime) :
-    ∃ (G : SimpleGraph V), G.IsCritical k ∧
-    (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → 1 < edges.ncard):= by
+    (h : ¬ (k - 1).Prime) : ∃ (G : SimpleGraph V), G.IsErdos944 k 1 := by
   sorry
 
 /--
@@ -80,16 +79,15 @@ Jensen [Je02] gave an construction for $k$-critical graphs without any critical 
 -/
 @[category research solved, AMS 11]
 theorem erdos_944.variants.dirac_conure.k_ge_five (k : ℕ) (hk : 5 ≤ k) :
-    ∃ (G : SimpleGraph V), G.IsCritical k ∧
-    (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → 1 < edges.ncard):= by
+    ∃ (G : SimpleGraph V), G.IsErdos944 k 1 := by
   sorry
 
 /--
 The case $k=4$ and $r=1$ remains open: Are there $4$-critical graphs without any critical edges?
 -/
 @[category research open, AMS 11]
-theorem erdos_944.dirac_conjecture.k_eq_four : (∃ (G : SimpleGraph V), G.IsCritical 4 ∧
-    (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → 1 < edges.ncard)) ↔ answer(sorry) := by
+theorem erdos_944.dirac_conjecture.k_eq_four :
+    (∃ (G : SimpleGraph V), G.IsErdos944 4 1) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -101,6 +99,5 @@ yet every critical set of edges has size $>r$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∃ k₀, ∀ k ≥ k₀,
-    ∃ (G : SimpleGraph V), G.IsCritical k ∧
-    (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → r < edges.ncard) := by
+    ∃ (G : SimpleGraph V), G.IsErdos944 k r := by
   sorry
