@@ -41,7 +41,7 @@ $$S(k) := \sum_{h=1}^{k-1}S'(h, k)$$
 def S (k : ℕ) : ℤ := ∑ h ∈ Finset.Ico 1 k, S' h k
 
 -- note that in Table 1 in  https://arxiv.org/abs/2501.03234v1, there seems to be an error: 11 appears twice
-example : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
+theorem S_values_first_ten : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
   unfold S
   decide +kernel
 

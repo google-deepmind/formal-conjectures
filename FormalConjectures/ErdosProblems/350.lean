@@ -33,11 +33,11 @@ def DecidableDistinctSubsetSums {M : Type*} [AddCommMonoid M] [DecidableEq M] (A
   ∀ X ⊆ A, ∀ Y ⊆ A, X ≠ Y → X.sum id ≠ Y.sum id
 
 @[category test, AMS 5 11]
-example : DecidableDistinctSubsetSums {1, 2} := by
+theorem decidableDistinctSubsetSums_1_2 : DecidableDistinctSubsetSums {1, 2} := by
   rw [DecidableDistinctSubsetSums] ; decide
 
 @[category test, AMS 5 11]
-example : DistinctSubsetSums ({1, 2} : Finset ℕ).toSet := by
+theorem distinctSubsetSums_1_2 : DistinctSubsetSums ({1, 2} : Finset ℕ).toSet := by
   rw [DistinctSubsetSums]
   intro x hx y hy hxy
   simp_rw [Finset.coe_subset, ←Finset.mem_powerset, Finset.setOf_mem, Finset.mem_coe] at *
