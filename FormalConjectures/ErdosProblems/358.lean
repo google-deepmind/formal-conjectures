@@ -106,7 +106,7 @@ $1 \leq g(n)$ for sufficiently large $n$.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_358.variants.one_le :
-    (∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 1 ≤ g A n) ↔ answer(sorry) := by
+    ∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 1 ≤ g A n := by
   sorry
 
 
