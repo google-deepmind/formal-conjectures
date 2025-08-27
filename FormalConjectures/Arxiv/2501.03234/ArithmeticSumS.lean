@@ -50,9 +50,7 @@ example : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
 
 end SumS
 
-section Conjecture_1_1
-
-def conjecture_1_1_def := ∀k, (hprim: Nat.Prime k) → (hodd : Odd k) → (0 < S k)
+def conjecture_1_1_def := ∀ k, (hprim : Nat.Prime k) → (hodd : Odd k) → (0 < S k)
 /--
 **Conjecture 1.1**: For any odd prime k, the sum associated with the classical theta function θ₃,
 $S(k)$ is positive.
@@ -61,21 +59,13 @@ $S(k)$ is positive.
 theorem conjecture_1_1 : conjecture_1_1_def := by
   sorry
 
-end Conjecture_1_1
-
-section Conjecture_4_1
-
-def conjecture_4_1_def := ∀k, (hprim: Nat.Prime k) → (hodd: Odd k) → (hgt: k > 5) → (k < S k)
+def conjecture_4_1_def := ∀ k, (hprim : Nat.Prime k) → (hodd : Odd k) → (hgt : k > 5) → (k < S k)
 /--
 **Conjecture 4.1**: For any prime k larger than 5,  $S(k) > k$
 -/
 @[category research open, AMS 11]
 theorem conjecture_4_1 : conjecture_4_1_def := by
   sorry
-
-end Conjecture_4_1
-
-section Conjecture_4_2
 
 def conjecture_4_2_def := ∀ k, (hprim : Nat.Prime k) → (hodd : Odd k) → (hgt : k > 233) → (2 * k < S k)
 
@@ -86,11 +76,7 @@ def conjecture_4_2_def := ∀ k, (hprim : Nat.Prime k) → (hodd : Odd k) → (h
 theorem conjecture_4_2 : conjecture_4_2_def := by
   sorry
 
-end Conjecture_4_2
-
-section Conjecture_4_3
-
-def conjecture_4_3_def := (k : ℕ) → (hprim: Nat.Prime k) → (hodd: Odd k) → (hgt: k > 3119) → 3*k < S k
+def conjecture_4_3_def := ∀ k, (hprim : Nat.Prime k) → (hodd : Odd k) → (hgt : k > 3119) → (3 * k < S k)
 
 /--
 **Conjecture 4.3**: For any prime k larger than 3119, $S(k) > 3k$.
@@ -99,11 +85,7 @@ def conjecture_4_3_def := (k : ℕ) → (hprim: Nat.Prime k) → (hodd: Odd k) �
 theorem conjecture_4_3 : conjecture_4_3_def := by
   sorry
 
-end Conjecture_4_3
-
-section Conjecture_4_4
-
-def conjecture_4_4_def (n : ℕ) :=  ∀ᶠ k : ℕ in Filter.atTop, Nat.Prime k → Odd k → n * k < S k
+def conjecture_4_4_def (n : ℕ) :=  ∀ᶠ k : ℕ in Filter.atTop, Nat.Prime k → Odd k → (n * k < S k)
 
 /--
 **Conjecture 4.4**: Given a natural number $n ∈ ℕ$, for all large enough odd prime k (depending on n),
@@ -113,15 +95,13 @@ $nk < S(k)$.
 theorem conjecture_4_4 (n : ℕ)  : conjecture_4_4_def n := by
   sorry
 
-end Conjecture_4_4
-
 /--
 **Conjecture 1.1 → Conjecture 4.4**: If conjecture 1.1 holds true, then this implies a special
 case of conjecture 4.4 where n = 0. In this case the lower bound would be 0 (for odd primes).
 -/
 example (hc1_1: conjecture_1_1_def ) : conjecture_4_4_def 0 := by
   simp [conjecture_4_4_def, Filter.Eventually]
-  exact ⟨0,fun b sb bprim bodd ↦ hc1_1 b bprim bodd⟩
+  exact ⟨0, fun b sb bprim bodd ↦ hc1_1 b bprim bodd⟩
 
 /--
 **Conjecture 4.1 → Conjecture 4.4**: If conjecture 4.1 holds true, then this implies a special
@@ -129,7 +109,7 @@ case of conjecture 4.4 where n = 1. In this case the lower bound would be 5.
 -/
 example (hc4_1: conjecture_4_1_def ) : conjecture_4_4_def 1 := by
   simp [conjecture_4_4_def, Filter.Eventually]
-  exact ⟨5+1,fun b sb bprim bodd ↦ hc4_1 b bprim bodd (by linarith)⟩
+  exact ⟨5+1, fun b sb bprim bodd ↦ hc4_1 b bprim bodd (by linarith)⟩
 
 /--
 **Conjecture 4.2 → Conjecture 4.4**: If conjecture 4.2 holds true, then this implies a special
@@ -151,6 +131,7 @@ example (hc4_3: conjecture_4_3_def ) : conjecture_4_4_def 3 := by
 
 
 end Arxiv.«2501.03234»
+
 
 
 
