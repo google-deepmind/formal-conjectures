@@ -28,14 +28,14 @@ open EuclideanGeometry MeasureTheory
 The set of worms is the set of curves of length (at most) 1.
 We formalize this as the set of ranges of 1-Lipschitz functions from `[0,1]` to `ℝ²`.
 -/
-def Worms : Set (Set (ℝ²)) :=
+def Worms : Set (Set ℝ²) :=
     {s | ∃ f : (Set.Icc (0 : ℝ) (1 : ℝ)) → ℝ², LipschitzWith 1 f ∧ Set.range f = s}
 
 /--
 The set of covers is the set of (measurable) sets
 that cover every worm by translation and rotation (i.e. through an isometry).
 -/
-def WormCovers : Set (Set (ℝ²)) :=
+def WormCovers : Set (Set ℝ²) :=
     {X | MeasurableSet X ∧ ∀ w ∈ Worms, ∃ iso, Isometry iso ∧ w ⊆ iso '' X}
 
 /--
@@ -97,7 +97,7 @@ Acta Mathematica Sinica, 49 (4): 835–846, MR 2264090.
 -/
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_upper_bound :
-    ∃ X : (Set (ℝ²)), MeasurableSet X ∧ Convex ℝ X ∧ volume X = 0.270911861 ∧
+    ∃ X : Set ℝ², MeasurableSet X ∧ Convex ℝ X ∧ volume X = 0.270911861 ∧
       ∀ w ∈ Worms, ∃ iso, Isometry iso ∧ w ⊆ iso '' X := by
   sorry
 
