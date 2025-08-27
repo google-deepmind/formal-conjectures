@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/406](https://www.erdosproblems.com/406)
 -/
+
+namespace Erdos406
+
 /--
 Is it true that there are only finitely many powers of $2$ which have only the digits $0$
 and $1$ when written in base $3$?
@@ -37,3 +40,5 @@ of $2$.
 theorem erdos_406.variants.one_two :
     IsGreatest { n | n.isPowerOfTwo ∧ Nat.digits 3 n ⊆ [1, 2] } (2 ^ 15) := by
   sorry
+
+end Erdos406

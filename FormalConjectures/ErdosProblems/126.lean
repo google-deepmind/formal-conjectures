@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/126](https://www.erdosproblems.com/126)
 -/
+
 open Filter
+
+namespace Erdos126
 
 def IsMaximalAddFactorsCard (f : ℕ → ℕ) : Prop := ∀ n,
     IsGreatest
@@ -64,3 +67,5 @@ theorem erdos_126.variants.isLittleO
     (hf : IsMaximalAddFactorsCard f) :
     (fun (n : ℕ) => (f n : ℝ)) =o[atTop] (fun (n : ℕ) => n / Real.log n) := by
   sorry
+
+end Erdos126

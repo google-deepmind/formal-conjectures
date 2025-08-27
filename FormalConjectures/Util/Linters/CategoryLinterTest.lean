@@ -70,3 +70,4 @@ theorem test_1 : 1 + 1 = 2 := by
 @[category research open, simp]
 theorem test_3 : 1 + 1 = 2 := by
   rfl
+

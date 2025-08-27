@@ -21,20 +21,19 @@ open scoped Topology
 
 *Reference:* [erdosproblems.com/442](https://www.erdosproblems.com/442)
 -/
-open Filter
+
+namespace Erdos442
 
 noncomputable section
 
-section Prelims
+open Filter Erdos442
 
-namespace Real
+section Prelims
 
 /--
 The function $\operatorname{Log} x := \max\{log x, 1\}$.
 -/
-def maxLogOne (x : ℝ) := max x.log 1
-
-end Real
+def Real.maxLogOne (x : ℝ) := max x.log 1
 
 namespace Set
 
@@ -111,10 +110,14 @@ $$
 -/
 @[category research solved, AMS 11]
 theorem erdos_442.variants.tao :
-    ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : Tendsto f atTop (𝓝 0)),
+    ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : f =o[atTop] (1 : ℝ → ℝ)),
       ∀ (x : ℝ),
         ∑ n ∈ A.bdd x, (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
         |∑ nm ∈ A.bdd x ×ˢ A.bdd x, (1 : ℝ) / nm.1.lcm nm.2| ≤
           C * (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 := by
   sorry
+
+end
+
+end Erdos442

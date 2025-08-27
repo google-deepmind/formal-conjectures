@@ -7,7 +7,8 @@ A collection of formalized statements of conjectures in
 [Lean](https://leanprover.github.io/lean4/doc/whatIsLean.html), using
 [mathlib](https://github.com/leanprover-community/mathlib4).
 
-<!--TODO(firsching): insert link to autmatically generated documentation once docgen4 works-->
+Explore the docs: [Formal Conjectures Documentation](https://google-deepmind.github.io/formal-conjectures/)
+
 
 ## Goals
 
@@ -196,7 +197,7 @@ elaborator allows us to formulate the problem without deciding for an answer.
 ```lean
 @[category research open]
 theorem HadwigerNelsonProblem :
-    IsLeast {n : ℕ | ExistsColoring n} answer(sorry) := by
+    UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
   sorry
 ```
 

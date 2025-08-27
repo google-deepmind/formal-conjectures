@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/First_Hardy%E2%80%93Littlewood_conjecture)
 -/
+
 open Filter
 
 open scoped Nat.Prime Classical
@@ -28,6 +29,8 @@ open scoped Nat.Prime Classical
 noncomputable section
 
 /-! ## First Hardy-Littlewood Conjecture -/
+
+namespace HardyLittlewood
 
 /--
 A prime constellation is a tuple $(p, p + m_1, ..., p + m_k)$ such that the $m_i$ are
@@ -110,3 +113,5 @@ theorem not_first_and_secondHardyLittlewoodConjecture :
     (∀ {k : ℕ} (m : Fin k.succ → ℕ), FirstHardyLittlewoodConjectureFor m) →
       ¬(∀ {x y : ℕ} (hx : 2 ≤ x) (hy : 2 ≤ y), SecondHardyLittlewoodConjectureFor x y) := by
   sorry
+
+end HardyLittlewood

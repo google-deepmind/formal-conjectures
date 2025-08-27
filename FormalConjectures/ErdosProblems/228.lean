@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/228](https://www.erdosproblems.com/228)
 -/
+
+namespace Erdos228
+
 /--
 Does there exist, for all large $n$, a polynomial $P$ of degree $n$, with coefficients $\pm1$, such
 that $$\sqrt n \ll |P(z)| \ll \sqrt n$$ for all $|z|=1$, with the implied constants independent of
@@ -30,7 +33,7 @@ The answer is yes, proved by Balister, Bollobás, Morris, Sahasrabudhe, and Tiba
 
 [BBMST19] Balister, P. and Bollob\'{A}s, B. and Morris, R. and Sahasrabudhe, J. and Tiba, M., _Flat Littlewood Polynomials Exist_. arXiv:907.09464 (2019).
 -/
-@[category research solved, AMS 5, AMS 12, AMS 41] --TODO(lezeau): I'm a little unhappy with the `41` tag
+@[category research solved, AMS 5 12 41] --TODO(lezeau): I'm a little unhappy with the `41` tag
 theorem erdos_228 :
     (∃ (c₁ : ℝ) (c₂ : ℝ), ∀ᶠ n : ℕ in Filter.atTop,
     ∃ p : Polynomial ℂ, p.degree = n ∧
@@ -38,3 +41,5 @@ theorem erdos_228 :
     ∀ z : ℂ, ‖z‖ = 1 →
     ( √n < c₁ * ‖p.eval z‖ ∧ ‖p.eval z‖ < c₂ * √n )) ↔ answer(True) := by
   sorry
+
+end Erdos228
