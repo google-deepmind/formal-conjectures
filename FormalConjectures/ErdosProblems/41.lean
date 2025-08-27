@@ -29,7 +29,7 @@ open Classical
 /--
 For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for  `a₁, ..., aₙ` in `A` (aside from the trivial coincidences).
 -/
-def NtupleCondition (A : Set α) (n : ℕ) : Prop := ∀ᵉ (I : Finset α) (J : Finset α),
+def NtupleCondition (A : Set α) (n : ℕ) : Prop := ∀ (I : Finset α) (J : Finset α),
     I.toSet ⊆ A ∧ J.toSet ⊆ A ∧ I.card = n ∧ J.card = n ∧
     (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J
 
