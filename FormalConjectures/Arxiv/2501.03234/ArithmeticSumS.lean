@@ -119,7 +119,7 @@ end Conjecture_4_4
 case of conjecture 4.4 where n = 0. In this case the lower bound would be 0 (for odd primes).
 -/
 example (hc1_1: conjecture_1_1_def ) : conjecture_4_4_def 0 := by
-  simp [conjecture_4_4_def, Filter.Eventually] at *
+  simp [conjecture_4_4_def, Filter.Eventually]
   exact ⟨0,fun b sb bprim bodd ↦ hc1_1 b bprim bodd⟩
 
 /--
@@ -127,7 +127,7 @@ example (hc1_1: conjecture_1_1_def ) : conjecture_4_4_def 0 := by
 case of conjecture 4.4 where n = 1. In this case the lower bound would be 5.
 -/
 example (hc4_1: conjecture_4_1_def ) : conjecture_4_4_def 1 := by
-  simp [conjecture_4_4_def, Filter.Eventually] at *
+  simp [conjecture_4_4_def, Filter.Eventually]
   exact ⟨5+1,fun b sb bprim bodd ↦ hc4_1 b bprim bodd (by linarith)⟩
 
 /--
@@ -135,7 +135,7 @@ example (hc4_1: conjecture_4_1_def ) : conjecture_4_4_def 1 := by
 case of conjecture 4.4 for n = 2. For this scenario, the lower bound is now 233.
 -/
 example (hc4_2: conjecture_4_2_def ) : conjecture_4_4_def 2 := by
-  simp [conjecture_4_4_def, Filter.Eventually] at *
+  simp [conjecture_4_4_def, Filter.Eventually]
   exact ⟨233+1,fun b sb bprim bodd ↦ hc4_2 b bprim bodd (by linarith)⟩
 
 /--
@@ -143,10 +143,11 @@ example (hc4_2: conjecture_4_2_def ) : conjecture_4_4_def 2 := by
 case of conjecture 4.4 for n = 3 is obtained, and the lower bound is 3119.
 -/
 example (hc4_3: conjecture_4_3_def ) : conjecture_4_4_def 3 := by
-  simp [conjecture_4_4_def, Filter.Eventually] at *
+  simp [conjecture_4_4_def, Filter.Eventually]
   exact ⟨3119+1,fun b sb bprim bodd ↦ hc4_3 b bprim bodd (by linarith)⟩
 
 end Arxiv.«2501.03234»
+
 
 
 
