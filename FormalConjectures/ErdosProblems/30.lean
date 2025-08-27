@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 /--
 Let $h(N)$ be the maximum size of a Sidon set in $\{1, \dots, N\}$.
 -/
-noncomputable abbrev h := Finset.maxSidonSetSize
+noncomputable abbrev h (N : ℕ) : ℕ := Finset.IsSidon.maxSubsetCard (Finset.Icc 1 N)
 
 
 open Filter
