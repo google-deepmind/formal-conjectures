@@ -25,22 +25,28 @@ import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 -/
 
 /--
+**The Lucas sequence of the first kind**
+$U_0(P, Q) = 0$, $U_1(P, Q)=1$, $U_{n+2}(P, Q)=PU_{n+1}(P, Q)-QU_n(P, Q)$
+-/
+def LucasSequence.U (P Q : ℤ) : ℕ → ℤ
+  | 0 => 0
+  | 1 => 1
+  | n + 2 => P * LucasSequence.U P Q (n + 1) - Q * LucasSequence.U P Q n
+
+/--
+**The Lucas sequence of the second kind**
+$V_0(P, Q) = 0$, $V_1(P, Q)=P$, $V_{n+2}(P, Q)=PV_{n+1}(P, Q)-QV_n(P, Q)$
+-/
+def LucasSequence.V (P Q : ℤ) : ℕ → ℤ
+  | 0 => 2
+  | 1 => P
+  | n + 2 => P * LucasSequence.V P Q (n + 1) - Q * LucasSequence.V P Q n
+
+/--
 **The Lucas numbers**
 $L_0 = 2$, $L_1=1$, $L_{n+2} = L_{n+1}+L_n$
 -/
-def lucasNumber : ℕ → ℤ
-  | 0 => 2
-  | 1 => 1
-  | (n + 2) => lucasNumber (n + 1) + lucasNumber n
-
-/--
-**The Lucas sequence of the first kind**
-$U_0(a,b) = 0$, $U_1(a,b)=1$, $U_{n+2}(a,b)=aU_{n+1}(a,b)-bU_n(a,b)$
--/
-def lucasUNumberPQ (a b : ℕ) : ℕ → ℤ
-  | 0 => 0
-  | 1 => 1
-  | (n + 2) => a * lucasUNumberPQ a b (n + 1) - b * lucasUNumberPQ a b n
+def lucasNumber : ℕ → ℤ := LucasSequence.V 1 (-1)
 
 /--
 **Wall–Sun–Sun prime**
@@ -61,4 +67,4 @@ structure IsLucasWieferichPrime (a b p : ℕ) : Prop where
   prime : p.Prime
   modeq :
     letI index := p - jacobiSym p (a^2 - 4*b)
-    lucasUNumberPQ a b index.toNat ≡ 0 [ZMOD (p^2)]
+    LucasSequence.U a b index.toNat ≡ 0 [ZMOD (p^2)]
