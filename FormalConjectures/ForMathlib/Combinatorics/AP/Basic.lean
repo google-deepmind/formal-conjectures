@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import Mathlib.Algebra.Module.NatInt
+import Mathlib.Data.ENat.Lattice
 import Mathlib.Data.Set.Card
 import Mathlib.Tactic.IntervalCases
 
@@ -148,3 +149,10 @@ theorem Set.isAPOfLengthFree_zero (s : Set α) : s.IsAPOfLengthFree 0 := by
 theorem Set.IsAPOfLength.not_isAPOfLengthFree {s : Set α} {l : ℕ∞}
     (hs : s.IsAPOfLength l) (hl : 1 < l) : ¬s.IsAPOfLengthFree l := by
   simpa [Set.IsAPOfLengthFree] using ⟨s, le_rfl, ⟨hs, hl⟩⟩
+
+/--
+Define the largest possible size of a subset of $\{1, \dots, N\}$ that does not contain
+any non-trivial $k$-term arithmetic progression.
+-/
+noncomputable def Set.IsAPOfLengthFree.maxCard (k : ℕ) (N : ℕ) : ℕ :=
+  sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : S.toSet.IsAPOfLengthFree k)}

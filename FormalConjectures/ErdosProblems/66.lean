@@ -17,30 +17,27 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 139
+# Erdős Problem 66
 
-*Reference:* [erdosproblems.com/139](https://www.erdosproblems.com/139)
+*Reference:* [erdosproblems.com/66](https://www.erdosproblems.com/66)
 -/
 
 
+namespace Erdos66
+
+open Filter AdditiveCombinatorics
 open scoped Topology
 
-namespace Erdos139
-
-private noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
-
 /--
-**Erdős Problem 139**:
-Let $r_k(N)$ be the size of the largest subset of ${1,...,N}$ which does not contain a non-trivial
-$k$-term arithmetic progression. Prove that $r_k(N) = o(N)$.
+Is there and $A \subset \mathbb{N}$ is such that
+$$\lim_{n\to \infty}\frac{1_A\ast 1_A(n)}{\log n}$$
+exists and is $\ne 0$?
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_139 (k : ℕ) (hk : 1 ≤ k) :
-    Filter.Tendsto (fun N => (r k N / N : ℝ)) Filter.atTop (𝓝 0) := by
+@[category research open, AMS 11]
+theorem erdos_66 : (∃ (A : Set ℕ) (c : ℝ), c ≠ 0 ∧
+    Tendsto (fun n ↦ (sumRep A n : ℝ) / Real.log n) atTop (𝓝 c)) ↔ answer(sorry) := by
   sorry
 
-/-
-TODO(lezeau): add the various known bounds as variants.
--/
+-- TODO(firsching): add the theorems/conjectures for the comments on the page
 
-end Erdos139
+end Erdos66
