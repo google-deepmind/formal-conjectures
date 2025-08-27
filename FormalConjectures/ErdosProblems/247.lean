@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/247](https://www.erdosproblems.com/247)
 -/
+
 open Filter
+
+namespace Erdos247
 
 /--
 Let $n_1 < n_2 < \cdots$ be a sequence of integers such that
@@ -55,3 +58,5 @@ theorem erdos_247.variants.strong_condition (n : ℕ → ℕ)
       atTop.limsup (fun k => n k / (k.succ : ℝ) ^ t |>.toEReal) = ⊤) :
     Transcendental ℚ (∑' k, (1 : ℝ) / 2 ^ n k) := by
   sorry
+
+end Erdos247

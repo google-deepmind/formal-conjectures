@@ -21,9 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_99-graph_problem)
 -/
-/-
-Conway's 99-graph problem
--/
+
+namespace Conway99Graph
+
 --TODO(firsching): Consider using SimpleGraph.IsSRGWith to formulate the conjecture.
 variable {V : Type} {G : SimpleGraph V}
 @[category undergraduate, AMS 5]
@@ -149,3 +149,5 @@ example : Conway9.LocallyLinear := by
     · fin_cases x1 <;> fin_cases x2 <;> fin_cases y1 <;> fin_cases y2 <;>
       simp only [not_true_eq_false, or_self, or_false, and_true] at h <;>
       decide
+
+end Conway99Graph

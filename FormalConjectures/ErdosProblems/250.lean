@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/250](https://www.erdosproblems.com/250)
 -/
+
 open scoped ArithmeticFunction
+
+namespace Erdos250
 
 /--
 Is
@@ -39,3 +42,5 @@ Mat. Sb. 187 *9* (1996), 1319--1348.
 theorem erdos_250  : (∀ x, HasSum (fun (n : ℕ) => σ 1 n / (2 : ℝ) ^ n) x → Irrational x) ↔
     answer(True):= by
   sorry
+
+end Erdos250

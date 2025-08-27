@@ -22,10 +22,15 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
 -/
 
+namespace Andrica
+
 /--
+**Andrica's conjecture**
 The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is the nth prime number.
 -/
 @[category research open, AMS 11]
 theorem andrica_conjecture (n : ℕ) :
-    Real.sqrt ((n+1).nth Prime) - Real.sqrt (n.nth Prime) < 1 := by
+    Real.sqrt ((n+1).nth Nat.Prime) - Real.sqrt (n.nth Nat.Prime) < 1 := by
   sorry
+
+end Andrica

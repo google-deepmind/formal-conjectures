@@ -23,6 +23,9 @@ import FormalConjectures.Util.ProblemImports
 
 Reviewed by @b-mehta on 2025-05-27
 -/
+
+namespace Erdos913
+
 /--
 Are there infinitely many $n$ such that if
 $$
@@ -91,3 +94,5 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
   simp only [Finsupp.coe_add, Finset.coe_insert, Finset.coe_singleton]
   rw [Set.injOn_insert (by simp [*]), Set.injOn_insert (by simp [hp''])]
   simp [aux₄, hp'', Ne.symm, aux₅]
+
+end Erdos913

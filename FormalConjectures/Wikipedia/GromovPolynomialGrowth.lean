@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Gromov's theorem on groups of polynomial growth
 
-*References:*
+*Reference:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Gromov%27s_theorem_on_groups_of_polynomial_growth)
 -/
 
@@ -27,6 +27,8 @@ import FormalConjectures.Util.ProblemImports
 Note: this was obtained in work with Kasia Jankiewicz and Catherine Pfaff, and using
 Claude 4.0 Sonnet: https://claude.ai/share/918bb269-bd28-4c09-b84e-cab579c836e8
 -/
+
+namespace GromovPolynomialGrowth
 
 /-- The `CayleyBall` is the ball of radius `n` in the Cayley graph of a group `G` with generating
     set `S`. -/
@@ -102,3 +104,5 @@ def HasPolynomialGrowth (G : Type*) [Group G] : Prop :=
 theorem GromovPolynomialGrowthTheorem (G : Type*) [Group G] [Group.FG G] :
     HasPolynomialGrowth G ↔ Group.IsVirtuallyNilpotent G := by
   sorry
+
+end GromovPolynomialGrowth

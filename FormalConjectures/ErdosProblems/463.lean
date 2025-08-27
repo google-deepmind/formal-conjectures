@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/463](https://www.erdosproblems.com/463)
 -/
+
 open Filter
+
+namespace Erdos463
 
 /--
 Is there a function $f$ with $f(n)\to\infty$ as $n\to\infty$ such that,
@@ -37,3 +40,5 @@ theorem erdos_463 : (∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
       ∃ m, ¬m.Prime ∧
         n + f n < m ∧ m < n + m.minFac) ↔ answer(sorry) := by
   sorry
+
+end Erdos463

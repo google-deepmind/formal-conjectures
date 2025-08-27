@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/389](https://www.erdosproblems.com/389)
 -/
+
+namespace Erdos389
+
 /--
 Is it true that for every $n \geq 1$ there is a $k$ such that
 $$
@@ -43,3 +46,5 @@ theorem erdos_389.variants.mehta_four :
       { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (4 + i) ∣ ∏ i ∈ Finset.range k, (4 + k + i) }
       207 := by
   sorry
+
+end Erdos389

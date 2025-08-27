@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/350](https://www.erdosproblems.com/350)
 -/
+
+namespace Erdos350
+
 /--The predicate that all (finite) subsets of `A` have distinct sums-/
 def DistinctSubsetSums {M : Type*} [AddCommMonoid M] (A : Set M) : Prop :=
   Set.Pairwise {X : Finset M | ↑X ⊆ A} fun X Y => X.sum id ≠ Y.sum id
@@ -29,11 +32,11 @@ def DistinctSubsetSums {M : Type*} [AddCommMonoid M] (A : Set M) : Prop :=
 def DecidableDistinctSubsetSums {M : Type*} [AddCommMonoid M] [DecidableEq M] (A : Finset M) : Prop :=
   ∀ X ⊆ A, ∀ Y ⊆ A, X ≠ Y → X.sum id ≠ Y.sum id
 
-@[category test, AMS 5, AMS 11]
+@[category test, AMS 5 11]
 example : DecidableDistinctSubsetSums {1, 2} := by
   rw [DecidableDistinctSubsetSums] ; decide
 
-@[category test, AMS 5, AMS 11]
+@[category test, AMS 5 11]
 example : DistinctSubsetSums ({1, 2} : Finset ℕ).toSet := by
   rw [DistinctSubsetSums]
   intro x hx y hy hxy
@@ -42,7 +45,7 @@ example : DistinctSubsetSums ({1, 2} : Finset ℕ).toSet := by
 
 
 /--Small sanity check: the two predicates are saying the same thing.-/
-@[category API, AMS 5, AMS 11]
+@[category API, AMS 5 11]
 theorem DistinctSubsetSums_iff_DecidableDistinctSubsetSums
     {M : Type*} [AddCommMonoid M] [DecidableEq M] (A : Finset M) :
     DistinctSubsetSums (A : Set M) ↔ DecidableDistinctSubsetSums A := by
@@ -52,7 +55,7 @@ theorem DistinctSubsetSums_iff_DecidableDistinctSubsetSums
 If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n < 2`.
 Proved by Ryavec.
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_350 (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A) :
     ∑ n ∈ A, (1 / n : ℝ) < 2 := by
   sorry
@@ -63,7 +66,9 @@ Proved by Hanson, Steele, and Stenger.
 
 We exlude here the case `s = 0`, because in the informal formulation then the right hand side is to be interpreted as `∞`, while the left hand side counts the elements in `A`.
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_350.variants.strengthening (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A)
     (s : ℝ) (hs : 0 < s) : ∑ n ∈ A, (1 / n : ℝ)^s < 1 / (1 - 2^(-s)) := by
   sorry
+
+end Erdos350

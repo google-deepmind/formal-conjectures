@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 asked by user [*Junyan Xu*](https://mathoverflow.net/users/3332/junyan-xu)
 -/
 
+namespace Mathoverflow486451
+
 /-- There exists a semiring with a unique left maximal ideal but more than one right maximal ideals. -/
 @[category research solved, AMS 16]
 theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
@@ -37,3 +39,5 @@ theorem exists_semiring_unique_left_right_maximal_ne :
       (∃! I : Ideal R, I.IsMaximal) ∧ (∃! J : Ideal Rᵐᵒᵖ, J.IsMaximal) ∧
       ∃ (I : Ideal R) (J : Ideal Rᵐᵒᵖ), (I : Set R) ≠ MulOpposite.op ⁻¹' J) ↔ answer(sorry) := by
   sorry
+
+end Mathoverflow486451

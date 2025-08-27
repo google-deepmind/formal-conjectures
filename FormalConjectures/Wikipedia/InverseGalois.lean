@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Inverse_Galois_problem)
 -/
+
+namespace InverseGalois
+
 structure GaloisRealization (K G : Type*) [Field K] [Group G] where
   L : Type*
   to_field : Field L
@@ -92,3 +95,5 @@ theorem inverse_galois_problem.variants.complex_function_field
     {G K : Type*} [Field K] [CharZero K] [Fintype G] [Group G] :
     IsRealizable (RatFunc K) G := by
   sorry
+
+end InverseGalois
