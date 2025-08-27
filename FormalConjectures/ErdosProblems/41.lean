@@ -50,6 +50,6 @@ Erdős proved the following pairwise version.
 Let `A` ⊆ ℕ be an infinite set such that the pairwise sums `a + b` are all distinct for `a, b` in `A` (aside from the trivial coincidences). Is it true that `lim inf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research solved, AMS 11]
-theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) : Filter.atTop.liminf (fun N => (A.bdd N).card / (N : ℝ).sqrt) = 0
-    := by
-sorry
+theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) : 
+    Filter.atTop.liminf (fun N => (A.bdd N).card / (N : ℝ).sqrt) = 0 := by
+  sorry
