@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 open scoped EuclideanGeometry
 
+namespace Erdos846
+
 def Triplewise {α : Type*} (s : Set α) (r : α → α → α → Prop) : Prop :=
   ∀ ⦃x⦄, x ∈ s → ∀ ⦃y⦄, y ∈ s → ∀ ⦃z⦄, z ∈ s → x ≠ y → y ≠ z → x ≠ z → r x y z
 
@@ -62,3 +64,5 @@ plane is weakly non-trilinar.
 theorem erdos_846 : (∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
     WeaklyNonTrilinear A) ↔ answer(sorry) := by
   sorry
+
+end Erdos846

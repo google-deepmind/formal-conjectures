@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Nat Filter
 
+namespace Erdos943
+
 noncomputable def a : PowerSeries ℕ := PowerSeries.mk (Set.indicator Powerful 1)
 
 /--
@@ -34,3 +36,5 @@ theorem erdos_943 :
     (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (a * a).coeff ℕ  n = (n : ℝ)^(o n)) ↔
     answer(sorry) := by
   sorry
+
+end Erdos943

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Asymptotics
 
+namespace Erdos236
+
 /-- 
 $f(n)$ counts the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$.
 -/
@@ -36,3 +38,5 @@ Let $f(n)$ count the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0
 @[category research open, AMS 5 11]
 theorem erdos_236: (fun n => (f n : ℝ)) =o[atTop] (fun n => Real.log (n : ℝ)) := by 
   sorry
+
+end Erdos236

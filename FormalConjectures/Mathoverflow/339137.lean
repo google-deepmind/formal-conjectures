@@ -28,6 +28,9 @@ Why do polynomials with coefficients 0,1
 *Reference:* [mathoverflow/339137](https://mathoverflow.net/questions/339137)
 asked by user [*Sil*](https://mathoverflow.net/users/136794/sil)
 -/
+
+namespace Mathoverflow339137
+
 /--
 The predicate that all coefficients of a polynomial are either zero or one.
 `P.coeffs` is the finite set of all *nonzero* coefficients of the polynomial `P`.
@@ -49,3 +52,5 @@ theorem mathoverflow_339137 (P Q R : ℝ[X]) (hP: P.Monic) (hQ : Q.Monic)
     (h : R = P * Q) (hR : IsZeroOne R) :
     IsZeroOne P ∧ IsZeroOne Q := by
   sorry
+
+end Mathoverflow339137

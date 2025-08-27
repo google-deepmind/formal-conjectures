@@ -29,7 +29,7 @@ Combinatorics, Probability and Computing (2021), 686-721.
  - [GoLo21]( https://www.cambridge.org/core/journals/combinatorics-probability-and-computing/article/abs/length-of-an-sincreasing-sequence-of-rtuples/7301418D47DB1ECD6BE71C20E8A98D0A) **The length of an $s$-increasing sequence of $r$-tuples** by *W. T. Gowers, J. Long*, 2021
 -/
 
-namespace Arxiv.id160908688
+namespace Arxiv.«1609.08688»
 
 /--
 Let $a = (a_1, a_2, a_3)$ and $b = (b_1, b_2, b_3)$ be two triples of integers.
@@ -228,4 +228,4 @@ theorem maximalLength_pow {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) 
 theorem maximalLength_le_strong (n : ℕ) : F n ≤ Real.sqrt n ^ 3 := by
   sorry
 
-end Arxiv.id160908688
+end Arxiv.«1609.08688»

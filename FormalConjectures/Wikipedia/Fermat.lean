@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Fermat_number)
 -/
 
+namespace Fermat
+
 /--
 Are Fermat numbers composite for all `n > 4`?
 -/
@@ -49,3 +51,5 @@ Are all Fermat numbers are square-free?
 @[category research open, AMS 11]
 theorem all_fermat_squarefree : (∀ (n : ℕ), Squarefree n.fermatNumber) ↔ answer(sorry) := by
   sorry
+
+end Fermat

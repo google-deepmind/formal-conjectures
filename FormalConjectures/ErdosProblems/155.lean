@@ -17,21 +17,32 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Brocard's Conjecture
+# Erdős Problem 155
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Brocard%27s_conjecture)
+*Reference:* [erdosproblems.com/155](https://www.erdosproblems.com/155)
 -/
 
-open Finset
+open Filter
+
+namespace Erdos155
 
 /--
-**Brocard's Conjecture**
-For every `n ≥ 2`, between the squares of the `n`-th and `(n+1)`-th primes,
-there are at least four prime numbers.
+Let $F(N)$ be the size of the largest Sidon subset of $\{1, \dots, N\}$.
 -/
-@[category research open, AMS 11]
-theorem brocard_conjecture (n : ℕ) (hn : 1 ≤ n) :
-    letI prev := n.nth Nat.Prime;
-    letI next := (n+1).nth Nat.Prime;
-    4 ≤ ((Ioo (prev^2) (next^2)).filter Nat.Prime).card := by
+noncomputable abbrev F := maxSidonSetSize
+
+/--
+Is it true that for every $k \geq 1$ we have
+$$
+F(N + k) \leq F(N) + 1
+$$
+for all sufficiently large $N$?
+-/
+@[category research open, AMS 5]
+theorem erdos_155 :
+    (∀ k ≥ 1, ∀ᶠ N in atTop, F (N + k) ≤ F N + 1) ↔ answer(sorry) := by
   sorry
+
+-- TODO: This may even hold with $k \approx ε * N ^ (1 / 2)$.
+
+end Erdos155

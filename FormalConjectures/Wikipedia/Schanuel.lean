@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open scoped Real Complex
 open IntermediateField
 
+namespace Schanuel
+
 -- TODO : remove and use `Algebra.trdeg` when the version is bumped
 -- https://leanprover-community.github.io/mathlib4_docs/Mathlib/RingTheory/AlgebraicIndependent/Basic.html#Algebra.trdeg
 /--
@@ -63,3 +65,5 @@ theorem schanuel_conjecture (n : ℕ) (z : Fin n → ℂ) (h : LinearIndependent
     let hinj := algebraMap ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) |>.injective
     n ≤ transcendenceDegree ℚ hinj := by
   sorry
+
+end Schanuel

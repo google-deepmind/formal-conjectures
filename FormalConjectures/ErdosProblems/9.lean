@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/9](https://www.erdosproblems.com/9)
 -/
 
+namespace Erdos9
+
 /--
 The set of odd numbers that cannot be expressed as a prime plus two powers of 2.
 -/
@@ -71,3 +73,5 @@ two powers of 2 positive?
 @[category research open, AMS 5 11]
 theorem erdos_9 : 0 < Erdos9A.upperDensity ↔ answer(sorry) := by
   sorry
+
+end Erdos9

@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/350](https://www.erdosproblems.com/350)
 -/
+
+namespace Erdos350
+
 /--The predicate that all (finite) subsets of `A` have distinct sums-/
 def DistinctSubsetSums {M : Type*} [AddCommMonoid M] (A : Set M) : Prop :=
   Set.Pairwise {X : Finset M | ↑X ⊆ A} fun X Y => X.sum id ≠ Y.sum id
@@ -67,3 +70,5 @@ We exlude here the case `s = 0`, because in the informal formulation then the ri
 theorem erdos_350.variants.strengthening (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A)
     (s : ℝ) (hs : 0 < s) : ∑ n ∈ A, (1 / n : ℝ)^s < 1 / (1 - 2^(-s)) := by
   sorry
+
+end Erdos350

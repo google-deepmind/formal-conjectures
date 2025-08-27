@@ -33,6 +33,8 @@ The first two conjectures are related in that the former implies the latter.
 
 open Topology Set Function Filter Bornology Metric MeasureTheory
 
+namespace Mandelbrot
+
 /-- The Multibrot set of power `n` is the set of all parameters `c : ℂ` for which `0` does not
 escape to infinity under repeated application of `z ↦ z ^ n + c`. -/
 def multibrotSet (n : ℕ) : Set ℂ :=
@@ -165,3 +167,5 @@ holds for them. -/
 @[category research open, AMS 37]
 theorem volume_frontier_multibrotSet_eq_zero {n : ℕ} : volume (frontier (multibrotSet n)) = 0 := by
   sorry
+
+end Mandelbrot

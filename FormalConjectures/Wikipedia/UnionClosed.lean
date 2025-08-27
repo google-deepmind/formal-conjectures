@@ -1,5 +1,5 @@
 /-
-Copyright 2024 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ In this file, we:
 open Finset
 
 variable {n : Type*} [DecidableEq n] {A : Finset (Finset n)}
+
+namespace UnionClosed
 
 abbrev IsUnionClosed (A : Finset (Finset n)) : Prop :=
   ∀ᵉ (X ∈ A) (Y ∈ A), X ∪ Y ∈ A
@@ -196,3 +198,5 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     simpa using hc
   have : (0 : ℝ) < 0 := by linear_combination this + hi
   simp at this
+
+end UnionClosed

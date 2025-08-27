@@ -29,6 +29,8 @@ $|y^2 - x^3| > C \sqrt{|x|}$.
 
 open Real
 
+namespace Hall
+
 def HallIneq (C : ℝ) (e : ℝ) : Prop :=
   ∀ x y : ℤ, y ^ 2 ≠ x ^ 3 → |y ^ 2 - x ^ 3| > C * (|x| : ℝ) ^ e
 
@@ -77,3 +79,5 @@ Weak form of Hall's conjecture: relax the exponent from $1/2$ to $1/2 - \varepsi
 @[category research open, AMS 11]
 theorem weak_hall_conjecture (ε : ℝ) (hε : ε > 0) : HallConjectureExp (2⁻¹ - ε) := by
   sorry
+
+end Hall

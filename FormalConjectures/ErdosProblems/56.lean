@@ -23,6 +23,9 @@ open scoped Finset
 
 *Reference:* [erdosproblems.com/56](https://www.erdosproblems.com/56)
 -/
+
+namespace Erdos56
+
 /--
 Say a set of natural numbers is `k`-weakly divisible if any `k+1` elements
 of `A` are not relatively prime.
@@ -111,3 +114,5 @@ Is this the largest such set?
 theorem erdos_56 : (∀ᵉ (N ≥ 2) (k > 0), (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card)) ↔
     answer(False) := by
   sorry
+
+end Erdos56

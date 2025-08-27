@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Function Set
 
+namespace Erdos44
+
 -- Reference: https://arxiv.org/pdf/2103.15850
 /-- The maximum size of a Sidon set in `{1, ..., N}` is less than or equal to `2 * √N`. -/
 @[category undergraduate, AMS 5 11]
@@ -95,3 +97,5 @@ The greedy construction gives a Sidon set of size approximately `√N`.
 theorem greedy_sidon_construction (N : ℕ) (hN : 1 ≤ N) :
     ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon A.toSet ∧ A.card ≥ N.sqrt := by
   sorry
+
+end Erdos44

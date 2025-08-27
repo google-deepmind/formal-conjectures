@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Asymptotics Filter Finset
 
+namespace Erdos678
+
 /--
 Write $M(n, k)$ be the least common multiple of ${n+1, \dotsc, n+k}$, denoted here as
 `lcmInterval n k`.
@@ -73,3 +75,5 @@ theorem erdos_678 :
     (∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite) ↔
       answer(True) := by
   sorry
+
+end Erdos678

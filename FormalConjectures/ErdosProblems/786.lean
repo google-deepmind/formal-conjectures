@@ -26,6 +26,10 @@ open Filter
 
 open scoped Topology
 
+namespace Erdos786
+
+open Erdos786
+
 /--
 `Nat.IsMulCardSet A` means that `A` is a set of natural numbers that
 satisfies the property that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$
@@ -94,3 +98,5 @@ theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε ≤ 1) :
     { n | ∃! i < k, p i ∣ n }.HasDensity (1 / Real.exp 1 - ε) ∧
       { n | ∃! i < k, p i ∣ n }.IsMulCardSet := by
   sorry
+
+end Erdos786

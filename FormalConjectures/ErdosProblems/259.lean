@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped ArithmeticFunction
 
+namespace Erdos259
+
 /--
 Is
 $$\sum_{n} \mu(n)^2\frac{n}{2^n}$$
@@ -32,3 +34,5 @@ irrational?
 @[category research open, AMS 11]
 theorem erdos_259 : Irrational (∑' n : ℕ, (μ n) ^ 2 * n / (2 ^ n)) ↔ answer(sorry) := by
   sorry
+
+end Erdos259
