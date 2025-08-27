@@ -26,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Pointwise Cardinal
 
+-- TODO(callesonne): add already proved results from the wiki page
+
 /--
 If `G` is an abelian group then can there exist an exact covering of `G` by more than one cosets of
 different sizes? (i.e. each element is contained in exactly one of the cosets.)
@@ -50,7 +52,7 @@ theorem erdos_274.variants.nonabelian :
     ∃ (P : Partition (⊤ : Subgroup G)),
       1 < P.parts.ncard ∧
       (∀ A ∈ P.parts, ∃ᵉ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
-      P.parts.Pairwise fun A B ↦ Nat.card A ≠ Nat.card B) ↔ answer(sorry) := by
+      P.parts.Pairwise fun A B ↦ #A ≠ #B) ↔ answer(sorry) := by
   sorry
 
 
