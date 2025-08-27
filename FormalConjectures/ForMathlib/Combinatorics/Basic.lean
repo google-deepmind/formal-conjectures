@@ -98,7 +98,7 @@ instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon A) :=
   decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
 
 /-- The maximum size of a Sidon set in the supplied `Finset`. -/
-def IsSidon.maxSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
+def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
   (A.powerset.filter IsSidon).sup Finset.card
 
 theorem IsSidon.insert {A : Finset α} {m : α} [DecidableEq α] [IsRightCancelAdd α]
