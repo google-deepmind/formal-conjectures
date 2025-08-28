@@ -35,4 +35,6 @@ theorem erdos_64 :
             k ≥ 2 ∧ c.IsCycle ∧ c.length = 2^k) ↔ answer(sorry) := by
   sorry
 
+-- TODO(firsching): add more context
+
 end Erdos64
