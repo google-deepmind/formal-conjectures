@@ -27,18 +27,18 @@ namespace Erdos828
 open scoped Nat
 
 /--
-Is it true that, for any $a \in \mathbb{N}$, there are infinitely many $n$ such that
+Is it true that, for any $a \in \mathbb{Z}$, there are infinitely many $n$ such that
 $$\phi(n) | n + a$$?
 -/
 @[category research open, AMS 11]
-theorem erdos_828 : (∀ a, Infinite {n | φ n ∣ n + a}) ↔ answer(sorry) := by
+theorem erdos_828 : (∀ a : ℤ, Infinite {n : ℕ | ↑(φ n) ∣ n + a}) ↔ answer(sorry) := by
   sorry
 
 /--
 Lehmer conjectured that $\phi(n) | n - 1$ if and only if $n$ is prime.
 -/
 @[category research open, AMS 11]
-theorem erdos_828.variants.lehmer_conjecture : (∀ n, φ n ∣ n - 1 ↔ Prime n) ↔ answer(sorry) := by
+theorem erdos_828.variants.lehmer_conjecture : (∀ n, (φ n : ℤ) ∣ ↑n - 1 ↔ Prime n) ↔ answer(sorry) := by
   sorry
 
 /--
