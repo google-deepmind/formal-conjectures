@@ -85,7 +85,7 @@ more than one such prime `p`, then the number needs to be multiplied by
 @[category research open, AMS 11]
 theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
-    (hm₃ : Odd m) (hb' : ¬ b ≡ 1 [MOD 4]) :
+    (hm₃ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4]) :
     (S a).HasDensity
       (ArtinConstant * ∏ p ∈ m.primeFactors, p * (p-2 : ℝ) / (p^2 - p - 1))
       {p | p.Prime} := by
@@ -101,7 +101,7 @@ is given by $$C \left(\prod_{p \mid m} \frac{p(p-2)}{(p ^ 2 - p - 1)}\right)
 @[category research open, AMS 11]
 theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
-    (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b ≡ 1 [MOD 4]):
+    (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]):
     (S a).HasDensity
       (ArtinConstant * (∏ p ∈ m.primeFactors, p * (p - 2 : ℝ) / (p ^ 2 - p - 1))
         * (∏ p ∈ a.primeFactors, p * (p - 1 : ℝ) / (p ^ 2 - p - 1)))
