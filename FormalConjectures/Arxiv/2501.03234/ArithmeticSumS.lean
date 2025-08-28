@@ -55,11 +55,11 @@ end SumS
 $S(k)$ is positive.
 -/
 @[category research open, AMS 11]
-theorem conjecture_1_1 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) : 0 < S k := by
+theorem conjecture_1_1 (k : ℕ) (hprim : k.Prime) (hodd : Odd k) : 0 < S k := by
   sorry
 
 /--
-**Conjecture 4.1**: For any prime k larger than 5,  $S(k) > k$.
+**Conjecture 4.1**: For any prime k larger than 5, $S(k) > k$.
 -/
 @[category research open, AMS 11]
 theorem conjecture_4_1 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k > 5) : k < S k := by
@@ -84,7 +84,7 @@ theorem conjecture_4_3 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k >
 $nk < S(k)$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_4 (n : ℕ)  :  ∀ᶠ k : ℕ in Filter.atTop, Nat.Prime k → Odd k → n * k < S k := by
+theorem conjecture_4_4 (n : ℕ) : ∀ᶠ (k : ℕ) in Filter.atTop, Nat.Prime k → Odd k → n * k < S k := by
   sorry
 
 /--
@@ -92,7 +92,7 @@ theorem conjecture_4_4 (n : ℕ)  :  ∀ᶠ k : ℕ in Filter.atTop, Nat.Prime k
 case of conjecture 4.4 where n = 0. In this case the lower bound would be 0 (for odd primes).
 -/
 @[category test, AMS 11]
-theorem conjecture_4_4_def_0 (hc1_1: type_of% conjecture_1_1) : type_of% (conjecture_4_4 0)  := by
+theorem conjecture_4_4_def_0 (hc1_1: type_of% conjecture_1_1) : type_of% (conjecture_4_4 0) := by
   simp only [Filter.Eventually, CharP.cast_eq_zero, zero_mul, Filter.mem_atTop_sets]
   exact ⟨0, fun b sb bprim bodd ↦ hc1_1 b bprim bodd⟩
 
