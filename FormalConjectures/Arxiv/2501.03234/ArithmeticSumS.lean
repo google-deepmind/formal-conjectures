@@ -62,21 +62,21 @@ theorem conjecture_1_1 (k : ℕ) (hprim : k.Prime) (hodd : Odd k) : 0 < S k := b
 **Conjecture 4.1**: For any prime k larger than 5, $S(k) > k$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_1 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k > 5) : k < S k := by
+theorem conjecture_4_1 (k : ℕ) (hprim : k.Prime) (hodd : Odd k) (hgt : k > 5) : k < S k := by
   sorry
 
 /--
 **Conjecture 4.2**: For any prime k larger than 233, $S(k) > 2k$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_2 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k > 233) : 2 * k < S k := by
+theorem conjecture_4_2 (k : ℕ) (hprim : k.Prime) (hodd : Odd k) (hgt : k > 233) : 2 * k < S k := by
   sorry
 
 /--
 **Conjecture 4.3**: For any prime k larger than 3119, $S(k) > 3k$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_3 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k > 3119) : 3 * k < S k := by
+theorem conjecture_4_3 (k : ℕ) (hprim : k.Prime) (hodd : Odd k) (hgt : k > 3119) : 3 * k < S k := by
   sorry
 
 /--
@@ -84,7 +84,7 @@ theorem conjecture_4_3 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k >
 $nk < S(k)$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_4 (n : ℕ) : ∀ᶠ (k : ℕ) in Filter.atTop, Nat.Prime k → Odd k → n * k < S k := by
+theorem conjecture_4_4 (n : ℕ) : ∀ᶠ (k : ℕ) in Filter.atTop, k.Prime → Odd k → n * k < S k := by
   sorry
 
 /--
