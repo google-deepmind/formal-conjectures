@@ -22,43 +22,57 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/11](https://www.erdosproblems.com/11)
 -/
 
+namespace Erdos11
+
 /--
-Is every odd n the sum of a squarefree number and a power of 2?
+Is every odd $n > 1$ the sum of a squarefree number and a power of 2?
 -/
 @[category research open, AMS 11]
-theorem erdos_11 (n : ℕ) (hn : Odd n) :
+theorem erdos_11 (n : ℕ) (hn : Odd n) (hn' : 1 < n) :
     ∃ k l : ℕ, Squarefree k ∧ n = k + 2 ^ l := by
   sorry
 
 /--
-Erdős often asked this under the weaker assumption that n
+Erdős often asked this under the weaker assumption that $n > 1$
 is not divisible by 4.
 -/
 @[category research open, AMS 11]
-theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n) :
+theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n)  (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
 /--
-Erdős thought that proving this with two powers of 2 is perhaps easy.
+Is every odd $n > 1$ the sum of a squarefree number and two powers of 2?
 -/
 @[category research open, AMS 11]
-theorem erdos_11.variants.two_pow_two (n : ℕ) (hn : Odd n) :
+theorem erdos_11.variants.two_pow_two (n : ℕ) (hn : Odd n) (hn' : 1 < n) :
     ∃ k l m : ℕ , Squarefree k ∧ n = k + 2^l + 2^m := by
   sorry
 
 /--
-Odlyzko has checked this up to `10^7`.
+Every odd $1 < n < 10^7$ is the sum of a squarefree number and a power of 2.
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.finite_bound1 (n : ℕ) (hn : Odd n) (h : n < 10^7) :
+theorem erdos_11.variants.finite_bound1 (n : ℕ) (hn : Odd n) (h : n < 10^7) (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 
 /--
-Hercher has verified this is true for all odd integers up to `2^50` (approx `1.12*10^15`)
+Every odd $1 < n < 2^50$ is the sum of a squarefree number and a power of 2.
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) :
+theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
+
+/--
+Suppose that every odd $n$ is the sum of a squarefree number and a power of 2. Then the set of primes
+$p$ such that $2 ^ p ≡ 2 \mod p ^ 2$ is infinite. This is Theorem 1 in [GrSo98].
+[GrSo98] Granville, A. and Soundararajan, K., A Binary Additive Problem of Erdős and the Order of $2$ mod $p^2$. The Ramanujan Journal (1998), 283-298.
+-/
+@[category research solved, AMS 11]
+theorem erdos_11.variants.variants.granville_soundararajan (H : type_of% erdos_11) :
+    {p : ℕ | p.Prime ∧ 2 ^ p ≡ 2 [MOD p ^ 2]}.Infinite := by
+  sorry
+
+end Erdos11

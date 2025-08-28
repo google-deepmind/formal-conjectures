@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/931](https://www.erdosproblems.com/931)
 -/
+
+namespace Erdos931
+
 /--
 Let $k_1 \geq k_2 \geq 3$. Are there only finitely many $n_2\geq n_1 + k_1$
 such that
@@ -71,3 +74,5 @@ theorem erdos_931.variants.exists_prime (k₁ k₂ n₁ n₂ : ℕ) (h₁ : k₂
       (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors) :
     ∃ (p : ℕ), p.Prime ∧ n₁ ≤ p ∧ p ≤ n₂ := by
   sorry
+
+end Erdos931

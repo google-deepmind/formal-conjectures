@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped ArithmeticFunction
 
+namespace Erdos825
+
 /--
 Is there an absolute constant $C > 0$ such that every integer $n$ with
 $\sigma(n) > Cn$ is the distinct sum of proper divisors of $n$?
@@ -46,3 +48,5 @@ theorem erdos_825.variants.necessary_cond (C : ℝ) (hC : 0 < C)
         ∃ s ⊆ n.properDivisors, n = s.sum id) :
     2 < C := by
   sorry
+
+end Erdos825

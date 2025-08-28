@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/68](https://www.erdosproblems.com/68)
 -/
 
+namespace Erdos68
+
 /--
 Is
 $$\sum_{n=2}^\infty \frac{1}{n!-1}$$
@@ -40,3 +42,5 @@ theorem sum_factorial_inv_eq_geometric :
     let f (n k : ℕ) : ℝ := 1 / ((n + 2).factorial : ℝ) ^ (k + 1)
     ∑' n : ℕ, (1 : ℝ) / ((n + 2).factorial - 1) = ∑' n : ℕ, ∑' k : ℕ, f n k := by
   sorry
+
+end Erdos68

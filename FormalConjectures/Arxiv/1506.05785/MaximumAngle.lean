@@ -24,12 +24,12 @@ _On the Approximation of Quantum Gates using Lattices_
 by *Alec Greene and Steven Damelin*
 -/
 
-open scoped EuclideanSpace
+namespace Arxiv.«1506.05785»
+
+open scoped EuclideanSpace RealInnerProductSpace
 
 /-- The integer lattice ℤ⁴ as the ℤ-span of the standard basis in 4-dimensional Euclidean space. -/
 scoped[EuclideanSpace] notation "ℤ⁴" => Submodule.span ℤ (Set.range (PiLp.basisFun 2 ℝ (Fin 4)))
-
-instance : IsZLattice ℝ ℤ⁴ := ZSpan.isZLattice _
 
 /--
 *Conjecture 3.4*
@@ -37,8 +37,10 @@ There exists $0 < \delta < 1$ such that for any $a \in \mathbb{S}^3$,
 there exists $b \in \mathbb{Z}^4$ and $k \in \mathbb{Z}$ such that $\|b\| = 5^k$ and
 $\langle a, \frac{b}{\|b\|} \rangle \geq 1 - 5^{-\frac{k}{2 - \delta}}.$
 -/
-@[category research open, AMS 81 11]
-theorem conjecture_3_4 : ∃ (δ : ℝ), 0 < δ ∧ δ < 1 ∧
-    ∀ (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1), ∃ (b : ℤ⁴) (k : ℤ), ‖b‖ = 5 ^ k ∧
-      inner a (‖b‖⁻¹ • b) ≥ 1 - (5 : ℝ) ^ (-k / (2 - δ)) := by
+@[category research open, AMS 11 81]
+theorem conjecture_3_4 : ∃ δ ∈ Set.Ioo (0 : ℝ) 1,
+    ∀ (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1), ∃ (b : ℤ⁴) (k : ℕ), k > 0 ∧ ‖b‖ = 5 ^ k ∧
+      1 - 5 ^ (-k / (2 - δ)) ≤ ⟪a, ‖b‖⁻¹ • b⟫ := by
   sorry
+
+end Arxiv.«1506.05785»

@@ -28,6 +28,8 @@ An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and
 asked by user [*David Feldman*](https://mathoverflow.net/users/10909/david-feldman)
 -/
 
+namespace SumOfThreeCubes
+
 /-- The predicate that `n : ℤ` is a sum of three (integer) cubes. -/
 def IsSumOfThreeCubes (n : ℤ) : Prop :=
   ∃ x y z : ℤ, n = x^3 + y^3 + z^3
@@ -60,3 +62,5 @@ theorem mod_9_of_isSumOfThreeCubes (n : ℤ) (hn : IsSumOfThreeCubes n) :
 theorem isSumOfThreeCubes_iff_mod_9 :
     (∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9])) ↔ answer(sorry) := by
   sorry
+
+end SumOfThreeCubes

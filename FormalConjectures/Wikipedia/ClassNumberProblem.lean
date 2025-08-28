@@ -23,6 +23,8 @@ open Polynomial
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Class_number_problem)
 -/
 
+namespace ClassNumberProblem
+
 def IsClassNumberOne (d : ℤ) : Prop :=
   ∃ (h₂ : Irreducible (X ^ 2 - C (d : ℚ))),
   haveI := Fact.mk h₂
@@ -46,3 +48,5 @@ theorem class_number_problem.variants.imaginary :
     { d : ℤ | Squarefree d ∧ d < 0 ∧ IsClassNumberOne d } =
     {-1, -2, -3, -7, -11, -19, -43, -67, -163} := by
   sorry
+
+end ClassNumberProblem

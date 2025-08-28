@@ -15,7 +15,10 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-namespace SimpleGraph
+
+namespace WrittenOnTheWallII.GraphConjecture5
+
+open SimpleGraph
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -37,4 +40,4 @@ theorem conjecture5 (G : SimpleGraph V) (h_conn : G.Connected) :
     max_sphere_size ≤ Ls G := by
   sorry
 
-end SimpleGraph
+end WrittenOnTheWallII.GraphConjecture5

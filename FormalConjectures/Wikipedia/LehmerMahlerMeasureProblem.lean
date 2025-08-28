@@ -22,7 +22,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_conjecture)
 -/
 
-open Polynomial
+namespace LehmerMahlerMeasureProblem
+
+open Polynomial LehmerMahlerMeasureProblem
 
 noncomputable section
 
@@ -77,3 +79,7 @@ theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])
     (hf : mahlerMeasureZ f > 1) (hf' : f.HasOddCoeffs) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^2 - X - 1) := by
   sorry
+
+end
+
+end LehmerMahlerMeasureProblem
