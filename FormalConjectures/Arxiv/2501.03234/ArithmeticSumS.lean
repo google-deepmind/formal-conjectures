@@ -102,7 +102,7 @@ case of conjecture 4.4 where n = 1. In this case the lower bound would be 5.
 -/
 @[category test, AMS 11]
 theorem conjecture_4_4_def_1 (hc4_1: type_of% conjecture_4_1) : type_of% (conjecture_4_4 1) := by
-  simp [Filter.Eventually,Filter.mem_atTop_sets]
+  simp [Filter.Eventually, Filter.mem_atTop_sets]
   exact ⟨5+1, fun b sb bprim bodd ↦ hc4_1 b bprim bodd (by linarith)⟩
 
 /--
@@ -124,3 +124,4 @@ theorem conjecture_4_4_def_3 (hc4_3: type_of% conjecture_4_3) : type_of% (conjec
   exact ⟨3119+1, fun b sb bprim bodd ↦ hc4_3 b bprim bodd (by linarith)⟩
 
 end Arxiv.«2501.03234»
+
