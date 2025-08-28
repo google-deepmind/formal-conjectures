@@ -41,7 +41,7 @@ theorem erdos_213 : (∀ n : ℕ, n ≥ 4 → Erdos213For n)
   sorry
 
 /--
-Best construction to date, due to Kreisel and Kurz, has n = 7.
+The best construction to date, due to Kreisel and Kurz, has $n = 7$.
 -/
 @[category research solved, AMS 52]
 theorem erdos_213.variants.KK08 : Erdos213For 7 := by sorry
