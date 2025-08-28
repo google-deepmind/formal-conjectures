@@ -124,4 +124,3 @@ theorem conjecture_4_4_def_3 (hc4_3: type_of% conjecture_4_3) : type_of% (conjec
   exact ⟨3119+1, fun b sb bprim bodd ↦ hc4_3 b bprim bodd (by linarith)⟩
 
 end Arxiv.«2501.03234»
-
