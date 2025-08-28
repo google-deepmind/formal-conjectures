@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/1/3%E2%80%932/3_conjecture)
 -/
 
-namespace conjecture_1_3_to_2_3
+namespace Conjecture_1_3_to_2_3
 
 /--
 Does every finite partially ordered set that is not totally ordered
@@ -41,4 +41,4 @@ theorem conjecture_1_3_to_2_3 : (∀ (P : Type) [Finite P] [PartialOrder P]
     answer(sorry ) := by
   sorry
 
-end conjecture_1_3_to_2_3
+end Conjecture_1_3_to_2_3
