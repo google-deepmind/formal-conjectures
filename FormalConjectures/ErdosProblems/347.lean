@@ -27,8 +27,6 @@ open Filter Set Topology
 /--
 The set of subset sums of a set `A ⊆ ℕ`.
 -/
-private def subsetSums (A : Set ℕ) : Set ℕ := {n | ∃ B : Finset ℕ, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
-
 local notation "𝓟" A => subsetSums A
 
 /--
