@@ -38,7 +38,7 @@ theorem erdos_828 : (∀ a : ℤ, Infinite {n : ℕ | ↑(φ n) ∣ n + a}) ↔ 
 Lehmer conjectured that $\phi(n) | n - 1$ if and only if $n$ is prime.
 -/
 @[category research open, AMS 11]
-theorem erdos_828.variants.lehmer_conjecture : (∀ n, (φ n : ℤ) ∣ ↑n - 1 ↔ Prime n) ↔ answer(sorry) := by
+theorem erdos_828.variants.lehmer_conjecture : (∀ n > 1, φ n ∣ n - 1 ↔ Prime n) ↔ answer(sorry) := by
   sorry
 
 /--
