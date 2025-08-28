@@ -27,8 +27,8 @@ open scoped EuclideanGeometry
 namespace Erdos213
 
 /--
-The predicate (on $n$) that there exist $n$ points in $\mathbb{R}^2$, no three on a line and no four on a circle,
-such that all pairwise distances are integers?
+The predicate (on $n$) that there exist $n$ points in $\mathbb{R}^2$, no three on a line and no four
+on a circle, such that all pairwise distances are integers?
 -/
 def Erdos213For (n : ℕ) : Prop := ∃ S : Set ℝ², S.Finite ∧ S.ncard = n ∧
     (∀ T : Set ℝ², T ⊆ S ∧ T.ncard = 3 → ¬ Collinear ℝ T) ∧
@@ -40,9 +40,7 @@ Let $n ≥ 4$. Are there $n$ points in $\mathbb{R}^2$, no three on a line and no
 such that all pairwise distances are integers?
 -/
 @[category research open, AMS 52]
-theorem erdos_213 : (∀ n : ℕ, n ≥ 4 → Erdos213For n)
-    ↔ answer(sorry) := by
-  sorry
+theorem erdos_213 : (∀ n : ℕ, n ≥ 4 → Erdos213For n) ↔ answer(sorry) := by sorry
 
 /--
 The best construction to date, due to Kreisel and Kurz, has $n = 7$.
