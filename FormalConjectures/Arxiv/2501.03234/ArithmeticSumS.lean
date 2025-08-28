@@ -50,100 +50,77 @@ example : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
 
 end SumS
 
-section Conjecture_1_1
-
-def conjecture_1_1_def := ∀k, (hprim: Nat.Prime k) → (hodd : Odd k) → (0 < S k)
 /--
 **Conjecture 1.1**: For any odd prime k, the sum associated with the classical theta function θ₃,
 $S(k)$ is positive.
 -/
 @[category research open, AMS 11]
-theorem conjecture_1_1 : conjecture_1_1_def := by
+theorem conjecture_1_1 (k : ℕ) (hprim : k.Prime) (hodd : Odd k) : 0 < S k := by
   sorry
 
-end Conjecture_1_1
-
-section Conjecture_4_1
-
-def conjecture_4_1_def := ∀k, (hprim: Nat.Prime k) → (hodd: Odd k) → (hgt: k > 5) → (k < S k)
 /--
-**Conjecture 4.1**: For any prime k larger than 5,  $S(k) > k$
+**Conjecture 4.1**: For any prime k larger than 5, $S(k) > k$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_1 : conjecture_4_1_def := by
+theorem conjecture_4_1 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k > 5) : k < S k := by
   sorry
 
-end Conjecture_4_1
-
-section Conjecture_4_2
-
-def conjecture_4_2_def := ∀k, (hprim: Nat.Prime k) → (hodd: Odd k) → (hgt: k > 233) → (2*k < S k)
 /--
-**Conjecture 4.2**: For any prime k larger than 233, $S(k) > 2k$
+**Conjecture 4.2**: For any prime k larger than 233, $S(k) > 2k$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_2 : conjecture_4_2_def := by
+theorem conjecture_4_2 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k > 233) : 2 * k < S k := by
   sorry
-
-end Conjecture_4_2
-
-section Conjecture_4_3
-
-def conjecture_4_3_def := (k : ℕ) → (hprim: Nat.Prime k) → (hodd: Odd k) → (hgt: k > 3119) → 3*k < S k
 
 /--
 **Conjecture 4.3**: For any prime k larger than 3119, $S(k) > 3k$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_3 : conjecture_4_3_def := by
+theorem conjecture_4_3 (k : ℕ) (hprim : Nat.Prime k) (hodd : Odd k) (hgt : k > 3119) : 3 * k < S k := by
   sorry
-
-end Conjecture_4_3
-
-section Conjecture_4_4
-
-def conjecture_4_4_def (n : ℕ) :=  ∀ᶠ k : ℕ in Filter.atTop, Nat.Prime k → Odd k → n * k < S k
 
 /--
 **Conjecture 4.4**: Given a natural number $n ∈ ℕ$, for all large enough odd prime k (depending on n),
 $nk < S(k)$.
 -/
 @[category research open, AMS 11]
-theorem conjecture_4_4 (n : ℕ)  : conjecture_4_4_def n := by
+theorem conjecture_4_4 (n : ℕ) : ∀ᶠ (k : ℕ) in Filter.atTop, Nat.Prime k → Odd k → n * k < S k := by
   sorry
-
-end Conjecture_4_4
 
 /--
 **Conjecture 1.1 → Conjecture 4.4**: If conjecture 1.1 holds true, then this implies a special
 case of conjecture 4.4 where n = 0. In this case the lower bound would be 0 (for odd primes).
 -/
-example (hc1_1: conjecture_1_1_def ) : conjecture_4_4_def 0 := by
-  simp [conjecture_4_1_def,conjecture_4_4_def, Filter.Eventually] at *
-  refine ⟨0,fun b sb bprim bodd ↦ hc1_1 b bprim bodd⟩
+@[category test, AMS 11]
+theorem conjecture_4_4_def_0 (hc1_1: type_of% conjecture_1_1) : type_of% (conjecture_4_4 0) := by
+  simp only [Filter.Eventually, CharP.cast_eq_zero, zero_mul, Filter.mem_atTop_sets]
+  exact ⟨0, fun b sb bprim bodd ↦ hc1_1 b bprim bodd⟩
 
 /--
 **Conjecture 4.1 → Conjecture 4.4**: If conjecture 4.1 holds true, then this implies a special
 case of conjecture 4.4 where n = 1. In this case the lower bound would be 5.
 -/
-example (hc4_1: conjecture_4_1_def ) : conjecture_4_4_def 1 := by
-  simp [conjecture_4_1_def,conjecture_4_4_def, Filter.Eventually] at *
-  exact ⟨5+1,fun b sb bprim bodd ↦ hc4_1 b bprim bodd (by linarith)⟩
+@[category test, AMS 11]
+theorem conjecture_4_4_def_1 (hc4_1: type_of% conjecture_4_1) : type_of% (conjecture_4_4 1) := by
+  simp [Filter.Eventually, Filter.mem_atTop_sets]
+  exact ⟨5+1, fun b sb bprim bodd ↦ hc4_1 b bprim bodd (by linarith)⟩
 
 /--
 **Conjecture 4.2 → Conjecture 4.4**: If conjecture 4.2 holds true, then this implies a special
 case of conjecture 4.4 for n = 2. For this scenario, the lower bound is now 233.
 -/
-example (hc4_1: conjecture_4_2_def ) : conjecture_4_4_def 2 := by
-  simp [conjecture_4_1_def,conjecture_4_4_def, Filter.Eventually] at *
-  exact ⟨233+1,fun b sb bprim bodd ↦ hc4_1 b bprim bodd (by linarith)⟩
+@[category test, AMS 11]
+theorem conjecture_4_4_def_2 (hc4_2: type_of% conjecture_4_2) : type_of% (conjecture_4_4 2) := by
+  simp only [Filter.Eventually, Filter.mem_atTop_sets]
+  exact ⟨233+1, fun b sb bprim bodd ↦ hc4_2 b bprim bodd (by linarith)⟩
 
 /--
 **Conjecture 4.3 → Conjecture 4.4**: If conjecture 4.3 holds true, then a special
 case of conjecture 4.4 for n = 3 is obtained, and the lower bound is 3119.
 -/
-example (hc4_3: conjecture_4_3_def ) : conjecture_4_4_def 3 := by
-  simp [conjecture_4_1_def,conjecture_4_4_def, Filter.Eventually] at *
-  exact ⟨3119+1,fun b sb bprim bodd ↦ hc4_3 b bprim bodd (by linarith)⟩
+@[category test, AMS 11]
+theorem conjecture_4_4_def_3 (hc4_3: type_of% conjecture_4_3) : type_of% (conjecture_4_4 3) := by
+  simp only [Filter.Eventually, Filter.mem_atTop_sets]
+  exact ⟨3119+1, fun b sb bprim bodd ↦ hc4_3 b bprim bodd (by linarith)⟩
 
 end Arxiv.«2501.03234»
