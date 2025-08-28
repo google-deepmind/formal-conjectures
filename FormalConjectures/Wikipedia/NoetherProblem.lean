@@ -36,7 +36,7 @@ class IsRationalExtension (K L ι : Type*)
 /-- If the index set `ι` is empty, then `IsRationalExtension K L ι` means that
 `K, L` are isomorphic as `K` algebras. -/
 @[category test, AMS 12]
-example (K L ι : Type*) [Field K] [Field L] [Algebra K L] [IsEmpty ι]
+theorem rationalExtension_empty_index (K L ι : Type*) [Field K] [Field L] [Algebra K L] [IsEmpty ι]
     [IsRationalExtension K L ι] :
     Nonempty (L ≃ₐ[K] K) := by
   set a : L ≃ₐ[K] (FractionRing (MvPolynomial ι K)) :=

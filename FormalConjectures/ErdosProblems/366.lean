@@ -35,7 +35,7 @@ theorem erdos_366 : (∃ (n : ℕ), (2).Full n ∧ (3).Full (n + 1)) ↔ answer(
 Note that $8$ is $3$-full and $9$ is 2-full.
 -/
 @[category test, AMS 11]
-example : (∃ (n : ℕ), (3).Full n ∧ (2).Full (n + 1)) := by
+theorem exists_three_full_then_two_full : (∃ (n : ℕ), (3).Full n ∧ (2).Full (n + 1)) := by
   use 8
   simp [Nat.Full, Nat.primeFactorsEq]
 

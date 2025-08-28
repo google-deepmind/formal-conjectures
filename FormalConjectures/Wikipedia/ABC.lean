@@ -30,7 +30,7 @@ The radical of `n` denoted is the product of the distinct prime factors of `n`.
 def radical (n : ℕ) : ℕ := n.primeFactors.prod id
 
 @[category test, AMS 11]
-example : radical 16 = 2 := by
+theorem radical_16 : radical 16 = 2 := by
   have : Nat.primeFactors 16 = {2} := by
     rw [show 16 = 2 ^ 4 by decide, Nat.primeFactors_pow]
     · norm_num
@@ -38,11 +38,11 @@ example : radical 16 = 2 := by
   norm_num [radical, this]
 
 @[category test, AMS 11]
-example : radical 17 = 17 := by
+theorem radical_17 : radical 17 = 17 := by
   rw [radical, Nat.Prime.primeFactors (by norm_num), Finset.prod_singleton, id]
 
 @[category test, AMS 11]
-example : radical 12 = 6 := by
+theorem radical_12 : radical 12 = 6 := by
   rw [radical, show 12 = 2^2 * 3 by rfl, Nat.primeFactors_mul (by norm_num)
     (by norm_num), Nat.primeFactors_pow _ (by norm_num),
     Nat.Prime.primeFactors (by norm_num), Nat.Prime.primeFactors (by norm_num)]

@@ -44,11 +44,11 @@ theorem erdos_313_conjecture : erdos_313_solutions.Infinite ↔ answer(sorry) :=
   sorry
 
 @[category test, AMS 11]
-example : (6, {2, 3}) ∈ erdos_313_solutions := by
+theorem erdos_313_solution_6_2_3 : (6, {2, 3}) ∈ erdos_313_solutions := by
   norm_num [erdos_313_solutions]
 
 @[category test, AMS 11]
-example : (42, {2, 3, 7}) ∈ erdos_313_solutions := by
+theorem erdos_313_solution_42_2_3_7 : (42, {2, 3, 7}) ∈ erdos_313_solutions := by
   norm_num [erdos_313_solutions]
 
 /--
