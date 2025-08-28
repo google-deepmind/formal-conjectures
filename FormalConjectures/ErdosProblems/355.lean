@@ -54,9 +54,10 @@ there exists some $\lambda > 1$ such that $a_{n+1}/a_n\geq \lambda$ for all $n\g
 contain all rationals in some open interval?
 -/
 @[category research open, AMS 11]
-theorem erdos_355 : ∃ A : ℕ → ℕ,
-    ∃ u v : ℝ, ∀ q : ℚ, ↑q ∈ Set.Ioo u v →
-    q ∈  {(∑ a ∈ A', (1 / a : ℚ)) | (A' : Finset ℕ) (_ : A'.toSet ⊆ Set.range A)} := by
+theorem erdos_355 :
+    (∃ A : ℕ → ℕ, ∃ u v : ℝ, ∀ q : ℚ, ↑q ∈ Set.Ioo u v →
+      q ∈  {(∑ a ∈ A', (1 / a : ℚ)) | (A' : Finset ℕ) (_ : A'.toSet ⊆ Set.range A)})
+    ↔ answer(sorry) := by
   sorry
 
 
