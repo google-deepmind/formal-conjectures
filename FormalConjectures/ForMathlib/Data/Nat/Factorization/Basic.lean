@@ -21,8 +21,8 @@ namespace Nat
 theorem prod_primeFactors_factorization_apply (n : ℕ) {p : ℕ} (hp : p.Prime) {f : ℕ → ℕ → ℕ}
     (hf : ∀ q n, ¬ q ∣ n → f q n = 0) (hf₀ : ∀ q, f q 0 = 0):
     (∏ q ∈ n.primeFactors, q ^ f q n).factorization p = f p n := by
-  rw [factorization_prod (fun _ _ _ ↦ by simp_all), Finset.sum_congr rfl (fun x hx ↦ by
-      rw [factorization_pow, (mem_primeFactors.1 hx).1.factorization])]
+  rw [factorization_prod fun _ _ _ ↦ by simp_all, Finset.sum_congr rfl fun x hx ↦ by
+      rw [factorization_pow, (mem_primeFactors.1 hx).1.factorization]]
   by_cases hpn : p ∣ n <;> simp [Finsupp.single_apply, hp, hpn]
   · exact fun _ ↦ by simp_all [hf₀]
   · simp [hf _ _ hpn]
