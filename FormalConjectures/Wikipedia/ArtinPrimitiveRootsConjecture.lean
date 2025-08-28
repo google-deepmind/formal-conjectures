@@ -76,7 +76,7 @@ theorem artin_primitive_roots.variants.part_ii_square_or_minus_one
 
 /--
 **Artin's Conjecture on Primitive Roots**, second half, power version
-If `a` is a perfect pth power for an odd prime `p` of a number that isn't `≡ 1 [MOD 4]`,
+If `a` is a perfect pth power for an odd prime `p` of a number whose squarefree part isn't `≡ 1 [MOD 4]`,
 then the density of the set `S(a)` of primes `p` such that `a` is a primitive root modulo `p`
 is given by `p(p-2) / (p ^ 2 - p - 1) * C` where `C` is Artin's constant. If there are
 more than one such prime `p`, then the number needs to be multiplied by
@@ -93,7 +93,7 @@ theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_
 
 /--
 **Artin's Conjecture on Primitive Roots**, second half, power version
-If `a` is a perfect mth power (for an odd `m`) of a number that is `≡ 1 [MOD 4]`,
+If `a` is a perfect mth power (for an odd `m`) of a number whose squarefree part is `≡ 1 [MOD 4]`,
 then the density of the set `S(a)` of primes `p` such that `a` is a primitive root modulo `p`
 is given by $$C \left(\prod_{p \mid m} \frac{p(p-2)}{(p ^ 2 - p - 1)}\right)
 \left(\prod_{p \mid a} \frac{p(p-1)}{(p ^ 2 - p - 1)}\right)$ where $C$ is Artin's constant.
