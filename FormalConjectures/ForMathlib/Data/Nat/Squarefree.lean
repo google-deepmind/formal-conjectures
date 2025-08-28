@@ -15,9 +15,14 @@ limitations under the License.
 -/
 
 import Mathlib.Data.Nat.Squarefree
+import FormalConjectures.ForMathlib.Data.Nat.Factorization.Basic
 
 namespace Nat
 
+/-- `n.squarefreePart` is the unique `a₀ : ℕ` such that `a₀` is squarefree and `n = a₀ * b ^ 2`,
+for some `b : ℕ`. At `0` this property is not well defined because `b` must be `0` and `a₀` can be
+any squarefree number; we give the junk value `1` at `n = 0` following the convention that the
+squarefree part of any square is `1`. -/
 def squarefreePart (n : ℕ) : ℕ := n.factorization.prod fun (p e : ℕ) ↦ p ^ (e % 2)
 
 example : squarefreePart 2 = 2 := by
@@ -38,98 +43,64 @@ example : squarefreePart 16 = 1 := by
 example : squarefreePart 24 = 6 := by
   decide +native
 
+theorem squarefreePart_ne_zero (n : ℕ) : n.squarefreePart ≠ 0 := by
+  simp [squarefreePart]
+
+theorem squarefreePart_zero : squarefreePart 0 = 1 := by
+  simp [squarefreePart]
+
+/-- If `n` is squarefree, then its squarefree part is itself. -/
 theorem squarefreePart_of_squarefree {n : ℕ} (hn : Squarefree n) :
     squarefreePart n = n := by
   by_cases h₀ : n = 0
   · simp_all only [not_squarefree_zero]
   nth_rw 2 [← n.factorization_prod_pow_eq_self h₀]
   simp only [squarefreePart, Finsupp.prod, support_factorization]
-  apply Finset.prod_congr rfl fun p hp ↦ ?_
-  rw [mem_primeFactors] at hp
-  rw [Nat.factorization_eq_one_of_squarefree hn hp.1 hp.2.1]
+  exact Finset.prod_congr rfl fun p hp ↦ by
+    rw [factorization_eq_one_of_squarefree hn (mem_primeFactors.1 hp).1 (mem_primeFactors.1 hp).2.1]
 
+/-- The squarefree part of any square is `1`. -/
 theorem squarefreePart_of_isSquare {n : ℕ} (hn : IsSquare n) :
     squarefreePart n = 1 := by
   by_cases h₀ : n = 0
-  · simp [h₀, squarefreePart]
+  · exact h₀ ▸ squarefreePart_zero
   obtain ⟨r, rfl⟩ := hn
   rw [mul_eq_zero, or_self] at h₀
   rw [squarefreePart, Finsupp.prod, support_factorization,
     Finset.prod_congr rfl fun p hp ↦ by rw [r.factorization_mul h₀ h₀]]
   simp [← two_mul]
 
+/-- If $n = \prod_p p^{e_p}$ is the prime factorization of $n$, then $\prod_p p^{e_p \pmod{2}}$
+is the prime factorization of the squarefree part of $n$. -/
+theorem squarefreePart_factorization (n : ℕ) {p : ℕ} (hp : p.Prime) :
+    n.squarefreePart.factorization p = n.factorization p % 2 := by
+  rw [squarefreePart, prod_factorization_eq_prod_primeFactors,
+    n.prod_primeFactors_factorization_apply hp (f := fun p n ↦ n.factorization p % 2)
+      (fun _ _ h ↦ by simp [factorization_eq_zero_of_not_dvd h]) (by simp)]
 
-def Nat.squarePart (n : ℕ) : ℕ :=
-  ∏ p ∈ n.primeFactors, p ^ (if Even <| n.factorization p then n.factorization p else n.factorization p - 1)
+theorem Prime.squarefree {p : ℕ} (hp : p.Prime) : Squarefree p := Irreducible.squarefree hp
 
-open Function
+theorem squarefree_squarefreePart (n : ℕ) : Squarefree n.squarefreePart := by
+  rcases eq_or_ne n 0 with (rfl | h₀)
+  · exact squarefreePart_zero ▸ squarefree_one
+  refine Nat.squarefree_iff_factorization_le_one n.squarefreePart_ne_zero |>.2 fun p ↦ ?_
+  by_cases hp : p.Prime
+  · linarith [n.squarefreePart_factorization hp, Nat.mod_lt (n.factorization p) two_pos]
+  · linarith [factorization_eq_zero_of_non_prime n.squarefreePart hp]
 
-theorem Squarefree.prod_of_pairwise_isCoprime {R : Type*} [CancelCommMonoidWithZero R]
-    [DecompositionMonoid R] {ι : Type*} [DecidableEq ι] {s : Finset ι} {f : ι → R}
-    (hs : Set.Pairwise s (IsRelPrime on f)) (hs' : ∀ i ∈ s, Squarefree (f i)) :
-    Squarefree (∏ i ∈ s, f i) := by
-  induction s using Finset.induction with
-  | empty => simp
-  | @insert a s ha ih =>
-    rw [Finset.prod_insert ha, squarefree_mul_iff]
-    rw [Finset.coe_insert, Set.pairwise_insert] at hs
-    refine ⟨IsRelPrime.prod_right fun i hi ↦ ?_, hs' a (by simp), ?_⟩
-    · exact (hs.right i (by simp [hi]) fun h ↦ ha (h ▸ hi)).left
-    · exact ih hs.left fun i hi ↦ hs' i <| Finset.mem_insert_of_mem hi
+theorem squarefreePart_dvd (n : ℕ) : squarefreePart n ∣ n := by
+  rcases eq_or_ne n 0 with (rfl | h₀)
+  · simp
+  exact Nat.factorization_prime_le_iff_dvd n.squarefreePart_ne_zero h₀ |>.1 fun p hp ↦
+    squarefreePart_factorization _ hp ▸ Nat.mod_le _ _
 
+/-- The square part is the value of `b ^ 2` in the squarefree decomposition of `n = a₀ * b ^ 2`.-/
+def squarePart (n : ℕ) : ℕ := n / n.squarefreePart
 
-theorem Nat.Prime.coprime_iff_ne {p q : ℕ} (hp : p.Prime) (hq : q.Prime) :
-    p.Coprime q ↔ p ≠ q := by
-  rw [hp.coprime_iff_not_dvd, hq.dvd_iff_eq (hp.ne_one), ne_comm]
+theorem squarePart_zero : squarePart 0 = 0 := by simp [squarePart]
 
-theorem Nat.Prime.squarefree {p : ℕ} (hp : p.Prime) :
-    Squarefree p := by
-  exact Irreducible.squarefree hp
-
-theorem Nat.squarefree_squarefreePart (n : ℕ) : Squarefree n.squarefreePart := by
-  apply Squarefree.prod_of_pairwise_isCoprime
-  · have : (n.primeFactors : Set ℕ).Pairwise (IsRelPrime on id)
-    · intro p hp q hq hpq
-      simp [Function.onFun]
-      rwa [←Nat.coprime_iff_isRelPrime, (prime_of_mem_primeFactors hp).coprime_iff_ne
-        (prime_of_mem_primeFactors hq)]
-    apply Set.Pairwise.mono _ this
-    rw [Finset.coe_subset]
-    exact Finset.filter_subset _ _
-  · intro i hi
-    rw [Finset.mem_filter] at hi
-    apply (prime_of_mem_primeFactors hi.left).squarefree
-
-
-#check Nat.prod_factorization_eq_prod_primeFactors
-#check Nat.prod_primeFactors_of_squarefree
-
-theorem Nat.prod_primeFactors_eq {n : ℕ} (hn : n ≠ 0) :
-    ∏ p ∈ n.primeFactors, p ^ (n.factorization p) = n := by
-  conv_rhs => rw [←prod_primeFactorsList hn]
-  rw [Finset.prod_list_count]
-  apply Finset.prod_congr rfl
-  simp
-
-theorem Nat.squarefreePart_mul_squarePart (n : ℕ) (hn : n ≠ 0) : n.squarefreePart * n.squarePart = n := by
-  have : n.squarefreePart = ∏ p ∈ n.primeFactors, p ^ (if Even <| n.factorization p then 0 else 1)
-  · sorry
-  unfold Nat.squarePart
-  rw [this, ←Finset.prod_mul_distrib]
-  have (hn : n ≠ 0) : ∏ p ∈ n.primeFactors, p ^ (n.factorization p) = n := by
-    rw [Nat.prod_primeFactors_eq hn]
-  conv_rhs =>
-    rw [←Nat.prod_primeFactors_eq hn]
-  apply Finset.prod_congr rfl
-  intro p hp
-  rw [←pow_add, ite_add_ite]
-  congr 1
-  rw [ite_eq_iff]
-  by_cases H : Even (n.factorization p)
-  · simp [H]
-  · simp only [H, zero_add, and_true, not_false_eq_true, true_and, false_or]
-    rw [Nat.add_comm, Nat.sub_add_cancel]
-    exact ((prime_of_mem_primeFactors hp).dvd_iff_one_le_factorization hn).mp
-      (dvd_of_mem_primeFactors hp)
+/-- The squarefree decomposition of a natural number. -/
+theorem squarefreePart_mul_squarePart (n : ℕ) : n.squarefreePart * n.squarePart = n :=
+  Nat.mul_div_eq_iff_dvd.2 n.squarefreePart_dvd
 
 end Nat
