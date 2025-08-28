@@ -31,7 +31,7 @@ Is it true that, for any $a \in \mathbb{Z}$, there are infinitely many $n$ such 
 $$\phi(n) | n + a$$?
 -/
 @[category research open, AMS 11]
-theorem erdos_828 : (∀ a : ℤ, Infinite {n : ℕ | ↑(φ n) ∣ n + a}) ↔ answer(sorry) := by
+theorem erdos_828 : (∀ a : ℤ, Set.Infinite {n : ℕ | ↑(φ n) ∣ n + a}) ↔ answer(sorry) := by
   sorry
 
 /--
