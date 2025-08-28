@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/228](https://www.erdosproblems.com/228)
 -/
+
+namespace Erdos228
+
 /--
 Does there exist, for all large $n$, a polynomial $P$ of degree $n$, with coefficients $\pm1$, such
 that $$\sqrt n \ll |P(z)| \ll \sqrt n$$ for all $|z|=1$, with the implied constants independent of
@@ -38,3 +41,5 @@ theorem erdos_228 :
     ∀ z : ℂ, ‖z‖ = 1 →
     ( √n < c₁ * ‖p.eval z‖ ∧ ‖p.eval z‖ < c₂ * √n )) ↔ answer(True) := by
   sorry
+
+end Erdos228

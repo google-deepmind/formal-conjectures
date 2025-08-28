@@ -34,7 +34,7 @@ theorem Real.iteratedLog_eq_zero_of_neg {x : ℝ} (hx : x < 0) :
     Real.iteratedLog x = 0 :=
   Real.iteratedLog_eq_zero_of_le (by linarith)
 
-example : Real.iteratedLog 2 = 1 := by
+theorem iteratedLog_two : Real.iteratedLog 2 = 1 := by
   simp [Real.iteratedLog]
   have : Real.log 2 ≤ 1 := by
     convert Real.log_le_sub_one_of_pos (show 0 < 2 by norm_num)
@@ -42,7 +42,7 @@ example : Real.iteratedLog 2 = 1 := by
   rw [Nat.sInf_def ⟨1, this⟩]
   exact (Nat.find_eq_iff _).2 ⟨this, fun n hn => by simp [Nat.lt_one_iff.1 hn]⟩
 
-example : Real.iteratedLog 4 = 2 := by
+theorem iteratedLog_four : Real.iteratedLog 4 = 2 := by
   simp [Real.iteratedLog]
   have : Real.log^[2] 4 ≤ 1 := by
     have h_ne_zero : Real.log √4 ≠ 0 := by simp; linarith [Real.sqrt_nonneg 4]

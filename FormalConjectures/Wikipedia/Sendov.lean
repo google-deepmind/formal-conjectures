@@ -25,8 +25,11 @@ Tags: Sendov Conjecture, Ilieff's Conjecture.
 
 -/
 
-
 open Polynomial
+
+namespace Sendov
+
+open Sendov
 
 /-- The predicate that a polynomial satisfies the hypotheses of Sendov's conjecture.
 
@@ -72,3 +75,5 @@ It has been shown that Sendov's conjecture holds for polynomials of sufficiently
 theorem sendov_conjecture.variants.eventually_true :
     ∀ᶠ (n : ℕ) in Filter.atTop, n.SatisfiesSendovConjecture := by
   sorry
+
+end Sendov

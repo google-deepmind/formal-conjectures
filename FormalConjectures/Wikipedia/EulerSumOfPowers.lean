@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Euler's_sum_of_powers_conjecture)
 -/
 
+namespace EulerSumOfPowers
+
 /--
 Euler's sum of powers conjecture states that for integers $n > 1$ and $k > 1$,
 if the sum of $n$ positive integers each raised to the $k$-th power equals another integer
@@ -52,3 +54,5 @@ theorem eulers_sum_of_powers_conjecture.false_for_k5 : ¬ (∀ (n b : ℕ) (_ : 
   norm_num
   use ![27, 84, 110, 133]
   decide
+
+end EulerSumOfPowers

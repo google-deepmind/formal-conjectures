@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/137](https://www.erdosproblems.com/137)
 -/
 
+namespace Erdos137
+
 /--
 Let $k\geq 3$. Can the product of any $k$ consecutive integers $N$ ever be powerful? That is,
 must there always exist a prime $p\mid N$ such that $p^2\nmid N$?
@@ -57,3 +59,5 @@ theorem erdos_137.multiple_powerful_factors (m k : ℕ) (hm : 0 < m): ∃ (n₀ 
     ∃ P : Finset ℕ, P.card = k ∧ ∀ p ∈ P, p.Prime ∧
     p ∣ N ∧ ¬ p ^ 2 ∣ N := by
   sorry
+
+end Erdos137

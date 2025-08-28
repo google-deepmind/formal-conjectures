@@ -17,9 +17,9 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Classical
+namespace WrittenOnTheWallII.GraphConjecture2
 
-namespace SimpleGraph
+open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -34,4 +34,4 @@ the neighbourhoods of the vertices of `G`.
 theorem conjecture2 (G : SimpleGraph α) (h : G.Connected) :
   2 * (l G - 1) ≤ Ls G := by sorry
 
-end SimpleGraph
+end WrittenOnTheWallII.GraphConjecture2

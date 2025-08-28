@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Real
 
+namespace Transcendental
+
 /--
 $e + \pi$ is transcendental.
 -/
@@ -81,6 +83,26 @@ theorem pi_pow_pi_pow_pi_transcendental : Transcendental ℚ (π ^ (π ^ π)) :=
   sorry
 
 /--
+$\pi^{\pi^{\pi^\pi}}$ is transcendental.
+-/
+@[category research open, AMS 11 33]
+theorem pi_pow_pi_pow_pi_pow_pi_transcendental : Transcendental ℚ (π ^ (π ^ (π ^ π))) := by
+  sorry
+
+/--
+$\pi^{\pi^{\pi^\pi}}$ is not an integer.
+
+This would follow from $\pi^{\pi^{\pi^\pi}}$ being transcendental,
+but this formulation is of interest in its own right,
+as it could in principle be proven by direct computation.
+
+*Reference:* [YouTube](https://www.youtube.com/watch?v=BdHFLfv-ThQ)
+-/
+@[category research open, AMS 11 33]
+theorem pi_pow_pi_pow_pi_pow_pi_not_integer : ¬ ∃ (n : ℤ), π ^ π ^ π ^ π = n :=
+  sorry
+
+/--
 $\log(\pi)$ is transcendental.
 -/
 @[category research open, AMS 11 33]
@@ -108,3 +130,70 @@ At least one of $\pi + e$ and $\pi e$ is transcendental.
 theorem exp_add_pi_or_exp_add_mul_transcendental :
     Transcendental ℚ (π + rexp 1) ∨ Transcendental ℚ (π * exp 1) := by
   sorry
+
+/--
+At least one of Catalan constant and the Gompertz constant is transcendental.
+-/
+@[category research solved, AMS 11 33]
+theorem transcendental_catalanConstant_or_gompertzConstant :
+    Transcendental ℚ catalanConstant ∨ Transcendental ℚ gompertzConstant := by
+  sorry
+
+/--
+The Catalan constant $G$ is transcendental.
+-/
+@[category research open, AMS 11, AMS 33]
+theorem transcendental_catalanConstant : Transcendental ℚ catalanConstant := by
+  sorry
+
+/--
+The Gompertz constant $\delta$ is transcendental.
+-/
+@[category research open, AMS 33]
+theorem transcendental_gompertzConstant : Transcendental ℚ gompertzConstant := by
+  sorry
+
+/--
+$\Gamma(1/2)$ is transcendental.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
+-/
+@[category research solved, AMS 33]
+theorem transcendental_gamma_one_div_two : Transcendental ℚ (1 / 2 : ℝ).Gamma := by
+  sorry
+
+/--
+$\Gamma(1/3)$ is transcendental.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
+-/
+@[category research solved, AMS 33]
+theorem transcendental_gamma_one_div_three : Transcendental ℚ (1 / 3 : ℝ).Gamma := by
+  sorry
+
+/--
+$\Gamma(1/4)$ is transcendental.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
+-/
+@[category research solved, AMS 33]
+theorem transcendental_gamma_one_div_four : Transcendental ℚ (1 / 4 : ℝ).Gamma := by
+  sorry
+
+/--
+$\Gamma(1/6)$ is transcendental.
+
+[Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
+-/
+@[category research solved, AMS 33]
+theorem transcendental_gamma_one_div_six : Transcendental ℚ (1 / 6 : ℝ).Gamma := by
+  sorry
+
+/--
+$\Gamma(1/n)$ for `n ≥ 2` is transcendental.
+-/
+@[category research open, AMS 33]
+theorem transcendental_gamma_one_div (n : ℕ) (hn : 2 ≤ n) : Transcendental ℚ (1 / n : ℝ).Gamma := by
+  sorry
+
+end Transcendental

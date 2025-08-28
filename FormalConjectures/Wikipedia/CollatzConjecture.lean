@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Collatz_conjecture)
 -/
+
+namespace CollatzConjecture
+
 /--
 Consider the following operation on the natural numbers:
 If the number is even, divide it by two.
@@ -38,3 +41,5 @@ $m$ such that the $m$-th term of the sequence is 1.
 @[category research open, AMS 11 37]
 theorem CollatzConjecture (n : ℕ) (hn : n > 0) : ∃ m : ℕ, collatzStep^[m] n = 1 := by
   sorry
+
+end CollatzConjecture

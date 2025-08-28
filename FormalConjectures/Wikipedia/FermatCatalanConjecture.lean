@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Function
 
+namespace FermatCatalanConjecture
+
 /--
 The set of solutions to the Fermat-Catalan Conjecture, i.e. the
 set of solutions $(a,b,c,m,n,k)$ to the equation $a^m + b^n = c^k$
@@ -66,3 +68,5 @@ theorem fermat_catalan.variants.darmon_granville
     {(a, b, c) : ℕ × ℕ × ℕ | 0 < a ∧ 0 < b ∧ 0 < c ∧ a^m + b^n = c^k ∧
       ({a, b, c} : Set _).Pairwise Nat.Coprime}.Finite := by
   sorry
+
+end FermatCatalanConjecture

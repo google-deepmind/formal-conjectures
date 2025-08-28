@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/672](https://www.erdosproblems.com/672)
 -/
+
+namespace Erdos672
+
 /-- Erdős problem 672 conjectures that the below holds for any $k ≥ 4$ and $l > 1$. -/
 def Erdos672With (k l : ℕ) : Prop :=
   ∀ (s : Finset ℕ), s.card = k → ∃ᵉ (n > 0) (d > 0), n.gcd d = 1 →
@@ -49,3 +52,5 @@ J. Indian Math. Soc. (N.S.) (1951), 135-139. -/
 lemma erdos_672.variants.oblath :
     Erdos672With 5 2 ∧ Erdos672With 3 3 ∧ Erdos672With 3 4 ∧ Erdos672With 3 5 := by
   sorry
+
+end Erdos672

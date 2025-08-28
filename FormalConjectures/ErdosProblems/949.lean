@@ -27,6 +27,8 @@ open Filter
 open scoped Pointwise Topology
 
 
+namespace Erdos949
+
 /--
 Let $S\sub \mathbb{R}$ be a set containing no solutions to $a + b = c$.
 Must there be a set $A\sub \mathbb{R}∖S$ of cardinality continuum such that $A + A \sub A$?
@@ -46,3 +48,5 @@ theorem erdos_949.variants.sidon : (∀ᵉ (S : Set ℝ), IsSidon S →
     ∃ (A : Set ℝ), A ⊆ Set.univ \ S ∧
     Cardinal.mk A = Cardinal.continuum ∧ A + A ⊆ A) ↔ answer(sorry) := by
   sorry
+
+end Erdos949

@@ -16,7 +16,9 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-namespace SimpleGraph
+namespace WrittenOnTheWallII.GraphConjecture58
+
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
 
@@ -32,4 +34,4 @@ theorem conjecture58 (hG : G.Connected) :
     Nat.ceil (G.b / G.l_avg) ≤ G.f := by
   sorry
 
-end SimpleGraph
+end WrittenOnTheWallII.GraphConjecture58

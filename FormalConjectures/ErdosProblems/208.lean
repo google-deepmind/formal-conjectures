@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Real
 
+namespace Erdos208
+
 /-- The sequence of squarefree numbers, denoted by `s` as in Erdős problem 208. -/
 noncomputable def erdos208.s : ℕ → ℕ := Nat.nth Squarefree
 
@@ -55,3 +57,5 @@ In [Er79] Erdős says perhaps $s_{n+1} − s_n ≪ log s_n$, but he is 'very dou
 @[category research open, AMS 11]
 theorem erdos_208.variants.log_bound :
     (fun n ↦ (s (n + 1) - s n : ℝ)) =O[atTop] fun n ↦ log (s n) := by sorry
+
+end Erdos208

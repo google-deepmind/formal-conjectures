@@ -34,8 +34,9 @@ assumption that `p ∤ N`, in order to give an equivalent statement.
 
 -/
 
+namespace ModularityConjecture
 
-open Complex CongruenceSubgroup ModularFormClass
+open Complex CongruenceSubgroup ModularFormClass ModularityConjecture
 open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
 
 noncomputable section
@@ -86,3 +87,7 @@ def ModularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
 @[category research solved, AMS 11]
 theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : ModularityConjecture E := by
   sorry
+
+end
+
+end ModularityConjecture

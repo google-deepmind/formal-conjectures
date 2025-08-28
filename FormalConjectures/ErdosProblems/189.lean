@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Affine EuclideanGeometry
 
+namespace Erdos189
+
 /-- Erdős problem 189 asked whether the below holds for all rectangles. -/
 def Erdos189For (P : ℝ² → ℝ² → ℝ² → ℝ² → Prop) (A : ℝ² → ℝ² → ℝ² → ℝ² → ℝ) :=
     ∀ᵉ (n > 0) (colouring : ℝ² → Fin n), ∃ colour, ∀ area > (0 : ℝ), ∃ a b c d,
@@ -75,3 +77,5 @@ theorem erdos_189.variants.parallelogram :
         line[ℝ, a, d] ∥ line[ℝ, b, c])
       (fun a b c d ↦ dist a b * dist b c * (∡ a b c).sin) := by
   sorry
+
+end Erdos189

@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/873](https://www.erdosproblems.com/873)
 -/
+
+namespace Erdos873
+
 /--Let $a$ be some sequence of natural numbers. We set $F(A,X,k)$ to be the count of
 the number of $i$ such that $[a_i,a_{i+1}, … ,a_{i+k−1}] < X$,
 where the left-hand side is the least common multiple.-/
@@ -34,3 +37,5 @@ Is it true that, for every $ϵ > 0$, there exists some $k$ such that $F(A,X,k) <
 theorem erdos_873 : (∀ᵉ (a : ℕ → ℕ) (ε > (0 : ℝ)), 0 < a 0 → StrictMono a →
     ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal) ↔ answer(sorry) := by
   sorry
+
+end Erdos873

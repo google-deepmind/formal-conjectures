@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/587](https://www.erdosproblems.com/587)
 -/
+
+namespace Erdos587
+
 /--
 `MaxNotSqSum N` is the size of the largest subset `A` of
 `{1,...,N}` such that for all non-empty `S ⊆ A`, the sum
@@ -37,3 +40,5 @@ Nguyen and Vu proved that $|A| \ll N^{1/3} (\log N)^{O(1)}$.
 theorem erdos_587.variants.nguyen_vu : ∃ᵉ (O > 0) (O' > 0),
     ∀ᶠ N in Filter.atTop, (MaxNotSqSum N : ℝ) ≤ O' * N^(1 / 3 : ℝ) * (N : ℝ).log^O := by
   sorry
+
+end Erdos587

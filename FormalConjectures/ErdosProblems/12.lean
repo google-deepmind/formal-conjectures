@@ -27,6 +27,8 @@ open Classical
 -- TODO(see issue https://github.com/google-deepmind/formal-conjectures/issues/40):
 -- add other statements from the file
 
+namespace Erdos12
+
 /--
 A set `A` is "good" if it is infinite and there are no distinct `a,b,c` in `A`
 such that `a ∣ (b+c)` and `b > a`, `c > a`.
@@ -44,6 +46,8 @@ private noncomputable def Set.bdd (A : Set ℕ) (N : ℕ) : Finset ℕ :=
 theorem isGood_example :
     IsGood {p ^ 2 | (p : ℕ) (_ : p ≡ 3 [MOD 4]) (_ : p.Prime)} := by
   sorry
+
+open Erdos12
 
 /--
 Let $A$ be an infinite set such that there are no distinct $a,b,c \in A$
@@ -84,3 +88,5 @@ Erdős and Sárközy proved that such an $A$ must have density 0.
 @[category research solved, AMS 11]
 theorem erdos_12.variants.density_0 (A : Set ℕ) (hA : IsGood A) : A.HasDensity 0 := by
   sorry
+
+end Erdos12

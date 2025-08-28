@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/251](https://www.erdosproblems.com/251)
 -/
 
+namespace Erdos251
+
 /--
 Is
 $$\sum_{n} \frac{p_n}{2^n}$$
@@ -32,3 +34,5 @@ irrationality.
 @[category research open, AMS 11]
 theorem erdos_251 : Irrational (∑' n : ℕ, (Nat.nth Nat.Prime n) / (2 ^ n)) ↔ answer(sorry) := by
   sorry
+
+end Erdos251

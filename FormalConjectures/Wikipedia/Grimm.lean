@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Function
 
+namespace Grimm
+
 /--
 **Grimm's Conjecture**
 If $n, n+1, \dots, n+k-1$ are all composite numbers, then there are $k$ distinct primes $p_i$
@@ -45,3 +47,5 @@ theorem grimm_conjecture_weak (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k)
     (h : ∀ i : Fin k, 1 < n + i ∧ ¬ (n + i).Prime) :
     ∃ ps : Fin k ↪ ℕ,  ∀ i : Fin k, (ps i).Prime ∧ ∃ j : Fin k, ps i ∣ (n + j) := by
   sorry
+
+end Grimm
