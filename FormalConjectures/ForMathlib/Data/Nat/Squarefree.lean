@@ -78,7 +78,6 @@ theorem squarefreePart_factorization (n : ℕ) {p : ℕ} (hp : p.Prime) :
 theorem Prime.squarefree {p : ℕ} (hp : p.Prime) : Squarefree p := Irreducible.squarefree hp
 
 theorem squarefree_squarefreePart (n : ℕ) : Squarefree n.squarefreePart := by
-  rcases eq_or_ne n 0 with (rfl | h₀); exact squarefreePart_zero ▸ squarefree_one
   refine Nat.squarefree_iff_factorization_le_one n.squarefreePart_ne_zero |>.2 fun p ↦ ?_
   by_cases hp : p.Prime
   · linarith [n.squarefreePart_factorization hp, Nat.mod_lt (n.factorization p) two_pos]
