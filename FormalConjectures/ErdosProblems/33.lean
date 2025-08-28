@@ -26,6 +26,8 @@ variable {α : Type} [AddCommMonoid α]
 
 open Classical
 
+open scoped Finset
+
 namespace Erdos33
 
 /-- Given a set of natural numbers `A`, `Set.bdd A N` is the set `{1,...,N} ∩ A`-/
@@ -40,9 +42,9 @@ def AdditiveBasisCondition (A : Set ℕ) : Prop :=
 /-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a` for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research open, AMS 11]
-theorem erdos_33 (c : ℝ): IsLeast
-    { #A | (A : Set ℕ) (h_basis : AdditiveBasisCondition A) ∧
-      Filter.atTop.limsup (fun N => (A.bdd N).card / (N : ℝ)^(1/2)) ≥ c }
+theorem erdos_33 : IsLeast
+    { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
+      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (N : ℝ)^(1/2)) = c}
     answer(sorry) := by
   sorry
 
