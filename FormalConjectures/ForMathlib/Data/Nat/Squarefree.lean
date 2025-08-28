@@ -57,3 +57,5 @@ theorem squarefreePart_of_isSquare {n : ℕ} (hn : IsSquare n) :
   rw [squarefreePart, Finsupp.prod, support_factorization,
     Finset.prod_congr rfl fun p hp ↦ by rw [r.factorization_mul h₀ h₀]]
   simp [← two_mul]
+
+end Nat
