@@ -42,9 +42,12 @@ $$S(k) := \sum_{h=1}^{k-1}S'(h, k)$$
 -/
 def S (k : ℕ) : ℤ := ∑ h ∈ Finset.Ico 1 k, S' h k
 
--- note that in Table 1 in  https://arxiv.org/abs/2501.03234v1, there seems to be an error:
--- 11 appears twice
-example : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
+/--
+Note that in Table 1 in  https://arxiv.org/abs/2501.03234v1, there seems to be an error:
+11 appears twice. The first 10 values of $S$.
+-/
+@[category test, AMS 11]
+theorem S_fst_10 : List.map S (List.range 10) = [0, 0, 1, 2, 5, 4, 7, 10, 11, 8] := by
   unfold S
   decide +kernel
 
@@ -89,7 +92,8 @@ theorem conjecture_4_4 (n : ℕ) : ∀ᶠ (k : ℕ) in Filter.atTop, k.Prime →
 
 /--
 **Conjecture 1.1 → Conjecture 4.4**: If conjecture 1.1 holds true, then this implies a special
-case of conjecture 4.4 where $n = 0$. In this case the lower bound would be 0 (for odd primes).
+case of conjecture 4.4 where $n = 0$. In this case the lower bound for the odd prime $k$
+would be $0$.
 -/
 @[category test, AMS 11]
 theorem conjecture_4_4_def_0 (hc1_1: type_of% conjecture_1_1) : type_of% (conjecture_4_4 0) := by
