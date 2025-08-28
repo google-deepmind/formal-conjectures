@@ -52,9 +52,7 @@ theorem squarefreePart_zero : squarefreePart 0 = 1 := by
 /-- If `n` is squarefree, then its squarefree part is itself. -/
 theorem squarefreePart_of_squarefree {n : ℕ} (hn : Squarefree n) :
     squarefreePart n = n := by
-  by_cases h₀ : n = 0
-  · simp_all only [not_squarefree_zero]
-  nth_rw 2 [← n.factorization_prod_pow_eq_self h₀]
+  nth_rw 2 [← n.factorization_prod_pow_eq_self fun _ ↦ by simp_all]
   simp only [squarefreePart, Finsupp.prod, support_factorization]
   exact Finset.prod_congr rfl fun p hp ↦ by
     rw [factorization_eq_one_of_squarefree hn (mem_primeFactors.1 hp).1 (mem_primeFactors.1 hp).2.1]
@@ -62,10 +60,9 @@ theorem squarefreePart_of_squarefree {n : ℕ} (hn : Squarefree n) :
 /-- The squarefree part of any square is `1`. -/
 theorem squarefreePart_of_isSquare {n : ℕ} (hn : IsSquare n) :
     squarefreePart n = 1 := by
-  by_cases h₀ : n = 0
-  · exact h₀ ▸ squarefreePart_zero
+  rcases eq_or_ne n 0 with (rfl | h₀); exact squarefreePart_zero
   obtain ⟨r, rfl⟩ := hn
-  rw [mul_eq_zero, or_self] at h₀
+  rw [ne_eq, mul_eq_zero, or_self] at h₀
   rw [squarefreePart, Finsupp.prod, support_factorization,
     Finset.prod_congr rfl fun p hp ↦ by rw [r.factorization_mul h₀ h₀]]
   simp [← two_mul]
@@ -81,16 +78,14 @@ theorem squarefreePart_factorization (n : ℕ) {p : ℕ} (hp : p.Prime) :
 theorem Prime.squarefree {p : ℕ} (hp : p.Prime) : Squarefree p := Irreducible.squarefree hp
 
 theorem squarefree_squarefreePart (n : ℕ) : Squarefree n.squarefreePart := by
-  rcases eq_or_ne n 0 with (rfl | h₀)
-  · exact squarefreePart_zero ▸ squarefree_one
+  rcases eq_or_ne n 0 with (rfl | h₀); exact squarefreePart_zero ▸ squarefree_one
   refine Nat.squarefree_iff_factorization_le_one n.squarefreePart_ne_zero |>.2 fun p ↦ ?_
   by_cases hp : p.Prime
   · linarith [n.squarefreePart_factorization hp, Nat.mod_lt (n.factorization p) two_pos]
   · linarith [factorization_eq_zero_of_non_prime n.squarefreePart hp]
 
 theorem squarefreePart_dvd (n : ℕ) : squarefreePart n ∣ n := by
-  rcases eq_or_ne n 0 with (rfl | h₀)
-  · simp
+  rcases eq_or_ne n 0 with (rfl | h₀); simp
   exact Nat.factorization_prime_le_iff_dvd n.squarefreePart_ne_zero h₀ |>.1 fun p hp ↦
     squarefreePart_factorization _ hp ▸ Nat.mod_le _ _
 
