@@ -24,9 +24,6 @@ import FormalConjectures.Util.ProblemImports
 
 open Classical Filter
 
--- TODO(see issue https://github.com/google-deepmind/formal-conjectures/issues/40):
--- add other statements from the file
-
 /--
 A set `A` is "good" if it is infinite and there are no distinct `a,b,c` in `A`
 such that `a ∣ (b+c)` and `b > a`, `c > a`.
