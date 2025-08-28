@@ -24,15 +24,26 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped EuclideanGeometry
 
+namespace Erdos213
+
+def Erdos213For (n : ℕ) : Prop := ∃ S : Set ℝ², S.Finite ∧ S.ncard = n ∧
+    (∀ T : Set ℝ², T ⊆ S ∧ T.ncard = 3 → ¬ Collinear ℝ T) ∧
+    (∀ Q : Set ℝ², Q ⊆ S ∧ Q.ncard = 4 → ¬ EuclideanGeometry.Cospherical Q) ∧
+    (S.Pairwise fun p₁ p₂ => dist p₁ p₂ ∈ Set.range Int.cast)
+
 /--
 Let n ≥ 4. Are there n points in ℝ², no three on a line and no four on a circle,
 such that all pairwise distances are integers?
 -/
 @[category research open, AMS 52]
-theorem erdos_213 : ∀ n : ℕ, n ≥ 4 →
-    (∃ S : Set ℝ², S.Finite ∧ S.ncard = n ∧
-      (∀ T : Set ℝ², T ⊆ S ∧ T.ncard = 3 → ¬ Collinear ℝ T) ∧
-      (∀ Q : Set ℝ², Q ⊆ S ∧ Q.ncard = 4 → ¬ EuclideanGeometry.Cospherical Q) ∧
-      (S.Pairwise fun p₁ p₂ => dist p₁ p₂ ∈ Set.range Int.cast))
+theorem erdos_213 : (∀ n : ℕ, n ≥ 4 → Erdos213For n)
     ↔ answer(sorry) := by
   sorry
+
+/--
+Best construction to date, due to Kreisel and Kurz, has n = 7.
+-/
+@[category research solved, AMS 52]
+theorem erdos_213.variants.KK08 : Erdos213For 7 := by sorry
+
+end Erdos213
