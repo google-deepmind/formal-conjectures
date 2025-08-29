@@ -67,7 +67,7 @@ is not an irrationality sequence.
 @[category research solved, AMS 11]
 theorem erdos_264.variants.ko_tao_neg {a : ℕ → ℕ} (h₁ : StrictMono a) (h₂ : 0 ∉ Set.range a)
     (h₃ : Summable ((1 : ℝ) / a ·))
-    (h₄ : 0 < atTop.liminf fun n ↦ a n ^ 2 * ∑' k : Set.Ioi n, 1 / (a k) ^ 2) :
+    (h₄ : 0 < atTop.liminf fun n ↦ a n ^ 2 * ∑' k : Set.Ioi n, 1 / (a k : ℝ) ^ 2) :
     ¬IsIrrationalitySequence a := by
   sorry
 
