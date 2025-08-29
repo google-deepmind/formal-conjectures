@@ -16,6 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Erdős Problem 264
+
+*Reference:* [erdosproblems.com/264](https://www.erdosproblems.com/264)
+-/
+
 namespace Erdos264
 
 open Filter
@@ -28,7 +34,7 @@ $b_n \neq 0$ for all $n$, the sum
 $$
   \sum \frac{1}{a_n + b_n}
 $$
-is irrational. 
+is irrational.
 Note: there are other possible definitions of this concept.
 -/
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop := ∀ b : ℕ → ℕ, BddAbove (Set.range b) →
@@ -67,7 +73,7 @@ is not an irrationality sequence.
 @[category research solved, AMS 11]
 theorem erdos_264.variants.ko_tao_neg {a : ℕ → ℕ} (h₁ : StrictMono a) (h₂ : 0 ∉ Set.range a)
     (h₃ : Summable ((1 : ℝ) / a ·))
-    (h₄ : 0 < atTop.liminf fun n ↦ a n ^ 2 * ∑' k : Set.Ioi n, 1 / (a k : ℝ) ^ 2) :
+    (h₄ : 0 < atTop.liminf fun n ↦ a n ^ 2 * ∑' k : Set.Ioi n, (1 : ℝ) / a k ^ 2) :
     ¬IsIrrationalitySequence a := by
   sorry
 
@@ -79,7 +85,7 @@ $\lim F(n + 1) / F(n) = \infty$ there exists such an irrationality sequence with
 -/
 @[category research solved, AMS 11]
 theorem erdos_264.variants.ko_tao_pos {F : ℕ → ℕ}
-    (hF : atTop.limsup (fun n ↦ (F (n + 1) : ℝ≥0∞) / F n) = ⊤) :
+    (hF : atTop.Tendsto (fun n ↦ (F (n + 1) : ℝ) / F n) atTop) :
     ∃ a : ℕ → ℕ, IsIrrationalitySequence a ∧ (fun n ↦ (a n : ℝ)) ~[atTop] fun n ↦ (F n : ℝ) := by
   sorry
 
