@@ -41,6 +41,7 @@ import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin
 import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
 import FormalConjectures.ForMathlib.NumberTheory.CoveringSystem
+import FormalConjectures.ForMathlib.NumberTheory.Lacunary
 import FormalConjectures.ForMathlib.NumberTheory.WallSunSunPrimes
 import FormalConjectures.ForMathlib.Order.Filter.Cofinite
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
