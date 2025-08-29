@@ -52,14 +52,14 @@ theorem not_full_of_prime_mod_prime_sq (n : ℕ) (k : ℕ) {p : ℕ} (hp : p.Pri
   rw [Full]
   push_neg
   use p
-  simp  [mem_primeFactors, hp, ne_eq, true_and, reducePow]
+  simp  [mem_primeFactors, hp, ne_eq, true_and]
   constructor
   · rw [←Nat.div_add_mod n (p ^ (k + 1)), h]
     have : p ∣ p ^ (k + 1) := by exact Dvd.intro_left (p.pow k) rfl
-    simp [Nat.dvd_add (dvd_mul_of_dvd_left this (n / (p ^ 2))) (dvd_refl p)]
+    simp
     exact ⟨Dvd.dvd.mul_right this (n / p ^ (k + 1)), fun a ↦ Prime.ne_zero hp⟩
   · intro h
-    simp_all [OfNat.zero_ne_ofNat, Nat.dvd_iff_mod_eq_zero.mp h]
+    simp_all [Nat.dvd_iff_mod_eq_zero.mp h]
     aesop
 
 

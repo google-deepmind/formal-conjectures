@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Logic.Equiv.Fin
+import Mathlib.Logic.Equiv.Fin.Rotate
 
 variable {n : ℕ}
 

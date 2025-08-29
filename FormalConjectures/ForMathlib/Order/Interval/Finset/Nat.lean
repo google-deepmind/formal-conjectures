@@ -19,5 +19,5 @@ import Mathlib.Data.Set.Card
 
 @[simp]
 theorem Nat.ncard_Iio (b : ℕ) : (Set.Iio b).ncard = b := by
-  rw [← Finset.coe_Iio, Set.ncard_coe_Finset]
+  rw [← Finset.coe_Iio, Set.ncard_coe_finset]
   exact Nat.card_Iio _
