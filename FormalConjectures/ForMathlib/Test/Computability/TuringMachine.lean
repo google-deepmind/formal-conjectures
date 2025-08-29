@@ -14,11 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-<<<<<<< HEAD
 import FormalConjectures.ForMathlib.Computability.TuringMachine.Notation
-=======
-import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
->>>>>>> main
 import Mathlib.Tactic.DeriveFintype
 
 --sanity checks for the definition of halting added in `ForMathlib`.
@@ -49,9 +45,8 @@ match l with
 instance : alwaysHaltingMachine.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after zero steps
-  exact ⟨0, by aesop⟩ 
+  exact ⟨0, by aesop⟩
 
-<<<<<<< HEAD
 example : turing_machine% "------" = fun _ _ => none := by
   aesop
 
@@ -81,19 +76,13 @@ example : turing_machine% "1RZ0LZ2LZ_---------" = fun a b =>
       | .B, 2 => none :=
   rfl
 
--- TODO(Paul-Lez): finish proving this
-instance : haltsAfterOne.IsHalting  where
-  halts := by
-    sorry
-=======
 instance : haltsAfterOne.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after one step
-  exact ⟨1, by aesop⟩ 
+  exact ⟨1, by aesop⟩
 
 theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
   apply haltingNumber_def
   · use { q := some Λ.T, tape := ⟨Γ.A, Quotient.mk'' [Γ.A], default⟩}
     rfl
   · rfl
->>>>>>> main
