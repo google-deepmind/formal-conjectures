@@ -26,6 +26,7 @@ variable {α : Type} [AddCommMonoid α]
 -/
 
 open Classical
+open scoped goldenRatio
 
 namespace Erdos33
 
@@ -43,7 +44,7 @@ def AdditiveBasisCondition (A : Set ℕ) : Prop :=
 @[category research open, AMS 11]
 theorem erdos_33 : IsLeast
     { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c}
+      Filter.atTop.limsup (fun N => (Set.bdd A N).card / √N) = c}
     answer(sorry) := by
   sorry
 
@@ -53,7 +54,7 @@ Erdos observed that this value is finite and > 1.
 @[category research solved, AMS 11]
 theorem erdos_33_i :
     1 ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c} := by
+      Filter.atTop.limsup (fun N => (Set.bdd A N).card / √N) = c} := by
   sorry
 
 /--
@@ -61,8 +62,8 @@ The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2
 -/
 @[category research solved, AMS 11]
 theorem erdos_33_Wouter :
-    2 * (Real.rpow ((1 + √5) / 2 ) (5/2)) ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c}
+    2 * (φ ^ ((5 : ℝ) / 2)) ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
+      Filter.atTop.limsup (fun N => (Set.bdd A N).card / √N) = c}
     := by
   sorry
 
