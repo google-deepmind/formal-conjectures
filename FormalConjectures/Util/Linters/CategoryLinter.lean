@@ -40,8 +40,6 @@ private def toCategory
       | _ => return false
   | _ => return #[]
 
-#check Command.declModifiers
-
 /-- The problem category linter checks that every theorem/lemma/example
 has been given a problem category attribute. -/
 def problemStatusLinter : Linter where

@@ -142,7 +142,7 @@ theorem transcendental_catalanConstant_or_gompertzConstant :
 /--
 The Catalan constant $G$ is transcendental.
 -/
-@[category research open, AMS 11, AMS 33]
+@[category research open, AMS 11 33]
 theorem transcendental_catalanConstant : Transcendental ℚ catalanConstant := by
   sorry
 

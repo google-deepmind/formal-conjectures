@@ -9,6 +9,7 @@ A collection of formalized statements of conjectures in
 
 Explore the docs: [Formal Conjectures Documentation](https://google-deepmind.github.io/formal-conjectures/)
 
+Join our [channel on the leanprover Zulip](https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures)
 
 ## Goals
 
