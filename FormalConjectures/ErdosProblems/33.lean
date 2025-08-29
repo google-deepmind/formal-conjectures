@@ -26,8 +26,6 @@ variable {α : Type} [AddCommMonoid α]
 
 open Classical
 
-open scoped Finset
-
 namespace Erdos33
 
 /-- Given a set of natural numbers `A`, `Set.bdd A N` is the set `{1,...,N} ∩ A`-/
@@ -44,7 +42,7 @@ def AdditiveBasisCondition (A : Set ℕ) : Prop :=
 @[category research open, AMS 11]
 theorem erdos_33 : IsLeast
     { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (N : ℝ)^(1/2)) = c}
+      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c}
     answer(sorry) := by
   sorry
 
