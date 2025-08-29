@@ -23,13 +23,13 @@ open Filter
 open scoped ENNReal Asymptotics
 
 /--
-One possible definition of an 'irrationality sequence'. Let $a_n$ be a sequence of
-integers such that for every bounded sequence of integers $b_n$ (with $a_n + b_n \neq 0$ and
-$b_n \neq 0$ for all $n$), the sum
+A sequence $a_n$ of integers is called an irrationality sequence if for every bounded sequence of integers $b_n$ with $a_n + b_n \neq 0$ and
+$b_n \neq 0$ for all $n$, the sum
 $$
   \sum \frac{1}{a_n + b_n}
 $$
-is irrational.
+is irrational. 
+Note: there are other possible definitions of this concept.
 -/
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop := ∀ b : ℕ → ℕ, BddAbove (Set.range b) →
   0 ∉ Set.range (a + b) → 0 ∉ Set.range b → Irrational (∑' n, (1 : ℝ) / (a n + b n))
