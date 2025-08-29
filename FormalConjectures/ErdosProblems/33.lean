@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Data.Real.Basic
 
 variable {α : Type} [AddCommMonoid α]
 
@@ -44,6 +45,26 @@ theorem erdos_33 : IsLeast
     { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
       Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c}
     answer(sorry) := by
+  sorry
+
+/--
+Erdos observed that this value is finite and > 1.
+-/
+@[category research solved, AMS 11]
+theorem erdos_33_i :
+    1 ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
+      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c}
+    := by
+  sorry
+
+/--
+The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0` is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by Wouter van Doorn.
+-/
+@[category research solved, AMS 11]
+theorem erdos_33_Wouter :
+    2 * (Real.rpow ((1 + √5) / 2 ) (5/2)) ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
+      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c}
+    := by
   sorry
 
 end Erdos33
