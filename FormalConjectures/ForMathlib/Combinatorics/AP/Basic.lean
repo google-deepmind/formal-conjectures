@@ -68,7 +68,7 @@ theorem Set.isAPOfLengthWith_pair {α : Type*} [DecidableEq α] [AddCommGroup α
     {a b : α} (hab : a ≠ b) :
     Set.IsAPOfLengthWith {a, b} 2 a (b - a) := by
   simp [IsAPOfLengthWith]
-  rw [Finset.card_insert_of_not_mem (by simpa only [Finset.mem_singleton])]
+  rw [Finset.card_insert_of_notMem (by simpa only [Finset.mem_singleton])]
   simp
   refine Set.ext fun x => ⟨fun h ↦ ?_, fun ⟨n, ⟨_, _⟩⟩ ↦ by interval_cases n <;> simp_all⟩
   cases h with

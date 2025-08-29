@@ -100,16 +100,16 @@ unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
 
-  Lean.withImportModules modulesToImport {} 0 fun env => do
+  Lean.withImportModules modulesToImport {} fun env => do
     let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
     return result
 
 unsafe def main (args : List String) : IO Unit := do
-  let .some file := args.get? 0
+  let .some file := (args[0]? : Option String)
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a welcome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
-  let .some graphFile := args.get? 1
+  let .some graphFile := (args[1]? : Option String)
     | IO.println "Repository growth graph not supplied, generating docs without graph."
   let graphHtml ← IO.FS.readFile graphFile
 

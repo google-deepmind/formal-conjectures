@@ -65,7 +65,7 @@ lemma BoundedDiscCover.bound_nonneg_of_nonempty
     0 < r := by
   apply lt_of_lt_of_le _ bdc.h_bdd
   suffices Nonempty ι by
-    apply tsum_pos bdc.h_summable (fun j => le_of_lt (bdc.h_pos j)) Classical.ofNonempty (bdc.h_pos _)
+    apply Summable.tsum_pos bdc.h_summable (fun j => le_of_lt (bdc.h_pos j)) Classical.ofNonempty (bdc.h_pos _)
   by_contra!
   apply Set.Nonempty.ne_empty hS (Set.eq_empty_of_subset_empty _)
   convert bdc.h_cover
