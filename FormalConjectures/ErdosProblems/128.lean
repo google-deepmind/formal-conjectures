@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 variable {V : Type*} {G : SimpleGraph V} [Fintype V]
 
+namespace Erdos128
+
 /--
 Let G be a graph with n vertices such that every subgraph on ≥ $n/2$
 vertices has more than $n^2/50$ edges. Must G contain a triangle?
@@ -36,3 +38,5 @@ theorem erdos_128 :
         50 * G'.edgeSet.toFinset.card > n^2) → ¬ (G.CliqueFree 3))
     ↔ answer(sorry) := by
   sorry
+
+end Erdos128

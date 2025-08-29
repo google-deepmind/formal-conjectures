@@ -27,6 +27,8 @@ private abbrev S :=
   {(n, m) : ℕ × ℕ | n < m ∧ ((2*n).choose n).primeFactors = ((2*m).choose m).primeFactors}
 
 
+namespace Erdos730
+
 /--
 Are there infinitely many pairs of integers $n < m$ such that $\binom{2n}{n}$
 and $\binom{2m}{m}$ have the same set of prime divisors?
@@ -56,3 +58,5 @@ In every known example $(n, m) ∈ S$, we have $m = n + 1$.
 @[category research open, AMS 11]
 theorem erdos_730.variants.delta_one (n m : ℕ) (h : (n, m) ∈ S) : m = n + 1 := by
   sorry
+
+end Erdos730

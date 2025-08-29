@@ -26,6 +26,8 @@ variable (K : Type*) [Field K]
 variable (G : Type*) [Group G] (hG : Monoid.IsTorsionFree G)
 include hG
 
+namespace Kaplansky
+
 /--
 **The zero-divisor conjecture**
 
@@ -121,3 +123,5 @@ theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
       (K : Type) (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val :=
   have ⟨G, _, _, hG⟩ := counter_unit_conjecture
   ⟨G, _, ‹_›, hG p hp⟩
+
+end Kaplansky

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [Ki85] Kiltinen, J. and Young P. (1985). Goldbach, Lemoine, and a Know/Don't Know Problem.
 -/
 
+namespace Lemoine
+
 def OddPrime (n : ℕ) : Prop :=
   n ≠ 2 ∧ n.Prime
 
@@ -44,3 +46,5 @@ theorem lemoine_conjecture_extension (n : ℕ) (hn : 8 < n) (odd : Odd n) :
     ∃ (p q r s a b : ℕ), OddPrime p ∧ OddPrime q ∧ OddPrime r ∧ OddPrime s ∧
     p + 2 * q = n ∧ 2 + p * q = 2 ^ a + r ∧ 2 * p + q = 2 ^ b + s := by
   sorry
+
+end Lemoine

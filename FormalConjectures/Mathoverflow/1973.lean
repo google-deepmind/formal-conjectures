@@ -27,6 +27,8 @@ Does the 6-sphere $S^6$ admit the structure of a complex manifold?
 asked by user [*Fetchinson0234*](https://mathoverflow.net/users/41312/victor-ramos)
 -/
 
+namespace Mathoverflow1973
+
 /-- The unit `n`-sphere, defined as `Metric.sphere 0 1` in `EuclideanSpace ℝ (Fin (n + 1))`. -/
 abbrev unitSphere (n : ℕ) : Set (EuclideanSpace ℝ (Fin (n + 1))) := Metric.sphere 0 1
 
@@ -39,3 +41,5 @@ theorem mathoverflow_1973 :
     (∃ atlas : ChartedSpace (EuclideanSpace ℂ (Fin 3)) (unitSphere 6),
       IsManifold 𝓘(ℂ, EuclideanSpace ℂ (Fin 3)) 1 (unitSphere 6)) ↔ answer(sorry) := by
   sorry
+
+end Mathoverflow1973

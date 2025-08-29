@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 --TODO(lezeau): add `ArithmeticFunction.IsAdditive` to `ForMathlib`
 
+namespace Erdos897
+
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
 if $(a,b)=1$ such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$.
@@ -97,3 +99,5 @@ theorem erdos_897.variants.parts.ii : (∀ (f : ℕ → ℝ),
     (∀ k p, p.Prime → f (p^k) = f p) ∨ (∀ (k p : ℕ), p.Prime → f (p^k) = k*f p) →
     Filter.atTop.limsup (fun (n : ℕ) => (f (n+1) / f n : EReal)) = ⊤) ↔ answer(sorry) := by
   sorry
+
+end Erdos897

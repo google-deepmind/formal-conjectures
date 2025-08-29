@@ -13,25 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.Algebra.Group.Indicator
 
-import FormalConjectures.Util.ProblemImports
+namespace Set
 
-/-!
-# Brocard's Conjecture
+variable {α R : Type*} [One R] [Zero R] (A : Set α)
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Brocard%27s_conjecture)
--/
+/-- A polymorphic indicator function `𝟙_A` which is `1` on `A` and `0` outside. -/
+noncomputable def indicatorOne : α → R := indicator A (fun _ ↦ 1)
 
-open Finset
+scoped notation "𝟙_" A:max => indicatorOne A
 
-/--
-**Brocard's Conjecture**
-For every `n ≥ 2`, between the squares of the `n`-th and `(n+1)`-th primes,
-there are at least four prime numbers.
--/
-@[category research open, AMS 11]
-theorem brocard_conjecture (n : ℕ) (hn : 1 ≤ n) :
-    letI prev := n.nth Nat.Prime;
-    letI next := (n+1).nth Nat.Prime;
-    4 ≤ ((Ioo (prev^2) (next^2)).filter Nat.Prime).card := by
-  sorry
+end Set

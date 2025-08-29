@@ -27,33 +27,36 @@ sides $a$, $b$, and hypotenuse $c$ such that the area of the triangle is $\frac{
 - [Wikipedia (Tunnell's theorem)](https://en.wikipedia.org/wiki/Tunnell%27s_theorem)
 - [Keith Conrad's note](https://kconrad.math.uconn.edu/blurbs/ugradnumthy/congnumber.pdf)
 -/
+
+namespace CongruentNumber
+
 def congruentNumber (n : ℕ) : Prop :=
   ∃ (a b c : ℚ), a ^ 2 + b ^ 2 = c ^ 2 ∧ n = (2⁻¹ : ℚ) * a * b
 
 /- 1 is not a congruent number. -/
 @[category test, AMS 11]
-example : ¬ congruentNumber 1 := by
+theorem not_congruentNumber_1 : ¬ congruentNumber 1 := by
   sorry
 
 /- 5, 6, 7, and 157 are congruent numbers. -/
 @[category test, AMS 11]
-example : congruentNumber 5 := by
+theorem congruentNumber_5 : congruentNumber 5 := by
   use 3 / 2, 20 / 3, 41 / 6
   norm_num
 
 @[category test, AMS 11]
-example : congruentNumber 6 := by
+theorem congruentNumber_6 : congruentNumber 6 := by
   use 3, 4, 5
   norm_num
 
 @[category test, AMS 11]
-example : congruentNumber 7 := by
+theorem congruentNumber_7 : congruentNumber 7 := by
   use 35 / 12, 24 / 5, 337 / 60
   norm_num
 
 /- Zagier's example -/
 @[category test, AMS 11]
-example : congruentNumber 157 := by
+theorem congruentNumber_157_zagier : congruentNumber 157 := by
   use 411340519227716149383203 / 21666555693714761309610,
     6803298487826435051217540 / 411340519227716149383203,
     224403517704336969924557513090674863160948472041 /
@@ -102,3 +105,5 @@ theorem Tunnell_odd_converse (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
 theorem Tunnell_even_converse (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     2 * (C n).ncard = (D n).ncard → congruentNumber n := by
   sorry
+
+end CongruentNumber

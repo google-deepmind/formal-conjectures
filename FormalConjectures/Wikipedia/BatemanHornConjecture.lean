@@ -29,6 +29,8 @@ https://claude.ai/share/a02c2bba-7f5f-435c-ab0e-58eb5ddc0545
 
 open Polynomial Asymptotics Filter Topology
 
+namespace BatemanHornConjecture
+
 /-- `OmegaP S p` counts the number of residue classes mod `p` where at least one polynomial in `S` vanishes. -/
 noncomputable def OmegaP (polys : Finset ℤ[X]) (p : ℕ) : ℕ :=
   {n : ZMod p | ∃ f ∈ polys, (f.map (Int.castRingHom (ZMod p))).eval n = 0}.ncard
@@ -77,3 +79,5 @@ theorem bateman_horn_conjecture
     (fun x : ℝ => (CountSimultaneousPrimes polys x : ℝ)) ~[atTop]
     (fun x : ℝ => BatemanHornConstant polys * x / (Real.log x) ^ polys.card) := by
   sorry
+
+end BatemanHornConjecture

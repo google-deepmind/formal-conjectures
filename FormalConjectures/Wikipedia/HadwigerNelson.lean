@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 *At least 5 colors are required:* [de Grey 2018](https://arxiv.org/abs/1804.02385)
 -/
 
+namespace HadwigerNelson
+
 /--
 The unit-distance graph in the plane, i.e. the graph whose vertices are points in the plane
 and whose edges connect points that are exactly 1 unit apart.
@@ -64,3 +66,5 @@ for the Hadwiger-Nelson problem.
 theorem HadwigerNelsonAtMostSeven :
     UnitDistancePlaneGraph.chromaticNumber ≤ 7 := by
   sorry
+
+end HadwigerNelson

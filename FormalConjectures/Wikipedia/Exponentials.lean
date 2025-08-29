@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Complex
 
+namespace Exponentials
+
 /--
 **Four exponentials conjecture**
 Let $x_0, x_1$ and $y_0, y_1$ be $\mathbb Q$-linearly independent pairs of complex numbers,
@@ -43,3 +45,5 @@ at least one of the numbers $2^t$ and $3^t$ is transcendental.
 theorem two_pow_three_pow_transcendental (t : ℝ) (h : Irrational t) :
     Transcendental ℚ (2 ^ t : ℝ) ∨ Transcendental ℚ (3 ^ t : ℝ) := by
   sorry
+
+end Exponentials

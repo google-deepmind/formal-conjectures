@@ -32,6 +32,8 @@ Because of indexing, since `n : ℕ` starts at 0, we change the side lengths to 
 asked by user [*Kaveh*](https://mathoverflow.net/users/7507/kaveh)
 -/
 
+namespace Mathoverflow34145
+
 /-- A rectangle is specified by its width, height, starting point, and rotation.
 The rectangle is assumed to start in the lower left corner. For example, the unit square
 `{ (x, y) | 0 ≤ x ≤ 1, 0 ≤ y ≤ 1 }` is specified as `⟨1, 1, (0, 0), 0⟩`  -/
@@ -74,31 +76,15 @@ noncomputable abbrev lbMeasure : Measure (ℝ × ℝ) :=
 @[category test, AMS 51]
 lemma lbMeasure_rigidMotion (start : ℝ × ℝ) (θ : Angle) (s : Set (ℝ × ℝ)) :
     lbMeasure (rigidMotion start θ '' s) = lbMeasure s := by
-  let rotation : (ℝ × ℝ) →ₗ[ℝ] (ℝ × ℝ) :=
-  { toFun p := (p.1 * θ.cos - p.2 * θ.sin, p.1 * θ.sin + p.2 * θ.cos)
-    map_add' p q := by
-      simp only [Prod.fst_add, Prod.snd_add, Prod.mk_add_mk, Prod.mk.injEq]; ring_nf; simp
-    map_smul' c p := by
-      simp only [Prod.smul_fst, smul_eq_mul, Prod.smul_snd, RingHom.id_apply,
-        Prod.smul_mk, Prod.mk.injEq]
-      ring_nf; simp }
-  let translation : (ℝ × ℝ) ≃ (ℝ × ℝ) :=
-  { toFun p := start + p
-    invFun p := (-start) + p
-    left_inv p := by simp
-    right_inv p := by simp }
-  have : rigidMotion start θ = translation ∘ rotation := by
-    ext p <;> unfold rigidMotion translation rotation <;> simp [add_assoc, add_sub_assoc]
-  rw [this, Set.image_comp, Equiv.image_eq_preimage]
-  unfold translation
-  simp only [Equiv.coe_fn_symm_mk, measure_preimage_add, addHaar_image_linearMap]
-  rw [← LinearMap.det_toMatrix (Basis.finTwoProd ℝ)]
-  have : rotation.toMatrix (Basis.finTwoProd ℝ) (Basis.finTwoProd ℝ) =
-      !![θ.cos, -θ.sin; θ.sin, θ.cos] := by
-    ext i j; unfold rotation; fin_cases i <;> fin_cases j <;> simp [LinearMap.toMatrix_apply]
-  rw [this]
-  norm_num
-  rw [← sq, ← sq, Angle.cos_sq_add_sin_sq, abs_one, ENNReal.ofReal_one, one_mul]
+  let α (x : ℝ × ℝ) := (x.1 * θ.cos - x.2 * θ.sin, x.1 * θ.sin + x.2 * θ.cos)
+  trans (Basis.finTwoProd _).addHaar (α '' s)
+  · exact (measure_preimage_add_right _ start _).symm.trans (congr_arg _ (Set.ext <| by
+      simp [rigidMotion, α, add_sub_assoc, add_assoc, Prod.ext_iff, ← eq_sub_iff_add_eq']))
+  · let β := Basis.finTwoProd ℝ
+    trans β.addHaar (β.constr ℝ ![α (β 0), α (β 1)] '' s)
+    · exact congr_arg _ <| Set.image_congr <| by aesop
+    · rw [addHaar_image_linearMap, eq_comm, ← LinearMap.det_toMatrix β, Matrix.det_fin_two]
+      simp [α, β, LinearMap.toMatrix_apply, ← sq]
 
 /-- `lbMeasure` is scaled by `scale`. -/
 @[category test, AMS 51]
@@ -187,3 +173,5 @@ theorem rectangles_pack_square_501_div_500 :
       (∀ n, (c.rect n).toSet ⊆ Rectangle.toSet ⟨501/500, 501/500, (0, 0), 0⟩) ∧
       c.IsPacking) := by
   sorry
+
+end Mathoverflow34145

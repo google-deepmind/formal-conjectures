@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 
+namespace TwinPrimes
+
 /--
 Are there infinitely many primes p such that p + 2 is prime?
 -/
@@ -32,3 +34,5 @@ Are there infinitely many primes p such that p + 2 is prime?
 theorem twin_primes :
     {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite ↔ answer(sorry) := by
   sorry
+
+end TwinPrimes

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [Legendre Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Legendre%27s_conjecture)
 -/
 
+namespace LegendreConjecture
+
 /--
 Does there always exist at least one prime between consecutive perfect squares?
 -/
@@ -32,3 +34,5 @@ theorem legendre_conjecture :
     (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p)
       ↔ answer(sorry) := by
   sorry
+
+end LegendreConjecture
