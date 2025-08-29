@@ -53,8 +53,7 @@ Erdos observed that this value is finite and > 1.
 @[category research solved, AMS 11]
 theorem erdos_33_i :
     1 ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c}
-    := by
+      Filter.atTop.limsup (fun N => (Set.bdd A N).card / (√N : ℝ)) = c} := by
   sorry
 
 /--
