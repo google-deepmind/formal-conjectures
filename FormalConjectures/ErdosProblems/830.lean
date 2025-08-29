@@ -85,7 +85,7 @@ $A(x) \leq x \exp(-(\tfrac{1}{2}+o(1))(\log x\log\log x)^{1/2})$.
 @[category research solved, AMS 11]
 theorem erdos_830.variants.pomerance_stronger :
     ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → ℝ) ∧
-    ∀ᶠ x in atTop, A x ≤ x * rexp (- (1/ 2 + o x) * (x.log * x.log.log )^ (1 / 2 : ℝ)) := by
+    ∀ᶠ x in atTop, A x ≤ x * rexp (- (1/ 2 + o x) * (x.log * x.log.log)^ (1 / 2 : ℝ)) := by
   sorry
 
 end Erdos830
