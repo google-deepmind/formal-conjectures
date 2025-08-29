@@ -25,7 +25,12 @@ import FormalConjectures.Util.ProblemImports
 namespace Conway99Graph
 
 --TODO(firsching): Consider using SimpleGraph.IsSRGWith to formulate the conjecture.
+
+open SimpleGraph
+
 variable {V : Type} {G : SimpleGraph V}
+
+
 @[category undergraduate, AMS 5]
 lemma completeGraphIsClique (s : Finset V) : (⊤ : SimpleGraph V).IsClique s :=
   Pairwise.set_pairwise (fun _ _ a ↦ a) _
@@ -104,7 +109,7 @@ theorem conway9_nonEdgesAreDiagonals : NonEdgesAreDiagonals Conway9 := by
   have ⟨x1, x2⟩ := x
   have ⟨y1, y2⟩ := y
   simp only [Conway9, SimpleGraph.completeGraph_eq_top,
-    SimpleGraph.boxProd_adj, SimpleGraph.top_adj, SimpleGraph.boxProd_neighborFinset]
+    SimpleGraph.boxProd_adj, SimpleGraph.top_adj, SimpleGraph.neighborFinset_boxProd]
   fin_cases x1 <;> fin_cases x2 <;> fin_cases y1 <;> fin_cases y2 <;> decide
 
 @[category API, AMS 5]

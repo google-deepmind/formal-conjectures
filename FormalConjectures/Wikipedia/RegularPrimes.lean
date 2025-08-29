@@ -34,15 +34,10 @@ variable (p : ℕ)
 
 namespace RegularPrimes
 
-/-- TODO: remove this once mathlib is updated as it seems that in this version of mathlib
-we need to do this manually. -/
-instance [hp : Fact p.Prime]  : NumberField (CyclotomicField ⟨p, hp.out.pos⟩ ℚ) :=
-  IsCyclotomicExtension.numberField {⟨p, hp.out.pos⟩} ℚ _
-
 /-- A natural prime number `p` is regular if `p` is coprime with the order of the class group
 of the `p`-th cyclotomic field. -/
 def IsRegularPrime [hp : Fact p.Prime] : Prop :=
-  p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField ⟨p, hp.out.pos⟩ ℚ)
+  p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField p  ℚ)
 
 @[category undergraduate, AMS 11]
 theorem not_isRegularPrime_37_first : ¬ @IsRegularPrime 37 (by decide) := by
