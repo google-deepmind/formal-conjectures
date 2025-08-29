@@ -19,21 +19,21 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 358
 
-*Reference:* [erdosproblems.com/358](https://www.erdosproblems.com/358)
+*Reference:* [erdosproblems.com/357](https://www.erdosproblems.com/357)
 -/
 
 namespace Erdos357
 
 open Filter Asymptotics
 
-def IsInterval {α : Type*} [LE α] (A : Set α) (B : Set α := Set.univ) : Prop :=
-    ∀ᵉ (a ∈ B) (b ∈ B) (c ∈ A),  a ≤ c → c ≤ b → c ∈ B
+/-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
+noncomputable def f (n : ℕ) : ℕ :=
+  sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ StrictMono a ∧
+    ∀ J J' : Finset (Fin k), IsInterval J → IsInterval J' → ∑ x ∈ J, a x = ∑ x ∈ J', a x → J = J'}
 
-noncomputable def f (n : ℕ) : ℕ := sSup {k : ℕ | ∀ I ⊆ Finset.Icc 1 n, I.card = k → ∀ J ⊆ I,
-    ∀ J' ⊆ I, IsInterval (α := ℕ) J I → IsInterval (α := ℕ) J' I → ∑ x ∈ J, x = ∑ x ∈ J', x → J = J'}
-
-/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
-$\sum_{u \le i \le v} a_i$ are distinct. Let $f(n)$ be the maximal such $k$. Is $f(n)=o(n)$? -/
+/-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. Is $f(n)=o(n)$? -/
 @[category research open, AMS 11]
 theorem erdos_357.parts.i : (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
@@ -46,46 +46,57 @@ As usual in this repo, solving this problem is not simply providing a term to re
 together with a proof of the theorem, but providing a *mathematically interesting* answer.
 Note also that there might be other reasonable (and non equivalent) formal statements that capture this
 question.
+Similar remarks hold for the `variants.monotone` formalisations later in this file.
 -/
 
-/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
-$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
-$g$ such that $g = O(f)$ ? -/
+/-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
+How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $g = O(f)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.parts.ii.bigO_version :
     (answer(sorry) : ℕ → ℝ) =O[atTop] (fun n ↦ (f n : ℝ)) := by
   sorry
 
-/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
-$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
-$g$ such that $g = O(f)$ ? -/
+/-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
+How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $g = O(f)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.parts.ii.bigO_version_symm :
     (fun n ↦ (f n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ)  := by
   sorry
 
-/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
-$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
-$g$ such that $f = θ(g)$ ? -/
+/-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
+How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $f = θ(g)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.parts.ii.bigTheta_version :
     (fun n ↦ (f n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
-/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
-$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
-$g$ such that $g = o(f)$ ? -/
+/-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
+How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $g = o(f)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.parts.ii.littleO_version :
     (answer(sorry) : ℕ → ℝ) =o[atTop] (fun n ↦ (f n : ℝ)) := by
   sorry
 
-/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
-$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
-$g$ such that $f = o(g)$ ? -/
+/-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
+How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $f = o(g)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.parts.ii.littleO_version_symm :
     (fun n ↦ (f n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
+  sorry
+
+/-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
+It is known that $f(n) \geq (2+o(1))\sqrt{n}$.
+Source: See comment by Desmond Weisenberg here: https://www.erdosproblems.com/forum/thread/357.
+-/
+@[category research solved, AMS 11]
+theorem erdos_357.variants.weisenberg : ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
+    ∀ᶠ n in atTop, (2 + o n) * √n ≤ f n := by
   sorry
 
 /-- Suppose $A$ is an infinite set such that all finite sums of consecutive terms of $A$ are distinct.
@@ -104,16 +115,20 @@ theorem erdos_357.variants.infinite_set_density (A : ℕ → ℕ) (hA : StrictMo
     (Set.range A).HasDensity 0 := by
   sorry
 
+
 /-- Suppose $A$ is an infinite set such that all finite sums of consecutive terms of $A$ are distinct.
 Then it is conjectured that the sum $\sum_k \frac{1}{a_k}$ converges. -/
 @[category research open, AMS 11]
 theorem erdos_357.variants.infinite_set_sum (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) : Summable (1 / A) := by
+    (hA : ∀ I J : Finset ℕ, IsInterval I → IsInterval J → ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
+    Summable (1 / A) := by
   sorry
 
-noncomputable def g (n : ℕ) : ℕ := sSup {k : ℕ | ∃ a : Fin k → ℕ, (∀ i, a i ∈ Set.Icc 1 n) ∧
-    (∀ I J : Finset (Fin k), IsInterval (α := Fin k) I → IsInterval (α := Fin k) J →
-      ∑ i ∈ I, a i = ∑ j ∈ J, a j → I = J)}
+/-- Let $g(n)$ be the maximal $k$ such that there exist integers $1 \le a_1, \dotsc, a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
+noncomputable def g (n : ℕ) : ℕ :=
+  sSup {k : ℕ | ∃ a : Fin k → ℕ, (Set.range a ⊆ Set.Icc 1 n) ∧ (∀ I J : Finset (Fin k),
+    IsInterval I → IsInterval J → ∑ i ∈ I, a i = ∑ j ∈ J, a j → I = J)}
 
 @[category research open, AMS 11]
 theorem erdos_357.variants.hegyvari : ∃ (o o' : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
@@ -121,6 +136,59 @@ theorem erdos_357.variants.hegyvari : ∃ (o o' : ℕ → ℝ), o =o[atTop] (1 :
       ∀ᶠ n in atTop, (g n : ℝ) ∈ Set.Icc (1 / 3 + o n) (2 / 3 + o' n) := by
   sorry
 
---TODO(Paul-Lez): add non-strict monotone version of problem
+/-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
+noncomputable def h (n : ℕ) : ℕ :=
+  sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ Monotone a ∧
+    ∀ J J' : Finset (Fin k), IsInterval J → IsInterval J' → ∑ x ∈ J, a x = ∑ x ∈ J', a x → J = J'}
+
+/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
+$\sum_{u \le i \le v} a_i$ are distinct. Let $f(n)$ be the maximal such $k$. Is $f(n)=o(n)$? -/
+@[category research open, AMS 11]
+theorem erdos_357.variants.monotone.parts.i : (fun n ↦ (h n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
+  sorry
+
+/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
+$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
+$g$ such that $g = O(f)$ ? -/
+@[category research open, AMS 11]
+theorem erdos_357.variants.monotone.parts.ii.bigO_version :
+    (answer(sorry) : ℕ → ℝ) =O[atTop] (fun n ↦ (h n : ℝ)) := by
+  sorry
+
+/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
+$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
+$g$ such that $g = O(f)$ ? -/
+@[category research open, AMS 11]
+theorem erdos_357.variants.monotone.parts.ii.bigO_version_symm :
+    (fun n ↦ (h n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ)  := by
+  sorry
+
+/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
+$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
+$g$ such that $f = θ(g)$ ? -/
+@[category research open, AMS 11]
+theorem erdos_357.variants.monotone.parts.ii.bigTheta_version :
+    (fun n ↦ (h n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+  sorry
+
+/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
+$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
+$g$ such that $g = o(f)$ ? -/
+@[category research open, AMS 11]
+theorem erdos_357.variants.monotone.parts.ii.littleO_version :
+    (answer(sorry) : ℕ → ℝ) =o[atTop] (fun n ↦ (h n : ℝ)) := by
+  sorry
+
+/-- Let $1 \le a_1 < \dotsc < a_k \le n$ be integers such that all sums of the shape
+$\sum_{u \le i \le v} a_i$ are distinct. How does $f(n)$ grow? Can we find a (good) explicit function
+$g$ such that $f = o(g)$ ? -/
+@[category research open, AMS 11]
+theorem erdos_357.variants.monotone.parts.ii.littleO_version_symm :
+    (fun n ↦ (h n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
+  sorry
+
+
+-- TODO(Paul-Lez): add results from last paragraph of the page.
 
 end Erdos357
