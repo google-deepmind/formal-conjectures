@@ -35,17 +35,17 @@ theorem erdos_828 : (∀ a : ℤ, Set.Infinite {n : ℕ | ↑(φ n) ∣ n + a}) 
   sorry
 
 /--
-Lehmer conjectured that $\phi(n) | n - 1$ if and only if $n$ is prime.
+When $n > 1$, Lehmer conjectured that $\phi(n) | n - 1$ if and only if $n$ is prime.
 -/
 @[category research open, AMS 11]
 theorem erdos_828.variants.lehmer_conjecture : (∀ n > 1, φ n ∣ n - 1 ↔ Prime n) ↔ answer(sorry) := by
   sorry
 
 /--
-It is an easy exercise to show that $\phi(n) | n$ if and only if $n = 2^a 3^b$.
+It is an easy exercise to show that, for $n > 1$, $\phi(n) | n$ if and only if $n = 2^a 3^b$.
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_828.variants.phi_dvd_self_iff_pow2_pow3 : ∀ n, φ n ∣ n ↔ ∃ a b, n = 2^a * 3^b := by
+theorem erdos_828.variants.phi_dvd_self_iff_pow2_pow3 : ∀ n > 1, φ n ∣ n ↔ ∃ a b, n = 2^a * 3^b := by
   sorry
 
 end Erdos828
