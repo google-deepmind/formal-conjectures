@@ -34,7 +34,9 @@ namespace Erdos33
 private noncomputable def Set.bdd (A : Set ℕ) (N : ℕ) : Finset ℕ :=
   Finset.Icc 1 N |>.filter (· ∈ A)
 
-/-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a` for some `a` in `A` and `n ≥ 0`. (Changed 'every large integer' to 'every integer' as for the statement these conditions are equivalent. Also, this was the formulation in the original paper `by Erdos.)
+/-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a` for some `a` in `A` and `n ≥ 0`. -/
+-- Formalisation note: Changed 'every large integer' to 'every integer' as for the statement these 
+-- conditions are equivalent. Also, this was the formulation in the original paper `by Erdos.
 -/
 def AdditiveBasisCondition (A : Set ℕ) : Prop :=
   ∀ (k : ℕ), ∃ (n : ℕ) (a : ℕ), a ∈ A ∧ k = a + n^2
