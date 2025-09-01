@@ -39,7 +39,7 @@ The answer is yes, proved by Ruzsa [Ru78].
 -/
 @[category research solved, AMS 5]
 theorem erdos_899 : (∀ (A : Set ℕ), A.Infinite →
-    Tendsto (fun N => (A.bdd N |>.card : ℝ) / N) atTop (𝓝 0) →
-    Tendsto (fun N => ((A - A : Set ℕ).bdd N |>.card : ℝ) / (A.bdd N).card) atTop atTop) ↔
+    Tendsto (fun N => (A.bddPos N |>.ncard : ℝ) / N) atTop (𝓝 0) →
+    Tendsto (fun N => ((A - A : Set ℕ).bddPos N |>.ncard : ℝ) / (A.bddPos N).ncard) atTop atTop) ↔
     answer(True) := by
   sorry

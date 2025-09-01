@@ -39,10 +39,9 @@ end Real
 
 namespace Set
 
-variable (A : Set ℕ) (x : ℝ)
+#check Finite
 
-local instance : Fintype <| ↑(A ∩ Set.Icc 1 ⌊x⌋₊) :=
-  Set.finite_Icc 1 ⌊x⌋₊ |>.inter_of_right A |>.fintype
+variable (A : Set ℕ) (x : ℝ)
 
 /--
 If `A` be a set of natural numbers and let `x` be real, then
@@ -50,8 +49,12 @@ If `A` be a set of natural numbers and let `x` be real, then
 of elements of `A` that are `≤ x`. Specifically, it is the set
 `{(n, m) | n ∈ A, n ≤ x, m ∈ A, m ≤ x, n < m}`
 -/
-private def bddProdUpper : Finset (ℕ × ℕ) :=
-  (A.bdd ⌊x⌋₊ ×ˢ A.bdd ⌊x⌋₊).filter fun (n, m) => n < m
+@[inline]
+abbrev bddProdUpper : Set (ℕ × ℕ) :=
+  {y ∈ A.bdd ⌊x⌋₊ ×ˢ A.bdd ⌊x⌋₊ | y.fst < y.snd}
+
+instance : Fintype (A.bddProdUpper x) := Set.Finite.fintype <|
+  ((finite_bdd A ⌊x⌋₊).prod (finite_bdd A ⌊x⌋₊)).subset (fun _ ha ↦ ha.left)
 
 end Set
 
@@ -110,6 +113,6 @@ theorem erdos_442.variants.tao :
       ∀ (x : ℝ),
         ∑ n ∈ A.bdd ⌊x⌋₊, (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
-        |∑ nm ∈ A.bdd ⌊x⌋₊ ×ˢ A.bdd ⌊x⌋₊, (1 : ℝ) / nm.1.lcm nm.2| ≤
+        |∑ nm ∈ (A.bddPos ⌊x⌋₊ ×ˢ A.bddPos ⌊x⌋₊).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤
           C * (∑ n ∈ A.bdd ⌊x⌋₊, (1 : ℝ) / n) ^ 2 := by
   sorry

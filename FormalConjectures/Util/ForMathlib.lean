@@ -28,7 +28,6 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.D
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
 import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
-import FormalConjectures.ForMathlib.Data.Nat.Bdd
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Finset
 import FormalConjectures.ForMathlib.Data.Nat.Full
