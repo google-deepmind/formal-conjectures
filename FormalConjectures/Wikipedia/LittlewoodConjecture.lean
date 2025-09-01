@@ -21,14 +21,18 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Littlewood_conjecture)
 -/
+
 open Filter
 
 -- TODO(mercuris): This is a norm on ℝ/ℤ, show this?
+
+namespace LittlewoodConjecture
+
 /--
 The distance to the nearest integer is the function
 $\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$.
 -/
-noncomputable abbrev distToNearestInt (x : ℝ) : ℝ := min |x - ⌊x⌋| |x - ⌈x⌉|
+noncomputable abbrev distToNearestInt (x : ℝ) : ℝ := |x - round x|
 
 /--
 For any two real numbers $\alpha$ and $\beta$,
@@ -40,6 +44,7 @@ to the nearest integer.
 -/
 @[category research solved, AMS 11]
 theorem littlewood_conjecture (α β : ℝ) :
-    atTop.liminf (fun (n : ℕ) => n * distToNearestInt (n * α)
-      * distToNearestInt (n * β)) = 0 := by
+    atTop.liminf (fun (n : ℕ) ↦ n * distToNearestInt (n * α) * distToNearestInt (n * β)) = 0 := by
   sorry
+
+end LittlewoodConjecture

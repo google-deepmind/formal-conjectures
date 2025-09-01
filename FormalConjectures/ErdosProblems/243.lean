@@ -21,9 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/243](https://www.erdosproblems.com/243)
 -/
+
 open Filter
 
 open scoped Topology
+
+namespace Erdos243
 
 /--
 Let $a_1 < a_2 < \dots$ be a sequence of integers such that
@@ -37,3 +40,5 @@ theorem erdos_243 (a : ℕ → ℕ) (ha₀ : StrictMono a)
     (ha₂ : Summable ((1 : ℚ) / a ·)) :
       ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := by
   sorry
+
+end Erdos243

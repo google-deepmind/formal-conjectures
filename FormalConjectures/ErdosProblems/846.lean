@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 open scoped EuclideanGeometry
 
+namespace Erdos846
+
 def Triplewise {α : Type*} (s : Set α) (r : α → α → α → Prop) : Prop :=
   ∀ ⦃x⦄, x ∈ s → ∀ ⦃y⦄, y ∈ s → ∀ ⦃z⦄, z ∈ s → x ≠ y → y ≠ z → x ≠ z → r x y z
 
@@ -50,7 +52,7 @@ def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
 end Prelims
 
 /--
-**Euler Problem 846**
+**Erdős Problem 846**
 Let `A ⊂ ℝ²` be an infinite set for which there exists some `ϵ>0` such that in any subset of `A`
 of size `n` there are always at least `ϵn` with no three on a line.
 Is it true that `A` is the union of a finite number of sets where no three are on a line?
@@ -62,3 +64,5 @@ plane is weakly non-trilinar.
 theorem erdos_846 : (∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
     WeaklyNonTrilinear A) ↔ answer(sorry) := by
   sorry
+
+end Erdos846

@@ -101,17 +101,42 @@ jobs:
           cd docbuild
           lake build FormalConjectures:docs
 
-      - name: Inject stats into index.html
+      - name: Extract documentation
         run: |
-          set -o pipefail
           cd docbuild
-          lake exe overwrite_index ./.lake/build/doc/index.html | tee -a "$GITHUB_STEP_SUMMARY"
+          mkdir out
+          lake query FormalConjectures:docs > out-files.txt
+          sed -i 's|^.*\.lake/build/doc/||' out-files.txt
+          echo "::group::Generated files"
+          cat out-files.txt
+          echo "::endgroup::"
+          rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.9'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0
+
+      - name: Run plotting script
+        run: |
+          python docbuild/scripts/plot_growth.py
+
+      - name: Inject stats into index.html
+        shell: bash
+        run: |
+          cd docbuild
+          lake exe overwrite_index ./out/index.html ./out/file_counts.html | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload docs
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docbuild/.lake/build/doc
+          path: docbuild/out
 
   # Deployment job
   deploy:

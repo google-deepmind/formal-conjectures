@@ -17,6 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 open Real Set
+
 /-!
 # Mathoverflow 347178
 
@@ -24,11 +25,13 @@ open Real Set
 asked by user [*Biagio Ricceri*](https://mathoverflow.net/users/149235/biagio-ricceri)
 -/
 
+namespace Mathoverflow347178
+
 /--
-Let $f\colon ℝ^n → ℝ,  n ≥ 2$ be a $C^1$ function. Is it true that
-$$\sup_{x\in {\bf R}^n}f(x)=\sup_{x\in {\bf R}^n}f(x+\nabla f(x))$$?
+Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Is it true that
+$$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$?
 -/
-@[category research open]
+@[category research open, AMS 26]
 theorem mathoverflow_347178 :
     (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f),
         (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) ∧
@@ -36,17 +39,28 @@ theorem mathoverflow_347178 :
       ↔ answer(sorry) := by
   sorry
 
-@[category research open]
+/--
+Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Is the boundedness of
+$\sup_{x \in \mathbb R^n}f(x)$ and $\sup_{x\in \mathbb R^n} f(x+\nabla f(x))$ equivalent?
+-/
+@[category research open, AMS 26]
 theorem mathoverflow_347178.variants.bounded_iff :
     (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f),
         (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))))
       ↔ answer(sorry) := by
   sorry
 
-@[category research open]
+/--
+Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Does the equality
+$$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$
+hold when both suprema are finite?
+-/
+@[category research open, AMS 26]
 theorem mathoverflow_347178.variants.bounded_only :
     (∀ᵉ (n ≥ 2) (f : EuclideanSpace ℝ (Fin n) → ℝ) (hf : ContDiff ℝ 1 f)
         (h : BddAbove (range f)) (h' : BddAbove (range (fun x ↦ f (x + gradient f x)))),
         (⨆ x, f x) = ⨆ x, f (x + gradient f x))
       ↔ answer(sorry) := by
   sorry
+
+end Mathoverflow347178

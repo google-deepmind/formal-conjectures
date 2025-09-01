@@ -21,7 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/298](https://www.erdosproblems.com/298)
 -/
-/--Does every set `A ⊆ N` of positive density contain some finite `S ⊂ A` such that `∑ n ∈ S, 1 / n = 1`?
+
+namespace Erdos298
+
+/-- Does every set `A ⊆ N` of positive density contain some finite `S ⊂ A` such that
+`∑ n ∈ S, 1 / n = 1`?
 
 The answer is yes, proved by Bloom [Bl21].
 
@@ -33,3 +37,13 @@ https://github.com/b-mehta/unit-fractions -/
 theorem erdos_298 : (∀ (A : Set ℕ), 0 ∉ A → A.HasPosDensity →
     ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) ↔ answer(True) := by
   sorry
+
+/--
+In [Bl21] it is proved under the weaker assumption that `A` only has positive upper density.
+-/
+@[category research solved, AMS 11]
+theorem erdos_298.variants.upper_density : (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
+    ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) ↔ answer(True) := by
+  sorry
+
+end Erdos298

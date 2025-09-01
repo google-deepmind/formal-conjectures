@@ -32,6 +32,8 @@ All known perfect numbers are even. The conjecture states that this is not a coi
 there are no odd perfect numbers.
 -/
 
+namespace OddPerfectNumber
+
 open Nat
 
 /--
@@ -67,3 +69,5 @@ theorem odd_perfect_number.euler_form (n : ℕ) (hn : Odd n) (hp : Perfect n) :
       ¬ p ∣ m ∧
       n = p^α * m^2 := by
   sorry
+
+end OddPerfectNumber

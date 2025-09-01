@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/257](https://www.erdosproblems.com/257)
 -/
+
+namespace Erdos257
+
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set. Is
 $$
@@ -40,7 +43,7 @@ $$
 $$
 where $d(n)$ is the number of divisors of $n$.
 -/
-@[category undergraduate]
+@[category undergraduate, AMS 11]
 theorem erdos_257.variants.tsum_top_eq :
     ∑' n, 1 / (2 ^ n - 1 : ℝ) = ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
@@ -54,7 +57,9 @@ is irrational.
 
 [Er48] Erdős, P., _On arithmetical properties of Lambert series_. J. Indian Math. Soc. (N.S.) (1948), 63-66.
 -/
-@[category research solved]
+@[category research solved, AMS 11]
 theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
+
+end Erdos257

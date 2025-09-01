@@ -21,9 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/786](https://www.erdosproblems.com/786)
 -/
+
 open Filter
 
 open scoped Topology
+
+namespace Erdos786
+
+open Erdos786
 
 /--
 `Nat.IsMulCardSet A` means that `A` is a set of natural numbers that
@@ -50,7 +55,7 @@ $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when
 $r = s$?
 -/
 @[category research open, AMS 11]
-theorem erdos_786.parts.ii : (∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : Tendsto f atTop (𝓝 0)),
+theorem erdos_786.parts.ii : (∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : f =o[atTop] (1 : ℕ → ℝ)),
     ∀ N, A N ⊆ Set.Icc 1 (N + 1) ∧ (1 - f N) * N ≤ (A N).ncard ∧ (A N).IsMulCardSet) ↔
     answer(sorry) := by
   sorry
@@ -82,7 +87,7 @@ the set $A$ of all naturals divisible by exactly one of $p_1, ..., p_k$ has
 density $1 / e - \epsilon$ and has the property that $a_1\cdots a_r = b_1\cdots b_s$
 with $a_i, b_j\in A$ can only hold when $r = s$.
 -/
-@[category research solved]
+@[category research solved, AMS 11]
 theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε ≤ 1) :
     -- TODO(mercuris) : I think we want `k` to be allowed to vary somehow as well, but maybe the exists is sufficient
     ∃ (k : ℕ),
@@ -93,3 +98,5 @@ theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε ≤ 1) :
     { n | ∃! i < k, p i ∣ n }.HasDensity (1 / Real.exp 1 - ε) ∧
       { n | ∃! i < k, p i ∣ n }.IsMulCardSet := by
   sorry
+
+end Erdos786

@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Artin%27s_conjecture_on_primitive_roots)
 -/
+
 open scoped Topology Nat
+
+namespace ArtinPrimitiveRootsConjecture
 
 /--Let `S(a)` be the set of primes such that `a` is a primitive root modulo `p`-/
 private abbrev S (a : ℤ) : Set ℕ :=
@@ -102,3 +105,5 @@ theorem artin_primitive_roots.variants.part_ii
       (ArtinConstant * ∏ p ∈ a_0.primeFactors, p * (p-1 : ℝ) / (p^2 - p - 1))
       {p | p.Prime} := by
   sorry
+
+end ArtinPrimitiveRootsConjecture
