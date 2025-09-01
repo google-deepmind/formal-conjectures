@@ -62,7 +62,9 @@ theorem erdos_33_i :
   sorry
 
 /--
-The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0` is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by Wouter van Doorn.
+The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0` 
+is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by 
+Wouter van Doorn.
 -/
 @[category research solved, AMS 11]
 theorem erdos_33_Wouter :
