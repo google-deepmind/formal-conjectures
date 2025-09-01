@@ -24,7 +24,7 @@ protected theorem Triplewise.eq (hs : s.Triplewise r)
   have := (h <| hs hx hy hz · · ·)
   tauto
 
-protected theorem Triplewise.mono (h : t ⊆ s) (hs : s.Triplewise r) :
+theorem Triplewise.mono (h : t ⊆ s) (hs : s.Triplewise r) :
     t.Triplewise r :=
   fun _ hx _ hy _ hz hxy hyz hxz ↦ hs (h hx) (h hy) (h hz) hxy hyz hxz
 
@@ -43,24 +43,24 @@ theorem triplewise_of_encard_lt (r : α → α → α → Prop)
   · exact encard_le_encard_of_injOn (by simp [MapsTo, hx, hy, hz]) (injOn_id _)
 
 @[simp]
-protected theorem triplewise_empty (r : α → α → α → Prop) :
+theorem triplewise_empty (r : α → α → α → Prop) :
     Set.Triplewise ∅ r :=
   (not_mem_empty · · |>.elim)
 
 @[simp]
-protected theorem triplewise_singleton (r : α → α → α → Prop) :
+theorem triplewise_singleton (r : α → α → α → Prop) :
     Set.Triplewise {x} r := by
   apply triplewise_of_encard_lt
   simp
 
 @[simp]
-protected theorem triplewise_pair
+theorem triplewise_pair
     (r : α → α → α → Prop) : Set.Triplewise {x, y} r := by
   apply triplewise_of_encard_lt
   apply (encard_insert_le {y} x).trans_lt
   norm_num
 
-protected theorem triplewise_insert :
+theorem triplewise_insert :
     (insert x s).Triplewise r ↔ s.Triplewise r ∧
     ∀ y ∈ s, ∀ z ∈ s, x ≠ y → x ≠ z → y ≠ z → r x y z ∧ r y x z ∧ r y z x := by
   refine ⟨fun hxs ↦ ?_, fun ⟨hs, hxs⟩ ↦ ?_⟩
@@ -81,7 +81,7 @@ protected theorem triplewise_insert :
     · exact (hxs w hw y hy hwz.symm hyz.symm hwy).2.2
     exact hs hw hy hz hwy hyz hwz
 
-protected theorem triplewise_insert_of_not_mem (hx : x ∉ s) :
+theorem triplewise_insert_of_not_mem (hx : x ∉ s) :
     (insert x s).Triplewise r ↔ s.Triplewise r ∧
     ∀ y ∈ s, ∀ z ∈ s, y ≠ z → r x y z ∧ r y x z ∧ r y z x := by
   refine Set.triplewise_insert.trans <| and_congr_right' <| forall₄_congr ?_
@@ -99,7 +99,7 @@ protected theorem Triplewise.insert_of_not_mem
     (insert x s).Triplewise r :=
   (Set.triplewise_insert_of_not_mem hx).mpr ⟨hs, h⟩
 
-protected theorem triplewise_set_pred_iff {S : Set α} {P : Set α → Prop} :
+theorem triplewise_set_pred_iff {S : Set α} {P : Set α → Prop} :
     S.Triplewise (P {·, ·, ·}) ↔ ∀ T ⊆ S, T.ncard = 3 → P T := by
   constructor
   · intro h T hT T_ncard
