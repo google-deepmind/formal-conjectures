@@ -22,7 +22,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/245](https://www.erdosproblems.com/245)
 -/
 
-open Filter
+namespace Erdos245
+
+open Filter Erdos245
 
 open scoped Pointwise Topology Classical
 
@@ -71,3 +73,5 @@ theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
     (hf : Tendsto (fun N => (A.bddPos ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
     2 ≤ limsup (fun (N : ℝ) => ((A + A).bddPos ⌊N⌋₊ |>.ncard : EReal) / (A.bddPos ⌊N⌋₊).ncard) atTop := by
   sorry
+
+end Erdos245

@@ -22,27 +22,24 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/340](https://www.erdosproblems.com/340)
 -/
 
-open Filter
+open Filter Finset
 open scoped Real Pointwise
-
-local instance (A : Finset ℕ) : Decidable (IsSidon A.toSet) :=
-  decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
 
 /-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
 such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
 the lower bound is required to avoid `0` being a contender in some cases. -/
-private def greedySidon.go (A : Finset ℕ) (hA : IsSidon A.toSet) (m : ℕ) :
-    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (A ∪ {m'}).toSet} :=
+private def greedySidon.go (A : Finset ℕ) (hA : IsSidon A) (m : ℕ) :
+    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (A ∪ {m'})} :=
   if h : A.Nonempty then
-    ⟨Nat.find (IsSidon.exists_insert_ge h hA m), Nat.find_spec (IsSidon.exists_insert_ge h hA m)⟩
+    ⟨Nat.find (hA.exists_insert_ge h m), Nat.find_spec (hA.exists_insert_ge h m)⟩
   else ⟨m, by simp_all [IsSidon]⟩
 
 @[category test, AMS 5]
-example : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
+theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
   decide
 
 @[category test, AMS 5]
-example : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
+theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
   decide
 
 /-- Main search loop for generating the greedy Sidon sequence. The return value for step `n` is the
@@ -50,7 +47,7 @@ finite set of numbers generated so far, a proof that it is Sidon, and the greate
 the finite set at that point. This is initialised at `{1}`, then `greedySidon.go` is
 called iteratively using the lower bound `max + 1` to find the next smallest Sidon preserving
 number. -/
-private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon A.toSet} × ℕ) :=
+private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon A} × ℕ) :=
   match n with
   | 0 => (⟨{1}, by simp [IsSidon]⟩, 1)
   | k + 1 =>
@@ -65,29 +62,29 @@ sequence `1, 2, 4, 8, 13, 21, 31, ...`. -/
 def greedySidon (n : ℕ) : ℕ := greedySidon.aux n |>.2
 
 @[category test, AMS 5]
-example : greedySidon 0 = 1 := rfl
+theorem greedySidon_zero : greedySidon 0 = 1 := rfl
 
 @[category test, AMS 5]
-example : greedySidon 1 = 2 := by
+theorem greedySidon_one : greedySidon 1 = 2 := by
   decide
 
 @[category test, AMS 5]
-example : greedySidon 2 = 4 := by
+theorem greedySidon_two : greedySidon 2 = 4 := by
   decide
 
 @[category test, AMS 5]
-example : greedySidon 3 = 8 := by
+theorem greedySidon_three : greedySidon 3 = 8 := by
   decide
 @[category test, AMS 5]
-example : greedySidon 4 = 13 := by
-  decide
-
-@[category test, AMS 5]
-example : greedySidon 5 = 21 := by
+theorem greedySidon_four : greedySidon 4 = 13 := by
   decide
 
 @[category test, AMS 5]
-example : greedySidon 10 = 97 := by
+theorem greedySidon_five : greedySidon 5 = 21 := by
+  decide
+
+@[category test, AMS 5]
+theorem greedySidon_ten : greedySidon 10 = 97 := by
   decide +native
 
 /--

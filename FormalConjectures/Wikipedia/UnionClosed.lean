@@ -32,6 +32,8 @@ open Finset
 
 variable {n : Type*} [DecidableEq n] {A : Finset (Finset n)}
 
+namespace UnionClosed
+
 abbrev IsUnionClosed (A : Finset (Finset n)) : Prop :=
   ∀ᵉ (X ∈ A) (Y ∈ A), X ∪ Y ∈ A
 
@@ -196,3 +198,5 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     simpa using hc
   have : (0 : ℝ) < 0 := by linear_combination this + hi
   simp at this
+
+end UnionClosed

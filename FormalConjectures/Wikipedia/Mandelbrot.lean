@@ -33,6 +33,8 @@ The first two conjectures are related in that the former implies the latter.
 
 open Topology Set Function Filter Bornology Metric MeasureTheory
 
+namespace Mandelbrot
+
 /-- The Multibrot set of power `n` is the set of all parameters `c : ℂ` for which `0` does not
 escape to infinity under repeated application of `z ↦ z ^ n + c`. -/
 def multibrotSet (n : ℕ) : Set ℂ :=
@@ -119,19 +121,19 @@ def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
 
 /-- For example, `0` is part of an attracting `2`-cycle of `z ↦ z ^ 2 - 1`. -/
 @[category test, AMS 37]
-example : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
+theorem isAttractingCycle_z_squared_minus_one : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
   ⟨by simp [IsPeriodicPt, IsFixedPt], by fun_prop, by simp [deriv_comp]⟩
 
 /-- On the other hand, while `2` is part of a `1`-cycle of `z ↦ z ^ 2 - 2`, that cycle is not
 attracting. -/
 @[category test, AMS 37]
-example : ¬ IsAttractingCycle (fun z ↦ z ^ 2 - 2) 1 2 := by
+theorem not_isAttractingCycle_z_squared_minus_two : ¬ IsAttractingCycle (fun z ↦ z ^ 2 - 2) 1 2 := by
   simp [IsAttractingCycle, show (1 : ℝ) ≤ 2 * 2 by norm_num]
 
 /-- No function has an attracting cycle of period `0`. This is important in that it means we don't
 need to require `0 < n` in the conjectures below. -/
 @[category test, AMS 37]
-example (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttractingCycle f 0 z := by
+theorem no_attractingCycle_period_zero (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttractingCycle f 0 z := by
   simp [IsAttractingCycle]
 
 /-- The density of hyperbolicity conjecture, stating that the set of all parameters `c` for which
@@ -152,7 +154,7 @@ theorem density_of_hyperbolicity_general_exponent {n : ℕ} (hn : 2 ≤ n) :
 /-- The boundary of any Multibrot set is measurable because it is closed, so it makes sense to
 ask about its area. -/
 @[category test, AMS 37]
-example {n : ℕ} : MeasurableSet (frontier (multibrotSet n)) := isClosed_frontier.measurableSet
+theorem multibrotSet_frontier_measurable {n : ℕ} : MeasurableSet (frontier (multibrotSet n)) := isClosed_frontier.measurableSet
 
 /-- The boundary of the Mandelbrot set is conjectured to have zero area. -/
 @[category research open, AMS 37]
@@ -165,3 +167,5 @@ holds for them. -/
 @[category research open, AMS 37]
 theorem volume_frontier_multibrotSet_eq_zero {n : ℕ} : volume (frontier (multibrotSet n)) = 0 := by
   sorry
+
+end Mandelbrot

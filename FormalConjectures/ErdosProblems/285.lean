@@ -26,6 +26,8 @@ open Filter
 
 open scoped Topology Real
 
+namespace Erdos285
+
 /--
 Let $f(k)$ be the minimal value of $n_k$ such that there exist $n_1 < n_2 < \cdots < n_k$ with
 $$
@@ -71,3 +73,5 @@ theorem erdos_285.variants.lb (f : ℕ → ℕ)
     ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
       ∀ k ∈ S, (1 + o k) * rexp 1 / (rexp 1 - 1) * (k + 1) ≤ f k := by
   sorry
+
+end Erdos285

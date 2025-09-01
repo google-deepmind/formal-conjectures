@@ -38,6 +38,8 @@ Turing machine non-termination has been formally proved in Rocq, we indicate it 
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
 
+namespace BusyBeaverMathOlympiad
+
 /--
 [BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch))
 
@@ -203,3 +205,5 @@ theorem beaver_math_olympiad_problem_5
     (b_rec : ∀ n, b (n+1) = if f (a n) ≤ b n then b n - f (a n) else 3 * b n + a n + 5) :
     (∃ i, b i = (f (a i)) - 1) ↔ answer(sorry) := by
   sorry
+
+end BusyBeaverMathOlympiad

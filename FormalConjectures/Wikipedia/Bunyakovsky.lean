@@ -23,6 +23,8 @@ open Polynomial
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Bunyakovsky_conjecture)
 -/
 
+namespace Bunyakovsky
+
 /--
 **Bunyakovsky conjecture**
 If a polynomial $f$ over integers satisfies both Schinzel and Bunyakovsky conditions,
@@ -33,3 +35,5 @@ theorem bunyakovsky_conjecture (f : ℤ[X]) :
     BunyakovskyCondition f ∧ SchinzelCondition {f} →
     Infinite {n : ℕ | (f.eval (n : ℤ)).natAbs.Prime} := by
   sorry
+
+end Bunyakovsky

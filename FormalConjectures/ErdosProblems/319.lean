@@ -26,6 +26,8 @@ open Filter
 
 open scoped Topology Finset Real
 
+namespace Erdos319
+
 /-- What is the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
@@ -122,3 +124,5 @@ theorem erdos_319.variants.lb : ∃ (o : ℕ → ℝ), (o =o[atTop] (1 : ℕ →
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } := by
   sorry
+
+end Erdos319

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Function Set Filter
 
+namespace Erdos329
+
 /--
 The partial density of a Sidon set `A` up to `N`, normalized by dividing by `√N` instead of `N`.
 This measures how close the set comes to the optimal density for Sidon sets.
@@ -88,7 +90,7 @@ then the maximum density would be 1.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_329.of_sub_perfectDifferenceSet :
-    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon A → ∃ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) →
     sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1 := by
   sorry
@@ -100,7 +102,7 @@ can be embedded in a perfect difference set.
 @[category research open, AMS 5 11]
 theorem erdos_329.converse_implication :
     (sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1) →
-    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon A → ∃ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) := by
   sorry
 
@@ -126,3 +128,5 @@ It is possible to construct a Sidon set with positive density.
 @[category undergraduate, AMS 5 11]
 theorem exists_sidon_pos_density : ∃ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
   sorry
+
+end Erdos329

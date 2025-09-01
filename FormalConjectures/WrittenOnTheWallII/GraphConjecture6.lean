@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 
 open Classical
 
-namespace SimpleGraph
+namespace WrittenOnTheWallII.GraphConjecture6
+
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -34,4 +36,4 @@ theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connec
     1 + n G - m G - a G ≤ Ls G := by
   sorry
 
-end SimpleGraph
+end WrittenOnTheWallII.GraphConjecture6

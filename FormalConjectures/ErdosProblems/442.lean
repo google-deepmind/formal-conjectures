@@ -22,20 +22,20 @@ open scoped Topology
 *Reference:* [erdosproblems.com/442](https://www.erdosproblems.com/442)
 -/
 
+namespace Erdos442
+
 open Filter Classical
 
 noncomputable section
 
-section Prelims
+open Filter Erdos442
 
-namespace Real
+section Prelims
 
 /--
 The function $\operatorname{Log} x := \max\{log x, 1\}$.
 -/
-def maxLogOne (x : ℝ) := max x.log 1
-
-end Real
+def Real.maxLogOne (x : ℝ) := max x.log 1
 
 namespace Set
 
@@ -116,3 +116,7 @@ theorem erdos_442.variants.tao :
         |∑ nm ∈ (A.bddPos ⌊x⌋₊ ×ˢ A.bddPos ⌊x⌋₊).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤
           C * (∑ n ∈ A.bdd ⌊x⌋₊, (1 : ℝ) / n) ^ 2 := by
   sorry
+
+end
+
+end Erdos442
