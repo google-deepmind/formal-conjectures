@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Analysis.SpecificLimits.Basic
-import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
-import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
-import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
+import Mathlib.Order.Interval.Finset.Defs
 
-variable {β : Type*} [Preorder β] --[LocallyFiniteOrderBot β]
+variable {β : Type*} [Preorder β]
 variable (S : Set β) (b : β) (A : Set β := .univ)
 
 /--
@@ -27,7 +24,7 @@ Given a set `S` and an element `b` in an order `β`, where all intervals bounded
 `Set.bdd S b A` is the intersection `S ∩ A ∩ Iio b`.
 -/
 @[inline]
-noncomputable abbrev Set.bdd (S : Set β) (b : β) (A : Set β := .univ) : Set β :=
+abbrev Set.bdd (S : Set β) (b : β) (A : Set β := .univ) : Set β :=
   S ∩ A ∩ Set.Iio b
 
 /--
@@ -35,7 +32,7 @@ Given a set `S` and an element `b` in an order `β` with bottom element `⊥`, w
 bounded above are finite, `Set.bddPos S b A` is the intersection `S ∩ A ∩ Ioc ⊥ b`.
 -/
 @[inline]
-noncomputable abbrev Set.bddPos [OrderBot β] (S : Set β) (b : β) (A : Set β := .univ) : Set β :=
+abbrev Set.bddPos [OrderBot β] (S : Set β) (b : β) (A : Set β := .univ) : Set β :=
   S ∩ A ∩ (Set.Ioc ⊥ b)
 
 theorem Set.finite_bdd [LocallyFiniteOrderBot β] (S : Set β) (b : β) (A : Set β := .univ) :
