@@ -25,13 +25,18 @@ import FormalConjectures.Util.ProblemImports
 universe u
 variable {V : Type u}
 
+namespace Erdos944
+
+
+/--
+The predicate that graph $G$ with chromatic number $k$ is such that every vertex is critical, yet every critical set of edges has size $>r$
+-/
 def SimpleGraph.IsErdos944 (G : SimpleGraph V) (k r : ℕ) : Prop :=  G.IsCritical k ∧
     (∀ (edges : Set (Sym2 V)), G.IsCriticalEdges edges → r < edges.ncard)
 
 /--
 Let $k \ge 4$ and $r\ge 1$. Must there exist a graph $G$ with chromatic number $k$
  such that every vertex is critical, yet every critical set of edges has size $>r$?
-
 -/
 @[category research open, AMS 11]
 theorem erdos_944 :
@@ -98,6 +103,8 @@ yet every critical set of edges has size $>r$.
 [MaSt25] Martinsson, Anders and Steiner, Raphael, Vertex-critical graphs far from edge-criticality. Combin. Probab. Comput. (2025), 151--157
 -/
 @[category research solved, AMS 11]
-theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∃ k₀, ∀ k ≥ k₀,
+theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∀ᶠ k in Filter.atTop,,
     ∃ (G : SimpleGraph V), G.IsErdos944 k r := by
   sorry
+  
+  end Erdos944
