@@ -27,6 +27,7 @@ variable {V : Type u}
 
 namespace Erdos944
 
+open Erdos944
 
 /--
 The predicate that graph $G$ with chromatic number $k$ is such that every vertex is critical, yet every critical set of edges has size $>r$
@@ -106,5 +107,5 @@ yet every critical set of edges has size $>r$.
 theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∀ᶠ k in Filter.atTop,,
     ∃ (G : SimpleGraph V), G.IsErdos944 k r := by
   sorry
-  
+
   end Erdos944
