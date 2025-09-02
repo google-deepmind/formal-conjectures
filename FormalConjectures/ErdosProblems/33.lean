@@ -67,7 +67,7 @@ is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by
 Wouter van Doorn.
 -/
 @[category research solved, AMS 11]
-theorem erdos_33_Wouter :
+theorem erdos_33.variants.vanDoorn :
     2 * (φ ^ ((5 : ℝ) / 2)) ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
       Filter.atTop.limsup (fun N => (Set.bdd A N).card / √N) = c}
     := by
