@@ -33,16 +33,12 @@ def NtupleCondition (A : Set α) (n : ℕ) : Prop := ∀ (I : Finset α) (J : Fi
   I.toSet ⊆ A ∧ J.toSet ⊆ A ∧ I.card = n ∧ J.card = n ∧
   (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J
 
-/-- Given a set of natural numbers `A`, `Set.bdd A N` is the set `{1,...,N} ∩ A`-/
-private noncomputable def Set.bdd (A : Set ℕ) (N : ℕ) : Finset ℕ :=
-    Finset.Icc 1 N |>.filter (· ∈ A)
-
 /--
 Let `A ⊆ ℕ` be an infinite set such that the triple sums `a + b + c` are all distinct for `a, b, c` in `A` (aside from the trivial coincidences). Is it true that `lim inf n → ∞ |A ∩ {1, …, N}| / N^(1/3) = 0`?
 -/
 @[category research open, AMS 11]
-theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.Infinite) : 
-    Filter.atTop.liminf (fun N => (A.bdd N).card / (N : ℝ)^(1/3)) = 0 := by
+theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.Infinite) :
+    Filter.atTop.liminf (fun N => (A.interIoc 1 N).ncard / (N : ℝ)^(1/3)) = 0 := by
   sorry
 
 /--
@@ -50,6 +46,6 @@ Erdős proved the following pairwise version.
 Let `A ⊆ ℕ` be an infinite set such that the pairwise sums `a + b` are all distinct for `a, b` in `A` (aside from the trivial coincidences). Is it true that `lim inf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research solved, AMS 11]
-theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) : 
-    Filter.atTop.liminf (fun N => (A.bdd N).card / (N : ℝ).sqrt) = 0 := by
+theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
+    Filter.atTop.liminf (fun N => (A.interIoc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry

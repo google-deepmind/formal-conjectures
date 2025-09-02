@@ -30,10 +30,6 @@ namespace Erdos899
 
 open Erdos899
 
-/-- If `A` is a set of natural numbers and `N : ℕ`, then `bdd A N` is the
-set `{ n ∈ A | 1 ≤ n ≤ N }`. -/
-def Set.bdd (A : Set ℕ) (N : ℕ) := A ∩ Set.Icc 1 N
-
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
 Is it true that
@@ -47,8 +43,8 @@ The answer is yes, proved by Ruzsa [Ru78].
 -/
 @[category research solved, AMS 5]
 theorem erdos_899 : (∀ (A : Set ℕ), A.Infinite →
-    Tendsto (fun N => (A.bddPos N |>.ncard : ℝ) / N) atTop (𝓝 0) →
-    Tendsto (fun N => ((A - A : Set ℕ).bddPos N |>.ncard : ℝ) / (A.bddPos N).ncard) atTop atTop) ↔
+    Tendsto (fun N => (A.interIoc 1 N |>.ncard : ℝ) / N) atTop (𝓝 0) →
+    Tendsto (fun N => ((A - A : Set ℕ).interIoc 1 N |>.ncard : ℝ) / (A.interIoc 1 N).ncard) atTop atTop) ↔
     answer(True) := by
   sorry
 

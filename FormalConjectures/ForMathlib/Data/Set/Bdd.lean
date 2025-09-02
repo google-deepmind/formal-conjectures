@@ -17,50 +17,51 @@ limitations under the License.
 import Mathlib.Order.Interval.Finset.Defs
 
 variable {β : Type*} [Preorder β]
-variable (S : Set β) (b : β) (A : Set β := .univ)
+variable (S : Set β) (a b : β)
 
 /--
 Given a set `S` and an element `b` in an order `β`, where all intervals bounded above are finite,
 `Set.bdd S b A` is the intersection `S ∩ A ∩ Iio b`.
 -/
 @[inline]
-abbrev Set.bdd (S : Set β) (b : β) (A : Set β := .univ) : Set β :=
-  S ∩ A ∩ Set.Iio b
+abbrev Set.interIio (S : Set β) (b : β) : Set β :=
+  S ∩ Set.Iio b
 
 /--
 Given a set `S` and an element `b` in an order `β` with bottom element `⊥`, where all intervals
 bounded above are finite, `Set.bddPos S b A` is the intersection `S ∩ A ∩ Ioc ⊥ b`.
 -/
 @[inline]
-abbrev Set.bddPos [OrderBot β] (S : Set β) (b : β) (A : Set β := .univ) : Set β :=
-  S ∩ A ∩ (Set.Ioc ⊥ b)
+abbrev Set.interIoc [OrderBot β] (S : Set β) (a b : β) : Set β :=
+  S ∩ (Set.Ioc a b)
 
-theorem Set.finite_bdd [LocallyFiniteOrderBot β] (S : Set β) (b : β) (A : Set β := .univ) :
-    (S.bdd b A).Finite :=
-  Set.finite_Iio b |>.inter_of_right (S ∩ A)
+variable {S b} in
+theorem Set.finite_interIio [LocallyFiniteOrderBot β] :
+    (S.interIio b).Finite :=
+  Set.finite_Iio b |>.inter_of_right S
 
-noncomputable instance [LocallyFiniteOrderBot β] : Fintype (S.bdd b A) :=
-  Set.finite_bdd S b A |>.fintype
+noncomputable instance [LocallyFiniteOrderBot β] : Fintype (S.interIio b) :=
+  Set.finite_interIio.fintype
 
-theorem Set.finite_bddPos [LocallyFiniteOrder β] [OrderBot β] (S : Set β) (b : β) (A : Set β := .univ) :
-    (S.bddPos b A).Finite :=
-  Set.finite_Ioc ⊥ b |>.inter_of_right (S ∩ A)
+variable {S a b} in
+theorem Set.finite_interIoc [LocallyFiniteOrder β] [OrderBot β] :
+    (S.interIoc a b).Finite :=
+  Set.finite_Ioc a b |>.inter_of_right S
 
-noncomputable instance [LocallyFiniteOrder β] [OrderBot β] : Fintype (S.bddPos b A) :=
-  Set.finite_bddPos S b A |>.fintype
-
-@[simp]
-theorem Set.bdd_univ (b : β) (A : Set β) : Set.bdd .univ b A = A ∩ Set.Iio b := by
-  rw [Set.bdd, univ_inter]
+noncomputable instance [LocallyFiniteOrder β] [OrderBot β] : Fintype (S.interIoc a b) :=
+  Set.finite_interIoc.fintype
 
 @[simp]
-theorem Set.bdd_univ' (b : β) : Set.univ.bdd b = Set.Iio b := by
-  rw [Set.bdd_univ, univ_inter]
+theorem Set.interIio_univ (b : β) : Set.interIio .univ b = Set.Iio b := by
+  rw [Set.interIio, univ_inter]
 
 @[simp]
-theorem Set.bdd_empty (b : β) (A : Set β) : Set.bdd ∅ b A = ∅ := by
-  rw [Set.bdd, empty_inter, empty_inter]
+theorem Set.interIio_univ' (b : β) : Set.univ.interIio b = Set.Iio b := by
+  rw [Set.interIio_univ]
 
-theorem Set.bdd_mono {S T : Set β} (h : S ⊆ T) (b : β) (A : Set β := .univ) :
-    S.bdd b A ⊆ T.bdd b A :=
-  Set.inter_subset_inter_left _ (Set.inter_subset_inter_left _ h)
+@[simp]
+theorem Set.interIio_empty (b : β) : Set.interIio ∅ b = ∅ := by
+  rw [Set.interIio, empty_inter]
+
+theorem Set.interIio_mono {S T : Set β} (h : S ⊆ T) (b : β) : S.interIio b ⊆ T.interIio b :=
+  Set.inter_subset_inter_left _ h

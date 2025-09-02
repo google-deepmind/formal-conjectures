@@ -53,7 +53,7 @@ $\liminf \frac{|A \cap \{1, \dotsc, N\}|}{N^{1/2}} > 0$ ?
 @[category research open, AMS 11]
 theorem erdos_12.parts.i : (∃ (A : Set ℕ), IsGood A ∧
     (0 : ℝ) < Filter.atTop.liminf
-      (fun N => (A.bddPos N).ncard / (N : ℝ).sqrt)) ↔ answer(sorry) := by
+      (fun N => (A.interIoc 1 N).ncard / (N : ℝ).sqrt)) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -64,7 +64,7 @@ with $|A \cap \{1, \dotsc, N\}| < N^{1−c}$?
 -/
 @[category research open, AMS 11]
 theorem erdos_12.parts.ii : (∃ c > (0 : ℝ), ∀ (A : Set ℕ), IsGood A →
-  {N : ℕ| (A.bddPos N).ncard < (N : ℝ) ^ (1 - c)}.Infinite) ↔ answer(sorry) := by
+  {N : ℕ| (A.interIoc 1 N).ncard < (N : ℝ) ^ (1 - c)}.Infinite) ↔ answer(sorry) := by
   sorry
 
 /--
