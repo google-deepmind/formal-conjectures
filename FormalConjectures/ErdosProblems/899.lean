@@ -43,8 +43,8 @@ The answer is yes, proved by Ruzsa [Ru78].
 -/
 @[category research solved, AMS 5]
 theorem erdos_899 : (∀ (A : Set ℕ), A.Infinite →
-    Tendsto (fun N => (A.interIoc 1 N |>.ncard : ℝ) / N) atTop (𝓝 0) →
-    Tendsto (fun N => ((A - A : Set ℕ).interIoc 1 N |>.ncard : ℝ) / (A.interIoc 1 N).ncard) atTop atTop) ↔
+    Tendsto (fun N => (A.interIcc 1 N |>.ncard : ℝ) / N) atTop (𝓝 0) →
+    Tendsto (fun N => ((A - A : Set ℕ).interIcc 1 N |>.ncard : ℝ) / (A.interIcc 1 N).ncard) atTop atTop) ↔
     answer(True) := by
   sorry
 

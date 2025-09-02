@@ -32,8 +32,8 @@ Given a set `S` and an element `b` in an order `β` with bottom element `⊥`, w
 bounded above are finite, `Set.bddPos S b A` is the intersection `S ∩ A ∩ Ioc ⊥ b`.
 -/
 @[inline]
-abbrev Set.interIoc [OrderBot β] (S : Set β) (a b : β) : Set β :=
-  S ∩ (Set.Ioc a b)
+abbrev Set.interIcc [OrderBot β] (S : Set β) (a b : β) : Set β :=
+  S ∩ (Set.Icc a b)
 
 variable {S b} in
 theorem Set.finite_interIio [LocallyFiniteOrderBot β] :
@@ -44,12 +44,12 @@ noncomputable instance [LocallyFiniteOrderBot β] : Fintype (S.interIio b) :=
   Set.finite_interIio.fintype
 
 variable {S a b} in
-theorem Set.finite_interIoc [LocallyFiniteOrder β] [OrderBot β] :
-    (S.interIoc a b).Finite :=
-  Set.finite_Ioc a b |>.inter_of_right S
+theorem Set.finite_interIcc [LocallyFiniteOrder β] [OrderBot β] :
+    (S.interIcc a b).Finite :=
+  Set.finite_Icc a b |>.inter_of_right S
 
-noncomputable instance [LocallyFiniteOrder β] [OrderBot β] : Fintype (S.interIoc a b) :=
-  Set.finite_interIoc.fintype
+noncomputable instance [LocallyFiniteOrder β] [OrderBot β] : Fintype (S.interIcc a b) :=
+  Set.finite_interIcc.fintype
 
 @[simp]
 theorem Set.interIio_univ (b : β) : Set.interIio .univ b = Set.Iio b := by
