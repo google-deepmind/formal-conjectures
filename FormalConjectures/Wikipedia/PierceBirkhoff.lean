@@ -31,7 +31,7 @@ The conjecture has been proved for `n = 1` and `n = 2` by Louis Mahé.
 
 /--
 A set is semi-algebraic in `ℝⁿ` if it can be described by a finite union of sets defined by
-of multivariate polynomial equations and inequalities.
+multivariate polynomial equations and inequalities.
 -/
 def IsSemiAlgebraic {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
   ∃ (ι : Type) (p : ι → MvPolynomial (Fin n) ℝ), Finite ι ∧
@@ -86,8 +86,7 @@ The Pierce-Birkhoff conjecture states that for every real piecewise-polynomial f
 @[category research open, AMS 13]
 theorem pierce_birkhoff_conjecture {n : ℕ} (f : EuclideanSpace ℝ (Fin n) → ℝ)
     (hf : IsPiecewiseMvPolynomial f) :
-    ∃ (ι κ : Type) (hι : Fintype ι) (hκ : Fintype κ)
-      (g : ι → κ → MvPolynomial (Fin n) ℝ),
+    ∃ (ι κ : Type) (g : ι → κ → MvPolynomial (Fin n) ℝ), Finite ι ∧ Finite κ ∧
       ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
   sorry
 
@@ -98,8 +97,7 @@ This was proved by Louis Mahé.
 @[category research solved, AMS 13]
 theorem pierce_birkhoff_conjecture_dim_one (f : ℝ → ℝ)
     (hf : IsPiecewisePolynomial f) :
-    ∃ (ι κ : Type) (hι : Fintype ι) (hκ : Fintype κ)
-      (g : ι → κ → Polynomial ℝ),
+    ∃ (ι κ : Type) (g : ι → κ → Polynomial ℝ), Finite ι ∧ Finite κ ∧
       ∀ x, f x = ⨆ i, ⨅ j, Polynomial.eval x (g i j) := by
   sorry
 
@@ -109,9 +107,7 @@ This was proved by Louis Mahé.
 -/
 @[category research solved, AMS 13]
 theorem pierce_birkhoff_conjecture_dim_two
-    (f : EuclideanSpace ℝ (Fin 2) → ℝ)
-    (hf : IsPiecewiseMvPolynomial f) :
-    ∃ (ι κ : Type) (hι : Fintype ι) (hκ : Fintype κ)
-      (g : ι → κ → MvPolynomial (Fin 2) ℝ),
+    (f : EuclideanSpace ℝ (Fin 2) → ℝ) (hf : IsPiecewiseMvPolynomial f) :
+    ∃ (ι κ : Type) (g : ι → κ → MvPolynomial (Fin 2) ℝ), Finite ι ∧ Finite κ ∧
       ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
   sorry
