@@ -56,7 +56,7 @@ theorem erdos_33 : IsLeast
 Erdos observed that this value is finite and > 1.
 -/
 @[category research solved, AMS 11]
-theorem erdos_33_i :
+theorem erdos_33.variants.one_mem_lowerBounds :
     1 ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
       Filter.atTop.limsup (fun N => (Set.bdd A N).card / √N) = c} := by
   sorry
