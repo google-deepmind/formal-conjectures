@@ -16,30 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Gilbreath's conjecture
-
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gilbreath%27s_conjecture)
--/
-
-namespace Gilbreath
+namespace Erdos355
 
 /--
-**Gilbreath's nth difference**, $d^n$
-Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
--/
-noncomputable def d : ℕ → (ℕ → ℕ)
-  | 0 => fun n ↦ n.nth Nat.Prime
-  | k + 1 => fun n ↦ Int.natAbs (d k (n + 1) - d k n)
-
-open Gilbreath
-
-/--
-**Gilbreath's conjecture**
-Gilbreath's conjecture states that every term in the sequence $d^k_0$ for $k > 0$ is equal to 1.
+Is there a lacunary sequence $A\subseteq \mathbb{N}$ (so that $A=\{a_1 < \cdots\}$ and
+there exists some $\lambda > 1$ such that $a_{n+1}/a_n\geq \lambda$ for all $n\geq 1$) such that
+\[\left\{ \sum_{a\in A'}\frac{1}{a} : A'\subseteq A\textrm{ finite}\right\}\]
+contain all rationals in some open interval?
 -/
 @[category research open, AMS 11]
-theorem gilbreath_conjecture (k : ℕ+) : d k 0 = 1 := by
+theorem erdos_355 :
+    (∃ A : ℕ → ℕ, IsLacunary A ∧ ∃ u v : ℝ, u < v ∧ ∀ q : ℚ, ↑q ∈ Set.Ioo u v →
+      q ∈  {(∑ a ∈ A', (1 / a : ℚ)) | (A' : Finset ℕ) (_ : A'.toSet ⊆ Set.range A)})
+    ↔ answer(sorry) := by
   sorry
 
-end Gilbreath
+
+end Erdos355

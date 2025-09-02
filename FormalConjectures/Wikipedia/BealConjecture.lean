@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace BealConjecture
 
-def BealConjecture : Prop := ∀ {A B C x y z : ℕ},
+def bealConjecture : Prop := ∀ {A B C x y z : ℕ},
     A ≠ 0 → B ≠ 0 → C ≠ 0 → 2 < x → 2 < y → 2 < z →
     A^x + B^y = C^z → 1 < Finset.gcd {A, B, C} id
 
@@ -33,14 +33,14 @@ The **Beal Conjecture**: if we are given positive integers $A, B, C, x, y, z$ su
 $x, y, z > 2$ and $A^x + B^y = C^z$ then $A, B, C$ have a common divisor.
 -/
 @[category research open, AMS 11]
-theorem beal_conjecture : BealConjecture := by
+theorem beal_conjecture : bealConjecture := by
   sorry
 
 /--
 The Beal Conjecture implies Fermat's last theorem
 -/
 @[category high_school, AMS 11]
-theorem flt_of_beal_conjecture (H : BealConjecture) :
+theorem flt_of_beal_conjecture (H : bealConjecture) :
     FermatLastTheorem := by
   intro n hn x y z hx hy hz
   by_contra h

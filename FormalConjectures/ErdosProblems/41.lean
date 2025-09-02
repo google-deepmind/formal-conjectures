@@ -27,23 +27,28 @@ variable {α : Type} [AddCommMonoid α]
 open Classical
 
 /--
-For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for  `a₁, ..., aₙ` in `A` (aside from the trivial coincidences).
+For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for  `a₁, ..., aₙ` in `A`
+(aside from the trivial coincidences).
 -/
 def NtupleCondition (A : Set α) (n : ℕ) : Prop := ∀ (I : Finset α) (J : Finset α),
   I.toSet ⊆ A ∧ J.toSet ⊆ A ∧ I.card = n ∧ J.card = n ∧
   (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J
 
 /--
-Let `A ⊆ ℕ` be an infinite set such that the triple sums `a + b + c` are all distinct for `a, b, c` in `A` (aside from the trivial coincidences). Is it true that `lim inf n → ∞ |A ∩ {1, …, N}| / N^(1/3) = 0`?
+Let `A ⊆ ℕ` be an infinite set such that the triple sums `a + b + c` are all distinct for
+`a, b, c` in `A` (aside from the trivial coincidences). Is it true that
+`liminf n → ∞ |A ∩ {1, …, N}| / N^(1/3) = 0`?
 -/
 @[category research open, AMS 11]
 theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.Infinite) :
-    Filter.atTop.liminf (fun N => (A.interIoc 1 N).ncard / (N : ℝ)^(1/3)) = 0 := by
+    Filter.atTop.liminf (fun N => (A.interIoc 1 N).ncard / (N : ℝ)^(1/3 : ℝ)) = 0 := by
   sorry
 
 /--
 Erdős proved the following pairwise version.
-Let `A ⊆ ℕ` be an infinite set such that the pairwise sums `a + b` are all distinct for `a, b` in `A` (aside from the trivial coincidences). Is it true that `lim inf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
+Let `A ⊆ ℕ` be an infinite set such that the pairwise sums `a + b` are all distinct for `a, b`
+in `A` (aside from the trivial coincidences).
+Is it true that `liminf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research solved, AMS 11]
 theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
