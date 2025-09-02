@@ -104,7 +104,7 @@ yet every critical set of edges has size $>r$.
 [MaSt25] Martinsson, Anders and Steiner, Raphael, Vertex-critical graphs far from edge-criticality. Combin. Probab. Comput. (2025), 151--157
 -/
 @[category research solved, AMS 11]
-theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∀ᶠ k in Filter.atTop,,
+theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∀ᶠ k in Filter.atTop,
     ∃ (G : SimpleGraph V), G.IsErdos944 k r := by
   sorry
 
