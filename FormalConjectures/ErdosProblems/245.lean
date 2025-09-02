@@ -41,8 +41,8 @@ The answer is yes, proved by Freiman [Fr73].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245 :
-    (∀ (A : Set ℕ), A.Infinite → Tendsto (fun N => (A.bddPos ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0) →
-    3 ≤ limsup (fun (N : ℝ) => ((A + A).bddPos ⌊N⌋₊ |>.ncard : EReal) / (A.bddPos ⌊N⌋₊).ncard) atTop) ↔ answer(True) := by
+    (∀ (A : Set ℕ), A.Infinite → Tendsto (fun N => (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0) →
+    3 ≤ limsup (fun (N : ℝ) => ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard) atTop) ↔ answer(True) := by
   sorry
 
 /--
@@ -55,10 +55,10 @@ as $N\to\infty$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.exists_limit (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.bddPos ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
+    (hf : Tendsto (fun N => (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
     -- Use `EReal` to disinguish infinite limit from other types of non-existence
     ∃ (α : EReal),
-      Tendsto (fun (N : ℝ) => (((A + A).bddPos ⌊N⌋₊ |>.ncard : EReal) / ((A.bddPos ⌊N⌋₊).ncard) : EReal)) atTop (𝓝 α) := by
+      Tendsto (fun (N : ℝ) => (((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / ((A.interIcc 1 ⌊N⌋₊).ncard) : EReal)) atTop (𝓝 α) := by
   sorry
 
 /--
@@ -70,8 +70,8 @@ $$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.bddPos ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    2 ≤ limsup (fun (N : ℝ) => ((A + A).bddPos ⌊N⌋₊ |>.ncard : EReal) / (A.bddPos ⌊N⌋₊).ncard) atTop := by
+    (hf : Tendsto (fun N => (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
+    2 ≤ limsup (fun (N : ℝ) => ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard) atTop := by
   sorry
 
 end Erdos245

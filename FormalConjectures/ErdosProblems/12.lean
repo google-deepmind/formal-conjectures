@@ -89,7 +89,7 @@ infinitely many $N$ such that \[\lvert A\cap\{1,\ldots,N\}\rvert > \frac{N}{f(N)
 -/
 @[category research solved, AMS 11]
 theorem erdos_12.variants.erdos_sarkozy (f : ℕ → ℕ) (hf : atTop.Tendsto f atTop) :
-    ∃ A, IsGood A ∧ {N : ℕ | (N : ℝ) / f N < (A.bdd N).card}.Infinite := by
+    ∃ A, IsGood A ∧ {N : ℕ | (N : ℝ) / f N < (A.interIcc 1 N).ncard}.Infinite := by
   sorry
 
 /--
@@ -101,7 +101,7 @@ is given by the set of $p^2$, where $p\equiv 3\pmod{4}$ is prime.
 @[category research solved, AMS 11]
 theorem erdos_12.variants.example (A : Set ℕ)
     (hA : A = {p ^ 2 | (p : ℕ) (_ : p.Prime) (_ : p ≡ 3 [MOD 4])}) :
-    IsGood A ∧ 0 < atTop.liminf (fun (N : ℕ) ↦ (A.bdd N).card * (N : ℝ).log / √N) := by
+    IsGood A ∧ 0 < atTop.liminf (fun (N : ℕ) ↦ (A.interIcc 1 N).ncard * (N : ℝ).log / √N) := by
   sorry
 
 
@@ -112,7 +112,7 @@ that $a \mid (b+c)$ and $b,c > a$. If all elements in $A$ are pairwise coprime t
 -/
 @[category research solved, AMS 11]
 theorem erdos_12.variants.schoen (A : Set ℕ) (hA : IsGood A) (hA' : A.Pairwise Nat.Coprime) :
-    (fun N ↦ (A.bdd N |>.card : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ)) := by
+    (fun N ↦ ((A.interIcc 1 N).ncard : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ)) := by
   sorry
 
 /--
@@ -122,7 +122,7 @@ that $a \mid (b+c)$ and $b,c > a$. If all elements in $A$ are pairwise coprime t
 -/
 @[category research solved, AMS 11]
 theorem erdos_12.variants.baier (A : Set ℕ) (hA : IsGood A) (hA' : A.Pairwise Nat.Coprime) :
-    (fun N ↦ (A.bdd N |>.card : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ) / (N : ℝ).log) := by
+    (fun N ↦ ((A.interIcc 1 N).ncard : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ) / (N : ℝ).log) := by
   sorry
 
 end Erdos12

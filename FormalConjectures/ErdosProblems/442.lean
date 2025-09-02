@@ -54,7 +54,7 @@ abbrev bddProdUpper : Set (ℕ × ℕ) :=
   {y ∈ A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊ | y.fst < y.snd}
 
 instance : Fintype (A.bddProdUpper x) := Set.Finite.fintype <|
-  (Set.finite_interIoc.prod Set.finite_interIoc).subset (fun _ ha ↦ ha.left)
+  (Set.finite_interIcc.prod Set.finite_interIcc).subset (fun _ ha ↦ ha.left)
 
 end Set
 
