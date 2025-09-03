@@ -74,7 +74,7 @@ If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then one can show 
 $A(x) \leq x \exp(-(\log x)^{1/3})$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_830.variants.pomerance : ∀ᶠ x in atTop, A x ≤ x * rexp (- x.log.nthRoot 3) := by
+theorem erdos_830.variants.pomerance : ∀ᶠ x in atTop, A x ≤ x * rexp (- Real.nthRoot 3 x.log) := by
   sorry
 
 /--
