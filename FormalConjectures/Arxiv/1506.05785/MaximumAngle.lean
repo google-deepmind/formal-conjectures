@@ -24,6 +24,8 @@ _On the Approximation of Quantum Gates using Lattices_
 by *Alec Greene and Steven Damelin*
 -/
 
+namespace Arxiv.«1506.05785»
+
 open scoped EuclideanSpace RealInnerProductSpace
 
 /-- The integer lattice ℤ⁴ as the ℤ-span of the standard basis in 4-dimensional Euclidean space. -/
@@ -40,3 +42,5 @@ theorem conjecture_3_4 : ∃ δ ∈ Set.Ioo (0 : ℝ) 1,
     ∀ (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1), ∃ (b : ℤ⁴) (k : ℕ), k > 0 ∧ ‖b‖ = 5 ^ k ∧
       1 - 5 ^ (-k / (2 - δ)) ≤ ⟪a, ‖b‖⁻¹ • b⟫ := by
   sorry
+
+end Arxiv.«1506.05785»

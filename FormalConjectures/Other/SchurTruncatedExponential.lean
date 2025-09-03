@@ -28,6 +28,8 @@ import FormalConjectures.Util.ProblemImports
 Note: This was asked by Nick Katz. Quasi-autoformalized using Claude 4.0 Sonnet.
 -/
 
+namespace SchurTruncatedExponential
+
 open Polynomial
 
 open scoped Nat
@@ -58,3 +60,5 @@ theorem schur_truncatedExp_galoisGroup_equiv (n : ℕ) (hn : n ≥ 2) :
     -- Galois group is symmetric group S_n
     Nonempty (f.Gal ≃* Equiv.Perm (Fin n)) := by
   sorry
+
+end SchurTruncatedExponential

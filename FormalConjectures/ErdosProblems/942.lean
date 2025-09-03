@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Nat Filter Topology
 
+namespace Erdos942
+
 /--
 Let $h(n)$ count the number of powerful integers in $[n^2, (n + 1)^2)$.
 -/
@@ -58,3 +60,5 @@ theorem erdos_942.variants.density :
     ∃ δ : ℕ → ℝ, ∀ l, {n | erdos_942.h n = l}.HasDensity (δ l) ∧
     ∑' l, δ l = 1 := by
   sorry
+
+end Erdos942

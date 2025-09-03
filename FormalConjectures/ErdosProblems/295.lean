@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open Classical
 open scoped Real
 
+namespace Erdos295
+
 /--
 Helper lemma: for each $N$, there exists $k$ and $n_1 < ... < n_k$ such that
 $N ≤ n_1 < ⋯ < n_k$ with $\frac 1 {n_1} + ... + \frac 1 {n_k} = 1$.
@@ -61,3 +63,5 @@ theorem erdos_295.variants.erdos_straus :
     ∃ᵉ (C > 0) (O > 0), ∀ᶠ (N : ℕ) in Filter.atTop,
       (k N - (rexp 1 - 1)*N) ∈ Set.Ioc (-C) (O * N / (N : ℝ).log):= by
   sorry
+
+end Erdos295

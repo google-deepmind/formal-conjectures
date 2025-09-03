@@ -23,52 +23,82 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Real
-open Finset
 
 local notation "e" => exp 1
 
 -- See also corresponding transcendence conjectures
 -- in `FormalConjectures.Wikipedia.SchanuelsConjecture`
 
-/-- $e + \pi$ is irrational -/
+namespace Irrational
+
+/-- Are $e$ and $\pi$ algebraically independent? -/
 @[category research open, AMS 33]
-theorem irrational_e_plus_pi : Irrational (e + π) := by
+theorem algebraicIndependent_e_pi :
+    AlgebraicIndependent ℚ ![e, π] ↔ answer(sorry) := by
   sorry
 
-/-- $e \pi$ is irrational -/
+/--
+Is $e + \pi$ irrational?
+-/
 @[category research open, AMS 33]
-theorem irrational_e_times_pi : Irrational (e * π) := by
+theorem irrational_e_plus_pi :
+    Irrational (e + π) ↔ answer(sorry) := by
   sorry
 
-/-- $e ^ e$ is irrational -/
+/--
+Is $e \pi$ irrational?
+-/
 @[category research open, AMS 33]
-theorem irrational_e_to_e : Irrational (e ^ e) := by
+theorem irrational_e_times_pi :
+    Irrational (e * π) ↔ answer(sorry) := by
   sorry
 
-/-- $\pi ^ e$ is irrational -/
+/--
+Is $e ^ e$ irrational?
+-/
 @[category research open, AMS 33]
-theorem irrational_pi_to_e : Irrational (π ^ e) := by
+theorem irrational_e_to_e :
+    Irrational (e ^ e) ↔ answer(sorry) := by
   sorry
 
-/-- $\pi ^ \pi$ is irrational -/
+/--
+Is $\pi ^ e$ irrational?
+-/
 @[category research open, AMS 33]
-theorem irrational_pi_to_pi : Irrational (π ^ π) := by
+theorem irrational_pi_to_e :
+    Irrational (π ^ e) ↔ answer(sorry) := by
   sorry
 
-/-- $\ln(\pi)$ is irrational -/
+/--
+Is $\pi ^ \pi$ irrational?
+-/
 @[category research open, AMS 33]
-theorem irrational_ln_pi : Irrational (log π) := by
+theorem irrational_pi_to_pi :
+    Irrational (π ^ π) ↔ answer(sorry) := by
   sorry
 
-/-- The the difference between harmonic series and natural logarithm, also known
-as Euler-Mascheroni constant $\gamma$ is irrational -/
+/--
+Is $\ln(\pi)$ irrational?
+-/
 @[category research open, AMS 33]
-theorem irrational_euler_mascheroni :
-    Irrational eulerMascheroniConstant := by
+theorem irrational_ln_pi :
+    Irrational (log π) ↔ answer(sorry) := by
   sorry
 
-/-- The Catalan constant is irrational -/
+/--
+Is the Euler-Mascheroni constant $\gamma$ irrational?
+-/
+@[category research open, AMS 33]
+theorem irrational_eulerMascheroniConstant :
+    Irrational eulerMascheroniConstant ↔ answer(sorry) := by
+  sorry
+
+/--
+Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$ irrational?
+-/
 @[category research open, AMS 11 33]
-theorem irrational_catalan_constant :
-    Irrational (∑' n : ℕ, (-1)^n / (2*n + 1)^2) := by
+theorem irrational_catalanConstant :
+    Irrational catalanConstant ↔ answer(sorry) := by
   sorry
+
+end Irrational

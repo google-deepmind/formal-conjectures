@@ -91,7 +91,7 @@ theorem univ {β : Type*} [PartialOrder β] [LocallyFiniteOrder β]
     (eventually_atTop.2 ⟨b, fun n hn => (div_self <| Nat.cast_ne_zero.2 (hb n hn)).symm⟩)
       tendsto_const_nhds
 
-example : (@Set.univ ℕ).HasDensity 1 := univ
+theorem univ_nat_hasDensity_one : (@Set.univ ℕ).HasDensity 1 := univ
 
 @[simp]
 theorem empty {β : Type*} [Preorder β] [LocallyFiniteOrderBot β] (A : Set β := Set.univ) :

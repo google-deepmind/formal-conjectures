@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
  - [Hardness of Busy Beaver Value BB(15)](https://doi.org/10.1007/978-3-031-72621-7_9), Stérin, T., Woods, D. (2024). In: Kovács, L., Sokolova, A. (eds) Reachability Problems. RP 2024. Lecture Notes in Computer Science, vol 15050. Springer, Cham. https://doi.org/10.1007/978-3-031-72621-7_9
 -/
 
+namespace Arxiv.«2107.12475»
+
 /--
 For $n > 8$, $2^n$ is not the the sum of distinct powers of $3$. Expressed here in terms of the base $3$ digits of $n$.
 
@@ -43,4 +45,6 @@ theorem CollatzLike (n : ℕ) (hn : 8 < n) : 2 ∈ Nat.digits 3 (2^n) := by
 For $n = 8$, $2$ is not contained in the base $3$ digits of $n$.
 -/
 @[category test, AMS 5 11]
-example : 2 ∉ Nat.digits 3 (2^8) := by norm_num
+theorem two_not_in_digits_three_pow_eight : 2 ∉ Nat.digits 3 (2^8) := by norm_num
+
+end Arxiv.«2107.12475»

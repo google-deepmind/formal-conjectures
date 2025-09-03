@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/366](https://www.erdosproblems.com/366)
 -/
 
+namespace Erdos366
+
 /--
 Are there any $2$-full $n$ such that $n+1$ is $3$-full?
 -/
@@ -29,21 +31,11 @@ Are there any $2$-full $n$ such that $n+1$ is $3$-full?
 theorem erdos_366 : (∃ (n : ℕ), (2).Full n ∧ (3).Full (n + 1)) ↔ answer(sorry) := by
   sorry
 
-open Lean Meta Qq in
-/-- Simproc to compute the set `Nat.primeFactors`. -/
-dsimproc Nat.primeFactorsEq (Nat.primeFactors _) := fun e ↦ do
-  unless e.isAppOfArity `Nat.primeFactors 1 do return .continue
-  let some n ← fromExpr? e.appArg! | return .continue
-  let outAsList : List Q(ℕ) := (unsafe n.primeFactors.val.unquot).map mkNatLit
-  let outAsFinset : Q(Finset ℕ) := outAsList.foldl (fun s n ↦ q(insert $n $s)) q({})
-  return .done outAsFinset
-
-
 /--
 Note that $8$ is $3$-full and $9$ is 2-full.
 -/
 @[category test, AMS 11]
-example : (∃ (n : ℕ), (3).Full n ∧ (2).Full (n + 1)) := by
+theorem exists_three_full_then_two_full : (∃ (n : ℕ), (3).Full n ∧ (2).Full (n + 1)) := by
   use 8
   simp [Nat.Full, Nat.primeFactorsEq]
 
@@ -61,3 +53,5 @@ Are there any consecutive pairs of $3$-full integers?
 @[category undergraduate, AMS 11]
 theorem erdos_366.variant.weaker : (∃ (n : ℕ), (3).Full n ∧ (3).Full (n + 1))  ↔ answer(sorry) := by
   sorry
+
+end Erdos366

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Nat
 
+namespace Erdos249
+
 /--
 Is
 $$\sum_{n} \frac{φ(n)}{2^n}$$
@@ -32,3 +34,5 @@ irrational? Here $\phi$ is the Euler totient function.
 @[category research open, AMS 11]
 theorem erdos_249 : Irrational (∑' n : ℕ, (φ n) / (2 ^ n)) ↔ answer(sorry) := by
   sorry
+
+end Erdos249

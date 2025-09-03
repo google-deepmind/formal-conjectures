@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/477](https://www.erdosproblems.com/477)
 -/
+
+namespace Erdos477
+
 /--
 Let $f: \mathbb{Z} \rightarrow \mathbb{Z}$ be a polynomial of degree at least $2$.
 
@@ -38,3 +41,5 @@ Probably there is no such $A$ for any polynomial $f$.
 theorem erdos_477.variants.strong_negation (f : Polynomial ℤ) (hf₀ : 2 ≤ f.degree) : ¬ ∃ (A : Set ℤ),
     ∀ z, ∃! a ∈ A ×ˢ Set.range f.eval, z = a.1 + a.2 := by
   sorry
+
+end Erdos477

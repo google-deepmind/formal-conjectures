@@ -32,6 +32,8 @@ Because of indexing, since `n : ℕ` starts at 0, we change the side lengths to 
 asked by user [*Kaveh*](https://mathoverflow.net/users/7507/kaveh)
 -/
 
+namespace Mathoverflow34145
+
 /-- A rectangle is specified by its width, height, starting point, and rotation.
 The rectangle is assumed to start in the lower left corner. For example, the unit square
 `{ (x, y) | 0 ≤ x ≤ 1, 0 ≤ y ≤ 1 }` is specified as `⟨1, 1, (0, 0), 0⟩`  -/
@@ -171,3 +173,5 @@ theorem rectangles_pack_square_501_div_500 :
       (∀ n, (c.rect n).toSet ⊆ Rectangle.toSet ⟨501/500, 501/500, (0, 0), 0⟩) ∧
       c.IsPacking) := by
   sorry
+
+end Mathoverflow34145

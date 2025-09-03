@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open scoped Topology ArithmeticFunction Nat
 open Filter
 
+namespace Erdos409
+
 /--
 How many iterations of $n\mapsto\phi(n) + 1$ are needed before a prime is reached?
 -/
@@ -160,3 +162,5 @@ theorem erdos_409.variants.sigma.parts.iii (p : ℕ) (h : p.Prime) (α : ℝ)
     (hα : { n | ∃ i, (σ 1 · - 1)^[i] n = p }.HasDensity α) :
     α = answer(sorry) := by
   sorry
+
+end Erdos409
