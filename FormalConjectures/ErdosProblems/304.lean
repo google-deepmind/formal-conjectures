@@ -46,7 +46,7 @@ lemma unitFractionExpressible_of_zero {a b : ℕ} (h : a = 0 ∨ b = 0) :
   rintro _ s rfl hs h
   rw [eq_comm, Finset.sum_eq_zero_iff_of_nonneg (fun i hi ↦ by positivity)] at h
   simp only [inv_eq_zero, Nat.cast_eq_zero] at h
-  rw [Finset.card_eq_zero, Finset.eq_empty_iff_forall_not_mem]
+  rw [Finset.card_eq_zero, Finset.eq_empty_iff_forall_notMem]
   intro i hi
   linarith [h i hi, hs i hi]
 
@@ -123,7 +123,7 @@ lemma dvd_of_smallestCollection_eq_one {a b : ℕ}
 lemma smallestCollection_two_fifteen : smallestCollection 2 15 = 2 := by
   have h : 2 ∈ unitFractionExpressible 2 15 := by
     use {10, 30}
-    norm_num [Finset.card_insert_of_not_mem, Finset.card_singleton]
+    norm_num [Finset.card_insert_of_notMem, Finset.card_singleton]
   have : smallestCollection 2 15 ≤ 2 := Nat.sInf_le h
   have : 0 < smallestCollection 2 15 := smallestCollection_pos (by simp) (by simp) ⟨_, h⟩
   have : smallestCollection 2 15 ≠ 1 := by
