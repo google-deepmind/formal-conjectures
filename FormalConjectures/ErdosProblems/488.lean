@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Classical
 
+namespace Erdos488
+
 /--
 Let $A$ be a finite set and
 $$B = \{n \ge 1 : a \nmid n \text{ for all } a \in A\}.$$
@@ -37,3 +39,5 @@ theorem erdos_488 : (∀ (A : Finset ℕ), A.Nonempty → 0 ∉ A → 1 ∉ A �
       ((Finset.Icc 1 m).filter (· ∈ B)).card / (m : ℚ) <
         2 * ((Finset.Icc 1 n).filter (· ∈ B)).card / n) ↔ answer(False):= by
   sorry
+
+end Erdos488

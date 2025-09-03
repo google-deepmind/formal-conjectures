@@ -22,7 +22,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/245](https://www.erdosproblems.com/245)
 -/
 
-open Filter
+namespace Erdos245
+
+open Filter Erdos245
 
 open scoped Pointwise Topology
 
@@ -44,7 +46,7 @@ The answer is yes, proved by Freiman [Fr73].
 @[category research solved, AMS 5 11]
 theorem erdos_245 :
     (∀ (A : Set ℕ), A.Infinite → Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0) →
-    3 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop) ↔ answer(True) := by
+    3 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : EReal) / (A.bdd N).ncard) atTop) ↔ answer(True) := by
   sorry
 
 /--
@@ -73,5 +75,7 @@ $$
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
     (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    2 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop := by
+    2 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : EReal) / (A.bdd N).ncard) atTop := by
   sorry
+
+end Erdos245

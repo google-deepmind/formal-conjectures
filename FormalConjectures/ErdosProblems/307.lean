@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/307](https://www.erdosproblems.com/307)
 -/
 
+namespace Erdos307
+
 /--
 Are there two finite set of primes $P$ and $Q$ such that
 
@@ -47,3 +49,5 @@ theorem erdos_307_coprime : (∃ P Q : Finset ℕ, P.toSet.Pairwise Nat.Coprime 
     Q.toSet.Pairwise Nat.Coprime ∧
     (1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹))) ↔ answer(sorry) := by
   sorry
+
+end Erdos307

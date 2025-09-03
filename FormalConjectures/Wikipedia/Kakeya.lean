@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open AffineMap MeasureTheory Metric
 
+namespace Kakeya
+
 /--
 A set `S` in `ℝⁿ` is called a Kakeya set if it contains a unit line segment in every direction.
 For simplicity, we omit the compactness assumption here.
@@ -37,7 +39,7 @@ def IsKakeya {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
 A trivial example: the closed ball of radius 1 in `ℝⁿ` is a Kakeya set.
 -/
 @[category test, AMS 42]
-example (n : ℕ) : IsKakeya (closedBall (0 : EuclideanSpace ℝ (Fin n)) 1) := by
+theorem isKakeya_closedBall (n : ℕ) : IsKakeya (closedBall (0 : EuclideanSpace ℝ (Fin n)) 1) := by
   rintro v hv
   use 0
   rintro _ ⟨t, ⟨ht₀, ht₁⟩, rfl⟩
@@ -98,3 +100,5 @@ theorem kakeya_finite {F : Type*} [Field F] [Fintype F] {n : ℕ}
     (K : Finset (Fin n → F)) (hK : IsKakeyaFinite K) :
     card F ^ n / (2 - 1 / card F : ℚ) ^ (n - 1) ≤ K.card := by
   sorry
+
+end Kakeya

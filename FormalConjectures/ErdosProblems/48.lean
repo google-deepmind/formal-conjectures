@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped ArithmeticFunction
 
+namespace Erdos48
+
 /--
 Are there infinitely many integers $n, m$ such that $ϕ(n) = σ(m)$?
 -/
@@ -31,3 +33,5 @@ Are there infinitely many integers $n, m$ such that $ϕ(n) = σ(m)$?
 theorem erdos_48 :
     {(n, m) : ℕ × ℕ | n.totient = σ 1 m}.Infinite ↔ answer(True) := by
   sorry
+
+end Erdos48

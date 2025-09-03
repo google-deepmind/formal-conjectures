@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
+namespace Erdos541
+
 /--
 Let $a_1, \dots, a_p$ be (not necessarily distinct) residues modulo a prime $p$, such that there
 exists some $r$ so that if $S \subseteq [p]$ is non-empty and
@@ -60,3 +62,5 @@ theorem erdos_541.variants.large_primes : ∀ᶠ p in atTop, p.Prime → ∀ a :
     (∃ r, ∀ (S : Finset (Fin p)), S ≠ ∅ → ∑ i ∈ S, a i = 0 → S.card = r) →
       (Set.range a).ncard ≤ 2 := by
   sorry
+
+end Erdos541

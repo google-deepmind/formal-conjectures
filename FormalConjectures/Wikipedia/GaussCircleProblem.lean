@@ -57,13 +57,14 @@ private abbrev E (r : ℝ) : ℝ := N r - π * r ^ 2
 /--
 Gauss proved that
 $$
-  |E(r)|\leq 2\sqrt{2}\pi r.
+  |E(r)|\leq 2\sqrt{2}\pi r,
 $$
+for sufficiently large $r$.
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67
 -/
 @[category research solved, AMS 11]
-theorem error_le (r : ℝ) (hr : 0 ≤ r) : |E r| ≤ 2 * √2 * π * r := by
+theorem error_le : ∀ᶠ r in atTop, |E r| ≤ 2 * √2 * π * r := by
   sorry
 
 /--
@@ -73,8 +74,7 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem error_not_isLittleO (r : ℝ) (hr : 0 ≤ r) :
-    ¬E =o[atTop] (fun r => √r * √√r.log) := by
+theorem error_not_isLittleO : ¬E =o[atTop] (fun r => √r * √√r.log) := by
   sorry
 
 /--
@@ -101,7 +101,7 @@ $$
 -/
 @[category research solved, AMS 11]
 theorem exact_form_floor (r : ℝ) (hr : 0 ≤ r) :
-    N r = 1 + 4 * ∑' i, (⌊r ^ 2 / (4 * i + 1)⌋ - ⌊r ^ 2 / (4 * i + 3)⌋) := by
+    N r = 1 + 4 * ∑' (i : ℕ), (⌊r ^ 2 / (4 * i + 1)⌋ - ⌊r ^ 2 / (4 * i + 3)⌋) := by
   sorry
 
 end GaussCircleProblem

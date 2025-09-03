@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_totient_problem)
 -/
 
+namespace LehmerTotient
+
 /--
 Does there exist a composite number $n > 1$ such that Euler’s totient function
 $\varphi(n)$ divides $n - 1$?
@@ -30,3 +32,5 @@ $\varphi(n)$ divides $n - 1$?
 theorem lehmer_totient :
     (∃ n > 1, ¬Prime n ∧ Nat.totient n ∣ n - 1) ↔ answer(sorry) := by
   sorry
+
+end LehmerTotient
