@@ -157,7 +157,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   obtain hn | hn := isEmpty_or_nonempty n
   · specialize h ∅
     simp only [ne_eq, card_empty, CharP.cast_eq_zero, mul_zero, filter_empty, le_refl,
-      IsEmpty.exists_iff, imp_false, not_forall, not_mem_empty, imp_self, implies_true,
+      IsEmpty.exists_iff, imp_false, not_forall, notMem_empty, imp_self, implies_true,
       not_true_eq_false, exists_const, Decidable.not_not] at h
     have : ∅ ∈ (∅ : Finset (Finset n)) := by simp [h]
     simp at this

@@ -61,7 +61,7 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
   · refine of_not_not fun h' ↦ h ?_
     replace ⟨k, h, h'⟩ :
         ∃ k, r < ‖(fun z ↦ z ^ n + c)^[k] 0‖ ∧ ‖c‖ ≤ ‖(fun z ↦ z ^ n + c)^[k] 0‖ := by
-      refine (le_or_lt ‖c‖ r).elim (fun h ↦ ⟨k, ?_, ?_⟩) fun h ↦ ⟨1, by
+      refine (le_or_gt ‖c‖ r).elim (fun h ↦ ⟨k, ?_, ?_⟩) fun h ↦ ⟨1, by
         simp [h, zero_pow (M₀ := ℂ) (one_pos.trans hn).ne.symm]⟩ <;> linarith
     let a := ‖(fun z ↦ z ^ n + c)^[k] 0‖ - r
     have ha : 0 < a := by unfold a; linarith
@@ -93,7 +93,7 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
       tendsto_pow_atTop_atTop_of_one_lt <| Nat.one_lt_cast.2 hn
   · specialize h' (isBounded_closedBall (x := 0) (r := r))
     rw [mem_map, mem_atTop_sets] at h'; replace ⟨n, h'⟩ := h'
-    exact not_lt_of_le (h n) (by simpa using h' n)
+    exact not_lt_of_ge (h n) (by simpa using h' n)
 
 /-- The mandelbrot set is equivalently the set of all parameters `c` for which the orbit of `0`
 under `z ↦ z ^ 2 + c` does not leave the closed disk of radius two around the origin. -/
