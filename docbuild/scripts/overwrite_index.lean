@@ -100,7 +100,7 @@ unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
 
-  Lean.withImportModules modulesToImport {} 0 fun env => do
+  Lean.withImportModules modulesToImport {} fun env => do
     let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
     return result
 
