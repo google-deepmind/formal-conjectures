@@ -45,12 +45,12 @@ match l with
 instance : alwaysHaltingMachine.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after zero steps
-  exact ⟨0, by aesop⟩ 
+  exact ⟨0, by aesop⟩
 
 instance : haltsAfterOne.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after one step
-  exact ⟨1, by aesop⟩ 
+  exact ⟨1, by aesop⟩
 
 theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
   apply haltingNumber_def

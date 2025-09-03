@@ -148,7 +148,7 @@ theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) :
     S.HasDensity 0 := by
   simp [HasDensity, partialDensity]
   have (n : ℕ) : ((S ∩ Set.Iio n).ncard : ℝ) / n ≤ S.ncard / n := by
-    by_cases h₀ : n = 0; simp [← Ico_bot, h₀]
+    by_cases h₀ : n = 0; simp [h₀]
     exact div_le_div₀ (by simp) (by simpa using Set.ncard_inter_le_ncard_left _ _ h)
       (by simpa using n.pos_of_ne_zero h₀) le_rfl
   exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds
