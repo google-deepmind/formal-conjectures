@@ -30,7 +30,8 @@ open Filter Asymptotics
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
 noncomputable def f (n : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ StrictMono a ∧
-    ∀ J J' : Finset (Fin k), IsInterval J → IsInterval J' → ∑ x ∈ J, a x = ∑ x ∈ J', a x → J = J'}
+    ∀ J J' : Finset (Fin k), J.toSet.OrdConnected → J'.toSet.OrdConnected →
+    ∑ x ∈ J, a x = ∑ x ∈ J', a x → J = J'}
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. Is $f(n)=o(n)$? -/
@@ -103,7 +104,8 @@ theorem erdos_357.variants.weisenberg : ∃ o : ℕ → ℝ, o =o[atTop] (1 : �
 Then $A$ has lower density 0. -/
 @[category research solved, AMS 11]
 theorem erdos_357.variants.infinite_set_lower_density (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, IsInterval I → IsInterval J → ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
+    (hA : ∀ I J : Finset ℕ, I.toSet.OrdConnected → J.toSet.OrdConnected →
+      ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
     (Set.range A).lowerDensity = 0 := by
   sorry
 
@@ -111,7 +113,7 @@ theorem erdos_357.variants.infinite_set_lower_density (A : ℕ → ℕ) (hA : St
 Then it is conjectured that $A$ has density 0. -/
 @[category research open, AMS 11]
 theorem erdos_357.variants.infinite_set_density (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, IsInterval I → IsInterval J → ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
+    (hA : ∀ I J : Finset ℕ, I.toSet.OrdConnected → J.toSet.OrdConnected → ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
     (Set.range A).HasDensity 0 := by
   sorry
 
@@ -120,7 +122,8 @@ theorem erdos_357.variants.infinite_set_density (A : ℕ → ℕ) (hA : StrictMo
 Then it is conjectured that the sum $\sum_k \frac{1}{a_k}$ converges. -/
 @[category research open, AMS 11]
 theorem erdos_357.variants.infinite_set_sum (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, IsInterval I → IsInterval J → ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
+    (hA : ∀ I J : Finset ℕ, I.toSet.OrdConnected → J.toSet.OrdConnected →
+      ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
     Summable (1 / A) := by
   sorry
 
@@ -128,7 +131,7 @@ theorem erdos_357.variants.infinite_set_sum (A : ℕ → ℕ) (hA : StrictMono A
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
 noncomputable def g (n : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ a : Fin k → ℕ, (Set.range a ⊆ Set.Icc 1 n) ∧ (∀ I J : Finset (Fin k),
-    IsInterval I → IsInterval J → ∑ i ∈ I, a i = ∑ j ∈ J, a j → I = J)}
+    I.toSet.OrdConnected → J.toSet.OrdConnected → ∑ i ∈ I, a i = ∑ j ∈ J, a j → I = J)}
 
 /-- Let $g(n)$ be the maximal $k$ such that there exist integers $1 \le a_1, \dotsc, a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. It is known that
@@ -143,7 +146,8 @@ theorem erdos_357.variants.hegyvari : ∃ (o o' : ℕ → ℝ), o =o[atTop] (1 :
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
 noncomputable def h (n : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ Monotone a ∧
-    ∀ J J' : Finset (Fin k), IsInterval J → IsInterval J' → ∑ x ∈ J, a x = ∑ x ∈ J', a x → J = J'}
+    ∀ J J' : Finset (Fin k), J.toSet.OrdConnected → J'.toSet.OrdConnected →
+      ∑ x ∈ J, a x = ∑ x ∈ J', a x → J = J'}
 
 -- The analogous question assuming only monotonicity of the $a_i$. The wording of the website
 -- suggests that this is open, though it's not clear whether the difficulty is the same as for the
