@@ -74,11 +74,10 @@ here).
 
 Conjecture: for any `g` in `Γ\G` such that `Dg` is relatively compact (in `Γ\G`), then `Dg` is closed.-/
 @[category research open, AMS 11 15 22]
-theorem matrix_group_conjecture {n : ℕ} (hn : 3 ≤ n) (g : MulOpposite SL(n, ℝ))
-    (D : Set (MulOpposite SL(n, ℝ) ⧸
-      ((⊤ : Subgroup _).map (SpecialLinearGroup.map (Int.castRingHom ℝ))).op))
-    (D_def : D = QuotientGroup.mk '' (Matrix.SpecialLinearGroup.diagonalSubgroup _ _).op.carrier)
-    (hg : IsCompact <| closure (g • D)) : IsClosed (g • D) :=
+theorem matrix_group_conjecture {n : ℕ} (hn : 3 ≤ n)
+    (g : SL(n, ℝ) ⧸ Subgroup.map (map (Int.castRingHom ℝ)) ⊤)
+    (hg : IsCompact <| closure (MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g)) :
+    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g := 
   sorry
 
 end MatrixGroupConjecture
