@@ -58,7 +58,7 @@ noncomputable def g (A : ℕ → ℕ) (n : ℕ) : ℕ :=
 When $A_n = n$, the function $f$ defined above counts the number of odd divisors of $n$.
 -/
 @[category high_school, AMS 5 11]
-theorem f_id : f id = (fun n ↦ (n.divisors.filter Odd).card) := by
+theorem f_id : f id = fun n ↦ (n.divisors.filter Odd).card := by
   sorry
 
 /--
