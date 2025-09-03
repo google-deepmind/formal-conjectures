@@ -76,7 +76,7 @@ theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠
     have : 4 ∣ (!n : ℕ) := this.trans (dvd_of_mod_eq_zero h_mod)
     match n with
     | S + 4 =>
-      simp_arith [left_factorial, mod_eq_zero_of_dvd ∘ Nat.dvd_factorial _,
+      simp +decide [left_factorial, mod_eq_zero_of_dvd ∘ Nat.dvd_factorial _,
         dvd_iff_mod_eq_zero,Nat.add_mod, Finset.sum_nat_mod, Finset.sum_range_succ'] at this
   exact this <| prod_primeFactorsList hn.ne_bot
 
@@ -103,7 +103,7 @@ theorem kurepa_conjecture.gcd_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0
       exact (sum_range_add_sum_Ico _ (le_of_not_ge ‹_›)).subst
         (h_dvd.add (dvd_sum fun _ h => hc.trans <| Nat.factorial_dvd_factorial (by aesop)))
     rw [dvd_iff_mod_eq_zero, left_factorial, sum_nat_mod, ← sum_subset (range_mono hc')
-      (by simp_arith +contextual [mod_eq_zero_of_dvd, dvd_factorial,
+      (by simp +arith +contextual [mod_eq_zero_of_dvd, dvd_factorial,
         pos_of_dvd_of_pos hc (factorial_pos _)])] at h_dvd
     refine by_contra fun _ ↦ h c ?_ (sum_nat_mod _ _ _ ▸ h_dvd)
     match c with

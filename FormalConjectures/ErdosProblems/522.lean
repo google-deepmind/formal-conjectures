@@ -34,7 +34,7 @@ structure KacPolynomial
     {k : Type*} (n : ℕ) [Field k] [MeasurableSpace k] (S : Set k)
     (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := by volume_tac) where
   toFun : Fin n.succ → Ω → k
-  h_indep : ProbabilityTheory.iIndepFun inferInstance toFun ℙ
+  h_indep : ProbabilityTheory.iIndepFun toFun ℙ
   h_unif : ∀ i, MeasureTheory.pdf.IsUniform (toFun i) S ℙ μ
 
 variable {k : Type*} (n : ℕ) [Field k] [MeasurableSpace k] (S : Set k)
