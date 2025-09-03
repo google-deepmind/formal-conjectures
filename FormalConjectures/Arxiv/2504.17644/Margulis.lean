@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # A conjecture by Margulis on matrix groups
 
-
+*Reference:* [arxiv/2504.17644](https://arxiv.org/pdf/2504.17644v3)
+**Bounded diagonal orbits in homogeneous spaces over function fields**
+by *Qianlin Huang, Ronggang Shi*
 -/
 
 section MatrixGroupConjecture
