@@ -53,17 +53,17 @@ private def Alphabet := ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 
 `R` or `L` and throws an error in other cases. This is used when parsing the "direction"
 component of turing machine string representations. -/
 private def Char.toDirSyntax : Char → TermElabM Term
-  | ⟨82, _⟩ => return ← `(Dir.right)
-  | ⟨76, _⟩ => return ← `(Dir.left)
+  | 'R' => `(Dir.right)
+  | 'L' => `(Dir.left)
   | char => throwError "Invalid direction {char}."
 
 /-- `Char.toBinarySyntax c` outputs the syntax corresponding to the character `c` if `c` is in
 `0, ..., 9` and throws an error in other cases. This is used when parsing the "symbol"
 component of turing machine string representations. -/
 private def Char.toNumeralSyntax (c : Char) : TermElabM Term := do
-  unless 48 ≤ c.val && c.val ≤ 57 do
+  unless c.isDigit do
     throwError m!"Invalid write instruction: {c} is not a numeral."
-  let n := c.val - 48
+  let n := c.val - '0'.val
   `($(Lean.Quote.quote n.toNat))
 
 /-- `Char.toStateSyntax c stateName` outputs the syntax of the constructor corresponding to `c`
@@ -71,13 +71,13 @@ if `c` is a capital letter (i.e. something between `A` and `Z`.). For example, `
 the syntax `stateName.A` where `stateName` is the name of the type used to index sets.
 This is used when parsing the "state" component of turing machine string representations. -/
 private def Char.toStateSyntax (c : Char) (stateName : Name) : TermElabM Term := do
-  if c.val < 65 || c.val > 90 then
+  if c.isUpper then
     throwError m!"Invalid state character: {c} should be between A and Z"
   -- The convention is to use the character `Z` to denote the extra halting state.
   if c == 'Z' then
     `(none)
   else
-    `($(Lean.mkIdent <| .str stateName c.toString))
+    return Lean.mkIdent <| .str stateName c.toString
 
 /-- `Nat.toStateSyntax n stateName` outputs the syntax of the `n`-th constructor of the type used to
 index states. -/
@@ -90,14 +90,14 @@ private def Nat.toStateSyntax (n : Nat) (stateName : Name) : TermElabM Term := d
 and outputs the syntax of the corresponding (state, statement) pair
 (i.e. term of type `State × Stmt`). -/
 private def String.toStmtSyntax (s : String) (stateName : Name) : TermElabM Term := do
-  unless s.length == 3 do
+  let [c_symbol, c_dir, c_state] := s.data | 
     throwError m!"Invalid transition encoding: {s} should be 3 characters long."
-  if s == "---" then
+  if c_symbol = '-' ∧ c_dir = '-' ∧ c_state = '-' then
     `(none)
   else
-    let state ← (s.get! ⟨2⟩).toStateSyntax stateName
-    let symbol ← (s.get! ⟨0⟩).toNumeralSyntax
-    let direction ← (s.get! ⟨1⟩).toDirSyntax
+    let state ← c_state.toStateSyntax stateName
+    let symbol ← c_symbol.toNumeralSyntax
+    let direction ← c_dir.toDirSyntax
     let stmt ← `(Stmt.write $symbol $direction)
     `(some ($state, $stmt))
 
