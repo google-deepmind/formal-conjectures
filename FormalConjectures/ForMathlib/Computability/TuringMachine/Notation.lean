@@ -70,11 +70,12 @@ private def Char.toNumeralSyntax (c : Char) : TermElabM Term := do
 if `c` is a capital letter (i.e. something between `A` and `Z`.). For example, `A` would output
 the syntax `stateName.A` where `stateName` is the name of the type used to index sets.
 This is used when parsing the "state" component of turing machine string representations. -/
-private def Char.toStateSyntax (c : Char) (stateName : Name) : TermElabM Term := do
-  if c.isUpper then
+private def Char.toStateSyntax (c : Char) (stateName : Name) (numStates : Nat) : TermElabM Term := do
+  unless c.isUpper do
     throwError m!"Invalid state character: {c} should be between A and Z"
-  -- The convention is to use the character `Z` to denote the extra halting state.
-  if c == 'Z' then
+  -- The convention is to non-state letters (i.e. any letter above the highest letter denoting a
+  -- state) to denote the extra halting state.
+  if c.val - 'A'.val ≥ numStates.toUInt32 then
     `(none)
   else
     return Lean.mkIdent <| .str stateName c.toString
@@ -89,13 +90,13 @@ private def Nat.toStateSyntax (n : Nat) (stateName : Name) : TermElabM Term := d
 /-- `String.toStmtSyntax s stateName` parses a component of a Turing machine string representation
 and outputs the syntax of the corresponding (state, statement) pair
 (i.e. term of type `State × Stmt`). -/
-private def String.toStmtSyntax (s : String) (stateName : Name) : TermElabM Term := do
-  let [c_symbol, c_dir, c_state] := s.data | 
+private def String.toStmtSyntax (s : String) (stateName : Name) (numStates : Nat) : TermElabM Term := do
+  let [c_symbol, c_dir, c_state] := s.data |
     throwError m!"Invalid transition encoding: {s} should be 3 characters long."
   if c_symbol = '-' ∧ c_dir = '-' ∧ c_state = '-' then
     `(none)
   else
-    let state ← c_state.toStateSyntax stateName
+    let state ← c_state.toStateSyntax stateName numStates
     let symbol ← c_symbol.toNumeralSyntax
     let direction ← c_dir.toDirSyntax
     let stmt ← `(Stmt.write $symbol $direction)
@@ -108,7 +109,7 @@ Take as input a list of strings and return an array of `matchAltExpr` syntaxes
 mapping `(state, symbol)` pairs to actions of a Turing Machine,
 given by a term of type `Option (State n)`.
 -/
-def mkMachineMatchAltExpr (L : List String) (stateName : Name) (numSymbols : Nat):
+def mkMachineMatchAltExpr (L : List String) (stateName : Name) (numSymbols numStates: Nat) :
     TermElabM (Array (TSyntax ``matchAltExpr)) := do
   /-
   The encoding of a TM move by a (sub)string `"ABC"` works as follows:
@@ -120,7 +121,7 @@ def mkMachineMatchAltExpr (L : List String) (stateName : Name) (numSymbols : Nat
 
   let moves ← L.toArray.zipIdx.mapM fun (s, i) =>
     Array.range numSymbols |>.mapM fun symbolIdx ↦ do
-      let s_first : Term ← (s.extract ⟨3 * symbolIdx⟩ ⟨3 * (symbolIdx + 1)⟩).toStmtSyntax stateName
+      let s_first : Term ← (s.extract ⟨3 * symbolIdx⟩ ⟨3 * (symbolIdx + 1)⟩).toStmtSyntax stateName numStates
       `(matchAltExpr| | $(← i.toStateSyntax stateName), ($(quote symbolIdx)) => $s_first)
 
   return moves.flatten
@@ -169,13 +170,13 @@ def parseTuring (descr : String) : TermElabM Expr := do
   let numStates := moveListStr.length
   let entryLengths := moveListStr.map String.length |>.dedup
   unless entryLengths.length == 1 do
-    throwError "Invalid string description"
+    throwError "All portions of the string separated by `_` should have the same length"
   let numSymbols := entryLengths[0]! / 3
   let stateName := numStates.toStateName
   mkStateType numStates stateName
   let .some stateType ← checkTypeQ (.const stateName []) q(Type)
     | throwError m!"The constant {stateName} is not a type."
-  let funConstructors ← mkMachineMatchAltExpr moveListStr (numStates.toStateName) numSymbols
+  let funConstructors ← mkMachineMatchAltExpr moveListStr (numStates.toStateName) numSymbols numStates
   let tm ← `(term | fun a b => match a, b with $funConstructors:matchAlt*)
   let _ ← synthInstanceQ q(Inhabited $stateType)
   let numSymbolsQ : Q(Nat) := ToExpr.toExpr numSymbols

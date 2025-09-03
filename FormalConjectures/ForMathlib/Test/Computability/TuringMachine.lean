@@ -76,6 +76,29 @@ example : turing_machine% "1RZ0LZ2LZ_---------" = fun a b =>
       | .B, 2 => none :=
   rfl
 
+/-- error: Invalid write instruction: A is not a numeral. -/
+#guard_msgs in
+#check turing_machine% "---ALZ_------"
+
+/-- error: Invalid direction A. -/
+#guard_msgs in
+#check turing_machine% "---0AZ_------"
+
+/--
+info: fun a b ↦
+  match a, b with
+  | State2.A, 0 => none
+  | State2.A, 1 => some (none, { symbol := 0, dir := Dir.left })
+  | State2.B, 0 => none
+  | State2.B, 1 => none : State2 → Fin 2 → Option (Option State2 × Stmt (Fin 2))
+-/
+#guard_msgs in
+#check turing_machine% "---0LZ_------"
+
+/-- error: All portions of the string separated by `_` should have the same length -/
+#guard_msgs in
+#check turing_machine% "---0LZ_-----"
+
 instance : haltsAfterOne.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after one step
