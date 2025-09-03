@@ -26,6 +26,6 @@ import FormalConjectures.Util.ProblemImports
 There are no distinct primes $p$ and $q$ such that $\frac{q^p - 1}{q - 1}$ divides $\frac{p^q - 1}{p - 1}$
 -/
 @[category research open, AMS 11]
-theorem feit_thompson_primes (p q : ℕ) (hp : Prime p) (hq : Prime q) (h : p < q) :
+theorem feit_thompson_primes (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (h : p < q) :
     ¬ (q ^ p - 1) / (q - 1) ∣ (p ^ q - 1) / (p - 1) := by
   sorry
