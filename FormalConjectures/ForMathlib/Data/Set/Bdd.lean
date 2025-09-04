@@ -20,16 +20,16 @@ variable {β : Type*} [Preorder β]
 variable (S : Set β) (a b : β)
 
 /--
-Given a set `S` and an element `b` in an order `β`, where all intervals bounded above are finite,
-`Set.bdd S b A` is the intersection `S ∩ A ∩ Iio b`.
+Given a set `S` and an element `b` in an order `β`, `Set.interIio S b A` is the intersection
+`S ∩ Iio b`.
 -/
 @[inline]
 abbrev Set.interIio (S : Set β) (b : β) : Set β :=
   S ∩ Set.Iio b
 
 /--
-Given a set `S` and an element `b` in an order `β` with bottom element `⊥`, where all intervals
-bounded above are finite, `Set.bddPos S b A` is the intersection `S ∩ A ∩ Ioc ⊥ b`.
+Given a set `S` and elements `a` and `b` in an order `β`, `Set.interIcc S a b` is the intersection
+`S  ∩ Icc a b`.
 -/
 @[inline]
 abbrev Set.interIcc [OrderBot β] (S : Set β) (a b : β) : Set β :=
