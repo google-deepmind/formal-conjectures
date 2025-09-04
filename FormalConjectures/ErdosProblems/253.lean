@@ -41,7 +41,7 @@ every sufficiently large integer is the sum of distinct $a_i$.
 @[category research solved, AMS 11]
 theorem erdos_253 : ¬ ∀ a : ℕ → ℤ,
     RepresentsAPs a → (Filter.atTop.Tendsto (fun n ↦ (a <| n + 1 : ℝ) / a n) (𝓝 1)) →
-    subsetSums (Set.range a) ∈ Filter.cofinite := by
+      subsetSums (Set.range a) ∈ Filter.cofinite := by
   sorry
 
 end Erdos253
