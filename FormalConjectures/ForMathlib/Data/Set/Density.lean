@@ -119,7 +119,7 @@ end Set.HasDensity
 
 namespace Nat
 
-open Set Classical
+open Set
 
 /--
 The natural density of the set of even numbers is `1 / 2`.
@@ -145,9 +145,8 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
     Tendsto.congr' (eventually_atTop.2 ⟨1, fun k hk => by field_simp⟩) h
 
 /-- A finite set has natural density zero. -/
-theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) :
-    S.HasDensity 0 := by
-  simp [HasDensity, partialDensity,  Set.interIio]
+theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) : S.HasDensity 0 := by
+  simp [HasDensity, partialDensity, Set.interIio]
   have (n : ℕ) : ((S ∩ Set.Iio n).ncard : ℝ) / n ≤ S.ncard / n := by
     by_cases h₀ : n = 0; simp [← Ico_bot, h₀]
     exact div_le_div₀ (by simp) (by simpa using Set.ncard_inter_le_ncard_left _ _ h)

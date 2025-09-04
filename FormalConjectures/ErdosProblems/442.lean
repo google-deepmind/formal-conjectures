@@ -24,7 +24,7 @@ open scoped Topology
 
 namespace Erdos442
 
-open Filter Classical
+open Filter
 
 noncomputable section
 
@@ -38,8 +38,6 @@ The function $\operatorname{Log} x := \max\{log x, 1\}$.
 def Real.maxLogOne (x : ℝ) := max x.log 1
 
 namespace Set
-
-#check Finite
 
 variable (A : Set ℕ) (x : ℝ)
 
