@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Topology
 
+namespace Erdos168
+
 /--Say a finite set of natural numbers is *non ternary* if it contains no
 3-term arithmetic progression of the form `n, 2n, 3n`.-/
 def NonTernary (S : Finset ℕ) : Prop := ∀ n : ℕ, n ∉ S ∨ 2*n ∉ S ∨ 3*n ∉ S
@@ -88,3 +90,5 @@ theorem erdos_168.parts.ii :
 theorem erdos_168.variants.limit_exists :
     ∃ x, Filter.Tendsto (fun N => (F N / N : ℝ)) Filter.atTop (𝓝 x) := by
   sorry
+
+end Erdos168

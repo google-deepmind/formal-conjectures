@@ -21,6 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/434](https://www.erdosproblems.com/434)
 -/
+
+namespace Erdos434
+
+open Erdos434
+
 /--
 A natural $n$ is representable as a set $A$ if it can be
 written as the sum of finitely many elements of $A$
@@ -60,3 +65,5 @@ theorem erdos_434.parts.ii : (∀ᵉ (n ≥ 1) (k ≥ 1), k ≤ n →
       { Nat.NcardUnrepresentable S | (S : Set ℕ) (_ : S ⊆ Set.Icc 1 n) (_ : S.ncard = k) }
       (Nat.NcardUnrepresentable <| Set.Icc (n - k + 1 : ℕ) n)) ↔ answer(sorry) := by
   sorry
+
+end Erdos434

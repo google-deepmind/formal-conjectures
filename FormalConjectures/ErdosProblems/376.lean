@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/376](https://www.erdosproblems.com/376)
 -/
+
+namespace Erdos376
+
 /--
 Are there infinitely many $n$ such that ${2n\choose n}$ is coprime to $105$?
 -/
@@ -37,3 +40,5 @@ theorem erdos_376.variants.prime {p q : ℕ} (h₁ : p.Prime)
     (h₂ : Odd p) (h₃ : q.Prime) (h₄ : Odd q) :
     { n | ((2 * n).choose n).Coprime (p * q) }.Infinite := by
   sorry
+
+end Erdos376

@@ -26,6 +26,8 @@ open Filter
 
 open scoped Topology Real
 
+namespace Erdos1
+
 /--
 A finite set of naturals $A$ is said to be a sum-distinct set for $N \in \mathbb{N}$ if
 $A\subseteq\{1, ..., N\}$ and the sums  $\sum_{a\in S}a$ are distinct for all $S\subseteq A$
@@ -149,3 +151,5 @@ https://oeis.org/A276661
 theorem erdos_1.variants.least_N_9 :
     IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 9 } 161 := by
   sorry
+
+end Erdos1

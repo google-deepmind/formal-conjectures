@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Topology Nat
 
+namespace ArtinPrimitiveRootsConjecture
+
 /--Let `S(a)` be the set of primes such that `a` is a primitive root modulo `p`-/
 private abbrev S (a : ℤ) : Set ℕ :=
   {p : ℕ | p.Prime ∧ orderOf (a : ZMod p) = (p-1 : ℕ)}
@@ -103,3 +105,5 @@ theorem artin_primitive_roots.variants.part_ii
       (ArtinConstant * ∏ p ∈ a_0.primeFactors, p * (p-1 : ℝ) / (p^2 - p - 1))
       {p | p.Prime} := by
   sorry
+
+end ArtinPrimitiveRootsConjecture

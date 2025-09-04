@@ -28,6 +28,8 @@ $f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 asked by user [*Z.H.*](https://mathoverflow.net/users/5098/z-h)
 -/
 
+namespace Mathoverflow21003
+
 /--
 Is there any polynomial $f(x, y) \in \mathbb{Q}[x, y]$ such that
 $f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
@@ -36,3 +38,5 @@ $f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 theorem mathoverflow_21003 :
     (∃ f : MvPolynomial (Fin 2) ℚ, Function.Bijective fun x ↦ f.eval x) ↔ answer(sorry) := by
   sorry
+
+end Mathoverflow21003

@@ -25,6 +25,9 @@ import FormalConjectures.Util.ProblemImports
 open Filter
 
 -- TODO(mercuris): This is a norm on ℝ/ℤ, show this?
+
+namespace LittlewoodConjecture
+
 /--
 The distance to the nearest integer is the function
 $\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$.
@@ -43,3 +46,5 @@ to the nearest integer.
 theorem littlewood_conjecture (α β : ℝ) :
     atTop.liminf (fun (n : ℕ) ↦ n * distToNearestInt (n * α) * distToNearestInt (n * β)) = 0 := by
   sorry
+
+end LittlewoodConjecture

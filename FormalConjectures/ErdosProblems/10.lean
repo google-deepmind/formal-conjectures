@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/10](https://www.erdosproblems.com/10)
 -/
 
+namespace Erdos10
+
 /--
 The set of natural numbers that can be written as a sum
 of a prime and at most $k$ powers of $2$.
@@ -90,3 +92,5 @@ infinitely many even integers which are not the sum of a prime and at most $3$ p
 theorem erdos_10.variants.gretchuk :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 3 := by
   sorry
+
+end Erdos10
