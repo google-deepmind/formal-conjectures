@@ -38,12 +38,14 @@ theorem erdos_321 (N : ℕ) : IsGreatest
     answer(sorry) := by
   sorry
 
--- Formalisation note: it's possible that solution to `erdos_321` needs to be
--- expressed asymptotically. To handle this we include `IsTheta`, `IsBigO`
--- and `IsLittleO` variants below. Since a solution is not known this necessitates
--- the use of an `answer(sorry)` placeholder. Trivial or sub-optimal solutions
--- will therefore exist to the asymptotic formalisations. A true solution to
--- the asymptotic variants should have a degree of optimality or non-triviality to it.
+/-
+Formalisation note: it's possible that solution to `erdos_321` needs to be
+expressed asymptotically. To handle this we include `IsTheta`, `IsBigO`
+and `IsLittleO` variants below. Since a solution is not known this necessitates
+the use of an `answer(sorry)` placeholder. Trivial or sub-optimal solutions
+will therefore exist to the asymptotic formalisations. A true solution to
+the asymptotic variants should have a degree of optimality or non-triviality to it.
+-/
 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $\Theta(R(N))$?
