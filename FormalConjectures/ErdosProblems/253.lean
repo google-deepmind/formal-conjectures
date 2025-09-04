@@ -26,11 +26,12 @@ namespace Erdos253
 
 open scoped Topology
 
-/-- The predicate that `a : ℕ → ℕ` is a sequence such that every infinite arithmetic progression
+/-- The predicate that `a : ℕ → ℤ` is a sequence such that every infinite arithmetic progression
 contains infinitely many integers that are the sum of distinct $a_i$s.-/
 @[inline]
 def RepresentsAPs (a : ℕ → ℤ) : Prop :=
     ∀ l, l.IsAPOfLength ⊤ → (subsetSums (Set.range a) ∩ l).Infinite
+
 
 /--
 Let $a_1 < a_2 < \dotsc$ be an infinite sequence of integers such that $a_{i+1}/a_i \to 1$. If every
