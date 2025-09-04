@@ -53,17 +53,6 @@ theorem erdos_42.constructive : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 �
       ((A - A) ∩ (B - B)) ⊆ {0}) ↔ answer(sorry) := by
   sorry
 
-/--
-A weaker version where we only require that the intersection is bounded.
-Note: This is trivially true since A and B are finite, making their
-difference sets and intersection finite.
--/
-@[category undergraduate, AMS 5 11]
-theorem erdos_42.weaker : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
-    ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N), ∃ᵉ (B : Set ℕ),
-      B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
-      ((A - A) ∩ (B - B)).Finite) := by
-  sorry
 
 /-! ## Related results and examples -/
 
