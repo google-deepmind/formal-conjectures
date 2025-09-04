@@ -105,7 +105,7 @@ theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
     (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]):
     (S a).HasDensity
       (ArtinConstant * (∏ p ∈ m.primeFactors, p * (p - 2 : ℝ) / (p ^ 2 - p - 1))
-        * (1 - ∏ q ∈ b.primeFactors, 1 / (1 + q - q ^ 2 : ℝ)))
+        * (1 - ∏ q ∈ b.squarefreePart.primeFactors, 1 / (1 + q - q ^ 2 : ℝ)))
       {p | p.Prime} := by
   sorry
 
