@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
-open scoped Pointwise Topology Classical
+open scoped Pointwise Topology
 
 namespace Erdos899
 
