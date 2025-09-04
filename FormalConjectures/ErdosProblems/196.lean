@@ -17,29 +17,17 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Gilbreath's conjecture
+# Erdős Problem 196
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gilbreath%27s_conjecture)
+*Reference:* [erdosproblems.com/196](https://www.erdosproblems.com/196)
 -/
+namespace Erdos196
 
-namespace Gilbreath
-
-/--
-**Gilbreath's nth difference**, $d^n$
-Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
--/
-noncomputable def d : ℕ → (ℕ → ℕ)
-  | 0 => fun n ↦ n.nth Nat.Prime
-  | k + 1 => fun n ↦ Int.natAbs (d k (n + 1) - d k n)
-
-open Gilbreath
-
-/--
-**Gilbreath's conjecture**
-Gilbreath's conjecture states that every term in the sequence $d^k_0$ for $k > 0$ is equal to 1.
--/
-@[category research open, AMS 11]
-theorem gilbreath_conjecture (k : ℕ+) : d k 0 = 1 := by
+/-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
+@[category research open, AMS 5 11]
+theorem erdos_196 : (∀ (f : ℕ ≃ ℕ), ∃ (a : List ℕ),
+    ((a.Sorted (· < · )) ∨ (a.Sorted (· > · ))) ∧ Set.IsAPOfLength (f '' a.toFinset) 4)
+    ↔ answer(sorry) := by
   sorry
 
-end Gilbreath
+end Erdos196

@@ -71,7 +71,7 @@ $p$ such that $2 ^ p ≡ 2 \mod p ^ 2$ is infinite. This is Theorem 1 in [GrSo98
 [GrSo98] Granville, A. and Soundararajan, K., A Binary Additive Problem of Erdős and the Order of $2$ mod $p^2$. The Ramanujan Journal (1998), 283-298.
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.variants.granville_soundararajan (H : type_of% erdos_11) :
+theorem erdos_11.variants.granville_soundararajan (H : type_of% erdos_11) :
     {p : ℕ | p.Prime ∧ 2 ^ p ≡ 2 [MOD p ^ 2]}.Infinite := by
   sorry
 

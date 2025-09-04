@@ -17,29 +17,15 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Gilbreath's conjecture
+# Feit-Thompson conjecture on primes
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gilbreath%27s_conjecture)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Feit%E2%80%93Thompson_conjecture)
 -/
 
-namespace Gilbreath
-
 /--
-**Gilbreath's nth difference**, $d^n$
-Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
--/
-noncomputable def d : ℕ → (ℕ → ℕ)
-  | 0 => fun n ↦ n.nth Nat.Prime
-  | k + 1 => fun n ↦ Int.natAbs (d k (n + 1) - d k n)
-
-open Gilbreath
-
-/--
-**Gilbreath's conjecture**
-Gilbreath's conjecture states that every term in the sequence $d^k_0$ for $k > 0$ is equal to 1.
+There are no distinct primes $p$ and $q$ such that $\frac{q^p - 1}{q - 1}$ divides $\frac{p^q - 1}{p - 1}$
 -/
 @[category research open, AMS 11]
-theorem gilbreath_conjecture (k : ℕ+) : d k 0 = 1 := by
+theorem feit_thompson_primes (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (h : p < q) :
+    ¬ (q ^ p - 1) / (q - 1) ∣ (p ^ q - 1) / (p - 1) := by
   sorry
-
-end Gilbreath
