@@ -85,7 +85,7 @@ more than one such prime `p`, then the number needs to be multiplied by
 @[category research open, AMS 11]
 theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
-    (hm₃ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4]) :
+    (hm₂ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4]) :
     (S a).HasDensity
       (ArtinConstant * ∏ p ∈ m.primeFactors, p * (p-2 : ℝ) / (p^2 - p - 1))
       {p | p.Prime} := by
@@ -93,10 +93,11 @@ theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_
 
 /--
 **Artin's Conjecture on Primitive Roots**, second half, power version
-If `a` is a perfect mth power (for an odd `m`) of a number whose squarefree part is `≡ 1 [MOD 4]`,
+If `a` is a perfect mth power (for an odd `m`) of a number `b` whose squarefree part is `≡ 1 [MOD 4]`,
 then the density of the set `S(a)` of primes `p` such that `a` is a primitive root modulo `p`
 is given by $$C \left(\prod_{p \mid m} \frac{p(p-2)}{(p ^ 2 - p - 1)}\right)
-\left(\prod_{p \mid a} \frac{p(p-1)}{(p ^ 2 - p - 1)}\right)$ where $C$ is Artin's constant.
+\left(\prod_{q \mid \mathrm{sf}(b)} \frac{1}{(1 + q - q ^ 2)}\right)$ where $C$ is Artin's constant,
+and $\mathrm{sf}(n)$ denotes the squarefree part of a natural number $n$.
 -/
 @[category research open, AMS 11]
 theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
@@ -104,7 +105,7 @@ theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
     (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]):
     (S a).HasDensity
       (ArtinConstant * (∏ p ∈ m.primeFactors, p * (p - 2 : ℝ) / (p ^ 2 - p - 1))
-        * (∏ p ∈ a.primeFactors, p * (p - 1 : ℝ) / (p ^ 2 - p - 1)))
+        * (1 - ∏ q ∈ b.primeFactors, 1 / (1 + q - q ^ 2 : ℝ)))
       {p | p.Prime} := by
   sorry
 
