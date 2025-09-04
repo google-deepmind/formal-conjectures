@@ -50,7 +50,7 @@ the asymptotic variants should have a degree of optimality or non-triviality to 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $\Theta(R(N))$?
 -/
-@[category research open, AMS 5]
+@[category research open, AMS 11]
 theorem erdos_321.variants.isTheta (N : ℕ) (R : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
@@ -61,7 +61,7 @@ theorem erdos_321.variants.isTheta (N : ℕ) (R : ℕ → ℝ)
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = O(g(N))$.
 -/
-@[category research open, AMS 5]
+@[category research open, AMS 11]
 theorem erdos_321.variants.isBigO (N : ℕ) (R : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
@@ -72,7 +72,7 @@ theorem erdos_321.variants.isBigO (N : ℕ) (R : ℕ → ℝ)
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = o(g(N))$.
 -/
-@[category research open, AMS 5]
+@[category research open, AMS 11]
 theorem erdos_321.variants.isLittleO (N : ℕ) (R : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
@@ -90,7 +90,7 @@ valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} 
 [BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum \sb{1}\spN\,1/i$_. Math. Comp. (1975), 29-42.
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 11]
 theorem erdos_321.variants.lower (N k : ℕ) (hk : 4 ≤ k ∧ k ≤ log^[k] N) (R : ℕ → ℝ)
   (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
@@ -108,7 +108,7 @@ valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} 
 [BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum \sb{1}\spN\,1/i$_. Math. Comp. (1975), 29-42.
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 11]
 theorem erdos_321.variants.upper (N r : ℕ) (hr : 1 ≤ log^[2 * r] N) (R : ℕ → ℝ)
   (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
