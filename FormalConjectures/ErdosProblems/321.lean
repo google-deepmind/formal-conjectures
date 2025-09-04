@@ -34,7 +34,7 @@ What is the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\s
 @[category research open, AMS 11]
 theorem erdos_321 (N : ℕ) : IsGreatest
     { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : (fun (⟨S, _⟩ : A.powerset) ↦ ∑ n ∈ S, (1 : ℚ) / n).Injective) }
+      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) }
     answer(sorry) := by
   sorry
 
@@ -54,7 +54,7 @@ Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all su
 theorem erdos_321.variants.isTheta (N : ℕ) (R : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : (fun (⟨S, _⟩ : A.powerset) ↦ ∑ n ∈ S, (1 : ℚ) / n).Injective) } (R N)) :
+      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
     R =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
@@ -65,7 +65,7 @@ Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all su
 theorem erdos_321.variants.isBigO (N : ℕ) (R : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : (fun (⟨S, _⟩ : A.powerset) ↦ ∑ n ∈ S, (1 : ℚ) / n).Injective) } (R N)) :
+      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
     R =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
@@ -76,7 +76,7 @@ Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all su
 theorem erdos_321.variants.isLittleO (N : ℕ) (R : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : (fun (⟨S, _⟩ : A.powerset) ↦ ∑ n ∈ S, (1 : ℚ) / n).Injective) } (R N)) :
+      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
     R =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
@@ -94,7 +94,7 @@ valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} 
 theorem erdos_321.variants.lower (N k : ℕ) (hk : 4 ≤ k ∧ k ≤ log^[k] N) (R : ℕ → ℝ)
   (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : (fun (⟨S, _⟩ : A.powerset) ↦ ∑ n ∈ S, (1 : ℚ) / n).Injective) } (R N)) :
+      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
   N / log N * ∏ i ∈ Finset.Icc 3 k, (log^[i] N) ≤ R N := by
   sorry
 
@@ -112,7 +112,7 @@ valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} 
 theorem erdos_321.variants.upper (N r : ℕ) (hr : 1 ≤ log^[2 * r] N) (R : ℕ → ℝ)
   (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : (fun (⟨S, _⟩ : A.powerset) ↦ ∑ n ∈ S, (1 : ℚ) / n).Injective) } (R N)) :
+      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
   R N ≤ 1 / log 2 * log^[r] N * N / log N * ∏ i ∈ Finset.Icc 3 r, (log^[i] N) := by
   sorry
 
