@@ -26,7 +26,7 @@ namespace Erdos245
 
 open Filter Erdos245
 
-open scoped Pointwise Topology Classical
+open scoped Pointwise Topology
 
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
@@ -41,10 +41,10 @@ The answer is yes, proved by Freiman [Fr73].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245 :
-    (∀ (A : Set ℕ), A.Infinite → 
+    (∀ (A : Set ℕ), A.Infinite →
       atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
-      3 ≤ atTop.limsup 
-        fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard) ↔ 
+      3 ≤ atTop.limsup
+        fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard) ↔
     answer(True) := by
   sorry
 
@@ -61,8 +61,8 @@ theorem erdos_245.variants.exists_limit (A : Set ℕ) (h_inf : A.Infinite)
     (hf : Tendsto (fun N => (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
     -- Use `EReal` to disinguish infinite limit from other types of non-existence
     ∃ (α : EReal),
-      atTop.Tendsto 
-        (fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard) 
+      atTop.Tendsto
+        (fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard)
         (𝓝 α) := by
   sorry
 
@@ -76,7 +76,7 @@ $$
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
     (hf : atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0)) :
-    2 ≤ atTop.limsup 
+    2 ≤ atTop.limsup
       fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard := by
   sorry
 

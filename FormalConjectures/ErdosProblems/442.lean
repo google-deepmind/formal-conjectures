@@ -24,8 +24,6 @@ open scoped Topology
 
 namespace Erdos442
 
-open Filter
-
 noncomputable section
 
 open Filter Erdos442
