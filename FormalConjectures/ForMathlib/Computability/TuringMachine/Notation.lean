@@ -170,7 +170,9 @@ def parseTuring (descr : String) : TermElabM Expr := do
   let numStates := moveListStr.length
   let entryLengths := moveListStr.map String.length |>.dedup
   unless entryLengths.length == 1 do
-    throwError "All portions of the string separated by `_` should have the same length"
+    throwError "All portions of the string separated by `_` should have the same length."
+  unless 3 ∣ entryLengths[0]! do
+    throwError "Each chunk of the string should consist of several groups of length 3."
   let numSymbols := entryLengths[0]! / 3
   let stateName := numStates.toStateName
   mkStateType numStates stateName

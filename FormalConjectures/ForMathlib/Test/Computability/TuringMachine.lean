@@ -95,9 +95,13 @@ info: fun a b ↦
 #guard_msgs in
 #check turing_machine% "---0LZ_------"
 
-/-- error: All portions of the string separated by `_` should have the same length -/
+/-- error: All portions of the string separated by `_` should have the same length. -/
 #guard_msgs in
 #check turing_machine% "---0LZ_-----"
+
+/-- error: Each chunk of the string should consist of several groups of length 3. -/
+#guard_msgs in
+#check turing_machine% "---0L_-----"
 
 instance : haltsAfterOne.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
@@ -106,6 +110,6 @@ instance : haltsAfterOne.IsHalting := by
 
 theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
   apply haltingNumber_def
-  · use { q := some Λ.T, tape := ⟨Γ.A, Quotient.mk'' [Γ.A], default⟩}
+  · use { q := some Λ.T, tape := ⟨Γ.A, Quotient.mk'' [Γ.A], default⟩ }
     rfl
   · rfl
