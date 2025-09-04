@@ -175,11 +175,11 @@ def parseTuring (descr : String) : TermElabM Expr := do
   let stateName := numStates.toStateName
   mkStateType numStates stateName
   let .some stateType ← checkTypeQ (.const stateName []) q(Type)
-    | throwError m!"The constant {stateName} is not a type."
+    | throwError m!"The constant {.ofConstName stateName} is not a type."
   let funConstructors ← mkMachineMatchAltExpr moveListStr (numStates.toStateName) numSymbols numStates
   let tm ← `(term | fun a b => match a, b with $funConstructors:matchAlt*)
   let _ ← synthInstanceQ q(Inhabited $stateType)
-  let numSymbolsQ : Q(Nat) := ToExpr.toExpr numSymbols
+  let numSymbolsQ : Q(Nat) := Lean.toExpr numSymbols
   elabTermEnsuringType tm q(Machine (Fin $numSymbolsQ) $stateType)
 
 /-- `turing_machine% tmStringDescription` outputs a term of type `Machine Γ Λ`
