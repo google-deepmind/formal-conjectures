@@ -30,7 +30,7 @@ variable {V : Type*}
 def avoidsOddCyclesOfLength (G : SimpleGraph V) (r : ℕ) : Prop :=
   ∀ (n : ℕ) (v : V) (c : G.Walk v v), c.length = n → n ≤ r → Odd n → ¬c.IsCycle
 
-@[category research open, AMS 05]
+@[category research open, AMS 5]
 theorem erdos_740 :
     (∀ (r : ℕ) (G : SimpleGraph V),
       G.chromaticNumber = ⊤ →
