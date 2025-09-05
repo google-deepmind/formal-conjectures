@@ -29,11 +29,11 @@ namespace erdos_5
 
 /--
 There exists a strictly increasing sequence of indices (n_i)
-such that the limit of $(p_{n_{i+1}} - p_{n_i}) / log p_{n_i}$ equals $\infty$,
+such that the limit of $(p_{n_i+1} - p_{n_i}) / log p_{n_i}$ equals $\infty$,
 where $p_k$ denotes the k-th prime number.
 
 **Note:**
-This definition is equivalent to $(p_{n_{i+1}} - p_{n_i}) / log n_i$
+This definition is equivalent to $(p_{n_i+1} - p_{n_i}) / log n_i$
 Since $p_n \sim n \log n$, then $\log n \sim \log p_n$
 -/
 @[category research solved, AMS 11]
@@ -46,12 +46,12 @@ theorem infinite_case :
 **The set of limit points of normalized prime gaps**
 -/
 def limit_points : Set ℝ :=
-  {x : ℝ | ∃ p : ℕ → ℕ, StrictMono p ∧ (∀ n : ℕ, (p n).Prime) ∧
+    {x : ℝ | ∃ p : ℕ → ℕ, StrictMono p ∧ (∀ n : ℕ, (p n).Prime) ∧
     Tendsto (fun i ↦ (p (i+1)  - p i) / log (p i)) atTop (𝓝 x) }
 
 /--
 For every nonnegative real number x, there exists a strictly increasing sequence of indices (n_i)
-such that the limit of $(p_{n_{i+1}} - p_{n_i}) / log p_{n_i}$ equals $x$,
+such that the limit of $(p_{n_i+1} - p_{n_i}) / log n_i$ equals $x$,
 where $p_k$ denotes the k-th prime number.
 -/
 @[category research open, AMS 11]
