@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Finset Real
 
+namespace Erdos695
+
 /--
 Let $q_1 < q_2 < \cdots$ be a sequence of primes such that $q_{i + 1} \equiv 1 \pmod{q_i}$. Is it
 true that
@@ -56,3 +58,5 @@ theorem erdos_695.variant.upperBound :
         ∀ k, q k ≤ exp (k * (log k) ^ (1 + o k))) ↔
     answer(sorry) := by
   sorry
+
+end Erdos695

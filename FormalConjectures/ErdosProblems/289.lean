@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Asymptotics Filter Finset
 
+namespace Erdos289
+
 /-- Is it true that, for all sufficiently large $k$, there exists finite intervals
 $I_1, \dotsc, I_k \subset \mathbb{N}$ with $|I_i| \geq 2$ for $1 \leq i \leq k$ such that
 $$
@@ -35,3 +37,5 @@ theorem erdos_289 :
       (∀ i, 2 ≤ #(I i) ∧ ∃ a b, 0 < a ∧ I i = Finset.Icc a b) ∧
       ∑ i, ∑ n ∈ I i, (n⁻¹ : ℚ) = 1) ↔ answer(sorry) := by
   sorry
+
+end Erdos289

@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/727](https://www.erdosproblems.com/727)
 -/
+
 open scoped Nat
+
+namespace Erdos727
 
 /--
 Let $k ≥ 2$. Does $((n+k)!)^2∣(2n)!$ hold for infinitely many $n$?
@@ -61,3 +64,5 @@ theorem erdos_727_variants.k_1_2 (k : ℕ) (hk : 2 ≤ k) :
     Set.Infinite {n : ℕ |
       (Nat.factorial (n + k)) * (Nat.factorial (n + 1)) ∣ Nat.factorial (2 * n)} := by
   sorry
+
+end Erdos727

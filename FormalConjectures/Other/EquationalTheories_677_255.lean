@@ -22,6 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Equational Theories project site](https://teorth.github.io/equational_theories/implications/?677&finite)
 -/
 
+namespace EquationalTheories_677_255
 
 class Magma (α : Type) where
   op : α → α → α
@@ -67,3 +68,5 @@ Probably this is false. -/
 theorem Finite.Equation677_implies_Equation255 (G : Type) [Magma G] [Finite G]
     (h : Equation677 G) : Equation255 G := by
   sorry
+
+end EquationalTheories_677_255

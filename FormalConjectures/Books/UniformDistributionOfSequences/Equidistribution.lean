@@ -28,6 +28,9 @@ are equidistributed modulo 1 or not.
 by *L. Kuipers* and *H. Niederreiter*, 1974
   - [Wikipedia](https://en.wikipedia.org/wiki/Equidistributed_sequence)
 -/
+
+namespace Equidistribution
+
 open scoped Topology
 
 /--
@@ -88,3 +91,5 @@ Find an accumulation point of the sequence `(3/2)^n`
 theorem isAccumulationPoint_three_halves_pow :
     IsAccumulationPoint answer(sorry) (fun n => (3 / 2 : ℝ)^n) := by
   sorry
+
+end Equidistribution

@@ -21,8 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/143](https://www.erdosproblems.com/143)
 -/
+
 open Filter Finset
 open scoped Topology
+
+namespace Erdos143
 
 /--
 Let $A \subseteq (1, \infty)$ be a countably infinite set such that for all $x\neq y\in A$ and
@@ -50,11 +53,9 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_143.parts.ii (A : Set ℝ) (h : WellSeparatedSet A):
-    ∃ (s : ℝ),
-      Tendsto (fun n ↦ ∑ x ∈ range n, 1 / (x * Real.log x)) atTop (𝓝 s) := by
+theorem erdos_143.parts.ii (A : Set ℝ) (h : WellSeparatedSet A) :
+    Summable fun (x : A) ↦ 1 / (x * Real.log x) := by
   sorry
-
 
 -- TODO(firsching): add the two other conjectures.
 /-
@@ -68,3 +69,5 @@ $$
 \sum_{\substack{x < n \\ x \in A}} \frac{1}{x} \ll \frac{\log x}{\sqrt{\log \log x}}?
 $$
 -/
+
+end Erdos143

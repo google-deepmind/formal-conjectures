@@ -26,6 +26,8 @@ open Filter
 
 open scoped Topology Real
 
+namespace Erdos1
+
 /--
 A finite set of naturals $A$ is said to be a sum-distinct set for $N \in \mathbb{N}$ if
 $A\subseteq\{1, ..., N\}$ and the sums  $\sum_{a\in S}a$ are distinct for all $S\subseteq A$
@@ -62,7 +64,7 @@ $$
 [Er56] Erdős, P., _Problems and results in additive number theory_. Colloque sur la Th\'{E}orie des Nombres, Bruxelles, 1955 (1956), 127-137.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
     ∀ (N : ℕ) (A : Finset ℕ) (h : IsSumDistinctSet A N),
       (1 / 4 - o A.card) * 2 ^ A.card / (A.card : ℝ).sqrt ≤ N := by
   sorry
@@ -72,7 +74,7 @@ A number of improvements of the constant $\frac{1}{4}$ have been given, with the
 record $\sqrt{2 / \pi}$ first provied in unpublished work of Elkies and Gleason.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_1.variants.lb_strong : ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+theorem erdos_1.variants.lb_strong : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
     ∀ (N : ℕ) (A : Finset ℕ) (h : IsSumDistinctSet A N),
       (√(2 / π) - o A.card) * 2 ^ A.card / (A.card : ℝ).sqrt ≤ N := by
   sorry
@@ -149,3 +151,5 @@ https://oeis.org/A276661
 theorem erdos_1.variants.least_N_9 :
     IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 9 } 161 := by
   sorry
+
+end Erdos1

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
  - [Résolution d'une question relative aux déterminants](https://gallica.bnf.fr/ark:/12148/bpt6k486252g/f400.image.r) by *Jacques Hadamard*,  Bull. des sciences math., p.245, 1893
 -/
 
+namespace Hadamard
+
 /--
 A square matrix $M$ with $±1$-entries that satisfies the equality $|M| ≤ n^\frac{n}{2}$ is called a *Hadamard matrix*.
 -/
@@ -44,8 +46,8 @@ Both definitions are equivalent.
 
 TOOD(firsching): complete and golf the proof
 -/
-@[category test]
-example (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
+@[category test, AMS 15]
+theorem isHadamard_equiv_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
   simp [IsHadamard, IsHadamard']
   intro h
   let N := M.transpose * M
@@ -85,8 +87,8 @@ There exists a Hadamard matrix for all $n = 4k$.
 theorem HadamardConjecture (k : ℕ) : ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
-@[category test]
-example : ∃ M, IsHadamard (n := 0) M := by
+@[category test, AMS 15]
+theorem exists_hadamard_zero : ∃ M, IsHadamard (n := 0) M := by
   use 0
   simp [IsHadamard]
 
@@ -109,13 +111,23 @@ def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
 /--
 which satisifies the condition.
 -/
-@[category test]
-example : IsHadamard H12 := by
+@[category test, AMS 15]
+theorem isHadamard_H12 : IsHadamard H12 := by
+  sorry
+
+/--
+For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.
+-/
+@[category research solved, AMS 15]
+theorem HadamardConjecture.variants.first_cases (k : ℕ) (h : k ≤ 166) :
+    ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
 /--
 The smallest order for which no Hadamard matrix is presently known is $668 = 4 * 167$.
 -/
 @[category research open, AMS 15]
-theorem HadamardConjecture.variant : ∃ M, IsHadamard (n := 4 * 167) M := by
+theorem HadamardConjecture.variants.«167» : ∃ M, IsHadamard (n := 4 * 167) M := by
   sorry
+
+end Hadamard

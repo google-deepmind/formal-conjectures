@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/410](https://www.erdosproblems.com/410)
 -/
+
 open ArithmeticFunction Filter
+
+namespace Erdos410
 
 /--
 Let $σ_1(n) = σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k−1}(n))$.
@@ -37,3 +40,5 @@ Erdos, Granville, Pomerance, Spiro
 theorem erdos_410 : (∀ᵉ (n > 1),
     Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop) ↔ answer(sorry) := by
   sorry
+
+end Erdos410

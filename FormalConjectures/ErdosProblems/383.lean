@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/383](https://www.erdosproblems.com/383)
 -/
+
+namespace Erdos383
+
 /--
 Is it true that for every $k$ there are infinitely many primes $p$ such that the largest prime
 divisor of
@@ -34,3 +37,5 @@ theorem erdos_383 :
     (∀ k, {p : ℕ | p.Prime ∧ Nat.maxPrimeFac (∏ i ∈ Finset.Icc 0 k, (p ^ 2 + i)) = p}.Infinite) ↔
     answer(sorry) := by
   sorry
+
+end Erdos383

@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/242](https://www.erdosproblems.com/242)
 -/
+
 open scoped Topology
+
+namespace Erdos242
 
 /--
 For every $n>2$ there exist distinct integers $1 ≤ x < y < z$
@@ -44,3 +47,5 @@ theorem erdos_242_schinzel_generalization
     ∀ᶠ (n : ℕ) in Filter.atTop, ∃ x y z : ℕ, 1 ≤ x ∧ x < y ∧ y < z ∧
       (a / n : ℚ) = 1 / x + 1 / y + 1 / z := by
   sorry
+
+end Erdos242

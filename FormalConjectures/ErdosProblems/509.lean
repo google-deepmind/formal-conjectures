@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/509](https://www.erdosproblems.com/509)
 -/
+
+namespace Erdos509
+
 open Polynomial
 open scoped Real
 
@@ -116,3 +119,5 @@ theorem erdos_509.variants.Pommerenke_connected : (∀ (f : ℂ[X]), f.Monic →
     IsConnected {z | ‖f.eval z‖ ≤ 1} →
     ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι)) ↔ answer(True) := by
   sorry
+
+end Erdos509
