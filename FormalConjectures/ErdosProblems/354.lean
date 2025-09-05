@@ -15,7 +15,12 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+/-!
 
+# Erdős Problem 354
+*Reference:* [erdosproblems.com/354](https://www.erdosproblems.com/354)
+
+-/
 namespace Erdos354
 
 /-- The set `{⌊a⌋, ⌊2 * a⌋, ⌊4 * a⌋, ...}`. -/
