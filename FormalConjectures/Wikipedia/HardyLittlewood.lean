@@ -30,6 +30,8 @@ noncomputable section
 
 /-! ## First Hardy-Littlewood Conjecture -/
 
+namespace HardyLittlewood
+
 /--
 A prime constellation is a tuple $(p, p + m_1, ..., p + m_k)$ such that the $m_i$ are
 all positive even integers and every entry is a prime number.
@@ -111,3 +113,5 @@ theorem not_first_and_secondHardyLittlewoodConjecture :
     (∀ {k : ℕ} (m : Fin k.succ → ℕ), FirstHardyLittlewoodConjectureFor m) →
       ¬(∀ {x y : ℕ} (hx : 2 ≤ x) (hy : 2 ≤ y), SecondHardyLittlewoodConjectureFor x y) := by
   sorry
+
+end HardyLittlewood

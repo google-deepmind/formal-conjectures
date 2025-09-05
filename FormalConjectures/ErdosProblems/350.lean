@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/350](https://www.erdosproblems.com/350)
 -/
+
+namespace Erdos350
+
 /--The predicate that all (finite) subsets of `A` have distinct sums-/
 def DistinctSubsetSums {M : Type*} [AddCommMonoid M] (A : Set M) : Prop :=
   Set.Pairwise {X : Finset M | ↑X ⊆ A} fun X Y => X.sum id ≠ Y.sum id
@@ -30,11 +33,11 @@ def DecidableDistinctSubsetSums {M : Type*} [AddCommMonoid M] [DecidableEq M] (A
   ∀ X ⊆ A, ∀ Y ⊆ A, X ≠ Y → X.sum id ≠ Y.sum id
 
 @[category test, AMS 5 11]
-example : DecidableDistinctSubsetSums {1, 2} := by
+theorem decidableDistinctSubsetSums_1_2 : DecidableDistinctSubsetSums {1, 2} := by
   rw [DecidableDistinctSubsetSums] ; decide
 
 @[category test, AMS 5 11]
-example : DistinctSubsetSums ({1, 2} : Finset ℕ).toSet := by
+theorem distinctSubsetSums_1_2 : DistinctSubsetSums ({1, 2} : Finset ℕ).toSet := by
   rw [DistinctSubsetSums]
   intro x hx y hy hxy
   simp_rw [Finset.coe_subset, ←Finset.mem_powerset, Finset.setOf_mem, Finset.mem_coe] at *
@@ -67,3 +70,5 @@ We exlude here the case `s = 0`, because in the informal formulation then the ri
 theorem erdos_350.variants.strengthening (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A)
     (s : ℝ) (hs : 0 < s) : ∑ n ∈ A, (1 / n : ℝ)^s < 1 / (1 - 2^(-s)) := by
   sorry
+
+end Erdos350

@@ -40,6 +40,8 @@ The conjecture is now claimed to be proven in this paper:
 
 -/
 
+namespace CasasAlvero
+
 open Polynomial
 
 variable {K L : Type*} [Field K] [Field L] {f : K →+* L}
@@ -161,3 +163,5 @@ theorem casas_alvero.positive_char_counterexample {p : ℕ} (hp : p.Prime) :
       Monic P ∧ HasCasasAlveroProp P ∧
       ¬∃ α : K, P = (X - C α) ^ P.natDegree := by
   sorry
+
+end CasasAlvero

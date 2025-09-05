@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/694](https://www.erdosproblems.com/694)
 -/
+
+namespace Erdos694
+
 /--
 Let $f_{\max}(n)$ be the largest $m$ such that $\phi(m) = n$, and
 $f_{\min}(n)$ be the smallest such $m$, where $\phi$ is Euler's
@@ -56,3 +59,5 @@ exactly one solution, then there must be infinitely many such $n$.
 theorem erdos_694.variants.inf_unique (h : ∃ n > 0, ∃! m, Nat.totient m = n) :
     { n | ∃! m, Nat.totient m = n }.Infinite := by
   sorry
+
+end Erdos694

@@ -18,7 +18,9 @@ import FormalConjectures.Util.ProblemImports
 
 universe u
 
-namespace SimpleGraph
+namespace WrittenOnTheWallII.GraphConjecture3
+
+open SimpleGraph
 
 variable {α : Type u} [Fintype α] [DecidableEq α]
 
@@ -34,4 +36,4 @@ theorem conjecture3 {G : SimpleGraph α} [DecidableEq α] [DecidableRel G.Adj] [
     gi G * MaxTemp G ≤ Ls G := by
   sorry
 
-end SimpleGraph
+end WrittenOnTheWallII.GraphConjecture3

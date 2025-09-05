@@ -19,5 +19,5 @@ Consider linking any open Mathlib issues / PRs here.
 * ams-XX
 
 ### Choose either option
-- [ ] I plan on working on this conjecture
+- [ ] I plan on adding this conjecture to the repository
 - [ ] This issue is up for grabs: I would like to see this conjecture added by somebody else

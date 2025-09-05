@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Topology Nat
 
+namespace ArtinPrimitiveRootsConjecture
+
 /--Let `S(a)` be the set of primes such that `a` is a primitive root modulo `p`-/
 private abbrev S (a : ℤ) : Set ℕ :=
   {p : ℕ | p.Prime ∧ orderOf (a : ZMod p) = (p-1 : ℕ)}
@@ -74,32 +76,38 @@ theorem artin_primitive_roots.variants.part_ii_square_or_minus_one
 
 /--
 **Artin's Conjecture on Primitive Roots**, second half, power version
-If `a` is a perfect pth power for prime `p`, then the density of the set `S(a)` of
-primes `p` such that `a` is a primitive root modulo `p`
-is given by `p(p-2) / (p^2 - p - 1) * C` where `C` is Artin's constant. If there are
+If `a` is a perfect pth power for an odd prime `p` of a number whose squarefree part isn't `≡ 1 [MOD 4]`,
+then the density of the set `S(a)` of primes `p` such that `a` is a primitive root modulo `p`
+is given by `p(p-2) / (p ^ 2 - p - 1) * C` where `C` is Artin's constant. If there are
 more than one such prime `p`, then the number needs to be multiplied by
-``p(p-2) / (p^2 - p - 1)` for all such primes `p`.
+`p(p-2) / (p^2 - p - 1)` for all such primes `p`.
 -/
 @[category research open, AMS 11]
-theorem artin_primitive_roots.variants.part_ii_prime_power
-    (a m b : ℕ) (ha : a = b^m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
-    (hm₂ : m.primeFactorsList.Nodup)  :
+theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_one
+    (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
+    (hm₂ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4]) :
     (S a).HasDensity
       (ArtinConstant * ∏ p ∈ m.primeFactors, p * (p-2 : ℝ) / (p^2 - p - 1))
       {p | p.Prime} := by
   sorry
 
 /--
-**Artin's Conjecture on Primitive Roots**, second half, perfect prime power version
-Write `a = a_0 b^2` where `a_0` is squarefree.
-If `a_0` is congruent to `1 mod 4`, then the density of the set `S(a)` of primes `p` such that `a` is a primitive root modulo `p`
-is given by `C * ∏_p, p(p-1) / (p^2 - p - 1)` where `C` is Artin's constant and the product is taken over the prime factors `p` of `a_0`
+**Artin's Conjecture on Primitive Roots**, second half, power version
+If `a` is a perfect mth power (for an odd `m`) of a number `b` whose squarefree part is `≡ 1 [MOD 4]`,
+then the density of the set `S(a)` of primes `p` such that `a` is a primitive root modulo `p`
+is given by $$C \left(\prod_{p \mid m} \frac{p(p-2)}{(p ^ 2 - p - 1)}\right)
+\left(\prod_{q \mid \mathrm{sf}(b)} \frac{1}{(1 + q - q ^ 2)}\right)$ where $C$ is Artin's constant,
+and $\mathrm{sf}(n)$ denotes the squarefree part of a natural number $n$.
 -/
+-- TODO: There might be a missing factor of `μ b` here, see https://mast.queensu.ca/~murty/intelligencer.pdf
 @[category research open, AMS 11]
-theorem artin_primitive_roots.variants.part_ii
-    (a a_0 b : ℕ) (ha : a = a_0 * b^2) (ha' : ∀ n m, m ≠ 1 → a ≠ n^m)
-    (ha' : Squarefree a) (ha_0' : a_0 ≡ 1 [MOD 4]):
+theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
+    (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
+    (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]):
     (S a).HasDensity
-      (ArtinConstant * ∏ p ∈ a_0.primeFactors, p * (p-1 : ℝ) / (p^2 - p - 1))
+      (ArtinConstant * (∏ p ∈ m.primeFactors, p * (p - 2 : ℝ) / (p ^ 2 - p - 1))
+        * (1 - ∏ q ∈ b.squarefreePart.primeFactors, 1 / (1 + q - q ^ 2 : ℝ)))
       {p | p.Prime} := by
   sorry
+
+end ArtinPrimitiveRootsConjecture

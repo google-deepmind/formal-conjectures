@@ -26,6 +26,8 @@ open Filter
 
 open scoped Pointwise
 
+namespace Erdos868
+
 /-- The number of ways in which a natural `n` can be written as the sum of
 `o` members of the set `A`. -/
 noncomputable
@@ -68,7 +70,9 @@ theorem erdos_868.variants.fixed_ε :
 /-- Härtter and Nathanson proved that there exist additive bases which do not contain
 any minimal additive bases. -/
 @[category research solved, AMS 5 11]
-theorem erdos_868.variants.Hartter_Nathanson : ∃ᵉ (A : Set ℕ) (o > 1),
+theorem erdos_868.variants.Hartter_Nathanson (o : ℕ) (ho : 1 < o) : ∃ (A : Set ℕ),
     A.IsAsymptoticAddBasisOfOrder o ∧ ∀ B ⊆ A, B.IsAsymptoticAddBasisOfOrder o →
     ∃ b ∈ B, (B \ {b}).IsAsymptoticAddBasisOfOrder o := by
   sorry
+
+end Erdos868

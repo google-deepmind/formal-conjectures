@@ -28,13 +28,15 @@ Since we don't have the conductor of the elliptic curve, our definition of `a_p(
 that in the literature at primes of bad reduction. For this reason, we state the conjecture with the
 assumption that `p ∤ N`, in order to give an equivalent statement.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
-* [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
+- [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
 
 -/
 
+namespace ModularityConjecture
 
-open Complex CongruenceSubgroup ModularFormClass
+open Complex CongruenceSubgroup ModularFormClass ModularityConjecture
 open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
 
 noncomputable section
@@ -78,10 +80,14 @@ def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop
   ∀ (p r : ℕ), p.Prime → 2 ≤ r → (N : ZMod p) = 0 → a_[p ^ r]f = (a_[p]f) ^ r
 
 /-- See  theorem 8.8.1 of [diamondshurman2005]. -/
-def ModularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
+def modularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
   ∃ (N : ℕ+) (f : CuspForm (Gamma0 N) 2), IsNormalisedEigenform f ∧
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
 
 @[category research solved, AMS 11]
-theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : ModularityConjecture E := by
+theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : modularityConjecture E := by
   sorry
+
+end
+
+end ModularityConjecture

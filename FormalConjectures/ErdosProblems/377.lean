@@ -25,6 +25,9 @@ import FormalConjectures.Util.ProblemImports
 open Filter
 
 open scoped Topology
+
+namespace Erdos377
+
 /--
 The sum of the inverses of all primes smaller than $n$, which don't divide the central
 binom coefficient.
@@ -126,3 +129,5 @@ $$
 theorem erdos_377.variants.ub : ∃ c < (1 : ℝ),
       ∀ᶠ n in atTop, sumInvPrimesNotDvdCentralBinom n ≤ c * (n : ℝ).log.log := by
   sorry
+
+end Erdos377
