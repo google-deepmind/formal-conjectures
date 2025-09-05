@@ -26,7 +26,7 @@ For every r≥4 and k≥2, does there exist finite f(k,r) such that every graph 
 
 variable {V : Type*} [Fintype V]
 
-@[category research open, AMS 05]
+@[category research open, AMS 5]
 theorem erdos_108 :
     (∃ (f : ℕ → ℕ → ℕ), ∀ (r k : ℕ), r ≥ 4 → k ≥ 2 →
       ∀ (G : SimpleGraph V) [DecidableRel G.Adj],
