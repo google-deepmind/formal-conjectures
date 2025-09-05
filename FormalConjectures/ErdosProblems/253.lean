@@ -34,7 +34,7 @@ def RepresentsAPs (a : ℕ → ℤ) : Prop :=
 
 
 /--
-Let $a_1 < a_2 < \dotsc$ be an infinite sequence of integers such that $a_{i+1}/a_i \to 1$. If every
+Let $a_1 < a_2 < \dotsc$ be an infinite sequence of integers such that $\frac{a_{i+1}}{a_i} \to 1$. If every
 arithmetic progression contains infinitely many integers which are the sum of distinct $a_i$ then
 every sufficiently large integer is the sum of distinct $a_i$.
 -/
