@@ -32,7 +32,7 @@ namespace SumOfThreeCubes
 
 variable {R : Type*} [Ring R]
 
-/-- The predicate that `n : R` is a sum of three (integer) cubes. -/
+/-- The predicate that `n : R` is a sum of three cubes. -/
 def IsSumOfThreeCubes (n : R) : Prop :=
   ∃ x y z : R, n = x^3 + y^3 + z^3
 
