@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace WrittenOnTheWallII.GraphConjecture1
+
 open SimpleGraph
 
 /--
@@ -31,3 +33,5 @@ theorem conjecture1 {α : Type*} [Fintype α] [DecidableEq α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
     n G + 1 - 2 * m G ≤ Ls G := by
   sorry
+
+end WrittenOnTheWallII.GraphConjecture1

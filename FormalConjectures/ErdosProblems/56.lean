@@ -23,6 +23,9 @@ open scoped Finset
 
 *Reference:* [erdosproblems.com/56](https://www.erdosproblems.com/56)
 -/
+
+namespace Erdos56
+
 /--
 Say a set of natural numbers is `k`-weakly divisible if any `k+1` elements
 of `A` are not relatively prime.
@@ -56,11 +59,12 @@ noncomputable def MaxWeaklyDivisible (N : ℕ) (k : ℕ) : ℕ :=
   sSup {#A | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : WeaklyDivisible k A)}
 
 @[category test, AMS 11]
-example (k : ℕ) : MaxWeaklyDivisible 0 k = 0 := by
+theorem maxWeaklyDivisible_zero : ∀ k : ℕ, MaxWeaklyDivisible 0 k = 0 := by
+  intro k
   simp [MaxWeaklyDivisible, Nat.sSup_def]
 
 @[category test, AMS 11]
-example {k : ℕ} (hk : k ≠ 0) : MaxWeaklyDivisible 1 k = 1 := by
+theorem maxWeaklyDivisible_one {k : ℕ} (hk : k ≠ 0) : MaxWeaklyDivisible 1 k = 1 := by
   have : {x | ∃ A, WeaklyDivisible k A ∧ (A = ∅ ∨ A = {1}) ∧ #A = x} = {0, 1} := by
     refine Set.ext fun _ => ⟨fun _ => by aesop, ?_⟩
     rintro ⟨_, _⟩
@@ -69,7 +73,7 @@ example {k : ℕ} (hk : k ≠ 0) : MaxWeaklyDivisible 1 k = 1 := by
   simp_all [MaxWeaklyDivisible]
 
 @[category test, AMS 11]
-example (N : ℕ) : MaxWeaklyDivisible N 0 = 0 := by
+theorem maxWeaklyDivisible_zero_k (N : ℕ) : MaxWeaklyDivisible N 0 = 0 := by
   simp [empty_iff_weaklyDivisible_zero, MaxWeaklyDivisible]
 
 /--
@@ -80,7 +84,7 @@ noncomputable def FirstPrimesMultiples (N k : ℕ) : Finset ℕ :=
     (Finset.Icc 1 N).filter fun i => ∃ j < k, (j.nth Nat.Prime ∣ i)
 
 @[category test, AMS 11]
-example (k : ℕ) : (FirstPrimesMultiples 1 k).card = 0 := by
+theorem firstPrimesMultiples_one_card_zero (k : ℕ) : (FirstPrimesMultiples 1 k).card = 0 := by
   simp [FirstPrimesMultiples, Finset.filter_singleton]
   intro n h
   by_contra hprime
@@ -90,7 +94,7 @@ example (k : ℕ) : (FirstPrimesMultiples 1 k).card = 0 := by
   tauto
 
 @[category test, AMS 11]
-example (N : ℕ) : (FirstPrimesMultiples N 0).card = 0 := by
+theorem firstPrimesMultiples_zero_k_card_zero (N : ℕ) : (FirstPrimesMultiples N 0).card = 0 := by
   simp [FirstPrimesMultiples]
 
 /--
@@ -108,6 +112,8 @@ relatively prime. An example is the set of all multiples of the first $k$ primes
 Is this the largest such set?
 -/
 @[category research solved, AMS 11]
-theorem erdos_56 : ∀ᵉ (N ≥ 2) (k > 0), (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card) ↔
+theorem erdos_56 : (∀ᵉ (N ≥ 2) (k > 0), (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card)) ↔
     answer(False) := by
   sorry
+
+end Erdos56

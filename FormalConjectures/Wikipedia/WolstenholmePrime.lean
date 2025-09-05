@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 
+namespace WolstenholmePrime
+
 /--
 Wolstenholme's theorem states that any prime $p > 3$ satisfies $\binom{2p-1}{p-1} \equiv 1 (\pmod{p^3})$.
 
@@ -77,3 +79,5 @@ It is conjectured that there are infinitely many Wolstenholme primes.
 theorem wolstenholme_prime_infinite :
     {p : ℕ | IsWolstenholmePrime p}.Infinite := by
   sorry
+
+end WolstenholmePrime

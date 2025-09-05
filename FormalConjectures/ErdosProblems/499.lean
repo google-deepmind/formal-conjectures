@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Nat
 
+namespace Erdos499
+
 /--
 Let $M$ be a real $n \times n$ doubly stochastic matrix. Does there exist some $σ \in S_n$ such that
 $$
@@ -34,7 +36,7 @@ This is true, and was proved by Marcus and Minc [MaMi62]
 -/
 @[category research solved, AMS 15]
 lemma erdos_499 :
-    (∀ (n : ℕ), ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
+    (∀ n, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
       n ^ (- n : ℤ) ≤ ∏ i, M i (σ i)) ↔
     answer(True) := by
   sorry
@@ -66,7 +68,9 @@ Proved by Marcus and Ree [MaRe59].
 -/
 @[category research solved, AMS 15]
 lemma erdos_499.variants.one_le :
-    (∀ (n : ℕ), ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
+    (∀ n > 0, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
       (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∑ i, M i (σ i)) ↔
     answer(True) := by
   sorry
+
+end Erdos499

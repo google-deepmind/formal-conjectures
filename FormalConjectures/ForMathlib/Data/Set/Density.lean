@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Analysis.SpecificLimits.Basic
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
+import FormalConjectures.ForMathlib.Data.Set.Bdd
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
 
@@ -32,9 +32,10 @@ we define the partial density of `S` (relative to a set `A`) to be the proportio
 
 This definition was inspired from https://github.com/b-mehta/unit-fractions
 -/
+@[inline]
 noncomputable abbrev partialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : ℝ :=
-  (S ∩ A ∩ Set.Iio b).ncard / (A ∩ Set.Iio b).ncard
+  (Set.interIio (S ∩ A) b).ncard / (Set.interIio A b).ncard
 
 /--
 Given a set `S` in an order `β`, where all intervals bounded above are finite, we define the upper
@@ -91,7 +92,7 @@ theorem univ {β : Type*} [PartialOrder β] [LocallyFiniteOrder β]
     (eventually_atTop.2 ⟨b, fun n hn => (div_self <| Nat.cast_ne_zero.2 (hb n hn)).symm⟩)
       tendsto_const_nhds
 
-example : (@Set.univ ℕ).HasDensity 1 := univ
+theorem univ_nat_hasDensity_one : (@Set.univ ℕ).HasDensity 1 := univ
 
 @[simp]
 theorem empty {β : Type*} [Preorder β] [LocallyFiniteOrderBot β] (A : Set β := Set.univ) :
@@ -107,7 +108,7 @@ theorem mono {β : Type*} [PartialOrder β] [LocallyFiniteOrder β] [OrderBot β
   let ⟨b, hb⟩ := Set.Iio_eventually_ncard_ne_zero β
   refine ⟨b, fun c hc => ?_⟩
   rw [div_le_div_iff_of_pos_right (by simpa using Nat.pos_of_ne_zero (hb c hc))]
-  simpa using Set.ncard_le_ncard (Set.inter_subset_inter_left _ h)
+  simpa using Set.ncard_le_ncard (Set.interIio_mono h c)
 
 theorem nonneg {β : Type*} [Preorder β] [LocallyFiniteOrderBot β] [(atTop : Filter β).NeBot]
     {S : Set β} {α : ℝ}  (h : S.HasDensity α) :
@@ -124,7 +125,7 @@ open Set
 The natural density of the set of even numbers is `1 / 2`.
 -/
 theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
-  simp [HasDensity, partialDensity]
+  simp [HasDensity, partialDensity, Set.interIio]
   have h {n : ℕ} (hn : 1 ≤ n) : (({n : ℕ | Even n} ∩ Iio n).ncard : ℝ) / n =
       if Even n then 2⁻¹ else (n + 1 : ℝ) /  n * 2⁻¹ := by
     split_ifs with h
@@ -144,9 +145,8 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
     Tendsto.congr' (eventually_atTop.2 ⟨1, fun k hk => by field_simp⟩) h
 
 /-- A finite set has natural density zero. -/
-theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) :
-    S.HasDensity 0 := by
-  simp [HasDensity, partialDensity]
+theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) : S.HasDensity 0 := by
+  simp [HasDensity, partialDensity, Set.interIio]
   have (n : ℕ) : ((S ∩ Set.Iio n).ncard : ℝ) / n ≤ S.ncard / n := by
     by_cases h₀ : n = 0; simp [← Ico_bot, h₀]
     exact div_le_div₀ (by simp) (by simpa using Set.ncard_inter_le_ncard_left _ _ h)

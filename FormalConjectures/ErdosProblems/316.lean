@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/316](https://www.erdosproblems.com/316)
 -/
+
+namespace Erdos316
+
 /-- Is it true that if $A \subseteq \mathbb{N}∖{1}$ is a finite set with
 $\sum_{n \in A} \frac{1}{n} < 2$ then there is a partition $A=A_1 \sqcup A_2$
 such that $\sum_{n \in A_i} \frac{1}{n} < 1$ for $i=1,2$?
@@ -68,3 +71,5 @@ theorem erdos_316.variants.generalized (n : ℕ) (hn : 2 ≤ n) : ∃ A : Finset
     A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
     P.parts.card = n → ∃ p ∈ P.parts, 1 ≤ ∑ n ∈ p, (1 / n : ℚ) := by
   sorry
+
+end Erdos316

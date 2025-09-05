@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/298](https://www.erdosproblems.com/298)
 -/
+
+namespace Erdos298
+
 /-- Does every set `A ⊆ N` of positive density contain some finite `S ⊂ A` such that
 `∑ n ∈ S, 1 / n = 1`?
 
@@ -42,3 +45,5 @@ In [Bl21] it is proved under the weaker assumption that `A` only has positive up
 theorem erdos_298.variants.upper_density : (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
     ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) ↔ answer(True) := by
   sorry
+
+end Erdos298

@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 by *Marco Abrate, Stefano Barbero, Umberto Cerruti, Nadir Murru*
 -/
 
+namespace Arxiv.«1601.03081»
+
 /--
 An odd number $n$ is called a crystal if $n = ab$, with $a, b > 1$
 and $B(a, b) ∈ ℕ$, where $B(a, b) := ((a + b)^2 + (a b + 1)^2) / (2 (a + 1) (b + 1))$.
@@ -32,7 +34,7 @@ def IsCrystalWithComponents (n a b : ℕ) : Prop :=
   Odd n ∧ 1 < a ∧ 1 < b ∧ n = a * b ∧ 2 * (a + 1) * (b + 1) ∣ (a + b)^2 + (a * b + 1)^2
 
 @[category test, AMS 11]
-example : IsCrystalWithComponents 35 5 7 := by
+theorem isCrystalWithComponents_35_5_7 : IsCrystalWithComponents 35 5 7 := by
   norm_num [IsCrystalWithComponents]
   decide
 
@@ -48,3 +50,5 @@ theorem crystals_components_unique (n a b c d : ℕ)
     (hab : IsCrystalWithComponents n a b) (hcd : IsCrystalWithComponents n c d) :
     ({a, b} : Finset ℕ) = {c, d} := by
   sorry
+
+end Arxiv.«1601.03081»

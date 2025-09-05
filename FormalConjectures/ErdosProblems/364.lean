@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Nat
 
+namespace Erdos364
+
 /-- There is no consecutive triple of powerful numbers. -/
 @[category research open, AMS 11]
 theorem erdos_364 :
@@ -54,3 +56,5 @@ theorem erdos_364.variants.weak :
   have h2mod4 : n % 4 = 2 ∨ (n + 1) % 4 = 2 ∨ (n + 2) % 4 = 2 ∨ (n + 3) % 4 = 2 := by omega
   rcases h2mod4 with (_|_|_|_) <;>
   simp_all [not_full_of_prime_mod_prime_sq _ 1 (Nat.prime_two)]
+
+end Erdos364

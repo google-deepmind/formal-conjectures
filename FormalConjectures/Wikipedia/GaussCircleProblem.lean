@@ -57,13 +57,14 @@ private abbrev E (r : ℝ) : ℝ := N r - π * r ^ 2
 /--
 Gauss proved that
 $$
-  |E(r)|\leq 2\sqrt{2}\pi r.
+  |E(r)|\leq 2\sqrt{2}\pi r,
 $$
+for sufficiently large $r$.
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67
 -/
 @[category research solved, AMS 11]
-theorem error_le (r : ℝ) (hr : 0 < r) : |E r| ≤ 2 * √2 * π * r := by
+theorem error_le : ∀ᶠ r in atTop, |E r| ≤ 2 * √2 * π * r := by
   sorry
 
 /--

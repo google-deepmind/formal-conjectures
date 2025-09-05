@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Rational_variety)
 -/
+
+namespace NoetherProblem
+
 /--
 A rational field extension is a field extension `L/K` isomorphic
 to a field of rational functions (in some arbitrary number of indeterminates.)
@@ -33,7 +36,7 @@ class IsRationalExtension (K L ι : Type*)
 /-- If the index set `ι` is empty, then `IsRationalExtension K L ι` means that
 `K, L` are isomorphic as `K` algebras. -/
 @[category test, AMS 12]
-example (K L ι : Type*) [Field K] [Field L] [Algebra K L] [IsEmpty ι]
+theorem rationalExtension_empty_index (K L ι : Type*) [Field K] [Field L] [Algebra K L] [IsEmpty ι]
     [IsRationalExtension K L ι] :
     Nonempty (L ≃ₐ[K] K) := by
   set a : L ≃ₐ[K] (FractionRing (MvPolynomial ι K)) :=
@@ -106,3 +109,5 @@ theorem noether_problem.variants.forty_seven :
     (_ : IsRationalExtension K L ι),
     Fintype.card ι = 47 ∧ ¬ HasNoetherProperty K L ι := by
   sorry
+
+end NoetherProblem

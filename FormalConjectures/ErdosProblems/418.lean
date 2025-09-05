@@ -26,6 +26,8 @@ Reviewed by @b-mehta on 2025-05-27
 
 open scoped ArithmeticFunction
 
+namespace Erdos418
+
 /--
 Are there infinitely many integers not of the form $n - \phi(n)$?
 
@@ -99,3 +101,5 @@ not of the form $n - \phi(n)$.
 theorem erdos_418.variants.density :
     (∃ (S : Set ℕ) (hS : S.HasPosDensity), S ⊆ { (n - n.totient : ℕ) | n }ᶜ) ↔ answer(sorry) := by
   sorry
+
+end Erdos418

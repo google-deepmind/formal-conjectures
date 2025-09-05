@@ -22,13 +22,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/245](https://www.erdosproblems.com/245)
 -/
 
-open Filter
+namespace Erdos245
+
+open Filter Erdos245
 
 open scoped Pointwise Topology
-
-/-- If `A` is a set of natural numbers and `N : ℕ`, then `bdd A N` is the
-set `{ n ∈ A | 1 ≤ n ≤ N }`. -/
-private def Set.bdd (A : Set ℕ) (N : ℕ) := A ∩ Set.Icc 1 N
 
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
@@ -43,8 +41,11 @@ The answer is yes, proved by Freiman [Fr73].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245 :
-    (∀ (A : Set ℕ), A.Infinite → Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0) →
-    3 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : EReal) / (A.bdd N).ncard) atTop) ↔ answer(True) := by
+    (∀ (A : Set ℕ), A.Infinite →
+      atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
+      3 ≤ atTop.limsup
+        fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard) ↔
+    answer(True) := by
   sorry
 
 /--
@@ -57,10 +58,12 @@ as $N\to\infty$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.exists_limit (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
+    (hf : Tendsto (fun N => (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
     -- Use `EReal` to disinguish infinite limit from other types of non-existence
     ∃ (α : EReal),
-      Tendsto (fun N => (((A + A).bdd N |>.ncard : EReal) / ((A.bdd N).ncard) : EReal)) atTop (𝓝 α) := by
+      atTop.Tendsto
+        (fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard)
+        (𝓝 α) := by
   sorry
 
 /--
@@ -72,6 +75,9 @@ $$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    2 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : EReal) / (A.bdd N).ncard) atTop := by
+    (hf : atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0)) :
+    2 ≤ atTop.limsup
+      fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard := by
   sorry
+
+end Erdos245

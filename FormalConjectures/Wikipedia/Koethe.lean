@@ -30,6 +30,8 @@ variable {R : Type*}
 
 variable [Ring R]
 
+namespace Koethe
+
 /--Say a subset `I` of a ring `R` is nilpotent if all its elements are nilpotent. -/
 def IsNil {S : Type*} [SetLike S R] (I : S) := ∀ i ∈ I, IsNilpotent i
 
@@ -88,3 +90,5 @@ This is known to be false, see Agata Smoktunowicz, _Polynomial rings over nil ri
 theorem amitsur_conjecture (J : TwoSidedIdeal R) (hJ : IsNil J) :
     IsNil (TwoSidedIdeal.map (Polynomial.C) J) := by
   sorry
+
+end Koethe
