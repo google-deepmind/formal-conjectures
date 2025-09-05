@@ -99,6 +99,7 @@ is given by $$C \left(\prod_{p \mid m} \frac{p(p-2)}{(p ^ 2 - p - 1)}\right)
 \left(\prod_{q \mid \mathrm{sf}(b)} \frac{1}{(1 + q - q ^ 2)}\right)$ where $C$ is Artin's constant,
 and $\mathrm{sf}(n)$ denotes the squarefree part of a natural number $n$.
 -/
+-- TODO: There might be a missing factor of `μ b` here, see https://mast.queensu.ca/~murty/intelligencer.pdf
 @[category research open, AMS 11]
 theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
