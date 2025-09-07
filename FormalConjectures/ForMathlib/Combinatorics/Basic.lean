@@ -15,11 +15,9 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
-import Mathlib.Combinatorics.Enumerative.Bell
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Linarith.Lemmas
+import Mathlib.Tactic.Ring.Basic
+import Mathlib.Tactic.Zify
 
 open Function Set
 
