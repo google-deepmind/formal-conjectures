@@ -27,12 +27,14 @@ variable {α : Type*} [AddCommMonoid α]
 
 /-- A Sidon set is a set such that all pairwise sums of elements are distinct,
 apart from coincidences forced by commutativity. -/
-def IsSidon (A : Set α) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
+def IsSidon {S : Type*} [Membership α S] (A : S) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
   i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)
 
 @[simp, push_cast]
 theorem coe {S : Type*} [SetLike S α] {A : S} : IsSidon (A : Set α) ↔ IsSidon A := by
   simp [IsSidon]
+
+open Classical
 
 /-- The subsets of `{0, ..., n - 1}` which are Sidon sets. -/
 noncomputable def SidonSubsets (n : ℕ) : Finset (Finset ℕ) :=

@@ -18,8 +18,8 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 43
-*Reference:* [erdosproblems.com/43](https://www.erdosproblems.com/43)
 
+*Reference:* [erdosproblems.com/43](https://www.erdosproblems.com/43)
 -/
 
 open scoped Pointwise
