@@ -28,17 +28,25 @@ An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and
 asked by user [*David Feldman*](https://mathoverflow.net/users/10909/david-feldman)
 -/
 
-/-- The predicate that `n : ℤ` is a sum of three (integer) cubes. -/
-def IsSumOfThreeCubes (n : ℤ) : Prop :=
-  ∃ x y z : ℤ, n = x^3 + y^3 + z^3
+namespace SumOfThreeCubes
+
+variable {R : Type*} [Ring R]
+
+/-- The predicate that `n : R` is a sum of three cubes. -/
+def IsSumOfThreeCubes (n : R) : Prop :=
+  ∃ x y z : R, n = x^3 + y^3 + z^3
 
 @[category test, AMS 11]
-theorem isSumOfThreeCubes_2 : IsSumOfThreeCubes 2 :=
+theorem isSumOfThreeCubes_2 : IsSumOfThreeCubes (2 : ℤ) :=
   ⟨1, 1, 0, by norm_num⟩
 
 @[category test, AMS 11]
-theorem isSumOfThreeCubes_33 : IsSumOfThreeCubes 33 :=
+theorem isSumOfThreeCubes_33 : IsSumOfThreeCubes (33 : ℤ) :=
   ⟨8866128975287528, -8778405442862239, -2736111468807040, by norm_num⟩
+
+@[category test, AMS 11]
+theorem isSumOfThreeCubes_42 : IsSumOfThreeCubes (42 : ℤ) :=
+  ⟨-80538738812075974, 80435758145817515, 12602123297335631, by norm_num⟩
 
 @[category test, AMS 11]
 theorem mod_9_of_isSumOfThreeCubes (n : ℤ) (hn : IsSumOfThreeCubes n) :
@@ -54,9 +62,33 @@ theorem mod_9_of_isSumOfThreeCubes (n : ℤ) (hn : IsSumOfThreeCubes n) :
   generalize (z : ZMod 9) = z at *
   decide +revert
 
+/--
+Any rational number is a sum of three rational cubes.
+
+First proved by Ryley in 1825, which can be found in [Ri1930].
+The below parametrization is brought from the MSE answer [MSE].
+
+[Ri1930] Richmond, H. W. "On Rational Solutions of x^3 + y^3 + z^3 = R." Proceedings of the Edinburgh Mathematical Society 2.2 (1930): 92-100.
+[MSE] Kieren MacMillan, Proving that any rational number can be represented as the sum of the cubes of three rational numbers, https://math.stackexchange.com/q/4480969
+-/
+@[category research solved, AMS 11]
+theorem isSumOfThreeCubesRat_any (r : ℚ) : IsSumOfThreeCubes r := by
+  by_cases h : r = 0
+  · exact ⟨0, 0, 0, by norm_num; exact h⟩
+  · push_neg at h
+    let x := (r ^ 6 + 45 * r ^ 4 - 81 * r ^ 2 + 27) / (6 * r * (r ^ 2 + 3) ^ 2)
+    let y := (3 - r ^ 2) * (6 * r) / (r ^ 2 + 3) ^ 2
+    let z := (r ^ 2 + 6 * r + 3) * (- r ^ 2 + 6 * r - 3) / (6 * r * (r ^ 2 + 3))
+    use x, y, z
+    field_simp [x, y, z]
+    ring_nf
+
+
 /-- An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and only if
 `n` is not `4` or `5` mod `9`. -/
-@[category research open, AMS 12]
+@[category research open, AMS 11]
 theorem isSumOfThreeCubes_iff_mod_9 :
     (∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9])) ↔ answer(sorry) := by
   sorry
+
+end SumOfThreeCubes

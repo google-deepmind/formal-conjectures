@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Jacobian_conjecture)
 -/
 
+namespace JacobianConjecture
+
 open Classical
 
 section Prelims
@@ -30,6 +32,7 @@ variable {k : Type*} [CommRing k]
 variable {σ τ ι : Type*}
 
 variable (k σ τ) in
+
 /--Implicitly use `σ` as an index set and `k` as coefficient ring. -/
 abbrev RegularFunction := τ → MvPolynomial σ k
 
@@ -112,7 +115,7 @@ lemma sanity_check_condition_1 (F : RegularFunction k σ σ) :
 -- Let's apply the conjecture to a trivial case to make sure things
 -- are working as expected.
 @[category test, AMS 14]
-example :
+theorem jacobian_conjecture_identity :
     ∃ (G : RegularFunction k σ σ), G.comp (id k σ) = id k σ ∧
     (id k σ).comp G = id k σ := by
   apply jacobian_conjecture
@@ -122,3 +125,5 @@ example :
     Matrix.of_apply, Matrix.one_eq_pi_single]
 
 end Tests
+
+end JacobianConjecture

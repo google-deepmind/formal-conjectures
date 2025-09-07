@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped ArithmeticFunction
 
+namespace Erdos826
+
 /--
 Are there infinitely many $n$ such that, for all $k\geq 1$
 $$
@@ -34,3 +36,5 @@ $$
 theorem erdos_826 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, σ 0 (n + k) ≤ C * k }.Infinite) ↔
     answer(sorry) := by
   sorry
+
+end Erdos826

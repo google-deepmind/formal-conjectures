@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 
 -/
 
+namespace Kurepa
+
 open BigOperators Nat Finset
 
 /--
@@ -124,3 +126,5 @@ Sanity check: for small values we can just compute that the conjecture is true.
 theorem kurepa_conjecture.variant.gcd.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
     (n !).gcd (! n) = 2 := by
   interval_cases n <;> decide
+
+end Kurepa

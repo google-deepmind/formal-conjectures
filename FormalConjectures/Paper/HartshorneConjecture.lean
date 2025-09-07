@@ -21,13 +21,15 @@ import FormalConjectures.Util.ProblemImports
 by *R. Hartshorne*
 -/
 
+namespace HartshorneConjecture
+
+open HartshorneConjecture
+
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
 variable (S : Scheme)
 
 namespace AlgebraicGeometry.Scheme
-
-section AlgebraicVectorBundles
 
 attribute [local instance] CategoryTheory.Types.instConcreteCategory
 
@@ -73,9 +75,10 @@ instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempt
     CoeOut (𝓕.Splitting ι) (ι → S.VectorBundles) where
   coe s := s.components
 
+end AlgebraicGeometry.Scheme
 --TODO(lezeau): here we would really need some sanity checks and easier results.
 
-end AlgebraicVectorBundles
+open AlgebraicGeometry.Scheme
 
 /--
 There are no indecomposable vector bundles of rank 2 on `ℙⁿ` for `n ≥ 7`.
@@ -87,3 +90,5 @@ theorem harthshorne_conjecture (n : ℕ) (hn : 7 ≤ n)
     (h𝓕 : 𝓕.rank = 2) :
     Nonempty (𝓕.Splitting (Fin 2)) :=
   sorry
+
+end HartshorneConjecture

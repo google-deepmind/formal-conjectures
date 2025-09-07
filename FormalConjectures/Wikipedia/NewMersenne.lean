@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_conjectures)
 -/
+
+namespace NewMersenne
+
 namespace Nat
 
 /--
@@ -42,6 +45,8 @@ def IsSpecialForm (p : ℕ) : Prop :=
   ∃ k : ℕ, p = 2^k + 1 ∨ p = 2^k - 1 ∨ p = 4^k + 3 ∨ p = 4^k - 3
 
 end Nat
+
+open NewMersenne
 
 /--
 A natural number `p` satisfies the statement of the New Mersenne Conjecture if whenever
@@ -79,3 +84,5 @@ theorem new_mersenne_conjecture_of_prime :
 theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) :
     NewMersenneConjectureStatement p := by
   sorry
+
+end NewMersenne

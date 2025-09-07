@@ -61,11 +61,12 @@ Question: are all convex polyhedra with nonempty interior Rupert?
   of [Prince Rupert's Cube](https://en.wikipedia.org/wiki/Prince_Rupert%27s_cube).
 
 -/
+
+namespace Rupert
+
 open scoped Matrix
 
 abbrev SO3 := Matrix.specialOrthogonalGroup (Fin 3) ℝ
-
-namespace Rupert
 
 scoped notation "ℝ²" => Fin 2 → ℝ
 scoped notation "ℝ³" => Fin 3 → ℝ

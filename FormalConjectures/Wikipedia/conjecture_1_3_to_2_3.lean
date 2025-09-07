@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/1/3%E2%80%932/3_conjecture)
 -/
 
+namespace Conjecture_1_3_to_2_3
+
 /--
 Does every finite partially ordered set that is not totally ordered
 contain two elements $x$ and $y$ such that the probability that
@@ -38,3 +40,5 @@ theorem conjecture_1_3_to_2_3 : (∀ (P : Type) [Finite P] [PartialOrder P]
       ∈ Set.Icc (1/3) (2/3)) ↔
     answer(sorry ) := by
   sorry
+
+end Conjecture_1_3_to_2_3

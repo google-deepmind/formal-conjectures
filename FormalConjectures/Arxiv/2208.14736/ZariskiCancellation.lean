@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 by *Neena Gupta*
 -/
 
+namespace Arxiv.«2208.14736»
+
 open Polynomial
 
 /--
@@ -68,3 +70,5 @@ theorem zariski_cancellation_problem.variants.false_pos_card
     (p : ℕ) [hp : Fact p.Prime] {ι : Type*} [Fintype ι] (hι : Fintype.card ι = 3) :
     ¬ IsCancellative (ZMod p) (MvPolynomial ι (ZMod p)) := by
   sorry
+
+end Arxiv.«2208.14736»

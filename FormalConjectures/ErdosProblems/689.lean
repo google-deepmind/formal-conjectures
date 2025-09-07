@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/689](https://www.erdosproblems.com/689)
 -/
 
+namespace Erdos689
+
 /--
 Is there some choice of congruence class `a_p` for all primes `2 ≤ p ≤ n` such that every integer
 in `[1,n]` satisfies at least two of the congruences `≡ a_p (mod p)`?
@@ -31,3 +33,5 @@ theorem erdos_689 :
       2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card)
     ↔ answer(sorry) := by
   sorry
+
+end Erdos689

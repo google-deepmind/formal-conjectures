@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open Classical Filter
 open scoped Topology Real
 
+namespace Erdos416
+
 /--Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable-/
 noncomputable abbrev V (x : ℝ) : ℝ :=
   (Finset.Icc 1 ⌊x⌋₊ |>.filter (fun n => ∃ (m : ℕ), m.totient = n)).card
@@ -91,3 +93,5 @@ theorem erdos_416.variants.Ford :
         + C₂* x.log.log.log - C₃ * x.log.log.log.log)
     V =Θ[atTop] G := by
   sorry
+
+end Erdos416
