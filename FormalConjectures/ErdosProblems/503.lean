@@ -18,6 +18,7 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 503
+
 *Reference:* [erdosproblems.com/503](https://www.erdosproblems.com/503)
 -/
 
@@ -37,7 +38,7 @@ determine an isosceles triangle? That is, for any three points $x$, $y$, $z$ fro
 of the distances $|x - y|$, $|y - z|$, $|x - z|$ are equal.
 -/
 @[category research open, AMS 51]
-theorem erdos_503 {n : ℕ} : ∃ A : Set (ESpace n), isoscelesSet A ∧ (∀ (B : Set (ESpace n)),
+theorem erdos_503 {n : ℕ} : ∃ A : Set (ESpace n), isoscelesSet A ∧ (∀ B : Set (ESpace n),
     isoscelesSet B → B.ncard ≤ A.ncard) ∧ A.ncard = answer(sorry) := by
   sorry
 
