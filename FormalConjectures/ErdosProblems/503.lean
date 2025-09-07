@@ -29,8 +29,7 @@ abbrev ESpace (n : ℕ) := EuclideanSpace ℝ (Fin n)
 def isIsosceles {n : ℕ} (x y z : ESpace n) :=
   dist x y = dist y z ∨ dist y z = dist x z ∨ dist x y = dist x z
 
-def isoscelesSet {n : ℕ} (A : Set (ESpace n)) :=
-  ∀ᵉ (x ∈ A) (y ∈ A) (z ∈ A) (x ≠ y) (x ≠ z) (y ≠ z), isIsosceles x y z
+def isoscelesSet {n : ℕ} (A : Set (ESpace n)) := A.Triplewise (λ x y z ↦ isIsosceles x y z)
 
 /--
 What is the size of the largest $A \subseteq \mathbb{R}^n$ such that every three points from $A$
