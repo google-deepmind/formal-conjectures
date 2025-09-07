@@ -152,13 +152,13 @@ theorem Reachable.complexity {n : ℕ} (hn : 0 < n) : Reachable n (complexity n)
   exact Nat.find_spec _
 
 @[category test, AMS 11]
-example : complexity 0 = 0 := rfl
+theorem complexity_zero : complexity 0 = 0 := rfl
 
 @[category test, AMS 11]
-example : complexity 1 = 1 := by decide +kernel
+theorem complexity_one : complexity 1 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-example : complexity 2 = 2 := by decide +kernel
+theorem complexity_two : complexity 2 = 2 := by decide +kernel
 
 @[category test, AMS 11]
 theorem Reachable.pow (m n : ℕ) (hm : 0 < m) (hn : 0 < n) : Reachable (m ^ n) (m * n) := by

@@ -31,7 +31,7 @@ def primeArithmeticProgressions : Set (Set ℕ) :=
   {s | (∀ p ∈ s, p.Prime) ∧ ∃ l > 0, s.IsAPOfLength l}
 
 @[category test, AMS 5 11]
-example : {3, 5, 7} ∈ primeArithmeticProgressions := by
+theorem primeArithmeticProgression_3_5_7 : {3, 5, 7} ∈ primeArithmeticProgressions := by
   simp [primeArithmeticProgressions, Set.IsAPOfLength, Set.IsAPOfLengthWith]
   refine ⟨by norm_num, ⟨3, 2, Set.ext fun x => ?_⟩⟩
   refine ⟨fun h => ?_, fun ⟨w, ⟨hl, hr⟩⟩ => by interval_cases w <;> simp_all⟩
@@ -42,12 +42,12 @@ example : {3, 5, 7} ∈ primeArithmeticProgressions := by
     | inr hrr => simpa [hrr] using ⟨2, by aesop⟩
 
 @[category test, AMS 5 11]
-example : ¬{1, 2} ∈ primeArithmeticProgressions := by
+theorem not_primeArithmeticProgression_1_2 : ¬{1, 2} ∈ primeArithmeticProgressions := by
   simp [primeArithmeticProgressions]
   norm_num
 
 @[category API, AMS 5 11]
-example : ∅ ∉ primeArithmeticProgressions := by
+theorem empty_not_primeArithmeticProgression : ∅ ∉ primeArithmeticProgressions := by
   simpa [primeArithmeticProgressions] using fun _ hl ↦ Set.not_isAPOfLength_empty hl
 
 @[category API, AMS 5 11]

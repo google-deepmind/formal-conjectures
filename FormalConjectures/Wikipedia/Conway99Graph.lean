@@ -55,7 +55,7 @@ one of the two diagonals of a unique 4-cycle.
 The first condition is equivalent to being locally linear.
 -/
 @[category research open, AMS 5]
-theorem Conway99Graph : (∃ G : SimpleGraph (Fin 99),
+theorem conway99Graph : (∃ G : SimpleGraph (Fin 99),
     G.LocallyLinear ∧ NonEdgesAreDiagonals G) ↔ answer(sorry) := by
   sorry
 
@@ -63,7 +63,7 @@ theorem Conway99Graph : (∃ G : SimpleGraph (Fin 99),
 The triangle is an example with 3 vertices satisfying the condition.
 -/
 @[category test, AMS 5]
-example : (completeGraph (Fin 3)).LocallyLinear ∧
+theorem triangle_locallyLinear_and_nonEdgesAreDiagonals : (completeGraph (Fin 3)).LocallyLinear ∧
     NonEdgesAreDiagonals (completeGraph (Fin 3)) := by
   constructor
   · simp [SimpleGraph.LocallyLinear]
@@ -89,7 +89,7 @@ and it is also isomorphic to it and to the Paley graph and the graph of the
 def Conway9 := (completeGraph (Fin 3)) □ (completeGraph (Fin 3))
 
 @[category test, AMS 5]
-example : NonEdgesAreDiagonals Conway9 := by
+theorem conway9_nonEdgesAreDiagonals : NonEdgesAreDiagonals Conway9 := by
   simp only [NonEdgesAreDiagonals, Set.Pairwise]
   have : ∀ i, Fintype ↑(Conway9.neighborSet i) := by
     intro i
@@ -115,7 +115,7 @@ lemma completeGraph_boxProd_completeGraph_cliqueSet :
   sorry
 
 @[category test, AMS 5]
-example : Conway9.LocallyLinear := by
+theorem conway9_locallyLinear : Conway9.LocallyLinear := by
   dsimp [SimpleGraph.LocallyLinear]
   constructor
   · simp only [SimpleGraph.EdgeDisjointTriangles, Set.Pairwise]

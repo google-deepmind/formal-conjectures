@@ -39,7 +39,7 @@ def IsKakeya {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
 A trivial example: the closed ball of radius 1 in `ℝⁿ` is a Kakeya set.
 -/
 @[category test, AMS 42]
-example (n : ℕ) : IsKakeya (closedBall (0 : EuclideanSpace ℝ (Fin n)) 1) := by
+theorem isKakeya_closedBall (n : ℕ) : IsKakeya (closedBall (0 : EuclideanSpace ℝ (Fin n)) 1) := by
   rintro v hv
   use 0
   rintro _ ⟨t, ⟨ht₀, ht₁⟩, rfl⟩

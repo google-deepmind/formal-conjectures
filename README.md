@@ -9,6 +9,7 @@ A collection of formalized statements of conjectures in
 
 Explore the docs: [Formal Conjectures Documentation](https://google-deepmind.github.io/formal-conjectures/)
 
+Join our [channel on the leanprover Zulip](https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures)
 
 ## Goals
 
@@ -224,8 +225,7 @@ meaningful solution of the problem is outside of the scope of this repository.
 2.  Bespoke definitions are allowed, as long as they help clarify problem
     statements. We also encourage contributors to provide some very basic API
     for such definitions as a way to test whether these behave as expected.
-3.  Benchmark problems should be stated with the `theorem` keyword, while for
-    test statements `example` is usually prefered.
+3.  Benchmark problems should be stated with the `theorem` or `lemma` keywords.
 4.  Every statement should have at least one `AMS` subject tag.
 5.  Every file should come with a reference to where the problem was sourced
     from, and be put in the corresponding directory of the repository, e.g. a

@@ -90,7 +90,7 @@ then the maximum density would be 1.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_329.of_sub_perfectDifferenceSet :
-    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon A → ∃ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) →
     sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1 := by
   sorry
@@ -102,7 +102,7 @@ can be embedded in a perfect difference set.
 @[category research open, AMS 5 11]
 theorem erdos_329.converse_implication :
     (sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1) →
-    (∀ (A : Finset ℕ), IsSidon A.toSet → ∃ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon A → ∃ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) := by
   sorry
 

@@ -42,7 +42,7 @@ def FermatCatalanSet : Set (ℕ × ℕ × ℕ) :=
     (fun f => ((f 0) ^ (f 3), (f 1) ^ (f 4), (f 2) ^ (f 5))) '' FermatCatalanSet'
 
 /--The proposition that the Fermat-Catalan Conjecture is true.-/
-def FermatCatalanConjecture : Prop :=
+def fermatCatalanConjecture : Prop :=
   FermatCatalanSet.Finite
 
 
@@ -53,7 +53,7 @@ $(a^m, b^n, c^k)$ where $a, b, c$ are positive coprime integers and $m, n, k$ ar
 $\frac 1 m + \frac 1 n + \frac 1 k < 1$.
 -/
 @[category research open, AMS 11]
-theorem fermat_catalan : FermatCatalanConjecture := by
+theorem fermat_catalan : fermatCatalanConjecture := by
   sorry
 
 /--

@@ -45,7 +45,7 @@ def IsRegularPrime [hp : Fact p.Prime] : Prop :=
   p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField ⟨p, hp.out.pos⟩ ℚ)
 
 @[category undergraduate, AMS 11]
-example : ¬ @IsRegularPrime 37 (by decide) := by
+theorem not_isRegularPrime_37_first : ¬ @IsRegularPrime 37 (by decide) := by
   sorry
 
 /-- The set of regular primes. -/
@@ -60,7 +60,7 @@ lemma small_regular_primes :
   sorry
 
 @[category undergraduate, AMS 11]
-example : ¬ @IsRegularPrime 37 (by decide) := by
+theorem not_isRegularPrime_37_second : ¬ @IsRegularPrime 37 (by decide) := by
   sorry
 
 /-- An equivanlent definitions of regualr prime `p` is that it does not divide the numerator of the

@@ -72,7 +72,7 @@ theorem erdos_17.variants.upper_Elsholtz :
 
 /-- $97$ is the smallest prime that is not a cluster prime. -/
 @[category test, AMS 11]
-example : IsLeast {p : ℕ | p.Prime ∧ ¬ IsClusterPrime p} 97 := by
+theorem isClusterPrime_97_isLeast_non_cluster : IsLeast {p : ℕ | p.Prime ∧ ¬ IsClusterPrime p} 97 := by
   sorry
 
 end Erdos17

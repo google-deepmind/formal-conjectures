@@ -115,7 +115,7 @@ lemma sanity_check_condition_1 (F : RegularFunction k σ σ) :
 -- Let's apply the conjecture to a trivial case to make sure things
 -- are working as expected.
 @[category test, AMS 14]
-example :
+theorem jacobian_conjecture_identity :
     ∃ (G : RegularFunction k σ σ), G.comp (id k σ) = id k σ ∧
     (id k σ).comp G = id k σ := by
   apply jacobian_conjecture

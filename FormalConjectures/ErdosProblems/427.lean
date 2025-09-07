@@ -31,7 +31,7 @@ $$
 $$
 where $p_r$ denotes the $r$th prime?
 -/
-def Erdos427 : Prop := ∀ (n d : ℕ),
+def erdos427 : Prop := ∀ (n d : ℕ),
     --Need to allow `n = 0` since we're counting primes from `0` rather than `1`
     --`d` needs to be `≠ 0` since the sum is never `0`!
     d ≠ 0 → ∃ k, k ≠ 0 ∧
@@ -45,7 +45,7 @@ $$
 where $p_r$ denotes the $r$th prime?
 -/
 @[category research solved, AMS 11]
-theorem erdos_427 : Erdos427 ↔ answer(True) := by
+theorem erdos_427 : erdos427 ↔ answer(True) := by
   sorry
 
 /--
@@ -74,7 +74,7 @@ theorem erdos_427.shiu : ShiuTheorem := by
 Cedric Pilatte has observed that a positive solution to Erdős Problem 427 follows from Shiu's theorem.
 -/
 @[category research solved, AMS 11]
-theorem erdos_427.of_shiu (H : ShiuTheorem) : Erdos427 := by
+theorem erdos_427.of_shiu (H : ShiuTheorem) : erdos427 := by
   sorry
 
 end Erdos427

@@ -29,7 +29,7 @@ namespace Erdos155
 /--
 Let $F(N)$ be the size of the largest Sidon subset of $\{1, \dots, N\}$.
 -/
-noncomputable abbrev F := maxSidonSetSize
+noncomputable abbrev F (N : ℕ) : ℕ := Finset.maxSidonSubsetCard (Finset.Icc 1 N)
 
 /--
 Is it true that for every $k \geq 1$ we have
