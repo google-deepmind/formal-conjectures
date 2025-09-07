@@ -15,9 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
-import Mathlib.Tactic.Linarith.Lemmas
-import Mathlib.Tactic.Ring.Basic
-import Mathlib.Tactic.Zify
+import Mathlib.Data.Nat.Lattice
+import Mathlib.Tactic.Linarith
 
 open Function Set
 
