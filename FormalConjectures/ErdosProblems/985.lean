@@ -40,7 +40,7 @@ Heath-Brown proved that at least one of 2, 3, or 5 is a primitive root for infin
 -/
 @[category research solved, AMS 11]
 theorem erdos_985.variants.two_three_five_primitive_root :
-    Infinite
+    Set.Infinite
       {p : ℕ | p.Prime ∧
       (orderOf (2 : ZMod p) = p - 1 ∨
        orderOf (3 : ZMod p) = p - 1 ∨
