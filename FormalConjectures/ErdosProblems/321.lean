@@ -29,14 +29,20 @@ open scoped Finset
 namespace Erdos321
 
 /--
-What is the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums 
-$\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$?
+Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
+$\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$.
+-/
+noncomputable def R (N : ℕ) : ℕ :=
+  sSup { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
+      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) }
+
+/--
+Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
+$\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $R(N)$?
 -/
 @[category research open, AMS 11]
-theorem erdos_321 (N : ℕ) : IsGreatest
-    { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) }
-    answer(sorry) := by
+theorem erdos_321 (N : ℕ) :
+    R N = answer(sorry) := by
   sorry
 
 /-
@@ -53,33 +59,24 @@ Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all su
 $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $\Theta(R(N))$?
 -/
 @[category research open, AMS 11]
-theorem erdos_321.variants.isTheta (N : ℕ) (R : ℕ → ℝ)
-    (h : ∀ N, IsGreatest
-    { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
-    R =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem erdos_321.variants.isTheta :
+    (fun N ↦ (R N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = O(g(N))$.
 -/
 @[category research open, AMS 11]
-theorem erdos_321.variants.isBigO (N : ℕ) (R : ℕ → ℝ)
-    (h : ∀ N, IsGreatest
-    { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
-    R =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem erdos_321.variants.isBigO :
+    (fun N ↦ (R N : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = o(g(N))$.
 -/
 @[category research open, AMS 11]
-theorem erdos_321.variants.isLittleO (N : ℕ) (R : ℕ → ℝ)
-    (h : ∀ N, IsGreatest
-    { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
-    R =o[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem erdos_321.variants.isLittleO :
+    (fun N ↦ (R N : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /--
@@ -93,10 +90,7 @@ valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} 
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
 @[category research solved, AMS 11]
-theorem erdos_321.variants.lower (N k : ℕ) (hk : 4 ≤ k ∧ k ≤ log^[k] N) (R : ℕ → ℝ)
-  (h : ∀ N, IsGreatest
-    { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
+theorem erdos_321.variants.lower (N k : ℕ) (hk : 4 ≤ k ∧ k ≤ log^[k] N) :
   N / log N * ∏ i ∈ Finset.Icc 3 k, (log^[i] N) ≤ R N := by
   sorry
 
@@ -111,10 +105,7 @@ valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} 
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
 @[category research solved, AMS 11]
-theorem erdos_321.variants.upper (N r : ℕ) (hr : 1 ≤ log^[2 * r] N) (R : ℕ → ℝ)
-  (h : ∀ N, IsGreatest
-    { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
-      (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) } (R N)) :
+theorem erdos_321.variants.upper (N r : ℕ) (hr : 1 ≤ log^[2 * r] N) :
   R N ≤ 1 / log 2 * log^[r] N * N / log N * ∏ i ∈ Finset.Icc 3 r, (log^[i] N) := by
   sorry
 
