@@ -29,7 +29,8 @@ open scoped Finset
 namespace Erdos321
 
 /--
-What is the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$?
+What is the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums 
+$\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$?
 -/
 @[category research open, AMS 11]
 theorem erdos_321 (N : ℕ) : IsGreatest
@@ -48,7 +49,8 @@ the asymptotic variants should have a degree of optimality or non-triviality to 
 -/
 
 /--
-Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $\Theta(R(N))$?
+Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
+$\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $\Theta(R(N))$?
 -/
 @[category research open, AMS 11]
 theorem erdos_321.variants.isTheta (N : ℕ) (R : ℕ → ℝ)
