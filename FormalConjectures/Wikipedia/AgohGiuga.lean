@@ -128,7 +128,7 @@ theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : 1 < a) (ha₂ : ¬a.Prime)
   rw [mul_assoc] at ha₁
   rw [mul_assoc, ← geom_sum_mul_of_one_le ((1).le_add_left (p * N)), p.coprime_mul_iff_left]
   simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero']).not.mpr
-    ((ZMod.natCast_zmod_eq_zero_iff_dvd _ _).not.mp (by simp_arith [le_of_lt ha₁]))
+    ((ZMod.natCast_zmod_eq_zero_iff_dvd _ _).not.mp (by simp [le_of_lt ha₁]))
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /-- A composite number `a` is Carmichael if and only if it is squarefree
@@ -166,7 +166,7 @@ theorem korselts_criterion (a : ℕ) (ha₁ : 1 < a) (ha₂ : ¬a.Prime) :
           h_sqfr p hp <| (sq p ▸ (pow_dvd_pow p h).trans (a.ordProj_dvd p))
         field_simp [h, pow_mul, le_antisymm this (hp.dvd_iff_one_le_factorization _ |>.1 _),
           ← CharP.cast_eq_zero_iff (ZMod p)]
-        simp_all_arith [CharP.cast_eq_zero_iff _ p,
+        simp_all +decide [CharP.cast_eq_zero_iff _ p,
           hp.coprime_iff_not_dvd.1 (hab.of_dvd_left (by aesop)), ZMod.pow_card_sub_one_eq_one]
       · simp [a.factorization_eq_zero_of_not_dvd hpa]
     · simp_all

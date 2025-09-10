@@ -17,6 +17,7 @@ limitations under the License.
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 import Mathlib.Combinatorics.SimpleGraph.Metric
+import Mathlib.Data.Multiset.Sort
 import Mathlib.Order.CompletePartialOrder
 
 namespace SimpleGraph
