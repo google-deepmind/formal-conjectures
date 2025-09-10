@@ -73,8 +73,8 @@ theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
 consecutive primes.
 -/
 def consecutivePrimes {k : ℕ} (p : Fin k.succ → ℕ) :=
-    ∀ i, (p i).Prime ∧ StrictMono p ∧
-      ∀ i < k, ∀ m ∈ Set.Ioo (p i) (p (i + 1)), ¬m.Prime
+    (∀ i, (p i).Prime) ∧ StrictMono p ∧
+      ∀ i : Fin k.succ, i < k → ∀ m ∈ Set.Ioo (p i) (p (i + 1)), ¬m.Prime
 
 -- Reworded slightly from the link.
 /--
@@ -95,8 +95,8 @@ theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε ≤ 1) :
       ∀ᶠ (p : Fin (k + 2) → ℕ) in atTop, consecutivePrimes p ∧
         ∑ i ∈ Finset.univ.filter (· < Fin.last _), (1 : ℝ) / p i < 1 ∧
           1 < ∑ i, (1 : ℝ) / p i →
-    { n | ∃! i < k, p i ∣ n }.HasDensity (1 / Real.exp 1 - ε) ∧
-      { n | ∃! i < k, p i ∣ n }.IsMulCardSet := by
+    { n | ∃! (i : Fin (k + 2)), i < k → p i ∣ n }.HasDensity (1 / Real.exp 1 - ε) ∧
+      { n | ∃! (i : Fin (k + 2)), i < k → p i ∣ n }.IsMulCardSet := by
   sorry
 
 end Erdos786
