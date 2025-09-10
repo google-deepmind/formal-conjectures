@@ -156,3 +156,8 @@ any non-trivial $k$-term arithmetic progression.
 -/
 noncomputable def Set.IsAPOfLengthFree.maxCard (k : ℕ) (N : ℕ) : ℕ :=
   sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : S.toSet.IsAPOfLengthFree k)}
+
+def ContainsMonoAPofLength {κ : Type} [Finite κ] {M : Set α}
+    (coloring : M → κ) (k : ℕ) : Prop :=
+  ∃ c : κ, ∃ ap : Set M, ((·.1) '' ap).IsAPOfLength k ∧
+    ∀ m ∈ ap, coloring m = c
