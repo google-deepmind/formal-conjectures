@@ -16,10 +16,13 @@ limitations under the License.
 
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjectures.ForMathlib.Analysis.NormedSpace.WithLp
+import FormalConjectures.ForMathlib.Analsis.SpecialFunctions.NthRoot
 import FormalConjectures.ForMathlib.Combinatorics.Basic
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
 import FormalConjectures.ForMathlib.Data.Set.Density
+import FormalConjectures.ForMathlib.Data.Set.Triplewise
 import FormalConjectures.ForMathlib.Geometry.«2d»
+import FormalConjectures.ForMathlib.Geometry.«3d»
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
