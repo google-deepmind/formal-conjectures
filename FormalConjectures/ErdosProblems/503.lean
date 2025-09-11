@@ -24,12 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos503
 
-abbrev ESpace (n : ℕ) := EuclideanSpace ℝ (Fin n)
-
-def isIsosceles {n : ℕ} (x y z : ESpace n) :=
-  dist x y = dist y z ∨ dist y z = dist x z ∨ dist x y = dist x z
-
-def isoscelesSet {n : ℕ} (A : Set (ESpace n)) := A.Triplewise (λ x y z ↦ isIsosceles x y z)
+open scoped EuclideanGeometry
 
 /--
 What is the size of the largest $A \subseteq \mathbb{R}^n$ such that every three points from $A$
@@ -37,8 +32,8 @@ determine an isosceles triangle? That is, for any three points $x$, $y$, $z$ fro
 of the distances $|x - y|$, $|y - z|$, $|x - z|$ are equal.
 -/
 @[category research open, AMS 51]
-theorem erdos_503 {n : ℕ} : ∃ A : Set (ESpace n), isoscelesSet A ∧ (∀ B : Set (ESpace n),
-    isoscelesSet B → B.ncard ≤ A.ncard) ∧ A.ncard = answer(sorry) := by
+theorem erdos_503 {n : ℕ} :
+    IsGreatest {m | ∃ A : Set (ℝ^n), isoscelesSet A ∧ A.ncard = m} answer(sorry) := by
   sorry
 
 /--
@@ -47,8 +42,8 @@ When $n = 2$, the answer is 6 (due to Kelly
 given by Kovács [Ko24c](https://arxiv.org/abs/2412.05190)).
 -/
 @[category research solved, AMS 51]
-theorem erdos_503.variants.R2 : ∃ A : Set (ESpace 2), isoscelesSet A ∧ (∀ B : Set (ESpace 2),
-    isoscelesSet B → B.ncard ≤ A.ncard) ∧ A.ncard = 6 := by
+theorem erdos_503.variants.R2 :
+    IsGreatest {m | ∃ A : Set ℝ², isoscelesSet A ∧ A.ncard = m} 6 := by
   sorry
 
 /--
@@ -56,8 +51,8 @@ When $n = 3$, the answer is 8 (due to Croft
 [Cr62](https://mathscinet.ams.org/mathscinet/relay-station?mr=155230)).
 -/
 @[category research solved, AMS 51]
-theorem erdos_503.variants.R3 : ∃ A : Set (ESpace 3), isoscelesSet A ∧ (∀ B : Set (ESpace 3),
-    isoscelesSet B → B.ncard ≤ A.ncard) ∧ A.ncard = 8 := by
+theorem erdos_503.variants.R3 :
+    IsGreatest {m | ∃ A : Set ℝ³, isoscelesSet A ∧ A.ncard = m} 8 := by
   sorry
 
 /--
@@ -68,8 +63,8 @@ $$
 $$
 -/
 @[category research solved, AMS 51]
-theorem erdos_503.variants.upper_bound {n : ℕ} : ∃ A : Set (ESpace n), isoscelesSet A ∧
-    (∀ B : Set (ESpace n), isoscelesSet B → B.ncard ≤ A.ncard) ∧ A.ncard ≤ (n + 2).choose 2 := by
+theorem erdos_503.variants.upper_bound {n : ℕ} :
+    ∃ a, IsGreatest {m | ∃ A : Set (ℝ^n), isoscelesSet A ∧ A.ncard = m} a ∧ a ≤ (n + 2).choose 2 := by
   sorry
 
 /--
@@ -79,8 +74,8 @@ vectors. This set can be viewed as a subset of some $\mathbb{R}^n$, and is easil
 the required property.
 -/
 @[category research solved, AMS 51]
-theorem erdos_503.variants.lower_bound {n : ℕ} : ∃ A : Set (ESpace n), isoscelesSet A ∧
-    (∀ B : Set (ESpace n), isoscelesSet B → B.ncard ≤ A.ncard) ∧ (n + 1).choose 2 ≤ A.ncard := by
+theorem erdos_503.variants.lower_bound {n : ℕ} :
+    ∃ a, IsGreatest {m | ∃ A : Set (ℝ^n), isoscelesSet A ∧ A.ncard = m} a ∧ (n + 1).choose 2 ≤ a := by
   sorry
 
 end Erdos503

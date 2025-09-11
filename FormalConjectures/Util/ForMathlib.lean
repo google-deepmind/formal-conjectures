@@ -44,8 +44,9 @@ import FormalConjectures.ForMathlib.Data.Real.Constants
 import FormalConjectures.ForMathlib.Data.Set.Density
 import FormalConjectures.ForMathlib.Data.Set.Triplewise
 import FormalConjectures.ForMathlib.Geometry.«2d»
-import FormalConjectures.ForMathlib.LinearAlgebra.SpecialLinearGroup
 import FormalConjectures.ForMathlib.Geometry.«3d»
+import FormalConjectures.ForMathlib.Geometry.Euclidean
+import FormalConjectures.ForMathlib.LinearAlgebra.SpecialLinearGroup
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin
 import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
 import FormalConjectures.ForMathlib.NumberTheory.CoveringSystem
