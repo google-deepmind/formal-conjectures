@@ -14,19 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
-
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
-
-@[default_target]
-lean_lib FormalConjectures where
-  globs := #[.submodules `FormalConjectures]
-
-require mathlib from git "https://github.com/leanprover-community/mathlib4.git" @ "v4.14.0"
+--A standard set of imports for open problems.
+import Mathlib
+import FormalConjectures.Util.Answer
+import FormalConjectures.Util.ForMathlib
+import FormalConjectures.Util.OpenProblemAttr

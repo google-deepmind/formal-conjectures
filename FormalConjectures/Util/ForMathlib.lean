@@ -14,19 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
-
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
-
-@[default_target]
-lean_lib FormalConjectures where
-  globs := #[.submodules `FormalConjectures]
-
-require mathlib from git "https://github.com/leanprover-community/mathlib4.git" @ "v4.14.0"
+import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
+import FormalConjectures.ForMathlib.Analysis.NormedSpace.WithLp
+import FormalConjectures.ForMathlib.Combinatorics.Basic
+import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
+import FormalConjectures.ForMathlib.Data.Set.Density
+import FormalConjectures.ForMathlib.Geometry.«2d»
+import FormalConjectures.ForMathlib.Logic.Equiv.Fin
+import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
+import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat

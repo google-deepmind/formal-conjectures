@@ -14,19 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
+-- Erdos Problems URL: https://www.erdosproblems.com/383
+import FormalConjectures.Util.ProblemImports
 
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
-
-@[default_target]
-lean_lib FormalConjectures where
-  globs := #[.submodules `FormalConjectures]
-
-require mathlib from git "https://github.com/leanprover-community/mathlib4.git" @ "v4.14.0"
+/--
+Is it true that for every $k$ there are infinitely many primes $p$ such that the largest prime
+divisor of
+$$
+  \prod_{i = 0}^k (p ^ 2 + i)
+$$
+is $p$?
+-/
+@[problem_status open]
+theorem erdos_383 (k : ℕ) :
+    {p : ℕ | p.Prime ∧ Nat.maxPrimeFac (∏ i in Finset.Icc 0 k, (p ^ 2 + i)) = p}.Infinite := by
+  sorry

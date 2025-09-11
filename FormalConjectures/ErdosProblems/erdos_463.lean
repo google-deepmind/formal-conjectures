@@ -14,19 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
+-- Erdos Problems URL: https://www.erdosproblems.com/463
+import FormalConjectures.Util.ProblemImports
 
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
+open Filter
 
-@[default_target]
-lean_lib FormalConjectures where
-  globs := #[.submodules `FormalConjectures]
-
-require mathlib from git "https://github.com/leanprover-community/mathlib4.git" @ "v4.14.0"
+/--
+Is there a function $f$ with $f(n)\to\infty$ as $n\to\infty$ such that,
+for all large $n$, there is a composite number $m$ such that
+$$
+n + f(n) < m < n + p(m)
+$$
+(Here $p(m)$ is the least prime factor of $m$.)
+-/
+@[problem_status open]
+theorem erdos_463 : ∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
+    ∀ᶠ n in atTop,
+      ∃ m, ¬m.Prime ∧
+        n + f n < m ∧ m < n + m.minFac :=
+  sorry

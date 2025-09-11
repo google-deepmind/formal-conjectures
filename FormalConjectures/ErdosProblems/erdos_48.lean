@@ -14,19 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
+-- Erdos Problems URL: https://www.erdosproblems.com/48
+import FormalConjectures.Util.ProblemImports
 
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
+open scoped ArithmeticFunction
 
-@[default_target]
-lean_lib FormalConjectures where
-  globs := #[.submodules `FormalConjectures]
-
-require mathlib from git "https://github.com/leanprover-community/mathlib4.git" @ "v4.14.0"
+/--
+Are there infinitely many integers `n,m` such that `ϕ(n)=σ(m)`
+?
+Status: Solved
+-/
+@[problem_status solved]
+theorem erdos_48 :
+    {(n, m) : ℕ × ℕ | n.totient = σ 1 m}.Infinite := by
+  sorry

@@ -1,0 +1,70 @@
+/-
+Copyright 2025 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+open BigOperators Nat
+
+def left_factorial (n : ℕ) := ∑ m in Finset.range n, m !
+
+local notation  "!" n => left_factorial n
+
+/--
+B44 Sums of factorials.
+
+Đura Kurepa defined \(!n=0!+1!+2!+...+(n-1)!\) and asks if \(!n\not\equiv0\) mod n
+for all n
+-/
+@[problem_status open]
+theorem kurepa_conjecture (n : ℕ) (h_n : 2 < n) : (!n : ℕ) % n ≠ 0 := sorry
+
+/--
+This statement can be reduced to the prime case only.
+-/
+@[problem_status open]
+theorem kurepa_conjecture.variant.prime (p : ℕ) (h_p : 2 < p) : p.Prime → (!p : ℕ) % p ≠ 0 := sorry
+
+-- TODO(firsching): show equivalence
+theorem kurepa_conjecture.prime_reduction  : (∀ n, ∀ h_n : 2 < n, (!n : ℕ) % n ≠ 0)
+  ↔ (∀ p, ∀ h_p : 2 < p, p.Prime → (!p : ℕ) % p ≠ 0) := sorry
+
+
+/--
+An equivalent formulation in terms of the gcd of n! and !n.
+-/
+@[problem_status open]
+theorem kurepa_conjecture.variant.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 := sorry
+
+
+-- TODO(firsching): show equivalence
+theorem kurepa_conjecture.gcd_reduction : (∀ n, ∀ h_n : 2 < n, (!n : ℕ) % n ≠ 0)
+  ↔ (∀ n,  2 < n → (n !).gcd (! n) = 2) := sorry
+
+/--
+Sanity check: for small values we can just compute that the conjecture is true
+-/
+@[problem_status solved]
+theorem kurepa_conjecture.variant.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
+    (!n : ℕ) % n ≠ 0 := by
+  interval_cases n <;> decide
+
+/--
+Sanity check: for small values we can just compute that the conjecture is true.
+-/
+@[problem_status solved]
+theorem kurepa_conjecture.variant.gcd.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
+    (n !).gcd (! n) = 2 := by
+  interval_cases n <;> decide
