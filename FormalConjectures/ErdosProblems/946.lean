@@ -46,7 +46,7 @@ theorem erdos_946 : {n : ℕ | τ n = τ (n + 1)}.Infinite := by
 There are infinitely many $n$ such that $τ(n) = τ(n + 5040)$. Proved in [Sp81].
 -/
 @[category research solved, AMS 11]
-theorem erdos_946.spiro_5040 : {n : ℕ | τ n = τ (n + 5040)}.Infinite := by
+theorem erdos_946.variants.spiro_5040 : {n : ℕ | τ n = τ (n + 5040)}.Infinite := by
   sorry
 
 /-- Number of $n \le x$ with $τ(n) = τ(n+1)$. -/
