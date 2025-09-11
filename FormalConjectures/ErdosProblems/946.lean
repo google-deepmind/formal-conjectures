@@ -50,7 +50,7 @@ theorem erdos_946.variants.spiro_5040 : {n : ℕ | τ n = τ (n + 5040)}.Infinit
   sorry
 
 /-- Number of $n \le x$ with $τ(n) = τ(n+1)$. -/
-noncomputable def Erdos946Count (x : ℝ) : ℝ
+noncomputable def erdos946Count (x : ℝ) : ℝ
   := ((Finset.range (⌊x⌋₊ + 1)).filter (fun n => τ n = τ (n + 1))).card
 
 /--
@@ -58,14 +58,14 @@ The number of $n \le x$ with $τ(n) = τ(n+1)$ is at least $x / (\log x)^7$ for 
 Proved in [He84].
 -/
 @[category research solved, AMS 11]
-theorem erdos_946.heathbrown_lower_bound : (fun x => x / (log x)^7) =O[atTop] Erdos946Count := by
+theorem erdos_946.variants.heathbrown_lower_bound : (fun x => x / (x.log)^7) =O[atTop] erdos946Count := by
   sorry
 
 /--
 Improved lower bound in [Hi85]: $Ω(x / (\log \log x)^3)$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_946.hildebrand_lower_bound : (fun x => x / (log (log x))^3) =O[atTop] Erdos946Count
+theorem erdos_946.variants.hildebrand_lower_bound : (fun x => x / (x.log.log)^3) =O[atTop] erdos946Count
     := by
   sorry
 
@@ -73,7 +73,7 @@ theorem erdos_946.hildebrand_lower_bound : (fun x => x / (log (log x))^3) =O[atT
 Upper bound in [EPS87]: $O(x / \sqrt{\log \log x})$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_946.upper_bound : Erdos946Count =O[atTop] (fun x => x / sqrt (log (log x))) := by
+theorem erdos_946.variants.upper_bound : erdos946Count =O[atTop] (fun x => x / √x.log.log ) := by
   sorry
 
 end Erdos946
