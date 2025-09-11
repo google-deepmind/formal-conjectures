@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Order.Filter.AtTopBot.Defs
 
 variable {M : Type*} [AddCommMonoid M]
 
