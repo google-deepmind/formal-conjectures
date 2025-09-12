@@ -85,7 +85,6 @@ theorem IsSidon.insert {A : Set α} {m : α} [IsRightCancelAdd α] [IsLeftCancel
     · simp_all
       exact fun _ _ _ _ _ ↦ by simp_all [add_comm]
 
-end Set
 
 /-!
 Maximal Sidon sets in an interval.
@@ -96,7 +95,7 @@ is inclusion-maximal among subsets of `Set.Icc 1 N` with the Sidon property.
 
 /-- `IsMaximalSidonSet A N` means `A ⊆ {1, …, N}` is Sidon and cannot be extended within
 `{1, …, N}` while remaining Sidon. -/
-def IsMaximalSidonSet (A : Set ℕ) (N : ℕ) : Prop :=
+def IsMaximalSidonSetIn (A : Set ℕ) (N : ℕ) : Prop :=
   A ⊆ Set.Icc 1 N ∧ IsSidon A ∧
     ∀ ⦃x : ℕ⦄, x ∈ Set.Icc 1 N → x ∉ A → ¬ IsSidon (A ∪ {x})
 
@@ -114,6 +113,8 @@ theorem maximal {A : Set ℕ} {N : ℕ} (hA : IsMaximalSidonSet A N) {x : ℕ}
     (hx : x ∈ Set.Icc 1 N) (hxA : x ∉ A) : ¬ IsSidon (A ∪ {x}) := hA.2.2 hx hxA
 
 end IsMaximalSidonSet
+
+end Set
 
 namespace Finset
 
