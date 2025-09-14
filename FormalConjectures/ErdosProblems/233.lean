@@ -25,13 +25,6 @@ import FormalConjectures.Util.ProblemImports
   - [Wikipedia](https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_conjecture)
 -/
 
--- TODO(firsching): This definition is also used in 218.lean, let's move it to a better place.
-/--
-The prime gap: the difference between the $n+1$-th and $n$-th prime.
--/
-noncomputable def primeGap (n : ℕ) : ℕ := (n + 1).nth Nat.Prime - n.nth Nat.Prime
-
-
 open Filter Real
 /--
 The prime number theorem immediately implies a lower bound of $\gg N(\log N)^2$ for the sum of
