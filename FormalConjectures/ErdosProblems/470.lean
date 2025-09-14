@@ -79,7 +79,7 @@ theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
 Fang [Fa22](https://arxiv.org/abs/2207.12906) has shown there are no odd weird numbers below $10^21$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_470.variants.odd_weird_1021 : ∀ n < 10 ^ 21, Odd n → ¬n.Weird := by
+theorem erdos_470.variants.odd_weird_10_pow_21 : ∀ n < 10 ^ 21, Odd n → ¬n.Weird := by
   sorry
 
 /--
