@@ -23,33 +23,20 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter
+open EuclideanGeometry
 
 namespace Erdos107
 
-abbrev Point := EuclideanSpace ℝ (Fin 2)
-
-namespace Point
-
-/-- The three points `a,b,c` are not collinear. -/
-def InGenPos₃ (a b c : Point) : Prop :=
-  Matrix.det !![a 0, b 0, c 0 ; a 1, b 1, c 1 ; 1, 1, 1] ≠ 0
-
-/-- No three points in `S` are collinear. -/
-def SetInGenPos (S : Set Point) : Prop :=
-  ∀ ⦃p q r : Point⦄, {p,q,r} ⊆ S → List.Nodup [p,q,r] → InGenPos₃ p q r
-
-end Point
-
 /-- The set `S` is in convex position. -/
-def ConvexIndep (S : Set Point) : Prop :=
+def ConvexIndep (S : Set ℝ²) : Prop :=
   ∀ a ∈ S, a ∉ convexHull ℝ (S \ {a})
 
 /-- The set `P` contains a convex `n`-gon. -/
-def HasConvexNGon (n : ℕ) (P : Set Point) : Prop :=
-  ∃ S : Finset Point, S.card = n ∧ ↑S ⊆ P ∧ ConvexIndep S
+def HasConvexNGon (n : ℕ) (P : Set ℝ²) : Prop :=
+  ∃ S : Finset ℝ², S.card = n ∧ ↑S ⊆ P ∧ ConvexIndep S
 
 noncomputable def f (n : ℕ) : ℕ :=
-  sInf { N | ∀ (pts : Finset Point), pts.card = N → Point.SetInGenPos pts →
+  sInf { N | ∀ (pts : Finset ℝ²), pts.card = N → NonTrilinear pts.toSet →
     HasConvexNGon n pts }
 
 /--
