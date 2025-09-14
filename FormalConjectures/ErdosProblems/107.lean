@@ -71,7 +71,7 @@ $$
 -/
 @[category research solved, AMS 52]
 theorem erdos_107.variants.ersz_bounds :
-    ∀ n ≥ 3, 2^(n-2) + 1 ≤ f n ∧ f n ≤ Nat.choose (2*n - 4) (n - 2) + 1 := by
+    ∀ n ≥ 3, 2^(n - 2) + 1 ≤ f n ∧ f n ≤ Nat.choose (2 * n - 4) (n - 2) + 1 := by
   sorry
 
 /--
