@@ -88,7 +88,7 @@ that an odd weird number must have at least 6 prime divisors.
 -/
 @[category research solved, AMS 11]
 theorem erdos_470.variants.odd_weird_prime_div :
-    ∀ n : ℕ, n.Weird → {m | m ∈ n.divisors ∧ m.Prime}.ncard > 6 := by
+    ∀ n : ℕ, Odd n → n.Weird → {m | m ∈ n.divisors ∧ m.Prime}.ncard > 6 := by
   sorry
 
 /--
