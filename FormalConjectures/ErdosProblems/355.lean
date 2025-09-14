@@ -16,27 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Erdős Problem 259
-
-*Reference:* [erdosproblems.com/259](https://www.erdosproblems.com/259)
--/
-
-open scoped ArithmeticFunction
-
-namespace Erdos259
+namespace Erdos355
 
 /--
-Is
-$$\sum_{n} \mu(n)^2\frac{n}{2^n}$$
-irrational?
-
-This is true, and was proved by Chen and Ruzsa.
-
-[ChRu99] Chen, Yong-Gao and Ruzsa, Imre Z., On the irrationality of certain series. Period. Math. Hungar. (1999), 31--37.
+Is there a lacunary sequence $A\subseteq \mathbb{N}$ (so that $A=\{a_1 < \cdots\}$ and
+there exists some $\lambda > 1$ such that $a_{n+1}/a_n\geq \lambda$ for all $n\geq 1$) such that
+\[\left\{ \sum_{a\in A'}\frac{1}{a} : A'\subseteq A\textrm{ finite}\right\}\]
+contain all rationals in some open interval?
 -/
-@[category research solved, AMS 11]
-theorem erdos_259 : Irrational (∑' n : ℕ, (μ n) ^ 2 * n / (2 ^ n)) := by
+@[category research open, AMS 11]
+theorem erdos_355 :
+    (∃ A : ℕ → ℕ, IsLacunary A ∧ ∃ u v : ℝ, u < v ∧ ∀ q : ℚ, ↑q ∈ Set.Ioo u v →
+      q ∈  {(∑ a ∈ A', (1 / a : ℚ)) | (A' : Finset ℕ) (_ : A'.toSet ⊆ Set.range A)})
+    ↔ answer(sorry) := by
   sorry
 
-end Erdos259
+
+end Erdos355

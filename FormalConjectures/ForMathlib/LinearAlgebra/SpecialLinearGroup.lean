@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2024 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Order.Filter.AtTopBot.Defs
 
-variable {M : Type*} [AddCommMonoid M]
+import FormalConjectures.ForMathlib.LinearAlgebra.GeneralLinearGroup
 
-/-- The set of subset sums of a set `A ⊆ M`. -/
-def subsetSums (A : Set M) : Set M :=
-  {n | ∃ B : Finset M, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
+open Matrix
+open scoped MatrixGroups
 
-/-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
-def IsAddComplete [Preorder M] (A : Set M) : Prop :=
-  ∀ᶠ k in Filter.atTop, k ∈ subsetSums A
+variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
+
+/-- The group of invertible diagonal matrices with determinant 1. -/
+def Matrix.SpecialLinearGroup.diagonalSubgroup : Subgroup (SpecialLinearGroup n R) :=
+  (Matrix.GeneralLinearGroup.diagonalSubgroup n R).comap Matrix.SpecialLinearGroup.toGL

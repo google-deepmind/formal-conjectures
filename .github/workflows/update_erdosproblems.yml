@@ -1,0 +1,22 @@
+name: Notify erdosproblems of update
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    # Not running on forks
+    if: github.repository == 'google-deepmind/formal-conjectures'
+    steps:
+      - name: Send repository dispatch event
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          # A Fine-grained personal access token with `Repository access` set to
+          # "Only select repositories", namely "teorth/erdosproblems" and `permissions`
+          # "Contents, Access: Read and write" can be used here.
+          token: ${{ secrets.REPO_DISPATCH_PAT }}
+          repository: teorth/erdosproblems
+          event-type: formal-conjecture-updated
