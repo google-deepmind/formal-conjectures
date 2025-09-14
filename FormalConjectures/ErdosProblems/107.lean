@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 107
 
-*Reference:* [erdosproblems.com/107](https://www.erdosproblems.com/107)
+*References:*
+- [erdosproblems.com/107](https://www.erdosproblems.com/107)
+- [Wikipedia](https://en.wikipedia.org/wiki/Happy_ending_problem)
 -/
 
 open Filter
