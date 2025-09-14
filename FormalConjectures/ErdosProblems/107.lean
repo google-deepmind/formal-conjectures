@@ -29,17 +29,22 @@ open EuclideanGeometry
 
 namespace Erdos107
 
-/-- The set `S` is in convex position. -/
+/-- `ConvexIndep S` means that `S` consists of extremal points of its convex hull,
+i.e., the point set encloses a convex shape.
+Also known as a "convex-independent set". -/
 def ConvexIndep (S : Set ℝ²) : Prop :=
   ∀ a ∈ S, a ∉ convexHull ℝ (S \ {a})
 
-/-- The set `P` contains a convex `n`-gon. -/
+/-- The set `P` contains a convex `n`-gon.
+See also `IsConvexPolygon`. -/
 def HasConvexNGon (n : ℕ) (P : Set ℝ²) : Prop :=
   ∃ S : Finset ℝ², S.card = n ∧ ↑S ⊆ P ∧ ConvexIndep S
 
+def cardSet (n : ℕ) := { N | ∀ (pts : Finset ℝ²), pts.card = N → NonTrilinear pts.toSet →
+  HasConvexNGon n pts }
+
 noncomputable def f (n : ℕ) : ℕ :=
-  sInf { N | ∀ (pts : Finset ℝ²), pts.card = N → NonTrilinear pts.toSet →
-    HasConvexNGon n pts }
+  sInf (cardSet n)
 
 /--
 Let $f(n)$ be minimal such that any $f(n)$ points in $ℝ^2$, no three on a line,
@@ -50,13 +55,27 @@ Prove that $f(n) = 2^{n-2} + 1$.
 theorem erdos_107 : (∀ n ≥ 3, f n = 2^(n - 2) + 1) ↔ answer(sorry) := by
   sorry
 
+namespace erdos_107
+
+/-- For every $n ≥ 3$, there exists $N$ such that any $N$ points, no three on a line,
+contain a convex $n$-gon. -/
+@[category research solved, AMS 52]
+theorem nonempty_cardSet : ∀ n ≥ 3, (cardSet n).Nonempty :=
+  sorry
+
 /-- Depending on details of definitions,
 the statement is false or trivial for $n < 3$. -/
 @[category test, AMS 52]
-theorem erdos_107.f_zero_eq : f 0 = 0 := by
+theorem f_zero_eq : f 0 = 0 := by
   have : ∀ P, HasConvexNGon 0 P := by
     intro; use ∅; simp [ConvexIndep]
-  simp [f, this]
+  simp [f, cardSet, this]
+
+@[category test, AMS 52]
+theorem f_three_eq : f 3 = 3 := by
+  sorry
+
+namespace variants
 
 /--
 Erdős and Szekeres proved the bounds
@@ -72,7 +91,7 @@ $$
   Compos. Math. (1935), 463-470.
 -/
 @[category research solved, AMS 52]
-theorem erdos_107.variants.ersz_bounds :
+theorem ersz_bounds :
     ∀ n ≥ 3, 2^(n - 2) + 1 ≤ f n ∧ f n ≤ Nat.choose (2 * n - 4) (n - 2) + 1 := by
   sorry
 
@@ -86,7 +105,7 @@ $$
   J. Amer. Math. Soc. (2017), 1047-1053.
 -/
 @[category research solved, AMS 52]
-theorem erdos_107.variants.su_bound :
+theorem su_bound :
     ∃ r : ℕ → ℝ, r =o[atTop] (fun n => (n : ℝ)) ∧
       ∀ n ≥ 3, (f n : ℝ) ≤ 2^(n + r n) := by
   sorry
@@ -102,9 +121,9 @@ $$
   _Two extensions of the Erdős-Szekeres problem_. J. Eur. Math. Soc. (JEMS) (2020), 3981-3995.
 -/
 @[category research solved, AMS 52]
-theorem erdos_107.variants.hmpt_bound :
+theorem hmpt_bound :
     ∃ r : ℕ → ℝ, r =O[atTop] (fun n => Real.sqrt (n * Real.log n)) ∧
       ∀ n ≥ 3, (f n : ℝ) ≤ 2^(n + r n) := by
   sorry
 
-end Erdos107
+end Erdos107.erdos_107.variants
