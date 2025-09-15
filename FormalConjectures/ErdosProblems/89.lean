@@ -41,12 +41,12 @@ noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
   sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
 
 /--
-Does every set of $n$ distinct points in $\mathbb{R}^2$ determine $/gg \frac{n}{\sqrt{\log n}}$
+Does every set of $n$ distinct points in $\mathbb{R}^2$ determine $\gg \frac{n}{\sqrt{\log n}}$
 many distinct distances?
 -/
 @[category research open, AMS 52]
 theorem erdos_89 :
-  (fun (n : ℕ) => n/(n : ℝ).log.sqrt) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+    (fun (n : ℕ) => n/(n : ℝ).log.sqrt) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
   sorry
 
 /--
@@ -54,7 +54,7 @@ Guth and Katz [GuKa15] proved that there are always $\gg \frac{n}{\log n}$ many 
 -/
 @[category research solved, AMS 52]
 theorem erdos_89.variants.n_dvd_log_n :
-  (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+    (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
   sorry
 
 /--
@@ -64,26 +64,14 @@ $\frac{n}{\sqrt{\log n}}$ holds, then the weaker lower bound $\frac{n}{\log n}$ 
 -/
 @[category test, AMS 52]
 theorem erdos_89.variants.implies_n_dvd_log_n (h : type_of% erdos_89) :
-   type_of% erdos_89.variants.n_dvd_log_n := by
-  refine Asymptotics.isBigO_iff.2 (h.bound.elim ? _)
-  intros c hc
-  use c
-  have := (Real.tendsto_log_atTop.eventually_ge_atTop 1).natCast_atTop
-  simp at this
-  have ⟨m, hm⟩ := this
-  simp_all only [norm_div, Real.norm_eq_abs, eventually_atTop, ge_iff_le]
-  obtain ⟨x, hx⟩ := hc
-  use max x m
-  intro l hl
-  refine le_trans ?_ <| hx l (by omega)
-  have := hm l (by omega)
-  refine (div_le_div_iff_of_pos_left ?_ (by positivity) (by positivity)).mpr <|
-    abs_le_abs_of_nonneg (by positivity) <| Real.sqrt_le_iff.mpr ⟨by linarith, by nlinarith⟩
-  by_contra hx
-  simp only [Nat.abs_cast, Nat.cast_pos, not_lt, nonpos_iff_eq_zero] at hx
-  rw [hx] at this
-  simp only [CharP.cast_eq_zero, Real.log_zero] at this
-  linarith
+    type_of% erdos_89.variants.n_dvd_log_n := by
+  refine .trans ?_ h
+  have := (Asymptotics.isLittleO_one_left_iff ℝ).mpr <| tendsto_norm_atTop_atTop.comp <| 
+    (tendsto_rpow_atTop (show 0 < 1/2 by norm_num)).comp
+    (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
+  convert (Asymptotics.isBigO_refl (fun n : ℕ ↦ n/(n : ℝ).log) _).mul this.isBigO using 1
+  · simp
+  · simp_rw [Function.comp, div_mul, ← Real.sqrt_eq_rpow, Real.div_sqrt]
 
 
 -- TODO(firsching): formalize the rest of the remarks
