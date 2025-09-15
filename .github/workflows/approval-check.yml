@@ -1,43 +1,71 @@
-on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - main
+name: Check approval condition
 
-  # This re-runs the check every time a review is submitted
-  pull_request_review:
-    types: [submitted]
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   run-if-trusted-or-approved:
     runs-on: ubuntu-latest
 
-    # This job ONLY runs if the PR author is trusted, OR a trusted
-    # user has submitted an "approved" review.
-    if: |
-      ( contains(fromJSON(vars.TRUSTED_AUTHORS_JSON), github.event.pull_request.user.login) )
-      ||
-      (
-        github.event_name == 'pull_request_review' &&
-        github.event.review.state == 'approved' &&
-        contains(fromJSON(vars.TRUSTED_AUTHORS_JSON), github.event.review.user.login)
-      )
+    # We must first fetch the PR's review status using the gh CLI,
+    # because the 'pull_request_target' event payload is minimal and doesn't
+    # include the 'github.event.review' object
 
     steps:
-      - name: Condition Met
+      - name: Check Author Trust
+        id: check_author
+        env:
+          TRUSTED_LIST: ${{ vars.TRUSTED_AUTHORS_JSON }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
-          echo "This job is running because a valid condition was met."
-          echo "Event Name: ${{ github.event_name }}"
-          echo "PR Author: ${{ github.event.pull_request.user.login }}"
-
-          # This block is just for logging/debugging which condition passed
-          if (contains(fromJSON(vars.TRUSTED_AUTHORS_JSON), github.event.pull_request.user.login)); then
-            echo "Condition Path: The PR author is on the trusted list."
+          if echo "$TRUSTED_LIST" | grep -q "\"$PR_AUTHOR\""; then
+            echo "Result: Author is trusted."
+            echo "trusted=true" >> $GITHUB_OUTPUT
           else
-            echo "Condition Path: A trusted reviewer (${{ github.event.review.user.login }}) approved the PR."
+            echo "Result: Author is not trusted."
+            echo "trusted=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: Check for Trusted Approval
+        id: check_approval
+        # This step only runs if the author was NOT trusted (short-circuiting)
+        if: steps.check_author.outputs.trusted == 'false'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TRUSTED_LIST: ${{ vars.TRUSTED_AUTHORS_JSON }}
+          PR_NUMBER: ${{ github.event.number }}
+        run: |
+          echo "Author not trusted. Checking for approved reviews from trusted reviewers..."
+
+          # 1. Get all "APPROVED" reviews for this PR
+          # 2. Filter them to get just the logins of the approvers
+          # 3. Use 'grep' to see if ANY of those approvers are in our trusted list
+          if gh pr review list "$PR_NUMBER" --state APPROVED --json author --jq '.[].author.login' | grep -q -F -f <(echo "$TRUSTED_LIST" | jq -r '.[]')
+          then
+            echo "Result: Found an APPROVED review from a trusted user."
+            echo "approved=true" >> $GITHUB_OUTPUT
+          else
+            echo "Result: No approved reviews found from trusted users."
+            echo "approved=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Gate Check
+        # This is the final check that will pass or fail the job
+        if: steps.check_author.outputs.trusted == 'true' || steps.check_approval.outputs.approved == 'true'
+        run: |
+          echo "Success: Conditions met."
+
+      - name: Fail Check
+        # If neither check passed, this step explicitly fails the job
+        if: steps.check_author.outputs.trusted == 'false' && steps.check_approval.outputs.approved != 'true'
+        run: |
+          echo "Failure: PR author is not trusted AND no trusted approval was found."
+          exit 1
