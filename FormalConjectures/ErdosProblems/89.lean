@@ -51,6 +51,8 @@ theorem erdos_89 :
 
 /--
 Guth and Katz [GuKa15] proved that there are always $\gg \frac{n}{\log n}$ many distinct distances.
+
+[GuKa15] Guth, Larry and Katz, Nets Hawk, On the Erdős distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190. 
 -/
 @[category research solved, AMS 52]
 theorem erdos_89.variants.n_dvd_log_n :
