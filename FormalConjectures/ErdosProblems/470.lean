@@ -72,7 +72,7 @@ well-known conjectures concerning prime gaps.
 @[category research solved, AMS 11]
 theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
     ∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10 →
-      Set.Infinite {n : ℕ | PrimitiveWeird n} := by
+      Set.Infinite PrimitiveWeird  := by
   sorry
 
 /--
