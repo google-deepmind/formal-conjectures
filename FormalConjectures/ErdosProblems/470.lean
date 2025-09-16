@@ -45,7 +45,7 @@ theorem erdos_470.part1 : (∃ n : ℕ, n.Weird ∧ Odd n) ↔ answer(sorry) := 
 Are there infinitely many primitive weird numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_470.part2 : (Set.Infinite {n : ℕ | PrimitiveWeird n}) ↔ answer(sorry) := by
+theorem erdos_470.part2 : (Set.Infinite PrimitiveWeird) ↔ answer(sorry) := by
   sorry
 
 /--
