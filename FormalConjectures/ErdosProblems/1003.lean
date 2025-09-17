@@ -50,8 +50,9 @@ $$\frac{x}{\exp(c(\log x)^{1/3})}$$
 for some constant $c > 0$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1003.variants.eps87 :
-    ∀ x, ∃ c > 0, {n | n.totient = (n + 1).totient}.ncard ≤ x / Real.exp (c * (Real.log x)^(1/3)) := by
+theorem erdos_1003.variants.eps87 (x : ℝ) : ∃ c > 0,
+    {(n : ℕ) | (n : ℝ) ≤ x ∧ (n.totient = (n + 1).totient)}.ncard
+        ≤ x / (c * (x.log) ^ (1 / 3)).exp := by
   sorry
 
 end Erdos1003
