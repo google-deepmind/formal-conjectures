@@ -32,26 +32,25 @@ import FormalConjectures.Util.ProblemImports
 open Filter Real
 
 namespace Erdos946
-
-private abbrev τ := fun (n : ℕ) => n.divisors.card
+open scoped ArithmeticFunction
 
 /--
 There are infinitely many $n$ such that $τ(n) = τ(n+1)$. Proved in [He84].
 -/
 @[category research solved, AMS 11]
-theorem erdos_946 : {n : ℕ | τ n = τ (n + 1)}.Infinite := by
+theorem erdos_946 : {n : ℕ | σ 0 n = σ 0 (n + 1)}.Infinite := by
   sorry
 
 /--
 There are infinitely many $n$ such that $τ(n) = τ(n + 5040)$. Proved in [Sp81].
 -/
 @[category research solved, AMS 11]
-theorem erdos_946.variants.spiro_5040 : {n : ℕ | τ n = τ (n + 5040)}.Infinite := by
+theorem erdos_946.variants.spiro_5040 : {n : ℕ | σ 0 n = σ 0 (n + 5040)}.Infinite := by
   sorry
 
 /-- Number of $n \le x$ with $τ(n) = τ(n+1)$. -/
 noncomputable def erdos946Count (x : ℝ) : ℝ
-  := ((Finset.range (⌊x⌋₊ + 1)).filter (fun n => τ n = τ (n + 1))).card
+  := ((Finset.range (⌊x⌋₊ + 1)).filter (fun n => σ 0 n = σ 0 (n + 1))).card
 
 /--
 The number of $n \le x$ with $τ(n) = τ(n+1)$ is at least $x / (\log x)^7$ for all sufficiently large $x$.
