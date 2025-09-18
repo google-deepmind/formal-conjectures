@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Nat.Lattice
 import Mathlib.Tactic.Linarith
 
@@ -23,8 +22,8 @@ open Function Set
 
 variable {α : Type*} [AddCommMonoid α]
 
-/-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
-coincidences forced by the commutativity of addition. -/
+/-- A Sidon set is a set such that all pairwise sums of elements are distinct,
+apart from coincidences forced by commutativity. -/
 def IsSidon {S : Type*} [Membership α S] (A : S) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
   i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)
 
@@ -32,7 +31,29 @@ def IsSidon {S : Type*} [Membership α S] (A : S) : Prop := ∀ᵉ (i₁ ∈ A) 
 theorem coe {S : Type*} [SetLike S α] {A : S} : IsSidon (A : Set α) ↔ IsSidon A := by
   simp [IsSidon]
 
+open Classical
+
+/-- The subsets of `{0, ..., n - 1}` which are Sidon sets. -/
+noncomputable def SidonSubsets (n : ℕ) : Finset (Finset ℕ) :=
+  (Finset.range n).powerset.filter fun s => IsSidon (s : Set ℕ)
+
+/-- The sizes of Sidon subsets of `{0, ..., n - 1}`. -/
+noncomputable def SidonSubsetsSizes (n : ℕ) : Finset ℕ :=
+  (SidonSubsets n).image Finset.card
+
+lemma SidonSubsetsSizesNonempty (n : ℕ) : (SidonSubsetsSizes n).Nonempty := by
+  use 0
+  simp only [SidonSubsetsSizes, Finset.mem_image]
+  use ∅
+  simp [SidonSubsets, IsSidon, Set.Pairwise, Finset.mem_filter, Finset.mem_powerset, Finset.card_empty]
+
+/-- The maximum size of a Sidon set in `{1, ..., N}`. -/
+noncomputable def maxSidonSetSize (N : ℕ) : ℕ :=
+  sSup {(A.card) | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 1 N) (_ : IsSidon A.toSet)}
+
+
 namespace Set
+
 
 lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
     {Y : Set ℕ} (hY : Y.IsAPOfLength 3) :
