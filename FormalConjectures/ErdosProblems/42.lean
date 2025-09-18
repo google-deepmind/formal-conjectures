@@ -29,17 +29,14 @@ open Function Set
 open scoped Pointwise
 
 /--
-**Erdős Problem 42**: For every maximal Sidon set in `{1, ..., N}`, there exists another
-Sidon set of size M with disjoint difference sets (apart from 0).
-
-Let M ≥ 1 and N be sufficiently large in terms of M. Is it true that for every maximal Sidon set
-`A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}` of size M such that
+**Erdős Problem 42**: Let M ≥ 1 and N be sufficiently large in terms of M. Is it true that for every
+maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}` of size M such that
 `(A - A) ∩ (B - B) = {0}`?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_42 : ∀ (M : ℕ), ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N),
+theorem erdos_42 : ∀ (M : ℕ), ∀ᶠ N in atTop, (∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A (Set.Icc 1 N)),
     ∃ᵉ (B : Set ℕ), B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
-    ((A - A) ∩ (B - B)) = {0} ↔ answer(sorry) := by
+    ((A - A) ∩ (B - B)) = {0}) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -51,7 +48,7 @@ disjoint difference sets (apart from 0).
 -/
 @[category research open, AMS 5 11]
 theorem erdos_42.constructive : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
-    ∀ (A : Set ℕ) (_ : IsMaximalSidonSet A N), ∃ᵉ (B : Set ℕ),
+    (A : Set ℕ) (_ : IsMaximalSidonSetIn A (Set.Icc 1 N)), ∃ᵉ (B : Set ℕ),
       B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
       ((A - A) ∩ (B - B)) = {0}) ↔ answer(sorry) := by
   sorry
@@ -63,7 +60,7 @@ theorem erdos_42.constructive : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 �
 The set `{1, 2, 4}` is a maximal Sidon set in `{1, ..., 4}`.
 -/
 @[category undergraduate, AMS 5 11]
-theorem example_maximal_sidon : IsMaximalSidonSet {1, 2, 4} 4 := by
+theorem example_maximal_sidon : IsMaximalSidonSetIn {1, 2, 4} {1, 2, 3, 4} := by
   sorry
 
 /--
@@ -78,7 +75,7 @@ For any maximal Sidon set, the difference set contains 0.
 -/
 @[category undergraduate, AMS 5 11]
 theorem maximal_sidon_contains_zero (A : Set ℕ) (N : ℕ) (hN : 1 ≤ N)
-    (hA : IsMaximalSidonSet A N) : 0 ∈ A - A := by
+    (hA : IsMaximalSidonSetIn A (Set.Icc 1 N)) : 0 ∈ A - A := by
   sorry
 
 /--
