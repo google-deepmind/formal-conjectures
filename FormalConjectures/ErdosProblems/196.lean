@@ -14,15 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Order.Filter.AtTopBot.Defs
+import FormalConjectures.Util.ProblemImports
 
-variable {M : Type*} [AddCommMonoid M]
+/-!
+# Erdős Problem 196
 
-/-- The set of subset sums of a set `A ⊆ M`. -/
-def subsetSums (A : Set M) : Set M :=
-  {n | ∃ B : Finset M, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
+*Reference:* [erdosproblems.com/196](https://www.erdosproblems.com/196)
+-/
+namespace Erdos196
 
-/-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
-def IsAddComplete [Preorder M] (A : Set M) : Prop :=
-  ∀ᶠ k in Filter.atTop, k ∈ subsetSums A
+/-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
+@[category research open, AMS 5 11]
+theorem erdos_196 : (∀ (f : ℕ ≃ ℕ), ∃ (a : List ℕ),
+    ((a.Sorted (· < · )) ∨ (a.Sorted (· > · ))) ∧ Set.IsAPOfLength (f '' a.toFinset) 4)
+    ↔ answer(sorry) := by
+  sorry
+
+end Erdos196
