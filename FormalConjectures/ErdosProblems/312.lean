@@ -1,7 +1,7 @@
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 312 — Fintype Formulation
+# Erdős Problem 312
 
 *Reference:* https://www.erdosproblems.com/312
 
