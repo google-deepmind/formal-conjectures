@@ -14,15 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Order.Filter.AtTopBot.Defs
+import Mathlib.Data.Nat.Prime.Defs
+import Mathlib.Data.Nat.Nth
 
-variable {M : Type*} [AddCommMonoid M]
-
-/-- The set of subset sums of a set `A ⊆ M`. -/
-def subsetSums (A : Set M) : Set M :=
-  {n | ∃ B : Finset M, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
-
-/-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
-def IsAddComplete [Preorder M] (A : Set M) : Prop :=
-  ∀ᶠ k in Filter.atTop, k ∈ subsetSums A
+/--
+The prime gap: the difference between the $n+1$-th and $n$-th prime.
+-/
+noncomputable def primeGap (n : ℕ) : ℕ := (n + 1).nth Nat.Prime - n.nth Nat.Prime
