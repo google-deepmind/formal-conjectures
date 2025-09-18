@@ -33,11 +33,11 @@ denotes the prime gap function.
 -/
 @[category research solved, AMS 11]
 theorem erdos_6 :
-    Set.Infinite fun n => primeGap n < primeGap (n + 1) ∧ primeGap (n + 1) < primeGap (n + 2) := by
+    {n | primeGap n < primeGap (n + 1) ∧ primeGap (n + 1) < primeGap (n + 2)}.Infinite := by
   sorry
 
 /--
-For all $m$, there are infinitely many $n$ such that $d_n < d_{n+1} \dots < d_{n+m}$,
+For all $m$, there are infinitely many $n$ such that $d_n < d_{n+1} < \dots < d_{n+m}$,
 where $d$ denotes the prime gap function.
 
 Proved by Banks, Freiberg, and Turnage-Butterbaugh [BFT15] with an application of the
@@ -45,7 +45,7 @@ Maynard-Tao machinery concerning bounded gaps between primes [Ma15]
 -/
 @[category research solved, AMS 11]
 theorem erdos_6.variants.increasing (m : ℕ) :
-    Set.Infinite fun n => ∀ i ∈ Finset.range m, primeGap (n + i) < primeGap (n + i + 1) := by
+    {n | ∀ i ∈ Finset.range m, primeGap (n + i) < primeGap (n + i + 1)}.Infinite := by
   sorry
 
 
@@ -58,7 +58,7 @@ Maynard-Tao machinery concerning bounded gaps between primes [Ma15]
 -/
 @[category research solved, AMS 11]
 theorem erdos_6.variants.decreasing (m : ℕ) :
-    Set.Infinite fun n => ∀ i ∈ Finset.range m, primeGap (n + i) > primeGap (n + i + 1) := by
+    {n | ∀ i ∈ Finset.range m, primeGap (n + i) > primeGap (n + i + 1)}.Infinite := by
   sorry
 
 end Erdos6
