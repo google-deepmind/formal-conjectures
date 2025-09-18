@@ -72,15 +72,6 @@ theorem erdos_312_fintype :
               1 - Real.exp (-(c * K)) < hsumIdx a S ∧
               hsumIdx a S ≤ 1)
   ↔ answer (sorry) := by
-  /-
-  Proof sketch (to be filled):
-  1. Fix `K > 1`, set ε := exp(-c*K).
-  2. Randomly thin the family with Bernoulli choices (probabilistic method).
-  3. Tune parameters so that the expected harmonic sum is ≈ 1 - ε/2.
-  4. Bound the variance (≲ 1/K) and apply Chebyshev/Hoeffding.
-  5. Conclude that some outcome gives a subset with harmonic sum in (1 - ε, 1].
-  6. Extract the corresponding `Finset` of indices.
-  -/
   sorry
 
 end Erdos312
