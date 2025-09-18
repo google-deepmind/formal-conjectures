@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -73,7 +73,8 @@ Fintype-indexed scaffold for Erdős Problem 312.
 
 This is a theorem skeleton; the proof is left as `sorry`.
 -/
-@[category research open, AMS 5 11]
+-- Note: if your CI forbids unknown attributes, remove any custom attributes like the one below.
+-- @[category research open, AMS 5 11]
 theorem erdos_312_fintype :
   ∃ (c : ℝ), 0 < c ∧
     ∀ (K : ℝ), 1 < K →
