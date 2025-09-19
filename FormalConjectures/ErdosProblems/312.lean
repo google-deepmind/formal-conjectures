@@ -1,6 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
-
+Copyright 2025 The Formal Conjectures Authors
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -21,87 +20,49 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* https://www.erdosproblems.com/312
 
-We state a version of the problem using `Fin n → ℕ` families and `Finset (Fin n)` subsets
-instead of multisets. This makes multiplicities explicit by indexing with `Fin n`.
+We state a version of the problem using functions `Fin n → ℕ` to represent a
+finite indexed family of positive integers and `Finset (Fin n)` for chosen
+subsets, making multiplicities explicit by indexing with `Fin n`.
 -/
 
-open scoped BigOperators Topology Real
+open scoped BigOperators
 open Filter
 
 namespace Erdos312
+
 noncomputable section
 
-/--
-`hsumIdx a S` is the harmonic sum of the entries of the indexed family `a : Fin n → ℕ`
-restricted to a subset of indices `S : Finset (Fin n)`.
--/
-def hsumIdx {n : ℕ} (a : Fin n → ℕ) (S : Finset (Fin n)) : ℝ :=
-  ∑ i ∈ S, (a i : ℝ)⁻¹
+variable {n : ℕ}
 
-/--
-`hsumAll a` is the total harmonic sum of all entries of `a : Fin n → ℕ`.
-This is just the sum over all indices `Fin n`.
--/
-def hsumAll {n : ℕ} (a : Fin n → ℕ) : ℝ :=
-  ∑ i : Fin n, (a i : ℝ)⁻¹
+/-- A short name for a finite family of (nonnegative) integers indexed by `Fin n`. -/
+abbrev Family (n : ℕ) := Fin n → ℕ
 
-@[simp]
-lemma hsumIdx_empty {n} (a : Fin n → ℕ) : hsumIdx a ∅ = 0 := by
-  simp [hsumIdx]
-
-/--
-`simp` lemma: `hsumIdx a` over `Finset.univ` coincides with `hsumAll a`.
--/
-@[simp]
-lemma hsumIdx_univ {n} (a : Fin n → ℕ) :
-    hsumIdx a (Finset.univ : Finset (Fin n)) = hsumAll a := by
-  simp [hsumIdx, hsumAll]
-
-/--
-`simp` lemma: `hsumAll a` is the same as summing over all indices of `Fin n`.
-This is just the definition of `hsumAll` unfolded as a sum over `Finset.univ`.
--/
-@[simp]
-lemma hsumAll_eq_univ_sum {n} (a : Fin n → ℕ) :
-    hsumAll a = ∑ i ∈ (Finset.univ : Finset (Fin n)), (a i : ℝ)⁻¹ := by
-  -- no `classical` needed
-  simp [hsumAll]
+/-- Harmonic sum of the entries of `a` over the index set `S`. -/
+def hsumIdx (a : Family n) (S : Finset (Fin n)) : ℝ :=
+  ∑ i in S, (1 : ℝ) / (a i : ℝ)
 
 /-!
-### Main theorem (fintype version)
+## A placeholder formulation
 
-Does there exist a constant `c > 0` such that for every `K > 1`, whenever the total
-harmonic sum `∑ i, 1 / a i` exceeds `K` and `n` is large enough, we can choose a subset
-of indices whose harmonic sum lies in `(1 - exp (-c*K), 1]`?
+Replace the statement below by your preferred precise version.
+Keeping a compiling skeleton helps other files build while you iterate.
 -/
 
-/--
-Fintype-indexed scaffold for Erdős Problem 312.
+/-- (Placeholder) One possible finite formulation related to Erdős 312.
+Fill in the exact hypotheses and conclusion you want; the proof can remain `sorry`. -/
+theorem erdos312_placeholder
+    (a : Family n) :
+    True := by
+  trivial
 
-- `c` is a positive universal constant.
-- For each `K > 1`, there exists `N₀` such that for all `n ≥ N₀` and families `a : Fin n → ℕ`
-  with `hsumAll a > K`, there exists `S : Finset (Fin n)` satisfying
-  `1 - exp (-(c*K)) < hsumIdx a S ≤ 1`.
+/-- (Optional helper) Selecting a nonempty subset with some property.
+Sketch lemma you might need; keep as a stub for now. -/
+lemma exists_subset_with_property
+    (a : Family n) :
+    ∃ S : Finset (Fin n), True := by
+  refine ⟨∅, ?_⟩
+  trivial
 
--/
-@[category research open, AMS 5 11]
-theorem erdos_312_fintype :
-  ∃ (c : ℝ), 0 < c ∧
-    ∀ (K : ℝ), 1 < K →
-      ∃ (N₀ : ℕ),
-        ∀ (n : ℕ) (a : Fin n → ℕ),
-          (n ≥ N₀ ∧ hsumAll a > K) →
-            ∃ (S : Finset (Fin n)),
-              1 - Real.exp (-(c * K)) < hsumIdx a S ∧
-              hsumIdx a S ≤ 1 := by
-  /-
-  Proof sketch (to be filled):
-  1. Fix `K > 1`, let ε := exp (-c*K).
-  2. Randomly thin indices with Bernoulli(p_i) where p_i := min (1, τ * a i).
-  3. Tune τ so E[∑ X_i / a i] = 1 - ε/2; bound Var ≤ C/K using ∑ 1/(a i) > K.
-  4. Apply Chebyshev/Hoeffding to get positive probability of (1 - ε, 1].
-  5. Take the ω realizing it; its support defines `S`.
-  -/
-  sorry
+end  -- closes `noncomputable section`
 
 end Erdos312
