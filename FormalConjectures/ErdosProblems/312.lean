@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-
 import FormalConjectures.Util.ProblemImports
 
 /-!
@@ -28,7 +27,6 @@ making multiplicities explicit by indexing with `Fin n`.
 -/
 
 open scoped BigOperators
-open Filter
 
 namespace Erdos312
 
@@ -54,7 +52,6 @@ lemma hsumIdx_empty (a : Family n) : hsumIdx a ∅ = 0 := by
 @[simp]
 lemma hsumAll_univ (a : Family n) :
     hsumAll a = ∑ i in (Finset.univ : Finset (Fin n)), (1 : ℝ) / (a i : ℝ) := by
-  classical
   simp [hsumAll]
 
 /-!
