@@ -30,7 +30,7 @@ Are there infinitely many solutions to $\phi(n) = \phi(n+1)$, where \phi is the 
 function?
 -/
 @[category research open, AMS 11]
-theorem erdos_1003 : (Set.Infinite {n | n.totient = (n + 1).totient}) ↔ answer(sorry) := by
+theorem erdos_1003 : Set.Infinite {n | φ n = φ (n + 1)} ↔ answer(sorry) := by
   sorry
 
 /--
