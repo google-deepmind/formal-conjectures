@@ -36,7 +36,7 @@ noncomputable section
 restricted to a subset of indices `S : Finset (Fin n)`.
 -/
 def hsumIdx {n : ℕ} (a : Fin n → ℕ) (S : Finset (Fin n)) : ℝ :=
-  ∑ i in S, (a i : ℝ)⁻¹
+  ∑ i ∈ S, (a i : ℝ)⁻¹
 
 /--
 `hsumAll a` is the total harmonic sum of all entries of `a : Fin n → ℕ`.
@@ -49,10 +49,22 @@ def hsumAll {n : ℕ} (a : Fin n → ℕ) : ℝ :=
 lemma hsumIdx_empty {n} (a : Fin n → ℕ) : hsumIdx a ∅ = 0 := by
   simp [hsumIdx]
 
+/--
+`simp` lemma: `hsumIdx a` over `Finset.univ` coincides with `hsumAll a`.
+-/
+@[simp]
+lemma hsumIdx_univ {n} (a : Fin n → ℕ) :
+    hsumIdx a (Finset.univ : Finset (Fin n)) = hsumAll a := by
+  simp [hsumIdx, hsumAll]
+
+/--
+`simp` lemma: `hsumAll a` is the same as summing over all indices of `Fin n`.
+This is just the definition of `hsumAll` unfolded as a sum over `Finset.univ`.
+-/
 @[simp]
 lemma hsumAll_eq_univ_sum {n} (a : Fin n → ℕ) :
-  hsumAll a = ∑ i in (Finset.univ : Finset (Fin n)), (a i : ℝ)⁻¹ := by
-  classical
+    hsumAll a = ∑ i ∈ (Finset.univ : Finset (Fin n)), (a i : ℝ)⁻¹ := by
+  -- no `classical` needed
   simp [hsumAll]
 
 /-!
