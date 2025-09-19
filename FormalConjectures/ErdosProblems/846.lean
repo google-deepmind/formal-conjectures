@@ -21,17 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/846](https://www.erdosproblems.com/846)
 -/
-open scoped EuclideanGeometry
+open EuclideanGeometry
 
 namespace Erdos846
 
 section Prelims
 open Classical
-
-/--We say a subset `A` of points in the plane is non-trilinear if
-it contains no three points that lie on the same line.-/
-def NonTrilinear (A : Set ℝ²) : Prop := ∀ᵉ (x ∈ A) (y ∈ A) (z ∈ A),
-  A.Triplewise (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
 
 /--We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
 `B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`.-/
