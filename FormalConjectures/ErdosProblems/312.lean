@@ -71,10 +71,8 @@ Fintype-indexed scaffold for Erdős Problem 312.
   with `hsumAll a > K`, there exists `S : Finset (Fin n)` satisfying
   `1 - exp (-(c*K)) < hsumIdx a S ≤ 1`.
 
-This is a theorem skeleton; the proof is left as `sorry`.
 -/
--- Note: if your CI forbids unknown attributes, remove any custom attributes like the one below.
--- @[category research open, AMS 5 11]
+@[category research open, AMS 5 11]
 theorem erdos_312_fintype :
   ∃ (c : ℝ), 0 < c ∧
     ∀ (K : ℝ), 1 < K →
