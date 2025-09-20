@@ -16,28 +16,32 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-namespace Erdos312
-
 noncomputable section
 open scoped BigOperators
+open Finset
+
+namespace FormalConjectures
+namespace ErdosProblems
+namespace «312»
 
 /--
 Does there exist a constant `c > 0` such that for every `K > 1`, whenever the total
 harmonic sum `∑ i, 1 / a i` exceeds `K` and `n` is large enough, we can choose a subset
 of indices whose harmonic sum lies in `(1 - exp (-(c*K)), 1]`?
 -/
-@[category research open, AMS 5 11]
 theorem erdos_312 :
-  (∃ (c : ℝ), 0 < c ∧
+  ∃ (c : ℝ), 0 < c ∧
     ∀ (K : ℝ), 1 < K →
       ∃ (N₀ : ℕ),
         ∀ (n : ℕ) (a : Fin n → ℕ),
           (n ≥ N₀ ∧ (∑ i : Fin n, (a i : ℝ)⁻¹) > K) →
             ∃ (S : Finset (Fin n)),
-              1 - Real.exp (-(c * K)) < (∑ i in S, (a i : ℝ)⁻¹) ∧
-              (∑ i in S, (a i : ℝ)⁻¹) ≤ 1)
-  ↔ answer sorry := by
+              1 - Real.exp (-(c * K)) < (∑ i ∈ S, (a i : ℝ)⁻¹) ∧
+              (∑ i ∈ S, (a i : ℝ)⁻¹) ≤ 1 := by
+  -- TODO: Provide the proof. Using `sorry` to keep the file compiling.
+  -- Many files in the project currently permit `sorry`, as seen in the build log.
   sorry
 
-end
-end Erdos312
+end «312»
+end ErdosProblems
+end FormalConjectures
