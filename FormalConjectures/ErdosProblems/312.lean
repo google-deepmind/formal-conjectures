@@ -81,14 +81,6 @@ theorem erdos_312_fintype :
             ∃ (S : Finset (Fin n)),
               1 - Real.exp (-(c * K)) < hsumIdx a S ∧
               hsumIdx a S ≤ 1 := by
-  /-
-  Proof sketch (to be filled):
-  1. Fix `K > 1`, let ε := Real.exp (-(c*K)).
-  2. Randomly thin indices with Bernoulli(p_i) where p_i := min (1, τ * a i).
-  3. Tune τ so E[∑ X_i / a i] = 1 - ε/2; bound Var ≤ C/K using ∑ 1/(a i) > K.
-  4. Apply Chebyshev/Hoeffding to get positive probability of (1 - ε, 1].
-  5. Take the ω realizing it; its support defines `S`.
-  -/
   sorry
 
 end  -- noncomputable section
