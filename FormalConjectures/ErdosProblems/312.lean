@@ -39,5 +39,5 @@ theorem erdos_312 :
   ↔ answer sorry := by
   sorry
 
-end  -- noncomputable section
+end
 end Erdos312
