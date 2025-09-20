@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,73 +16,28 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Erdős Problem 312 — Fintype Formulation
-
-*Reference:* https://www.erdosproblems.com/312
-
-We state a version of the problem using functions `Fin n → ℕ` to represent a finite
-indexed family of positive integers and `Finset (Fin n)` for chosen subsets,
-making multiplicities explicit by indexing with `Fin n`.
--/
-
-
 namespace Erdos312
 
 noncomputable section
+open scoped BigOperators
 
-variable {n : ℕ}
-
-/-- A short name for a finite family of (nonnegative) integers indexed by `Fin n`. -/
-abbrev Family (n : ℕ) := Fin n → ℕ
-
-/-- Harmonic sum of the entries of `a` over the index set `S`. -/
-def hsumIdx (a : Family n) (S : Finset (Fin n)) : ℝ :=
-  ∑ i in S, (1 : ℝ) / (a i : ℝ)
-
-/-- Total harmonic sum of all entries of the indexed family `a`. -/
-def hsumAll (a : Family n) : ℝ :=
-  ∑ i : Fin n, (1 : ℝ) / (a i : ℝ)
-
-@[simp]
-lemma hsumIdx_empty (a : Family n) : hsumIdx a ∅ = 0 := by
-  simp [hsumIdx]
-
-@[simp]
-lemma hsumAll_univ (a : Family n) :
-    hsumAll a = ∑ i in (Finset.univ : Finset (Fin n)), (1 : ℝ) / (a i : ℝ) := by
-  simp [hsumAll]
-
-/-!
-## Main theorem (fintype version, scaffold)
-
+/--
 Does there exist a constant `c > 0` such that for every `K > 1`, whenever the total
 harmonic sum `∑ i, 1 / a i` exceeds `K` and `n` is large enough, we can choose a subset
 of indices whose harmonic sum lies in `(1 - exp (-(c*K)), 1]`?
 -/
-
-/--
-Fintype-indexed scaffold for Erdős Problem 312.
-
-- `c` is a positive universal constant.
-- For each `K > 1`, there exists `N₀` such that for all `n ≥ N₀` and families `a : Fin n → ℕ`
-  with `hsumAll a > K`, there exists `S : Finset (Fin n)` satisfying
-  `1 - Real.exp (-(c*K)) < hsumIdx a S ∧ hsumIdx a S ≤ 1`.
-
-This is a theorem skeleton; the proof is left as `sorry`.
--/
 @[category research open, AMS 5 11]
 theorem erdos_312 :
-  ∃ (c : ℝ), 0 < c ∧
+  (∃ (c : ℝ), 0 < c ∧
     ∀ (K : ℝ), 1 < K →
       ∃ (N₀ : ℕ),
-        ∀ (n : ℕ) (a : Family n),
-          (n ≥ N₀ ∧ hsumAll a > K) →
+        ∀ (n : ℕ) (a : Fin n → ℕ),
+          (n ≥ N₀ ∧ (∑ i : Fin n, (a i : ℝ)⁻¹) > K) →
             ∃ (S : Finset (Fin n)),
-              1 - Real.exp (-(c * K)) < hsumIdx a S ∧
-              hsumIdx a S ≤ 1 := by
+              1 - Real.exp (-(c * K)) < (∑ i in S, (a i : ℝ)⁻¹) ∧
+              (∑ i in S, (a i : ℝ)⁻¹) ≤ 1)
+  ↔ answer sorry := by
   sorry
 
-end
-
+end  -- noncomputable section
 end Erdos312
