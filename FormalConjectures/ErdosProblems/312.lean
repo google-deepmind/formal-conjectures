@@ -83,6 +83,6 @@ theorem erdos_312 :
               hsumIdx a S ≤ 1 := by
   sorry
 
-end  -- noncomputable section
+end
 
 end Erdos312
