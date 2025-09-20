@@ -72,7 +72,7 @@ Fintype-indexed scaffold for Erdős Problem 312.
 This is a theorem skeleton; the proof is left as `sorry`.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_312_fintype :
+theorem erdos_312 :
   ∃ (c : ℝ), 0 < c ∧
     ∀ (K : ℝ), 1 < K →
       ∃ (N₀ : ℕ),
