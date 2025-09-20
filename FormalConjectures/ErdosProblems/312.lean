@@ -26,7 +26,6 @@ indexed family of positive integers and `Finset (Fin n)` for chosen subsets,
 making multiplicities explicit by indexing with `Fin n`.
 -/
 
-open scoped BigOperators
 
 namespace Erdos312
 
