@@ -16,9 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-noncomputable section
-open scoped BigOperators
-open Finset
 
 namespace FormalConjectures
 namespace ErdosProblems
