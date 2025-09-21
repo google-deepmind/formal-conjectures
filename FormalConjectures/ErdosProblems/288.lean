@@ -49,7 +49,7 @@ theorem erdos_288.variants.i2_card_eq_1 : Set.Finite { (I, n₂) : (ℕ × ℕ) 
 It is perhaps true with two intervals replaced by any $k$ intervals.
 -/
 @[category research open, AMS 11]
-theorem erdos_288.variants.k_intervals : ∃ k, Set.Finite { I : Fin k → ℕ × ℕ |
+theorem erdos_288.variants.k_intervals : ∀ k, Set.Finite { I : Fin k → ℕ × ℕ |
       ∃ n : ℕ, (∑ j : Fin k, ∑ n_j ∈ Set.Icc (I j).1 (I j).2, (1 / n_j : ℚ)) = n
     } ↔ answer(sorry) := by
   sorry
