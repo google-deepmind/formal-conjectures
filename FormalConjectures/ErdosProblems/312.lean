@@ -16,13 +16,18 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 import FormalConjectures.Util.Answer.Syntax
+import FormalConjectures.Util.Attributes
+
+open scoped BigOperators
 
 namespace Erdos312
 
 /--
-Does there exist a constant $c > 0$ such that, for any $K > 1$, whenever $A$ is a sufficiently large finite multiset of integers with $\sum_{n\in A}\frac{1}{n}>K$ there exists some $S \subset A$ such that
-$$1-e^{-cK} < \sum_{n\in S}\frac{1}{n}\leq 1?$$
+Does there exist a constant `c > 0` such that, for any `K > 1`, whenever `A` is a sufficiently large
+finite multiset of integers with `∑ n ∈ A, 1/n > K` there exists some `S ⊆ A` such that
+`1 - exp (-(c*K)) < ∑ n ∈ S, 1/n ≤ 1`?
 -/
+
 theorem erdos_312 :
     (∃ (c : ℝ), 0 < c ∧
       ∀ (K : ℝ), 1 < K →
