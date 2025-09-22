@@ -24,14 +24,14 @@ Does there exist a constant $c > 0$ such that, for any $K > 1$, whenever $A$ is 
 $$1-e^{-cK} < \sum_{n\in S}\frac{1}{n}\leq 1?$$
 -/
 theorem erdos_312 :
-  (∃ (c : ℝ), 0 < c ∧
-    ∀ (K : ℝ), 1 < K →
-      ∃ (N₀ : ℕ),
-        ∀ (n : ℕ) (a : Fin n → ℕ),
-          (n ≥ N₀ ∧ (∑ i : Fin n, (a i : ℝ)⁻¹) > K) →
-            ∃ (S : Finset (Fin n)),
-              1 - Real.exp (-(c * K)) < (∑ i ∈ S, (a i : ℝ)⁻¹) ∧
-              (∑ i ∈ S, (a i : ℝ)⁻¹) ≤ 1)
-  ↔ answer(sorry) := by
+    (∃ (c : ℝ), 0 < c ∧
+      ∀ (K : ℝ), 1 < K →
+        ∃ (N₀ : ℕ),
+          ∀ (n : ℕ) (a : Fin n → ℕ),
+            (n ≥ N₀ ∧ (∑ i : Fin n, (a i : ℝ)⁻¹) > K) →
+              ∃ (S : Finset (Fin n)),
+                1 - Real.exp (-(c * K)) < (∑ i ∈ S, (a i : ℝ)⁻¹) ∧
+                (∑ i ∈ S, (a i : ℝ)⁻¹) ≤ 1)
+    ↔ answer(sorry) := by
 
 end Erdos312
