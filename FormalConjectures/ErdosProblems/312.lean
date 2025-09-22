@@ -15,10 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.Util.Answer.Syntax
-import FormalConjectures.Util.Attributes
-
-open scoped BigOperators
 
 namespace Erdos312
 
