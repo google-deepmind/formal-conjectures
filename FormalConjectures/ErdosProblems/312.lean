@@ -22,9 +22,8 @@ namespace ErdosProblems
 namespace Erdos312
 
 /--
-Does there exist a constant `c > 0` such that for every `K > 1`, whenever the total
-harmonic sum `∑ i, 1 / a i` exceeds `K` and `n` is large enough, we can choose a subset
-of indices whose harmonic sum lies in `(1 - exp (-(c*K)), 1]`?
+Does there exist a constant $c > 0$ such that, for any $K > 1$, whenever $A$ is a sufficiently large finite multiset of integers with $\sum_{n\in A}\frac{1}{n}>K$ there exists some $S \subset A$ such that 
+$$1-e^{-cK} < \sum_{n\in S}\frac{1}{n}\leq 1?$$
 -/
 theorem erdos_312 :
   (∃ (c : ℝ), 0 < c ∧
