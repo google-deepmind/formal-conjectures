@@ -20,7 +20,7 @@ import FormalConjectures.Util.Answer.Syntax
 namespace Erdos312
 
 /--
-Does there exist a constant $c > 0$ such that, for any $K > 1$, whenever $A$ is a sufficiently large finite multiset of integers with $\sum_{n\in A}\frac{1}{n}>K$ there exists some $S \subset A$ such that 
+Does there exist a constant $c > 0$ such that, for any $K > 1$, whenever $A$ is a sufficiently large finite multiset of integers with $\sum_{n\in A}\frac{1}{n}>K$ there exists some $S \subset A$ such that
 $$1-e^{-cK} < \sum_{n\in S}\frac{1}{n}\leq 1?$$
 -/
 theorem erdos_312 :
