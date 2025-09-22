@@ -35,5 +35,3 @@ theorem erdos_312 :
   ↔ answer sorry := by
 
 end Erdos312
-end ErdosProblems
-end FormalConjectures
