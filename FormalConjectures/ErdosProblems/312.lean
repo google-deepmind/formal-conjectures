@@ -32,6 +32,6 @@ theorem erdos_312 :
             ∃ (S : Finset (Fin n)),
               1 - Real.exp (-(c * K)) < (∑ i ∈ S, (a i : ℝ)⁻¹) ∧
               (∑ i ∈ S, (a i : ℝ)⁻¹) ≤ 1)
-  ↔ answer sorry := by
+  ↔ answer(sorry) := by
 
 end Erdos312
