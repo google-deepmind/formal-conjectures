@@ -17,8 +17,6 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 import FormalConjectures.Util.Answer.Syntax
 
-namespace FormalConjectures
-namespace ErdosProblems
 namespace Erdos312
 
 /--
