@@ -37,7 +37,7 @@ What is the smallest $k$ such that $\mathbb{R}^2$ can be red/blue coloured with 
 points unit distance apart, and no $k$-term arithmetic progression of blue points with distance 1?
 -/
 @[category research open, AMS 5]
-theorem erdos_188 : IsEmpty erdos_188.s ∨ IsLeast erdos_188.s answer(sorry)
-    := by sorry
+theorem erdos_188 : IsEmpty erdos_188.s ∨ IsLeast erdos_188.s answer(sorry) := by
+  sorry
 
 end Erdos188
