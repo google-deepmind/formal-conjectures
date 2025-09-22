@@ -33,5 +33,6 @@ theorem erdos_312 :
                 1 - Real.exp (-(c * K)) < (∑ i ∈ S, (a i : ℝ)⁻¹) ∧
                 (∑ i ∈ S, (a i : ℝ)⁻¹) ≤ 1)
     ↔ answer(sorry) := by
+  sorry
 
 end Erdos312
