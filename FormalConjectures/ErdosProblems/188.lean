@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos188
 
 /--
-The set of numbers ($k$) such that $\mathbb{R}^2$ can be red/blue coloured with no pair of red
+The set of numbers $k$ such that $\mathbb{R}^2$ can be red/blue coloured with no pair of red
 points unit distance apart, and no $k$-term arithmetic progression of blue points with distance 1.
 -/
 def erdos_188.s := { k : ℕ | ∃ blue : Set ℂ,
