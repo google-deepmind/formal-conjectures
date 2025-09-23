@@ -23,7 +23,7 @@ Does there exist a constant `c > 0` such that, for any `K > 1`, whenever `A` is 
 finite multiset of integers with `∑ n ∈ A, 1/n > K` there exists some `S ⊆ A` such that
 `1 - exp (-(c*K)) < ∑ n ∈ S, 1/n ≤ 1`?
 -/
-
+@[category research open, AMS 5 11]
 theorem erdos_312 :
     (∃ (c : ℝ), 0 < c ∧
       ∀ (K : ℝ), 1 < K →
