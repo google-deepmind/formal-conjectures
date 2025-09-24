@@ -40,7 +40,7 @@ def IsBasis (A : Set ℕ) : Prop :=
 
 /-- `A` is a **minimal** (order-2) basis if removing any `n ∈ A` destroys the basis property. -/
 def IsMinimalBasis (A : Set ℕ) : Prop :=
-  IsBasis A ∧ ∀ ⦃n⦄, n ∈ A → ¬ IsBasis (A \ {n})
+  IsBasis A ∧ ∀ {n}, n ∈ A → ¬ IsBasis (A \ {n})
 
 /-- Integers **not** representable from `A` when `n` is forbidden (i.e. using only `A \ {n}`). -/
 def notRepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
@@ -59,18 +59,16 @@ theorem erdos_330 :
     ∀ (A : Set ℕ),
       IsMinimalBasis A →
       0 < upperDensity A →
-      ∀ ⦃n : ℕ⦄, n ∈ A → 0 < upperDensity (notRepWithout A n) := by
+      ∀ {n : ℕ}, n ∈ A → 0 < upperDensity (notRepWithout A n) := by
   sorry
-
-/-! ## Equivalent/auxiliary formulations (placeholders) -/
 
 /-- Reformulation via complements of representation sets. -/
 @[category research open, AMS 5 11]
 theorem erdos_330.reformulation :
     (∀ (A : Set ℕ), IsMinimalBasis A → 0 < upperDensity A →
-      ∀ ⦃n : ℕ⦄, n ∈ A → 0 < upperDensity (notRepWithout A n)) ↔
+      ∀ {n : ℕ}, n ∈ A → 0 < upperDensity (notRepWithout A n)) ↔
     (∀ (A : Set ℕ), IsMinimalBasis A → 0 < upperDensity A →
-      ∀ ⦃n : ℕ⦄, n ∈ A → 0 < upperDensity {m | m ∉ repSet (A \ {n})}) := by
+      ∀ {n : ℕ}, n ∈ A → 0 < upperDensity {m | m ∉ repSet (A \ {n})}) := by
   sorry
 
 /-- If the conclusion failed for some `n ∈ A`, one would get an `atTop`-large set of exceptional
@@ -78,46 +76,25 @@ integers that are representable without `n`; this would contradict minimality (s
 @[category research open, AMS 5 11]
 theorem erdos_330.minimality_pressure :
     ∀ (A : Set ℕ), IsMinimalBasis A →
-      (∃ ⦃n : ℕ⦄, n ∈ A ∧ upperDensity (notRepWithout A n) = 0) →
+      (∃ (n : ℕ), n ∈ A ∧ upperDensity (notRepWithout A n) = 0) →
       False := by
   sorry
 
-/-! ## Examples / sanity checks (order-2 basis API) -/
+/-! ## Examples / sanity checks -/
 
-/-- If `A` is finite then `A` is not an order-2 basis (sanity check). -/
 @[category undergraduate, AMS 5 11]
 theorem finite_not_basis {A : Set ℕ} (hfin : A.Finite) : ¬ IsBasis A := by
   sorry
 
-/-- Monotonicity of representation sets with respect to inclusion. -/
 @[category undergraduate, AMS 5 11]
 theorem repSet_mono {A B : Set ℕ} (hAB : A ⊆ B) : repSet A ⊆ repSet B := by
   intro m hm
   rcases hm with ⟨a, haA, b, hbA, hsum⟩
   exact ⟨a, hAB haA, b, hAB hbA, hsum⟩
 
-/-- Removing an element cannot enlarge the representation set. -/
 @[category undergraduate, AMS 5 11]
 theorem repSet_diff_singleton_subset {A : Set ℕ} {n : ℕ} :
-    repSet (A \ {n}) ⊆ repSet A := by
-  exact repSet_mono (by intro x hx; exact And.left hx)
-
-/-! ## Density helpers (placeholders tied to your ForMathlib `upperDensity`) -/
-
-/-- If `S ⊆ T` and `upperDensity S = 0`, then `upperDensity T = 0` implies `upperDensity (T \ S) = 0`.
-(Placeholder for a typical density subadditivity tool you may already have.) -/
-@[category research open, AMS 5 11]
-theorem upperDensity_diff_zero {S T : Set ℕ}
-    (hST : S ⊆ T) (hS0 : upperDensity S = 0) (hT0 : upperDensity T = 0) :
-    upperDensity (T \ S) = 0 := by
-  sorry
-
-/-- If `IsMinimalBasis A` and `0 < upperDensity A`, then for each `n ∈ A` the complement
-of `repSet (A \ {n})` is not `upperDensity`-null. (Bridges minimality to the target inequality.) -/
-@[category research open, AMS 5 11]
-theorem minimality_implies_positive_exception_set
-    {A : Set ℕ} (hmin : IsMinimalBasis A) (hpos : 0 < upperDensity A) :
-    ∀ ⦃n : ℕ⦄, n ∈ A → upperDensity (notRepWithout A n) ≠ 0 := by
-  sorry
+    repSet (A \ {n}) ⊆ repSet A :=
+  repSet_mono (by intro x hx; exact And.left hx)
 
 end Erdos330
