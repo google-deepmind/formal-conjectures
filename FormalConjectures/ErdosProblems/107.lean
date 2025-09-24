@@ -29,20 +29,12 @@ open EuclideanGeometry
 
 namespace Erdos107
 
-/-- `ConvexIndep S` means that `S` consists of extremal points of its convex hull,
-i.e., the point set encloses a convex shape.
-Also known as a "convex-independent set". -/
-def ConvexIndep (S : Set ℝ²) : Prop :=
-  ∀ a ∈ S, a ∉ convexHull ℝ (S \ {a})
-
-/-- The set `P` contains a convex `n`-gon.
-See also `IsConvexPolygon`. -/
-def HasConvexNGon (n : ℕ) (P : Set ℝ²) : Prop :=
-  ∃ S : Finset ℝ², S.card = n ∧ ↑S ⊆ P ∧ ConvexIndep S
-
+/-- The set of $N$ such that any $N$ points in the plane, no three on a line,
+contain a convex $n$-gon. -/
 def cardSet (n : ℕ) := { N | ∀ (pts : Finset ℝ²), pts.card = N → NonTrilinear pts.toSet →
   HasConvexNGon n pts }
 
+/-- The function $f(n)$ specified in `erdos_107`. -/
 noncomputable def f (n : ℕ) : ℕ :=
   sInf (cardSet n)
 
@@ -54,8 +46,6 @@ Prove that $f(n) = 2^{n-2} + 1$.
 @[category research open, AMS 52]
 theorem erdos_107 : (∀ n ≥ 3, f n = 2^(n - 2) + 1) ↔ answer(sorry) := by
   sorry
-
-namespace erdos_107
 
 /-- For every $n ≥ 3$, there exists $N$ such that any $N$ points, no three on a line,
 contain a convex $n$-gon. -/
@@ -126,4 +116,4 @@ theorem hmpt_bound :
       ∀ n ≥ 3, (f n : ℝ) ≤ 2^(n + r n) := by
   sorry
 
-end Erdos107.erdos_107.variants
+end Erdos107.variants
