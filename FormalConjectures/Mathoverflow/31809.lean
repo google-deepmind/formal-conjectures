@@ -32,7 +32,7 @@ open CategoryTheory Limits Category Preadditive Pretriangulated
 @[category research open, AMS 18]
 theorem mathoverflow_31809 : (∀ (C : Type*) [Category C] [Preadditive C]
     [HasZeroObject C] [HasShift C ℤ] [∀ (n : ℤ), (shiftFunctor C n).Additive]
-    [Pretriangulated C], ¬ IsTriangulated C) ↔ answer(sorry) := by
+    [Pretriangulated C], IsTriangulated C) ↔ answer(sorry) := by
   sorry
 
 end Mathoverflow31809
