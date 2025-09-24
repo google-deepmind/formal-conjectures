@@ -15,27 +15,46 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib/LinearAlgebra/Basis
-import Mathlib/LinearAlgebra/Finsupp
+import Mathlib/Data/PNat/Basic
+import Mathlib/Analysis/SpecialFunctions/Exp
+
+/-!
+# Erdős Problem 312 — Conjecture Statement
+
+We state the conjecture only (no proof).
+-/
 
 noncomputable section
 open scoped BigOperators
 
 namespace FormalConjectures
-namespace Erdos330
+namespace ErdosProblems
+namespace «312»
 
-variables {K V ι : Type*} [Field K] [AddCommMonoid V] [Module K V]
+/-- Harmonic sum of a finite family of positive integers. -/
+def hsum {n : ℕ} (a : Fin n → ℕ+) : ℝ :=
+  ∑ i, ((a i : ℕ) : ℝ)⁻¹
 
-/-- Coordinates of `x` in basis `b` as a finitely supported function. -/
-abbrev coords (b : Basis ι K V) (x : V) : (ι →₀ K) := b.repr x
+/--
+Core predicate with parameter `c > 0`:
 
-/-- Round-trip: reconstruct a vector from its coordinates. -/
-@[simp] lemma total_repr (b : Basis ι K V) (x : V) : b.total (b.repr x) = x :=
-  b.total_repr x
+For all `K > 1` and finite families `a`, if `hsum a > K` then there exists
+`S ⊆ {0,…,n-1}` with `1 - exp (-(c*K)) < ∑_{i∈S} 1/(a i) ≤ 1`.
+-/
+def ConjectureWith (c : ℝ) : Prop :=
+  0 < c ∧
+  ∀ ⦃K : ℝ⦄, 1 < K →
+  ∀ ⦃n : ℕ⦄, ∀ (a : Fin n → ℕ+),
+    hsum a > K →
+    ∃ S : Finset (Fin n),
+      1 - Real.exp (-(c*K)) < ∑ i in S, ((a i : ℕ) : ℝ)⁻¹ ∧
+      (∑ i in S, ((a i : ℕ) : ℝ)⁻¹) ≤ 1
 
-/-- Round-trip: coordinates of a reconstructed vector. -/
-@[simp] lemma repr_total (b : Basis ι K V) (c : ι →₀ K) : b.repr (b.total c) = c :=
-  b.repr_total c
+/-- There exists some `c > 0` for which `ConjectureWith c` holds. -/
+@[AMS "Erdős 312"]
+@[ProblemCategory "Additive/Combinatorial Number Theory"]
+def Conjecture : Prop := ∃ c : ℝ, ConjectureWith c
 
-end Erdos330
+end «312»
+end ErdosProblems
 end FormalConjectures
