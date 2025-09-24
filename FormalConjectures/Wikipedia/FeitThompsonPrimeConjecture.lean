@@ -14,15 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Order.Filter.AtTopBot.Defs
+import FormalConjectures.Util.ProblemImports
 
-variable {M : Type*} [AddCommMonoid M]
+/-!
+# Feit-Thompson conjecture on primes
 
-/-- The set of subset sums of a set `A ⊆ M`. -/
-def subsetSums (A : Set M) : Set M :=
-  {n | ∃ B : Finset M, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Feit%E2%80%93Thompson_conjecture)
+-/
 
-/-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
-def IsAddComplete [Preorder M] (A : Set M) : Prop :=
-  ∀ᶠ k in Filter.atTop, k ∈ subsetSums A
+/--
+There are no distinct primes $p$ and $q$ such that $\frac{q^p - 1}{q - 1}$ divides $\frac{p^q - 1}{p - 1}$
+-/
+@[category research open, AMS 11]
+theorem feit_thompson_primes (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (h : p < q) :
+    ¬ (q ^ p - 1) / (q - 1) ∣ (p ^ q - 1) / (p - 1) := by
+  sorry
