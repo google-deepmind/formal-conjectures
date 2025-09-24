@@ -15,13 +15,13 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib/Data/PNat/Basic
-import Mathlib/Analysis/SpecialFunctions/Exp
+import Mathlib.Data.PNat.Basic
+import Mathlib.Analysis.SpecialFunctions.Exp
 
 /-!
-# Erdős Problem 312 — Conjecture Statement
+# Erdős Problem 312 — Conjecture
 
-We state the conjecture only (no proof).
+Statement only (no proof).
 -/
 
 noncomputable section
@@ -36,10 +36,10 @@ def hsum {n : ℕ} (a : Fin n → ℕ+) : ℝ :=
   ∑ i, ((a i : ℕ) : ℝ)⁻¹
 
 /--
-Core predicate with parameter `c > 0`:
+Predicate with parameter `c > 0`:
 
 For all `K > 1` and finite families `a`, if `hsum a > K` then there exists
-`S ⊆ {0,…,n-1}` with `1 - exp (-(c*K)) < ∑_{i∈S} 1/(a i) ≤ 1`.
+`S ⊆ {0,…,n-1}` with `1 - exp (-(c*K)) < ∑ i ∈ S, ((a i : ℕ) : ℝ)⁻¹ ≤ 1`.
 -/
 def ConjectureWith (c : ℝ) : Prop :=
   0 < c ∧
@@ -47,12 +47,10 @@ def ConjectureWith (c : ℝ) : Prop :=
   ∀ ⦃n : ℕ⦄, ∀ (a : Fin n → ℕ+),
     hsum a > K →
     ∃ S : Finset (Fin n),
-      1 - Real.exp (-(c*K)) < ∑ i in S, ((a i : ℕ) : ℝ)⁻¹ ∧
-      (∑ i in S, ((a i : ℕ) : ℝ)⁻¹) ≤ 1
+      1 - Real.exp (-(c*K)) < ∑ i ∈ S, ((a i : ℕ) : ℝ)⁻¹ ∧
+      (∑ i ∈ S, ((a i : ℕ) : ℝ)⁻¹) ≤ 1
 
-/-- There exists some `c > 0` for which `ConjectureWith c` holds. -/
-@[AMS "Erdős 312"]
-@[ProblemCategory "Additive/Combinatorial Number Theory"]
+/-- **Erdős 312 — Conjecture.** -/
 def Conjecture : Prop := ∃ c : ℝ, ConjectureWith c
 
 end «312»
