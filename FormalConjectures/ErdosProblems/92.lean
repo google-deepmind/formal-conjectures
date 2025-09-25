@@ -33,8 +33,8 @@ that lie on a single circle centered at `x`. It does this by grouping the other 
 distance to `x` and finding the size of the largest group.
 -/
 noncomputable def maxEquidistantPointsAt (x : ℝ²) (points : Finset ℝ²) : ℕ :=
-  let otherPoints := points.erase x
-  let distances := otherPoints.image (dist x)
+  letI otherPoints := points.erase x
+  letI distances := otherPoints.image (dist x)
   sSup (distances.image fun d ↦ (otherPoints.filter fun p ↦ dist x p = d).card)
 
 /--
@@ -43,7 +43,6 @@ points from `A` that are equidistant from `x`.
 -/
 def hasMinEquidistantProperty (k : ℕ) (A : Finset ℝ²) : Prop :=
   A.Nonempty ∧ ∀ x ∈ A, k ≤ maxEquidistantPointsAt x A
-
 
 /--
 The set of all possible values `k` for which there exists a set of `n` points
@@ -65,13 +64,11 @@ theorem possible_f_values_BddAbove (n : ℕ) : BddAbove (possible_f_values n) :=
   unfold Erdos92.maxEquidistantPointsAt at *
   sorry
 
-
 /--
 Let $f(n)$ be maximal such that there exists a set $A$ of $n$ points in $\mathbb^2$
 in which every $x \in A$ has at least $f(n)$ points in $A$ equidistant from $x$.
 -/
 noncomputable def f (n : ℕ) : ℕ := sSup <| possible_f_values n
-
 
 /--
 Is it true that $f(n)\leq n^{o(1)}$?
