@@ -30,8 +30,22 @@ namespace FormalConjectures
 namespace ErdosProblems
 namespace «330»
 
-/-- `Basis A h` means `A` is a minimal asymptotic basis of order `h`. -/
-def Basis (A : Set ℕ) (h : ℕ) : Prop := sorry
+open Filter Set
+
+/-- `Rep_h A m` : `m` is a sum of *exactly* `h` terms from `A`. -/
+def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
+  ∃ s : Multiset ℕ, (∀ a ∈ s, a ∈ A) ∧ s.card = h ∧ s.sum = m
+
+/-- `A` is an asymptotic additive basis of order `h`. -/
+def IsAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
+  ∀ᶠ m in atTop, Rep_h A h m
+
+/-- `Basis A h` means `A` is a **minimal** asymptotic basis of order `h`. -/
+def Basis (A : Set ℕ) (h : ℕ) : Prop :=
+  IsAsymptoticBasisOfOrder A h ∧ ∀ n ∈ A, ¬ IsAsymptoticBasisOfOrder (A \ {n}) h
+
+/-- Integers not representable **without** using `n` (i.e. by `A \ {n}`) with exactly `h` terms. -/
+def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ := {m | ¬ Rep_h (A \ {n}) h m}
 
 /--
 **Erdős 330 — Conjecture (statement only).**
@@ -45,7 +59,7 @@ theorem erdos_330 :
       2 ≤ h →
       Basis A h →
       A.HasPosDensity →
-      (∀ n ∈ A, ({m | ¬ Basis (A \ {n}) h}).HasPosDensity) := by
+      (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity) := by
   sorry
 
 end «330»
