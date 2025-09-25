@@ -54,10 +54,9 @@ for some constant $c_H$ dependending on $H$.
 
 [ErHa89] Erdős, P. and Hajnal, A., Ramsey-type theorems. Discrete Appl. Math. (1989), 37-52.
 -/
-@[category research open, AMS 05]
+@[category research solved, AMS 05]
 theorem erdos_61.variants.erha89 (H : SimpleGraph α):
-    (∃ c : ℝ, ErdosHajnalLowerBound H
-      (fun n : ℕ => exp (c * sqrt (log n)))) ↔ answer(sorry) := by
+    ∃ c : ℝ, ErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
   sorry
 
 /--
@@ -66,10 +65,9 @@ $f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H$ dependendin
 
 [BNSS23] Bucić, M. and Nguyen, T. and Scott, A. and Seymour, P., A loglog step towards Erdos-Hajnal
 -/
-@[category research open, AMS 05]
+@[category research solved, AMS 05]
 theorem erdos_61.variants.bnss23 (H : SimpleGraph α):
-    (∃ c : ℝ, ErdosHajnalLowerBound H
-      (fun n : ℕ => exp (c * sqrt (log n * log (log n))))) ↔ answer(sorry) := by
+    ∃ c : ℝ, ErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
   sorry
 
 end Erdos61
