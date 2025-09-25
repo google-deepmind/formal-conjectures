@@ -22,6 +22,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/51](https://www.erdosproblems.com/51)
 -/
 
+open Filter
+open scoped Nat
+
 namespace Erdos51
 
 /--
