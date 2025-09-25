@@ -28,9 +28,9 @@ open scoped Nat
 namespace Erdos51
 
 /--
-Is there an infinite set A ⊆ ℕ such that for every a ∈ A,
-there is an integer n such that ϕ(n)=a, and
-yet if nₐ is the smallest such integer, then nₐ/a → ∞ as a → ∞?
+Is there an infinite set $A ⊆ ℕ$ such that for every $a ∈ A$,
+there is an integer n such that $\phi(n)=a$, and
+yet if $n_a$ is the smallest such integer, then $\frac{n_a}{a} → ∞$ as $a → ∞$?
 -/
 @[category research open, AMS 11]
 theorem erdos_51 :
