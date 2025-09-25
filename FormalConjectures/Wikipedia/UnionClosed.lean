@@ -199,4 +199,15 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   have : (0 : ℝ) < 0 := by linear_combination this + hi
   simp at this
 
+/--
+If the UC conjecture is tight for some family `A` then `#A = 2 ^ k` for some `k`.
+
+Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
+-/
+@[category research open, AMS 5]
+theorem union_closed.variants.cardinality_even_of_union_closed_tight
+    [Nonempty n] (hA : A ≠ {∅}) (UCC_tight : ∀ i, #{x ∈ A | i ∈ x} = (1 / 2 : ℝ) * #A) :
+    ∃ k, #A = 2 ^ k := by
+  sorry
+
 end UnionClosed
