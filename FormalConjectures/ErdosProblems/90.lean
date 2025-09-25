@@ -27,6 +27,7 @@ open scoped EuclideanGeometry
 
 namespace Erdos90
 open Finset
+
 /--
 Given a finite set of points, this function counts the number of **unordered pairs** of distinct
 points that are at a distance of exactly 1 from each other.
@@ -71,7 +72,7 @@ Does every set of $n$ distinct points in $\mathbb{R}^2$ contain at most
 $n^{1+O(\frac{1}{\log\log n})}$ many pairs which are distance $1$ apart?
 -/
 @[category research open, AMS 52]
-theorem erdos_90 : (∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log : ℕ → ℝ)),
+theorem erdos_90 : (∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log)),
   (fun n => (maxUnitDistances n : ℝ)) = fun (n : ℕ) => (n : ℝ) ^ (1 + O n)) ↔ answer(sorry) := by
   sorry
 
