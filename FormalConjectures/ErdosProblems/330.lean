@@ -15,44 +15,39 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Data.PNat.Basic
-import Mathlib.Analysis.SpecialFunctions.Exp
 
 /-!
-# Erdős Problem 312 — Conjecture
+# Erdős Problem 330
 
-Statement only (no proof).
+*Reference:* [erdosproblems.com/330](https://www.erdosproblems.com/330)
+
+Suppose `A ⊂ ℕ` is a minimal basis with positive density.
+Is it true that, for any `n ∈ A`, the (upper) density of integers which cannot be
+represented without using `n` is positive?
 -/
-
-noncomputable section
-open scoped BigOperators
 
 namespace FormalConjectures
 namespace ErdosProblems
-namespace «312»
+namespace «330»
 
-/-- Harmonic sum of a finite family of positive integers. -/
-def hsum {n : ℕ} (a : Fin n → ℕ+) : ℝ :=
-  ∑ i, ((a i : ℕ) : ℝ)⁻¹
+/-- `Basis A h` means `A` is a minimal asymptotic basis of order `h`. -/
+def Basis (A : Set ℕ) (h : ℕ) : Prop := sorry
 
 /--
-Predicate with parameter `c > 0`:
+**Erdős 330 — Conjecture (statement only).**
 
-For all `K > 1` and finite families `a`, if `hsum a > K` then there exists
-`S ⊆ {0,…,n-1}` with `1 - exp (-(c*K)) < ∑ i ∈ S, ((a i : ℕ) : ℝ)⁻¹ ≤ 1`.
+If `A` is a minimal basis of order `h ≥ 2` with positive density, then for every `n ∈ A`,
+the set of integers which cannot be represented without using `n` has positive density.
 -/
-def ConjectureWith (c : ℝ) : Prop :=
-  0 < c ∧
-  ∀ ⦃K : ℝ⦄, 1 < K →
-  ∀ ⦃n : ℕ⦄, ∀ (a : Fin n → ℕ+),
-    hsum a > K →
-    ∃ S : Finset (Fin n),
-      1 - Real.exp (-(c*K)) < ∑ i ∈ S, ((a i : ℕ) : ℝ)⁻¹ ∧
-      (∑ i ∈ S, ((a i : ℕ) : ℝ)⁻¹) ≤ 1
+@[category research open, AMS 5]
+theorem erdos_330 :
+    ∀ (h : ℕ) (A : Set ℕ),
+      2 ≤ h →
+      Basis A h →
+      A.HasPosDensity →
+      (∀ n ∈ A, ({m | ¬ Basis (A \ {n}) h}).HasPosDensity) := by
+  sorry
 
-/-- **Erdős 312 — Conjecture.** -/
-def Conjecture : Prop := ∃ c : ℝ, ConjectureWith c
-
-end «312»
+end «330»
 end ErdosProblems
 end FormalConjectures
