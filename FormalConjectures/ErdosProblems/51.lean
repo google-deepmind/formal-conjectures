@@ -36,8 +36,8 @@ yet if $n_a$ is the smallest such integer, then $\frac{n_a}{a} → \infty$ as $a
 theorem erdos_51 :
     ∃ A : Set ℕ, ∃ n : A → ℕ,
       (A.Infinite ∧
-      (∀ a : A, IsLeast (Nat.totient ⁻¹' {(a : ℕ)}) (n a)) ∧
-      Filter.Tendsto (fun a : A => (n a : ℝ) / (a : ℝ)) Filter.atTop Filter.atTop)
+      (∀ a : A, IsLeast (φ ⁻¹' {(a : ℕ)}) (n a)) ∧
+      Tendsto (fun a : A => (n a : ℝ) / (a : ℝ)) atTop atTop)
     ↔ answer(sorry) := by
   sorry
 
