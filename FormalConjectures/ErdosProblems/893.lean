@@ -34,7 +34,7 @@ Definition of function $f(n) := \sum_{1\leq k\leq n}\tau(2^k-1)$.
 Here $\tau$ is the divisor counting function, which is `σ 0` in mathlib.
  -/
 
-def f (n : ℕ) : ℕ :=  Finset.sum (Icc 1 n) fun k : ℕ => σ 0 (2^k - 1)
+def f (n : ℕ) : ℕ :=  ∑ k ∈ Finset.Icc 1 n, σ 0 (2^k - 1)
 
 /--
 Does the limit $\lim_{n\to\infty} \frac{f(2n)}{f(n)}$ tend to infinity?
