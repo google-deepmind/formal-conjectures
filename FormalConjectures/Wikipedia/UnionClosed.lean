@@ -206,7 +206,8 @@ Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4
 -/
 @[category research open, AMS 5]
 theorem union_closed.variants.cardinality_even_of_union_closed_tight
-    [Nonempty n] (hA : A ≠ {∅}) (UCC_tight : ∀ i, #{x ∈ A | i ∈ x} = (1 / 2 : ℝ) * #A) :
+    [Nonempty n] (hA : A ≠ {∅}) (hA : IsUnionClosed A)
+    (UCC_tight : ∀ i, #{x ∈ A | i ∈ x} = (1 / 2 : ℝ) * #A) :
     ∃ k, #A = 2 ^ k := by
   sorry
 
