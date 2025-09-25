@@ -41,7 +41,7 @@ def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
 Is $a_n = 2^{2^n}$ an irrationality sequence in the above sense?
 -/
 @[category research open, AMS 11]
-theorem erdos_259.parts.i : IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) ↔ answer(sorry) := by
+theorem erdos_263.parts.i : IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -49,7 +49,7 @@ Must every irrationality sequence $a_n$ in the above sense
 satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_259.parts.ii (a : ℕ → ℕ):
+theorem erdos_263.parts.ii (a : ℕ → ℕ):
       (IsIrrationalitySequence a → atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop) ↔
     answer(sorry) := by
   sorry
@@ -59,7 +59,7 @@ A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{1/2
 has $\sum \frac{1}{a_n}$ converging to an irrational number.
 -/
 @[category research solved, AMS 11]
-theorem erdos_259.variants.folklore (a : ℕ -> ℕ):
+theorem erdos_263.variants.folklore (a : ℕ -> ℕ):
     atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (2 ^ n : ℝ))) atTop →
     (Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ)) := by
   sorry
@@ -73,7 +73,7 @@ an irrationality sequence in the above sense.
          arXiv:2406.17593 (2024).
 -/
 @[category research solved, AMS 11]
-theorem erdos_259.variants.sub_doubly_exponential (a: ℕ -> ℕ):
+theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ):
     (StrictMono a ∧
       Summable (fun n : ℕ => 1 / (a n : ℝ)) ∧
       atTop.Tendsto (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ 2) (𝓝 0)
@@ -86,7 +86,7 @@ $\liminf \frac{a_{n+1}}{a_n^{2+\varepsilon}} > 0$, then $a_n$ is an irrationalit
 by the above folklore result.
 -/
 @[category research solved, AMS 11]
-theorem erdos_259.variants.super_doubly_exponential (a: ℕ -> ℕ):
+theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ):
     ∃ ε : ℝ, ε > 0 ∧
     Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ (2 + ε)) > 0  →
       IsIrrationalitySequence a := by
