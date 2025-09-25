@@ -54,7 +54,7 @@ $\lim_{n\to\infty} \frac{f(2n)}{f(n)}$ is unbounded.
 -/
 @[category research solved, AMS 5]
 theorem erdos_893.variants.unbounded :
-   ¬ BddAbove ((fun n : ℕ => (f (2 * n) : ℝ) / (f n : ℝ)) '' Set.univ) := by
+   ¬ BddAbove (Set.range fun n : ℕ => (f (2 * n) : ℝ) / f n) := by
   sorry
 
 
