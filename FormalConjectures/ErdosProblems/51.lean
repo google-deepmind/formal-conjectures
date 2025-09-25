@@ -28,9 +28,9 @@ open scoped Nat
 namespace Erdos51
 
 /--
-Is there an infinite set $A ⊆ ℕ$ such that for every $a ∈ A$,
+Is there an infinite set $A \subset \mathbb{N}$ such that for every $a \in A$,
 there is an integer n such that $\phi(n)=a$, and
-yet if $n_a$ is the smallest such integer, then $\frac{n_a}{a} → ∞$ as $a → ∞$?
+yet if $n_a$ is the smallest such integer, then $\frac{n_a}{a} → \infty$ as $a → \infty$?
 -/
 @[category research open, AMS 11]
 theorem erdos_51 :
