@@ -41,7 +41,7 @@ has infinitely many solutions.
 -/
 @[category research open, AMS 11]
 theorem erdos_1003.variants.Icc :
-    (∀ k ≥ 1, Set.Infinite {n | ∀ i ∈ Set.Icc 1 k, n.totient = (n + i).totient}) ↔ answer(sorry) := by
+    (∀ k ≥ 1, Set.Infinite {n | ∀ i ∈ Set.Icc 1 k, φ n = φ (n + i)}) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -52,8 +52,8 @@ for some constant $c > 0$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1003.variants.eps87 (x : ℝ) : ∃ c > 0,
-    {(n : ℕ) | (n : ℝ) ≤ x ∧ (n.totient = (n + 1).totient)}.ncard
-        ≤ x / (c * (x.log) ^ (1 / 3)).exp := by
+    {(n : ℕ) | (n ≤ x) ∧ φ n = φ (n + 1)}.ncard ≤
+      x / (c * (x.log) ^ (1 / 3)).exp := by
   sorry
 
 end Erdos1003
