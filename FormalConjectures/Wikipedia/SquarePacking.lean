@@ -74,7 +74,7 @@ structure Packing (n : ℕ) (s : Set ℝ²) (S : Set ℝ²) where
   that represent the transformations of the base shape to their locations in the packing. -/
   embeddings : Fin n → (ℝ² ≃ᵢ ℝ²)
   /-- The images of the embeddings are pairwise disjoint -/
-  disjoint : ∀ i j : Fin n, i ≠ j → Disjoint (embeddings i '' s) (embeddings j '' s)
+  disjoint : Pairwise fun i j => Disjoint (embeddings i '' s) (embeddings j '' s)
   /-- The images of the embeddings are all inside the larger set `S` -/
   inside : ∀ i : Fin n, embeddings i '' s ⊆ S
 
