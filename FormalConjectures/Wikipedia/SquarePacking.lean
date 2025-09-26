@@ -54,8 +54,8 @@ def UnitSquare : Set ℝ² := Square 1
 
 /--
 A circle of a particular radius as a subset of the Euclidean plane.
-Not including border, so that squares that touch at the border are disjoint,
-but a square internal to another shape is a subset of that shape.
+Not including border, so that circles that touch at the border are disjoint,
+but a circle internal to another shape is a subset of that shape.
 -/
 def Circle (r : ℝ) : Set ℝ² :=
   {p : ℝ² | p 0 ^ 2 + p 1 ^ 2 < r ^ 2}
