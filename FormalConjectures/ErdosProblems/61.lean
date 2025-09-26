@@ -39,37 +39,37 @@ def IsErdosHajnalLowerBound {α : Type*} [Fintype α] [DecidableEq α]
     ¬ (∃ g : α ↪ Fin n, H = G.comap g) → G.indepNum ≥ f n ∨ G.cliqueNum ≥ f n
 
 /--
-The Erdős–Hajnal Conjecture states that there is a constant $c(H)$ for each
+The Erdős–Hajnal Conjecture states that there is a constant $c(H) > 0$ for each
 $H$ such that we can take $f(n) = n^{c(H)}$ in the above formulation.
 -/
 @[category research open, AMS 05]
 theorem erdos_61:
     (∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c : ℝ, IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c)) ↔ answer(sorry) := by
+      ∃ c : ℝ, c > 0 ∧ IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c)) ↔ answer(sorry) := by
   sorry
 
 /--
 Erdős and Hajnal [ErHa89] proved that we can take $f(n) = \exp(c_H \sqrt{\log n})$
-for some constant $c_H$ dependending on $H$.
+for some constant $c_H > 0$ dependending on $H$.
 
 [ErHa89] Erdős, P. and Hajnal, A., Ramsey-type theorems. Discrete Appl. Math. (1989), 37-52.
 -/
 @[category research solved, AMS 05]
 theorem erdos_61.variants.erha89:
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c : ℝ, IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
+      ∃ c : ℝ, c > 0 ∧ IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
   sorry
 
 /--
 Bucić, Nguyen, Scott, and Seymour [BNSS23] improved this to
-$f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H$ dependending on $H$.
+$f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H > 0$ dependending on $H$.
 
 [BNSS23] Bucić, M. and Nguyen, T. and Scott, A. and Seymour, P., A loglog step towards Erdos-Hajnal
 -/
 @[category research solved, AMS 05]
 theorem erdos_61.variants.bnss23:
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c : ℝ, IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
+      ∃ c : ℝ, c > 0 ∧ IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
   sorry
 
 end Erdos61
