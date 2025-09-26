@@ -33,9 +33,10 @@ if for any sequence $b_n$ of positive integers with $\frac{a_n}{b_n} \to 1$ as $
 the sum $\sum \frac{1}{b_n}$ converges to an irrational number.
 -/
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
-  ∀ b : ℕ → ℕ,
-    atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
-    (Irrational <| ∑' n, 1 / (b n : ℝ))
+  (∀ n : ℕ, a n > 0) ∧
+    (∀ b : ℕ → ℕ, (∀ n : ℕ, b n > 0) ∧
+      atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
+      (Irrational <| ∑' n, 1 / (b n : ℝ)))
 
 /--
 Is $a_n = 2^{2^n}$ an irrationality sequence in the above sense?
@@ -87,9 +88,10 @@ by the above folklore result.
 -/
 @[category research solved, AMS 11]
 theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ):
-    ∃ ε : ℝ, ε > 0 ∧
-    Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ (2 + ε)) > 0  →
-      IsIrrationalitySequence a := by
+    (∀ n : ℕ, a n > 0) →
+      (∃ ε : ℝ, ε > 0 ∧
+      Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ (2 + ε)) > 0  →
+        IsIrrationalitySequence a) := by
   sorry
 
 end Erdos263
