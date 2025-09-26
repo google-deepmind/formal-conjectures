@@ -33,7 +33,7 @@ For a graph $H$, consider all graphs $G$ that do not contain $H$ as an induced s
 We would like to find a lower bound $f(n)$ such that every such $G$ on $n$ vertices
 has a clique or independent set of size $\ge f(n)$ for sufficiently large $n$.
 -/
-def ErdosHajnalLowerBound {α : Type*} [Fintype α] [DecidableEq α]
+def IsErdosHajnalLowerBound {α : Type*} [Fintype α] [DecidableEq α]
   (H : SimpleGraph α) (f : ℕ → ℝ) : Prop :=
   ∀ᶠ n in atTop, ∀ G : SimpleGraph (Fin n),
     ¬ (∃ g : α ↪ Fin n, H = G.comap g) → G.indepNum ≥ f n ∨ G.cliqueNum ≥ f n
@@ -45,7 +45,7 @@ $H$ such that we can take $f(n) = n^{c(H)}$ in the above formulation.
 @[category research open, AMS 05]
 theorem erdos_61:
     (∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c : ℝ, ErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c)) ↔ answer(sorry) := by
+      ∃ c : ℝ, IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c)) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -57,7 +57,7 @@ for some constant $c_H$ dependending on $H$.
 @[category research solved, AMS 05]
 theorem erdos_61.variants.erha89:
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c : ℝ, ErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
+      ∃ c : ℝ, IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
   sorry
 
 /--
@@ -69,7 +69,7 @@ $f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H$ dependendin
 @[category research solved, AMS 05]
 theorem erdos_61.variants.bnss23:
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c : ℝ, ErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
+      ∃ c : ℝ, IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
   sorry
 
 end Erdos61
