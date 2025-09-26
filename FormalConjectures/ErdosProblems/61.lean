@@ -36,7 +36,7 @@ has a clique or independent set of size $\ge f(n)$ for sufficiently large $n$.
 def ErdosHajnalLowerBound {α : Type*} [Fintype α] [DecidableEq α]
   (H : SimpleGraph α) (f : ℕ → ℝ) : Prop :=
   ∀ᶠ n in atTop, ∀ G : SimpleGraph (Fin n),
-    ¬ (∃ f : α ↪ Fin n, H = G.comap f) → G.indepNum ≥ f n ∨ G.cliqueNum ≥ f n
+    ¬ (∃ g : α ↪ Fin n, H = G.comap g) → G.indepNum ≥ f n ∨ G.cliqueNum ≥ f n
 
 /--
 The Erdős–Hajnal Conjecture states that there is a constant $c(H)$ for each
