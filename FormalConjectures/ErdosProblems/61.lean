@@ -55,9 +55,9 @@ for some constant $c_H > 0$ dependending on $H$.
 [ErHa89] Erdős, P. and Hajnal, A., Ramsey-type theorems. Discrete Appl. Math. (1989), 37-52.
 -/
 @[category research solved, AMS 05]
-theorem erdos_61.variants.erha89:
+theorem erdos_61.variants.erha89 :
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c : ℝ, c > 0 ∧ IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
+      ∃ c > (0 : ℝ) ∧ IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
   sorry
 
 /--
