@@ -81,7 +81,7 @@ structure Packing (n : ℕ) (s : Set ℝ²) (S : Set ℝ²) where
 /--
 Eleven unit squares can be packed into a square of side length < 3.877084.
 
-Reference: https://en.wikipedia.org/wiki/Square_packing#In_a_square
+Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
 @[category undergraduate, AMS 51]
 theorem eleven_square_packing_in_square_bound :
@@ -91,7 +91,7 @@ theorem eleven_square_packing_in_square_bound :
 /--
 What is the smallest square that can contain 11 unit squares?
 
-Reference: https://en.wikipedia.org/wiki/Square_packing#In_a_square
+Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
 @[category research open, AMS 51]
 theorem least_eleven_square_packing_in_square :
@@ -101,8 +101,7 @@ theorem least_eleven_square_packing_in_square :
 /--
 Seventeen unit squares can be packed into a square of side length < 4.6756.
 
-Reference: https://en.wikipedia.org/wiki/Square_packing#In_a_square
-
+Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
 @[category undergraduate, AMS 51]
 theorem seventeen_square_packing_in_square_bound :
@@ -112,7 +111,7 @@ theorem seventeen_square_packing_in_square_bound :
 /--
 What is the smallest square that can contain 17 unit squares?
 
-Reference: https://en.wikipedia.org/wiki/Square_packing#In_a_square
+Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
 @[category research open, AMS 51]
 theorem least_seventeen_square_packing_in_square :
@@ -122,7 +121,7 @@ theorem least_seventeen_square_packing_in_square :
 /--
 Three unit squares can be packed into a circle of radius (5 √17) / 16 ≈ 1.288.
 
-Reference: https://en.wikipedia.org/wiki/Square_packing#In_a_circle
+Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle)
 -/
 @[category undergraduate, AMS 51]
 theorem three_square_packing_in_circle_bound :
@@ -132,7 +131,7 @@ theorem three_square_packing_in_circle_bound :
 /--
 What is the smallest circle that can contain 3 unit squares?
 
-Reference: https://en.wikipedia.org/wiki/Square_packing#In_a_circle
+Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle)
 -/
 @[category research open, AMS 51]
 theorem least_three_square_packing_in_circle :
@@ -142,7 +141,7 @@ theorem least_three_square_packing_in_circle :
 /--
 Twenty-one unit circles can be packed into a square of side length < 9.359.
 
-Reference: https://erich-friedman.github.io/packing/cirinsqu/
+Reference: [Visualizations](https://erich-friedman.github.io/packing/cirinsqu/)
 -/
 @[category undergraduate, AMS 51]
 theorem twenty_one_circle_packing_in_square_bound :
