@@ -67,9 +67,9 @@ $f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H > 0$ depende
 [BNSS23] Bucić, M. and Nguyen, T. and Scott, A. and Seymour, P., A loglog step towards Erdos-Hajnal
 -/
 @[category research solved, AMS 05]
-theorem erdos_61.variants.bnss23:
+theorem erdos_61.variants.bnss23 :
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c : ℝ, c > 0 ∧ IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
+      ∃ c > (0 : ℝ) ∧ IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
   sorry
 
 end Erdos61
