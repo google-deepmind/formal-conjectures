@@ -45,7 +45,7 @@ $H$ such that we can take $f(n) = n^{c(H)}$ in the above formulation.
 @[category research open, AMS 05]
 theorem erdos_61 :
     (∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c > (0 : ℝ) ∧ IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c)) ↔ answer(sorry) := by
+      ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c)) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -57,7 +57,7 @@ for some constant $c_H > 0$ dependending on $H$.
 @[category research solved, AMS 05]
 theorem erdos_61.variants.erha89 :
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c > (0 : ℝ) ∧ IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
+      ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
   sorry
 
 /--
@@ -69,7 +69,7 @@ $f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H > 0$ depende
 @[category research solved, AMS 05]
 theorem erdos_61.variants.bnss23 :
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c > (0 : ℝ) ∧ IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
+      ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
   sorry
 
 end Erdos61
