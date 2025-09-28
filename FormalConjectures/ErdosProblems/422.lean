@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos422
 
 /--
-Let $f(0) = f(1) = 1$ and for $n > 1$
+Let $f(1) = f(2) = 1$ and for $n > 2$
 $$
 f(n) = f(n - f(n - 1)) + f(n - f(n - 2)).
 $$
