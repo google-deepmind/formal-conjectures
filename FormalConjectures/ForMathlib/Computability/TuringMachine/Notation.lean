@@ -104,6 +104,10 @@ private def String.toStmtSyntax (s : String) (stateName : Name) (numStates : Nat
 
 end Util
 
+private def String.nextn (s : String) (p : Pos) : Nat → Pos
+  | 0 => p
+  | n + 1 => s.next (s.nextn p n)
+
 /--
 Take as input a list of strings and return an array of `matchAltExpr` syntaxes
 mapping `(state, symbol)` pairs to actions of a Turing Machine,
@@ -121,7 +125,9 @@ def mkMachineMatchAltExpr (L : List String) (stateName : Name) (numSymbols numSt
 
   let moves ← L.toArray.zipIdx.mapM fun (s, i) =>
     Array.range numSymbols |>.mapM fun symbolIdx ↦ do
-      let s_first : Term ← (s.extract ⟨3 * symbolIdx⟩ ⟨3 * (symbolIdx + 1)⟩).toStmtSyntax stateName numStates
+      let pos1 := s.nextn ⟨0⟩ (3 * symbolIdx)
+      let pos2 := s.nextn ⟨0⟩ (3 * (symbolIdx + 1))
+      let s_first : Term ← (s.extract pos1 pos2).toStmtSyntax stateName numStates
       `(matchAltExpr| | $(← i.toStateSyntax stateName), ($(quote symbolIdx)) => $s_first)
 
   return moves.flatten
