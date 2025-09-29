@@ -32,9 +32,9 @@ $$
 Note: It is not known whether $f(n)$ is well-defined for all $n$.
 -/
 partial def f : ℕ+ → ℕ+
-| 1 => 1
-| 2 => 1
-| n => f (n - f (n - 1)) + f (n - f (n - 2))
+  | 1 => 1
+  | 2 => 1
+  | n => f (n - f (n - 1)) + f (n - f (n - 2))
 
 /--
 Does $f(n)$ miss infinitely many integers?
