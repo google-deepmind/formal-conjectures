@@ -28,15 +28,16 @@ open Filter Set
 
 /-- `Rep_h A m` means `m` is a sum of exactly `h` terms from `A`. -/
 def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
-  ∃ s : Multiset ℕ, (∀ a ∈ s, a ∈ A) ∧ s.card = h ∧ s.sum = m
+  ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
 
 /-- `A` is an asymptotic additive basis of order `h`. -/
 def IsAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
-  ∀ᶠ m in atTop, Rep_h A h m
+  ∀ᶠ m in atTop, ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
 
-/-- `Basis A h` means `A` is a minimal asymptotic basis of order `h`. -/
+/-- `Basis A h` means `A` is a minimal asymptotic additive basis of order `h`. -/
 def Basis (A : Set ℕ) (h : ℕ) : Prop :=
   IsAsymptoticBasisOfOrder A h ∧ ∀ n ∈ A, ¬ IsAsymptoticBasisOfOrder (A \ {n}) h
+
 
 /-- Integers not representable without using `n` (i.e. by `A \ {n}`) with exactly `h` terms. -/
 def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ := {m | ¬ Rep_h (A \ {n}) h m}
@@ -49,12 +50,13 @@ Is it true that, for any `n ∈ A`, the set of integers which cannot be represen
 without using `n` has positive density?
 -/
 @[category research open, AMS 5]
-theorem erdos_330 :
+theorem erdos_330_answer :
     ∀ (h : ℕ) (A : Set ℕ),
       2 ≤ h →
       Basis A h →
       A.HasPosDensity →
       (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity) := by
+  -- answer(sorry)
   sorry
 
 end Erdos330
