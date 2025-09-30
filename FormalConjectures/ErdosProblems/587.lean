@@ -38,7 +38,7 @@ Nguyen and Vu proved that $|A| \ll N^{1/3} (\log N)^{O(1)}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_587.variants.nguyen_vu : ∃ᵉ (O > 0) (O' > 0),
-    ∀ᶠ N in Filter.atTop, (MaxNotSqSum N : ℝ) ≤ O' * N^(1 / 3 : ℝ) * (N : ℝ).log^O := by
+    ∀ᶠ N in Filter.atTop, (MaxNotSqSum N : ℝ) ≤ O' * Real.nthRoot 3 N * (N : ℝ).log^O := by
   sorry
 
 end Erdos587

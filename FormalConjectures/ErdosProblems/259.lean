@@ -30,9 +30,13 @@ namespace Erdos259
 Is
 $$\sum_{n} \mu(n)^2\frac{n}{2^n}$$
 irrational?
+
+This is true, and was proved by Chen and Ruzsa.
+
+[ChRu99] Chen, Yong-Gao and Ruzsa, Imre Z., On the irrationality of certain series. Period. Math. Hungar. (1999), 31--37.
 -/
-@[category research open, AMS 11]
-theorem erdos_259 : Irrational (∑' n : ℕ, (μ n) ^ 2 * n / (2 ^ n)) ↔ answer(sorry) := by
+@[category research solved, AMS 11]
+theorem erdos_259 : Irrational (∑' n : ℕ, (μ n) ^ 2 * n / (2 ^ n)) := by
   sorry
 
 end Erdos259
