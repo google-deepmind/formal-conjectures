@@ -50,7 +50,7 @@ theorem erdos_145 :
   sorry
 
 /--
-Erd\"os [Er51] proved this for all $0\leq \alpha\leq 2$.
+Erdős [Er51] proved this for all $0\leq \alpha\leq 2$.
 
 [Er51] Erdös, P., Some problems and results in elementary number theory.
   Publ. Math. Debrecen (1951), 103-109.
