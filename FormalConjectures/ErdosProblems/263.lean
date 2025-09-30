@@ -74,11 +74,11 @@ an irrationality sequence in the above sense.
          arXiv:2406.17593 (2024).
 -/
 @[category research solved, AMS 11]
-theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ):
-    (StrictMono a ∧
-      Summable (fun n : ℕ => 1 / (a n : ℝ)) ∧
-      atTop.Tendsto (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ 2) (𝓝 0)
-    ) → ¬ IsIrrationalitySequence a := by
+theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ) 
+    (ha ' : StrictMono a)
+    (ha'' : Summable (fun n : ℕ => 1 / (a n : ℝ)))
+    (ha''' : atTop.Tendsto (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ 2) (𝓝 0)) :
+   ¬ IsIrrationalitySequence a := by
   sorry
 
 /--
