@@ -84,7 +84,7 @@ theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ)
 /--
 On the other hand, if there exists some $\varepsilon > 0$ such that $a_n$ satisfies
 $\liminf \frac{a_{n+1}}{a_n^{2+\varepsilon}} > 0$, then $a_n$ is an irrationality sequence
-by the above folklore result.
+by the above folklore result `erdos_263.variants.folklore`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
