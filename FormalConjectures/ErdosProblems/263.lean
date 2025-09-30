@@ -87,11 +87,11 @@ $\liminf \frac{a_{n+1}}{a_n^{2+\varepsilon}} > 0$, then $a_n$ is an irrationalit
 by the above folklore result.
 -/
 @[category research solved, AMS 11]
-theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ):
-    (∀ n : ℕ, a n > 0) →
-      (∃ ε : ℝ, ε > 0 ∧
-      Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ (2 + ε)) > 0  →
-        IsIrrationalitySequence a) := by
+theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
+    (ha : ∀ n : ℕ, a n > 0)
+    (ha' : ∃ ε : ℝ, ε > 0 ∧
+      Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ (2 + ε)) > 0) : 
+    IsIrrationalitySequence a) := by
   sorry
 
 end Erdos263
