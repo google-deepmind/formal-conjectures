@@ -50,8 +50,8 @@ Must every irrationality sequence $a_n$ in the above sense
 satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_263.parts.ii (a : ℕ → ℕ):
-      (IsIrrationalitySequence a → atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop) ↔
+theorem erdos_263.parts.ii : (∀ a : ℕ → ℕ,
+      IsIrrationalitySequence a → atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop) ↔
     answer(sorry) := by
   sorry
 
@@ -60,9 +60,9 @@ A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{1/2
 has $\sum \frac{1}{a_n}$ converging to an irrational number.
 -/
 @[category research solved, AMS 11]
-theorem erdos_263.variants.folklore (a : ℕ -> ℕ) 
-    (ha : atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (2 ^ n : ℝ))) atTop) : 
-    Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ) := by
+theorem erdos_263.variants.folklore (a : ℕ -> ℕ)
+    (ha : atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (2 ^ n : ℝ))) atTop) :
+      Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ) := by
   sorry
 
 /--
@@ -74,8 +74,8 @@ an irrationality sequence in the above sense.
          arXiv:2406.17593 (2024).
 -/
 @[category research solved, AMS 11]
-theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ) 
-    (ha ' : StrictMono a)
+theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ)
+    (ha' : StrictMono a)
     (ha'' : Summable (fun n : ℕ => 1 / (a n : ℝ)))
     (ha''' : atTop.Tendsto (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ 2) (𝓝 0)) :
    ¬ IsIrrationalitySequence a := by
@@ -90,8 +90,8 @@ by the above folklore result `erdos_263.variants.folklore`.
 theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
     (ha : ∀ n : ℕ, a n > 0)
     (ha' : ∃ ε : ℝ, ε > 0 ∧
-      Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ (2 + ε)) > 0) : 
-    IsIrrationalitySequence a) := by
+      Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ (2 + ε)) > 0) :
+    IsIrrationalitySequence a := by
   sorry
 
 end Erdos263
