@@ -16,7 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
 # Erdős Problem 330
 
 *Reference:* [erdosproblems.com/330](https://www.erdosproblems.com/330)
@@ -25,19 +24,25 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos330
 
 open Filter Set
+open scoped BigOperators
 
 /-- `Rep_h A m` means `m` is a sum of exactly `h` terms from `A`. -/
 def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
   ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
 
-/-- `A` is an asymptotic additive basis of order `h`. -/
-def IsAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
-  ∀ᶠ m in atTop, ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
+/--
+Use the **additive** version of your generic API:
+
+If your to_additive generated the name `Set.IsAsymptoticAddBasisOfOrder`, this alias
+plugs it in for `A : Set ℕ`. If your project used a different additive name, just
+swap that identifier below (only here).
+-/
+abbrev IsAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
+  Set.IsAsymptoticAddBasisOfOrder A h
 
 /-- `Basis A h` means `A` is a minimal asymptotic additive basis of order `h`. -/
 def Basis (A : Set ℕ) (h : ℕ) : Prop :=
   IsAsymptoticBasisOfOrder A h ∧ ∀ n ∈ A, ¬ IsAsymptoticBasisOfOrder (A \ {n}) h
-
 
 /-- Integers not representable without using `n` (i.e. by `A \ {n}`) with exactly `h` terms. -/
 def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ := {m | ¬ Rep_h (A \ {n}) h m}
