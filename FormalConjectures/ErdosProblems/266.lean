@@ -52,7 +52,7 @@ number for all $t \in \mathbb{Q}$ such that $t \ne -a_n$ for any $n$.
 @[category research solved, AMS 11]
 theorem erdos_266.variants.all_rationals:
     ∃ a : ℕ → ℕ, StrictMono a ∧ a 0 ≥ 1 ∧
-      (∀ t : ℚ, (∃ n : ℕ, t = -(a n)) ∨
+      (∀ t : ℚ, (¬ ∃ n : ℕ, t = -(a n)) →
         (∃ q : ℚ, HasSum (fun n : ℕ => ((1 : ℝ) / ((a n) + t))) q)) := by
   sorry
 
