@@ -64,8 +64,7 @@ theorem erdos_145.variants.le_two {α : ℝ} (hα : α ∈ Set.Icc 0 2) :
 /--
 Hooley [Ho73] extended this to all $\alpha\leq 3$.
 
-[Ho73] Hooley, Christopher, On the intervals between consecutive terms of sequences.
-  (1973), 129-140.
+[Ho73] Hooley, Christopher, On the intervals between consecutive terms of sequences. Proc. Symp. Pure Math, vol. 24, pp. 129-140. 1973.
 -/
 @[category research solved, AMS 11]
 theorem erdos_145.variants.le_three {α : ℝ} (hα : α ∈ Set.Icc 0 3) :
