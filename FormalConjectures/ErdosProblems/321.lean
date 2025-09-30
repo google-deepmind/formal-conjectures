@@ -82,7 +82,7 @@ theorem erdos_321.variants.isLittleO :
 /--
 Let $R(N)$ be the maximal such size. Results of Bleicher and Erdős from [BlEr75] and [BlEr76b] imply that
 $$
-\frac{N}{\log N} \prod_{i=3}^{k} \log_i N \le R(N) \le \frac{1}{\log 2} \log_r N \left( \frac{N}{\log N} \prod_{i=3}^{r} \log_i N \right),
+\frac{N}{\log N} \prod_{i=3}^{k} \log_i N \le R(N),
 $$
 valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} N \ge 1$. (In these bounds $\log_i n$ denotes the $i$-fold iterated logarithm.)
 
@@ -90,14 +90,14 @@ valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} 
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
 @[category research solved, AMS 11]
-theorem erdos_321.variants.lower (N k : ℕ) (hk : 4 ≤ k ∧ k ≤ log^[k] N) :
-  N / log N * ∏ i ∈ Finset.Icc 3 k, (log^[i] N) ≤ R N := by
+theorem erdos_321.variants.lower (N k : ℕ) (hk : 4 ≤ k) (hkN : k ≤ log^[k] N) :
+    N / log N * ∏ i ∈ Finset.Icc 3 k, (log^[i] N) ≤ R N := by
   sorry
 
 /--
 Let $R(N)$ be the maximal such size. Results of Bleicher and Erdős from [BlEr75] and [BlEr76b] imply that
 $$
-\frac{N}{\log N} \prod_{i=3}^{k} \log_i N \le R(N) \le \frac{1}{\log 2} \log_r N \left( \frac{N}{\log N} \prod_{i=3}^{r} \log_i N \right),
+R(N) \le \frac{1}{\log 2} \log_r N \left( \frac{N}{\log N} \prod_{i=3}^{r} \log_i N \right),
 $$
 valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} N \ge 1$. (In these bounds $\log_i n$ denotes the $i$-fold iterated logarithm.)
 
@@ -105,8 +105,8 @@ valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} 
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
 @[category research solved, AMS 11]
-theorem erdos_321.variants.upper (N r : ℕ) (hr : 1 ≤ log^[2 * r] N) :
-  R N ≤ 1 / log 2 * log^[r] N * N / log N * ∏ i ∈ Finset.Icc 3 r, (log^[i] N) := by
+theorem erdos_321.variants.upper (N r : ℕ) (hr : 1 ≤ r) (hrN : 1 ≤ log^[2 * r] N) :
+    R N ≤ 1 / log 2 * log^[r] N * N / log N * ∏ i ∈ Finset.Icc 3 r, (log^[i] N) := by
   sorry
 
 end Erdos321
