@@ -15,21 +15,27 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Set.Basis
+import Mathlib.Data.Nat.Basic
 
 /-!
 # Erdős Problem 330
 
 *Reference:* [erdosproblems.com/330](https://www.erdosproblems.com/330)
-
-Suppose `A ⊂ ℕ` is a minimal asymptotic additive basis with positive density.
-Is it true that, for any `n ∈ A`, the integers not representable without `n`
-still have positive density?
 -/
 
 namespace Erdos330
 
 open Filter Set
+open scoped BigOperators
+
+def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
+  ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
+
+def IsAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
+  ∀ᶠ m in atTop, ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
+
+def MinAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
+  IsAsymptoticBasisOfOrder A h ∧ ∀ n ∈ A, ¬ IsAsymptoticBasisOfOrder (A \ {n}) h
 
 def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
   {m | ¬ Rep_h (A \ {n}) h m}
@@ -38,7 +44,7 @@ def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
 theorem erdos_330_answer :
     ∀ (h : ℕ) (A : Set ℕ),
       2 ≤ h →
-      Basis A h →
+      MinAsymptoticBasisOfOrder A h →
       A.HasPosDensity →
       (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity) := by
   sorry
