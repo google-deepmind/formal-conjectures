@@ -34,19 +34,17 @@ A set is semi-algebraic in `ℝⁿ` if it can be described by a finite union of 
 multivariate polynomial equations and inequalities.
 -/
 def IsSemiAlgebraic {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
-  ∃ (ι : Type) (p : ι → MvPolynomial (Fin n) ℝ), Finite ι ∧
-    S = {x | ∃ i, MvPolynomial.eval x (p i) = 0} ∪ {x | ∃ i, MvPolynomial.eval x (p i) > 0}
+  ∃ (ι₀ ι₁ : Type) (p₀ : ι₀ → MvPolynomial (Fin n) ℝ) (p₁ : ι₁ → MvPolynomial (Fin n) ℝ),
+    Finite ι₀ ∧ Finite ι₁ ∧
+    S = (⋃ i, {x | MvPolynomial.eval x (p₀ i) = 0}) ∪ ⋃ i, {x | MvPolynomial.eval x (p₁ i) > 0}
 
 /--
 A set is semi-algebraic in `ℝ` if it can be described by a finite boolean combination
 of polynomial equations and inequalities.
 -/
 def IsSemiAlgebraic₁ (S : Set ℝ) : Prop :=
-  ∃ (ι : Type) (p : ι → Polynomial ℝ), Finite ι ∧
-    S = {x | ∃ (i : ι), Polynomial.eval x (p i) = 0} ∪
-    {x | ∃ (i : ι), Polynomial.eval x (p i) > 0}
-
-
+  ∃ (ι₀ ι₁ : Type) (p₀ : ι₀ → Polynomial ℝ) (p₁ : ι₁ → Polynomial ℝ), Finite ι₀ ∧ Finite ι₁ ∧
+    S = (⋃ i, {x | Polynomial.eval x (p₀ i) = 0}) ∪ ⋃ i, {x | Polynomial.eval x (p₁ i) > 0}
 
 open scoped Polynomial
 
