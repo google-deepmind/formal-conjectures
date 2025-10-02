@@ -16,6 +16,7 @@ limitations under the License.
 
 import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import Mathlib.Tactic.DeriveFintype
+import Mathlib.Tactic.FinCases
 
 --sanity checks for the definition of halting added in `ForMathlib`.
 --These should be easy to prove
@@ -36,24 +37,36 @@ def alwaysHaltingMachine : Machine Γ Λ := fun _ _ =>
   none
 
 def haltsAfterOne : Machine Γ Λ := fun l _ =>
-match l with
-| --If the state is `S`, change state to `T` and move head to the right
-  .S => some (Λ.T, Stmt.write default Dir.right)
-| --If the state is already `T` then halt
-  .T => none
+  match l with
+  | --If the state is `S`, change state to `T` and move head to the right
+    .S => some (Λ.T, Stmt.write default Dir.right)
+  | --If the state is already `T` then halt
+    .T => none
 
 instance : alwaysHaltingMachine.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after zero steps
-  exact ⟨0, by aesop⟩ 
+  exact ⟨0, by aesop⟩
 
 instance : haltsAfterOne.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
   -- halts after one step
-  exact ⟨1, by aesop⟩ 
+  exact ⟨1, by aesop⟩
 
 theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
   apply haltingNumber_def
   · use { q := some Λ.T, tape := ⟨Γ.A, Quotient.mk'' [Γ.A], default⟩}
     rfl
   · rfl
+
+def neverHalts : Machine Γ Λ := fun l s =>
+  match l, s with
+  | .S, .A => some (Λ.T, Stmt.write default Dir.right)
+  | .T, .A => some (Λ.S, Stmt.write default Dir.right)
+  | .S, .B => some (Λ.T, Stmt.write default Dir.left)
+  | .T, .B => some (Λ.T, Stmt.write default Dir.left)
+
+theorem not_isHalting_neverHalts : ¬ neverHalts.IsHalting := by
+  apply not_isHalting_of_forall_isSome
+  intro l s
+  fin_cases s <;> fin_cases l <;> aesop
