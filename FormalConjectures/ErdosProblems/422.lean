@@ -24,23 +24,46 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos422
 
+open Filter
+open scoped Topology
+
+instance : Norm ℕ+ where
+  norm n := n
+
 /--
 Let $f(1) = f(2) = 1$ and for $n > 2$
 $$
 f(n) = f(n - f(n - 1)) + f(n - f(n - 2)).
 $$
-Note: It is not known whether $f(n)$ is well-defined for all $n$.
 -/
-partial def f : ℕ+ → ℕ+
+def f : ℕ+ → ℕ+
   | 1 => 1
   | 2 => 1
   | n => f (n - f (n - 1)) + f (n - f (n - 2))
+-- Note: It is not known whether $f(n)$ is well-defined for all $n$.
+termination_by n => n
+decreasing_by
+  all_goals sorry
 
 /--
 Does $f(n)$ miss infinitely many integers?
 -/
 @[category research open, AMS 11]
 theorem erdos_422 : Set.Infinite {n | ∀ x, f x ≠ n} ↔ answer(sorry) := by
+  sorry
+
+/--
+Is $f$ surjective?
+-/
+@[category research open, AMS 11]
+theorem erdos_422.variants.surjective : f.Surjective ↔ answer(sorry) := by
+  sorry
+
+/--
+How does $f$ grow?
+-/
+@[category research open, AMS 11]
+theorem erdos_422.variants.growth_rate : f =O[atTop] (answer(sorry) : ℕ+ → ℕ+) := by
   sorry
 
 end Erdos422
