@@ -54,4 +54,13 @@ theorem erdos_288.variants.k_intervals : ∀ k, Set.Finite { I : Fin k → ℕ �
     answer(sorry) := by
   sorry
 
+/--
+Is it true for any $k > 2$ that only finitely many $k$ intervals satisfy this condition?
+-/
+@[category research open, AMS 11]
+theorem erdos_288.variants.exists_k_gt_2 : ∃ k > 2, Set.Finite { I : Fin k → ℕ × ℕ |
+      ∃ n : ℕ, (∑ j : Fin k, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } ↔
+    answer(sorry) := by
+  sorry
+
 end Erdos288
