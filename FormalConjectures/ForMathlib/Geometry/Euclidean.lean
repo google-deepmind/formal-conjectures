@@ -21,7 +21,7 @@ scoped[EuclideanGeometry] notation "ℝ^" n:65 => EuclideanSpace ℝ (Fin n)
 
 open scoped EuclideanGeometry
 
-def isIsosceles {n : ℕ} (x y z : ℝ^n) :=
+def IsIsoscelesRn {n : ℕ} (x y z : ℝ^n) :=
   dist x y = dist y z ∨ dist y z = dist x z ∨ dist x y = dist x z
 
-def isoscelesSet {n : ℕ} (A : Set (ℝ^n)) := A.Triplewise (isIsosceles · · ·)
+def Set.IsIsosceles {n : ℕ} (A : Set (ℝ^n)) := A.Triplewise (IsIsoscelesRn · · ·)
