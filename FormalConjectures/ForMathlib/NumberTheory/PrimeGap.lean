@@ -14,13 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.GCDMonoid.Finset
-import Mathlib.Algebra.GCDMonoid.Nat
+import Mathlib.Data.Nat.Prime.Defs
+import Mathlib.Data.Nat.Nth
 
-/-- A Finset of numbers is coprime, or relatively prime, if its `gcd` is 1. -/
-@[reducible] def Finset.Coprime (S : Finset ℕ) : Prop := S.gcd id = 1
-
-theorem Finset.Coprime_pair_iff (S : Finset ℕ) (a b : ℕ) (h : S = {a, b}) :
-    S.Coprime ↔ Nat.Coprime a b := by
-  simp only [h, Finset.Coprime, Nat.Coprime, gcd_insert, gcd_singleton, normalize_eq]
-  rfl
+/--
+The prime gap: the difference between the $n+1$-th and $n$-th prime.
+-/
+noncomputable def primeGap (n : ℕ) : ℕ := (n + 1).nth Nat.Prime - n.nth Nat.Prime
