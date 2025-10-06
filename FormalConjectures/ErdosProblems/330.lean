@@ -32,7 +32,8 @@ open scoped BigOperators
 def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
   ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
 
-/-- `A` is an asymptotic basis of order `h` if all sufficiently large integers are sums of `h` elements of `A`. -/
+/-- `A` is an asymptotic basis of order `h` if all sufficiently large integers are sums of `h`
+elements of `A`. -/
 def IsAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
   ∀ᶠ m in atTop, ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
 
@@ -45,16 +46,14 @@ def MinAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
 def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
   {m | ¬ Rep_h (A \ {n}) h m}
 
-/-!
-### Informal statement (Erdős 330)
-
-Suppose `A ⊂ ℕ` is a **minimal** asymptotic basis of order `h ≥ 2` with **positive upper density**.
-Then for every `n ∈ A`, the set of integers that are *not* representable as a sum of `h`
-elements from `A` **avoiding** `n` has positive upper density.
-
-Equivalently: if `A` is a minimal basis, each element `n` is “essential on a positive-density set” of sums.
--/
 @[category research open, AMS 5]
+/-- **Erdős Problem 330 (informal).**
+
+Suppose `A ⊂ ℕ` is a *minimal* asymptotic basis of order `h ≥ 2` with **positive (upper) density**.
+Then for every `n ∈ A`, the set of integers that are **not** representable as a sum of `h` elements
+of `A` while avoiding `n` (i.e., `UnrepWithout A h n`) has positive (upper) density.
+
+Equivalently: if `A` is a minimal basis, each element `n` is “essential” on a positive-density set of sums. -/
 theorem erdos_330_answer :
     ∀ (h : ℕ) (A : Set ℕ),
       2 ≤ h →
@@ -62,6 +61,5 @@ theorem erdos_330_answer :
       A.HasPosDensity →
       (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity) :=
   answer(sorry)
-
 
 end Erdos330
