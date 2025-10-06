@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+-- If Set.IsAsymptoticAddBasis is not re-exported by ProblemImports,
+-- add the precise mathlib import where it is defined.
 
 /-!
 # Erdős Problem 330
@@ -31,35 +33,28 @@ open scoped BigOperators
 def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
   ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
 
-/-- `A` is an asymptotic basis of order `h` if all sufficiently large integers are sums of `h`
-elements of `A`. -/
-def IsAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
-  ∀ᶠ m in atTop, ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
-
-/-- `A` is a minimal asymptotic basis of order `h` if it is an asymptotic basis of order `h`
-and removing any single element destroys that property. -/
-def MinAsymptoticBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
-  IsAsymptoticBasisOfOrder A h ∧ ∀ n ∈ A, ¬ IsAsymptoticBasisOfOrder (A \ {n}) h
-
 /-- Integers not representable as a sum of `h` elements of `A` **without** using `n`. -/
 def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
   {m | ¬ Rep_h (A \ {n}) h m}
 
+/-- Minimality built on top of the library predicate `Set.IsAsymptoticAddBasis`. -/
+def MinAsymptoticAddBasis (A : Set ℕ) (h : ℕ) : Prop :=
+  Set.IsAsymptoticAddBasis A h ∧ ∀ n ∈ A, ¬ Set.IsAsymptoticAddBasis (A \ {n}) h
+
 @[category research open, AMS 5]
 /-- **Erdős Problem 330 (informal).**
 
-Suppose `A ⊂ ℕ` is a *minimal* asymptotic basis of order `h ≥ 2` with **positive (upper) density**.
+Suppose `A ⊂ ℕ` is a *minimal* asymptotic add-basis of order `h ≥ 2` with **positive (upper) density**.
 Then for every `n ∈ A`, the set of integers that are **not** representable as a sum of `h` elements
 of `A` while avoiding `n` (i.e., `UnrepWithout A h n`) has positive (upper) density.
 
-Equivalently: if `A` is a minimal basis, each element `n` is “essential” on a positive-density set of sums. -/
+Equivalently: if `A` is a minimal asymptotic add-basis, each element `n` is “essential” on a positive-density set of sums. -/
 theorem erdos_330_answer :
     ∀ (h : ℕ) (A : Set ℕ),
       2 ≤ h →
-      MinAsymptoticBasisOfOrder A h →
+      MinAsymptoticAddBasis A h →
       A.HasPosDensity →
       (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity)
-      ↔ answer(sorry) := by
-  sorry
+      ↔ answer(sorry) := by sorry
 
 end Erdos330
