@@ -58,7 +58,8 @@ theorem erdos_330_answer :
       2 ≤ h →
       MinAsymptoticBasisOfOrder A h →
       A.HasPosDensity →
-      (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity) :=
-  answer(sorry)
+      (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity)
+      ↔ answer(sorry) := by
+  sorry
 
 end Erdos330
