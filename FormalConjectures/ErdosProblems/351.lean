@@ -22,8 +22,6 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/351](https://www.erdosproblems.com/351)
 -/
 
-variable {K L : Type} [CommRing K] [Field L]
-
 open RatFunc
 
 namespace Erdos351
