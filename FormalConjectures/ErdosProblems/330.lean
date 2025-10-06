@@ -15,8 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
--- If Set.IsAsymptoticAddBasis is not re-exported by ProblemImports,
--- add the precise mathlib import where it is defined.
 
 /-!
 # Erdős Problem 330
@@ -39,22 +37,20 @@ def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
 
 /-- Minimality built on top of the library predicate `Set.IsAsymptoticAddBasis`. -/
 def MinAsymptoticAddBasis (A : Set ℕ) (h : ℕ) : Prop :=
-  Set.IsAsymptoticAddBasis A h ∧ ∀ n ∈ A, ¬ Set.IsAsymptoticAddBasis (A \ {n}) h
+  Set.IsAsymptoticAddBasis A h ∧
+    ∀ n ∈ A, ¬ Set.IsAsymptoticAddBasis (A \ {n}) h
 
-@[category research open, AMS 5]
 /-- **Erdős Problem 330 (informal).**
-
-Suppose `A ⊂ ℕ` is a *minimal* asymptotic add-basis of order `h ≥ 2` with **positive (upper) density**.
+Suppose `A ⊂ ℕ` is a *minimal* asymptotic add-basis of order `h ≥ 2` with positive (upper) density.
 Then for every `n ∈ A`, the set of integers that are **not** representable as a sum of `h` elements
-of `A` while avoiding `n` (i.e., `UnrepWithout A h n`) has positive (upper) density.
-
-Equivalently: if `A` is a minimal asymptotic add-basis, each element `n` is “essential” on a positive-density set of sums. -/
+of `A` while avoiding `n` has positive (upper) density. -/
+@[category research open, AMS 5 11]
 theorem erdos_330_answer :
     ∀ (h : ℕ) (A : Set ℕ),
       2 ≤ h →
       MinAsymptoticAddBasis A h →
       A.HasPosDensity →
       (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity)
-      ↔ answer(sorry) := by sorry
-
+      ↔ answer(sorry) := by
+  sorry
 end Erdos330
