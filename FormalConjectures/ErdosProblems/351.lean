@@ -32,7 +32,8 @@ open Polynomial
 def imageSet (P : ℚ[X]) : Set ℚ :=
   Set.range (fun (n : ℕ) ↦ P.eval ↑n + 1 / n)
 
-/-- The predicate that a set is complete, i.e. that it contains all sufficiently large integers. -/
+/-- The predicate that a set is complete, i.e. that every sufficiently large integer is a sum
+of elements of the set. -/
 def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
   ∀ B : Finset α,
     ∀ᶠ (m : ℕ) in Filter.atTop, ↑m ∈
