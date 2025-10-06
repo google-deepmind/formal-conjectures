@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Data.Nat.Basic
 
 /-!
 # Erdős Problem 330
