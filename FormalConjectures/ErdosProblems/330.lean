@@ -60,8 +60,8 @@ theorem erdos_330_answer :
       2 ≤ h →
       MinAsymptoticBasisOfOrder A h →
       A.HasPosDensity →
-      (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity) := by
-  -- Repo convention: keep answers as `answer(sorry)` unless actually proved.
+      (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity) :=
   answer(sorry)
+
 
 end Erdos330
