@@ -97,4 +97,7 @@ theorem squarePart_zero : squarePart 0 = 0 := by simp [squarePart]
 theorem squarefreePart_mul_squarePart (n : ℕ) : n.squarefreePart * n.squarePart = n :=
   Nat.mul_div_eq_iff_dvd.2 n.squarefreePart_dvd
 
+theorem squarefree_infinite : Set.Infinite { n : ℕ | Squarefree n } :=
+  Set.Infinite.mono (fun _ hp ↦ hp.squarefree) Nat.infinite_setOf_prime
+
 end Nat
