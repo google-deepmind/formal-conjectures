@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/145](https://www.erdosproblems.com/647)
 -/
 
+namespace Erdos647
+
 open Filter ArithmeticFunction
 
 /-- Let $\tau(n)$ count the number of divisors of $n$. Is there some $n > 24$ such that
@@ -57,3 +59,5 @@ theorem erdos_647.variants.infinite :
     (∀ k, { n | iSup fun m : Set.Ioo (n - k) n ↦ ↑m + σ 0 m ≤ n + 2 }.Infinite) ↔
       answer(sorry) := by
   sorry
+
+end Erdos647
