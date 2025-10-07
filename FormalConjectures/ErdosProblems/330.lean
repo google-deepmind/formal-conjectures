@@ -40,7 +40,7 @@ def MinAsymptoticAddBasis (A : Set ℕ) (h : ℕ) : Prop :=
   Set.IsAsymptoticAddBasis A h ∧
     ∀ n ∈ A, ¬ Set.IsAsymptoticAddBasis (A \ {n}) h
 
-/-- **Erdős Problem 330 (informal).**
+/--
 Suppose `A ⊂ ℕ` is a *minimal* asymptotic add-basis of order `h ≥ 2` with positive (upper) density.
 Then for every `n ∈ A`, the set of integers that are **not** representable as a sum of `h` elements
 of `A` while avoiding `n` has positive (upper) density. -/
