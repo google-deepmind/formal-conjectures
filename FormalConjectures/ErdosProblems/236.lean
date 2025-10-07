@@ -26,7 +26,7 @@ open Filter Asymptotics
 
 namespace Erdos236
 
-/-- 
+/--
 $f(n)$ counts the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$.
 -/
 private def f (n : ℕ) : ℕ :=
@@ -36,7 +36,7 @@ private def f (n : ℕ) : ℕ :=
 Let $f(n)$ count the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$. Show that $f(n)=o(\log n)$.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_236: (fun n => (f n : ℝ)) =o[atTop] (fun n => Real.log (n : ℝ)) := by 
+theorem erdos_236: (fun n => (f n : ℝ)) =o[atTop] (fun n => Real.log (n : ℝ)) := by
   sorry
 
 end Erdos236
