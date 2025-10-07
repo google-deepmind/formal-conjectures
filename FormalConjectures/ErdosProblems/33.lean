@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Data.Real.Basic
 
 variable {α : Type} [AddCommMonoid α]
 
@@ -34,15 +33,15 @@ namespace Erdos33
 private noncomputable def Set.bdd (A : Set ℕ) (N : ℕ) : Finset ℕ :=
   Finset.Icc 1 N |>.filter (· ∈ A)
 
-/-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a` for some `a` in `A` 
+/-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a` for some `a` in `A`
 and `n ≥ 0`. -/
--- Formalisation note: Changed 'every large integer' to 'every integer' as for the statement these 
+-- Formalisation note: Changed 'every large integer' to 'every integer' as for the statement these
 -- conditions are equivalent. Also, this was the formulation in the original paper `by Erdos.
 def AdditiveBasisCondition (A : Set ℕ) : Prop :=
   ∀ (k : ℕ), ∃ (n : ℕ) (a : ℕ), a ∈ A ∧ k = a + n^2
 
-/-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a` 
-for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of 
+/-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a`
+for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of
 `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research open, AMS 11]
@@ -62,8 +61,8 @@ theorem erdos_33.variants.one_mem_lowerBounds :
   sorry
 
 /--
-The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0` 
-is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by 
+The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`
+is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by
 Wouter van Doorn.
 -/
 @[category research solved, AMS 11]
