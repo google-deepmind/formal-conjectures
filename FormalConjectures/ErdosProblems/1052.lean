@@ -21,14 +21,12 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1052](https://www.erdosproblems.com/1052)
 -/
 
-open Nat Finset ArithmeticFunction
-
 namespace Erdos1052
 
 /-- A proper unitary divisor of $n$ is $d \mid n$
 such that $(d, n/d) = 1$ other than $n$. -/
 def properUnitaryDivisors (n : ℕ) : Finset ℕ :=
-  {d ∈ Ico 1 n | d ∣ n ∧ d.Coprime (n / d)}
+  {d ∈ Finset.Ico 1 n | d ∣ n ∧ d.Coprime (n / d)}
 
 /-- A number $n \ge 1$ is a unitary perfect number if
 it is the sum of its proper unitary divisors. -/
