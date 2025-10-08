@@ -50,7 +50,7 @@ noncomputable def comp
   fun (i : ι) ↦ MvPolynomial.bind₁ F (G i)
 
 variable (k σ) in
-private noncomputable def id : RegularFunction k σ σ := MvPolynomial.X
+noncomputable def id : RegularFunction k σ σ := MvPolynomial.X
 
 end RegularFunction
 
