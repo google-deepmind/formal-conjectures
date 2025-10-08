@@ -23,8 +23,13 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter
+
 namespace Green1
 
+/--
+Let $A$ be a set of $n$ positive integers. Does $A$ contain a sum-free set
+of size at least $\frac n 3 + Ω(n)$, where $Ω(n) → ∞$ as $n → ∞$?
+-/
 @[category research open, AMS 5 11]
 theorem green_1 : ∃ Ω : ℕ → ℝ, atTop.Tendsto Ω atTop ∧
      ∀ n, ∀ (A : Finset ℕ), (∀ a ∈ A, 0 < a) → A.card = n →
