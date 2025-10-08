@@ -29,7 +29,7 @@ open scoped BigOperators
 
 /-- `Rep_h A h m` means `m` is a sum of `h` elements of `A`. -/
 def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
-  ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i, f i) = m
+  ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i : Fin h, f i) = m
 
 /-- Integers not representable as a sum of `h` elements of `A` **without** using `n`. -/
 def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
@@ -43,7 +43,8 @@ def MinAsymptoticAddBasis (A : Set ℕ) (h : ℕ) : Prop :=
 /--
 Suppose `A ⊂ ℕ` is a *minimal* asymptotic add-basis of order `h ≥ 2` with positive (upper) density.
 Then for every `n ∈ A`, the set of integers that are **not** representable as a sum of `h` elements
-of `A` while avoiding `n` has positive (upper) density. -/
+of `A` while avoiding `n` has positive (upper) density.
+-/
 @[category research open, AMS 5 11]
 theorem erdos_330_answer :
     ∀ (h : ℕ) (A : Set ℕ),
@@ -53,4 +54,5 @@ theorem erdos_330_answer :
       (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity)
       ↔ answer(sorry) := by
   sorry
+
 end Erdos330
