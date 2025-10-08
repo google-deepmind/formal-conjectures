@@ -39,7 +39,6 @@ def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
 def MinAsymptoticAddBasis (A : Set ℕ) (h : ℕ) : Prop :=
   Set.IsAsymptoticAddBasis A h ∧
     ∀ n ∈ A, ¬ Set.IsAsymptoticAddBasis (A \ {n}) h
-
 /--
 Suppose `A ⊂ ℕ` is a *minimal* asymptotic add-basis of order `h ≥ 2` with positive (upper) density.
 Then for every `n ∈ A`, the set of integers that are **not** representable as a sum of `h` elements
