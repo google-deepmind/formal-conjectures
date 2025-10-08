@@ -24,28 +24,35 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos330
 
-open Set
+open Filter Set
 open scoped BigOperators
 
+/-- `Rep_h A h m` means `m` is a sum of `h` elements of `A`. -/
 def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
-  ∃ f : Fin h → ℕ, (∀ i, f i ∈ A) ∧ (∑ i : Fin h, f i) = m
+  ∃ (f : Fin h → ℕ), (∀ i, f i ∈ A) ∧ (∑ i : Fin h, f i) = m
 
+/-- Integers not representable as a sum of `h` elements of `A` **without** using `n`. -/
 def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
   {m | ¬ Rep_h (A \ {n}) h m}
 
+/-- Minimality built on top of the library predicate `Set.IsAsymptoticAddBasis`. -/
 def MinAsymptoticAddBasis (A : Set ℕ) (h : ℕ) : Prop :=
   Set.IsAsymptoticAddBasis A h ∧
-    ∀ ⦃n⦄, n ∈ A → ¬ Set.IsAsymptoticAddBasis (A \ {n}) h
+    ∀ n ∈ A, ¬ Set.IsAsymptoticAddBasis (A \ {n}) h
 
+/--
+Suppose `A ⊂ ℕ` is a *minimal* asymptotic add-basis of order `h ≥ 2` with positive (upper) density.
+Then for every `n ∈ A`, the set of integers that are **not** representable as a sum of `h` elements
+of `A` while avoiding `n` has positive (upper) density.
+-/
 @[category research open, AMS 5 11]
 theorem erdos_330_answer :
-    answer (
-      ∀ (h : ℕ) (A : Set ℕ),
-        2 ≤ h →
-        MinAsymptoticAddBasis A h →
-        A.HasPosDensity →
-        (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity)
-    ) :=
-  answer.sorry
+    ∀ (h : ℕ) (A : Set ℕ),
+      2 ≤ h →
+      MinAsymptoticAddBasis A h →
+      A.HasPosDensity →
+      (∀ n ∈ A, (UnrepWithout A h n).HasPosDensity)
+      ↔ answer(sorry) := by
+  sorry
 
 end Erdos330
