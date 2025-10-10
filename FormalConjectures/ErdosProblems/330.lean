@@ -35,16 +35,21 @@ def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
 def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
   {m | ¬ Rep_h (A \ {n}) h m}
 
-/-- Minimality built on `Set.IsAsymptoticAddBasisOfOrder`. -/
-def MinAsymptoticAddBasis (A : Set ℕ) (h : ℕ) : Prop :=
-  Set.IsAsymptoticAddBasisOfOrder A h ∧
-    ∀ n ∈ A, ¬ Set.IsAsymptoticAddBasisOfOrder (A \ {n}) h
+/-- “Is an asymptotic add-basis for some order.” -/
+def IsAsymptoticAddBasis (A : Set ℕ) : Prop :=
+  ∃ h : ℕ, Set.IsAsymptoticAddBasisOfOrder A h
+
+/-- Order-agnostic minimal asymptotic add-basis. -/
+def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
+  IsAsymptoticAddBasis A ∧
+    ∀ ⦃n⦄, n ∈ A → ¬ IsAsymptoticAddBasis (A \ {n})
 
 @[category research open, AMS 5 11]
 theorem erdos_330_statement
-    (h : ℕ) (A : Set ℕ)
-    (h2 : 2 ≤ h)
-    (hmin : MinAsymptoticAddBasis A h)
+    (A : Set ℕ) (h : ℕ)
+    (h2   : 2 ≤ h)
+    (hmin : MinAsymptoticAddBasis A)
+    (hord : Set.IsAsymptoticAddBasisOfOrder A h)
     (hden : Set.HasPosDensity A) :
     ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A h n) ↔ answer(sorry) := by
   sorry
