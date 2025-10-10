@@ -27,7 +27,7 @@ open Filter
 
 namespace Erdos142
 
-private noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
+noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
 
 /--
 Prove an asymptotic formula for $r_k(N)$, the largest possible size of a subset

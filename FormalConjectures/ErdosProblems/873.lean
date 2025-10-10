@@ -27,7 +27,7 @@ namespace Erdos873
 /--Let $a$ be some sequence of natural numbers. We set $F(A,X,k)$ to be the count of
 the number of $i$ such that $[a_i,a_{i+1}, … ,a_{i+k−1}] < X$,
 where the left-hand side is the least common multiple.-/
-private noncomputable abbrev F (a : ℕ → ℕ) (X : ℝ) (k : ℕ) : ℕ∞ :=
+noncomputable abbrev F (a : ℕ → ℕ) (X : ℝ) (k : ℕ) : ℕ∞ :=
   {i : ℕ | (Finset.range k).lcm (fun m => a (i + m)) < X}.encard
 
 /--Let $A = \{a_1 < a_2 <⋯\} ⊆ ℕ$ and let $F(A,X,k)$ count the number of $i$ such that
