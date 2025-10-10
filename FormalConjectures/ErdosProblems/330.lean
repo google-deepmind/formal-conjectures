@@ -39,8 +39,7 @@ def UnrepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
 /-- Order-agnostic minimality: removing any single element destroys the AAB property
     (for *every* order). -/
 def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
-  Set.IsAsymptoticAddBasis A ∧
-    ∀ ⦃n⦄, n ∈ A → ¬ Set.IsAsymptoticAddBasis (A \ {n})
+  IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
 /--
 **Erdős Problem 330**
 
