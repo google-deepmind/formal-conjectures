@@ -27,7 +27,13 @@ namespace Erdos330
 open Set
 open scoped BigOperators
 
-
+/-- `Rep A m` means `m` is a sum of **finitely many** elements of `A`
+    (i.e., representable by *some* finite number of terms, not a fixed order). -/
+def Rep (A : Set ℕ) (m : ℕ) : Prop :=
+  ∃ k : ℕ, ∃ f : Fin k → ℕ, (∀ i, f i ∈ A) ∧ (∑ i : Fin k, f i) = m
+/-- Integers **not** representable as a finite sum of elements of `A` **while avoiding** `n`. -/
+def UnrepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
+  {m | ¬ Rep (A \ {n}) m}
 
 /-- Order-agnostic minimality: removing any single element destroys the AAB property
     (for *every* order). -/
