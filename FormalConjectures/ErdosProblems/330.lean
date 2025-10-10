@@ -48,7 +48,7 @@ as a finite sum of elements of `A` while avoiding `n` has positive (upper) densi
 -/
 @[category research open, AMS 5 11]
 theorem erdos_330_statement :
-    (∀ (A : Set ℕ),  MinAsymptoticAddBasis A →  A.HasPosDensity →
+    (∀ (A : Set ℕ),  MinAsymptoticAddBasis A → A.HasPosDensity →
     ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n)) ↔ answer(sorry) := by
   sorry
 
