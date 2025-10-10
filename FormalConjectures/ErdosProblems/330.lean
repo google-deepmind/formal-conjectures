@@ -24,28 +24,29 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos330
 
+open Set
 open scoped BigOperators
 
 /-- `Rep_h A h m` means `m` is a sum of `h` elements of `A`. -/
-def Rep_h (A : _root_.Set ℕ) (h m : ℕ) : Prop :=
+def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
   ∃ f : Fin h → ℕ, (∀ i, f i ∈ A) ∧ (∑ i : Fin h, f i) = m
 
 /-- Integers not representable as a sum of `h` elements of `A` without using `n`. -/
-def UnrepWithout (A : _root_.Set ℕ) (h n : ℕ) : _root_.Set ℕ :=
+def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
   {m | ¬ Rep_h (A \ {n}) h m}
 
-/-- Minimality using `_root_.Set.IsAsymptoticAddBasis`. -/
-def MinAsymptoticAddBasis (A : _root_.Set ℕ) (h : ℕ) : Prop :=
-  _root_.Set.IsAsymptoticAddBasis A h ∧
-    ∀ ⦃n⦄, n ∈ A → ¬ _root_.Set.IsAsymptoticAddBasis (A \ {n}) h
+/-- Minimality built on `Set.IsAsymptoticAddBasisOfOrder`. -/
+def MinAsymptoticAddBasis (A : Set ℕ) (h : ℕ) : Prop :=
+  Set.IsAsymptoticAddBasisOfOrder A h ∧
+    ∀ n ∈ A, ¬ Set.IsAsymptoticAddBasisOfOrder (A \ {n}) h
 
 @[category research open, AMS 5 11]
 theorem erdos_330_statement
-    (h : ℕ) (A : _root_.Set ℕ)
+    (h : ℕ) (A : Set ℕ)
     (h2 : 2 ≤ h)
     (hmin : MinAsymptoticAddBasis A h)
-    (hden : _root_.Set.HasPosDensity A) :
-    ∀ n ∈ A, _root_.Set.HasPosDensity (UnrepWithout A h n) := by
+    (hden : Set.HasPosDensity A) :
+    ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A h n) ↔ answer(sorry) := by
   sorry
 
 end Erdos330
