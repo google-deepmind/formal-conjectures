@@ -43,8 +43,7 @@ def IsAsymptoticAddBasis (A : Set ℕ) : Prop :=
 /-- Order-agnostic minimality: removing any single element destroys the AAB property
     (for *every* order). -/
 def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
-  IsAsymptoticAddBasis A ∧
-    ∀ ⦃n⦄, n ∈ A → ¬ IsAsymptoticAddBasis (A \ {n})
+  IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
 
 @[category research open, AMS 5 11]
 theorem erdos_330_statement
