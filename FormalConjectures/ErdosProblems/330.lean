@@ -36,8 +36,7 @@ def Rep (A : Set ℕ) (m : ℕ) : Prop :=
 def UnrepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
   {m | ¬ Rep (A \ {n}) m}
 
-/-- Order-agnostic minimality: removing any single element destroys the AAB property
-    (for *every* order). -/
+/-- An asymptotic additive basis is minimal when one cannot obtain an asymptotic additive basis by removing any element from it. -/
 def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
   IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
 /--
