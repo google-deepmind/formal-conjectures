@@ -46,11 +46,9 @@ def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
   IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
 
 @[category research open, AMS 5 11]
-theorem erdos_330_statement
-    (A : Set ℕ)
-    (hmin : MinAsymptoticAddBasis A)
-    (hden : Set.HasPosDensity A) :
-    ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n) ↔ answer(sorry) := by
+theorem erdos_330_statement : 
+    (∀ (A : Set ℕ),  MinAsymptoticAddBasis A →  A.HasPosDensity →  
+    ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n)) ↔ answer(sorry) := by
   sorry
 
 end Erdos330
