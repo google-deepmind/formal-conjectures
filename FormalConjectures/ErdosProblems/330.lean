@@ -42,9 +42,9 @@ def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
 /--
 **Erdős Problem 330**
 
-Suppose `A ⊂ ℕ` is a minimal asymptotic additive basis with positive (upper) density.
-Is it true that, for every `n ∈ A`, the set of integers that cannot be represented
-as a finite sum of elements of `A` while avoiding `n` has positive (upper) density?
+Suppose $A \subset \mathbb{N}$ is a minimal basis with positive density.
+Is it true that, for any $n \in A$, the (upper) density of integers which 
+cannot be represented without using $n$ is positive?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_330_statement :
