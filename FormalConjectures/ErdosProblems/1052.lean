@@ -18,6 +18,7 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 1052
+
 *Reference:* [erdosproblems.com/1052](https://www.erdosproblems.com/1052)
 -/
 
@@ -28,16 +29,15 @@ such that $(d, n/d) = 1$ other than $n$. -/
 def properUnitaryDivisors (n : ℕ) : Finset ℕ :=
   {d ∈ Finset.Ico 1 n | d ∣ n ∧ d.Coprime (n / d)}
 
-/-- A number $n \ge 1$ is a unitary perfect number if
-it is the sum of its proper unitary divisors. -/
+/-- A number $n >0$ is a unitary perfect number if it is the sum of its proper unitary divisors. -/
 def IsUnitaryPerfect (n : ℕ) : Prop :=
   ∑ i ∈ properUnitaryDivisors n, i = n ∧ 0 < n
 
-/-- **Erdős Problem 1052**:
+/--
 Are there only finitely many unitary perfect numbers? -/
 @[category research open, AMS 11]
 theorem erdos_1052 :
-    {n : ℕ | IsUnitaryPerfect n}.Finite ↔ answer(sorry) := by
+    Set.Finite IsUnitaryPerfect ↔ answer(sorry) := by
   sorry
 
 /-- All unitary perfect numbers are even. -/
