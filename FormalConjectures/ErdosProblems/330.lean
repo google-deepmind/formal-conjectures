@@ -32,7 +32,8 @@ open scoped BigOperators
 /-- Order-agnostic minimality: removing any single element destroys the AAB property
     (for *every* order). -/
 def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
-  IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
+  Set.IsAsymptoticAddBasis A ∧
+    ∀ ⦃n⦄, n ∈ A → ¬ Set.IsAsymptoticAddBasis (A \ {n})
 /--
 **Erdős Problem 330**
 
