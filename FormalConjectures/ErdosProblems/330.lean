@@ -36,18 +36,21 @@ def Rep (A : Set ℕ) (m : ℕ) : Prop :=
 def UnrepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
   {m | ¬ Rep (A \ {n}) m}
 
-/-- Order-agnostic: “`A` is an asymptotic additive basis of **some** order `h ≥ 2`.” -/
-def IsAsymptoticAddBasis (A : Set ℕ) : Prop :=
-  ∃ h : ℕ, 2 ≤ h ∧ Set.IsAsymptoticAddBasisOfOrder A h
 
 /-- Order-agnostic minimality: removing any single element destroys the AAB property
     (for *every* order). -/
 def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
   IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
+/--
+**Erdős Problem 330**
 
+Suppose `A ⊂ ℕ` is a minimal asymptotic additive basis with positive (upper) density.
+Is it true that, for every `n ∈ A`, the set of integers that cannot be represented
+as a finite sum of elements of `A` while avoiding `n` has positive (upper) density?
+-/
 @[category research open, AMS 5 11]
-theorem erdos_330_statement : 
-    (∀ (A : Set ℕ),  MinAsymptoticAddBasis A →  A.HasPosDensity →  
+theorem erdos_330_statement :
+    (∀ (A : Set ℕ),  MinAsymptoticAddBasis A →  A.HasPosDensity →
     ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n)) ↔ answer(sorry) := by
   sorry
 
