@@ -31,6 +31,7 @@ open scoped BigOperators
     (i.e., representable by *some* finite number of terms, not a fixed order). -/
 def Rep (A : Set ℕ) (m : ℕ) : Prop :=
   ∃ k : ℕ, ∃ f : Fin k → ℕ, (∀ i, f i ∈ A) ∧ (∑ i : Fin k, f i) = m
+
 /-- Integers **not** representable as a finite sum of elements of `A` **while avoiding** `n`. -/
 def UnrepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
   {m | ¬ Rep (A \ {n}) m}
