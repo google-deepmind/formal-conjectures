@@ -27,31 +27,31 @@ namespace Erdos330
 open Set
 open scoped BigOperators
 
-/-- `Rep_h A h m` means `m` is a sum of `h` elements of `A`. -/
-def Rep_h (A : Set ℕ) (h m : ℕ) : Prop :=
-  ∃ f : Fin h → ℕ, (∀ i, f i ∈ A) ∧ (∑ i : Fin h, f i) = m
+/-- `Rep A m` means `m` is a sum of **finitely many** elements of `A`
+    (i.e., representable by *some* finite number of terms, not a fixed order). -/
+def Rep (A : Set ℕ) (m : ℕ) : Prop :=
+  ∃ k : ℕ, ∃ f : Fin k → ℕ, (∀ i, f i ∈ A) ∧ (∑ i : Fin k, f i) = m
 
-/-- Integers not representable as a sum of `h` elements of `A` without using `n`. -/
-def UnrepWithout (A : Set ℕ) (h n : ℕ) : Set ℕ :=
-  {m | ¬ Rep_h (A \ {n}) h m}
+/-- Integers **not** representable as a finite sum of elements of `A` **while avoiding** `n`. -/
+def UnrepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
+  {m | ¬ Rep (A \ {n}) m}
 
-/-- “Is an asymptotic add-basis for some order.” -/
+/-- Order-agnostic: “`A` is an asymptotic additive basis of **some** order `h ≥ 2`.” -/
 def IsAsymptoticAddBasis (A : Set ℕ) : Prop :=
-  ∃ h : ℕ, Set.IsAsymptoticAddBasisOfOrder A h
+  ∃ h : ℕ, 2 ≤ h ∧ Set.IsAsymptoticAddBasisOfOrder A h
 
-/-- Order-agnostic minimal asymptotic add-basis. -/
+/-- Order-agnostic minimality: removing any single element destroys the AAB property
+    (for *every* order). -/
 def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
   IsAsymptoticAddBasis A ∧
     ∀ ⦃n⦄, n ∈ A → ¬ IsAsymptoticAddBasis (A \ {n})
 
 @[category research open, AMS 5 11]
 theorem erdos_330_statement
-    (A : Set ℕ) (h : ℕ)
-    (h2   : 2 ≤ h)
+    (A : Set ℕ)
     (hmin : MinAsymptoticAddBasis A)
-    (hord : Set.IsAsymptoticAddBasisOfOrder A h)
     (hden : Set.HasPosDensity A) :
-    ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A h n) ↔ answer(sorry) := by
+    ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n) ↔ answer(sorry) := by
   sorry
 
 end Erdos330
