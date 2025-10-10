@@ -40,6 +40,7 @@ def UnrepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
 additive basis by removing any element from it. -/
 def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
   IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
+
 /--
 Suppose $A \subset \mathbb{N}$ is a minimal basis with positive density.
 Is it true that, for any $n \in A$, the (upper) density of integers which 
