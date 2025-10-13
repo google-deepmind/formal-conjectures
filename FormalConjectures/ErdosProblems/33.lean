@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Data.Real.Basic
 
 variable {α : Type} [AddCommMonoid α]
 

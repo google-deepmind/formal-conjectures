@@ -24,8 +24,6 @@ open scoped Topology
 
 namespace Erdos442
 
-noncomputable section
-
 open Filter Erdos442
 
 section Prelims
@@ -33,7 +31,7 @@ section Prelims
 /--
 The function $\operatorname{Log} x := \max\{log x, 1\}$.
 -/
-def Real.maxLogOne (x : ℝ) := max x.log 1
+noncomputable def Real.maxLogOne (x : ℝ) := max x.log 1
 
 namespace Set
 
@@ -49,7 +47,7 @@ of elements of `A` that are `≤ x`. Specifically, it is the set
 abbrev bddProdUpper : Set (ℕ × ℕ) :=
   {y ∈ A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊ | y.fst < y.snd}
 
-instance : Fintype (A.bddProdUpper x) := Set.Finite.fintype <|
+noncomputable instance : Fintype (A.bddProdUpper x) := Set.Finite.fintype <|
   (Set.finite_interIcc.prod Set.finite_interIcc).subset (fun _ ha ↦ ha.left)
 
 end Set
@@ -112,7 +110,5 @@ theorem erdos_442.variants.tao :
         |∑ nm ∈ (A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤
           C * (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 := by
   sorry
-
-end
 
 end Erdos442
