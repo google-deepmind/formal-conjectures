@@ -28,7 +28,8 @@ namespace Erdos351
 
 open Polynomial
 
-/-- The set of rational numbers of the form `P(n) + 1 / n` where `n` is a natural number. -/
+/-- The set of rational numbers of the form `P(n) + 1 / n` where `n` is a natural number 
+and `P` is a polynomial with rational coefficients. -/
 def imageSet (P : ℚ[X]) : Set ℚ :=
   Set.range (fun (n : ℕ) ↦ P.eval ↑n + 1 / n)
 
