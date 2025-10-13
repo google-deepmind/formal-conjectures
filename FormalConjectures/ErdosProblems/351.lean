@@ -37,8 +37,8 @@ def imageSet (P : ℚ[X]) : Set ℚ :=
 of elements of the set. -/
 def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
   ∀ B : Finset α,
-    ∀ᶠ (m : ℕ) in Filter.atTop, ↑m ∈
-      { ∑ n ∈ X, n | (X : Finset α) (_ : X.toSet ⊆ A \ B.toSet)}
+    ∀ᶠ (m : ℕ) in Filter.atTop, 
+      ↑m ∈ { ∑ n ∈ X, n | (X : Finset α) (_ : X.toSet ⊆ A \ B.toSet) }
 
 /-- The predicate that rational polynomial `P` has a complete image. -/
 def HasCompleteImage (P : ℚ[X]) : Prop := IsStronglyComplete (imageSet P)
