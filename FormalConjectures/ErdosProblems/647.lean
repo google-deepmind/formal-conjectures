@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 647
 
-*Reference:* [erdosproblems.com/145](https://www.erdosproblems.com/647)
+*Reference:* [erdosproblems.com/647](https://www.erdosproblems.com/647)
 -/
 
 namespace Erdos647
