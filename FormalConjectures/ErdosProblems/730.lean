@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
   - [erdosproblems.com/730](https://www.erdosproblems.com/730)
   - [A129515](https://oeis.org/A129515)
 -/
-private abbrev S :=
+abbrev S :=
   {(n, m) : ℕ × ℕ | n < m ∧ ((2*n).choose n).primeFactors = ((2*m).choose m).primeFactors}
 
 

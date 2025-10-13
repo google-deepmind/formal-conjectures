@@ -29,10 +29,6 @@ open scoped goldenRatio
 
 namespace Erdos33
 
-/-- Given a set of natural numbers `A`, `Set.bdd A N` is the set `{1,...,N} ∩ A`-/
-private noncomputable def Set.bdd (A : Set ℕ) (N : ℕ) : Finset ℕ :=
-  Finset.Icc 1 N |>.filter (· ∈ A)
-
 /-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a` for some `a` in `A`
 and `n ≥ 0`. -/
 -- Formalisation note: Changed 'every large integer' to 'every integer' as for the statement these
@@ -47,7 +43,7 @@ for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of
 @[category research open, AMS 11]
 theorem erdos_33 : IsLeast
     { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (Set.bdd A N).card / √N) = c}
+      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) = c}
     answer(sorry) := by
   sorry
 
@@ -57,7 +53,7 @@ Erdos observed that this value is finite and > 1.
 @[category research solved, AMS 11]
 theorem erdos_33.variants.one_mem_lowerBounds :
     1 ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (Set.bdd A N).card / √N) = c} := by
+      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) = c} := by
   sorry
 
 /--
@@ -68,7 +64,7 @@ Wouter van Doorn.
 @[category research solved, AMS 11]
 theorem erdos_33.variants.vanDoorn :
     2 * (φ ^ ((5 : ℝ) / 2)) ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (Set.bdd A N).card / √N) = c}
+      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) = c}
     := by
   sorry
 

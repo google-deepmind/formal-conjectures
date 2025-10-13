@@ -29,7 +29,7 @@ namespace Erdos236
 /--
 $f(n)$ counts the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$.
 -/
-private def f (n : ℕ) : ℕ :=
+def f (n : ℕ) : ℕ :=
   ((List.range (Nat.log2 n + 1)).filter (fun k => Nat.Prime (n - 2^k))).length
 
 /--
