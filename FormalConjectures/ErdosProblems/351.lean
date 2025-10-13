@@ -28,16 +28,16 @@ namespace Erdos351
 
 open Polynomial
 
-/-- The set of rational numbers of the form `P(n) + 1 / n` where `n` is a natural number 
+/-- The set of rational numbers of the form `P(n) + 1 / n` where `n` is a natural number
 and `P` is a polynomial with rational coefficients. -/
 def imageSet (P : ℚ[X]) : Set ℚ :=
   Set.range (fun (n : ℕ) ↦ P.eval ↑n + 1 / n)
 
-/-- The predicate that a set is complete, i.e. that every sufficiently large integer is a sum
-of elements of the set. -/
+/-- The predicate that a set `A` is complete, i.e. that for every finite set `B`, every sufficiently
+large integer is a sum of elements of the set `A \ B`. -/
 def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
   ∀ B : Finset α,
-    ∀ᶠ (m : ℕ) in Filter.atTop, 
+    ∀ᶠ (m : ℕ) in Filter.atTop,
       ↑m ∈ { ∑ n ∈ X, n | (X : Finset α) (_ : X.toSet ⊆ A \ B.toSet) }
 
 /-- The predicate that rational polynomial `P` has a complete image. -/
