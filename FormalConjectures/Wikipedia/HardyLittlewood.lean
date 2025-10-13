@@ -26,8 +26,6 @@ open Filter
 
 open scoped Nat.Prime Classical
 
-noncomputable section
-
 /-! ## First Hardy-Littlewood Conjecture -/
 
 namespace HardyLittlewood
@@ -49,14 +47,14 @@ def IsAdmissiblePrimeConstellation {k : ℕ} (m : Fin k.succ → ℕ) (p : ℕ) 
 /--
 The number of distinct residue classes amongst a tuple $(m_0, ..., m_k)$ for a prime $q$.
 -/
-def Nat.numResidues (q : ℕ) {k : ℕ} (m : Fin k.succ → ℕ) : ℕ :=
+noncomputable def Nat.numResidues (q : ℕ) {k : ℕ} (m : Fin k.succ → ℕ) : ℕ :=
   Set.range (fun i => (m i : ZMod q)) |>.ncard
 
 /--
 For a given tuple $(m_1, ..., m_k)$, this counts number of admissible
 prime constellations $(p, p + m_1, ..., p + m_k)$ where $p \leq n$.
 -/
-def Nat.primeTupleCounting {k : ℕ} (m : Fin k.succ → ℕ) (n : ℕ) : ℕ :=
+noncomputable def Nat.primeTupleCounting {k : ℕ} (m : Fin k.succ → ℕ) (n : ℕ) : ℕ :=
   Nat.count (IsAdmissiblePrimeConstellation m) n.succ
 
 def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop :=
