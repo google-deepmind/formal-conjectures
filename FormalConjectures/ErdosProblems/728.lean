@@ -25,27 +25,18 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos728
 
 /--
-Let $\varepsilon, C > 0$.
-Are there integers $a, b, n$ such that
-
-$$
-a > \varepsilon n,\quad b > \varepsilon n, \quad
-a!\, b! \mid n!\, (a + b - n)!,
-$$
-
+Let $\varepsilon, C > 0$. Are there integers $a, b, n$ such that
+$$a > \varepsilon n,\quad b > \varepsilon n, \quad a!\, b! \mid n!\, (a + b - n)!, $$
 and
-
-$$
-a + b > n + C \log n ?
-$$
+$$ a + b > n + C \log n ?$$
 -/
 @[category research open, AMS 11]
-theorem erdos_728 (ε C : ℝ) :
+theorem erdos_728 (ε C : ℝ) (hε : 0 < ε) (hC : 0 < C) :
     ∃ a b n : ℕ,
       ε * n < a ∧
       ε * n < b ∧
       Nat.factorial a * Nat.factorial b ∣ Nat.factorial n * Nat.factorial (a + b - n) ∧
-      a + b > n + C * Real.log n := by
+      a + b > n + C * Real.log n ↔ answer(sorry) := by
   sorry
 
 -- TODO(firsching): Use Legendre's formula to test divisibility in terms of p-adic valuations.
