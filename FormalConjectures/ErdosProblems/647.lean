@@ -31,13 +31,13 @@ $$
   \max_{m < n}(m + \tau(n)) \leq n + 2?
 $$ -/
 @[category research open, AMS 11]
-theorem erdos_647 : (∃ n > 24, iSup fun m : Fin n ↦ m + σ 0 m ≤ n + 2) ↔ answer(sorry) := by
+theorem erdos_647 : (∃ n > 24, ⨆ m : Fin n, m + σ 0 m ≤ n + 2) ↔ answer(sorry) := by
   sorry
 
 /-- This is true for $n = 24$. -/
 @[category research solved, AMS 11]
-theorem erdos_647.variants.twenty_four : iSup fun m : Fin 24 ↦ m + σ 0 m ≤ 26 := by
-  sorry
+theorem erdos_647.variants.twenty_four : ⨆ m : Fin 24, (m : ℕ) + σ 0 m ≤ 26 := by
+  exact ciSup_le <| by decide
 
 /-- Erdős says 'it is extremely doubtful' that there are infinitely many such $n$, and in
 fact suggests that
@@ -46,7 +46,7 @@ $$
 $$ -/
 @[category research open, AMS 11]
 theorem erdos_647.variants.lim :
-    atTop.Tendsto (fun n ↦ iSup fun (m : Fin n) ↦ σ 0 m + m - n) atTop ↔ answer(sorry) := by
+    atTop.Tendsto (fun n ↦ ⨆ m : Fin n, σ 0 m + m - n) atTop ↔ answer(sorry) := by
   sorry
 
 /-- Erdős says it 'seems certain' that for every $k$ there are infinitely many $n$
@@ -56,7 +56,7 @@ $$
 $$ -/
 @[category research open, AMS 11]
 theorem erdos_647.variants.infinite :
-    (∀ k, { n | iSup fun m : Set.Ioo (n - k) n ↦ ↑m + σ 0 m ≤ n + 2 }.Infinite) ↔
+    (∀ k, { n | ⨆ m : Set.Ioo (n - k) n, ↑m + σ 0 m ≤ n + 2 }.Infinite) ↔
       answer(sorry) := by
   sorry
 
