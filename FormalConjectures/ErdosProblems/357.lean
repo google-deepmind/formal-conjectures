@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 358
+# Erdős Problem 357
 
 *Reference:* [erdosproblems.com/357](https://www.erdosproblems.com/357)
 -/
