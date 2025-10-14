@@ -30,7 +30,7 @@ open Polynomial
 
 /-- The set of rational numbers of the form `P(n) + 1 / n` where `n` is a natural number
 and `P` is a polynomial with rational coefficients. -/
-def imageSet (P : ℚ[X]) : Set ℚ :=
+def imageSet {α : Type*} [Semifield α] (P : α[X]) : Set α :=
   Set.range (fun (n : ℕ) ↦ P.eval ↑n + 1 / n)
 
 /-- The predicate that a set `A` is complete, i.e. that for every finite set `B`, every sufficiently
