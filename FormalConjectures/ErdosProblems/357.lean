@@ -26,12 +26,13 @@ namespace Erdos357
 
 open Filter Asymptotics
 
+def HasDistinctSums {ι α : Type*} [Preorder ι] [AddCommMonoid α] (a : ι → α) : Prop :=
+  {J : Finset ι | J.OrdConnected}.InjOn (fun J ↦ ∑ x ∈ J, a x)
+
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
 noncomputable def f (n : ℕ) : ℕ :=
-  sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ StrictMono a ∧
-    ∀ J J' : Finset (Fin k), J.toSet.OrdConnected → J'.toSet.OrdConnected →
-    ∑ x ∈ J, a x = ∑ x ∈ J', a x → J = J'}
+  sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ StrictMono a ∧ HasDistinctSums a}
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. Is $f(n)=o(n)$? -/
@@ -104,8 +105,7 @@ theorem erdos_357.variants.weisenberg : ∃ o : ℕ → ℝ, o =o[atTop] (1 : �
 Then $A$ has lower density 0. -/
 @[category research solved, AMS 11]
 theorem erdos_357.variants.infinite_set_lower_density (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, I.toSet.OrdConnected → J.toSet.OrdConnected →
-      ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
+    (hA : ∀ I J : Finset ℕ, I.OrdConnected → J.OrdConnected → HasDistinctSums A) :
     (Set.range A).lowerDensity = 0 := by
   sorry
 
@@ -113,7 +113,7 @@ theorem erdos_357.variants.infinite_set_lower_density (A : ℕ → ℕ) (hA : St
 Then it is conjectured that $A$ has density 0. -/
 @[category research open, AMS 11]
 theorem erdos_357.variants.infinite_set_density (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, I.toSet.OrdConnected → J.toSet.OrdConnected → ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
+    (hA : HasDistinctSums A) :
     (Set.range A).HasDensity 0 := by
   sorry
 
@@ -122,16 +122,14 @@ theorem erdos_357.variants.infinite_set_density (A : ℕ → ℕ) (hA : StrictMo
 Then it is conjectured that the sum $\sum_k \frac{1}{a_k}$ converges. -/
 @[category research open, AMS 11]
 theorem erdos_357.variants.infinite_set_sum (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, I.toSet.OrdConnected → J.toSet.OrdConnected →
-      ∑ i ∈ I, A i = ∑ j ∈ J, A j → I = J) :
+    (hA : HasDistinctSums A) :
     Summable (1 / A) := by
   sorry
 
 /-- Let $g(n)$ be the maximal $k$ such that there exist integers $1 \le a_1, \dotsc, a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
 noncomputable def g (n : ℕ) : ℕ :=
-  sSup {k : ℕ | ∃ a : Fin k → ℕ, (Set.range a ⊆ Set.Icc 1 n) ∧ (∀ I J : Finset (Fin k),
-    I.toSet.OrdConnected → J.toSet.OrdConnected → ∑ i ∈ I, a i = ∑ j ∈ J, a j → I = J)}
+  sSup {k : ℕ | ∃ a : Fin k → ℕ, (Set.range a ⊆ Set.Icc 1 n) ∧ HasDistinctSums a}
 
 /-- Let $g(n)$ be the maximal $k$ such that there exist integers $1 \le a_1, \dotsc, a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. It is known that
@@ -145,9 +143,7 @@ theorem erdos_357.variants.hegyvari : ∃ (o o' : ℕ → ℝ), o =o[atTop] (1 :
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
 noncomputable def h (n : ℕ) : ℕ :=
-  sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ Monotone a ∧
-    ∀ J J' : Finset (Fin k), J.toSet.OrdConnected → J'.toSet.OrdConnected →
-      ∑ x ∈ J, a x = ∑ x ∈ J', a x → J = J'}
+  sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ Monotone a ∧ HasDistinctSums a}
 
 -- The analogous question assuming only monotonicity of the $a_i$. The wording of the website
 -- suggests that this is open, though it's not clear whether the difficulty is the same as for the
@@ -198,7 +194,6 @@ Can we find a (good) explicit function $g$ such that $h = o(g)$ ? -/
 theorem erdos_357.variants.monotone.parts.ii.littleO_version_symm :
     (fun n ↦ (h n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
-
 
 -- TODO(Paul-Lez): add results from last paragraph of the page.
 
