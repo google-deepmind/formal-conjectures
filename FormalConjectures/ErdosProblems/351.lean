@@ -33,7 +33,7 @@ and `P` is a polynomial with rational coefficients. -/
 def imageSet {α : Type*} [Semifield α] (P : α[X]) : Set α :=
   Set.range (fun (n : ℕ) ↦ P.eval ↑n + 1 / n)
 
-/-- The predicate that a set `A` is complete, i.e. that for every finite set `B`, every sufficiently
+/-- The predicate that a set `A` is strongly complete, i.e. that for every finite set `B`, every sufficiently
 large integer is a sum of elements of the set `A \ B`. -/
 def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
   ∀ B : Finset α,
