@@ -139,7 +139,7 @@ $$\left(\frac 1 3 + o(1) \right)n \leq g(n) \leq \left(\frac 2 3 + o(1) \right)n
 @[category research open, AMS 11]
 theorem erdos_357.variants.hegyvari : ∃ (o o' : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
     o' =o[atTop] (1 : ℕ → ℝ) ∧
-      ∀ᶠ n in atTop, (g n : ℝ) ∈ Set.Icc (1 / 3 + o n) (2 / 3 + o' n) := by
+      ∀ᶠ n in atTop, (g n : ℝ) ∈ Set.Icc ((1 / 3 + o n) * n) ((2 / 3 + o' n)*n) := by
   sorry
 
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
