@@ -31,12 +31,12 @@ and
 $$ a + b > n + C \log n ?$$
 -/
 @[category research open, AMS 11]
-theorem erdos_728 (ε C : ℝ) (hε : 0 < ε) (hC : 0 < C) :
-    ∃ a b n : ℕ,
+theorem erdos_728 :
+    (∀ (ε C : ℝ) (hε : 0 < ε) (hC : 0 < C), ∃ a b n : ℕ,
       ε * n < a ∧
       ε * n < b ∧
       Nat.factorial a * Nat.factorial b ∣ Nat.factorial n * Nat.factorial (a + b - n) ∧
-      a + b > n + C * Real.log n ↔ answer(sorry) := by
+      a + b > n + C * Real.log n) ↔ answer(sorry) := by
   sorry
 
 -- TODO(firsching): Use Legendre's formula to test divisibility in terms of p-adic valuations.
