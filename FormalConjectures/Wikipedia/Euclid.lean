@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# *Euclic Numbers conjecture
+# Euclid Numbers conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Euclid_number)
 -/
