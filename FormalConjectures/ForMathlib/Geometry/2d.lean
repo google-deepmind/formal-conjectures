@@ -18,7 +18,9 @@ import Mathlib.LinearAlgebra.Orientation
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
 import Mathlib.Geometry.Euclidean.Triangle
-import FormalConjectures.ForMathlib.Logic.Equiv.Fin.Rotate
+
+import FormalConjectures.ForMathlib.Logic.Equiv.Fin
+import FormalConjectures.ForMathlib.Data.Set.Triplewise
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
@@ -46,6 +48,22 @@ variable {V P : Type*} {n : ℕ}
 variable [NormedAddCommGroup V] [InnerProductSpace ℝ V] [MetricSpace P] [NormedAddTorsor V P]
 
 variable [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] {p : Fin n → P}
+
+/-- We say a subset `A` of points in the plane is non-trilinear
+if it contains no three points that lie on the same line.-/
+def NonTrilinear (A : Set P) : Prop :=
+  A.Triplewise (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
+
+/-- `ConvexIndep S` means that `S` consists of extremal points of its convex hull,
+i.e., the point set encloses a convex shape.
+Also known as a "convex-independent set". -/
+def ConvexIndep (S : Set ℝ²) : Prop :=
+  ∀ a ∈ S, a ∉ convexHull ℝ (S \ {a})
+
+/-- The set `P` contains a convex `n`-gon.
+See also `IsConvexPolygon`. -/
+def HasConvexNGon (n : ℕ) (P : Set ℝ²) : Prop :=
+  ∃ S : Finset ℝ², S.card = n ∧ ↑S ⊆ P ∧ ConvexIndep S
 
 /-- The statement that a sequence of points form a counter-clockwise convex polygon. -/
 def IsCcwConvexPolygon (p : Fin n → P) : Prop :=

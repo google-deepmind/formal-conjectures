@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib
+import Mathlib.Algebra.GCDMonoid.Finset
+import Mathlib.Algebra.GCDMonoid.Nat
 
 /-- A Finset of numbers is coprime, or relatively prime, if its `gcd` is 1. -/
 @[reducible] def Finset.Coprime (S : Finset ℕ) : Prop := S.gcd id = 1

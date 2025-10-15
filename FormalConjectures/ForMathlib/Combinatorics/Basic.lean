@@ -15,13 +15,19 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Tactic.Linarith
+import Mathlib.Analysis.Normed.Field.Lemmas
+import Mathlib.Order.CompletePartialOrder
 
 open Function Set
+open scoped Pointwise
 
 variable {α : Type*} [AddCommMonoid α]
+
+/--
+A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
+if the equation $a + b = c$ has no solution with $a,b,c \in A$.
+-/
+def IsSumFree (A : Set α) : Prop := Disjoint (A + A)  A
 
 /-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
 coincidences forced by the commutativity of addition. -/

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Is Every Convex Polyhedron Rupert?

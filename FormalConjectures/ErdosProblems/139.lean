@@ -27,7 +27,7 @@ open scoped Topology
 
 namespace Erdos139
 
-private noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
+noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
 
 /--
 **Erdős Problem 139**:

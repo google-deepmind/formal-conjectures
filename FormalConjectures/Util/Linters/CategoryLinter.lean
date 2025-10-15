@@ -29,7 +29,7 @@ problems and background results/sanity checks.
 open Lean Elab Meta Linter Command Parser Term
 
 /-- Checks if a command has the `category` attribute. -/
-private def toCategory
+def toCategory
   (stx : TSyntax ``Command.declModifiers) :
     CommandElabM (Array <| TSyntax ``attrInstance) := do
   match stx with

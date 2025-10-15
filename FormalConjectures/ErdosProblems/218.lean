@@ -25,11 +25,6 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos218
 
 /--
-The prime gap: the difference between the $n+1$-th and $n$-th prime.
--/
-noncomputable def primeGap (n : ℕ) : ℕ := (n + 1).nth Nat.Prime - n.nth Nat.Prime
-
-/--
 The set of indices $n$ for which a prime gap is followed by a larger or equal prime gap has a
 natural density of $\frac 1 2$.
 -/
