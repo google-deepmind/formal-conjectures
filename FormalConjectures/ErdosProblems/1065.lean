@@ -36,7 +36,7 @@ theorem erdos_1065a :
 
 /--
 Are there infinitely many primes $p$ such that $p$ = $2^k 3^l q + 1$
-for some prime $q$ and $k ≥ 0$, $l >= 0$?
+for some prime $q$ and $k ≥ 0$, $l ≥ 0$?
 -/
 @[category research open, AMS 11]
 theorem erdos_1065b :
