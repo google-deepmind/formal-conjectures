@@ -30,7 +30,7 @@ for some prime $q$ and $k ≥ 0$?
  -/
 @[category research open, AMS 11]
 theorem erdos_1065a :
-    Set.Infinite {p | ∃ (q : ℕ) (k : ℕ), p.Prime ∧ q.Prime ∧ p = 2^k * q + 1}
+    Set.Infinite {p | ∃ q k, p.Prime ∧ q.Prime ∧ p = 2^k * q + 1}
     ↔ answer(sorry) := by
   sorry
 
