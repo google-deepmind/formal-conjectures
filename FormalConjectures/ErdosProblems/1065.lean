@@ -27,6 +27,10 @@ namespace Erdos1065
 /--
 Are there infinitely many primes $p$ such that $p$ = $2^k * q + 1$
 for some prime $q$ and $k ≥ 0$?
+
+This is mentioned as B46 
+in [Unsolved Problems in Number Theory](https://doi.org/10.1007/978-0-387-26677-0)
+by *Richard K. Guy*
  -/
 @[category research open, AMS 11]
 theorem erdos_1065a :
