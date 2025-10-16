@@ -37,12 +37,12 @@ $n^{1+α}$ edges, then must $G$ contain a $D$-balanced subgraph on $m>n^{1−α}
 $ϵm^{1+α}$ edges?
 -/
 @[category research open, AMS 11]
-theorem erdos_1077 : (∀ {u : ℕ} (G : SimpleGraph (Fin u)) [Fintype G.edgeSet]
-    (ε α : ℝ) (h1 : ε > 0) (h2 : α > 0),
-    ∃ (D0 n0 : ℕ), ∀ D > D0, ∀ n > n0, u = n ∧ #G.edgeFinset > ((n : ℝ)^ (1 + α)) →
-    ∃ H : Subgraph G, ∃ m,
-    m = #H.verts.toFinset ∧ IsBalanced H.coe D ∧ m > (n : ℝ) ^ (1 - α) ∧
-    #H.coe.edgeFinset > ε * (m ^ (1 + α)))
+theorem erdos_1077 : (∀ (ε α : ℝ) (h1 : (ε : ℝ) > 0) (h2 : α > 0),
+    ∃ (D0 n0 : ℕ), ∀ D > D0, ∀ n > n0, ∀ (G : SimpleGraph (Fin n)),
+    #G.edgeFinset > ((n : ℝ)^ (1 + α)) → ∃ (H : Subgraph G),
+    IsBalanced H.coe D ∧
+    letI m := #H.verts.toFinset
+    m > (n : ℝ) ^ (1 - α) ∧ #H.edgeSet.toFinset > ε * (m ^ (1 + α)))
     ↔ answer(sorry) := by
   sorry
 
