@@ -33,7 +33,7 @@ variable {V : Type*} [Fintype V]
 We call a graph $D$-balanced (or $D$-almost-regular) if the maximum degree is at most $D$ times the
 minimum degree.
 -/
-def IsBalanced (G : SimpleGraph V) (D : ℝ) [DecidableRel G.Adj]: Prop :=
+def IsBalanced (G : SimpleGraph V) (D : ℝ) [DecidableRel G.Adj] : Prop :=
     G.maxDegree <= D * G.minDegree
 
 end SimpleGraph
