@@ -29,6 +29,7 @@ open Fintype
 namespace SimpleGraph
 
 variable {V : Type*} [Fintype V]
+
 /--
 We call a graph $D$-balanced (or $D$-almost-regular) if the maximum degree is at most $D$ times the
 minimum degree.
