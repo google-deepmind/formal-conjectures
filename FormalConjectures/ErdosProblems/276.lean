@@ -17,28 +17,21 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 463
+# Erdős Problem 276
 
-*Reference:* [erdosproblems.com/463](https://www.erdosproblems.com/463)
+*References:*
+[erdosproblems.com/276](https://www.erdosproblems.com/276)
 -/
 
-open Filter
-
-namespace Erdos463
+def IsLucasSequence (a : ℕ → ℕ) : Prop := ∀ n, a (n + 2) = a (n + 1) + a n
 
 /--
-Is there a function $f$ with $f(n)\to\infty$ as $n\to\infty$ such that,
-for all large $n$, there is a composite number $m$ such that
-$$
-n + f(n) < m < n + p(m)
-$$
-Here $p(m)$ is the least prime factor of $m$.
+Is there an infinite Lucas sequence $a_0, a_1, \ldots$ where $a_{n+2} = a_{n+1} + a_n$ for
+$n \ge 0$ such that all $a_k$ are composite, and yet no integer has a common factor with every
+term of the sequence?
 -/
 @[category research open, AMS 11]
-theorem erdos_463 : (∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
-    ∀ᶠ n in atTop,
-      ∃ m, m.Composite ∧
-        n + f n < m ∧ m < n + m.minFac) ↔ answer(sorry) := by
+theorem erdos_274 : (∃ (a : ℕ → ℕ),
+    IsLucasSequence a ∧ (∀ k, (a k).Composite) ∧ (∀ n > 1, ∃ k, ¬ n ∣ (a k))) ↔
+    answer(sorry) := by
   sorry
-
-end Erdos463
