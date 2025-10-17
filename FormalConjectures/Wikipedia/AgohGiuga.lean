@@ -119,34 +119,34 @@ def IsCarmichael (n : ℕ) : Prop :=
 
 /-- A composite Carmichael number is squarefree. -/
 @[category undergraduate, AMS 11]
-theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : 1 < a) (ha₂ : ¬a.Prime) (ha₃ : IsCarmichael a) :
+theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCarmichael a) :
     Squarefree a := by
-  simp_all [a.squarefree_iff_prime_squarefree, IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
+  simp_all [Nat.Composite, a.squarefree_iff_prime_squarefree, IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
   rintro p hp ⟨N, rfl⟩
-  apply absurd (ha₃ (p * N + 1) ((1).le_add_left _))
+  apply absurd (ha₂ (p * N + 1) ((1).le_add_left _))
   have : Fact p.Prime := ⟨hp⟩
   rw [mul_assoc] at ha₁
   rw [mul_assoc, ← geom_sum_mul_of_one_le ((1).le_add_left (p * N)), p.coprime_mul_iff_left]
   simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero']).not.mpr
-    ((ZMod.natCast_zmod_eq_zero_iff_dvd _ _).not.mp (by simp_arith [le_of_lt ha₁]))
+    ((ZMod.natCast_zmod_eq_zero_iff_dvd _ _).not.mp (by simp_arith [le_of_lt ha₁.1]))
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /-- A composite number `a` is Carmichael if and only if it is squarefree
 and, for all prime `p` dividing `a`, we have `p - 1 ∣ a - 1`. -/
 @[category undergraduate, AMS 11]
-theorem korselts_criterion (a : ℕ) (ha₁ : 1 < a) (ha₂ : ¬a.Prime) :
+theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     IsCarmichael a ↔ Squarefree a ∧
       ∀ p, p.Prime → p ∣ a → (p - 1 : ℕ) ∣ (a - 1 : ℕ) := by
-  refine ⟨fun h ↦ ⟨squarefree_of_isCarmichael ha₁ ha₂ h, fun p hp hpa ↦ ?_⟩, fun h b hb hab ↦ ?_⟩
+  refine ⟨fun h ↦ ⟨squarefree_of_isCarmichael ha₁ h, fun p hp hpa ↦ ?_⟩, fun h b hb hab ↦ ?_⟩
   · have : Fact p.Prime := ⟨hp⟩
     let ⟨g, h⟩ := IsCyclic.exists_generator (α := (ZMod p)ˣ)
     obtain ⟨k, rfl⟩ := hpa
     have hk : k.Coprime p := by
       by_contra hk
       obtain ⟨_, rfl⟩ := not_not.1 <| hp.coprime_iff_not_dvd.not.1 <| mt Nat.Coprime.symm hk
-      absurd (squarefree_of_isCarmichael ha₁ ha₂ h)
+      absurd (squarefree_of_isCarmichael ha₁ h)
       simp [← mul_assoc, mul_comm, Nat.squarefree_mul_iff, ← sq, Nat.squarefree_pow_iff hp.ne_one]
-    simp_all [IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
+    simp_all [IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime, Nat.Composite]
     let e : ZMod (p * k) ≃+* ZMod p × ZMod k := ZMod.chineseRemainder hk.symm
     let s : ZMod (p * k) := e.symm (g, 1)
     have : NeZero k := ⟨fun _ => by simp_all⟩
@@ -156,11 +156,12 @@ theorem korselts_criterion (a : ℕ) (ha₁ : 1 < a) (ha₂ : ¬a.Prime) :
       ← map_pow, ← Units.val_pow_eq_pow_val, ← orderOf_dvd_iff_pow_eq_one,
       orderOf_eq_card_of_forall_mem_zpowers]
   · obtain ⟨h_sqfr, h_dvd⟩ := h
-    simp_all [a.squarefree_iff_prime_squarefree, Nat.FermatPsp, Nat.ProbablePrime]
-    refine if hb : _ = 0 then ⟨0, hb⟩ else (a.factorization_le_iff_dvd ha₁.ne_bot hb).1 fun p => ?_
+    simp_all [a.squarefree_iff_prime_squarefree, Nat.FermatPsp, Nat.ProbablePrime, Nat.Composite]
+    refine if hb : _ = 0 then ⟨0, hb⟩ else (a.factorization_le_iff_dvd ha₁.1.ne_bot hb).1 fun p => ?_
     by_cases hp : p.Prime
     · by_cases hpa : p ∣ a
       · obtain ⟨_, h⟩ := h_dvd p hp hpa
+        obtain ⟨ha₁, ha₂⟩ := ha₁
         apply Nat.Prime.pow_dvd_iff_le_factorization hp hb |>.1
         have : a.factorization p ≤ 1 := not_lt.1 fun h =>
           h_sqfr p hp <| (sq p ▸ (pow_dvd_pow p h).trans (a.ordProj_dvd p))
