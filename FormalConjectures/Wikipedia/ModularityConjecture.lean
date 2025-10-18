@@ -39,10 +39,8 @@ namespace ModularityConjecture
 open Complex CongruenceSubgroup ModularFormClass ModularityConjecture
 open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
 
-noncomputable section
-
 /-- The `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
-def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
+noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
   (qExpansion N f).coeff ℂ n
 
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
@@ -67,7 +65,7 @@ instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
 
 /-- Note that normally this is written as `p + 1 - #E(𝔽ₚ)`, but since we don't have a point at
 infinty on this affine curve we only have `p` -/
-def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
+noncomputable def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
   p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
 /-- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. See
@@ -87,7 +85,5 @@ def modularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
 @[category research solved, AMS 11]
 theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : modularityConjecture E := by
   sorry
-
-end
 
 end ModularityConjecture

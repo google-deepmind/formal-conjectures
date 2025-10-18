@@ -15,24 +15,27 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open Polynomial
 
 /-!
-# Hypothesis H
-
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schinzel%27s_hypothesis_H)
+# Erdős Problem 686
+*Reference:* [erdosproblems.com/686](https://www.erdosproblems.com/686)
 -/
 
-namespace Schinzel
+namespace Erdos686
 
 /--
-**Schinzel conjecture (H hypothesis)**
-If a finite set of polynomials $f_i$ satisfies both Schinzel and Bunyakovsky conditions,
-there exist infinitely many natural numbers $n$ such that $f_i(n)$ are primes for all $i$.
+Can every integer $N≥2$ be written as
+$$N=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
+for some $k≥2$ and $m≥n+k$?
 -/
 @[category research open, AMS 11]
-theorem schinzel_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, BunyakovskyCondition f)
-    (hfs' : SchinzelCondition fs) : Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
+theorem erdos_686 :
+    (∀ (N : ℕ), N ≥ 2 → ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+      (N : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)))
+    ↔ answer(sorry) := by
   sorry
 
-end Schinzel
+-- TODO: also formalize the follow-up question:
+-- “If $n$ and $k$ are fixed then can one say anything about the set of integers so represented?”
+
+end Erdos686

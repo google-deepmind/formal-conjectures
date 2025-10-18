@@ -17,26 +17,26 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 236
+# Ben Green's Open Problem 1
 
-*Reference:* [erdosproblems.com/236](https://www.erdosproblems.com/236)
+*Reference:* [Ben Green's Open Problem 1](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1 Problem 1)
 -/
 
-open Filter Asymptotics
+open Filter
 
-namespace Erdos236
-
-/--
-$f(n)$ counts the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$.
--/
-def f (n : ℕ) : ℕ :=
-  ((List.range (Nat.log2 n + 1)).filter (fun k => Nat.Prime (n - 2^k))).length
+namespace Green1
 
 /--
-Let $f(n)$ count the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0$. Show that $f(n)=o(\log n)$.
+Let $A$ be a set of $n$ positive integers. Does $A$ contain a sum-free set
+of size at least $\frac n 3 + Ω(n)$, where $Ω(n) → ∞$ as $n → ∞$?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_236: (fun n => (f n : ℝ)) =o[atTop] (fun n => Real.log (n : ℝ)) := by
+theorem green_1 : (∃ Ω : ℕ → ℝ, atTop.Tendsto Ω atTop ∧
+     ∀ n, ∀ (A : Finset ℕ), (∀ a ∈ A, 0 < a) → A.card = n →
+     ∃ (S : Finset ℕ), S ⊆ A ∧ IsSumFree S.toSet ∧ ((n : ℝ) / 3) + Ω n ≤ S.card)
+     ↔ answer(sorry) := by
   sorry
 
-end Erdos236
+-- TODO(firsching): add known/related results here.
+
+end Green1
