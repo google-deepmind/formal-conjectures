@@ -36,14 +36,11 @@ $$
 f(n) = f(n - f(n - 1)) + f(n - f(n - 2)).
 $$
 -/
-def f : ℕ+ → ℕ+
+partial def f : ℕ+ → ℕ+
   | 1 => 1
   | 2 => 1
   | n => f (n - f (n - 1)) + f (n - f (n - 2))
 -- Note: It is not known whether $f(n)$ is well-defined for all $n$.
-termination_by n => n
-decreasing_by
-  all_goals sorry
 
 /--
 Does $f(n)$ miss infinitely many integers?
@@ -64,6 +61,13 @@ How does $f$ grow?
 -/
 @[category research open, AMS 11]
 theorem erdos_422.variants.growth_rate : f =O[atTop] (answer(sorry) : ℕ+ → ℕ+) := by
+  sorry
+
+/--
+Does $f$ become stationary at some point?
+-/
+@[category research open, AMS 11]
+theorem erdos_422.variants.eventually_const : (∃ n, EventuallyConst f n) ↔ answer(sorry) := by
   sorry
 
 end Erdos422
