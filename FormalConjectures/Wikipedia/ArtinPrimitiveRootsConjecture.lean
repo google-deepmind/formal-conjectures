@@ -27,14 +27,14 @@ open scoped Topology Nat
 namespace ArtinPrimitiveRootsConjecture
 
 /--Let `S(a)` be the set of primes such that `a` is a primitive root modulo `p`-/
-private abbrev S (a : ℤ) : Set ℕ :=
+abbrev S (a : ℤ) : Set ℕ :=
   {p : ℕ | p.Prime ∧ orderOf (a : ZMod p) = (p-1 : ℕ)}
 
 /--
 **Artin's Constant** is defined to be the product
 `∏_{p prime}, (1 - 1/(p*(p-1)))`
 -/
-private noncomputable def ArtinConstant : ℝ :=
+noncomputable def ArtinConstant : ℝ :=
   ∏' p : {n : ℕ // n.Prime}, (1 - 1 / (p*(p-1)) : ℝ)
 
 /--

@@ -15,24 +15,30 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open Polynomial
 
 /-!
-# Hypothesis H
+# Erdős Problem 728
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schinzel%27s_hypothesis_H)
+*Reference:* [erdosproblems.com/728](https://www.erdosproblems.com/728)
 -/
 
-namespace Schinzel
+namespace Erdos728
 
 /--
-**Schinzel conjecture (H hypothesis)**
-If a finite set of polynomials $f_i$ satisfies both Schinzel and Bunyakovsky conditions,
-there exist infinitely many natural numbers $n$ such that $f_i(n)$ are primes for all $i$.
+Let $\varepsilon, C > 0$. Are there integers $a, b, n$ such that
+$$a > \varepsilon n,\quad b > \varepsilon n, \quad a!\, b! \mid n!\, (a + b - n)!, $$
+and
+$$ a + b > n + C \log n ?$$
 -/
 @[category research open, AMS 11]
-theorem schinzel_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, BunyakovskyCondition f)
-    (hfs' : SchinzelCondition fs) : Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
+theorem erdos_728 :
+    (∀ (ε C : ℝ) (hε : 0 < ε) (hC : 0 < C), ∃ a b n : ℕ,
+      ε * n < a ∧
+      ε * n < b ∧
+      Nat.factorial a * Nat.factorial b ∣ Nat.factorial n * Nat.factorial (a + b - n) ∧
+      a + b > n + C * Real.log n) ↔ answer(sorry) := by
   sorry
 
-end Schinzel
+-- TODO(firsching): Use Legendre's formula to test divisibility in terms of p-adic valuations.
+
+end Erdos728

@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.Linters.AMSLinter
 
+namespace AMSLinter
+
 --Definitions aren't required to have an AMS attribute
 #guard_msgs in
 def foo : Nat := 1
@@ -85,3 +87,5 @@ theorem test_out_of_order : 1 + 1 = 2 := by
 @[AMS 3 3]
 theorem test_dup : 1 + 1 = 2 := by
   rfl
+
+end AMSLinter
