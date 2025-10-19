@@ -28,12 +28,12 @@ import FormalConjectures.Util.ProblemImports
 open Filter Real
 
 
-private abbrev τ  := fun (n : ℕ) => n.divisors.card
+abbrev τ  := fun (n : ℕ) => n.divisors.card
 
 /--
 Let $F(x)$ be the maximal $k$ such that there exist $n+1, \dots, n+k \le x$
 with $τ(n+1), \dots, τ(n+k)$ all distinct, where $τ(m)$ counts the divisors of $m$.-/
-private noncomputable def F (x : ℝ) : ℕ :=
+noncomputable def F (x : ℝ) : ℕ :=
   sSup {k | ∃ (n : ℕ), n + k ≤ x ∧ (Set.Ioc n (n + k)).InjOn τ}
 
 -- Implementation note: we define a Prop here and below to be able to easily formulate
