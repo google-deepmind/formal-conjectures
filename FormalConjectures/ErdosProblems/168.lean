@@ -37,7 +37,7 @@ def IntervalNonTernarySets (N : ℕ) : Finset (Finset ℕ) :=
     fun S => ∀ n ∈ Finset.Icc 1 (N / 3 : ℕ), n ∉ S ∨ 2*n ∉ S ∨ 3*n ∉ S
 
 /--`F N` is the size of the largest non ternary subset of `{1,...,N}`.-/
-private abbrev F (N : ℕ) : ℕ := (IntervalNonTernarySets N).sup Finset.card
+abbrev F (N : ℕ) : ℕ := (IntervalNonTernarySets N).sup Finset.card
 
 @[category API, AMS 5 11]
 lemma F_0 : F 0 = 0 := rfl

@@ -30,13 +30,13 @@ $$
 {\theta \alpha ^{n}}\right\rbrace -\liminf _{n\rightarrow \infty }\left\lbrace {\theta \alpha ^{n}}\right\rbrace }\right).
 $$
 -/
-private noncomputable def Ω (α : ℝ) : ℝ :=
+noncomputable def Ω (α : ℝ) : ℝ :=
   ⨅ (θ : ℝ) (_ : 0 < θ), Filter.atTop.limsup (fun n ↦ Int.fract (θ * α ^ n))
     - Filter.atTop.liminf (fun n ↦ Int.fract (θ * α ^ n))
 
 /-- A Z-number is a real number `x` such that the fractional parts of `x(3/2)^n` are less than
 `1/2` for all positive integers `n`. -/
-private def IsZNumber (x : ℝ) : Prop :=
+def IsZNumber (x : ℝ) : Prop :=
   ∀ n > 0, Int.fract (x * (3 / 2 : ℝ) ^ n) < 1 / 2
 
 /-- The **Mahler Conjecture** states that there are no Z-numbers. -/
