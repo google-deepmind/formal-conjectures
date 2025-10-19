@@ -31,6 +31,9 @@ namespace Erdos263
 We call a sequence $a_n$ of positive integers an _irrationality sequence_
 if for any sequence $b_n$ of positive integers with $\frac{a_n}{b_n} \to 1$ as $n \to \infty$,
 the sum $\sum \frac{1}{b_n}$ converges to an irrational number.
+
+Note: This is one of many possible notions of "irrationality sequences." See
+FormalConjectures/ErdosProblems/264.lean for another possible definition.
 -/
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
   (∀ n : ℕ, a n > 0) ∧
