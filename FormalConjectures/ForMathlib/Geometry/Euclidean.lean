@@ -15,13 +15,5 @@ limitations under the License.
 -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import FormalConjectures.ForMathlib.Data.Set.Triplewise
 
 scoped[EuclideanGeometry] notation "ℝ^" n:65 => EuclideanSpace ℝ (Fin n)
-
-open scoped EuclideanGeometry
-
-def IsIsoscelesRn {n : ℕ} (x y z : ℝ^n) :=
-  dist x y = dist y z ∨ dist y z = dist x z ∨ dist x y = dist x z
-
-def Set.IsIsosceles {n : ℕ} (A : Set (ℝ^n)) := A.Triplewise (IsIsoscelesRn · · ·)
