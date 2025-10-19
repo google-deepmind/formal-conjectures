@@ -97,4 +97,16 @@ theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
     IsIrrationalitySequence a := by
   sorry
 
+/--
+Koizumi [Ko25] showed that $a_n = \lfloor \alpha^{2^n} \rfloor$ is an irrationality sequence
+for all but countably many $\alpha > 1$.
+
+[Ko25] Koizumi, J., Irrationality of the reciprocal sum of doubly exponential sequences,
+       arXiv:2504.05933 (2025).
+-/
+@[category research solved, AMS 11]
+theorem erdos_263.variants.doubly_exponential_all_but_countable :
+    ∀ᶠ (α : ℝ) in Filter.cofinite, α > 1 → IsIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
+  sorry
+
 end Erdos263
