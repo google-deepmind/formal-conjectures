@@ -25,7 +25,7 @@ This problem asks whether maximal Sidon sets can coexist with other Sidon sets t
 disjoint difference sets (apart from 0).
 -/
 
-open Function Set
+open Function Set Filter
 open scoped Pointwise
 
 /--
@@ -48,7 +48,7 @@ disjoint difference sets (apart from 0).
 -/
 @[category research open, AMS 5 11]
 theorem erdos_42.constructive : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
-    (A : Set ℕ) (_ : IsMaximalSidonSetIn A N), ∃ᵉ (B : Set ℕ),
+    ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N), ∃ᵉ (B : Set ℕ),
       B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
       ((A - A) ∩ (B - B)) = {0}) ↔ answer(sorry) := by
   sorry
