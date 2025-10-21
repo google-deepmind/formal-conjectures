@@ -32,6 +32,7 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Balanced
 import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjectures.ForMathlib.Computability.TuringMachine.PostTuringMachine
 import FormalConjectures.ForMathlib.Data.Finset.OrdConnected
@@ -47,6 +48,7 @@ import FormalConjectures.ForMathlib.Data.Set.Density
 import FormalConjectures.ForMathlib.Data.Set.Triplewise
 import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Geometry.«3d»
+import FormalConjectures.ForMathlib.Geometry.Euclidean
 import FormalConjectures.ForMathlib.LinearAlgebra.SpecialLinearGroup
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin
 import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
