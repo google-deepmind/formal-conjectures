@@ -23,7 +23,17 @@ import FormalConjectures.Util.ProblemImports
 [erdosproblems.com/276](https://www.erdosproblems.com/276)
 -/
 
-def IsLucasSequence (a : ℕ → ℕ) : Prop := ∀ n, a (n + 2) = a (n + 1) + a n
+/--
+We define a Lucas sequence to be a Fibonacci sequence with arbitrary starting points
+`L 0` and `L 1`.
+
+TODO: There seems to be multiple definitions in the literature, some of which also
+allow coefficients in the reccurence relation. For now this simple definition has been
+chosen as it agrees best with the Erdős problem in this same file.
+However before moving this into `ForMathlib` one should make a concious decision about
+which definition to choose.
+-/
+def IsLucasSequence (L : ℕ → ℕ) : Prop := ∀ n, L (n + 2) = L (n + 1) + L n
 
 namespace Erdos276
 
