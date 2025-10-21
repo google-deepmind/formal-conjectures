@@ -32,6 +32,6 @@ term of the sequence?
 -/
 @[category research open, AMS 11]
 theorem erdos_274 : (∃ (a : ℕ → ℕ),
-    IsLucasSequence a ∧ (∀ k, (a k).Composite) ∧ (∀ n > 1, ∃ k, ¬ n ∣ (a k))) ↔
+    IsLucasSequence a ∧ (∀ k, (a k).Composite) ∧ (∀ n > 1, ∃ k, Nat.gcd n (a k) = 1)) ↔
     answer(sorry) := by
   sorry
