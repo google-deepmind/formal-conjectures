@@ -26,7 +26,7 @@ namespace Erdos371
 
 /--
 Let $P(n)$ denote the largest prime factor of $n$. Show that the set of $n$
-with $P(n+1) > P(n)$ has density 1/2.
+with $P(n+1) > P(n)$ has density $\frac{1}{2}$.
 -/
 @[category research open, AMS 11]
 theorem erdos_371 :
