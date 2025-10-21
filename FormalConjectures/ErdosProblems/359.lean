@@ -24,7 +24,28 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos359
 
-open Filter Asymptotics
+-- open MeasureTheory
+-- open Polynomial
+-- open scoped BigOperators
+-- open scoped Classical
+-- open scoped ENNReal
+-- open scoped EuclideanGeometry
+-- open scoped InnerProductSpace
+-- open scoped intervalIntegral
+-- open scoped List
+-- open scoped Matrix
+-- open scoped Nat
+-- open scoped NNReal
+-- open scoped Pointwise
+-- open scoped ProbabilityTheory
+-- open scoped Real
+-- open scoped symmDiff
+-- open scoped Topology
+
+
+
+
+-- open Filter Asymptotics
 
 /-- The predicate that `A 0 = n` and for all `j`, `A (j + 1)` is the smallest natural number that
 cannot be written as a sum of consecutive terms of `A 0, ..., A j` -/
@@ -54,14 +75,6 @@ Then the first few terms of $A$ are $1,2,4,5,8,10,14,15,...$. -/
 @[category test, AMS 11]
 theorem erdos_359.variants.isGoodFor_1_low_values (A : ℕ → ℕ) (hA : IsGoodFor A 1) :
     A '' (Set.Iic 7) = {1, 2, 4, 5, 8, 10, 14, 15} := by
-  sorry
-
-/-- Suppose sequence $A$ satisfies the following: `A 0 = n` and for all `j`, `A (j + 1)` is the
-smallest natural number that cannot be written as a sum of consecutive terms of `A 0, ..., A j`.
-Then $A$ is strictly increasing. -/
-@[category test, AMS 11]
-theorem erdos_359.variants.strictMono_of_isGoodFor (A : ℕ → ℕ) (n : ℕ) (hA : IsGoodFor A n) :
-    StrictMono A := by
   sorry
 
 /-- Suppose sequence $A$ satisfies the following: `A 0 = 1` and for all `j`, `A (j + 1)` is the
