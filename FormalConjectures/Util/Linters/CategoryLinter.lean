@@ -18,15 +18,17 @@ import FormalConjectures.Util.Attributes
 import Mathlib.Tactic.Lemma
 
 
-/-! # The Problem Status Linter
+/-! # The Category Linter
 
-The `problemStatusLinter` is a linter to aid with formatting contributions to
+The `categoryLinter` is a linter to aid with formatting contributions to
 the Formal Conjectures repository by ensuring that results in a file have
 the appropriate tags in order to distinguish between open/already solved
 problems and background results/sanity checks.
 -/
 
 open Lean Elab Meta Linter Command Parser Term
+
+namespace CategoryLinter
 
 /-- Checks if a command has the `category` attribute. -/
 def toCategory
@@ -42,7 +44,7 @@ def toCategory
 
 /-- The problem category linter checks that every theorem/lemma/example
 has been given a problem category attribute. -/
-def problemStatusLinter : Linter where
+def categoryLinter : Linter where
   run := fun stx => do
     match stx with
       | `(command| $a:declModifiers theorem $_ $_:bracketedBinder* : $_ := $_)
@@ -57,4 +59,6 @@ def problemStatusLinter : Linter where
       | _ => return
 
 initialize do
-  addLinter problemStatusLinter
+  addLinter categoryLinter
+
+end CategoryLinter

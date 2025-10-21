@@ -17,28 +17,21 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 463
+# Erdős Problem 371
 
-*Reference:* [erdosproblems.com/463](https://www.erdosproblems.com/463)
+*Reference:* [erdosproblems.com/371](https://www.erdosproblems.com/371)
 -/
 
-open Filter
-
-namespace Erdos463
+namespace Erdos371
 
 /--
-Is there a function $f$ with $f(n)\to\infty$ as $n\to\infty$ such that,
-for all large $n$, there is a composite number $m$ such that
-$$
-n + f(n) < m < n + p(m)
-$$
-Here $p(m)$ is the least prime factor of $m$.
+Let $P(n)$ denote the largest prime factor of $n$. Show that the set of $n$
+with $P(n+1) > P(n)$ has density $\frac{1}{2}$.
 -/
 @[category research open, AMS 11]
-theorem erdos_463 : (∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
-    ∀ᶠ n in atTop,
-      ∃ m, m.Composite ∧
-        n + f n < m ∧ m < n + m.minFac) ↔ answer(sorry) := by
+theorem erdos_371 :
+    { n | Nat.maxPrimeFac (n + 1) > Nat.maxPrimeFac n }.HasDensity (1/2) := by
   sorry
 
-end Erdos463
+-- TODO: add the statements from the additional material
+end Erdos371
