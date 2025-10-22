@@ -50,7 +50,7 @@ theorem erdos_366.variant.three_two :
 /--
 Are there any consecutive pairs of $3$-full integers?
 -/
-@[category research open, AMS 11]
+@[category undergraduate, AMS 11]
 theorem erdos_366.variant.weaker : (∃ (n : ℕ), (3).Full n ∧ (3).Full (n + 1))  ↔ answer(sorry) := by
   sorry
 
