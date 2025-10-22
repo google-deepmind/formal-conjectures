@@ -14,20 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
+import Mathlib.Data.ZMod.Defs
 
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
-
-@[default_target]
-lean_lib FormalConjectures where
-  roots := #[`FormalConjectures]
-  globs := #[.submodules `FormalConjectures]
-
-require "leanprover-community" / "mathlib" @ git "v4.22.0"
+/--
+A perfect difference set modulo `n` is a set `D` such that the map `(a, b) ↦ a - b` from
+`D.offDiag` to `{x : ZMod n | x ≠ 0}` is a bijection.
+-/
+def IsPerfectDifferenceSet (D : Set ℕ) (n : ℕ) : Prop :=
+  D.offDiag.BijOn (fun (a, b) => (a - b : ZMod n)) {x : ZMod n | x ≠ 0}

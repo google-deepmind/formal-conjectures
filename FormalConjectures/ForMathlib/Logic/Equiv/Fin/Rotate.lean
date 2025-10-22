@@ -14,20 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
+import Mathlib.Logic.Equiv.Fin.Rotate
 
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
+variable {n : ℕ}
 
-@[default_target]
-lean_lib FormalConjectures where
-  roots := #[`FormalConjectures]
-  globs := #[.submodules `FormalConjectures]
-
-require "leanprover-community" / "mathlib" @ git "v4.22.0"
+theorem lt_finRotate_of_ne_last {i : Fin (n + 1)} (hi : i ≠ Fin.last n) :
+    i < finRotate _ i := by
+  rw [Fin.lt_iff_val_lt_val, coe_finRotate_of_ne_last hi, Nat.lt_add_one_iff]

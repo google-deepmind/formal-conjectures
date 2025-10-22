@@ -14,20 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
+import FormalConjectures.Util.ProblemImports
 
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
+/-!
+# Erdős Problem 371
 
-@[default_target]
-lean_lib FormalConjectures where
-  roots := #[`FormalConjectures]
-  globs := #[.submodules `FormalConjectures]
+*Reference:* [erdosproblems.com/371](https://www.erdosproblems.com/371)
+-/
 
-require "leanprover-community" / "mathlib" @ git "v4.22.0"
+namespace Erdos371
+
+/--
+Let $P(n)$ denote the largest prime factor of $n$. Show that the set of $n$
+with $P(n+1) > P(n)$ has density $\frac{1}{2}$.
+-/
+@[category research open, AMS 11]
+theorem erdos_371 :
+    { n | Nat.maxPrimeFac (n + 1) > Nat.maxPrimeFac n }.HasDensity (1/2) := by
+  sorry
+
+-- TODO: add the statements from the additional material
+end Erdos371

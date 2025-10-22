@@ -14,20 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Lake
-open Lake DSL
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
-
-@[default_target]
-lean_lib FormalConjectures where
-  roots := #[`FormalConjectures]
-  globs := #[.submodules `FormalConjectures]
-
-require "leanprover-community" / "mathlib" @ git "v4.22.0"
+scoped[EuclideanGeometry] notation "ℝ^" n:65 => EuclideanSpace ℝ (Fin n)

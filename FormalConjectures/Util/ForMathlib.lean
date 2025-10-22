@@ -26,7 +26,6 @@ import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Basis
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Convolution
 import FormalConjectures.ForMathlib.Combinatorics.Basic
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Bipartite
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Coloring
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
@@ -40,15 +39,18 @@ import FormalConjectures.ForMathlib.Data.Nat.Factorization.Basic
 import FormalConjectures.ForMathlib.Data.Nat.Full
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
+import FormalConjectures.ForMathlib.Data.Nat.Prime.Composite
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Finset
 import FormalConjectures.ForMathlib.Data.Nat.Squarefree
 import FormalConjectures.ForMathlib.Data.Real.Constants
 import FormalConjectures.ForMathlib.Data.Set.Density
 import FormalConjectures.ForMathlib.Data.Set.Triplewise
+import FormalConjectures.ForMathlib.Data.ZMod.PerfectDifferenceSet
 import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Geometry.«3d»
+import FormalConjectures.ForMathlib.Geometry.Euclidean
 import FormalConjectures.ForMathlib.LinearAlgebra.SpecialLinearGroup
-import FormalConjectures.ForMathlib.Logic.Equiv.Fin
+import FormalConjectures.ForMathlib.Logic.Equiv.Fin.Rotate
 import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
 import FormalConjectures.ForMathlib.NumberTheory.CoveringSystem
 import FormalConjectures.ForMathlib.NumberTheory.Lacunary

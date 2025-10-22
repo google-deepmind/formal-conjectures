@@ -25,13 +25,26 @@ namespace HartshorneConjecture
 
 open HartshorneConjecture
 
+universe u
+
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
-variable (S : Scheme)
+variable (S : Scheme.{u})
 
 namespace AlgebraicGeometry.Scheme
 
-attribute [local instance] CategoryTheory.Types.instConcreteCategory
+attribute [local instance] CategoryTheory.Types.instConcreteCategory Types.instFunLike
+
+-- TODO(lezeau): explain/investigate why the following two instances are needed.
+
+local instance (X : TopologicalSpace.Opens S) :
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (Type u) :=
+  CategoryTheory.GrothendieckTopology.instWEqualsLocallyBijectiveTypeHomObjForget
+    ((Opens.grothendieckTopology S).over X)
+
+local instance (X : TopologicalSpace.Opens S) :
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}):=
+  inferInstance
 
 /--
 A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
