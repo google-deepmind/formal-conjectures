@@ -54,7 +54,7 @@ A weaker version asking for any modulus, not necessarily of the form `p^2 + p + 
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.weaker : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
-    ∃ (B : Set ℕ), ∃ᵉ (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ false := by
+    ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ false := by
   simp
 
   sorry
