@@ -44,7 +44,7 @@ As described in [A25], a counterexample is provided in [Ha47], see below.
 @[category research solved, AMS 5 11]
 theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ (B : Set ℕ) (p : ℕ), IsPrimePow p ∧ A ⊆ B ∧
-    IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ false := by
+    IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ False := by
   simp
   sorry
 
