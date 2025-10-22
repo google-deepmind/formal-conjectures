@@ -35,6 +35,8 @@ namespace AlgebraicGeometry.Scheme
 
 attribute [local instance] CategoryTheory.Types.instConcreteCategory Types.instFunLike
 
+-- TODO(lezeau): explain/investigate why the following two instances are needed.
+
 local instance (X : TopologicalSpace.Opens S) :
     ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (Type u) :=
   CategoryTheory.GrothendieckTopology.instWEqualsLocallyBijectiveTypeHomObjForget
