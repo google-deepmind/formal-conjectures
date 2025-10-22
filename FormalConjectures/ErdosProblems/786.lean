@@ -74,7 +74,7 @@ consecutive primes.
 -/
 def consecutivePrimes {k : ℕ} (p : Fin k.succ → ℕ) :=
     (∀ i, (p i).Prime) ∧ StrictMono p ∧
-      ∀ i : Fin k.succ, i < k → ∀ m ∈ Set.Ioo (p i) (p (i + 1)), ¬m.Prime
+      ∀ i : Fin k, ∀ m ∈ Set.Ioo (p i.castSucc) (p i.succ), ¬m.Prime
 
 -- Reworded slightly from the link.
 /--
