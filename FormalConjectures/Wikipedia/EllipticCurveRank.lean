@@ -50,7 +50,7 @@ Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really me
 rational points is torsion, not that it is of infinite rank. -/
 @[category research solved, AMS 11 14]
 instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic]
-    [AddCommMonoid  E⟮K⟯] [Module ℤ E⟮K⟯]:
+    [AddCommMonoid  E⟮K⟯] [Module ℤ E⟮K⟯] :
       Module.Finite ℤ E⟮K⟯ := by
   sorry
 
