@@ -58,7 +58,7 @@ There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.
 (Found by AlphaProof, although it was implicit already in [A129515])
 -/
 @[category research solved, AMS 11]
-theorem erdos_730.variants.delta_ne_one : ∃ (n m : ℕ) (h : (n, m) ∈ S), m ≠ n + 1 := by
+theorem erdos_730.variants.delta_ne_one : ∃ (n m : ℕ) (_ : (n, m) ∈ S), m ≠ n + 1 := by
   dsimp [S]
   use 10003
   use 10005
