@@ -16,7 +16,7 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Real MeasureTheory Measure
+open Real MeasureTheory Measure Module
 
 /-!
 # Mathoverflow 34145
