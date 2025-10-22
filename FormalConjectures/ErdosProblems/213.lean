@@ -22,16 +22,17 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/213](https://www.erdosproblems.com/213)
 -/
 
-open scoped EuclideanGeometry
+open EuclideanGeometry
 
 namespace Erdos213
 
 /--
-The predicate (on $n$) that there exist $n$ points in $\mathbb{R}^2$, no three on a line and no four
-on a circle, such that all pairwise distances are integers?
+The predicate (on $n$) that there exist $n$ points in $\mathbb{R}^2$,
+no three on a line and no four on a circle,
+such that all pairwise distances are integers.
 -/
 def Erdos213For (n : ℕ) : Prop := ∃ S : Set ℝ², S.Finite ∧ S.ncard = n ∧
-    (∀ T : Set ℝ², T ⊆ S ∧ T.ncard = 3 → ¬ Collinear ℝ T) ∧
+    NonTrilinear S ∧
     (∀ Q : Set ℝ², Q ⊆ S ∧ Q.ncard = 4 → ¬ EuclideanGeometry.Cospherical Q) ∧
     (S.Pairwise fun p₁ p₂ => dist p₁ p₂ ∈ Set.range Int.cast)
 
