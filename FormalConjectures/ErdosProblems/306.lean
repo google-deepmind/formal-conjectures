@@ -32,8 +32,8 @@ each the product of two distinct primes, such that $\frac{a}{b}=\frac{1}{n_1}+\c
 @[category research open, AMS 11]
 theorem erdos_306 : (∀ (q : ℚ), 0 < q → Squarefree q.den →
     ∃ k : ℕ, ∃ (n : Fin (k + 1) → ℕ), n 0 = 1 ∧ StrictMono n ∧
-    (∀ i ∈ Finset.Icc 1 (⟨k, lt_add_one k⟩ : Fin (k + 1)) , ω (n i) = 2 ∧ Ω (n i) = 2) ∧
-    q = ∑ i ∈ Finset.Icc 1 (⟨k, lt_add_one k⟩ : Fin (k + 1)), (1 : ℚ) / (n i)) ↔ answer(sorry) := by
+    (∀ i ∈ Finset.Icc 1 (Fin.last k), ω (n i) = 2 ∧ Ω (n i) = 2) ∧
+    q = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i)) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -44,6 +44,6 @@ product of three distinct primes.
 theorem erdos_306.variant.integer_three_primes (m : ℕ) (h : 0 < m) :
     ∃ k : ℕ, ∃ (n : Fin (k + 1) → ℕ), n 0 = 1 ∧
     ∀ i, (hik : i < k) → n ⟨i, by omega⟩ < n ⟨(i + 1), by omega⟩ ∧
-    (∀ i ∈ Finset.Icc 1 (⟨k, lt_add_one k⟩ : Fin (k + 1)), ω (n i) = 3 ∧ Ω (n i) = 3) ∧
-    m = ∑ i ∈ Finset.Icc 1 (⟨k, lt_add_one k⟩ : Fin (k + 1)), (1 : ℚ) / (n i) := by
+    (∀ i ∈ Finset.Icc 1 (Fin.last k), ω (n i) = 3 ∧ Ω (n i) = 3) ∧
+    m = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i) := by
   sorry
