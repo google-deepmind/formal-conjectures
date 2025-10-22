@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 707: Embedding Sidon Sets in Perfect Difference Sets
 
-*Reference:* [erdosproblems.com/707](https://www.erdosproblems.com/707)
+*References:*
+- [erdosproblems.com/707](https://www.erdosproblems.com/707)
+- [A25](https://borisalexeev.com/papers/erdos707.html) Boris Alexeev, ChatGPT, Lean, and Dustin G. Mixon, Forbidden Sidon subsets of perfect difference sets, featuring a human-assisted proof (2025)
+- [M47] Marshall Hall, Jr., Cyclic projective planes, Duke Math. J. 14 (1947), 1079–1090.
 
 Let `A ⊆ ℕ` be a finite Sidon set. Is there some set `B` with `A ⊆ B` which is a perfect
 difference set modulo `p^2 + p + 1` for some prime power `p`?
@@ -33,42 +36,60 @@ open Function Set
 namespace Erdos707
 
 /--
-**Erdős Problem 707**: Any finite Sidon set can be embedded in a perfect difference set modulo
-`p^2 + p + 1` for some prime power `p`.
+**Erdős Problem 707**: It is false that any finite Sidon set can be embedded in a perfect
+difference set modulo `p^2 + p + 1` for some prime power `p`.
+
+As described in [A25], a counterexample is provided in [M47], see below.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ (B : Set ℕ) (p : ℕ), IsPrimePow p ∧ A ⊆ B ∧
-    IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ answer(sorry) := by
+    IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ false := by
+  simp
   sorry
 
-/--
-The smallest prime power `p` for which some finite Sidon set can be embedded in a perfect
-difference set modulo `p^2 + p + 1`.
--/
-@[category research open, AMS 5 11]
-theorem erdos_707.variants.smallest_prime :
-    sInf {p : ℕ | IsPrimePow p ∧ ∃ (A : Set ℕ) (B : Set ℕ), A.Finite ∧ IsSidon A ∧
-      A ⊆ B ∧ IsPerfectDifferenceSet B (p^2 + p + 1)} =
-    answer(sorry) := by
-  sorry
-
-/--
-A constructive version asking for explicit bounds on the size of `p` in terms of `|A|`.
--/
-@[category research open, AMS 5 11]
-theorem erdos_707.variants.constructive : (∃ (f : ℕ → ℕ), ∀ (A : Set ℕ) (h : A.Finite),
-    IsSidon A → ∃ (B : Set ℕ) (p : ℕ), IsPrimePow p ∧ p ≤ f A.ncard ∧ A ⊆ B ∧
-    IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ answer(sorry) := by
-  sorry
 
 /--
 A weaker version asking for any modulus, not necessarily of the form `p^2 + p + 1`.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_707.variants.weaker : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
-    ∃ (B : Set ℕ), ∃ᵉ (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ answer(sorry) := by
+    ∃ (B : Set ℕ), ∃ᵉ (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ false := by
+  simp
+
   sorry
+
+/--
+A counterexample to the prime case from [A25].
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_707.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4, 8}) :
+   Finite A ∧ IsSidon A ∧
+   ∀ (B : Set ℕ) (p : ℕ),
+    Prime p → A ⊆ B → ¬IsPerfectDifferenceSet B (p ^ 2 + p + 1) := by
+  sorry
+
+
+/--
+A counterexample for any modulus from [A25].
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_707.counterexample_mian_chowla (A : Set ℕ) (hA : A = {1, 2, 4, 8, 13}) :
+   Finite A ∧ IsSidon A ∧
+   ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
+  sorry
+
+/--
+A counterexample for any modulus from from [M47] in the paragraph following Theorem 4.3, where it
+was given as $\{-8, -6, 0, 1, 4\}$, but this can be shifted to natural numbers
+as pointed out in [A25].
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_707.counterexample_hall(A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
+   Finite A ∧ IsSidon A ∧
+   ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
+  sorry
+
 
 /-! ## Perfect difference sets and their properties -/
 
