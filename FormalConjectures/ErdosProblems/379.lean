@@ -26,7 +26,7 @@ namespace Erdos379
 
 open Filter
 
-private noncomputable def S (n : ℕ) : ℕ :=
+noncomputable def S (n : ℕ) : ℕ :=
   sSup {s | ∀ k ∈ Finset.Ico 1 n, ∃ p, p.Prime ∧ p^s ∣n.choose k}
 
 /--

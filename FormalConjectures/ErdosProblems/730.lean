@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
   - [erdosproblems.com/730](https://www.erdosproblems.com/730)
   - [A129515](https://oeis.org/A129515)
 -/
-private abbrev S :=
+abbrev S :=
   {(n, m) : ℕ × ℕ | n < m ∧ ((2*n).choose n).primeFactors = ((2*m).choose m).primeFactors}
 
 
@@ -53,10 +53,22 @@ theorem erdos_730.variants.two_div_forall (n : ℕ) (h : 0 < n) : 2 ∣ (2*n).ch
   sorry
 
 /--
-In every known example $(n, m) ∈ S$, we have $m = n + 1$.
+There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.
+
+(Found by AlphaProof, although it was implicit already in [A129515])
 -/
-@[category research open, AMS 11]
-theorem erdos_730.variants.delta_one (n m : ℕ) (h : (n, m) ∈ S) : m = n + 1 := by
-  sorry
+@[category research solved, AMS 11]
+theorem erdos_730.variants.delta_ne_one : ∃ (n m : ℕ) (h : (n, m) ∈ S), m ≠ n + 1 := by
+  dsimp [S]
+  use 10003
+  use 10005
+  simp_all
+  norm_num [ Finset.ext_iff,Nat.choose_eq_zero_iff]
+  simp_rw[Nat.choose_eq_descFactorial_div_factorial]
+  intro p hp
+  constructor
+  all_goals exact fun h' => or_self_iff.1 (hp.dvd_mul.1 (
+    h'.trans (by refine' of_decide_eq_true (by constructor:_ = ↑_))))
+
 
 end Erdos730
