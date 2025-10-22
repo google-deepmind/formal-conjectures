@@ -137,7 +137,7 @@ monotonically in $n$.
 A sufficient condition for this conjecture to hold is that there exists a Fermat prime larger than
 65537.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem selfridge_seq_conjecture.variants.sufficient_condition (n : ℕ) (hn : Prime n.fermatNumber)
     (hn' : n ≥ 5) : type_of% selfridge_seq_conjecture := by
   sorry

@@ -26,11 +26,9 @@ The trap this avoids is that using `rpow`, `(-8 : ℝ) ^ (1/3 : ℝ) = 1`.
 This is being upstreamed to Mathlib in leanprover-community/mathlib4#26935.
 -/
 
-noncomputable section
-
 namespace Real
 
-def nthRoot (n : ℕ) (r : ℝ) : ℝ :=
+noncomputable def nthRoot (n : ℕ) (r : ℝ) : ℝ :=
   if Even n then r ^ (n⁻¹ : ℝ) else SignType.sign r ^ n * abs r ^ (n⁻¹ : ℝ)
 
 theorem nthRoot_of_even {n : ℕ} (hn : Even n) (r : ℝ) : nthRoot n r = r ^ (n⁻¹ : ℝ) :=

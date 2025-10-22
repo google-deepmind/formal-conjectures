@@ -29,7 +29,7 @@ open Set Filter Real Nat Function
 This defines the core property of the problem: For what values of $t,\alpha \in (0,\infty)$
 is the sequence $\lfloor t\alpha^n\rfloor$ complete?
 -/
-private def IsGoodPair (t α : ℝ) : Prop :=
+def IsGoodPair (t α : ℝ) : Prop :=
   IsAddComplete (range (fun n ↦ ⌊t * α ^ n⌋))
 
 /--
