@@ -33,7 +33,7 @@ variable (S : Scheme.{u})
 
 namespace AlgebraicGeometry.Scheme
 
-attribute [local instance] CategoryTheory.Types.instConcreteCategory  Types.instFunLike
+attribute [local instance] CategoryTheory.Types.instConcreteCategory Types.instFunLike
 
 local instance (X : TopologicalSpace.Opens S) :
     ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (Type u) :=
