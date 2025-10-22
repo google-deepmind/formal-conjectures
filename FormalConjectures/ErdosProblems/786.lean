@@ -73,8 +73,9 @@ theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
 consecutive primes.
 -/
 def consecutivePrimes {k : ℕ} (p : Fin k.succ → ℕ) :=
-    (∀ i, (p i).Prime) ∧ StrictMono p ∧
-      ∀ i : Fin k, ∀ m ∈ Set.Ioo (p i.castSucc) (p i.succ), ¬m.Prime
+    -- TODO(firsching): clarify quantifier scope here.
+    ∀ i, (p i).Prime ∧ StrictMono p ∧
+    ∀ i : Fin k, ∀ m ∈ Set.Ioo (p i.castSucc) (p i.succ), ¬m.Prime
 
 -- Reworded slightly from the link.
 /--

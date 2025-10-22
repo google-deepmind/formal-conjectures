@@ -40,9 +40,6 @@ local instance (X : TopologicalSpace.Opens S) :
   CategoryTheory.GrothendieckTopology.instWEqualsLocallyBijectiveTypeHomObjForget
     ((Opens.grothendieckTopology S).over X)
 
-local instance (X : TopologicalSpace.Opens S) :
-    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}):=
-  inferInstance
 
 /--
 A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
