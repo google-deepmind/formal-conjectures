@@ -26,11 +26,6 @@ The trap this avoids is that using `rpow`, `(-8 : ℝ) ^ (1/3 : ℝ) = 1`.
 This is being upstreamed to Mathlib in leanprover-community/mathlib4#26935.
 -/
 
-theorem SignType.pow_odd (s : SignType) (n : ℕ) (hn : Odd n) : s ^ n = s := by
-  obtain ⟨k, rfl⟩ := hn
-  rw [pow_add, pow_one, pow_mul, sq]
-  cases s <;> simp
-
 namespace Real
 
 noncomputable def nthRoot (n : ℕ) (r : ℝ) : ℝ :=
