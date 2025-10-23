@@ -35,34 +35,43 @@ open Function Set
 
 namespace Erdos707
 
+
 /--
-**Erdős Problem 707**: It is false that any finite Sidon set can be embedded in a perfect
-difference set modulo `p^2 + p + 1` for some prime power `p`.
+**Erdős Problem 707**: Is is false that any finite Sidon set can be embedded in a perfect
+different set modulo some $n$.
 
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
+theorem erdos_707.variants.weaker : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
+    ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ false := by
+  sorry
+
+
+/--
+It is false that any finite Sidon set can be embedded in a perfect
+difference set modulo `p^2 + p + 1` for some prime power `p`.
+
+As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
+--/
+@[category research solved, AMS 5 11]
+theorem erdos_707.variants.prime_power : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ (B : Set ℕ) (p : ℕ), IsPrimePow p ∧ A ⊆ B ∧
     IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ False := by
   simp
   sorry
 
 /--
-A version asking for prime order.
+It is false that any finite Sidon set can be embedded in a perfect
+difference set modulo `p^2 + p + 1` for some prime `p`.
+
+As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.prime : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ᵉ (B : Set ℕ) (p : ℕ), p.Prime ∧ A ⊆ B ∧ IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ false := by
   sorry
 
-/--
-A weaker version asking for any modulus, not necessarily of the form `p^2 + p + 1`.
--/
-@[category research solved, AMS 5 11]
-theorem erdos_707.variants.weaker : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
-    ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ false := by
-  sorry
 
 /--
 Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture, proving that $\{1,2,4,8\}$
