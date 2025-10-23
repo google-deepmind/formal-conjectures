@@ -45,7 +45,7 @@ The proof of this has been formalized.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
-    ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ false := by
+    ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ False := by
   sorry
 
 
