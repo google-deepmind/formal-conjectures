@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Logic.Equiv.Fin
+import Mathlib.Data.Finset.Empty
 
-variable {n : ℕ}
-
-theorem lt_finRotate_of_ne_last {i : Fin (n + 1)} (hi : i ≠ Fin.last n) :
-    i < finRotate _ i := by
-  rw [Fin.lt_iff_val_lt_val, coe_finRotate_of_ne_last hi, Nat.lt_add_one_iff]
+@[simp]
+theorem Finset.univ_finset_of_isEmpty {α : Type*} [h : IsEmpty α] :
+    (Set.univ : Set (Finset α)) = {∅} := by
+  ext S
+  rw [Set.mem_singleton_iff, eq_true (Set.mem_univ S), true_iff]
+  ext a
+  exact IsEmpty.elim h a

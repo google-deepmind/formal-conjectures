@@ -24,7 +24,7 @@ theorem prod_primeFactors_factorization_apply (n : ℕ) {p : ℕ} (hp : p.Prime)
   rw [factorization_prod fun _ _ _ ↦ by simp_all, Finset.sum_congr rfl fun x hx ↦ by
       rw [factorization_pow, (mem_primeFactors.1 hx).1.factorization]]
   by_cases hpn : p ∣ n <;> simp [Finsupp.single_apply, hp, hpn]
-  · exact fun _ ↦ by simp_all [hf₀]
+  · exact fun _ ↦ by simp_all
   · simp [hf _ _ hpn]
 
 end Nat
