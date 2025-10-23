@@ -72,7 +72,7 @@ The proof of this has been formalized.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.prime : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
-    ∃ᵉ (B : Set ℕ) (p : ℕ), p.Prime ∧ A ⊆ B ∧ IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ false := by
+    ∃ᵉ (B : Set ℕ) (p : ℕ), p.Prime ∧ A ⊆ B ∧ IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ False := by
   sorry
 
 
