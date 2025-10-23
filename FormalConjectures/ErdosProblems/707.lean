@@ -107,7 +107,7 @@ was given as $\{-8, -6, 0, 1, 4\}$, but this can be shifted to natural numbers
 as pointed out in [arxiv/2510.19804].
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707.counterexample_hall(A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
+theorem erdos_707.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
   sorry
