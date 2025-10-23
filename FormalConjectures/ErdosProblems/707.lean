@@ -37,7 +37,7 @@ namespace Erdos707
 
 
 /--
-**Erdős Problem 707**: Is is false that any finite Sidon set can be embedded in a perfect
+**Erdős Problem 707**: It is false that any finite Sidon set can be embedded in a perfect
 different set modulo some $n$.
 
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
