@@ -48,6 +48,13 @@ theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
   simp
   sorry
 
+/--
+A  version asking for prime modulus.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_707.variants.weaker : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
+    ∃ᵉ (B : Set ℕ) (p : ℕ), p.Prime ∧ A ⊆ B ∧ IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ false := by
+  sorry
 
 /--
 A weaker version asking for any modulus, not necessarily of the form `p^2 + p + 1`.
@@ -55,8 +62,6 @@ A weaker version asking for any modulus, not necessarily of the form `p^2 + p + 
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.weaker : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ false := by
-  simp
-
   sorry
 
 /--
