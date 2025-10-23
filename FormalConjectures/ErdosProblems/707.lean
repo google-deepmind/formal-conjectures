@@ -41,9 +41,10 @@ namespace Erdos707
 different set modulo some $n$.
 
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
+The proof of this has been formalized.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707.variants.weaker : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
+theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ false := by
   sorry
 
@@ -53,6 +54,7 @@ It is false that any finite Sidon set can be embedded in a perfect
 difference set modulo `p^2 + p + 1` for some prime power `p`.
 
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
+The proof of this has been formalized.
 --/
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.prime_power : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
@@ -66,6 +68,7 @@ It is false that any finite Sidon set can be embedded in a perfect
 difference set modulo `p^2 + p + 1` for some prime `p`.
 
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
+The proof of this has been formalized.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.prime : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
