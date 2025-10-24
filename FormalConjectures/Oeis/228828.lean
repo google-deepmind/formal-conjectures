@@ -22,7 +22,7 @@ Numbers n such that n^2 + pi(n) is prime.
 *Reference:* [A228828](https://oeis.org/A228828)
 -/
 
-namespace Oeis228828
+namespace OeisA228828
 
 open scoped Nat.Prime
 
