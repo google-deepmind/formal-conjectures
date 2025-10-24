@@ -30,28 +30,28 @@ def IsFactorial (d : ℕ) : Prop :=
 def factorialsLessThanN (n : ℕ) : Set ℕ :=
   { d | d < n ∧ IsFactorial d }
 
-def allFactorialSubtractionsComposite (n : ℕ) : Prop :=
+def AllFactorialSubtractionsComposite (n : ℕ) : Prop :=
   ∀d ∈ factorialsLessThanN n, (n - d).Composite
 
 /-- Are there infinitely many primes $p$ such that $p - k!$ is composite for each $k$ such that $1 ≤ k! < p$? -/
 @[category research open, AMS 11]
 theorem erdos_1059 :
-    Set.Infinite {p | p.Prime ∧ allFactorialSubtractionsComposite p} ↔ answer(sorry) := by
+    Set.Infinite {p | p.Prime ∧ AllFactorialSubtractionsComposite p} ↔ answer(sorry) := by
   sorry
 
-abbrev decidableIsFactorial (d : ℕ) : Prop :=
+abbrev DecidableIsFactorial (d : ℕ) : Prop :=
   ((Finset.Icc 0 d).filter (λ k => Nat.factorial k = d)).Nonempty
 
 def decidableFactorialsLessThanN (n : ℕ) : Finset ℕ :=
-  (Finset.range n).filter decidableIsFactorial
+  (Finset.range n).filter DecidableIsFactorial
 
-def decidableAllFactorialSubtractionsComposite (n : ℕ) : Prop :=
+def DecidableAllFactorialSubtractionsComposite (n : ℕ) : Prop :=
   ∀ d ∈ decidableFactorialsLessThanN n, (n - d).Composite
 
 @[category test, AMS 11]
 lemma isFactorial_equivalent (d : ℕ) :
-  IsFactorial d ↔ decidableIsFactorial d := by
-  unfold IsFactorial decidableIsFactorial
+  IsFactorial d ↔ DecidableIsFactorial d := by
+  unfold IsFactorial DecidableIsFactorial
   simp
   constructor
   · rintro ⟨k, hk⟩
@@ -79,29 +79,29 @@ lemma factorialsLessThanN_equivalent (n : ℕ) :
 
 @[category test, AMS 11]
 lemma allFactorialSubtractionsComposite_equivalent (d : ℕ) :
-    decidableAllFactorialSubtractionsComposite d ↔ allFactorialSubtractionsComposite d := by
-  unfold allFactorialSubtractionsComposite decidableAllFactorialSubtractionsComposite
+    DecidableAllFactorialSubtractionsComposite d ↔ AllFactorialSubtractionsComposite d := by
+  unfold AllFactorialSubtractionsComposite DecidableAllFactorialSubtractionsComposite
   rw [factorialsLessThanN_equivalent d]
   simp
 
 @[category test, AMS 11]
-theorem allFactorialSubtractionsComposite_101 : allFactorialSubtractionsComposite 101 := by
-  have h : decidableAllFactorialSubtractionsComposite 101 := by
-    norm_num [decidableAllFactorialSubtractionsComposite, decidableFactorialsLessThanN]
+theorem allFactorialSubtractionsComposite_101 : AllFactorialSubtractionsComposite 101 := by
+  have h : DecidableAllFactorialSubtractionsComposite 101 := by
+    norm_num [DecidableAllFactorialSubtractionsComposite, decidableFactorialsLessThanN]
     decide +kernel
   exact (allFactorialSubtractionsComposite_equivalent 101).mp h
 
 @[category test, AMS 11]
-theorem allFactorialSubtractionsComposite_211 : allFactorialSubtractionsComposite 211 := by
-  have h : decidableAllFactorialSubtractionsComposite 211 := by
-    norm_num [decidableAllFactorialSubtractionsComposite, decidableFactorialsLessThanN]
+theorem allFactorialSubtractionsComposite_211 : AllFactorialSubtractionsComposite 211 := by
+  have h : DecidableAllFactorialSubtractionsComposite 211 := by
+    norm_num [DecidableAllFactorialSubtractionsComposite, decidableFactorialsLessThanN]
     decide +kernel
   exact (allFactorialSubtractionsComposite_equivalent 211).mp h
 
 @[category test, AMS 11]
-theorem notAllFactorialSubtractionsComposite_89 : ¬(allFactorialSubtractionsComposite 89) := by
-  have h : ¬(decidableAllFactorialSubtractionsComposite 89) := by
-    unfold decidableAllFactorialSubtractionsComposite decidableFactorialsLessThanN
+theorem notAllFactorialSubtractionsComposite_89 : ¬(AllFactorialSubtractionsComposite 89) := by
+  have h : ¬(DecidableAllFactorialSubtractionsComposite 89) := by
+    unfold DecidableAllFactorialSubtractionsComposite decidableFactorialsLessThanN
     intro h
     specialize h 6
     have : Nat.Prime (89 - 6) := by norm_num
