@@ -86,6 +86,6 @@ noncomputable def cochromaticNumber (G : SimpleGraph V) : ℕ∞ := ⨅ n ∈ se
 
 /-- The chromatic cardinal is the minimal number of colors need to color it. In contrast to
 `chromaticNumber`, which assigns `⊤ : ℕ∞` to all non-finitely colorable graphs, this definition
-returns a `Cardinal` and can therefore  distinguis between different infinite chromatic numbers -/
+returns a `Cardinal` and can therefore distinguish between different infinite chromatic numbers. -/
 noncomputable def chromaticCardinal (G : SimpleGraph V) : Cardinal :=
   sInf {κ : Cardinal | ∃ (C : Type u) (_ : Cardinal.mk C = κ), Nonempty (G.Coloring C)}
