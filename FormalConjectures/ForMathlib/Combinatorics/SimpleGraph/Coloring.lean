@@ -83,3 +83,9 @@ This is `⊤` (infinity) iff `G` isn't colorable with finitely many colors.
 If `G` is colorable, then `ENat.toNat G.chromaticNumber` is the `ℕ`-valued chromatic number.
 -/
 noncomputable def cochromaticNumber (G : SimpleGraph V) : ℕ∞ := ⨅ n ∈ setOf G.Cocolorable, (n : ℕ∞)
+
+/-- The chromatic cardinal is the minimal number of colors need to color it. In contrast to
+`chromaticNumber`, which assigns `⊤ : ℕ∞` to all non-finitely colorable graphs, this definition
+returns a `Cardinal` and can therefore distinguish between different infinite chromatic numbers. -/
+noncomputable def chromaticCardinal (G : SimpleGraph V) : Cardinal :=
+  sInf {κ : Cardinal | ∃ (C : Type u) (_ : Cardinal.mk C = κ), Nonempty (G.Coloring C)}
