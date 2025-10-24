@@ -55,14 +55,6 @@ The length of the longest snake for the `Hypercube n` graph.
 -/
 noncomputable def LongestSnakeInTheBox (n : ℕ) : ℕ := LongestSnakeInGraph <| Hypercube n
 
-@[simp]
-theorem Finset.univ_finset_of_isEmpty {α : Type*} [h : IsEmpty α] :
-    (Set.univ : Set (Finset α)) = {∅} := by
-  ext S
-  rw [Set.mem_singleton_iff, eq_true (Set.mem_univ S), true_iff]
-  ext a
-  exact IsEmpty.elim h a
-
 /--
 The longest snake in the $0$-dimensional cube, i.e. the cube consisting of one point, is zero,
 since there only is one induced path and it is of length zero.
@@ -76,7 +68,7 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
-    simp_all [hPath, hSupport, hLength]
+    simp_all
   · rw [h]
     use (⊤ : Subgraph _), by simp, ∅, ∅
     simp
