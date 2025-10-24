@@ -24,14 +24,14 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos1059
 
-def isFactorial (d : ℕ) : Prop :=
+def IsFactorial (d : ℕ) : Prop :=
   d ∈ Set.range Nat.factorial
 
 def factorialsLessThanN (n : ℕ) : Set ℕ :=
   { d | d < n ∧ isFactorial d }
 
 def allFactorialSubtractionsComposite (n : ℕ) : Prop :=
-  ∀d ∈ factorialsLessThanN n, ¬Nat.Prime (n - d)
+  ∀d ∈ factorialsLessThanN n, (n - d).Composite
 
 /-- Are there infinitely many primes $p$ such that $p - k!$ is composite for each $k$ such that $1 ≤ k! < p$? -/
 @[category research open, AMS 11]
@@ -39,12 +39,11 @@ theorem erdos_1059 :
     Set.Infinite {p | p.Prime ∧ allFactorialSubtractionsComposite p} ↔ answer(sorry) := by
   sorry
 
-@[reducible]
-def decidableIsFactorial (d : ℕ) : Prop :=
+abbrev decidableIsFactorial (d : ℕ) : Prop :=
   ((Finset.Icc 0 d).filter (λ k => Nat.factorial k = d)).Nonempty
 
 def decidableFactorialsLessThanN (n : ℕ) : Finset ℕ :=
-  (Finset.Ico 0 n).filter decidableIsFactorial
+  (Finset.range n).filter decidableIsFactorial
 
 def decidableAllFactorialSubtractionsComposite (n : ℕ) : Prop :=
   ∀ d ∈ decidableFactorialsLessThanN n, ¬Nat.Prime (n - d)
