@@ -64,4 +64,4 @@ Conjecture: the sequence A228828 is infinite.
 theorem a.infinite : {a n | n}.Infinite := by
   sorry
 
-end Oeis228828
+end OeisA228828
