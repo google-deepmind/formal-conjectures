@@ -32,7 +32,7 @@ Given a finite set of points in the plane, we define the number of distinct dist
 of points.
 -/
 noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  (Finset.image (fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2) (Finset.product points points)).card
+  ((points ×ˢ points).image (fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2)).card
 
 /--
 The minimum number of distinct distances guaranteed for any set of $n$ points.
