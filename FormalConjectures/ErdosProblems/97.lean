@@ -39,7 +39,7 @@ A set of points $A$ has n equidistant points on a set of points $B$
 if for every point in $B$, there exist at least $n$ other points in $A$ that are equidistant from it.
 -/
 def HasNEquidistantPointsOn (n : ℕ) (A : Finset ℝ²) (B : Finset ℝ²) : Prop :=
-  B.Nonempty ∧ ∀ p ∈ B, HasNEquidistantPointsAt n A p
+  ∀ p ∈ B, HasNEquidistantPointsAt n A p
 
 /--
 A set of points $A$ has n equidistant property
@@ -60,7 +60,7 @@ A set of points $A$ has n unit distance points on a set of points $B$
 if for every point in $B$, there exist at least $n$ other points in $A$ that are at unit distance from it.
 -/
 def HasNUnitDistancePointsOn (n : ℕ) (A : Finset ℝ²) (B : Finset ℝ²) : Prop :=
-  B.Nonempty ∧ ∀ p ∈ B, HasNUnitDistancePointsAt n A p
+  ∀ p ∈ B, HasNUnitDistancePointsAt n A p
 
 /--
 A set of points $A$ has n unit distance property
@@ -74,7 +74,7 @@ Does every convex polygon have a vertex with no other 4 vertices equidistant fro
 -/
 @[category research open, AMS 52]
 theorem erdos_97 :
-    (∀ A : Finset ℝ², ConvexIndep A → ¬HasNEquidistantProperty 4 A) ↔ answer(sorry) := by
+    (∀ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A → ¬HasNEquidistantProperty 4 A) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -88,7 +88,7 @@ Danzer's construction is explained in [Er87b].
 -/
 @[category research solved, AMS 52]
 theorem erdos_97.variants.three_equidistant :
-    ∃ A : Finset ℝ², ConvexIndep A ∧ HasNEquidistantProperty 3 A := by
+    ∃ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A ∧ HasNEquidistantProperty 3 A := by
   let A₁ : ℝ² := ![(-√3), -1]
   let A₂ : ℝ² := ![(√3), -1]
   let A₃ : ℝ² := ![0, 2]
@@ -107,7 +107,7 @@ with no other $k$ vertices equidistant from it.
 -/
 @[category research open, AMS 52]
 theorem erdos_97.variants.k_equidistant :
-    (∃ k : ℕ, ∀ A : Finset ℝ², ConvexIndep A → ¬HasNEquidistantProperty k A) ↔ answer(sorry) := by
+    (∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A → ¬HasNEquidistantProperty k A) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -118,14 +118,14 @@ every vertex has three vertices equidistant from it (and this distance is the sa
 -/
 @[category research solved, AMS 52]
 theorem erdos_97.variants.three_unit_distance :
-    ∃ A : Finset ℝ², ConvexIndep A ∧ HasNUnitDistanceProperty 3 A := by
+    ∃ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A ∧ HasNUnitDistanceProperty 3 A := by
   sorry
 
 /--
 A two-part partition $\{A, B\}$ of $V$ is a cut if the convex hulls of $A$ and $B$ are disjoint.
 -/
 def IsCut (V A B : Finset ℝ²) : Prop :=
-  A.Nonempty ∧ B.Nonempty ∧ A ∪ B = V ∧ Disjoint A B ∧
+  A ∪ B = V ∧ Disjoint A B ∧
   Disjoint (convexHull ℝ (A : Set ℝ²)) (convexHull ℝ (B : Set ℝ²))
 
 /--
@@ -136,7 +136,7 @@ for all $a \in A$, and $|\{a \in A : d(a, b) = 1\}| ≥ 3$ for all $b \in B$, is
 @[category research solved, AMS 52]
 theorem erdos_97.variants.three_unit_distance_cut_min :
     sInf {n : ℕ | ∃ (V : Finset ℝ²) (A B : Finset ℝ²),
-      n = V.card ∧ ConvexIndep V ∧ IsCut V A B ∧
+      n = V.card ∧ ConvexIndep V ∧ A.Nonempty ∧ B.Nonempty ∧ IsCut V A B ∧
       HasNUnitDistancePointsOn 3 B A ∧ HasNUnitDistancePointsOn 3 A B} = 20 := by
   sorry
 
