@@ -28,7 +28,7 @@ def IsFactorial (d : ℕ) : Prop :=
   d ∈ Set.range Nat.factorial
 
 def factorialsLessThanN (n : ℕ) : Set ℕ :=
-  { d | d < n ∧ isFactorial d }
+  { d | d < n ∧ IsFactorial d }
 
 def allFactorialSubtractionsComposite (n : ℕ) : Prop :=
   ∀d ∈ factorialsLessThanN n, (n - d).Composite
@@ -46,12 +46,12 @@ def decidableFactorialsLessThanN (n : ℕ) : Finset ℕ :=
   (Finset.range n).filter decidableIsFactorial
 
 def decidableAllFactorialSubtractionsComposite (n : ℕ) : Prop :=
-  ∀ d ∈ decidableFactorialsLessThanN n, ¬Nat.Prime (n - d)
+  ∀ d ∈ decidableFactorialsLessThanN n, (n - d).Composite
 
 @[category test, AMS 11]
 lemma isFactorial_equivalent (d : ℕ) :
-  isFactorial d ↔ decidableIsFactorial d := by
-  unfold isFactorial decidableIsFactorial
+  IsFactorial d ↔ decidableIsFactorial d := by
+  unfold IsFactorial decidableIsFactorial
   simp
   constructor
   · rintro ⟨k, hk⟩
