@@ -37,22 +37,20 @@ $$
 $$
 -/
 
-noncomputable section
-
 namespace GaussCircleProblem
 
 /--
 Let $N(r)$ be the number of points $(m, n)$ within a circle of radius $r$,
 where $m$ and $n$ are both integers.
 -/
-abbrev N (r : ℝ) : ℕ :=
+noncomputable abbrev N (r : ℝ) : ℕ :=
   { (m, n) : ℤ × ℤ | !₂[↑m, ↑n] ∈ Metric.closedBall (0 : ℝ²) r }.ncard
 
 /--
 Let $E(r)$ be the error term between the number of integral points inside the circle and the
 area of the circle; that is $N(r) = \pi r^2 + E(r)$.
 -/
-abbrev E (r : ℝ) : ℝ := N r - π * r ^ 2
+noncomputable abbrev E (r : ℝ) : ℝ := N r - π * r ^ 2
 
 /--
 Gauss proved that
