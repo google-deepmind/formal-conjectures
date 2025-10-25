@@ -63,6 +63,7 @@ Is it possible that $|\{1,\ldots,N\} \setminus B| = o(N^\frac{1}{2})$?
 -/
 @[category research open, AMS 11]
 theorem erdos_14b :
-  ∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot := by sorry
+  ∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot ↔ answer(sorry) := by
+    sorry
 
 end Erdos14
