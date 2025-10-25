@@ -27,7 +27,13 @@ Is there a constant `c > 0` such that if `|E(G)| ≥ c n`, then `G` contains a 6
 **Status:** open.
 
 Choice: *I plan on working on this conjecture.*
+
+-- [category research open]
+-- [AMS 05]
+-- tags: graph theory, cycles
 -/
+
+noncomputable section
 
 namespace Erdos1080
 
@@ -47,12 +53,16 @@ structure IsBipartition (G : SimpleGraph V) (U W : Finset V) : Prop :=
 def HasC6 (G : SimpleGraph V) : Prop :=
   ∃ (v : Fin 6 → V),
     (∀ i j, i ≠ j → v i ≠ v j) ∧
-    (∀ i : Fin 6, G.Adj (v i) (v ⟨(i.1 + 1) % 6, by
-      have : (i.1 + 1) % 6 < 6 := Nat.mod_lt _ (by decide)
-      exact this⟩))
+    (∀ i : Fin 6,
+      G.Adj (v i)
+        (v ⟨(i.1 + 1) % 6,
+            by
+              have : 0 < 6 := by decide
+              exact Nat.mod_lt _ this⟩))
 
 /-- Size of the designated part: `⌊ n^(2/3) ⌋`. -/
-def partSize (n : ℕ) : ℕ := Nat.floor ((n : ℝ) ^ (2 / 3 : ℝ))
+def partSize (n : ℕ) : ℕ :=
+  Nat.floor ((n : ℝ) ^ (2 / 3 : ℝ))
 
 /-!
 ## Conjecture (formal shell)
@@ -60,15 +70,14 @@ def partSize (n : ℕ) : ℕ := Nat.floor ((n : ℝ) ^ (2 / 3 : ℝ))
 There exists a universal `c > 0` such that for every finite simple graph `G` on `n` vertices,
 if `G` is bipartite with one part of size `⌊ n^(2/3) ⌋` and `|E(G)| ≥ c n`, then `G` has a `C₆`.
 -/
-@[category research open, AMS 05, tags "graph theory, cycles"]
 theorem erdos_1080_statement :
   ∃ c : ℝ, 0 < c ∧
     ∀ (V : Type*) [Fintype V] [DecidableEq V] (G : SimpleGraph V),
       ∃ (U W : Finset V),
         IsBipartition G U W ∧
         U.card = partSize (Fintype.card V) ∧
-        (Nat.ceil (c * (Fintype.card V)) : ℕ) ≤ G.edgeFinset.card →
-        HasC6 G := ↔ answer(sorry) := by
+        ((Nat.ceil (c * (Fintype.card V : ℝ)) : ℕ) ≤ G.edgeFinset.card → HasC6 G) := by
+
   sorry
 
 end Erdos1080
