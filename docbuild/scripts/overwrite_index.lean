@@ -96,13 +96,14 @@ unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
   -- which we probably don't want to count here.
   let moduleImportNames := #[`FormalConjectures.All]
   initSearchPath (← findSysroot)
-  let modulesToImport : Array Import := moduleImportNames.map ({ module := · })
+  let imports : Array Import := moduleImportNames.map ({ module := · })
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
 
-  Lean.withImportModules modulesToImport {} fun env => do
-    let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
-    return result
+  let env ← Lean.importModules imports {} (trustLevel := 1024) (loadExts := true)
+
+  let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
+  return result
 
 unsafe def main (args : List String) : IO Unit := do
   let .some (file : String) := args[0]?
