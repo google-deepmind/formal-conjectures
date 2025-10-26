@@ -29,10 +29,11 @@ Is there a constant `c > 0` such that if `|E(G)| ≥ c n`, then `G` contains a 6
 Choice: *I plan on working on this conjecture.*
 
 -- [category research open]
--- [AMS 05]
+-- [AMS 05C38]
 -- tags: graph theory, cycles
 -/
 
+open Classical
 noncomputable section
 
 namespace Erdos1080
@@ -41,13 +42,17 @@ open Finset
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
-/-- Minimal bipartition predicate with explicit parts `U, W`:
-disjoint, cover all vertices, and no edges inside each part. -/
-structure IsBipartition (G : SimpleGraph V) (U W : Finset V) : Prop :=
-(disjoint : Disjoint U W)
-(cover   : U ∪ W = (univ : Finset V))
-(no_edges_in_U : ∀ ⦃x y⦄, x ∈ U → y ∈ U → ¬ G.Adj x y)
-(no_edges_in_W : ∀ ⦃x y⦄, x ∈ W → y ∈ W → ¬ G.Adj x y)
+/-- `edgeSet` is finite since it is a subtype of `Sym2 V`, which is finite for finite `V`. -/
+instance (G : SimpleGraph V) : Fintype G.edgeSet := by
+  classical
+  exact Fintype.ofFinite (G.edgeSet)
+
+/-- Minimal bipartition predicate with explicit parts `U, W`. -/
+structure IsBipartition (G : SimpleGraph V) (U W : Finset V) : Prop where
+  disjoint : Disjoint U W
+  cover   : U ∪ W = (univ : Finset V)
+  no_edges_in_U : ∀ ⦃x y⦄, x ∈ U → y ∈ U → ¬ G.Adj x y
+  no_edges_in_W : ∀ ⦃x y⦄, x ∈ W → y ∈ W → ¬ G.Adj x y
 
 /-- `G` contains a 6-cycle: six distinct vertices with cyclic adjacencies. -/
 def HasC6 (G : SimpleGraph V) : Prop :=
@@ -64,12 +69,7 @@ def HasC6 (G : SimpleGraph V) : Prop :=
 def partSize (n : ℕ) : ℕ :=
   Nat.floor ((n : ℝ) ^ (2 / 3 : ℝ))
 
-/-!
-## Conjecture (formal shell)
-
-There exists a universal `c > 0` such that for every finite simple graph `G` on `n` vertices,
-if `G` is bipartite with one part of size `⌊ n^(2/3) ⌋` and `|E(G)| ≥ c n`, then `G` has a `C₆`.
--/
+/-- Erdős Problem 1080 (conjecture shell). -/
 theorem erdos_1080_statement :
   ∃ c : ℝ, 0 < c ∧
     ∀ (V : Type*) [Fintype V] [DecidableEq V] (G : SimpleGraph V),
@@ -77,7 +77,6 @@ theorem erdos_1080_statement :
         IsBipartition G U W ∧
         U.card = partSize (Fintype.card V) ∧
         ((Nat.ceil (c * (Fintype.card V : ℝ)) : ℕ) ≤ G.edgeFinset.card → HasC6 G) := by
-
   sorry
 
 end Erdos1080
