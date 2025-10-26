@@ -29,7 +29,7 @@ Is there a constant `c > 0` such that if `|E(G)| ≥ c n`, then `G` contains a 6
 Choice: *I plan on working on this conjecture.*
 
 -- [category research open]
--- [AMS 05C38]
+-- [AMS 05]
 -- tags: graph theory, cycles
 -/
 
@@ -38,23 +38,16 @@ noncomputable section
 
 namespace Erdos1080
 
-open Finset
-
 variable {V : Type*} [Fintype V] [DecidableEq V]
-
-/-- `edgeSet` is finite since it is a subtype of `Sym2 V`, which is finite for finite `V`. -/
-instance (G : SimpleGraph V) : Fintype G.edgeSet := by
-  classical
-  exact Fintype.ofFinite (G.edgeSet)
 
 /-- Minimal bipartition predicate with explicit parts `U, W`. -/
 structure IsBipartition (G : SimpleGraph V) (U W : Finset V) : Prop where
   disjoint : Disjoint U W
-  cover   : U ∪ W = (univ : Finset V)
+  cover   : U ∪ W = (Finset.univ : Finset V)
   no_edges_in_U : ∀ ⦃x y⦄, x ∈ U → y ∈ U → ¬ G.Adj x y
   no_edges_in_W : ∀ ⦃x y⦄, x ∈ W → y ∈ W → ¬ G.Adj x y
 
-/-- `G` contains a 6-cycle: six distinct vertices with cyclic adjacencies. -/
+/-- `G` contains a 6-cycle. -/
 def HasC6 (G : SimpleGraph V) : Prop :=
   ∃ (v : Fin 6 → V),
     (∀ i j, i ≠ j → v i ≠ v j) ∧
@@ -65,18 +58,24 @@ def HasC6 (G : SimpleGraph V) : Prop :=
               have : 0 < 6 := by decide
               exact Nat.mod_lt _ this⟩))
 
-/-- Size of the designated part: `⌊ n^(2/3) ⌋`. -/
+/-- Size target: `⌊ n^(2/3) ⌋`. -/
 def partSize (n : ℕ) : ℕ :=
   Nat.floor ((n : ℝ) ^ (2 / 3 : ℝ))
 
-/-- Erdős Problem 1080 (conjecture shell). -/
-theorem erdos_1080_statement :
+/-- **Problem statement** packaged as a proposition. -/
+def Statement : Prop :=
   ∃ c : ℝ, 0 < c ∧
     ∀ (V : Type*) [Fintype V] [DecidableEq V] (G : SimpleGraph V),
       ∃ (U W : Finset V),
         IsBipartition G U W ∧
         U.card = partSize (Fintype.card V) ∧
-        ((Nat.ceil (c * (Fintype.card V : ℝ)) : ℕ) ≤ G.edgeFinset.card → HasC6 G) := by
-  sorry
+        ((Nat.ceil (c * (Fintype.card V : ℝ)) : ℕ) ≤ G.edgeFinset.card → HasC6 G)
+
+/--
+Erdős Problem 1080 (formal shell, in the “problem ↔ answer” style used in the repo).
+-/
+@[category research open, AMS 05]
+theorem erdos_1080 : Statement ↔ answer(sorry) := by
+sorry
 
 end Erdos1080
