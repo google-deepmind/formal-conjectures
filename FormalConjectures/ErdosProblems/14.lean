@@ -27,7 +27,7 @@ namespace Erdos14
 open Asymptotics Filter
 
 abbrev allUniqueSums (A : Set ℕ) : Set ℕ :=
-  { n | ∃! (a : ℕ×ℕ), a.1 ≤ a.2 ∧ a.1 ∈ A ∧ a.2 ∈ A ∧ a.1 + a.2 = n }
+  { n | ∃! (a : ℕ × ℕ), a.1 ≤ a.2 ∧ a.1 ∈ A ∧ a.2 ∈ A ∧ a.1 + a.2 = n }
 
 /--
 The number of integers in $\{1,\ldots,N\}$ which are not representable in exactly one way
@@ -43,7 +43,7 @@ noncomputable def almostSquareRoot (ε : ℝ) (N : ℕ) : ℝ :=
 noncomputable def squareRoot (N : ℕ) : ℝ :=
   Real.sqrt N
 
-notation f " ⟫ " g => IsBigO atTop g f
+notation f " ≫ " g => IsBigO atTop g f
 
 /--
 Let $A ⊆ \mathbb{N}$. Let $B ⊆ \mathbb{N}$ be the set of integers which are representable
@@ -54,7 +54,7 @@ $\epsilon > 0$ and large $N$, $|\{1,\ldots,N\} \setminus B| \gg_\epsilon N^{1/2 
 theorem erdos_14a :
   (
     (
-      ∀ (A : Set ℕ), ∀ (ε : ℝ), (ε > 0) → (nonUniqueSumCount A) ⟫ (almostSquareRoot ε)
+      ∀ (A : Set ℕ), ∀ (ε : ℝ), (ε > 0) → (nonUniqueSumCount A) ≫ (almostSquareRoot ε)
     ) ↔ answer(sorry)
   ) := by sorry
 
