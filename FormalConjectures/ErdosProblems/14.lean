@@ -43,8 +43,6 @@ noncomputable def almostSquareRoot (ε : ℝ) (N : ℕ) : ℝ :=
 noncomputable def squareRoot (N : ℕ) : ℝ :=
   Real.sqrt N
 
-notation f " ≫ " g => IsBigO atTop g f
-
 /--
 Let $A ⊆ \mathbb{N}$. Let $B ⊆ \mathbb{N}$ be the set of integers which are representable
 in exactly one way as the sum of two elements from $A$. Is it true that for all
