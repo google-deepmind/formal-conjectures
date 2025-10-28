@@ -39,7 +39,7 @@ $h(n) > (\log n)^{c - o(1)}$.
 theorem erdos_942 : (∃ c > 0, ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
     ∀ n > 0, erdos_942.h n < (Real.log n) ^ (c + o n) ∧
     {n | erdos_942.h n > (Real.log n) ^ (c - o n)}.Infinite)
-    ↔ answer(False) := by
+    ↔ answer(sorry) := by
   sorry
 
 /--
