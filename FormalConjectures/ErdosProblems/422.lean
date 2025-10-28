@@ -27,20 +27,18 @@ namespace Erdos422
 open Filter
 open scoped Topology
 
-instance : Norm ℕ+ where
-  norm n := n
-
 /--
 Let $f(1) = f(2) = 1$ and for $n > 2$
 $$
 f(n) = f(n - f(n - 1)) + f(n - f(n - 2)).
 $$
+
+Note: It is not known whether $f(n)$ is well-defined for all $n$.
 -/
 partial def f : ℕ+ → ℕ+
   | 1 => 1
   | 2 => 1
   | n => f (n - f (n - 1)) + f (n - f (n - 2))
--- Note: It is not known whether $f(n)$ is well-defined for all $n$.
 
 /--
 Does $f(n)$ miss infinitely many integers?
@@ -60,14 +58,15 @@ theorem erdos_422.variants.surjective : f.Surjective ↔ answer(sorry) := by
 How does $f$ grow?
 -/
 @[category research open, AMS 11]
-theorem erdos_422.variants.growth_rate : f =O[atTop] (answer(sorry) : ℕ+ → ℕ+) := by
+theorem erdos_422.variants.growth_rate :
+    (fun n ↦ (f n : ℝ)) =O[atTop] (answer(sorry) : ℕ+ → ℝ) := by
   sorry
 
 /--
 Does $f$ become stationary at some point?
 -/
 @[category research open, AMS 11]
-theorem erdos_422.variants.eventually_const : (∃ n, EventuallyConst f n) ↔ answer(sorry) := by
+theorem erdos_422.variants.eventually_const : EventuallyConst f atTop ↔ answer(sorry) := by
   sorry
 
 end Erdos422
