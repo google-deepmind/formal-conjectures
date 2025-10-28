@@ -56,6 +56,13 @@ and deleting any single vertex reduces the chromatic number.
 -/
 def IsCritical (k : ℕ) : Prop := G.chromaticNumber = k ∧ ∀ v, (⊤ : G.Subgraph).IsCritialVertex v
 
+theorem not_isCritical_of_fintype_lt [Fintype V] (k : ℕ) (hk : Fintype.card V < k) :
+   ¬G.IsCritical k := by
+  simp [IsCritical]
+  intro h
+  have := h ▸ SimpleGraph.chromaticNumber_le_iff_colorable.2 G.colorable_of_fintype
+  simp at this
+  grind
 
 open SimpleGraph
 
