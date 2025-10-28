@@ -20,6 +20,8 @@ import Mathlib.Tactic.Linter.Header
 
 open Lean Elab Meta Command Syntax
 
+namespace CopyrightLinter
+
 def correctCopyrightHeader : String :=
 "/-
 Copyright 2025 The Formal Conjectures Authors.
@@ -55,3 +57,5 @@ def copyrightLinter : Linter where run := withSetOptionIn fun stx ↦ do
       ++ correctCopyrightHeader
 
 initialize addLinter copyrightLinter
+
+end CopyrightLinter
