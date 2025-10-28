@@ -26,7 +26,7 @@ open scoped Nat
 
 /-- The EHS numbers (after Erdős, Hardy, and Subbarao) are those $m\geq 1$ such that there
 exists a prime $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$.-/
-abbrev Nat.EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
+abbrev Nat.EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, p.Prime ∧ ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
 /-- The Pillai primes are those primes $p$ such that there exists an $m$ with
 $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$-/
@@ -41,7 +41,7 @@ that $m! + 1 \equiv 0\pmod{p}$. Does
 $$
   \lim\frac{|S\cap[1, x]|}{x}
 $$
-exist? What is it? -/
+exist? -/
 @[category research open, AMS 11]
 theorem erdos_1074.parts.i.i : (∃ c, EHSNumbers.HasDensity c) ↔ answer(sorry) := by
   sorry
@@ -52,7 +52,7 @@ $$
   \lim\frac{|S\cap[1, x]|}{x}?
 $$ -/
 @[category research open, AMS 11]
-theorem erdos_1074.parts.i.ii : ∃ c, c = answer(sorry) ∧ EHSNumbers.HasDensity c := by
+theorem erdos_1074.parts.i.ii : EHSNumbers.HasDensity answer(sorry) := by
   sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
@@ -60,7 +60,7 @@ $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$, then does
 $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}
 $$
-exist? What is it? -/
+exist? -/
 @[category research open, AMS 11]
 theorem erdos_1074.parts.ii.i : (∃ c, PillaiPrimes.HasDensity c {p | p.Prime}) ↔ answer(sorry) := by
   sorry
@@ -72,7 +72,7 @@ $$
 $$ -/
 @[category research open, AMS 11]
 theorem erdos_1074.parts.ii.ii :
-    ∃ c, c = answer(sorry) ∧ PillaiPrimes.HasDensity c {p | p.Prime} := by
+    PillaiPrimes.HasDensity answer(sorry) {p | p.Prime} := by
   sorry
 
 /-- Pillai [Pi30] raised the question of whether there exist any primes in $P$. This was answered
