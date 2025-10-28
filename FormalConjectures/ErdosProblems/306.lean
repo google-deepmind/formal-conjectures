@@ -42,7 +42,7 @@ product of three distinct primes.
 -/
 @[category research solved, AMS 11]
 theorem erdos_306.variant.integer_three_primes (m : ℕ) (h : 0 < m) :
-    ∃ k : ℕ, ∃ (n : Fin (k + 1) → ℕ), n 0 = 1 ∧
+    ∃ k > (0 : ℕ), ∃ (n : Fin (k + 1) → ℕ), n 0 = 1 ∧
     ∀ i, (hik : i < k) → n ⟨i, by omega⟩ < n ⟨(i + 1), by omega⟩ ∧
     (∀ i ∈ Finset.Icc 1 (Fin.last k), ω (n i) = 3 ∧ Ω (n i) = 3) ∧
     m = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i) := by
