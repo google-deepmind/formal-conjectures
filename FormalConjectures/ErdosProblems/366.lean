@@ -28,7 +28,8 @@ namespace Erdos366
 Are there any $2$-full $n$ such that $n+1$ is $3$-full?
 -/
 @[category research open, AMS 11]
-theorem erdos_366 : (∃ (n : ℕ), (2).Full n ∧ (3).Full (n + 1)) ↔ answer(sorry) := by
+theorem erdos_366 :
+    (∃ n > 0, (2).Full n ∧ (3).Full (n + 1)) ↔ answer(sorry) := by
   sorry
 
 /--
