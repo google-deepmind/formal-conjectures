@@ -60,7 +60,7 @@ theorem erdos_44.variant : (∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsS
 The case where we start with an empty set (constructing large Sidon sets).
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44.empty_start : (∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M : ℕ) (A ⊆ Finset.Icc 1 M),
+theorem erdos_44.empty_start : (∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M > (0 : ℕ)) (A ⊆ Finset.Icc 1 M),
     IsSidon A ∧ (1 - ε) * Real.sqrt M ≤ A.card) ↔ answer(sorry) := by
   sorry
 
