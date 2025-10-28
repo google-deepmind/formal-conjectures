@@ -46,10 +46,6 @@ instance {n : ℕ} {M : Candidate n} : Inhabited M.Λ := M.Λ_inhabited
 noncomputable def BB (n : ℕ) : ℕ :=
   sSup { N | ∃ C : Candidate n, C.M.haltingNumber = N}
 
-end BusyBeaver
-
-open BusyBeaver
-
 /--
 To compute `BB n`, we need only consider machines with states and symbols indexed in `Fin`.
 -/
@@ -78,3 +74,5 @@ theorem BB_4 : BB 4 = 107 := by
 @[category research solved, AMS 3]
 theorem BB_5 : BB 5 = 47176870 := by
   sorry
+
+end BusyBeaver
