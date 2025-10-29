@@ -80,4 +80,4 @@ theorem a_isBigO : (fun n ↦ (a n : ℝ)) =O[atTop] (fun n ↦ Real.log n * Rea
 theorem a_unbounded : ¬BddAbove (Set.range fun n ↦ a n / (Real.log n * Real.log (Real.log n))) :=
   sorry
 
-end OeisA034693
+end OeisA34693
