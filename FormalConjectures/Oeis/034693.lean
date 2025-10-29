@@ -22,7 +22,7 @@ Smallest number $k$ such that $kn + 1$ is prime.
 *Reference:* [A034693](https://oeis.org/A034693)
 -/
 
-namespace OeisA034693
+namespace OeisA34693
 
 open Filter
 
