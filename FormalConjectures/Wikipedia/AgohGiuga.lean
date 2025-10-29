@@ -75,37 +75,37 @@ theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
 -- Formalisation note: refers to a Giuga number in the sense of
 -- https://en.wikipedia.org/wiki/Giuga_number
 /--
-A (weak) Giuga number is a number $n$ such that
+A (weak) Giuga number is a composite number $n$ such that
 $$\sum_{i=1}^{n - 1}i^{\varphi(n)} \equiv -1\pmod{n}$$.
 -/
 def IsWeakGiuga (n : ℕ) : Prop :=
-    2 ≤ n ∧ ¬ n.Prime ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ φ n
+    n.Composite ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ φ n
 
 -- Formalisation note: refers to a Giuga number in the sense of
 -- https://www.cambridge.org/core/services/aop-cambridge-core/content/view/8A6841B3FDA442A8FAEC89AA702C16F6/S0008439500007244a.pdf/note_on_giugas_conjecture.pdf
 /--
-A (strong) Giuga number is a number $n$ such that
+A (strong) Giuga number is a composite number $n$ such that
 $$\sum_{i=1}^{n - 1}i^{n - 1} \equiv -1\pmod{n}$$-/
 def IsStrongGiuga (n : ℕ) : Prop :=
-    2 ≤ n ∧ ¬ n.Prime ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
+    n.Composite ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
 
 /--
-A number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
+A composite number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
 prime divisors $p$ of $n$.
 -/
 @[category research solved, AMS 11]
-theorem isWeakGiuga_iff_prime_dvd (n : ℕ) :
+theorem isWeakGiuga_iff_prime_dvd {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∀ p ∈ n.primeFactors, p ∣ (n / p - 1) := by
   sorry
 
 /--
-A number $n$ is weak Giuga if and only if
+A composite number $n$ is weak Giuga if and only if
 $$
 \sum_{p\mid n} \frac{1}{p} - \frac{1}{n} \in\mathbb{N}.
 $$
 -/
 @[category research solved, AMS 11]
-theorem isWeakGiuga_iff_sum_primeFactors (n : ℕ) :
+theorem isWeakGiuga_iff_sum_primeFactors {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∃ m : ℕ, ∑ p ∈ n.primeFactors, (1 / p : ℚ) - 1 / n = m := by
   sorry
 
@@ -179,7 +179,7 @@ and weak Giuga).
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
 @[category research solved, AMS 11]
-theorem isStrongGiuga_iff (a : ℕ) :
+theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
     IsStrongGiuga a ↔ IsCarmichael a ∧ ∃ n : ℕ, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
   sorry
 
