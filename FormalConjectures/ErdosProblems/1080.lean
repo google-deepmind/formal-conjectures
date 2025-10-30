@@ -76,9 +76,6 @@ Erdős Problem 1080 (formal shell, in the “problem ↔ answer” style used in
 -/
 @[category research open, AMS 05]
 theorem erdos_1080 : Statement ↔ answer(sorry) := by
-  -- Fill in equivalence scaffolding as the project’s convention requires.
-  -- Left-to-right usually wraps the constructive statement into `answer`,
-  -- right-to-left unpacks. Placeholder for now:
-  sorry
+sorry
 
 end Erdos1080
