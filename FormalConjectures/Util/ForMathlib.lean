@@ -20,6 +20,7 @@ import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
 import FormalConjectures.ForMathlib.Algebra.Polynomial.HasseDeriv
 import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjectures.ForMathlib.AlgebraicGeometry.VectorBundle
+import FormalConjectures.ForMathlib.Analysis.Asymptotics.Basic
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.NthRoot
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
