@@ -123,7 +123,7 @@ Then it is conjectured that the sum $\sum_k \frac{1}{a_k}$ converges. -/
 @[category research open, AMS 11]
 theorem erdos_357.variants.infinite_set_sum (A : ℕ → ℕ) (hA : StrictMono A)
     (hA : HasDistinctSums A) :
-    Summable (1 / A) := by
+    Summable (fun i ↦ (1 : ℝ) / A i) := by
   sorry
 
 /-- Let $g(n)$ be the maximal $k$ such that there exist integers $1 \le a_1, \dotsc, a_k \le n$

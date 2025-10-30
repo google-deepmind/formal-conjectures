@@ -102,20 +102,6 @@ theorem erdos_329.converse_implication :
 /-! ## Related results and examples -/
 
 /--
-The set of squares `{n^2 | n : ℕ}` is a Sidon set.
--/
-@[category undergraduate, AMS 5 11]
-theorem squares_are_sidon : IsSidon {n^2 | n : ℕ} := by
-  sorry
-
-/--
-The set of squares has upper density 0.
--/
-@[category undergraduate, AMS 5 11]
-theorem squares_sidon_density : sidonUpperDensity {n^2 | n : ℕ} = 0 := by
-  sorry
-
-/--
 It is possible to construct a Sidon set with positive density.
 -/
 @[category undergraduate, AMS 5 11]
