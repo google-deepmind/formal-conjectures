@@ -32,7 +32,7 @@ open ShelahSpencer FirstOrder Filter Topology
 namespace ShelahSpencerZeroOneLaw
 
 /--
-`[1] ∀ α ∈ (0, 1) ∖ ℚ, ∀ ψ ∈ T, limₙ μ({G: G ∈ SimpleGraph(Fin(n)) ⊨ ψ}) exists and is 1 or 0`
+`[1] ∀ α ∈ (0, 1) ∖ ℚ, ∀ ψ ∈ T, limₙ μ_α({G: G ∈ SimpleGraph(Fin(n)) ⊨ ψ}) exists and is 1 or 0`
      where `T` is the set of all Sentences in the language of graphs, `μ` is
      `ShelahSpencer.Measure n α` as defined in Probability.Basic.
 -/
@@ -46,7 +46,7 @@ theorem zeroOne_irrational
      (ShelahSpencer.Measure n α) {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure
        φ}) atTop (𝓝 1) := by sorry
 
-/-- `[2] ∀ α ∈ (0, 1) ∩ ℚ, ∃ ψ ∈ T, limₙ μ({G: G ∈ SimpleGraph(Fin(n)) ⊨ ψ}) does not exist.`
+/-- `[2] ∀ α ∈ (0, 1) ∩ ℚ, ∃ ψ ∈ T, limₙ μ_α({G: G ∈ SimpleGraph(Fin(n)) ⊨ ψ}) does not exist.`
 (Theorem 2 gives "oscillation")
 -/
 @[category research solved, AMS 03 05]
