@@ -37,7 +37,8 @@ least $3$ distances, yet the total number of distinct distances is \ll \frac{n}{
 @[category research open, AMS 52]
 theorem erdos_659 : (∃ (a : ℕ → Finset ℝ²), ∀ n, #(a n) = n ∧
     3 ≤ minimalDistinctDistancesSubsetOfSize (a n) 4 ∧
-    (fun n => (distinctDistances (a n) : ℝ)) ≪ fun (n : ℕ) => n /(n : ℝ).log) ↔ answer(sorry) := by
+    (fun n => (distinctDistances (a n) : ℝ)) ≪ fun (n : ℕ) => n /(n : ℝ).log.sqrt)
+    ↔ answer(sorry) := by
   sorry
 
 
