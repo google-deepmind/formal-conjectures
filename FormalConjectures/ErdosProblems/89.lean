@@ -32,7 +32,7 @@ Given a finite set of points in the plane, we define the number of distinct dist
 of points.
 -/
 noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  ((points ×ˢ points).image (fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2)).card
+  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
 
 /--
 The minimum number of distinct distances guaranteed for any set of $n$ points.
@@ -52,7 +52,7 @@ theorem erdos_89 :
 /--
 Guth and Katz [GuKa15] proved that there are always $\gg \frac{n}{\log n}$ many distinct distances.
 
-[GuKa15] Guth, Larry and Katz, Nets Hawk, On the Erdős distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190. 
+[GuKa15] Guth, Larry and Katz, Nets Hawk, On the Erdős distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190.
 -/
 @[category research solved, AMS 52]
 theorem erdos_89.variants.n_dvd_log_n :
@@ -68,7 +68,7 @@ $\frac{n}{\sqrt{\log n}}$ holds, then the weaker lower bound $\frac{n}{\log n}$ 
 theorem erdos_89.variants.implies_n_dvd_log_n (h : type_of% erdos_89) :
     type_of% erdos_89.variants.n_dvd_log_n := by
   refine .trans ?_ h
-  have := (Asymptotics.isLittleO_one_left_iff ℝ).mpr <| tendsto_norm_atTop_atTop.comp <| 
+  have := (Asymptotics.isLittleO_one_left_iff ℝ).mpr <| tendsto_norm_atTop_atTop.comp <|
     (tendsto_rpow_atTop (show 0 < 1/2 by norm_num)).comp
     (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
   convert (Asymptotics.isBigO_refl (fun n : ℕ ↦ n/(n : ℝ).log) _).mul this.isBigO using 1
