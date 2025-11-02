@@ -57,4 +57,4 @@ theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.
     Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry
 
-end Erdos 41
+end Erdos41

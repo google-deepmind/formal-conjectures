@@ -72,4 +72,4 @@ theorem herzog_schonheim (G : Type*) [Group G] : ∀ (P : Partition (⊤ : Subgr
     ∃ᵉ (A ∈ P.parts) (B ∈ P.parts), A ≠ B ∧ A.index = B.index := by
   sorry
 
-end Erdos 274
+end Erdos274
