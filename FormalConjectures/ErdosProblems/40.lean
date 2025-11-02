@@ -64,7 +64,7 @@ Erdős-Turán conjecture, see Erdõs Problem 28,
 Problem 28).
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40 fun _ => True) : type_of% erdos_28 := by
+theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40 fun _ => True) : type_of% Erdos28.erdos_28 := by
   simp only [Erdos40, Erdos40For, sumRep, sumConv, indicatorOne, forall_const] at h_erdos_40
   intro A hA
   apply h_erdos_40

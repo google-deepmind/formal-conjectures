@@ -54,4 +54,4 @@ theorem erdos_936.variants.factorial_sub_one :
    EventuallyNotPowerful (·! - 1) ↔ answer(sorry) := by
   sorry
 
-end Erdos 936
+end Erdos936
