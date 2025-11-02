@@ -16,6 +16,13 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+
+/-!
+# Erdős Problem 355
+
+*Reference:* [erdosproblems.com/355](https://www.erdosproblems.com/355)
+-/
+
 namespace Erdos355
 
 /--

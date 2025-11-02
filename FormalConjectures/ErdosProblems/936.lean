@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 open Filter Nat
 
+namespace Erdos936
+
 /--
 The predicate that `a n` is only powerful for finitely many `n`.
 -/
@@ -51,3 +53,5 @@ theorem erdos_936.variants.factorial_add_one :
 theorem erdos_936.variants.factorial_sub_one :
    EventuallyNotPowerful (·! - 1) ↔ answer(sorry) := by
   sorry
+
+end Erdos 936

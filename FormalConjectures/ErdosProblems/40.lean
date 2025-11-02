@@ -26,6 +26,8 @@ import FormalConjectures.ErdosProblems.«28»
 open Filter Set AdditiveCombinatorics
 open scoped Pointwise
 
+namespace Erdos40
+
 
 /--
 The predicate for a function $g\colon\mathbb{N} → \mathbb{R})$ that
@@ -90,3 +92,5 @@ theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40 fun _ => True) : type_of% erd
       have := hn m this
       omega
     · exact (Set.finite_Icc _ _).inter_of_right A
+
+end Erdos40

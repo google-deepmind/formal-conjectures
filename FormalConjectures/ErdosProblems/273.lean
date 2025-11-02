@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/273](https://www.erdosproblems.com/273)
 -/
 
+namespace Erdos273
+
 /--
 Is there a covering system all of whose moduli are of the form $p-1$ for some primes $p\geq 5$?
 -/
@@ -37,3 +39,5 @@ theorem erdos_273.variants.three : (∃ c : StrictCoveringSystem ℕ, ∀ i, ∃
     c.moduli i = Ideal.span {↑(p - 1)}) ↔ answer(True) := by
   -- TODO(Paul-Lez): find reference for this and perhaps formalize the proof?
   sorry
+
+end Erdos273

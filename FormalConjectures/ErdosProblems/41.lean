@@ -26,6 +26,8 @@ variable {α : Type} [AddCommMonoid α]
 
 open Classical
 
+namespace Erdos41
+
 /--
 For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for  `a₁, ..., aₙ` in `A`
 (aside from the trivial coincidences).
@@ -54,3 +56,5 @@ Is it true that `liminf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
     Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry
+
+end Erdos 41

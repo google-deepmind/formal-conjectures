@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/845](https://www.erdosproblems.com/845)
 -/
 
+namespace Erdos845
+
 /--
 Let $C > 0$. Is it true that the set of integers of the form $n = b_1 + \cdots + b_t$,
 with $b_1 < \cdots < b_t$, where $b_i = 2^{k_i}3^{l_i}$ for $1 \leq i\leq t$ and
@@ -33,3 +35,5 @@ theorem erdos_845 (C : ℝ) (hC : 0 < C) :
     { ∑ x ∈ B, f x | (B : Finset (ℕ × ℕ)) (h : B.Nonempty)
       (hB : B.sup f ≤ C * B.inf' h f) }.HasDensity 0 ↔ answer(sorry) := by
   sorry
+
+end Erdos845

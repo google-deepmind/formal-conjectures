@@ -28,6 +28,8 @@ disjoint difference sets (apart from 0).
 open Function Set Filter
 open scoped Pointwise
 
+namespace Erdos42
+
 /--
 **Erdős Problem 42**: Let M ≥ 1 and N be sufficiently large in terms of M. Is it true that for every
 maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}` of size M such that
@@ -86,3 +88,5 @@ is also a Sidon set.
 theorem disjoint_differences_union_sidon (A B : Set ℕ) (hA : IsSidon A) (hB : IsSidon B)
     (h : ((A - A) ∩ (B - B)) ⊆ {0}) : IsSidon (A ∪ B) := by
   sorry
+
+end Erdos42

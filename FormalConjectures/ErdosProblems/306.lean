@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped ArithmeticFunction
 
+namespace Erdos306
+
 /--
 Let $\frac a b\in \mathbb{Q}_{>0}$ with $b$ squarefree. Are there integers $1 < n_1 < \dots < n_k$,
 each the product of two distinct primes, such that $\frac{a}{b}=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$?
@@ -47,3 +49,5 @@ theorem erdos_306.variant.integer_three_primes (m : ℕ) (h : 0 < m) :
     (∀ i ∈ Finset.Icc 1 (Fin.last k), ω (n i) = 3 ∧ Ω (n i) = 3) ∧
     m = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i) := by
   sorry
+
+end Erdos306
