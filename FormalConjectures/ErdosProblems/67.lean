@@ -36,7 +36,7 @@ This is true, and was proved by Tao [Ta16]
 -/
 @[category research solved, AMS 11]
 theorem erdos_67 (f : ℕ → ({-1, 1} : Finset ℝ)) (C : ℝ) (hC : 0 < C) : ∃ᵉ (d ≥ 1) (m ≥ 1),
-    C < |(∑ k ∈ Finset.Icc 1 m, (f (k * d)).1)| := by
+    C < |∑ k ∈ Finset.Icc 1 m, (f (k * d)).1| := by
   sorry
 
 /--
