@@ -29,8 +29,8 @@ open Filter Polynomial Finset
 namespace Erdos283
 
 /--
-The predicate that, given a polynomial, is true if the leading coefficient is positive and such that
-there exists no $d≥2$ with $d ∣ p(n)$ for all $n≥1$, then for allr all sufficiently large $m$,
+Given a polynomial `p`, the predicate that if the leading coefficient is positive and
+there exists no $d≥2$ with $d ∣ p(n)$ for all $n≥1$, then for all sufficiently large $m$,
 there exist integers $1≤n_1<\dots < n_k$ such that $$1=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$$
 and $$m=p(n_1)+\cdots+p(n_k)$$?
 -/
