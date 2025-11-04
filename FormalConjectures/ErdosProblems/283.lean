@@ -35,7 +35,7 @@ there exist integers $1≤n_1<\dots < n_k$ such that $$1=\frac{1}{n_1}+\cdots+\f
 and $$m=p(n_1)+\cdots+p(n_k)$$?
 -/
 def erdos_283_condition (p : ℤ[X]) : Prop :=
-  p.leadingCoeff > 2 → ¬ (∃ d ≥ 2, ∀ n ≥ 1, d ∣ p.eval n) →
+  p.leadingCoeff > 0 → ¬ (∃ d ≥ 2, ∀ n ≥ 1, d ∣ p.eval n) →
   ∀ᶠ m in atTop, ∃ k ≥ 1, ∃ n : Fin (k + 1) → ℤ, 0 = n 0 ∧ StrictMono n ∧
   1 = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i) ∧
   m = ∑ i ∈ Finset.Icc 1 (Fin.last k),  p.eval (n i)
