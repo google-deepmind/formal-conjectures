@@ -49,7 +49,7 @@ and
 $$m=p(n_1)+\cdots+p(n_k)$$?
 -/
 @[category research open, AMS 11]
-theorem erdos_283 : (∀ p : ℤ[X], erdos_283_condition p) ↔ answer(sorry) := by
+theorem erdos_283 : (∀ p : ℤ[X], Condition p) ↔ answer(sorry) := by
   sorry
 
 
@@ -57,7 +57,7 @@ theorem erdos_283 : (∀ p : ℤ[X], erdos_283_condition p) ↔ answer(sorry) :=
 Graham [Gr63] has proved this when $p(x)=x$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_283.variants.graham : erdos_283_condition X := by
+theorem erdos_283.variants.graham : Condition X := by
   sorry
 
 
