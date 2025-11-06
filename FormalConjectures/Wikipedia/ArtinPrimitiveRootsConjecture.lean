@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.Wikipedia.GeneralizedRiemannHypothesis
 
 /-!
 # Artin's conjecture on primitive roots
@@ -47,6 +48,7 @@ Note that Artin's conjecture has been proved subject to the Generalized Riemann 
 - [Ho67] Hooley, C. "On Artin's conjecture." _Journal für die reine und angewandte Mathematik_ 225 (1967): 209-220.
 -/
 
+open GRH
 open scoped Topology Nat
 
 namespace ArtinPrimitiveRootsConjecture
@@ -90,8 +92,16 @@ of primes $p$ such that $a$ is a primitive root modulo $p$ has a positive asympt
 density inside the set of primes. In particular, $S(a)$ is infinite.
 -/
 @[category research open, AMS 11]
-theorem artin_primitive_roots.parts.i (a : ℤ)
-    (ha : ¬ IsSquare a) (ha' : a ≠ -1) :
+theorem artin_primitive_roots.parts.i (a : ℤ) (ha : ¬IsSquare a) (ha' : a ≠ -1) :
+    ∃ x > 0, (S a).HasDensity x {p | p.Prime} := by
+  sorry
+
+/--
+**Artin's Conjecture on Primitive Roots**, first half, conditional on GRH.
+-/
+@[category research solved, AMS 11]
+theorem conditional_artin_primitive_roots.parts.i (a : ℤ) (ha : ¬IsSquare a) (ha' : a ≠ -1)
+    (h : type_of% generalized_riemann_hypothesis) :
     ∃ x > 0, (S a).HasDensity x {p | p.Prime} := by
   sorry
 
@@ -104,9 +114,22 @@ equals Artin's constant.
 -/
 @[category research open, AMS 11]
 theorem artin_primitive_roots.parts.ii
-    (a a_0 b : ℤ) (ha : a = a_0 * b^2)
-    (ha' : ∀ n m, m ≠ 1 → a ≠ n^m) (ha_0 : Squarefree a_0)
-    (ha_0' : ¬ a_0 ≡ 1 [ZMOD 4]):
+    (a a_0 b : ℤ) (ha : a = a_0 * b ^ 2)
+    (ha' : ∀ n m, m ≠ 1 → a ≠ n ^ m) (ha_0 : Squarefree a_0)
+    (ha_0' : ¬a_0 ≡ 1 [ZMOD 4]) :
+    (S a).HasDensity ArtinConstant {p | p.Prime} := by
+  sorry
+
+
+/--
+**Artin's Conjecture on Primitive Roots**, second half, conditional on GRH.
+-/
+@[category research solved, AMS 11]
+theorem conditional_artin_primitive_roots.parts.ii
+    (a a_0 b : ℤ) (ha : a = a_0 * b ^ 2)
+    (ha' : ∀ n m, m ≠ 1 → a ≠ n ^ m) (ha_0 : Squarefree a_0)
+    (ha_0' : ¬a_0 ≡ 1 [ZMOD 4])
+    (h : type_of% generalized_riemann_hypothesis) :
     (S a).HasDensity ArtinConstant {p | p.Prime} := by
   sorry
 
@@ -138,6 +161,17 @@ theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_
   sorry
 
 /--
+**Artin's Conjecture on Primitive Roots**, second half, power version, conditional on GRH
+-/
+@[category research solved, AMS 11]
+theorem conditional_artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_one
+    (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
+    (hm₂ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4])
+    (h : type_of% generalized_riemann_hypothesis) :
+    (S a).HasDensity (ArtinConstant * powCorrectionFactor m) {p | p.Prime} := by
+  sorry
+
+/--
 **Artin's Conjecture on Primitive Roots**, second half, power version
 If $a = b^m$ is a perfect odd power of a number $b$ whose squarefree part $b_0\equiv 1 \pmod{4}$,
 then the density of the set $S(a)$ of primes $p$ such that $a$ is a primitive root modulo $p$
@@ -149,8 +183,21 @@ where $C$ is Artin's constant.
 -/
 @[category research open, AMS 11]
 theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
-    (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
-    (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]):
+    (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
+    (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]) :
+    (S a).HasDensity
+      (ArtinConstant * powCorrectionFactor m * entanglementFactor b m)
+      {p | p.Prime} := by
+  sorry
+
+/--
+**Artin's Conjecture on Primitive Roots**, second half, power version, conditional on GRH.
+-/
+@[category research solved, AMS 11]
+theorem conditional_artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
+    (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
+    (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4])
+    (h : type_of% generalized_riemann_hypothesis) :
     (S a).HasDensity
       (ArtinConstant * powCorrectionFactor m * entanglementFactor b m)
       {p | p.Prime} := by
