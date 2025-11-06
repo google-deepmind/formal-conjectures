@@ -80,13 +80,4 @@ theorem maximal_sidon_contains_zero (A : Set ℕ) (N : ℕ) (hN : 1 ≤ N)
     (hA : IsMaximalSidonSetIn A N) : 0 ∈ A - A := by
   sorry
 
-/--
-If two Sidon sets have disjoint difference sets (apart from 0), then their union
-is also a Sidon set.
--/
-@[category undergraduate, AMS 5 11]
-theorem disjoint_differences_union_sidon (A B : Set ℕ) (hA : IsSidon A) (hB : IsSidon B)
-    (h : ((A - A) ∩ (B - B)) ⊆ {0}) : IsSidon (A ∪ B) := by
-  sorry
-
 end Erdos42
