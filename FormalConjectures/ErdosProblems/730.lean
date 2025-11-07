@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
   - [A129515](https://oeis.org/A129515)
 -/
 abbrev S :=
-  {(n, m) : ℕ × ℕ | n < m ∧ ((2*n).choose n).primeFactors = ((2*m).choose m).primeFactors}
+  {(n, m) : ℕ × ℕ | n < m ∧ n.centralBinom.primeFactors = m.centralBinom.primeFactors}
 
 
 namespace Erdos730
@@ -49,7 +49,7 @@ theorem erdos_730.variants.explicit_pairs :
 Show that for all $n$, the binomial coefficient $\binom{2n}{n}$ is even.
 -/
 @[category high_school, AMS 11]
-theorem erdos_730.variants.two_div_forall (n : ℕ) (h : 0 < n) : 2 ∣ (2*n).choose n := by
+theorem erdos_730.variants.two_div_forall (n : ℕ) (h : 0 < n) : 2 ∣ n.centralBinom := by
   sorry
 
 /--
@@ -62,7 +62,7 @@ theorem erdos_730.variants.delta_ne_one : ∃ (n m : ℕ), (n, m) ∈ S ∧ m �
   dsimp [S]
   use 10003
   use 10005
-  norm_num [Finset.ext_iff, Nat.choose_eq_zero_iff]
+  norm_num [Finset.ext_iff, Nat.choose_eq_zero_iff, Nat.centralBinom]
   simp_rw [Nat.choose_eq_descFactorial_div_factorial]
   intro p hp
   constructor
