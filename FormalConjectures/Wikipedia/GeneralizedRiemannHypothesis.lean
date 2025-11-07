@@ -32,7 +32,7 @@ Dirichlet $L$-function of $\chi$ which is always a set of non-positive integers.
 - $\chi \neq 1$ is even, then the trivial zeroes are the non-positive even integers. -/
 def trivialZeros {q : ℕ} (χ : DirichletCharacter ℂ q) : Set ℤ :=
   if q = 1 then {-2 * (n + 1) | (n : ℕ) } else
-    if χ.Odd then { -2 * n + 1 | (n : ℕ) } else
+    if χ.Odd then { -2 * n - 1 | (n : ℕ) } else
       { - 2 * n | (n : ℕ) }
 
 /-- The **Generalized Riemann Hypothesis** asserts that all the non-trivial zeros of the
