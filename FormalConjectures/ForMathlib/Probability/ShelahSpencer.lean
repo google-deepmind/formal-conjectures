@@ -364,18 +364,7 @@ lemma ProbabilityMeasure' {E: Type*} [Fintype E] (α : ℝ) (hα : α ≥ 0):
       -- simp [graphEquiv]
       simp only [graphEquiv, Equiv.coe_fn_symm_mk]
       classical
-      -- align the (definitionally equal) decidable instances for `Adj`
-      have hinst :
-          (fun a b =>
-              Classical.propDecidable ((graphOfCfg cfg).Adj a b)) =
-            (fun a b =>
-              SimpleGraph.instDecidableRelAdjFromEdgeSetOfDecidablePredSym2MemSetOfDecidableEq
-                (cfgSet cfg) a b) := by
-        funext a b
-        apply Subsingleton.elim
-      classical
       aesop
-      -- simpa [hinst]
     have h_product_rewrite :
         ∀ cfg : Edge → Bool,
           graphProbabilityProduct' (graphOfCfg cfg) p =
@@ -556,4 +545,4 @@ lemma ProbabilityMeasure' {E: Type*} [Fintype E] (α : ℝ) (hα : α ≥ 0):
     _ = 1 := step2_simplify
 
 end ShelahSpencer
-#min_imports
+-- #min_imports
