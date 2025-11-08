@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
+namespace Erdos361
+
 /--
 Let $c>0$ and $n$ be some large integer. What is the size of the largest
 $A\subseteq \{1,\ldots,\lfloor cn\rfloor\}$ such that $n$ is not a sum of a subset of $A$?
@@ -65,3 +67,5 @@ theorem erdos_361.smallO
       (fun B ↦ n ≠ ∑ a ∈ B, a)).sup Finset.card) :
     (fun n ↦ (A n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
+
+end Erdos361

@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 variable {α : Type} [AddCommMonoid α]
 
 /-!
-# Erdős Problem 41
+# Erdős Problem 33
 
 *Reference:* [erdosproblems.com/33](https://www.erdosproblems.com/33)
 -/

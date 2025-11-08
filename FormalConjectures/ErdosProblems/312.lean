@@ -16,6 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Erdős Problem 312
+
+*Reference:* [erdosproblems.com/312](https://www.erdosproblems.com/312)
+-/
+
 namespace Erdos312
 
 /--

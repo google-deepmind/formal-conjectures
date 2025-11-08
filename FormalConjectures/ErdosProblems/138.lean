@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 138
 
 *References:*
-- [erdosproblems.com/138](https://erdosproblems.com/138)
+- [erdosproblems.com/138](https://www.erdosproblems.com/138)
 - [Be68] Berlekamp, E. R., A construction for partitions which avoid long arithmetic progressions. Canad. Math. Bull. (1968), 409-414.
 - [Er80] Erdős, Paul, A survey of problems in combinatorial number theory. Ann. Discrete Math. (1980), 89-115.
 - [Er81] Erdős, P., On the combinatorial problems which I would most like to see solved. Combinatorica (1981), 25-42.

@@ -16,13 +16,15 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Filter
-
 /-!
 # Erdős Problem 940
 
 *Reference:* [erdosproblems.com/940](https://www.erdosproblems.com/940)
 -/
+
+open Filter
+
+namespace Erdos940
 
 /--
 Let $r \ge 3$. Is it true that the set of integers which are the sum of at most $r$ $r$-powerful numbers
@@ -73,3 +75,5 @@ $2$-powerful numbers.
 theorem erdos_940.variants.three_powerful :
     ∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ 3 ∧ (∀ s ∈ S, (2).Full s) ∧ x = S.sum := by
   sorry
+
+end Erdos940

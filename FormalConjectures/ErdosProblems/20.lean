@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/20](https://www.erdosproblems.com/20)
 -/
+
+namespace Erdos20
+
 universe u
 variable {α : Type}
 
@@ -56,3 +59,5 @@ theorem erdos_20 : ∃ (c : ℕ → ℕ), ∀ n k, f n k < (c k)^n := by
 
 
 -- TODO(firsching): add the various known bounds as variants.
+
+end Erdos20

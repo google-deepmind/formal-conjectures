@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open Filter Finset
 open scoped Real Pointwise
 
+namespace Erdos340
+
 /-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
 such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
 the lower bound is required to avoid `0` being a contender in some cases. -/
@@ -174,3 +176,5 @@ theorem erdos_340.variants.co_density_zero_sub :
     (∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon)
       ↔ answer(sorry) :=
   sorry
+
+end Erdos340
