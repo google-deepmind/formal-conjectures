@@ -13,26 +13,28 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.ModelTheory.Graph
-import Mathlib.ModelTheory.Semantics
-import Mathlib.ModelTheory.Syntax
-import Mathlib.Data.Real.Basic
-import Mathlib.Topology.Basic
-import FormalConjectures.Util.ProblemImports
+
 import FormalConjectures.ForMathlib.Probability.ShelahSpencer
+import FormalConjectures.Util.ProblemImports
+import Mathlib.Data.Real.Irrational
+import Mathlib.ModelTheory.Graph
 
 /-! # Shelah-Spencer's Zero-One Law for Sparse Random Graphs
 
 *Reference*: [Zero-one laws for sparse random graphs]
 Journal of the American Mathematical Society, 1(1), 97-115.
 by *S. Shelah* and *J. Spencer*
+
+[Range and degree of realizability of formulas in the restricted predicate calculus]
+Cybernetics, 5(2), 142-154.
+by *Glebskii, Y. V., Kogan, D. I., Liogon'kiI, M. I., & Talanov, V. A. (1969)* (for α = 0)
 -/
 
 open ShelahSpencer FirstOrder Filter Topology
 namespace ShelahSpencerZeroOneLaw
 
 /--
-`[1] ∀ α ∈ (0, 1) ∖ ℚ, ∀ ψ ∈ T, limₙ μ_α({G: G ∈ SimpleGraph(Fin(n)) ⊨ ψ}) exists and is 1 or 0`
+`[1] ∀ α ∈ (0, 1) ∖ ℚ, ∀ ψ ∈ T, limₙ μ({G: G ∈ SimpleGraph(Fin(n)) ⊨ ψ}) exists and is 1 or 0`
      where `T` is the set of all Sentences in the language of graphs, `μ` is
      `ShelahSpencer.Measure n α` as defined in Probability.Basic.
 -/
@@ -40,13 +42,13 @@ namespace ShelahSpencerZeroOneLaw
 theorem zeroOne_irrational
   (α : ℝ)(hα : 0 < α ∧ α < 1) (hirr : Irrational α) (φ : Language.graph.Sentence) :
    Tendsto (fun n =>
-     (ShelahSpencer.Measure n α) {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure
+     (ShelahSpencer.Measure' (E := Fin n) α) {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure
        φ}) atTop (𝓝 0) ∨
    Tendsto (fun n =>
-     (ShelahSpencer.Measure n α) {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure
+     (ShelahSpencer.Measure' (E := Fin n) α) {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure
        φ}) atTop (𝓝 1) := by sorry
 
-/-- `[2] ∀ α ∈ (0, 1) ∩ ℚ, ∃ ψ ∈ T, limₙ μ_α({G: G ∈ SimpleGraph(Fin(n)) ⊨ ψ}) does not exist.`
+/-- `[2] ∀ α ∈ (0, 1) ∩ ℚ, ∃ ψ ∈ T, limₙ μ({G: G ∈ SimpleGraph(Fin(n)) ⊨ ψ}) does not exist.`
 (Theorem 2 gives "oscillation")
 -/
 @[category research solved, AMS 03 05]
@@ -55,6 +57,6 @@ theorem zeroOne_rational
    ∃ φ : Language.graph.Sentence,
    ∀ b : ENNReal,
    ¬ Tendsto (fun n =>
-     (ShelahSpencer.Measure n α) {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure
+     (ShelahSpencer.Measure' (E := Fin n) α) {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure
        φ}) atTop (𝓝 b) := by sorry
 end ShelahSpencerZeroOneLaw
