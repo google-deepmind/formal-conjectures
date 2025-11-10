@@ -14,26 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import Mathlib.NumberTheory.DirichletCharacter.Basic
 
-/-!
-# Erdős Problem 398
+namespace DirichletCharacter
 
-*References:*
- - [erdosproblems.com/398](https://www.erdosproblems.com/398)
- - [Wikipedia: Brocard's problem](https://en.wikipedia.org/wiki/Brocard%27s_problem)
--/
+instance {S : Type*} [DecidableEq S] [CommRing S] {m : ℕ} :
+    DecidablePred (Odd  (S := S) (m := m)) :=
+  fun ψ ↦ decidable_of_iff (ψ (-1) = -1) <| by rfl
 
-open Nat
+instance {S : Type*} [DecidableEq S] [CommRing S] {m : ℕ} :
+    DecidablePred (Even (S := S) (m := m)) :=
+  fun ψ ↦ decidable_of_iff (ψ (-1) = 1) <| by rfl
 
-namespace Erdos398
-
-/--
-**Brocard's Problem**
-Does $n! + 1 = m^2$ have integer solutions other than $n = 4, 5, 7$?
--/
-@[category research open, AMS 11]
-theorem erdos_398 : {n | ∃ m, n ! + 1 = m ^ 2} = {4, 5, 7} ↔ answer(sorry) := by
-  sorry
-
-end Erdos398
+end DirichletCharacter

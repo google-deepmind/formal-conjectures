@@ -31,6 +31,22 @@ instance Full.decide : ∀ k n, Decidable (Full k n) := by
   dsimp [Full]
   infer_instance
 
+/-- Every natural number is $0$-full. -/
+theorem Full.zero_left (n : ℕ) : (0 : ℕ).Full n := by
+  simp [Nat.Full]
+
+/-- Every natural number is $1$-full. -/
+theorem Full.one_left (n : ℕ) : (1 : ℕ).Full n := by
+  aesop (add simp [Nat.Full])
+
+/-- $0$ is always $k$-full. -/
+theorem Full.zero_right (k : ℕ) : k.Full 0 := by
+  simp [Nat.Full]
+
+/-- $1$ is always $k$-full. -/
+theorem Full.one_right (k : ℕ) : k.Full 1 := by
+  simp [Nat.Full]
+
 /--
 A [Powerful number](https://en.wikipedia.org/wiki/Powerful_number) is a natural number $n$ where
 for every prime divisor $p$, $p^2$ divides $n$.
