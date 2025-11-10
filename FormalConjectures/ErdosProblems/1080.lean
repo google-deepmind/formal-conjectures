@@ -21,8 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* https://www.erdosproblems.com/1080
 
-Let `G` be a bipartite simple graph on `n` vertices such that one part has size `⌊ n^(2/3) ⌋`.
-Is there a constant `c > 0` such that if `|E(G)| ≥ c n`, then `G` contains a 6-cycle `C₆`?
+Let `G` be a bipartite simple graph on `n` vertices such that one part has
+size `⌊ n^(2/3) ⌋`.
+Is there a constant `c > 0` such that if `|E G| ≥ c n`, then `G` contains a 6-cycle `C₆`?
 
 **Status:** open.
 
@@ -43,9 +44,9 @@ variable {V : Type*} [Fintype V] [DecidableEq V]
 /-- Minimal bipartition predicate with explicit parts `U, W`. -/
 structure IsBipartition (G : SimpleGraph V) (U W : Finset V) : Prop where
   disjoint : Disjoint U W
-  cover   : U ∪ W = (Finset.univ : Finset V)
-  no_edges_in_U : ∀ ⦃x y⦄, x ∈ U → y ∈ U → ¬ G.Adj x y
-  no_edges_in_W : ∀ ⦃x y⦄, x ∈ W → y ∈ W → ¬ G.Adj x y
+  cover    : U ∪ W = (Finset.univ : Finset V)
+  no_edges_in_U : ∀ {x y}, x ∈ U → y ∈ U → ¬ G.Adj x y
+  no_edges_in_W : ∀ {x y}, x ∈ W → y ∈ W → ¬ G.Adj x y
 
 /-- `G` contains a 6-cycle. -/
 def HasC6 (G : SimpleGraph V) : Prop :=
@@ -58,9 +59,8 @@ def HasC6 (G : SimpleGraph V) : Prop :=
               have : 0 < 6 := by decide
               exact Nat.mod_lt _ this⟩))
 
-/-- Size target: `⌊ n^(2/3) ⌋`. -/
-def partSize (n : ℕ) : ℕ :=
-  Nat.floor ((n : ℝ) ^ (2 / 3 : ℝ))
+/-- Size target `⌊ n^(2/3) ⌋`. -/
+def partSize (n : ℕ) : ℕ := Nat.floor ((n : ℝ) ^ (2 / 3 : ℝ))
 
 /-- **Problem statement** packaged as a proposition. -/
 def Statement : Prop :=
@@ -76,6 +76,6 @@ Erdős Problem 1080 (formal shell, in the “problem ↔ answer” style used in
 -/
 @[category research open, AMS 05]
 theorem erdos_1080 : Statement ↔ answer(sorry) := by
-sorry
+  sorry
 
 end Erdos1080
