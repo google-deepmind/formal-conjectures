@@ -14,26 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import Mathlib.Analysis.Asymptotics.Defs
+import Mathlib.Order.Filter.AtTopBot.Defs
 
-/-!
-# Erdős Problem 398
-
-*References:*
- - [erdosproblems.com/398](https://www.erdosproblems.com/398)
- - [Wikipedia: Brocard's problem](https://en.wikipedia.org/wiki/Brocard%27s_problem)
--/
-
-open Nat
-
-namespace Erdos398
-
-/--
-**Brocard's Problem**
-Does $n! + 1 = m^2$ have integer solutions other than $n = 4, 5, 7$?
--/
-@[category research open, AMS 11]
-theorem erdos_398 : {n | ∃ m, n ! + 1 = m ^ 2} = {4, 5, 7} ↔ answer(sorry) := by
-  sorry
-
-end Erdos398
+notation f " ≫ " g => Asymptotics.IsBigO Filter.atTop g f

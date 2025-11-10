@@ -17,23 +17,20 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 845
+# Kummer–Vandiver conjecture
 
-*Reference:* [erdosproblems.com/845](https://www.erdosproblems.com/845)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Kummer%E2%80%93Vandiver_conjecture)
 -/
 
-namespace Erdos845
+open NumberField CyclotomicField IsCyclotomicExtension
+
+-- TODO(Paul-Lez): change `PNat` to `Nat` once the version of Mathlib we're on allows it.
 
 /--
-Let $C > 0$. Is it true that the set of integers of the form $n = b_1 + \cdots + b_t$,
-with $b_1 < \cdots < b_t$, where $b_i = 2^{k_i}3^{l_i}$ for $1 \leq i\leq t$ and
-$b_t \leq Cb_1$ has density $0$?
--/
+Kummer–Vandiver conjecture states that for every prime $p$, the class number of the maximal
+real subfield of $\mathbb{Q}(\zeta_p)$ is not divisible by $p$.
+--/
 @[category research open, AMS 11]
-theorem erdos_845 (C : ℝ) (hC : 0 < C) :
-    let f : ℕ × ℕ → ℕ := fun (k, l) ↦ 2 ^ k * 3 ^ l
-    { ∑ x ∈ B, f x | (B : Finset (ℕ × ℕ)) (h : B.Nonempty)
-      (hB : B.sup f ≤ C * B.inf' h f) }.HasDensity 0 ↔ answer(sorry) := by
+theorem kummer_vandiver (p : ℕ+) (hp : p.Prime) :
+    ¬ ↑p ∣ (classNumber (maximalRealSubfield (CyclotomicField p ℚ))) := by
   sorry
-
-end Erdos845

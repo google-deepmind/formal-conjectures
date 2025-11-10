@@ -25,6 +25,9 @@ import FormalConjectures.Util.ProblemImports
 open Filter Set AdditiveCombinatorics
 open scoped Pointwise
 
+
+namespace Erdos28
+
 /--
 If $A ⊆ \mathbb{N}$ is such that $A + A$ contains all but finitely many integers then
  $\limsup 1_A ∗ 1_A(n) = \infty$.
@@ -35,3 +38,5 @@ theorem erdos_28 (A : Set ℕ) (h : (A + A)ᶜ.Finite) :
   sorry
 
 -- TODO(firsching): add the theorems/conjectures for the comments on the page
+
+end Erdos28
