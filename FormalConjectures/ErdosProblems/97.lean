@@ -74,7 +74,7 @@ Does every convex polygon have a vertex with no other 4 vertices equidistant fro
 -/
 @[category research open, AMS 52]
 theorem erdos_97 :
-    (∀ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A → ¬HasNEquidistantProperty 4 A) ↔ answer(sorry) := by
+    (∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -107,7 +107,7 @@ with no other $k$ vertices equidistant from it.
 -/
 @[category research open, AMS 52]
 theorem erdos_97.variants.k_equidistant :
-    (∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A → ¬HasNEquidistantProperty k A) ↔ answer(sorry) := by
+    (∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty k A) ↔ answer(sorry) := by
   sorry
 
 /--
