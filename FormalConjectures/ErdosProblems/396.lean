@@ -30,7 +30,7 @@ Is it true that for every $k$ there exists $n$ such that
 $$\prod_{0\leq i\leq k}(n-i) \mid \binom{2n}{n}?$$
 -/
 @[category research open, AMS 11]
-def erdos_396 : (∀ k : ℕ, ∃ n : ℕ, descFactorial n (k + 1) ∣ centralBinom n) ↔ answer(sorry) := by
+theorem erdos_396 : (∀ k : ℕ, ∃ n : ℕ, descFactorial n (k + 1) ∣ centralBinom n) ↔ answer(sorry) := by
   sorry
 
 
