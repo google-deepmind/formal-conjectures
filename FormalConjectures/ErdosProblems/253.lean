@@ -26,20 +26,20 @@ namespace Erdos253
 
 open scoped Topology
 
-/-- The predicate that `a : ℕ → ℤ` is a strictly monotone sequence such that every infinite
+/-- The predicate that `a : ℕ → ℕ` is a strictly monotone sequence such that every infinite
 arithmetic progression contains infinitely many integers that are the sum of distinct $a_i$s.-/
 @[inline]
-def RepresentsAPs (a : ℕ → ℤ) : Prop :=
+def RepresentsAPs (a : ℕ → ℕ) : Prop :=
     StrictMono a ∧ ∀ l, l.IsAPOfLength ⊤ → (subsetSums (Set.range a) ∩ l).Infinite
 
-
 /--
-Let $a_1 < a_2 < \dotsc$ be an infinite sequence of integers such that $\frac{a_{i+1}}{a_i} \to 1$. If every
-arithmetic progression contains infinitely many integers which are the sum of distinct $a_i$ then
-every sufficiently large integer is the sum of distinct $a_i$.
+Let $a_1 < a_2 < \dotsc$ be an infinite sequence of positive integers such that
+$\frac{a_{i+1}}{a_i} \to 1$. If every arithmetic progression contains infinitely many
+integers which are the sum of distinct $a_i$ then every sufficiently large integer is
+the sum of distinct $a_i$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_253 : ¬ ∀ a : ℕ → ℤ,
+theorem erdos_253 : ¬ ∀ a : ℕ → ℕ, a 0 > 0 →
     RepresentsAPs a → (Filter.atTop.Tendsto (fun n ↦ (a <| n + 1 : ℝ) / a n) (𝓝 1)) →
       subsetSums (Set.range a) ∈ Filter.cofinite := by
   sorry
