@@ -39,7 +39,7 @@ integers which are the sum of distinct $a_i$ then every sufficiently large integ
 the sum of distinct $a_i$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_253 : ¬ ∀ a : ℕ → ℕ, a 0 > 0 →
+theorem erdos_253 : ¬ ∀ a : ℕ → ℕ, 0 < a 0 →
     RepresentsAPs a → (Filter.atTop.Tendsto (fun n ↦ (a <| n + 1 : ℝ) / a n) (𝓝 1)) →
       subsetSums (Set.range a) ∈ Filter.cofinite := by
   sorry
