@@ -44,6 +44,18 @@ theorem erdos_274 :
   sorry
 
 /--
+If `G` is a finite abelian group then there cannot exist an exact covering of `G` by more
+than one cosets of different sizes? (i.e. each element is contained in exactly one
+of the cosets.)
+-/
+@[category research solved, AMS 20]
+theorem erdos_274.variants.abelian (G : Type*) [Fintype G] [CommGroup G]
+    (hG : 1 < Fintype.card G) (P : Partition (⊤ : Subgroup G)) (hP : 1 < P.parts.ncard)
+    (h : ∀ A ∈ P.parts, ∃ᵉ (s : G) (H : Subgroup G), s • (H : Set G) = A) :
+    ∃ᵉ (A ∈ P.parts) (B ∈ P.parts), A ≠ B ∧ A.index = B.index := by
+  sorry
+
+/--
 Let $G$ be a group, and let $A = \{a_1G_1, \dots, a_kG_k\}$ be a finite system of left cosets of
 subgroups $G_1, \dots, G_k$ of $G$.
 
