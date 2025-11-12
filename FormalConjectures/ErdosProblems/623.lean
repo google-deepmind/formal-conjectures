@@ -32,7 +32,7 @@ $X$ to $X$ such that $f(A)\not\in A$ for all $A$. Must there exist an infinite $
 that is independent - that is, for all finite $B\subset Y$ we have $f(B)\not\in Y$?
 -/
 @[category research open, AMS 3]
-theorem erdos_623 : (∀ (X : Type u) (hX : Cardinal.mk X = Cardinal.aleph Ordinal.omega0)
+theorem erdos_623 : (∀ (X : Type u) (hX : #X = ℵ_ ω)
     (f : Finset X → X), (∀ A : Finset X, f A ∉ A) →
     (∃ Y : Set X, Set.Infinite Y ∧ (∀ (B : Finset X), ↑B ⊆ Y → f B ∉ Y))) ↔ answer(sorry) := by
   sorry
