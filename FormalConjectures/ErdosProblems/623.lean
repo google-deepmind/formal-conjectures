@@ -16,6 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 open Filter Real Set
+open scoped Cardinal Ordinal
 
 namespace Erdos623
 
