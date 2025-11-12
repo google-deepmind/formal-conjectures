@@ -38,7 +38,7 @@ Conjectured by Burr, Erdős, Graham, and Li [BEGL96]
 -/
 @[category research open, AMS 11]
 theorem erdos_124 : (∀ k, ∀ d : Fin k → ℕ,
-    ∀ i, 3 ≤ d i →  StrictMono d → ∑ i : Fin k, (1 : ℚ) / d i - 1 = 1 →
+    (∀ i, 3 ≤ d i) →  StrictMono d → ∑ i : Fin k, (1 : ℚ) / (d i - 1) = 1 →
     ∀ᶠ n in atTop, ∃ c : Fin k → ℕ, ∃ a : Fin k → ℕ,
     ∀ i, c i ∈ ({0, 1} : Finset ℕ) ∧
     ∀ i, ((d i).digits (a i)).toFinset ⊆ {0, 1} ∧
