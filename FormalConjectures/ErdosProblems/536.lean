@@ -35,8 +35,8 @@ where $[\cdot, \cdot]$ denotes the least common multiple?
 theorem erdos_536 :
     (∀ᵉ (ε > (0: ℝ)), ∀ᶠ N in atTop,
     ∀ (A : Finset ℕ), A ⊆ Icc 1 N → (ε * (N : ℝ)) ≤ (A.card : ℝ) →
-    ∃ a b c : ℕ,
-    # {a, b, c} = 3 ∧ a ∈ A ∧ b ∈ A ∧ c ∈ A ∧ a.lcm b = b.lcm c ∧ b.lcm c = a.lcm c)
+    ∃ᵉ  (a ∈ A) (b ∈ A) (c ∈ A),
+    # {a, b, c} = 3 ∧ a.lcm b = b.lcm c ∧ b.lcm c = a.lcm c)
     ↔ answer(sorry) := by
   sorry
 
