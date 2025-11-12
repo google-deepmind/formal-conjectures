@@ -26,6 +26,7 @@ open EuclideanGeometry Finset
 
 namespace Erdos659
 
+/-- The minimum number of distinct distances determined by any subset of `points` of size `n`. -/
 noncomputable def minimalDistinctDistancesSubsetOfSize (points : Set ℝ²) (n : ℕ) : ℕ :=
   sInf {(distinctDistances subset : ℝ) |
     (subset : Finset ℝ²) (_ : subset.toSet ⊆ points) (_ : subset.card = n)}
