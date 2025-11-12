@@ -35,9 +35,8 @@ If `G` is a group then can there exist an exact covering of `G` by more than one
 different sizes? (i.e. each element is contained in exactly one of the cosets.)
 -/
 @[category research open, AMS 20]
-theorem erdos_274 :
-    (∀ (G : Type*), [Group G] → 1 < ENat.card G →
-    ∃ (P : Partition (⊤ : Subgroup G)),
+theorem erdos_274 (G : Type*) [Group G] (hG : 1 < ENat.card G) :
+    (∃ (P : Partition (⊤ : Subgroup G)),
       1 < P.parts.ncard ∧
       (∀ A ∈ P.parts, ∃ᵉ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
       P.parts.Pairwise fun A B ↦ #A ≠ #B) ↔ answer(sorry) := by
