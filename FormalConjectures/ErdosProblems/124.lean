@@ -42,7 +42,7 @@ theorem erdos_124 : (∀ k, ∀ d : Fin k → ℕ,
     ∀ᶠ n in atTop, ∃ c : Fin k → ℕ, ∃ a : Fin k → ℕ,
     ∀ i, c i ∈ ({0, 1} : Finset ℕ) ∧
     ∀ i, ((d i).digits (a i)).toFinset ⊆ {0, 1} ∧
-    n = ∑ i, (c i) * (a i )) ↔ answer(sorry) := by
+    n = ∑ i, c i * a i) ↔ answer(sorry) := by
   sorry
 
 -- TODO(firsching): formalize the other two claims from the additional material
