@@ -25,7 +25,7 @@ variable {α : Type} [AddCommMonoid α]
 -/
 
 open Classical
-open scoped goldenRatio
+open scoped goldenRatio ENNReal
 
 namespace Erdos33
 
@@ -42,8 +42,8 @@ for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of
 -/
 @[category research open, AMS 11]
 theorem erdos_33 : IsLeast
-    { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) = c}
+    { c : ℝ≥0∞ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
+      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / (√N).toNNReal) = c}
     answer(sorry) := by
   sorry
 
@@ -51,9 +51,8 @@ theorem erdos_33 : IsLeast
 Erdos observed that this value is finite and > 1.
 -/
 @[category research solved, AMS 11]
-theorem erdos_33.variants.one_mem_lowerBounds :
-    1 ∈ lowerBounds { c : ℝ | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) = c} := by
+theorem erdos_33.variants.one_mem_lowerBounds : ∃ A, AdditiveBasisCondition A ∧
+    1 < Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) := by
   sorry
 
 /--
