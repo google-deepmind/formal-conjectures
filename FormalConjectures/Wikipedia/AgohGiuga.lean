@@ -75,37 +75,37 @@ theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
 -- Formalisation note: refers to a Giuga number in the sense of
 -- https://en.wikipedia.org/wiki/Giuga_number
 /--
-A (weak) Giuga number is a number $n$ such that
+A (weak) Giuga number is a composite number $n$ such that
 $$\sum_{i=1}^{n - 1}i^{\varphi(n)} \equiv -1\pmod{n}$$.
 -/
 def IsWeakGiuga (n : ℕ) : Prop :=
-    2 ≤ n ∧ ¬ n.Prime ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ φ n
+    n.Composite ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ φ n
 
 -- Formalisation note: refers to a Giuga number in the sense of
 -- https://www.cambridge.org/core/services/aop-cambridge-core/content/view/8A6841B3FDA442A8FAEC89AA702C16F6/S0008439500007244a.pdf/note_on_giugas_conjecture.pdf
 /--
-A (strong) Giuga number is a number $n$ such that
+A (strong) Giuga number is a composite number $n$ such that
 $$\sum_{i=1}^{n - 1}i^{n - 1} \equiv -1\pmod{n}$$-/
 def IsStrongGiuga (n : ℕ) : Prop :=
-    2 ≤ n ∧ ¬ n.Prime ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
+    n.Composite ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
 
 /--
-A number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
+A composite number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
 prime divisors $p$ of $n$.
 -/
 @[category research solved, AMS 11]
-theorem isWeakGiuga_iff_prime_dvd (n : ℕ) :
+theorem isWeakGiuga_iff_prime_dvd {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∀ p ∈ n.primeFactors, p ∣ (n / p - 1) := by
   sorry
 
 /--
-A number $n$ is weak Giuga if and only if
+A composite number $n$ is weak Giuga if and only if
 $$
 \sum_{p\mid n} \frac{1}{p} - \frac{1}{n} \in\mathbb{N}.
 $$
 -/
 @[category research solved, AMS 11]
-theorem isWeakGiuga_iff_sum_primeFactors (n : ℕ) :
+theorem isWeakGiuga_iff_sum_primeFactors {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∃ m : ℕ, ∑ p ∈ n.primeFactors, (1 / p : ℚ) - 1 / n = m := by
   sorry
 
@@ -128,7 +128,7 @@ theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCa
   rw [mul_assoc] at ha₁
   rw [mul_assoc, ← geom_sum_mul_of_one_le ((1).le_add_left (p * N)), p.coprime_mul_iff_left]
   simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero']).not.mpr
-    ((ZMod.natCast_zmod_eq_zero_iff_dvd _ _).not.mp (by simp_arith [le_of_lt ha₁.1]))
+    ((ZMod.natCast_eq_zero_iff _ _).not.mp (by simp [le_of_lt ha₁.1]))
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /-- A composite number `a` is Carmichael if and only if it is squarefree
@@ -152,7 +152,7 @@ theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     have : NeZero k := ⟨fun _ => by simp_all⟩
     have : p * k ∣ (e.symm (g, 1)).val ^ (p * k - 1) - 1 := h _ (ZMod.val_pos.2 (by aesop))
       ((ZMod.isUnit_iff_coprime _ _).1 (by simp [Prod.isUnit_iff])).symm
-    simp_all [p.totient_prime, sub_eq_zero, ZMod.val_pos, ← ZMod.natCast_zmod_eq_zero_iff_dvd,
+    simp_all [p.totient_prime, sub_eq_zero, ZMod.val_pos, ← ZMod.natCast_eq_zero_iff,
       ← map_pow, ← Units.val_pow_eq_pow_val, ← orderOf_dvd_iff_pow_eq_one,
       orderOf_eq_card_of_forall_mem_zpowers]
   · obtain ⟨h_sqfr, h_dvd⟩ := h
@@ -167,7 +167,7 @@ theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
           h_sqfr p hp <| (sq p ▸ (pow_dvd_pow p h).trans (a.ordProj_dvd p))
         field_simp [h, pow_mul, le_antisymm this (hp.dvd_iff_one_le_factorization _ |>.1 _),
           ← CharP.cast_eq_zero_iff (ZMod p)]
-        simp_all_arith [CharP.cast_eq_zero_iff _ p,
+        simp_all +decide [CharP.cast_eq_zero_iff _ p,
           hp.coprime_iff_not_dvd.1 (hab.of_dvd_left (by aesop)), ZMod.pow_card_sub_one_eq_one]
       · simp [a.factorization_eq_zero_of_not_dvd hpa]
     · simp_all
@@ -179,7 +179,7 @@ and weak Giuga).
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
 @[category research solved, AMS 11]
-theorem isStrongGiuga_iff (a : ℕ) :
+theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
     IsStrongGiuga a ↔ IsCarmichael a ∧ ∃ n : ℕ, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
   sorry
 

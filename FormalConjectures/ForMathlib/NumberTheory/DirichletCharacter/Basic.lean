@@ -14,10 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Logic.Equiv.Fin
+import Mathlib.NumberTheory.DirichletCharacter.Basic
 
-variable {n : ℕ}
+namespace DirichletCharacter
 
-theorem lt_finRotate_of_ne_last {i : Fin (n + 1)} (hi : i ≠ Fin.last n) :
-    i < finRotate _ i := by
-  rw [Fin.lt_iff_val_lt_val, coe_finRotate_of_ne_last hi, Nat.lt_add_one_iff]
+instance {S : Type*} [DecidableEq S] [CommRing S] {m : ℕ} :
+    DecidablePred (Odd  (S := S) (m := m)) :=
+  fun ψ ↦ decidable_of_iff (ψ (-1) = -1) <| by rfl
+
+instance {S : Type*} [DecidableEq S] [CommRing S] {m : ℕ} :
+    DecidablePred (Even (S := S) (m := m)) :=
+  fun ψ ↦ decidable_of_iff (ψ (-1) = 1) <| by rfl
+
+end DirichletCharacter

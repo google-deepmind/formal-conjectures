@@ -20,13 +20,13 @@ import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
 import FormalConjectures.ForMathlib.Algebra.Polynomial.HasseDeriv
 import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjectures.ForMathlib.AlgebraicGeometry.VectorBundle
+import FormalConjectures.ForMathlib.Analysis.Asymptotics.Basic
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.NthRoot
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Basis
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Convolution
 import FormalConjectures.ForMathlib.Combinatorics.Basic
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Bipartite
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Coloring
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
@@ -35,6 +35,7 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.I
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Balanced
 import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjectures.ForMathlib.Computability.TuringMachine.PostTuringMachine
+import FormalConjectures.ForMathlib.Data.Finset.Empty
 import FormalConjectures.ForMathlib.Data.Finset.OrdConnected
 import FormalConjectures.ForMathlib.Data.Nat.Factorization.Basic
 import FormalConjectures.ForMathlib.Data.Nat.Full
@@ -51,8 +52,9 @@ import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Geometry.«3d»
 import FormalConjectures.ForMathlib.Geometry.Euclidean
 import FormalConjectures.ForMathlib.LinearAlgebra.SpecialLinearGroup
-import FormalConjectures.ForMathlib.Logic.Equiv.Fin
+import FormalConjectures.ForMathlib.Logic.Equiv.Fin.Rotate
 import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
+import FormalConjectures.ForMathlib.NumberTheory.DirichletCharacter.Basic
 import FormalConjectures.ForMathlib.NumberTheory.CoveringSystem
 import FormalConjectures.ForMathlib.NumberTheory.Lacunary
 import FormalConjectures.ForMathlib.NumberTheory.PrimeGap

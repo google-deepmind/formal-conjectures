@@ -26,11 +26,6 @@ The trap this avoids is that using `rpow`, `(-8 : ℝ) ^ (1/3 : ℝ) = 1`.
 This is being upstreamed to Mathlib in leanprover-community/mathlib4#26935.
 -/
 
-theorem SignType.pow_odd (s : SignType) (n : ℕ) (hn : Odd n) : s ^ n = s := by
-  obtain ⟨k, rfl⟩ := hn
-  rw [pow_add, pow_one, pow_mul, sq]
-  cases s <;> simp
-
 namespace Real
 
 noncomputable def nthRoot (n : ℕ) (r : ℝ) : ℝ :=
@@ -105,9 +100,9 @@ theorem nthRoot_mul_of_even_of_nonneg {n : ℕ} {a b : ℝ} (hn : Even n)
   simp only [Real.nthRoot_of_even hn, Real.mul_rpow ha hb]
 
 theorem nthRoot_mul_of_odd {n : ℕ} {a b : ℝ} (hn : Odd n) :
-    Real.nthRoot n (a * b) = Real.nthRoot n a * Real.nthRoot n b := by
-  simp only [Real.nthRoot_of_odd hn, sign_mul, SignType.coe_mul, abs_mul,
-    Real.mul_rpow (Real.nnabs.proof_1 a) (Real.nnabs.proof_1 b)]
+    nthRoot n (a * b) = nthRoot n a * nthRoot n b := by
+  simp [Real.nthRoot_of_odd hn, sign_mul, SignType.coe_mul, abs_mul,
+  Real.mul_rpow (abs_nonneg a) (abs_nonneg b)]
   ring
 
 end Real

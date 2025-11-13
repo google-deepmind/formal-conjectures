@@ -33,6 +33,7 @@ $$ a + b > n + C \log n ?$$
 @[category research open, AMS 11]
 theorem erdos_728 :
     (∀ (ε C : ℝ) (hε : 0 < ε) (hC : 0 < C), ∃ a b n : ℕ,
+      0 < n ∧
       ε * n < a ∧
       ε * n < b ∧
       Nat.factorial a * Nat.factorial b ∣ Nat.factorial n * Nat.factorial (a + b - n) ∧

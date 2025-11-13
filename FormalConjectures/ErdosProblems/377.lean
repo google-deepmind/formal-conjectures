@@ -33,7 +33,7 @@ The sum of the inverses of all primes smaller than $n$, which don't divide the c
 binom coefficient.
 -/
 noncomputable abbrev sumInvPrimesNotDvdCentralBinom (n : ℕ) : ℝ :=
-  ∑ p ∈ Finset.Icc 1 n with p.Prime, if p ∣ (2 * n).choose n then 0 else (1 : ℝ) / p
+  ∑ p ∈ Finset.Icc 1 n with p.Prime, if p ∣ n.centralBinom then 0 else (1 : ℝ) / p
 
 /--
 Is there some absolute constant $C > 0$ such that
