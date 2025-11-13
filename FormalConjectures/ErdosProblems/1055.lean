@@ -41,7 +41,7 @@ $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
 Show that for each $r$ there exists a prime $p$ of class $r$. -/
 @[category undergraduate, AMS 11]
-theorem exists_p (r : ℕ+) : ∃ p, p.Prime ∧ IsOfClass r p :=
+theorem exists_p (r : ℕ+) : ∃ p, p.Prime ∧ IsOfClass r p := by
   sorry
 
 open Classical
@@ -57,7 +57,7 @@ $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
 Are there infinitely many primes in each class?-/
 @[category research open, AMS 11]
-theorem erdos_1055 (r) : {p | p.Prime ∧ IsOfClass r p}.Infinite :=
+theorem erdos_1055 (r) : {p | p.Prime ∧ IsOfClass r p}.Infinite := by
   sorry
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
@@ -67,7 +67,7 @@ If $p_r$ is the least prime in class $r$, then how does $p_r^{1/r}$ behave?
 Erdos conjectured that this tends to infinity. -/
 @[category research open, AMS 11]
 theorem erdos_1055.variants.erdos_limit :
-    Filter.atTop.Tendsto (fun r ↦ (p r : ℝ) ^ (1 / r : ℝ)) Filter.atTop :=
+    Filter.atTop.Tendsto (fun r ↦ (p r : ℝ) ^ (1 / r : ℝ)) Filter.atTop := by
   sorry
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
@@ -77,7 +77,7 @@ If $p_r$ is the least prime in class $r$, then how does $p_r^{1/r}$ behave?
 Selfridge conjectured that this is bounded. -/
 @[category research open, AMS 11]
 theorem erdos_1055.variants.selfridge_limit :
-    ∃ M, ∀ r, (p r : ℝ) ^ (1 / r : ℝ) ≤ M :=
+    ∃ M, ∀ r, (p r : ℝ) ^ (1 / r : ℝ) ≤ M := by
   sorry
 
 --TODO(Paul-Lez): formalize the rest of the problems on the page.
