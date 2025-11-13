@@ -23,17 +23,18 @@ import FormalConjectures.Util.ProblemImports
 -/
 namespace Erdos624
 
-open Set Function Filter Nat Real Asymptotics
+open Filter Finset
 
 /--
 The condition that an integer `m` ensures the existence of a function `f` covering `Fin n`
 for all large enough subsets `Y`.
-The property is invariant under bijection, so we use a representative `Fin n` for a finite set of size `n`.
+The property is invariant under bijection, so we use a representative `Fin n` for a finite set
+of size `n`.
 -/
-def H_property (n m : ℕ) : Prop :=
-  ∃ (f : Set (Fin n) → (Fin n)),
-    ∀ (Y : Set (Fin n)), Nat.card Y ≥ m →
-      Set.image f (Set.powerset Y) = Set.univ
+def exists_eventually_surjective (n m : ℕ) : Prop :=
+  ∃ (f : Finset (Fin n) → Fin n),
+    ∀ (Y : Finset (Fin n)), #Y ≥ m →
+      Y.powerset.image f = Finset.univ
 
 /--
 Let $H(n)$ be the minimum integer $m$ such that there is a function $f: \mathcal{P}(X) \to X$
@@ -42,10 +43,8 @@ the set $\{f(A) : A \subseteq Y\}$ covers $X$.
 -/
 noncomputable def H (n : ℕ) : ℕ :=
   if 0 < n then
-    sInf {m : ℕ | H_property n m}
+    sInf {m : ℕ | exists_eventually_surjective n m}
   else 0
-
-open Asymptotics
 
 /--
 Let $X$ be a finite set of size $n$ and $H(n)$ be such that there is a function
@@ -55,7 +54,7 @@ Prove that $H(n)-\log_2 n \to \infty$.
 -/
 @[category research open, AMS 5]
 theorem erdos_624 :
-    Tendsto (fun n : ℕ => (H n : ℝ) - (Real.log (n : ℝ) / Real.log 2)) atTop atTop := by
+    atTop.Tendsto (fun n : ℕ => H n - Real.logb 2 (n : ℝ)) atTop := by
   sorry
 
 end Erdos624
