@@ -32,19 +32,19 @@ open Set
 Defines the set of new numbers generated from a set A by the operation
 $x y - 1$ for $x \neq y$.
 -/
-def next_generation (A : Set ℕ) : Set ℕ :=
+def nextGeneration (A : Set ℕ) : Set ℕ :=
   { z : ℕ | ∃ x y, x ∈ A ∧ y ∈ A ∧ x ≠ y ∧ z = x * y - 1 }
 
 /--
 The sequence of sets $A_n$ where $A_0 = \{2, 3\}$ and $A_{n+1}$ is $A_n$ union all newly
 generated elements.
 -/
-def sequence_set : ℕ → Set ℕ
+def sequenceSet : ℕ → Set ℕ
   | 0 => {2, 3}
-  | n + 1 => (sequence_set n) ∪ (next_generation (sequence_set n))
+  | n + 1 => (sequenceSet n) ∪ (nextGeneration (sequenceSet n))
 
 /-- The set of integers which eventually appear in the sequence, which is the union of all $A_n$. -/
-def generated_set : Set ℕ := ⋃ n : ℕ, sequence_set n
+def generatedSet : Set ℕ := ⋃ n : ℕ, sequenceSet n
 
 /--
 Let $a_1=2$ and $a_2=3$ and continue the sequence by appending to $a_1,\ldots,a_n$ all possible
@@ -52,7 +52,7 @@ values of $a_ia_j-1$ with $i\neq j$.
 Is it true that the set of integers which eventually appear has positive density?
 -/
 @[category research open, AMS 11]
-theorem erdos_424 : (generated_set).HasPosDensity ↔ answer(sorry) := by
+theorem erdos_424 : generatedSet.HasPosDensity ↔ answer(sorry) := by
   sorry
 
 -- TODO(firsching): formalize the statements from the additional material
