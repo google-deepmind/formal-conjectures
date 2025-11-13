@@ -185,7 +185,16 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
     simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
+/--
+Given a finite set of points in the plane, we define the number of distinct distances between pairs
+of points.
+-/
+noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
+  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
+
 end EuclideanGeometry
+
+
 
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
   dist p q = dist q r ∨ dist q r = dist r p ∨ dist r p = dist p q
