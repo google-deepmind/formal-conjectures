@@ -31,7 +31,7 @@ for all large enough subsets `Y`.
 The property is invariant under bijection, so we use a representative `Fin n` for a finite set
 of size `n`.
 -/
-def exists_eventually_surjective (n m : ℕ) : Prop :=
+def ExistsEventuallySurjective (n m : ℕ) : Prop :=
   ∃ (f : Finset (Fin n) → Fin n),
     ∀ (Y : Finset (Fin n)), #Y ≥ m →
       Y.powerset.image f = Finset.univ
