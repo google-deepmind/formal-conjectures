@@ -17,12 +17,12 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# New Mersenne conjecture
+# Conjectures about Mersenne primes
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_conjectures)
 -/
 
-namespace NewMersenne
+namespace Mersenne
 
 namespace Nat
 
@@ -46,7 +46,7 @@ def IsSpecialForm (p : ℕ) : Prop :=
 
 end Nat
 
-open NewMersenne
+open Mersenne
 
 /--
 A natural number `p` satisfies the statement of the New Mersenne Conjecture if whenever
@@ -85,4 +85,12 @@ theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) :
     NewMersenneConjectureStatement p := by
   sorry
 
-end NewMersenne
+/--
+Are there infinitely many Mersenne primes?
+-/
+@[category research open, AMS 11]
+theorem infinitely_many_mersenne_primes :
+  Set.Infinite { p : ℕ | p.GivesMersennePrime } ↔ answer(sorry) := by
+    sorry
+
+end Mersenne

@@ -20,6 +20,8 @@ import Mathlib.Tactic.DeriveFintype
 --sanity checks for the definition of halting added in `ForMathlib`.
 --These should be easy to prove
 
+namespace BusyBeasverTest
+
 open Turing BusyBeaver Machine
 
 inductive Γ where
@@ -113,3 +115,5 @@ theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
   · use { q := some Λ.T, tape := ⟨Γ.A, Quotient.mk'' [Γ.A], default⟩ }
     rfl
   · rfl
+
+end BusyBeasverTest
