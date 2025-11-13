@@ -27,7 +27,7 @@ namespace Erdos982
 
 /--
 If $n$ distinct points in $\mathbb{R}^2$ form a convex polygon then some vertex has at least
-$\lfloor \frac{n}{2}\rfloor$ different distances to other vertices.
+$\lfloor\frac{n}{2}\rfloor$ different distances to other vertices.
 -/
 @[category research open, AMS 52]
 theorem erdos_982 (n : ℕ) (hn : 3 ≤ n) :
