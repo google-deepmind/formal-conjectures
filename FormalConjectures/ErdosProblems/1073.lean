@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1065](https://www.erdosproblems.com/1073)
 -/
 
-open Nat Filter Finset
+open Nat Filter
 
 namespace Erdos1073
 
@@ -33,28 +33,8 @@ noncomputable def A (x : ℕ) : ℝ := {u | u.Composite ∧ ∃ n, n ! + 1 ≡ 0
 
 /-- Is it true that $A(x) ≤ x^{o(1)}$? -/
 @[category research open, AMS 11]
-theorem erdos_1073a : (A =o[atTop] (fun x ↦ (x : ℝ))) ↔ answer(sorry) := by
-  sorry
-
-/-- Is it true that $f(p)/p \to 0$ for almost all $p$? -/
-@[category research open, AMS 11]
-theorem erdos_1073b :
-    (∃ (P : Finset ℕ), (∀ p ∈ P, p.Prime) ∧
-      ∀ᵉ ε > (0 : ℝ), ∃ N₀, ∀ p ≥ N₀, p.Prime ∧ p ∉ P → f p / p < ε)
-    ↔ answer(sorry) := by
-  sorry
-
-/--
-Erdős, Hardy, and Subbarao [HaSu02], believed that the number of $p \le x$ for which $f(p)=p−1$
-is $o(x/logx)$.
-
-[HaSu02] Hardy, G. E. and Subbarao, M. V., _A modified problem of Pillai and some related questions._
-Amer. Math. Monthly (2002), 554--559.
--/
-@[category research open, AMS 11]
-theorem erdos_1073a.variants.littleo :
-    (fun x ↦ (#({p | p.Prime ∧ f p = p - 1} ∩ Finset.range (x + 1)).toFinset : ℝ)) =o[atTop]
-      (fun x ↦ x / Real.log x) := by
+theorem erdos_1073 :
+    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ x, A x ≤ x ^ (o x)) ↔ answer(sorry) := by
   sorry
 
 end Erdos1073
