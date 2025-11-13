@@ -43,7 +43,7 @@ the set $\{f(A) : A \subseteq Y\}$ covers $X$.
 -/
 noncomputable def H (n : ℕ) : ℕ :=
   if 0 < n then
-    sInf {m : ℕ | exists_eventually_surjective n m}
+    sInf {m : ℕ | ExistsEventuallySurjective n m}
   else 0
 
 /--
