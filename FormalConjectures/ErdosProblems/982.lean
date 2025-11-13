@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 982: Different Distances from a Vertex of a Convex Polygon
+# Erdős Problem 982
 
 *Reference:* [erdosproblems.com/982](https://www.erdosproblems.com/982)
 -/
