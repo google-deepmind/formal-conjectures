@@ -30,11 +30,9 @@ If $n$ distinct points in $\mathbb{R}^2$ form a convex polygon then some vertex 
 $\lfloor\frac{n}{2}\rfloor$ different distances to other vertices.
 -/
 @[category research open, AMS 52]
-theorem erdos_982 (n : ℕ) (hn : 3 ≤ n) :
-    ∀ (p : Fin n → ℝ²), Function.Injective p →
-      EuclideanGeometry.IsConvexPolygon p →
-      ∃ (i : Fin n),
-        { d : ℝ | ∃ j : Fin n, j ≠ i ∧ d = dist (p i) (p j) }.ncard ≥ n / 2 := by
+theorem erdos_982 (n : ℕ) (hn : 3 ≤ n) (p : Fin n → ℝ²) (hp : Function.Injective p)
+    (hp' : EuclideanGeometry.IsConvexPolygon p) :
+    ∃ (i : Fin n), { d : ℝ | ∃ j : Fin n, j ≠ i ∧ d = dist (p i) (p j) }.ncard ≥ n / 2 := by
   sorry
 
 end Erdos982
