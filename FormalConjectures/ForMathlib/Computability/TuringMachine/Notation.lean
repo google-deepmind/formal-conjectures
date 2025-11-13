@@ -38,6 +38,9 @@ For each state, a `3m`-character substring defines the behavior:
 The character `Z` is reserved for the halting state. The string `"---"` can be used to represent
 a transition to the halting state without writing or moving.
 
+Example of a tape: `1RA0LB_0LA---`
+
+There are more examples in `ForMathlib/Test/Computability`.
 -/
 
 open Turing BusyBeaver
@@ -63,6 +66,7 @@ component of turing machine string representations. -/
 private def Char.toNumeralSyntax (c : Char) : TermElabM Term := do
   unless c.isDigit do
     throwError m!"Invalid write instruction: {c} is not a numeral."
+  -- Compute the value of the digit represented by `c`.
   let n := c.val - '0'.val
   `($(Lean.Quote.quote n.toNat))
 
@@ -88,8 +92,7 @@ private def Nat.toStateSyntax (n : Nat) (stateName : Name) : TermElabM Term := d
   `($(Lean.mkIdent <| .str stateName Alphabet[n]!.toString))
 
 /-- `String.toStmtSyntax s stateName` parses a component of a Turing machine string representation
-and outputs the syntax of the corresponding (state, statement) pair
-(i.e. term of type `State × Stmt`). -/
+and outputs the syntax of the corresponding `(state, statement) : State × Stmt` pair. -/
 private def String.toStmtSyntax (s : String) (stateName : Name) (numStates : Nat) : TermElabM Term := do
   let [c_symbol, c_dir, c_state] := s.data |
     throwError m!"Invalid transition encoding: {s} should be 3 characters long."
