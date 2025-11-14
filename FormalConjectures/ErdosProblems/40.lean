@@ -37,7 +37,7 @@ implies $\limsup 1_A\ast 1_A(n)=\infty$.
 def Erdos40For (g : ℕ → ℝ) : Prop :=
   ∀ (A : Set ℕ),
     ((fun (N : ℕ) => (N : ℝ).sqrt/(g N)) =O[atTop] (fun (N : ℕ) => ((A ∩ Set.Icc 1 N).ncard : ℝ))) →
-    (limsup (fun (N : ℕ) => sumRep A N) atTop = (⊤ : ℕ∞))
+    (limsup (fun (N : ℕ) => (sumRep A N : ℕ∞)) atTop = (⊤ : ℕ∞))
 
 /--
 Given a set of functions $\mathbb{N} → \mathbb{R})$, we assert that for all $g$ in that set,

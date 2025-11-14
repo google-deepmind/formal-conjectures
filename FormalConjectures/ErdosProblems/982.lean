@@ -13,30 +13,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 28
+# Erdős Problem 982
 
-*Reference:* [erdosproblems.com/28](https://www.erdosproblems.com/28)
+*Reference:* [erdosproblems.com/982](https://www.erdosproblems.com/982)
 -/
 
-open Filter Set AdditiveCombinatorics
-open scoped Pointwise
+open EuclideanGeometry
 
-
-namespace Erdos28
+namespace Erdos982
 
 /--
-If $A ⊆ \mathbb{N}$ is such that $A + A$ contains all but finitely many integers then
- $\limsup 1_A ∗ 1_A(n) = \infty$.
+If $n$ distinct points in $\mathbb{R}^2$ form a convex polygon then some vertex has at least
+$\lfloor\frac{n}{2}\rfloor$ different distances to other vertices.
 -/
-@[category research open, AMS 11]
-theorem erdos_28 (A : Set ℕ) (h : (A + A)ᶜ.Finite) :
-    limsup (fun (n : ℕ) => (sumRep A n : ℕ∞)) atTop = (⊤ : ℕ∞) := by
+@[category research open, AMS 52]
+theorem erdos_982 (n : ℕ) (hn : 3 ≤ n) (p : Fin n → ℝ²) (hp : Function.Injective p)
+    (hp' : EuclideanGeometry.IsConvexPolygon p) :
+    ∃ (i : Fin n), { d : ℝ | ∃ j : Fin n, j ≠ i ∧ d = dist (p i) (p j) }.ncard ≥ n / 2 := by
   sorry
 
--- TODO(firsching): add the theorems/conjectures for the comments on the page
-
-end Erdos28
+end Erdos982

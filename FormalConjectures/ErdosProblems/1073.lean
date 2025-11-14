@@ -17,26 +17,24 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 28
+# Erdős Problem 1073
 
-*Reference:* [erdosproblems.com/28](https://www.erdosproblems.com/28)
+*Reference:* [erdosproblems.com/1065](https://www.erdosproblems.com/1073)
 -/
 
-open Filter Set AdditiveCombinatorics
-open scoped Pointwise
+open Nat Filter
 
-
-namespace Erdos28
+namespace Erdos1073
 
 /--
-If $A ⊆ \mathbb{N}$ is such that $A + A$ contains all but finitely many integers then
- $\limsup 1_A ∗ 1_A(n) = \infty$.
+Let $A(x)$ count the number of composite $u < x$ such that $n!+1 \equiv 0 (\mod u)$ for some $n$.
 -/
+noncomputable def A (x : ℕ) : ℝ := {u | u.Composite ∧ ∃ n, n ! + 1 ≡ 0 [MOD u] ∧ u < x}.ncard
+
+/-- Is it true that $A(x) ≤ x^{o(1)}$? -/
 @[category research open, AMS 11]
-theorem erdos_28 (A : Set ℕ) (h : (A + A)ᶜ.Finite) :
-    limsup (fun (n : ℕ) => (sumRep A n : ℕ∞)) atTop = (⊤ : ℕ∞) := by
+theorem erdos_1073 :
+    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ x, A x ≤ x ^ (o x)) ↔ answer(sorry) := by
   sorry
 
--- TODO(firsching): add the theorems/conjectures for the comments on the page
-
-end Erdos28
+end Erdos1073

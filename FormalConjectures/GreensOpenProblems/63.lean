@@ -13,30 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«424»
 
 /-!
-# Erdős Problem 28
+# Ben Green's Open Problem 63
 
-*Reference:* [erdosproblems.com/28](https://www.erdosproblems.com/28)
+Let $A$ be the smallest set containing $2$ and $3$ and such that $a_1a_2 - 1 \in A$
+if $a_1, a_2 \in A$. Does $A$ have positive density?
+
+*Reference:*
+ - [Ben Green's Open Problem 63](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 63)
+ - [erdosproblems.com/424](https://www.erdosproblems.com/424)
 -/
-
-open Filter Set AdditiveCombinatorics
-open scoped Pointwise
-
-
-namespace Erdos28
-
-/--
-If $A ⊆ \mathbb{N}$ is such that $A + A$ contains all but finitely many integers then
- $\limsup 1_A ∗ 1_A(n) = \infty$.
--/
-@[category research open, AMS 11]
-theorem erdos_28 (A : Set ℕ) (h : (A + A)ᶜ.Finite) :
-    limsup (fun (n : ℕ) => (sumRep A n : ℕ∞)) atTop = (⊤ : ℕ∞) := by
-  sorry
-
--- TODO(firsching): add the theorems/conjectures for the comments on the page
-
-end Erdos28

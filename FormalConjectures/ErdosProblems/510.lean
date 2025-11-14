@@ -13,30 +13,32 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 28
+# Erdős Problem 510
 
-*Reference:* [erdosproblems.com/28](https://www.erdosproblems.com/28)
+*Reference:* [erdosproblems.com/510](https://www.erdosproblems.com/510)
 -/
 
-open Filter Set AdditiveCombinatorics
-open scoped Pointwise
+namespace Erdos510
 
-
-namespace Erdos28
+open scoped Finset
 
 /--
-If $A ⊆ \mathbb{N}$ is such that $A + A$ contains all but finitely many integers then
- $\limsup 1_A ∗ 1_A(n) = \infty$.
+**Chowla's cosine problem**
+
+If $A\subset \mathbb{Z}$ is a finite set of size $N$ then is there some absolute constant $c>0$ and
+$\theta$ such that
+$$\sum_{n\in A}\cos(n\theta) < -cN^{1/2}?$$
 -/
 @[category research open, AMS 11]
-theorem erdos_28 (A : Set ℕ) (h : (A + A)ᶜ.Finite) :
-    limsup (fun (n : ℕ) => (sumRep A n : ℕ∞)) atTop = (⊤ : ℕ∞) := by
+theorem erdos_510 :
+    (∃ (c : ℝ) (hc : 0 < c),
+      ∀ (N : ℕ), ∀ (A : Finset ℤ), # A = N →
+      (∃ (θ : ℝ), (∑ n ∈ A, (n * θ).cos) < -c * (N : ℝ).sqrt)) ↔ answer(sorry) := by
   sorry
 
--- TODO(firsching): add the theorems/conjectures for the comments on the page
+-- TODO(firsching): add the additional material
 
-end Erdos28
+end Erdos510
