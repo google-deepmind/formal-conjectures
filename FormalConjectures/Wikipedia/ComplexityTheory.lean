@@ -83,10 +83,7 @@ See Definition 2.1 in Arora-Barak (2009).
 -/
 def NP : ComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
-      isComputableInPolyTime
-        (pairFinEncoding finEncodingListBool finEncodingListBool)
-        finEncodingBoolBool
-        R ∧
+      isComputableInPolyTime finEncodingListBoolProdListBool finEncodingBoolBool R ∧
       ∀ x, L x ↔ ∃ w : List Bool, w.length ≤ p.eval x.length ∧ R (x, w) }
 
 /--
