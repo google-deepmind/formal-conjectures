@@ -29,7 +29,7 @@ open Set
 The set of numbers $D(A)$ which occur infinitely often as $a_1 - a_2$ with $a_1, a_2 \in A$.
 -/
 noncomputable def D_A (A : Set ℕ) : Set ℤ :=
-  { d : ℤ | Set.Infinite { p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ A ∧ (p.1 : ℤ) - (p.2 : ℤ) = d } }
+  { d : ℤ | Set.Infinite { (a, b) : ℕ × ℕ | a ∈ A ∧ b ∈ A ∧ (a : ℤ) - (b : ℤ) = d } }
 
 /--
 A set $S \subseteq \mathbb{Z}$ has bounded gaps if it is syndetic, meaning there is a uniform
