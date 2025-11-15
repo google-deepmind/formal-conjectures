@@ -35,7 +35,7 @@ in complexity theory, including
 
 open Computability Turing
 
-namespace PvsNP
+namespace ComplexityTheory
 
 /--
 The type of decision problems.
@@ -75,9 +75,11 @@ def P : ComplexityClass :=
 
 /--
 The class NP is the set of decision problems
-such that there exists a polynomial over ℕ and a poly-time Turing machine
-where for all `x`, `L x = true` iff there exists a `w` of length at most `p (length x)`
+such that there exists a polynomial `p` over ℕ and a poly-time Turing machine
+where for all `x`, `L x = true` iff there exists a `w` of length at most `p (|x|)`
 such that the Turing machine accepts the pair `(x,w)`.
+
+See Definition 2.1 in Arora-Barak (2009).
 -/
 def NP : ComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
@@ -118,4 +120,4 @@ theorem P_subset_NP :
     P ⊆ NP := by
   sorry
 
-end PvsNP
+end ComplexityTheory
