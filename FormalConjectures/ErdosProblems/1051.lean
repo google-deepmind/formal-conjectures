@@ -20,14 +20,6 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 1051
 
 *Reference:* [erdosproblems.com/1051](https://www.erdosproblems.com/1051)
-
-Is it true that if $a_1 < a_2 < \cdots$ is a sequence of integers with
-$\liminf a_n^{1/2^n} > 1$, then the sum $\sum_{n=0}^\infty \frac{1}{a_n \cdot a_{n+1}}$
-is irrational?
-
-## References
-- [Er88c] Erdős, P., On the irrationality of certain series: problems and results.
-  New advances in transcendence theory (Durham, 1986) (1988), 102-109.
 -/
 
 namespace Erdos1051
@@ -47,7 +39,7 @@ noncomputable def ErdosSeries (a : ℕ → ℤ) : ℝ :=
 
 /--
 Is it true that if $a_0 < a_1 < a_2 < \cdots$ is a strictly increasing sequence
-of integers with $\liminf a_n^{1/2^n} > 1$, then
+of integers with $\liminf a_n^{1/2^n} > 1$, then the series
 $\sum_{n=0}^\infty \frac{1}{a_n \cdot a_{n+1}}$ is irrational?
 -/
 @[category research open, AMS 11]
@@ -57,14 +49,14 @@ theorem erdos_1051 :
   sorry
 
 /--
-If the sequence grows rapidly to infinity (specifically, if $a_{n+1} \geq C \cdot a_n^2$
-for some constant $C > 0$), then the series is irrational.
+Erdős [Er88c] notes that if the sequence grows rapidly to infinity (specifically, if
+$a_{n+1} \geq C \cdot a_n^2$ for some constant $C > 0$), then the series is irrational.
 
-This is a solved variant mentioned by Erdős in [Er88c], where he notes the result
-holds when $a_n \to \infty$ "rapidly".
+[Er88c] Erdős, P., _On the irrationality of certain series: problems and results_.
+New advances in transcendence theory (Durham, 1986) (1988), 102-109.
 -/
 @[category research solved, AMS 11]
-theorem irrational_of_rapid_growth (a : ℕ → ℤ) (h_mono : StrictMono a)
+theorem erdos_1051.rapid_growth (a : ℕ → ℤ) (h_mono : StrictMono a)
     (h_rapid : ∃ C > 0, ∀ n, (a (n + 1) : ℝ) ≥ C * (a n : ℝ) ^ 2) :
     Irrational (ErdosSeries a) := by
   sorry
