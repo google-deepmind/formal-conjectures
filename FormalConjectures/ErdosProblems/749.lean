@@ -21,27 +21,21 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/749](https://www.erdosproblems.com/749)
 -/
 
-open Function Set Filter Pointwise
+open Set Pointwise AdditiveCombinatorics
 
 namespace Erdos749
 
 /--
-The number of ordered pairs $(a_1, a_2)$ in $A \times A$ such that $a_1 + a_2 = n$.
-This is the value of the convolution $1_A * 1_A$ at $n$.
-We use `noncomputable` because `Nat.card` on arbitrary sets lacks a computable implementation.
--/
-noncomputable
-def rep_count (A : Set ℕ) (n : ℕ) : ℕ :=
-  Nat.card { p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n }
-
-/--
-**Erdős Problem 749**: Let $\epsilon>0$. Does there exist $A\subseteq \mathbb{N}$ such that the lower density of $A+A$ is at least $1-\epsilon$ and yet $1_A\ast 1_A(n) \ll_\epsilon 1$ for all $n$?
+Let $\epsilon>0$. Does there exist $A\subseteq \mathbb{N}$
+such that the lower density of $A+A$ is at least $1-\epsilon$
+and yet $1_A\ast 1_A(n) \ll_\epsilon 1$ for all $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_749 : (∀ ε : ℝ, 0 < ε →
-    ∃ A : Set ℕ,
-      lowerDensity (A + A) ≥ 1 - ε ∧
-      (∃ C : ℕ, ∀ n : ℕ, rep_count A n ≤ C)) ↔ answer(sorry) := by
+theorem erdos_749 : (∀ᵉ (ε > (0 : ℝ)),
+    ∃ A : Set ℕ, 1 - ε ≤ lowerDensity (A + A) ∧
+    ((Nat.cast (R := ℝ) ∘ sumRep A) ≪ Nat.cast (R := ℝ) ∘ 1)) ↔ answer(sorry) := by
   sorry
 
+
+-- TODO(firsching): add a "similar question" for the upper density.
 end Erdos749
