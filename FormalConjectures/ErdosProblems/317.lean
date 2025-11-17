@@ -23,24 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 namespace Erdos317
-
-/--
-The least common multiple of the numbers 1,...,n.
--/
-abbrev lcm_one_to_n : ℕ → ℕ
-    | 0 => 1
-    | n + 1 => (lcm_one_to_n n).lcm (n + 1)
-
-/--
-Inequality is obvious for `erdos_317.variants.claim2`, the problem is strict inequality.
-This fails for small $n$, for example\[\frac{1}{2}-\frac{1}{3}-\frac{1}{4}=-\frac{1}{12}.\]
--/
-@[category API, AMS 11]
-lemma claim2_inequality : ∃ N : ℕ, ∀ n ≥ N,
-    ∀ δ : ℕ → ℝ, δ '' (Finset.Icc 1 n) ⊆ {-1,0,1} →
-    abs (∑ k ∈ Finset.Icc 1 n, ((δ k : ℝ) / k)) ≠ 0 →
-        abs (∑ k ∈ Finset.Icc 1 n, ((δ k : ℝ) / k)) ≥ 1 / (lcm_one_to_n n : ℝ) := by
-  sorry
+open Finset
+open Filter
 
 /--
 Is there some constant $c>0$ such that for every $n\geq 1$ there exists some $\delta_k\in \{-1,0,1\}$ for $1\leq k\leq n$ with
@@ -48,9 +32,9 @@ Is there some constant $c>0$ such that for every $n\geq 1$ there exists some $\d
 -/
 @[category research open, AMS 11]
 theorem erdos_317 : (∃ c : ℝ, c > 0 → ∀ n ≥ 1,
-    ∃ δ : ℕ → ℝ, δ '' (Finset.Icc 1 n) ⊆ {-1,0,1} ∧
-              0 < abs (∑ k ∈ Finset.Icc 1 n, ((δ k : ℝ) / k)) ∧
-        c / 2^n > abs (∑ k ∈ Finset.Icc 1 n, ((δ k : ℝ) / k))) ↔ answer(sorry) := by
+    ∃ δ : (Fin n) → ℚ, δ '' Set.univ ⊆ {-1,0,1}∧
+    letI lhs := |∑ k, ((δ k : ℝ) / (k + 1))|
+    0 < lhs ∧ lhs < c / 2^n) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -59,10 +43,34 @@ Is it true that for sufficiently large $n$, for any $\delta_k\in \{-1,0,1\}$,
 whenever the left-hand side is not zero?
 -/
 @[category research open, AMS 11]
-theorem erdos_317.variants.claim2 : (∃ N : ℕ, ∀ n ≥ N,
-    ∀ δ : ℕ → ℝ, δ '' (Finset.Icc 1 n) ⊆ {-1,0,1} →
-    abs (∑ k ∈ Finset.Icc 1 n, ((δ k : ℝ) / k)) ≠ 0 →
-        abs (∑ k ∈ Finset.Icc 1 n, ((δ k : ℝ) / k)) > 1 / (lcm_one_to_n n : ℝ)) ↔ answer(sorry) := by
+theorem erdos_317.variants.claim2 : (∀ᶠ n in atTop,
+    ∀ δ : (Fin n) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
+    letI lhs := |∑ k, ((δ k : ℚ) / (k + 1))|
+    lhs ≠ 0 → lhs > 1 / (Icc 1 n).lcm id) ↔ answer(sorry) := by
   sorry
+
+/--
+Inequality in `erdos_317.variants.claim2` is obvious, the problem is strict inequality.
+-/
+@[category undergraduate, AMS 11]
+lemma claim2_inequality : ∀ᶠ n in atTop,
+    ∀ δ : (Fin n) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
+    letI lhs := |∑ k, ((δ k : ℚ) / (k + 1))|
+    lhs ≠ 0 → lhs ≥ 1 / (Icc 1 n).lcm id := by
+  sorry
+
+/--
+`erdos_317.variants.claim2` fails for small $n$, for example
+\[\frac{1}{2}-\frac{1}{3}-\frac{1}{4}=-\frac{1}{12}.\]
+-/
+@[category graduate, AMS 11]
+theorem erdos_317.variants.counterexample : ¬ (∀  δ : (Fin 4) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
+    letI lhs := |∑ k, ((δ k : ℚ) / (k + 1))|
+    lhs ≠ 0 → lhs > (1 : ℚ) / ((Icc 1 4).lcm id : ℕ)) := by
+  push_neg
+  use ![0, 1, -1, -1]
+  norm_num[Finset.sum]
+  refine ⟨by grind, le_of_eq ?_⟩
+  exact (abs_of_nonneg (by norm_num)).trans (one_div _)
 
 end Erdos317
