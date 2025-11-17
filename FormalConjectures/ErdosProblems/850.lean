@@ -29,8 +29,8 @@ have the same prime factors, and x+2,y+2 also have the same prime factors?
 -/
 @[category research open, AMS 11]
 theorem erdos_850 :
-    ∃ x y : ℕ, x ≠ y ∧ (Nat.primeFactors x = Nat.primeFactors y)
-    ∧ (Nat.primeFactors (x + 1) = Nat.primeFactors (y + 1))
-    ∧ (Nat.primeFactors (x + 2) = Nat.primeFactors (y + 2)) := by
+    (∃ x y : ℕ, x ≠ y ∧ x.primeFactors = y.primeFactors
+      ∧ (x + 1).primeFactors = (y + 1).primeFactors
+      ∧ (x + 2).primeFactors = (y + 2).primeFactors) ↔ answer(sorry) := by
     sorry
 end Erdos850
