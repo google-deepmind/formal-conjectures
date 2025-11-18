@@ -40,9 +40,6 @@ def nthPrime : ℕ → ℕ
   let prev := nthPrime n
   Nat.find (Nat.exists_infinite_primes (prev + 1))
 
--- #eval nthPrime 0
--- #eval nthPrime 99
-
 /--
 Let $lcm(1, \cdots, n)$ denote the least common multiple of ${1, \cdots, n}$.
 And $p_{k}$ the $k$th prime.
