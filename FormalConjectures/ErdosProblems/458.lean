@@ -27,9 +27,7 @@ namespace Erdos458
 least common multiple of ${1, \cdots, n}$
 -/
 def lcm_upto (n : ℕ) : ℕ :=
-  ((Finset.range (n+1)).erase 0).lcm id
-
---#eval lcm_upto 10
+  (Finset.Icc 1 n).lcm id
 
 /--
 computes $n$th prime $p_n$, counting from zero
@@ -47,7 +45,7 @@ Is it true that, for all $k \geq 1$, $lcm(1, \cdots, p_{k+1}−1) < p_{k} * lcm(
 -/
 @[category research open, AMS 11]
 theorem erdos_458 :
-    ∀ k : ℕ, lcm_upto (nthPrime (k + 1) - 1)
-     < nthPrime k * lcm_upto (nthPrime k) ↔ answer(sorry) := by
+    (∀ k : ℕ, lcm_upto (nthPrime (k + 1) - 1)
+     < nthPrime k * lcm_upto (nthPrime k)) ↔ answer(sorry) := by
     sorry
 end Erdos458
