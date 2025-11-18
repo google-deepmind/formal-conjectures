@@ -23,7 +23,6 @@ import Mathlib.Data.ENNReal.Basic
 *Reference:* [erdosproblems.com/1041](https://www.erdosproblems.com/1041)
 -/
 
-
 open Polynomial MeasureTheory ENNReal
 
 namespace Erdos1041
