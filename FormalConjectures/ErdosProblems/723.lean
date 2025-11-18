@@ -42,7 +42,8 @@ These always exist if $n$ is a prime power.
 -/
 @[category research solved, AMS 5]
 theorem erdos_732.prime_pow_is_projplane_order :
-    ∀ n, IsPrimePow n → ∃ pp : ProjectivePlane P L, pp.order = n := by
+    ∀ n, IsPrimePow n → ∃ (P L : Type) (_ : Membership P L) (_ : Fintype P) (_ : Fintype L)
+      (pp : ProjectivePlane P L), pp.order = n := by
   sorry
 
 /--
