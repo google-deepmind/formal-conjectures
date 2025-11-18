@@ -17,25 +17,34 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 944
+# Erdős Problem 705
 
-*Reference:* [erdosproblems.com/944](https://www.erdosproblems.com/944)
+*Reference:* [erdosproblems.com/705](https://www.erdosproblems.com/705)
 -/
-
-universe u
-variable {V : Type u}
 
 namespace Erdos705
 
 open Erdos705
 
--- {h : G.Adj = fun x y ↦ ‖x - y‖ = 1}
-def unitDistanceGraph (G : SimpleGraph (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∀ x y : EuclideanSpace ℝ (Fin 2), G.Adj x y ↔ ‖x - y‖ = 1
+variable {V : Finset (EuclideanSpace ℝ (Fin 2))}
 
+/--
+A finite unit distance graph in ℝ^2:
+A graph where the vertices are a finite collection of points in ℝ² and there is an edge between
+two points if and only if the distance between them is 1.
+-/
+
+def unitDistancePlaneGraph (G : SimpleGraph V) : Prop :=
+  ∀ x y : V, G.Adj x y ↔ dist x y = 1
+
+/--
+Let G be a finite unit distance graph in R².
+Is there some k such that if G has girth ≥ k, then χ(G) ≤ 3?
+-/
+
+@[category research open, AMS 5]
 theorem erdos_705:
-    (∀ (G : SimpleGraph (EuclideanSpace ℝ (Fin 2))) (h : unitDistanceGraph G),
-        ∃ k, SimpleGraph.girth G ≥ k → SimpleGraph.chromaticNumber G ≤ 3) ↔ answer(sorry) := by
-  sorry
+  (∀ (G : SimpleGraph V) (h : unitDistancePlaneGraph G),
+    ∃ k, SimpleGraph.girth G ≥ k → SimpleGraph.chromaticNumber G ≤ 3) ↔ answer(sorry) := by sorry
 
 end Erdos705
