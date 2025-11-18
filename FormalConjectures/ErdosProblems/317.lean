@@ -69,7 +69,7 @@ theorem erdos_317.variants.counterexample : ¬ (∀  δ : (Fin 4) → ℚ, δ ''
     lhs ≠ 0 → lhs > (1 : ℚ) / ((Icc 1 4).lcm id : ℕ)) := by
   push_neg
   use ![0, 1, -1, -1]
-  norm_num[Finset.sum]
+  norm_num [Finset.sum]
   refine ⟨by grind, le_of_eq ?_⟩
   exact (abs_of_nonneg (by norm_num)).trans (one_div _)
 
