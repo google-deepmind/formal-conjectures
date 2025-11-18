@@ -30,23 +30,14 @@ def lcm_upto (n : ℕ) : ℕ :=
   (Finset.Icc 1 n).lcm id
 
 /--
-computes $n$th prime $p_n$, counting from zero
--/
-def nthPrime : ℕ → ℕ
-| 0       => 2
-| n + 1   =>
-  let prev := nthPrime n
-  Nat.find (Nat.exists_infinite_primes (prev + 1))
-
-/--
 Let $lcm(1, \cdots, n)$ denote the least common multiple of ${1, \cdots, n}$.
 And $p_{k}$ the $k$th prime.
 Is it true that, for all $k \geq 1$, $lcm(1, \cdots, p_{k+1}−1) < p_{k} * lcm(1, \cdots, p_{k})$ ?
 -/
 @[category research open, AMS 11]
 theorem erdos_458 :
-    (∀ k : ℕ, lcm_upto (nthPrime (k + 1) - 1)
-     < nthPrime k * lcm_upto (nthPrime k)) ↔ answer(sorry) := by
+    (∀ k : ℕ, lcm_upto ((k + 1).nth Prime - 1)
+     < k.nth Prime * lcm_upto (k.nth Prime)) ↔ answer(sorry) := by
     sorry
 
 end Erdos458
