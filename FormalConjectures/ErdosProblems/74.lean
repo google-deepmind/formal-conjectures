@@ -122,7 +122,7 @@ vertices can be made bipartite by deleting at most $f(n)$ edges?
 -/
 @[category research open, AMS 5]
 theorem erdos_74 : (∀ f : ℕ → ℕ, Tendsto f atTop atTop →
-    (∃ G : SimpleGraph V, G.chromaticNumber = ⊤ ∧
+    (∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
     ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ f n)) ↔ answer(sorry):= by
   sorry
 
@@ -131,7 +131,7 @@ Is there a graph of infinite chromatic number such that every finite subgraph on
 vertices can be made bipartite by deleting at most $\sqrt{n}$ edges?
 -/
 @[category research open, AMS 5]
-theorem erdos_74.variants.sqrt : (∃ G : SimpleGraph V, G.chromaticNumber = ⊤ ∧
+theorem erdos_74.variants.sqrt : (∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
     ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ (n : ℝ).sqrt) ↔ answer(sorry):= by
   sorry
 
