@@ -32,7 +32,7 @@ Is there some constant $c>0$ such that for every $n\geq 1$ there exists some $\d
 -/
 @[category research open, AMS 11]
 theorem erdos_317 : (∃ c : ℝ, c > 0 → ∀ n ≥ 1,
-    ∃ δ : (Fin n) → ℚ, δ '' Set.univ ⊆ {-1,0,1}∧
+    ∃ δ : (Fin n) → ℚ, δ '' Set.univ ⊆ {-1,0,1} ∧
     letI lhs := |∑ k, ((δ k : ℝ) / (k + 1))|
     0 < lhs ∧ lhs < c / 2^n) ↔ answer(sorry) := by
   sorry
