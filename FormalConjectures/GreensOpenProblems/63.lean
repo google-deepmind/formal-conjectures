@@ -13,26 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«424»
 
 /-!
-# Erdős Problem 689
-*Reference:* [erdosproblems.com/689](https://www.erdosproblems.com/689)
+# Ben Green's Open Problem 63
+
+Let $A$ be the smallest set containing $2$ and $3$ and such that $a_1a_2 - 1 \in A$
+if $a_1, a_2 \in A$. Does $A$ have positive density?
+
+*Reference:*
+ - [Ben Green's Open Problem 63](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 63)
+ - [erdosproblems.com/424](https://www.erdosproblems.com/424)
 -/
-
-namespace Erdos689
-
-/--
-Let `n` be sufficiently large. Is there some choice of congruence class `a_p` for all primes
-`2 ≤ p ≤ n` such that every integer in `[1,n]` satisfies at least two of the congruences
-`≡ a_p (mod p)`?
--/
-@[category research open, AMS 11]
-theorem erdos_689 :
-    (∀ᶠ n in Filter.atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
-      2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card)
-    ↔ answer(sorry) := by
-  sorry
-
-end Erdos689

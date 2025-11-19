@@ -17,22 +17,24 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 689
-*Reference:* [erdosproblems.com/689](https://www.erdosproblems.com/689)
+# Erdős Problem 1073
+
+*Reference:* [erdosproblems.com/1065](https://www.erdosproblems.com/1073)
 -/
 
-namespace Erdos689
+open Nat Filter
+
+namespace Erdos1073
 
 /--
-Let `n` be sufficiently large. Is there some choice of congruence class `a_p` for all primes
-`2 ≤ p ≤ n` such that every integer in `[1,n]` satisfies at least two of the congruences
-`≡ a_p (mod p)`?
+Let $A(x)$ count the number of composite $u < x$ such that $n!+1 \equiv 0 (\mod u)$ for some $n$.
 -/
+noncomputable def A (x : ℕ) : ℝ := {u | u.Composite ∧ ∃ n, n ! + 1 ≡ 0 [MOD u] ∧ u < x}.ncard
+
+/-- Is it true that $A(x) ≤ x^{o(1)}$? -/
 @[category research open, AMS 11]
-theorem erdos_689 :
-    (∀ᶠ n in Filter.atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
-      2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card)
-    ↔ answer(sorry) := by
+theorem erdos_1073 :
+    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ x, A x ≤ x ^ (o x)) ↔ answer(sorry) := by
   sorry
 
-end Erdos689
+end Erdos1073
