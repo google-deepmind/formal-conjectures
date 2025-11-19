@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Er92b] Erdős, Paul, _Some of my favourite problems in various branches of combinatorics_. Matematiche (Catania) (1992), 231-240.
 -/
 
+open Filter
+
 namespace Erdos123
 
 /--
@@ -47,3 +49,11 @@ Let $a, b, c$ be three integers which are pairwise coprime. Is every large integ
 the sum of distinct integers of the form $a^k b^l c^m$ ($k, l, m ≥ 0$), none of which
 divide any other?
 -/
+@[category research open, AMS 11]
+theorem erdos_123 (a b c : ℕ) (ha : 1 < a) (hb : 1 < b) (hc : 1 < c)
+    (h_coprime : PairwiseCoprime a b c) :
+    (∀ᶠ n in atTop, ∃ (s : Finset ℕ),
+      (s : Set ℕ) ⊆ powersOfThree a b c ∧
+      IsAntichain (· ∣ ·) (s : Set ℕ) ∧
+      s.sum id = n) ↔ answer(sorry) := by
+  sorry
