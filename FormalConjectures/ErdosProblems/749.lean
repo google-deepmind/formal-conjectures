@@ -13,26 +13,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 689
-*Reference:* [erdosproblems.com/689](https://www.erdosproblems.com/689)
+# Erdős Problem 749
+
+*Reference:* [erdosproblems.com/749](https://www.erdosproblems.com/749)
 -/
 
-namespace Erdos689
+open Set Pointwise AdditiveCombinatorics
+
+namespace Erdos749
 
 /--
-Let `n` be sufficiently large. Is there some choice of congruence class `a_p` for all primes
-`2 ≤ p ≤ n` such that every integer in `[1,n]` satisfies at least two of the congruences
-`≡ a_p (mod p)`?
+Let $\epsilon>0$. Does there exist $A\subseteq \mathbb{N}$
+such that the lower density of $A+A$ is at least $1-\epsilon$
+and yet $1_A\ast 1_A(n) \ll_\epsilon 1$ for all $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_689 :
-    (∀ᶠ n in Filter.atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
-      2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card)
-    ↔ answer(sorry) := by
+theorem erdos_749 : (∀ᵉ (ε > (0 : ℝ)),
+    ∃ A : Set ℕ, 1 - ε ≤ lowerDensity (A + A) ∧
+    ((Nat.cast (R := ℝ) ∘ sumRep A) ≪ (fun n => (1: ℝ)))) ↔ answer(sorry) := by
   sorry
 
-end Erdos689
+
+-- TODO(firsching): add a "similar question" for the upper density.
+end Erdos749
