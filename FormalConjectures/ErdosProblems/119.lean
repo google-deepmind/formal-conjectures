@@ -61,7 +61,7 @@ Wagner [Wa80] proved that there is some c > 0 with Mₙ > (log n)ᶜ infintely o
 -/
 @[category research closed, AMS 30]
 theorem erdos_119_1 :
-    limsup (fun n =>  M z n) atTop = ∞ ↔ answer(True) := by
+    ∀ (R : ℝ), ∃ n, M z n ≥ R ↔ answer(True) := by
   sorry
 
 /-- Question 2:
