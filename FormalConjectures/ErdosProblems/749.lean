@@ -33,7 +33,7 @@ and yet $1_A\ast 1_A(n) \ll_\epsilon 1$ for all $n$?
 @[category research open, AMS 11]
 theorem erdos_749 : (∀ᵉ (ε > (0 : ℝ)),
     ∃ A : Set ℕ, 1 - ε ≤ lowerDensity (A + A) ∧
-    ((Nat.cast (R := ℝ) ∘ sumRep A) ≪ Nat.cast (R := ℝ) ∘ 1)) ↔ answer(sorry) := by
+    ((Nat.cast (R := ℝ) ∘ sumRep A) ≪ (fun n => (1: ℝ)))) ↔ answer(sorry) := by
   sorry
 
 
