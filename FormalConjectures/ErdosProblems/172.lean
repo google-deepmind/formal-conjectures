@@ -31,7 +31,7 @@ and products of distinct elements in A have the same color.
 @[category research open, AMS 5]
 theorem erdos_172 :
     ∀ (n : ℕ), ∀ (color : ℕ → Fin n), ∀ (m : ℕ),
-    ∃ (A : Finset ℕ), A.card=m ∧ ∃ (c : Fin n), ∀ (S : Finset ℕ),
+    ∃ (A : Finset ℕ), A.card>m ∧ ∃ (c : Fin n), ∀ (S : Finset ℕ),
     (S.card ≠ 0 ∧ S⊆A) → (color (∑ x∈S, x) = c ∧ color (∏ x∈S, x) = c) := by
     sorry
 
