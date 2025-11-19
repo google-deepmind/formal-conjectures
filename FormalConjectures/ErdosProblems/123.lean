@@ -57,3 +57,17 @@ theorem erdos_123 (a b c : ℕ) (ha : 1 < a) (hb : 1 < b) (hc : 1 < c)
       IsAntichain (· ∣ ·) (s : Set ℕ) ∧
       s.sum id = n) ↔ answer(sorry) := by
   sorry
+
+/--
+Erdős and Lewin proved this conjecture when $a = 3$, $b = 5$, and $c = 7$.
+
+Reference: [ErLe96] Erdős, P. and Lewin, Mordechai,
+_$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
+-/
+@[category research solved, AMS 11]
+theorem erdos_123.variants.erdos_lewin_3_5_7 :
+    ∀ᶠ n in atTop, ∃ (s : Finset ℕ),
+      (s : Set ℕ) ⊆ powersOfThree 3 5 7 ∧
+      IsAntichain (· ∣ ·) (s : Set ℕ) ∧
+      s.sum id = n := by
+  sorry
