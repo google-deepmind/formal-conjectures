@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 123
 
-*Reference:* [erdosproblems.com/123](https://www.erdosproblems.com/123)
+*References:*
+- [erdosproblems.com/123](https://www.erdosproblems.com/123)
+- [ErLe96] Erdős, P. and Lewin, Mordechai, _$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
+- [Er92b] Erdős, Paul, _Some of my favourite problems in various branches of combinatorics_. Matematiche (Catania) (1992), 231-240.
 -/
 
 namespace Erdos123
