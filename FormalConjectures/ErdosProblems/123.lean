@@ -30,6 +30,33 @@ open Filter
 namespace Erdos123
 
 /--
+A set `A` of natural numbers is **d-complete** if every sufficiently large integer
+is the sum of distinct elements of `A` such that no element divides another.
+
+**References:**
+- [ErLe96] Erdős, P. and Lewin, M., _$d$-complete sequences of integers_. Math. Comp. (1996).
+-/
+def IsDComplete (A : Set ℕ) : Prop :=
+  ∀ᶠ n in atTop, ∃ s : Finset ℕ,
+    (s : Set ℕ) ⊆ A ∧                    -- The summands come from A
+    IsAntichain (· ∣ ·) (s : Set ℕ) ∧   -- No summand divides another
+    s.sum id = n                         -- They sum to n
+
+/--
+The set of all natural numbers of the form $p^a q^b$ where $a, b ≥ 0$.
+This represents numbers whose prime factors are restricted to those of $p$ and $q$.
+-/
+def PowersOfTwo (p q : ℕ) : Set ℕ :=
+  {n : ℕ | ∃ a b : ℕ, n = p^a * q^b}
+
+/--
+The set of all natural numbers of the form $p^a q^b r^c$ where $a, b, c ≥ 0$.
+This represents numbers whose prime factors are restricted to those of $p$, $q$, and $r$.
+-/
+def PowersOfThree (p q r : ℕ) : Set ℕ :=
+  {n : ℕ | ∃ a b c : ℕ, n = p^a * q^b * r^c}
+
+/--
 Given three natural numbers `a`, `b`, `c`, this is the set of all natural numbers
 of the form $a^k b^l c^m$ where $k, l, m ≥ 0$.
 -/
@@ -48,14 +75,12 @@ def PairwiseCoprime (a b c : ℕ) : Prop :=
 Let $a, b, c$ be three integers which are pairwise coprime. Is every large integer
 the sum of distinct integers of the form $a^k b^l c^m$ ($k, l, m ≥ 0$), none of which
 divide any other?
+
+Equivalently: is the set $\{a^k b^l c^m : k, l, m \geq 0\}$ d-complete?
 -/
 @[category research open, AMS 11]
-theorem erdos_123 (a b c : ℕ) (ha : 1 < a) (hb : 1 < b) (hc : 1 < c)
-    (h_coprime : PairwiseCoprime a b c) :
-    (∀ᶠ n in atTop, ∃ (s : Finset ℕ),
-      (s : Set ℕ) ⊆ powersOfThree a b c ∧
-      IsAntichain (· ∣ ·) (s : Set ℕ) ∧
-      s.sum id = n) ↔ answer(sorry) := by
+theorem erdos_123 (a b c : ℕ) (h_coprime : PairwiseCoprime a b c) :
+    IsDComplete (PowersOfThree a b c) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -66,8 +91,6 @@ _$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
 -/
 @[category research solved, AMS 11]
 theorem erdos_123.variants.erdos_lewin_3_5_7 :
-    ∀ᶠ n in atTop, ∃ (s : Finset ℕ),
-      (s : Set ℕ) ⊆ powersOfThree 3 5 7 ∧
-      IsAntichain (· ∣ ·) (s : Set ℕ) ∧
-      s.sum id = n := by
+    IsDComplete (PowersOfThree 3 5 7) := by
+  sorry
   sorry
