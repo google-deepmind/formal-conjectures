@@ -27,7 +27,23 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos123
 
-/-- Let a,b,c be three integers which are pairwise coprime. Is every large integer the sum of distinct integers of the form akblcm (k,l,m≥0), none of which divide any other?
+/--
+Given three natural numbers `a`, `b`, `c`, this is the set of all natural numbers
+of the form $a^k b^l c^m$ where $k, l, m ≥ 0$.
+-/
+def powersOfThree (a b c : ℕ) : Set ℕ :=
+  {n | ∃ k l m : ℕ, n = a^k * b^l * c^m}
+
+/--
+Helper predicate for pairwise coprimality of three integers.
+-/
+def PairwiseCoprime (a b c : ℕ) : Prop :=
+  Nat.Coprime a b ∧ Nat.Coprime b c ∧ Nat.Coprime a c
+
+/--
+**Erdős Problem #123**
+
+Let a,b,c be three integers which are pairwise coprime. Is every large integer the sum of distinct integers of the form akblcm (k,l,m≥0), none of which divide any other?
 
 ANSWER
 -/
