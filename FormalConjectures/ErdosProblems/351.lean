@@ -51,7 +51,7 @@ is strongly complete, in the sense that, for any finite set $B$,
 contains all sufficiently large rational numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_351 : (∀ P : ℚ[X], HasCompleteImage P) ↔ answer(sorry) := by
+theorem erdos_351 : (∀ P : ℚ[X], 0 < P.natDegree → HasCompleteImage P) ↔ answer(False) := by
   sorry
 
 /--
