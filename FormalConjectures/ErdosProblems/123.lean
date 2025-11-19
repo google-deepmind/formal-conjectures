@@ -93,4 +93,22 @@ _$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
 theorem erdos_123.variants.erdos_lewin_3_5_7 :
     IsDComplete (PowersOfThree 3 5 7) := by
   sorry
+
+/--
+A simpler case: the set of numbers of the form $2^k 3^l$ ($k, l ≥ 0$) is d-complete.
+
+This was initially conjectured by Erdős in 1992, who called it a "nice and difficult"
+problem, but it was quickly proven by Jansen and others using a simple inductive argument:
+- If $n = 2m$ is even, apply the inductive hypothesis to $m$ and double all summands.
+- If $n$ is odd, let $3^k$ be the largest power of $3$ with $3^k ≤ n$, and apply the
+  inductive hypothesis to $n - 3^k$ (which is even).
+
+Reference: [Er92b] Erdős, Paul, _Some of my favourite problems in various branches
+of combinatorics_. Matematiche (Catania) (1992), 231-240.
+-/
+@[category research solved, AMS 11]
+theorem erdos_123.variants.powers_2_3 :
+    IsDComplete (PowersOfTwo 2 3) := by
   sorry
+
+end Erdos123
