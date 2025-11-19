@@ -43,8 +43,7 @@ def PairwiseCoprime (a b c : ℕ) : Prop :=
 /--
 **Erdős Problem #123**
 
-Let a,b,c be three integers which are pairwise coprime. Is every large integer the sum of distinct integers of the form akblcm (k,l,m≥0), none of which divide any other?
-
-ANSWER
+Let $a, b, c$ be three integers which are pairwise coprime. Is every large integer
+the sum of distinct integers of the form $a^k b^l c^m$ ($k, l, m ≥ 0$), none of which
+divide any other?
 -/
-theorem erdos_123
