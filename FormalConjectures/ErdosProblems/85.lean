@@ -26,19 +26,20 @@ open SimpleGraph Finset
 
 namespace Erdos85
 
-open Classical in
 /--
 Let $f(n)$ be the smallest integer for which every graph on $n$ vertices with minimal degree $\geq
-f(n)$ contains a $C_4$. Is it true that $f(n + 1) \geq f(n)$?
+f(n)$ contains a $C_4$.
 -/
-noncomputable def erdos_85.f (n : ℕ) : ℕ :=
-  sInf {k : ℕ | ∀ G : SimpleGraph (Fin n), G.minDegree ≥ k → (cycleGraph 4) ⊑ G}
+noncomputable def f (n : ℕ) : ℕ :=
+  sInf {k : ℕ | ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
+    G.minDegree ≥ k → (cycleGraph 4) ⊑ G}
 
 /--
 Is it true that f(n + 1) ≥ f(n)?
 -/
 @[category research open, AMS 5]
-theorem erdos_85 : (∀ n : ℕ, erdos_85.f (n + 1) ≥ erdos_85.f n) ↔ answer(sorry) := by
+theorem erdos_85 :
+    (∀ n : ℕ, f (n + 1) ≥ f n) ↔ answer(sorry) := by
   sorry
 
 end Erdos85
