@@ -33,8 +33,7 @@ namespace Erdos123
 A set `A` of natural numbers is **d-complete** if every sufficiently large integer
 is the sum of distinct elements of `A` such that no element divides another.
 
-**References:**
-- [ErLe96] Erdős, P. and Lewin, M., _$d$-complete sequences of integers_. Math. Comp. (1996).
+Reference: [ErLe96] Erdős, P. and Lewin, M., _$d$-complete sequences of integers_. Math. Comp. (1996).
 -/
 def IsDComplete (A : Set ℕ) : Prop :=
   ∀ᶠ n in atTop, ∃ s : Finset ℕ,
