@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/930](https://www.erdosproblems.com/930)
 -/
 
-open Finset Nat
+open Finset
 
 namespace Erdos930
 
@@ -48,6 +48,52 @@ theorem erdos_930 :
     (∀ i j : Fin r, i ≠ j → Disjoint (I i) (I j)) →
       (∀ i : Fin r, k ≤ (I i).card ∧ ∃ a, I i = Ico a (a + (I i).card)) →
         ¬ PerfectPower (∏ i : Fin r, ∏ m ∈ I i, m) := by
+  sorry
+
+/--
+$p$ is the least prime satisfying $k \le p$
+if for any other prime $q$, $k \le q$ implies $p \le q$.
+-/
+def leastPrime (k p : ℕ) : Prop :=
+  p.Prime ∧ k ≤ p ∧ ∀ q, k ≤ q ∧ q.Prime → p ≤ q
+
+/--
+$n$ is greater than the least prime $p$ satisfying $k \le p$
+-/
+def gtLeastPrime (k n : ℕ) : Prop :=
+  ∀ p, leastPrime k p → p < n
+
+/--
+Let $k$, $l$, $n$ be integers such that $k \ge 3$, $l \ge 2$ and $n + k \ge p^{(k)}$,
+where $p^{(k)}$ is the least prime satisfying $p^{(k)} \ge k$.
+Then there is a prime $p \ge k$ for which $\alpha_p \not\equiv 0 \pmod{1}$,
+where $\alpha_p$ is the power of $p$ dividing $(n + 1) \ldots (n + k)$.
+
+Theorem 2 from [ErSe75].
+
+[ErSe75] Erdős, P. and Selfridge, J. L., The product of consecutive integers is never a power. Illinois J. Math. (1975), 292-301.
+-/
+@[category research solved, AMS 11]
+theorem erdos_930.variant.consecutive_strong :
+  ∀ k l n, 3 ≤ k → 2 ≤ l → gtLeastPrime k (n + k) →
+    ∃ p, k ≤ p ∧ p.Prime ∧
+      ¬ (l ∣ Nat.factorization (∏ m ∈ Icc (n + 1) (n + k), m) p) := by
+  sorry
+
+/--
+Erdos and Selfridge [ErSe75] proved that the product of
+consecutive integers is never a power (establishing the case $r=1$).
+
+Theorem 1 from [ErSe75].
+
+It is implied from `erdos_930.variant.consecutive_strong`.
+
+[ErSe75] Erdős, P. and Selfridge, J. L., The product of consecutive integers is never a power. Illinois J. Math. (1975), 292-301.
+-/
+@[category research solved, AMS 11]
+theorem erdos_930.variant.consecutive_integers :
+  ∀ n k, 0 ≤ n → 2 ≤ k →
+    ¬ PerfectPower (∏ m ∈ Icc (n + 1) (n + k), m) := by
   sorry
 
 end Erdos930
