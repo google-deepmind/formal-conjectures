@@ -52,7 +52,7 @@ theorem mahler_conjecture.variants.consequence (H : type_of% mahler_conjecture) 
 
 /-- It is known that for all rational `p/q > 1` in lowest terms, we have `Ω(p/q) > 1/p`. -/
 @[category research solved, AMS 11]
-theorem mahler_conjecture.variants.flatto_lagarias_pollington (p q : ℕ) (hp : 1 ≤ p) (hq : 1 < q)
+theorem mahler_conjecture.variants.flatto_lagarias_pollington (p q : ℕ) (hq : 1 < q)
     (hpq : p.Coprime q) (hpq' : q < p) : 1 / p < Ω (p / q) := by
   sorry
 
