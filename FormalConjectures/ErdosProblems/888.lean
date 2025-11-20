@@ -45,8 +45,7 @@ theorem erdos_888 : ∀n, Nat.findGreatest (p n) n = (answer(sorry): ℕ → ℕ
 theorem erdos_888_Sárközy : ∃c:ℝ,c>0 ∧ ∀n:ℕ , Nat.findGreatest (p n) n ≥  n*c := by
   sorry
 
-/--The primes show that |A| >> n/log n is possible.
-`>>` is implementet as |A| growing faster then any multiple of n/log n -/
+/--The primes show that `|A| ≫ n/log n` is possible.-/
 @[category research solved, AMS 11]
-theorem erdos_888_primes : ∀c:ℝ, ∃n₀:ℕ, ∀n:ℕ,n>n₀ → Nat.findGreatest (p n) n > c* ↑n / (↑n:ℝ).log  := by
+theorem erdos_888_primes : (fun n : ℕ  ↦   ↑(Nat.findGreatest (p n) n : ℝ )) ≫ (fun n : ℕ  ↦ ↑n / (↑n : ℝ).log)  := by
   sorry
