@@ -24,14 +24,14 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos358
 
-open Filter
+open Filter Finset
 
 /-
 Let $a$ be an infinite sequence of integers. `intervalRepresentations A n` is the set of solutions
-to \[n=\sum_{u\leq i\leq v}a_i.\]
+to \[n=\sum_{u\leq i\leq v}a_i.\] where `u` and `v` are positive integers.
 -/
 def intervalRepresentations (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
-  {(u, v) | n = ∑ i ∈ Finset.Icc u v, A i}
+  {(u, v) | (u : ℕ) (v : ℕ) (_ : 0 < u) (_ : 0 < v) (_ : n = ∑ i ∈ Icc u v, A i)}
 
 /-
 Let $a$ be an infinite sequence of integers. Let $f(n)$ count the number of
@@ -45,7 +45,7 @@ Let $a$ be an infinite sequence of integers. `intervalRepresentationsNonTrivial 
 solutions to \[n=\sum_{u\leq i\leq v}a_i\] such that the sum has at least two terms.
 -/
 def intervalRepresentationsNonTrivial (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
-  {(u, v) | n = ∑ i ∈ Finset.Icc u v, A i ∧ u < v}
+  {(u, v) | (u : ℕ) (v : ℕ) (_ : 0 < u) (_ : 0 < v) (_ : n = ∑ i ∈ Icc u v, A i) (_ : u < v)}
 
 /-
 Let $a$ be an infinite sequence of integers. Let $g(n)$ count the number of
@@ -58,7 +58,7 @@ noncomputable def g (A : ℕ → ℕ) (n : ℕ) : ℕ :=
 When $A_n = n$, the function $f$ defined above counts the number of odd divisors of $n$.
 -/
 @[category high_school, AMS 5 11]
-theorem f_id : f id = fun n ↦ (n.divisors.filter Odd).card := by
+theorem f_id : f id = fun n ↦ #{d ∈ n.divisors | Odd d} := by
   sorry
 
 /--
