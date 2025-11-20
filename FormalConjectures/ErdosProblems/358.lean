@@ -31,7 +31,7 @@ Let $a$ be an infinite sequence of integers. `intervalRepresentations A n` is th
 to \[n=\sum_{u\leq i\leq v}a_i.\] where `u` and `v` are positive integers.
 -/
 def intervalRepresentations (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
-  {(u, v) | (u : ℕ) (v : ℕ) (_ : 0 < u) (_ : 0 < v) (_ : n = ∑ i ∈ Icc u v, A i)}
+  {(u, v) | 0 < u ∧ 0 < v ∧ n = ∑ i ∈ Icc u v, A i}
 
 /-
 Let $a$ be an infinite sequence of integers. Let $f(n)$ count the number of
@@ -45,7 +45,7 @@ Let $a$ be an infinite sequence of integers. `intervalRepresentationsNonTrivial 
 solutions to \[n=\sum_{u\leq i\leq v}a_i\] such that the sum has at least two terms.
 -/
 def intervalRepresentationsNonTrivial (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
-  {(u, v) | (u : ℕ) (v : ℕ) (_ : 0 < u) (_ : 0 < v) (_ : n = ∑ i ∈ Icc u v, A i) (_ : u < v)}
+  {(u, v) | 0 < u ∧ 0 < v ∧ u < v ∧ n = ∑ i ∈ Icc u v, A i}
 
 /-
 Let $a$ be an infinite sequence of integers. Let $g(n)$ count the number of
