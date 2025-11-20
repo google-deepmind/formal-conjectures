@@ -36,7 +36,7 @@ where $p(m)$ denotes the least prime factor of $m$?
 -/
 @[category research open, AMS 11]
 theorem erdos_680 :
-  (∀ᶠ (n : ℕ) in Filter.atTop, ∃ k, Nat.minFac (n + k) > k^2 + 1)
+  (∀ᶠ (n : ℕ) in Filter.atTop, ∃ k ≠ 0, Nat.minFac (n + k) > k^2 + 1)
   ↔ answer(sorry) := sorry
 
 /--
@@ -45,7 +45,7 @@ $\epsilon>0$, where $C_\epsilon>0$ is some constant?
 -/
 @[category research open, AMS 11]
 theorem erdos_680.variant : (∀ ε > 0, ∃ C > 0,
-  ¬ ∀ᶠ (n : ℕ) in Filter.atTop, ∃ k,
+  ¬ ∀ᶠ (n : ℕ) in Filter.atTop, ∃ k ≠ 0,
   Nat.minFac (n + k) > exp ((1 + ε) * √k) + C)
   ↔ answer(sorry) := sorry
 
