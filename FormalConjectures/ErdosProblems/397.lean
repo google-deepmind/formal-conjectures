@@ -36,7 +36,7 @@ with the $m_i,n_j$ distinct?
 -/
 @[category research open, AMS 11]
 theorem erdos_397 :
-  {(M,N) : Finset Nat × Finset Nat | Disjoint M N ∧
+  {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
     ∏ i ∈ M, centralBinom i = ∏ j ∈ N, centralBinom j}.Finite ↔ answer(sorry) := by
   sorry
 
