@@ -28,7 +28,9 @@ open Polynomial MeasureTheory ENNReal
 
 namespace Erdos1041
 
-variable (f : ℂ[X])
+variable (n : ℕ) (f : ℂ[X])
+
+noncomputable def numRoots (f : ℂ[X]) : ℕ := Multiset.card f.roots
 
 /--
 The length of a subset $s$ of $\mathbb{C}$ is defined to be its 1-dimensional
@@ -42,39 +44,19 @@ variable {α : Type _} [TopologicalSpace α]
 def connectedComponents (s : Set α) : Set (Set α) :=
   {t | t ⊆ s ∧ IsConnected t ∧ ∀ u, t ⊂ u → u ⊆ s → ¬IsConnected u}
 
-/-- The number of connected components of a set -/
-noncomputable def numConnectedComponents (s : Set α) : ℕ :=
-  Nat.card (connectedComponents s)
-
-/--
-Let
-$$ f(z) = \prod_{i=1}^n (z - z_i) \in \mathbb{C}[z] $$
-be a complex polynomial of degree $n$.
-
-**Szegő's Lemma** (Reference: Szegő, Amer. Math. Monthly 58 (1951), 639):
-If all roots $z_i$ satisfy $|z_i| \leq 1$, then the number of connected components
-of the sublevel set
-$$ E(f) = \{ z \in \mathbb{C} \mid |f(z)| < 1 \} $$
-is at most $n - 1$.
-
-That is, the closure $\overline{E(f)}$ has at most $n-1$ connected components.
--/
-@[category research open, AMS 32]
-theorem numConnectedComponents_le (n : ℕ) :
-    numConnectedComponents { z | ‖f.eval z‖ < 1 } ≤ n - 1 := by
-  sorry
-
-
 /--
 **Erdős–Herzog–Piranian Component Lemma** (Metric Properties of Polynomials, 1958):
-If $f$ is a degree $n$ polynomial with all roots in the unit disk, then some connected component
+If $f$ is a degree $n$ polynomial with all roots in the unit disk,
+then some connected component
 of $\{z \mid |f(z)| < 1\}$ contains at least two distinct roots.
 -/
-@[category graduate, AMS 32]
-example : ∃ (s : Set ℂ) (h : s ∈ connectedComponents { z | ‖f.eval z‖ < 1 }),
-   ∃ (z₁ z₂ : ℂ) (hroots : z₁ ≠ z₂), z₁ ∈ f.rootSet ℂ ∧ z₂ ∈ f.rootSet ℂ := by
-  sorry -- TODO: prove using pigoenhole principle
-
+@[category research solved, AMS 32]
+theorem exists_connected_component_contains_two_roots
+    (h : ∀ z, z ∈ f.rootSet ℂ → ‖z‖ < 1) (hn : numRoots f = n) :
+  ∃ (s : Set ℂ) (z₁ z₂ : ℂ),
+    s ∈ connectedComponents {z | ‖f.eval z‖ < 1} ∧
+    z₁ ≠ z₂ ∧ z₁ ∈ f.rootSet ℂ ∧ z₂ ∈ f.rootSet ℂ ∧ z₁ ∈ s ∧ z₂ ∈ s := by
+  sorry
 
 /--
 Let
@@ -87,12 +69,9 @@ which connects two of the roots of $f$?
 -/
 @[category research open, AMS 32]
 theorem erdos_1041
-  (h : ∀ z, z ∈ f.rootSet ℂ → ‖z‖ < 1) :
-  ∃ (z₁ z₂ : ℂ)
-    (hz : z₁ ≠ z₂)
-    (hz₁ : z₁ ∈ f.rootSet ℂ)
-    (hz₂ : z₂ ∈ f.rootSet ℂ)
-    (γ : Path z₁ z₂),
+    (h : ∀ z, z ∈ f.rootSet ℂ → ‖z‖ < 1) (hn : numRoots f = n) :
+  ∃ (z₁ z₂ : ℂ) (hz : z₁ ≠ z₂) (hz₁ : z₁ ∈ f.rootSet ℂ)
+    (hz₂ : z₂ ∈ f.rootSet ℂ) (γ : Path z₁ z₂),
     Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧
     length (Set.range γ) < 2 := by
   sorry
