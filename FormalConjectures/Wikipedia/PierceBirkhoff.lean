@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open scoped EuclideanGeometry
+
 /-!
 # Pierce–Birkhoff conjecture
 
@@ -33,7 +35,7 @@ The conjecture has been proved for `n = 1` and `n = 2` by Louis Mahé.
 A set is semi-algebraic in `ℝⁿ` if it can be described by a finite union of sets defined by
 multivariate polynomial equations and inequalities.
 -/
-def IsSemiAlgebraic {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
+def IsSemiAlgebraic {n : ℕ} (S : Set (ℝ^n)) : Prop :=
   ∃ (ι₀ ι₁ : Type) (p₀ : ι₀ → MvPolynomial (Fin n) ℝ) (p₁ : ι₁ → MvPolynomial (Fin n) ℝ),
     Finite ι₀ ∧ Finite ι₁ ∧
     S = (⋃ i, {x | MvPolynomial.eval x (p₀ i) = 0}) ∪ ⋃ i, {x | MvPolynomial.eval x (p₁ i) > 0}
@@ -53,8 +55,8 @@ A function `f : ℝⁿ → ℝ` is piecewise polynomial if there exists a finite
 closed semi-algebraic sets such that the restriction of `f` to each set in the covering is
 polynomial.
 -/
-def IsPiecewiseMvPolynomial {n : ℕ} (f : EuclideanSpace ℝ (Fin n) → ℝ) : Prop :=
-  ∃ (ι : Type) (P : ι → Set (EuclideanSpace ℝ (Fin n)))
+def IsPiecewiseMvPolynomial {n : ℕ} (f : ℝ^n → ℝ) : Prop :=
+  ∃ (ι : Type) (P : ι → Set (ℝ^n))
     (g : ι → MvPolynomial (Fin n) ℝ),
     Finite ι ∧
     (∀ i, IsClosed (P i)) ∧
@@ -82,7 +84,7 @@ The Pierce-Birkhoff conjecture states that for every real piecewise-polynomial f
 `f = supᵢ infⱼ(gᵢⱼ)`.
 -/
 @[category research open, AMS 13]
-theorem pierce_birkhoff_conjecture {n : ℕ} (f : EuclideanSpace ℝ (Fin n) → ℝ)
+theorem pierce_birkhoff_conjecture {n : ℕ} (f : ℝ^n → ℝ)
     (hf : IsPiecewiseMvPolynomial f) :
     ∃ (ι κ : Type) (g : ι → κ → MvPolynomial (Fin n) ℝ), Finite ι ∧ Finite κ ∧
       ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
@@ -105,7 +107,7 @@ This was proved by Louis Mahé.
 -/
 @[category research solved, AMS 13]
 theorem pierce_birkhoff_conjecture_dim_two
-    (f : EuclideanSpace ℝ (Fin 2) → ℝ) (hf : IsPiecewiseMvPolynomial f) :
+    (f : ℝ² → ℝ) (hf : IsPiecewiseMvPolynomial f) :
     ∃ (ι κ : Type) (g : ι → κ → MvPolynomial (Fin 2) ℝ), Finite ι ∧ Finite κ ∧
       ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
   sorry

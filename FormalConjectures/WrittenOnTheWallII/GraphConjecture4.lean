@@ -30,7 +30,7 @@ trees satisfies `Ls(G) ≥ NG(G) - 1` where `NG(G)` is the minimal neighbourhood
 size of a non-edge of `G`.
 -/
 @[category research solved, AMS 5]
-theorem conjecture4 (G : SimpleGraph α) [DecidableRel G.Adj] [Nonempty α] (h_conn : G.Connected) :
+theorem conjecture4 (G : SimpleGraph α) [DecidableRel G.Adj] [Nontrivial α] (h_conn : G.Connected) :
     NG G - 1 ≤ Ls G := by
   sorry
 

@@ -48,7 +48,7 @@ def sumConv (f g : ℕ → R) (n : ℕ) : R := ∑ p ∈ antidiagonal n, f p.1 *
 infixl:70 " ∗ " => sumConv
 
 /-- The number of sum representations is the sum convolution of `A`'s indicator
-function with itself. -/
+function with itself: $1_A\ast 1_A(n)$. -/
 noncomputable def sumRep (A : Set ℕ) : ℕ → ℕ := (𝟙_A ∗ 𝟙_A)
 
 
