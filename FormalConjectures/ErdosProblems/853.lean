@@ -25,22 +25,12 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos853
 
 /-
-Defining `p n` as the `nth prime number` and `primeGap`:
--/
-
-noncomputable def p (n : ℕ) : ℕ := n.nth Nat.Prime
-
-noncomputable def primeGap (n : ℕ) : ℕ :=
-  p (n + 1) - p (n)
-
-/-
 Let `r(x)` be the smallest even integer `t` such that
 `primeGap = t` has no solutions for `n ≤ x`.
 -/
 
 noncomputable def r (x : ℕ) : ℕ :=
   sInf { t : ℕ | t % 2 = 0 ∧ ¬ (∃ n ≤ x, primeGap n = t) }
-
 
 /--
 Let $d_n=p_{n+1}-p_n$, where $p_n$ is the $n$th prime. Let $r(x)$ be the smallest even
@@ -51,13 +41,17 @@ Is it true that $r(x)\to \infty$?
 
 @[category research open, AMS 11]
 theorem erdos_853 :
-  ∀ (M : ℕ), ∃ (X : ℕ), ∀ x ≥ X, r x > M := sorry
+  ∀ (M : ℕ), ∃ (X : ℕ), ∀ x ≥ X, r x > M := by sorry
 
-/-- Or even $r(x)/\log x \to \infty$? -/
+/--
+Let $d_n=p_{n+1}-p_n$, where $p_n$ is the $n$th prime. Let $r(x)$ be the smallest even
+integer $t$ such that $d_n=t$ has no solutions for $n\leq x$.
+
+Is it true that $r(x)/\log x \to \infty$? -/
 
 @[category research open, AMS 11]
 theorem erdos_853_strong :
-  ∀ (M : ℕ), ∃ (X : ℕ), ∀ x ≥ X, r x / Real.log (x) > M := sorry
+  ∀ (M : ℕ), ∃ (X : ℕ), ∀ x ≥ X, r x / Real.log (x) > M := by sorry
 
 
 end Erdos853
