@@ -43,8 +43,9 @@ then $n$ has at most $K$ divisors in $(n^{1/2},n^{1/2}+C n^{1/4})$.
 -/
 @[category research open, AMS 11]
 theorem erdos_887 :
-  ∃ K : ℕ, ∀ C : ℝ, 0 < C → ∀ᶠ n in atTop, divisorsCount n C ≤ K
-    ↔ answer(sorry) := by
+  ∃ K : ℕ, ∀ C : ℝ, 0 < C →
+    ∃ n₀ : ℝ → ℕ, ∀ n, n₀ C < n → divisorsCount n C ≤ K
+      ↔ answer(sorry) := by
   sorry
 
 end Erdos887
