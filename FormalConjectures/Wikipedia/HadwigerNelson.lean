@@ -26,11 +26,13 @@ import FormalConjectures.Util.ProblemImports
 
 namespace HadwigerNelson
 
+open scoped EuclideanGeometry
+
 /--
 The unit-distance graph in the plane, i.e. the graph whose vertices are points in the plane
 and whose edges connect points that are exactly 1 unit apart.
 -/
-def UnitDistancePlaneGraph : SimpleGraph (EuclideanSpace ℝ (Fin 2)) :=
+def UnitDistancePlaneGraph : SimpleGraph ℝ² :=
   SimpleGraph.mk
     (fun x y => dist x y = 1)
     (by
