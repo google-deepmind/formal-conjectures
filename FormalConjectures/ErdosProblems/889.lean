@@ -88,4 +88,34 @@ theorem erdos_889.variants.v1_eq_1_finite :
   {n | v_l 1 n = 1}.Finite ↔ answer(sorry) := by
   sorry
 
+
+
+/--
+$V(n,k)$ is the number of primes $p$ such that
+$p^\alpha$ exactly divides $n+k$ and
+for all $0 \le i < k$, $p^\alpha$ does not divide $n+i$.
+-/
+def V (n k : ℕ) : ℕ :=
+  ((n + k).primeFactors.filter (fun p =>
+    ∀ i ∈ range k, ¬ p ^ ((n + k).factorization p) ∣ n + i)).card
+
+/--
+$V_l(n)$ is the supremum of $V(n,k)$ for all $k \ge l$
+-/
+noncomputable def V_l (l n : ℕ) : ℕ∞ :=
+  ⨆ k ≥ l, (V n k : ℕ∞)
+
+/--
+Does $V_1(n) = 1$ have finite solutions?
+
+This is a modification of `erdos_889.variants.v1_eq_1_finite`,
+which might make it more amenable to attack according to [ErSe67].
+
+[ErSe67] Erdős, P. and Selfridge, J. L., Some problems on the prime factors of consecutive integers. Illinois J. Math. (1967), 428--430.
+-/
+@[category research open, AMS 11]
+theorem erdos_889.variants.V1_eq_1_finite :
+  {n | V_l 1 n = 1}.Finite ↔ answer(sorry) := by
+  sorry
+
 end Erdos889
