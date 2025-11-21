@@ -40,5 +40,7 @@ Is it true that f(n + 1) ≥ f(n)?
 theorem erdos_85 :
     (∀ n : ℕ, f (n + 1) ≥ f n) ↔ answer(sorry) := by
   sorry
+
 -- TODO: add connection to Ramsey number, weaker version and implied bounds from additional material.
+
 end Erdos85
