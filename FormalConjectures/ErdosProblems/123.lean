@@ -43,14 +43,14 @@ def IsDComplete (A : Set ℕ) : Prop :=
 
 /--
 The set of all natural numbers of the form $p^a q^b$ where $a, b ≥ 0$.
-This represents numbers whose prime factors are restricted to those of $p$ and $q$.
+This is a subset of numbers whose prime factors are restricted to those of $p$ and $q$.
 -/
 def PowersOfTwo (p q : ℕ) : Set ℕ :=
   {n : ℕ | ∃ a b : ℕ, n = p^a * q^b}
 
 /--
 The set of all natural numbers of the form $p^a q^b r^c$ where $a, b, c ≥ 0$.
-This represents numbers whose prime factors are restricted to those of $p$, $q$, and $r$.
+This is a subset of numbers whose prime factors are restricted to those of $p$, $q$, and $r$.
 -/
 def PowersOfThree (p q r : ℕ) : Set ℕ :=
   {n : ℕ | ∃ a b c : ℕ, n = p^a * q^b * r^c}
