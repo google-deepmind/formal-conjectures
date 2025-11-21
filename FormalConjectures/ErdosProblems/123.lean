@@ -56,13 +56,6 @@ def PowersOfThree (p q r : ℕ) : Set ℕ :=
   {n : ℕ | ∃ a b c : ℕ, n = p^a * q^b * r^c}
 
 /--
-Given three natural numbers `a`, `b`, `c`, this is the set of all natural numbers
-of the form $a^k b^l c^m$ where $k, l, m ≥ 0$.
--/
-def powersOfThree (a b c : ℕ) : Set ℕ :=
-  {n | ∃ k l m : ℕ, n = a^k * b^l * c^m}
-
-/--
 Helper predicate for pairwise coprimality of three integers.
 -/
 def PairwiseCoprime (a b c : ℕ) : Prop :=
