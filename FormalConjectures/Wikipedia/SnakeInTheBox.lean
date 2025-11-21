@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Snake-in-the-box)
+- [Hypercube](https://en.wikipedia.org/wiki/Hypercube_graph)
 - [xkcd](https://xkcd.com/3125/)
 -/
 
@@ -28,13 +29,12 @@ universe u
 
 namespace SnakeInBox
 
-open SimpleGraph
-
+open SimpleGraph symmDiff
 
 /--
-A graph on the power set of `Fin n`, where two sets are adjacent if their intersection has size 1.
+A graph on the power set of `Fin n`, where two sets are adjacent if they differ by a single element.
 -/
-def Hypercube (n : ℕ) : SimpleGraph (Finset (Fin n)) := fromRel fun a b => (a ∩ b).card = 1
+def Hypercube (n : ℕ) : SimpleGraph (Finset (Fin n)) := fromRel fun a b => (a ∆ b).card = 1
 
 /--
 A subgraph `G'` is a 'snake' of length `k` in graph `G` if it is an induced path of length `k`.
@@ -73,7 +73,6 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
     use (⊤ : Subgraph _), by simp, ∅, ∅
     simp
 
-
 open List
 
 /-
@@ -101,7 +100,6 @@ theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
   sorry
 
 -- TODO(firsching): add more known bounds and open conjecture for a few small dimensions
-
 
 /--
 An upper bound of the maximal length of the longest snake in a box is given by
