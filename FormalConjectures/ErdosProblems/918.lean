@@ -70,8 +70,8 @@ theorem erdos_918.variants.all_subgraphs.parts.ii (ω : Ordinal) :
   sorry
 
 /-- A question of Erd\H{o}s and Hajnal [ErHa68b], who proved that for every finite $k$
-there is a graph with chromatic number $\aleph_1$ where each subgraph on less than $\aleph_k$
-vertices has chromatic number $\leq \aleph_0$. -/
+there is a graph with chromatic number $\aleph_1$ and $\aleph_k$ vertices where each subgraph on
+less than $\aleph_k$ vertices has chromatic number $\leq \aleph_0$. -/
 -- Formalisation note: the source is missing the assumption that the graph have ℵₖ vertices
 -- which can be found in [ErHa68b]
 @[category research solved, AMS 5]
