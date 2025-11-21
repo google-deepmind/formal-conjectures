@@ -31,9 +31,9 @@ such that $\lvert x_{n+1}-x_n\rvert \ll 1$?
 -/
 @[category research open, AMS 11]
 theorem erdos_952 :
-  ∃ (f : ℕ → GaussianInt), ∃ (B : ℤ),
-    Function.Injective f ∧
-      (∀ n, Prime (f n) ∧ (f (n + 1) - f n).norm ≤ B) := by
+  ∃ (x : ℕ → GaussianInt), ∃ (C : ℤ),
+    Function.Injective x ∧
+      ∀ n, Prime (x n) ∧ (x (n + 1) - x n).norm < C := by
   sorry
 
 end Erdos952
