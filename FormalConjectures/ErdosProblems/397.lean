@@ -17,22 +17,27 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 689
-*Reference:* [erdosproblems.com/689](https://www.erdosproblems.com/689)
+# Erdős Problem 397
+
+*References:*
+ - [erdosproblems.com/397](https://www.erdosproblems.com/397)
 -/
 
-namespace Erdos689
+open Nat
+
+namespace Erdos397
 
 /--
-Let `n` be sufficiently large. Is there some choice of congruence class `a_p` for all primes
-`2 ≤ p ≤ n` such that every integer in `[1,n]` satisfies at least two of the congruences
-`≡ a_p (mod p)`?
+Are there only finitely many solutions to
+$$
+  \prod_i \binom{2m_i}{m_i}=\prod_j \binom{2n_j}{n_j}
+$$
+with the $m_i,n_j$ distinct?
 -/
 @[category research open, AMS 11]
-theorem erdos_689 :
-    (∀ᶠ n in Filter.atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
-      2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card)
-    ↔ answer(sorry) := by
+theorem erdos_397 :
+  {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
+    ∏ i ∈ M, centralBinom i = ∏ j ∈ N, centralBinom j}.Finite ↔ answer(sorry) := by
   sorry
 
-end Erdos689
+end Erdos397

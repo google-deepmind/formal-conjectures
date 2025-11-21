@@ -103,9 +103,8 @@ The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mo
 -/
 @[category high_school, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
-    IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 3 [MOD 5] := by
+    IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 4 [MOD 5] := by
   sorry
-
 
 end PrimalityTesting
 
