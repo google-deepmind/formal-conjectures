@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/85](https://www.erdosproblems.com/85)
 -/
 
-open SimpleGraph Finset
+open Classical SimpleGraph Finset
 
 namespace Erdos85
 
@@ -31,8 +31,7 @@ Let $f(n)$ be the smallest integer for which every graph on $n$ vertices with mi
 f(n)$ contains a $C_4$.
 -/
 noncomputable def f (n : ℕ) : ℕ :=
-  sInf {k : ℕ | ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
-    G.minDegree ≥ k → (cycleGraph 4) ⊑ G}
+  sInf {k : ℕ | ∀ (G : SimpleGraph (Fin n)), G.minDegree ≥ k → (cycleGraph 4) ⊑ G}
 
 /--
 Is it true that f(n + 1) ≥ f(n)?
@@ -41,5 +40,5 @@ Is it true that f(n + 1) ≥ f(n)?
 theorem erdos_85 :
     (∀ n : ℕ, f (n + 1) ≥ f n) ↔ answer(sorry) := by
   sorry
-
+-- TODO: add connection to Ramsey number, weaker version and implied bounds from additional material.
 end Erdos85
