@@ -27,7 +27,7 @@ namespace Erdos477
 /--
 Let $f:\mathbb{Z}\to \mathbb{Z}$ be a polynomial of degree at least $2$. Is there a set $A$ such
 that every $z\in \mathbb{Z}$ has exactly one representation as $z=a+f(n)$ for some $a\in A$ and
-$n\geq 1$?
+$n > 0$?
 -/
 @[category research open, AMS 12]
 theorem erdos_477 : (∀ (f : Polynomial ℤ), 2 ≤ f.degree →
