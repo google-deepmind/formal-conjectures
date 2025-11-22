@@ -31,7 +31,7 @@ variable (z : PNat → ℂ) (hz : ∀ i : PNat, ‖z i‖ = 1)
 
 /-- For $n \geq 1$ let $p_n(z) = \prod_{i \leq n} (z - z_i)$. -/
 noncomputable def p (n : PNat) : ℂ → ℂ :=
-    fun w => ∏ i : range n, (w - z ⟨i + 1, by linarith⟩)
+    fun w => ∏ i ∈ range n, (w - z ⟨i + 1, by linarith⟩)
 
 /-- Let $M_n = \max_{|z| = 1} |p_n(z)|$. -/
 noncomputable def M (n : PNat) : ℝ :=
@@ -70,7 +70,7 @@ Is it true that there exists $c > 0$ such that, for all large $n$, $\sum_{k \leq
 @[category research open, AMS 30]
 theorem erdos_119_3 :
     ∃ (c : ℝ) (hc : c > 0), ∀ᶠ n in atTop,
-      ∑ k : range n, M z ⟨k + 1, by linarith⟩ > n ^ (1 + c) ↔ answer(sorry) := by
+      ∑ k ∈ range n, M z ⟨k + 1, by linarith⟩ > n ^ (1 + c) ↔ answer(sorry) := by
   sorry
 
 end Erdos119
