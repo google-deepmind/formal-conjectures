@@ -73,7 +73,8 @@ $n^{1+O(\frac{1}{\log\log n})}$ many pairs which are distance $1$ apart?
 -/
 @[category research open, AMS 52]
 theorem erdos_90 : (∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log)),
-  (fun n => (maxUnitDistances n : ℝ)) = fun (n : ℕ) => (n : ℝ) ^ (1 + O n)) ↔ answer(sorry) := by
+    (fun n => (maxUnitDistances n : ℝ)) =ᶠ[atTop] fun (n : ℕ) => (n : ℝ) ^ (1 + O n)) ↔
+      answer(sorry) := by
   sorry
 
 -- TODO(firsching): add the statements from the rest of the page.
