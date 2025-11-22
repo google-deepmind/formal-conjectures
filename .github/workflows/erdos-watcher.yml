@@ -1,0 +1,80 @@
+name: "Erdos problem watcher"
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # daily at 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 python-dateutil
+
+      - name: Run Erdos updates checker
+        id: run_erdos_updates_checker
+        run: |
+          python .github/scripts/check_erdos_updates.py \
+            --problems-dir FormalConjectures/ErdosProblems \
+            --dates-file .github/erdos-updates/erdos_dates.json \
+            --out .github/erdos-updates/updates.json
+
+      - name: Show detected updates
+        run: |
+          echo "Updates file content:" && cat .github/erdos-updates/updates.json || true
+
+      - name: Create issues for updates
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs')
+            const updatesPath = '.github/erdos-updates/updates.json'
+            if (!fs.existsSync(updatesPath)) {
+              console.log('No updates file present; nothing to do')
+              return
+            }
+            const updates = JSON.parse(fs.readFileSync(updatesPath, 'utf8'))
+            if (!updates || updates.length === 0) {
+              console.log('No updates detected')
+              return
+            }
+            for (const u of updates) {
+              const title = `[Erdos site update] Problem ${u.id}: page updated`
+              const body = `Erdos problem page updated: ${u.url}\n\nPrevious date: ${u.old || 'none'}\nNew date: ${u.new}\n\nPlease review the formalisation in ${u.lean_path} and update if needed.`
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['erdos-update']
+              })
+            }
+
+      - name: Commit updated dates (if any)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/erdos-updates/erdos_dates.json
+          if git diff --staged --quiet; then
+            echo "No date changes to commit"
+          else
+            git commit -m "Update Erdos problem last-seen dates"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
