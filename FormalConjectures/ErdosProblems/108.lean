@@ -35,8 +35,8 @@ contains a subgraph of girth ≥ r and chromatic number ≥ k?
 -/
 @[category research open, AMS 5]
 theorem erdos_108 :
-    (∀ r ≥ 4, ∀ k ≥ 2, ∃ (f : ℕ → ℕ → ℕ),
-    ∀ (G : SimpleGraph V) (hchro : SimpleGraph.chromaticNumber G ≤ (f k r)),
+    (∀ r ≥ 4, ∀ k ≥ 2, ∃ (f : ℕ),
+    ∀ (G : SimpleGraph V) (hchro : SimpleGraph.chromaticNumber G ≤ f),
     ∃ (H : SimpleGraph V) (hsub : H ≤ G), (SimpleGraph.girth H ≥ r) ∧
     (SimpleGraph.chromaticNumber H ≥ k)) ↔ answer(sorry) := by sorry
 
