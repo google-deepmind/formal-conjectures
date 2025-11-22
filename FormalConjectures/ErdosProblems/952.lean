@@ -14,26 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-
 import FormalConjectures.Util.ProblemImports
 
-open Classical
+/-!
+# Erdős Problem 952
 
-namespace WrittenOnTheWallII.GraphConjecture6
+*References:*
+- [erdosproblems.com/952](https://www.erdosproblems.com/952)
+- [Wikipedia](https://wikipedia.org/wiki/Gaussian_moat)
+-/
 
-open SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+namespace Erdos952
 
 /--
-WOWII [Conjecture 6](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-For a connected graph `G` we have
-`Ls(G) ≥ 1 + n(G) - m(G) - a(G)` where `a(G)` is defined via independent sets.
+Is there an infinite sequence of distinct Gaussian primes $x_1,x_2,\ldots$
+such that $\lvert x_{n+1}-x_n\rvert \ll 1$?
 -/
-@[category research solved, AMS 5]
-theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-    1 + n G - m G - a G ≤ Ls G := by
+@[category research open, AMS 11]
+theorem erdos_952 :
+  ∃ (x : ℕ → GaussianInt) (C : ℤ),
+    Function.Injective x ∧
+      ∀ n, Prime (x n) ∧ (x (n + 1) - x n).norm < C := by
   sorry
 
-end WrittenOnTheWallII.GraphConjecture6
+end Erdos952
