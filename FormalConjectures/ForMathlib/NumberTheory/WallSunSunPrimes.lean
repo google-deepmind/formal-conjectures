@@ -59,12 +59,18 @@ structure IsWallSunSunPrime (p : ℕ) : Prop where
 
 /--
 **Lucas–Wieferich prime**
-A Lucas–Wieferich prime associated with $(a,b)$ is a prime $p$ such $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$
-where $U(a,b)$ is the Lucas sequence of the first kind and $\varepsilon$ is the Legendre symbol
-$\left({\tfrac {a^{2}-4b}{p}}\right)$
+A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not dividing $a^2 - b$, such
+that $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$ where $U(a,b)$ is the Lucas sequence of the first
+kind and $\varepsilon$ is the Legendre symbol $\left({\tfrac {a^{2}-4b}{p}}\right)$.
+
+See first paragraph of
+https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime#Wall%E2%80%93Sun%E2%80%93Sun_primes_with_discriminant_D
+for the condition that $p$ is odd and coprime to the discriminant
 -/
 structure IsLucasWieferichPrime (a b p : ℕ) : Prop where
   prime : p.Prime
+  odd : Odd p
+  not_dvd : ¬p ∣ a ^ 2 - b
   modeq :
     letI index := p - jacobiSym p (a^2 - 4*b)
     LucasSequence.U a b index.toNat ≡ 0 [ZMOD (p^2)]
