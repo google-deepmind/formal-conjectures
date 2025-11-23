@@ -63,8 +63,7 @@ noncomputable def lowerDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot
 theorem lowerDensity_le_one {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) : S.lowerDensity A ≤ 1 := by
   by_cases h : atTop (α := β) = ⊥
-  · simp_all[Set.partialDensity,Set.lowerDensity]
-    norm_num[Filter.liminf_eq]at*
+  · field_simp [h, Set.lowerDensity, Filter.liminf_eq]
   · have : (atTop (α := β)).NeBot := ⟨h⟩
     apply Real.sSup_le (fun x hx ↦ ?_) one_pos.le
     simpa using hx.mono fun y hy ↦ hy.trans (Set.partialDensity_le_one _ _ y)
@@ -122,7 +121,7 @@ theorem empty {β : Type*} [Preorder β] [LocallyFiniteOrderBot β] (A : Set β 
 theorem mono {β : Type*} [PartialOrder β] [LocallyFiniteOrder β] [OrderBot β]
     {S T : Set β} {αS αT : ℝ} [(atTop (α := β)).NeBot] (h : S ⊆ T) (hS : S.HasDensity αS)
     (hT : T.HasDensity αT) : αS ≤ αT := by
-  simp_all [HasDensity]
+  rw [HasDensity] at hS hT
   apply le_of_tendsto_of_tendsto hS hT
   filter_upwards [eventually_ge_atTop ⊥] with b hb
   apply div_le_div_of_nonneg_right
