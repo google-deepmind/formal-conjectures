@@ -28,7 +28,6 @@ namespace Erdos853
 Let `r(x)` be the smallest even integer `t` such that
 `primeGap = t` has no solutions for `n ≤ x`.
 -/
-
 noncomputable def r (x : ℕ) : ℕ :=
   sInf { t : ℕ | t % 2 = 0 ∧ ¬ (∃ n ≤ x, primeGap n = t) }
 
