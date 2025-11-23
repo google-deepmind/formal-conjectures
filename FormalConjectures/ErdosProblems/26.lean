@@ -53,8 +53,7 @@ def IsBehrend {ι : Type*} (A : ι → ℕ) : Prop := (MultiplesOf A).HasDensity
 
 /-- A sequence of naturals $(a_i)$ is _weakly Behrend_ with respect to $\varepsilon \in \mathbb{R}$
 if at least $1 - \varepsilon$ density of all numbers are a multiple of $A$. -/
-def IsWeaklyBehrend {ι : Type*} (A : ι → ℕ) (ε : ℝ) : Prop :=
-  ∀ d > (0 : ℝ), (MultiplesOf A).HasDensity d → 1 - ε ≤ d
+def IsWeaklyBehrend {ι : Type*} (A : ι → ℕ) (ε : ℝ) : Prop := 1 - ε ≤ (MultiplesOf A).lowerDensity
 
 @[category test, AMS 11]
 theorem isBehrend_of_contains_one {ι : Type*} (A : ι → ℕ) (h : 1 ∈ Set.range A) :
@@ -64,13 +63,15 @@ theorem isBehrend_of_contains_one {ι : Type*} (A : ι → ℕ) (h : 1 ∈ Set.r
     field_simp [multiplesOf_eq_univ A h, Set.partialDensity]
 
 @[category test, AMS 11]
-theorem not_isBehrend_finite {ι : Type*} [Finite ι] [Preorder ι] (A : ι → ℕ) (h : StrictMono A)
-    (h : 1 ∉ Set.range A) : ¬IsBehrend A := by
-  sorry
+theorem isWeaklyBehrend_of_ge_one {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε : 1 ≤ ε) :
+    IsWeaklyBehrend A ε := by
+  exact (sub_nonpos.2 hε).trans (Set.lowerDensity_nonneg _)
 
 @[category test, AMS 11]
-theorem isWeaklyBehrend_of_ge_one {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε : 1 ≤ ε) :
-    IsWeaklyBehrend A ε := fun _ h _ => (sub_nonpos.2 hε).trans h.le
+theorem not_isWeaklyBehrend_of_neg {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε : ε < 0) :
+    ¬IsWeaklyBehrend A ε := by
+  norm_num [IsWeaklyBehrend]
+  exact (add_lt_of_neg_right _ hε).trans_le (Set.lowerDensity_le_one _)
 
 /--
 Let $A\subset\mathbb{N}$ be infinite such that $\sum_{a \in A} \frac{1}{a} = \infty$. Must
