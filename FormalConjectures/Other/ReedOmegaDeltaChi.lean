@@ -45,6 +45,11 @@ noncomputable
 def maxCliqueSize {V : Type} (G : SimpleGraph V) : ℕ∞ :=
   if Nonempty V ∧ G.cliqueNum = 0 then ⊤ else G.cliqueNum
 
+/--
+For a graph $G$, we define $\Delta(G)$ to be the maximum degree, $\omega(G)$ to be the size of the
+largest clique subgraph, and $\chi(G)$ to be the chromatic number. Reed's omega, delta, and chi
+conjecture states that $$\chi(G) \leq \lceil \frac{1}{2}(\omega(G) + \Delta(G) + 1) \rceil.$$
+-/
 @[category research open, AMS 5]
 theorem reed_omega_delta_chi_conjecture :
   ∀ {V : Type} (G : SimpleGraph V),
@@ -55,6 +60,9 @@ theorem reed_omega_delta_chi_conjecture :
   χ ≤ (ω + Δ + 1).map (fun d => (d + 1) / 2) := by
     sorry
 
+/--
+The simplest open case is when $\Delta(G) = 6$ and $\omega(G) = 2$.
+-/
 @[category research open, AMS 5]
 theorem reed_conjecture_Δ_6_ω_2 :
   ∀ {V : Type} (G : SimpleGraph V), maxDegree G = 6 ∧ G.cliqueNum = 2 → G.chromaticNumber ≤ 5 := by
