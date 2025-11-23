@@ -68,7 +68,7 @@ in the case of $p$ only having real roots has been shown by Tischler.
 lemma mean_value_problem_of_real_roots (p : Polynomial ℂ) (hp : 2 ≤ p.natDegree)
     (h : ∀ x : ℂ, p.IsRoot x → x.im = 0) (z : ℂ) (K : ℝ) :
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
-      ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ (p.natDegree - 1)/ p.natDegree * ‖p.derivative.eval z‖ :=
+      ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ (p.natDegree - 1)/ p.natDegree * ‖p.derivative.eval z‖ := by
   sorry
 
 /--
