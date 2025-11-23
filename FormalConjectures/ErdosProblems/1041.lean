@@ -28,9 +28,11 @@ open Polynomial MeasureTheory ENNReal
 
 namespace Erdos1041
 
-variable (n : ℕ) (f : ℂ[X])
-
 noncomputable def numRoots (f : ℂ[X]) : ℕ := Multiset.card f.roots
+
+variable (n : ℕ) (f : ℂ[X]) (hn : n ≥ 2) (hnum : numRoots f = n)
+         (h : ∀ z, z ∈ f.rootSet ℂ → ‖z‖ < 1)
+include hn hnum h
 
 /--
 The length of a subset $s$ of $\mathbb{C}$ is defined to be its 1-dimensional
@@ -51,8 +53,7 @@ then some connected component
 of $\{z \mid |f(z)| < 1\}$ contains at least two distinct roots.
 -/
 @[category research solved, AMS 32]
-theorem exists_connected_component_contains_two_roots
-    (h : ∀ z, z ∈ f.rootSet ℂ → ‖z‖ < 1) (hn : numRoots f = n) :
+theorem exists_connected_component_contains_two_roots :
   ∃ (s : Set ℂ) (z₁ z₂ : ℂ),
     s ∈ connectedComponents {z | ‖f.eval z‖ < 1} ∧
     z₁ ≠ z₂ ∧ z₁ ∈ f.rootSet ℂ ∧ z₂ ∈ f.rootSet ℂ ∧ z₁ ∈ s ∧ z₂ ∈ s := by
@@ -68,8 +69,7 @@ $$ \{ z \in \mathbb{C} \mid |f(z)| < 1 \} $$
 which connects two of the roots of $f$?
 -/
 @[category research open, AMS 32]
-theorem erdos_1041
-    (h : ∀ z, z ∈ f.rootSet ℂ → ‖z‖ < 1) (hn : numRoots f = n) :
+theorem erdos_1041 :
   ∃ (z₁ z₂ : ℂ) (hz : z₁ ≠ z₂) (hz₁ : z₁ ∈ f.rootSet ℂ)
     (hz₂ : z₂ ∈ f.rootSet ℂ) (γ : Path z₁ z₂),
     Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧
