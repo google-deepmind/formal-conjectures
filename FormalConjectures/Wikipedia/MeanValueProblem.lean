@@ -44,7 +44,7 @@ there is a critical point $c$ of $p$, such that $|p(z)-p(c)|/|z-c| ≤ |p'(z)|$.
 @[category research open, AMS 12]
 lemma mean_value_problem (p : Polynomial ℂ) (hp : 2 ≤ p.degree) (z : ℂ) (K : ℝ):
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
-      ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ ‖p.derivative.eval z‖ :=
+      ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ ‖p.derivative.eval z‖ := by
   sorry
 
 /--
