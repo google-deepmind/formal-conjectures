@@ -165,18 +165,18 @@ theorem length (h : s.IsAPOfLength l) : s.length = l := by
   obtain ⟨_, _, h⟩ := h
   exact h.length
 
-/-- Only the empty set is a finite arithmetic progression of length $0$. -/
+/-- Only the empty list is a finite arithmetic progression of length $0$. -/
 @[simp] theorem zero : s.IsAPOfLength 0 ↔ s = [] := by simp [IsAPOfLength]
 
 /-- Only singletons are finite arithmetic progressions of length $1$. -/
 @[simp] theorem one : s.IsAPOfLength 1 ↔ ∃ a, s = [a] := by simp [IsAPOfLength]
 
-/-- If a set is an arithmetic progression of lengths `l₁` and `l₂`, then the lengths are
+/-- If a list is an arithmetic progression of lengths `l₁` and `l₂`, then the lengths are
 equal. -/
-theorem congr {s : Set α} {l₁ l₂ : ℕ∞}
+theorem congr {s : List α} {l₁ l₂ : ℕ}
     (h₁ : s.IsAPOfLength l₁) (h₂ : s.IsAPOfLength l₂) :
     l₁ = l₂ := by
-  rw [← h₁.card, h₂.card]
+  rw [← h₁.length, h₂.length]
 
 end List.IsAPOfLength
 
