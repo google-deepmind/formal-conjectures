@@ -19,16 +19,19 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Rational distance problem
 
-*Reference:* (https://en.wikipedia.org/wiki/Unit_square#Rational_distance_problem)
-
-*Reference* (https://mathoverflow.net/questions/418260)
+*References:* 
+- [Wikipedia](https://en.wikipedia.org/wiki/Unit_square#Rational_distance_problem)
+- [mathoverflow/418260](https://mathoverflow.net/questions/1973/)
+asked by user [Yuan Yang](https://mathoverflow.net/users/177957/yuan-yang)
+- D19 in [Unsolved Problems in Number Theory](https://doi.org/10.1007/978-0-387-26677-0)
+by *Richard K. Guy*
 -/
 
 namespace RationalDistanceProblem
 
-abbrev Plane := EuclideanSpace ℝ (Fin 2)
+open EuclideanGeometry
 
-def UnitSquareCorners : Fin 4 → Plane :=
+def UnitSquareCorners : Fin 4 → ℝ²  :=
   ![![0, 0], ![1, 0], ![1, 1], ![0, 1]]
 
 /-
@@ -36,7 +39,7 @@ Does there exist a point in the plane at rational distance from all four vertice
 -/
 @[category research open, AMS 11 51]
 theorem rational_distance_problem :
-  ∃ P : Plane, ∀ i, ¬ Irrational (dist P (UnitSquareCorners i)) ↔ answer(sorry) := by
+  ∃ P : ℝ² , ∀ i, ¬ Irrational (dist P (UnitSquareCorners i)) ↔ answer(sorry) := by
     sorry
 
 end RationalDistanceProblem
