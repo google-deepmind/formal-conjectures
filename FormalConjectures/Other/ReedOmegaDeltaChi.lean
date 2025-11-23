@@ -39,8 +39,7 @@ def maxDegree {V : Type} (G : SimpleGraph V) : ℕ∞ :=
 
 /--
 For a nonempty graph, `G.cliqueNum` is 0 iff the clique size is unbounded. For the purposes of
-stating the conjecture, we actually want the max clique size to be `∞` in this case - if we just
-write `G.cliqueNum`, the resulting statement is trivially false.
+stating the conjecture, we actually want the max clique size to be `∞` in this case.
 -/
 noncomputable
 def maxCliqueSize {V : Type} (G : SimpleGraph V) : ℕ∞ :=
