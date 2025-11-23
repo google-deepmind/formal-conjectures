@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open MeasureTheory Classical
 open scoped ProbabilityTheory Topology Real
 
+namespace Erdos522
+
 /--
 A *Kac Polynomial* in `n` coefficients over some subset `S` of a field `k` is a polynomial whose
 `n` first coefficients are picked uniformely at random in `S` and whose other coefficients are all `0`
@@ -106,3 +108,5 @@ theorem erdos_522.variants.yakir_solution :
       (n : ℕ) (hn : 2 ≤ n) (f : KacPolynomial n ({-1, 1} : Set ℂ) Ω),
        (ℙ {ω | |(f.roots ω).countP (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ n^(9/10 : ℝ) }).toReal ≤ p n :=
   sorry
+
+end Erdos522

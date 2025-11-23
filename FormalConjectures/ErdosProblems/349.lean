@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/349](https://www.erdosproblems.com/349)
 -/
 
+namespace Erdos349
 
 open Set Filter Real Nat Function
 
@@ -78,3 +79,5 @@ Is it true that the terms of the sequence $\lfloor (3/2)^n\rfloor$ are even infi
 theorem erdos_349.variants.floor_3_halves_even :
     {n | Even ⌊(3/2 : ℝ) ^ n⌋}.Infinite ↔ answer(sorry) := by
   sorry
+
+end Erdos349

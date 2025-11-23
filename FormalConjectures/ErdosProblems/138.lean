@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 138
 
 *References:*
-- [erdosproblems.com/138](https://erdosproblems.com/138)
+- [erdosproblems.com/138](https://www.erdosproblems.com/138)
 - [Be68] Berlekamp, E. R., A construction for partitions which avoid long arithmetic progressions. Canad. Math. Bull. (1968), 409-414.
 - [Er80] Erdős, Paul, A survey of problems in combinatorial number theory. Ann. Discrete Math. (1980), 89-115.
 - [Er81] Erdős, P., On the combinatorial problems which I would most like to see solved. Combinatorica (1981), 25-42.
@@ -87,7 +87,7 @@ theorem erdos_138 : atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop ↔
 When $p$ is prime Berlekamp [Be68] has proved $W(p+1) ≥ p^{2^p}$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_138.variants.prime (p : ℕ) (hp : p.Prime) : p^(2^ p) ≤ W (p + 1) := by
+theorem erdos_138.variants.prime (p : ℕ) (hp : p.Prime) : p * (2 ^ p) ≤ W (p + 1) := by
   sorry
 
 /--

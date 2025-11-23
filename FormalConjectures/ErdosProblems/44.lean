@@ -48,29 +48,11 @@ theorem erdos_44 : (∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon A �
   sorry
 
 /--
-A variant considering the extension to any larger range.
--/
-@[category undergraduate, AMS 5 11]
-theorem erdos_44.variant : (∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon A →
-    ∀ᵉ (ε > (0 : ℝ)) (M ≥ N), ∃ᵉ (B ⊆ Finset.Icc (N + 1) M),
-      IsSidon (A ∪ B) ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card) ↔ answer(sorry) := by
-  sorry
-
-/--
 The case where we start with an empty set (constructing large Sidon sets).
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44.empty_start : (∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M : ℕ) (A ⊆ Finset.Icc 1 M),
+theorem erdos_44.empty_start : (∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M > (0 : ℕ)) (A ⊆ Finset.Icc 1 M),
     IsSidon A ∧ (1 - ε) * Real.sqrt M ≤ A.card) ↔ answer(sorry) := by
-  sorry
-
-/--
-A constructive version asking for explicit bounds on M in terms of ε.
--/
-@[category research open, AMS 5 11]
-theorem erdos_44.constructive : (∃ (f : ℝ → ℕ), ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N),
-    IsSidon A → ∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M ≤ f ε) (B ⊆ Finset.Icc (N + 1) M),
-      N < M ∧ IsSidon (A ∪ B) ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card) ↔ answer(sorry) := by
   sorry
 
 /-! ## Related results and examples -/

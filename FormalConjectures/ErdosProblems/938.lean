@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 open Nat
 
+namespace Erdos938
+
 /--
 Let $A=\{n_1 < n_2 < \cdots\}$ be the sequence of powerful numbers (if $p\mid n$ then $p^2\mid n$).
 Are there only finitely many three-term progressions of consecutive terms $n_k,n_{k+1},n_{k+2}$?
@@ -31,3 +33,5 @@ Are there only finitely many three-term progressions of consecutive terms $n_k,n
 theorem erdos_938 : {P : Finset ℕ | Set.IsAPOfLength P.toSet 3 ∧ ∃ k,
     P = {nth Powerful k, nth Powerful (k + 1), nth Powerful (k + 2)}}.Finite ↔ answer(sorry) := by
   sorry
+
+end Erdos938

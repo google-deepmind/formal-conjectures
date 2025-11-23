@@ -27,6 +27,7 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Real
 
+namespace Erdos945
 
 abbrev τ  := fun (n : ℕ) => n.divisors.card
 
@@ -91,3 +92,5 @@ theorem erdos_945.variants.upper_bound :
 
 -- TODO(firsching): add observations what follows from Cramér's conjecture and if every sufficient
 -- interval contains a squarefree number.
+
+end Erdos945

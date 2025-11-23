@@ -20,7 +20,7 @@ namespace WrittenOnTheWallII.GraphConjecture58
 
 open SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
+variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (G : SimpleGraph α)
 
 /--
 WOWII [Conjecture 58](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
