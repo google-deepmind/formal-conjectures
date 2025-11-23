@@ -35,7 +35,7 @@ representative `{g_1, ..., g_k}` such that the cosets `g_iH_i` are pairwise disj
 union covers `G`.
 
 Note that this differs from `Partition (α := Subgroup G)` because the covering condition there
-invokes `Subgroup.sub` which is multiplication and thus stronger than union. This definition
+invokes `Subgroup.sup` which is subgroup generation and thus stronger than union. This definition
 is easier to use in this contect than the alternative `Partition (α := Set G)`, which lacks
 subgroup definitions such as `Subgroup.index`. -/
 structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] where
