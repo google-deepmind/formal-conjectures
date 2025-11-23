@@ -40,4 +40,6 @@ theorem erdos_108 :
     ∃ (H : G.Subgraph), (SimpleGraph.girth H.coe ≥ r) ∧
     (SimpleGraph.chromaticNumber H.coe ≥ k)) ↔ answer(sorry) := by sorry
 
+-- TODO: Proof for the case r=4 and statement for the infinite case
+
 end Erdos108
