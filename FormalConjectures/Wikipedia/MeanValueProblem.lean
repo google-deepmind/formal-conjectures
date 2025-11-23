@@ -74,7 +74,7 @@ lemma mean_value_problem_of_real_roots (p : Polynomial ℂ) (hp : 2 ≤ p.natDeg
 /--
 The following tighter bound depending on the degree $d$ of the polynomial $p$,
 in the case of $p$ all roots having the same norm has been shown by Tischler.
-|p(z)-p(c)|/|z-c| ≤ (d-1)/d * |p'(z)|
+$$|p(z) - p(c)|/|z-c| ≤ (d-1)/d * |p'(z)|$$.
 -/
 
 @[category research solved, AMS 12]
