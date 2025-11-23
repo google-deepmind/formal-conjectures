@@ -19,9 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Rational distance problem
 
-*References:* 
+*References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Unit_square#Rational_distance_problem)
-- [mathoverflow/418260](https://mathoverflow.net/questions/1973/)
+- [mathoverflow/418260](https://mathoverflow.net/questions/418260/)
 asked by user [Yuan Yang](https://mathoverflow.net/users/177957/yuan-yang)
 - D19 in [Unsolved Problems in Number Theory](https://doi.org/10.1007/978-0-387-26677-0)
 by *Richard K. Guy*
