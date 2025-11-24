@@ -13,27 +13,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
-
 import FormalConjectures.Util.ProblemImports
 
-open Classical
+/-!
+# Erdős Problem 749
 
-namespace WrittenOnTheWallII.GraphConjecture6
+*Reference:* [erdosproblems.com/749](https://www.erdosproblems.com/749)
+-/
 
-open SimpleGraph
+open Set Pointwise AdditiveCombinatorics
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+namespace Erdos749
 
 /--
-WOWII [Conjecture 6](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-For a connected graph `G` we have
-`Ls(G) ≥ 1 + n(G) - m(G) - a(G)` where `a(G)` is defined via independent sets.
+Let $\epsilon>0$. Does there exist $A\subseteq \mathbb{N}$
+such that the lower density of $A+A$ is at least $1-\epsilon$
+and yet $1_A\ast 1_A(n) \ll_\epsilon 1$ for all $n$?
 -/
-@[category research solved, AMS 5]
-theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-    1 + n G - m G - a G ≤ Ls G := by
+@[category research open, AMS 11]
+theorem erdos_749 : (∀ᵉ (ε > (0 : ℝ)),
+    ∃ A : Set ℕ, 1 - ε ≤ lowerDensity (A + A) ∧
+    ((Nat.cast (R := ℝ) ∘ sumRep A) ≪ (fun n => (1: ℝ)))) ↔ answer(sorry) := by
   sorry
 
-end WrittenOnTheWallII.GraphConjecture6
+
+-- TODO(firsching): add a "similar question" for the upper density.
+end Erdos749
