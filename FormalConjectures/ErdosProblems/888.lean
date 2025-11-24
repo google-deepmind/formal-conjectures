@@ -33,16 +33,16 @@ def RequiredCondition (A : Finset ℕ) (n : ℕ) : Prop :=
   A ⊆ Finset.Ioc 0 n ∧ ∀ᵉ (a ∈ A) (b ∈ A) (c ∈ A) (d ∈ A),
   a ≤ b → b ≤ c → c ≤ d → IsSquare (a * b * c * d) → a * d = b * c
 
-def p (n : ℕ) (k : ℕ) : Prop := ∃ A: Finset ℕ, RequiredCondition A n ∧ A.card = k
+def p (n : ℕ) (k : ℕ) : Prop := ∃ A : Finset ℕ, RequiredCondition A n ∧ A.card = k
 
 
 @[category research open, AMS 11]
-theorem erdos_888 : ∀n, Nat.findGreatest (p n) n = (answer(sorry): ℕ → ℕ)  n := by
+theorem erdos_888 : ∀ n, Nat.findGreatest (p n) n = (answer(sorry) : ℕ → ℕ)  n := by
   sorry
 
 /--`|A|=o(n)`-/
 @[category research solved, AMS 11]
-theorem erdos_888_Sárközy : ∃c:ℝ,c>0 ∧ ∀n:ℕ , Nat.findGreatest (p n) n ≥  n*c := by
+theorem erdos_888_Sárközy : ∃ c : ℝ, c > 0 ∧ ∀ n : ℕ , Nat.findGreatest (p n) n ≥  n * c := by
   sorry
 
 /--The primes show that `|A| ≫ n/log n` is possible.-/
