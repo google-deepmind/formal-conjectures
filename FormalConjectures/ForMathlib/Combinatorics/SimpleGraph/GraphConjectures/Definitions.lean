@@ -18,6 +18,7 @@ import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Combinatorics.SimpleGraph.Bipartite
 import Mathlib.Combinatorics.SimpleGraph.Matching
 import Mathlib.Data.Real.Archimedean
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 namespace SimpleGraph
 
@@ -86,5 +87,17 @@ noncomputable def indepNeighbors (G : SimpleGraph α) (v : α) : ℝ :=
 /-- Average of `indepNeighbors` over all vertices. -/
 noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
   (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
+
+/-- A finite unit distance graph in ℝ^2:
+A graph where the vertices are a finite collection of points in ℝ² and there is an edge between
+two points if and only if the distance between them is 1. -/
+def UnitDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph V where
+  Adj := fun x y => dist x y = 1
+  symm := by
+    intros x y
+    simp [dist_comm]
+  loopless := by
+    intros x
+    simp [dist_self]
 
 end SimpleGraph

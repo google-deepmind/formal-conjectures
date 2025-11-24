@@ -24,27 +24,20 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos705
 
-open Erdos705
-
-variable {V : Finset (EuclideanSpace ℝ (Fin 2))}
-
-/--
-A finite unit distance graph in ℝ^2:
-A graph where the vertices are a finite collection of points in ℝ² and there is an edge between
-two points if and only if the distance between them is 1.
--/
-
-def unitDistancePlaneGraph (G : SimpleGraph V) : Prop :=
-  ∀ x y : V, G.Adj x y ↔ dist x y = 1
+open scoped EuclideanGeometry
+open SimpleGraph
 
 /--
 Let G be a finite unit distance graph in R².
 Is there some k such that if G has girth ≥ k, then χ(G) ≤ 3?
 -/
-
 @[category research open, AMS 5]
 theorem erdos_705:
-  (∀ (G : SimpleGraph V) (h : unitDistancePlaneGraph G),
-    ∃ k, SimpleGraph.girth G ≥ k → SimpleGraph.chromaticNumber G ≤ 3) ↔ answer(sorry) := by sorry
+  (∀ (V : Set ℝ²) (hf: V.Finite),
+    ∃ k, (UnitDistancePlaneGraph V).girth ≥ k → (UnitDistancePlaneGraph V).chromaticNumber ≤ 3) ↔
+    answer(sorry) := by sorry
+
+
+-- TODO: add statements for the concrete constructions in the additional material
 
 end Erdos705
