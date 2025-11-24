@@ -29,9 +29,9 @@ namespace Erdos888
 
 /-- Let `A` be a subset of `{1,...,n}` such that
 if `a ≤ b ≤ c ≤ d ∈ A` and `abcd` square then `ad=bc` -/
-def RequiredCondition (A : Finset ℕ) (n:ℕ ) :Prop :=
-  ∀a ∈ A,0<a ∧ a≤n ∧
-  ∀a ∈ A,∀b ∈ A,∀c ∈ A,∀d ∈ A, a ≤ b ∧ b ≤ c ∧ c ≤ d ∧ IsSquare (a*b*c*d) → a*d=b*c
+def RequiredCondition (A : Finset ℕ) (n : ℕ) : Prop :=
+  A ⊆ Finset.Ioc 0 n ∧ ∀ᵉ (a ∈ A) (b ∈ A) (c ∈ A) (d ∈ A),
+  a ≤ b → b ≤ c → c ≤ d → IsSquare (a * b * c * d) → a * d = b * c
 
 def p (n:ℕ) (k:ℕ):Prop := ∃A: Finset ℕ, RequiredCondition A n ∧ A.card = k
 
