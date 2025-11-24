@@ -88,9 +88,9 @@ noncomputable def indepNeighbors (G : SimpleGraph α) (v : α) : ℝ :=
 noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
   (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
 
-/-- A finite unit distance graph in ℝ^2:
-A graph where the vertices are a finite collection of points in ℝ² and there is an edge between
-two points if and only if the distance between them is 1. -/
+/-- A unit distance graph in ℝ²:
+A graph where the vertices V are a collection of points in ℝ² and there is
+an edge between two points if and only if the distance between them is 1. -/
 def UnitDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph V where
   Adj := fun x y => dist x y = 1
   symm := by
