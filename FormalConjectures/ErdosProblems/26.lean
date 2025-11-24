@@ -47,7 +47,7 @@ theorem not_isThick_of_geom_one_lt (r : ℕ) (hr : r > 1) : ¬IsThick fun n : �
 theorem isThick_const {ι : Type*} [Infinite ι] (r : ℕ) (h : r > 0) : IsThick fun _ : ι ↦ r := by
   field_simp [IsThick, h, summable_const_iff]
 
-/-- The set of multiples of a sequence $(a_i)$ is $\{ na_i | n \in \mathbb{N}, i\}$. -/
+/-- The set of multiples of a sequence $(a_i)$ is $\{na_i | n \in \mathbb{N}, i\}$. -/
 def MultiplesOf {ι : Type*} (A : ι → ℕ) : Set ℕ := Set.range fun (n, i) ↦ n * A i
 
 @[category test, AMS 11]
@@ -57,7 +57,7 @@ theorem multiplesOf_eq_univ {ι : Type*} (A : ι → ℕ) (h : 1 ∈ Set.range A
   exact top_unique fun n hn ↦ ⟨(n, i), by simp [hi]⟩
 
 /-- A sequence of naturals $(a_i)$ is _Behrend_ if almost all integers are a multiple of
-some $a_i$. In other words, if the set of multples has natural density $1$. -/
+some $a_i$. In other words, if the set of multiples has natural density $1$. -/
 def IsBehrend {ι : Type*} (A : ι → ℕ) : Prop := (MultiplesOf A).HasDensity 1
 
 /-- A sequence of naturals $(a_i)$ is _weakly Behrend_ with respect to $\varepsilon \in \mathbb{R}$
