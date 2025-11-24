@@ -38,6 +38,15 @@ def IsThick {ι : Type*} (A : ι → ℕ) : Prop := ¬Summable (fun i ↦ (1 : �
 theorem not_isThick_of_finite {ι : Type*} [Finite ι] (A : ι → ℕ) : ¬IsThick A := by
   simpa [IsThick] using .of_finite
 
+@[category test, AMS 11]
+theorem not_isThick_of_geom_one_lt (r : ℕ) (hr : r > 1) : ¬IsThick fun n : ℕ ↦ r ^ n := by
+  simpa [IsThick] using summable_geometric_of_lt_one (r := 1 / r) (by aesop)
+    (div_lt_self zero_lt_one (mod_cast hr))
+
+@[category test, AMS 11]
+theorem isThick_const {ι : Type*} [Infinite ι] (r : ℕ) (h : r > 0) : IsThick fun _ : ι ↦ r := by
+  field_simp [IsThick, h, summable_const_iff]
+
 /-- The set of multiples of a sequence $(a_i)$ is $\{ na_i | n \in \mathbb{N}, i\}$. -/
 def MultiplesOf {ι : Type*} (A : ι → ℕ) : Set ℕ := Set.range fun (n, i) ↦ n * A i
 
