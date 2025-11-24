@@ -101,7 +101,7 @@ theorem erdos_26.variants.rusza : ∃ A : ℕ → ℕ,
   sorry
 
 /--
-Tenenbaum asked the weaker variant (still open) where for every $\epsilon>0$ there is
+Tenenbaum asked the weaker variant where for every $\epsilon>0$ there is
 some $k=k(\epsilon)$ such that at least $1-\epsilon$ density of all integers have a
 divisor of the form $a+k$ for some $a\in A$.
 -/
