@@ -49,8 +49,6 @@ $v_0(n)=\max_{k\geq 0}v(n,k)\to \infty$ as $n\to \infty$?
 theorem erdos_889 : Tendsto v₀ atTop atTop := by
   sorry
 
-
-
 /--
 $v_0(n) > 1$ for all $n$ except $n$ = 0, 1, 2, 3, 4, 7, 8, 16
 
@@ -58,7 +56,7 @@ $v_0(n) > 1$ for all $n$ except $n$ = 0, 1, 2, 3, 4, 7, 8, 16
 -/
 @[category research solved, AMS 11]
 theorem erdos_889.variants.v0_gt_1 :
-  ∀ n : ℕ, n ∉ ({0,1,3,4,7,8,16} : Finset ℕ) → 1 < v₀ n := by
+    ∀ n : ℕ, n ∉ ({0, 1, 2, 3, 4, 7, 8, 16} : Finset ℕ) → 1 < v₀ n := by
   sorry
 
 /--
@@ -75,7 +73,7 @@ $v_l(n) \to \infty$ as $n \to \infty$
 -/
 @[category research open, AMS 11]
 theorem erdos_889.variants.general :
-  ∀ l, Tendsto (v_l l) atTop atTop := by
+    ∀ l, Tendsto (v_l l) atTop atTop := by
   sorry
 
 /--
@@ -88,12 +86,11 @@ theorem erdos_889.variants.v1_eq_1_finite :
   {n | v_l 1 n = 1}.Finite ↔ answer(sorry) := by
   sorry
 
-
-
 /--
 $V(n,k)$ is the number of primes $p$ such that
 $p^\alpha$ exactly divides $n+k$ and
-for all $0 \le i < k$, $p^\alpha$ does not divide $n+i$.
+for all $0 \le i < k$, $p^\alpha$ does not divide $n+i$,
+where $\alpha$ is the multiplicity of $p$ in the factorization of $n+k$.
 -/
 def V (n k : ℕ) : ℕ :=
   ((n + k).primeFactors.filter (fun p =>
@@ -115,7 +112,7 @@ which might make it more amenable to attack according to [ErSe67].
 -/
 @[category research open, AMS 11]
 theorem erdos_889.variants.V1_eq_1_finite :
-  {n | V_l 1 n = 1}.Finite ↔ answer(sorry) := by
+    {n | V_l 1 n = 1}.Finite ↔ answer(sorry) := by
   sorry
 
 end Erdos889
