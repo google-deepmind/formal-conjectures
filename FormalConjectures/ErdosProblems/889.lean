@@ -83,7 +83,7 @@ Does $v_1(n) = 1$ have finite solutions?
 -/
 @[category research open, AMS 11]
 theorem erdos_889.variants.v1_eq_1_finite :
-  {n | v_l 1 n = 1}.Finite ↔ answer(sorry) := by
+    {n | v_l 1 n = 1}.Finite ↔ answer(sorry) := by
   sorry
 
 /--
