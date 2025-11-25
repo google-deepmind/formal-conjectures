@@ -31,7 +31,7 @@ and products of distinct elements in $A$ are the same colour?
 @[category research open, AMS 5]
 theorem erdos_172 :
     (∀ (n : ℕ) (color : ℕ → Fin n) (m), ∃ (A : Finset ℕ), A.card ≥ m ∧ ∃ c, ∀ (S : Finset A),
-    S.Nonempty → color (∑ x ∈ S, x) = c ∧ color (∏ x ∈ S, x) = c) ↔answer(sorry) := by
+    S.Nonempty → color (∑ x ∈ S, x) = c ∧ color (∏ x ∈ S, x) = c) ↔ answer(sorry) := by
   sorry
 
 -- TODO: add the statements from the additional material
