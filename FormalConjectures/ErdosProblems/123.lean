@@ -58,9 +58,7 @@ def PowersOfThree (p q r : ℕ) : Set ℕ :=
 /--
 Helper predicate for pairwise coprimality of three integers.
 -/
-def PairwiseCoprime (a b c : ℕ) : Prop :=
-  Nat.Coprime a b ∧ Nat.Coprime b c ∧ Nat.Coprime a c
-
+def PairwiseCoprime (a b c : ℕ) : Prop := Set.Pairwise {a, b, c} Nat.Coprime
 /--
 **Erdős Problem #123**
 
