@@ -193,7 +193,7 @@ lemma exists_of_not_haltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n
     rw [HaltsAfter, multiStep_succ, this]
     rfl
   · apply multiStep_succ_eq_none_of_multiStep_eq_none
-    rwa [Bool.not_eq_true, Option.not_isSome, Option.isNone_iff_eq_none] at HH
+    rwa [Bool.not_eq_true, Option.isSome_eq_false_iff, Option.isNone_iff_eq_none] at HH
 
 lemma not_isHalting_iff_forall_isSome_multiStep : ¬IsHalting M
     ↔ ∀ n, M.multiStep (init []) (n + 1) |>.isSome := by
@@ -203,14 +203,14 @@ lemma not_isHalting_iff_forall_isSome_multiStep : ¬IsHalting M
 
 lemma not_isHalting_of_forall_isSome (H : ∀ l s, ∃ a b, M l s = some (some a, b)) :
     ¬IsHalting M := by
-  rw [not_isHalting_iff_forall_multiStep_ne_none]
+  rw [not_isHalting_iff_forall_isSome_multiStep]
   intro n
   induction n with
   | zero =>
     obtain ⟨a, b, H⟩ := H default (Tape.mk₁ []).head
     simp [init, step, H]
   | succ n ih =>
-    obtain ⟨a, b, hab⟩ := exists_of_notHaltsAfter _ _ _ (by rwa [Option.isSome_iff_ne_none] at ih)
+    obtain ⟨a, b, hab⟩ := exists_of_not_haltsAfter _ _ _ (by rwa [Option.isSome_iff_ne_none] at ih)
     obtain ⟨c, d, hcd⟩ := H a b.head
     obtain ⟨e, f, hef⟩ := H c (Tape.move d.dir (Tape.write d.symbol b)).head
     simp [multiStep_succ, multiStep_succ, hab, step, hcd, hef]
