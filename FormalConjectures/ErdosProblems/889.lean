@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/889](https://www.erdosproblems.com/889)
 -/
 
-open Finset Nat Filter
+open Finset Nat Filter Topology
 
 namespace Erdos889
 
@@ -46,7 +46,7 @@ do not divide $n+i$ for $0\leq i < k$. Is it true that
 $v_0(n)=\max_{k\geq 0}v(n,k)\to \infty$ as $n\to \infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_889 : Tendsto v₀ atTop atTop := by
+theorem erdos_889 : Tendsto v₀ atTop (𝓝 ⊤) := by
   sorry
 
 /--
@@ -73,7 +73,7 @@ $v_l(n) \to \infty$ as $n \to \infty$
 -/
 @[category research open, AMS 11]
 theorem erdos_889.variants.general :
-    ∀ l, Tendsto (v_l l) atTop atTop := by
+    ∀ l, Tendsto (v_l l) atTop (𝓝 ⊤) := by
   sorry
 
 /--
