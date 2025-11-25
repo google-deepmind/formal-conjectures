@@ -39,10 +39,6 @@ noncomputable def length (s : Set ℂ) : ℝ≥0∞ := μH[1] s
 
 variable {α : Type _} [TopologicalSpace α]
 
-/-- The set of connected components of a subset of a topological space. -/
-def connectedComponents (s : Set α) : Set (Set α) :=
-  {t | t ⊆ s ∧ IsConnected t ∧ ∀ u, t ⊂ u → u ⊆ s → ¬IsConnected u}
-
 /--
 **Erdős–Herzog–Piranian Component Lemma** (Metric Properties of Polynomials, 1958):
 If $f$ is a degree $n$ polynomial with all roots in the unit disk,
