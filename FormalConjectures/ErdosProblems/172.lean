@@ -25,14 +25,14 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos172
 
 /--
-For any finite coloring of ℕ there exist arbitrarily large finite A such that all sums
-and products of distinct elements in A have the same color.
+Is it true that in any finite colouring of $\mathbb{N}$ there exist arbitrarily large finite $A$ such that all sums
+and products of distinct elements in $A$ are the same colour?
 -/
 @[category research open, AMS 5]
 theorem erdos_172 :
-    ∀ (n : ℕ), ∀ (color : ℕ → Fin n), ∀ (m : ℕ),
-    ∃ (A : Finset ℕ), A.card>m ∧ ∃ (c : Fin n), ∀ (S : Finset ℕ),
-    (S.card ≠ 0 ∧ S⊆A) → (color (∑ x∈S, x) = c ∧ color (∏ x∈S, x) = c) := by
+    ∀ (n : ℕ), ∀ (color : ℕ → Fin n), ∀ m, ∃ (A : Finset ℕ), A.card = m ∧ ∃ c, ∀ (S : Finset A),
+    S.Nonempty → color (∑ x ∈ S, x) = c ∧ color (∏ x ∈ S, x) = c := by
     sorry
 
+-- TODO: add the statements from the additional material
 end Erdos172
