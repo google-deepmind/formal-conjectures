@@ -15,8 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Data.ENNReal.Basic
-import Mathlib.Algebra.Polynomial.Roots
+-- import Mathlib.Data.ENNReal.Basic
 
 /-!
 # Erdős Problem 1041
@@ -24,14 +23,12 @@ import Mathlib.Algebra.Polynomial.Roots
 *Reference:* [erdosproblems.com/1041](https://www.erdosproblems.com/1041)
 -/
 
-open Polynomial MeasureTheory ENNReal
+open Polynomial MeasureTheory ENNReal Metric
 
 namespace Erdos1041
 
-noncomputable def numRoots (f : ℂ[X]) : ℕ := Multiset.card f.roots
-
-variable (n : ℕ) (f : ℂ[X]) (hn : n ≥ 2) (hnum : numRoots f = n)
-         (h : ∀ z, z ∈ f.rootSet ℂ → ‖z‖ < 1)
+variable (n : ℕ) (f : ℂ[X]) (hn : n ≥ 2) (hnum : f.natDegree = n)
+variable (h : ∀ z, z ∈ f.rootSet ℂ → ball 0 1)
 include hn hnum h
 
 /--
@@ -54,9 +51,9 @@ of $\{z \mid |f(z)| < 1\}$ contains at least two distinct roots.
 -/
 @[category research solved, AMS 32]
 theorem exists_connected_component_contains_two_roots :
-  ∃ (s : Set ℂ) (z₁ z₂ : ℂ),
-    s ∈ connectedComponents {z | ‖f.eval z‖ < 1} ∧
-    z₁ ≠ z₂ ∧ z₁ ∈ f.rootSet ℂ ∧ z₂ ∈ f.rootSet ℂ ∧ z₁ ∈ s ∧ z₂ ∈ s := by
+  ∃ (z₁ z₂ : ℂ),
+    connectedComponentIn {z | ‖f.eval z‖ < 1} z₁ = connectedComponentIn {z | ‖f.eval z‖ < 1} z₂ ∧
+    z₁ ≠ z₂ ∧ z₁ ∈ f.rootSet ℂ ∧ z₂ ∈ f.rootSet ℂ := by
   sorry
 
 /--
