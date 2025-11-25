@@ -26,7 +26,7 @@ namespace Erdos859
 
 /--
 `DivisorSumSet t` is the set of natural numbers `n` such that `t` can be represented as
-a sum of divisors of `n`.
+a sum of distinct divisors of `n`.
 -/
 def DivisorSumSet (t : ℕ) := { n : ℕ | ∃ s ⊆ Nat.divisors n, t = ∑ i ∈ s , i }
 
