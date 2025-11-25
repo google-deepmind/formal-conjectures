@@ -181,7 +181,7 @@ lemma haltsAfter_zero_iff (s : Cfg Γ Λ) :
 lemma isHalting_iff_exists_haltsAt : IsHalting M ↔ ∃ n, M.HaltsAfter (init []) n :=
   ⟨fun _ ↦ eval_dom_iff.mpr IsHalting.halts, fun H ↦ ⟨eval_dom_iff.mp H⟩⟩
 
-lemma exists_of_notHaltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n) :
+lemma exists_of_not_haltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n) :
     ∃ (a : Λ) (b : Tape Γ), M.multiStep s n = some ⟨a, b⟩ := by
   contrapose! H
   by_cases HH : M.multiStep s n |>.isSome
@@ -195,7 +195,7 @@ lemma exists_of_notHaltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n)
   · apply multiStep_succ_eq_none_of_multiStep_eq_none
     rwa [Bool.not_eq_true, Option.not_isSome, Option.isNone_iff_eq_none] at HH
 
-lemma not_isHalting_iff_forall_multiStep_ne_none : ¬IsHalting M
+lemma not_isHalting_iff_forall_isSome_multiStep : ¬IsHalting M
     ↔ ∀ n, M.multiStep (init []) (n + 1) |>.isSome := by
   simp_rw [isHalting_iff_exists_haltsAt, HaltsAfter, Option.isSome_iff_ne_none]
   push_neg
