@@ -60,7 +60,7 @@ Hint: investigate some multiplicative structure of `DivisorSumSet t`.
 -/
 @[category undergraduate, AMS 11]
 lemma erdos_859.variants.positive_density (t : ℕ) :
-  (DivisorSumSet t).HasPosDensity := by
+    (DivisorSumSet t).HasPosDensity := by
   sorry
 
 end Erdos859
