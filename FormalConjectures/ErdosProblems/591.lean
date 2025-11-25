@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Cardinal Ordinal
 
+namespace Erdos591
+
 universe u
 
 /--
@@ -33,3 +35,5 @@ edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 @[category research open, AMS 3]
 theorem erdos_591 : OmegaPowerRamsey (ω ^ 2) 3 ↔ answer(sorry) := by
   sorry
+
+end Erdos591

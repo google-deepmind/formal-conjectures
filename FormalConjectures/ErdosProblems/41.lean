@@ -26,6 +26,8 @@ variable {α : Type} [AddCommMonoid α]
 
 open Classical
 
+namespace Erdos41
+
 /--
 For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for  `a₁, ..., aₙ` in `A`
 (aside from the trivial coincidences).
@@ -34,10 +36,6 @@ def NtupleCondition (A : Set α) (n : ℕ) : Prop := ∀ (I : Finset α) (J : Fi
   I.toSet ⊆ A ∧ J.toSet ⊆ A ∧ I.card = n ∧ J.card = n ∧
   (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J
 
-/-- Given a set of natural numbers `A`, `Set.bdd A N` is the set `{1,...,N} ∩ A`-/
-private noncomputable def Set.bdd (A : Set ℕ) (N : ℕ) : Finset ℕ :=
-    Finset.Icc 1 N |>.filter (· ∈ A)
-
 /--
 Let `A ⊆ ℕ` be an infinite set such that the triple sums `a + b + c` are all distinct for
 `a, b, c` in `A` (aside from the trivial coincidences). Is it true that
@@ -45,7 +43,7 @@ Let `A ⊆ ℕ` be an infinite set such that the triple sums `a + b + c` are all
 -/
 @[category research open, AMS 11]
 theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.Infinite) :
-    Filter.atTop.liminf (fun N => (A.bdd N).card / (N : ℝ) ^ (1 / 3 : ℝ)) = 0 := by
+    Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ)^(1/3 : ℝ)) = 0 := by
   sorry
 
 /--
@@ -56,5 +54,7 @@ Is it true that `liminf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research solved, AMS 11]
 theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
-    Filter.atTop.liminf (fun N => (A.bdd N).card / (N : ℝ).sqrt) = 0 := by
+    Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry
+
+end Erdos41

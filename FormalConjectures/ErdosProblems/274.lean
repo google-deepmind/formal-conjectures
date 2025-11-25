@@ -26,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Pointwise Cardinal
 
+namespace Erdos274
+
 -- TODO(callesonne): add already proved results from the wiki page
 
 /--
@@ -69,3 +71,5 @@ theorem herzog_schonheim (G : Type*) [Group G] : ∀ (P : Partition (⊤ : Subgr
     (∀ B ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = B) →
     ∃ᵉ (A ∈ P.parts) (B ∈ P.parts), A ≠ B ∧ A.index = B.index := by
   sorry
+
+end Erdos274

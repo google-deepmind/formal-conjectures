@@ -21,6 +21,8 @@ import Mathlib.Tactic.FinCases
 --sanity checks for the definition of halting added in `ForMathlib`.
 --These should be easy to prove
 
+namespace BusyBeasverTest
+
 open Turing BusyBeaver Machine
 
 inductive Γ where
@@ -69,3 +71,5 @@ theorem not_isHalting_neverHalts : ¬ neverHalts.IsHalting := by
   apply not_isHalting_of_forall_isSome
   intro l s
   fin_cases s <;> fin_cases l <;> aesop
+
+end BusyBeasverTest

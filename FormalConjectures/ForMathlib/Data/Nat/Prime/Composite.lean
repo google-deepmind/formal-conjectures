@@ -13,11 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.Data.Nat.Prime.Defs
 
-import Mathlib.Logic.Equiv.Fin
-
-variable {n : ℕ}
-
-theorem lt_finRotate_of_ne_last {i : Fin (n + 1)} (hi : i ≠ Fin.last n) :
-    i < finRotate _ i := by
-  rw [Fin.lt_iff_val_lt_val, coe_finRotate_of_ne_last hi, Nat.lt_add_one_iff]
+abbrev Nat.Composite (n : ℕ) : Prop := 1 < n ∧ ¬n.Prime

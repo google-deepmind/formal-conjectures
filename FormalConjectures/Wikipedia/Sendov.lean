@@ -35,12 +35,12 @@ open Sendov
 
 `f.IsSendov` holds if `f` has degree at least 2 and all roots of `f` lie in the unit disc
 of the complex plane. -/
-private def Polynomial.IsSendov (f : ℂ[X]) : Prop :=
+def Polynomial.IsSendov (f : ℂ[X]) : Prop :=
   2 ≤ f.natDegree ∧ (f.rootSet ℂ ⊆ Metric.closedBall 0 1)
 
 /-- `SatisfiesSendovConjecture n` states that Sendov's conjecture is true for every polynomial of
 degree `n`. -/
-private def Nat.SatisfiesSendovConjecture (n : ℕ) : Prop :=
+def Nat.SatisfiesSendovConjecture (n : ℕ) : Prop :=
   ∀ (f : ℂ[X]), f.IsSendov → f.natDegree = n →
     ∀ z, z ∈ f.rootSet ℂ → Metric.infDist z (f.derivative.rootSet ℂ) ≤ 1
 

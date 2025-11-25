@@ -68,12 +68,12 @@ theorem Set.isAPOfLengthWith_pair {α : Type*} [DecidableEq α] [AddCommGroup α
     {a b : α} (hab : a ≠ b) :
     Set.IsAPOfLengthWith {a, b} 2 a (b - a) := by
   simp [IsAPOfLengthWith]
-  rw [Finset.card_insert_of_not_mem (by simpa only [Finset.mem_singleton])]
+  rw [Finset.card_insert_of_notMem (by simpa only [Finset.mem_singleton])]
   simp
   refine Set.ext fun x => ⟨fun h ↦ ?_, fun ⟨n, ⟨_, _⟩⟩ ↦ by interval_cases n <;> simp_all⟩
   cases h with
-  | inl hl => use 0; simp [zero_nsmul, hl]
-  | inr hr => exact ⟨1, by norm_num, by simp_all [hr, add_assoc]⟩
+  | inl hl => use 0; simp [hl]
+  | inr hr => exact ⟨1, by norm_num, by simp_all⟩
 
 -- Formalisation note: separate result needed for `ℕ` since this is not covered by
 -- the `AddCommGroup` result above.
@@ -82,7 +82,7 @@ first term `a` and difference `b - a`. -/
 theorem Nat.isAPOfLengthWith_pair {a b : ℕ} (hab : a < b) :
     Set.IsAPOfLengthWith {a, b} 2 a (b - a) := by
   let ⟨n, h⟩ := Nat.exists_eq_add_of_lt hab
-  simp [Set.IsAPOfLengthWith, Nat.sub_ne_zero_of_lt hab, h, add_assoc]
+  simp [Set.IsAPOfLengthWith, h, add_assoc]
   exact Set.ext fun x => ⟨fun a => by aesop, fun ⟨w, ⟨_, _⟩⟩ => by interval_cases w <;> simp_all⟩
 
 /--
@@ -108,7 +108,7 @@ theorem eq (h : s.IsAPOfLength l) : ∃ a d : α, s = {a + n • d | (n : ℕ) (
 @[simp] theorem zero : s.IsAPOfLength 0 ↔ s = ∅ := by simp [Set.IsAPOfLength]
 
 /-- Only singletons are finite arithmetic progressions of length $1$. -/
-@[simp] theorem one : s.IsAPOfLength 1 ↔ ∃ a, s = {a} := by simp [IsAPOfLength, zero_nsmul]
+@[simp] theorem one : s.IsAPOfLength 1 ↔ ∃ a, s = {a} := by simp [IsAPOfLength]
 
 /-- If a set is an arithmetic progression of lengths `l₁` and `l₂`, then the lengths are
 equal. -/
@@ -156,3 +156,19 @@ any non-trivial $k$-term arithmetic progression.
 -/
 noncomputable def Set.IsAPOfLengthFree.maxCard (k : ℕ) (N : ℕ) : ℕ :=
   sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : S.toSet.IsAPOfLengthFree k)}
+
+theorem Set.IsAPOfLengthFree.maxCard_zero (N : ℕ) : maxCard 0 N = N := by
+  simp only [maxCard, Nat.cast_zero, isAPOfLengthFree_zero, exists_const, exists_prop]
+  apply IsGreatest.csSup_eq
+  refine ⟨⟨Finset.Icc 1 N, Subset.rfl, Nat.card_Icc _ _⟩, ?_⟩
+  rintro n ⟨S, hS, rfl⟩
+  exact S.card_mono hS |>.trans_eq (Nat.card_Icc _ _)
+
+theorem Set.IsAPOfLengthFree.maxCard_one (N : ℕ) : maxCard 1 N = N := by
+  nth_rw 2 [← maxCard_zero N]
+  simp [maxCard, isAPOfLengthFree_one, isAPOfLengthFree_zero]
+
+def ContainsMonoAPofLength {κ : Type} [Finite κ] {M : Set α}
+    (coloring : M → κ) (k : ℕ) : Prop :=
+  ∃ c : κ, ∃ ap : Set M, ((·.1) '' ap).IsAPOfLength k ∧
+    ∀ m ∈ ap, coloring m = c
