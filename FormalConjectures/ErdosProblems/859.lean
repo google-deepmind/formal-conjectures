@@ -30,8 +30,7 @@ a sum of divisors of `n`.
 -/
 def DivisorSumSet (t : ℕ) := { n : ℕ | ∃ s ⊆ Nat.divisors n, t = ∑ i ∈ s , i }
 
-open Asymptotics
-open Filter
+open Asymptotics Filter
 
 /-- A weaker version of the problem proved by Erdos:
 The density `dₜ` of `DivisorSumSet (t : ℕ)` is bounded from below by `1 / log (t) ^ c₃` and
