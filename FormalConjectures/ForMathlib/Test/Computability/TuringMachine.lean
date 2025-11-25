@@ -59,8 +59,7 @@ theorem haltsAfterOne_haltingNumber : haltsAfterOne.haltingNumber = 1 := by
     rfl
   · rfl
 
-def neverHalts : Machine Γ Λ := fun l s =>
-  match l, s with
+def neverHalts : Machine Γ Λ :=
   | .S, .A => some (Λ.T, Stmt.write default Dir.right)
   | .T, .A => some (Λ.S, Stmt.write default Dir.right)
   | .S, .B => some (Λ.T, Stmt.write default Dir.left)
