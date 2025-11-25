@@ -33,4 +33,7 @@ theorem erdos_850 :
       ∧ (x + 1).primeFactors = (y + 1).primeFactors
       ∧ (x + 2).primeFactors = (y + 2).primeFactors) ↔ answer(sorry) := by
     sorry
+
+-- TODO(Paul-Lez): formalise remaining problems
+
 end Erdos850
