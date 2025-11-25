@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 open Nat
 
+namespace Erdos939
+
 /--
 A set `S` belongs to `Erdos939Sums r` if it meets the following criteria:
 - The size of the set is `$|S| = r - 2$`.
@@ -106,3 +108,5 @@ theorem erdos_939.variants.euler : ¬ (∀ k ≥ 4, ∀ S : Finset ℕ, S.card =
   · decide
   · use 144
     norm_num
+
+end Erdos939

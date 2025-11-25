@@ -65,19 +65,19 @@ theorem not_lt₂_self {α : Type*} [LinearOrder α] (a : Fin 3 → α) : ¬a <�
 
 /-- For example, $(3, 3, 9) <_2 (5, 6, 1)$. -/
 @[category test, AMS 5]
-example : ![3, 3, 9] <₂ ![5, 6, 1] := ⟨0, 1, zero_ne_one, by simp⟩
+theorem lt₂_example_1 : ![3, 3, 9] <₂ ![5, 6, 1] := ⟨0, 1, zero_ne_one, by simp⟩
 
 /-- $(5, 6, 1) <_2 (7, 7, 7)$ -/
 @[category test, AMS 5]
-example : ![5, 6, 1] <₂ ![7, 7, 7] := ⟨0, 2, by simp, by simp⟩
+theorem lt₂_example_2 : ![5, 6, 1] <₂ ![7, 7, 7] := ⟨0, 2, by simp, by simp⟩
 
 /-- $(7, 7, 7) <_2 (7, 8, 9)$ -/
 @[category test, AMS 5]
-example : ![7, 7, 7] <₂ ![7, 8, 9] := ⟨1, 2, by simp, by simp⟩
+theorem lt₂_example_3 : ![7, 7, 7] <₂ ![7, 8, 9] := ⟨1, 2, by simp, by simp⟩
 
 /-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4). -/
 @[category test, AMS 5]
-example : ¬![1, 2, 3] <₂ ![1, 2, 4] := not_lt₂_of_exists 0 1 zero_ne_one (by simp) (by simp)
+theorem not_lt₂_example : ¬![1, 2, 3] <₂ ![1, 2, 4] := not_lt₂_of_exists 0 1 zero_ne_one (by simp) (by simp)
 
 /-- The $2$-less relation is not transitive on the naturals. -/
 @[category API, AMS 5]
@@ -121,25 +121,25 @@ noncomputable def maximalLength (n : ℕ) : ℕ :=
 local notation "F" => maximalLength
 
 @[category test, AMS 5]
-example : maximalLength 0 = 0 := by
+theorem maximalLength_zero : maximalLength 0 = 0 := by
   have (x : ℕ) (s : List (Fin 3 → ℕ)) :
       IsIncreasing₂ s ∧ (∀ a, a ∉ s) ∧ s.length = x ↔ s = [] ∧ x = 0 := by
     refine ⟨fun ⟨ha₁, ha₂, rfl⟩ => ?_, fun ⟨h₁, h₂⟩ => by simp [h₁, h₂]⟩
-    simp only [List.length_eq_zero, and_self]
+    simp only [List.length_eq_zero_iff, and_self]
     refine List.eq_nil_of_subset_nil fun ai hai => ?_
     simpa using ha₂ ai hai
   simp [maximalLength, fun x => exists_congr (this x)]
 
 @[category test, AMS 5]
-example : maximalLength 1 = 1 := by
+theorem maximalLength_one : maximalLength 1 = 1 := by
   classical
   have (x : ℕ) (s : List (Fin 3 → ℕ)) :
       IsIncreasing₂ s ∧ (∀ a ∈ s, ∀ i, a i = 1) ∧ s.length = x ↔
         s = [fun _ => 1] ∧ x = 1 ∨ s = [] ∧ x = 0 := by
     refine ⟨fun ⟨hs₁, hs₂, hx⟩ => ?_, fun h => by aesop⟩
     have := hx ▸ isIncreasing₂_const_length hs₁ hs₂
-    interval_cases x; simp [hx, List.length_eq_zero.1 hx]; simp
-    obtain ⟨a, rfl⟩ := List.length_eq_one.1 hx
+    interval_cases x; simp [List.length_eq_zero_iff.1 hx]; simp
+    obtain ⟨a, rfl⟩ := List.length_eq_one_iff.1 hx
     simp at hs₂
     rw [show a = fun _ => 1 from funext fun i => by simp [hs₂ i]]
   simp [maximalLength, fun x => exists_congr (this x)]
@@ -149,7 +149,7 @@ example : maximalLength 1 = 1 := by
   exact ⟨1, ⟨[fun _ => 1], by simp⟩, one_ne_zero⟩
 
 @[category test, AMS 5]
-example : maximalLength 4 = 8 := by
+theorem maximalLength_four : maximalLength 4 = 8 := by
   sorry
 
 /-- In a set of more than $n^2$ triples with coordinates from $\{1, ..., n\}$ we must
@@ -213,7 +213,7 @@ def sequenceProduct {α : Type*} (s t : List (Fin 3 → α)) : Lex (List (Πₗ 
 local infix:100 " ⊗₂ " => sequenceProduct
 
 @[category test, AMS 5]
-example : [![1, 1, 1]] ⊗₂ [![1, 1, 1]] = toLex [toLex ![(1, 1), (1, 1), (1, 1)]] := by
+theorem sequenceProduct_example : [![1, 1, 1]] ⊗₂ [![1, 1, 1]] = toLex [toLex ![(1, 1), (1, 1), (1, 1)]] := by
   simp [sequenceProduct]
 
 /-- Suppose that for some $n$ we have $F(n) = n ^ {\alpha}$. Then there are arbitrarily

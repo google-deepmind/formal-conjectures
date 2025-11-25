@@ -23,8 +23,10 @@ import FormalConjectures.ErdosProblems.«28»
 *Reference:* [erdosproblems.com/40](https://www.erdosproblems.com/40)
 -/
 
-open Filter Set
+open Filter Set AdditiveCombinatorics
 open scoped Pointwise
+
+namespace Erdos40
 
 
 /--
@@ -35,9 +37,7 @@ implies $\limsup 1_A\ast 1_A(n)=\infty$.
 def Erdos40For (g : ℕ → ℝ) : Prop :=
   ∀ (A : Set ℕ),
     ((fun (N : ℕ) => (N : ℝ).sqrt/(g N)) =O[atTop] (fun (N : ℕ) => ((A ∩ Set.Icc 1 N).ncard : ℝ))) →
-    (limsup (fun (N : ℕ) =>
-    letI a := PowerSeries.mk (indicator A 1)
-    (a * a).coeff ℕ N) atTop = (⊤ : ℕ∞))
+    (limsup (fun (N : ℕ) => (sumRep A N : ℕ∞)) atTop = (⊤ : ℕ∞))
 
 /--
 Given a set of functions $\mathbb{N} → \mathbb{R})$, we assert that for all $g$ in that set,
@@ -64,8 +64,8 @@ Erdős-Turán conjecture, see Erdõs Problem 28,
 Problem 28).
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40 fun _ => True) : type_of% erdos_28 := by
-  simp [Erdos40, Erdos40For] at h_erdos_40
+theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40 fun _ => True) : type_of% Erdos28.erdos_28 := by
+  simp only [Erdos40, Erdos40For, sumRep, sumConv, indicatorOne, forall_const] at h_erdos_40
   intro A hA
   apply h_erdos_40
   rotate_right
@@ -92,3 +92,5 @@ theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40 fun _ => True) : type_of% erd
       have := hn m this
       omega
     · exact (Set.finite_Icc _ _).inter_of_right A
+
+end Erdos40

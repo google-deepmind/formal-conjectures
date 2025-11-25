@@ -24,11 +24,11 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Set Topology
 
+namespace Erdos347
+
 /--
 The set of subset sums of a set `A ⊆ ℕ`.
 -/
-private def subsetSums (A : Set ℕ) : Set ℕ := {n | ∃ B : Finset ℕ, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
-
 local notation "𝓟" A => subsetSums A
 
 /--
@@ -45,3 +45,5 @@ theorem erdos_347 :
       (∀ ι : ℕ → ℕ, (range ι)ᶜ.Finite → HasDensity (𝓟 (range (a ∘ ι))) 1))
     ↔ answer(sorry) := by
   sorry
+
+end Erdos347

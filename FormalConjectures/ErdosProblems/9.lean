@@ -31,7 +31,7 @@ def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧
 
 
 @[category test, AMS 5 11]
-example : 1 ∈ Erdos9A := by
+theorem erdos9A_contains_one : 1 ∈ Erdos9A := by
   constructor
   · decide
   · push_neg
@@ -39,7 +39,7 @@ example : 1 ∈ Erdos9A := by
     linarith [Nat.Prime.two_le hp, @Nat.one_le_two_pow k, @Nat.one_le_two_pow l]
 
 @[category test, AMS 5 11]
-example : 3 ∈ Erdos9A := by
+theorem erdos9A_contains_three : 3 ∈ Erdos9A := by
   constructor
   · decide
   · push_neg
@@ -47,10 +47,9 @@ example : 3 ∈ Erdos9A := by
     linarith [Nat.Prime.two_le hp, @Nat.one_le_two_pow k, @Nat.one_le_two_pow l]
 
 @[category test, AMS 5 11]
-example : 5 ∉ Erdos9A := by
+theorem erdos9A_not_contains_five : 5 ∉ Erdos9A := by
   unfold Erdos9A
-  simp only [exists_and_left, not_exists, not_and, Set.mem_setOf_eq, not_forall, Classical.not_imp,
-    Decidable.not_not]
+  simp only [exists_and_left, not_exists, not_and, Set.mem_setOf_eq, not_forall, Decidable.not_not]
   intro
   use 3, Nat.prime_three, 0, 0
   simp only [pow_zero, Nat.reduceAdd]

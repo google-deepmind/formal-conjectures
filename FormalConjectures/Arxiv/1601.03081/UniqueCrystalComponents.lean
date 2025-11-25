@@ -34,7 +34,7 @@ def IsCrystalWithComponents (n a b : ℕ) : Prop :=
   Odd n ∧ 1 < a ∧ 1 < b ∧ n = a * b ∧ 2 * (a + 1) * (b + 1) ∣ (a + b)^2 + (a * b + 1)^2
 
 @[category test, AMS 11]
-example : IsCrystalWithComponents 35 5 7 := by
+theorem isCrystalWithComponents_35_5_7 : IsCrystalWithComponents 35 5 7 := by
   norm_num [IsCrystalWithComponents]
   decide
 

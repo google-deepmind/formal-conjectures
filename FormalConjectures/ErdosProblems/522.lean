@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open MeasureTheory Classical
 open scoped ProbabilityTheory Topology Real
 
+namespace Erdos522
+
 /--
 A *Kac Polynomial* in `n` coefficients over some subset `S` of a field `k` is a polynomial whose
 `n` first coefficients are picked uniformely at random in `S` and whose other coefficients are all `0`
@@ -34,7 +36,7 @@ structure KacPolynomial
     {k : Type*} (n : ℕ) [Field k] [MeasurableSpace k] (S : Set k)
     (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := by volume_tac) where
   toFun : Fin n.succ → Ω → k
-  h_indep : ProbabilityTheory.iIndepFun inferInstance toFun ℙ
+  h_indep : ProbabilityTheory.iIndepFun toFun ℙ
   h_unif : ∀ i, MeasureTheory.pdf.IsUniform (toFun i) S ℙ μ
 
 variable {k : Type*} (n : ℕ) [Field k] [MeasurableSpace k] (S : Set k)
@@ -106,3 +108,5 @@ theorem erdos_522.variants.yakir_solution :
       (n : ℕ) (hn : 2 ≤ n) (f : KacPolynomial n ({-1, 1} : Set ℂ) Ω),
        (ℙ {ω | |(f.roots ω).countP (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ n^(9/10 : ℝ) }).toReal ≤ p n :=
   sorry
+
+end Erdos522

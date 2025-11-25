@@ -47,7 +47,7 @@ Both definitions are equivalent.
 TOOD(firsching): complete and golf the proof
 -/
 @[category test, AMS 15]
-example (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
+theorem isHadamard_equiv_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
   simp [IsHadamard, IsHadamard']
   intro h
   let N := M.transpose * M
@@ -63,12 +63,12 @@ example (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamar
     have : √(↑n ^ (n : ℝ)) = (↑n ^ (n : ℝ)) ^ ((1 : ℝ)/2) := by
       rw [Real.rpow_div_two_eq_sqrt]
       · simp only [Real.rpow_natCast, Real.rpow_one]
-      · simp only [Real.rpow_natCast, Nat.cast_nonneg, pow_nonneg, N]
+      · simp only [Real.rpow_natCast, Nat.cast_nonneg, pow_nonneg]
     rw [this]
     simp
     refine ((fun {x y z} hx hy hz ↦ (Real.eq_rpow_inv hx hy hz).mpr) ?_ ?_ ?_ ?_).symm
     · exact Real.rpow_nonneg (Nat.cast_nonneg' n) _
-    · simp only [Real.rpow_natCast, one_div, Nat.cast_nonneg, pow_nonneg, N]
+    · simp only [Nat.cast_nonneg, pow_nonneg]
     · norm_num
     · rw [← Real.rpow_mul <| Nat.cast_nonneg' n]
       norm_num
@@ -88,7 +88,7 @@ theorem HadamardConjecture (k : ℕ) : ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
 @[category test, AMS 15]
-example : ∃ M, IsHadamard (n := 0) M := by
+theorem exists_hadamard_zero : ∃ M, IsHadamard (n := 0) M := by
   use 0
   simp [IsHadamard]
 
@@ -112,14 +112,22 @@ def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
 which satisifies the condition.
 -/
 @[category test, AMS 15]
-example : IsHadamard H12 := by
+theorem isHadamard_H12 : IsHadamard H12 := by
+  sorry
+
+/--
+For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.
+-/
+@[category research solved, AMS 15]
+theorem HadamardConjecture.variants.first_cases (k : ℕ) (h : k ≤ 166) :
+    ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
 /--
 The smallest order for which no Hadamard matrix is presently known is $668 = 4 * 167$.
 -/
 @[category research open, AMS 15]
-theorem HadamardConjecture.variant : ∃ M, IsHadamard (n := 4 * 167) M := by
+theorem HadamardConjecture.variants.«167» : ∃ M, IsHadamard (n := 4 * 167) M := by
   sorry
 
 end Hadamard

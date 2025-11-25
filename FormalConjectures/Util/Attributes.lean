@@ -102,7 +102,7 @@ inductive ProblemStatus
 syntax problemStatus := &"open" <|> &"solved"
 
 /-- Convert from a syntax node to a name. -/
-private def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
+def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
   match stx with
     | `(problemStatus| open) => ``ProblemStatus.open
     | `(problemStatus| solved) => ``ProblemStatus.solved
@@ -174,7 +174,7 @@ def addSubjectEntry {m : Type → Type} [MonadEnv m] (name : Name)
 
 /-- Convert from a syntax node to a term of type `Category` and annotate the syntax
 with the corresponding name's docstring. -/
-private def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
+def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
   match stx with
   | `(CategorySyntax| high_school) =>
     Elab.addConstInfo stx ``Category.highSchool
@@ -270,7 +270,7 @@ section Helper
 `splitByFun f arr` is the hashmap such that the value for
 key `b : β` is the array of `a : α` in `arr` that get mapped
 to `b` by `f` -/
-private def splitByFun {α β : Type} (f : α → β) [BEq β] [Hashable β]
+def splitByFun {α β : Type} (f : α → β) [BEq β] [Hashable β]
     (arr : Array α) : Std.HashMap β (Array α) :=
   Array.foldr addPreimage {} arr
 where

@@ -61,7 +61,7 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
   · refine of_not_not fun h' ↦ h ?_
     replace ⟨k, h, h'⟩ :
         ∃ k, r < ‖(fun z ↦ z ^ n + c)^[k] 0‖ ∧ ‖c‖ ≤ ‖(fun z ↦ z ^ n + c)^[k] 0‖ := by
-      refine (le_or_lt ‖c‖ r).elim (fun h ↦ ⟨k, ?_, ?_⟩) fun h ↦ ⟨1, by
+      refine (le_or_gt ‖c‖ r).elim (fun h ↦ ⟨k, ?_, ?_⟩) fun h ↦ ⟨1, by
         simp [h, zero_pow (M₀ := ℂ) (one_pos.trans hn).ne.symm]⟩ <;> linarith
     let a := ‖(fun z ↦ z ^ n + c)^[k] 0‖ - r
     have ha : 0 < a := by unfold a; linarith
@@ -93,7 +93,7 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
       tendsto_pow_atTop_atTop_of_one_lt <| Nat.one_lt_cast.2 hn
   · specialize h' (isBounded_closedBall (x := 0) (r := r))
     rw [mem_map, mem_atTop_sets] at h'; replace ⟨n, h'⟩ := h'
-    exact not_lt_of_le (h n) (by simpa using h' n)
+    exact not_lt_of_ge (h n) (by simpa using h' n)
 
 /-- The mandelbrot set is equivalently the set of all parameters `c` for which the orbit of `0`
 under `z ↦ z ^ 2 + c` does not leave the closed disk of radius two around the origin. -/
@@ -121,19 +121,19 @@ def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
 
 /-- For example, `0` is part of an attracting `2`-cycle of `z ↦ z ^ 2 - 1`. -/
 @[category test, AMS 37]
-example : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
+theorem isAttractingCycle_z_squared_minus_one : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
   ⟨by simp [IsPeriodicPt, IsFixedPt], by fun_prop, by simp [deriv_comp]⟩
 
 /-- On the other hand, while `2` is part of a `1`-cycle of `z ↦ z ^ 2 - 2`, that cycle is not
 attracting. -/
 @[category test, AMS 37]
-example : ¬ IsAttractingCycle (fun z ↦ z ^ 2 - 2) 1 2 := by
+theorem not_isAttractingCycle_z_squared_minus_two : ¬ IsAttractingCycle (fun z ↦ z ^ 2 - 2) 1 2 := by
   simp [IsAttractingCycle, show (1 : ℝ) ≤ 2 * 2 by norm_num]
 
 /-- No function has an attracting cycle of period `0`. This is important in that it means we don't
 need to require `0 < n` in the conjectures below. -/
 @[category test, AMS 37]
-example (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttractingCycle f 0 z := by
+theorem no_attractingCycle_period_zero (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttractingCycle f 0 z := by
   simp [IsAttractingCycle]
 
 /-- The density of hyperbolicity conjecture, stating that the set of all parameters `c` for which
@@ -154,7 +154,7 @@ theorem density_of_hyperbolicity_general_exponent {n : ℕ} (hn : 2 ≤ n) :
 /-- The boundary of any Multibrot set is measurable because it is closed, so it makes sense to
 ask about its area. -/
 @[category test, AMS 37]
-example {n : ℕ} : MeasurableSet (frontier (multibrotSet n)) := isClosed_frontier.measurableSet
+theorem multibrotSet_frontier_measurable {n : ℕ} : MeasurableSet (frontier (multibrotSet n)) := isClosed_frontier.measurableSet
 
 /-- The boundary of the Mandelbrot set is conjectured to have zero area. -/
 @[category research open, AMS 37]

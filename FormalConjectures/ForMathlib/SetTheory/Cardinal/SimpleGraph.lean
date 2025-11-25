@@ -17,7 +17,6 @@ limitations under the License.
 import Mathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Order.CompletePartialOrder
 import Mathlib.SetTheory.Ordinal.Exponential
-import Mathlib
 
 open Cardinal Ordinal
 

@@ -58,7 +58,7 @@ def Set.IsAPAndPrimeProgressionOfLength (s : Set ℕ) (l : ℕ) :=
 There are 3 consecutive primes in arithmetic progression.
 -/
 @[category test, AMS 5 11]
-example : ∃ (s : Set ℕ), s.IsAPAndPrimeProgressionOfLength 3 := by
+theorem exists_three_consecutive_primes_in_ap : ∃ (s : Set ℕ), s.IsAPAndPrimeProgressionOfLength 3 := by
   use {3, 5, 7}
   constructor
   · use 3, 2
