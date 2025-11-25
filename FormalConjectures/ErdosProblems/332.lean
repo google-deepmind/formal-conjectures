@@ -48,7 +48,7 @@ has to provide what the sufficient conditions are, and proof that they imply the
 If the condition is a solution to the problem is up to human judgement.
 -/
 @[category research open, AMS 11]
-theorem erdos_332 : ∀ (A : Set ℕ), (answer(sorry) : Set ℕ → Prop) A → HasBoundedGaps (D_A A) := by
+theorem erdos_332 (A : Set ℕ) : (answer(sorry) : Set ℕ → Prop) A → HasBoundedGaps (D_A A) := by
   sorry
 
 --TODO(firsching): formalize additional statements
