@@ -50,7 +50,7 @@ for some positive constants `c₁` and `c₂`.
 -/
 @[category research open, AMS 11]
 theorem erdos_859 (t : ℕ) : ∃ c₁ > 0, ∃ c₂ > 0, ∃ dₜ : ℝ, ((DivisorSumSet t).HasDensity dₜ) ∧
-  (IsEquivalent (atTop : Filter ℕ)  (fun t ↦ dₜ) (fun t ↦ c₁ / (Real.log t)^c₂ )) := by
+  (fun (t : ℕ) ↦ dₜ) ~[atTop] (fun t ↦ c₁ / (Real.log t)^c₂ ) := by
   sorry
 
 /-
