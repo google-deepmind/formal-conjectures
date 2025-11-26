@@ -21,19 +21,19 @@ variable {M : Type*} [AddCommMonoid M]
 
 open scoped List
 
-/-- The set of subset sums of a set `A ⊆ M`. -/
+/-- The set of subset sums of a set `$A \subseteq M$`. -/
 def subsetSums (A : Set M) : Set M :=
   {n | ∃ B : Finset M, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
 
-/-- The set of subset sums of a sequence `ℕ → M`. -/
+/-- The set of subset sums of a sequence `$\mathbb{N} \to M$`. -/
 def subseqSums (A : ℕ → M) : Set M :=
   {n | ∃ B : Finset ℕ, B.toSet.InjOn A ∧ n = ∑ i ∈ B, A i}
 
-/-- The set of subset sums of a sequence `ℕ → M`, where repetition is allowed. -/
+/-- The set of subset sums of a sequence `$\mathbb{N} \to M$`, where repetition is allowed. -/
 def subseqSums' (A : ℕ → M) : Set M :=
   {n | ∃ B : Finset ℕ, n = ∑ i ∈ B, A i}
 
-/-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
+/-- A set `$A \subseteq M$` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
 def IsAddComplete [Preorder M] (A : Set M) : Prop :=
   ∀ᶠ k in Filter.atTop, k ∈ subsetSums A
 
