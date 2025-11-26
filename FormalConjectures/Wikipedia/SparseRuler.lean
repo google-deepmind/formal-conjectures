@@ -22,7 +22,7 @@ import FormalConjectures.ErdosProblems.«170»
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Sparse_ruler)
 
-A sparse ruler of length $L$ is a sequence of marks $0 = a_1 \lt a_1 \lt \dots \lt a_m = L$.
+A sparse ruler of length $L$ is a sequence of marks $0 = a_1 < a_2 < \dots < a_m = L$.
 A distance $k \in \mathbb{N}$ can be measured if there are $i, j \in \{1, \dots, m\}$, such that
 $k = a_j - a_i$.
 

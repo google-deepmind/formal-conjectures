@@ -27,7 +27,7 @@ open ArithmeticFunction Filter
 namespace Erdos410
 
 /--
-Let $σ_1(n) = σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k−1}(n))$.
+Let $σ_1(n) = σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k-1}(n))$.
 
 Is it true that $\lim_{k → ∞} σ_k(n)^{\frac 1 k} = ∞$?
 

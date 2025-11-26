@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos1065
 
 /--
-Are there infinitely many primes $p$ such that $p$ = $2^k * q + 1$
+Are there infinitely many primes $p$ such that $p = 2^k * q + 1$
 for some prime $q$ and $k ≥ 0$?
 
 This is mentioned as B46 
@@ -39,7 +39,7 @@ theorem erdos_1065a :
   sorry
 
 /--
-Are there infinitely many primes $p$ such that $p$ = $2^k 3^l q + 1$
+Are there infinitely many primes $p$ such that $p = 2^k 3^l q + 1$
 for some prime $q$ and $k ≥ 0$, $l ≥ 0$?
 -/
 @[category research open, AMS 11]

@@ -32,20 +32,20 @@ noncomputable def r (x : ℕ) : ℕ :=
   sInf { t : ℕ | t % 2 = 0 ∧ ¬ (∃ n ≤ x, primeGap n = t) }
 
 /--
-Let $d_n=p_{n+1}-p_n$, where $p_n$ is the $n$th prime. Let $r(x)$ be the smallest even
-integer $t$ such that $d_n=t$ has no solutions for $n\leq x$.
+Let $d_n = p_{n+1} - p_n$, where $p_n$ is the $n$th prime. Let $r(x)$ be the smallest even
+integer $t$ such that $d_n = t$ has no solutions for $n \le x$.
 
-Is it true that $r(x)\to \infty$?
+Is it true that $r(x) \to \infty$?
 -/
 @[category research open, AMS 11]
 theorem erdos_853 :
   ∀ (M : ℕ), ∃ (X : ℕ), ∀ x ≥ X, r x > M := by sorry
 
 /--
-Let $d_n=p_{n+1}-p_n$, where $p_n$ is the $n$th prime. Let $r(x)$ be the smallest even
-integer $t$ such that $d_n=t$ has no solutions for $n\leq x$.
+Let $d_n = p_{n+1} - p_n$, where $p_n$ is the $n$th prime. Let $r(x)$ be the smallest even
+integer $t$ such that $d_n = t$ has no solutions for $n \le x$.
 
-Is it true that $r(x)/\log x \to \infty$? -/
+Is it true that $r(x) / \log x \to \infty$? -/
 @[category research open, AMS 11]
 theorem erdos_853_strong :
   ∀ (M : ℕ), ∃ (X : ℕ), ∀ x ≥ X, r x / Real.log (x) > M := by sorry
