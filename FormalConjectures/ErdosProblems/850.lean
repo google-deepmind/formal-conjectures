@@ -14,26 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-
 import FormalConjectures.Util.ProblemImports
 
-open Classical
+/-!
+# Erdős Problem 850
+*Reference:* [erdosproblems.com/850](https://www.erdosproblems.com/850)
+-/
 
-namespace WrittenOnTheWallII.GraphConjecture6
-
-open SimpleGraph
-
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+namespace Erdos850
 
 /--
-WOWII [Conjecture 6](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-For a connected graph `G` we have
-`Ls(G) ≥ 1 + n(G) - m(G) - a(G)` where `a(G)` is defined via independent sets.
+Can there exist two distinct integers x and y such that x,y have the same prime factors, x+1,y+1
+have the same prime factors, and x+2,y+2 also have the same prime factors?
 -/
-@[category research solved, AMS 5]
-theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-    1 + n G - m G - a G ≤ Ls G := by
-  sorry
+@[category research open, AMS 11]
+theorem erdos_850 :
+    (∃ x y : ℕ, x ≠ y ∧ x.primeFactors = y.primeFactors
+      ∧ (x + 1).primeFactors = (y + 1).primeFactors
+      ∧ (x + 2).primeFactors = (y + 2).primeFactors) ↔ answer(sorry) := by
+    sorry
 
-end WrittenOnTheWallII.GraphConjecture6
+-- TODO(Paul-Lez): formalise remaining problems
+
+end Erdos850

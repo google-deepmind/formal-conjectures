@@ -16,22 +16,31 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-namespace WrittenOnTheWallII.GraphConjecture40
+/-!
+# Erdős Problem 85
 
-open SimpleGraph
+*Reference:* [erdosproblems.com/85](https://www.erdosproblems.com/85)
+-/
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (G : SimpleGraph α)
+open Classical SimpleGraph Finset
+
+namespace Erdos85
 
 /--
-WOWII [Conjecture 40](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+Let $f(n)$ be the smallest integer for which every graph on $n$ vertices with minimal degree $\geq
+f(n)$ contains a $C_4$.
+-/
+noncomputable def f (n : ℕ) : ℕ :=
+  sInf {k : ℕ | ∀ (G : SimpleGraph (Fin n)), G.minDegree ≥ k → (cycleGraph 4) ⊑ G}
 
-For a nontrivial connected graph `G` the size `f(G)` of a largest induced forest
-satisfies `f(G) ≥ ceil((p(G) + b(G) + 1)/2)` where `p(G)` is the path cover
-number and `b(G)` is the largest induced bipartite subgraph size.
+/--
+Is it true that f(n + 1) ≥ f(n)?
 -/
 @[category research open, AMS 5]
-theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :
-    ⌈((p G + b G + 1) / 2)⌉ ≤ f G := by
+theorem erdos_85 :
+    (∀ n : ℕ, f (n + 1) ≥ f n) ↔ answer(sorry) := by
   sorry
 
-end WrittenOnTheWallII.GraphConjecture40
+-- TODO: add connection to Ramsey number, weaker version and implied bounds from additional material.
+
+end Erdos85

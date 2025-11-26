@@ -87,7 +87,7 @@ theorem erdos_138 : atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop ↔
 When $p$ is prime Berlekamp [Be68] has proved $W(p+1) ≥ p^{2^p}$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_138.variants.prime (p : ℕ) (hp : p.Prime) : p^(2^ p) ≤ W (p + 1) := by
+theorem erdos_138.variants.prime (p : ℕ) (hp : p.Prime) : p * (2 ^ p) ≤ W (p + 1) := by
   sorry
 
 /--

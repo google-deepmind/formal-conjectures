@@ -14,26 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-
 import FormalConjectures.Util.ProblemImports
 
-open Classical
+/-!
+# Erdős Problem 458
+*Reference:* [erdosproblems.com/458](https://www.erdosproblems.com/458)
+-/
 
-namespace WrittenOnTheWallII.GraphConjecture6
-
-open SimpleGraph
-
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+namespace Erdos458
 
 /--
-WOWII [Conjecture 6](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-For a connected graph `G` we have
-`Ls(G) ≥ 1 + n(G) - m(G) - a(G)` where `a(G)` is defined via independent sets.
+least common multiple of ${1, \cdots, n}$
 -/
-@[category research solved, AMS 5]
-theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-    1 + n G - m G - a G ≤ Ls G := by
-  sorry
+def lcm_upto (n : ℕ) : ℕ :=
+  (Finset.Icc 1 n).lcm id
 
-end WrittenOnTheWallII.GraphConjecture6
+/--
+Let $lcm(1, \cdots, n)$ denote the least common multiple of ${1, \cdots, n}$.
+And $p_{k}$ the $k$th prime.
+Is it true that, for all $k \geq 1$, $lcm(1, \cdots, p_{k+1}−1) < p_{k} * lcm(1, \cdots, p_{k})$ ?
+-/
+@[category research open, AMS 11]
+theorem erdos_458 :
+    (∀ k : ℕ, lcm_upto ((k + 1).nth Prime - 1)
+     < k.nth Prime * lcm_upto (k.nth Prime)) ↔ answer(sorry) := by
+    sorry
+
+end Erdos458
