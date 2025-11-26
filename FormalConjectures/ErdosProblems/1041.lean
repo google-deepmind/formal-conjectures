@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
--- import Mathlib.Data.ENNReal.Basic
 
 /-!
 # Erdős Problem 1041
@@ -23,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1041](https://www.erdosproblems.com/1041)
 -/
 
-open Polynomial MeasureTheory ENNReal Metric
+open Polynomial MeasureTheory ENNReal
 
 namespace Erdos1041
 
@@ -36,8 +35,6 @@ The length of a subset $s$ of $\mathbb{C}$ is defined to be its 1-dimensional
 Hausdorff measure $\mathcal{H}^1(s)$.
 -/
 noncomputable def length (s : Set ℂ) : ℝ≥0∞ := μH[1] s
-
-variable {α : Type _} [TopologicalSpace α]
 
 /--
 **Erdős–Herzog–Piranian Component Lemma** (Metric Properties of Polynomials, 1958):
