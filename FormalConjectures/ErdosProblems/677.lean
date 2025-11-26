@@ -23,20 +23,15 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos677
 
-/-
-We use the same definition as is Erdős Problem 678.
--/
+open Finset
 
-/--
-Write $M(n, k)$ be the least common multiple of ${n+1, \dotsc, n+k}$, denoted here as
-`lcmInterval n k`.
--/
-def lcmInterval (n k : ℕ) : ℕ := (Finset.Ioc n (n + k)).lcm id
+/- Denote by $M(n, k)$ the least common multiple of ${n+1, \dotsc, n+k}$. -/
 
 /-
 Erdős expected very few solutions for M(n,k)=M(m,l), where m ≥ n+k and l > 1. The only solutions he
- knew were the followings.
+ knew were the following.
 -/
+
 @[category test, AMS 11]
 lemma lcmInterval_eq_example1 : lcmInterval 4 3 = lcmInterval 13 2 := by decide
 
@@ -49,5 +44,5 @@ Is it true that for all m ≥ n + k, we get M(m, k) ≠ M(n, k)?
 -/
 @[category research open, AMS 11]
 theorem erdos_677 :
-    ∀ m n k, m ≥ n + k → lcmInterval m k ≠ lcmInterval n k := by
+    ∀ (m n k : ℕ), k > 0 → m ≥ n + k → lcmInterval m k ≠ lcmInterval n k := by
   sorry
