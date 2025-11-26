@@ -28,7 +28,7 @@ open Polynomial MeasureTheory ENNReal Metric
 namespace Erdos1041
 
 variable (n : ℕ) (f : ℂ[X]) (hn : n ≥ 2) (hnum : f.natDegree = n)
-variable (h : ∀ z, z ∈ f.rootSet ℂ → ball 0 1)
+variable (h : f.rootSet ℂ ⊆ Metric.ball 0 1)
 include hn hnum h
 
 /--
