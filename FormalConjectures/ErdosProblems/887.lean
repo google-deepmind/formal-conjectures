@@ -30,18 +30,29 @@ $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{
 
 namespace Erdos887
 
-@[category research solved, AMS 11]
-theorem erdos_887 : ∀ C > 0, ∀ᶠ n in atTop,
-  #{ d ∈ Ioo (⌊(n : ℝ)^(1 / 2)⌋) (⌈ n^(1 / 2) + C * n^(1 / 4)⌉) | d ∣ n } ≤ answer(sorry) := by
+@[category research open, AMS 11]
+theorem erdos_887 : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
+    #{ d ∈ Ioo (⌊√(n : ℝ)⌋) (⌈ √(n : ℝ) + C * n^((1 : ℝ) / 4)⌉) | d ∣ n } ≤ answer(sorry) := by
+  sorry
+
+@[category research open, AMS 11]
+theorem erdos_887.variant_i : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
+    #{ d ∈ Ioo (⌊√(n : ℝ)⌋) (⌈ √(n : ℝ) + C * n^((1 : ℝ) / 4)⌉) | d ∣ n } ≤ K := by
   sorry
 
 /-
-A question of Erdös and Rosenfeld, who proved that there are infinitely many $n$ with $4$ divisors
+A question of Erdős and Rosenfeld, who proved that there are infinitely many $n$ with $4$ divisors
 in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$, and ask whether $4$ is best possible here.
 -/
 @[category research solved, AMS 11]
-theorem erdos_887.variants :
-  ∀ᶠ n in atTop, #{ d ∈ Ioo (⌊(n : ℝ)^(1 / 2)⌋) (⌈ n^(1 / 2) + n^(1 / 4)⌉) | d ∣ n } ≤ 4 := by
+theorem erdos_887.variant_ii :
+    Infinite {n : ℤ | (#{ d ∈ Ioo (⌊√(n : ℝ)⌋) (⌈ √(n : ℝ) + n^((1 : ℝ) / 4)⌉) | d ∣ n } ≤ 4)} := by
+  sorry
+
+@[category research open, AMS 11]
+theorem erdos_887.variant_iii :
+    IsLeast {K | ∀ᶠ n in atTop,
+    #{ d ∈ Ioo (⌊√(n : ℝ)⌋) (⌈ √(n : ℝ) + n^((1 : ℝ) / 4)⌉) | d ∣ n } ≤ K } 4 := by
   sorry
 
 end Erdos887
