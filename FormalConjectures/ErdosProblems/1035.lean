@@ -33,17 +33,10 @@ def Hypercube (n : ℕ) : SimpleGraph (Fin n → Bool) where
   symm := by
     intros v w h
     obtain ⟨i, hi, hu⟩ := h
-    exact ⟨i, hi.symm, fun j hj => (hu j hj).symm⟩
-  loopless := by
-    intros v
-    simp only [not_exists]
-    intro i
-    push_neg
-    intro h
-    use i
-    constructor
-    · exact h
-    · simp
+    exact ⟨i, Ne.symm hi, fun j hj => hu j (Ne.symm hj)⟩
+  loopless v h := by
+    obtain ⟨i, hi, _⟩ := h
+    exact hi rfl
 
 /--
 A graph $G$ contains (or embeds) a graph $H$ if there exists an injective graph homomorphism
@@ -60,7 +53,8 @@ See also [576] for the extremal number of edges that guarantee a $Q_n$.
 -/
 @[category research open, AMS 05]
 theorem erdos_1035 :
-    (∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n))),
+    (∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n))) [Fintype (Fin (2^n))]
+      [DecidableRel G.Adj],
       (∀ v, (G.degree v : ℝ) > (1 - c) * 2^n) →
       contains G (Hypercube n)) ↔ answer(sorry) := by
   sorry
@@ -74,7 +68,8 @@ such that every graph on $m$ vertices with minimum degree $> (1-c) \cdot 2^n$ co
 -/
 @[category research open, AMS 05]
 theorem erdos_1035.variant_m (c : ℝ) (hc : c > 0) :
-    (∀ n : ℕ, ∃ m > 2^n, ∀ (G : SimpleGraph (Fin m)),
+    (∀ n : ℕ, ∃ m > 2^n, ∀ (G : SimpleGraph (Fin m)) [Fintype (Fin m)]
+      [DecidableRel G.Adj],
       (∀ v, (G.degree v : ℝ) > (1 - c) * 2^n) →
       contains G (Hypercube n)) ↔ answer(sorry) := by
   sorry
@@ -88,7 +83,8 @@ with minimum degree $> 2^n - u_n$ contains a $Q_n$.
 -/
 @[category research open, AMS 05]
 theorem erdos_1035.variant_u :
-    (∃ u : ℕ → ℕ, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n))),
+    (∃ u : ℕ → ℕ, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n))) [Fintype (Fin (2^n))]
+      [DecidableRel G.Adj],
       (∀ v, G.degree v > 2^n - u n) →
       contains G (Hypercube n)) ↔ answer(sorry) := by
   sorry
