@@ -31,10 +31,10 @@ see: https://leanprover.zulipchat.com/#narrow/channel/116395-maths/topic/Formali
 
 def finEncodingListBool : Computability.FinEncoding (List Bool) where
   Γ := Bool
-  encode := fun l ↦ l
-  decode := fun l ↦ some l
-  decode_encode := fun x ↦ rfl
-  ΓFin := by exact Bool.fintype
+  encode := id
+  decode := Option.some
+  decode_encode _ := rfl
+  ΓFin := Bool.fintype
 
 @[simp]
 lemma splitOnP_isNone_map_some {α : Type} (l : List α) :
