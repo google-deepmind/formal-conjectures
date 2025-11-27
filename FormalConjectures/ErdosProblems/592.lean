@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Cardinal Ordinal
 
+namespace Erdos592
+
 universe u
 
 /--
@@ -36,3 +38,5 @@ theorem erdos_592 (β : Ordinal.{u}) : (β.card ≤ ℵ₀) →
   sorry
 
 -- TODO(firsching): add condition by Galvin and Larson.
+
+end Erdos592

@@ -28,13 +28,15 @@ disjoint difference sets (apart from 0).
 open Function Set Filter
 open scoped Pointwise
 
+namespace Erdos42
+
 /--
 **Erdős Problem 42**: Let M ≥ 1 and N be sufficiently large in terms of M. Is it true that for every
 maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}` of size M such that
 `(A - A) ∩ (B - B) = {0}`?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_42 : (∀ (M : ℕ), ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N),
+theorem erdos_42 : (∀ M ≥ 1, ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N),
     ∃ᵉ (B : Set ℕ), B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
     ((A - A) ∩ (B - B)) = {0}) ↔ answer(sorry) := by
   sorry
@@ -78,11 +80,4 @@ theorem maximal_sidon_contains_zero (A : Set ℕ) (N : ℕ) (hN : 1 ≤ N)
     (hA : IsMaximalSidonSetIn A N) : 0 ∈ A - A := by
   sorry
 
-/--
-If two Sidon sets have disjoint difference sets (apart from 0), then their union
-is also a Sidon set.
--/
-@[category undergraduate, AMS 5 11]
-theorem disjoint_differences_union_sidon (A B : Set ℕ) (hA : IsSidon A) (hB : IsSidon B)
-    (h : ((A - A) ∩ (B - B)) ⊆ {0}) : IsSidon (A ∪ B) := by
-  sorry
+end Erdos42

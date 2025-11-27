@@ -40,8 +40,8 @@ $$
 -/
 @[category research solved, AMS 11]
 theorem erdos_392 (A : ℕ → ℕ) (h : ∀ n > 0,
-    IsLeast { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧ Monotone a ∧ a t ≤ n ^ 2) }
-      (A n)) :
+    IsLeast { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧
+      Monotone a ∧ a (Fin.last t) ≤ n ^ 2) } (A n)) :
     ((fun (n : ℕ) => (A n - n / 2 + n / (2 * Real.log n) : ℝ)) =o[atTop] fun n => n / Real.log n)
   := by
   sorry
@@ -49,14 +49,14 @@ theorem erdos_392 (A : ℕ → ℕ) (h : ∀ n > 0,
 /--
 If we change the condition to $a_t \leq n$ it can be shown that
 $$
-  A(n) = n - \frac{n}{log n} + o\left(\frac{n}{\log n}\right)
+  A(n) = n - \frac{n}{\log n} + o\left(\frac{n}{\log n}\right)
 $$
 -/
 @[category research solved, AMS 11]
 theorem erdos_392.variants.lower (A : ℕ → ℕ)
     (hA : ∀ n > 0, IsLeast
-      { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧ Monotone a ∧ a t ≤ n) }
-      (A n)) :
+      { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧
+        Monotone a ∧ a (Fin.last t) ≤ n) } (A n)) :
     (fun (n : ℕ) => (A n - n + n / Real.log n : ℝ)) =o[atTop] fun n => n / Real.log n := by
   sorry
 

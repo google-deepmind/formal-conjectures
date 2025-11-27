@@ -32,4 +32,4 @@ theorem Set.Iio_eventually_ncard_ne_zero (β : Type*) [PartialOrder β]
     [LocallyFiniteOrder β] [OrderBot β] [Nontrivial β] :
     ∃ (b : β), ∀ n ≥ b, (Set.Iio n).ncard ≠ 0 :=
   let ⟨b, hb⟩ := Finset.Iio_eventually_card_ne_zero β
-  ⟨b, fun n hn => by rw [← Finset.coe_Iio, Set.ncard_coe_Finset]; exact hb n hn⟩
+  ⟨b, fun n hn => by rw [← Finset.coe_Iio, Set.ncard_coe_finset]; exact hb n hn⟩

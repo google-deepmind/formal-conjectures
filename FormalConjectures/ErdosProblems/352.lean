@@ -28,7 +28,7 @@ open scoped ProbabilityTheory
 namespace Erdos352
 
 /--
-Is there some c > 0 such that every measurable A ⊆ ℝ² of measure ≥ c
+Is there some $c > 0$ such that every measurable $A \subseteq \mathbb{R}^2$ of measure $\geq c$
  contains the vertices of a triangle of area 1?
 -/
 @[category research open, AMS 51]

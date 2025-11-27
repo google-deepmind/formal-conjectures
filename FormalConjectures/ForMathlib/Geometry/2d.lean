@@ -18,7 +18,8 @@ import Mathlib.LinearAlgebra.Orientation
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
 import Mathlib.Geometry.Euclidean.Triangle
-import FormalConjectures.ForMathlib.Logic.Equiv.Fin
+
+import FormalConjectures.ForMathlib.Logic.Equiv.Fin.Rotate
 import FormalConjectures.ForMathlib.Data.Set.Triplewise
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
@@ -178,15 +179,24 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
                   a 1, b 1, c 1;
                   1,   1,   1] / 2 := by
   rw [triangle_area, Orientation.areaForm_to_volumeForm,
-    positiveOrientation.volumeForm_robust (EuclideanSpace.basisFun (Fin 2) ℝ) rfl, Basis.det_apply]
+    positiveOrientation.volumeForm_robust (EuclideanSpace.basisFun (Fin 2) ℝ) rfl, Module.Basis.det_apply]
   suffices (a 0 - c 0) * (b 1 - c 1) - (b 0 - c 0) * (a 1 - c 1) =
       a 0 * b 1 - a 0 * c 1 - b 0 * a 1 + b 0 * c 1 + c 0 * a 1 - c 0 * b 1 by
-    simp [Matrix.det_fin_two, Matrix.det_fin_three, Basis.toMatrix, this]
+    simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
+/--
+Given a finite set of points in the plane, we define the number of distinct distances between pairs
+of points.
+-/
+noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
+  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
+
 end EuclideanGeometry
+
 
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
   dist p q = dist q r ∨ dist q r = dist r p ∨ dist r p = dist p q
 
-nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) := A.Triplewise (IsIsosceles · · ·)
+nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) :=
+  Nonempty A ∧ A.Triplewise (IsIsosceles · · ·)

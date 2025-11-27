@@ -17,10 +17,10 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Mathoverflow 31908
+# Mathoverflow 31809
 
 Source:
-[Mathoverflow/31908](https://mathoverflow.net/questions/31809/pre-triangulated-category-that-isnt-triangulated)
+[Mathoverflow/31809](https://mathoverflow.net/questions/31809/pre-triangulated-category-that-isnt-triangulated)
 
 -/
 

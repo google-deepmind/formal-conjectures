@@ -19,11 +19,8 @@ import Mathlib.Tactic
 
 theorem Nat.image_mul_two_Iio_even {n : ℕ} (h : Even n) :
     (2 * ·) '' Set.Iio (n / 2) = { n | Even n } ∩ Set.Iio n := by
-  norm_num [Set.ext_iff, Nat.even_iff] at *
-  use ⟨by omega, fun _ =>⟨. / 2, by omega⟩⟩
+  aesop (add simp [even_iff_two_dvd, dvd_iff_exists_eq_mul_right])
 
 theorem Nat.image_mul_two_Iio (n : ℕ) :
     (2 * ·) '' Set.Iio ((n + 1) / 2) = { n | Even n } ∩ Set.Iio n := by
-  norm_num [Nat.lt_iff_add_one_le, Set.ext_iff, Nat.le_div_iff_mul_le,
-    Nat.even_iff]
-  use ⟨by omega, fun _ => ⟨. / 2, by omega⟩⟩
+  aesop (add simp [even_iff_two_dvd, dvd_iff_exists_eq_mul_right, mul_comm, lt_div_iff_mul_lt])

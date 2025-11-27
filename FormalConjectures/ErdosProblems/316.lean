@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos316
 
-/-- Is it true that if $A \subseteq \mathbb{N}∖{1}$ is a finite set with
+/-- Is it true that if $A \subseteq \mathbb{N}\setminus\{1\}$ is a finite set with
 $\sum_{n \in A} \frac{1}{n} < 2$ then there is a partition $A=A_1 \sqcup A_2$
 such that $\sum_{n \in A_i} \frac{1}{n} < 1$ for $i=1,2$?
 
@@ -37,7 +37,7 @@ theorem erdos_316 : (∀ A : Finset ℕ, 0 ∉ A → 1 ∉ A →
     ∑ n ∈ A, (1 / n : ℚ) < 2 → ∃ (A₁ A₂ : Finset ℕ),
       Disjoint A₁ A₂ ∧ A = A₁ ∪ A₂ ∧
       (∑ n ∈ A₁, (1 / n : ℚ) < 1 ∧ ∑ n ∈ A₂, (1 / n : ℚ) < 1)) ↔ answer(False) := by
-  simp only [one_div, iff_false, not_forall, Classical.not_imp, not_exists, not_and, not_lt]
+  simp only [one_div, iff_false, not_forall, not_exists, not_and, not_lt]
   let A : Finset ℕ := {2, 3, 4, 5, 6, 7, 10, 11, 13, 14, 15}
   refine ⟨A, by decide, by decide, by decide +kernel, ?_⟩
   suffices h : ∀ B ⊆ A, ∑ n ∈ B, (n : ℚ)⁻¹ < 1 → 1 ≤ ∑ n ∈ A \ B, (n : ℚ)⁻¹ by
@@ -63,9 +63,9 @@ lemma erdos_316.variants.multiset : ∃ A : Multiset ℕ, 0 ∉ A ∧ 1 ∉ A �
     exact this ▸ h B (by simp [hBC])
   decide +kernel
 
-/-- More generally, Sándor shows that for any $n≥2$ there exists a finite set
-$A \subseteq \mathbb{N}∖{1}$ with $\sum_{n \in A} \frac{1}{k} < n$ , and no
-partition into $n$ parts each of which has $\sum_{n \in A_i} \frac{1}{k} < 1$. -/
+/-- More generally, Sándor shows that for any $n \ge 2$ there exists a finite set
+$A \subseteq \mathbb{N}\setminus\{1\}$ with $\sum_{k \in A} \frac{1}{k} < n$, and no
+partition into $n$ parts each of which has $\sum_{n \in A_i} \frac{1}{n} < 1$. -/
 @[category research solved, AMS 5 11]
 theorem erdos_316.variants.generalized (n : ℕ) (hn : 2 ≤ n) : ∃ A : Finset ℕ,
     A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
