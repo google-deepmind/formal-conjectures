@@ -56,6 +56,12 @@ def PowersOfThree (p q r : ℕ) : Set ℕ :=
   {n : ℕ | ∃ a b c : ℕ, n = p^a * q^b * r^c}
 
 /--
+The subsets of powers of three which satisfy the criterion of being close to its smallest element. Namely for an arbitrary $ε > 0$ a finite subset $A$ of PowersOfThree is snug if for all $a ∈ A$, we have $a < (1 + ε) * min(A)$.
+-/
+def IsSnug (ε : ℝ) (A : Finset ℕ) (hA : A.Nonempty) : Prop :=
+  ∀ a ∈ A, a < (1 + ε) * A.min' hA
+
+/--
 Helper predicate for pairwise coprimality of three integers.
 -/
 def PairwiseCoprime (a b c : ℕ) : Prop := Set.Pairwise {a, b, c} Nat.Coprime
@@ -100,5 +106,14 @@ of combinatorics_. Matematiche (Catania) (1992), 231-240.
 theorem erdos_123.variants.powers_2_3 :
     IsDComplete (PowersOfTwo 2 3) := by
   sorry
+
+/--
+A stronger conjecture for numbers of the form $2^k 3^l 5^j$.
+
+For any $ε > 0$, all large integers $n$ can be written as the sum of distinct integers $b_1 < ... < b_t$ of the form $2^k 3^l 5^j$ where $b_t < (1 + ϵ) b_1$.
+-/
+@[category research open, AMS 11]
+theorem erdos_123.variants.powers_2_3_5_snug :
+  (∀ ε > 0, ∀ᶠ (n : ℕ) in atTop, ∃ (A : Finset ℕ) (hA : (A : Set ℕ) ⊆ PowersOfThree 2 3 5) (hAnonempty : A.Nonempty) (hAsnug: IsSnug ε A hAnonempty), A.sum id = n) ↔ answer(sorry) := by sorry
 
 end Erdos123
