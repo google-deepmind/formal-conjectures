@@ -41,9 +41,9 @@ $X \subseteq m$ with $|X| = \kappa$ contains subsets of all possible colours?
 -/
 @[category research open, AMS 03 05]
 theorem erdos_598 :
-    ∃ c : { s : Set m // s.Countable } → κ.out,
+    (∃ c : { s : Set m // s.Countable } → κ.out,
     ∀ X : Set m, #X = κ →
-    c '' { s : { sub : Set m // sub.Countable } | s.1 ⊆ X } = Set.univ := by
+    c '' { s : { sub : Set m // sub.Countable } | s.1 ⊆ X } = Set.univ) ↔ answer(sorry) := by
   sorry
 
 end Erdos598
