@@ -37,9 +37,9 @@ Reference: [ErLe96] Erdős, P. and Lewin, M., _$d$-complete sequences of integer
 -/
 def IsDComplete (A : Set ℕ) : Prop :=
   ∀ᶠ n in atTop, ∃ s : Finset ℕ,
-    (s : Set ℕ) ⊆ A ∧                    -- The summands come from A
+    (s : Set ℕ) ⊆ A ∧                  -- The summands come from A
     IsAntichain (· ∣ ·) (s : Set ℕ) ∧   -- No summand divides another
-    s.sum id = n                         -- They sum to n
+    s.sum id = n                        -- They sum to n
 
 /--
 The set of all natural numbers of the form $p^a q^b$ where $a, b ≥ 0$.
