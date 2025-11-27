@@ -25,11 +25,11 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos229
 
 /--
-Let $(S_n)_{n \geq 1}$ be a sequence of sets of complex numbers, none of which have a finite
-limit point. Does there exist an entire transcendental function $f(z)$ such that, for all $n \geq 1$, there
-exists some $k_n \geq 0$ such that
+Let $(S_n)_{n \ge 1}$ be a sequence of sets of complex numbers, none of which have a finite
+limit point. Does there exist an entire transcendental function $f(z)$ such that, for all $n \ge 1$, there
+exists some $k_n \ge 0$ such that
 $$
-  f^{(k_n)}(z) = 0\quad\text{for all $z\in S_n$?}
+  f^{(k_n)}(z) = 0 \quad \text{for all } z \in S_n?
 $$
 
 Solved in the affirmative by Barth and Schneider [BaSc72].

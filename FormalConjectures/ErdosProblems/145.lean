@@ -62,7 +62,7 @@ theorem erdos_145.variants.le_two {α : ℝ} (hα : α ∈ Set.Icc 0 2) :
   sorry
 
 /--
-Hooley [Ho73] extended this to all $\alpha\leq 3$.
+Hooley [Ho73] extended this to all $0 \leq \alpha\leq 3$.
 
 [Ho73] Hooley, Christopher, On the intervals between consecutive terms of sequences. Proc. Symp. Pure Math, vol. 24, pp. 129-140. 1973.
 -/
@@ -73,7 +73,7 @@ theorem erdos_145.variants.le_three {α : ℝ} (hα : α ∈ Set.Icc 0 3) :
   sorry
 
 /--
-Greaves, Harman, and Huxley [GHH97] showed that this is true for $\alpha\leq 11/3$.
+Greaves, Harman, and Huxley [GHH97] showed that this is true for $0 \leq \alpha\leq 11/3$.
 
 [GHH97] Greaves, G. R. H. and Harman, G. and Huxley, M. N., Sieve Methods, Exponential Sums, and
   their Applications in Number Theory. (1997).

@@ -31,7 +31,7 @@ $z$ and $n$?
 
 The answer is yes, proved by Balister, Bollobás, Morris, Sahasrabudhe, and Tiba [BBMST19].
 
-[BBMST19] Balister, P. and Bollob\'{A}s, B. and Morris, R. and Sahasrabudhe, J. and Tiba, M., _Flat Littlewood Polynomials Exist_. arXiv:907.09464 (2019).
+[BBMST19] Balister, P. and Bollob\'{A}s, B. and Morris, R. and Sahasrabudhe, J. and Tiba, M., _Flat Littlewood Polynomials Exist_. arXiv:1907.09464 (2019).
 -/
 @[category research solved, AMS 5 12 41] --TODO(lezeau): I'm a little unhappy with the `41` tag
 theorem erdos_228 :

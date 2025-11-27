@@ -53,7 +53,7 @@ theorem complete_for_alpha_in_Ioo_one_to_goldenRatio (t α : ℝ) (ht : 0 < t)
 
 /--
 For any $k$ there exists some $t_k\in (0,1)$ such that the set of $\alpha$
-such that the sequence `⌊tₖαⁿ⌋` is complete consists of at least $k$
+such that the sequence $\lfloor t_k\alpha^n\rfloor$ is complete consists of at least $k$
 disjoint line segments.
 -/
 @[category research solved, AMS 11]

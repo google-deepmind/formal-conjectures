@@ -23,16 +23,9 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter
-open scoped EuclideanGeometry
+open EuclideanGeometry
 
 namespace Erdos89
-
-/--
-Given a finite set of points in the plane, we define the number of distinct distances between pairs
-of points.
--/
-noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
 
 /--
 The minimum number of distinct distances guaranteed for any set of $n$ points.

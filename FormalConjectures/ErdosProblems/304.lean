@@ -84,7 +84,7 @@ lemma dvd_of_one_mem_unitFractionExpressible {a b : ℕ}
   exact mod_cast hm.symm
 
 /-- Let $$N(a, b)$$, denoted here by `smallestCollection a b` be the minimal k such that there
-exist integers $1 < n_1 < n_2 < ... < n_k$ with
+exist integers $1 < n_1 < n_2 < \dots < n_k$ with
 $$\frac{a}{b} = \sum_{i=1}^k \frac{1}{n_i}$$ -/
 noncomputable def smallestCollection (a b : ℕ) : ℕ := sInf (unitFractionExpressible a b)
 
