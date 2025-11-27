@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.Wikipedia.HardyLittlewood
 
 /-!
 # Erdős Problem 884
@@ -44,6 +45,12 @@ noncomputable abbrev sum_inv_of_consecutive_divisors (n : ℕ) : ℚ :=
     (1 : ℚ) / (Nat.nth (· ∣ n) (i + 1) - Nat.nth (· ∣ n) i)
 
 /--
+Statement of Erdos conjecture 884. See `erdos_884` for the problem asking whether this is true.
+-/
+def erdos_884_stmt : Prop :=
+    sum_inv_of_divisor_pair_differences =O[Filter.atTop] (1 + sum_inv_of_divisor_pair_differences)
+
+/--
 For a natural number n, let `1 = d₁ < ⋯ < d_{τ(n)} = n` denote the divisors of n
 in increasing order.
 Does it hold that
@@ -52,14 +59,28 @@ for `n → ∞`, i.e.
 `∑ 1 ≤ i < j ≤ τ(n), 1 / (d_j - d_i) ∈ O (1 + ∑ 1 ≤ i < τ(n), 1 / (d_{i + 1} - d_i))`?
 
 In September 2025, Terence Tao gave a conditional _negative_ answer to this conjecture,
-disproving it under the assumption of the *Qualitative Hardy-Littlewood Conjecture*,
-See [here](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf).
+see `erdos_884_fales_of_hardy_littlewood` for this implication.
 However, the conjecture itself remains open.
 -/
 @[category research open, AMS 11]
 theorem erdos_884 :
-    sum_inv_of_divisor_pair_differences =O[Filter.atTop] (1 + sum_inv_of_divisor_pair_differences) := by
+    erdos_884_stmt ↔ answer(sorry) := by
   sorry
+
+/--
+In September 2025, Terence Tao gave a conditional _negative_ answer to Erdos conjecture 884,
+disproving it under the assumption of the *Qualitative Hardy-Littlewood Conjecture*.
+See [here](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf).
+The *qualitative* version of the conjecture only states that there are infinitely many tuples
+of primes and does not require any asymptotical bounds and as such is a corollary of the general
+form of the Hardy-Littlewood Conjecture.
+We state the 'weaker' implication using general Hardy-Littlewood here, since this conjecture is
+already formalized.
+-/
+@[category research solved, AMS 11]
+theorem erdos_884_false_of_hardy_littlewood :
+    ∀ (k : ℕ) (m : Fin k.succ → ℕ), HardyLittlewood.FirstHardyLittlewoodConjectureFor m
+    → ¬ erdos_884_stmt := by sorry
 
 
 end Erdos884
