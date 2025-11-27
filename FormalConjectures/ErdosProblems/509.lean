@@ -86,9 +86,9 @@ theorem erdos_509 : (∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
 /--
 Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial. Can the set
 $\{z ∈ ℂ : |f(z)| ≤ 1\}$
-be covered by a set of closed discs the sum of whose radii is ≤2e?
+be covered by a set of closed discs the sum of whose radii is $≤ 2e$?
 Solution: True. This is due to Cartan.
-See *Sur les systèmes de fonctions holomorphes à variétés linéaires
+See *Sur les systèmes de fonctions holomorphes à variétés linéaires
 lacunaires et leurs applications*, Henri Cartan,
 http://www.numdam.org/article/ASENS_1928_3_45__255_0.pdf
 -/
@@ -98,19 +98,18 @@ theorem erdos_509.variants.Cartan_bound : (∀ (f : ℂ[X]), f.Monic → f.natDe
   sorry
 
 /--
-Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial. Can the set
+Let $f(z) ∈ $ℂ[z]$ be a monic non-constant polynomial. Can the set
 $\{z ∈ ℂ : |f(z)| ≤ 1\}$
-be covered by a set of closed discs the sum of whose radii is $≤ 2.59$?
+be covered by a set of closed discs the sum of whose radii is $≤ 2.59$? 
 Solution: True. This is due to Pommerenke.
--/
-@[category research solved, AMS 30]
+-/@[category research solved, AMS 30]
 theorem erdos_509.variants.Pommerenke_bound : (∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
     ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2.59 ι)) ↔ answer(True) := by
   sorry
 
 /--
 Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial.
-If it is connected, can the set $\{z ∈ C : |f(z)| ≤ 1\}$
+If it is connected, can the set $\{z ∈ ℂ : |f(z)| ≤ 1\}$
 be covered by a set of circles the sum of whose radii is $≤ 2$?
 Solution: True. This is due to Pommerenke.
 -/

@@ -47,7 +47,7 @@ noncomputable abbrev k (N : ℕ) : ℕ := Nat.find (exists_k N)
 Let $k(N)$ denote the smallest $k$ such that there exists
 $N ≤ n_1 < ⋯ < n_k$ with $\frac 1 {n_1} + ... + \frac 1 {n_k} = 1$
 
-Is it true that $\lim_{N→∞} k(N) - (e - 1)N = ∞$?
+Is it true that $\lim_{N \to \infty} k(N) - (e - 1)N = \infty$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_295 :
@@ -56,7 +56,7 @@ theorem erdos_295 :
 
 /--
 Erdős and Straus have proved the existence of some constant $c>0$
-such that $-c < k(N)-(e-1)N ≪ \frac N {log N}$
+such that $-c < k(N)-(e-1)N \ll \frac N {\log N}$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_295.variants.erdos_straus :

@@ -49,7 +49,7 @@ theorem erdos_392 (A : ℕ → ℕ) (h : ∀ n > 0,
 /--
 If we change the condition to $a_t \leq n$ it can be shown that
 $$
-  A(n) = n - \frac{n}{log n} + o\left(\frac{n}{\log n}\right)
+  A(n) = n - \frac{n}{\log n} + o\left(\frac{n}{\log n}\right)
 $$
 -/
 @[category research solved, AMS 11]

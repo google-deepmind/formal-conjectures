@@ -47,7 +47,7 @@ local instance (X : TopologicalSpace.Opens S) :
   inferInstance
 
 /--
-A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
+A vector bundle over a scheme `S` is a locally free $\mathcal{O}_S$-module of finite rank.
 -/
 structure VectorBundles where
   carrier : S.Modules
@@ -94,7 +94,7 @@ end AlgebraicGeometry.Scheme
 open AlgebraicGeometry.Scheme
 
 /--
-There are no indecomposable vector bundles of rank 2 on `ℙⁿ` for `n ≥ 7`.
+There are no indecomposable vector bundles of rank 2 on $\mathbb{P}^n$ for $n \ge 7$.
 This is conjecture 6.3 in _VARIETIES OF SMALL CODIMENSION IN PROJECTIVE SPACE_, R. Hartshorne
 -/
 @[category research open, AMS 14]
