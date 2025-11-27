@@ -56,7 +56,7 @@ theorem card (h : s.IsAPOfLengthWith l a d) : ENat.card s = l := h.1
 theorem eq (h : s.IsAPOfLengthWith l a d) : s = {a + n • d | (n : ℕ) (_ : n < l)} := h.2
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
-if the difference is non-zero and `s` is empty. -/
+if `s` is empty. -/
 @[simp]
 theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by
   simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
@@ -78,7 +78,7 @@ theorem length (h : s.IsAPOfLengthWith l a d) : s.length = l := by
   simp [h]
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
-if the difference is non-zero and `s` is empty. -/
+if `s` is empty. -/
 @[simp]
 theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = [] := by
   simp [IsAPOfLengthWith]
