@@ -51,7 +51,7 @@ Amer. Math. Monthly (2002), 554--559.
 -/
 @[category research open, AMS 11]
 theorem erdos_1072a.variants.littleo :
-    (fun x ↦ ({p | p.Prime ∧ f p = p - 1}.interIcc 0 x).ncard : ℝ)) =o[atTop]
+    (fun x ↦ (({p | p.Prime ∧ f p = p - 1}.interIcc 0 x).ncard : ℝ)) =o[atTop]
       (fun x ↦ x / Real.log x) := by
   sorry
 
