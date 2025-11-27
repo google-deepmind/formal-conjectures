@@ -22,47 +22,65 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 # Erdős Problem 508
 
 *Reference:* [erdosproblems.com/508](https://www.erdosproblems.com/508)
+
+proven by considering the [Moser-Spindel graph]
+or the [Golomb graph]
+*At least 4 colors are required:* [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)
+*At least 4 colors are required:* [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph)
+*At least 5 colors are required:* [de Grey 2018](https://arxiv.org/abs/1804.02385)
 -/
 
 
 
 namespace Erdos508
 
-open Real
-
-abbrev Plane := EuclideanSpace ℝ (Fin 2)
+open scoped EuclideanGeometry
 
 /--
-Whether c defines a valid coloring of the plane, i.e. whether
-c(x₁) ≠ c(x₂) holds for all points x₁ ∈ ℝ² and x₂ ∈ ℝ² that are
-exactly distance 1 apart from each other (with respect to
-the euclidean metric)
+The unit-distance graph in the plane, i.e. the graph whose vertices are points in the plane
+and whose edges connect points that are exactly 1 unit apart.
 -/
-@[category API, AMS 5]
-def validColoring {n : ℕ} (c : Plane → Fin n) : Prop :=
-  ∀ x₁ x₂, dist x₁ x₂ = 1 → c x₁ ≠ c x₂
+def UnitDistancePlaneGraph : SimpleGraph ℝ² :=
+  SimpleGraph.mk
+    (fun x y => dist x y = 1)
+    (by
+      intros x y
+      simp [dist_comm])
+    (by
+      intros x
+      simp [dist_self])
+
+scoped notation "χ(ℝ²)" => UnitDistancePlaneGraph.chromaticNumber
 
 /--
-Whether the `Plane` is colorable with n colors
+The Hadwiger–Nelson problem asks: How many colors are required to color the plane
+such that no two points at distance 1 from each other have the same color?
 -/
-@[category API, AMS 5]
-def planeIsColorableWith (n : ℕ) : Prop :=
-  ∃ c : Plane → Fin n, validColoring c
+@[category research open, AMS 52]
+theorem HadwigerNelsonProblem :
+    χ(ℝ²) = answer(sorry) := by
+  sorry
 
+/--
+Aubrey de Grey improved the lower bound for the chromatic number of the plane
+to 5 in 2018 using a graph that has >1000 nodes.
 
-/-
-The smallest number n ∈ ℕ such that the "`Plane` is colorable"
-with n colors, i.e. there is a coloring c : ℝ × ℝ → Fin n
-such that c(x₁) ≠ c(x₂) holds for all x₁,x₂ ∈ ℝ² that are
-distance 1 apart with respect to the euclidean metric
---/
-@[category research open, AMS 5]
-noncomputable def chromaticNumberOfThePlane : WithTop ℕ :=
-sInf ((↑) '' { n : ℕ | planeIsColorableWith n})
+"The chromatic number of the plane is at least 5" Aubrey D. N. J. de Grey, 2018
+(https://doi.org/10.48550/arXiv.1804.02385)
+-/
+@[category research solved, AMS 52]
+theorem HadwigerNelsonAtLeastFive :
+    5 ≤ χ(ℝ²) := by
+  sorry
 
-
-scoped notation "χ(ℝ²)" => chromaticNumberOfThePlane
-
+/--
+The "chromatic number of the plane" is at least 4. This can be
+proven by considering the [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)
+or the [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph) graph.
+-/
+@[category research solved, AMS 5]
+theorem HadwigerNelsonAtLeast4 : 4 ≤ χ(ℝ²) := by
+  sorry
 
 /--
 This upper bound for the chromatic number of the plane was
@@ -74,87 +92,52 @@ Soifer, Alexander (2008), The Mathematical Coloring Book: Mathematics of Colorin
 
 An alternative approach that uses square tiling was highlighted by László Székely.
 -/
-@[category research solved, AMS 5]
-def planeIs7Colorable : planeIsColorableWith 7 :=
-  by sorry
+@[category high_school, AMS 52]
+theorem HadwigerNelsonAtMostSeven :
+    χ(ℝ²) ≤ 7 := by
+  sorry
+
 
 
 /--
 The "chromatic number of the `Plane`" is at least 3. This is proven
 by considering an equilateral triangle in the plane.
 -/
-@[category undergraduate, AMS 5]
-theorem chromaticNumberOfThePlaneGeq3 : 3 ≤ χ(ℝ²) := by
-  unfold chromaticNumberOfThePlane
+@[category high_school, AMS 5]
+theorem HadwigerNelsonAtLeastThree : 3 ≤ χ(ℝ²) := by
+  unfold SimpleGraph.chromaticNumber
   apply le_sInf
-  intro x plane_is_x_colorable
+  rintro b ⟨n, rfl⟩
+  apply le_iInf
+  norm_cast
+  intro plane_is_n_colorable
+  rw [Set.mem_setOf_eq] at plane_is_n_colorable
+  obtain ⟨n_coloring⟩ := plane_is_n_colorable
+
+  -- Define the points p₁, p₂ and p₃ of an arbitrary equilateral triangle
+  let p₁ : ℝ² := ![0, 0]
+  let p₂ : ℝ² := ![1, 0]
+  let p₃ : ℝ² := ![0.5, Real.sqrt 3 / 2]
+
+  -- Prove that the points are adjacent in the unit distance plane graph
+  have p₁_p₂_adj : UnitDistancePlaneGraph.Adj p₁ p₂ := by simp [UnitDistancePlaneGraph, p₁, p₂, dist]
+  have p₁_p₃_adj : UnitDistancePlaneGraph.Adj p₁ p₃ := by simp [UnitDistancePlaneGraph, p₁, p₃,  dist, div_pow]; norm_num
+  have p₂_p₃_adj : UnitDistancePlaneGraph.Adj p₂ p₃ := by simp [UnitDistancePlaneGraph, p₂, p₃, dist, div_pow]; norm_num
 
 
-  by_cases x_is_top_case : x = ⊤
-  -- If x is the top 3 ≤ x holds trivially
-  · rw [x_is_top_case]
-    exact OrderTop.le_top 3
+  -- We'll denote coloring p_i with c_i (for i ∈ {1,2,3})
+  -- Prove that p₁, p₂ and p₃ have different images under the coloring
+  have not_c₁_equ_c₂ : n_coloring p₁ ≠ n_coloring p₂ := n_coloring.valid p₁_p₂_adj
+  have not_c₁_equ_c₃ : n_coloring p₁ ≠ n_coloring p₃ := n_coloring.valid p₁_p₃_adj
+  have not_c₂_equ_c₃ : n_coloring p₂ ≠ n_coloring p₃ := n_coloring.valid p₂_p₃_adj
 
-  · obtain ⟨x₀, ⟨plane_is_x₀_colorable, x₀_equ_x⟩⟩ := plane_is_x_colorable
+  let used_colors_subset : Finset (Fin n) := {n_coloring p₁, n_coloring p₂, n_coloring p₃}
+  have card_eq_3 : used_colors_subset.card = 3 := (used_colors_subset.card_eq_three.2
+    ⟨n_coloring p₁, n_coloring p₂, n_coloring p₃,
+      ⟨not_c₁_equ_c₂, not_c₁_equ_c₃, not_c₂_equ_c₃, rfl⟩
+    ⟩)
 
-    -- Define the points p₁, p₂ and p₃ of an arbitrary equilateral triangle
-    let p₁ : Plane := ![0, 0]
-    let p₂ : Plane := ![1, 0]
-    let p₃ : Plane := ![0.5, Real.sqrt 3 / 2]
-
-    -- Prove that the points are exactly distance 1 apart from each other
-    have unit_dist_p₁_p₂ : dist p₁ p₂ = 1 := by simp [p₁, p₂, dist]
-    have unit_dist_p₂_p₃ : dist p₂ p₃ = 1 := by
-      simp [p₂, p₃, dist, div_pow]
-      norm_num
-    have unit_dist_p₁_p₃ : dist p₁ p₃ = 1 := by
-      simp [p₁, p₃,  dist, div_pow]
-      norm_num
-
-    obtain ⟨coloring, coloring_is_valid⟩ := plane_is_x₀_colorable
-    unfold validColoring at coloring_is_valid
-
-    -- We'll denote coloring p_i with c_i (for i ∈ {1,2,3})
-    -- Prove that p₁, p₂ and p₃ have different images under the coloring
-    have not_c₁_equ_c₂ : coloring p₁ ≠ coloring p₂ := (coloring_is_valid p₁ p₂ unit_dist_p₁_p₂)
-    have not_c₂_equ_c₃ : coloring p₂ ≠ coloring p₃ := (coloring_is_valid p₂ p₃ unit_dist_p₂_p₃)
-    have not_c₁_equ_c₃ : coloring p₁ ≠ coloring p₃ := (coloring_is_valid p₁ p₃ unit_dist_p₁_p₃)
-
-
-    let image_subset : Finset (Fin x₀) := {coloring p₁, coloring p₂, coloring p₃}
-
-    -- Prove that |image_subset| = 3
-    have image_subset_card_equ_3 : image_subset.card = 3 := by
-      rw [Finset.card_eq_three]
-      use (coloring p₁)
-      use (coloring p₂)
-      use (coloring p₃)
-
-    have _3_leq_x₀ :=
-    calc
-      3 = image_subset.card := image_subset_card_equ_3.symm
-      _ ≤ Fintype.card (Fin x₀) := by exact Finset.card_le_univ image_subset
-      _ = x₀ := by exact Fintype.card_fin x₀
-
-    rw [← x₀_equ_x]
-    exact Nat.ofNat_le_cast.mpr _3_leq_x₀
-
-
-/--
-The "chromatic number of the plane" is at least 4. This can be
-proven by considering the [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)
-or the [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph) graph.
--/
-@[category research solved, AMS 5]
-theorem chromaticNumberOfThePlaneGeq4 : 4 ≤ χ(ℝ²) := by
-  sorry
-
-/--
-Aubrey de Grey proved this tighter lower bound in 2018 using a graph that has >1000 nodes.
-
-"The chromatic number of the plane is at least 5" Aubrey D. N. J. de Grey, 2018
-(https://doi.org/10.48550/arXiv.1804.02385)
--/
-@[category research solved, AMS 5]
-theorem chromaticNumberOfThePlaneGeq5 : 5 ≤ χ(ℝ²) := by
-  sorry
+  calc
+    3 = used_colors_subset.card := card_eq_3.symm
+    _ ≤ Fintype.card (Fin n) := Finset.card_le_univ used_colors_subset
+    _ = n := Fintype.card_fin n
