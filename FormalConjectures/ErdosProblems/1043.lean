@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos1043
 
-open Complex MeasureTheory Set Polynomial
+open MeasureTheory Polynomial
 
 /-- The set $\{ z \in \mathbb{C} : \lvert f(z)\rvert\leq 1\}$ -/
 def levelSet (f : Polynomial ℂ) : Set ℂ :=
