@@ -17,21 +17,27 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 203
+# Erdős Problem 705
 
-*Reference:* [erdosproblems.com/203](https://www.erdosproblems.com/203)
+*Reference:* [erdosproblems.com/705](https://www.erdosproblems.com/705)
 -/
 
-namespace Erdos203
+namespace Erdos705
+
+open scoped EuclideanGeometry
+open SimpleGraph
 
 /--
-Is there an integer $m$ with $(m, 6) = 1$ such that none of $2^k \cdot 3^\ell \cdot m + 1$ are prime,
-for any $k, \ell \ge 0$?
+Let G be a finite unit distance graph in R².
+Is there some k such that if G has girth ≥ k, then χ(G) ≤ 3?
 -/
 @[category research open, AMS 5]
-theorem erdos_203 : (∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 3^l * m + 1).Prime) ↔ answer(sorry) := by
-  sorry
+theorem erdos_705:
+  (∀ (V : Set ℝ²) (hf: V.Finite),
+    ∃ k, (UnitDistancePlaneGraph V).girth ≥ k ∧ (UnitDistancePlaneGraph V).chromaticNumber ≤ 3) ↔
+    answer(sorry) := by sorry
 
---TODO(rdivyanshu): add statements about covering system and odd integers `m` such that none of 2^k*m + 1 is prime
 
-end Erdos203
+-- TODO: add statements for the concrete constructions in the additional material
+
+end Erdos705

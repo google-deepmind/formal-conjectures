@@ -57,7 +57,7 @@ theorem lehmer_mahler_measure_problem.variants.best (f : ℤ[X])
   sorry
 
 /--
-If `f` is not reciprocal and `M(f)>1` then `M(f) ≥ M(X^3 - X - 1)`.
+If $f$ is not reciprocal and $M(f) > 1$ then $M(f) \ge M(X^3 - X - 1)$.
 -/
 @[category research solved, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.not_reciprocal (f : ℤ[X])
@@ -70,7 +70,7 @@ def Polynomial.HasOddCoeffs (f : Polynomial ℤ) : Prop :=
   ∀ i ≤ f.natDegree, Odd (f.coeff i)
 
 /--
-If all the coefficients of `f` are odd and `M(f)>1`, `M(f) ≥ M(X^2 - X - 1)`.
+If all the coefficients of $f$ are odd and $M(f) > 1$, then $M(f) \ge M(X^2 - X - 1)$.
 -/
 @[category research solved, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])

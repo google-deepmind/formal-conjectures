@@ -26,7 +26,7 @@ namespace VaughtConjecture
 
 open FirstOrder.Language
 
-/-- The number of countable models of some L-Theory T up to isomorhpism -/
+/-- The number of countable models of some L-Theory T up to isomorphism -/
 def numberOfCountableModels {L : FirstOrder.Language} (T : L.Theory) : Cardinal :=
   Cardinal.mk (Quotient (Setoid.comap
     (fun (model : {mt : T.ModelType // Countable mt.Carrier}) ↦

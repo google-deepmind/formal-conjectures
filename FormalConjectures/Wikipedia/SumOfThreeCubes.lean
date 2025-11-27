@@ -68,7 +68,7 @@ Any rational number is a sum of three rational cubes.
 First proved by Ryley in 1825, which can be found in [Ri1930].
 The below parametrization is brought from the MSE answer [MSE].
 
-[Ri1930] Richmond, H. W. "On Rational Solutions of x^3 + y^3 + z^3 = R." Proceedings of the Edinburgh Mathematical Society 2.2 (1930): 92-100.
+[Ri1930] Richmond, H. W. "On Rational Solutions of $x^3 + y^3 + z^3 = R$." Proceedings of the Edinburgh Mathematical Society 2.2 (1930): 92-100.
 [MSE] Kieren MacMillan, Proving that any rational number can be represented as the sum of the cubes of three rational numbers, https://math.stackexchange.com/q/4480969
 -/
 @[category research solved, AMS 11]

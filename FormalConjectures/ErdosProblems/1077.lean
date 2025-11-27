@@ -32,8 +32,8 @@ open SimpleGraph
 We call a graph $D$-balanced (or $D$-almost-regular) if the maximum degree is at most $D$ times the
 minimum degree.
 
-Let $ϵ,α>0$ and $D$ and $n$ be sufficiently large. If $G$ is a graph on $n$ vertices with at least
-$n^{1+α}$ edges, then must $G$ contain a $D$-balanced subgraph on $m>n^{1−α}$ vertices with at least
+Let $ϵ, α > 0$ and $D$ and $n$ be sufficiently large. If $G$ is a graph on $n$ vertices with at least
+$n^{1+α}$ edges, then must $G$ contain a $D$-balanced subgraph on $m > n^{1-α}$ vertices with at least
 $ϵm^{1+α}$ edges?
 -/
 @[category research open, AMS 5]

@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos316
 
-/-- Is it true that if $A \subseteq \mathbb{N}∖{1}$ is a finite set with
+/-- Is it true that if $A \subseteq \mathbb{N}\setminus\{1\}$ is a finite set with
 $\sum_{n \in A} \frac{1}{n} < 2$ then there is a partition $A=A_1 \sqcup A_2$
 such that $\sum_{n \in A_i} \frac{1}{n} < 1$ for $i=1,2$?
 
@@ -63,9 +63,9 @@ lemma erdos_316.variants.multiset : ∃ A : Multiset ℕ, 0 ∉ A ∧ 1 ∉ A �
     exact this ▸ h B (by simp [hBC])
   decide +kernel
 
-/-- More generally, Sándor shows that for any $n≥2$ there exists a finite set
-$A \subseteq \mathbb{N}∖{1}$ with $\sum_{n \in A} \frac{1}{k} < n$ , and no
-partition into $n$ parts each of which has $\sum_{n \in A_i} \frac{1}{k} < 1$. -/
+/-- More generally, Sándor shows that for any $n \ge 2$ there exists a finite set
+$A \subseteq \mathbb{N}\setminus\{1\}$ with $\sum_{k \in A} \frac{1}{k} < n$, and no
+partition into $n$ parts each of which has $\sum_{n \in A_i} \frac{1}{n} < 1$. -/
 @[category research solved, AMS 5 11]
 theorem erdos_316.variants.generalized (n : ℕ) (hn : 2 ≤ n) : ∃ A : Finset ℕ,
     A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
