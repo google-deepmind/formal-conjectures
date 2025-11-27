@@ -14,26 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-
 import FormalConjectures.Util.ProblemImports
 
-open Classical
+/-!
+# Erdős Problem 397
 
-namespace WrittenOnTheWallII.GraphConjecture6
+*References:*
+ - [erdosproblems.com/397](https://www.erdosproblems.com/397)
+-/
 
-open SimpleGraph
+open Nat
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+namespace Erdos397
 
 /--
-WOWII [Conjecture 6](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-For a connected graph `G` we have
-`Ls(G) ≥ 1 + n(G) - m(G) - a(G)` where `a(G)` is defined via independent sets.
+Are there only finitely many solutions to
+$$
+  \prod_i \binom{2m_i}{m_i}=\prod_j \binom{2n_j}{n_j}
+$$
+with the $m_i,n_j$ distinct?
 -/
-@[category research solved, AMS 5]
-theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-    1 + n G - m G - a G ≤ Ls G := by
+@[category research open, AMS 11]
+theorem erdos_397 :
+  {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
+    ∏ i ∈ M, centralBinom i = ∏ j ∈ N, centralBinom j}.Finite ↔ answer(sorry) := by
   sorry
 
-end WrittenOnTheWallII.GraphConjecture6
+end Erdos397
