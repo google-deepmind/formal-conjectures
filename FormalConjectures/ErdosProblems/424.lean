@@ -47,8 +47,8 @@ def sequenceSet : ℕ → Set ℕ
 def generatedSet : Set ℕ := ⋃ n : ℕ, sequenceSet n
 
 /--
-Let $a_1=2$ and $a_2=3$ and continue the sequence by appending to $a_1,\ldots,a_n$ all possible
-values of $a_ia_j-1$ with $i\neq j$.
+Let $a_1 = 2$ and $a_2 = 3$ and continue the sequence by appending to $a_1, \ldots, a_n$ all possible
+values of $a_i a_j - 1$ with $i \neq j$.
 Is it true that the set of integers which eventually appear has positive density?
 -/
 @[category research open, AMS 11]

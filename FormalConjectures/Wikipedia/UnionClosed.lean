@@ -199,7 +199,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   simp at this
 
 /--
-If the UC conjecture is tight for some family `A` then `#A = 2 ^ k` for some `k`.
+If the UC conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
 
 Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
 -/

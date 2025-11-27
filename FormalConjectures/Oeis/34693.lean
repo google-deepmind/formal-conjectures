@@ -57,14 +57,14 @@ theorem seven : a 7 = 4 := by
 @[category research open, AMS 11]
 theorem exists_k {n : ℕ} (hn : 1 < n) : ∃ k < n, (n * k + 1).Prime := sorry
 
-/-- A stronger conjecture: for every n there exists a number $k < 1 + n^{.75}$ such that
+/-- A stronger conjecture: for every n there exists a number $k < 1 + n^{0.75}$ such that
 $nk + 1$ is a prime. -/
 @[category research open, AMS 11]
 theorem exists_k_stronger {n : ℕ} (hn : 0 < n) : ∃ k : ℕ,
     k < 1 + (Real.nthRoot 4 n) ^ 3 ∧ (n * k + 1).Prime :=
   sorry
 
-/-- The expression $1 + n^{.74}$ does not work as an upper bound. -/
+/-- The expression $1 + n^{0.74}$ does not work as an upper bound. -/
 @[category research solved, AMS 11]
 theorem exists_k_best_possible : ∃ n > (0 : ℕ), ∀ (k : ℕ),
     k < 1 + (Real.nthRoot 100 n) ^ 74 → ¬(n * k + 1).Prime :=

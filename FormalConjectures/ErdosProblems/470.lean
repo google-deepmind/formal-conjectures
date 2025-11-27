@@ -66,7 +66,7 @@ theorem erdos_470.variants.smallest_weird_eq_70 : (∀ n < 70, ¬n.Weird) ∧ (7
 /--
 Melfi [Me15](https://mathscinet.ams.org/mathscinet/relay-station?mr=3276337) has proved that there
 are infinitely many primitive weird numbers, conditional on the fact that
-$p_{n+1} - p_n < \frac{1}{10} p_n^{1/2}$ for all large $n$, which in turn would follow from
+$p_{n+1} - p_n < \frac{1}{10} \sqrt{p_n}$ for all large $n$, which in turn would follow from
 well-known conjectures concerning prime gaps.
 -/
 @[category research solved, AMS 11]
@@ -76,7 +76,7 @@ theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
   sorry
 
 /--
-Fang [Fa22](https://arxiv.org/abs/2207.12906) has shown there are no odd weird numbers below $10^21$.
+Fang [Fa22](https://arxiv.org/abs/2207.12906) has shown there are no odd weird numbers below $10^{21}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_470.variants.odd_weird_10_pow_21 : ∀ n < 10 ^ 21, Odd n → ¬n.Weird := by
