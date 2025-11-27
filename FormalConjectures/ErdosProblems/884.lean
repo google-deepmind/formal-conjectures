@@ -35,13 +35,13 @@ As a `Finset`, this is the same as `Nat.divisors`
 -/
 abbrev divisors_increasing (n : ℕ) : List ℕ := (List.range (n + 1)).filter (· ∣ n)
 
-abbrev sum_inv_of_divisor_pair_differences (n : ℕ) : ℚ :=
-    ∑ j : Fin ((divisors_increasing n).length), ∑ i : Fin  j,
-    (1 : ℚ) / ((divisors_increasing n)[j] - (divisors_increasing n)[i])
+noncomputable abbrev sum_inv_of_divisor_pair_differences (n : ℕ) : ℚ :=
+    ∑ j : Fin n.divisors.card, ∑ i : Fin  j,
+    (1 : ℚ) / (Nat.nth (· ∣ n) j - Nat.nth (· ∣ n) i )
 
-abbrev sum_inv_of_consecutive_divisors (n : ℕ) : ℚ :=
-    ∑ i : Fin ((divisors_increasing n).length - 1),
-    (1 : ℚ) / ((divisors_increasing n)[i.val + 1] - (divisors_increasing n)[i.val])
+noncomputable abbrev sum_inv_of_consecutive_divisors (n : ℕ) : ℚ :=
+    ∑ i : Fin (n.divisors.card - 1),
+    (1 : ℚ) / (Nat.nth (· ∣ n) (i + 1) - Nat.nth (· ∣ n) i)
 
 /--
 For a natural number n, let `1 = d₁ < ⋯ < d_{τ(n)} = n` denote the divisors of n
