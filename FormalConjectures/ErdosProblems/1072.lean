@@ -42,6 +42,14 @@ theorem erdos_1072b :
     ↔ answer(sorry) := by
   sorry
 
+/-- Is it true that $f(p)/p \to 0$ for $p$ in a density 1 subset of the primes? -/
+@[category research open, AMS 11]
+theorem erdos_1072b.variants.density :
+    (∃ (P : Set ℕ), P ⊆ {p | p.Prime} ∧ P.HasDensity 1 {p | p.Prime} ∧
+      ∀ᵉ ε > (0 : ℝ), ∃ N₀, ∀ p ≥ N₀, p ∈ P → f p / p < ε)
+    ↔ answer(sorry) := by
+  sorry
+
 /--
 Erdős, Hardy, and Subbarao [HaSu02], believed that the number of $p \le x$ for which $f(p)=p−1$
 is $o(x/logx)$.
