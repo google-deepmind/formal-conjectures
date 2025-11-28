@@ -59,7 +59,7 @@ noncomputable def GrowthFunction (S : Set G) (n : ℕ) : ℕ :=
   (CayleyBall S n).ncard
 
 @[category API, AMS 20]
-theorem growthFunction_zero {G : Type*} [Group G] (S : Set G) :
+theorem growthFunction_zero (S : Set G) :
     GrowthFunction S 0 = 1 := by
   simp [GrowthFunction, CayleyBall]
 
