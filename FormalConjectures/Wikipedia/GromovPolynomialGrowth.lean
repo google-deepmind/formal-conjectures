@@ -147,7 +147,7 @@ theorem tendsto_atTop_growthFunction_of_infinite [Infinite G] {S : Set G} (hS : 
   intro A
   by_cases hA : A = ∅
   · aesop
-  · choose n hn using fun (a : A) ↦ exists_mem_cayleyBall_of_closure_eq h a
+  · choose n hn using fun (a : A) ↦ exists_cayleyBall_mem_of_closure_eq h a
     let N : ℕ := (Set.range n).toFinset.max' (by simpa [Finset.nonempty_iff_ne_empty])
     refine ⟨N, fun a ha ↦ ?_⟩
     simpa using cayleyBall_monotone S (Finset.le_max' _ _ (by aesop)) (hn ⟨a, ha⟩)
