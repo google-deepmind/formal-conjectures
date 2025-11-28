@@ -121,7 +121,7 @@ lemma mem_cayleyBall_one_of_mem {S : Set G} {g : G} (hg : g ∈ S) : g ∈ Cayle
   ⟨[g], by simp_all⟩
 
 @[category API, AMS 20]
-lemma exists_mem_cayleyBall_of_closure_eq {S : Set G} (h : Subgroup.closure S = ⊤) (g : G) :
+lemma exists_cayleyBall_mem_of_closure_eq {S : Set G} (h : Subgroup.closure S = ⊤) (g : G) :
     ∃ n, g ∈ CayleyBall S n := by
   induction h ▸ Subgroup.mem_top g using Subgroup.closure_induction with
   | mem => exact ⟨1, mem_cayleyBall_one_of_mem ‹_›⟩
