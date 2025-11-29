@@ -59,7 +59,7 @@ theorem isMulBasisOfOrder_iff (A : Set α) (n : ℕ) : A.IsMulBasisOfOrder n ↔
   have := Set.mem_finset_prod (t := .univ) (f := fun _ : Fin n ↦ A)
   simp_all [IsMulBasisOfOrder]
 
-/-- A set `A : Set α` is a multiplicative basis of order `2` if every `a : α` belongs to `A + A`. -/
+/-- A set `A : Set α` is a multiplicative basis of order `2` if every `a : α` belongs to `A * A`. -/
 @[to_additive
 /--
 A set `A : Set α` is an additive basis of order `2` if every `a : α` belongs to `A + A`.

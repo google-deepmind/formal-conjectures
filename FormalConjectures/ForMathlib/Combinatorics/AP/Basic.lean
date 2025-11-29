@@ -41,6 +41,13 @@ value `⊤`.
 def Set.IsAPOfLengthWith (s : Set α) (l : ℕ∞) (a d : α) : Prop :=
   ENat.card s = l ∧ s = {a + n • d | (n : ℕ) (_ : n < l)}
 
+/--
+A list version of `Set.IsAPOfLengthWith`. Useful when order preservation is required, for example
+when considering images under arbitrary functions.
+-/
+def List.IsAPOfLengthWith (s : List α) (l : ℕ) (a d : α) : Prop :=
+  s = (List.range l).map fun n ↦ a + n • d
+
 namespace Set.IsAPOfLengthWith
 
 variable {s : Set α} {l : ℕ∞} {a d : α}
@@ -49,7 +56,7 @@ theorem card (h : s.IsAPOfLengthWith l a d) : ENat.card s = l := h.1
 theorem eq (h : s.IsAPOfLengthWith l a d) : s = {a + n • d | (n : ℕ) (_ : n < l)} := h.2
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
-if the difference is non-zero and `s` is empty. -/
+if `s` is empty. -/
 @[simp]
 theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by
   simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
@@ -61,6 +68,28 @@ theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by
   simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
 
 end Set.IsAPOfLengthWith
+
+namespace List.IsAPOfLengthWith
+
+variable {s : List α} {l : ℕ} {a d : α}
+
+theorem length (h : s.IsAPOfLengthWith l a d) : s.length = l := by
+  rw [IsAPOfLengthWith] at h
+  simp [h]
+
+/-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
+if `s` is empty. -/
+@[simp]
+theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = [] := by
+  simp [IsAPOfLengthWith]
+
+/-- An arithmetic progression with first term `a` and difference `d` is of length one if and only
+if `s` is a singleton. -/
+@[simp]
+theorem one : s.IsAPOfLengthWith 1 a d ↔ s = [a] := by
+  simp [IsAPOfLengthWith]
+
+end List.IsAPOfLengthWith
 
 /-- In an abelian additive group `α`, the set `{a, b}` with `a ≠ b` is an arithmetic progression of
 length `2` with first term `a` and difference `b - a`. -/
@@ -93,6 +122,13 @@ arithmetic progression.
 def Set.IsAPOfLength (s : Set α) (l : ℕ∞) : Prop :=
   ∃ a d : α, s.IsAPOfLengthWith l a d
 
+/--
+A list version of `Set.IsAPOfLength`. Useful when order preservation is required, for example
+when considering images under arbitrary functions.
+-/
+def List.IsAPOfLength (s : List α) (l : ℕ) : Prop :=
+  ∃ a d : α, s.IsAPOfLengthWith l a d
+
 namespace Set.IsAPOfLength
 
 open Set.IsAPOfLengthWith
@@ -118,6 +154,31 @@ theorem congr {s : Set α} {l₁ l₂ : ℕ∞}
   rw [← h₁.card, h₂.card]
 
 end Set.IsAPOfLength
+
+namespace List.IsAPOfLength
+
+open List.IsAPOfLengthWith
+
+variable {s : List α} {l : ℕ}
+
+theorem length (h : s.IsAPOfLength l) : s.length = l := by
+  obtain ⟨_, _, h⟩ := h
+  exact h.length
+
+/-- Only the empty list is a finite arithmetic progression of length $0$. -/
+@[simp] theorem zero : s.IsAPOfLength 0 ↔ s = [] := by simp [IsAPOfLength]
+
+/-- Only singletons are finite arithmetic progressions of length $1$. -/
+@[simp] theorem one : s.IsAPOfLength 1 ↔ ∃ a, s = [a] := by simp [IsAPOfLength]
+
+/-- If a list is an arithmetic progression of lengths `l₁` and `l₂`, then the lengths are
+equal. -/
+theorem congr {s : List α} {l₁ l₂ : ℕ}
+    (h₁ : s.IsAPOfLength l₁) (h₂ : s.IsAPOfLength l₂) :
+    l₁ = l₂ := by
+  rw [← h₁.length, h₂.length]
+
+end List.IsAPOfLength
 
 theorem Set.isAPOfLength_pair {α : Type*} [DecidableEq α] [AddCommGroup α] {a b : α} (hab : a ≠ b) :
     Set.IsAPOfLength {a, b} 2 :=

@@ -21,12 +21,12 @@ open Real MeasureTheory Measure Module
 /-!
 # Mathoverflow 34145
 
-Can the unit square be covered by (1/k)-by-(1/(k+1)) rectangles (across 1 ≤ k natural)?
+Can the unit square be covered by $1/k$-by-$1/(k+1)$ rectangles (across $1 \le k$ natural)?
 
-I am deliberately not requiring that the rotations can only be 0ᵒ, 90ᵒ, 180ᵒ, or 270ᵒ.
+I am deliberately not requiring that the rotations can only be $0^\circ, 90^\circ, 180^\circ, \text{ or } 270^\circ$.
 
-Because of indexing, since `n : ℕ` starts at 0, we change the side lengths to `1 / (n + 1)` and
-`1 / (n + 2)`, so that the first rectangle is `1/1` by `1/2`, the second is `1/2` by `1/3`, etc.
+Because of indexing, since `n : ℕ` starts at 0, we change the side lengths to $1 / (n + 1)$ and
+$1 / (n + 2)$, so that the first rectangle is $1/1$ by $1/2$, the second is $1/2$ by $1/3$, etc.
 
 *Reference:* [mathoverflow/34145](https://mathoverflow.net/q/34145)
 asked by user [*Kaveh*](https://mathoverflow.net/users/7507/kaveh)
@@ -36,7 +36,7 @@ namespace Mathoverflow34145
 
 /-- A rectangle is specified by its width, height, starting point, and rotation.
 The rectangle is assumed to start in the lower left corner. For example, the unit square
-`{ (x, y) | 0 ≤ x ≤ 1, 0 ≤ y ≤ 1 }` is specified as `⟨1, 1, (0, 0), 0⟩`  -/
+$\{ (x, y) \mid 0 \le x \le 1, 0 \le y \le 1 \}$ is specified as `⟨1, 1, (0, 0), 0⟩`  -/
 structure Rectangle : Type where
   width : ℝ
   height : ℝ

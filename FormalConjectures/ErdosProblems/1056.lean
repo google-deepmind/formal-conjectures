@@ -67,12 +67,12 @@ theorem erdos_1056_k3 :
 
 /--
 Noll and Simmons asked, more generally, whether there are solutions to
-$q_1! \equiv \dots \equiv q_k! \mod p$ for arbitrarily large $k$ (with $q_1 < \dots <q_k$).
+$q_1! \equiv \dots \equiv q_k! \mod p$ for arbitrarily large $k$ (with $q_1 < \dots < q_k$).
 -/
 @[category research open, AMS 11]
 theorem noll_simmons :
     (∀ᶠ k in Filter.atTop,
-    ∃ (p : ℕ) (_ : p.Prime) (Q : Fin k → ℕ) (_ : StrictMono Q),
+    ∃ (p : ℕ) (_ : p.Prime) (Q : Fin k → ℕ) (_ : StrictMono Q) (_ : ∀ i, Q i < p),
     ∀ i j : Fin k, (Q i)! ≡ (Q j)! [MOD p]) ↔ answer(sorry) := by
   sorry
 

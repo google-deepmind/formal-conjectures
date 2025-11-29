@@ -28,7 +28,7 @@ open BigOperators Nat Finset
 
 /--
 Left factorial of n
-$$$!n = 0!+1!+2!+...+(n-1)!$$
+$$!n = 0! + 1! + 2! + \dots + (n-1)!$$
 -/
 def left_factorial (n : ℕ) := ∑ m ∈ Finset.range n, m !
 

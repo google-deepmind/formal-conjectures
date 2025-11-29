@@ -25,7 +25,7 @@ variable {α : Type*} [AddCommMonoid α]
 
 /--
 A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
-if the equation $a + b = c$ has no solution with $a,b,c \in A$.
+if the equation $a + b = c$ has no solution with $a, b, c \in A$.
 -/
 def IsSumFree (A : Set α) : Prop := Disjoint (A + A)  A
 

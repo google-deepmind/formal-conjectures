@@ -28,7 +28,7 @@ open Filter ArithmeticFunction
 
 /-- Let $\tau(n)$ count the number of divisors of $n$. Is there some $n > 24$ such that
 $$
-  \max_{m < n}(m + \tau(n)) \leq n + 2?
+  \max_{m < n}(m + \tau(m)) \leq n + 2?
 $$ -/
 @[category research open, AMS 11]
 theorem erdos_647 : (∃ n > 24, ⨆ m : Fin n, m + σ 0 m ≤ n + 2) ↔ answer(sorry) := by

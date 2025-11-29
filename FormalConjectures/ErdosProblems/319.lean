@@ -28,7 +28,7 @@ open scoped Topology Finset Real
 
 namespace Erdos319
 
-/-- What is the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- What is the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -52,7 +52,7 @@ theorem erdos_319 (N : ℕ) : IsGreatest
 -- the use of an `answer(sorry)` placeholder. Trivial or sub-optimal solutions
 -- will therefore exist to the asymptotic formalisations. A true solution to
 -- the asymptotic variants should have a degree of optimality or non-triviality to it.
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -71,7 +71,7 @@ theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     c =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -90,7 +90,7 @@ theorem erdos_319.variants.isBigO (N : ℕ) (c : ℕ → ℝ)
     c =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
