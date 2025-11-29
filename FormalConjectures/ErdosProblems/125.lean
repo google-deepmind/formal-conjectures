@@ -35,8 +35,8 @@ Does $A + B$ have positive density?
 
 @[category research open, AMS 11]
 theorem erdos_125 :
-    ({ x : ℕ | (digits 3 x).toFinset ⊆ {0, 1} } + { x : ℕ | (digits 4 x).toFinset ⊆ {0, 1} }
-      ).HasPosDensity ↔ answer(sorry) := by
+    ({ x : ℕ | (digits 3 x).toFinset ⊆ {0, 1} } +
+      { x : ℕ | (digits 4 x).toFinset ⊆ {0, 1} }).HasPosDensity ↔ answer(sorry) := by
   sorry
 
 end Erdos125
