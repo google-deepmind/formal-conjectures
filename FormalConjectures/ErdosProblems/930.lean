@@ -44,10 +44,10 @@ is not a perfect power?
 -/
 @[category research open, AMS 11]
 theorem erdos_930 :
-    (∀ r, ∃ k, ∀ (I : Fin r → Finset ℕ),
-      (∀ i j : Fin r, i ≠ j → Disjoint (I i) (I j)) →
-        (∀ i : Fin r, k ≤ (I i).card ∧ ∃ a, I i = Ico a (a + (I i).card)) →
-          ¬ IsPower (∏ i : Fin r, ∏ m ∈ I i, m)) ↔ answer(sorry) := by
+    (∀ r, ∃ k, ∀ (I : Fin r → ℕ × ℕ),
+      (∀ i : Fin r, (I i).1 ≤ (I i).2 ∧ k ≤ (I i).2 - (I i).1 + 1) →
+        (∀ i j : Fin r, i ≠ j → (I i).2 < (I j).1 ∨ (I j).2 < (I i).1) →
+          ¬ IsPower (∏ i : Fin r, ∏ m ∈ Icc (I i).1 (I i).2, m)) ↔ answer(sorry) := by
   sorry
 
 /--
