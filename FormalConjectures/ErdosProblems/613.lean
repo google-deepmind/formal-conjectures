@@ -34,17 +34,14 @@ theorem erdos_613
     (n : ℕ)
     (hn : n ≥ 3)
     (G : SimpleGraph (Fin (2 * n + 1)))
-    (hedges :
-      G.edgeFinset.card =
-        Nat.choose (2 * n + 1) 2 -
-        Nat.choose n 2 - 1) :
+    [DecidableRel G.Adj]
+    (hedges : G.edgeFinset.card = Nat.choose (2 * n + 1) 2 - Nat.choose n 2 - 1) :
     (∃ (B : SimpleGraph (Fin (2 * n + 1)))
        (D : SimpleGraph (Fin (2 * n + 1))),
-         B ⊆ G ∧
-         D ⊆ G ∧
-         B.edgeFinset.card + D.edgeFinset.card = G.edgeFinset.card ∧
-         B.IsBipartite ∧
-         ∀ v, D.degree v < n)
+       [DecidableRel B.Adj] →
+       [DecidableRel D.Adj] → B ≤ G ∧ D ≤ G ∧ B.edgeFinset.card + D.edgeFinset.card = G.edgeFinset.card ∧
+       B.IsBipartite ∧
+       ∀ v, D.degree v < n)
     ↔ answer(sorry) := by
   sorry
 
