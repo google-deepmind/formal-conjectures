@@ -44,7 +44,7 @@ def p (n : ℕ) (k : ℕ) : Prop := ∃ A : Finset ℕ, RequiredCondition A n �
 theorem erdos_888 : ∀ n, Nat.findGreatest (p n) n = (answer(sorry) : ℕ → ℕ)  n := by
   sorry
 
-/--`|A|=o(n)`-/
+/--`|A|=o(n)`. -/
 @[category research solved, AMS 11]
 theorem erdos_888_Sárközy : (fun n ↦ (Nat.findGreatest (p n) n : ℝ)) =o[atTop] (Nat.cast : ℕ → ℝ) := by
   sorry
