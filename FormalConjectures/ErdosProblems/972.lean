@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos972
 
 /--
-The set of primes `p` such that `floor (α * p)` is also prime.
+The set of primes `p` such that `Nat.floor (α * p)` is also prime.
 -/
 def bothPrimes (α : ℝ) : Set ℕ :=
 {p : ℕ | Nat.Prime p ∧ Nat.Prime ((Int.floor (α * p)).toNat)}
