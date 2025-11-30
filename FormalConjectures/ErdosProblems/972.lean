@@ -33,7 +33,6 @@ def bothPrimes (α : ℝ) : Set ℕ :=
 Let $\alpha > 1$ be irrational. Are there infinitely many primes $p$
 such that $\lfloor p\alpha \rfloor$ is also prime?
 -/
-
 @[category research open, AMS 11]
 theorem erdos_972 (α : ℝ) : 1 < α → Irrational α → (bothPrimes α).Infinite ↔ answer(sorry) := by
   sorry
