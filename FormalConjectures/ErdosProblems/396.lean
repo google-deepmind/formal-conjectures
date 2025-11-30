@@ -13,21 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 196
+# Erdős Problem 396
 
-*Reference:* [erdosproblems.com/196](https://www.erdosproblems.com/196)
+*Reference:* [erdosproblems.com/396](https://www.erdosproblems.com/396)
 -/
-namespace Erdos196
 
-/-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
-@[category research open, AMS 5 11]
-theorem erdos_196 : (∀ (f : ℕ ≃ ℕ), ∃ (a : List ℕ),
-    ((a.Sorted (· < · )) ∨ (a.Sorted (· > · ))) ∧ (a.map f).IsAPOfLength 4)
-    ↔ answer(sorry) := by
+namespace Erdos396
+
+open Nat
+
+/--
+Is it true that for every $k$ there exists $n$ such that
+$$\prod_{0\leq i\leq k}(n-i) \mid \binom{2n}{n}?$$
+-/
+@[category research open, AMS 11]
+theorem erdos_396 : (∀ k : ℕ, ∃ n : ℕ, descFactorial n (k + 1) ∣ centralBinom n) ↔ answer(sorry) := by
   sorry
 
-end Erdos196
+
+-- TODO(firsching): formalise the additional material
+
+end Erdos396
