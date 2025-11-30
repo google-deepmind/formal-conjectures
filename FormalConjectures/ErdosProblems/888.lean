@@ -34,7 +34,7 @@ def RequiredCondition (A : Finset ℕ) (n : ℕ) : Prop :=
   a ≤ b → b ≤ c → c ≤ d → IsSquare (a * b * c * d) → a * d = b * c
 
 /-- Proposition that for a specific `n` an `A` with the above defined condition
-and cardinality `k` exists-/
+and cardinality `k` exists. -/
 def p (n : ℕ) (k : ℕ) : Prop := ∃ A : Finset ℕ, RequiredCondition A n ∧ A.card = k
 
 
