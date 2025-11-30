@@ -28,10 +28,10 @@ namespace Erdos930
 
 /--
 $n$ is a perfect power if there exist natural numbers $m$ and $l$
-such that $1 < m$, $1 < l$, and $m^l = n$.
+such that $1 < l$ and $m^l = n$.
 -/
-def PerfectPower (n : ℕ) : Prop :=
-  ∃ m l, 1 < m ∧ 1 < l ∧ m^l = n
+def IsPower (n : ℕ) : Prop :=
+  ∃ m l, 1 < l ∧ m^l = n
 
 /--
 Is it true that, for every $r$, there is a $k$ such that
@@ -44,10 +44,10 @@ is not a perfect power?
 -/
 @[category research open, AMS 11]
 theorem erdos_930 :
-  ∀ r, ∃ k, ∀ (I : Fin r → Finset ℕ),
-    (∀ i j : Fin r, i ≠ j → Disjoint (I i) (I j)) →
-      (∀ i : Fin r, k ≤ (I i).card ∧ ∃ a, I i = Ico a (a + (I i).card)) →
-        ¬ PerfectPower (∏ i : Fin r, ∏ m ∈ I i, m) := by
+    (∀ r, ∃ k, ∀ (I : Fin r → Finset ℕ),
+      (∀ i j : Fin r, i ≠ j → Disjoint (I i) (I j)) →
+        (∀ i : Fin r, k ≤ (I i).card ∧ ∃ a, I i = Ico a (a + (I i).card)) →
+          ¬ IsPower (∏ i : Fin r, ∏ m ∈ I i, m)) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -75,9 +75,9 @@ Theorem 2 from [ErSe75].
 -/
 @[category research solved, AMS 11]
 theorem erdos_930.variant.consecutive_strong :
-  ∀ k l n, 3 ≤ k → 2 ≤ l → gtLeastPrime k (n + k) →
-    ∃ p, k ≤ p ∧ p.Prime ∧
-      ¬ (l ∣ Nat.factorization (∏ m ∈ Icc (n + 1) (n + k), m) p) := by
+    ∀ k l n, 3 ≤ k → 2 ≤ l → gtLeastPrime k (n + k) →
+      ∃ p, k ≤ p ∧ p.Prime ∧
+        ¬ (l ∣ Nat.factorization (∏ m ∈ Icc (n + 1) (n + k), m) p) := by
   sorry
 
 /--
@@ -92,8 +92,8 @@ It is implied from `erdos_930.variant.consecutive_strong`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_930.variant.consecutive_integers :
-  ∀ n k, 0 ≤ n → 2 ≤ k →
-    ¬ PerfectPower (∏ m ∈ Icc (n + 1) (n + k), m) := by
+    ∀ n k, 0 ≤ n → 2 ≤ k →
+      ¬ IsPower (∏ m ∈ Icc (n + 1) (n + k), m) := by
   sorry
 
 end Erdos930
