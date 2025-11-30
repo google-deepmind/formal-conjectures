@@ -41,7 +41,7 @@ def p (n : ℕ) (k : ℕ) : Prop := ∃ A : Finset ℕ, RequiredCondition A n �
 /-- What is the size of the largest subset `A` of `{1,...,n}` such that if
 `a ≤ b ≤ c ≤ d ∈ A` and `abcd` square then `ad=bc` -/
 @[category research open, AMS 11]
-theorem erdos_888 : ∀ n, Nat.findGreatest (p n) n = (answer(sorry) : ℕ → ℕ)  n := by
+theorem erdos_888 : ∀ n, Nat.findGreatest (p n) n = (answer(sorry) : ℕ → ℕ) n := by
   sorry
 
 /--`|A|=o(n)`. -/
