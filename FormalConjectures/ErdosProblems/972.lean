@@ -27,7 +27,7 @@ namespace Erdos972
 The set of primes `p` such that `Nat.floor (α * p)` is also prime.
 -/
 def bothPrimes (α : ℝ) : Set ℕ :=
-{p : ℕ | Nat.Prime p ∧ Nat.Prime ((Int.floor (α * p)).toNat)}
+  {p : ℕ | Nat.Prime p ∧ Nat.Prime ⌊ (α * p) ⌋₊}
 
 /--
 Let $\alpha > 1$ be irrational. Are there infinitely many primes $p$
