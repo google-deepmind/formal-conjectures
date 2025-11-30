@@ -46,7 +46,7 @@ theorem erdos_888 : ∀ n, Nat.findGreatest (p n) n = (answer(sorry) : ℕ → �
 
 /--`|A|=o(n)`-/
 @[category research solved, AMS 11]
-theorem erdos_888_Sárközy : ∃ c : ℝ, c > 0 ∧ ∀ n : ℕ , Nat.findGreatest (p n) n ≥  n * c := by
+theorem erdos_888_Sárközy : (fun n ↦ (Nat.findGreatest (p n) n : ℝ)) =o[atTop] (Nat.cast : ℕ → ℝ) := by
   sorry
 
 /--The primes show that `|A| ≫ n/log n` is possible.-/
