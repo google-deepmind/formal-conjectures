@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/888](https://www.erdosproblems.com/888)
 -/
 
-open Classical
+open Classical Filter
 
 namespace Erdos888
 
