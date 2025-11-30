@@ -65,6 +65,7 @@ def IsSnug (ε : ℝ) (A : Finset ℕ) (hA : A.Nonempty) : Prop :=
 Helper predicate for pairwise coprimality of three integers.
 -/
 def PairwiseCoprime (a b c : ℕ) : Prop := Set.Pairwise {a, b, c} Nat.Coprime
+
 /--
 **Erdős Problem #123**
 
@@ -73,9 +74,13 @@ the sum of distinct integers of the form $a^k b^l c^m$ ($k, l, m ≥ 0$), none o
 divide any other?
 
 Equivalently: is the set $\{a^k b^l c^m : k, l, m \geq 0\}$ d-complete?
+
+Note: For this not to reduce to the two-integer case, we need the integers
+to be greater than one and distinct.
 -/
 @[category research open, AMS 11]
-theorem erdos_123 (a b c : ℕ) (h_coprime : PairwiseCoprime a b c) :
+theorem erdos_123 (a b c : ℕ) (h_distinct : a ≠ b ∧ b ≠ c ∧ a ≠ c)
+    (h_gt_one : 1 < a ∧ 1 < b ∧ 1 < c) (h_coprime : PairwiseCoprime a b c) :
     IsDComplete (PowersOfThree a b c) ↔ answer(sorry) := by
   sorry
 
