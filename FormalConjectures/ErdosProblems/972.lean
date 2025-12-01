@@ -26,7 +26,7 @@ namespace Erdos972
 /--
 The set of primes `p` such that `Nat.floor (α * p)` is also prime.
 -/
-def bothPrimes (α : ℝ) : Set ℕ :=
+def primeSet (α : ℝ) : Set ℕ :=
   {p : ℕ | Nat.Prime p ∧ Nat.Prime ⌊ (α * p) ⌋₊}
 
 /--
