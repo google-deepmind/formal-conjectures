@@ -43,7 +43,7 @@ x of α such that the family consisting of all members of F containing x is an i
 subfamily of F with maximal cardinality.
 -/
 @[category research open, AMS 5]
-theorem exists_maximal_star
-    : ∀ F : Finset (Finset α), Decreasing F →
+theorem exists_maximal_star :
+    ∀ F : Finset (Finset α), Decreasing F →
         ∃ x : α, ∀ G, G ⊆ F → Intersecting G → G.card ≤ { A ∈ F | x ∈ A }.card := by
   sorry
