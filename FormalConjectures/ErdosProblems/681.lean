@@ -27,12 +27,11 @@ namespace Erdos681
 def IsLPF (p m : ℕ) : Prop := Prime p ∧ p ∣ m ∧ ∀ q, q ∣ m → p < q
 
 /--
-**Erdős 681**
+**Erdős problem 681.**
 Is it true that for all large $n$ there exists $k$
 such that $n + k$ is composite and $p(n+k) > k^2$,
 where $p(m)$ is the least prime factor of $m$ ?
 -/
-
 @[category research open, AMS 11]
 theorem erdos_681 : (∃ N, ∀ n > N, ∃ k, (n + k).Composite ∧ ∀ p, IsLPF p (n + k) → p > k ^ 2)
     ↔ answer(sorry) := by
