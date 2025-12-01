@@ -51,5 +51,5 @@ theorem erdos_888_Sárközy : (fun n ↦ (Nat.findGreatest (p n) n : ℝ)) =o[at
 
 /-- The primes show that `|A| ≫ n/log n` is possible. -/
 @[category research solved, AMS 11]
-theorem erdos_888_primes : (fun n : ℕ  ↦ (Nat.findGreatest (p n) n : ℝ )) ≫ (fun n : ℕ  ↦ n / (n : ℝ).log)  := by
+theorem erdos_888_primes : (fun n : ℕ ↦ (Nat.findGreatest (p n) n : ℝ )) ≫ (fun n : ℕ ↦ n / (n : ℝ).log)  := by
   sorry
