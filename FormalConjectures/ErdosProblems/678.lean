@@ -25,8 +25,6 @@ open Asymptotics Filter Finset
 
 namespace Erdos678
 
-/- Denote by $M(n, k)$ the least common multiple of ${n+1, \dotsc, n+k}$. -/
-
 /--
 The referee of [Er79] found the example $M(96, 7) > M(104, 8)$, showing that there are cases where
 $M(n, k) > M(m, k + 1)$ with $m \geq n + k$.
