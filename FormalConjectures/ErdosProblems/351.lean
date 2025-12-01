@@ -44,22 +44,22 @@ def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
 def HasCompleteImage (P : ℚ[X]) : Prop := IsStronglyComplete (imageSet P)
 
 /--
-Let $p(x)\in \mathbb{Q}[x]$. Is it true that
-\[A=\{ p(n)+1/n : n\in \mathbb{N}\}\]
+Let $p(x) \in \mathbb{Q}[x]$. Is it true that
+\[A=\{ p(n)+1/n : n \in \mathbb{N}\}\]
 is strongly complete, in the sense that, for any finite set $B$,
-\[\left\{\sum_{n\in X}n : X\subseteq A\backslash B\textrm{ finite }\right\}\]
-contains all sufficiently large rational numbers?
+\[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
+contains all sufficiently large integers?
 -/
 @[category research open, AMS 11]
 theorem erdos_351 : (∀ P : ℚ[X], 0 < P.natDegree → HasCompleteImage P) ↔ answer(False) := by
   sorry
 
 /--
-Let $p(x) = x\in \mathbb{Q}[x]$. It has been shown that
-\[A=\{ p(n)+1/n : n\in \mathbb{N}\}\]
+Let $p(x) = x \in \mathbb{Q}[x]$. It has been shown that
+\[A=\{ p(n)+1/n : n \in \mathbb{N}\}\]
 is strongly complete, in the sense that, for any finite set $B$,
-\[\left\{\sum_{n\in X}n : X\subseteq A\backslash B\textrm{ finite }\right\}\]
-contains all sufficiently large rational numbers.
+\[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
+contains all sufficiently large integers.
 -/
 @[category research open, AMS 11]
 theorem erdos_351.variants.X : HasCompleteImage X := by

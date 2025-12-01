@@ -29,7 +29,7 @@ open scoped Topology Real
 namespace Erdos285
 
 /--
-Let $f(k)$ be the minimal value of $n_k$ such that there exist $n_1 < n_2 < \cdots < n_k$ with
+Let $f(k)$ be the minimal value of $n_k$ such that there exist $n_1 < n_2 < \dots < n_k$ with
 $$
   1 = \frac{1}{n_1} + \cdots + \frac{1}{n_k}.
 $$
