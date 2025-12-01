@@ -26,28 +26,15 @@ import FormalConjectures.Util.ProblemImports
 
 namespace HadwigerNelson
 
-open scoped EuclideanGeometry
+open SimpleGraph
 
-/--
-The unit-distance graph in the plane, i.e. the graph whose vertices are points in the plane
-and whose edges connect points that are exactly 1 unit apart.
--/
-def UnitDistancePlaneGraph : SimpleGraph ℝ² :=
-  SimpleGraph.mk
-    (fun x y => dist x y = 1)
-    (by
-      intros x y
-      simp [dist_comm])
-    (by
-      intros x
-      simp [dist_self])
 /--
 The Hadwiger–Nelson problem asks: How many colors are required to color the plane
 such that no two points at distance 1 from each other have the same color?
 -/
 @[category research open, AMS 52]
 theorem HadwigerNelsonProblem :
-    UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+    (UnitDistancePlaneGraph ⊤).chromaticNumber = answer(sorry) := by
   sorry
 
 /--
@@ -57,7 +44,7 @@ See reference: [de Grey 2018](https://arxiv.org/abs/1804.02385)
 -/
 @[category research solved, AMS 52]
 theorem HadwigerNelsonAtLeastFive :
-    5 ≤ UnitDistancePlaneGraph.chromaticNumber := by
+    5 ≤ (UnitDistancePlaneGraph ⊤).chromaticNumber := by
   sorry
 
 /--
@@ -66,7 +53,7 @@ for the Hadwiger-Nelson problem.
 -/
 @[category high_school, AMS 52]
 theorem HadwigerNelsonAtMostSeven :
-    UnitDistancePlaneGraph.chromaticNumber ≤ 7 := by
+    (UnitDistancePlaneGraph ⊤).chromaticNumber ≤ 7 := by
   sorry
 
 end HadwigerNelson

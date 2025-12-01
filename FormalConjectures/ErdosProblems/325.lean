@@ -44,7 +44,7 @@ theorem erdos_325 :
 
 /--
 Writing $f_{k, 3}(x)$ for the number of integers $\leq x$ which are the sum of three $k$th powers,
-is it even true that $f_{k, 3}(x) \gg_\epsilon x ^ (3 / k - \epsilon)$?
+is it even true that $f_{k, 3}(x) \gg_{\epsilon} x ^ (3 / k - \epsilon)$?
 -/
 @[category research open, AMS 11]
 theorem erdos_325.variants.weaker :

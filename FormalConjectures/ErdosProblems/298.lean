@@ -24,8 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos298
 
-/-- Does every set `A ⊆ N` of positive density contain some finite `S ⊂ A` such that
-`∑ n ∈ S, 1 / n = 1`?
+/-- Does every set $A \subseteq \mathbb{N}$ of positive density contain some finite $S \subset A$ such that
+$\sum_{n \in S} \frac{1}{n} = 1$?
 
 The answer is yes, proved by Bloom [Bl21].
 

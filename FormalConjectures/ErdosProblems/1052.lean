@@ -24,12 +24,12 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos1052
 
-/-- A proper unitary divisor of $n$ is $d \mid n$
-such that $(d, n/d) = 1$ other than $n$. -/
+/-- A proper unitary divisor of $n$ is a divisor $d$ of $n$
+such that $d$ is coprime to $n/d$, and $d < n$. -/
 def properUnitaryDivisors (n : ℕ) : Finset ℕ :=
   {d ∈ Finset.Ico 1 n | d ∣ n ∧ d.Coprime (n / d)}
 
-/-- A number $n >0$ is a unitary perfect number if it is the sum of its proper unitary divisors. -/
+/-- A number $n > 0$ is a unitary perfect number if it is the sum of its proper unitary divisors. -/
 def IsUnitaryPerfect (n : ℕ) : Prop :=
   ∑ i ∈ properUnitaryDivisors n, i = n ∧ 0 < n
 

@@ -41,7 +41,7 @@ of size at least `(1−ε)M^{1/2}`?
 This problem asks whether any Sidon set can be extended to achieve a density
 arbitrarily close to the optimal density for Sidon sets.
 -/
-@[category undergraduate, AMS 5 11]
+@[category research open, AMS 5 11]
 theorem erdos_44 : (∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon A →
     ∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M > N) (B ⊆ Finset.Icc (N + 1) M),
       IsSidon (A ∪ B) ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card) ↔ answer(sorry) := by
@@ -51,8 +51,8 @@ theorem erdos_44 : (∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon A �
 The case where we start with an empty set (constructing large Sidon sets).
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44.empty_start : (∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M > (0 : ℕ)) (A ⊆ Finset.Icc 1 M),
-    IsSidon A ∧ (1 - ε) * Real.sqrt M ≤ A.card) ↔ answer(sorry) := by
+theorem erdos_44.empty_start : (∀ᵉ (ε > (0 : ℝ)), ∀ᶠ (M : ℕ) in Filter.atTop,
+    ∃ᵉ (A ⊆ Finset.Icc 1 M), IsSidon A ∧ (1 - ε) * Real.sqrt M ≤ A.card) ↔ answer(sorry) := by
   sorry
 
 /-! ## Related results and examples -/

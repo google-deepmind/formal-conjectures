@@ -26,8 +26,8 @@ namespace Erdos312
 
 /--
 Does there exist a constant `c > 0` such that, for any `K > 1`, whenever `A` is a sufficiently large
-finite multiset of integers with `∑ n ∈ A, 1/n > K` there exists some `S ⊆ A` such that
-`1 - exp (-(c*K)) < ∑ n ∈ S, 1/n ≤ 1`?
+finite multiset of integers with $\sum_{n \in A} 1/n > K$ there exists some $S \subseteq A$ such that
+$1 - \exp(-(c*K)) < \sum_{n \in S} 1/n \le 1$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_312 :
