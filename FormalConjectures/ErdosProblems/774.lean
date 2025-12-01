@@ -38,14 +38,14 @@ namespace Erdos774
 open Set
 open scoped BigOperators
 
-def IsDissociated (B : Finset ℕ) : Prop :=
-  AddDissociated (↑B : Set ℕ)
 
-/-- An infinite set `A` is proportionately dissociated if every finite subset
-    contains a large dissociated subset. -/
 def IsPropDissociated (A : Set ℕ) : Prop :=
   ∀ (B : Finset ℕ), (∀ b ∈ B, b ∈ A) →
-    ∃ (D : Finset ℕ), D ⊆ B ∧ IsDissociated D ∧ (D.card ≫ B.card)
+    ∃ (D : Finset ℕ),
+      D ⊆ B ∧
+      AddDissociated (↑D : Set ℕ) ∧
+      (D.card ≫ B.card)
+
 /--
 **Erdős Problem 774**
 
@@ -55,7 +55,7 @@ Is every proportionately dissociated set the union of finitely many dissociated 
 theorem erdos_774_statement :
     (∀ A : Set ℕ, IsPropDissociated A →
       ∃ (k : ℕ) (A₁ … Aₖ : Set ℕ),
-        (∀ i, IsDissociated (Aᵢ.toFinset)) ∧ A = ⋃ i, Aᵢ) ↔ answer(sorry) := by
+        (∀ i, AddDissociated (Aᵢ : Set ℕ)) ∧ A = ⋃ i, Aᵢ) ↔ answer(sorry) := by
   sorry
 
 end Erdos774
