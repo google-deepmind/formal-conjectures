@@ -38,7 +38,7 @@ theorem erdos_142 (k : ℕ) : (fun N => (r k N : ℝ)) =Θ[atTop] (answer(sorry)
   sorry
 
 /--
-Show that $r_k(N)=o_k(N/\log N)$, where $r_k(N)$ the largest possible size of a subset
+Show that $r_k(N) = o_k(N / \log N)$, where $r_k(N)$ the largest possible size of a subset
 of $\{1, \dots, N\}$ that does not contain any non-trivial $k$-term arithmetic progression.
 -/
 @[category research open, AMS 11]
@@ -48,7 +48,7 @@ theorem erdos_142.variants.lower (k : ℕ) (hk : 1 < k) :
 
 
 /--
-Find functions $f_k$, such that $r_k(N)=O_k(f_k)$, where $r_k(N)$ the largest possible size of a
+Find functions $f_k$, such that $r_k(N) = O_k(f_k)$, where $r_k(N)$ the largest possible size of a
 subset of $\{1, \dots, N\}$ that does not contain any non-trivial $k$-term arithmetic progression.
 -/
 @[category research open, AMS 11]

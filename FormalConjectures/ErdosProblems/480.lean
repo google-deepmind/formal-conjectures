@@ -25,8 +25,8 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos480
 
 /--
-Let $x_1,x_2,...∈[0, 1]$ be an infinite sequence. Is it true that there are infinitely many $m, n$
-such that $|x_{m+n} - x_m| ≤ \frac 1 {\sqrt 5 n}$?
+Let $x_1,x_2,\dots \in [0, 1]$ be an infinite sequence. Is it true that there are infinitely many $m, n$
+such that $|x_{m+n} - x_m| \le \frac 1 {\sqrt 5 n}$?
 
 This was proved Chung and Graham.
 -/
@@ -38,8 +38,8 @@ theorem erdos_480 : (∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
 
 /--
 For any $ϵ>0$ there must exist some $n$ such that there are infinitely many $m$
-for which $|x_{m+n} - x_m| < \frac 1 {(c−ϵ)n}$, where
-$c= 1 + \sum_{k≥1} \frac 1 {F_{2k}} =2.535370508...$
+for which $|x_{m+n} - x_m| < \frac 1 {(c-ϵ)n}$, where
+$c= 1 + \sum_{k \ge 1} \frac 1 {F_{2k}} =2.535370508\dots$
 and $F_m$ is the $m$th Fibonacci number. This constant is best possible.
 -/
 @[category research solved, AMS 11]

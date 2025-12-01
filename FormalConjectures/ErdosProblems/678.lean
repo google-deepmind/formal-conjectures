@@ -56,7 +56,7 @@ Cambie [Ca24] found the example $M(36, 8) > M(48, 9)$.
 lemma lcmInterval_lt_example4 : lcmInterval 47 9 < lcmInterval 36 8 := by decide
 
 /--
-Write $M(n, k)$ be the least common multiple of ${n+1, \dotsc, n+k}$.
+Write $M(n, k)$ be the least common multiple of $\{n+1, \dotsc, n+k\}$.
 Let $k$ be sufficiently large. Are there infinitely many $m, n$ with $m \geq n + k$ such that
 $$
 M(n, k) > M(m, k + 1)
