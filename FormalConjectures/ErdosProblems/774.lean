@@ -56,7 +56,7 @@ Is every proportionately dissociated set the union of finitely many dissociated 
 theorem erdos_774_statement :
     (∀ A : Set ℕ, IsPropDissociated A →
       ∃ (k : ℕ) (A₁ … Aₖ : Set ℕ),
-        (∀ i, IsDissociated (Aᵢ.toFinset)) ∧ A = ⋃ i, Aᵢ) ↔ answer(sorry) := by
+        (∀ i, AddDissociated Aᵢ) ∧ A = ⋃ i, Aᵢ) ↔ answer(sorry) := by
   sorry
 
 end Erdos774
