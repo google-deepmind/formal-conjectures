@@ -46,6 +46,7 @@ def IsDissociated (B : Finset ℕ) : Prop :=
 def IsPropDissociated (A : Set ℕ) : Prop :=
   ∀ (B : Finset ℕ), (∀ b ∈ B, b ∈ A) →
     ∃ (D : Finset ℕ), D ⊆ B ∧ IsDissociated D ∧ (D.card ≫ B.card)
+
 /--
 **Erdős Problem 774**
 
