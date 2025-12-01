@@ -42,7 +42,7 @@ def IsDissociated (B : Finset ℕ) : Prop :=
   AddDissociated (↑B : Set ℕ)
 
 /-- An infinite set `A` is proportionately dissociated if every finite subset
-    contains a large dissociated subset. -/
+contains a large dissociated subset. -/
 def IsPropDissociated (A : Set ℕ) : Prop :=
   ∀ (B : Finset ℕ), (∀ b ∈ B, b ∈ A) →
     ∃ (D : Finset ℕ), D ⊆ B ∧ IsDissociated D ∧ (D.card ≫ B.card)
