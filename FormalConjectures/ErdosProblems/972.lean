@@ -30,6 +30,7 @@ def primeSet (α : ℝ) : Set ℕ :=
   {p : ℕ | Nat.Prime p ∧ Nat.Prime ⌊ (α * p) ⌋₊}
 
 /--
+**Erdős problem 972.**
 Let $\alpha > 1$ be irrational. Are there infinitely many primes $p$
 such that $\lfloor p\alpha \rfloor$ is also prime?
 -/
