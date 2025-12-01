@@ -38,9 +38,8 @@ namespace Erdos774
 open Set
 open scoped BigOperators
 
-/-- A finite set `B` is dissociated if all distinct subcollections have distinct sums. -/
 def IsDissociated (B : Finset ℕ) : Prop :=
-  ∀ (X Y : Finset ℕ), X ⊆ B → Y ⊆ B → X ≠ Y → (∑ i in X, i) ≠ (∑ i in Y, i)
+  AddDissociated (↑B : Set ℕ)
 
 /-- An infinite set `A` is proportionately dissociated if every finite subset
     contains a large dissociated subset. -/
