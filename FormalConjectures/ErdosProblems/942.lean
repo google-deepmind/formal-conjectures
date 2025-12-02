@@ -37,7 +37,7 @@ $h(n) > (\log n)^{c - o(1)}$.
 -/
 @[category research open, AMS 11]
 theorem erdos_942 : (∃ c > 0, ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
-    ∀ n, erdos_942.h n < (Real.log n) ^ (c + o n) ∧
+    ∀ n > 0, erdos_942.h n < (Real.log n) ^ (c + o n) ∧
     {n | erdos_942.h n > (Real.log n) ^ (c - o n)}.Infinite)
     ↔ answer(sorry) := by
   sorry
@@ -50,10 +50,9 @@ theorem erdos_942.variants.limsup :
     atTop.limsup (((fun (n : ℕ) ↦ (n : ℕ∞)) ∘ erdos_942.h)) = ⊤ := by
   sorry
 
-
 /--
-It is not hard to prove that the density $δ_l$ of integers for which $h(n) = l$ exists
-and satisfies $$\sum_l δ_l = 1$$.
+It is not hard to prove that the density $\delta_l$ of integers for which $h(n) = l$ exists
+and satisfies $$\sum_l \delta_l = 1$$.
 -/
 @[category graduate, AMS 11]
 theorem erdos_942.variants.density :

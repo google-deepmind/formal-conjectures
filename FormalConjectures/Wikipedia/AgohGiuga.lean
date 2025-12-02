@@ -75,37 +75,37 @@ theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
 -- Formalisation note: refers to a Giuga number in the sense of
 -- https://en.wikipedia.org/wiki/Giuga_number
 /--
-A (weak) Giuga number is a number $n$ such that
+A (weak) Giuga number is a composite number $n$ such that
 $$\sum_{i=1}^{n - 1}i^{\varphi(n)} \equiv -1\pmod{n}$$.
 -/
 def IsWeakGiuga (n : ℕ) : Prop :=
-    2 ≤ n ∧ ¬ n.Prime ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ φ n
+    n.Composite ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ φ n
 
 -- Formalisation note: refers to a Giuga number in the sense of
 -- https://www.cambridge.org/core/services/aop-cambridge-core/content/view/8A6841B3FDA442A8FAEC89AA702C16F6/S0008439500007244a.pdf/note_on_giugas_conjecture.pdf
 /--
-A (strong) Giuga number is a number $n$ such that
+A (strong) Giuga number is a composite number $n$ such that
 $$\sum_{i=1}^{n - 1}i^{n - 1} \equiv -1\pmod{n}$$-/
 def IsStrongGiuga (n : ℕ) : Prop :=
-    2 ≤ n ∧ ¬ n.Prime ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
+    n.Composite ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
 
 /--
-A number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
+A composite number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
 prime divisors $p$ of $n$.
 -/
 @[category research solved, AMS 11]
-theorem isWeakGiuga_iff_prime_dvd (n : ℕ) :
+theorem isWeakGiuga_iff_prime_dvd {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∀ p ∈ n.primeFactors, p ∣ (n / p - 1) := by
   sorry
 
 /--
-A number $n$ is weak Giuga if and only if
+A composite number $n$ is weak Giuga if and only if
 $$
 \sum_{p\mid n} \frac{1}{p} - \frac{1}{n} \in\mathbb{N}.
 $$
 -/
 @[category research solved, AMS 11]
-theorem isWeakGiuga_iff_sum_primeFactors (n : ℕ) :
+theorem isWeakGiuga_iff_sum_primeFactors {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∃ m : ℕ, ∑ p ∈ n.primeFactors, (1 / p : ℚ) - 1 / n = m := by
   sorry
 
@@ -119,54 +119,55 @@ def IsCarmichael (n : ℕ) : Prop :=
 
 /-- A composite Carmichael number is squarefree. -/
 @[category undergraduate, AMS 11]
-theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : 1 < a) (ha₂ : ¬a.Prime) (ha₃ : IsCarmichael a) :
+theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCarmichael a) :
     Squarefree a := by
-  simp_all [a.squarefree_iff_prime_squarefree, IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
+  simp_all [Nat.Composite, a.squarefree_iff_prime_squarefree, IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
   rintro p hp ⟨N, rfl⟩
-  apply absurd (ha₃ (p * N + 1) ((1).le_add_left _))
+  apply absurd (ha₂ (p * N + 1) ((1).le_add_left _))
   have : Fact p.Prime := ⟨hp⟩
   rw [mul_assoc] at ha₁
   rw [mul_assoc, ← geom_sum_mul_of_one_le ((1).le_add_left (p * N)), p.coprime_mul_iff_left]
   simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero']).not.mpr
-    ((ZMod.natCast_zmod_eq_zero_iff_dvd _ _).not.mp (by simp_arith [le_of_lt ha₁]))
+    ((ZMod.natCast_eq_zero_iff _ _).not.mp (by simp [le_of_lt ha₁.1]))
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /-- A composite number `a` is Carmichael if and only if it is squarefree
 and, for all prime `p` dividing `a`, we have `p - 1 ∣ a - 1`. -/
 @[category undergraduate, AMS 11]
-theorem korselts_criterion (a : ℕ) (ha₁ : 1 < a) (ha₂ : ¬a.Prime) :
+theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     IsCarmichael a ↔ Squarefree a ∧
       ∀ p, p.Prime → p ∣ a → (p - 1 : ℕ) ∣ (a - 1 : ℕ) := by
-  refine ⟨fun h ↦ ⟨squarefree_of_isCarmichael ha₁ ha₂ h, fun p hp hpa ↦ ?_⟩, fun h b hb hab ↦ ?_⟩
+  refine ⟨fun h ↦ ⟨squarefree_of_isCarmichael ha₁ h, fun p hp hpa ↦ ?_⟩, fun h b hb hab ↦ ?_⟩
   · have : Fact p.Prime := ⟨hp⟩
     let ⟨g, h⟩ := IsCyclic.exists_generator (α := (ZMod p)ˣ)
     obtain ⟨k, rfl⟩ := hpa
     have hk : k.Coprime p := by
       by_contra hk
       obtain ⟨_, rfl⟩ := not_not.1 <| hp.coprime_iff_not_dvd.not.1 <| mt Nat.Coprime.symm hk
-      absurd (squarefree_of_isCarmichael ha₁ ha₂ h)
+      absurd (squarefree_of_isCarmichael ha₁ h)
       simp [← mul_assoc, mul_comm, Nat.squarefree_mul_iff, ← sq, Nat.squarefree_pow_iff hp.ne_one]
-    simp_all [IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
+    simp_all [IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime, Nat.Composite]
     let e : ZMod (p * k) ≃+* ZMod p × ZMod k := ZMod.chineseRemainder hk.symm
     let s : ZMod (p * k) := e.symm (g, 1)
     have : NeZero k := ⟨fun _ => by simp_all⟩
     have : p * k ∣ (e.symm (g, 1)).val ^ (p * k - 1) - 1 := h _ (ZMod.val_pos.2 (by aesop))
       ((ZMod.isUnit_iff_coprime _ _).1 (by simp [Prod.isUnit_iff])).symm
-    simp_all [p.totient_prime, sub_eq_zero, ZMod.val_pos, ← ZMod.natCast_zmod_eq_zero_iff_dvd,
+    simp_all [p.totient_prime, sub_eq_zero, ZMod.val_pos, ← ZMod.natCast_eq_zero_iff,
       ← map_pow, ← Units.val_pow_eq_pow_val, ← orderOf_dvd_iff_pow_eq_one,
       orderOf_eq_card_of_forall_mem_zpowers]
   · obtain ⟨h_sqfr, h_dvd⟩ := h
-    simp_all [a.squarefree_iff_prime_squarefree, Nat.FermatPsp, Nat.ProbablePrime]
-    refine if hb : _ = 0 then ⟨0, hb⟩ else (a.factorization_le_iff_dvd ha₁.ne_bot hb).1 fun p => ?_
+    simp_all [a.squarefree_iff_prime_squarefree, Nat.FermatPsp, Nat.ProbablePrime, Nat.Composite]
+    refine if hb : _ = 0 then ⟨0, hb⟩ else (a.factorization_le_iff_dvd ha₁.1.ne_bot hb).1 fun p => ?_
     by_cases hp : p.Prime
     · by_cases hpa : p ∣ a
       · obtain ⟨_, h⟩ := h_dvd p hp hpa
+        obtain ⟨ha₁, ha₂⟩ := ha₁
         apply Nat.Prime.pow_dvd_iff_le_factorization hp hb |>.1
         have : a.factorization p ≤ 1 := not_lt.1 fun h =>
           h_sqfr p hp <| (sq p ▸ (pow_dvd_pow p h).trans (a.ordProj_dvd p))
         field_simp [h, pow_mul, le_antisymm this (hp.dvd_iff_one_le_factorization _ |>.1 _),
           ← CharP.cast_eq_zero_iff (ZMod p)]
-        simp_all_arith [CharP.cast_eq_zero_iff _ p,
+        simp_all +decide [CharP.cast_eq_zero_iff _ p,
           hp.coprime_iff_not_dvd.1 (hab.of_dvd_left (by aesop)), ZMod.pow_card_sub_one_eq_one]
       · simp [a.factorization_eq_zero_of_not_dvd hpa]
     · simp_all
@@ -178,7 +179,7 @@ and weak Giuga).
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
 @[category research solved, AMS 11]
-theorem isStrongGiuga_iff (a : ℕ) :
+theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
     IsStrongGiuga a ↔ IsCarmichael a ∧ ∃ n : ℕ, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
   sorry
 

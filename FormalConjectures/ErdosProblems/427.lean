@@ -51,7 +51,7 @@ theorem erdos_427 : erdos427 ↔ answer(True) := by
 /--
 The statement of Shiu's theorem:
 for any $k \geq 1$ and $(a, q) = 1$ there exist infinitely many $k$-tuples of consecutive primes
-$p_m, ..., p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
+$p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
@@ -61,7 +61,7 @@ def ShiuTheorem : Prop := ∀ (k a q : ℕ), 1 ≤ k → 1 ≤ q → a.gcd q = 1
 
 /--
 **Shiu's theorem**: for any $k \geq 1$ and $(a, q) = 1$ there exist infinitely many $k$-tuples of consecutive primes
-$p_m, ..., p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
+$p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
