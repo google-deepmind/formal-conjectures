@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Magic Square of Squares
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Magic_square_of_squares)
+*References:*
+
+* [Wikipedia](https://en.wikipedia.org/wiki/Magic_square_of_squares)
+* [multimagie.com](http://www.multimagie.com/English/SquaresOfSquaresSearch.htm)
 -/
 
 namespace MagicSquareOfSquares
