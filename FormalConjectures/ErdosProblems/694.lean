@@ -25,11 +25,11 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos694
 
 /--
-Let $f_{\max}(n)$ be the largest $m$ such that $\phi(m) = n$, and
-$f_{\min}(n)$ be the smallest such $m$, where $\phi$ is Euler's
+Let $f_\max(n)$ be the largest $m$ such that $\phi(m) = n$, and
+$f_\min(n)$ be the smallest such $m$, where $\phi$ is Euler's
 totient function. Investigate
 $$
-  \max_{n\leq x}\frac{f_{\max}(n)}{f_{\min}(n)}.
+  \max_{n\leq x}\frac{f_\max(n)}{f_\min(n)}.
 $$
 -/
 @[category research open, AMS 11]
@@ -44,7 +44,7 @@ theorem erdos_694 (max min : ℕ → ℕ)
 
 /--
 Carmichael has asked whether there is an integer $n$ for which $\phi(m) = n$ has
-exactly one solution, that is $\frac{f_{\max}(n)}{f_{\min}(n)} = 1$.
+exactly one solution, that is $\frac{f_\max(n)}{f_\min(n)} = 1$.
 -/
 @[category research open, AMS 11]
 theorem erdos_694.variants.carmichael :

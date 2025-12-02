@@ -81,7 +81,7 @@ theorem erdos_944.variants.dirac_conjecture.k_sub_one_not_prime (k : ℕ) (hk : 
   sorry
 
 /--
-Jensen [Je02] gave an construction for $k$-critical graphs without any critical edges for all $k≥5$.
+Jensen [Je02] gave an construction for $k$-critical graphs without any critical edges for all $k ≥ 5$.
 
 [Je02] Jensen, Tommy R., Dense critical and vertex-critical graphs. Discrete Math. (2002), 63--84.
 -/

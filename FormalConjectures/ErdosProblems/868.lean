@@ -35,7 +35,7 @@ def ncard_add_repr (A : Set ℕ) (o : ℕ) (n : ℕ) : ℕ :=
   { a : Fin o → ℕ | Set.range a ⊆ A ∧ ∑ i, a i = n }.ncard
 
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
-$n$ can be written as the sum of two elements from $A$. If $f(n)\to\infty$ as $n\to\infty$, then
+$n$ can be written as the sum of two elements from $A$. If $f(n) \to \infty$ as $n \to \infty$, then
 must $A$ contain a minimal additive basis of order $2$? -/
 @[category research open, AMS 5 11]
 theorem erdos_868.parts.i :
@@ -46,7 +46,7 @@ theorem erdos_868.parts.i :
   sorry
 
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
-$n$ can be written as the sum of two elements from $A$. If $f(n)>\epsilon\log n$ for large $n$
+$n$ can be written as the sum of two elements from $A$. If $f(n) > \epsilon \log n$ for large $n$
 and an arbitrary fixed $\epsilon > 0$, then must $A$ contain a minimal additive
 basis of order $2$? -/
 @[category research open, AMS 5 11]
@@ -57,7 +57,7 @@ theorem erdos_868.parts.ii :
     answer(sorry) := by
   sorry
 
-/-- Erdős and Nathanson proved that this is true if $f(n) > (\log\frac{4}{3})^{-1}\log n$ for
+/-- Erdős and Nathanson proved that this is true if $f(n) > (\log \frac{4}{3})^{-1} \log n$ for
 all large $n$. -/
 @[category research solved, AMS 5 11]
 theorem erdos_868.variants.fixed_ε :

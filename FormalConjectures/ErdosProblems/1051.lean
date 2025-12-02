@@ -26,7 +26,7 @@ namespace Erdos1051
 
 /--
 A sequence of integers `a` satisfies the growth condition if
-$\liminf a_n^{1/2^n} > 1$.
+$\liminf a_n^{\frac{1}{2^n}} > 1$.
 -/
 def GrowthCondition (a : ℕ → ℤ) : Prop :=
   Filter.liminf (fun n => ((a n : ℝ) ^ (1 / 2 ^ n : ℝ))) Filter.atTop > 1

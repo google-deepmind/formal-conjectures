@@ -61,7 +61,7 @@ $$
   \lim_{x\to\infty} \frac{1}{x}\sum_{n\leq x} f(n) = \gamma_0
 $$
 
-[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $(\sp{2n}\sb{n})$_. Math. Comp. (1975), 83-92.
+[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.limit.i (γ₀ : ℝ)
@@ -84,7 +84,7 @@ $$
   \lim_{x\to\infty} \frac{1}{x}\sum_{n\leq x} f(n)^2 = \gamma_0^2
 $$
 
-[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $(\sp{2n}\sb{n})$_. Math. Comp. (1975), 83-92.
+[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.limit.ii (γ₀ : ℝ)
@@ -105,7 +105,7 @@ $$
 $$
 then for almost all integers $f(m) = \gamma_0 + o(1)$.
 
-[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $(\sp{2n}\sb{n})$_. Math. Comp. (1975), 83-92.
+[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.ae (γ₀ : ℝ) (hγ₀ : γ₀ = ∑' (k : ℕ), (k + 2 : ℝ).log / 2 ^ (k + 2)) :
@@ -123,7 +123,7 @@ $$
   f(n) \leq c \log\log n.
 $$
 
-[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $(\sp{2n}\sb{n})$_. Math. Comp. (1975), 83-92.
+[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.ub : ∃ c < (1 : ℝ),

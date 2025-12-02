@@ -29,7 +29,7 @@ open ArithmeticFunction
 namespace Erdos412
 
 /--
-Let $σ_1(n)=σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k−1}(n))$.
+Let $σ_1(n)=σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k-1}(n))$.
 Is it true that, for every $m, n ≥ 2$, there exist some $i, j$ such that $σ_i(m) = σ_j(n)$?
 -/
 @[category research open, AMS 11]
