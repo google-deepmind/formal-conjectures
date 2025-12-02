@@ -54,13 +54,13 @@ theorem triplewise_of_encard_lt (r : α → α → α → Prop)
   contrapose! h
   obtain ⟨x, hx, y, hy, z, hz, hxy, hyz, hxz, _⟩ := h
   trans encard {x, y, z}
-  · norm_num [encard_insert_of_not_mem, *]
+  · norm_num [encard_insert_of_notMem, *]
   · exact encard_le_encard_of_injOn (by simp [MapsTo, hx, hy, hz]) (injOn_id _)
 
 @[simp]
 theorem triplewise_empty (r : α → α → α → Prop) :
     Set.Triplewise ∅ r :=
-  (not_mem_empty · · |>.elim)
+  (notMem_empty · · |>.elim)
 
 @[simp]
 theorem triplewise_singleton (r : α → α → α → Prop) :

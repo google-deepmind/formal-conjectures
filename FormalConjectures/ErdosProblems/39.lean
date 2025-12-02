@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/39](https://www.erdosproblems.com/39)
 -/
 
+namespace Erdos39
+
 open Filter
 
 /--
@@ -37,3 +39,5 @@ theorem erdos_39 : (∃ (A : Set ℕ), A.Infinite ∧ IsSidon A ∧
   sorry
 
 --TODO(firsching): add the various known bounds as variants.
+
+end Erdos39

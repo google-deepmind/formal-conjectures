@@ -15,13 +15,19 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Tactic.Linarith
+import Mathlib.Analysis.Normed.Field.Lemmas
+import Mathlib.Order.CompletePartialOrder
 
 open Function Set
+open scoped Pointwise
 
 variable {α : Type*} [AddCommMonoid α]
+
+/--
+A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
+if the equation $a + b = c$ has no solution with $a, b, c \in A$.
+-/
+def IsSumFree (A : Set α) : Prop := Disjoint (A + A)  A
 
 /-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
 coincidences forced by the commutativity of addition. -/
@@ -84,6 +90,35 @@ theorem IsSidon.insert {A : Set α} {m : α} [IsRightCancelAdd α] [IsLeftCancel
         · exact fun c hc h ↦ by cases ((hm c hc i₁ hi₁).2 b hb) h.symm
     · simp_all
       exact fun _ _ _ _ _ ↦ by simp_all [add_comm]
+
+
+/-!
+Maximal Sidon sets in an interval.
+
+We follow the convention that `IsMaximalSidonSetIn A N` means `A ⊆ {1, …, N}` is Sidon and
+is inclusion-maximal among subsets of `Set.Icc 1 N` with the Sidon property.
+-/
+
+/-- `IsMaximalSidonSetIn A N` means `A ⊆ {1, …, N}` is Sidon and cannot be extended within
+`{1, …, N}` while remaining Sidon. -/
+def IsMaximalSidonSetIn (A : Set ℕ) (N : ℕ) : Prop :=
+  A ⊆ Set.Icc 1 N ∧ IsSidon A ∧
+    ∀ ⦃x : ℕ⦄, x ∈ Set.Icc 1 N → x ∉ A → ¬ IsSidon (A ∪ {x})
+
+namespace IsMaximalSidonSetIn
+
+/-- If `A` is a maximal Sidon set in `{1, …, N}`, then `A ⊆ {1, …, N}`. -/
+theorem subset {A : Set ℕ} {N : ℕ} (hA : IsMaximalSidonSetIn A N) :
+    A ⊆ Set.Icc 1 N := hA.1
+
+/-- If `A` is a maximal Sidon set in `{1, …, N}`, then `A` is Sidon. -/
+theorem isSidon {A : Set ℕ} {N : ℕ} (hA : IsMaximalSidonSetIn A N) : IsSidon A := hA.2.1
+
+/-- Maximality condition unpacked. -/
+theorem maximal {A : Set ℕ} {N : ℕ} (hA : IsMaximalSidonSetIn A N) {x : ℕ}
+    (hx : x ∈ Set.Icc 1 N) (hxA : x ∉ A) : ¬ IsSidon (A ∪ {x}) := hA.2.2 hx hxA
+
+end IsMaximalSidonSetIn
 
 end Set
 

@@ -26,35 +26,33 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Pointwise Cardinal
 
+namespace Erdos274
+
 -- TODO(callesonne): add already proved results from the wiki page
 
 /--
-If `G` is an abelian group then can there exist an exact covering of `G` by more than one cosets of
+If `G` is a group then can there exist an exact covering of `G` by more than one cosets of
 different sizes? (i.e. each element is contained in exactly one of the cosets.)
 -/
 @[category research open, AMS 20]
-theorem erdos_274 :
-    (∀ (G : Type*), [CommGroup G] →
-    ∃ (P : Partition (⊤ : Subgroup G)), 1 < P.parts.ncard ∧
-      (∀ A ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
-      P.parts.Pairwise fun A B ↦ #A ≠ #B) ↔ answer(sorry) := by
-  sorry
-
-/--
-In [Er97c] Erdős asks this for finite (not necessarily abelian) groups.
-
-[Er97c] Erdős, Paul, Some of my favorite problems and results.
-The mathematics of Paul Erd\H{o}s, I (1997), 47-67.
--/
-@[category research open, AMS 20]
-theorem erdos_274.variants.nonabelian :
-    (∀ (G : Type*), [Group G] → [Fintype G] →
-    ∃ (P : Partition (⊤ : Subgroup G)),
+theorem erdos_274 (G : Type*) [Group G] (hG : 1 < ENat.card G) :
+    (∃ (P : Partition (⊤ : Subgroup G)),
       1 < P.parts.ncard ∧
       (∀ A ∈ P.parts, ∃ᵉ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
       P.parts.Pairwise fun A B ↦ #A ≠ #B) ↔ answer(sorry) := by
   sorry
 
+/--
+If `G` is a finite abelian group then there cannot exist an exact covering of `G` by more
+than one cosets of different sizes? (i.e. each element is contained in exactly one
+of the cosets.)
+-/
+@[category research solved, AMS 20]
+theorem erdos_274.variants.abelian (G : Type*) [Fintype G] [CommGroup G]
+    (hG : 1 < Fintype.card G) (P : Partition (⊤ : Subgroup G)) (hP : 1 < P.parts.ncard)
+    (h : ∀ A ∈ P.parts, ∃ᵉ (s : G) (H : Subgroup G), s • (H : Set G) = A) :
+    ∃ᵉ (A ∈ P.parts) (B ∈ P.parts), A ≠ B ∧ A.index = B.index := by
+  sorry
 
 /--
 Let $G$ be a group, and let $A = \{a_1G_1, \dots, a_kG_k\}$ be a finite system of left cosets of
@@ -64,8 +62,11 @@ Herzog and Schönheim conjectured that if $A$ forms a partition of $G$ with $k >
 indices $[G:G_1], \dots, [G:G_k]$ cannot be distinct.
 -/
 @[category research open, AMS 20]
-theorem herzog_schonheim (G : Type*) [Group G] : ∀ (P : Partition (⊤ : Subgroup G)),
+theorem herzog_schonheim (G : Type*) [Group G] (hG : 1 < ENat.card G) :
+    ∀ (P : Partition (⊤ : Subgroup G)),
     1 < P.parts.ncard →
     (∀ B ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = B) →
     ∃ᵉ (A ∈ P.parts) (B ∈ P.parts), A ≠ B ∧ A.index = B.index := by
   sorry
+
+end Erdos274

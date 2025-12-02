@@ -169,7 +169,7 @@ def HaltsAfter (s : Cfg Γ Λ) (n : ℕ) : Prop :=
 
 lemma haltsAfter_zero_iff (s : Cfg Γ Λ) :
     HaltsAfter M s 0 ↔ step M s = none := by
-  rw [HaltsAfter, multiStep, Function.iterate_one, Option.some_bind]
+  rw [HaltsAfter, multiStep, Function.iterate_one, Option.bind_some]
 
 lemma isHalting_iff_exists_haltsAt : IsHalting M ↔ ∃ n, M.HaltsAfter (init []) n :=
   ⟨fun _ ↦ eval_dom_iff.mpr IsHalting.halts, fun H ↦ ⟨eval_dom_iff.mp H⟩⟩
