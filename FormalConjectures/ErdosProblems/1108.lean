@@ -38,13 +38,12 @@ The problem asks:
    every prime divisor appears with exponent at least `2`)?
 -/
 
-open scoped Nat
 open Nat
 
 /-- The set `FactorialSums` is the set `A` of all finite sums of factorials
 \{ ∑\_{n∈S} n! : S ⊂ ℕ finite \}. -/
 abbrev Nat.FactorialSums : Set ℕ :=
-  {m | ∃ S : Finset ℕ, m = ∑ n in S, n!}
+  {m | ∃ S : Finset ℕ, m = S.sum (fun n => Nat.factorial n)}
 
 /-- A natural number `n` is a perfect `k`-th power if there is some `m`
 with `n = m^k`. We will only be interested in the case `2 ≤ k`. -/
@@ -99,14 +98,12 @@ theorem erdos_1108.parts.ii :
 @[category test, AMS 11]
 theorem erdos_1108.variants.zero_mem_FactorialSums :
     0 ∈ Nat.FactorialSums := by
-  refine ⟨∅, ?_⟩
-  simp [Nat.FactorialSums]
+  refine ⟨∅, by simp⟩
 
 /-- Another basic example: the singletons `{n}` give `n! ∈ Nat.FactorialSums`. -/
 @[category test, AMS 11]
 theorem erdos_1108.variants.factorial_mem_FactorialSums (n : ℕ) :
-    n! ∈ Nat.FactorialSums := by
-  refine ⟨{n}, ?_⟩
-  simp [Nat.FactorialSums]
+    Nat.factorial n ∈ Nat.FactorialSums := by
+  refine ⟨{n}, by simp⟩
 
 end Erdos1108
