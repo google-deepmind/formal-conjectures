@@ -9,8 +9,6 @@ You may obtain a copy of the License at
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib/NumberTheory/ArithmeticFunction
-import Mathlib/Data/Real/Log
 
 open Filter Real
 open scoped ArithmeticFunction
