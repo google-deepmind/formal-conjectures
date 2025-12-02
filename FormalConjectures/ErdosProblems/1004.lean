@@ -17,8 +17,7 @@ namespace Erdos1004
 
 /-- `distinct_totient_run n K` means that the values `φ(n+1), φ(n+2), ..., φ(n+K)` are all distinct. -/
 def distinct_totient_run (n K : ℕ) : Prop :=
-  ∀ (k₁ k₂ : ℕ) (hk₁ : k₁ < K) (hk₂ : k₂ < K),
-    totient (n + k₁ + 1) = totient (n + k₂ + 1) → k₁ = k₂
+  ∀ (i j : Fin K), totient (n + i.val + 1) = totient (n + j.val + 1) → i = j
 
 /--
 For any fixed c > 0, if x is sufficiently large then there exists n ≤ x such that
