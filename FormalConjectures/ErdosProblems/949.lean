@@ -41,12 +41,13 @@ theorem erdos_949 : (∀ᵉ (S : Set ℝ), (∀ᵉ (a ∈ S) (b ∈ S), ¬ a + b
 
 /--
 Let $S\sub \mathbb{R}$ be a Sidon set.
-Must there be a set $A\sub \mathbb{R}∖S$ of cardinality continuum such that $A + A \sub A$?
+Must there be a set $A\sub \mathbb{R}∖S$ of cardinality continuum such that
+$A + A \sub \mathbb{R}\S$?
 -/
 @[category research open, AMS 5]
 theorem erdos_949.variants.sidon : (∀ᵉ (S : Set ℝ), IsSidon S →
     ∃ (A : Set ℝ), A ⊆ Set.univ \ S ∧
-    Cardinal.mk A = Cardinal.continuum ∧ A + A ⊆ A) ↔ answer(sorry) := by
+    Cardinal.mk A = Cardinal.continuum ∧ A + A ⊆ Set.univ \ S) ↔ answer(sorry) := by
   sorry
 
 end Erdos949
