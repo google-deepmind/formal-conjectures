@@ -81,7 +81,7 @@ theorem new_mersenne_conjecture_of_prime :
   sorry
 
 @[category research open, AMS 11]
-theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) :
+theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) (h : Odd p) :
     NewMersenneConjectureStatement p := by
   sorry
 
