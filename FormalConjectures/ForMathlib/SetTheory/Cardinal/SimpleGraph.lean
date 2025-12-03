@@ -23,12 +23,14 @@ open Cardinal Ordinal
 universe u
 
 /--
-This proposition asserts the Ramsey property `κ → (κ, c)₂`, where `κ` is the
-cardinality of the ordinal `ω ^ β` and `c` is some cardinal.
+This proposition asserts the ordinal Ramsey property `ω^β → (ω^β, c)²`.
 
-It states that for any 2-coloring of the edges of a complete graph on `κ`
-vertices, there must be a monochromatic red clique of size `κ` or a
-monochromatic blue clique of size `c`.
+It states that for any linearly ordered type `V` that is order-isomorphic to the ordinal `ω^β`,
+and for any 2-coloring of the edges of the complete graph on `V` (represented by
+complementary graphs `G_red` and `G_blue`), one of the following must hold:
+
+* There is a `G_red` clique which is order-isomorphic to `ω^β`.
+* There is a `G_blue` clique of cardinality `c`.
 -/
 def OmegaPowerRamsey (β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
   let α_ord := ω ^ β
