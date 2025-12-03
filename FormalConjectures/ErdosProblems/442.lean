@@ -81,7 +81,7 @@ theorem erdos_442 : (∀ (A : Set ℕ),
     Tendsto (fun (x : ℝ) =>
       1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) atTop atTop →
     Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 *
-      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(True) := by
+      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(False) := by
   sorry
 
 /--
