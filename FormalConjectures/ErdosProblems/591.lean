@@ -32,7 +32,7 @@ universe u
 Let $α$ be the infinite ordinal $\omega^{\omega^2}$. Is it true that any red/blue colouring of the
 edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
-@[category research open, AMS 3]
+@[category research solved, AMS 3]
 theorem erdos_591 : OmegaPowerRamsey (ω ^ 2) 3 ↔ answer(sorry) := by
   sorry
 
