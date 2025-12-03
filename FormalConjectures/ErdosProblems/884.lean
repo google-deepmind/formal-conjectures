@@ -48,7 +48,7 @@ noncomputable abbrev sum_inv_of_consecutive_divisors (n : ℕ) : ℚ :=
 Statement of Erdos conjecture 884. See `erdos_884` for the problem asking whether this is true.
 -/
 def erdos_884_stmt : Prop :=
-    sum_inv_of_divisor_pair_differences =O[Filter.atTop] (1 + sum_inv_of_divisor_pair_differences)
+    sum_inv_of_divisor_pair_differences =O[Filter.atTop] (1 + sum_inv_of_consecutive_divisors)
 
 /--
 For a natural number n, let `1 = d₁ < ⋯ < d_{τ(n)} = n` denote the divisors of n
