@@ -20,8 +20,6 @@ import Mathlib.SetTheory.Ordinal.Exponential
 
 open Cardinal Ordinal
 
-open scoped Ordinal
-
 universe u
 
 /--
@@ -33,12 +31,13 @@ vertices, there must be a monochromatic red clique of size `κ` or a
 monochromatic blue clique of size `c`.
 -/
 def OmegaPowerRamsey (β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
-  let κ := (ω ^ β).card
-  ∀ (V : Type u),  κ = Cardinal.mk V →
-  -- For any red/blue edge coloring of the complete graph on V...
-  -- (represented by two graphs G_red and G_blue that are complements)
+  let α_ord := ω ^ β
+  -- We require V to have an order (LinearOrder)
+  ∀ (V : Type u) [LinearOrder V] [LE (Quotient.out α_ord).α],
+  Nonempty (V ≃o α_ord.out.α) →
   ∀ (G_red G_blue : SimpleGraph V), IsCompl G_red G_blue →
     -- ...there is either a red K_α
-    (∃ (s : Set V), G_red.IsClique s ∧ #s = κ) ∨
-    -- ...or there is a blue K_3.
+    (∃ (s : Set V), G_red.IsClique s ∧ Nonempty (s ≃o α_ord.out.α)) ∨
+   -- ...or there is a blue K_c.
+   -- For the blue clique, size 'c' is enough (if c is finite),
     (∃ (s : Set V), G_blue.IsClique s ∧ #s = c)
