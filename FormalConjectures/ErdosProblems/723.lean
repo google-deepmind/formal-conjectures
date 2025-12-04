@@ -34,14 +34,16 @@ variable {P L : Type} [Membership P L] [Fintype P] [Fintype L]
 If there is a finite projective plane of order $n$ then must $n$ be a prime power?
 -/
 @[category research open, AMS 5]
-theorem erdos_732 : (∀ pp : ProjectivePlane P L, IsPrimePow pp.order) ↔ answer(False) := by
+theorem erdos_723 :
+    (∀ {P L : Type} (_: Membership P L) (_ : Fintype P) (_ : Fintype L),
+      ∀ pp : ProjectivePlane P L, IsPrimePow pp.order) ↔ answer(sorry) := by
   sorry
 
 /--
 These always exist if $n$ is a prime power.
 -/
 @[category research solved, AMS 5]
-theorem erdos_732.prime_pow_is_projplane_order :
+theorem erdos_723.prime_pow_is_projplane_order :
     ∀ n, IsPrimePow n → ∃ (P L : Type) (_ : Membership P L) (_ : Fintype P) (_ : Fintype L)
       (pp : ProjectivePlane P L), pp.order = n := by
   sorry
@@ -50,14 +52,14 @@ theorem erdos_732.prime_pow_is_projplane_order :
 This conjecture has been proved for $n \leq 11$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_732.leq_11 : ∀ pp : ProjectivePlane P L, pp.order ≤ 11 → IsPrimePow pp.order := by
+theorem erdos_723.leq_11 : ∀ pp : ProjectivePlane P L, pp.order ≤ 11 → IsPrimePow pp.order := by
   sorry
 
 /--
 It is open whether there exists a projective plane of order 12.
 -/
 @[category research open, AMS 5]
-theorem erdos_732.eq_12 :
+theorem erdos_723.eq_12 :
     (∃ (P L : Type) (_ : Membership P L) (_ : Fintype P) (_ : Fintype L) (pp : ProjectivePlane P L),
       pp.order = 12) ↔ answer(sorry) := by
   sorry
