@@ -33,7 +33,9 @@ Category and AMS classification:
 This is a research-level open problem in combinatorial game theory and number theory.
 -/
 
-import Mathlib
+import FormalConjectures.Util.ProblemImports
+
+namespace CatchUp
 
 noncomputable section
 open scoped BigOperators
@@ -134,9 +136,11 @@ def T (N : ℕ) : ℕ := N * (N + 1) / 2
 If T N is even (equivalently N ≡ 0 or 3 mod 4),
 then under optimal play the game Catch-Up({1,…,N}) ends in a draw."
 -/
-@[category research open]
-@[AMS 91, AMS 11]
+@[category research open, AMS 91 11]
 theorem catchUp_draw_when_T_even (N : ℕ)
     (h_even : Even (T N)) :
     catchUpValueN N = Outcome.Draw := by
   sorry
+
+end -- noncomputable section
+end CatchUp
