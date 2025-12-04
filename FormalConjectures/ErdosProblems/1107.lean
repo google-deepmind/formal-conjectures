@@ -20,12 +20,9 @@ import FormalConjectures.ForMathlib.Data.Nat.Full
 /-!
 # Erdős Problem 1107
 
-*Reference:* [erdosproblems.com/1107](https://www.erdosproblems.com/1107)
-
-Every large integer is the sum of at most $r+1$ many $r$-powerful numbers.
-proved by Heath-Brown [He88] for $r=2$ (sums of 3 square-full numbers).
-
-[He88] Heath-Brown, D. R., Ternary quadratic forms and sums of three square-full numbers. (1988)
+*References:*
+- [erdosproblems.com/1107](https://www.erdosproblems.com/1107)
+- [He88] Heath-Brown, D. R., Ternary quadratic forms and sums of three square-full numbers. (1988)
 -/
 
 namespace Erdos1107
