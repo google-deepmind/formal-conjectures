@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1041](https://www.erdosproblems.com/1041)
 -/
 
-open Polynomial MeasureTheory ENNReal
+open Polynomial MeasureTheory ENNReal Classical
 
 namespace Erdos1041
 
@@ -40,13 +40,16 @@ noncomputable def length (s : Set ℂ) : ℝ≥0∞ := μH[1] s
 **Erdős–Herzog–Piranian Component Lemma** (Metric Properties of Polynomials, 1958):
 If $f$ is a degree $n$ polynomial with all roots in the unit disk,
 then some connected component
-of $\{z \mid |f(z)| < 1\}$ contains at least two distinct roots.
+of $\{z \mid |f(z)| < 1\}$ contains at least two roots.
+
+See p. 139, above Problem 5:
+[EHP58] Erdős, P. and Herzog, F. and Piranian, G., _Metric properties of polynomials_.
+  J. Analyse Math. (1958), 125-148.
 -/
 @[category research solved, AMS 32]
 theorem exists_connected_component_contains_two_roots :
-  ∃ (z₁ z₂ : ℂ),
-    connectedComponentIn {z | ‖f.eval z‖ < 1} z₁ = connectedComponentIn {z | ‖f.eval z‖ < 1} z₂ ∧
-    z₁ ≠ z₂ ∧ z₁ ∈ f.rootSet ℂ ∧ z₂ ∈ f.rootSet ℂ := by
+  ∃ C, C ⊆ {z | ‖f.eval z‖ < 1} ∧ IsConnected C ∧
+    2 ≤ (f.roots.filter (· ∈ C)).card := by
   sorry
 
 /--
