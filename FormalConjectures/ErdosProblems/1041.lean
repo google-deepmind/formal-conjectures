@@ -48,8 +48,8 @@ See p. 139, above Problem 5:
 -/
 @[category research solved, AMS 32]
 theorem exists_connected_component_contains_two_roots :
-  ∃ C, C ⊆ {z | ‖f.eval z‖ < 1} ∧ IsConnected C ∧
-    2 ≤ (f.roots.filter (· ∈ C)).card := by
+    ∃ C, C ⊆ {z | ‖f.eval z‖ < 1} ∧ IsConnected C ∧
+      2 ≤ (f.roots.filter (· ∈ C)).card := by
   sorry
 
 /--
@@ -63,10 +63,8 @@ which connects two of the roots of $f$?
 -/
 @[category research open, AMS 32]
 theorem erdos_1041 :
-  ∃ (z₁ z₂ : ℂ) (hz : z₁ ≠ z₂) (hz₁ : z₁ ∈ f.rootSet ℂ)
-    (hz₂ : z₂ ∈ f.rootSet ℂ) (γ : Path z₁ z₂),
-    Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧
-    length (Set.range γ) < 2 := by
+    ∃ (z₁ z₂ : ℂ) (h : ({z₁, z₂} : Multiset ℂ) ≤ f.roots) (γ : Path z₁ z₂),
+      Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧ length (Set.range γ) < 2 := by
   sorry
 
 end Erdos1041
