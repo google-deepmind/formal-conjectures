@@ -29,9 +29,9 @@ noncomputable def FloorMultiples (a γ : ℝ) (n : ℕ) : ℤ := ⌊γ ^ n * a�
 /-- The sequence `⌊a⌋, ⌊b⌋, ⌊γ * a⌋, ⌊γ * b⌋, ... ⌊γ ^ i * a⌋, ⌊γ ^ i * b⌋, ...` -/
 noncomputable def FloorMultiples.interleave (a b γ : ℝ) (n : ℕ) : ℤ :=
   if n % 2 = 0 then
-    FloorMultiples a γ n
+    FloorMultiples a γ (n / 2)
   else
-    FloorMultiples b γ n
+    FloorMultiples b γ (n / 2)
 
 /-- Let $\alpha,\beta\in \mathbb{R}_{>0}$ such that $\alpha/\beta$ is irrational. Is
 \[\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
