@@ -26,12 +26,6 @@ open Asymptotics Filter Finset
 namespace Erdos678
 
 /--
-Write $M(n, k)$ be the least common multiple of $\{n+1, \dotsc, n+k\}$, denoted here as
-`lcmInterval n k`.
--/
-def lcmInterval (n k : ℕ) : ℕ := (Finset.Ioc n (n + k)).lcm id
-
-/--
 The referee of [Er79] found the example $M(96, 7) > M(104, 8)$, showing that there are cases where
 $M(n, k) > M(m, k + 1)$ with $m \geq n + k$.
 [Er79] Erdős, Paul, Some unconventional problems in number theory. Math. Mag. (1979), 67-70.
