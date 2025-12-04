@@ -28,8 +28,6 @@ open Configuration
 
 namespace Erdos723
 
-variable {P L : Type} [Membership P L] [Fintype P] [Fintype L]
-
 /--
 If there is a finite projective plane of order $n$ then must $n$ be a prime power?
 -/
@@ -52,7 +50,8 @@ theorem erdos_723.prime_pow_is_projplane_order :
 This conjecture has been proved for $n \leq 11$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_723.leq_11 : ∀ pp : ProjectivePlane P L, pp.order ≤ 11 → IsPrimePow pp.order := by
+theorem erdos_723.leq_11 {P L : Type} [Membership P L] [Fintype P] [Fintype L] :
+    ∀ pp : ProjectivePlane P L, pp.order ≤ 11 → IsPrimePow pp.order := by
   sorry
 
 /--
@@ -69,7 +68,8 @@ Bruck and Ryser have proved that if $n \equiv 1 (\mod 4)$ or $n \equiv 2 (\mod 4
 the sum of two squares.
 -/
 @[category research solved, AMS 5]
-theorem bruck_ryser (n : ℕ) (pp : ProjectivePlane P L) (hpp : pp.order = n) :
+theorem bruck_ryser {P L : Type} [Membership P L] [Fintype P] [Fintype L]
+    (n : ℕ) (pp : ProjectivePlane P L) (hpp : pp.order = n) :
     (n ≡ 1 [MOD 4] ∨ n ≡ 2 [MOD 4]) → ∃ a b, n = a ^ 2 + b ^ 2 := by
   sorry
 
