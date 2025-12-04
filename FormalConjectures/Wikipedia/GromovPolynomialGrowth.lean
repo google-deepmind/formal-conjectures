@@ -40,7 +40,7 @@ def CayleyBall (S : Set G) (n : ℕ) : Set G :=
   {g : G | ∃ (l : List G), l.length ≤ n ∧ (∀ s ∈ l, s ∈ S ∨ s⁻¹ ∈ S) ∧ l.prod = g}
 
 @[category API, AMS 20]
-theorem cayleyBall_zero {G : Type*} [Group G] (S : Set G) :
+theorem cayleyBall_zero (S : Set G) :
     CayleyBall S 0 = {1} := by simp [CayleyBall]
 
 @[category API, AMS 20]
