@@ -1,24 +1,24 @@
-import Init.Prelude
-import Init.PropLemmas
-import Mathlib.Data.Finset.Card
 import Batteries.Data.List.Lemmas
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
+import Init.Prelude
+import Init.PropLemmas
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Group.Defs
+import Mathlib.Algebra.Group.Subgroup.Defs
 import Mathlib.Algebra.Group.Subgroup.Lattice
 import Mathlib.Data.Fin.Tuple.Basic
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Defs
 import Mathlib.Data.Finset.Lattice.Basic
 import Mathlib.Data.Finset.Union
+import Mathlib.Data.Fintype.BigOperators
 import Mathlib.GroupTheory.Finiteness
 import Mathlib.Order.BoundedOrder.Basic
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Algebra.Group.Subgroup.Defs
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Order.Filter.Basic
-import Mathlib.Order.Filter.AtTopBot.Defs
 import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.Order.Filter.AtTopBot.Defs
+import Mathlib.Order.Filter.Basic
 
 
 open Classical
@@ -63,69 +63,66 @@ lemma prodOfWord_product_right {n : ℕ} {S : Finset G} (w : Fin n.succ → S) :
   apply List.prod_concat
 
 noncomputable
-def wordNShell (S : Finset G) (n : ℕ) : Finset G :=
-  let wordsOfLength_n : Finset (Fin n → S) := Finset.univ
-  wordsOfLength_n.image (fun w ↦ prodOfWord w)
+def wordShell (S : Finset G) (n : ℕ) : Finset G :=
+  let wordsOfLengthN : Finset (Fin n → S) := Finset.univ
+  wordsOfLengthN.image (fun w ↦ prodOfWord w)
 
 noncomputable
-def wordNBall (S : Finset G) (n : ℕ) : Finset G :=
-  (Finset.range (n + 1)).biUnion (wordNShell S ·)
+def wordBall (S : Finset G) (n : ℕ) : Finset G :=
+  (Finset.range (n + 1)).biUnion (wordShell S ·)
 
--- This is LLM generated, see if it can be tidied
-lemma wordNBall_member_is_word (S : Finset G) (n : ℕ) :
-  ∀ a ∈ wordNBall S n, ∃ k ≤ n, ∃ w : Fin k → S,
+lemma wordBall_element_is_word (S : Finset G) (n : ℕ) :
+  ∀ a ∈ wordBall S n, ∃ k ≤ n, ∃ w : Fin k → S,
   a = prodOfWord w := by
     intro a ha
-    rw [wordNBall] at ha
+    rw [wordBall] at ha
     simp only [Finset.mem_biUnion, Finset.mem_range] at ha
     obtain ⟨ k, hk_n, ha_in_shell ⟩ := ha
-    rw [wordNShell] at ha_in_shell
+    rw [wordShell] at ha_in_shell
     simp only [Finset.mem_image] at ha_in_shell
     obtain ⟨ w, hw_univ, ha_eq ⟩ := ha_in_shell
     use k
     constructor
     · exact Nat.le_of_lt_succ hk_n
-    · use w
-      apply Eq.symm
+    · use w; apply Eq.symm
       exact ha_eq
 
--- This is LLM generated, see if it can be tidied
-lemma word_is_in_wordNBall (S : Finset G) (n : ℕ) (w : Fin n → S) :
-  prodOfWord w ∈ wordNBall S n := by
-    rw [wordNBall]
+lemma word_is_in_wordBall (S : Finset G) (n : ℕ) (w : Fin n → S) :
+  prodOfWord w ∈ wordBall S n := by
+    rw [wordBall]
     simp only [Finset.mem_biUnion, Finset.mem_range]
     use n
     constructor
-    · simp
-    · rw [wordNShell]
+    · exact Nat.lt_add_one n
+    · rw [wordShell]
       simp only [Finset.mem_image]
       use w
-      simp
+      simp only [Finset.mem_univ, and_self]
 
-lemma wordNShell_zero_eq_one (S : Finset G) :
-  wordNShell S 0 = {1} := by
+lemma wordShell_zero_eq_one (S : Finset G) :
+  wordShell S 0 = {1} := by
     rfl
 
-lemma wordNBall_zero_eq_one (S : Finset G) :
-  wordNBall S 0 = {1} := by
+lemma wordBall_zero_eq_one (S : Finset G) :
+  wordBall S 0 = {1} := by
     rfl
 
-lemma wordNPlus1Ball_union_WordNBall_WordNPlus1Shell (S : Finset G) (n : ℕ) :
-  wordNBall S (n + 1) = wordNBall S n ∪ wordNShell S (n + 1) := by
-    simp_all [wordNBall]
+lemma wordShell_union_wordBall_is_wordBall (S : Finset G) (n : ℕ) :
+  wordBall S (n + 1) = wordBall S n ∪ wordShell S (n + 1) := by
+    simp_all [wordBall]
     rw [Finset.range_succ]
     rw [Finset.biUnion_insert]
     apply Finset.union_comm
 
-lemma wordNBall_subset_wordNPlus1Ball (S : Finset G) (n : ℕ) :
-  wordNBall S n ⊆ wordNBall S (n + 1) := by
-    rw [wordNBall, wordNBall]
+lemma wordBall_n_subset_wordBall_n_plus_one (S : Finset G) (n : ℕ) :
+  wordBall S n ⊆ wordBall S (n + 1) := by
+    rw [wordBall, wordBall]
     have h : Finset.range (n + 1) ⊆ Finset.range (n + 1 + 1) := by
       simp only [Finset.range_subset, Nat.le_add_right]
-    exact Finset.biUnion_subset_biUnion_of_subset_left (fun x ↦ wordNShell S x) h
+    exact Finset.biUnion_subset_biUnion_of_subset_left (fun x ↦ wordShell S x) h
 
-lemma wordNBall_monotone (S : Finset G) (m n : ℕ) (hmn : m ≤ n) :
-  wordNBall S m ⊆ wordNBall S n := by
+lemma wordBall_monotone (S : Finset G) (m n : ℕ) (hmn : m ≤ n) :
+  wordBall S m ⊆ wordBall S n := by
     have hmn' : ∃ k : ℕ, n = m + k := Nat.exists_eq_add_of_le hmn
     obtain ⟨ k, hk ⟩ := hmn'
     subst hk
@@ -133,19 +130,19 @@ lemma wordNBall_monotone (S : Finset G) (m n : ℕ) (hmn : m ≤ n) :
     | zero =>
       rfl
     | succ n ih =>
-      have subset_mn1 := wordNBall_subset_wordNPlus1Ball S (m + n)
+      have subset_mn1 := wordBall_n_subset_wordBall_n_plus_one S (m + n)
       simp_all only [Nat.le_add_right, forall_const]
       exact Set.Subset.trans ih subset_mn1
 
-lemma wordNBall_contains_one (S : Finset G) (n : ℕ) :
-  (1 : G) ∈ wordNBall S n := by
-    have h_one_in_ball_zero : (1 : G) ∈ wordNBall S 0 := by
-      simp_all only [wordNBall_zero_eq_one S, Finset.mem_singleton]
-    exact wordNBall_monotone S 0 n (Nat.zero_le n) h_one_in_ball_zero
+lemma wordBall_contains_one (S : Finset G) (n : ℕ) :
+  (1 : G) ∈ wordBall S n := by
+    have h_one_in_ball_zero : (1 : G) ∈ wordBall S 0 := by
+      simp_all only [wordBall_zero_eq_one S, Finset.mem_singleton]
+    exact wordBall_monotone S 0 n (Nat.zero_le n) h_one_in_ball_zero
 
-lemma wordNShell_one_eq_S (S : Finset G) :
-  wordNShell S 1 = S := by
-    rw [wordNShell]
+lemma wordShell_one_eq_S (S : Finset G) :
+  wordShell S 1 = S := by
+    rw [wordShell]
     simp_all [prodOfWord]
     ext x
     simp only [Finset.mem_image, Finset.mem_univ, true_and]
@@ -156,35 +153,35 @@ lemma wordNShell_one_eq_S (S : Finset G) :
     · intro hx
       exact ⟨fun _ => ⟨x, hx⟩, rfl⟩
 
-lemma wordNBall_one_eq_S_union_one (S : Finset G) :
-  wordNBall S 1 = S ∪ {1} := by
-    have h_union := wordNPlus1Ball_union_WordNBall_WordNPlus1Shell S 0
+lemma wordBall_one_eq_S_union_one (S : Finset G) :
+  wordBall S 1 = S ∪ {1} := by
+    have h_union := wordShell_union_wordBall_is_wordBall S 0
     rw [zero_add] at h_union
-    rw [wordNBall_zero_eq_one S, wordNShell_one_eq_S S] at h_union
+    rw [wordBall_zero_eq_one S, wordShell_one_eq_S S] at h_union
     rw [Finset.union_comm] at h_union
     exact h_union
 
 lemma shell_subset_ball (S : Finset G) (m n : ℕ) (hmn : m ≤ n) :
-  wordNShell S m ⊆ wordNBall S n := by
-    rw [wordNBall]
+  wordShell S m ⊆ wordBall S n := by
+    rw [wordBall]
     intro g hg
     simp_all only [Finset.mem_biUnion, Finset.mem_range]
     use m
     simp_all only [and_true]
     exact Nat.lt_add_one_of_le hmn
 
-lemma wordNPlus1Shell_from_wordNShell_left (S : Finset G) (n : ℕ) :
-  ∀ w ∈ wordNShell S (n + 1), ∃ s ∈ S, ∃ w' ∈ wordNShell S n,
+lemma wordShell_element_is_product_left (S : Finset G) (n : ℕ) :
+  ∀ w ∈ wordShell S (n + 1), ∃ s ∈ S, ∃ w' ∈ wordShell S n,
   w = s * w' := by
     intro w hw
-    rw [wordNShell] at hw
+    rw [wordShell] at hw
     simp only [Finset.mem_image] at hw
     obtain ⟨ f, hf1, hProd ⟩ := hw
     rw [prodOfWord_product_left] at hProd
     use (f 0 : S)
     constructor
     · simp
-    · rw [wordNShell]
+    · rw [wordShell]
       simp only [Finset.mem_image]
       use prodOfWord (Fin.tail f)
       have hh : Fin.tail f ∈ Finset.univ := by
@@ -194,11 +191,11 @@ lemma wordNPlus1Shell_from_wordNShell_left (S : Finset G) (n : ℕ) :
       · subst hProd
         trivial
 
-lemma wordNShell_mul_wordNPlus1Shell_left (S : Finset G) (n : ℕ) :
-  ∀ w ∈ wordNShell S n, ∀ s ∈ S, s * w ∈ wordNShell S (n + 1) := by
+lemma wordShell_mul_element_left (S : Finset G) (n : ℕ) :
+  ∀ w ∈ wordShell S n, ∀ s ∈ S, s * w ∈ wordShell S (n + 1) := by
     intro w h_w s hₛ
-    rw [wordNShell]
-    rw [wordNShell] at h_w
+    rw [wordShell]
+    rw [wordShell] at h_w
     rw [Finset.mem_image]
     rw [Finset.mem_image] at h_w
     obtain ⟨ f_n, hf_n, hProd_n ⟩ := h_w
@@ -215,14 +212,14 @@ lemma wordNShell_mul_wordNPlus1Shell_left (S : Finset G) (n : ℕ) :
       rw [prodOfWord_product_left]
       rw [hProd_head, hProd_tail]
 
-lemma wordNShell_mul_wordKShell (S : Finset G) (k n : ℕ) :
-  ∀ w ∈ wordNShell S k, ∀ w' ∈ wordNShell S n, w * w' ∈ wordNShell S (k + n) := by
+lemma wordShell_mul_wordShell (S : Finset G) (k n : ℕ) :
+  ∀ w ∈ wordShell S k, ∀ w' ∈ wordShell S n, w * w' ∈ wordShell S (k + n) := by
     induction k with
     | zero =>
       intro w hw w' hw'
       simp_all only [zero_add]
       have hw'_one : w = (1 : G) := by
-        rw [wordNShell] at hw
+        rw [wordShell] at hw
         simp only [Finset.univ_unique, Finset.image_singleton, Finset.mem_singleton] at hw
         subst hw
         rfl
@@ -230,22 +227,22 @@ lemma wordNShell_mul_wordKShell (S : Finset G) (k n : ℕ) :
       exact hw'
     | succ k ih =>
       intro w hw w' hw'
-      obtain ⟨ s, hsS, wₖ, hwₖ, hw'_eq ⟩ := wordNPlus1Shell_from_wordNShell_left S k w hw
-      have h_ih : wₖ * w' ∈ wordNShell S (k + n) := ih wₖ hwₖ w' hw'
+      obtain ⟨ s, hsS, wₖ, hwₖ, hw'_eq ⟩ := wordShell_element_is_product_left S k w hw
+      have h_ih : wₖ * w' ∈ wordShell S (k + n) := ih wₖ hwₖ w' hw'
       subst hw'_eq
       have move_plus_one : k + 1 + n = (k + n) + 1 := by
         rw [Nat.add_assoc, Nat.add_comm 1 n, ←Nat.add_assoc]
       rw [mul_assoc, move_plus_one]
-      exact wordNShell_mul_wordNPlus1Shell_left S (k + n) (wₖ * w') h_ih s hsS
+      exact wordShell_mul_element_left S (k + n) (wₖ * w') h_ih s hsS
 
-lemma wordNBall_mul_wordKBall (S : Finset G) (k n : ℕ) :
-  ∀ w ∈ wordNBall S k, ∀ w' ∈ wordNBall S n, w * w' ∈ wordNBall S (k + n) := by
+lemma wordBall_mul_wordBall (S : Finset G) (k n : ℕ) :
+  ∀ w ∈ wordBall S k, ∀ w' ∈ wordBall S n, w * w' ∈ wordBall S (k + n) := by
     intro w hw w' hw'
-    rw [wordNBall] at hw hw'
+    rw [wordBall] at hw hw'
     obtain ⟨ k_w, hk_w, hw_eq ⟩ := Finset.mem_biUnion.mp hw
     obtain ⟨ n_w, hn_w, hw'_eq ⟩ := Finset.mem_biUnion.mp hw'
     simp_all only [Finset.mem_biUnion, Finset.mem_range]
-    have h_prod := wordNShell_mul_wordKShell S k_w n_w w hw_eq w' hw'_eq
+    have h_prod := wordShell_mul_wordShell S k_w n_w w hw_eq w' hw'_eq
     have h_lt : k_w + n_w ≤ k + n := by
       apply Nat.le_of_lt_add_one at hn_w
       apply Nat.le_of_lt_add_one at hk_w
@@ -253,12 +250,12 @@ lemma wordNBall_mul_wordKBall (S : Finset G) (k n : ℕ) :
     have h_shell_sub_ball := shell_subset_ball S (k_w + n_w) (k + n) h_lt
     exact h_shell_sub_ball h_prod
 
-lemma wordNPlus1Ball_from_wordNBall_left (S : Finset G) (n : ℕ) :
-  ∀ w ∈ wordNBall S (n + 1), w = 1 ∨ ∃ s ∈ S, ∃ w' ∈ wordNBall S n,
+lemma wordBall_element_is_product_left (S : Finset G) (n : ℕ) :
+  ∀ w ∈ wordBall S (n + 1), w = 1 ∨ ∃ s ∈ S, ∃ w' ∈ wordBall S n,
   w = s * w' := by
     intro w hw
-    rw [wordNBall] at hw
-    simp only [wordNShell, Finset.mem_biUnion, Finset.mem_range,
+    rw [wordBall] at hw
+    simp only [wordShell, Finset.mem_biUnion, Finset.mem_range,
       Finset.mem_image, Finset.mem_univ, true_and] at hw
     obtain ⟨ m, hm, a, hProd ⟩ := hw
     apply Nat.le_of_lt_add_one at hm
@@ -271,9 +268,9 @@ lemma wordNPlus1Ball_from_wordNBall_left (S : Finset G) (n : ℕ) :
       simp only [Finset.coe_mem, true_and]
       simp only [Nat.add_le_add_iff_right] at hm
       let a' := prodOfWord (Fin.tail a)
-      have h_tail_mem : a' ∈ wordNBall S n := by
-        have h_tail_mem_shell : a' ∈ wordNShell S m := by
-          rw [wordNShell]
+      have h_tail_mem : a' ∈ wordBall S n := by
+        have h_tail_mem_shell : a' ∈ wordShell S m := by
+          rw [wordShell]
           simp only [Finset.mem_image]
           use Fin.tail a
           simp only [Finset.mem_univ, true_and]; rfl
@@ -284,60 +281,60 @@ lemma wordNPlus1Ball_from_wordNBall_left (S : Finset G) (n : ℕ) :
       subst a'; subst hProd
       rfl
 
-lemma wordKPlusNBall_from_wordNBall (S : Finset G) (k n : ℕ) :
-  ∀ w ∈ wordNBall S (k + n), ∃ wₖ ∈ wordNBall S k, ∃ wₙ ∈ wordNBall S n,
+lemma wordBall_element_is_product (S : Finset G) (k n : ℕ) :
+  ∀ w ∈ wordBall S (k + n), ∃ wₖ ∈ wordBall S k, ∃ wₙ ∈ wordBall S n,
   w = wₖ * wₙ := by
     induction k with
     | zero =>
       intro w hw
       rw [zero_add] at hw
-      rw [wordNBall_zero_eq_one S]
+      rw [wordBall_zero_eq_one S]
       use 1
       simp only [Finset.mem_singleton, true_and, one_mul, exists_eq_right']
       exact hw
     | succ k ih =>
       intro w hw
       rw [add_assoc, add_comm 1 n, ←add_assoc] at hw
-      obtain h_w_cases := wordNPlus1Ball_from_wordNBall_left S (k + n) w hw
+      obtain h_w_cases := wordBall_element_is_product_left S (k + n) w hw
       cases h_w_cases with
       | inl h_eq_one =>
         use 1
-        simp_all only [one_mul, exists_eq_right', wordNBall_contains_one S, true_and]
+        simp_all only [one_mul, exists_eq_right', wordBall_contains_one S, true_and]
       | inr h_exists =>
         obtain ⟨ s, hsS, w', hw', hw_eq ⟩ := h_exists
         obtain ⟨ wₖ, hwₖ, wₙ, hwₙ, hw'_eq ⟩ := ih w' hw'
         use (s * wₖ)
         constructor
-        · have hs_ball : s ∈ wordNBall S 1 := by
-            rw [wordNBall_one_eq_S_union_one S]
+        · have hs_ball : s ∈ wordBall S 1 := by
+            rw [wordBall_one_eq_S_union_one S]
             simp only [Finset.union_singleton, Finset.mem_insert, hsS, or_true]
           rw [add_comm]
-          exact wordNBall_mul_wordKBall S 1 k s hs_ball wₖ hwₖ
+          exact wordBall_mul_wordBall S 1 k s hs_ball wₖ hwₖ
         · use wₙ
           constructor
           · exact hwₙ
           · rw [hw_eq, hw'_eq]
             rw [mul_assoc]
 
-lemma wordNBall_closed_under_inv (S : Finset G) (hS : SymmetricFiniteGeneratingSet S) :
-  ∀ n : ℕ, ∀ w ∈ wordNBall S n, w⁻¹ ∈ wordNBall S n := by
+lemma wordBall_closed_under_inv (S : Finset G) (hS : SymmetricFiniteGeneratingSet S) :
+  ∀ n : ℕ, ∀ w ∈ wordBall S n, w⁻¹ ∈ wordBall S n := by
     intro n
     induction n with
     | zero =>
       intro w hw
-      rw [wordNBall_zero_eq_one S] at hw
-      simp_all only [Finset.mem_singleton, inv_one, wordNBall_contains_one S 0]
+      rw [wordBall_zero_eq_one S] at hw
+      simp_all only [Finset.mem_singleton, inv_one, wordBall_contains_one S 0]
     | succ n ih =>
       intro x hn
       rw [add_comm] at hn
-      obtain ⟨ w₁, hw₁, wₙ, hwₙ, hw_eq ⟩ := wordKPlusNBall_from_wordNBall S 1 n x hn
+      obtain ⟨ w₁, hw₁, wₙ, hwₙ, hw_eq ⟩ := wordBall_element_is_product S 1 n x hn
       have h_x_inv_eq : x⁻¹ = wₙ⁻¹ * w₁⁻¹ := by
         rw [hw_eq, mul_inv_rev]
-      have h_wn_inv_in_ball : wₙ⁻¹ ∈ wordNBall S n := by
+      have h_wn_inv_in_ball : wₙ⁻¹ ∈ wordBall S n := by
         exact ih wₙ hwₙ
-      have h_w1_inv_in_ball : w₁⁻¹ ∈ wordNBall S 1 := by
-        rw [wordNBall_one_eq_S_union_one S]
-        rw [wordNBall_one_eq_S_union_one S] at hw₁
+      have h_w1_inv_in_ball : w₁⁻¹ ∈ wordBall S 1 := by
+        rw [wordBall_one_eq_S_union_one S]
+        rw [wordBall_one_eq_S_union_one S] at hw₁
         rw [Finset.mem_union] at hw₁
         cases hw₁ with
         | inl h_in_S =>
@@ -345,12 +342,12 @@ lemma wordNBall_closed_under_inv (S : Finset G) (hS : SymmetricFiniteGeneratingS
         | inr h_eq_one =>
           simp_all only [Finset.mem_singleton, Finset.union_singleton, inv_one,
             Finset.mem_insert, true_or]
-      have h_inv_prod := wordNBall_mul_wordKBall S n 1 wₙ⁻¹ h_wn_inv_in_ball w₁⁻¹ h_w1_inv_in_ball
+      have h_inv_prod := wordBall_mul_wordBall S n 1 wₙ⁻¹ h_wn_inv_in_ball w₁⁻¹ h_w1_inv_in_ball
       rw [←h_x_inv_eq] at h_inv_prod
       exact h_inv_prod
 
 def allBalls (S : Finset G) : Set G :=
-  ⋃ n : ℕ, wordNBall S n
+  ⋃ n : ℕ, wordBall S n
 
 def in_allBalls (S : Finset G) (g : G) (_ : g ∈ Subgroup.closure S) : Prop :=
   g ∈ allBalls S
@@ -360,12 +357,12 @@ lemma allBalls_mem (S : Finset G) :
     intro x hx
     simp only [in_allBalls, allBalls, Set.mem_iUnion, Finset.mem_coe]
     use 1
-    rw [wordNBall]
+    rw [wordBall]
     simp only [Finset.mem_biUnion]
     use 1
     constructor
     · simp
-    · rw [wordNShell]
+    · rw [wordShell]
       simp only [Finset.mem_image, Finset.mem_univ]
       simp
       use fun i ↦ ⟨ x, hx ⟩
@@ -376,11 +373,11 @@ lemma allBalls_one (S : Finset G) :
   in_allBalls S (1 : G) (Subgroup.one_mem ((Subgroup.closure S) : Subgroup G)) := by
     simp only [in_allBalls, allBalls, Set.mem_iUnion, Finset.mem_coe]
     use 0
-    rw [wordNBall]
+    rw [wordBall]
     simp only [Finset.mem_biUnion]
     use 0
     simp only [zero_add, Finset.range_one, Finset.mem_singleton, true_and]
-    rw [wordNShell]
+    rw [wordShell]
     simp only [Finset.mem_image, Finset.mem_univ, Fin.exists_fin_zero_pi, true_and]
     rfl
 
@@ -397,8 +394,8 @@ lemma allBalls_mul (S : Finset G) :
     use n
     have h_le : n_x + n_y ≤ n := by
       rfl
-    apply wordNBall_monotone S (n_x + n_y) n h_le
-    exact wordNBall_mul_wordKBall S n_x n_y x hn_x y hn_y
+    apply wordBall_monotone S (n_x + n_y) n h_le
+    exact wordBall_mul_wordBall S n_x n_y x hn_x y hn_y
 
 lemma allBalls_inv (S : Finset G) (hS : SymmetricFiniteGeneratingSet S) :
   ∀ (x : G) (hx : x ∈ (Subgroup.closure (S : Finset G) : Subgroup G)),
@@ -406,9 +403,9 @@ lemma allBalls_inv (S : Finset G) (hS : SymmetricFiniteGeneratingSet S) :
     intro x hx_closure hx_allBalls
     rw [in_allBalls, allBalls, Set.mem_iUnion] at hx_allBalls ⊢
     obtain ⟨ n, hn ⟩ := hx_allBalls
-    exact ⟨n, wordNBall_closed_under_inv S hS n x hn⟩
+    exact ⟨n, wordBall_closed_under_inv S hS n x hn⟩
 
-lemma wordNBalls_cover_G {S : Finset G} (hS : SymmetricFiniteGeneratingSet S) :
+lemma allBalls_cover_G {S : Finset G} (hS : SymmetricFiniteGeneratingSet S) :
   allBalls S = (⊤ : Subgroup G).carrier := by
     ext g
     constructor
@@ -426,13 +423,13 @@ lemma wordNBalls_cover_G {S : Finset G} (hS : SymmetricFiniteGeneratingSet S) :
 
 lemma mem_allBalls {S : Finset G} (hS : SymmetricFiniteGeneratingSet S) (g : G) :
   g ∈ allBalls S := by
-    rw [wordNBalls_cover_G hS]
+    rw [allBalls_cover_G hS]
     simp only [Subgroup.top_toSubmonoid, Subsemigroup.mem_carrier, Submonoid.mem_toSubsemigroup,
       Submonoid.mem_top]
 
-lemma finset_in_CBall (S S' : Finset G) (hS : SymmetricFiniteGeneratingSet S') :
-  ∃ C : ℕ, S ⊆ wordNBall S' C := by
-    have h_s_in_ball : ∀ s ∈ S, ∃ C_s : ℕ, s ∈ wordNBall S' C_s := by
+lemma finset_in_wordBall (S S' : Finset G) (hS : SymmetricFiniteGeneratingSet S') :
+  ∃ C : ℕ, S ⊆ wordBall S' C := by
+    have h_s_in_ball : ∀ s ∈ S, ∃ C_s : ℕ, s ∈ wordBall S' C_s := by
       intro s hs
       have h_s_in_allBalls := mem_allBalls hS s
       rw [allBalls, Set.mem_iUnion] at h_s_in_allBalls
@@ -443,43 +440,43 @@ lemma finset_in_CBall (S S' : Finset G) (hS : SymmetricFiniteGeneratingSet S') :
       intro s
       apply Finset.le_sup
       simp only [Finset.mem_univ]
-    have h_C_member : ∀ s ∈ S, s ∈ wordNBall S' C := by
+    have h_C_element : ∀ s ∈ S, s ∈ wordBall S' C := by
       intro s hs
-      apply wordNBall_monotone S' (f_C ⟨s, hs⟩) C (h_C_bound ⟨s, hs⟩)
+      apply wordBall_monotone S' (f_C ⟨s, hs⟩) C (h_C_bound ⟨s, hs⟩)
       exact Nat.find_spec (h_s_in_ball s hs)
     use C
     intro s hs
-    exact h_C_member s hs
+    exact h_C_element s hs
 
-lemma wordNBall_subset_equiv (S S' : Finset G) (hS' : SymmetricFiniteGeneratingSet S') :
-  ∃ C : ℕ, ∀ n : ℕ, wordNBall S n ⊆ wordNBall S' (C * n) := by
-    obtain ⟨ C, hC ⟩ := finset_in_CBall S S' hS'
+lemma wordBall_S_subset_wordBall_S' (S S' : Finset G) (hS' : SymmetricFiniteGeneratingSet S') :
+  ∃ C : ℕ, ∀ n : ℕ, wordBall S n ⊆ wordBall S' (C * n) := by
+    obtain ⟨ C, hC ⟩ := finset_in_wordBall S S' hS'
     use C
     intro n
     induction n with
     | zero =>
-      simp only [Nat.mul_zero, wordNBall_zero_eq_one, Finset.singleton_subset_iff]
-      exact wordNBall_contains_one S' 0
+      simp only [Nat.mul_zero, wordBall_zero_eq_one, Finset.singleton_subset_iff]
+      exact wordBall_contains_one S' 0
     | succ n ih =>
       intro g hg
-      obtain h_cases := wordNPlus1Ball_from_wordNBall_left S n g hg
+      obtain h_cases := wordBall_element_is_product_left S n g hg
       cases h_cases with
       | inl h_eq_one =>
         subst h_eq_one
-        exact wordNBall_contains_one S' (C * (n + 1))
+        exact wordBall_contains_one S' (C * (n + 1))
       | inr h_exists =>
         obtain ⟨s, hsS, w', hw', hw_eq⟩ := h_exists
-        have h_s_in_C : s ∈ wordNBall S' C := hC hsS
-        have h_w'_in_Cn : w' ∈ wordNBall S' (C * n) := ih hw'
-        have h_prod_in_C_plus_Cn := wordNBall_mul_wordKBall S' C (C * n) s h_s_in_C w' h_w'_in_Cn
+        have h_s_in_C : s ∈ wordBall S' C := hC hsS
+        have h_w'_in_Cn : w' ∈ wordBall S' (C * n) := ih hw'
+        have h_prod_in_C_plus_Cn := wordBall_mul_wordBall S' C (C * n) s h_s_in_C w' h_w'_in_Cn
         have move_plus_one : C * (n + 1) = C + C * n := by
           rw [Nat.mul_succ, Nat.add_comm]
         rw [move_plus_one]
         subst hw_eq; exact h_prod_in_C_plus_Cn
 
-lemma wordNBall_subset_equiv' (S S' : Finset G) (hS' : SymmetricFiniteGeneratingSet S') :
-  ∃ C : ℕ, C > 0 ∧ ∀ n : ℕ, wordNBall S n ⊆ wordNBall S' (C * n) := by
-    obtain ⟨ C, hC ⟩ := wordNBall_subset_equiv S S' hS'
+lemma wordBall_S_subset_wordBall_S'_succ (S S' : Finset G) (hS' : SymmetricFiniteGeneratingSet S') :
+  ∃ C : ℕ, C > 0 ∧ ∀ n : ℕ, wordBall S n ⊆ wordBall S' (C * n) := by
+    obtain ⟨ C, hC ⟩ := wordBall_S_subset_wordBall_S' S S' hS'
     use C + 1
     constructor
     · exact Nat.succ_pos C
@@ -488,12 +485,12 @@ lemma wordNBall_subset_equiv' (S S' : Finset G) (hS' : SymmetricFiniteGenerating
         rw [Nat.add_one_mul]
         exact Nat.le_add_right (C * n) n
       specialize hC n
-      have h_sub : wordNBall S' (C * n) ⊆ wordNBall S' ((C + 1) * n) := wordNBall_monotone S' (C * n) ((C + 1) * n) h_mul
+      have h_sub : wordBall S' (C * n) ⊆ wordBall S' ((C + 1) * n) := wordBall_monotone S' (C * n) ((C + 1) * n) h_mul
       exact Finset.Subset.trans hC h_sub
 
 noncomputable
 def growthRate (S : Finset G) (n : ℕ) : ℕ :=
-  (wordNBall S n).card
+  (wordBall S n).card
 
 def GrowthEquiv (f g : ℕ → ℕ) : Prop :=
   ∃ C₁ C₂ : ℕ, C₁ > 0 ∧ C₂ > 0 ∧ ∀ᶠ n in Filter.atTop, f n ≤ g (C₁ * n) ∧ g n ≤ f (C₂ * n)
@@ -528,8 +525,8 @@ theorem growthRatesEquiv (f g : ℕ → ℕ) : GrowsLike G f → GrowsLike G g �
     have h_g_lbound := h_ab_g.1
     have h_g_ubound := h_ab_g.2
 
-    obtain ⟨ C₁, hC₁ ⟩ := wordNBall_subset_equiv' S_f S_g hS_g
-    obtain ⟨ C₂, hC₂ ⟩ := wordNBall_subset_equiv' S_g S_f hS_f
+    obtain ⟨ C₁, hC₁ ⟩ := wordBall_S_subset_wordBall_S'_succ S_f S_g hS_g
+    obtain ⟨ C₂, hC₂ ⟩ := wordBall_S_subset_wordBall_S'_succ S_g S_f hS_f
 
     have hC₁_pos : C₁ > 0 := hC₁.1
     have hC₁_bound := hC₁.2
@@ -557,13 +554,13 @@ theorem growthRatesEquiv (f g : ℕ → ℕ) : GrowsLike G f → GrowsLike G g �
       exact Nat.le_of_add_left_le hn
 
     constructor
-    · have h_f1 : f n ≤ (wordNBall S_f (C_f2 * n)).card := by
+    · have h_f1 : f n ≤ (wordBall S_f (C_f2 * n)).card := by
         apply h_f_ubound n h_nbound_f
-      have h_f2 : (wordNBall S_f (C_f2 * n)).card ≤ (wordNBall S_g (C₁ * C_f2 * n)).card := by
+      have h_f2 : (wordBall S_f (C_f2 * n)).card ≤ (wordBall S_g (C₁ * C_f2 * n)).card := by
         apply Finset.card_le_card
         rw [mul_assoc]
         exact hC₁_bound (C_f2 * n)
-      have h_f3 : (wordNBall S_g (C₁ * C_f2 * n)).card ≤ g ((C_g1 * C₁ * C_f2) * n) := by
+      have h_f3 : (wordBall S_g (C₁ * C_f2 * n)).card ≤ g ((C_g1 * C₁ * C_f2) * n) := by
         have h_prod : (C_g1 * (C₁ * C_f2 * n)) = (C_g1 * C₁ * C_f2 * n) := by
           rw [mul_assoc, mul_assoc, mul_assoc]
         rw [←h_prod]
@@ -574,16 +571,16 @@ theorem growthRatesEquiv (f g : ℕ → ℕ) : GrowsLike G f → GrowsLike G g �
           exact Nat.le_mul_of_pos_left n h_mul
         exact Nat.le_trans h_nbound_g h_mul_n
       calc f n
-        _ ≤ (wordNBall S_f (C_f2 * n)).card := h_f1
-        _ ≤ (wordNBall S_g (C₁ * C_f2 * n)).card := h_f2
+        _ ≤ (wordBall S_f (C_f2 * n)).card := h_f1
+        _ ≤ (wordBall S_g (C₁ * C_f2 * n)).card := h_f2
         _ ≤ g ((C_g1 * C₁ * C_f2) * n) := h_f3
-    · have h_g1 : g n ≤ (wordNBall S_g (C_g2 * n)).card := by
+    · have h_g1 : g n ≤ (wordBall S_g (C_g2 * n)).card := by
         apply h_g_ubound n h_nbound_g
-      have h_g2 : (wordNBall S_g (C_g2 * n)).card ≤ (wordNBall S_f (C₂ * C_g2 * n)).card := by
+      have h_g2 : (wordBall S_g (C_g2 * n)).card ≤ (wordBall S_f (C₂ * C_g2 * n)).card := by
         apply Finset.card_le_card
         rw [mul_assoc]
         exact hC₂_bound (C_g2 * n)
-      have h_g3 : (wordNBall S_f (C₂ * C_g2 * n)).card ≤ f ((C_f1 * C₂ * C_g2) * n) := by
+      have h_g3 : (wordBall S_f (C₂ * C_g2 * n)).card ≤ f ((C_f1 * C₂ * C_g2) * n) := by
         have h_prod : (C_f1 * (C₂ * C_g2 * n)) = (C_f1 * C₂ * C_g2 * n) := by
           rw [mul_assoc, mul_assoc, mul_assoc]
         rw [←h_prod]
@@ -594,24 +591,24 @@ theorem growthRatesEquiv (f g : ℕ → ℕ) : GrowsLike G f → GrowsLike G g �
           exact Nat.le_mul_of_pos_left n h_mul
         exact Nat.le_trans h_nbound_f h_mul_n
       calc g n
-        _ ≤ (wordNBall S_g (C_g2 * n)).card := h_g1
-        _ ≤ (wordNBall S_f (C₂ * C_g2 * n)).card := h_g2
+        _ ≤ (wordBall S_g (C_g2 * n)).card := h_g1
+        _ ≤ (wordBall S_f (C₂ * C_g2 * n)).card := h_g2
         _ ≤ f ((C_f1 * C₂ * C_g2) * n) := h_g3
 
 /--
 Other stuff I proved but didn't use above
 -/
 
-lemma wordNShell_subset_H (S : Finset G) (H : Subgroup G) (hS : (S : Set G) ⊆ H.carrier) :
-  ∀ n : ℕ, (wordNShell S n : Set G) ⊆ H.carrier := by
+lemma wordShell_subset_H (S : Finset G) (H : Subgroup G) (hS : (S : Set G) ⊆ H.carrier) :
+  ∀ n : ℕ, (wordShell S n : Set G) ⊆ H.carrier := by
     intro n
     induction n with
     | zero =>
-      simp [wordNShell, prodOfWord]
+      simp [wordShell, prodOfWord]
     | succ n ih =>
       intro g hg
-      rw [wordNShell] at hg
-      obtain ⟨ s, hsS, w', hw', hw_eq ⟩ := wordNPlus1Shell_from_wordNShell_left S n g hg
+      rw [wordShell] at hg
+      obtain ⟨ s, hsS, w', hw', hw_eq ⟩ := wordShell_element_is_product_left S n g hg
       have hw'_H : w' ∈ H.carrier := ih hw'
       subst hw_eq
       simp_all only [Subsemigroup.mem_carrier, Submonoid.mem_toSubsemigroup, Subgroup.mem_toSubmonoid,
@@ -622,24 +619,24 @@ lemma wordNShell_subset_H (S : Finset G) (H : Subgroup G) (hS : (S : Set G) ⊆ 
         exact hsS
       · exact hw'_H
 
-lemma wordNBall_subset_H (S : Finset G) (H : Subgroup G) (hS : (S : Set G) ⊆ H.carrier) :
-  ∀ n : ℕ, (wordNBall S n : Set G) ⊆ H.carrier := by
+lemma wordBall_subset_H (S : Finset G) (H : Subgroup G) (hS : (S : Set G) ⊆ H.carrier) :
+  ∀ n : ℕ, (wordBall S n : Set G) ⊆ H.carrier := by
     intro n
-    rw [wordNBall]
+    rw [wordBall]
     intro g hg
     obtain ⟨ k, hk, hg_eq ⟩ := Finset.mem_biUnion.mp hg
-    have hNShell_H : (wordNShell S k : Set G) ⊆ H.carrier := wordNShell_subset_H S H hS k
+    have hNShell_H : (wordShell S k : Set G) ⊆ H.carrier := wordShell_subset_H S H hS k
     exact hNShell_H hg_eq
 
-lemma wordKPlusNShell_from_wordNShell (S : Finset G) (k n : ℕ) :
-  ∀ w ∈ wordNShell S (k + n), ∃ wₖ ∈ wordNShell S k, ∃ wₙ ∈ wordNShell S n,
+lemma wordShell_element_is_product (S : Finset G) (k n : ℕ) :
+  ∀ w ∈ wordShell S (k + n), ∃ wₖ ∈ wordShell S k, ∃ wₙ ∈ wordShell S n,
   w = wₖ * wₙ := by
     induction k with
     | zero =>
       intro w hw
       use 1
       constructor
-      · simp [wordNShell, prodOfWord]
+      · simp [wordShell, prodOfWord]
       · use w
         constructor
         · rw [zero_add] at hw
@@ -648,22 +645,22 @@ lemma wordKPlusNShell_from_wordNShell (S : Finset G) (k n : ℕ) :
     | succ k ih =>
       intro w hw
       rw [add_assoc, add_comm 1 n, ←add_assoc] at hw
-      obtain ⟨ s, hsS, w', hw', hw_eq ⟩ := wordNPlus1Shell_from_wordNShell_left S (k + n) w hw
+      obtain ⟨ s, hsS, w', hw', hw_eq ⟩ := wordShell_element_is_product_left S (k + n) w hw
       obtain ⟨ wₖ, hwₖ, wₙ, hwₙ, hw'_eq ⟩ := ih w' hw'
       use (s * wₖ)
       constructor
-      · simp [wordNShell_mul_wordNPlus1Shell_left S k wₖ hwₖ s hsS]
+      · simp [wordShell_mul_element_left S k wₖ hwₖ s hsS]
       · use wₙ
         constructor
         · exact hwₙ
         · rw [hw_eq, hw'_eq]
           rw [mul_assoc]
 
-lemma wordNPlus1Shell_from_wordNShell_right (S : Finset G) (n : ℕ) :
-  ∀ w ∈ wordNShell S (n + 1), ∃ s ∈ S, ∃ w' ∈ wordNShell S n,
+lemma wordShell_element_is_product_rightight (S : Finset G) (n : ℕ) :
+  ∀ w ∈ wordShell S (n + 1), ∃ s ∈ S, ∃ w' ∈ wordShell S n,
   w = w' * s := by
-    let h_kPlusN := wordKPlusNShell_from_wordNShell S n 1
-    rw [wordNShell_one_eq_S S] at h_kPlusN
+    let h_kPlusN := wordShell_element_is_product S n 1
+    rw [wordShell_one_eq_S S] at h_kPlusN
     intro w hw
     obtain ⟨ wₙ, hwₙ, s, hsS, hw_eq ⟩ := h_kPlusN w hw
     use s
@@ -671,36 +668,9 @@ lemma wordNPlus1Shell_from_wordNShell_right (S : Finset G) (n : ℕ) :
     · exact hsS
     · use wₙ
 
-lemma wordNPlusKShell_from_wordNShell (S : Finset G) (k n : ℕ) :
-  ∀ w ∈ wordNShell S (k + n), ∃ wₖ ∈ wordNShell S k, ∃ wₙ ∈ wordNShell S n,
-  w = wₖ * wₙ := by
-    induction k with
-    | zero =>
-      intro w hw
-      use 1
-      constructor
-      · simp [wordNShell, prodOfWord]
-      · use w
-        constructor
-        · simp_all
-        · simp
-    | succ k ih =>
-      intro w hw
-      rw [add_assoc, add_comm 1 n, ←add_assoc] at hw
-      obtain ⟨ s, hsS, w', hw', hw_eq ⟩ := wordNPlus1Shell_from_wordNShell_left S (k + n) w hw
-      obtain ⟨ wₖ, hwₖ, wₙ, hwₙ, hw'_eq ⟩ := ih w' hw'
-      use (s * wₖ)
-      constructor
-      · simp [wordNShell_mul_wordNPlus1Shell_left S k wₖ hwₖ s hsS]
-      · use wₙ
-        constructor
-        · exact hwₙ
-        · rw [hw_eq, hw'_eq]
-          rw [mul_assoc]
-
-lemma wordNShell_card_bound (S : Finset G) (n : ℕ) :
-  (wordNShell S n).card ≤ (S.card) ^ n := by
-    rw [wordNShell]
+lemma wordShell_card_bound (S : Finset G) (n : ℕ) :
+  (wordShell S n).card ≤ (S.card) ^ n := by
+    rw [wordShell]
     let h_words : Finset (Fin n → S) := Finset.univ
     have h_image_card : (h_words.image (fun w ↦ prodOfWord w)).card ≤ h_words.card := by
       apply Finset.card_image_le
@@ -711,30 +681,30 @@ lemma wordNShell_card_bound (S : Finset G) (n : ℕ) :
     rw [h_words_card] at h_image_card
     exact h_image_card
 
-lemma wordNShell_card_bound_prod (S : Finset G) (n m : ℕ) :
-  (wordNShell S (n + m)).card ≤ (S.card) ^ n * (wordNShell S m).card := by
-    have h_surj : wordNShell S (n + m) ⊆
-        (wordNShell S n ×ˢ wordNShell S m).image (fun ⟨wₙ, wₘ⟩ ↦ wₙ * wₘ) := by
+lemma wordShell_card_bound_prod (S : Finset G) (n m : ℕ) :
+  (wordShell S (n + m)).card ≤ (S.card) ^ n * (wordShell S m).card := by
+    have h_surj : wordShell S (n + m) ⊆
+        (wordShell S n ×ˢ wordShell S m).image (fun ⟨wₙ, wₘ⟩ ↦ wₙ * wₘ) := by
       intro w hw
-      obtain ⟨wₙ, hwₙ, wₘ, hwₘ, hw_eq⟩ := wordNPlusKShell_from_wordNShell S n m w hw
+      obtain ⟨wₙ, hwₙ, wₘ, hwₘ, hw_eq⟩ := wordShell_element_is_product S n m w hw
       simp only [Finset.mem_image, Finset.mem_product]
       use (wₙ, wₘ)
       subst hw_eq
       simp_all only [and_self]
-    have h_subset_card : (wordNShell S (n + m)).card ≤
-        ((wordNShell S n ×ˢ wordNShell S m).image (fun ⟨wₙ, wₘ⟩ ↦ wₙ * wₘ)).card := by
+    have h_subset_card : (wordShell S (n + m)).card ≤
+        ((wordShell S n ×ˢ wordShell S m).image (fun ⟨wₙ, wₘ⟩ ↦ wₙ * wₘ)).card := by
       apply Finset.card_le_card
       exact h_surj
-    have h_image_card : ((wordNShell S n ×ˢ wordNShell S m).image (fun ⟨wₙ, wₘ⟩ ↦ wₙ * wₘ)).card
-        ≤ (wordNShell S n ×ˢ wordNShell S m).card := Finset.card_image_le
-    have h_product_card : (wordNShell S n ×ˢ wordNShell S m).card =
-        (wordNShell S n).card * (wordNShell S m).card := by apply Finset.card_product
-    have h_shell_bound_prod : (wordNShell S n).card * (wordNShell S m).card
-        ≤ S.card ^ n * (wordNShell S m).card := by
-      have h_shell_bound := wordNShell_card_bound S n
-      exact Nat.mul_le_mul_right (wordNShell S m).card h_shell_bound
-    calc (wordNShell S (n + m)).card
-       _ ≤ ((wordNShell S n ×ˢ wordNShell S m).image (fun ⟨wₙ, wₘ⟩ ↦ wₙ * wₘ)).card := h_subset_card
-       _ ≤ (wordNShell S n ×ˢ wordNShell S m).card := h_image_card
-       _ = (wordNShell S n).card * (wordNShell S m).card := h_product_card
-       _ ≤ S.card ^ n * (wordNShell S m).card := h_shell_bound_prod
+    have h_image_card : ((wordShell S n ×ˢ wordShell S m).image (fun ⟨wₙ, wₘ⟩ ↦ wₙ * wₘ)).card
+        ≤ (wordShell S n ×ˢ wordShell S m).card := Finset.card_image_le
+    have h_product_card : (wordShell S n ×ˢ wordShell S m).card =
+        (wordShell S n).card * (wordShell S m).card := by apply Finset.card_product
+    have h_shell_bound_prod : (wordShell S n).card * (wordShell S m).card
+        ≤ S.card ^ n * (wordShell S m).card := by
+      have h_shell_bound := wordShell_card_bound S n
+      exact Nat.mul_le_mul_right (wordShell S m).card h_shell_bound
+    calc (wordShell S (n + m)).card
+       _ ≤ ((wordShell S n ×ˢ wordShell S m).image (fun ⟨wₙ, wₘ⟩ ↦ wₙ * wₘ)).card := h_subset_card
+       _ ≤ (wordShell S n ×ˢ wordShell S m).card := h_image_card
+       _ = (wordShell S n).card * (wordShell S m).card := h_product_card
+       _ ≤ S.card ^ n * (wordShell S m).card := h_shell_bound_prod
