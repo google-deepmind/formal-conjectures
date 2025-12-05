@@ -44,24 +44,17 @@ is not a perfect power?
 -/
 @[category research open, AMS 11]
 theorem erdos_930 :
-    (∀ r, ∃ k, ∀ (I : Fin r → ℕ × ℕ),
-      (∀ i : Fin r, (I i).1 ≤ (I i).2 ∧ k ≤ (I i).2 - (I i).1 + 1) →
-        (∀ i j : Fin r, i ≠ j → (I i).2 < (I j).1 ∨ (I j).2 < (I i).1) →
+    (∀ r > 0, ∃ k, ∀ (I : Fin r → ℕ × ℕ),
+      (∀ i : Fin r, 0 < (I i).1 ∧ (I i).1 ≤ (I i).2 ∧ k ≤ (I i).2 - (I i).1 + 1) →
+        (∀ i j : Fin r, i < j → (I i).2 < (I j).1) →
           ¬ IsPower (∏ i : Fin r, ∏ m ∈ Icc (I i).1 (I i).2, m)) ↔ answer(sorry) := by
   sorry
 
 /--
-$p$ is the least prime satisfying $k \le p$
-if for any other prime $q$, $k \le q$ implies $p \le q$.
+Returns the least prime satisfying $k \le p$
 -/
-def leastPrime (k p : ℕ) : Prop :=
-  p.Prime ∧ k ≤ p ∧ ∀ q, k ≤ q ∧ q.Prime → p ≤ q
-
-/--
-$n$ is greater than the least prime $p$ satisfying $k \le p$
--/
-def gtLeastPrime (k n : ℕ) : Prop :=
-  ∀ p, leastPrime k p → p < n
+def nextPrime (k : ℕ) : ℕ :=
+  Nat.find (Nat.exists_infinite_primes k)
 
 /--
 Let $k$, $l$, $n$ be integers such that $k \ge 3$, $l \ge 2$ and $n + k \ge p^{(k)}$,
@@ -75,7 +68,7 @@ Theorem 2 from [ErSe75].
 -/
 @[category research solved, AMS 11]
 theorem erdos_930.variant.consecutive_strong :
-    ∀ k l n, 3 ≤ k → 2 ≤ l → gtLeastPrime k (n + k) →
+    ∀ k l n, 3 ≤ k → 2 ≤ l → nextPrime k < n + k →
       ∃ p, k ≤ p ∧ p.Prime ∧
         ¬ (l ∣ Nat.factorization (∏ m ∈ Icc (n + 1) (n + k), m) p) := by
   sorry
