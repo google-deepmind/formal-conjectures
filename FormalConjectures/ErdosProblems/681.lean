@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos681
 
 /-- `IsLPF p m` says that `p` is the least prime factor of `m`. -/
-def IsLPF (p m : ℕ) : Prop := Prime p ∧ p ∣ m ∧ ∀ q, q ∣ m → p < q
+def IsLPF (p m : ℕ) : Prop := p.Prime ∧ p ∣ m ∧ ∀ q, q.Prime ∧ q ∣ m → p ≤ q
 
 /--
 **Erdős problem 681.**
