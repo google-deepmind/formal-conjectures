@@ -59,7 +59,7 @@ def nextPrime (k : ℕ) : ℕ :=
 /--
 Let $k$, $l$, $n$ be integers such that $k \ge 3$, $l \ge 2$ and $n + k \ge p^{(k)}$,
 where $p^{(k)}$ is the least prime satisfying $p^{(k)} \ge k$.
-Then there is a prime $p \ge k$ for which $\alpha_p \not\equiv 0 \pmod{1}$,
+Then there is a prime $p \ge k$ for which $\alpha_p \not\equiv 0 \pmod{l}$,
 where $\alpha_p$ is the power of $p$ dividing $(n + 1) \ldots (n + k)$.
 
 Theorem 2 from [ErSe75].
