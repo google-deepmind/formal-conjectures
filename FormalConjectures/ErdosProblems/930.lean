@@ -68,7 +68,7 @@ Theorem 2 from [ErSe75].
 -/
 @[category research solved, AMS 11]
 theorem erdos_930.variant.consecutive_strong :
-    ∀ k l n, 3 ≤ k → 2 ≤ l → nextPrime k < n + k →
+    ∀ k l n, 3 ≤ k → 2 ≤ l → nextPrime k ≤ n + k →
       ∃ p, k ≤ p ∧ p.Prime ∧
         ¬ (l ∣ Nat.factorization (∏ m ∈ Icc (n + 1) (n + k), m) p) := by
   sorry
