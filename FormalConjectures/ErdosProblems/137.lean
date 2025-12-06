@@ -47,14 +47,16 @@ theorem erdos_137.variants.perfect_power (k : ℕ) (hk : k ≥ 2) (n : ℕ) (x l
   sorry
 
 /--
-Erdős [Er82c] conjectures that, if $m$, $k$ are fixed and $n$ sufficiently large, then there must
+Erdős [Er82c] conjectures that, if $k$ are fixed, $n$ sufficiently large and $m$ be any
+positive integer, then there must
 be at least $k$ distict primes $p$ such that $p\mid m(m+1)\cdots (m+n)$ and yet $p^2$ does not
-divide the right hand side.
+divide the right hand side. That is atleast $k$ prime factors are of power $1$.
 
 [Er82c] Erdős, Paul, "Miscellaneous problems in number theory". Congr. Numer. (1982), 25-45.,
 -/
 @[category research open, AMS 11]
-theorem erdos_137.multiple_powerful_factors (m k : ℕ) (hm : 0 < m): ∃ (n₀ : ℕ), ∀ n > n₀,
+theorem erdos_137.multiple_powerful_factors (k : ℕ) : ∃ (n₀ : ℕ), ∀ n > n₀,
+    ∀ (m : ℕ) (hm : 0 < m),
     letI N := ∏ x ∈ Finset.Ioc m (m + n), x
     ∃ P : Finset ℕ, P.card = k ∧ ∀ p ∈ P, p.Prime ∧
     p ∣ N ∧ ¬ p ^ 2 ∣ N := by
