@@ -30,21 +30,44 @@ Claude 4.0 Sonnet: https://claude.ai/share/918bb269-bd28-4c09-b84e-cab579c836e8
 
 namespace GromovPolynomialGrowth
 
+open Filter
+
+variable {G : Type*} [Group G]
+
 /-- The `CayleyBall` is the ball of radius `n` in the Cayley graph of a group `G` with generating
     set `S`. -/
-def CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) : Set G :=
+def CayleyBall (S : Set G) (n : ℕ) : Set G :=
   {g : G | ∃ (l : List G), l.length ≤ n ∧ (∀ s ∈ l, s ∈ S ∨ s⁻¹ ∈ S) ∧ l.prod = g}
+
+@[category API, AMS 20]
+theorem cayleyBall_zero (S : Set G) :
+    CayleyBall S 0 = {1} := by simp [CayleyBall]
+
+@[category API, AMS 20]
+lemma cayleyBall_finite {S : Set G} (hS : S.Finite) (n : ℕ) : (CayleyBall S n).Finite := by
+  have hu : (S ∪ (·)⁻¹ '' S).Finite := hS.union (by simpa using hS.preimage inv_injective.injOn)
+  have hf (m : ℕ) : {f : Fin m → G | ∀ i, f i ∈ S ∨ (f i)⁻¹ ∈ S}.Finite := by
+    simpa using Set.Finite.pi' fun _ ↦ hu
+  have : {l : List G | l.length ≤ n ∧ ∀ s ∈ l, s ∈ S ∨ s⁻¹ ∈ S}.Finite :=
+    ((Set.finite_le_nat n).biUnion fun m _ ↦ (hf m).image List.ofFn).subset
+      fun l ⟨hl, hlS⟩ ↦ Set.mem_biUnion hl ⟨fun i ↦ l[i], by aesop⟩
+  exact (this.image List.prod).subset fun _ _ ↦ by aesop (add simp [CayleyBall])
 
 /-- The `GrowthFunction` of a group `G` with respect to a set `S` counts the number
     of group elements that can be reached by words of length at most `n` in `S`. -/
-noncomputable def GrowthFunction {G : Type*} [Group G] (S : Set G) (n : ℕ) : ℕ :=
+noncomputable def GrowthFunction (S : Set G) (n : ℕ) : ℕ :=
   (CayleyBall S n).ncard
+
+@[category API, AMS 20]
+theorem growthFunction_zero (S : Set G) :
+    GrowthFunction S 0 = 1 := by
+  simp [GrowthFunction, CayleyBall]
 
 -- Basic properties of CayleyBall and GrowthFunction (Claude generated statements, human proofs)
 
 /-- The identity is always in the Cayley ball of radius n for any $n ≥ 0$. -/
 @[category API, AMS 20]
-lemma one_mem_CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) :
+lemma one_mem_cayleyBall (S : Set G) (n : ℕ) :
     1 ∈ CayleyBall S n := by
   simp only [CayleyBall, Set.mem_setOf_eq]
   use ∅
@@ -52,7 +75,7 @@ lemma one_mem_CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) :
 
 /-- The Cayley ball is monotonic in radius. -/
 @[category API, AMS 20]
-lemma CayleyBall_monotone {G : Type*} [Group G] (S : Set G) {m n : ℕ} (h : m ≤ n) :
+lemma cayleyBall_monotone (S : Set G) {m n : ℕ} (h : m ≤ n) :
     CayleyBall S m ⊆ CayleyBall S n := by
   simp only [CayleyBall, Set.setOf_subset_setOf, forall_exists_index, and_imp]
   exact fun g l lLength LSubS lProdG ↦ ⟨l, by linarith, LSubS, lProdG⟩
@@ -60,7 +83,7 @@ lemma CayleyBall_monotone {G : Type*} [Group G] (S : Set G) {m n : ℕ} (h : m �
 /-- Closure property: if g, h ∈ CayleyBall S m, CayleyBall S n respectively,
     then gh ∈ CayleyBall S (m + n). -/
 @[category API, AMS 20]
-lemma CayleyBall_mul {G : Type*} [Group G] (S : Set G) {g h : G} {m n : ℕ}
+lemma cayleyBall_mul (S : Set G) {g h : G} {m n : ℕ}
     (hg : g ∈ CayleyBall S m) (hh : h ∈ CayleyBall S n) :
     g * h ∈ CayleyBall S (m + n) := by
   simp only [CayleyBall, Set.mem_setOf_eq] at hg hh ⊢
@@ -77,7 +100,7 @@ lemma CayleyBall_mul {G : Type*} [Group G] (S : Set G) {g h : G} {m n : ℕ}
 
 /-- If `g ∈ CayleyBall S n`, then `g⁻¹ ∈ CayleyBall S n`. -/
 @[category API, AMS 20]
-lemma CayleyBall_inv {G : Type*} [Group G] (S : Set G) {g : G} {n : ℕ}
+lemma cayleyBall_inv (S : Set G) {g : G} {n : ℕ}
     (hg : g ∈ CayleyBall S n) :
     g⁻¹ ∈ CayleyBall S n := by
   simp only [CayleyBall, Set.mem_setOf_eq] at hg ⊢
@@ -91,17 +114,73 @@ lemma CayleyBall_inv {G : Type*} [Group G] (S : Set G) {g : G} {n : ℕ}
   simp only [inv_inv] at this
   exact this.symm
 
+-- end of Claude generated statements
+
+@[category API, AMS 20]
+lemma mem_cayleyBall_one_of_mem {S : Set G} {g : G} (hg : g ∈ S) : g ∈ CayleyBall S 1 :=
+  ⟨[g], by simp_all⟩
+
+@[category API, AMS 20]
+lemma exists_cayleyBall_mem_of_closure_eq {S : Set G} (h : Subgroup.closure S = ⊤) (g : G) :
+    ∃ n, g ∈ CayleyBall S n := by
+  induction h ▸ Subgroup.mem_top g using Subgroup.closure_induction with
+  | mem => exact ⟨1, mem_cayleyBall_one_of_mem ‹_›⟩
+  | one => exact ⟨0, one_mem_cayleyBall ..⟩
+  | mul _ _ _ _ hg₁ hg₂ =>
+    obtain ⟨n₁, hn₁⟩ := hg₁
+    obtain ⟨n₂, hn₂⟩ := hg₂
+    exact ⟨n₁ + n₂, cayleyBall_mul S hn₁ hn₂⟩
+  | inv _ _ hg =>
+    obtain ⟨n, hn⟩ := hg
+    exact ⟨n, cayleyBall_inv S hn⟩
+
+/-- In an infinite group, the growth function with respect to a finite generating set
+is unbounded. -/
+@[category API, AMS 20]
+theorem tendsto_atTop_growthFunction_of_infinite [Infinite G] {S : Set G} (hS : S.Finite)
+    (h : Subgroup.closure S = ⊤) : atTop.Tendsto (GrowthFunction S) atTop := by
+  delta GrowthFunction
+  have (n : ℕ) : Fintype (CayleyBall S n) := (cayleyBall_finite hS n).fintype
+  apply ((Finset.tendsto_card_atTop).comp (f := fun n ↦ (CayleyBall S n).toFinset) ?_).congr
+    (by simp [Set.ncard_eq_toFinset_card'])
+  apply tendsto_atTop_atTop_of_monotone fun _ _ ↦ by simpa using cayleyBall_monotone S
+  intro A
+  by_cases hA : A = ∅
+  · aesop
+  · choose n hn using fun (a : A) ↦ exists_cayleyBall_mem_of_closure_eq h a
+    let N : ℕ := (Set.range n).toFinset.max' (by simpa [Finset.nonempty_iff_ne_empty])
+    refine ⟨N, fun a ha ↦ ?_⟩
+    simpa using cayleyBall_monotone S (Finset.le_max' _ _ (by aesop)) (hn ⟨a, ha⟩)
+
+/-- Infinite groups do not satisfy polynomial growth over `ℕ` for any degree `d` because when
+`d = 0` this reduces to the unbounded nature of `growthFunction` while `n = 0` works when `d ≠ 0`.
+Thus a finitely-generated infinite nilpotent group would be a counter-example to
+Gromov's theorem when quantifying over all of `ℕ`, and so `n = 0` should be excluded. -/
+@[category test, AMS 20]
+theorem growthFunction_not_polynomial_of_infinite [Infinite G] {S : Set G} (hS : S.Finite)
+    (h : Subgroup.closure S = ⊤) {C : ℝ} (d : ℕ) :
+    ∃ (n : ℕ), C * n ^ d < GrowthFunction S n := by
+  by_cases hd : d = 0
+  · obtain ⟨n, _, hn⟩ := exists_lt_of_tendsto_atTop (tendsto_atTop_growthFunction_of_infinite hS h)
+      0 ⌈C⌉₊
+    use n
+    grw [Nat.le_ceil C]
+    simpa [hd] using mod_cast hn
+  · exact ⟨0, by simp [hd, growthFunction_zero]⟩
+
+variable (G)
+
 /-- A group `HasPolynomialGrowth` if there exists a finite generating set such that
     the growth function is bounded above by a polynomial. -/
-def HasPolynomialGrowth (G : Type*) [Group G] : Prop :=
+def HasPolynomialGrowth : Prop :=
   ∃ (S : Set G), Set.Finite S ∧ Subgroup.closure S = ⊤ ∧
     ∃ (C : ℝ) (d : ℕ), C > 0 ∧
-    ∀ n : ℕ, (GrowthFunction S n : ℝ) ≤ C * (n : ℝ) ^ d
+    ∀ n > 0, (GrowthFunction S n : ℝ) ≤ C * (n : ℝ) ^ d
 
 /-- **Gromov's Polynomial Growth Theorem** : A finitely generated group has
     polynomial growth if and only if it is virtually nilpotent. -/
 @[category research solved, AMS 20]
-theorem GromovPolynomialGrowthTheorem (G : Type*) [Group G] [Group.FG G] :
+theorem GromovPolynomialGrowthTheorem [Group.FG G] :
     HasPolynomialGrowth G ↔ Group.IsVirtuallyNilpotent G := by
   sorry
 
