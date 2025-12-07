@@ -19,6 +19,7 @@ import Mathlib.Order.BoundedOrder.Basic
 import Mathlib.Order.Filter.AtTopBot.Basic
 import Mathlib.Order.Filter.AtTopBot.Defs
 import Mathlib.Order.Filter.Basic
+import Mathlib.Order.MinMax
 
 
 open Classical
@@ -584,8 +585,67 @@ theorem growthRatesEquiv (f g : ℕ → ℕ) : GrowsLike G f → GrowsLike G g �
         _ ≤ (wordBall S_f (C₂ * C_g2 * n)).card := h_g2
         _ ≤ f ((C_f1 * C₂ * C_g2) * n) := h_g3
 
+-- TODO BELOW ALL LLM GENERATED
+lemma GrowthEquiv.refl (f : ℕ → ℕ) : GrowthEquiv f f := by
+  use 1, 1
+  simp only [gt_iff_lt, Nat.lt_one_iff, one_mul, le_refl, and_self, Filter.eventually_const]
+
+lemma GrowthEquiv.symm {f g : ℕ → ℕ} (h : GrowthEquiv f g) : GrowthEquiv g f := by
+  obtain ⟨C₁, C₂, hC₁, hC₂, hev⟩ := h
+  use C₂, C₁, hC₂, hC₁
+  filter_upwards [hev] with n ⟨h1, h2⟩
+  exact ⟨h2, h1⟩
+
+lemma GrowthEquiv.trans {f g h : ℕ → ℕ} (hfg : GrowthEquiv f g) (hgh : GrowthEquiv g h) :
+    GrowthEquiv f h := by
+  obtain ⟨C₁f, C₂f, hC₁f, hC₂f, hev_f⟩ := hfg
+  obtain ⟨C₁g, C₂g, hC₁g, hC₂g, hev_g⟩ := hgh
+  let C₁ := C₁g * C₁f
+  let C₂ := C₂f * C₂g
+  use C₁, C₂
+  simp_all [Nat.mul_pos_iff_of_pos_left, C₁, C₂]
+  obtain ⟨ a_f, h_ab_f ⟩ := hev_f
+  obtain ⟨ a_g, h_ab_g ⟩ := hev_g
+  use Nat.max a_f a_g
+  intro b hb
+  constructor
+  · specialize h_ab_f b
+    specialize h_ab_g (C₁f * b)
+    have h_b_f : a_f ≤ b := le_of_max_le_left hb
+    have h_b_g : a_g ≤ (C₁f * b) := by
+      have qq : a_g ≤ b := le_of_max_le_right hb
+      exact le_mul_of_one_le_of_le hC₁f qq
+    simp only [h_b_f, true_implies] at h_ab_f
+    simp only [h_b_g, true_implies] at h_ab_g
+    calc f b
+       _ ≤ g (C₁f * b) := h_ab_f.1
+       _ ≤ h (C₁g * (C₁f * b)) := h_ab_g.1
+       _ = h (C₁ * b) := by rw [mul_assoc]
+  · specialize h_ab_g b
+    specialize h_ab_f (C₂g * b)
+    have h_b_g : a_g ≤ b := le_of_max_le_right hb
+    have h_b_f : a_f ≤ (C₂g * b) := by
+      have qq : a_f ≤ b := le_of_max_le_left hb
+      exact le_mul_of_one_le_of_le hC₂g qq
+    simp only [h_b_g, true_implies] at h_ab_g
+    simp only [h_b_f, true_implies] at h_ab_f
+    calc h b
+       _ ≤ g (C₂g * b) := h_ab_g.2
+       _ ≤ f (C₂f * (C₂g * b)) := h_ab_f.2
+       _ = f (C₂ * b) := by rw [mul_assoc]
+
+instance GrowthEquivSetoid : Setoid (ℕ → ℕ) where
+  r := GrowthEquiv
+  iseqv := ⟨GrowthEquiv.refl, GrowthEquiv.symm, GrowthEquiv.trans⟩
+
+def GrowthClass : Type := Quotient GrowthEquivSetoid
+
+noncomputable def growthRateClass (G : Type) [Group G] [Group.FG G] : GrowthClass := by
+  choose S hS using symmetricFiniteGeneratingSetExists (G := G)
+  exact Quotient.mk GrowthEquivSetoid (growthRate S)
+
 /--
-Other stuff I proved but didn't use above
+Some other maybe-useful lemmas that I proved but didn't use above:
 -/
 
 lemma wordShell_subset_H (S : Finset G) (H : Subgroup G) (hS : (S : Set G) ⊆ H.carrier) :
