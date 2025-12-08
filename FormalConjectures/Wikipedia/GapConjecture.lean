@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open Algebra.Group.GrowthRate
+
 /-!
 # Gap conjecture
 
@@ -24,9 +26,21 @@ import FormalConjectures.Util.ProblemImports
 
 namespace GapConjecture
 
+def SuperPolynomial (F : GrowthClass) : Prop :=
+  ∀ n : ℕ, ⟦fun m => ↑(m ^ n)⟧ ≤ F
+
+noncomputable
+def expSqrt : GrowthClass :=
+  ⟦fun n => Real.exp (Real.sqrt n)⟧
+
+/-!
+If the growth rate of a finitely generated group $G$ is superpolynomial, then the growth rate is at
+least $e^{\sqrt{n}}$.
+-/
 @[category research open, AMS 20]
 theorem gap_conjecture :
   ∀ (G : Type) [Group G] [Group.FG G],
-      growthRate G = growthRate G := by sorry
+    SuperPolynomial (growthRate G) → growthRate G ≥ expSqrt := by
+      sorry
 
 end GapConjecture
