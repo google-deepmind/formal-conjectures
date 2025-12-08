@@ -24,15 +24,15 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos458
 
 /--
-least common multiple of ${1, \cdots, n}$
+The least common multiple of the integers in the set $\{1, \dots, n\}$.
 -/
 def lcm_upto (n : ℕ) : ℕ :=
   (Finset.Icc 1 n).lcm id
 
 /--
-Let $lcm(1, \cdots, n)$ denote the least common multiple of ${1, \cdots, n}$.
-And $p_{k}$ the $k$th prime.
-Is it true that, for all $k \geq 1$, $lcm(1, \cdots, p_{k+1}−1) < p_{k} * lcm(1, \cdots, p_{k})$ ?
+Let $\operatorname{lcm}(1, \dots, n)$ denote the least common multiple of $\{1, \dots, n\}$.
+Let $p_k$ be the $k$-th prime.
+Is it true that for all $k \geq 1$, $\operatorname{lcm}(1, \dots, p_{k+1}-1) < p_k \cdot \operatorname{lcm}(1, \dots, p_k)$?
 -/
 @[category research open, AMS 11]
 theorem erdos_458 :

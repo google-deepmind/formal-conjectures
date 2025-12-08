@@ -82,7 +82,7 @@ theorem exists_inscribed_rectangle_of_smooth (γ : Circle → ℝ²)
   sorry
 
 /--
-It is also known that every C² Jordan curve admits an inscribed square.
+It is also known that every $C^2$ Jordan curve admits an inscribed square.
 -/
 @[category research solved, AMS 51]
 theorem exists_inscribed_square_of_C2 (γ : Circle → ℝ²)

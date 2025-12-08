@@ -43,7 +43,7 @@ theorem infinite_isWallSunSunPrime : {p : ℕ | IsWallSunSunPrime p}.Infinite :=
 /--
 A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not dividing $a^2 - b$, such
 that $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$ where $U(a,b)$ is the Lucas sequence of the first
-kind and $\varepsilon$ is the Legendre symbol $\left({\tfrac {a^{2}-4b}{p}}\right)$.
+kind and $\varepsilon$ is the Legendre symbol $\left({\tfrac {a^2-4b}{p}}\right)$.
 The discriminant of this number is the quantity $a^2 - 4b$. It is conjectured that there are
 infinitely many Lucas–Wieferich primes of any given discriminant.
 -/
