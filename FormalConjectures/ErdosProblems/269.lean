@@ -32,13 +32,13 @@ def HasPrimeFactorsIn (P : Set ℕ) (n : ℕ) : Prop :=
 
 /--
 The infinite, strictly increasing sequence $\{a_0, a_1, \dots\}$ of integers
-whose prime factors all belong to `P`.
+whose prime factors all belong to $P$.
 -/
 noncomputable def a (P : Set ℕ) : ℕ → ℕ := Nat.nth <| HasPrimeFactorsIn P
 
 /--
-The `n`-th partial least common multiple, $[a_0, \dots, a_n]$, which is
-the LCM of the first `n` integers in the sequence.
+The $n$-th partial least common multiple, $[a_0, \dots, a_{n-1}]$, which is
+the LCM of the first $n$ integers in the sequence.
 -/
 noncomputable def partialLcm (P : Set ℕ) (n : ℕ) : ℕ :=
   -- We take the LCM of `{a P 0, ..., a P n}`.
@@ -74,7 +74,7 @@ theorem erdos_269.variants.irrational : (∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ 
   sorry
 
 /--
-This theorem addresses the case where the set of primes `P` is infinite. In this case the sum is
+This theorem addresses the case where the set of primes $P$ is infinite. In this case the sum is
 irrational.
 -/
 @[category research solved, AMS 11]

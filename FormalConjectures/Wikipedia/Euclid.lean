@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 namespace EuclidNumbers
 
 /--
-The $n$th Euclid number is the product of the first $n$ prime numbers plus one.
+The n-th Euclid number is the product of the first n prime numbers plus one.
 -/
 noncomputable def Euclid (n : ℕ) : ℕ := 1 + ∏ i ∈ Finset.range n, i.nth Nat.Prime
 

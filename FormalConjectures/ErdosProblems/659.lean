@@ -33,7 +33,7 @@ noncomputable def minimalDistinctDistancesSubsetOfSize (points : Set ℝ²) (n :
 
 /--
 Is there a set of $n$ points in $\mathbb{R}^2$ such that every subset of $4$ points determines at
-least $3$ distances, yet the total number of distinct distances is \ll \frac{n}{\sqrt{\log n}}?
+least $3$ distances, yet the total number of distinct distances is $\ll \frac{n}{\sqrt{\log n}}$?
 -/
 @[category research open, AMS 52]
 theorem erdos_659 : (∃ (a : ℕ → Finset ℝ²), ∀ n, #(a n) = n ∧

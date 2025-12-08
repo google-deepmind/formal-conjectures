@@ -69,7 +69,7 @@ theorem erdos_357.parts.ii.bigO_version_symm :
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
-How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $f = θ(g)$ ? -/
+How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $f = \Theta(g)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.parts.ii.bigTheta_version :
     (fun n ↦ (f n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
@@ -173,7 +173,7 @@ theorem erdos_357.variants.monotone.parts.ii.bigO_version_symm :
 
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How does $h(n)$ grow?
-Can we find a (good) explicit function $g$ such that $h = θ(g)$ ? -/
+Can we find a (good) explicit function $g$ such that $h = \Theta(g)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.variants.monotone.parts.ii.bigTheta_version :
     (fun n ↦ (h n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
