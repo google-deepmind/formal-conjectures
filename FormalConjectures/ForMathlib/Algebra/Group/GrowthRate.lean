@@ -24,6 +24,8 @@ import Mathlib.Order.MinMax
 
 open Classical
 
+namespace Algebra.Group.GrowthRate
+
 variable {G : Type} [Group G]
 
 structure SymmetricGeneratingSet (S : Finset G) where
@@ -439,7 +441,7 @@ lemma finset_subset_wordBall (S S' : Finset G) (hS : SymmetricGeneratingSet S') 
     have hf_C : ∀ g : G, g ∈ wordBall S' (f_C g) := fun g => Nat.find_spec (g_in_ball hS g)
     exact wordBall_monotone S' (Finset.le_sup hs) (hf_C s)
 
-lemma wordBall_S_subset_scaled_wordBall_S' (S S' : Finset G) (hS' : SymmetricGeneratingSet S') :
+lemma wordBall_subset_scaled_wordBall (S S' : Finset G) (hS' : SymmetricGeneratingSet S') :
   ∃ C : ℕ, ∀ n : ℕ, wordBall S n ⊆ wordBall S' (C * n) := by
     obtain ⟨ C, hC ⟩ := finset_subset_wordBall S S' hS'
     use C
@@ -459,16 +461,16 @@ lemma wordBall_S_subset_scaled_wordBall_S' (S S' : Finset G) (hS' : SymmetricGen
         obtain ⟨s, hsS, a', ha', ha_eq⟩ := h_prod
         have h_s_in_C_ball := hC hsS
         have h_a'_in_Cn_ball := ih ha'
-        have h_prod_in_C_plus_Cn :=
+        have h_prod_in_C_plus_Cn_ball :=
           wordBall_mul_wordBall S' C (C * n) s h_s_in_C_ball a' h_a'_in_Cn_ball
         have distribute_plus_one : C * (n + 1) = C + C * n := by
           rw [Nat.mul_succ, Nat.add_comm]
         rw [distribute_plus_one]
-        subst ha_eq; exact h_prod_in_C_plus_Cn
+        subst ha_eq; exact h_prod_in_C_plus_Cn_ball
 
-lemma wordBall_S_subset_wordBall_S'_succ (S S' : Finset G) (hS' : SymmetricGeneratingSet S') :
+lemma wordBall_subset_scaled_wordBall_succ (S S' : Finset G) (hS' : SymmetricGeneratingSet S') :
   ∃ C : ℕ, C > 0 ∧ ∀ n : ℕ, wordBall S n ⊆ wordBall S' (C * n) := by
-    obtain ⟨ C, hC ⟩ := wordBall_S_subset_scaled_wordBall_S' S S' hS'
+    obtain ⟨ C, hC ⟩ := wordBall_subset_scaled_wordBall S S' hS'
     use C + 1, Nat.succ_pos C
     intro n
     have h_mul : C * n ≤ (C + 1) * n := by
@@ -479,25 +481,25 @@ lemma wordBall_S_subset_wordBall_S'_succ (S S' : Finset G) (hS' : SymmetricGener
     exact Finset.Subset.trans hC h_sub
 
 noncomputable
-def growthRate (S : Finset G) : ℕ → ℕ :=
+def growthRate_of_wordBalls (S : Finset G) : ℕ → ℕ :=
   fun n => (wordBall S n).card
 
 def GrowthEquiv (f g : ℕ → ℕ) : Prop :=
   ∃ C₁ C₂ : ℕ, C₁ > 0 ∧ C₂ > 0 ∧ ∀ᶠ n in Filter.atTop, f n ≤ g (C₁ * n) ∧ g n ≤ f (C₂ * n)
 
 def GrowsLike (G : Type) [Group G] (f : ℕ → ℕ) : Prop :=
-  ∃ (S : Finset G), SymmetricGeneratingSet S ∧ GrowthEquiv (growthRate S) f
+  ∃ (S : Finset G), SymmetricGeneratingSet S ∧ GrowthEquiv (growthRate_of_wordBalls S) f
 
 theorem growthRatesEquiv (f g : ℕ → ℕ) : GrowsLike G f → GrowsLike G g → GrowthEquiv f g := by
     intro h_f h_g
 
     obtain ⟨ S_f, hS_f, h_equiv_f ⟩ := h_f
     rw [GrowthEquiv] at h_equiv_f
-    unfold growthRate at h_equiv_f
+    unfold growthRate_of_wordBalls at h_equiv_f
 
     obtain ⟨ S_g, hS_g, h_equiv_g ⟩ := h_g
     rw [GrowthEquiv] at h_equiv_g
-    unfold growthRate at h_equiv_g
+    unfold growthRate_of_wordBalls at h_equiv_g
 
     obtain ⟨ C_f1, C_f2, hC_f1, hC_f2, hC_f ⟩ := h_equiv_f
     obtain ⟨ C_g1, C_g2, hC_g1, hC_g2, hC_g ⟩ := h_equiv_g
@@ -515,8 +517,8 @@ theorem growthRatesEquiv (f g : ℕ → ℕ) : GrowsLike G f → GrowsLike G g �
     have h_g_lbound := h_ab_g.1
     have h_g_ubound := h_ab_g.2
 
-    obtain ⟨ C₁, hC₁ ⟩ := wordBall_S_subset_wordBall_S'_succ S_f S_g hS_g
-    obtain ⟨ C₂, hC₂ ⟩ := wordBall_S_subset_wordBall_S'_succ S_g S_f hS_f
+    obtain ⟨ C₁, hC₁ ⟩ := wordBall_subset_scaled_wordBall_succ S_f S_g hS_g
+    obtain ⟨ C₂, hC₂ ⟩ := wordBall_subset_scaled_wordBall_succ S_g S_f hS_f
 
     have hC₁_pos : C₁ > 0 := hC₁.1
     have hC₁_bound := hC₁.2
@@ -585,54 +587,48 @@ theorem growthRatesEquiv (f g : ℕ → ℕ) : GrowsLike G f → GrowsLike G g �
         _ ≤ (wordBall S_f (C₂ * C_g2 * n)).card := h_g2
         _ ≤ f ((C_f1 * C₂ * C_g2) * n) := h_g3
 
--- TODO BELOW ALL LLM GENERATED
 lemma GrowthEquiv.refl (f : ℕ → ℕ) : GrowthEquiv f f := by
-  use 1, 1
-  simp only [gt_iff_lt, Nat.lt_one_iff, one_mul, le_refl, and_self, Filter.eventually_const]
+  use 1, 1, Nat.succ_pos 0, Nat.succ_pos 0
+  simp only [one_mul, le_refl, and_self, Filter.eventually_const]
 
 lemma GrowthEquiv.symm {f g : ℕ → ℕ} (h : GrowthEquiv f g) : GrowthEquiv g f := by
   obtain ⟨C₁, C₂, hC₁, hC₂, hev⟩ := h
+  rw [GrowthEquiv]
   use C₂, C₁, hC₂, hC₁
   filter_upwards [hev] with n ⟨h1, h2⟩
   exact ⟨h2, h1⟩
 
-lemma GrowthEquiv.trans {f g h : ℕ → ℕ} (hfg : GrowthEquiv f g) (hgh : GrowthEquiv g h) :
+lemma GrowthEquiv.trans {f g h : ℕ → ℕ} (h_fg : GrowthEquiv f g) (h_gh : GrowthEquiv g h) :
     GrowthEquiv f h := by
-  obtain ⟨C₁f, C₂f, hC₁f, hC₂f, hev_f⟩ := hfg
-  obtain ⟨C₁g, C₂g, hC₁g, hC₂g, hev_g⟩ := hgh
-  let C₁ := C₁g * C₁f
-  let C₂ := C₂f * C₂g
-  use C₁, C₂
-  simp_all [Nat.mul_pos_iff_of_pos_left, C₁, C₂]
-  obtain ⟨ a_f, h_ab_f ⟩ := hev_f
-  obtain ⟨ a_g, h_ab_g ⟩ := hev_g
-  use Nat.max a_f a_g
+  obtain ⟨C₁f, C₂f, hC₁f, hC₂f, hev_f⟩ := h_fg
+  obtain ⟨C₁g, C₂g, hC₁g, hC₂g, hev_g⟩ := h_gh
+
+  rw [GrowthEquiv]
+  use C₁g * C₁f, C₂f * C₂g
+  use Nat.mul_pos hC₁g hC₁f, Nat.mul_pos hC₂f hC₂g
+
+  rw [Filter.eventually_atTop] at hev_f hev_g ⊢
+  obtain ⟨N_f, hN_f⟩ := hev_f
+  obtain ⟨N_g, hN_g⟩ := hev_g
+
+  use Nat.max N_f N_g
   intro b hb
+
+  have hb_f : N_f ≤ b := le_of_max_le_left hb
+  have hb_g : N_g ≤ b := le_of_max_le_right hb
+
+  have hb_f_scaled : N_f ≤ C₂g * b := le_trans hb_f (Nat.le_mul_of_pos_left b hC₂g)
+  have hb_g_scaled : N_g ≤ C₁f * b := le_trans hb_g (Nat.le_mul_of_pos_left b hC₁f)
+
   constructor
-  · specialize h_ab_f b
-    specialize h_ab_g (C₁f * b)
-    have h_b_f : a_f ≤ b := le_of_max_le_left hb
-    have h_b_g : a_g ≤ (C₁f * b) := by
-      have qq : a_g ≤ b := le_of_max_le_right hb
-      exact le_mul_of_one_le_of_le hC₁f qq
-    simp only [h_b_f, true_implies] at h_ab_f
-    simp only [h_b_g, true_implies] at h_ab_g
-    calc f b
-       _ ≤ g (C₁f * b) := h_ab_f.1
-       _ ≤ h (C₁g * (C₁f * b)) := h_ab_g.1
-       _ = h (C₁ * b) := by rw [mul_assoc]
-  · specialize h_ab_g b
-    specialize h_ab_f (C₂g * b)
-    have h_b_g : a_g ≤ b := le_of_max_le_right hb
-    have h_b_f : a_f ≤ (C₂g * b) := by
-      have qq : a_f ≤ b := le_of_max_le_left hb
-      exact le_mul_of_one_le_of_le hC₂g qq
-    simp only [h_b_g, true_implies] at h_ab_g
-    simp only [h_b_f, true_implies] at h_ab_f
-    calc h b
-       _ ≤ g (C₂g * b) := h_ab_g.2
-       _ ≤ f (C₂f * (C₂g * b)) := h_ab_f.2
-       _ = f (C₂ * b) := by rw [mul_assoc]
+  · calc f b
+      _ ≤ g (C₁f * b) := (hN_f b hb_f).1
+      _ ≤ h (C₁g * (C₁f * b)) := (hN_g (C₁f * b) hb_g_scaled).1
+      _ = h (C₁g * C₁f * b) := by rw [mul_assoc]
+  · calc h b
+      _ ≤ g (C₂g * b) := (hN_g b hb_g).2
+      _ ≤ f (C₂f * (C₂g * b)) := (hN_f (C₂g * b) hb_f_scaled).2
+      _ = f (C₂f * C₂g * b) := by rw [mul_assoc]
 
 instance GrowthEquivSetoid : Setoid (ℕ → ℕ) where
   r := GrowthEquiv
@@ -640,9 +636,27 @@ instance GrowthEquivSetoid : Setoid (ℕ → ℕ) where
 
 def GrowthClass : Type := Quotient GrowthEquivSetoid
 
-noncomputable def growthRateClass (G : Type) [Group G] [Group.FG G] : GrowthClass := by
-  choose S hS using symmetricFiniteGeneratingSetExists (G := G)
-  exact Quotient.mk GrowthEquivSetoid (growthRate S)
+noncomputable
+def growthRateClass_of_wordBalls {G : Type} [Group G] (S : Finset G) : GrowthClass :=
+  Quotient.mk GrowthEquivSetoid (growthRate_of_wordBalls S)
+
+noncomputable
+def growthRate (G : Type) [Group G] [Group.FG G] : GrowthClass :=
+  let S := Classical.choose symmetricFiniteGeneratingSetExists
+  @growthRateClass_of_wordBalls G _ S
+
+theorem growthRate_well_defined (G : Type) [Group G] [Group.FG G]
+    (S S' : Finset G) (hS : @SymmetricGeneratingSet G _ S) (hS' : @SymmetricGeneratingSet G _ S') :
+    growthRateClass_of_wordBalls S = growthRateClass_of_wordBalls S' := by
+  apply Quotient.sound
+  have h_growth_S : GrowsLike G (growthRate_of_wordBalls S) := by
+    use S, hS
+    exact GrowthEquiv.refl (growthRate_of_wordBalls S)
+  have h_growth_S' : GrowsLike G (growthRate_of_wordBalls S') := by
+    use S', hS'
+    exact GrowthEquiv.refl (growthRate_of_wordBalls S')
+  exact growthRatesEquiv (growthRate_of_wordBalls S) (growthRate_of_wordBalls S')
+    h_growth_S h_growth_S'
 
 /--
 Some other maybe-useful lemmas that I proved but didn't use above:
@@ -717,3 +731,5 @@ lemma wordShell_card_bound_prod (S : Finset G) (n m : ℕ) :
        _ ≤ (wordShell S n ×ˢ wordShell S m).card := h_image_card
        _ = (wordShell S n).card * (wordShell S m).card := h_product_card
        _ ≤ S.card ^ n * (wordShell S m).card := h_shell_bound_prod
+
+end Algebra.Group.GrowthRate
