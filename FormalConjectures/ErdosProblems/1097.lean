@@ -25,36 +25,41 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos1097
 
 /--
-Given a finite set of integers $A$ with $|A| = n$, let $D_3(A)$ be the set of common differences
-$d$ that occur in at least one three-term arithmetic progression in $A$. That is,
-$$D_3(A) = \{d : \exists a, b, c \in A \text{ distinct}, b - a = c - b = d\}$$
+Given a finite set of integers `A` (modelled as a `Finset ℤ`), the set
+`CommonDifferencesThreeTermAP A` consists of all integers `d` such that there
+is a non-trivial three-term arithmetic progression `a, b, c ∈ A` with
+`b - a = d` and `c - b = d`.
 -/
 def CommonDifferencesThreeTermAP (A : Finset ℤ) : Set ℤ :=
-  {d : ℤ | ∃ a b c : ℤ, a ∈ A ∧ b ∈ A ∧ c ∈ A ∧ a ≠ b ∧ b ≠ c ∧ a ≠ c ∧ b - a = d ∧ c - b = d}
+  {d : ℤ |
+    ∃ a b c : ℤ,
+      a ∈ A ∧ b ∈ A ∧ c ∈ A ∧
+      a ≠ b ∧ b ≠ c ∧ a ≠ c ∧
+      b - a = d ∧ c - b = d}
 
 /--
 The main conjecture: for any finite set of integers $A$ with $|A| = n$, the number of distinct
 common differences in three-term arithmetic progressions is $O(n^{3/2})$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1097 : ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
-    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ) := by
+theorem erdos_1097 : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
+    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ)) ↔ answer(sorry) := by
   sorry
 
 /--
 A weaker bound has been proven: there are always $O(n^2)$ such values of $d$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1097.variants.weaker : ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
-    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (2 : ℝ) := by
+theorem erdos_1097.variants.weaker : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
+    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (2 : ℝ)) ↔ answer(sorry) := by
   sorry
 
 /--
 A trivial lower bound: there are always at least $Ω(n)$ such values of $d$ in the worst case.
 -/
 @[category research open, AMS 11]
-theorem erdos_1097.variants.lower_bound : ∀ (n : ℕ), ∃ (A : Finset ℤ),
-    A.card = n ∧ ∃ c > (0 : ℝ), c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard := by
+theorem erdos_1097.variants.lower_bound : (∀ (n : ℕ), ∃ (A : Finset ℤ),
+    A.card = n ∧ ∃ c > (0 : ℝ), c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard) ↔ answer(sorry) := by
   sorry
 
 end Erdos1097
