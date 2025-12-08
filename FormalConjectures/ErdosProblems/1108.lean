@@ -20,90 +20,39 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 1108
 
 *Reference:* [erdosproblems.com/1108](https://www.erdosproblems.com/1108)
-
-We look at sums of factorials over finite sets of natural numbers
-and ask how often these sums can be perfect powers, or more generally
-"powerful" numbers.
-
-Let
-\[
-  A = \Bigl\{ \sum_{n \in S} n! : S \subset \mathbb{N} \text{ finite} \Bigr\}.
-\]
-
-The problem asks:
-
-1. Fix an integer `k ≥ 2`. Does `A` contain only finitely many perfect `k`-th
-   powers?
-2. Does `A` contain only finitely many powerful numbers (i.e. numbers in which
-   every prime divisor appears with exponent at least `2`)?
 -/
 
-open Nat
-
-/-- The set `FactorialSums` is the set `A` of all finite sums of factorials
-\{ ∑\_{n∈S} n! : S ⊂ ℕ finite \}. -/
-abbrev Nat.FactorialSums : Set ℕ :=
-  {m | ∃ S : Finset ℕ, m = S.sum (fun n => Nat.factorial n)}
-
-/-- A natural number `n` is a perfect `k`-th power if there is some `m`
-with `n = m^k`. We will only be interested in the case `2 ≤ k`. -/
-def Nat.IsKthPower (k n : ℕ) : Prop :=
-  ∃ m : ℕ, n = m ^ k
-
-/-- A powerful number is a positive integer `n` such that whenever a prime
-`p` divides `n`, we also have `p^2 ∣ n`. -/
-def Nat.IsPowerful (n : ℕ) : Prop :=
-  ∀ p : ℕ, p.Prime → p ∣ n → p ^ 2 ∣ n
-
-/-- The subset of `FactorialSums` consisting of perfect `k`-th powers. -/
-abbrev Nat.FactorialSumsKthPowers (k : ℕ) : Set ℕ :=
-  {n | n ∈ Nat.FactorialSums ∧ Nat.IsKthPower k n}
-
-/-- The subset of `FactorialSums` consisting of powerful numbers. -/
-abbrev Nat.FactorialSumsPowerful : Set ℕ :=
-  {n | n ∈ Nat.FactorialSums ∧ Nat.IsPowerful n}
+open Nat Filter
 
 namespace Erdos1108
 
-/-- First part of Erdős Problem 1108.
+/--
+The set $A = \left\{ \sum_{n\in S}n! : S\subset \mathbb{N}\text{ finite}\right\}$ of all finite
+sums of distinct factorials.
+-/
+def FactorialSums : Set ℕ :=
+  { m : ℕ | ∃ S : Finset ℕ, m = S.sum (fun n => Nat.factorial n) }
 
-Let
-`A = Nat.FactorialSums = { ∑ n∈S, n! : S ⊂ ℕ finite }`.
+/--
+A number is powerful if each prime factor appears with exponent at least 2.
+-/
+def IsPowerful (n : ℕ) : Prop :=
+  ∀ p : ℕ, Nat.Prime p → ¬ (p ∣ n ∧ ¬ p ^ 2 ∣ n)
 
-For each integer `k ≥ 2`, does `A` contain only finitely many perfect `k`-th
-powers?
-
-Formally: is it true that for every `k ≥ 2`, the set of `k`-th powers in `A`
-is finite? -/
+/--
+For $k \geq 2$, does the set $A$ contain only finitely many $k$-th powers?
+-/
 @[category research open, AMS 11]
-theorem erdos_1108.parts.i :
-    (∀ k, 2 ≤ k → (Nat.FactorialSumsKthPowers k).Finite) ↔
-      answer (sorry) := by
+theorem erdos_1108.k_th_powers : (∀ k ≥ 2,
+    Set.Finite { a ∈ FactorialSums | ∃ m : ℕ, m ^ k = a }) ↔ answer(sorry) := by
   sorry
 
-/-- Second part of Erdős Problem 1108.
-
-Does the set `A = Nat.FactorialSums` contain only finitely many powerful
-numbers?
-
-Formally: is the set of powerful elements of `Nat.FactorialSums` finite? -/
+/--
+Does the set $A$ contain only finitely many powerful numbers?
+-/
 @[category research open, AMS 11]
-theorem erdos_1108.parts.ii :
-    (Nat.FactorialSumsPowerful).Finite ↔
-      answer (sorry) := by
+theorem erdos_1108.powerful_numbers :
+    (Set.Finite { a ∈ FactorialSums | IsPowerful a }) ↔ answer(sorry) := by
   sorry
-
-/-- A small sanity check: the empty sum is allowed, so `0` lies in
-`Nat.FactorialSums`. We record this as a test lemma. -/
-@[category test, AMS 11]
-theorem erdos_1108.variants.zero_mem_FactorialSums :
-    0 ∈ Nat.FactorialSums := by
-  refine ⟨∅, by simp⟩
-
-/-- Another basic example: the singletons `{n}` give `n! ∈ Nat.FactorialSums`. -/
-@[category test, AMS 11]
-theorem erdos_1108.variants.factorial_mem_FactorialSums (n : ℕ) :
-    Nat.factorial n ∈ Nat.FactorialSums := by
-  refine ⟨{n}, by simp⟩
 
 end Erdos1108
