@@ -62,7 +62,7 @@ New graph obtained by deleting a given set of edges.
 def SimpleGraph'.deleteEdges (G : SimpleGraph' V) (s : Set (Sym2 V)) :
     SimpleGraph' V where
   verts := G.verts
-  Adj u v := if s(u, v) ∈ s then False else G.Adj u v
+  Adj u v := G.Adj u v ∧ s(u, v) ∉ s
   Adj_of_verts u v h := by
     by_cases h_case : s(u, v) ∈ s
     · simp [h_case] at h
