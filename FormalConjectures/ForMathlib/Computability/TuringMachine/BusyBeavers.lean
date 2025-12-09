@@ -133,9 +133,9 @@ lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
   rw [multiStep, Function.iterate_succ', Function.comp_apply, multiStep]
 
 @[simp]
-lemma multiStep_succ_eq_none_of_multiStep_eq_none {M : Machine Γ Λ} {config : Cfg Γ Λ} {n : ℕ}
-    (H : M.multiStep config n = none) :
-    M.multiStep config (n + 1) = none := by
+lemma multiStep_eq_none_of_le {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
+    (H : M.multiStep config n = none) (hnm : n ≤ m) :
+    M.multiStep config m = none := by
   rw [multiStep_succ, H]
   rfl
 
@@ -184,7 +184,7 @@ lemma isHalting_iff_exists_haltsAt : IsHalting M ↔ ∃ n, M.HaltsAfter (init [
 lemma exists_of_not_haltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n) :
     ∃ (a : Λ) (b : Tape Γ), M.multiStep s n = some ⟨a, b⟩ := by
   contrapose! H
-  by_cases HH : M.multiStep s n |>.isSome
+  match HH : M.multiStep s n with
   · have : M.multiStep s n = some ⟨none, (Option.get _ HH).tape⟩ := by
       suffices ∀ (a : Λ), a ∉ (Option.get _ HH).q by
         rw [← Option.eq_none_iff_forall_not_mem.mpr this, ← Option.eq_some_of_isSome]
@@ -195,8 +195,8 @@ lemma exists_of_not_haltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n
   · apply multiStep_succ_eq_none_of_multiStep_eq_none
     rwa [Bool.not_eq_true, Option.isSome_eq_false_iff, Option.isNone_iff_eq_none] at HH
 
-lemma not_isHalting_iff_forall_isSome_multiStep : ¬IsHalting M
-    ↔ ∀ n, M.multiStep (init []) (n + 1) |>.isSome := by
+lemma not_isHalting_iff_forall_isSome_multiStep :
+    ¬ IsHalting M ↔ ∀ n, M.multiStep (init []) (n + 1) |>.isSome := by
   simp_rw [isHalting_iff_exists_haltsAt, HaltsAfter, Option.isSome_iff_ne_none]
   push_neg
   rfl
