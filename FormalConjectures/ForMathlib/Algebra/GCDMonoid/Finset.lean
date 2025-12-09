@@ -14,10 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ErdosProblems.«508»
+import Mathlib.Algebra.GCDMonoid.Finset
+import Mathlib.Order.Interval.Finset.Defs
 
-/-!
-# The Hadwiger–Nelson problem
+namespace Finset
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem)
--/
+/-- The least common multiple of ${n+1, \dotsc, n+k}$. -/
+def lcmInterval {α : Type*} [AddMonoid α] [CancelCommMonoidWithZero α] [NormalizedGCDMonoid α]
+    [Preorder α] [LocallyFiniteOrder α] (n k : α) : α := (Finset.Ioc n (n + k)).lcm id
+
+end Finset
