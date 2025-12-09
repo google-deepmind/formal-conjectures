@@ -23,19 +23,17 @@ import FormalConjectures.Wikipedia.GeneralizedRiemannHypothesis
 Artin's conjecture predicts, given an integer $a$, densities of primes $p$ for which
 $a$ is a primitive root modulo $p$. Under certain conditions (when $a$ is not a
 power and its squarefree part is $1\pmod{4}$) the density is given by Artin's constant
-$$
-\prod_{p\ \text{prime}}, \left(1 - \frac{1}{p(p - 1)}\right).
-$$
+$$\prod_{p\ \text{prime}} \left(1 - \frac{1}{p(p - 1)}\right).$$
 For more general values of $a$, this constant must be corrected by certain factors.
 - When $a = b^m$, $m$ is a maximal odd power, the squarefree part of $b$ satisfies
   $b_0 \not\equiv 1\pmod{4}$. Then Artin's constant should be multiplied by
   $$\prod_{p \mid m} \frac{p(p - 2)}{p^2 - p - 1}.$$
-- When $a = b^m$, $m$ is a maximal odd power, the squarefree part of $b$ satisfies
-  $b_0\equiv 1\pmod{4}$. Then Artin's constant should be multipled by the factor in
+- When $a = b^m$, $m$ is a maximal power, the squarefree part of $b$ satisfies
+  $b_0\equiv 1\pmod{4}$. Then Artin's constant should be multiplied by the factor in
   the above bullet, as well as an additional entanglement factor from the primes dividing
-  $\text{gcd}(b_0, m)$ and primes dividing $b_0$:
-  $$1 - \prod_{p \mid \text{gcd}(b_0, m)} \frac{1}{2 - p}
-  \prod_{p \mid b_0; p\nmid m} \frac{1}{1 + p - p^2}.$$
+  $\gcd(b_0, m)$ and primes dividing $b_0$:
+  $$1 - \prod_{p \mid \gcd(b_0, m)} \frac{1}{2 - p}
+  \prod_{p \mid b_0, p\nmid m} \frac{1}{1 + p - p^2}.$$
 - When $a = -1$ or $a$ is a square, then the density is $0$.
 
 Note that Artin's conjecture has been proved subject to the Generalized Riemann Hypothesis
@@ -77,9 +75,9 @@ noncomputable def powCorrectionFactor (m : ℕ) : ℝ :=
 Artin's conjecture on $S(a)$ when $a = b^m$ is a power, and the squarefree part
 of $b_0\equiv 1\pmod{4}$, requires a further correct factor to
 `ArtinConstant * powCorrectionFactor m`, which modifies primes which divide
-$\text{gcd}(b_0, m)$ and primes which do not divide $m$ separately as
-$$ 1 - \prod_{p \mid \text{gcd}(b_0, m)} \frac{1}{2 - p}
-  \prod_{p \mid b_0; p\nmid m} \frac{1}{1 + p - p^2}.$$
+$\gcd(b_0, m)$ and primes which do not divide $m$ separately as
+$$ 1 - \prod_{p \mid \gcd(b_0, m)} \frac{1}{2 - p}
+  \prod_{p \mid b_0, p\nmid m} \frac{1}{1 + p - p^2}.$$
 -/
 -- Eq. (1.4) of https://arxiv.org/pdf/1112.4816
 noncomputable def entanglementFactor (b : ℕ) (m : ℕ) : ℝ :=
@@ -173,12 +171,12 @@ theorem conditional_artin_primitive_roots.variants.part_ii_prime_power_squarefre
 
 /--
 **Artin's Conjecture on Primitive Roots**, second half, power version
-If $a = b^m$ is a perfect odd power of a number $b$ whose squarefree part $b_0\equiv 1 \pmod{4}$,
+If $a = b^m$ is a perfect power of a number $b$ whose squarefree part $b_0\equiv 1 \pmod{4}$,
 then the density of the set $S(a)$ of primes $p$ such that $a$ is a primitive root modulo $p$
 is given by
 $$C \left(\prod_{p \mid m} \frac{p(p-2)}{(p ^ 2 - p - 1)}\right)
-\left(1 - \prod_{p \mid \text{gcd}(b_0, m)\frac{1}{2 - p}
-\prod_{p \mid b_0; p\nmid m} \frac{1}{(1 + q - q ^ 2)}\right)$$,
+\left(1 - \prod_{p \mid \gcd(b_0, m)} \frac{1}{2 - p}
+\prod_{p \mid b_0, p\nmid m} \frac{1}{(1 + p - p ^ 2)}\right)$$,
 where $C$ is Artin's constant.
 -/
 @[category research open, AMS 11]

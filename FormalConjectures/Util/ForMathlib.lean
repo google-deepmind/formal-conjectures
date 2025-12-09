@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.ForMathlib.Algebra.GCDMonoid.Finset
 import FormalConjectures.ForMathlib.Algebra.Group.Indicator
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
@@ -32,6 +33,7 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
+import FormalConjectures.ForMathlib.Computability.TuringMachine.Notation
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Balanced
 import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjectures.ForMathlib.Computability.TuringMachine.PostTuringMachine

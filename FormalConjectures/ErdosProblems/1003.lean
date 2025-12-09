@@ -27,7 +27,7 @@ namespace Erdos1003
 open scoped Nat
 
 /--
-Are there infinitely many solutions to $\phi(n) = \phi(n+1)$, where \phi is the Euler totient
+Are there infinitely many solutions to $\phi(n) = \phi(n+1)$, where $\phi$ is the Euler totient
 function?
 -/
 @[category research open, AMS 11]

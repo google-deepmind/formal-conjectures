@@ -41,7 +41,7 @@ theorem dickson_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, f.degree = 
 
 /--
 **Polignac's conjecture**
-For any integer $k$ there are infinitely many primes $p$ such that $p + 2k$ is prime.
+For any integer $k$ there are infinitely many primes $p$ such that $p + 2k$ is prime.
 -/
 @[category research open, AMS 11]
 theorem polignac_conjecture (k : ℕ) :
@@ -50,7 +50,7 @@ theorem polignac_conjecture (k : ℕ) :
 
 /--
 **The infinitude of Sophie Germain primes**
-There are infinitely many primes $p$ such that $2p + 1$ is prime.
+There are infinitely many primes $p$ such that $2p + 1$ is prime.
 -/
 @[category research open, AMS 11]
 theorem infinite_safe_primes :
@@ -59,7 +59,7 @@ theorem infinite_safe_primes :
 
 /--
 **The infinitude of cousin primes**
-There are infinitely many primes $p$ such that $p + 4$ is prime.
+There are infinitely many primes $p$ such that $p + 4$ is prime.
 -/
 @[category research open, AMS 11]
 theorem infinite_cousin_primes :
@@ -68,7 +68,7 @@ theorem infinite_cousin_primes :
 
 /--
 **The infinitude of sexy primes**
-There are infinitely many primes $p$ such that $p + 6$ is prime.
+There are infinitely many primes $p$ such that $p + 6$ is prime.
 -/
 @[category research open, AMS 11]
 theorem infinite_sexy_primes :

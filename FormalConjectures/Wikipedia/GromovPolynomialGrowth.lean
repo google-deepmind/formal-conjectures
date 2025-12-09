@@ -42,7 +42,7 @@ noncomputable def GrowthFunction {G : Type*} [Group G] (S : Set G) (n : ℕ) : �
 
 -- Basic properties of CayleyBall and GrowthFunction (Claude generated statements, human proofs)
 
-/-- The identity is always in the Cayley ball of radius n for any n ≥ 0. -/
+/-- The identity is always in the Cayley ball of radius n for any $n ≥ 0$. -/
 @[category API, AMS 20]
 lemma one_mem_CayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) :
     1 ∈ CayleyBall S n := by

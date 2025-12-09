@@ -195,8 +195,8 @@ noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
 end EuclideanGeometry
 
 
-
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
   dist p q = dist q r ∨ dist q r = dist r p ∨ dist r p = dist p q
 
-nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) := A.Triplewise (IsIsosceles · · ·)
+nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) :=
+  Nonempty A ∧ A.Triplewise (IsIsosceles · · ·)

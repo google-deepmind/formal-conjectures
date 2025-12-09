@@ -23,15 +23,22 @@ import FormalConjectures.Util.ProblemImports
 -/
 namespace Erdos354
 
-/-- The set `{⌊a⌋, ⌊2 * a⌋, ⌊4 * a⌋, ...}`. -/
-def FloorMultiples (a γ : ℝ) : Set ℝ := Set.range (fun (n : ℕ) ↦ ⌊γ ^ n * a⌋)
+/-- The sequence `⌊a⌋, ⌊γ * a⌋, ⌊γ ^ 2 * a⌋, ..., ⌊γ ^ i * a⌋, ...`. -/
+noncomputable def FloorMultiples (a γ : ℝ) (n : ℕ) : ℤ := ⌊γ ^ n * a⌋
+
+/-- The sequence `⌊a⌋, ⌊b⌋, ⌊γ * a⌋, ⌊γ * b⌋, ... ⌊γ ^ i * a⌋, ⌊γ ^ i * b⌋, ...` -/
+noncomputable def FloorMultiples.interleave (a b γ : ℝ) (n : ℕ) : ℤ :=
+  if n % 2 = 0 then
+    FloorMultiples a γ (n / 2)
+  else
+    FloorMultiples b γ (n / 2)
 
 /-- Let $\alpha,\beta\in \mathbb{R}_{>0}$ such that $\alpha/\beta$ is irrational. Is
-\[\{ \lfloor \alpha\rfloor,\lfloor 2\alpha\rfloor,\lfloor 4\alpha\rfloor,\ldots\}\cup
-\{ \lfloor \beta\rfloor,\lfloor 2\beta\rfloor,\lfloor 4\beta\rfloor,\ldots\}\] complete?-/
+\[\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
+\{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}\] complete?-/
 @[category research open, AMS 11]
 theorem erdos_354.parts.i : (∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
-    IsAddComplete (FloorMultiples α 2 ∪ FloorMultiples β 2)) ↔ answer(sorry) := by
+    IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2)) ↔ answer(sorry) := by
   sorry
 
 /-- Let $\alpha,\beta\in \mathbb{R}_{>0}$ such that $\alpha/\beta$ is irrational. Is
@@ -39,7 +46,7 @@ theorem erdos_354.parts.i : (∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
 \{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}\] complete? -/
 @[category research open, AMS 11]
 theorem erdos_354.parts.ii : (∃ γ ∈ Set.Ioo 1 2, ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
-    IsAddComplete (FloorMultiples α γ ∪ FloorMultiples β γ)) ↔ answer(sorry) := by
+    IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2)) ↔ answer(sorry) := by
   sorry
 
 end Erdos354

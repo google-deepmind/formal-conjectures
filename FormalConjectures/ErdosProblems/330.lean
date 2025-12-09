@@ -42,13 +42,13 @@ def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
   IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
 
 /--
-Suppose $A \subset \mathbb{N}$ is a minimal basis with positive density.
-Is it true that, for any $n \in A$, the (upper) density of integers which 
+Does there exist a minimal basis $A \subset \mathbb{N}$ with positive density
+such that, for any $n \in A$, the (upper) density of integers which 
 cannot be represented without using $n$ is positive?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_330_statement :
-    (∀ (A : Set ℕ),  MinAsymptoticAddBasis A → A.HasPosDensity →
+    (∃ (A : Set ℕ),  MinAsymptoticAddBasis A ∧ A.HasPosDensity ∧
     ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n)) ↔ answer(sorry) := by
   sorry
 

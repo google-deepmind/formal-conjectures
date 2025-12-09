@@ -84,7 +84,7 @@ $$
 \sum_{i=1}^k \frac{1}{p_i} < 1 < \sum_{i=1}^{k + 1} \frac{1}{p_i},
 $$
 the set $A$ of all naturals divisible by exactly one of $p_1, ..., p_k$ has
-density $1 / e - \epsilon$ and has the property that $a_1\cdots a_r = b_1\cdots b_s$
+density $\frac{1}{e} - \epsilon$ and has the property that $a_1\cdots a_r = b_1\cdots b_s$
 with $a_i, b_j\in A$ can only hold when $r = s$.
 -/
 @[category research solved, AMS 11]
