@@ -19,9 +19,11 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Reed's omega, delta, and chi conjecture
 
-*Reference:* (http://www.openproblemgarden.org/op/reeds_omega_delta_and_chi_conjecture)
-
-*Reference* (https://mathoverflow.net/questions/37923)
+*References*:
+- [B. Reed,  ω Δ and χ, J. Graph Theory 27 (1998) 177-212.](https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-0118(199804)27:4%3C177::AID-JGT1%3E3.0.CO;2-K) 
+-
+[openproblemgarden(http://www.openproblemgarden.org/op/reeds_omega_delta_and_chi_conjecture)
+- [mathoverflow/37923](https://mathoverflow.net/questions/37923) asked by user [Andrew D. King](https://mathoverflow.net/users/4580/andrew-d-king)
 -/
 
 namespace ReedOmegaDeltaChi
