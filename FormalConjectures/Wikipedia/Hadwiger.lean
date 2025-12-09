@@ -39,7 +39,7 @@ the vertex set.
 structure SimpleGraph' (V : Type*) where
   verts : Set V
   Adj : V → V → Prop
-  Adj_of_verts : ∀ (u v : V), Adj u v → u ∈ verts ∧ v ∈ verts
+  left_mem_verts_of_adj : ∀ (u v : V), Adj u v → u ∈ verts
   symm : Symmetric Adj := by aesop_graph
   loopless : Irreflexive Adj := by aesop_graph
 
