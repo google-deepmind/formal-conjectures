@@ -134,7 +134,7 @@ lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
   rw [multiStep, Function.iterate_succ', Function.comp_apply, multiStep]
 
 @[simp]
-lemma multiStep_eq_none_of_le {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
+lemma multiStep_eq_none_mono {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
     (H : M.multiStep config n = none) (hnm : n ≤ m) :
     M.multiStep config m = none := by
   induction hnm with
@@ -142,13 +142,6 @@ lemma multiStep_eq_none_of_le {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : �
   | @step m hnm H =>
     rw [multiStep_succ, H]
     rfl
-
-lemma multiStep_eq_none_of_le_of_multiStep_eq_none {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
-    (hmn : m ≤ n) (hm : M.multiStep config m = none) : M.multiStep config n = none := by
-  induction n, hmn using Nat.le_induction with
-  | base => exact hm
-  | succ k hmk a => simp [multiStep_succ, a]
-
 
 variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ]
 variable (M : Machine Γ Λ)
@@ -230,7 +223,7 @@ theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some 
   · exact le_top
   · refine ⟨fun h ↦ h, fun _ ↦ ?_⟩
     by_contra! hc
-    simp_all [multiStep_eq_none_of_le_of_multiStep_eq_none (show k + 1 ≤ n by aesop) ‹_›]
+    simp_all [multiStep_eq_none_mono ‹_› (show k + 1 ≤ n by aesop)]
 
 end Machine
 
