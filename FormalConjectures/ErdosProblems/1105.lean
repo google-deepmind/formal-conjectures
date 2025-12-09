@@ -24,27 +24,38 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos1105
 
-/--
-The anti-Ramsey number `AR(n, G)` is the maximum number of colours with which
-the edges of the complete graph `K_n` can be coloured without creating a
-rainbow copy of `G`.
+open Classical
 
-This problem asks for the asymptotic behaviour of `AR(n, C_k)` for cycles `C_k`
-and an exact formula for `AR(n, P_k)` for paths `P_k`.
--/
+/-- The linear coefficient conjectured for `AR(n, C_k)`. -/
+noncomputable def cycleCoeff (k : ℕ) : ℝ :=
+  (Nat.choose (k - 2) 2 : ℝ) + (1 : ℝ) / (k - 1)
 
-/- Conjecture for cycles `C_k`. -/
-@[category research open, AMS 5 11]
-axiom cycle_conjecture : Prop
+/-- ℓ = ⌊(k - 1)/2⌋. -/
+def ell (k : ℕ) : ℕ :=
+  (k - 1) / 2
 
-/- Conjecture for paths `P_k`. -/
-@[category research open, AMS 5 11]
-axiom path_conjecture : Prop
+/-- ε = 1 if k is odd, ε = 2 otherwise. -/
+def eps (k : ℕ) : ℕ :=
+  if k % 2 = 1 then 1 else 2
 
-/- Main bundled statement for Erdős Problem 1105. -/
-@[category research open, AMS 5 11]
-theorem erdos_1105.main :
-    (cycle_conjecture ∧ path_conjecture) ↔ answer(sorry) := by
+@[category research open, AMS 5]
+theorem erdos_1105 :
+    (∃ (AR_cycle AR_path : ℕ → ℕ → ℕ),
+        -- Cycle part:  AR(n, C_k) = cycleCoeff(k) * n + O(1)
+        (∀ k : ℕ, 3 ≤ k →
+          ∃ C : ℝ, ∃ N0 : ℕ, 0 ≤ C ∧
+            ∀ n : ℕ, n ≥ N0 →
+              |(AR_cycle n k : ℝ) - cycleCoeff k * (n : ℝ)| ≤ C)
+        ∧
+        -- Path part:  exact formula for AR(n, P_k)
+        (∀ n k : ℕ, n ≥ k → 5 ≤ k →
+          AR_path n k =
+            max
+              (Nat.choose (k - 2) 2 + 1)
+              (Nat.choose (ell k - 1) 2
+                + (ell k - 1) * (n - ell k + 1)
+                + eps k))
+    ) ↔ answer(sorry) := by
   sorry
 
 end Erdos1105
