@@ -38,10 +38,10 @@ theorem erdos_402 (A : Finset ℕ) (h₁ : 0 ∉ A) (h₂ : A.Nonempty) : ∃ᵉ
 
 /-- A conjecture of Graham [Gr70], who also conjectured that (assuming $A$ itself
 has no common divisor) the only cases where equality is achieved are when
-$A = \{1, ..., n\}$ or $\{L/1, ..., L/n\}$ (where $L = \operatorname{lcm}(1, ..., n)$) or
-$\{2, 3, 4, 6\}$.
+$A = \{1, \dots, n\}$ or $A = \{L/1, \dots, L/n\}$ (where $L = \operatorname{lcm}(1, \dots, n)$) or
+$A = \{2, 3, 4, 6\}$.
 Note: The source [BaSo96] mentioned on the Erdős page makes it clear what
-quantfiers to use for "where equality is achieved". See Theorem 1.1 there.
+quantifiers to use for "where equality is achieved". See Theorem 1.1 there.
 
 TODO(firsching): Consider if we should have the other direction here as well or
 an iff statement.
@@ -60,11 +60,11 @@ characterises the case of equality) independently by Szegedy [Sz86] and
 Zaharescu [Za87]. The following is taken from [Sz86].
 
 There exists an effectively computable $n_0$ with the following properties:
-(i) if $n\geq n_0$ and $a_1, a_2, ..., a_n$ are distinct natural numbers then
-$\max_{i, j} \frac{a_i}{(a_i, a_j)} \geq n$.
-(ii) If equality holds then the system $\{a_1, a_2, ..., a_n\}$ is either of the
-type $\{k, 2k, ..., nk\}$ or of the type
-$\left\{\frac{k}{1}, \frac{k}{2}, ..., \frac{k}{n}\right\}$-/
+(i) if $n \ge n_0$ and $a_1, a_2, \dots, a_n$ are distinct natural numbers then
+$\max_{i, j} \frac{a_i}{(a_i, a_j)} \ge n$.
+(ii) If equality holds then the system $\{a_1, a_2, \dots, a_n\}$ is either of the
+type $\{k, 2k, \dots, nk\}$ or of the type
+$\left\{\frac{k}{1}, \frac{k}{2}, \dots, \frac{k}{n}\right\}$.-/
 @[category research solved, AMS 11]
 theorem erdos_402.variants.szegedy_zaharescu_weak : ∀ᶠ n in atTop,
     ∀ (A : Finset ℕ), A.card = n → 0 ∉ A →

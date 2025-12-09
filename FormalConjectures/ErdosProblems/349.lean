@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/349](https://www.erdosproblems.com/349)
 -/
 
+namespace Erdos349
 
 open Set Filter Real Nat Function
 
@@ -29,7 +30,7 @@ open Set Filter Real Nat Function
 This defines the core property of the problem: For what values of $t,\alpha \in (0,\infty)$
 is the sequence $\lfloor t\alpha^n\rfloor$ complete?
 -/
-private def IsGoodPair (t α : ℝ) : Prop :=
+def IsGoodPair (t α : ℝ) : Prop :=
   IsAddComplete (range (fun n ↦ ⌊t * α ^ n⌋))
 
 /--
@@ -52,7 +53,7 @@ theorem complete_for_alpha_in_Ioo_one_to_goldenRatio (t α : ℝ) (ht : 0 < t)
 
 /--
 For any $k$ there exists some $t_k\in (0,1)$ such that the set of $\alpha$
-such that the sequence `⌊tₖαⁿ⌋` is complete consists of at least $k$
+such that the sequence $\lfloor t_k\alpha^n\rfloor$ is complete consists of at least $k$
 disjoint line segments.
 -/
 @[category research solved, AMS 11]
@@ -78,3 +79,5 @@ Is it true that the terms of the sequence $\lfloor (3/2)^n\rfloor$ are even infi
 theorem erdos_349.variants.floor_3_halves_even :
     {n | Even ⌊(3/2 : ℝ) ^ n⌋}.Infinite ↔ answer(sorry) := by
   sorry
+
+end Erdos349

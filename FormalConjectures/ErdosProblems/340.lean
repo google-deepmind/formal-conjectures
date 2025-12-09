@@ -25,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 open Filter Finset
 open scoped Real Pointwise
 
+namespace Erdos340
+
 /-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
 such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
 the lower bound is required to avoid `0` being a contender in some cases. -/
@@ -91,7 +93,7 @@ theorem greedySidon_ten : greedySidon 10 = 97 := by
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
 we begin with $1$ and iteratively include the next smallest integer that preserves the
 Sidon property (i.e. there are no non-trivial solutions to $a + b = c + d$). What is the
-order of growth of $A$? Is it true that $| A \cap\{1, \ldots, N\}| \gg N^{1/2−\varepsilon}$
+order of growth of $A$? Is it true that $|A \cap \{1, \ldots, N\}| \gg N^{1/2 - \varepsilon}$
 for all $\varepsilon > 0$ and large $N$?
 -/
 @[category research open, AMS 5]
@@ -104,7 +106,7 @@ theorem erdos_340 (ε : ℝ) (hε : ε > 0) :
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
 we begin with $1$ and iteratively include the next smallest integer that preserves the
 Sidon property (i.e. there are no non-trivial solutions to $a + b = c + d$). What is the
-order of growth of $A$? Is it true that $| A \cap\{1, \ldots, N\}| \gg N^{1/2−\varepsilon}$
+order of growth of $A$? Is it true that $|A \cap \{1, \ldots, N\}| \gg N^{1/2 - \varepsilon}$
 for all $\varepsilon > 0$ and large $N$?
 -/
 @[category research open, AMS 5]
@@ -174,3 +176,5 @@ theorem erdos_340.variants.co_density_zero_sub :
     (∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon)
       ↔ answer(sorry) :=
   sorry
+
+end Erdos340
