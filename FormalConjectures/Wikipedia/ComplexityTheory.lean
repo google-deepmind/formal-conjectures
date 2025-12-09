@@ -63,7 +63,7 @@ abbrev ComplexityClass := Set DecisionProblem
 /--
 A simple definition to abstract the notion of a poly-time Turing machine into a predicate.
 -/
-def isComputableInPolyTime {α β : Type} (ea : FinEncoding α) (eb : FinEncoding β) (f : α → β) :=
+def IsComputableInPolyTime {α β : Type} (ea : FinEncoding α) (eb : FinEncoding β) (f : α → β) :=
   Nonempty (TM2ComputableInPolyTime ea eb f)
 
 /--
