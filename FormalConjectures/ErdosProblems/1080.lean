@@ -39,7 +39,11 @@ contain a $C_6$?
 theorem erdos_1080 :
     (∃ (c : ℝ) (_ : c > 0), ∀ (V : Type*) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
         [DecidableRel G.Adj] (n : ℕ) (_ : Fintype.card V = n) (_ : n > 0)
-        (X Y : Set V) (_ : IsBipartition G X Y) (_ : X.ncard = ⌊(n : ℝ) ^ (2/3 : ℝ)⌋₊)
+        (_ : G.IsBipartite)
+        (X Y : Set V) (_ : ∀ v, v ∈ X ∨ v ∈ Y) (_ : Disjoint X Y)
+        (_ : ∀ x y, x ∈ X → y ∈ X → ¬G.Adj x y)
+        (_ : ∀ x y, x ∈ Y → y ∈ Y → ¬G.Adj x y)
+        (_ : X.ncard = ⌊(n : ℝ) ^ (2/3 : ℝ)⌋₊)
         (_ : Fintype.card G.edgeSet ≥ c * n),
         ∃ (v : V) (walk : G.Walk v v), walk.IsCycle ∧ walk.length = 6) ↔ answer(sorry) := by
   sorry
