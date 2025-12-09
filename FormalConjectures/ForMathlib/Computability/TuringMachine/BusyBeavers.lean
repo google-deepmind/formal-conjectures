@@ -82,6 +82,7 @@ instance Machine.inhabited [Inhabited Λ] : Inhabited (Machine Γ Λ) := by
   looks like `L.rev ++ [a] ++ R` with the machine currently reading
   the `a`. The lists are automatically extended with blanks as the
   machine moves around. -/
+@[ext]
 structure Cfg [Inhabited Γ] where
   /-- The current machine state. -/
   q : Option Λ
@@ -136,8 +137,11 @@ lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
 lemma multiStep_eq_none_of_le {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
     (H : M.multiStep config n = none) (hnm : n ≤ m) :
     M.multiStep config m = none := by
-  rw [multiStep_succ, H]
-  rfl
+  induction hnm with
+  | refl => exact H
+  | @step m hnm H =>
+    rw [multiStep_succ, H]
+    rfl
 
 lemma multiStep_eq_none_of_le_of_multiStep_eq_none {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
     (hmn : m ≤ n) (hm : M.multiStep config m = none) : M.multiStep config n = none := by
@@ -184,16 +188,14 @@ lemma isHalting_iff_exists_haltsAt : IsHalting M ↔ ∃ n, M.HaltsAfter (init [
 lemma exists_of_not_haltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n) :
     ∃ (a : Λ) (b : Tape Γ), M.multiStep s n = some ⟨a, b⟩ := by
   contrapose! H
-  match HH : M.multiStep s n with
-  · have : M.multiStep s n = some ⟨none, (Option.get _ HH).tape⟩ := by
-      suffices ∀ (a : Λ), a ∉ (Option.get _ HH).q by
-        rw [← Option.eq_none_iff_forall_not_mem.mpr this, ← Option.eq_some_of_isSome]
-      intro a h
-      apply (H a (Option.get _ HH).tape) <| h.symm ▸ (Option.eq_some_of_isSome HH)
-    rw [HaltsAfter, multiStep_succ, this]
-    rfl
-  · apply multiStep_succ_eq_none_of_multiStep_eq_none
-    rwa [Bool.not_eq_true, Option.isSome_eq_false_iff, Option.isNone_iff_eq_none] at HH
+  rw [HaltsAfter, multiStep_succ]
+  obtain H | ⟨⟨u, u'⟩, hu⟩ := (Option.eq_none_or_eq_some (M.multiStep s n))
+  · simp [H]
+  · suffices u = none by rw [hu, this] ; rfl
+    rw [Option.eq_none_iff_forall_ne_some]
+    intro a hc
+    subst hc
+    simp [hu] at H ⊢
 
 lemma not_isHalting_iff_forall_isSome_multiStep :
     ¬ IsHalting M ↔ ∀ n, M.multiStep (init []) (n + 1) |>.isSome := by

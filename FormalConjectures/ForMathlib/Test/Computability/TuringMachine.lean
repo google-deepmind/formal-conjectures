@@ -38,12 +38,11 @@ deriving Inhabited, Fintype
 def alwaysHaltingMachine : Machine Γ Λ := fun _ _ =>
   none
 
-def haltsAfterOne : Machine Γ Λ := fun l _ =>
-  match l with
+def haltsAfterOne : Machine Γ Λ
   | --If the state is `S`, change state to `T` and move head to the right
-    .S => some (Λ.T, Stmt.write default Dir.right)
+    .S, _ => some (Λ.T, Stmt.write default Dir.right)
   | --If the state is already `T` then halt
-    .T => none
+    .T, _ => none
 
 instance : alwaysHaltingMachine.IsHalting := by
   rw [isHalting_iff_exists_haltsAt]
