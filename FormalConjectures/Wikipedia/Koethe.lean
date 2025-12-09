@@ -30,6 +30,8 @@ variable {R : Type*}
 
 variable [Ring R]
 
+namespace Koethe
+
 /--Say a subset `I` of a ring `R` is nilpotent if all its elements are nilpotent. -/
 def IsNil {S : Type*} [SetLike S R] (I : S) := ∀ i ∈ I, IsNilpotent i
 
@@ -58,21 +60,21 @@ theorem KotherConjecture.variants.le_KotherRadical {I : Ideal R} (hI : IsNil I) 
 of the matrix ring `M_n(R)`.-/
 @[category research open, AMS 16]
 theorem KotherConjecture.variants.general_matrix {I : TwoSidedIdeal R} (hI : IsNil I)
-    (n : Type*) [Fintype n] : IsNil (matricesOver n I) := by
+    (n : Type*) [Fintype n] : IsNil (matrix n I) := by
   sorry
 
 /--The **Köthe conjecture**: for any nil ideal `I` of `R`, the matrix ideal `M_2(I)` is a nil ideal
 of the matrix ring `M_2(R)`.-/
 @[category research open, AMS 16]
 theorem KotherConjecture.variants.two_by_two_matrix {I : TwoSidedIdeal R} (hI : IsNil I) :
-    IsNil (matricesOver (Fin 2) I) := by
+    IsNil (matrix (Fin 2) I) := by
   sorry
 
 /--The **Köthe conjecture**: for any positive integer `n`, the Köthe radical of `R` is the matrix ideal `M_2(Nil*(R))`.-/
 @[category research open, AMS 16]
 theorem KotherConjecture.variants.matrixOver_KotherRadical
     {I : TwoSidedIdeal R} (hI : IsNil I) (n : Type*) [Fintype n] :
-    matricesOver n (Nil* R) = Nil* (Matrix n n R) := by
+    matrix n (Nil* R) = Nil* (Matrix n n R) := by
   sorry
 
 /-
@@ -88,3 +90,5 @@ This is known to be false, see Agata Smoktunowicz, _Polynomial rings over nil ri
 theorem amitsur_conjecture (J : TwoSidedIdeal R) (hJ : IsNil J) :
     IsNil (TwoSidedIdeal.map (Polynomial.C) J) := by
   sorry
+
+end Koethe

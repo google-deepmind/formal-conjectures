@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
-import Mathlib
+import Mathlib.Algebra.Polynomial.Degree.Definitions
+import Mathlib.Algebra.Polynomial.Eval.Defs
+import Mathlib.Data.Nat.Prime.Defs
 
 open Polynomial
 
@@ -34,7 +35,7 @@ def BunyakovskyCondition (f : ℤ[X]) : Prop :=
 /--
 **Schinzel condition**
 A condition on sets of polynomials in the Schinzel and Bunyakovsky conjectures.
-Holds if for every prime $p$ there exists a natural $n$ such that $p$ not divides $f_i(n)$ for all $f_i$.
+Holds if for every prime $p$ there exists a natural $n$ such that for every polynomial $f$ in the set, $p$ does not divide $f(n)$.
 -/
 def SchinzelCondition (fs : Finset ℤ[X]) : Prop :=
   ∀ p : ℕ, p.Prime → ∃ n : ℕ, ∀ f ∈ fs, ¬(p : ℤ) ∣ f.eval (n : ℤ)

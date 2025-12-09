@@ -21,19 +21,21 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/672](https://www.erdosproblems.com/672)
 -/
+
+namespace Erdos672
+
 /-- Erdős problem 672 conjectures that the below holds for any $k ≥ 4$ and $l > 1$. -/
-def Erdos672With (k l : ℕ) [NeZero k] : Prop :=
-  ∀ᵉ (s : Fin k → ℕ), 0 < s 0 → (∃ d > 0, Nat.gcd (s 0) d = 1 ∧ ∀ i, s i = s 0 + i * d) →
-  ¬ ∃ q, ∏ i, s i = q ^ l
+def Erdos672With (k l : ℕ) : Prop :=
+  ∀ (s : Finset ℕ), s.card = k → ∀ᵉ (n > 0) (d > 0), n.gcd d = 1 →
+    Set.IsAPOfLengthWith s k n d → ∀ q, ∏ i ∈ s, i ≠ q ^ l
 
 /--
-Can the product of an arithmetic progression of positive integers of length ≥ 4 be a perfect power?
+Can the product of an arithmetic progression of positive integers $n, n + d, ..., n + (k - 1)d$
+of length ≥ 4, with $(n, d) = 1$, be a perfect power?
 -/
 @[category research open, AMS 11]
 theorem erdos_672 :
-    (∀ᵉ (k) (l > 1), (hk : k ≥ 4) →
-    letI : NeZero k := ⟨Nat.not_eq_zero_of_lt hk⟩
-    Erdos672With k l) ↔ answer(sorry) := by
+    (∀ᵉ (k) (l > 1), k ≥ 4 → Erdos672With k l) ↔ answer(sorry) := by
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/
@@ -50,3 +52,5 @@ J. Indian Math. Soc. (N.S.) (1951), 135-139. -/
 lemma erdos_672.variants.oblath :
     Erdos672With 5 2 ∧ Erdos672With 3 3 ∧ Erdos672With 3 4 ∧ Erdos672With 3 5 := by
   sorry
+
+end Erdos672

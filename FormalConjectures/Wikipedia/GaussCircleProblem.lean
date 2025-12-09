@@ -37,33 +37,32 @@ $$
 $$
 -/
 
-noncomputable section
-
 namespace GaussCircleProblem
 
 /--
 Let $N(r)$ be the number of points $(m, n)$ within a circle of radius $r$,
 where $m$ and $n$ are both integers.
 -/
-private abbrev N (r : ℝ) : ℕ :=
+noncomputable abbrev N (r : ℝ) : ℕ :=
   { (m, n) : ℤ × ℤ | !₂[↑m, ↑n] ∈ Metric.closedBall (0 : ℝ²) r }.ncard
 
 /--
 Let $E(r)$ be the error term between the number of integral points inside the circle and the
 area of the circle; that is $N(r) = \pi r^2 + E(r)$.
 -/
-private abbrev E (r : ℝ) : ℝ := N r - π * r ^ 2
+noncomputable abbrev E (r : ℝ) : ℝ := N r - π * r ^ 2
 
 /--
 Gauss proved that
 $$
-  |E(r)|\leq 2\sqrt{2}\pi r.
+  |E(r)|\leq 2\sqrt{2}\pi r,
 $$
+for sufficiently large $r$.
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67
 -/
 @[category research solved, AMS 11]
-theorem error_le (r : ℝ) (hr : 0 ≤ r) : |E r| ≤ 2 * √2 * π * r := by
+theorem error_le : ∀ᶠ r in atTop, |E r| ≤ 2 * √2 * π * r := by
   sorry
 
 /--
@@ -73,14 +72,13 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem error_not_isLittleO (r : ℝ) (hr : 0 ≤ r) :
-    ¬E =o[atTop] (fun r => √r * √√r.log) := by
+theorem error_not_isLittleO : ¬E =o[atTop] (fun r => √r * √√r.log) := by
   sorry
 
 /--
 It is conjectured that the correct bound is
 $$
-  |E(r)| = O\left(r^{1/2 + o(1)})\right)
+  |E(r)| = O\left(r^{1/2 + o(1)}\right)
 $$
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67
@@ -101,7 +99,7 @@ $$
 -/
 @[category research solved, AMS 11]
 theorem exact_form_floor (r : ℝ) (hr : 0 ≤ r) :
-    N r = 1 + 4 * ∑' i, (⌊r ^ 2 / (4 * i + 1)⌋ - ⌊r ^ 2 / (4 * i + 3)⌋) := by
+    N r = 1 + 4 * ∑' (i : ℕ), (⌊r ^ 2 / (4 * i + 1)⌋ - ⌊r ^ 2 / (4 * i + 3)⌋) := by
   sorry
 
 end GaussCircleProblem

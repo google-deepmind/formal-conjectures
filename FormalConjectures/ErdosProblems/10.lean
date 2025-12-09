@@ -21,12 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/10](https://www.erdosproblems.com/10)
 -/
-/--
-The lower asymptotic density of a set $S$ is the $\liminf$ as $n → ∞$ of the
-ratio $\frac{|\{a ∈ S \mid  a < n\}|}{n}$.
--/
-noncomputable def lowerDensity (S : Set ℕ) : ℝ :=
-    Filter.atTop.liminf (fun n => (Set.Iio n ∩ S).ncard / n)
+
+namespace Erdos10
 
 /--
 The set of natural numbers that can be written as a sum
@@ -53,7 +49,7 @@ Ref: Gallagher, P. X., _Primes and powers of 2_.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_10.variants.gallagher (ε : ℝ)
-    (hε : 0 < ε) : ∃ k, 1 - ε ≤ lowerDensity (sumPrimeAndTwoPows k) := by
+    (hε : 0 < ε) : ∃ k, 1 - ε ≤ (sumPrimeAndTwoPows k).lowerDensity := by
   sorry
 
 /--
@@ -96,3 +92,5 @@ infinitely many even integers which are not the sum of a prime and at most $3$ p
 theorem erdos_10.variants.gretchuk :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 3 := by
   sorry
+
+end Erdos10

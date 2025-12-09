@@ -24,20 +24,24 @@ import FormalConjectures.Util.ProblemImports
 
 open AffineMap MeasureTheory Metric
 
+open scoped EuclideanGeometry
+
+namespace Kakeya
+
 /--
 A set `S` in `ℝⁿ` is called a Kakeya set if it contains a unit line segment in every direction.
 For simplicity, we omit the compactness assumption here.
 For a discussion on the equivalence of definitions with and without compactness, see
 [this paper](https://arxiv.org/pdf/2203.15731).
 -/
-def IsKakeya {n : ℕ} (S : Set (EuclideanSpace ℝ (Fin n))) : Prop :=
+def IsKakeya {n : ℕ} (S : Set (ℝ^n)) : Prop :=
   ∀ v, ‖v‖ = 1 → ∃ a, affineSegment ℝ a (a + v) ⊆ S
 
 /--
 A trivial example: the closed ball of radius 1 in `ℝⁿ` is a Kakeya set.
 -/
 @[category test, AMS 42]
-example (n : ℕ) : IsKakeya (closedBall (0 : EuclideanSpace ℝ (Fin n)) 1) := by
+theorem isKakeya_closedBall (n : ℕ) : IsKakeya (closedBall (0 : ℝ^n) 1) := by
   rintro v hv
   use 0
   rintro _ ⟨t, ⟨ht₀, ht₁⟩, rfl⟩
@@ -48,7 +52,7 @@ The **Kakeya set conjecture** in dimension `n`: the statement that every Kakeya 
 Hausdorff dimension `n`.
 -/
 def KakeyaSetConjectureDim (n : ℕ) : Prop :=
-  ∀ S : Set (EuclideanSpace ℝ (Fin n)), IsKakeya S → dimH S = n
+  ∀ S : Set (ℝ^n), IsKakeya S → dimH S = n
 
 @[category research open, AMS 42]
 theorem kakeya_set_conjecture (n : ℕ) (hn : n > 0) :
@@ -98,3 +102,5 @@ theorem kakeya_finite {F : Type*} [Field F] [Fintype F] {n : ℕ}
     (K : Finset (Fin n → F)) (hK : IsKakeyaFinite K) :
     card F ^ n / (2 - 1 / card F : ℚ) ^ (n - 1) ≤ K.card := by
   sorry
+
+end Kakeya

@@ -96,24 +96,27 @@ unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
   -- which we probably don't want to count here.
   let moduleImportNames := #[`FormalConjectures.All]
   initSearchPath (← findSysroot)
-  let modulesToImport : Array Import := moduleImportNames.map ({ module := · })
+  let imports : Array Import := moduleImportNames.map ({ module := · })
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
 
-  Lean.withImportModules modulesToImport {} 0 fun env => do
-    let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
-    return result
+  let env ← Lean.importModules imports {} (trustLevel := 1024) (loadExts := true)
+
+  let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
+  return result
 
 unsafe def main (args : List String) : IO Unit := do
-  let .some file := args.get? 0
+  let .some (file : String) := args[0]?
     | IO.println "Usage: stats <file>
-overwrites the contents of the `main` tag of a html `file` with a weclome page including stats."
+overwrites the contents of the `main` tag of a html `file` with a welcome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
+  let .some (graphFile : String) := args[1]?
+    | IO.println "Repository growth graph not supplied, generating docs without graph."
+  let graphHtml ← IO.FS.readFile graphFile
 
   runWithImports do
     let categoryStats ← getCategoryStatsMarkdown
     let subjectStats ← getSubjectStatsMarkdown
-
     let markdownBody :=
       s!"# Welcome to the *Formal Conjectures* Documentation!
 
@@ -136,8 +139,13 @@ classifications, please refer to the
 ---
 
 ## Subject Category Statistics
-{subjectStats}"
+{subjectStats}
+
+---
+
+## Repository growth
+"
     IO.println markdownBody
     let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throwError "Parsing failed"
-    let finalHtml ← replaceTag "main" inputHtmlContent newBody
+    let finalHtml ← replaceTag "main" inputHtmlContent (newBody ++ graphHtml)
     IO.FS.writeFile file finalHtml

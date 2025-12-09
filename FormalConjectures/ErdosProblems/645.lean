@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 
+namespace Erdos645
+
 /--
 If ℕ is $2$-coloured then there must exist a monochromatic three-term arithmetic progression
 $x,x+d,x+2d$ such that $d>x$.
@@ -31,3 +33,5 @@ $x,x+d,x+2d$ such that $d>x$.
 theorem erdos_645 (c : ℕ → Bool) : ∃ x d, 0 < x ∧ x < d ∧
     (∃ C, c x = C ∧ c (x + d) = C ∧ c (x + 2 * d) = C) := by
   sorry
+
+end Erdos645

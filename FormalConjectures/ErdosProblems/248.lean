@@ -24,14 +24,14 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped ArithmeticFunction
 
+namespace Erdos248
+
 /--
-Are there infinitely many $n$ such that, for all $k\geq 1$
-$$
-  \omega(n + k) \ll k?
-$$
-Here $\omega(n)$ is the number of distinct prime divisors
-of $n$.
+Are there infinitely many $n$ such that $\omega(n + k) \ll k$ for all $k \geq 1$?
+Here $\omega(n)$ is the number of distinct prime divisors of $n$.
 -/
 @[category research open, AMS 11]
 theorem erdos_248 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, ω (n + k) ≤ C * k }.Infinite) ↔ answer(sorry) := by
   sorry
+
+end Erdos248

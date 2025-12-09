@@ -18,7 +18,9 @@ import Mathlib.LinearAlgebra.Orientation
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
 import Mathlib.Geometry.Euclidean.Triangle
-import FormalConjectures.ForMathlib.Logic.Equiv.Fin
+
+import FormalConjectures.ForMathlib.Logic.Equiv.Fin.Rotate
+import FormalConjectures.ForMathlib.Data.Set.Triplewise
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
@@ -46,6 +48,22 @@ variable {V P : Type*} {n : ℕ}
 variable [NormedAddCommGroup V] [InnerProductSpace ℝ V] [MetricSpace P] [NormedAddTorsor V P]
 
 variable [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] {p : Fin n → P}
+
+/-- We say a subset `A` of points in the plane is non-trilinear
+if it contains no three points that lie on the same line.-/
+def NonTrilinear (A : Set P) : Prop :=
+  A.Triplewise (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
+
+/-- `ConvexIndep S` means that `S` consists of extremal points of its convex hull,
+i.e., the point set encloses a convex shape.
+Also known as a "convex-independent set". -/
+def ConvexIndep (S : Set ℝ²) : Prop :=
+  ∀ a ∈ S, a ∉ convexHull ℝ (S \ {a})
+
+/-- The set `P` contains a convex `n`-gon.
+See also `IsConvexPolygon`. -/
+def HasConvexNGon (n : ℕ) (P : Set ℝ²) : Prop :=
+  ∃ S : Finset ℝ², S.card = n ∧ ↑S ⊆ P ∧ ConvexIndep S
 
 /-- The statement that a sequence of points form a counter-clockwise convex polygon. -/
 def IsCcwConvexPolygon (p : Fin n → P) : Prop :=
@@ -161,13 +179,24 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
                   a 1, b 1, c 1;
                   1,   1,   1] / 2 := by
   rw [triangle_area, Orientation.areaForm_to_volumeForm,
-    positiveOrientation.volumeForm_robust (EuclideanSpace.basisFun (Fin 2) ℝ) rfl, Basis.det_apply]
+    positiveOrientation.volumeForm_robust (EuclideanSpace.basisFun (Fin 2) ℝ) rfl, Module.Basis.det_apply]
   suffices (a 0 - c 0) * (b 1 - c 1) - (b 0 - c 0) * (a 1 - c 1) =
       a 0 * b 1 - a 0 * c 1 - b 0 * a 1 + b 0 * c 1 + c 0 * a 1 - c 0 * b 1 by
-    simp [Matrix.det_fin_two, Matrix.det_fin_three, Basis.toMatrix, this]
+    simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
+
+/--
+Given a finite set of points in the plane, we define the number of distinct distances between pairs
+of points.
+-/
+noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
+  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
 
 end EuclideanGeometry
 
+
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
   dist p q = dist q r ∨ dist q r = dist r p ∨ dist r p = dist p q
+
+nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) :=
+  Nonempty A ∧ A.Triplewise (IsIsosceles · · ·)

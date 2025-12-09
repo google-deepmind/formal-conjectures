@@ -21,9 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/267](https://www.erdosproblems.com/267)
 -/
+
+namespace Erdos267
+
 /--
-Let $F_1=F_2=1$ and $F_{n+1} = F_n + F_{n−1}$ be the Fibonacci sequence.
-Let $n_1 < n_2 < ...$ be an infinite sequence with $\frac{n_{k+1}}{n_k} ≥ c > 1$. Must
+Let $F_1=F_2=1$ and $F_{n+1} = F_n + F_{n-1}$ be the Fibonacci sequence.
+Let $n_1 < n_2 < \dots$ be an infinite sequence with $\frac{n_{k+1}}{n_k} \ge c > 1$. Must
 $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 -/
 @[category research open, AMS 11]
@@ -32,8 +35,8 @@ theorem erdos_267 : (∀ᵉ (n : ℕ → ℕ) (c > (1 : ℚ)), StrictMono n → 
   sorry
 
 /--
-Let $F_1=F_2=1$ and $F_{n+1} = F_n + F_{n−1}$ be the Fibonacci sequence.
-Let $n_1 < n_2 < ...$ be an infinite sequence with $\frac {n_k}{k} → ∞$. Must
+Let $F_1=F_2=1$ and $F_{n+1} = F_n + F_{n-1}$ be the Fibonacci sequence.
+Let $n_1 < n_2 < \dots$ be an infinite sequence with $\frac {n_k}{k} \to \infty$. Must
 $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 -/
 @[category research open, AMS 11]
@@ -64,3 +67,5 @@ Ref: André-Jeannin, Richard, _Irrationalité de la somme des inverses de certai
 theorem erdos_267.variants.fibonacci_inverse_sum :
     Irrational <| ∑' k, 1 / (Nat.fib k) := by
   sorry
+
+end Erdos267
