@@ -14,69 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.Util.ProblemImports
+
 /-!
-# Erdős Problem 1080 — Bipartitions of size ⌊n^(2/3)⌋ and 6-cycles
+# Erdős Problem 1080
 
-**Source:** https://www.erdosproblems.com/1080
-
-This problem concerns the extremal relationship between:
-
-* a bipartition of size roughly `n^(2/3)`
-* edge-density in a graph
-* and the forced existence of a 6-cycle (`C₆`).
-
-The conjecture asserts that sufficiently many edges (linear in `n`)
-guarantee a 6-cycle, provided one side of the bipartition has size ⌊n^(2/3)⌋.
-
--- [category research open]
--- [AMS 05]
--- tags: graph theory, cycles
+*Reference:* [erdosproblems.com/1080](https://www.erdosproblems.com/1080)
 -/
 
-import FormalConjectures.Util.ProblemImports
-import Mathlib.Data.Real.Basic
-
-open Classical
-noncomputable section
+open SimpleGraph
 
 namespace Erdos1080
 
-variable {V : Type*} [Fintype V] [DecidableEq V]
+/-- `IsBipartition G X Y` means that `X` and `Y` form a bipartition of the vertices of `G`. -/
+def IsBipartition {V : Type*} (G : SimpleGraph V) (X Y : Set V) : Prop :=
+  Disjoint X Y ∧ X ∪ Y = Set.univ ∧ ∀ ⦃u v⦄, G.Adj u v → (u ∈ X ↔ v ∈ Y)
 
-/-- Minimal bipartition predicate with explicit parts `U, W`. -/
-structure IsBipartition (G : SimpleGraph V) (U W : Finset V) : Prop where
-  disjoint : Disjoint U W
-  cover : U ∪ W = (Finset.univ : Finset V)
-  no_edges_in_U :
-    ∀ {x y}, x ∈ U → y ∈ U → ¬ G.Adj x y
-  no_edges_in_W :
-    ∀ {x y}, x ∈ W → y ∈ W → ¬ G.Adj x y
-
-/-- `G` contains a 6-cycle. -/
-def HasC6 (G : SimpleGraph V) : Prop :=
-  ∃ v : Fin 6 → V,
-    (∀ i j, i ≠ j → v i ≠ v j) ∧
-    (∀ i : Fin 6,
-      let j : Fin 6 := ⟨(i.1 + 1) % 6, by decide⟩
-      G.Adj (v i) (v j))
-
-/-- Target bipartition size: `⌊n^(2/3)⌋`. -/
-def partSize (n : ℕ) : ℕ :=
-  Nat.floor ((n : ℝ) ^ (2 / 3 : ℝ))
-
-/-- Formal packaging of the conjecture statement. -/
-def Statement : Prop :=
-  ∃ c : ℝ, 0 < c ∧
-    ∀ (V : Type*) [Fintype V] [DecidableEq V] (G : SimpleGraph V),
-      ∃ U W : Finset V,
-        IsBipartition G U W ∧
-        U.card = partSize (Fintype.card V) ∧
-        ((Nat.ceil (c * (Fintype.card V : ℝ)) : ℕ)
-            ≤ G.edgeFinset.card → HasC6 G)
-
-/-- Erdős Problem 1080 in the `problem ↔ answer` format used in the repository. -/
+/--
+Let $G$ be a bipartite graph on $n$ vertices such that one part has $\lfloor n^{2/3}\rfloor$
+vertices. Is there a constant $c>0$ such that if $G$ has at least $cn$ edges then $G$ must
+contain a $C_6$?
+-/
+@[category research open, AMS 5]
 theorem erdos_1080 :
-    Statement ↔ answer (sorry) := by
+    (∃ (c : ℝ) (_ : c > 0), ∀ (V : Type*) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+        [DecidableRel G.Adj] (n : ℕ) (_ : Fintype.card V = n) (_ : n > 0)
+        (X Y : Set V) (_ : IsBipartition G X Y) (_ : X.ncard = ⌊(n : ℝ) ^ (2/3 : ℝ)⌋₊)
+        (_ : Fintype.card G.edgeSet ≥ c * n),
+        ∃ (v : V) (walk : G.Walk v v), walk.IsCycle ∧ walk.length = 6) ↔ answer(sorry) := by
   sorry
 
 end Erdos1080
