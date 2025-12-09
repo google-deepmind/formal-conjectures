@@ -82,7 +82,7 @@ def SimpleGraph'.deleteEdges (G : SimpleGraph' V) (s : Set (Sym2 V)) :
       exact G.loopless v h
 
 def SimpleGraph'.edgeSet (G : SimpleGraph' V) : Set (Sym2 V) :=
-  {e | ∃ u v, s(u, v) = e ∧ G.Adj u v}
+  {e | Sym2.lift ⟨(G.Adj · ·), sorry⟩ e}
 
 @[category API]
 lemma SimpleGraph'.mem_edgeSet (G : SimpleGraph' V) {e : Sym2 V} :
