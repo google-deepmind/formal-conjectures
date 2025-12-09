@@ -31,13 +31,9 @@ namespace ReedOmegaDeltaChi
 open Classical
 
 noncomputable
-def maxDegree {V : Type} (G : SimpleGraph V) : ℕ∞ :=
-  if h : ∀ v, Finite (G.neighborSet v) then
-    have : ∀ v, Fintype (G.neighborSet v) :=
-      fun v => @Fintype.ofFinite _ (h v)
-    ⨆ v, G.degree v
-  else
-    ⊤
+def edegree (G : SimpleGraph V) (v : V) : ℕ∞ := (G.neighborSet v).encard
+
+def emaxDegree {V : Type*} (G : SimpleGraph V) : ℕ∞ := ⨆ v, G.edegree v
 
 /--
 For a nonempty graph, `G.cliqueNum` is 0 iff the clique size is unbounded. For the purposes of
