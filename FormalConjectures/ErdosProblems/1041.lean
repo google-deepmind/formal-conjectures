@@ -40,7 +40,7 @@ noncomputable def length (s : Set ℂ) : ℝ≥0∞ := μH[1] s
 **Erdős–Herzog–Piranian Component Lemma** (Metric Properties of Polynomials, 1958):
 If $f$ is a degree $n$ polynomial with all roots in the unit disk,
 then some connected component
-of $\{z \mid |f(z)| < 1\}$ contains at least two roots.
+of $\{z \mid |f(z)| < 1\}$ contains at least two roots with multiplicity.
 
 See p. 139, above Problem 5:
 [EHP58] Erdős, P. and Herzog, F. and Piranian, G., _Metric properties of polynomials_.
