@@ -43,17 +43,7 @@ The type of decision problems.
 We define these as functions from lists of booleans to booleans,
 implictly assuming the usual encodings.
 -/
-structure DecisionProblem where
-  toFun : List Bool → Bool
-
-instance : CoeFun DecisionProblem (fun _ ↦ List Bool → Bool) :=
-  ⟨DecisionProblem.toFun⟩
-
-instance : Membership (List Bool) DecisionProblem :=
-  ⟨fun X x ↦ X x⟩
-
-instance : HasCompl DecisionProblem :=
-  ⟨fun X ↦ ⟨fun x ↦ not (X x)⟩⟩
+abbrev DecisionProblem := List Bool → Bool
 
 /--
 The type of complexity classes. We define these as sets of decision problems.
