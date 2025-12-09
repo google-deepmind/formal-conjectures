@@ -62,7 +62,7 @@ lemma erdos_859.variants.trivial_case : DivisorSumSet 0 = Set.univ := by
 
 /-
 An easy sanity check is to prove that for every natural number `t` the density `dₜ` is
-a positve number.
+a positive number.
 Hint: investigate some multiplicative structure of `DivisorSumSet t`.
 -/
 @[category undergraduate, AMS 11]
