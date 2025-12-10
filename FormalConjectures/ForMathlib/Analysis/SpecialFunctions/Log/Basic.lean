@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Complex.ExponentialBounds
+import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Tactic
 
 -- TODO(mercuris): define a recursive version of this for better usability?

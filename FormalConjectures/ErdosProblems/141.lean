@@ -43,7 +43,7 @@ theorem first_three_odd_primes : ({3, 5, 7} : Set ℕ).IsPrimeProgressionOfLengt
   use 1
   constructor
   · aesop
-  · norm_num [exists_lt_succ, or_assoc, eq_comm, Set.insert_def,
+  · norm_num [exists_lt_succ_right, or_assoc, eq_comm, Set.insert_def,
     show (2).nth Nat.Prime = 5 from nth_count prime_five,
     show (3).nth Nat.Prime = 7 from Nat.nth_count (by decide : (7).Prime)]
 
@@ -65,7 +65,7 @@ theorem exists_three_consecutive_primes_in_ap : ∃ (s : Set ℕ), s.IsAPAndPrim
     unfold Set.IsAPOfLengthWith
     constructor
     · aesop
-    · norm_num [exists_lt_succ, or_assoc, eq_comm, Set.insert_def]
+    · norm_num [exists_lt_succ_right, or_assoc, eq_comm, Set.insert_def]
   · exact first_three_odd_primes
 
 /--

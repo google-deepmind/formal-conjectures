@@ -79,7 +79,7 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
         refine .trans ?_ (sub_le_sub hm h')
         rw [hr', hr'', show ‖(fun z ↦ z ^ n + c)^[k] 0‖ = a + r by simp [a]]
         suffices a ≤ a * (n * n ^ m) by linarith
-        refine (mul_one a).symm.trans_le <| (mul_le_mul_left ha).2 ?_
+        refine (mul_one a).symm.trans_le <| (mul_le_mul_iff_right₀ ha).2 ?_
         have hn : 1 ≤ (n : ℝ) := Nat.one_le_cast.2 hn.le
         simpa using mul_le_mul hn (one_le_pow₀ hn)
     rw [← tendsto_norm_atTop_iff_cobounded]
