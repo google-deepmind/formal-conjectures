@@ -54,8 +54,8 @@ theorem erdos_1097.variants.weaker :
 A trivial lower bound: there are always at least $Ω(n)$ such values of $d$ in the worst case.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1097.variants.lower_bound : ∀ (n : ℕ), ∃ (A : Finset ℤ),
-    A.card = n ∧ ∃ c > (0 : ℝ), c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard := by
+theorem erdos_1097.variants.lower_bound : ∃ c > (0 : ℝ), ∀ (n : ℕ), ∃ (A : Finset ℤ),
+    A.card = n ∧ c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard := by
   sorry
 
 end Erdos1097
