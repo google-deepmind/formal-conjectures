@@ -36,8 +36,13 @@ $∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tends to infinit
 @[category research open, AMS 11]
 theorem erdos_1106 : Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := sorry
 
+<<<<<<< HEAD
 /-- Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct prime factors of
 $∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficient large $n$-/
+=======
+/-- Let $p(n)$ be the partition number of $n$ and $F(n)$ be distinct prime factor of
+$∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficiently large $n$. -/
+>>>>>>> refs/remotes/origin/ErdosProblem1106
 @[category research open, AMS 11]
 theorem erdos_1106_k2 :  ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := sorry
 
