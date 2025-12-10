@@ -61,7 +61,7 @@ The class P is the set of decision problems
 decidable in polynomial time by a deterministic Turing machine.
 -/
 def P : ComplexityClass :=
-  { L | IsComputableInPolyTime finEncodingListBool finEncodingBoolBool L.toFun }
+  { L | IsComputableInPolyTime finEncodingListBool finEncodingBoolBool L }
 
 /--
 The class NP is the set of decision problems
@@ -100,11 +100,27 @@ The conjecture that the complexity classes NP and coNP are not equal.
 theorem NP_ne_coNP : NP ≠ coNP := by sorry
 
 /--
+The theorem that the set of complements of languages in P is itself P.
+-/
+@[category undergraduate, AMS 68]
+theorem coP_eq_P :
+    { L | Lᶜ ∈ P } = P := by
+  sorry
+
+/--
 The theorem that P is a subset of NP.
 -/
 @[category undergraduate, AMS 68]
 theorem P_subset_NP :
     P ⊆ NP := by
+  sorry
+
+/--
+The theorem that P is a subset of coNP.
+-/
+@[category undergraduate, AMS 68]
+theorem P_subset_coNP :
+    P ⊆ coNP := by
   sorry
 
 end ComplexityTheory
