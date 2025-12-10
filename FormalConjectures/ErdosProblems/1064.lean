@@ -30,8 +30,7 @@ Let $ϕ(n)$ be the Euler's totient function, then the $n$ satisfies $ϕ(n)>ϕ(n 
 have asymptotic density 1 and there exist infinitely many $n$ such that $ϕ(n)< ϕ(n - ϕ(n))$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1064 :
-    (Tendsto (fun (x : ℕ) => (Nat.card {n| φ n > φ (n - φ n)}) / (x : ℝ)) atTop (𝓝 1)) := sorry
+theorem erdos_1064 : {n | φ n > φ (n - φ n)}.HasDensity 1 := sorry
 
 @[category research open, AMS 11]
 theorem erdos_1064_k2 : {n | φ n < φ (n - φ n)}.Infinite := sorry
