@@ -21,9 +21,9 @@ open Nat
 
 namespace Erdos1004
 
-/-- `distinct_totient_run n K` means that the values `φ(n+1), φ(n+2), ..., φ(n+K)` are all distinct. -/
-def distinct_totient_run (n K : ℕ) : Prop :=
-  ∀ (i j : Fin K), totient (n + i.val + 1) = totient (n + j.val + 1) → i = j
+/-- `IsDistinctTotientRun n K` means that the values `φ(n+1), φ(n+2), ..., φ(n+K)` are all distinct. -/
+def IsDistinctTotientRun (n K : ℕ) : Prop :=
+  (Set.Icc (n + 1) (n + K)).InjOn totient
 
 /--
 For any fixed c > 0, if x is sufficiently large then there exists n ≤ x such that
@@ -31,9 +31,9 @@ the values of φ(n+k) are all distinct for 1 ≤ k ≤ (log x)^c.
 This is an open problem.
 -/
 @[category research open, AMS 11]
-theorem erdos_1004 (c : ℝ) (hc : c > 0) :
-    (∃ x₀ : ℕ, ∀ x ≥ x₀, ∃ n ≤ x,
-      distinct_totient_run n ⌊(Real.log (x : ℝ)) ^ c⌋₊) ↔ answer(sorry) := by
+theorem erdos_1004:
+    (∀ c > (0 : ℝ), ∀ᶠ x in atTop, ∃ n ≤ x,
+      IsDistinctTotientRun n ⌊(Real.log (x : ℝ)) ^ c⌋₊) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -44,8 +44,9 @@ Here we state the existence of such a constant c.
 @[category research solved, AMS 11]
 theorem erdos_1004.EPS87_theorem :
     (∃ (c : ℝ) (hc : c > 0),
-      ∀ (n K : ℕ), distinct_totient_run n K →
-        (K : ℝ) ≤ (n : ℝ) / Real.exp (c * (Real.log n) ^ (1/3 : ℝ))) ↔ answer(True) := by
+      ∀ (n K : ℕ), n > 0 → IsDistinctTotientRun n K →
+        (K : ℝ) ≤ (n : ℝ) / Real.exp (c * (Real.log n) ^ (1/3 : ℝ))) ↔
+      answer(True) := by
   sorry
 
 end Erdos1004
