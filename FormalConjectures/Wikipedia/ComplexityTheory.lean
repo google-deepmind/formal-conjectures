@@ -121,6 +121,9 @@ The theorem that P is a subset of coNP.
 @[category undergraduate, AMS 68]
 theorem P_subset_coNP :
     P ⊆ coNP := by
-  sorry
+  rw [coNP, ← coP_eq_P]
+  simp only [Set.setOf_subset_setOf]
+  intros L hL
+  exact P_subset_NP hL
 
 end ComplexityTheory
