@@ -38,6 +38,13 @@ def ell (k : ℕ) : ℕ :=
 def eps (k : ℕ) : ℕ :=
   if k % 2 = 1 then 1 else 2
 
+/--
+Is it true that the anti-Ramsey number $AR(n, C_k)$ for cycles satisfies
+$AR(n, C_k) = \binom{k-2}{2} + \frac{1}{k-1} \cdot n + O(1)$ for $k \geq 3$,
+and the anti-Ramsey number $AR(n, P_k)$ for paths of length $k$ (where $k \geq 5$ and $n \geq k$)
+is exactly $\max\left(\binom{k-2}{2} + 1, \binom{\ell-1}{2} + (\ell-1)(n-\ell+1) + \varepsilon\right)$
+where $\ell = \lfloor(k-1)/2\rfloor$ and $\varepsilon = 1$ if $k$ is odd, $\varepsilon = 2$ otherwise?
+-/
 @[category research open, AMS 5]
 theorem erdos_1105 :
     (∃ (AR_cycle AR_path : ℕ → ℕ → ℕ),
