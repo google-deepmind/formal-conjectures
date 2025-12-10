@@ -62,7 +62,7 @@ def flip (x : Fin n → Bool) (B : Finset (Fin n)) : Fin n → Bool :=
 /-- Local sensitivity s(f,x),
 number of indices where flipping one bit changes the value of `f`. -/
 def sensitivityAt (f : (Fin n → Bool) → Bool) (x : Fin n → Bool) : ℕ :=
-  (univ.filter fun i => f (flip x {i}) ≠ f x).card
+  #{i | f (flip x {i}) ≠ f x}
 
 /-- Global sensitivity s(f),
 maximum sensitivity of `f` over all inputs. -/
@@ -72,7 +72,7 @@ def sensitivity (f : (Fin n → Bool) → Bool) : ℕ :=
 /-- Check validity of block collection (disjoint and sensitive),
 A collection of blocks `cB` is valid for `f` at `x` if the blocks are
 disjoint and flipping any block changes `f(x)`. -/
-def isValidBlockConfig (f : (Fin n → Bool) → Bool) (x : Fin n → Bool)
+def IsValidBlockConfig (f : (Fin n → Bool) → Bool) (x : Fin n → Bool)
     (cB : Finset (Finset (Fin n))) : Prop :=
   (cB : Set (Finset (Fin n))).PairwiseDisjoint id ∧
   ∀ B ∈ cB, f (flip x B) ≠ f x
@@ -80,7 +80,7 @@ def isValidBlockConfig (f : (Fin n → Bool) → Bool) (x : Fin n → Bool)
 /-- Local block sensitivity bs(f,x),
 maximum size of a collection of sensitive, disjoint blocks for `f` at `x`. -/
 noncomputable def blockSensitivityAt (f : (Fin n → Bool) → Bool) (x : Fin n → Bool) : ℕ :=
-  (univ.filter (fun cB => isValidBlockConfig f x cB)).sup card
+  Finset.sup {cB | IsValidBlockConfig f x cB} card
 
 /-- Global block sensitivity of `f`,
 maximum block sensitivity of `f` over all inputs. -/
