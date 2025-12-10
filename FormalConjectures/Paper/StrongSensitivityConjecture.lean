@@ -94,8 +94,7 @@ for every Boolean function `f : {0,1}^n → {0,1}`,
 We call this the *strong* sensitivity conjecture because the original sensitivity
 conjecture only asked for a polynomial bound in terms of `s(f)`. Huang's
 celebrated result (often called the sensitivity theorem) gives a quartic bound,
-`bs(f) ≤ s(f)^4`, thereby settling the original conjecture.
--/
+`bs(f) ≤ s(f)^4`, thereby settling the original conjecture. -/
 @[category research open, AMS 68]
 theorem strong_sensitivity_conjecture {n : ℕ} (f : (Fin n → Bool) → Bool) :
     blockSensitivity f ≤ sensitivity f ^ 2 := by
@@ -107,21 +106,27 @@ A Boolean function whose block sensitivity is strictly greater than
 its sensitivity. Source: [Nisan1989](https://dl.acm.org/doi/10.1145/73007.73038).
 
 `nisanExample(x) = 1` iff the Hamming weight of `x` is either
-`n/2` or `n/2 + 1`. We assume `n` is a multiple of 4. By analyzing `x`
-with Hamming weight `n/2` (the function is symmetric, so only the weight
-matters), one can check that
-
-* `s(f) = n/2`,
-* `bs(f) = 3n/4`.
-
-The value of `bs(f)` comes from using all `n/2` 1-bits as singleton blocks,
-and pairing the `n/2` 0-bits into `n/4` disjoint size-2 blocks.
--/
+`n/2` or `n/2 + 1`. We assume `n` is a multiple of 4.
+The function is symmetric, so its value only depends on the Hamming weight
+of the input. -/
 @[category test]
 def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
   let w := #{i | x i}
   decide (w ∈ ({n / 2, n / 2 + 1} : Finset ℕ))
 
+/-- Assuming `n` is a multiple of 4, the sensitivity of `nisanExample`
+is `n/2`, achieved by any `x` with Hamming weight `n/2`. -/
+lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
+    sensitivity (nisanExample n) = n / 2 := by
+  sorry
+
+/-- Assuming `n` is a multiple of 4, the block sensitivity of `nisanExample`
+is `3n/4`, achieved by any `x` with Hamming weight `n/2`.
+An optimal block configuration uses all `n/2` 1-bits as singleton blocks
+and forms `n/4` disjoint size-2 blocks from the 0-bits. -/
+lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) :
+    blockSensitivity (nisanExample n) = 3 * n / 4 := by
+  sorry
 
 end Sensitivity
 end StrongSensitivityConjecture
