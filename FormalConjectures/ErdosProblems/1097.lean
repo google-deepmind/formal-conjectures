@@ -39,15 +39,15 @@ common differences in three-term arithmetic progressions is $O(n^{3/2})$.
 -/
 @[category research open, AMS 11]
 theorem erdos_1097 : ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
-    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ) := by
+    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ) ↔ answer(sorry) := by
   sorry
 
 /--
 A weaker bound has been proven: there are always $O(n^2)$ such values of $d$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1097.variants.weaker : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
-    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (2 : ℝ)) ↔ answer(sorry) := by
+theorem erdos_1097.variants.weaker :
+    ∃ C > 0, ∀ A, (CommonDifferencesThreeTermAP A).ncard ≤ C * A.card ^ 2 := by
   sorry
 
 /--
