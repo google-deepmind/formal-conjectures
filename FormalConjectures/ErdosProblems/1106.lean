@@ -13,8 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
--- import FormalConjectures.Util.ProblemImports
 import FormalConjectures.Util.ProblemImports
 
 /-!
@@ -29,22 +27,19 @@ namespace Erdos1106
 
 /-- The partition function p(n) is the number of ways to write n as a sum of positive
 integers (where the order of the summands does not matter). -/
-def p : ℕ → ℕ
-| 0 => 1
-| n + 1 => (p n) + ∑ k ∈  range (n + 1),
-    if n + 1 - (k + 1) < (k + 1) then 0
-    else p (n + 1 - (k + 1) - (k + 1))
-
-/-- let $F(n)$ be distinct prime factor of $∏_{i= 1} ^ {n} p(n)$ -/
-def F : ℕ → ℕ := fun n => (∏ i ∈ Icc 1 n, p i).primeFactors.card
+def p : ℕ → ℕ := fun n => Fintype.card (Nat.Partition n)
 
 /--
 Let $p(n)$ be the partition number of $n$ and $F(n)$ be distinct prime factor of
-$∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tendsto infinity when $n$ tendsto infinity, and
-is $F(n)>n$ for sufficient large $n$.
+$∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tendsto infinity.
 -/
 @[category research open, AMS 11]
-theorem erdos_1106 : Tendsto F atTop atTop ∧ ∃ N, ∀ n > N, F n > n := sorry
+theorem erdos_1106 : Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := sorry
+
+/-- Let $p(n)$ be the partition number of $n$ and $F(n)$ be distinct prime factor of
+$∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficient large $n$-/
+@[category research open, AMS 11]
+theorem erdos_1106_k2 :  ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := sorry
 
 
 end Erdos1106
