@@ -20,13 +20,15 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 590
 
 *References:*
- - [erdosproblems.com/591](https://www.erdosproblems.com/590)
+ - [erdosproblems.com/590](https://www.erdosproblems.com/590)
  - [Ch72] Chang, C. C., A partition theorem for the complete graph on {$\omega\sp{\omega }$}. J. Combinatorial Theory Ser. A (1972), 396-452.
  - [Sp57] Specker, Ernst, Teilmengen von Mengen mit Relationen. Comment. Math. Helv. (1957), 302-314.
  - [La73] Larson, Jean A., A short proof of a partition theorem for the ordinal {$\omega \sp{\omega }$}. Ann. Math. Logic (1973/74), 129-145.
 -/
 
 open Cardinal Ordinal
+
+namespace Erdos590
 
 universe u
 
@@ -62,3 +64,5 @@ red $K_α$ or a blue $K_3$. A shorter proof was found by Larson [La73]
 @[category research solved, AMS 3]
 theorem erdos_590.variants.finite_cardinal (m : ℕ): OmegaPowerRamsey ω m := by
   sorry
+
+end Erdos590

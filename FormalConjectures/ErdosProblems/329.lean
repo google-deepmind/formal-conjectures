@@ -78,13 +78,6 @@ theorem erdos_turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUpperDensity A 
   sorry
 
 /--
-A perfect difference set modulo `n` is a set `D` such that the map `(a, b) ↦ a - b` from
-`D.offDiag` to `{x : ZMod n | x ≠ 0}` is a bijection.
--/
-def IsPerfectDifferenceSet (D : Set ℕ) (n : ℕ) : Prop :=
-  D.offDiag.BijOn (fun (a, b) => (a - b : ZMod n)) {x : ZMod n | x ≠ 0}
-
-/--
 If any finite Sidon set can be embedded in a perfect difference set,
 then the maximum density would be 1.
 -/
@@ -107,20 +100,6 @@ theorem erdos_329.converse_implication :
   sorry
 
 /-! ## Related results and examples -/
-
-/--
-The set of squares `{n^2 | n : ℕ}` is a Sidon set.
--/
-@[category undergraduate, AMS 5 11]
-theorem squares_are_sidon : IsSidon {n^2 | n : ℕ} := by
-  sorry
-
-/--
-The set of squares has upper density 0.
--/
-@[category undergraduate, AMS 5 11]
-theorem squares_sidon_density : sidonUpperDensity {n^2 | n : ℕ} = 0 := by
-  sorry
 
 /--
 It is possible to construct a Sidon set with positive density.

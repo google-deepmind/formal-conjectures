@@ -57,6 +57,7 @@ There are various ways of contributing to this repository:
         [Erdős Problems](https://www.erdosproblems.com/),
         [Wikipedia's list of unsolved problems](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics),
         [the Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book), ...)
+    *   The [The On-Line Encyclopedia of Integer Sequences (OEIS)](https://oeis.org/)
     *   ...
 
     We are also interested in the formalized statements of solved variants of
@@ -71,8 +72,9 @@ There are various ways of contributing to this repository:
     informal statement of the conjecture.
 
 3.  **Formalise a problem already proposed**. You can find a list of problems ready
-   to be worked on in our [list of unassigned new conjectures](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee+label%3A%22new+conjecture%22).
-   Just pick one and comment on the issue (e.g., "I want to work on this") to
+   to be worked on in our [list of unassigned new conjectures](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee+label%3A%22new+conjecture%22) or
+   [good first issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22).
+   Just pick one and comment on the issue (e.g., "I plan to work on this") to
    have it assigned to you.
 
 4.  **Improving the referencing and tagging of problems.** For example, adding
@@ -294,7 +296,7 @@ third party content. The original source for each conjecture is indicated by a
 URL within the source file. Third party content may be subject to different
 licensing requirements. In particular:
 
--   Material from Wikipedia articles and MathOverflow is released under the
+-   Material from Wikipedia articles, MathOverflow and the OEIS is released under the
     Creative Commons Attribution-Share-Alike License 4.0.
 -   Material from bbchallenge.org is used under the Creative Commons Attribution
     4.0 International License.

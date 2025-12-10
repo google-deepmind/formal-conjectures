@@ -30,8 +30,8 @@ open scoped Pointwise Topology
 namespace Erdos949
 
 /--
-Let $S\sub \mathbb{R}$ be a set containing no solutions to $a + b = c$.
-Must there be a set $A\sub \mathbb{R}∖S$ of cardinality continuum such that $A + A \sub A$?
+Let $S \\subseteq \\mathbb{R}$ be a set containing no solutions to $a + b = c$.
+Must there be a set $A \\subseteq \\mathbb{R} \\setminus S$ of cardinality continuum such that $A + A \\subseteq A$?
 -/
 @[category research open, AMS 5]
 theorem erdos_949 : (∀ᵉ (S : Set ℝ), (∀ᵉ (a ∈ S) (b ∈ S), ¬ a + b ∈ S) →

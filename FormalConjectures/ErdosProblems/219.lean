@@ -69,7 +69,7 @@ Ref: Green, Ben and Tao, Terence, _The primes contain arbitrarily long arithmeti
 -/
 
 @[category research solved, AMS 5 11]
-theorem erdos_219 : (∀ N, ∃ l ∈ primeArithmeticProgressions, N ≤ ENat.card l) ↔ answer(True) := by
+theorem erdos_219 : (∀ N : ℕ, ∃ l ∈ primeArithmeticProgressions, N ≤ ENat.card l) ↔ answer(True) := by
   sorry
 
 end Erdos219

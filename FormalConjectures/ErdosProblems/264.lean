@@ -62,9 +62,9 @@ theorem erdos_264.variants.example : IsIrrationalitySequence (fun n ↦ 2 ^ (2 ^
 
 /--
 Kovač and Tao [KoTa24] generally proved that any strictly increasing sequence of positive integers
-$a_n$ such that $\sum\frac{1}{a_n}$ converges and
+$a_n$ such that $\sum \frac{1}{a_n}$ converges and
 $$
-  \liminf(a_n^2 \sum_{k > n}\frac{1}{a_k^2}) > 0
+  \liminf_{n \to \infty} (a_n^2 \sum_{k > n} \frac{1}{a_k^2}) > 0
 $$
 is not an irrationality sequence.
 
@@ -79,7 +79,7 @@ theorem erdos_264.variants.ko_tao_neg {a : ℕ → ℕ} (h₁ : StrictMono a) (h
 
 /--
 On the other hand, Kovač and Tao [KoTa24] do prove that for any function $F$ with
-$\lim F(n + 1) / F(n) = \infty$ there exists such an irrationality sequence with $a_n\sim F(n)$.
+$\lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \infty$ there exists such an irrationality sequence with $a_n \sim F(n)$.
 
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series. arXiv:2406.17593 (2024).
 -/
