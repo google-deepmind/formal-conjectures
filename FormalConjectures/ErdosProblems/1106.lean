@@ -31,7 +31,7 @@ def p : ℕ → ℕ := fun n => Fintype.card (Nat.Partition n)
 
 /--
 Let $p(n)$ be the partition number of $n$ and $F(n)$ be distinct prime factor of
-$∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tendsto infinity.
+$∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tends to infinity.
 -/
 @[category research open, AMS 11]
 theorem erdos_1106 : Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := sorry
