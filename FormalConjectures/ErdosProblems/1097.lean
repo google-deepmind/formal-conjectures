@@ -31,11 +31,7 @@ is a non-trivial three-term arithmetic progression `a, b, c ∈ A` with
 `b - a = d` and `c - b = d`.
 -/
 def CommonDifferencesThreeTermAP (A : Finset ℤ) : Set ℤ :=
-  {d : ℤ |
-    ∃ a b c : ℤ,
-      a ∈ A ∧ b ∈ A ∧ c ∈ A ∧
-      a ≠ b ∧ b ≠ c ∧ a ≠ c ∧
-      b - a = d ∧ c - b = d}
+  {d : ℤ | d ≠ 0 ∧ ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, b - a = d ∧ c - b = d}
 
 /--
 The main conjecture: for any finite set of integers $A$ with $|A| = n$, the number of distinct
@@ -50,8 +46,8 @@ theorem erdos_1097 : ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
 A weaker bound has been proven: there are always $O(n^2)$ such values of $d$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1097.variants.weaker : ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
-    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (2 : ℝ) := by
+theorem erdos_1097.variants.weaker : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
+    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (2 : ℝ)) ↔ answer(sorry) := by
   sorry
 
 /--
