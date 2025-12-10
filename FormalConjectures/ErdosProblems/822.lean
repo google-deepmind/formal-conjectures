@@ -17,6 +17,7 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 822
+
 Does the set of integers of the form `n + φ(n)` have positive (lower) density?
 Gabdullin, Iudelevich, and Luca proved this was true.
 
