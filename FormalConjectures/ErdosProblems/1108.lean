@@ -31,7 +31,7 @@ The set $A = \left\{ \sum_{n\in S}n! : S\subset \mathbb{N}\text{ finite}\right\}
 sums of distinct factorials.
 -/
 def FactorialSums : Set ℕ :=
-  { m : ℕ | ∃ S : Finset ℕ, m = S.sum (fun n => Nat.factorial n) }
+  {m : ℕ | ∃ S : Finset ℕ, m = ∑ n ∈ S, n.factorial}
 
 /--
 A number is powerful if each prime factor appears with exponent at least 2.
