@@ -37,7 +37,7 @@ contain a $C_6$?
 -/
 @[category research open, AMS 5]
 theorem erdos_1080 :
-    (∃ (c : ℝ) (_ : c > 0), ∀ (V : Type*) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+    (∃ (c : ℝ) (_ : c > 0), ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
         [DecidableRel G.Adj] (n : ℕ) (_ : Fintype.card V = n) (_ : n > 0)
         (_ : G.IsBipartite)
         (X Y : Set V) (_ : ∀ v, v ∈ X ∨ v ∈ Y) (_ : Disjoint X Y)
