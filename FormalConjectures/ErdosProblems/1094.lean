@@ -20,10 +20,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1094
 
-*Reference:* [erdosproblems.com/1094](https://www.erdosproblems.com/1094)
-
 For all $n\ge 2k$ the least prime factor of $\binom{n}{k}$ is $\le\max(n/k,k)$, with only
-finitely many exceptions.  (Status: open.)
+finitely many exceptions.
+
+*Reference:* [erdosproblems.com/1094](https://www.erdosproblems.com/1094)
 -/
 
 namespace Erdos1094
