@@ -13,8 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
--- import FormalConjectures.Util.ProblemImports
 import FormalConjectures.Util.ProblemImports
 
 /-!
@@ -29,12 +27,13 @@ namespace Erdos1064
 
 /--
 Let $ϕ(n)$ be the Euler's totient function, then the $n$ satisfies $ϕ(n)>ϕ(n - ϕ(n))$
-has asymptotic density 1 and there exist infinity $n$ such that $ϕ(n)< ϕ(n - ϕ(n))$.
+have asymptotic density 1 and there exist infinitely many $n$ such that $ϕ(n)< ϕ(n - ϕ(n))$.
 -/
 @[category research open, AMS 11]
 theorem erdos_1064 :
-    (Tendsto (fun (x : ℕ) => (Nat.card {n| φ n > φ (n - φ n)}) / (x : ℝ)) atTop (𝓝 1))
-    ∧ {n | φ n < φ (n - φ n)}.Infinite := sorry
+    (Tendsto (fun (x : ℕ) => (Nat.card {n| φ n > φ (n - φ n)}) / (x : ℝ)) atTop (𝓝 1)) := sorry
 
+@[category research open, AMS 11]
+theorem erdos_1064_k2 : {n | φ n < φ (n - φ n)}.Infinite := sorry
 
 end Erdos1064
