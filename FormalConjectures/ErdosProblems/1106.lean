@@ -41,6 +41,6 @@ Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct p
 $∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficiently large $n$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1106_k2 :  ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := sorry
+theorem erdos_1106_k2 : ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := sorry
 
 end Erdos1106
