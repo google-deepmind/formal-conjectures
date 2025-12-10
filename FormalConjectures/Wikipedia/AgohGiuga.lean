@@ -165,8 +165,8 @@ theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
         apply Nat.Prime.pow_dvd_iff_le_factorization hp hb |>.1
         have : a.factorization p ≤ 1 := not_lt.1 fun h =>
           h_sqfr p hp <| (sq p ▸ (pow_dvd_pow p h).trans (a.ordProj_dvd p))
-        replace : a.factorization p = 1 := by
-          apply le_antisymm this (hp.dvd_iff_one_le_factorization (by grind) |>.1 hpa)
+        replace : a.factorization p = 1 :=
+          this.antisymm (hp.dvd_iff_one_le_factorization (by grind) |>.1 hpa)
         simp_rw [this, pow_one, ← CharP.cast_eq_zero_iff (ZMod p)]
         have one_le_b_pow : 1 ≤ b ^ (a - 1) := by omega
         push_cast [one_le_b_pow]
