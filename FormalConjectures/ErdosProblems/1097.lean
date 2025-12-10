@@ -42,24 +42,24 @@ The main conjecture: for any finite set of integers $A$ with $|A| = n$, the numb
 common differences in three-term arithmetic progressions is $O(n^{3/2})$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1097 : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
-    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ)) ↔ answer(sorry) := by
+theorem erdos_1097 : ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
+    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ) := by
   sorry
 
 /--
 A weaker bound has been proven: there are always $O(n^2)$ such values of $d$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1097.variants.weaker : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
-    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (2 : ℝ)) ↔ answer(sorry) := by
+theorem erdos_1097.variants.weaker : ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
+    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (2 : ℝ) := by
   sorry
 
 /--
 A trivial lower bound: there are always at least $Ω(n)$ such values of $d$ in the worst case.
 -/
-@[category research open, AMS 11]
-theorem erdos_1097.variants.lower_bound : (∀ (n : ℕ), ∃ (A : Finset ℤ),
-    A.card = n ∧ ∃ c > (0 : ℝ), c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard) ↔ answer(sorry) := by
+@[category research solved, AMS 11]
+theorem erdos_1097.variants.lower_bound : ∀ (n : ℕ), ∃ (A : Finset ℤ),
+    A.card = n ∧ ∃ c > (0 : ℝ), c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard := by
   sorry
 
 end Erdos1097
