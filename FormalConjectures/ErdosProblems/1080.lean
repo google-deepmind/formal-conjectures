@@ -39,10 +39,9 @@ contain a $C_6$?
 theorem erdos_1080 :
     (∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] [DecidableEq V] {Nonempty V]
       (G : SimpleGraph V)
-        [DecidableRel G.Adj] (n : ℕ) (_ : Fintype.card V = n) (_ : n > 0)
-        (X Y : Set V) (_ : IsBipartition G X Y)
-        (_ : X.ncard = ⌊(n : ℝ) ^ (2/3 : ℝ)⌋₊)
-        (_ : Fintype.card G.edgeSet ≥ c * n),
+        [DecidableRel G.Adj] (X Y : Set V)
+        IsBipartition G X Y ∧ X.ncard = ⌊(Fintype.card V : ℝ) ^ (2/3 : ℝ)⌋₊ ∧
+        Fintype.card G.edgeSet ≥ c * Fintype.card V ∧
         ∃ (v : V) (walk : G.Walk v v), walk.IsCycle ∧ walk.length = 6) ↔ answer(sorry) := by
   sorry
 
