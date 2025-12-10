@@ -31,10 +31,10 @@ namespace Erdos1094
 open scoped Nat
 
 /--
-Erdős conjectured that there are only finitely many pairs `(n,k)` with `n ≥ 2*k` for which the
+**Erdős problem 1094**
+
+There are only finitely many pairs `(n,k)` with `n ≥ 2*k` for which the
 least prime factor of the binomial coefficient `Nat.choose n k` exceeds `max (n / k) k`.
-Formally: the set of pairs `(n,k)` such that `2*k ≤ n` and `Nat.minFac (Nat.choose n k) >
-max (n / k) k` is finite.
 -/
 @[category research open, AMS 11]
 theorem erdos_1094 :
