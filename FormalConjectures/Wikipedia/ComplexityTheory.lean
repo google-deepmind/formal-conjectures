@@ -61,7 +61,7 @@ The class P is the set of decision problems
 decidable in polynomial time by a deterministic Turing machine.
 -/
 def P : ComplexityClass :=
-  { L | isComputableInPolyTime finEncodingListBool finEncodingBoolBool L.toFun }
+  { L | IsComputableInPolyTime finEncodingListBool finEncodingBoolBool L.toFun }
 
 /--
 The class NP is the set of decision problems
@@ -73,7 +73,7 @@ See Definition 2.1 in Arora-Barak (2009).
 -/
 def NP : ComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
-      isComputableInPolyTime finEncodingListBoolProdListBool finEncodingBoolBool R ∧
+      IsComputableInPolyTime finEncodingListBoolProdListBool finEncodingBoolBool R ∧
       ∀ x, L x ↔ ∃ w : List Bool, w.length ≤ p.eval x.length ∧ R (x, w) }
 
 /--
