@@ -19,13 +19,6 @@ namespace StrongSensitivityConjecture
 
 /-!
 # Strong Sensitivity Conjecture (`bs(f) ≤ s(f)^2`)
-*References:*
-* [Induced Subgraphs of Hypercubes and a Proof of the Sensitivity Conjecture](https://arxiv.org/abs/1907.00847)
-  by Hao Huang (see Section 3, Concluding Remarks)
-* [Variations on the Sensitivity Conjecture](https://arxiv.org/abs/1011.0354)
-  by Pooya Hatami, Raghav Kulkarni, and Denis Pankratov (see Question 3.1)
-* [On the Degree of Boolean Functions as Real Polynomials](https://link.springer.com/article/10.1007/BF01263419)
-  by Noam Nisan, and Mario Szegedy (see Section 4, Open Problems)
 
 This file formalizes the *strong* sensitivity conjecture, asserting:
 
@@ -44,6 +37,14 @@ relation. On the lower bound side, Rubinstein
 exhibiting the first quadratic separation. The best currently
 known gap, due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), is
 `bs(f) ≥ (2/3)⋅s(f)^2`.
+
+*References:*
+* [Induced Subgraphs of Hypercubes and a Proof of the Sensitivity Conjecture](https://arxiv.org/abs/1907.00847)
+  by Hao Huang (see Section 3, Concluding Remarks)
+* [Variations on the Sensitivity Conjecture](https://arxiv.org/abs/1011.0354)
+  by Pooya Hatami, Raghav Kulkarni, and Denis Pankratov (see Question 3.1)
+* [On the Degree of Boolean Functions as Real Polynomials](https://link.springer.com/article/10.1007/BF01263419)
+  by Noam Nisan, and Mario Szegedy (see Section 4, Open Problems)
 -/
 
 open Finset Function Classical
@@ -80,8 +81,7 @@ def isValidBlockConfig (f : (Fin n → Bool) → Bool) (x : Fin n → Bool)
 noncomputable def blockSensitivityAt (f : (Fin n → Bool) → Bool) (x : Fin n → Bool) : ℕ :=
   (univ.filter (fun cB => isValidBlockConfig f x cB)).sup card
 
--- Global block sensitivity bs(f)
-/-- maximum block sensitivity of `f` over all inputs. -/
+/-- Global block sensitivity of `f`, maximum block sensitivity of `f` over all inputs. -/
 noncomputable def blockSensitivity (f : (Fin n → Bool) → Bool) : ℕ :=
   univ.sup (blockSensitivityAt f)
 
@@ -96,7 +96,7 @@ celebrated result (often called the sensitivity theorem) gives a quartic bound,
 -/
 @[category research open, AMS 68]
 theorem strong_sensitivity_conjecture {n : ℕ} (f : (Fin n → Bool) → Bool) :
-  blockSensitivity f ≤ (sensitivity f) ^ 2 := by
+    blockSensitivity f ≤ sensitivity f ^ 2 := by
   sorry
 
 
@@ -117,7 +117,7 @@ and pairing the `n/2` 0-bits into `n/4` disjoint size-2 blocks.
 -/
 @[category test]
 def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
-  let w := (univ.filter fun i => x i = true).card
+  let w := #{i | x i}
   decide (w ∈ ({n / 2, n / 2 + 1} : Finset ℕ))
 
 
