@@ -38,9 +38,8 @@ A number is powerful if each prime factor appears with exponent at least 2.
 -/
 def IsPowerful (n : ℕ) : Prop :=
   ∀ p : ℕ, p.Prime → p ∣ n → p ^ 2 ∣ n
-
 /--
-For $k \geq 2$, does the set of finite sums of distinct factorials contain only finitely many $k$-th powers?
+For each $k \geq 2$, does the set $A = \left\{ \sum_{n\in S}n! : S\subset \mathbb{N}\text{ finite}\right\}$ of all finite sums of distinct factorials contain only finitely many $k$-th powers?
 -/
 @[category research open, AMS 11]
 theorem erdos_1108.k_th_powers : (∀ k ≥ 2,
@@ -48,16 +47,11 @@ theorem erdos_1108.k_th_powers : (∀ k ≥ 2,
   sorry
 
 /--
-Does the set $A$ contain only finitely many powerful numbers?
+Does the set $A = \left\{ \sum_{n\in S}n! : S\subset \mathbb{N}\text{ finite}\right\}$ of all finite sums of distinct factorials contain only finitely many powerful numbers?
 -/
 @[category research open, AMS 11]
 theorem erdos_1108.powerful_numbers :
-    {a ∈ FactorialSums | IsPowerful a}.Finite ↔ answer(sorry) := by
-  sorry
-
-end Erdos1108
-96aa4
-FactorialSums ∧ IsPowerful a }) ↔ answer(sorry) := by
+     {a ∈ FactorialSums | IsPowerful a}.Finite ↔ answer(sorry) := by
   sorry
 
 end Erdos1108
