@@ -28,11 +28,8 @@ namespace Erdos822
 /--
 **Erdős Problem 822.**
 
-We formalise the question
+Does the set of integers of the form $n + \varphi(n)$ have positive (lower) density?
 
-> “Does the set of integers of the form `n + φ(n)` have positive (lower) density?”
-
-as asking whether `shiftedTotientSet` has positive natural density in `ℕ`.
 The problem is known to have an affirmative answer.
 -/
 @[category research solved, AMS 11]
