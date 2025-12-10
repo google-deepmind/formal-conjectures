@@ -35,14 +35,10 @@ open Set
 namespace Erdos881
 
 /--
-`IsMinimalAsymptoticAddBasisOfOrder k A` means:
-
+A*minimal* additive basis of order `k` is a set `A` such that
 * `A` is an asymptotic additive basis of order `k`, and
 * for every infinite subset `B ⊆ A`, the complement `A \ B` is *not*
   an asymptotic additive basis of order `k`.
-
-This formalises the notion of a *minimal* additive basis of order `k`
-as it appears in Erdős Problem 881.
 -/
 def IsMinimalAsymptoticAddBasisOfOrder (k : ℕ) (A : Set ℕ) : Prop :=
   A.IsAsymptoticAddBasisOfOrder k ∧
