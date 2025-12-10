@@ -35,7 +35,7 @@ open Set
 namespace Erdos881
 
 /--
-A*minimal* additive basis of order `k` is a set `A` such that
+A *minimal* additive basis of order `k` is a set `A` such that
 * `A` is an asymptotic additive basis of order `k`, and
 * for every infinite subset `B ⊆ A`, the complement `A \ B` is *not*
   an asymptotic additive basis of order `k`.
