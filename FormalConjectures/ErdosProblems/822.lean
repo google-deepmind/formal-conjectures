@@ -46,7 +46,7 @@ The problem is known to have an affirmative answer.
 -/
 @[category research solved, AMS 11]
 theorem erdos_822 :
-    shiftedTotientSet.HasPosDensity ↔ answer(True) := by
+    (Set.range fun n => n + Nat.totient n).HasPosDensity ↔ answer(True) := by
   -- TODO: Replace `sorry` with a formal proof using the results of
   -- Gabdullin–Iudelevich–Luca once an appropriate library interface is available.
   sorry
