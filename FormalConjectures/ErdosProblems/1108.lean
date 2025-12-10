@@ -37,7 +37,7 @@ def FactorialSums : Set ℕ :=
 A number is powerful if each prime factor appears with exponent at least 2.
 -/
 def IsPowerful (n : ℕ) : Prop :=
-  ∀ p : ℕ, Nat.Prime p → ¬ (p ∣ n ∧ ¬ p ^ 2 ∣ n)
+  ∀ p : ℕ, p.Prime → p ∣ n → p ^ 2 ∣ n
 
 /--
 For $k \geq 2$, does the set $A$ contain only finitely many $k$-th powers?
