@@ -53,28 +53,32 @@ axiom PathGraph : ℕ → (Type* → SimpleGraph Type*)
 
 /--
 Is it true that the anti-Ramsey number $AR(n, C_k)$ for cycles satisfies
-$AR(n, C_k) = \binom{k-2}{2} + \frac{1}{k-1} \cdot n + O(1)$ for $k \geq 3$,
-and the anti-Ramsey number $AR(n, P_k)$ for paths of length $k$ (where $k \geq 5$ and $n \geq k$)
+$AR(n, C_k) = \binom{k-2}{2} + \frac{1}{k-1} \cdot n + O(1)$ for $k \geq 3$?
+-/
+@[category research open, AMS 5]
+theorem erdos_1105.cycles :
+    (∀ k : ℕ, 3 ≤ k →
+      ∃ C : ℝ, ∃ N0 : ℕ, 0 ≤ C ∧
+        ∀ n : ℕ, n ≥ N0 →
+          |(AntiRamseyNumber n (CycleGraph k) : ℝ) - cycleCoeff k * (n : ℝ)| ≤ C)
+    ↔ answer(sorry) := by
+  sorry
+
+/--
+Is it true that the anti-Ramsey number $AR(n, P_k)$ for paths (where $k \geq 5$ and $n \geq k$)
 is exactly $\max\left(\binom{k-2}{2} + 1, \binom{\ell-1}{2} + (\ell-1)(n-\ell+1) + \varepsilon\right)$
 where $\ell = \lfloor(k-1)/2\rfloor$ and $\varepsilon = 1$ if $k$ is odd, $\varepsilon = 2$ otherwise?
 -/
 @[category research open, AMS 5]
-theorem erdos_1105 :
-    (-- Cycle part:  AR(n, C_k) = cycleCoeff(k) * n + O(1)
-        (∀ k : ℕ, 3 ≤ k →
-          ∃ C : ℝ, ∃ N0 : ℕ, 0 ≤ C ∧
-            ∀ n : ℕ, n ≥ N0 →
-              |(AntiRamseyNumber n (CycleGraph k) : ℝ) - cycleCoeff k * (n : ℝ)| ≤ C)
-        ∧
-        -- Path part:  exact formula for AR(n, P_k)
-        (∀ n k : ℕ, n ≥ k → 5 ≤ k →
-          AntiRamseyNumber n (PathGraph k) =
-            max
-              (Nat.choose (k - 2) 2 + 1)
-              (Nat.choose (ell k - 1) 2
-                + (ell k - 1) * (n - ell k + 1)
-                + eps k))
-    ) ↔ answer(sorry) := by
+theorem erdos_1105.paths :
+    (∀ n k : ℕ, n ≥ k → 5 ≤ k →
+      AntiRamseyNumber n (PathGraph k) =
+        max
+          (Nat.choose (k - 2) 2 + 1)
+          (Nat.choose (ell k - 1) 2
+            + (ell k - 1) * (n - ell k + 1)
+            + eps k))
+    ↔ answer(sorry) := by
   sorry
 
 end Erdos1105
