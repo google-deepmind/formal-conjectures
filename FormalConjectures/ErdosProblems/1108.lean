@@ -52,7 +52,7 @@ Does the set $A$ contain only finitely many powerful numbers?
 -/
 @[category research open, AMS 11]
 theorem erdos_1108.powerful_numbers :
-    (Set.Finite { a ∈ FactorialSums | IsPowerful a }) ↔ answer(sorry) := by
+    {a ∈ FactorialSums | IsPowerful a}.Finite ↔ answer(sorry) := by
   sorry
 
 end Erdos1108
