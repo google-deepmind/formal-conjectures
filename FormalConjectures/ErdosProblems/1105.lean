@@ -39,6 +39,19 @@ def eps (k : ℕ) : ℕ :=
   if k % 2 = 1 then 1 else 2
 
 /--
+The anti-Ramsey number AR(n, H) is the maximum number of colors in an edge-coloring of K_n
+such that there is no rainbow copy of H (a copy where all edges have different colors).
+This is a placeholder definition that should be properly formalized.
+-/
+axiom AntiRamseyNumber : ℕ → (Type* → SimpleGraph Type*) → ℕ
+
+/-- Notation for cycle graph C_k -/
+axiom CycleGraph : ℕ → (Type* → SimpleGraph Type*)
+
+/-- Notation for path graph P_k -/
+axiom PathGraph : ℕ → (Type* → SimpleGraph Type*)
+
+/--
 Is it true that the anti-Ramsey number $AR(n, C_k)$ for cycles satisfies
 $AR(n, C_k) = \binom{k-2}{2} + \frac{1}{k-1} \cdot n + O(1)$ for $k \geq 3$,
 and the anti-Ramsey number $AR(n, P_k)$ for paths of length $k$ (where $k \geq 5$ and $n \geq k$)
@@ -47,16 +60,15 @@ where $\ell = \lfloor(k-1)/2\rfloor$ and $\varepsilon = 1$ if $k$ is odd, $\vare
 -/
 @[category research open, AMS 5]
 theorem erdos_1105 :
-    (∃ (AR_cycle AR_path : ℕ → ℕ → ℕ),
-        -- Cycle part:  AR(n, C_k) = cycleCoeff(k) * n + O(1)
+    (-- Cycle part:  AR(n, C_k) = cycleCoeff(k) * n + O(1)
         (∀ k : ℕ, 3 ≤ k →
           ∃ C : ℝ, ∃ N0 : ℕ, 0 ≤ C ∧
             ∀ n : ℕ, n ≥ N0 →
-              |(AR_cycle n k : ℝ) - cycleCoeff k * (n : ℝ)| ≤ C)
+              |(AntiRamseyNumber n (CycleGraph k) : ℝ) - cycleCoeff k * (n : ℝ)| ≤ C)
         ∧
         -- Path part:  exact formula for AR(n, P_k)
         (∀ n k : ℕ, n ≥ k → 5 ≤ k →
-          AR_path n k =
+          AntiRamseyNumber n (PathGraph k) =
             max
               (Nat.choose (k - 2) 2 + 1)
               (Nat.choose (ell k - 1) 2
