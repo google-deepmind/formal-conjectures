@@ -30,10 +30,6 @@ Gabdullin, Iudelevich, and Luca proved that the set of integers of the form
 
 namespace Erdos822
 
-/-- The set of natural numbers of the form `n + φ(n)`. -/
-def shiftedTotientSet : Set ℕ :=
-  { m : ℕ | ∃ n : ℕ, m = n + Nat.totient n }
-
 /--
 **Erdős Problem 822.**
 
