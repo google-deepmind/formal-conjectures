@@ -31,13 +31,13 @@ The set $A = \left\{ \sum_{n\in S}n! : S\subset \mathbb{N}\text{ finite}\right\}
 sums of distinct factorials.
 -/
 def FactorialSums : Set ℕ :=
-  { m : ℕ | ∃ S : Finset ℕ, m = ∑ n ∈ S, n.factorial }
+  { m : ℕ | ∃ S : Finset ℕ, m = S.sum (fun n => Nat.factorial n) }
 
 /--
 A number is powerful if each prime factor appears with exponent at least 2.
 -/
 def IsPowerful (n : ℕ) : Prop :=
-  ∀ p : ℕ, Nat.Prime p → ¬ (p ∣ n ∧ ¬ p ^ 2 ∣ n)
+  ∀ p : ℕ, p.Prime → p ∣ n → p ^ 2 ∣ n
 
 /--
 For $k \geq 2$, does the set of finite sums of distinct factorials contain only finitely many $k$-th powers?
@@ -52,7 +52,7 @@ Does the set $A$ contain only finitely many powerful numbers?
 -/
 @[category research open, AMS 11]
 theorem erdos_1108.powerful_numbers :
-    (Set.Finite { a | a ∈ FactorialSums ∧ IsPowerful a }) ↔ answer(sorry) := by
+    (Set.Finite { a ∈ FactorialSums | IsPowerful a }) ↔ answer(sorry) := by
   sorry
 
 end Erdos1108
