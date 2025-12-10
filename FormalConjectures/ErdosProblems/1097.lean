@@ -31,11 +31,7 @@ is a non-trivial three-term arithmetic progression `a, b, c ∈ A` with
 `b - a = d` and `c - b = d`.
 -/
 def CommonDifferencesThreeTermAP (A : Finset ℤ) : Set ℤ :=
-  {d : ℤ |
-    ∃ a b c : ℤ,
-      a ∈ A ∧ b ∈ A ∧ c ∈ A ∧
-      a ≠ b ∧ b ≠ c ∧ a ≠ c ∧
-      b - a = d ∧ c - b = d}
+  {d : ℤ | d ≠ 0 ∧ ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, b - a = d ∧ c - b = d}
 
 /--
 The main conjecture: for any finite set of integers $A$ with $|A| = n$, the number of distinct
