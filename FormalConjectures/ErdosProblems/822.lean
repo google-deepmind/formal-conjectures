@@ -20,12 +20,11 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 822
 
-> Does the set of integers of the form `n + φ(n)` have positive (lower) density?
+
+Does the set of integers of the form `n + φ(n)` have positive (lower) density?
+Gabdullin, Iudelevich, and Luca proved this was true.
 
 *Reference:* [erdosproblems.com/822](https://www.erdosproblems.com/822)
-
-Gabdullin, Iudelevich, and Luca proved that the set of integers of the form
-`n + φ(n)` has positive lower asymptotic density.
 -/
 
 namespace Erdos822
