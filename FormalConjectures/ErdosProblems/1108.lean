@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1108](https://www.erdosproblems.com/1108)
 -/
 
-open Nat Filter
+open Nat Filter BigOperators
 
 namespace Erdos1108
 
@@ -31,7 +31,7 @@ The set $A = \left\{ \sum_{n\in S}n! : S\subset \mathbb{N}\text{ finite}\right\}
 sums of distinct factorials.
 -/
 def FactorialSums : Set ℕ :=
-  { m : ℕ | ∃ S : Finset ℕ, m = S.sum (fun n => Nat.factorial n) }
+  { m : ℕ | ∃ S : Finset ℕ, m = ∑ n ∈ S, n.factorial }
 
 /--
 A number is powerful if each prime factor appears with exponent at least 2.
@@ -40,11 +40,11 @@ def IsPowerful (n : ℕ) : Prop :=
   ∀ p : ℕ, Nat.Prime p → ¬ (p ∣ n ∧ ¬ p ^ 2 ∣ n)
 
 /--
-For $k \geq 2$, does the set $A$ contain only finitely many $k$-th powers?
+For $k \geq 2$, does the set of finite sums of distinct factorials contain only finitely many $k$-th powers?
 -/
 @[category research open, AMS 11]
 theorem erdos_1108.k_th_powers : (∀ k ≥ 2,
-    Set.Finite { a ∈ FactorialSums | ∃ m : ℕ, m ^ k = a }) ↔ answer(sorry) := by
+    Set.Finite { a | a ∈ FactorialSums ∧ ∃ m : ℕ, m ^ k = a }) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -52,7 +52,7 @@ Does the set $A$ contain only finitely many powerful numbers?
 -/
 @[category research open, AMS 11]
 theorem erdos_1108.powerful_numbers :
-    (Set.Finite { a ∈ FactorialSums | IsPowerful a }) ↔ answer(sorry) := by
+    (Set.Finite { a | a ∈ FactorialSums ∧ IsPowerful a }) ↔ answer(sorry) := by
   sorry
 
 end Erdos1108
