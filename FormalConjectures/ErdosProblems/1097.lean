@@ -54,7 +54,7 @@ theorem erdos_1097.variants.weaker :
 A trivial lower bound: there exist sets $A$ with $|A| = n$ that contain at least $\Omega(n)$
 distinct common differences of three-term arithmetic progressions.
 -/
-@[category research solved, AMS 11]
+@[category undergrad, AMS 11]
 theorem erdos_1097.variants.lower_bound : ∃ c > (0 : ℝ), ∀ (n : ℕ), ∃ (A : Finset ℤ),
     A.card = n ∧ c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard := by
   sorry
