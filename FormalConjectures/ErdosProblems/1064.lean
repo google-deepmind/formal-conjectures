@@ -16,29 +16,27 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 510
+# Erdős Problem 1064
 
-*Reference:* [erdosproblems.com/510](https://www.erdosproblems.com/510)
+*Reference:* [erdosproblems.com/1064](https://www.erdosproblems.com/1064)
 -/
 
-namespace Erdos510
+open Nat Filter Topology
 
-open scoped Finset
+namespace Erdos1064
 
 /--
-**Chowla's cosine problem**
-
-If $A\subset \mathbb{N}$ is a finite set of positive integers of size $N > 0$ then is there some
-absolute constant $c>0$ and $\theta$ such that
-$$\sum_{n\in A}\cos(n\theta) < -cN^{1/2}?$$
+Let $ϕ(n)$ be the Euler's totient function, then the $n$ satisfies $ϕ(n)>ϕ(n - ϕ(n))$
+have asymptotic density 1.
 -/
 @[category research open, AMS 11]
-theorem erdos_510 :
-    (∃ (c : ℝ) (hc : 0 < c),
-      ∀ N > 0, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
-      (∃ (θ : ℝ), (∑ n ∈ A, (n * θ).cos) < -c * (N : ℝ).sqrt)) ↔ answer(sorry) := by
-  sorry
+theorem erdos_1064 : {n | φ n > φ (n - φ n)}.HasDensity 1 := sorry
 
--- TODO(firsching): add the additional material
+/--
+Let $ϕ(n)$ be the Euler's totient function, there exist infinitely many $n$
+such that $ϕ(n)< ϕ(n - ϕ(n))$
+-/
+@[category research open, AMS 11]
+theorem erdos_1064_k2 : {n | φ n < φ (n - φ n)}.Infinite := sorry
 
-end Erdos510
+end Erdos1064

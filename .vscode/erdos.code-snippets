@@ -1,0 +1,24 @@
+{
+	"Erdos problem": {
+		"scope": "lean4",
+		"prefix": "erdos problem",
+		"body": [
+      "import FormalConjectures.Util.ProblemImports",
+      "",
+      "/-!",
+      "# Erdős Problem $1",
+      "",
+      "*Reference:* [erdosproblems.com/$1](https://www.erdosproblems.com/$1)",
+      "-/",
+      "",
+      "namespace Erdos$1",
+      "",
+      "/-- $2 -/",
+      "@[category $3, AMS $4]",
+      "theorem erdos_$1 : $2 := by",
+      "  sorry",
+      "",
+      "end Erdos$1",
+		]
+	},
+}
