@@ -35,11 +35,11 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- Abbreviation for the average independence number of the neighborhoods.
 -/
-noncomputable abbrev l (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ := averageIndepNeighbors G
+noncomputable abbrev l (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
 
 /-- The same quantity under a different name, used in some conjectures.
 -/
-noncomputable abbrev l_avg (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ := averageIndepNeighbors G
+noncomputable abbrev l_avg (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
 
 /-- Independent domination number of `G`. -/
 noncomputable def gi (G : SimpleGraph α) : ℕ := G.indepDominationNumber
