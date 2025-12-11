@@ -38,7 +38,7 @@ theorem erdos_1072a : Set.Infinite {p | p.Prime ∧ f p = p - 1} ↔ answer(sorr
 @[category research open, AMS 11]
 theorem erdos_1072b :
     (∃ (P : Set ℕ), P.HasDensity 0 {p | p.Prime} ∧
-      Tendsto (fun p => f p / p) (atTop \inf principal ({p | p.Prime} \ P)) (\nhds 0)
+      Tendsto (fun p => f p / p) (atTop ⊓ principal ({p | p.Prime} \ P)) (𝓝 0)
     ↔ answer(sorry) := by
   sorry
 
@@ -46,13 +46,13 @@ theorem erdos_1072b :
 @[category research open, AMS 11]
 theorem erdos_1072b.variants.density :
     (∃ (P : Set ℕ), P ⊆ {p | p.Prime} ∧ P.HasDensity 1 {p | p.Prime} ∧
-      ∀ᵉ ε > (0 : ℝ), ∃ N₀, ∀ p ≥ N₀, p ∈ P → f p / p < ε)
+      Tendsto (fun p => f p / p) (atTop ⊓ principal P) (𝓝 0))
     ↔ answer(sorry) := by
   sorry
 
 /--
 Erdős, Hardy, and Subbarao [HaSu02], believed that the number of $p \le x$ for which $f(p)=p−1$
-is $o(x/logx)$.
+is $o(x/\log x)$.
 
 [HaSu02] Hardy, G. E. and Subbarao, M. V., _A modified problem of Pillai and some related questions._
 Amer. Math. Monthly (2002), 554--559.
