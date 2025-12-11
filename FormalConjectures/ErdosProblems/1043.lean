@@ -27,7 +27,7 @@ open MeasureTheory Polynomial
 
 /-- The set $\{ z \in \mathbb{C} : \lvert f(z)\rvert\leq 1\}$ -/
 def levelSet (f : Polynomial ℂ) : Set ℂ :=
-  {z : ℂ | ‖Polynomial.eval z f‖ ≤ 1}
+  {z : ℂ | ‖f.eval z‖ ≤ 1}
 
 /--
 **Erdős Problem 1043**:
@@ -44,7 +44,7 @@ Pommerenke [Po61] proved that the answer is no.
 @[category research solved, AMS 28 30]
 theorem erdos_1043 :
     ∃ (f : ℂ[X]), f.Monic ∧
-      ∀ (u : ℂ), ‖u‖ = 1 ∧
+      ∀ (u : ℂ), ‖u‖ = 1 →
       volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) > 2 := by
   sorry
 
@@ -54,7 +54,7 @@ measure at most 3.3.
 -/
 @[category research solved, AMS 28 30]
 theorem erdos_1043.variants.weak :
-    ∀ (f : ℂ[X]), f.Monic ∧
+    ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
       volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) ≤ 3.3 := by
   sorry
