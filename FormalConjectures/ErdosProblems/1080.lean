@@ -37,11 +37,9 @@ contain a $C_6$?
 -/
 @[category research open, AMS 5]
 theorem erdos_1080 :
-    (∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] [DecidableEq V] {Nonempty V]
-      (G : SimpleGraph V)
-        [DecidableRel G.Adj] (X Y : Set V)
-        IsBipartition G X Y ∧ X.ncard = ⌊(Fintype.card V : ℝ) ^ (2/3 : ℝ)⌋₊ ∧
-        Fintype.card G.edgeSet ≥ c * Fintype.card V ∧
+    (∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V) (X Y : Set V),
+      IsBipartition G X Y → X.ncard = ⌊(Fintype.card V : ℝ) ^ (2/3 : ℝ)⌋₊ →
+      G.edgeSet.ncard ≥ c * Fintype.card V →
         ∃ (v : V) (walk : G.Walk v v), walk.IsCycle ∧ walk.length = 6) ↔ answer(sorry) := by
   sorry
 
