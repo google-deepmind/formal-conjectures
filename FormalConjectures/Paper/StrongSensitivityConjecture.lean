@@ -116,6 +116,7 @@ def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
 
 /-- Assuming `n` is a multiple of 4, the sensitivity of `nisanExample`
 is `n/2`, achieved by any `x` with Hamming weight `n/2`. -/
+@[category test]
 lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
     sensitivity (nisanExample n) = n / 2 := by
   sorry
@@ -124,6 +125,7 @@ lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
 is `3n/4`, achieved by any `x` with Hamming weight `n/2`.
 An optimal block configuration uses all `n/2` 1-bits as singleton blocks
 and forms `n/4` disjoint size-2 blocks from the 0-bits. -/
+@[category test]
 lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) :
     blockSensitivity (nisanExample n) = 3 * n / 4 := by
   sorry
