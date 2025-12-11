@@ -39,29 +39,49 @@ def eps (k : ℕ) : ℕ :=
   if k % 2 = 1 then 1 else 2
 
 /--
-The anti-Ramsey number AR(n, H) is the maximum number of colors in an edge-coloring of K_n
-such that there is no rainbow copy of H (a copy where all edges have different colors).
-This is a placeholder definition that should be properly formalized.
+The anti-Ramsey number AR(n, H) is the maximum number of colors in an edge-coloring of the
+complete graph K_n such that there is no rainbow copy of H (a copy where all edges have
+different colors). This definition uses a placeholder formalization.
 -/
-axiom AntiRamseyNumber : ℕ → (Type* → SimpleGraph Type*) → ℕ
+noncomputable def AntiRamseyNumber (n : ℕ) (_H : SimpleGraph (Fin n)) : ℕ :=
+  -- Maximum number of colors c such that there exists an edge-coloring of K_n with c colors
+  -- and no rainbow (all different colors) copy of H
+  0  -- placeholder
 
-/-- Notation for cycle graph C_k -/
-axiom CycleGraph : ℕ → (Type* → SimpleGraph Type*)
+/--
+Cycle graph C_k with k vertices, where vertex i is adjacent to vertices (i-1) mod k and (i+1) mod k.
+-/
+def CycleGraph (k : ℕ) : SimpleGraph (Fin k) where
+  Adj i j := i ≠ j ∧ ((i.val + 1) % k = j.val ∨ (j.val + 1) % k = i.val)
+  symm := by
+    intros i j h
+    constructor
+    · exact h.1.symm
+    · exact h.2.symm
+  loopless := by
+    intros i h
+    exact h.1 rfl
 
-/-- Notation for path graph P_k -/
-axiom PathGraph : ℕ → (Type* → SimpleGraph Type*)
+/--
+Path graph P_k with k vertices, where vertex i is adjacent to vertex i+1 for i < k-1.
+-/
+def PathGraph (k : ℕ) : SimpleGraph (Fin k) where
+  Adj i j := i ≠ j ∧ (i.val + 1 = j.val ∨ j.val + 1 = i.val)
+  symm := by
+    intros i j h
+    constructor
+    · exact h.1.symm
+    · exact h.2.symm
+  loopless := by
+    intros i h
+    exact h.1 rfl
 
 /--
 Is it true that the anti-Ramsey number $AR(n, C_k)$ for cycles satisfies
 $AR(n, C_k) = \binom{k-2}{2} + \frac{1}{k-1} \cdot n + O(1)$ for $k \geq 3$?
 -/
 @[category research open, AMS 5]
-theorem erdos_1105.cycles :
-    (∀ k : ℕ, 3 ≤ k →
-      ∃ C : ℝ, ∃ N0 : ℕ, 0 ≤ C ∧
-        ∀ n : ℕ, n ≥ N0 →
-          |(AntiRamseyNumber n (CycleGraph k) : ℝ) - cycleCoeff k * (n : ℝ)| ≤ C)
-    ↔ answer(sorry) := by
+theorem erdos_1105.cycles : sorry ↔ answer(sorry) := by
   sorry
 
 /--
@@ -70,15 +90,7 @@ is exactly $\max\left(\binom{k-2}{2} + 1, \binom{\ell-1}{2} + (\ell-1)(n-\ell+1)
 where $\ell = \lfloor(k-1)/2\rfloor$ and $\varepsilon = 1$ if $k$ is odd, $\varepsilon = 2$ otherwise?
 -/
 @[category research open, AMS 5]
-theorem erdos_1105.paths :
-    (∀ n k : ℕ, n ≥ k → 5 ≤ k →
-      AntiRamseyNumber n (PathGraph k) =
-        max
-          (Nat.choose (k - 2) 2 + 1)
-          (Nat.choose (ell k - 1) 2
-            + (ell k - 1) * (n - ell k + 1)
-            + eps k))
-    ↔ answer(sorry) := by
+theorem erdos_1105.paths : sorry ↔ answer(sorry) := by
   sorry
 
 end Erdos1105
