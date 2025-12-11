@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1072
 
-*Reference:* [erdosproblems.com/1065](https://www.erdosproblems.com/1072)
+*Reference:* [erdosproblems.com/1072](https://www.erdosproblems.com/1072)
 -/
 
 open Nat Filter Finset
@@ -34,11 +34,11 @@ noncomputable def f (p : ℕ) : ℕ := sInf {n | (n)! + 1 ≡ 0 [MOD p]}
 theorem erdos_1072a : Set.Infinite {p | p.Prime ∧ f p = p - 1} ↔ answer(sorry) := by
   sorry
 
-/-- Is it true that $f(p)/p \to 0$ for almost all $p$? -/
+/-- Is it true that $f(p)/p \to 0$ as $p \to \infty$, except along a density zero set of primes? -/
 @[category research open, AMS 11]
 theorem erdos_1072b :
-    (∃ (P : Finset ℕ), (∀ p ∈ P, p.Prime) ∧
-      ∀ᵉ ε > (0 : ℝ), ∃ N₀, ∀ p ≥ N₀, p.Prime ∧ p ∉ P → f p / p < ε)
+    (∃ (P : Set ℕ), P.HasDensity 0 {p | p.Prime} ∧
+      Tendsto (fun p => f p / p) (atTop \inf principal ({p | p.Prime} \ P)) (\nhds 0)
     ↔ answer(sorry) := by
   sorry
 
