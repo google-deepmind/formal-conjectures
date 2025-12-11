@@ -183,9 +183,12 @@ def degreeMultiset (G : SimpleGraph α) [DecidableRel G.Adj] : Multiset ℕ :=
 /-- The annihilation number of a graph. This is the largest number of degrees that can be added
 together without going over the total number of edges of that graph. -/
 def annihilationNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  -- The set of all multisets of degrees that sum to less than `#V`
-  Finset.Iic (degreeMultiset G) |>.filter (fun S ↦ Multiset.sum S ≤ Fintype.card α)
-  -- Take the largest possible cardinality that arises in that set.
+  -- Calculate the limit: The number of edges (Sum of degrees / 2)
+  let limit := G.edgeFinset.card
+
+  -- The set of all multisets of degrees that sum to less than or equal to `limit`
+  Finset.Iic (degreeMultiset G)
+    |>.filter (fun S ↦ Multiset.sum S ≤ limit)
     |>.sup Multiset.card
 
 /--
