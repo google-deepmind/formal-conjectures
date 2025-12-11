@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.NumberTheory.SmoothNumbers
 
 /-!
 # Erdős Problem 1093
@@ -26,6 +25,18 @@ import Mathlib.NumberTheory.SmoothNumbers
 namespace Erdos1093
 
 open Finset Nat
+
+/--
+A number $n$ is $k$-smooth if all its prime factors are $\le k$.
+-/
+def IsKSmooth (k n : ℕ) : Prop :=
+  ∀ p, p.Prime → p ∣ n → p ≤ k
+
+/--
+The set of $k$-smooth numbers.
+-/
+def smoothNumbers (k : ℕ) : Set ℕ :=
+  {n | IsKSmooth k n}
 
 /--
 If defined, the deficiency is the count of $0 \le i < k$ such that $n - i$ is $k$-smooth.
