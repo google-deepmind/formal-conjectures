@@ -109,14 +109,14 @@ its sensitivity. Source: [Nisan1989](https://dl.acm.org/doi/10.1145/73007.73038)
 `n/2` or `n/2 + 1`. We assume `n` is a multiple of 4.
 The function is symmetric, so its value only depends on the Hamming weight
 of the input. -/
-@[category test]
+@[category test, AMS 68]
 def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
   let w := #{i | x i}
   decide (w ∈ ({n / 2, n / 2 + 1} : Finset ℕ))
 
 /-- Assuming `n` is a multiple of 4, the sensitivity of `nisanExample`
 is `n/2`, achieved by any `x` with Hamming weight `n/2`. -/
-@[category test]
+@[category test, AMS 68]
 lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
     sensitivity (nisanExample n) = n / 2 := by
   sorry
@@ -125,7 +125,7 @@ lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
 is `3n/4`, achieved by any `x` with Hamming weight `n/2`.
 An optimal block configuration uses all `n/2` 1-bits as singleton blocks
 and forms `n/4` disjoint size-2 blocks from the 0-bits. -/
-@[category test]
+@[category test, AMS 68]
 lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) :
     blockSensitivity (nisanExample n) = 3 * n / 4 := by
   sorry
