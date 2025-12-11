@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 
 namespace Arxiv.«2107.00295»
 
@@ -29,25 +28,31 @@ by *Eun-Kyung Cho, Ilkyoo Choi, Boram Park*
 
 variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
 
-variable (D := G.maxDegree) (i := G.indepDominationNumber) (n := Fintype.card V)
-
 /--
 **Conjecture 1.6 (Even case).**
-For an isolate-free graph `G` on `n` vertices with maximum degree `D ≥ 1`,
-if `D` is even, then `(D + 2)² · i(G) ≤ (D² + 4) · n`.
+For an isolate-free graph $G$ on $n$ vertices with maximum degree $D \geq 1$,
+if $D$ is even, then $(D + 2)^2 \cdot i(G) \leq (D^2 + 4) \cdot n$.
 -/
 @[category research open, AMS 5]
-theorem independentDominationEven (hIso : 0 < G.minDegree) (hMax : 1 ≤ D) (hEven : Even D) :
+theorem independentDominationEven (hIso : 0 < G.minDegree) (hMax : 1 ≤ G.maxDegree)
+    (hEven : Even G.maxDegree) :
+    let D := G.maxDegree
+    let i := G.indepDominationNumber
+    let n := Fintype.card V
     (D + 2)^2 * i ≤ (D^2 + 4) * n := by
   sorry
 
 /--
 **Conjecture 1.6 (Odd case).**
-For an isolate-free graph `G` on `n` vertices with maximum degree `D ≥ 1`,
-if `D` is odd, then `(D + 1)(D + 3) · i(G) ≤ (D² + 3) · n`.
+For an isolate-free graph $G$ on $n$ vertices with maximum degree $D \geq 1$,
+if $D$ is odd, then $(D + 1)(D + 3) \cdot i(G) \leq (D^2 + 3) \cdot n$.
 -/
 @[category research open, AMS 5]
-theorem independentDominationOdd (hIso : 0 < G.minDegree) (hMax : 1 ≤ D) (hOdd : Odd D) :
+theorem independentDominationOdd (hIso : 0 < G.minDegree) (hMax : 1 ≤ G.maxDegree)
+    (hOdd : Odd G.maxDegree) :
+    let D := G.maxDegree
+    let i := G.indepDominationNumber
+    let n := Fintype.card V
     (D + 1) * (D + 3) * i ≤ (D^2 + 3) * n := by
   sorry
 
