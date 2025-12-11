@@ -56,7 +56,9 @@ def PowersOfThree (p q r : ℕ) : Set ℕ :=
   {n : ℕ | ∃ a b c : ℕ, n = p^a * q^b * r^c}
 
 /--
-The subsets of powers of three which satisfy the criterion of being close to its smallest element. Namely for an arbitrary $ε > 0$ a finite subset $A$ of PowersOfThree is snug if for all $a ∈ A$, we have $a < (1 + ε) * min(A)$.
+Characterizes a "snug" finite set of natural numbers:
+all elements are within a multiplicative factor $(1 + ε)$ of the minimum.
+Specifically, for a finite set $A$ and $ε > 0$, all $a ∈ A$ satisfy $a < (1 + ε) · min(A)$.
 -/
 def IsSnug (ε : ℝ) (A : Finset ℕ) (hA : A.Nonempty) : Prop :=
   ∀ a ∈ A, a < (1 + ε) * A.min' hA
