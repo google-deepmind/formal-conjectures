@@ -34,22 +34,13 @@ noncomputable def f (p : ℕ) : ℕ := sInf {n | (n)! + 1 ≡ 0 [MOD p]}
 theorem erdos_1072a : Set.Infinite {p | p.Prime ∧ f p = p - 1} ↔ answer(sorry) := by
   sorry
 
-/-- Is it true that $f(p)/p \to 0$ as $p \to \infty$, except along a density zero set of primes? -/
+/-- Is it true that $f(p)/p \to 0$ for $p \to \infty$ in a density 1 subset of the primes? -/
 @[category research open, AMS 11]
 theorem erdos_1072b :
-    (∃ (P : Set ℕ), P.HasDensity 0 {p | p.Prime} ∧
-      Tendsto (fun p => f p / p) (atTop ⊓ principal ({p | p.Prime} \ P)) (𝓝 0)
-    ↔ answer(sorry) := by
-  sorry
-
-/-- Is it true that $f(p)/p \to 0$ for $p$ in a density 1 subset of the primes? -/
-@[category research open, AMS 11]
-theorem erdos_1072b.variants.density :
     (∃ (P : Set ℕ), P ⊆ {p | p.Prime} ∧ P.HasDensity 1 {p | p.Prime} ∧
       Tendsto (fun p => f p / p) (atTop ⊓ principal P) (𝓝 0))
     ↔ answer(sorry) := by
   sorry
-
 /--
 Erdős, Hardy, and Subbarao [HaSu02], believed that the number of $p \le x$ for which $f(p)=p−1$
 is $o(x/\log x)$.
