@@ -51,7 +51,8 @@ theorem erdos_1097.variants.weaker :
   sorry
 
 /--
-A trivial lower bound: there are always at least $Ω(n)$ such values of $d$ in the worst case.
+A trivial lower bound: there exist sets $A$ with $|A| = n$ that contain at least $\Omega(n)$
+distinct common differences of three-term arithmetic progressions.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1097.variants.lower_bound : ∃ c > (0 : ℝ), ∀ (n : ℕ), ∃ (A : Finset ℤ),
