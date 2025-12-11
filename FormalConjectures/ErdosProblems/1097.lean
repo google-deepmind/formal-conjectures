@@ -43,11 +43,11 @@ theorem erdos_1097 : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
   sorry
 
 /--
-A weaker bound has been proven: there are always $O(n^2)$ such values of $d$.
+A weaker bound has been proven: there are always at most $n^2$ such values of $d$.
 -/
-@[category research solved, AMS 11]
+@[category undergrad, AMS 11]
 theorem erdos_1097.variants.weaker :
-    ∃ C > 0, ∀ A, (CommonDifferencesThreeTermAP A).ncard ≤ C * A.card ^ 2 := by
+    ∀ A, (CommonDifferencesThreeTermAP A).ncard ≤ A.card ^ 2 := by
   sorry
 
 /--
