@@ -64,9 +64,10 @@ def IsSnug (ε : ℝ) (A : Finset ℕ) (hA : A.Nonempty) : Prop :=
   ∀ a ∈ A, a < (1 + ε) * A.min' hA
 
 /--
-Helper predicate for pairwise coprimality of three integers.
+Predicate for pairwise coprimality of three integers.
+Requires all three input values to be pairwise coprime to each other.
 -/
-def PairwiseCoprime (a b c : ℕ) : Prop := Set.Pairwise {a, b, c} Nat.Coprime
+def PairwiseCoprime (a b c : ℕ) : Prop := Pairwise (Nat.Coprime.onFun ![a, b, c])
 
 /--
 **Erdős Problem #123**
@@ -82,7 +83,7 @@ to be greater than one and distinct.
 -/
 @[category research open, AMS 11]
 theorem erdos_123 (a b c : ℕ) (ha : a > 1) (hb : b > 1) (hc : c > 1)
-(h_coprime : PairwiseCoprime a b c) :     IsDComplete (PowersOfThree a b c) ↔ answer(sorry) := by
+    (h_coprime : PairwiseCoprime a b c) : IsDComplete (PowersOfThree a b c) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -121,7 +122,7 @@ For any $ε > 0$, all large integers $n$ can be written as the sum of distinct i
 @[category research open, AMS 11]
 theorem erdos_123.variants.powers_2_3_5_snug :
   (∀ ε > 0, ∀ᶠ (n : ℕ) in atTop, ∃ (A : Finset ℕ) (hA : (A : Set ℕ) ⊆ PowersOfThree 2 3 5)
-(hAnonempty : A.Nonempty) (hAsnug: IsSnug ε A hAnonempty),
-A.sum id = n) ↔ answer(sorry) := by sorry
+  (hAnonempty : A.Nonempty) (hAsnug: IsSnug ε A hAnonempty),
+  A.sum id = n) ↔ answer(sorry) := by sorry
 
 end Erdos123
