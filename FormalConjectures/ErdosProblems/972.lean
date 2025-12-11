@@ -16,29 +16,26 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 510
+# Erdős Problem 972
 
-*Reference:* [erdosproblems.com/510](https://www.erdosproblems.com/510)
+*Reference:* [erdosproblems.com/972](https://www.erdosproblems.com/972)
 -/
 
-namespace Erdos510
-
-open scoped Finset
+namespace Erdos972
 
 /--
-**Chowla's cosine problem**
+The set of primes `p` such that `Nat.floor (α * p)` is also prime.
+-/
+def primeSet (α : ℝ) : Set ℕ :=
+  {p : ℕ | Nat.Prime p ∧ Nat.Prime ⌊ (α * p) ⌋₊}
 
-If $A\subset \mathbb{N}$ is a finite set of positive integers of size $N > 0$ then is there some
-absolute constant $c>0$ and $\theta$ such that
-$$\sum_{n\in A}\cos(n\theta) < -cN^{1/2}?$$
+/--
+**Erdős problem 972.**
+Let $\alpha > 1$ be irrational. Are there infinitely many primes $p$
+such that $\lfloor p\alpha \rfloor$ is also prime?
 -/
 @[category research open, AMS 11]
-theorem erdos_510 :
-    (∃ (c : ℝ) (hc : 0 < c),
-      ∀ N > 0, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
-      (∃ (θ : ℝ), (∑ n ∈ A, (n * θ).cos) < -c * (N : ℝ).sqrt)) ↔ answer(sorry) := by
+theorem erdos_972 : (∀ α > 1, Irrational α → (primeSet α).Infinite) ↔ answer(sorry) := by
   sorry
 
--- TODO(firsching): add the additional material
-
-end Erdos510
+end Erdos972
