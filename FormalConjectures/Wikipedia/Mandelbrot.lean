@@ -72,16 +72,14 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
         refine .trans ?_ <| norm_sub_le_norm_add _ _
         replace hm :
             r ^ n + a * n ^ m * r ^ (n - 1) * ↑n ≤ ‖(fun z ↦ z ^ n + c)^[k + m] 0‖ ^ n := by
-          grw [← hm]
-          cases n
-          · simp
+          refine .trans ?_ (pow_le_pow_left₀ (by positivity) hm n); cases n; simp
           rw [add_comm r _, add_pow]
           refine .trans ?_ <| Finset.add_le_sum (by intros; positivity) ?_ ?_ zero_ne_one <;> simp
         rw [norm_pow, pow_succ]
-        grw [← hm, h']
+        refine .trans ?_ (sub_le_sub hm h')
         rw [hr', hr'', show ‖(fun z ↦ z ^ n + c)^[k] 0‖ = a + r by simp [a]]
         suffices a ≤ a * (n * n ^ m) by linarith
-        rw [le_mul_iff_one_le_right ha]
+        refine (mul_one a).symm.trans_le <| (mul_le_mul_left ha).2 ?_
         have hn : 1 ≤ (n : ℝ) := Nat.one_le_cast.2 hn.le
         simpa using mul_le_mul hn (one_le_pow₀ hn)
     rw [← tendsto_norm_atTop_iff_cobounded]
