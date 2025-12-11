@@ -14,20 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import Mathlib.Algebra.GCDMonoid.Finset
+import Mathlib.Order.Interval.Finset.Defs
 
-/-!
-# Erdős Problem 196
+namespace Finset
 
-*Reference:* [erdosproblems.com/196](https://www.erdosproblems.com/196)
--/
-namespace Erdos196
+/-- The least common multiple of ${n+1, \dotsc, n+k}$. -/
+def lcmInterval {α : Type*} [AddMonoid α] [CancelCommMonoidWithZero α] [NormalizedGCDMonoid α]
+    [Preorder α] [LocallyFiniteOrder α] (n k : α) : α := (Finset.Ioc n (n + k)).lcm id
 
-/-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
-@[category research open, AMS 5 11]
-theorem erdos_196 : (∀ (f : ℕ ≃ ℕ), ∃ (a : List ℕ),
-    ((a.Sorted (· < · )) ∨ (a.Sorted (· > · ))) ∧ (a.map f).IsAPOfLength 4)
-    ↔ answer(sorry) := by
-  sorry
-
-end Erdos196
+end Finset

@@ -13,32 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 510
+# Erdős Problem 414
 
-*Reference:* [erdosproblems.com/510](https://www.erdosproblems.com/510)
+*Reference:* [erdosproblems.com/414](https://www.erdosproblems.com/414)
+
 -/
 
-namespace Erdos510
+namespace Erdos414
 
-open scoped Finset
+-- The auxiliary function $h(n) = n + τ(n)$ (where $τ(n) counts the number of divisors of $n$)
+def h (n : ℕ) : ℕ := n + n.divisors.card
 
 /--
-**Chowla's cosine problem**
-
-If $A\subset \mathbb{N}$ is a finite set of positive integers of size $N > 0$ then is there some
-absolute constant $c>0$ and $\theta$ such that
-$$\sum_{n\in A}\cos(n\theta) < -cN^{1/2}?$$
+Let $h_1(n) = h(n)$ and $h_k(n) = h(h_{k-1}(n))$. Is it true, for any $m,n$, there exist
+$i$ and $j$ such that $h_i(m) = h_j(n)$?
 -/
 @[category research open, AMS 11]
-theorem erdos_510 :
-    (∃ (c : ℝ) (hc : 0 < c),
-      ∀ N > 0, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
-      (∃ (θ : ℝ), (∑ n ∈ A, (n * θ).cos) < -c * (N : ℝ).sqrt)) ↔ answer(sorry) := by
+theorem erdos_414 : (∀ᵉ  (m > 0) (n > 0), ∃ i j, h^[i] m = h^[j] n) ↔ answer(sorry) := by
   sorry
 
--- TODO(firsching): add the additional material
-
-end Erdos510
+end Erdos414

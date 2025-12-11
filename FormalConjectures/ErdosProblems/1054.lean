@@ -50,7 +50,7 @@ theorem erdos_1054.parts.ii : (∃ (A : Set ℕ), A.HasDensity 1 ∧
 of $m$ for some $k\geq 1$. Is it true that $\limsup f(n)/n=\infty$? -/
 @[category research open, AMS 11]
 theorem erdos_1054.parts.iii : (∃ (A : Set ℕ), A.HasDensity 1 ∧
-    atTop.limsup (fun n ↦ (f n : EReal) / n = ⊤)) ↔ answer(sorry) := by
+    atTop.limsup (fun n ↦ (f n : EReal) / n) = ⊤) ↔ answer(sorry) := by
   sorry
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
