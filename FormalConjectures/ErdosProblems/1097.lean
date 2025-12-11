@@ -45,7 +45,7 @@ theorem erdos_1097 : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
 /--
 A weaker bound has been proven: there are always at most $n^2$ such values of $d$.
 -/
-@[category undergrad, AMS 11]
+@[category undergraduate, AMS 11]
 theorem erdos_1097.variants.weaker :
     ∀ A, (CommonDifferencesThreeTermAP A).ncard ≤ A.card ^ 2 := by
   sorry
@@ -54,7 +54,7 @@ theorem erdos_1097.variants.weaker :
 A trivial lower bound: there exist sets $A$ with $|A| = n$ that contain at least $\Omega(n)$
 distinct common differences of three-term arithmetic progressions.
 -/
-@[category undergrad, AMS 11]
+@[category undergraduate, AMS 11]
 theorem erdos_1097.variants.lower_bound : ∃ c > (0 : ℝ), ∀ (n : ℕ), ∃ (A : Finset ℤ),
     A.card = n ∧ c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard := by
   sorry
