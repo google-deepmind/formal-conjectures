@@ -30,12 +30,11 @@ variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableR
 
 /--
 **Conjecture 1.6 (Even case).**
-For an isolate-free graph $G$ on $n$ vertices with maximum degree $D \geq 1$,
+For a nonempty isolate-free graph $G$ on $n$ vertices,
 if $D$ is even, then $(D + 2)^2 \cdot i(G) \leq (D^2 + 4) \cdot n$.
 -/
 @[category research open, AMS 5]
-theorem independentDominationEven (hIso : 0 < G.minDegree) (hMax : 1 ≤ G.maxDegree)
-    (hEven : Even G.maxDegree) :
+theorem independentDominationEven (hIso : 0 < G.minDegree) (hEven : Even G.maxDegree) :
     let D := G.maxDegree
     let i := G.indepDominationNumber
     let n := Fintype.card V
@@ -44,12 +43,11 @@ theorem independentDominationEven (hIso : 0 < G.minDegree) (hMax : 1 ≤ G.maxDe
 
 /--
 **Conjecture 1.6 (Odd case).**
-For an isolate-free graph $G$ on $n$ vertices with maximum degree $D \geq 1$,
+For a nonempty isolate-free graph $G$ on $n$ vertices,
 if $D$ is odd, then $(D + 1)(D + 3) \cdot i(G) \leq (D^2 + 3) \cdot n$.
 -/
 @[category research open, AMS 5]
-theorem independentDominationOdd (hIso : 0 < G.minDegree) (hMax : 1 ≤ G.maxDegree)
-    (hOdd : Odd G.maxDegree) :
+theorem independentDominationOdd (hIso : 0 < G.minDegree) (hOdd : Odd G.maxDegree) :
     let D := G.maxDegree
     let i := G.indepDominationNumber
     let n := Fintype.card V
