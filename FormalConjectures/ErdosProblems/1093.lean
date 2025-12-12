@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.NumberTheory.SmoothNumbers
 
 /-!
 # Erdős Problem 1093
@@ -38,8 +37,8 @@ Are there infinitely many binomial coefficients with deficiency 1?
 -/
 @[category research open, AMS 5]
 theorem erdos_1093.parts.i :
-    {(k, n) : ℕ × ℕ | k < n ∧ deficiency n k = 1 ∧
-      ∀ p, p.Prime → p | choose n k → k < p}.Infinite ↔ answer(sorry) := by
+    {x : ℕ × ℕ | let k := x.1; let n := x.2; k < n ∧ deficiency n k = 1 ∧
+      ∀ p, p.Prime → (p ∣ choose n k) → k < p}.Infinite ↔ answer(sorry) := by
   sorry
 
 /--
@@ -47,8 +46,8 @@ Are there only finitely many binomial coefficients with deficiency > 1?
 -/
 @[category research open, AMS 5]
 theorem erdos_1093.parts.ii :
-    {(k, n) : ℕ × ℕ | k < n ∧ deficiency n k > 1 ∧
-      ∀ p, p.Prime → p | choose n k → k < p}.Finite ↔ answer(sorry) := by
+    {x : ℕ × ℕ | let k := x.1; let n := x.2; k < n ∧ deficiency n k > 1 ∧
+      ∀ p, p.Prime → (p ∣ choose n k) → k < p}.Finite ↔ answer(sorry) := by
   sorry
 
 end Erdos1093
