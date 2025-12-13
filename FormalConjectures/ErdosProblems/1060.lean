@@ -15,15 +15,14 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open Asymptotics
-open ArithmeticFunction
-open Finset
-open Filter
+
 /-!
 # Erdős Problem 1060
 
 *Reference:* [erdosproblems.com/1060](https://www.erdosproblems.com/1060)
 -/
+
+open Asymptotics ArithmeticFunction Finset Filter Real
 
 namespace Erdos1060
 
@@ -32,6 +31,7 @@ $k\sigma(k)=n$, where $\sigma(k)$ is the sum of divisors of $k$. The first bound
 than any power of $n^(\frac{1}{\log\log n})$. The second bound is that $f(n)$ is at most a power of
 $\log n$.
 -/
+
 @[category research open, AMS 11]
 theorem erdos_1060.bound_one (n : ℕ) :
   ∃ h : ℕ → ℝ,
