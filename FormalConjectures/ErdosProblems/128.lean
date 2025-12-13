@@ -32,10 +32,10 @@ vertices has more than $n^2/50$ edges. Must G contain a triangle?
 -/
 @[category research open, AMS 5]
 theorem erdos_128 :
-    ((∀ (V' : Set V),
-      2 * V'.ncard ≥ Fintype.card V →
-        50 * (G.induce V').edgeSet.ncard > Fintype.card V ^ 2) → ¬(G.CliqueFree 3))
+    ((∀ V' : Set V,
+      2 * V'.ncard + 1 ≥ Fintype.card V →
+        50 * (G.induce V').edgeSet.ncard > Fintype.card V ^ 2) → ¬ G.CliqueFree 3)
     ↔ answer(sorry) := by
   sorry
 
-end Erdos128
+end Erdos128 m ≥ ⌊n/2⌋ ↔ 2 * m + 1 ≥ n
