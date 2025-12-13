@@ -38,4 +38,4 @@ theorem erdos_128 :
     ↔ answer(sorry) := by
   sorry
 
-end Erdos128 m ≥ ⌊n/2⌋ ↔ 2 * m + 1 ≥ n
+end Erdos128
