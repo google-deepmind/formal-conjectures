@@ -60,15 +60,11 @@ $f(n)\leq n^{o(\frac{1}{\log\log n})}$? Perhaps even $\leq (\log n)^{O(1)}$?
 
 @[category research open, AMS 11]
 theorem erdos_1060.bound_one (n : ℕ) :
-  ∃ h : ℕ → ℝ, LittleO h ∧ CountSolutions n ≤ (n:ℝ) ^ h n :=
-  by sorry
-
-
+  ∃ h : ℕ → ℝ, LittleO h ∧ CountSolutions n ≤ (n:ℝ) ^ h n := by sorry
 
 @[category research open, AMS 11]
 theorem erdos_1060.bound_two (n : ℕ ) :
  ∃ (C : ℝ), IsBigO Filter.atTop (fun n =>
-  (CountSolutions n : ℝ )) (fun n => (Real.log (n : ℝ)) ^ C) :=
-  by sorry
+  (CountSolutions n : ℝ )) (fun n => (Real.log (n : ℝ)) ^ C) := by sorry
 
 end Erdos1060
