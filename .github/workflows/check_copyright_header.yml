@@ -22,10 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Run copyright check script
-      uses: actions/github-script@v7
+      uses: actions/github-script@v8
       with:
         script: |
           const script = require('./scripts/check_copyright_header.js')
