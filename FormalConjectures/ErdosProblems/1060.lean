@@ -17,6 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 open Asymptotics
 open ArithmeticFunction
+open Finset
 
 /-!
 # Erdős Problem 1060
@@ -26,45 +27,24 @@ open ArithmeticFunction
 
 namespace Erdos1060
 
-
-/--
-`CountSolutions n` is the number of natural numbers `k ≤ n`
-such that `k * σ(k) = n`.
-
-Formally, we count:
-\[
-f(n) = \#\{\,k : \mathbb{N} \mid k \le n \ \text{and}\ k \sigma(k) = n\,\}.
-\]
--/
-
-def CountSolutions (n : ℕ) : ℕ :=
-  Fintype.card {k : Fin (n + 1) // (k:ℕ) * (σ 1 (k:ℕ)) = n}
-
-/--
-`LittleO h` expresses the asymptotic condition
-
-\[
-h(n) = o\!\Big(\frac{1}{\log\log n}\Big) \quad (n \to \infty).
-\]
-
--/
-
-def LittleO (h : ℕ → ℝ)  : Prop :=
-  IsLittleO Filter.atTop (fun n => h n) (fun n => (1 : ℝ) / Real.log (Real.log n))
-
-
-/-- The conjecture is about the function $f(n)$ count the number of solutions to $k\sigma(k)=n$,
-where $\sigma(k)$ is the sum of divisors of $k$. Is it true that
-$f(n)\leq n^{o(\frac{1}{\log\log n})}$? Perhaps even $\leq (\log n)^{O(1)}$?
+/-- The conjecture is about the function $f(n)$ which counts the number of solutions to
+$k\sigma(k)=n$, where $\sigma(k)$ is the sum of divisors of $k$. The first bound is that $f(n)$ grows slower
+than any power of $n^(\frac{1}{\log\log n})$. The second bound is that $f(n)$ is at most a power of
+$\log n$.
 -/
 
 @[category research open, AMS 11]
 theorem erdos_1060.bound_one (n : ℕ) :
-  ∃ h : ℕ → ℝ, LittleO h ∧ CountSolutions n ≤ (n:ℝ) ^ h n := by sorry
+  ∃ h : ℕ → ℝ,
+    IsLittleO Filter.atTop
+      (fun n => h n)
+      (fun n => (1 : ℝ) / Real.log (Real.log n))
+      ∧
+      #{k  ≤ n | k * σ 1 k = n} ≤ (n:ℝ) ^ h n := by sorry
 
 @[category research open, AMS 11]
 theorem erdos_1060.bound_two (n : ℕ ) :
  ∃ (C : ℝ), IsBigO Filter.atTop (fun n =>
-  (CountSolutions n : ℝ )) (fun n => (Real.log (n : ℝ)) ^ C) := by sorry
+  (#{k  ≤ n | k * σ 1 k = n} : ℝ )) (fun n => (Real.log (n : ℝ)) ^ C) := by sorry
 
 end Erdos1060
