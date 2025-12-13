@@ -32,7 +32,6 @@ $k\sigma(k)=n$, where $\sigma(k)$ is the sum of divisors of $k$. The first bound
 than any power of $n^(\frac{1}{\log\log n})$. The second bound is that $f(n)$ is at most a power of
 $\log n$.
 -/
-
 @[category research open, AMS 11]
 theorem erdos_1060.bound_one (n : ℕ) :
   ∃ h : ℕ → ℝ,
