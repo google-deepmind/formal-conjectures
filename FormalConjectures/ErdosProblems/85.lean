@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/85](https://www.erdosproblems.com/85)
 -/
 
-open Classical SimpleGraph Finset
+open Classical SimpleGraph Finset Filter
 
 namespace Erdos85
 
@@ -34,11 +34,10 @@ noncomputable def f (n : ℕ) : ℕ :=
   sInf {k : ℕ | ∀ (G : SimpleGraph (Fin n)), G.minDegree ≥ k → (cycleGraph 4) ⊑ G}
 
 /--
-Is it true that f(n + 1) ≥ f(n)?
+Is it true that, for all large $n$, $f(n + 1) \ge f(n)$?
 -/
 @[category research open, AMS 5]
-theorem erdos_85 :
-    (∀ n : ℕ, f (n + 1) ≥ f n) ↔ answer(sorry) := by
+theorem erdos_85 : (∀ᶠ n in atTop, f n ≤ f (n + 1)) ↔ answer(sorry) := by
   sorry
 
 -- TODO: add connection to Ramsey number, weaker version and implied bounds from additional material.
