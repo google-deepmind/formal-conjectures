@@ -34,6 +34,8 @@ average_degree, matching_number, residue, annihilation_number, cvetkovic.
 
 open SimpleGraph
 
+open Classical
+
 /-! ### Graph Definitions -/
 
 /-- House Graph: Square 0-1-2-3-0 with roof 4 connected to 2,3. -/
@@ -45,13 +47,7 @@ def HouseGraph : SimpleGraph (Fin 5) :=
 instance : DecidableRel HouseGraph.Adj := by unfold HouseGraph; infer_instance
 
 /-- K4: Complete graph on 4 vertices. -/
-def K4 : SimpleGraph (Fin 4) :=
-  SimpleGraph.fromEdgeSet {
-    s(0, 1), s(0, 2), s(0, 3),
-    s(1, 2), s(1, 3),
-    s(2, 3)
-  }
-instance : DecidableRel K4.Adj := by unfold K4; infer_instance
+abbrev K4 : SimpleGraph (Fin 4) := completeGraph (Fin 4)
 
 /-- Petersen Graph on 10 vertices. -/
 def PetersenGraph : SimpleGraph (Fin 10) :=
@@ -63,21 +59,12 @@ def PetersenGraph : SimpleGraph (Fin 10) :=
     -- Inner Star
     s(5, 7), s(7, 9), s(9, 6), s(6, 8), s(8, 5)
   }
-instance : DecidableRel PetersenGraph.Adj := by unfold PetersenGraph; infer_instance
 
 /-- C6: Cycle graph on 6 vertices. -/
-def C6 : SimpleGraph (Fin 6) :=
-  SimpleGraph.fromEdgeSet {
-    s(0, 1), s(1, 2), s(2, 3), s(3, 4), s(4, 5), s(5, 0)
-  }
-instance : DecidableRel C6.Adj := by unfold C6; infer_instance
+abbrev C6 : SimpleGraph (Fin 6) := cycleGraph 6
 
 /-- Star5: Star graph with center 0 and 5 leaves. -/
-def Star5 : SimpleGraph (Fin 6) :=
-  SimpleGraph.fromEdgeSet {
-    s(0, 1), s(0, 2), s(0, 3), s(0, 4), s(0, 5)
-  }
-instance : DecidableRel Star5.Adj := by unfold Star5; infer_instance
+def Star5 : SimpleGraph (Fin 1 ⊕ Fin 5) := completeBipartiteGraph (Fin 1) (Fin 5)
 
 
 /-! ### House Graph Tests -/
