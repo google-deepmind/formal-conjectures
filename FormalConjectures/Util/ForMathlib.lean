@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Algebra.GCDMonoid.Finset
+import FormalConjectures.ForMathlib.Algebra.Group.GrowthRate
 import FormalConjectures.ForMathlib.Algebra.Group.Indicator
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
