@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 open Asymptotics
 open ArithmeticFunction
 open Finset
-
+open Filter
 /-!
 # Erdős Problem 1060
 
@@ -35,15 +35,12 @@ $\log n$.
 @[category research open, AMS 11]
 theorem erdos_1060.bound_one (n : ℕ) :
   ∃ h : ℕ → ℝ,
-    IsLittleO Filter.atTop
-      (fun n => h n)
-      (fun n => (1 : ℝ) / Real.log (Real.log n))
-      ∧
+    h =o[atTop](fun n => (1 / Real.log (Real.log n))) ∧
       #{k  ≤ n | k * σ 1 k = n} ≤ (n:ℝ) ^ h n := by sorry
 
 @[category research open, AMS 11]
 theorem erdos_1060.bound_two (n : ℕ ) :
- ∃ (C : ℝ), IsBigO Filter.atTop (fun n =>
-  (#{k  ≤ n | k * σ 1 k = n} : ℝ )) (fun n => (Real.log (n : ℝ)) ^ C) := by sorry
+ ∃ (C : ℝ), (fun n =>
+  (#{k  ≤ n | k * σ 1 k = n} : ℝ )) =O[atTop] (fun n => log n ^ C) := by sorry
 
 end Erdos1060
