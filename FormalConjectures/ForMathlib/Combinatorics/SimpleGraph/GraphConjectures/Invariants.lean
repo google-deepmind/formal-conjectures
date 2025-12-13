@@ -183,7 +183,7 @@ def degreeMultiset (G : SimpleGraph α) [DecidableRel G.Adj] : Multiset ℕ :=
 together without going over the total number of edges of that graph. -/
 def annihilationNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   -- Calculate the limit: The number of edges (Sum of degrees / 2)
-  let limit := G.edgeFinset.card
+  letI limit := G.edgeFinset.card
 
   -- The set of all multisets of degrees that sum to less than or equal to `limit`
   Finset.Iic (degreeMultiset G)
