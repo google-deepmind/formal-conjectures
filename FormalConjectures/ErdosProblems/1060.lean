@@ -16,6 +16,7 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 open Asymptotics
+open ArithmeticFunction
 
 /-!
 # Erdős Problem 1060
@@ -23,20 +24,7 @@ open Asymptotics
 *Reference:* [erdosproblems.com/1060](https://www.erdosproblems.com/1060)
 -/
 
-
 namespace Erdos1060
-
-/--
-`σ(n)` is the classical **sum-of-divisors function**.
-
-More precisely:
-\[
-\sigma(n) = \sum_{d \mid n} d,
-\]
-the sum of all positive divisors of `n`.
--/
-
-def sigma (n : ℕ) : ℕ := ∑ x ∈ n.divisors, x
 
 
 /--
@@ -50,11 +38,7 @@ f(n) = \#\{\,k : \mathbb{N} \mid k \le n \ \text{and}\ k \sigma(k) = n\,\}.
 -/
 
 def CountSolutions (n : ℕ) : ℕ :=
-  Fintype.card {k : Fin (n + 1) // (k:ℕ) * sigma (k:ℕ) = n}
-
-
-noncomputable def LogLog (n : ℕ) : ℝ := Real.log (Real.log (n : ℝ))
-
+  Fintype.card {k : Fin (n + 1) // (k:ℕ) * (σ 1 (k:ℕ)) = n}
 
 /--
 `LittleO h` expresses the asymptotic condition
@@ -66,7 +50,7 @@ h(n) = o\!\Big(\frac{1}{\log\log n}\Big) \quad (n \to \infty).
 -/
 
 def LittleO (h : ℕ → ℝ)  : Prop :=
-  IsLittleO Filter.atTop (fun n => h n) (fun n => (1 : ℝ) / LogLog n)
+  IsLittleO Filter.atTop (fun n => h n) (fun n => (1 : ℝ) / Real.log (Real.log n))
 
 
 /-- The conjecture is about the function $f(n)$ count the number of solutions to $k\sigma(k)=n$,
