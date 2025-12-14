@@ -46,8 +46,6 @@ theorem erdos_1003.variants.Icc :
     (∀ k ≥ 1, Set.Infinite {n | ∀ i ∈ Set.Icc 1 k, φ n = φ (n + i)}) ↔ answer(sorry) := by
   sorry
 
-
-
 /--
 Erdős, Pomerance, and Sárközy [EPS87] proved that for all large $x$, the number
 of $n \leq x$ with $\phi(n) = \phi(n+1)$ is at most $$\frac{x}{\exp((\log x)^{1/3})}$$.
