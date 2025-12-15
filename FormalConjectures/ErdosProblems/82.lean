@@ -49,4 +49,12 @@ $F(n) / \log n \to \infty as n \to \infty$
 theorem erdos_82 : Tendsto (fun n => F n / Real.log n) atTop atTop := by
   sorry
 
+/--
+$F(n) \le O(n^{1/2} \ln ^ {3/4} n)$
+-/
+@[category research solved, AMS 5]
+theorem erdos_82.variants.F_upper_bound :
+    (fun n => (F n : ℝ)) =O[atTop] (fun n => Real.sqrt n * (Real.log n) ^ (3 / 4)) := by
+  sorry
+
 end Erdos82
