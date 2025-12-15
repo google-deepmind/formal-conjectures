@@ -85,11 +85,19 @@ theorem isAccumulationPoint_three_halves_pow_infinite :
   sorry
 
 /--
-Find an accumulation point of the sequence `(3/2)^n`
+Find an accumulation point of the sequence `(3/2)^n` modulo `1`.
 -/
 @[category research open, AMS 11]
 theorem isAccumulationPoint_three_halves_pow :
-    IsAccumulationPoint answer(sorry) (fun n => (3 / 2 : ℝ)^n) := by
+    IsAccumulationPoint answer(sorry) (fun n => Int.fract <| (3 / 2 : ℝ)^n) := by
+  sorry
+
+/--
+There is an accumulation point of the sequence `(3/2)^n` modulo `1`.
+-/
+@[category test, AMS 11]
+theorem isAccumulationPoint_three_halves_pow_exists :
+    ∃ p, (IsAccumulationPoint p (fun n => Int.fract <| (3 / 2 : ℝ)^n)) := by
   sorry
 
 end Equidistribution

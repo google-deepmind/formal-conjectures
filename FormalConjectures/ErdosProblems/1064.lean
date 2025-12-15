@@ -13,29 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 128
+# Erdős Problem 1064
 
-*Reference:* [erdosproblems.com/128](https://www.erdosproblems.com/128)
+*Reference:* [erdosproblems.com/1064](https://www.erdosproblems.com/1064)
 -/
 
-variable {V : Type*} {G : SimpleGraph V} [Fintype V]
+open Nat Filter Topology
 
-namespace Erdos128
+namespace Erdos1064
 
 /--
-Let G be a graph with n vertices such that every subgraph on ≥ $n/2$
-vertices has more than $n^2/50$ edges. Must G contain a triangle?
+Let $ϕ(n)$ be the Euler's totient function, then the $n$ satisfies $ϕ(n)>ϕ(n - ϕ(n))$
+have asymptotic density 1.
 -/
-@[category research open, AMS 5]
-theorem erdos_128 :
-    ((∀ V' : Set V,
-      2 * V'.ncard + 1 ≥ Fintype.card V →
-        50 * (G.induce V').edgeSet.ncard > Fintype.card V ^ 2) → ¬ G.CliqueFree 3)
-    ↔ answer(sorry) := by
-  sorry
+@[category research open, AMS 11]
+theorem erdos_1064 : {n | φ n > φ (n - φ n)}.HasDensity 1 := sorry
 
-end Erdos128
+/--
+Let $ϕ(n)$ be the Euler's totient function, there exist infinitely many $n$
+such that $ϕ(n)< ϕ(n - ϕ(n))$
+-/
+@[category research open, AMS 11]
+theorem erdos_1064_k2 : {n | φ n < φ (n - φ n)}.Infinite := sorry
+
+end Erdos1064
