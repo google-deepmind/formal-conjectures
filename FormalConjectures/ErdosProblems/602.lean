@@ -41,7 +41,7 @@ Is there a $2$-colouring of $\bigcup_i A_i$ such that no $A_i$ is monochromatic?
 @[category research open, AMS 03 05]
 theorem erdos_602 :
     (∃ (c : α → Fin 2),
-    ∀ i, #(c '' fun x ↦ x ∈ A i) ≠ 1) ↔ answer(sorry) := by
+    ∀ i, #(c '' {x : α | x ∈ A i}) ≠ 1) ↔ answer(sorry) := by
   sorry
 
 end Erdos602
