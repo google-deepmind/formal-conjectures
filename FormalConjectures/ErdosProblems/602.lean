@@ -29,7 +29,7 @@ open Cardinal
 universe u v
 
 variable (ι : Type u) (α : Type v) (A : ι → Set α) (h : ∀ i, #(A i) = ℵ₀)
-variable (hij : ∀ i j, i ≠ j → ∃ n : ℕ, n ≠ 1 ∧ #{x : α // x ∈ (A i ∩ A j)} = n)
+variable (hij : Pairwise fun i j ↦ (A i ∩ A j).Finite)
 
 /--
 **Erdős Problem 602:**
@@ -40,8 +40,8 @@ Is there a $2$-colouring of $\bigcup_i A_i$ such that no $A_i$ is monochromatic?
 -/
 @[category research open, AMS 03 05]
 theorem erdos_602 :
-    ∃ (c : {x : α // ∃ i, x ∈ A i} → Fin 2),
-    ∀ i, #(c '' fun ⟨x, _⟩ ↦ x ∈ A i) ≠ 1 := by
+    (∃ (c : α → Fin 2),
+    ∀ i, #(c '' fun x ↦ x ∈ A i) ≠ 1) ↔ answer(sorry) := by
   sorry
 
 end Erdos602
