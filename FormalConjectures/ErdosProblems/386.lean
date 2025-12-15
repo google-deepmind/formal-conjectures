@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
---open Nat
 /-!
 # Erdős Problem 386
 
