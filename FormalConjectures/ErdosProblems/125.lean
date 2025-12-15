@@ -17,25 +17,26 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 128
+# Erdős Problem 125
 
-*Reference:* [erdosproblems.com/128](https://www.erdosproblems.com/128)
+*Reference:* [erdosproblems.com/125](https://www.erdosproblems.com/125)
 -/
 
-variable {V : Type*} {G : SimpleGraph V} [Fintype V]
+open Nat Pointwise
 
-namespace Erdos128
+namespace Erdos125
 
-/--
-Let G be a graph with n vertices such that every subgraph on ≥ $n/2$
-vertices has more than $n^2/50$ edges. Must G contain a triangle?
+/-
+Let $A = {∑ ε_{k} 3^{k} : ε_{k} ∈ {0,1}}$ be the set of integers which
+have only the digits $0, 1$ when written base 3, and $B = {∑ ε_{k} 4^{k} : ε_{k} ∈ {0,1}}$
+be the set of integers which have only the digits $0, 1$ when written base 4.
+Does $A + B$ have positive density?
 -/
-@[category research open, AMS 5]
-theorem erdos_128 :
-    ((∀ V' : Set V,
-      2 * V'.ncard + 1 ≥ Fintype.card V →
-        50 * (G.induce V').edgeSet.ncard > Fintype.card V ^ 2) → ¬ G.CliqueFree 3)
-    ↔ answer(sorry) := by
+
+@[category research open, AMS 11]
+theorem erdos_125 :
+    ({ x : ℕ | (digits 3 x).toFinset ⊆ {0, 1} } +
+      { x : ℕ | (digits 4 x).toFinset ⊆ {0, 1} }).HasPosDensity ↔ answer(sorry) := by
   sorry
 
-end Erdos128
+end Erdos125

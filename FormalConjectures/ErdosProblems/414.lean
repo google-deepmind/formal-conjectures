@@ -17,25 +17,23 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 128
+# Erdős Problem 414
 
-*Reference:* [erdosproblems.com/128](https://www.erdosproblems.com/128)
+*Reference:* [erdosproblems.com/414](https://www.erdosproblems.com/414)
+
 -/
 
-variable {V : Type*} {G : SimpleGraph V} [Fintype V]
+namespace Erdos414
 
-namespace Erdos128
+-- The auxiliary function $h(n) = n + τ(n)$ (where $τ(n) counts the number of divisors of $n$)
+def h (n : ℕ) : ℕ := n + n.divisors.card
 
 /--
-Let G be a graph with n vertices such that every subgraph on ≥ $n/2$
-vertices has more than $n^2/50$ edges. Must G contain a triangle?
+Let $h_1(n) = h(n)$ and $h_k(n) = h(h_{k-1}(n))$. Is it true, for any $m,n$, there exist
+$i$ and $j$ such that $h_i(m) = h_j(n)$?
 -/
-@[category research open, AMS 5]
-theorem erdos_128 :
-    ((∀ V' : Set V,
-      2 * V'.ncard + 1 ≥ Fintype.card V →
-        50 * (G.induce V').edgeSet.ncard > Fintype.card V ^ 2) → ¬ G.CliqueFree 3)
-    ↔ answer(sorry) := by
+@[category research open, AMS 11]
+theorem erdos_414 : (∀ᵉ  (m > 0) (n > 0), ∃ i j, h^[i] m = h^[j] n) ↔ answer(sorry) := by
   sorry
 
-end Erdos128
+end Erdos414

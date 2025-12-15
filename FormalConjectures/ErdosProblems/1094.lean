@@ -16,26 +16,29 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Erdős Problem 128
 
-*Reference:* [erdosproblems.com/128](https://www.erdosproblems.com/128)
+/-!
+# Erdős Problem 1094
+
+For all $n\ge 2k$ the least prime factor of $\binom{n}{k}$ is $\le\max(n/k,k)$, with only
+finitely many exceptions.
+
+*Reference:* [erdosproblems.com/1094](https://www.erdosproblems.com/1094)
 -/
 
-variable {V : Type*} {G : SimpleGraph V} [Fintype V]
+namespace Erdos1094
 
-namespace Erdos128
+open scoped Nat
 
 /--
-Let G be a graph with n vertices such that every subgraph on ≥ $n/2$
-vertices has more than $n^2/50$ edges. Must G contain a triangle?
+**Erdős problem 1094**
+
+There are only finitely many pairs `(n,k)` with `n ≥ 2*k` for which the
+least prime factor of the binomial coefficient `Nat.choose n k` exceeds `max (n / k) k`.
 -/
-@[category research open, AMS 5]
-theorem erdos_128 :
-    ((∀ V' : Set V,
-      2 * V'.ncard + 1 ≥ Fintype.card V →
-        50 * (G.induce V').edgeSet.ncard > Fintype.card V ^ 2) → ¬ G.CliqueFree 3)
-    ↔ answer(sorry) := by
+@[category research open, AMS 11]
+theorem erdos_1094 :
+    {(n, k) : ℕ × ℕ | 2 * k ≤ n ∧ (n.choose k).minFac > max (n / k) k}.Finite := by
   sorry
 
-end Erdos128
+end Erdos1094
