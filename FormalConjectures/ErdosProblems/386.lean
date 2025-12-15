@@ -33,11 +33,9 @@ def ConsecutivePrimes (S : Finset ℕ) (l : ℕ) : Prop :=
 /-
 
 Erdos 386 Conjecture:
-Are there infinitely many integers n and k, such that the binomial coefficient of n and k is the
-product of consecutive prime numbers; i.e.,
-\[ {n}\choose{k} = \prod_{p \in P} p \] ?,
-where P is a set of consecutive prime numbers.
-
+Are there infinitely many binomial coefficients
+\[ {n}\choose{k} \] with \[ k ∈ [2, n - 2] \]
+which are a product of consecutive primes?
 
 A solution to Erdos' 386 is a tuple `(n, k, P)`, where `n` and `k` are integers and `P`
 is a non-empty finite set of distinct prime numbers, such that it's product is
@@ -56,7 +54,9 @@ def erdos_386_solutions : Set (ℕ × ℕ × Finset ℕ) := {
 Here is the formalisation of Erdos 386 problem:
 -/
 @[category research open, AMS 11]
-theorem erdos_386_conjecture : erdos_386_solutions.Infinite ↔ answer(sorry) := by
+theorem erdos_386_conjecture :
+    erdos_386_solutions.Infinite
+      ↔ answer(sorry) := by
   sorry
 
 end Erdos386
