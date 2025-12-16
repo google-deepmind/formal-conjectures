@@ -39,8 +39,8 @@ $F(n)$ is the maximal integer such that every graph on $n$ vertices
 contains a regular induced subgraph on at least $F(n)$ vertices.
 -/
 noncomputable def F (n : ℕ) : ℕ :=
-  sSup { k | ∀ (G : SimpleGraph (Fin n)), ∃ S : Subgraph G,
-    IsRegularInduced S ∧ S.verts.ncard = k}
+  sSup {k | ∀ (G : SimpleGraph (Fin n)), ∃ S : Subgraph G,
+    IsRegularInduced S ∧ k ≤ S.verts.ncard}
 
 /--
 $F(n) / \log n \to \infty as n \to \infty$
