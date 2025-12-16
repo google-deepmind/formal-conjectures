@@ -121,7 +121,7 @@ lemma mem_cayleyBall_one_of_mem {S : Set G} {g : G} (hg : g ∈ S) : g ∈ Cayle
   ⟨[g], by simp_all⟩
 
 @[category API, AMS 20]
-lemma exists_cayleyBall_mem_of_closure_eq {S : Set G} (h : Subgroup.closure S = ⊤) (g : G) :
+lemma exists_cayleyBall_mem_of_closure_eq_top {S : Set G} (h : Subgroup.closure S = ⊤) (g : G) :
     ∃ n, g ∈ CayleyBall S n := by
   induction h ▸ Subgroup.mem_top g using Subgroup.closure_induction with
   | mem => exact ⟨1, mem_cayleyBall_one_of_mem ‹_›⟩
@@ -145,7 +145,7 @@ theorem tendsto_atTop_growthFunction_of_infinite [Infinite G] {S : Set G} (hS : 
     (by simp [Set.ncard_eq_toFinset_card'])
   apply tendsto_atTop_atTop_of_monotone fun _ _ ↦ by simpa using cayleyBall_monotone S
   intro A
-  by_cases hA : A = ∅
+  obtain rfl | hA := A.eq_empty_or_nonempty
   · aesop
   · choose n hn using fun (a : A) ↦ exists_cayleyBall_mem_of_closure_eq h a
     let N : ℕ := (Set.range n).toFinset.max' (by simpa [Finset.nonempty_iff_ne_empty])
