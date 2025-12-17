@@ -26,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter
+open Submonoid
+open scoped Pointwise
 
 namespace Erdos123
 
@@ -40,20 +42,6 @@ def IsDComplete (A : Set ℕ) : Prop :=
     (s : Set ℕ) ⊆ A ∧                  -- The summands come from A
     IsAntichain (· ∣ ·) (s : Set ℕ) ∧   -- No summand divides another
     s.sum id = n                        -- They sum to n
-
-/--
-The set of all natural numbers of the form $p^a q^b$ where $a, b ≥ 0$.
-This is a subset of numbers whose prime factors are restricted to those of $p$ and $q$.
--/
-def PowersOfTwo (p q : ℕ) : Set ℕ :=
-  {n : ℕ | ∃ a b : ℕ, n = p^a * q^b}
-
-/--
-The set of all natural numbers of the form $p^a q^b r^c$ where $a, b, c ≥ 0$.
-This is a subset of numbers whose prime factors are restricted to those of $p$, $q$, and $r$.
--/
-def PowersOfThree (p q r : ℕ) : Set ℕ :=
-  {n : ℕ | ∃ a b c : ℕ, n = p^a * q^b * r^c}
 
 /--
 Characterizes a "snug" finite set of natural numbers:
@@ -83,8 +71,9 @@ to be greater than one and distinct.
 -/
 @[category research open, AMS 11]
 theorem erdos_123 (a b c : ℕ) (ha : a > 1) (hb : b > 1) (hc : c > 1)
-    (h_coprime : PairwiseCoprime a b c) : IsDComplete (PowersOfThree a b c) ↔ answer(sorry) := by
-  sorry
+    (h_coprime : PairwiseCoprime a b c) :
+    IsDComplete ((powers a : Set ℕ) * (powers b : Set ℕ) *
+      (powers c : Set ℕ)) ↔ answer(sorry) := by sorry
 
 /--
 Erdős and Lewin proved this conjecture when $a = 3$, $b = 5$, and $c = 7$.
@@ -94,8 +83,7 @@ _$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
 -/
 @[category research solved, AMS 11]
 theorem erdos_123.variants.erdos_lewin_3_5_7 :
-    IsDComplete (PowersOfThree 3 5 7) := by
-  sorry
+    IsDComplete ((powers 3 : Set ℕ) * (powers 5 : Set ℕ) * (powers 7 : Set ℕ)) := by sorry
 
 /--
 A simpler case: the set of numbers of the form $2^k 3^l$ ($k, l ≥ 0$) is d-complete.
@@ -111,18 +99,20 @@ of combinatorics_. Matematiche (Catania) (1992), 231-240.
 -/
 @[category research solved, AMS 11]
 theorem erdos_123.variants.powers_2_3 :
-    IsDComplete (PowersOfTwo 2 3) := by
-  sorry
+    IsDComplete ((powers 2 : Set ℕ) * (powers 3 : Set ℕ)) := by sorry
 
 /--
 A stronger conjecture for numbers of the form $2^k 3^l 5^j$.
 
-For any $ε > 0$, all large integers $n$ can be written as the sum of distinct integers $b_1 < ... < b_t$ of the form $2^k 3^l 5^j$ where $b_t < (1 + ϵ) b_1$.
+For any $ε > 0$, all large integers $n$ can be written as the sum of distinct integers
+$b_1 < ... < b_t$ of the form $2^k 3^l 5^j$ where $b_t < (1 + ϵ) b_1$.
 -/
 @[category research open, AMS 11]
 theorem erdos_123.variants.powers_2_3_5_snug :
-  (∀ ε > 0, ∀ᶠ (n : ℕ) in atTop, ∃ (A : Finset ℕ) (hA : (A : Set ℕ) ⊆ PowersOfThree 2 3 5)
-  (hAnonempty : A.Nonempty) (hAsnug: IsSnug ε A hAnonempty),
-  A.sum id = n) ↔ answer(sorry) := by sorry
+  (∀ ε > 0, ∀ᶠ (n : ℕ) in atTop,
+    ∃ (A : Finset ℕ) (hA : (A : Set ℕ) ⊆ (powers 2 : Set ℕ) *
+      (powers 3 : Set ℕ) * (powers 5 : Set ℕ))
+      (hAnonempty : A.Nonempty) (hAsnug : IsSnug ε A hAnonempty),
+    A.sum id = n) ↔ answer(sorry) := by sorry
 
 end Erdos123
