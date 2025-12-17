@@ -30,8 +30,9 @@ Is it true that, for every integer $t\geq1$, there is some integer $a$ such that
 with $1\leq k \le \frac{n}{2}$ has exactly $t$ solutions?
 -/
 @[category research open, AMS 11]
-theorem erdos_849 (t : ℕ) (h : t ≥ 1) : ∃ (a : ℕ),
-    {n : ℕ | ∃ (k : ℕ), (k ≥ 1) ∧ k ≤ (n : ℝ) / 2 ∧ choose n k = a}.ncard = t ↔ answer(sorry) := by
+theorem erdos_849 : answer(sorry) ↔
+    ∀ t t ≥ 1, ∃ a : ℕ,
+      {n : ℕ | ∃ (k : ℕ), (k ≥ 1) ∧ k ≤ (n : ℝ) / 2 ∧ choose n k = a}.ncard = t := by
   sorry
 
 end Erdos849
