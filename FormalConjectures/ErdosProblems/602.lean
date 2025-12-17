@@ -26,10 +26,7 @@ namespace Erdos602
 
 open Cardinal
 
-universe u v
-
-variable (ι : Type u) (α : Type v) (A : ι → Set α) (h : ∀ i, #(A i) = ℵ₀)
-variable (hij : Pairwise fun i j ↦ (A i ∩ A j).Finite)
+variable (ι α : Type) (A : ι → Set α)
 
 /--
 **Erdős Problem 602:**
@@ -39,9 +36,9 @@ $|A_i \cap A_j|$ finite and $\neq 1$.
 Is there a $2$-colouring of $\bigcup_i A_i$ such that no $A_i$ is monochromatic?
 -/
 @[category research open, AMS 03 05]
-theorem erdos_602 :
-    (∃ (c : α → Fin 2),
-    ∀ i, #(c '' {x : α | x ∈ A i}) ≠ 1) ↔ answer(sorry) := by
+theorem erdos_602 : ((∀ i, #(A i) = ℵ₀) →
+    (Pairwise fun i j ↦ (A i ∩ A j).Finite ∧ #{x : α // x ∈ (A i ∩ A j)} ≠ 1) →
+    ∃ c : α → Fin 2, ∀ i, (c '' A i).Nontrivial) ↔ answer(sorry) := by
   sorry
 
 end Erdos602
