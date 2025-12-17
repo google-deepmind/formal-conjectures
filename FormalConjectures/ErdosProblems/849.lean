@@ -36,7 +36,3 @@ theorem erdos_849 : answer(sorry) ↔
   sorry
 
 end Erdos849
-
--- Is it true that, for every integer t≥1, there is some integer a such that
--- (nk)=a
--- (with 1≤k≤n/2) has exactly t solutions?
