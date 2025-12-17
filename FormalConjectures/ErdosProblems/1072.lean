@@ -23,6 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Nat Filter Finset
+open scoped Topology
 
 namespace Erdos1072
 
