@@ -27,7 +27,7 @@ namespace Erdos849
 
 /--
 Is it true that, for every integer $t\geq1$, there is some integer $a$ such that ${n \choose k} = a$
-with $1\leq\frac{n}{2}$ has exactly $t$ solutions?
+with $1\leq k \le \frac{n}{2}$ has exactly $t$ solutions?
 -/
 @[category research open, AMS 11]
 theorem erdos_849 (t : ℕ) (h : t ≥ 1) : ∃ (a : ℕ),
