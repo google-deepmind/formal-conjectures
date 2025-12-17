@@ -32,7 +32,7 @@ with $1\leq k \le \frac{n}{2}$ has exactly $t$ solutions?
 @[category research open, AMS 11]
 theorem erdos_849 : answer(sorry) ↔
     ∀ t ≥ 1, ∃ a : ℕ,
-      {n : ℕ | ∃ (k : ℕ), (k ≥ 1) ∧ k ≤ (n : ℝ) / 2 ∧ choose n k = a}.ncard = t := by
+      {n : ℕ | ∃ k ≥ 1, 2 * k ≤ n ∧ choose n k = a}.ncard = t := by
   sorry
 
 end Erdos849
