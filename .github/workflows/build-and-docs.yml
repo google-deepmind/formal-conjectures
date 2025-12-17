@@ -33,7 +33,7 @@ jobs:
     steps:
 
       - name: Checkout project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -88,7 +88,7 @@ jobs:
           lake update formal_conjectures
 
       - name: Cache documentation
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: docbuild/.lake/build/doc
           key: MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
@@ -113,7 +113,7 @@ jobs:
           rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12.9'
 
@@ -134,7 +134,7 @@ jobs:
 
       - name: Upload docs
         id: deployment
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: docbuild/out
 

@@ -22,28 +22,28 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1077](https://www.erdosproblems.com/1077)
 -/
 
-namespace Erdos1077
+open Classical Finset Filter SimpleGraph
 
-open Classical
-open Finset
-open SimpleGraph
+namespace Erdos1077
 
 /--
 We call a graph $D$-balanced (or $D$-almost-regular) if the maximum degree is at most $D$ times the
 minimum degree.
 
-Let $ϵ, α > 0$ and $D$ and $n$ be sufficiently large. If $G$ is a graph on $n$ vertices with at least
-$n^{1+α}$ edges, then must $G$ contain a $D$-balanced subgraph on $m > n^{1-α}$ vertices with at least
-$ϵm^{1+α}$ edges?
+Let $ε, α > 0$ and $D$ and $n$ be sufficiently large. If $G$ is a graph on $n$ vertices with at
+least $n^{1+α}$ edges, then must $G$ contain a $D$-balanced subgraph on $m > n^{1-α}$ vertices with
+at least $εm^{1+α}$ edges?
 -/
 @[category research open, AMS 5]
-theorem erdos_1077 : (∀ (ε α : ℝ) (h1 : (ε : ℝ) > 0) (h2 : α > 0),
-    ∃ (D0 n0 : ℕ), ∀ D > D0, ∀ n > n0, ∀ (G : SimpleGraph (Fin n)),
-    #G.edgeFinset > ((n : ℝ)^ (1 + α)) → ∃ (H : Subgraph G),
-    IsBalanced H.coe D ∧
-    letI m := #H.verts.toFinset
-    m > (n : ℝ) ^ (1 - α) ∧ #H.edgeSet.toFinset > ε * (m ^ (1 + α)))
-    ↔ answer(sorry) := by
+theorem erdos_1077 :
+    (∀ ε > (0 : ℝ), ε < 1 → ∀ α > (0 : ℝ), α < 1 → ∀ᶠ D in atTop, ∀ᶠ n in atTop,
+      ∀ G : SimpleGraph (Fin n), G.edgeSet.ncard > (n : ℝ) ^ (1 + α) →
+        ∃ (H : Subgraph G),
+          letI m := H.verts.ncard
+          IsBalanced H.coe D ∧
+          m > (n : ℝ) ^ (1 - α) ∧
+          H.edgeSet.ncard > ε * m ^ (1 + α))
+      ↔ answer(sorry) := by
   sorry
 
 end Erdos1077
