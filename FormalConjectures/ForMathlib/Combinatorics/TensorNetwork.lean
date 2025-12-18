@@ -1,926 +1,392 @@
 import Mathlib
+import FormalConjectures.ForMathlib.Combinatorics.TensorContraction
+
 
 open scoped TensorProduct
 open scoped BigOperators
 
 variable (V : Type*)[NormedAddCommGroup V] [InnerProductSpace ℝ V]
 
-def finIccEquiv (k : ℕ) : Fin k ≃ Set.Icc (1 : ℕ) k :=
-  { toFun := fun i =>
-    ⟨i.1 + 1,
-      by
-        have hi : i.1 < k := i.2
-        constructor
-        · -- 1 ≤ i.1 + 1
-          exact Nat.succ_le_succ (Nat.zero_le _)
-        · -- i.1 + 1 ≤ k
-          exact Nat.succ_le_of_lt hi⟩
-  , invFun := fun i =>
-    -- send n ∈ [1,k] ↦ n-1 as an element of Fin k
-    ⟨i.1 - 1,
-      by
-        -- we need: i.1 - 1 < k
-        have h₁ : 1 ≤ i.1 := i.2.1
-        have h₂ : i.1 ≤ k := i.2.2
-        -- from 1 ≤ i.1 we get 0 < i.1
-        have hpos : 0 < i.1 := Nat.succ_le_iff.mp h₁
-        -- i.1 - 1 < i.1
-        have hlt₁ : i.1 - 1 < i.1 := Nat.sub_lt (Nat.succ_le_of_lt hpos) (Nat.succ_pos _)
-        -- so i.1 - 1 < k by transitivity
-        exact lt_of_lt_of_le hlt₁ h₂⟩
-  , left_inv := by
-      intro i
-    -- show: (i ↦ i+1 ↦ (i+1)-1) = i
-      cases i with
-      | mk n hn =>
-      -- the underlying ℕ equality is (n + 1) - 1 = n
-      -- then Fin extensionality finishes it
-        apply Fin.ext
-        simp
-    , right_inv := by
-      intro i
-    -- show: (n ↦ n-1 ↦ (n-1)+1) = n  for n ∈ [1,k]
-      cases i with
-      | mk n hIcc =>
-        have h₁ : 1 ≤ n := hIcc.1
-        have hpos : 0 < n := Nat.succ_le_iff.mp h₁
-        apply Subtype.ext
-        -- as ℕ: (n - 1) + 1 = n
-        have : n - 1 + 1 = n := Nat.sub_add_cancel h₁
-        simp [this]
-  }
-
-/-- Turn `v : Fin k → V` into a function on `{1,…,k}`. -/
-def finFunToIccFun {V : Type*} {k : ℕ} (v : Fin k → V) : Set.Icc (1 : ℕ) k → V :=
-  fun i => v ((finIccEquiv k).symm i)
-
-lemma finFunToIccFun_update {V : Type*} {k : ℕ} [DecidableEq (Fin k)] (v : Fin k → V) (i : Fin k) (x : V) :
-  finFunToIccFun (k := k) (Function.update v i x) = Function.update (finFunToIccFun (k := k) v) (finIccEquiv k i) x := by
-    funext j
-    let e := finIccEquiv k
-    by_cases h : j = e i
-    ·
-      subst h
-      simp [finFunToIccFun, Function.update, e]
-    ·
-      have hij : e.symm j ≠ i := by
-        intro h'
-        apply h
-        have := e.apply_symm_apply j
-        simpa [h'] using this.symm
-      simp [finFunToIccFun, Function.update, h, hij, e]
-
-/-- Turn `w : {1,…,k} → V` into a function on `Fin k`. -/
-def iccFunToFinFun {V : Type*} {k : ℕ} (w : Set.Icc (1 : ℕ) k → V) : Fin k → V :=
-  fun i => w ((finIccEquiv k) i)
-
-lemma iccFunToFinFun_update {V : Type*} {k : ℕ} [DecidableEq (Fin k)] (v : Set.Icc (1 : ℕ) k → V) (i : Set.Icc (1 : ℕ) k) (x : V) :
-  iccFunToFinFun (k := k) (Function.update v i x) = Function.update (iccFunToFinFun (k := k) v) ((finIccEquiv k).symm i) x := by
-    funext j
-    let e := (finIccEquiv k)
-    by_cases h : j = e.symm i
-    ·
-      subst h
-      simp [iccFunToFinFun, Function.update, e]
-    ·
-      have hij : e j ≠ i := by
-        intro h'
-        apply h
-        have := e.symm_apply_apply j
-        simpa [h'] using this.symm
-      simp [iccFunToFinFun, Function.update, h, hij, e]
-
-def PurePartOfContraction {k l m : ℕ} (R : Set (ℕ × ℕ))
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) :
-    (Fin m → V) := by
-    let A := (Set.Icc 1 k \ Prod.fst '' R : Set ℕ)
-    let B := (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)
-    let Ainc : A → Set.Icc 1 k := fun i => by
-      have hi : i.val ∈ (Set.Icc 1 k) := by simpa using i.property.left
-      exact ⟨i.val,hi⟩
-    let Binc : B → Set.Icc 1 l := fun i => by
-      have hi : i.val ∈ (Set.Icc 1 l) := by simpa using i.property.left
-      exact ⟨i.val,hi⟩
-    let inc : A ⊕ B → (Set.Icc 1 k) ⊕ (Set.Icc 1 l) := Sum.map Ainc Binc
-    let vSum : (Set.Icc 1 k) ⊕ (Set.Icc 1 l) → V := fun s =>
-      match s with
-      | Sum.inl a => v a
-      | Sum.inr a => (finFunToIccFun m_1) a
-    let prefun : A ⊕ B → V := vSum ∘ inc
-    exact iccFunToFinFun (prefun ∘ f.symm)
-
-variable {α β γ : Type*}
-
-theorem comp_right_cancel (f : α ≃ β) {g h : β → γ} :
-    (g ∘ f = h ∘ f) ↔ g = h := by
-  constructor
-  · -- → direction: cancel `f` on the right
-    intro hcomp
-    funext b
-    -- apply the equality of functions at `f.symm b`
-    have := congrArg (fun (k : α → γ) => k (f.symm b)) hcomp
-    -- now `(g ∘ f) (f.symm b) = (h ∘ f) (f.symm b)` simplifies to `g b = h b`
-    simpa using this
-  · -- ← direction: if `g = h` then trivially `g ∘ f = h ∘ f`
-    intro hgh
-    subst hgh
-    rfl
-
-lemma PurePart_Invariance_Right {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Fin l) (hi : (finIccEquiv l i).val ∈ Prod.snd '' R) (x : V):
-    PurePartOfContraction V R f v (Function.update m_1 i x) = PurePartOfContraction V R f v m_1 := by
-    simp [PurePartOfContraction]
-    apply congrArg (iccFunToFinFun)
-    rw [comp_right_cancel]
-    have hupdate : finFunToIccFun (k := l) (Function.update m_1 i x) = Function.update (finFunToIccFun (k := l) m_1) (finIccEquiv l i) x :=
-      finFunToIccFun_update (v := m_1) (i := i) (x := x)
-    rw [hupdate]
-    funext j
-    cases j with
-    | inl a =>
-      simp
-    | inr b =>
-      rcases b with ⟨n, hn⟩
-      have hn_not : n ∉ Prod.snd '' R := hn.2
-      have hn_Icc : n ∈ Set.Icc (1 : ℕ) l := hn.1
-      let y : Set.Icc (1 : ℕ) l := ⟨n, hn_Icc⟩
-      have hneq : y ≠ finIccEquiv l i := by
-        intro hEq
-        have hmem' : y.1 ∈ Prod.snd '' R := by
-          have : (finIccEquiv l i).1 ∈ Prod.snd '' R := hi
-          simpa [hEq] using this
-        have : n ∈ Prod.snd '' R := by simpa [y] using hmem'
-        exact hn_not this
-      simp [Function.update, y, hneq]
-
-lemma PurePart_Invariance_Left {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Set.Icc 1 k) (hi : i.val ∈ Prod.fst '' R) (x : V):
-    PurePartOfContraction V R f (Function.update v i x) m_1 = PurePartOfContraction V R f v m_1 := by
-    classical
-    simp [PurePartOfContraction]
-    apply congrArg (iccFunToFinFun)
-    rw [comp_right_cancel]
-    funext j
-    cases j with
-    | inr a =>
-      simp
-    | inl b =>
-      rcases b with ⟨n, hn⟩
-      have hn_not : n ∉ Prod.fst '' R := hn.2
-      have hn_Icc : n ∈ Set.Icc (1 : ℕ) k := hn.1
-      let y : Set.Icc (1 : ℕ) k := ⟨n, hn_Icc⟩
-      have hneq : y ≠ i := by
-        intro hEq
-        have hmem' : y.1 ∈ Prod.fst '' R := by
-          have : i.1 ∈ Prod.fst '' R := hi
-          simpa [hEq] using this
-        have : n ∈ Prod.fst '' R := by simpa [y] using hmem'
-        exact hn_not this
-      simp [Function.update, y, hneq]
-
-lemma PurePart_Update_Right {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Fin l) (hi : (finIccEquiv l i).val ∈ Set.Icc 1 l \ Prod.snd '' R) (x : V):
-    PurePartOfContraction V R f v (Function.update m_1 i x) = Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inr ⟨(finIccEquiv l i).val, hi⟩))) x := by
-  classical
-  simp [PurePartOfContraction]
-  rw [← iccFunToFinFun_update]
-  apply congrArg (iccFunToFinFun)
-  funext t
-  by_cases h : t = f (Sum.inr ⟨(finIccEquiv l i).val, hi⟩)
-  . subst h
-    have hIcc :
-        (⟨(finIccEquiv l i).val, hi.1⟩ : Set.Icc 1 l)
-          = finIccEquiv l i := by
-      apply Subtype.ext
-      simp  -- same underlying nat; proof is irrelevant
-    -- Now simplify both sides.
-    simp [Function.update]
-    rw [finFunToIccFun_update]
-    simp
-  · have h_ne : t ≠ f (Sum.inr ⟨(finIccEquiv l i).val, hi⟩) := h
-    rw [Function.update_of_ne h_ne, finFunToIccFun_update]
-    cases hft : f.symm t with
-    | inl a =>
-      simp [hft]
-    | inr a =>
-      simp [hft]
-      rw [Function.update_of_ne]
-      intro h1
-      have h_a : a = ⟨(finIccEquiv l i).val, hi⟩ := by
-        ext
-        have := congrArg (fun x : Set.Icc 1 l => (x : ℕ)) h1
-        simpa using this
-      exact h (by
-        have := congrArg f hft
-        simpa [h_a] using this)
-
-lemma PurePart_Update_Left {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Set.Icc 1 k) (hi : i.val ∈ Set.Icc 1 k \ Prod.fst '' R) (x : V):
-    PurePartOfContraction V R f (Function.update v i x) m_1 = Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inl ⟨i,hi⟩))) x := by
-  classical
-  simp [PurePartOfContraction]
-  rw [← iccFunToFinFun_update]
-  apply congrArg (iccFunToFinFun)
-  funext t
-  by_cases h : t = f (Sum.inl ⟨i.val, hi⟩)
-  . subst h
-    simp [Function.update]
-  · have h_ne : t ≠ f (Sum.inl ⟨i.val, hi⟩) := h
-    rw [Function.update_of_ne h_ne]
-    cases hft : f.symm t with
-    | inr a =>
-      simp [hft]
-    | inl a =>
-      simp [hft]
-      rw [Function.update_of_ne]
-      intro h1
-      have h_a : a = ⟨i.val, hi⟩ := by
-        ext
-        have := congrArg (fun x : Set.Icc 1 k => (x : ℕ)) h1
-        simpa using this
-      exact h (by
-        have := congrArg f hft
-        simpa [h_a] using this)
-
-noncomputable def ScalarPartOfContraction {k l : ℕ} (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) :
-    ℝ := by
-    classical
-    have hIccFin : (Set.Icc 1 k ×ˢ Set.Icc 1 l).Finite := (Set.finite_Icc 1 k).prod (Set.finite_Icc 1 l)
-    have hRfin : R.Finite := hIccFin.subset hR
-    let scalars : ℕ × ℕ → ℝ := fun r =>
-      if hr : r ∈ R then
-        have h1 : r.1 ∈ Set.Icc 1 k := (hR hr).1
-        have h2 : r.2 ∈ Set.Icc 1 l := (hR hr).2
-        inner ℝ (v ⟨r.1,h1⟩) (finFunToIccFun m_1 ⟨r.2,h2⟩)
-      else
-        1
-    exact ∏ r ∈ hRfin.toFinset, scalars r
-
-lemma ScalarPart_Invariance_Right {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Fin l) (hi : (finIccEquiv l i).val ∈ Set.Icc 1 l \ Prod.snd '' R) (x : V):
-    ScalarPartOfContraction V R hR v (Function.update m_1 i x) = ScalarPartOfContraction V R hR v m_1 := by
-    classical
-    simp [ScalarPartOfContraction]
-    apply Finset.prod_congr rfl
-    intro r hrFin
-    by_cases hr : r∈ R
-    .
-      simp [hr, finFunToIccFun_update, Function.update]
-      have h2 : r.2 ∈ Set.Icc 1 l := (hR hr).2
-      have hneq : (⟨r.2, h2⟩ : Set.Icc 1 l) ≠ finIccEquiv l i := by
-        intro hEq
-        have hr2_in : r.2 ∈ Prod.snd '' R := by
-          refine ⟨r, hr, ?_⟩
-          rfl
-        have hNat : (finIccEquiv l i).val = r.2 := by
-          have := congrArg (fun (z : Set.Icc 1 l) => (z : ℕ)) hEq
-          simpa using this.symm
-        have : (finIccEquiv l i).val ∈ Prod.snd '' R := by
-          simpa [hNat] using hr2_in
-        exact hi.2 this
-      simp [hneq]
-    .
-      simp [hr]
-
-lemma ScalarPart_Invariance_Left {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Set.Icc 1 k) (hi : i.val ∈ Set.Icc 1 k \ Prod.fst '' R) (x : V):
-    ScalarPartOfContraction V R hR (Function.update v i x)  m_1 = ScalarPartOfContraction V R hR v m_1 := by
-    classical
-    simp [ScalarPartOfContraction]
-    apply Finset.prod_congr rfl
-    intro r hrFin
-    by_cases hr : r∈ R
-    .
-      simp [hr, Function.update]
-      have h2 : r.1 ∈ Set.Icc 1 k := (hR hr).1
-      have hneq : (⟨r.1, h2⟩ : Set.Icc 1 k) ≠ i := by
-        intro hEq
-        have hr1_in : r.1 ∈ Prod.fst '' R := by
-          refine ⟨r, hr, ?_⟩
-          rfl
-        have hNat : i.val = r.1 := by
-          have := congrArg (fun (z : Set.Icc 1 k) => (z : ℕ)) hEq
-          simpa using this.symm
-        have : i.val ∈ Prod.fst '' R := by
-          simpa [hNat] using hr1_in
-        exact hi.2 this
-      simp [hneq]
-    .
-      simp [hr]
-
-lemma ScalarPart_Update_Add_Right {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjsnd : Set.InjOn Prod.snd R)
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Fin l) (hi : (finIccEquiv l i).val ∈ Prod.snd '' R) (x y: V):
-    ScalarPartOfContraction V R hR v (Function.update m_1 i (x + y)) = (ScalarPartOfContraction V R hR v (Function.update m_1 i x)) + (ScalarPartOfContraction V R hR v (Function.update m_1 i y)) := by
-    classical
-    have hIccFin : (Set.Icc 1 k ×ˢ Set.Icc 1 l).Finite := (Set.finite_Icc 1 k).prod (Set.finite_Icc 1 l)
-    have hRfin : R.Finite := hIccFin.subset hR
-    simp [ScalarPartOfContraction, finFunToIccFun_update]
-    rcases hi with ⟨r₀, hr₀R, hr₀snd⟩
-    have hr₀S : r₀ ∈ hRfin.toFinset :=
-      by simpa using hRfin.mem_toFinset.mpr hr₀R
-    have hsplit_xy :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ (v ⟨r.1, ((hR h).1)⟩) (Function.update (finFunToIccFun m_1) (finIccEquiv l i) (x + y) ⟨r.2, ((hR h).2)⟩)
-          else 1)
-      hr₀S).symm
-    have hsplit_x :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ (v ⟨r.1, ((hR h).1)⟩) (Function.update (finFunToIccFun m_1) (finIccEquiv l i) x ⟨r.2, ((hR h).2)⟩)
-          else 1)
-      hr₀S).symm
-    have hsplit_y :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ (v ⟨r.1, ((hR h).1)⟩) (Function.update (finFunToIccFun m_1) (finIccEquiv l i) y ⟨r.2, ((hR h).2)⟩)
-          else 1)
-      hr₀S).symm
-    simp [hsplit_xy, hsplit_x, hsplit_y, hr₀R]
-    simp [Function.update, hr₀snd, inner_add_right, add_mul]
-        -- Define the “tail product” as a function of a vector `z`.
-    -- Note: we avoid `?_` by getting the Icc-memberships from `hR` *inside* the proof.
-    have prod_const :
-        ∀ z : V,
-          ∏ r ∈ hRfin.toFinset.erase r₀,
-            (if hr : r ∈ R then
-              let hIk : r.1 ∈ Set.Icc 1 k := (hR hr).1
-              let hIl : r.2 ∈ Set.Icc 1 l := (hR hr).2
-              inner ℝ (v ⟨r.1, hIk⟩)
-                (if (⟨r.2, hIl⟩ : Set.Icc 1 l) = (finIccEquiv l i) then z
-                 else finFunToIccFun m_1 ⟨r.2, hIl⟩)
-            else 1)
-          =
-          ∏ r ∈ hRfin.toFinset.erase r₀,
-            (if hr : r ∈ R then
-              let hIk : r.1 ∈ Set.Icc 1 k := (hR hr).1
-              let hIl : r.2 ∈ Set.Icc 1 l := (hR hr).2
-              inner ℝ (v ⟨r.1, hIk⟩) (finFunToIccFun m_1 ⟨r.2, hIl⟩)
-            else 1) := by
-        intro z
-        refine Finset.prod_congr rfl ?_
-        intro r hr
-        classical
-        by_cases hrR : r ∈ R
-        ·
-          have hr_ne : r ≠ r₀ := (Finset.mem_erase.mp hr).1
-          have hIk : r.1 ∈ Set.Icc 1 k := (hR hrR).1
-          have hIl : r.2 ∈ Set.Icc 1 l := (hR hrR).2
-          have hvals_ne : r.2 ≠ r₀.2 := by
-            intro h_eq
-            have : r = r₀ :=
-              hInjsnd hrR hr₀R (by simpa [Prod.snd] using h_eq)
-            exact hr_ne this
-          have hcond_false : (⟨r.2, hIl⟩ : Set.Icc 1 l) ≠ (finIccEquiv l i) := by
-            intro h_eq
-            have hnat : r.2 = finIccEquiv l i :=
-              congrArg (fun (t : Set.Icc 1 l) => (t : ℕ)) h_eq
-            -- `hr₀snd : r₀.2 = ↑((finIccEquiv l) i)`
-            have : r.2 = r₀.2 := by
-              simpa [hr₀snd] using hnat
-            exact hvals_ne this
-          simp [hrR]
-          have : ¬ ((⟨r.2, hIl⟩ : Set.Icc 1 l) = (finIccEquiv l) i) := by
-            exact hcond_false
-          simp [this]
-        · -- Case: r ∉ R: both sides are `1`.
-          simp [hrR]
-    -- Instantiate that lemma at z = x + y, z = x, and z = y.
-    have prod_xy := prod_const (x + y)
-    have prod_x  := prod_const x
-    have prod_y  := prod_const y
-    -- All three “tail products” in the goal now collapse to the same base product.
-    -- The big equality becomes trivially true.
-    simp [prod_xy, prod_x, prod_y]
-
-lemma ScalarPart_Update_Add_Left {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjfst : Set.InjOn Prod.fst R)
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Set.Icc 1 k) (hi : i.val ∈ Prod.fst '' R) (x y: V):
-    ScalarPartOfContraction V R hR (Function.update v i (x + y)) m_1 = (ScalarPartOfContraction V R hR (Function.update v i x) m_1) + (ScalarPartOfContraction V R hR (Function.update v i y) m_1) := by
-    classical
-    have hIccFin : (Set.Icc 1 k ×ˢ Set.Icc 1 l).Finite := (Set.finite_Icc 1 k).prod (Set.finite_Icc 1 l)
-    have hRfin : R.Finite := hIccFin.subset hR
-    simp [ScalarPartOfContraction]
-    rcases hi with ⟨r₀, hr₀R, hr₀fst⟩
-    have hr₀S : r₀ ∈ hRfin.toFinset :=
-      by simpa using hRfin.mem_toFinset.mpr hr₀R
-    have hsplit_xy :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ ((Function.update v i (x + y)) ⟨r.1, (hR h).1⟩) ((finFunToIccFun m_1) ⟨r.2, (hR h).2⟩)
-          else 1)
-      hr₀S).symm
-    have hsplit_x :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ ((Function.update v i x) ⟨r.1, (hR h).1⟩) ((finFunToIccFun m_1) ⟨r.2, (hR h).2⟩)
-          else 1)
-      hr₀S).symm
-    have hsplit_y :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ ((Function.update v i y) ⟨r.1, (hR h).1⟩) ((finFunToIccFun m_1) ⟨r.2, (hR h).2⟩)
-          else 1)
-      hr₀S).symm
-    simp [hsplit_xy, hsplit_x, hsplit_y, hr₀R]
-    simp [Function.update, hr₀fst, inner_add_left, add_mul]
-        -- Define the “tail product” as a function of a vector `z`.
-    -- Note: we avoid `?_` by getting the Icc-memberships from `hR` *inside* the proof.
-    have prod_const :
-        ∀ z : V,
-          ∏ r ∈ hRfin.toFinset.erase r₀,
-            (if hr : r ∈ R then
-              let hIk : r.1 ∈ Set.Icc 1 k := (hR hr).1
-              let hIl : r.2 ∈ Set.Icc 1 l := (hR hr).2
-              inner ℝ (if (⟨r.1, hIk⟩ : Set.Icc 1 k) = i then z
-                 else v ⟨r.1, hIk⟩) (finFunToIccFun m_1 ⟨r.2, hIl⟩)
-            else 1)
-          =
-          ∏ r ∈ hRfin.toFinset.erase r₀,
-            (if hr : r ∈ R then
-              let hIk : r.1 ∈ Set.Icc 1 k := (hR hr).1
-              let hIl : r.2 ∈ Set.Icc 1 l := (hR hr).2
-              inner ℝ (v ⟨r.1, hIk⟩) (finFunToIccFun m_1 ⟨r.2, hIl⟩)
-            else 1) := by
-        intro z
-        refine Finset.prod_congr rfl ?_
-        intro r hr
-        classical
-        by_cases hrR : r ∈ R
-        ·
-          have hr_ne : r ≠ r₀ := (Finset.mem_erase.mp hr).1
-          have hIk : r.1 ∈ Set.Icc 1 k := (hR hrR).1
-          have hIl : r.2 ∈ Set.Icc 1 l := (hR hrR).2
-          have hvals_ne : r.1 ≠ r₀.1 := by
-            intro h_eq
-            have : r = r₀ :=
-              hInjfst hrR hr₀R (by simpa [Prod.fst] using h_eq)
-            exact hr_ne this
-          have hcond_false : (⟨r.1, hIk⟩ : Set.Icc 1 k) ≠ i := by
-            intro h_eq
-            have hnat : r.1 = i :=
-              congrArg (fun (t : Set.Icc 1 k) => (t : ℕ)) h_eq
-            -- `hr₀snd : r₀.2 = ↑((finIccEquiv l) i)`
-            have : r.1 = r₀.1 := by
-              simpa [hr₀fst] using hnat
-            exact hvals_ne this
-          simp [hrR]
-          have : ¬ ((⟨r.1, hIk⟩ : Set.Icc 1 k) = i) := by
-            exact hcond_false
-          simp [this]
-        · -- Case: r ∉ R: both sides are `1`.
-          simp [hrR]
-    -- Instantiate that lemma at z = x + y, z = x, and z = y.
-    have prod_xy := prod_const (x + y)
-    have prod_x  := prod_const x
-    have prod_y  := prod_const y
-    -- All three “tail products” in the goal now collapse to the same base product.
-    -- The big equality becomes trivially true.
-    simp [prod_xy, prod_x, prod_y]
-
-lemma ScalarPart_Update_Mul_Right {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjsnd : Set.InjOn Prod.snd R)
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Fin l) (hi : (finIccEquiv l i).val ∈ Prod.snd '' R) (c : ℝ) (x : V) :
-    ScalarPartOfContraction V R hR v (Function.update m_1 i (c • x)) = c • ScalarPartOfContraction V R hR v (Function.update m_1 i x) := by
-    classical
-    have hIccFin : (Set.Icc 1 k ×ˢ Set.Icc 1 l).Finite := (Set.finite_Icc 1 k).prod (Set.finite_Icc 1 l)
-    have hRfin : R.Finite := hIccFin.subset hR
-    simp [ScalarPartOfContraction, finFunToIccFun_update]
-    rcases hi with ⟨r₀, hr₀R, hr₀snd⟩
-    have hr₀S : r₀ ∈ hRfin.toFinset :=
-      by simpa using hRfin.mem_toFinset.mpr hr₀R
-    have hsplit_cx :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ (v ⟨r.1, (hR h).1⟩) (Function.update (finFunToIccFun m_1) (finIccEquiv l i) (c • x) ⟨r.2, (hR h).2⟩)
-          else 1)
-      hr₀S).symm
-    have hsplit_x :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ (v ⟨r.1, (hR h).1⟩) (Function.update (finFunToIccFun m_1) (finIccEquiv l i) x ⟨r.2, (hR h).2⟩)
-          else 1)
-      hr₀S).symm
-    simp [hsplit_cx, hsplit_x, hr₀R]
-    simp [Function.update, hr₀snd]
-    simp [inner_smul_right, mul_assoc]
-    have prod_const :
-        ∀ z : V,
-          ∏ r ∈ hRfin.toFinset.erase r₀,
-            (if hr : r ∈ R then
-              let hIk : r.1 ∈ Set.Icc 1 k := (hR hr).1
-              let hIl : r.2 ∈ Set.Icc 1 l := (hR hr).2
-              inner ℝ (v ⟨r.1, hIk⟩)
-                (if (⟨r.2, hIl⟩ : Set.Icc 1 l) = (finIccEquiv l i) then z
-                 else finFunToIccFun m_1 ⟨r.2, hIl⟩)
-            else 1)
-          =
-          ∏ r ∈ hRfin.toFinset.erase r₀,
-            (if hr : r ∈ R then
-              let hIk : r.1 ∈ Set.Icc 1 k := (hR hr).1
-              let hIl : r.2 ∈ Set.Icc 1 l := (hR hr).2
-              inner ℝ (v ⟨r.1, hIk⟩) (finFunToIccFun m_1 ⟨r.2, hIl⟩)
-            else 1) := by
-        intro z
-        refine Finset.prod_congr rfl ?_
-        intro r hr
-        classical
-        by_cases hrR : r ∈ R
-        ·
-          have hr_ne : r ≠ r₀ := (Finset.mem_erase.mp hr).1
-          have hIk : r.1 ∈ Set.Icc 1 k := (hR hrR).1
-          have hIl : r.2 ∈ Set.Icc 1 l := (hR hrR).2
-          have hvals_ne : r.2 ≠ r₀.2 := by
-            intro h_eq
-            have : r = r₀ :=
-              hInjsnd hrR hr₀R (by simpa [Prod.snd] using h_eq)
-            exact hr_ne this
-          have hcond_false : (⟨r.2, hIl⟩ : Set.Icc 1 l) ≠ (finIccEquiv l i) := by
-            intro h_eq
-            have hnat : r.2 = finIccEquiv l i :=
-              congrArg (fun (t : Set.Icc 1 l) => (t : ℕ)) h_eq
-            -- `hr₀snd : r₀.2 = ↑((finIccEquiv l) i)`
-            have : r.2 = r₀.2 := by
-              simpa [hr₀snd] using hnat
-            exact hvals_ne this
-          simp [hrR]
-          have : ¬ ((⟨r.2, hIl⟩ : Set.Icc 1 l) = (finIccEquiv l) i) := by
-            exact hcond_false
-          simp [this]
-        · -- Case: r ∉ R: both sides are `1`.
-          simp [hrR]
-    have prod_cx := prod_const (c • x)
-    have prod_x  := prod_const x
-    simp [prod_cx, prod_x]
-
-lemma ScalarPart_Update_Mul_Left {k l m : ℕ} [DecidableEq (Fin k)] [DecidableEq (Fin l)] [DecidableEq (Fin m)] (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjfst : Set.InjOn Prod.fst R)
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) (i : Set.Icc 1 k) (hi : i.val ∈ Prod.fst '' R) (c : ℝ) (x : V) :
-    ScalarPartOfContraction V R hR (Function.update v i (c • x)) m_1= c • ScalarPartOfContraction V R hR (Function.update v i x) m_1 := by
-    classical
-    have hIccFin : (Set.Icc 1 k ×ˢ Set.Icc 1 l).Finite := (Set.finite_Icc 1 k).prod (Set.finite_Icc 1 l)
-    have hRfin : R.Finite := hIccFin.subset hR
-    simp [ScalarPartOfContraction]
-    rcases hi with ⟨r₀, hr₀R, hr₀fst⟩
-    have hr₀S : r₀ ∈ hRfin.toFinset :=
-      by simpa using hRfin.mem_toFinset.mpr hr₀R
-    have hsplit_cx :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ ((Function.update v i (c • x)) ⟨r.1, (hR h).1⟩) ((finFunToIccFun m_1) ⟨r.2, (hR h).2⟩)
-          else 1)
-      hr₀S).symm
-    have hsplit_x :=
-      (Finset.mul_prod_erase
-        (s := hRfin.toFinset)
-        (a := r₀)
-        (f := fun r =>
-          if h : r ∈ R then
-            inner ℝ ((Function.update v i x) ⟨r.1, (hR h).1⟩) ((finFunToIccFun m_1) ⟨r.2, (hR h).2⟩)
-          else 1)
-      hr₀S).symm
-    simp [hsplit_cx, hsplit_x, hr₀R]
-    simp [Function.update, hr₀fst]
-    simp [inner_smul_left, mul_assoc]
-    have prod_const :
-        ∀ z : V,
-          ∏ r ∈ hRfin.toFinset.erase r₀,
-            (if hr : r ∈ R then
-              let hIk : r.1 ∈ Set.Icc 1 k := (hR hr).1
-              let hIl : r.2 ∈ Set.Icc 1 l := (hR hr).2
-              inner ℝ (if (⟨r.1, hIk⟩ : Set.Icc 1 k) = i then z
-                 else v ⟨r.1, hIk⟩) (finFunToIccFun m_1 ⟨r.2, hIl⟩)
-            else 1)
-          =
-          ∏ r ∈ hRfin.toFinset.erase r₀,
-            (if hr : r ∈ R then
-              let hIk : r.1 ∈ Set.Icc 1 k := (hR hr).1
-              let hIl : r.2 ∈ Set.Icc 1 l := (hR hr).2
-              inner ℝ (v ⟨r.1, hIk⟩) (finFunToIccFun m_1 ⟨r.2, hIl⟩)
-            else 1) := by
-        intro z
-        refine Finset.prod_congr rfl ?_
-        intro r hr
-        classical
-        by_cases hrR : r ∈ R
-        ·
-          have hr_ne : r ≠ r₀ := (Finset.mem_erase.mp hr).1
-          have hIk : r.1 ∈ Set.Icc 1 k := (hR hrR).1
-          have hIl : r.2 ∈ Set.Icc 1 l := (hR hrR).2
-          have hvals_ne : r.1 ≠ r₀.1 := by
-            intro h_eq
-            have : r = r₀ :=
-              hInjfst hrR hr₀R (by simpa [Prod.fst] using h_eq)
-            exact hr_ne this
-          have hcond_false : (⟨r.1, hIk⟩ : Set.Icc 1 k) ≠ i := by
-            intro h_eq
-            have hnat : r.1 = i :=
-              congrArg (fun (t : Set.Icc 1 k) => (t : ℕ)) h_eq
-            -- `hr₀snd : r₀.2 = ↑((finIccEquiv l) i)`
-            have : r.1 = r₀.1 := by
-              simpa [hr₀fst] using hnat
-            exact hvals_ne this
-          simp [hrR]
-          have : ¬ ((⟨r.1, hIk⟩ : Set.Icc 1 k) = i) := by
-            exact hcond_false
-          simp [this]
-        · -- Case: r ∉ R: both sides are `1`.
-          simp [hrR]
-    have prod_cx := prod_const (c • x)
-    have prod_x  := prod_const x
-    simp [prod_cx, prod_x]
-
-noncomputable def EvaluateContraction {k l m : ℕ} (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) (m_1 : Fin l -> V) :
-    (⨂[ℝ]^m V) := by
-    let pure : Fin m → V := PurePartOfContraction V R f v m_1
-    let scal : ℝ := ScalarPartOfContraction V R hR v m_1
-    exact scal • (PiTensorProduct.tprod ℝ pure)
-
-noncomputable def ContractionWithPure {k l m : ℕ} (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjsnd : Set.InjOn Prod.snd R)
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) :
-    MultilinearMap ℝ (fun _ : Fin l => V) (⨂[ℝ]^m V) := by
-    have hIccFin : (Set.Icc 1 k ×ˢ Set.Icc 1 l).Finite :=
-      (Set.finite_Icc 1 k).prod (Set.finite_Icc 1 l)
-    have hRfin : R.Finite :=
-      hIccFin.subset hR
-    let A := (Set.Icc 1 k \ Prod.fst '' R : Set ℕ)
-    let B := (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)
-    let Ainc : A → Set.Icc 1 k := fun i => by
-      have hi : i.val ∈ (Set.Icc 1 k) := by simpa using i.property.left
-      exact ⟨i.val,hi⟩
-    let Binc : B → Set.Icc 1 l := fun i => by
-      have hi : i.val ∈ (Set.Icc 1 l) := by simpa using i.property.left
-      exact ⟨i.val,hi⟩
-    let inc : A ⊕ B → (Set.Icc 1 k) ⊕ (Set.Icc 1 l) := Sum.map Ainc Binc
-    classical
-    refine
-      { toFun := ?toFun,
-        map_update_add' := ?map_update_add',
-        map_update_smul' := ?map_update_smul'
-        }
-    . intro m_1
-      exact EvaluateContraction V R hR f v m_1
-    . intro _ m_1 i x y
-      simp [EvaluateContraction]
-      by_cases hi : (finIccEquiv l i).val ∈ Prod.snd '' R
-      .
-        have hScalar : ScalarPartOfContraction V R hR v (Function.update m_1 i (x + y)) =
-          ScalarPartOfContraction V R hR v (Function.update m_1 i x) +
-          ScalarPartOfContraction V R hR v (Function.update m_1 i y) := ScalarPart_Update_Add_Right (k := k) (l := l) (m := m) (V := V) (R := R) hR hInjsnd v m_1 i hi x y
-        have hPurexy : PurePartOfContraction V R f v (Function.update m_1 i (x + y)) =
-          PurePartOfContraction V R f v m_1 := PurePart_Invariance_Right (k := k) (l := l) (m := m) V R f v m_1 i hi (x + y)
-        have hPurex : PurePartOfContraction V R f v (Function.update m_1 i x) =
-          PurePartOfContraction V R f v m_1 := PurePart_Invariance_Right (k := k) (l := l) (m := m) V R f v m_1 i hi x
-        have hPurey : PurePartOfContraction V R f v (Function.update m_1 i y) =
-          PurePartOfContraction V R f v m_1 := PurePart_Invariance_Right (k := k) (l := l) (m := m) V R f v m_1 i hi y
-        simp [hScalar, hPurexy, hPurex, hPurey, add_smul]
-      .
-        have hi' : (finIccEquiv l i).val ∈ Set.Icc 1 l \ Prod.snd '' R := by simp [hi]
-        have hPurexy : PurePartOfContraction V R f v (Function.update m_1 i (x + y)) =
-          Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inr ⟨(finIccEquiv l i).val, hi'⟩))) (x + y) :=
-          PurePart_Update_Right (k := k) (l := l) (m := m) V R f v m_1 i hi' (x + y)
-        have hPurex : PurePartOfContraction V R f v (Function.update m_1 i x) =
-          Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inr ⟨(finIccEquiv l i).val, hi'⟩))) x :=
-          PurePart_Update_Right (k := k) (l := l) (m := m) V R f v m_1 i hi' x
-        have hPurey : PurePartOfContraction V R f v (Function.update m_1 i y) =
-          Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inr ⟨(finIccEquiv l i).val, hi'⟩))) y :=
-          PurePart_Update_Right (k := k) (l := l) (m := m) V R f v m_1 i hi' y
-        have hScalarxy : ScalarPartOfContraction V R hR v (Function.update m_1 i (x + y)) =
-          ScalarPartOfContraction V R hR v m_1 :=
-          ScalarPart_Invariance_Right (k := k) (l := l) (m := m) V R hR v m_1 i hi' (x + y)
-        have hScalarx : ScalarPartOfContraction V R hR v (Function.update m_1 i x) =
-          ScalarPartOfContraction V R hR v m_1 :=
-          ScalarPart_Invariance_Right (k := k) (l := l) (m := m) V R hR v m_1 i hi' x
-        have hScalary : ScalarPartOfContraction V R hR v (Function.update m_1 i y) =
-          ScalarPartOfContraction V R hR v m_1 :=
-          ScalarPart_Invariance_Right (k := k) (l := l) (m := m) V R hR v m_1 i hi' y
-        simp [hPurexy, hPurex, hPurey, hScalarxy, hScalarx, hScalary]
-    . intro _ m_1 i c x
-      simp [EvaluateContraction]
-      by_cases hi : (finIccEquiv l i).val ∈ Prod.snd '' R
-      .
-        have hScalar : ScalarPartOfContraction V R hR v (Function.update m_1 i (c • x)) =
-          c • ScalarPartOfContraction V R hR v (Function.update m_1 i x) :=
-          ScalarPart_Update_Mul_Right (k := k) (l := l) (m := m) (V := V) (R := R) hR hInjsnd v m_1 i hi c x
-        have hPurecx : PurePartOfContraction V R f v (Function.update m_1 i (c • x)) =
-          PurePartOfContraction V R f v m_1 := PurePart_Invariance_Right (k := k) (l := l) (m := m) V R f v m_1 i hi (c • x)
-        have hPurex : PurePartOfContraction V R f v (Function.update m_1 i x) =
-          PurePartOfContraction V R f v m_1 := PurePart_Invariance_Right (k := k) (l := l) (m := m) V R f v m_1 i hi x
-        simp [hScalar, hPurecx, hPurex, mul_smul]
-      .
-        have hi' : (finIccEquiv l i).val ∈ Set.Icc 1 l \ Prod.snd '' R := by simp [hi]
-        have hScalarcx : ScalarPartOfContraction V R hR v (Function.update m_1 i (c • x)) =
-          ScalarPartOfContraction V R hR v m_1 :=
-          ScalarPart_Invariance_Right (k := k) (l := l) (m := m) (V := V) (R := R) hR v m_1 i hi' (c • x)
-        have hScalarx : ScalarPartOfContraction V R hR v (Function.update m_1 i x) =
-          ScalarPartOfContraction V R hR v m_1 :=
-          ScalarPart_Invariance_Right (k := k) (l := l) (m := m) (V := V) (R := R) hR v m_1 i hi' x
-        have hPurecx : PurePartOfContraction V R f v (Function.update m_1 i (c • x)) =
-          Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inr ⟨(finIccEquiv l i).val, hi'⟩))) (c • x) :=
-          PurePart_Update_Right (k := k) (l := l) (m := m) V R f v m_1 i hi' (c • x)
-        have hPurex : PurePartOfContraction V R f v (Function.update m_1 i x) =
-          Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inr ⟨(finIccEquiv l i).val, hi'⟩))) x :=
-          PurePart_Update_Right (k := k) (l := l) (m := m) V R f v m_1 i hi' x
-        simp [hScalarcx, hScalarx, hPurecx, hPurex, ← smul_assoc, mul_comm]
-
-lemma ContractionWithPure_update_add {k l m : ℕ} (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjfst : Set.InjOn Prod.fst R)
-    (hInjsnd : Set.InjOn Prod.snd R)
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) (i : Set.Icc 1 k) (x y : V):
-      ContractionWithPure V R hR hInjsnd f (Function.update v i (x + y)) = (ContractionWithPure V R hR hInjsnd f (Function.update v i x)) + (ContractionWithPure V R hR hInjsnd f (Function.update v i y)) := by
-    classical
-    simp [ContractionWithPure]
-    ext m_1
-    simp [EvaluateContraction]
-    by_cases hi : i.val ∈ Prod.fst '' R
-    .
-      have hScalar : ScalarPartOfContraction V R hR (Function.update v i (x + y)) m_1 =
-        ScalarPartOfContraction V R hR (Function.update v i x) m_1 +
-        ScalarPartOfContraction V R hR (Function.update v i y) m_1 := ScalarPart_Update_Add_Left (k := k) (l := l) (m := m) (V := V) (R := R) hR hInjfst v m_1 i hi x y
-      have hPurexy : PurePartOfContraction V R f (Function.update v i (x + y)) m_1 =
-        PurePartOfContraction V R f v m_1 := PurePart_Invariance_Left (k := k) (l := l) (m := m) V R f v m_1 i hi (x + y)
-      have hPurex : PurePartOfContraction V R f (Function.update v i x) m_1 =
-        PurePartOfContraction V R f v m_1 := PurePart_Invariance_Left (k := k) (l := l) (m := m) V R f v m_1 i hi x
-      have hPurey : PurePartOfContraction V R f (Function.update v i y) m_1 =
-        PurePartOfContraction V R f v m_1 := PurePart_Invariance_Left (k := k) (l := l) (m := m) V R f v m_1 i hi y
-      simp [hScalar, hPurexy, hPurex, hPurey, add_smul]
-    .
-      have hi' : i.val ∈ Set.Icc 1 k \ Prod.fst '' R := by simp [hi]
-      have hPurexy : PurePartOfContraction V R f (Function.update v i (x + y)) m_1 =
-          Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inl ⟨i.val, hi'⟩))) (x + y) :=
-          PurePart_Update_Left (k := k) (l := l) (m := m) V R f v m_1 i hi' (x + y)
-      have hPurex : PurePartOfContraction V R f (Function.update v i x) m_1 =
-          Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inl ⟨i.val, hi'⟩))) x :=
-          PurePart_Update_Left (k := k) (l := l) (m := m) V R f v m_1 i hi' x
-      have hPurey : PurePartOfContraction V R f (Function.update v i y) m_1 =
-          Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inl ⟨i.val, hi'⟩))) y :=
-          PurePart_Update_Left (k := k) (l := l) (m := m) V R f v m_1 i hi' y
-      have hScalarxy : ScalarPartOfContraction V R hR (Function.update v i (x + y)) m_1 =
-          ScalarPartOfContraction V R hR v m_1 :=
-          ScalarPart_Invariance_Left (k := k) (l := l) (m := m) V R hR v m_1 i hi' (x + y)
-      have hScalarx : ScalarPartOfContraction V R hR (Function.update v i x) m_1 =
-          ScalarPartOfContraction V R hR v m_1 :=
-          ScalarPart_Invariance_Left (k := k) (l := l) (m := m) V R hR v m_1 i hi' x
-      have hScalary : ScalarPartOfContraction V R hR (Function.update v i y) m_1 =
-          ScalarPartOfContraction V R hR v m_1 :=
-          ScalarPart_Invariance_Left (k := k) (l := l) (m := m) V R hR v m_1 i hi' y
-      simp [hPurexy, hPurex, hPurey, hScalarxy, hScalarx, hScalary]
-
-lemma ContractionWithPure_update_mul {k l m : ℕ} (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjfst : Set.InjOn Prod.fst R)
-    (hInjsnd : Set.InjOn Prod.snd R)
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m))
-    (v : Set.Icc 1 k → V) (i : Set.Icc 1 k) (c : ℝ) (x : V):
-      ContractionWithPure V R hR hInjsnd f (Function.update v i (c • x)) = c • (ContractionWithPure V R hR hInjsnd f (Function.update v i x)) := by
-    classical
-    simp [ContractionWithPure]
-    ext m_1
-    simp [EvaluateContraction]
-    by_cases hi : i.val ∈ Prod.fst '' R
-    .
-      have hScalar : ScalarPartOfContraction V R hR (Function.update v i (c • x)) m_1 =
-        c • ScalarPartOfContraction V R hR (Function.update v i x) m_1 :=
-        ScalarPart_Update_Mul_Left (k := k) (l := l) (m := m) (V := V) (R := R) hR hInjfst v m_1 i hi c x
-      have hPurecx : PurePartOfContraction V R f (Function.update v i (c • x)) m_1 =
-        PurePartOfContraction V R f v m_1 := PurePart_Invariance_Left (k := k) (l := l) (m := m) V R f v m_1 i hi (c • x)
-      have hPurex : PurePartOfContraction V R f (Function.update v i x) m_1 =
-        PurePartOfContraction V R f v m_1 := PurePart_Invariance_Left (k := k) (l := l) (m := m) V R f v m_1 i hi x
-      simp [hScalar, hPurecx, hPurex, mul_smul]
-    .
-      have hi' : i.val ∈ Set.Icc 1 k \ Prod.fst '' R := by simp [hi]
-      have hScalarcx : ScalarPartOfContraction V R hR (Function.update v i (c • x)) m_1 =
-        ScalarPartOfContraction V R hR v m_1 :=
-        ScalarPart_Invariance_Left (k := k) (l := l) (m := m) (V := V) (R := R) hR v m_1 i hi' (c • x)
-      have hScalarx : ScalarPartOfContraction V R hR (Function.update v i x) m_1=
-        ScalarPartOfContraction V R hR v m_1 :=
-        ScalarPart_Invariance_Left (k := k) (l := l) (m := m) (V := V) (R := R) hR v m_1 i hi' x
-      have hPurecx : PurePartOfContraction V R f (Function.update v i (c • x)) m_1 =
-        Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inl ⟨i.val, hi'⟩))) (c • x) :=
-        PurePart_Update_Left (k := k) (l := l) (m := m) V R f v m_1 i hi' (c • x)
-      have hPurex : PurePartOfContraction V R f (Function.update v i x) m_1 =
-        Function.update (PurePartOfContraction V R f v m_1) ((finIccEquiv m).symm (f (Sum.inl ⟨i.val, hi'⟩))) x :=
-        PurePart_Update_Left (k := k) (l := l) (m := m) V R f v m_1 i hi' x
-      simp [hScalarcx, hScalarx, hPurecx, hPurex, ← smul_assoc, mul_comm]
-
-noncomputable def MultiLinearTensorContraction {k l m : ℕ} (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjfst : Set.InjOn Prod.fst R)
-    (hInjsnd : Set.InjOn Prod.snd R)
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m)) :
-      MultilinearMap ℝ (fun _ : Fin k => V) (⨂[ℝ]^l V →ₗ[ℝ] ⨂[ℝ]^m V) := by
-    classical
-    refine
-      { toFun := ?toFun,
-        map_update_add' := ?map_update_add',
-        map_update_smul' := ?map_update_smul'
-        }
-    . intro v
-      let w : (Set.Icc 1 k) → V := finFunToIccFun v
-      exact PiTensorProduct.lift (ContractionWithPure V R hR hInjsnd f w)
-    . intro _ m_1 i x y
-      let wxy := finFunToIccFun (k := k) (Function.update m_1 i (x + y))
-      let wx := finFunToIccFun (Function.update m_1 i x)
-      let wy := finFunToIccFun (Function.update m_1 i y)
-      have hwxy : wxy = Function.update (finFunToIccFun m_1) (finIccEquiv k i) (x + y) := by
-        exact finFunToIccFun_update (v := m_1) (i := i) (x := x + y)
-      have hwx : wx = Function.update (finFunToIccFun m_1) (finIccEquiv k i) x := by
-        exact finFunToIccFun_update (v := m_1) (i := i) (x := x)
-      have hwy : wy = Function.update (finFunToIccFun m_1) (finIccEquiv k i) y := by
-        exact finFunToIccFun_update (v := m_1) (i := i) (x := y)
-      simp [wxy, wx, wy, hwxy, hwx, hwy]
-      rw [ContractionWithPure_update_add V R hR hInjfst hInjsnd f (v := finFunToIccFun m_1) (i := finIccEquiv k i) (x := x) (y := y)]
-      simp [PiTensorProduct.lift.map_add]
-    . intro _ m_1 i c x
-      let wcx := finFunToIccFun (Function.update m_1 i (c • x))
-      let wx := finFunToIccFun (Function.update m_1 i x)
-      have hwcx : wcx = Function.update (finFunToIccFun m_1) (finIccEquiv k i) (c • x) := by
-        exact finFunToIccFun_update (v := m_1) (i := i) (x := c • x)
-      have hwx : wx = Function.update (finFunToIccFun m_1) (finIccEquiv k i) x := by
-        exact finFunToIccFun_update (v := m_1) (i := i) (x := x)
-      simp [wcx, wx, hwcx, hwx]
-      rw [ContractionWithPure_update_mul V R hR hInjfst hInjsnd f (v := finFunToIccFun m_1) (i := finIccEquiv k i) (c := c) (x := x)]
-      simp [PiTensorProduct.lift.map_smul]
-
-noncomputable def TensorContraction {k l m : ℕ} (R : Set (ℕ × ℕ))
-    (hR : R ⊆ Set.Icc 1 k ×ˢ Set.Icc 1 l)
-    (hInjfst : Set.InjOn Prod.fst R)
-    (hInjsnd : Set.InjOn Prod.snd R)
-    /- `f` is a bijection from the disjoint union `([k] \ π₁(R)) ⊔ ([l] \ π₁(R))` to `[m]`. -/
-    (f : ((Set.Icc 1 k \ Prod.fst '' R : Set ℕ) ⊕ (Set.Icc 1 l \ Prod.snd '' R : Set ℕ)) ≃ (Set.Icc 1 m)) :
-      (⨂[ℝ]^k V) →ₗ[ℝ] ⨂[ℝ]^l V →ₗ[ℝ] ⨂[ℝ]^m V :=
-  PiTensorProduct.lift (MultiLinearTensorContraction V R hR hInjfst hInjsnd f)
-
-structure TensorNetwork (α β : Type*) where
+structure TensorNetwork (α β : Type*) [Fintype α] [Fintype β] where
   G : Graph α β
-  /-- The assignment of a (positive) integer `r v` for each edge `v`. -/
-  r : α → ℕ
-  hr : ∀ x, x ∈ G.vertexSet → 0 < r x
-  c : β → ℕ × ℕ
-  hc : ∀ (e x y), G.IsLink e x y →
-    c e ∈ (Set.Icc 1 (r x) ×ˢ Set.Icc 1 (r y))
-  existsAtMostOneEdge {x : α} : Set.InjOn c {e | ∃ y, G.IsLink e x y}
+  [loc : ∀ x : α, Fintype (G.incidenceSet x)]
+  loopless : ∀ (e : β) (x : α), ¬ G.IsLoopAt e x
+  c : ∀ x : α, G.incidenceSet x → Fin (Fintype.card (G.incidenceSet x))
+  hc : ∀ x : α, Function.Bijective (c x)
+
+namespace TensorNetwork
+noncomputable def deg {α β : Type*} [Fintype α] [Fintype β] (G : TensorNetwork α β) (x : α) : ℕ := by
+  have hfin : Fintype (G.G.incidenceSet x) := G.loc x
+  exact Fintype.card (G.G.incidenceSet x)
+end TensorNetwork
 
 /-- Given a tensor network `G`, the assignement of a tensor `T_v` for each vertex.
 Note: we also assigne "junk values for elements of `α` that aren't edges". -/
-structure TensorMap {α β : Type*} (T : TensorNetwork α β)  where
-  tensor : ∀ x : α, ⨂[ℝ]^(T.r x) V
+structure TensorMap {α β : Type*} [Fintype α] [Fintype β] (G : TensorNetwork α β)  where
+  tensor : ∀ x : α, ⨂[ℝ]^(G.deg x) V
+
+noncomputable def SingleLegContractionGraph {α β: Type*} [Fintype α] [DecidableEq α] [Fintype β] {G : TensorNetwork α β} (loopless : ∀ (e : β) (x : α), ¬ G.G.IsLoopAt e x) (v w : α) (hv : v ∈ G.G.vertexSet) (hvw : ¬v = w): Graph α β := by
+  classical
+  refine
+    { vertexSet := ?_
+      IsLink := ?_
+      edgeSet := ?_
+      isLink_symm := ?_
+      eq_or_eq_of_isLink_of_isLink := ?_
+      edge_mem_iff_exists_isLink := ?_
+      left_mem_of_isLink := ?_
+      }
+  . exact G.G.vertexSet \ {w}
+  . let is_link_new : β → α → α → Prop := fun e x y =>
+      if (w = x) ∨ (w = y) ∨ (x = y) then
+        False
+      else if (x = v) then
+        (G.G.IsLink e v y) ∨ (G.G.IsLink e w y)
+      else if (y = v) then
+        (G.G.IsLink e x v) ∨ (G.G.IsLink e x w)
+      else
+        G.G.IsLink e x y
+    exact is_link_new
+  . exact G.G.edgeSet \ {e | G.G.IsLink e v w}
+  . intro e h
+    have he : e ∈ G.G.edgeSet := ((Set.mem_diff (s := G.G.edgeSet) (t := {e | G.G.IsLink e v w}) (e : β)).1 h).1
+    simp [Symmetric]
+    intro x y hwx hwy hxy hexy
+    have hsymm := G.G.isLink_symm (e := e) he
+    constructor
+    . simp [hwx,hwy,Ne.symm hxy]
+    . by_cases hyv : y = v
+      . simp [hyv]
+        by_cases hxv : x = v
+        . simp [hxv, hyv] at hexy
+          simp [hxv, hexy]
+        . simp [hxv,hyv] at hexy
+          by_cases hlinkexv : G.G.IsLink e x v
+          . simp [hsymm hlinkexv]
+          . simp [hlinkexv] at hexy
+            simp [hsymm hexy]
+      . simp [hyv]
+        by_cases hxv : x = v
+        . simp [hxv]
+          simp [hxv] at hexy
+          by_cases hlinkevy : G.G.IsLink e v y
+          . simp [hsymm hlinkevy]
+          . simp [hlinkevy] at hexy
+            simp [hsymm hexy]
+        . simp [hxv]
+          simp [hxv, hyv] at hexy
+          simp [hsymm hexy]
+  . intro e x y v_1 w_1 h1 h2
+    by_cases hxv1 : x = v_1
+    . simp [hxv1]
+    . simp [hxv1]
+      by_cases hxw1 : x = w_1
+      . exact hxw1
+      . by_cases hwx : w = x
+        . simp [hwx] at h1
+        . by_cases hwy : w = y
+          . simp [hwy] at h1
+          . by_cases hxy : x = y
+            . simp [hxy] at h1
+            . simp [hwx,hwy,hxy] at h1
+              by_cases hwv1 : w = v_1
+              . simp [hwv1] at h2
+              . simp [hwv1] at h2
+                by_cases hww1 : w = w_1
+                . simp [hww1] at h2
+                . simp [hww1] at h2
+                  by_cases hv1w1 : v_1 = w_1
+                  . simp [hv1w1] at h2
+                  . simp [hv1w1] at h2
+                    by_cases hvx : v = x
+                    . simp [hvx] at h1
+                      simp [hvx] at h2
+                      simp [Ne.symm hxv1, Ne.symm hxw1] at h2
+                      have he := (G.G.edge_mem_iff_exists_isLink e).symm.1 ⟨v_1, w_1, h2⟩
+                      have hG := G.G.eq_or_eq_of_isLink_of_isLink (e := e)
+                      by_cases hlink : G.G.IsLink e x y
+                      . apply hG (x := x) (y := y) (v := v_1) (w := w_1) at hlink
+                        apply hlink at h2
+                        simp [hxv1,hxw1] at h2
+                      . simp [hlink] at h1
+                        apply hG (x := w) (y := y) (v := v_1) (w := w_1) at h1
+                        apply h1 at h2
+                        simp [hwv1,hww1] at h2
+                    . simp [Ne.symm hvx] at h1
+                      by_cases hv1v : v_1 = v
+                      . simp [hv1v] at h2
+                        by_cases hyv : y = v
+                        . simp [hyv] at h1
+                          by_cases hlink : G.G.IsLink e x v
+                          . have he := (G.G.edge_mem_iff_exists_isLink e).symm.1 ⟨x, v, hlink⟩
+                            have hG := G.G.eq_or_eq_of_isLink_of_isLink (e := e)
+                            by_cases hlink2 : G.G.IsLink e v w_1
+                            . apply hG (x := x) (y := v) (v := v) (w := w_1) hlink at hlink2
+                              simp [Ne.symm hvx, hxw1] at hlink2
+                            . simp [hlink2] at h2
+                              apply hG (x := x) (y := v) (v := w) (w := w_1) hlink at h2
+                              simp [Ne.symm hwx, hxw1] at h2
+                          . simp [hlink] at h1
+                            have he := (G.G.edge_mem_iff_exists_isLink e).symm.1 ⟨x, w, h1⟩
+                            have hG := G.G.eq_or_eq_of_isLink_of_isLink (e := e)
+                            by_cases hlink2 : G.G.IsLink e v w_1
+                            . apply hG (x := x) (y := w) (v := v) (w := w_1) h1 at hlink2
+                              simp [Ne.symm hvx, hxw1] at hlink2
+                            . simp [hlink2] at h2
+                              apply hG (x := x) (y := w) (v := w) (w := w_1) h1 at h2
+                              simp [Ne.symm hwx, hxw1] at h2
+                        . simp [hyv] at h1
+                          have he := (G.G.edge_mem_iff_exists_isLink e).symm.1 ⟨x, y, h1⟩
+                          have hG := G.G.eq_or_eq_of_isLink_of_isLink (e := e)
+                          by_cases hlink : G.G.IsLink e v w_1
+                          . apply hG (x := x) (y := y) (v := v) (w := w_1) h1 at hlink
+                            simp [Ne.symm hvx, hxw1] at hlink
+                          . simp [hlink] at h2
+                            apply hG (x := x) (y := y) (v := w) (w := w_1) h1 at h2
+                            simp [Ne.symm hwx, hxw1] at h2
+                      . simp [hv1v] at h2
+                        by_cases hyv : y = v
+                        . simp [hyv] at h1
+                          by_cases hw1v : w_1 = v
+                          . simp [hw1v] at h2
+                            by_cases hlink : G.G.IsLink e x v
+                            . have he := (G.G.edge_mem_iff_exists_isLink e).symm.1 ⟨x, v, hlink⟩
+                              have hG := G.G.eq_or_eq_of_isLink_of_isLink (e := e)
+                              by_cases hlink2 : G.G.IsLink e v_1 v
+                              . apply hG (x := x) (y := v) (v := v_1) (w := v) hlink at hlink2
+                                simp [hxv1, Ne.symm hvx] at hlink2
+                              . simp [hlink2] at h2
+                                apply hG (x := x) (y := v) (v := v_1) (w := w) hlink at h2
+                                simp [hxv1, Ne.symm hwx] at h2
+                            . simp [hlink] at h1
+                              have he := (G.G.edge_mem_iff_exists_isLink e).symm.1 ⟨x, w, h1⟩
+                              have hG := G.G.eq_or_eq_of_isLink_of_isLink (e := e)
+                              by_cases hlink2 : G.G.IsLink e v_1 v
+                              . apply hG (x := x) (y := w) (v := v_1) (w := v) h1 at hlink2
+                                simp [hxv1, Ne.symm hvx] at hlink2
+                              . simp [hlink2] at h2
+                                apply hG (x := x) (y := w) (v := v_1) (w := w) h1 at h2
+                                simp [hxv1, Ne.symm hwx] at h2
+                          . simp [hw1v] at h2
+                            have he := (G.G.edge_mem_iff_exists_isLink e).symm.1 ⟨v_1, w_1, h2⟩
+                            have hG := G.G.eq_or_eq_of_isLink_of_isLink (e := e)
+                            by_cases hlink : G.G.IsLink e x v
+                            . apply hG (x := x) (y := v) (v := v_1) (w := w_1) hlink at h2
+                              simp [hxv1, hxw1] at h2
+                            . simp [hlink] at h1
+                              apply hG (x := x) (y := w) (v := v_1) (w := w_1) h1 at h2
+                              simp [hxv1, hxw1] at h2
+                        . simp [hyv] at h1
+                          have he := (G.G.edge_mem_iff_exists_isLink e).symm.1 ⟨x, y, h1⟩
+                          have hG := G.G.eq_or_eq_of_isLink_of_isLink (e := e)
+                          by_cases hw1v : w_1 = v
+                          . simp [hw1v] at h2
+                            by_cases hlink : G.G.IsLink e v_1 v
+                            . apply hG (x := x) (y := y) (v := v_1) (w := v) h1 at hlink
+                              simp [hxv1, Ne.symm hvx] at hlink
+                            . simp [hlink] at h2
+                              apply hG (x := x) (y := y) (v := v_1) (w := w) h1 at h2
+                              simp [hxv1, Ne.symm hwx] at h2
+                          . simp [hw1v] at h2
+                            apply hG (x := x) (y := y) (v := v_1) (w := w_1) h1 at h2
+                            simp [hxv1, hxw1] at h2
+  . intro e
+    constructor
+    . intro he
+      simp at he
+      have he1 := he.1
+      have he2 := he.2
+      apply (G.G.edge_mem_iff_exists_isLink (e := e)).1 at he1
+      rcases he1 with ⟨s, t, hst⟩
+      by_cases hsw : s = w
+      . use v, t
+        simp [Ne.symm hvw]
+        simp [hsw] at hst
+        apply G.G.isLink_comm.1 at hst
+        by_cases htv : t = v
+        . simp [htv] at hst
+          simp [hst] at he2
+        . by_cases hwt : w = t
+          . simp [hwt] at hst
+            simp [loopless] at hst
+          . simp [hwt, Ne.symm htv]
+            simp [G.G.isLink_comm.1 hst]
+      . by_cases htw : t = w
+        . use s, v
+          simp [Ne.symm hsw, Ne.symm hvw]
+          by_cases hsv : s = v
+          . simp [hsv]
+            simp [htw,hsv,he2] at hst
+          . simp [hsv]
+            simp [htw] at hst
+            simp [hst]
+        . use s, t
+          simp [Ne.symm hsw, Ne.symm htw]
+          by_cases hst2 : s = t
+          . simp [hst2]
+            simp [hst2, loopless] at hst
+          . simp [hst2]
+            by_cases hsv : s = v
+            . simp [hsv]
+              simp [hsv] at hst
+              simp [hst]
+            . simp [hsv]
+              by_cases htv : t = v
+              . simp [htv]
+                simp [htv] at hst
+                simp [hst]
+              . simp [htv, hst]
+    . intro h
+      rcases h with ⟨s, t, hst⟩
+      by_cases hws : w = s
+      . simp [hws] at hst
+      . by_cases hwt : w = t
+        . simp [hwt] at hst
+        . by_cases hst2 : s = t
+          . simp [hst2] at hst
+          . simp [hws, hwt, hst2] at hst
+            by_cases hsv : s = v
+            . simp [hsv] at hst
+              by_cases hlink : G.G.IsLink e v t
+              . refine And.intro ?_ ?_
+                . exact (G.G.edge_mem_iff_exists_isLink (e := e)).2 ⟨v, t, hlink⟩
+                . simp
+                  have h := ((G.G.eq_or_eq_of_isLink_of_isLink (e := e) (x := t) (y := v) (v := w) (w := v)) (G.G.isLink_comm.1 hlink))
+                  simp [G.G.isLink_comm] at h
+                  intro hG
+                  simp [hG] at h
+                  simp [Ne.symm hwt] at h
+                  simp [h] at hlink
+                  simp [loopless] at hlink
+              . simp [hlink] at hst
+                refine And.intro ?_ ?_
+                . exact (G.G.edge_mem_iff_exists_isLink (e := e)).2 ⟨w, t, hst⟩
+                . simp
+                  have h := ((G.G.eq_or_eq_of_isLink_of_isLink (e := e) (x := t) (y := w) (v := v) (w := w)) (G.G.isLink_comm.1 hst))
+                  intro hG
+                  simp [hG] at h
+                  simp [Ne.symm hwt] at h
+                  simp [h,hsv] at hst2
+            . simp [hsv] at hst
+              by_cases htv : t = v
+              . simp [htv] at hst
+                by_cases hlink : G.G.IsLink e s v
+                . refine And.intro ?_ ?_
+                  . exact (G.G.edge_mem_iff_exists_isLink (e := e)).2 ⟨s, v, hlink⟩
+                  . simp
+                    have h := ((G.G.eq_or_eq_of_isLink_of_isLink (e := e) (x := s) (y := v) (v := w) (w := v)) hlink)
+                    simp [G.G.isLink_comm] at h
+                    intro hG
+                    simp [hG] at h
+                    simp [Ne.symm hws, hsv] at h
+                . simp [hlink] at hst
+                  refine And.intro ?_ ?_
+                  . exact (G.G.edge_mem_iff_exists_isLink (e := e)).2 ⟨s, w, hst⟩
+                  . simp
+                    have h := ((G.G.eq_or_eq_of_isLink_of_isLink (e := e) (x := s) (y := w) (v := w) (w := v)) hst)
+                    intro hG
+                    simp [G.G.isLink_comm] at h
+                    simp [hG] at h
+                    simp [Ne.symm hws, hsv] at h
+              . simp [htv] at hst
+                refine And.intro ?_ ?_
+                . exact (G.G.edge_mem_iff_exists_isLink (e := e)).2 ⟨s, t, hst⟩
+                . simp
+                  have h := ((G.G.eq_or_eq_of_isLink_of_isLink (e := e) (x := s) (y := t) (v := v) (w := w)) hst)
+                  intro hG
+                  simp [hG] at h
+                  simp [Ne.symm hws, hsv] at h
+  . intro e x y h
+    by_cases hwx : w = x
+    . simp [hwx] at h
+    . by_cases hwy : w = y
+      . simp [hwy] at h
+      . by_cases hxy : x = y
+        . simp [hxy] at h
+        . simp [hwx,hwy,hxy] at h
+          by_cases hxv : x = v
+          . simp [hxv] at hwx
+            simp [hxv, hv, Ne.symm hwx]
+          . simp [hxv] at h
+            by_cases hyv : y = v
+            . simp [hyv] at h
+              by_cases hlink : G.G.IsLink e x v
+              . simp [Ne.symm hwx]
+                exact Graph.IsLink.left_mem (h := hlink)
+              . simp [hlink] at h
+                simp [Ne.symm hwx]
+                exact Graph.IsLink.left_mem (h := h)
+            . simp [hyv] at h
+              simp [Ne.symm hwx]
+              exact Graph.IsLink.left_mem (h := h)
+
+noncomputable def SingleLegContractionTensorNetwork {α β: Type*} [Fintype α] [DecidableEq α] [Fintype β] (G : TensorNetwork α β) (loopless : ∀ (e : β) (x : α), ¬ G.G.IsLoopAt e x) (v w : α) (hv : v ∈ G.G.vertexSet) (hvw : ¬v = w):
+  TensorNetwork (α := α) (β := β) := by
+  classical
+  let G' := SingleLegContractionGraph (G := G) (loopless := loopless) (v := v) (w := w) (hv := hv) (hvw := hvw)
+  refine
+  { G := G'
+    loc := ?_         -- the fintype instance field
+    loopless := ?_
+    c := ?_
+    hc := ?_ }
+  . intro x
+    classical
+    infer_instance    -- usually works if β is fintype and IsLink is decidable enough
+  . intro e x
+    simp [G', SingleLegContractionGraph]
+    intro h
+    apply Graph.isLink_self_iff.2 at h
+    rcases h with ⟨hneq, _⟩
+    exact hneq.2.2 rfl
+  . intro x
+    exact (Fintype.equivFin (G'.incidenceSet x)).1
+  . intro x
+    exact (Fintype.equivFin (G'.incidenceSet x)).bijective
+
+noncomputable def SingleLegContractionTensorMap {α β: Type*} [Fintype α] [DecidableEq α] [Fintype β] {G : TensorNetwork α β} (T : TensorMap (V := V) G) (loopless : ∀ (e : β) (x : α), ¬ G.G.IsLoopAt e x) (v w : α) (hv : v ∈ G.G.vertexSet) (hvw : ¬v = w):
+  TensorMap (V := V) (G := SingleLegContractionTensorNetwork (loopless := loopless) (v := v) (w := w) (hv := hv) (hvw := hvw)):= by
+  classical
+  let G' := SingleLegContractionTensorNetwork (loopless := loopless) (v := v) (w := w) (hv := hv) (hvw := hvw)
+  let E : Set β := { e | e ∈ G.G.edgeSet ∧ G.G.IsLink e v w }
+  haveI : Fintype (↑(G.G.incidenceSet v)) := G.loc v
+  let φ : (↑E) → ↑(G.G.incidenceSet v) := fun e =>
+    ⟨(e : β), by
+      have hw : G.G.IsLink (e : β) v w := by simpa [E] using e.2.2
+      exact ⟨w, hw⟩⟩
+  have hφ : Function.Injective φ := by
+    intro a b hab
+    apply Subtype.ext
+    simpa [φ] using congrArg Subtype.val hab
+  have hcard_le : Fintype.card (↑E) ≤ Fintype.card (↑(G.G.incidenceSet v)) :=
+    Fintype.card_le_of_injective φ hφ
+  have hcard_le_deg_v : Fintype.card (↑E) ≤ TensorNetwork.deg (G := G) v := by
+    -- deg is card of incidenceSet, and hcard_le is already in that form
+    simpa [TensorNetwork.deg] using hcard_le
+
+  refine
+  {
+    tensor := ?_
+  }
+  . intro x
+    by_cases hxw : x = w
+    . simp [hxw]
+      simp [SingleLegContractionTensorNetwork]
+      have hfilter_empty : Finset.filter (fun e => e ∈ (G'.G.incidenceSet w)) Finset.univ = (∅ : Finset β) := by
+        ext e
+        simp [Graph.incidenceSet]
+      simp [hfilter_empty]  -- goal becomes ⊢ ⨂[ℝ]^0 V
+      exact 0
+    . by_cases hxv : x = v
+      . simp [hxv]
+        simp [SingleLegContractionTensorNetwork]
+        have Tk' : ⨂[ℝ]^(G.deg v) V := by
+          simpa [TensorNetwork.deg] using (T.tensor v)
+        have Tl' : ⨂[ℝ]^(G.deg w) V := by
+          simpa [TensorNetwork.deg] using (T.tensor w)
+        let Rel : { e : β // e ∈ G.G.edgeSet ∧ G.G.IsLink e v w } → ℕ × ℕ := fun e =>
+          (G.c v ⟨e.1, ⟨w, e.2.2⟩⟩, G.c w ⟨e.1, ⟨v, ((G.G.isLink_symm (e := e) (x := v) (y := w)) e.2.1) e.2.2⟩⟩)
+        let R : Set (ℕ × ℕ) := Set.image Rel Set.univ
+
+        have Tvw : ⨂[ℝ]^(G.deg v + G.deg w) V :=
+          (TensorContraction (V := V) (k := G.deg v) (l := G.deg w) (m := m) R hR hInjfst hInjsnd f) Tk' Tl'
