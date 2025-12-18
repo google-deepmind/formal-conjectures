@@ -21,11 +21,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/847](https://www.erdosproblems.com/847)
 -/
 
-open Nat
-
 namespace Erdos847
 
--- There is a subset of `S` with a three term arithmetic progression
+/-
+There is a subset of `S` with a three term arithmetic progression
+-/
 def containsThreeTermArithProg (S : Set ℕ) : Prop :=
     ∃ a b c, a < b ∧ b < c ∧ {a, b, c} ⊆ S ∧ b - a = c - b
 
@@ -36,16 +36,17 @@ def hε (A : Set ℕ) :=
 
 
 /--
-Let A⊂N be an infinite set for which there exists some ϵ > 0 such that in any subset of A of size n
-there is a subset of size at least ϵ n which contains no three-term arithmetic progression.
+Let $A \subset \mathbb{N}$ be an infinite set for which there exists some $\epsilon > 0$ such that
+in any subset of $A$ of size $n$ there is a subset of size at least $\epsilon n$ which contains no
+three-term arithmetic progression.
 
-Is it true that A is the union of a finite number of sets which contain no three-term arithmetic progression?
+Is it true that $A$ is the union of a finite number of sets which contain no three-term arithmetic
+progression?
 -/
 @[category research open, AMS 11]
 theorem erdos_847
-    (A : Set ℕ) (hinf : Infinite A) (heps : hε A) :
-  answer(sorry) ↔
-  ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ¬ containsThreeTermArithProg (S i)) ∧ A = ⋃ i : Fin n, S i :=
-  sorry
+    (A : Set ℕ) (hinf : Infinite A) (heps : hε A) : answer(sorry) ↔
+    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ¬ containsThreeTermArithProg (S i)) ∧
+    A = ⋃ i : Fin n, S i := sorry
 
 end Erdos847
