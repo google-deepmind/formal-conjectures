@@ -25,17 +25,13 @@ open Nat
 
 namespace Erdos847
 
-#check List.range'
-#check List.range
-#check List.toSSet
-#check Infinite
-
--- there is a subset of S with a three term arithmetic progression
+-- There is a subset of `S` with a three term arithmetic progression
 def containsThreeTermArithProg (S : Set ℕ) : Prop :=
-    ∃ a b c, {a, b, c} ⊆ S ∧ ∃ t, [a, b, c] = List.range' a 3 t
+    ∃ a b c, a < b ∧ b < c ∧ {a, b, c} ⊆ S ∧ b - a = c - b
+
 
 def hε (A : Set ℕ) :=
-  ∃ (ε : ℝ), ∀ (B : Set ℕ), B ⊆ A →
+  ∃ (ε : ℝ), ε > 0 ∧  ∀ (B : Set ℕ), B ⊆ A → Finite B →
   ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ¬ containsThreeTermArithProg C
 
 
