@@ -58,7 +58,7 @@ Theorem 1.4 from [AKS07]
 -/
 @[category research solved, AMS 5]
 theorem erdos_82.variants.F_upper_bound :
-    (fun n => (F n : ℝ)) =O[atTop] (fun n => Real.sqrt n * (Real.log n) ^ (3 / 4)) := by
+    (fun n => (F n : ℝ)) =O[atTop] (fun n => Real.sqrt n * (Real.log n) ^ (3 / 4 : ℝ)) := by
   sorry
 
 end Erdos82
