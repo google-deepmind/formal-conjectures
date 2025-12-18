@@ -43,9 +43,9 @@ Pommerenke [Po61] proved that the answer is no.
 -/
 @[category research solved, AMS 28 30]
 theorem erdos_1043 :
-    ∃ (f : ℂ[X]), f.Monic ∧
-      ∀ (u : ℂ), ‖u‖ = 1 →
-      volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) > 2 := by
+    (∀ (f : ℂ[X]), f.Monic →
+      ∃ (u : ℂ), ‖u‖ = 1 ∧
+      volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) ≤ 2) ↔ answer(False) := by
   sorry
 
 /--
