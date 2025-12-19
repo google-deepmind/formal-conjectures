@@ -35,7 +35,7 @@ variable {d : ℕ}
 The number of pairs of points in a finite set `S` of points in `ℝ^d` that are distance 1 apart.
 -/
 noncomputable def countUnitDistancePairs (d : ℕ) (S : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
-  (S.offDiag.filter (fun (p, q) => dist p q = 1)).card
+  #(S.offDiag.filter fun (p, q) => dist p q = 1)
 
 /--
 The minimal value f_d(n) such that for any set of n points in ℝ^d, there exist at most f_d(n)
