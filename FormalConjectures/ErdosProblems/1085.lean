@@ -35,7 +35,7 @@ variable {d : ℕ}
 The number of pairs of points in a finite set `S` of points in `ℝ^d` that are distance 1 apart.
 -/
 noncomputable def countUnitDistancePairs (d : ℕ) (S : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
-  #(S.offDiag.filter fun (p, q) => dist p q = 1)
+  #(S.sym2.filter fun s => dist s.out.1 s.out.2 = 1)
 
 /--
 The minimal value f_d(n) such that for any set of n points in ℝ^d, there exist at most f_d(n)
@@ -45,11 +45,17 @@ noncomputable def f_d (d n : ℕ) : ℕ :=
   ⨆ (S : Finset (EuclideanSpace ℝ (Fin d))) (_ : S.card = n), countUnitDistancePairs d S
 
 /--
-Estimate f_d(n). This asks for good upper and lower bounds on f_d(n) as a function of n and d.
+Estimate f_d(n). Find the best possible constants c₁, c₂, α, β such that
+c₁ * n^α ≤ f_d(n) ≤ c₂ * n^β for all sufficiently large n.
+
+Known results:
+- For d=2: f_2(n) = O(n^(4/3)) and f_2(n) = Ω(n^(1+c/log log n)) for some c > 0
+- For d≥3: f_d(n) = Θ(n^(2-2/d)) (Spencer-Szemerédi-Trotter)
 -/
 @[category research open, AMS 52]
 theorem erdos_1085 :
-    (∃ bounds : ℕ → ℕ → ℕ, ∀ d n : ℕ, f_d d n ≤ bounds d n) ↔ answer(sorry) := by
+    (∀ d n : ℕ, n > 0 → f_d d n ≤ answer(sorry) * n ^ answer(sorry)) ∧
+    (∀ d n : ℕ, n > answer(sorry) → f_d d n ≥ answer(sorry) * n ^ answer(sorry)) := by
   sorry
 
 end Erdos1085
