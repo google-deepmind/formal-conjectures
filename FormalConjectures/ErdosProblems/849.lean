@@ -13,27 +13,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 248
+# Erdős Problem 849
 
-*References:*
-- [erdosproblems.com/248](https://www.erdosproblems.com/248)
-- [TaTe25] T. Tao and J. Teräväinen, Quantitative correlations and some problems on prime factors of consecutive integers. arXiv:2512.01739 (2025).
+*Reference:* [erdosproblems.com/849](https://www.erdosproblems.com/849)
 -/
 
-open scoped ArithmeticFunction
+open Nat
 
-namespace Erdos248
+namespace Erdos849
 
 /--
-Are there infinitely many $n$ such that $\omega(n + k) \ll k$ for all $k \geq 1$?
-Here $\omega(n)$ is the number of distinct prime divisors of $n$.
+Is it true that, for every integer $t\geq1$, there is some integer $a$ such that ${n \choose k} = a$
+with $1\leq k \le \frac{n}{2}$ has exactly $t$ solutions?
 -/
-@[category research solved, AMS 11]
-theorem erdos_248 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, ω (n + k) ≤ C * k }.Infinite) := by
+@[category research open, AMS 11]
+theorem erdos_849 : answer(sorry) ↔
+    ∀ t ≥ 1, ∃ a : ℕ,
+      {n : ℕ | ∃ k ≥ 1, 2 * k ≤ n ∧ choose n k = a}.ncard = t := by
   sorry
 
-end Erdos248
+end Erdos849
