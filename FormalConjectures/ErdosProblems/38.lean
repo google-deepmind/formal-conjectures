@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 open Classical Set Pointwise
 
-section Erdos38
+namespace Erdos38
 
 /--
 Does there exist $B \subset \mathbb{N}$ which is not an additive basis,
