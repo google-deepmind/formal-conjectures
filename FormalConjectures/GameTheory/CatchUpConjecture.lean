@@ -13,27 +13,46 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-  
-/-
-Formalization of the Catch-Up game and the conjecture.
-We define the `Player`, `Position`, and `Outcome` types.
-The main game logic is implemented in `value`, which recursively evaluates the game outcome under optimal play.
-`catchUpValueN` defines the game value for the set {1, ..., N}.
-The conjecture that the game ends in a draw when T_N is even is stated as `catchUp_draw_when_T_even`.
 
-Reference:
-----------
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# The Catch-Up game and conjecture
+
+The game **Catch-Up** (Isaksen–Ismail–Brams–Nealen, 2015) is a two-player, perfect-information game
+played on a finite nonempty set `S` of positive integers. Each time a player removes a number from
+`S`, that number is added to the player’s score.
+
+**Rules.**
+* The scores start at `0`. Player `P1` starts by removing **exactly one** number from `S`.
+* After the first move, players alternate turns. On a turn, the current player removes **one or more**
+  numbers from `S`, one at a time, and must keep removing numbers until their score becomes
+  **at least** the opponent’s score; before the final pick they must remain **strictly behind**.
+* If the current player cannot catch up (in particular, even taking all remaining numbers would still
+  leave them behind), the game ends immediately: the current player receives all remaining numbers.
+
+When `S` is empty, the player with higher score wins; equal scores give a draw.
+
+In this file we define:
+* `Player` and `Outcome`,
+* the recursive evaluator `value` (optimal play),
+* `catchUpValueN` for the initial segment `{1, …, N}`,
+* the conjecture `catchUp_draw_when_T_even`.
+
+## Example
+For `S = {1,2,3,4}` one play is: `P1` takes `2`, `P2` takes `1` then `4`, and `P1` takes `3`,
+ending with scores `(5,5)`.
+
+## References
 A. Isaksen, M. Ismail, S. J. Brams, A. Nealen,
-"Catch-Up: A Game in Which the Lead Alternates,"
-Game & Puzzle Design 1(2), 38–49, 2015.
-https://game.engineering.nyu.edu/projects/catch-up/
+*Catch-Up: A Game in Which the Lead Alternates,* Game & Puzzle Design 1(2), 38–49 (2015).
 
 Category and AMS classification:
 --------------------------------
 This is a research-level open problem in combinatorial game theory and number theory.
+
 -/
 
-import FormalConjectures.Util.ProblemImports
 
 namespace CatchUp
 
@@ -41,7 +60,7 @@ noncomputable section
 open scoped BigOperators
 
 /-
-Define Player and Position types for the Catch-Up game.
+Define Player type for the Catch-Up game.
 -/
 inductive Player | P1 | P2
 deriving DecidableEq, Repr
@@ -49,12 +68,6 @@ deriving DecidableEq, Repr
 def Player.other : Player → Player
 | P1 => P2
 | P2 => P1
-
-structure Position (S : Finset ℕ) where
-  remaining : Finset ℕ
-  s1 : ℕ
-  s2 : ℕ
-  turn : Player
 
 /-
 Define Outcome type, negation, ordering, and bestOutcome helper.
@@ -114,17 +127,16 @@ noncomputable def value (remaining : Finset ℕ) (s_me s_opp : ℕ) (isFirstMove
       bestOutcome outcomes
 termination_by remaining.card
 decreasing_by
-exact Finset.card_lt_card ( Finset.erase_ssubset hx ); (
--- Since $x \in remaining$, removing $x$ from $remaining$ decreases its cardinality by one.
-apply Finset.card_erase_lt_of_mem hx); (
--- Since $x \in \text{remaining}$, we have $\text{remaining.erase } x \subset \text{remaining}$, and thus $\text{remaining.erase } x.card < \text{remaining.card}$.
-apply Finset.card_lt_card; exact Finset.erase_ssubset hx)
+  classical
+  all_goals
+    simpa [remaining'] using Finset.card_erase_lt_of_mem hx
+
 
 /-
 Define helper functions for the Catch-Up game on {1, ..., N}.
 -/
 def initialSet (N : ℕ) : Finset ℕ :=
-  (Finset.range N).image (· + 1)
+  Finset.Icc 1 N
 
 noncomputable def catchUpValueN (N : ℕ) : Outcome :=
   value (initialSet N) 0 0 true
@@ -132,10 +144,11 @@ noncomputable def catchUpValueN (N : ℕ) : Outcome :=
 def T (N : ℕ) : ℕ := N * (N + 1) / 2
 
 /-- English version:
-"Let T N = 1 + 2 + ⋯ + N = N (N + 1) / 2.
-If T N is even (equivalently N ≡ 0 or 3 mod 4),
-then under optimal play the game Catch-Up({1,…,N}) ends in a draw."
+Let \(T_N = \sum_{k=1}^{N} k = \frac{N(N+1)}{2}\).
+If \(T_N\) is even (equivalently \(N \equiv 0 \pmod 4\) or \(N \equiv 3 \pmod 4\)),
+then under optimal play the game `Catch-Up(\(\{1, \ldots, N\}\))` ends in a draw.
 -/
+
 @[category research open, AMS 91 11]
 theorem catchUp_draw_when_T_even (N : ℕ)
     (h_even : Even (T N)) :
