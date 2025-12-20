@@ -39,10 +39,9 @@ structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
   iIndepFun_primes : iIndepFun (fun p : Primes ↦ f p) ℙ
   /-- Primes entries are uniformly distributed on `{-1, 1}`. -/
   prob_of_prime p : p.Prime → ℙ {ω | f p ω = 1} = 1 / 2 ∧ ℙ {ω | f p ω = -1} = 1 / 2
-
   map_one ω : f 1 ω = 1
   map_mul_of_coprime a b ω : a.Coprime b → f (a * b) ω = f a ω * f b ω
-  map_not_squarefree n ω : ¬ Squarefree n → f n ω = 0
+  map_of_not_squarefree n ω : ¬ Squarefree n → f n ω = 0
 
 /--
 Is there an analogue of the law of the iterated logarithm (LIL)
@@ -51,7 +50,7 @@ for Rademacher multiplicative functions?
 @[category research open, AMS 11 60]
 theorem erdos_520 :
     (∃ c > 0, ∀ (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
-      ∀ᵐ ω, limsup (fun N ↦ ∑ m ∈ Finset.range (N + 1), f m ω / sqrt (N * log (log N))) atTop = c)
+      ∀ᵐ ω, limsup (fun N ↦ ∑ m ≤ N, f m ω / sqrt (N * log (log N))) atTop = c)
     ↔ answer(sorry) := by
   sorry
 
