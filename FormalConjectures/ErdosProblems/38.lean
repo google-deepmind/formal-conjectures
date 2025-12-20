@@ -30,14 +30,11 @@ section Erdos38
 Does there exist a set B ⊆ ℕ which is not an additive basis but guarantees a density increase?
 -/
 @[category research open, AMS 11]
-theorem erdos_38 :
-    (
-      ∃ B : Set ℕ, ¬ B.IsAddBasis ∧
-      ∃ f : ℝ → ℝ, (∀ α : ℝ, 0 < α → α < 1 → f α > 0) ∧
-        ∀ A : Set ℕ, let α := schnirelmannDensity A
-        ∀ N : ℕ,
-          ∃ b ∈ B, (Ioc 0 N ∩ (A ∪ (A + {b}))).ncard ≥ (α + f α) * N
-    ) ↔ answer(sorry) := by
+theorem erdos_38 : answer(sorry) ↔
+    ∃ B : Set ℕ, ¬ B.IsAddBasis ∧ ∃ f : ℝ → ℝ, (∀ α, 0 < α → α < 1 → f α > 0) ∧
+      ∀ (A : Set ℕ) (N : ℕ),
+        let α := schnirelmannDensity A
+        ∃ b ∈ B, (Ioc 0 N ∩ (A ∪ (A + {b}))).ncard ≥ (α + f α) * N := by
   sorry
 
 end Erdos38
