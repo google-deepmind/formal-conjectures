@@ -36,7 +36,7 @@ theorem erdos_38 :
       ∃ f : ℝ → ℝ, (∀ α : ℝ, 0 < α → α < 1 → f α > 0) ∧
         ∀ A : Set ℕ, let α := schnirelmannDensity A
         ∀ N : ℕ,
-          ∃ b ∈ B, ((Ioc 0 N) ∩ (A ∪ (A + {b}))).ncard ≥ (α + f α) * N
+          ∃ b ∈ B, (Ioc 0 N ∩ (A ∪ (A + {b}))).ncard ≥ (α + f α) * N
     ) ↔ answer(True) := by
   sorry
 
