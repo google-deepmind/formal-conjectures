@@ -37,9 +37,7 @@ Is it true that $A$ is the union of a finite number of sets which contain no thr
 progression?
 -/
 @[category research open, AMS 11]
-theorem erdos_847
-    (A : Set ℕ) (hinf : Infinite A) (heps : hε A) : answer(sorry) ↔
-    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧
-    A = ⋃ i : Fin n, S i := sorry
+theorem erdos_847 : answer(sorry) ↔ ∀ (A : Set ℕ), Infinite A → hε A →
+    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧ A = ⋃ i : Fin n, S i := sorry
 
 end Erdos847
