@@ -31,8 +31,8 @@ def containsThreeTermArithProg (S : Set ℕ) : Prop :=
 
 
 def hε (A : Set ℕ) :=
-  ∃ (ε : ℝ), ε > 0 ∧  ∀ (B : Set ℕ), B ⊆ A → Finite B →
-  ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ¬ containsThreeTermArithProg C
+    ∃ (ε : ℝ), ε > 0 ∧  ∀ (B : Set ℕ), B ⊆ A → Finite B →
+    ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ThreeAPFree C
 
 
 /--
@@ -46,7 +46,7 @@ progression?
 @[category research open, AMS 11]
 theorem erdos_847
     (A : Set ℕ) (hinf : Infinite A) (heps : hε A) : answer(sorry) ↔
-    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ¬ containsThreeTermArithProg (S i)) ∧
+    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧
     A = ⋃ i : Fin n, S i := sorry
 
 end Erdos847
