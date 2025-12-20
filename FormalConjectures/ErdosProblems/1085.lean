@@ -48,7 +48,7 @@ noncomputable def f_d (d n : ℕ) : ℕ :=
 Upper bound for d=2: f_2(n) = O(n^(4/3)).
 This bound is due to Spencer, Szemerédi, and Trotter.
 -/
-@[category research open, AMS 52]
+@[category research solved, AMS 52]
 theorem erdos_1085_upper_d2 :
     ∃ c : ℝ, ∃ N : ℕ, ∀ n : ℕ, n ≥ N → (f_d 2 n : ℝ) ≤ answer(c * n ^ (4/3 : ℝ)) := by
   sorry
