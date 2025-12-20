@@ -29,10 +29,11 @@ section Erdos520
 variable {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
 
 /--
-A Rademacher multiplicative function is a random function `f : ℕ → Ω → ℝ` satisfying:
-for each prime `p`, the values `f(p)` are independent and uniformly distributed on `{-1, 1}`;
-`f` is multiplicative with `f(1) = 1`; and
-`f(n) = 0` whenever `n` is not squarefree.
+Let $f$ be a Rademacher multiplicative function:
+a random $\{-1, 0, 1\}$-valued multiplicative function,
+where for each prime $p$ we independently choose $f(p) \in \{-1, 1\}$ uniformly at random,
+and for square-free integers $n$ we extend $f(p_1 \cdots p_r) = f(p_1) \cdots f(p_r)$
+(and $f(n) = 0$ if $n$ is not squarefree).
 -/
 structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
   /-- Prime entries are independent. -/
@@ -44,8 +45,10 @@ structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
   map_of_not_squarefree n ω : ¬ Squarefree n → f n ω = 0
 
 /--
-Is there an analogue of the law of the iterated logarithm (LIL)
-for Rademacher multiplicative functions?
+Does there exist some constant $c > 0$ such that, almost surely,
+\[
+  \limsup_{N \to \infty} \frac{\sum_{m \leq N} f(m)}{\sqrt{N \log \log N}} = c?
+\]
 -/
 @[category research open, AMS 11 60]
 theorem erdos_520 :
