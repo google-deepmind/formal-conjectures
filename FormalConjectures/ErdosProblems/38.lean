@@ -27,7 +27,13 @@ open Classical Set Pointwise
 section Erdos38
 
 /--
-Does there exist a set B ⊆ ℕ which is not an additive basis but guarantees a density increase?
+Does there exist $B \subset \mathbb{N}$ which is not an additive basis,
+but is such that for every set $A \subseteq \mathbb{N}$ of Schnirelmann density $\alpha$
+and every $N$ there exists $b \in B$ such that
+\[
+  \lvert (A \cup (A+b)) \cap \{1, \ldots, N\} \rvert \geq (\alpha + f(\alpha)) N
+\]
+where $f(\alpha) > 0$ for $0 < \alpha < 1$?
 -/
 @[category research open, AMS 11]
 theorem erdos_38 : answer(sorry) ↔
