@@ -23,17 +23,10 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos847
 
-/-
-There is a subset of `S` with a three term arithmetic progression
--/
-def containsThreeTermArithProg (S : Set ℕ) : Prop :=
-    ∃ a b c, a < b ∧ b < c ∧ {a, b, c} ⊆ S ∧ b - a = c - b
-
 
 def hε (A : Set ℕ) :=
     ∃ (ε : ℝ), ε > 0 ∧  ∀ (B : Set ℕ), B ⊆ A → Finite B →
     ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ThreeAPFree C
-
 
 /--
 Let $A \subset \mathbb{N}$ be an infinite set for which there exists some $\epsilon > 0$ such that
