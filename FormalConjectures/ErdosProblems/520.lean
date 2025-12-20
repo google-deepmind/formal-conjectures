@@ -28,6 +28,12 @@ section Erdos520
 
 variable {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
 
+/--
+A Rademacher multiplicative function is a random function `f : ℕ → Ω → ℝ` satisfying:
+for each prime `p`, the values `f(p)` are independent and uniformly distributed on `{-1, 1}`;
+`f` is multiplicative with `f(1) = 1`; and
+`f(n) = 0` whenever `n` is not squarefree.
+-/
 structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
   /-- Prime entries are independent. -/
   iIndepFun_primes : iIndepFun (fun p : Primes ↦ f p) ℙ
@@ -38,6 +44,10 @@ structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
   map_mul_of_coprime a b ω : a.Coprime b → f (a * b) ω = f a ω * f b ω
   map_not_squarefree n ω : ¬ Squarefree n → f n ω = 0
 
+/--
+Is there an analogue of the law of the iterated logarithm (LIL)
+for Rademacher multiplicative functions?
+-/
 @[category research open, AMS 11 60]
 theorem erdos_520 :
     (∃ c > 0, ∀ (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
