@@ -37,7 +37,7 @@ theorem erdos_38 :
         ∀ A : Set ℕ, let α := schnirelmannDensity A
         ∀ N : ℕ,
           ∃ b ∈ B, (Ioc 0 N ∩ (A ∪ (A + {b}))).ncard ≥ (α + f α) * N
-    ) ↔ answer(True) := by
+    ) ↔ answer(sorry) := by
   sorry
 
 end Erdos38
