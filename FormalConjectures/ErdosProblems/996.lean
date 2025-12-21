@@ -59,7 +59,7 @@ namespace Erdos996
 
 /-- Does there exists a positive constant `ε` such that for all `f ∈ L²[0,1]` and all lacunary
 sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k) ^ ε`, then for almost every `x`,
-`lim ∑ k ∈ Finset.range N, f ((n k) • x)) / N = ∫ t, f t ∂t`.-/
+`lim ∑ k ∈ Finset.range N, f ((n k) • x)) / N = ∫ t, f t ∂t`? -/
 @[category research open, AMS 42]
 theorem erdos_996.log3 : ∃ (ε : ℝ), 0 < ε ∧ ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     Lacunary n →
