@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib
+import FormalConjectures.Util.ProblemImports
 
 /-!
 # Latin Tableau Conjecture
@@ -32,15 +32,17 @@ the union of k independent sets of the graph.
 * [The Latin Tableau Conjecture](https://www.combinatorics.org/ojs/index.php/eljc/article/view/v32i2p48)
 -/
 
+namespace LatinTableau
+
 variable {α : Type*} [DecidableEq α]
 
 namespace SimpleGraph
 
-/- The maximum size of the union of k finite independent sets. -/
+/-- The maximum size of the union of k finite independent sets. -/
 noncomputable def independenceNumK (G : SimpleGraph α) (k : ℕ) : ℕ :=
   sSup { n | ∃ f : Fin k → Set α, (∀ i, G.IsIndepSet (f i)) ∧ ((⋃ i, f i).ncard = n) }
 
-/- A finite graph is cdsColorable if it has a proper coloring
+/-- A finite graph is cdsColorable if it has a proper coloring
   by natural numbers such that for all k > 0, the number of
   vertices with color < k equals the maximum size of
   the union of k independent sets. -/
@@ -52,14 +54,15 @@ open YoungDiagram
 
 def YoungDiagram.Cell (μ : YoungDiagram) : Type := Subtype fun c : ℕ × ℕ => c ∈ μ
 
-/- The simple graph of a Young diagram: two distinct cells are
+/-- The simple graph of a Young diagram: two distinct cells are
   adjacent iff they lie in the same row or in the same column. -/
 def YoungDiagram.toSimpleGraph (μ : YoungDiagram) : SimpleGraph (YoungDiagram.Cell μ) :=
   SimpleGraph.fromRel fun a b =>
     (Prod.fst a.val = Prod.fst b.val) ∨ (Prod.snd a.val = Prod.snd b.val)
 
-/- The Latin Tableau Conjecture: If G is the simple graph
+/-- The Latin Tableau Conjecture: If G is the simple graph
   of a Young diagram, then G is cdsColorable. -/
+@[category research open, AMS 5]
 theorem LatinTableauConjecture (μ : YoungDiagram) [Fintype (YoungDiagram.Cell μ)]
    [DecidableEq (YoungDiagram.Cell μ)] :
      (YoungDiagram.toSimpleGraph μ).cdsColorable := by sorry
