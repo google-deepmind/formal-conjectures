@@ -23,7 +23,7 @@ open MeasureTheory AddCircle Filter Topology Asymptotics Finset
 
 *Reference:*
  - [erdosproblems.com/996](https://www.erdosproblems.com/996)
- - [Er64b] Erdös, P. "On the strong law of large numbers." Transactions of the American Mathematical
+ - [Er49d] Erdös, P. "On the strong law of large numbers." Transactions of the American Mathematical
     Society 67.1 (1949): 51-56.
  - [Ma66] Matsuyama, Noboru. "On the strong law of large numbers." Tohoku Mathematical Journal,
     Second Series 18.3 (1966): 259-269.
