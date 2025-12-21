@@ -42,8 +42,8 @@ $\{a ∈ ℕ  | ∀ a ∈ A, n > a and n + a is squarafree  \}$.
 def HasPropertyQ (A : Set ℕ): Prop :=
   {n : ℕ | ∀ a ∈ A, a < n →  Squarefree (n + a)}.Infinite
 
-def IsIncreasing (u : ℕ → ℕ ) : Prop :=
-  ∀ n : ℕ, u n ≤ u (n + 1)
+def IsStrictlyIncreasing (u : ℕ → ℕ ) : Prop :=
+  ∀ n : ℕ, u n < u (n + 1)
 
 def Aset (A : ℕ → ℕ) : Set ℕ :=
   {x : ℕ | ∃ n, A n = x}
@@ -60,12 +60,12 @@ Wouter Van Doorn in this [paper](https://arxiv.org/pdf/2512.01087)
 
 @[category research solved, AMS 11]
 theorem erdos_1102.HasPropertyP (A : ℕ → ℕ ): ∀ A : ℕ → ℕ, ∃ f : ℕ → ℝ,
-  IsIncreasing A → HasPropertyP (Aset A)  → ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ f n := by
+  IsStrictlyIncreasing A → HasPropertyP (Aset A)  → ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ f n := by
   sorry
 
 @[category research solved, AMS 11]
 theorem erdos_1102.HasPropertyQ (A : ℕ → ℕ ) : ∀ A : ℕ → ℕ, ∃ (f : ℕ → ℝ),
-  IsIncreasing A → HasPropertyQ (Aset A)  → ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ f n := by
+  IsStrictlyIncreasing A → HasPropertyQ (Aset A)  → ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ f n := by
   sorry
 
 end Erdos1102
