@@ -24,7 +24,7 @@ played on a finite nonempty set `S` of positive integers. Each time a player rem
 `S`, that number is added to the player’s score.
 
 **Rules.**
-* The scores start at `0`. Player `P1` starts by removing **exactly one** number from `S`.
+* The scores start at `0`. Player `p1` starts by removing **exactly one** number from `S`.
 * After the first move, players alternate turns. On a turn, the current player removes **one or more**
   numbers from `S`, one at a time, and must keep removing numbers until their score becomes
   **at least** the opponent’s score; before the final pick they must remain **strictly behind**.
@@ -37,10 +37,10 @@ In this file we define:
 * `Player` and `Outcome`,
 * the recursive evaluator `value` (optimal play),
 * `catchUpValueN` for the initial segment `{1, …, N}`,
-* the conjecture `catchUp_draw_when_T_even`.
+* the conjecture `value_of_even_mul_succ_self_div_two`.
 
 ## Example
-For `S = {1,2,3,4}` one play is: `P1` takes `2`, `P2` takes `1` then `4`, and `P1` takes `3`,
+For `S = {1,2,3,4}` one play is: `p1` takes `2`, `p2` takes `1` then `4`, and `p1` takes `3`,
 ending with scores `(5,5)`.
 
 ## References
@@ -62,86 +62,126 @@ open scoped BigOperators
 /-
 Define Player type for the Catch-Up game.
 -/
-inductive Player | P1 | P2
+inductive Player | p1 | p2
 deriving DecidableEq, Repr
 
 def Player.other : Player → Player
-| P1 => P2
-| P2 => P1
+| p1 => p2
+| p2 => p1
 
 /-
 Define Outcome type, negation, ordering, and bestOutcome helper.
 -/
-inductive Outcome | Win | Loss | Draw
+inductive Outcome | win | loss | draw
 deriving DecidableEq, Repr
 
 def Outcome.neg : Outcome → Outcome
-| Win => Loss
-| Loss => Win
-| Draw => Draw
+| win => loss
+| loss => win
+| draw => draw
 
-def Outcome.toInt : Outcome → ℤ
-| Win => 1
-| Draw => 0
-| Loss => -1
+/--
+Computes the best outcome for the current player from a list of possible outcomes.
+Win > Draw > Loss.
+-/
+def Outcome.best (os : List Outcome) : Outcome :=
+  os.foldl (fun
+    | .win,  _     => .win
+    | _,     .win  => .win
+    | .draw, _     => .draw
+    | _,     .draw => .draw
+    | _,     _     => .loss) .loss
 
-instance : LE Outcome where
-  le a b := a.toInt ≤ b.toInt
-
-instance : LT Outcome where
-  lt a b := a.toInt < b.toInt
-
-instance : DecidableRel (· ≤ · : Outcome → Outcome → Prop) :=
-  fun a b => inferInstanceAs (Decidable (a.toInt ≤ b.toInt))
-
-instance : DecidableRel (· < · : Outcome → Outcome → Prop) :=
-  fun a b => inferInstanceAs (Decidable (a.toInt < b.toInt))
-
-def bestOutcome (os : List Outcome) : Outcome :=
-  os.foldl (fun acc o => if acc < o then o else acc) Outcome.Loss
 
 /-
-Define the recursive game value function `value`.
+Define the recursive game value functions.
 -/
-noncomputable def value (remaining : Finset ℕ) (s_me s_opp : ℕ) (isFirstMove : Bool) : Outcome :=
+
+/-
+`value remaining s_me s_opp isFirstMove` evaluates the position where:
+
+* `remaining` is the set `S'` of numbers not yet taken.
+* `s_me` is the current score of the player who is about to act (the “current player”).
+* `s_opp` is the opponent’s current score.
+* `isFirstMove` indicates whether we are in the special very first move of the whole game,
+  where the rules force exactly one pick and then the turn passes.
+
+The result is the game-theoretic value from the current player’s point of view:
+`.win` / `.loss` / `.draw`, assuming optimal play from both sides.
+
+We model a single *turn* (which may consist of several picks `$x_1,...,x_k$`) by recursion:
+the current player chooses one number `x`; if they are still strictly behind after taking it, they must
+continue the same turn (so the recursive call keeps the same “current player”);
+once they catch up (score ≥ opponent), the turn ends and we swap players.
+-/
+noncomputable def valueAux (remaining : Finset ℕ) (s_me s_opp : ℕ) (isFirstMove : Bool) : Outcome :=
+  -- If no numbers remain, the game is over. Compare final scores.
   if h : remaining = ∅ then
-    if s_me > s_opp then Outcome.Win
-    else if s_opp > s_me then Outcome.Loss
-    else Outcome.Draw
-  else
-    if s_me + remaining.sum (fun x => x) < s_opp then
-      Outcome.Loss
+    if s_me > s_opp then
+      -- Current player ends with strictly larger score.
+      Outcome.win
+    else if s_opp > s_me then
+      -- Opponent ends with strictly larger score.
+      Outcome.loss
     else
+      -- Scores are equal.
+      Outcome.draw
+  else
+    -- Terminal rule / pruning:
+    -- If even taking *all* remaining numbers would still leave the current player behind,
+    -- then there is no legal catch-up sequence (in the TeX: no `$x_1,...,x_k$` with final sum ≥ gap).
+    -- By the rules, the current player takes everything and the game ends immediately,
+    -- but under this inequality they must still lose.
+    if s_me + remaining.sum (fun x => x) < s_opp then
+      Outcome.loss
+    else
+      -- Otherwise, the current player can pick some `$x \in$ remaining`.
+      -- We evaluate every possible next pick under optimal play, then take the best outcome.
       let moves := remaining.attach.toList
       let outcomes := moves.map (fun ⟨x, hx⟩ =>
+        -- Take `x`: update current player's score and remove `x` from the set.
         let s_me' := s_me + x
         let remaining' := remaining.erase x
+
         if isFirstMove then
-          (value remaining' s_opp s_me' false).neg
+          -- First move rule (TeX item (1)):
+          -- On the first move, `p1` must take exactly one element and then the turn passes.
+          -- We therefore swap roles, evaluate from the opponent’s perspective, and negate
+          -- to convert back to the current player's perspective.
+          (valueAux remaining' s_opp s_me' false).neg
         else
+          -- Subsequent move rule (TeX item (2)):
+          -- On a turn, the current player must keep taking numbers while strictly behind,
+          -- and stops as soon as they reach or exceed the opponent.
           if s_me' ≥ s_opp then
-            (value remaining' s_opp s_me' false).neg
+            -- We have caught up (or overtaken) on this pick: the turn ends and the opponent moves next.
+            -- Swap players and negate to return to the current player's perspective.
+            (valueAux remaining' s_opp s_me' false).neg
           else
-            value remaining' s_me' s_opp false
+            -- Still strictly behind after taking `x`: rules force us to continue the same turn,
+            -- so the same player remains “current” in the recursive call.
+            valueAux remaining' s_me' s_opp false
       )
-      bestOutcome outcomes
+      -- Optimal play: choose the best outcome among all legal next picks.
+      Outcome.best outcomes
 termination_by remaining.card
 decreasing_by
   classical
   all_goals
     simpa [remaining'] using Finset.card_erase_lt_of_mem hx
 
+/-- Public API: The game-theoretic value of Catch-Up on the set `S`, assuming optimal play.
+    Returns `.win` if player 1 wins, `.loss` if player 2 wins, `.draw` if the game is tied. -/
+noncomputable def value (S : Finset ℕ) : Outcome :=
+  valueAux S 0 0 true
+
 
 /-
-Define helper functions for the Catch-Up game on {1, ..., N}.
+Define helper function for the Catch-Up game on {1, ..., N}.
 -/
-def initialSet (N : ℕ) : Finset ℕ :=
-  Finset.Icc 1 N
 
 noncomputable def catchUpValueN (N : ℕ) : Outcome :=
-  value (initialSet N) 0 0 true
-
-def T (N : ℕ) : ℕ := N * (N + 1) / 2
+  value (Finset.Icc 1 N)
 
 /-- English version:
 Let \(T_N = \sum_{k=1}^{N} k = \frac{N(N+1)}{2}\).
@@ -150,10 +190,8 @@ then under optimal play the game `Catch-Up(\(\{1, \ldots, N\}\))` ends in a draw
 -/
 
 @[category research open, AMS 91 11]
-theorem catchUp_draw_when_T_even (N : ℕ)
-    (h_even : Even (T N)) :
-    catchUpValueN N = Outcome.Draw := by
+theorem value_of_even_mul_succ_self_div_two (N : ℕ) (h_even : Even (N * (N + 1) / 2)) :
+    value (.Icc 1 N) = .draw := by
   sorry
-
 end -- noncomputable section
 end CatchUp
