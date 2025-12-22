@@ -44,7 +44,7 @@ theorem erdos_996.log3 : ∃ (ε : ℝ), 0 < ε ∧ ∀ (f : Lp ℂ 2 (haarAddCi
     (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
     (fun k => 1 / (Real.log^[3] k) ^ ε)
     →
-    ∀ᵐ x, Tendsto (fun N => (∑ k ∈ Finset.range N, f ((n k) • x)) / N) atTop
+    ∀ᵐ x, Tendsto (fun N => (∑ k ∈ .range N, f (n k • x)) / N) atTop
     (𝓝 (∫ t, f t ∂haarAddCircle)) := by
   sorry
 
