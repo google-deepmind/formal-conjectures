@@ -174,15 +174,6 @@ decreasing_by
     Returns `.win` if player 1 wins, `.loss` if player 2 wins, `.draw` if the game is tied. -/
 noncomputable def value (S : Finset ℕ) : Outcome :=
   valueAux S 0 0 true
-
-
-/-
-Define helper function for the Catch-Up game on {1, ..., N}.
--/
-
-noncomputable def catchUpValueN (N : ℕ) : Outcome :=
-  value (Finset.Icc 1 N)
-
 /--
 Let \(T_N = \sum_{k=1}^{N} k = \frac{N(N+1)}{2}\).
 If \(T_N\) is even (equivalently \(N \equiv 0 \pmod 4\) or \(N \equiv 3 \pmod 4\)),
