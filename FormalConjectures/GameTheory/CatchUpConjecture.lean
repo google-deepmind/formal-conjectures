@@ -177,7 +177,6 @@ Let \(T_N = \sum_{k=1}^{N} k = \frac{N(N+1)}{2}\).
 If \(T_N\) is even (equivalently \(N \equiv 0 \pmod 4\) or \(N \equiv 3 \pmod 4\)),
 then under optimal play the game `Catch-Up(\(\{1, \ldots, N\}\))` ends in a draw.
 -/
-
 @[category research open, AMS 91 11]
 theorem value_of_even_mul_succ_self_div_two (N : ℕ) (h_even : Even (N * (N + 1) / 2)) :
     value (.Icc 1 N) = .draw := by
