@@ -57,6 +57,7 @@ Conversely, for any function `f : ℕ → ℕ` that goes to infinity,
 there exists a strictly increasing sequence `A = {a₁ < a₂ < …}`
 with property P such that `(a_j / j) ≤ f(j)` for all `j`.
 -/
+@[category research solved, AMS 11]
 theorem erdos_1102.exists_sequence_with_P
   (f : ℕ → ℕ) (h_inf : Tendsto f atTop atTop) :
   ∃ A : ℕ → ℕ, StrictMono A ∧
