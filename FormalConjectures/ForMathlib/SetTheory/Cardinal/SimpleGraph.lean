@@ -23,7 +23,7 @@ open Cardinal Ordinal
 universe u
 
 /--
-This proposition asserts the ordinal Ramsey property `ω^β → (ω^β, c)²`.
+This proposition asserts the ordinal Ramsey property `ω^β → (ω^β, c)₂`.
 
 It states that for any linearly ordered type `V` that is order-isomorphic to the ordinal `ω^β`,
 and for any 2-coloring of the edges of the complete graph on `V` (represented by
