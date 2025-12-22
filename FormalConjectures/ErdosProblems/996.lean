@@ -42,7 +42,7 @@ example : Lacunary (fun k => 2 ^ k) := by
 
 /-- A lacunary sequence is strictly increasing. -/
 @[category API, AMS 40]
-lemma Lacunary.StrictMono {n : ℕ → ℕ} (hn : Lacunary n) : StrictMono n := by
+lemma Lacunary.strictMono {n : ℕ → ℕ} (hn : Lacunary n) : StrictMono n := by
   refine strictMono_nat_of_lt_succ fun k => (Nat.cast_lt (α := ℝ)).mp ?_
   obtain ⟨c, hc⟩ := hn
   by_cases h : n k = 0
