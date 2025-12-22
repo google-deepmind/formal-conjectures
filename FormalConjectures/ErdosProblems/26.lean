@@ -88,7 +88,7 @@ there exist some $k\geq 1$ such that almost all integers have a divisor of the f
 for some $a\in A$?
 -/
 @[category research open, AMS 11]
-theorem erdos_26 : (∀ᵉ (A : ℕ → ℕ) (hA : StrictMono A) (h : IsThick A),
+theorem erdos_26 : (∀ A : ℕ → ℕ, StrictMono A → IsThick A →
     ∃ k, IsBehrend (A · + k)) ↔ answer(sorry) := by
   sorry
 
