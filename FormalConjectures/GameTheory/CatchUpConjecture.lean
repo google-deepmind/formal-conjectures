@@ -181,4 +181,5 @@ then under optimal play the game `Catch-Up(\(\{1, \ldots, N\}\))` ends in a draw
 theorem value_of_even_mul_succ_self_div_two (N : ℕ) (h_even : Even (N * (N + 1) / 2)) :
     value (.Icc 1 N) = .draw := by
   sorry
+
 end CatchUp
