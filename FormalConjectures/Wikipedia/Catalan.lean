@@ -17,9 +17,11 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Catalan's conjecture
+# Catalan's conjecture and related Diophantine equations
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Catalan%27s_conjecture)
+*References:*
+- [Wikipedia - Catalan's conjecture](https://en.wikipedia.org/wiki/Catalan%27s_conjecture)
+- [arXiv:2507.12397](https://arxiv.org/abs/2507.12397) (Lebesgue-Nagell equation)
 -/
 
 namespace Catalan
@@ -43,3 +45,35 @@ theorem pillais_conjecture (a b c : ℕ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   sorry
 
 end Catalan
+
+/-! ## Lebesgue-Nagell equation -/
+
+namespace LebesgueNagell
+
+/--
+**Lebesgue-Nagell Equation Conjecture**
+
+For any odd prime $p$, the only integer solutions $(x, y)$ to the equation $x^2 - 2 = y^p$
+are $(x, y) = (\pm 1, -1)$.
+
+*Reference:* Ethan Katz and Kyle Pratt, "On the Lebesgue-Nagell equation $x^2 - 2 = y^p$",
+[arXiv:2507.12397](https://arxiv.org/abs/2507.12397)
+-/
+@[category research open, AMS 11]
+theorem lebesgue_nagell (p : ℕ) (hp : p.Prime) (hodd : Odd p) (x y : ℤ) :
+    x ^ 2 - 2 = y ^ p ↔ (x = 1 ∨ x = -1) ∧ y = -1 := by
+  sorry
+
+/-- The pair $(1, -1)$ is a solution to $x^2 - 2 = y^p$ for any odd $p$. -/
+@[category test, AMS 11]
+theorem lebesgue_nagell_solution_pos_one (p : ℕ) (hodd : Odd p) :
+    (1 : ℤ) ^ 2 - 2 = (-1 : ℤ) ^ p := by
+  simp [hodd.neg_one_pow]
+
+/-- The pair $(-1, -1)$ is a solution to $x^2 - 2 = y^p$ for any odd $p$. -/
+@[category test, AMS 11]
+theorem lebesgue_nagell_solution_neg_one (p : ℕ) (hodd : Odd p) :
+    (-1 : ℤ) ^ 2 - 2 = (-1 : ℤ) ^ p := by
+  simp [hodd.neg_one_pow]
+
+end LebesgueNagell
