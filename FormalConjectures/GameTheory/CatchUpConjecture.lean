@@ -53,11 +53,9 @@ This is a research-level open problem in combinatorial game theory and number th
 
 -/
 
+noncomputable section
 
 namespace CatchUp
-
-noncomputable section
-open scoped BigOperators
 
 /-
 Define Player type for the Catch-Up game.
