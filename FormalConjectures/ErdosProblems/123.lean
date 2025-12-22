@@ -69,9 +69,9 @@ Note: For this not to reduce to the two-integer case, we need the integers
 to be greater than one and distinct.
 -/
 @[category research open, AMS 11]
-theorem erdos_123 (a b c : ℕ) (ha : a > 1) (hb : b > 1) (hc : c > 1)
-    (h_coprime : PairwiseCoprime a b c) :
-    IsDComplete (↑(powers a) * ↑(powers b) * ↑(powers c)) ↔ answer(sorry) := by sorry
+theorem erdos_123 : (∀ᵉ (a : ℕ) (b : ℕ) (c : ℕ) (ha : a > 1) (hb : b > 1) (hc : c > 1)
+    (h_coprime : PairwiseCoprime a b c),
+    IsDComplete (↑(powers a) * ↑(powers b) * ↑(powers c))) ↔ answer(sorry) := by sorry
 
 /--
 Erdős and Lewin proved this conjecture when $a = 3$, $b = 5$, and $c = 7$.
