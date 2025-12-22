@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Data.Real.Basic
 
 /-!
 # VCₙ dimension of convex sets in ℝⁿ, ℝⁿ⁺¹, ℝⁿ⁺²
@@ -62,7 +60,7 @@ lemma vc2_lt_two_of_convex_r3 {C : Set (Fin 3 → ℝ)} (hC : Convex ℝ C)
     {x y : Fin 2 → Fin 3 → ℝ} {z : Set (Fin 2 × Fin 2) → Fin 3 → ℝ}
     (hxy : ∀ i j s, x i + y j + z s ∈ C ↔ (i, j) ∈ s) : False := sorry
 
-/-- Every convex set in ℝⁿ⁺¹ has VC₂ dimension at most 1. -/
+/-- Every convex set in ℝⁿ⁺¹ has VCₙ dimension at most 1. -/
 @[category research open, AMS 5 52]
 lemma exists_vcn_le_of_convex_rn_add_one (n : ℕ) :
     ∃ d : ℕ, ∀ (C : Set (Fin (n + 1) → ℝ)) (hC : Convex ℝ C) (x : Fin n → ℕ → Fin (n + 1) → ℝ)
