@@ -58,7 +58,7 @@ noncomputable section
 namespace CatchUp
 
 /-
-Define Player type for the Catch-Up game.
+An arbitrary two elements type indexing the players in the Catch-Up game.
 -/
 inductive Player | p1 | p2
 deriving DecidableEq, Repr
