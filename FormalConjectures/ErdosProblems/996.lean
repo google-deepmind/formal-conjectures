@@ -16,8 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open MeasureTheory AddCircle Filter Topology Asymptotics Finset
-
 /-!
 # Erdős Problem 996
 
@@ -28,6 +26,8 @@ open MeasureTheory AddCircle Filter Topology Asymptotics Finset
  - [Ma66] Matsuyama, Noboru. "On the strong law of large numbers." Tohoku Mathematical Journal,
     Second Series 18.3 (1966): 259-269.
 -/
+
+open MeasureTheory AddCircle Filter Topology Asymptotics Finset Real
 
 noncomputable def fourierPartial {T : ℝ} [hT : Fact (0 < T)] (f : Lp ℂ 2 (@haarAddCircle T hT))
     (k : ℕ) : AddCircle T → ℂ :=
