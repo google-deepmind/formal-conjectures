@@ -31,7 +31,7 @@ open MeasureTheory AddCircle Filter Topology Asymptotics Finset
 
 /-- In [Er64b], a sequence of natural numbers `n 1 < n 2 < ...` is said to be lacunary if for all
 `k`, `n (k + 1) / n k > c > 1`. -/
-def Lacunary (n : ℕ → ℕ) : Prop := ∃ (c : ℝ), 1 < c ∧ ∀ k, c * (n k) < n (k + 1)
+def IsLacunary (n : ℕ → ℕ) : Prop := ∃ c > (1 : ℝ), ∀ k, c * n k < n (k + 1)
 
 /-- `n k = 2 ^ k` is a lacunary sequence . -/
 @[category test, AMS 40]
