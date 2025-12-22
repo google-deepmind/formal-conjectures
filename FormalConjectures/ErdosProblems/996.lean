@@ -39,10 +39,10 @@ namespace Erdos996
 sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k ^ C)`, then for almost every `x`,
 `lim ∑ k ∈ Finset.range N, f (n k • x)) / N = ∫ t, f t ∂t`? -/
 @[category research open, AMS 42]
-theorem erdos_996.log3 : ∃ (ε : ℝ), 0 < ε ∧ ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
+theorem erdos_996.log3 : ∃ (C : ℝ), 0 < C ∧ ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
     (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
-    (fun k => 1 / log (log (log k))) ^ ε)
+    (fun k => 1 / (log (log (log k))) ^ C)
     →
     ∀ᵐ x, Tendsto (fun N => (∑ k ∈ .range N, f (n k • x)) / N) atTop
     (𝓝 (∫ t, f t ∂haarAddCircle)) := by
@@ -50,11 +50,11 @@ theorem erdos_996.log3 : ∃ (ε : ℝ), 0 < ε ∧ ∀ (f : Lp ℂ 2 (haarAddCi
 
 /-- The following theorem is proved in [Ma66]. -/
 @[category research solved, AMS 42]
-theorem erdos_996.log2 : ∀ (ε : ℝ), 0.5 < ε →
+theorem erdos_996.log2 : ∀ (C : ℝ), 0.5 < C →
     ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
     (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
-    (fun k => 1 / (Real.log^[2] k) ^ ε)
+    (fun k => 1 / (log (log k)) ^ C)
     →
     ∀ᵐ x, Tendsto (fun N => (∑ k ∈ .range N, f (n k • x)) / N) atTop
     (𝓝 (∫ t, f t ∂haarAddCircle)) := by
