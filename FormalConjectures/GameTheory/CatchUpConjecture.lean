@@ -183,7 +183,7 @@ Define helper function for the Catch-Up game on {1, ..., N}.
 noncomputable def catchUpValueN (N : ℕ) : Outcome :=
   value (Finset.Icc 1 N)
 
-/-- English version:
+/--
 Let \(T_N = \sum_{k=1}^{N} k = \frac{N(N+1)}{2}\).
 If \(T_N\) is even (equivalently \(N \equiv 0 \pmod 4\) or \(N \equiv 3 \pmod 4\)),
 then under optimal play the game `Catch-Up(\(\{1, \ldots, N\}\))` ends in a draw.
