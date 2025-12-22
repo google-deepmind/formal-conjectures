@@ -183,4 +183,3 @@ theorem value_of_even_mul_succ_self_div_two (N : ℕ) (h_even : Even (N * (N + 1
     value (.Icc 1 N) = .draw := by
   sorry
 end CatchUp
-end -- noncomputable section
