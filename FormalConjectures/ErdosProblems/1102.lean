@@ -28,17 +28,15 @@ namespace Erdos1102
 
 /--
 Property P : A set $A ⊆ ℕ $ has property P, if for all $n ≥ 1$ the set
-$ \{a ∈ A | n + a is squarafree  \}$.
+$ \{a ∈ A | n + a is squarafree \}$ is finite.
 -/
-
 def HasPropertyP (A : Set ℕ) : Prop :=
   ∀ n ≥ 1, {a ∈ A | Squarefree (n + a)}.Finite
 
 /--
-Property Q : A set $A ⊆ ℕ $ has property Q, if for all $n ≥ 1$ the set
-$\{a ∈ ℕ  | ∀ a ∈ A, n > a and n + a is squarafree  \}$.
+Property Q : A set $A ⊆ ℕ $ has property Q, if the set
+$\{n ∈ ℕ  | ∀ a ∈ A, n > a implies n + a is squarafree \}$ is infinite.
 -/
-
 def HasPropertyQ (A : Set ℕ): Prop :=
   {n : ℕ | ∀ a ∈ A, a < n →  Squarefree (n + a)}.Infinite
 
@@ -49,23 +47,29 @@ def Aset (A : ℕ → ℕ) : Set ℕ :=
   {x : ℕ | ∃ n, A n = x}
 
 /--
-Given a strictly increasing sequence `A : ℕ → ℕ` with `P` (resp. `Q`),
+Given a strictly increasing sequence `A : ℕ → ℕ` with `P`,
 characterize lower bounds on its growth, i.e. find explicit functions `f` such that
 for all sufficiently large `n`, we have `f n ≤ A n`.
 
-The problem seems to be solved based on this recent article by Terence Tao and
-Wouter Van Doorn in this [paper](https://arxiv.org/pdf/2512.01087)
-
+The problem appears to have been solved in a recent [paper](https://arxiv.org/pdf/2512.01087)
+by Terence Tao and Wouter van Doorn.
 -/
-
 @[category research solved, AMS 11]
-theorem erdos_1102.HasPropertyP (A : ℕ → ℕ ): ∀ A : ℕ → ℕ, ∃ f : ℕ → ℝ,
-  IsStrictlyIncreasing A → HasPropertyP (Aset A)  → ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ f n := by
+theorem erdos_1102.HasPropertyP (A : ℕ → ℕ )(h_inc : IsStrictlyIncreasing A)
+  (hP : HasPropertyP (Aset A)): ∃ f : ℕ → ℝ, ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ f n := by
   sorry
 
+/--
+Given a strictly increasing sequence `A : ℕ → ℕ` with `Q`,
+characterize lower bounds on its growth, i.e., find explicit functions `g` such that
+for all sufficiently large `n`, we have `g n ≤ A n`.
+
+The problem appears to have been solved in a recent [paper](https://arxiv.org/pdf/2512.01087)
+by Terence Tao and Wouter van Doorn.
+-/
 @[category research solved, AMS 11]
-theorem erdos_1102.HasPropertyQ (A : ℕ → ℕ ) : ∀ A : ℕ → ℕ, ∃ (f : ℕ → ℝ),
-  IsStrictlyIncreasing A → HasPropertyQ (Aset A)  → ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ f n := by
+theorem erdos_1102.HasPropertyQ (A : ℕ → ℕ ) (h_inc : IsStrictlyIncreasing A)
+  (hQ : HasPropertyQ (Aset A)): ∃ (g : ℕ → ℝ), ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ g n := by
   sorry
 
 end Erdos1102
