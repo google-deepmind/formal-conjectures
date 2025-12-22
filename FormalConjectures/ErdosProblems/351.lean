@@ -22,14 +22,15 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/351](https://www.erdosproblems.com/351)
 -/
 
-open RatFunc
+open Polynomial
 
 namespace Erdos351
 
-open Polynomial
-
 /-- The set of rational numbers of the form `P(n) + 1 / n` where `n` is a natural number
-and `P` is a polynomial with rational coefficients. -/
+and `P` is a polynomial with rational coefficients.
+
+Note: We include `P 0` in there (since `1 / 0 = 0`), but this doesn't change the validity of the
+conjecture -/
 def imageSet {α : Type*} [Semifield α] (P : α[X]) : Set α :=
   Set.range (fun (n : ℕ) ↦ P.eval ↑n + 1 / n)
 
@@ -40,29 +41,38 @@ def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
     ∀ᶠ (m : ℕ) in Filter.atTop,
       ↑m ∈ { ∑ n ∈ X, n | (X : Finset α) (_ : X.toSet ⊆ A \ B.toSet) }
 
-/-- The predicate that rational polynomial `P` has a complete image. -/
+/-- The predicate that the rational polynomial `P` has a complete image. -/
 def HasCompleteImage (P : ℚ[X]) : Prop := IsStronglyComplete (imageSet P)
 
 /--
-Let $p(x)\in \mathbb{Q}[x]$. Is it true that
-\[A=\{ p(n)+1/n : n\in \mathbb{N}\}\]
-is strongly complete, in the sense that, for any finite set $B$,
-\[\left\{\sum_{n\in X}n : X\subseteq A\backslash B\textrm{ finite }\right\}\]
-contains all sufficiently large rational numbers?
--/
+Let $p(x) \in \mathbb{Q}[x]$ be a non-constant rational polynomial with positive leading
+coefficient. Is it true that \[A=\{ p(n)+1/n : n \in \mathbb{N}\}\] is strongly complete,
+in the sense that, for any finite set $B$,
+\[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
+contains all sufficiently large integers? -/
 @[category research open, AMS 11]
-theorem erdos_351 : (∀ P : ℚ[X], HasCompleteImage P) ↔ answer(sorry) := by
+theorem erdos_351 :
+    (∀ P : ℚ[X], 0 < P.natDegree → 0 < P.leadingCoeff → HasCompleteImage P) ↔ answer(sorry) := by
   sorry
 
 /--
-Let $p(x) = x\in \mathbb{Q}[x]$. It has been shown that
-\[A=\{ p(n)+1/n : n\in \mathbb{N}\}\]
+Let $p(x) = x \in \mathbb{Q}[x]$. It has been shown that
+\[A=\{ p(n)+1/n : n \in \mathbb{N}\}\]
 is strongly complete, in the sense that, for any finite set $B$,
-\[\left\{\sum_{n\in X}n : X\subseteq A\backslash B\textrm{ finite }\right\}\]
-contains all sufficiently large rational numbers.
+\[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
+contains all sufficiently large integers.
 -/
-@[category research open, AMS 11]
-theorem erdos_351.variants.X : HasCompleteImage X := by
+@[category research solved, AMS 11]
+protected theorem erdos_351.variants.X : HasCompleteImage X := by
+  sorry
+
+/-- Let $p(x) = x ^ 2 \in \mathbb{Q}[x]$. It has been shown that
+\[A=\{ p(n)+1/n : n \in \mathbb{N}\}\]
+is strongly complete, in the sense that, for any finite set $B$,
+\[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
+contains all sufficiently large integers. -/
+@[category research solved, AMS 11]
+theorem erdos_351.variants.X_sq : HasCompleteImage (X ^ 2) := by
   sorry
 
 end Erdos351

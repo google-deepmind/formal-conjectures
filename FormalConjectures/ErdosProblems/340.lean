@@ -93,7 +93,7 @@ theorem greedySidon_ten : greedySidon 10 = 97 := by
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
 we begin with $1$ and iteratively include the next smallest integer that preserves the
 Sidon property (i.e. there are no non-trivial solutions to $a + b = c + d$). What is the
-order of growth of $A$? Is it true that $| A \cap\{1, \ldots, N\}| \gg N^{1/2−\varepsilon}$
+order of growth of $A$? Is it true that $|A \cap \{1, \ldots, N\}| \gg N^{1/2 - \varepsilon}$
 for all $\varepsilon > 0$ and large $N$?
 -/
 @[category research open, AMS 5]
@@ -106,7 +106,7 @@ theorem erdos_340 (ε : ℝ) (hε : ε > 0) :
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
 we begin with $1$ and iteratively include the next smallest integer that preserves the
 Sidon property (i.e. there are no non-trivial solutions to $a + b = c + d$). What is the
-order of growth of $A$? Is it true that $| A \cap\{1, \ldots, N\}| \gg N^{1/2−\varepsilon}$
+order of growth of $A$? Is it true that $|A \cap \{1, \ldots, N\}| \gg N^{1/2 - \varepsilon}$
 for all $\varepsilon > 0$ and large $N$?
 -/
 @[category research open, AMS 5]

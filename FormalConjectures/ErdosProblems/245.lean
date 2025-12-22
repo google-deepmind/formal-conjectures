@@ -53,8 +53,7 @@ Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| =
 Determine whether there exists a limit to
 $$
 \frac{|(A + A)\cap \{1, ..., N\}|}{|A \cap \{1, ..., N\}|}
-$$
-as $N\to\infty$.
+$$ as $N\to\infty$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.exists_limit (A : Set ℕ) (h_inf : A.Infinite)

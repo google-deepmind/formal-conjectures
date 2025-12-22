@@ -28,14 +28,14 @@ open scoped Finset
 /--
 **Chowla's cosine problem**
 
-If $A\subset \mathbb{Z}$ is a finite set of size $N$ then is there some absolute constant $c>0$ and
-$\theta$ such that
+If $A\subset \mathbb{N}$ is a finite set of positive integers of size $N > 0$ then is there some
+absolute constant $c>0$ and $\theta$ such that
 $$\sum_{n\in A}\cos(n\theta) < -cN^{1/2}?$$
 -/
 @[category research open, AMS 11]
 theorem erdos_510 :
     (∃ (c : ℝ) (hc : 0 < c),
-      ∀ (N : ℕ), ∀ (A : Finset ℤ), # A = N →
+      ∀ N > 0, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
       (∃ (θ : ℝ), (∑ n ∈ A, (n * θ).cos) < -c * (N : ℝ).sqrt)) ↔ answer(sorry) := by
   sorry
 

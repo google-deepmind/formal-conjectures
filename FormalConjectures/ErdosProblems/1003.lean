@@ -25,9 +25,10 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos1003
 
 open scoped Nat
+open Filter
 
 /--
-Are there infinitely many solutions to $\phi(n) = \phi(n+1)$, where \phi is the Euler totient
+Are there infinitely many solutions to $\phi(n) = \phi(n+1)$, where $\phi$ is the Euler totient
 function?
 -/
 @[category research open, AMS 11]
@@ -46,15 +47,15 @@ theorem erdos_1003.variants.Icc :
   sorry
 
 /--
-Erdős, Pomerance, and Sárközy [EPS87] proved that the number of $n \leq x$ with $\phi(n) = \phi(n+1)$
-is at most $$\frac{x}{\exp(c(\log x)^{1/3})}$$ for some constant $c > 0$.
+Erdős, Pomerance, and Sárközy [EPS87] proved that for all large $x$, the number
+of $n \leq x$ with $\phi(n) = \phi(n+1)$ is at most $$\frac{x}{\exp((\log x)^{1/3})}$$.
 
-[EPS87] Erd\H os, Paul and Pomerance, Carl and S\'ark\"ozy, Andr\'as, _On locally repeated values of certain arithmetic functions_. {III}. Proc. Amer. Math. Soc. (1987), 1--7.
+[EPS87] Erd\H os, Paul and Pomerance, Carl and S\'ark\"ozy, Andr\'as, _On locally repeated values of certain arithmetic functions_. {II}. Proc. Amer. Math. Soc. (1987), 1--7.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1003.variants.eps87 {x : ℝ} (hx : 0 < x) : ∃ c > 0,
+theorem erdos_1003.variants.eps87 :  ∀ᶠ x in atTop,
     {(n : ℕ) | (n ≤ x) ∧ φ n = φ (n + 1)}.ncard ≤
-      x / Real.exp (c * (x.log) ^ (1 / 3)) := by
+      x / Real.exp ((x.log) ^ ((1 : ℝ) / 3)) := by
   sorry
 
 end Erdos1003
