@@ -31,7 +31,7 @@ open MeasureTheory AddCircle Filter Topology Asymptotics Finset Real
 
 noncomputable def fourierPartial {T : ℝ} [hT : Fact (0 < T)] (f : Lp ℂ 2 (@haarAddCircle T hT))
     (k : ℕ) : AddCircle T → ℂ :=
-  fun x => ∑ i ∈ Icc (-(k : ℤ)) (k : ℤ), fourierCoeff f k • (fourier i x)
+  fun x => ∑ i ∈ Icc (-k : ℤ) k, fourierCoeff f k • fourier i x
 
 namespace Erdos996
 
