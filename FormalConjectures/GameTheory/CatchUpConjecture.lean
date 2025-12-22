@@ -36,7 +36,6 @@ When `S` is empty, the player with higher score wins; equal scores give a draw.
 In this file we define:
 * `Player` and `Outcome`,
 * the recursive evaluator `value` (optimal play),
-* `catchUpValueN` for the initial segment `{1, …, N}`,
 * the conjecture `value_of_even_mul_succ_self_div_two`.
 
 ## Example
@@ -63,16 +62,16 @@ An arbitrary two elements type indexing the players in the Catch-Up game.
 inductive Player | p1 | p2
 deriving DecidableEq, Repr
 
+/-- Returns the other player. -/
 def Player.other : Player → Player
 | p1 => p2
 | p2 => p1
 
-/-
-Define Outcome type, negation, ordering, and bestOutcome helper.
--/
+/-- The possible outcomes of a Catch-Up game. -/
 inductive Outcome | win | loss | draw
 deriving DecidableEq, Repr
 
+/-- Negates an outcome, swapping win and loss. Used when switching player perspectives. -/
 def Outcome.neg : Outcome → Outcome
 | win => loss
 | loss => win
@@ -172,6 +171,7 @@ decreasing_by
     Returns `.win` if player 1 wins, `.loss` if player 2 wins, `.draw` if the game is tied. -/
 noncomputable def value (S : Finset ℕ) : Outcome :=
   valueAux S 0 0 true
+
 /--
 Let \(T_N = \sum_{k=1}^{N} k = \frac{N(N+1)}{2}\).
 If \(T_N\) is even (equivalently \(N \equiv 0 \pmod 4\) or \(N \equiv 3 \pmod 4\)),
@@ -182,5 +182,5 @@ then under optimal play the game `Catch-Up(\(\{1, \ldots, N\}\))` ends in a draw
 theorem value_of_even_mul_succ_self_div_two (N : ℕ) (h_even : Even (N * (N + 1) / 2)) :
     value (.Icc 1 N) = .draw := by
   sorry
-end -- noncomputable section
 end CatchUp
+end -- noncomputable section
