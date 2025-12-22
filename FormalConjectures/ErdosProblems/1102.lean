@@ -16,7 +16,7 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Squarefree
+open Squarefree Set Order Filter Topology
 
 /-!
 # Erdős Problem 1102
@@ -40,36 +40,51 @@ $\{n ∈ ℕ  | ∀ a ∈ A, n > a implies n + a is squarafree \}$ is infinite.
 def HasPropertyQ (A : Set ℕ): Prop :=
   {n : ℕ | ∀ a ∈ A, a < n →  Squarefree (n + a)}.Infinite
 
-def IsStrictlyIncreasing (u : ℕ → ℕ ) : Prop :=
-  ∀ n : ℕ, u n < u (n + 1)
-
-def Aset (A : ℕ → ℕ) : Set ℕ :=
-  {x : ℕ | ∃ n, A n = x}
-
 /--
-Given a strictly increasing sequence `A : ℕ → ℕ` with `P`,
-characterize lower bounds on its growth, i.e. find explicit functions `f` such that
-for all sufficiently large `n`, we have `f n ≤ A n`.
-
-The problem appears to have been solved in a recent [paper](https://arxiv.org/pdf/2512.01087)
-by Terence Tao and Wouter van Doorn.
+If `A = {a₁ < a₂ < …}` has property P,
+then `A` has natural density `0`.
+Equivalently, `(a_j / j) → ∞` as `j → ∞`.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1102.HasPropertyP (A : ℕ → ℕ )(h_inc : IsStrictlyIncreasing A)
-  (hP : HasPropertyP (Aset A)): ∃ f : ℕ → ℝ, ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ f n := by
+theorem erdos_1102.density_zero_of_P
+  (A : ℕ → ℕ) (h_inc : StrictMono A)
+  (hP : HasPropertyP (range A)) :
+  ∀ M : ℝ, ∃ N, ∀ j ≥ N, (A j : ℝ) / j ≥ M := by
   sorry
 
 /--
-Given a strictly increasing sequence `A : ℕ → ℕ` with `Q`,
-characterize lower bounds on its growth, i.e., find explicit functions `g` such that
-for all sufficiently large `n`, we have `g n ≤ A n`.
+Conversely, for any function `f : ℕ → ℕ` that goes to infinity,
+there exists a strictly increasing sequence `A = {a₁ < a₂ < …}`
+with property P such that `(a_j / j) ≤ f(j)` for all `j`.
+-/
+theorem erdos_1102.exists_sequence_with_P
+  (f : ℕ → ℕ) (h_inf : Tendsto f atTop atTop) :
+  ∃ A : ℕ → ℕ, StrictMono A ∧
+    HasPropertyP (range A) ∧
+    ∀ j : ℕ, (A j : ℝ) / j ≤ f j := by
+  sorry
 
-The problem appears to have been solved in a recent [paper](https://arxiv.org/pdf/2512.01087)
-by Terence Tao and Wouter van Doorn.
+/--
+Every sequence with property Q has upper density at most `6 / π^2`.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1102.HasPropertyQ (A : ℕ → ℕ ) (h_inc : IsStrictlyIncreasing A)
-  (hQ : HasPropertyQ (Aset A)): ∃ (g : ℕ → ℝ), ∃ N, ∀ n ≥ N, (A n : ℝ) ≥ g n := by
+theorem erdos_1102.upper_density_Q
+  (A : ℕ → ℕ) (h_inc : StrictMono A)
+  (hQ : HasPropertyQ (range A)) :
+  limsup (fun j ↦ (j : ℕ ) / (A j)) atTop ≤ (6 / Real.pi^2) := by
+  sorry
+
+/--
+There exists an infinite sequence $A = {a₁ < a₂ < …} ⊂ \mathsf{SF}$ where
+$\mathsf{SF} := \mathbb{N} \setminus \bigcup_{p} p^{2}\mathbb{N}$, i.e. the set of
+squarefree numbers. The set `A` has property Q that has natural density `6 / π^2`.
+Equivalently, `(j / a_j) → 6/π^2` as `j → ∞`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_1102.lower_density_Q_exists :
+  ∃ A : ℕ → ℕ, StrictMono A ∧
+    HasPropertyQ (range A) ∧
+    Tendsto (fun j ↦ (j : ℕ) / ((A j) : ℝ )) atTop (𝓝 (6 / Real.pi^2)) := by
   sorry
 
 end Erdos1102
