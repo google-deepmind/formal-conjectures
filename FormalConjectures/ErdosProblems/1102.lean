@@ -28,14 +28,14 @@ namespace Erdos1102
 
 /--
 Property P : A set $A ⊆ ℕ $ has property P, if for all $n ≥ 1$ the set
-$ \{a ∈ A | n + a is squarafree\}$ is finite.
+$ \{a ∈ A | n + a\text{ is squarefree}\}$ is finite.
 -/
 def HasPropertyP (A : Set ℕ) : Prop :=
   ∀ n ≥ 1, {a ∈ A | Squarefree (n + a)}.Finite
 
 /--
 Property Q : A set $A ⊆ ℕ $ has property Q, if the set
-$\{n ∈ ℕ  | ∀ a ∈ A, n > a implies n + a is squarafree\}$ is infinite.
+$\{n ∈ ℕ  | ∀ a ∈ A, n > a implies n + a\text{ is squarefree}\}$ is infinite.
 -/
 def HasPropertyQ (A : Set ℕ) : Prop :=
   {n : ℕ | ∀ a ∈ A, a < n → Squarefree (n + a)}.Infinite
