@@ -59,7 +59,7 @@ theorem erdos_263.parts.ii : (∀ a : ℕ → ℕ,
   sorry
 
 /--
-A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{1/2ⁿ} = \infty$
+A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{\frac{1}{2^n}} = \infty$
 has $\sum \frac{1}{a_n}$ converging to an irrational number.
 -/
 @[category research solved, AMS 11]
