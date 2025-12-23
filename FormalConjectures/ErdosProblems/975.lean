@@ -32,28 +32,29 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Real Polynomial
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction Topology
 
 namespace Erdos975
 
-/-
-Sum of $\tau(f(n))$ from `0` to `⌊x⌋` for a polynomial $f \in \mathbb{Z}[X]$.
+/-- Sum of $\tau(f(n))$ from `0` to `⌊x⌋` for a polynomial $f \in \mathbb{Z}[X]$.
+
 Here $\tau$ is the divisor counting function, which is `σ 0` in mathlib.
-Also, for simplicity, we use `toNat` to convert integer values to natural numbers, instead of
-dealing with negative values.
--/
+Also, for simplicity, we use `Nat.floor` to convert rational values to natural numbers, instead of
+dealing with negative values. -/
 noncomputable def Erdos975Sum (f : ℤ[X]) (x : ℝ) : ℝ :=
-  ∑ n ≤ ⌊x⌋₊, σ 0 (f.eval ↑n).toNat
+  ∑ n ≤ ⌊x⌋₊, σ 0 ⌊f.eval ↑n⌋₊
 
 /--
 For an irreducible polynomial $f \in \mathbb{Z}[x]$ with $f(n) \ge 1$ for sufficiently large $n$,
 does there exists a constant $c = c(f) > 0$ such that
 $\sum_{n \le x} \tau(f(n)) \approx c \cdot x \log x$?
--/
+
+Note that it is unclear whether the polynomial should have integer coefficients or merely be
+integer-valued. We assume the former. -/
 @[category research open, AMS 11]
-theorem erdos_975 : (∀ (f : ℤ[X]), Irreducible f → (∀ᶠ n : ℕ in atTop, 1 ≤ f.eval ↑n) →
-    ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (nhds c)) ↔
-    answer(sorry) := by
+theorem erdos_975 : answer(sorry) ↔
+    ∀ f : ℤ[X], f.natDegree ≠ 0 → Irreducible f → (∀ᶠ n in atTop, 1 ≤ f.eval n) →
+    ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
   sorry
 
 /--
@@ -61,13 +62,13 @@ The correctness of the growth rate is shown in [Va39] (lower bound) and [Er52b] 
 -/
 @[category research solved, AMS 11]
 theorem erdos_975.variant.upper_bound (f : ℤ[X]) (hf : Irreducible f)
-    (hf_pos : ∀ᶠ n : ℕ in atTop, 1 ≤ f.eval ↑n) : Erdos975Sum f =O[atTop] (fun x ↦ x * log x) := by
+    (hf_pos : ∀ᶠ n in atTop, 1 ≤ f.eval n) : Erdos975Sum f =O[atTop] (fun x ↦ x * log x) := by
   sorry
 
 @[category research solved, AMS 11]
-theorem erdos_975.variant.lower_bound (f : ℤ[X]) (hf : Irreducible f)
-    (hf_pos : ∀ᶠ n : ℕ in atTop, 1 ≤ f.eval ↑n) :
-    (fun x ↦ x * log x) =O[atTop] (Erdos975Sum f) := by
+theorem erdos_975.variant.lower_bound (f : ℤ[X]) (hf : Irreducible f) (hfdeg : f.natDegree ≠ 0)
+    (hf_pos : ∀ᶠ n in atTop, 1 ≤ f.eval n) :
+    (fun x ↦ x * log x) =O[atTop] Erdos975Sum f := by
   sorry
 
 /--
@@ -80,7 +81,7 @@ TODO: formalize Hurwitz class numbers and the expression of the constant in term
 @[category research solved, AMS 11]
 theorem erdos_975.variant.quadratic (f : ℤ[X]) (hf : Irreducible f)
     (hf_pos : ∀ᶠ n : ℕ in atTop, 1 ≤ f.eval ↑n) (hf_degree : f.degree = 2) (c : ℝ) :
-    c = answer(sorry) → 0 < c ∧ Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (nhds c) := by
+    c = answer(sorry) → 0 < c ∧ Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
   sorry
 
 /--
@@ -89,12 +90,12 @@ $\sum_{n \le x} \tau(n^2 + 1) \sim \frac{3}{\pi} x \log x + O(x)$. See Tao's blo
 -/
 @[category research solved, AMS 11]
 theorem erdos_975.variant.n2_plus_1_strong :
-    (fun x ↦ (Erdos975Sum (X ^ 2 + 1) x - (3 / π) * x * log x)) =O[atTop] id := by
+    (fun x ↦ Erdos975Sum (X ^ 2 + 1) x - (3 / π) * x * log x) =O[atTop] id := by
   sorry
 
 @[category research solved, AMS 11]
 theorem erdos_975.variant.n2_plus_1 :
-    ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum (X ^ 2 + 1) x / (x * log x)) atTop (nhds c) := by
+    ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum (X ^ 2 + 1) x / (x * log x)) atTop (𝓝 c) := by
   sorry
 
 end Erdos975
