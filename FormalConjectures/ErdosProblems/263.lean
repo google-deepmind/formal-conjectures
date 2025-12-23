@@ -93,7 +93,7 @@ by the above folklore result `erdos_263.variants.folklore`.
 theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
     (ha : ∀ n : ℕ, a n > 0)
     (ha' : ∃ ε : ℝ, ε > 0 ∧
-      Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / (a n) ^ (2 + ε)) > 0) :
+      Filter.atTop.liminf (fun n : ℕ => (a (n + 1) : ℝ) / a n ^ (2 + ε)) > 0) :
     IsIrrationalitySequence a := by
   sorry
 
