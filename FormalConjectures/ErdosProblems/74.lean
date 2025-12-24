@@ -85,7 +85,7 @@ theorem SimpleGraph.subgraphEdgeDistsToBipartite_bddAbove (G : SimpleGraph V) (n
     have := h_fin.fintype
     have := Fintype.ofFinite ↑A.coe.edgeSet
     convert (A.coe).card_edgeFinset_le_card_choose_two
-    · rw [← Set.ncard_coe_Finset A.coe.edgeFinset, coe_edgeFinset A.coe, ← Subgraph.image_coe_edgeSet_coe A]
+    · rw [← Set.ncard_coe_finset A.coe.edgeFinset, coe_edgeFinset A.coe, ← Subgraph.image_coe_edgeSet_coe A]
       exact (Set.ncard_image_iff (Set.toFinite A.coe.edgeSet)).mpr <|
         Function.Injective.injOn <| Sym2.map.injective Subtype.coe_injective
     · rw [Set.ncard_eq_toFinset_card _ h_fin, Set.Finite.card_toFinset]
@@ -122,7 +122,7 @@ vertices can be made bipartite by deleting at most $f(n)$ edges?
 -/
 @[category research open, AMS 5]
 theorem erdos_74 : (∀ f : ℕ → ℕ, Tendsto f atTop atTop →
-    (∃ G : SimpleGraph V, G.chromaticNumber = ⊤ ∧
+    (∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
     ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ f n)) ↔ answer(sorry):= by
   sorry
 
@@ -131,7 +131,7 @@ Is there a graph of infinite chromatic number such that every finite subgraph on
 vertices can be made bipartite by deleting at most $\sqrt{n}$ edges?
 -/
 @[category research open, AMS 5]
-theorem erdos_74.variants.sqrt : (∃ G : SimpleGraph V, G.chromaticNumber = ⊤ ∧
+theorem erdos_74.variants.sqrt : (∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
     ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ (n : ℝ).sqrt) ↔ answer(sorry):= by
   sorry
 

@@ -28,7 +28,7 @@ namespace Erdos249
 
 /--
 Is
-$$\sum_{n} \frac{φ(n)}{2^n}$$
+$$\sum_{n} \frac{\phi(n)}{2^n}$$
 irrational? Here $\phi$ is the Euler totient function.
 -/
 @[category research open, AMS 11]

@@ -25,16 +25,29 @@ namespace HartshorneConjecture
 
 open HartshorneConjecture
 
+universe u
+
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
-variable (S : Scheme)
+variable (S : Scheme.{u})
 
 namespace AlgebraicGeometry.Scheme
 
-attribute [local instance] CategoryTheory.Types.instConcreteCategory
+attribute [local instance] CategoryTheory.Types.instConcreteCategory Types.instFunLike
+
+-- TODO(lezeau): explain/investigate why the following two instances are needed.
+
+local instance (X : TopologicalSpace.Opens S) :
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (Type u) :=
+  CategoryTheory.GrothendieckTopology.instWEqualsLocallyBijectiveTypeHomObjForget
+    ((Opens.grothendieckTopology S).over X)
+
+local instance (X : TopologicalSpace.Opens S) :
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}):=
+  inferInstance
 
 /--
-A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
+A vector bundle over a scheme `S` is a locally free $\mathcal{O}_S$-module of finite rank.
 -/
 structure VectorBundles where
   carrier : S.Modules
@@ -81,7 +94,7 @@ end AlgebraicGeometry.Scheme
 open AlgebraicGeometry.Scheme
 
 /--
-There are no indecomposable vector bundles of rank 2 on `ℙⁿ` for `n ≥ 7`.
+There are no indecomposable vector bundles of rank 2 on $\mathbb{P}^n$ for $n \ge 7$.
 This is conjecture 6.3 in _VARIETIES OF SMALL CODIMENSION IN PROJECTIVE SPACE_, R. Hartshorne
 -/
 @[category research open, AMS 14]

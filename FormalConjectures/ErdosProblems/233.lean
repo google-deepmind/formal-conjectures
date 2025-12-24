@@ -26,6 +26,9 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Real
+
+namespace Erdos233
+
 /--
 The prime number theorem immediately implies a lower bound of $\gg N(\log N)^2$ for the sum of
 squares of gaps between consecutive primes.
@@ -52,3 +55,5 @@ Cramér proved an upper bound of $O(N(\log N)^4)$ conditional on the Riemann hyp
 theorem erdos_233.variant (h : RiemannHypothesis) :
     (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) =O[atTop] fun N => N * (log N)^4 := by
   sorry
+
+end Erdos233

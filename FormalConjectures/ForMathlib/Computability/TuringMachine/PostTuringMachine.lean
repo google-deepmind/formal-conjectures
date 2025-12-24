@@ -66,13 +66,13 @@ theorem eval_dom_iff {σ : Type*} {f : σ → Option σ} {s : σ} :
   refine ⟨fun ⟨n, hn⟩ ↦ ?_, fun H ↦ ?_⟩
   · induction n generalizing s with
     | zero =>
-      rw [zero_add, Function.iterate_one, Option.some_bind] at hn
+      rw [zero_add, Function.iterate_one, Option.bind_some] at hn
       simpa [Part.dom_iff_mem] using ⟨s, dom_of_apply_eq_none hn⟩
     | succ n ih =>
       obtain ha | ⟨a', ha'⟩ := (f s).eq_none_or_eq_some
       · simpa [Part.dom_iff_mem] using ⟨s, dom_of_apply_eq_none ha⟩
-      · simp_rw [Function.iterate_succ, Function.comp_apply, Option.some_bind] at hn ih
-        simp_rw [ha', Option.some_bind] at hn
+      · simp_rw [Function.iterate_succ, Function.comp_apply, Option.bind_some] at hn ih
+        simp_rw [ha', Option.bind_some] at hn
         have ih := @ih a' ⟨n, hn⟩ hn
         rwa [Turing.eval_eq_eval ha']
   · let C (s) : Prop := (Turing.eval f s).Dom → ∃ n, (Option.bind · f)^[n+1] s = none
@@ -83,7 +83,7 @@ theorem eval_dom_iff {σ : Type*} {f : σ → Option σ} {s : σ} :
       simp [ha]
     · obtain ⟨n, hn⟩ := h a' ha' (by rwa [←Turing.eval_eq_eval ha'])
       use n + 1
-      simp only [Function.iterate_succ, Function.comp_apply, Option.some_bind] at hn
+      simp only [Function.iterate_succ, Function.comp_apply, Option.bind_some] at hn
       simp [ha', hn]
 
 end Turing

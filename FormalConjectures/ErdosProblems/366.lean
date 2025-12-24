@@ -28,16 +28,16 @@ namespace Erdos366
 Are there any $2$-full $n$ such that $n+1$ is $3$-full?
 -/
 @[category research open, AMS 11]
-theorem erdos_366 : (∃ (n : ℕ), (2).Full n ∧ (3).Full (n + 1)) ↔ answer(sorry) := by
+theorem erdos_366 : (∃ n > 0, (2).Full n ∧ (3).Full (n + 1)) ↔ answer(sorry) := by
   sorry
 
 /--
 Note that $8$ is $3$-full and $9$ is 2-full.
 -/
 @[category test, AMS 11]
-theorem exists_three_full_then_two_full : (∃ (n : ℕ), (3).Full n ∧ (2).Full (n + 1)) := by
+theorem exists_three_full_then_two_full : (∃ n > 0, (3).Full n ∧ (2).Full (n + 1)) := by
   use 8
-  simp [Nat.Full, Nat.primeFactorsEq]
+  norm_num +contextual [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]
 
 /--
 Are there infinitely many 3-full $n$ such that $n+1$ is 2-full?
@@ -51,7 +51,7 @@ theorem erdos_366.variant.three_two :
 Are there any consecutive pairs of $3$-full integers?
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_366.variant.weaker : (∃ (n : ℕ), (3).Full n ∧ (3).Full (n + 1))  ↔ answer(sorry) := by
+theorem erdos_366.variant.weaker : (∃ n > 0, (3).Full n ∧ (3).Full (n + 1))  ↔ answer(sorry) := by
   sorry
 
 end Erdos366

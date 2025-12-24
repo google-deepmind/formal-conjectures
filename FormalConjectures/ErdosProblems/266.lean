@@ -36,8 +36,8 @@ This was disproven by Kovač and Tao in [KoTa24].
          [arXiv:2406.17593](https://arxiv.org/abs/2406.17593) (2024).
 -/
 @[category research solved, AMS 11]
-theorem erdos_266 (a : ℕ → ℕ) :
-    ¬ ((∀ n : ℕ, a n ≥ 1) ∧ Summable ((1 : ℝ) / a ·) →
+theorem erdos_266 :
+    ¬ ∀ (a : ℕ → ℕ), ((∀ n : ℕ, a n ≥ 1) ∧ Summable ((1 : ℝ) / a ·) →
       ∃ t ≥ (1 : ℕ), Irrational <| ∑' n, (1 : ℝ) / ((a n) + t)) := by
   sorry
 

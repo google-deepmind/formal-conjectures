@@ -56,7 +56,7 @@ theorem erdos_897.parts.ii : (∀ (f : ℕ → ℝ),
 Wirsing [Wi70] proved that if $|f(n+1)−f(n)| ≤ C$ then $f(n) = c \log n + O(1)$ for some constant
 $c$.
 
-[Wi70] Wirsing, E., _A characterization of $\log n$ as an additive arthemetic function_.
+[Wi70] Wirsing, E., _A characterization of $\log n$ as an additive arithmetic function_.
 Symposia Math. (1970), 45-47.
 -/
 @[category research solved, AMS 11]

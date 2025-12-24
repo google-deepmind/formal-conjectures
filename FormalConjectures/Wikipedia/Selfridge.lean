@@ -103,9 +103,8 @@ The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mo
 -/
 @[category high_school, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
-    IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 3 [MOD 5] := by
+    IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 4 [MOD 5] := by
   sorry
-
 
 end PrimalityTesting
 
@@ -137,7 +136,7 @@ monotonically in $n$.
 A sufficient condition for this conjecture to hold is that there exists a Fermat prime larger than
 65537.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem selfridge_seq_conjecture.variants.sufficient_condition (n : ℕ) (hn : Prime n.fermatNumber)
     (hn' : n ≥ 5) : type_of% selfridge_seq_conjecture := by
   sorry

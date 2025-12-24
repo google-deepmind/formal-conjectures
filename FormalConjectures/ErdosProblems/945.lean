@@ -27,6 +27,7 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Real
 
+namespace Erdos945
 
 abbrev τ  := fun (n : ℕ) => n.divisors.card
 
@@ -81,7 +82,7 @@ theorem erdos_945.variants.lower_bound :
   sorry
 
 /--
-Erdős and Mirsky [ErMi52] proved that $\log F(x) <<  \frac{(\log x)^{1/2}}$.
+Erdős and Mirsky [ErMi52] proved that $\log F(x) \ll  \frac{(\log x)^{1/2}}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_945.variants.upper_bound :
@@ -91,3 +92,5 @@ theorem erdos_945.variants.upper_bound :
 
 -- TODO(firsching): add observations what follows from Cramér's conjecture and if every sufficient
 -- interval contains a squarefree number.
+
+end Erdos945

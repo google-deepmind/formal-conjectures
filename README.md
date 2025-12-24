@@ -57,6 +57,7 @@ There are various ways of contributing to this repository:
         [Erdős Problems](https://www.erdosproblems.com/),
         [Wikipedia's list of unsolved problems](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics),
         [the Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book), ...)
+    *   The [The On-Line Encyclopedia of Integer Sequences (OEIS)](https://oeis.org/)
     *   ...
 
     We are also interested in the formalized statements of solved variants of
@@ -295,7 +296,7 @@ third party content. The original source for each conjecture is indicated by a
 URL within the source file. Third party content may be subject to different
 licensing requirements. In particular:
 
--   Material from Wikipedia articles and MathOverflow is released under the
+-   Material from Wikipedia articles, MathOverflow and the OEIS is released under the
     Creative Commons Attribution-Share-Alike License 4.0.
 -   Material from bbchallenge.org is used under the Creative Commons Attribution
     4.0 International License.

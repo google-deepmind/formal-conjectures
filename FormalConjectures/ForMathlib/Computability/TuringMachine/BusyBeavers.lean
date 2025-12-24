@@ -71,7 +71,7 @@ deriving Inhabited
   the initial state. -/
 @[nolint unusedArguments]
 def Machine [Inhabited Λ] :=
-  Λ → Γ → Option (Option Λ × (Stmt Γ))
+  Λ → Γ → Option (Option Λ × Stmt Γ)
 
 instance Machine.inhabited [Inhabited Λ] : Inhabited (Machine Γ Λ) := by
   unfold Machine; infer_instance
@@ -82,6 +82,7 @@ instance Machine.inhabited [Inhabited Λ] : Inhabited (Machine Γ Λ) := by
   looks like `L.rev ++ [a] ++ R` with the machine currently reading
   the `a`. The lists are automatically extended with blanks as the
   machine moves around. -/
+@[ext]
 structure Cfg [Inhabited Γ] where
   /-- The current machine state. -/
   q : Option Λ
@@ -132,12 +133,15 @@ lemma multiStep_succ (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) :
     M.multiStep config (n + 1) = Option.bind (M.multiStep config n) M.step := by
   rw [multiStep, Function.iterate_succ', Function.comp_apply, multiStep]
 
-lemma multiStep_eq_none_of_le_of_multiStep_eq_none {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
-    (hmn : m ≤ n) (hm : M.multiStep config m = none) : M.multiStep config n = none := by
-  induction n, hmn using Nat.le_induction with
-  | base => exact hm
-  | succ k hmk a => simp [multiStep_succ, a]
-
+@[simp]
+lemma multiStep_eq_none_mono {M : Machine Γ Λ} {config : Cfg Γ Λ} {m n : ℕ}
+    (H : M.multiStep config n = none) (hnm : n ≤ m) :
+    M.multiStep config m = none := by
+  induction hnm with
+  | refl => exact H
+  | @step m hnm H =>
+    rw [multiStep_succ, H]
+    rfl
 
 variable {Γ Λ : Type*} [Inhabited Λ] [Inhabited Γ]
 variable (M : Machine Γ Λ)
@@ -169,10 +173,42 @@ def HaltsAfter (s : Cfg Γ Λ) (n : ℕ) : Prop :=
 
 lemma haltsAfter_zero_iff (s : Cfg Γ Λ) :
     HaltsAfter M s 0 ↔ step M s = none := by
-  rw [HaltsAfter, multiStep, Function.iterate_one, Option.some_bind]
+  rw [HaltsAfter, multiStep, Function.iterate_one, Option.bind_some]
 
 lemma isHalting_iff_exists_haltsAt : IsHalting M ↔ ∃ n, M.HaltsAfter (init []) n :=
   ⟨fun _ ↦ eval_dom_iff.mpr IsHalting.halts, fun H ↦ ⟨eval_dom_iff.mp H⟩⟩
+
+lemma exists_of_not_haltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n) :
+    ∃ (a : Λ) (b : Tape Γ), M.multiStep s n = some ⟨a, b⟩ := by
+  contrapose! H
+  rw [HaltsAfter, multiStep_succ]
+  obtain H | ⟨⟨u, u'⟩, hu⟩ := (Option.eq_none_or_eq_some (M.multiStep s n))
+  · simp [H]
+  · suffices u = none by rw [hu, this] ; rfl
+    rw [Option.eq_none_iff_forall_ne_some]
+    intro a hc
+    subst hc
+    simp [hu] at H ⊢
+
+lemma not_isHalting_iff_forall_isSome_multiStep :
+    ¬ IsHalting M ↔ ∀ n, M.multiStep (init []) (n + 1) |>.isSome := by
+  simp_rw [isHalting_iff_exists_haltsAt, HaltsAfter, Option.isSome_iff_ne_none]
+  push_neg
+  rfl
+
+lemma not_isHalting_of_forall_isSome (H : ∀ l s, ∃ a b, M l s = some (some a, b)) :
+    ¬IsHalting M := by
+  rw [not_isHalting_iff_forall_isSome_multiStep]
+  intro n
+  induction n with
+  | zero =>
+    obtain ⟨a, b, H⟩ := H default (Tape.mk₁ []).head
+    simp [init, step, H]
+  | succ n ih =>
+    obtain ⟨a, b, hab⟩ := exists_of_not_haltsAfter _ _ _ (by rwa [Option.isSome_iff_ne_none] at ih)
+    obtain ⟨c, d, hcd⟩ := H a b.head
+    obtain ⟨e, f, hef⟩ := H c (Tape.move d.dir (Tape.write d.symbol b)).head
+    simp [multiStep_succ, multiStep_succ, hab, step, hcd, hef]
 
 noncomputable def haltingNumber : PartENat :=
   --The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
@@ -187,7 +223,7 @@ theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some 
   · exact le_top
   · refine ⟨fun h ↦ h, fun _ ↦ ?_⟩
     by_contra! hc
-    simp_all [multiStep_eq_none_of_le_of_multiStep_eq_none (show k + 1 ≤ n by aesop) ‹_›]
+    simp_all [multiStep_eq_none_mono ‹_› (show k + 1 ≤ n by aesop)]
 
 end Machine
 
