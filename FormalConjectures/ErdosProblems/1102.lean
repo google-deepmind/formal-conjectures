@@ -88,7 +88,7 @@ theorem erdos_1102.lower_density_Q_exists :
     ∃ A : ℕ → ℕ, StrictMono A ∧
     (∀ j, Squarefree (A j)) ∧
     HasPropertyQ (range A) ∧
-    Tendsto (fun j : ℕ  ↦ (j / A j : ℝ )) atTop (𝓝 (6 / Real.pi^2)) := by
+    Tendsto (fun j : ℕ  ↦ (j / A j : ℝ)) atTop (𝓝 (6 / Real.pi^2)) := by
   sorry
 
 end Erdos1102
