@@ -60,7 +60,8 @@ with property P such that `(a_j / j) ≤ f(j)` for all `j`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1102.exists_sequence_with_P
-    (f : ℕ → ℕ) (h_inf : Tendsto f atTop atTop) :
+    (f : ℕ → ℕ) (h_inf : Tendsto f atTop atTop)
+    (h_pos : ∀ n, f n ≠ 0) :
     ∃ A : ℕ → ℕ, StrictMono A ∧
     HasPropertyP (range A) ∧
     ∀ j : ℕ, (A j : ℝ) / j ≤ f j := by
@@ -87,7 +88,7 @@ theorem erdos_1102.lower_density_Q_exists :
     ∃ A : ℕ → ℕ, StrictMono A ∧
     (∀ j, Squarefree (A j)) ∧
     HasPropertyQ (range A) ∧
-    Tendsto (fun j ↦ (j : ℕ) / ((A j) : ℝ )) atTop (𝓝 (6 / Real.pi^2)) := by
+    Tendsto (fun j : ℕ  ↦ (j / A j : ℝ )) atTop (𝓝 (6 / Real.pi^2)) := by
   sorry
 
 end Erdos1102
