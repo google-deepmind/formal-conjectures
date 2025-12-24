@@ -107,7 +107,7 @@ for all but countably many $\alpha > 1$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_263.variants.doubly_exponential_all_but_countable :
-    ∀ᶠ (α : ℝ) in Filter.cofinite, α > 1 → IsIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
+    ∀ᶠ (α : ℝ) in .cocountable, α > 1 → IsIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
   sorry
 
 end Erdos263
