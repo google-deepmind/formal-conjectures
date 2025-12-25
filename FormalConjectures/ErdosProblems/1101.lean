@@ -60,7 +60,7 @@ theorem erdos_1101.polynomial : ¬ ∃ u, IsGood u ∧ ∃ k : ℕ, (fun n => (u
 
 /-- 2. There is a good sequence with sub-exponential growth. -/
 @[category research open, AMS 11]
-theorem erdos_1101.subexponential : ∃ u, IsGood u ∧ ∀ (ε : ℝ), 0 < ε → (fun n => (u n : ℝ)) =o[atTop] (fun n => Real.exp (ε * n)) :=
+theorem erdos_1101.subexponential : ∃ u, IsGood u ∧ ∀ (ε : ℝ), 0 < ε → (fun n => Real.log (u n : ℝ)) =o[atTop] (fun n => (n : ℝ)) :=
   sorry
 
 end Erdos1101
