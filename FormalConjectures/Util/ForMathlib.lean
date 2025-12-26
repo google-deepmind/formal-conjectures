@@ -56,6 +56,7 @@ import FormalConjectures.ForMathlib.Geometry.Euclidean
 import FormalConjectures.ForMathlib.LinearAlgebra.SpecialLinearGroup
 import FormalConjectures.ForMathlib.Logic.Equiv.Fin.Rotate
 import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
+import FormalConjectures.ForMathlib.NumberTheory.BirchSwinnertonDyer
 import FormalConjectures.ForMathlib.NumberTheory.DirichletCharacter.Basic
 import FormalConjectures.ForMathlib.NumberTheory.CoveringSystem
 import FormalConjectures.ForMathlib.NumberTheory.Lacunary
