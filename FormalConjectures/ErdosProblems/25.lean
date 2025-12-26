@@ -36,7 +36,7 @@ section LogarithmicDensity
 /-- The partial logarithmic sum of a set `A` up to `n`.
     Sum of 1/k for k in A ∩ [1, n]. -/
 noncomputable def partialLogSum (A : Set ℕ) (n : ℕ) : ℝ :=
-  ∑ k ∈ range (n + 1), if k ∈ A ∧ k ≠ 0 then (1 : ℝ) / k else 0
+  ∑ k ∈ range (n + 1), if k ∈ A then (1 : ℝ) / k else 0
 
 /--
 A set `A` has logarithmic density `d` if the sequence
