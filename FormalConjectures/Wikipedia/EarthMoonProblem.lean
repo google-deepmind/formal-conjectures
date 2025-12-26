@@ -12,10 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
-import Mathlib.Combinatorics.SimpleGraph.Coloring
-import Mathlib.Combinatorics.SimpleGraph.Planar
-import Mathlib.Data.Fintype.Card
+import FormalConjectures.Util.ProblemImports
 
 /-!
 # Earth-Moon Problem
