@@ -36,7 +36,7 @@ A set `A` has logarithmic density `d` if the sequence
 $(1 / \log n) \cdot \sum_{k \in A, k \le n} (1/k)$ converges to `d`.
 -/
 def HasLogarithmicDensity (A : Set ℕ) (d : ℝ) : Prop :=
-  Tendsto (fun n => (∑ k ∈ range (n + 1), if k ∈ A then (1 : ℝ) / k else 0) / Real.log n) atTop (𝓝 d)
+  Tendsto (fun n => (∑ k ∈ range (n + 1) with k ∈ A, (1 : ℝ) / k) / Real.log n) atTop (𝓝 d)
 
 /--
 **Erdős Problem 25**
