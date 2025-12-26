@@ -23,46 +23,20 @@ $a_i \pmod{n_i}$. Let $A$ be the set of integers $n$ such that for every $i$ eit
 $n \not\equiv a_i \pmod{n_i}$. Must the logarithmic density of $A$ exist?
 
 *Reference:* [erdosproblems.com/25](https://www.erdosproblems.com/25)
-
-We first define logarithmic density, as it is not yet in the core Mathlib.
 -/
 
 open Filter Finset Real Nat Set
 open scoped Topology
 open Classical
 
-section LogarithmicDensity
-
-/-- The partial logarithmic sum of a set `A` up to `n`.
-    Sum of 1/k for k in A ∩ [1, n]. -/
-noncomputable def partialLogSum (A : Set ℕ) (n : ℕ) : ℝ :=
-  ∑ k ∈ range (n + 1), if k ∈ A then (1 : ℝ) / k else 0
+namespace Erdos25
 
 /--
 A set `A` has logarithmic density `d` if the sequence
 $(1 / \log n) \cdot \sum_{k \in A, k \le n} (1/k)$ converges to `d`.
 -/
 def HasLogarithmicDensity (A : Set ℕ) (d : ℝ) : Prop :=
-  Tendsto (fun n => partialLogSum A n / Real.log n) atTop (𝓝 d)
-
-end LogarithmicDensity
-
-namespace Erdos25
-
-/-- The parameters for the problem: a sequence of moduli and residues. -/
-structure CongruenceSystem where
-  n : ℕ → ℕ             -- Sequence of moduli n_i
-  a : ℕ → ℤ             -- Sequence of residues a_i
-  n_pos : ∀ i, 0 < n i  -- Moduli must be positive
-  n_strict_mono : StrictMono n -- n_1 < n_2 <... (strictly increasing)
-
-/--
-The "Survivor Set" A.
-An integer `x` is in `A` if for every index `i`, `x` "escapes" the constraint.
-Escape condition: either `x` is small (`x < n_i`) OR `x` does not match the residue (`x ≢ a_i mod n_i`).
--/
-def survivor_set (S : CongruenceSystem) : Set ℕ :=
-  { x | ∀ i, (x : ℤ) < S.n i ∨ ¬((x : ℤ) ≡ S.a i [ZMOD S.n i]) }
+  Tendsto (fun n => (∑ k ∈ range (n + 1), if k ∈ A then (1 : ℝ) / k else 0) / Real.log n) atTop (𝓝 d)
 
 /--
 **Erdős Problem 25**
@@ -72,8 +46,11 @@ $a_i \pmod{n_i}$. Let $A$ be the set of integers $n$ such that for every $i$ eit
 $n \not\equiv a_i \pmod{n_i}$. Must the logarithmic density of $A$ exist?
 -/
 @[category research open, AMS 11]
-theorem erdos_25 (S : CongruenceSystem) :
-    (∃ d, HasLogarithmicDensity (survivor_set S) d) ↔ answer(sorry) := by
+theorem erdos_25 (seq_n : ℕ → ℕ) (seq_a : ℕ → ℤ) (h_pos : ∀ i, 0 < seq_n i)
+    (h_mono : StrictMono seq_n) :
+    (∃ d, HasLogarithmicDensity
+      { x : ℕ | ∀ i, (x : ℤ) < seq_n i ∨ ¬((x : ℤ) ≡ seq_a i [ZMOD seq_n i]) } d)
+    ↔ answer(sorry) := by
   sorry
 
 end Erdos25
