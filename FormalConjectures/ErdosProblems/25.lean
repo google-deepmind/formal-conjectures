@@ -46,10 +46,10 @@ $a_i \pmod{n_i}$. Let $A$ be the set of integers $n$ such that for every $i$ eit
 $n \not\equiv a_i \pmod{n_i}$. Must the logarithmic density of $A$ exist?
 -/
 @[category research open, AMS 11]
-theorem erdos_25 (seq_n : ℕ → ℕ) (seq_a : ℕ → ℤ) (h_pos : ∀ i, 0 < seq_n i)
-    (h_mono : StrictMono seq_n) :
-    (∃ d, HasLogarithmicDensity
-      { x : ℕ | ∀ i, (x : ℤ) < seq_n i ∨ ¬((x : ℤ) ≡ seq_a i [ZMOD seq_n i]) } d)
+theorem erdos_25 :
+    (∀ (seq_n : ℕ → ℕ) (seq_a : ℕ → ℤ), (∀ i, 0 < seq_n i) → StrictMono seq_n →
+      ∃ d, HasLogarithmicDensity
+        { x : ℕ | ∀ i, (x : ℤ) < seq_n i ∨ ¬((x : ℤ) ≡ seq_a i [ZMOD seq_n i]) } d)
     ↔ answer(sorry) := by
   sorry
 
