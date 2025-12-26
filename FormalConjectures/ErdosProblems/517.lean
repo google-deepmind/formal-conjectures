@@ -23,19 +23,31 @@ import FormalConjectures.Util.ProblemImports
  - [erdosproblems.com/517](https://www.erdosproblems.com/517)
  - [Bi28] Biernacki, Miécislas, Sur les équations algébriques contenant des paramétres arbitraires.
     (1928), 145.
+ - [Wa01] Wang, Yuefei. "On the Fatou set of an entire function with gaps." Tohoku Mathematical
+    Journal, Second Series 53.1 (2001): 163-170.
 -/
 
-open Set
+open Set Filter
 
 namespace Erdos517
 
-/-- If `f(z) = ∑ aₖzⁿₖ` is an entire function such that `nₖ / k → ∞`, then `f` assumes every value
-infinitely often. -/
+/-- This is the terminology adopted in [Wa01] and some other sources. -/
+def hasFejerGaps (n : ℕ → ℕ) : Prop := Tendsto (fun k => n k / (k : ℝ)) atTop atTop
+
+def hasFabryGaps (n : ℕ → ℕ) : Prop := Summable (fun k => 1 / (n k : ℝ))
+
+@[category API, AMS 40]
+theorem hasFabryGaps.hasFejerGaps {n : ℕ → ℕ} (hn : hasFabryGaps n) : hasFejerGaps n := by
+  sorry
+
+/-- If `f(z) = ∑ aₖzⁿₖ` is an entire function such that `nₖ / k → ∞`, is it true that `f` assumes
+every value infinitely often? -/
 @[category research open, AMS 30]
 theorem erdos_517.fabry {f : ℂ → ℂ} (z : ℂ) : {x : ℂ | f x = z}.Infinite := by
   sorry
 
-/-- The following theorem is proved in [Bi28]. -/
+/-- If `f(z) = ∑ aₖzⁿₖ` is an entire function such that `∑ 1 / nₖ < ∞`, then `f` assumes every value
+infinitely often. This theorem is proved in [Bi28]. -/
 @[category research solved, AMS 30]
 theorem erdos_517.fejer {f : ℂ → ℂ} (z : ℂ) : {x : ℂ | f x = z}.Infinite := by
   sorry
