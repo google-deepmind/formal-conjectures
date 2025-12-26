@@ -51,7 +51,7 @@ or by combining planar graphs to form $K_9$ edges minus some constraints),
 and the upper bound is 12.
 -/
 def EarthMoonConjecture : Prop :=
-  ∀ (α : Type*) [Fintype α] [DecidableEq α] (G₁ G₂ : SimpleGraph α),
+  ∀ (α : Type) [Fintype α] [DecidableEq α] (G₁ G₂ : SimpleGraph α),
     G₁.IsPlanar → G₂.IsPlanar → (G₁ ⊔ G₂).Colorable 9
 
 end EarthMoonProblem
