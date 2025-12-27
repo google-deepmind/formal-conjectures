@@ -29,16 +29,19 @@ import FormalConjectures.Util.ProblemImports
 
 open Set Filter
 
-namespace Erdos517
-
 /-- This is the terminology adopted in [Wa01] and some other sources. -/
-def hasFejerGaps (n : ℕ → ℕ) : Prop := Tendsto (fun k => n k / (k : ℝ)) atTop atTop
+def hasFejerGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Tendsto (fun k => n k / (k : ℝ)) atTop atTop
 
-def hasFabryGaps (n : ℕ → ℕ) : Prop := Summable (fun k => 1 / (n k : ℝ))
+def hasFabryGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Summable (fun k => 1 / (n k : ℝ))
 
 @[category API, AMS 40]
 theorem hasFabryGaps.hasFejerGaps {n : ℕ → ℕ} (hn : hasFabryGaps n) : hasFejerGaps n := by
+  refine ⟨hn.1, ?_⟩
+  by_contra! h
+  suffices ¬ Summable (fun k => 1 / (n k : ℝ)) from this hn.2
   sorry
+
+namespace Erdos517
 
 /-- If `f(z) = ∑ aₖzⁿₖ` is an entire function such that `nₖ / k → ∞`, is it true that `f` assumes
 every value infinitely often? -/
