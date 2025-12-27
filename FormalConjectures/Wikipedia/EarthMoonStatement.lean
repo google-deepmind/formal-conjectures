@@ -64,3 +64,10 @@ It states that every union of two planar graphs is 9-colorable.
 @[category research open, AMS 05C15]
 theorem earth_moon_conjecture_nine : EarthMoonStatement 9 := by
   sorry
+
+/--
+The known upper bound for the Earth-Moon problem.
+Sulanke showed in 1974 that 12 colors are always sufficient.
+-/
+theorem earth_moon_upper_bound_twelve : EarthMoonStatement 12 := by
+  sorry
