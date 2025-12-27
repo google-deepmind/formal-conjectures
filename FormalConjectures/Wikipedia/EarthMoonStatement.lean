@@ -41,18 +41,17 @@ def earthMoonNumber {α : Type*} [Fintype α] [DecidableEq α]
   (G₁ ⊔ G₂).chromaticNumber
 
 /--
-**Earth-Moon Conjecture**
+**Earth-Moon Property**
 
-The conjecture states that for any two planar graphs on any vertex set,
-$9$ colors are sufficient to color their union.
+The property that for any two planar graphs on any vertex set,
+$k$ colors are sufficient to color their union.
 
-This is an open problem. The current best lower bound is 9 (exhibited by $K_8$ plus a generic node, 
-or by combining planar graphs to form $K_9$ edges minus some constraints), 
-and the upper bound is 12.
+The **Earth-Moon Conjecture** specifically refers to the case $k=9$.
+The current best lower bound is 9, and the upper bound is 12.
 -/
-def EarthMoonConjecture : Prop :=
+def EarthMoonStatement (k : ℕ) : Prop :=
   ∀ (α : Type) [Fintype α] [DecidableEq α] (G₁ G₂ : SimpleGraph α),
-    G₁.IsPlanar → G₂.IsPlanar → (G₁ ⊔ G₂).Colorable 9
+    G₁.IsPlanar → G₂.IsPlanar → (G₁ ⊔ G₂).Colorable k
 
 end EarthMoonProblem
 
@@ -60,7 +59,8 @@ open EarthMoonProblem
 
 /--
 The formal statement of the Earth-Moon Conjecture.
+It states that every union of two planar graphs is 9-colorable.
 -/
 @[category research open, AMS 05C15]
-theorem earth_moon_conjecture_nine : EarthMoonConjecture := by
+theorem earth_moon_conjecture_nine : EarthMoonStatement 9 := by
   sorry
