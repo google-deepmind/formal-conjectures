@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import FormalConjectures.ForMathlib.NumberTheory.LogarithmicDensity
 import FormalConjectures.Util.ProblemImports
 
 /-!
@@ -30,13 +31,6 @@ open scoped Topology
 open Classical
 
 namespace Erdos25
-
-/--
-A set `A` has logarithmic density `d` if the sequence
-$(1 / \log n) \cdot \sum_{k \in A, k \le n} (1/k)$ converges to `d`.
--/
-def HasLogarithmicDensity (A : Set ℕ) (d : ℝ) : Prop :=
-  Tendsto (fun n => (∑ k ∈ range (n + 1) with k ∈ A, (1 : ℝ) / k) / Real.log n) atTop (𝓝 d)
 
 /--
 **Erdős Problem 25**
