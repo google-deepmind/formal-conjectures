@@ -18,28 +18,12 @@ import Mathlib.Analysis.Normed.Field.Lemmas
 import Mathlib.Tactic.Rify
 
 /-- Say a sequence is lacunary if there exists some $\lambda > 1$ such that
-$a_{n+1}/a_n\geq \lambda$ for all $n\geq 1$. -/
-def IsLacunary (A : ℕ → ℕ) : Prop :=
-  A 0 ≠ 0 ∧ ∃ μ > (1 : ℝ), (∀ n, μ ≤ A (n + 1) / A n)
-
-/-- Every term of a lacunary sequence is positive. -/
-theorem IsLacunary.pos {A : ℕ → ℕ} (hA : IsLacunary A) (n : ℕ) : 0 < A n := by
-  induction n with
-  | zero => exact Nat.pos_iff_ne_zero.mpr hA.left
-  | succ n ih =>
-    obtain ⟨μ, hμ, hμ'⟩ := hA.right
-    specialize hμ' n
-    rify at ih ⊢
-    rw [le_div_iff₀ ih] at hμ'
-    apply lt_trans ih (lt_of_lt_of_le (lt_mul_left ih hμ) hμ')
+$a_{n+1}/a_n > \lambda$ for all $n\geq 1$. -/
+def IsLacunary (n : ℕ → ℕ) : Prop := ∃ c > (1 : ℝ), ∀ k, c * n k < n (k + 1)
 
 /-- Every lacunary sequence is strictly increasing. -/
-theorem IsLacunary.StrictMono (A : ℕ → ℕ) (hA : IsLacunary A) : StrictMono A := by
-  apply strictMono_nat_of_lt_succ
-  intro n
-  obtain ⟨μ, hμ, hμ'⟩ := hA.right
-  specialize hμ' n
-  have H := hA.pos n
-  rify at H ⊢
-  rw [le_div_iff₀ H] at hμ'
-  apply lt_of_lt_of_le (lt_mul_left H hμ) hμ'
+lemma IsLacunary.strictMono {n : ℕ → ℕ} (hn : IsLacunary n) : StrictMono n := by
+  refine strictMono_nat_of_lt_succ fun k => (Nat.cast_lt (α := ℝ)).mp ?_
+  obtain ⟨c, hc⟩ := hn
+  refine (hc.2 k).trans_le' ?_
+  grw [hc.1, one_mul]
