@@ -21,7 +21,10 @@ namespace SimpleGraph
 /-- A simple graph is planar if it can be embedded in the plane without edge crossings.
 According to Kuratowski's theorem, a finite graph is planar if and only if it does not
 contain a subdivision of K₅ or K₃,₃.
+
+This predicate is declared as an axiom pending a complete formalization of planar graph
+theory in mathlib. Once available, this will be replaced with a proper definition.
 -/
-noncomputable def IsPlanar {α : Type*} (G : SimpleGraph α) : Prop := sorry
+axiom IsPlanar {α : Type*} (G : SimpleGraph α) : Prop
 
 end SimpleGraph
