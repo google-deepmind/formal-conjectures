@@ -22,7 +22,7 @@ of two planar graphs on the same set of vertices. This is equivalent to finding
 the maximum chromatic number of graphs with thickness 2.
 
 It is known that this number is between 9 and 12.
-The conjecture is that the value is 9.
+In 2018, Ellen Gethner conjectured that the value is 11.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Earth-Moon_problem)
@@ -46,8 +46,8 @@ def earthMoonNumber {α : Type*} [Fintype α] [DecidableEq α]
 The property that for any two planar graphs on any vertex set,
 $k$ colors are sufficient to color their union.
 
-The **Earth-Moon Conjecture** specifically refers to the case $k=9$.
-The current best lower bound is 9, and the upper bound is 12.
+The **Earth-Moon Conjecture** (Gethner, 2018) specifically refers to the case $k=11$.
+The current best lower bound is 9 (exhibited by Sulanke's graph), and the upper bound is 12.
 -/
 def EarthMoonStatement (k : ℕ) : Prop :=
   ∀ (α : Type) [Fintype α] [DecidableEq α] (G₁ G₂ : SimpleGraph α),
@@ -59,10 +59,10 @@ open EarthMoonProblem
 
 /--
 The formal statement of the Earth-Moon Conjecture.
-It states that every union of two planar graphs is 9-colorable.
+Ellen Gethner conjectured that every union of two planar graphs is 11-colorable.
 -/
 @[category research open, AMS 05C15]
-theorem earth_moon_conjecture_nine : EarthMoonStatement 9 := by
+theorem earth_moon_conjecture_eleven : EarthMoonStatement 11 := by
   sorry
 
 /--
