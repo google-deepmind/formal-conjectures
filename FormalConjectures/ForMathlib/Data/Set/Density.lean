@@ -178,3 +178,22 @@ theorem infinite_of_hasDensity_pos {S : Set ℕ} {α : ℝ} (h : S.HasDensity α
   mt hasDensity_zero_of_finite fun h' => (_root_.ne_of_lt hα).symm (tendsto_nhds_unique h h')
 
 end Nat
+
+/-! ## Logarithmic Density -/
+
+section LogarithmicDensity
+
+open Finset Real Classical
+
+/--
+A set `A` of natural numbers has logarithmic density `d` if the sequence
+$(1 / \log n) \cdot \sum_{k \in A, k \le n} (1/k)$ converges to `d`.
+
+Logarithmic density is a weaker notion than natural density: if a set has natural density `d`,
+then it also has logarithmic density `d`, but the converse is false (Besicovitch).
+-/
+def Set.HasLogDensity (A : Set ℕ) (d : ℝ) : Prop :=
+  Filter.Tendsto (fun n : ℕ => (∑ k ∈ Finset.range (n + 1) with k ∈ A, (1 : ℝ) / k) / Real.log n)
+    Filter.atTop (𝓝 d)
+
+end LogarithmicDensity

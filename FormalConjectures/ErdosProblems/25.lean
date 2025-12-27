@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.ForMathlib.NumberTheory.LogarithmicDensity
 import FormalConjectures.Util.ProblemImports
 
 /-!
@@ -42,7 +41,7 @@ $n \not\equiv a_i \pmod{n_i}$. Must the logarithmic density of $A$ exist?
 @[category research open, AMS 11]
 theorem erdos_25 :
     (∀ (seq_n : ℕ → ℕ) (seq_a : ℕ → ℤ), (∀ i, 0 < seq_n i) → StrictMono seq_n →
-      ∃ d, HasLogarithmicDensity
+      ∃ d, Set.HasLogDensity
         { x : ℕ | ∀ i, (x : ℤ) < seq_n i ∨ ¬((x : ℤ) ≡ seq_a i [ZMOD seq_n i]) } d)
     ↔ answer(sorry) := by
   sorry
