@@ -1,6 +1,5 @@
 /-
 Copyright 2025 The Formal Conjectures Authors.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -38,7 +37,7 @@ The precise statement of the Earth-Moon number for a specific graph pair.
 It is the chromatic number of the union (lattice join) of two graphs.
 -/
 def earthMoonNumber {α : Type*} [Fintype α] [DecidableEq α] 
-    (G₁ G₂ : SimpleGraph α) : ℕ :=
+    (G₁ G₂ : SimpleGraph α) : ℕ∞ :=
   (G₁ ⊔ G₂).chromaticNumber
 
 /--
@@ -52,7 +51,7 @@ The current best lower bound is 9 (exhibited by Sulanke's graph), and the upper 
 -/
 def EarthMoonStatement (k : ℕ) : Prop :=
   ∀ (α : Type) [Fintype α] [DecidableEq α] (G₁ G₂ : SimpleGraph α),
-    G₁.IsPlanar → G₂.IsPlanar → (G₁ ⊔ G₂).Colorable k
+    IsPlanar G₁ → IsPlanar G₂ → (G₁ ⊔ G₂).Colorable k
 
 end EarthMoonProblem
 
@@ -62,7 +61,7 @@ open EarthMoonProblem
 The formal statement of the Earth-Moon Conjecture.
 Ellen Gethner conjectured that every union of two planar graphs is 11-colorable.
 -/
-@[category research open, AMS 05C15]
+@[category "research_open", "AMS 05C15"]
 theorem earth_moon_conjecture_eleven : EarthMoonStatement 11 := by
   sorry
 
