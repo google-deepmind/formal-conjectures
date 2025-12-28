@@ -35,7 +35,7 @@ def HasFabryGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Tendsto (fun k => 
 def HasFejerGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Summable (fun k => 1 / (n k : ℝ))
 
 @[category API, AMS 40]
-theorem hasFejerGaps.hasFabryGaps {n : ℕ → ℕ} (hn : HasFejerGaps n) : HasFabryGaps n := by
+theorem HasFejerGaps.HasFabryGaps {n : ℕ → ℕ} (hn : HasFejerGaps n) : HasFabryGaps n := by
   refine ⟨hn.1, ?_⟩
   simp only [tendsto_atTop_atTop]
   intro b
@@ -100,7 +100,7 @@ namespace Erdos517
 every value infinitely often? -/
 @[category research open, AMS 30]
 theorem erdos_517.fabry : answer(sorry) ↔ ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFabryGaps n)
-    {a : ℕ → ℂ} (hf : ∀ z, HasSum (fun k => (a k) * z ^ (n k)) (f z)) (z : ℂ),
+    {a : ℕ → ℂ} (hf : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (z : ℂ),
     {x : ℂ | f x = z}.Infinite := by
   sorry
 
@@ -108,7 +108,7 @@ theorem erdos_517.fabry : answer(sorry) ↔ ∀ {f : ℂ → ℂ} {n : ℕ → �
 infinitely often. This theorem is proved in [Bi28]. -/
 @[category research solved, AMS 30]
 theorem erdos_517.fejer {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ}
-    (hf : ∀ z, HasSum (fun k => a k * z ^ (n k)) (f z)) (z : ℂ) : {x : ℂ | f x = z}.Infinite :=
+    (hf : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (z : ℂ) : {x : ℂ | f x = z}.Infinite :=
   sorry
 
 end Erdos517
