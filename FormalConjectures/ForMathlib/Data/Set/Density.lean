@@ -198,7 +198,6 @@ def Set.HasLogDensity (A : Set ℕ) (d : ℝ) : Prop :=
     Filter.atTop (𝓝 d)
 
 /-- If a set has natural density `d`, then it also has logarithmic density `d`. -/
-theorem Set.HasDensity.hasLogDensity {A : Set ℕ} {d : ℝ} (h : A.HasDensity d) : A.HasLogDensity d := by
-  sorry
+proof_wanted Set.HasDensity.hasLogDensity {A : Set ℕ} {d : ℝ} (h : A.HasDensity d) : A.HasLogDensity d
 
 end LogarithmicDensity
