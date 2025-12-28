@@ -190,10 +190,15 @@ A set `A` of natural numbers has logarithmic density `d` if the sequence
 $(1 / \log n) \cdot \sum_{k \in A, k \le n} (1/k)$ converges to `d`.
 
 Logarithmic density is a weaker notion than natural density: if a set has natural density `d`,
-then it also has logarithmic density `d`, but the converse is false (Besicovitch).
+then it also has logarithmic density `d` (see `Set.HasDensity.hasLogDensity`), but the converse
+is false.
 -/
 def Set.HasLogDensity (A : Set ℕ) (d : ℝ) : Prop :=
   Filter.Tendsto (fun n : ℕ => (∑ k ∈ Finset.range (n + 1) with k ∈ A, (1 : ℝ) / k) / Real.log n)
     Filter.atTop (𝓝 d)
+
+/-- If a set has natural density `d`, then it also has logarithmic density `d`. -/
+theorem Set.HasDensity.hasLogDensity {A : Set ℕ} {d : ℝ} (h : A.HasDensity d) : A.HasLogDensity d := by
+  sorry
 
 end LogarithmicDensity
