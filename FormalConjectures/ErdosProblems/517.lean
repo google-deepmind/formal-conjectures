@@ -37,26 +37,62 @@ def HasFejerGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Summable (fun k =>
 @[category API, AMS 40]
 theorem hasFejerGaps.hasFabryGaps {n : ℕ → ℕ} (hn : HasFejerGaps n) : HasFabryGaps n := by
   refine ⟨hn.1, ?_⟩
-  simp only [tendsto_atTop, eventually_atTop, ge_iff_le]
+  simp only [tendsto_atTop_atTop]
   intro b
-  /- use the Cauchy criterion of series. -/
-  have : ∃ k > 0, ∀ m ≥ k, ∑ j : Icc ⌊m / 2⌋₊ m , 1 / (n j : ℝ)
-    ≤ 1 / (2 * b) := by
-    have : Icc (-1 / (2 * b)) (1 / (2 * b)) ∈ (𝓝 0) := by sorry
-    obtain ⟨k, hk⟩ := hn.2.nat_tsum_vanishing this
-    refine ⟨2 * k + 1, by linarith, fun m hm => ?_⟩
-    have : Icc ⌊m / 2⌋₊ m ⊆ {n | k ≤ n} := by sorry
-    have := (hk (Icc ⌊m / 2⌋₊ m) this).2
-    simpa [tsum_fintype] using this
-  obtain ⟨k, hk⟩ := this
-  refine ⟨k, fun m hm => ?_⟩
-  suffices m / n m ≤ 1 / b from by sorry
-  calc
-  _ ≤ 2 * ⌈m / 2⌉₊ / (n m : ℝ) := by sorry
-  _ = 2 * ∑ j : Icc ⌊m / 2⌋₊ m, 1 / (n m : ℝ) := by sorry
-  _ ≤ 2 * ∑ j : Icc ⌊m / 2⌋₊ m, 1 / (n j : ℝ) := by sorry
-  _ ≤ 2 * 1 / (2 * b) := by grind
-  _ = 1 / b := by grind
+  by_cases hb : b > 0
+  · have : ∃ k > 1, ∀ m ≥ k, ∑ j : Icc (m / 2) m , 1 / (n j : ℝ)
+      ≤ 1 / (2 * b) := by
+      have : Icc (-1 / (2 * b)) (1 / (2 * b)) ∈ (𝓝 0) := by
+        simp_all only [gt_iff_lt, one_div, mul_inv_rev, Icc_mem_nhds_iff, mem_Ioo, inv_pos,
+          mul_pos_iff_of_pos_left, Nat.ofNat_pos, and_true]
+        exact div_neg_of_neg_of_pos (by linarith) (by linarith)
+      obtain ⟨k, hk⟩ := hn.2.nat_tsum_vanishing this
+      refine ⟨2 * k + 2, by linarith, fun m hm => ?_⟩
+      have : Icc (m / 2) m ⊆ {n | k ≤ n} := by
+        intro x hx
+        refine LE.le.trans ?_ hx.1
+        simp [Nat.le_div_two_iff_mul_two_le]
+        linarith
+      have := (hk (Icc (m / 2) m) this).2
+      simpa [tsum_fintype] using this
+    obtain ⟨k, hk⟩ := this
+    refine ⟨k, fun m hm => ?_⟩
+    suffices m / n m ≤ 1 / b from by
+      refine (le_div_comm₀ hb (by norm_cast; linarith)).2 ?_
+      have hnm : 0 < n m := (hn.1.imp (by linarith : 0 < m)).trans_le' (by linarith)
+      simpa using (div_le_iff₀' (by norm_cast)).1 this
+    calc
+    _ ≤ 2 * ((m + 1 : ℕ) / 2 / (n m : ℝ)) := by
+      ring_nf; field_simp; gcongr; linarith
+    _ ≤ 2 * ∑ j : Icc (m / 2) m, 1 / (n m : ℝ) := by
+      gcongr
+      simp only [Finset.sum_const, Finset.card_univ, Fintype.card_ofFinset, Nat.card_Icc,
+        nsmul_eq_mul, ← div_eq_mul_one_div]
+      gcongr
+      refine (div_le_iff₀' (by linarith)).2 ?_
+      calc
+      _ = (m + 1 : ℕ) - ((m / 2 : ℕ) : ℝ) + ((m / 2 : ℕ) : ℝ) := by grind
+      _ ≤ ((m + 1 : ℕ) - ((m / 2 : ℕ) : ℝ)) + ((m + 1 : ℕ) - ((m / 2 : ℕ) : ℝ)) := by
+        gcongr
+        apply le_sub_right_of_add_le
+        simp [← Nat.cast_add]
+        omega
+      _ ≤ 2 * (((m + 1 - m / 2) : ℕ) : ℝ) := by
+        simp only [two_mul]
+        gcongr <;> simp [Nat.cast_sub (by omega : m / 2 ≤ m + 1)]
+    _ ≤ 2 * ∑ j : Icc (m / 2) m, 1 / (n j : ℝ) := by
+      refine mul_le_mul_of_nonneg_left (Finset.sum_le_sum fun i a ↦
+        one_div_le_one_div_of_le ?_ ?_) (by linarith)
+      · norm_cast
+        refine (hn.1.imp (LT.lt.trans_le ?_ i.2.1)).trans_le' (by linarith : 0 ≤ n 0)
+        simp
+        linarith
+      · exact_mod_cast hn.1.monotone (by grind)
+    _ ≤ 2 * 1 / (2 * b) := by grind
+    _ = 1 / b := by grind
+  · refine ⟨0, fun m hm => ?_⟩
+    simp_all only [gt_iff_lt, not_lt, zero_le]
+    exact hb.trans (div_nonneg (by linarith) (by linarith))
 
 namespace Erdos517
 
