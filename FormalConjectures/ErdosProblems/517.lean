@@ -47,6 +47,7 @@ theorem HasFejerGaps.HasFabryGaps {n : ℕ → ℕ} (hn : HasFejerGaps n) : HasF
       simp_all only [gt_iff_lt, one_div, mul_inv_rev, Ico_mem_nhds_iff, mem_Ioo, inv_pos,
         mul_pos_iff_of_pos_left, Nat.ofNat_pos, and_true]
       exact div_neg_of_neg_of_pos (by linarith) (by linarith)
+    /- Choose `k` large enough so that the tail sum is small. -/
     obtain ⟨k, hk⟩ := hn.2.nat_tsum_vanishing this
     refine ⟨2 * k + 2, fun m hm => ?_⟩
     suffices m / n m ≤ 1 / b from by
