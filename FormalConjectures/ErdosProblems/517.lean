@@ -29,9 +29,12 @@ import FormalConjectures.Util.ProblemImports
 
 open Set Filter Topology
 
-/-- This is the terminology adopted in [Wa01] and some other sources. -/
+/-- A sequence of natural numbers `n₀ < n₁ < ...` is said to have Fabry gaps if `nₖ / k → ∞`.
+This is the terminology adopted in [Wa01] and some other sources. -/
 def HasFabryGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Tendsto (fun k => n k / (k : ℝ)) atTop atTop
 
+/-- A sequence of natural numbers `n₀ < n₁ < ...` is said to have Fejér gaps if `∑' 1 / nₖ < ∞`.
+This is the terminology adopted in [Wa01] and some other sources. -/
 def HasFejerGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Summable (fun k => 1 / (n k : ℝ))
 
 @[category API, AMS 40]
