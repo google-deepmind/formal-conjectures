@@ -194,7 +194,7 @@ then it also has logarithmic density `d` (see `Set.HasDensity.hasLogDensity`), b
 is false.
 -/
 def Set.HasLogDensity (A : Set ℕ) (d : ℝ) : Prop :=
-  Tendsto (fun n : ℕ => (∑ k ≤ n with k ∈ A, k⁻¹ / .log n : ℝ)) atTop (𝓝 d)
+  Tendsto (fun n : ℕ => (∑ k ≤ n with k ∈ A, (k : ℝ)⁻¹ / .log n : ℝ)) atTop (𝓝 d)
 
 /-- If a set has natural density `d`, then it also has logarithmic density `d`. -/
 proof_wanted Set.HasDensity.hasLogDensity {A : Set ℕ} {d : ℝ} (h : A.HasDensity d) : A.HasLogDensity d
