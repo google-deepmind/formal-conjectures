@@ -44,6 +44,7 @@ import FormalConjectures.ForMathlib.Data.Finset.Empty
 import FormalConjectures.ForMathlib.Data.Finset.OrdConnected
 import FormalConjectures.ForMathlib.Data.Nat.Factorization.Basic
 import FormalConjectures.ForMathlib.Data.Nat.Full
+import FormalConjectures.ForMathlib.Data.Nat.Init
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Composite
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
@@ -64,6 +65,7 @@ import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
 import FormalConjectures.ForMathlib.NumberTheory.CoveringSystem
 import FormalConjectures.ForMathlib.NumberTheory.DirichletCharacter.Basic
 import FormalConjectures.ForMathlib.NumberTheory.Lacunary
+import FormalConjectures.ForMathlib.NumberTheory.LegendreSymbol.Basic
 import FormalConjectures.ForMathlib.NumberTheory.PrimeGap
 import FormalConjectures.ForMathlib.NumberTheory.WallSunSunPrimes
 import FormalConjectures.ForMathlib.Order.Filter.Cofinite
