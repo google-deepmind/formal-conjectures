@@ -39,9 +39,7 @@ def HasFejerGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Summable (fun k =>
 
 @[category API, AMS 40]
 theorem HasFejerGaps.HasFabryGaps {n : ℕ → ℕ} (hn : HasFejerGaps n) : HasFabryGaps n := by
-  refine ⟨hn.1, ?_⟩
-  simp only [tendsto_atTop_atTop]
-  intro b
+  refine ⟨hn.1, tendsto_atTop_atTop.2 fun b => ?_⟩
   by_cases hb : b > 0
   · have : Ico (-1 / (2 * b)) (1 / (2 * b)) ∈ (𝓝 0) := by
       simp_all only [gt_iff_lt, one_div, mul_inv_rev, Ico_mem_nhds_iff, mem_Ioo, inv_pos,
