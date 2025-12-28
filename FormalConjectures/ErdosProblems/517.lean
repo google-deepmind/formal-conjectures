@@ -30,12 +30,12 @@ import FormalConjectures.Util.ProblemImports
 open Set Filter Topology
 
 /-- This is the terminology adopted in [Wa01] and some other sources. -/
-def hasFabryGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Tendsto (fun k => n k / (k : ℝ)) atTop atTop
+def HasFabryGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Tendsto (fun k => n k / (k : ℝ)) atTop atTop
 
-def hasFejerGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Summable (fun k => 1 / (n k : ℝ))
+def HasFejerGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Summable (fun k => 1 / (n k : ℝ))
 
 @[category API, AMS 40]
-theorem hasFejerGaps.hasFabryGaps {n : ℕ → ℕ} (hn : hasFejerGaps n) : hasFabryGaps n := by
+theorem hasFejerGaps.hasFabryGaps {n : ℕ → ℕ} (hn : HasFejerGaps n) : HasFabryGaps n := by
   refine ⟨hn.1, ?_⟩
   simp only [tendsto_atTop, eventually_atTop, ge_iff_le]
   intro b
@@ -63,16 +63,16 @@ namespace Erdos517
 /-- If `f(z) = ∑ aₖzⁿₖ` is an entire function such that `nₖ / k → ∞`, is it true that `f` assumes
 every value infinitely often? -/
 @[category research open, AMS 30]
-theorem erdos_517.fabry {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : hasFabryGaps n) {a : ℕ → ℂ}
-    (hf : ∀ z, HasSum (fun k => (a k) * z ^ (n k)) (f z)) (z : ℂ) :
+theorem erdos_517.fabry : answer(sorry) ↔ ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFabryGaps n)
+    {a : ℕ → ℂ} (hf : ∀ z, HasSum (fun k => (a k) * z ^ (n k)) (f z)) (z : ℂ),
     {x : ℂ | f x = z}.Infinite := by
   sorry
 
 /-- If `f(z) = ∑ aₖzⁿₖ` is an entire function such that `∑ 1 / nₖ < ∞`, then `f` assumes every value
 infinitely often. This theorem is proved in [Bi28]. -/
 @[category research solved, AMS 30]
-theorem erdos_517.fejer {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : hasFejerGaps n) {a : ℕ → ℂ}
-    (hf : ∀ z, HasSum (fun k => (a k) * z ^ (n k)) (f z)) (z : ℂ) : {x : ℂ | f x = z}.Infinite :=
+theorem erdos_517.fejer {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ}
+    (hf : ∀ z, HasSum (fun k => a k * z ^ (n k)) (f z)) (z : ℂ) : {x : ℂ | f x = z}.Infinite :=
   sorry
 
 end Erdos517
