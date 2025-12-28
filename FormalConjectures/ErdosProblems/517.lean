@@ -27,7 +27,7 @@ import FormalConjectures.Util.ProblemImports
     Journal, Second Series 53.1 (2001): 163-170.
 -/
 
-open Set Filter
+open Set Filter Topology
 
 /-- This is the terminology adopted in [Wa01] and some other sources. -/
 def hasFabryGaps (n : ℕ → ℕ) : Prop := StrictMono n ∧ Tendsto (fun k => n k / (k : ℝ)) atTop atTop
@@ -40,14 +40,23 @@ theorem hasFejerGaps.hasFabryGaps {n : ℕ → ℕ} (hn : hasFejerGaps n) : hasF
   simp only [tendsto_atTop, eventually_atTop, ge_iff_le]
   intro b
   /- use the Cauchy criterion of series. -/
-  have : ∃ k, ∀ m ≥ k, ∑' (j : ℕ), 1 / (n (j + ⌊m / 2⌋₊) : ℝ) ≤ 1 / b := by sorry
+  have : ∃ k > 0, ∀ m ≥ k, ∑ j : Icc ⌊m / 2⌋₊ m , 1 / (n j : ℝ)
+    ≤ 1 / (2 * b) := by
+    have : Icc (-1 / (2 * b)) (1 / (2 * b)) ∈ (𝓝 0) := by sorry
+    obtain ⟨k, hk⟩ := hn.2.nat_tsum_vanishing this
+    refine ⟨2 * k + 1, by linarith, fun m hm => ?_⟩
+    have : Icc ⌊m / 2⌋₊ m ⊆ {n | k ≤ n} := by sorry
+    have := (hk (Icc ⌊m / 2⌋₊ m) this).2
+    simpa [tsum_fintype] using this
   obtain ⟨k, hk⟩ := this
   refine ⟨k, fun m hm => ?_⟩
   suffices m / n m ≤ 1 / b from by sorry
   calc
-  _ = ∑ i ∈ Finset.range m, 1 / (n m : ℝ) := by sorry
-  _ ≤ ∑' (j : ℕ), 1 / (n (j + ⌊m / 2⌋₊) : ℝ) := by sorry
-  _ ≤ 1 / b := hk m hm
+  _ ≤ 2 * ⌈m / 2⌉₊ / (n m : ℝ) := by sorry
+  _ = 2 * ∑ j : Icc ⌊m / 2⌋₊ m, 1 / (n m : ℝ) := by sorry
+  _ ≤ 2 * ∑ j : Icc ⌊m / 2⌋₊ m, 1 / (n j : ℝ) := by sorry
+  _ ≤ 2 * 1 / (2 * b) := by grind
+  _ = 1 / b := by grind
 
 namespace Erdos517
 
@@ -63,7 +72,7 @@ theorem erdos_517.fabry {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : hasFabryGaps n
 infinitely often. This theorem is proved in [Bi28]. -/
 @[category research solved, AMS 30]
 theorem erdos_517.fejer {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : hasFejerGaps n) {a : ℕ → ℂ}
-    (hf : ∀ z, HasSum (fun k => (a k) * z ^ (n k)) (f z)) (z : ℂ) : {x : ℂ | f x = z}.Infinite := by
+    (hf : ∀ z, HasSum (fun k => (a k) * z ^ (n k)) (f z)) (z : ℂ) : {x : ℂ | f x = z}.Infinite :=
   sorry
 
 end Erdos517
