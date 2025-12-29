@@ -15,7 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open Finset
+open Finset SimpleGraph
+open scoped Nat
 
 /-!
 # Erdős Problem 835
@@ -24,6 +25,7 @@ open Finset
 -/
 namespace Erdos835
 
+variable {n k : ℕ}
 
 /--
 The property that for a given $k$, the $k$-subsets of a $2k$-set can be colored with $k+1$ colors
@@ -44,25 +46,10 @@ colours appear among the $k$-sized subsets of $A$?
 theorem erdos_835 : (∃ k > 2, Property k) ↔ answer(sorry) := by
   sorry
 
-/--
-The Johnson graph $J(n, k)$ has as vertices the $k$-subsets of an $n$-set.
-Two vertices are adjacent if their intersection has size $k-1$.
-Requires $k > 0$.
--/
-def JohnsonGraph (n k : ℕ) (hk : 0 < k) : SimpleGraph {s : Finset (Fin n) // s.card = k} where
-  Adj := λ S T => (S.val ∩ T.val).card = k - 1
-  symm := by
-    intro S T h
-    rw [inter_comm]
-    exact h
-  loopless := by
-    intro S h
-    rw [inter_self] at h
-    omega
 
 @[category test, AMS 5]
 theorem property_iff_chromaticNumber (k : ℕ) (hk : 0 < k) :
-    ((JohnsonGraph (2 * k) k (Nat.zero_lt_of_lt hk)).chromaticNumber = k + 1) ↔
+    (J(2 * k, k).chromaticNumber = k + 1) ↔
     Property k := by
   sorry
 
@@ -75,7 +62,7 @@ Johnson graph $J(2k, k)$ is $k+1$.
 theorem erdos_835.variant.johnson : (∃ l,
     -- making sure k > 2
     letI k := l + 3
-    (JohnsonGraph (2 * k) k (by omega)).chromaticNumber = k + 1) ↔ answer(sorry) := by
+    J(2 * k, k).chromaticNumber = k + 1) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -84,7 +71,7 @@ see [Johnson graphs](https://aeb.win.tue.nl/graphs/Johnson.html).
 -/
 @[category research solved, AMS 5]
 theorem johnsonGraph_2k_k_chromaticNumber_known_cases (k : ℕ) (hk : 3 ≤ k) (hk' : k ≤ 8) :
-    (JohnsonGraph (2 * k) k (by omega)).chromaticNumber > k + 1 := by
+    J(2 * k, k).chromaticNumber > k + 1 := by
   sorry
 
 /--
@@ -93,17 +80,61 @@ The smallest open case is $k=9$. Is the chromatic number of $J(18, 9)$ equal to 
 Answer: No!
 -/
 @[category research solved, AMS 5]
-theorem johnsonGraph_18_9_chromaticNumber :
-    ¬ (JohnsonGraph 18 9 (by omega)).chromaticNumber = 10 := by
+theorem johnsonGraph_18_9_chromaticNumber : ¬ J(18, 9).chromaticNumber = 10 := by
   sorry
+
+
+/-- Johnson's upper bound on the maximum size `A(n, d, w)` of a `n`-dimensional binary code of
+distance `d` and weight `w` is as follows:
+* If `d > 2 * w`, then `A(n, d, w) = 1`.
+* If `d ≤ 2 * w`, then `A(n, d, w) ≤ ⌊n / w * A(n - 1, d, w - 1)⌋`. -/
+def johnsonBound : ℕ → ℕ → ℕ → ℕ
+  | 0, _d, _w => 1
+  | _n, _d, 0 => 1
+  | n + 1, d, w + 1 => if 2 * (w + 1) < d then 1 else (n + 1) * johnsonBound n d w / (w + 1)
+
+/-- Johnson's bound for the independence number of the Johnson graph. -/
+@[category research solved, AMS 5]
+lemma indepNum_johnson_le_johnsonBound : α(J(n, k)) ≤ johnsonBound n 4 k := sorry
+
+/-- Johnson's bound for the chromatic number of the Johnson graph. -/
+@[category research solved, AMS 5]
+lemma div_johnsonBound_le_chromaticNum_johnson :
+    ⌈(n.choose k / johnsonBound n 4 k : ℚ≥0)⌉₊ ≤ χ(J(n, k)) := by
+  obtain hnk | hkn := lt_or_ge n k
+  · simp [Nat.choose_eq_zero_of_lt, *]
+  have : Nonempty {s : Finset (Fin n) // #s = k} := by
+    simpa [Finset.Nonempty] using Finset.powersetCard_nonempty (s := .univ).2 <| by simpa
+  grw [← card_div_indepNum_le_chromaticNumber, indepNum_johnson_le_johnsonBound] <;> simp
+
+/-- It is known that for $3 \leq k \leq 8$, the chromatic number of $J(2k, k)$ is greater than
+$k+1$, see [Johnson graphs](https://aeb.win.tue.nl/graphs/Johnson.html). -/
+@[category research solved, AMS 5]
+theorem chromaticNumber_johnson_2k_k_lower_bound (hk : 3 ≤ k) (hk' : k ≤ 8) :
+    k + 1 < J(2 * k, k).chromaticNumber := by
+  sorry
+
+/-- It is also known that for $3 \leq k \leq 203$ odd, the chromatic number of $J(2k, k)$ is
+greater than $k+1$, see [Johnson graphs](https://aeb.win.tue.nl/graphs/Johnson.html). -/
+@[category research solved, AMS 5]
+theorem chromaticNumber_johnson_2k_k_lower_bound_odd (hk : 3 ≤ k) (hk' : k ≤ 300) (hk_odd : Odd k) :
+    k + 1 < J(2 * k, k).chromaticNumber := by
+  grw [← div_johnsonBound_le_chromaticNum_johnson]
+  decide +revert +kernel
 
 /--
 Generalising to any odd k>9
 -/
 @[category research solved, AMS 5]
 theorem johnsonGraph_chromaticNumber (l : ℕ) (hk : l > 6) (hl : Even l) :
-    (JohnsonGraph (2*(l + 3)) (l + 3) (by omega)).chromaticNumber ≠  (l + 3) + 1 := by
+    J(2*(l + 3), l + 3).chromaticNumber ≠  (l + 3) + 1 := by
   sorry
 
+
+/-- Is the chromatic number of `J(2 * k, k)` always at least `k + 2`? -/
+@[category research open, AMS 5]
+theorem johnson_chromaticNumber : answer(sorry) ↔
+    ∀ k ≥ 3, k + 2 ≤ J(2 * k, k).chromaticNumber :=
+  sorry
 
 end Erdos835

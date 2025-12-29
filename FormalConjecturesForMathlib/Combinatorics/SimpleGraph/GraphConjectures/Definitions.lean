@@ -42,9 +42,6 @@ noncomputable def m (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 
-/-- The independence number of a graph `G`. -/
-noncomputable def a (G : SimpleGraph α) : ℝ := (G.indepNum : ℝ)
-
 /-- The maximum cardinality among all independent sets `s`
     that maximize the quantity `|s| - |N(s)|`, where `N(s)`
     is the neighborhood of the set `s`. -/
@@ -55,7 +52,6 @@ noncomputable def aprime (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   letI critical_sets := indep_sets.filter (fun s ↦ diff s = max_diff.getD 0)
   letI max_card := (critical_sets.image Finset.card).max
   (max_card.getD 0 : ℝ)
-
 
 /-- `largestInducedForestSize G` is the size of a largest induced forest of `G`. -/
 noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
