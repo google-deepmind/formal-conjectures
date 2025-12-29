@@ -19,8 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 486: Logarithmic density for sets avoiding modular subsets
 
-Let $A \subseteq \mathbb{N}$, and for each $n \in A$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
-Let $B = \{m \in \mathbb{N} : m \not\in X_n \pmod{n} \text{ for all } n \in A\}$.
+For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
+Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
 Must $B$ have a logarithmic density?
 
 *Reference:* [erdosproblems.com/486](https://www.erdosproblems.com/486)
@@ -31,13 +31,13 @@ namespace Erdos486
 /--
 **Erdős Problem 486**
 
-Let $A \subseteq \mathbb{N}$, and for each $n \in A$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
-Let $B = \{m \in \mathbb{N} : m \not\in X_n \pmod{n} \text{ for all } n \in A\}$.
+For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
+Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
 Must $B$ have a logarithmic density?
 -/
 @[category research open, AMS 11]
 theorem erdos_486 :
-    (∀ X : (n : ℕ) → Set (ZMod n)), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d)
+    (∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d)
     ↔ answer(sorry) := by
   sorry
 
