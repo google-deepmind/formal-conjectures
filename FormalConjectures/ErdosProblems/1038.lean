@@ -39,7 +39,7 @@ theorem erdos_1038.inf (n : ℕ) : answer(sorry) =
 
 /-- What is the supremum of `|{x ∈ ℝ : |f (x)| < 1}|` over all monic polynomials `f` of degree `n`
 with `n` roots in `[-1,1]`? -/
-@[category research solved, AMS 60]
+@[category research open, AMS 60]
 theorem erdos_1038.sup (n : ℕ) : answer(sorry) =
     ⨆ f : {f : Polynomial ℝ // f.IsMonicOfDegree n ∧
     (f.roots.filter (fun x => x ∈ Set.Icc (-1 : ℝ) 1)).card = n},
