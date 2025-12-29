@@ -23,8 +23,8 @@ open Finset Real
 
 *Reference:* [erdosproblems.com/1084](https://www.erdosproblems.com/1084)
 
-Let `f_d(n)` be the maximum number of pairs of points at distance exactly `1`
-among any set of `n` points in `ℝ^d`, under the condition that all pairwise
+Let `f_2(n)` be the maximum number of pairs of points at distance exactly `1`
+among any set of `n` points in `ℝ^2`, under the condition that all pairwise
 distances are at least `1`.
 
 Estimate the growth of `f_d(n)`.
@@ -37,19 +37,19 @@ namespace Erdos1084
 /--
 Erdős problem 1084.
 
-For every dimension `d`, there exists a function `f : ℕ → ℕ` such that for any
-finite set `s` of points in `ℝ^d` with all pairwise distances at least `1`,
-the number of unordered pairs of distinct points in `s` at distance exactly `1`
-is at most `f (card s)`.
+There exists a constant `C` such that for any finite set `s` of points in `ℝ²`
+with all pairwise distances at least `1`, the number of ordered pairs of distinct
+points in `s` at distance exactly `1` is at most `C * n^{4/3}`, where `n = card s`.
 -/
 @[category research open, AMS 52]
 theorem erdos_1084 :
-  ∀ d : ℕ,
-    ∃ f : ℕ → ℕ,
-      ∀ s : Finset (EuclideanSpace ℝ (Fin d)),
-        (∀ ⦃x y⦄, x ∈ s → y ∈ s → x ≠ y → dist x y ≥ 1) →
-        ((s.product s).filter
-          (fun p => p.1 ≠ p.2 ∧ dist p.1 p.2 = 1)).card ≤ f s.card := by
+  ∃ C : ℝ,
+    0 ≤ C ∧
+    ∀ s : Finset (EuclideanSpace ℝ (Fin 2)),
+      (∀ ⦃x y⦄, x ∈ s → y ∈ s → x ≠ y → dist x y ≥ 1) →
+      ((s.product s).filter
+        (fun p => p.1 ≠ p.2 ∧ dist p.1 p.2 = 1)).card 
+        ≤ C * (s.card : ℝ) ^ (4 / 3) := by
   sorry
 
 end Erdos1084
