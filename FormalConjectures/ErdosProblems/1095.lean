@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos1095
 
 open Real Filter Asymptotics
-open Nat hiding log
+open _root_.Nat hiding log
 
 /--
 Let $g(k)>k+1$ be maximal such that
@@ -33,7 +33,7 @@ if $n\leq g(k)$ then $\binom{n}{k}$ is divisible by a prime $\leq k$.
 Estimate $g(k)$.
 -/
 noncomputable def g (k : ℕ) : ℕ :=
-  sSup {m | ∀ n ≤ m, ∃ p ≤ k, p.Prime ∧ p ∣ choose n k}
+  sSup {m | ∀ n ∈ Set.Ioc k m, ∃ p ≤ k, p.Prime ∧ p ∣ choose n k}
 
 
 /--
@@ -42,7 +42,7 @@ due to Konyagin [Ko99b](https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1
 -/
 @[category research solved, AMS 05 11]
 theorem erdos_1095_lower_solved :
-    ∃ c > 0, (fun k : ℕ => exp (c * log k ^ 2)) =O[atTop] fun k => g k := by
+    ∃ c > 0, (fun k : ℕ => exp (c * (log k) ^ 2)) =O[atTop] fun k => (g k: ℝ) := by
   sorry
 
 /--
@@ -51,7 +51,7 @@ Ecklund, Erdős, and Selfridge conjectured $g(k)\leq \exp(k^{1+o(1)})$
 -/
 @[category research open, AMS 05 11]
 theorem erdos_1095_upper_conjecture :
-    ∃ c ≥ 1, ∀ k : Nat, g k ≤ exp ((k : ℝ) ^ c) := by
+    ∀ c ≥ 1, ∀ᶠ k in atTop, g k ≤ exp ((k : ℝ) ^ c) := by
   sorry
 
 /--
@@ -65,12 +65,12 @@ theorem erdos_1095_lower_conjecture :
   sorry
 
 /--
-[Sorenson, Sorenson, and Webster](https://mathscinet.ams.org/mathscinet/relay-station?mr=4235124) give heuristic evidence that
-\[\log g(k) \asymp \frac{k}{\log k}.\]
+[Sorenson, Sorenson, and Webster](https://mathscinet.ams.org/mathscinet/relay-station?mr=4235124)
+give heuristic evidence that \[\log g(k) \asymp \frac{k}{\log k}.\]
 -/
 @[category research open, AMS 05 11]
 theorem erdos_1095_theta :
-    (fun k => log (g k)) =Θ[atTop] (fun k => k / log k) :=
+    (fun k => log (g k)) ~[atTop] (fun k => k / log k) :=
   sorry
 
 end Erdos1095
