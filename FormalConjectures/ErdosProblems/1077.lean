@@ -34,7 +34,7 @@ Let $ε, α > 0$ and $D$ and $n$ be sufficiently large. If $G$ is a graph on $n$
 least $n^{1+α}$ edges, then must $G$ contain a $D$-balanced subgraph on $m > n^{1-α}$ vertices with
 at least $εm^{1+α}$ edges?
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_1077 :
     (∀ ε > (0 : ℝ), ε < 1 → ∀ α > (0 : ℝ), α < 1 → ∀ᶠ D in atTop, ∀ᶠ n in atTop,
       ∀ G : SimpleGraph (Fin n), G.edgeSet.ncard > (n : ℝ) ^ (1 + α) →
