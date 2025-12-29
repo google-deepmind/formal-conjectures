@@ -24,7 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos1095
 
-open Real Nat Filter Asymptotics
+open Real Filter Asymptotics
+open Nat hiding log
 
 /--
 Let $g(k)>k+1$ be maximal such that
@@ -32,7 +33,7 @@ if $n\leq g(k)$ then $\binom{n}{k}$ is divisible by a prime $\leq k$.
 Estimate $g(k)$.
 -/
 noncomputable def g (k : ℕ) : ℕ :=
-  sSup {m | ∀ n : ℕ, (k < n ∧ n ≤ m) → (∃ p, p.Prime ∧ p ≤ k ∧ (p ∣ choose n k))}
+  sSup {m | ∀ n ≤ m, ∃ p ≤ k, p.Prime ∧ p ∣ choose n k}
 
 
 /--
@@ -41,7 +42,7 @@ due to Konyagin [Ko99b](https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1
 -/
 @[category research solved, AMS 05 11]
 theorem erdos_1095_lower_solved :
-    ∃ c > 0, (fun k : ℕ => exp (c * (log k : ℝ)^2)) =O[atTop] fun k => (g k: ℝ) := by
+    ∃ c > 0, (fun k : ℕ => exp (c * log k ^ 2)) =O[atTop] fun k => g k := by
   sorry
 
 /--
@@ -60,7 +61,7 @@ $g(k)\geq\exp(c\frac{k}{\log k})$ for some constant $c>0$.
 -/
 @[category research open, AMS 05 11]
 theorem erdos_1095_lower_conjecture :
-    ∃ c > 0, ∀ k : Nat, g k ≥ exp (c * (k : ℝ) / log (k : ℝ)) := by
+    ∃ c > 0, ∀ k, g k ≥ exp (c * k / log k) := by
   sorry
 
 /--
@@ -69,6 +70,7 @@ theorem erdos_1095_lower_conjecture :
 -/
 @[category research open, AMS 05 11]
 theorem erdos_1095_theta :
-    (fun k => log (g k : ℝ)) =Θ[atTop] (fun k => (k : ℝ) / log (k : ℝ)) :=
-sorry
+    (fun k => log (g k)) =Θ[atTop] (fun k => k / log k) :=
+  sorry
+
 end Erdos1095
