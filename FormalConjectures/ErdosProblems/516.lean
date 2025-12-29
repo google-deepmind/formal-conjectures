@@ -19,15 +19,16 @@ import FormalConjectures.Util.ProblemImports
  - [erdosproblems.com/516](https://www.erdosproblems.com/516)
 -/
 
+open scoped Real
 open Set Filter
 
-def ofFiniteOrder {f : ℂ → ℂ} (hf : Differentiable ℂ f) : Prop :=
-  ∃ c
+def ofFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
+    [NormedAddCommGroup F] [NormedSpace ℂ F] {f : E → F} : Prop :=
+  Differentiable ℂ f ∧ ∃ c ≥ 0, ∃ a ≥ 0, ∀ z, ‖f z‖ ≤ c * rexp ‖z‖ ^ a
 
 namespace Erdos516
 
-/-- If `f(z) = ∑ aₖzⁿₖ` is an entire function such that `nₖ / k → ∞`, is it true that `f` assumes
-every value infinitely often? -/
+/-- If `f(z) = ∑ aₖzⁿₖ` is an entire function of finite order such that ? -/
 @[category research open, AMS 30]
 theorem erdos_517.fabry {f : ℂ → ℂ} (z : ℂ) : {x : ℂ | f x = z}.Infinite := by
   sorry
