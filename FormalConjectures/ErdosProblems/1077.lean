@@ -43,7 +43,7 @@ theorem erdos_1077 :
           IsBalanced H.coe D ∧
           m > (n : ℝ) ^ (1 - α) ∧
           H.edgeSet.ncard > ε * m ^ (1 + α))
-      ↔ answer(sorry) := by
+      ↔ answer(False) := by
   sorry
 
 end Erdos1077
