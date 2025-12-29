@@ -26,10 +26,6 @@ Must $B$ have a logarithmic density?
 *Reference:* [erdosproblems.com/486](https://www.erdosproblems.com/486)
 -/
 
-open Filter Set
-open scoped Topology
-open Classical
-
 namespace Erdos486
 
 /--
