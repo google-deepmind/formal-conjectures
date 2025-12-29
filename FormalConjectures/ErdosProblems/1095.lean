@@ -40,7 +40,7 @@ noncomputable def g (k : ℕ) : ℕ :=
 The current record is\[g(k) \gg \exp(c(\log k)^2)\]for some $c>0$, due to Konyagin
 [Ko99b](https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/S0025579300007555).
 -/
-@[category research solved, AMS 05 11]
+@[category research solved, AMS 11]
 theorem erdos_1095_lower_solved :
     ∃ c > 0, (fun k : ℕ ↦ exp (c * log k ^ 2)) =O[atTop] fun k ↦ (g k : ℝ) := by
   sorry
@@ -49,7 +49,7 @@ theorem erdos_1095_lower_solved :
 Ecklund, Erdős, and Selfridge conjectured $g(k)\leq \exp(k^{1+o(1)})$
 [EES74](https://mathscinet.ams.org/mathscinet/relay-station?mr=1199990)
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 11]
 theorem erdos_1095_upper_conjecture :
     ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧ ∀ k, g k ≤ exp (k ^ (1 + f k)) := by
   sorry
@@ -59,7 +59,7 @@ Erdős, Lacampagne, and Selfridge [ELS93](https://www.ams.org/journals/mcom/1993
 write 'it is clear to every right-thinking person' that
 $g(k)\geq\exp(c\frac{k}{\log k})$ for some constant $c>0$.
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 11]
 theorem erdos_1095_lower_conjecture : ∃ c > 0, ∀ k, g k ≥ exp (c * k / log k) :=
   sorry
 
@@ -67,7 +67,7 @@ theorem erdos_1095_lower_conjecture : ∃ c > 0, ∀ k, g k ≥ exp (c * k / log
 [Sorenson, Sorenson, and Webster](https://mathscinet.ams.org/mathscinet/relay-station?mr=4235124)
 give heuristic evidence that \[\log g(k) \asymp \frac{k}{\log k}.\]
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 11]
 theorem erdos_1095_log_equivalent : (fun k ↦ log (g k)) ~[atTop] (fun k ↦ k / log k) :=
   sorry
 
