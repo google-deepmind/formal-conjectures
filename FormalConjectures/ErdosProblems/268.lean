@@ -24,8 +24,6 @@ import FormalConjectures.Util.ProblemImports
  - [KoTa24] Kova\vC, V. and Tao T., On several irrationality problems for Ahmes series.
 -/
 
-open Topology
-
 namespace Erdos268
 
 /-- Let `X` be the set of points in `Fin d → ℝ` of the shape
