@@ -20,14 +20,17 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 268
 
 *Reference:*
-- [erdosproblems.com/268](https://www.erdosproblems.com/268)
+ - [erdosproblems.com/268](https://www.erdosproblems.com/268)
+ - [KoTa24] Kova\vC, V. and Tao T., On several irrationality problems for Ahmes series.
 -/
 
 open Topology
 
 namespace Erdos268
 
-/--
+/-- Let `X` be the set of points in `Fin d → ℝ` of the shape
+`fun i : Fin d => ∑' n : A, (1 : ℝ) / (n + i)` for some infinite subset `A ⊆ ℕ` such that
+`1 / n` is summable over `A`. `X` has nonempty interior. This is proved in [KoTa24].
 -/
 @[category research solved, AMS 40 54]
 theorem erdos_268 (d : ℕ) : (interior {x : Fin d → ℝ | ∃ A : Set ℕ, A.Infinite ∧
