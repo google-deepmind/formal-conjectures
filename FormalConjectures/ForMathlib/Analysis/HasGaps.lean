@@ -56,6 +56,6 @@ theorem HasFejerGaps.hasFabryGaps {f : ℕ → ℕ} (hf : HasFejerGaps f) : HasF
       _ ≤ ∑' n : Ici (N / 2), (f n : ℝ)⁻¹ :=
         hf.2.sum_le_tsum_set (by simp [Ico_subset_Ici_self]) (by simp)
   · exact hf.2.tendsto_tsum_zero (fun b ↦ by simpa using eventually_gt_atTop b)
-  · filter_upwards [eventually_gt_atTop 1] with N hN
+  · filter_upwards [eventually_gt_atTop 0] with N hN
     refine (hf.2.comp_injective Subtype.val_injective).tsum_pos (by simp) ⟨N, by simp⟩ ?_
     simpa using (hf.1 hN).bot_lt
