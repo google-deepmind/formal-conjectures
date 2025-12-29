@@ -19,7 +19,8 @@ import Mathlib.Analysis.RCLike.Basic
 import Mathlib.Data.Int.Star
 import Mathlib.Data.Nat.Cast.Order.Field
 
-/-! #
+/-!
+# Sequences with Large Gaps
 
 *References:*
  - [Wa01] Wang, Yuefei. "On the Fatou set of an entire function with gaps." Tohoku Mathematical
