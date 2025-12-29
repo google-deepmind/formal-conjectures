@@ -41,9 +41,7 @@ Must $B$ have a logarithmic density?
 -/
 @[category research open, AMS 11]
 theorem erdos_486 :
-    (∀ (A : Set ℕ) (X : (n : A) → Set (ZMod n)),
-      ∃ d, Set.HasLogDensity
-        { m : ℕ | ∀ n : A, (m : ZMod n.1) ∉ X n } d)
+    (∀ X : (n : ℕ) → Set (ZMod n)), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d)
     ↔ answer(sorry) := by
   sorry
 
