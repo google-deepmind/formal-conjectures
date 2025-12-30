@@ -22,15 +22,16 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1084](https://www.erdosproblems.com/1084)
 
 Let `f_2(n)` be the maximum number of pairs of points at distance exactly `1`
-among any set of `n` points in `ℝ^2`, under the condition that all pairwise
+among any set of `n` points in `ℝ²`, under the condition that all pairwise
 distances are at least `1`.
 
-Estimate the growth of `f_d(n)`.
+Estimate the growth of `f_2(n)`.
 
 Status: open.
 -/
 
 open Finset Real
+open scoped EuclideanGeometry
 
 namespace Erdos1084
 
@@ -44,7 +45,7 @@ points in `s` at distance exactly `1` is at most `C * n^{4/3}`, where `n = card 
 @[category research open, AMS 52]
 theorem erdos_1084 :
     ∃ C : ℝ,
-      ∀ s : Finset ℝ^2,
+      ∀ s : Finset ℝ²,
         (s.toSet.Pairwise (fun x y => 1 ≤ dist x y)) →
         #{p ∈ s.offDiag | dist p.1 p.2 = 1} ≤ C * (#s : ℝ) ^ (4 / 3) := by
   sorry
