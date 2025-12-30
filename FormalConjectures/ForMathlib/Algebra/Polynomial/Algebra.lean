@@ -14,15 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Analysis.Calculus.FDeriv.Defs
+import Mathlib.Algebra.Polynomial.Bivariate
 
 /-!
-# Transcendental Entire Functions
+# Algebra over the Ring of Polynomials
 
 -/
 
-open Complex
+namespace Polynomial
 
-def IsTranscendental (f : ℂ → ℂ) : Prop := Differentiable ℂ f ∧ ∀ p : Polynomial ℂ, p.eval ≠ f
+variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
+
+instance instAlgebraPi : Algebra R[X] (S → S) :=
+  (Pi.ringHom fun x ↦ (Polynomial.aeval x).toRingHom).toAlgebra
+
+end Polynomial

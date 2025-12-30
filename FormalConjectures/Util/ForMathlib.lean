@@ -17,13 +17,13 @@ limitations under the License.
 import FormalConjectures.ForMathlib.Algebra.GCDMonoid.Finset
 import FormalConjectures.ForMathlib.Algebra.Group.Indicator
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
+import FormalConjectures.ForMathlib.Algebra.Polynomial.Algebra
 import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
 import FormalConjectures.ForMathlib.Algebra.Polynomial.HasseDeriv
 import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjectures.ForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjectures.ForMathlib.Analysis.Asymptotics.Basic
 import FormalConjectures.ForMathlib.Analysis.HasGaps
-import FormalConjectures.ForMathlib.Analysis.Transcendental
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.NthRoot
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
