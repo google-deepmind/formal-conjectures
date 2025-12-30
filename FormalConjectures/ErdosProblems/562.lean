@@ -48,8 +48,8 @@ $$ \log_{r-1} R_r(n) \asymp_r n, $$
 where $\log_{r-1}$ denotes the $(r-1)$-fold iterated logarithm.
 -/
 @[category research open, AMS 05]
-theorem erdos_562 (r : ℕ) (hr : 3 ≤ r) :
-    (fun n ↦ Real.log^[r - 1] (Combinatorics.HypergraphRamsey r n)) =Θ[Filter.atTop] (fun n ↦ (n : ℝ)) ↔ answer(sorry) := by
+theorem erdos_562 : answer(sorry) ↔
+    \forall r \ge 3, (fun n ↦ log^[r - 1] hypergraphRamsey r n) ~[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
 end Erdos562
