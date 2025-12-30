@@ -35,15 +35,15 @@ and
 $$C \log n < a + b - n < C' \log n ?$$
 -/
 @[category research open, AMS 11]
-theorem erdos_728 : answer(sorry) ↔
-    ∀ C > (0 : ℝ), ∀ C' > C, ∀ᶠ ε : ℝ in 𝓝[>] 0,
+theorem erdos_728 :
+    ∀ᶠ ε : ℝ in 𝓝[>] 0, ∀ C > (0 : ℝ), ∀ C' > C,
       ∃ a b n : ℕ,
-      0 < n ∧
-      ε * n < a ∧
-      ε * n < b ∧
-      a ! * b ! ∣ n ! * (a + b - n)! ∧
-      a + b > n + C * log n ∧
-      a + b < n + C' * log n := by
+        0 < n ∧
+        ε * n < a ∧
+        ε * n < b ∧
+        a ! * b ! ∣ n ! * (a + b - n)! ∧
+        a + b > n + C * log n ∧
+        a + b < n + C' * log n := by
   sorry
 
 -- TODO(firsching): Use Legendre's formula to test divisibility in terms of p-adic valuations.
