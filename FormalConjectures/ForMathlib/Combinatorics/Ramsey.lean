@@ -36,4 +36,30 @@ noncomputable def hypergraphRamsey (r n : ℕ) : ℕ :=
     ∃ (S : Finset (Fin m)), S.card = n ∧
       ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color }
 
+/-- `n ≤ hypergraphRamsey r n` when the set is nonempty. -/
+theorem le_hypergraphRamsey (r n : ℕ) (hne : { m | ∀ (c : Finset (Fin m) → Bool),
+    ∃ (S : Finset (Fin m)), S.card = n ∧
+      ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color }.Nonempty) :
+    n ≤ hypergraphRamsey r n := by
+  apply le_csInf hne
+  intro m hm
+  have : ∃ (S : Finset (Fin m)), S.card = n ∧ _ := hm (fun _ ↦ false)
+  obtain ⟨S, hS, -⟩ := this
+  calc n = S.card := hS.symm
+    _ ≤ Fintype.card (Fin m) := Finset.card_le_univ S
+    _ = m := Fintype.card_fin m
+
+/-- `hypergraphRamsey r r = r` for any `r`. -/
+theorem hypergraphRamsey_self (r : ℕ) : hypergraphRamsey r r = r := by
+  have h_mem : r ∈ { m | ∀ (c : Finset (Fin m) → Bool),
+      ∃ (S : Finset (Fin m)), S.card = m ∧
+        ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color } := by
+    intro c
+    refine ⟨Finset.univ, ?_, c Finset.univ, ?_⟩
+    · simp [Fintype.card_fin]
+    · intro e _ he_card
+      congr 1
+      exact Finset.eq_univ_of_card e (he_card.trans (Fintype.card_fin r).symm)
+  refine le_antisymm (Nat.sInf_le h_mem) (le_hypergraphRamsey r r ⟨r, h_mem⟩)
+
 end Combinatorics
