@@ -23,7 +23,6 @@ import Mathlib.Data.Nat.Lattice
 This file defines the `r`-uniform hypergraph Ramsey number `R_r(n)`.
 -/
 
-
 namespace Combinatorics
 
 /--
