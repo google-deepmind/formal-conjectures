@@ -24,6 +24,7 @@ Published in Discrete Mathematics 92 (1991) 85–88.
 
 open BigOperators
 open Classical
+open scoped Finset
 
 /-- A sequence of natural numbers is **compact** on a set `S` if consecutive terms at distance
 `2` differ by `1` for all `k ∈ S`. -/
@@ -36,7 +37,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- The number of vertices of `G` having degree `d`. -/
 noncomputable def degreeFreq (G : SimpleGraph α) (d : ℕ) : ℕ :=
-  (Finset.univ.filter fun v : α => G.degree v = d).card
+  #{v | G.degree v = d}
 
 
 
@@ -74,8 +75,8 @@ lemma lemma2_a
     (h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ i, d (i + 2) ≠ d i) :
     2 * n * n ≤
-      (∑ i ∈ Finset.Icc (2 * n + 1) (4 * n), d i) -
-        (∑ i ∈ Finset.Icc 1 (2 * n), d i) := by
+      (∑ i ∈ .Icc (2 * n + 1) (4 * n), d i) -
+        ∑ i ∈ .Icc 1 (2 * n), d i := by
   sorry
 
 /-- **Lemma 2 (b)**
@@ -86,8 +87,8 @@ lemma lemma2_b
     (h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ i, d (i + 2) ≠ d i) :
     2 * n * n + 2 * n + 1 ≤
-      (∑ i ∈ Finset.Icc (2 * n + 1) (4 * n + 1), d i) -
-        (∑ i ∈ Finset.Icc 1 (2 * n), d i) := by
+      (∑ i ∈ .Icc (2 * n + 1) (4 * n + 1), d i) -
+        ∑ i ∈ .Icc 1 (2 * n), d i := by
   sorry
 
 /-- **Lemma 2 (c)**
@@ -98,8 +99,8 @@ lemma lemma2_c
     (h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ i, d (i + 2) ≠ d i) :
     2 * n * n + 2 * n ≤
-      (∑ i ∈ Finset.Icc (2 * n + 2) (4 * n + 2), d i) -
-        (∑ i ∈ Finset.Icc 1 (2 * n + 1), d i) := by
+      (∑ i ∈ .Icc (2 * n + 2) (4 * n + 2), d i) -
+        ∑ i ∈ .Icc 1 (2 * n + 1), d i := by
   sorry
 
 /-- **Lemma 2 (d)**
@@ -110,8 +111,8 @@ lemma lemma2_d
     (h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ i, d (i + 2) ≠ d i) :
     2 * n * n + 4 * n + 2 ≤
-      (∑ i ∈ Finset.Icc (2 * n + 2) (4 * n + 3), d i) -
-        (∑ i ∈ Finset.Icc 1 (2 * n + 1), d i) := by
+      (∑ i ∈ .Icc (2 * n + 2) (4 * n + 3), d i) -
+        ∑ i ∈ .Icc 1 (2 * n + 1), d i := by
   sorry
 
 end lemmas
@@ -150,8 +151,7 @@ triangle-free graph whose new part has minimum degree at least
 `2 n` and `f = 3`. -/
 @[category research solved, AMS 5]
 lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 3) (v : α) :
-    ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : α ↪ β),
-      (∀ u w, G.Adj u w ↔ H.Adj (i u) (i w)) ∧
+    ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : G ↪g H),
       H.degree (i v) = G.degree v + 1 ∧
       (∀ w ≠ v, H.degree (i w) = G.degree w) ∧
       let J := H.induce (Set.compl (Set.range i))
@@ -162,8 +162,8 @@ lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 3) (
 with `f = 3`. -/
 @[category research solved, AMS 5]
 theorem theorem2 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.CliqueFree 3) :
-    ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : α ↪ β),
-      (∀ u w, G.Adj u w ↔ H.Adj (i u) (i w)) ∧ H.CliqueFree 3 ∧ f H = 3 := by
+    ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : G ↪g H),
+      H.CliqueFree 3 ∧ f H = 3 := by
   sorry
 
 /-- `F n` is the smallest number of vertices of a triangle-free graph
