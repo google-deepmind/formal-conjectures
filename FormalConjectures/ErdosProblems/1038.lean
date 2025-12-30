@@ -22,27 +22,30 @@ import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 
 *Reference:*
  - [erdosproblems.com/1038](https://www.erdosproblems.com/1038)
+ - [Tao25] Tao, Terence. Sublevel Sets of Logarithmic Potentials. Terry Tao’s Blog, Dec. 2025
+  (https://terrytao.wordpress.com/wp-content/uploads/2025/12/erdos-1038-1.pdf)
 -/
 
+open scoped Real ENNReal
 open MeasureTheory
 
 namespace Erdos1038
 
 /-- What is the infimum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` of degree `n`
 with `n` roots in `[-1,1]`? -/
-@[category research open, AMS 60]
-theorem erdos_1038.inf (n : ℕ) : answer(sorry) =
-    ⨅ f : {f : Polynomial ℝ // f.IsMonicOfDegree n ∧
-    (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = n},
+@[category research open, AMS 28]
+theorem erdos_1038.inf (n : ℕ) : 2 * 2 ^ (1 / 2) =
+    ⨆ f : {f : Polynomial ℝ // f.Monic ∧
+    (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
     volume {x | |f.1.eval x| < 1} := by
   sorry
 
-/-- What is the supremum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` of degree `n`
-with `n` roots in `[-1,1]`? -/
-@[category research open, AMS 60]
-theorem erdos_1038.sup (n : ℕ) : answer(sorry) =
-    ⨆ f : {f : Polynomial ℝ // f.IsMonicOfDegree n ∧
-    (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = n},
+/-- The supremum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` with all
+its roots contained in `[-1,1]` is  `2 * 2 ^ (1 / 2)`. This is proved in [Tao25]. -/
+@[category research solved, AMS 28]
+theorem erdos_1038.sup (n : ℕ) : 2 * 2 ^ (1 / 2) =
+    ⨆ f : {f : Polynomial ℝ // f.Monic ∧
+    (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
     volume {x | |f.1.eval x| < 1} := by
   sorry
 
