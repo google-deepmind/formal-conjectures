@@ -44,7 +44,6 @@ points in `s` at distance exactly `1` is at most `C * n^{4/3}`, where `n = card 
 @[category research open, AMS 52]
 theorem erdos_1084 :
   ∃ C : ℝ,
-    0 ≤ C ∧
     ∀ s : Finset (EuclideanSpace ℝ (Fin 2)),
       (∀ ⦃x y⦄, x ∈ s → y ∈ s → x ≠ y → dist x y ≥ 1) →
       ((s.product s).filter
