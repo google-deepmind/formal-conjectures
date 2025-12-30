@@ -38,8 +38,7 @@ noncomputable def countUnitDistancePairs (d : ℕ) (S : Finset (EuclideanSpace �
   #{s \in S.sym2 | dist s.out.1 s.out.2 = 1}
 
 /--
-The minimal value f_d(n) such that for any set of n points in ℝ^d, there exist at most f_d(n)
-pairs of points which are distance 1 apart.
+The maximal number of pairs of points which are distance 1 apart that a set of `n` points in `ℝ^d` make.
 -/
 noncomputable def f_d (d n : ℕ) : ℕ :=
   ⨆ (S : Finset (EuclideanSpace ℝ (Fin d))) (_ : S.card = n), countUnitDistancePairs d S
