@@ -31,7 +31,7 @@ open Filter
 namespace Erdos513
 
 noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
-  (⨆ n, ‖iteratedDeriv n f 0 * ((n)! : ℝ)⁻¹ * r ^ n‖) / (⨆ z : {z : ℂ // ‖z‖ = r}, ‖f z‖)
+  (⨆ n, ‖iteratedDeriv n f 0 * (n ! : ℝ)⁻¹ * r ^ n‖) / (⨆ z : {z : ℂ // ‖z‖ = r}, ‖f z‖)
 
 /-- Let `f` be a transcendental entire function. What is the greatest possible value of
 `liminf (fun r : ℝ => ratio r f) atTop`? -/
