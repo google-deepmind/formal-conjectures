@@ -16,8 +16,6 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 import FormalConjectures.ForMathlib.Combinatorics.Ramsey
 
-open Asymptotics
-
 /-!
 # Erdős Problem 562
 
@@ -32,6 +30,9 @@ a tower of exponentials of height $r-1$?
 
 *Reference:* [erdosproblems.com/562](https://www.erdosproblems.com/562)
 -/
+
+open Combinatorics Filter Real
+open scoped Asymptotics
 
 namespace Erdos562
 
