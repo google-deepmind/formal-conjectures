@@ -56,7 +56,7 @@ noncomputable section
 
 namespace CatchUp
 
-/-
+/--
 An arbitrary two elements type indexing the players in the Catch-Up game.
 -/
 inductive Player | p1 | p2
@@ -90,11 +90,11 @@ def Outcome.best (os : List Outcome) : Outcome :=
     | _,     _     => .loss) .loss
 
 
-/-
+/-!
 Define the recursive game value functions.
 -/
 
-/-
+/--
 `value remaining s_me s_opp isFirstMove` evaluates the position where:
 
 * `remaining` is the set `S'` of numbers not yet taken.
@@ -113,16 +113,16 @@ once they catch up (score ≥ opponent), the turn ends and we swap players.
 -/
 noncomputable def valueAux (remaining : Finset ℕ) (s_me s_opp : ℕ) (isFirstMove : Bool) : Outcome :=
   -- If no numbers remain, the game is over. Compare final scores.
-  if h : remaining = ∅ then
+  if remaining = ∅ then
     if s_me > s_opp then
       -- Current player ends with strictly larger score.
-      Outcome.win
+      .win
     else if s_opp > s_me then
       -- Opponent ends with strictly larger score.
-      Outcome.loss
+      .loss
     else
       -- Scores are equal.
-      Outcome.draw
+      .draw
   else
     -- Terminal rule / pruning:
     -- If even taking *all* remaining numbers would still leave the current player behind,
@@ -130,12 +130,12 @@ noncomputable def valueAux (remaining : Finset ℕ) (s_me s_opp : ℕ) (isFirstM
     -- By the rules, the current player takes everything and the game ends immediately,
     -- but under this inequality they must still lose.
     if s_me + remaining.sum (fun x => x) < s_opp then
-      Outcome.loss
+      .loss
     else
       -- Otherwise, the current player can pick some `$x \in$ remaining`.
       -- We evaluate every possible next pick under optimal play, then take the best outcome.
       let moves := remaining.attach.toList
-      let outcomes := moves.map (fun ⟨x, hx⟩ =>
+      let outcomes := moves.map (fun ⟨x, _⟩ =>
         -- Take `x`: update current player's score and remove `x` from the set.
         let s_me' := s_me + x
         let remaining' := remaining.erase x
@@ -160,15 +160,14 @@ noncomputable def valueAux (remaining : Finset ℕ) (s_me s_opp : ℕ) (isFirstM
             valueAux remaining' s_me' s_opp false
       )
       -- Optimal play: choose the best outcome among all legal next picks.
-      Outcome.best outcomes
+      .best outcomes
 termination_by remaining.card
 decreasing_by
-  classical
   all_goals
-    simpa [remaining'] using Finset.card_erase_lt_of_mem hx
+    simpa [remaining'] using Finset.card_erase_lt_of_mem ‹_›
 
 /-- Public API: The game-theoretic value of Catch-Up on the set `S`, assuming optimal play.
-    Returns `.win` if player 1 wins, `.loss` if player 2 wins, `.draw` if the game is tied. -/
+Returns `.win` if player 1 wins, `.loss` if player 2 wins, `.draw` if the game is tied. -/
 noncomputable def value (S : Finset ℕ) : Outcome :=
   valueAux S 0 0 true
 
@@ -177,7 +176,7 @@ Let \(T_N = \sum_{k=1}^{N} k = \frac{N(N+1)}{2}\).
 If \(T_N\) is even (equivalently \(N \equiv 0 \pmod 4\) or \(N \equiv 3 \pmod 4\)),
 then under optimal play the game `Catch-Up(\(\{1, \ldots, N\}\))` ends in a draw.
 -/
-@[category research open, AMS 91 11]
+@[category research open, AMS 11 91]
 theorem value_of_even_mul_succ_self_div_two (N : ℕ) (h_even : Even (N * (N + 1) / 2)) :
     value (.Icc 1 N) = .draw := by
   sorry
