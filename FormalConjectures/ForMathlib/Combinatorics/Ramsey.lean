@@ -26,8 +26,6 @@ This file defines the `r`-uniform hypergraph Ramsey number `R_r(n)`.
 
 namespace Combinatorics
 
-
-
 /--
 The `r`-uniform hypergraph Ramsey number `R_r(n)`.
 The smallest natural number `m` such that every 2-coloring of the `r`-subsets of a set of size `m`
