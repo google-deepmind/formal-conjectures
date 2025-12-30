@@ -55,7 +55,12 @@ lemma lemma1_a
     (h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ k, d (k + 2) ≠ d k) :
     1 ≤ d (k + 2) - d k := by
-  sorry
+  rw [Nat.one_le_iff_ne_zero]
+  intro h
+  rw [Nat.sub_eq_zero_iff_le] at h
+  have h' : d k ≤ d (k + 2) := h_mono (le_add_of_nonneg_right (Nat.zero_le 2))
+  have h_eq : d (k + 2) = d k := le_antisymm h h'
+  exact h_no_three k h_eq
 
 /-- **Lemma 1 (b)**
 If a sequence `d` is nondecreasing and no three terms are equal, then terms at distance `2 * r` differ by at least `r`. -/
