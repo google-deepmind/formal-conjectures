@@ -17,6 +17,13 @@ import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Nat.Lattice
 
+/-!
+# Hypergraph Ramsey Numbers
+
+This file defines the `r`-uniform hypergraph Ramsey number `R_r(n)`.
+-/
+
+
 namespace Combinatorics
 
 
