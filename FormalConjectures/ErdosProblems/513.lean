@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open scoped Nat Real
-open Filter
+open Filter Polynomial
 
 namespace Erdos513
 
