@@ -46,9 +46,7 @@ theorem erdos_1084 :
   ∃ C : ℝ,
     ∀ s : Finset (EuclideanSpace ℝ (Fin 2)),
       (s.toSet.Pairwise (1 \le dist \. \.)) →
-      ((s.product s).filter
-        (fun p => p.1 ≠ p.2 ∧ dist p.1 p.2 = 1)).card 
-        ≤ C * (s.card : ℝ) ^ (4 / 3) := by
+      #{p \in s.offDiag | dist p.1 p.2 = 1} ≤ C * #s ^ (4 / 3) := by
   sorry
 
 end Erdos1084
