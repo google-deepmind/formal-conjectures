@@ -44,7 +44,7 @@ points in `s` at distance exactly `1` is at most `C * n^{4/3}`, where `n = card 
 @[category research open, AMS 52]
 theorem erdos_1084 :
   ∃ C : ℝ,
-    ∀ s : Finset (EuclideanSpace ℝ (Fin 2)),
+    ∀ s : Finset ℝ\^2,
       (s.toSet.Pairwise (1 \le dist \. \.)) →
       #{p \in s.offDiag | dist p.1 p.2 = 1} ≤ C * #s ^ (4 / 3) := by
   sorry
