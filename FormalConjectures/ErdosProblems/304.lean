@@ -23,45 +23,47 @@ import FormalConjectures.Util.ProblemImports
 
 open Asymptotics Filter
 
+namespace Erdos304
+
 /--
 The set of `k` for which `a / b` can be expressed as a sum of `k` distinct unit fractions.
 -/
 def unitFractionExpressible (a b : ℕ) : Set ℕ :=
   {k | ∃ s : Finset ℕ, s.card = k ∧ (∀ n ∈ s, n > 1) ∧ (a / b : ℚ) = ∑ n ∈ s, (n : ℚ)⁻¹}
 
-@[category API, simp]
+@[category API, simp, AMS 11]
 lemma zero_mem_unitFractionExpressible_iff {a b : ℕ} :
     0 ∈ unitFractionExpressible a b ↔ a = 0 ∨ b = 0 := by
   simp_all [unitFractionExpressible]
 
-@[category API]
+@[category API, AMS 11]
 lemma unitFractionExpressible_of_zero {a b : ℕ} (h : a = 0 ∨ b = 0) :
     unitFractionExpressible a b = {0} := by
   simp only [Set.eq_singleton_iff_unique_mem, zero_mem_unitFractionExpressible_iff, *]
   have : (a / b : ℚ) = 0 := by simpa
-  simp only [unitFractionExpressible, gt_iff_lt, CharP.cast_eq_zero, div_zero, Set.mem_setOf_eq,
-    forall_exists_index, and_imp, true_and, or_true, this]
+  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_setOf_eq, forall_exists_index, and_imp,
+    true_and, this]
   rintro _ s rfl hs h
   rw [eq_comm, Finset.sum_eq_zero_iff_of_nonneg (fun i hi ↦ by positivity)] at h
   simp only [inv_eq_zero, Nat.cast_eq_zero] at h
-  rw [Finset.card_eq_zero, Finset.eq_empty_iff_forall_not_mem]
+  rw [Finset.card_eq_zero, Finset.eq_empty_iff_forall_notMem]
   intro i hi
   linarith [h i hi, hs i hi]
 
-@[category API]
+@[category API, AMS 11]
 lemma unitFractionExpressible_zero_left {b : ℕ} :
     unitFractionExpressible 0 b = {0} := unitFractionExpressible_of_zero (by simp)
 
-@[category API]
+@[category API, AMS 11]
 lemma unitFractionExpressible_zero_right {a : ℕ} :
     unitFractionExpressible a 0 = {0} := unitFractionExpressible_of_zero (by simp)
 
-@[category API]
+@[category API, AMS 11]
 lemma zero_notMem_unitFractionExpressible {a b : ℕ} :
     0 ∉ unitFractionExpressible a b ↔ a ≠ 0 ∧ b ≠ 0 := by
   simp_all [unitFractionExpressible]
 
-@[category API]
+@[category API, AMS 11]
 lemma eq_inv_of_one_mem_unitFractionExpressible {a b : ℕ}
     (h : 1 ∈ unitFractionExpressible a b) : ∃ m : ℕ, 1 < m ∧ (a / b : ℚ) = (m : ℚ)⁻¹ := by
   simp only [unitFractionExpressible, gt_iff_lt, Set.mem_setOf_eq, Finset.card_eq_one] at h
@@ -69,7 +71,7 @@ lemma eq_inv_of_one_mem_unitFractionExpressible {a b : ℕ}
   simp only [Finset.mem_singleton, forall_eq, Finset.sum_singleton] at h₁ h₂
   use m
 
-@[category API]
+@[category API, AMS 11]
 lemma dvd_of_one_mem_unitFractionExpressible {a b : ℕ}
     (h : 1 ∈ unitFractionExpressible a b) : a ∣ b := by
   obtain ⟨m, hm₁, hm⟩ := eq_inv_of_one_mem_unitFractionExpressible h
@@ -82,13 +84,13 @@ lemma dvd_of_one_mem_unitFractionExpressible {a b : ℕ}
   exact mod_cast hm.symm
 
 /-- Let $$N(a, b)$$, denoted here by `smallestCollection a b` be the minimal k such that there
-exist integers $1 < n_1 < n_2 < ... < n_k$ with
+exist integers $1 < n_1 < n_2 < \dots < n_k$ with
 $$\frac{a}{b} = \sum_{i=1}^k \frac{1}{n_i}$$ -/
 noncomputable def smallestCollection (a b : ℕ) : ℕ := sInf (unitFractionExpressible a b)
 
 -- in fact `(unitFractionExpressible a b).Nonempty` should always be true, but we do not prove it
 -- for now
-@[category API]
+@[category API, AMS 11]
 lemma smallestCollection_pos {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
     (h : (unitFractionExpressible a b).Nonempty) :
     0 < smallestCollection a b := by
@@ -97,7 +99,7 @@ lemma smallestCollection_pos {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
   have : 0 ∈ unitFractionExpressible a b := h' ▸ Nat.sInf_mem h
   simp_all
 
-@[category API]
+@[category API, AMS 11]
 lemma smallestCollection_left_one (b : ℕ) (hb : 1 < b) : smallestCollection 1 b = 1 := by
   have : 1 ∈ unitFractionExpressible 1 b := ⟨{b}, by simpa⟩
   have : smallestCollection 1 b ≤ 1 := Nat.sInf_le this
@@ -105,23 +107,23 @@ lemma smallestCollection_left_one (b : ℕ) (hb : 1 < b) : smallestCollection 1 
   have : smallestCollection 1 b ≠ 0 := ne_of_mem_of_not_mem (Nat.sInf_mem ⟨_, ‹_›⟩) this
   omega
 
-@[category API]
+@[category API, AMS 11]
 lemma eq_one_of_smallestCollection_eq_one {a b : ℕ}
     (h : smallestCollection a b = 1) : ∃ m : ℕ, 1 < m ∧ (a / b : ℚ) = (m : ℚ)⁻¹ := by
   have : 1 ∈ unitFractionExpressible a b := h ▸ Nat.sInf_mem (Nat.nonempty_of_sInf_eq_succ h)
   apply eq_inv_of_one_mem_unitFractionExpressible this
 
-@[category API]
+@[category API, AMS 11]
 lemma dvd_of_smallestCollection_eq_one {a b : ℕ}
     (h : smallestCollection a b = 1) : a ∣ b := by
   have : 1 ∈ unitFractionExpressible a b := h ▸ Nat.sInf_mem (Nat.nonempty_of_sInf_eq_succ h)
   apply dvd_of_one_mem_unitFractionExpressible this
 
-@[category test]
+@[category test, AMS 11]
 lemma smallestCollection_two_fifteen : smallestCollection 2 15 = 2 := by
   have h : 2 ∈ unitFractionExpressible 2 15 := by
     use {10, 30}
-    norm_num [Finset.card_insert_of_not_mem, Finset.card_singleton]
+    norm_num [Finset.card_insert_of_notMem, Finset.card_singleton]
   have : smallestCollection 2 15 ≤ 2 := Nat.sInf_le h
   have : 0 < smallestCollection 2 15 := smallestCollection_pos (by simp) (by simp) ⟨_, h⟩
   have : smallestCollection 2 15 ≠ 1 := by
@@ -172,3 +174,5 @@ theorem upper_bound :
     (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop]
       (fun b : ℕ => Real.log (Real.log b)) ↔ answer(sorry) := by
   sorry
+
+end Erdos304

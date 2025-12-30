@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
+namespace Erdos463
+
 /--
 Is there a function $f$ with $f(n)\to\infty$ as $n\to\infty$ such that,
 for all large $n$, there is a composite number $m$ such that
@@ -35,6 +37,8 @@ Here $p(m)$ is the least prime factor of $m$.
 @[category research open, AMS 11]
 theorem erdos_463 : (∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
     ∀ᶠ n in atTop,
-      ∃ m, ¬m.Prime ∧
+      ∃ m, m.Composite ∧
         n + f n < m ∧ m < n + m.minFac) ↔ answer(sorry) := by
   sorry
+
+end Erdos463

@@ -22,33 +22,20 @@ open scoped Topology
 *Reference:* [erdosproblems.com/442](https://www.erdosproblems.com/442)
 -/
 
-open Filter
+namespace Erdos442
 
-noncomputable section
+open Filter Erdos442
 
 section Prelims
-
-namespace Real
 
 /--
 The function $\operatorname{Log} x := \max\{log x, 1\}$.
 -/
-def maxLogOne (x : ℝ) := max x.log 1
-
-end Real
+noncomputable def Real.maxLogOne (x : ℝ) := max x.log 1
 
 namespace Set
 
 variable (A : Set ℕ) (x : ℝ)
-
-local instance : Fintype <| ↑(A ∩ Set.Icc 1 ⌊x⌋₊) :=
-  Set.finite_Icc 1 ⌊x⌋₊ |>.inter_of_right A |>.fintype
-
-/--
-If `A` is a set of natural numbers, then `A.bdd x` is the finite
-set `{n ∈ A | n ≤ x}`.
--/
-private def bdd : Finset ℕ := (A ∩ Set.Icc 1 ⌊x⌋₊).toFinset
 
 /--
 If `A` be a set of natural numbers and let `x` be real, then
@@ -56,8 +43,12 @@ If `A` be a set of natural numbers and let `x` be real, then
 of elements of `A` that are `≤ x`. Specifically, it is the set
 `{(n, m) | n ∈ A, n ≤ x, m ∈ A, m ≤ x, n < m}`
 -/
-private def bddProdUpper : Finset (ℕ × ℕ) :=
-  (A.bdd x ×ˢ A.bdd x).filter fun (n, m) => n < m
+@[inline]
+abbrev bddProdUpper : Set (ℕ × ℕ) :=
+  {y ∈ A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊ | y.fst < y.snd}
+
+noncomputable instance : Fintype (A.bddProdUpper x) := Set.Finite.fintype <|
+  (Set.finite_interIcc.prod Set.finite_interIcc).subset (fun _ ha ↦ ha.left)
 
 end Set
 
@@ -88,9 +79,9 @@ Note: the informal and formal statements follow the solution paper https://arxiv
 @[category research solved, AMS 11]
 theorem erdos_442 : (∀ (A : Set ℕ),
     Tendsto (fun (x : ℝ) =>
-      1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.bdd x, (1 : ℝ) / n) atTop atTop →
-    Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 *
-      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(True) := by
+      1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) atTop atTop →
+    Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 *
+      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(False) := by
   sorry
 
 /--
@@ -113,9 +104,11 @@ $$
 @[category research solved, AMS 11]
 theorem erdos_442.variants.tao :
     ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : f =o[atTop] (1 : ℝ → ℝ)),
-      ∀ (x : ℝ),
-        ∑ n ∈ A.bdd x, (1 : ℝ) / n =
+      ∀ᶠ (x : ℝ) in atTop,
+        ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
-        |∑ nm ∈ A.bdd x ×ˢ A.bdd x, (1 : ℝ) / nm.1.lcm nm.2| ≤
-          C * (∑ n ∈ A.bdd x, (1 : ℝ) / n) ^ 2 := by
+        |∑ nm ∈ (A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤
+          C * (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 := by
   sorry
+
+end Erdos442

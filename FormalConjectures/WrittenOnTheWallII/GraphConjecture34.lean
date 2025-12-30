@@ -20,7 +20,9 @@ import FormalConjectures.Util.ProblemImports
 open Finset
 open scoped Classical
 
-namespace SimpleGraph
+namespace WrittenOnTheWallII.GraphConjecture34
+
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -32,8 +34,8 @@ Then
 `path(G) ≥ ceil( distavg(G, center) + distavg(G, maxEccentricityVertices G) )`.
 -/
 @[category research open, AMS 5]
-theorem conjecture34 [Nonempty α] (G : SimpleGraph α) (h_conn : G.Connected) :
+theorem conjecture34 [Nontrivial α] (G : SimpleGraph α) (h_conn : G.Connected) :
     Int.ceil (distavg G (graphCenter G) + distavg G (maxEccentricityVertices G)) ≤ (path G : ℤ) := by
   sorry
 
-end SimpleGraph
+end WrittenOnTheWallII.GraphConjecture34

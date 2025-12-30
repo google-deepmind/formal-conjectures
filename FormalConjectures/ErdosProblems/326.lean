@@ -26,6 +26,8 @@ open Filter
 
 open scoped Topology
 
+namespace Erdos326
+
 /--
 Let $A \subset \mathbb{N}$ be an additive basis of order 2.
 
@@ -48,3 +50,5 @@ theorem erdos_326.variants.eq :
     ∃ (a : ℕ → ℕ) (_ : StrictMono a) (_ : Set.range a |>.IsAddBasisOfOrder 2) (x : ℝ) (_ : 0 < x),
       Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x) :=
   sorry
+
+end Erdos326

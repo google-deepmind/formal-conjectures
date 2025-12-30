@@ -21,26 +21,18 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/846](https://www.erdosproblems.com/846)
 -/
-open scoped EuclideanGeometry
+open EuclideanGeometry
 
-def Triplewise {α : Type*} (s : Set α) (r : α → α → α → Prop) : Prop :=
-  ∀ ⦃x⦄, x ∈ s → ∀ ⦃y⦄, y ∈ s → ∀ ⦃z⦄, z ∈ s → x ≠ y → y ≠ z → x ≠ z → r x y z
-
+namespace Erdos846
 
 section Prelims
 open Classical
-
-/--We say a subset `A` of points in the plane is non-trilinear if
-it contains no three points that lie on the same line.-/
-def NonTrilinear (A : Set ℝ²) : Prop := ∀ᵉ (x ∈ A) (y ∈ A) (z ∈ A),
-  Triplewise A (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
-
 
 /--We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
 `B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`.-/
 def NonTrilinearFor (A : Set ℝ²) (ε : ℝ) : Prop :=
   ∀ (B : Finset ℝ²), B.toSet ⊆ A → ∃ C ⊆ B,
-    ε * B.card ≤ C.card ∧ NonTrilinear A
+    ε * B.card ≤ C.card ∧ NonTrilinear C.toSet
 
 /--We say a subset `A` of points in the plane is weakly non-trilinear if it is
 a finite union of non-trilinear sets.-/
@@ -62,3 +54,5 @@ plane is weakly non-trilinar.
 theorem erdos_846 : (∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
     WeaklyNonTrilinear A) ↔ answer(sorry) := by
   sorry
+
+end Erdos846

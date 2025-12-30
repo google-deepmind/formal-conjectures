@@ -22,11 +22,13 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gilbreath%27s_conjecture)
 -/
 
+namespace Gilbreath
+
 /--
 **Gilbreath's nth difference**, $d^n$
 Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
 -/
-noncomputable def Gilbreath.d : ℕ → (ℕ → ℕ)
+noncomputable def d : ℕ → (ℕ → ℕ)
   | 0 => fun n ↦ n.nth Nat.Prime
   | k + 1 => fun n ↦ Int.natAbs (d k (n + 1) - d k n)
 
@@ -39,3 +41,5 @@ Gilbreath's conjecture states that every term in the sequence $d^k_0$ for $k > 0
 @[category research open, AMS 11]
 theorem gilbreath_conjecture (k : ℕ+) : d k 0 = 1 := by
   sorry
+
+end Gilbreath

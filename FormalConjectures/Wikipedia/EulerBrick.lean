@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [stackexchange](https://math.stackexchange.com/questions/2264401/euler-bricks-and-the-4th-dimension)
 -/
 
+namespace EulerBrick
+
 /--
 An **Euler brick** is a rectangular cuboid where all edges and face diagonals have integer lengths.
 -/
@@ -37,7 +39,7 @@ def IsPerfectCuboid (a b c : ℕ+) : Prop :=
   IsEulerBrick a b c ∧ IsSquare (a^2 + b^2 + c^2)
 
 /--
-Generalization of an Euler brick to n-dimensional space.
+Generalization of an Euler brick to $n$-dimensional space.
 -/
 def IsEulerHyperBrick (n : ℕ) (sides : Fin n → ℕ+) : Prop :=
   Pairwise fun i j ↦ IsSquare ((sides i)^2 + (sides j)^2)
@@ -51,7 +53,7 @@ theorem perfect_euler_brick_existence :
   sorry
 
 /--
-Is there an Euler brick in 4-dimensional space?
+Is there an Euler brick in $4$-dimensional space?
 -/
 @[category research open, AMS 11]
 theorem four_dim_euler_brick_existence :
@@ -59,9 +61,11 @@ theorem four_dim_euler_brick_existence :
   sorry
 
 /--
-Is there an Euler brick in n-dimensional space for any n > 3?
+Is there an Euler brick in $n$-dimensional space for any $n > 3$?
 -/
 @[category research open, AMS 11]
 theorem n_dim_euler_brick_existence :
     (∀ n > 3, ∃ sides : Fin n → ℕ+, IsEulerHyperBrick n sides) ↔ answer(sorry) := by
   sorry
+
+end EulerBrick

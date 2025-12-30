@@ -24,8 +24,10 @@ import FormalConjectures.Util.ProblemImports
 
 open Finset
 
+namespace Oppermann
+
 /--
-For every integer `x ≥ 2` there exists a prime between `x(x-1)` and `x²`.
+For every integer $x \ge 2$ there exists a prime between $x(x-1)$ and $x^2$.
 -/
 @[category research open, AMS 11]
 theorem oppermann_conjecture.parts.i (x : ℕ) (hx : 2 ≤ x) :
@@ -33,7 +35,7 @@ theorem oppermann_conjecture.parts.i (x : ℕ) (hx : 2 ≤ x) :
   sorry
 
 /--
-For every integer `x ≥ 2` there exists a prime between `x²` and `x(x+1)`.
+For every integer $x \ge 2$ there exists a prime between $x^2$ and $x(x+1)$.
 -/
 @[category research open, AMS 11]
 theorem oppermann_conjecture.parts.ii (x : ℕ) (hx : 2 ≤ x) :
@@ -42,9 +44,9 @@ theorem oppermann_conjecture.parts.ii (x : ℕ) (hx : 2 ≤ x) :
 
 /--
 **Oppermann's Conjecture**:
-For every integer `x ≥ 2`, the following hold:
-- There exists a prime between `x * (x-1)` and `x ^ 2`.
-- There exists a prime between `x ^ 2` and `x * (x+1)`.
+For every integer $x \ge 2$, the following hold:
+- There exists a prime between $x(x-1)$ and $x^2$.
+- There exists a prime between $x^2$ and $x(x+1)$.
 -/
 @[category research open, AMS 11]
 theorem oppermann_conjecture (x : ℕ) (hx : 2 ≤ x) :
@@ -65,3 +67,5 @@ theorem oppermann_implies_brocard (n : ℕ) (hn : 1 ≤ n) (P : type_of% opperma
 theorem oppermann_implies_legendre (n : ℕ) (hn : 1 ≤ n) (P : type_of% oppermann_conjecture) :
     ∃ p ∈ Ioo (n ^ 2) ((n + 1) ^ 2), p.Prime := by
   sorry
+
+end Oppermann

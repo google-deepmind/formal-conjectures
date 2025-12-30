@@ -22,6 +22,10 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/307](https://www.erdosproblems.com/307)
 -/
 
+namespace Erdos307
+
+open scoped Finset
+
 /--
 Are there two finite set of primes $P$ and $Q$ such that
 
@@ -42,8 +46,10 @@ theorem erdos_307 : (∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ (∀ q ∈
 /--
 Instead of asking for sets of primes, ask only that all primes in the sets be relatively coprime.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_307_coprime : (∃ P Q : Finset ℕ, P.toSet.Pairwise Nat.Coprime ∧
-    Q.toSet.Pairwise Nat.Coprime ∧
+@[category research solved, AMS 5 11]
+theorem erdos_307_coprime : (∃ P Q : Finset ℕ, 1 < #P ∧ 1 < #Q ∧ Set.Pairwise P Nat.Coprime ∧
+    Set.Pairwise Q Nat.Coprime ∧
     (1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹))) ↔ answer(sorry) := by
   sorry
+
+end Erdos307

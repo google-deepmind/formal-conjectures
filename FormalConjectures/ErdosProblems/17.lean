@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Asymptotics Real
 
+namespace Erdos17
+
 /-- A prime $p$ is a cluster prime if every even natural number
 $n \le p - 3$ can be written as a difference of two primes
 $q_1 - q_2$ with $q_1, q_2 \le p$. -/
@@ -70,5 +72,7 @@ theorem erdos_17.variants.upper_Elsholtz :
 
 /-- $97$ is the smallest prime that is not a cluster prime. -/
 @[category test, AMS 11]
-example : IsLeast {p : ℕ | p.Prime ∧ ¬ IsClusterPrime p} 97 := by
+theorem isClusterPrime_97_isLeast_non_cluster : IsLeast {p : ℕ | p.Prime ∧ ¬ IsClusterPrime p} 97 := by
   sorry
+
+end Erdos17

@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.Linters.CategoryLinter
 
+namespace CategoryLinter
+
 --Definitions aren't required to have a category attribute
 #guard_msgs in
 def foo : Nat := 1
@@ -70,3 +72,5 @@ theorem test_1 : 1 + 1 = 2 := by
 @[category research open, simp]
 theorem test_3 : 1 + 1 = 2 := by
   rfl
+
+end CategoryLinter

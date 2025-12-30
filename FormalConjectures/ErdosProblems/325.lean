@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Asymptotics Filter
 
+namespace Erdos325
+
 /-- A predicate for $n$ to be the sum of three $k$th powers. -/
 def IsSumThreePower (k n : ℕ) : Prop := ∃ a b c, a ^ k + b ^ k + c ^ k = n
 
@@ -42,7 +44,7 @@ theorem erdos_325 :
 
 /--
 Writing $f_{k, 3}(x)$ for the number of integers $\leq x$ which are the sum of three $k$th powers,
-is it even true that $f_{k, 3}(x) \gg_\epsilon x ^ (3 / k - \epsilon)$?
+is it even true that $f_{k, 3}(x) \gg_{\epsilon} x ^ (3 / k - \epsilon)$?
 -/
 @[category research open, AMS 11]
 theorem erdos_325.variants.weaker :
@@ -58,3 +60,5 @@ For $k = 3$, the best known is due to Wooley [Wo15]
 theorem erdos_325.variants.wooley :
     (fun x : ℕ => (x : ℝ) ^ (0.917 : ℝ)) =O[atTop] (fun x => (cardIsSumThreePowerBelow 3 x : ℝ)) :=
   sorry
+
+end Erdos325

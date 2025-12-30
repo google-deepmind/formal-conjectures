@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [Goldbach's Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture)
 -/
 
+namespace GoldbachConjecture
+
 /--
 Can every even integer greater than 2 be written as the sum of two primes?
 -/
@@ -31,3 +33,21 @@ Can every even integer greater than 2 be written as the sum of two primes?
 theorem goldbach (n : ℕ) (hn : 2 < n) (hn_even : Even n) :
     ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
   sorry
+
+end GoldbachConjecture
+
+namespace TernaryGoldbachConjecture
+
+/--
+Can every odd integer greater than 5 be written as the sum of three primes?
+(A prime may be used more than once.)
+
+NB. While Harald Helfgott's solution is not published in a peer-reviewed journal yet,
+his results seem generally accepted.
+-/
+@[category research solved, AMS 11]
+theorem ternaryGoldbach (n : ℕ) (hn : 5 < n) (hn_odd : Odd n) :
+    ∃ p q r, Nat.Prime p ∧ Nat.Prime q ∧ Nat.Prime r ∧ n = p + q + r := by
+  sorry
+
+end TernaryGoldbachConjecture

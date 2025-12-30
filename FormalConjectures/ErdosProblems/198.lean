@@ -24,8 +24,10 @@ import FormalConjectures.Util.ProblemImports
 
 open Function Set Nat
 
+namespace Erdos198
+
 /-- Let $V$ be a vector space over the rationals and let $k$ be a fixed
-positive integer. Then there is a set $X_k ⊆ Y$ such that $X_k$ meets
+positive integer. Then there is a set $X_k \subseteq V$ such that $X_k$ meets
 every infinite arithmetic progression in $V$ but $X_k$ intersects every
 $k$-element arithmetic progression in at most two points.
 
@@ -48,7 +50,7 @@ lemma baumgartner_headline (V : Type*) [AddCommGroup V] [Module ℚ V] :
   baumgartner_strong V 3
 
 /--
-If $A ⊆ ℕ$ is a Sidon set then must the complement of $A$ contain an infinite arithmetic
+If $A \subseteq \mathbb{N}$ is a Sidon set then must the complement of $A$ contain an infinite arithmetic
 progression?
 
 Answer "yes" according to remark on page 23 of:
@@ -58,12 +60,12 @@ Answer "yes" according to remark on page 23 of:
 
 
 "Baumgartner also proved the conjecture of Erdös that if $A$ is a sequence of positive integers with
-all sums $a + a'$ distinct for $a, a' ∈ A$ then the complement of $A$ contains an
+all sums $a + a'$ distinct for $a, a' \in A$ then the complement of $A$ contains an
 infinite A.P."
 
 
 But this seems to be a misprint, since the opposite is true:
-There is a sequence of positive integers with all $a + a'$ distinct for $a, a' ∈ A$ such that the
+There is a sequence of positive integers with all $a + a'$ distinct for $a, a' \in A$ such that the
 complement of $A$ contains no infinite A.P., i.e. there is a Sidon set $A$ which intersects all
 arithmetic progressions.
 
@@ -84,3 +86,5 @@ In fact one such sequence is $n! + n$. This was found by AlphaProof. It also fou
 theorem erdos_198.variant_concrete :  ∃ (A : Set ℕ), A = {n ! + n | n} ∧
     IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → (A ∩ Y).Nonempty) := by
   sorry
+
+end Erdos198

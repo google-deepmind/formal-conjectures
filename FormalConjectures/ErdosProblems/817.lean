@@ -24,7 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
-open scoped Classical in
+namespace Erdos817
+
 /-- Define $g_k(n)$ to be the minimal $N$ such that $\{1, ..., N\}$ contains some $A$ of
 size $|A| = n$ such that
 $$
@@ -35,7 +36,7 @@ noncomputable
 def g (k : ℕ) (n : ℕ) : ℕ := sInf { N | ∃ A ⊆ Finset.Icc 1 N, A.card = n ∧
     ∀ s, s ⊆ { ∑ a ∈ B, a | B ∈ A.powerset } → s.IsAPOfLengthFree k}
 
-/-- Let $k\geq 3$. Define $g_k(n)$ to be the minimal $N$ such that
+/-- Let $k \geq 3$. Define $g_k(n)$ to be the minimal $N$ such that
 $\{1, ..., N\}$ contains some $A$ of size $|A| = n$ such that
 $$
   \langle A\rangle = \left\{\sum_{a \in A} \epsilon_a a : \epsilon_a \in\{0, 1\}\right\}
@@ -59,3 +60,5 @@ $$ -/
 theorem erdos_817.variants.bdd_power : ∃ O > (0 : ℝ),
     (fun (n : ℕ) => (3 ^ n : ℝ) / n ^ O) =O[atTop] fun n => (g 3 n : ℝ) := by
   sorry
+
+end Erdos817

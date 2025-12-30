@@ -22,13 +22,15 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Euler's_sum_of_powers_conjecture)
 -/
 
+namespace EulerSumOfPowers
+
 /--
 Euler's sum of powers conjecture states that for integers $n > 1$ and $k > 1$,
 if the sum of $n$ positive integers each raised to the $k$-th power equals another integer
-raised to the $k$-th power, then $n \geq k$.
+raised to the $k$-th power, then $n ≥ k$.
 
 The conjecture is known to be false for $k = 4$ and $k = 5$,
-but remains open for $k \geq 6$.
+but remains open for $k ≥ 6$.
 -/
 @[category research open, AMS 11]
 theorem eulers_sum_of_powers_conjecture (n k b : ℕ) (hn : 1 < n) (hk : 5 < k) (a : Fin n → ℕ)
@@ -36,8 +38,8 @@ theorem eulers_sum_of_powers_conjecture (n k b : ℕ) (hn : 1 < n) (hk : 5 < k) 
   sorry
 
 @[category research solved, AMS 11]
-theorem eulers_sum_of_powers_conjecture.false_for_k4 : ¬ (∀ (n b : ℕ) (hn : 1 < n)
-    (a: Fin n → ℕ) (ha : ∀ i, a i > 0) (hsum : ∑ i, (a i) ^ 4 = b ^ 4), 4 ≤ n) := by
+theorem eulers_sum_of_powers_conjecture.false_for_k4 : ¬ (∀ (n b : ℕ) (_ : 1 < n)
+    (a: Fin n → ℕ) (_ : ∀ i, a i > 0) (_ : ∑ i, (a i) ^ 4 = b ^ 4), 4 ≤ n) := by
   push_neg
   use 3, 422481
   norm_num
@@ -45,10 +47,12 @@ theorem eulers_sum_of_powers_conjecture.false_for_k4 : ¬ (∀ (n b : ℕ) (hn :
   decide
 
 @[category research solved, AMS 11]
-theorem eulers_sum_of_powers_conjecture.false_for_k5 : ¬ (∀ (n b : ℕ) (hn : 1 < n)
-    (a: Fin n → ℕ) (ha : ∀ i, a i > 0) (hsum : ∑ i, (a i) ^ 5 = b ^ 5), 5 ≤ n) := by
+theorem eulers_sum_of_powers_conjecture.false_for_k5 : ¬ (∀ (n b : ℕ) (_ : 1 < n)
+    (a: Fin n → ℕ) (_ : ∀ i, a i > 0) (_ : ∑ i, (a i) ^ 5 = b ^ 5), 5 ≤ n) := by
   push_neg
   use 4, 144
   norm_num
   use ![27, 84, 110, 133]
   decide
+
+end EulerSumOfPowers

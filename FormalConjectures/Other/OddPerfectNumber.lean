@@ -32,6 +32,8 @@ All known perfect numbers are even. The conjecture states that this is not a coi
 there are no odd perfect numbers.
 -/
 
+namespace OddPerfectNumber
+
 open Nat
 
 /--
@@ -42,7 +44,7 @@ theorem odd_perfect_number_conjecture (n : ℕ) (hn : Perfect n) : Even n := by
   sorry
 
 /--
-A known result: If an odd perfect number exists, it must be greater than 10^1500
+A known result: If an odd perfect number exists, it must be greater than $10^{1500}$
 and must have at least 101 prime factors (including multiplicities).
 
 Reference: Pascal Ochem, Michaël Rao (2012). "Odd perfect numbers are greater than 10^1500"
@@ -54,7 +56,7 @@ theorem odd_perfect_number.lower_bound (n : ℕ) (hn : Odd n) (hp : Perfect n) :
 
 /--
 A known result: If an odd perfect number exists, it must be of the form
-p^α * m^2 where p is prime, p ≡ 1 (mod 4), α ≡ 1 (mod 4), and p ∤ m.
+$p^α * m^2$ where $p$ is prime, $p \equiv 1 \pmod{4}$, $\alpha \equiv 1 \pmod{4}$, and $p \nmid m$.
 
 Reference: Euler's theorem on odd perfect numbers
 -/
@@ -67,3 +69,5 @@ theorem odd_perfect_number.euler_form (n : ℕ) (hn : Odd n) (hp : Perfect n) :
       ¬ p ∣ m ∧
       n = p^α * m^2 := by
   sorry
+
+end OddPerfectNumber

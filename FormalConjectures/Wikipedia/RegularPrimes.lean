@@ -28,22 +28,17 @@ infinitely many regular primes.
 
 open scoped NumberField
 
-noncomputable section
-
 variable (p : ℕ)
 
-/-- TODO: remove this once mathlib is updated as it seems that in this version of mathlib
-we need to do this manually. -/
-instance [hp : Fact p.Prime]  : NumberField (CyclotomicField ⟨p, hp.out.pos⟩ ℚ) :=
-  IsCyclotomicExtension.numberField {⟨p, hp.out.pos⟩} ℚ _
+namespace RegularPrimes
 
 /-- A natural prime number `p` is regular if `p` is coprime with the order of the class group
 of the `p`-th cyclotomic field. -/
-def IsRegularPrime [hp : Fact p.Prime] : Prop :=
-  p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField ⟨p, hp.out.pos⟩ ℚ)
+noncomputable def IsRegularPrime [hp : Fact p.Prime] : Prop :=
+  p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField p  ℚ)
 
 @[category undergraduate, AMS 11]
-example : ¬ @IsRegularPrime 37 (by decide) := by
+theorem not_isRegularPrime_37_first : ¬ @IsRegularPrime 37 (by decide) := by
   sorry
 
 /-- The set of regular primes. -/
@@ -58,7 +53,7 @@ lemma small_regular_primes :
   sorry
 
 @[category undergraduate, AMS 11]
-example : ¬ @IsRegularPrime 37 (by decide) := by
+theorem not_isRegularPrime_37_second : ¬ @IsRegularPrime 37 (by decide) := by
   sorry
 
 /-- An equivanlent definitions of regualr prime `p` is that it does not divide the numerator of the
@@ -81,3 +76,5 @@ def RegularPrimeConjecture : Prop :=
 @[category research open, AMS 11]
 theorem regularprime_conjecture : RegularPrimeConjecture := by
   sorry
+
+end RegularPrimes

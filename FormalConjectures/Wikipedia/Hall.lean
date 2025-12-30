@@ -29,6 +29,8 @@ $|y^2 - x^3| > C \sqrt{|x|}$.
 
 open Real
 
+namespace Hall
+
 def HallIneq (C : ℝ) (e : ℝ) : Prop :=
   ∀ x y : ℤ, y ^ 2 ≠ x ^ 3 → |y ^ 2 - x ^ 3| > C * (|x| : ℝ) ^ e
 
@@ -46,7 +48,7 @@ theorem hall_conjecture : HallConjectureExp 2⁻¹ := by
 Elkies' example $(x, y) = (5853886516781223, 447884928428402042307918)$ shows that such $C$ must be
 less than $0.0215$. Note that simple `linarith` does not work here.
 -/
-@[category test]
+@[category test, AMS 11]
 theorem elkies_bound (C : ℝ) : HallIneq C 2⁻¹ → C < 0.0215 := by
   intro h
   by_cases hC : C ≤ 0
@@ -77,3 +79,5 @@ Weak form of Hall's conjecture: relax the exponent from $1/2$ to $1/2 - \varepsi
 @[category research open, AMS 11]
 theorem weak_hall_conjecture (ε : ℝ) (hε : ε > 0) : HallConjectureExp (2⁻¹ - ε) := by
   sorry
+
+end Hall

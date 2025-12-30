@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Finset Nat
 
+namespace Erdos779
+
 /--
 A Conjecture of Marian Deaconescu, see p.120 in https://doi.org/10.2307/2975810
 
@@ -36,3 +38,5 @@ where the conjecture is trivially false.]
 theorem erdos_779 (n : ℕ) (hn : n ≥ 1): let P := ∏ i ∈ range (n + 1), nth Nat.Prime i
     ∃ p, p.Prime ∧ (P + p).Prime ∧ nth Nat.Prime n < p ∧ p < P := by
   sorry
+
+end Erdos779

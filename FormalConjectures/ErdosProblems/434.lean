@@ -21,6 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/434](https://www.erdosproblems.com/434)
 -/
+
+namespace Erdos434
+
+open Erdos434
+
 /--
 A natural $n$ is representable as a set $A$ if it can be
 written as the sum of finitely many elements of $A$
@@ -37,10 +42,10 @@ noncomputable abbrev Nat.NcardUnrepresentable (A : Set ℕ) :=
     { n : ℕ | ¬n.IsRepresentableAs A }.ncard
 
 /--
-Let $k\leq n$. What choice of $A\subseteq\{1, \dots, n\}$ of size $|A| = k$
+Let $k \le n$. What choice of $A\subseteq\{1, \dots, n\}$ of size $|A| = k$
 maximises the number of integers not representable as the sum of finitely
 many elements from $A$ (with repetitions allowed)?
-Is it $\{n, n - 1, ..., n - k + 1\}$?
+Is it $\{n, n - 1, \dots, n - k + 1\}$?
 -/
 @[category research open, AMS 11]
 theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) (h : k ≤ n) :
@@ -50,8 +55,8 @@ theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) (h : k ≤ n
   sorry
 
 /--
-Let $k\leq n$. Out of all $A\subseteq\{1, \dots, n\}$ of size $|A| = k$,
-does $A = \{n, n - 1, ..., n - k + 1\}$ maximise the number of integers
+Let $k \le n$. Out of all $A\subseteq\{1, \dots, n\}$ of size $|A| = k$,
+does $A = \{n, n - 1, \dots, n - k + 1\}$ maximise the number of integers
 not representable as the sum of finitely many elements from $A$ (with repetitions allowed)?
 -/
 @[category research open, AMS 11]
@@ -60,3 +65,5 @@ theorem erdos_434.parts.ii : (∀ᵉ (n ≥ 1) (k ≥ 1), k ≤ n →
       { Nat.NcardUnrepresentable S | (S : Set ℕ) (_ : S ⊆ Set.Icc 1 n) (_ : S.ncard = k) }
       (Nat.NcardUnrepresentable <| Set.Icc (n - k + 1 : ℕ) n)) ↔ answer(sorry) := by
   sorry
+
+end Erdos434

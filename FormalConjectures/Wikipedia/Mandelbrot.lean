@@ -33,6 +33,8 @@ The first two conjectures are related in that the former implies the latter.
 
 open Topology Set Function Filter Bornology Metric MeasureTheory
 
+namespace Mandelbrot
+
 /-- The Multibrot set of power `n` is the set of all parameters `c : ℂ` for which `0` does not
 escape to infinity under repeated application of `z ↦ z ^ n + c`. -/
 def multibrotSet (n : ℕ) : Set ℂ :=
@@ -45,7 +47,7 @@ abbrev mandelbrotSet := multibrotSet 2
 
 /-- The `multibrotSet n` is equivalently the set of all parameters `c` for which the orbit of `0`
 under `z ↦ z ^ n + c` does not leave the closed disk of radius `2 ^ (n - 1)⁻¹` around the origin. -/
-@[category API]
+@[category API, AMS 37]
 theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
     multibrotSet n = {c | ∀ k, ‖(fun z ↦ z ^ n + c)^[k] 0‖ ≤ 2 ^ (n - 1 : ℝ)⁻¹} := by
   replace hn := one_lt_two.trans_le hn
@@ -59,7 +61,7 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
   · refine of_not_not fun h' ↦ h ?_
     replace ⟨k, h, h'⟩ :
         ∃ k, r < ‖(fun z ↦ z ^ n + c)^[k] 0‖ ∧ ‖c‖ ≤ ‖(fun z ↦ z ^ n + c)^[k] 0‖ := by
-      refine (le_or_lt ‖c‖ r).elim (fun h ↦ ⟨k, ?_, ?_⟩) fun h ↦ ⟨1, by
+      refine (le_or_gt ‖c‖ r).elim (fun h ↦ ⟨k, ?_, ?_⟩) fun h ↦ ⟨1, by
         simp [h, zero_pow (M₀ := ℂ) (one_pos.trans hn).ne.symm]⟩ <;> linarith
     let a := ‖(fun z ↦ z ^ n + c)^[k] 0‖ - r
     have ha : 0 < a := by unfold a; linarith
@@ -91,11 +93,11 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
       tendsto_pow_atTop_atTop_of_one_lt <| Nat.one_lt_cast.2 hn
   · specialize h' (isBounded_closedBall (x := 0) (r := r))
     rw [mem_map, mem_atTop_sets] at h'; replace ⟨n, h'⟩ := h'
-    exact not_lt_of_le (h n) (by simpa using h' n)
+    exact not_lt_of_ge (h n) (by simpa using h' n)
 
 /-- The mandelbrot set is equivalently the set of all parameters `c` for which the orbit of `0`
 under `z ↦ z ^ 2 + c` does not leave the closed disk of radius two around the origin. -/
-@[category API]
+@[category API, AMS 37]
 theorem mandelbrotSet_eq : mandelbrotSet = {c | ∀ k, ‖(fun z ↦ z ^ 2 + c)^[k] 0‖ ≤ 2} := by
   simpa [show (2 - 1 : ℝ) = 1 by norm_num] using multibrotSet_eq le_rfl
 
@@ -118,41 +120,41 @@ def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
   f.IsPeriodicPt n z ∧ DifferentiableAt ℂ f^[n] z ∧ ‖deriv f^[n] z‖ < 1
 
 /-- For example, `0` is part of an attracting `2`-cycle of `z ↦ z ^ 2 - 1`. -/
-@[category test]
-example : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
+@[category test, AMS 37]
+theorem isAttractingCycle_z_squared_minus_one : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
   ⟨by simp [IsPeriodicPt, IsFixedPt], by fun_prop, by simp [deriv_comp]⟩
 
 /-- On the other hand, while `2` is part of a `1`-cycle of `z ↦ z ^ 2 - 2`, that cycle is not
 attracting. -/
-@[category test]
-example : ¬ IsAttractingCycle (fun z ↦ z ^ 2 - 2) 1 2 := by
+@[category test, AMS 37]
+theorem not_isAttractingCycle_z_squared_minus_two : ¬ IsAttractingCycle (fun z ↦ z ^ 2 - 2) 1 2 := by
   simp [IsAttractingCycle, show (1 : ℝ) ≤ 2 * 2 by norm_num]
 
 /-- No function has an attracting cycle of period `0`. This is important in that it means we don't
 need to require `0 < n` in the conjectures below. -/
-@[category test]
-example (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttractingCycle f 0 z := by
+@[category test, AMS 37]
+theorem no_attractingCycle_period_zero (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttractingCycle f 0 z := by
   simp [IsAttractingCycle]
 
 /-- The density of hyperbolicity conjecture, stating that the set of all parameters `c` for which
-`fun z ↦ z ^ 2 - c` has an attracting cycle is dense in the Mandelbrot set. -/
+`fun z ↦ z ^ 2 + c` has an attracting cycle is dense in the Mandelbrot set. -/
 @[category research open, AMS 37]
 theorem density_of_hyperbolicity :
-    mandelbrotSet ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ 2 - c) n z} := by
+    mandelbrotSet ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ 2 + c) n z} := by
   sorry
 
 /-- The density of hyperbolicity conjecture for Multibrot sets, stating that the set of all
-parameters `c` for which `fun z ↦ z ^ n - c` has an attracting cycle is dense in `multibrotSet n`.
+parameters `c` for which `fun z ↦ z ^ n + c` has an attracting cycle is dense in `multibrotSet n`.
 Note that we need to require `2 ≤ n` because the conjecture is trivially false for `n = 1`. -/
 @[category research open, AMS 37]
 theorem density_of_hyperbolicity_general_exponent {n : ℕ} (hn : 2 ≤ n) :
-    multibrotSet n ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ n - c) n z} := by
+    multibrotSet n ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ n + c) n z} := by
   sorry
 
 /-- The boundary of any Multibrot set is measurable because it is closed, so it makes sense to
 ask about its area. -/
-@[category test]
-example {n : ℕ} : MeasurableSet (frontier (multibrotSet n)) := isClosed_frontier.measurableSet
+@[category test, AMS 37]
+theorem multibrotSet_frontier_measurable {n : ℕ} : MeasurableSet (frontier (multibrotSet n)) := isClosed_frontier.measurableSet
 
 /-- The boundary of the Mandelbrot set is conjectured to have zero area. -/
 @[category research open, AMS 37]
@@ -165,3 +167,5 @@ holds for them. -/
 @[category research open, AMS 37]
 theorem volume_frontier_multibrotSet_eq_zero {n : ℕ} : volume (frontier (multibrotSet n)) = 0 := by
   sorry
+
+end Mandelbrot

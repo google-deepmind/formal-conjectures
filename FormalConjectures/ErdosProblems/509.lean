@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/509](https://www.erdosproblems.com/509)
 -/
 
+namespace Erdos509
+
 open Polynomial
 open scoped Real
 
@@ -51,8 +53,8 @@ noncomputable def boundedDiscCover_empty [Nonempty M] (r : ℝ) (hr : 0 < r) :
   h_summable := (hasSum_fintype _).summable
   h_bdd := by
     have := hasSum_fintype fun (_ : (PUnit : Type v)) => if 0 ≤ r then -1 else r
-    simp only [tsum_const, Nat.card_eq_fintype_card, Fintype.card_ofSubsingleton, smul_ite,
-      smul_neg, one_smul, ge_iff_le]
+    simp only [tsum_const, Nat.card_eq_fintype_card, Fintype.card_ofSubsingleton, one_smul,
+      ge_iff_le]
     bound
   h_pos := by aesop
 
@@ -63,7 +65,7 @@ lemma BoundedDiscCover.bound_nonneg_of_nonempty
     0 < r := by
   apply lt_of_lt_of_le _ bdc.h_bdd
   suffices Nonempty ι by
-    apply tsum_pos bdc.h_summable (fun j => le_of_lt (bdc.h_pos j)) Classical.ofNonempty (bdc.h_pos _)
+    apply Summable.tsum_pos bdc.h_summable (fun j => le_of_lt (bdc.h_pos j)) Classical.ofNonempty (bdc.h_pos _)
   by_contra!
   apply Set.Nonempty.ne_empty hS (Set.eq_empty_of_subset_empty _)
   convert bdc.h_cover
@@ -84,9 +86,9 @@ theorem erdos_509 : (∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
 /--
 Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial. Can the set
 $\{z ∈ ℂ : |f(z)| ≤ 1\}$
-be covered by a set of closed discs the sum of whose radii is ≤2e?
+be covered by a set of closed discs the sum of whose radii is $≤ 2e$?
 Solution: True. This is due to Cartan.
-See *Sur les systèmes de fonctions holomorphes à variétés linéaires
+See *Sur les systèmes de fonctions holomorphes à variétés linéaires
 lacunaires et leurs applications*, Henri Cartan,
 http://www.numdam.org/article/ASENS_1928_3_45__255_0.pdf
 -/
@@ -96,19 +98,18 @@ theorem erdos_509.variants.Cartan_bound : (∀ (f : ℂ[X]), f.Monic → f.natDe
   sorry
 
 /--
-Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial. Can the set
+Let $f(z) ∈ $ℂ[z]$ be a monic non-constant polynomial. Can the set
 $\{z ∈ ℂ : |f(z)| ≤ 1\}$
-be covered by a set of closed discs the sum of whose radii is $≤ 2.59$?
+be covered by a set of closed discs the sum of whose radii is $≤ 2.59$? 
 Solution: True. This is due to Pommerenke.
--/
-@[category research solved, AMS 30]
+-/@[category research solved, AMS 30]
 theorem erdos_509.variants.Pommerenke_bound : (∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
     ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2.59 ι)) ↔ answer(True) := by
   sorry
 
 /--
 Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial.
-If it is connected, can the set $\{z ∈ C : |f(z)| ≤ 1\}$
+If it is connected, can the set $\{z ∈ ℂ : |f(z)| ≤ 1\}$
 be covered by a set of circles the sum of whose radii is $≤ 2$?
 Solution: True. This is due to Pommerenke.
 -/
@@ -117,3 +118,5 @@ theorem erdos_509.variants.Pommerenke_connected : (∀ (f : ℂ[X]), f.Monic →
     IsConnected {z | ‖f.eval z‖ ≤ 1} →
     ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι)) ↔ answer(True) := by
   sorry
+
+end Erdos509

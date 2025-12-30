@@ -21,18 +21,33 @@ import FormalConjectures.Util.ProblemImports
 by *R. Hartshorne*
 -/
 
+namespace HartshorneConjecture
+
+open HartshorneConjecture
+
+universe u
+
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
-variable (S : Scheme)
+variable (S : Scheme.{u})
 
 namespace AlgebraicGeometry.Scheme
 
-section AlgebraicVectorBundles
+attribute [local instance] CategoryTheory.Types.instConcreteCategory Types.instFunLike
 
-attribute [local instance] CategoryTheory.Types.instConcreteCategory
+-- TODO(lezeau): explain/investigate why the following two instances are needed.
+
+local instance (X : TopologicalSpace.Opens S) :
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (Type u) :=
+  CategoryTheory.GrothendieckTopology.instWEqualsLocallyBijectiveTypeHomObjForget
+    ((Opens.grothendieckTopology S).over X)
+
+local instance (X : TopologicalSpace.Opens S) :
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}):=
+  inferInstance
 
 /--
-A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
+A vector bundle over a scheme `S` is a locally free $\mathcal{O}_S$-module of finite rank.
 -/
 structure VectorBundles where
   carrier : S.Modules
@@ -73,12 +88,13 @@ instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempt
     CoeOut (𝓕.Splitting ι) (ι → S.VectorBundles) where
   coe s := s.components
 
+end AlgebraicGeometry.Scheme
 --TODO(lezeau): here we would really need some sanity checks and easier results.
 
-end AlgebraicVectorBundles
+open AlgebraicGeometry.Scheme
 
 /--
-There are no indecomposable vector bundles of rank 2 on `ℙⁿ` for `n ≥ 7`.
+There are no indecomposable vector bundles of rank 2 on $\mathbb{P}^n$ for $n \ge 7$.
 This is conjecture 6.3 in _VARIETIES OF SMALL CODIMENSION IN PROJECTIVE SPACE_, R. Hartshorne
 -/
 @[category research open, AMS 14]
@@ -87,3 +103,5 @@ theorem harthshorne_conjecture (n : ℕ) (hn : 7 ≤ n)
     (h𝓕 : 𝓕.rank = 2) :
     Nonempty (𝓕.Splitting (Fin 2)) :=
   sorry
+
+end HartshorneConjecture

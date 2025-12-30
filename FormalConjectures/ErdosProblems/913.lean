@@ -23,6 +23,9 @@ import FormalConjectures.Util.ProblemImports
 
 Reviewed by @b-mehta on 2025-05-27
 -/
+
+namespace Erdos913
+
 /--
 Are there infinitely many $n$ such that if
 $$
@@ -54,12 +57,12 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
     rintro p hp
     nlinarith [hp.two_le]
   have : S.InjOn f := by
-    simp only [Set.InjOn, Set.mem_setOf_eq, and_imp, f]
+    simp only [Set.InjOn, f]
     rintro a ha b hb h
     rw [tsub_left_inj (hS a ha.1).le (hS b hb.1).le] at h
     simpa using h
   refine ((h.diff (Set.finite_singleton 2)).image (this.mono Set.diff_subset)).mono ?_
-  simp only [Set.image_subset_iff, Set.preimage_setOf_eq, Set.setOf_subset_setOf, and_imp, S]
+  simp only [Set.image_subset_iff, Set.preimage_setOf_eq, S]
   rintro p ⟨⟨hp, hp'⟩, hp''⟩
   simp only [Set.mem_singleton_iff] at hp''
   have fac : (f p * (f p + 1)).factorization =
@@ -91,3 +94,5 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
   simp only [Finsupp.coe_add, Finset.coe_insert, Finset.coe_singleton]
   rw [Set.injOn_insert (by simp [*]), Set.injOn_insert (by simp [hp''])]
   simp [aux₄, hp'', Ne.symm, aux₅]
+
+end Erdos913

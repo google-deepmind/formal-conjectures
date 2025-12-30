@@ -28,6 +28,10 @@ import FormalConjectures.Util.ProblemImports
 - [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
 -/
 
+namespace EllipticCurveRank
+
+open EllipticCurveRank
+
 /-- A data structure representing isomoprhism classes of elliptic curves over ℚ.
 Every elliptic curve over ℚ is isomorphic to one with Weierstrass equation `y² = x³ + Ax + B`,
 and the pair `(A,B)` is unique if it satisfy the `reduced` condition below.
@@ -45,8 +49,9 @@ open Module (finrank)
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank. -/
 @[category research solved, AMS 11 14]
-instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic] :
-    Module.Finite ℤ E⟮K⟯ := by
+instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic]
+    [AddCommMonoid  E⟮K⟯] [Module ℤ E⟮K⟯] :
+      Module.Finite ℤ E⟮K⟯ := by
   sorry
 
 namespace RatEllipticCurve
@@ -152,6 +157,8 @@ end RatEllipticCurve
 
 namespace WeierstrassCurve
 
+open _root_.WeierstrassCurve
+
 /-! See https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve#Largest_known_ranks -/
 
 /-- The elliptic curve over ℚ of rank at least 29 found by Elkies and Klagsbrun in 2024.
@@ -216,3 +223,5 @@ theorem rank_elkies28 : finrank ℤ elkies28⟮ℚ⟯ = 28 := by
 -- TODO: compute the rank of some rank 0 / 1 curve.
 
 end WeierstrassCurve
+
+end EllipticCurveRank
