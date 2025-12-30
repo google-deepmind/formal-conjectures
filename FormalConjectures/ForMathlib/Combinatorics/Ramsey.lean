@@ -60,6 +60,6 @@ theorem hypergraphRamsey_self (r : ℕ) : hypergraphRamsey r r = r := by
     · intro e _ he_card
       congr 1
       exact Finset.eq_univ_of_card e (he_card.trans (Fintype.card_fin r).symm)
-  refine le_antisymm (Nat.sInf_le h_mem) (le_hypergraphRamsey r r ⟨r, h_mem⟩)
+  exact le_antisymm (Nat.sInf_le h_mem) (le_hypergraphRamsey r r ⟨r, h_mem⟩)
 
 end Combinatorics
