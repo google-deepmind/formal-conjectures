@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Real
-open scoped Nat
+open scoped Nat Topology
 
 namespace Erdos728
 
@@ -36,7 +36,7 @@ $$C \log n < a + b - n < C' \log n ?$$
 -/
 @[category research open, AMS 11]
 theorem erdos_728 : answer(sorry) ↔
-    ∀ (ε C C' : ℝ) (hε : 0 < ε) (hC : 0 < C) (hCC' : C < C'),
+    ∀ C > (0 : ℝ), ∀ C' > C, ∀ᶠ ε in 𝓝[>] 0,
       ∃ a b n : ℕ,
       0 < n ∧
       ε * n < a ∧
