@@ -15,30 +15,24 @@ limitations under the License.
 -/
 
 import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.SetTheory.Ordinal.Exponential
 
 open Cardinal Ordinal
 
-open scoped Ordinal
-
 universe u
 
 /--
-This proposition asserts the Ramsey property `κ → (κ, c)₂`, where `κ` is the
-cardinality of the ordinal `ω ^ β` and `c` is some cardinal.
+This proposition asserts the ordinal Ramsey property `α → (β, c)²`.
 
-It states that for any 2-coloring of the edges of a complete graph on `κ`
-vertices, there must be a monochromatic red clique of size `κ` or a
-monochromatic blue clique of size `c`.
+It states that for any 2-coloring of the complete graph on the ordinal `α`,
+one of the following must hold:
+* There is a red clique which is order-isomorphic to `β`.
+* There is a blue clique of cardinality `c`.
 -/
-def OmegaPowerRamsey (β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
-  let κ := (ω ^ β).card
-  ∀ (V : Type u),  κ = Cardinal.mk V →
-  -- For any red/blue edge coloring of the complete graph on V...
-  -- (represented by two graphs G_red and G_blue that are complements)
-  ∀ (G_red G_blue : SimpleGraph V), IsCompl G_red G_blue →
-    -- ...there is either a red K_α
-    (∃ (s : Set V), G_red.IsClique s ∧ #s = κ) ∨
-    -- ...or there is a blue K_3.
-    (∃ (s : Set V), G_blue.IsClique s ∧ #s = c)
+def OrdinalCardinalRamsey (α β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
+  -- For any 2-coloring of `α`,
+  ∀ red blue : SimpleGraph α.toType, IsCompl red blue →
+    -- either there is a red `K_β`
+    (∃ s, red.IsClique s ∧ typeLT s = β) ∨
+   -- or there is a blue `K_c`.
+    ∃ s, blue.IsClique s ∧ #s = c

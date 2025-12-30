@@ -50,9 +50,9 @@ If `G` is a group then can there exist an exact covering of `G` by more than one
 different sizes? (i.e. each element is contained in exactly one of the cosets.)
 -/
 @[category research open, AMS 20]
-theorem erdos_274 (G : Type*) [Group G] (hG : 1 < ENat.card G) :
+theorem erdos_274 : (∀ᵉ (G : Type*) (h : Group G) (hG : 1 < ENat.card G),
     (∃ (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
-      1 < Fintype.card ι ∧ (Set.range P.parts).Pairwise fun A B ↦ #A ≠ #B) ↔ answer(sorry) := by
+      1 < Fintype.card ι ∧ (Set.range P.parts).Pairwise fun A B ↦ #A ≠ #B)) ↔ answer(sorry) := by
   sorry
 
 /--

@@ -13,16 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 
-/-! #
+
+/-!
+# Wall-Sun-Sun primes
 
 *References:*
 - [Wikipedia, Lucas_sequence](https://en.wikipedia.org/wiki/Lucas_sequence)
 - [Wikipedia, Wall–Sun–Sun prime](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
 - [Wikipedia, Wieferich prime](https://en.wikipedia.org/wiki/Lucas%E2%80%93Wieferich_prime)
 -/
+
+open scoped NumberTheorySymbols
 
 /--
 **The Lucas sequence of the first kind**
@@ -59,7 +62,7 @@ structure IsWallSunSunPrime (p : ℕ) : Prop where
 
 /--
 **Lucas–Wieferich prime**
-A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not dividing $a^2 - b$, such
+A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not dividing $a^2 - 4b$, such
 that $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$ where $U(a,b)$ is the Lucas sequence of the first
 kind and $\varepsilon$ is the Legendre symbol $\left({\tfrac {a^{2}-4b}{p}}\right)$.
 
@@ -70,7 +73,5 @@ for the condition that $p$ is odd and coprime to the discriminant
 structure IsLucasWieferichPrime (a b p : ℕ) : Prop where
   prime : p.Prime
   odd : Odd p
-  not_dvd : ¬p ∣ a ^ 2 - b
-  modeq :
-    letI index := p - jacobiSym p (a^2 - 4*b)
-    LucasSequence.U a b index.toNat ≡ 0 [ZMOD (p^2)]
+  not_dvd : ¬(p : ℤ) ∣ a ^ 2 - 4 * b
+  modeq : LucasSequence.U a b (p - J(a^2 - 4*b | p)).toNat ≡ 0 [ZMOD (p^2)]
