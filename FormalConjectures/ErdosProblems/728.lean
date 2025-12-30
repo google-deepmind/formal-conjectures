@@ -28,11 +28,13 @@ open scoped Nat Topology
 namespace Erdos728
 
 /--
-Let $\varepsilon, C, C' > 0$. Are there integers $a, b, n$ such that
-$$\varepsilon n < a < (1 - \varepsilon) n,\quad \varepsilon n < b < (1 - \varepsilon) n,
-  \quad a!\, b! \mid n!\, (a + b - n)!, $$
+Let $\varepsilon$ be sufficiently small and $C, C' > 0$. Are there integers $a, b, n$ such that
+$$a, b > \varepsilon n\quad a!\, b! \mid n!\, (a + b - n)!, $$
 and
 $$C \log n < a + b - n < C' \log n ?$$
+
+Note that the website currently displays a simpler (trivial) version of this problem because
+$a + b$ isn't assumed to be in the $n + O(\log n)$ regime.
 -/
 @[category research open, AMS 11]
 theorem erdos_728 :
