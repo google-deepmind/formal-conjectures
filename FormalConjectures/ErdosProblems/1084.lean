@@ -16,8 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Finset Real
-
 /-!
 # Erdős Problem 1084
 
@@ -31,6 +29,8 @@ Estimate the growth of `f_d(n)`.
 
 Status: open.
 -/
+
+open Finset Real
 
 namespace Erdos1084
 
