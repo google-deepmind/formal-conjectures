@@ -45,7 +45,7 @@ points in `s` at distance exactly `1` is at most `C * n^{4/3}`, where `n = card 
 theorem erdos_1084 :
   ∃ C : ℝ,
     ∀ s : Finset (EuclideanSpace ℝ (Fin 2)),
-      (∀ ⦃x y⦄, x ∈ s → y ∈ s → x ≠ y → dist x y ≥ 1) →
+      (s.toSet.Pairwise (1 \le dist \. \.)) →
       ((s.product s).filter
         (fun p => p.1 ≠ p.2 ∧ dist p.1 p.2 = 1)).card 
         ≤ C * (s.card : ℝ) ^ (4 / 3) := by
