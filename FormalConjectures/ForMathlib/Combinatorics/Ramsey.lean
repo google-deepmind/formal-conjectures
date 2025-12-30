@@ -31,7 +31,7 @@ The `r`-uniform hypergraph Ramsey number `R_r(n)`.
 The smallest natural number `m` such that every 2-coloring of the `r`-subsets of a set of size `m`
 contains a monochromatic subset of size `n`.
 -/
-noncomputable def HypergraphRamsey (r n : ℕ) : ℕ :=
+noncomputable def hypergraphRamsey (r n : ℕ) : ℕ :=
   sInf { m | ∀ (c : Finset (Fin m) → Bool),
     ∃ (S : Finset (Fin m)), S.card = n ∧
       ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color }
