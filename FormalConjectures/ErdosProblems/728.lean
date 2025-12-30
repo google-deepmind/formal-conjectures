@@ -41,8 +41,6 @@ theorem erdos_728 : answer(sorry) ↔
       0 < n ∧
       ε * n < a ∧
       ε * n < b ∧
-      a < (1 - ε) * n ∧
-      b < (1 - ε) * n ∧
       a ! * b ! ∣ n ! * (a + b - n)! ∧
       a + b > n + C * log n ∧
       a + b < n + C' * log n := by
