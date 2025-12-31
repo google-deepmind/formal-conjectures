@@ -24,12 +24,6 @@ import Mathlib.RingTheory.Algebraic.Pi
 
 variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
 
-namespace Algebra
-
-@[simp] lemma toRingHom_ofId : ofId R S = algebraMap R S := rfl
-
-end Algebra
-
 namespace Polynomial
 
 @[simp] theorem eval₂_id {p : Polynomial R} {x : R} : eval₂ (RingHom.id _) x p = p.eval x := rfl
