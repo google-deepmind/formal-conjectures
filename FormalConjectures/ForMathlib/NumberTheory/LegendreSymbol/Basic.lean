@@ -13,27 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.NumberTheory.LegendreSymbol.Basic
 
-import FormalConjectures.Util.ProblemImports
-
-/-!
-# Erdős Problem 591
-
-*Reference:* [erdosproblems.com/591](https://www.erdosproblems.com/591)
--/
-
-open Cardinal Ordinal
-
-namespace Erdos591
-
-universe u
-
-/--
-Let $α$ be the infinite ordinal $\omega^{\omega^2}$. Is it true that any red/blue colouring of the
-edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
--/
-@[category research open, AMS 3]
-theorem erdos_591 : OrdinalCardinalRamsey (ω ^ ω ^ 2) (ω ^ ω ^ 2) 3 ↔ answer(sorry) := by
-  sorry
-
-end Erdos591
+@[inherit_doc]
+scoped[NumberTheorySymbols] notation "L(" a " | " p ")" => legendreSym p a

@@ -88,8 +88,8 @@ there exist some $k\geq 1$ such that almost all integers have a divisor of the f
 for some $a\in A$?
 -/
 @[category research open, AMS 11]
-theorem erdos_26 (A : ℕ → ℕ) (hA : StrictMono A) (h : IsThick A) :
-    (∃ k, IsBehrend (A · + k)) ↔ answer(sorry) := by
+theorem erdos_26 : (∀ A : ℕ → ℕ, StrictMono A → IsThick A →
+    ∃ k, IsBehrend (A · + k)) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -106,8 +106,8 @@ some $k=k(\epsilon)$ such that at least $1-\epsilon$ density of all integers hav
 divisor of the form $a+k$ for some $a\in A$.
 -/
 @[category research open, AMS 11]
-theorem erdos_26.variants.tenenbaum (A : ℕ → ℕ) (hA : StrictMono A) (h : IsThick A) :
-    (∀ ε > (0 : ℝ), ∃ k, IsWeaklyBehrend (A · + k) ε) ↔ answer(sorry) := by
+theorem erdos_26.variants.tenenbaum : (∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A → 
+    (∀ ε > (0 : ℝ), ∃ k, IsWeaklyBehrend (A · + k) ε)) ↔ answer(sorry) := by
   sorry
 
 end Erdos26
