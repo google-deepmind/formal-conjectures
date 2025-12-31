@@ -58,8 +58,9 @@ theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
 /-- Is it true that for all entire functions `f = ∑ aₖzⁿₖ` such that `∑' 1 / nₖ < ∞`,
 `limsup (fun r => ratio r f) atTop = 1`? -/
 @[category research open, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one_Fejer {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n)
-    {a : ℕ → ℂ} (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (hf : ofFiniteOrder f) :
+theorem erdos_516.limsup_ratio_eq_one_Fejer : answer(sorry) ↔
+    ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ}
+    (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
