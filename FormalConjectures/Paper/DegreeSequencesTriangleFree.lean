@@ -78,7 +78,7 @@ lemma lemma2_a
     (h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ i, d (i + 2) ≠ d i) :
     2 * n * n ≤
-      (∑ i ∈ .Icc (2 * n + 1) (4 * n), d i) -
+      ∑ i ∈ .Icc (2 * n + 1) (4 * n), d i -
         ∑ i ∈ .Icc 1 (2 * n), d i := by
   sorry
 
