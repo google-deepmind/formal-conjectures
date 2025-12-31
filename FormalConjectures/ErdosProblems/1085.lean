@@ -35,11 +35,10 @@ variable {d : ℕ}
 The number of pairs of points in a finite set `S` of points in `ℝ^d` that are distance 1 apart.
 -/
 noncomputable def countUnitDistancePairs (d : ℕ) (S : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
-  #(S.sym2.filter fun s => dist s.out.1 s.out.2 = 1)
+  ((S.sym2).filter (λ s ↦ dist s.out.1 s.out.2 = 1)).card
 
 /--
-The minimal value f_d(n) such that for any set of n points in ℝ^d, there exist at most f_d(n)
-pairs of points which are distance 1 apart.
+The maximal number of pairs of points which are distance 1 apart that a set of `n` points in `ℝ^d` make.
 -/
 noncomputable def f_d (d n : ℕ) : ℕ :=
   ⨆ (S : Finset (EuclideanSpace ℝ (Fin d))) (_ : S.card = n), countUnitDistancePairs d S
@@ -50,7 +49,7 @@ This bound is due to Spencer, Szemerédi, and Trotter.
 -/
 @[category research solved, AMS 52]
 theorem erdos_1085_upper_d2 :
-    ∃ c : ℝ, ∃ N : ℕ, ∀ n : ℕ, n ≥ N → (f_d 2 n : ℝ) ≤ answer(c * n ^ (4/3 : ℝ)) := by
+  ∃ c : ℝ, ∃ N : ℕ, ∀ n : ℕ, n ≥ N → (f_d 2 n : ℝ) ≤ answer(c * n ^ (4/3 : ℝ)) :=
   sorry
 
 /--
