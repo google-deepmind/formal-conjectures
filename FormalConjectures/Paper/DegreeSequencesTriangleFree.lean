@@ -130,7 +130,7 @@ noncomputable def degreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : Lis
 
 /-- The degree sequence of `G` is **compact** if it satisfies
 `IsCompactSequenceOn` for all valid indices `k` such that `k + 2 < Fintype.card α`. -/
-def degreeSequenceCompact (G : SimpleGraph α) [DecidableRel G.Adj] : Prop :=
+def HasCompactdegreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : Prop :=
   IsCompactSequenceOn (fun k => (degreeSequence G).getD k 0) {k | k + 2 < Fintype.card α}
 
 /-- **Theorem 1.** If a triangle-free graph has `f = 2`,
