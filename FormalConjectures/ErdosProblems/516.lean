@@ -30,7 +30,7 @@ open Set Filter
 such that for all `z`, `‖f z‖ ≤ c * rexp ‖z‖ ^ a`. -/
 def ofFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     [NormedAddCommGroup F] [NormedSpace ℂ F] (f : E → F) : Prop :=
-  Differentiable ℂ f ∧ ∃ c ≥ 0, ∃ a ≥ 0, ∀ z, ‖f z‖ ≤ c * rexp ‖z‖ ^ a
+  Differentiable ℂ f ∧ ∃ c ≥ 0, ∃ a ≥ 0, ∀ z, ‖f z‖ ≤ c * rexp (‖z‖ ^ a)
 
 namespace Erdos516
 
