@@ -13,17 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.Data.Finset.Sym
+import Mathlib.Topology.MetricSpace.Defs
 
-import Mathlib.Analysis.Normed.Field.Lemmas
-import Mathlib.Tactic.Rify
+open scoped Finset
 
-/-- Say a sequence is lacunary if there exists some $\lambda > 1$ such that
-$a_{n+1}/a_n > \lambda$ for all $n\geq 1$. -/
-def IsLacunary (n : ℕ → ℕ) : Prop := ∃ c > (1 : ℝ), ∀ k, c * n k < n (k + 1)
+variable {X : Type*} [MetricSpace X]
 
-/-- Every lacunary sequence is strictly increasing. -/
-lemma IsLacunary.strictMono {n : ℕ → ℕ} (hn : IsLacunary n) : StrictMono n := by
-  refine strictMono_nat_of_lt_succ fun k => (Nat.cast_lt (α := ℝ)).mp ?_
-  obtain ⟨c, hc⟩ := hn
-  refine (hc.2 k).trans_le' ?_
-  grw [hc.1, one_mul]
+/-- The number of pairs of points of a finite set `s` in a metric space that are distance 1 apart.
+-/
+noncomputable def unitDistNum (s : Finset X) : ℕ := #{p ∈ s.sym2 | dist p.out.1 p.out.2 = 1}

@@ -18,6 +18,7 @@ import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjectures.ForMathlib.Data.Set.Bdd
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
+import Batteries.Util.ProofWanted
 
 open Filter
 
@@ -178,3 +179,24 @@ theorem infinite_of_hasDensity_pos {S : Set ℕ} {α : ℝ} (h : S.HasDensity α
   mt hasDensity_zero_of_finite fun h' => (_root_.ne_of_lt hα).symm (tendsto_nhds_unique h h')
 
 end Nat
+
+/-! ## Logarithmic Density -/
+
+section LogarithmicDensity
+
+open Finset Real Classical
+
+/--
+A set `A` of natural numbers has logarithmic density `d` if the sequence
+$(1 / \log n) \cdot \sum_{k \in A, k \le n} (1/k)$ converges to `d`.
+Logarithmic density is a weaker notion than natural density: if a set has natural density `d`,
+then it also has logarithmic density `d` (see `Set.HasDensity.hasLogDensity`), but the converse
+is false.
+-/
+def Set.HasLogDensity (A : Set ℕ) (d : ℝ) : Prop :=
+  Tendsto (fun n : ℕ => (∑ k ≤ n with k ∈ A, (k : ℝ)⁻¹ / .log n : ℝ)) atTop (𝓝 d)
+
+/-- If a set has natural density `d`, then it also has logarithmic density `d`. -/
+proof_wanted Set.HasDensity.hasLogDensity {A : Set ℕ} {d : ℝ} (h : A.HasDensity d) : A.HasLogDensity d
+
+end LogarithmicDensity

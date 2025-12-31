@@ -19,10 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Brocard's Conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Brocard%27s_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Brocard%27s_conjecture)
+- [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
 
-open Finset
+open Finset Filter
 
 namespace Brocard
 
@@ -33,6 +35,16 @@ there are at least four prime numbers.
 -/
 @[category research open, AMS 11]
 theorem brocard_conjecture (n : ℕ) (hn : 1 ≤ n) :
+    letI prev := n.nth Nat.Prime;
+    letI next := (n+1).nth Nat.Prime;
+    4 ≤ ((Ioo (prev^2) (next^2)).filter Nat.Prime).card := by
+  sorry
+
+/--
+Ferreira proved that Brocard's conjecture is true for sufficiently large n.
+-/
+@[category research solved, AMS 11]
+theorem brocard_conjecture.ferreira_large_n : ∀ᶠ n in atTop,
     letI prev := n.nth Nat.Prime;
     letI next := (n+1).nth Nat.Prime;
     4 ≤ ((Ioo (prev^2) (next^2)).filter Nat.Prime).card := by

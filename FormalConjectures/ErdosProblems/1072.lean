@@ -39,7 +39,7 @@ theorem erdos_1072a : Set.Infinite {p | p.Prime ∧ f p = p - 1} ↔ answer(sorr
 @[category research open, AMS 11]
 theorem erdos_1072b :
     (∃ (P : Set ℕ), P ⊆ {p | p.Prime} ∧ P.HasDensity 1 {p | p.Prime} ∧
-      Tendsto (fun p => f p / p) (atTop ⊓ principal P) (𝓝 0))
+      Tendsto (fun p => (f p / p : ℝ)) (atTop ⊓ principal P) (𝓝 0))
     ↔ answer(sorry) := by
   sorry
 /--
