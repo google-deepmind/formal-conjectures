@@ -67,7 +67,11 @@ theorem erdos_252_3 : Irrational (∑' n : ℕ, σ 3 n / (n ! : ℝ)) := by
 theorem erdos_252_4 : Irrational (∑' n : ℕ, σ 4 n / (n ! : ℝ)) := by
   sorry
 
-/-- For a fixed `k ≥ 5`, is `∑ σ k n / n!` irrational?. -/
+/-- For a fixed `k ≥ 5`, is `∑ σ k n / n!` irrational?.
+#TODO : Once we have Schinzel's conjecture or the prime tuple conjecture in this repository,
+formalize the statement that these two conjectures imply that `∑ σ k n / n!` is irrational for all
+`k`.
+-/
 @[category research open, AMS 11]
 theorem erdos_252_ge_5 {k : ℕ} (hk : k ≥ 5) :
     Irrational (∑' n : ℕ, σ k n / (n ! : ℝ)) ↔ answer(sorry) := by
