@@ -63,7 +63,7 @@ theorem erdos_1084_triangular_optimal_d2 : f 2 (3 * n ^ 2 + 3 * n + 1) = 9 * n ^
   sorry
 
 /-- Erdős claims the existence of two constants $c_1, c_2 > 0$
-such that $6n - c_1 n^{2/3} ≤ f_d(n) \le 6n - c_2 n^{2/3}$. -/
+such that $6n - c_1 n^{2/3} ≤ f_3(n) \le 6n - c_2 n^{2/3}$. -/
 @[category research solved, AMS 52]
 theorem erdos_1084_upper_lower_d3 :
     ∃ c₁ : ℝ, ∃ c₂ > (0 : ℝ), ∀ᶠ n in atTop,
