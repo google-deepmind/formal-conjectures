@@ -39,8 +39,6 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 noncomputable def degreeFreq (G : SimpleGraph α) (d : ℕ) : ℕ :=
   #{v | G.degree v = d}
 
-
-
 end SimpleGraph
 
 section lemmas
