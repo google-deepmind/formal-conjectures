@@ -149,16 +149,19 @@ lemma lemma3 (n : ℕ) (hn : 0 < n) :
       G.IsBipartite ∧ G.minDegree = n + 1 ∧ f G = 3 := by
   sorry
 
-/-- **Lemma 4.** A triangle-free graph can be extended by one to a
-triangle-free graph whose new part has minimum degree at least
-`2 n` and `f = 3`. -/
+/-- **Lemma 4.** Let `G` be a triangle-free graph with `n` vertices and let `v` be a vertex of `G`.
+There exists a triangle-free graph `H` containing `G` as an induced subgraph such that:
+(i) the degree of `v` in `H` is one more than its degree in `G`;
+(ii) for every vertex `w` of `G` other than `v` the degree of `w` in `H` is the same as its degree in `G`;
+(iii) if `J` is the subgraph of `H` induced by the vertices not in `G`, then `f(J)=3` and `δ(J) ≥ 2n`. -/
 @[category API, AMS 5]
 lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 3) (v : α) :
     ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : G ↪g H),
+      H.CliqueFree 3 ∧
       H.degree (i v) = G.degree v + 1 ∧
       (∀ w ≠ v, H.degree (i w) = G.degree w) ∧
       let J := H.induce (Set.compl (Set.range i))
-      J.CliqueFree 3 ∧ f J = 3 ∧ J.minDegree ≥ 2 * Fintype.card α := by
+      f J = 3 ∧ J.minDegree ≥ 2 * Fintype.card α := by
   sorry
 
 /-- **Theorem 2.** Every triangle-free graph is an induced subgraph of one
