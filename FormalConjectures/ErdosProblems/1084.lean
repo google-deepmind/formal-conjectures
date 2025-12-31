@@ -53,7 +53,7 @@ theorem erdos_1084_easy_upper_d2 (hn : n ≠ 0) : f 2 n < 3 * n :=
 
 /-- Erdős showed that there is some constant $c > 0$ such that $f_2(n) < 3n - c n^{1/2}$. -/
 @[category research solved, AMS 52]
-theorem erdos_1084_upper_d2 : ∃ c > (0 : ℝ), f 2 n < 3 * n - c * sqrt n :=
+theorem erdos_1084_upper_d2 : ∃ c > (0 : ℝ), ∀ n, f 2 n < 3 * n - c * sqrt n :=
   sorry
 
 /-- Erdős conjectured that the triangular lattice is best possible in 2D, in particular that
