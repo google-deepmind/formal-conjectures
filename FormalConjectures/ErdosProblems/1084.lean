@@ -30,24 +30,44 @@ Estimate the growth of `f_2(n)`.
 Status: open.
 -/
 
-open Finset Real
+open Finset Filter Metric Real
 open scoped EuclideanGeometry
 
 namespace Erdos1084
+variable {n : ℕ}
 
-/--
-Erdős problem 1084.
+/-- The maximal number of pairs of points which are distance 1 apart that a set of `n` 1-separated
+points in `ℝ^d` make. -/
+noncomputable def f (d n : ℕ) : ℕ :=
+  ⨆ (s : Finset (ℝ^ d)) (_ : s.card = n) (_ : IsSeparated 1 s.toSet), unitDistNum s
 
-There exists a constant `C` such that for any finite set `s` of points in `ℝ²`
-with all pairwise distances at least `1`, the number of ordered pairs of distinct
-points in `s` at distance exactly `1` is at most `C * n^{4/3}`, where `n = card s`.
--/
+/-- It is easy to check that $f_1(n) = n - 1$. -/
+@[category research solved, AMS 52]
+theorem erdos_1084_upper_d1 (n : ℕ) : f 1 n = n - 1 :=
+  sorry
+
+/-- It is easy to check that $f_2(n) < 3n$. -/
+@[category research solved, AMS 52]
+theorem erdos_1084_easy_upper_d2 (hn : n ≠ 0) : f 2 n < 3 * n :=
+  sorry
+
+/-- Erdős showed that there is some constant $c > 0$ such that $f_2(n) < 3n - c n^{1/2}$. -/
+@[category research solved, AMS 52]
+theorem erdos_1084_upper_d2 : ∃ c > (0 : ℝ), f 2 n < 3 * n - c * sqrt n :=
+  sorry
+
+/-- Erdős conjectured that the triangular lattice is best possible in 2D, in particular that
+$f_2(3n^2 + 3n + 1) < 9n^2 + 6n$. -/
 @[category research open, AMS 52]
-theorem erdos_1084 :
-    ∃ C : ℝ,
-      ∀ s : Finset ℝ²,
-        (s.toSet.Pairwise (fun x y => 1 ≤ dist x y)) →
-        #{p ∈ s.offDiag | dist p.1 p.2 = 1} ≤ C * (#s : ℝ) ^ (4 / 3) := by
+theorem erdos_1084_triangular_optimal_d2 : f 2 (3 * n ^ 2 + 3 * n + 1) = 9 * n ^ 2 + 6 * n :=
+  sorry
+
+/-- Erdős claims the existence of two constants $c_1, c_2 > 0$
+such that $6n - c_1 n^{2/3} ≤ f_d(n) \le 6n - c_2 n^{2/3}$. -/
+@[category research solved, AMS 52]
+theorem erdos_1084_upper_lower_d3 :
+    ∃ c₁ : ℝ, ∃ c₂ > (0 : ℝ), ∀ᶠ n in atTop,
+      6 * n - c₁ * n ^ (2 / 3 : ℝ) ≤ f 3 n ∧ f 3 n ≤ 6 * n - c₂ * n ^ (2 / 3 : ℝ) :=
   sorry
 
 end Erdos1084
