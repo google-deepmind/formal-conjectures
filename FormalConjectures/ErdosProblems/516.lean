@@ -15,7 +15,7 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 516
-*Reference:*
+*References:*
  - [erdosproblems.com/516](https://www.erdosproblems.com/516)
  - [Fu63] Fuchs, W. H. J., Proof of a conjecture of G. Pólya concerning gap series. Illinois J.
     Math. (1963), 661--667.
