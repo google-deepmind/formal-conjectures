@@ -27,7 +27,7 @@ open scoped Real Nat
 open Set Filter
 
 /-- An entire function `f` is said to be of finite order if there exist numbers c, a ≥ 0
-such that for all `z`, `‖f z‖ ≤ c * rexp ‖z‖ ^ a`. -/
+such that for all `z`, `‖f z‖ ≤ c * rexp (‖z‖ ^ a)`. -/
 def ofFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     [NormedAddCommGroup F] [NormedSpace ℂ F] (f : E → F) : Prop :=
   Differentiable ℂ f ∧ ∃ c ≥ 0, ∃ a ≥ 0, ∀ z, ‖f z‖ ≤ c * rexp (‖z‖ ^ a)
@@ -50,7 +50,7 @@ theorem erdos_516.limsup_ratio_eq_one_Fabry_ofFiniteOrder {f : ℂ → ℂ} {n :
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65]. -/
 @[category research solved, AMS 30]
 theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
-    (hn : ∃ c > 0, ∀ k, n k >  k * (k.log) ^ (2 + c)) {a : ℕ → ℂ}
+    (hn : ∃ c > 0, ∀ k, n k >  k * ((k : ℝ).log) ^ (2 + c)) {a : ℕ → ℂ}
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) :
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
