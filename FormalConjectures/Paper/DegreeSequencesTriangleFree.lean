@@ -62,7 +62,7 @@ lemma lemma1_a
 
 /-- **Lemma 1 (b)**
 If a sequence `d` is nondecreasing and no three terms are equal, then terms at distance `2 * r` differ by at least `r`. -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 lemma lemma1_b
     (h_mono : Monotone d)
     (h_pos : ∀ k, 0 < d k)
@@ -72,7 +72,7 @@ lemma lemma1_b
 
 /-- **Lemma 2 (a)**
 Inequality involving sums of terms of a nondecreasing sequence with no three terms equal. -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 lemma lemma2_a
     (h_mono : Monotone d)
     (h_pos : ∀ k, 0 < d k)
@@ -84,7 +84,7 @@ lemma lemma2_a
 
 /-- **Lemma 2 (b)**
 Inequality involving sums of terms of a nondecreasing sequence with no three terms equal. -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 lemma lemma2_b
     (h_mono : Monotone d)
     (h_pos : ∀ k, 0 < d k)
@@ -96,7 +96,7 @@ lemma lemma2_b
 
 /-- **Lemma 2 (c)**
 Inequality involving sums of terms of a nondecreasing sequence with no three terms equal. -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 lemma lemma2_c
     (h_mono : Monotone d)
     (h_pos : ∀ k, 0 < d k)
@@ -108,7 +108,7 @@ lemma lemma2_c
 
 /-- **Lemma 2 (d)**
 Inequality involving sums of terms of a nondecreasing sequence with no three terms equal. -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 lemma lemma2_d
     (h_mono : Monotone d)
     (h_pos : ∀ k, 0 < d k)
@@ -138,12 +138,12 @@ then it is bipartite, has minimum degree `1`, and
 its degree sequence is compact. -/
 @[category research solved, AMS 5]
 theorem theorem1 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 3) (h₂ : f G = 2) :
-    G.IsBipartite ∧ G.minDegree = 1 ∧ degreeSequenceCompact G := by
+    G.IsBipartite ∧ G.minDegree = 1 ∧ HasCompactdegreeSequence G := by
   sorry
 
 /-- **Lemma 3.** For every `n` there exists a bipartite graph with
 `8 n` vertices, minimum degree `n + 1`, and `f = 3`. -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 lemma lemma3 (n : ℕ) (hn : 0 < n) :
     ∃ (G : SimpleGraph (Fin (8 * n))) (_ : DecidableRel G.Adj),
       G.IsBipartite ∧ G.minDegree = n + 1 ∧ f G = 3 := by
@@ -152,7 +152,7 @@ lemma lemma3 (n : ℕ) (hn : 0 < n) :
 /-- **Lemma 4.** A triangle-free graph can be extended by one to a
 triangle-free graph whose new part has minimum degree at least
 `2 n` and `f = 3`. -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 3) (v : α) :
     ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : G ↪g H),
       H.degree (i v) = G.degree v + 1 ∧
