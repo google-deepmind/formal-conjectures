@@ -21,11 +21,25 @@ import Mathlib.Algebra.Polynomial.Bivariate
 
 -/
 
+variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
+
+namespace Algebra
+
+@[simp] lemma toRingHom_ofId : ofId R S = algebraMap R S := rfl
+
+end Algebra
+
 namespace Polynomial
 
-variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
+@[simp] theorem eval₂_id {p : Polynomial R} {x : R} : eval₂ (RingHom.id _) x p = p.eval x := rfl
 
 instance instAlgebraPi : Algebra R[X] (S → S) :=
   (Pi.ringHom fun x ↦ (Polynomial.aeval x).toRingHom).toAlgebra
+
+variable {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
+
+/-- #TODO:  Generalize the following lemma to `CommSemiring`. -/
+@[simp] lemma aeval_polynomial_pi (p : R[X][X]) (f : S → S) (x : S) :
+    p.aeval f x = aevalAeval x (f x) p := by simp [instAlgebraPi, aeval, eval₂, sum]
 
 end Polynomial
