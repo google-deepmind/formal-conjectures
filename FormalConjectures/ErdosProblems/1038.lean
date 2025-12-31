@@ -32,7 +32,7 @@ open MeasureTheory
 namespace Erdos1038
 
 /-- What is the infimum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` such that
-all of its roots are contained in `[-1,1]`? -/
+all of its roots are real and contained in `[-1,1]`? -/
 @[category research open, AMS 28]
 theorem erdos_1038.inf (n : ℕ) : answer(sorry) =
     ⨅ f : {f : Polynomial ℝ // f.Monic ∧
@@ -41,7 +41,7 @@ theorem erdos_1038.inf (n : ℕ) : answer(sorry) =
   sorry
 
 /-- The infimum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` such that
-all of its roots are contained in `[-1,1]` is `< 1.835`. -/
+all of its roots are real and contained in `[-1,1]` is `< 1.835`. -/
 @[category research solved, AMS 28]
 theorem erdos_1038.inf_upperBound (n : ℕ) : ⨅ f : {f : Polynomial ℝ // f.Monic ∧
     (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
@@ -49,17 +49,18 @@ theorem erdos_1038.inf_upperBound (n : ℕ) : ⨅ f : {f : Polynomial ℝ // f.M
   sorry
 
 /-- The infimum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` such that
-all of its roots are contained in `[-1,1]` is `≥ 2 ^ (4 / 3) - 1`. -/
+all of its roots are real and contained in `[-1,1]` is `≥ 2 ^ (4 / 3) - 1`. -/
 @[category research solved, AMS 28]
-theorem erdos_1038.inf_lowerBound (n : ℕ) : 2 ^ (4 / 3) - 1 ≤ ⨅ f : {f : Polynomial ℝ // f.Monic ∧
+theorem erdos_1038.inf_lowerBound (n : ℕ) : 2 ^ (4 / 3 : ℝ) - 1 ≤ ⨅ f : {f : Polynomial ℝ // f.Monic ∧
     (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
     volume {x | |f.1.eval x| < 1} := by
   sorry
 
-/-- The supremum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` with all
-its roots contained in `[-1,1]` is  `2 * 2 ^ (1 / 2)`. This is proved in [Tao25]. -/
+/-- The supremum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` such that
+all of its roots are real and contained in `[-1,1]` is  `2 * 2 ^ (1 / 2)`. This is proved in
+[Tao25]. -/
 @[category research solved, AMS 28]
-theorem erdos_1038.sup (n : ℕ) : 2 * 2 ^ (1 / 2) =
+theorem erdos_1038.sup (n : ℕ) : 2 * 2 ^ (1 / 2 : ℝ) =
     ⨆ f : {f : Polynomial ℝ // f.Monic ∧
     (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
     volume {x | |f.1.eval x| < 1} := by
