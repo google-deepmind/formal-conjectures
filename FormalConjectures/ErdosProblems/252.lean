@@ -35,36 +35,34 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open scoped Nat
+open ArithmeticFunction
 
 namespace Erdos252
 
-def σ (k : ℕ) (n : ℕ) : ℕ := ∑ d : {d : Fin (n + 1) // d.1 ∣ n}, d ^ k
-
-/-- `∑ σ 0 n / n!` is irrational. `σ 0 n` is just the number of divisors of `n`, and this is proved
-in [ErSt71]. -/
+/-- `∑ σ 0 n / n!` is irrational. This is proved in [ErSt71]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_0 : Irrational (∑' n : ℕ, σ 0 n / (n ! : ℝ)) := by
+theorem erdos_252_0 : Irrational (∑' n : ℕ, sigma 0 n / (n ! : ℝ)) := by
   sorry
 
 /-- `∑ σ 1 n / n!` is irrational. This is proved in [ErSt74]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_1 : Irrational (∑' n : ℕ, σ 1 n / (n ! : ℝ)) := by
+theorem erdos_252_1 : Irrational (∑' n : ℕ, sigma 1 n / (n ! : ℝ)) := by
   sorry
 
 
 /-- `∑ σ 2 n / n!` is irrational. This is proved in [ErKa54]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_2 : Irrational (∑' n : ℕ, σ 2 n / (n ! : ℝ)) := by
+theorem erdos_252_2 : Irrational (∑' n : ℕ, sigma 2 n / (n ! : ℝ)) := by
   sorry
 
 /-- `∑ σ 3 n / n!` is irrational. This is proved in [ScPu06] and [FLC07]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_3 : Irrational (∑' n : ℕ, σ 3 n / (n ! : ℝ)) := by
+theorem erdos_252_3 : Irrational (∑' n : ℕ, sigma 3 n / (n ! : ℝ)) := by
   sorry
 
 /-- `∑ σ 4 n / n!` is irrational. This is proved in [Pr22]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_4 : Irrational (∑' n : ℕ, σ 4 n / (n ! : ℝ)) := by
+theorem erdos_252_4 : Irrational (∑' n : ℕ, sigma 4 n / (n ! : ℝ)) := by
   sorry
 
 /-- For a fixed `k ≥ 5`, is `∑ σ k n / n!` irrational?.
@@ -74,7 +72,7 @@ formalize the statement that these two conjectures imply that `∑ σ k n / n!` 
 -/
 @[category research open, AMS 11]
 theorem erdos_252_ge_5 {k : ℕ} (hk : k ≥ 5) :
-    Irrational (∑' n : ℕ, σ k n / (n ! : ℝ)) ↔ answer(sorry) := by
+    Irrational (∑' n : ℕ, sigma k n / (n ! : ℝ)) ↔ answer(sorry) := by
   sorry
 
 end Erdos252
