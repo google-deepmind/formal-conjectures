@@ -51,7 +51,8 @@ theorem erdos_1038.inf_upperBound (n : ℕ) : ⨅ f : {f : Polynomial ℝ // f.M
 /-- The infimum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` such that
 all of its roots are real and contained in `[-1,1]` is `≥ 2 ^ (4 / 3) - 1`. -/
 @[category research solved, AMS 28]
-theorem erdos_1038.inf_lowerBound (n : ℕ) : 2 ^ (4 / 3 : ℝ) - 1 ≤ ⨅ f : {f : Polynomial ℝ // f.Monic ∧
+theorem erdos_1038.inf_lowerBound (n : ℕ) : 2 ^ (4 / 3 : ℝ) - 1 ≤
+    ⨅ f : {f : Polynomial ℝ // f.Monic ∧
     (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
     volume {x | |f.1.eval x| < 1} := by
   sorry
