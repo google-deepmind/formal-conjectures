@@ -53,7 +53,7 @@ theorem erdos_1085_lower_d3 :
   sorry
 
 /-- is the $n^{4/3}\log\log n$ lower bound in 3D also an upper bound?. -/
-@[category research solved, AMS 52]
+@[category research open, AMS 52]
 theorem erdos_1085_upper_d3 : answer(sorry) ↔
     (fun n ↦ (f 3 n : ℝ)) =O[atTop] (fun n : ℕ ↦ (n : ℝ) ^ (4/3 : ℝ) * log (log n)) :=
   sorry
