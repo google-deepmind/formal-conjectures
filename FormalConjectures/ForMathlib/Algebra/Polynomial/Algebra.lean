@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import Mathlib.Algebra.Polynomial.Bivariate
+import Mathlib.RingTheory.Algebraic.Pi
 
 /-!
 # Algebra over the Ring of Polynomials
@@ -40,6 +41,7 @@ variable {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
 
 /-- #TODO:  Generalize the following lemma to `CommSemiring`. -/
 @[simp] lemma aeval_polynomial_pi (p : R[X][X]) (f : S → S) (x : S) :
-    p.aeval f x = aevalAeval x (f x) p := by simp [instAlgebraPi, aeval, eval₂, sum]
+    p.aeval f x = aevalAeval x (f x) p := by
+  simp [instAlgebraPi, aeval, eval₂, sum]
 
 end Polynomial
