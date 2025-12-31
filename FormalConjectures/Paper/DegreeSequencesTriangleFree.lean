@@ -47,7 +47,7 @@ variable (d : ℕ → ℕ) (n k r : ℕ)
 
 /-- **Lemma 1 (a)**
 If a sequence `d` is nondecreasing and no three terms are equal, then terms at distance 2 differ by at least 1. -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 lemma lemma1_a
     (h_mono : Monotone d)
     (h_pos : ∀ k, 0 < d k)
