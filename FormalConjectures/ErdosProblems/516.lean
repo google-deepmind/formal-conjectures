@@ -43,7 +43,7 @@ noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function of finite order such that `nₖ / k → ∞`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
 @[category research solved, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one_Fabry_ofFiniteOrder {f : ℂ → ℂ} {n : ℕ → ℕ}
+theorem erdos_516.limsup_ratio_eq_one_of_hasFabryGaps_ofFiniteOrder {f : ℂ → ℂ} {n : ℕ → ℕ}
     (hn : HasFabryGaps n) {a : ℕ → ℂ} (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z))
     (hf : ofFiniteOrder f) :
     limsup (fun r => ratio r f) atTop = 1 := by
