@@ -49,7 +49,7 @@ theorem erdos_516.limsup_ratio_eq_one_of_hasFabryGaps_ofFiniteOrder {f : ℂ →
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
-/-- Let `f = ∑ aₖzⁿₖ` be a entire function such that `nₖ > k (log k) ^ (2 + c)`.
+/-- Let `f = ∑ aₖzⁿₖ` be an entire function such that `nₖ > k (log k) ^ (2 + c)`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65]. -/
 @[category research solved, AMS 30]
 theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
@@ -61,7 +61,7 @@ theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
 /-- Is it true that for all entire functions `f = ∑ aₖzⁿₖ` such that `∑' 1 / nₖ < ∞`,
 `limsup (fun r => ratio r f) atTop = 1`? -/
 @[category research open, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one_Fejer : answer(sorry) ↔
+theorem erdos_516.limsup_ratio_eq_one_of_hasFejerGaps : answer(sorry) ↔
     ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ}
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
     limsup (fun r => ratio r f) atTop = 1 := by
