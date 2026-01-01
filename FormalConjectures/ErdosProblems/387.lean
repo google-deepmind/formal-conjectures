@@ -50,22 +50,17 @@ theorem erdos_387.schinzel : answer(sorry) ↔
 
 /-- It is easy to see that `n.choose k` has a divisor in `[n / k, n]`.-/
 @[category research solved, AMS 11]
-theorem erdos_387.easy {n : ℕ+} {k : ℕ} (hk : k ≤ n) : ∃ d : ℕ,
-    (d : ℝ) ∈ Set.Icc (n / k : ℝ) n ∧ d ∣ n.1.choose k := by
-  by_cases hk0 : k = 0 <;> simp_all +decide [ Nat.factorial_ne_zero ];
-  · exact PNat.one_le _;
-  · refine' ⟨ Nat.gcd ( Nat.choose n k ) n, _, _ ⟩;
-    · constructor;
-      · rw [ div_le_iff₀ ] <;> norm_cast;
-        · have h_div : (n : ℕ) ∣ Nat.choose n k * k := by
-            have h_div : Nat.choose n k * k = n * Nat.choose (n - 1) (k - 1) := by
-              cases n using PNat.recOn <;> cases k <;> simp_all +decide [ Nat.succ_mul_choose_eq ];
-            exact ⟨ _, h_div ⟩;
-          rw [ ← Nat.gcd_mul_right ];
-          exact Nat.le_of_dvd ( Nat.gcd_pos_of_pos_right _ ( Nat.mul_pos n.pos ( Nat.pos_of_ne_zero hk0 ) ) ) ( Nat.dvd_gcd h_div ( dvd_mul_right _ _ ) );
-        · positivity;
-      · exact Nat.le_of_dvd n.pos ( Nat.gcd_dvd_right _ _ );
-    · exact Nat.gcd_dvd_left _ _
+theorem erdos_387.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n) : ∃ d : ℕ,
+    (d : ℝ) ∈ Set.Icc (n / k : ℝ) n ∧ d ∣ n.choose k := by
+  by_cases k = 0 <;> simp_all
+  refine ⟨(n.choose k).gcd n, ⟨?_, ?_⟩, gcd_dvd_left _ _⟩
+  · rw [div_le_iff₀ (by positivity)]
+    norm_cast
+    rw [← Nat.gcd_mul_right]
+    refine Nat.le_of_dvd ?_ (Nat.dvd_gcd ⟨(n - 1).choose (k - 1), ?_⟩ (dvd_mul_right _ _))
+    · exact Nat.gcd_pos_of_pos_right _ (by positivity)
+    · cases n <;> cases k <;> simp_all [Nat.succ_mul_choose_eq]
+  · exact Nat.le_of_dvd (by linarith) (gcd_dvd_right _ _)
 
 /-- Is it true for any `c < 1` and all `n` sufficiently large, for all `1 ≤ k < n`, `n.choose k`
 has a divisor in `(cn, n]`? This is a variant of `erdos_387` and appears in [Gu04]. -/
