@@ -15,8 +15,10 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Algebra.GCDMonoid.Finset
+import FormalConjectures.ForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 import FormalConjectures.ForMathlib.Algebra.Group.Indicator
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
+import FormalConjectures.ForMathlib.Algebra.Polynomial.Algebra
 import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
 import FormalConjectures.ForMathlib.Algebra.Polynomial.HasseDeriv
 import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
@@ -30,6 +32,7 @@ import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Basis
 import FormalConjectures.ForMathlib.Combinatorics.Additive.Convolution
 import FormalConjectures.ForMathlib.Combinatorics.Basic
+import FormalConjectures.ForMathlib.Combinatorics.Ramsey
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Balanced
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Coloring
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
@@ -44,6 +47,7 @@ import FormalConjectures.ForMathlib.Data.Finset.Empty
 import FormalConjectures.ForMathlib.Data.Finset.OrdConnected
 import FormalConjectures.ForMathlib.Data.Nat.Factorization.Basic
 import FormalConjectures.ForMathlib.Data.Nat.Full
+import FormalConjectures.ForMathlib.Data.Nat.Init
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Composite
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
@@ -55,6 +59,7 @@ import FormalConjectures.ForMathlib.Data.Set.Density
 import FormalConjectures.ForMathlib.Data.Set.Triplewise
 import FormalConjectures.ForMathlib.Data.ZMod.PerfectDifferenceSet
 import FormalConjectures.ForMathlib.Geometry.Euclidean
+import FormalConjectures.ForMathlib.Geometry.Metric
 import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Geometry.«3d»
 import FormalConjectures.ForMathlib.LinearAlgebra.GeneralLinearGroup
@@ -64,6 +69,7 @@ import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
 import FormalConjectures.ForMathlib.NumberTheory.CoveringSystem
 import FormalConjectures.ForMathlib.NumberTheory.DirichletCharacter.Basic
 import FormalConjectures.ForMathlib.NumberTheory.Lacunary
+import FormalConjectures.ForMathlib.NumberTheory.LegendreSymbol.Basic
 import FormalConjectures.ForMathlib.NumberTheory.PrimeGap
 import FormalConjectures.ForMathlib.NumberTheory.WallSunSunPrimes
 import FormalConjectures.ForMathlib.Order.Filter.Cofinite
