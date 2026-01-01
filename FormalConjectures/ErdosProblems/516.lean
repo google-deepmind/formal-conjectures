@@ -40,7 +40,7 @@ namespace Erdos516
 noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
   (⨅ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log / (⨆ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log
 
-/-- Let `f = ∑ aₖzⁿₖ` be a entire function of finite order such that `nₖ / k → ∞`.
+/-- Let `f = ∑ aₖzⁿₖ` be an entire function of finite order such that `nₖ / k → ∞`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
 @[category research solved, AMS 30]
 theorem erdos_516.limsup_ratio_eq_one_Fabry_ofFiniteOrder {f : ℂ → ℂ} {n : ℕ → ℕ}
