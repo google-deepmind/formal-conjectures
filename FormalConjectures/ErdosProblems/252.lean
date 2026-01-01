@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.Wikipedia.Schinzel
 
 /-!
 # Erdős Problem 252
@@ -41,38 +42,48 @@ namespace Erdos252
 
 /-- `∑ σ 0 n / n!` is irrational. This is proved in [ErSt71]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_0 : Irrational (∑' n : ℕ, sigma 0 n / (n ! : ℝ)) := by
+theorem erdos_252_0 : Irrational (∑' n, σ 0 n / (n ! : ℝ)) := by
   sorry
 
 /-- `∑ σ 1 n / n!` is irrational. This is proved in [ErSt74]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_1 : Irrational (∑' n : ℕ, sigma 1 n / (n ! : ℝ)) := by
+theorem erdos_252_1 : Irrational (∑' n, σ 1 n / (n ! : ℝ)) := by
   sorry
 
 
 /-- `∑ σ 2 n / n!` is irrational. This is proved in [ErKa54]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_2 : Irrational (∑' n : ℕ, sigma 2 n / (n ! : ℝ)) := by
+theorem erdos_252_2 : Irrational (∑' n, σ 2 n / (n ! : ℝ)) := by
   sorry
 
 /-- `∑ σ 3 n / n!` is irrational. This is proved in [ScPu06] and [FLC07]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_3 : Irrational (∑' n : ℕ, sigma 3 n / (n ! : ℝ)) := by
+theorem erdos_252_3 : Irrational (∑' n, σ 3 n / (n ! : ℝ)) := by
   sorry
 
 /-- `∑ σ 4 n / n!` is irrational. This is proved in [Pr22]. -/
 @[category research solved, AMS 11]
-theorem erdos_252_4 : Irrational (∑' n : ℕ, sigma 4 n / (n ! : ℝ)) := by
+theorem erdos_252_4 : Irrational (∑' n, σ 4 n / (n ! : ℝ)) := by
   sorry
 
-/-- For a fixed `k ≥ 5`, is `∑ σ k n / n!` irrational?.
-#TODO : Once we have Schinzel's conjecture or the prime tuple conjecture in this repository,
-formalize the statement that these two conjectures imply that `∑ σ k n / n!` is irrational for all
-`k`.
--/
+/-- For a fixed `k ≥ 5`, is `∑ σ k n / n!` irrational?. -/
 @[category research open, AMS 11]
-theorem erdos_252_ge_5 {k : ℕ} (hk : k ≥ 5) :
-    Irrational (∑' n : ℕ, sigma k n / (n ! : ℝ)) ↔ answer(sorry) := by
+theorem erdos_252_ge_5 {k : ℕ} : answer(sorry) ↔
+    ∀ k ≥ 5, Irrational (∑' n, σ k n / (n ! : ℝ)) := by
+  sorry
+
+/-- Schinzel's conjecture implies that `∑ σ k n / n!` is irrational for all `k`, and this is proved
+in [ScPu06]. -/
+@[category research solved, AMS 11]
+theorem erdos_252.schinzel (hs : ∀ (fs : Finset (Polynomial ℤ)), (∀ f ∈ fs, BunyakovskyCondition f)
+    → SchinzelCondition fs → Infinite ↑{n | ∀ f ∈ fs, Prime (Polynomial.eval (↑n) f).natAbs}) :
+    ∀ k, Irrational (∑' n, σ k n / (n ! : ℝ)) := by
+  sorry
+
+/-- The prime `k`-tuples conjecture implies that `∑ σ k n / n!` is irrational, and this is proved
+in [FLC07]. -/
+@[category research solved, AMS 11]
+theorem erdos_252.prime_tuples {k : ℕ} (hs : sorry) : Irrational (∑' n, σ k n / (n ! : ℝ)) := by
   sorry
 
 end Erdos252
