@@ -31,7 +31,7 @@ open Set Filter
 
 /-- An entire function `f` is said to be of finite order if there exist numbers c, a ≥ 0
 such that for all `z`, `‖f z‖ ≤ c * rexp (‖z‖ ^ a)`. -/
-def ofFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
+def OfFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     [NormedAddCommGroup F] [NormedSpace ℂ F] (f : E → F) : Prop :=
   Differentiable ℂ f ∧ ∃ c ≥ 0, ∃ a ≥ 0, ∀ z, ‖f z‖ ≤ c * rexp (‖z‖ ^ a)
 
