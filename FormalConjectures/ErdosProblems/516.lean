@@ -26,8 +26,8 @@ import FormalConjectures.Util.ProblemImports
     (1965), 133--140.
 -/
 
-open scoped Real Nat
-open Set Filter
+open scoped Nat
+open Filter Real Set
 
 /-- An entire function `f` is said to be of finite order if there exist numbers c, a ≥ 0
 such that for all `z`, `‖f z‖ ≤ c * rexp (‖z‖ ^ a)`. -/
