@@ -72,7 +72,7 @@ theorem erdos_252_ge_5 {k : ℕ} : answer(sorry) ↔
     ∀ k ≥ 5, Irrational (∑' n, σ k n / (n ! : ℝ)) := by
   sorry
 
-/-- Schinzel's conjecture implies that `∑ σ k n / n!` is irrational for all `k`, and this is proved
+/-- If Schinzel's conjecture is true, then `∑ σ k n / n!` is irrational for all `k`. This is proved
 in [ScPu06]. -/
 @[category research solved, AMS 11]
 theorem erdos_252.schinzel (hs : ∀ (fs : Finset (Polynomial ℤ)), (∀ f ∈ fs, BunyakovskyCondition f)
@@ -80,10 +80,13 @@ theorem erdos_252.schinzel (hs : ∀ (fs : Finset (Polynomial ℤ)), (∀ f ∈ 
     ∀ k, Irrational (∑' n, σ k n / (n ! : ℝ)) := by
   sorry
 
-/-- The prime `k`-tuples conjecture implies that `∑ σ k n / n!` is irrational, and this is proved
+/-- If the prime `k`-tuples conjecture is true, then `∑ σ k n / n!` is irrational. This is proved
 in [FLC07]. -/
 @[category research solved, AMS 11]
-theorem erdos_252.prime_tuples {k : ℕ} (hs : sorry) : Irrational (∑' n, σ k n / (n ! : ℝ)) := by
+theorem erdos_252.prime_tuples {k : ℕ} (hk : 4 ≤ k) (hp : ∀ (a : Fin k → ℕ+) (b : Fin k → ℕ)
+    (hab : ∀ p, p.Prime → ∃ n, ¬ p ∣ ∏ i, (a i * n + b i)),
+    Set.Infinite {n | ∀ i : Fin k, (a i * n + b i).Prime} ) :
+    Irrational (∑' n, σ k n / (n ! : ℝ)) := by
   sorry
 
 end Erdos252
