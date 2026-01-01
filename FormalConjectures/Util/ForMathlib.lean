@@ -25,7 +25,6 @@ import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjectures.ForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjectures.ForMathlib.Analysis.Asymptotics.Basic
 import FormalConjectures.ForMathlib.Analysis.HasGaps
-import FormalConjectures.ForMathlib.Analysis.Transcendental
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.NthRoot
 import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
