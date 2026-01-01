@@ -23,11 +23,10 @@ import FormalConjectures.ErdosProblems.«28»
 *Reference:* [erdosproblems.com/40](https://www.erdosproblems.com/40)
 -/
 
-open Filter Set AdditiveCombinatorics
+open AdditiveCombinatorics Filter Real Set
 open scoped Pointwise
 
 namespace Erdos40
-
 
 /--
 The predicate for a function $g\colon\mathbb{N} → \mathbb{R})$ that
@@ -35,9 +34,9 @@ $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
 implies $\limsup 1_A\ast 1_A(n)=\infty$.
 -/
 def Erdos40For (g : ℕ → ℝ) : Prop :=
-  ∀ (A : Set ℕ),
-    ((fun (N : ℕ) => (N : ℝ).sqrt/(g N)) =O[atTop] (fun (N : ℕ) => ((A ∩ Set.Icc 1 N).ncard : ℝ))) →
-    (limsup (fun (N : ℕ) => (sumRep A N : ℕ∞)) atTop = (⊤ : ℕ∞))
+  ∀ A : Set ℕ,
+    (fun N : ℕ ↦ √N / g N) =O[atTop] (fun N ↦ ((A ∩ .Icc 1 N).ncard : ℝ)) →
+    limsup (fun N ↦ (sumRep A N : ℕ∞)) atTop = ⊤
 
 /--
 Given a set of functions $\mathbb{N} → \mathbb{R})$, we assert that for all $g$ in that set,
@@ -45,8 +44,7 @@ if $g(N) → \infty$ then
 $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
 implies $\limsup 1_A\ast 1_A(n)=\infty$.
 -/
-def Erdos40 (G : (ℕ → ℝ) → Prop) : Prop :=
-    (∀ g, G g → (Tendsto g atTop atTop) → Erdos40For g)
+def Erdos40ForSet (G : Set (ℕ → ℝ)) : Prop := ∀ g ∈ G, Tendsto g atTop atTop → Erdos40For g
 
 /--
 For what functions $g(N) → \infty$ is it true that
@@ -54,7 +52,7 @@ $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
 implies $\limsup 1_A\ast 1_A(n)=\infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_40 : Erdos40 answer(sorry) := by
+theorem erdos_40 : Erdos40ForSet answer(sorry) := by
   sorry
 
 /--
@@ -64,8 +62,9 @@ Erdős-Turán conjecture, see Erdõs Problem 28,
 Problem 28).
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40 fun _ => True) : type_of% Erdos28.erdos_28 := by
-  simp only [Erdos40, Erdos40For, sumRep, sumConv, indicatorOne, forall_const] at h_erdos_40
+theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40ForSet .univ) : type_of% Erdos28.erdos_28 := by
+  simp only [Erdos40ForSet, Erdos40For, sumRep, sumConv, indicatorOne, mem_univ, forall_const]
+    at h_erdos_40
   intro A hA
   apply h_erdos_40
   rotate_right

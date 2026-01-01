@@ -19,10 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Oppermann's Conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Oppermann%27s_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Oppermann%27s_conjecture)
+- [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
 
-open Finset
+open Finset Filter
 
 namespace Oppermann
 
@@ -66,6 +68,15 @@ theorem oppermann_implies_brocard (n : ℕ) (hn : 1 ≤ n) (P : type_of% opperma
 @[category high_school, AMS 11]
 theorem oppermann_implies_legendre (n : ℕ) (hn : 1 ≤ n) (P : type_of% oppermann_conjecture) :
     ∃ p ∈ Ioo (n ^ 2) ((n + 1) ^ 2), p.Prime := by
+  sorry
+
+/--
+Ferreira proved that Oppermann's conjecture is true for sufficiently large x.
+-/
+@[category research solved, AMS 11]
+theorem oppermann_conjecture.ferreira_large_x : ∀ᶠ x in atTop,
+    (∃ p ∈ Ioo (x * (x - 1)) (x^2), p.Prime) ∧
+    (∃ p ∈ Ioo (x^2) (x * (x + 1)), p.Prime) := by
   sorry
 
 end Oppermann
