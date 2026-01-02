@@ -48,7 +48,7 @@ theorem erdos_387.schinzel : answer(sorry) ↔
     ∀ᶠ k in atTop, ¬ IsPrimePow k → ∃ n : ℕ, ∀ i < k, ¬ n - i ∣ n.choose k := by
   sorry
 
-/-- It is easy to see that `n.choose k` has a divisor in `[n / k, n]`.-/
+/-- It is easy to see that `n.choose k` has a divisor in `[n / k, n]`. -/
 @[category research solved, AMS 11]
 theorem erdos_387.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n) : ∃ d : ℕ,
     (d : ℝ) ∈ Set.Icc (n / k : ℝ) n ∧ d ∣ n.choose k := by
