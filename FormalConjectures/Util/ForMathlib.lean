@@ -39,11 +39,16 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.D
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
 import FormalConjectures.ForMathlib.Computability.Encoding
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Balanced
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Clique
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.Johnson
 import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjectures.ForMathlib.Computability.TuringMachine.Notation
 import FormalConjectures.ForMathlib.Computability.TuringMachine.PostTuringMachine
+import FormalConjectures.ForMathlib.Data.Finset.Card
 import FormalConjectures.ForMathlib.Data.Finset.Empty
 import FormalConjectures.ForMathlib.Data.Finset.OrdConnected
+import FormalConjectures.ForMathlib.Data.Finset.Powerset
 import FormalConjectures.ForMathlib.Data.Nat.Factorization.Basic
 import FormalConjectures.ForMathlib.Data.Nat.Full
 import FormalConjectures.ForMathlib.Data.Nat.Init
