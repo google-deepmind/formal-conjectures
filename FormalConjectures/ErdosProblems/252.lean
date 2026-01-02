@@ -68,7 +68,7 @@ theorem erdos_252_4 : Irrational (∑' n, σ 4 n / (n ! : ℝ)) := by
 
 /-- For a fixed `k ≥ 5`, is `∑ σ k n / n!` irrational?. -/
 @[category research open, AMS 11]
-theorem erdos_252_ge_5 {k : ℕ} : answer(sorry) ↔
+theorem erdos_252_ge_5 : answer(sorry) ↔
     ∀ k ≥ 5, Irrational (∑' n, σ k n / (n ! : ℝ)) := by
   sorry
 
