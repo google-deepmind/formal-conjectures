@@ -28,7 +28,7 @@ open Filter
 
 namespace Erdos454
 
-noncomputable def f (n : ℕ) : ℕ := ⨅ i : Fin n, (n + i).nth Prime - (n - i).nth Prime
+noncomputable def f (n : ℕ) : ℕ := ⨅ i : Fin n, (n + i).nth Prime + (n - i).nth Prime
 
 /-- Let `f n = ⨅ i : Fin n, (n + i).nth Prime - (n - i).nth Prime`. Is it true that
 `limsup (fun n => f n - 2 * (n.nth Prime) : ℕ∞) atTop = ⊤`? -/
