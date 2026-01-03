@@ -42,14 +42,14 @@ lemma IsSidon.B2 (A : Set ℕ) (hA : IsSidon A) : B2 1 A := by
 namespace Erdos158
 
 /-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}|/√N = 0`? -/
-@[category research open, AMS 5 11]
+@[category research open, AMS 5]
 theorem erdos_158.B22 : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → B2 2 A →
     liminf (fun N : ℕ => (A ∩ (Finset.range N)).ncard / √N) atTop = 0 := by
   sorry
 
 /-- Let `A` be an infinite Sidon set. Then `liminf |A ∩ {1, ..., N}| * (log N / N) ^ (1 / 2) < ∞`.
 This is proved in [ESS94]. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5]
 theorem erdos_158.isSidon' {A : Set ℕ} (hp : A.Infinite) (hq : IsSidon A) :
     liminf (fun N : ℕ => (A ∩ (Finset.range N)).ncard * ENNReal.ofReal (√(Real.log N / N)))
     atTop < ⊤ := by
@@ -57,7 +57,7 @@ theorem erdos_158.isSidon' {A : Set ℕ} (hp : A.Infinite) (hq : IsSidon A) :
 
 /-- As a corollary of `erdos_158.isSidon'`, we can prove that `liminf |A ∩ {1, ..., N}|/√N = 0` for
 any infinite Sidon set `A`. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5]
 theorem erdos_158.isSidon {A : Set ℕ} (hp : A.Infinite) (hq : IsSidon A) :
     liminf (fun N : ℕ => (A ∩ (Finset.range N)).ncard / √(N : ℝ)) atTop = 0 := by
   have := erdos_158.isSidon' hp hq
