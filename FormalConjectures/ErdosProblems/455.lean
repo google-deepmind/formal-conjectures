@@ -30,8 +30,8 @@ namespace Erdos455
 /-- Let `q : ℕ → ℕ` be a strictly increasing sequence of primes such that
 `q (n + 1) - q n ≥ q n - q (n - 1)`. Must `lim q n / (n ^ 2) = ∞`? -/
 @[category research open, AMS 11]
-theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, (StrictMono q ∧
-    ∀ n, (q n).Prime ∧ q (n + 1) - q n ≥ q n - q (n - 1)) →
+theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
+    (∀ n, (q n).Prime ∧ q (n + 1) - q n ≥ q n - q (n - 1)) →
     Tendsto (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop atTop :=
   sorry
 
