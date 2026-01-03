@@ -39,7 +39,7 @@ theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
 `q (n + 1) - q n ≥ q n - q (n - 1)`. Then `liminf q n / (n ^ 2) > 0.352`, and this is proved in
 [Ri76]. -/
 @[category research solved, AMS 11]
-theorem erdos_455.liminf: ∀ q : ℕ → ℕ, StrictMono q →
+theorem erdos_455.liminf : ∀ q : ℕ → ℕ, StrictMono q →
     (∀ n, (q n).Prime ∧ q (n + 1) - q n ≥ q n - q (n - 1)) →
     liminf (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop > 0.352 :=
   sorry
