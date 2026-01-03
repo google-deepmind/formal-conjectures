@@ -30,7 +30,7 @@ open Cardinal Filter ENNReal
 /-- A set `A ⊆ ℕ` is said to be a `B₂[g]` set if for all `n`, the equation
 `a + a' = n, a ≤ a', a, a' ∈ A` has at most `g` solutions. This is defined in [ESS94]. -/
 def B2 (g : ℕ) (A : Set ℕ) : Prop :=
-  ∀ n, #{x : ℕ × ℕ | x.1 + x.2 = n ∧ x.1 ≤ x.2 ∧ x.1 ∈ A ∧ x.2 ∈ A} ≤ g
+  ∀ n, {x : ℕ × ℕ | x.1 + x.2 = n ∧ x.1 ≤ x.2 ∧ x.1 ∈ A ∧ x.2 ∈ A}.encard ≤ g
 
 /-- A Sidon set is `B₂[1]`. -/
 @[category API, AMS 5]
