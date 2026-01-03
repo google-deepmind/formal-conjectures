@@ -70,18 +70,18 @@ structure NavierStokesExistenceAndSmoothness
     (v :  ℝ³ → ℝ → ℝ³) (p : ℝ³ → ℝ → ℝ) : Prop where
 
   -- (1)
-  navierStokes : ∀ x, ∀ t ≥ 0,
+  navier_stokes : ∀ x, ∀ t ≥ 0,
     deriv (v x ·) t + fderiv ℝ (v · t) x (v x t) = nu • Δ (v · t) x - gradient (p · t) x + f x t
 
   -- (2)
   div_free : ∀ x, ∀ t ≥ 0, div (v · t) x = 0
 
   -- (3)
-  initialCondition : ∀ x, v x 0 = v₀ x
+  initial_condition : ∀ x, v x 0 = v₀ x
 
   -- (6) and (11)
-  velocitySmoothness : ContDiffOn ℝ ∞ (↿v) (Set.univ ×ˢ Set.Ici 0)
-  pressureSmoothness : ContDiffOn ℝ ∞ (↿p) (Set.univ ×ˢ Set.Ici 0)
+  velocity_smooth : ContDiffOn ℝ ∞ (↿v) (Set.univ ×ˢ Set.Ici 0)
+  pressure_smooth : ContDiffOn ℝ ∞ (↿p) (Set.univ ×ˢ Set.Ici 0)
 
 
 structure NavierStokesExistenceAndSmoothnessR3
@@ -91,7 +91,7 @@ structure NavierStokesExistenceAndSmoothnessR3
 
   -- (7)
   integrable : ∀ t ≥ 0, Integrable (‖v · t‖^2)
-  globallyBoundedEnergy : ∃ E, ∀ t ≥ 0, (∫ x : ℝ³, ‖v x t‖^2) < E
+  globally_bounded_energy : ∃ E, ∀ t ≥ 0, (∫ x : ℝ³, ‖v x t‖^2) < E
 
 structure NavierStokesExistenceAndSmoothnessPeriodic
     (nu : ℝ) (v₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³)
