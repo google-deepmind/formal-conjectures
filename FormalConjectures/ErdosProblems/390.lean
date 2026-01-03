@@ -33,8 +33,8 @@ namespace Erdos390
 
 /-- Let `f n` be the smallest integer for which `n!` can be represented as the product of distinct
 integers greater than n, the largest of which is `f n`. -/
-noncomputable def f (n : ℕ) : ℕ := sInf (fun m => ∃ k, ∃ f : ℕ → ℕ, StrictMono f ∧
-  n < f 0 ∧ f (k - 1) = m ∧ ∏ i < k, f i = n !)
+noncomputable def f (n : ℕ) : ℕ := sInf {m : ℕ | ∃ k, ∃ f : ℕ → ℕ, StrictMono f ∧
+  n < f 0 ∧ f (k - 1) = m ∧ ∏ i < k, f i = n !}
 
 /-- `f n - 2 * n = θ (n / log n)`. This is proved in [EGS82]. -/
 @[category research solved, AMS 11]
