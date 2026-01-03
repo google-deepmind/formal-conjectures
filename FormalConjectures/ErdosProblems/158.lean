@@ -35,11 +35,8 @@ def B2 (g : ℕ) (A : Set ℕ) : Prop :=
 /-- A Sidon set is `B₂[1]`. -/
 @[category API, AMS 5]
 lemma IsSidon.B2 (A : Set ℕ) (hA : IsSidon A) : B2 1 A := by
-  intro n
-  by_contra h
-  simp_all only [Nat.cast_one, not_le]
-  obtain ⟨⟨x, ⟨hx1, hx2, hx3⟩⟩, ⟨y, ⟨hy1, hy2, hy3⟩⟩, hxy⟩ := one_lt_iff_nontrivial.mp h
-  have := hA x.1 hx3.1 y.1 hy3.1 x.2 hx3.2 y.2 hy3.2 (hx1.trans hy1.symm)
+  refine fun n => le_one_iff_subsingleton.2 (subsingleton_iff.2 fun ⟨x, h, p, q⟩ ⟨y, r, s, t⟩ => ?_)
+  have := hA x.1 q.1 y.1 t.1 x.2 q.2 y.2 t.2 (h.trans r.symm)
   grind
 
 namespace Erdos158
