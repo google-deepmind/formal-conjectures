@@ -53,7 +53,7 @@ structure ForceCondition (f : ℝ³ → ℝ → ℝ³) : Prop where
 structure ForceConditionR3 (f : ℝ³ → ℝ → ℝ³) : Prop
   extends ForceCondition f where
   -- (5)
-  decay : ∀ n : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ∀ t ≥ 0,
+  decay : ∀ n : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ∀ t > 0,
     ‖iteratedFDeriv ℝ n (↿f) (x,t)‖ ≤ C / (1 + ‖x‖ + t)^K
 
 structure ForceConditionPeriodic (f : ℝ³ → ℝ → ℝ³) : Prop
@@ -61,7 +61,7 @@ structure ForceConditionPeriodic (f : ℝ³ → ℝ → ℝ³) : Prop
   -- (8)
   periodic : ∀ t ≥ 0, IsPeriodic (f · t)
   -- (9)
-  decay : ∀ n : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ∀ t ≥ 0,
+  decay : ∀ n : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ∀ t > 0,
     ‖iteratedFDeriv ℝ n (↿f) (x,t)‖ ≤ C / (1 + t)^K
 
 
@@ -70,7 +70,7 @@ structure NavierStokesExistenceAndSmoothness
     (v :  ℝ³ → ℝ → ℝ³) (p : ℝ³ → ℝ → ℝ) : Prop where
 
   -- (1)
-  navier_stokes : ∀ x, ∀ t ≥ 0,
+  navier_stokes : ∀ x, ∀ t > 0,
     deriv (v x ·) t + fderiv ℝ (v · t) x (v x t) = nu • Δ (v · t) x - gradient (p · t) x + f x t
 
   -- (2)
@@ -99,7 +99,8 @@ structure NavierStokesExistenceAndSmoothnessPeriodic
   extends NavierStokesExistenceAndSmoothness nu v₀ f v p where
 
   -- (10)
-  periodic : ∀ t ≥ 0, IsPeriodic (v · t)
+  velocity_periodic : ∀ t ≥ 0, IsPeriodic (v · t)
+  pressure_periodic : ∀ t ≥ 0, IsPeriodic (p · t)
 
 
 /-- (A) Existence and smoothness of Navier–Stokes solutions on ℝ³. -/
@@ -118,12 +119,12 @@ theorem navier_stokes_existence_and_smoothness_periodic (nu : ℝ) (hnu : nu > 0
 @[category research open, AMS 35]
 theorem navier_stokes_breakdown_R3 (nu : ℝ) (hnu : nu > 0) :
   ∃ (v₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
-    InitialVelocityConditionR3 v₀ → ForceConditionR3 f →
+    InitialVelocityConditionR3 v₀ ∧ ForceConditionR3 f ∧
     ¬(∃ v p, NavierStokesExistenceAndSmoothnessR3 nu v₀ f v p) := sorry
 
 /-- (D) Breakdown of Navier–Stokes Solutions on ℝ³/ℤ³. -/
 @[category research open, AMS 35]
 theorem navier_stokes_breakdown_periodic (nu : ℝ) (hnu : nu > 0) :
   ∃ (v₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
-    InitialVelocityConditionPeriodic v₀ → ForceConditionPeriodic f →
+    InitialVelocityConditionPeriodic v₀ ∧ ForceConditionPeriodic f ∧
     ¬(∃ v p, NavierStokesExistenceAndSmoothnessPeriodic nu v₀ f v p) := sorry
