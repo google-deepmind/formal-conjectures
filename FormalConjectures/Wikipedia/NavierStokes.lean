@@ -39,10 +39,12 @@ structure InitialVelocityCondition (v₀ : ℝ³ → ℝ³) : Prop where
 
 structure InitialVelocityConditionR3 (v₀ : ℝ³ → ℝ³) : Prop
   extends InitialVelocityCondition v₀ where
+  -- (4)
   decay : ∀ n : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ‖iteratedFDeriv ℝ n v₀ x‖ ≤ C / (1 + ‖x‖)^K
 
 structure InitialVelocityConditionPeriodic (v₀ : ℝ³ → ℝ³) : Prop
   extends InitialVelocityCondition v₀ where
+  -- (8)
   periodic : IsPeriodic v₀
 
 structure ForceCondition (f : ℝ³ → ℝ → ℝ³) : Prop where
@@ -50,12 +52,15 @@ structure ForceCondition (f : ℝ³ → ℝ → ℝ³) : Prop where
 
 structure ForceConditionR3 (f : ℝ³ → ℝ → ℝ³) : Prop
   extends ForceCondition f where
+  -- (5)
   decay : ∀ n : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ∀ t ≥ 0,
     ‖iteratedFDeriv ℝ n (↿f) (x,t)‖ ≤ C / (1 + ‖x‖ + t)^K
 
 structure ForceConditionPeriodic (f : ℝ³ → ℝ → ℝ³) : Prop
   extends ForceCondition f where
+  -- (8)
   periodic : ∀ t ≥ 0, IsPeriodic (f · t)
+  -- (9)
   decay : ∀ n : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ∀ t ≥ 0,
     ‖iteratedFDeriv ℝ n (↿f) (x,t)‖ ≤ C / (1 + t)^K
 
@@ -64,13 +69,17 @@ structure NavierStokesExistenceAndSmoothness
     (nu : ℝ) (v₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³)
     (v :  ℝ³ → ℝ → ℝ³) (p : ℝ³ → ℝ → ℝ) : Prop where
 
+  -- (1)
   navierStokes : ∀ x, ∀ t ≥ 0,
     deriv (v x ·) t + fderiv ℝ (v · t) x (v x t) = nu • Δ (v · t) x - gradient (p · t) x + f x t
-    ∧
-    div (v · t) x = 0
 
+  -- (2)
+  div_free : ∀ x, ∀ t ≥ 0, div (v · t) x = 0
+
+  -- (3)
   initialCondition : ∀ x, v x 0 = v₀ x
 
+  -- (6) and (11)
   velocitySmoothness : ContDiffOn ℝ ∞ (↿v) (Set.univ ×ˢ Set.Ici 0)
   pressureSmoothness : ContDiffOn ℝ ∞ (↿p) (Set.univ ×ˢ Set.Ici 0)
 
@@ -80,6 +89,7 @@ structure NavierStokesExistenceAndSmoothnessR3
     (v :  ℝ³ → ℝ → ℝ³) (p : ℝ³ → ℝ → ℝ) : Prop
   extends NavierStokesExistenceAndSmoothness nu v₀ f v p where
 
+  -- (7)
   integrable : ∀ t ≥ 0, Integrable (‖v · t‖^2)
   globallyBoundedEnergy : ∃ E, ∀ t ≥ 0, (∫ x : ℝ³, ‖v x t‖^2) < E
 
@@ -88,11 +98,11 @@ structure NavierStokesExistenceAndSmoothnessPeriodic
     (v :  ℝ³ → ℝ → ℝ³) (p : ℝ³ → ℝ → ℝ) : Prop
   extends NavierStokesExistenceAndSmoothness nu v₀ f v p where
 
+  -- (10)
   periodic : ∀ t ≥ 0, IsPeriodic (v · t)
 
 
-/-- (A) Existence and smoothness of Navier–Stokes solutions on ℝ³.
--/
+/-- (A) Existence and smoothness of Navier–Stokes solutions on ℝ³. -/
 @[category research open, AMS 35]
 theorem navier_stokes_existence_and_smoothness_R3 (nu : ℝ) (hnu : nu > 0)
   (v₀ : ℝ³ → ℝ³) (hv₀ : InitialVelocityConditionR3 v₀) :
