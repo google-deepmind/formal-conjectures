@@ -28,10 +28,10 @@ open Filter
 
 namespace Erdos454
 
+/-- Define `f n` to be the minimum of `(n + i).nth Prime - (n - i).nth Prime` over `i < n`. -/
 noncomputable def f (n : ℕ) : ℕ := ⨅ i : Fin n, (n + i).nth Prime + (n - i).nth Prime
 
-/-- Let `f n = ⨅ i : Fin n, (n + i).nth Prime - (n - i).nth Prime`. Is it true that
-`limsup (fun n => f n - 2 * (n.nth Prime) : ℕ∞) atTop = ⊤`? -/
+/-- Is it true that `limsup (fun n => f n - 2 * (n.nth Prime) : ℕ∞) atTop = ⊤`? -/
 @[category research open, AMS 11]
 theorem erdos_454 : answer(sorry) ↔ limsup (fun n => f n - 2 * (n.nth Prime : ℕ∞)) atTop = ⊤ := by
   sorry
