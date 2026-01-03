@@ -25,33 +25,47 @@ import FormalConjectures.Util.ProblemImports
     Theory (1994), 329-347.
 -/
 
-open Cardinal Filter ENNReal
+open Filter ENNReal
 
 /-- A set `A ⊆ ℕ` is said to be a `B₂[g]` set if for all `n`, the equation
 `a + a' = n, a ≤ a', a, a' ∈ A` has at most `g` solutions. This is defined in [ESS94]. -/
 def B2 (g : ℕ) (A : Set ℕ) : Prop :=
   ∀ n, {x : ℕ × ℕ | x.1 + x.2 = n ∧ x.1 ≤ x.2 ∧ x.1 ∈ A ∧ x.2 ∈ A}.encard ≤ g
 
-/-- A Sidon set is `B₂[1]`. -/
+/-- A set is Sidon iff it is `B₂[1]`. -/
 @[category API, AMS 5]
-lemma IsSidon.B2 (A : Set ℕ) (hA : IsSidon A) : B2 1 A := by
-  refine fun n => le_one_iff_subsingleton.2 (subsingleton_iff.2 fun ⟨x, h, p, q⟩ ⟨y, r, s, t⟩ => ?_)
-  have := hA x.1 q.1 y.1 t.1 x.2 q.2 y.2 t.2 (h.trans r.symm)
-  grind
+lemma IsSidon.B2 (A : Set ℕ) : IsSidon A ↔ B2 1 A := by
+  refine ⟨fun hA n => ?_, fun hB => fun i hi j hj k hk l hl h => ?_⟩
+  · refine Set.encard_le_one_iff.2 fun x y ⟨h, p, q⟩ ⟨r, s, t⟩ => ?_
+    have := hA x.1 q.1 y.1 t.1 x.2 q.2 y.2 t.2 (h.trans r.symm)
+    grind
+  · by_cases hp : j ≤ l <;> by_cases hq : i ≤ k
+    · have := Set.encard_le_one_iff.1 (hB (j + l)) ⟨j, l⟩ ⟨i, k⟩ ⟨rfl, hp, hj, hl⟩ ⟨h, hq, hi, hk⟩
+      grind
+    · have := Set.encard_le_one_iff.1 (hB (j + l)) ⟨j, l⟩ ⟨k, i⟩ ⟨rfl, hp, hj, hl⟩ ?_
+      · grind
+      · exact ⟨by linarith, by linarith, hk, hi⟩
+    · have := Set.encard_le_one_iff.1 (hB (l + j)) ⟨l, j⟩ ⟨i, k⟩ ⟨rfl, by linarith, hl, hj⟩ ?_
+      · grind
+      · exact ⟨by linarith, hq, hi, hk⟩
+    · have := Set.encard_le_one_iff.1 (hB (j + l)) ⟨l, j⟩ ⟨k, i⟩ ?_ ?_
+      · grind
+      · exact ⟨by linarith, by linarith, hl, hj⟩
+      · exact ⟨by linarith, by linarith, hk, hi⟩
 
 namespace Erdos158
 
 /-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}|/√N = 0`? -/
 @[category research open, AMS 5]
 theorem erdos_158.B22 : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → B2 2 A →
-    liminf (fun N : ℕ => (A ∩ (Finset.range N)).ncard / √N) atTop = 0 := by
+    liminf (fun N : ℕ => (A ∩ .Iio N).ncard / √N) atTop = 0 := by
   sorry
 
 /-- Let `A` be an infinite Sidon set. Then `liminf |A ∩ {1, ..., N}| * (log N / N) ^ (1 / 2) < ∞`.
 This is proved in [ESS94]. -/
 @[category research solved, AMS 5]
 theorem erdos_158.isSidon' {A : Set ℕ} (hp : A.Infinite) (hq : IsSidon A) :
-    liminf (fun N : ℕ => (A ∩ (Finset.range N)).ncard * ENNReal.ofReal (√(Real.log N / N)))
+    liminf (fun N : ℕ => (A ∩ .Iio N).ncard * ENNReal.ofReal (√(Real.log N / N)))
     atTop < ⊤ := by
   sorry
 
@@ -59,14 +73,14 @@ theorem erdos_158.isSidon' {A : Set ℕ} (hp : A.Infinite) (hq : IsSidon A) :
 any infinite Sidon set `A`. -/
 @[category research solved, AMS 5]
 theorem erdos_158.isSidon {A : Set ℕ} (hp : A.Infinite) (hq : IsSidon A) :
-    liminf (fun N : ℕ => (A ∩ (Finset.range N)).ncard / √(N : ℝ)) atTop = 0 := by
+    liminf (fun N : ℕ => (A ∩ .Iio N).ncard / √(N : ℝ)) atTop = 0 := by
   have := erdos_158.isSidon' hp hq
   contrapose! this with h
-  have hg : Tendsto (fun N => (A ∩ (Finset.range N)).ncard * √(Real.log N / N)) atTop atTop := by
-    have hl : Tendsto (fun N => (A ∩ (Finset.range N)).ncard / √N * √(Real.log N)) atTop atTop := by
-      obtain ⟨c, hc_pos, hc⟩ : ∃ c > 0, ∀ᶠ N in atTop, (A ∩ (Finset.range N)).ncard / √N ≥ c := by
+  have hg : Tendsto (fun N => (A ∩ .Iio N).ncard * √(Real.log N / N)) atTop atTop := by
+    have hl : Tendsto (fun N => (A ∩ .Iio N).ncard / √N * √(Real.log N)) atTop atTop := by
+      obtain ⟨c, hc_pos, hc⟩ : ∃ c > 0, ∀ᶠ N in atTop, (A ∩ .Iio N).ncard / √N ≥ c := by
         simp only [liminf_eq, eventually_atTop, ne_eq] at h
-        by_cases h_zero : ∀ a ∈ {a : ℝ | ∃ a_1 : ℕ, ∀ N : ℕ, a_1 ≤ N → a ≤ (A ∩ (Finset.range N)).ncard / √N}, a ≤ 0
+        by_cases h_zero : ∀ a ∈ {a : ℝ | ∃ a_1 : ℕ, ∀ N : ℕ, a_1 ≤ N → a ≤ (A ∩ .Iio N).ncard / √N}, a ≤ 0
         · exact False.elim <| h <| le_antisymm ( csSup_le ⟨ 0, ⟨ 0, fun n hn => by positivity ⟩ ⟩ h_zero ) <| le_csSup ⟨ 0, h_zero ⟩ ⟨ 0, fun n hn => by positivity ⟩;
         · aesop;
       refine' tendsto_atTop_mono' _ _ _
