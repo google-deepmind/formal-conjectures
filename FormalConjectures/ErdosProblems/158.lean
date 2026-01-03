@@ -34,7 +34,7 @@ def B2 (g : ℕ) (A : Set ℕ) : Prop :=
 
 /-- A set is Sidon iff it is `B₂[1]`. -/
 @[category API, AMS 5]
-lemma IsSidon.B2 (A : Set ℕ) : IsSidon A ↔ B2 1 A := by
+@[simp] lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A := by
   refine ⟨fun hA n => ?_, fun hB => fun i hi j hj k hk l hl h => ?_⟩
   · refine Set.encard_le_one_iff.2 fun x y ⟨h, p, q⟩ ⟨r, s, t⟩ => ?_
     have := hA x.1 q.1 y.1 t.1 x.2 q.2 y.2 t.2 (h.trans r.symm)
