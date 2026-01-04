@@ -24,26 +24,16 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos699
 
-/--
-Sylvester and Schur showed that for every $1 \le i \le n / 2$ there is a prime $p > i$ dividing
-$\binom{n}{i}$.
-
-**Erdős Problem 699.** Is it true that for every $1 \le i < j \le n / 2$ there exists a prime
-$p \ge i$ with $p \mid \gcd\big(\binom{n}{i}, \binom{n}{j}\big)$?
-
-Erdős and Szekeres further conjectured that one can require $p > i$, with some (not fully
-classified) exceptions: the condition fails when $i = 2$ and $n$ is a power of $2$, there are
-several counterexamples when $i = 3$, and one known counterexample when $i \ge 4$,
-$$\gcd\Big(\tbinom{28}{5}, \tbinom{28}{14}\Big) = 2^3 \cdot 3^3 \cdot 5,$$
-listed as Problem B31 of Guy's collection [Gu04].
--/
-
 /-- Sylvester and Schur: for $1 \le i \le n/2$ there is a prime $p > i$ dividing `n.choose i`. -/
 @[category research solved, AMS 11]
 theorem sylvester_schur (n i : ℕ) (hi : 1 ≤ i) (hi_half : i ≤ n / 2) :
     ∃ p : ℕ, p.Prime ∧ i < p ∧ p ∣ Nat.choose n i := by
   sorry
 
+/--
+**Erdős Problem 699.** Is it true that for every $1 \le i < j \le n / 2$ there exists a prime
+$p \ge i$ with $p \mid \gcd\big(\binom{n}{i}, \binom{n}{j}\big)$?
+-/
 @[category research open, AMS 11]
 theorem erdos_699 :
     (∀ n i j : ℕ,
