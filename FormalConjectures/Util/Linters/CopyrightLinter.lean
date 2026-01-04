@@ -13,18 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import Mathlib.Tactic.Linter.Header
-
---TODO(Paul-Lez): change this so we don't start getting errors in 2026!
 
 open Lean Elab Meta Command Syntax
 
 namespace CopyrightLinter
 
-def correctCopyrightHeader : String :=
+/-- The part of the expected copyright before the year. -/
+def correctCopyrightPrefix : String :=
 "/-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright "
+
+/-- The part of the expected copyright after the year. -/
+def correctCopyrightSuffix : String :=
+" The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the \"License\");
 you may not use this file except in compliance with the License.
@@ -39,6 +41,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/"
 
+/-- Check whether a file, given as a `String`, is prefixed with the correct copyright header. -/
+def hasCorrectCopyright (file : String) : Bool := Id.run do
+  let .some suffix := file.dropPrefix? correctCopyrightPrefix | false
+  correctCopyrightSuffix.isPrefixOf (suffix.extract ⟨4⟩ suffix.stopPos).toString
+
+/-- The current correct copyright header. -/
+def correctCopyrightHeader : String := correctCopyrightPrefix ++ "2026" ++ correctCopyrightSuffix
+
+/-- info: true -/
+#guard_msgs in
+#eval hasCorrectCopyright correctCopyrightHeader
+
 register_option linter.style.copyright : Bool := {
   defValue := true
   descr := "enable the copyright header style linter"
@@ -51,7 +65,7 @@ def copyrightLinter : Linter where run := withSetOptionIn fun stx ↦ do
   -- message will be logged.
   let startingStx : Syntax := .atom (.synthetic ⟨0⟩ ⟨1⟩) <| source.extract ⟨0⟩ ⟨1⟩
   -- We don't want to output an error message when building `FormalConjectures.All`
-  unless (← getFileName) == "FormalConjectures.All" || correctCopyrightHeader.data.IsPrefix source.data do
+  unless (← getFileName) == "FormalConjectures.All" || hasCorrectCopyright source do
     Lean.Linter.logLint linter.style.copyright startingStx <|
     "The copyright header is incorrect. Please copy and paste the following one:\n"
       ++ correctCopyrightHeader
