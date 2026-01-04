@@ -68,7 +68,7 @@ theorem erdos_346.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
 /-- Erdős and Graham [ErGr80] also says that it is not hard to construct very irregular sequences
 satisfying the aforementioned properties. -/
 @[category research solved, AMS 11]
-theorem erdos_346.gt : ∃ A : ℕ → ℕ, IsLacunary A ∧ IsAddStronglyCompleteNatSeq A ∧
+theorem erdos_346.example : ∃ A : ℕ → ℕ, IsLacunary A ∧ IsAddStronglyCompleteNatSeq A ∧
     ∀ B : Set ℕ, B.Infinite → ¬ IsAddComplete (range A \ B) ∧
     liminf (fun n => A (n + 1) / (2 : ℝ)) atTop = 1 ∧
     limsup (fun n => A (n + 1) / (A n : ENNReal)) atTop = ⊤ := by
