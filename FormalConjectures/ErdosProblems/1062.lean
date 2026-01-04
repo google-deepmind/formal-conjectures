@@ -43,7 +43,7 @@ def f (n : ℕ) : ℕ :=
 /-- The interval `[m + 1, 3m + 2]` gives a construction showing that `f n` is asymptotically
 at least `2n / 3`. -/
 @[category research open, AMS 11]
-theorem erdos_1062.lower_bound (n : ℕ) : (2 * n) / 3 ≤ f n := by
+theorem erdos_1062.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ ≤ f n := by
   sorry
 
 /-- Lebensold proved that for large `n`, the function `f n` lies between `0.6725 n` and
