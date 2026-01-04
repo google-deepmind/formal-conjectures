@@ -31,14 +31,10 @@ two distinct other elements of `A`. -/
 def ForkFree (A : Finset ℕ) : Prop :=
   ∀ a ∈ A, {b ∈ A \ {a} | a ∣ b}.Subsingleton
 
-/-- `Admissible A n` means that `A` is contained in `{1,...,n}` and is fork-free. -/
-def Admissible (A : Finset ℕ) (n : ℕ) : Prop :=
-  A ⊆ Finset.Icc 1 n ∧ ForkFree A
-
 /-- The extremal function from Erdős problem 1062: the largest size of a fork-free subset of
 `{1,...,n}`. -/
 def f (n : ℕ) : ℕ :=
-  Nat.findGreatest (fun k => ∃ A, Admissible A n ∧ A.card = k) n
+  Nat.findGreatest (fun k => ∃ A ⊆ Finset.Icc 1 n, ForkFree A ∧ A.card = k) n
 
 /-- The interval `[m + 1, 3m + 2]` gives a construction showing that `f n` is asymptotically
 at least `2n / 3`. -/
