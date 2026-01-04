@@ -42,6 +42,10 @@ distinct terms of `A`. -/
 def IsAddCompleteNatSeq [Preorder M] (A : ℕ → M) : Prop :=
   ∀ᶠ k in Filter.atTop, k ∈ subseqSums A
 
+/-- A sequence `A` is strongly complete if `fun m => A (n + m)` is still complete for all `n`. -/
+def IsAddStronglyCompleteNatSeq [Preorder M] (A : ℕ → M) : Prop :=
+  ∀ n, IsAddCompleteNatSeq (fun m => A (n + m))
+
 /-- A sequence `A` is complete if every sufficiently large element of `M` is a sum of
 (not necessarily distinct) terms of `A`. -/
 def IsAddCompleteNatSeq' [Preorder M] (A : ℕ → M) : Prop :=
