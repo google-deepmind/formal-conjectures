@@ -53,7 +53,7 @@ theorem erdos_346.f_isAddStronglyCompleteNatSeq : IsAddStronglyCompleteNatSeq f 
 /-- The sequence `f` is not complete whenever infinitely many terms are removed from it, and this
 is proved in [Gr64d]. -/
 @[category test, AMS 11]
-theorem erdos_346.f_not_isAddCompleteNatSeq {B : Set ℕ} (hB : B.Infinite) :
+theorem erdos_346.f_not_isAddComplete {B : Set ℕ} (hB : B.Infinite) :
     ¬ IsAddComplete (range f \ B) := by
   sorry
 
