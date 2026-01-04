@@ -33,13 +33,10 @@ def B2 (g : ℕ) (A : Set ℕ) : Prop :=
   ∀ n, {x : ℕ × ℕ | x.1 + x.2 = n ∧ x.1 ≤ x.2 ∧ x.1 ∈ A ∧ x.2 ∈ A}.encard ≤ g
 
 /-- A set is Sidon iff it is `B₂[1]`. -/
-@[category API, AMS 5]
-@[simp] lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A := by
-  refine ⟨fun hA n => ?_, fun hB => fun i hi j hj k hk l hl h => ?_⟩
-  · refine Set.encard_le_one_iff.2 fun x y ⟨h, p, q⟩ ⟨r, s, t⟩ => ?_
-    have := hA x.1 q.1 y.1 t.1 x.2 q.2 y.2 t.2 (h.trans r.symm)
-    grind
-  · by_cases hp : j ≤ l <;> by_cases hq : i ≤ k
+@[category API, AMS 5, simp]
+lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A where
+  mp hB i hi j hj k hk l hl h := by
+    by_cases hp : j ≤ l <;> by_cases hq : i ≤ k
     · have := Set.encard_le_one_iff.1 (hB (j + l)) ⟨j, l⟩ ⟨i, k⟩ ⟨rfl, hp, hj, hl⟩ ⟨h, hq, hi, hk⟩
       grind
     · have := Set.encard_le_one_iff.1 (hB (j + l)) ⟨j, l⟩ ⟨k, i⟩ ⟨rfl, hp, hj, hl⟩ ?_
@@ -52,42 +49,54 @@ def B2 (g : ℕ) (A : Set ℕ) : Prop :=
       · grind
       · exact ⟨by linarith, by linarith, hl, hj⟩
       · exact ⟨by linarith, by linarith, hk, hi⟩
+  mpr hA n := by
+    refine Set.encard_le_one_iff.2 fun x y ⟨h, p, q⟩ ⟨r, s, t⟩ => ?_
+    have := hA x.1 q.1 y.1 t.1 x.2 q.2 y.2 t.2 (h.trans r.symm)
+    grind
 
 namespace Erdos158
 
-/-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}|/√N = 0`? -/
+/-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0`? -/
 @[category research open, AMS 5]
 theorem erdos_158.B22 : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → B2 2 A →
-    liminf (fun N : ℕ => (A ∩ .Iio N).ncard / √N) atTop = 0 := by
+    liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
   sorry
 
-/-- Let `A` be an infinite Sidon set. Then `liminf |A ∩ {1, ..., N}| * (log N / N) ^ (1 / 2) < ∞`.
-This is proved in [ESS94]. -/
+/-- Let `A` be an infinite Sidon set. Then
+`liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) * (log N) ^ (1 / 2) < ∞`. This is proved in [ESS94]. -/
 @[category research solved, AMS 5]
 theorem erdos_158.isSidon' {A : Set ℕ} (hp : A.Infinite) (hq : IsSidon A) :
-    liminf (fun N : ℕ => (A ∩ .Iio N).ncard * ENNReal.ofReal (√(Real.log N / N)))
+    liminf (fun N : ℕ => ENNReal.ofReal ((A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)
+    * (Real.log N) ^ (1 / 2 : ℝ)))
     atTop < ⊤ := by
   sorry
 
-/-- As a corollary of `erdos_158.isSidon'`, we can prove that `liminf |A ∩ {1, ..., N}|/√N = 0` for
-any infinite Sidon set `A`. -/
+/-- As a corollary of `erdos_158.isSidon'`, we can prove that
+`liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0` for any infinite Sidon set `A`. -/
 @[category research solved, AMS 5]
 theorem erdos_158.isSidon {A : Set ℕ} (hp : A.Infinite) (hq : IsSidon A) :
-    liminf (fun N : ℕ => (A ∩ .Iio N).ncard / √(N : ℝ)) atTop = 0 := by
+    liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
   have := erdos_158.isSidon' hp hq
   contrapose! this with h
-  have hg : Tendsto (fun N => (A ∩ .Iio N).ncard * √(Real.log N / N)) atTop atTop := by
-    have hl : Tendsto (fun N => (A ∩ .Iio N).ncard / √N * √(Real.log N)) atTop atTop := by
-      obtain ⟨c, hc_pos, hc⟩ : ∃ c > 0, ∀ᶠ N in atTop, (A ∩ .Iio N).ncard / √N ≥ c := by
-        simp only [liminf_eq, eventually_atTop, ne_eq] at h
-        by_cases h_zero : ∀ a ∈ {a : ℝ | ∃ a_1 : ℕ, ∀ N : ℕ, a_1 ≤ N → a ≤ (A ∩ .Iio N).ncard / √N}, a ≤ 0
-        · exact False.elim <| h <| le_antisymm ( csSup_le ⟨ 0, ⟨ 0, fun n hn => by positivity ⟩ ⟩ h_zero ) <| le_csSup ⟨ 0, h_zero ⟩ ⟨ 0, fun n hn => by positivity ⟩;
-        · aesop;
-      refine' tendsto_atTop_mono' _ _ _
-      exacts [ fun N => c * Real.sqrt ( Real.log N ), by filter_upwards [ hc, Filter.eventually_gt_atTop 1 ] with N hN₁ hN₂ using mul_le_mul_of_nonneg_right hN₁ <| Real.sqrt_nonneg _, Filter.Tendsto.const_mul_atTop hc_pos <| Filter.tendsto_atTop_atTop.mpr fun x => ⟨ ⌈Real.exp ( x ^ 2 ) ⌉₊ + 1, fun N hN => Real.le_sqrt_of_sq_le <| Real.le_log_iff_exp_le ( by norm_cast; linarith ) |>.2 <| by linarith [ Nat.le_ceil ( Real.exp ( x ^ 2 ) ), show ( N : ℝ ) ≥ ⌈Real.exp ( x ^ 2 ) ⌉₊ + 1 by exact_mod_cast hN ] ⟩ ]
-    convert hl using 1
-    norm_num [div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm]
+  have hl : Tendsto (fun N => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)
+    * (Real.log N) ^ (1 / 2 : ℝ)) atTop atTop := by
+    obtain ⟨c, hc_pos, hc⟩ : ∃ c > 0, ∀ᶠ N in atTop, c ≤ (A ∩ .Iio N).ncard
+      * (N : ℝ) ^ (- 1 / 2 : ℝ) := by
+      simp_all only [liminf_eq, eventually_atTop]
+      by_cases ha : ∀ a ∈ {a | ∃ c : ℕ, ∀ b ≥ c, a ≤ ↑(A ∩ .Iio b).ncard *
+        (b : ℝ) ^ (-1 / 2 : ℝ)}, a ≤ 0
+      · exact False.elim <| h <| le_antisymm (csSup_le ⟨0, ⟨0, fun n hn => by positivity⟩⟩ ha) <|
+          (le_csSup ⟨0, ha⟩ ⟨0, fun n hn => by positivity⟩)
+      · aesop
+    refine tendsto_atTop_mono' atTop (f₁ := fun N : ℕ => c * (Real.log N) ^ (1 / 2 : ℝ)) ?_ ?_
+    · refine EventuallyLE.mul_le_mul ?_ ?_ ?_ ?_
+      · filter_upwards [hc]; grind
+      · exact (EventuallyLE.refl atTop (fun N : ℕ => (Real.log N) ^ (1 / 2 : ℝ)))
+      repeat filter_upwards with a; positivity
+    · refine Tendsto.const_mul_atTop hc_pos ?_
+      simpa using (tendsto_rpow_atTop (by linarith : 0 < 1 / (2 : ℝ))).comp
+        (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
   rw [Tendsto.liminf_eq]
-  simpa [ofReal_mul, Function.comp_def] using tendsto_ofReal_atTop.comp hg
+  simpa [Function.comp_def] using tendsto_ofReal_atTop.comp hl
 
 end Erdos158
