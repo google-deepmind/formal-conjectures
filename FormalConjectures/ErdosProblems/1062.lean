@@ -29,7 +29,7 @@ namespace Erdos1062
 /-- A finite set `A` of positive integers is fork-free if no element divides
 two distinct other elements of `A`. -/
 def ForkFree (A : Finset ℕ) : Prop :=
-  ∀ a ∈ A, {b \in A.erase a | a ∣ b}.Subsingleton
+  ∀ a ∈ A, {b ∈ A \ {a} | a ∣ b}.Subsingleton
 
 /-- `Admissible A n` means that `A` is contained in `{1,...,n}` and is fork-free. -/
 def Admissible (A : Finset ℕ) (n : ℕ) : Prop :=
