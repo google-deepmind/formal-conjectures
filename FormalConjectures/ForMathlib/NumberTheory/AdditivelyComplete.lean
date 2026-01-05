@@ -57,6 +57,7 @@ def IsAddComplete (A : Set M) : Prop :=
   ∀ᶠ k in Filter.atTop, k ∈ subsetSums A
 
 /-- If `A ⊆ B` and `A` is complete, then `B` is also complete. -/
+@[gcongr]
 theorem isAddComplete_mono {A B : Set M} (h : A ⊆ B) (ha : IsAddComplete A) : IsAddComplete B := by
   filter_upwards [ha] with x hx
   exact (subsetSums_mono h) hx
@@ -94,7 +95,7 @@ theorem IsAddStronglyCompleteNatSeq.isAddCompleteNatSeq {A : ℕ → M}
     IsAddCompleteNatSeq A := by simpa using hA 0
 
 open Classical in
-/-- A sequence `A` is strongly complete iff its range is strongly complete. -/
+/-- If the range of a sequence `A` is strongly complete, then `A` is strongly complete. -/
 theorem isAddStronglyComplete_iff_isAddStronglyCompleteNatSeq (A : ℕ → M) :
     IsAddStronglyComplete (.range A) → IsAddStronglyCompleteNatSeq A :=
   fun h n => (isAddCompleteNatSeq_iff_isAddCompleteNatSeq (fun m => A (n + m))).1
