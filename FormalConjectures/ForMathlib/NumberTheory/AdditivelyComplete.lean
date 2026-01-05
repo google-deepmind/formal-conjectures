@@ -102,10 +102,10 @@ theorem IsAddStronglyComplete.isAddStronglyCompleteNatSeq {A : ℕ → M}
     (isAddComplete_mono (A := .range A \ ((Finset.range n).image A)) (fun _ ⟨⟨y, hy⟩, q⟩ =>
     ⟨y - n, by grind⟩) (h (Finset.finite_toSet _)))
 
-/-- If `A` is strongly complete and its range is infinite, then the range of `A` is strongly
+/-- If `A` is strongly complete and ..., then the range of `A` is strongly
 complete.-/
 theorem IsAddStronglyCompleteNatSeq.isAddStronglyComplete  {A : ℕ → M}
-    (h : IsAddStronglyCompleteNatSeq A) (hA : (Set.range A).Infinite) :
+    (h : IsAddStronglyCompleteNatSeq A) :
     IsAddStronglyComplete (.range A) := by
   sorry
 
