@@ -15,8 +15,8 @@ limitations under the License.
 -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Order.Filter.AtTopBot.Defs
 import Mathlib.Data.Finset.Preimage
+import Mathlib.Order.Filter.AtTopBot.Defs
 
 variable {M : Type*} [AddCommMonoid M]
 
