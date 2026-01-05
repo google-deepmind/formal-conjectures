@@ -89,7 +89,7 @@ def IsAddStronglyCompleteNatSeq (A : ℕ → M) : Prop :=
   ∀ n, IsAddCompleteNatSeq (fun m => A (n + m))
 
 /-- A strongly complete sequence is complete. -/
-theorem isAddCompleteNatSeq_of_isAddStronglyCompleteNatSeq {A : ℕ → M}
+theorem IsAddStronglyCompleteNatSeq.isAddCompleteNatSeq {A : ℕ → M}
     (hA : IsAddStronglyCompleteNatSeq A) :
     IsAddCompleteNatSeq A := by simpa using hA 0
 
