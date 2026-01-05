@@ -26,18 +26,18 @@ notation g " ≪ " f => Asymptotics.IsBigO Filter.atTop g f
 
 /-- The type of common functions used to estimate growth rate. -/
 inductive ElementaryGrowth : Type
-  | const : ℝ → CommonFn
-  | id    : CommonFn
-  | log   : CommonFn
-  | exp   : CommonFn
-  | add   : CommonFn → CommonFn → CommonFn
-  | mul   : CommonFn → CommonFn → CommonFn
-  | comp  : CommonFn → CommonFn → CommonFn
+  | const : ℝ → ElementaryGrowth
+  | id    : ElementaryGrowth
+  | log   : ElementaryGrowth
+  | exp   : ElementaryGrowth
+  | add   : ElementaryGrowth → ElementaryGrowth → ElementaryGrowth
+  | mul   : ElementaryGrowth → ElementaryGrowth → ElementaryGrowth
+  | comp  : ElementaryGrowth → ElementaryGrowth → ElementaryGrowth
 
-namespace CommonFn
+namespace ElementaryGrowth
 
 /-- The evaluation map of the type of common growth functions. -/
-noncomputable def Real.eval : CommonFn → ℝ → ℝ
+noncomputable def Real.eval : ElementaryGrowth → ℝ → ℝ
   | const c  => fun _ => c
   | id       => fun x => x
   | log      => fun x => x.log
@@ -46,4 +46,4 @@ noncomputable def Real.eval : CommonFn → ℝ → ℝ
   | mul f g  => fun x => eval f x * eval g x
   | comp f g => eval f ∘ eval g
 
-end CommonFn
+end ElementaryGrowth
