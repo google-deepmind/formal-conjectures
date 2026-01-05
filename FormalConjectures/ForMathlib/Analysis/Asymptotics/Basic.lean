@@ -18,7 +18,6 @@ import Mathlib.Analysis.Asymptotics.Defs
 import Mathlib.Order.Filter.AtTopBot.Defs
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
-open scoped Nat
 open Filter
 
 notation f " ≫ " g => Asymptotics.IsBigO Filter.atTop g f
