@@ -33,12 +33,35 @@ open scoped ArithmeticFunction
 
 namespace Erdos413
 
-/-- `barrier n` means `n` is an Erdős barrier for `ω`, i.e. `m + ω(m) ≤ n` for all `m < n`. -/
-def barrier (n : ℕ) : Prop := ∀ m < n, m + ω m ≤ n
+/-- `barrier f n` means `n` is a barrier for the function `f`,
+    i.e. `m + f m ≤ n` for all `m < n`. -/
+def barrier (f : ℕ → ℕ) (n : ℕ) : Prop := ∀ m < n, m + f m ≤ n
 
 /-- Are there infinitely many barriers for `ω`? -/
 @[category research open, AMS 11]
-theorem erdos_413 : ({ n | barrier n }.Infinite) ↔ answer(sorry) := by
+theorem erdos_413 : ({ n | barrier ω n }.Infinite) ↔ answer(sorry) := by
+  sorry
+
+/-- `expProd n` is `∏ kᵢ` when `n = ∏ pᵢ ^ kᵢ`, i.e. the product of the prime exponents of `n`. -/
+def expProd (n : ℕ) : ℕ :=
+  n.factorization.support.prod fun p => n.factorization p
+
+/-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density. -/
+@[category research solved, AMS 11]
+theorem erdos_413_expProd_barrier_pos_density :
+    { n | barrier expProd n }.HasPosDensity := by
+  sorry
+
+/-- Erdős believed there should be infinitely many barriers for `Ω`, the total prime multiplicity. -/
+@[category research open, AMS 11]
+theorem erdos_413_bigOmega :
+    ({ n | barrier bigOmega n }.Infinite) ↔ answer(sorry) := by
+  sorry
+
+/-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`. -/
+@[category computational, AMS 11]
+theorem erdos_413_bigOmega_largest_barrier_lt_100k :
+    IsGreatest {n : ℕ | n < 10 ^ 5 ∧ barrier bigOmega n} 99840 := by
   sorry
 
 /-- `barrierWith ε n` records the relaxed barrier inequality `(m : ℝ) + ε * ω(m) ≤ n` for all `m < n`. -/
