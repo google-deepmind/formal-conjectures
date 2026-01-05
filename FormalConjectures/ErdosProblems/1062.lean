@@ -38,7 +38,7 @@ def ForkFree (A : Set ℕ) : Prop :=
 noncomputable def f (n : ℕ) : ℕ :=
   Nat.findGreatest
     (fun k =>
-      ∃ A : Set ℕ, A ⊆ (Finset.Icc 1 n : Set ℕ) ∧ A.Finite ∧ ForkFree A ∧ Nat.card A = k)
+      ∃ A ⊆ Set.Icc 1 n, ForkFree A ∧ A.ncard = k)
     n
 
 /-- The interval `[m + 1, 3m + 2]` gives a construction showing that `f n` is asymptotically
