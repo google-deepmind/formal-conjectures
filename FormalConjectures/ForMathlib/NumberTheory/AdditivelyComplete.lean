@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Order.Filter.AtTopBot.Defs
+import Mathlib.Data.Finset.Preimage
 
 variable {M : Type*} [AddCommMonoid M]
 
@@ -25,28 +26,83 @@ open scoped List
 def subsetSums (A : Set M) : Set M :=
   {n | ∃ B : Finset M, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
 
+/-- If `A ⊆ B`, then `subsetSums A ⊆ subsetSums B`. -/
+theorem subsetSums_mono {A B : Set M} (h : A ⊆ B) : subsetSums A ⊆ subsetSums B :=
+  fun _ ⟨C, hC⟩ => ⟨C, hC.1.trans h, hC.2⟩
+
 /-- The set of subset sums of a sequence `ℕ → M`. -/
 def subseqSums (A : ℕ → M) : Set M :=
   {n | ∃ B : Finset ℕ, B.toSet.InjOn A ∧ n = ∑ i ∈ B, A i}
+
+/-- The set of subset sums of a sequence is `ℕ → M` is equal to the set of subset sums of its
+range. -/
+theorem subseqSums_eq_subsetSums (A : ℕ → M) : subsetSums (Set.range A) = subseqSums A := by
+  ext x
+  classical
+  refine ⟨fun ⟨C, hC⟩ => ?_, fun ⟨C, hC⟩ => ?_⟩
+  · choose! n hn using fun i (hi : i ∈ C) => hC.1 hi
+    exact ⟨Finset.image n C, fun i hi j hj hij => by aesop, hC.2.trans
+      ((Finset.sum_image fun i hi j hj hij => by grind).trans (by aesop)).symm⟩
+  · exact ⟨C.image A, by grind, hC.2.trans (by simp [Finset.sum_image hC.1])⟩
 
 /-- The set of subset sums of a sequence `ℕ → M`, where repetition is allowed. -/
 def subseqSums' (A : ℕ → M) : Set M :=
   {n | ∃ B : Finset ℕ, n = ∑ i ∈ B, A i}
 
+variable [Preorder M]
+
 /-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
-def IsAddComplete [Preorder M] (A : Set M) : Prop :=
+def IsAddComplete (A : Set M) : Prop :=
   ∀ᶠ k in Filter.atTop, k ∈ subsetSums A
+
+/-- If `A ⊆ B` and `A` is complete, then `B` is also complete. -/
+theorem isAddComplete_mono {A B : Set M} (h : A ⊆ B) (ha : IsAddComplete A) : IsAddComplete B := by
+  filter_upwards [ha] with x hx
+  exact (subsetSums_mono h) hx
+
+/-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
+def IsAddStronglyComplete (A : Set M) : Prop :=
+  ∀ {B : Set M}, B.Finite → IsAddComplete (A \ B)
+
+/-- A strongly complete set is complete. -/
+theorem isAddComplete_of_isAddStronglyComplete {A : Set M} (hA : IsAddStronglyComplete A) :
+    IsAddComplete A := by simpa using hA Set.finite_empty
+
+/-- If `A ⊆ B` and `A` is strongly complete, then `B` is also strongly complete. -/
+theorem isAddStronglyComplete_mono {A B : Set M} (h : A ⊆ B) (ha : IsAddStronglyComplete A) :
+    IsAddStronglyComplete B := fun hC => isAddComplete_mono (by grind) (ha hC)
 
 /-- A sequence `A` is complete if every sufficiently large element of `M` is a sum of
 distinct terms of `A`. -/
-def IsAddCompleteNatSeq [Preorder M] (A : ℕ → M) : Prop :=
+def IsAddCompleteNatSeq (A : ℕ → M) : Prop :=
   ∀ᶠ k in Filter.atTop, k ∈ subseqSums A
 
+/-- A sequence `A` is complete iff its range is complete. -/
+theorem isAddCompleteNatSeq_iff_isAddCompleteNatSeq (A : ℕ → M) : IsAddComplete (.range A) ↔
+    IsAddCompleteNatSeq A where
+  mp h := by filter_upwards [h] with x hx; simp [← subseqSums_eq_subsetSums A, hx]
+  mpr h := by filter_upwards [h] with x hx; simp [subseqSums_eq_subsetSums A, hx]
+
 /-- A sequence `A` is strongly complete if `fun m => A (n + m)` is still complete for all `n`. -/
-def IsAddStronglyCompleteNatSeq [Preorder M] (A : ℕ → M) : Prop :=
+def IsAddStronglyCompleteNatSeq (A : ℕ → M) : Prop :=
   ∀ n, IsAddCompleteNatSeq (fun m => A (n + m))
+
+/-- A strongly complete sequence is complete. -/
+theorem isAddCompleteNatSeq_of_isAddStronglyCompleteNatSeq {A : ℕ → M}
+    (hA : IsAddStronglyCompleteNatSeq A) :
+    IsAddCompleteNatSeq A := by simpa using hA 0
+
+/-- A sequence `A` is strongly complete iff its range is strongly complete. -/
+theorem isAddStronglyComplete_iff_isAddStronglyCompleteNatSeq (A : ℕ → M) :
+    IsAddStronglyComplete (.range A) ↔ IsAddStronglyCompleteNatSeq A where
+  mp h n := by
+    classical
+    exact (isAddCompleteNatSeq_iff_isAddCompleteNatSeq (fun m => A (n + m))).1 (isAddComplete_mono
+      (A := .range A \ ((Finset.range n).image A)) (fun _ ⟨⟨y, hy⟩, q⟩ => ⟨y - n, by grind⟩)
+      (h (Finset.finite_toSet _)))
+  mpr h B hB := by sorry
 
 /-- A sequence `A` is complete if every sufficiently large element of `M` is a sum of
 (not necessarily distinct) terms of `A`. -/
-def IsAddCompleteNatSeq' [Preorder M] (A : ℕ → M) : Prop :=
+def IsAddCompleteNatSeq' (A : ℕ → M) : Prop :=
   ∀ᶠ k in Filter.atTop, k ∈ subseqSums' A
