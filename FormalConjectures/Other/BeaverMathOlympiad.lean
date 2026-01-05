@@ -59,19 +59,19 @@ The first 10 values of $(a_n, b_n)$ are $(1, 2), (3, 1), (2, 6), (5, 4), (1, 18)
 [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `↔ answer(sorry)`.
+using `answer(sorry) ↔`.
 
 The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor Jason Yuen on
 June 25th 2024.
 -/
 @[category research open, AMS 5 11 68]
 theorem busy_beaver_math_olympiad_problem_1 :
-    (∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
+    answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 1)
     (a_rec : ∀ n, a (n + 1) = if b n ≤ a n then a n - b n else 2 * a n + 1)
     (b_ini : b 0 = 2)
     (b_rec : ∀ n, b (n + 1) = if b n ≤ a n then 4 * b n + 2 else b n - a n),
-    (∃ i, a i = b i)) ↔ answer(sorry) := by
+    (∃ i, a i = b i) := by
   sorry
 
 /--
@@ -190,7 +190,7 @@ Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
 [`1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE`](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `↔ answer(sorry)`.
+using `answer(sorry) ↔`.
 
 The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor mxdys
 on August 7th 2024.
@@ -199,12 +199,12 @@ The correspondence between the machine's halting problem and the below reformula
 in [Rocq](https://github.com/ccz181078/busycoq/blob/BB6/verify/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE.v).
 -/
 @[category research open, AMS 5 11 68]
-theorem beaver_math_olympiad_problem_5
-    (a b f : ℕ → ℕ) (hf : f = fun x ↦ 10 * 2 ^ x - 1)
+theorem beaver_math_olympiad_problem_5 : answer(sorry) ↔
+    ∀ (a b f : ℕ → ℕ), ∀ᵉ (hf : f = fun x ↦ 10 * 2 ^ x - 1)
     (a_ini : a 0 = 0) (b_ini : b 0 = 5)
     (a_rec : ∀ n, a (n + 1) = if f (a n) ≤ b n then a n + 1 else a n)
-    (b_rec : ∀ n, b (n+1) = if f (a n) ≤ b n then b n - f (a n) else 3 * b n + a n + 5) :
-    (∃ i, b i = (f (a i)) - 1) ↔ answer(sorry) := by
+    (b_rec : ∀ n, b (n+1) = if f (a n) ≤ b n then b n - f (a n) else 3 * b n + a n + 5),
+    (∃ i, b i = (f (a i)) - 1) := by
   sorry
 
 end BusyBeaverMathOlympiad

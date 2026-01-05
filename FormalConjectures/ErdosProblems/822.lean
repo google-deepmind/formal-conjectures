@@ -35,10 +35,9 @@ The problem is known to have an affirmative answer.
 -/
 @[category research solved, AMS 11]
 theorem erdos_822 :
-    (Set.range fun n => n + Nat.totient n).HasPosDensity ↔ answer(True) := by
+    answer(True) ↔ (Set.range fun n => n + Nat.totient n).HasPosDensity := by
   -- TODO: Replace `sorry` with a formal proof using the results of
   -- Gabdullin–Iudelevich–Luca once an appropriate library interface is available.
   sorry
 
 end Erdos822
-

@@ -142,14 +142,14 @@ def Configuration.IsPacking (c : Configuration) : Prop :=
 /-- Can a unit square be covered by rectangles of width `1 / (n + 1)` and height `1 / (n + 2)`? -/
 @[category research open, AMS 51]
 theorem rectangles_cover_unit_square :
-    (∃ c : Configuration, ∀ p ∈ unitSquare, ∃ n, p ∈ (c.rect n).toSet) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ c : Configuration, ∀ p ∈ unitSquare, ∃ n, p ∈ (c.rect n).toSet := by
   sorry
 
 /-- Equivalently, can a unit square be packed with rectangles of width `1 / (n + 1)` and height
 `1 / (n + 2)`? -/
 @[category research open, AMS 51]
 theorem rectangles_pack_unit_square :
-    (∃ c : Configuration, (∀ n, (c.rect n).toSet ⊆ unitSquare) ∧ c.IsPacking) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ c : Configuration, (∀ n, (c.rect n).toSet ⊆ unitSquare) ∧ c.IsPacking := by
   sorry
 
 /-- It is known that packing the rectangles into a square of side length `133/132` is possible.

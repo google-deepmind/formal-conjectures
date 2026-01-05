@@ -49,7 +49,7 @@ and
 $$m=p(n_1)+\cdots+p(n_k)$$?
 -/
 @[category research open, AMS 11]
-theorem erdos_283 : (∀ p : ℤ[X], Condition p) ↔ answer(sorry) := by
+theorem erdos_283 : answer(sorry) ↔ ∀ p : ℤ[X], Condition p := by
   sorry
 
 

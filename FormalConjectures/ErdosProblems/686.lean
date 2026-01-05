@@ -30,9 +30,8 @@ for some $k≥2$ and $m≥n+k$?
 -/
 @[category research open, AMS 11]
 theorem erdos_686 :
-    (∀ (N : ℕ), N ≥ 2 → ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
-      (N : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)))
-    ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ (N : ℕ), N ≥ 2 → ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+      (N : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
   sorry
 
 -- TODO: also formalize the follow-up question:

@@ -41,11 +41,10 @@ The answer is yes, proved by Freiman [Fr73].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245 :
-    (∀ (A : Set ℕ), A.Infinite →
+    answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
       atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
       3 ≤ atTop.limsup
-        fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard) ↔
-    answer(True) := by
+        fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard := by
   sorry
 
 /--

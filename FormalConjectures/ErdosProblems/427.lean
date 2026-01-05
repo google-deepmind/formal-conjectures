@@ -45,7 +45,7 @@ $$
 where $p_r$ denotes the $r$th prime?
 -/
 @[category research solved, AMS 11]
-theorem erdos_427 : erdos427 ↔ answer(True) := by
+theorem erdos_427 : answer(sorry) ↔ erdos427 := by
   sorry
 
 /--

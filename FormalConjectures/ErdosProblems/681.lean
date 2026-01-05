@@ -34,9 +34,8 @@ such that $n + k$ is composite and $p(n+k) > k^2$,
 where $p(m)$ is the least prime factor of $m$ ?
 -/
 @[category research open, AMS 11]
-theorem erdos_681 :
-    (∃ N, ∀ n > N, ∃ k > 0, (n + k).Composite ∧ ∀ p, IsLPF p (n + k) → p > k ^ 2) ↔
-    answer(sorry) := by
+theorem erdos_681 : answer(sorry) ↔
+    ∃ N, ∀ n > N, ∃ k > 0, (n + k).Composite ∧ ∀ p, IsLPF p (n + k) → p > k ^ 2 := by
   sorry
 
 end Erdos681

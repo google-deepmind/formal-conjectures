@@ -34,10 +34,9 @@ $$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$?
 -/
 @[category research open, AMS 26]
 theorem mathoverflow_347178 :
-    (∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f),
+    answer(sorry) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f),
         (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) ∧
-        (⨆ x, (f x : EReal)) = ⨆ x, (f (x + gradient f x) : EReal))
-      ↔ answer(sorry) := by
+        (⨆ x, (f x : EReal)) = ⨆ x, (f (x + gradient f x) : EReal) := by
   sorry
 
 /--
@@ -46,9 +45,8 @@ $\sup_{x \in \mathbb R^n}f(x)$ and $\sup_{x\in \mathbb R^n} f(x+\nabla f(x))$ eq
 -/
 @[category research open, AMS 26]
 theorem mathoverflow_347178.variants.bounded_iff :
-    (∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f),
-        (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))))
-      ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f),
+        (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) := by
   sorry
 
 /--
@@ -58,10 +56,9 @@ hold when both suprema are finite?
 -/
 @[category research open, AMS 26]
 theorem mathoverflow_347178.variants.bounded_only :
-    (∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f)
+    answer(sorry) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f)
         (h : BddAbove (range f)) (h' : BddAbove (range (fun x ↦ f (x + gradient f x)))),
-        (⨆ x, f x) = ⨆ x, f (x + gradient f x))
-      ↔ answer(sorry) := by
+        (⨆ x, f x) = ⨆ x, f (x + gradient f x) := by
   sorry
 
 end Mathoverflow347178
