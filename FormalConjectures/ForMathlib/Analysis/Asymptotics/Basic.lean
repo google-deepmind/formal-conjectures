@@ -25,7 +25,7 @@ notation f " ≫ " g => Asymptotics.IsBigO Filter.atTop g f
 notation g " ≪ " f => Asymptotics.IsBigO Filter.atTop g f
 
 /-- The type of common functions used to estimate growth rate. -/
-inductive CommonFn : Type
+inductive ElementaryGrowth : Type
   | const : ℝ → CommonFn
   | id    : CommonFn
   | log   : CommonFn
