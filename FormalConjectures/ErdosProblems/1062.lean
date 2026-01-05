@@ -36,10 +36,7 @@ def ForkFree (A : Set ℕ) : Prop :=
 /-- The extremal function from Erdős problem 1062: the largest size of a fork-free subset of
 `{1,...,n}`. -/
 noncomputable def f (n : ℕ) : ℕ :=
-  Nat.findGreatest
-    (fun k =>
-      ∃ A ⊆ Set.Icc 1 n, ForkFree A ∧ A.ncard = k)
-    n
+  Nat.findGreatest (fun k => ∃ A ⊆ Set.Icc 1 n, ForkFree A ∧ A.ncard = k) n
 
 /-- The interval `[m + 1, 3m + 2]` gives a construction showing that `f n` is asymptotically
 at least `⌊2n / 3⌋`. -/
