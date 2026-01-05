@@ -66,7 +66,7 @@ def IsAddStronglyComplete (A : Set M) : Prop :=
   ∀ {B : Set M}, B.Finite → IsAddComplete (A \ B)
 
 /-- A strongly complete set is complete. -/
-theorem isAddComplete_of_isAddStronglyComplete {A : Set M} (hA : IsAddStronglyComplete A) :
+theorem IsAddStronglyComplete.isAddComplete {A : Set M} (hA : IsAddStronglyComplete A) :
     IsAddComplete A := by simpa using hA Set.finite_empty
 
 /-- If `A ⊆ B` and `A` is strongly complete, then `B` is also strongly complete. -/
@@ -93,15 +93,13 @@ theorem IsAddStronglyCompleteNatSeq.isAddCompleteNatSeq {A : ℕ → M}
     (hA : IsAddStronglyCompleteNatSeq A) :
     IsAddCompleteNatSeq A := by simpa using hA 0
 
+open Classical in
 /-- A sequence `A` is strongly complete iff its range is strongly complete. -/
 theorem isAddStronglyComplete_iff_isAddStronglyCompleteNatSeq (A : ℕ → M) :
-    IsAddStronglyComplete (.range A) ↔ IsAddStronglyCompleteNatSeq A where
-  mp h n := by
-    classical
-    exact (isAddCompleteNatSeq_iff_isAddCompleteNatSeq (fun m => A (n + m))).1 (isAddComplete_mono
-      (A := .range A \ ((Finset.range n).image A)) (fun _ ⟨⟨y, hy⟩, q⟩ => ⟨y - n, by grind⟩)
-      (h (Finset.finite_toSet _)))
-  mpr h B hB := by sorry
+    IsAddStronglyComplete (.range A) → IsAddStronglyCompleteNatSeq A :=
+  fun h n => (isAddCompleteNatSeq_iff_isAddCompleteNatSeq (fun m => A (n + m))).1
+    (isAddComplete_mono (A := .range A \ ((Finset.range n).image A)) (fun _ ⟨⟨y, hy⟩, q⟩ =>
+    ⟨y - n, by grind⟩) (h (Finset.finite_toSet _)))
 
 /-- A sequence `A` is complete if every sufficiently large element of `M` is a sum of
 (not necessarily distinct) terms of `A`. -/
