@@ -37,7 +37,7 @@ def f (n : ℕ) : ℕ :=
   Nat.findGreatest (fun k => ∃ A ⊆ Finset.Icc 1 n, ForkFree A ∧ A.card = k) n
 
 /-- The interval `[m + 1, 3m + 2]` gives a construction showing that `f n` is asymptotically
-at least `2n / 3`. -/
+at least `⌊2n / 3⌋`. -/
 @[category research open, AMS 11]
 theorem erdos_1062.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ ≤ f n := by
   sorry
