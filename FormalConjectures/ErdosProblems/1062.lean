@@ -46,8 +46,7 @@ theorem erdos_1062.lower_bound (n : ℕ) : 2 * n / 3 ≤ f n := by
 `0.6736 n`. -/
 @[category research solved, AMS 11]
 theorem erdos_1062.lebensold_bounds :
-    ∃ N, ∀ ⦃n⦄, N ≤ n →
-      (0.6725 : ℝ) * n ≤ f n ∧ f n ≤ (0.6736 : ℝ) * n := by
+    ∀ᶠ n in atTop, (0.6725 : ℝ) * n ≤ f n ∧ f n ≤ (0.6736 : ℝ) * n := by
   sorry
 
 /-- Erdős asked whether the limiting density `f n / n` exists and, if so, whether it is
