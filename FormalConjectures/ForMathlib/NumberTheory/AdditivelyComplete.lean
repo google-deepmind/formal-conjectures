@@ -27,6 +27,7 @@ def subsetSums (A : Set M) : Set M :=
   {n | ∃ B : Finset M, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
 
 /-- If `A ⊆ B`, then `subsetSums A ⊆ subsetSums B`. -/
+@[gcongr]
 theorem subsetSums_mono {A B : Set M} (h : A ⊆ B) : subsetSums A ⊆ subsetSums B :=
   fun _ ⟨C, hC⟩ => ⟨C, hC.1.trans h, hC.2⟩
 
