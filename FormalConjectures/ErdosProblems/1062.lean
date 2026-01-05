@@ -58,12 +58,11 @@ theorem erdos_1062.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ ≤ f n :=
   simp only [ForkFree, Finset.coe_Icc, Set.mem_Icc, Set.mem_diff, Set.mem_singleton_iff, and_assoc,
     and_imp, A]
   rintro a ha -
-  refine Set.subsingleton_of_forall_eq (2 * a) ?_
+  refine Set.subsingleton_of_forall_eq (a * 2) ?_
   simp only [Set.mem_setOf_eq, and_imp]
   rintro _ _ hk _ ⟨k, rfl⟩
   match k with
-  | 0 | 1 => simp_all
-  | 2 => exact mul_comm ..
+  | 0 | 1 | 2 => simp_all
   | k + 3 => grw [← le_add_self] at hk; omega
 
 /-- Lebensold proved that for large `n`, the function `f n` lies between `0.6725 n` and
