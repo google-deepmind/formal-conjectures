@@ -34,8 +34,15 @@ conjecture -/
 def imageSet {α : Type*} [Semifield α] (P : α[X]) : Set α :=
   Set.range (fun (n : ℕ) ↦ P.eval ↑n + 1 / n)
 
+/-- The predicate that a set `A` is strongly complete, i.e. that for every finite set `B`, every sufficiently
+large integer is a sum of elements of the set `A \ B`. -/
+def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
+  ∀ B : Finset α,
+    ∀ᶠ (m : ℕ) in Filter.atTop,
+      ↑m ∈ { ∑ n ∈ X, n | (X : Finset α) (_ : X.toSet ⊆ A \ B.toSet) }
+
 /-- The predicate that the rational polynomial `P` has a complete image. -/
-def HasCompleteImage (P : ℚ[X]) : Prop := IsAddStronglyComplete (imageSet P)
+def HasCompleteImage (P : ℚ[X]) : Prop := IsStronglyComplete (imageSet P)
 
 /--
 Let $p(x) \in \mathbb{Q}[x]$ be a non-constant rational polynomial with positive leading
