@@ -24,7 +24,16 @@ nonnegative integers.
 
 Zhi-Wei Sun has offered a $3,500 prize for the first proof.
 
-*Reference:* [A303656](https://oeis.org/A303656)
+*References:*
+- [OEIS A303656](https://oeis.org/A303656)
+- Z.-W. Sun, "Restricted sums of four squares," arXiv preprint:
+  https://arxiv.org/abs/1701.05868v10
+- Z.-W. Sun, "Refining Lagrange's four-square theorem," Journal of Number Theory:
+  http://maths.nju.edu.cn/~zwsun/RefineFourSquareTh.pdf
+- Z.-W. Sun, "Restricted sums of three or four squares":
+  http://maths.nju.edu.cn/~zwsun/Square-sum.pdf
+- Zhi-Wei Sun's 1-3-5 conjecture and variations:
+  https://www.aimspress.com/aimspress-data/era/2020/2/PDF/1935-9179_2020_2_589.pdf
 -/
 
 namespace OeisA303656
