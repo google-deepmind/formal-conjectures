@@ -34,7 +34,7 @@ namespace Erdos885
 For integer $n \geq 1$ we define the factor difference set of $n$ by
 $D(n) = \{|a-b| : n=ab\}$.
 -/
-def FactorDifferenceSet (n : ℕ) : Set ℕ :=
+def factorDifferenceSet (n : ℕ) : Set ℕ :=
   {d | ∃ a b : ℕ, n = a * b ∧ (d : ℤ) = |(a : ℤ) - b|}
 
 /--
@@ -42,11 +42,11 @@ Is it true that, for every $k \geq 1$, there exist integers $N_1 < \dots < N_k$ 
 $|\cap_i D(N_i)| \geq k$?
 -/
 @[category research open, AMS 11]
-theorem erdos_885 : ∀ k ≥ 1,
+theorem erdos_885 : answer(sorry) ↔ ∀ k ≥ 1,
     ∃ Ns : Finset ℕ,
       (∀ n ∈ Ns, 1 ≤ n) ∧
       Ns.card = k ∧
-      (⋂ n ∈ Ns, FactorDifferenceSet n).ncard ≥ k := by
+      (⋂ n ∈ Ns, factorDifferenceSet n).ncard ≥ k := by
   sorry
 
 /--
@@ -57,7 +57,7 @@ theorem erdos_885.variants.k_eq_2 :
     ∃ Ns : Finset ℕ,
       (∀ n ∈ Ns, 1 ≤ n) ∧
       Ns.card = 2 ∧
-      (⋂ n ∈ Ns, FactorDifferenceSet n).ncard ≥ 2 := by
+      (⋂ n ∈ Ns, factorDifferenceSet n).ncard ≥ 2 := by
   sorry
 
 /--
@@ -68,7 +68,7 @@ theorem erdos_885.variants.k_eq_3 :
     ∃ Ns : Finset ℕ,
       (∀ n ∈ Ns, 1 ≤ n) ∧
       Ns.card = 3 ∧
-      (⋂ n ∈ Ns, FactorDifferenceSet n).ncard ≥ 3 := by
+      (⋂ n ∈ Ns, factorDifferenceSet n).ncard ≥ 3 := by
   sorry
 
 /--
@@ -79,7 +79,7 @@ theorem erdos_885.variants.k_eq_4 :
     ∃ Ns : Finset ℕ,
       (∀ n ∈ Ns, 1 ≤ n) ∧
       Ns.card = 4 ∧
-      (⋂ n ∈ Ns, FactorDifferenceSet n).ncard ≥ 4 := by
+      (⋂ n ∈ Ns, factorDifferenceSet n).ncard ≥ 4 := by
   sorry
 
 end Erdos885
