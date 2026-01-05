@@ -16,6 +16,47 @@ limitations under the License.
 
 import Mathlib.Analysis.Asymptotics.Defs
 import Mathlib.Order.Filter.AtTopBot.Defs
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+
+open scoped Nat
 
 notation f " ≫ " g => Asymptotics.IsBigO Filter.atTop g f
 notation g " ≪ " f => Asymptotics.IsBigO Filter.atTop g f
+
+/-- The type of common functions used to estimate growth rate. -/
+inductive CommonFn : Type
+  | const : ℝ → CommonFn
+  | id    : CommonFn
+  | log   : CommonFn
+  | exp   : CommonFn
+  | Gamma : CommonFn
+  | add   : CommonFn → CommonFn → CommonFn
+  | mul   : CommonFn → CommonFn → CommonFn
+  | comp  : CommonFn → CommonFn → CommonFn
+
+namespace CommonFn
+
+/-- The evaluation map of the type of common growth functions. -/
+noncomputable def Real.eval : CommonFn → ℝ → ℝ
+  | const c  => fun _ => c
+  | id       => fun x => x
+  | log      => fun x => x.log
+  | exp      => fun x => x.exp
+  | Gamma    => fun x => x.Gamma
+  | add f g  => fun x => eval f x + eval g x
+  | mul f g  => fun x => eval f x * eval g x
+  | comp f g => eval f ∘ eval g
+
+/-- The evaluation map of the type of common growth functions. -/
+noncomputable def Nat.eval : CommonFn → ℕ → ℝ
+  | const c  => fun _ => c
+  | id       => fun x => x
+  | log      => fun x => (x : ℝ).log
+  | exp      => fun x => (x : ℝ).log
+  | Gamma    => fun x => x !
+  | add f g  => fun x => eval f x + eval g x
+  | mul f g  => fun x => eval f x * eval g x
+  | comp f g => Real.eval f ∘ eval g
+
+end CommonFn
