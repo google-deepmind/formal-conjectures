@@ -96,11 +96,18 @@ theorem IsAddStronglyCompleteNatSeq.isAddCompleteNatSeq {A : ℕ → M}
 
 open Classical in
 /-- If the range of a sequence `A` is strongly complete, then `A` is strongly complete. -/
-theorem isAddStronglyComplete_iff_isAddStronglyCompleteNatSeq (A : ℕ → M) :
-    IsAddStronglyComplete (.range A) → IsAddStronglyCompleteNatSeq A :=
-  fun h n => (isAddCompleteNatSeq_iff_isAddCompleteNatSeq (fun m => A (n + m))).1
+theorem IsAddStronglyComplete.isAddStronglyCompleteNatSeq {A : ℕ → M}
+    (h : IsAddStronglyComplete (.range A)) : IsAddStronglyCompleteNatSeq A :=
+  fun n => (isAddCompleteNatSeq_iff_isAddCompleteNatSeq (fun m => A (n + m))).1
     (isAddComplete_mono (A := .range A \ ((Finset.range n).image A)) (fun _ ⟨⟨y, hy⟩, q⟩ =>
     ⟨y - n, by grind⟩) (h (Finset.finite_toSet _)))
+
+/-- If `A` is strongly complete and its range is infinite, then the range of `A` is strongly
+complete.-/
+theorem IsAddStronglyCompleteNatSeq.isAddStronglyComplete  {A : ℕ → M}
+    (h : IsAddStronglyCompleteNatSeq A) (hA : (Set.range A).Infinite) :
+    IsAddStronglyComplete (.range A) := by
+  sorry
 
 /-- A sequence `A` is complete if every sufficiently large element of `M` is a sum of
 (not necessarily distinct) terms of `A`. -/
