@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Topology.Basic
 
 /-!
 # Erdős Problem 1062
@@ -23,18 +24,22 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Classical Filter
+open scoped Topology
 
 namespace Erdos1062
 
-/-- A finite set `A` of positive integers is fork-free if no element divides
-two distinct other elements of `A`. -/
-def ForkFree (A : Finset ℕ) : Prop :=
-  ∀ a ∈ A, {b ∈ A \ {a} | a ∣ b}.Subsingleton
+/-- A set `A` of positive integers is fork-free if no element divides two distinct
+other elements of `A`. -/
+def ForkFree (A : Set ℕ) : Prop :=
+  ∀ a ∈ A, ({b | b ∈ A \ {a} ∧ a ∣ b} : Set ℕ).Subsingleton
 
 /-- The extremal function from Erdős problem 1062: the largest size of a fork-free subset of
 `{1,...,n}`. -/
-def f (n : ℕ) : ℕ :=
-  Nat.findGreatest (fun k => ∃ A ⊆ Finset.Icc 1 n, ForkFree A ∧ A.card = k) n
+noncomputable def f (n : ℕ) : ℕ :=
+  Nat.findGreatest
+    (fun k =>
+      ∃ A : Set ℕ, A ⊆ (Finset.Icc 1 n : Set ℕ) ∧ A.Finite ∧ ForkFree A ∧ Nat.card A = k)
+    n
 
 /-- The interval `[m + 1, 3m + 2]` gives a construction showing that `f n` is asymptotically
 at least `⌊2n / 3⌋`. -/
