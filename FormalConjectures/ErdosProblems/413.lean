@@ -71,7 +71,7 @@ def barrierWith (ε : ℝ) (f : ℕ → ℕ) (n : ℕ) : Prop :=
 /-- Does there exist some `ε > 0` such that there are infinitely many `ε`-barriers for `ω`? -/
 @[category research open, AMS 11]
 theorem erdos_413_epsilon :
-    (∃ ε > (0 : ℝ), { n | barrierWith ε ω n }.Infinite) ↔ answer(sorry) := by
+    (∃ ε > (0 : ℝ), { n | IsBarrier (ε \smul ω) n }.Infinite) ↔ answer(sorry) := by
   sorry
 
 end Erdos413
