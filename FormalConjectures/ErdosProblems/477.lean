@@ -24,22 +24,36 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos477
 
+-- TODO(lezeau): add the other (families of) counterexamples plus variants
+
+/--
+Let $f = X ^ 2$ be a polynomial of degree at least $2$. Then there is not set
+$A$ such that every $z\in \mathbb{Z}$ has exactly one representation as
+$z=a+f(n)$ for some $a\in A$ and $n > 0$
+-/
+@[category research solved, AMS 12]
+theorem erdos_477.variants.explicit_counterexample :
+    letI f := Polynomial.X ^ 2
+    ¬ ∃ A : Set ℤ, ∀ z, ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 :=
+  sorry
+
 /--
 Let $f:\mathbb{Z}\to \mathbb{Z}$ be a polynomial of degree at least $2$. Is there a set $A$ such
 that every $z\in \mathbb{Z}$ has exactly one representation as $z=a+f(n)$ for some $a\in A$ and
 $n > 0$?
 -/
-@[category research open, AMS 12]
-theorem erdos_477 : answer(sorry) ↔ ∀ (f : Polynomial ℤ), 2 ≤ f.degree →
+@[category research solved, AMS 12]
+theorem erdos_477 : answer(False) ↔ ∀ (f : Polynomial ℤ), 2 ≤ f.degree →
     (∃ (A : Set ℤ), ∀ z, ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2) := by
-  sorry
+  simp only [false_iff, not_forall]
+  exact ⟨.X ^ 2, by simp, erdos_477.variants.explicit_counterexample⟩
 
 /--
 Probably there is no such $A$ for any polynomial $f$.
 -/
 @[category research open, AMS 12]
-theorem erdos_477.variants.strong_negation (f : Polynomial ℤ) (hf₀ : 2 ≤ f.degree) : ¬ ∃ (A : Set ℤ),
-    ∀ z, ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
+theorem erdos_477.variants.strong_negation (f : Polynomial ℤ) (hf₀ : 2 ≤ f.degree) :
+    ¬ ∃ A : Set ℤ, ∀ z, ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
   sorry
 
 end Erdos477
