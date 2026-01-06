@@ -30,8 +30,7 @@ Let $k\geq 3$. Can the product of any $k$ consecutive integers $N$ ever be power
 must there always exist a prime $p\mid N$ such that $p^2\nmid N$?
 -/
 @[category research open, AMS 11]
-theorem erdos_137 :
-    (∀ k ≥ 3, ∀ n, ¬ (∏ x ∈ Finset.Ioc n (n + k), x).Powerful) ↔ answer(sorry) := by
+theorem erdos_137 : answer(sorry) ↔ ∀ k ≥ 3, ∀ n, ¬ (∏ x ∈ Finset.Ioc n (n + k), x).Powerful := by
   sorry
 
 /--

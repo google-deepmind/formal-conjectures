@@ -52,7 +52,7 @@ values of $a_i a_j - 1$ with $i \neq j$.
 Is it true that the set of integers which eventually appear has positive density?
 -/
 @[category research open, AMS 11]
-theorem erdos_424 : generatedSet.HasPosDensity ↔ answer(sorry) := by
+theorem erdos_424 : answer(sorry) ↔ generatedSet.HasPosDensity := by
   sorry
 
 -- TODO(firsching): formalize the statements from the additional material

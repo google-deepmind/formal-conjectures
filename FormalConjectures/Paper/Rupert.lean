@@ -104,7 +104,6 @@ Does the Rupert property hold for every convex polyhedron with nonempty interior
 -/
 @[category research open, AMS 52]
 theorem is_every_convex_polyhedron_rupert :
-    (∀ (vertices : Finset ℝ³),
-       (interior (convexHull ℝ vertices : Set ℝ³)).Nonempty → IsRupert vertices)
-      ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ (vertices : Finset ℝ³),
+       (interior (convexHull ℝ vertices : Set ℝ³)).Nonempty → IsRupert vertices := by
  sorry

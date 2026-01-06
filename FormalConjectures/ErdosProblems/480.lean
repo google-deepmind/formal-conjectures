@@ -31,9 +31,8 @@ such that $|x_{m+n} - x_m| \le \frac 1 {\sqrt 5 n}$?
 This was proved Chung and Graham.
 -/
 @[category research solved, AMS 11]
-theorem erdos_480 : (∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
-    {(m, n) | (m) (n) (_ : m ≠ 0) (_ : |x (m + n) - x m| ≤ 1 / (√5 * n))}.Infinite) ↔
-    answer(True) := by
+theorem erdos_480 : answer(True) ↔ ∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
+    {(m, n) | (m) (n) (_ : m ≠ 0) (_ : |x (m + n) - x m| ≤ 1 / (√5 * n))}.Infinite := by
   sorry
 
 /--

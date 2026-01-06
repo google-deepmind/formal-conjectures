@@ -49,7 +49,7 @@ Is there a perfect Euler brick?
 -/
 @[category research open, AMS 11]
 theorem perfect_euler_brick_existence :
-    (∃ a b c : ℕ+, IsPerfectCuboid a b c) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ a b c : ℕ+, IsPerfectCuboid a b c := by
   sorry
 
 /--
@@ -57,7 +57,7 @@ Is there an Euler brick in $4$-dimensional space?
 -/
 @[category research open, AMS 11]
 theorem four_dim_euler_brick_existence :
-    (∃ sides : Fin 4 → ℕ+, IsEulerHyperBrick 4 sides) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ sides : Fin 4 → ℕ+, IsEulerHyperBrick 4 sides:= by
   sorry
 
 /--
@@ -65,7 +65,7 @@ Is there an Euler brick in $n$-dimensional space for any $n > 3$?
 -/
 @[category research open, AMS 11]
 theorem n_dim_euler_brick_existence :
-    (∀ n > 3, ∃ sides : Fin n → ℕ+, IsEulerHyperBrick n sides) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ n > 3, ∃ sides : Fin n → ℕ+, IsEulerHyperBrick n sides := by
   sorry
 
 end EulerBrick

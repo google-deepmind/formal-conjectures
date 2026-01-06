@@ -51,7 +51,7 @@ noncomputable def f (k : ℕ) : ℕ := Nat.find (erdos_961.well_defined k)
 It is conjectured that $f(k) \ll (\log k)^O(1)$.
 -/
 @[category research open, AMS 11]
-theorem erdos_961 : (∃ C > 0, ∀ᶠ k in atTop, f k < (log (k : ℝ)) ^ C) ↔ answer(sorry) := by
+theorem erdos_961 : answer(sorry) ↔ ∃ C > 0, ∀ᶠ k in atTop, f k < (log (k : ℝ)) ^ C := by
   sorry
 
 /--
