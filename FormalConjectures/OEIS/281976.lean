@@ -41,7 +41,7 @@ def IsSumOfFourSquaresWithSquareConditions (n : ℕ) : Prop :=
 
 @[category test, AMS 11]
 theorem isSumOfFourSquaresWithSquareConditions_0 : IsSumOfFourSquaresWithSquareConditions 0 :=
-  ⟨0, 0, 0, 0, by norm_num, by norm_num, ⟨0, by norm_num⟩, ⟨0, by norm_num⟩⟩
+  ⟨0, 0, 0, 0, by norm_num⟩
 
 @[category test, AMS 11]
 theorem isSumOfFourSquaresWithSquareConditions_8 : IsSumOfFourSquaresWithSquareConditions 8 :=
