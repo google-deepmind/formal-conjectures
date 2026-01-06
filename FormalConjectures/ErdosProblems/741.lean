@@ -42,7 +42,7 @@ theorem erdos_741.density : answer(sorry) ↔ ∀ A : Set ℕ, HasPosDensity (A 
 /-- Let `A ⊆ ℕ` be a basis of order 2. Can one always decompose `A` as a disjoint union of two
 subsets `A₁` and `A₂` such that `A₁ + A₁` and `A₂ + A₂` cannot both have bounded gaps? -/
 @[category research open, AMS 5]
-theorem erdos_741.basis : answer(sorry) ↔ ∀ A : Set ℕ, IsAddA₁asisOfOrder (A ∪ {0}) 2 → ∃ A₁ A₂,
+theorem erdos_741.basis : answer(sorry) ↔ ∀ A : Set ℕ, IsAddBasisOfOrder (A ∪ {0}) 2 → ∃ A₁ A₂,
     A₁ ⊆ A ∧ A₂ ⊆ A ∧ A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ ¬ (IsSyndetic A₁ ∧ IsSyndetic A₂):= by
   sorry
 
