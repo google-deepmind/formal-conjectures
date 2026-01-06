@@ -36,7 +36,7 @@ namespace Erdos413
 /-- `IsBarrier f n` means `n` is a barrier for the real-valued function `f`,
 i.e. `(m : ℝ) + f m ≤ (n : ℝ)` for all `m < n`. -/
 def IsBarrier (f : ℕ → ℝ) (n : ℕ) : Prop :=
-  ∀ m < n, (m : ℝ) + f m ≤ (n : ℝ)
+  ∀ m < n, (m : ℝ) + f m ≤ n
 
 /-- Are there infinitely many barriers for `ω`? -/
 @[category research open, AMS 11]
