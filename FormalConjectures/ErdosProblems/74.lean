@@ -121,9 +121,9 @@ Is there a graph of infinite chromatic number such that every finite subgraph on
 vertices can be made bipartite by deleting at most $f(n)$ edges?
 -/
 @[category research open, AMS 5]
-theorem erdos_74 : (∀ f : ℕ → ℕ, Tendsto f atTop atTop →
+theorem erdos_74 : answer(sorry) ↔ ∀ f : ℕ → ℕ, Tendsto f atTop atTop →
     (∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
-    ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ f n)) ↔ answer(sorry):= by
+    ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ f n) := by
   sorry
 
 /--
@@ -131,8 +131,9 @@ Is there a graph of infinite chromatic number such that every finite subgraph on
 vertices can be made bipartite by deleting at most $\sqrt{n}$ edges?
 -/
 @[category research open, AMS 5]
-theorem erdos_74.variants.sqrt : (∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
-    ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ (n : ℝ).sqrt) ↔ answer(sorry):= by
+theorem erdos_74.variants.sqrt : answer(sorry) ↔
+    ∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
+    ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ (n : ℝ).sqrt := by
   sorry
 
 -- TODO(firsching): add the remaining statements/comments

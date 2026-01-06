@@ -30,8 +30,8 @@ that every $z\in \mathbb{Z}$ has exactly one representation as $z=a+f(n)$ for so
 $n > 0$?
 -/
 @[category research open, AMS 12]
-theorem erdos_477 : (∀ (f : Polynomial ℤ), 2 ≤ f.degree →
-    (∃ (A : Set ℤ), ∀ z, ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2)) ↔ answer(sorry) := by
+theorem erdos_477 : answer(sorry) ↔ ∀ (f : Polynomial ℤ), 2 ≤ f.degree →
+    (∃ (A : Set ℤ), ∀ z, ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2) := by
   sorry
 
 /--
