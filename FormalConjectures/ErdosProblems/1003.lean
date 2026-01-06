@@ -43,7 +43,7 @@ $$\phi(n) = \phi(n+1) = \cdots = \phi (n+k)$$ has infinitely many solutions.
 -/
 @[category research open, AMS 11]
 theorem erdos_1003.variants.Icc :
-    answer(sorry) ↔ (∀ k ≥ 1, Set.Infinite {n | ∀ i ∈ Set.Icc 1 k, φ n = φ (n + i)}) := by
+    answer(sorry) ↔ ∀ k ≥ 1, {n | ∀ i ∈ Set.Icc 1 k, φ n = φ (n + i)}.Infinite := by
   sorry
 
 /--
