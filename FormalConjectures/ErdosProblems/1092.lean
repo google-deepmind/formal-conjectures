@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Topology.Basic
 
 /-!
 # Erdős Problem 1092
@@ -43,6 +42,7 @@ open Classical
 open SimpleGraph
 open Finset
 open Asymptotics
+open Filter
 
 /--
 The function `f : ℕ → ℕ → ℕ` with the Erdős 1092 properties.
@@ -50,14 +50,14 @@ Defined as the supremum over all functions satisfying the chromatic number decom
 -/
 noncomputable def f : ℕ → ℕ → ℕ :=
   sSup {g : ℕ → ℕ → ℕ |
-    ∀ r n,
+    ∀ (r : ℕ) (n : ℕ),
       ∀ G : SimpleGraph (Fin n),
         (∀ H : Subgraph G,
           let m := H.verts.toFinset.card
           ∃ H₁ H₂ : Subgraph H.coe,
-            chromaticNumber H₁.coe ≤ r ∧
+            chromaticNumber H₁.coe ≤ (r : ℕ∞) ∧
             H₂.edgeSet.toFinset.card ≤ g r m) →
-        chromaticNumber G ≤ r + 1}
+        chromaticNumber G ≤ (r + 1 : ℕ∞)}
 
 /--
 Erdős Problem 1092 (open).
@@ -72,16 +72,16 @@ There exists a function `f : ℕ → ℕ → ℕ` such that:
 @[category research open, AMS 5]
 theorem erdos_1092 :
   ((∀ r n, 0 ≤ f r n) ∧
-    (∀ r n,
+    (∀ (r : ℕ) (n : ℕ),
       ∀ G : SimpleGraph (Fin n),
         (∀ H : Subgraph G,
           let m := H.verts.toFinset.card
           ∃ H₁ H₂ : Subgraph H.coe,
-            chromaticNumber H₁.coe ≤ r ∧
+            chromaticNumber H₁.coe ≤ (r : ℕ∞) ∧
             H₂.edgeSet.toFinset.card ≤ f r m) →
-        chromaticNumber G ≤ r + 1) ∧
-    (fun n => n) =o[atTop] (fun n => f 2 n) ∧
-    (∀ r, (fun n => r * n) =o[atTop] (fun n => f r n)))
+        chromaticNumber G ≤ (r + 1 : ℕ∞)) ∧
+    (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) ∧
+    (∀ (r : ℕ), (fun (n : ℕ) => (r * n : ℝ)) =o[atTop] (fun (n : ℕ) => (f r n : ℝ))))
   ↔ answer(sorry) := by
   sorry
 
