@@ -27,8 +27,9 @@ open Polynomial MeasureTheory ENNReal Classical
 namespace Erdos1041
 
 variable (n : ℕ) (f : ℂ[X]) (hn : n ≥ 2) (hnum : f.natDegree = n)
+variable (h_monic : f.Monic)
 variable (h : f.rootSet ℂ ⊆ Metric.ball 0 1)
-include hn hnum h
+include hn hnum h h_monic
 
 /--
 The length of a subset $s$ of $\mathbb{C}$ is defined to be its 1-dimensional
