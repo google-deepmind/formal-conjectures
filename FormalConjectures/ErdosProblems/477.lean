@@ -85,7 +85,7 @@ theorem erdos_477.X_pow_three :
 Probably there is no such $A$ for the polynomial $X^k$ for any $k \ge 0$. This is asked in [Sek59].
 -/
 @[category research open, AMS 12]
-theorem erdos_477.monomial (k : ℕ) (hk : 2 ≤ k):
+theorem erdos_477.monomial (k : ℕ) (hk : 2 ≤ k) :
     letI f := X ^ k
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
   sorry
