@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 477
 
-*Reference:* [erdosproblems.com/477](https://www.erdosproblems.com/477)
+*References:*
+- [erdosproblems.com/477](https://www.erdosproblems.com/477)
+- [Sek59](http://dml.cz/dmlcz/100376) Milan Sekanina, Замечания к фактoризации беcкoнечнoй цикличеcкoй группы, Czechoslovak Mathematical Journal, Vol. 9 (1959), No. 4, 485–495
 -/
 
 open Polynomial Set
@@ -30,6 +32,8 @@ namespace Erdos477
 Let $f = X ^ 2$ be a polynomial of degree at least $2$. Then there is not set
 $A$ such that every $z\in \mathbb{Z}$ has exactly one representation as
 $z=a+f(n)$ for some $a\in A$ and $n > 0$
+
+This is shown in [Sek59]
 -/
 @[category research solved, AMS 12]
 theorem erdos_477.variants.explicit_counterexample :
@@ -69,7 +73,7 @@ theorem erdos_477.variants.strong_negation_pow_three :
   sorry
 
 /--
-Probably there is no such $A$ for the polynomial $X^k$ for any $k \ge 0$.
+Probably there is no such $A$ for the polynomial $X^k$ for any $k \ge 0$. This is asked in [Sek59].
 -/
 @[category research open, AMS 12]
 theorem erdos_477.variants.strong_negation_monomial (k : ℕ) (hk : 2 ≤ k):
