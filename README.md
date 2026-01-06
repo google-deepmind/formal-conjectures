@@ -236,9 +236,12 @@ meaningful solution of the problem is outside of the scope of this repository.
     use `answer(sorry)` in the following way:
     ```lean
     /-- English version: "Does P hold ?" -/
-    theorem myConjecture : P ↔ answer(sorry) := by
+    theorem myConjecture : answer(sorry) ↔ P := by
       sorry
-    ```
+    ```.
+    This way the informal "Does ...", "Are there ..." or "Is it true that ..." corresponds
+    to the `answer(sorry)` in the formalised statement.
+
     If the problem has been solved, `answer(sorry)` should be replaced by
     `answer(True)` or `answer(False)` accordingly.
     If the problem is not stated as a question, the following style is preferred:

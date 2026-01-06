@@ -52,6 +52,7 @@ import FormalConjectures.ForMathlib.Data.Nat.Prime.Composite
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Finset
 import FormalConjectures.ForMathlib.Data.Nat.Squarefree
+import FormalConjectures.ForMathlib.Data.Real.Cardinality
 import FormalConjectures.ForMathlib.Data.Real.Constants
 import FormalConjectures.ForMathlib.Data.Set.Bdd
 import FormalConjectures.ForMathlib.Data.Set.Density
@@ -75,6 +76,8 @@ import FormalConjectures.ForMathlib.Order.Filter.Cofinite
 import FormalConjectures.ForMathlib.Order.Filter.atTopBot.Finset
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
+import FormalConjectures.ForMathlib.SetTheory.Cardinal.Arithmetic
+import FormalConjectures.ForMathlib.SetTheory.Cardinal.Continuum
 import FormalConjectures.ForMathlib.SetTheory.Cardinal.SimpleGraph
 import FormalConjectures.ForMathlib.Test.Computability.TuringMachine
 import FormalConjectures.ForMathlib.Topology.Algebra.InfiniteSum.Group

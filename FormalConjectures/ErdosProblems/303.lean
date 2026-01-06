@@ -35,8 +35,9 @@ Bull. Austral. Math. Soc. (1991), 387-392.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_303 :
+    answer(True) ↔
     --For any finite colouring of the integers
-    (∀ (𝓒 : ℤ → ℤ), (Set.range 𝓒).Finite →
+    ∀ (𝓒 : ℤ → ℤ), (Set.range 𝓒).Finite →
       --There exists integers `a, b, c`
       ∃ (a b c : ℤ),
       --that are non-zero and distinct.
@@ -44,7 +45,7 @@ theorem erdos_303 :
       --`a, b, c` satisfy the equation
       (1/a : ℝ) = 1/b + 1/c ∧
       --`a, b, c` have the same color
-      (𝓒 '' {a, b, c}).Subsingleton) ↔ answer(True) := by
+      (𝓒 '' {a, b, c}).Subsingleton := by
   sorry
 
 end Erdos303

@@ -37,12 +37,12 @@ where $c_i\in \{0, 1\}$ and $a_i$ has only the digits $0, 1$ when written in bas
 Conjectured by Burr, Erdős, Graham, and Li [BEGL96]
 -/
 @[category research open, AMS 11]
-theorem erdos_124 : (∀ k, ∀ d : Fin k → ℕ,
+theorem erdos_124 : answer(sorry) ↔ ∀ k, ∀ d : Fin k → ℕ,
     (∀ i, 3 ≤ d i) →  StrictMono d → 1 ≤ ∑ i : Fin k, (1 : ℚ) / (d i - 1) →
     ∀ᶠ n in atTop, ∃ c : Fin k → ℕ, ∃ a : Fin k → ℕ,
     ∀ i, c i ∈ ({0, 1} : Finset ℕ) ∧
     ∀ i, ((d i).digits (a i)).toFinset ⊆ {0, 1} ∧
-    n = ∑ i, c i * a i) ↔ answer(sorry) := by
+    n = ∑ i, c i * a i := by
   sorry
 
 -- TODO(firsching): formalize the other two claims from the additional material
