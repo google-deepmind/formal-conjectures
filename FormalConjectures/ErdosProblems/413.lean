@@ -39,7 +39,7 @@ def IsBarrier (f : ℕ → ℕ) (n : ℕ) : Prop := ∀ m < n, m + f m ≤ n
 
 /-- Are there infinitely many barriers for `ω`? -/
 @[category research open, AMS 11]
-theorem erdos_413 : ({ n | barrier ω n }.Infinite) ↔ answer(sorry) := by
+theorem erdos_413 : answer(sorry) ↔ {n | barrier ω n}.Infinite := by
   sorry
 
 /-- `expProd n` is `∏ kᵢ` when `n = ∏ pᵢ ^ kᵢ`, i.e. the product of the prime exponents of `n`. -/
