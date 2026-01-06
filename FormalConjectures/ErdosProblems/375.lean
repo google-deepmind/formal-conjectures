@@ -44,7 +44,7 @@ for some `c > 0`. In particular, this resolves Legendre's conjecture.
 #TODO : Formalize Legendre's conjecture. -/
 @[category research solved, AMS 11]
 theorem erdos_375.legendre : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
-    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ (n + i + 1)) →
+    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
     ∃ c > 0, ∀ n, (n + 1).nth Prime - n.nth Prime < (n.nth Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
   sorry
 
@@ -52,17 +52,17 @@ theorem erdos_375.legendre : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Pri
 there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
 @[category research solved, AMS 11]
 theorem erdos_375.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
-    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ (n + i + 1) := by
+    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
   sorry
 
 /-- There exists a constant `c > 0` such that for all `n` large enough, if
-`k < c * (Real.log n / (Real.log (Real.log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime)`, then
+`k < c * (log n / (log (log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime)`, then
 there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. This is proved
 in [RST75]. -/
 @[category research solved, AMS 11]
-theorem erdos_375.log : ∃ c > 0, ∀ᶠ n : ℕ in atTop, ∀ k : ℕ,
-    k < c * (Real.log n / (Real.log (Real.log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime) →
-    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ (n + i + 1) := by
+theorem erdos_375.log : ∃ c > 0, ∀ n k : ℕ,
+    k < c * (log n / (log (log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime) →
+    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
   sorry
 
 end Erdos375
