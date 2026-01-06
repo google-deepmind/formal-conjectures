@@ -18,6 +18,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 152
 
+#TODO: Formalize the corresponding conjecture for infinite Sidon sets.
+
 *References:*
  - [erdosproblems.com/152](https://www.erdosproblems.com/152)
  - [ESS94] Erdős, P. and Sárközy, A. and Sós, T., On Sum Sets of Sidon Sets, I. Journal of Number
