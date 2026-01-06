@@ -44,7 +44,7 @@ theorem erdos_413 : answer(sorry) ↔ {n | barrier ω n}.Infinite := by
 
 /-- `expProd n` is `∏ kᵢ` when `n = ∏ pᵢ ^ kᵢ`, i.e. the product of the prime exponents of `n`. -/
 def expProd (n : ℕ) : ℕ :=
-  n.factorization.support.prod fun p => n.factorization p
+  n.factorization.prod fun p => id
 
 /-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density. -/
 @[category research solved, AMS 11]
