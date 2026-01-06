@@ -51,26 +51,26 @@ def expProd (n : ℕ) : ℕ :=
 /-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density. -/
 @[category research solved, AMS 11]
 theorem erdos_413_hasPosDensity_barrier_expProd :
-    { n | IsBarrier (fun m => (expProd m : ℝ)) n }.HasPosDensity := by
+    { n | IsBarrier (fun m => expProd m) n }.HasPosDensity := by
   sorry
 
 /-- Erdős believed there should be infinitely many barriers for `Ω`, the total prime multiplicity. -/
 @[category research open, AMS 11]
 theorem erdos_413_bigOmega :
-    answer(sorry) ↔ { n | IsBarrier (fun m => (Ω m : ℝ)) n }.Infinite := by
+    answer(sorry) ↔ { n | IsBarrier (fun m => Ω m) n }.Infinite := by
   sorry
 
 /-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`. -/
 @[category research solved, AMS 11]
 theorem erdos_413_bigOmega_largest_barrier_lt_100k :
-    IsGreatest {n : ℕ | n < 10 ^ 5 ∧ IsBarrier (fun m => (Ω m : ℝ)) n} 99840 := by
+    IsGreatest {n : ℕ | n < 10 ^ 5 ∧ IsBarrier (fun m => Ω m) n} 99840 := by
   sorry
 
 /-- Does there exist some `ε > 0` such that there are infinitely many `ε`-barriers for `ω`? -/
 @[category research open, AMS 11]
 theorem erdos_413_epsilon :
     answer(sorry) ↔
-        (∃ ε > (0 : ℝ), { n | IsBarrier (fun n => ε * (ω n : ℝ)) n }.Infinite) := by
+        (∃ ε > (0 : ℝ), { n | IsBarrier (fun n => ε * ω n) n }.Infinite) := by
   sorry
 
 end Erdos413
