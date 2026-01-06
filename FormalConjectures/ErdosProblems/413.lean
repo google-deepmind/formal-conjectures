@@ -33,45 +33,44 @@ open scoped ArithmeticFunction
 
 namespace Erdos413
 
-/-- `barrier f n` means `n` is a barrier for the function `f`,
-i.e. `m + f m ≤ n` for all `m < n`. -/
-def IsBarrier (f : ℕ → ℕ) (n : ℕ) : Prop := ∀ m < n, m + f m ≤ n
+/-- `IsBarrier f n` means `n` is a barrier for the real-valued function `f`,
+i.e. `(m : ℝ) + f m ≤ (n : ℝ)` for all `m < n`. -/
+def IsBarrier (f : ℕ → ℝ) (n : ℕ) : Prop :=
+  ∀ m < n, (m : ℝ) + f m ≤ (n : ℝ)
 
 /-- Are there infinitely many barriers for `ω`? -/
 @[category research open, AMS 11]
-theorem erdos_413 : answer(sorry) ↔ {n | barrier ω n}.Infinite := by
+theorem erdos_413 :
+    answer(sorry) ↔ { n | IsBarrier (fun m => (ω m : ℝ)) n }.Infinite := by
   sorry
 
 /-- `expProd n` is `∏ kᵢ` when `n = ∏ pᵢ ^ kᵢ`, i.e. the product of the prime exponents of `n`. -/
 def expProd (n : ℕ) : ℕ :=
-  n.factorization.prod fun p => id
+  n.factorization.prod fun _ e => e
 
 /-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density. -/
 @[category research solved, AMS 11]
 theorem erdos_413_hasPosDensity_barrier_expProd :
-    { n | barrier expProd n }.HasPosDensity := by
+    { n | IsBarrier (fun m => (expProd m : ℝ)) n }.HasPosDensity := by
   sorry
 
 /-- Erdős believed there should be infinitely many barriers for `Ω`, the total prime multiplicity. -/
 @[category research open, AMS 11]
 theorem erdos_413_bigOmega :
-    ({ n | barrier Ω n }.Infinite) ↔ answer(sorry) := by
+    answer(sorry) ↔ { n | IsBarrier (fun m => (Ω m : ℝ)) n }.Infinite := by
   sorry
 
 /-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`. -/
 @[category research solved, AMS 11]
 theorem erdos_413_bigOmega_largest_barrier_lt_100k :
-    IsGreatest {n : ℕ | n < 10 ^ 5 ∧ barrier Ω n} 99840 := by
+    IsGreatest {n : ℕ | n < 10 ^ 5 ∧ IsBarrier (fun m => (Ω m : ℝ)) n} 99840 := by
   sorry
-
-/-- `barrierWith ε f n` records the relaxed barrier inequality `(m : ℝ) + ε * f m ≤ n` for all `m < n`. -/
-def barrierWith (ε : ℝ) (f : ℕ → ℕ) (n : ℕ) : Prop :=
-  ∀ m < n, (m : ℝ) + ε * (f m : ℝ) ≤ (n : ℝ)
 
 /-- Does there exist some `ε > 0` such that there are infinitely many `ε`-barriers for `ω`? -/
 @[category research open, AMS 11]
 theorem erdos_413_epsilon :
-    (∃ ε > (0 : ℝ), { n | IsBarrier (ε \smul ω) n }.Infinite) ↔ answer(sorry) := by
+    answer(sorry) ↔
+        (∃ ε > (0 : ℝ), { n | IsBarrier (fun n => ε * (ω n : ℝ)) n }.Infinite) := by
   sorry
 
 end Erdos413
