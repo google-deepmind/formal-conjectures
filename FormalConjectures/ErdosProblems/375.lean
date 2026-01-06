@@ -40,11 +40,18 @@ theorem erdos_375 : answer(sorry) ↔ ∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i 
   sorry
 
 /-- If `erdos_375` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
-for some `c > 0`. In particular, this resolves Legendre's conjecture. -/
+for some `c > 0`. -/
+@[category research solved, AMS 11]
+theorem erdos_375.bounded_gap : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
+    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
+    ∃ c > 0, ∀ n, (n + 1).nth Prime - n.nth Prime < (n.nth Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
+  sorry
+
+/-- In particular, if `erdos_375` is true, then it resolves Legendre's conjecture.-/
 @[category research solved, AMS 11]
 theorem erdos_375.legendre : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
-    ∃ c > 0, ∀ n, (n + 1).nth Prime - n.nth Prime < (n.nth Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
+    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p) := by
   sorry
 
 /-- For any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite, then
