@@ -35,7 +35,7 @@ namespace Erdos741
 positive density? -/
 @[category research open, AMS 5]
 theorem erdos_741.density : answer(sorry) ↔ ∀ A : Set ℕ, HasPosDensity (A + A) → ∃ A₁ A₂,
-    A₁ ⊆ A ∧ A₂ ⊆ A ∧ A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ HasPosDensity (A₁ + A₁)
+    A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ HasPosDensity (A₁ + A₁)
     ∧ HasPosDensity (A₂ + A₂):= by
   sorry
 
@@ -43,7 +43,7 @@ theorem erdos_741.density : answer(sorry) ↔ ∀ A : Set ℕ, HasPosDensity (A 
 subsets `A₁` and `A₂` such that `A₁ + A₁` and `A₂ + A₂` cannot both have bounded gaps? -/
 @[category research open, AMS 5]
 theorem erdos_741.basis : answer(sorry) ↔ ∀ A : Set ℕ, IsAddBasisOfOrder (A ∪ {0}) 2 → ∃ A₁ A₂,
-    A₁ ⊆ A ∧ A₂ ⊆ A ∧ A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ ¬ (IsSyndetic A₁ ∧ IsSyndetic A₂):= by
+    A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ ¬ (IsSyndetic A₁ ∧ IsSyndetic A₂):= by
   sorry
 
 end Erdos741
