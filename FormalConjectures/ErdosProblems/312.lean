@@ -39,7 +39,7 @@ theorem erdos_312 :
             (n ≥ N₀ ∧ (∑ i : Fin n, (a i : ℝ)⁻¹) > K) →
               ∃ (S : Finset (Fin n)),
                 1 - Real.exp (-(c * K)) < (∑ i ∈ S, (a i : ℝ)⁻¹) ∧
-                (∑ i ∈ S, (a i : ℝ)⁻¹) ≤ 1 := by
+                ∑ i ∈ S, (a i : ℝ)⁻¹ ≤ 1 := by
   sorry
 
 end Erdos312
