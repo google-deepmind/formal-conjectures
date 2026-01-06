@@ -53,7 +53,6 @@ theorem erdos_477.variants.strong_negation_degree_two_dvd_condition_b_ne_zero (a
     ¬ ∃ (A : Set ℤ), ∀ z, ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
   sorry
 
-
 /--
 Probably there is no such $A$ for any polynomial $f$ of degree $2$.
 -/
@@ -61,7 +60,6 @@ Probably there is no such $A$ for any polynomial $f$ of degree $2$.
 theorem erdos_477.variants.strong_negation_degree_eq_two (f : Polynomial ℤ) (hf₀ : 2 = f.degree) :
     ¬ ∃ (A : Set ℤ), ∀ z, ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
   sorry
-
 
 /--
 Probably there is no such $A$ for the polynomial $X^3$.
