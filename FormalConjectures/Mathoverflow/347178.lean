@@ -46,7 +46,7 @@ $\sup_{x \in \mathbb R^n}f(x)$ and $\sup_{x\in \mathbb R^n} f(x+\nabla f(x))$ eq
 @[category research open, AMS 26]
 theorem mathoverflow_347178.variants.bounded_iff :
     answer(sorry) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f),
-        (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) := by
+        BddAbove (range f) ↔ BddAbove (range fun x ↦ f (x + gradient f x)) := by
   sorry
 
 /--
