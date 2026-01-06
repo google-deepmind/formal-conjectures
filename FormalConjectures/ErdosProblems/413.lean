@@ -55,13 +55,13 @@ theorem erdos_413_expProd_barrier_pos_density :
 /-- Erdős believed there should be infinitely many barriers for `Ω`, the total prime multiplicity. -/
 @[category research open, AMS 11]
 theorem erdos_413_bigOmega :
-    ({ n | barrier bigOmega n }.Infinite) ↔ answer(sorry) := by
+    ({ n | barrier Ω n }.Infinite) ↔ answer(sorry) := by
   sorry
 
 /-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`. -/
 @[category research solved, AMS 11]
 theorem erdos_413_bigOmega_largest_barrier_lt_100k :
-    IsGreatest {n : ℕ | n < 10 ^ 5 ∧ barrier bigOmega n} 99840 := by
+    IsGreatest {n : ℕ | n < 10 ^ 5 ∧ barrier Ω n} 99840 := by
   sorry
 
 /-- `barrierWith ε f n` records the relaxed barrier inequality `(m : ℝ) + ε * f m ≤ n` for all `m < n`. -/
