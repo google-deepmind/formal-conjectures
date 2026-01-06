@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 517
 
-*Reference:*
+*References:*
  - [erdosproblems.com/517](https://www.erdosproblems.com/517)
  - [Bi28] Biernacki, Miécislas, Sur les équations algébriques contenant des paramétres arbitraires.
     (1928), 145.

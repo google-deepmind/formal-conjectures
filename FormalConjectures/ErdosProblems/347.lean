@@ -40,10 +40,9 @@ has density $1$ for every cofinite subsequence $A'$ of $A$?
 -/
 @[category research open, AMS 11]
 theorem erdos_347 :
-    (∃ a : ℕ → ℕ, (Monotone a) ∧
+    answer(sorry) ↔ ∃ a : ℕ → ℕ, (Monotone a) ∧
       (Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (𝓝 2)) ∧
-      (∀ ι : ℕ → ℕ, (range ι)ᶜ.Finite → HasDensity (𝓟 (range (a ∘ ι))) 1))
-    ↔ answer(sorry) := by
+      (∀ ι : ℕ → ℕ, (range ι)ᶜ.Finite → HasDensity (𝓟 (range (a ∘ ι))) 1) := by
   sorry
 
 end Erdos347

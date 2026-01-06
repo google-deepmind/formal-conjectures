@@ -59,8 +59,8 @@ one of the two diagonals of a unique 4-cycle.
 The first condition is equivalent to being locally linear.
 -/
 @[category research open, AMS 5]
-theorem conway99Graph : (∃ G : SimpleGraph (Fin 99),
-    G.LocallyLinear ∧ NonEdgesAreDiagonals G) ↔ answer(sorry) := by
+theorem conway99Graph : answer(sorry) ↔ ∃ G : SimpleGraph (Fin 99),
+    G.LocallyLinear ∧ NonEdgesAreDiagonals G := by
   sorry
 
 /--

@@ -52,7 +52,7 @@ in the sense that, for any finite set $B$,
 contains all sufficiently large integers? -/
 @[category research open, AMS 11]
 theorem erdos_351 :
-    (∀ P : ℚ[X], 0 < P.natDegree → 0 < P.leadingCoeff → HasCompleteImage P) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ P : ℚ[X], 0 < P.natDegree → 0 < P.leadingCoeff → HasCompleteImage P := by
   sorry
 
 /--

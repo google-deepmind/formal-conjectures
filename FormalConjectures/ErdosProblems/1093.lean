@@ -37,8 +37,8 @@ Are there infinitely many binomial coefficients with deficiency 1?
 -/
 @[category research open, AMS 5]
 theorem erdos_1093.parts.i :
-    {x : ℕ × ℕ | let k := x.1; let n := x.2; k < n ∧ deficiency n k = 1 ∧
-      ∀ p, p.Prime → (p ∣ choose n k) → k < p}.Infinite ↔ answer(sorry) := by
+    answer(sorry) ↔ {x : ℕ × ℕ | let k := x.1; let n := x.2; k < n ∧ deficiency n k = 1 ∧
+      ∀ p, p.Prime → (p ∣ choose n k) → k < p}.Infinite := by
   sorry
 
 /--
@@ -47,7 +47,7 @@ Are there only finitely many binomial coefficients with deficiency > 1?
 @[category research open, AMS 5]
 theorem erdos_1093.parts.ii :
     {x : ℕ × ℕ | let k := x.1; let n := x.2; k < n ∧ deficiency n k > 1 ∧
-      ∀ p, p.Prime → (p ∣ choose n k) → k < p}.Finite ↔ answer(sorry) := by
+      ∀ p, p.Prime → (p ∣ choose n k) → k < p}.Finite := by
   sorry
 
 end Erdos1093
