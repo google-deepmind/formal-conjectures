@@ -35,7 +35,7 @@ namespace Erdos152
 ranges over all Sidon sets of size `n`. -/
 noncomputable def f (n : ℕ) : ℕ :=
   ⨅ A : {A : Set ℕ | A.ncard = n ∧ IsSidon A},
-  {s : ℕ | s - 1 ∉ A.1 + A.1 ∧ s ∈ A.1 ∧ s + 1 ∉ A.1 + A.1}.ncard
+  {s : ℕ | s - 1 ∉ A.1 + A.1 ∧ s ∈ A.1 + A.1 ∧ s + 1 ∉ A.1 + A.1}.ncard
 
 /-- Must `lim f n = ∞`? -/
 @[category research open, AMS 5]
