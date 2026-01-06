@@ -35,7 +35,7 @@ namespace Erdos413
 
 /-- `barrier f n` means `n` is a barrier for the function `f`,
     i.e. `m + f m ≤ n` for all `m < n`. -/
-def barrier (f : ℕ → ℕ) (n : ℕ) : Prop := ∀ m < n, m + f m ≤ n
+def IsBarrier (f : ℕ → ℕ) (n : ℕ) : Prop := ∀ m < n, m + f m ≤ n
 
 /-- Are there infinitely many barriers for `ω`? -/
 @[category research open, AMS 11]
