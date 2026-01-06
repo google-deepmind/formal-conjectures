@@ -1,0 +1,6 @@
+# Label Name: erdos-problems
+# Trigger: Any file changed inside FormalConjectures/ErdosProblems/
+erdos-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/ErdosProblems/**'
+
