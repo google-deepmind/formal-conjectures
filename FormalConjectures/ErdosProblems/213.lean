@@ -41,7 +41,7 @@ Let $n \geq 4$. Are there $n$ points in $\mathbb{R}^2$, no three on a line and n
 such that all pairwise distances are integers?
 -/
 @[category research open, AMS 52]
-theorem erdos_213 : (∀ n : ℕ, n ≥ 4 → Erdos213For n) ↔ answer(sorry) := by sorry
+theorem erdos_213 : answer(sorry) ↔ ∀ n : ℕ, n ≥ 4 → Erdos213For n := by sorry
 
 /--
 The best construction to date, due to Kreisel and Kurz, has $n = 7$.

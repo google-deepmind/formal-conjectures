@@ -29,7 +29,7 @@ Is there an integer $m$ with $(m, 6) = 1$ such that none of $2^k \cdot 3^\ell \c
 for any $k, \ell \ge 0$?
 -/
 @[category research open, AMS 5]
-theorem erdos_203 : (∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 3^l * m + 1).Prime) ↔ answer(sorry) := by
+theorem erdos_203 : answer(sorry) ↔ ∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 3^l * m + 1).Prime := by
   sorry
 
 --TODO(rdivyanshu): add statements about covering system and odd integers `m` such that none of 2^k*m + 1 is prime

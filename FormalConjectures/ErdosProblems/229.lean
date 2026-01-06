@@ -39,9 +39,9 @@ _the derivatives of an entire function_. Proc. Amer. Math. Soc. (1972), 229--232
 @[category research solved, AMS 30]
 theorem erdos_229 :
     letI := Polynomial.algebraPi ℂ ℂ ℂ
-    (∀ (S : ℕ → Set ℂ), (∀ n, derivedSet (S n) = ∅) →
+    answer(True) ↔ ∀ (S : ℕ → Set ℂ), (∀ n, derivedSet (S n) = ∅) →
     ∃ (f : ℂ → ℂ), Transcendental (Polynomial ℂ) f ∧ Differentiable ℂ f ∧ ∀ n ≥ 1,
-      ∃ k, ∀ z ∈ S n, iteratedDeriv k f z = 0) ↔ answer(True) := by
+      ∃ k, ∀ z ∈ S n, iteratedDeriv k f z = 0 := by
   sorry
 
 /--

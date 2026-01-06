@@ -37,7 +37,7 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem erdos_4 : (∀ C > 0, Erdos4For C) ↔ answer(True) := by
+theorem erdos_4 : answer(True) ↔ (∀ C > 0, Erdos4For C) := by
   sorry
 
 @[category research solved, AMS 11]

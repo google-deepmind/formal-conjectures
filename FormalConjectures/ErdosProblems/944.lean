@@ -42,7 +42,7 @@ Let $k \ge 4$ and $r\ge 1$. Must there exist a graph $G$ with chromatic number $
 -/
 @[category research open, AMS 11]
 theorem erdos_944 :
-    (∀ k ≥ 4, ∀ r ≥ 1, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k r) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ k ≥ 4, ∀ r ≥ 1, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k r := by
   sorry
 
 /--
@@ -53,7 +53,7 @@ This was conjectured by Dirac in 1970.
 -/
 @[category research open, AMS 11]
 theorem erdos_944.variants.dirac_conjecture :
-    (∀ k ≥ 4, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ k ≥ 4, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1 := by
   sorry
 
 
@@ -95,7 +95,7 @@ The case $k=4$ and $r=1$ remains open: Are there $4$-critical graphs without any
 -/
 @[category research open, AMS 11]
 theorem erdos_944.dirac_conjecture.k_eq_four :
-    (∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 4 1) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 4 1 := by
   sorry
 
 /--

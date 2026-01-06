@@ -30,8 +30,9 @@ namespace Erdos421
 Is there a sequence $1 \le d_1 < d_2 < \dots$ with density 1 such that all products
 $\prod_{u \le i \le v} d_i$ are distinct? -/
 @[category research open, AMS 11]
-theorem erdos_421 : (∃ (d : ℕ → ℕ), StrictMono d ∧ 1 ≤ d 0 ∧ HasDensity (Set.range d) 1 ∧
-    {(u, v) : ℕ × ℕ | u ≤ v}.InjOn fun (u, v) => ∏ i ∈ Finset.Icc u v, d i) ↔ answer(sorry) := by
+theorem erdos_421 : answer(sorry) ↔
+    ∃ (d : ℕ → ℕ), StrictMono d ∧ 1 ≤ d 0 ∧ HasDensity (Set.range d) 1 ∧
+    {(u, v) : ℕ × ℕ | u ≤ v}.InjOn fun (u, v) => ∏ i ∈ Finset.Icc u v, d i := by
   sorry
 
 end Erdos421
