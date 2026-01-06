@@ -64,14 +64,14 @@ theorem erdos_413_bigOmega_largest_barrier_lt_100k :
     IsGreatest {n : ℕ | n < 10 ^ 5 ∧ barrier bigOmega n} 99840 := by
   sorry
 
-/-- `barrierWith ε n` records the relaxed barrier inequality `(m : ℝ) + ε * ω(m) ≤ n` for all `m < n`. -/
-def barrierWith (ε : ℝ) (n : ℕ) : Prop :=
-  ∀ m < n, (m : ℝ) + ε * (ω m : ℝ) ≤ (n : ℝ)
+/-- `barrierWith ε f n` records the relaxed barrier inequality `(m : ℝ) + ε * f m ≤ n` for all `m < n`. -/
+def barrierWith (ε : ℝ) (f : ℕ → ℕ) (n : ℕ) : Prop :=
+  ∀ m < n, (m : ℝ) + ε * (f m : ℝ) ≤ (n : ℝ)
 
 /-- Does there exist some `ε > 0` such that there are infinitely many `ε`-barriers for `ω`? -/
 @[category research open, AMS 11]
 theorem erdos_413_epsilon :
-    (∃ ε > (0 : ℝ), { n | barrierWith ε n }.Infinite) ↔ answer(sorry) := by
+    (∃ ε > (0 : ℝ), { n | barrierWith ε ω n }.Infinite) ↔ answer(sorry) := by
   sorry
 
 end Erdos413
