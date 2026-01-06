@@ -56,7 +56,7 @@ theorem erdos_695.variant.upperBound : answer(sorry) ↔
       ∃ o : ℕ → ℝ,
         (o =o[atTop] (1 : ℕ → ℝ)) ∧
         -- We use `(k + 1)` here as the informal statement is 1-indexed.
-        ∀ k, q k ≤ exp ((k + 1) * (log (k + 1)) ^ (1 + o k)) := by
+        ∀ k, q k ≤ exp ((k + 1) * log (k + 1) ^ (1 + o k)) := by
   sorry
 
 end Erdos695
