@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 996
+# Erdős Problem 741
 
 *References:*
- - [erdosproblems.com/996](https://www.erdosproblems.com/996)
- - [Er49d] Erdös, P. "On the strong law of large numbers." Transactions of the American Mathematical
-    Society 67.1 (1949): 51-56.
+ - [erdosproblems.com/741](https://www.erdosproblems.com/741)
+ - [Er94b] Erdős, Paul, Some problems in number theory, combinatorics and combinatorial geometry.
+    Math. Pannon. (1994), 261-269.
  - [Ma66] Matsuyama, Noboru. "On the strong law of large numbers." Tohoku Mathematical Journal,
     Second Series 18.3 (1966): 259-269.
 -/
@@ -33,13 +33,13 @@ noncomputable def fourierPartial {T : ℝ} [hT : Fact (0 < T)] (f : Lp ℂ 2 (@h
     (k : ℕ) : AddCircle T → ℂ :=
   fun x => ∑ i ∈ Icc (-k : ℤ) k, fourierCoeff f k • fourier i x
 
-namespace Erdos996
+namespace Erdos741
 
 /-- Does there exists a positive constant `C` such that for all `f ∈ L²[0,1]` and all lacunary
 sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k ^ C)`, then for almost every `x`,
 `lim ∑ k ∈ Finset.range N, f (n k • x)) / N = ∫ t, f t ∂t`? -/
 @[category research open, AMS 42]
-theorem erdos_996.log3 : answer(sorry) ↔
+theorem erdos_741.log3 : answer(sorry) ↔
     ∃ (C : ℝ), 0 < C ∧ ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
     (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
@@ -51,7 +51,7 @@ theorem erdos_996.log3 : answer(sorry) ↔
 
 /-- The following theorem is proved in [Ma66]. -/
 @[category research solved, AMS 42]
-theorem erdos_996.log2 : ∀ (C : ℝ), 0.5 < C →
+theorem erdos_741.log2 : ∀ (C : ℝ), 0.5 < C →
     ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
     (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
@@ -61,4 +61,4 @@ theorem erdos_996.log2 : ∀ (C : ℝ), 0.5 < C →
     (𝓝 (∫ t, f t ∂haarAddCircle)) := by
   sorry
 
-end Erdos996
+end Erdos741
