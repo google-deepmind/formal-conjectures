@@ -23,42 +23,26 @@ import FormalConjectures.Util.ProblemImports
  - [erdosproblems.com/741](https://www.erdosproblems.com/741)
  - [Er94b] Erdős, Paul, Some problems in number theory, combinatorics and combinatorial geometry.
     Math. Pannon. (1994), 261-269.
- - [Ma66] Matsuyama, Noboru. "On the strong law of large numbers." Tohoku Mathematical Journal,
-    Second Series 18.3 (1966): 259-269.
 -/
 
-open MeasureTheory AddCircle Filter Topology Asymptotics Finset Real
-
-noncomputable def fourierPartial {T : ℝ} [hT : Fact (0 < T)] (f : Lp ℂ 2 (@haarAddCircle T hT))
-    (k : ℕ) : AddCircle T → ℂ :=
-  fun x => ∑ i ∈ Icc (-k : ℤ) k, fourierCoeff f k • fourier i x
+open scoped Pointwise
+open Set
 
 namespace Erdos741
 
-/-- Does there exists a positive constant `C` such that for all `f ∈ L²[0,1]` and all lacunary
-sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k ^ C)`, then for almost every `x`,
-`lim ∑ k ∈ Finset.range N, f (n k • x)) / N = ∫ t, f t ∂t`? -/
-@[category research open, AMS 42]
-theorem erdos_741.log3 : answer(sorry) ↔
-    ∃ (C : ℝ), 0 < C ∧ ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
-    IsLacunary n →
-    (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
-    (fun k => 1 / (log (log (log k))) ^ C)
-    →
-    ∀ᵐ x, Tendsto (fun N => (∑ k ∈ .range N, f (n k • x)) / N) atTop
-    (𝓝 (∫ t, f t ∂haarAddCircle)) := by
+/-- Let `A ⊆ ℕ` be a set such that `A + A` has positive density. Can one always decompose
+`A` as a disjoint union of two subsets `A₁` and `A₂` such that both `A₁ + A₁` and `A₂ + A₂` have
+positive density? -/
+@[category research open, AMS 5]
+theorem erdos_741.density : answer(sorry) ↔ ∀ A : Set ℕ, HasPosDensity (A + A) → ∃ B C,
+    B ⊆ A ∧ C ⊆ A ∧ A = B ∪ C ∧ Disjoint B C ∧ HasPosDensity (B + B) ∧ HasPosDensity (C + C):= by
   sorry
 
-/-- The following theorem is proved in [Ma66]. -/
-@[category research solved, AMS 42]
-theorem erdos_741.log2 : ∀ (C : ℝ), 0.5 < C →
-    ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
-    IsLacunary n →
-    (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
-    (fun k => 1 / (log (log k)) ^ C)
-    →
-    ∀ᵐ x, Tendsto (fun N => (∑ k ∈ .range N, f (n k • x)) / N) atTop
-    (𝓝 (∫ t, f t ∂haarAddCircle)) := by
+/-- Let `A ⊆ ℕ` be a basis of order 2. Can one always decompose `A` as a disjoint union of two
+subsets `A₁` and `A₂` such that `A₁ + A₁` and `A₂ + A₂` cannot both have bounded gaps? -/
+@[category research open, AMS 5]
+theorem erdos_741.basis : answer(sorry) ↔ ∀ A : Set ℕ, IsAddBasisOfOrder A 2 → ∃ B C,
+    B ⊆ A ∧ C ⊆ A ∧ A = B ∪ C ∧ Disjoint B C ∧ (¬ (OfBoundedGaps B ∧ OfBoundedGaps C)):= by
   sorry
 
 end Erdos741

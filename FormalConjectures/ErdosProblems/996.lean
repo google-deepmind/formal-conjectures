@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 996
 
-*References:*
+*Reference:*
  - [erdosproblems.com/996](https://www.erdosproblems.com/996)
  - [Er49d] Erdös, P. "On the strong law of large numbers." Transactions of the American Mathematical
     Society 67.1 (1949): 51-56.

@@ -29,6 +29,10 @@ if the equation $a + b = c$ has no solution with $a, b, c \in A$.
 -/
 def IsSumFree (A : Set α) : Prop := Disjoint (A + A)  A
 
+/-- A set $A$ of natural numbers is said to have bounded gaps if there exists an integer $p$ such
+that $A ∩ [n, n + 1, ..., n + p]$ is nonempty for all $n$. -/
+def OfBoundedGaps (A : Set ℕ) : Prop := ∃ p, ∀ n, A ∩ .Icc n (n + p) ≠ ∅
+
 /-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
 coincidences forced by the commutativity of addition. -/
 def IsSidon {S : Type*} [Membership α S] (A : S) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
