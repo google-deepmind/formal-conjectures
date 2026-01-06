@@ -41,35 +41,32 @@ are exactly those satisfying (2).
 namespace OeisA080170
 
 /--
-List of binomial coefficients: C(2k,k), C(3k,k), ..., C((k+1)k,k)
+The gcd of the binomial coefficients
+C(2k,k), C(3k,k), ..., C((k+1)k,k) is equal to 1.
 -/
-def binom_sequence (k : ℕ) : List ℕ :=
-  (List.range k).map (fun i => Nat.choose ((i + 2) * k) k)
+def gcdCondition (k : ℕ) : Prop :=
+   (List.range k).foldr
+    (fun i g => Nat.gcd (Nat.choose ((i + 2) * k) k) g)
+    0 = 1
 
 /--
-Condition: gcd of the binomial sequence is 1
+Let P be the largest prime power dividing k.
+Then k / P > P.
 -/
-def gcd_condition (k : ℕ) : Prop :=
-  (binom_sequence k).foldr Nat.gcd 0 = 1
+def primePowerCondition (k : ℕ) : Prop :=
+  ∃ (P : ℕ),
+    (∃ (p e : ℕ), p.Prime ∧ e ≥ 1 ∧ P = p ^ e ∧ P ∣ k) ∧
+    (∀ (p e : ℕ), p.Prime → e ≥ 1 → p ^ e ∣ k → p ^ e ≤ P) ∧
+    k / P > P
 
 /--
-Maximum prime power in the factorization of k
+Conjecture: The gcd condition holds if and only if prime power condition is true
 -/
-def max_prime_power (k : ℕ) : ℕ :=
-  k.factorization.sup (fun p e => p ^ e)
 
-/--
-Condition: k divided by the maximum prime power is greater than the max prime power
--/
-def max_prime_condition (k : ℕ) : Prop :=
-  k / max_prime_power k > max_prime_power k
-
-/--
-Conjecture: The gcd condition is equivalent to the max prime power condition
--/
 @[category research open, AMS 11]
-conjecture A080170_A051283_equiv (k : ℕ) (hk : 2 ≤ k) :
-  gcd_condition k ↔ max_prime_condition k
-
+theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
+  gcdCondition k  ↔ primePowerCondition k :=
+by
+  sorry
 
 end OeisA080170
