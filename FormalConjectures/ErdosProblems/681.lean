@@ -35,7 +35,7 @@ where $p(m)$ is the least prime factor of $m$ ?
 -/
 @[category research open, AMS 11]
 theorem erdos_681 : answer(sorry) ↔
-    ∃ N, ∀ n > N, ∃ k > 0, (n + k).Composite ∧ ∀ p, IsLPF p (n + k) → p > k ^ 2 := by
+    ∀ᶠ n in .atTop, ∃ k > 0, (n + k).Composite ∧ ∀ p, IsLPF p (n + k) → p > k ^ 2 := by
   sorry
 
 end Erdos681
