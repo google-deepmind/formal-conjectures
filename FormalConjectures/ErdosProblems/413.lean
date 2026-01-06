@@ -48,7 +48,7 @@ def expProd (n : ℕ) : ℕ :=
 
 /-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density. -/
 @[category research solved, AMS 11]
-theorem erdos_413_expProd_barrier_pos_density :
+theorem erdos_413_hasPosDensity_barrier_expProd :
     { n | barrier expProd n }.HasPosDensity := by
   sorry
 
