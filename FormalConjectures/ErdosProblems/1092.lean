@@ -42,15 +42,22 @@ namespace Erdos1092
 open Classical
 open SimpleGraph
 open Finset
+open Asymptotics
 
 /--
-Asymptotic domination: `f ≫ g` means `g n / f n → 0`.
-This is the standard Erdős-style notation.
+The function `f : ℕ → ℕ → ℕ` with the Erdős 1092 properties.
+Defined as the supremum over all functions satisfying the chromatic number decomposition property.
 -/
-def dominates (f g : ℕ → ℕ) : Prop :=
-  tendsto (fun n => (g n : ℝ) / (f n : ℝ)) atTop (nhds 0)
-
-notation f " ≫ " g => dominates f g
+noncomputable def f : ℕ → ℕ → ℕ :=
+  sSup {g : ℕ → ℕ → ℕ |
+    ∀ r n,
+      ∀ G : SimpleGraph (Fin n),
+        (∀ H : Subgraph G,
+          let m := H.verts.toFinset.card
+          ∃ H₁ H₂ : Subgraph H.coe,
+            chromaticNumber H₁.coe ≤ r ∧
+            H₂.edgeSet.toFinset.card ≤ g r m) →
+        chromaticNumber G ≤ r + 1}
 
 /--
 Erdős Problem 1092 (open).
@@ -59,13 +66,12 @@ There exists a function `f : ℕ → ℕ → ℕ` such that:
 * If every subgraph of a graph `G` can be decomposed into an `r`-colorable part
   and a sparse remainder with at most `f r m` edges,
   then `G` has chromatic number at most `r + 1`.
-* Moreover, `f 2 n ≫ n`.
-* More generally, `f r n ≫ fun n => r * n`.
+* Moreover, `(fun n => n) =o[atTop] (fun n => f 2 n)`.
+* More generally, `∀ r, (fun n => r * n) =o[atTop] (fun n => f r n)`.
 -/
 @[category research open, AMS 5]
 theorem erdos_1092 :
-  (∃ f : ℕ → ℕ → ℕ,
-    (∀ r n, 0 ≤ f r n) ∧
+  ((∀ r n, 0 ≤ f r n) ∧
     (∀ r n,
       ∀ G : SimpleGraph (Fin n),
         (∀ H : Subgraph G,
@@ -74,8 +80,8 @@ theorem erdos_1092 :
             chromaticNumber H₁.coe ≤ r ∧
             H₂.edgeSet.toFinset.card ≤ f r m) →
         chromaticNumber G ≤ r + 1) ∧
-    dominates (fun n => f 2 n) (fun n => n) ∧
-    (∀ r, dominates (fun n => f r n) (fun n => r * n)))
+    (fun n => n) =o[atTop] (fun n => f 2 n) ∧
+    (∀ r, (fun n => r * n) =o[atTop] (fun n => f r n)))
   ↔ answer(sorry) := by
   sorry
 
