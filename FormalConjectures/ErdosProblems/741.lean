@@ -34,15 +34,16 @@ namespace Erdos741
 `A` as a disjoint union of two subsets `A₁` and `A₂` such that both `A₁ + A₁` and `A₂ + A₂` have
 positive density? -/
 @[category research open, AMS 5]
-theorem erdos_741.density : answer(sorry) ↔ ∀ A : Set ℕ, HasPosDensity (A + A) → ∃ B C,
-    B ⊆ A ∧ C ⊆ A ∧ A = B ∪ C ∧ Disjoint B C ∧ HasPosDensity (B + B) ∧ HasPosDensity (C + C):= by
+theorem erdos_741.density : answer(sorry) ↔ ∀ A : Set ℕ, HasPosDensity (A + A) → ∃ A₁ A₂,
+    A₁ ⊆ A ∧ A₂ ⊆ A ∧ A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ HasPosDensity (A₁ + A₁)
+    ∧ HasPosDensity (A₂ + A₂):= by
   sorry
 
 /-- Let `A ⊆ ℕ` be a basis of order 2. Can one always decompose `A` as a disjoint union of two
 subsets `A₁` and `A₂` such that `A₁ + A₁` and `A₂ + A₂` cannot both have bounded gaps? -/
 @[category research open, AMS 5]
-theorem erdos_741.basis : answer(sorry) ↔ ∀ A : Set ℕ, IsAddBasisOfOrder A 2 → ∃ B C,
-    B ⊆ A ∧ C ⊆ A ∧ A = B ∪ C ∧ Disjoint B C ∧ (¬ (OfBoundedGaps B ∧ OfBoundedGaps C)):= by
+theorem erdos_741.basis : answer(sorry) ↔ ∀ A : Set ℕ, IsAddA₁asisOfOrder (A ∪ {0}) 2 → ∃ A₁ A₂,
+    A₁ ⊆ A ∧ A₂ ⊆ A ∧ A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ ¬ (IsSyndetic A₁ ∧ IsSyndetic A₂):= by
   sorry
 
 end Erdos741
