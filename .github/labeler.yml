@@ -1,6 +1,31 @@
-# Label Name: erdos-problems
-# Trigger: Any file changed inside FormalConjectures/ErdosProblems/
+arxiv:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Arxiv/**'
+
 erdos-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/ErdosProblems/**'
 
+ForMathlib:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/ForMathlib/**'
+
+green-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/GreensOpenProblems/**'
+
+mathoverflow:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Mathoverflow/**'
+
+millenium-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Millenium/**'
+
+oeis:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/OEIS/**'
+
+wikipedia:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Wikipedia/**'
