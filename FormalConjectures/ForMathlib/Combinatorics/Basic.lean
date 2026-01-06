@@ -31,7 +31,7 @@ def IsSumFree (A : Set α) : Prop := Disjoint (A + A)  A
 
 /-- A set $A$ of natural numbers is said to have bounded gaps if there exists an integer $p$ such
 that $A ∩ [n, n + 1, ..., n + p]$ is nonempty for all $n$. -/
-def OfBoundedGaps (A : Set ℕ) : Prop := ∃ p, ∀ n, A ∩ .Icc n (n + p) ≠ ∅
+def IsSyndetic (A : Set ℕ) : Prop := ∃ p, ∀ n, (A ∩ .Icc n (n + p)).Nonempty
 
 /-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
 coincidences forced by the commutativity of addition. -/
