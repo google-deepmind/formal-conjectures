@@ -40,15 +40,14 @@ theorem erdos_375 : answer(sorry) ↔ ∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i 
   sorry
 
 /-- If `erdos_375` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
-for some `c > 0`. In particular, this resolves Legendre's conjecture.
-#TODO : Formalize Legendre's conjecture. -/
+for some `c > 0`. In particular, this resolves Legendre's conjecture. -/
 @[category research solved, AMS 11]
 theorem erdos_375.legendre : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
     ∃ c > 0, ∀ n, (n + 1).nth Prime - n.nth Prime < (n.nth Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
   sorry
 
-/-- For any `n ≥ 1` and `k `, if `n + 1, ..., n + k` are all composite, then
+/-- For any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite, then
 there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
 @[category research solved, AMS 11]
 theorem erdos_375.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
@@ -61,7 +60,7 @@ there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1
 in [RST75]. -/
 @[category research solved, AMS 11]
 theorem erdos_375.log : ∃ c > 0, ∀ n k : ℕ,
-    k < c * (log n / (log (log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime) →
+    k < c * (Real.log n / (Real.log (Real.log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
   sorry
 
