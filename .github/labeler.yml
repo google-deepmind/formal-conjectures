@@ -6,10 +6,6 @@ erdos-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/ErdosProblems/**'
 
-ForMathlib:
-  - changed-files:
-    - any-glob-to-any-file: 'FormalConjectures/ForMathlib/**'
-
 green-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/GreensOpenProblems/**'
