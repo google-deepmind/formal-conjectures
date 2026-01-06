@@ -111,7 +111,7 @@ Fix a $k \geq 3$. Is it true that there are infinitely many arithmetic prime pro
 -/
 @[category research open, AMS 5 11]
 theorem erdos_141.variant.infinite_general_case : answer(sorry) ↔
-    ∀ᵉ (k ≥ 3), (consecutivePrimeArithmeticProgressions k).Infinite :=
+    ∀ k ≥ 3, (consecutivePrimeArithmeticProgressions k).Infinite :=
   sorry
 
 end Erdos141
