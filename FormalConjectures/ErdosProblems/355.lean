@@ -34,7 +34,7 @@ contain all rationals in some open interval?
 @[category research open, AMS 11]
 theorem erdos_355 :
     answer(sorry) ↔ ∃ A : ℕ → ℕ, IsLacunary A ∧ ∃ u v : ℝ, u < v ∧ ∀ q : ℚ, ↑q ∈ Set.Ioo u v →
-      q ∈  {(∑ a ∈ A', (1 / a : ℚ)) | (A' : Finset ℕ) (_ : A'.toSet ⊆ Set.range A)} := by
+      q ∈ {∑ a ∈ A', (1 / a : ℚ) | (A' : Finset ℕ) (_ : A'.toSet ⊆ Set.range A)} := by
   sorry
 
 
