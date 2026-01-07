@@ -36,7 +36,7 @@ Is there a set of $n$ points in $\mathbb{R}^2$ such that every subset of $4$ poi
 least $3$ distances, yet the total number of distinct distances is $\ll \frac{n}{\sqrt{\log n}}$?
 -/
 @[category research open, AMS 52]
-theorem erdos_659 : answer(sorry) ↔ ∃ (a : ℕ → Finset ℝ²), ∀ n, #(a n) = n ∧
+theorem erdos_659 : answer(sorry) ↔ ∃ (a : ℕ → Finset ℝ²), ∀ᶠ n in Filter.atTop, #(a n) = n ∧
     3 ≤ minimalDistinctDistancesSubsetOfSize (a n) 4 ∧
     (fun n => (distinctDistances (a n) : ℝ)) ≪ fun (n : ℕ) => n / (n : ℝ).log.sqrt := by
   sorry
