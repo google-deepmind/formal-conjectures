@@ -34,16 +34,16 @@ Does there always exist at least one prime between consecutive perfect squares?
 -/
 @[category research open, AMS 11]
 theorem legendre_conjecture :
-    answer(sorry) ↔ (∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p) := by
+    answer(sorry) ↔ ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
   sorry
 
 /-- If there exists a constant `c > 0` such that
- `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)` for all `n`, then
+`(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)` for all `n`, then
 Legendre's conjecture is true. -/
 @[category research solved, AMS 11]
 theorem bounded_gap_legendre :
     (∃ c > 0, ∀ n, (n + 1).nth Prime - n.nth Prime < (n.nth Prime : ℝ) ^ (1 / (2 : ℝ) - c))
-    → (∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p) := by
+    → ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
   sorry
 
 /--
