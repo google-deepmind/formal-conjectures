@@ -45,7 +45,7 @@ and $F_m$ is the $m$th Fibonacci number. This constant is best possible.
 theorem erdos_480.variants.chung_graham :
     let c : ℝ := 1 + ∑' (k : ℕ+), (1 : ℝ) / (2*k : ℕ).fib
     IsGreatest {C : ℝ | C > 0 ∧ ∀ (x : ℕ → ℝ) (hx : ∀ n, x n ∈ Set.Icc 0 1),
-      ∀ ε ∈ Set.Ioo 0 C, ∃ n, {m | m ≠ 0 ∧ |x (n + m) - x m| < 1 / ((C - ε) * n)}.Infinite}
+      ∀ ε ∈ Set.Ioo 0 C, ∃ n, {m | n ≠ 0 ∧ |x (n + m) - x m| < 1 / ((C - ε) * n)}.Infinite}
     c := by
   sorry
 
