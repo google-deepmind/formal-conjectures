@@ -33,7 +33,18 @@ open Filter Finset Nat
 @[category API, AMS 5]
 theorem IsSidon.add_card {A : Finset ℕ} {n : ℕ} (hn : A.card = n) (hA : IsSidon A) :
     (A + A).card = (n + 1).choose 2 := by
-  sorry
+  have hs := Fintype.card_congr (Sym2.sortEquiv (α := A))
+  simp only [Sym2.card, Fintype.card_coe, hn] at hs
+  have ha := Fintype.card_coe (α := A × A) {s | s.1 ≤ s.2}
+  simp only [mem_filter, mem_univ, true_and] at ha
+  have h_card_eq : image (fun (p : A × A) => p.1.1 + p.2.1) {s | s.1 ≤ s.2} = A + A := by
+    ext; simp [Finset.mem_add]; grind
+  refine Eq.trans ?_ (hs.trans ha).symm
+  rw [← h_card_eq, Finset.card_image_of_injOn]
+  · intro p hp q hq hf
+    have := hA p.1 p.1.2 q.1 q.1.2 p.2 p.2.2 q.2 q.2.2 hf
+    simp [← Subtype.coe_le_coe] at hp hq
+    grind
 
 namespace Erdos153
 
