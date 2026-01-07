@@ -82,7 +82,7 @@ theorem f_decomposition_property (r n : ℕ) (G : SimpleGraph (Fin n)) :
   sorry
 
 @[category research open, AMS 5]
-theorem f_asymptotic_2 :
+theorem f_asymptotic_2 : answer(sorry) \iff
   (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
   sorry
 
