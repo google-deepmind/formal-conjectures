@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.Wikipedia.LegendreConjecture
 
 /-!
 # Erdős Problem 375
@@ -51,8 +52,8 @@ theorem erdos_375.bounded_gap : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).
 @[category research solved, AMS 11]
 theorem erdos_375.legendre : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
-    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p) := by
-  sorry
+    (∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p) :=
+  fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.bounded_gap hp)
 
 /-- For any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite, then
 there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
