@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Finset.Preimage
+import Mathlib.Data.Set.Finite.Lattice
 import Mathlib.Order.Filter.AtTopBot.Defs
 
 variable {M : Type*} [AddCommMonoid M]
@@ -30,21 +30,6 @@ def subsetSums (A : Set M) : Set M :=
 @[gcongr]
 theorem subsetSums_mono {A B : Set M} (h : A ⊆ B) : subsetSums A ⊆ subsetSums B :=
   fun _ ⟨C, hC⟩ => ⟨C, hC.1.trans h, hC.2⟩
-
-/-- The set of subset sums of a sequence `ℕ → M`. -/
-def subseqSums (A : ℕ → M) : Set M :=
-  {n | ∃ B : Finset ℕ, B.toSet.InjOn A ∧ n = ∑ i ∈ B, A i}
-
-/-- The set of subset sums of a sequence is `ℕ → M` is equal to the set of subset sums of its
-range. -/
-theorem subseqSums_eq_subsetSums (A : ℕ → M) : subsetSums (Set.range A) = subseqSums A := by
-  ext x
-  classical
-  refine ⟨fun ⟨C, hC⟩ => ?_, fun ⟨C, hC⟩ => ?_⟩
-  · choose! n hn using fun i (hi : i ∈ C) => hC.1 hi
-    exact ⟨Finset.image n C, fun i hi j hj hij => by aesop, hC.2.trans
-      ((Finset.sum_image fun i hi j hj hij => by grind).trans (by aesop)).symm⟩
-  · exact ⟨C.image A, by grind, hC.2.trans (by simp [Finset.sum_image hC.1])⟩
 
 /-- The set of subset sums of a sequence `ℕ → M`, where repetition is allowed. -/
 def subseqSums' (A : ℕ → M) : Set M :=
@@ -64,7 +49,7 @@ theorem isAddComplete_mono {A B : Set M} (h : A ⊆ B) (ha : IsAddComplete A) : 
 
 /-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
 def IsAddStronglyComplete (A : Set M) : Prop :=
-  ∀ {B : Set M}, B.Finite → IsAddComplete (A \ B)
+  ∀ ⦃B : Set M⦄, B.Finite → IsAddComplete (A \ B)
 
 /-- A strongly complete set is complete. -/
 theorem IsAddStronglyComplete.isAddComplete {A : Set M} (hA : IsAddStronglyComplete A) :
@@ -72,42 +57,36 @@ theorem IsAddStronglyComplete.isAddComplete {A : Set M} (hA : IsAddStronglyCompl
 
 /-- If `A ⊆ B` and `A` is strongly complete, then `B` is also strongly complete. -/
 theorem isAddStronglyComplete_mono {A B : Set M} (h : A ⊆ B) (ha : IsAddStronglyComplete A) :
-    IsAddStronglyComplete B := fun hC => isAddComplete_mono (by grind) (ha hC)
-
-/-- A sequence `A` is complete if every sufficiently large element of `M` is a sum of
-distinct terms of `A`. -/
-def IsAddCompleteNatSeq (A : ℕ → M) : Prop :=
-  ∀ᶠ k in Filter.atTop, k ∈ subseqSums A
-
-/-- A sequence `A` is complete iff its range is complete. -/
-theorem isAddCompleteNatSeq_iff_isAddCompleteNatSeq (A : ℕ → M) : IsAddComplete (.range A) ↔
-    IsAddCompleteNatSeq A where
-  mp h := by filter_upwards [h] with x hx; simp [← subseqSums_eq_subsetSums A, hx]
-  mpr h := by filter_upwards [h] with x hx; simp [subseqSums_eq_subsetSums A, hx]
+    IsAddStronglyComplete B := fun C hC => isAddComplete_mono (by grind) (ha hC)
 
 /-- A sequence `A` is strongly complete if `fun m => A (n + m)` is still complete for all `n`. -/
 def IsAddStronglyCompleteNatSeq (A : ℕ → M) : Prop :=
-  ∀ n, IsAddCompleteNatSeq (fun m => A (n + m))
+  ∀ n, IsAddComplete (Set.range (fun m => A (n + m)))
 
 /-- A strongly complete sequence is complete. -/
-theorem IsAddStronglyCompleteNatSeq.isAddCompleteNatSeq {A : ℕ → M}
+theorem IsAddStronglyCompleteNatSeq.isAddComplete {A : ℕ → M}
     (hA : IsAddStronglyCompleteNatSeq A) :
-    IsAddCompleteNatSeq A := by simpa using hA 0
+    IsAddComplete (Set.range A) := by simpa using hA 0
 
 open Classical in
 /-- If the range of a sequence `A` is strongly complete, then `A` is strongly complete. -/
 theorem IsAddStronglyComplete.isAddStronglyCompleteNatSeq {A : ℕ → M}
     (h : IsAddStronglyComplete (.range A)) : IsAddStronglyCompleteNatSeq A :=
-  fun n => (isAddCompleteNatSeq_iff_isAddCompleteNatSeq (fun m => A (n + m))).1
-    (isAddComplete_mono (A := .range A \ ((Finset.range n).image A)) (fun _ ⟨⟨y, hy⟩, q⟩ =>
+  fun n => (isAddComplete_mono (A := .range A \ ((Finset.range n).image A)) (fun _ ⟨⟨y, hy⟩, q⟩ =>
     ⟨y - n, by grind⟩) (h (Finset.finite_toSet _)))
 
-/-- If `A` is strongly complete and ..., then the range of `A` is strongly
-complete.-/
+/-- If `A` is strongly complete and the preimage of each element is finite, then the range of `A`
+is strongly complete.-/
 theorem IsAddStronglyCompleteNatSeq.isAddStronglyComplete  {A : ℕ → M}
-    (h : IsAddStronglyCompleteNatSeq A) :
+    (h : IsAddStronglyCompleteNatSeq A) (hA : ∀ m, (A ⁻¹' {m}).Finite):
     IsAddStronglyComplete (.range A) := by
-  sorry
+  refine fun B hB => ?_
+  obtain ⟨n, hn⟩ := Finset.exists_nat_subset_range (hB.preimage' (fun b _ => hA b)).toFinset
+  rw [Set.Finite.toFinset_subset, Finset.coe_range] at hn
+  refine isAddComplete_mono ?_ (h (n + 1))
+  refine fun x ⟨y, hy⟩ => ⟨⟨n + 1 + y, hy⟩, fun hx => ?_⟩
+  have : n + 1 + y ∈ Set.Iio n := by grind
+  grind
 
 /-- A sequence `A` is complete if every sufficiently large element of `M` is a sum of
 (not necessarily distinct) terms of `A`. -/
