@@ -18,22 +18,17 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 1092
-
-*Reference:* https://www.erdosproblems.com/1092
-
-
-If a graph `G` has the property that every subgraph `H` on `m` vertices can be
-written as the union of
-1. a graph of chromatic number at most `r`, and
-2. a graph with at most `f r m` edges,
-
-then `G` has chromatic number at most `r + 1`.
+Let $f_r(n)$ be maximal such that, if a graph $G$ has the property that every subgraph $H$ on $m$
+vertices is the union of a graph with chromatic number $r$ and a graph with $\leq f_r(m)$ edges,
+then $G$ has chromatic number $\leq r+1$.
 
 Erdős asked whether:
 * `f 2 n ≫ n`
 * more generally, `f r n ≫ r * n`
 
 This problem is currently open.
+
+*Reference:* https://www.erdosproblems.com/1092
 -/
 
 namespace Erdos1092
@@ -88,7 +83,7 @@ theorem f_decomposition_property (r n : ℕ) (G : SimpleGraph (Fin n)) :
 
 @[category research open, AMS 5]
 theorem f_asymptotic_2 :
-  answer(sorry) ↔ (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
+  (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
   sorry
 
 @[category research open, AMS 5]
