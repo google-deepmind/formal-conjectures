@@ -29,31 +29,14 @@ import FormalConjectures.Util.ProblemImports
 open scoped Pointwise
 open Filter Finset Nat
 
-/-- Suppose `A` is a finite Sidon set of size `n`. Then `(A + A).card = (n + 1).choose 2`. -/
-@[category API, AMS 5]
-theorem IsSidon.add_card {A : Finset ℕ} {n : ℕ} (hn : A.card = n) (hA : IsSidon A) :
-    (A + A).card = (n + 1).choose 2 := by
-  have hs := Fintype.card_congr (Sym2.sortEquiv (α := A))
-  simp only [Sym2.card, Fintype.card_coe, hn] at hs
-  have ha := Fintype.card_coe (α := A × A) {s | s.1 ≤ s.2}
-  simp only [mem_filter, mem_univ, true_and] at ha
-  have h_card_eq : image (fun (p : A × A) => p.1.1 + p.2.1) {s | s.1 ≤ s.2} = A + A := by
-    ext; simp [Finset.mem_add]; grind
-  refine Eq.trans ?_ (hs.trans ha).symm
-  rw [← h_card_eq, Finset.card_image_of_injOn]
-  · intro p hp q hq hf
-    have := hA p.1 p.1.2 q.1 q.1.2 p.2 p.2.2 q.2 q.2.2 hf
-    simp [← Subtype.coe_le_coe] at hp hq
-    grind
-
 namespace Erdos153
 
 /-- Define `f n` to be the minimum of
 `∑ (i : Set.Ico 1 ((A + A).card), (s i - s (i - 1)) ^ 2 / n` as `A` ranges over all Sidon sets
 of size `n`, where `s` is an order embedding from `Fin n` into `A`. -/
 noncomputable def f (n : ℕ) : ℝ := ⨅ A : {A : Finset ℕ | A.card = n ∧ IsSidon A},
-  ∑ i : Set.Ico 1 ((A.1 + A).card), ((A.1 + A).orderIsoOfFin rfl ⟨i, i.2.2⟩ -
-  (A.1 + A).orderIsoOfFin rfl ⟨i - 1, by grind⟩) ^ 2 / (n : ℝ)
+  let s := (A.1 + A).orderIsoOfFin rfl
+  ∑ i : Set.Ico 1 ((A.1 + A).card), (s ⟨i, i.2.2⟩ - s ⟨i - 1, by grind⟩) ^ 2 / (n : ℝ)
 
 /-- Must `lim f n = ∞`? -/
 @[category research open, AMS 5]
