@@ -83,7 +83,7 @@ Or even $f(n) < n^{c/\log\log n}$ for some constant $c > 0$?
 -/
 @[category research open, AMS 52]
 theorem erdos_92.variants.strong : answer(sorry) ↔
-    ∃ c > 0, ∀ n, (f n : ℝ) ≤ n^(c / (n : ℝ).log.log) := by
+    ∃ c > 0, ∀ᶠ n in atTop, (f n : ℝ) ≤ n^(c / (n : ℝ).log.log) := by
 sorry
 
 -- TODO(firsching): formalize the rest of the remarks

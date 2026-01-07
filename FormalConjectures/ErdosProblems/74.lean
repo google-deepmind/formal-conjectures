@@ -38,7 +38,7 @@ For a given subgraph `A`, this is the set of all numbers `k` such that `A` can b
 bipartite by deleting `k` edges.
 -/
 def SimpleGraph.edgeDistancesToBipartite {G : SimpleGraph V} (A : G.Subgraph) : Set ℕ :=
-  { (E.ncard) | (E : Set (Sym2 V)) (_ : IsBipartite (A.deleteEdges E).coe)}
+  { (E.ncard) | (E : Set (Sym2 V)) (_ : E ⊆ A.edgeSet) (_ : IsBipartite (A.deleteEdges E).coe)}
 
 /--
 The set of edge distances to a bipartite graph is always non-empty because deleting all edges
@@ -48,8 +48,8 @@ from a graph makes it bipartite.
 theorem SimpleGraph.edgeDistancesToBipartite_nonempty {G : SimpleGraph V} (A : G.Subgraph) :
     SimpleGraph.edgeDistancesToBipartite A |>.Nonempty := by
   dsimp only [edgeDistancesToBipartite,Set.nonempty_def]
-  refine ⟨_, Set.univ, ?_, rfl⟩
-  use fun v => 0
+  refine ⟨_, A.edgeSet, fun _ a ↦ a, ?_, rfl⟩
+  use fun _ => 0
   simp
 
 /--
@@ -93,11 +93,9 @@ theorem SimpleGraph.subgraphEdgeDistsToBipartite_bddAbove (G : SimpleGraph V) (n
   apply Nat.sInf_le
   simp only [Subgraph.deleteEdges_verts, exists_prop, Set.mem_setOf_eq]
   use A.edgeSet
-  constructor
-  · use 0
-    rintro ⟨v, hv⟩ ⟨w, hw⟩ ⟨_, hvw⟩
-    aesop
-  · rfl
+  refine ⟨by rfl, ?_, rfl⟩
+  use fun _ => 0
+  simp
 
 /--
 For a given graph $G$ and size $n$, this defines the smallest number $k$
