@@ -32,9 +32,9 @@ $\sigma(n) > Cn$ is the distinct sum of proper divisors of $n$?
 -/
 @[category research open, AMS 11]
 theorem erdos_825 :
-    (∃ (C : ℝ) (_ : C > 0),
+    answer(sorry) ↔ ∃ (C : ℝ) (_ : C > 0),
       ∀ (n) (_ : σ 1 n > C * n),
-        ∃ s ⊆ n.properDivisors, n = s.sum id) ↔ answer(sorry) := by
+        ∃ s ⊆ n.properDivisors, n = s.sum id := by
   sorry
 
 /--

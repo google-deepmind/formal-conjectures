@@ -37,8 +37,8 @@ The main conjecture: for any finite set of integers $A$ with $|A| = n$, the numb
 common differences in three-term arithmetic progressions is $O(n^{3/2})$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1097 : (∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
-    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ)) ↔ answer(sorry) := by
+theorem erdos_1097 : answer(sorry) ↔ ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
+    (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ) := by
   sorry
 
 /--

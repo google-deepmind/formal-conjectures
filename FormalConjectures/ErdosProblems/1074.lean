@@ -43,7 +43,7 @@ $$
 $$
 exist? -/
 @[category research open, AMS 11]
-theorem erdos_1074.part8_i_i : (∃ c, EHSNumbers.HasDensity c) ↔ answer(sorry) := by
+theorem erdos_1074.part8_i_i : answer(sorry) ↔ ∃ c, EHSNumbers.HasDensity c := by
   sorry
 
 /-- Let $S$ be the set of all $m\geq 1$ such that there exists a prime $p\not\equiv 1\pmod{m}$ such
@@ -62,7 +62,7 @@ $$
 $$
 exist? -/
 @[category research open, AMS 11]
-theorem erdos_1074.part_ii_i : (∃ c, PillaiPrimes.HasDensity c {p | p.Prime}) ↔ answer(sorry) := by
+theorem erdos_1074.part_ii_i : answer(sorry) ↔ ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
   sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with

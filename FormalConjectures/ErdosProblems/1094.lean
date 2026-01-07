@@ -38,7 +38,7 @@ least prime factor of the binomial coefficient `Nat.choose n k` exceeds `max (n 
 -/
 @[category research open, AMS 11]
 theorem erdos_1094 :
-    {(n, k) : ℕ × ℕ | 2 * k ≤ n ∧ (n.choose k).minFac > max (n / k) k}.Finite := by
+    {(n, k) : ℕ × ℕ | 0 < k ∧ 2 * k ≤ n ∧ (n.choose k).minFac > max (n / k) k}.Finite := by
   sorry
 
 end Erdos1094

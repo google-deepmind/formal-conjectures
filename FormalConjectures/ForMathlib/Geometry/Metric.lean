@@ -13,21 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.Data.Finset.Sym
+import Mathlib.Topology.MetricSpace.Defs
 
-import Lake
-open Lake DSL
+open scoped Finset
 
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
+variable {X : Type*} [MetricSpace X]
 
-@[default_target]
-lean_lib FormalConjectures where
-  roots := #[`FormalConjectures]
-  globs := #[.submodules `FormalConjectures]
-
-require "leanprover-community" / "mathlib" @ git "v4.22.0"
+/-- The number of pairs of points of a finite set `s` in a metric space that are distance 1 apart.
+-/
+noncomputable def unitDistNum (s : Finset X) : ℕ := #{p ∈ s.sym2 | dist p.out.1 p.out.2 = 1}

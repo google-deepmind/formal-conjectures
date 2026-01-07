@@ -15,8 +15,10 @@ limitations under the License.
 -/
 
 import FormalConjectures.ForMathlib.Algebra.GCDMonoid.Finset
+import FormalConjectures.ForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 import FormalConjectures.ForMathlib.Algebra.Group.Indicator
 import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
+import FormalConjectures.ForMathlib.Algebra.Polynomial.Algebra
 import FormalConjectures.ForMathlib.Algebra.Polynomial.Basic
 import FormalConjectures.ForMathlib.Algebra.Polynomial.HasseDeriv
 import FormalConjectures.ForMathlib.AlgebraicGeometry.ProjectiveSpace
@@ -44,17 +46,20 @@ import FormalConjectures.ForMathlib.Data.Finset.Empty
 import FormalConjectures.ForMathlib.Data.Finset.OrdConnected
 import FormalConjectures.ForMathlib.Data.Nat.Factorization.Basic
 import FormalConjectures.ForMathlib.Data.Nat.Full
+import FormalConjectures.ForMathlib.Data.Nat.Init
 import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Composite
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
 import FormalConjectures.ForMathlib.Data.Nat.Prime.Finset
 import FormalConjectures.ForMathlib.Data.Nat.Squarefree
+import FormalConjectures.ForMathlib.Data.Real.Cardinality
 import FormalConjectures.ForMathlib.Data.Real.Constants
 import FormalConjectures.ForMathlib.Data.Set.Bdd
 import FormalConjectures.ForMathlib.Data.Set.Density
 import FormalConjectures.ForMathlib.Data.Set.Triplewise
 import FormalConjectures.ForMathlib.Data.ZMod.PerfectDifferenceSet
 import FormalConjectures.ForMathlib.Geometry.Euclidean
+import FormalConjectures.ForMathlib.Geometry.Metric
 import FormalConjectures.ForMathlib.Geometry.«2d»
 import FormalConjectures.ForMathlib.Geometry.«3d»
 import FormalConjectures.ForMathlib.LinearAlgebra.GeneralLinearGroup
@@ -64,12 +69,15 @@ import FormalConjectures.ForMathlib.NumberTheory.AdditivelyComplete
 import FormalConjectures.ForMathlib.NumberTheory.CoveringSystem
 import FormalConjectures.ForMathlib.NumberTheory.DirichletCharacter.Basic
 import FormalConjectures.ForMathlib.NumberTheory.Lacunary
+import FormalConjectures.ForMathlib.NumberTheory.LegendreSymbol.Basic
 import FormalConjectures.ForMathlib.NumberTheory.PrimeGap
 import FormalConjectures.ForMathlib.NumberTheory.WallSunSunPrimes
 import FormalConjectures.ForMathlib.Order.Filter.Cofinite
 import FormalConjectures.ForMathlib.Order.Filter.atTopBot.Finset
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
 import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
+import FormalConjectures.ForMathlib.SetTheory.Cardinal.Arithmetic
+import FormalConjectures.ForMathlib.SetTheory.Cardinal.Continuum
 import FormalConjectures.ForMathlib.SetTheory.Cardinal.SimpleGraph
 import FormalConjectures.ForMathlib.Test.Computability.TuringMachine
 import FormalConjectures.ForMathlib.Topology.Algebra.InfiniteSum.Group

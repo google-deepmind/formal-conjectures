@@ -81,8 +81,8 @@ theorem erdos_168.parts.i :
 
 /-- Is the limit $F(N)/N$ as $N \to \infty$ irrational? -/
 @[category research open, AMS 5 11]
-theorem erdos_168.parts.ii :
-    Irrational (Filter.atTop.limsup (fun N => (F N / N : ℝ))) ↔ answer(sorry):= by
+theorem erdos_168.parts.ii : answer(sorry) ↔
+    Irrational (Filter.atTop.limsup (fun N => (F N / N : ℝ))) := by
   sorry
 
 /-- The limit $F(N)/N$ as $N \to \infty$ exists. (proved by Graham, Spencer, and Witsenhausen) -/
