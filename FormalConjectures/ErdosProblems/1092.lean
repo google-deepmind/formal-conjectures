@@ -67,7 +67,7 @@ There exists a function `f : ℕ → ℕ → ℕ` such that:
 -/
 
 
-@[category research open, AMS 5]
+@[category API, AMS 5]
 theorem f_nonneg : ∀ r n, 0 ≤ f r n := by
   sorry
 
