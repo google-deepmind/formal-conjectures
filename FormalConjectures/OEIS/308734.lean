@@ -29,6 +29,10 @@ Zhi-Wei Sun has offered a $2,500 prize for the first proof.
 - Z.-W. Sun, "Refining Lagrange's four-square theorem," *J. Number Theory* **175** (2017), 167-190.
   https://doi.org/10.1016/j.jnt.2016.11.008
 - Z.-W. Sun, "Restricted sums of four squares," *Int. J. Number Theory* **15** (2019), 1863-1893.
+- Z.-W. Sun, "Various Refinements of Lagrange's Four-Square Theorem," Westlake Number Theory
+  Symposium, Nanjing University, China, 2020.
+- S. Banerjee, "On a conjecture of Sun about sums of restricted squares," *J. Number Theory*
+  **256** (2024), 253-289.
 -/
 
 namespace OeisA308734
@@ -59,4 +63,3 @@ theorem conjecture (n : ℕ) (hn : 1 < n) : IsSumOfFourSquaresWithPowers n := by
   sorry
 
 end OeisA308734
-
