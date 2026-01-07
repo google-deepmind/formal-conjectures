@@ -48,17 +48,12 @@ theorem IsSidon.add_card {A : Finset ℕ} {n : ℕ} (hn : A.card = n) (hA : IsSi
 
 namespace Erdos153
 
-/-- Suppose `A` is a finite Sidon set of size `n`. We define `s` to be the increasing order
-isomorphism between `Fin (n.choose 2 + n)` and `A + A`. -/
-def s {A : Finset ℕ} {n : ℕ} (hn : A.card = n) (hA : IsSidon A) : Fin ((n + 1).choose 2) → A + A :=
-  (A + A).orderIsoOfFin (hA.add_card hn)
-
 /-- Define `f n` to be the minimum of
-`∑ (i : Set.Ico 1 ((n + 1).choose 2)), (s i - s (i - 1)) ^ 2 / n` as `A` ranges over all Sidon sets
+`∑ (i : Set.Ico 1 ((A + A).card), (s i - s (i - 1)) ^ 2 / n` as `A` ranges over all Sidon sets
 of size `n`, where `s` is an order embedding from `Fin n` into `A`. -/
 noncomputable def f (n : ℕ) : ℝ := ⨅ A : {A : Finset ℕ | A.card = n ∧ IsSidon A},
-  ∑ i : Set.Ico 1 ((n + 1).choose 2),
-  (s A.2.1 A.2.2 ⟨i, i.2.2⟩ - s A.2.1 A.2.2 ⟨i - 1, by grind⟩) ^ 2 / (n : ℝ)
+  ∑ i : Set.Ico 1 ((A.1 + A).card), ((A.1 + A).orderIsoOfFin rfl ⟨i, i.2.2⟩ -
+  (A.1 + A).orderIsoOfFin rfl ⟨i - 1, by grind⟩) ^ 2 / (n : ℝ)
 
 /-- Must `lim f n = ∞`? -/
 @[category research open, AMS 5]
