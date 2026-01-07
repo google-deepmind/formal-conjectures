@@ -42,9 +42,9 @@ def s {A : Finset ℕ} {n : ℕ} (hn : A.card = n) (hA : IsSidon A) : Fin (n.cho
 
 /-- Define `f n` to be the minimum of `∑ (s (i + 1) - s i) ^ 2 / n` as `A`
 ranges over all Sidon sets of size `n`, where `s` is an order embedding from `Fin n` into `A`. -/
-noncomputable def f (n : ℕ+) : ℝ :=
+noncomputable def f (n : ℕ) : ℝ :=
   ⨅ A : {A : Finset ℕ | A.card = n ∧ IsSidon A},
-  ∑ i : Fin (n.1.choose 2 + n - 1),
-  (s A.2.1 A.2.2 (i.succ) - s A.2.1 A.2.2 (i.castSucc)) ^ 2 / (n : ℝ)
+  ∑ i : Set.Ico 1 (n.choose 2 + n),
+  (s A.2.1 A.2.2 sorry - s A.2.1 A.2.2 sorry) ^ 2 / (n : ℝ)
 
 end Erdos153
