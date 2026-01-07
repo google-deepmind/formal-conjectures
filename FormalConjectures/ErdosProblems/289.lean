@@ -32,10 +32,10 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_289 :
+theorem erdos_289 : answer(sorry) ↔
     (∀ᶠ k : ℕ in atTop, ∃ I : Fin k → Finset ℕ,
       (∀ i, 2 ≤ #(I i) ∧ ∃ a b, 0 < a ∧ I i = Finset.Icc a b) ∧
-      ∑ i, ∑ n ∈ I i, (n⁻¹ : ℚ) = 1) ↔ answer(sorry) := by
+      ∑ i, ∑ n ∈ I i, (n⁻¹ : ℚ) = 1) := by
   sorry
 
 end Erdos289

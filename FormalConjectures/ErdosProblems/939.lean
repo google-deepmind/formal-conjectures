@@ -39,7 +39,7 @@ def Erdos939Sums (r : ℕ) :=
 If $r≥4$ then can the sum of $r-2$ coprime $r$-powerful numbers ever be itself $r$-powerful?
 -/
 @[category research open, AMS 11]
-theorem erdos_939 : (∀ r ≥ 4, (Erdos939Sums r).Nonempty) ↔ answer(sorry) := by
+theorem erdos_939 : answer(sorry) ↔ ∀ r ≥ 4, (Erdos939Sums r).Nonempty := by
   sorry
 
 /--
@@ -47,7 +47,7 @@ If $r≥4$ are there infinitely many sums of $r-2$ coprime $r$-powerful numbers
 that are themselves $r$-powerful?
 -/
 @[category research open, AMS 11]
-theorem erdos_939.variants.infinite : (∀ r ≥ 4, (Erdos939Sums r).Infinite) ↔ answer(sorry) := by
+theorem erdos_939.variants.infinite : answer(sorry) ↔ ∀ r ≥ 4, (Erdos939Sums r).Infinite := by
   sorry
 
 /--
@@ -55,9 +55,9 @@ Are there infinitely many triples of coprime $3$-powerful numbers $a, b, c$ such
 -/
 @[category research open, AMS 11]
 theorem erdos_939.variants.triples :
-    {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
+    answer(sorry) ↔ {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
       (3).Full a ∧ (3).Full b ∧ (3).Full c ∧
-      a + b = c}.Infinite ↔ answer(sorry) := by
+      a + b = c}.Infinite := by
   sorry
 
 /--

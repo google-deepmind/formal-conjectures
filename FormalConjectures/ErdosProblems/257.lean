@@ -32,8 +32,8 @@ $$
 irrational?
 -/
 @[category research open, AMS 11]
-theorem erdos_257 : (∀ (A : Set ℕ), A.Infinite →
-    Irrational (∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1))) ↔ answer(sorry) := by
+theorem erdos_257 : answer(sorry) ↔ ∀ (A : Set ℕ), A.Infinite →
+    Irrational (∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1)) := by
   sorry
 
 /--

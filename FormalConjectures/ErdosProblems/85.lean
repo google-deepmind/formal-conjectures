@@ -37,7 +37,7 @@ noncomputable def f (n : ℕ) : ℕ :=
 Is it true that, for all large $n$, $f(n + 1) \ge f(n)$?
 -/
 @[category research open, AMS 5]
-theorem erdos_85 : (∀ᶠ n in atTop, f n ≤ f (n + 1)) ↔ answer(sorry) := by
+theorem erdos_85 : answer(sorry) ↔ ∀ᶠ n in atTop, f n ≤ f (n + 1) := by
   sorry
 
 -- TODO: add connection to Ramsey number, weaker version and implied bounds from additional material.

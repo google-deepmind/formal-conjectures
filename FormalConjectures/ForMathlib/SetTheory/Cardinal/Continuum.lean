@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,21 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.SetTheory.Cardinal.Continuum
 
-import Lake
-open Lake DSL
-
-package formal_conjectures where
-  leanOptions := #[
-    ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`pp.proofs.withType, false⟩,
-    ⟨`autoImplicit, false⟩,
-    ⟨`relaxedAutoImplicit, false⟩
-  ]
-
-@[default_target]
-lean_lib FormalConjectures where
-  roots := #[`FormalConjectures]
-  globs := #[.submodules `FormalConjectures]
-
-require "leanprover-community" / "mathlib" @ git "v4.22.0"
+attribute [simp] Cardinal.continuum_ne_zero
