@@ -33,12 +33,12 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_695 :
-    (∀ {q : ℕ → ℕ},
+theorem erdos_695 : answer(sorry) ↔
+    ∀ {q : ℕ → ℕ},
       StrictMono q →
       (∀ i, (q i).Prime) →
       (∀ i, q (i + 1) % q i = 1) →
-      Tendsto (fun k => (q k : ℝ) ^ (1 / k : ℝ)) atTop atTop) ↔ answer(sorry) := by
+      Tendsto (fun k => (q k : ℝ) ^ (1 / k : ℝ)) atTop atTop := by
   sorry
 
 /--
@@ -48,16 +48,15 @@ q(k) \leq \exp(k (\log k)^{1 + o(1)})?
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_695.variant.upperBound :
-    (∃ q : ℕ → ℕ,
+theorem erdos_695.variant.upperBound : answer(sorry) ↔
+    ∃ q : ℕ → ℕ,
       StrictMono q ∧
       (∀ i, (q i).Prime) ∧
       (∀ i, q (i + 1) % q i = 1) ∧
       ∃ o : ℕ → ℝ,
         (o =o[atTop] (1 : ℕ → ℝ)) ∧
         -- We use `(k + 1)` here as the informal statement is 1-indexed.
-        ∀ k, q k ≤ exp ((k + 1) * (log (k + 1)) ^ (1 + o k))) ↔
-    answer(sorry) := by
+        ∀ k, q k ≤ exp ((k + 1) * log (k + 1) ^ (1 + o k)) := by
   sorry
 
 end Erdos695

@@ -33,12 +33,13 @@ $\log n$.
 -/
 
 @[category research open, AMS 11]
-theorem erdos_1060.bound_one (n : ℕ) :
+theorem erdos_1060.bound_one :
     ∃ h : ℕ → ℝ,
-      h =o[atTop] (fun n ↦ 1 / log (log n)) ∧ #{k ≤ n | k * σ 1 k = n} ≤ (n : ℝ) ^ h n := by sorry
+      h =o[atTop] (fun n ↦ 1 / log (log n)) ∧ ∀ᶠ n in atTop, #{k ≤ n | k * σ 1 k = n} ≤ (n : ℝ) ^ h n := by sorry
 
 @[category research open, AMS 11]
-theorem erdos_1060.bound_two (n : ℕ) :
-    ∃ (C : ℝ), (fun n ↦ (#{k ≤ n | k * σ 1 k = n} : ℝ)) =O[atTop] (fun n ↦ log n ^ C) := by sorry
+theorem erdos_1060.bound_two :
+    ∃ (C : ℝ), (fun n ↦ (#{k ≤ n | k * σ 1 k = n} : ℝ)) =O[atTop]
+      (fun n ↦ log n ^ C) := by sorry
 
 end Erdos1060

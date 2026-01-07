@@ -36,9 +36,8 @@ Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all 
 Must $B$ have a logarithmic density?
 -/
 @[category research open, AMS 11]
-theorem erdos_486 :
-    (∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d)
-    ↔ answer(sorry) := by
+theorem erdos_486 : answer(sorry) ↔
+    ∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d := by
   sorry
 
 end Erdos486

@@ -74,16 +74,16 @@ noncomputable def f (n : ℕ) : ℕ := sSup <| possible_f_values n
 Is it true that $f(n)\leq n^{o(1)}$?
 -/
 @[category research open, AMS 52]
-theorem erdos_92.variants.weak : (∃ o : ℕ → ℝ,
-  o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ n, (f n : ℝ) ≤ n^(o n)) ↔ answer(sorry) := by
+theorem erdos_92.variants.weak : answer(sorry) ↔ ∃ o : ℕ → ℝ,
+  o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ n, (f n : ℝ) ≤ n^(o n) := by
 sorry
 
 /--
 Or even $f(n) < n^{c/\log\log n}$ for some constant $c > 0$?
 -/
 @[category research open, AMS 52]
-theorem erdos_92.variants.strong :
-  (∃ c > 0, ∀ n, (f n : ℝ) ≤ n^(c / (n : ℝ).log.log)) ↔ answer(sorry) := by
+theorem erdos_92.variants.strong : answer(sorry) ↔
+    ∃ c > 0, ∀ n, (f n : ℝ) ≤ n^(c / (n : ℝ).log.log) := by
 sorry
 
 -- TODO(firsching): formalize the rest of the remarks

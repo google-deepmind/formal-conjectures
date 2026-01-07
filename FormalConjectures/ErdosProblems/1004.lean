@@ -32,8 +32,8 @@ This is an open problem.
 -/
 @[category research open, AMS 11]
 theorem erdos_1004 :
-    (∀ c > (0 : ℝ), ∀ᶠ x in atTop, ∃ n ≤ x,
-      IsDistinctTotientRun n ⌊(Real.log (x : ℝ)) ^ c⌋₊) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ c > (0 : ℝ), ∀ᶠ x in atTop, ∃ n ≤ x,
+      IsDistinctTotientRun n ⌊(Real.log (x : ℝ)) ^ c⌋₊ := by
   sorry
 
 /--
@@ -43,10 +43,9 @@ Here we state the existence of such a constant c.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1004.EPS87_theorem :
-    (∃ (c : ℝ) (hc : c > 0),
+    answer(True) ↔ ∃ (c : ℝ) (hc : c > 0),
       ∀ (n K : ℕ), n > 0 → IsDistinctTotientRun n K →
-        (K : ℝ) ≤ (n : ℝ) / Real.exp (c * (Real.log n) ^ (1/3 : ℝ))) ↔
-      answer(True) := by
+        (K : ℝ) ≤ (n : ℝ) / Real.exp (c * (Real.log n) ^ (1/3 : ℝ)) := by
   sorry
 
 end Erdos1004
