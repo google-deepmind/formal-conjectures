@@ -31,7 +31,7 @@ $$ R_3(n) \geq 2^{2^{cn}}? $$
 
 namespace Erdos564
 
-open Combinatorics Real
+open Combinatorics Real Filter
 
 /--
 **Erdős Problem 564**
@@ -45,7 +45,7 @@ $$ R_3(n) \geq 2^{2^{cn}}? $$
 -/
 @[category research open, AMS 05]
 theorem erdos_564 : answer(sorry) ↔
-    ∃ c > 0, ∀ n, (2 : ℝ)^(2 : ℝ)^(c * n) ≤ hypergraphRamsey 3 n := by
+    ∃ c > 0, ∀ᶠ n in atTop, (2 : ℝ)^(2 : ℝ)^(c * n) ≤ hypergraphRamsey 3 n := by
   sorry
 
 end Erdos564
