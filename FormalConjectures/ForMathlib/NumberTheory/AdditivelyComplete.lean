@@ -70,14 +70,14 @@ theorem IsAddStronglyCompleteNatSeq.isAddComplete {A : ℕ → M}
 
 open Classical in
 /-- If the range of a sequence `A` is strongly complete, then `A` is strongly complete. -/
-theorem IsAddStronglyComplete.isAddStronglyCompleteNatSeq {A : ℕ → M}
+theorem IsAddStronglyCompleteNatSeq.of_isAddStronglyComplete {A : ℕ → M}
     (h : IsAddStronglyComplete (.range A)) : IsAddStronglyCompleteNatSeq A :=
   fun n => (h (Finset.finite_toSet _)).mono (A := .range A \ ((Finset.range n).image A))
     (fun _ ⟨⟨y, hy⟩, q⟩ => ⟨y - n, by grind⟩)
 
 /-- If `A` is strongly complete and the preimage of each element is finite, then the range of `A`
-is strongly complete.-/
-theorem IsAddStronglyCompleteNatSeq.isAddStronglyComplete  {A : ℕ → M}
+is strongly complete. -/
+theorem IsAddStronglyCompleteNatSeq.isAddStronglyComplete {A : ℕ → M}
     (h : IsAddStronglyCompleteNatSeq A) (hA : ∀ m, (A ⁻¹' {m}).Finite) :
     IsAddStronglyComplete (.range A) := by
   refine fun B hB => ?_
