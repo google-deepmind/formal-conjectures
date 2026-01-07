@@ -70,20 +70,30 @@ There exists a function `f : ℕ → ℕ → ℕ` such that:
 * Moreover, `(fun n => n) =o[atTop] (fun n => f 2 n)`.
 * More generally, `∀ r, (fun n => r * n) =o[atTop] (fun n => f r n)`.
 -/
+
+
 @[category research open, AMS 5]
-theorem erdos_1092 :
-  ((∀ r n, 0 ≤ f r n) ∧
-    (∀ (r : ℕ) (n : ℕ),
-      ∀ G : SimpleGraph (Fin n),
-        (∀ H : Subgraph G,
-          let m := H.verts.toFinset.card
-          ∃ H₁ H₂ : Subgraph H.coe,
-            chromaticNumber H₁.coe ≤ (r : ℕ∞) ∧
-            H₂.edgeSet.toFinset.card ≤ f r m) →
-        chromaticNumber G ≤ (r + 1 : ℕ∞)) ∧
-    (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) ∧
-    (∀ (r : ℕ), (fun (n : ℕ) => (r * n : ℝ)) =o[atTop] (fun (n : ℕ) => (f r n : ℝ))))
-  ↔ answer(sorry) := by
+theorem f_nonneg : ∀ r n, 0 ≤ f r n := by
+  sorry
+
+@[category research open, AMS 5]
+theorem f_decomposition_property (r n : ℕ) (G : SimpleGraph (Fin n)) :
+  (∀ H : Subgraph G,
+    let m := H.verts.toFinset.card
+    ∃ H₁ H₂ : Subgraph H.coe,
+      chromaticNumber H₁.coe ≤ (r : ℕ∞) ∧
+      H₂.edgeSet.toFinset.card ≤ f r m) →
+  chromaticNumber G ≤ (r + 1 : ℕ∞) := by
+  sorry
+
+@[category research open, AMS 5]
+theorem f_asymptotic_2 :
+  (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
+  sorry
+
+@[category research open, AMS 5]
+theorem f_asymptotic_general : ∀ (r : ℕ),
+  (fun (n : ℕ) => (r * n : ℝ)) =o[atTop] (fun (n : ℕ) => (f r n : ℝ)) := by
   sorry
 
 end Erdos1092
