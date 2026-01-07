@@ -40,11 +40,9 @@ theorem erdos_477 : answer(sorry) ↔
   sorry
 
 /--
-Let $f = X ^ 2$ be a polynomial of degree at least $2$. Then there is no set
-$A$ such that every $z\in \mathbb{Z}$ has exactly one representation as
-$z=a+f(n)$ for some $a\in A$ and $n > 0$
+There is no such $A$ for the polynomial $f(x) = X^2$.
 
-This is shown in [Sek59]
+This is shown in [Sek59].
 -/
 @[category research solved, AMS 12]
 theorem erdos_477.S_sq :
@@ -58,17 +56,9 @@ with $a \ne 0$ and $b \ne 0.
 This was found be AlphaProof for the specific instance $X^2 - X + 1$ and then generalised.
  -/
 @[category research solved, AMS 12]
-theorem erdos_477.degree_two_dvd_condition_b_ne_zero (a b c : ℤ) (ha : a ≠ 0) (hb : b ≠ 0)
+theorem erdos_477.degree_two_dvd_condition_b_ne_zero {a b c : ℤ} (ha : a ≠ 0) (hb : b ≠ 0)
     (hab : a ∣ b) :
     let f := a • X ^ 2 + b • X + C c
-    ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
-  sorry
-
-/--
-Probably there is no such $A$ for any polynomial $f$ of degree $2$.
--/
-@[category research open, AMS 12]
-theorem erdos_477.variants.degree_eq_two (f : ℤ[X]) (hf₀ : 2 = f.degree) :
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
   sorry
 
@@ -82,7 +72,7 @@ theorem erdos_477.X_pow_three :
   sorry
 
 /--
-Probably there is no such $A$ for the polynomial $X^k$ for any $k \ge 0$. This is asked in [Sek59].
+Probably there is no such $A$ for the polynomial $X^k$ for any $k \ge 2$. This is asked in [Sek59].
 -/
 @[category research open, AMS 12]
 theorem erdos_477.monomial (k : ℕ) (hk : 2 ≤ k) :
