@@ -147,7 +147,6 @@ theorem erdos_409.variants.sigma.parts.i.isLittleO (c : ℕ → ℕ)
   sorry
 
 /--
-As pointed out by Terry Tao in a comment, is seems the right question is:
 Is it true that iterates of $n\mapsto\sigma(n) - 1$ always reach a prime?
 -/
 @[category research open, AMS 11]
