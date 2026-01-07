@@ -47,8 +47,8 @@ infinitely connected?
 -/
 @[category research open, AMS 5]
 theorem erdos_1068 :
-  (∀ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = aleph 1 →
-    ∃ (s : Set V), s.Countable ∧ InfinitelyConnected (G.induce s)) ↔ answer(sorry) := by
+  answer(sorry) ↔ ∀ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = aleph 1 →
+    ∃ (s : Set V), s.Countable ∧ InfinitelyConnected (G.induce s) := by
   sorry
 
 end Erdos1068
