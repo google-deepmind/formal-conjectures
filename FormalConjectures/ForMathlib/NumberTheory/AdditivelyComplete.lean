@@ -43,7 +43,7 @@ def IsAddComplete (A : Set M) : Prop :=
 
 /-- If `A ⊆ B` and `A` is complete, then `B` is also complete. -/
 @[gcongr]
-theorem isAddComplete_mono {A B : Set M} (h : A ⊆ B) (ha : IsAddComplete A) : IsAddComplete B := by
+theorem IsAddComplete.mono {A B : Set M} (h : A ⊆ B) (ha : IsAddComplete A) : IsAddComplete B := by
   filter_upwards [ha] with x hx
   exact (subsetSums_mono h) hx
 
@@ -56,8 +56,8 @@ theorem IsAddStronglyComplete.isAddComplete {A : Set M} (hA : IsAddStronglyCompl
     IsAddComplete A := by simpa using hA Set.finite_empty
 
 /-- If `A ⊆ B` and `A` is strongly complete, then `B` is also strongly complete. -/
-theorem isAddStronglyComplete_mono {A B : Set M} (h : A ⊆ B) (ha : IsAddStronglyComplete A) :
-    IsAddStronglyComplete B := fun C hC => isAddComplete_mono (by grind) (ha hC)
+theorem IsAddStronglyComplete.mono {A B : Set M} (h : A ⊆ B) (ha : IsAddStronglyComplete A) :
+    IsAddStronglyComplete B := fun C hC => (ha hC).mono (by grind)
 
 /-- A sequence `A` is strongly complete if `fun m => A (n + m)` is still complete for all `n`. -/
 def IsAddStronglyCompleteNatSeq (A : ℕ → M) : Prop :=
@@ -72,18 +72,18 @@ open Classical in
 /-- If the range of a sequence `A` is strongly complete, then `A` is strongly complete. -/
 theorem IsAddStronglyComplete.isAddStronglyCompleteNatSeq {A : ℕ → M}
     (h : IsAddStronglyComplete (.range A)) : IsAddStronglyCompleteNatSeq A :=
-  fun n => (isAddComplete_mono (A := .range A \ ((Finset.range n).image A)) (fun _ ⟨⟨y, hy⟩, q⟩ =>
-    ⟨y - n, by grind⟩) (h (Finset.finite_toSet _)))
+  fun n => (h (Finset.finite_toSet _)).mono (A := .range A \ ((Finset.range n).image A))
+    (fun _ ⟨⟨y, hy⟩, q⟩ => ⟨y - n, by grind⟩)
 
 /-- If `A` is strongly complete and the preimage of each element is finite, then the range of `A`
 is strongly complete.-/
 theorem IsAddStronglyCompleteNatSeq.isAddStronglyComplete  {A : ℕ → M}
-    (h : IsAddStronglyCompleteNatSeq A) (hA : ∀ m, (A ⁻¹' {m}).Finite):
+    (h : IsAddStronglyCompleteNatSeq A) (hA : ∀ m, (A ⁻¹' {m}).Finite) :
     IsAddStronglyComplete (.range A) := by
   refine fun B hB => ?_
   obtain ⟨n, hn⟩ := Finset.exists_nat_subset_range (hB.preimage' (fun b _ => hA b)).toFinset
   rw [Set.Finite.toFinset_subset, Finset.coe_range] at hn
-  refine isAddComplete_mono ?_ (h (n + 1))
+  refine (h (n + 1)).mono ?_
   refine fun x ⟨y, hy⟩ => ⟨⟨n + 1 + y, hy⟩, fun hx => ?_⟩
   have : n + 1 + y ∈ Set.Iio n := by grind
   grind
