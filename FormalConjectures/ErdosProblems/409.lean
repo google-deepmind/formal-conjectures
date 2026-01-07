@@ -147,20 +147,12 @@ theorem erdos_409.variants.sigma.parts.i.isLittleO (c : ℕ → ℕ)
   sorry
 
 /--
-Can infinitely many $n$ reach the same prime under the iteration $n\mapsto\sigma(n) - 1$?
+As pointed out by Terry Tao in a comment, is seems the right question is:
+Is it true that iterates of $n\mapsto\sigma(n) - 1$ always reach a prime?
 -/
 @[category research open, AMS 11]
 theorem erdos_409.variants.sigma.parts.ii :
-    answer(sorry) ↔ ∃ (p : ℕ) (hp : p.Prime), { n | ∃ i, (σ 1 · - 1)^[i] n = p }.Infinite := by
-  sorry
-
-/--
-What is the density of $n$ which reach any fixed prime under the iteration $n\mapsto\sigma(n) - 1$?
--/
-@[category research open, AMS 11]
-theorem erdos_409.variants.sigma.parts.iii (p : ℕ) (h : p.Prime) (α : ℝ)
-    (hα : { n | ∃ i, (σ 1 · - 1)^[i] n = p }.HasDensity α) :
-    α = answer(sorry) := by
+    answer(sorry) ↔ (∀ n > 1, ∃ i, (σ 1 · - 1)^[i] n |>.Prime)  := by
   sorry
 
 end Erdos409
