@@ -49,7 +49,7 @@ The density `dₜ` of `DivisorSumSet (t : ℕ)` is assymptotically equivalent to
 for some positive constants `c₁` and `c₂`.
 -/
 @[category research open, AMS 11]
-theorem erdos_859 (t : ℕ) : ∃ c₁ > 0, ∃ c₂ > 0, ∃ dₜ : ℝ, ((DivisorSumSet t).HasDensity dₜ) ∧
+theorem erdos_859 (t : ℕ) (ht : 1 ≤ t) : ∃ c₁ > 0, ∃ c₂ > 0, ∃ dₜ : ℝ, ((DivisorSumSet t).HasDensity dₜ) ∧
     (fun (t : ℕ) ↦ dₜ) ~[atTop] (fun t ↦ c₁ / (Real.log t)^c₂ ) := by
   sorry
 
