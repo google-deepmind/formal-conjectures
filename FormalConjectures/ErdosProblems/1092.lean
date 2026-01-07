@@ -41,8 +41,7 @@ open Filter
 
 /--
 $f_r(n)$ is maximal such that, if a graph $G$ has the property that every subgraph $H$ on $m$
-vertices is the union of a graph with chromatic number $r$ and a graph with $\leq f_r(m)$ edges,
-then $G$ has chromatic number $\leq r+1$.
+vertices has chromatic number $\leq r+1$ once we remove $f_r(m)$ edges from it.
 -/
 noncomputable def f : ℕ → ℕ → ℕ :=
   sSup {g : ℕ → ℕ → ℕ |
