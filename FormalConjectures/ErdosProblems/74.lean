@@ -97,7 +97,6 @@ theorem SimpleGraph.subgraphEdgeDistsToBipartite_bddAbove (G : SimpleGraph V) (n
   use fun _ => 0
   simp
 
-
 /--
 For a given graph $G$ and size $n$, this defines the smallest number $k$
 such that any subgraph of $G$ on $n$ vertices can be made bipartite by deleting
