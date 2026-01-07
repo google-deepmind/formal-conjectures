@@ -88,7 +88,7 @@ theorem isSumOfThreeCubesRat_any (r : ℚ) : IsSumOfThreeCubes r := by
 `n` is not `4` or `5` mod `9`. -/
 @[category research open, AMS 11]
 theorem isSumOfThreeCubes_iff_mod_9 :
-    (∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9])) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9]) := by
   sorry
 
 end SumOfThreeCubes

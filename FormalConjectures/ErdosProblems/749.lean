@@ -31,9 +31,9 @@ such that the lower density of $A+A$ is at least $1-\epsilon$
 and yet $1_A\ast 1_A(n) \ll_\epsilon 1$ for all $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_749 : (∀ᵉ (ε > (0 : ℝ)),
+theorem erdos_749 : answer(sorry) ↔ ∀ ε > (0 : ℝ),
     ∃ A : Set ℕ, 1 - ε ≤ lowerDensity (A + A) ∧
-    ((Nat.cast (R := ℝ) ∘ sumRep A) ≪ (fun n => (1: ℝ)))) ↔ answer(sorry) := by
+    ((Nat.cast (R := ℝ) ∘ sumRep A) ≪ (fun n => (1: ℝ))) := by
   sorry
 
 

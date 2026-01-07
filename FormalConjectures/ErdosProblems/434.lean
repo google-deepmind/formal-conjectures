@@ -60,10 +60,10 @@ does $A = \{n, n - 1, \dots, n - k + 1\}$ maximise the number of integers
 not representable as the sum of finitely many elements from $A$ (with repetitions allowed)?
 -/
 @[category research open, AMS 11]
-theorem erdos_434.parts.ii : (∀ᵉ (n ≥ 1) (k ≥ 1), k ≤ n →
+theorem erdos_434.parts.ii : answer(sorry) ↔ ∀ᵉ (n ≥ 1) (k ≥ 1), k ≤ n →
     IsGreatest
       { Nat.NcardUnrepresentable S | (S : Set ℕ) (_ : S ⊆ Set.Icc 1 n) (_ : S.ncard = k) }
-      (Nat.NcardUnrepresentable <| Set.Icc (n - k + 1 : ℕ) n)) ↔ answer(sorry) := by
+      (Nat.NcardUnrepresentable <| Set.Icc (n - k + 1 : ℕ) n) := by
   sorry
 
 end Erdos434

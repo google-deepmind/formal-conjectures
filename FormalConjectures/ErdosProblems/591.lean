@@ -33,7 +33,7 @@ Let $α$ be the infinite ordinal $\omega^{\omega^2}$. Is it true that any red/bl
 edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
 @[category research open, AMS 3]
-theorem erdos_591 : OrdinalCardinalRamsey (ω ^ ω ^ 2) (ω ^ ω ^ 2) 3 ↔ answer(sorry) := by
+theorem erdos_591 : answer(sorry) ↔ OrdinalCardinalRamsey (ω ^ ω ^ 2) (ω ^ ω ^ 2) 3 := by
   sorry
 
 end Erdos591

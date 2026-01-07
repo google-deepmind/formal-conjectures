@@ -43,7 +43,7 @@ local instance (X : TopologicalSpace.Opens S) :
     ((Opens.grothendieckTopology S).over X)
 
 local instance (X : TopologicalSpace.Opens S) :
-    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}):=
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}) :=
   inferInstance
 
 /--

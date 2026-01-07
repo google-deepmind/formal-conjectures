@@ -31,36 +31,33 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_288 : Set.Finite { I : Fin 2 → ℕ+ × ℕ+ |
-      ∃ n : ℕ+, (∑ j : Fin 2, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } ↔
-    answer(sorry) := by
+theorem erdos_288 : answer(sorry) ↔ Set.Finite { I : Fin 2 → ℕ+ × ℕ+ |
+    ∃ n : ℕ+, (∑ j : Fin 2, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } := by
   sorry
 
 /--
 This is still open even if $|I_2| = 1$.
 -/
 @[category research open, AMS 11]
-theorem erdos_288.variants.i2_card_eq_1 : Set.Finite { (I, n₂) : (ℕ+ × ℕ+) × ℕ+ |
-      ∃ n : ℕ+, ∑ n₁ ∈ Set.Icc I.1 I.2, (n₁⁻¹ : ℚ) + (n₂⁻¹ : ℚ) = n } ↔
-    answer(sorry) := by
+theorem erdos_288.variants.i2_card_eq_1 : answer(sorry) ↔ Set.Finite { (I, n₂) : (ℕ+ × ℕ+) × ℕ+ |
+    ∃ n : ℕ+, ∑ n₁ ∈ Set.Icc I.1 I.2, (n₁⁻¹ : ℚ) + (n₂⁻¹ : ℚ) = n } := by
   sorry
 
 /--
 It is perhaps true with two intervals replaced by any $k$ intervals.
 -/
 @[category research open, AMS 11]
-theorem erdos_288.variants.k_intervals : ∀ k, Set.Finite { I : Fin k → ℕ+ × ℕ+ |
-      ∃ n : ℕ+, (∑ j : Fin k, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } ↔
-    answer(sorry) := by
+theorem erdos_288.variants.k_intervals : answer(sorry) ↔ ∀ k, Set.Finite { I : Fin k → ℕ+ × ℕ+ |
+    ∃ n : ℕ+, (∑ j : Fin k, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } := by
   sorry
 
 /--
 Is it true for any $k > 2$ that only finitely many $k$ intervals satisfy this condition?
 -/
 @[category research open, AMS 11]
-theorem erdos_288.variants.exists_k_gt_2 : ∃ k > 2, Set.Finite { I : Fin k → ℕ+ × ℕ+ |
-      ∃ n : ℕ+, (∑ j : Fin k, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } ↔
-    answer(sorry) := by
+theorem erdos_288.variants.exists_k_gt_2 : answer(sorry) ↔
+    ∃ k > 2, Set.Finite { I : Fin k → ℕ+ × ℕ+ |
+    ∃ n : ℕ+, (∑ j : Fin k, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } := by
   sorry
 
 end Erdos288
