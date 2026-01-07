@@ -18,6 +18,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 153
 
+#TODO: Formalize the corresponding conjecture for infinite Sidon sets.
+
 *References:*
  - [erdosproblems.com/153](https://www.erdosproblems.com/153)
  - [ESS94] Erdős, P. and Sárközy, A. and Sós, T., On Sum Sets of Sidon Sets, I. Journal of Number
@@ -25,26 +27,31 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open scoped Pointwise
-open Filter Finset
+open Filter Finset Nat
 
-/-- Suppose `A` is a finite Sidon set of size `n`. Then `(A + A).card = n.choose 2 + n`. -/
+/-- Suppose `A` is a finite Sidon set of size `n`. Then `(A + A).card = (n + 1).choose 2`. -/
 @[category API, AMS 5]
 theorem IsSidon.add_card {A : Finset ℕ} {n : ℕ} (hn : A.card = n) (hA : IsSidon A) :
-    (A + A).card = n.choose 2 + n := by
+    (A + A).card = (n + 1).choose 2 := by
   sorry
 
 namespace Erdos153
 
 /-- Suppose `A` is a finite Sidon set of size `n`. We define `s` to be the increasing order
 isomorphism between `Fin (n.choose 2 + n)` and `A + A`. -/
-def s {A : Finset ℕ} {n : ℕ} (hn : A.card = n) (hA : IsSidon A) : Fin (n.choose 2 + n) → A + A :=
+def s {A : Finset ℕ} {n : ℕ} (hn : A.card = n) (hA : IsSidon A) : Fin ((n + 1).choose 2) → A + A :=
   (A + A).orderIsoOfFin (hA.add_card hn)
 
-/-- Define `f n` to be the minimum of `∑ (s (i + 1) - s i) ^ 2 / n` as `A`
-ranges over all Sidon sets of size `n`, where `s` is an order embedding from `Fin n` into `A`. -/
-noncomputable def f (n : ℕ) : ℝ :=
-  ⨅ A : {A : Finset ℕ | A.card = n ∧ IsSidon A},
-  ∑ i : Set.Ico 1 (n.choose 2 + n),
-  (s A.2.1 A.2.2 sorry - s A.2.1 A.2.2 sorry) ^ 2 / (n : ℝ)
+/-- Define `f n` to be the minimum of
+`∑ (i : Set.Ico 1 ((n + 1).choose 2)), (s i - s (i - 1)) ^ 2 / n` as `A` ranges over all Sidon sets
+of size `n`, where `s` is an order embedding from `Fin n` into `A`. -/
+noncomputable def f (n : ℕ) : ℝ := ⨅ A : {A : Finset ℕ | A.card = n ∧ IsSidon A},
+  ∑ i : Set.Ico 1 ((n + 1).choose 2),
+  (s A.2.1 A.2.2 ⟨i, i.2.2⟩ - s A.2.1 A.2.2 ⟨i - 1, by grind⟩) ^ 2 / (n : ℝ)
+
+/-- Must `lim f n = ∞`? -/
+@[category research open, AMS 5]
+theorem erdos_153 : answer(sorry) ↔ Tendsto f atTop atTop := by
+  sorry
 
 end Erdos153
