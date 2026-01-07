@@ -45,8 +45,9 @@ open Asymptotics
 open Filter
 
 /--
-The function `f : ℕ → ℕ → ℕ` with the Erdős 1092 properties.
-Defined as the supremum over all functions satisfying the chromatic number decomposition property.
+$f_r(n)$ is maximal such that, if a graph $G$ has the property that every subgraph $H$ on $m$
+vertices is the union of a graph with chromatic number $r$ and a graph with $\leq f_r(m)$ edges,
+then $G$ has chromatic number $\leq r+1$.
 -/
 noncomputable def f : ℕ → ℕ → ℕ :=
   sSup {g : ℕ → ℕ → ℕ |
