@@ -43,41 +43,18 @@ open Filter
 $f_r(n)$ is maximal such that, if a graph $G$ has the property that every subgraph $H$ on $m$
 vertices has chromatic number $\leq r+1$ once we remove $f_r(m)$ edges from it.
 -/
-noncomputable def f : ℕ → ℕ → ℕ :=
-  sSup {g : ℕ → ℕ → ℕ |
-    ∀ (r : ℕ) (n : ℕ),
-      ∀ G : SimpleGraph (Fin n),
-        (∀ H : Subgraph G,
-          let m := H.verts.toFinset.card
-          ∃ H₁ H₂ : Subgraph H.coe,
-            chromaticNumber H₁.coe ≤ (r : ℕ∞) ∧
-            H₂.edgeSet.toFinset.card ≤ g r m) →
-        chromaticNumber G ≤ (r + 1 : ℕ∞)}
-
-/--
-Erdős Problem 1092 (open).
-
-There exists a function `f : ℕ → ℕ → ℕ` such that:
-* If every subgraph of a graph `G` can be decomposed into an `r`-colorable part
-  and a sparse remainder with at most `f r m` edges,
-  then `G` has chromatic number at most `r + 1`.
-* Moreover, `(fun n => n) =o[atTop] (fun n => f 2 n)`.
-* More generally, `∀ r, (fun n => r * n) =o[atTop] (fun n => f r n)`.
--/
-
+noncomputable def f (r n : ℕ) : ℕ :=
+  sSup {k : ℕ |
+    ∀ G : SimpleGraph (Fin n),
+      (∀ H : Subgraph G,
+        let m := H.verts.toFinset.card
+        ∃ E : Finset (Sym2 H.verts),
+          E.card ≤ k ∧
+          chromaticNumber (H.coe.deleteEdges E) ≤ (r + 1 : ℕ∞)) →
+      chromaticNumber G ≤ (r + 1 : ℕ∞)}
 
 @[category API, AMS 5]
 theorem f_nonneg : ∀ r n, 0 ≤ f r n := by
-  sorry
-
-@[category research open, AMS 5]
-theorem f_decomposition_property (r n : ℕ) (G : SimpleGraph (Fin n)) :
-  (∀ H : Subgraph G,
-    let m := H.verts.toFinset.card
-    ∃ H₁ H₂ : Subgraph H.coe,
-      chromaticNumber H₁.coe ≤ (r : ℕ∞) ∧
-      H₂.edgeSet.toFinset.card ≤ f r m) →
-  chromaticNumber G ≤ (r + 1 : ℕ∞) := by
   sorry
 
 @[category research open, AMS 5]
