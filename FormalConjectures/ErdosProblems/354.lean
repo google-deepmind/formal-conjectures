@@ -45,7 +45,7 @@ theorem erdos_354.parts.i : answer(sorry) ↔ ∀ᵉ (α > 0) (β > 0), Irration
 \[\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
 \{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}\] complete? -/
 @[category research open, AMS 11]
-theorem erdos_354.parts.ii : answer(sorry) ↔ ∃ γ ∈ Set.Ioo 1 2, ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
+theorem erdos_354.parts.ii : answer(sorry) ↔ ∃ γ ∈ Set.Ioo (1 : ℝ) 2, ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
     IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2) := by
   sorry
 
