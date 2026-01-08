@@ -46,7 +46,7 @@ noncomputable def sizeRamsey {α β : Type*} [Fintype α] [Fintype β]
   sInf { m | ∃ (n : ℕ) (F : SimpleGraph (Fin n)),
     F.edgeSet.ncard = m ∧
     ∀ (R : SimpleGraph (Fin n)), R ≤ F →
-      G.IsContained R ∨ H.IsContained (F.deleteEdges R.edgeSet) }
+      G.IsContained R ∨ H.IsContained (F \ R) }
 
 /--
 **Erdős Problem 566**
