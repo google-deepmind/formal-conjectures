@@ -54,10 +54,6 @@ noncomputable def f (r n : ℕ) : ℕ :=
           chromaticNumber (H.coe.deleteEdges E) ≤ (r + 1 : ℕ∞)) →
       chromaticNumber G ≤ (r + 1 : ℕ∞)}
 
-@[category API, AMS 5]
-theorem f_nonneg : ∀ r n, 0 ≤ f r n := by
-  sorry
-
 @[category research open, AMS 5]
 theorem f_asymptotic_2 : answer(sorry) ↔
   (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
