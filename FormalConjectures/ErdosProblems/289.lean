@@ -34,7 +34,8 @@ $$
 @[category research open, AMS 11]
 theorem erdos_289 : answer(sorry) ↔
     (∀ᶠ k : ℕ in atTop, ∃ I : Fin k → Finset ℕ,
-      (∀ i, 2 ≤ #(I i) ∧ ∃ a b, 0 < a ∧ I i = Finset.Icc a b) ∧
+      (∀ i, 2 ≤ #(I i) ∧ ∃ a b, I i = Finset.Icc a b) ∧
+      (∀ i j, i ≠ j → ∀ x ∈ I i, ∀ y ∈ I j, x + 1 < y ∨ y + 1 < x) ∧
       ∑ i, ∑ n ∈ I i, (n⁻¹ : ℚ) = 1) := by
   sorry
 
