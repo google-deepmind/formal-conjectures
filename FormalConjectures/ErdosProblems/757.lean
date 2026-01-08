@@ -30,25 +30,25 @@ open Filter
 
 namespace Erdos757
 
-/-- We say that `c` is admissible if for any finite Sidon set `A` such that for any subset `B`
-of size `4`, `(B - B).card = 11`, there exists a Sidon subset `S` of size at least `c * A.ncard`. -/
-def admissible (c : ℝ) : Prop := ∀ {A : Set ℝ}, A.Finite → (∀ B ⊆ A,
+/-- We say that `c` is admissible if for any finit set `A` such that for any subset `B` of size `4`,
+`(B - B).card = 11`, there exists a Sidon subset `S` of size at least `c * A.ncard`. -/
+def IsAdmissible (c : ℝ) : Prop := ∀ {A : Set ℝ}, A.Finite → (∀ B ⊆ A,
   B.ncard = 4 → (B - B).ncard = 11) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)
 
-/-- What is the infimum of the set of admissble numbers? -/
+/-- What is the supremum of the set of admissible numbers? -/
 @[category research open, AMS 5]
 theorem erdos_757 {A : Set ℝ} :
-    answer(sorry) = sInf {c | admissible c} := by
+    answer(sorry) = sSup {c | IsAdmissible c} := by
   sorry
 
-/-- The infimum is strictly larger than `1 / 2`, which is proved in [GyLe95]. -/
+/-- The supremum is strictly larger than `1 / 2`, which is proved in [GyLe95]. -/
 @[category research solved, AMS 5]
-theorem erdos_757.lowerBound {A : Set ℝ} : 1 / (2 : ℝ) < sInf {c | admissible c} := by
+theorem erdos_757.lowerBound {A : Set ℝ} : 1 / (2 : ℝ) < sSup {c | IsAdmissible c} := by
   sorry
 
-/-- In [GyLe95], the authors also prove that the infimum is smaller than `3 / 5`. -/
+/-- In [GyLe95], the authors also prove that the supremum is smaller than `3 / 5`. -/
 @[category research solved, AMS 5]
-theorem erdos_757.upperBound {A : Set ℝ} : sInf {c | admissible c} < 3 / (5 : ℝ) := by
+theorem erdos_757.upperBound {A : Set ℝ} : sSup {c | IsAdmissible c} < 3 / (5 : ℝ) := by
   sorry
 
 end Erdos757
