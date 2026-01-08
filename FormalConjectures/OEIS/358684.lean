@@ -28,12 +28,14 @@ $n$-th Fermat number exceeds $2^(2^n - k)$.
 open Nat
 
 /--
-A358684: $a(n)$ is the minimum integer $k$ such that the smallest prime factor of the $n$-th Fermat number exceeds $2^{2^n - k}$.
+A358684: $a(n)$ is the minimum integer $k$ such that the smallest prime factor of the $n$-th Fermat
+number exceeds $2^{2^n - k}$.
 Let $F_n = 2^{2^n} + 1$ be the $n$-th Fermat number, and $P_n$ be its smallest prime factor.
 The definition of $a(n)$ is equivalent to the closed form:
 $$a(n) = 2^n - \lfloor \log_2(P_n) \rfloor$$
 where $P_n = \operatorname{minFac}(\operatorname{fermatNumber} n)$.
-The subtraction is defined in $\mathbb{N}$ and is safe since $P_n \le F_n$, implying $\log_2 P_n < 2^n$.
+The subtraction is defined in $\mathbb{N}$ and is safe
+ since $P_n \le F_n$, implying $\log_2 P_n < 2^n$.
 -/
 def a (n : ℕ) : ℕ :=
   let pn := minFac (fermatNumber n)
@@ -45,11 +47,9 @@ We use `Nat.find` which returns the smallest natural number satisfying a predica
 -/
 noncomputable def a' (n : ℕ) : ℕ :=
   let Pn := minFac (fermatNumber n)
-  Nat.find (show ∃ k, Pn > 2^(2^n - k) from by
-    -- Existence proof: k = 2^n is a valid witness.
+  Nat.find (show ∃ k, Pn > 2 ^ (2 ^ n - k) from by
     use 2^n
     simp only [tsub_self, pow_zero]
-    -- We need to show Pn > 1. Since Pn is a prime factor, Pn ≥ 2.
     simp [Pn]
     unfold Nat.fermatNumber
     exact (Nat.minFac_prime (by norm_num)).one_lt
@@ -60,14 +60,7 @@ The minimization definition is equivalent to the closed form.
 -/
 @[category API, AMS 11]
 theorem a_equiv_a' (n : ℕ) : a n = a' n := by
-  delta a' and a
-  simp_rw [comm.trans (Nat.find_eq_iff _),]
-  use(Nat.sub_sub_self ?_).symm▸((Nat.log2_self_le) ?_).lt_of_ne fun and=>? _, fun and=>asymm.comp (Nat.lt_log2_self).trans_le ∘pow_le_pow_right' (by decide) ∘by valid
-  · delta Nat.fermatNumber
-    exact (Nat.log2_eq_log_two▸Nat.le_of_lt_succ ((2).log_lt_of_lt_pow (Nat.minFac_pos _).ne' ((Nat.minFac_le (by bound)).trans_lt (by simp_all[pow_add, mul_two]))))
-  · exact (Nat.minFac_pos _).ne'
-  · simp_rw [Nat.fermatNumber]at*
-    use absurd (and▸dvd_pow_self (2) fun and=>by simp_all[Ne.symm]) (by simp_all[(2).dvd_add_right,dvd_pow] ∘(.|>.trans (Nat.minFac_dvd _) ) )
+  sorry
 
 @[category test, AMS 11]
 theorem zero : a 0 = 0 := by
@@ -101,6 +94,7 @@ theorem five : a 5 = 23 := by
 
 @[category test, AMS 11]
 theorem six : a 6 = 46 := by
+  -- AlphaProof failed to close this goal
   sorry
 
 @[category test, AMS 11]
@@ -122,6 +116,15 @@ theorem oeis_358684_conjecture_0 (n : ℕ) :
   padicValNat 2 (minFac (fermatNumber n) - 1) ≤ 2 ^ n - a n := by
   delta fermatNumber and a
   rw [Nat.sub_sub_self]
-  · exact (Nat.log2_eq_log_two▸Nat.le_log_of_pow_le (by decide) (Nat.ordProj_le 2 (Nat.sub_ne_zero_of_lt (Nat.minFac_prime (by simp_all)).one_lt) |>.trans (Nat.sub_le _ _)))
-  · rw[Nat.log2_eq_log_two]
-    exact (Nat.le_of_lt_succ ((Nat.log_lt_of_lt_pow (Nat.minFac_pos _).ne') ((Nat.minFac_le (Nat.succ_pos _)).trans_lt (by simp_all[pow_add, mul_two]))))
+  · rw [Nat.log2_eq_log_two]
+    apply Nat.le_log_of_pow_le (by decide)
+    refine le_trans ?_ <| sub_le _ 1
+    apply Nat.ordProj_le 2
+    exact Nat.sub_ne_zero_of_lt (Nat.minFac_prime (by norm_num)).one_lt
+  · rw [Nat.log2_eq_log_two]
+    have : (2 ^ 2 ^ n) + 1 < 2 ^ ((2 ^ n) + 1) := by
+      simp [pow_add, mul_two]
+    refine Nat.le_of_lt_succ <| (2).log_lt_of_lt_pow ?_ ?_
+    · exact Nat.minFac_pos _|>.ne'
+    · exact (Nat.minFac_le (by bound)).trans_lt this
+
