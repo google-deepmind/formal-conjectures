@@ -114,8 +114,8 @@ theorem MLC_general_exponent (n : ℕ) : LocallyConnectedSpace (multibrotSet n) 
   sorry
 
 /-- We say that `z : ℂ` is part of an attracting cycle of period `n` of `f : ℂ → ℂ` if it is an
-`n`-periodic point (i.e. `f^[n] z = z`), `f^[n]` is differentiable at `z` and `‖deriv f^[n] z‖` is
-strictly less than one.-/
+`n`-periodic point (i.e. `f^[n] z = z`), `f^[n]` is differentiable at `z`, `‖deriv f^[n] z‖` is
+strictly less than one, and `n > 0`. -/
 def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
   (0 < n) ∧ f.IsPeriodicPt n z ∧ DifferentiableAt ℂ f^[n] z ∧ ‖deriv f^[n] z‖ < 1
 
