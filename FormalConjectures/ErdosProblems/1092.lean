@@ -40,8 +40,9 @@ open Asymptotics
 open Filter
 
 /--
-$f_r(n)$ is maximal such that, if a graph $G$ has the property that every subgraph $H$ on $m$
-vertices has chromatic number $\leq r+1$ once we remove $f_r(m)$ edges from it.
+$f_r(n)$ is maximal such that, if a graph $G$ on $n$ vertices has the property that every
+subgraph $H$ on $m$ vertices has chromatic number $\leq r+1$ once we remove $f_r(m)$ edges
+from it.
 -/
 noncomputable def f (r n : ℕ) : ℕ :=
   sSup {k : ℕ |
