@@ -41,10 +41,8 @@ for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of
 `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)`?
 -/
 @[category research open, AMS 11]
-theorem erdos_33 : IsLeast
-    { c : EReal | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) = c}
-    answer(sorry) := by
+theorem erdos_33 : ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
+    (A.1.interIcc 1 N).ncard / (√N : EReal)) = answer(sorry) := by
   sorry
 
 /--
