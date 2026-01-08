@@ -48,7 +48,6 @@ noncomputable def f (r n : ℕ) : ℕ :=
   sSup {k : ℕ |
     ∀ G : SimpleGraph (Fin n),
       (∀ H : Subgraph G,
-        let m := H.verts.toFinset.card
         ∃ E : Finset (Sym2 H.verts),
           E.card ≤ k ∧
           chromaticNumber (H.coe.deleteEdges E) ≤ (r + 1 : ℕ∞)) →
@@ -61,7 +60,7 @@ theorem f_asymptotic_2 : answer(sorry) ↔
 
 @[category research open, AMS 5]
 theorem f_asymptotic_general :
-    answer(sorry) ↔ ∀ r, (fun n : ℕ => (r * n : ℝ)) =o[atTop] (fun n : ℕ => (f r n : ℝ)) := by
+    answer(sorry) ↔ ∀ r : ℕ, (fun n : ℕ => ((r : ℝ) * n)) =o[atTop] (fun n : ℕ => (f r n : ℝ)) := by
   sorry
 
 end Erdos1092
