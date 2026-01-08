@@ -27,8 +27,9 @@ Zhi-Wei Sun has offered a $200 prize for the first proof.
 *References:*
 - [OEIS A232174](https://oeis.org/A232174)
 - Z.-W. Sun, "Conjectures on representations involving primes," in: M. Nathanson (ed.),
-  Combinatorial and Additive Number Theory II: CANT, Springer, 2017, pp. 279-310.
-  (See also arXiv:1211.1588 [math.NT].)
+  Combinatorial and Additive Number Theory II: CANT, Springer Proc. in Math. & Stat.,
+  Vol. 220, Springer, 2017, pp. 279-310. https://arxiv.org/abs/1211.1588
+- D.A. Cox, "Primes of the Form x² + ny²," John Wiley & Sons, 1989.
 -/
 
 namespace OeisA232174
@@ -59,4 +60,3 @@ theorem conjecture (n : ℕ) (hn : 1 < n) : HasPrimeRepresentation n := by
   sorry
 
 end OeisA232174
-
