@@ -21,14 +21,7 @@ variable {α : Type} [AddCommMonoid α]
 /-!
 # Erdős Problem 33
 
-*References:*
- - [erdosproblems.com/33](https://www.erdosproblems.com/33)
- - [Ci93] Cilleruelo, Javier, The additive completion of $k$th-powers. J. Number Theory (1993),
-    237--243.
- - [Ha95] Habsieger, Laurent, On the additive completion of polynomial sets. J. Number Theory
-    (1995), 130--135.
- - [BaRa01] Balasubramanian, R. and Ramana, D. S., Additive complements of the squares. C. R. Math.
-    Acad. Sci. Soc. R. Can. (2001), 6--11.
+*Reference:* [erdosproblems.com/33](https://www.erdosproblems.com/33)
 -/
 
 open Classical
@@ -62,15 +55,6 @@ theorem erdos_33.variants.one_mem_lowerBounds : ∃ A, AdditiveBasisCondition A 
     1 < Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) := by
   sorry
 
-/-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a`
-for some `a` in `A` and `n ≥ 0`. Then `lim inf n → ∞ |A ∩ {1, …, N}| / N^(1/2) ≥ 4 / pi`.
-This is proved by Cilleruelo [Ci93], Habsieger [Ha95], and Balasubramanian and Ramana [BaRa01]. -/
-@[category research solved, AMS 11]
-theorem erdos_33.liminf : 4 / Real.pi ≤
-    ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.liminf (fun N =>
-    (A.1.interIcc 1 N).ncard / (√N : EReal)) := by
-  sorry
-
 /--
 The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)`
 is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by
@@ -79,7 +63,7 @@ Wouter van Doorn.
 @[category research solved, AMS 11]
 theorem erdos_33.variants.vanDoorn :
     ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
-    (A.1.interIcc 1 N).ncard / (√N : EReal)) < ↑(2 * (φ ^ ((5 : ℝ) / 2))) := by
+    (A.1.interIcc 1 N).ncard / (√N : EReal)) ≤ ↑(2 * (φ ^ ((5 : ℝ) / 2))) := by
   sorry
 
 end Erdos33
