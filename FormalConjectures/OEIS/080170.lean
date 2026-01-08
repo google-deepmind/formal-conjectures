@@ -45,14 +45,14 @@ namespace OeisA080170
 The gcd of the binomial coefficients
 $\binom{2k}{k}, \binom{3k}{k}, \dots, \binom{(k+1)k}{k} = 1$.
 -/
-def gcdCondition (k : ℕ) : Prop :=
+def GCDCondition (k : ℕ) : Prop :=
     (Finset.range k).gcd (fun i => Nat.choose ((i + 2) * k) k) = 1
 
 /--
 Let P be the largest prime power dividing `k`.
 Then $k / P > P$.
 -/
-def primePowerCondition (k : ℕ) : Prop :=
+def PrimePowerCondition (k : ℕ) : Prop :=
   let P := ((Nat.divisors k).filter IsPrimePow).max.getD 0
   k / P > P
 
@@ -60,8 +60,8 @@ def primePowerCondition (k : ℕ) : Prop :=
 Conjecture: The gcd condition holds if and only if prime power condition is true
 -/
 @[category research open, AMS 11]
-theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
-    gcdCondition k ↔ primePowerCondition k := by
+theorem GCDCondition_iff_PrimePowerCondition (k : ℕ) (hk : 2 ≤ k) :
+    GCDCondition k ↔ PrimePowerCondition k := by
   sorry
 
 end OeisA080170
