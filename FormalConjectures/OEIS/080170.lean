@@ -46,7 +46,7 @@ The gcd of the binomial coefficients
 $\binom{2k}{k}, \binom{3k}{k}, \dots, \binom{(k+1)k}{k} = 1$.
 -/
 def GCDCondition (k : ℕ) : Prop :=
-    (Finset.range k).gcd (fun i => Nat.choose ((i + 2) * k) k) = 1
+  (Finset.range k).gcd (fun i => Nat.choose ((i + 2) * k) k) = 1
 
 /--
 Let P be the largest prime power dividing `k`.
