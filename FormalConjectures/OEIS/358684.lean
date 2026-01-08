@@ -20,7 +20,7 @@ $a(n)$ is the minimum integer $k$ such that the smallest prime factor of the
 $n$-th Fermat number exceeds $2^(2^n - k)$.
 
 *References:*
-- [A034693](https://oeis.org/A034693)
+- [A358684](https://oeis.org/A358684)
 - [SA22](https://doi.org/10.26493/2590-9770.1473.ec5) Lorenzo Sauras-Altuzarra, *Some properties of the factors of Fermat numbers*, Art Discrete Appl. Math. (2022).
 -/
 
