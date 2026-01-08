@@ -19,44 +19,36 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 757
 
-*Reference:*
+*References:*
  - [erdosproblems.com/757](https://www.erdosproblems.com/757)
- - [Er49d] Erdös, P. "On the strong law of large numbers." Transactions of the American Mathematical
-    Society 67.1 (1949): 51-56.
- - [Ma66] Matsuyama, Noboru. "On the strong law of large numbers." Tohoku Mathematical Journal,
-    Second Series 18.3 (1966): 259-269.
+ - [GyLe95] Gyárfás, András and Lehel, Jenő, Linear sets with five distinct differences among any
+    four elements. J. Combin. Theory Ser. B (1995), 108-118.
 -/
 
 open scoped Pointwise
 open Filter
 
-/-- Let `B` be a Sidon set `B` of size 4. Then `(B - B).ncard = 13`. -/
-@[category research open, AMS 5]
-theorem IsSido.sub_card {B : Set ℝ} (hn : B.ncard = 4) (hpos : ∀ x ∈ B, 0 < x)
-    (hB : IsSidon B) : (B - B).ncard = 13 := by
-  sorry
-
 namespace Erdos757
 
-/-- Sth . -/
+/-- We say that `c` is admissible if for any finite Sidon set `A` such that for any subset `B`
+of size `4`, `(B - B).card = 11`, there exists a Sidon subset `S` of size at least `c * A.ncard`. -/
+def admissible (c : ℝ) : Prop := ∀ {A : Set ℝ}, A.Finite → (∀ B ⊆ A,
+  B.ncard = 4 → (B - B).ncard = 11) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)
+
+/-- What is the infimum of the set of admissble numbers? -/
 @[category research open, AMS 5]
 theorem erdos_757 {A : Set ℝ} :
-    answer(sorry) = sInf {c | ∀ {A : Set ℝ}, A.Finite → (∀ x ∈ A, 0 < x) → (∀ B ⊆ A,
-    B.ncard = 4 → (B - B).ncard = 11) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)} := by
+    answer(sorry) = sInf {c | admissible c} := by
   sorry
 
-/-- Sth . -/
+/-- The infimum is strictly larger than `1 / 2`, which is proved in [GyLe95]. -/
 @[category research solved, AMS 5]
-theorem erdos_757.lowerBound {A : Set ℝ} : 1 / (2 : ℝ) <
-    sInf {c | ∀ {A : Set ℝ}, A.Finite → (∀ x ∈ A, 0 < x) → (∀ B ⊆ A,
-    B.ncard = 4 → (B - B).ncard = 11) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)} := by
+theorem erdos_757.lowerBound {A : Set ℝ} : 1 / (2 : ℝ) < sInf {c | admissible c} := by
   sorry
 
-/-- Sth . -/
+/-- In [GyLe95], the authors also prove that the infimum is smaller than `3 / 5`. -/
 @[category research solved, AMS 5]
-theorem erdos_757.upperBound {A : Set ℝ} : sInf {c | ∀ {A : Set ℝ}, A.Finite → (∀ x ∈ A, 0 < x) →
-    (∀ B ⊆ A, B.ncard = 4 → (B - B).ncard = 11) → ∃ S ⊆ A, IsSidon S ∧
-    c * A.ncard ≤ (S.ncard : ℝ)} < 3 / (5 : ℝ) := by
+theorem erdos_757.upperBound {A : Set ℝ} : sInf {c | admissible c} < 3 / (5 : ℝ) := by
   sorry
 
 end Erdos757
