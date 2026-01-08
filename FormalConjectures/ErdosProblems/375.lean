@@ -52,15 +52,15 @@ theorem erdos_375.bounded_gap : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).
 @[category research solved, AMS 11]
 theorem erdos_375.legendre : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
-    (∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p) :=
+    (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p) :=
   fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.bounded_gap hp)
 
-/-- For any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite, then
-there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
+/-- It is easy to see that for any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite,
+then there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
 @[category research solved, AMS 11]
 theorem erdos_375.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
-  sorry
+
 
 /-- There exists a constant `c > 0` such that for all `n` large enough, if
 `k < c * (log n / (log (log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime)`, then

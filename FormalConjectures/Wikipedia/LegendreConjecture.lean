@@ -38,12 +38,13 @@ theorem legendre_conjecture :
   sorry
 
 /-- If there exists a constant `c > 0` such that
-`(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)` for all `n`, then
+`(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all `n`, then
 Legendre's conjecture is true. -/
 @[category research solved, AMS 11]
 theorem bounded_gap_legendre :
-    (∃ c > 0, ∀ n, (n + 1).nth Prime - n.nth Prime < (n.nth Prime : ℝ) ^ (1 / (2 : ℝ) - c))
-    → ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
+    (∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
+    (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c))
+    → ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
   sorry
 
 /--
