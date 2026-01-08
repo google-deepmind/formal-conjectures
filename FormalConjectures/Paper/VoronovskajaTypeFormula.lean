@@ -41,7 +41,7 @@ p_{n,j}(x) = \binom{n}{j} x^j(1-x)^{n-j},
 and $J_{n,n+1}(x) = 0$.
 
 In the classical case $\alpha = 1$, these operators reduce to the usual Bernstein operators.
-For sufficiently smooth $f$ one  has the classical Voronovskaja asymptotic formula
+For sufficiently smooth $f$, one has the classical Voronovskaja asymptotic formula
 \[
 \lim_{n \to \infty} n\bigl( B_{n,1} f(x) - f(x) \bigr)
     = \tfrac{1}{2} x(1-x) f''(x).
@@ -68,13 +68,13 @@ Determine the asymptotic behaviour of the Bézier-type Bernstein operators for $
     If the limit exists, determine an explicit expression for it in terms of $f$, $x$, and $\alpha$.
 -/
 
-/-!
+/--
 Cumulative sum `J_{n,k}(x) = ∑_{j=k}^n p_{n,j}(x)`
 -/
-noncomputable def J (n k : ℕ) (x : ℝ ) : ℝ  :=
+noncomputable def J (n k : ℕ) (x : ℝ) : ℝ :=
 ∑ j ∈ Finset.Icc k n, Polynomial.eval x (bernsteinPolynomial ℝ n j)
 
-/-!
+/--
 Bézier–type Bernstein operator:
 `(B_{n,α} f)(x) = ∑_{k=0}^n f(k/n) * (J_{n,k}(x)^α - J_{n,k+1}(x)^α)`
 -/
@@ -82,7 +82,7 @@ noncomputable def BezierBernstein (n : ℕ) (α : ℝ) (f : ℝ  → ℝ) (x : �
 ∑ k ∈  Finset.range (n+1),
     f (k/n) * ( (J n k x) ^ α - (J n (k+1) x) ^ α )
 
-/-!
+/--
 Classical Voronovskaja theorem (α = 1)
 
 For smooth `f`, the limit:
@@ -93,15 +93,16 @@ This is already in the literature; here we state it.
 @[category research solved, AMS 26 40 47]
 theorem voronovskaja_theorem.bernstein_operators
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
-    (f'' : ℝ := iteratedDerivWithin 2 f I x):
+    (f'' : ℝ := iteratedDerivWithin 2 f I x) :
     Tendsto (fun (n : ℕ) => n • (BezierBernstein n 1 f x - f x))
     atTop
     (𝓝 ((1/2) * x * (1-x) * f'')) := by
   sorry
 
-/-!
+/--
 Conjecture: Voronovskaja-type formula for Bézier-Bernstein operators
-with shape parameter α ≠ 1.  -/
+with shape parameter α ≠ 1.
+ -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators
     (α : ℝ) (hα : α ≠ 1)
