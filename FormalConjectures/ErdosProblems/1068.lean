@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.SetTheory.Cardinal.Ordinal
 
 /-!
 # Erdős Problem 1068
