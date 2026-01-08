@@ -38,16 +38,15 @@ open SimpleGraph
 /--
 The size Ramsey number `r̂(G, H)` is the minimum number of edges in a graph `F`
 such that any 2-coloring of `F`'s edges contains a copy of `G` in one color or `H` in the other.
+
+A 2-coloring is represented by a subgraph `R ≤ F` (the "red" edges); the "blue" edges are `F \ R`.
 -/
 noncomputable def sizeRamsey {α β : Type*} [Fintype α] [Fintype β]
     (G : SimpleGraph α) (H : SimpleGraph β) : ℕ :=
   sInf { m | ∃ (n : ℕ) (F : SimpleGraph (Fin n)),
     F.edgeSet.ncard = m ∧
-    ∀ c : F.edgeSet → Bool,
-      (∃ S : F.Subgraph, Nonempty (S.coe ≃g G) ∧
-        ∀ e : Sym2 (Fin n), ∀ he : e ∈ S.edgeSet, c ⟨e, S.edgeSet_subset he⟩ = true) ∨
-      (∃ T : F.Subgraph, Nonempty (T.coe ≃g H) ∧
-        ∀ e : Sym2 (Fin n), ∀ he : e ∈ T.edgeSet, c ⟨e, T.edgeSet_subset he⟩ = false) }
+    ∀ (R : SimpleGraph (Fin n)), R ≤ F →
+      G.IsContained R ∨ H.IsContained (F.deleteEdges R.edgeSet) }
 
 /--
 **Erdős Problem 566**
