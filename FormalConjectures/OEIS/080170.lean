@@ -60,7 +60,7 @@ def PrimePowerCondition (k : ℕ) : Prop :=
 Conjecture: The gcd condition holds if and only if prime power condition is true
 -/
 @[category research open, AMS 11]
-theorem GCDCondition_iff_PrimePowerCondition (k : ℕ) (hk : 2 ≤ k) :
+theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
     GCDCondition k ↔ PrimePowerCondition k := by
   sorry
 
