@@ -45,14 +45,15 @@ for some `c > 0`. -/
 @[category research solved, AMS 11]
 theorem erdos_375.bounded_gap : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
-    ∃ c > 0, ∀ n, (n + 1).nth Prime - n.nth Prime < (n.nth Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
+    ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime
+    < (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
   sorry
 
 /-- In particular, if `erdos_375` is true, then it resolves Legendre's conjecture.-/
 @[category research solved, AMS 11]
 theorem erdos_375.legendre : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
-    (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p) :=
+    (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p) :=
   fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.bounded_gap hp)
 
 /-- It is easy to see that for any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite,
@@ -60,7 +61,20 @@ then there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for a
 @[category research solved, AMS 11]
 theorem erdos_375.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
-
+  intro n hn k hk
+  interval_cases k <;> intro h
+  · simp_all; intro; grind
+  · choose! p hp using (n + 1).exists_prime_and_dvd (by linarith)
+    exact ⟨fun x => p, fun x => by grind, fun i => by simpa using hp⟩
+  · choose! p hp using (fun i : Fin 2 => (n + i + 1).exists_prime_and_dvd (by linarith))
+    refine ⟨p, fun x y hxy => ?_, hp⟩
+    by_contra! hr
+    wlog hq : x < y
+    · exact this n hn k hk h p hp y x hxy.symm hr.symm (by grind)
+    · have hy : y = x + 1 := by grind
+      have := hy ▸ Nat.dvd_sub (hp y).2 (hxy ▸ (hp x).2)
+      have := (hp 1).1
+      simp_all [Nat.not_prime_one]
 
 /-- There exists a constant `c > 0` such that for all `n` large enough, if
 `k < c * (log n / (log (log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime)`, then
