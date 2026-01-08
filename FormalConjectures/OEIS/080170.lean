@@ -15,20 +15,21 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Algebra.IsPrimePow
 
 /-!
 # Conjecture relating two characterizations of a set of integers.
 
 Informal Statement:
-For an integer k ≥ 2, the following are equivalent:
+For an integer $k ≥ 2$, the following are equivalent:
 
-(1) The greatest common divisor of the binomial coefficients
-    C(2k,k), C(3k,k),.....,C((k+1)k,k) is equal to 1.
+1. The greatest common divisor of the binomial coefficients
+    $\binom{2k}{k}, \binom{3k}{k}, \dots, \binom{(k+1)k}{k} = 1$.
 
-(2) Writing prime factorization of k as
-    k = ∏ pᵢ^{eᵢ}, and let
-    P = max pᵢ^{eᵢ},
-    one has k / P > P.
+2. Writing prime factorization of k as
+    $k = \prod p_i^{e_i}$, and let
+    $P = \max_i p_i^{e_i}$,
+    one has $k / P > P$.
 
 This conjecture asserts that the integers satisfying (1)
 are exactly those satisfying (2).
@@ -42,31 +43,25 @@ namespace OeisA080170
 
 /--
 The gcd of the binomial coefficients
-C(2k,k), C(3k,k), ..., C((k+1)k,k) is equal to 1.
+$\binom{2k}{k}, \binom{3k}{k}, \dots, \binom{(k+1)k}{k} = 1$.
 -/
 def gcdCondition (k : ℕ) : Prop :=
-   (List.range k).foldr
-    (fun i g => Nat.gcd (Nat.choose ((i + 2) * k) k) g)
-    0 = 1
+    (Finset.range k).gcd (fun i => Nat.choose ((i + 2) * k) k) = 1
 
 /--
-Let P be the largest prime power dividing k.
-Then k / P > P.
+Let P be the largest prime power dividing `k`.
+Then $k / P > P$.
 -/
 def primePowerCondition (k : ℕ) : Prop :=
-  ∃ (P : ℕ),
-    (∃ (p e : ℕ), p.Prime ∧ e ≥ 1 ∧ P = p ^ e ∧ P ∣ k) ∧
-    (∀ (p e : ℕ), p.Prime → e ≥ 1 → p ^ e ∣ k → p ^ e ≤ P) ∧
-    k / P > P
+  let P := ((Nat.divisors k).filter IsPrimePow).max.getD 0
+  k / P > P
 
 /--
 Conjecture: The gcd condition holds if and only if prime power condition is true
 -/
-
 @[category research open, AMS 11]
 theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
-  gcdCondition k  ↔ primePowerCondition k :=
-by
+    gcdCondition k ↔ primePowerCondition k := by
   sorry
 
 end OeisA080170
