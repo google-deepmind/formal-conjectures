@@ -24,10 +24,12 @@ with $w, x, y, z$ nonnegative integers.
 
 Zhi-Wei Sun has offered a $2,468 prize for the first proof (or $2,468 RMB for a counterexample).
 
+The conjecture has been verified for all $n$ up to $1.2 \times 10^{12}$ by Yaakov Baruch (March 2019).
+
 *References:*
 - [OEIS A306477](https://oeis.org/A306477)
 - Z.-W. Sun, "Positive integers written as C(w,2) + C(x,4) + C(y,6) + C(z,8) with w,x,y,z in {2,3,...},"
-  MathOverflow Question 323541, Feb. 19, 2019.
+  MathOverflow Question 323541, Feb. 19, 2019. https://mathoverflow.net/questions/323541
 -/
 
 namespace OeisA306477
