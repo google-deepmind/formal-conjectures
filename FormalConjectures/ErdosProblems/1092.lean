@@ -56,7 +56,7 @@ noncomputable def f (r n : ℕ) : ℕ :=
 
 @[category research open, AMS 5]
 theorem f_asymptotic_2 : answer(sorry) ↔
-  (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
+    (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
   sorry
 
 @[category research open, AMS 5]
