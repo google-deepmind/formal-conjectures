@@ -48,6 +48,7 @@ The discriminant of this number is the quantity $a^2 - 4b$. It is conjectured th
 infinitely many Lucas–Wieferich primes of any given discriminant.
 -/
 @[category research open, AMS 11]
-theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℕ} (hD : D ≡ 0 [MOD 4] ∨ D ≡ 1 [MOD 4]) :
+theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℕ} (hD₀ : 0 < D)
+    (hD : D ≡ 0 [MOD 4] ∨ D ≡ 1 [MOD 4]) :
     {p : ℕ | ∃ a b : ℕ, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p}.Infinite := by
   sorry
