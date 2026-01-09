@@ -50,7 +50,6 @@ If a sequence `d` is nondecreasing and no three terms are equal, then terms at d
 @[category API, AMS 5]
 lemma lemma1_a
     (h_mono : Monotone d)
-    (h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ k, d (k + 2) ≠ d k) :
     1 ≤ d (k + 2) - d k := by
   have : d k ≤ d (k + 2) := h_mono (by omega)
