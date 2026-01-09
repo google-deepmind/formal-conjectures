@@ -28,11 +28,10 @@ The conjecture has been verified for all $n$ up to $1.2 \times 10^{12}$ by Yaako
 
 *References:*
 - [OEIS A306477](https://oeis.org/A306477)
-- Z.-W. Sun, "Positive integers written as C(w,2) + C(x,4) + C(y,6) + C(z,8) with w,x,y,z in {2,3,...},"
-  MathOverflow Question 323541, Feb. 19, 2019. https://mathoverflow.net/questions/323541
+- [mathoverflow/323541](https://mathoverflow.net/questions/323541): Z.-W. Sun, "Positive integers written as C(w,2) + C(x,4) + C(y,6) + C(z,8) with w,x,y,z in {2,3,...},", Feb. 19, 2019.
 -/
 
-namespace OeisA306477
+namespace OEIS.A306477
 
 /-- The predicate that `n` can be written as $\binom{w+2}{2} + \binom{x+3}{4} + \binom{y+5}{6} + \binom{z+7}{8}$
 for nonnegative integers $w, x, y, z$. -/
@@ -41,7 +40,7 @@ def IsSumOfBinomials (n : ℕ) : Prop :=
 
 @[category test, AMS 11]
 theorem isSumOfBinomials_1 : IsSumOfBinomials 1 :=
-  ⟨0, 0, 0, 0, by native_decide⟩
+  ⟨0, 0, 0, 0, by decide⟩
 
 @[category test, AMS 11]
 theorem isSumOfBinomials_3 : IsSumOfBinomials 3 :=
@@ -59,4 +58,4 @@ $\binom{w+2}{2} + \binom{x+3}{4} + \binom{y+5}{6} + \binom{z+7}{8}$ for nonnegat
 theorem conjecture (n : ℕ) (hn : 0 < n) : IsSumOfBinomials n := by
   sorry
 
-end OeisA306477
+end OEIS.A306477
