@@ -35,15 +35,15 @@ namespace OeisA231201
 
 /-- The predicate that `n` can be written as $x + y$ with $x,y >0$ such that
 $2^x + y$ is prime -/
-def PrimeCondition (n: ℕ) : Prop :=
+def PrimeCondition (n : ℕ) : Prop :=
   ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ n = x + y ∧ (2^x + y).Prime
 
 @[category test, AMS 11]
-theorem PrimeCondition_8 : PrimeCondition 8 :=
+theorem primeCondition_8 : PrimeCondition 8 :=
   ⟨3, 5, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 @[category test, AMS 11]
-theorem PrimeCondition_53 : PrimeCondition 53 :=
+theorem primeCondition_53 : PrimeCondition 53 :=
   ⟨20, 33, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 @[category research open, AMS 11]
