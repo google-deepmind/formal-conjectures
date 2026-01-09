@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Data.Set.Card
 import Mathlib.Data.Nat.Lattice
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Set.Card
 
 /-!
 # Size Ramsey Number
