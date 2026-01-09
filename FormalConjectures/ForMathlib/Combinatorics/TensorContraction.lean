@@ -3,21 +3,20 @@ import Mathlib
 open scoped TensorProduct
 open scoped BigOperators
 
-abbrev Free
-    {A : Type*} [Fintype A]
-    {R : Type*} [Fintype R]
-    (f : R → A) :=
-    {a : A // a ∉ Set.range f}
+-- TODO(Paul): change this to `Set.univ \ Set.range f` ?
+abbrev Free {A : Type*} {R : Type*} (f : R → A) :=
+  {a : A // a ∉ Set.range f}
+
+variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+variable {A : Type*} [Fintype A] [DecidableEq A]
+variable {B : Type*} [Fintype B] [DecidableEq B]
+variable {C : Type*} [Fintype C] [DecidableEq C]
+variable {R : Type*} [Fintype R] [DecidableEq R]
 
 def PurePartOfContraction
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {C : Type*} [Fintype C] [DecidableEq C]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (f : (Free fst) ⊕ (Free snd) ≃ C)
-    (vA : A → V) (vB : B -> V) :
+    (vA : A → V) (vB : B → V) :
     (C → V) :=
   let inc : (Free fst) ⊕ (Free snd) → A ⊕ B := Sum.map (fun i => i) (fun i => i)
   let vSum : A ⊕ B → V := fun s =>
@@ -26,62 +25,37 @@ def PurePartOfContraction
     | Sum.inr a => vB a
   vSum ∘ inc ∘ f.symm
 
-variable {α β γ : Type*}
-
-theorem comp_right_cancel (f : α ≃ β) {g h : β → γ} :
-    (g ∘ f = h ∘ f) ↔ g = h := by
-  constructor
-  · intro hcomp
-    funext b
-    simpa using congrArg (fun (k : α → γ) => k (f.symm b)) hcomp
-  · intro hgh
-    simp [hgh]
-
 lemma PurePart_Invariance_Right
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {C : Type*} [Fintype C] [DecidableEq C]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (f : (Free fst) ⊕ (Free snd) ≃ C)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Set.range snd)
     (x : V):
     PurePartOfContraction fst snd f vA (Function.update vB i.val x) = PurePartOfContraction fst snd f vA vB := by
-  simp only [PurePartOfContraction, ← Function.comp_assoc, comp_right_cancel]
+  simp only [PurePartOfContraction, ← Function.comp_assoc, f.symm.surjective.right_cancellable]
   funext j
   cases j with
   | inl a => simp
   | inr b => grind
 
 lemma PurePart_Invariance_Left
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {C : Type*} [Fintype C] [DecidableEq C]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (f : (Free fst) ⊕ (Free snd) ≃ C)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Set.range fst)
     (x : V):
     PurePartOfContraction fst snd f (Function.update vA i.val x) vB = PurePartOfContraction fst snd f vA vB := by
-  simp only [PurePartOfContraction, ← Function.comp_assoc, comp_right_cancel]
+  simp only [PurePartOfContraction, ← Function.comp_assoc,
+    f.symm.surjective.right_cancellable]
   funext j
   cases j with
   | inl a => grind
   | inr b => simp
 
 lemma PurePart_Update_Right
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {C : Type*} [Fintype C] [DecidableEq C]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (f : (Free fst) ⊕ (Free snd) ≃ C)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Free snd)
     (x : V):
     PurePartOfContraction fst snd f vA (Function.update vB i.val x) = Function.update (PurePartOfContraction fst snd f vA vB) (f (Sum.inr i)) x := by
@@ -95,14 +69,9 @@ lemma PurePart_Update_Right
     | inr a => grind
 
 lemma PurePart_Update_Left
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {C : Type*} [Fintype C] [DecidableEq C]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (f : (Free fst) ⊕ (Free snd) ≃ C)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Free fst)
     (x : V):
     PurePartOfContraction fst snd f (Function.update vA i.val x) vB = Function.update (PurePartOfContraction fst snd f vA vB) (f (Sum.inl i)) x := by
@@ -116,23 +85,15 @@ lemma PurePart_Update_Left
     | inl a => grind
 
 noncomputable def ScalarPartOfContraction
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
-    (vA : A → V) (vB : B -> V) : ℝ :=
+    (vA : A → V) (vB : B → V) : ℝ :=
   let scalars : R → ℝ := fun r =>
     inner ℝ (vA (fst r)) (vB (snd r))
   ∏ r : R, scalars r
 
 lemma ScalarPart_Invariance_Right
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Free snd)
     (x : V):
     ScalarPartOfContraction fst snd vA (Function.update vB i.val x) = ScalarPartOfContraction fst snd vA vB := by
@@ -140,12 +101,8 @@ lemma ScalarPart_Invariance_Right
   grind
 
 lemma ScalarPart_Invariance_Left
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Free fst)
     (x : V):
     ScalarPartOfContraction fst snd (Function.update vA i.val x) vB = ScalarPartOfContraction fst snd vA vB := by
@@ -153,13 +110,9 @@ lemma ScalarPart_Invariance_Left
   grind
 
 lemma ScalarPart_Update_Add_Right
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (hInjsnd : Function.Injective snd)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Set.range snd)
     (x y: V):
     ScalarPartOfContraction fst snd vA (Function.update vB i.val (x + y)) = (ScalarPartOfContraction fst snd vA (Function.update vB i.val x)) + (ScalarPartOfContraction fst snd vA (Function.update vB i.val y)) := by
@@ -185,18 +138,13 @@ lemma ScalarPart_Update_Add_Right
         inner ℝ (vA (fst r)) (vB (snd r))) := by
     refine Finset.prod_congr rfl ?_
     grind
-  simp [hsplit]
-  simp [Function.update, hr₀i, inner_add_right, add_mul]
-  simp [prod_const]
+  simp_rw [hsplit]
+  simp [Function.update, hr₀i, inner_add_right, add_mul, prod_const]
 
 lemma ScalarPart_Update_Add_Left
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (hInjfst : Function.Injective fst)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Set.range fst)
     (x y: V):
     ScalarPartOfContraction fst snd (Function.update vA i.val (x + y)) vB = (ScalarPartOfContraction fst snd (Function.update vA i.val x) vB) + (ScalarPartOfContraction fst snd (Function.update vA i.val y) vB) := by
@@ -223,17 +171,12 @@ lemma ScalarPart_Update_Add_Left
     refine Finset.prod_congr rfl ?_
     grind
   simp [hsplit]
-  simp [Function.update, hr₀i, inner_add_left, add_mul]
-  simp [prod_const]
+  simp [Function.update, hr₀i, inner_add_left, add_mul, prod_const]
 
 lemma ScalarPart_Update_Mul_Right
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (hInjsnd : Function.Injective snd)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Set.range snd)
     (c : ℝ) (x : V) :
     ScalarPartOfContraction fst snd vA (Function.update vB i.val (c • x)) = c • ScalarPartOfContraction fst snd vA (Function.update vB i.val x) := by
@@ -263,13 +206,9 @@ lemma ScalarPart_Update_Mul_Right
   simp [Function.update, hr₀i, inner_smul_right, mul_assoc, prod_const]
 
 lemma ScalarPart_Update_Mul_Left
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {R : Type*} [Fintype R] [DecidableEq R]
     (fst : R → A) (snd : R → B)
     (hInjsnd : Function.Injective fst)
-    (vA : A → V) (vB : B -> V)
+    (vA : A → V) (vB : B → V)
     (i : Set.range fst)
     (c : ℝ) (x : V) :
     ScalarPartOfContraction fst snd (Function.update vA i.val (c • x)) vB = c • ScalarPartOfContraction fst snd (Function.update vA i.val x) vB := by
@@ -299,23 +238,16 @@ lemma ScalarPart_Update_Mul_Left
   simp [Function.update, hr₀i, inner_smul_left, mul_assoc, prod_const]
 
 noncomputable def EvaluateContraction
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {B : Type*} [Fintype B] [DecidableEq B]
-    {R : Type*} [Fintype R] [DecidableEq R]
     {m : ℕ}
     (fst : R → A) (snd : R → B)
     (f : (Free fst) ⊕ (Free snd) ≃ Fin m)
-    (vA : A → V) (vB : B -> V) :
+    (vA : A → V) (vB : B → V) :
     (⨂[ℝ]^m V) :=
-  let pure : Fin m → V := PurePartOfContraction fst snd f vA vB
-  let scal : ℝ := ScalarPartOfContraction fst snd vA vB
+  letI pure : Fin m → V := PurePartOfContraction fst snd f vA vB
+  letI scal : ℝ := ScalarPartOfContraction fst snd vA vB
   scal • (PiTensorProduct.tprod ℝ pure)
 
 noncomputable def ContractionWithPure
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {R : Type*} [Fintype R] [DecidableEq R]
     {l m : ℕ}
     (fst : R → A) (snd : R → (Fin l))
     (hInjsnd : Function.Injective snd)
@@ -332,45 +264,23 @@ noncomputable def ContractionWithPure
     exact EvaluateContraction fst snd f vA vB
   . intro _ vB i x y
     by_cases hi : i ∈ Set.range snd
-    .
-      have hScalar : @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA (Function.update vB i (x + y)) =
-        @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA (Function.update vB i x) +
-        @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA (Function.update vB i y)
-        := ScalarPart_Update_Add_Right fst snd (B := Fin l) hInjsnd vA vB ⟨i,hi⟩ x y
-      have hPure (z : V) : @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA (Function.update vB i z) =
-        @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA vB
-        := PurePart_Invariance_Right fst snd f vA vB ⟨i,hi⟩ z
+    . have hScalar := ScalarPart_Update_Add_Right fst snd (B := Fin l) hInjsnd vA vB ⟨i,hi⟩ x y
+      have hPure (z : V) := PurePart_Invariance_Right fst snd f vA vB ⟨i,hi⟩ z
       simp [EvaluateContraction, hScalar, hPure, add_smul]
-    .
-      have hPure (z : V) : @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA (Function.update vB i z) =
-        Function.update (@PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA vB) (f (Sum.inr ⟨i,hi⟩)) z :=
-        PurePart_Update_Right fst snd f vA vB ⟨i, hi⟩ z
-      have hScalar (z : V) : @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA (Function.update vB i z) =
-        @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA vB :=
-        ScalarPart_Invariance_Right fst snd vA vB ⟨i,hi⟩ z
+    . have hPure (z : V) := PurePart_Update_Right fst snd f vA vB ⟨i, hi⟩ z
+      have hScalar (z : V) := ScalarPart_Invariance_Right fst snd vA vB ⟨i,hi⟩ z
       simp [EvaluateContraction, hScalar, hPure]
   . intro _ vB i c x
     by_cases hi : i ∈ Set.range snd
-    .
-      have hScalar : @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA (Function.update vB i (c • x)) =
-        c • @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA (Function.update vB i x) :=
+    . have hScalar :=
         ScalarPart_Update_Mul_Right fst snd hInjsnd vA vB ⟨i,hi⟩ c x
-      have hPure (z : V) : @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA (Function.update vB i z) =
-        @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA vB := PurePart_Invariance_Right fst snd f vA vB ⟨i,hi⟩ z
+      have hPure (z : V) := PurePart_Invariance_Right fst snd f vA vB ⟨i,hi⟩ z
       simp [EvaluateContraction, hScalar, hPure, mul_smul]
-    .
-      have hScalar (z : V) : @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA (Function.update vB i z) =
-        @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA vB :=
-        ScalarPart_Invariance_Right fst snd vA vB ⟨i, hi⟩ z
-      have hPure (z : V) : @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA (Function.update vB i z) =
-        Function.update (@PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA vB) (f (Sum.inr ⟨i,hi⟩)) z :=
-        PurePart_Update_Right fst snd f vA vB ⟨i,hi⟩ z
+    . have hScalar (z : V) := ScalarPart_Invariance_Right fst snd vA vB ⟨i, hi⟩ z
+      have hPure (z : V) := PurePart_Update_Right fst snd f vA vB ⟨i,hi⟩ z
       simp [EvaluateContraction, hScalar, hPure, ← smul_assoc, mul_comm]
 
 lemma ContractionWithPure_update_add
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {R : Type*} [Fintype R] [DecidableEq R]
     {l m : ℕ}
     (fst : R → A) (snd : R → (Fin l))
     (hInjfst : Function.Injective fst)
@@ -381,26 +291,14 @@ lemma ContractionWithPure_update_add
   simp only [ContractionWithPure]
   ext vB
   by_cases hi : i ∈ Set.range fst
-  .
-    have hScalar : @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd (Function.update vA i (x + y)) vB =
-      @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd (Function.update vA i x) vB +
-      @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd (Function.update vA i y) vB := ScalarPart_Update_Add_Left fst snd hInjfst vA vB ⟨i,hi⟩ x y
-    have hPure (z : V) : @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f (Function.update vA i z) vB =
-      @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA vB := PurePart_Invariance_Left fst snd f vA vB ⟨i,hi⟩ z
+  . have hScalar := ScalarPart_Update_Add_Left fst snd hInjfst vA vB ⟨i,hi⟩ x y
+    have hPure (z : V) := PurePart_Invariance_Left fst snd f vA vB ⟨i,hi⟩ z
     simp [EvaluateContraction, hScalar, hPure, add_smul]
-  .
-    have hPure (z : V) : @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f (Function.update vA i z) vB =
-      Function.update (@PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA vB) (f (Sum.inl ⟨i,hi⟩)) z :=
-      PurePart_Update_Left fst snd f vA vB ⟨i, hi⟩ z
-    have hScalar (z : V) : @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd (Function.update vA i z) vB =
-      @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA vB :=
-      ScalarPart_Invariance_Left fst snd vA vB ⟨i,hi⟩ z
+  . have hPure (z : V) := PurePart_Update_Left fst snd f vA vB ⟨i, hi⟩ z
+    have hScalar (z : V) := ScalarPart_Invariance_Left fst snd vA vB ⟨i,hi⟩ z
     simp [EvaluateContraction, hScalar, hPure]
 
 lemma ContractionWithPure_update_mul
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {A : Type*} [Fintype A] [DecidableEq A]
-    {R : Type*} [Fintype R] [DecidableEq R]
     {l m : ℕ}
     (fst : R → A) (snd : R → (Fin l))
     (hInjfst : Function.Injective fst)
@@ -411,45 +309,33 @@ lemma ContractionWithPure_update_mul
   simp only [ContractionWithPure]
   ext vB
   by_cases hi : i ∈ Set.range fst
-  .
-    have hScalar : @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd (Function.update vA i (c • x)) vB =
-      c • @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd (Function.update vA i x) vB :=
+  . have hScalar :=
       ScalarPart_Update_Mul_Left fst snd hInjfst vA vB ⟨i,hi⟩ c x
-    have hPure (z : V) : @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f (Function.update vA i z) vB =
-      @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA vB := PurePart_Invariance_Left fst snd f vA vB ⟨i,hi⟩ z
+    have hPure (z : V) := PurePart_Invariance_Left fst snd f vA vB ⟨i,hi⟩ z
     simp [EvaluateContraction, hScalar, hPure, mul_smul]
-  .
-    have hScalar (z : V) : @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd (Function.update vA i z) vB =
-      @ScalarPartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ fst snd vA vB :=
+  . have hScalar (z : V) :=
       ScalarPart_Invariance_Left fst snd vA vB ⟨i, hi⟩ z
-    have hPure (z : V) : @PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f (Function.update vA i z) vB =
-      Function.update (@PurePartOfContraction V _ _ _ _ _ (Fin l) (Fin.fintype l) (instDecidableEqFin l) _ _ _ _ _ _ fst snd f vA vB) (f (Sum.inl ⟨i,hi⟩)) z :=
+    have hPure (z : V) :=
       PurePart_Update_Left fst snd f vA vB ⟨i,hi⟩ z
     simp [EvaluateContraction, hScalar, hPure, ← smul_assoc, mul_comm]
 
 noncomputable def MultiLinearTensorContraction
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {R : Type*} [Fintype R] [DecidableEq R]
     {k l m : ℕ}
     (fst : R → (Fin k)) (snd : R → (Fin l))
     (hInjfst : Function.Injective fst)
     (hInjsnd : Function.Injective snd)
     (f : (Free fst) ⊕ (Free snd) ≃ Fin m) :
-      MultilinearMap ℝ (fun _ : Fin k => V) (⨂[ℝ]^l V →ₗ[ℝ] ⨂[ℝ]^m V) := by
-  refine
-    { toFun := ?toFun,
-      map_update_add' := ?map_update_add',
-      map_update_smul' := ?map_update_smul'
-      }
-  . intro vA
-    exact PiTensorProduct.lift (ContractionWithPure fst snd hInjsnd f vA)
-  . intro _ vA i x y
+      MultilinearMap ℝ (fun _ : Fin k => V) (⨂[ℝ]^l V →ₗ[ℝ] ⨂[ℝ]^m V) where
+  toFun va := PiTensorProduct.lift (ContractionWithPure fst snd hInjsnd f va)
+  map_update_add' := by
+    intro _ vA i x y
     simpa using congrArg PiTensorProduct.lift
       (ContractionWithPure_update_add
         (fst := fst) (snd := snd)
         (hInjfst := hInjfst) (hInjsnd := hInjsnd)
         (f := f) (vA := vA) (i := i) (x := x) (y := y))
-  . intro _ vA i c x
+  map_update_smul' := by
+    intro _ vA i c x
     simpa using congrArg PiTensorProduct.lift
       (ContractionWithPure_update_mul
         (fst := fst) (snd := snd)
@@ -457,8 +343,6 @@ noncomputable def MultiLinearTensorContraction
         (f := f) (vA := vA) (i := i) (c := c) (x := x))
 
 noncomputable def TensorContraction
-    {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    {R : Type*} [Fintype R] [DecidableEq R]
     {k l m : ℕ}
     (fst : R → (Fin k)) (snd : R → (Fin l))
     (hInjfst : Function.Injective fst)
