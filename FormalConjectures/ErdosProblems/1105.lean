@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ open SimpleGraph
 
 /-- The path graph on `k` vertices: vertices are `Fin k` and vertex `i` is adjacent to `i+1`. -/
 def pathGraph (k : ℕ) : SimpleGraph (Fin k) :=
-  SimpleGraph.fromRel fun i j => i.val + 1 = j.val ∨ j.val + 1 = i.val
+  SimpleGraph.fromRel fun i j => i.val + 1 = j.val
 
 /-- An edge coloring of a simple graph `G` with color type `α`. -/
 def EdgeColoring (G : SimpleGraph V) (α : Type*) := G.edgeSet → α
@@ -104,7 +104,7 @@ This is a conjecture of Erdős, Simonovits, and Sós [ESS75].
 The case n ≥ k ≥ 5 has been announced as proven by Yuan [Yu21].
 -/
 @[category research open, AMS 5]
-theorem erdos_1105_paths (n k : ℕ) (hn : k ≤ n) (hk : 5 ≤ k) :
+theorem erdos_1105.variants.paths (n k : ℕ) (hn : k ≤ n) (hk : 5 ≤ k) :
     antiRamseyNumber n (pathGraph k) = conjecturedARPath n k := by
   sorry
 
@@ -113,7 +113,7 @@ Known result: AR(n, C₃) = n - 1.
 Proved by Erdős, Simonovits, and Sós [ESS75].
 -/
 @[category research solved, AMS 5]
-theorem erdos_1105_triangles (n : ℕ) (hn : 3 ≤ n) :
+theorem erdos_1105.variants.triangles (n : ℕ) (hn : 3 ≤ n) :
     antiRamseyNumber n (cycleGraph 3) = n - 1 := by
   sorry
 
