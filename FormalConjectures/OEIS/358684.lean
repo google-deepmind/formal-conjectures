@@ -139,7 +139,7 @@ This is Conjecture 3.4 in [SA22].
 -/
 @[category research solved, AMS 11]
 theorem oeis_358684_conjecture_0 (n : ℕ) :
-  padicValNat 2 (minFac (fermatNumber n) - 1) ≤ 2 ^ n - a n := by
+    padicValNat 2 (minFac (fermatNumber n) - 1) ≤ 2 ^ n - a n := by
   delta fermatNumber and a
   rw [Nat.sub_sub_self]
   · rw [Nat.log2_eq_log_two]
