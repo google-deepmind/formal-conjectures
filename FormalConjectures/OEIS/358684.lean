@@ -38,7 +38,7 @@ The subtraction is defined in $\mathbb{N}$ and is safe
  since $P_n \le F_n$, implying $\log_2 P_n < 2^n$.
 -/
 def a (n : ℕ) : ℕ :=
-  let pn := minFac (fermatNumber n)
+  letI pn := minFac (fermatNumber n)
   (2 ^ n) - (log2 pn)
 
 /--
@@ -46,7 +46,7 @@ The "original" definition: $a'(n)$ is the minimum $k$ such that $P_n > 2^{2^n - 
 We use `Nat.find` which returns the smallest natural number satisfying a predicate.
 -/
 noncomputable def a' (n : ℕ) : ℕ :=
-  let Pn := minFac (fermatNumber n)
+  letI Pn := minFac (fermatNumber n)
   Nat.find (show ∃ k, Pn > 2 ^ (2 ^ n - k) from by
     use 2^n
     simp only [tsub_self, pow_zero]
@@ -96,33 +96,27 @@ theorem a_equiv_a' (n : ℕ) : a n = a' n := by
 
 @[category test, AMS 11]
 theorem zero : a 0 = 0 := by
-  simp [a]
-  norm_num [Nat.log2]
+  norm_num [a, Nat.log2]
 
 @[category test, AMS 11]
 theorem one : a 1 = 0 := by
-  simp [a]
-  norm_num [Nat.log2]
+  norm_num [a, Nat.log2]
 
 @[category test, AMS 11]
 theorem two : a 2 = 0 := by
-  norm_num [a]
-  norm_num [Nat.log2]
+  norm_num [a, Nat.log2]
 
 @[category test, AMS 11]
 theorem three : a 3 = 0 := by
-  rw[a]
-  norm_num only [Nat.log2_eq_log_two,Nat.fermatNumber]
+  norm_num only [a, Nat.log2_eq_log_two,Nat.fermatNumber]
 
 @[category test, AMS 11]
 theorem four : a 0 = 0 := by
-  norm_num[a]
-  norm_num[Nat.log2]
+  norm_num[a, Nat.log2]
 
 @[category test, AMS 11]
 theorem five : a 5 = 23 := by
-  norm_num[a]
-  norm_num [fermatNumber,Nat.log2_eq_log_two]
+  norm_num [a, fermatNumber,Nat.log2_eq_log_two]
 
 @[category test, AMS 11]
 theorem six : a 6 = 46 := by
