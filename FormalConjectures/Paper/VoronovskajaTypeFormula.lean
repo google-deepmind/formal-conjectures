@@ -16,7 +16,7 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Topology Filter Real unitInterval
+open Topology Filter Real unitInterval Polynomial
 
 /-!
 # Voronovskaja-type Formula for the Bezier Variant of the Bernstein Operators
@@ -71,8 +71,9 @@ Determine the asymptotic behaviour of the Bézier-type Bernstein operators for $
 /--
 Cumulative sum `J_{n,k}(x) = ∑_{j=k}^n p_{n,j}(x)`
 -/
-noncomputable def J (n k : ℕ) (x : ℝ) : ℝ :=
-∑ j ∈ Finset.Icc k n, Polynomial.eval x (bernsteinPolynomial ℝ n j)
+noncomputable def BernsteinTail (n k : ℕ) : Polynomial ℝ :=
+  ∑ j ∈ Finset.Icc k n,
+    bernsteinPolynomial ℝ n j
 
 /--
 Bézier–type Bernstein operator:
@@ -80,7 +81,7 @@ Bézier–type Bernstein operator:
 -/
 noncomputable def BezierBernstein (n : ℕ) (α : ℝ) (f : ℝ  → ℝ) (x : ℝ) : ℝ :=
 ∑ k ∈  Finset.range (n+1),
-    f (k/n) * ( (J n k x) ^ α - (J n (k+1) x) ^ α )
+    f (k/n) * (((BernsteinTail n k).eval x) ^ α - ((BernsteinTail n k + 1).eval x) ^ α)
 
 /--
 Classical Voronovskaja theorem (α = 1)
@@ -102,7 +103,7 @@ theorem voronovskaja_theorem.bernstein_operators
 /--
 Conjecture: Voronovskaja-type formula for Bézier-Bernstein operators
 with shape parameter α ≠ 1.
- -/
+-/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators
     (α : ℝ) (hα : α ≠ 1)
