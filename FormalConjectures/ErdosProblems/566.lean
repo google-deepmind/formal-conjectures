@@ -36,19 +36,6 @@ namespace Erdos566
 open SimpleGraph
 
 /--
-The size Ramsey number `r̂(G, H)` is the minimum number of edges in a graph `F`
-such that any 2-coloring of `F`'s edges contains a copy of `G` in one color or `H` in the other.
-
-A 2-coloring is represented by a subgraph `R ≤ F` (the "red" edges); the "blue" edges are `F \ R`.
--/
-noncomputable def sizeRamsey {α β : Type*} [Fintype α] [Fintype β]
-    (G : SimpleGraph α) (H : SimpleGraph β) : ℕ :=
-  sInf { m | ∃ (n : ℕ) (F : SimpleGraph (Fin n)),
-    F.edgeSet.ncard = m ∧
-    ∀ (R : SimpleGraph (Fin n)), R ≤ F →
-      G.IsContained R ∨ H.IsContained (F \ R) }
-
-/--
 **Erdős Problem 566**
 
 Let $G$ be such that any subgraph on $k$ vertices has at most $2k-3$ edges.
