@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ForMathlib.Computability.TuringMachine.PostTuringMachine
+import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
 import Mathlib.Computability.TuringMachine
 import Mathlib.Data.Nat.Lattice
 import Mathlib.Data.Nat.PartENat

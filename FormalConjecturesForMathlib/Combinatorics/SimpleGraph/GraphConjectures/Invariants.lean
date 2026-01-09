@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.Data.Multiset.Interval

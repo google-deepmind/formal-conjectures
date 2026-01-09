@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
-import FormalConjectures.ForMathlib.Data.Set.Bdd
-import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
-import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
+import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
+import FormalConjecturesForMathlib.Data.Set.Bdd
+import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
+import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 import Batteries.Util.ProofWanted
 
 open Filter

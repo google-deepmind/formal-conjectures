@@ -19,8 +19,8 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
 import Mathlib.Geometry.Euclidean.Triangle
 
-import FormalConjectures.ForMathlib.Logic.Equiv.Fin.Rotate
-import FormalConjectures.ForMathlib.Data.Set.Triplewise
+import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
+import FormalConjecturesForMathlib.Data.Set.Triplewise
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 

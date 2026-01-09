@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 
-import FormalConjectures.ForMathlib.LinearAlgebra.GeneralLinearGroup
+import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
 
 open Matrix
 open scoped MatrixGroups

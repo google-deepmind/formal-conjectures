@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ForMathlib.Combinatorics.AP.Basic
+import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 import Mathlib.Analysis.Normed.Field.Lemmas
 import Mathlib.Order.CompletePartialOrder
 

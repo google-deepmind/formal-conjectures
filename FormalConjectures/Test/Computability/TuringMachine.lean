@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ForMathlib.Computability.TuringMachine.Notation
+import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Tactic.FinCases
 

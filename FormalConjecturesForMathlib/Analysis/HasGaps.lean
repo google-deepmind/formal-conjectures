@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.ForMathlib.Topology.Algebra.InfiniteSum.Group
-import FormalConjectures.ForMathlib.Topology.Algebra.InfiniteSum.Order
+import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
+import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Analysis.SpecificLimits.Basic
 
 /-!

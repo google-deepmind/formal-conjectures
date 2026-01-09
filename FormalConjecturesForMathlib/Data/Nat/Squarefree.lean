@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import Mathlib.Data.Nat.Squarefree
-import FormalConjectures.ForMathlib.Data.Nat.Factorization.Basic
+import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 
 namespace Nat
 
