@@ -45,8 +45,8 @@ theorem erdos_828.variants.lehmer_conjecture : answer(sorry) ↔ ∀ n > 1, φ n
 It is an easy exercise to show that, for $n > 1$, $\phi(n) | n$ if and only if $n = 2^a 3^b$.
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_828.variants.phi_dvd_self_iff_pow2_pow3 {n : ℕ} (hn : 1 > n):
-    φ n ∣ n ↔ ∃ᵉ (a > 0) (b), n = 2^a * 3^b := by
+theorem erdos_828.variants.phi_dvd_self_iff_pow2_pow3 {n : ℕ} :
+    φ n ∣ n ↔ ∃ a b, n = 2 ^ a * 3 ^ b := by
   sorry
 
 end Erdos828
