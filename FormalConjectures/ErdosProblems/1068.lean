@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1068](https://www.erdosproblems.com/1068)
 -/
 
-open Cardinal
+open Cardinal List
 
 namespace Erdos1068
 
@@ -30,14 +30,14 @@ namespace Erdos1068
 Two walks are internally disjoint if they share no vertices other than their endpoints.
 -/
 def InternallyDisjoint {V : Type*} {G : SimpleGraph V} {u v : V} (p q : G.Walk u v) : Prop :=
-  Disjoint ({x | x ∈ p.support} \ {u, v}) ({x | x ∈ q.support} \ {u, v})
+  Disjoint p.support.tail.dropLast q.support.tail.dropLast
 
 /--
 We say a graph is infinitely connected if any two vertices are connected by infinitely many
 pairwise disjoint paths.
 -/
 def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∀ u v : V, u ≠ v → ∃ P : Set (G.Walk u v),
+  ∀ u v : V, ∃ P : Set (G.Walk u v),
     P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
 
 /--
