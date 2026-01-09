@@ -18,7 +18,7 @@ limitations under the License.
 import Mathlib
 import FormalConjecturesForMathlib
 import FormalConjectures.Util.Answer
-import FormalConjectures.Util.Attributes
+import FormalConjectures.Util.Attributes.Attributes
 import FormalConjectures.Util.Linters.AMSLinter
 import FormalConjectures.Util.Linters.CategoryLinter
 import FormalConjectures.Util.Linters.CopyrightLinter
