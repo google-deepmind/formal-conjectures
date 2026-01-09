@@ -38,6 +38,7 @@ progression?
 -/
 @[category research open, AMS 11]
 theorem erdos_847 : answer(sorry) ↔ ∀ (A : Set ℕ), Infinite A → hε A →
-    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧ A = ⋃ i : Fin n, S i := sorry
+    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧ A = ⋃ i : Fin n, S i := by 
+  sorry
 
 end Erdos847
