@@ -38,6 +38,7 @@ import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.DiamExtra
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
+import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 import FormalConjectures.ForMathlib.Computability.Encoding
 import FormalConjectures.ForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjectures.ForMathlib.Computability.TuringMachine.Notation

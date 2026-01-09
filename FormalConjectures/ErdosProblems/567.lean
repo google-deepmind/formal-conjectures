@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 
 /-!
 # Erdős Problem 567
@@ -35,37 +34,48 @@ Combin. Probab. Comput. (1993), 389-399.
 namespace Erdos567
 
 open SimpleGraph
+open scoped Finset
 
 /-- $Q_3$ is the 3-dimensional hypercube graph (8 vertices, 12 edges).
 Vertices are 3-bit vectors. Two vertices are adjacent iff they differ in exactly one bit. -/
-def Q3 : SimpleGraph (Fin 3 → Bool) :=
-  SimpleGraph.fromRel fun a b => (Finset.univ.filter fun i => a i ≠ b i).card = 1
+def Q3 : SimpleGraph (Fin 3 → Bool) where
+  Adj u v := #{i | u i ≠ v i} = 1
+  symm _ _ := by simp [eq_comm]
+  loopless _ := by simp
 
 /-- $K_{3,3}$ is the complete bipartite graph with partition sizes 3, 3 (6 vertices, 9 edges). -/
 def K33 : SimpleGraph (Fin 3 ⊕ Fin 3) := completeBipartiteGraph (Fin 3) (Fin 3)
 
 /-- $H_5$ is $C_5$ with two vertex-disjoint chords (5 vertices, 7 edges).
-Edges: cycle 0-1-2-3-4-0 plus chords {0,2} and {1,3}. -/
+Also known as $K_4^*$ (the graph obtained from $K_4$ by subdividing one edge). -/
 def H5 : SimpleGraph (Fin 5) :=
-  SimpleGraph.fromRel fun u v =>
-    -- Cycle C5 edges
-    (u.val + 1) % 5 = v.val ∨ (v.val + 1) % 5 = u.val ∨
-    -- Chord 0-2
-    ({u, v} : Finset (Fin 5)) = {0, 2} ∨
-    -- Chord 1-3
-    ({u, v} : Finset (Fin 5)) = {1, 3}
+  .cycleGraph 5 ⊔ .edge 0 2 ⊔ .edge 1 3
 
 /--
-**Erdős Problem 567**
+**Erdős Problem 567 (Q3)**
 
-Let $G$ be either $Q_3$ or $K_{3,3}$ or $H_5$.
-Is it true that $G$ is Ramsey size linear?
+Is $Q_3$ (the 3-dimensional hypercube) Ramsey size linear?
 -/
 @[category research open, AMS 05]
-theorem erdos_567 : answer(sorry) ↔
-    IsRamseySizeLinear Q3 ∧
-    IsRamseySizeLinear K33 ∧
-    IsRamseySizeLinear H5 := by
+theorem erdos_567_Q3 : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
+  sorry
+
+/--
+**Erdős Problem 567 (K33)**
+
+Is $K_{3,3}$ Ramsey size linear?
+-/
+@[category research open, AMS 05]
+theorem erdos_567_K33 : answer(sorry) ↔ IsRamseySizeLinear K33 := by
+  sorry
+
+/--
+**Erdős Problem 567 (H5)**
+
+Is $H_5$ ($C_5$ with two vertex-disjoint chords) Ramsey size linear?
+-/
+@[category research open, AMS 05]
+theorem erdos_567_H5 : answer(sorry) ↔ IsRamseySizeLinear H5 := by
   sorry
 
 end Erdos567
