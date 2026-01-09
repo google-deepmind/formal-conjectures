@@ -55,12 +55,44 @@ noncomputable def a' (n : ℕ) : ℕ :=
     exact (Nat.minFac_prime (by norm_num)).one_lt
   )
 
+
+/-
+The log2 of the smallest prime factor of $F_n$ is at most $2^n$.
+-/
+@[category undergraduate, AMS 11]
+private lemma log2_minFac_le (n : ℕ) : log2 (fermatNumber n).minFac ≤ 2^n := by
+  rw [log2_eq_log_two]
+  refine (log_mono_right (minFac_le (by rw [fermatNumber]; norm_num))).trans_eq ?_
+  rw [fermatNumber, log_eq_of_pow_le_of_lt_pow (le_add_right _ _)]
+  rw [pow_succ, mul_two]; apply add_lt_add_left (one_lt_pow (by norm_num) (by norm_num))
+
+
 /--
 The minimization definition is equivalent to the closed form.
 -/
 @[category API, AMS 11]
 theorem a_equiv_a' (n : ℕ) : a n = a' n := by
-  sorry
+  unfold a a'; set Pn := (fermatNumber n).minFac
+  rw [Eq.comm, Nat.find_eq_iff]
+  constructor
+  · rw [tsub_tsub_cancel_of_le (log2_minFac_le n), log2_eq_log_two]
+    refine lt_of_le_of_ne (pow_log_le_self 2 (Nat.Prime.ne_zero (minFac_prime ?_))) fun h => ?_
+    · rw [fermatNumber]
+      norm_num
+    · have hPn : Pn.Prime := minFac_prime (by rw [fermatNumber]; norm_num)
+      have hnz := log2_eq_log_two ▸ (Nat.log_pos one_lt_two hPn.two_le).ne'
+      refine (Nat.not_even_iff_odd.mpr <| (odd_pow_iff hnz).mp ?_) even_two
+      rw [log2_eq_log_two, h]
+      exact Odd.of_dvd_nat (odd_fermatNumber n) (minFac_dvd _)
+  · intro m hm; simp only [not_lt]
+    rw [lt_tsub_iff_left] at hm
+    rw [log2_eq_log_two] at hm
+    refine (lt_pow_succ_log_self (b:=2) (by norm_num) _).le.trans ?_
+    apply Nat.pow_le_pow_right (by norm_num)
+    apply le_tsub_of_add_le_right
+    have := succ_le_of_lt hm
+    omega
+
 
 @[category test, AMS 11]
 theorem zero : a 0 = 0 := by
