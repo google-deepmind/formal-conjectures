@@ -28,7 +28,7 @@ namespace Erdos1071
 
 /-- Two segments are disjoint if they only intersect at their endpoints (if at all). -/
 def SegmentsDisjoint (p1 q1 p2 q2 : ℝ²) : Prop :=
-  (segment ℝ p1 q1 ∩ segment ℝ p2 q2) ⊆ {p1, q1, p2, q2}
+  segment ℝ p1 q1 ∩ segment ℝ p2 q2 ⊆ {p1, q1, p2, q2}
 
 /-- Are there a finite set of unit line segments in the unit square, no two of which intersect, which are maximal with respect to this property?
 Solved affirmatively by Danzer, who gave an explicit construction.
