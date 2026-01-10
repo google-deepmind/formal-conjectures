@@ -39,3 +39,34 @@ theorem green_1 : answer(sorry) ↔ ∃ Ω : ℕ → ℝ, atTop.Tendsto Ω atTop
 -- TODO(firsching): add known/related results here.
 
 end Green1
+
+/-!
+# Ben Green's Open Problem 30
+
+*Reference:* [Ben Green's Open Problem 30](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.30)
+-/
+
+namespace Green30
+
+/--
+Given a finite set $A ⊆ ℤ$ with small doubling
+$D(A) = |A - A| / |A| ≤ K$,
+find a large structured subset $A' ⊆ A$ such that
+$D(A') ≤ K + ε$.
+
+Here “large” and “structured” are to be understood in a Freiman-type sense.
+-/
+@[category research open, AMS 5 11]
+theorem green_30 :
+  answer(sorry) ↔
+  ∀ (A : Finset ℤ) (K ε : ℝ),
+    0 < ε →
+    A.card ≠ 0 →
+    ((A.image (fun a => a)) \ A).card ≤ (K * A.card) →
+    ∃ (A' : Finset ℤ),
+      A' ⊆ A ∧
+      (True) := by
+  sorry
+
+end Green 30
+
