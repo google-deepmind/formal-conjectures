@@ -22,4 +22,3 @@ import FormalConjectures.Util.Attributes
 import FormalConjectures.Util.Linters.AMSLinter
 import FormalConjectures.Util.Linters.CategoryLinter
 import FormalConjectures.Util.Linters.CopyrightLinter
-import FormalConjectures.Util.Linters.ResearchOpenLinter

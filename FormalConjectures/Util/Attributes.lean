@@ -222,8 +222,14 @@ initialize Lean.registerBuiltinAttribute {
         let cat ← Syntax.toCategory s
         return (cat, "")
       | _ => throwUnsupportedSyntax
+    if status == Category.research ProblemStatus.open then
+      let env ← getEnv
+      if let some info := env.find? decl then
+        if let some val := info.value? then
+          if !val.hasSorry then
+             logWarning "If a problem has a sorry-free proof, it should not be categorised as `open`."
     addCategoryEntry decl status oldDoc
-  applicationTime := .beforeElaboration
+  applicationTime := .afterTypeChecking
 }
 
 syntax subjectList := many(num)

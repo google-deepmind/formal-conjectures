@@ -76,7 +76,7 @@ Is it true that $f(n)\leq n^{o(1)}$?
 @[category research open, AMS 52]
 theorem erdos_92.variants.weak : answer(sorry) ↔ ∃ o : ℕ → ℝ,
   o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ n, (f n : ℝ) ≤ n^(o n) := by
-  sorry
+sorry
 
 /--
 Or even $f(n) < n^{c/\log\log n}$ for some constant $c > 0$?
@@ -84,7 +84,7 @@ Or even $f(n) < n^{c/\log\log n}$ for some constant $c > 0$?
 @[category research open, AMS 52]
 theorem erdos_92.variants.strong : answer(sorry) ↔
     ∃ c > 0, ∀ᶠ n in atTop, (f n : ℝ) ≤ n^(c / (n : ℝ).log.log) := by
-  sorry
+sorry
 
 -- TODO(firsching): formalize the rest of the remarks
 
