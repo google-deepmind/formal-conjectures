@@ -31,7 +31,7 @@ Let 2 ≤ k ≤ n − 2. Can binomial(n,k) be the product of consecutive primes 
 -/
 @[category research open, AMS 11]
 theorem erdos_386 :
-    answer(sorry) ↔ ∀ k \ge 2, ∃\^f n in .atTop,
+    answer(sorry) ↔ ∀ k ≥ 2, ∃ᶠ n in .atTop,
       k ≤ n - 2 ∧ ∃ p q : ℕ, n.choose k = ∏ i ∈ .Ico p q, nth Nat.Prime i := by
     sorry
 
