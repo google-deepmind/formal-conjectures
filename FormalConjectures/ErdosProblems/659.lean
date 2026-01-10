@@ -33,7 +33,7 @@ least $3$ distances, yet the total number of distinct distances is $\ll \frac{n}
 @[category research open, AMS 52]
 theorem erdos_659 : answer(sorry) ↔ ∃ A : ℕ → Finset ℝ²,
    (∀ n, #(A n) = n ∧ ∀ S ⊆ A n, #S = 4 → 3 ≤ distinctDistances S) ∧
-    (fun n ↦ distinctDistances (A n)) ≪ fun n ↦ n / sqrt (log n) :=
+    (fun n ↦ distinctDistances (A n)) ≪ fun n ↦ n / sqrt (log n) := by
   sorry
 
 end Erdos659

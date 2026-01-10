@@ -60,7 +60,7 @@ write 'it is clear to every right-thinking person' that
 $g(k)\geq\exp(c\frac{k}{\log k})$ for some constant $c>0$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1095_lower_conjecture : ∃ c > 0, ∀ k, g k ≥ exp (c * k / log k) :=
+theorem erdos_1095_lower_conjecture : ∃ c > 0, ∀ k, g k ≥ exp (c * k / log k) := by
   sorry
 
 /--
@@ -68,7 +68,7 @@ theorem erdos_1095_lower_conjecture : ∃ c > 0, ∀ k, g k ≥ exp (c * k / log
 give heuristic evidence that \[\log g(k) \asymp \frac{k}{\log k}.\]
 -/
 @[category research open, AMS 11]
-theorem erdos_1095_log_equivalent : (fun k ↦ log (g k)) ~[atTop] (fun k ↦ k / log k) :=
+theorem erdos_1095_log_equivalent : (fun k ↦ log (g k)) ~[atTop] (fun k ↦ k / log k) := by
   sorry
 
 end Erdos1095
