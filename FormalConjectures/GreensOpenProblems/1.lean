@@ -68,5 +68,5 @@ theorem green_30 :
       (True) := by
   sorry
 
-end Green 30
+end Green30
 
