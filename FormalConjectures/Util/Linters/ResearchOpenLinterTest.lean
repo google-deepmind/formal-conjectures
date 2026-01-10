@@ -18,7 +18,7 @@ import FormalConjectures.Util.Linters.ResearchOpenLinter
 set_option warn.sorry false
 
 /--
-warning: A proof is provided for a problem categorized as `open`, should be `solved`
+warning: This problem is categorized as `open`, but the proof is something else than `by sorry`
 -/
 #guard_msgs in
 @[category research open]
@@ -26,7 +26,7 @@ theorem test_failure_1 : 1 = 1 := by
   rfl
 
 /--
-warning: A proof is provided for a problem categorized as `open`, should be `solved`
+warning: This problem is categorized as `open`, but the proof is something else than `by sorry`
 -/
 #guard_msgs in
 @[category research open]

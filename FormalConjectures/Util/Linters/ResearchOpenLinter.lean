@@ -19,6 +19,12 @@ import Mathlib.Tactic.Lemma
 
 open Lean Elab Meta Linter Command Parser Term
 
+/-! # The researchOpen linter
+
+The `researchOpen` is a linter to detect problems that are mislabeled as `research open`, when in
+fact the proof is something else than `by sorry`.
+-/
+
 namespace ResearchOpenLinter
 
 /-- Checks if a command has the `category research open` attribute. -/
@@ -36,12 +42,11 @@ def isResearchOpen
 def check (mods : TSyntax ``Command.declModifiers) (body : TSyntax `term) : CommandElabM Unit := do
   if ← isResearchOpen mods then
     match body with
-    | `(term| sorry) => return
     | `(term| by sorry) => return
     | _ =>
-      logWarningAt body "A proof is provided for a problem categorized as `open`, should be `solved`"
+      logWarningAt body "This problem is categorized as `open`, but the proof is something else than `by sorry`"
 
-/-- The research open linter checks that every research open problem is proved using 'sorry'. -/
+/-- The research open linter checks that every research open problem is proved using 'by sorry'. -/
 def researchOpenLinter : Linter where
   run := fun stx => do
     match stx with
