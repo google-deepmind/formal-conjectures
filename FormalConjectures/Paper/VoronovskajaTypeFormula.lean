@@ -71,17 +71,16 @@ Determine the asymptotic behaviour of the Bézier-type Bernstein operators for $
 /--
 Cumulative sum `J_{n,k}(x) = ∑_{j=k}^n p_{n,j}(x)`
 -/
-noncomputable def BernsteinTail (n k : ℕ) : Polynomial ℝ :=
-  ∑ j ∈ Finset.Icc k n,
-    bernsteinPolynomial ℝ n j
+noncomputable def bernsteinTail (n k : ℕ) : Polynomial ℝ :=
+  ∑ j ∈ Finset.Icc k n, bernsteinPolynomial ℝ n j
 
 /--
 Bézier–type Bernstein operator:
 `(B_{n,α} f)(x) = ∑_{k=0}^n f(k/n) * (J_{n,k}(x)^α - J_{n,k+1}(x)^α)`
 -/
-noncomputable def BezierBernstein (n : ℕ) (α : ℝ) (f : ℝ  → ℝ) (x : ℝ) : ℝ :=
+noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ  → ℝ) (x : ℝ) : ℝ :=
 ∑ k ∈  Finset.range (n+1),
-    f (k/n) * (((BernsteinTail n k).eval x) ^ α - ((BernsteinTail n k + 1).eval x) ^ α)
+    f (k/n) * (((bernsteinTail n k).eval x) ^ α - ((bernsteinTail n k + 1).eval x) ^ α)
 
 /--
 Classical Voronovskaja theorem (α = 1)
@@ -93,9 +92,9 @@ This is already in the literature; here we state it.
 -/
 @[category research solved, AMS 26 40 47]
 theorem voronovskaja_theorem.bernstein_operators
-    (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
-    (f'' : ℝ := iteratedDerivWithin 2 f I x) :
-    Tendsto (fun (n : ℕ) => n • (BezierBernstein n 1 f x - f x))
+    (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I) :
+    let f'' : ℝ := iteratedDerivWithin 2 f I x
+    Tendsto (fun (n : ℕ) => n • (bezierBernstein n 1 f x - f x))
     atTop
     (𝓝 ((1/2) * x * (1-x) * f'')) := by
   sorry
@@ -108,7 +107,7 @@ with shape parameter α ≠ 1.
 theorem voronovskaja_theorem.bezier_bernstein_operators
     (α : ℝ) (hα : α ≠ 1)
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
-    (f'' : ℝ := iteratedDerivWithin 2 f I x)
-    (x : ℝ)(hf : ContDiffAt ℝ 2 f x) : ∃ L : ℝ,
-    Tendsto (fun n : ℕ => Real.sqrt n * (BezierBernstein n α f x - f x)) atTop (𝓝 L) := by
+    (x : ℝ)(hf : ContDiffAt ℝ 2 f x) : let f'' : ℝ := iteratedDerivWithin 2 f I x
+    ∃ L : ℝ,
+    Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop (𝓝 L) := by
   sorry
