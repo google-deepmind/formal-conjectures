@@ -43,9 +43,7 @@ theorem erdos_1071a :
         seg.2 0 ∈ Icc 0 1 ∧ seg.2 1 ∈ Icc 0 1) ∧
       (S.toSet.Pairwise SegmentsDisjoint) ∧
       Maximal (fun T : Finset (ℝ² × ℝ²) =>
-        (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧
-          seg.1 0 ∈ Icc 0 1 ∧ seg.1 1 ∈ Icc 0 1 ∧
-          seg.2 0 ∈ Icc 0 1 ∧ seg.2 1 ∈ Icc 0 1) ∧
+        (∀ seg ∈ T, dist seg.1 seg.2 = 1) ∧ T.toSet \subseteq Icc 0 1 ∧
         (∀ s1 s2, s1 ∈ T → s2 ∈ T → s1 ≠ s2 → SegmentsDisjoint s1.1 s1.2 s2.1 s2.2)) S := by
   sorry
 
