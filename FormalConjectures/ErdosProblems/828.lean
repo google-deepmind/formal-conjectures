@@ -40,6 +40,7 @@ When $n > 1$, Lehmer conjectured that $\phi(n) | n - 1$ if and only if $n$ is pr
 @[category research open, AMS 11]
 theorem erdos_828.variants.lehmer_conjecture : answer(sorry) ↔ ∀ n > 1, φ n ∣ n - 1 ↔ Prime n := by
   sorry
+
 /--
 It is an easy exercise to show that $\phi(n) | n$ if and only if $n = 0, 1$ or $n = 2^a 3^b$.
 -/
