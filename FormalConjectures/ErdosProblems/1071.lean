@@ -16,10 +16,11 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1071
-*Reference:* [erdosproblems.com/1071](https://www.erdosproblems.com/1071)
 
-[Da85] Danzer, L., _Some combinatorial and metric problems in geometry_.
-Intuitive geometry (Siófok, 1985), 167-177.
+*References:*
+* [erdosproblems.com/1071](https://www.erdosproblems.com/1071)
+* [Da85] Danzer, L., _Some combinatorial and metric problems in geometry_.
+  Intuitive geometry (Siófok, 1985), 167-177.
 -/
 
 open Set Metric EuclideanGeometry Order
