@@ -18,7 +18,9 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 1071
 *Reference:* [erdosproblems.com/1071](https://www.erdosproblems.com/1071)
 -/
+
 open Set Metric EuclideanGeometry Order
+
 namespace Erdos1071
 
 /-- Two segments are disjoint if they only intersect at their endpoints (if at all). -/
