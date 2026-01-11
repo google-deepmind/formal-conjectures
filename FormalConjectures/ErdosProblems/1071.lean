@@ -32,8 +32,7 @@ namespace Erdos1071
 def SegmentsDisjoint (seg1 seg2 : ℝ² × ℝ²) : Prop :=
   segment ℝ seg1.1 seg1.2 ∩ segment ℝ seg2.1 seg2.2 ⊆ {seg1.1, seg1.2, seg2.1, seg2.2}
 
-/-- Is there a finite set of unit line segments in the unit square, no two of which intersect, which are maximal with respect to this property?
-Solved affirmatively by [Da85], who gave an explicit construction. -/
+/-- Can a finite set of disjoint unit segments in a unit square be maximal? -/
 @[category research solved, AMS 52]
 theorem erdos_1071a :
     answer(True) ↔ ∃ S : Finset (ℝ² × ℝ²),
