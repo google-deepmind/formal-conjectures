@@ -27,7 +27,7 @@ namespace Erdos386
 open Nat
 
 /--
-Let 2 ≤ k ≤ n − 2. Can binomial(n,k) be the product of consecutive primes infinitely often?
+Let $2 \le k \le n - 2$. Can $\binom{n}{k}$ be the product of consecutive primes infinitely often?
 -/
 @[category research open, AMS 11]
 theorem erdos_386 :
