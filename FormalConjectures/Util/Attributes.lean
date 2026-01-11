@@ -222,7 +222,7 @@ initialize Lean.registerBuiltinAttribute {
         let cat ← Syntax.toCategory s
         return (cat, "")
       | _ => throwUnsupportedSyntax
-    if status == Category.research ProblemStatus.open then
+    if status == .research .open then
       let env ← getEnv
       if let some info := env.find? decl then
         if let some val := info.value? then
