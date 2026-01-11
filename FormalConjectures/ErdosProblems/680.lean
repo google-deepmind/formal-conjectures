@@ -45,8 +45,8 @@ $\epsilon>0$, where $C_\epsilon>0$ is some constant?
 -/
 @[category research open, AMS 11]
 theorem erdos_680.variant : answer(sorry) ↔ ∀ ε > 0, ∃ C > 0,
-  ¬ ∀ᶠ (n : ℕ) in Filter.atTop, ∃ k ≠ 0,
-  Nat.minFac (n + k) > exp ((1 + ε) * √k) + C := by
+    ¬ ∀ᶠ (n : ℕ) in Filter.atTop, ∃ k ≠ 0,
+    Nat.minFac (n + k) > exp ((1 + ε) * √k) + C := by
   sorry
 
 end Erdos680

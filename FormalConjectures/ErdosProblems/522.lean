@@ -28,8 +28,8 @@ open scoped ProbabilityTheory Topology Real
 namespace Erdos522
 
 /--
-A *Kac Polynomial* in `n` coefficients over some subset `S` of a field `k` is a polynomial whose
-`n` first coefficients are picked uniformely at random in `S` and whose other coefficients are all `0`
+A *Kac Polynomial* in `n` coefficients over some subset `S` of a field `k` is a polynomial whose `n`
+first coefficients are picked uniformely at random in `S` and whose other coefficients are all `0`.
 -/
 @[ext]
 structure KacPolynomial
@@ -70,7 +70,8 @@ noncomputable def roots (f : KacPolynomial n S Ω μ) : Ω → Multiset k :=
 end KacPolynomial
 
 /--
-Let `f(z)=∑_{0≤k≤n} ϵ_k z^k` be a random polynomial, where `ϵ_k∈{−1,1}` independently uniformly at random for `0≤k≤n`.
+Let `f(z)=∑_{0≤k≤n} ϵ_k z^k` be a random polynomial, where `ϵ_k∈{−1,1}` independently uniformly at
+random for `0≤k≤n`.
 Is it true that the number of roots of `f(z)` in `{z∈C:|z|≤1}` is, almost surely, `(1/2+o(1))n`?
 
 Formalization note: here the goal seems to mean that
@@ -83,7 +84,8 @@ theorem erdos_522 :
     Filter.Tendsto p Filter.atTop (𝓝 0) ∧
     ∀ (Ω : Type*) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (n : ℕ) (hn : 1 ≤ n) (f : KacPolynomial n ({-1, 1} : Set ℂ) Ω),
-      (ℙ {ω | |(f.roots ω).countP (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ (o n) * n }).toReal ≤ p n := by
+      (ℙ {ω | |(f.roots ω).countP
+        (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ (o n) * n }).toReal ≤ p n := by
   sorry
 
 /--
@@ -106,7 +108,8 @@ theorem erdos_522.variants.yakir_solution :
     ∃ p : ℕ → ℝ, Filter.Tendsto p Filter.atTop (𝓝 0) ∧
     ∀ (Ω : Type*) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (n : ℕ) (hn : 2 ≤ n) (f : KacPolynomial n ({-1, 1} : Set ℂ) Ω),
-       (ℙ {ω | |(f.roots ω).countP (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ n^(9/10 : ℝ) }).toReal ≤ p n := by
+       (ℙ {ω | |(f.roots ω).countP
+         (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ n^(9/10 : ℝ) }).toReal ≤ p n := by
   sorry
 
 end Erdos522
