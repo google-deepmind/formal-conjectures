@@ -47,7 +47,7 @@ theorem hasSquareCondition_7 : HasSquareCondition 7 :=
 
 @[category test, AMS 11]
 theorem hasSquareCondition_95 : HasSquareCondition 95 :=
-  ⟨6, 3, 1, 7, by norm_num, ⟨216, by norm_num⟩⟩
+  ⟨6, 3, 1, 7, by norm_num, 216, by norm_num⟩
 
 /--
 **Zhi-Wei Sun's 1680-Conjecture (A280831)**: Any nonnegative integer can be written as
