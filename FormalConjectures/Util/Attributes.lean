@@ -224,10 +224,8 @@ initialize Lean.registerBuiltinAttribute {
       | _ => throwUnsupportedSyntax
     if status == .research .open then
       let env ← getEnv
-      let some info := env.find? decl
-      let some val := info.value?
-      guard !val.hasSorry
-      logWarning "If a problem has a sorry-free proof, it should not be categorised as `open`."
+      if (env.find? decl).bind (·.value?) |>.any (!·.hasSorry) then
+        logWarning "If a problem has a sorry-free proof, it should not be categorised as `open`."
     addCategoryEntry decl status oldDoc
   applicationTime := .afterTypeChecking
 }
