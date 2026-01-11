@@ -39,7 +39,7 @@ theorem erdos_1071a :
           seg.1 0 ∈ Icc 0 1 ∧ seg.1 1 ∈ Icc 0 1 ∧
           seg.2 0 ∈ Icc 0 1 ∧ seg.2 1 ∈ Icc 0 1) ∧
         T.toSet.Pairwise SegmentsDisjoint) S := by
-sorry
+  sorry
 
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite? -/
 @[category research open, AMS 52]
