@@ -43,7 +43,7 @@ theorem hasSquareCondition_0 : HasSquareCondition 0 :=
 
 @[category test, AMS 11]
 theorem hasSquareCondition_7 : HasSquareCondition 7 :=
-  ⟨1, 1, 1, 2, by norm_num, ⟨41, by norm_num⟩⟩
+  ⟨1, 1, 1, 2, by norm_num, 41, by norm_num⟩
 
 @[category test, AMS 11]
 theorem hasSquareCondition_95 : HasSquareCondition 95 :=
