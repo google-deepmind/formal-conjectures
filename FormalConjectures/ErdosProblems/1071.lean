@@ -57,6 +57,6 @@ theorem erdos_1071b :
       Maximal (fun T : Set (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧ seg.1 ∈ R ∧ seg.2 ∈ R) ∧
         T.Pairwise SegmentsDisjoint) S := by
-sorry
+  sorry
 
 end Erdos1071
