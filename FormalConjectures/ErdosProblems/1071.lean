@@ -52,8 +52,6 @@ theorem erdos_1071a :
 theorem erdos_1071b :
     answer(sorry) ↔ ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
       S.Countable ∧ S.Infinite ∧
-      (∀ seg ∈ S, dist seg.1 seg.2 = 1 ∧ seg.1 ∈ R ∧ seg.2 ∈ R) ∧
-      S.Pairwise SegmentsDisjoint ∧
       Maximal (fun T : Set (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧ seg.1 ∈ R ∧ seg.2 ∈ R) ∧
         T.Pairwise SegmentsDisjoint) S := by
