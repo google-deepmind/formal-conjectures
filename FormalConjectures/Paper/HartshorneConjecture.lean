@@ -101,7 +101,7 @@ This is conjecture 6.3 in _VARIETIES OF SMALL CODIMENSION IN PROJECTIVE SPACE_, 
 theorem harthshorne_conjecture (n : ℕ) (hn : 7 ≤ n)
     (𝓕 : VectorBundles ℙ(Fin (n + 1); Spec (.of ℂ)))
     (h𝓕 : 𝓕.rank = 2) :
-    Nonempty (𝓕.Splitting (Fin 2)) :=
+    Nonempty (𝓕.Splitting (Fin 2)) := by
   sorry
 
 end HartshorneConjecture

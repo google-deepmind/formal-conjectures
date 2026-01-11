@@ -103,7 +103,7 @@ It is open, even for $k=3$, whether there are infinitely many such progressions.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_141.variant.infinite_three : answer(sorry) ↔
-    (consecutivePrimeArithmeticProgressions 3).Infinite :=
+    (consecutivePrimeArithmeticProgressions 3).Infinite := by
   sorry
 
 /--
@@ -111,7 +111,7 @@ Fix a $k \geq 3$. Is it true that there are infinitely many arithmetic prime pro
 -/
 @[category research open, AMS 5 11]
 theorem erdos_141.variant.infinite_general_case : answer(sorry) ↔
-    ∀ k ≥ 3, (consecutivePrimeArithmeticProgressions k).Infinite :=
+    ∀ k ≥ 3, (consecutivePrimeArithmeticProgressions k).Infinite := by
   sorry
 
 end Erdos141
