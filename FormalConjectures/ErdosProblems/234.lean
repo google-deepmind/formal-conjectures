@@ -22,7 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/234](https://www.erdosproblems.com/234)
 -/
 
-open Set NNReal
+open Real Set
+open scoped NNReal
 
 namespace Erdos234
 
@@ -32,7 +33,7 @@ Is it true that for all `c ≥ 0`, the density `f c` of integers for which
 -/
 @[category research open, AMS 11]
 theorem erdos_234 : answer(sorry) ↔ ∃ f : ℝ≥0 → ℝ, Continuous f ∧
-    ∀ c : ℝ≥0, HasDensity {n : ℕ | (primeGap n : ℝ) / (n : ℝ).log < c} (f c) := by
+    ∀ c : ℝ≥0, HasDensity {n : ℕ | primeGap n / log n < c} (f c) := by
   sorry
 
 end Erdos234
