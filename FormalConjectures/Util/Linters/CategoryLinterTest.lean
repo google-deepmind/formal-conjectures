@@ -58,19 +58,19 @@ theorem test_theorem_with_docstring : 1 + 1 = 2 := by
 
 #guard_msgs in
 @[category research open]
-theorem test_2 : 1 + 1 = 2 := by
-  rfl
+theorem test_2 : 1 + 1 = 3 := by
+  sorry
 
 --The linter is compatible with theorems having other attributes.
 #guard_msgs in
 @[simp, category research open]
-theorem test_1 : 1 + 1 = 2 := by
-  rfl
+theorem test_1 : 1 + 1 = 3 := by
+  sorry
 
 --The order of attributes is irrelevant.
 #guard_msgs in
 @[category research open, simp]
-theorem test_3 : 1 + 1 = 2 := by
-  rfl
+theorem test_3 : 1 + 1 = 3 := by
+  sorry
 
 end CategoryLinter

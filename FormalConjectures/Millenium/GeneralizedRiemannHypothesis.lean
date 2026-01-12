@@ -42,7 +42,7 @@ $\frac{1}{2}$. -/
 theorem generalized_riemann_hypothesis (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q)
     (hχ : χ.IsPrimitive) (s : ℂ) (hs : χ.LFunction s = 0)
     (hs_nontrivial : s ∉ Int.cast '' trivialZeros χ) :
-    s.re = 1 / 2 :=
+    s.re = 1 / 2 := by
   sorry
 
 /-- GRH for $\chi = 1$ is `RiemannHypothesis`. -/

@@ -133,12 +133,12 @@ There are two special directories:
 A tag to mark the category of a problem statement. In this repository, we allow
 for the following categories:
 
--   Open research problem: a mathematical problem for which there is no solution
-    accepted by the community.
--   Solved research problem: a mathematical problem that has an accepted
-    solution (in the sense that it is widely accepted by experts in the field).
-    In particular this does *not* mean that the statement has been proven in the
-    formal setting.
+-   Open research problem: a mathematical problem or conjecture for which no
+    solution or proof is currently accepted by the mathematical community.
+-   Solved research problem: a problem with an established solution.
+    This includes problems that have a formal proof within this repository,
+    a formal proof of an equivalent statement found elsewhere, or an informal
+    solution widely accepted by experts in the field.
 -   Graduate level problem.
 -   Undergraduate level problem.
 -   High school level problem.
