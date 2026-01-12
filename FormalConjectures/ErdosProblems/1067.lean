@@ -54,8 +54,12 @@ def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop :=
 Does every graph with chromatic number $\aleph_1$ contain an infinitely connected subgraph with
 chromatic number $\aleph_1$?
 
-The answer is no, as shown by Soukup [So15](https://arxiv.org/abs/1506.00940) and Bowler and Pitz
-[BoPi24](https://arxiv.org/abs/2006.04652).
+Komjáth [Ko13] proved that it is consistent that the answer is no. This was improved by
+Soukup [So15], who constructed a counterexample using no extra set-theoretical assumptions. A
+simpler elementary example was given by Bowler and Pitz [BoPi24].
+
+Thomassen [Th17] constructed a counterexample to the version which asks for infinite
+edge-connectivity (that is, to disconnect the graph requires deleting infinitely many edges).
 -/
 @[category research solved, AMS 5]
 theorem erdos_1067 :
@@ -65,7 +69,7 @@ theorem erdos_1067 :
 
 /--
 In [ErHa66] Erdős and Hajnal asked the same question under the additional assumption that the graph
-has $\aleph_1$ many vertices. Komjáth [Ko13](https://doi.org/10.1007/s11856-013-0002-6) proved that
+has $\aleph_1$ many vertices. Komjáth [Ko13] proved that
 the answer is independent of ZFC.
 -/
 @[category research solved, AMS 5]
