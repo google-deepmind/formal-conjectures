@@ -32,8 +32,7 @@ increasing triples `uₙ < uₙ₊₁ < uₙ₊₂` or decreasing triples `uₙ 
 (1961/62), 251–256.
 -/
 
-open Filter
-open scoped BigOperators
+open Filter Real
 
 namespace Erdos968
 
