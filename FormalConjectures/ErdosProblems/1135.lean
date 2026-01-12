@@ -31,6 +31,6 @@ namespace Erdos1135
 /-!The **Collatz conjecture** states that for any positive integer $n$, there exists a natural number $m$ such that the $m$-th term of the sequence is 1.
 -/
 @[category research open, AMS 11 37]
-alias collatzConjecture := CollatzConjecture.collatzConjecture
+alias erdos_1135 := CollatzConjecture.collatzConjecture
 
 end Erdos1135
