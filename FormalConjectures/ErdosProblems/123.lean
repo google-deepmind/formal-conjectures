@@ -120,9 +120,56 @@ Proof: Let m₀ be the largest element of M = {25^a · 7^b} with m₀ ≤ X.
 By maximality of m₀, we have m₁ > X, hence m₁ ∈ (X, 2X). -/
 lemma density_M (X : ℕ) (hX : X ≥ 343) :
     ∃ a b : ℕ, X < 25^a * 7^b ∧ 25^a * 7^b < 2 * X := by
-  -- We construct the element using the density of {25^a · 7^b}
-  -- The key ratios 49/25 < 2 and 625/343 < 2 ensure short intervals contain elements
-  sorry
+  -- Elements of {25^a · 7^b} in order: 343, 625, 1225, 2401, 4375, 8575, ...
+  -- Each consecutive pair has ratio < 2, so we find a witness by case analysis
+  -- For large X, we use the recursive structure
+  by_cases h625 : X < 625
+  · -- 343 ≤ X < 625: use 625 = 25^2 * 7^0 (since 625 < 686 = 2*343)
+    exact ⟨2, 0, by omega, by omega⟩
+  · by_cases h1225 : X < 1225
+    · -- 625 ≤ X < 1225: use 1225 = 25 * 7^2 (since 1225 < 1250 = 2*625)
+      exact ⟨1, 2, by omega, by omega⟩
+    · by_cases h2401 : X < 2401
+      · -- 1225 ≤ X < 2401: use 2401 = 7^4 (since 2401 < 2450 = 2*1225)
+        exact ⟨0, 4, by omega, by omega⟩
+      · by_cases h4375 : X < 4375
+        · -- 2401 ≤ X < 4375: use 4375 = 25^2 * 7 (since 4375 < 4802 = 2*2401)
+          exact ⟨2, 1, by omega, by omega⟩
+        · by_cases h8575 : X < 8575
+          · -- 4375 ≤ X < 8575: use 8575 = 25 * 7^3 (since 8575 < 8750 = 2*4375)
+            exact ⟨1, 3, by omega, by omega⟩
+          · by_cases h15625 : X < 15625
+            · -- 8575 ≤ X < 15625: use 15625 = 25^3 * 7^0 (since 15625 < 17150 = 2*8575)
+              exact ⟨3, 0, by omega, by omega⟩
+            · by_cases h16807 : X < 16807
+              · -- 15625 ≤ X < 16807: use 16807 = 7^5 (since 16807 < 31250 = 2*15625)
+                exact ⟨0, 5, by omega, by omega⟩
+              · by_cases h30625 : X < 30625
+                · -- 16807 ≤ X < 30625: use 30625 = 25^2 * 7^2 (since 30625 < 33614 = 2*16807)
+                  exact ⟨2, 2, by omega, by omega⟩
+                · -- For X ≥ 30625, use recursive argument:
+                  -- There exists 25^a' * 7^b' in (X/49, 2X/49), multiply by 49 = 7^2
+                  have hX49 : X / 49 ≥ 343 := by omega
+                  obtain ⟨a', b', hlo', hhi'⟩ := density_M (X / 49) hX49
+                  use a', b' + 2
+                  constructor
+                  · -- X < 25^a' * 7^(b'+2) = 25^a' * 7^b' * 49
+                    have h1 : X / 49 < 25^a' * 7^b' := hlo'
+                    have h2 : X < 49 * (X / 49) + 49 := by
+                      have := Nat.div_add_mod X 49
+                      have hmod : X % 49 < 49 := Nat.mod_lt X (by norm_num)
+                      omega
+                    calc X < 49 * (X / 49) + 49 := h2
+                      _ ≤ 49 * (25^a' * 7^b') := by nlinarith
+                      _ = 25^a' * 7^b' * 49 := by ring
+                      _ = 25^a' * (7^b' * 7^2) := by ring
+                      _ = 25^a' * 7^(b' + 2) := by rw [← pow_add]
+                  · -- 25^a' * 7^(b'+2) < 2X
+                    have h2 : 25^a' * 7^b' < 2 * (X / 49) := hhi'
+                    calc 25^a' * 7^(b' + 2) = 25^a' * (7^b' * 7^2) := by rw [pow_add]
+                      _ = 25^a' * 7^b' * 49 := by ring
+                      _ < 2 * (X / 49) * 49 := by nlinarith
+                      _ ≤ 2 * X := by omega
 
 /-- Key lemma: For X ≥ 625, there exists m ∈ {5 · 25^a · 7^b} with X < m < 2X.
 
@@ -172,12 +219,22 @@ lemma density_M5 (X : ℕ) (hX : X ≥ 625) :
       constructor <;> omega
 
 /-- Base case: All integers in [186, 2500] are d-representable.
-This requires computational verification via exhaustive search. -/
+
+This requires computational verification via exhaustive search, as done in the original
+Erdős-Lewin paper [ErLe96]. The verification checks that for each n ∈ [186, 2500],
+there exists a finite subset s ⊆ S357 such that:
+1. s.sum id = n
+2. s forms an antichain under divisibility
+
+The search space is finite: |S357 ∩ [1, 2500]| ≈ 100 elements. A backtracking search
+over subsets finds valid representations for all 2315 values.
+
+TODO: This can be formalized via:
+- Implementing a decidable `IsDRepresentable` predicate with exhaustive subset search
+- Using `native_decide` for the computational verification
+- Or generating explicit witness terms for each n ∈ [186, 2500] -/
 lemma base_case (n : ℕ) (hn_low : 186 ≤ n) (hn_high : n ≤ 2500) :
     IsDRepresentable n := by
-  -- Computational verification: for each n in [186, 2500], there exists
-  -- a subset of S357 that sums to n and forms an antichain under divisibility.
-  -- The search space is manageable since |S357 ∩ [1, 2500]| is finite and small.
   sorry
 
 /-- Auxiliary: multiplying by 3 preserves membership in S357 -/
