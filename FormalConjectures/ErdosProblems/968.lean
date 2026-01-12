@@ -70,7 +70,7 @@ We encode `∑_{pₙ < x}` as a sum over `n < Nat.primeCounting' x` (the number 
 theorem erdos_968.variants.sum_abs_diff_isTheta_log_sq :
     (fun x : ℕ =>
         \sum n < Nat.primeCounting' x, |u (n + 1) - u n|) =Θ[atTop]
-      fun x : ℕ => ((x : ℝ).log) ^ 2 := by
+      fun x : ℕ => log x ^ 2 := by
   sorry
 
 /--
