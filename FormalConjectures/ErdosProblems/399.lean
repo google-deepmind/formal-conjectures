@@ -36,18 +36,6 @@ open Nat
 
 namespace Erdos399
 
-/-- The equation `n! = x^k + y^k`. -/
-abbrev FactorialEqPowAdd (n x y k : ℕ) : Prop :=
-  n ! = x ^ k + y ^ k
-
-/-- The equation `n! = x^k - y^k`, encoded without subtraction as `n! + y^k = x^k`. -/
-abbrev FactorialEqPowSub (n x y k : ℕ) : Prop :=
-  n ! + y ^ k = x ^ k
-
-/-- The disjunction `n! = x^k + y^k` or `n! = x^k - y^k`. -/
-abbrev FactorialEqPowAddOrSub (n x y k : ℕ) : Prop :=
-  FactorialEqPowAdd n x y k ∨ FactorialEqPowSub n x y k
-
 /--
 Is it true that there are no solutions to `n! = x^k ± y^k` with `x,y,n ∈ ℕ`, `x*y > 1`, and
 `k > 2`?
@@ -63,9 +51,9 @@ theorem erdos_399 : answer(False) ↔
 
 /-- Erdős and Obláth proved there are no solutions when `x.Coprime y` and `k ≠ 4`. -/
 @[category research solved, AMS 11]
-theorem erdos_399.variants.erdos_oblath :
-    ∀ {n x y k : ℕ}, x.Coprime y → 1 < x * y → 2 < k → k ≠ 4 →
-      ¬ FactorialEqPowAddOrSub n x y k := by
+theorem erdos_399.variants.erdos_oblath {n x y k : ℕ} :
+    x.Coprime y → 1 < x * y → 2 < k → k ≠ 4 →
+      ¬ (n ! = x ^ k + y ^ k ∨ n ! + y ^ k = x ^ k) := by
   sorry
 
 /-- Pollack and Shapiro proved there are no solutions to `n! = x^4 - 1`. -/
