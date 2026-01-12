@@ -48,26 +48,17 @@ abbrev FactorialEqPowSub (n x y k : ℕ) : Prop :=
 abbrev FactorialEqPowAddOrSub (n x y k : ℕ) : Prop :=
   FactorialEqPowAdd n x y k ∨ FactorialEqPowSub n x y k
 
-/-- Jonas Barfield's counterexample: `10! = 48^4 - 36^4`. -/
-@[category research solved, AMS 11]
-theorem erdos_399.variants.barfield :
-    FactorialEqPowSub (n := 10) (x := 48) (y := 36) (k := 4) := by
-  native_decide
-
 /--
 Is it true that there are no solutions to `n! = x^k ± y^k` with `x,y,n ∈ ℕ`, `x*y > 1`, and
 `k > 2`?
+
+The answer is no: Jonas Barfield found the counterexample `10! = 48^4 - 36^4` (equivalently,
+`10! + 36^4 = 48^4`).
 -/
 @[category research solved, AMS 11]
 theorem erdos_399 : answer(False) ↔
     ¬ ∃ (n x y k : ℕ), 1 < x * y ∧ 2 < k ∧ FactorialEqPowAddOrSub n x y k := by
-  constructor
-  · intro h
-    cases h
-  · intro h
-    refine (h ?_).elim
-    refine ⟨10, 48, 36, 4, by decide, by decide, ?_⟩
-    exact Or.inr erdos_399.variants.barfield
+  exact ⟨False.elim, fun h => h ⟨10, 48, 36, 4, by decide, by decide, by native_decide⟩⟩
 
 /-- Erdős and Obláth proved there are no solutions when `x.Coprime y` and `k ≠ 4`. -/
 @[category research solved, AMS 11]
