@@ -36,7 +36,7 @@ In particular, `(a, b)` and `(b, a)` are counted separately; an unordered varian
 by additionally requiring `a ≤ b`. -/
 noncomputable abbrev S (x : ℝ) : ℝ :=
   ((Finset.Icc 1 ⌊x⌋₊ ×ˢ Finset.Icc 1 ⌊x⌋₊).filter fun (a, b) ↦
-      a + b ≤ ⌊x⌋₊ ∧ σ 1 a + σ 1 b = σ 1 (a + b)).card
+      a + b ≤ x ∧ σ 1 a + σ 1 b = σ 1 (a + b)).card
 
 /--
 How many (ordered) solutions are there to `σ(a) + σ(b) = σ(a + b)` with `a + b ≤ x`?
