@@ -36,7 +36,7 @@ form $k^2 + 1$, where $k$ is an integer.
 -/
 @[category research open, AMS 11]
 theorem conjecture (p : ℕ) (hp : p.Prime) :
-    ∃ k : ℤ, 0 < k ^ 2 + 1 ∧ k ^ 2 + 1 < p ∧
+    ∃ k : ℤ, k ^ 2 + 1 < p ∧
       orderOf (k ^ 2 + 1 : ZMod p) = p - 1 := by
   sorry
 
