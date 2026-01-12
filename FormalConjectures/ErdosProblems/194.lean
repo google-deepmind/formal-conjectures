@@ -19,17 +19,19 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 194
 
-*Reference:*
+*References:*
 - [erdosproblems.com/194](https://www.erdosproblems.com/194)
-- [ABJ11] Ardal, H. and Brown, T. and Jungi\'C, V., Chaotic orderings of the rationals and reals. Amer. Math. Monthly (2011), 921-925.
+- [ABJ11] Ardal, H. and Brown, T. and Jungić, V., Chaotic orderings of the rationals and reals. Amer. Math. Monthly (2011), 921-925.
 -/
 
 namespace Erdos194
 
 /--
-Let $k\geq 3$. Must any ordering of $\mathbb{R}$ contain a monotone $k$-term arithmetic progression?
+Let $k\geq 3$. Must any ordering of $\mathbb{R}$ contain a monotone $k$-term arithmetic progression,
+that is, some $x_1 <\cdots < x_k$ which forms an increasing or decreasing $k$-term arithmetic
+progression?
 
-The answer is no, even for $k=3$, as shown by Ardal, Brown, and Jungi\'{c} [ABJ11].
+The answer is no, even for $k=3$, as shown by Ardal, Brown, and Jungić [ABJ11].
 -/
 @[category research solved, AMS 5]
 theorem erdos_194 :
