@@ -35,9 +35,7 @@ The number of reduced residue classes `a` modulo `d` for which
 `least_prime_congruent a d > (1 + c) * φ(d) * log d`.
 -/
 noncomputable def large_least_prime_residue_count (c : ℝ) (d : ℕ) : ℝ :=
-  ((Finset.range d).filter fun a =>
-      a.Coprime d ∧
-        (least_prime_congruent a d : ℝ) > (1 + c) * (d.totient : ℝ) * Real.log d).card
+  #{a < d | a.Coprime d ∧ least_prime_congruent a d > (1 + c) * d.totient * log d}
 
 /--
 The number of reduced residue classes `a` modulo `d` for which
