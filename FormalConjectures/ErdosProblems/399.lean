@@ -53,7 +53,7 @@ theorem erdos_399 : answer(False) ↔
 @[category research solved, AMS 11]
 theorem erdos_399.variants.erdos_oblath {n x y k : ℕ} :
     x.Coprime y → 1 < x * y → 2 < k → k ≠ 4 →
-      ¬ (n ! = x ^ k + y ^ k ∨ n ! + y ^ k = x ^ k) := by
+      n ! ≠ x ^ k + y ^ k ∧ n ! + y ^ k ≠ x ^ k := by
   sorry
 
 /-- Pollack and Shapiro proved there are no solutions to `n! = x^4 - 1`. -/
