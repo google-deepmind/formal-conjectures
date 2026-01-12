@@ -19,10 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 971
 
-Let `p(a, d)` be the least prime congruent to `a` modulo `d`. Does there exist a constant `c > 0`
-such that, for all large `d`, we have
-`p(a, d) > (1 + c) * φ(d) * log d` for `≫ φ(d)` many values of `a`?
-
 *Reference:* [erdosproblems.com/971](https://www.erdosproblems.com/971)
 -/
 
