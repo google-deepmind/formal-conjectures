@@ -77,8 +77,8 @@ theorem erdos_399.variants.pollack_shapiro :
 Cambie observed that there are no solutions to `n! = x^4 + y^4` with `x.Coprime y` and `x*y > 1`.
 -/
 @[category research solved, AMS 11]
-theorem erdos_399.variants.cambie :
-    ∀ {n x y : ℕ}, x.Coprime y → 1 < x * y → n ! ≠ x ^ 4 + y ^ 4 := by
+theorem erdos_399.variants.cambie {n x y : ℕ} :
+    x.Coprime y → 1 < x * y → n ! ≠ x ^ 4 + y ^ 4 := by
   sorry
 
 /--
