@@ -36,20 +36,35 @@ open Cardinal SimpleGraph
 namespace Erdos1067
 
 /--
+A graph is infinitely edge-connected if to disconnect the graph requires deleting
+infinitely many edges. In other words, removing any finite set of edges leaves
+the graph connected.
+-/
+def InfinitelyEdgeConnected {V : Type*} (G : SimpleGraph V) : Prop :=
+  ∀ (s : Set (Sym2 V)), s.Finite → s ⊆ G.edgeSet → (G.deleteEdges s).Connected
+
+/--
 Does every graph with chromatic number $\aleph_1$ contain an infinitely connected subgraph with
 chromatic number $\aleph_1$?
 
 Komjáth [Ko13] proved that it is consistent that the answer is no. This was improved by
 Soukup [So15], who constructed a counterexample using no extra set-theoretical assumptions. A
 simpler elementary example was given by Bowler and Pitz [BoPi24].
+-/
+@[category research solved, AMS 5]
+theorem erdos_1067 :
+    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticNumber = aleph 1 →
+      ∃ (H : G.Subgraph), H.coe.chromaticNumber = aleph 1 ∧ InfinitelyConnected H.coe := by
+  sorry
 
+/--
 Thomassen [Th17] constructed a counterexample to the version which asks for infinite
 edge-connectivity (that is, to disconnect the graph requires deleting infinitely many edges).
 -/
 @[category research solved, AMS 5]
-theorem erdos_1067 :
-    False ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticNumber = aleph 1 →
-      ∃ (H : G.Subgraph), H.coe.chromaticNumber = aleph 1 ∧ InfinitelyConnected H.coe := by
+theorem erdos_1067.variant.infinite_edge_connectivity :
+    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticNumber = aleph 1 →
+      ∃ (H : G.Subgraph), H.coe.chromaticNumber = aleph 1 ∧ InfinitelyEdgeConnected H.coe := by
   sorry
 
 /--
@@ -58,7 +73,7 @@ has $\aleph_1$ many vertices. Komjáth [Ko13] proved that the answer is independ
 -/
 @[category research solved, AMS 5]
 theorem erdos_1067.variant.aleph_1_vertices :
-    False ↔ ∀ (V : Type) (G : SimpleGraph V), #V = aleph 1 → G.chromaticNumber = aleph 1 →
+    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), #V = aleph 1 → G.chromaticNumber = aleph 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticNumber = aleph 1 ∧ InfinitelyConnected H.coe := by
   sorry
 
