@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos971
 
-open Filter
+open Filter Finset Real
 
 /-- `least_prime_congruent a d` is the least prime congruent to `a` modulo `d`. -/
 noncomputable def leastCongruentPrime (a d : ℕ) : ℕ :=
