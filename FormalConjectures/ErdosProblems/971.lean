@@ -26,25 +26,9 @@ namespace Erdos971
 
 open Filter Finset Real
 
-/-- `least_prime_congruent a d` is the least prime congruent to `a` modulo `d`. -/
+/-- `leastCongruentPrime a d` is the least prime congruent to `a` modulo `d`. -/
 noncomputable def leastCongruentPrime (a d : ℕ) : ℕ :=
   sInf {p : ℕ | p.Prime ∧ p ≡ a [MOD d]}
-
-/--
-The number of reduced residue classes `a` modulo `d` for which
-`least_prime_congruent a d > (1 + c) * φ(d) * log d`.
--/
-noncomputable def large_least_prime_residue_count (c : ℝ) (d : ℕ) : ℝ :=
-  #{a < d | a.Coprime d ∧ least_prime_congruent a d > (1 + c) * d.totient * log d}
-
-/--
-The number of reduced residue classes `a` modulo `d` for which
-`least_prime_congruent a d < ε * φ(d) * log d`.
--/
-noncomputable def small_least_prime_residue_count (ε : ℝ) (d : ℕ) : ℝ :=
-  ((Finset.range d).filter fun a =>
-      a.Coprime d ∧
-        (least_prime_congruent a d : ℝ) < ε * (d.totient : ℝ) * Real.log d).card
 
 /--
 Let `p(a, d)` be the least prime congruent to `a (mod d)`.
@@ -54,7 +38,8 @@ Does there exist a constant `c > 0` such that for all large `d`,
 @[category research open, AMS 11]
 theorem erdos_971 : answer(sorry) ↔
     ∃ c > (0 : ℝ), ∃ C > (0 : ℝ), ∀ᶠ d in atTop,
-      C * (d.totient : ℝ) ≤ large_least_prime_residue_count c d := by
+      C * (d.totient : ℝ) ≤
+        #{a < d | a.Coprime d ∧ (leastCongruentPrime a d : ℝ) > (1 + c) * d.totient * log d} := by
   sorry
 
 /--
@@ -66,7 +51,9 @@ Erdős [Er49c] proved that the statement in `erdos_971` holds for infinitely man
 @[category research solved, AMS 11]
 theorem erdos_971.variants.infinite_sequence :
     ∃ c > (0 : ℝ), ∃ C > (0 : ℝ),
-      {d : ℕ | C * (d.totient : ℝ) ≤ large_least_prime_residue_count c d}.Infinite := by
+      {d : ℕ | C * (d.totient : ℝ) ≤
+        #{a < d | a.Coprime d ∧ (leastCongruentPrime a d : ℝ) > (1 + c) * d.totient * log d}}.Infinite :=
+    by
   sorry
 
 /--
@@ -79,7 +66,8 @@ values of `a` (for all large `d`).
 @[category research solved, AMS 11]
 theorem erdos_971.variants.many_small :
     ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ᶠ d in atTop,
-      C * (d.totient : ℝ) ≤ small_least_prime_residue_count ε d := by
+      C * (d.totient : ℝ) ≤
+        #{a < d | a.Coprime d ∧ (leastCongruentPrime a d : ℝ) < ε * d.totient * log d} := by
   sorry
 
 end Erdos971
