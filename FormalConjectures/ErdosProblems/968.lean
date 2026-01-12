@@ -41,7 +41,8 @@ namespace Erdos968
 `u n` is the normalized `n`th prime, defined as `pₙ / (n+1)` where `pₙ` is the `n`th prime
 (with `0.nth Nat.Prime = 2`).
 
-This avoids dividing by `0`, and corresponds to the classical sequence `(p₁/1, p₂/2, p₃/3, ...)`.
+This corresponds to the classical sequence `(p₁/1, p₂/2, p₃/3, ...)` while using `Nat.nth Prime`'s
+`0`-based indexing; in particular, the denominator is always positive.
 -/
 noncomputable def u (n : ℕ) : ℝ :=
   (n.nth Nat.Prime : ℝ) / (n + 1)
