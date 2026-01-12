@@ -57,8 +57,9 @@ The answer is no: Jonas Barfield found the counterexample `10! = 48^4 - 36^4` (e
 -/
 @[category research solved, AMS 11]
 theorem erdos_399 : answer(False) ↔
-    ¬ ∃ (n x y k : ℕ), 1 < x * y ∧ 2 < k ∧ FactorialEqPowAddOrSub n x y k := by
-  exact ⟨False.elim, fun h => h ⟨10, 48, 36, 4, by decide, by decide, by native_decide⟩⟩
+    ¬ ∃ (n x y k : ℕ), 1 < x * y ∧ 2 < k ∧ (n ! = x ^ k + y ^ k ∨ n ! + y ^ k = x ^ k) := by
+  simp only [false_iff, Classical.not_not]
+  exact ⟨10, 48, 36, 4, by decide⟩
 
 /-- Erdős and Obláth proved there are no solutions when `x.Coprime y` and `k ≠ 4`. -/
 @[category research solved, AMS 11]
