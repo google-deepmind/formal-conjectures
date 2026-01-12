@@ -69,8 +69,7 @@ theorem erdos_1067 :
 
 /--
 In [ErHa66] Erdős and Hajnal asked the same question under the additional assumption that the graph
-has $\aleph_1$ many vertices. Komjáth [Ko13] proved that
-the answer is independent of ZFC.
+has $\aleph_1$ many vertices. Komjáth [Ko13] proved that the answer is independent of ZFC.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1067.variant.aleph_1_vertices :
