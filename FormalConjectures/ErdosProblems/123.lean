@@ -331,7 +331,50 @@ lemma induction_case_mod1 (n : ℕ) (hn : n % 3 = 1) (hn_large : n > 2500)
   · -- Antichain property: N' coprime to 3, elements of s.image (*3) are divisible by 3
     -- Since gcd(N', 3) = 1, neither N' nor 3y' can divide the other (for y' ∈ s)
     -- Among 3x', 3y', the antichain property follows from that of x', y' in s
-    sorry
+    intro x hx y hy hxy hdiv
+    simp only [Finset.coe_insert, Finset.coe_image, Set.mem_insert_iff, Set.mem_image] at hx hy
+    -- Case analysis on whether x or y is N'
+    rcases hx with rfl | ⟨x', hx', rfl⟩ <;> rcases hy with rfl | ⟨y', hy', rfl⟩
+    · -- x = N', y = N': contradicts hxy
+      exact hxy rfl
+    · -- x = N', y = y' * 3: N' ∣ y'*3 impossible since gcd(N', 3) = 1 implies N' ∣ y', but N' > y'
+      have hgcd : Nat.gcd N' 3 = 1 := gcd_pow25_pow7_three a b
+      -- From gcd(N', 3) = 1 and N' ∣ y' * 3, we get N' ∣ y'
+      have hdiv_y' : N' ∣ y' := by
+        have h1 : N' ∣ y' * 3 := hdiv
+        exact Nat.Coprime.dvd_of_dvd_mul_right hgcd h1
+      -- But y' < N' (from bounds), contradiction with divisibility
+      have hy'_bound : y' ≤ s.sum id := Finset.single_le_sum (fun x _ => Nat.zero_le x) hy'
+      have hsum_bound : s.sum id = (n - N') / 3 := hs_sum
+      have hy'_lt_N' : y' < N' := by
+        have h1 : y' ≤ (n - N') / 3 := by rw [← hsum_bound]; exact hy'_bound
+        -- (n - N') / 3 < N' since N' > n/4 implies (n - N') < 3n/4, so (n-N')/3 < n/4 < N'
+        have h2 : (n - N') / 3 < N' := by
+          have hN'_gt : N' > n / 4 := hN'_lo
+          have h3 : n - N' ≤ 3 * (n / 4) := by omega
+          have h4 : (n - N') / 3 ≤ n / 4 := by
+            calc (n - N') / 3 ≤ (3 * (n / 4)) / 3 := Nat.div_le_div_right h3
+              _ = n / 4 := Nat.mul_div_cancel_left (n / 4) (by norm_num)
+          omega
+        omega
+      -- y' > 0 (all elements of S357 are positive) and N' ∣ y' implies N' ≤ y', contradiction with y' < N'
+      have hy'_pos : 0 < y' := by
+        -- y' ∈ s ⊆ S357, and all elements of S357 are products of powers of 3, 5, 7, hence ≥ 1
+        have hy'_mem : y' ∈ S357 := hs_sub hy'
+        simp only [S357, Set.mem_mul] at hy'_mem
+        obtain ⟨ab, ⟨a, ⟨ka, rfl⟩, b, ⟨kb, rfl⟩, rfl⟩, c, ⟨kc, rfl⟩, rfl⟩ := hy'_mem
+        positivity
+      have hle : N' ≤ y' := Nat.le_of_dvd hy'_pos hdiv_y'
+      omega
+    · -- x = x' * 3, y = N': 3x' ∣ N' is impossible since 3 ∤ N'
+      have hgcd : Nat.gcd N' 3 = 1 := gcd_pow25_pow7_three a b
+      have h3_dvd_N' : 3 ∣ N' := Nat.dvd_trans (Nat.dvd_mul_left 3 x') hdiv
+      have : N' % 3 = 0 := Nat.mod_eq_zero_of_dvd h3_dvd_N'
+      omega
+    · -- x = x' * 3, y = y' * 3: follows from antichain property of s
+      have hne' : x' ≠ y' := fun h => hxy (by simp [h])
+      have hdiv' : x' ∣ y' := (Nat.mul_dvd_mul_iff_right (by norm_num : 0 < 3)).mp hdiv
+      exact hs_anti hx' hy' hne' hdiv'
   · -- Sum = n: N' + Σ(3·sᵢ) = N' + 3·Σsᵢ = N' + 3·((n-N')/3) = N' + (n-N') = n
     have hN'_lt_n : N' < n := by omega
     have hN'_nmem : N' ∉ s.image (· * 3) := by
@@ -382,7 +425,47 @@ lemma induction_case_mod2 (n : ℕ) (hn : n % 3 = 2) (hn_large : n > 2500)
     · rw [heq]; exact five_pow25_pow7_mem_S357 a b
     · exact mul_three_mem_S357 (hs_sub hy)
   · -- Antichain property: Same structure as mod1 case
-    sorry
+    intro x hx y hy hxy hdiv
+    simp only [Finset.coe_insert, Finset.coe_image, Set.mem_insert_iff, Set.mem_image] at hx hy
+    rcases hx with rfl | ⟨x', hx', rfl⟩ <;> rcases hy with rfl | ⟨y', hy', rfl⟩
+    · exact hxy rfl
+    · -- x = N'', y = y' * 3: N'' ∣ y'*3 impossible since gcd(N'', 3) = 1 implies N'' ∣ y', but N'' > y'
+      have hgcd : Nat.gcd N'' 3 = 1 := gcd_five_pow25_pow7_three a b
+      -- From gcd(N'', 3) = 1 and N'' ∣ y' * 3, we get N'' ∣ y'
+      have hdiv_y' : N'' ∣ y' := by
+        have h1 : N'' ∣ y' * 3 := hdiv
+        exact Nat.Coprime.dvd_of_dvd_mul_right hgcd h1
+      -- But y' < N'' (from bounds), contradiction with divisibility
+      have hy'_bound : y' ≤ s.sum id := Finset.single_le_sum (fun x _ => Nat.zero_le x) hy'
+      have hsum_bound : s.sum id = (n - N'') / 3 := hs_sum
+      have hy'_lt_N'' : y' < N'' := by
+        have h1 : y' ≤ (n - N'') / 3 := by rw [← hsum_bound]; exact hy'_bound
+        -- (n - N'') / 3 < N'' since N'' > n/4 implies (n - N'') < 3n/4, so (n-N'')/3 < n/4 < N''
+        have h2 : (n - N'') / 3 < N'' := by
+          have hN''_gt : N'' > n / 4 := hN''_lo
+          have h3 : n - N'' ≤ 3 * (n / 4) := by omega
+          have h4 : (n - N'') / 3 ≤ n / 4 := by
+            calc (n - N'') / 3 ≤ (3 * (n / 4)) / 3 := Nat.div_le_div_right h3
+              _ = n / 4 := Nat.mul_div_cancel_left (n / 4) (by norm_num)
+          omega
+        omega
+      -- y' > 0 (all elements of S357 are positive) and N'' ∣ y' implies N'' ≤ y', contradiction with y' < N''
+      have hy'_pos : 0 < y' := by
+        have hy'_mem : y' ∈ S357 := hs_sub hy'
+        simp only [S357, Set.mem_mul] at hy'_mem
+        obtain ⟨ab, ⟨a, ⟨ka, rfl⟩, b, ⟨kb, rfl⟩, rfl⟩, c, ⟨kc, rfl⟩, rfl⟩ := hy'_mem
+        positivity
+      have hle : N'' ≤ y' := Nat.le_of_dvd hy'_pos hdiv_y'
+      omega
+    · -- x = x' * 3, y = N'': 3x' ∣ N'' impossible since 3 ∤ N''
+      have hgcd : Nat.gcd N'' 3 = 1 := gcd_five_pow25_pow7_three a b
+      have h3_dvd_N'' : 3 ∣ N'' := Nat.dvd_trans (Nat.dvd_mul_left 3 x') hdiv
+      have : N'' % 3 = 0 := Nat.mod_eq_zero_of_dvd h3_dvd_N''
+      omega
+    · -- x = x' * 3, y = y' * 3: follows from antichain property of s
+      have hne' : x' ≠ y' := fun h => hxy (by simp [h])
+      have hdiv' : x' ∣ y' := (Nat.mul_dvd_mul_iff_right (by norm_num : 0 < 3)).mp hdiv
+      exact hs_anti hx' hy' hne' hdiv'
   · -- Sum = n: N'' + Σ(3·sᵢ) = N'' + 3·Σsᵢ = N'' + 3·((n-N'')/3) = N'' + (n-N'') = n
     have hN''_lt_n : N'' < n := by omega
     have hN''_nmem : N'' ∉ s.image (· * 3) := by
