@@ -14,20 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjectures.Wikipedia.HardyLittlewood
 
 /-!
 # Erdős Problem 855
 
 *Reference:* [erdosproblems.com/855](https://www.erdosproblems.com/855)
 
-If `π(x)` counts the number of primes in `[1, x]`, is it true that for sufficiently large `x` and `y`
-we have `π(x+y) ≤ π(x) + π(y)`?
+This is an "eventually" formulation of the Second Hardy–Littlewood conjecture.
 -/
 
-open Nat
-
 namespace Erdos855
+
+open HardyLittlewood
 
 /--
 If `π(x)` counts the number of primes in `[1, x]`, is it true that for sufficiently large `x` and `y`
@@ -37,7 +36,7 @@ we have `π(x+y) ≤ π(x) + π(y)`?
 theorem erdos_855 :
     answer(sorry) ↔
       ∃ N : ℕ, ∀ x y : ℕ, x ≥ N → y ≥ N →
-        primeCounting (x + y) ≤ primeCounting x + primeCounting y := by
+        SecondHardyLittlewoodConjectureFor x y := by
   sorry
 
 end Erdos855
