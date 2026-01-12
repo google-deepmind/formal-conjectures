@@ -41,11 +41,12 @@ theorem density_exists (m : ℕ) (α : ℝ) : ∃ δ, HasDensity
 divisible by some $d \equiv 1 \pmod{m}$ with $1 < d < exp (m ^ \alpha)$ exists. -/
 noncomputable def δ (m : ℕ) (α : ℝ) : ℝ := (density_exists m α).choose
 
-/-- $\delta < \frac{m ^ \alpha + 1}{m}`. -/
+/-- $\delta < \frac{m ^ \alpha + 1}{m}`. This shows that
+$lim_{m\rightarrow\infty} \delta (m, \alpha) = 0$ for $\alpha < 1$. -/
 @[category research solved, AMS 11]
 theorem erdos_697.delta_lt (m : ℕ) (α : ℝ) : δ m α < (m ^ α + 1) / m := by sorry
 
-/-- Let $\beta = \frac{1}{\log 2}$. Then $lim_{m\rightarrow\infty} \delta (m, \alpha) = 0` if
+/-- Let $\beta = \frac{1}{\log 2}$. Then $lim_{m\rightarrow\infty} \delta (m, \alpha) = 0$ if
 $\alpha < \beta$. This is proved in [Ha92]. -/
 @[category research solved, AMS 11]
 theorem erdos_697.beta_lt {α : ℝ} (hα : 1 / log (2 : ℝ) < α) : Tendsto (δ · α) atTop (𝓝 0) := by
