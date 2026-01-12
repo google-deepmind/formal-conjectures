@@ -27,7 +27,7 @@ namespace Erdos971
 open Filter
 
 /-- `least_prime_congruent a d` is the least prime congruent to `a` modulo `d`. -/
-noncomputable def least_prime_congruent (a d : ℕ) : ℕ :=
+noncomputable def leastCongruentPrime (a d : ℕ) : ℕ :=
   sInf {p : ℕ | p.Prime ∧ p ≡ a [MOD d]}
 
 /--
