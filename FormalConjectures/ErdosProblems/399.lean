@@ -88,7 +88,7 @@ and `y`).
 @[category research solved, AMS 11]
 theorem erdos_399.variants.sum_two_squares :
     ∀ {n x y : ℕ}, 1 < x * y → n ! = x ^ 2 + y ^ 2 →
-      n = 6 ∧ ((x = 12 ∧ y = 24) ∨ (x = 24 ∧ y = 12)) := by
+      n = 6 ∧ (x = 12 ∧ y = 24 ∨ x = 24 ∧ y = 12) := by
   sorry
 
 end Erdos399
