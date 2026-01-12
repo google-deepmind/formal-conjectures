@@ -70,8 +70,7 @@ theorem erdos_399.variants.erdos_oblath :
 
 /-- Pollack and Shapiro proved there are no solutions to `n! = x^4 - 1`. -/
 @[category research solved, AMS 11]
-theorem erdos_399.variants.pollack_shapiro :
-    ¬ ∃ (n x : ℕ), n ! + 1 = x ^ 4 := by
+theorem erdos_399.variants.pollack_shapiro (n x : ℕ) : n ! + 1 ≠ x ^ 4 := by
   sorry
 
 /--
