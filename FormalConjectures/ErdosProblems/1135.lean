@@ -18,7 +18,7 @@ import FormalConjectures.Wikipedia.CollatzConjecture
 /-!
 # Erdős Problem 1135
 
-*Reference:*
+*References:*
 * [erdosproblems.com/1135](__https://www.erdosproblems.com/1135__)
 * [Gu04] Guy, Richard K., Unsolved problems in number theory.  (2004), xviii+437.
 * [La10] Lagarias, Jeffrey C., The {$3x+1$} problem: an overview.  (2010), 3--29.
