@@ -282,19 +282,42 @@ def verifyRange (lo hi : ℕ) : Bool :=
 /-- The S357 elements up to 2500 that we need for base case verification -/
 def s357UpTo2500 : List ℕ := s357List 2500
 
-/-- Proof that isS357Element correctly identifies S357 membership -/
+/-- Proof that isS357Element correctly identifies S357 membership.
+
+The function isS357Element works by:
+1. Dividing out all factors of 3 (via gcd with 3^20)
+2. Dividing out all factors of 5 (via gcd with 5^15)
+3. Dividing out all factors of 7 (via gcd with 7^12)
+4. Checking if the result is 1
+
+If the result is 1, then x only had prime factors 3, 5, 7, so x ∈ S357.
+
+This proof requires showing that the gcd-based factorization correctly
+extracts all prime powers. -/
 lemma isS357Element_correct {x : ℕ} (hpos : 0 < x) :
     isS357Element x = true → x ∈ S357 := by
-  intro h
+  intro _h
   simp only [S357, Set.mem_mul, Submonoid.mem_powers]
-  -- The element passes our filter, so it's of the form 3^a * 5^b * 7^c
-  -- We construct the witnesses by prime factorization
+  -- The proof requires extracting witnesses (a, b, c) from the gcd computation.
+  -- Key insight: if x / gcd(x, 3^20) / gcd(_, 5^15) / gcd(_, 7^12) = 1,
+  -- then x = 3^a * 5^b * 7^c where a ≤ 20, b ≤ 15, c ≤ 12.
+  -- This is tedious but straightforward number theory.
   sorry
 
-/-- If isDRepresentableDec n = true, then IsDRepresentable n -/
+/-- If isDRepresentableDec n = true, then IsDRepresentable n.
+
+The search algorithm searchReprAux finds a list of S357 elements that:
+1. Sum to n
+2. Form an antichain under divisibility
+
+This soundness proof requires:
+1. Showing elements found by search satisfy isS357Element
+2. Showing isS357Element elements are in S357 (via isS357Element_correct)
+3. Showing the antichain check isAntichain implies IsAntichain -/
 lemma isDRepresentableDec_sound (n : ℕ) :
     isDRepresentableDec n = true → IsDRepresentable n := by
-  -- The search algorithm finds a valid antichain subset of S357 summing to n
+  -- The search algorithm finds a valid antichain subset of S357 summing to n.
+  -- A complete proof would extract the witness list and verify properties.
   sorry
 
 -- Computational verification: #eval verifyRange 186 2500 returns true
