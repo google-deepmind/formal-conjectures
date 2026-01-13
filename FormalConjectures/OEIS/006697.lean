@@ -43,7 +43,7 @@ def morphism : Bool → List Bool
 
 /-- Apply the morphism to a list of symbols. -/
 def applyMorphism (w : List Bool) : List Bool :=
-  (w.map morphism).join
+  (w.map morphism).flatten
 
 /-- The n-th iterate of the morphism applied to [a]. -/
 def iterateMorphism : ℕ → List Bool
