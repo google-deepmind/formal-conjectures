@@ -52,7 +52,7 @@ theorem erdos_318.univ : P₁ univ := by
 theorem erdos_318.odd : P₁ {n | Odd n} := by
   sorry
 
-/-- The set of nonzero squares does not have property `P₁`. -/
+/-- The set of squares does not have property `P₁`. -/
 @[category test, AMS 11]
 theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n}) := by
   simp only [P₁, not_forall, not_exists, not_and]
@@ -116,7 +116,7 @@ theorem erdos_318.posDensity : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A :=
 theorem erdos_318.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
-/-- Does the set of nonzero squares excluding 1 have property `P₁`? -/
+/-- Does the set of squares excluding 1 have property `P₁`? -/
 @[category research open, AMS 11]
 theorem erdos_318.square_excluding_one : answer(sorry) ↔  P₁ ({n | IsSquare n} \ {1}) := by
   sorry
