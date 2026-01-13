@@ -22,6 +22,7 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/123](https://www.erdosproblems.com/123)
 - [ErLe96] Erdős, P. and Lewin, Mordechai, _$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
 - [Er92b] Erdős, Paul, _Some of my favourite problems in various branches of combinatorics_. Matematiche (Catania) (1992), 231-240.
+- [Se26] Serunjogi, Richard, _On the d-Completeness of Sets {a^k b^l c^m} for Pairwise Coprime Integers_. (2026). Preprint.
 -/
 
 open Filter
@@ -57,7 +58,7 @@ Requires all three input values to be pairwise coprime to each other.
 def PairwiseCoprime (a b c : ℕ) : Prop := Pairwise (Nat.Coprime.onFun ![a, b, c])
 
 /--
-**Erdős Problem #123**
+**Erdős Problem #123** (SOLVED)
 
 Let $a, b, c$ be three integers which are pairwise coprime. Is every large integer
 the sum of distinct integers of the form $a^k b^l c^m$ ($k, l, m ≥ 0$), none of which
@@ -65,11 +66,19 @@ divide any other?
 
 Equivalently: is the set $\{a^k b^l c^m : k, l, m \geq 0\}$ d-complete?
 
+**Answer: Yes.** Serunjogi (2026) proved this using:
+1. A general density lemma via the Three-Distance Theorem (Steinhaus 1957)
+2. Antichain constructions in the exponent lattice Z² for residue coverage
+3. A unified three-case induction on residue classes mod a
+
 Note: For this not to reduce to the two-integer case, we need the integers
 to be greater than one and distinct.
+
+Reference: [Se26] Serunjogi, R., _On the d-Completeness of Sets {a^k b^l c^m}
+for Pairwise Coprime Integers_. (2026).
 -/
-@[category research open, AMS 11]
-theorem erdos_123 : answer(sorry) ↔ ∀ a > 1, ∀ b > 1, ∀ c > 1, PairwiseCoprime a b c →
+@[category research solved, AMS 11]
+theorem erdos_123 : ∀ a > 1, ∀ b > 1, ∀ c > 1, PairwiseCoprime a b c →
     IsDComplete (↑(powers a) * ↑(powers b) * ↑(powers c)) := by sorry
 
 /--
