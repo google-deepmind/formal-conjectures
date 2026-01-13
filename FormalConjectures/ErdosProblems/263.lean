@@ -39,7 +39,7 @@ def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
   (∀ n : ℕ, a n > 0) ∧
     (∀ b : ℕ → ℕ, (∀ n : ℕ, b n > 0) ∧
       atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
-      (Irrational <| ∑' n, 1 / (b n : ℝ)))
+      Irrational (∑' n, 1 / (b n : ℝ)))
 
 /--
 Is $a_n = 2^{2^n}$ an irrationality sequence in the above sense?
