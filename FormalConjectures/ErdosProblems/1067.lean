@@ -67,14 +67,6 @@ theorem erdos_1067.variant.infinite_edge_connectivity :
       ∃ (H : G.Subgraph), H.coe.chromaticNumber = aleph 1 ∧ InfinitelyEdgeConnected H.coe := by
   sorry
 
-/--
-In [ErHa66] Erdős and Hajnal asked the same question under the additional assumption that the graph
-has $\aleph_1$ many vertices. Komjáth [Ko13] proved that the answer is independent of ZFC.
--/
-@[category research solved, AMS 5]
-theorem erdos_1067.variant.aleph_1_vertices :
-    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), #V = aleph 1 → G.chromaticNumber = aleph 1 →
-      ∃ (H : G.Subgraph), H.coe.chromaticNumber = aleph 1 ∧ InfinitelyConnected H.coe := by
-  sorry
+-- TODO: Formalize variant independent of ZFC.
 
 end Erdos1067
