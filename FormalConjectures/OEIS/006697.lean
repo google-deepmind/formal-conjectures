@@ -43,7 +43,7 @@ def morphism : Bool → List Bool
 
 /-- Apply the morphism to a list of symbols. -/
 def applyMorphism (w : List Bool) : List Bool :=
-  w.bind morphism
+  (w.map morphism).join
 
 /-- The n-th iterate of the morphism applied to [a]. -/
 def iterateMorphism : ℕ → List Bool
@@ -67,8 +67,12 @@ def subwordsOfLength (n : ℕ) : Set (List Bool) :=
 /-- The subword complexity function: a(n) is the number of distinct subwords of length n. -/
 noncomputable def a (n : ℕ) : ℕ := (subwordsOfLength n).ncard
 
-/-- The set of "exceptional" exponents in the generating function: {2^k + k - 1 : k ≥ 1}. -/
-def exceptionalExponents : Set ℕ := {n | ∃ k : ℕ, k ≥ 1 ∧ n = 2 ^ k + k - 1}
+/-- Decidable predicate for exceptional exponents: n is exceptional if n = 2^k + k - 1 for some k ≥ 1. -/
+def isExceptionalExponent (n : ℕ) : Bool :=
+  (List.range (n + 2)).any fun k => k ≥ 1 && n + 1 == 2 ^ k + k
+
+/-- The set of exceptional exponents in the generating function: {2^k + k - 1 : k ≥ 1}. -/
+def exceptionalExponents : Set ℕ := {n | isExceptionalExponent n}
 
 /--
 **Conjecture (A006697)**: The generating function for the number of subwords of length $n$
@@ -82,7 +86,7 @@ Equivalently, a(n) equals the n-th coefficient of this generating function.
 theorem conjecture : ∀ n, (a n : ℚ) =
     PowerSeries.coeff ℚ n (1 + (1 - PowerSeries.X)⁻¹ +
       (1 - PowerSeries.X)⁻¹ ^ 2 * ((1 - PowerSeries.X)⁻¹ -
-        ∑ k ∈ Finset.filter (· ∈ exceptionalExponents) (Finset.range (n + 1)),
+        ∑ k ∈ (Finset.range (n + 1)).filter (isExceptionalExponent ·),
           PowerSeries.X ^ k)) := by
   sorry
 
