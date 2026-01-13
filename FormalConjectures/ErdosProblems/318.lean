@@ -97,7 +97,7 @@ theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n} \ {0}) := by
       simp_all [neg_div, zero_lt_iff, (not_iff_not.2 mem_singleton_iff).1 (hs hp).2]
 
 /-- For any set `A` containing exactly one even number, `A` does not have property `P₁`. Sattler
-[Sa82] credits this observation to Erdős, who presumably found this after [ErGr80].-/
+[Sa82] credits this observation to Erdős, who presumably found this after [ErGr80]. -/
 @[category research solved, AMS 11]
 theorem erdos_318.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even n}.ncard = 1) :
     ¬ P₁ {n | IsSquare n} := by
