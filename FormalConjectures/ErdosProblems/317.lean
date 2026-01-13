@@ -31,11 +31,11 @@ Is there some constant $c>0$ such that for every $n\geq 1$ there exists some $\d
 \[0< \left\lvert \sum_{1\leq k\leq n}\frac{\delta_k}{k}\right\rvert < \frac{c}{2^n}?\]
 -/
 @[category research open, AMS 11]
-theorem erdos_317 :
-    (∃ c > 0, ∀ n ≥ 1, ∃ δ : Fin n → ℚ,
+theorem erdos_317 : answer(sorry) ↔
+    ∃ c > 0, ∀ n ≥ 1, ∃ δ : Fin n → ℚ,
       Set.range δ ⊆ {-1, 0, 1} ∧
       letI lhs : ℝ := |∑ k, (δ k) / (k + 1)|
-      0 < lhs ∧ lhs < c / 2^n) ↔ answer(sorry) := by
+      0 < lhs ∧ lhs < c / 2^n := by
   sorry
 
 /--
@@ -44,10 +44,10 @@ Is it true that for sufficiently large $n$, for any $\delta_k\in \{-1,0,1\}$,
 whenever the left-hand side is not zero?
 -/
 @[category research open, AMS 11]
-theorem erdos_317.variants.claim2 : (∀ᶠ n in atTop,
-    ∀ δ : (Fin n) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
+theorem erdos_317.variants.claim2 : answer(sorry) ↔
+    ∀ᶠ n in atTop, ∀ δ : (Fin n) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
     letI lhs := |∑ k, ((δ k : ℚ) / (k + 1))|
-    lhs ≠ 0 → lhs > 1 / (Icc 1 n).lcm id) ↔ answer(sorry) := by
+    lhs ≠ 0 → lhs > 1 / (Icc 1 n).lcm id := by
   sorry
 
 /--

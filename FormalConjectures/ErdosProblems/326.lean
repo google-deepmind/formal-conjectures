@@ -35,9 +35,9 @@ Must there exist $B = \{b_1 < b_2 < \dots\} \subseteq A$ which is also a basis s
 $\lim_{k\to\infty} \frac{b_k}{k^2}$ does not exist?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_326 : (∀ (A : Set ℕ), A.IsAddBasisOfOrder 2 →
+theorem erdos_326 : answer(sorry) ↔ ∀ (A : Set ℕ), A.IsAddBasisOfOrder 2 →
     ∃ (b : ℕ → ℕ), StrictMono b ∧ ∀ n, b n ∈ A ∧ (Set.range b).IsAddBasis ∧
-      ∀ (x : ℝ), ¬ Tendsto (fun n ↦ (b n : ℝ) / n ^ 2) atTop (𝓝 x)) ↔ answer(sorry) := by
+      ∀ (x : ℝ), ¬ Tendsto (fun n ↦ (b n : ℝ) / n ^ 2) atTop (𝓝 x) := by
   sorry
 
 /--
@@ -48,7 +48,7 @@ Erdős originally asked whether this was true with `A = B`, but this was disprov
 @[category research solved, AMS 5 11]
 theorem erdos_326.variants.eq :
     ∃ (a : ℕ → ℕ) (_ : StrictMono a) (_ : Set.range a |>.IsAddBasisOfOrder 2) (x : ℝ) (_ : 0 < x),
-      Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x) :=
+      Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x) := by
   sorry
 
 end Erdos326

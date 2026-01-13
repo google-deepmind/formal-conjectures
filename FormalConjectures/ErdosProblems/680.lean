@@ -36,17 +36,17 @@ where $p(m)$ denotes the least prime factor of $m$?
 -/
 @[category research open, AMS 11]
 theorem erdos_680 :
-  (∀ᶠ (n : ℕ) in Filter.atTop, ∃ k ≠ 0, Nat.minFac (n + k) > k^2 + 1)
-  ↔ answer(sorry) := sorry
+    answer(sorry) ↔ ∀ᶠ (n : ℕ) in .atTop, ∃ k ≠ 0, (n + k).minFac > k^2 + 1 := by
+  sorry
 
 /--
 Can one prove this is false if we replace $k^2+1$ by $e^{(1+\epsilon)\sqrt{k}}+C_\epsilon$, for all
 $\epsilon>0$, where $C_\epsilon>0$ is some constant?
 -/
 @[category research open, AMS 11]
-theorem erdos_680.variant : (∀ ε > 0, ∃ C > 0,
-  ¬ ∀ᶠ (n : ℕ) in Filter.atTop, ∃ k ≠ 0,
-  Nat.minFac (n + k) > exp ((1 + ε) * √k) + C)
-  ↔ answer(sorry) := sorry
+theorem erdos_680.variant : answer(sorry) ↔ ∀ ε > 0, ∃ C > 0,
+    ¬ ∀ᶠ (n : ℕ) in Filter.atTop, ∃ k ≠ 0,
+    Nat.minFac (n + k) > exp ((1 + ε) * √k) + C := by
+  sorry
 
 end Erdos680

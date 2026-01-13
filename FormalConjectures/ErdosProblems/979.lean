@@ -32,18 +32,18 @@ Let $k ≥ 2$, and let $f_k(n)$ count the number of solutions to $n = p_1^k + \d
 where the $p_i$ are prime numbers. Is it true that $\limsup f_k(n) = \infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_979 :
-    (∀ k ≥ 2, Filter.limsup (fun n => (solutionSet n k).encard) Filter.atTop = ⊤) ↔ answer(sorry) := by
+theorem erdos_979 : answer(sorry) ↔
+    ∀ k ≥ 2, Filter.limsup (fun n => (solutionSet n k).encard) Filter.atTop = ⊤ := by
   sorry
 
 /--
 Erdős [Er37b] proved that if $f_2(n)$ counts the number of solutions to $n = p_1^2 + p_2^2$, where $p_1$ and $p_2$ are prime numbers, then $\limsup f_2(n) = \infty$.
 
-[Er37b] Erdős, Paul, On the Sum and Difference of Squares of Primes. J. London Math. Soc. (1937), 133--136. 
+[Er37b] Erdős, Paul, On the Sum and Difference of Squares of Primes. J. London Math. Soc. (1937), 133--136.
 -/
 @[category research solved, AMS 11]
 theorem erdos_979_k2 :
-    Filter.limsup (fun n => (solutionSet n 2).encard) Filter.atTop = ⊤ :=
+    Filter.limsup (fun n => (solutionSet n 2).encard) Filter.atTop = ⊤ := by
   sorry
 
 /--
@@ -51,7 +51,7 @@ Erdős (unpublished)
 -/
 @[category research solved, AMS 11]
 theorem erdos_979_k3 :
-    Filter.limsup (fun n => (solutionSet n 3).encard) Filter.atTop = ⊤ :=
+    Filter.limsup (fun n => (solutionSet n 3).encard) Filter.atTop = ⊤ := by
   sorry
 
 end Erdos979

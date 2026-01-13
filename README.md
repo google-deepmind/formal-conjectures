@@ -118,11 +118,11 @@ lake build
 The directory structure is organized by the type of sources of the conjectures.
 There are two special directories:
 
--   `Util` contains utilities like the
+-   `FormalConjectures/Util` contains utilities like the
     [`category` attribute](./FormalConjectures/Util/Attributes.lean), the
     [`answer( )` elaborator](./FormalConjectures/Util/Answer.lean) and some
     linters.
--   `ForMathlib` contains code potentially suitable to be upstreamed to
+-   `FormalConjecturesForMathlib` contains code potentially suitable to be upstreamed to
     [mathlib](https://github.com/leanprover-community/mathlib4). Here we follow
     mathlib's directory structure.
 
@@ -133,12 +133,12 @@ There are two special directories:
 A tag to mark the category of a problem statement. In this repository, we allow
 for the following categories:
 
--   Open research problem: a mathematical problem for which there is no solution
-    accepted by the community.
--   Solved research problem: a mathematical problem that has an accepted
-    solution (in the sense that it is widely accepted by experts in the field).
-    In particular this does *not* mean that the statement has been proven in the
-    formal setting.
+-   Open research problem: a mathematical problem or conjecture for which no
+    solution or proof is currently accepted by the mathematical community.
+-   Solved research problem: a problem with an established solution.
+    This includes problems that have a formal proof within this repository,
+    a formal proof of an equivalent statement found elsewhere, or an informal
+    solution widely accepted by experts in the field.
 -   Graduate level problem.
 -   Undergraduate level problem.
 -   High school level problem.
@@ -236,9 +236,12 @@ meaningful solution of the problem is outside of the scope of this repository.
     use `answer(sorry)` in the following way:
     ```lean
     /-- English version: "Does P hold ?" -/
-    theorem myConjecture : P ↔ answer(sorry) := by
+    theorem myConjecture : answer(sorry) ↔ P := by
       sorry
-    ```
+    ```.
+    This way the informal "Does ...", "Are there ..." or "Is it true that ..." corresponds
+    to the `answer(sorry)` in the formalised statement.
+
     If the problem has been solved, `answer(sorry)` should be replaced by
     `answer(True)` or `answer(False)` accordingly.
     If the problem is not stated as a question, the following style is preferred:

@@ -55,12 +55,10 @@ is an additive basis of order `k + 1`?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_881 :
-    (∀ (k : ℕ) (A : Set ℕ),
+    answer(sorry) ↔ ∀ (k : ℕ) (A : Set ℕ),
       IsMinimalAsymptoticAddBasisOfOrder k A →
         ∃ (B : Set ℕ), B ⊆ A ∧ B.Infinite ∧
-          (A \ B).IsAsymptoticAddBasisOfOrder (k + 1)) ↔
-      answer(sorry) := by
+          (A \ B).IsAsymptoticAddBasisOfOrder (k + 1) := by
   sorry
 
 end Erdos881
-
