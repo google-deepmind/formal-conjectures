@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Wikipedia.HardyLittlewood
 
 /-!
@@ -24,19 +23,16 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 This is an "eventually" formulation of the Second Hardy–Littlewood conjecture.
 -/
 
+open Filter
+open scoped Nat.Prime
+
 namespace Erdos855
 
-open HardyLittlewood
-
-/--
-If `π(x)` counts the number of primes in `[1, x]`, is it true that for sufficiently large `x` and `y`
-we have `π(x+y) ≤ π(x) + π(y)`?
--/
 @[category research open, AMS 11]
 theorem erdos_855 :
     answer(sorry) ↔
-      ∃ N : ℕ, ∀ x y : ℕ, x ≥ N → y ≥ N →
-        SecondHardyLittlewoodConjectureFor x y := by
+        (∀ᶠ x in atTop, ∀ᶠ y in atTop,
+        π (x + y) ≤ π x + π y) := by
   sorry
 
 end Erdos855
