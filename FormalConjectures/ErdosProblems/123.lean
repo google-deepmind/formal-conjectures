@@ -292,16 +292,23 @@ The function isS357Element works by:
 
 If the result is 1, then x only had prime factors 3, 5, 7, so x ∈ S357.
 
-This proof requires showing that the gcd-based factorization correctly
-extracts all prime powers. -/
+**Proof sketch**: If `isS357Element x = true`, then after dividing by gcd with
+large powers of 3, 5, 7, we get 1. This means `x.primeFactors ⊆ {3, 5, 7}`.
+By unique factorization, `x = 3^a * 5^b * 7^c` for some `a, b, c`.
+
+**Implementation note**: Completing this proof requires careful use of Mathlib's
+`Nat.factorization` API and `Finsupp.prod`. The key lemma is that
+`x = ∏ p in x.primeFactors, p^(x.factorization p)` and when
+`x.primeFactors ⊆ {3,5,7}`, this product equals `3^a * 5^b * 7^c`. -/
 lemma isS357Element_correct {x : ℕ} (hpos : 0 < x) :
     isS357Element x = true → x ∈ S357 := by
   intro _h
   simp only [S357, Set.mem_mul, Submonoid.mem_powers]
-  -- The proof requires extracting witnesses (a, b, c) from the gcd computation.
-  -- Key insight: if x / gcd(x, 3^20) / gcd(_, 5^15) / gcd(_, 7^12) = 1,
-  -- then x = 3^a * 5^b * 7^c where a ≤ 20, b ≤ 15, c ≤ 12.
-  -- This is tedious but straightforward number theory.
+  -- The proof requires:
+  -- 1. Show isS357Element x = true implies x.primeFactors ⊆ {3, 5, 7}
+  -- 2. Use unique factorization to get x = 3^a * 5^b * 7^c
+  -- 3. Construct the S357 membership witness
+  -- This requires Mathlib's Nat.factorization_prod_pow_eq_self and Finset.prod_subset.
   sorry
 
 /-- If isDRepresentableDec n = true, then IsDRepresentable n.
