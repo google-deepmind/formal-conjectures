@@ -29,10 +29,8 @@ open scoped Nat.Prime
 namespace Erdos855
 
 @[category research open, AMS 11]
-theorem erdos_855 :
-    answer(sorry) ↔
-        (∀ᶠ x in atTop, ∀ᶠ y in atTop,
-        π (x + y) ≤ π x + π y) := by
+theorem erdos_855 : answer(sorry) ↔
+    ∀ᶠ x in atTop, ∀ᶠ y in atTop, π (x + y) ≤ π x + π y := by
   sorry
 
 end Erdos855
