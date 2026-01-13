@@ -29,7 +29,7 @@ import FormalConjectures.Util.ProblemImports
     theory. Monographies de L'Enseignement Mathematique (1980).
 -/
 
-open Set
+open Set Real
 
 namespace Erdos318
 
@@ -38,7 +38,7 @@ namespace Erdos318
 `∑ n ∈ S, fₙ / n = 0`. This is defined in [Sa82b]. -/
 def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ), f ∘ (Subtype.val : A → ℕ) ≠ (fun _ => 1) →
   f ∘ (Subtype.val : A → ℕ) ≠ (fun _ => - 1) → Set.range f ⊆ {1, -1} →
-  ∃ S : Finset ℕ, S.Nonempty ∧ S.toSet ⊆ A ∧ ∑ n ∈ S, (f n).1 / n = 0
+  ∃ S : Finset ℕ, S.Nonempty ∧ S.toSet ⊆ A ∧ ∑ n ∈ S, f n / n = 0
 
 /-- `ℕ` has property `P₁`. This is proved in [ErSt75]. -/
 @[category research solved, AMS 11]
@@ -50,10 +50,34 @@ theorem erdos_318.univ : P₁ univ := by
 theorem erdos_318.odd : P₁ {n | Odd n} := by
   sorry
 
-/-- The set of squares does not have property `P₁`. -/
+/-- The set of nonzero squares does not have property `P₁`. -/
 @[category test, AMS 11]
-theorem erdos_318.squares : ¬ P₁ {n | IsSquare n} := by
-  sorry
+theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n} \ {0}) := by
+  simp only [P₁, not_forall, not_exists, not_and]
+  refine ⟨fun n => if n = 1 then 1 else - 1, fun h => ?_, fun h => ?_,
+    fun x ⟨y, hy⟩ => ?_, fun S h hs => ?_⟩
+  · have : (- 1 : ℝ) = 1 := by simpa using congr_fun h ⟨4, ⟨⟨2, by grind⟩, by grind⟩⟩
+    grind
+  · have : 1 = (- 1 : ℝ) := by simpa using congr_fun h ⟨1, ⟨IsSquare.one, by grind⟩⟩
+    grind
+  · by_cases x = 1 <;> grind
+  · by_cases h1 : 1 ∈ S
+    · rw [Finset.sum_eq_add_sum_diff_singleton h1, Finset.sum_congr rfl
+        (g := fun n : ℕ => (- 1 : ℝ) / n)]
+      · simp only [↓reduceIte, Nat.cast_one, div_self one_ne_zero, ← ne_eq, div_eq_mul_one_div
+          (- 1 : ℝ), ← Finset.mul_sum, neg_one_mul (∑ x ∈ S \ {1}, 1 / (x : ℝ)), ← sub_eq_add_neg]
+        apply ne_of_gt
+        calc
+        _ < 1 - (π ^ 2 / 6 - 1) := by
+          have : π ^ 2 < 3.15 ^ 2 := by gcongr; exact Real.pi_lt_d2
+          linarith
+        _ = 1 - ∑' n : {n | n ≥ 2}, 1 / (n : ℝ) ^ 2 := by sorry
+        _ ≤ 1 - ∑ n ∈ S \ {1}, 1 / (n : ℝ) := by sorry
+      · intro _ _; grind
+    · suffices ∑ n ∈ S, (fun n ↦ if n = 1 then 1 else - 1) n / (n : ℝ) < 0 from by linarith
+      refine Finset.sum_neg (fun p hp => ?_) h
+      have : p ≠ 1 := by grind
+      simp_all [neg_div, zero_lt_iff, (not_iff_not.2 mem_singleton_iff).1 (hs hp).2]
 
 /-- For any set `A` containing exactly one even number, `A` does not have property `P₁`. Sattler
 [Sa82] credits this observation to Erdős, who presumably found this after [ErGr80].-/
@@ -72,7 +96,7 @@ theorem erdos_318.posDensity : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A :=
 theorem erdos_318.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
-/-- Does the set of squares excluding 1 have property `P₁`? -/
+/-- Does the set of nonzero squares excluding 1 have property `P₁`? -/
 @[category research open, AMS 11]
 theorem erdos_318.square_excluding_one : answer(sorry) ↔  P₁ ({n | IsSquare n} \ {1}) := by
   sorry
