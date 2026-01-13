@@ -19,18 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 486: Logarithmic density for sets avoiding modular subsets
 
-For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
-Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
-Must $B$ have a logarithmic density?
-
 *Reference:* [erdosproblems.com/486](https://www.erdosproblems.com/486)
 -/
 
 namespace Erdos486
 
 /--
-**Erdős Problem 486**
-
 For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
 Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
 Must $B$ have a logarithmic density?

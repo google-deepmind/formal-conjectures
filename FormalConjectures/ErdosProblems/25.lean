@@ -16,11 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 25: Logarithmic density of size-dependent congruences
-
-Let $n_1 < n_2 < \dots$ be an arbitrary sequence of integers, each with an associated residue class
-$a_i \pmod{n_i}$. Let $A$ be the set of integers $n$ such that for every $i$ either $n < n_i$ or
-$n \not\equiv a_i \pmod{n_i}$. Must the logarithmic density of $A$ exist?
+# Erdős Problem 25
 
 *Reference:* [erdosproblems.com/25](https://www.erdosproblems.com/25)
 -/
@@ -32,8 +28,6 @@ open Classical
 namespace Erdos25
 
 /--
-**Erdős Problem 25**
-
 Let $n_1 < n_2 < \dots$ be an arbitrary sequence of integers, each with an associated residue class
 $a_i \pmod{n_i}$. Let $A$ be the set of integers $n$ such that for every $i$ either $n < n_i$ or
 $n \not\equiv a_i \pmod{n_i}$. Must the logarithmic density of $A$ exist?
