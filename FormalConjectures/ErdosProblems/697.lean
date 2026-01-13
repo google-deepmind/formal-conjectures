@@ -34,7 +34,7 @@ namespace Erdos697
 some $d \equiv 1 \pmod{m}$ with $1 < d < \exp (m ^ \alpha)$ exists. -/
 @[category research solved, AMS 11]
 theorem density_exists (m : ℕ) (α : ℝ) : ∃ δ, HasDensity
-    {n : ℕ | ∃ d, d ≡ 1 [MOD m] ∧ (d : ℝ) ∈ Set.Ioo 1 (exp (m ^ α)) ∧ n ∣ d} δ := by
+    {n : ℕ | ∃ d, d ≡ 1 [MOD m] ∧ (d : ℝ) ∈ Set.Ioo 1 (exp (m ^ α)) ∧ d ∣ n} δ := by
   sorry
 
 /-- For each $m$ and $\alpha$,  $\delta (m, \alpha)$ is the density of the set of integers which are
@@ -58,6 +58,5 @@ This is proved in [Ha92]. -/
 @[category research solved, AMS 11]
 theorem erdos_697.lt_beta {α : ℝ} (hα : α < 1 / log (2 : ℝ)) : Tendsto (δ · α) atTop (𝓝 1) := by
   sorry
-
 
 end Erdos697
