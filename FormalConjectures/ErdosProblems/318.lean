@@ -54,6 +54,7 @@ theorem erdos_318.odd : P₁ {n | Odd n} := by
 @[category test, AMS 11]
 theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n} \ {0}) := by
   simp only [P₁, not_forall, not_exists, not_and]
+  -- Consider the function `f` that sends `1` to `1` and sends all other numbers to `-1`.
   refine ⟨fun n => if n = 1 then 1 else - 1, fun h => ?_, fun h => ?_,
     fun x ⟨y, hy⟩ => ?_, fun S h hs => ?_⟩
   · have : (- 1 : ℝ) = 1 := by simpa using congr_fun h ⟨4, ⟨⟨2, by grind⟩, by grind⟩⟩
@@ -61,6 +62,9 @@ theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n} \ {0}) := by
   · have : 1 = (- 1 : ℝ) := by simpa using congr_fun h ⟨1, ⟨IsSquare.one, by grind⟩⟩
     grind
   · by_cases x = 1 <;> grind
+  -- Consider two cases: `1 ∈ S` or `1 ∉ S`. In the first case, the finite sum over `S` is bounded
+  -- below by `1 - (π ^ 2 / 6 - 1)`, which is positive. In the second case, the finite sum over `S`
+  -- is negative.
   · by_cases h1 : 1 ∈ S
     · rw [Finset.sum_eq_add_sum_diff_singleton h1, Finset.sum_congr rfl
         (g := fun n : ℕ => (- 1 : ℝ) / n)]
@@ -71,8 +75,21 @@ theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n} \ {0}) := by
         _ < 1 - (π ^ 2 / 6 - 1) := by
           have : π ^ 2 < 3.15 ^ 2 := by gcongr; exact Real.pi_lt_d2
           linarith
-        _ = 1 - ∑' n : {n | n ≥ 2}, 1 / (n : ℝ) ^ 2 := by sorry
-        _ ≤ 1 - ∑ n ∈ S \ {1}, 1 / (n : ℝ) := by sorry
+        _ = 1 - (∑' n : ℕ, 1 / (n : ℝ) ^ 2 - 1) := by congr; exact hasSum_zeta_two.tsum_eq.symm
+        _ ≤ 1 - ∑ n ∈ S \ {1}, 1 / (n : ℝ) := by
+          gcongr
+          have : 1 = 1 / ((1 : ℕ) : ℝ) := by norm_cast; grind
+          nth_rewrite 3 [this]
+          rw [le_sub_iff_add_le, ← Finset.sum_eq_sum_diff_singleton_add h1]
+          let S' := S.preimage (· ^ 2) (Function.Injective.injOn
+            (Nat.pow_left_injective (by decide)))
+          have hS' : S'.map ⟨(· ^ 2), Nat.pow_left_injective (by decide)⟩ = S := by
+            apply Finset.coe_injective
+            have h : (S : Set ℕ) ⊆ Set.range (· ^ 2) :=
+              hs.trans (by simp [isSquare_iff_exists_sq, Set.subset_def])
+            simpa [S', Set.image_preimage_eq_iff] using h
+          rw [← hS', Finset.sum_map, Function.Embedding.coeFn_mk]
+          simpa [Nat.cast_pow] using Summable.sum_le_tsum S' (fun _ _ => by positivity) (by simp)
       · intro _ _; grind
     · suffices ∑ n ∈ S, (fun n ↦ if n = 1 then 1 else - 1) n / (n : ℝ) < 0 from by linarith
       refine Finset.sum_neg (fun p hp => ?_) h
@@ -86,7 +103,8 @@ theorem erdos_318.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even 
     ¬ P₁ {n | IsSquare n} := by
   sorry
 
-/-- There exists a set `A` with positive density that does not have property `P₁`. -/
+/-- There exists a set `A` with positive density that does not have property `P₁`.
+#TODO: prove this lemma by assuming `erdos_318.contain_single_even`. -/
 @[category research solved, AMS 11]
 theorem erdos_318.posDensity : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
