@@ -30,8 +30,8 @@ namespace Erdos99
 
 /-- A set has minimum distance 1 if all pairwise distances are at least 1, and the minimum is achieved. -/
 def HasMinDist1 (A : Finset ℝ²) : Prop :=
-  (∀ p q, p ∈ A → q ∈ A → p ≠ q → dist p q ≥ 1) ∧
-  (∃ p q, p ∈ A ∧ q ∈ A ∧ dist p q = 1)
+  (∀ᵉ (p ∈ A) (q ∈ A), p ≠ q → dist p q ≥ 1) ∧
+  (∃ᵉ (p ∈ A) (q ∈ A), dist p q = 1)
 
 /-- Three points form an equilateral triangle of side length 1. -/
 def FormsEquilateralTriangle (p q r : ℝ²) : Prop :=
