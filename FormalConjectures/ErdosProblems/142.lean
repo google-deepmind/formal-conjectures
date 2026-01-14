@@ -67,4 +67,8 @@ of $\{1, \dots, N\}$ that does not contain any non-trivial $3$-term arithmetic p
 theorem erdos_142.variants.three : (fun N => (r 3 N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
+Hello, I found the asymptotic formula for EDMOS problem 124:
+Let rk(N) be the maximum possible size of a subset of {1, ..., N} containing no nontrivial elements.
+Prove an asymptotic formula for rk(N). Could someone please check it with me?
+
 end Erdos142
