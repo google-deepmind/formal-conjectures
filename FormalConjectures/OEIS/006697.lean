@@ -60,7 +60,8 @@ lemma count_true_morphism (b : Bool) : count true (morphism b) = 1 := by
 lemma count_false_finiteWord : ∀ n, (finiteWord n).count false = 2 ^ n
   | 0 => rfl
   | n + 1 => by
-    simp [finiteWord, count_flatMap, Function.comp_def, sum_map_ite, ← Bool.beq_eq_decide_eq, -beq_false, ← count_eq_length_filter, count_false_finiteWord, pow_succ]
+    simp [finiteWord, count_flatMap, Function.comp_def, sum_map_ite, ← Bool.beq_eq_decide_eq,
+      -beq_false, ← count_eq_length_filter, count_false_finiteWord, pow_succ]
 
 @[simp, category API, AMS 68]
 lemma count_true_finiteWord : ∀ n, (finiteWord n).count true = 2 ^ n - 1
