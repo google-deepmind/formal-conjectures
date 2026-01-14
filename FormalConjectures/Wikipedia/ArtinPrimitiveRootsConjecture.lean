@@ -182,7 +182,7 @@ where $C$ is Artin's constant.
 @[category research open, AMS 11]
 theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
-    (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]) :
+    (hm₂ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]) :
     (S a).HasDensity
       (ArtinConstant * powCorrectionFactor m * entanglementFactor b m)
       {p | p.Prime} := by
@@ -194,7 +194,7 @@ theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
 @[category research solved, AMS 11]
 theorem conditional_artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
-    (hm₂ : m.primeFactorsList.Nodup) (hm₃ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4])
+    (hm₂ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4])
     (h : type_of% generalized_riemann_hypothesis) :
     (S a).HasDensity
       (ArtinConstant * powCorrectionFactor m * entanglementFactor b m)
