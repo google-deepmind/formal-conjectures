@@ -41,7 +41,7 @@ infinitely many edges. In other words, removing any finite set of edges leaves
 the graph connected.
 -/
 def InfinitelyEdgeConnected {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∀ {s : Set (Sym2 V)}, s.Finite → (G.deleteEdges s).Connected
+  ∀ ⦃s : Set (Sym2 V)⦄, s.Finite → (G.deleteEdges s).Connected
 
 /--
 Does every graph with chromatic number $\aleph_1$ contain an infinitely connected subgraph with
