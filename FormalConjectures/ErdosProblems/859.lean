@@ -37,9 +37,9 @@ The density `dₜ` of `DivisorSumSet (t : ℕ)` is bounded from below by `1 / lo
 from above by `1 / log (t) ^ c₄` for some positive constants `c₃` and `c₄`.
 -/
 @[category research solved, AMS 11]
-theorem erdos_859.variants.erdos_upper_lower_bounds : ∃ᵉ (c₃ > 0) (c₄ > 0) (t₀ : ℕ), ∀ t > t₀,
-    ∃ dₜ : ℝ, ((DivisorSumSet t).HasDensity dₜ) ∧
-    (1 / (Real.log t)^c₃ < dₜ) ∧ (dₜ < 1 / (Real.log t)^c₄) := by
+theorem erdos_859.variants.erdos_upper_lower_bounds : ∃ᵉ (c₃ > (0 : ℝ)) (c₄ > (0 : ℝ)) (t₀ : ℕ),
+    ∀ᶠ t in atTop, ∃ dₜ : ℝ, (DivisorSumSet t).HasDensity dₜ ∧
+    1 / Real.log t ^ c₃ < dₜ ∧ dₜ < 1 / Real.log t ^ c₄ := by
   sorry
 
 
@@ -49,8 +49,9 @@ The density `dₜ` of `DivisorSumSet (t : ℕ)` is assymptotically equivalent to
 for some positive constants `c₁` and `c₂`.
 -/
 @[category research open, AMS 11]
-theorem erdos_859 (t : ℕ) : ∃ c₁ > 0, ∃ c₂ > 0, ∃ dₜ : ℝ, ((DivisorSumSet t).HasDensity dₜ) ∧
-    (fun (t : ℕ) ↦ dₜ) ~[atTop] (fun t ↦ c₁ / (Real.log t)^c₂ ) := by
+theorem erdos_859 :
+    ∃ c₁ > 0, ∃ c₂ > (0 : ℝ), ∃ d : ℕ → ℝ, (∀ t > 0, (DivisorSumSet t).HasDensity (d t)) ∧
+      (fun (t : ℕ) ↦ d t) ~[atTop] (fun t ↦ c₁ / Real.log t ^ c₂) := by
   sorry
 
 /-
