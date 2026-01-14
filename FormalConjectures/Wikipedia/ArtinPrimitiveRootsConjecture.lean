@@ -57,7 +57,7 @@ abbrev S (a : ℤ) : Set ℕ :=
 
 /--
 **Artin's Constant** is defined to be the product
-$$\prod_{p\ \text{prime}}, \left(1 - \frac{1}{p(p - 1)}\right)$$.
+$$\prod_{p\ \text{prime}} \left(1 - \frac{1}{p(p - 1)}\right)$$.
 -/
 noncomputable def ArtinConstant : ℝ :=
   ∏' p : Nat.Primes, (1 - 1 / (p * (p - 1)) : ℝ)
@@ -176,7 +176,7 @@ then the density of the set $S(a)$ of primes $p$ such that $a$ is a primitive ro
 is given by
 $$C \left(\prod_{p \mid m} \frac{p(p-2)}{(p ^ 2 - p - 1)}\right)
 \left(1 - \prod_{p \mid \gcd(b_0, m)} \frac{1}{2 - p}
-\prod_{p \mid b_0, p\nmid m} \frac{1}{(1 + p - p ^ 2)}\right)$$,
+\prod_{p \mid b_0, p\nmid m} \frac{1}{(1 + p - p ^ 2)}\right),$$
 where $C$ is Artin's constant.
 -/
 @[category research open, AMS 11]
