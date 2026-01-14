@@ -152,7 +152,7 @@ $$C\prod_{p \mid m} \frac{p(p - 2)}{p^2 - p - 1}$$,
 where $C$ is Artin's constant.
 -/
 @[category research open, AMS 11]
-theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_one
+theorem artin_primitive_roots.variants.part_ii_power_squarefreePart_not_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v^u) (hm₁ : 1 < m)
     (hm₂ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4]) :
     (S a).HasDensity (ArtinConstant * powCorrectionFactor m) {p | p.Prime} := by
@@ -162,7 +162,7 @@ theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_
 **Artin's Conjecture on Primitive Roots**, second half, power version, conditional on GRH
 -/
 @[category research solved, AMS 11]
-theorem conditional_artin_primitive_roots.variants.part_ii_prime_power_squarefree_not_modeq_one
+theorem conditional_artin_primitive_roots.variants.part_ii_power_squarefreePart_not_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
     (hm₂ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4])
     (h : type_of% generalized_riemann_hypothesis) :
@@ -180,7 +180,7 @@ $$C \left(\prod_{p \mid m} \frac{p(p-2)}{(p ^ 2 - p - 1)}\right)
 where $C$ is Artin's constant.
 -/
 @[category research open, AMS 11]
-theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
+theorem artin_primitive_roots.variants.part_ii_power_squarefreePart_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
     (hm₂ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4]) :
     (S a).HasDensity
@@ -192,7 +192,7 @@ theorem artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
 **Artin's Conjecture on Primitive Roots**, second half, power version, conditional on GRH.
 -/
 @[category research solved, AMS 11]
-theorem conditional_artin_primitive_roots.variants.part_ii_prime_power_squarefree_modeq_one
+theorem conditional_artin_primitive_roots.variants.part_ii_power_squarefreePart_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
     (hm₂ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4])
     (h : type_of% generalized_riemann_hypothesis) :
