@@ -40,7 +40,7 @@ def FormsEquilateralTriangle (p q r : ℝ²) : Prop :=
 /-- For sufficiently large n, any set of n points with minimum distance 1 that minimizes diameter must contain an equilateral triangle of side length 1. -/
 @[category research open, AMS 52]
 theorem erdos_99 :
-    answer(sorry) ↔ ∃ N : ℕ, ∀ n ≥ N, ∀ A : Finset ℝ²,
+    answer(sorry) ↔ ∀ᶠ n in Filter.atTop, ∀ A : Finset ℝ²,
       (A.card = n ∧ HasMinDist1 A ∧
        ∀ B : Finset ℝ², B.card = n → HasMinDist1 B →
          diam (A : Set ℝ²) ≤ diam (B : Set ℝ²)) →
