@@ -33,29 +33,51 @@ $$\sum_{n \geq 0} a_n x^n = 1 + \frac{1}{1-x} + \frac{1}{(1-x)^2}\left(\frac{1}{
 - N. J. A. Sloane and Simon Plouffe, *The Encyclopedia of Integer Sequences*, Academic Press, 1995.
 -/
 
-namespace OEIS.A006697
+open PowerSeries WithPiTopology List
 
-open PowerSeries PowerSeries.WithPiTopology
+namespace OEIS.A006697
 
 /-- The morphism σ on {a, b} defined by a ↦ aab, b ↦ b, represented on Bool where
 `false` = a and `true` = b. -/
 def morphism : Bool → List Bool
   | false => [false, false, true]  -- a ↦ aab
-  | true => [true]                  -- b ↦ b
-
-/-- Apply the morphism to a list of symbols. -/
-def applyMorphism (w : List Bool) : List Bool :=
-  w.flatMap morphism
+  | true  => [true]                -- b ↦ b
 
 /-- The n-th iterate of the morphism applied to [a]. -/
-def iterateMorphism : ℕ → List Bool
+def finiteWord : ℕ → List Bool
   | 0 => [false]
-  | n + 1 => applyMorphism (iterateMorphism n)
+  | n + 1 => (finiteWord n).flatMap morphism
+
+@[simp, category API, AMS 68]
+lemma count_false_morphism (b : Bool) : count false (morphism b) = if b then 0 else 2 := by
+  cases b <;> simp [morphism]
+
+@[simp, category API, AMS 68]
+lemma count_true_morphism (b : Bool) : count true (morphism b) = 1 := by
+  cases b <;> simp [morphism]
+
+@[simp, category API, AMS 68]
+lemma count_false_finiteWord : ∀ n, (finiteWord n).count false = 2 ^ n
+  | 0 => rfl
+  | n + 1 => by
+    simp [finiteWord, count_flatMap, Function.comp_def, sum_map_ite, ← Bool.beq_eq_decide_eq, -beq_false, ← count_eq_length_filter, count_false_finiteWord, pow_succ]
+
+@[simp, category API, AMS 68]
+lemma count_true_finiteWord : ∀ n, (finiteWord n).count true = 2 ^ n - 1
+  | 0 => rfl
+  | n + 1 => by
+    simp [finiteWord, List.count_flatMap, Function.comp_def, ← count_true_add_count_false,
+      count_true_finiteWord, pow_succ]; omega
+
+@[simp, category API, AMS 68]
+lemma length_finiteWord (n : ℕ) : (finiteWord n).length = 2 ^ (n + 1) - 1 := by
+  simp [← count_true_add_count_false, count_true_finiteWord, pow_succ]; omega
 
 /-- The infinite word w is the fixed point of the morphism starting from 'a'.
-The i-th symbol stabilizes after sufficiently many iterations (at most i+1). -/
+We define it as the limit: w(i) is the i-th symbol, which stabilizes after
+sufficiently many iterations. -/
 noncomputable def infiniteWord (i : ℕ) : Bool :=
-  (iterateMorphism (i + 1)).getD i false
+  (finiteWord (i + 1))[i]'(by grw [length_finiteWord, ← Nat.lt_two_pow_self]; simp)
 
 /-- A subword (factor) of length n starting at position i. -/
 noncomputable def subwordAt (i n : ℕ) : List Bool :=
@@ -77,7 +99,7 @@ $$\sum_{n \geq 0} a_n x^n = 1 + \frac{1}{1-x} + \frac{1}{(1-x)^2}\left(\frac{1}{
 Equivalently, a(n) equals the n-th coefficient of this generating function.
 -/
 @[category research open, AMS 68]
-theorem conjecture : ∀ n, (a n : ℚ) =
+theorem conjecture : ∀ n, a n =
     coeff ℚ n (1 + (1 - X)⁻¹ + (1 - X)⁻¹ ^ 2 * ((1 - X)⁻¹ - ∑' k, X ^ (2 ^ (k + 1) + k))) := by
   sorry
 
