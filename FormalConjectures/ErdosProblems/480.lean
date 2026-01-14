@@ -34,7 +34,7 @@ A conjecture of Newman.
 -/
 @[category research solved, AMS 11]
 theorem erdos_480 : answer(True) ↔ ∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
-    ⨅ n, atTop.liminf (fun m => n *|x (m + n) - x m|) ≤  1 / √5 := by
+    ⨅ n, atTop.liminf (fun m => n * |x (m + n) - x m|) ≤ 1 / √5 := by
   sorry
 
 /--
@@ -48,7 +48,7 @@ and $F_m$ is the $m$th Fibonacci number.
 theorem erdos_480.variants.chung_graham :
     let c : ℝ := 1 + ∑' (k : ℕ+), (1 : ℝ) / (2*k : ℕ).fib
     ∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
-    ⨅ n, atTop.liminf (fun m => n *|x (m + n) - x m|) ≤  1 / c := by
+    ⨅ n, atTop.liminf (fun m => n * |x (m + n) - x m|) ≤ 1 / c := by
   sorry
 
 /--
@@ -58,7 +58,7 @@ They also prove that this constant is best possible.
 theorem erdos_480.variants.chung_graham_best_possible :
     let c : ℝ := 1 + ∑' (k : ℕ+), (1 : ℝ) / (2*k : ℕ).fib
     ∀ ε > (0 : ℝ), ¬ (∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
-    ⨅ n, atTop.liminf (fun m => n *|x (m + n) - x m|) ≤  1 / c - ε) := by
+    ⨅ n, atTop.liminf (fun m => n * |x (m + n) - x m|) ≤ 1 / c - ε) := by
   sorry
 
 end Erdos480
