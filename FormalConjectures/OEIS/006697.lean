@@ -52,35 +52,10 @@ def iterateMorphism : ℕ → List Bool
   | 0 => [false]
   | n + 1 => applyMorphism (iterateMorphism n)
 
-/-- The length of iterateMorphism n is at least n + 1. -/
-private lemma length_iterateMorphism_ge (n : ℕ) : n + 1 ≤ (iterateMorphism n).length := by
-  induction n with
-  | zero => simp [iterateMorphism]
-  | succ n ih =>
-    simp only [iterateMorphism, applyMorphism, List.length_flatMap]
-    have h1 : (iterateMorphism n).length ≥ 1 := by omega
-    have h2 : ∀ b, 1 ≤ (morphism b).length := by intro b; cases b <;> simp [morphism]
-    calc n + 1 + 1
-      _ ≤ (iterateMorphism n).length + 1 := by omega
-      _ ≤ ((iterateMorphism n).map fun b => (morphism b).length).sum := by
-          trans (iterateMorphism n).length
-          · omega
-          · rw [show (iterateMorphism n).length = ((iterateMorphism n).map fun _ => 1).sum by simp]
-            apply List.sum_le_sum
-            simp only [List.mem_map, forall_exists_index, and_imp]
-            intro _ b _ rfl
-            exact h2 b
-
-/-- After i+1 iterations, the word has length > i. -/
-private lemma lt_length_iterateMorphism (i : ℕ) : i < (iterateMorphism (i + 1)).length := by
-  have := length_iterateMorphism_ge (i + 1)
-  omega
-
 /-- The infinite word w is the fixed point of the morphism starting from 'a'.
-We define it as the limit: w(i) is the i-th symbol, which stabilizes after
-sufficiently many iterations. -/
+The i-th symbol stabilizes after sufficiently many iterations (at most i+1). -/
 noncomputable def infiniteWord (i : ℕ) : Bool :=
-  (iterateMorphism (i + 1))[i]'(lt_length_iterateMorphism i)
+  (iterateMorphism (i + 1)).getD i false
 
 /-- A subword (factor) of length n starting at position i. -/
 noncomputable def subwordAt (i n : ℕ) : List Bool :=
