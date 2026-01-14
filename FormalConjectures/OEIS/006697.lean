@@ -35,7 +35,7 @@ $$\sum_{n \geq 0} a_n x^n = 1 + \frac{1}{1-x} + \frac{1}{(1-x)^2}\left(\frac{1}{
 
 namespace OEIS.A006697
 
-open PowerSeries
+open PowerSeries PowerSeries.WithPiTopology
 
 /-- The morphism σ on {a, b} defined by a ↦ aab, b ↦ b, represented on Bool where
 `false` = a and `true` = b. -/
@@ -52,22 +52,29 @@ def iterateMorphism : ℕ → List Bool
   | 0 => [false]
   | n + 1 => applyMorphism (iterateMorphism n)
 
-/-- The length of iterateMorphism n equals 2^(n+1) - 1, which is always > n. -/
-lemma lt_length_iterateMorphism (i : ℕ) : i < (iterateMorphism (i + 1)).length := by
-  -- Length formula: L(n) = 2^(n+1) - 1 (each 'a' → 3 symbols, 'b' → 1 symbol)
-  -- Since 2^(n+1) - 1 > n for all n ≥ 0, the bound holds.
-  induction i with
-  | zero => simp [iterateMorphism, applyMorphism, morphism]
-  | succ i ih =>
+/-- The length of iterateMorphism n is at least n + 1. -/
+private lemma length_iterateMorphism_ge (n : ℕ) : n + 1 ≤ (iterateMorphism n).length := by
+  induction n with
+  | zero => simp [iterateMorphism]
+  | succ n ih =>
     simp only [iterateMorphism, applyMorphism, List.length_flatMap]
-    calc i + 1
-      _ < (iterateMorphism (i + 1)).length := ih
-      _ ≤ ((iterateMorphism (i + 1)).map fun b => (morphism b).length).sum := by
-          simp only [← List.length_map]
-          apply List.length_le_sum_of_one_le
-          simp only [List.mem_map]
-          rintro _ ⟨b, -, rfl⟩
-          cases b <;> simp [morphism]
+    have h1 : (iterateMorphism n).length ≥ 1 := by omega
+    have h2 : ∀ b, 1 ≤ (morphism b).length := by intro b; cases b <;> simp [morphism]
+    calc n + 1 + 1
+      _ ≤ (iterateMorphism n).length + 1 := by omega
+      _ ≤ ((iterateMorphism n).map fun b => (morphism b).length).sum := by
+          trans (iterateMorphism n).length
+          · omega
+          · rw [show (iterateMorphism n).length = ((iterateMorphism n).map fun _ => 1).sum by simp]
+            apply List.sum_le_sum
+            simp only [List.mem_map, forall_exists_index, and_imp]
+            intro _ b _ rfl
+            exact h2 b
+
+/-- After i+1 iterations, the word has length > i. -/
+private lemma lt_length_iterateMorphism (i : ℕ) : i < (iterateMorphism (i + 1)).length := by
+  have := length_iterateMorphism_ge (i + 1)
+  omega
 
 /-- The infinite word w is the fixed point of the morphism starting from 'a'.
 We define it as the limit: w(i) is the i-th symbol, which stabilizes after
