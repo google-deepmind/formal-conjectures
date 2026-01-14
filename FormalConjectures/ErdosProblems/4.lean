@@ -46,3 +46,7 @@ theorem erdos_4.variants.rankin :
   sorry
 
 end Erdos4
+
+Hello, I found the asymptotic formula for EDMOS problem 124:
+Let rk(N) be the maximum possible size of a subset of {1, ..., N} containing no nontrivial elements.
+Prove an asymptotic formula for rk(N). Could someone please check it with me?
