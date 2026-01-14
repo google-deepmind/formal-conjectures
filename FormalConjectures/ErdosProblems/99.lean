@@ -44,7 +44,7 @@ theorem erdos_99 :
       (A.card = n ∧ HasMinDist1 A ∧
        ∀ B : Finset ℝ², B.card = n → HasMinDist1 B →
          diam (A : Set ℝ²) ≤ diam (B : Set ℝ²)) →
-      ∃ p q r, p ∈ A ∧ q ∈ A ∧ r ∈ A ∧ FormsEquilateralTriangle p q r := by
+      ∃ᵉ (p ∈ A) (q ∈ A) (r ∈ A), FormsEquilateralTriangle p q r := by
 sorry
 
 end Erdos99
