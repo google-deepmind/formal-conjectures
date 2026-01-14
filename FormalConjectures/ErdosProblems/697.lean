@@ -53,7 +53,7 @@ $\alpha < \beta$. This is proved in [Ha92]. -/
 theorem erdos_697.beta_lt {α : ℝ} (hα : 1 / log (2 : ℝ) < α) : Tendsto (δ · α) atTop (𝓝 0) := by
   sorry
 
-/-- $lim_{m\rightarrow\infty} \delta (m, \alpha) = 1` if $\beta < \alpha$.
+/-- $lim_{m\rightarrow\infty} \delta (m, \alpha) = 1$ if $\beta < \alpha$.
 This is proved in [Ha92]. -/
 @[category research solved, AMS 11]
 theorem erdos_697.lt_beta {α : ℝ} (hα : α < 1 / log (2 : ℝ)) : Tendsto (δ · α) atTop (𝓝 1) := by
