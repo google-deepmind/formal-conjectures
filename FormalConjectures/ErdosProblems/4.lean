@@ -46,3 +46,5 @@ theorem erdos_4.variants.rankin :
   sorry
 
 end Erdos4
+
+Hello, I found the symptotic formula, can someone awnser and verify with me plz
