@@ -36,11 +36,11 @@ coprime. -/
 noncomputable def h (n : ℕ) : ℕ∞ := sInf {m | 2 < m ∧ ∀ (i j : ℕ), (i : ℕ∞) ∈ Set.Icc 2 m →
   (i : ℕ∞) ∈ Set.Icc 2 m → i ≠ j → (i ^ n - 1).Coprime (j ^ n - 1)}
 
-/-- `n` is prime iff `h n = n + 1`. -/
+/-- `n` is prime iff `h n = n + 1`. #TODO: prove this theorem. -/
 @[category test, AMS 11]
 theorem Nat.Prime.h_eq_add_one {n : ℕ} : h n = n + 1 ↔ (n + 1).Prime := by sorry
 
-/-- If `n` is odd, then `h n = ∞`. -/
+/-- If `n` is odd, then `h n = ∞`. #TODO: prove this theorem. -/
 @[category test, AMS 11]
 theorem Odd.h_unbounded {n : ℕ} (pn : Odd n) : h n = ⊤ := by sorry
 
