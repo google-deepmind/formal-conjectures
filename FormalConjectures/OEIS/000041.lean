@@ -25,11 +25,13 @@ There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1
 *Reference*: [OEIS A000041](https://oeis.org/A000041)
 -/
 
-def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)                                       │
+def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
 
-def IsPerfectPower (n : ℕ) : Prop :=                                                      │
-    ∃ x m : ℕ, 1 < x ∧ 1 < m ∧ x ^ m = n                                                    │
+def IsPerfectPower (n : ℕ) : Prop :=
+    ∃ x m : ℕ, 1 < x ∧ 1 < m ∧ x ^ m = n
 
 @[category research open, AMS 11]
 theorem noPowerPartitionNumber (k : ℕ) : answer(sorry) ↔ ¬IsPerfectPower (p k) := by
     sorry
+
+end OeisA000041
