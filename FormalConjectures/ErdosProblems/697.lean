@@ -37,7 +37,7 @@ theorem density_exists (m : ℕ) (α : ℝ) : ∃ δ, HasDensity
     {n : ℕ | ∃ d, d ≡ 1 [MOD m] ∧ (d : ℝ) ∈ Set.Ioo 1 (exp (m ^ α)) ∧ d ∣ n} δ := by
   sorry
 
-/-- For each $m$ and $\alpha$,  $\delta (m, \alpha)$ is the density of the set of integers which are
+/-- For each $m$ and $\alpha$, $\delta (m, \alpha)$ is the density of the set of integers which are
 divisible by some $d \equiv 1 \pmod{m}$ with $1 < d < exp (m ^ \alpha)$ exists. -/
 noncomputable def δ (m : ℕ) (α : ℝ) : ℝ := (density_exists m α).choose
 
