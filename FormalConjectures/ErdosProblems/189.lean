@@ -63,7 +63,7 @@ theorem erdos_189.variants.square :
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
         line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧
-        line[ℝ, c, d].direction ⟂ line[ℝ, d, a].direction
+        line[ℝ, c, d].direction ⟂ line[ℝ, d, a].direction ∧
         dist a b = dist b c)
       (fun a b c d ↦ dist a b * dist b c) := by
   sorry
