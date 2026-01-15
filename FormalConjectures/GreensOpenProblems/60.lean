@@ -36,7 +36,7 @@ theorem green_60 :
       ∀ (A : Finset ℕ),
         (∀ a ∈ A, IsSquare a) →
         2 ≤ A.card →
-          ((A + A).card : ℝ) ≥ Real.rpow (A.card : ℝ) (1 + c) := by
+          ((A + A).card : ℝ) ≥ (A.card : ℝ) ^ (1 + c) := by
   sorry
 
 end Green60
