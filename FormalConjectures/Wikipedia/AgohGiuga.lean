@@ -47,7 +47,7 @@ An integer `p ≥ 2` is prime if and only if we have
 def AgohGiugaCongr : Prop :=
   ∀ p ≥ 2, p.Prime ↔ ∃ (k : ℤ),
   let B := bernoulli' (p - 1)
-  p * B.num + B.den = k * p
+  p * B.num + B.den = k * p^2
 
 /--
 The **Agoh-Giuga Conjecture**, Giuga's formulation.
