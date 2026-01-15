@@ -28,9 +28,10 @@ import FormalConjectures.Wikipedia.CollatzConjecture
 
 namespace Erdos1135
 
-/-!The **Collatz conjecture** states that for any positive integer $n$, there exists a natural number $m$ such that the $m$-th term of the sequence is 1.
+/-!The **Collatz conjecture** states that for any positive integer $n$, there exists a natural
+number $m$ such that the $m$-th term of the sequence is 1.
 -/
 @[category research open, AMS 11 37]
-alias erdos_1135 := CollatzConjecture.collatzConjecture
+theorem erdos_1135 : type_of% CollatzConjecture.collatzConjecture := by sorry
 
 end Erdos1135
