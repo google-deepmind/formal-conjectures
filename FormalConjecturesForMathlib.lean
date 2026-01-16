@@ -20,6 +20,7 @@ import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
+import FormalConjecturesForMathlib.Algebra.Powerfree
 import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
