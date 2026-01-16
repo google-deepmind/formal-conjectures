@@ -27,7 +27,6 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos204
 
 /--
-
 Are there $n$ such that there is a covering system with moduli the divisors of $n$ which is 'as
 disjoint as possible'?
 
@@ -43,8 +42,7 @@ Adenwalla [Ad25] has proved there are no such $n$.
 theorem erdos_204 : answer(False) ↔ ∃ (n : ℕ) (a : ℕ → ℤ),
     let D := {d : ℕ | d ∣ n ∧ d > 1}
     (∀ x : ℤ, ∃ d ∈ D, x ≡ a d [ZMOD d]) ∧
-    (∀ d ∈ D, ∀ d' ∈ D, ∀ x : ℤ,
-      x ≡ a d [ZMOD d] → x ≡ a d' [ZMOD d'] → Nat.gcd d d' = 1) := by
+    (∀ d ∈ D, ∀ d' ∈ D, ∀ x : ℤ, x ≡ a d [ZMOD d] → x ≡ a d' [ZMOD d'] → Nat.gcd d d' = 1) := by
   sorry
 
 end Erdos204
