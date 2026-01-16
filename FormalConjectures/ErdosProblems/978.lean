@@ -28,9 +28,6 @@ import FormalConjectures.Util.ProblemImports
 
 open Polynomial Set
 
-def Powerfree {R : Type*} [Monoid R] (r : R) (k : ℕ) : Prop :=
-  ∀ x : R, x ^ k ∣ r → IsUnit x
-
 namespace Erdos978
 
 /-- Let `f ∈ ℤ[X]` be an irreducible polynomial. Suppose that the degree `k` of `f` is larger than
