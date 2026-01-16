@@ -233,3 +233,11 @@ def ContainsMonoAPofLength {κ : Type} [Finite κ] {M : Set α}
     (coloring : M → κ) (k : ℕ) : Prop :=
   ∃ c : κ, ∃ ap : Set M, ((·.1) '' ap).IsAPOfLength k ∧
     ∀ m ∈ ap, coloring m = c
+
+/--
+A function `f : α → β` has a monotone `k`-term arithmetic progression if there exists an
+arithmetic progression `l` of length `k` in `α` such that its image under `f` is sorted
+(either strictly increasing or strictly decreasing).
+-/
+def HasMonotoneAP {β : Type*} [Preorder β] (f : α → β) (k : ℕ) : Prop :=
+  ∃ l : List α, l.IsAPOfLength k ∧ ((l.map f).Sorted (· < ·) ∨ (l.map f).Sorted (· > ·))

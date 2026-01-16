@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 
 /-!
 # Erdős Problem 195
@@ -29,33 +30,29 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos195
 
-open Function Set
-
-/-- A permutation `f` of `ℤ` has a monotone $k$-term AP if there is an AP `l`
-such that its image under `f` is sorted. -/
-def HasMonotoneAP (f : ℤ ≃ ℤ) (k : ℕ) : Prop :=
-  ∃ l : List ℤ, l.IsAPOfLength k ∧ ((l.map f).Sorted (· < ·) ∨ (l.map f).Sorted (· > ·))
-
 /--
 What is the largest $k$ such that in any permutation of $\mathbb{Z}$ there must exist a
 monotone $k$-term arithmetic progression $x_1 < \cdots < x_k$?
 -/
 @[category research open, AMS 5]
 theorem erdos_195 :
-    answer(sorry) = sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by sorry
+    answer(sorry) = sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by
+  sorry
 
 /--
 Geneson [Ge19] proved that k ≤ 5.
 -/
 @[category research solved, AMS 5]
 theorem erdos_195.variant.leq_5_bound :
-    5 ≥ sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by sorry
+    5 ≥ sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by
+  sorry
 
 /--
 Adenwalla [Ad22] proved that k ≤ 4.
 -/
 @[category research solved, AMS 5]
 theorem erdos_195.variant.leq_4_bound :
-    4 ≥ sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by sorry
+    4 ≥ sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by
+  sorry
 
 end Erdos195
