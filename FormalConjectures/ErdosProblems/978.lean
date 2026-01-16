@@ -26,10 +26,11 @@ import FormalConjectures.Util.ProblemImports
  - [Er53] Erdős, P., Arithmetical properties of polynomials. J. London Math. Soc. (1953), 416--425.
 -/
 
-open Polynomial Set Real
+open Polynomial Set
 
 def Powerfree {R : Type*} [Monoid R] (r : R) (k : ℕ) : Prop :=
   ∀ x : R, x ^ k ∣ r → IsUnit x
+
 namespace Erdos978
 
 /-- Let `f ∈ ℤ[X]` be an irreducible polynomial. Suppose that the degree `k` of `f` is larger than
@@ -62,10 +63,10 @@ theorem erdos_978.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree �
     {n : ℕ | Powerfree (f.eval (n : ℤ)).toNat (f.natDegree - 2)}.Infinite := by
   sorry
 
-/-- Is it true that the set of `n` such that `f n` is `(k - 2)`-th power free has
-infinitely many elements? This result is proved in [Br11]. -/
+/-- The set of `n` such that `f n` is `(k - 2)`-th power free has infinitely many elements. This
+result is proved in [Br11]. -/
 @[category research solved, AMS 11]
-theorem erdos_978.sub_two' : answer(sorry) ↔ ∀ {f : ℤ[X]}, Irreducible f →
+theorem erdos_978.sub_two' : answer(True) ↔ ∀ {f : ℤ[X]}, Irreducible f →
     f.natDegree > 2 → f.leadingCoeff > 0 →
     (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, p ^ (f.natDegree - 2) ∣ (f.eval (n : ℤ)).toNat) →
     {n : ℕ | Powerfree (f.eval (n : ℤ)).toNat (f.natDegree - 2)}.Infinite := by
