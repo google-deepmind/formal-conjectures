@@ -20,6 +20,33 @@ variable {V α ι : Type*} {G : SimpleGraph V} {n : ℕ}
 
 namespace SimpleGraph
 
+/-- An edge coloring of a simple graph `G` with color type `α`.
+Note: this exists in upstream Mathlib as SimpleGraph.EdgeLabeling -/
+def EdgeColoring (G : SimpleGraph V) (α : Type*) := G.edgeSet → α
+
+variable {W : Type*}
+
+/-- A subgraph `H` of a graph with edge coloring `c` is rainbow if all edges of `H` have distinct
+colors. -/
+def IsRainbow {V : Type*} {G : SimpleGraph V} {α : Type*} (c : EdgeColoring G α)
+    (H : G.Subgraph) : Prop :=
+  Function.Injective fun e : H.edgeSet => c ⟨e.val, H.edgeSet_subset e.property⟩
+
+/-- A graph `G` contains a rainbow copy of `H` if there is a subgraph of `G` that is isomorphic
+to `H` and is rainbow under the edge coloring `c`. -/
+def HasRainbowCopy {V W : Type*} {G : SimpleGraph V} {α : Type*} (c : EdgeColoring G α)
+    (H : SimpleGraph W) : Prop :=
+  ∃ (S : G.Subgraph), H ⊑ S.coe ∧ IsRainbow c S
+
+/-- An edge coloring of `Kₙ` with `m` colors that avoids rainbow copies of `H`. -/
+def IsAntiRamseyColoring (n m : ℕ) (H : SimpleGraph W) : Prop :=
+  ∃ (c : EdgeColoring (completeGraph (Fin n)) (Fin m)), ¬HasRainbowCopy c H
+
+/-- The anti-Ramsey number AR(n, H) is the maximum number of colors in which the edges of Kₙ
+can be colored without creating a rainbow copy of H. -/
+noncomputable def antiRamseyNumber (n : ℕ) (H : SimpleGraph W) : ℕ :=
+  sSup {m : ℕ | IsAntiRamseyColoring n m H}
+
 lemma le_chromaticNumber_iff_colorable : n ≤ G.chromaticNumber ↔ ∀ m, G.Colorable m → n ≤ m := by
   simp [chromaticNumber]
 
