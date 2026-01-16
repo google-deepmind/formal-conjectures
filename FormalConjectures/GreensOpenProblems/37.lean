@@ -29,8 +29,10 @@ an arithmetic progression of length `k` with common difference `d`?
 
 namespace Green37
 
+open Set
+
 /-- `A` contains a length-`k` arithmetic progression with difference `d`. -/
-def ContainsAP (A : Set ℕ) (k d : ℕ) : Prop := ∃ a, ∀ i < k, a + i * d ∈ A
+abbrev ContainsAP (A : Set ℕ) (k d : ℕ) : Prop := Set.ContainsAP A k d
 
 /-- `A` contains such a progression for every `d ∈ {1, …, N}`. -/
 def IsAPCover (A : Set ℕ) (N k : ℕ) : Prop := ∀ d, 1 ≤ d ∧ d ≤ N → ContainsAP A k d

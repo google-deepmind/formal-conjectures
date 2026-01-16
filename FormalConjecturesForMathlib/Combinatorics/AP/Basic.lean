@@ -229,6 +229,10 @@ theorem Set.IsAPOfLengthFree.maxCard_one (N : ℕ) : maxCard 1 N = N := by
   nth_rw 2 [← maxCard_zero N]
   simp [maxCard, isAPOfLengthFree_one, isAPOfLengthFree_zero]
 
+/-- A set `A` contains an arithmetic progression of length `k` with difference `d`. -/
+def Set.ContainsAP (A : Set α) (k : ℕ) (d : α) : Prop :=
+  ∃ a, ∃ s, s ⊆ A ∧ s.IsAPOfLengthWith (k : ℕ∞) a d
+
 def ContainsMonoAPofLength {κ : Type} [Finite κ] {M : Set α}
     (coloring : M → κ) (k : ℕ) : Prop :=
   ∃ c : κ, ∃ ap : Set M, ((·.1) '' ap).IsAPOfLength k ∧
