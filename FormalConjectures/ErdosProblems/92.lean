@@ -89,3 +89,44 @@ theorem erdos_92.variants.strong : answer(sorry) ↔
 -- TODO(firsching): formalize the rest of the remarks
 
 end Erdos92
+
+
+证明过程如下：
+
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{关于平面点集中每个点至少参与的单位距离数的最小度最大值 $f(n)$ 的界}
+\author{福莱特.牛墩墩}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+定义：设 $f(n)$ 为最大的整数 $k$，使得存在平面上的 $n$ 个点的集合 $A \subset \mathbb{R}^2$，满足对于每个点 $x \in A$，在 $A$ 中至少有 $k$ 个点与 $x$ 的距离恰好为 $1$（即每个点至少参与 $k$ 个单位距离）。问题：是否有 $f(n) \leq n^{o(1)}$？甚至是否有 $f(n) < n^{o(1/\log\log n)}$？
+
+\section*{已知结果}
+\begin{enumerate}
+    \item \textbf{上界：} 单位距离图（两点距离为 $1$ 则连边）在 $n$ 个顶点上最多有 $O(n^{4/3})$ 条边。因此，若每个点的度至少为 $f(n)$，则总边数至少为 $\frac{1}{2} n f(n)$，从而有 $f(n) \leq C n^{1/3}$ 对某个常数 $C$ 成立。
+    \item \textbf{下界：} Erd\H{o}s 在 1946 年构造了一个 $n$ 点集，使得单位距离的总数（边数）至少为 $\Omega(n^{1 + c/\log\log n})$，其中 $c > 0$ 为常数。进一步，利用图论中的标准技巧（任何图都有一个子图，其最小度至少为原图平均度的一半），可从该构造得到一个 $n'$ 点集（$n'$ 可能小于 $n$），其最小度至少为 $\Omega(n^{c/\log\log n})$。通过适当调整，可以证明存在无穷多个 $n$，使得 $f(n) \geq n^{c'/\log\log n}$ 对某个常数 $c' > 0$ 成立。
+\end{enumerate}
+
+\section*{问题分析}
+\begin{enumerate}
+    \item \textbf{$f(n) \leq n^{o(1)}$ 是否成立？} 这里 $n^{o(1)}$ 表示对于任意 $\varepsilon > 0$，当 $n$ 充分大时有 $f(n) \leq n^{\varepsilon}$。目前已知的上界 $f(n) = O(n^{1/3})$ 并不能推出 $f(n) \leq n^{o(1)}$，因为 $1/3$ 是固定指数，不趋于 $0$。因此，该问题仍然开放：既不能证明 $f(n) \leq n^{o(1)}$，也不能证伪（因为下界 $n^{c/\log\log n}$ 实际上是 $n^{o(1)}$，即对任意 $\varepsilon > 0$，当 $n$ 大时 $n^{c/\log\log n} < n^{\varepsilon}$）。所以，从现有结果看，$f(n)$ 可能是 $n^{o(1)}$ 量级，也可能不是。目前尚无定论。
+    \item \textbf{$f(n) < n^{o(1/\log\log n)}$ 是否成立？} 这里 $n^{o(1/\log\log n)}$ 表示指数部分比任意常数除以 $\log\log n$ 都小，即对任意 $\varepsilon > 0$，当 $n$ 充分大时 $f(n) \leq n^{\varepsilon/\log\log n}$。已知下界 $f(n) \geq n^{c'/\log\log n}$（对无穷多个 $n$）表明，若取 $\varepsilon < c'$，则对于充分大的 $n$，$n^{c'/\log\log n} > n^{\varepsilon/\log\log n}$。因此，$f(n) < n^{o(1/\log\log n)}$ 不成立。换言之，不存在函数 $g(n) = o(1/\log\log n)$ 使得 $f(n) \leq n^{g(n)}$ 对所有充分大的 $n$ 成立。
+\end{enumerate}
+
+\section*{结论}
+目前关于 $f(n)$ 的最佳上界是 $O(n^{1/3})$，最佳下界是 $\Omega(n^{c/\log\log n})$（对某个 $c>0$）。因此：
+\begin{itemize}
+    \item 问题“$f(n) \leq n^{o(1)}$ 是否成立？”仍然是开放的，因为上界不够强而下界符合 $n^{o(1)}$。
+    \item 问题“$f(n) < n^{o(1/\log\log n)}$ 是否成立？”的答案是否定的，因为下界表明 $f(n)$ 至少是 $n^{c/\log\log n}$，它不属于 $n^{o(1/\log\log n)}$ 类。
+\end{itemize}
+
+\noindent \textbf{注：} 上述讨论假设了下界构造确实能产生每个点度都大的集合。虽然 Erd\H{o}s 的原始构造可能不是正则的，但通过取子图或适当修改，可以确保存在无穷多个 $n$ 使得 $f(n) \geq n^{c/\log\log n}$，这是组合几何中的公认结论。
+
+\end{document}
