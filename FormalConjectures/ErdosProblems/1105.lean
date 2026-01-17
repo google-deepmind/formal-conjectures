@@ -31,23 +31,12 @@ namespace Erdos1105
 
 open SimpleGraph Asymptotics Filter
 
-/-- A homomorphism is rainbow if it maps distinct edges to distinct colors. -/
-def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →g G) {C : Type*}
-    (c : Sym2 V → C) : Prop :=
-  Function.Injective fun e : H.edgeSet => c (Sym2.map f e)
-
-/--
-The anti-Ramsey number $\mathrm{AR}(n, H)$: maximum colors to edge-color $K_n$ without rainbow $H$.
--/
-noncomputable def antiRamseyNum {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
-  sSup {k | ∃ c : Sym2 (Fin n) → Fin k, ∀ f : H →g ⊤, ¬IsRainbow f c}
-
 /--
 Is $\mathrm{AR}(n, C_k) = \left(\frac{k-2}{2} + \frac{1}{k-1}\right)n + O(1)$?
 -/
 @[category research open, AMS 05]
 theorem erdos_1105_cycles (k : ℕ) (hk : 3 ≤ k) :
-    answer(sorry) ↔ (fun n => (AR (cycleGraph k) n : ℝ) - ((k - 2 : ℝ) / 2 + 1 / (k - 1)) * n)
+    answer(sorry) ↔ ((fun n => (antiRamseyNum (cycleGraph k) n : ℝ) - ((k - 2 : ℝ) / 2 + 1 / (k - 1)) * n)
       =O[atTop] (fun _ => (1 : ℝ))) := by
   sorry
 
@@ -59,7 +48,7 @@ Is $\mathrm{AR}(n, P_k) = \max\left(\binom{k-2}{2}+1,\; \binom{\ell-1}{2}+(\ell-
 theorem erdos_1105_paths (k n : ℕ) (hk : 5 ≤ k) (hn : k ≤ n) :
     let ℓ := (k - 1) / 2
     let ε := if Odd k then 1 else 2
-    answer(sorry) ↔ AR (pathGraph k) n = max ((k - 2).choose 2 + 1) ((ℓ - 1).choose 2 + (ℓ - 1) * (n - ℓ + 1) + ε) := by
+    answer(sorry) ↔ antiRamseyNum (pathGraph k) n = max ((k - 2).choose 2 + 1) ((ℓ - 1).choose 2 + (ℓ - 1) * (n - ℓ + 1) + ε) := by
   sorry
 
 end Erdos1105
