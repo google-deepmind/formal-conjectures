@@ -59,7 +59,7 @@ theorem erdos_770.liminf : answer(sorry) ↔ liminf h atTop = ⊤ := by
 @[category research open, AMS 11]
 theorem erdos_770.prime : answer(sorry) ↔ ∀ ε > 0, ∀ n : ℕ,
     let p := sSup {m : ℕ | m.Prime ∧ m - 1 ∣ n}
-    p > (n : ℝ)^ (ε : ℝ) → h n = p := by
+    p > (n : ℝ) ^ (ε : ℝ) → h n = p := by
   sorry
 
 /-- It is probably true that `h n = 3` for infinitely many `n`. -/
