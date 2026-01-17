@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,16 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Ben Green's Open Problem 47
-
-Inverse large sieve problem.
-
-Suppose that $A \subseteq \mathbf{N}$ satisfies $|A \pmod{p}| \le \frac{p + 1}{2}$ for all
-sufficiently large primes $p$. Then either:
-
-1. `A` is very small in a sense that $|A \cap [1, X]| \ll \frac{X^{1/2}}{(\log X)^{100}}$
-
-2. `A` is contained in the image of `ℤ` under some quadratic map `φ : ℚ → ℚ`.
+# Ben Green's Open Problem 47: Inverse large sieve problem
 
 *Reference:*
 
@@ -42,13 +33,21 @@ sufficiently large primes $p$. Then either:
 
 -/
 
+open Finset
+
 namespace Green47
 
+/--
+Suppose that $A \subseteq \mathbf{N}$ satisfies $|A \pmod{p}| \le \frac{p + 1}{2}$ for all
+sufficiently large primes $p$. This implies that `A` is small in a sense that $|A \cap [1, X]| \ll X^{1/2}$
+
+This bound is clearly sharp, because one could take `A` to be the set of squares or more generally
+the image of `ℤ` under a quadratic map `φ : ℚ → ℚ`.
+--/
 @[category research open, AMS 11]
 theorem green_47 (A : Finset ℕ) :
     (∀ p : ℕ, 0 < p → (A.image (λ a => a % p)).card ≤ p + 1/2) →
-    ∃ C : ℝ, ∀ X : ℕ, (A.filter (λ a => a ≤ X)).card ≤ C * (X : ℝ)^(1/2) := by
+    ∃ C : ℝ, ∀ X : ℕ, Nat.card {a : ℕ | a ∈ A ∧ a ≤ X} ≤ C * (X : ℝ)^(1/2) := by
   sorry
-
 
 end Green47
