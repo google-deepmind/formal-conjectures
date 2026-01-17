@@ -42,9 +42,9 @@ theorem legendre_conjecture :
 then Legendre's conjecture is asymptotically true. -/
 @[category research solved, AMS 11]
 theorem bounded_gap_legendre :
-    (∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
-    (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c))
-    → ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
+    (H : ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
+      (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c)) :
+    ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
 /--
