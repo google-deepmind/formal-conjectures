@@ -38,10 +38,6 @@ variable {α : Type*} [DecidableEq α]
 
 namespace SimpleGraph
 
-/-- The maximum size of the union of k finite independent sets. -/
-noncomputable def independenceNumK (G : SimpleGraph α) (k : ℕ) : ℕ :=
-  sSup { n | ∃ f : Fin k → Set α, (∀ i, G.IsIndepSet (f i)) ∧ ((⋃ i, f i).ncard = n) }
-
 /-- A finite graph is cdsColorable if it has a proper coloring
   by natural numbers such that for all k > 0, the number of
   vertices with color < k equals the maximum size of
