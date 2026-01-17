@@ -18,25 +18,31 @@ import Mathlib.Algebra.Squarefree.Basic
 
 variable {M M₀ : Type*}
 
-def Powerfree [Monoid M] (r : M) (k : ℕ) : Prop :=
-  ∀ ⦃x : M⦄, x ^ k ∣ r → IsUnit x
+def Powerfree [Monoid M] (m : M) (k : ℕ) : Prop :=
+  ∀ ⦃x : M⦄, x ^ k ∣ m → IsUnit x
 
 section Monoid
 
+theorem powerfree_monotone [Monoid M] {m : M} {a b : ℕ} (hab : a ≤ b) (hm : Powerfree m a) :
+  Powerfree m b := fun x hx => hm (dvd_of_mul_right_dvd (pow_mul_pow_sub x hab ▸ hx))
+
+theorem powerfree_antitone [Monoid M] {r m : M} {k : ℕ} (hrm : r ∣ m) (hm : Powerfree m k) :
+    Powerfree r k := fun _ hx => hm (hx.trans hrm)
+
 @[simp]
-theorem powerfree_two [Monoid M] {r : M} : Powerfree r 2 ↔ Squarefree r where
+theorem powerfree_two [Monoid M] {m : M} : Powerfree m 2 ↔ Squarefree m where
   mp h x hx := h (sq x ▸ hx)
   mpr h x hx := h x (sq x ▸ hx)
 
-theorem IsUnit.powerfree [CommMonoid M] {r : M} (h : IsUnit r) {k : ℕ} (hk : k ≠ 0) :
-    Powerfree r k := fun _ hx => (isUnit_pow_iff hk).1 (isUnit_of_dvd_unit hx h)
+theorem IsUnit.powerfree [CommMonoid M] {m : M} (h : IsUnit m) {k : ℕ} (hk : k ≠ 0) :
+    Powerfree m k := fun _ hx => (isUnit_pow_iff hk).1 (isUnit_of_dvd_unit hx h)
 
 @[simp]
 theorem powerfree_one [CommMonoid M] {k : ℕ} (hk : k ≠ 0) : Powerfree (1 : M) k :=
   isUnit_one.powerfree hk
 
-theorem Irreducible.powerfree [CommMonoid M] {r : M} (h : Irreducible r) {k : ℕ} (hk : 2 ≤ k) :
-    Powerfree r k := by
+theorem Irreducible.powerfree [CommMonoid M] {m : M} (h : Irreducible m) {k : ℕ} (hk : 2 ≤ k) :
+    Powerfree m k := by
   rintro y ⟨z, hz⟩
   induction k with
   | zero => grind
