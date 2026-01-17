@@ -39,7 +39,7 @@ def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →
 /--
 The anti-Ramsey number $\mathrm{AR}(n, H)$: maximum colors to edge-color $K_n$ without rainbow $H$.
 -/
-noncomputable def AR {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
+noncomputable def antiRamseyNum {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
   sSup {k | ∃ c : Sym2 (Fin n) → Fin k, ∀ f : H →g ⊤, ¬IsRainbow f c}
 
 /--
