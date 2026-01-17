@@ -79,3 +79,39 @@ theorem erdos_90 : answer(sorry) ↔ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fu
 -- TODO(firsching): add the statements from the rest of the page.
 
 end Erdos90
+
+
+
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{平面点集单位距离对数量的上界问题}
+\author{福莱特.牛墩墩}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+问题：在 $\mathbb{R}^2$ 中，任意 $n$ 个不同的点所确定的距离为 $1$ 的点对的数量，是否最多为 $n^{1+O(1/\log\log n)}$？
+
+\section*{结论}
+答案是否定的。更准确地说，目前并不知道是否每个 $n$ 点集都满足 $n^{1+O(1/\log\log n)}$ 的上界。已知最好的下界和上界表明，单位距离对的数量可以在 $n^{1+c/\log\log n}$ 到 $O(n^{4/3})$ 之间，其中 $c>0$ 为某个常数。
+
+\section*{已知结果}
+\begin{itemize}
+    \item \textbf{下界：} Erd\H{o}s 在 1946 年构造了一个 $n$ 个点的集合，其中距离为 $1$ 的点对的数量至少为 $n^{1+\frac{c}{\log\log n}}$，其中 $c$ 是一个正常数（例如 $c=\log 2$ 左右）。这表明单位距离对的数量可以超过 $n^{1+\frac{C}{\log\log n}}$，如果 $C < c$ 且 $n$ 足够大。
+    \item \textbf{上界：} 目前最好的上界是 $O(n^{4/3})$，由 Spencer、Szemerédi 和 Trotter 等人利用交叉数定理等方法得到。注意 $n^{4/3}$ 比 $n^{1+O(1/\log\log n)}$ 增长得更快，因为对于任意固定的 $C$，当 $n$ 充分大时，$n^{4/3} / n^{1+C/\log\log n} = n^{1/3 - C/\log\log n} \to \infty$。
+\end{itemize}
+
+\section*{讨论}
+问题中的表达式 $n^{1+O(1/\log\log n)}$ 意味着存在常数 $C$，使得单位距离对的数量不超过 $n^{1+C/\log\log n}$。由于 Erd\H{o}s 的构造给出了指数中的常数为 $c$，若 $C < c$，则该构造将超过所述上界，因此不能断言对所有点集该上界都成立。虽然我们可以取 $C$ 足够大以包含已知构造，但目前并未证明存在这样的 $C$ 使得上界成立。事实上，猜想单位距离对的数量为 $n^{1+o(1)}$，但尚未被证明或否定。
+
+因此，基于当前知识，我们不能说平面中任意 $n$ 点集最多包含 $n^{1+O(1/\log\log n)}$ 个距离为 $1$ 的点对。
+
+\end{document}
+
+
+
