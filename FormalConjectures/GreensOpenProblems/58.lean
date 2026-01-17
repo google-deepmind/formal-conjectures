@@ -26,10 +26,8 @@ open scoped Pointwise
 
 namespace Green58
 
-/-- The analytic lower bound on the size of the sets in the conjecture. Here `((49 : ℝ) / 100)` is
+/- The analytic lower bound on the size of the sets in the conjecture. Here `((49 : ℝ) / 100)` is
 `0.49`. -/
-noncomputable def requiredSize (N : ℕ) : ℝ :=
-  (N : ℝ) ^ ((49 : ℝ) / 100)
 
 /--
 Suppose $A, B ⊆ \{1, \dots, N\}$ both have size at least $N^{0.49}$. Must the sumset $A + B$
@@ -38,9 +36,9 @@ contain a composite number?
 @[category research open, AMS 5 11]
 theorem green_58 :
     answer(sorry) ↔
-      ∀ᵉ (N ≥ 1) (A ⊆ Finset.Icc 1 N) (B ⊆ Finset.Icc 1 N),
-        requiredSize N ≤ (A.card : ℝ) →
-        requiredSize N ≤ (B.card : ℝ) →
+      ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N) (B ⊆ Finset.Icc 1 N),
+        (N : ℝ) ^ (0.49 : ℝ) ≤ (A.card : ℝ) →
+        (N : ℝ) ^ (0.49 : ℝ) ≤ (B.card : ℝ) →
         ∃ m ∈ (A + B), m.Composite := by
   sorry
 
