@@ -153,3 +153,62 @@ theorem erdos_1.variants.least_N_9 :
   sorry
 
 end Erdos1
+
+
+
+
+
+
+
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{关于子集和互不相同的集合的下界}
+\author{福莱特.牛墩墩}
+\date{3026年1月17日}
+
+\begin{document}
+
+\maketitle
+
+设 \( N \) 和 \( n \) 为正整数，\( A \subseteq \{1,2,\dots,N\} \) 满足 \( |A| = n \)，且 \( A \) 的所有子集和互不相同。我们要证明：存在常数 \( c > 0 \)，使得 \( N \geq c \cdot 2^n \)。事实上，可以取 \( c = \frac{1}{2} \)，即 \( N \geq 2^{n-1} \)。
+
+\begin{proof}
+设 \( A = \{a_1, a_2, \dots, a_n\} \)，其中 \( 1 \leq a_1 < a_2 < \dots < a_n \leq N \)。令 \( S_i = a_1 + a_2 + \dots + a_i \)（\( 1 \leq i \leq n \)）。
+
+考虑前 \( i \) 个元素 \( a_1, \dots, a_i \) 的所有子集。由于 \( A \) 的任意子集和互异，这些子集的和也互不相同，且每个和都是区间 \([0, S_i]\) 中的整数。不同和的个数为 \( 2^i \)，而区间 \([0, S_i]\) 中至多有 \( S_i + 1 \) 个整数，因此
+\[
+2^i \leq S_i + 1 \qquad (1 \leq i \leq n). \tag{1}
+\]
+
+下面用归纳法证明：对所有 \( i = 1, \dots, n \)，有 \( a_i \geq 2^{i-1} \)。
+
+当 \( i = 1 \) 时，由 (1) 得 \( 2 \leq S_1 + 1 = a_1 + 1 \)，故 \( a_1 \geq 1 = 2^{0} \)。
+
+假设对 \( j = 1, \dots, i-1 \) 有 \( a_j \geq 2^{j-1} \)。则
+\[
+S_{i-1} \geq 1 + 2 + \dots + 2^{i-2} = 2^{i-1} - 1.
+\]
+代入 (1) 得
+\[
+2^i \leq S_i + 1 = S_{i-1} + a_i + 1 \geq (2^{i-1} - 1) + a_i + 1 = 2^{i-1} + a_i,
+\]
+因此 \( a_i \geq 2^i - 2^{i-1} = 2^{i-1} \)。归纳完成。
+
+取 \( i = n \)，得 \( a_n \geq 2^{n-1} \)。由于 \( a_n \leq N \)，所以
+\[
+N \geq 2^{n-1}.
+\]
+这意味着 \( N \) 至少是 \( 2^n \) 的一半，故 \( N \gg 2^n \)（即 \( N \) 至少是指数级）。
+\end{proof}
+
+\noindent \textbf{注：} 更精细的估计可得 \( N \geq \frac{2^n - 1}{n} \)，但上述下界 \( 2^{n-1} \) 已足够说明指数下界。
+
+\end{document}
+
+
+
+
+
