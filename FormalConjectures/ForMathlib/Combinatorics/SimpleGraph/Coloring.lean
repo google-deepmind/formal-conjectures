@@ -114,5 +114,5 @@ noncomputable def chromaticCardinal.{u} {V : Type u} (G : SimpleGraph V) : Cardi
 /-- The maximum size of the union of k finite independent sets.
 -/
 noncomputable def independenceNumK (G : SimpleGraph V) (k : ℕ) : ℕ :=
-  sSup { n | ∃ f : Fin k → Set V, (∀ i, G.IsIndepSet (f i)) ∧ ((⋃ i, f i).ncard = n) }
+  sSup {n | ∃ f : Fin k → Set V, (∀ i, G.IsIndepSet (f i)) ∧ (⋃ i, f i).ncard = n}
 
