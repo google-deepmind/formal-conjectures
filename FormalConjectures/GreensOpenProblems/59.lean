@@ -29,19 +29,20 @@ namespace Green59
 
 /-- For fixed `ε` and parameter `N`, this is the smoothness bound `⌈N^ε⌉` used in the conjecture. -/
 noncomputable def smoothBound (ε : ℝ) (N : ℕ) : ℕ :=
-  Nat.ceil ((N : ℝ) ^ ε)
+  ⌈((N : ℝ) ^ ε)⌉₊
 
 /-- The conjecture asserts that, for some absolute `ε > 0`, every `n ≤ N` splits as a sum of two
 `N^ε`-smooth integers. -/
 @[category research open, AMS 11]
 theorem green_59 :
     answer(sorry) ↔ ∃ ε > (0 : ℝ),
-      ∀ (N : ℕ), 1 ≤ N →
-        ∀ (n : ℕ), 1 ≤ n → n ≤ N →
-          ∃ a b : ℕ,
-            a ∈ Nat.smoothNumbers (smoothBound ε N) ∧
-            b ∈ Nat.smoothNumbers (smoothBound ε N) ∧
-            a + b = n := by
+      ∃ N0 : ℕ, 1 ≤ N0 ∧
+        ∀ (N : ℕ), N0 ≤ N →
+          ∀ (n : ℕ), 1 ≤ n → n ≤ N →
+            ∃ a b : ℕ,
+              a ∈ Nat.smoothNumbers (smoothBound ε N) ∧
+              b ∈ Nat.smoothNumbers (smoothBound ε N) ∧
+              a + b = n := by
   sorry
 
 end Green59
