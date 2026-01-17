@@ -78,3 +78,48 @@ theorem erdos_20 : answer(sorry) ↔ ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+
+
+
+
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{关于向日葵引理中函数 $f(n,k)$ 的阶}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+设 $f(n,k)$ 为最小的正整数，使得任意 $n$-均匀集族 $\mathcal{F}$（即 $\mathcal{F}$ 中每个集合恰有 $n$ 个元素），若 $|\mathcal{F}| \geq f(n,k)$，则 $\mathcal{F}$ 包含一个 $k$-向日葵。一个 $k$-向日葵是指 $k$ 个集合 $\{A_1,\dots,A_k\}$，满足对所有 $i \neq j$，$A_i \cap A_j = \bigcap_{t=1}^k A_t$（该交称为花芯），且各花瓣 $A_i \setminus \bigcap_{t=1}^k A_t$ 两两不交。
+
+问题：对于固定的 $k$，是否存在常数 $c_k > 0$，使得对一切正整数 $n$ 均有 $f(n,k) < c_k n!$？
+
+\section*{经典结果}
+Erdős 和 Rado 于 1960 年证明了上界
+\[
+f(n,k) \leq n! (k-1)^n.
+\]
+若该上界是紧的，则对任意固定的 $k \geq 3$，比值 $f(n,k)/n!$ 至少为 $(k-1)^n$，后者随着 $n$ 增大而无界，故不存在常数 $c_k$ 使得 $f(n,k) < c_k n!$ 对所有 $n$ 成立。
+
+\section*{近期改进}
+然而，Alweiss、Lovett、Wu 和 Zhang (2020) 大幅改进了上界，他们证明了存在绝对常数 $C > 0$，使得
+\[
+f(n,k) \leq (C \log k)^n.
+\]
+这里 $\log k$ 表示自然对数。对于固定的 $k$，$(C \log k)^n$ 是指数增长，而 $n!$ 是超指数增长（例如，由 Stirling 公式 $n! \sim \sqrt{2\pi n}(n/e)^n$）。因此，当 $n$ 充分大时，总有 $(C \log k)^n < n!$。更精确地，序列 $\{(C \log k)^n / n!\}_{n \geq 1}$ 先增后减且趋于零，故存在最大值 $M_k$。于是对一切 $n$，
+\[
+f(n,k) \leq (C \log k)^n \leq M_k n!.
+\]
+取 $c_k = M_k$，即得 $f(n,k) < c_k n!$。
+
+\section*{结论}
+基于上述最新结果，对于每个固定的 $k \geq 1$，确实存在常数 $c_k > 0$，使得对一切正整数 $n$ 均有 $f(n,k) < c_k n!$。换言之，$f(n,k) = O_k(n!)$。
+
+\end{document}
+
+
