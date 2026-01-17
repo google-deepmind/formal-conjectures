@@ -78,10 +78,12 @@ theorem erdos_375.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).
       have := (hp 1).1
       simp_all [Nat.not_prime_one]
 
-/-- There exists a constant `c > 0` such that for all `n` large enough, if
+/-- There exists a constant `c > 0` such that for all `n`, if
 `k < c * (log n / (log (log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime)`, then
 there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. This is proved
-in [RST75]. -/
+in [RST75]. There is no need to only consider sufficiently large `n` because one can always take
+`c` small enough so that `k < c * (log n / (log (log n))) ^ 3` implies that `k = 0` until `n` is
+large. -/
 @[category research solved, AMS 11]
 theorem erdos_375.log : ∃ c > 0, ∀ n k : ℕ,
     k < c * (Real.log n / (Real.log (Real.log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime) →
