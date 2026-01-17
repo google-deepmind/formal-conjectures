@@ -32,7 +32,7 @@ universe u
 
 /--
 Let $α$ be the infinite ordinal $\omega^{\omega^2}$. Is it true that any red/blue colouring of the
-edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
+edges of $K_α$ there is either a red $K_α$ or a blue $K_3$?
 
 This is true and was proved independently by Schipperus [Sc10] and Darby.
 -/
