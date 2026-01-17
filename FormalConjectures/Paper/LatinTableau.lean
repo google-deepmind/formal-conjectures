@@ -44,7 +44,7 @@ vertices with color `< k` equals the maximum size of
 the union of `k` independent sets. -/
 def CDSColorable [Fintype α] {G : SimpleGraph α} : Prop :=
   ∃ (C : G.Coloring Nat), ∀ k : Nat, k > 0 →
-  ∑ i ∈ Finset.range k, (C.colorClass i).ncard = independenceNumK G k
+  ∑ i < k, (C.colorClass i).ncard = independenceNumK G k
 
 open YoungDiagram
 
