@@ -47,7 +47,7 @@ sufficiently large primes $p$. Then either of the conditions are fulfilled:
 --/
 @[category research open, AMS 11]
 theorem green_47 (A : Finset ℕ) :
-    (∀ p : ℕ, 0 < p → (A.image (λ a => a % p)).card ≤ p + 1/2) →
+    (∀ p : ℕ, 0 < p → (A.image (λ a => a % p)).card ≤ (p + 1) / 2) →
     ((∃ C : ℝ, ∀ X : ℕ, #{a ∈ A | a ≤ X} ≤ C * (X : ℝ)^(1/2) / (Real.log X)^100)
     ∨ (∃ a b c : ℚ, ∀ n ∈ A, ∃ z : ℤ, (n : ℚ) = a*z*z + b*z + c)) := by
   sorry
