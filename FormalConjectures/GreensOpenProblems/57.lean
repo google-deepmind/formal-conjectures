@@ -44,28 +44,24 @@ noncomputable def tripleKernel (f₁ f₂ f₃ : G × G → ℝ) : G → ℝ := 
 def LInftyBounded {α : Type*} (f : α → ℝ) : Prop := ∀ x, |f x| ≤ 1
 
 /-- The generating family of functions for `Φ(G)`. -/
-noncomputable def baseΦ :
-    Set (G → ℝ) :=
+noncomputable def baseΦ : Set (G → ℝ) :=
   {φ | ∃ f₁ f₂ f₃ : G × G → ℝ,
       LInftyBounded f₁ ∧ LInftyBounded f₂ ∧ LInftyBounded f₃ ∧
       φ = tripleKernel G f₁ f₂ f₃}
 
 /-- The generating family of functions for `Φ′(G)`, where the third kernel depends only on
 `x₁ + x₂`. -/
-noncomputable def baseΦ' :
-    Set (G → ℝ) :=
+noncomputable def baseΦ' : Set (G → ℝ) :=
   {φ | ∃ f₁ f₂ : G × G → ℝ, ∃ h : G → ℝ,
       LInftyBounded f₁ ∧ LInftyBounded f₂ ∧ LInftyBounded h ∧
       φ = tripleKernel G f₁ f₂ (fun p => h (p.1 + p.2))}
 
 /-- The space `Φ(G)` of convex combinations of kernels from `baseΦ`. -/
-noncomputable def Φ :
-    Set (G → ℝ) :=
+noncomputable def Φ : Set (G → ℝ) :=
   convexHull ℝ (baseΦ G)
 
 /-- The restricted space `Φ′(G)` of convex combinations of kernels from `baseΦ'`. -/
-noncomputable def Φ' :
-    Set (G → ℝ) :=
+noncomputable def Φ' : Set (G → ℝ) :=
   convexHull ℝ (baseΦ' G)
 
 /--
