@@ -34,7 +34,7 @@ variable (G : Type*) [AddCommGroup G] [Fintype G] [DecidableEq G]
 
 /-- Uniform average over pairs `(x₁, x₂)` in `G × G`, with the third variable determined by
 the relation `x₁ + x₂ + x₃ = g`. -/
-noncomputable def tripleKernel (f₁ f₂ f₃ : G × G → ℝ) : G → ℝ := fun g =>
+def tripleKernel (f₁ f₂ f₃ : G × G → ℝ) : G → ℝ := fun g =>
   let cardG : ℝ := Fintype.card G
   (cardG ^ 2)⁻¹ *
       ∑ x₁ : G, ∑ x₂ : G,
@@ -44,24 +44,24 @@ noncomputable def tripleKernel (f₁ f₂ f₃ : G × G → ℝ) : G → ℝ := 
 def LInftyBounded {α : Type*} (f : α → ℝ) : Prop := ∀ x, |f x| ≤ 1
 
 /-- The generating family of functions for `Φ(G)`. -/
-noncomputable def baseΦ : Set (G → ℝ) :=
+def baseΦ : Set (G → ℝ) :=
   {φ | ∃ f₁ f₂ f₃ : G × G → ℝ,
       LInftyBounded f₁ ∧ LInftyBounded f₂ ∧ LInftyBounded f₃ ∧
       φ = tripleKernel G f₁ f₂ f₃}
 
 /-- The generating family of functions for `Φ′(G)`, where the third kernel depends only on
 `x₁ + x₂`. -/
-noncomputable def baseΦ' : Set (G → ℝ) :=
+def baseΦ' : Set (G → ℝ) :=
   {φ | ∃ f₁ f₂ : G × G → ℝ, ∃ h : G → ℝ,
       LInftyBounded f₁ ∧ LInftyBounded f₂ ∧ LInftyBounded h ∧
       φ = tripleKernel G f₁ f₂ (fun p => h (p.1 + p.2))}
 
 /-- The space `Φ(G)` of convex combinations of kernels from `baseΦ`. -/
-noncomputable def Φ : Set (G → ℝ) :=
+def Φ : Set (G → ℝ) :=
   convexHull ℝ (baseΦ G)
 
 /-- The restricted space `Φ′(G)` of convex combinations of kernels from `baseΦ'`. -/
-noncomputable def Φ' : Set (G → ℝ) :=
+def Φ' : Set (G → ℝ) :=
   convexHull ℝ (baseΦ' G)
 
 /--
