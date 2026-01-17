@@ -45,7 +45,7 @@ Solution: True (proved by Erdős and Straus, see Erdős Problems website).
 theorem erdos_258.variants.Monotone : answer(True) ↔
     ∀ (a : ℕ → ℕ), (∀ n, a n ≠ 0) → Monotone a →
     Filter.Tendsto a Filter.atTop Filter.atTop →
-    Irrational (∑' (n : ℕ), ((n + 1).divisors.card / ∏ i ∈ Finset.Icc 1 (n +1), a i)) := by
+    Irrational (∑' (n : ℕ), ((n + 1).divisors.card / ∏ i ∈ Finset.Icc 1 (n + 1), a i)) := by
   sorry
 
 
