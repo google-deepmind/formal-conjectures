@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 591
 
-*Reference:* [erdosproblems.com/591](https://www.erdosproblems.com/591)
+*References:*
+- [erdosproblems.com/591](https://www.erdosproblems.com/591)
+- [Sc10] Schipperus, Rene, Countable partition ordinals. Ann. Pure Appl. Logic (2010), 1195-1215.
 -/
 
 open Cardinal Ordinal
@@ -31,9 +33,11 @@ universe u
 /--
 Let $α$ be the infinite ordinal $\omega^{\omega^2}$. Is it true that any red/blue colouring of the
 edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
+
+This is true and was proved independently by Schipperus [Sc10] and Darby.
 -/
-@[category research open, AMS 3]
-theorem erdos_591 : answer(sorry) ↔ OrdinalCardinalRamsey (ω ^ ω ^ 2) (ω ^ ω ^ 2) 3 := by
+@[category research solved, AMS 3]
+theorem erdos_591 : answer(True) ↔ OrdinalCardinalRamsey (ω ^ ω ^ 2) (ω ^ ω ^ 2) 3 := by
   sorry
 
 end Erdos591
