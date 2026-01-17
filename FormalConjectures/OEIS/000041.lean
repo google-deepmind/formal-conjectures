@@ -17,7 +17,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace OeisA000041
 
-/-
+/-!
 Name: "No powers as partition numbers"
 
 There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
