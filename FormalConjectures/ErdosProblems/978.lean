@@ -51,7 +51,7 @@ theorem erdos_978.sub_one_density {f : ℤ[X]} (hi : Irreducible f) (hd : f.natD
     HasPosDensity {n : ℕ | Powerfree (f.eval (n : ℤ)).toNat (f.natDegree - 1)} := by
   sorry
 
-/-- If the degree `k` of `f` is larger than or equal `9`, then the set of `n` such that `f n` is
+/-- If the degree `k` of `f` is larger than or equal to `9`, then the set of `n` such that `f n` is
 `(k - 2)`-th power free has infinitely many elements. This result is proved in [Br11]. -/
 @[category research solved, AMS 11]
 theorem erdos_978.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree ≥ 9)
