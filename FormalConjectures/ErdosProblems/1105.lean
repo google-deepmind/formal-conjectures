@@ -31,19 +31,16 @@ namespace Erdos1105
 
 open SimpleGraph Asymptotics Filter
 
-/-- Edge coloring of `G`. -/
-def EdgeColoring {V : Type*} (_ : SimpleGraph V) (C : Type*) := Sym2 V → C
-
 /-- A homomorphism is rainbow if it maps distinct edges to distinct colors. -/
 def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H.Hom G) {C : Type*}
-    (c : EdgeColoring G C) : Prop :=
+    (c : Sym2 V → C) : Prop :=
   Function.Injective fun e : H.edgeSet => c (Sym2.map f e)
 
 /--
 The anti-Ramsey number $\mathrm{AR}(n, H)$: maximum colors to edge-color $K_n$ without rainbow $H$.
 -/
 noncomputable def AR {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
-  sSup {k | ∃ c : EdgeColoring (⊤ : SimpleGraph (Fin n)) (Fin k), ∀ f : H.Hom ⊤, ¬IsRainbow f c}
+  sSup {k | ∃ c : Sym2 (Fin n) → Fin k, ∀ f : H.Hom ⊤, ¬IsRainbow f c}
 
 /-- Path on $k$ vertices. -/
 def pathGraph (k : ℕ) : SimpleGraph (Fin k) :=
