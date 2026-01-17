@@ -37,7 +37,7 @@ proved in [Er53]. -/
 @[category research solved, AMS 11]
 theorem erdos_978.sub_one {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree > 2)
     (hp : ¬ ∃ l : ℕ, f.natDegree = 2 ^ l) (hc : f.leadingCoeff > 0) :
-    {n : ℕ | Powerfree (f.eval (n : ℤ)).toNat (f.natDegree - 1)}.Infinite := by
+    {n : ℕ | Powerfree (f.eval (n : ℤ)) (f.natDegree - 1)}.Infinite := by
   sorry
 
 /-- Let `f ∈ ℤ[X]` be an irreducible polynomial. Suppose that the degree `k` of `f` is larger than
@@ -48,7 +48,7 @@ free has positive density, and this is proved in [Ho67]. -/
 theorem erdos_978.sub_one_density {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree > 2)
     (hp : ¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, p ^ (f.natDegree - 1) ∣ (f.eval (n : ℤ)).toNat)
     (hc : f.leadingCoeff > 0) :
-    HasPosDensity {n : ℕ | Powerfree (f.eval (n : ℤ)).toNat (f.natDegree - 1)} := by
+    HasPosDensity {n : ℕ | Powerfree (f.eval (n : ℤ)) (f.natDegree - 1)} := by
   sorry
 
 /-- If the degree `k` of `f` is larger than or equal to `9`, then the set of `n` such that `f n` is
@@ -57,7 +57,7 @@ theorem erdos_978.sub_one_density {f : ℤ[X]} (hi : Irreducible f) (hd : f.natD
 theorem erdos_978.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree ≥ 9)
     (hp : ¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, p ^ (f.natDegree - 2) ∣ (f.eval (n : ℤ)).toNat)
     (hc : f.leadingCoeff > 0) :
-    {n : ℕ | Powerfree (f.eval (n : ℤ)).toNat (f.natDegree - 2)}.Infinite := by
+    {n : ℕ | Powerfree (f.eval (n : ℤ)) (f.natDegree - 2)}.Infinite := by
   sorry
 
 /-- The set of `n` such that `f n` is `(k - 2)`-th power free has infinitely many elements. This
@@ -66,7 +66,7 @@ result is proved in [Br11]. -/
 theorem erdos_978.sub_two' : answer(True) ↔ ∀ {f : ℤ[X]}, Irreducible f →
     f.natDegree > 2 → f.leadingCoeff > 0 →
     (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, p ^ (f.natDegree - 2) ∣ (f.eval (n : ℤ)).toNat) →
-    {n : ℕ | Powerfree (f.eval (n : ℤ)).toNat (f.natDegree - 2)}.Infinite := by
+    {n : ℕ | Powerfree (f.eval (n : ℤ)) (f.natDegree - 2)}.Infinite := by
   sorry
 
 /-- Does `n ^ 4 + 2` represent infinitely many squarefree numbers? -/
