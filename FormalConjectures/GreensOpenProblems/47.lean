@@ -39,15 +39,17 @@ namespace Green47
 
 /--
 Suppose that $A \subseteq \mathbf{N}$ satisfies $|A \pmod{p}| \le \frac{p + 1}{2}$ for all
-sufficiently large primes $p$. This implies that `A` is small in a sense that $|A \cap [1, X]| \ll X^{1/2}$
+sufficiently large primes $p$. Then either of the conditions are fulfilled:
 
-This bound is clearly sharp, because one could take `A` to be the set of squares or more generally
-the image of `ℤ` under a quadratic map `φ : ℚ → ℚ`.
+1. `A` is small in a sense that $|A \cap [1, X]| \ll \frac{X^{1/2}}{(\log X)^{100}}$.
+
+2. `A` is contained in the image of `ℤ` under some quadratic map `φ : ℚ → ℚ`.
 --/
 @[category research open, AMS 11]
 theorem green_47 (A : Finset ℕ) :
     (∀ p : ℕ, 0 < p → (A.image (λ a => a % p)).card ≤ p + 1/2) →
-    ∃ C : ℝ, ∀ X : ℕ, #{a ∈ A | a ≤ X} ≤ C * (X : ℝ)^(1/2) := by
+    (∃ C : ℝ, ∀ X : ℕ, #{a ∈ A | a ≤ X} ≤ C * (X : ℝ)^(1/2) / (Real.log X)^100)
+    ∨ (∃ a b c : ℚ, ∀ n ∈ A, ∃ z : ℤ, (n : ℚ) = a*z*z + b*z + c):= by
   sorry
 
 end Green47
