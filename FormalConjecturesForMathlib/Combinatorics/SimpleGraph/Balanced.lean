@@ -37,8 +37,4 @@ minimum degree.
 def IsBalanced (G : SimpleGraph V) (D : ℝ) [DecidableRel G.Adj] : Prop :=
     G.maxDegree <= D * G.minDegree
 
-/-- Path on $k$ vertices. -/
-def pathGraph (k : ℕ) : SimpleGraph (Fin k) :=
-  fromRel fun i j => (i : ℕ) + 1 = j
-
 end SimpleGraph
