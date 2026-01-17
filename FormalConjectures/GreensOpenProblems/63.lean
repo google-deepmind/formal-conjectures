@@ -26,3 +26,17 @@ if $a_1, a_2 \in A$. Does $A$ have positive density?
  - [Ben Green's Open Problem 63](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 63)
  - [erdosproblems.com/424](https://www.erdosproblems.com/424)
 -/
+
+namespace Green63
+
+/--
+Let $A$ be the smallest set containing $2$ and $3$ and such that $a_1 a_2 - 1 \in A$
+if $a_1, a_2 \in A$. Does $A$ have positive density?
+
+Erdős attributes this to Hofstadter. The answer is probably yes.
+-/
+@[category research open, AMS 11]
+theorem green_63 : answer(sorry) ↔ Erdos424.generatedSet.HasPosDensity := by
+  sorry
+
+end Green63
