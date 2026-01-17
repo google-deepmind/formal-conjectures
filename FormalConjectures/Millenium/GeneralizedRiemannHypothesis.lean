@@ -27,7 +27,7 @@ namespace GRH
 /-- Let $\chi$ be a Dirichlet character, `trivialZeros` is the set of trivial zeros of the
 Dirichlet $L$-function of $\chi$ which is always a set of non-positive integers.
 - $\chi = 1$ then the Dirichlet $L$-function is the Riemann zeta function, having trivial
-  zeroes at all negative integers (exclude $0$).
+  zeroes at all negative even integers (exclude $0$).
 - $\chi$ is odd, then the trivial zeroes are the negative odd integers.
 - $\chi \neq 1$ is even, then the trivial zeroes are the non-positive even integers. -/
 def trivialZeros {q : ℕ} (χ : DirichletCharacter ℂ q) : Set ℤ :=

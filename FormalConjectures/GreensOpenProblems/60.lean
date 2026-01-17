@@ -16,27 +16,27 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open scoped Pointwise
+
 /-!
-# Erdős Problem 289
-*Reference:* [erdosproblems.com/289](https://www.erdosproblems.com/289)
+# Ben Green's Open Problem 60
+
+*Reference:* [Ben Green's Open Problem 60](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 60)
 -/
 
-open Asymptotics Filter Finset
+namespace Green60
 
-namespace Erdos289
-
-/-- Is it true that, for all sufficiently large $k$, there exists finite intervals
-$I_1, \dotsc, I_k \subset \mathbb{N}$ with $|I_i| \geq 2$ for $1 \leq i \leq k$ such that
-$$
-1 = \sum_{i=1}^k \sum_{n \in I_i} \frac{1}{n}.
-$$
+/--
+Is there an absolute constant $c > 0$ such that, whenever $A ⊆ \mathbb{N}$ is a set of squares
+with $|A| ≥ 2$, the sumset $A + A$ satisfies $|A + A| ≥ |A|^{1 + c}$?
 -/
 @[category research open, AMS 11]
-theorem erdos_289 : answer(sorry) ↔
-    (∀ᶠ k : ℕ in atTop, ∃ I : Fin k → ℕ × ℕ,
-    (∀ i, (I i).1 < (I i).2) ∧
-    (∀ i j, i ≠ j → (I i).2 < (I j).1 ∨ (I j).2 < (I i).1) ∧
-    ∑ i, ∑ n ∈ .Icc (I i).1 (I i).2, (n⁻¹ : ℚ) = 1) := by
+theorem green_60 :
+    answer(sorry) ↔ ∃ c > (0 : ℝ),
+      ∀ (A : Finset ℕ),
+        (∀ a ∈ A, IsSquare a) →
+        2 ≤ A.card →
+          ((A + A).card : ℝ) ≥ (A.card : ℝ) ^ (1 + c) := by
   sorry
 
-end Erdos289
+end Green60
