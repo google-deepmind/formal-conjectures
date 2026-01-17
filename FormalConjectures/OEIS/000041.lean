@@ -29,7 +29,10 @@ def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
 
 def IsPerfectPower (n : ℕ) : Prop :=
     ∃ x m : ℕ, 1 < x ∧ 1 < m ∧ x ^ m = n
-
+/--
+There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
+See comment by Zhi-Wei Sun (Dec 02 2013).
+-/
 @[category research open, AMS 11]
 theorem noPowerPartitionNumber (k : ℕ) : answer(sorry) ↔ ¬IsPerfectPower (p k) := by
     sorry
