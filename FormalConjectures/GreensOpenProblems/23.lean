@@ -19,9 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Green's Open Problem 23
 
-Suppose that $\mathbb{N}$ is finitely coloured. Are there $x,y$ of the same colour such that $x^2 +
- y^2$ is a square?
-
 References:
 - [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.23)
 - [FrKlMo25] Frantzikinakis, N., O. Klurman, and J. Moreira. "Partition regularity of Pythagorean pairs." Forum of Mathematics, Pi 13. Cambridge University Press (2025).
