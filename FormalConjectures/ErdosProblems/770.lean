@@ -33,8 +33,8 @@ namespace Erdos770
 
 /-- Let `h n` be the minimal number such that `2 ^ n - 1, ..., (h n) ^ n - 1` are mutually
 coprime. -/
-noncomputable def h (n : ℕ) : ℕ∞ := sInf {m | 2 < m ∧ ∀ (i j : ℕ), (i : ℕ∞) ∈ Set.Icc 2 m →
-  (i : ℕ∞) ∈ Set.Icc 2 m → i ≠ j → (i ^ n - 1).Coprime (j ^ n - 1)}
+noncomputable def h (n : ℕ) : ℕ∞ := sInf {m | 2 < m ∧
+  (Set.Icc 2 m).Pairwise fun i j => (i.toNat ^ n - 1).Coprime (j.toNat ^ n - 1)}
 
 /-- `n + 1` is prime iff `h n = n + 1`. #TODO: prove this theorem. -/
 @[category test, AMS 11]
