@@ -32,6 +32,13 @@ def an_div_n_tendsto_infinity (an : ℕ → ℝ) : Prop :=
 noncomputable def sum_of_sequence (an : ℕ → ℝ) : ℝ :=
 ∑'[conditional ℕ] n, (an n / 2 ^ (an n))
 
+/-
+Let $a_1 < a_2 < \cdots$ be an increasing sequence such that
+\frac{a_n}{n} \to \infty.
+Is the sum
+\sum_{n}^{\infty} \frac{a_n}{2^{a_n}} irrational?
+-/
+
 @[category research open, AMS 11]
 theorem erdos_260 (a : ℕ → ℝ) (h : StrictMono a) (h2 : an_div_n_tendsto_infinity a) :
     Irrational (sum_of_sequence a) := by sorry
