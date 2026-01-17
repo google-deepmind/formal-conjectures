@@ -38,8 +38,8 @@ theorem legendre_conjecture :
   sorry
 
 /-- If there exists a constant `c > 0` such that
-`(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all `n`, then
-Legendre's conjecture is true. -/
+`(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all large `n`,
+then Legendre's conjecture is asymptotically true. -/
 @[category research solved, AMS 11]
 theorem bounded_gap_legendre :
     (∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
