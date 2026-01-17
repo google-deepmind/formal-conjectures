@@ -58,7 +58,7 @@ theorem erdos_770.liminf : answer(sorry) ↔ liminf h atTop = ⊤ := by
 `h n = p`? -/
 @[category research open, AMS 11]
 theorem erdos_770.prime : answer(sorry) ↔ ∀ ε > 0, ∀ n : ℕ,
-    let p := sSup {m : ℕ | m.Prime ∧ (m - 1) ∣ n}
+    let p := sSup {m : ℕ | m.Prime ∧ m - 1 ∣ n}
     p > (n : ℝ)^ (ε : ℝ) → h n = p := by
   sorry
 
