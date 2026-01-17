@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 770
 
-*Reference:*
+*References:*
  - [erdosproblems.com/770](https://www.erdosproblems.com/770)
  - [Er49d] Erdös, P. "On the strong law of large numbers." Transactions of the American Mathematical
     Society 67.1 (1949): 51-56.
@@ -36,7 +36,7 @@ coprime. -/
 noncomputable def h (n : ℕ) : ℕ∞ := sInf {m | 2 < m ∧ ∀ (i j : ℕ), (i : ℕ∞) ∈ Set.Icc 2 m →
   (i : ℕ∞) ∈ Set.Icc 2 m → i ≠ j → (i ^ n - 1).Coprime (j ^ n - 1)}
 
-/-- `n` is prime iff `h n = n + 1`. #TODO: prove this theorem. -/
+/-- `n + 1` is prime iff `h n = n + 1`. #TODO: prove this theorem. -/
 @[category test, AMS 11]
 theorem Nat.Prime.h_eq_add_one {n : ℕ} : h n = n + 1 ↔ (n + 1).Prime := by sorry
 
