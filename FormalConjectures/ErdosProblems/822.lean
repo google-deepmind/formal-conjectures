@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [erdosproblems.com/822](https://www.erdosproblems.com/822)
 - [GIL24] Gabdullin, Mikhail R. and Iudelevich, Vitalii V. and Luca,
-Florian, Numbers of the form {$k+f(k)$}. J. Number Theory (2024), 58--85.
+  Florian, Numbers of the form {$k+f(k)$}. J. Number Theory (2024), 58--85.
 -/
 
 namespace Erdos822
