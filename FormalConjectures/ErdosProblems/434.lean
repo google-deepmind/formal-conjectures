@@ -67,4 +67,3 @@ theorem erdos_434.parts.ii : answer(sorry) ↔ ∀ᵉ (n ≥ 1) (k ≥ 1), k ≤
   sorry
 
 end Erdos434
-∀ᶠ 
