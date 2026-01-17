@@ -52,7 +52,7 @@ theorem erdos_375.bounded_gap : Erdos375 →
     < (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
   sorry
 
-/-- In particular, if `Erdos375` is true, then it resolves Legendre's conjecture.-/
+/-- In particular, if `Erdos375` is true, then Legendre's conjecture is asymptotically true.-/
 @[category research solved, AMS 11]
 theorem erdos_375.legendre : Erdos375 →
     (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p) :=
