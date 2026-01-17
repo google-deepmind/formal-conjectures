@@ -42,7 +42,7 @@ namespace SimpleGraph
   by natural numbers such that for all k > 0, the number of
   vertices with color < k equals the maximum size of
   the union of k independent sets. -/
-def cdsColorable [Fintype α] {G : SimpleGraph α} : Prop :=
+def CDSColorable [Fintype α] {G : SimpleGraph α} : Prop :=
   ∃ (C : G.Coloring Nat), ∀ k : Nat, k > 0 →
   ∑ i ∈ Finset.range k, (C.colorClass i).ncard = independenceNumK G k
 
