@@ -47,7 +47,7 @@ the image of `ℤ` under a quadratic map `φ : ℚ → ℚ`.
 @[category research open, AMS 11]
 theorem green_47 (A : Finset ℕ) :
     (∀ p : ℕ, 0 < p → (A.image (λ a => a % p)).card ≤ p + 1/2) →
-    ∃ C : ℝ, ∀ X : ℕ, Nat.card {a : ℕ | a ∈ A ∧ a ≤ X} ≤ C * (X : ℝ)^(1/2) := by
+    ∃ C : ℝ, ∀ X : ℕ, #{a ∈ A | a ≤ X} ≤ C * (X : ℝ)^(1/2) := by
   sorry
 
 end Green47
