@@ -27,7 +27,6 @@ open Classical
 namespace Erdos488
 
 /--
-
 Let $A$ be a finite set and
 $$B=\{ n \geq 1 : a\mid n\textrm{ for some }a\in A\}.$$
 Is it true that, for every $m>n\geq \max(A)$,
