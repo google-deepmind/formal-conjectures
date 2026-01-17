@@ -33,26 +33,28 @@ open Set Filter Topology Asymptotics
 
 namespace Erdos375
 
-/-- Is it true that for any `n ≥ 1` and any `k`, if `n + 1, ..., n + k` are all composite, then
-there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`? -/
+/-- This is a proposition saying that for any `n ≥ 1` and any `k`, if `n + 1, ..., n + k` are all
+composite, then there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`.
+-/
+def Erdos375 : Prop := ∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
+    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1
+
+/-- Is `Erdos375` true? -/
 @[category research open, AMS 11]
-theorem erdos_375 : answer(sorry) ↔ ∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
-    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
+theorem erdos_375 : answer(sorry) ↔ Erdos375 := by
   sorry
 
-/-- If `erdos_375` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
+/-- If `Erdos375` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
 for some `c > 0`. -/
 @[category research solved, AMS 11]
-theorem erdos_375.bounded_gap : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
-    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
+theorem erdos_375.bounded_gap : Erdos375 →
     ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime
     < (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
   sorry
 
-/-- In particular, if `erdos_375` is true, then it resolves Legendre's conjecture.-/
+/-- In particular, if `Erdos375` is true, then it resolves Legendre's conjecture.-/
 @[category research solved, AMS 11]
-theorem erdos_375.legendre : (∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
-    ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1) →
+theorem erdos_375.legendre : Erdos375 →
     (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p) :=
   fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.bounded_gap hp)
 

@@ -34,7 +34,7 @@ Does there always exist at least one prime between consecutive perfect squares?
 -/
 @[category research open, AMS 11]
 theorem legendre_conjecture :
-    answer(sorry) ↔ ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
+    answer(sorry) ↔ ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
 /-- If there exists a constant `c > 0` such that
@@ -44,7 +44,7 @@ Legendre's conjecture is true. -/
 theorem bounded_gap_legendre :
     (∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
     (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c))
-    → ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
+    → ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
 /--
@@ -52,7 +52,7 @@ Ferreira proved that the conjecture is true for sufficiently large n.
 -/
 @[category research solved, AMS 11]
 theorem legendre_conjecture.ferreira_large_n :
-    ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Prime p := by
+    ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
 end LegendreConjecture
