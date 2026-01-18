@@ -28,7 +28,7 @@ A [perfect power](https://en.wikipedia.org/wiki/Perfect_power) is a natural numb
 def IsPerfectPower (n : ℕ) : Prop :=
     ∃ k m : ℕ, 1 < k ∧ 1 < m ∧ k ^ m = n
 
-theorem IsPerfectPower.four : IsPerfectPower 4 :=
+example : IsPerfectPower 4 :=
   ⟨2, 2, by decide, by decide, rfl⟩
 
 theorem IsPerfectPower.twenty_seven : IsPerfectPower 27 :=
