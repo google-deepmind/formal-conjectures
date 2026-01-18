@@ -44,7 +44,7 @@ theorem Nat.Prime.h_eq_add_one {n : ℕ} : h n = n + 1 ↔ (n + 1).Prime := by s
 @[category test, AMS 11]
 theorem Odd.h_unbounded {n : ℕ} (pn : Odd n) : h n = ⊤ := by sorry
 
-/-- For every prime `p`, does the density of integers with `h n = p` exists? -/
+/-- For every prime `p`, does the density of integers with `h n = p` exist? -/
 @[category research open, AMS 11]
 theorem erdos_770.density : answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∃ a, HasDensity {n | h n = p} a := by
   sorry
