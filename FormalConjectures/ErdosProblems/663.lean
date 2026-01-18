@@ -28,17 +28,9 @@ namespace Erdos663
 Let $q(n,k)$ denote the least number coprime to all numbers in $[n+1, n+k]$.
 -/
 
-def q (n k : ℕ) : ℕ :=
-    if hpos : n > 0 ∧ k > 0 then
-    have h : ∃ q > 1, (∀ i ∈ Finset.Icc (n+1) (n+k), q.Coprime i) := by
-        use (Nat.exists_infinite_primes (n+k+1)).choose
-        have hspec := (Nat.exists_infinite_primes (n+k+1)).choose_spec
-        simp only [Finset.mem_Icc]
-        constructor
-        linarith
-        intros
-        exact Nat.coprime_of_lt_prime (by linarith) (by linarith) hspec.right
-    Nat.find h
+noncomputable def q (n k : ℕ) : ℕ :=
+    if k > 0 ∧ n > 0
+    then sInf {q > 1 | ∀ i ∈ Finset.Icc (n+1) (n+k), q.Coprime i}
     else 0
 
 /--
@@ -47,7 +39,7 @@ $q(n,k) < (1 + o(1)) \log n$?
 -/
 @[category research open, AMS 11]
 theorem erdos_663 :
-    answer(sorry) ↔ ∀ k > 1, ∀ b : ℕ, q (k := k) ≤ᶠ[.atTop] Nat.log b := by
+    answer(sorry) ↔ ∀ k > 1, ∃ C > 0, ∀ᶠ n in .atTop, q k n < C * (Real.log ·) := by
     sorry
 
 /--
@@ -55,7 +47,7 @@ The bound $q(n,k) < (1 + o(1)) k \log n$ is easy.
 -/
 @[category research solved, AMS 11]
 theorem erdos_663.easy :
-    answer(sorry) ↔ ∀ k > 1, ∀ b : ℕ, q (k := k) ≤ᶠ[.atTop] k * Nat.log b := by
+    answer(sorry) ↔ ∀ k > 1, ∃ C > 0, ∀ᶠ n in .atTop, q k n < C * k * (Real.log ·) := by
     sorry
 
 end Erdos663
