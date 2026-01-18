@@ -33,7 +33,7 @@ namespace Erdos275
 If a finite system of $r$ congruences $\{ a_i\pmod{n_i} : 1\leq i\leq r\}$ (the $n_i$ are not
 necessarily distinct) covers $2^r$ consecutive integers then it covers all integers.
 
-This is best possible as the system $2^{i-1}\pmod{2^i}$ shows. This was proved indepedently by
+This is best possible as the system $2^{i-1}\pmod{2^i}$ shows. This was proved independently by
 Selfridge and Crittenden and Vanden Eynden [CrVE70].
 -/
 @[category research solved, AMS 11]
