@@ -31,7 +31,7 @@ def IsPerfectPower (n : ℕ) : Prop :=
 example : IsPerfectPower 4 :=
   ⟨2, 2, by decide, by decide, rfl⟩
 
-theorem IsPerfectPower.twenty_seven : IsPerfectPower 27 :=
+example : IsPerfectPower 27 :=
   ⟨3, 3, by decide, by decide, rfl⟩
 
 end Nat
