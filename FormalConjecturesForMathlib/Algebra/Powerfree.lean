@@ -16,33 +16,41 @@ limitations under the License.
 
 import Mathlib.Algebra.Squarefree.Basic
 
-variable {M M₀ : Type*}
-
-def Powerfree [Monoid M] (m : M) (k : ℕ) : Prop :=
-  ∀ ⦃x : M⦄, x ^ k ∣ m → IsUnit x
+variable {M M₀ : Type*} {r m : M} {k : ℕ}
 
 section Monoid
+variable [Monoid M]
 
-theorem powerfree_monotone [Monoid M] {m : M} {a b : ℕ} (hab : a ≤ b) (hm : Powerfree m a) :
-  Powerfree m b := fun x hx => hm (dvd_of_mul_right_dvd (pow_mul_pow_sub x hab ▸ hx))
+def Powerfree (k : ℕ) (m : M) : Prop :=
+  ∀ ⦃x : M⦄, x ^ k ∣ m → IsUnit x
 
-theorem powerfree_antitone [Monoid M] {r m : M} {k : ℕ} (hrm : r ∣ m) (hm : Powerfree m k) :
-    Powerfree r k := fun _ hx => hm (hx.trans hrm)
+theorem powerfree_monotone {a b : ℕ} (hab : a ≤ b) (hm : Powerfree a m) :
+  Powerfree b m := fun x hx => hm (dvd_of_mul_right_dvd (pow_mul_pow_sub x hab ▸ hx))
+
+theorem powerfree_antitone (hrm : r ∣ m) (hm : Powerfree k m) :
+    Powerfree k r := fun _ hx => hm (hx.trans hrm)
+
+theorem powerfree_associated (hrm : Associated r m) : Powerfree k r ↔ Powerfree k m := by sorry
 
 @[simp]
-theorem powerfree_two [Monoid M] {m : M} : Powerfree m 2 ↔ Squarefree m where
+theorem powerfree_two {m : M} : Powerfree 2 m ↔ Squarefree m where
   mp h x hx := h (sq x ▸ hx)
   mpr h x hx := h x (sq x ▸ hx)
 
-theorem IsUnit.powerfree [CommMonoid M] {m : M} (h : IsUnit m) {k : ℕ} (hk : k ≠ 0) :
-    Powerfree m k := fun _ hx => (isUnit_pow_iff hk).1 (isUnit_of_dvd_unit hx h)
+end Monoid
+
+section CommMonoid
+variable [CommMonoid M]
+
+theorem IsUnit.powerfree (h : IsUnit m) (hk : k ≠ 0) :
+    Powerfree k m := fun _ hx => (isUnit_pow_iff hk).1 (isUnit_of_dvd_unit hx h)
 
 @[simp]
-theorem powerfree_one [CommMonoid M] {k : ℕ} (hk : k ≠ 0) : Powerfree (1 : M) k :=
+theorem powerfree_one (hk : k ≠ 0) : Powerfree k (1 : M) :=
   isUnit_one.powerfree hk
 
-theorem Irreducible.powerfree [CommMonoid M] {m : M} (h : Irreducible m) {k : ℕ} (hk : 2 ≤ k) :
-    Powerfree m k := by
+theorem Irreducible.powerfree (h : Irreducible m) (hk : 2 ≤ k) :
+    Powerfree k m := by
   rintro y ⟨z, hz⟩
   induction k with
   | zero => grind
@@ -52,17 +60,13 @@ theorem Irreducible.powerfree [CommMonoid M] {m : M} (h : Irreducible m) {k : �
   · exact (isUnit_pow_iff (by linarith)).1 hu
   · apply isUnit_of_mul_isUnit_left hu
 
-end Monoid
-
-section MonoidWithZero
+end CommMonoid
 
 @[simp]
 theorem not_powerfree_zero [MonoidWithZero M₀] [Nontrivial M₀] (k : ℕ) :
-    ¬ Powerfree (0 : M₀) k := by
+    ¬ Powerfree k (0 : M₀) := by
   rw [Powerfree, not_forall]
   exact ⟨0, by simp⟩
 
-theorem Prime.powerfree [CancelCommMonoidWithZero M₀] {x : M₀} (h : Prime x) {k : ℕ} (hk : 2 ≤ k) :
-    Powerfree x k := h.irreducible.powerfree hk
-
-end MonoidWithZero
+theorem Prime.powerfree [CancelCommMonoidWithZero M₀] {m : M₀} (h : Prime m) (hk : 2 ≤ k) :
+    Powerfree k m := h.irreducible.powerfree hk
