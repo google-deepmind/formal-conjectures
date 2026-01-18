@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.PerfectPower
 
+open Nat
 namespace OeisA000041
 
 /-!
@@ -27,8 +29,6 @@ There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1
 
 def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
 
-def IsPerfectPower (n : ℕ) : Prop :=
-    ∃ x m : ℕ, 1 < x ∧ 1 < m ∧ x ^ m = n
 /--
 There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
 See comment by Zhi-Wei Sun (Dec 02 2013).
