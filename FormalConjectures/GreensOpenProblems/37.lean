@@ -31,23 +31,16 @@ namespace Green37
 
 open Set
 
-/-- `A` contains a length-`k` arithmetic progression with difference `d`. -/
-abbrev ContainsAP (A : Set ℕ) (k d : ℕ) : Prop := Set.ContainsAP A k d
-
 /-- `A` contains such a progression for every `d ∈ {1, …, N}`. -/
-def IsAPCover (A : Set ℕ) (N k : ℕ) : Prop := ∀ d, 1 ≤ d ∧ d ≤ N → ContainsAP A k d
-
-/-- `m` is the minimal size of a finite set with the cover property. -/
-def IsMinimalAPSetSize (m N k : ℕ) : Prop :=
-  ∃ A : Finset ℕ, A.card = m ∧ IsAPCover (A : Set ℕ) N k ∧
-    ∀ B : Finset ℕ, IsAPCover (B : Set ℕ) N k → m ≤ B.card
+def IsAPCover (A : Set ℕ) (N k : ℕ) : Prop := ∀ d, 1 ≤ d ∧ d ≤ N → Set.ContainsAP A k d
 
 /--
 Smallest size of a subset of `ℕ` that contains, for each `d = 1, …, N`,
 an arithmetic progression of length `k` with common difference `d`.
 -/
 @[category research open, AMS 05 11]
-theorem green_37 (N k : ℕ) : IsMinimalAPSetSize (answer(sorry)) N k := by
+theorem green_37 (N k : ℕ) :
+    IsLeast { m | ∃ A : Finset ℕ, A.card = m ∧ IsAPCover (A : Set ℕ) N k } (answer(sorry)) := by
   sorry
 
 end Green37
