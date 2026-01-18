@@ -40,20 +40,18 @@ def tripleKernel (f₁ f₂ f₃ : G × G → ℝ) : G → ℝ := fun g =>
       ∑ x₁ : G, ∑ x₂ : G,
         f₁ (x₂, g - x₁ - x₂) * f₂ (x₁, g - x₁ - x₂) * f₃ (x₁, x₂)
 
-/- Supremum norm bounded by `1`. -/
-
 /-- The generating family of functions for `Φ(G)`. -/
 def baseΦ : Set (G → ℝ) :=
-    {φ | ∃ f₁ f₂ f₃ : G × G → ℝ,
-      (∀ p, |f₁ p| ≤ 1) ∧ (∀ p, |f₂ p| ≤ 1) ∧ (∀ p, |f₃ p| ≤ 1) ∧
-      φ = tripleKernel G f₁ f₂ f₃}
+  {φ | ∃ f₁ f₂ f₃ : G × G → ℝ,
+    (∀ p, |f₁ p| ≤ 1) ∧ (∀ p, |f₂ p| ≤ 1) ∧ (∀ p, |f₃ p| ≤ 1) ∧
+    φ = tripleKernel G f₁ f₂ f₃}
 
 /-- The generating family of functions for `Φ′(G)`, where the third kernel depends only on
 `x₁ + x₂`. -/
 def baseΦ' : Set (G → ℝ) :=
-    {φ | ∃ f₁ f₂ : G × G → ℝ, ∃ h : G → ℝ,
-      (∀ p, |f₁ p| ≤ 1) ∧ (∀ p, |f₂ p| ≤ 1) ∧ (∀ x, |h x| ≤ 1) ∧
-      φ = tripleKernel G f₁ f₂ (fun p => h (p.1 + p.2))}
+  {φ | ∃ f₁ f₂ : G × G → ℝ, ∃ h : G → ℝ,
+    (∀ p, |f₁ p| ≤ 1) ∧ (∀ p, |f₂ p| ≤ 1) ∧ (∀ x, |h x| ≤ 1) ∧
+    φ = tripleKernel G f₁ f₂ (fun p => h (p.1 + p.2))}
 
 /-- The space `Φ(G)` of convex combinations of kernels from `baseΦ`. -/
 def Φ : Set (G → ℝ) :=
@@ -71,9 +69,9 @@ third kernel is required to depend only on $x_1 + x_2$?
 -/
 @[category research open, AMS 5 11]
 theorem green_57 :
-    answer(sorry) ↔
-      ∀ (G : Type) [AddCommGroup G] [Fintype G] [DecidableEq G],
-        Φ G = Φ' G := by
+  answer(sorry) ↔
+    ∀ (G : Type) [AddCommGroup G] [Fintype G] [DecidableEq G],
+      Φ G = Φ' G := by
   sorry
 
 end
