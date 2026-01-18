@@ -46,7 +46,7 @@ A list version of `Set.IsAPOfLengthWith`. Useful when order preservation is requ
 when considering images under arbitrary functions.
 -/
 def List.IsAPOfLengthWith (s : List α) (l : ℕ) (a d : α) : Prop :=
-  s = (List.range l).map fun n ↦ a + n • d
+  s = (List.range l).map (fun n ↦ a + n • d) ∨ s = (List.range l).reverse.map (fun n ↦ a + n • d)
 
 namespace Set.IsAPOfLengthWith
 
@@ -74,8 +74,7 @@ namespace List.IsAPOfLengthWith
 variable {s : List α} {l : ℕ} {a d : α}
 
 theorem length (h : s.IsAPOfLengthWith l a d) : s.length = l := by
-  rw [IsAPOfLengthWith] at h
-  simp [h]
+  cases h <;> simp_all
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
 if `s` is empty. -/
@@ -236,8 +235,7 @@ def ContainsMonoAPofLength {κ : Type} [Finite κ] {M : Set α}
 
 /--
 A function `f : α → β` has a monotone `k`-term arithmetic progression if there exists an
-arithmetic progression `l` of length `k` in `α` such that its image under `f` is sorted
-(either strictly increasing or strictly decreasing).
+arithmetic progression `l` of length `k` in `α` such that its image under `f` is sorted.
 -/
 def HasMonotoneAP {β : Type*} [Preorder β] (f : α → β) (k : ℕ) : Prop :=
-  ∃ l : List α, l.IsAPOfLength k ∧ ((l.map f).Sorted (· < ·) ∨ (l.map f).Sorted (· > ·))
+  ∃ l : List α, l.IsAPOfLength k ∧ (l.map f).Sorted (· < ·)
