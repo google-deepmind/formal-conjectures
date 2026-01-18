@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos847
 
 
-def hε (A : Set ℕ) :=
+def HasFew3APs (A : Set ℕ) :=
     ∃ (ε : ℝ), ε > 0 ∧  ∀ (B : Set ℕ), B ⊆ A → Finite B →
     ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ThreeAPFree C
 
