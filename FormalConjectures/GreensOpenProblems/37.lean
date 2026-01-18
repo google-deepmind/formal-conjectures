@@ -29,18 +29,33 @@ an arithmetic progression of length `k` with common difference `d`?
 
 namespace Green37
 
-open Set
+open Set Filter
+open scoped Asymptotics
 
-/-- `A` contains such a progression for every `d ∈ {1, …, N}`. -/
+/-- `A` contains an arithmetic progression of length `k` and common difference `d` for every `d ∈ {1, …, N}`. -/
 def IsAPCover (A : Set ℕ) (N k : ℕ) : Prop := ∀ d, 1 ≤ d ∧ d ≤ N → Set.ContainsAP A k d
 
+/-- The minimum size of a subset of `ℕ` that contains, for each `d = 1, …, N`,
+an arithmetic progression of length `k` with common difference `d`. -/
+noncomputable def m (N k : ℕ) : ℕ :=
+  sInf { m | ∃ A : Finset ℕ, A.card = m ∧ IsAPCover (A : Set ℕ) N k }
+
 /--
-Smallest size of a subset of `ℕ` that contains, for each `d = 1, …, N`,
+Given a natural number `N`, what is the smallest size of a subset of `ℕ` that contains, for each `d = 1, …, N`,
 an arithmetic progression of length `k` with common difference `d`.
 -/
 @[category research open, AMS 05 11]
 theorem green_37 (N k : ℕ) :
     IsLeast { m | ∃ A : Finset ℕ, A.card = m ∧ IsAPCover (A : Set ℕ) N k } (answer(sorry)) := by
+  sorry
+
+/--
+Asymptotic version: if `m(N, k)` is the size of the smallest such subset, then `m(N, k)` satisfies
+some asymptotic condition as `N` grows.
+-/
+@[category research open, AMS 05 11]
+theorem green_37_asymptotic (k : ℕ) :
+    answer(sorry) ↔ ∃ f : ℕ → ℝ, (fun N ↦ (m N k : ℝ)) =O[atTop] f := by
   sorry
 
 end Green37
