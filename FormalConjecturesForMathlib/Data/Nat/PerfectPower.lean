@@ -26,7 +26,7 @@ A [perfect power](https://en.wikipedia.org/wiki/Perfect_power) is a natural numb
   $k = 3$, then $n$ is called a perfect square or perfect cube, respectively.
 -/
 def IsPerfectPower (n : ℕ) : Prop :=
-    ∃ k m : ℕ, 1 < k ∧ 1 < m ∧ k ^ m = n
+  ∃ k m : ℕ, 1 < k ∧ 1 < m ∧ k ^ m = n
 
 theorem isPerfectPower_iff_factorization_gcd (n : ℕ) :
     IsPerfectPower n ↔ n > 1 ∧ n.primeFactors.gcd n.factorization > 1 := by
