@@ -30,7 +30,8 @@ theorem powerfree_monotone {a b : ℕ} (hab : a ≤ b) (hm : Powerfree a m) :
 theorem powerfree_antitone (hrm : r ∣ m) (hm : Powerfree k m) :
     Powerfree k r := fun _ hx => hm (hx.trans hrm)
 
-theorem powerfree_associated (hrm : Associated r m) : Powerfree k r ↔ Powerfree k m := by sorry
+theorem powerfree_associated (hrm : Associated r m) : Powerfree k r ↔ Powerfree k m :=
+  ⟨fun h => powerfree_antitone hrm.dvd' h, fun h => powerfree_antitone hrm.dvd h⟩
 
 @[simp]
 theorem powerfree_two {m : M} : Powerfree 2 m ↔ Squarefree m where
