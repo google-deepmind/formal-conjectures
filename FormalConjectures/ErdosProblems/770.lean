@@ -57,14 +57,14 @@ theorem erdos_770.liminf : answer(sorry) ↔ liminf h atTop = ⊤ := by
 /-- Is it true that if `p` is the greatest prime such that `p - 1 ∣ n` and `p > n ^ ε`, then
 `h n = p`? -/
 @[category research open, AMS 11]
-theorem erdos_770.prime : answer(sorry) ↔ ∀ ε > 0, ∀ n : ℕ,
+theorem erdos_770.prime : answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
     let p := sSup {m : ℕ | m.Prime ∧ m - 1 ∣ n}
     p > (n : ℝ) ^ (ε : ℝ) → h n = p := by
   sorry
 
 /-- It is probably true that `h n = 3` for infinitely many `n`. -/
 @[category research open, AMS 11]
-theorem erdos_770.three : {n | h n = 3}.Infinite := by
+theorem erdos_770.three : answer(sorry) ↔ {n | h n = 3}.Infinite := by
   sorry
 
 end Erdos770
