@@ -44,7 +44,7 @@ sufficiently large primes $p$. Then either of the conditions are fulfilled:
 1. `A` is small in a sense that $|A \cap [1, X]| \ll \frac{X^{1/2}}{(\log X)^{100}}$.
 
 2. `A` is contained in the image of `ℤ` under some quadratic map `φ : ℚ → ℚ`.
---/
+-/
 @[category research open, AMS 11]
 theorem green_47 (A : Finset ℕ) :
     (∀ p : ℕ, 0 < p → (A.image (λ a => a % p)).card ≤ (p + 1) / 2) →
