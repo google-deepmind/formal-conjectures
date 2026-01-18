@@ -64,7 +64,7 @@ theorem erdos_770.prime : answer(sorry) ↔ ∀ ε > 0, ∀ n : ℕ,
 
 /-- It is probably true that `h n = 3` for infinitely many `n`. -/
 @[category research open, AMS 11]
-theorem erdos_770.three : answer(sorry) ↔ {n | h n = 3}.Infinite := by
+theorem erdos_770.three : {n | h n = 3}.Infinite := by
   sorry
 
 end Erdos770
