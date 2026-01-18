@@ -27,6 +27,7 @@ There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1
 *Reference*: [OEIS A000041](https://oeis.org/A000041)
 -/
 
+/-- The `n`-th partition number. -/
 def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
 
 /--
