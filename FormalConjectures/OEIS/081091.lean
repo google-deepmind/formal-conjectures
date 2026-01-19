@@ -42,4 +42,6 @@ See Wagstaff (2001) where this conjecture is posed.
       answer(sorry) ↔ Set.Infinite {p : ℕ | isPrimeBitsSet 3 p} := by
     sorry
 
+-- TODO(Paul-Lez): add result that for m ≥ 3, there is no prime number with precisely 2m bits, exactly two of which are zero bits.
+
   end OeisA081091
