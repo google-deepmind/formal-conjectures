@@ -27,7 +27,7 @@ def Powerfree (k : ℕ) (m : M) : Prop :=
 theorem Powerfree.of_le {a b : ℕ} (hab : a ≤ b) (hm : Powerfree a m) :
   Powerfree b m := fun x hx => hm (dvd_of_mul_right_dvd (pow_mul_pow_sub x hab ▸ hx))
 
-theorem powerfree_antitone (hrm : r ∣ m) (hm : Powerfree k m) :
+theorem Powerfree.of_dvd (hrm : r ∣ m) (hm : Powerfree k m) :
     Powerfree k r := fun _ hx => hm (hx.trans hrm)
 
 theorem powerfree_congr (hrm : Associated r m) : Powerfree k r ↔ Powerfree k m :=
