@@ -38,13 +38,13 @@ variable {α : Type*} [DecidableEq α]
 
 namespace SimpleGraph
 
-/-- A finite graph is cdsColorable if it has a proper coloring
+/-- A finite graph is CDSColorable if it has a proper coloring
 by natural numbers such that for all `k > 0`, the number of
 vertices with color `< k` equals the maximum size of
 the union of `k` independent sets. -/
 def CDSColorable [Fintype α] {G : SimpleGraph α} : Prop :=
-  ∃ (C : G.Coloring Nat), ∀ k : Nat, k > 0 →
-  ∑ i < k, (C.colorClass i).ncard = independenceNumK G k
+  ∃ (C : G.Coloring Nat), ∀ k : Nat,
+  ∑ i < k, (C.colorClass i).ncard = indepNumK G k
 
 open YoungDiagram
 
@@ -57,8 +57,8 @@ def YoungDiagram.toSimpleGraph (μ : YoungDiagram) : SimpleGraph (YoungDiagram.C
     (Prod.fst a.val = Prod.fst b.val) ∨ (Prod.snd a.val = Prod.snd b.val)
 
 /-- The Latin Tableau Conjecture: If G is the simple graph
-  of a Young diagram, then G is cdsColorable. -/
+  of a Young diagram, then G is CDSColorable. -/
 @[category research open, AMS 5]
 theorem LatinTableauConjecture (μ : YoungDiagram) [Fintype (YoungDiagram.Cell μ)]
    [DecidableEq (YoungDiagram.Cell μ)] :
-     (YoungDiagram.toSimpleGraph μ).cdsColorable := by sorry
+     (YoungDiagram.toSimpleGraph μ).CDSColorable := by sorry
