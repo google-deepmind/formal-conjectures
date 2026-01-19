@@ -50,12 +50,30 @@ theorem green_37 (N k : ℕ) :
   sorry
 
 /--
-Asymptotic version: if `m(N, k)` is the size of the smallest such subset, then `m(N, k)` satisfies
-some asymptotic condition as `N` grows.
+Asymptotic version: determine the asymptotic behavior of `m(N, k)` as `N` grows.
+The solver should determine what function `f : ℕ → ℝ` equals `(fun N ↦ (m N k : ℝ))`.
 -/
 @[category research open, AMS 05 11]
 theorem green_37_asymptotic (k : ℕ) :
-    answer(sorry) ↔ ∃ f : ℕ → ℝ, (fun N ↦ (m N k : ℝ)) =O[atTop] f := by
+    (fun N ↦ (m N k : ℝ)) = (answer(sorry) : ℕ → ℝ) := by
+  sorry
+
+/-- Determine the asymptotic equivalence class (theta) of `m(N, k)`. -/
+@[category research open, AMS 05 11]
+theorem green_37_theta (k : ℕ) :
+    (fun N ↦ (m N k : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+  sorry
+
+/-- Determine an upper bound (big O) for `m(N, k)`. -/
+@[category research open, AMS 05 11]
+theorem green_37_bigO (k : ℕ) :
+    (fun N ↦ (m N k : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+  sorry
+
+/-- Determine a strict upper bound (little o) for `m(N, k)`. -/
+@[category research open, AMS 05 11]
+theorem green_37_littleO (k : ℕ) :
+    (fun N ↦ (m N k : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 end Green37
