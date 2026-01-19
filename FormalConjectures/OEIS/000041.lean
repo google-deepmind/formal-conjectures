@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,25 +13,28 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Erdős Problem 486: Logarithmic density for sets avoiding modular subsets
+open Nat
+namespace OeisA000041
 
-*Reference:* [erdosproblems.com/486](https://www.erdosproblems.com/486)
+/-!
+Name: "No powers as partition numbers"
+
+There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
+
+*Reference*: [OEIS A000041](https://oeis.org/A000041)
 -/
 
-namespace Erdos486
+/-- The `n`-th partition number. -/
+def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
 
 /--
-For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
-Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
-Must $B$ have a logarithmic density?
+There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
+See comment by Zhi-Wei Sun (Dec 02 2013).
 -/
 @[category research open, AMS 11]
-theorem erdos_486 : answer(sorry) ↔
-    ∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d := by
-  sorry
+theorem noPowerPartitionNumber (k : ℕ) : answer(sorry) ↔ ¬IsPerfectPower (p k) := by
+    sorry
 
-end Erdos486
+end OeisA000041
