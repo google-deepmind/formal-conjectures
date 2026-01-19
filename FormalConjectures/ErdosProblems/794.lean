@@ -79,15 +79,6 @@ abbrev Has4Vertices3Edges {α : Type*} [Fintype α] [DecidableEq α] (H : Finset
 abbrev Has5Vertices7Edges {α : Type*} [Fintype α] [DecidableEq α] (H : Finset (Finset α)) : Prop :=
   HasAtLeastEdgesOnVertices H 5 7
 
-/--
-The statement of **Erdős Problem 794** (as stated on erdosproblems.com), modelling a 3-uniform
-hypergraph on `3n` vertices as a `Finset` of 3-element subsets of `Fin (3 * n)`.
--/
-def Statement : Prop :=
-  ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))),
-    Is3Uniform H → n ^ 3 + 1 ≤ H.card →
-      Has4Vertices3Edges H ∨ Has5Vertices7Edges H
-
 /-- Harris's counterexample has exactly 28 edges. -/
 @[category test, AMS 5]
 theorem harrisCounterexample_card : HarrisCounterexample.card = 28 := by native_decide
@@ -128,9 +119,12 @@ Harris's counterexample provides a 3-uniform hypergraph on `9 = 3 * 3` vertices 
 `28 = 3 ^ 3 + 1` edges that avoids both forbidden configurations.
 -/
 @[category research solved, AMS 5]
-theorem erdos_794 : answer(False) ↔ Statement := by
+theorem erdos_794 : answer(False) ↔
+    (∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))),
+      Is3Uniform H → n ^ 3 + 1 ≤ H.card →
+        Has4Vertices3Edges H ∨ Has5Vertices7Edges H) := by
   -- `answer(False)` is `False`, so this is equivalent to `¬ Statement`.
-  simp [false_iff]
+  simp only [false_iff]
   intro h
   have hEdges : (3 ^ 3 + 1 : ℕ) ≤ HarrisCounterexample.card := by
     native_decide
