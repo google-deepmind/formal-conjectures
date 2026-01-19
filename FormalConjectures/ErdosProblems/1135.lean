@@ -32,6 +32,6 @@ namespace Erdos1135
 number $m$ such that the $m$-th term of the sequence is 1.
 -/
 @[category research open, AMS 11 37]
-theorem erdos_1135 : type_of% CollatzConjecture.collatzConjecture := by sorry
+theorem erdos_1135 : type_of% CollatzConjecture.collatz_conjecture := by sorry
 
 end Erdos1135
