@@ -66,6 +66,5 @@ def YoungDiagram.toSimpleGraph (μ : YoungDiagram) : SimpleGraph (YoungDiagram.C
 /-- The Latin Tableau Conjecture: If G is the simple graph
   of a Young diagram, then G is CDSColorable. -/
 @[category research open, AMS 5]
-theorem LatinTableauConjecture (μ : YoungDiagram) [Fintype (YoungDiagram.Cell μ)]
-   [DecidableEq (YoungDiagram.Cell μ)] :
+theorem LatinTableauConjecture (μ : YoungDiagram) :
      (YoungDiagram.toSimpleGraph μ).CDSColorable := by sorry
