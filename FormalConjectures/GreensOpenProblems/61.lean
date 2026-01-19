@@ -39,7 +39,7 @@ exist such $A$ with $|A| \ll_C n / \log^C n$ for any $C$.
 theorem green_61 :
     answer(sorry) ↔
       ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
-        ∀ n ≥ 1, ∀ (A : Finset ℕ),
+        ∀ n : ℕ, n ≥ 1 → ∀ (A : Finset ℕ),
           (Finset.Icc 1 n).image (· ^ 2) ⊆ A + A →
             (n : ℝ) ^ (1 - f n) ≤ A.card := by
   sorry
