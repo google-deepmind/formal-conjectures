@@ -22,18 +22,22 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 namespace Green4
-def A (n: ℕ):= alternatingGroup (Fin n)
-def prodfree {n: ℕ} (S: Set (Equiv.Perm (Fin n))): Prop:=∀x∈S,∀y∈S,∀z∈S,x*y≠z
-def largest_prodfree {n: ℕ} (S: Set (Equiv.Perm (Fin n))): Prop:=(∀x∈S,x∈A n)∧prodfree S∧
-  (∀S': Set (Equiv.Perm (Fin n)),(∀x∈S',x∈A n)→prodfree S'→S'.ncard≤S.ncard)
+def A (n : ℕ):= alternatingGroup (Fin n)
+
+def ProdFree {n : ℕ} (S : Set (Equiv.Perm (Fin n))) : Prop:=∀x∈S, ∀y∈S, ∀z∈S, x*y≠z
+
+def LargestProdFree (n : ℕ) (S : Set (Equiv.Perm (Fin n))) : Prop:=(∀x∈S , x∈A n) ∧ ProdFree S ∧
+  (∀S': Set (Equiv.Perm (Fin n)), (∀x∈S',x∈A n) → ProdFree S' → S'.ncard≤S.ncard)
+
 /-Green's Open Problem 4: What is the largest product-free set in the alternating group A_n?-/
 @[category research open,AMS 20]
-theorem green_4 (n: ℕ): @largest_prodfree n answer(sorry):=sorry
+theorem green_4 (n : ℕ) : LargestProdFree n answer(sorry):=sorry
 
-def extremal_family {n: ℕ} (x: Fin n) (I: Set (Fin n)): Set (Equiv.Perm (Fin n)):={π|π∈A n∧π x∈I∧(I.image π)∩I=∅}
+def extremal_family {n : ℕ} (x : Fin n) (I : Set (Fin n)) : Set (Equiv.Perm (Fin n)):={π|π∈A n∧π x∈I∧(I.image π)∩I=∅}
 
-/-In the case of large N, the problem was solved in [On the largest product-free subsets of the alternating groups](https://arxiv.org/pdf/2205.15191)
+/-In the case of large n, the problem was solved in [On the largest product-free subsets of the alternating groups](https://arxiv.org/pdf/2205.15191)
 -/
 @[category research solved, AMS 20]
-theorem large_green_4: ∃N:ℕ,∀n>N,∀S,@largest_prodfree n S→∃x I,S=extremal_family x I∨S=(extremal_family x I).image Equiv.symm:=sorry
+theorem large_green_4: ∃N : ℕ, ∀n>N, ∀S, LargestProdFree n S → ∃x I, S=extremal_family x I
+  ∨ S=(extremal_family x I).image Equiv.symm:=sorry
 end Green4
