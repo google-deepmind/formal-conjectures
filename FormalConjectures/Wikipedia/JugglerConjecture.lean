@@ -39,7 +39,7 @@ The **Juggler Conjecture** states that for any positive integer $n$, there exist
 $m$ such that the $m$-th term of the sequence is $1$.
 -/
 @[category research open, AMS 11 37]
-theorem jugglerConjecture (n : ℕ) (hn : n > 0) : ∃ m : ℕ, jugglerStep^[m] n = 1 := by
+theorem juggler_conjecture (n : ℕ) (hn : n > 0) : ∃ m, jugglerStep^[m] n = 1 := by
   sorry
 
 /-- Example: jugglerStep 36 = ⌊36^(1/2)⌋ = ⌊6⌋ = 6 (since 36 is even). -/
