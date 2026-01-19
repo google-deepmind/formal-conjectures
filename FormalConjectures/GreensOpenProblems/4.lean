@@ -42,5 +42,7 @@ def extremalFamily {n : ℕ} (x : Fin n) (I : Set (Fin n)) : Set (Equiv.Perm (Fi
 -/
 @[category research solved, AMS 20]
 theorem large_green_4: ∃N : ℕ, ∀n > N, ∀S, LargestProdFree n S → ∃x I, S = extremalFamily x I ∨
-  S = (extremalFamily x I).image Equiv.symm := sorry
+    S = (extremalFamily x I).image Equiv.symm := by
+  sorry
+
 end Green4
