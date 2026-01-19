@@ -40,8 +40,8 @@ Exp. Math. vol. 10, issue 2 (2001) 267.
   with $0 < i < n$.
   -/
   @[category research open, AMS 11]
-  theorem conjecture :
-      Set.Infinite {p : ℕ | ∃ n i : ℕ, 0 < i ∧ i < n ∧ p = 2^n + 2^i + 1 ∧ isPrimeBitsSet 3 p} := by
+  theorem conjectureA081091 :
+      answer(sorry) ↔ Set.Infinite {p : ℕ | isPrimeBitsSet 3 p} := by
     sorry
 
   end OeisA081091
