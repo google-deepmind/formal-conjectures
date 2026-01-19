@@ -45,5 +45,3 @@ theorem green_61 :
   sorry
 
 end Green61
-
-
