@@ -38,7 +38,7 @@ This was answered affirmatively by Haight [Ha79].
 @[category research solved, AMS 11]
 theorem erdos_277 :
    answer(True) ↔ ∀ c : ℝ, ∃ n : ℕ, (sigma 1 n : ℝ) > c * n ∧
-    ¬ ∃ (S : Finset (ℤ × ℕ)),
+      ¬ ∃ (S : Finset (ℤ × ℕ)),
       (∀ z : ℤ, ∃ s ∈ S, z ≡ s.1 [ZMOD s.2]) ∧
       (∀ s ∈ S, s.2 ∣ n ∧ 1 < s.2) := by
   sorry
