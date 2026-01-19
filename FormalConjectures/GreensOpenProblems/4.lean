@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Green4
 def A (n : ℕ) := alternatingGroup (Fin n)
 
-def ProdFree {n : ℕ} (S : Set (Equiv.Perm (Fin n))) : Prop := ∀x ∈ S, ∀y ∈ S, ∀z ∈ S, x*y ≠ z
+def ProdFree {n : ℕ} (S : Set (Equiv.Perm (Fin n))) : Prop := ∀ x ∈ S, ∀ y ∈ S, ∀ z ∈ S, x * y ≠ z
 
 def LargestProdFree (n : ℕ) (S : Set (Equiv.Perm (Fin n))) : Prop := (∀x ∈ S , x ∈ A n) ∧
   ProdFree S ∧ (∀S' : Set (Equiv.Perm (Fin n)), (∀x ∈ S',x ∈ A n) → ProdFree S' →
