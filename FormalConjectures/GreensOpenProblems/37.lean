@@ -51,11 +51,11 @@ theorem green_37 (N k : ℕ) :
 
 /--
 Asymptotic version: determine the asymptotic behavior of `m(N, k)` as `N` grows.
-The solver should determine what function `f : ℕ → ℝ` equals `(fun N ↦ (m N k : ℝ))`.
+The solver should determine what function `f : ℕ → ℝ` eventually equals `(fun N ↦ (m N k : ℝ))`.
 -/
 @[category research open, AMS 05 11]
 theorem green_37_asymptotic (k : ℕ) :
-    (fun N ↦ (m N k : ℝ)) = (answer(sorry) : ℕ → ℝ) := by
+    ∀ᶠ N in atTop, (m N k : ℝ) = (answer(sorry) : ℕ → ℝ) N := by
   sorry
 
 /-- Determine the asymptotic equivalence class (theta) of `m(N, k)`. -/
