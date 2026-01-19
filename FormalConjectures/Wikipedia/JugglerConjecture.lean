@@ -46,11 +46,8 @@ theorem juggler_conjecture (n : ℕ) (hn : n > 0) : ∃ m, jugglerStep^[m] n = 1
 @[category test, AMS 11]
 theorem jugglerStep_36 : jugglerStep 36 = 6 := by
   unfold jugglerStep
-  simp only [show Even 36 by decide, ↓reduceIte]
-  norm_cast
-  have key : (36 : ℝ) ^ ((1 : ℝ) / 2) = 6 := by rw [← Real.sqrt_eq_rpow]; norm_num
-  conv_lhs => rw [key]
-  simp
+  norm_num [←Real.sqrt_eq_rpow]
+  decide
 
 end JugglerConjecture 
 
