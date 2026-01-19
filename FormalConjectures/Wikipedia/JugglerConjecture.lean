@@ -42,5 +42,15 @@ $m$ such that the $m$-th term of the sequence is 1.
 theorem jugglerConjecture (n : ℕ) (hn : n > 0) : ∃ m : ℕ, jugglerStep^[m] n = 1 := by
   sorry
 
+/-- Example: jugglerStep 36 = ⌊36^(1/2)⌋ = ⌊6⌋ = 6 (since 36 is even). -/
+@[category test, AMS 11]
+theorem jugglerStep_36 : jugglerStep 36 = 6 := by
+  unfold jugglerStep
+  simp only [show Even 36 by decide, ↓reduceIte]
+  norm_cast
+  have key : (36 : ℝ) ^ ((1 : ℝ) / 2) = 6 := by rw [← Real.sqrt_eq_rpow]; norm_num
+  conv_lhs => rw [key]
+  simp
+
 end JugglerConjecture 
 
