@@ -48,6 +48,7 @@ import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 import FormalConjecturesForMathlib.Data.Nat.Full
 import FormalConjecturesForMathlib.Data.Nat.Init
 import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
+import FormalConjecturesForMathlib.Data.Nat.PerfectPower
 import FormalConjecturesForMathlib.Data.Nat.Prime.Composite
 import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
