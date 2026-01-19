@@ -31,7 +31,11 @@ theorem Powerfree.of_dvd (hrm : r ∣ m) (hm : Powerfree k m) :
     Powerfree k r := fun _ hx => hm (hx.trans hrm)
 
 theorem powerfree_congr (hrm : Associated r m) : Powerfree k r ↔ Powerfree k m :=
-  ⟨fun h => powerfree_antitone hrm.dvd' h, fun h => powerfree_antitone hrm.dvd h⟩
+  ⟨fun h => h.of_dvd hrm.dvd', fun h => h.of_dvd hrm.dvd⟩
+
+@[simp]
+theorem powerfree_neg [HasDistribNeg M] : Powerfree k m ↔ Powerfree k (-m) :=
+  powerfree_congr (Associated.refl m).neg_right
 
 @[simp]
 theorem powerfree_two {m : M} : Powerfree 2 m ↔ Squarefree m where
