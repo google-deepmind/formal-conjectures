@@ -37,10 +37,9 @@ theorem green_23 :
   answer(True) ↔
     -- For every finite colouring of the natural numbers
     ∀ (k : ℕ) (c : ℕ → Fin k),
-    -- there exist two distinct numbers of the same colour whose squares sum to a square
+    -- there exist two numbers of the same colour whose squares sum to a square
     ∃ x y : ℕ,
       0 < x ∧ 0 < y ∧  -- Exclude trivial x^2 + 0^2 = x^2 solution
-      x ≠ y ∧          -- Distinct
       c x = c y ∧      -- Same colour
       IsSquare (x^2 + y^2)
     := by
