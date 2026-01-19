@@ -13,19 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«510»
 
 /-!
-# Erdős Problem 196
+# Ben Green's Open Problem 81
 
-*Reference:* [erdosproblems.com/196](https://www.erdosproblems.com/196)
+Let $A$ be a set of size $n$ integers. Is there some absolute constant $c > 0$ and $\theta$
+such that $\sum_{a \in A} \cos(a \theta) \leq - c \sqrt{n}$?
+
+*References:*
+ - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11 Problem 81)
+ - [erdosproblems.com/510](https://www.erdosproblems.com/510)
 -/
-namespace Erdos196
-
-/-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
-@[category research open, AMS 5 11]
-theorem erdos_196 : answer(sorry) ↔ ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 4 := by
-  sorry
-
-end Erdos196

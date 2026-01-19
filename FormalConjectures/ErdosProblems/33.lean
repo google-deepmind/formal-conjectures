@@ -38,13 +38,11 @@ def AdditiveBasisCondition (A : Set ℕ) : Prop :=
 
 /-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a`
 for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of
-`lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
+`lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)`?
 -/
 @[category research open, AMS 11]
-theorem erdos_33 : IsLeast
-    { c : EReal | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) = c}
-    answer(sorry) := by
+theorem erdos_33 : ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
+    (A.1.interIcc 1 N).ncard / (√N : EReal)) = answer(sorry) := by
   sorry
 
 /--
@@ -56,14 +54,14 @@ theorem erdos_33.variants.one_mem_lowerBounds : ∃ A, AdditiveBasisCondition A 
   sorry
 
 /--
-The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`
+The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)`
 is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by
 Wouter van Doorn.
 -/
 @[category research solved, AMS 11]
 theorem erdos_33.variants.vanDoorn :
-    ↑(2 * (φ ^ ((5 : ℝ) / 2))) ∈ lowerBounds { c : EReal | ∃ (A : Set ℕ), AdditiveBasisCondition A ∧
-      Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / (√N)) = c} := by
+    ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
+    (A.1.interIcc 1 N).ncard / (√N : EReal)) ≤ ↑(2 * (φ ^ ((5 : ℝ) / 2))) := by
   sorry
 
 end Erdos33
