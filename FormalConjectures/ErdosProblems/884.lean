@@ -29,13 +29,6 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 
 namespace Erdos884
 
-/--
-`divisors_increasing n` is the increasingly ordered list of divisors of `n`.
-By convention, we set `divisors_increasing 0 = ∅`.
-As a `Finset`, this is the same as `Nat.divisors`
--/
-abbrev divisors_increasing (n : ℕ) : List ℕ := (List.range (n + 1)).filter (· ∣ n)
-
 noncomputable abbrev sum_inv_of_divisor_pair_differences (n : ℕ) : ℚ :=
     ∑ j : Fin n.divisors.card, ∑ i : Fin  j,
     (1 : ℚ) / (Nat.nth (· ∣ n) j - Nat.nth (· ∣ n) i )
@@ -45,21 +38,34 @@ noncomputable abbrev sum_inv_of_consecutive_divisors (n : ℕ) : ℚ :=
     (1 : ℚ) / (Nat.nth (· ∣ n) (i + 1) - Nat.nth (· ∣ n) i)
 
 /--
-Statement of Erdos conjecture 884. See `erdos_884` for the problem asking whether this is true.
--/
-def erdos_884_stmt : Prop :=
-    sum_inv_of_divisor_pair_differences =O[Filter.atTop] (1 + sum_inv_of_consecutive_divisors)
-
-/--
-For a natural number n, let `1 = d₁ < ⋯ < d_{τ(n)} = n` denote the divisors of n
+For a natural number n, let $1 = d_1 < \dotsc < d_{\tau(n)} = n$ denote the divisors of $n$
 in increasing order.
 Does it hold that
-`∑ 1 ≤ i < j ≤ τ(n), 1 / (d_j - d_i) ⟪ 1 + ∑ 1 ≤ i < τ(n), 1 / (d_{i + 1} - d_i)`
-for `n → ∞`, i.e.
-`∑ 1 ≤ i < j ≤ τ(n), 1 / (d_j - d_i) ∈ O (1 + ∑ 1 ≤ i < τ(n), 1 / (d_{i + 1} - d_i))`?
+$\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \ll 1 + \sum_{1 \le i < \tau(n)}
+ \frac{1}{d_{i + 1} - d_i}$
+for $n \to \infty`, i.e.
+$\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
+ \frac{1}{d_{i + 1} - d_i}) \right)$?
 
 In September 2025, Terence Tao gave a conditional _negative_ answer to this conjecture,
-see `erdos_884_fales_of_hardy_littlewood` for this implication.
+see `erdos_884_false_of_hardy_littlewood` for this implication.
+However, the conjecture itself remains open.
+-/
+def erdos_884_stmt : Prop :=
+    sum_inv_of_divisor_pair_differences ≪ 1 + sum_inv_of_consecutive_divisors
+
+/--
+For a natural number n, let $1 = d_1 < \dotsc < d_{\tau(n)} = n$ denote the divisors of $n$
+in increasing order.
+Does it hold that
+$\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \ll 1 + \sum_{1 \le i < \tau(n)}
+ \frac{1}{d_{i + 1} - d_i}$
+for $n \to \infty`, i.e.
+$\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
+ \frac{1}{d_{i + 1} - d_i}) \right)$?
+
+In September 2025, Terence Tao gave a conditional _negative_ answer to this conjecture,
+see `erdos_884_false_of_hardy_littlewood` for this implication.
 However, the conjecture itself remains open.
 -/
 @[category research open, AMS 11]
