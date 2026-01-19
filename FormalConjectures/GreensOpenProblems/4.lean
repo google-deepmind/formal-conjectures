@@ -35,7 +35,7 @@ def LargestProdFree (n : ℕ) (S : Set (Equiv.Perm (Fin n))) : Prop := (∀x ∈
 theorem green_4 (n : ℕ) : LargestProdFree n answer(sorry) := sorry
 
 def extremalFamily {n : ℕ} (x : Fin n) (I : Set (Fin n)) : Set (Equiv.Perm (Fin n)) :=
-  {π | π ∈ A n ∧ π x ∈ I ∧ (I.image π) ∩ I = ∅}
+  {π | π ∈ A n ∧ π x ∈ I ∧ Disjoint (I.image π) I}
 
 /-In the case of large n, the problem was solved in
 [On the largest product-free subsets of the alternating groups](https://arxiv.org/pdf/2205.15191)
