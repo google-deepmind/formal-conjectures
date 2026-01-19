@@ -81,13 +81,13 @@ abbrev Has5Vertices7Edges {α : Type*} [Fintype α] [DecidableEq α] (H : Finset
 
 /-- Harris's counterexample has exactly 28 edges. -/
 @[category test, AMS 5]
-theorem harrisCounterexample_card : HarrisCounterexample.card = 28 := by native_decide
+theorem harrisCounterexample_card : HarrisCounterexample.card = 28 := by decide +kernel
 
 /-- Harris's counterexample is 3-uniform. -/
 @[category test, AMS 5]
 theorem harrisCounterexample_is3Uniform : Is3Uniform HarrisCounterexample := by
   unfold Is3Uniform
-  native_decide
+  decide +kernel
 
 /--
 Harris's counterexample has no subgraph on 4 vertices with (at least) 3 edges.
