@@ -22,10 +22,8 @@ import FormalConjectures.Util.ProblemImports
   See Wagstaff (2001) where this conjecture is posed.
 
   *References:*
-  *
-Samuel S. Wagstaff, Jr., [Prime Numbers with a fixed number of one bits or
-zero bits in their binary representation](http://projecteuclid.org/euclid.em/999188636),
-Exp. Math. vol. 10, issue 2 (2001) 267.
+  * Samuel S. Wagstaff, Jr., [Prime Numbers with a fixed number of one bits or zero bits in their binary 
+     representation](http://projecteuclid.org/euclid.em/999188636), Exp. Math. vol. 10, issue 2 (2001) 267.
   * [A081091](https://oeis.org/A081091)
   -/
 
