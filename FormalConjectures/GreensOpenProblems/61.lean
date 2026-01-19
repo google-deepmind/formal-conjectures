@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 This problem was originally considered by Erdős and Newman.
 -/
 
-open scoped Pointwise
+open scoped Pointwise Topology
 open Filter
 
 namespace Green61
