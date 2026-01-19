@@ -36,7 +36,7 @@ noncomputable def jugglerStep (n : ℕ) : ℕ :=
 Now form a sequence beginning with any positive integer, where each subsequent term is obtained
 by applying the operation defined above to the previous term.
 The **Juggler Conjecture** states that for any positive integer $n$, there exists a natural number
-$m$ such that the $m$-th term of the sequence is 1.
+$m$ such that the $m$-th term of the sequence is $1$.
 -/
 @[category research open, AMS 11 37]
 theorem jugglerConjecture (n : ℕ) (hn : n > 0) : ∃ m : ℕ, jugglerStep^[m] n = 1 := by
