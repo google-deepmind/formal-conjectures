@@ -30,7 +30,7 @@ def LargestProdFree (n : ℕ) (S : Set (Equiv.Perm (Fin n))) : Prop := (∀x ∈
   ProdFree S ∧ (∀S' : Set (Equiv.Perm (Fin n)), (∀x ∈ S',x ∈ A n) → ProdFree S' →
     S'.ncard ≤ S.ncard)
 
-/-Green's Open Problem 4: What is the largest product-free set in the alternating group A_n?-/
+/-- What is the largest product-free set in the alternating group A_n?-/
 @[category research open,AMS 20]
 theorem green_4 (n : ℕ) : LargestProdFree n answer(sorry) := sorry
 
