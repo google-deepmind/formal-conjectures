@@ -28,7 +28,7 @@ open scoped Pointwise
 open Filter
 
 namespace Green61
-
+-- TODO(Paul-Lez): add the other two results
 /--
 Suppose that $A + A$ contains the first $n$ squares. Is $|A| \geq n^{1 - o(1)}$?
 
