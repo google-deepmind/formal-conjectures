@@ -38,7 +38,7 @@ variable {α : Type*} [DecidableEq α]
 
 namespace SimpleGraph
 
-/-- A finite graph is CDSColorable if it has a proper coloring
+/-- A finite graph is CDS-colorable if it has a proper coloring
 by natural numbers such that for all `k > 0`, the number of
 vertices with color `< k` equals the maximum size of
 the union of `k` independent sets. -/
