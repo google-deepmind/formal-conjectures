@@ -55,33 +55,30 @@ theorem green_24 :
 
 /- A collection of associated bounds and conjectured values. -/
 namespace variants
-  /-- From [Aa19] p.577: the trivial upper bound is $n^2$ (non asymptotic) -/
-  @[category research open, AMS 5 11]
-  theorem upper_trivial {n : ℕ} :
-    max013Translates n ≤ n ^ 2 := by
-    sorry
 
-  /-- The asymptotic constant $\gamma$ defined in [Aa19] p.579. -/
-  noncomputable def gamma : ℝ :=
-    limsup (fun n : ℕ => (max013Translates n : ℝ) / ((n : ℝ)^2)) atTop
+/-- From [Aa19] p.577: the trivial upper bound is $n^2$ (non asymptotic) -/
+@[category research open, AMS 5 11]
+theorem upper_trivial {n : ℕ} : max013Translates n ≤ n ^ 2 := by
+  sorry
 
-  /-- Asymptotic upper bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
-  @[category research open, AMS 5 11]
-  theorem upper_HL :
-    gamma ≤ (3/4 : ℝ) := by
-    sorry
+/-- The asymptotic constant $\gamma$ defined in [Aa19] p.579. -/
+noncomputable def gamma : ℝ :=
+  limsup (fun n : ℕ => (max013Translates n : ℝ) / ((n : ℝ)^2)) atTop
 
-  /-- Asymptotic lower bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
-  @[category research open, AMS 5 11]
-  theorem lower_HL :
-    gamma ≥ (1/12 : ℝ) := by
-    sorry
+/-- Asymptotic upper bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
+@[category research open, AMS 5 11]
+theorem upper_HL : gamma ≤ (3/4 : ℝ) := by
+  sorry
 
-  /-- Conjecture p.579 in [Aa19]: $\left({1}{3} + o(1)\right) n^2$. -/
-  @[category research open, AMS 5 11]
-  theorem conjecture :
-    gamma = (1/3 : ℝ) := by
-    sorry
+/-- Asymptotic lower bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
+@[category research open, AMS 5 11]
+theorem lower_HL : gamma ≥ (1/12 : ℝ) := by
+  sorry
+
+/-- Conjecture p.579 in [Aa19]: $\left({1}{3} + o(1)\right) n^2$. -/
+@[category research open, AMS 5 11]
+theorem conjecture : gamma = (1/3 : ℝ) := by
+  sorry
 
 end variants
 
