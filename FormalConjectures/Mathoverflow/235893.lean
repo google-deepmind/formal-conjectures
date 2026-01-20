@@ -49,7 +49,7 @@ Does there exist a bijection $f : ℝ^n → ℝ^n$ such that $f$ is connected bu
 @[category research open, AMS 26 54]
 theorem mathoverflow_235893 (n : ℕ) :
   ∃ (f : ℝ^n → ℝ^n) (hf : Function.Bijective f),
-    IsConnectedMap f ∧ ¬ IsConnectedMap (Equiv.ofBijective f hf) ↔ answer(sorry) := by
+    IsConnectedMap f ∧ ¬ IsConnectedMap (Equiv.ofBijective f hf).symm ↔ answer(sorry) := by
   sorry
 
 /--
@@ -60,7 +60,7 @@ proven in [mathoverflow/260589](https://mathoverflow.net/questions/260589) by
 @[category research solved, AMS 26 54]
 theorem mathoverflow_260589 :
   ∃ (f : ℝ → ℝ^2) (hf : Function.Bijective f),
-    IsConnectedMap f ∧ ¬ IsConnectedMap (Equiv.ofBijective f hf) := by
+    IsConnectedMap f ∧ ¬ IsConnectedMap (Equiv.ofBijective f hf).symm := by
   sorry
 
 end Mathoverflow235893
