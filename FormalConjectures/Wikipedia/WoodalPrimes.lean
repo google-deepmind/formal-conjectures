@@ -16,6 +16,14 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-! # Woodall Primes
+
+References:
+* [Wikipedia/Woodall_number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
+* [OEIS/A002234](https://oeis.org/A002234)
+
+-/
+
 namespace WoodallPrimes
 
 /-- There are infinitely many prime numbers of the form `k * 2 ^ k - 1` for `k > 1`. -/
