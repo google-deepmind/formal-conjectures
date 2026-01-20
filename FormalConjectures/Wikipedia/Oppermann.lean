@@ -68,7 +68,12 @@ theorem oppermann_implies_brocard (n : ℕ) (hn : 1 ≤ n) (P : type_of% opperma
 @[category high_school, AMS 11]
 theorem oppermann_implies_legendre (n : ℕ) (hn : 1 ≤ n) (P : type_of% oppermann_conjecture) :
     ∃ p ∈ Ioo (n ^ 2) ((n + 1) ^ 2), p.Prime := by
-  sorry
+  obtain ⟨⟨p, ph⟩, _⟩ := P (n + 1) (by simpa)
+  use p
+  simp_all only [mem_Ioo, Nat.reduceLeDiff, add_tsub_cancel_right, and_true]
+  apply lt_of_lt_of_le' ph.1.1
+  rw [sq, add_mul]
+  exact Nat.le_add_right (n * n) (1 * n)
 
 /--
 Ferreira proved that Oppermann's conjecture is true for sufficiently large x.
