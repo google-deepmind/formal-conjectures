@@ -24,9 +24,8 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos847
 
 
-def HasFew3APs (A : Set ℕ) :=
-    ∃ (ε : ℝ), ε > 0 ∧  ∀ (B : Set ℕ), B ⊆ A → Finite B →
-    ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ThreeAPFree C
+def HasFew3APs (A : Set ℕ) := ∃ (ε : ℝ), ε > 0 ∧  ∀ (B : Set ℕ), B ⊆ A → Finite B →
+  ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ThreeAPFree C
 
 /--
 Let $A \subset \mathbb{N}$ be an infinite set for which there exists some $\epsilon > 0$ such that
