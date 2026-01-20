@@ -30,7 +30,7 @@ open Lean Elab Meta Linter Command Parser Term ProblemAttributes
 
 register_option linter.style.ams_attribute : Bool := {
   defValue := true
-  descr := "enable the `ams` attribute style linter"
+  descr := "enable the `AMS` attribute style linter"
 }
 
 namespace AMSLinter
