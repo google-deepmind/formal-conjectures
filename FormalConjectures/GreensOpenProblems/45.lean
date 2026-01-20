@@ -15,9 +15,13 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«689»
 
 /-!
 # Ben Green's Open Problem 45
+
+Can we pick residue classes $a_p(mod p)$, one for each prime `p ⩽ N`,
+such that every integer `⩽ N` lies in at least 10 of them?
 
 *References:*
 - [Ben Green's Open Problem 45](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.45)
@@ -28,14 +32,7 @@ open Finset
 
 namespace Green45
 
-/--
-Can we pick residue classes $a_p(mod p)$, one for each prime `p ⩽ N`,
-such that every integer `⩽ N` lies in at least 10 of them?
--/
-@[category research open, AMS 11]
-theorem green_45 :
-    answer(sorry) ↔ ∀ᶠ n in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
-    10 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
-  sorry
+abbrev green_45 (a : ℕ → ℕ)(n m : ℕ) : Prop :=
+10 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card
 
 end Green45
