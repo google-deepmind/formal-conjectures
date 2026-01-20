@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # Toronto spaces
 
 A *Toronto space* is a topological space
-which is homeomorphic to all of its subspace of same cardinality.
+which is homeomorphic to all of its subspaces of same cardinality.
 
 It is conjectured that every T2, Toronto space is discrete.
 W.R. Brian proved that this holds under GCH.
@@ -37,7 +37,7 @@ open Cardinal
 variable (X : Type*) [TopologicalSpace X]
 
 /-- A *Toronto space* is a topological space
-which is homeomorphic to all of its subspace of same cardinality.
+which is homeomorphic to all of its subspaces of same cardinality.
 -/
 class TorontoSpace where
   toronto : ∀ Y : Set X, #Y = #X → Y ≃ₜ X
