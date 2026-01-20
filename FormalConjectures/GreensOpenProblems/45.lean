@@ -32,7 +32,7 @@ open Finset
 
 namespace Green45
 
-abbrev green_45 (a : ℕ → ℕ)(n m : ℕ) : Prop :=
-10 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card
+theorem green_45 : type_of% erdos_689 := by
+  sorry
 
 end Green45
