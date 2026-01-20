@@ -60,7 +60,7 @@ instance Finite.torontoSpace [Finite X] : TorontoSpace X where
 
 /-- Any T2, Toronto space is discrete. -/
 @[category research open, AMS 54]
-instance DiscreteTopology.of_t2_of_torontoSpace [T2Space X] [TorontoSpace X] :
+theorem DiscreteTopology.of_t2_of_torontoSpace [T2Space X] [TorontoSpace X] :
     DiscreteTopology X := by
   sorry
 
