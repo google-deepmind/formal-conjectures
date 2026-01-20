@@ -29,11 +29,11 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 
 namespace Erdos884
 
-noncomputable abbrev sum_inv_of_divisor_pair_differences (n : ℕ) : ℚ :=
+noncomputable abbrev sumDivisorInvPairwiseDifference (n : ℕ) : ℚ :=
     ∑ j : Fin n.divisors.card, ∑ i : Fin  j,
     (1 : ℚ) / (Nat.nth (· ∣ n) j - Nat.nth (· ∣ n) i )
 
-noncomputable abbrev sum_inv_of_consecutive_divisors (n : ℕ) : ℚ :=
+noncomputable abbrev sumDivisorInvConsecutiveDifference (n : ℕ) : ℚ :=
     ∑ i : Fin (n.divisors.card - 1),
     (1 : ℚ) / (Nat.nth (· ∣ n) (i + 1) - Nat.nth (· ∣ n) i)
 
@@ -51,8 +51,8 @@ In September 2025, Terence Tao gave a conditional _negative_ answer to this conj
 see `erdos_884_false_of_hardy_littlewood` for this implication.
 However, the conjecture itself remains open.
 -/
-def erdos_884_stmt : Prop :=
-    sum_inv_of_divisor_pair_differences ≪ 1 + sum_inv_of_consecutive_divisors
+def Erdos884 : Prop :=
+    sumDivisorInvPairwiseDifference ≪ 1 + sumDivisorInvConsecutiveDifference
 
 /--
 For a natural number n, let $1 = d_1 < \dotsc < d_{\tau(n)} = n$ denote the divisors of $n$
@@ -70,7 +70,7 @@ However, the conjecture itself remains open.
 -/
 @[category research open, AMS 11]
 theorem erdos_884 :
-    erdos_884_stmt ↔ answer(sorry) := by
+    Erdos884 ↔ answer(sorry) := by
   sorry
 
 /--
@@ -86,7 +86,8 @@ already formalized.
 @[category research solved, AMS 11]
 theorem erdos_884_false_of_hardy_littlewood :
     ∀ (k : ℕ) (m : Fin k.succ → ℕ), HardyLittlewood.FirstHardyLittlewoodConjectureFor m
-    → ¬ erdos_884_stmt := by sorry
+    → ¬ Erdos884 := by
+  sorry
 
 
 end Erdos884
