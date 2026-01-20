@@ -46,8 +46,7 @@ leading coefficient of `f` is positive. Then the set of `n` such that `f n` is `
 free has positive density, and this is proved in [Ho67]. -/
 @[category research solved, AMS 11]
 theorem erdos_978.sub_one_density {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree > 2)
-    (hp : ¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ (f.eval (n : ℤ)))
-    (hc : f.leadingCoeff > 0) :
+    (hp : ¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
     HasPosDensity {n : ℕ | Powerfree (f.natDegree - 1) (f.eval (n : ℤ))} := by
   sorry
 
@@ -55,7 +54,7 @@ theorem erdos_978.sub_one_density {f : ℤ[X]} (hi : Irreducible f) (hd : f.natD
 `(k - 2)`-th power free has infinitely many elements. This result is proved in [Br11]. -/
 @[category research solved, AMS 11]
 theorem erdos_978.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree ≥ 9)
-    (hp : ¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ (f.eval (n : ℤ))) :
+    (hp : ¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
@@ -63,7 +62,7 @@ theorem erdos_978.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree �
 elements? -/
 @[category research open, AMS 11]
 theorem erdos_978.sub_two' : answer(sorry) ↔ ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 2 →
-    (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ (f.eval (n : ℤ))) →
+    (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) →
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 

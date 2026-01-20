@@ -35,7 +35,7 @@ theorem powerfree_congr (hrm : Associated r m) : Powerfree k r ↔ Powerfree k m
 
 @[simp]
 theorem powerfree_neg [HasDistribNeg M] : Powerfree k (-m) ↔ Powerfree k m :=
-  powerfree_congr (Associated.refl m).neg_right
+  powerfree_congr (Associated.refl m).neg_left
 
 @[simp]
 theorem powerfree_two {m : M} : Powerfree 2 m ↔ Squarefree m where
