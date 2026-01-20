@@ -28,7 +28,6 @@ such that every integer `⩽ N` lies in at least 10 of them?
 - [erdosproblems.com/689](https://www.erdosproblems.com/689)
 -/
 
-
 namespace Green45
 
 theorem green_45 : type_of% erdos_689 := by
