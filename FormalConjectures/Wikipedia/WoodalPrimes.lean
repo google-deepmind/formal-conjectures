@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-! # Woodall Primes
 
 References:
-* [Wikipedia/Woodall_number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
+* [Wikipedia/Woodall Number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
 * [OEIS/A002234](https://oeis.org/A002234)
 
 -/
