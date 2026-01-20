@@ -30,7 +30,7 @@ def an_div_n_tendsto_infinity (an : ℕ → ℝ) : Prop :=
     Tendsto (fun n => an n / (n : ℝ)) atTop atTop
 
 noncomputable def sum_of_sequence (an : ℕ → ℝ) : ℝ :=
-∑'[conditional ℕ] n, (an n / 2 ^ (an n))
+  ∑'[conditional ℕ] n, (an n / 2 ^ (an n))
 
 /-
 Let $a_1 < a_2 < \cdots$ be an increasing sequence such that
