@@ -41,6 +41,7 @@ Is the sum
 
 @[category research open, AMS 11]
 theorem erdos_260 (a : ℕ → ℝ) (h : StrictMono a) (h2 : an_div_n_tendsto_infinity a) :
-    Irrational (sum_of_sequence a) := by sorry
+    Irrational (sum_of_sequence a) := by
+  sorry
 
 end Erdos260
