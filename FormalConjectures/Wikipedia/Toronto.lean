@@ -64,4 +64,6 @@ instance DiscreteTopology.of_t2_of_torontoSpace [T2Space X] [TorontoSpace X] :
     DiscreteTopology X := by
   sorry
 
+-- TODO: Add implication that this holds under the GCH
+
 end Toronto
