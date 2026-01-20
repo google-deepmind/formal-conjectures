@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ForMathlib.Combinatorics.YoungDiagram
 
 /-!
 # Latin Tableau Conjecture
@@ -37,31 +38,6 @@ namespace LatinTableau
 variable {α : Type*} [DecidableEq α]
 
 namespace SimpleGraph
-
-/-- A finite graph is CDS-colorable if it has a proper coloring
-by natural numbers such that for all `k > 0`, the number of
-vertices with color `< k` equals the maximum size of
-the union of `k` independent sets. -/
-def CDSColorable [Fintype α] {G : SimpleGraph α} : Prop :=
-  ∃ (C : G.Coloring Nat), ∀ k : Nat,
-  ∑ i < k, (C.colorClass i).ncard = indepNumK G k
-
-open YoungDiagram
-
-
-def YoungDiagram.Cell (μ : YoungDiagram) : Type := μ.cells
-
-instance (μ : YoungDiagram) : Fintype μ.Cell :=
-  inferInstanceAs (Fintype μ.cells)
-
-instance (μ : YoungDiagram) : DecidableEq μ.Cell :=
-  inferInstanceAs (DecidableEq μ.cells)
-
-/-- The simple graph of a Young diagram: two distinct cells are
-  adjacent iff they lie in the same row or in the same column. -/
-def YoungDiagram.toSimpleGraph (μ : YoungDiagram) : SimpleGraph (YoungDiagram.Cell μ) :=
-  SimpleGraph.fromRel fun a b =>
-    (Prod.fst a.val = Prod.fst b.val) ∨ (Prod.snd a.val = Prod.snd b.val)
 
 /-- The Latin Tableau Conjecture: If G is the simple graph
   of a Young diagram, then G is CDSColorable. -/

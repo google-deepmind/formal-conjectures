@@ -115,3 +115,11 @@ noncomputable def chromaticCardinal.{u} {V : Type u} (G : SimpleGraph V) : Cardi
 noncomputable def indepNumK (G : SimpleGraph V) (k : ℕ) : ℕ :=
   sSup {n | ∃ f : Fin k → Set V, (∀ i, G.IsIndepSet (f i)) ∧ (⋃ i, f i).ncard = n}
 
+/-- A finite graph is CDS-colorable if it has a proper coloring
+by natural numbers such that for all `k > 0`, the number of
+vertices with color `< k` equals the maximum size of
+the union of `k` independent sets. -/
+
+def CDSColorable [Fintype α] {G : SimpleGraph α} : Prop :=
+    ∃ (C : G.Coloring Nat), ∀ k : Nat,
+   ∑ i < k, (C.colorClass i).ncard = indepNumK G k
