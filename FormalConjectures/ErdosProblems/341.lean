@@ -38,12 +38,13 @@ This problem is discussed under Problem 7 on Green's open problems list.
 theorem erdos_341 :
     answer(sorry) ↔
       ∀ (l : List ℤ) (a : ℕ → ℤ),
-      l.Sorted (· < ·) →
-      l ≠ [] →
-      (∀ k, k < l.length → a k = l[k]!) →
-      (∀ n, n ≥ l.length - 1 →
-        IsLeast { x : ℤ | a n < x ∧ ∀ i j, i ≤ n → j ≤ n → a i + a j ≠ x } (a (n + 1))) →
-      ∃ p > 0, ∀ᶠ m in atTop, (a (m + 1 + p) - a (m + p)) = (a (m + 1) - a m) := by
+        l.Sorted (· < ·) →
+        l ≠ [] →
+        (List.range l.length).map a = l →
+        (∀ n ≥ l.length - 1,
+          IsLeast { x | a n < x ∧ x ∉ { a i + a j | (i ≤ n) (j ≤ n) } } (a (n + 1))) →
+        let d := fun i ↦ a (i + 1) - a i
+        ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
   sorry
 
 end Erdos341
