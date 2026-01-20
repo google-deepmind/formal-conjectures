@@ -27,7 +27,7 @@ namespace Erdos260
 open Filter SummationFilter
 
 def an_div_n_tendsto_infinity (an : ℕ → ℝ) : Prop :=
-    Tendsto (fun n => an n / (n : ℝ)) atTop atTop
+   Tendsto (fun n => an n / (n : ℝ)) atTop atTop
 
 noncomputable def sum_of_sequence (an : ℕ → ℝ) : ℝ :=
   ∑'[conditional ℕ] n, (an n / 2 ^ (an n))
