@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
   theory. Number theory (Eger, 1996) (1998), 169-180.
 -/
 
-open Nat Real Set Filter
+open Nat Set Filter
 open scoped Topology
 
 namespace Erdos417
