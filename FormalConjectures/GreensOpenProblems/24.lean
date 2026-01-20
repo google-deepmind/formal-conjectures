@@ -35,11 +35,12 @@ namespace Green24
 The maximum number of $\lbrace 0,1,3 \rbrace$ affine translates that a set of size $n$ can
 contain.
 -/
-noncomputable def max013Translates (n : ℕ) : ℕ :=
+noncomputable def max013AffineTranslates (n : ℕ) : ℕ :=
   sSup { k |
     ∃ A : Finset ℤ,
       A.card = n ∧
-      k = (A.filter (fun x ↦ x + 1 ∈ A ∧ x + 3 ∈ A)).card
+      -- Iterate over (x,y) = (a, a + d) in A × A (x ≠ y), and check if a + 3d = x + 3(y - x) ∈ A
+      k = ((A ×ˢ A).filter (fun (x, y) ↦ x ≠ y ∧ x + 3 * (y - x) ∈ A)).card
   }
 
 /--
@@ -49,7 +50,7 @@ $\lbrace 0,1,3 \rbrace$ that $A$ can contain?
 Conjectured in [Aa19] p.579: $\left({1}{3} + o(1)\right) n^2$.
 -/
 @[category research open, AMS 5 11]
-theorem green_24 : ∀ n, max013Translates n = answer(sorry) := by
+theorem green_24 : ∀ n, max013AffineTranslates n = answer(sorry) := by
   sorry
 
 /- A collection of associated bounds and conjectured values. -/
@@ -57,12 +58,12 @@ namespace variants
 
 /-- From [Aa19] p.577: the trivial upper bound is $n^2$ (non asymptotic) -/
 @[category research open, AMS 5 11]
-theorem upper_trivial {n : ℕ} : max013Translates n ≤ n ^ 2 := by
+theorem upper_trivial {n : ℕ} : max013AffineTranslates n ≤ n ^ 2 := by
   sorry
 
 /-- The asymptotic constant $\gamma$ defined in [Aa19] p.579. -/
 noncomputable def gamma : ℝ :=
-  limsup (fun n : ℕ => (max013Translates n : ℝ) / ((n : ℝ)^2)) atTop
+  limsup (fun n : ℕ => (max013AffineTranslates n : ℝ) / ((n : ℝ)^2)) atTop
 
 /-- Asymptotic upper bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
 @[category research open, AMS 5 11]
