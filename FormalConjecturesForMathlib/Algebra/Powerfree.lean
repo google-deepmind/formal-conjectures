@@ -34,7 +34,7 @@ theorem powerfree_congr (hrm : Associated r m) : Powerfree k r ↔ Powerfree k m
   ⟨fun h => h.of_dvd hrm.dvd', fun h => h.of_dvd hrm.dvd⟩
 
 @[simp]
-theorem powerfree_neg [HasDistribNeg M] : Powerfree k m ↔ Powerfree k (-m) :=
+theorem powerfree_neg [HasDistribNeg M] : Powerfree k (-m) ↔ Powerfree k m :=
   powerfree_congr (Associated.refl m).neg_right
 
 @[simp]
