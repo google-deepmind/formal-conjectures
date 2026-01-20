@@ -22,8 +22,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 
 namespace SimpleGraph
 
-open Finset
-open Classical
+open Classical Finset List
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -99,5 +98,20 @@ def UnitDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph 
   loopless := by
     intros x
     simp [dist_self]
+
+/--
+Two walks are internally disjoint if they share no vertices other than their endpoints.
+-/
+def InternallyDisjoint {V : Type*} {G : SimpleGraph V} {u v x y : V}
+    (p : G.Walk u v) (q : G.Walk x y) : Prop :=
+  Disjoint p.support.tail.dropLast q.support.tail.dropLast
+
+/--
+We say a graph is infinitely connected if any two vertices are connected by infinitely many
+pairwise disjoint paths.
+-/
+def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop :=
+  Pairwise fun u v ↦ ∃ P : Set (G.Walk u v),
+    P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
 
 end SimpleGraph
