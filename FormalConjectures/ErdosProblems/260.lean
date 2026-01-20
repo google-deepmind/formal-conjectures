@@ -24,13 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos260
 
-open Filter SummationFilter
-
-def an_div_n_tendsto_infinity (an : ℕ → ℝ) : Prop :=
-   Tendsto (fun n => an n / (n : ℝ)) atTop atTop
-
-noncomputable def sum_of_sequence (an : ℕ → ℝ) : ℝ :=
-  ∑'[conditional ℕ] n, (an n / 2 ^ (an n))
+open Filter
 
 /-
 Let $a_1 < a_2 < \cdots$ be an increasing sequence such that
@@ -40,8 +34,11 @@ Is the sum
 -/
 
 @[category research open, AMS 11]
-theorem erdos_260 (a : ℕ → ℝ) (h : StrictMono a) (h2 : an_div_n_tendsto_infinity a) :
-    Irrational (sum_of_sequence a) := by
+theorem erdos_260 (a : ℕ → ℝ)(s : ℝ)
+                  (h : StrictMono a)
+                  (h2 : Tendsto (fun n => a n / (n : ℝ)) atTop atTop)
+                  (h3 : HasSum (fun n => a n / 2 ^ (a n)) s) :
+    Irrational s := by
   sorry
 
 end Erdos260
