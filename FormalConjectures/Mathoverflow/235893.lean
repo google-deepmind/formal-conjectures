@@ -29,7 +29,7 @@ namespace Mathoverflow235893
 
 variable (n : ℕ)
 
-/-- For topological spaces X and Y we say a function $f : X → Y$ is *connected* is it sends
+/-- For topological spaces $X$ and $Y$ we say a function $f : X → Y$ is *connected* is it sends
 connected sets to connected sets.
 -/
 def IsConnectedMap {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] (f : X → Y) : Prop :=
