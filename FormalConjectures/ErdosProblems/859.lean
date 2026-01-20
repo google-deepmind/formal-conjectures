@@ -59,7 +59,10 @@ A case where we can easily calculate the density of `DivisorSumSet t` is that of
 -/
 @[category high_school, AMS 11]
 lemma erdos_859.variants.trivial_case : DivisorSumSet 0 = Set.univ := by
-  sorry
+  ext
+  simp only [DivisorSumSet, Set.mem_setOf_eq, Set.mem_univ, iff_true]
+  use ∅
+  simp only [Finset.empty_subset, Finset.sum_empty, and_self]
 
 /-
 An easy sanity check is to prove that for every natural number `t` the density `dₜ` is
