@@ -40,7 +40,7 @@ variable (X : Type*) [TopologicalSpace X]
 which is homeomorphic to all of its subspaces of same cardinality.
 -/
 class TorontoSpace where
-  toronto : ∀ Y : Set X, #Y = #X → Y ≃ₜ X
+  toronto : ∀ ⦃Y : Set X⦄, #Y = #X → Y ≃ₜ X
 
 /-- Every finite space is Toronto, since
 the only subspace with same cardinality is the space itself.
