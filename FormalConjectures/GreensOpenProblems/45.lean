@@ -27,3 +27,11 @@ such that every integer `⩽ N` lies in at least 10 of them?
 - [Ben Green's Open Problem 45](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.45)
 - [erdosproblems.com/689](https://www.erdosproblems.com/689)
 -/
+
+namespace Green45
+
+@[category research open, AMS 11]
+theorem green_45 : type_of% Erdos689.erdos_689 := by
+  sorry
+
+end Green45
