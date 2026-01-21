@@ -26,7 +26,7 @@ open scoped Topology
 
 namespace Erdos168
 
-/--Say a finite set of natural numbers is *non ternary* if it contains no
+/-- Say a finite set of natural numbers is *non ternary* if it contains no
 3-term arithmetic progression of the form `n, 2n, 3n`.-/
 def NonTernary (S : Finset ℕ) : Prop := ∀ n : ℕ, n ∉ S ∨ 2*n ∉ S ∨ 3*n ∉ S
 
