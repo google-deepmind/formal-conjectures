@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 If $2^x$ and $3^x$ are integers, then $x$ must be an integer.
 -/
 @[category research open, AMS 11 13]
-theorem mathoverflow_17560 {x : ℝ} (hx : ∃ m : ℕ, 2 ^ x = m) (hx' : ∃ m : ℕ, 3 ^ x = m) :
+theorem mathoverflow_17560 {x : ℝ} (hx : ∃ m : ℕ, (2 : ℝ) ^ x = m) (hx' : ∃ m : ℕ, (3 : ℝ) ^ x = m) :
     ∃ m : ℤ, x = m := by
   sorry
 
@@ -28,7 +28,7 @@ theorem mathoverflow_17560 {x : ℝ} (hx : ∃ m : ℕ, 2 ^ x = m) (hx' : ∃ m 
 If for each natural number $n$ the number $n^x$ is an integer then $x$ must also be an integer.
 -/
 @[category graduate, AMS 11 13]
-theorem mathoverflow_17560.variants.with_5 {x : ℝ} (hx : ∀ n : ℕ, ∃ m : ℕ, n ^ x = m) :
+theorem mathoverflow_17560.variants.all_nats {x : ℝ} (hx : ∀ n : ℕ, ∃ m : ℕ, (n : ℝ) ^ x = m) :
     ∃ m : ℤ, x = m := by
   sorry
 
@@ -36,6 +36,6 @@ theorem mathoverflow_17560.variants.with_5 {x : ℝ} (hx : ∀ n : ℕ, ∃ m : 
 If $2^x$, $3^x$ and $5^x$ are integers, then $x$ must be an integer.
 -/
 @[category graduate, AMS 11 13]
-theorem mathoverflow_17560.variants.with_5 {x : ℝ} (hx : ∃ m : ℕ, 2 ^ x = m)
-    (hx' : ∃ m : ℕ, 3 ^ x = m) : ∃ m : ℤ, x = m := by
+theorem mathoverflow_17560.variants.with_5 {x : ℝ} (hx : ∃ m : ℕ, (2 : ℝ) ^ x = m)
+    (hx' : ∃ m : ℕ, (3 : ℝ) ^ x = m) (hx'' : ∃ m : ℕ, (5 : ℝ) ^ x = m) : ∃ m : ℤ, x = m := by
   sorry
