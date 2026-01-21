@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ theorem balanced_primes :
 
 /--
 Let $p_k$ be the $k$-th prime number.
-Are there infinitely many $n$ such that $p_n = (∑ i = 1 ^ k, (p_{n - i} + p_{n + i})) / 2$ is prime?
+Are there infinitely many $n$ such that $p_n = (∑ i = 1 ^ k, (p_{n - i} + p_{n + i})) / (2*k)$ is prime?
 -/
 @[category research open, AMS 11]
 theorem balanced_primes_order (k : ℕ) :
