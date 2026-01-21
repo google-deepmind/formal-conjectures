@@ -54,9 +54,12 @@ A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not divid
 that $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$ where $U(a,b)$ is the Lucas sequence of the first
 kind and $\varepsilon$ is the Legendre symbol $\left({\tfrac {a^2-4b}{p}}\right)$.
 The discriminant of this number is the quantity $a^2 - 4b$. It is conjectured that there are
-infinitely many Lucas–Wieferich primes of any given discriminant.
+infinitely many Lucas–Wieferich primes of any given non-one fundamental discriminant.
+
+TODO: Source this conjecture
 -/
 @[category research open, AMS 11]
-theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℤ} (hD : IsFundamentalDiscriminant D) :
+theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℤ} (hD : IsFundamentalDiscriminant D)
+    (hD₁ : D ≠ 1) :
     {p : ℕ | ∃ a b, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p}.Infinite := by
   sorry
