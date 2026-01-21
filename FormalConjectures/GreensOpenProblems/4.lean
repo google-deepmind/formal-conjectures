@@ -24,12 +24,10 @@ import FormalConjectures.Util.ProblemImports
 namespace Green4
 def ProdFree {M : Type*} [Monoid M] (S : Set M) : Prop := ∀ x ∈ S, ∀ y ∈ S, ∀ z ∈ S, x * y ≠ z
 
-def LargestProdFree (n : ℕ) (S : Set <| alternatingGroup <| Fin n) : Prop :=
-  MaximalFor ProdFree Set.ncard S
-
-/-- What is the largest product-free set in the alternating group $A_n$? -/
+/-- What is the largest product-free set in the alternating group A_n?-/
 @[category research open,AMS 20]
-theorem green_4 (n : ℕ) : LargestProdFree n answer(sorry) := by
+theorem green_4 (n : ℕ) : 
+    MaximalFor (M := alternatingGroup <| Fin n) ProdFree Set.ncard answer(sorry) := by
   sorry
 
 def extremalFamily {n : ℕ} (x : Fin n) (I : Set (Fin n)) : Set <| alternatingGroup <| Fin n :=
