@@ -48,7 +48,7 @@ Does there exist a bijection $f : ℝ^n → ℝ^n$ such that $f$ is connected bu
 -/
 @[category research open, AMS 26 54]
 theorem mathoverflow_235893 (n : ℕ) :
-    answer(sorry) ↔ ∃ (f : ℝ^n ≅ ℝ^n), IsConnectedMap f.hom ∧ ¬ IsConnectedMap f.symm.hom := by
+    answer(sorry) ↔ ∃ (f : ℝ^n ≃ ℝ^n), IsConnectedMap f ∧ ¬ IsConnectedMap f.symm := by
   sorry
 
 /--
