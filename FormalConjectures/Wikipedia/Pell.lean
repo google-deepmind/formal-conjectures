@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Infinitude of Pell number primes
 
-*Reference:*
+*References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Pell_number#Primes_and_squares)
  - [OEIS A086383](https://oeis.org/A086383)
 
