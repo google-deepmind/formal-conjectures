@@ -110,3 +110,14 @@ noncomputable def cochromaticNumber (G : SimpleGraph V) : ℕ∞ := ⨅ n ∈ se
 returns a `Cardinal` and can therefore distinguish between different infinite chromatic numbers. -/
 noncomputable def chromaticCardinal.{u} {V : Type u} (G : SimpleGraph V) : Cardinal :=
   sInf {κ : Cardinal | ∃ (C : Type u) (_ : Cardinal.mk C = κ), Nonempty (G.Coloring C)}
+
+/-- A homomorphism is rainbow if it maps distinct edges to distinct colors. -/
+def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →g G) {C : Type*}
+    (c : Sym2 V → C) : Prop :=
+  Function.Injective fun e : H.edgeSet => c (Sym2.map f e)
+
+/--
+The anti-Ramsey number $\mathrm{AR}(n, H)$: maximum colors to edge-color $K_n$ without rainbow $H$.
+-/
+noncomputable def antiRamseyNum {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
+  sSup {k | ∃ c : Sym2 (Fin n) → Fin k, ∀ f : H →g ⊤, ¬IsRainbow f c}

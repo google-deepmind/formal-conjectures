@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,17 +15,23 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«689»
 
 /-!
-# Erdős Problem 196
+# Ben Green's Open Problem 45
 
-*Reference:* [erdosproblems.com/196](https://www.erdosproblems.com/196)
+Can we pick residue classes $a_p(mod p)$, one for each prime `p ⩽ N`,
+such that every integer `⩽ N` lies in at least 10 of them?
+
+*References:*
+- [Ben Green's Open Problem 45](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.45)
+- [erdosproblems.com/689](https://www.erdosproblems.com/689)
 -/
-namespace Erdos196
 
-/-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
-@[category research open, AMS 5 11]
-theorem erdos_196 : answer(sorry) ↔ ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 4 := by
+namespace Green45
+
+@[category research open, AMS 11]
+theorem green_45 : type_of% Erdos689.erdos_689 := by
   sorry
 
-end Erdos196
+end Green45

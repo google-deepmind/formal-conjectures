@@ -20,6 +20,7 @@ import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
+import FormalConjecturesForMathlib.Algebra.Powerfree
 import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
@@ -48,6 +49,7 @@ import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 import FormalConjecturesForMathlib.Data.Nat.Full
 import FormalConjecturesForMathlib.Data.Nat.Init
 import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
+import FormalConjecturesForMathlib.Data.Nat.PerfectPower
 import FormalConjecturesForMathlib.Data.Nat.Prime.Composite
 import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
