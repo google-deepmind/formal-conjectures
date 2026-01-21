@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Green4
 /--A set is product-free if for some * operation, there are no elements in the set x,y,z such that x*y=z
 -/
-def ProdFree {M : Type*} [Monoid M] (S : Set M) : Prop := ∀ x ∈ S, ∀ y ∈ S, ∀ z ∈ S, x * y ≠ z
+def ProdFree {M : Type*} [Monoid M] (S : Set M) : Prop := ∀ x ∈ S, ∀ y ∈ S, x * y ∉ z
 
 /-- What is the largest product-free set in the alternating group $A_n$?-/
 @[category research open, AMS 20]
@@ -32,9 +32,9 @@ theorem green_4 (n : ℕ) :
     MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard answer(sorry) := by
   sorry
 
-/-- Defines a family of subsets of $A_n$ where each permutation π in a subset obeys π(x)∈I and ∀v∈I,
-π(v)∉I for fixed x and I. It is easy to demonstrate that such a subset is product-free, because for
-any a,b,c in such a set, (a*b) (x)=a(b(x))∉I but c(x)
+/-- Defines a family of subsets of $A_n$ where each permutation $\pi$ in a subset obeys $\pi(x)$ and $\forall v \in I$,
+\pi(v)\notin I$ for a fixed $x$ and $I$. It is easy to demonstrate that such a subset is product-free, because for
+any a,b,c in such a set, $(a*b) (x)=a(b(x))\notin I$ but $c(x) \in I$
 -/
 def extremalFamily {n : ℕ} (x : Fin n) (I : Set (Fin n)) : Set <| alternatingGroup <| Fin n :=
   {π | π.val x ∈ I ∧ Disjoint (I.image π) I}
@@ -44,9 +44,9 @@ def extremalFamily {n : ℕ} (x : Fin n) (I : Set (Fin n)) : Set <| alternatingG
 Specifically, this theorem formalizes the statement of theorem 1.1 in the mentioned paper
 -/
 @[category research solved, AMS 20]
-theorem large_green_4: ∀ᶠn in Filter.atTop,
-  ∀S, MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard S →
-  ∃x I, S = extremalFamily x I ∨ S = (extremalFamily x I).image (·⁻¹) := by
+theorem large_green_4: ∀ᶠ n in .atTop,
+  ∀ S, MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard S →
+  ∃ x I, S = extremalFamily x I ∨ S = (extremalFamily x I).image (·⁻¹) := by
   sorry
 
 end Green4
