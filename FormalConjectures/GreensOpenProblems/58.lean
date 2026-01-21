@@ -26,9 +26,6 @@ open scoped Pointwise
 
 namespace Green58
 
-/- The analytic lower bound on the size of the sets in the conjecture. Here `((49 : ℝ) / 100)` is
-`0.49`. -/
-
 /--
 Suppose $A, B ⊆ \{1, \dots, N\}$ both have size at least $N^{0.49}$. Must the sumset $A + B$
 contain a composite number?
