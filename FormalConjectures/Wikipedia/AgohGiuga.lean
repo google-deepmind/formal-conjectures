@@ -67,7 +67,7 @@ theorem agoh_giuga : AgohGiugaCongr := by
 theorem agoh_giuga.variants.giuga : AgohGiugaSum := by
   sorry
 
-/-- The two statements of the conjecture are equivalent.-/
+/-- The two statements of the conjecture are equivalent. -/
 @[category research solved, AMS 11]
 theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
   sorry
