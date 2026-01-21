@@ -52,7 +52,12 @@ theorem pell_five : pell 5 = 29 := rfl
 P_{2n+1} = P_n ^ 2 + P_{n+1} ^ 2 -/
 @[category high_school, AMS 11]
 theorem pell_sq_add_pell_succ_sq (n : ℕ) : pell (2 * n + 1) = pell n ^ 2 + pell (n + 1) ^ 2 := by
-  sorry
+  induction n using Nat.twoStepInduction with
+  |zero
+  |one => constructor
+  |more =>
+    simp_all! only [mul_add, mul_one, add_assoc, Nat.reduceAdd, Nat.reduceMul]
+    linarith
 
 /-- An explicit formula for Pell numbers, similar to Binet's formula-/
 @[category high_school, AMS 11]
