@@ -40,7 +40,7 @@ Let $p_k$ be the $k$-th prime number.
 Are there infinitely many $n$ such that $p_n = (∑ i = 1 ^ k, (p_{n - i} + p_{n + i})) / (2*k)$ is prime?
 -/
 @[category research open, AMS 11]
-theorem balanced_primes_order (k : ℕ) :
+theorem balanced_primes_order {k : ℕ} (hk : 0 < k):
     answer(sorry) ↔ {n : ℕ | Nat.nth Prime n = (∑ i ∈ Finset.range k,
       (Nat.nth Prime (n - i) + Nat.nth Prime (n + i))) / (2 * k)}.Infinite := by
   sorry
