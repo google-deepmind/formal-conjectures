@@ -37,11 +37,8 @@ This problem is discussed under Problem 7 on Green's open problems list.
 @[category research open, AMS 11]
 theorem erdos_341 :
     answer(sorry) ↔
-      ∀ (l : List ℤ) (a : ℕ → ℤ),
-        l.Sorted (· < ·) →
-        l ≠ [] →
-        (List.range l.length).map a = l →
-        (∀ n ≥ l.length - 1,
+      ∀ (a : ℕ → ℤ),
+        (∀ᶠ n in atTop,
           IsLeast { x | a n < x ∧ x ∉ { a i + a j | (i ≤ n) (j ≤ n) } } (a (n + 1))) →
         let d := fun i ↦ a (i + 1) - a i
         ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
