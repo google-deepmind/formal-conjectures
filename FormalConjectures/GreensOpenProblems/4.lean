@@ -22,9 +22,10 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 namespace Green4
-/--A set is product-free if for some * operation, there are no elements in the set x,y,z such that x*y=z
--/
-def ProdFree {M : Type*} [Monoid M] (S : Set M) : Prop := ∀ x ∈ S, ∀ y ∈ S, x * y ∉ z
+
+/-- A set in a monoid is product-free if there are no elements `x, y, z` in the set such that
+`x * y = z`. -/
+def ProdFree {M : Type*} [Monoid M] (S : Set M) : Prop := ∀ x ∈ S, ∀ y ∈ S, ∀ z ∈ S, x * y ≠ z
 
 /-- What is the largest product-free set in the alternating group $A_n$?-/
 @[category research open, AMS 20]
