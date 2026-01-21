@@ -50,7 +50,7 @@ variable (Γ : Type*)
 variable (Λ : Type*)
 
 /-- A Turing machine "statement" is just a command to write a symbol on the tape
-(at the current position) and then move left or right-/
+(at the current position) and then move left or right. -/
 structure Stmt where write ::
   symbol : Γ
   dir : Dir

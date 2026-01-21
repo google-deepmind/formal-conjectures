@@ -91,7 +91,7 @@ noncomputable def RegularFunction.aeval {S₁ : Type*} [CommSemiring S₁] [Alge
 
 
 omit [CharZero k] [Fintype σ] in
-/--`aeval` is compatible with composition of regular functions-/
+/--`aeval` is compatible with composition of regular functions. -/
 @[category API, AMS 14]
 lemma comp_aeval
     (F : RegularFunction k σ τ) (G : RegularFunction k τ ι)
