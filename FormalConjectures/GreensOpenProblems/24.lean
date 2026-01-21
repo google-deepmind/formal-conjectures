@@ -67,17 +67,17 @@ noncomputable def gamma : ℝ :=
 
 /-- Asymptotic upper bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
 @[category research open, AMS 5 11]
-theorem upper_HL : gamma ≤ (3/4 : ℝ) := by
+theorem upper_HL : gamma ≤ 3/4 := by
   sorry
 
 /-- Asymptotic lower bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
 @[category research open, AMS 5 11]
-theorem lower_HL : gamma ≥ (1/12 : ℝ) := by
+theorem lower_HL : gamma ≥ 1/12 := by
   sorry
 
 /-- Conjecture p.579 in [Aa19]: $\left({1}{3} + o(1)\right) n^2$. -/
 @[category research open, AMS 5 11]
-theorem conjecture : gamma = (1/3 : ℝ) := by
+theorem conjecture : gamma = 1/3 := by
   sorry
 
 end variants
