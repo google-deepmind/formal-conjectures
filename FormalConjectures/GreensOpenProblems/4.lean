@@ -25,7 +25,7 @@ namespace Green4
 def ProdFree {M : Type*} [Monoid M] (S : Set M) : Prop := ∀ x ∈ S, ∀ y ∈ S, ∀ z ∈ S, x * y ≠ z
 
 /-- What is the largest product-free set in the alternating group A_n?-/
-@[category research open,AMS 20]
+@[category research open, AMS 20]
 theorem green_4 (n : ℕ) : 
     MaximalFor (M := alternatingGroup <| Fin n) ProdFree Set.ncard answer(sorry) := by
   sorry
