@@ -13,31 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«510»
 
 /-!
-# Erdős Problem 705
+# Ben Green's Open Problem 81
 
-*Reference:* [erdosproblems.com/705](https://www.erdosproblems.com/705)
+Let $A$ be a set of size $n$ integers. Is there some absolute constant $c > 0$ and $\theta$
+such that $\sum_{a \in A} \cos(a \theta) \leq - c \sqrt{n}$?
+
+*References:*
+ - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11 Problem 81)
+ - [erdosproblems.com/510](https://www.erdosproblems.com/510)
 -/
-
-namespace Erdos705
-
-open scoped EuclideanGeometry
-open SimpleGraph
-
-/--
-Let G be a finite unit distance graph in R².
-Is there some k such that if G has girth ≥ k, then χ(G) ≤ 3?
--/
-@[category research open, AMS 5]
-theorem erdos_705:
-  answer(sorry) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
-    (UnitDistancePlaneGraph V).girth ≥ k ∧ (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by
-  sorry
-
-
--- TODO: add statements for the concrete constructions in the additional material
-
-end Erdos705

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,27 +17,24 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 705
+# Erdős Problem 197
 
-*Reference:* [erdosproblems.com/705](https://www.erdosproblems.com/705)
+*Reference:* [erdosproblems.com/197](https://www.erdosproblems.com/197)
 -/
 
-namespace Erdos705
+open Set
 
-open scoped EuclideanGeometry
-open SimpleGraph
+namespace Erdos197
 
 /--
-Let G be a finite unit distance graph in R².
-Is there some k such that if G has girth ≥ k, then χ(G) ≤ 3?
+Can $\mathbb{N}$ be partitioned into two sets, each of which can be permuted to avoid monotone
+3-term arithmetic progressions?
 -/
 @[category research open, AMS 5]
-theorem erdos_705:
-  answer(sorry) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
-    (UnitDistancePlaneGraph V).girth ≥ k ∧ (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by
+theorem erdos_197 :
+    answer(sorry) ↔ ∃ A B : Set ℕ, IsCompl A B ∧
+      (∃ f : ℕ ≃ A, ¬ HasMonotoneAP f 3) ∧
+      (∃ g : ℕ ≃ B, ¬ HasMonotoneAP g 3) := by
   sorry
 
-
--- TODO: add statements for the concrete constructions in the additional material
-
-end Erdos705
+end Erdos197

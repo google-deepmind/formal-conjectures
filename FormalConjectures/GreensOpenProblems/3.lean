@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,21 +17,25 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 486: Logarithmic density for sets avoiding modular subsets
+# Ben Green's Open Problem 3
 
-*Reference:* [erdosproblems.com/486](https://www.erdosproblems.com/486)
+*Reference:* [Ben Green's Open Problem 3](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.3 Problem 3)
 -/
 
-namespace Erdos486
+open Set MeasureTheory
 
-/--
-For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
-Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
-Must $B$ have a logarithmic density?
--/
+namespace Green3
+
+/-- Suppose that $A \subset [0,1]$ is open and has measure greater than $\frac{1}{3}$. Is there a solution to $xy = z$ with $x, y, z \in A$? -/
 @[category research open, AMS 11]
-theorem erdos_486 : answer(sorry) ↔
-    ∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d := by
-  sorry
+theorem green_3 :
+    answer(sorry) ↔ ∀ A : Set ℝ,
+      IsOpen A →
+      A ⊆ Icc 0 1 →
+      volume A > 1/3 →
+      ∃ x y z, x ∈ A ∧ y ∈ A ∧ z ∈ A ∧ x * y = z := by
+sorry
 
-end Erdos486
+end Green3
+
+

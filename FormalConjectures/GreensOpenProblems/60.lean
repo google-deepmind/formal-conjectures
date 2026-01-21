@@ -16,28 +16,27 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
-# Erdős Problem 705
+open scoped Pointwise
 
-*Reference:* [erdosproblems.com/705](https://www.erdosproblems.com/705)
+/-!
+# Ben Green's Open Problem 60
+
+*Reference:* [Ben Green's Open Problem 60](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 60)
 -/
 
-namespace Erdos705
-
-open scoped EuclideanGeometry
-open SimpleGraph
+namespace Green60
 
 /--
-Let G be a finite unit distance graph in R².
-Is there some k such that if G has girth ≥ k, then χ(G) ≤ 3?
+Is there an absolute constant $c > 0$ such that, whenever $A ⊆ \mathbb{N}$ is a set of squares
+with $|A| ≥ 2$, the sumset $A + A$ satisfies $|A + A| ≥ |A|^{1 + c}$?
 -/
-@[category research open, AMS 5]
-theorem erdos_705:
-  answer(sorry) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
-    (UnitDistancePlaneGraph V).girth ≥ k ∧ (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by
+@[category research open, AMS 11]
+theorem green_60 :
+    answer(sorry) ↔ ∃ c > (0 : ℝ),
+      ∀ (A : Finset ℕ),
+        (∀ a ∈ A, IsSquare a) →
+        2 ≤ A.card →
+          ((A + A).card : ℝ) ≥ (A.card : ℝ) ^ (1 + c) := by
   sorry
 
-
--- TODO: add statements for the concrete constructions in the additional material
-
-end Erdos705
+end Green60

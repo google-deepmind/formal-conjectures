@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,23 +15,23 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«689»
 
 /-!
-# Erdős Problem 486: Logarithmic density for sets avoiding modular subsets
+# Ben Green's Open Problem 45
 
-*Reference:* [erdosproblems.com/486](https://www.erdosproblems.com/486)
+Can we pick residue classes $a_p(mod p)$, one for each prime `p ⩽ N`,
+such that every integer `⩽ N` lies in at least 10 of them?
+
+*References:*
+- [Ben Green's Open Problem 45](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.45)
+- [erdosproblems.com/689](https://www.erdosproblems.com/689)
 -/
 
-namespace Erdos486
+namespace Green45
 
-/--
-For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
-Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
-Must $B$ have a logarithmic density?
--/
 @[category research open, AMS 11]
-theorem erdos_486 : answer(sorry) ↔
-    ∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d := by
+theorem green_45 : type_of% Erdos689.erdos_689 := by
   sorry
 
-end Erdos486
+end Green45
