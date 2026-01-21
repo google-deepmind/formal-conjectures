@@ -36,7 +36,7 @@ $φ(n) = φ(m)$ where $φ$ is the Euler totient function.
 /-- Natural number $n$ for which there exists a $m ≠ n$ with $φ(m) = φ(n)$ -/
 def CarmichaelTotientFor (n : ℕ) : Prop := ∃ m : ℕ, m ≠ n ∧ φ m = φ n
 
-/-- n = 0 ↔ φ(n) = 0 -/
+/-- $n = 0 ↔ φ(n) = 0$ -/
 @[category test, AMS 11]
 theorem carchimichealTotientFor_zero : ¬ CarmichaelTotientFor 0 := by
   simp [CarmichaelTotientFor]
