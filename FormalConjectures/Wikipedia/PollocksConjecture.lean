@@ -63,9 +63,13 @@ there are exactly 241 integers that are not a sum of 4 tetrahedral numbers, and 
 -/
 @[category research open, AMS 11]
 theorem pollock_tetrahedral.salzer_levine :
-    NotSumOfFourTetrahedral.Finite ∧
-      NotSumOfFourTetrahedral.ncard = 241 ∧
-      IsGreatest NotSumOfFourTetrahedral 343867 := by
+    IsGreatest NotSumOfFourTetrahedral 343867 := by
+  sorry
+
+/-- As stated on Wikipedia/OEIS (A000797), the set of exceptions has cardinality `241`. -/
+@[category high_school, AMS 11]
+theorem pollock_tetrahedral.ncard_exceptions :
+    NotSumOfFourTetrahedral.ncard = 241 := by
   sorry
 
 end PollocksConjecture
