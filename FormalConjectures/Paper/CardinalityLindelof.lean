@@ -16,25 +16,16 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Casas-Alvero Conjecture
+# Conjecture about cardinality of Lindelöf spaces
+
+The conjecture asks for a Lindelöf space where all singletons are G_δ sets
+and which has cardinality > 𝔠.
+
+This is Problem 1 in https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf
 
 *Reference:*
-* [Selected Old Open Problems in General Topology](https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf) by
-* [MathOverflow](https://mathoverflow.net/questions/27851)
-
-The Casas-Alvero conjecture states that if a univariate polynomial `P` of degree `d` over a field
-of characteristic zero shares a non-trivial factor with its Hasse derivatives up to order `d-1`,
-then `P` must be of the form `(X - α)ᵈ` for some `α` in the field.
-
-The conjecture has been proven for:
-* Degrees `d ≤ 8`
-* Degrees of the form `p^k` where `p` is prime
-* Degrees of the form `2p^k` where `p` is prime
-
-The conjecture is false in positive characteristic `p` for polynomials of degree `p+1`.
-
-The conjecture is now claimed to be proven in this paper:
-* [Proof of the Casas-Alvero conjecture: Soham Ghosh)](https://arxiv.org/pdf/2501.09272)
+* [Selected Old Open Problems in General Topology](https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf)
+  by A. V. Arhangel’skii
 
 -/
 
@@ -42,27 +33,26 @@ open Cardinal
 
 namespace CardinalityLindelof
 
-variable (X : Type*) [TopologicalSpace X]
 /--
-A space where all singletons are Gδ points
+A space where all singletons are Gδ points.
 -/
-class HasPointsGδ : Prop where
+class HasPointsGδ (X : Type*) [TopologicalSpace X] : Prop where
   gδPoints : ∀ ⦃x : X⦄, IsGδ {x}
 
 /-- Singletons are Gδ in First-Countable T₁ Spaces -/
-instance HasPointsGδ.ofT1SpaceFirstCountable
+@[category test, AMS 54]
+instance HasPointsGδ.ofT1SpaceFirstCountable (X : Type*) [TopologicalSpace X]
     [FirstCountableTopology X] [T1Space X] : HasPointsGδ X where
-  gδPoints := fun x ↦ IsGδ.singleton x
-
+  gδPoints := IsGδ.singleton
 
 /--
 Does every Lindelöf space with Gδ points have cardinality less or equal to the continuum?
 -/
 @[category research open, AMS 54]
 theorem HasPointsGδ.lindelof_card :
-    ∃ (X : Type*) (_ : TopologicalSpace X) (_ : HasPointsGδ X) (_ : LindelofSpace X), #X ≤ ℵ₀ := by
+    ∃ (X : Type*) (_ : TopologicalSpace X), HasPointsGδ X ∧ LindelofSpace X ∧ 𝔠 < #X := by
   sorry
 
---TODO under additional set theory axioms, there exists such a space with ℵ₀ < #X
+--TODO under additional set theory axioms, there exists such a space with 𝔠 < #X.
 
 end CardinalityLindelof
