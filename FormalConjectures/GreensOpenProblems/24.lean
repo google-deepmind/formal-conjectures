@@ -53,7 +53,7 @@ Conjectured in [Aa19] p.579: $\left({1}{3} + o(1)\right) n^2$.
 theorem green_24 : ∀ n, max013AffineTranslates n = answer(sorry) := by
   sorry
 
-/- A collection of associated bounds and conjectured values. -/
+/-! A collection of associated bounds and conjectured values. -/
 namespace variants
 
 /-- From [Aa19] p.577: the trivial upper bound is $n^2$ (non asymptotic) -/
