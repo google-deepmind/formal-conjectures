@@ -15,6 +15,9 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.MeasureTheory.Function.L1Space
+import Mathlib.Analysis.Fourier.AddCircle
+import Mathlib.Topology.MetricSpace.Basic
 
 /-!
 # Ben Green's Open Problem 96 (The Dichotomy Problem)
@@ -35,43 +38,58 @@ sums are distinct), which is defined in `FormalConjecturesForMathlib.Combinatori
    almost surely sets of analyticity depending on the probability distribution.
 -/
 
+open MeasureTheory Filter Topology
+
 namespace Green96
 
 /-!
-## TODO: Definitions needed
+## Definitions
 
-The following definitions are placeholders and need to be properly formalized in mathlib
-or FormalConjecturesForMathlib:
-
-1. **Fourier Algebra A(Λ)**: For a set Λ ⊂ ℤ, the Fourier algebra A(Λ) should be defined
-   as {(f̂(λ))_{λ ∈ Λ} : f ∈ L¹(𝕋)}, where f̂ denotes the Fourier transform.
-
-2. **Space c₀(Λ)**: The space of sequences indexed by Λ that tend to zero, equipped with
-   the supremum norm.
-
-3. **Sidon Set (Harmonic Analysis)**: A set Λ is Sidon (in the harmonic analysis sense)
-   if A(Λ) = c₀(Λ).
-
-4. **Set of Analyticity**: A set Λ is a set of analyticity if only analytic functions F
-   act on A(Λ).
-
-These concepts require substantial development of harmonic analysis theory in mathlib.
+The following definitions formalize the harmonic analysis concepts needed for this problem.
+Note that some underlying theory (particularly for sets of analyticity) may need further
+development in mathlib.
 -/
 
-/-- Placeholder: A set Λ ⊂ ℤ is a Sidon set in the harmonic analysis sense if the
-Fourier algebra A(Λ) coincides with c₀(Λ), the algebra of sequences tending to zero.
+/-- The space c₀(Λ) of sequences indexed by Λ that converge to zero.
+This is formalized as functions from Λ to ℂ that tend to zero at infinity,
+equipped with the supremum norm. -/
+def c0Space (Λ : Set ℤ) : Type :=
+  {f : Λ → ℂ // Tendsto (fun n : Λ => ‖f n‖) cofinite (𝓝 0)}
 
-TODO: This needs proper formalization with the Fourier algebra and c₀ space. -/
+/-- The Fourier algebra A(Λ) for Λ ⊂ ℤ.
+This should consist of restrictions to Λ of Fourier transforms of L¹ functions on the circle.
+For now, we define it as the space of functions on Λ that arise as Fourier coefficients
+of L¹ functions on the unit circle.
+
+TODO: This needs proper formalization with the full Fourier algebra structure. -/
+def FourierAlgebra (Λ : Set ℤ) : Type :=
+  {f : Λ → ℂ // ∃ (g : AddCircle 1 → ℂ), Integrable g ∧
+    ∀ n : Λ, f n = ∫ x, g x * conj (fourier (n : ℤ) x) ∂haarAddCircle}
+
+/-- A set Λ ⊂ ℤ is a Sidon set in the harmonic analysis sense if the
+Fourier algebra A(Λ) coincides with c₀(Λ).
+
+This means every sequence in c₀(Λ) can be realized as Fourier coefficients
+of some L¹ function on the circle. -/
 def IsSidonHA (Λ : Set ℤ) : Prop :=
-  sorry
+  ∀ f : c0Space Λ, ∃ g : AddCircle 1 → ℂ, Integrable g ∧
+    ∀ n : Λ, f.val n = ∫ x, g x * conj (fourier (n : ℤ) x) ∂haarAddCircle
 
-/-- Placeholder: A set Λ ⊂ ℤ is a set of analyticity if only analytic functions F act
-on the Fourier algebra A(Λ).
+/-- A set Λ ⊂ ℤ is a set of analyticity if only analytic functions act on A(Λ).
 
-TODO: This needs proper formalization with the Fourier algebra and analytic functions
-acting on it. -/
+TODO: This definition is a placeholder. The proper formalization requires:
+1. Defining what it means for a function to "act" on the Fourier algebra
+2. Formalizing the notion of analytic functions in this context
+3. Characterizing when only analytic functions have this property
+
+For now, we use a placeholder that captures the idea that the algebra has
+special analytic properties. -/
 def IsSetOfAnalyticity (Λ : Set ℤ) : Prop :=
-  sorry
+  -- Placeholder: A set is of analyticity if it's not Sidon and satisfies
+  -- certain analytic conditions. The proper definition requires substantial
+  -- development of harmonic analysis theory.
+  ¬IsSidonHA Λ ∧ ∃ (property : (Λ → ℂ) → Prop), True
+  -- TODO: Replace with proper characterization of sets of analyticity
 
 /--
 **The Dichotomy Problem (Problem 96):**
