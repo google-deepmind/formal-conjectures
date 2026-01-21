@@ -61,8 +61,7 @@ theorem coe_pell_eq : ∀ n, (pell n : ℝ) = ((1 + √2) ^ n - (1 - √2) ^ n) 
 
 /-- There are infinitely many prime Pell numbers -/
 @[category research open, AMS 11]
-theorem infinite_pell_primes :
-    Infinite {n : ℕ | Prime (pell n)} := by
+theorem infinite_pell_primes : Infinite {n : ℕ | Prime (pell n)} := by
   sorry
 
 -- TODO : Formalise connection between Pell numbers and Pell equation x^2 - 2*y^2 = -1
