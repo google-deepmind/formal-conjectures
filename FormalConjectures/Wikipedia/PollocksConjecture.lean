@@ -69,6 +69,7 @@ theorem pollock_tetrahedral.salzer_levine :
 /-- As stated on Wikipedia/OEIS (A000797), the set of exceptions has cardinality `241`. -/
 @[category high_school, AMS 11]
 theorem pollock_tetrahedral.ncard_exceptions :
+    type_of% pollock_tetrahedral.salzer_levine ↔
     NotSumOfFourTetrahedral.ncard = 241 := by
   sorry
 
