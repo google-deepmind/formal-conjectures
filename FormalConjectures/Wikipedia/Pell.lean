@@ -23,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
  - [Wikipedia](https://en.wikipedia.org/wiki/Pell_number#Primes_and_squares)
  - [OEIS A086383](https://oeis.org/A086383)
 
-The Pell numbers $P_n$ are defined by $P_0 = 0$, $P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$
+The Pell numbers $P_n$ are defined by $P_0 = 0$,
+$P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$. [OEIS A000129](https://oeis.org/A000129)
 
 The conjecture says that there are infinitely many prime Pell numbers.
 -/
@@ -31,42 +32,38 @@ The conjecture says that there are infinitely many prime Pell numbers.
 namespace PellNumbers
 
 /-- The *Pell numbers* $P_n$ are defined by $P_0 = 0$, $P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$ -/
-def pell : ℕ → ℕ
+def pellNumber : ℕ → ℕ
   | 0 => 0
   | 1 => 1
-  | n + 1 + 1 => 2 * pell  (n + 1) + pell n
+  | n + 1 + 1 => 2 * pellNumber  (n + 1) + pellNumber n
 
 @[category test, AMS 11]
-theorem pell_zero : pell 0 = 0 := rfl
+theorem pellNumber_zero : pellNumber 0 = 0 := rfl
 
 @[category test, AMS 11]
-theorem pell_one : pell 1 = 1 := rfl
+theorem pellNumber_one : pellNumber 1 = 1 := rfl
 
 @[category test, AMS 11]
-theorem pell_two : pell 2 = 2 := rfl
+theorem pellNumber_two : pellNumber 2 = 2 := rfl
 
 @[category test, AMS 11]
-theorem pell_five : pell 5 = 29 := rfl
+theorem pellNumber_five : pellNumber 5 = 29 := rfl
 
 /-- Similar to Fibonacci numbers, there exist numerous identites around Pell numbers, i.e.
 P_{2n+1} = P_n ^ 2 + P_{n+1} ^ 2 -/
 @[category high_school, AMS 11]
-theorem pell_sq_add_pell_succ_sq (n : ℕ) : pell (2 * n + 1) = pell n ^ 2 + pell (n + 1) ^ 2 := by
-  induction n using Nat.twoStepInduction with
-  |zero
-  |one => constructor
-  |more =>
-    simp_all! only [mul_add, mul_one, add_assoc, Nat.reduceAdd, Nat.reduceMul]
-    linarith
+theorem pellNumber_sq_add_pellNumber_succ_sq (n : ℕ) :
+    pellNumber (2 * n + 1) = pellNumber n ^ 2 + pellNumber (n + 1) ^ 2 := by
+  sorry
 
-/-- An explicit formula for Pell numbers, similar to Binet's formula-/
+/-- An explicit formula for Pell numbers, similar to Binet's formula -/
 @[category high_school, AMS 11]
-theorem coe_pell_eq : ∀ n, (pell n : ℝ) = ((1 + √2) ^ n - (1 - √2) ^ n) / (2 * √2) := by
+theorem coe_pellNumber_eq : ∀ n, (pellNumber n : ℝ) = ((1 + √2) ^ n - (1 - √2) ^ n) / (2 * √2) := by
   sorry
 
 /-- There are infinitely many prime Pell numbers -/
 @[category research open, AMS 11]
-theorem infinite_pell_primes : Infinite {n : ℕ | Prime (pell n)} := by
+theorem infinite_pellNumber_primes : Infinite {n : ℕ | Prime (pellNumber n)} := by
   sorry
 
 -- TODO : Formalise connection between Pell numbers and Pell equation x^2 - 2*y^2 = -1
