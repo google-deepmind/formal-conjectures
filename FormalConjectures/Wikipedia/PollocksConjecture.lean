@@ -40,25 +40,32 @@ open scoped BigOperators
 def tetrahedral (n : ℕ) : ℕ :=
   n * (n + 1) * (n + 2) / 6
 
+/-! ## Auxiliary definition -/
+
+/-- The set of natural numbers that are **not** a sum of 4 tetrahedral numbers. -/
+def NotSumOfFourTetrahedral : Set ℕ :=
+  {N : ℕ | ∀ f : Fin 4 → ℕ, N ≠ ∑ i, tetrahedral (f i)}
+
 /-! ## Statements -/
 
 /--
 Pollock's (tetrahedral numbers) conjecture:
-every positive integer is the sum of at most 5 tetrahedral numbers.
+every integer is the sum of at most 5 tetrahedral numbers.
 -/
 @[category research open, AMS 11]
-theorem pollock_tetrahedral (N : ℕ) (hN : 0 < N) :
+theorem pollock_tetrahedral (N : ℕ) :
     ∃ f : Fin 5 → ℕ, N = ∑ i, tetrahedral (f i) := by
   sorry
 
 /--
 Salzer–Levine strengthening (as stated on Wikipedia/OEIS):
-the set of positive integers that are *not* a sum of at most 4 tetrahedral numbers is finite.
+there are exactly 241 integers that are not a sum of 4 tetrahedral numbers, and the largest is `343867`.
 -/
 @[category research open, AMS 11]
-theorem pollock_tetrahedral.finite_exceptions :
-    Set.Finite {N : ℕ | 0 < N ∧ ¬ ∃ f : Fin 4 → ℕ, N = ∑ i, tetrahedral (f i)} := by
+theorem pollock_tetrahedral.salzer_levine :
+    NotSumOfFourTetrahedral.Finite ∧
+      NotSumOfFourTetrahedral.ncard = 241 ∧
+      IsGreatest NotSumOfFourTetrahedral 343867 := by
   sorry
 
 end PollocksConjecture
-
