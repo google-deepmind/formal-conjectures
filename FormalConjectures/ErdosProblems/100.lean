@@ -31,9 +31,9 @@ namespace Erdos100
 /-- If two distances in A differ, they differ by at least 1. -/
 def DistancesSeparated (A : Finset (ℝ × ℝ)) : Prop :=
   ∀ p₁ q₁ p₂ q₂, p₁ ∈ A → q₁ ∈ A → p₂ ∈ A → q₂ ∈ A →
-    p₁ ≠ q₁ → p₂ ≠ q₂ →
     dist p₁ q₁ ≠ dist p₂ q₂ →
     |dist p₁ q₁ - dist p₂ q₂| ≥ 1
+
 
 /-- Let $A$ be a set of $n$ points in $\mathbb{R}^2$ such that all pairwise distances
 are at least 1 and if two distinct distances differ then they differ by at least 1.
