@@ -27,7 +27,7 @@ def ProdFree {M : Type*} [Monoid M] (S : Set M) : Prop := ∀ x ∈ S, ∀ y ∈
 def LargestProdFree (n : ℕ) (S : Set <| alternatingGroup <| Fin n) : Prop :=
   MaximalFor ProdFree Set.ncard S
 
-/-- What is the largest product-free set in the alternating group A_n?-/
+/-- What is the largest product-free set in the alternating group $A_n$? -/
 @[category research open,AMS 20]
 theorem green_4 (n : ℕ) : LargestProdFree n answer(sorry) := by
   sorry
