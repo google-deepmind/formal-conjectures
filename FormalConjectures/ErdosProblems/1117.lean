@@ -42,7 +42,7 @@ Is it possible for\[\limsup \nu(r)=\infty?\]
 This is Problem 2.16 in [Ha74], where it is attributed to Erdős.
 The answer to the first question is yes, as shown by Herzog and Piranian [HePi68].
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 32]
 theorem erdos_1117.part.a :
     answer(True) ↔ ∃ f : ℂ → ℂ, Differentiable ℂ f ∧
     (¬ ∃ (c : ℂ) (n : ℕ), ∀ z, f z = c * z ^ n) ∧
@@ -56,7 +56,7 @@ Is it possible for\[\liminf \nu(r)=\infty?\]
 The second question is still open, although an 'approximate' affirmative answer is given by
 Glücksam and Pardo-Simón [GlPa24].
 -/
-@[category research open, AMS 30]
+@[category research open, AMS 32]
 theorem erdos_1117.part.b :
     answer(sorry) ↔ ∃ f : ℂ → ℂ, Differentiable ℂ f ∧
     (¬ ∃ (c : ℂ) (n : ℕ), ∀ z, f z = c * z ^ n) ∧
