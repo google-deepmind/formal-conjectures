@@ -33,7 +33,7 @@ theorem green_4 (n : ℕ) :
 def extremalFamily {n : ℕ} (x : Fin n) (I : Set (Fin n)) : Set <| alternatingGroup <| Fin n :=
   {π | π.val x ∈ I ∧ Disjoint (I.image π) I}
 
-/-In the case of large n, the problem was solved in
+/-- In the case of large n, the problem was solved in
 [On the largest product-free subsets of the alternating groups](https://arxiv.org/pdf/2205.15191)
 -/
 @[category research solved, AMS 20]
