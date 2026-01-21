@@ -18,6 +18,7 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 1096
+
 *Reference:* [erdosproblems.com/1096](https://www.erdosproblems.com/1096)
 -/
 
@@ -26,8 +27,7 @@ open Filter
 namespace Erdos1096
 
 /-- The set of numbers of the shape ∑_{i ∈ S} q^i (for all finite S). -/
-def Sums (q : ℝ) : Set ℝ :=
-  { s | ∃ S : Finset ℕ, s = ∑ i ∈ S, q ^ i }
+def Sums (q : ℝ) : Set ℝ := { ∑ i ∈ S, q ^ i | S : Finset ℕ }
 
 /--
 Let 1 < q < 1 + ε and consider the set of numbers of the shape ∑_{i ∈ S} q^i
@@ -37,9 +37,9 @@ If ε > 0 is sufficiently small, then x_{k+1} - x_k → 0.
 -/
 @[category research open, AMS 11]
 theorem erdos_1096 :
-    ∃ ε > 0, ∀ q, 1 < q → q < 1 + ε →
+    (∃ ε > 0, ∀ q, 1 < q → q < 1 + ε →
     ∀ x : ℕ → ℝ, StrictMono x → Set.range x = Sums q →
-    Tendsto (fun k => x (k + 1) - x k) atTop (nhds 0) ↔ answer(sorry) :=
+    Tendsto (fun k => x (k + 1) - x k) atTop (𝓝 0)) ↔ answer(sorry) :=
   sorry
 
 end Erdos1096
