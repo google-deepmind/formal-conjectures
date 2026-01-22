@@ -35,7 +35,7 @@ namespace Erdos1063
 Let `nK k` be the least `n ≥ 2k` such that all but one of the integers `n - i` with `0 ≤ i < k`
 divide `n.choose k`.
 -/
-noncomputable def nK (k : ℕ) : ℕ :=
+noncomputable def n (k : ℕ) : ℕ :=
   sInf {n | 2 * k ≤ n ∧ ∃ i0 < k, ¬ (n - i0) ∣ n.choose k ∧
     ∀ i < k, i ≠ i0 → (n - i) ∣ n.choose k}
 
