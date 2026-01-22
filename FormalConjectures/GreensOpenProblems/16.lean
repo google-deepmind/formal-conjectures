@@ -19,8 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Ben Green's Open Problem 16
 
-*References:*
-* [Ben Green's Open Problem 16](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.16 Problem 16)
+*Reference:* [Ben Green's Open Problem 16](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.16 Problem 16)
 -/
 
 open Finset
@@ -36,16 +35,10 @@ def SolutionFree (A : Finset ℕ) : Prop :=
 /-- What is the largest subset of $[N]$ with no solution to $x + 3y = 2z + 2w$
 in distinct integers $x, y, z, w$? -/
 @[category research open, AMS 5 11]
-theorem green_16 :
-    answer(sorry) ↔ ∃ f : ℕ → ℕ,
-      (∀ N : ℕ, ∀ A : Finset ℕ,
-        A ⊆ range (N + 1) →
-        SolutionFree A →
-        A.card ≤ f N) ∧
-      (∀ N : ℕ, ∃ A : Finset ℕ,
-        A ⊆ range (N + 1) ∧
-        SolutionFree A ∧
-        A.card = f N) := by
+theorem green_16 (N : ℕ) :
+    ∃ A : Finset ℕ, A ⊆ range (N + 1) ∧ SolutionFree A ∧
+      A.card = answer(sorry) ∧
+      MaximalFor (fun B => B ⊆ range (N + 1) ∧ SolutionFree B) Finset.card A := by
 sorry
 
 end Green16
