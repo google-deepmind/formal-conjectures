@@ -36,8 +36,7 @@ Let `nK k` be the least `n ≥ 2k` such that all but one of the integers `n - i`
 divide `n.choose k`.
 -/
 noncomputable def nK (k : ℕ) : ℕ :=
-  sInf {n | 2 * k ≤ n ∧ ∃ i0 < k, ¬ (n - i0) ∣ n.choose k ∧
-    ∀ i < k, i ≠ i0 → (n - i) ∣ n.choose k}
+  sInf {n | 2 * k ≤ n ∧ ∃! i < k, ¬ (n - i0) ∣ n.choose k
 
 /--
 Erdős and Selfridge noted that, for `n ≥ 2k` with `k ≥ 2`, at least one of the numbers `n - i`
