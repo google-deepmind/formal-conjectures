@@ -36,8 +36,7 @@ def SolutionFree (A : Finset ℕ) : Prop :=
 in distinct integers $x, y, z, w$? -/
 @[category research open, AMS 5 11]
 theorem green_16 (N : ℕ) :
-    ∃ A : Finset ℕ, A ⊆ range (N + 1) ∧ SolutionFree A ∧
-      A.card = answer(sorry) ∧
+    ∃ A : Finset ℕ, A.card = answer(sorry) ∧
       MaximalFor (fun B => B ⊆ range (N + 1) ∧ SolutionFree B) Finset.card A := by
 sorry
 
