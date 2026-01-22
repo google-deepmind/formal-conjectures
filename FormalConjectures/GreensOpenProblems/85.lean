@@ -54,7 +54,7 @@ theorem green_85 :
 From [Gr24] "It is quite easy to show using Cauchy-Schwarz that there must be such a rectangle with
 area $\gg \alpha^2 (\log 1/\alpha)^{-1}$."
 -/
-@[category research open, AMS 28 52]
+@[category research solved, AMS 28 52]
 theorem green_85_loose :
   answer(True) ↔ ∃ c > 0, ∀ A : Set (ℝ × ℝ),
     IsOpen A →
