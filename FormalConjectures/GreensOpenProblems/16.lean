@@ -83,7 +83,7 @@ noncomputable def g (N : ℕ) : ℕ :=
 $N^{1/3 - o(1)}$ with no nontrivial solutions to $x + 2y + 3z = x' + 2y' + 3z'$? -/
 @[category research open, AMS 5 11]
 theorem zhao_question :
-    ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
+    ∀ ε : ℝ, ε > 0 → ∀^f N in atTop,
       (g N : ℝ) ≥ (N : ℝ) ^ (1 / 3 - ε) := by
 sorry
 
