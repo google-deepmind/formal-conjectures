@@ -34,7 +34,7 @@ namespace Erdos965
 
 /--
 Erdős asks in [Er75b] if for every 2-coloring of ℝ, there is an uncountable set $A ⊆ ℝ$ such that
-all sums $a + b$ for $a, b ∈ A, a ≠ b$.
+all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour.
 
 In [Ko16] Péter Komjáth constructed a counterexample.
 The same result was proven independently in [SWCol] by Sokoup and Weiss.
