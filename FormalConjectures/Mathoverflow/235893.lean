@@ -47,8 +47,8 @@ theorem Continuous.isConnectedMap {X Y : Type*} [TopologicalSpace X] [Topologica
 Does there exist a bijection $f : ℝ^n → ℝ^n$ such that $f$ is connected but the inverse is not?
 -/
 @[category research open, AMS 26 54]
-theorem mathoverflow_235893 (n : ℕ) :
-    answer(sorry) ↔ ∃ (f : ℝ^n ≃ ℝ^n), IsConnectedMap f ∧ ¬ IsConnectedMap f.symm := by
+theorem mathoverflow_235893 :
+    answer(sorry) ↔ ∀ n > 0, ∃ (f : ℝ^n ≃ ℝ^n), IsConnectedMap f ∧ ¬ IsConnectedMap f.symm := by
   sorry
 
 /--
@@ -58,8 +58,7 @@ proven in [mathoverflow/260589](https://mathoverflow.net/questions/260589) by us
 -/
 @[category research solved, AMS 26 54]
 theorem mathoverflow_260589 :
-  ∃ (f : ℝ ≅ ℝ^2),
-    IsConnectedMap f.hom ∧ ¬ IsConnectedMap f.symm.hom := by
+    ∃ (f : ℝ ≅ ℝ^2), IsConnectedMap f.hom ∧ ¬ IsConnectedMap f.symm.hom := by
   sorry
 
 --TODO: Add remarks from the mathoverflow post

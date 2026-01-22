@@ -119,4 +119,13 @@ theorem erdos_509.variants.Pommerenke_connected : answer(True) ↔ ∀ (f : ℂ[
     ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι) := by
   sorry
 
+
+open MeasureTheory in
+@[category research open, AMS 28]
+theorem green_94 :
+   answer(sorry) ↔  ∀ A : Set ℝ,
+    volume A > 0 → ∃ a b : ℝ, 0 < a ∧ ∀ n : ℕ, a * (2 ^ n)⁻¹ + b ∈ A := by
+  simp
+  sorry
+
 end Erdos509
