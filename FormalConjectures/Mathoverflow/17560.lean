@@ -16,6 +16,10 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-! # Mathoverflow 17560
+
+-/
+
 /--
 If $2^x$ and $3^x$ are integers, then $x$ must be an integer.
 -/
