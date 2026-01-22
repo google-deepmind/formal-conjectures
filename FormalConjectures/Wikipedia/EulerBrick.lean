@@ -78,17 +78,21 @@ The three Cuboid conjectures ask if certain families of polynomials are always i
 If all hold, this implies the nonexistence of a perfect Euler brick.
 -/
 
+/-- Pairs of natural numbers for which the first Cuboid polynomial is irreducible. -/
 def CuboidOneFor (a b : ℕ) : Prop :=
-  Irreducible (X (R := ℤ) ^ 8 + 6 * (a ^ 2 - b ^ 2) * (X (R := ℤ) ^ 6)
+  Irreducible (X (R := ℤ) ^ 8 + 6 * (a ^ 2 - b ^ 2) * X (R := ℤ) ^ 6
     + (b ^ 4 - 4 * a ^ 2 * b ^ 2 + a ^ 4) * X (R := ℤ) ^ 4
     - 6 * a ^ 2 * b ^ 2 * (a ^ 2 - b ^ 2) * X (R := ℤ) ^ 4 + a ^ 4 * b ^ 4)
 
+/-- *First Cuboid conjecture*: For all positive coprime integers $a$, $b$ with $a ≠ b$,
+the polynomial of the first Cuboid polynomial is irreducible. -/
 def CuboidOne : Prop := ∀ ⦃a b : ℕ⦄, a.Coprime b → a ≠ 0 → b ≠ 0 → a ≠ b → CuboidOneFor a b
 
 /-- The first Cuboid conjecture -/
 @[category research open, AMS 12]
 theorem cuboidOne : CuboidOne := by sorry
 
+/-- Pairs of natural numbers for which the second Cuboid polynomial is irreducible. -/
 def CuboidTwoFor (a b : ℕ) : Prop :=
   Irreducible (X (R := ℤ) ^ 10 + (2 * b ^ 2 + a ^ 2) * (3 * b ^ 2 - 2 * a ^ 2) * X (R := ℤ) ^ 8
     + (b ^ 8 + 10 * a ^ 2 * b ^ 6 + 4 * a ^ 4 * b ^ 4 - 14 * a ^ 6 * b ^ 2 + a ^ 8) * X (R := ℤ) ^ 6
@@ -96,23 +100,29 @@ def CuboidTwoFor (a b : ℕ) : Prop :=
     * X (R := ℤ) ^ 4 - a ^ 6 * b ^ 6 * (b ^ 2 + 2 * a ^ 2) * (-2 * b ^ 2 + 3 * a ^ 2)
     * X (R := ℤ) ^ 2 - b ^ 10 * a ^ 10)
 
+/-- *Second Cuboid conjecture*: For all positive coprime integers $a$, $b$ with $a ≠ b$,
+the polynomial of the second Cuboid polynomial is irreducible. -/
 def CuboidTwo : Prop := ∀ ⦃a b : ℕ⦄, a.Coprime b → a ≠ 0 → b ≠ 0 → a ≠ b → CuboidTwoFor a b
 
 /-- The second Cuboid conjecture -/
 @[category research open, AMS 12]
 theorem cuboidTwo : CuboidTwo := by sorry
 
+/-- Triplets of natural numbers for which the third Cuboid polynomial is irreducible. -/
 def CuboidThreeFor (a b c : ℕ) : Prop :=
   Irreducible (X (R := ℤ) ^ 12 + (6 * c ^ 2 - 2 * a ^ 2 - 2 * b ^ 2) * X (R := ℤ) ^ 10
-    + (c ^ 4 + b ^ 4 + a ^ 4 + 4 * a ^ 2 * c ^ 2 + 4 * b ^ 2 * c ^ 2 - 12 * b ^ 2 * a ^ 2
-    * X (R := ℤ) ^ 8) + (6 * a ^ 4 * c ^ 2 + 6 * c ^ 2 * b ^ 4 - 8 * a ^ 2 * b ^ 2 * c ^ 2
+    + (c ^ 4 + b ^ 4 + a ^ 4 + 4 * a ^ 2 * c ^ 2 + 4 * b ^ 2 * c ^ 2 - 12 * b ^ 2 * a ^ 2)
+    * X (R := ℤ) ^ 8 + (6 * a ^ 4 * c ^ 2 + 6 * c ^ 2 * b ^ 4 - 8 * a ^ 2 * b ^ 2 * c ^ 2
     - 2 * c ^ 4 * a ^ 2 - 2 * c ^ 4 * b ^ 2 - 2 * a ^ 4 * b ^ 2 - 2 * b ^ 4 * a ^ 2)
     * X (R := ℤ) ^ 6 + (4 * c ^ 2 * b ^ 4 * a ^ 2 + 4 * a ^ 4 * c ^ 2 * b ^ 2
-    - 12 * c ^ 4 * a ^ 2 * b ^ 2 + c ^ 4 * a ^ 4 + c ^ 4 * b ^ 4 * a ^ 4 * b ^ 4) * X (R := ℤ) ^ 4
+    - 12 * c ^ 4 * a ^ 2 * b ^ 2 + c ^ 4 * a ^ 4 + c ^ 4 * b ^ 4 + a ^ 4 * b ^ 4) * X (R := ℤ) ^ 4
     + (6 * a ^ 4 * c ^ 2 * b ^ 4 - 2 * c ^ 4 * a ^ 4 * b ^ 2 - 2 * c ^ 4 * a ^ 2 * b ^ 4)
     * X (R := ℤ) ^ 2 + c ^ 4 * a ^ 4 * b ^ 4)
 
-def CuboidThree : Prop := ∀ ⦃a b c : ℕ⦄, a.Coprime b → b.Coprime c → c.Coprime a → a ≠ 0 → b ≠ 0 →
+/-- *Third Cuboid conjecture*:
+For all positive, pairwise different coprime integers $a, b, c$ with $b * c ≠ a ^ 2$
+and $a * c ≠ b ^ 2$, the polynomial of the third Cuboid polynomial is irreducible. -/
+def CuboidThree : Prop := ∀ ⦃a b c : ℕ⦄, gcd a (gcd b c) = 1 → a ≠ 0 → b ≠ 0 →
   c ≠ 0 → a ≠ b → b ≠ c → c ≠ a → b * c ≠ a ^ 2 → a * c ≠ b ^ 2 → CuboidThreeFor a b c
 
 /-- The third Cuboid conjecture -/
@@ -120,7 +130,7 @@ def CuboidThree : Prop := ∀ ⦃a b c : ℕ⦄, a.Coprime b → b.Coprime c →
 theorem cuboidThree : CuboidThree := by sorry
 
 /-- In [Sh12], Ruslan notes that a perfect Euler brick does not exist
-if all three Cuboid conjectures hold -/
+if all three Cuboid conjectures hold. -/
 @[category research solved, AMS 12]
 theorem cuboid_perfect_euler_brick (h₁ : CuboidOne) (h₂ : CuboidTwo) (h₃ : CuboidThree) :
     ¬ ∃ a b c : ℕ+, IsPerfectCuboid a b c := by
