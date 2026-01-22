@@ -41,6 +41,8 @@ def CarmichaelTotientFor (n : ℕ) : Prop := ∃ m : ℕ, m ≠ n ∧ φ m = φ 
 theorem carchimichealTotientFor_zero : ¬ CarmichaelTotientFor 0 := by
   simp [CarmichaelTotientFor]
 
+-- TODO: Version of this ↓ lemma to mathlib?
+
 /-- For every odd number $n$, $φ(2n) = φ(n)$ -/
 @[category high_school, AMS 11]
 theorem carmichealTotientFor_odd {n : ℕ} (hn : Odd n) : CarmichaelTotientFor n := by
