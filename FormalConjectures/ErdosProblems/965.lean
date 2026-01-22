@@ -42,7 +42,7 @@ The same result was proven independently in [SWCol] by Sokoup and Weiss.
 @[category research solved, AMS 03 05]
 theorem erdos_965 :
     answer(False) ↔ ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧
-      ∀ a b c d, a ∈ A → b ∈ A → c ∈ A → d ∈ A → a ≠ b → c ≠ d → f (a + b) = f (c + d) := by
+      ∀ᵉ (a ∈ A) (b ∈ A) (c ∈ A) (d ∈ A), a ≠ b → c ≠ d → f (a + b) = f (c + d) := by
   sorry
 
 /--
