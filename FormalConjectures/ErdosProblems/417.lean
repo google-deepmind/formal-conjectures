@@ -33,12 +33,15 @@ namespace Erdos417
 /--
 Let\[V'(x)=\#\{\phi(m) : 1\leq m\leq x\}\]and\[V(x)=\#\{\phi(m) \leq x : 1\leq m\}.\]
 Does $\lim V(x)/V'(x)$ exist?
+
+Formalization note: We formalize the limit of the inverse fraction V'(x)/V(x)
+to ensure the limit is finite (bounded between 0 and 1).
 -/
 @[category research open, AMS 11]
 theorem erdos_417.part.a :
     answer(sorry) ↔ ∃ L : ℝ, Tendsto (fun x ↦
-      ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ℝ) /
-      ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ℝ))
+      ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ℝ) /
+      ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ℝ))
       atTop (𝓝 L) := by
   sorry
 
@@ -47,9 +50,9 @@ Is it $>1$?
 -/
 @[category research open, AMS 11]
 theorem erdos_417.part.b :
-    answer(sorry) ↔ ∃ L > 1, Tendsto (fun x ↦
-      ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ℝ) /
-      ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ℝ))
+    answer(sorry) ↔ ∃ L < 1, Tendsto (fun x ↦
+      ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ℝ) /
+      ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ℝ))
       atTop (𝓝 L) := by
   sorry
 
