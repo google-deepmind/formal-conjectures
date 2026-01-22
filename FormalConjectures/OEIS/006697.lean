@@ -41,7 +41,7 @@ namespace OEIS.A006697
 `false` = a and `true` = b. -/
 def morphism : Bool → List Bool
   | false => [false, false, true]  -- a ↦ aab
-  | true  => [true]                -- b ↦ b
+  | true => [true]                -- b ↦ b
 
 /-- The n-th iterate of the morphism applied to [a]. -/
 def finiteWord : ℕ → List Bool

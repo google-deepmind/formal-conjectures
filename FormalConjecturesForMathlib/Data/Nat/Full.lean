@@ -68,7 +68,7 @@ theorem not_full_of_prime_mod_prime_sq (n : ℕ) (k : ℕ) {p : ℕ} (hp : p.Pri
   rw [Full]
   push_neg
   use p
-  simp  [mem_primeFactors, hp, ne_eq, true_and]
+  simp [mem_primeFactors, hp, ne_eq, true_and]
   constructor
   · rw [←Nat.div_add_mod n (p ^ (k + 1)), h]
     have : p ∣ p ^ (k + 1) := by exact Dvd.intro_left (p.pow k) rfl

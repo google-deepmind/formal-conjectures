@@ -42,7 +42,7 @@ $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{
 -/
 @[category research open, AMS 11]
 theorem erdos_887.variant_i : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
-    #{ d ∈ Ioo ⌊√n⌋ ⌈√n  + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ K := by
+    #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ K := by
   sorry
 
 /--

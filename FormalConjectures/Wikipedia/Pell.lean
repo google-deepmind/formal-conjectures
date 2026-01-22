@@ -35,7 +35,7 @@ namespace PellNumbers
 def pellNumber : ℕ → ℕ
   | 0 => 0
   | 1 => 1
-  | n + 1 + 1 => 2 * pellNumber  (n + 1) + pellNumber n
+  | n + 1 + 1 => 2 * pellNumber (n + 1) + pellNumber n
 
 @[category test, AMS 11]
 theorem pellNumber_zero : pellNumber 0 = 0 := rfl

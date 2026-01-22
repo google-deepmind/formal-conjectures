@@ -33,7 +33,7 @@ There are several open and solved variants of this conjecture.
 open Topology ContDiff Manifold
 open scoped EuclideanGeometry
 
-/-- Four points `a b c d` in the plane form a rectangle  with `a` opposite to `c` iff the line
+/-- Four points `a b c d` in the plane form a rectangle with `a` opposite to `c` iff the line
 segments from `a` to `c` and from `b` to `d` have both the same length and the same midpoint, acting
 as the diagonals of the rectangle. We also require the rectangle to be nondegenerate and have a
 given aspect ratio `ratio : ℝ`. -/
