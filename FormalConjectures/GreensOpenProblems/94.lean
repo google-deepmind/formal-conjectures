@@ -35,7 +35,7 @@ Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `
 theorem green_94 :
    answer(sorry) ↔  ∀ A : Set ℝ,
    volume A > 0 →
-   ∃ a b : ℝ, 0 < a ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
+   ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry
 
 end Green94
