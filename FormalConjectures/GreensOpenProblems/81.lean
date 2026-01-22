@@ -13,25 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«510»
 
 /-!
-# Erdős Problem 486: Logarithmic density for sets avoiding modular subsets
+# Ben Green's Open Problem 81
 
-*Reference:* [erdosproblems.com/486](https://www.erdosproblems.com/486)
+Let $A$ be a set of size $n$ integers. Is there some absolute constant $c > 0$ and $\theta$
+such that $\sum_{a \in A} \cos(a \theta) \leq - c \sqrt{n}$?
+
+*References:*
+ - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11 Problem 81)
+ - [erdosproblems.com/510](https://www.erdosproblems.com/510)
 -/
-
-namespace Erdos486
-
-/--
-For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
-Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
-Must $B$ have a logarithmic density?
--/
-@[category research open, AMS 11]
-theorem erdos_486 : answer(sorry) ↔
-    ∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d := by
-  sorry
-
-end Erdos486

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,15 +17,24 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 196
+# Erdős Problem 197
 
-*Reference:* [erdosproblems.com/196](https://www.erdosproblems.com/196)
+*Reference:* [erdosproblems.com/197](https://www.erdosproblems.com/197)
 -/
-namespace Erdos196
 
-/-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
-@[category research open, AMS 5 11]
-theorem erdos_196 : answer(sorry) ↔ ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 4 := by
+open Set
+
+namespace Erdos197
+
+/--
+Can $\mathbb{N}$ be partitioned into two sets, each of which can be permuted to avoid monotone
+3-term arithmetic progressions?
+-/
+@[category research open, AMS 5]
+theorem erdos_197 :
+    answer(sorry) ↔ ∃ A B : Set ℕ, IsCompl A B ∧
+      (∃ f : ℕ ≃ A, ¬ HasMonotoneAP f 3) ∧
+      (∃ g : ℕ ≃ B, ¬ HasMonotoneAP g 3) := by
   sorry
 
-end Erdos196
+end Erdos197
