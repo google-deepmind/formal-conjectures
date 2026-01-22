@@ -22,36 +22,60 @@ namespace AMSLinter
 #guard_msgs in
 def foo : Nat := 1
 
-/-- warning: Missing AMS attribute. -/
+/--
+warning: Missing AMS attribute.
+
+Note: This linter can be disabled with `set_option linter.style.ams_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem -/
 theorem test_theorem : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing AMS attribute. -/
+/--
+warning: Missing AMS attribute.
+
+Note: This linter can be disabled with `set_option linter.style.ams_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 theorem test_theorem_with_hypothesis (_ : True) : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing AMS attribute. -/
+/--
+warning: Missing AMS attribute.
+
+Note: This linter can be disabled with `set_option linter.style.ams_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with two helpful hypotheses -/
 theorem test_theorem_with_hypotheses (_ : True) (_ : False): 1 + 1 = 2 := by
   rfl
 
 
-/-- warning: Missing AMS attribute. -/
+/--
+warning: Missing AMS attribute.
+
+Note: This linter can be disabled with `set_option linter.style.ams_attribute false`
+-/
 #guard_msgs in
 lemma test_lemma : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing AMS attribute. -/
+/--
+warning: Missing AMS attribute.
+
+Note: This linter can be disabled with `set_option linter.style.ams_attribute false`
+-/
 #guard_msgs in
 example : 1 + 1 = 2 := by
   rfl
 
-/-- warning: The AMS tag should be formatted as AMS 1 3 rather than AMS 1, AMS 3 -/
+/--
+warning: The AMS tag should be formatted as AMS 1 3 rather than AMS 1, AMS 3
+
+Note: This linter can be disabled with `set_option linter.style.ams_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 @[AMS 1, AMS 3]
@@ -76,13 +100,21 @@ theorem test_1 : 1 + 1 = 2 := by
 theorem test_3 : 1 + 1 = 2 := by
   rfl
 
-/-- warning: The AMS tags should be ordered as AMS 1 3 -/
+/--
+warning: The AMS tags should be ordered as AMS 1 3
+
+Note: This linter can be disabled with `set_option linter.style.ams_attribute false`
+-/
 #guard_msgs in
 @[AMS 3 1]
 theorem test_out_of_order : 1 + 1 = 2 := by
   rfl
 
-/-- warning: AMS tags contain duplicates. This should be AMS 3 -/
+/--
+warning: AMS tags contain duplicates. This should be AMS 3
+
+Note: This linter can be disabled with `set_option linter.style.ams_attribute false`
+-/
 #guard_msgs in
 @[AMS 3 3]
 theorem test_dup : 1 + 1 = 2 := by
