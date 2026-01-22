@@ -28,7 +28,7 @@ namespace WoodallPrimes
 
 /-- There are infinitely many prime numbers of the form `k * 2 ^ k - 1` for `k > 1`. -/
 @[category research open, AMS 11]
-theorem infinitely_many_woodall_primes : {(k * 2 ^ k - 1) | (k : ℕ) (_ : 1 < k)}.Infinite := by
+theorem infinitely_many_woodall_primes : {k : ℕ | 1 < k ∧ (k * 2 ^ k - 1).Prime}.Infinite := by
   sorry
 
 end WoodallPrimes
