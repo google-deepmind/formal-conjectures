@@ -23,7 +23,12 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos847
 
-def HasFew3APs (A : Set ℕ) := ∃ (ε : ℝ), ε > 0 ∧  ∀ (B : Set ℕ), B ⊆ A → Finite B →
+/--
+`HasFew3APs A` means that $A \subset \mathbb{N}$ is a set for which there exists some $\epsilon > 0$ such that
+in any subset of $A$ of size $n$ there is a subset of size at least $\epsilon n$ which contains no
+three-term arithmetic progression.
+-/
+def HasFew3APs (A : Set ℕ) := ∃ (ε : ℝ), ε > 0 ∧ ∀ (B : Set ℕ), B ⊆ A → Finite B →
   ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ThreeAPFree C
 
 /--
