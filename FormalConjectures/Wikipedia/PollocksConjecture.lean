@@ -50,7 +50,7 @@ def NotSumOfFourTetrahedral : Set ℕ :=
 
 /--
 Pollock's (tetrahedral numbers) conjecture:
-every integer is the sum of at most 5 tetrahedral numbers.
+every integer is the sum of at most $5$ tetrahedral numbers.
 -/
 @[category research open, AMS 11]
 theorem pollock_tetrahedral (N : ℕ) :
