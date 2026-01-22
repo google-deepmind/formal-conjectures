@@ -39,7 +39,7 @@ and $g \notin N$.
 @[category research open, AMS 20]
 theorem green_100 :
   answer(sorry) ↔
-    ∀ (G : Type*) [Group G],
+    ∀ (G : Type) [Group G],
       (∀ (g : G), g ≠ 1 → ∃ (N : Subgroup G), N.Normal ∧ Finite (G ⧸ N) ∧ g ∉ N) := by
   sorry
 end Green100
