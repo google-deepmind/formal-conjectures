@@ -73,7 +73,7 @@ theorem green_16_conjectured_lower_bound :
 def ZhaoSolutionFree (A : Finset ℕ) : Prop :=
   ∀ x y z x' y' z', x ∈ A → y ∈ A → z ∈ A → x' ∈ A → y' ∈ A → z' ∈ A →
     x + 2 * y + 3 * z = x' + 2 * y' + 3 * z' →
-    ({x, y, z} : Finset ℕ) = {x', y', z'}
+    x = x' ∧ y = y' ∧ z = z'
 
 /-- The maximum size of a Zhao-solution-free subset of $[N]$. -/
 noncomputable def g (N : ℕ) : ℕ :=
