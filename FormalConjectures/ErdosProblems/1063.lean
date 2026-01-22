@@ -60,7 +60,9 @@ theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     nK k ≤ k ! := by
   sorry
 
-/-- Cambie observed the improved bound `nK k ≤ k * lcm(1, ..., k - 1)`. -/
+/-- Cambie observed the improved bound `nK k ≤ k * lcm(1, ..., k - 1)`.
+Source: comment on https://www.erdosproblems.com/1063.
+-/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.cambie_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     nK k ≤ k * (Finset.Icc 1 (k - 1)).lcm id := by
