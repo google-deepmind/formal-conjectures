@@ -57,7 +57,7 @@ theorem erdos_1063.variants.small_values :
 /-- Monier observed that `nK k ≤ k!` for `k ≥ 3`. -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
-    nK k ≤ k! := by
+    nK k ≤ k ! := by
   sorry
 
 /-- Cambie observed the improved bound `nK k ≤ k * lcm(1, ..., k - 1)`. -/
