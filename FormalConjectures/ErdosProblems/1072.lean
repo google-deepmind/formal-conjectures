@@ -27,7 +27,7 @@ open scoped Topology
 
 namespace Erdos1072
 
-/-- For any prime $p$, let $f(p)$ be the least integer such that $f(p)! + 1 \equiv 0 \mod p$.-/
+/-- For any prime $p$, let $f(p)$ be the least integer such that $f(p)! + 1 \equiv 0 \mod p$. -/
 noncomputable def f (p : ℕ) : ℕ := sInf {n | (n)! + 1 ≡ 0 [MOD p]}
 
 /-- Is it true that there are infinitely many $p$ for which $f(p) = p − 1$? -/

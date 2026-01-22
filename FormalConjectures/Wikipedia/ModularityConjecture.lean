@@ -46,7 +46,7 @@ noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gam
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
 
 /-- We need to reduce a rational modulo `p`, in practice we wont be dividing by zero since the
-conductor of the elliptic curve saves us.-/
+conductor of the elliptic curve saves us. -/
 def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
   (q.num : ZMod p) * (q.den : ZMod p)⁻¹
 
@@ -57,7 +57,7 @@ def setOfPointsModN (E : WeierstrassCurve ℚ) [E.IsElliptic] (n : ℕ) :=
     y ^ 2 + ratRed E.a₁ n * x * y + ratRed E.a₃ n * y =
       x ^ 3 + ratRed E.a₂ n * x ^ 2 + ratRed E.a₄ n * x + ratRed E.a₆ n}
 
-/-- The set of point `mod n` is finite.-/
+/-- The set of point `mod n` is finite. -/
 instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
     Fintype (setOfPointsModN E p) := by
   rw [setOfPointsModN]
