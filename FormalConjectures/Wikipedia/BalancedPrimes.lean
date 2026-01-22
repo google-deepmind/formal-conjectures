@@ -41,7 +41,7 @@ Are there infinitely many $n$ such that $p_n = (∑ i = 1 ^ k, (p_{n - i} + p_{n
 -/
 @[category research open, AMS 11]
 theorem balanced_primes_order {k : ℕ} (hk : 0 < k):
-    answer(sorry) ↔ {n : ℕ | k ≤ n ∧ Nat.nth Prime n = (∑ i ∈ Finset.range k,
+    answer(sorry) ↔ {n : ℕ | k ≤ n ∧ Nat.nth Prime n = (∑ i ∈ Finset.Ioo 0 k,
       (Nat.nth Prime (n - i) + Nat.nth Prime (n + i))) / (2 * k)}.Infinite := by
   sorry
 
