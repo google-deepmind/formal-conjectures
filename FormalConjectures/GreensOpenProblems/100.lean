@@ -21,7 +21,6 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.100)
 
-Is every group well-approximated by finite groups?
 
 This problem asks whether every group is residually finite. A group is residually finite if
 for every non-identity element, there exists a normal subgroup such that the quotient is finite
