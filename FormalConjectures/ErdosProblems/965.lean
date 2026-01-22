@@ -19,78 +19,39 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 965
 
-Let `uₙ = pₙ / n`, where `pₙ` is the `n`th prime. Does the set of `n` such that `uₙ < uₙ₊₁`
-have positive density?
-
-Erdős and Prachar also proved that `∑_{pₙ < x} |uₙ₊₁ - uₙ| ≍ (log x)^2`, and that the set of `n`
-such that `uₙ > uₙ₊₁` has positive density. Erdős also asked whether there are infinitely many
-increasing triples `uₙ < uₙ₊₁ < uₙ₊₂` or decreasing triples `uₙ > uₙ₊₁ > uₙ₊₂`.
+For every 2-coloring of ℝ, is there an uncountable set $A ⊆ ℝ$ such that
+all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour?
 
 *References:*
-
 - [erdosproblems.com/965](https://www.erdosproblems.com/965)
-
-[ErPr61] Erdős, P. and Prachar, K., _Sätze und Probleme über pₖ/k_. Abh. Math. Sem. Univ. Hamburg
-(1961/62), 251–256.
+- [Er75b] Erdős, Paul, Problems and results in combinatorial number theory. Journées Arithmétiques de Bordeaux (Conf., Univ. Bordeaux, Bordeaux, 1974) (1975), 295-310.
+- [HLS17] Hindman, Neil and Leader, Imre and Strauss, Dona, Pairwise sums in colourings of the reals. Abh. Math. Semin. Univ. Hambg. (2017), 275--287.
+- [Ko16] Komjáth, Péter, A certain 2-coloring of the reals. Real Anal. Exchange (2016), 227--231.
+- [SWCol] Sokoup Dániel and Weiss, William, Sums and Anti-Ramsey Colourings of ℝ. https://danieltsoukup.github.io/academic/finset_colouring.pdf
 -/
-
-open Filter Real
-open scoped BigOperators
 
 namespace Erdos965
 
 /--
-`u n` is the normalized `n`th prime, defined as `pₙ / (n+1)` where `pₙ` is the `n`th prime
-(with `0.nth Nat.Prime = 2`).
+Erdős asks in [Er75b] if for every 2-coloring of ℝ, there is an uncountable set $A ⊆ ℝ$ such that
+all sums $a + b$ for $a, b ∈ A, a ≠ b$.
 
-This corresponds to the classical sequence `(p₁/1, p₂/2, p₃/3, ...)` while using `Nat.nth Prime`'s
-`0`-based indexing; in particular, the denominator is always positive.
+In [Ko16] Péter Komjáth constructed a counterexample.
+The same result was proven independently in [SWCol] by Sokoup and Weiss.
 -/
-noncomputable def u (n : ℕ) : ℝ :=
-  (n.nth Nat.Prime : ℝ) / (n + 1)
-
-/--
-Does the set `{n | u n < u (n+1)}` have positive natural density?
--/
-@[category research open, AMS 11]
-theorem erdos_968 : answer(sorry) ↔ {n : ℕ | u n < u (n + 1)}.HasPosDensity := by
+@[category research solved, AMS 03 05]
+theorem erdos_965 :
+    answer(False) ↔ ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧
+      ∀ a b c d, a ∈ A → b ∈ A → c ∈ A → d ∈ A → a ≠ b → c ≠ d → f (a + b) = f (c + d) := by
   sorry
 
 /--
-Erdős and Prachar proved `∑_{pₙ < x} |u (n+1) - u n| ≍ (log x)^2` (see [ErPr61]).
-
-We encode `∑_{pₙ < x}` as a sum over `n < Nat.primeCounting' x` (the number of primes `< x`).
+In fact, in both [Ko16] and [SWCol] a generalized example for $k$-sums is constructed.
 -/
-@[category research solved, AMS 11]
-theorem erdos_968.variants.sum_abs_diff_isTheta_log_sq :
-    (fun x : ℕ =>
-        ∑ n < Nat.primeCounting' x, |u (n + 1) - u n|) =Θ[atTop]
-      fun x : ℕ => log x ^ 2 := by
+@[category research solved, AMS 03 05]
+theorem erdos_965.generalization {k : ℕ} (hk : 2 ≤ k) :
+    answer(False) ↔ ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧ ∀ s t : Finset ℝ,
+      ↑s ⊆ A → ↑t ⊆ A → s.card = k → t.card = k → f (s.sum id) = f (t.sum id) := by
   sorry
 
-/--
-Erdős and Prachar proved that the set `{n | u n > u (n+1)}` has positive natural density
-(see [ErPr61]).
--/
-@[category research solved, AMS 11]
-theorem erdos_968.variants.decreasingSteps_hasPosDensity :
-    {n : ℕ | u n > u (n + 1)}.HasPosDensity := by
-  sorry
-
-/--
-Erdős asked whether there are infinitely many solutions to `uₙ < uₙ₊₁ < uₙ₊₂`.
--/
-@[category research open, AMS 11]
-theorem erdos_968.variants.infinite_increasingTriples :
-    answer(sorry) ↔ {n : ℕ | u n < u (n + 1) ∧ u (n + 1) < u (n + 2)}.Infinite := by
-  sorry
-
-/--
-Erdős asked whether there are infinitely many solutions to `uₙ > uₙ₊₁ > uₙ₊₂`.
--/
-@[category research open, AMS 11]
-theorem erdos_968.variants.infinite_decreasingTriples :
-    answer(sorry) ↔ {n : ℕ | u n > u (n + 1) ∧ u (n + 1) > u (n + 2)}.Infinite := by
-  sorry
-
-end Erdos968
+end Erdos965
