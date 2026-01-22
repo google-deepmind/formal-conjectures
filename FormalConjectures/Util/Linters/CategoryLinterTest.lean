@@ -22,35 +22,57 @@ namespace CategoryLinter
 #guard_msgs in
 def foo : Nat := 1
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem -/
 theorem test_theorem : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 theorem test_theorem_with_hypothesis (_ : True) : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with two helpful hypotheses -/
 theorem test_theorem_with_hypotheses (_ : True) (_ : False): 1 + 1 = 2 := by
   rfl
 
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 lemma test_lemma : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 example : 1 + 1 = 2 := by
   rfl
 
+/-- warning: If a problem has a sorry-free proof, it should not be categorised as `open`. -/
+#guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 @[category research open]
 theorem test_theorem_with_docstring : 1 + 1 = 2 := by

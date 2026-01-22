@@ -31,7 +31,7 @@ abbrev τ  := fun (n : ℕ) => n.divisors.card
 
 /--
 Let $F(x)$ be the maximal $k$ such that there exist $n+1, \dots, n+k \le x$
-with $τ(n+1), \dots, τ(n+k)$ all distinct, where $τ(m)$ counts the divisors of $m$.-/
+with $τ(n+1), \dots, τ(n+k)$ all distinct, where $τ(m)$ counts the divisors of $m$. -/
 noncomputable def F (x : ℝ) : ℕ :=
   sSup {k | ∃ (n : ℕ), n + k ≤ x ∧ (Set.Ioc n (n + k)).InjOn τ}
 

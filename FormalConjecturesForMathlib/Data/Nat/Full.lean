@@ -62,7 +62,7 @@ instance Powerful.decide : ∀ n, Decidable (Powerful n) := by
 theorem full_of_le_full (k : ℕ) (n : ℕ) {m : ℕ} (hk : k ≤ m) (h : m.Full n) : k.Full n :=
   fun p a ↦ pow_dvd_of_le_of_pow_dvd hk (h p a)
 
-/-- If $n \equiv p \pmod{p ^ (k + 1)}$, for a prime $p$ then $n$ is not $(k + 1)$-full.-/
+/-- If $n \equiv p \pmod{p ^ (k + 1)}$, for a prime $p$ then $n$ is not $(k + 1)$-full. -/
 theorem not_full_of_prime_mod_prime_sq (n : ℕ) (k : ℕ) {p : ℕ} (hp : p.Prime)
     (h : n % p ^ (k + 1) = p) : ¬ (k + 1).Full n := by
   rw [Full]

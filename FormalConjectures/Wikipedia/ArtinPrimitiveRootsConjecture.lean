@@ -51,7 +51,7 @@ open scoped Topology Nat
 
 namespace ArtinPrimitiveRootsConjecture
 
-/--Let $S(a)$ be the set of primes such that $a$ is a primitive root modulo $p$. -/
+/-- Let $S(a)$ be the set of primes such that $a$ is a primitive root modulo $p$. -/
 abbrev S (a : ℤ) : Set ℕ :=
   {p : ℕ | p.Prime ∧ orderOf (a : ZMod p) = (p-1 : ℕ)}
 

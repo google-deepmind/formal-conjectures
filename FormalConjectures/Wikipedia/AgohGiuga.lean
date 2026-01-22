@@ -57,17 +57,17 @@ An integer `p ≥ 2` is prime if and only if it satifies the congruence
 def AgohGiugaSum : Prop := ∀ p ≥ 2, p.Prime ↔
   p ∣ 1 + ∑ i ∈ Finset.Ioo 0 p, i^(p - 1 : ℕ)
 
-/--The **Agoh-Giuga Conjecture**, Agoh's formulation-/
+/-- The **Agoh-Giuga Conjecture**, Agoh's formulation -/
 @[category research open, AMS 11]
 theorem agoh_giuga : AgohGiugaCongr := by
   sorry
 
-/--The **Agoh-Giuga Conjecture**, Giuga's formulation-/
+/-- The **Agoh-Giuga Conjecture**, Giuga's formulation -/
 @[category research open, AMS 11]
 theorem agoh_giuga.variants.giuga : AgohGiugaSum := by
   sorry
 
-/--The two statements of the conjecture are equivalent.-/
+/-- The two statements of the conjecture are equivalent. -/
 @[category research solved, AMS 11]
 theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
   sorry
