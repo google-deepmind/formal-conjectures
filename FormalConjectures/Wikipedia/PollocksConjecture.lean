@@ -59,7 +59,7 @@ theorem pollock_tetrahedral (N : ℕ) :
 
 /--
 Salzer–Levine strengthening (as stated on Wikipedia/OEIS):
-there are exactly 241 integers that are not a sum of 4 tetrahedral numbers, and the largest is `343867`.
+there are exactly $241$ integers that are not a sum of $4$ tetrahedral numbers, and the largest is $343867$.
 -/
 @[category research open, AMS 11]
 theorem pollock_tetrahedral.salzer_levine :
