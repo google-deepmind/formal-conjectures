@@ -30,18 +30,17 @@ open Filter
 prime divisor of $m$. -/
 noncomputable def F (n : ℕ) : ℕ := sSup { m + m.minFac | (m < n) (_ : m.Composite)}
 
-/-- Let\[F(n) = \max_{\substack{m< n\\ m\textrm{ composite}}} m+p(m),\]where $p(m)$ is the least
+/-- Let \[F(n) = \max_{\substack{m< n\\ m\textrm{ composite}}} m+p(m),\] where $p(m)$ is the least
 prime divisor of $m$. Is it true that $F(n)>n$ for all sufficiently large $n$? -/
 @[category research open, AMS 11]
 theorem erdos_385.parts.i : answer(sorry) ↔ ∀ᶠ n in atTop, n < F n := by sorry
 
-/-- Let\[F(n) = \max_{\substack{m< n\\ m\textrm{ composite}}} m+p(m),\]where $p(m)$ is the least
+/-- Let \[F(n) = \max_{\substack{m< n\\ m\textrm{ composite}}} m+p(m),\] where $p(m)$ is the least
 prime divisor of $m$. Does $F(n)-n\to \infty$ as $n\to\infty$? -/
 @[category research open, AMS 11]
 theorem erdos_385.parts.ii : answer(sorry) ↔ atTop.Tendsto (fun n ↦ F n - n) atTop := by sorry
 
-
-/-- A question of Erd\H{o}s, Eggleton, and Selfridge, who write that in fact it is possible that
+/-- A question of Erdős, Eggleton, and Selfridge, who write that in fact it is possible that
 this quantity is always at least $n+(1-o(1))\sqrt{n}$ -/
 @[category research open, AMS 11]
 theorem erdos_385.variants.lb : answer(sorry) ↔ ∃ (e : ℕ → ℝ) (he : e =o[atTop] (1 : ℕ → ℝ)),
