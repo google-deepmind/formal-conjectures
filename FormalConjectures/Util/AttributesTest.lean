@@ -47,6 +47,7 @@ theorem test_success_3 : 1 = 1 := by
 theorem test_ignore_other_categories : 1 = 1 :=
   rfl
 
-@[category research formally solved here "https://github.com/example/formal-proof"]
+#guard_msgs in
+@[category research formally solved at "https://github.com/example/formal-proof"]
 theorem a_formally_solved_problem : 2 + 2 = 4 := by
   sorry

@@ -40,7 +40,7 @@ The values of this attribute are
   The criterion for being solved is that there exists an informal solution
   that is widely accepted by experts in the area. In particular, this
   does *not* require a formal solution to exist.
-- `@[category research formally solved here "link"]` : a research level math problem
+- `@[category research formally solved at "link"]` : a research level math problem
   that has been formally solved in this repository, with "link" being a permalink
   to the formal solution.
 - `@[category test]` : a statement that serves as a sanity check (e.g. for a new definition).
@@ -105,14 +105,14 @@ inductive ProblemStatus
   | formallySolvedHere : String → ProblemStatus
   deriving Inhabited, BEq, Hashable, ToExpr
 
-syntax problemStatus := &"open" <|> &"solved" <|> (&"formally" &"solved" &"here" str)
+syntax problemStatus := &"open" <|> &"solved" <|> (&"formally" &"solved" &"at" str)
 
 /-- Convert from a syntax node to a name. -/
 def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
   match stx with
     | `(problemStatus| open) => ``ProblemStatus.open
     | `(problemStatus| solved) => ``ProblemStatus.solved
-    | `(problemStatus| formally solved here $_) => ``ProblemStatus.formallySolvedHere
+    | `(problemStatus| formally solved at $_) => ``ProblemStatus.formallySolvedHere
     | _ => none
 
 /-- A type to capture the various types of statements that appear in our Lean files. -/
@@ -194,7 +194,7 @@ def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
     return Category.graduate
   | `(CategorySyntax| research $status) =>
     let problemStatus ← match status with
-      | `(problemStatus| formally solved here $link) => do
+      | `(problemStatus| formally solved at $link) => do
         Elab.addConstInfo status ``ProblemStatus.formallySolvedHere
         pure (ProblemStatus.formallySolvedHere link.getString)
       | _ => do
