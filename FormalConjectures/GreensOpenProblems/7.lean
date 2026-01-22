@@ -28,7 +28,7 @@ namespace Green7
 -- TODO: Add Green's Open Problem 7
 
 @[category research open, AMS 11]
-theorem green_7.variant : type_of% Erdos341.erdos_341 := by
+theorem green_7.variant.queneau : type_of% Erdos341.erdos_341 := by
   sorry
 
 end Green7
