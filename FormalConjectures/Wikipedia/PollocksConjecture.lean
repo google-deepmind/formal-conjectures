@@ -42,7 +42,7 @@ def tetrahedral (n : ℕ) : ℕ :=
 
 /-! ## Auxiliary definition -/
 
-/-- The set of natural numbers that are **not** a sum of 4 tetrahedral numbers. -/
+/-- The set of natural numbers that are **not** a sum of $4$ tetrahedral numbers. -/
 def NotSumOfFourTetrahedral : Set ℕ :=
   {N : ℕ | ∀ f : Fin 4 → ℕ, N ≠ ∑ i, tetrahedral (f i)}
 
