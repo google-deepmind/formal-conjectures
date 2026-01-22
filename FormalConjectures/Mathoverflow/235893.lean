@@ -58,7 +58,7 @@ proven in [mathoverflow/260589](https://mathoverflow.net/questions/260589) by us
 -/
 @[category research solved, AMS 26 54]
 theorem mathoverflow_260589 :
-    ∃ (f : ℝ ≅ ℝ^2), IsConnectedMap f.hom ∧ ¬ IsConnectedMap f.symm.hom := by
+    ∃ f : ℝ ≅ ℝ^2, IsConnectedMap f.hom ∧ ¬ IsConnectedMap f.symm.hom := by
   sorry
 
 --TODO: Add remarks from the mathoverflow post
