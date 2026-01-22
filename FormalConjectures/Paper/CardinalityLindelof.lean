@@ -36,13 +36,13 @@ namespace CardinalityLindelof
 /--
 A space where all singletons are Gδ points.
 -/
-class HasPointsGδ (X : Type*) [TopologicalSpace X] : Prop where
+class HasSingletonsGδ (X : Type*) [TopologicalSpace X] : Prop where
   gδPoints : ∀ ⦃x : X⦄, IsGδ {x}
 
 /-- Singletons are Gδ in First-Countable T₁ Spaces -/
 @[category test, AMS 54]
 instance HasPointsGδ.ofT1SpaceFirstCountable (X : Type*) [TopologicalSpace X]
-    [FirstCountableTopology X] [T1Space X] : HasPointsGδ X where
+    [FirstCountableTopology X] [T1Space X] : HasSingletonsGδ X where
   gδPoints := IsGδ.singleton
 
 /--
@@ -50,7 +50,7 @@ Does every Lindelöf space with Gδ points have cardinality less or equal to the
 -/
 @[category research open, AMS 54]
 theorem HasPointsGδ.lindelof_card :
-    ∃ (X : Type*) (_ : TopologicalSpace X), HasPointsGδ X ∧ LindelofSpace X ∧ 𝔠 < #X := by
+    ∃ (X : Type*) (_ : TopologicalSpace X), HasSingletonsGδ X ∧ LindelofSpace X ∧ 𝔠 < #X := by
   sorry
 
 --TODO under additional set theory axioms, there exists such a space with 𝔠 < #X.
