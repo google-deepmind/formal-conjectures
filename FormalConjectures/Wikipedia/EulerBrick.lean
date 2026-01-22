@@ -81,7 +81,7 @@ If all hold, this implies the nonexistence of a perfect Euler brick.
 def CuboidOneFor (a b : ℕ) : Prop :=
   Irreducible (X (R := ℤ) ^ 8 + 6 * (a ^ 2 - b ^ 2) * (X (R := ℤ) ^ 6)
     + (b ^ 4 - 4 * a ^ 2 * b ^ 2 + a ^ 4) * X (R := ℤ) ^ 4
-    - 6 * a ^ 2 * b ^ 2 * (a ^ 2 - b ^2) * X (R := ℤ) ^ 4 + a ^ 4 * b ^ 4)
+    - 6 * a ^ 2 * b ^ 2 * (a ^ 2 - b ^ 2) * X (R := ℤ) ^ 4 + a ^ 4 * b ^ 4)
 
 def CuboidOne : Prop := ∀ ⦃a b : ℕ⦄, a.Coprime b → a ≠ 0 → b ≠ 0 → a ≠ b → CuboidOneFor a b
 
