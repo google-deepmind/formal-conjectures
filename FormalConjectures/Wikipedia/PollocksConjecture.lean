@@ -66,7 +66,7 @@ theorem pollock_tetrahedral.salzer_levine :
     IsGreatest NotSumOfFourTetrahedral 343867 := by
   sorry
 
-/-- As stated on Wikipedia/OEIS (A000797), the set of exceptions has cardinality `241`. -/
+/-- As stated on Wikipedia/OEIS (A000797), the set of exceptions has cardinality $241$. -/
 @[category high_school, AMS 11]
 theorem pollock_tetrahedral.ncard_exceptions :
     type_of% pollock_tetrahedral.salzer_levine ↔
