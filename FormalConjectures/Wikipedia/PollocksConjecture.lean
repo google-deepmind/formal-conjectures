@@ -36,7 +36,7 @@ open scoped BigOperators
 
 /-! ## Definitions -/
 
-/-- The `n`-th tetrahedral number: \(T_n = n (n+1) (n+2) / 6\). -/
+/-- The $n$-th tetrahedral number: $T_n = \frac{n(n+1)(n+2)}{6}$. -/
 def tetrahedral (n : ℕ) : ℕ :=
   n * (n + 1) * (n + 2) / 6
 
