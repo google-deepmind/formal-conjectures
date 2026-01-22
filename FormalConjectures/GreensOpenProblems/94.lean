@@ -28,8 +28,6 @@ open Set MeasureTheory
 
 namespace Green94
 
-def geometric_set : Set ℝ := { x : ℝ | ∃ n : ℕ, x = 1 / (2^n) }
-
 /--
 Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
 -/
@@ -37,7 +35,7 @@ Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `
 theorem green_94 :
    answer(sorry) ↔  ∀ A : Set ℝ,
    volume A > 0 →
-   ∃ a b : ℝ, 0 < a ∧ ∀ x ∈ geometric_set, a * x + b ∈ A := by
+   ∃ a b : ℝ, 0 < a ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry
 
 end Green94
