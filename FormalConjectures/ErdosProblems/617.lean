@@ -25,8 +25,6 @@ import FormalConjectures.Util.ProblemImports
   Discrete Math. (1999), 79-86.
 -/
 
-open Nat Finset Sym2
-
 namespace Erdos617
 
 /--
