@@ -40,7 +40,7 @@ noncomputable def nK (k : ℕ) : ℕ :=
     ∀ i < k, i ≠ i0 → (n - i) ∣ n.choose k}
 
 /--
-Erdos and Selfridge noted that, for `n ≥ 2k` with `k ≥ 2`, at least one of the numbers `n - i`
+Erdős and Selfridge noted that, for `n ≥ 2k` with `k ≥ 2`, at least one of the numbers `n - i`
 for `0 ≤ i < k` fails to divide `n.choose k`.
 -/
 @[category research solved, AMS 11]
