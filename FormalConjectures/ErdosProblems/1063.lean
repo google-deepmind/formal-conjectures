@@ -21,9 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
  * [erdosproblems.com/1063](https://www.erdosproblems.com/1063)
- - [ErSe83] Erdos, P. and Selfridge, J. L., Problem 6447. Amer. Math. Monthly (1983), 710.
- - [Gu04] Guy, Richard K., _Unsolved problems in number theory_. (2004), Problem B31.
- - [Mo85] Monier (1985). No reference found.
+ * [ErSe83] Erdos, P. and Selfridge, J. L., Problem 6447. Amer. Math. Monthly (1983), 710.
+ * [Gu04] Guy, Richard K., _Unsolved problems in number theory_. (2004), Problem B31.
+ * [Mo85] Monier (1985). No reference found.
 -/
 
 open Filter Real
