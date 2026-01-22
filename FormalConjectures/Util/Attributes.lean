@@ -40,6 +40,9 @@ The values of this attribute are
   The criterion for being solved is that there exists an informal solution
   that is widely accepted by experts in the area. In particular, this
   does *not* require a formal solution to exist.
+- `@[category research formally solved here "link"]` : a research level math problem
+  that has been formally solved in this repository, with "link" being a permalink
+  to the formal solution.
 - `@[category test]` : a statement that serves as a sanity check (e.g. for a new definition).
 - `@[category API]` : a statement that constructs basic theory around a new definition
 
@@ -97,15 +100,19 @@ inductive ProblemStatus
   /-- Indicates that a mathematical problem is already solved,
   i.e., there is a published (informal) proof that is widely accepted by experts. -/
   | solved
+  /-- Indicates that a mathematical problem is formally solved in this repository,
+  with a link to the formal proof. -/
+  | formallySolvedHere : String → ProblemStatus
   deriving Inhabited, BEq, Hashable, ToExpr
 
-syntax problemStatus := &"open" <|> &"solved"
+syntax problemStatus := &"open" <|> &"solved" <|> (&"formally" &"solved" &"here" str)
 
 /-- Convert from a syntax node to a name. -/
 def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
   match stx with
     | `(problemStatus| open) => ``ProblemStatus.open
     | `(problemStatus| solved) => ``ProblemStatus.solved
+    | `(problemStatus| formally solved here $_) => ``ProblemStatus.formallySolvedHere
     | _ => none
 
 /-- A type to capture the various types of statements that appear in our Lean files. -/
@@ -186,12 +193,17 @@ def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
     Elab.addConstInfo stx ``Category.graduate
     return Category.graduate
   | `(CategorySyntax| research $status) =>
-    let some n := problemStatus.toName status | throwUnsupportedSyntax
-    Elab.addConstInfo status n
-    let status ← Lean.Meta.MetaM.run' <|
-      unsafe Meta.evalExpr ProblemStatus q(ProblemStatus) (.const n [])
+    let problemStatus ← match status with
+      | `(problemStatus| formally solved here $link) => do
+        Elab.addConstInfo status ``ProblemStatus.formallySolvedHere
+        pure (ProblemStatus.formallySolvedHere link.getString)
+      | _ => do
+        let some n := problemStatus.toName status | throwUnsupportedSyntax
+        Elab.addConstInfo status n
+        Lean.Meta.MetaM.run' <|
+          unsafe Meta.evalExpr ProblemStatus q(ProblemStatus) (.const n [])
     Elab.addConstInfo stx ``Category.research
-    return Category.research status
+    return Category.research problemStatus
   | `(CategorySyntax| test) =>
     Elab.addConstInfo stx ``Category.test
     return Category.test
@@ -210,6 +222,7 @@ This is used as follows: `@[category my_cat]` where `my_cat` is one of:
 - `graduate` : a graduate level math problem.
 - `research open` : an open reseach level math problem.
 - `research solved` : a solved reseach level math problem.
+- `research formally solved here "link"` : a formally solved research problem with a permalink.
 - `test` : a statement that serves as a sanity check (e.g. for a new definition).
 - `API` : a statement that constructs basic theory around a new definition -/
 initialize Lean.registerBuiltinAttribute {
