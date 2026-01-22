@@ -82,7 +82,7 @@ If all hold, this implies the nonexistence of a perfect Euler brick.
 def CuboidOneFor (a b : ℕ) : Prop :=
   Irreducible (X (R := ℤ) ^ 8 + 6 * (a ^ 2 - b ^ 2) * X (R := ℤ) ^ 6
     + (b ^ 4 - 4 * a ^ 2 * b ^ 2 + a ^ 4) * X (R := ℤ) ^ 4
-    - 6 * a ^ 2 * b ^ 2 * (a ^ 2 - b ^ 2) * X (R := ℤ) ^ 4 + a ^ 4 * b ^ 4)
+    - 6 * a ^ 2 * b ^ 2 * (a ^ 2 - b ^ 2) * X (R := ℤ) ^ 2 + a ^ 4 * b ^ 4)
 
 /-- *First Cuboid conjecture*: For all positive coprime integers $a$, $b$ with $a ≠ b$,
 the polynomial of the first Cuboid polynomial is irreducible. -/
