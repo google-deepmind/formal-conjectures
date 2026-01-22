@@ -22,6 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Euler_brick)
 - [stackexchange](https://math.stackexchange.com/questions/2264401/euler-bricks-and-the-4th-dimension)
+- [Sh12] Shapirov, Ruslan. Perfect cuboids and irreducible polynomials. https://arxiv.org/abs/1108.5348
 -/
 
 namespace EulerBrick
@@ -67,5 +68,64 @@ Is there an Euler brick in $n$-dimensional space for any $n > 3$?
 theorem n_dim_euler_brick_existence :
     answer(sorry) ↔ ∀ n > 3, ∃ sides : Fin n → ℕ+, IsEulerHyperBrick n sides := by
   sorry
+
+section Cuboid
+
+open Polynomial
+
+/- **Cuboid conjectures**:
+The three Cuboid conjectures ask if certain families of polynomials are always irreducible.
+If all hold, this implies the nonexistence of a perfect Euler brick.
+-/
+
+def CuboidOneFor (a b : ℕ) : Prop :=
+  Irreducible (X (R := ℤ) ^ 8 + 6 * (a ^ 2 - b ^ 2) * (X (R := ℤ) ^ 6)
+    + (b ^ 4 - 4 * a ^ 2 * b ^ 2 + a ^ 4) * X (R := ℤ) ^ 4
+    - 6 * a ^ 2 * b ^ 2 * (a ^ 2 - b ^2) * X (R := ℤ) ^ 4 + a ^ 4 * b ^ 4)
+
+def CuboidOne : Prop := ∀ ⦃a b : ℕ⦄, a.Coprime b → a ≠ 0 → b ≠ 0 → a ≠ b → CuboidOneFor a b
+
+/-- The first Cuboid conjecture -/
+@[category research open, AMS 12]
+theorem cuboidOne : CuboidOne := by sorry
+
+def CuboidTwoFor (a b : ℕ) : Prop :=
+  Irreducible (X (R := ℤ) ^ 10 + (2 * b ^ 2 + a ^ 2) * (3 * b ^ 2 - 2 * a ^ 2) * X (R := ℤ) ^ 8
+    + (b ^ 8 + 10 * a ^ 2 * b ^ 6 + 4 * a ^ 4 * b ^ 4 - 14 * a ^ 6 * b ^ 2 + a ^ 8) * X (R := ℤ) ^ 6
+    - a ^ 2 * b ^ 2 * (b ^ 8 - 14 * a ^ 2 * b ^ 6 + 4 * a ^ 4 * b ^ 4 + 10 * a ^ 6 * b ^ 2 + a ^ 8)
+    * X (R := ℤ) ^ 4 - a ^ 6 * b ^ 6 * (b ^ 2 + 2 * a ^ 2) * (-2 * b ^ 2 + 3 * a ^ 2)
+    * X (R := ℤ) ^ 2 - b ^ 10 * a ^ 10)
+
+def CuboidTwo : Prop := ∀ ⦃a b : ℕ⦄, a.Coprime b → a ≠ 0 → b ≠ 0 → a ≠ b → CuboidTwoFor a b
+
+/-- The second Cuboid conjecture -/
+@[category research open, AMS 12]
+theorem cuboidTwo : CuboidTwo := by sorry
+
+def CuboidThreeFor (a b c : ℕ) : Prop :=
+  Irreducible (X (R := ℤ) ^ 12 + (6 * c ^ 2 - 2 * a ^ 2 - 2 * b ^ 2) * X (R := ℤ) ^ 10
+    + (c ^ 4 + b ^ 4 + a ^ 4 + 4 * a ^ 2 * c ^ 2 + 4 * b ^ 2 * c ^ 2 - 12 * b ^ 2 * a ^ 2
+    * X (R := ℤ) ^ 8) + (6 * a ^ 4 * c ^ 2 + 6 * c ^ 2 * b ^ 4 - 8 * a ^ 2 * b ^ 2 * c ^ 2
+    - 2 * c ^ 4 * a ^ 2 - 2 * c ^ 4 * b ^ 2 - 2 * a ^ 4 * b ^ 2 - 2 * b ^ 4 * a ^ 2)
+    * X (R := ℤ) ^ 6 + (4 * c ^ 2 * b ^ 4 * a ^ 2 + 4 * a ^ 4 * c ^ 2 * b ^ 2
+    - 12 * c ^ 4 * a ^ 2 * b ^ 2 + c ^ 4 * a ^ 4 + c ^ 4 * b ^ 4 * a ^ 4 * b ^ 4) * X (R := ℤ) ^ 4
+    + (6 * a ^ 4 * c ^ 2 * b ^ 4 - 2 * c ^ 4 * a ^ 4 * b ^ 2 - 2 * c ^ 4 * a ^ 2 * b ^ 4)
+    * X (R := ℤ) ^ 2 + c ^ 4 * a ^ 4 * b ^ 4)
+
+def CuboidThree : Prop := ∀ ⦃a b c : ℕ⦄, a.Coprime b → b.Coprime c → c.Coprime a → a ≠ 0 → b ≠ 0 →
+  c ≠ 0 → a ≠ b → b ≠ c → c ≠ a → b * c ≠ a ^ 2 → a * c ≠ b ^ 2 → CuboidThreeFor a b c
+
+/-- The third Cuboid conjecture -/
+@[category research open, AMS 12]
+theorem cuboidThree : CuboidThree := by sorry
+
+/-- In [Sh12], Ruslan notes that a perfect Euler brick does not exist
+if all three Cuboid conjectures hold -/
+@[category research solved, AMS 12]
+theorem cuboid_perfect_euler_brick (h₁ : CuboidOne) (h₂ : CuboidTwo) (h₃ : CuboidThree) :
+    ¬ ∃ a b c : ℕ+, IsPerfectCuboid a b c := by
+  sorry
+
+end Cuboid
 
 end EulerBrick
