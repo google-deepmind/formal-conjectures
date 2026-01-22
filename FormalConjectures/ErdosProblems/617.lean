@@ -32,10 +32,12 @@ Let $r\geq 3$. If the edges of $K_{r^2+1}$ are $r$-coloured then there exist $r+
 least one colour missing on the edges of the induced $K_{r+1}$.
 
 In other words, there is no balanced colouring.
+
+A conjecture of Erdős and Gyárfás [ErGy99].
 -/
 @[category research open, AMS 5]
 theorem erdos_617 (r : ℕ) (hr : r ≥ 3) :
-  ∀ (V : Type) [Fintype V] [DecidableEq V], Fintype.card V = r^2 + 1 →
+  ∀ {V : Type} [Fintype V] [DecidableEq V], Fintype.card V = r^2 + 1 →
   ∀ (coloring : Sym2 V → Fin r),
     ∃ (S : Finset V) (k : Fin r),
       S.card = r + 1 ∧
@@ -43,11 +45,11 @@ theorem erdos_617 (r : ℕ) (hr : r ≥ 3) :
   sorry
 
 /--
-A conjecture of Erdős and Gyárfás [ErGy99] proved the conjecture for $r=3$.
+Erdős and Gyárfás [ErGy99] proved the conjecture for $r=3$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_617.variant.r_eq_3 :
-  ∀ (V : Type) [Fintype V] [DecidableEq V], Fintype.card V = 3^2 + 1 →
+  ∀ {V : Type} [Fintype V] [DecidableEq V], Fintype.card V = 3^2 + 1 →
   ∀ (coloring : Sym2 V → Fin 3),
     ∃ (S : Finset V) (k : Fin 3),
       S.card = 3 + 1 ∧
@@ -55,11 +57,11 @@ theorem erdos_617.variant.r_eq_3 :
   sorry
 
 /--
-A conjecture of Erdős and Gyárfás [ErGy99] proved the conjecture for $r=4$.
+Erdős and Gyárfás [ErGy99] proved the conjecture for $r=4$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_617.variant.r_eq_4 :
-  ∀ (V : Type) [Fintype V] [DecidableEq V], Fintype.card V = 4^2 + 1 →
+  ∀ {V : Type} [Fintype V] [DecidableEq V], Fintype.card V = 4^2 + 1 →
   ∀ (coloring : Sym2 V → Fin 4),
     ∃ (S : Finset V) (k : Fin 4),
       S.card = 4 + 1 ∧
@@ -67,8 +69,8 @@ theorem erdos_617.variant.r_eq_4 :
   sorry
 
 /--
-A conjecture of Erdős and Gyárfás [ErGy99] showed this property fails for infinitely many $r$ if we
-replace $r^2+1$ by $r^2$.
+Erdős and Gyárfás [ErGy99] showed this property fails for infinitely many $r$ if we replace $r^2+1$
+by $r^2$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_617.variant.r2 :
