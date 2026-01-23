@@ -40,18 +40,18 @@ namespace Green35
 open MeasureTheory
 open scoped Convolution ENNReal
 
-/-- A nonnegative integrable function on `[0,1]` with total integral `1`. -/
+/-- A nonnegative integrable function on $[0,1]$ with total integral $1$. -/
 def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
   Integrable f ∧
     (∀ x, 0 ≤ f x) ∧
     Function.support f ⊆ Set.Icc (0 : ℝ) 1 ∧
     (∫ x, f x) = 1
 
-/-- The infimum of `‖f ∗ f‖_p` over unit-interval densities. -/
+/-- The infimum of $\|f \ast f\|_p$ over unit-interval densities. -/
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
   sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
-/-- Estimate `c p` for `1 < p ≤ ∞`. -/
+/-- Estimate $c(p)$ for $1 < p \le \infty$. -/
 @[category research open, AMS 26 28 42]
 theorem green_35 (p : ℝ≥0∞) (hp : 1 < p) :
     c p = answer(sorry) := by
@@ -60,17 +60,17 @@ theorem green_35 (p : ℝ≥0∞) (hp : 1 < p) :
 /-! Known bounds and comparisons. -/
 namespace variants
 
-/-- Lower bound for `c 2` from Green's first paper ([Gr01]). -/
+/-- Lower bound for $c(2)$ from Green's first paper ([Gr01]). -/
 @[category research solved, AMS 26 28 42]
 theorem p2_lower : ENNReal.ofReal 0.7559 ≤ c 2 := by
   sorry
 
-/-- Best-known lower bound for `c ∞` due to Cloninger and Steinerberger ([CS17]). -/
+/-- Best-known lower bound for $c(\infty)$ due to Cloninger and Steinerberger ([CS17]). -/
 @[category research solved, AMS 26 28 42]
 theorem pInf_lower : ENNReal.ofReal 0.64 ≤ c ∞ := by
   sorry
 
-/-- Best-known upper bound for `c ∞` due to Matolcsi and Vinuesa ([MV10]). -/
+/-- Best-known upper bound for $c(\infty)$ due to Matolcsi and Vinuesa ([MV10]). -/
 @[category research solved, AMS 26 28 42]
 theorem pInf_upper : c ∞ ≤ ENNReal.ofReal 0.7505 := by
   sorry
