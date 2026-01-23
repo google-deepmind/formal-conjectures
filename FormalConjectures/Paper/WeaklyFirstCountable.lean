@@ -37,7 +37,7 @@ open scoped Cardinal
 namespace WeaklyFirstCountable
 
 /-- A topologocal space $X$ is called *weakly first countable* if there exists a function
-$N : X → ℕ → Set X, such that
+$N : X → ℕ → Set X, such that:
 
 * For all $x : X, k : ℕ$ we have x ∈ N x k
 * $O ⊆ X$ is open iff $∀ x ∈ O, ∃ k : ℕ, N x k ⊆ O$
@@ -47,27 +47,27 @@ class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
     ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, N x k ⊆ O
 
 /-- Every first countable space is weakly first countable,
-simply take $N x$ as a countable neighborhood basis of $x$ -/
+simply take $N x$ as a countable neighborhood basis of $x$. -/
 @[category test, AMS 54]
 instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [TopologicalSpace X]
     [FirstCountableTopology X] : WeaklyFirstCountableTopology X where
     nhds_countable_weak_basis := by sorry
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
-countable compact space X such that $𝔠 < |X|$ -/
+countable compact space X such that $𝔠 < |X|$. -/
 @[category research open, AMS 54]
 theorem existsWeaklyFirstCountableCompactBig : answer(sorry) ↔
     ∃ (X : Type*) (_ : TopologicalSpace X),
       WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ 𝔠 < #X := by sorry
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
-countable compact space X such that $𝔠 < |X|$ -/
+countable compact space X such that $𝔠 < |X|$. -/
 def ExistsWeaklyFirstCountableCompactNotFirstCountable : Prop :=
     ∃ (X : Type*) (_ : TopologicalSpace X), WeaklyFirstCountableTopology X ∧ CompactSpace X ∧
       ¬ FirstCountableTopology X
 
 /-- Problem 3 in [Ar2013]: Give an example in ZFC of a weakly first-
-countable compact space X which is not first countable -/
+countable compact space X which is not first countable. -/
 def existsWeaklyFirstCountableCompactNotFirstCountable :
     ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
 
