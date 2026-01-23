@@ -54,7 +54,6 @@ theorem green_16_lower_bound :
     (fun N ↦ (N : ℝ) ^ (1 / 2 : ℝ)) ≪ fun N ↦ (f N : ℝ) := by
   sorry
 
-
 /-- From [Schoen and Sisask] $f(N) \ll N \cdot e^{-c(\log N)^{1/7}}$. -/
 @[category research open, AMS 5 11]
 theorem green_16_upper_bound :
@@ -66,8 +65,6 @@ theorem green_16_upper_bound :
 theorem green_16_conjectured_lower_bound :
     ∃ c > (0 : ℝ), (fun N ↦ (N : ℝ) * exp (-c * (log N) ^ (1 / 7 : ℝ))) ≪ fun N ↦ (f N : ℝ) := by
   sorry
-
-
 
 /-- A set has no nontrivial solution to $x + 2y + 3z = x' + 2y' + 3z'$. -/
 def ZhaoSolutionFree (A : Finset ℕ) : Prop :=
