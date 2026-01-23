@@ -54,7 +54,9 @@ theorem erdos_1063.variants.small_values :
     n 2 = 4 ∧ n 3 = 6 ∧ n 4 = 9 ∧ n 5 = 12 := by
   sorry
 
-/-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]). -/
+/-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]).
+TODO: Find reference
+-/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k ! := by
