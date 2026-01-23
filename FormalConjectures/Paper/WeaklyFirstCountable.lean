@@ -47,6 +47,12 @@ class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
   nhds_countable_weak_basis : ∃ V : X → ℕ → Set X, ∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x n ∧
     ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
 
+/-- There are weakly first countable spaces which are not first countable,
+for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
+@[category undergraduate, AMS 54]
+theorem exists_weakly_first_countable_not_first_countable : ∃ (X : Type*) (_ : TopologicalSpace X),
+      WeaklyFirstCountableTopology X ∧ ¬ FirstCountableTopology X := by sorry
+
 /-- Every first countable space is weakly first countable,
 simply take $N x$ as a countable neighborhood basis of $x$. -/
 @[category test, AMS 54]
