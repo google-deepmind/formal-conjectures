@@ -47,8 +47,8 @@ theorem erdos_385.variants.lb : answer(sorry) ↔ ∃ (e : ℕ → ℝ) (he : e 
     ∀ n, n + (1 - e n) * √n ≤ F n :=
   sorry
 
-/-- (note that it is trivially $\leq n+\sqrt{n}$). -/
-@[category undergraduate, AMS 11]
+/-- Note that trivially $F(n) \leq n + \sqrt{n}$. -/
+@[category test, AMS 11]
 theorem erdos_385.variants.ub (n : ℕ) : F n ≤ n + √n := by
   sorry
 
