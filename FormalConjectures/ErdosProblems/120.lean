@@ -34,7 +34,7 @@ of positive measure which does not contain any set of the shape $a * A + b$
 for some $a,b \in \mathbb{R}$ and $a \neq 0$?
 -/
 def Erdos120For (A : Set ℝ) : Prop := ∃ E : Set ℝ,
-    0 < volume E ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬ .image (fun x => a * x + b) A ⊆ E
+  0 < volume E ∧ ∀ a b : ℝ, a ≠ 0 ∧ ¬ .image (fun x => a * x + b) A ⊆ E
 
 /--
 Let $A \subseteq \mathbb{R}$ be an infinite set. Must there be a set $E \subseteq \mathbb{R}$
