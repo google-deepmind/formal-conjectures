@@ -38,7 +38,7 @@ A topological space $X$ is called *homogenous* if for all $x, y \in X$ there is 
 $f : X \to X$ with $f(x) = y$.
 -/
 class HomogenousSpace (X : Type*) [TopologicalSpace X] : Prop where
-  exists_equiv : ∀ x y : X, ∃ f : X ≃ X, f x = y
+  exists_equiv : ∀ x y : X, ∃ f : X ≃ₜ X, f x = y
 
 /-- Every discrete space is homogenous -/
 @[category test, AMS 54]
