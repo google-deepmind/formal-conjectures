@@ -25,8 +25,6 @@ If n is composite and satisfies both:
 
 then n ≡ 65 (mod 72).
 
-This conjecture, posed by R. Stephan, probably requires meticulous congruence case analysis
-of the φ and σ functions modulo 8 and 9.
 
 *References:* [oeis.org/A056777](https://oeis.org/A056777)
 -/
