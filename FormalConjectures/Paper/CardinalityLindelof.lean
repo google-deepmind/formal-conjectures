@@ -41,7 +41,7 @@ class HasSingletonsGδ (X : Type*) [TopologicalSpace X] : Prop where
 
 /-- Singletons are Gδ in First-Countable T₁ Spaces -/
 @[category test, AMS 54]
-instance HasPointsGδ.ofT1SpaceFirstCountable (X : Type*) [TopologicalSpace X]
+instance HasSingletonsGδ.of_t1Space_firstCountableTopology (X : Type*) [TopologicalSpace X]
     [FirstCountableTopology X] [T1Space X] : HasSingletonsGδ X where
   gδPoints := .singleton
 
