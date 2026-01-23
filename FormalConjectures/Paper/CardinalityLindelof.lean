@@ -43,7 +43,7 @@ class HasSingletonsGδ (X : Type*) [TopologicalSpace X] : Prop where
 @[category test, AMS 54]
 instance HasPointsGδ.ofT1SpaceFirstCountable (X : Type*) [TopologicalSpace X]
     [FirstCountableTopology X] [T1Space X] : HasSingletonsGδ X where
-  gδPoints := IsGδ.singleton
+  gδPoints := .singleton
 
 /--
 Does every Lindelöf space with Gδ points have cardinality less or equal to the continuum?
