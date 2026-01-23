@@ -125,7 +125,7 @@ protected lemma IsAsymptoticMulBasisOfOrder.nonempty [Infinite M]
 
 /-- `A : Set M` is an asymptotic basis of order one iff it is cofinite. -/
 @[to_additive (attr := simp)
-/--`A : Set M` is an asymptotic basis of order one iff it is cofinite.-/]
+/--`A : Set M` is an asymptotic basis of order one iff it is cofinite. -/]
 lemma isAsymptoticMulBasisOfOrder_one_iff : IsAsymptoticMulBasisOfOrder A 1 ↔ Aᶜ.Finite := by
   simp [IsAsymptoticMulBasisOfOrder, compl_def]
 
