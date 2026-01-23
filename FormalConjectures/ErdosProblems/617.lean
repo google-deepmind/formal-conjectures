@@ -36,9 +36,8 @@ In other words, there is no balanced colouring.
 A conjecture of Erdős and Gyárfás [ErGy99].
 -/
 @[category research open, AMS 5]
-theorem erdos_617 (r : ℕ) (hr : r ≥ 3) :
-  ∀ {V : Type} [Fintype V] [DecidableEq V], Fintype.card V = r^2 + 1 →
-  ∀ (coloring : Sym2 V → Fin r),
+theorem erdos_617 (r : ℕ) (hr : r ≥ 3) {V : Type} [Fintype V] [DecidableEq V]
+    (hV : Fintype.card V = r^2 + 1) (coloring : Sym2 V → Fin r) :
     ∃ (S : Finset V) (k : Fin r),
       S.card = r + 1 ∧
       ∀ u ∈ S, ∀ v ∈ S, u ≠ v → coloring s(u, v) ≠ k := by
@@ -48,9 +47,8 @@ theorem erdos_617 (r : ℕ) (hr : r ≥ 3) :
 Erdős and Gyárfás [ErGy99] proved the conjecture for $r=3$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_617.variant.r_eq_3 :
-  ∀ {V : Type} [Fintype V] [DecidableEq V], Fintype.card V = 3^2 + 1 →
-  ∀ (coloring : Sym2 V → Fin 3),
+theorem erdos_617.variant.r_eq_3 (r : ℕ) (hr : r ≥ 3) {V : Type} [Fintype V] [DecidableEq V]
+    (hV : Fintype.card V = 3^2 + 1) (coloring : Sym2 V → Fin 3) :
     ∃ (S : Finset V) (k : Fin 3),
       S.card = 3 + 1 ∧
       ∀ u ∈ S, ∀ v ∈ S, u ≠ v → coloring s(u, v) ≠ k := by
@@ -60,9 +58,8 @@ theorem erdos_617.variant.r_eq_3 :
 Erdős and Gyárfás [ErGy99] proved the conjecture for $r=4$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_617.variant.r_eq_4 :
-  ∀ {V : Type} [Fintype V] [DecidableEq V], Fintype.card V = 4^2 + 1 →
-  ∀ (coloring : Sym2 V → Fin 4),
+theorem erdos_617.variant.r_eq_4 (r : ℕ) (hr : r ≥ 3) {V : Type} [Fintype V] [DecidableEq V]
+    (hV : Fintype.card V = 4^2 + 1) (coloring : Sym2 V → Fin 4) :
     ∃ (S : Finset V) (k : Fin 4),
       S.card = 4 + 1 ∧
       ∀ u ∈ S, ∀ v ∈ S, u ≠ v → coloring s(u, v) ≠ k := by
