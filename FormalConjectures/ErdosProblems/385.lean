@@ -35,8 +35,8 @@ prime divisor of $m$. Is it true that $F(n)>n$ for all sufficiently large $n$? -
 @[category research open, AMS 11]
 theorem erdos_385.parts.i : answer(sorry) ↔ ∀ᶠ n in atTop, n < F n := by sorry
 
-/-- Let \[F(n) = \max_{\substack{m< n\\ m\textrm{ composite}}} m+p(m),\] where $p(m)$ is the least
-prime divisor of $m$. Does $F(n)-n\to \infty$ as $n\to\infty$? -/
+/-- Let $F(n) := \max\{m + p(m) \mid  \textrm{$m < n$ composite}\}\}$ where $p(m)$ is the least
+prime divisor of $m$. Does $F(n) - n \to \infty$ as $n\to\infty$? -/
 @[category research open, AMS 11]
 theorem erdos_385.parts.ii : answer(sorry) ↔ atTop.Tendsto (fun n ↦ F n - n) atTop := by sorry
 
