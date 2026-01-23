@@ -22,8 +22,8 @@ import FormalConjectures.Util.ProblemImports
 Estimate the infimum of the $L^p$ norm of the self-convolution of a nonnegative integrable
 function supported on $[0,1]$ with total integral $1$.
 
-We model a function `f : [0,1] → ℝ≥0` as a function on the subtype `Set.Icc (0 : ℝ) 1`, and
-extend by `0` to a function on `ℝ` when forming convolutions.
+We model a function `f : [0,1] → ℝ≥0` as a function `f : ℝ → ℝ` that is nonnegative, integrable,
+supported on `[0,1]`, and has total integral `1`.
 
 *References:*
 - [Ben Green's Open Problem 35](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.35)
@@ -38,33 +38,18 @@ extend by `0` to a function on `ℝ` when forming convolutions.
 namespace Green35
 
 open MeasureTheory
-open scoped Convolution
-
-/-- Extend a function on `[0,1]` by zero to a function on `ℝ`. -/
-def extendByZero (f : Set.Icc (0 : ℝ) 1 → ℝ≥0) : ℝ → ℝ :=
-  fun x => if hx : x ∈ Set.Icc (0 : ℝ) 1 then (f ⟨x, hx⟩ : ℝ) else 0
+open scoped Convolution ENNReal
 
 /-- A nonnegative integrable function on `[0,1]` with total integral `1`. -/
-def IsUnitIntervalDensity (f : Set.Icc (0 : ℝ) 1 → ℝ≥0) : Prop :=
-  Integrable (extendByZero f) ∧
-    (∫ x, extendByZero f x) = 1
+def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
+  Integrable f ∧
+    (∀ x, 0 ≤ f x) ∧
+    Function.support f ⊆ Set.Icc (0 : ℝ) 1 ∧
+    (∫ x, f x) = 1
 
-/-- The class `F` of unit-interval densities. -/
-def F : Set (Set.Icc (0 : ℝ) 1 → ℝ≥0) :=
-  { f | IsUnitIntervalDensity f }
-
-/-- A density for which the self-convolution is defined everywhere. -/
-def IsAdmissible (f : Set.Icc (0 : ℝ) 1 → ℝ≥0) : Prop :=
-  f ∈ F ∧
-    ConvolutionExists (extendByZero f) (extendByZero f) (ContinuousLinearMap.lsmul ℝ ℝ)
-
-/-- Convolution of two real-valued functions on `ℝ` with respect to Lebesgue measure. -/
-noncomputable def convolution (f g : Set.Icc (0 : ℝ) 1 → ℝ≥0) : ℝ → ℝ :=
-  extendByZero f ⋆ extendByZero g
-
-/-- The infimum of `‖f ∗ f‖_p` over `f ∈ F`, where `F` is the unit-interval density class. -/
+/-- The infimum of `‖f ∗ f‖_p` over unit-interval densities. -/
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
-  sInf { r | ∃ f, IsAdmissible f ∧ r = eLpNorm (convolution f f) p }
+  sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
 /-- Estimate `c p` for `1 < p ≤ ∞`. -/
 @[category research open, AMS 26 28 42]
