@@ -31,10 +31,10 @@ around those.
   https://www.mathnet.ru/links/016f74007f9f96fa3aadae05cbd98457/dan40570.pdf (in Russian)
 -/
 
-namespace WeaklyFirstCountable
-
 open TopologicalSpace
 open scoped Cardinal
+
+namespace WeaklyFirstCountable
 
 /-- A topologocal space $X$ is called *weakly first countable* if there exists a function
 $N : X → ℕ → Set X, such that
