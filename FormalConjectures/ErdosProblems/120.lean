@@ -27,14 +27,21 @@ open Set MeasureTheory
 namespace Erdos120
 
 /--
-Let $A ⊆ R$ be an infinite set. Must there be a set $E ⊂ R$ of positive measure which
-does not contain any set of the shape $aA + b$ for some $a,b ∈ R$ and $a ≠ 0$?
+Let $A \subseteq \mathbb{R}$ be an infinite set. Must there be a set $E \subseteq \mathbb{R}$
+of positive measure which does not contain any set of the shape $a * A + b$
+for some $a,b \in \mathbb{R}$ and $a \neq 0$?
 -/
 @[category research open, AMS 05 28]
-theorem erdos_120 :
-   answer(sorry) ↔ ∀ (A : Set ℝ), A.Infinite →
-   ∃ E : Set ℝ,
-   volume E > 0 ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬(Set.image (fun x => a * x + b) A ⊆ E) := by
+theorem erdos_120 : answer(sorry) ↔ ∀ ⦃A : Set ℝ⦄, A.Infinite → ∃ E : Set ℝ,
+    volume E > 0 ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬(Set.image (fun x => a * x + b) A ⊆ E) := by
+  sorry
+
+/--
+Note: Steinhaus has proved Erdős 120 to be false whenever $A$ is a finite set.
+-/
+@[category research solved, AMS 05 28]
+theorem erdos_120.variants.finite_set ⦃A : Set ℝ⦄ (h : A.Finite) : ¬(∃ E : Set ℝ,
+    volume E > 0 ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬(Set.image (fun x => a * x + b) A ⊆ E)):= by
   sorry
 
 end Erdos120
