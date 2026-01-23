@@ -61,9 +61,16 @@ noncomputable def aprime (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
 noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
   sSup { n | ∃ s : Finset α, (G.induce s).IsAcyclic ∧ s.card = n }
 
-/-- `f G` is the number of vertices of a largest induced forest of `G` as a real. -/
-noncomputable def f (G : SimpleGraph α) : ℝ :=
-  (largestInducedForestSize G : ℝ)
+/-- The degree sequence of a graph, sorted in nondecreasing order. -/
+noncomputable def degreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : List ℕ :=
+  (Finset.univ.val.map fun v : α => G.degree v).sort (· ≤ ·)
+
+/--
+The maximum number of occurrences of any term of the degree sequence of `G`.
+-/
+noncomputable def degreeSequenceMultiplicity (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  let degs := degreeSequence G
+  (List.max? (degs.map (fun d => degs.count d))).get!
 
 /-- `largestInducedBipartiteSubgraphSize G` is the size of a largest induced
 bipartite subgraph of `G`. -/
