@@ -77,7 +77,7 @@ def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop
     a_[p ^ r]f = a_[p]f * a_[p ^ (r - 1)]f - p ^ (k - 1) * a_[p ^ (r - 2)]f) ∧
   ∀ (p r : ℕ), p.Prime → 2 ≤ r → (N : ZMod p) = 0 → a_[p ^ r]f = (a_[p]f) ^ r
 
-/-- See  theorem 8.8.1 of [diamondshurman2005]. -/
+/-- See theorem 8.8.1 of [diamondshurman2005]. -/
 def modularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
   ∃ (N : ℕ+) (f : CuspForm (Gamma0 N) 2), IsNormalisedEigenform f ∧
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
