@@ -73,7 +73,7 @@ section Cuboid
 
 open Polynomial
 
-/- **Cuboid conjectures**:
+/-! **Cuboid conjectures**:
 The three Cuboid conjectures ask if certain families of polynomials are always irreducible.
 If all hold, this implies the nonexistence of a perfect Euler brick.
 -/
