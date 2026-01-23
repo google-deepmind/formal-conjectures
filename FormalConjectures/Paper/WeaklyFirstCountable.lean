@@ -1,0 +1,81 @@
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Conjectures about Weakly First Countable spaces
+
+This file formalizes the notion of a weakly first countable topological space and some conjectures
+around those.
+
+*References:*
+* [Ar2013] Arhangeliski, Alexandr. "Selected old open problems in general topology."
+  Buletinul Academiei de Ştiinţe a Republicii Moldova. Matematica 73.2-3 (2013): 37-46.
+  https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf
+* [Ya1976] Yakovlev, N. N. "On the theory of o-metrizable spaces."
+  Doklady Akademii Nauk. Vol. 229. No. 6. Russian Academy of Sciences, 1976.
+  https://www.mathnet.ru/links/016f74007f9f96fa3aadae05cbd98457/dan40570.pdf (in Russian)
+-/
+
+namespace WeaklyFirstCountable
+
+open TopologicalSpace
+open scoped Cardinal
+
+/-- A topologocal space $X$ is called *weakly first countable* if there exists a function
+$N : X → ℕ → Set X, such that
+
+* For all $x : X, k : ℕ$ we have x ∈ N x k
+* $O ⊆ X$ is open iff $∀ x ∈ O, ∃ k : ℕ, N x k ⊆ O$
+-/
+class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
+  nhds_countable_weak_basis : ∃ N : X → ℕ → Set X, ∀ (x : X) (k : ℕ), x ∈ N x k ∧
+    ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, N x k ⊆ O
+
+/-- Every first countable space is weakly first countable,
+simply take $N x$ as a countable neighborhood basis of $x$ -/
+@[category test, AMS 54]
+instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [TopologicalSpace X]
+    [FirstCountableTopology X] : WeaklyFirstCountableTopology X where
+    nhds_countable_weak_basis := by sorry
+
+/-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
+countable compact space X such that $𝔠 < |X|$ -/
+@[category research open, AMS 54]
+theorem existsWeaklyFirstCountableCompactBig : answer(sorry) ↔
+    ∃ (X : Type*) (_ : TopologicalSpace X),
+      WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ 𝔠 < #X := by sorry
+
+/-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
+countable compact space X such that $𝔠 < |X|$ -/
+def ExistsWeaklyFirstCountableCompactNotFirstCountable : Prop :=
+    ∃ (X : Type*) (_ : TopologicalSpace X), WeaklyFirstCountableTopology X ∧ CompactSpace X ∧
+      ¬ FirstCountableTopology X
+
+/-- Problem 3 in [Ar2013]: Give an example in ZFC of a weakly first-
+countable compact space X which is not first countable -/
+def existsWeaklyFirstCountableCompactNotFirstCountable :
+    ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
+
+/-- Under CH, such a space exists as constructed in [Ya1976] by Yakovlev. -/
+@[category research solved, AMS 54]
+theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable (CH : ℵ₁ = 𝔠) :
+    ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
+
+-- TODO: add Problem 4 in [Ar2013]
+
+end WeaklyFirstCountable
