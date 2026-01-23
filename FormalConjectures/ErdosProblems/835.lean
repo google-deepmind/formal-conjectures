@@ -89,10 +89,47 @@ theorem johnsonGraph_2k_k_chromaticNumber_known_cases (k : ℕ) (hk : 3 ≤ k) (
 
 /--
 The smallest open case is $k=9$. Is the chromatic number of $J(18, 9)$ equal to 10?
+
+Answer: No!
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem johnsonGraph_18_9_chromaticNumber :
-    (JohnsonGraph 18 9 (by omega)).chromaticNumber = 10 ↔ answer(sorry) := by
-  sorry
+    ¬ (JohnsonGraph 18 9 (by omega)).chromaticNumber = 10 := by
+  norm_num[JohnsonGraph,SimpleGraph.chromaticNumber]
+  refine ne_of_gt<|lt_of_lt_of_le (show 10<11by decide) (le_iInf₂ fun and ⟨a, _⟩=>mod_cast Fintype.card_fin and▸? _)
+  simp_all
+  have:= Fintype.card_congr ((.sigmaFiberEquiv a))▸ Fintype.card_sigma.symm
+  simp_all![Fintype.card_subtype]
+  by_cases h : ∀y, Finset.biUnion {s | a s=y} (·.1.powersetCard 8) ⊆.powersetCard 8 .univ
+  · replace h α :=((( Finset.card_biUnion) ?_).ge.trans ( Finset.card_mono (h α)) ).trans (by rw [ Finset.card_powersetCard _, Finset.card_fin])
+    · simp_all![ Finset.sum_eq_card_nsmul]
+      obtain ⟨@c⟩ :=eq_or_ne and 10
+      · simp_all[ne_of_lt ∘(Finset.sum_le_sum fun and j=>(Nat.le_div_iff_mul_le _).2 (h _)).trans_lt]
+        replace h y: Finset.card {s | a s=y}=43758/9:=le_antisymm ((Nat.le_div_iff_mul_le (by decide)).2 (h y)) (not_lt.1 fun and=>? _)
+        · simp_all
+          let α := Finset.univ.filter (a ·=0)
+          have:α.biUnion (·.1.powersetCard 8) ⊆_:= Finset.biUnion_subset.2 fun and k=> Finset.powersetCard_mono and.1.subset_univ
+          have:∑S ∈ α,∑T ∈.powersetCard 7 .univ,ite (T ⊆ S.val) (1) 0 = _:=α.sum_comm
+          have : ∀ a ∈ Finset.univ.powersetCard 7,∑s ∈ α,ite (a ⊆ s.1) (1) 0≤5:=fun R M=> (α.card_filter _).ge.trans (not_lt.1 fun and=>? _)
+          · use(( Finset.sum_le_sum this).trans_lt ?_).ne' (by valid)
+            norm_num[ (by norm_num[ Finset.ext_iff,and_comm]:∀S: {x : Finset (Fin 18) //x.card=9},(Finset.univ.powersetCard 7).filter (. ⊆ S.val) = S.1.powersetCard 7), α,h]
+            exact (α.sum_congr rfl fun and n=>by rw [and.2]).ge.trans_lt' (by norm_num[ α,Nat.choose_eq_factorial_div_factorial,h])
+          replace: (α.filter (R ⊆·.1)).biUnion (·.1\R|>.powersetCard 1) ⊆(.univ\R).powersetCard (1):= fun and=>?_
+          · apply(( Finset.card_mono this).trans_lt (by simp_all[←(2).div_lt_iff_lt_mul, Finset.sum_eq_card_nsmul, R.card_sdiff,Subtype.prop])).ne ∘ Finset.card_biUnion
+            simp_rw [ α,Set.PairwiseDisjoint]at*
+            simp_rw [Set.Pairwise,Finset.disjoint_left, Finset.mem_coe, Finset.mem_powersetCard, Finset.subset_sdiff] at M⊢
+            use fun and A B K V C _ _=>‹∀ (x _ _ _ _ _),_› and.1 (by use and.2) ( _) (by use B.prop) ?_<|by simp_all
+            use le_antisymm (not_lt.1 fun and' =>V (and.eq (( Finset.eq_of_subset_of_card_le (by norm_num) (by valid)).symm.trans ( Finset.eq_of_subset_of_card_le and.1.inter_subset_right (by valid))))) (not_lt.1 fun and=>V ((Subtype.eq) ?_))
+            cases(C∪R).card_mono (C.union_subset (by push_cast[*, C.subset_inter]:C ⊆Subtype.val (by gcongr) ∩B.val) ((by simp_all[ R.subset_inter]))) |>.not_lt (by simp_all[disjoint_comm])
+          apply Finset.biUnion_subset.mpr @fun a s=> Finset.powersetCard_mono (a.val.sdiff_subset_sdiff a.val.subset_univ (by rw []))
+        exact ( Finset.sum_lt_sum (fun R L=>(Nat.le_div_iff_mul_le (by decide)).2 (h R)) (by use y, Finset.mem_univ y)).ne this
+      use (by valid ∘(Finset.sum_le_sum fun R L=>(Nat.le_div_iff_mul_le (by decide)).2 (h R)).trans_eq.comp ( Fin.sum_const _ _).trans) (mul_comm _ _)
+    refine fun and R M A B=> Finset.disjoint_left.2 fun p K V=>‹∀ (x _ _ _ _ _),_› and.1 (by use and.2) M.1 (by use M.2) ?_<|by simp_all
+    use le_antisymm (not_lt.1 fun and' =>B (and.eq (( Finset.eq_of_subset_of_card_le (by norm_num) (by valid)).symm.trans ( Finset.eq_of_subset_of_card_le and.1.inter_subset_right (by valid))))) (( Finset.mem_powersetCard.1 K).2▸? _)
+    use p.card_mono (le_inf (Finset.mem_powersetCard.1 K).1 (Finset.mem_powersetCard.1 V).1)
+  nlinarith [show 0 = 1 by aesop]
+
+
+
 
 end Erdos835
