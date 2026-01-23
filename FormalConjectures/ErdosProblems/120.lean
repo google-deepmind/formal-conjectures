@@ -35,7 +35,7 @@ for some $a,b \in \mathbb{R}$ and $a \neq 0$?
 -/
 @[category research open, AMS 05 28]
 theorem erdos_120 : answer(sorry) ↔ ∀ ⦃A : Set ℝ⦄, A.Infinite → ∃ E : Set ℝ,
-    0 < volume E ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬ Set.image (fun x => a * x + b) A ⊆ E := by
+    0 < volume E ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬ .image (fun x => a * x + b) A ⊆ E := by
   sorry
 
 /--
