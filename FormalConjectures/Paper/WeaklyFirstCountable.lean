@@ -39,12 +39,13 @@ namespace WeaklyFirstCountable
 /-- A topologocal space $X$ is called *weakly first countable* if there exists a function
 $N : X → ℕ → Set X, such that:
 
-* For all $x : X, k : ℕ$ we have x ∈ N x k
-* $O ⊆ X$ is open iff $∀ x ∈ O, ∃ k : ℕ, N x k ⊆ O$
+* For all $x : X, n : ℕ$ we have $x ∈ V x n$
+* For all $x : X, n : ℕ$: $V (n + 1) x ⊆ V n x$
+* $O ⊆ X$ is open iff $∀ x ∈ O, ∃ n : ℕ, V x n ⊆ O$
 -/
 class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
-  nhds_countable_weak_basis : ∃ N : X → ℕ → Set X, ∀ (x : X) (k : ℕ), x ∈ N x k ∧
-    ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, N x k ⊆ O
+  nhds_countable_weak_basis : ∃ V : X → ℕ → Set X, ∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x k ∧
+    ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
 
 /-- Every first countable space is weakly first countable,
 simply take $N x$ as a countable neighborhood basis of $x$. -/
