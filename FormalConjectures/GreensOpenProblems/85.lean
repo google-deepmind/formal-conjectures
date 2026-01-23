@@ -56,7 +56,7 @@ area $\gg \alpha^2 (\log 1/\alpha)^{-1}$."
 -/
 @[category research solved, AMS 28 52]
 theorem green_85_loose :
-  answer(True) ↔ ∃ c > 0, ∀ A : Set (ℝ × ℝ),
+    ∃ c > 0, ∀ A : Set (ℝ × ℝ),
     IsOpen A →
     A ⊆ Icc 0 1 ×ˢ Icc 0 1 →
     A.Nonempty →
