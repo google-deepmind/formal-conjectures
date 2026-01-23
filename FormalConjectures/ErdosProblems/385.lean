@@ -26,7 +26,7 @@ namespace Erdos385
 
 open Filter
 
-/-- Let \[F(n) = \max_{\substack{m< n\\ m\textrm{ composite}}} m+p(m),\] where $p(m)$ is the least
+/-- Let $F(n) := \max\{m + p(m) \mid  \textrm{$m < n$ composite}\}\}$ where $p(m)$ is the least
 prime divisor of $m$. -/
 noncomputable def F (n : ℕ) : ℕ := sSup {m + m.minFac | (m < n) (_ : m.Composite)}
 
