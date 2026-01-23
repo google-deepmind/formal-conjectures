@@ -51,23 +51,23 @@ theorem green_16 (N : ℕ) :
 /-- From [Ruzsa] $f(N) \gg N^{1/2}$. -/
 @[category research open, AMS 5 11]
 theorem green_16_lower_bound :
-    ∃ c : ℝ, c > 0 ∧ ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
-      (f N : ℝ) ≥ c * (N : ℝ) ^ (1 / 2 : ℝ) := by
+    (fun N ↦ (N : ℝ) ^ (1 / 2 : ℝ)) ≪ fun N ↦ (f N : ℝ) := by
   sorry
+
 
 /-- From [Schoen and Sisask] $f(N) \ll N \cdot e^{-c(\log N)^{1/7}}$. -/
 @[category research open, AMS 5 11]
 theorem green_16_upper_bound :
-    ∃ c : ℝ, c > 0 ∧ ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
-      (f N : ℝ) ≤ (N : ℝ) * exp (-c * (log N) ^ (1 / 7 : ℝ)) := by
+    ∃ c > (0 : ℝ), (fun N ↦ (f N : ℝ)) ≪ fun N ↦ (N : ℝ) * exp (-c * (log N) ^ (1 / 7 : ℝ)) := by
   sorry
 
 /-- $f(N) \gg N \cdot e^{-c(\log N)^{1/7}}$. -/
 @[category research open, AMS 5 11]
 theorem green_16_conjectured_lower_bound :
-    ∃ c : ℝ, c > 0 ∧ ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
-      (f N : ℝ) ≥ (N : ℝ) * exp (-c * (log N) ^ (1 / 7 : ℝ)) := by
+    ∃ c > (0 : ℝ), (fun N ↦ (N : ℝ) * exp (-c * (log N) ^ (1 / 7 : ℝ))) ≪ fun N ↦ (f N : ℝ) := by
   sorry
+
+
 
 /-- A set has no nontrivial solution to $x + 2y + 3z = x' + 2y' + 3z'$. -/
 def ZhaoSolutionFree (A : Finset ℕ) : Prop :=
@@ -83,7 +83,7 @@ noncomputable def g (N : ℕ) : ℕ :=
 $N^{1/3 - o(1)}$ with no nontrivial solutions to $x + 2y + 3z = x' + 2y' + 3z'$? -/
 @[category research open, AMS 5 11]
 theorem zhao_question :
-    ∀ ε : ℝ, ε > 0 → ∀ᶠ N in atTop, (g N : ℝ) ≥ (N : ℝ) ^ (1 / 3 - ε) := by
+  ∃ h : ℕ → ℝ, Tendsto h atTop (nhds 0) ∧ ∀ᶠ N in atTop, (g N : ℝ) ≥ (N : ℝ) ^ (1 / 3 - h N) := by
 sorry
 
 end Green16
