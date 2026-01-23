@@ -20,7 +20,6 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 120
 
 *Reference:*
-
 - [erdosproblems.com/120](https://www.erdosproblems.com/120)
 - [St20](http://matwbn.icm.edu.pl/ksiazki/fm/fm1/fm1111.pdf) Steinhaus, Hugo, Sur les distances des points dans les ensembles de measure positive. Fund. Math. (1920), 93-104.
 -/
