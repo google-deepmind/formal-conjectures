@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Sum of two numbers with prime conditions
 
-Number of ways to write $n = x+y$, for $x,y > 0$ such that  $2^x + y$ is prime.
+Number of ways to write $n = x+y$, for $x,y > 0$ such that $2^x + y$ is prime.
 
 Zhi-Wei Sun has offered a $1000 prize for the first proof.
 

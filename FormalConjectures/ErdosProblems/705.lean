@@ -33,8 +33,8 @@ Is there some k such that if G has girth ≥ k, then χ(G) ≤ 3?
 -/
 @[category research open, AMS 5]
 theorem erdos_705:
-  answer(sorry) ↔ ∀ (V : Set ℝ²) (hf: V.Finite),
-    ∃ k, (UnitDistancePlaneGraph V).girth ≥ k ∧ (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by
+  answer(sorry) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
+    (UnitDistancePlaneGraph V).girth ≥ k ∧ (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by
   sorry
 
 

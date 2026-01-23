@@ -46,14 +46,14 @@ for some `c > 0`. This is proved in [ClHa64]. -/
 @[category research solved, AMS 30]
 theorem erdos_513.upper_bound : ∃ c > 0,
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},
-    (liminf (fun r : ℝ => ratio r f) atTop) ≤ 2 / π - c :=
+    (liminf (fun r : ℝ => ratio r f) atTop) ≤ 2 / π - c := by
   sorry
 
 /-- For all transcendental entire function `f`, `liminf (fun r : ℝ => ratio r f) atTop > 1 / 2`. -/
 @[category research solved, AMS 30]
 theorem erdos_513.lower_bound :
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},
-    (liminf (fun r : ℝ => ratio r f) atTop) > 1 / 2 :=
+    (liminf (fun r : ℝ => ratio r f) atTop) > 1 / 2 := by
   sorry
 
 end Erdos513

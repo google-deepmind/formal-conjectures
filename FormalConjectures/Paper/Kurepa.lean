@@ -32,7 +32,7 @@ $$!n = 0! + 1! + 2! + \dots + (n-1)!$$
 -/
 def left_factorial (n : ℕ) := ∑ m ∈ Finset.range n, m !
 
-local notation  "!" n => left_factorial n
+local notation "!" n => left_factorial n
 
 /--
 ## Kurepa's conjecture

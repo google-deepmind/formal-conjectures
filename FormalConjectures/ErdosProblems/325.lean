@@ -58,7 +58,7 @@ For $k = 3$, the best known is due to Wooley [Wo15]
 -/
 @[category research solved, AMS 11]
 theorem erdos_325.variants.wooley :
-    (fun x : ℕ => (x : ℝ) ^ (0.917 : ℝ)) =O[atTop] (fun x => (cardIsSumThreePowerBelow 3 x : ℝ)) :=
+    (fun x : ℕ => (x : ℝ) ^ (0.917 : ℝ)) =O[atTop] (fun x => (cardIsSumThreePowerBelow 3 x : ℝ)) := by
   sorry
 
 end Erdos325

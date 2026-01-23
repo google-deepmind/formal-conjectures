@@ -35,12 +35,12 @@ $A + A \subseteq \mathbb{R}\setminus S$?
 -/
 @[category research open, AMS 5]
 theorem erdos_949 : answer(sorry) ↔
-    ∀ S : Set ℝ, (∀ a ∈ S, ∀ b ∈ S, a + b ∉ S) → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ :=
+    ∀ S : Set ℝ, (∀ a ∈ S, ∀ b ∈ S, a + b ∉ S) → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by
   sorry
 
 /-- Let $S\sub \mathbb{R}$ be a Sidon set. Must there be a set $A\sub \mathbb{R}∖S$ of cardinality
 continuum such that $A + A \sub \mathbb{R}∖S$? -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_949.variants.sidon : answer(True) ↔
     ∀ S : Set ℝ, IsSidon S → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by
   simp only [true_iff, Set.add_subset_iff]
