@@ -41,8 +41,8 @@ Are there infinitely many $n$ such that
 $p_n = \dfrac{\sum_{i = 1} ^ k p_{n - i} + p_{n + i}}{2*k}$?
 -/
 @[category research open, AMS 11]
-theorem balanced_primes_order {k : ℕ} (hk : 0 < k):
-    answer(sorry) ↔ {n : ℕ | k ≤ n ∧ 2 * k * Nat.nth Prime n = ∑ i ∈ .Ioc 0 k,
+theorem balanced_primes_order :
+    answer(sorry) ↔ ∀ k > 0, {n : ℕ | k ≤ n ∧ 2 * k * Nat.nth Prime n = ∑ i ∈ .Ioc 0 k,
       ((n - i).nth Prime + (n + i).nth Prime)}.Infinite := by
   sorry
 
