@@ -142,7 +142,7 @@ open KProof KTProof
 
 
 /--
-If `KProof Γ φ`, then `KTProof Γ φ`.  In other words, KT extends K.
+If `KProof Γ φ`, then `KTProof Γ φ`. In other words, KT extends K.
 -/
 @[category API, AMS 3]
 lemma KTExtendsK {Γ φ} (h : KProof Γ φ) : KTProof Γ φ :=
@@ -160,7 +160,7 @@ structure NormalModalLogic : Type where
   /-- `extK` means that if `K ⊢ φ`, then `φ ∈ thms`. That is, the logic extends system K. -/
   extK : ∀ {φ}, KProof ∅ φ → φ ∈ thms
   /-- `mp` means that if `φ ∈ thms` and `(φ ~> ψ) ∈ thms`, then `ψ ∈ thms`. That is, thms is closed
-  under modus ponens.-/
+  under modus ponens. -/
   mp : ∀ {φ ψ}, φ ∈ thms → (φ ~> ψ) ∈ thms → ψ ∈ thms
   /-- `nec` means that if `φ ∈ thms`, then `□φ ∈ thms`. Equivalently, `thms` is closed under
   necessitation -/
