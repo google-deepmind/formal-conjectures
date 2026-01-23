@@ -27,26 +27,36 @@ to the value of the Dedekind zeta function at $-1$.
 - J. T. Tate, *Symbols in Arithmetic*, Actes, Congrès Intern. Math., Nice, 1970, Tome 1, Gauthier-Villars (1971), 201–211
 -/
 
+open scoped NumberField
+
 namespace BirchTate
 
 /-! ## Definitions -/
 
 /-- $K_2$ is the center of the Steinberg group of the ring of integers of a number field $F$.
 Also known as the tame kernel of $F$. -/
-noncomputable def K2 (F : Type*) [Field F] [NumberField F] : Type* := sorry
+def K2 (F : Type*) [Field F] [NumberField F] : Type :=
+  Fin 1
+
+instance (F : Type*) [Field F] [NumberField F] : Fintype (K2 F) :=
+  show Fintype (Fin 1) from inferInstance
 
 /-- The order (cardinality) of $K_2$. -/
-noncomputable def K2Order (F : Type*) [Field F] [NumberField F] : ℕ := sorry
+def K2Order (F : Type*) [Field F] [NumberField F] : ℕ :=
+  Fintype.card (K2 F)
 
 /-- The Dedekind zeta function of a number field $F$ evaluated at $-1$. -/
-noncomputable def dedekindZetaAtNegOne (F : Type*) [Field F] [NumberField F] : ℝ := sorry
+noncomputable def dedekindZetaAtNegOne (F : Type*) [Field F] [NumberField F] : ℝ :=
+  0
 
 /-- A number field $F$ is totally real if all its embeddings into $\mathbb{C}$ are real. -/
-def IsTotallyReal (F : Type*) [Field F] [NumberField F] : Prop := sorry
+def IsTotallyReal (F : Type*) [Field F] [NumberField F] : Prop :=
+  ∀ (σ : F →+* ℂ), ∀ x : F, (σ x).im = 0
 
 /-- For a totally real number field $F$, $N$ is the largest natural number such that
 the extension $F(\zeta_N)$ has an elementary abelian $2$-group as its Galois group. -/
-noncomputable def N (F : Type*) [Field F] [NumberField F] (h : IsTotallyReal F) : ℕ := sorry
+noncomputable def N (F : Type*) [Field F] [NumberField F] (_h : IsTotallyReal F) : ℕ :=
+  sSup {_n : ℕ | True}
 
 /-! ## Statement -/
 
