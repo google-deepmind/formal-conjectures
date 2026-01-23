@@ -53,6 +53,6 @@ theorem HasPointsGδ.lindelof_card :
     ∃ (X : Type*) (_ : TopologicalSpace X), HasSingletonsGδ X ∧ LindelofSpace X ∧ 𝔠 < #X := by
   sorry
 
---TODO under additional set theory axioms, there exists such a space with 𝔠 < #X.
+-- TODO: under additional set theory axioms, there exists such a space with 𝔠 < #X.
 
 end CardinalityLindelof
