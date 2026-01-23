@@ -29,21 +29,27 @@ open Set MeasureTheory
 namespace Erdos120
 
 /--
+There exists a set $E \subseteq \mathbb{R}$, dependent on set $A \subseteq \mathbb{R}$,
+of positive measure which does not contain any set of the shape $a * A + b$
+for some $a,b \in \mathbb{R}$ and $a \neq 0$?
+-/
+def Erdos120For (A : Set ℝ) : Prop := ∃ E : Set ℝ,
+    0 < volume E ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬ .image (fun x => a * x + b) A ⊆ E
+
+/--
 Let $A \subseteq \mathbb{R}$ be an infinite set. Must there be a set $E \subseteq \mathbb{R}$
 of positive measure which does not contain any set of the shape $a * A + b$
 for some $a,b \in \mathbb{R}$ and $a \neq 0$?
 -/
 @[category research open, AMS 05 28]
-theorem erdos_120 : answer(sorry) ↔ ∀ ⦃A : Set ℝ⦄, A.Infinite → ∃ E : Set ℝ,
-    0 < volume E ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬ .image (fun x => a * x + b) A ⊆ E := by
+theorem erdos_120 : answer(sorry) ↔ ∀ ⦃A : Set ℝ⦄, A.Infinite → Erdos120For A := by
   sorry
 
 /--
 Steinhaus [St20] has proved Erdős 120 to be false whenever $A$ is a finite set.
 -/
 @[category research solved, AMS 05 28]
-theorem erdos_120.variants.finite_set {A : Set ℝ} (h : A.Finite) : ¬ ∃ E : Set ℝ,
-    0 < volume E ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬ .image (fun x => a * x + b) A ⊆ E := by
+theorem erdos_120.variants.finite_set {A : Set ℝ} (h : A.Finite) : ¬ Erdos120For A := by
   sorry
 
 end Erdos120
