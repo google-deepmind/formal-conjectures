@@ -34,7 +34,7 @@ does not contain any set of the shape $aA + b$ for some $a,b ∈ R$ and $a ≠ 0
 theorem erdos_120 :
    answer(sorry) ↔ ∀ (A : Set ℝ), A.Infinite →
    ∃ E : Set ℝ,
-   volume E > 0 ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬(Set.image (fun x => a * x + b) A ⊆ E):= by
+   volume E > 0 ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬(Set.image (fun x => a * x + b) A ⊆ E) := by
   sorry
 
 end Erdos120
