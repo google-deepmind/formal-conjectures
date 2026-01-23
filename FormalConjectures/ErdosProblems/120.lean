@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 120
 
-*Reference:* [erdosproblems.com/120](https://www.erdosproblems.com/120)
+*Reference:*
+
+- [erdosproblems.com/120](https://www.erdosproblems.com/120)
+- [St20](http://matwbn.icm.edu.pl/ksiazki/fm/fm1/fm1111.pdf) Steinhaus, Hugo, Sur les distances des points dans les ensembles de measure positive. Fund. Math. (1920), 93-104.
 -/
 
 open Set MeasureTheory
@@ -38,9 +41,6 @@ theorem erdos_120 : answer(sorry) ↔ ∀ ⦃A : Set ℝ⦄, A.Infinite → ∃ 
 
 /--
 Steinhaus [St20] has proved Erdős 120 to be false whenever $A$ is a finite set.
-
-[St20] Steinhaus, Hugo, "On the distances between points in sets of positive measure".
- Fund. Math. (1920), 93-104.
 -/
 @[category research solved, AMS 05 28]
 theorem erdos_120.variants.finite_set {A : Set ℝ} (h : A.Finite) : ¬ ∃ E : Set ℝ,
