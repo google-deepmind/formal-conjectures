@@ -57,7 +57,7 @@ theorem erdos_1063.variants.small_values :
 /-- Monier observed that $n_k \le k!$ for $k \ge 3$. -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
-    n k ≤ k! := by
+    n k ≤ k ! := by
   sorry
 
 /-- [Cambie observed](https://www.erdosproblems.com/1063) the improved bound
