@@ -41,7 +41,7 @@ Note: Steinhaus has proved Erdős 120 to be false whenever $A$ is a finite set.
 -/
 @[category research solved, AMS 05 28]
 theorem erdos_120.variants.finite_set ⦃A : Set ℝ⦄ (h : A.Finite) : ¬(∃ E : Set ℝ,
-    volume E > 0 ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬(Set.image (fun x => a * x + b) A ⊆ E)):= by
+    volume E > 0 ∧ ∃ a b : ℝ, a ≠ 0 ∧ ¬(Set.image (fun x => a * x + b) A ⊆ E)) := by
   sorry
 
 end Erdos120
