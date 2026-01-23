@@ -19,8 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Birch–Tate conjecture
 
-The Birch–Tate conjecture relates the order of K₂ (the tame kernel) of a totally real number field
-to the value of the Dedekind zeta function at -1.
+The Birch–Tate conjecture relates the order of $K_2$ (the tame kernel) of a totally real number field
+to the value of the Dedekind zeta function at $-1$.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Birch%E2%80%93Tate_conjecture)
@@ -29,36 +29,34 @@ to the value of the Dedekind zeta function at -1.
 
 namespace BirchTate
 
-variable (F : Type*) [Field F] [NumberField F]
-
 /-! ## Definitions -/
 
-/-- K₂ is the center of the Steinberg group of the ring of integers of a number field F.
-Also known as the tame kernel of F. -/
+/-- $K_2$ is the center of the Steinberg group of the ring of integers of a number field $F$.
+Also known as the tame kernel of $F$. -/
 noncomputable def K2 (F : Type*) [Field F] [NumberField F] : Type* := sorry
 
-/-- The order (cardinality) of K₂. -/
+/-- The order (cardinality) of $K_2$. -/
 noncomputable def K2Order (F : Type*) [Field F] [NumberField F] : ℕ := sorry
 
-/-- The Dedekind zeta function of a number field F evaluated at -1. -/
+/-- The Dedekind zeta function of a number field $F$ evaluated at $-1$. -/
 noncomputable def dedekindZetaAtNegOne (F : Type*) [Field F] [NumberField F] : ℝ := sorry
 
-/-- A number field F is totally real if all its embeddings into ℂ are real. -/
+/-- A number field $F$ is totally real if all its embeddings into $\mathbb{C}$ are real. -/
 def IsTotallyReal (F : Type*) [Field F] [NumberField F] : Prop := sorry
 
-/-- For a totally real number field F, N is the largest natural number such that
-the extension F(ζ_N) has an elementary abelian 2-group as its Galois group. -/
+/-- For a totally real number field $F$, $N$ is the largest natural number such that
+the extension $F(\zeta_N)$ has an elementary abelian $2$-group as its Galois group. -/
 noncomputable def N (F : Type*) [Field F] [NumberField F] (h : IsTotallyReal F) : ℕ := sorry
 
 /-! ## Statement -/
 
 /--
-The Birch–Tate conjecture: For a totally real number field F,
-let N be the largest natural number such that F(ζ_N) has an elementary abelian 2-group
-as its Galois group. Then #K₂ = |N · ζ_F(-1)|.
+The Birch–Tate conjecture: For a totally real number field $F$,
+let $N$ be the largest natural number such that $F(\zeta_N)$ has an elementary abelian $2$-group
+as its Galois group. Then $\#K_2 = |N \cdot \zeta_F(-1)|$.
 -/
 @[category research open, AMS 19]
-theorem birch_tate_conjecture (h : IsTotallyReal F) :
+theorem birch_tate_conjecture (F : Type*) [Field F] [NumberField F] (h : IsTotallyReal F) :
     K2Order F = Int.natAbs ⌊(N F h : ℝ) * dedekindZetaAtNegOne F⌋ := by
   sorry
 
