@@ -37,7 +37,8 @@ theorem balanced_primes :
 
 /--
 Let $p_k$ be the $k$-th prime number.
-Are there infinitely many $n$ such that $p_n = (∑ i = 1 ^ k, (p_{n - i} + p_{n + i})) / (2*k)$ is prime?
+Are there infinitely many $n$ such that
+$p_n = \dfrac{\sum_{i = 1} ^ k p_{n - i} + p_{n + i}}{2*k}$?
 -/
 @[category research open, AMS 11]
 theorem balanced_primes_order {k : ℕ} (hk : 0 < k):
