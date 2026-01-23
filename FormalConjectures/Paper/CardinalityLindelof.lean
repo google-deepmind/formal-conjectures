@@ -46,13 +46,13 @@ instance HasGδSingletons.of_t1Space_firstCountableTopology (X : Type*) [Topolog
   isGδ_singleton := IsGδ.singleton
 
 /--
-Does every Lindelöf space with Gδ points have cardinality less or equal to the continuum?
+Is the a Lindelöf space with Gδ points with  cardinality greater than the continuum?
 -/
 @[category research open, AMS 54]
 theorem HasGδSingletons.lindelof_card :
-    ∃ (X : Type*) (_ : TopologicalSpace X), HasGδSingletons X ∧ LindelofSpace X ∧ 𝔠 < #X := by
+    ∃ (X : Type) (_ : TopologicalSpace X), HasGδSingletons X ∧ LindelofSpace X ∧ 𝔠 < #X := by
   sorry
 
---TODO under additional set theory axioms, there exists such a space with 𝔠 < #X.
+-- TODO: under additional axioms, there such a space exists. I.e. this is consistent with ZFC
 
 end CardinalityLindelof
