@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures around Homogenous topological spaces
+# Conjectures around homogenous topological spaces
 
 This file formalizes the notion of a weakly first countable topological space and some conjectures
 around those.
