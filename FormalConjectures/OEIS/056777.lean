@@ -25,13 +25,16 @@ If n is composite and satisfies both:
 
 then n ≡ 65 (mod 72).
 
-
 *References:* [oeis.org/A056777](https://oeis.org/A056777)
 -/
 
 namespace OeisA056777
 
-@[category undergraduate, AMS 11]
+/--
+**Conjecture: A056777**:
+Composite n ∧ φ(n + 12) = φ(n) + 12 ∧ σ(n + 12) = σ(n) + 12 → n ≅ 65 (mod 72).
+-/
+@[category research open, AMS 11]
 theorem conjectureA056777 (n : ℕ)
     (hcomp : ¬ n.Prime ∧ 1 < n)
     (htot : Nat.totient (n + 12) = Nat.totient n + 12)
