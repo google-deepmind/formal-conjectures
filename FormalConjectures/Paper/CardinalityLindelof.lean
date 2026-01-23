@@ -24,7 +24,7 @@ and which has cardinality > 𝔠.
 This is Problem 1 in https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf
 
 *Reference:*
-* [Selected Old Open Problems in General Topology](https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf)
+* [Selected Old Open Problems in General Topology](https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf)
   by A. V. Arhangel’skii
 
 -/
@@ -36,23 +36,23 @@ namespace CardinalityLindelof
 /--
 A space where all singletons are Gδ points.
 -/
-class HasSingletonsGδ (X : Type*) [TopologicalSpace X] : Prop where
-  gδPoints : ∀ ⦃x : X⦄, IsGδ {x}
+class HasGδSingletons (X : Type*) [TopologicalSpace X] : Prop where
+  isGδ_singleton : ∀ ⦃x : X⦄, IsGδ {x}
 
 /-- Singletons are Gδ in First-Countable T₁ Spaces -/
 @[category test, AMS 54]
-instance HasSingletonsGδ.of_t1Space_firstCountableTopology (X : Type*) [TopologicalSpace X]
-    [FirstCountableTopology X] [T1Space X] : HasSingletonsGδ X where
-  gδPoints := .singleton
+instance HasGδSingletons.of_t1Space_firstCountableTopology (X : Type*) [TopologicalSpace X]
+    [FirstCountableTopology X] [T1Space X] : HasGδSingletons X where
+  isGδ_singleton := IsGδ.singleton
 
 /--
 Does every Lindelöf space with Gδ points have cardinality less or equal to the continuum?
 -/
 @[category research open, AMS 54]
-theorem HasPointsGδ.lindelof_card :
-    ∃ (X : Type*) (_ : TopologicalSpace X), HasSingletonsGδ X ∧ LindelofSpace X ∧ 𝔠 < #X := by
+theorem HasGδSingletons.lindelof_card :
+    ∃ (X : Type*) (_ : TopologicalSpace X), HasGδSingletons X ∧ LindelofSpace X ∧ 𝔠 < #X := by
   sorry
 
--- TODO: under additional set theory axioms, there exists such a space with 𝔠 < #X.
+--TODO under additional set theory axioms, there exists such a space with 𝔠 < #X.
 
 end CardinalityLindelof
