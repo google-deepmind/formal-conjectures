@@ -41,20 +41,20 @@ noncomputable def n (k : ℕ) : ℕ :=
 
 /--
 Erdős and Selfridge noted that, for $n \ge 2k$ with $k \ge 2$, at least one of the numbers
-$n - i$ for $0 \le i < k$ fails to divide $\binom{n}{k}$.
+$n - i$ for $0 \le i < k$ fails to divide $\binom{n}{k}$ ([ErSe83]).
 -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.exists_exception {n k : ℕ} (hk : 2 ≤ k) (h : 2 * k ≤ n) :
     ∃ i < k, ¬ (n - i) ∣ n.choose k := by
   sorry
 
-/-- The initial values satisfy $n_2 = 4$, $n_3 = 6$, $n_4 = 9$, and $n_5 = 12$. -/
+/-- The initial values satisfy $n_2 = 4$, $n_3 = 6$, $n_4 = 9$, and $n_5 = 12$ ([Gu04], Problem B31). -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.small_values :
     n 2 = 4 ∧ n 3 = 6 ∧ n 4 = 9 ∧ n 5 = 12 := by
   sorry
 
-/-- Monier observed that $n_k \le k!$ for $k \ge 3$. -/
+/-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]). -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k ! := by
