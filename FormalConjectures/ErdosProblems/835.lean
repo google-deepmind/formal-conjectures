@@ -131,5 +131,59 @@ theorem johnsonGraph_18_9_chromaticNumber :
 
 
 
+set_option maxHeartbeats 2000000 in
+/--
+Generalising to any odd k>9
+-/
+@[category research solved, AMS 5]
+theorem johnsonGraph_chromaticNumber (l : ℕ) (hk : l > 6) (hl : Even l) :
+    (JohnsonGraph (2*(l + 3)) (l + 3) (by omega)).chromaticNumber ≠  (l + 3) + 1 := by
+  norm_num[JohnsonGraph,SimpleGraph.chromaticNumber]
+  refine ne_of_gt<|lt_of_lt_of_le (show (l + 3 : ℕ∞) + 1< (l + 4) + 1 by norm_cast; norm_num) (le_iInf₂ fun and ⟨a, _⟩=>mod_cast Fintype.card_fin and▸? _)
+  have:= Fintype.card_congr ((.sigmaFiberEquiv a))▸ Fintype.card_sigma.symm
+  simp_all![Fintype.card_subtype]
+  by_cases h : ∀y, Finset.biUnion {s | a s=y} (·.1.powersetCard (l+2)) ⊆.powersetCard (l + 2) .univ
+  · replace h α :=((( Finset.card_biUnion) ?_).ge.trans ( Finset.card_mono (h α)) ).trans (by rw [ Finset.card_powersetCard _, Finset.card_fin])
+    · simp_all![ Finset.sum_eq_card_nsmul]
+      obtain ⟨@c⟩ :=eq_or_ne and (l + 4)
+      · simp_all[ne_of_lt ∘(Finset.sum_le_sum fun and j=>(Nat.le_div_iff_mul_le _).2 (h _)).trans_lt]
+        replace h y: Finset.card {s | a s=y}=((2*(l + 3)).choose (l + 2))/(l + 3):=le_antisymm ((Nat.le_div_iff_mul_le (by omega)).2 (show _ ≤  _ by refine le_of_le_of_eq (h y) ?_; rfl  )) (not_lt.1 fun and=>? _)
+        · simp_all
+          let α := Finset.univ.filter (a ·=0)
+          have:α.biUnion (·.1.powersetCard (l + 2)) ⊆_:= Finset.biUnion_subset.2 fun and k=> Finset.powersetCard_mono and.1.subset_univ
+          have:∑S ∈ α,∑T ∈.powersetCard (l + 1) .univ,ite (T ⊆ S.val) (1) 0 = _:=α.sum_comm
+          --                                                                was  0≤5 -- what number to put here? perhaps (l + 5)/2 which is floor 5.5 = 5 for l = 6, k = 9
+          have : ∀ a ∈ Finset.univ.powersetCard (l + 1),∑s ∈ α,ite (a ⊆ s.1) (1) 0≤(l + 5)/2:=fun R M=> (α.card_filter _).ge.trans (not_lt.1 fun and=>? _)
+          · use(( Finset.sum_le_sum this).trans_lt ?_).ne' (by valid)
+            norm_num[ (by norm_num[ Finset.ext_iff,and_comm]:∀S: {x : Finset (Fin (2 * (l + 3))) //x.card=(l + 3)},(Finset.univ.powersetCard (l + 1)).filter (. ⊆ S.val) = S.1.powersetCard (l + 1)), α,h]
+            exact (α.sum_congr rfl fun and n=>by rw [and.2]).ge.trans_lt' (by norm_num[ α,Nat.choose_eq_factorial_div_factorial,h]; exact nat_choose_lemma1 l hk hl)
+          replace: (α.filter (R ⊆·.1)).biUnion (·.1\R|>.powersetCard 1) ⊆(.univ\R).powersetCard (1):= fun and=>?_
+          · apply(( Finset.card_mono this).trans_lt (by simp_all[←(2).div_lt_iff_lt_mul, Finset.sum_eq_card_nsmul, R.card_sdiff,Subtype.prop]; rw [show (2 * (l + 3) - (l + 1)) = l + 5 by omega];exact and)).ne ∘ Finset.card_biUnion
+            simp_rw [ α,Set.PairwiseDisjoint]at*
+            simp_rw [Set.Pairwise,Finset.disjoint_left, Finset.mem_coe, Finset.mem_powersetCard, Finset.subset_sdiff] at M⊢
+            use fun and A B K V C x_1 x_2=>‹∀ (x _ _ _ _ _),_› and.1 (by use and.2) ( _) (by use B.prop) ?_<|by simp_all
+            norm_num at A K V
+            apply Set.mem_setOf.2
+            use le_antisymm (not_lt.1 fun and' =>V (and.eq (( Finset.eq_of_subset_of_card_le (R.union_subset A.2 x_1.1.1) ?_▸ Finset.eq_of_subset_of_card_le (R.union_subset K.2 x_2.1.1) ?_)))) ?_
+            · norm_num[*, and.2,x_1.1.2.symm]
+              cases V (and.eq (( Finset.eq_of_subset_of_card_le (by norm_num) (and.2.trans_le and')).symm.trans ( Finset.eq_of_subset_of_card_le (by norm_num) (B.2.trans_le and'))))
+            · cases V (and.eq (( Finset.eq_of_subset_of_card_le (by norm_num) (and.2.trans_le and')).symm.trans ( Finset.eq_of_subset_of_card_le (by norm_num) (B.2.trans_le and'))))
+            · apply M.2▸R.card_lt_card ⟨ R.subset_inter A.2 K.2,(C.card_pos).1 x_1.2.ge|>.elim fun and a s=> Finset.disjoint_left.1 x_1.1.2 a (s (by norm_num[x_1.1.1 _,x_2.1.1 _,a]))⟩
+          apply Finset.biUnion_subset.mpr @fun a s=> Finset.powersetCard_mono (a.val.sdiff_subset_sdiff a.val.subset_univ (by rw []))
+        have not_this :=  ( Finset.sum_lt_sum (fun R L=>(Nat.le_div_iff_mul_le (by omega)).2 (h R)) (by use y, Finset.mem_univ y;)).ne
+        cases not_this.lt_or_lt
+        · nlinarith[((2*(l+3)).choose (l+2)).mul_div_le (l+2+1), ( (2 *(l+3))).succ_mul_choose_eq (l+2), (2*(l+3)).choose_succ_succ (l+2), (by valid:).trans_eq (by rw [ Fin.sum_const,smul_eq_mul])]
+        · use (by valid:).not_le (Finset.sum_le_sum fun R M=>(Nat.le_div_iff_mul_le (by valid)).2 (h R))
+      rename_i h_1
+      contrapose! this
+      apply ne_of_lt.comp ( Finset.sum_le_card_nsmul _ _ _ fun and x =>(Nat.le_div_iff_mul_le (by valid)).2 (h _)).trans_lt
+      norm_num[(mul_right_mono (and.le_of_lt_succ (h_1.lt_of_le (by valid)))).trans_lt.comp (Nat.mul_div_le _ _).trans_lt]
+      exact (mul_right_mono (by valid:_≤l+3)).trans_lt ((Nat.mul_div_le _ _).trans_lt (by nlinarith[ (2 *(l+3)).succ_mul_choose_eq (l+2), (2*(l+3)).choose_pos (by valid:l+2≤ _), (2 *(l+3)).choose_succ_succ<|l+2]))
+    refine fun and R M A B=> Finset.disjoint_left.2 fun p K V=>‹∀ (x _ _ _ _ _),_› and.1 (by use and.2) M.1 (by use M.2) ?_<|by simp_all
+    apply Set.mem_setOf.2
+    use(Finset.mem_powersetCard.1 K).elim fun a s=>le_antisymm (not_lt.1 (B ∘and.eq ∘?_)) (s.ge.trans (p.card_mono<|le_inf a (Finset.mem_powersetCard.1 V).1))
+    exact ( Finset.eq_of_subset_of_card_le Finset.inter_subset_left |>.comp and.2.trans_le ·▸ Finset.eq_of_subset_of_card_le Finset.inter_subset_right (M.2.trans_le (by assumption)))
+  nlinarith [show 0 = 1 by aesop]
+
 
 end Erdos835
