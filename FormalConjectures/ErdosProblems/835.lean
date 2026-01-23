@@ -21,7 +21,9 @@ open scoped Nat
 /-!
 # Erdős Problem 835
 
-*Reference:* [erdosproblems.com/835](https://www.erdosproblems.com/835)
+*References:*
+ - [erdosproblems.com/835](https://www.erdosproblems.com/835)
+ - [MT25](https://github.com/QuanyuTang/erdos-problem-835/blob/main/On_Problem_835.pdf)
 -/
 namespace Erdos835
 
@@ -75,12 +77,12 @@ theorem johnsonGraph_2k_k_chromaticNumber_known_cases (k : ℕ) (hk : 3 ≤ k) (
   sorry
 
 /--
-The smallest open case is $k=9$. Is the chromatic number of $J(18, 9)$ equal to 10?
-
-Answer: No!
+The smallest case not on this page is $k=9$:
+But that one can be solved as well:
+The chromatic number of $J(18, 9)$ is at least $11$.
 -/
 @[category research solved, AMS 5]
-theorem johnsonGraph_18_9_chromaticNumber : ¬ J(18, 9).chromaticNumber = 10 := by
+theorem johnsonGraph_18_9_chromaticNumber : J(18, 9).chromaticNumber > 9 + 1 := by
   sorry
 
 
@@ -123,13 +125,35 @@ theorem chromaticNumber_johnson_2k_k_lower_bound_odd (hk : 3 ≤ k) (hk' : k ≤
   decide +revert +kernel
 
 /--
-Generalising to any odd k>9
+It can be seen that the chromatic number of $J(2k,k)$ is $>k+1$ for all odd $k>2$.
 -/
 @[category research solved, AMS 5]
-theorem johnsonGraph_chromaticNumber (l : ℕ) (hk : l > 6) (hl : Even l) :
-    J(2*(l + 3), l + 3).chromaticNumber ≠  (l + 3) + 1 := by
+theorem johnson_chromaticNumber_odd (k : ℕ) (hk : 2 < k) (h : Odd k) :
+    k + 1 < J(2 * k, k).chromaticNumber :=
   sorry
 
+/--
+Ma and Tang have proved that the chromatic number of $J(2k,k)$ is $>k+1$ for all $k>2$ not of the
+form $p-1$ for prime $p$.
+-/
+@[category research solved, AMS 5]
+theorem johnson_chromaticNumber_composite (k : ℕ) (hk : 2 < k) (h : (k + 1).Composite) :
+    k + 1 < J(2 * k, k).chromaticNumber :=
+  sorry
+
+/--
+Ma and Tang's result implies the cases for odd $k$.
+-/
+@[category test, AMS 5]
+theorem johnsonGraph_chromaticNumber_odd_of_johnson_chromaticNumber_composite :
+    (type_of% johnson_chromaticNumber_composite) → (type_of% johnson_chromaticNumber_odd) := by
+  intro h k hk h_odd
+  refine h k hk ⟨by omega, ?_⟩
+  rw [Nat.not_prime_iff_exists_dvd_lt (by omega)]
+  use 2
+  constructor
+  · exact even_iff_two_dvd.mp (Odd.add_one h_odd)
+  · omega
 
 /-- Is the chromatic number of `J(2 * k, k)` always at least `k + 2`? -/
 @[category research open, AMS 5]
