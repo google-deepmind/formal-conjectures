@@ -24,12 +24,14 @@ import FormalConjectures.Util.ProblemImports
 * [GuKa15](Guth, Larry and Katz, Nets Hawk, On the Erd\H{o}s distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190.)
 * [Piepmeyer](No references found)
 -/
+
 open Set Metric Filter Real
+open scoped EuclideanGeometry
 
 namespace Erdos100
 
 /-- If two distances in A differ, they differ by at least 1. -/
-def DistancesSeparated (A : Finset (ℝ × ℝ)) : Prop :=
+def DistancesSeparated (A : Finset (ℝ²)) : Prop :=
   ∀ p₁ q₁ p₂ q₂, p₁ ∈ A → q₁ ∈ A → p₂ ∈ A → q₂ ∈ A →
     dist p₁ q₁ ≠ dist p₂ q₂ →
     |dist p₁ q₁ - dist p₂ q₂| ≥ 1
@@ -37,44 +39,46 @@ def DistancesSeparated (A : Finset (ℝ × ℝ)) : Prop :=
 /-- Is the diameter of $A$ at least $Cn$ for some constant $C > 0$? -/
 @[category research open, AMS 52]
 theorem erdos_100 :
-    answer(sorry) ↔ ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset (ℝ × ℝ),
+    answer(sorry) ↔ ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset (ℝ²),
       A.card = n →
       DistancesSeparated A →
-      diam (A : Set (ℝ × ℝ)) > C * n := by
-sorry
+      diam (A : Set (ℝ²)) > C * n := by
+  sorry
 
 /-- Stronger conjecture: diameter $\geq n - 1$ for sufficiently large $n$. -/
 @[category research open, AMS 52]
 theorem erdos_100_strong :
-    ∀ᶠ n in atTop, ∀ A : Finset (ℝ × ℝ),
+    ∀ᶠ n in atTop, ∀ A : Finset (ℝ²),
       A.card = n →
       DistancesSeparated A →
-      diam (A : Set (ℝ × ℝ)) ≥ n - 1 := by
-sorry
+      diam (A : Set (ℝ²)) ≥ n - 1 := by
+  sorry
 
-/-- From [Kanold]: diameter $\geq n^{3/4}$. -/
+/-- From [Kanold]: diameter $\geq n^{3/4}$.
+TODO: find reference -/
 @[category research open, AMS 52]
 theorem erdos_100_kanold :
-    ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset (ℝ × ℝ),
+    ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset (ℝ²),
       A.card = n →
       DistancesSeparated A →
-      diam (A : Set (ℝ × ℝ)) ≥ C * (n : ℝ) ^ (3 / 4 : ℝ) := by
-sorry
+      diam (A : Set (ℝ²)) ≥ (n : ℝ) ^ (3 / 4 : ℝ) := by
+  sorry
 
 /-- From [GuKa15]: diameter $\gg n / \log n$. -/
 @[category research open, AMS 52]
 theorem erdos_100_guth_katz :
-    ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset (ℝ × ℝ),
+    ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset (ℝ²),
       A.card = n →
       DistancesSeparated A →
-      diam (A : Set (ℝ × ℝ)) ≥ C * n / log n := by
-sorry
+      diam (A : Set (ℝ²)) ≥ C * n / log n := by
+  sorry
 
-/-- From [Piepmeyer]: 9 points with diameter $< 5$. -/
+/-- From [Piepmeyer]: 9 points with diameter $< 5$.
+TODO: find reference -/
 @[category research open, AMS 52]
 theorem erdos_100_piepmeyer :
-    ∃ A : Finset (ℝ × ℝ), A.card = 9 ∧ DistancesSeparated A ∧
-      diam (A : Set (ℝ × ℝ)) < 5 := by
-sorry
+    ∃ A : Finset (ℝ²), A.card = 9 ∧ DistancesSeparated A ∧
+      diam (A : Set (ℝ²)) < 5 := by
+  sorry
 
 end Erdos100
