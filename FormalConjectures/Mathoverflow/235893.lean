@@ -16,14 +16,14 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open scoped EuclideanGeometry
-
 /-!
 # Mathoverflow 235893
 
 *Reference:* [mathoverflow/235893](https://mathoverflow.net/questions/235893)
 asked by user [*Willie Wong*](https://mathoverflow.net/users/3948/willie-wong)
 -/
+
+open scoped EuclideanGeometry
 
 namespace Mathoverflow235893
 
