@@ -46,8 +46,8 @@ Specifically, this theorem formalizes the statement of theorem 1.1 in the mentio
 -/
 @[category research solved, AMS 20]
 theorem large_green_4 : ∀ᶠ n in .atTop,
-  ∀ S, MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard S →
-  ∃ x I, S = extremalFamily x I ∨ S = (extremalFamily x I).image (·⁻¹) := by
+    ∀ S, MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard S →
+    ∃ x I, S = extremalFamily x I ∨ S = (extremalFamily x I).image (·⁻¹) := by
   sorry
 
 end Green4
