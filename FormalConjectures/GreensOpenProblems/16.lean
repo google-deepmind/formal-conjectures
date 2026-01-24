@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 * [Yufei Zhao](Via Personal Communication with Ben Green)
 -/
 
-open Finset Real Filter
+open Finset Real Filter Topology
 
 namespace Green16
 
