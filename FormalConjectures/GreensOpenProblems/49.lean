@@ -19,8 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Ben Green's Open Problem 49
 
-*Reference:*
-https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.49
+*Reference:* [Ben Green's Open Problem 49](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.49)
+*Solved by:* [Gowers, Green, Manners, and Tao (2023)](https://arxiv.org/abs/2311.05762)
 -/
 
 open Pointwise
@@ -34,9 +34,7 @@ Suppose that $A \subset \mathbb{F}_2^n$ satisfies $|A + A| \le K |A|$.
 Is it true that $A$ is covered by $K^{O(1)}$ translates of a subspace
 of size at most $|A|$?
 
-This problem is now solved, following the Polynomial Freiman–Ruzsa theorem
-proved by Gowers, Green, Manners, and Tao (2023).
-See: https://arxiv.org/abs/2311.05762
+This problem is resolved by the Polynomial Freiman–Ruzsa theorem (Gowers, Green, Manners, and Tao, 2023).
 -/
 @[category research solved, AMS 05 11]
 theorem green_49 : answer(True) ↔
@@ -45,8 +43,8 @@ theorem green_49 : answer(True) ↔
       1 ≤ K →
       ((A + A).card : ℝ) ≤ K * A.card →
       ∃ V : Submodule (ZMod 2) (Fin n → ZMod 2),
-        (Nat.card V ≤ A.card) ∧
-        ∃ (t : Finset (Fin n → ZMod 2)),
+        Nat.card V ≤ A.card ∧
+        ∃ t : Finset (Fin n → ZMod 2),
           t.card ≤ K ^ C ∧
           A ⊆ t.bind (fun x => x +ᵥ V) := by
   sorry
