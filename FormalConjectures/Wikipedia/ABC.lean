@@ -80,4 +80,7 @@ theorem abc.variants.quality (ε : ℝ) (hε : 0 < ε) :
     a + b = c ∧ quality a b c > (1 + ε)}.Finite := by
   sorry
 
+noncomputable def triangleArea (p₁ p₂ p₃ : ℝ × ℝ) : ℝ :=
+  (1/2) * |p₁.1 * (p₂.2 - p₃.2) + p₂.1 * (p₃.2 - p₁.2) + p₃.1 * (p₁.2 - p₂.2)|
+
 end ABC
