@@ -50,7 +50,7 @@ variable [NormedAddCommGroup V] [InnerProductSpace ℝ V] [MetricSpace P] [Norme
 variable [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] {p : Fin n → P}
 
 /-- We say a subset `A` of points in the plane is non-trilinear
-if it contains no three points that lie on the same line.-/
+if it contains no three points that lie on the same line. -/
 def NonTrilinear (A : Set P) : Prop :=
   A.Triplewise (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
 

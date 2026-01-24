@@ -88,7 +88,7 @@ theorem squarefreePart_dvd (n : ℕ) : squarefreePart n ∣ n := by
   exact Nat.factorization_prime_le_iff_dvd n.squarefreePart_ne_zero h₀ |>.1 fun p hp ↦
     squarefreePart_factorization _ hp ▸ Nat.mod_le _ _
 
-/-- The square part is the value of `b ^ 2` in the squarefree decomposition of `n = a₀ * b ^ 2`.-/
+/-- The square part is the value of `b ^ 2` in the squarefree decomposition of `n = a₀ * b ^ 2`. -/
 def squarePart (n : ℕ) : ℕ := n / n.squarefreePart
 
 theorem squarePart_zero : squarePart 0 = 0 := by simp [squarePart]
