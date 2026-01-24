@@ -22,7 +22,7 @@ open Filter Set
 # Ben Green's Open Problem 2
 
 References:
-- [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.85)
+- [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.2)
 - [Er65] P. Erdős. Extremal problems in number theory, In Proc. Sympos. Pure Math., Vol. VIII,
   pages 181–189. Amer. Math. Soc., Providence, R.I., 1965.
 - [Sa21] Sanders, Tom. "The Erdős–Moser Sum-free Set Problem." Canadian Journal of Mathematics 73.1
