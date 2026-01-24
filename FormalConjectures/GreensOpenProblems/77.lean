@@ -26,20 +26,22 @@ open Filter Metric
 
 namespace Green77
 
+/-- The closed unit disc in ℝ², i.e., all points at distance at most 1 from the origin. -/
 def unitDisc : Set (ℝ × ℝ) := {p | dist p (0, 0) ≤ 1}
 
+/-- Compute the area of a triangle with vertices p₁, p₂, p₃ using the shoelace formula. -/
 noncomputable def triangleArea (p₁ p₂ p₃ : ℝ × ℝ) : ℝ :=
   (1/2) * |p₁.1 * (p₂.2 - p₃.2) + p₂.1 * (p₃.2 - p₁.2) + p₃.1 * (p₁.2 - p₂.2)|
 
 @[category research open, AMS 52 05]
 theorem green_77 :
-    answer(sorry) ↔ ∀ (ε : ℕ → ℝ), (atTop.Tendsto ε (𝓝 0)) →
+    answer(sorry) ↔ ∃ (f : ℕ → ℝ), (atTop.Tendsto f (𝓝 0)) ∧
       ∃ N, ∀ n ≥ N, ∀ (S : Finset (ℝ × ℝ)),
         (∀ p ∈ S, p ∈ unitDisc) →
         S.card = n →
         ∃ p₁ ∈ S, ∃ p₂ ∈ S, ∃ p₃ ∈ S,
           p₁ ≠ p₂ ∧ p₂ ≠ p₃ ∧ p₁ ≠ p₃ ∧
-          triangleArea p₁ p₂ p₃ ≤ (n : ℝ)^(-2 : ℝ) * (1 + ε n) := by
+          triangleArea p₁ p₂ p₃ ≤ (n : ℝ)^(-2 : ℝ) * (1 + f n) := by
   sorry
 
 end Green77
