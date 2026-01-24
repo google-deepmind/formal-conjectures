@@ -38,11 +38,13 @@ Does $10A$ contain a coset of some subspace of dimension at least $n - O(\log(1/
 -/
 @[category research open, AMS 05 11]
 theorem green_50 : answer(sorry) ↔
-  ∃ C > 0, ∀ (n : ℕ) (α : ℝ) (A : Finset (Fin n → ZMod 2)),
-    0 < α → (A.card : ℝ) = α * (2 ^ n : ℝ) →
-    ∃ V : Submodule (ZMod 2) (Fin n → ZMod 2),
-      (n : ℝ) - C * Real.log (1 / α) ≤ (Module.finrank (ZMod 2) V : ℝ) ∧
-      ∃ x, ∀ v ∈ V, x + v ∈ iteratedSum A 10 := by
+  ∃ C > 0,
+    ∀ (n : ℕ) (α : ℝ) (A : Finset (Fin n → ZMod 2)),
+      0 < α →
+      (A.card : ℝ) = α * (2 ^ n : ℝ) →
+      ∃ V : Submodule (ZMod 2) (Fin n → ZMod 2),
+        (n : ℝ) - C * Real.log (1 / α) ≤ (Module.finrank (ZMod 2) V : ℝ) ∧
+        ∃ x, ∀ v ∈ V, x + v ∈ iteratedSum A 10 := by
   sorry
 
 end Green50
