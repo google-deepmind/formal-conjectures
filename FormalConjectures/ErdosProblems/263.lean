@@ -53,9 +53,10 @@ Must every irrationality sequence $a_n$ in the above sense
 satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_263.parts.ii : (∀ a : ℕ → ℕ,
-      IsIrrationalitySequence a → atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop) ↔
-    answer(sorry) := by
+theorem erdos_263.parts.ii : answer(sorry) ↔
+    (∀ a : ℕ → ℕ,
+      IsIrrationalitySequence a →
+        atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop) := by
   sorry
 
 /--
