@@ -69,8 +69,8 @@ noncomputable def degreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : Lis
 The maximum number of occurrences of any term of the degree sequence of `G`.
 -/
 noncomputable def degreeSequenceMultiplicity (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  let degs := degreeSequence G
-  (List.max? (degs.map (fun d => degs.count d))).get!
+  letI degs := degreeSequence G
+  (List.max? (degs.map (fun d => degs.count d))).getD 0
 
 /-- `largestInducedBipartiteSubgraphSize G` is the size of a largest induced
 bipartite subgraph of `G`. -/
