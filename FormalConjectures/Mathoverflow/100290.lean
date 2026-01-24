@@ -36,7 +36,7 @@ noncomputable def gourevitch_sum : ℝ := ∑' n, gourevitch_term n
 
 /-- Does the infinite series equal 32 / π³? -/
 @[category research open, AMS 11 33 40]
-theorem gourevitch_conjecture : answer(sorry) ↔ gourevitch_sum = 32 / (Real.pi^3) := by
+theorem gourevitch_conjecture : answer(sorry) ↔ gourevitch_sum = 32 / (Real.pi ^ 3) := by
   sorry
 
 end Mathoverflow100290
