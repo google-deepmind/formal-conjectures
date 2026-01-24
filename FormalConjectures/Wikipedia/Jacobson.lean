@@ -22,12 +22,12 @@ open Ring
 # Jacobson Conjecture
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/Jacobson's_conjecture)
-* [He1965]: Herstein, I. N. (1965), "A counterexample in Noetherian rings",
+- [Wikipedia](https://en.wikipedia.org/wiki/Jacobson's_conjecture)
+- [He1965]: Herstein, I. N. (1965), "A counterexample in Noetherian rings",
   Proceedings of the National Academy of Sciences of the United States of America, 54 (4): 1036–1037
   https://pmc.ncbi.nlm.nih.gov/articles/PMC219788/
-* [Ja1956]: Jacobson, Nathan. Structure of rings. Vol. 37. American Mathematical Soc., 1956.
-* [Le1977]: Lenagan, T. H. (1977), "Noetherian rings with Krull dimension one",
+- [Ja1956]: Jacobson, Nathan. Structure of rings. Vol. 37. American Mathematical Soc., 1956.
+- [Le1977]: Lenagan, T. H. (1977), "Noetherian rings with Krull dimension one",
   J. London Math. Soc. Series 2, 15 (1): 41–47
   https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/jlms/s2-15.1.41
 -/
