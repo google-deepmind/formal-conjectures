@@ -40,15 +40,15 @@ namespace Green2
 The restricted sumset of a set $S$, denoted $S \hat{+} S$, is the set
 $\lbrace s_1 + s_2 : s_1, s_2 \in S, s_1 \neq s_2 \rbrace$.
 -/
-def restrictedSumset (S : Set ℤ) : Set ℤ :=
-  {s₁ + s₂ | (s₁ ∈ S) (s₂ ∈ S) (s₁ ≠ s₂)}
+def restrictedSumset (S : Finset ℤ) : Finset ℤ :=
+  S.offDiag.image (fun p => p.1 + p.2)
 
 /--
 We define the construction from [Sa21, p1] as
 $M(A) := \max \{|S| : S \subseteq A \text{ and } (S \hat{+} S) \cap A = \varnothing \}$.
 -/
-noncomputable def maxRestrictedSumAvoidingSubsetSize (A : Finset ℤ) : ℕ :=
-     sSup { (S.card) | (S : Finset ℤ) (_ : S ⊆ A) (_ : Disjoint (restrictedSumset S) A)}
+def maxRestrictedSumAvoidingSubsetSize (A : Finset ℤ) : ℕ :=
+  (A.powerset.filter fun S => Disjoint (restrictedSumset S) A).sup Finset.card
 
 /--
 Let $A \subset \mathbf{Z}$ be a set of $n$ integers. Is there a set $S \subset A$ of size
@@ -56,8 +56,8 @@ $(\log n)^{100}$ such that the restricted sumset$S \hat{+} S$ is disjoint from $
 -/
 @[category research open, AMS 11]
 theorem green_2 : answer(sorry) ↔
-    ∀ᶠ n in atTop, ∀ A : Finset ℤ, A.card = n →
-      maxRestrictedSumAvoidingSubsetSize A ≥ (Real.log n) ^ 100 := by
+    ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℤ, A.card = n →
+      (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≥ (Real.log n) ^ 100 := by
   sorry
 
 /--
@@ -65,8 +65,8 @@ From [Sa21] it is known that there is always such an S with $|S| \gt (\log |A|)^
 -/
 @[category research solved, AMS 11]
 theorem green_2_lower_bound_sanders :
-    ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℤ, A.card = n →
-      maxRestrictedSumAvoidingSubsetSize A ≥ ((Real.log n) ^ (1 + c)) := by
+    ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℤ, A.card = n →
+      (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≥ ((Real.log n) ^ (1 + c)) := by
   sorry
 
 /--
@@ -74,7 +74,7 @@ From [Er65] it is known that $M(A) \le \frac{1}{3}|A| + O(1)$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_erdos :
-    ∃ C, ∀ n, ∃ A : Finset ℤ, A.card = n ∧
+    ∃ C : ℝ, ∀ n : ℕ, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ n / 3 + C := by
   sorry
 
@@ -88,7 +88,7 @@ From [Ch71] it is known that $M(A) \le |A|^{2/5 + o(1)}$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_choi :
-    ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
+    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ n ^ (2 / 5 + ε) := by
   sorry
 
@@ -97,8 +97,8 @@ From [Ru05] the best-known upper bound is $|S| \lt e^{C \sqrt{\log |A|}}$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_ruzsa :
-    ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
-      maxRestrictedSumAvoidingSubsetSize A < Real.exp (C * Real.sqrt (Real.log n)) := by
+    ∃ C > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∃ A : Finset ℤ, A.card = n ∧
+      (maxRestrictedSumAvoidingSubsetSize A : ℝ) < Real.exp (C * Real.sqrt (Real.log n)) := by
   sorry
 
 end Green2
