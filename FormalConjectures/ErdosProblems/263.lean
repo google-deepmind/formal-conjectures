@@ -45,7 +45,7 @@ def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
 Is $a_n = 2^{2^n}$ an irrationality sequence in the above sense?
 -/
 @[category research open, AMS 11]
-theorem erdos_263.parts.i : IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) ↔ answer(sorry) := by
+theorem erdos_263.parts.i : answer(sorry) ↔ IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) := by
   sorry
 
 /--
