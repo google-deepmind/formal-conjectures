@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 open Nat
-namespace OeisA000041
+namespace OeisA41
 
 /-!
 Name: "No powers as partition numbers"
@@ -37,4 +37,4 @@ See comment by Zhi-Wei Sun (Dec 02 2013).
 theorem noPowerPartitionNumber (k : ℕ) : answer(sorry) ↔ ¬IsPerfectPower (p k) := by
     sorry
 
-end OeisA000041
+end OeisA41
