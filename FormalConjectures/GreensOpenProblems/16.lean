@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # Ben Green's Open Problem 16
 
 *References:*
-* [Ben Green's Open Problem 16](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.16)
+* [Ben Green's Open Problem 16](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.16 Problem 16)
 * [Ruzsa](I. Z. Ruzsa, Solving a linear equation in a set of integers. I. Acta Arith. 65 (1993), no. 3, 259–282.)
 * [Schoen and Sisask](T. Schoen and O. Sisask, Roth’s theorem for four variables and additive structures in sums of sparse sets Forum of Mathematics, Sigma (2016), Vol. 4, e5, 28 pages.)
 * [Yufei Zhao](Via Personal Communication with Ben Green)
