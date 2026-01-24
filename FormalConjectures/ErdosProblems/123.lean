@@ -38,7 +38,7 @@ Reference: [ErLe96] Erdős, P. and Lewin, M., _$d$-complete sequences of integer
 -/
 def IsDComplete (A : Set ℕ) : Prop :=
   ∀ᶠ n in atTop, ∃ s : Finset ℕ,
-    --The summands come from A
+    -- The summands come from A
     (s : Set ℕ) ⊆ A ∧
     -- No summand divides another
     IsAntichain (· ∣ ·) (s : Set ℕ) ∧
