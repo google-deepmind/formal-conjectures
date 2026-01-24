@@ -67,13 +67,13 @@ theorem existsWeaklyFirstCountableCompactBig : answer(sorry) ↔
     ∃ (X : Type*) (_ : TopologicalSpace X),
       WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ 𝔠 < #X := by sorry
 
-/-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
+/-- Problem 3 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact space X such that $𝔠 < |X|$. -/
 def ExistsWeaklyFirstCountableCompactNotFirstCountable : Prop :=
     ∃ (X : Type*) (_ : TopologicalSpace X), WeaklyFirstCountableTopology X ∧ CompactSpace X ∧
       ¬ FirstCountableTopology X
 
-/-- Problem 3 in [Ar2013]: Give an example in ZFC of a weakly first-
+/-- Problem 4 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact space X which is not first countable. -/
 def existsWeaklyFirstCountableCompactNotFirstCountable :
     ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
