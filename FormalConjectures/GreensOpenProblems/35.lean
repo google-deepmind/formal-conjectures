@@ -73,7 +73,6 @@ theorem pInf_upper : c ∞ ≤ .ofReal 0.7505 := by
   sorry
 
 /-- A comparison bound from Young's inequality. -/
-@[category research solved, AMS 26 28 42]
 @[category undergraduate, AMS 26 28 42]
 theorem pInf_lower_young : (c 2) ^ 2 ≤ c ∞ := by
   sorry
