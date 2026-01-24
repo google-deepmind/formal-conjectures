@@ -29,8 +29,7 @@ open scoped BigOperators
 
 /-- The n-th term of the Gourevitch series -/
 noncomputable def gourevitch_term (n : ℕ) : ℝ :=
-  ((1 + 14 * n + 76 * n^2 + 168 * n^3) / (2^(20 * n)) : ℝ) *
-  ((Nat.choose (2 * n) n : ℝ)^7)
+  ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ) * ((Nat.central_binom n : ℝ) ^ 7)
 
 /-- The infinite sum of the Gourevitch series -/
 noncomputable def gourevitch_sum : ℝ := ∑' n, gourevitch_term n
