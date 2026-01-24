@@ -29,10 +29,7 @@ namespace Green77
 def unitDisc : Set (ℝ × ℝ) := {p | dist p (0, 0) ≤ 1}
 
 noncomputable def triangleArea (p₁ p₂ p₃ : ℝ × ℝ) : ℝ :=
-  let (x₁, y₁) := p₁
-  let (x₂, y₂) := p₂
-  let (x₃, y₃) := p₃
-  (1/2) * |x₁ * (y₂ - y₃) + x₂ * (y₃ - y₁) + x₃ * (y₁ - y₂)|
+  (1/2) * |p₁.1 * (p₂.2 - p₃.2) + p₂.1 * (p₃.2 - p₁.2) + p₃.1 * (p₁.2 - p₂.2)|
 
 @[category research open, AMS 52 05]
 theorem green_77 :
