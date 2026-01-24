@@ -27,11 +27,13 @@ supported on `[0,1]`, and has total integral `1`.
 
 *References:*
 - [Ben Green's Open Problem 35](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.35)
-- [Gr01] B. J. Green, *The number of squares and $B_h[g]$-sets*, Acta Arith. 100 (2001), no. 4,
-  365-390.
-- [CS17] A. Cloninger and S. Steinerberger, *On suprema of autoconvolutions with an application to
-  Sidon sets*, Proc. Amer. Math. Soc. 145 (2017), no. 8, 3191-3200.
-- [MV10] M. Matolcsi and C. Vinuesa, *Improved bounds on the supremum of autoconvolutions*,
+- [Gr01](https://people.maths.ox.ac.uk/greenbj/papers/number-of-squares-and-Bh%5Bg%5D.pdf)
+  B. J. Green, *The number of squares and $B_h[g]$-sets*, Acta Arith. 100 (2001), no. 4, 365-390.
+- [CS17](https://arxiv.org/abs/1403.7988)
+  A. Cloninger and S. Steinerberger, *On suprema of autoconvolutions with an application to Sidon
+  sets*, Proc. Amer. Math. Soc. 145 (2017), no. 8, 3191-3200.
+- [MV10](https://arxiv.org/abs/0907.1379)
+  M. Matolcsi and C. Vinuesa, *Improved bounds on the supremum of autoconvolutions*,
   J. Math. Anal. Appl. 372 (2010), 439-447.
 -/
 
@@ -48,10 +50,16 @@ def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
   sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
-/-- Estimate $c(p)$ for $1 < p \le \infty$. -/
+/-- Lower bound for $c(p)$ for $1 < p \le \infty$. -/
 @[category research open, AMS 26 28 42]
-theorem green_35 {p : ℝ≥0∞} (hp : 1 < p) :
-    c p = answer(sorry) := by
+theorem green_35.lower {p : ℝ≥0∞} (hp : 1 < p) :
+    answer(sorry) ≤ c p := by
+  sorry
+
+/-- Upper bound for $c(p)$ for $1 < p \le \infty$. -/
+@[category research open, AMS 26 28 42]
+theorem green_35.upper {p : ℝ≥0∞} (hp : 1 < p) :
+    c p ≤ answer(sorry) := by
   sorry
 
 /-! Known bounds and comparisons. -/
