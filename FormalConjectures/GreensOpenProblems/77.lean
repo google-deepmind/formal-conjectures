@@ -33,6 +33,13 @@ def unitDisc : Set (ℝ × ℝ) := {p | dist p (0, 0) ≤ 1}
 noncomputable def triangleArea (p₁ p₂ p₃ : ℝ × ℝ) : ℝ :=
   (1/2) * |p₁.1 * (p₂.2 - p₃.2) + p₂.1 * (p₃.2 - p₁.2) + p₃.1 * (p₁.2 - p₂.2)|
 
+/--
+Given $n$ points in the unit disc, must there be a triangle determined by these points with area
+at most $n^{-2 + o(1)}$?
+
+Komlós, Pintz, and Szemerédi showed that the $o(1)$ term is necessary, and proved that there must
+exist a triangle with area at most $n^{-8/7}$.
+-/
 @[category research open, AMS 52 05]
 theorem green_77 :
     answer(sorry) ↔ ∃ (f : ℕ → ℝ), (atTop.Tendsto f (𝓝 0)) ∧
