@@ -18,12 +18,13 @@ import FormalConjectures.Util.ProblemImports
 open scoped ArithmeticFunction
 
 /-!
-# **Conjecture: A056777**
+# **Conjectures associated with A056777**
 
-Composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
+A056777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
 $\sigma(n+12) = \sigma(n) + 12$.
 
-The conjecture states that all such $n$ satisfy $n \equiv 65 \pmod{72}$.
+The conjectures state identities connecting A056777 and prime quadruples (A007530), as
+well as congruences satisfied by the members of A056777.
 
 *References:* [oeis.org/A056777](https://oeis.org/A056777)
 -/
