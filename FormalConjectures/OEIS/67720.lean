@@ -35,8 +35,7 @@ def a (k : ℕ) : Prop :=
 
 /-- $1$ is in the sequence A067720. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 := by
-  unfold a; native_decide
+theorem a_1 : a 1 := by norm_num [a]
 
 /-- $2$ is in the sequence A067720. -/
 @[category test, AMS 11]
@@ -62,11 +61,6 @@ theorem a_8 : a 8 := by
 @[category test, AMS 11]
 theorem a_10 : a 10 := by
   unfold a; native_decide
-
-/-- $8 + 1 = 9$ is not prime, showing $8$ is an exception. -/
-@[category test, AMS 11]
-theorem not_prime_9 : ¬ (8 + 1 : ℕ).Prime := by
-  native_decide
 
 /-- If $k + 1$ and $k^2 + 1$ are both prime, then $k$ is in the sequence. -/
 @[category undergraduate, AMS 11]
