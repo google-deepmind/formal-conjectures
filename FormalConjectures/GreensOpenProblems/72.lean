@@ -71,7 +71,7 @@ alias no_three_in_line := green_62
 
 /-- Does the no-three-in-line problem hold when $N$ is big enough? -/
 @[category research open, AMS 05 52]
-theorem green_62.variant.eventually : ∀ᶠ N in Filter.atTop, NoKinLineFor 3 N := by
+theorem green_62.variants.eventually : ∀ᶠ N in Filter.atTop, NoKinLineFor 3 N := by
   sorry
 
 /-- For $N \leq k$, this has been verfied with computers. -/
