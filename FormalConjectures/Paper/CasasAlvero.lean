@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Casas-Alvero Conjecture
 
-*Reference:*
+*References:*
 * [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)
 * [MathOverflow](https://mathoverflow.net/questions/27851)
 

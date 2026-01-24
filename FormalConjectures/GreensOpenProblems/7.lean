@@ -13,28 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
 
-open Nat
-namespace OeisA000041
+import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«341»
 
 /-!
-Name: "No powers as partition numbers"
+# Ben Green's Open Problem 7
 
-There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
-
-*Reference*: [OEIS A000041](https://oeis.org/A000041)
+*Reference:* [Ben Green's Open Problem 7](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1 Problem 7)
 -/
 
-/-- The `n`-th partition number. -/
-def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
+namespace Green7
 
-/--
-There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
-See comment by Zhi-Wei Sun (Dec 02 2013).
--/
+-- TODO: Add Green's Open Problem 7
+
 @[category research open, AMS 11]
-theorem noPowerPartitionNumber (k : ℕ) : answer(sorry) ↔ ¬IsPerfectPower (p k) := by
-    sorry
+theorem green_7.variant.queneau : type_of% Erdos341.erdos_341 := by
+  sorry
 
-end OeisA000041
+end Green7

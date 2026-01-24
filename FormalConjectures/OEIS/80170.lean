@@ -39,7 +39,7 @@ are exactly those satisfying (2).
 - [A051283](https://oeis.org/A051283)
 -/
 
-namespace OeisA080170
+namespace OeisA80170
 
 /--
 The gcd of the binomial coefficients
@@ -64,4 +64,4 @@ theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
     GCDCondition k ↔ PrimePowerCondition k := by
   sorry
 
-end OeisA080170
+end OeisA80170

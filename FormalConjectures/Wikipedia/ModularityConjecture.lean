@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Modularity conjecture
 
-The **Modularity conjecture** (also know as the Shimura--Taniyama--Weil conjecture) states that
+The **Modularity conjecture** (also know as the Shimura-Taniyama-Weil conjecture) states that
 every rational elliptic curve is modular, meaning that it can be
 associated with a modular form. We state the `a_p` version of the conjecture, which relates the
 coefficients of the modular form to the number of points on the elliptic curve over finite fields.
@@ -46,7 +46,7 @@ noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gam
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
 
 /-- We need to reduce a rational modulo `p`, in practice we wont be dividing by zero since the
-conductor of the elliptic curve saves us.-/
+conductor of the elliptic curve saves us. -/
 def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
   (q.num : ZMod p) * (q.den : ZMod p)⁻¹
 
@@ -57,7 +57,7 @@ def setOfPointsModN (E : WeierstrassCurve ℚ) [E.IsElliptic] (n : ℕ) :=
     y ^ 2 + ratRed E.a₁ n * x * y + ratRed E.a₃ n * y =
       x ^ 3 + ratRed E.a₂ n * x ^ 2 + ratRed E.a₄ n * x + ratRed E.a₆ n}
 
-/-- The set of point `mod n` is finite.-/
+/-- The set of point `mod n` is finite. -/
 instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
     Fintype (setOfPointsModN E p) := by
   rw [setOfPointsModN]
@@ -77,7 +77,7 @@ def IsNormalisedEigenform {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : Prop
     a_[p ^ r]f = a_[p]f * a_[p ^ (r - 1)]f - p ^ (k - 1) * a_[p ^ (r - 2)]f) ∧
   ∀ (p r : ℕ), p.Prime → 2 ≤ r → (N : ZMod p) = 0 → a_[p ^ r]f = (a_[p]f) ^ r
 
-/-- See  theorem 8.8.1 of [diamondshurman2005]. -/
+/-- See theorem 8.8.1 of [diamondshurman2005]. -/
 def modularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
   ∃ (N : ℕ+) (f : CuspForm (Gamma0 N) 2), IsNormalisedEigenform f ∧
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
