@@ -1,0 +1,48 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+open Filter Metric
+
+/-!
+# Ben Green's Open Problem 77
+
+*Reference:* [Ben Green's Open Problem 77](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.77)
+-/
+
+namespace Green77
+
+def unitDisc : Set (ℝ × ℝ) := {p | dist p (0, 0) ≤ 1}
+
+noncomputable def triangleArea (p₁ p₂ p₃ : ℝ × ℝ) : ℝ :=
+  let (x₁, y₁) := p₁
+  let (x₂, y₂) := p₂
+  let (x₃, y₃) := p₃
+  (1/2) * |x₁ * (y₂ - y₃) + x₂ * (y₃ - y₁) + x₃ * (y₁ - y₂)|
+
+@[category research open, AMS 52 05]
+theorem green_77 :
+    answer(sorry) ↔ ∀ (ε : ℕ → ℝ), (atTop.Tendsto ε (𝓝 0)) →
+      ∃ N, ∀ n ≥ N, ∀ (S : Finset (ℝ × ℝ)),
+        (∀ p ∈ S, p ∈ unitDisc) →
+        S.card = n →
+        ∃ p₁ ∈ S, ∃ p₂ ∈ S, ∃ p₃ ∈ S,
+          p₁ ≠ p₂ ∧ p₂ ≠ p₃ ∧ p₁ ≠ p₃ ∧
+          triangleArea p₁ p₂ p₃ ≤ (n : ℝ)^(-2 : ℝ) * (1 + ε n) := by
+  sorry
+
+end Green77
