@@ -48,8 +48,7 @@ We define the construction from [Sa21, p1] as
 $M(A) := \max \{|S| : S \subseteq A \text{ and } (S \hat{+} S) \cap A = \varnothing \}$.
 -/
 noncomputable def maxRestrictedSumAvoidingSubsetSize (A : Finset ℤ) : ℕ :=
-  sSup {n : ℕ | ∃ S : Finset ℤ,
-    S ⊆ A ∧ Disjoint (restrictedSumset S) A ∧ S.card = n}
+     sSup { (S.card) | (S : Finset ℤ) (_ : S ⊆ A) (_ : Disjoint (restrictedSumset S) A)}
 
 /--
 Let $A \subset \mathbf{Z}$ be a set of $n$ integers. Is there a set $S \subset A$ of size
