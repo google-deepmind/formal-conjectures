@@ -24,9 +24,9 @@ Given $N \lt 2$ and a more than $2 * N$ points on an $N \times N$-grid,
 are there $3$ of the points on a common line?
 
 *References:*
-* [Ben Green's Open Problem 62](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.62)
-* [Wikipedia](https://en.wikipedia.org/wiki/No-three-in-line_problem)
-* [GK2025] Grebennikov, A. Kwan, M. No $(k + 1)$-in-line problem for large constant $k$.
+- [Ben Green's Open Problem 62](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.62)
+- [Wikipedia](https://en.wikipedia.org/wiki/No-three-in-line_problem)
+- [GK2025] Grebennikov, A. Kwan, M. No $(k + 1)$-in-line problem for large constant $k$.
   https://arxiv.org/abs/2510.17743
 -/
 
@@ -85,5 +85,7 @@ theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
 theorem no_k_in_line_big {k : ℕ} (N : ℕ) (h : 10 ^ 37 < k) :
     NoKinLineFor k N := by
   sorry
+
+-- TODO: Add lower bound for no-three-in-line
 
 end Green72
