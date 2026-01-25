@@ -75,7 +75,8 @@ def ExistsWeaklyFirstCountableCompactNotFirstCountable : Prop :=
 
 /-- Problem 4 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact space X which is not first countable. -/
-def existsWeaklyFirstCountableCompactNotFirstCountable :
+@[category test, AMS 54]
+theorem existsWeaklyFirstCountableCompactNotFirstCountable :
     ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
 
 /-- Under CH, such a space exists as constructed in [Ya1976] by Yakovlev. -/
