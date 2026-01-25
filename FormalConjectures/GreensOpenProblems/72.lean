@@ -34,10 +34,10 @@ namespace Green72
 
 /-- We say a subset of $[N]^2$ is allowed for some $k$ if it contains no $k$ points
 which lie on a common line. -/
-structure AllowedSet (k : ℕ) (N : ℕ) (s : Finset (Fin 2 → ℕ)) : Prop where
-  is_bounded : ∀ i ∈ s, i 0 < N ∧ i 1 < N
-  not_collinear : ∀ ⦃t : Finset (Fin 2 → ℕ)⦄, t ⊆ s → t.card = k →
-    Collinear ℝ ({r | ∃ i ∈ s, r = (fun j ↦ (↑(i j) : ℝ))} : Set (Fin 2 → ℝ))
+structure AllowedSet (k : ℕ) (N : ℕ) (s : Finset (ℕ × ℕ)) : Prop where
+  is_bounded : ∀ i ∈ s, i.1 < N ∧ i.2 < N
+  not_collinear : ∀ ⦃t : Finset (ℕ × ℕ)⦄, t ⊆ s → t.card = k →
+    Collinear ℝ ({r | ∃ i ∈ s, r = ((↑i.1 : ℝ), (↑i.2 : ℝ))} : Set (ℝ × ℝ))
 
 /-- The maximal size of an allowed set -/
 noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
