@@ -37,9 +37,9 @@ of size at most $|A|$?
 This problem is resolved by the Polynomial Freiman–Ruzsa theorem (Gowers, Green, Manners, and Tao, 2023).
 -/
 @[category research solved, AMS 05 11]
-theorem green_49 : answer(True) ↔
-  ∃ C > 0,
-    ∀ (n : ℕ) (K : ℝ) (A : Finset (Fin n → ZMod 2)),
+theorem green_49 :
+    answer(True) ↔ ∃ C > 0,
+      ∀ (n : ℕ) (K : ℝ) (A : Finset (Fin n → ZMod 2)),
       1 ≤ K →
       ((A + A).card : ℝ) ≤ K * A.card →
       ∃ V : Submodule (ZMod 2) (Fin n → ZMod 2),
