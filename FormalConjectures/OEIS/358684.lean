@@ -56,7 +56,7 @@ noncomputable def a' (n : ℕ) : ℕ :=
   )
 
 
-/-
+/--
 The log2 of the smallest prime factor of $F_n$ is at most $2^n$.
 -/
 @[category undergraduate, AMS 11]
@@ -93,26 +93,21 @@ theorem a_equiv_a' (n : ℕ) : a n = a' n := by
     have := succ_le_of_lt hm
     omega
 
+@[category test, AMS 11]
+theorem zero : a 0 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem zero : a 0 = 0 := by
-  norm_num [a, Nat.log2]
+theorem one : a 1 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem one : a 1 = 0 := by
-  norm_num [a, Nat.log2]
-
-@[category test, AMS 11]
-theorem two : a 2 = 0 := by
-  norm_num [a, Nat.log2]
+theorem two : a 2 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
 theorem three : a 3 = 0 := by
   norm_num only [a, Nat.log2_eq_log_two,Nat.fermatNumber]
 
 @[category test, AMS 11]
-theorem four : a 0 = 0 := by
-  norm_num[a, Nat.log2]
+theorem four : a 0 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
 theorem five : a 5 = 23 := by

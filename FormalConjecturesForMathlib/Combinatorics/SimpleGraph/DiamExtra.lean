@@ -53,9 +53,7 @@ proof_wanted diam_ne_zero [Nontrivial α] : G.diam ≠ 0
 
 lemma nontrivial_of_diam_ne_zero' (h : G.diam ≠ 0) : Nontrivial α := by
   contrapose! h
-  rw [not_nontrivial_iff_subsingleton] at h
   exact diam_eq_zero_of_subsingleton
-
 
 section Path
 open Path
