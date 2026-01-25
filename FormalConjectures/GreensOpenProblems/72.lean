@@ -45,7 +45,7 @@ noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
 
 /-- By pigeon hole principle, AllowedSetSize $k$ $N$ $\leq (k - 1) * N$ for $N \geq k$ -/
 @[category high_school, AMS 05 52]
-theorem allowed_set_size_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
+theorem allowedSetSize_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
     AllowedSetSize k N ≤ (k - 1) * N := by
   sorry
 
