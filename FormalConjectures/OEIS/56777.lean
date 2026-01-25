@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 open scoped ArithmeticFunction
 
 /-!
-# **Conjectures associated with A056777**
+# Conjectures associated with A056777
 
 A056777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
 $\sigma(n+12) = \sigma(n) + 12$.
