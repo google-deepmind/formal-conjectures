@@ -45,9 +45,8 @@ abbrev TrivialRuler (N : ℕ) : Finset ℕ := Finset.range (N+1)
 /-- Sanity Check: the trivial ruler is actually a perfect ruler if $K \geq N$ -/
 @[category API, AMS 05]
 lemma trivial_ruler_is_perfect (N : ℕ) : TrivialRuler N ∈ PerfectRulersLengthN N := by
-    simp only [PerfectRulersLengthN, Finset.mem_filter, Finset.mem_powerset, Finset.range_subset,
-      add_le_add_iff_right]
-    exact ⟨by rfl, fun k hk => ⟨0, by simp, k, hk, rfl⟩⟩
+    simp only [PerfectRulersLengthN, Finset.mem_filter, Finset.mem_powerset, Finset.range_subset]
+    exact ⟨by simp, fun k hk => ⟨0, by simp, k, hk, rfl⟩⟩
 
 /-- We define a function `F N` as the minimum cardinality of an `N`-perfect ruler of length `N`. -/
 def F (N : ℕ) : ℕ :=

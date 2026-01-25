@@ -33,6 +33,9 @@ register_option linter.style.category_attribute : Bool := {
   descr := "enable the `category` attribute style linter"
 }
 
+-- FIXME: False positive
+set_option linter.style.docString.empty false
+
 namespace CategoryLinter
 
 /-- Checks if a command has the `category` attribute. -/

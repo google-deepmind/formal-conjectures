@@ -65,8 +65,11 @@ theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠
       refine hp.eq_two_or_odd.resolve_right fun _ ↦ ?_
       have : p ∣ ∑ a ∈ range n, (a)! := .trans (by simp)
         (dvd_of_mem_primeFactorsList h_mem |>.trans (dvd_of_mod_eq_zero h_mod))
-      rw [← CharP.cast_eq_zero_iff (ZMod p), cast_sum, ← sum_subset (range_subset.2
-        (le_of_mem_primeFactorsList h_mem)) (fun _ _ _ ↦ CharP.cast_eq_zero_iff _ p _ |>.2 <|
+      have hxp : range p ⊆ range n := by
+        simp only [range_subset_range]
+        exact le_of_mem_primeFactorsList h_mem
+      rw [← CharP.cast_eq_zero_iff (ZMod p), cast_sum,
+        ← sum_subset hxp (fun _ _ _ ↦ CharP.cast_eq_zero_iff _ p _ |>.2 <|
         hp.dvd_factorial.2 <| by aesop), ← cast_sum, CharP.cast_eq_zero_iff _ p] at this
       exact h p (hp.two_le.lt_of_ne (by omega)) hp <| mod_eq_zero_of_dvd this
     rw [List.prod_eq_pow_card _ 2 this]
@@ -107,7 +110,10 @@ theorem kurepa_conjecture.gcd_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0
         pos_of_dvd_of_pos hc (factorial_pos _)])] at h_dvd
     refine by_contra fun _ ↦ h c ?_ (sum_nat_mod _ _ _ ▸ h_dvd)
     match c with
-    | 0 => field_simp [Ne.symm] at hc
+    | 0 =>
+      contrapose! hc
+      simp only [zero_dvd_iff]
+      positivity
     | 1 => trivial
     | S + 3 => omega
 
