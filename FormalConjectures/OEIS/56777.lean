@@ -55,10 +55,7 @@ theorem a_65 : a 65 := by
 /-- $209$ is in the sequence A056777. -/
 @[category test, AMS 11]
 theorem a_209 : a 209 := by
-  refine ⟨?_, by norm_num, ?_, ?_⟩
-  · native_decide
-  · native_decide
-  · native_decide
+  refine ⟨?_, by norm_num, ?_⟩ <;> native_decide
 
 /-- Numbers coming from prime quadruples are in the sequence A056777. -/
 @[category undergraduate, AMS 11]
