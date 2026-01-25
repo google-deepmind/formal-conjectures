@@ -32,7 +32,7 @@ namespace Green16
 
 /-- A set has no solution to $x + 3y = 2z + 2w$ in distinct elements. -/
 def SolutionFree (A : Finset ℕ) : Prop :=
-  ∀ x y z w, x ∈ A → y ∈ A → z ∈ A → w ∈ A →
+  ∀ x ∈ A, ∀ y ∈ A, ∀ z ∈ A, ∀ w ∈ A,
     [x, y, z, w].Nodup →
     x + 3 * y ≠ 2 * z + 2 * w
 
