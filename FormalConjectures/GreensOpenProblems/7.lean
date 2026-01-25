@@ -20,15 +20,15 @@ import FormalConjectures.ErdosProblems.«341»
 /-!
 # Ben Green's Open Problem 7
 
-*Reference:* [Ben Green's Open Problem 7](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1 Problem 7)
+*References:*
+ - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1 Problem 7)
+ - [erdosproblems.com/341](https://www.erdosproblems.com/341)
 -/
 
 namespace Green7
 
 -- TODO: Add Green's Open Problem 7
 
-@[category research open, AMS 11]
-theorem green_7.variant.queneau : type_of% Erdos341.erdos_341 := by
-  sorry
+alias green_7.variant.queneau := Erdos341.erdos_341
 
 end Green7
