@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Ben Green's Open Problem 62
 
-More commonly known as the **no-three-in-line problem** problem.
+More commonly known as the **no-three-in-line problem**.
 
 Given $N \lt 2$ and a more than $2 * N$ points on an $N \times N$-grid,
 are there $3$ of the points on a common line?
@@ -43,7 +43,8 @@ structure AllowedSet (k : ℕ) (N : ℕ) (s : Finset (Fin 2 → ℕ)) : Prop whe
 noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
   sSup {r | ∃ s, r = s.card ∧ AllowedSet N k s}
 
-/-- By pigeon hole principle, AllowedSetSize $k$ $N$ $\leq (k - 1) * N$ for $N \geq k$ -/
+/-- By the pigeon hole principle, the size of a subset of an $N \times N$ grid such that no $k$
+points lie on a line is bounded by $\leq (k - 1) * N$ for $N \geq k$. -/
 @[category high_school, AMS 05 52]
 theorem allowedSetSize_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
     AllowedSetSize k N ≤ (k - 1) * N := by
