@@ -16,9 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Filter
-open scoped Topology
-
 /-!
 # Ben Green's Open Problem 2
 
@@ -35,6 +32,10 @@ References:
   sum-free sets via large Sidon sets. Colloq. Math., 86(2):171–176, 2000.
   doi:10.4064/cm-86-2-171-176.
 -/
+
+open Filter
+open scoped Topology
+
 namespace Green2
 
 /--
