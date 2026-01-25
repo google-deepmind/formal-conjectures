@@ -53,16 +53,16 @@ noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
 /-- Lower bound for $c(p)$ for $1 < p \le \infty$, improving the known values at $p = 2, \infty$. -/
 @[category research open, AMS 26 28 42]
 theorem green_35.lower {p : ℝ≥0∞} (hp : 1 < p) :
-    answer(sorry) p ≤ c p ∧
-      (p = 2 → 0.7559 < answer(sorry) p) ∧
-      (p = ∞ → 0.64 < answer(sorry) p) := by
+    answer(sorry) ≤ c p ∧
+      (p = 2 → 0.7559 < answer(sorry)) ∧
+      (p = ∞ → 0.64 < answer(sorry)) := by
   sorry
 
 /-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value at $p = \infty$. -/
 @[category research open, AMS 26 28 42]
 theorem green_35.upper {p : ℝ≥0∞} (hp : 1 < p) :
-    c p ≤ answer(sorry) p ∧
-      (p = ∞ → answer(sorry) p < 0.7505) := by
+    c p ≤ answer(sorry) ∧
+      (p = ∞ → answer(sorry) < 0.7505) := by
   sorry
 
 /-! Known bounds and comparisons. -/
