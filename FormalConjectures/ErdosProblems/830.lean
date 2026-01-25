@@ -22,10 +22,10 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/830](https://www.erdosproblems.com/830)
 -/
 
-namespace Erdos830
-
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 open Classical Filter Real
+
+namespace Erdos830
 
 /--
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$.

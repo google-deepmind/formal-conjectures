@@ -24,7 +24,7 @@ open scoped List
 
 /-- The set of subset sums of a set `A ⊆ M`. -/
 def subsetSums (A : Set M) : Set M :=
-  {n | ∃ B : Finset M, B.toSet ⊆ A ∧ n = ∑ i ∈ B, i}
+  {n | ∃ B : Finset M, ↑B ⊆ A ∧ n = ∑ i ∈ B, i}
 
 /-- If `A ⊆ B`, then `subsetSums A ⊆ subsetSums B`. -/
 @[gcongr]
