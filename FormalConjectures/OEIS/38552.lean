@@ -122,7 +122,7 @@ theorem a_eq_largestNegFundDisc {n k : ℕ} (h : a n k) :
 $h(-k) = n$ and $k'$ is the largest even squarefree number with $h(-k') = n$,
 then $k > k'$. -/
 @[category research open, AMS 11]
-theorem odd_gt_even_for_even_classNumber (n : ℕ) (hn : Even n) (k k' : ℕ)
+theorem odd_gt_even_for_even_classNumber {n : ℕ} (hn : Even n) (k k' : ℕ)
     (hk_odd : Odd k) (hk'_even : Even k')
     (hk_sq : Squarefree k) (hk'_sq : Squarefree k')
     (hk_class : HasClassNumber k n) (hk'_class : HasClassNumber k' n)
