@@ -50,7 +50,7 @@ theorem IsHomeomorph.equiv_of_discreteTopology {X  Y : Type*} [TopologicalSpace 
   · exact Equiv.leftInverse_symm f
   · exact Equiv.rightInverse_symm f
 
-/-- Every discrete space is homogeneous -/
+/-- Every discrete space is homogeneous. -/
 @[category test, AMS 54]
 instance DiscreteTopology.toHomogeneousSpace (X : Type*) [TopologicalSpace X] [DiscreteTopology X] :
     HomogeneousSpace X where
