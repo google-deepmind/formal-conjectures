@@ -101,4 +101,5 @@ theorem green_2_upper_bound_ruzsa :
     ∃ C > (0 : ℝ), ∀ A : Finset ℤ,
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) < Real.exp (C * Real.sqrt (Real.log A.card)) := by
   sorry
+
 end Green2
