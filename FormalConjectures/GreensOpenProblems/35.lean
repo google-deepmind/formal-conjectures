@@ -54,7 +54,7 @@ noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
 @[category research open, AMS 26 28 42]
 theorem green_35.lower :
     let lb : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
-    (∀ p, 1 < p → lb p ≤ c p) ∧ 0.7559 < c 2 ∧ 0.64 < c ∞ := by
+    (∀ p, 1 < p → lb p ≤ c p) ∧ (0.7559 < c 2 \or 0.64 < c ∞) := by
   sorry
 
 /-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value at $p = \infty$. -/
