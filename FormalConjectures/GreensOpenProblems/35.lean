@@ -44,7 +44,7 @@ open scoped Convolution ENNReal
 
 /-- A nonnegative integrable function on $[0,1]$ with total integral $1$. -/
 def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
-  Integrable f ∧ (∀ x, 0 ≤ f x) ∧ Function.support f ⊆ Set.Icc (0 : ℝ) 1 ∧ (∫ x, f x) = 1
+  Integrable f ∧ (∀ x, 0 ≤ f x) ∧ Function.support f ⊆ .Icc (0 : ℝ) 1 ∧ ∫ x, f x = 1
 
 /-- The infimum of $\|f \ast f\|_p$ over unit-interval densities. -/
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
