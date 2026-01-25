@@ -17,7 +17,7 @@ import Mathlib.AlgebraicGeometry.Limits
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
--- The contents of this file will be in mathlib as of #26061 which should be merged in 4.21 or 4.22.
+-- The contents of this file will be in mathlib as of #26061
 
 universe u v
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry

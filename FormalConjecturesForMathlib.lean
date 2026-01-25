@@ -25,6 +25,7 @@ import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
 import FormalConjecturesForMathlib.Analysis.HasGaps
+import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
 import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
 import FormalConjecturesForMathlib.Combinatorics.AP.Basic
@@ -43,7 +44,6 @@ import FormalConjecturesForMathlib.Computability.Encoding
 import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
-import FormalConjecturesForMathlib.Data.Finset.Empty
 import FormalConjecturesForMathlib.Data.Finset.OrdConnected
 import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 import FormalConjecturesForMathlib.Data.Nat.Full
@@ -54,7 +54,6 @@ import FormalConjecturesForMathlib.Data.Nat.Prime.Composite
 import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
 import FormalConjecturesForMathlib.Data.Nat.Squarefree
-import FormalConjecturesForMathlib.Data.Real.Cardinality
 import FormalConjecturesForMathlib.Data.Real.Constants
 import FormalConjecturesForMathlib.Data.Set.Bdd
 import FormalConjecturesForMathlib.Data.Set.Density
