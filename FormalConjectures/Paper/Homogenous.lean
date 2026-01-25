@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures around homogenous topological spaces
+# Conjectures around homogeneous topological spaces
 
 This file formalizes the notion of a weakly first countable topological space and some conjectures
 around those.
@@ -28,40 +28,40 @@ around those.
   https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf
 -/
 
-open TopologicalSpace Filter Set
+open TopologicalSpace Topology Filter Set
 open scoped Cardinal
 
-namespace Homogenous
+namespace Homogeneous
 
 /--
-A topological space $X$ is called *homogenous* if for all $x, y \in X$ there is homeomorphism
+A topological space $X$ is called *homogeneous* if for all $x, y \in X$ there is homeomorphism
 $f : X \to X$ with $f(x) = y$.
 -/
-class HomogenousSpace (X : Type*) [TopologicalSpace X] : Prop where
+class HomogeneousSpace (X : Type*) [TopologicalSpace X] : Prop where
   exists_equiv : ∀ x y : X, ∃ f : X ≃ₜ X, f x = y
 
-/-- Every discrete space is homogenous -/
+/-- Every discrete space is homogeneous -/
 @[category test, AMS 54]
-instance DiscreteTopology.toHomogenousSpace (X : Type*) [TopologicalSpace X] [DiscreteTopology X] :
-    HomogenousSpace X := by
+instance DiscreteTopology.toHomogeneousSpace (X : Type*) [TopologicalSpace X] [DiscreteTopology X] :
+    HomogeneousSpace X := by
   sorry
 
 /-- Problem 13 in [Ar2013]:
 Is it true that every infinite homogeneous compact
 space contains a non-trivial convergent sequence? -/
 @[category research open, AMS 54]
-theorem homogenousSpace_exists_inj_tendsto :
-    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), Infinite X → CompactSpace X →
-      HomogenousSpace X → ∃ s : ℕ → X, s.Injective ∧ ∃ a : X, Tendsto s atTop (nhds a) := by
+theorem homogeneousSpace_exists_inj_tendsto :
+    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), ¬ Finite X → CompactSpace X →
+      HomogeneousSpace X → ∃ s : ℕ → X, s.Injective ∧ ∃ a : X, Tendsto s atTop (nhds a) := by
   sorry
 
 /-- Problem 14 in [Ar2013]:
 Is it possible to represent an arbitrary compact space as an image
 of a homogeneous compact space under a continuous mapping? -/
 @[category research open, AMS 54]
-theorem homogenousSpace_exists_surjective :
+theorem homogeneousSpace_exists_surjective :
     answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X →
-      ∃ (Y : Type*) (_ : TopologicalSpace Y), CompactSpace Y ∧ HomogenousSpace Y ∧
+      ∃ (Y : Type*) (_ : TopologicalSpace Y), CompactSpace Y ∧ HomogeneousSpace Y ∧
         ∃ f : Y → X, Continuous f ∧ f.Surjective := by
   sorry
 
@@ -82,7 +82,7 @@ instance MetrizableSpace.countablyMonolithicSpace
 Is every homogeneous ω-monolithic compact space first countable? -/
 @[category research open, AMS 54]
 theorem firstCountableTopology_of_countablyMonolithicSpace :
-    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X → HomogenousSpace X →
+    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X → HomogeneousSpace X →
       CountablyMonolithicSpace X → FirstCountableTopology X := by
   sorry
 
@@ -90,7 +90,7 @@ theorem firstCountableTopology_of_countablyMonolithicSpace :
 Is the cardinality of every homogeneous ω-monolithic compact space not greater than 𝔠? -/
 @[category research open, AMS 54]
 theorem countablyMonolithicSpace_card_lt :
-    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X → HomogenousSpace X →
+    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X → HomogeneousSpace X →
       CountablyMonolithicSpace X → #X ≤ 𝔠 := by
   sorry
 
@@ -100,7 +100,7 @@ first countable neighborhood basis? -/
 @[category research open, AMS 54]
 theorem countablyMonolithicSpace_exists_nhds_generated_countable :
     answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X →
-      CountablyMonolithicSpace X → ∃ x : X, (nhds x).IsCountablyGenerated := by
+      CountablyMonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
   sorry
 
-end Homogenous
+end Homogeneous
