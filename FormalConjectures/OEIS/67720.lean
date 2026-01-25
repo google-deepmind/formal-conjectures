@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# **Conjectures associated with A067720**
+# Conjectures associated with A067720
 
 A067720 lists numbers $k$ such that $\varphi(k^2 + 1) = k \cdot \varphi(k + 1)$,
 where $\varphi$ is Euler's totient function.
@@ -27,11 +27,13 @@ $k + 1$ is prime. The conjecture states that $k = 8$ is the only exception.
 *References:* [oeis.org/A067720](https://oeis.org/A067720)
 -/
 
+open Nat
+
 namespace OeisA067720
 
 /-- A number $k$ is in the sequence A067720 if $\varphi(k^2 + 1) = k \cdot \varphi(k + 1)$. -/
 def a (k : ℕ) : Prop :=
-  Nat.totient (k ^ 2 + 1) = k * Nat.totient (k + 1)
+  φ (k ^ 2 + 1) = k * φ (k + 1)
 
 /-- $1$ is in the sequence A067720. -/
 @[category test, AMS 11]
@@ -40,41 +42,36 @@ theorem a_1 : a 1 := by norm_num [a]
 /-- $2$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 := by
-  unfold a; native_decide
+  unfold a; decide
 
 /-- $4$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 := by
-  unfold a; native_decide
+  unfold a; decide
 
 /-- $6$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_6 : a 6 := by
-  unfold a; native_decide
+  unfold a; decide
 
 /-- $8$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_8 : a 8 := by
-  unfold a; native_decide
+  unfold a; decide
 
 /-- $10$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_10 : a 10 := by
-  unfold a; native_decide
+  unfold a; decide
 
 /-- If $k + 1$ and $k^2 + 1$ are both prime, then $k$ is in the sequence. -/
 @[category undergraduate, AMS 11]
-theorem a_of_primes (k : ℕ) (hk1 : (k + 1).Prime) (hk2 : (k ^ 2 + 1).Prime) : a k := by
-  sorry
+theorem a_of_primes {k : ℕ} (hk : (k + 1).Prime) (hk' : (k ^ 2 + 1).Prime) : a k := by
+  rw [a, totient_prime hk', totient_prime hk, Nat.add_sub_cancel, Nat.add_sub_cancel, sq]
 
 /-- For members of the sequence other than $8$, we have $k + 1$ is prime. -/
 @[category research open, AMS 11]
-theorem prime_add_one_of_a (k : ℕ) (h : a k) (hne : k ≠ 8) : (k + 1).Prime := by
-  sorry
-
-/-- $8$ is the only member of the sequence where $k + 1$ is composite. -/
-@[category research open, AMS 11]
-theorem unique_composite_8 (k : ℕ) (h : a k) (hcomp : ¬ (k + 1).Prime) : k = 8 := by
+theorem prime_add_one_of_a {k : ℕ} (h : a k) (hne : k ≠ 8) : (k + 1).Prime := by
   sorry
 
 end OeisA067720
