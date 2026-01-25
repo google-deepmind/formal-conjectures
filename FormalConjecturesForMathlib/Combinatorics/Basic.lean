@@ -49,7 +49,7 @@ lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
     (A ∩ Y).ncard ≤ 2 := by
   simp [IsAPOfLength, IsAPOfLengthWith] at hY
   obtain ⟨hc, ⟨a, d, hY⟩⟩ := hY
-  have hY_card : Y.ncard = 3 := by simp [ncard, encard, hc]
+  have hY_card : Y.ncard = 3 := by simp [ncard, hc]
   by_contra! h
   have hss : Y ⊆ A ∩ Y := by
     have hY_fin : Finite Y := finite_of_ncard_ne_zero (by linarith)
