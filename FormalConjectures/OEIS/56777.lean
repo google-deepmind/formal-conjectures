@@ -59,7 +59,7 @@ theorem a_209 : a 209 := by
 
 /-- Numbers coming from prime quadruples are in the sequence A056777. -/
 @[category undergraduate, AMS 11]
-theorem a_of_comesFromPrimeQuadruple (n : ℕ) (h : comesFromPrimeQuadruple n) : a n := by
+theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) : a n := by
   sorry
 
 /-- All members of the sequence A056777 come from prime quadruples. -/
