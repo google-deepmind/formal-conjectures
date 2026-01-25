@@ -73,10 +73,8 @@ class CountablyMonolithicSpace (X : Type*) [TopologicalSpace X] : Prop where
 /-- Every Metrizable space is ω-monolithic. -/
 @[category test, AMS 54]
 instance MetrizableSpace.countablyMonolithicSpace
-    (X : Type*) [TopologicalSpace X] [MetrizableSpace X] : CountablyMonolithicSpace X := by
-  refine { metrizable_of_closure_of_countable := ?_ }
-  intros
-  infer_instance
+    (X : Type*) [TopologicalSpace X] [MetrizableSpace X] : CountablyMonolithicSpace X where
+  metrizable_of_closure_of_countable _ _ := inferInstance
 
 /-- Problem 15 in [Ar2013]:
 Is every homogeneous ω-monolithic compact space first countable? -/
