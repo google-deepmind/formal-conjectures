@@ -60,14 +60,12 @@ theorem eq (h : s.IsAPOfLengthWith l a d) : s = {a + n • d | (n : ℕ) (_ : n 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
 if `s` is empty. -/
 @[simp]
-theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by
-  simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
+theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by simp [IsAPOfLengthWith]
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length one if and only
 if `s` is a singleton. -/
 @[simp]
-theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by
-  simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
+theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by simp +contextual [IsAPOfLengthWith]
 
 end Set.IsAPOfLengthWith
 
