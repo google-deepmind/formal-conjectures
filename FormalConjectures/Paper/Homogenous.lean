@@ -68,7 +68,7 @@ theorem homogeneousSpace_exists_surjective :
 /-- A topological space is called ω-monolithic if
 the closure of every countable subspace is metrizable. -/
 class CountablyMonolithicSpace (X : Type*) [TopologicalSpace X] : Prop where
-  metrizable_of_closure_of_countable : ∀ ⦃s : Set X⦄, s.Countable → MetrizableSpace (closure s)
+  metrizableSpace_closure_of_countable : ∀ ⦃s : Set X⦄, s.Countable → MetrizableSpace (closure s)
 
 /-- Every Metrizable space is ω-monolithic. -/
 @[category test, AMS 54]
