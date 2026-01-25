@@ -64,24 +64,19 @@ theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) :
 
 /-- All members of the sequence A056777 come from prime quadruples. -/
 @[category research open, AMS 11]
-theorem comesFromPrimeQuadruple_of_a (n : ℕ) (h : a n) : comesFromPrimeQuadruple n := by
+theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : comesFromPrimeQuadruple n := by
   sorry
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 65 \pmod{72}$. -/
 @[category undergraduate, AMS 11]
-theorem mod_72_of_comesFromPrimeQuadruple (n : ℕ) (h : comesFromPrimeQuadruple n) :
+theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) :
     n % 72 = 65 := by
   sorry
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 9 \pmod{100}$. -/
 @[category undergraduate, AMS 11]
-theorem mod_100_of_comesFromPrimeQuadruple (n : ℕ) (h : comesFromPrimeQuadruple n) :
+theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) :
     n % 100 = 9 := by
-  sorry
-
-/-- All members of the sequence satisfy $n \equiv 65 \pmod{72}$. -/
-@[category research open, AMS 11]
-theorem mod_72_of_a (n : ℕ) (h : a n) : n % 72 = 65 := by
   sorry
 
 end OeisA056777
