@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
  - [erdosproblems.com/951](https://www.erdosproblems.com/951)
  - [Er77c] Erdős, Paul, Problems and results on combinatorial number theory. III. Number theory day (Proc. Conf., Rockefeller Univ.,
     New York, 1976) (1977), 43-72.
+ - [Wikipedia](https://en.wikipedia.org/wiki/Beurling_zeta_function)
+ - [Beurling Zeta Functions, Generalised Primes, and Fractal Membranes](https://arxiv.org/abs/math/0410270)
 -/
 
 open scoped Finsupp Nat.Prime
@@ -48,7 +50,7 @@ def Erdos951 (a : ℕ → ℝ) : Prop :=
 
 /-- If `a` has property `Erdos951` and `1 < a 0`, then `a` is a set of Beurling prime numbers. -/
 @[category API, AMS 11]
-theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0):
+theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0) (he : Erdos951 a) :
     IsBeurlingPrimes a := by
   sorry
 
