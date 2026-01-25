@@ -215,7 +215,7 @@ Define the largest possible size of a subset of $\{1, \dots, N\}$ that does not 
 any non-trivial $k$-term arithmetic progression.
 -/
 noncomputable def Set.IsAPOfLengthFree.maxCard (k : ℕ) (N : ℕ) : ℕ :=
-  sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : S.toSet.IsAPOfLengthFree k)}
+  sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : (S : Set ℕ).IsAPOfLengthFree k)}
 
 theorem Set.IsAPOfLengthFree.maxCard_zero (N : ℕ) : maxCard 0 N = N := by
   simp only [maxCard, Nat.cast_zero, isAPOfLengthFree_zero, exists_const, exists_prop]
@@ -249,4 +249,4 @@ Define the largest possible size of a subset of a finset `s` that does not conta
 any non-trivial `k`-term arithmetic progression.
 -/
 noncomputable def Finset.maxAPFreeCard (k : ℕ) (s : Finset α) : ℕ :=
-  (s.powerset.filter (fun t ↦ t.toSet.IsAPOfLengthFree k)).sup Finset.card
+  (s.powerset.filter fun t : Finset α ↦ (t : Set α).IsAPOfLengthFree k).sup Finset.card

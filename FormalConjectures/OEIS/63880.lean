@@ -15,8 +15,6 @@ limitations under the License.
 -/
 import FormalConjectures.Util.ProblemImports
 
-open scoped ArithmeticFunction
-
 /-!
 # Conjectures associated with A063880
 
@@ -31,6 +29,8 @@ with $108$ being the only primitive term.
 
 *References:* [A063880](https://oeis.org/A063880)
 -/
+
+open scoped ArithmeticFunction.sigma
 
 namespace OeisA63880
 

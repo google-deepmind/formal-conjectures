@@ -35,8 +35,7 @@ import FormalConjectures.Wikipedia.Schinzel
     arXiv:2209.11124 (2022).
 -/
 
-open scoped Nat
-open ArithmeticFunction
+open scoped Nat ArithmeticFunction.sigma
 
 namespace Erdos252
 

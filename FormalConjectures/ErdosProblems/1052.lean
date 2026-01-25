@@ -71,4 +71,4 @@ theorem isUnitaryPerfect_87360 : IsUnitaryPerfect 87360 := by
 theorem isUnitaryPerfect_146361946186458562560000 : IsUnitaryPerfect 146361946186458562560000 := by
   sorry
 
-end Erdos1052 
+end Erdos1052

@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Nat Filter
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.Omega
 open scoped Topology
 
 namespace Erdos1139

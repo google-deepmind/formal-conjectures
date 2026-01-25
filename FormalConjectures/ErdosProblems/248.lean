@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 - [TaTe25] T. Tao and J. Teräväinen, Quantitative correlations and some problems on prime factors of consecutive integers. arXiv:2512.01739 (2025).
 -/
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.omega
 
 namespace Erdos248
 

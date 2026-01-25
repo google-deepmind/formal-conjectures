@@ -16,7 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-variable {α : Type} [AddCommMonoid α]
 
 /-!
 # Erdős Problem 41
@@ -27,13 +26,14 @@ variable {α : Type} [AddCommMonoid α]
 open Classical
 
 namespace Erdos41
+variable {α : Type} [AddCommMonoid α]
 
 /--
 For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for `a₁, ..., aₙ` in `A`
 (aside from the trivial coincidences).
 -/
 def NtupleCondition (A : Set α) (n : ℕ) : Prop := ∀ (I : Finset α) (J : Finset α),
-  I.toSet ⊆ A ∧ J.toSet ⊆ A ∧ I.card = n ∧ J.card = n ∧
+  ↑I ⊆ A ∧ ↑J ⊆ A ∧ I.card = n ∧ J.card = n ∧
   (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J
 
 /--

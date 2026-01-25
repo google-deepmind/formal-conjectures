@@ -63,7 +63,7 @@ def copyrightLinter : Linter where run := withSetOptionIn fun stx ↦ do
   let source := (← getFileMap).source
   -- Get the syntax corresponding to the first character in the file since that's where the warning
   -- message will be logged.
-  let startingStx : Syntax := .atom (.synthetic ⟨0⟩ ⟨1⟩) <| source.extract ⟨0⟩ ⟨1⟩
+  let startingStx : Syntax := .atom (.synthetic ⟨0⟩ ⟨1⟩) <| String.Pos.Raw.extract source ⟨0⟩ ⟨1⟩
   -- We don't want to output an error message when building `FormalConjectures.All`
   unless (← getFileName) == "FormalConjectures.All" || hasCorrectCopyright source do
     Lean.Linter.logLint linter.style.copyright startingStx <|

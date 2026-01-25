@@ -81,7 +81,7 @@ theorem squarefree_squarefreePart (n : ℕ) : Squarefree n.squarefreePart := by
   refine Nat.squarefree_iff_factorization_le_one n.squarefreePart_ne_zero |>.2 fun p ↦ ?_
   by_cases hp : p.Prime
   · linarith [n.squarefreePart_factorization hp, Nat.mod_lt (n.factorization p) two_pos]
-  · linarith [factorization_eq_zero_of_non_prime n.squarefreePart hp]
+  · linarith [factorization_eq_zero_of_not_prime n.squarefreePart hp]
 
 theorem squarefreePart_dvd (n : ℕ) : squarefreePart n ∣ n := by
   rcases eq_or_ne n 0 with (rfl | h₀); simp

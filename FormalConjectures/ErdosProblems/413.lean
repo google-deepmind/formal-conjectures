@@ -29,7 +29,8 @@ even posed a relaxed variant asking whether there is some `ε > 0` for which inf
 satisfy `m + ε · ω(m) ≤ n` for every `m < n`.
 -/
 
-open scoped ArithmeticFunction
+open ArithmeticFunction
+open scoped omega Omega
 
 namespace Erdos413
 

@@ -41,7 +41,7 @@ A subgraph `G'` is a 'snake' of length `k` in graph `G` if it is an induced path
 -/
 def IsSnakeInGraphOfLength {V : Type u} [DecidableEq V] (G : SimpleGraph V) (G' : Subgraph G)
     (k : ℕ) : Prop :=
-  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = P.support.toFinset.toSet ∧
+  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = {v | v ∈ P.support} ∧
   P.length = k
 
 /--

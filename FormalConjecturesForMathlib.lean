@@ -49,7 +49,6 @@ import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
 import FormalConjecturesForMathlib.Data.Finset.Card
-import FormalConjecturesForMathlib.Data.Finset.OrdConnected
 import FormalConjecturesForMathlib.Data.Finset.Powerset
 import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 import FormalConjecturesForMathlib.Data.Nat.Full

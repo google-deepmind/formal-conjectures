@@ -39,7 +39,7 @@ variable {n : ℕ}
 /-- The maximal number of pairs of points which are distance 1 apart that a set of `n` 1-separated
 points in `ℝ^d` make. -/
 noncomputable def f (d n : ℕ) : ℕ :=
-  ⨆ (s : Finset (ℝ^ d)) (_ : s.card = n) (_ : IsSeparated' 1 s.toSet), unitDistNum s
+  ⨆ (s : Finset (ℝ^ d)) (_ : s.card = n) (_ : IsSeparated' 1 (s : Set (ℝ^ d))), unitDistNum s
 
 /-- It is easy to check that $f_1(n) = n - 1$. -/
 @[category research solved, AMS 52]
