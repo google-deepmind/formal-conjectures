@@ -23,7 +23,7 @@ relaxedAutoImplicit = false
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.24.0"
+rev = "v4.25.0"
 
 # We make this a separate library so that we can apply different lean options.
 [[lean_lib]]

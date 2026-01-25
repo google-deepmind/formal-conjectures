@@ -44,7 +44,6 @@ import FormalConjecturesForMathlib.Computability.Encoding
 import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
-import FormalConjecturesForMathlib.Data.Finset.OrdConnected
 import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 import FormalConjecturesForMathlib.Data.Nat.Full
 import FormalConjecturesForMathlib.Data.Nat.Init
