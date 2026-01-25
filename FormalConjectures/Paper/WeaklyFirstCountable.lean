@@ -36,7 +36,7 @@ open scoped Cardinal
 
 namespace WeaklyFirstCountable
 
-/-- A topologocal space $X$ is called *weakly first countable* if there exists a function
+/-- A topological space $X$ is called *weakly first countable* if there exists a function
 $N : X → ℕ → Set X, such that:
 
 * For all $x : X, n : ℕ$ we have $x ∈ V x n$
