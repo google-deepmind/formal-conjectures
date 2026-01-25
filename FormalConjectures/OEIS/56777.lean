@@ -38,7 +38,7 @@ def a (n : ℕ) : Prop :=
 
 /-- A number $n$ comes from a prime quadruple $(p, p+2, p+6, p+8)$ if
 $n = p(p+8)$ for some prime $p$ where $p$, $p+2$, $p+6$, $p+8$ are all prime. -/
-def comesFromPrimeQuadruple (n : ℕ) : Prop :=
+def ComesFromPrimeQuadruple (n : ℕ) : Prop :=
   ∃ p : ℕ, p.Prime ∧ (p + 2).Prime ∧ (p + 6).Prime ∧ (p + 8).Prime ∧ n = p * (p + 8)
 
 /-- $65$ is in the sequence A056777. -/
