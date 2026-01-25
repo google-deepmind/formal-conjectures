@@ -16,7 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Filter Set
+open Filter
+open scoped Topology
 
 /-!
 # Ben Green's Open Problem 2
@@ -66,7 +67,7 @@ From [Sa21] it is known that there is always such an S with $|S| \gt (\log |A|)^
 @[category research solved, AMS 11]
 theorem green_2_lower_bound_sanders :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℤ, A.card = n →
-      (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≥ ((Real.log n) ^ (1 + c)) := by
+      maxRestrictedSumAvoidingSubsetSize A ≥ Real.log n ^ (1 + c) := by
   sorry
 
 /--
@@ -74,8 +75,8 @@ From [Er65] it is known that $M(A) \le \frac{1}{3}|A| + O(1)$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_erdos :
-    ∃ C : ℝ, ∀ n : ℕ, ∃ A : Finset ℤ, A.card = n ∧
-      (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ n / 3 + C := by
+    ∃ C : ℝ, ∀ A : Finset ℤ,
+      (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ A.card / 3 + C := by
   sorry
 
 /-
@@ -88,8 +89,8 @@ From [Ch71] it is known that $M(A) \le |A|^{2/5 + o(1)}$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_choi :
-    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∃ A : Finset ℤ, A.card = n ∧
-      (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ n ^ (2 / 5 + ε) := by
+    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)), ∀ A : Finset ℤ,
+      (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ A.card ^ (2 / 5 + o A.card) := by
   sorry
 
 /--
@@ -97,8 +98,7 @@ From [Ru05] the best-known upper bound is $|S| \lt e^{C \sqrt{\log |A|}}$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_ruzsa :
-    ∃ C > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∃ A : Finset ℤ, A.card = n ∧
-      (maxRestrictedSumAvoidingSubsetSize A : ℝ) < Real.exp (C * Real.sqrt (Real.log n)) := by
+    ∃ C > (0 : ℝ), ∀ A : Finset ℤ,
+      (maxRestrictedSumAvoidingSubsetSize A : ℝ) < Real.exp (C * Real.sqrt (Real.log A.card)) := by
   sorry
-
 end Green2
