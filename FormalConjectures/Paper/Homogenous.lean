@@ -62,7 +62,7 @@ of a homogeneous compact space under a continuous mapping? -/
 theorem homogeneousSpace_exists_surjective :
     answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X →
       ∃ (Y : Type*) (_ : TopologicalSpace Y), CompactSpace Y ∧ HomogeneousSpace Y ∧
-        ∃ f : Y → X, Continuous f ∧ f.Surjective := by
+        ∃ f : Y → X, IsInducing f ∧ f.Surjective := by
   sorry
 
 /-- A topological space is called ω-monolithic if
