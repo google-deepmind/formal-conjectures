@@ -58,7 +58,7 @@ simply take $N x$ as a countable neighborhood basis of $x$. -/
 @[category test, AMS 54]
 instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [TopologicalSpace X]
     [FirstCountableTopology X] : WeaklyFirstCountableTopology X where
-    nhds_countable_weak_basis := by sorry
+  nhds_countable_weak_basis := by sorry
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact space X such that $𝔠 < |X|$. -/
