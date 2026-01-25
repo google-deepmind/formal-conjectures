@@ -54,9 +54,9 @@ satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
 -/
 @[category research open, AMS 11]
 theorem erdos_263.parts.ii : answer(sorry) ↔
-    (∀ a : ℕ → ℕ,
+    ∀ a : ℕ → ℕ,
       IsIrrationalitySequence a →
-        atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop) := by
+        atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop := by
   sorry
 
 /--
@@ -66,7 +66,7 @@ has $\sum \frac{1}{a_n}$ converging to an irrational number.
 @[category research solved, AMS 11]
 theorem erdos_263.variants.folklore (a : ℕ -> ℕ)
     (ha : atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (2 ^ n : ℝ))) atTop) :
-      Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ) := by
+    Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ) := by
   sorry
 
 /--
@@ -82,7 +82,7 @@ theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ)
     (ha' : StrictMono a)
     (ha'' : Summable (fun n : ℕ => 1 / (a n : ℝ)))
     (ha''' : atTop.Tendsto (fun n : ℕ => (a (n + 1) : ℝ) / a n ^ 2) (𝓝 0)) :
-   ¬ IsIrrationalitySequence a := by
+    ¬ IsIrrationalitySequence a := by
   sorry
 
 /--
