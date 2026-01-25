@@ -16,6 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 open scoped ArithmeticFunction
+open Nat
 
 /-!
 # Conjectures associated with A056777
@@ -34,7 +35,7 @@ namespace OeisA056777
 /-- A composite number $n$ is in the sequence A056777 if it satisfies both
 $\varphi(n+12) = \varphi(n) + 12$ and $\sigma(n+12) = \sigma(n) + 12$. -/
 def a (n : ℕ) : Prop :=
-  ¬n.Prime ∧ 1 < n ∧ Nat.totient (n + 12) = Nat.totient n + 12 ∧ σ 1 (n + 12) = σ 1 n + 12
+  ¬n.Prime ∧ 1 < n ∧ totient (n + 12) = totient n + 12 ∧ σ 1 (n + 12) = σ 1 n + 12
 
 /-- A number $n$ comes from a prime quadruple $(p, p+2, p+6, p+8)$ if
 $n = p(p+8)$ for some prime $p$ where $p$, $p+2$, $p+6$, $p+8$ are all prime. -/
@@ -46,7 +47,7 @@ def ComesFromPrimeQuadruple (n : ℕ) : Prop :=
 theorem a_65 : a 65 := by
   refine ⟨?_, by norm_num, ?_, ?_⟩
   · simp only [show (65 : ℕ) = 5 * 13 by norm_num]
-    exact Nat.not_prime_mul (by norm_num) (by norm_num)
+    exact not_prime_mul (by norm_num) (by norm_num)
   · decide
   · decide
 
@@ -56,29 +57,29 @@ theorem a_209 : a 209 := by
   set_option maxRecDepth 1000 in
   refine ⟨?_, by norm_num, ?_, ?_⟩
   · simp only [show (209 : ℕ) = 11 * 19 by norm_num]
-    exact Nat.not_prime_mul (by norm_num) (by norm_num)
+    exact not_prime_mul (by norm_num) (by norm_num)
   · decide
   · decide
 
 /-- Numbers coming from prime quadruples are in the sequence A056777. -/
 @[category undergraduate, AMS 11]
-theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) : a n := by
+theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) : a n := by
   sorry
 
 /-- All members of the sequence A056777 come from prime quadruples. -/
 @[category research open, AMS 11]
-theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : comesFromPrimeQuadruple n := by
+theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : ComesFromPrimeQuadruple n := by
   sorry
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 65 \pmod{72}$. -/
 @[category undergraduate, AMS 11]
-theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) :
+theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
     n % 72 = 65 := by
   sorry
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 9 \pmod{100}$. -/
 @[category undergraduate, AMS 11]
-theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) :
+theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
     n % 100 = 9 := by
   sorry
 
