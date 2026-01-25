@@ -27,33 +27,32 @@ import FormalConjectures.Util.ProblemImports
  - [Beurling Zeta Functions, Generalised Primes, and Fractal Membranes](https://arxiv.org/abs/math/0410270)
 -/
 
-open scoped Finsupp Nat.Prime
+open scoped Finsupp Nat.Prime Topology
 open Filter
-
-/-- A sequence of real numbers `1 < a 0 < a 1 < ...` is called a set of Beurling prime numbers if
-it tends to infinity. -/
-noncomputable def IsBeurlingPrimes (a : ℕ → ℝ) : Prop :=
-  1 < a 0 ∧ StrictMono a ∧ Tendsto a atTop atTop
-
-/-- The set of Beurling integers are numbers of the form `∏ i, (a i) ^ (k i)`, where `k` has
-finite support. -/
-def BeurlingInteger (a : ℕ → ℝ) : Set ℝ :=
-  let g : (ℕ →₀ ℕ) → ℝ := fun k => k.prod (fun x y => (a x) ^ y)
-  .range g
-
-namespace Erdos951
 
 /-- A sequence `a : ℕ → ℝ` is said to have property `Erdos951` if for any pair of distinct
 Beuring integers `x, y`, `|x - y| ≥ 1`. -/
 def Erdos951 (a : ℕ → ℝ) : Prop :=
-  ∀ x y : ℝ, x ≠ y → x ∈ BeurlingInteger a → y ∈ BeurlingInteger a → |x - y| ≥ 1
+  ∀ ⦃x y : ℝ⦄, x ≠ y → x ∈ BeurlingInteger a → y ∈ BeurlingInteger a → |x - y| ≥ 1
+
+namespace Erdos951
 
 /-- If `a` has property `Erdos951` and `1 < a 0`, then `a` is a set of Beurling prime numbers. -/
 @[category API, AMS 11]
 theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     (hm : StrictMono a) (he : Erdos951 a) :
     IsBeurlingPrimes a := by
-  sorry
+  refine ⟨ha, hm, tendsto_atTop_atTop.2 fun x => ?_⟩
+  by_contra h_contra
+  obtain ⟨L, hL⟩ : ∃ L, Filter.Tendsto a Filter.atTop (𝓝 L) :=
+    ⟨_, tendsto_atTop_isLUB hm.monotone (isLUB_ciSup ⟨x, Set.forall_mem_range.2 fun n =>
+    le_of_not_ge fun hn => h_contra ⟨n, fun m hm' => hn.trans (hm.monotone hm')⟩⟩)⟩
+  obtain ⟨N, hN⟩ := Metric.tendsto_atTop.mp hL (1 / 2) (by norm_num)
+  have := hm (by linarith : N < N + 1)
+  have h_diff : a (N + 1) - a N ≥ 1 := by
+    rw [← abs_of_nonneg (by linarith : 0 ≤ a _ - _)]
+    exact he (by grind) (generator_mem_beurling a (N + 1)) (generator_mem_beurling a N)
+  linarith [abs_lt.1 (hN N le_rfl), abs_lt.1 (hN (N + 1) (by grind))]
 
 /-- If `a` has property `Erdos951`, is it true that `#{a i ≤ x} ≤ π x`? -/
 @[category research open, AMS 11]
