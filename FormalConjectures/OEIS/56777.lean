@@ -48,14 +48,20 @@ def comesFromPrimeQuadruple (n : ℕ) : Prop :=
 @[category test, AMS 11]
 theorem a_65 : a 65 := by
   refine ⟨?_, by norm_num, ?_, ?_⟩
-  · native_decide
-  · native_decide
-  · native_decide
+  · simp only [show (65 : ℕ) = 5 * 13 by norm_num]
+    exact Nat.not_prime_mul (by norm_num) (by norm_num)
+  · decide
+  · decide
 
 /-- $209$ is in the sequence A056777. -/
 @[category test, AMS 11]
 theorem a_209 : a 209 := by
-  refine ⟨?_, by norm_num, ?_⟩ <;> native_decide
+  set_option maxRecDepth 1000 in
+  refine ⟨?_, by norm_num, ?_, ?_⟩
+  · simp only [show (209 : ℕ) = 11 * 19 by norm_num]
+    exact Nat.not_prime_mul (by norm_num) (by norm_num)
+  · decide
+  · decide
 
 /-- Numbers coming from prime quadruples are in the sequence A056777. -/
 @[category undergraduate, AMS 11]
