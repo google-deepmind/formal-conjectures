@@ -50,7 +50,7 @@ class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
 /-- There are weakly first countable spaces which are not first countable,
 for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
 @[category undergraduate, AMS 54]
-theorem exists_weakly_first_countable_not_first_countable : ∃ (X : Type*) (_ : TopologicalSpace X),
+theorem exists_weakly_first_countable_not_first_countable : ∃ (X : Type) (_ : TopologicalSpace X),
       WeaklyFirstCountableTopology X ∧ ¬ FirstCountableTopology X := by sorry
 
 /-- Every first countable space is weakly first countable,
@@ -64,13 +64,13 @@ instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [Topolo
 countable compact space X such that $𝔠 < |X|$. -/
 @[category research open, AMS 54]
 theorem existsWeaklyFirstCountableCompactBig : answer(sorry) ↔
-    ∃ (X : Type*) (_ : TopologicalSpace X),
+    ∃ (X : Type) (_ : TopologicalSpace X),
       WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ 𝔠 < #X := by sorry
 
 /-- Problem 3 in [Ar2013]: Give an example in ZFC of a weakly first-
-countable compact space X such that $𝔠 < |X|$. -/
+countable compact space which is not first countable. -/
 def ExistsWeaklyFirstCountableCompactNotFirstCountable : Prop :=
-    ∃ (X : Type*) (_ : TopologicalSpace X), WeaklyFirstCountableTopology X ∧ CompactSpace X ∧
+    ∃ (X : Type) (_ : TopologicalSpace X), WeaklyFirstCountableTopology X ∧ CompactSpace X ∧
       ¬ FirstCountableTopology X
 
 /-- Problem 4 in [Ar2013]: Give an example in ZFC of a weakly first-
