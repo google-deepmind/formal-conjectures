@@ -34,15 +34,12 @@ namespace OeisA056777
 /-- A composite number $n$ is in the sequence A056777 if it satisfies both
 $\varphi(n+12) = \varphi(n) + 12$ and $\sigma(n+12) = \sigma(n) + 12$. -/
 def a (n : ℕ) : Prop :=
-  ¬n.Prime ∧ 1 < n ∧
-  Nat.totient (n + 12) = Nat.totient n + 12 ∧
-  σ 1 (n + 12) = σ 1 n + 12
+  ¬n.Prime ∧ 1 < n ∧ Nat.totient (n + 12) = Nat.totient n + 12 ∧ σ 1 (n + 12) = σ 1 n + 12
 
 /-- A number $n$ comes from a prime quadruple $(p, p+2, p+6, p+8)$ if
 $n = p(p+8)$ for some prime $p$ where $p$, $p+2$, $p+6$, $p+8$ are all prime. -/
 def comesFromPrimeQuadruple (n : ℕ) : Prop :=
-  ∃ p : ℕ, p.Prime ∧ (p + 2).Prime ∧ (p + 6).Prime ∧ (p + 8).Prime ∧
-    n = p * (p + 8)
+  ∃ p : ℕ, p.Prime ∧ (p + 2).Prime ∧ (p + 6).Prime ∧ (p + 8).Prime ∧ n = p * (p + 8)
 
 /-- $65$ is in the sequence A056777. -/
 @[category test, AMS 11]
