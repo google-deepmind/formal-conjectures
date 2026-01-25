@@ -40,15 +40,6 @@ $p$-th Lucas number. It is conjectured that there are infinitely many Wall-Sun-S
 theorem infinite_isWallSunSunPrime : {p : ℕ | IsWallSunSunPrime p}.Infinite := by
   sorry
 
-/-- Fundamental discriminants are those integers `D` that appear as discriminants of quadratic
-fields.
-
-`D` is a fundamental discriminant if it is either of the form `4m` for `m` congruent to `2` or `3`
-mod `4` squarefree, or if it congruent to `1` mod `4` and squarefree. -/
-def IsFundamentalDiscriminant (D : ℤ) : Prop :=
-  4 ∣ D ∧ (D / 4 ≡ 2 [ZMOD 4] ∨ D / 4 ≡ 3 [ZMOD 4]) ∧ Squarefree (D / 4) ∨
-    D ≡ 1 [ZMOD 4] ∧ Squarefree D
-
 /--
 A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not dividing $a^2 - 4b$, such
 that $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$ where $U(a,b)$ is the Lucas sequence of the first
@@ -59,7 +50,7 @@ infinitely many Lucas–Wieferich primes of any given non-one fundamental discri
 TODO: Source this conjecture
 -/
 @[category research open, AMS 11]
-theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℤ} (hD : IsFundamentalDiscriminant D)
+theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℤ} (hD : IsFundamentalDiscr D)
     (hD₁ : D ≠ 1) :
     {p : ℕ | ∃ a b, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p}.Infinite := by
   sorry
