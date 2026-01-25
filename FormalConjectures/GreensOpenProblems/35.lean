@@ -50,16 +50,19 @@ def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
   sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
-/-- Lower bound for $c(p)$ for $1 < p \le \infty$. -/
+/-- Lower bound for $c(p)$ for $1 < p \le \infty$, improving the known values at $p = 2, \infty$. -/
 @[category research open, AMS 26 28 42]
 theorem green_35.lower {p : ℝ≥0∞} (hp : 1 < p) :
-    answer(sorry) ≤ c p := by
+    answer(sorry) p ≤ c p ∧
+      (p = 2 → 0.7559 < answer(sorry) p) ∧
+      (p = ∞ → 0.64 < answer(sorry) p) := by
   sorry
 
-/-- Upper bound for $c(p)$ for $1 < p \le \infty$. -/
+/-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value at $p = \infty$. -/
 @[category research open, AMS 26 28 42]
 theorem green_35.upper {p : ℝ≥0∞} (hp : 1 < p) :
-    c p ≤ answer(sorry) := by
+    c p ≤ answer(sorry) p ∧
+      (p = ∞ → answer(sorry) p < 0.7505) := by
   sorry
 
 /-! Known bounds and comparisons. -/
@@ -67,22 +70,22 @@ namespace variants
 
 /-- Lower bound for $c(2)$ from Green's first paper ([Gr01]). -/
 @[category research solved, AMS 26 28 42]
-theorem p2_lower : .ofReal 0.7559 ≤ c 2 := by
+theorem p2_lower : 0.7559 ≤ c 2 := by
   sorry
 
 /-- Best-known lower bound for $c(\infty)$ due to Cloninger and Steinerberger ([CS17]). -/
 @[category research solved, AMS 26 28 42]
-theorem pInf_lower : .ofReal 0.64 ≤ c ∞ := by
+theorem c_inf_lower : 0.64 ≤ c ∞ := by
   sorry
 
 /-- Best-known upper bound for $c(\infty)$ due to Matolcsi and Vinuesa ([MV10]). -/
 @[category research solved, AMS 26 28 42]
-theorem pInf_upper : c ∞ ≤ .ofReal 0.7505 := by
+theorem c_inf_upper : c ∞ ≤ 0.7505 := by
   sorry
 
 /-- A comparison bound from Young's inequality. -/
 @[category undergraduate, AMS 26 28 42]
-theorem pInf_lower_young : (c 2) ^ 2 ≤ c ∞ := by
+theorem c_inf_lower_young : (c 2) ^ 2 ≤ c ∞ := by
   sorry
 
 end variants
