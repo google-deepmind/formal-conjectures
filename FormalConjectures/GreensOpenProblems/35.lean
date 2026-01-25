@@ -69,7 +69,7 @@ namespace variants
 
 /-- Lower bound for $c(2)$ from Green's first paper ([Gr01]). -/
 @[category research solved, AMS 26 28 42]
-theorem p2_lower : 0.7559 ≤ c 2 := by
+theorem c_2_lower : 0.7559 ≤ c 2 := by
   sorry
 
 /-- Best-known lower bound for $c(\infty)$ due to Cloninger and Steinerberger ([CS17]). -/
