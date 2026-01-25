@@ -68,10 +68,9 @@ $n$ variables of degree $2d$ can be written as a sum of squares of polynomials i
 - $(n, d) = (3, 2)$.
 -/
 def Hilbert17thProblemHomogenousPoly (n d : ℕ) : Prop :=
-  ∀ (f : MvPolynomial (Fin n) ℝ) (hhom : f.IsHomogeneous n)
-    (hdeg : f.totalDegree = 2 * d)
-    (hnonneg : ∀ x : Fin n → ℝ, 0 ≤ f.eval x), ∃ (m : ℕ) (g : Fin m → MvPolynomial (Fin n) ℝ),
-      f = ∑ i, (g i) ^ 2
+  ∀ f : MvPolynomial (Fin n) ℝ, f.IsHomogeneous n → f.totalDegree = 2 * d →
+    (∀ x : Fin n → ℝ, 0 ≤ f.eval x) →
+      ∃ (m : ℕ) (g : Fin m → MvPolynomial (Fin n) ℝ), f = ∑ i, (g i) ^ 2
 
 @[category research solved, AMS 12]
 theorem hilbert_17th_problem_poly : ∀ n d, Hilbert17thProblemHomogenousPoly n d ↔

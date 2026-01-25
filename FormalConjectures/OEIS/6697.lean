@@ -35,7 +35,7 @@ $$\sum_{n \geq 0} a_n x^n = 1 + \frac{1}{1-x} + \frac{1}{(1-x)^2}\left(\frac{1}{
 
 open PowerSeries WithPiTopology List
 
-namespace OEIS.A006697
+namespace OeisA6697
 
 /-- The morphism σ on {a, b} defined by a ↦ aab, b ↦ b, represented on Bool where
 `false` = a and `true` = b. -/
@@ -104,4 +104,4 @@ theorem conjecture : ∀ n, a n =
     coeff ℚ n (1 + (1 - X)⁻¹ + (1 - X)⁻¹ ^ 2 * ((1 - X)⁻¹ - ∑' k, X ^ (2 ^ (k + 1) + k))) := by
   sorry
 
-end OEIS.A006697
+end OeisA6697

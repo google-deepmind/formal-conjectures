@@ -61,6 +61,6 @@ theorem mathoverflow_260589 :
     ∃ f : ℝ ≃ ℝ^2, IsConnectedMap f ∧ ¬ IsConnectedMap f.symm := by
   sorry
 
---TODO: Add remarks from the mathoverflow post
+-- TODO: Add remarks from the mathoverflow post
 
 end Mathoverflow235893

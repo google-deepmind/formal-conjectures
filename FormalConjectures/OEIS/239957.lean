@@ -28,7 +28,7 @@ Zhi-Wei Sun has offered a prize of RMB 2,000 for the first proof.
 - Z.-W. Sun, "New observations on primitive roots modulo primes," arXiv:1405.0290 [math.NT], 2014.
 -/
 
-namespace OEIS.A239957
+namespace OeisA239957
 
 /--
 **Zhi-Wei Sun's Conjecture (A239957)**: Every prime $p$ has a primitive root $0 < g < p$ of the
@@ -40,4 +40,4 @@ theorem conjecture (p : ℕ) (hp : p.Prime) :
       orderOf (k ^ 2 + 1 : ZMod p) = p - 1 := by
   sorry
 
-end OEIS.A239957
+end OeisA239957
