@@ -80,7 +80,7 @@ def existsWeaklyFirstCountableCompactNotFirstCountable :
 
 /-- Under CH, such a space exists as constructed in [Ya1976] by Yakovlev. -/
 @[category research solved, AMS 54]
-theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable (CH : ℵ₁ = 𝔠) :
+theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable [Fact (ℵ₁ = 𝔠)] :
     ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
 
 -- TODO: add Problem 4 in [Ar2013]
