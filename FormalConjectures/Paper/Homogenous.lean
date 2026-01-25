@@ -40,11 +40,25 @@ $f : X \to X$ with $f(x) = y$.
 class HomogeneousSpace (X : Type*) [TopologicalSpace X] : Prop where
   exists_equiv : ∀ x y : X, ∃ f : X ≃ₜ X, f x = y
 
+/-- A bijection between discrete topoligical spaces is a homeomorpism. -/
+@[category test, AMS 54]
+theorem IsHomeomorph.equiv_of_discreteTopology {X  Y : Type*} [TopologicalSpace X]
+  [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y]
+    (f : X ≃ Y) : IsHomeomorph f := by
+  refine isHomeomorph_iff_exists_inverse.mpr ⟨continuous_of_discreteTopology,
+    Exists.intro f.symm ⟨?_, ?_, continuous_of_discreteTopology⟩⟩
+  · exact Equiv.leftInverse_symm f
+  · exact Equiv.rightInverse_symm f
+
 /-- Every discrete space is homogeneous -/
 @[category test, AMS 54]
 instance DiscreteTopology.toHomogeneousSpace (X : Type*) [TopologicalSpace X] [DiscreteTopology X] :
-    HomogeneousSpace X := by
-  sorry
+    HomogeneousSpace X where
+  exists_equiv x y := by
+    classical
+    use IsHomeomorph.homeomorph (Equiv.swap x y)
+      (IsHomeomorph.equiv_of_discreteTopology (Equiv.swap x y))
+    rw [IsHomeomorph.homeomorph_apply, Equiv.swap_apply_left]
 
 /-- Problem 13 in [Ar2013]:
 Is it true that every infinite homogeneous compact
@@ -62,19 +76,21 @@ of a homogeneous compact space under a continuous mapping? -/
 theorem homogeneousSpace_exists_surjective :
     answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X →
       ∃ (Y : Type*) (_ : TopologicalSpace Y), CompactSpace Y ∧ HomogeneousSpace Y ∧
-        ∃ f : Y → X, IsInducing f ∧ f.Surjective := by
+        ∃ f : Y → X, Continuous f ∧ f.Surjective := by
   sorry
 
 /-- A topological space is called ω-monolithic if
 the closure of every countable subspace is metrizable. -/
 class CountablyMonolithicSpace (X : Type*) [TopologicalSpace X] : Prop where
-  metrizableSpace_closure_of_countable : ∀ ⦃s : Set X⦄, s.Countable → MetrizableSpace (closure s)
+  metrizable_of_closure_of_countable : ∀ ⦃s : Set X⦄, s.Countable → MetrizableSpace (closure s)
 
 /-- Every Metrizable space is ω-monolithic. -/
 @[category test, AMS 54]
 instance MetrizableSpace.countablyMonolithicSpace
-    (X : Type*) [TopologicalSpace X] [MetrizableSpace X] : CountablyMonolithicSpace X where
-  metrizable_of_closure_of_countable _ _ := inferInstance
+    (X : Type*) [TopologicalSpace X] [MetrizableSpace X] : CountablyMonolithicSpace X := by
+  refine { metrizable_of_closure_of_countable := ?_ }
+  intros
+  infer_instance
 
 /-- Problem 15 in [Ar2013]:
 Is every homogeneous ω-monolithic compact space first countable? -/
@@ -94,7 +110,7 @@ theorem countablyMonolithicSpace_card_lt :
 
 /-- Problem 17 in [Ar2013]:
 Is it true that every ω-monolithic compact space contains a point with a
-countable neighborhood basis? -/
+first countable neighborhood basis? -/
 @[category research open, AMS 54]
 theorem countablyMonolithicSpace_exists_nhds_generated_countable :
     answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X →
