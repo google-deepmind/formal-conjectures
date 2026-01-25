@@ -59,9 +59,9 @@ theorem green_35.lower :
 
 /-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value at $p = \infty$. -/
 @[category research open, AMS 26 28 42]
-theorem green_35.upper {p : ℝ≥0∞} (hp : 1 < p) :
-    c p ≤ answer(sorry) ∧
-      (p = ∞ → answer(sorry) < 0.7505) := by
+theorem green_35.upper :
+    let ub : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
+    (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7505 := by
   sorry
 
 /-! Known bounds and comparisons. -/
