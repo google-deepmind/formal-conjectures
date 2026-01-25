@@ -55,7 +55,7 @@ noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
 theorem green_35.lower :
     let lb : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
     (∀ p, 1 < p → lb p ≤ c p) ∧
-      (ENNReal.ofReal (Real.sqrt (4 / 7)) < c 2 \or 0.64 < c ∞) := by
+      (ENNReal.ofReal (Real.sqrt (4 / 7)) < c 2 ∨ 0.64 < c ∞) := by
   sorry
 
 /-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value at $p = \infty$. -/
