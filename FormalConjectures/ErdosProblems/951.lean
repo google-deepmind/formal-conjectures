@@ -19,28 +19,26 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 951
 
-*Reference:*
+*References:*
  - [erdosproblems.com/951](https://www.erdosproblems.com/951)
  - [Er77c] Erdős, Paul, Problems and results on combinatorial number theory. III. Number theory day (Proc. Conf., Rockefeller Univ.,
     New York, 1976) (1977), 43-72.
- - [Wikipedia](https://en.wikipedia.org/wiki/Beurling_zeta_function)
- - [Beurling Zeta Functions, Generalised Primes, and Fractal Membranes](https://arxiv.org/abs/math/0410270)
 -/
 
 open scoped Finsupp Nat.Prime Topology
 open Filter
 
+namespace Erdos951
+
 /-- A sequence `a : ℕ → ℝ` is said to have property `Erdos951` if for any pair of distinct
 Beuring integers `x, y`, `|x - y| ≥ 1`. -/
-def Erdos951 (a : ℕ → ℝ) : Prop :=
+def Erdos951_prop (a : ℕ → ℝ) : Prop :=
   ∀ ⦃x y : ℝ⦄, x ≠ y → x ∈ BeurlingInteger a → y ∈ BeurlingInteger a → |x - y| ≥ 1
-
-namespace Erdos951
 
 /-- If `a` has property `Erdos951` and `1 < a 0`, then `a` is a set of Beurling prime numbers. -/
 @[category API, AMS 11]
 theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
-    (hm : StrictMono a) (he : Erdos951 a) :
+    (hm : StrictMono a) (he : Erdos951_prop a) :
     IsBeurlingPrimes a := by
   refine ⟨ha, hm, tendsto_atTop_atTop.2 fun x => ?_⟩
   by_contra h_contra
@@ -57,7 +55,7 @@ theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
 /-- If `a` has property `Erdos951`, is it true that `#{a i ≤ x} ≤ π x`? -/
 @[category research open, AMS 11]
 theorem erdos_951 : answer(sorry) ↔
-    ∀ a : ℕ → ℝ, Erdos951 a → ∀ (x : ℝ), {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
+    ∀ a : ℕ → ℝ, Erdos951_prop a → ∀ (x : ℝ), {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry
 
 /-- Beurling conjectured that if the number of Beurling integer in `[1, x]`

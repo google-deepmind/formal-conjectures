@@ -18,6 +18,14 @@ import Mathlib.Algebra.BigOperators.Finsupp.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Order.Filter.AtTopBot.Defs
 
+/-!
+# Beurling primes
+
+*References:*
+ - [Wikipedia](https://en.wikipedia.org/wiki/Beurling_zeta_function)
+ - [Beurling Zeta Functions, Generalised Primes, and Fractal Membranes](https://arxiv.org/abs/math/0410270)
+-/
+
 open Filter
 
 /-- A sequence of real numbers `1 < a 0 < a 1 < ...` is called a set of Beurling prime numbers if
