@@ -29,6 +29,8 @@ open Filter
 
 namespace Erdos912
 
+/-- If $n! = \prod_{i}p_i^{k_i}$ is the factorization into distinct primes, then we define $h(n)$
+to be the number of distinct exponents $k_i$. -/
 noncomputable def h (n : ℕ) : ℕ := (n !).factorization.frange.card
 
 /-- Erdős and Selfridge prove in [Er82c] that $h(n) \asymp \left(\frac{n}{\log n}\right)^{1/2}$. -/
@@ -43,6 +45,13 @@ as $n\to \infty$.
 -/
 @[category research open, AMS 11]
 theorem erdos_912.equivalent : ∃ c > 0,
+    (fun n => (h n : ℝ)) ~[atTop] (fun n => c * (n / Real.log n) ^ (1 / 2 : ℝ)) := by
+  sorry
+
+/-- A heuristic of Tao using the Cramér model for the primes suggests this is true with
+$c=\sqrt{2\pi}$. -/
+@[category research open, AMS 11]
+theorem erdos_912.variant : ∃ c > 0,
     (fun n => (h n : ℝ)) ~[atTop] (fun n => c * (n / Real.log n) ^ (1 / 2 : ℝ)) := by
   sorry
 
