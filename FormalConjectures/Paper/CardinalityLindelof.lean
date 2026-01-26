@@ -53,6 +53,6 @@ theorem HasGδSingletons.lindelof_card :
     ∃ (X : Type) (_ : TopologicalSpace X), HasGδSingletons X ∧ LindelofSpace X ∧ 𝔠 < #X := by
   sorry
 
--- TODO: under additional axioms, there such a space exists. I.e. this is consistent with ZFC.
+-- TODO: under additional axioms (consistent with ZFC), there such a space exists. I.e. this is consistent with ZFC.
 
 end CardinalityLindelof
