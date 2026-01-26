@@ -55,11 +55,6 @@ lemma splitOnP_append_cons {α : Type} (l1 l2 : List α)
     obtain ⟨hd1, tl1, h1'⟩ := List.exists_cons_of_ne_nil (List.splitOnP_ne_nil P tl)
     by_cases hPh : P hd <;> simp [*]
 
-@[simp]
-lemma Option.getD_comp_some : (fun x ↦ x.getD false) ∘ some = id := by
-  ext
-  simp
-
 def finEncodingListBoolProdListBool : Computability.FinEncoding (List Bool × List Bool) where
   Γ := Option Bool
   encode := fun ⟨l1, l2⟩ ↦ (l1.map some) ++ [none] ++ (l2.map some)
