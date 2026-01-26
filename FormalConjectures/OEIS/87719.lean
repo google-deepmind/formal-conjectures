@@ -40,7 +40,7 @@ def countNotExceeding (n m : ℕ) : ℕ :=
   (Finset.Icc 1 m).filter (fun k => k ≤ k.minFac ^ n) |>.card
 
 /-- There exists m such that countExceeding n m > countNotExceeding n m. -/
-@[category research open, AMS 11]
+@[category undergraduate, AMS 11]
 theorem a_exists (n : ℕ) : ∃ m, countExceeding n m > countNotExceeding n m := by
     sorry
 
