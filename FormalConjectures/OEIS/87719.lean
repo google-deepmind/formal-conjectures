@@ -41,12 +41,12 @@ def countNotExceeding (n m : ℕ) : ℕ :=
 
 /-- There exists m such that countExceeding n m > countNotExceeding n m. -/
 @[category research open, AMS 11]
-theorem a_exists {n : ℕ} : ∃ m, countExceeding n m > countNotExceeding n m := by
+theorem a_exists (n : ℕ) : ∃ m, countExceeding n m > countNotExceeding n m := by
     sorry
 
 /-- The sequence a(n): least m such that countExceeding n m > countNotExceeding n m. -/
 noncomputable def a (n : ℕ) : ℕ :=
-  Nat.find (@a_exists n)
+  Nat.find (a_exists n)
 
 /-- a(1) = 15. -/
 @[category test, AMS 11]
