@@ -33,7 +33,7 @@ with $108$ being the only primitive term.
 *References:* [oeis.org/A063880](https://oeis.org/A063880)
 -/
 
-namespace OeisA063880
+namespace OeisA63880
 
 /-- The set of unitary divisors of $n$: divisors $d$ such that $\gcd(d, n/d) = 1$. -/
 def unitaryDivisors (n : ℕ) : Finset ℕ :=
@@ -109,4 +109,4 @@ theorem exists_primitive_of_a {n : ℕ} (h : a n) :
     ∃ m s, isPrimitiveTerm m ∧ Squarefree s ∧ m.Coprime s ∧ n = m * s := by
   sorry
 
-end OeisA063880
+end OeisA63880
