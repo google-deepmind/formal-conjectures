@@ -59,7 +59,7 @@ For $N \geq k$ and $k > 1$, the AllowedSetSize in $(k - 1) * N$, i. e. on an $N 
 there is a set of $k * N$ points for which no $k$ lie on a line (and not such a set of bigger size).
 -/
 @[category research open, AMS 05 52]
-theorem NoKinLine {k : ℕ} {N : ℕ} (h : k ≤ N) : NoKinLineFor k N := by
+theorem NoKinLine {k : ℕ} {N : ℕ} (hk : 1 < k) (h : k ≤ N) : NoKinLineFor k N := by
   sorry
 
 /-- **Green's Open Problem 62 / No-three-in-line problem**:
@@ -75,7 +75,7 @@ alias no_three_in_line := green_62
 theorem green_62.variants.eventually : ∀ᶠ N in Filter.atTop, NoKinLineFor 3 N := by
   sorry
 
-/-- For $N \leq k$, this has been verfied with computers. -/
+/-- For $N \leq 60$, this has been verfied with computers. -/
 @[category research solved, AMS 05 52]
 theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
     NoKinLineFor 3 N := by
