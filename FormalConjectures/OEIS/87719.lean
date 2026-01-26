@@ -29,7 +29,7 @@ The conjecture states that $a_n = 3^n + 3 \cdot 2^n + 6$ for $n \ge 1$.
 *References:* [oeis.org/A087719](https://oeis.org/A087719)
 -/
 
-namespace Oeis87719
+namespace OeisA87719
 
 /-- Count of numbers k in {1, ..., m} where k > (minFac k)^n. -/
 def countExceeding (n m : ℕ) : ℕ :=
@@ -77,4 +77,4 @@ theorem a_three : a 3 = 57 := by
 theorem a_formula {n : ℕ} (hn : n ≥ 1) : a n = 3 ^ n + 3 * 2 ^ n + 6 := by
     sorry
 
-end Oeis87719
+end OeisA87719
