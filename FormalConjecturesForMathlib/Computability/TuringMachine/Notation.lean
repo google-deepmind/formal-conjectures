@@ -94,7 +94,7 @@ private def Nat.toStateSyntax (n : Nat) (stateName : Name) : TermElabM Term := d
 /-- `String.toStmtSyntax s stateName` parses a component of a Turing machine string representation
 and outputs the syntax of the corresponding `(state, statement) : State × Stmt` pair. -/
 private def String.toStmtSyntax (s : String) (stateName : Name) (numStates : Nat) : TermElabM Term := do
-  let [c_symbol, c_dir, c_state] := s.data |
+  let [c_symbol, c_dir, c_state] := s.toList |
     throwError m!"Invalid transition encoding: {s} should be 3 characters long."
   if c_symbol = '-' ∧ c_dir = '-' ∧ c_state = '-' then
     `(none)
