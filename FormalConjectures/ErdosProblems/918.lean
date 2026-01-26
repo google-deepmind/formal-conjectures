@@ -73,7 +73,7 @@ less than $\aleph_k$ vertices has chromatic number $\leq \aleph_0$. -/
 @[category research solved, AMS 5]
 theorem erdos_918.variants.erdos_hajnal (k : ℕ) : ∃ (V : Type u) (G : SimpleGraph V),
     #V = ℵ_ k ∧ G.chromaticCardinal = ℵ₁ ∧
-      ∀ (W : Set V) (_ : #W < ℵ_ k), (G.induce W).chromaticCardinal ≤ ℵ₀ :=
+      ∀ (W : Set V) (_ : #W < ℵ_ k), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry
 
 /-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is

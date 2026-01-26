@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/313](https://www.erdosproblems.com/313)
-- OEIS: [A054377](https://oeis.org/A054377) (Primary pseudoperfect numbers)
+- OEIS: [A54377](https://oeis.org/A54377) (Primary pseudoperfect numbers)
 -/
 
 namespace Erdos313

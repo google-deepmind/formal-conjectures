@@ -28,14 +28,14 @@ namespace Erdos846
 section Prelims
 open Classical
 
-/--We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
-`B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`.-/
+/-- We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
+`B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`. -/
 def NonTrilinearFor (A : Set ℝ²) (ε : ℝ) : Prop :=
   ∀ (B : Finset ℝ²), B.toSet ⊆ A → ∃ C ⊆ B,
     ε * B.card ≤ C.card ∧ NonTrilinear C.toSet
 
-/--We say a subset `A` of points in the plane is weakly non-trilinear if it is
-a finite union of non-trilinear sets.-/
+/-- We say a subset `A` of points in the plane is weakly non-trilinear if it is
+a finite union of non-trilinear sets. -/
 def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
   ∃ B : Finset (Set ℝ²), A = sSup B ∧ ∀ b ∈ B, NonTrilinear b
 

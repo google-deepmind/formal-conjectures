@@ -17,5 +17,5 @@ limitations under the License.
 import Mathlib.Analysis.Asymptotics.Defs
 import Mathlib.Order.Filter.AtTopBot.Defs
 
-notation f " ≫ " g => Asymptotics.IsBigO Filter.atTop g f
-notation g " ≪ " f => Asymptotics.IsBigO Filter.atTop g f
+notation f " ≫ " g => Asymptotics.IsBigO Filter.atTop (g : ℕ → ℝ) (f : ℕ → ℝ)
+notation g " ≪ " f => Asymptotics.IsBigO Filter.atTop (g : ℕ → ℝ) (f : ℕ → ℝ)

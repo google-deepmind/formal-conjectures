@@ -44,8 +44,8 @@ The answer is yes, proved by Ruzsa [Ru78].
 @[category research solved, AMS 5]
 theorem erdos_899 : answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
     Tendsto (fun N => (A.interIcc 1 N |>.ncard : ℝ) / N) atTop (𝓝 0) →
-    Tendsto (fun N => ((A - A : Set ℕ).interIcc 1 N |>.ncard : ℝ) /
-      (A.interIcc 1 N).ncard) atTop atTop := by
+    atTop.limsup (fun N => ((A - A : Set ℕ).interIcc 1 N |>.ncard : EReal) /
+      (A.interIcc 1 N).ncard) = ⊤ := by
   sorry
 
 end Erdos899

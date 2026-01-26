@@ -43,7 +43,7 @@ Erdős [Er37b] proved that if $f_2(n)$ counts the number of solutions to $n = p_
 -/
 @[category research solved, AMS 11]
 theorem erdos_979_k2 :
-    Filter.limsup (fun n => (solutionSet n 2).encard) Filter.atTop = ⊤ :=
+    Filter.limsup (fun n => (solutionSet n 2).encard) Filter.atTop = ⊤ := by
   sorry
 
 /--
@@ -51,7 +51,7 @@ Erdős (unpublished)
 -/
 @[category research solved, AMS 11]
 theorem erdos_979_k3 :
-    Filter.limsup (fun n => (solutionSet n 3).encard) Filter.atTop = ⊤ :=
+    Filter.limsup (fun n => (solutionSet n 3).encard) Filter.atTop = ⊤ := by
   sorry
 
 end Erdos979

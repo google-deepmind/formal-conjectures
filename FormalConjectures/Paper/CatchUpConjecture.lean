@@ -46,36 +46,35 @@ ending with scores `(5,5)`.
 A. Isaksen, M. Ismail, S. J. Brams, A. Nealen,
 *Catch-Up: A Game in Which the Lead Alternates,* Game & Puzzle Design 1(2), 38–49 (2015).
 
-Category and AMS classification:
---------------------------------
-This is a research-level open problem in combinatorial game theory and number theory.
-
 -/
-
-noncomputable section
 
 namespace CatchUp
 
 /--
 An arbitrary two elements type indexing the players in the Catch-Up game.
 -/
-inductive Player | p1 | p2
+inductive Player
+  | p1
+  | p2
 deriving DecidableEq, Repr
 
 /-- Returns the other player. -/
 def Player.other : Player → Player
-| p1 => p2
-| p2 => p1
+  | p1 => p2
+  | p2 => p1
 
 /-- The possible outcomes of a Catch-Up game. -/
-inductive Outcome | win | loss | draw
+inductive Outcome
+  | win
+  | loss
+  | draw
 deriving DecidableEq, Repr
 
 /-- Negates an outcome, swapping win and loss. Used when switching player perspectives. -/
 def Outcome.neg : Outcome → Outcome
-| win => loss
-| loss => win
-| draw => draw
+  | win => loss
+  | loss => win
+  | draw => draw
 
 /--
 Computes the best outcome for the current player from a list of possible outcomes.
@@ -177,7 +176,8 @@ If \(T_N\) is even (equivalently \(N \equiv 0 \pmod 4\) or \(N \equiv 3 \pmod 4\
 then under optimal play the game `Catch-Up(\(\{1, \ldots, N\}\))` ends in a draw.
 -/
 @[category research open, AMS 11 91]
-theorem value_of_even_mul_succ_self_div_two (N : ℕ) (h_even : Even (N * (N + 1) / 2)) :
+theorem value_of_even_mul_succ_self_div_two
+    (N : ℕ) (h_even : Even (N * (N + 1) / 2)) :
     value (.Icc 1 N) = .draw := by
   sorry
 

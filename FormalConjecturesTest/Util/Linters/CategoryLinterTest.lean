@@ -18,39 +18,61 @@ import FormalConjectures.Util.Linters.CategoryLinter
 
 namespace CategoryLinter
 
---Definitions aren't required to have a category attribute
+-- Definitions aren't required to have a category attribute
 #guard_msgs in
 def foo : Nat := 1
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem -/
 theorem test_theorem : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 theorem test_theorem_with_hypothesis (_ : True) : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with two helpful hypotheses -/
 theorem test_theorem_with_hypotheses (_ : True) (_ : False): 1 + 1 = 2 := by
   rfl
 
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 lemma test_lemma : 1 + 1 = 2 := by
   rfl
 
-/-- warning: Missing problem category attribute -/
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 example : 1 + 1 = 2 := by
   rfl
 
+/-- warning: If a problem has a sorry-free proof, it should not be categorised as `open`. -/
+#guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 @[category research open]
 theorem test_theorem_with_docstring : 1 + 1 = 2 := by
@@ -58,19 +80,19 @@ theorem test_theorem_with_docstring : 1 + 1 = 2 := by
 
 #guard_msgs in
 @[category research open]
-theorem test_2 : 1 + 1 = 2 := by
-  rfl
+theorem test_2 : 1 + 1 = 3 := by
+  sorry
 
---The linter is compatible with theorems having other attributes.
+-- The linter is compatible with theorems having other attributes.
 #guard_msgs in
 @[simp, category research open]
-theorem test_1 : 1 + 1 = 2 := by
-  rfl
+theorem test_1 : 1 + 1 = 3 := by
+  sorry
 
---The order of attributes is irrelevant.
+-- The order of attributes is irrelevant.
 #guard_msgs in
 @[category research open, simp]
-theorem test_3 : 1 + 1 = 2 := by
-  rfl
+theorem test_3 : 1 + 1 = 3 := by
+  sorry
 
 end CategoryLinter

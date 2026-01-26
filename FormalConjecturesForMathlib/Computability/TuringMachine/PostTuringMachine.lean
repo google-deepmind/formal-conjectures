@@ -32,7 +32,7 @@ theorem Part.get_eq_get {σ : Type*} {a b : Part σ} (ha : a.Dom) (hb : a.get ha
 
 namespace Turing
 
-lemma dom_of_apply_eq_none  {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f s = none) :
+lemma dom_of_apply_eq_none {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f s = none) :
     s ∈ Turing.eval f s := by
   apply PFun.fix_stop
   simp [hf]

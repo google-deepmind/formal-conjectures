@@ -22,8 +22,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 
 namespace SimpleGraph
 
-open Finset
-open Classical
+open Classical Finset List
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -43,9 +42,6 @@ noncomputable def m (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 
-/-- The independence number of a graph `G`. -/
-noncomputable def a (G : SimpleGraph α) : ℝ := (G.indepNum : ℝ)
-
 /-- The maximum cardinality among all independent sets `s`
     that maximize the quantity `|s| - |N(s)|`, where `N(s)`
     is the neighborhood of the set `s`. -/
@@ -56,7 +52,6 @@ noncomputable def aprime (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   letI critical_sets := indep_sets.filter (fun s ↦ diff s = max_diff.getD 0)
   letI max_card := (critical_sets.image Finset.card).max
   (max_card.getD 0 : ℝ)
-
 
 /-- `largestInducedForestSize G` is the size of a largest induced forest of `G`. -/
 noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
@@ -99,5 +94,20 @@ def UnitDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph 
   loopless := by
     intros x
     simp [dist_self]
+
+/--
+Two walks are internally disjoint if they share no vertices other than their endpoints.
+-/
+def InternallyDisjoint {V : Type*} {G : SimpleGraph V} {u v x y : V}
+    (p : G.Walk u v) (q : G.Walk x y) : Prop :=
+  Disjoint p.support.tail.dropLast q.support.tail.dropLast
+
+/--
+We say a graph is infinitely connected if any two vertices are connected by infinitely many
+pairwise disjoint paths.
+-/
+def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop :=
+  Pairwise fun u v ↦ ∃ P : Set (G.Walk u v),
+    P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
 
 end SimpleGraph

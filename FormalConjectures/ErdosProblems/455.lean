@@ -32,7 +32,7 @@ namespace Erdos455
 @[category research open, AMS 11]
 theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
     (∀ n, (q n).Prime ∧ q (n + 1) - q n ≥ q n - q (n - 1)) →
-    Tendsto (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop atTop :=
+    Tendsto (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop atTop := by
   sorry
 
 /--  Let `q : ℕ → ℕ` be a strictly increasing sequence of primes such that
@@ -41,7 +41,7 @@ theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
 @[category research solved, AMS 11]
 theorem erdos_455.liminf : ∀ q : ℕ → ℕ, StrictMono q →
     (∀ n, (q n).Prime ∧ q (n + 1) - q n ≥ q n - q (n - 1)) →
-    liminf (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop > 0.352 :=
+    liminf (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop > 0.352 := by
   sorry
 
 end Erdos455
