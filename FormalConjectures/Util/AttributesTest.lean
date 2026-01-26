@@ -48,6 +48,6 @@ theorem test_ignore_other_categories : 1 = 1 :=
   rfl
 
 #guard_msgs in
-@[category research formally solved at "https://github.com/example/formal-proof"]
+@[category research formally solved using lean4 at "https://github.com/example/formal-proof"]
 theorem a_formally_solved_problem : 2 + 2 = 4 := by
   sorry

@@ -40,9 +40,11 @@ The values of this attribute are
   The criterion for being solved is that there exists an informal solution
   that is widely accepted by experts in the area. In particular, this
   does *not* require a formal solution to exist.
-- `@[category research formally solved at "link"]` : a research level math problem
-  that has been formally solved in this repository, with "link" being a permalink
-  to the formal solution.
+- @[category research formally solved using <kind> at "link"]` : a formally solved research problem.
+   `<kind>` must be one of:
+  - `formal_conjectures` : solved in this repository (e.g. filling the `sorry` in the current file).
+  - `lean4` : solved in Lean 4 (e.g. Mathlib, or some other repo) as an equivalent statement.
+  - `other_system` : solved in another formal system (Roqc, Isabelle, Lean3, HOL, etc.).
 - `@[category test]` : a statement that serves as a sanity check (e.g. for a new definition).
 - `@[category API]` : a statement that constructs basic theory around a new definition
 
@@ -94,6 +96,21 @@ in the AMS classification for completeness. Some are not relevant to this reposi
 
 namespace ProblemAttributes
 
+/-- The type of formal proof that exists for a problem. This is meant to be used
+for the `research formally solved` category. -/
+inductive FormalProofKind
+  /-- The problem exactly as stated in formal-conjectures has a formal proof.
+  The link points to a commit that fills the `sorry` relative to the current
+  commit (i.e., the commit where this category is added, or the commit with the
+  latest fix for this statement). -/
+  | formalConjecturesProof
+  /-- The problem is solved in Lean 4 (e.g. in Mathlib or some other
+  repository), perhaps as an equivalent statement. -/
+  | lean4
+  /-- The problem is formally solved in a different system (Roqc, Isabelle, Lean 3, HOL, etc.). -/
+  | otherSystem
+  deriving Inhabited, BEq, Hashable, ToExpr
+
 inductive ProblemStatus
   /-- Indicates that a mathematical problem is still open. -/
   | open
@@ -102,17 +119,27 @@ inductive ProblemStatus
   | solved
   /-- Indicates that a mathematical problem is formally solved in this repository,
   with a link to the formal proof. -/
-  | formallySolvedHere : String → ProblemStatus
+  | formallySolvedAt : FormalProofKind → String → ProblemStatus
   deriving Inhabited, BEq, Hashable, ToExpr
 
-syntax problemStatus := &"open" <|> &"solved" <|> (&"formally" &"solved" &"at" str)
+syntax formalProofKind := &"formal_conjectures" <|> &"lean4" <|> &"other_system"
+
+def formalProofKind.toName (stx : TSyntax ``formalProofKind) : Option Name :=
+  match stx with
+  | `(formalProofKind| formal_conjectures) => ``FormalProofKind.formalConjecturesProof
+  | `(formalProofKind| lean4) => ``FormalProofKind.lean4
+  | `(formalProofKind| other_system) => ``FormalProofKind.otherSystem
+  | _ => none
+
+syntax problemStatus := &"open" <|> &"solved"
+  <|> (&"formally" &"solved" &"using" formalProofKind &"at" str)
 
 /-- Convert from a syntax node to a name. -/
 def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
   match stx with
     | `(problemStatus| open) => ``ProblemStatus.open
     | `(problemStatus| solved) => ``ProblemStatus.solved
-    | `(problemStatus| formally solved at $_) => ``ProblemStatus.formallySolvedHere
+    | `(problemStatus| formally solved using $_ at $_) => ``ProblemStatus.formallySolvedAt
     | _ => none
 
 /-- A type to capture the various types of statements that appear in our Lean files. -/
@@ -194,9 +221,12 @@ def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
     return Category.graduate
   | `(CategorySyntax| research $status) =>
     let problemStatus ← match status with
-      | `(problemStatus| formally solved at $link) => do
-        Elab.addConstInfo status ``ProblemStatus.formallySolvedHere
-        pure (ProblemStatus.formallySolvedHere link.getString)
+      | `(problemStatus| formally solved using $kind at $link) => do
+        Elab.addConstInfo status ``ProblemStatus.formallySolvedAt
+        let some n := formalProofKind.toName kind | throwUnsupportedSyntax
+        let pfKind ← Lean.Meta.MetaM.run' <|
+          unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
+        pure (ProblemStatus.formallySolvedAt pfKind link.getString)
       | _ => do
         let some n := problemStatus.toName status | throwUnsupportedSyntax
         Elab.addConstInfo status n
