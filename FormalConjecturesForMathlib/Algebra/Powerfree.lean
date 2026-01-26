@@ -73,5 +73,5 @@ theorem not_powerfree_zero [MonoidWithZero M₀] [Nontrivial M₀] (k : ℕ) :
   rw [Powerfree, not_forall]
   exact ⟨0, by simp⟩
 
-theorem Prime.powerfree [CancelCommMonoidWithZero M₀] {m : M₀} (h : Prime m) (hk : 2 ≤ k) :
-    Powerfree k m := h.irreducible.powerfree hk
+theorem Prime.powerfree [CommMonoidWithZero M₀] [IsCancelMulZero M₀] {m : M₀} (h : Prime m)
+    (hk : 2 ≤ k) : Powerfree k m := h.irreducible.powerfree hk

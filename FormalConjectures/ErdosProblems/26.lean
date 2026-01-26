@@ -71,7 +71,7 @@ theorem isBehrend_of_contains_one {ι : Type*} (A : ι → ℕ) (h : 1 ∈ Set.r
   rw [IsBehrend, Set.HasDensity]
   exact tendsto_atTop_of_eventually_const (i₀ := 1) fun n hn ↦ by
     simp [multiplesOf_eq_univ A h, Set.partialDensity]
-    field_simp
+    lia
 
 @[category test, AMS 11]
 theorem isWeaklyBehrend_of_ge_one {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε : 1 ≤ ε) :

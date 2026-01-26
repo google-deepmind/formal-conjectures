@@ -173,7 +173,7 @@ def numToAMSName (n : Nat) : MetaM Name := do
 def AMS.getDesc (a : AMS) : CoreM String := do
   let .const n [] := Lean.toExpr a | throwError "this shouldn't happen"
   let .some doc := ← Lean.findDocString? (← getEnv) n | throwError m!"{.ofConstName n} is missing a docstring"
-  return doc.trim
+  return doc.trimAscii.toString
 
 def AMS.toNat? (a : AMS) : Option Nat := do
   let .const (.str _ m) [] := Lean.toExpr a | none
@@ -190,6 +190,6 @@ elab "#AMS" : command => do
     let nm : Name := Name.str ``AMS (ToString.toString n)
     if ← Lean.hasConst nm then
       if let some doc := ← Lean.findDocString? env nm then
-        return s!"{n} {doc.trim}"
+        return s!"{n} {doc.trimAscii}"
     return none
   Lean.logInfo ("\n".intercalate lines)

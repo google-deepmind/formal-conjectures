@@ -139,7 +139,7 @@ theorem union_closed.variants.singleton_mem
     rw [Finset.insert_eq]
     exact h_union_closed _ hi _ hx
   have h₃ : #B ≤ #C := Finset.card_le_card_of_injOn _ h₂ h₁
-  have h₄ : #C + #B = #A := by rw [filter_card_add_filter_neg_card_eq_card]
+  have h₄ : #C + #B = #A := by rw [card_filter_add_card_filter_not]
   have : #A ≤ 2 * #C := by omega
   cancel_denoms
   norm_cast

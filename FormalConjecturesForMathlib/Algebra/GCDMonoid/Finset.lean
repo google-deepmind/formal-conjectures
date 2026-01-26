@@ -20,7 +20,7 @@ import Mathlib.Order.Interval.Finset.Defs
 namespace Finset
 
 /-- The least common multiple of ${n+1, \dotsc, n+k}$. -/
-def lcmInterval {α : Type*} [AddMonoid α] [CancelCommMonoidWithZero α] [NormalizedGCDMonoid α]
+def lcmInterval {α : Type*} [AddMonoid α] [CommMonoidWithZero α] [NormalizedGCDMonoid α]
     [Preorder α] [LocallyFiniteOrder α] (n k : α) : α := (Finset.Ioc n (n + k)).lcm id
 
 end Finset
