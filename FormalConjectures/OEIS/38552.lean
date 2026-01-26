@@ -32,7 +32,7 @@ The conjectures state that:
 *References:* [oeis.org/A038552](https://oeis.org/A038552)
 -/
 
-namespace OeisA038552
+namespace Oeis38552
 
 /-- The class number of the imaginary quadratic field $\mathbb{Q}(\sqrt{-k})$ equals $n$. -/
 def HasClassNumber (k n : ℕ) : Prop :=
@@ -131,4 +131,4 @@ theorem odd_gt_even_for_even_classNumber {n : ℕ} (hn : Even n) (k k' : ℕ)
     k > k' := by
   sorry
 
-end OeisA038552
+end Oeis38552
