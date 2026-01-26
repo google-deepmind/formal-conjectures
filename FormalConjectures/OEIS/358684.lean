@@ -64,8 +64,9 @@ private lemma log2_minFac_le (n : ℕ) : log2 (fermatNumber n).minFac ≤ 2^n :=
   rw [log2_eq_log_two]
   refine (log_mono_right (minFac_le (by rw [fermatNumber]; norm_num))).trans_eq ?_
   rw [fermatNumber, log_eq_of_pow_le_of_lt_pow (le_add_right _ _)]
-  rw [pow_succ, mul_two]; apply add_lt_add_left (one_lt_pow (by norm_num) (by norm_num))
-
+  rw [pow_succ, mul_two]
+  gcongr
+  exact one_lt_pow (by norm_num) (by norm_num)
 
 /--
 The minimization definition is equivalent to the closed form.

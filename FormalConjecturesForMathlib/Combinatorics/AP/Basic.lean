@@ -240,4 +240,4 @@ A function `f : α → β` has a monotone `k`-term arithmetic progression if the
 arithmetic progression `l` of length `k` in `α` such that its image under `f` is sorted.
 -/
 def HasMonotoneAP {β : Type*} [Preorder β] (f : α → β) (k : ℕ) : Prop :=
-  ∃ l : List α, l.IsAPOfLength k ∧ (l.map f).Sorted (· < ·)
+  ∃ l : List α, l.IsAPOfLength k ∧ (l.map f).Pairwise (· < ·)
