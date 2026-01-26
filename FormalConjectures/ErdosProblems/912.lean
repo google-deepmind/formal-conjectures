@@ -52,7 +52,7 @@ theorem erdos_912.equivalent : ∃ c > 0,
 $c=\sqrt{2\pi}$. -/
 @[category research open, AMS 11]
 theorem erdos_912.variant :
-    (fun n => (h n : ℝ)) ~[atTop] (fun n => √(2 * π) * (n / Real.log n) ^ (1 / 2 : ℝ)) := by
+    (fun n => (h n : ℝ)) ~[atTop] (fun n => √(2 * Real.pi) * (n / Real.log n) ^ (1 / 2 : ℝ)) := by
   sorry
 
 end Erdos912
