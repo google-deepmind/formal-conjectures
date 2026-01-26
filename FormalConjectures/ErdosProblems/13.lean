@@ -22,8 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/13](https://www.erdosproblems.com/13)
 -/
 
-open Finset
-open Nat
+open Finset Nat
 
 namespace Erdos13
 
