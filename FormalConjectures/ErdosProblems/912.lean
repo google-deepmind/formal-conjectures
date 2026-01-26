@@ -31,7 +31,7 @@ namespace Erdos912
 
 noncomputable def h (n : ℕ) : ℕ := (n !).factorization.frange.card
 
-/-- Erdős and Selfridge prove in [Er82c] that `h =Θ[atTop] (fun n => (n / log n) ^ (1 / 2))`. -/
+/-- Erdős and Selfridge prove in [Er82c] that $h(n) \asymp \left(\frac{n}{\log n}\right)^{1/2}$. -/
 @[category research solved, AMS 11]
 theorem erdos_912_theta :
     (fun n => (h n : ℝ)) =Θ[atTop] (fun n => (n / Real.log n) ^ (1 / 2 : ℝ)) := by
