@@ -42,7 +42,7 @@ theorem a_1 : a 1 := by norm_num [a]
 /-- $2$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 := by
-  unfold a; decide
+  simp +decide only [a]
 
 /-- $4$ is in the sequence A067720. -/
 @[category test, AMS 11]
