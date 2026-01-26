@@ -22,8 +22,7 @@ import FormalConjectures.Util.ProblemImports
 Let $A \subset \mathbb{Z}$ be a set of size $n$. For how many $\theta \in \mathbb{R}/\mathbb{Z}$
 must we have $\sum_{a \in A} \cos(2\pi a\theta) = 0$?
 
-This problem asks for the minimum number of zeros of the trigonometric sum
-$\sum_{a \in A} \cos(2\pi a \theta)$ on the circle, over all sets $A$ of a given size.
+It is known that there must be at least $\Omega(\log n / \log \log n)$ zeros.
 
 *Reference:*
 - [Gr24] [Ben Green's Open Problem 82](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.82)
@@ -37,16 +36,19 @@ namespace Green82
 /--
 Let $A \subset \mathbb{Z}$ be a set of size $n$. For how many $\theta \in \mathbb{R}/\mathbb{Z}$
 must we have $\sum_{a \in A} \cos(2\pi a\theta) = 0$?
-
-We formalize this as asking for the infimum of the number of zeros of
-$\theta \mapsto \sum_{a \in A} \cos(2\pi a \theta)$ in $[0, 1)$, over all finite sets
-$A \subset \mathbb{Z}$ with $|A| = n$.
 -/
 @[category research open, AMS 11 42]
-theorem green_82 (n : ℕ) (hn : 1 ≤ n) :
-    ⨅ (A : Finset ℤ) (_ : A.card = n),
-      ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard =
-    answer(sorry) := by
+theorem green_82 :
+    answer(sorry) ↔ ∃ f : ℕ → ℕ, ∀ n > 0, ∀ A : Finset ℤ, A.card = n →
+      f n ≤ ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard := by
+  sorry
+
+/-- There must be at least $\Omega(\log n / \log \log n)$ zeros. -/
+@[category research solved, AMS 11 42]
+theorem green_82_lower_bound :
+    ∃ c > 0, ∀ n ≥ 2, ∀ A : Finset ℤ, A.card = n →
+      c * log n / log (log n) ≤
+        ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard := by
   sorry
 
 end Green82
