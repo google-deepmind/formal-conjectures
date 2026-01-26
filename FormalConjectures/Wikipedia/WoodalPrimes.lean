@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 
 References:
 * [Wikipedia/Woodall Number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
-* [OEIS/A002234](https://oeis.org/A002234)
+* [OEIS/A2234](https://oeis.org/A2234)
 
 -/
 

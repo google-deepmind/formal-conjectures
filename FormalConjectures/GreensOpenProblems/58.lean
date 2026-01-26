@@ -13,30 +13,73 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 import FormalConjectures.Util.ProblemImports
 
-open scoped Pointwise
+open scoped ArithmeticFunction
 
 /-!
-# Ben Green's Open Problem 58
+# Conjectures associated with A56777
 
-*Reference:* [Ben Green's Open Problem 58](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 58)
+A56777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
+$\sigma(n+12) = \sigma(n) + 12$.
+
+The conjectures state identities connecting A56777 and prime quadruples (A7530), as
+well as congruences satisfied by the members of A56777.
+
+*References:* [oeis.org/A56777](https://oeis.org/A56777)
 -/
 
-namespace Green58
+namespace OeisA56777
 
-/--
-Suppose $A, B ⊆ \{1, \dots, N\}$ both have size at least $N^{0.49}$. Must the sumset $A + B$
-contain a composite number?
--/
-@[category research open, AMS 5 11]
-theorem green_58 :
-    answer(sorry) ↔
-      ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N) (B ⊆ Finset.Icc 1 N),
-        (N : ℝ) ^ (0.49 : ℝ) ≤ (A.card : ℝ) →
-        (N : ℝ) ^ (0.49 : ℝ) ≤ (B.card : ℝ) →
-        ∃ m ∈ (A + B), m.Composite := by
+/-- A composite number $n$ is in the sequence A56777 if it satisfies both
+$\varphi(n+12) = \varphi(n) + 12$ and $\sigma(n+12) = \sigma(n) + 12$. -/
+def a (n : ℕ) : Prop :=
+  ¬n.Prime ∧ 1 < n ∧ Nat.totient (n + 12) = Nat.totient n + 12 ∧ σ 1 (n + 12) = σ 1 n + 12
+
+/-- A number $n$ comes from a prime quadruple $(p, p+2, p+6, p+8)$ if
+$n = p(p+8)$ for some prime $p$ where $p$, $p+2$, $p+6$, $p+8$ are all prime. -/
+def comesFromPrimeQuadruple (n : ℕ) : Prop :=
+  ∃ p : ℕ, p.Prime ∧ (p + 2).Prime ∧ (p + 6).Prime ∧ (p + 8).Prime ∧ n = p * (p + 8)
+
+/-- $65$ is in the sequence A56777. -/
+@[category test, AMS 11]
+theorem a_65 : a 65 := by
+  refine ⟨?_, by norm_num, ?_, ?_⟩
+  · simp only [show (65 : ℕ) = 5 * 13 by norm_num]
+    exact Nat.not_prime_mul (by norm_num) (by norm_num)
+  · decide
+  · decide
+
+/-- $209$ is in the sequence A56777. -/
+@[category test, AMS 11]
+theorem a_209 : a 209 := by
+  set_option maxRecDepth 1000 in
+  refine ⟨?_, by norm_num, ?_, ?_⟩
+  · simp only [show (209 : ℕ) = 11 * 19 by norm_num]
+    exact Nat.not_prime_mul (by norm_num) (by norm_num)
+  · decide
+  · decide
+
+/-- Numbers coming from prime quadruples are in the sequence A56777. -/
+@[category undergraduate, AMS 11]
+theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) : a n := by
   sorry
 
-end Green58
+/-- All members of the sequence A56777 come from prime quadruples. -/
+@[category research open, AMS 11]
+theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : comesFromPrimeQuadruple n := by
+  sorry
+
+/-- Numbers coming from prime quadruples satisfy $n \equiv 65 \pmod{72}$. -/
+@[category undergraduate, AMS 11]
+theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) :
+    n % 72 = 65 := by
+  sorry
+
+/-- Numbers coming from prime quadruples satisfy $n \equiv 9 \pmod{100}$. -/
+@[category undergraduate, AMS 11]
+theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h : comesFromPrimeQuadruple n) :
+    n % 100 = 9 := by
+  sorry
+
+end OeisA56777

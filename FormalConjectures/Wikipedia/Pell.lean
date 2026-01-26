@@ -21,10 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Pell_number#Primes_and_squares)
- - [OEIS A086383](https://oeis.org/A086383)
+ - [OEIS A86383](https://oeis.org/A86383)
 
 The Pell numbers $P_n$ are defined by $P_0 = 0$,
-$P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$. [OEIS A000129](https://oeis.org/A000129)
+$P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$. [OEIS A129](https://oeis.org/A129)
 
 The conjecture says that there are infinitely many prime Pell numbers.
 -/

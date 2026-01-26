@@ -19,20 +19,20 @@ open scoped ArithmeticFunction
 open Nat
 
 /-!
-# Conjectures associated with A056777
+# Conjectures associated with A56777
 
-A056777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
+A56777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
 $\sigma(n+12) = \sigma(n) + 12$.
 
-The conjectures state identities connecting A056777 and prime quadruples (A007530), as
-well as congruences satisfied by the members of A056777.
+The conjectures state identities connecting A56777 and prime quadruples (A7530), as
+well as congruences satisfied by the members of A56777.
 
-*References:* [oeis.org/A056777](https://oeis.org/A056777)
+*References:* [oeis.org/A56777](https://oeis.org/A56777)
 -/
 
-namespace OeisA056777
+namespace OeisA56777
 
-/-- A composite number $n$ is in the sequence A056777 if it satisfies both
+/-- A composite number $n$ is in the sequence A56777 if it satisfies both
 $\varphi(n+12) = \varphi(n) + 12$ and $\sigma(n+12) = \sigma(n) + 12$. -/
 def a (n : ℕ) : Prop :=
   ¬n.Prime ∧ 1 < n ∧ totient (n + 12) = totient n + 12 ∧ σ 1 (n + 12) = σ 1 n + 12
@@ -42,7 +42,7 @@ $n = p(p+8)$ for some prime $p$ where $p$, $p+2$, $p+6$, $p+8$ are all prime. -/
 def ComesFromPrimeQuadruple (n : ℕ) : Prop :=
   ∃ p : ℕ, p.Prime ∧ (p + 2).Prime ∧ (p + 6).Prime ∧ (p + 8).Prime ∧ n = p * (p + 8)
 
-/-- $65$ is in the sequence A056777. -/
+/-- $65$ is in the sequence A56777. -/
 @[category test, AMS 11]
 theorem a_65 : a 65 := by
   refine ⟨?_, by norm_num, ?_, ?_⟩
@@ -51,7 +51,7 @@ theorem a_65 : a 65 := by
   · decide
   · decide
 
-/-- $209$ is in the sequence A056777. -/
+/-- $209$ is in the sequence A56777. -/
 @[category test, AMS 11]
 theorem a_209 : a 209 := by
   set_option maxRecDepth 1000 in
@@ -61,12 +61,12 @@ theorem a_209 : a 209 := by
   · decide
   · decide
 
-/-- Numbers coming from prime quadruples are in the sequence A056777. -/
+/-- Numbers coming from prime quadruples are in the sequence A56777. -/
 @[category undergraduate, AMS 11]
 theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) : a n := by
   sorry
 
-/-- All members of the sequence A056777 come from prime quadruples. -/
+/-- All members of the sequence A56777 come from prime quadruples. -/
 @[category research open, AMS 11]
 theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : ComesFromPrimeQuadruple n := by
   sorry
@@ -83,4 +83,4 @@ theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadrupl
     n % 100 = 9 := by
   sorry
 
-end OeisA056777
+end OeisA56777
