@@ -37,8 +37,9 @@ theorem erdos_912_theta :
     (fun n => (h n : ℝ)) =Θ[atTop] (fun n => (n / Real.log n) ^ (1 / 2 : ℝ)) := by
   sorry
 
-/-- Prove that there exists a constant `c > 0` such that
-`h ~[atTop] (fun n => c * (n / log n) ^ (1 / 2))`.
+/-- Prove that there exists some $c>0$ such that
+$$h(n) \sim c \left(\frac{n}{\log n}\right)^{1/2}$$
+as $n\to \infty$.
 -/
 @[category research open, AMS 11]
 theorem erdos_912.equivalent : ∃ c > 0,
