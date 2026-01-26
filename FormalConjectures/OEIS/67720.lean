@@ -47,22 +47,22 @@ theorem a_2 : a 2 := by
 /-- $4$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 := by
-  unfold a; decide
+  simp +decide only [a]
 
 /-- $6$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_6 : a 6 := by
-  unfold a; decide
+  simp +decide only [a]
 
 /-- $8$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_8 : a 8 := by
-  unfold a; decide
+  simp +decide only [a]
 
 /-- $10$ is in the sequence A067720. -/
 @[category test, AMS 11]
 theorem a_10 : a 10 := by
-  unfold a; decide
+  simp +decide only [a]
 
 /-- If $k + 1$ and $k^2 + 1$ are both prime, then $k$ is in the sequence. -/
 @[category undergraduate, AMS 11]
