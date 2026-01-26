@@ -16,6 +16,7 @@ limitations under the License.
 import Mathlib
 import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Defs
 
+open Algebra (IsQuadraticExtension)
 open Module NumberField
 
 namespace QuadraticAlgebra
@@ -29,6 +30,9 @@ lemma discr_rat_of_not_modEq_one (hd : Squarefree d) (hd₄ : ¬ d ≡ 1 [ZMOD 4
 
 end QuadraticAlgebra
 
+lemma isQuadraticExtension_iff_exists_quadraticAlgebra :
+    IsQuadart
+
 /-- Fundamental discriminants are those integers `D` that appear as discriminants of quadratic
 fields.
 
@@ -37,6 +41,11 @@ mod `4` squarefree, or if it congruent to `1` mod `4` and squarefree. -/
 def IsFundamentalDiscr (D : ℤ) : Prop :=
   4 ∣ D ∧ (D / 4 ≡ 2 [ZMOD 4] ∨ D / 4 ≡ 3 [ZMOD 4]) ∧ Squarefree (D / 4) ∨
     D ≡ 1 [ZMOD 4] ∧ Squarefree D
+
+lemma isFundamentalDiscr_iff_exists_isQuadraticExtension {D : ℤ} :
+    IsFundamentalDiscr D ↔ ∃ d ≠ 1, Squarefree d ∧ discr ℚ (QuadraticAlgebra ℚ d 0) = d := by
+  constructor
+  · rintro (⟨\d, rfl⟩)
 
 lemma isFundamentalDiscr_iff_exists_discr_eq {D : ℤ} :
     IsFundamentalDiscr D ↔ ∃ d ≠ 1, Squarefree d ∧ discr ℚ (QuadraticAlgebra ℚ d 0) = d := by
