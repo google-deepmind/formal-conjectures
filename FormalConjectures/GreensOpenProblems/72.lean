@@ -51,7 +51,7 @@ theorem allowedSetSize_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
   sorry
 
 /-- $N, k$ when the AllowedSetSize of $N$ for $k$ is $k * N$. -/
-def NoKinLineFor (k : ℕ) (N : ℕ) : Prop :=
+def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
   AllowedSetSize k N = (k - 1) * N
 
 /-- The **no-k-in-line problem**:
@@ -59,32 +59,32 @@ For $N \geq k$ and $k > 1$, the AllowedSetSize in $(k - 1) * N$, i. e. on an $N 
 there is a set of $k * N$ points for which no $k$ lie on a line (and not such a set of bigger size).
 -/
 @[category research open, AMS 05 52]
-theorem NoKinLine {k : ℕ} {N : ℕ} (hk : 1 < k) (h : k ≤ N) : NoKinLineFor k N := by
+theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 1 < k) (h : k ≤ N) : NoKInLineFor k N := by
   sorry
 
 /-- **Green's Open Problem 62 / No-three-in-line problem**:
 The no-k-in-line conjecture holds for $k = 3$. -/
 @[category research open, AMS 05 52]
-theorem green_62 {N : ℕ} (hN : 3 ≤ N) : NoKinLineFor 3 N := by
+theorem green_62 {N : ℕ} (hN : 3 ≤ N) : NoKInLineFor 3 N := by
   sorry
 
 alias no_three_in_line := green_62
 
 /-- Does the no-three-in-line problem hold when $N$ is big enough? -/
 @[category research open, AMS 05 52]
-theorem green_62.variants.eventually : ∀ᶠ N in Filter.atTop, NoKinLineFor 3 N := by
+theorem green_62.variants.eventually : ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
   sorry
 
 /-- For $N \leq 60$, this has been verfied with computers. -/
 @[category research solved, AMS 05 52]
 theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
-    NoKinLineFor 3 N := by
+    NoKInLineFor 3 N := by
   sorry
 
 /-- In [GK2025] Grebennikov and Kwan prove the no-k-in-line conjecture for $k > 10 ^ 37$. -/
 @[category research solved, AMS 05 52]
 theorem no_k_in_line_big {k : ℕ} (N : ℕ) (h : 10 ^ 37 < k) :
-    NoKinLineFor k N := by
+    NoKInLineFor k N := by
   sorry
 
 -- TODO: Add lower bound for no-three-in-line
