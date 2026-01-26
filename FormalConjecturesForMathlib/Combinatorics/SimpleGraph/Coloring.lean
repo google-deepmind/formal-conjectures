@@ -65,7 +65,7 @@ lemma card_div_indepNum_le_chromaticNumber : ⌈(Nat.card V / α(G) : ℚ≥0)�
     fun b _ ↦ IsIndepSet.card_le_indepNum ?_
   simpa [IsIndepSet, Set.Pairwise] using fun x hx y hy _ ↦ c.not_adj_of_mem_colorClass hx hy
 
-instance (f : ι → V) : IsSymm ι fun i j ↦ G.Adj (f i) (f j) where symm _ _ := .symm
+instance (f : ι → V) : Std.Symm fun i j ↦ G.Adj (f i) (f j) where symm _ _ := .symm
 
 variable (G) in
 /-- A set of edges is critical if deleting them reduces the chromatic number. -/
