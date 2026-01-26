@@ -157,7 +157,7 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
         cast_div (even_iff_two_dvd.mp h) (by norm_num), cast_add]; ring
   refine Tendsto.congr' (eventually_atTop.2 ⟨1, fun n hn => (h hn).symm⟩)
     (Tendsto.if' tendsto_const_nhds ?_)
-  replace h : Tendsto (fun  (k : ℕ) => 1 + 1 / (k : ℝ)) atTop (𝓝 1) := by
+  replace h : Tendsto (fun (k : ℕ) => 1 + 1 / (k : ℝ)) atTop (𝓝 1) := by
     simpa using Tendsto.const_add (M := ℝ) _ tendsto_one_div_atTop_nhds_zero_nat
   simpa using Tendsto.mul_const _ <|
     Tendsto.congr' (eventually_atTop.2 ⟨1, fun k hk => by field_simp⟩) h
