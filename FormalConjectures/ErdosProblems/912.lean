@@ -51,8 +51,8 @@ theorem erdos_912.equivalent : ∃ c > 0,
 /-- A heuristic of Tao using the Cramér model for the primes suggests this is true with
 $c=\sqrt{2\pi}$. -/
 @[category research open, AMS 11]
-theorem erdos_912.variant : ∃ c > 0,
-    (fun n => (h n : ℝ)) ~[atTop] (fun n => c * (n / Real.log n) ^ (1 / 2 : ℝ)) := by
+theorem erdos_912.variant :
+    (fun n => (h n : ℝ)) ~[atTop] (fun n => √(2 * π) * (n / Real.log n) ^ (1 / 2 : ℝ)) := by
   sorry
 
 end Erdos912
