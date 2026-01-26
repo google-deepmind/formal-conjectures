@@ -29,7 +29,7 @@ $k + 1$ is prime. The conjecture states that $k = 8$ is the only exception.
 
 open Nat
 
-namespace OeisA067720
+namespace OeisA67720
 
 /-- A number $k$ is in the sequence A067720 if $\varphi(k^2 + 1) = k \cdot \varphi(k + 1)$. -/
 def a (k : ℕ) : Prop :=
@@ -74,4 +74,4 @@ theorem a_of_primes {k : ℕ} (hk : (k + 1).Prime) (hk' : (k ^ 2 + 1).Prime) : a
 theorem prime_add_one_of_a {k : ℕ} (h : a k) (hne : k ≠ 8) : (k + 1).Prime := by
   sorry
 
-end OeisA067720
+end OeisA67720
