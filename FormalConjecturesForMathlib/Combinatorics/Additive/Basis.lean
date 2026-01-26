@@ -121,7 +121,8 @@ protected lemma IsAsymptoticMulBasisOfOrder.ne_zero [Infinite M]
 protected lemma IsAsymptoticMulBasisOfOrder.nonempty [Infinite M]
     (hA : A.IsAsymptoticMulBasisOfOrder n) : A.Nonempty := by
   by_contra!
-  simp [this, IsAsymptoticMulBasisOfOrder, hA.ne_zero, finite_univ_iff, Infinite.not_finite] at hA
+  simp [this, IsAsymptoticMulBasisOfOrder, hA.ne_zero, finite_univ_iff,
+    _root_.Infinite.not_finite] at hA
 
 /-- `A : Set M` is an asymptotic basis of order one iff it is cofinite. -/
 @[to_additive (attr := simp)

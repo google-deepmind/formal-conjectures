@@ -40,7 +40,7 @@ lemma le_chromaticNumber_of_pairwise_adj (hn : n ≤ Nat.card ι) (f : ι → V)
     (hf : Pairwise fun i j ↦ G.Adj (f i) (f j)) : n ≤ G.chromaticNumber :=
   le_chromaticNumber_iff_colorable.2 fun _m hm ↦ hn.trans <| hm.card_le_of_pairwise_adj f hf
 
-instance (f : ι → V) : IsSymm ι fun i j ↦ G.Adj (f i) (f j) where symm _ _ := .symm
+instance (f : ι → V) : Std.Symm fun i j ↦ G.Adj (f i) (f j) where symm _ _ := .symm
 
 variable (G) in
 /-- A set of edges is critical if deleting them reduces the chromatic number. -/
