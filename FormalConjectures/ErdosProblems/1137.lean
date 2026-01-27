@@ -16,19 +16,27 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-! # Woodall Primes
+/-!
+# Erdős Problem 1137
 
-References:
-* [Wikipedia/Woodall Number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
-* [OEIS/A2234](https://oeis.org/A2234)
-
+*Reference:* [erdosproblems.com/1137](https://www.erdosproblems.com/1137)
 -/
 
-namespace WoodallPrimes
+open Filter Finset
+open scoped Topology
 
-/-- There are infinitely many prime numbers of the form `k * 2 ^ k - 1` for `k > 1`. -/
+namespace Erdos1137
+
+/--
+Let $d_n=p_{n+1}-p_n$, where $p_n$ denotes the $n$th prime. Is it true that
+$$\frac{\max_{n < x}d_{n}d_{n-1}}{(\max_{n < x}d_n)^2}\to 0$$ as $x\to \infty$?
+-/
 @[category research open, AMS 11]
-theorem infinitely_many_woodall_primes : {k : ℕ | 1 < k ∧ (k * 2 ^ k - 1).Prime}.Infinite := by
+theorem erdos_1137 :
+    answer(sorry) ↔
+     Tendsto (fun x ↦
+        (((range x).sup (fun n ↦ (primeGap n) * (primeGap (n - 1))) : ℕ) : ℝ) /
+        (((range x).sup primeGap : ℕ) : ℝ) ^ 2) atTop (𝓝 0) := by
   sorry
 
-end WoodallPrimes
+end Erdos1137

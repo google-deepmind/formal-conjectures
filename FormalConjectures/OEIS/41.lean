@@ -23,7 +23,7 @@ Name: "No powers as partition numbers"
 
 There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
 
-*Reference*: [OEIS A000041](https://oeis.org/A000041)
+*Reference*: [OEIS A41](https://oeis.org/A41)
 -/
 
 /-- The `n`-th partition number. -/

@@ -1,5 +1,5 @@
 /-
-Copyright 2026 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,22 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.Data.Finset.Card
 
-import FormalConjectures.Util.ProblemImports
+namespace Finset
+variable {α : Type*} {s t : Finset α}
 
-/-! # Woodall Primes
+lemma card_le_card_iff_of_subset (hst : s ⊆ t) : #t ≤ #s ↔ s = t where
+  mp := eq_of_subset_of_card_le hst
+  mpr := by rintro rfl; rfl
 
-References:
-* [Wikipedia/Woodall Number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
-* [OEIS/A2234](https://oeis.org/A2234)
+lemma card_lt_card_iff_of_subset (hst : s ⊆ t) : #s < #t ↔ s ≠ t := by
+  rw [← not_le, card_le_card_iff_of_subset hst]
 
--/
-
-namespace WoodallPrimes
-
-/-- There are infinitely many prime numbers of the form `k * 2 ^ k - 1` for `k > 1`. -/
-@[category research open, AMS 11]
-theorem infinitely_many_woodall_primes : {k : ℕ | 1 < k ∧ (k * 2 ^ k - 1).Prime}.Infinite := by
-  sorry
-
-end WoodallPrimes
+end Finset
