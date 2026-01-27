@@ -38,6 +38,13 @@ open scoped Real in
 theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
   sorry
 
+
+#guard_msgs in
+@[category research formally solved using lean4 at "https://github.com/example/formal-proof"]
+theorem a_formally_solved_problem : 2 + 2 = 4 := by
+  rfl
+
+
 -- The `#AMS` command
 
 /--
