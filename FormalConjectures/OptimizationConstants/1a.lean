@@ -30,7 +30,9 @@ open Set
 
 namespace Constant1a
 
-/-- A real number satisfying a certain inequality about integral. -/
+/--
+A real number satisfying a certain inequality about (auto)convolutions and $L^2$-norms of functions.
+Such numbers are related to the maximal size of Sidon sets in additive combinatorics. -/
 def IsL2Bound (C : ℝ) : Prop :=
   ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f →  C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
     ≤ sSup {r | ∃ t ∈ Icc (1 / 2 : ℝ) 1, r = ∫ x, f (t - x) * f x}
@@ -39,7 +41,7 @@ def IsL2Bound (C : ℝ) : Prop :=
 The biggest real number satisfying a certain inequality about integral. -/
 noncomputable def C1a : ℝ := sSup {C : ℝ | IsL2Bound C}
 
-/-- The best known lower bound, proven by Matolcsi-Vinuesa in-/
+/-- The best known lower bound, proven by Matolcsi-Vinuesa in [M2010]-/
 @[category research solved, AMS 05 11 26]
 theorem c1a_lower_bound : 1.2748 ≤ C1a := by
   sorry
@@ -64,6 +66,6 @@ theorem c1a_ge : answer(sorry) ≤ C1a := by
 theorem c1a_eq : C1a = answer(sorry) := by
   sorry
 
--- TODO : Formalise relationship to Sidon sets.
+-- TODO : Formalise relationship with Sidon sets.
 
 end Constant1a
