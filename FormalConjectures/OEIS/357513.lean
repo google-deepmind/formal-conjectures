@@ -57,32 +57,10 @@ def q_modeq (p : ℕ) (k : ℕ) (x y : ℚ) : Prop :=
   ∃ z, is_p_integral p z ∧ x - y = (p ^ k : ℚ) * z
 
 def term_rat (n k : ℕ) : ℚ :=
-  (Nat.choose n k : ℚ) ^ 2 * (Nat.choose (n + k) k : ℚ) ^ 2 / (k : ℚ) ^ 3
+  ((n.choose k : ℚ) ^ 2 * ((n + k).choose k : ℚ) ^ 2) / k ^ 3
 
-def H (n r : ℕ) : ℚ := Finset.sum (Finset.Icc 1 n) (fun k => 1 / (k : ℚ)^r)
+def H (n r : ℕ) : ℚ := ∑ k ∈ Finset.Icc 1 n, 1 / (k : ℚ)^r
 
-lemma rat_num_mod_pk (p k : ℕ) (x : ℚ) (hp : Nat.Prime p)
-    (h_int : is_p_integral p x) (h_cong : q_modeq p k x 0) :
-    (x.num : ℤ) ≡ 0 [ZMOD (p ^ k : ℤ)] := by
-  delta is_p_integral q_modeq Int.ModEq at *
-  refine h_cong.elim fun and h=>(h.2▸sub_zero _)▸ Rat.mul_num _ _▸mod_cast(? _)
-  exact (.trans (by rw [Int.natAbs_mul,Int.natAbs_ofNat, one_mul,((hp.coprime_iff_not_dvd.2 (by valid)).pow_left _).mul and.reduced]) (by norm_num))
-
-lemma q_modeq_sum {p k : ℕ} {s : Finset ℕ} {f g : ℕ → ℚ} (hp : Nat.Prime p) :
-    (∀ i ∈ s, q_modeq p k (f i) (g i)) →
-    q_modeq p k (Finset.sum s f) (Finset.sum s g) := by
-  delta q_modeq Finset.sum
-  norm_num[is_p_integral,mul_comm,hp.ne_zero,←div_eq_iff]
-  use fun and=>ne_of_eq_of_ne (by rw [←s.sum_sub_distrib,s.sum_div]) @?_
-  induction(s) using Finset.cons_induction with|empty=>field_simp [hp.ne_one]|cons=>_
-  simp_all[mt (dvd_trans.comp p.dvd_of_mod_eq_zero · (Rat.add_den_dvd _ _)),hp.dvd_mul,p.dvd_iff_mod_eq_zero]
-
-lemma q_modeq_mul_scaling (p k j : ℕ) (x y u : ℚ) (hp : Nat.Prime p)
-  (hu : is_p_integral p u) (h : q_modeq p k x y) :
-  q_modeq p (k + j) ((p^j : ℚ) * u * x) ((p^j : ℚ) * u * y) := by
-  delta is_p_integral q_modeq at *
-  refine h.elim fun A B=>⟨u*A,u.mul_den A▸hu ∘? _,.trans (by rw [←mul_sub, B.2]) (by ring)⟩
-  refine (by valid ∘ hp.dvd_mul.mp).comp (p.dvd_of_mod_eq_zero · |>.trans (Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)) )
 
 lemma term_identity (p : ℕ) (k : ℕ) (hp : Nat.Prime p) (hk : k ∈ Finset.Icc 1 (p - 1)) :
   term_rat (p - 1) k = (p : ℚ)^2 / k^5 * ((1 - (p : ℚ)/k)^2 *
@@ -179,7 +157,8 @@ lemma harmonic_reflection (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5) :
       · simp_rw [ Finset.prod_Icc_succ_top and.succ_pos, Rat.normalize_eq]
         exact (Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)).trans (by gcongr)
       · exact (hp.prime.exists_mem_finset_dvd ((p.dvd_of_mod_eq_zero and).trans V)).choose_spec.elim (K _ · ·.modEq_zero_nat)
-    · simp_all only[mul_one_div, two_mul,neg_mul,neg_div, sub_neg_eq_add,←sub_add,← Finset.sum_sub_distrib, Finset.mul_sum]
+    · simp_all only [mul_one_div, neg_mul, neg_div, sub_neg_eq_add, ← sub_add, ←
+      Finset.sum_sub_distrib, Finset.mul_sum]
       simp_all only[← V,div_eq_mul_inv, one_mul,← Finset.mul_sum, two_mul, Finset.sum_add_distrib]
   · exact(( Finset.sum_Ico_eq_sum_range _ _ _).trans (Finset.sum_congr rfl (by field_simp+contextual[eq_self,add_sub,←sub_add,hp.one_lt,·.le_sub_one_of_lt]))).symm
 
@@ -193,7 +172,7 @@ lemma harmonic_vanish_6 (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5) (h_neq7 :
   · have := (∑ a ∈.Icc (1) (p-1), (↑a)⁻¹^6:ℚ).num_div_den
     rw[div_eq_iff,Nat.gcd_eq_right ∘Int.natCast_dvd.mp]at *
     · replace: (∑ a ∈.Icc (1) (p-1),(a:ℚ)⁻¹^6).2 ∣∏ a ∈.Icc (1) (p-1), a^6:=(p-1).rec (refl _) fun and y=>.trans (by rw [ Finset.sum_Icc_succ_top and.succ_pos, Rat.add_def]) ?_
-      · simp_all -contextual [ Finset.prod_Icc_succ_top, and.succ_pos, Rat.normalize]
+      · simp_all -contextual [Finset.prod_Icc_succ_top, Rat.normalize]
         exact (Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)).trans ↑(mul_dvd_mul y ↑(mod_cast↑( Rat.inv_natCast_den_of_pos (by·bound)).dvd))
       · exact (hp.prime.not_dvd_finset_prod fun and=>mt hp.dvd_of_dvd_pow ∘mt p.eq_zero_of_dvd_of_lt ∘by valid ∘ Finset.mem_Icc.mp).comp ↑(·.trans this)
     · replace:↑p ∣ (∑ a ∈.Icc (1) (p-1), (a : Rat)⁻¹^6).1*∏ a ∈.Icc (1) (p-1), a^6
@@ -225,6 +204,54 @@ lemma sum_is_integral (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5) :
     exact (Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)).trans ↑(mul_dvd_mul j ((Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)).trans ((mod_cast (Rat.inv_natCast_den_of_pos (by ·bound)).dvd))))
   · exact (hp.prime.not_dvd_finset_prod fun and=>mt hp.dvd_of_dvd_pow ∘mt p.eq_zero_of_dvd_of_lt ∘by valid ∘ Finset.mem_range.1).comp (·.trans (this _))
 
+theorem supercongruence_rational (p : ℕ) (hp : Nat.Prime p) (h5 : 5 ≤ p) (h7 : 7 ≠ p) :
+    q_modeq p 4 (∑ k ∈ Finset.Icc 1 (p - 1), term_rat (p - 1) k) 0 := by
+  let n := p - 1
+  let S := ∑ k ∈ Finset.Icc 1 n, term_rat n k;
+  let H5 := H n 5
+  let H6 := H n 6
+  have h_term_cong : ∀ k ∈ Finset.Icc 1 n,
+      q_modeq p 4 (term_rat n k) ((p : ℚ)^2 / k^5 - 2 * (p : ℚ)^3 / k^6) :=
+    fun k hk => term_approx_mod_p4 p hp (by omega) k hk
+  have h_sum_approx : q_modeq p 4 S ((p : ℚ)^2 * H5 - 2 * (p : ℚ)^3 * H6) := by
+    simp_all only[term_rat, S, H6,q_modeq, H,n,div_eq_mul_inv,←inv_pow]
+    choose! A B using‹_›
+    simp_all only [is_p_integral, sub_eq_iff_eq_add, one_mul, Finset.mul_sum,
+      Finset.sum_add_distrib, Finset.sum_sub_distrib]
+    exists∑ a ∈.Icc (1) n, A a, fun and=>?_
+    · replace h_neq7:(∑ a ∈.Icc (1) n, A a).2 ∣∏ a ∈.Icc (1) (n : ℕ),(A a).2:=(Finset.Icc _ _).induction (by rfl ) fun and a s=>?_
+      · exact (by field_simp [(Rat.add_den_dvd _ _).trans, mul_dvd_mul,·])
+      · use(hp.prime.exists_mem_finset_dvd<| (p.dvd_of_mod_eq_zero and).trans h_neq7).elim (B · ·.1|>.1 (by omega))
+    · exact (congr_arg₂ _) (Finset.mul_sum _ _ _).symm ((congr_arg₂ _) (( Finset.mul_sum _ _ _).symm.trans (congr_arg _ (Finset.sum_congr rfl (by bound)))) rfl )
+  have h_refl : q_modeq p 2 (2 * H5) (-5 * (p : ℚ) * H6) := harmonic_reflection p hp (by omega)
+  have h_refl_scaled : q_modeq p 4 (2 * (p : ℚ)^2 * H5) (-5 * (p : ℚ)^3 * H6) := by
+    delta term_rat q_modeq at*
+    exact (h_refl).imp fun and=>.imp_right (by linear_combination2.*p^2)
+  have h_rhs_val : q_modeq p 4 (2 * ((p : ℚ)^2 * H5 - 2 * (p : ℚ)^3 * H6)) (-9 * (p : ℚ)^3 * H6) := by
+    delta q_modeq at*
+    exact (by valid:).imp fun and=>.imp_right (.trans (by ring))
+  have h_H6_van : q_modeq p 1 H6 0 := harmonic_vanish_6 p hp (by omega) (by omega)
+  have h_vanish : q_modeq p 4 (-9 * (p : ℚ)^3 * H6) 0 := by
+    norm_num[ q_modeq]at‹_›⊢
+    norm_num[is_p_integral]at‹_›⊢
+    refine (by valid:).elim fun A B=>⟨-9*A, B.1 ∘p.mod_eq_zero_of_dvd ∘ fun and=>?_, B.2▸by ring⟩
+    rw[ Rat.mul_den]at and
+    exact (p.dvd_of_mod_eq_zero and).trans (by. (norm_num[Nat.div_dvd_of_dvd _,Nat.gcd_dvd]))
+  have h_2S : q_modeq p 4 (2 * S) 0 := by
+    rw[ q_modeq]at*
+    norm_num[is_p_integral, sub_eq_iff_eq_add] at h_sum_approx‹∃_, _∧H6-0 =_›h_rhs_val‹_›⊢
+    refine h_sum_approx.elim (h_vanish.elim (h_rhs_val.elim fun a s A B R L=>⟨2*R+a+A,?_, L.2▸by linarith⟩))
+    apply lt_self_iff_false 10 |>.elim fun and x =>mt (p.dvd_of_mod_eq_zero · |>.trans ( Rat.add_den_dvd _ _)) ?_
+    use hp.not_dvd_mul (mt (·.trans ( Rat.add_den_dvd _ _)) ? _)<|by valid
+    norm_num[*,hp.dvd_mul,mt (dvd_trans · (Rat.mul_den_dvd _ _)),p.dvd_iff_mod_eq_zero]
+  have h_S : q_modeq p 4 S 0 := by
+    norm_num[q_modeq] at h_2S⊢
+    field_simp[is_p_integral,mul_comm (2 :ℚ),←div_eq_iff]at h_2S⊢
+    refine h_2S.elim fun A B=>⟨A/2, B.1 ∘ fun and=>p.mod_eq_zero_of_dvd ? _,by bound⟩
+    rw[div_eq_mul_inv, A.mul_den]at and
+    exact ( (p.coprime_primes hp (by decide ) ).mpr (by valid)).dvd_mul_right.mp (Rat.inv_natCast_den_of_pos two_pos▸ (p.dvd_of_mod_eq_zero and).trans ↑(Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)))
+  omega
+
 /--
 We have  $a(p-1) \equiv 0 \pmod{p^4}$ for all primes $p \ge 3$ except $p=7$.
 -/
@@ -232,69 +259,23 @@ We have  $a(p-1) \equiv 0 \pmod{p^4}$ for all primes $p \ge 3$ except $p=7$.
 theorem a357513_supercongruence (p : ℕ) (hp : Nat.Prime p) (h_ge3 : p ≥ 3) (h_neq7 : p ≠ 7) :
     (a (p - 1) : ℤ) ≡ 0 [ZMOD (p : ℤ) ^ 4] := by
   rcases eq_or_ne p 3 with rfl | h_ne3
-  · have h_a2 : (a 2 : ℤ) = 81 := by
-      simp_all!
-      delta a
-      norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
-    have h_mod : (81 : ℤ) ≡ 0 [ZMOD (3 : ℤ) ^ 4] := by
-      simp_all +decide[a]
-    clear h_a2 h_mod
-    norm_num[a]
-    norm_num+decide only[ Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton,Nat.choose]
+  · norm_num +decide only [a, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton,
+      Nat.choose]
   · have hp_ge5 : p ≥ 5 := by
-      if R :p=4 then{norm_num[R] at hp} else ·omega
+      if h4 : p = 4 then {norm_num [h4] at hp} else · omega
     let n := p - 1
-    let S : ℚ := Finset.sum (Finset.Icc 1 n) (fun k => term_rat n k)
-    have h_sum_cong : q_modeq p 4 S 0 := by
-      let H5 := H n 5
-      let H6 := H n 6
-      have h_term_cong : ∀ k ∈ Finset.Icc 1 n,
-          q_modeq p 4 (term_rat n k) ((p : ℚ)^2 / k^5 - 2 * (p : ℚ)^3 / k^6) :=
-        fun k hk => term_approx_mod_p4 p hp hp_ge5 k hk
-      have h_sum_approx : q_modeq p 4 S ((p : ℚ)^2 * H5 - 2 * (p : ℚ)^3 * H6) := by
-        simp_all only[term_rat, S, H6,q_modeq, H,n,div_eq_mul_inv,←inv_pow]
-        choose! A B using‹_›
-        simp_all only[is_p_integral, sub_eq_iff_eq_add, one_mul,n, Finset.mul_sum, Finset.sum_add_distrib, Finset.sum_sub_distrib]
-        exists∑ a ∈.Icc (1) n, A a, fun and=>?_
-        · replace h_neq7:(∑ a ∈.Icc (1) n, A a).2 ∣∏ a ∈.Icc (1) (n : ℕ),(A a).2:=(Finset.Icc _ _).induction (by rfl ) fun and a s=>?_
-          · exact (by field_simp [(Rat.add_den_dvd _ _).trans, mul_dvd_mul,·])
-          · use(hp.prime.exists_mem_finset_dvd<| (p.dvd_of_mod_eq_zero and).trans h_neq7).elim (B · ·.1|>.1 (by omega))
-        · exact (congr_arg₂ _) (Finset.mul_sum _ _ _).symm ((congr_arg₂ _) (( Finset.mul_sum _ _ _).symm.trans (congr_arg _ (Finset.sum_congr rfl (by bound)))) rfl )
-      have h_refl : q_modeq p 2 (2 * H5) (-5 * (p : ℚ) * H6) := harmonic_reflection p hp hp_ge5
-      have h_refl_scaled : q_modeq p 4 (2 * (p : ℚ)^2 * H5) (-5 * (p : ℚ)^3 * H6) := by
-        delta term_rat q_modeq at*
-        exact (h_refl).imp fun and=>.imp_right (by linear_combination2.*p^2)
-      have h_rhs_val : q_modeq p 4 (2 * ((p : ℚ)^2 * H5 - 2 * (p : ℚ)^3 * H6)) (-9 * (p : ℚ)^3 * H6) := by
-        delta q_modeq at*
-        exact (by valid:).imp fun and=>.imp_right (.trans (by ring))
-      have h_H6_van : q_modeq p 1 H6 0 := harmonic_vanish_6 p hp hp_ge5 h_neq7
-      have h_vanish : q_modeq p 4 (-9 * (p : ℚ)^3 * H6) 0 := by
-        norm_num[ q_modeq]at‹_›⊢
-        norm_num[is_p_integral]at‹_›⊢
-        refine (by valid:).elim fun A B=>⟨-9*A, B.1 ∘p.mod_eq_zero_of_dvd ∘ fun and=>?_, B.2▸by ring⟩
-        rw[ Rat.mul_den]at and
-        exact (p.dvd_of_mod_eq_zero and).trans (by. (norm_num[Nat.div_dvd_of_dvd _,Nat.gcd_dvd]))
-      have h_2S : q_modeq p 4 (2 * S) 0 := by
-        rw[ q_modeq]at*
-        norm_num[is_p_integral, sub_eq_iff_eq_add] at h_sum_approx‹∃_, _∧H6-0 =_›h_rhs_val‹_›⊢
-        refine h_sum_approx.elim (h_vanish.elim (h_rhs_val.elim fun a s A B R L=>⟨2*R+a+A,?_, L.2▸by linarith⟩))
-        apply lt_self_iff_false 10 |>.elim fun and x =>mt (p.dvd_of_mod_eq_zero · |>.trans ( Rat.add_den_dvd _ _)) ?_
-        use hp.not_dvd_mul (mt (·.trans ( Rat.add_den_dvd _ _)) ? _)<|by valid
-        norm_num[*,hp.dvd_mul,mt (dvd_trans · (Rat.mul_den_dvd _ _)),p.dvd_iff_mod_eq_zero]
-      have h_S : q_modeq p 4 S 0 := by
-        norm_num[q_modeq] at h_2S⊢
-        field_simp[is_p_integral,mul_comm (2 :ℚ),←div_eq_iff]at h_2S⊢
-        refine h_2S.elim fun A B=>⟨A/2, B.1 ∘ fun and=>p.mod_eq_zero_of_dvd ? _,by bound⟩
-        rw[div_eq_mul_inv, A.mul_den]at and
-        exact ( (p.coprime_primes hp (by decide ) ).mpr (by valid)).dvd_mul_right.mp (Rat.inv_natCast_den_of_pos two_pos▸ (p.dvd_of_mod_eq_zero and).trans ↑(Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)))
-      valid
+    let S : ℚ := ∑ k ∈ (Finset.Icc 1 n), term_rat n k
     have h_S_int : is_p_integral p S := sum_is_integral p hp hp_ge5
     have h_a_val : (a n : ℤ) = S.num := by
       norm_num[a,term_rat,S]
       positivity
-    simp_all[is_p_integral,q_modeq,Int.modEq_zero_iff_dvd,n]
-    choose _ _ _simpa using(id) h_sum_cong
-    norm_num[*, Rat.mul_num, Rat.mul_den]
-    field_simp[Int.natAbs_mul,Int.natAbs_pow,((hp.coprime_iff_not_dvd.2 (by valid ∘p.mod_eq_zero_of_dvd)).pow_left _).mul (Rat.reduced _),id]
+    simp_all [is_p_integral, Int.modEq_zero_iff_dvd,n]
+    choose _ _ hS using(id) (supercongruence_rational p hp (hp_ge5) (by symm; exact h_neq7))
+    unfold S n
+    simp only [sub_zero] at hS
+    norm_num [hS, *, Rat.mul_num, Rat.mul_den]
+    field_simp [Int.natAbs_mul, Int.natAbs_pow,
+      ((hp.coprime_iff_not_dvd.2 (by valid ∘p.mod_eq_zero_of_dvd)).pow_left _
+      ).mul_left (Rat.reduced _),id]
 
 end OeisA357513
