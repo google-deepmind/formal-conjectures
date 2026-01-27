@@ -31,7 +31,7 @@ open Set
 namespace Constant1a
 
 /-- A real number satisfying a certain inequality about integral. -/
-def isL2Bound (C : ℝ) : Prop :=
+def IsL2Bound (C : ℝ) : Prop :=
   ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f →  C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
     ≤ sSup {r | ∃ t ∈ Icc (1 / 2 : ℝ) 1, r = ∫ x, f (t - x) * f x}
 
