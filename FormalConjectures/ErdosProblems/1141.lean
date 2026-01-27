@@ -31,6 +31,12 @@ open Nat Set
 namespace Erdos1141
 
 /--
+The property that $n-k^2$ is prime for all $k$ with $(n,k)=1$ and $k^2 < n$.
+-/
+def erdos_1141_property (n : ℕ) : Prop :=
+  ∀ k, k ^ 2 < n → Coprime n k → (n - k ^ 2).Prime
+
+/--
 Are there infinitely many $n$ such that $n-k^2$ is prime for all $k$ with $(n,k)=1$ and $k^2 < n$?
 
 In [Va99] it is asked whether $968$ is the largest integer with this property, but this is an
@@ -41,7 +47,15 @@ is $1722$.
 -/
 @[category research open, AMS 11]
 theorem erdos_1141 :
-    answer(sorry) ↔ Infinite { n | ∀ k, k ^ 2 < n → Coprime n k → (n - k ^ 2).Prime } := by
+    answer(sorry) ↔ Infinite { n | erdos_1141_property n } := by
+  sorry
+
+@[category research solved, AMS 11]
+example : ¬ erdos_1141_property 968 := by
+  sorry
+
+@[category research solved, AMS 11]
+example : erdos_1141_property 1722 := by
   sorry
 
 end Erdos1141
