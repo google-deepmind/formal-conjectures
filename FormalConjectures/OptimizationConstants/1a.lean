@@ -37,7 +37,7 @@ def IsL2Bound (C : ℝ) : Prop :=
 
 /-- **Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets**:
 The biggest real number satisfying a certain inequality about integral. -/
-noncomputable def C1a : ℝ := sSup {C : ℝ | isL2Bound C}
+noncomputable def C1a : ℝ := sSup {C : ℝ | IsL2Bound C}
 
 /-- The best known lower bound, proven by Matolcsi-Vinuesa in-/
 @[category research solved, AMS 05 11 26]
