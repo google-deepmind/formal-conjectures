@@ -77,6 +77,7 @@ import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 import FormalConjecturesForMathlib.NumberTheory.Lacunary
 import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 import FormalConjecturesForMathlib.NumberTheory.PrimeGap
+import FormalConjecturesForMathlib.NumberTheory.Primitive
 import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes
 import FormalConjecturesForMathlib.Order.Filter.Cofinite
 import FormalConjecturesForMathlib.Order.Filter.atTopBot.Finset
