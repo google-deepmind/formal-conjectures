@@ -31,7 +31,7 @@ bipartite subgraph and `l(v)` is the independence number of `G.neighborSet v`.
 -/
 @[category research open, AMS 5]
 theorem conjecture58 (hG : G.Connected) :
-    Nat.ceil (G.b / G.l_avg) ≤ G.f := by
+    Nat.ceil (G.b / G.l_avg) ≤ G.largestInducedForestSize := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture58
