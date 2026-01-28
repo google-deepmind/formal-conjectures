@@ -31,9 +31,9 @@ open scoped Cardinal
 
 namespace Erdos261
 
-/-- An natural number `n` is said to have property `Erdos261_prop` if there exists `t ≥ 1` and
+/-- An natural number `n` is said to have property `Erdos261_prop` if there exists `t ≥ 2` and
 distinct integers `a₀, a₁, ..., aₜ ≥ 1` such that `n / 2 ^ n = ∑ k, aₖ / 2 ^ aₖ`. -/
-def Erdos261_prop (n : ℕ) : Prop := ∃ᵉ (t ≥ 1) (a : Fin t → ℕ), a.Injective ∧
+def Erdos261_prop (n : ℕ) : Prop := ∃ᵉ (t ≥ 2) (a : Fin t → ℕ), a.Injective ∧
   (1 ≤ a) ∧ n / (2 ^ n : ℚ) = ∑ k, (a k) / (2 ^ (a k) : ℚ)
 
 /-- Borwein and Loring used the following example in [BoLO90] to show that there are infinitely
@@ -44,7 +44,8 @@ theorem erdos_261.example (m : ℕ) :
     n / (2 ^ n : ℚ) = ∑ k ∈ Finset.Ioc n (n + m), k / (2 ^ k : ℚ) := by
   sorry
 
-/-- #TODO: use `erdos_261.example` to prove the following theorem. -/
+/-- As a corollary, there exists infinitely many numbers with the property.
+#TODO: use `erdos_261.example` to prove the following theorem. -/
 @[category research solved, AMS 11]
 theorem erdos_261.infinite : {n : ℕ | Erdos261_prop n}.Infinite := by
   sorry
@@ -54,25 +55,25 @@ theorem erdos_261.infinite : {n : ℕ | Erdos261_prop n}.Infinite := by
 theorem erdos_261.le_10000 {n : ℕ} (hn : n ≤ 10000) : Erdos261_prop n := by
   sorry
 
-/-- Does all `n` satisfy `Erdos261_prop`? -/
+/-- Do all `n` satisfy `Erdos261_prop`? -/
 @[category research open, AMS 11]
 theorem erdos_261.all : answer(sorry) ↔ ∀ n, Erdos261_prop n := by
   sorry
 
-/-- Does there exists a rational `x` such that `x = ∑' k, (a k) / 2 ^ (a k)` has at least `2 ^ ℵ₀`
+/-- Does there exists a rational `x` such that `x = ∑' k, (a k) / 2 ^ (a k)` has at least `𝔠`
 many solutions? -/
 @[category research open, AMS 11]
 theorem erdos_261.rational : answer(sorry) ↔ ∃ x : ℚ,
-    #{a : ℕ → ℕ | Summable (fun k => (a k) / (2 ^ (a k) : ℚ)) ∧
-    x = ∑' k, (a k) / (2 ^ (a k) : ℚ)} ≥ 2 ^ ℵ₀ := by
+    𝔠 ≤ #{a : ℕ → ℕ | Summable (fun k => (a k) / (2 ^ (a k) : ℚ)) ∧
+    x = ∑' k, (a k) / (2 ^ (a k) : ℚ)} := by
   sorry
 
 /-- Does there exists a rational `x` such that `x = ∑' k, (a k) / 2 ^ (a k)` has at least `2`
 solutions? -/
 @[category research open, AMS 11]
 theorem erdos_261.rational.weak : answer(sorry) ↔ ∃ x : ℚ,
-    #{a : ℕ → ℕ | Summable (fun k => (a k) / (2 ^ (a k) : ℚ)) ∧
-    x = ∑' k, (a k) / (2 ^ (a k) : ℚ)} ≥ 2 := by
+    2 ≤ #{a : ℕ → ℕ | Summable (fun k => (a k) / (2 ^ (a k) : ℚ)) ∧
+    x = ∑' k, (a k) / (2 ^ (a k) : ℚ)} := by
   sorry
 
 end Erdos261
