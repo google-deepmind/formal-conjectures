@@ -32,7 +32,7 @@ namespace Erdos455
 @[category research open, AMS 11]
 theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
     (∀ n, (q n).Prime ∧ q (n + 2) - q (n + 1) ≥ q (n + 1) - q n) →
-    Tendsto (fun n : ℕ => (q n : ℝ) / (n ^ 2 : ℝ)) atTop atTop := by
+    Tendsto (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop atTop := by
   sorry
 
 /--  Let `q : ℕ → ℕ` be a strictly increasing sequence of primes such that
