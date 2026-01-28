@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 Let $A \subset \mathbb{Z}$ be a set of size $n$. For how many $\theta \in \mathbb{R}/\mathbb{Z}$
 must we have $\sum_{a \in A} \cos(2\pi a\theta) = 0$?
 
-It is known that there must be at least $\Omega(\log n / \log \log n)$ zeros.
+It is known that there are sets $A$ for which the number of zeros is at most $n^{5/6 + o(1)}$.
 
 *Reference:*
 - [Gr24] [Ben Green's Open Problem 82](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.82)
@@ -39,16 +39,18 @@ must we have $\sum_{a \in A} \cos(2\pi a\theta) = 0$?
 -/
 @[category research open, AMS 11 42]
 theorem green_82 :
-    answer(sorry) ↔ ∃ f : ℕ → ℕ, ∀ n > 0, ∀ A : Finset ℤ, A.card = n →
+    answer(sorry) ↔ ∃ f : ℕ → ℕ, ∀ n ≥ 2, ∀ A : Finset ℤ, A.card = n →
       f n ≤ ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard := by
   sorry
 
-/-- There must be at least $\Omega(\log n / \log \log n)$ zeros. -/
+/--
+There are examples of such cosine sums with at most $n^{5/6}$ zeros.
+-/
 @[category research solved, AMS 11 42]
-theorem green_82_lower_bound :
-    ∃ c > 0, ∀ n ≥ 2, ∀ A : Finset ℤ, A.card = n →
-      c * log n / log (log n) ≤
-        ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard := by
+theorem green_82_upper_bound :
+    ∃ c > 0, ∀ n ≥ 2, ∃ A : Finset ℤ, A.card = n ∧
+      (({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard : ℝ) ≤
+      c * n ^ (5 / 6 : ℝ) := by
   sorry
 
 end Green82
