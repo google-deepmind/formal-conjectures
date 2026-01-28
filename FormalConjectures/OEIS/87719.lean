@@ -72,9 +72,6 @@ theorem a_three : a 3 = 57 := by
   intro m hm
   interval_cases m <;> decide
 
-/-- The formula value. -/
-def formula (n : ℕ) : ℕ := 3 ^ n + 3 * 2 ^ n + 6
-
 /-- Conjecture: a(n) = 3^n + 3 * 2^n + 6 for n ≥ 1. -/
 @[category research formally solved using lean4 at "https://github.com/google-deepmind/formal-conjectures/pull/1894/commits/7a286754f623759d69a3dd18f482c53c1d70959b", AMS 11]
 theorem a_formula {n : ℕ} (hn : n ≥ 1) : a n = 3 ^ n + 3 * 2 ^ n + 6 := by
