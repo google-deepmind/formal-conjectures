@@ -46,7 +46,7 @@ theorem erdos_1145 :
     B ⊆ Ici 1 →
     Tendsto (fun n ↦ (Nat.nth (· ∈ A) n : ℝ) / (Nat.nth (· ∈ B) n : ℝ)) atTop (𝓝 1) →
     Ici 2 ⊆ A + B →
-    ¬ BddAbove (range (fun n ↦ ({p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n}).ncard))) := by
+    limsup (fun n ↦ ({p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n}.ncard : ℕ∞)) atTop = ⊤) := by
   sorry
 
 end Erdos1145
