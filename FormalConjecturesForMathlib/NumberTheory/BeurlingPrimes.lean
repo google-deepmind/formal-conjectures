@@ -36,7 +36,7 @@ noncomputable def IsBeurlingPrimes (a : ℕ → ℝ) : Prop :=
 /-- The set of Beurling integers are numbers of the form `∏ i, (a i) ^ (k i)`, where `k` has
 finite support. -/
 def BeurlingInteger (a : ℕ → ℝ) : Set ℝ :=
-  let g : (ℕ →₀ ℕ) → ℝ := fun k => k.prod (fun x y => (a x) ^ y)
+  letI g : (ℕ →₀ ℕ) → ℝ := fun k => k.prod (fun x y => (a x) ^ y)
   .range g
 
 /-- Every element of the sequence `a` is a Beurling integer. -/

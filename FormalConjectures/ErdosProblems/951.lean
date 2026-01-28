@@ -30,12 +30,12 @@ open Filter
 
 namespace Erdos951
 
-/-- A sequence `a : ℕ → ℝ` is said to have property `Erdos951` if for any pair of distinct
+/-- A sequence `a : ℕ → ℝ` is said to have property `Erdos951_prop` if for any pair of distinct
 Beuring integers `x, y`, `|x - y| ≥ 1`. -/
 def Erdos951_prop (a : ℕ → ℝ) : Prop :=
   ∀ ⦃x y : ℝ⦄, x ≠ y → x ∈ BeurlingInteger a → y ∈ BeurlingInteger a → |x - y| ≥ 1
 
-/-- If `a` has property `Erdos951` and `1 < a 0`, then `a` is a set of Beurling prime numbers. -/
+/-- If `a` has property `Erdos951_prop` and `1 < a 0`, then `a` is a set of Beurling prime numbers. -/
 @[category API, AMS 11]
 theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     (hm : StrictMono a) (he : Erdos951_prop a) :
@@ -52,7 +52,7 @@ theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     exact he (by grind) (generator_mem_beurling a (N + 1)) (generator_mem_beurling a N)
   linarith [abs_lt.1 (hN N le_rfl), abs_lt.1 (hN (N + 1) (by grind))]
 
-/-- If `a` has property `Erdos951`, is it true that `#{a i ≤ x} ≤ π x`? -/
+/-- If `a` has property `Erdos951_prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
 @[category research open, AMS 11]
 theorem erdos_951 : answer(sorry) ↔
     ∀ a : ℕ → ℝ, Erdos951_prop a → ∀ (x : ℝ), {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
@@ -61,10 +61,10 @@ theorem erdos_951 : answer(sorry) ↔
 /-- Beurling conjectured that if the number of Beurling integer in `[1, x]`
 is `x + o(log x)`, then `a` must be the sequence of primes. -/
 @[category research solved, AMS 11]
-theorem erdos_951.Beurling : answer(sorry) ↔
+theorem erdos_951.variants.beurling :
     ∀ a : ℕ → ℝ, IsBeurlingPrimes a →
     ((fun x => (BeurlingInteger a ∩ .Iic x).ncard - x) =o[atTop] Real.log) →
-    ∀ i, a i = Nat.nth Nat.Prime i  := by
+    a = Nat.cast ∘ Nat.nth Nat.Prime := by
   sorry
 
 end Erdos951
