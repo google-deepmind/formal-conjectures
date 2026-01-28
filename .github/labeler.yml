@@ -6,6 +6,10 @@ erdos-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/ErdosProblems/**'
 
+kourovka:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Kourovka/**'
+
 green-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/GreensOpenProblems/**'
