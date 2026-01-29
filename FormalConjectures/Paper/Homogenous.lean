@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Topology.Discrete
 
 /-!
 # Conjectures around homogeneous topological spaces
@@ -39,22 +40,6 @@ $f : X \to X$ with $f(x) = y$.
 -/
 class HomogeneousSpace (X : Type*) [TopologicalSpace X] : Prop where
   exists_equiv : ∀ x y : X, ∃ f : X ≃ₜ X, f x = y
-
-
-/- A bijection between discrete topological spaces induces a homeomorphism. -/
-def Homeomorph.OfDiscrete {X  Y : Type*} [TopologicalSpace X]
-    [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y]
-    (f : X ≃ Y) : X ≃ₜ Y where
-  toEquiv := f
-  continuous_toFun := continuous_of_discreteTopology
-  continuous_invFun := continuous_of_discreteTopology
-
-/-- A bijection between discrete topoligical spaces is a homeomorpism. -/
-@[category test, AMS 54]
-theorem IsHomeomorph.equiv_of_discreteTopology {X  Y : Type*} [TopologicalSpace X]
-  [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y]
-    (f : X ≃ Y) : IsHomeomorph f :=
-  (Homeomorph.OfDiscrete f).isHomeomorph
 
 /-- Every discrete space is homogeneous. -/
 @[category test, AMS 54]
