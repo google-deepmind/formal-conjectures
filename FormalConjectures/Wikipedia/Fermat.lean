@@ -28,28 +28,28 @@ namespace Fermat
 Are Fermat numbers composite for all `n > 4`?
 -/
 @[category research open, AMS 11]
-theorem fermat_number_are_composite : (∀ n > 4, ¬Prime n.fermatNumber) ↔ answer(sorry) := by
+theorem fermat_number_are_composite : answer(sorry) ↔ ∀ n > 4, ¬Prime n.fermatNumber := by
   sorry
 
 /--
 Are there infinitely many Fermat primes?
 -/
 @[category research open, AMS 11]
-theorem infinite_fermat_primes : Infinite {n : ℕ | Prime n.fermatNumber} ↔ answer(sorry) := by
+theorem infinite_fermat_primes : answer(sorry) ↔ Infinite {n : ℕ | Prime n.fermatNumber} := by
   sorry
 
 /--
 Are there infinitely many composite Fermat numbers?
 -/
 @[category research open, AMS 11]
-theorem infinite_fermat_composite : Infinite {n : ℕ | ¬Prime n.fermatNumber} ↔ answer(sorry) := by
+theorem infinite_fermat_composite : answer(sorry) ↔ Infinite {n : ℕ | ¬Prime n.fermatNumber} := by
   sorry
 
 /--
 Are all Fermat numbers are square-free?
 -/
 @[category research open, AMS 11]
-theorem all_fermat_squarefree : (∀ (n : ℕ), Squarefree n.fermatNumber) ↔ answer(sorry) := by
+theorem all_fermat_squarefree : answer(sorry) ↔ ∀ n : ℕ, Squarefree n.fermatNumber := by
   sorry
 
 end Fermat

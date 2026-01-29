@@ -27,7 +27,7 @@ open scoped Topology
 
 namespace Erdos139
 
-private noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
+noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
 
 /--
 **Erdős Problem 139**:
@@ -35,7 +35,7 @@ Let $r_k(N)$ be the size of the largest subset of ${1,...,N}$ which does not con
 $k$-term arithmetic progression. Prove that $r_k(N) = o(N)$.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_139 (k : ℕ) (hk : 1 ≤ k) :
+theorem erdos_139 (k : ℕ) (hk : 1 < k) :
     Filter.Tendsto (fun N => (r k N / N : ℝ)) Filter.atTop (𝓝 0) := by
   sorry
 

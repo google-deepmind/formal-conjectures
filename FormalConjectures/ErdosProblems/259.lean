@@ -27,9 +27,7 @@ open scoped ArithmeticFunction
 namespace Erdos259
 
 /--
-Is
-$$\sum_{n} \mu(n)^2\frac{n}{2^n}$$
-irrational?
+Is $\sum_{n} \mu(n)^2\frac{n}{2^n}$ irrational?
 
 This is true, and was proved by Chen and Ruzsa.
 

@@ -33,9 +33,9 @@ namespace DeterminantalConjecture
 
 /--
 Does the determinant of the sum $A + B$ of two $n \times n$ normal
-complex matrices A and B always lie in the convex hull
-of the $n!$ points $\prod i (\lambda(A)_i + \lambda(B)_{σ(i)})$?
-Here the numbers $\lambda (A)_i$ and $\lambda (B)_i$ are
+complex matrices $A$ and $B$ always lie in the convex hull
+of the $n!$ points $\prod_i (\lambda(A)_i + \lambda(B)_{\sigma(i)})$?
+Here the numbers $\lambda(A)_i$ and $\lambda(B)_i$ are
 the eigenvalues of $A$ and $B$, and $\sigma$ is an element of the symmetric
 group $S_n$.
 -/

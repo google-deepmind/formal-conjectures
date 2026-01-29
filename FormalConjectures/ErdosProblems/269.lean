@@ -32,13 +32,13 @@ def HasPrimeFactorsIn (P : Set ℕ) (n : ℕ) : Prop :=
 
 /--
 The infinite, strictly increasing sequence $\{a_0, a_1, \dots\}$ of integers
-whose prime factors all belong to `P`.
+whose prime factors all belong to $P$.
 -/
 noncomputable def a (P : Set ℕ) : ℕ → ℕ := Nat.nth <| HasPrimeFactorsIn P
 
 /--
-The `n`-th partial least common multiple, $[a_0, \dots, a_n]$, which is
-the LCM of the first `n` integers in the sequence.
+The $n$-th partial least common multiple, $[a_0, \dots, a_{n-1}]$, which is
+the LCM of the first $n$ integers in the sequence.
 -/
 noncomputable def partialLcm (P : Set ℕ) (n : ℕ) : ℕ :=
   -- We take the LCM of `{a P 0, ..., a P n}`.
@@ -57,8 +57,9 @@ $$ \sum_{n=1}^\infty \frac{1}{[a_1,\ldots,a_n]} $$
 rational?
 -/
 @[category research open, AMS 11]
-theorem erdos_269.variants.rational : (∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
-    ∃ (q : ℚ), q = (series (P : Set ℕ))) ↔ answer(sorry) := by
+theorem erdos_269.variants.rational : answer(sorry) ↔
+    ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
+    ∃ (q : ℚ), q = (series (P : Set ℕ)) := by
   sorry
 
 /--
@@ -69,12 +70,13 @@ $$ \sum_{n=1}^\infty \frac{1}{[a_1,\ldots,a_n]} $$
 irrational?
 -/
 @[category research open, AMS 11]
-theorem erdos_269.variants.irrational : (∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
-    Irrational (series (P : Set ℕ))) ↔ answer(sorry) := by
+theorem erdos_269.variants.irrational : answer(sorry) ↔
+    ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
+    Irrational (series (P : Set ℕ)) := by
   sorry
 
 /--
-This theorem addresses the case where the set of primes `P` is infinite. In this case the sum is
+This theorem addresses the case where the set of primes $P$ is infinite. In this case the sum is
 irrational.
 -/
 @[category research solved, AMS 11]

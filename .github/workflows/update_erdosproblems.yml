@@ -8,6 +8,8 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+    # Not running on forks
+    if: github.repository == 'google-deepmind/formal-conjectures'
     steps:
       - name: Send repository dispatch event
         uses: peter-evans/repository-dispatch@v3

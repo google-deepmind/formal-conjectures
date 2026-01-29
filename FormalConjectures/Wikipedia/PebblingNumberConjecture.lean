@@ -95,7 +95,7 @@ The pebbling number of the complete graph on `n` vertices is `n`.
 -/
 @[category API, AMS 5]
 theorem PebblingNumber_completeGraph [Fintype V] :
-    PebblingNumber (completeGraph V) = Fintype.card V := by
+    PebblingNumber (SimpleGraph.completeGraph V) = Fintype.card V := by
   refine IsLeast.csInf_eq ⟨fun D hD v => ?_, fun a ha => not_lt.1 fun ha_lt => ?_⟩
   · by_cases h : ∃ w, 2 ≤ D w
     · obtain ⟨w, hw⟩ := h

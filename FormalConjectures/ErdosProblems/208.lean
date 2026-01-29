@@ -31,26 +31,24 @@ noncomputable def erdos208.s : ℕ → ℕ := Nat.nth Squarefree
 open erdos208
 
 /--
-Let $s_1 < s_2 < ⋯$ be the sequence of squarefree numbers. Is it true that
-for any $ϵ > 0$ and large $n$, $s_{n+1} − s_n ≪_ϵ s_n^ε$?
+Let $s_1 < s_2 < \dots$ be the sequence of squarefree numbers. Is it true that
+for any $\epsilon > 0$ and large $n$, $s_{n+1} - s_n \ll_\epsilon s_n^\epsilon$?
 -/
 @[category research open, AMS 11]
-theorem erdos_208.i :
-    (∀ ε > (0 : ℝ), (fun n => (s (n + 1) - s n : ℝ)) =O[atTop] (fun n => (s n : ℝ)^ε)) ↔
-    answer(sorry) := by sorry
+theorem erdos_208.i : answer(sorry) ↔
+    ∀ ε > (0 : ℝ), (fun n => (s (n + 1) - s n : ℝ)) =O[atTop] (fun n => (s n : ℝ)^ε) := by sorry
 
 /--
-Let $s_1 < s_2 < ⋯$ be the sequence of squarefree numbers. Is it true that
-$s_{n + 1} - s_n ≤ (1 + o(1)) * (\pi^2 / 6) * log (s_n) / log (log (s_n))$?
+Let $s_1 < s_2 < \dots$ be the sequence of squarefree numbers. Is it true that
+$s_{n + 1} - s_n \le (1 + o(1)) \cdot (\pi^2 / 6) \cdot \log (s_n) / \log (\log (s_n))$?
 -/
 @[category research open, AMS 11]
-theorem erdos_208.ii :
-    (∃ (c : ℕ → ℝ), (c =o[atTop] (1 : ℕ → ℝ)) ∧ ∀ᶠ n in atTop,
-      s (n + 1) - s n ≤ (1 + (c n)) * (π^2 / 6) * log (s n) / log (log (s n))) ↔ answer(sorry) := by
+theorem erdos_208.ii : answer(sorry) ↔ ∃ (c : ℕ → ℝ), (c =o[atTop] (1 : ℕ → ℝ)) ∧ ∀ᶠ n in atTop,
+      s (n + 1) - s n ≤ (1 + (c n)) * (π^2 / 6) * log (s n) / log (log (s n)) := by
   sorry
 
 /--
-In [Er79] Erdős says perhaps $s_{n+1} − s_n ≪ log s_n$, but he is 'very doubtful'.
+In [Er79] Erdős says perhaps $s_{n+1} - s_n \ll \log s_n$, but he is 'very doubtful'.
 
 [Er79] Erdős, Paul, __Some unconventional problems in number theory__. Math. Mag. (1979), 67-70.
 -/

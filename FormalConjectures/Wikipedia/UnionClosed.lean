@@ -157,8 +157,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   obtain hn | hn := isEmpty_or_nonempty n
   · specialize h ∅
     simp only [ne_eq, card_empty, CharP.cast_eq_zero, mul_zero, filter_empty, le_refl,
-      IsEmpty.exists_iff, imp_false, not_forall, not_mem_empty, imp_self, implies_true,
-      not_true_eq_false, exists_const, Decidable.not_not] at h
+      IsEmpty.exists_iff, imp_false, not_forall, notMem_empty, exists_const, Decidable.not_not] at h
     have : ∅ ∈ (∅ : Finset (Finset n)) := by simp [h]
     simp at this
   -- Use A as the set of all subsets of `n`, which is not singleton empty and is union-closed.
@@ -187,10 +186,10 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     · simp
     intro a ha b hb h
     simp only [coe_powerset, coe_erase, coe_univ, Set.mem_preimage, Set.mem_powerset_iff,
-      Set.subset_diff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and, A] at ha hb
+      Set.subset_diff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and] at ha hb
     have := congr(($h).erase i)
     rwa [erase_insert ha, erase_insert hb] at this
-  simp only [one_div, card_univ, Fintype.card_finset, Nat.cast_pow, Nat.cast_ofNat, this] at hi
+  simp only [card_univ, Fintype.card_finset, Nat.cast_pow, Nat.cast_ofNat, this] at hi
   rw [pow_sub₀ _ (by simp) hn] at hi
   -- which is a contradiction.
   have : (1 / 2 : ℚ) * 2 ^ (Fintype.card n) < c * 2 ^ (Fintype.card n) := by
@@ -198,5 +197,17 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     simpa using hc
   have : (0 : ℝ) < 0 := by linear_combination this + hi
   simp at this
+
+/--
+If the UC conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
+
+Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
+-/
+@[category research open, AMS 5]
+theorem union_closed.variants.cardinality_even_of_union_closed_tight
+    [Nonempty n] (hA : A ≠ {∅} ∧ A ≠ ∅) (hA : IsUnionClosed A)
+    (UCC_tight : ∀ i, #{x ∈ A | i ∈ x} = (1 / 2 : ℝ) * #A) :
+    ∃ k, #A = 2 ^ k := by
+  sorry
 
 end UnionClosed

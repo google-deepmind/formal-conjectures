@@ -17,20 +17,30 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Problem 108: Erdős-Hajnal conjecture on subgraphs with high girth and chromatic number
+# Erdős Problem 108
 
-*Reference:* [Erdős Problems](https://erdosproblems.com/108)
-
-For every r≥4 and k≥2, does there exist finite f(k,r) such that every graph of chromatic number ≥f(k,r) contains a subgraph of girth ≥r and chromatic number ≥k?
+*Reference:* [erdosproblems.com/108](https://www.erdosproblems.com/108)
 -/
 
-variable {V : Type*} [Fintype V]
+universe u
 
+namespace Erdos108
+
+open Erdos108
+
+/--
+For every r ≥ 4 and k ≥ 2 is there some finite f(k,r) such that every graph of chromatic number ≥ f(k,r)
+contains a subgraph of girth ≥ r and chromatic number ≥ k?
+-/
 @[category research open, AMS 5]
 theorem erdos_108 :
-    (∃ (f : ℕ → ℕ → ℕ), ∀ (r k : ℕ), r ≥ 4 → k ≥ 2 →
-      ∀ (G : SimpleGraph V) [DecidableRel G.Adj],
-        G.chromaticNumber ≥ f k r →
-        ∃ (H : G.Subgraph), H.coe.girth ≥ r ∧ H.coe.chromaticNumber ≥ k) ↔
-    answer(sorry) := by
+    answer(sorry) ↔ ∀ r ≥ 4, ∀ k ≥ (2 : ℕ), ∃ (f : ℕ),
+    ∀ (V : Type u) (G : SimpleGraph V) (_ : Nonempty V)
+      (hchro : f ≤ SimpleGraph.chromaticNumber G),
+    ∃ (H : G.Subgraph), (SimpleGraph.girth H.coe ≥ r) ∧
+    (SimpleGraph.chromaticNumber H.coe ≥ k) := by
   sorry
+
+-- TODO: Proof for the case r=4 and statement for the infinite case
+
+end Erdos108

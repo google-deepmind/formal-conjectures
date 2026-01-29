@@ -33,7 +33,7 @@ satisfies
 eccentricity and `l(G)` is the independence number of neighbourhoods.
 -/
 @[category research open, AMS 5]
-theorem conjecture19 (G : SimpleGraph α) [Nonempty α] (h_conn : G.Connected) :
+theorem conjecture19 (G : SimpleGraph α) [Nontrivial α] (h_conn : G.Connected) :
     FLOOR ((∑ v ∈ Finset.univ, ecc G v) / (Fintype.card α : ℝ) + sSup (Set.range (indepNeighbors G)))
       ≤ b G := by
   sorry

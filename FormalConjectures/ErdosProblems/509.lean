@@ -33,8 +33,8 @@ universe u v
 
 variable {M : Type u} [MetricSpace M]
 
-/--An $r$-bounded disc cover of a subset of a metric space $M$
-is an indexed family of closed discs whose radii sum to at most $r$.-/
+/-- An $r$-bounded disc cover of a subset of a metric space $M$
+is an indexed family of closed discs whose radii sum to at most $r$. -/
 structure BoundedDiscCover (S : Set M) (r : ℝ) (ι : Type v) where
   (C : ι → M)
   (R : ι → ℝ)
@@ -53,8 +53,8 @@ noncomputable def boundedDiscCover_empty [Nonempty M] (r : ℝ) (hr : 0 < r) :
   h_summable := (hasSum_fintype _).summable
   h_bdd := by
     have := hasSum_fintype fun (_ : (PUnit : Type v)) => if 0 ≤ r then -1 else r
-    simp only [tsum_const, Nat.card_eq_fintype_card, Fintype.card_ofSubsingleton, smul_ite,
-      smul_neg, one_smul, ge_iff_le]
+    simp only [tsum_const, Nat.card_eq_fintype_card, Fintype.card_ofSubsingleton, one_smul,
+      ge_iff_le]
     bound
   h_pos := by aesop
 
@@ -65,7 +65,7 @@ lemma BoundedDiscCover.bound_nonneg_of_nonempty
     0 < r := by
   apply lt_of_lt_of_le _ bdc.h_bdd
   suffices Nonempty ι by
-    apply tsum_pos bdc.h_summable (fun j => le_of_lt (bdc.h_pos j)) Classical.ofNonempty (bdc.h_pos _)
+    apply Summable.tsum_pos bdc.h_summable (fun j => le_of_lt (bdc.h_pos j)) Classical.ofNonempty (bdc.h_pos _)
   by_contra!
   apply Set.Nonempty.ne_empty hS (Set.eq_empty_of_subset_empty _)
   convert bdc.h_cover
@@ -79,45 +79,44 @@ $\{z ∈ ℂ : |f(z)| ≤ 1\}$
 be covered by a set of closed discs the sum of whose radii is $≤ 2$?
 -/
 @[category research open, AMS 30]
-theorem erdos_509 : (∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
-    ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι)) ↔ answer(sorry) := by
+theorem erdos_509 : answer(sorry) ↔ ∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
+    ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι) := by
   sorry
 
 /--
 Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial. Can the set
 $\{z ∈ ℂ : |f(z)| ≤ 1\}$
-be covered by a set of closed discs the sum of whose radii is ≤2e?
+be covered by a set of closed discs the sum of whose radii is $≤ 2e$?
 Solution: True. This is due to Cartan.
-See *Sur les systèmes de fonctions holomorphes à variétés linéaires
+See *Sur les systèmes de fonctions holomorphes à variétés linéaires
 lacunaires et leurs applications*, Henri Cartan,
 http://www.numdam.org/article/ASENS_1928_3_45__255_0.pdf
 -/
 @[category research solved, AMS 30]
-theorem erdos_509.variants.Cartan_bound : (∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
-    ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} (2*rexp 1) ι)) ↔ answer(True) := by
+theorem erdos_509.variants.Cartan_bound : answer(True) ↔ ∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
+    ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} (2*rexp 1) ι) := by
   sorry
 
 /--
-Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial. Can the set
+Let $f(z) ∈ $ℂ[z]$ be a monic non-constant polynomial. Can the set
 $\{z ∈ ℂ : |f(z)| ≤ 1\}$
 be covered by a set of closed discs the sum of whose radii is $≤ 2.59$?
 Solution: True. This is due to Pommerenke.
--/
-@[category research solved, AMS 30]
-theorem erdos_509.variants.Pommerenke_bound : (∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
-    ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2.59 ι)) ↔ answer(True) := by
+-/@[category research solved, AMS 30]
+theorem erdos_509.variants.Pommerenke_bound : answer(True) ↔ ∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
+    ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2.59 ι) := by
   sorry
 
 /--
 Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial.
-If it is connected, can the set $\{z ∈ C : |f(z)| ≤ 1\}$
+If it is connected, can the set $\{z ∈ ℂ : |f(z)| ≤ 1\}$
 be covered by a set of circles the sum of whose radii is $≤ 2$?
 Solution: True. This is due to Pommerenke.
 -/
 @[category research solved, AMS 30]
-theorem erdos_509.variants.Pommerenke_connected : (∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
+theorem erdos_509.variants.Pommerenke_connected : answer(True) ↔ ∀ (f : ℂ[X]), f.Monic → f.natDegree ≠ 0 →
     IsConnected {z | ‖f.eval z‖ ≤ 1} →
-    ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι)) ↔ answer(True) := by
+    ∃ (ι : Type), Nonempty (BoundedDiscCover {z | ‖f.eval z‖ ≤ 1} 2 ι) := by
   sorry
 
 end Erdos509

@@ -69,3 +69,5 @@ where go : _ → InfoTree → _
           return #[⟨ctx, t⟩]
     return (← cs.mapM (go <| i.updateContext? ctx)).toArray.flatten
   | _, _ => pure #[]
+
+end Google

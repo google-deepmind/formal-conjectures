@@ -28,7 +28,7 @@ open ProblemAttributes
 def getCategoryStatsMarkdown : CoreM String := do
   let stats ← getCategoryStats
   let githubSearchBaseUrl := "https://github.com/search?type=code&q=repo%3Agoogle-deepmind%2Fformal-conjectures+"
-  return  s!"| Count | Category          |
+  return s!"| Count | Category          |
 | ----- | ----------------- |
 | {stats (Category.research ProblemStatus.open)} | [Research (open)]({githubSearchBaseUrl}%22category+research+open%22)|
 | {stats (Category.research ProblemStatus.solved)} | [Research (solved)]({githubSearchBaseUrl}%22category+research+solved%22)|
@@ -96,20 +96,21 @@ unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
   -- which we probably don't want to count here.
   let moduleImportNames := #[`FormalConjectures.All]
   initSearchPath (← findSysroot)
-  let modulesToImport : Array Import := moduleImportNames.map ({ module := · })
+  let imports : Array Import := moduleImportNames.map ({ module := · })
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
 
-  Lean.withImportModules modulesToImport {} 0 fun env => do
-    let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
-    return result
+  let env ← Lean.importModules imports {} (trustLevel := 1024) (loadExts := true)
+
+  let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
+  return result
 
 unsafe def main (args : List String) : IO Unit := do
-  let .some file := args.get? 0
+  let .some (file : String) := args[0]?
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a welcome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
-  let .some graphFile := args.get? 1
+  let .some (graphFile : String) := args[1]?
     | IO.println "Repository growth graph not supplied, generating docs without graph."
   let graphHtml ← IO.FS.readFile graphFile
 

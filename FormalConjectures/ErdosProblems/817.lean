@@ -36,7 +36,7 @@ noncomputable
 def g (k : ℕ) (n : ℕ) : ℕ := sInf { N | ∃ A ⊆ Finset.Icc 1 N, A.card = n ∧
     ∀ s, s ⊆ { ∑ a ∈ B, a | B ∈ A.powerset } → s.IsAPOfLengthFree k}
 
-/-- Let $k\geq 3$. Define $g_k(n)$ to be the minimal $N$ such that
+/-- Let $k \geq 3$. Define $g_k(n)$ to be the minimal $N$ such that
 $\{1, ..., N\}$ contains some $A$ of size $|A| = n$ such that
 $$
   \langle A\rangle = \left\{\sum_{a \in A} \epsilon_a a : \epsilon_a \in\{0, 1\}\right\}
@@ -49,7 +49,7 @@ $$ -/
 -- Formalisation note : only formalising the "In particular" part
 @[category research open, AMS 5 11]
 theorem erdos_817 :
-    ((fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ)) ↔ answer(sorry) := by
+    answer(sorry) ↔ (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
   sorry
 
 /-- A problem of Erdős and Sárközy who proved

@@ -45,8 +45,8 @@ such that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold whe
 $r = s$?
 -/
 @[category research open, AMS 11]
-theorem erdos_786.parts.i : (∀ ε > 0, ε ≤ 1 →
-    ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet) ↔ answer(sorry) := by
+theorem erdos_786.parts.i : answer(sorry) ↔ ∀ ε > 0, ε ≤ 1 →
+    ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet := by
   sorry
 
 /--
@@ -55,9 +55,9 @@ $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when
 $r = s$?
 -/
 @[category research open, AMS 11]
-theorem erdos_786.parts.ii : (∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : f =o[atTop] (1 : ℕ → ℝ)),
-    ∀ N, A N ⊆ Set.Icc 1 (N + 1) ∧ (1 - f N) * N ≤ (A N).ncard ∧ (A N).IsMulCardSet) ↔
-    answer(sorry) := by
+theorem erdos_786.parts.ii : answer(sorry) ↔
+    ∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : f =o[atTop] (1 : ℕ → ℝ)),
+    ∀ N, A N ⊆ Set.Icc 1 (N + 1) ∧ (1 - f N) * N ≤ (A N).ncard ∧ (A N).IsMulCardSet := by
   sorry
 
 /--
@@ -73,8 +73,8 @@ theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
 consecutive primes.
 -/
 def consecutivePrimes {k : ℕ} (p : Fin k.succ → ℕ) :=
-    ∀ i, (p i).Prime ∧ StrictMono p ∧
-      ∀ i < k, ∀ m ∈ Set.Ioo (p i) (p (i + 1)), ¬m.Prime
+    (∀ i, (p i).Prime) ∧ StrictMono p ∧
+    ∀ i : Fin k, ∀ m ∈ Set.Ioo (p i.castSucc) (p i.succ), ¬m.Prime
 
 -- Reworded slightly from the link.
 /--
@@ -84,19 +84,21 @@ $$
 \sum_{i=1}^k \frac{1}{p_i} < 1 < \sum_{i=1}^{k + 1} \frac{1}{p_i},
 $$
 the set $A$ of all naturals divisible by exactly one of $p_1, ..., p_k$ has
-density $1 / e - \epsilon$ and has the property that $a_1\cdots a_r = b_1\cdots b_s$
+density $\frac{1}{e} - \epsilon$ and has the property that $a_1\cdots a_r = b_1\cdots b_s$
 with $a_i, b_j\in A$ can only hold when $r = s$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε ≤ 1) :
-    -- TODO(mercuris) : I think we want `k` to be allowed to vary somehow as well, but maybe the exists is sufficient
+    -- TODO(mercuris) : I think we want `k` to be allowed to vary somehow as well, but maybe the
+    -- exists is sufficient
     ∃ (k : ℕ),
-      -- Sufficient to take L^∞ norm to guarantee all primes are large, due to the consecutivePrimes assertion
+      -- Sufficient to take L^∞ norm to guarantee all primes are large, due to the consecutivePrimes
+      -- assertion
       ∀ᶠ (p : Fin (k + 2) → ℕ) in atTop, consecutivePrimes p ∧
         ∑ i ∈ Finset.univ.filter (· < Fin.last _), (1 : ℝ) / p i < 1 ∧
           1 < ∑ i, (1 : ℝ) / p i →
-    { n | ∃! i < k, p i ∣ n }.HasDensity (1 / Real.exp 1 - ε) ∧
-      { n | ∃! i < k, p i ∣ n }.IsMulCardSet := by
+    { n | ∃! (i : Fin (k + 2)), i < k → p i ∣ n }.HasDensity (1 / Real.exp 1 - ε) ∧
+      { n | ∃! (i : Fin (k + 2)), i < k → p i ∣ n }.IsMulCardSet := by
   sorry
 
 end Erdos786

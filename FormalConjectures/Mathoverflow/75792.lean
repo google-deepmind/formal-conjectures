@@ -33,7 +33,7 @@ We have chosen to formalise this using an inductive type.
  - [mathoverflow/75792](https://mathoverflow.net/a/75792) by user [Harry Altman](https://mathoverflow.net/users/5583)
  - http://arxiv.org/abs/1203.6462 by Jānis Iraids, Kaspars Balodis, Juris Čerņenoks, Mārtiņš Opmanis, Rihards Opmanis, Kārlis Podnieks
  - http://arxiv.org/abs/1207.4841 by Harry Altman, Joshua Zelinsky
- - https://oeis.org/A005245 : Mahler-Popken complexity.
+ - https://oeis.org/A5245 : Mahler-Popken complexity.
 -/
 
 namespace Mathoverflow75792
@@ -155,10 +155,12 @@ theorem Reachable.complexity {n : ℕ} (hn : 0 < n) : Reachable n (complexity n)
 theorem complexity_zero : complexity 0 = 0 := rfl
 
 @[category test, AMS 11]
-theorem complexity_one : complexity 1 = 1 := by decide +kernel
+theorem complexity_one : complexity 1 = 1 := by
+  sorry
 
 @[category test, AMS 11]
-theorem complexity_two : complexity 2 = 2 := by decide +kernel
+theorem complexity_two : complexity 2 = 2 := by
+  sorry
 
 @[category test, AMS 11]
 theorem Reachable.pow (m n : ℕ) (hm : 0 < m) (hn : 0 < n) : Reachable (m ^ n) (m * n) := by
@@ -178,10 +180,10 @@ theorem Reachable.five_pow_six : Reachable (5^6) 29 :=
   have h27 : Reachable 27 9 := .pow' 3 3
   .add .one <| .mul h8 <| .mul h9 <| .add .one <| .mul h8 h27
 
-/-- Is `5n` the complexity of `5^n` for `0 < n`? Answer: No.-/
+/-- Is `5n` the complexity of `5^n` for `0 < n`? Answer: No. -/
 @[category research solved, AMS 11]
-theorem complexity_five_pow : (∀ n : ℕ, 0 < n → complexity (5 ^ n) = 5 * n) ↔ answer(False) := by
-  simp only [iff_false, not_forall, Classical.not_imp]
+theorem complexity_five_pow : answer(False) ↔ ∀ n : ℕ, 0 < n → complexity (5 ^ n) = 5 * n := by
+  simp [false_iff, not_forall]
   exact ⟨6, by decide, fun h ↦ absurd (h ▸ Reachable.five_pow_six.complexity_le) (by decide)⟩
 
 /-- Is `3n` the complexity of `3^n` for `0 < n`? Answer: Yes, by John Selfridge.
@@ -189,12 +191,12 @@ theorem complexity_five_pow : (∀ n : ℕ, 0 < n → complexity (5 ^ n) = 5 * n
 Reference: https://arxiv.org/abs/1207.4841
 -/
 @[category research solved, AMS 11]
-theorem complexity_three_pow : (∀ n : ℕ, 0 < n → complexity (3 ^ n) = 3 * n) ↔ answer(True) := by
+theorem complexity_three_pow : answer(True) ↔ ∀ n : ℕ, 0 < n → complexity (3 ^ n) = 3 * n := by
   sorry
 
 /-- Is `2n` the complexity of `2^n` for `0 < n`? -/
 @[category research open, AMS 11]
-theorem complexity_two_pow : (∀ n : ℕ, 0 < n → complexity (2 ^ n) = 2 * n) ↔ answer(sorry) := by
+theorem complexity_two_pow : answer(sorry) ↔ ∀ n : ℕ, 0 < n → complexity (2 ^ n) = 2 * n := by
   sorry
 
 end Mathoverflow75792

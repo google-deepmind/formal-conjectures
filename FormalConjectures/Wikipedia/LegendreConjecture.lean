@@ -16,12 +16,15 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open Filter
+
 /-!
 # Legendre's conjecture
 
 *References:*
 - [Landau Problems Wikipedia Page](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
 - [Legendre Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Legendre%27s_conjecture)
+- [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
 
 namespace LegendreConjecture
@@ -31,8 +34,25 @@ Does there always exist at least one prime between consecutive perfect squares?
 -/
 @[category research open, AMS 11]
 theorem legendre_conjecture :
-    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p)
-      ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
+  sorry
+
+/-- If there exists a constant `c > 0` such that
+`(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all large `n`,
+then Legendre's conjecture is asymptotically true. -/
+@[category research solved, AMS 11]
+theorem bounded_gap_legendre
+    (H : ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
+      (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c)) :
+    ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
+  sorry
+
+/--
+Ferreira proved that the conjecture is true for sufficiently large n.
+-/
+@[category research solved, AMS 11]
+theorem legendre_conjecture.ferreira_large_n :
+    ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
 end LegendreConjecture

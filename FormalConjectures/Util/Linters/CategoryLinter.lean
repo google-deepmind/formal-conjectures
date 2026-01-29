@@ -18,9 +18,9 @@ import FormalConjectures.Util.Attributes
 import Mathlib.Tactic.Lemma
 
 
-/-! # The Problem Status Linter
+/-! # The Category Linter
 
-The `problemStatusLinter` is a linter to aid with formatting contributions to
+The `categoryLinter` is a linter to aid with formatting contributions to
 the Formal Conjectures repository by ensuring that results in a file have
 the appropriate tags in order to distinguish between open/already solved
 problems and background results/sanity checks.
@@ -28,8 +28,15 @@ problems and background results/sanity checks.
 
 open Lean Elab Meta Linter Command Parser Term
 
+register_option linter.style.category_attribute : Bool := {
+  defValue := true
+  descr := "enable the `category` attribute style linter"
+}
+
+namespace CategoryLinter
+
 /-- Checks if a command has the `category` attribute. -/
-private def toCategory
+def toCategory
   (stx : TSyntax ``Command.declModifiers) :
     CommandElabM (Array <| TSyntax ``attrInstance) := do
   match stx with
@@ -42,8 +49,8 @@ private def toCategory
 
 /-- The problem category linter checks that every theorem/lemma/example
 has been given a problem category attribute. -/
-def problemStatusLinter : Linter where
-  run := fun stx => do
+def categoryLinter : Linter where
+  run := withSetOptionIn fun stx => do
     match stx with
       | `(command| $a:declModifiers theorem $_ $_:bracketedBinder* : $_ := $_)
       | `(command| $a:declModifiers lemma $_ $_:bracketedBinder* : $_ := $_)
@@ -53,8 +60,11 @@ def problemStatusLinter : Linter where
           let outStx := match a with
           | `(declModifiers| $(_)? $atts $(_)? $(_)? $(_)? $(_)?) => atts.raw
           | _ => stx
-          logWarningAt outStx "Missing problem category attribute"
+          logLintIf linter.style.category_attribute outStx
+            "Missing problem category attribute"
       | _ => return
 
 initialize do
-  addLinter problemStatusLinter
+  addLinter categoryLinter
+
+end CategoryLinter

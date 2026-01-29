@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/897](https://www.erdosproblems.com/897)
 -/
---TODO(lezeau): add `ArithmeticFunction.IsAdditive` to `ForMathlib`
+-- TODO(lezeau): add `ArithmeticFunction.IsAdditive` to `ForMathlib`
 
 namespace Erdos897
 
@@ -31,12 +31,11 @@ if $(a,b)=1$ such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$.
 Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 -/
 @[category research open, AMS 11]
-theorem erdos_897.parts.i : (∀ (f : ℕ → ℝ),
+theorem erdos_897.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
-    Filter.atTop.limsup (fun (n : ℕ) => ((f (n+1) - f n) / (n : ℝ).log : EReal)) = ⊤) ↔
-    answer(sorry) := by
+    Filter.atTop.limsup (fun (n : ℕ) => ((f (n+1) - f n) / (n : ℝ).log : EReal)) = ⊤ := by
   sorry
 
 /--
@@ -45,18 +44,18 @@ if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$.
 Is it true that $\limsup_n f(n+1)/ f(n) = ∞$?
 -/
 @[category research open, AMS 11]
-theorem erdos_897.parts.ii : (∀ (f : ℕ → ℝ),
+theorem erdos_897.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
-    Filter.atTop.limsup (fun (n : ℕ) => (f (n+1) / f n : EReal)) = ⊤) ↔ answer(sorry) := by
+    Filter.atTop.limsup (fun (n : ℕ) => (f (n+1) / f n : EReal)) = ⊤ := by
   sorry
 
 /--
 Wirsing [Wi70] proved that if $|f(n+1)−f(n)| ≤ C$ then $f(n) = c \log n + O(1)$ for some constant
 $c$.
 
-[Wi70] Wirsing, E., _A characterization of $\log n$ as an additive arthemetic function_.
+[Wi70] Wirsing, E., _A characterization of $\log n$ as an additive arithmetic function_.
 Symposia Math. (1970), 45-47.
 -/
 @[category research solved, AMS 11]
@@ -76,13 +75,12 @@ or $f(p^k) = kf(p)$.
 Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 -/
 @[category research open, AMS 11]
-theorem erdos_897.variants.parts.i : (∀ (f : ℕ → ℝ),
+theorem erdos_897.variants.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
     (∀ k p, p.Prime → f (p^k) = f p) ∨ (∀ (k p : ℕ), p.Prime → f (p^k) = k*f p) →
-    Filter.atTop.limsup (fun (n : ℕ) => ((f (n+1) - f n) / (n : ℝ).log : EReal)) = ⊤) ↔
-      answer(sorry) := by
+    Filter.atTop.limsup (fun (n : ℕ) => ((f (n+1) - f n) / (n : ℝ).log : EReal)) = ⊤ := by
   sorry
 
 /--
@@ -92,12 +90,12 @@ or $f(p^k) = kf(p)$.
 Is it true that $\limsup_n f(n+1)/f(n) = ∞$?
 -/
 @[category research open, AMS 11]
-theorem erdos_897.variants.parts.ii : (∀ (f : ℕ → ℝ),
+theorem erdos_897.variants.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
     (∀ k p, p.Prime → f (p^k) = f p) ∨ (∀ (k p : ℕ), p.Prime → f (p^k) = k*f p) →
-    Filter.atTop.limsup (fun (n : ℕ) => (f (n+1) / f n : EReal)) = ⊤) ↔ answer(sorry) := by
+    Filter.atTop.limsup (fun (n : ℕ) => (f (n+1) / f n : EReal)) = ⊤ := by
   sorry
 
 end Erdos897

@@ -20,13 +20,15 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 590
 
 *References:*
- - [erdosproblems.com/591](https://www.erdosproblems.com/590)
+ - [erdosproblems.com/590](https://www.erdosproblems.com/590)
  - [Ch72] Chang, C. C., A partition theorem for the complete graph on {$\omega\sp{\omega }$}. J. Combinatorial Theory Ser. A (1972), 396-452.
  - [Sp57] Specker, Ernst, Teilmengen von Mengen mit Relationen. Comment. Math. Helv. (1957), 302-314.
  - [La73] Larson, Jean A., A short proof of a partition theorem for the ordinal {$\omega \sp{\omega }$}. Ann. Math. Logic (1973/74), 129-145.
 -/
 
 open Cardinal Ordinal
+
+namespace Erdos590
 
 universe u
 
@@ -35,7 +37,7 @@ Let $α$ be the infinite ordinal $\omega^{\omega}$. It was proved by Chang [Ch72
 colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
 @[category research solved, AMS 3]
-theorem erdos_590 : OmegaPowerRamsey ω 3 := by
+theorem erdos_590 : OrdinalCardinalRamsey (ω ^ ω) (ω ^ ω) 3 := by
   sorry
 
 /--
@@ -43,7 +45,7 @@ Specker [Sp57] proved that when $α=ω^2$ any red/blue
 colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
 @[category research solved, AMS 3]
-theorem erdos_590.variants.two : OmegaPowerRamsey 2 3 := by
+theorem erdos_590.variants.two : OrdinalCardinalRamsey (ω ^ 2) (ω ^ 2) 3 := by
   sorry
 
 /--
@@ -51,7 +53,8 @@ Specker [Sp57] proved that when $α=ω^n$ for $3≤ n < \omega$ then it is not t
 red/blue colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
 @[category research solved, AMS 3]
-theorem erdos_590.variants.ge_three_false (n : ℕ) (h : 3 ≤ n) : ¬ OmegaPowerRamsey n 3 := by
+theorem erdos_590.variants.ge_three_false {n : ℕ} (h : 3 ≤ n) :
+    ¬ OrdinalCardinalRamsey (ω ^ n) (ω ^ n) 3 := by
   sorry
 
 /--
@@ -60,5 +63,7 @@ It was proved by Milnor that any red/blue colouring of the edges of $K_α$ there
 red $K_α$ or a blue $K_3$. A shorter proof was found by Larson [La73]
 -/
 @[category research solved, AMS 3]
-theorem erdos_590.variants.finite_cardinal (m : ℕ): OmegaPowerRamsey ω m := by
+theorem erdos_590.variants.finite_cardinal (m : ℕ) : OrdinalCardinalRamsey (ω ^ ω) (ω ^ ω) m := by
   sorry
+
+end Erdos590

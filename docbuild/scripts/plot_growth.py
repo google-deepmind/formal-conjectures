@@ -59,7 +59,7 @@ def get_file_counts_over_time(start_date, columns):
           files = tree_result.stdout.strip().split('\n')
 
           # Only care about lean files in `FormalConjectures` subdir
-          subdir_pattern = re.compile(r'^FormalConjectures/.*\.lean')
+          subdir_pattern = re.compile(r'^FormalConjectures/(?!ForMathlib/).*\.lean')
 
           file_count = len([f for f in files if f and subdir_pattern.match(f)])
           data.append([datetime.fromtimestamp(timestamp), file_count])

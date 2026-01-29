@@ -19,15 +19,17 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Oppermann's Conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Oppermann%27s_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Oppermann%27s_conjecture)
+- [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
 
-open Finset
+open Finset Filter
 
 namespace Oppermann
 
 /--
-For every integer `x ≥ 2` there exists a prime between `x(x-1)` and `x²`.
+For every integer $x \ge 2$ there exists a prime between $x(x-1)$ and $x^2$.
 -/
 @[category research open, AMS 11]
 theorem oppermann_conjecture.parts.i (x : ℕ) (hx : 2 ≤ x) :
@@ -35,7 +37,7 @@ theorem oppermann_conjecture.parts.i (x : ℕ) (hx : 2 ≤ x) :
   sorry
 
 /--
-For every integer `x ≥ 2` there exists a prime between `x²` and `x(x+1)`.
+For every integer $x \ge 2$ there exists a prime between $x^2$ and $x(x+1)$.
 -/
 @[category research open, AMS 11]
 theorem oppermann_conjecture.parts.ii (x : ℕ) (hx : 2 ≤ x) :
@@ -44,9 +46,9 @@ theorem oppermann_conjecture.parts.ii (x : ℕ) (hx : 2 ≤ x) :
 
 /--
 **Oppermann's Conjecture**:
-For every integer `x ≥ 2`, the following hold:
-- There exists a prime between `x * (x-1)` and `x ^ 2`.
-- There exists a prime between `x ^ 2` and `x * (x+1)`.
+For every integer $x \ge 2$, the following hold:
+- There exists a prime between $x(x-1)$ and $x^2$.
+- There exists a prime between $x^2$ and $x(x+1)$.
 -/
 @[category research open, AMS 11]
 theorem oppermann_conjecture (x : ℕ) (hx : 2 ≤ x) :
@@ -66,6 +68,18 @@ theorem oppermann_implies_brocard (n : ℕ) (hn : 1 ≤ n) (P : type_of% opperma
 @[category high_school, AMS 11]
 theorem oppermann_implies_legendre (n : ℕ) (hn : 1 ≤ n) (P : type_of% oppermann_conjecture) :
     ∃ p ∈ Ioo (n ^ 2) ((n + 1) ^ 2), p.Prime := by
+  obtain ⟨⟨p, ph⟩, _⟩ := P (n + 1) (by simpa)
+  use p
+  refine ⟨Finset.Ioo_subset_Ioo_left ?_ ph.1, ph.2⟩
+  push_cast [sq, add_one_mul,le_self_add]
+
+/--
+Ferreira proved that Oppermann's conjecture is true for sufficiently large x.
+-/
+@[category research solved, AMS 11]
+theorem oppermann_conjecture.ferreira_large_x : ∀ᶠ x in atTop,
+    (∃ p ∈ Ioo (x * (x - 1)) (x^2), p.Prime) ∧
+    (∃ p ∈ Ioo (x^2) (x * (x + 1)), p.Prime) := by
   sorry
 
 end Oppermann

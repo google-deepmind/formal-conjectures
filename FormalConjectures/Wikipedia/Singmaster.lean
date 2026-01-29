@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 Singmaster's conjecture says that for any integer $t>1$, the number of solutions to the equation:
 
-`$\binom{n}{k} = t,\quad 1 \le k < n,$`
+$\binom{n}{k} = t,\quad 1 \le k < n,$
 
 with $\binom{n}{k}$ being the numbers that appear in Pascal's triangle, is bounded by a global
 constant $O(1)$.

@@ -1,0 +1,39 @@
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Erdős Problem 659
+
+*Reference:* [erdosproblems.com/659](https://www.erdosproblems.com/659)
+-/
+
+open EuclideanGeometry Finset Real
+
+namespace Erdos659
+
+/--
+Is there a set of $n$ points in $\mathbb{R}^2$ such that every subset of $4$ points determines at
+least $3$ distances, yet the total number of distinct distances is $\ll \frac{n}{\sqrt{\log n}}$?
+-/
+@[category research open, AMS 52]
+theorem erdos_659 : answer(sorry) ↔ ∃ A : ℕ → Finset ℝ²,
+   (∀ n, #(A n) = n ∧ ∀ S ⊆ A n, #S = 4 → 3 ≤ distinctDistances S) ∧
+    (fun n ↦ distinctDistances (A n)) ≪ fun n ↦ n / sqrt (log n) := by
+  sorry
+
+end Erdos659
