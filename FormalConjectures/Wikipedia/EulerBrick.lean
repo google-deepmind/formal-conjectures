@@ -89,7 +89,8 @@ def CuboidOne : Prop := ∀ ⦃a b : ℤ⦄, gcd a b = 1 → 0 < a → 0 < b →
 
 /-- The first Cuboid conjecture -/
 @[category research open, AMS 12]
-theorem cuboidOne : CuboidOne := by sorry
+theorem cuboidOne : CuboidOne := by 
+  sorry
 
 /-- Pairs of natural numbers for which the second Cuboid polynomial is irreducible. -/
 def CuboidTwoFor (a b : ℤ) : Prop :=
