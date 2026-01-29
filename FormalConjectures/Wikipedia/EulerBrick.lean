@@ -42,7 +42,7 @@ def IsPerfectCuboid (a b c : ℕ+) : Prop :=
 Generalization of an Euler brick to $n$-dimensional space.
 -/
 def IsEulerHyperBrick (n : ℕ) (sides : Fin n → ℕ+) : Prop :=
-Pairwise fun i j ↦ IsSquare ((sides i)^2 + (sides j)^2)
+  Pairwise fun i j ↦ IsSquare ((sides i)^2 + (sides j)^2)
 
 /--
 Is there a perfect Euler brick?
