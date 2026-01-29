@@ -57,7 +57,7 @@ def Homeomorph.OfDiscrete {X  Y : Type*} [TopologicalSpace X]
 theorem IsHomeomorph.equiv_of_discreteTopology {X  Y : Type*} [TopologicalSpace X]
   [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y]
     (f : X ≃ Y) : IsHomeomorph f :=
-  isHomeomorph_iff_exists_homeomorph.mpr (Exists.intro (Homeomorph.OfDiscrete f) rfl)
+  (Homeomorph.OfDiscrete f).isHomeomorph
 
 /-- Every discrete space is homogeneous. -/
 @[category test, AMS 54]
