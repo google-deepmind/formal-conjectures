@@ -50,9 +50,20 @@ theorem five : a 5 = 1335793103 := by
   unfold a
   norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
 
-
+/--
+For a prime $p$, a rational number $x \in \mathbb{Q}$ is called $p$-integral if its denominator is
+not divisible by $p$. That is, if $x$ is represented as a fraction $a/b$ in lowest terms,
+then $p \nmid b$.
+-/
 def is_p_integral (p : ℕ) (x : ℚ) : Prop := x.den % p ≠ 0
 
+
+/--
+Let $p$ be a prime and $k$ be a natural number.
+Two rational numbers $x, y \in \mathbb{Q}$ are said to be congruent modulo $p^k$,
+denoted $x \equiv y \pmod{p^k}$, if their difference is a multiple of $p^k$
+by a $p$-integral factor.
+-/
 def q_modeq (p : ℕ) (k : ℕ) (x y : ℚ) : Prop :=
   ∃ z, is_p_integral p z ∧ x - y = (p ^ k : ℚ) * z
 
@@ -61,7 +72,21 @@ def term_rat (n k : ℕ) : ℚ :=
 
 def H (n r : ℕ) : ℚ := ∑ k ∈ Finset.Icc 1 n, 1 / (k : ℚ)^r
 
+/--
+Let $p$ be a prime and $1 \le k \le p-1$. The $k$-th term of the sum for $n=p-1$, denoted $t_k$,
+satisfies:
+$$
+t_k = \frac{1}{k^3} \binom{p-1}{k}^2 \binom{p-1+k}{k}^2 =
+\frac{p^2}{k^5} \left( \left(1 - \frac{p}{k}\right)^2
+\prod_{j=1}^{k-1} \left(1 - \frac{p^2}{j^2}\right)^2 \right)
+$$
 
+Proof Sketch:
+This follows from the algebraic expansion of the binomial coefficients.
+We use the identity $\binom{p-1}{k} = (-1)^k \prod_{j=1}^k (1 - \frac{p}{j})$ and similar expansions
+for $\binom{p-1+k}{k}$, cancelling common factorial terms and isolating the factor of $p^2$ inherent
+in the product structure.
+-/
 lemma term_identity (p : ℕ) (k : ℕ) (hp : Nat.Prime p) (hk : k ∈ Finset.Icc 1 (p - 1)) :
   term_rat (p - 1) k = (p : ℚ)^2 / k^5 * ((1 - (p : ℚ)/k)^2 *
     (Finset.prod (Finset.Icc 1 (k - 1)) (fun j => 1 - (p : ℚ)^2 / j^2))^2) := by
@@ -98,6 +123,17 @@ lemma prod_approx_one (p : ℕ) (k : ℕ) (hp : Nat.Prime p) (hk : k ∈ Finset.
     cases(p: Int)^2 using Int.negInduction with norm_num[<-ZMod.intCast_zmod_eq_zero_iff_dvd]
   · use (p.mul_dvd_mul_iff_left hp.pos).not.2 (hp.prime.not_dvd_finset_prod fun and=>mt hp.dvd_of_dvd_pow ∘mt hp.dvd_of_dvd_pow ∘mt p.eq_zero_of_dvd_of_lt ∘by valid ∘ Finset.mem_range.1)
 
+/--
+For a prime $p \ge 5$ and $1 \le k \le p-1$, the term $t_k$ satisfies the congruence:
+$$t_k \equiv \frac{p^2}{k^5} - \frac{2p^3}{k^6} \pmod{p^4}$$
+
+Proof Sketch:
+Using the Term Identity, we analyze the product $\prod_{j=1}^{k-1} (1 - \frac{p^2}{j^2})^2$.
+Modulo $p^2$, this product is congruent to 1.
+The term $(1 - \frac{p}{k})^2$ expands to $1 - \frac{2p}{k} + \frac{p^2}{k^2}$.
+Multiplying these factors by the scalar $\frac{p^2}{k^5}$ and discarding terms of
+order $p^4$ or higher yields the result.
+-/
 lemma term_approx_mod_p4 (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5)
     (k : ℕ) (hk : k ∈ Finset.Icc 1 (p - 1)) :
     q_modeq p 4 (term_rat (p - 1) k) ((p : ℚ)^2 / k^5 - 2 * (p : ℚ)^3 / k^6) := by
@@ -128,6 +164,18 @@ lemma term_approx_mod_p4 (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5)
     ring
   convert@h_rhs▸ h_scale
 
+/--
+For a prime $p \ge 5$, the harmonic numbers satisfy:
+$$2 H_{p-1}^{(5)} \equiv -5p H_{p-1}^{(6)} \pmod{p^2}$$
+
+Proof Sketch:
+We proceed by substituting $k \to p-k$ in the summation sum.
+$$
+H_{p-1}^{(5)} = \sum_{k=1}^{p-1} \frac{1}{(p-k)^5} = \sum_{k=1}^{p-1} \frac{(-1)^5}{k^5(1 - p/k)^5}
+$$
+Expanding $(1-p/k)^{-5}$ via Taylor series modulo $p^2$ allows us to
+relate the sum of powers of $k$ to higher-order harmonic sums.
+-/
 lemma harmonic_reflection (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5) :
     q_modeq p 2 (2 * H (p - 1) 5) (-5 * (p : ℚ) * H (p - 1) 6) := by
   have h_term : ∀ k ∈ Finset.Icc 1 (p - 1), q_modeq p 2 (1 / ((p : ℚ) - k)^5) (-1/k^5 - 5*p/k^6) := by
@@ -162,6 +210,19 @@ lemma harmonic_reflection (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5) :
       simp_all only[← V,div_eq_mul_inv, one_mul,← Finset.mul_sum, two_mul, Finset.sum_add_distrib]
   · exact(( Finset.sum_Ico_eq_sum_range _ _ _).trans (Finset.sum_congr rfl (by field_simp+contextual[eq_self,add_sub,←sub_add,hp.one_lt,·.le_sub_one_of_lt]))).symm
 
+
+/--
+For a prime $p \ge 5$ and $p \neq 7$:
+$$
+H_{p-1}^{(6)} \equiv 0 \pmod p
+$$
+
+Proof Sketch:
+
+Since $p-1$ is not divisible by 6 (for $p \neq 7, p \ge 5$), the sum of powers $k^{-6}$ runs through
+a complete set of residues (excluding 0) or can be grouped using primitive roots to show the sum
+vanishes modulo $p$.
+-/
 lemma harmonic_vanish_6 (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5) (h_neq7 : p ≠ 7) :
     q_modeq p 1 (H (p - 1) 6) 0 := by
   delta Ne q_modeq H at *
@@ -204,6 +265,31 @@ lemma sum_is_integral (p : ℕ) (hp : Nat.Prime p) (h_ge5 : p ≥ 5) :
     exact (Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)).trans ↑(mul_dvd_mul j ((Nat.div_dvd_of_dvd ↑(gcd_dvd_right _ _)).trans ((mod_cast (Rat.inv_natCast_den_of_pos (by ·bound)).dvd))))
   · exact (hp.prime.not_dvd_finset_prod fun and=>mt hp.dvd_of_dvd_pow ∘mt p.eq_zero_of_dvd_of_lt ∘by valid ∘ Finset.mem_range.1).comp (·.trans (this _))
 
+
+/--
+For any prime $p \ge 5$ with $p \neq 7$, the rational sum satisfies:
+$$
+S_{p-1} \equiv 0 \pmod{p^4}
+$$
+
+Proof Sketch:
+Let $n = p-1$. By the lemma above, the sum $S_{p-1}$ approximates to:
+$$
+S_{p-1} \equiv \sum_{k=1}^{p-1} \left( \frac{p^2}{k^5} - \frac{2p^3}{k^6} \right)
+\equiv p^2 H_{p-1}^{(5)} - 2p^3 H_{p-1}^{(6)} \pmod{p^4}
+$$
+Using the reflection lemma, we substitute $p^2 H_{p-1}^{(5)}$ (multiplied by 2 for convenience):
+$$
+2 S_{p-1} \equiv p^2 (2 H_{p-1}^{(5)}) - 4p^3 H_{p-1}^{(6)}
+\equiv p^2 (-5p H_{p-1}^{(6)}) - 4p^3 H_{p-1}^{(6)} \pmod{p^4}
+$$
+$$
+2 S_{p-1} \equiv -9p^3 H_{p-1}^{(6)} \pmod{p^4}
+$$
+By the vanishing lemma, $H_{p-1}^{(6)} \equiv 0 \pmod p$.
+Therefore, $p^3 H_{p-1}^{(6)} \equiv 0 \pmod{p^4}$.
+Since $p \ge 5$, 2 is invertible modulo $p^4$, implying $S_{p-1} \equiv 0 \pmod{p^4}$.
+-/
 theorem supercongruence_rational (p : ℕ) (hp : Nat.Prime p) (h5 : 5 ≤ p) (h7 : 7 ≠ p) :
     q_modeq p 4 (∑ k ∈ Finset.Icc 1 (p - 1), term_rat (p - 1) k) 0 := by
   let n := p - 1
@@ -254,6 +340,10 @@ theorem supercongruence_rational (p : ℕ) (hp : Nat.Prime p) (h5 : 5 ≤ p) (h7
 
 /--
 We have  $a(p-1) \equiv 0 \pmod{p^4}$ for all primes $p \ge 3$ except $p=7$.
+
+Proof Sketch:
+Since $S_{p-1} \equiv 0 \pmod{p^4}$ and the denominator of $S_{p-1}$ is not divisible by $p$
+(as shown by the p-integrality of the sum), the numerator $a(p-1)$ must be divisible by $p^4$.
 -/
 @[category research solved, AMS 11]
 theorem a357513_supercongruence (p : ℕ) (hp : Nat.Prime p) (h_ge3 : p ≥ 3) (h_neq7 : p ≠ 7) :
