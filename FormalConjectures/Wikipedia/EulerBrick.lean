@@ -36,7 +36,7 @@ def IsEulerBrick (a b c : ℕ+) : Prop :=
 A **perfect cuboid** is an Euler brick with an integer space diagonal.
 -/
 def IsPerfectCuboid (a b c : ℕ+) : Prop :=
-IsEulerBrick a b c ∧ IsSquare (a^2 + b^2 + c^2)
+  IsEulerBrick a b c ∧ IsSquare (a^2 + b^2 + c^2)
 
 /--
 Generalization of an Euler brick to $n$-dimensional space.
