@@ -55,7 +55,7 @@ Is it true that every infinite homogeneous compact
 space contains a non-trivial convergent sequence? -/
 @[category research open, AMS 54]
 theorem homogeneousSpace_exists_inj_tendsto :
-    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), ¬ Finite X → CompactSpace X →
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), ¬ Finite X → CompactSpace X →
       HomogeneousSpace X → ∃ s : ℕ → X, s.Injective ∧ ∃ a : X, Tendsto s atTop (nhds a) := by
   sorry
 
