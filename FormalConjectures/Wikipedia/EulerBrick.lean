@@ -30,7 +30,7 @@ namespace EulerBrick
 An **Euler brick** is a rectangular cuboid where all edges and face diagonals have integer lengths.
 -/
 def IsEulerBrick (a b c : ℕ+) : Prop :=
-IsSquare (a^2 + b^2) ∧ IsSquare (a^2 + c^2) ∧ IsSquare (b^2 + c^2)
+  IsSquare (a^2 + b^2) ∧ IsSquare (a^2 + c^2) ∧ IsSquare (b^2 + c^2)
 
 /--
 A **perfect cuboid** is an Euler brick with an integer space diagonal.
