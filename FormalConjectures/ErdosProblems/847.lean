@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [erdosproblems.com/847](https://www.erdosproblems.com/847)
 - [RRS24] Reiher, Christian and R\"odl, Vojt\v ech and Sales, Marcelo, Colouring versus density in integers and {H}ales-{J}ewett cubes. J. Lond. Math. Soc. (2) (2024)
+  [arXiv:2311.08556](https://arxiv.org/abs/2311.08556)
 -/
 
 namespace Erdos847
