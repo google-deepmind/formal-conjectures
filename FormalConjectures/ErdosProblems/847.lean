@@ -18,7 +18,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 847
 
-*Reference:* [erdosproblems.com/847](https://www.erdosproblems.com/847)
+*References:*
+- [erdosproblems.com/847](https://www.erdosproblems.com/847)
+- [RRS24] Reiher, Christian and R\"odl, Vojt\v ech and Sales, Marcelo, Colouring versus density in integers and {H}ales-{J}ewett cubes. J. Lond. Math. Soc. (2) (2024)
 -/
 
 namespace Erdos847
@@ -38,10 +40,15 @@ three-term arithmetic progression.
 
 Is it true that $A$ is the union of a finite number of sets which contain no three-term arithmetic
 progression?
+
+A negative answer was given by Reiher, Rödl, and Sales [RRS24], who proved that, for any
+$0<\mu<1/2$, there exists $A\subseteq \mathbb{N}$ such that every finite colouring of $A$ contains
+a three-term arithmetic progression, and yet every subset of $A$ of size $n$ contains a subset of
+size $\geq \mu n$ without a three-term arithmetic progression.
 -/
-@[category research open, AMS 11]
-theorem erdos_847 : answer(sorry) ↔ ∀ (A : Set ℕ), Infinite A → HasFew3APs A →
-    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧ A = ⋃ i : Fin n, S i := by 
+@[category research solved, AMS 11]
+theorem erdos_847 : answer(False) ↔ ∀ (A : Set ℕ), Infinite A → HasFew3APs A →
+    ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧ A = ⋃ i : Fin n, S i := by
   sorry
 
 end Erdos847
