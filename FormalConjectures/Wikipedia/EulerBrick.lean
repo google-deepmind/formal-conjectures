@@ -127,7 +127,8 @@ def CuboidThree : Prop := ∀ ⦃a b c : ℤ⦄, gcd a (gcd b c) = 1 → 0 < a �
 
 /-- The third Cuboid conjecture -/
 @[category research open, AMS 12]
-theorem cuboidThree : CuboidThree := by sorry
+theorem cuboidThree : CuboidThree := by 
+  sorry
 
 /-- In [Sh12], Ruslan notes that a perfect Euler brick does not exist
 if all three Cuboid conjectures hold. -/
