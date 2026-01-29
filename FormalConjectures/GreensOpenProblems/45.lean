@@ -30,6 +30,8 @@ such that every integer `⩽ N` lies in at least 10 of them?
 
 namespace Green45
 
-alias green_45 := Erdos689.erdos_689
+@[category research open, AMS 11]
+theorem green_45 : type_of% Erdos689.erdos_689 := by
+  sorry
 
 end Green45

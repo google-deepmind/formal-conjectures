@@ -29,6 +29,8 @@ if $a_1, a_2 \in A$. Does $A$ have positive density?
 
 namespace Green63
 
-alias green_63 := Erdos424.erdos_424
+@[category research open, AMS 11]
+theorem green_63 : type_of% Erdos424.erdos_424 := by
+  sorry
 
 end Green63
