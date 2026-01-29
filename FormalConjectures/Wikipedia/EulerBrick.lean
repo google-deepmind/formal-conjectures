@@ -107,7 +107,8 @@ def CuboidTwo : Prop := ∀ ⦃a b : ℕ⦄, a.Coprime b → 0 < a → 0 < b →
 
 /-- The second Cuboid conjecture -/
 @[category research open, AMS 12]
-theorem cuboidTwo : CuboidTwo := by sorry
+theorem cuboidTwo : CuboidTwo := by 
+  sorry
 
 /-- Triplets of natural numbers for which the third Cuboid polynomial is irreducible. -/
 def CuboidThreeFor (a b c : ℤ) : Prop :=
