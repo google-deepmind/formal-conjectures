@@ -41,7 +41,7 @@ Note that Artin's conjecture has been proved subject to the Generalized Riemann 
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Artin%27s_conjecture_on_primitive_roots)
-- [OEIS](https://oeis.org/A085397)
+- [OEIS](https://oeis.org/A85397)
 - [LMS14](https://arxiv.org/pdf/1112.4816) Lenstra, H.W. et al. "Character sums for primitive root densities" _arXiv:1112.4816_ [math.NT] (2014).
 - [Ho67] Hooley, C. "On Artin's conjecture." _Journal für die reine und angewandte Mathematik_ 225 (1967): 209-220.
 -/
@@ -106,7 +106,7 @@ theorem conditional_artin_primitive_roots.parts.i (a : ℤ) (ha : ¬IsSquare a) 
 /--
 **Artin's Conjecture on Primitive Roots**, second half.
 Write $a = a_0 b^2$ where $a_0$ is squarefree. Under the conditions that $a$ is not a perfect
-power and $a_0\not\equiv 1\pmod{4}$ (sequence A085397 in the OEIS), the density of the set
+power and $a_0\not\equiv 1\pmod{4}$ (sequence A85397 in the OEIS), the density of the set
 $S(a)$ of primes $p$ such that $a$ is a primitive root modulo $p$ is independent of $a$ and
 equals Artin's constant.
 -/
