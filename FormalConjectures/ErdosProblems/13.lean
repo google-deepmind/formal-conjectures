@@ -52,7 +52,7 @@ $a | (b_1 + ... + b_r)$ and $a < \min(b_1, ..., b_r)$, then is it true that
 $|A| \le N/(r+1) + O(1)$?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_13_general (r : ℕ) : ∃ C : ℝ, ∀ N : ℕ,
+theorem erdos_13_general : answer(sorry) ↔ ∀ r : ℕ, ∃ C : ℝ, ∀ N : ℕ,
     ∀ A ⊆ Icc 1 N,
     (∀ a ∈ A, ∀ (b : Fin r → ℕ), (∀ i, b i ∈ A) → (∀ i, a < b i) →
       ¬ (a ∣ ∑ i, b i)) →
