@@ -45,10 +45,7 @@ class HomogeneousSpace (X : Type*) [TopologicalSpace X] : Prop where
 def Homeomorph.OfDiscrete {X  Y : Type*} [TopologicalSpace X]
   [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y]
     (f : X ≃ Y) : X ≃ₜ Y where
-  toFun := f
-  invFun := f.symm
-  left_inv := Equiv.leftInverse_symm f
-  right_inv := Equiv.rightInverse_symm f
+  toEquiv := f
   continuous_toFun := continuous_of_discreteTopology
   continuous_invFun := continuous_of_discreteTopology
 
