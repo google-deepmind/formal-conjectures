@@ -65,7 +65,7 @@ of a homogeneous compact space under a continuous mapping? -/
 @[category research open, AMS 54]
 theorem homogeneousSpace_exists_surjective :
     answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X →
-      ∃ (Y : Type*) (_ : TopologicalSpace Y), CompactSpace Y ∧ HomogeneousSpace Y ∧
+      ∃ (Y : Type) (_ : TopologicalSpace Y), CompactSpace Y ∧ HomogeneousSpace Y ∧
         ∃ f : Y → X, Continuous f ∧ f.Surjective := by
   sorry
 
