@@ -70,7 +70,7 @@ However, the conjecture itself remains open.
 -/
 @[category research open, AMS 11]
 theorem erdos_884 :
-    Erdos884 ↔ answer(sorry) := by
+    answer(sorry) ↔ Erdos884 := by
   sorry
 
 /--
