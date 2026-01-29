@@ -86,7 +86,7 @@ instance MetrizableSpace.countablyMonolithicSpace
 Is every homogeneous ω-monolithic compact space first countable? -/
 @[category research open, AMS 54]
 theorem firstCountableTopology_of_countablyMonolithicSpace :
-    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X → HomogeneousSpace X →
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), CompactSpace X → HomogeneousSpace X →
       CountablyMonolithicSpace X → FirstCountableTopology X := by
   sorry
 
