@@ -94,7 +94,7 @@ theorem firstCountableTopology_of_countablyMonolithicSpace :
 Is the cardinality of every homogeneous ω-monolithic compact space not greater than 𝔠? -/
 @[category research open, AMS 54]
 theorem countablyMonolithicSpace_card_lt :
-    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X → HomogeneousSpace X →
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), CompactSpace X → HomogeneousSpace X →
       CountablyMonolithicSpace X → #X ≤ 𝔠 := by
   sorry
 
