@@ -38,10 +38,6 @@ has been studied in several works. In particular, see:
   - *The Boxdot Conjecture and the Generalized McKinsey Axiom*, Christopher Steinsvold,
     Australasian Journal of Logic (AJL).
 
-
-Jeřábek's proof of the Boxdot Conjecture has been formalised in Lean:
-https://github.com/FormalizedFormalLogic/Foundation. Note however that the statement's formalisation
-in that repository is different to the one presented in the current file.
 -/
 
 namespace Arxiv.«1308.0994»
@@ -202,7 +198,8 @@ def KT : NormalModalLogic := by
 Boxdot Conjecture: every normal modal logic that faithfully interprets KT
 by the boxdot translation is included in KT.
 -/
-@[category research solved, AMS 3]
+@[category research formally solved using lean4 at
+  "https://github.com/FormalizedFormalLogic/Foundation", AMS 3]
 theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L ⊆ KT := by
   sorry
 
