@@ -83,3 +83,4 @@ import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
 import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
+import FormalConjecturesForMathlib.Topology.Discrete
