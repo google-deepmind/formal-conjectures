@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Topology.Discrete
 
 /-!
 # Conjectures around homogeneous topological spaces
