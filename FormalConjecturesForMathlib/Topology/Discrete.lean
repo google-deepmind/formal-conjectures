@@ -16,16 +16,13 @@ limitations under the License.
 import Mathlib.Topology.Homeomorph.Lemmas
 
 /- A bijection between discrete topological spaces induces a homeomorphism. -/
-def Homeomorph.OfDiscrete {X  Y : Type*} [TopologicalSpace X]
-    [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y] (f : X ≃ Y) : X ≃ₜ Y where
-  toFun := f
-  invFun := f.symm
-  left_inv := Equiv.leftInverse_symm f
-  right_inv := Equiv.rightInverse_symm f
+def Homeomorph.OfDiscrete {X  Y : Type*} [TopologicalSpace X] [DiscreteTopology X]
+    [TopologicalSpace Y] [DiscreteTopology Y] (f : X ≃ Y) : X ≃ₜ Y where
+  toEquiv := f
   continuous_toFun := continuous_of_discreteTopology
   continuous_invFun := continuous_of_discreteTopology
 
 /-- A bijection between discrete topoligical spaces is a homeomorpism. -/
 theorem IsHomeomorph.equiv_of_discreteTopology {X  Y : Type*} [TopologicalSpace X]
     [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y] (f : X ≃ Y) : IsHomeomorph f :=
-  isHomeomorph_iff_exists_homeomorph.mpr (Exists.intro (Homeomorph.OfDiscrete f) rfl)
+  (Homeomorph.OfDiscrete f).isHomeomorph
