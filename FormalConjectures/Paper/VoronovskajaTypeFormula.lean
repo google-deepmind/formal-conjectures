@@ -21,10 +21,6 @@ open Topology Filter Real unitInterval Polynomial
 /-!
 # Voronovskaja-type Formula for the Bezier Variant of the Bernstein Operators
 
-*References:*
-
-* [A problem in Constructive theory of functions, Szopol 2010](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf?utm_source=perplexity)
-
 The Bézier-type Bernstein operators $B_{n,\alpha}$ for $\alpha > 0$ are defined for
 $f : [0,1] \to \mathbb{R}$ by
 \[
@@ -66,6 +62,10 @@ Determine the asymptotic behaviour of the Bézier-type Bernstein operators for $
     at least for functions $f$ that are twice differentiable at $x \in (0,1)$.
     \item \textbf{Explicit form of the limit:}
     If the limit exists, determine an explicit expression for it in terms of $f$, $x$, and $\alpha$.
+
+*References:*
+
+* [A problem in Constructive theory of functions, Szopol 2010](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf?utm_source=perplexity)
 -/
 
 /--
@@ -76,7 +76,15 @@ noncomputable def bernsteinTail (n k : ℕ) : Polynomial ℝ :=
 
 /--
 Bézier–type Bernstein operator:
-`(B_{n,α} f)(x) = ∑_{k=0}^n f(k/n) * (J_{n,k}(x)^α - J_{n,k+1}(x)^α)`
+\[
+(B_{n,\alpha} f)(x)
+= \sum_{k=0}^{n}
+f\!\left(\frac{k}{n}\right)
+\left(
+J_{n,k}(x)^{\alpha}
+- J_{n,k+1}(x)^{\alpha}
+\right)
+\]
 -/
 noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ  → ℝ) (x : ℝ) : ℝ :=
 ∑ k ∈  Finset.range (n+1),
@@ -86,9 +94,11 @@ noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ  → ℝ) (x : �
 Classical Voronovskaja theorem (α = 1)
 
 For smooth `f`, the limit:
-    n * (B_n f x - f x) → (1/2)*x*(1-x)*f''(x)
-
-This is already in the literature; here we state it.
+\[
+n\bigl( B_n f(x) - f(x) \bigr)
+\;\longrightarrow\;
+\frac{1}{2}\, x(1 - x)\, f''(x)
+\]
 -/
 @[category research solved, AMS 26 40 47]
 theorem voronovskaja_theorem.bernstein_operators
