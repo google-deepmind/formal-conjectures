@@ -53,12 +53,12 @@ theorem c1a_upper_bound : C1a ≤ 1.5029 := by
 
 /-- How can the upper bound be improved? -/
 @[category research open, AMS 05 11 26]
-theorem c1a_le : C1a ≤ answer(sorry) := by
+theorem c1a_le : ∃ (c : ℝ), c = answer(sorry) ∧ c < 1.5029 ∧ C1a ≤ c := by
   sorry
 
 /-- How can the lower bound be improved? -/
 @[category research open, AMS 05 11 26]
-theorem c1a_ge : answer(sorry) ≤ C1a := by
+theorem c1a_ge : ∃ (c : ℝ), c = answer(sorry) ∧ 1.2748 < c ∧ c ≤ C1a := by
   sorry
 
 /-- What is the exact value of the constant? -/
