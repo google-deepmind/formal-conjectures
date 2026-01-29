@@ -43,7 +43,7 @@ class HomogeneousSpace (X : Type*) [TopologicalSpace X] : Prop where
 
 /- A bijection between discrete topological spaces induces a homeomorphism. -/
 def Homeomorph.OfDiscrete {X  Y : Type*} [TopologicalSpace X]
-  [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y]
+    [DiscreteTopology X] [TopologicalSpace Y] [DiscreteTopology Y]
     (f : X ≃ Y) : X ≃ₜ Y where
   toEquiv := f
   continuous_toFun := continuous_of_discreteTopology
