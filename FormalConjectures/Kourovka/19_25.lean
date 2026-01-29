@@ -31,8 +31,8 @@ by B. Curtin, G. R. Pourgholi
 /--
 Let $G$ and $H$ be finite groups of the same order with
 $\sum_{g \in G} \phi(|g|) = \sum_{h \in H} \phi(|h|)$,
-where $\phi is the Euler totient function. Suppose that G is simple. Is
-H necessarily simple?
+where $\phi$ is the Euler totient function. Suppose that $G$ is simple. Is
+$H$ necessarily simple?
 -/
 @[category research open, AMS 20]
 theorem kourovka.«19.25» : answer(sorry) ↔
