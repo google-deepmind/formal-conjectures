@@ -103,7 +103,7 @@ Is it true that every ω-monolithic compact space contains a point with a
 first countable neighborhood basis? -/
 @[category research open, AMS 54]
 theorem countablyMonolithicSpace_exists_nhds_generated_countable :
-    answer(sorry) ↔ ∀ ⦃X : Type*⦄ (_ : TopologicalSpace X), CompactSpace X →
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), CompactSpace X →
       CountablyMonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
   sorry
 
