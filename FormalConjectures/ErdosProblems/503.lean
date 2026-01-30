@@ -26,6 +26,13 @@ namespace Erdos503
 
 open scoped EuclideanGeometry
 
+open Set
+
+/-- A set is isosceles if every three points determine an isosceles triangle -/
+def IsIsosceles {E : Type*} [NormedAddCommGroup E] (A : Set E) : Prop :=
+  ∀ x y z, x ∈ A → y ∈ A → z ∈ A → x ≠ y → y ≠ z → x ≠ z →
+    dist x y = dist y z ∨ dist y z = dist x z ∨ dist x y = dist x z
+
 /--
 What is the size of the largest $A \subseteq \mathbb{R}^n$ such that every three points from $A$
 determine an isosceles triangle? That is, for any three points $x$, $y$, $z$ from $A$, at least two
@@ -33,7 +40,8 @@ of the distances $|x - y|$, $|y - z|$, $|x - z|$ are equal.
 -/
 @[category research open, AMS 51]
 theorem erdos_503 (n : ℕ) :
-    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} answer(sorry) := by
+    ∃ m : ℕ, IsGreatest {k | ∃ (A : Set (EuclideanSpace ℝ (Fin n))),
+      A.Finite ∧ IsIsosceles A ∧ A.ncard = k} m := by
   sorry
 
 /--
@@ -44,7 +52,8 @@ When $n = 2$, the answer is 6 (due to Kelly [ErKe47] - an alternative proof is g
 -/
 @[category research solved, AMS 51]
 theorem erdos_503.variants.R2 :
-    IsGreatest {(A.ncard) | (A : Set ℝ²) (hA : A.IsIsosceles)} 6 := by
+    IsGreatest {k | ∃ (A : Set (EuclideanSpace ℝ (Fin 2))),
+      A.Finite ∧ IsIsosceles A ∧ A.ncard = k} 6 := by
   sorry
 
 /--
@@ -54,7 +63,8 @@ When $n = 3$, the answer is 8 (due to Croft [Cr62]).
 -/
 @[category research solved, AMS 51]
 theorem erdos_503.variants.R3 :
-    IsGreatest {(A.ncard) | (A : Set ℝ³) (hA : A.IsIsosceles)} 8 := by
+    IsGreatest {k | ∃ (A : Set (EuclideanSpace ℝ (Fin 3))),
+      A.Finite ∧ IsIsosceles A ∧ A.ncard = k} 8 := by
   sorry
 
 /--
@@ -67,7 +77,8 @@ $$
 -/
 @[category research solved, AMS 51]
 theorem erdos_503.variants.upper_bound (n : ℕ) :
-    ∀ m ∈ {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)}, m ≤ (n + 2).choose 2 := by
+    ∀ (A : Set (EuclideanSpace ℝ (Fin n))),
+      A.Finite → IsIsosceles A → A.ncard ≤ Nat.choose (n + 2) 2 := by
   sorry
 
 /--
@@ -78,7 +89,8 @@ the required property.
 -/
 @[category research solved, AMS 51]
 theorem erdos_503.variants.lower_bound (n : ℕ) :
-    ∀ m ∈ {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)}, (n + 1).choose 2 ≤ m := by
+    ∃ (A : Set (EuclideanSpace ℝ (Fin n))),
+      A.Finite ∧ IsIsosceles A ∧ Nat.choose (n + 1) 2 ≤ A.ncard := by
   sorry
 
 end Erdos503
