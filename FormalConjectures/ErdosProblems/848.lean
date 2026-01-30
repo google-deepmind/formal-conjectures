@@ -27,8 +27,8 @@ squarefree (for all $a, b \in A$) achieved by taking those $n \equiv 7 \pmod{25}
  - [Er92b] Erdős, P. "Some of my favourite problems in number theory, combinatorics,
    and geometry." Resenhas do Instituto de Matemático e Estatística da Universidade
    de São Paulo 2.2 (1995): 165-186.
- - [SS25] Sawhney, M., Sellke, M. "On products in arithmetic progressions."
-   arXiv:2502.06025 (2025)
+ - [Sa25] Sawhney, M. "Problem 848." (2025)
+   https://www.math.columbia.edu/~msawhney/Problem_848.pdf
  - Full formal proof of asymptotic result: https://github.com/The-Obstacle-Is-The-Way/erdos-banger
 -/
 
@@ -59,12 +59,12 @@ This asks whether `Problem848Statement N` holds for all N. -/
 theorem erdos_848 : ∀ N, Problem848Statement N := by
   sorry
 
-/-- **Erdős Problem 848 (Sawhney-Sellke 2025, Asymptotic)**
+/-- **Erdős Problem 848 (Sawhney 2025, Asymptotic)**
 
 There exists N₀ such that for all N ≥ N₀, if A ⊆ {1, …, N} satisfies that ab + 1
 is never squarefree for all a, b ∈ A, then |A| ≤ |{n ≤ N : n ≡ 7 (mod 25)}|.
 
-More precisely, Sawhney-Sellke prove: there exist absolute constants η > 0 and N₀
+More precisely, Sawhney proves: there exist absolute constants η > 0 and N₀
 such that for all N ≥ N₀, if |A| ≥ (1/25 - η)N then A ⊆ {n : n ≡ 7 (mod 25)} or
 A ⊆ {n : n ≡ 18 (mod 25)}.
 
