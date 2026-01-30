@@ -55,9 +55,9 @@ The weaker property: $n = x^2 + y^2 - z^2$ such that $\max(x^2, y^2, z^2) \leq n
 -/
 def erdos_1148_weaker_prop (n : ℕ) : Prop :=
   ∃ x y z : ℕ, n + z ^ 2 = x ^ 2 + y ^ 2 ∧
-  (x ^ 2 : ℝ) ≤ n + 2 * Real.sqrt n ∧
-  (y ^ 2 : ℝ) ≤ n + 2 * Real.sqrt n ∧
-  (z ^ 2 : ℝ) ≤ n + 2 * Real.sqrt n
+    (x ^ 2 : ℝ) ≤ n + 2 * Real.sqrt n ∧
+    (y ^ 2 : ℝ) ≤ n + 2 * Real.sqrt n ∧
+    (z ^ 2 : ℝ) ≤ n + 2 * Real.sqrt n
 
 /--
 [Va99] reports this is 'obvious' if we replace $\leq n$ with $\leq n+2\sqrt{n}$.
