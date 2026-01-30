@@ -30,7 +30,8 @@ open Filter
 namespace Erdos1148
 
 /--
-This property represents for a number $n$ if $n = x^2 + y^2 - z^2$ with $\max(x^2, y^2, z^2) \leq n$.
+A natural number $n$ which can be written as $n$ if $n = x^2 + y^2 - z^2$ with $\max(x^2, y^2, z^2)
+\leq n$.
 -/
 def erdos_1148_prop (n : ℕ) : Prop :=
   ∃ x y z : ℕ, n + z ^ 2 = x ^ 2 + y ^ 2 ∧ x ^ 2 ≤ n ∧ y ^ 2 ≤ n ∧ z ^ 2 ≤ n
@@ -45,7 +46,7 @@ theorem erdos_1148 : ∀ᶠ n in atTop, erdos_1148_prop n := by
 /--
 The largest integer known which cannot be written this way is $6563$.
 -/
-@[category research solved, AMS 11]
+@[category high_school, AMS 11]
 theorem erdos_1148.lower_bound : ¬ erdos_1148_prop 6563 := by
   sorry
 
@@ -62,7 +63,7 @@ def erdos_1148_weaker_prop (n : ℕ) : Prop :=
 [Va99] reports this is 'obvious' if we replace $\leq n$ with $\leq n+2\sqrt{n}$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1148.variants.weaker : ∀ᶠ n in atTop, erdos_1148_weaker_prop n := by
+theorem erdos_1148.variants.weaker : ∀ n, erdos_1148_weaker_prop n := by
   sorry
 
 end Erdos1148
