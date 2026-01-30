@@ -41,12 +41,12 @@ A stronger form of [erdosproblems.com/28].
 -/
 @[category research open, AMS 5]
 theorem erdos_1145 :
-  answer(sorry) ↔ (∀ (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite),
-    A ⊆ Ici 1 →
-    B ⊆ Ici 1 →
+  answer(sorry) ↔ ∀ ⦃A B : Set ℕ⦄ (hA : A.Infinite) (hB : B.Infinite),
+    0 ∉ A →
+    0 ∉ B →
     Tendsto (fun n ↦ (Nat.nth (· ∈ A) n : ℝ) / (Nat.nth (· ∈ B) n : ℝ)) atTop (𝓝 1) →
     Ici 2 ⊆ A + B →
-    limsup (fun n ↦ ({p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n}.ncard : ℕ∞)) atTop = ⊤) := by
+    limsup (fun n ↦ ({p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n}.ncard : ℕ∞)) atTop = ⊤ := by
   sorry
 
 end Erdos1145
