@@ -68,7 +68,7 @@ More precisely, Sawhney-Sellke prove: there exist absolute constants η > 0 and 
 such that for all N ≥ N₀, if |A| ≥ (1/25 - η)N then A ⊆ {n : n ≡ 7 (mod 25)} or
 A ⊆ {n : n ≡ 18 (mod 25)}.
 
-A complete formal Lean 4 proof (3887 lines, 0 sorries) is available at:
+A complete formal Lean 4 proof (~5500 lines, 0 sorries) is available at:
 https://github.com/The-Obstacle-Is-The-Way/erdos-banger -/
 @[category research formally solved using lean4 at "https://github.com/The-Obstacle-Is-The-Way/erdos-banger/blob/main/formal/lean/Erdos/Problem848.lean", AMS 11]
 theorem erdos_848_asymptotic : ∃ N₀ : ℕ, ∀ N ≥ N₀, Problem848Statement N := by
