@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 848
 
-Is the maximum size of a set $A \subseteq \{1, \ldots, N\}$ such that $ab + 1$ is never
+Is the maximum size of a set $A \subseteq \{1, \dots, N\}$ such that $ab + 1$ is never
 squarefree (for all $a, b \in A$) achieved by taking those $n \equiv 7 \pmod{25}$?
 
 *References:*
@@ -34,44 +34,52 @@ squarefree (for all $a, b \in A$) achieved by taking those $n \equiv 7 \pmod{25}
 
 namespace Erdos848
 
-/-- A set A has the non-squarefree product property if ab + 1 is not squarefree
-for all a, b ∈ A. -/
+/-- A set $A$ has the non-squarefree product property if $ab + 1$ is not squarefree
+for all $a, b ∈ A$. -/
 def NonSquarefreeProductProp (A : Finset ℕ) : Prop :=
   ∀ a ∈ A, ∀ b ∈ A, ¬Squarefree (a * b + 1)
 
-/-- The candidate extremal set: {n ∈ {0, …, N-1} : n ≡ 7 (mod 25)}. -/
+/-- The candidate extremal set: $\{n ∈ \{0, \dots, N-1\} : n ≡ 7 (mod 25)\}$. -/
 def A₇ (N : ℕ) : Finset ℕ :=
   (Finset.range N).filter (fun n => n % 25 = 7)
 
-/-- The Erdős Problem 848 statement for a fixed N: any set A ⊆ {0, …, N-1} with
-the non-squarefree product property has cardinality at most |A₇(N)|. -/
-def Problem848Statement (N : ℕ) : Prop :=
+/-- Internal statement used to define `Erdos848`. -/
+def statement (N : ℕ) : Prop :=
   ∀ A : Finset ℕ, A ⊆ Finset.range N → NonSquarefreeProductProp A →
     A.card ≤ (A₇ N).card
 
+end Erdos848
+
+/-- The Erdős Problem 848 statement for a fixed $N$: any set $A ⊆ \{0, \dots, N-1\}$ with
+the non-squarefree product property has cardinality at most $|A₇(N)|$. -/
+def Erdos848 (N : ℕ) : Prop :=
+  Erdos848.statement N
+
+namespace Erdos848
+
 /-- **Erdős Problem 848 (Original)**
 
-Is the maximum size of a set A ⊆ {1, …, N} such that ab + 1 is never squarefree
-(for all a, b ∈ A) achieved by taking those n ≡ 7 (mod 25)?
+Is the maximum size of a set $A ⊆ \{1, \dots, N\}$ such that $ab + 1$ is never squarefree
+(for all $a, b ∈ A$) achieved by taking those $n ≡ 7 \pmod{25}$?
 
-This asks whether `Problem848Statement N` holds for all N. -/
+This asks whether `Erdos848 N` holds for all $N$ (formulated using `A ⊆ Finset.range N`). -/
 @[category research open, AMS 11]
-theorem erdos_848 : ∀ N, Problem848Statement N := by
+theorem erdos_848 : answer(sorry) ↔ ∀ N, Erdos848 N := by
   sorry
 
 /-- **Erdős Problem 848 (Sawhney 2025, Asymptotic)**
 
-There exists N₀ such that for all N ≥ N₀, if A ⊆ {1, …, N} satisfies that ab + 1
-is never squarefree for all a, b ∈ A, then |A| ≤ |{n ≤ N : n ≡ 7 (mod 25)}|.
+There exists $N₀$ such that for all $N ≥ N₀$, if $A ⊆ \{1, \dots, N\}$ satisfies that $ab + 1$
+is never squarefree for all $a, b ∈ A$, then $|A| ≤ |\{n ≤ N : n ≡ 7 \pmod{25}\}|$.
 
-More precisely, Sawhney proves: there exist absolute constants η > 0 and N₀
-such that for all N ≥ N₀, if |A| ≥ (1/25 - η)N then A ⊆ {n : n ≡ 7 (mod 25)} or
-A ⊆ {n : n ≡ 18 (mod 25)}.
+More precisely, Sawhney proves: there exist absolute constants $η > 0$ and $N₀$
+such that for all $N ≥ N₀$, if $|A| ≥ (1/25 - η)N$ then $A ⊆ \{n : n ≡ 7 \pmod{25}\}$ or
+$A ⊆ \{n : n ≡ 18 \pmod{25}\}$.
 
 A complete formal Lean 4 proof (0 sorries) is available at:
 https://github.com/The-Obstacle-Is-The-Way/erdos-banger -/
 @[category research formally solved using lean4 at "https://github.com/The-Obstacle-Is-The-Way/erdos-banger/blob/main/formal/lean/Erdos/Problem848.lean", AMS 11]
-theorem erdos_848_asymptotic : ∃ N₀ : ℕ, ∀ N ≥ N₀, Problem848Statement N := by
+theorem erdos_848_asymptotic : ∀ᶠ N in Filter.atTop, Erdos848 N := by
   sorry
 
 end Erdos848
