@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-### What is the conjecture
+### What is the Erdős problem?
 Link to the problem on https://www.erdosproblems.com along with a short description.
 
 Status: open
