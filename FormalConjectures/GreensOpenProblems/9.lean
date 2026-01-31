@@ -41,7 +41,7 @@ Problem 9 (i): is $r_3(N) \ll N(\log N)^{-10}$?
 
 Solved in [BlSi20].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5]
 theorem green_9_i :
     (fun (N : ℕ) ↦ (r 3 N : ℝ))
       =O[atTop] fun (N : ℕ) ↦ (N : ℝ) * (Real.log N) ^ (-10 : ℝ) := by
@@ -50,7 +50,7 @@ theorem green_9_i :
 /--
 Problem 9 (ii): is $r_5(N) \ll N(\log N)^{-c}$?
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 5]
 theorem green_9_ii : answer(sorry) ↔
     ∃ c > (0 : ℝ), (fun (N : ℕ) ↦ (r 5 N : ℝ))
       =O[atTop] fun (N : ℕ) ↦ (N : ℝ) * (Real.log N) ^ (-c) := by
@@ -59,7 +59,7 @@ theorem green_9_ii : answer(sorry) ↔
 /--
 Problem 9 (iii): is $r_4(\mathbf{F}_5^n) \ll N^{1-c}$, where $N=5^n$?
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 5]
 theorem green_9_iii : answer(sorry) ↔
     ∃ c > (0 : ℝ), (fun (n : ℕ) ↦ ((Finset.univ : Finset (Fin n → ZMod 5)).maxAPFreeCard 4 : ℝ))
       =O[atTop] fun (n : ℕ) ↦ ((5 : ℝ) ^ n) ^ (1 - c) := by
