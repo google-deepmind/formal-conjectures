@@ -1,7 +1,7 @@
 ---
 name: Erdős Problem
 about: Add an Erdős Problem
-title: ''
+title: 'Erdős Problem [put a number here!]'
 labels: 'new conjecture, erdos-problem'
 assignees: ''
 
