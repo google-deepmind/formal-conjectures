@@ -43,8 +43,9 @@ theorem erdos_918.parts.i :
 /-- Is there a graph with $\aleph_{\omega+1}$ vertices and chromatic number $\aleph_1$ such that
 every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? -/
 @[category research open, AMS 5]
-theorem erdos_918.parts.ii (ω : Ordinal) :
-    answer(sorry) ↔ ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
+theorem erdos_918.parts.ii :
+    answer(sorry) ↔ ∀ (ω : Ordinal),
+    ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry
 
@@ -60,8 +61,9 @@ theorem erdos_918.variants.all_subgraphs.parts.i :
 /-- Is there a graph with $\aleph_{\omega+1}$ vertices and chromatic number $\aleph_1$ such that
 every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? -/
 @[category research open, AMS 5]
-theorem erdos_918.variants.all_subgraphs.parts.ii (ω : Ordinal) :
-    answer(sorry) ↔ ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
+theorem erdos_918.variants.all_subgraphs.parts.ii :
+    answer(sorry) ↔ ∀ (ω : Ordinal),
+      ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal ≤ ℵ₀ := by
   sorry
 

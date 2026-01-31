@@ -49,8 +49,8 @@ theorem erdos_965 :
 In fact, in both [Ko16] and [SWCol] a generalized example for $k$-sums is constructed.
 -/
 @[category research solved, AMS 03 05]
-theorem erdos_965.generalization {k : ℕ} (hk : 2 ≤ k) :
-    answer(False) ↔ ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧ ∀ s t : Finset ℝ,
+theorem erdos_965.generalization : answer(False) ↔
+     ∀ᵉ (k ≥ 2), ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧ ∀ s t : Finset ℝ,
       ↑s ⊆ A → ↑t ⊆ A → s.card = k → t.card = k → f (s.sum id) = f (t.sum id) := by
   sorry
 
