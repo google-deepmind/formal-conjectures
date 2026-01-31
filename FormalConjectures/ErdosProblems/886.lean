@@ -25,8 +25,7 @@ import FormalConjectures.Util.ProblemImports
   (1997), 353--359.
 -/
 
-open Nat Real Filter
-open scoped Asymptotics
+open Nat Filter
 
 namespace Erdos886
 
@@ -34,7 +33,7 @@ namespace Erdos886
 The set of divisors of $n$ in the interval $(n^{1/2}, n^{1/2} + n^{1/2-\epsilon})$.
 -/
 noncomputable def erdos_886_divisors (n : ℕ) (ε : ℝ) : Finset ℕ :=
-  (Nat.divisors n).filter (fun d =>
+  (divisors n).filter (fun d =>
     (n : ℝ) ^ (1/2 : ℝ) < d ∧ (d : ℝ) < (n : ℝ) ^ (1/2 : ℝ) + (n : ℝ) ^ (1/2 - ε))
 
 /--
