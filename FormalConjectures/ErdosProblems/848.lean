@@ -49,9 +49,7 @@ def Erdos848 (N : ℕ) : Prop :=
   ∀ A : Finset ℕ, A ⊆ Finset.range N → NonSquarefreeProductProp A →
     A.card ≤ (A₇ N).card
 
-/-- **Erdős Problem 848 (Original)**
-
-Is the maximum size of a set $A ⊆ \{1, \dots, N\}$ such that $ab + 1$ is never squarefree
+/-- Is the maximum size of a set $A ⊆ \{1, \dots, N\}$ such that $ab + 1$ is never squarefree
 (for all $a, b ∈ A$) achieved by taking those $n ≡ 7 \pmod{25}$?
 
 This asks whether `Erdos848 N` holds for all $N$ (formulated using `A ⊆ Finset.range N`). -/
@@ -59,18 +57,16 @@ This asks whether `Erdos848 N` holds for all $N$ (formulated using `A ⊆ Finset
 theorem erdos_848 : answer(sorry) ↔ ∀ N, Erdos848 N := by
   sorry
 
-/-- **Erdős Problem 848 (Sawhney 2025, Asymptotic)**
-
-There exists $N₀$ such that for all $N ≥ N₀$, if $A ⊆ \{1, \dots, N\}$ satisfies that $ab + 1$
+/-- There exists $N₀$ such that for all $N ≥ N₀$, if $A ⊆ \{1, \dots, N\}$ satisfies that $ab + 1$
 is never squarefree for all $a, b ∈ A$, then $|A| ≤ |\{n ≤ N : n ≡ 7 \pmod{25}\}|$.
 
 More precisely, Sawhney proves: there exist absolute constants $η > 0$ and $N₀$
 such that for all $N ≥ N₀$, if $|A| ≥ (1/25 - η)N$ then $A ⊆ \{n : n ≡ 7 \pmod{25}\}$ or
 $A ⊆ \{n : n ≡ 18 \pmod{25}\}$.
 
-A complete formal Lean 4 proof (0 sorries) is available at:
+A complete formal Lean 4 proof is available at:
 https://github.com/The-Obstacle-Is-The-Way/erdos-banger -/
-@[category research formally solved using lean4 at "https://github.com/The-Obstacle-Is-The-Way/erdos-banger/blob/main/formal/lean/Erdos/Problem848.lean", AMS 11]
+@[category research formally solved using lean4 at "https://github.com/The-Obstacle-Is-The-Way/erdos-banger/blob/08733c26a613ef2cc17cfc9ca2bad81976115a82/formal/lean/Erdos/Problem848.lean#L5565C52-L5565C71", AMS 11]
 theorem erdos_848_asymptotic : ∀ᶠ N in Filter.atTop, Erdos848 N := by
   sorry
 
