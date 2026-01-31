@@ -58,7 +58,7 @@ theorem erdos_1038.inf_lowerBound (n : ℕ) : 2 ^ (4 / 3 : ℝ) - 1 ≤
   sorry
 
 /-- The supremum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` such that
-all of its roots are real and contained in `[-1,1]` is  `2 * 2 ^ (1 / 2)`. This is proved in
+all of its roots are real and contained in `[-1,1]` is `2 * 2 ^ (1 / 2)`. This is proved in
 [Tao25]. -/
 @[category research solved, AMS 28]
 theorem erdos_1038.sup (n : ℕ) : 2 * 2 ^ (1 / 2 : ℝ) =

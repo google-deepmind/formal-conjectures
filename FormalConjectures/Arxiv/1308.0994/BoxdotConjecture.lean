@@ -142,7 +142,7 @@ open KProof KTProof
 
 
 /--
-If `KProof Γ φ`, then `KTProof Γ φ`.  In other words, KT extends K.
+If `KProof Γ φ`, then `KTProof Γ φ`. In other words, KT extends K.
 -/
 @[category API, AMS 3]
 lemma KTExtendsK {Γ φ} (h : KProof Γ φ) : KTProof Γ φ :=

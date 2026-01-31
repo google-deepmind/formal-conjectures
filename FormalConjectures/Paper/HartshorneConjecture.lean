@@ -89,7 +89,7 @@ instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempt
   coe s := s.components
 
 end AlgebraicGeometry.Scheme
---TODO(lezeau): here we would really need some sanity checks and easier results.
+-- TODO(lezeau): here we would really need some sanity checks and easier results.
 
 open AlgebraicGeometry.Scheme
 
