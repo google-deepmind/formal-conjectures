@@ -8,7 +8,11 @@ assignees: ''
 ---
 
 ### What is the Erdős problem?
-Link to the problem on https://www.erdosproblems.com along with a short description.
+
+https://www.erdosproblems.com/[put a number here!]
+
+[copy the main statement from erdosproblems.com here]
+
 
 Status: open
 
