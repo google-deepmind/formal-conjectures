@@ -32,7 +32,7 @@ namespace Erdos886
 /--
 The set of divisors of $n$ in the interval $(n^{1/2}, n^{1/2} + n^{1/2-\epsilon})$.
 -/
-noncomputable def erdos_886_divisors (n : ℕ) (ε : ℝ) : Finset ℕ :=
+noncomputable def Erdos886Divisors (n : ℕ) (ε : ℝ) : Finset ℕ :=
   (divisors n).filter (fun d =>
     (n : ℝ) ^ (1/2 : ℝ) < d ∧ (d : ℝ) < (n : ℝ) ^ (1/2 : ℝ) + (n : ℝ) ^ (1/2 - ε))
 
@@ -44,7 +44,7 @@ Erdős attributes this conjecture to Ruzsa.
 -/
 @[category research open, AMS 11]
 theorem erdos_886 :
-    answer(sorry) ↔ ∀ ε > 0, ∃ C : ℕ, ∀ᶠ n in atTop, (erdos_886_divisors n ε).card ≤ C := by
+    answer(sorry) ↔ ∀ ε > 0, ∃ C : ℕ, ∀ᶠ n in atTop, (Erdos886Divisors n ε).card ≤ C := by
   sorry
 
 /--
@@ -53,7 +53,7 @@ four divisors of $n$ in $(n^{1/2},n^{1/2}+n^{1/4})$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_886.variants.rosenfeld :
-    Set.Infinite {n | 4 ≤ (erdos_886_divisors n (1/4)).card} := by
+    Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4)).card} := by
   sorry
 
 end Erdos886
