@@ -43,19 +43,11 @@ def NonSquarefreeProductProp (A : Finset ℕ) : Prop :=
 def A₇ (N : ℕ) : Finset ℕ :=
   (Finset.range N).filter (fun n => n % 25 = 7)
 
-/-- Internal statement used to define `Erdos848`. -/
-def statement (N : ℕ) : Prop :=
-  ∀ A : Finset ℕ, A ⊆ Finset.range N → NonSquarefreeProductProp A →
-    A.card ≤ (A₇ N).card
-
-end Erdos848
-
 /-- The Erdős Problem 848 statement for a fixed $N$: any set $A ⊆ \{0, \dots, N-1\}$ with
 the non-squarefree product property has cardinality at most $|A₇(N)|$. -/
 def Erdos848 (N : ℕ) : Prop :=
-  Erdos848.statement N
-
-namespace Erdos848
+  ∀ A : Finset ℕ, A ⊆ Finset.range N → NonSquarefreeProductProp A →
+    A.card ≤ (A₇ N).card
 
 /-- **Erdős Problem 848 (Original)**
 
