@@ -33,7 +33,7 @@ namespace Green77
 Any $n$ points in the unit square contain a triangle with area $\le h(n)$ 
 for some function $h$.
 -/
-@[category research open, AMS 52 05]
+@[category research open, AMS 52, AMS 05]
 theorem heilbronn_triangle_problem (n : ℕ) : ∃ (h : ℕ → ℝ),
   (∀ points : Set (ℝ × ℝ),
     (∀ p ∈ points, 0 ≤ p.1 ∧ p.1 ≤ 1 ∧ 0 ≤ p.2 ∧ p.2 ≤ 1) →

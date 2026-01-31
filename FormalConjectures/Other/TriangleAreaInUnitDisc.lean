@@ -29,7 +29,7 @@ open EuclideanSpace
 /--
 For any $n$ points in the unit disc, there exists a triangle with area $\le C n^{-2}$.
 -/
-@[category research open, AMS 52 05]
+@[category research open, AMS 52, AMS 05]
 theorem triangle_area_bound (n : ℕ) : ∃ C > (0 : ℝ),
   ∀ (points : Set (ℝ × ℝ)),
     (∀ p ∈ points, p.1 ^ 2 + p.2 ^ 2 ≤ 1) →
