@@ -66,7 +66,7 @@ $A ⊆ \{n : n ≡ 18 \pmod{25}\}$.
 
 A complete formal Lean 4 proof is available at:
 https://github.com/The-Obstacle-Is-The-Way/erdos-banger -/
-@[category research formally solved using lean4 at "https://github.com/The-Obstacle-Is-The-Way/erdos-banger/blob/08733c26a613ef2cc17cfc9ca2bad81976115a82/formal/lean/Erdos/Problem848.lean#L5565C52-L5565C71", AMS 11]
+@[category research formally solved using lean4 at "https://github.com/The-Obstacle-Is-The-Way/erdos-banger/blob/e5887cdd70dab3642a67dffc38f004288b5ae81a/formal/lean/Erdos/848.lean", AMS 11]
 theorem erdos_848_asymptotic : ∀ᶠ N in Filter.atTop, Erdos848 N := by
   sorry
 
