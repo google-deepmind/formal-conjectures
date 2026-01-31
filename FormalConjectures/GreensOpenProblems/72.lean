@@ -25,7 +25,6 @@ are there $3$ of the points on a common line?
 
 *References:*
 - [Ben Green's Open Problem 72](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.72)
-- [Ben Green's Open Problem 62](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.62)
 - [Wikipedia](https://en.wikipedia.org/wiki/No-three-in-line_problem)
 - [GK2025] Grebennikov, A. Kwan, M. No $(k + 1)$-in-line problem for large constant $k$.
   https://arxiv.org/abs/2510.17743
