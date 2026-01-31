@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Ben Green's Open Problem 62
+# Ben Green's Open Problem 72
 
 More commonly known as the **no-three-in-line problem**.
 
@@ -24,6 +24,7 @@ Given $N \lt 2$ and a more than $2 * N$ points on an $N \times N$-grid,
 are there $3$ of the points on a common line?
 
 *References:*
+- [Ben Green's Open Problem 72](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.72)
 - [Ben Green's Open Problem 62](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.62)
 - [Wikipedia](https://en.wikipedia.org/wiki/No-three-in-line_problem)
 - [GK2025] Grebennikov, A. Kwan, M. No $(k + 1)$-in-line problem for large constant $k$.
