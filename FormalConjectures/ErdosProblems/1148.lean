@@ -33,21 +33,21 @@ namespace Erdos1148
 A natural number $n$ which can be written as $n$ if $n = x^2 + y^2 - z^2$ with $\max(x^2, y^2, z^2)
 \leq n$.
 -/
-def erdos_1148_prop (n : ℕ) : Prop :=
+def Erdos1148Prop (n : ℕ) : Prop :=
   ∃ x y z : ℕ, n = x ^ 2 + y ^ 2 - z ^ 2 ∧ x ^ 2 ≤ n ∧ y ^ 2 ≤ n ∧ z ^ 2 ≤ n
 
 /--
 Can every large integer $n$ be written as $n=x^2+y^2-z^2$ with $\max(x^2,y^2,z^2)\leq n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_1148 : ∀ᶠ n in atTop, erdos_1148_prop n := by
+theorem erdos_1148 : ∀ᶠ n in atTop, Erdos1148Prop n := by
   sorry
 
 /--
 The largest integer known which cannot be written this way is $6563$.
 -/
 @[category high_school, AMS 11]
-theorem erdos_1148.lower_bound : ¬ erdos_1148_prop 6563 := by
+theorem erdos_1148.lower_bound : ¬ Erdos1148Prop 6563 := by
   sorry
 
 /--
