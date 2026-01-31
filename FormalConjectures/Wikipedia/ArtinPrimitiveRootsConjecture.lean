@@ -41,7 +41,7 @@ Note that Artin's conjecture has been proved subject to the Generalized Riemann 
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Artin%27s_conjecture_on_primitive_roots)
-- [OEIS](https://oeis.org/A85397)
+- [A85397](https://oeis.org/A85397)
 - [LMS14](https://arxiv.org/pdf/1112.4816) Lenstra, H.W. et al. "Character sums for primitive root densities" _arXiv:1112.4816_ [math.NT] (2014).
 - [Ho67] Hooley, C. "On Artin's conjecture." _Journal für die reine und angewandte Mathematik_ 225 (1967): 209-220.
 -/

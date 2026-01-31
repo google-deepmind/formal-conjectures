@@ -27,7 +27,7 @@ $\sigma(n+12) = \sigma(n) + 12$.
 The conjectures state identities connecting A56777 and prime quadruples (A7530), as
 well as congruences satisfied by the members of A56777.
 
-*References:* [oeis.org/A56777](https://oeis.org/A56777)
+*References:* [A56777](https://oeis.org/A56777)
 -/
 
 namespace OeisA56777
