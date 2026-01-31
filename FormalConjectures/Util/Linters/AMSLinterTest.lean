@@ -18,7 +18,7 @@ import FormalConjectures.Util.Linters.AMSLinter
 
 namespace AMSLinter
 
---Definitions aren't required to have an AMS attribute
+-- Definitions aren't required to have an AMS attribute
 #guard_msgs in
 def foo : Nat := 1
 
@@ -88,13 +88,13 @@ theorem test_theorem_with_docstring : 1 + 1 = 2 := by
 example: 1 + 1 = 2 := by
   rfl
 
---The linter is compatible with theorems having other attributes.
+-- The linter is compatible with theorems having other attributes.
 #guard_msgs in
 @[simp, AMS 1]
 theorem test_1 : 1 + 1 = 2 := by
   rfl
 
---The order of attributes is irrelevant.
+-- The order of attributes is irrelevant.
 #guard_msgs in
 @[AMS 1, simp]
 theorem test_3 : 1 + 1 = 2 := by

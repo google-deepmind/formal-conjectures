@@ -36,15 +36,15 @@ Bull. Austral. Math. Soc. (1991), 387-392.
 @[category research solved, AMS 5 11]
 theorem erdos_303 :
     answer(True) ↔
-    --For any finite colouring of the integers
+    -- For any finite colouring of the integers
     ∀ (𝓒 : ℤ → ℤ), (Set.range 𝓒).Finite →
-      --There exists integers `a, b, c`
+      -- There exists integers `a, b, c`
       ∃ (a b c : ℤ),
-      --that are non-zero and distinct.
+      -- that are non-zero and distinct.
       [a, b, c, 0].Nodup ∧
-      --`a, b, c` satisfy the equation
+      -- `a, b, c` satisfy the equation
       (1/a : ℝ) = 1/b + 1/c ∧
-      --`a, b, c` have the same color
+      -- `a, b, c` have the same color
       (𝓒 '' {a, b, c}).Subsingleton := by
   sorry
 
