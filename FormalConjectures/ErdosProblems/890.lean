@@ -36,7 +36,7 @@ for every $k\geq 1$, $\liminf_{n\to \infty}\sum_{0\leq i < k}\omega(n+i)\leq k+\
 -/
 @[category research open, AMS 11]
 theorem erdos_890.parts.a :
-    answer(sorry) ↔ ∀ k ≥ 1, liminf (fun n ↦ (∑ i ∈ range k, (ω (n + i) : ℝ))) atTop ≤ k + π k := by
+    answer(sorry) ↔ ∀ k ≥ 1, liminf (fun n ↦ (∑ i ∈ range k, (ω (n + i) : EReal))) atTop ≤ k + π k := by
   sorry
 
 /--
@@ -45,12 +45,12 @@ $\limsup_{n\to \infty}\left(\sum_{0\leq i < k}\omega(n+i)\right) \frac{\log\log 
 -/
 @[category research open, AMS 11]
 theorem erdos_890.parts.b :
-    answer(sorry) ↔ ∀ k ≥ 1, limsup (fun n ↦ (∑ i ∈ range k, (ω (n + i) : ℝ)) *
+    answer(sorry) ↔ ∀ k ≥ 1, limsup (fun n ↦ (∑ i ∈ range k, (ω (n + i) : EReal)) *
       (log (log n) / log n)) atTop = 1 := by
   sorry
 
 /--
-A question of Erd\H{o}s and Selfridge [ErSe67], who observe that
+A question of Erdős and Selfridge [ErSe67], who observe that
 $\liminf_{n\to \infty}\sum_{0\leq i < k}\omega(n+i)\geq k+\pi(k)-1$ for every $k$. This follows from
 Pólya's theorem that the set of $k$-smooth integers has unbounded gaps - indeed,
 $n(n+1)\cdots (n+k-1)$ is divisible by all primes $\leq k$ and, provided $n$ is large, all but at
@@ -58,7 +58,7 @@ most one of $n,n+1,\ldots,n+k-1$ has a prime factor $>k$ by Pólya's theorem.
 -/
 @[category research solved, AMS 11]
 theorem erdos_890.variants.liminf_lower_bound (k : ℕ) :
-    liminf (fun n ↦ (∑ i ∈ range k, (ω (n + i) : ℝ))) atTop ≥ k + π k - 1 := by
+    liminf (fun n ↦ (∑ i ∈ range k, (ω (n + i) : EReal))) atTop ≥ k + π k - 1 := by
   sorry
 
 /--
@@ -66,7 +66,7 @@ It is a classical fact that $\limsup_{n\to \infty}\omega(n)\frac{\log\log n}{\lo
 -/
 @[category research solved, AMS 11]
 theorem erdos_890.variants.omega_limsup :
-    limsup (fun n ↦ (ω n : ℝ) * (log (log n) / log n)) atTop = 1 := by
+    limsup (fun n ↦ (ω n : EReal) * (log (log n) / log n)) atTop = 1 := by
   sorry
 
 end Erdos890
