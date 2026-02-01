@@ -20,11 +20,6 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 18
 
 *Reference:* [erdosproblems.com/18](https://www.erdosproblems.com/18)
-
-For a practical number $m$, let $h(m)$ be the minimum number of divisors of $m$
-needed to represent every positive integer $1 \le k \le m$ as a sum of distinct divisors.
-
-Erdős proved that $h(n!) < n$.
 -/
 
 open Filter Asymptotics Real
