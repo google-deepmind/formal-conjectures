@@ -14,46 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«508»
 
 /-!
 # The Hadwiger–Nelson problem
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem)
-
-*At least 5 colors are required:* [de Grey 2018](https://arxiv.org/abs/1804.02385)
 -/
-
-namespace HadwigerNelson
-
-open SimpleGraph
-
-/--
-The Hadwiger–Nelson problem asks: How many colors are required to color the plane
-such that no two points at distance 1 from each other have the same color?
--/
-@[category research open, AMS 52]
-theorem HadwigerNelsonProblem :
-    (UnitDistancePlaneGraph ⊤).chromaticNumber = answer(sorry) := by
-  sorry
-
-/--
-It was established in 2018 that at least 5 colors are required for the Hadwiger-Nelson problem.
-
-See reference: [de Grey 2018](https://arxiv.org/abs/1804.02385)
--/
-@[category research solved, AMS 52]
-theorem HadwigerNelsonAtLeastFive :
-    5 ≤ (UnitDistancePlaneGraph ⊤).chromaticNumber := by
-  sorry
-
-/--
-A simple construction that tiles the plane with hexagons can be used to show that 7 colors suffice
-for the Hadwiger-Nelson problem.
--/
-@[category high_school, AMS 52]
-theorem HadwigerNelsonAtMostSeven :
-    (UnitDistancePlaneGraph ⊤).chromaticNumber ≤ 7 := by
-  sorry
-
-end HadwigerNelson

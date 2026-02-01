@@ -51,8 +51,8 @@ Wagner [Wa80] proved that there is some $c > 0$ with $M_n > (\log n)^c$ infintel
 -/
 @[category research solved, AMS 30]
 theorem erdos_119_1 :
-    (∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
-      atTop.limsup (fun n => (M z n : EReal)) = ⊤) ↔ answer(True) := by
+    answer(True) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
+      atTop.limsup (fun n => (M z n : EReal)) = ⊤ := by
   sorry
 
 /-- Question 2:
@@ -65,8 +65,8 @@ Beck [Be91] proved that there exists some $c > 0$ such that $\max_{n \leq N} M_n
 -/
 @[category research solved, AMS 30]
 theorem erdos_119_2 :
-    (∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
-      ∃ (c : ℝ) (hc : c > 0), Infinite {n : ℕ | M z n > n ^ c}) ↔ answer(True) := by
+    answer(True) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
+      ∃ (c : ℝ) (hc : c > 0), Infinite {n : ℕ | M z n > n ^ c} := by
   sorry
 
 /-- Question 3:
@@ -75,9 +75,9 @@ Is it true that there exists $c > 0$ such that, for all large $n$, $\sum_{k \leq
 -/
 @[category research open, AMS 30]
 theorem erdos_119_3 :
-    (∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
+    answer(sorry) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
       ∃ (c : ℝ) (hc : c > 0), ∀ᶠ n in atTop,
-        ∑ k ∈ range n, M z k > n ^ (1 + c)) ↔ answer(sorry) := by
+        ∑ k ∈ range n, M z k > n ^ (1 + c) := by
   sorry
 
 end Erdos119

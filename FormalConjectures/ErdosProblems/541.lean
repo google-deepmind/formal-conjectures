@@ -35,9 +35,9 @@ then $|S| = r$.
 Must there be at most two distinct residues amongst the $a_i$?
 -/
 @[category research solved, AMS 11]
-theorem erdos_541 : (∀ p, Fact p.Prime → ∀ (a : Fin p → ZMod p),
+theorem erdos_541 : answer(True) ↔ (∀ p, Fact p.Prime → ∀ (a : Fin p → ZMod p),
     (∃ r, ∀ (S : Finset (Fin p)), S ≠ ∅ → ∑ i ∈ S, a i = 0 → S.card = r) →
-      (Set.range a).ncard ≤ 2) ↔ answer(True) := by
+      (Set.range a).ncard ≤ 2) := by
   sorry
 
 /-- Gao, Hamidoune, and Wang [GHW10] solved this for all moduli `p` (not necessarily prime).

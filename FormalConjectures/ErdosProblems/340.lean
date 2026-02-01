@@ -133,7 +133,7 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 -/
 @[category research open, AMS 5]
 theorem erdos_340.variants.sub_hasPosDensity :
-    Set.HasPosDensity (Set.range greedySidon - Set.range greedySidon) :=
+    Set.HasPosDensity (Set.range greedySidon - Set.range greedySidon) := by
   sorry
 
 /--
@@ -152,8 +152,8 @@ theorem erdos_340.variants._22_mem_sub :
 The smallest integer which is unknown to be in $A - A$ is $33$.
  -/
 @[category research open, AMS 5]
-theorem erdos_340.variants._33_mem_sub :
-    33 ∈ Set.range greedySidon - Set.range greedySidon ↔ answer(sorry) :=
+theorem erdos_340.variants._33_mem_sub : answer(sorry) ↔
+    33 ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 -- Formalisation note: there is some slight ambiguity in the meaning of
@@ -164,17 +164,16 @@ theorem erdos_340.variants._33_mem_sub :
 It may be true that all or almost all integers are in $A - A$.
 -/
 @[category research open, AMS 5]
-theorem erdos_340.variants.cofinite_sub :
-    (∀ᶠ n in cofinite, n ∈ Set.range greedySidon - Set.range greedySidon) ↔ answer(sorry) :=
+theorem erdos_340.variants.cofinite_sub : answer(sorry) ↔
+    ∀ᶠ n in cofinite, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 /--
 It may be true that all or almost all integers are in $A - A$.
 -/
 @[category research open, AMS 5]
-theorem erdos_340.variants.co_density_zero_sub :
-    (∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon)
-      ↔ answer(sorry) :=
+theorem erdos_340.variants.co_density_zero_sub : answer(sorry) ↔
+    ∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 end Erdos340

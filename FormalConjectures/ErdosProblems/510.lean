@@ -18,25 +18,49 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 510
 
-*Reference:* [erdosproblems.com/510](https://www.erdosproblems.com/510)
+*References:*
+- [erdosproblems.com/510](https://www.erdosproblems.com/510)
+- [Ru04] Ruzsa, Imre Z., Negative values of cosine sums. Acta Arith. (2004), 179-186.
+- [Be25c] B. Bedert, Polynomial bounds for the Chowla Cosine Problem. arXiv:2509.05260 (2025).
 -/
 
 namespace Erdos510
 
+open Real
 open scoped Finset
 
 /--
 **Chowla's cosine problem**
 
-If $A\subset \mathbb{Z}$ is a finite set of size $N$ then is there some absolute constant $c>0$ and
-$\theta$ such that
+If $A\subset \mathbb{N}$ is a finite set of positive integers of size $N > 0$ then is there some
+absolute constant $c>0$ and $\theta$ such that
 $$\sum_{n\in A}\cos(n\theta) < -cN^{1/2}?$$
 -/
 @[category research open, AMS 11]
 theorem erdos_510 :
-    (∃ (c : ℝ) (hc : 0 < c),
-      ∀ (N : ℕ), ∀ (A : Finset ℤ), # A = N →
-      (∃ (θ : ℝ), (∑ n ∈ A, (n * θ).cos) < -c * (N : ℝ).sqrt)) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ (c : ℝ) (hc : 0 < c),
+      ∀ N > 0, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
+      ∃ θ, ∑ n ∈ A, cos (n * θ) < -c * sqrt N := by
+  sorry
+
+/--
+Ruzsa [Ru04] proved an upper bound of $-\exp(O(\sqrt{\log N})$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_510.variant.ruzsa :
+    ∃ (c : ℝ) (hc : 0 < c),
+      ∀ N > 0, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
+      ∃ θ, ∑ n ∈ A, cos (n * θ) < - exp (c * sqrt (log N)) := by
+  sorry
+
+/--
+Bedert [Be25c] proved an upper bound of $-c N^{1/7}$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_510.variant.bedert :
+    ∃ (c : ℝ) (hc : 0 < c),
+      ∀ N > 0, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
+      ∃ θ, ∑ n ∈ A, cos (n * θ) < - c * N ^ (1 / 7 : ℝ) := by
   sorry
 
 -- TODO(firsching): add the additional material

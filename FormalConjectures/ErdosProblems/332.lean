@@ -51,6 +51,6 @@ If the condition is a solution to the problem is up to human judgement.
 theorem erdos_332 (A : Set ℕ) : (answer(sorry) : Set ℕ → Prop) A → HasBoundedGaps (D_A A) := by
   sorry
 
---TODO(firsching): formalize additional statements
+-- TODO(firsching): formalize additional statements
 
 end Erdos332

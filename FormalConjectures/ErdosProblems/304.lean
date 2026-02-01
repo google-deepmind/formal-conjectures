@@ -163,16 +163,15 @@ In 1985 Vose [Vo85] proved the upper bound $$N(b) \ll \sqrt{\log b}$$.
 @[category research solved, AMS 11]
 theorem erdos_304.variants.upper_1985 :
     (fun b => (smallestCollectionTo b : ℝ)) =O[atTop]
-      (fun b => Real.sqrt (Real.log b)) :=
+      (fun b => Real.sqrt (Real.log b)) := by
   sorry
 
 /--
 Is it true that $$N(b) \ll \log \log b$$?
 -/
 @[category research open, AMS 11]
-theorem upper_bound :
-    (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop]
-      (fun b : ℕ => Real.log (Real.log b)) ↔ answer(sorry) := by
+theorem upper_bound : answer(sorry) ↔
+    (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop] (fun b : ℕ => Real.log (Real.log b)) := by
   sorry
 
 end Erdos304

@@ -28,7 +28,7 @@ open ProblemAttributes
 def getCategoryStatsMarkdown : CoreM String := do
   let stats ← getCategoryStats
   let githubSearchBaseUrl := "https://github.com/search?type=code&q=repo%3Agoogle-deepmind%2Fformal-conjectures+"
-  return  s!"| Count | Category          |
+  return s!"| Count | Category          |
 | ----- | ----------------- |
 | {stats (Category.research ProblemStatus.open)} | [Research (open)]({githubSearchBaseUrl}%22category+research+open%22)|
 | {stats (Category.research ProblemStatus.solved)} | [Research (solved)]({githubSearchBaseUrl}%22category+research+solved%22)|

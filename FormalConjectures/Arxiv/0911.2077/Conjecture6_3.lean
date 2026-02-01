@@ -34,7 +34,7 @@ local notation "Φ" => cdf (gaussianReal 0 1)
 
 /--
 Empirical evidence seems to suggest that Slud's bound does not hold for all $p$, and in fact, as $n\to\infty$,
-the maximal permissible $p$ shrinks to $\frac{1}{2}$.  Also, the following appears to be true:
+the maximal permissible $p$ shrinks to $\frac{1}{2}$. Also, the following appears to be true:
 
 When $p\in(0,1/2)$ and
 $m = 2k$ is even, and $\sigma := \sqrt{p(1-p)}$,

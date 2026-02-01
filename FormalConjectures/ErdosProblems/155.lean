@@ -39,8 +39,7 @@ $$
 for all sufficiently large $N$?
 -/
 @[category research open, AMS 5]
-theorem erdos_155 :
-    (∀ k ≥ 1, ∀ᶠ N in atTop, F (N + k) ≤ F N + 1) ↔ answer(sorry) := by
+theorem erdos_155 : answer(sorry) ↔ ∀ k ≥ 1, ∀ᶠ N in atTop, F (N + k) ≤ F N + 1 := by
   sorry
 
 -- TODO: This may even hold with $k \approx ε * N ^ (1 / 2)$.

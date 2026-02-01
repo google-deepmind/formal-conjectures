@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 open scoped Nat
 
 /-- The EHS numbers (after Erdős, Hardy, and Subbarao) are those $m\geq 1$ such that there
-exists a prime $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$.-/
+exists a prime $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$. -/
 abbrev Nat.EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, p.Prime ∧ ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
 /-- The Pillai primes are those primes $p$ such that there exists an $m$ with
@@ -43,7 +43,7 @@ $$
 $$
 exist? -/
 @[category research open, AMS 11]
-theorem erdos_1074.parts.i.i : (∃ c, EHSNumbers.HasDensity c) ↔ answer(sorry) := by
+theorem erdos_1074.part8_i_i : answer(sorry) ↔ ∃ c, EHSNumbers.HasDensity c := by
   sorry
 
 /-- Let $S$ be the set of all $m\geq 1$ such that there exists a prime $p\not\equiv 1\pmod{m}$ such
@@ -52,7 +52,7 @@ $$
   \lim\frac{|S\cap[1, x]|}{x}?
 $$ -/
 @[category research open, AMS 11]
-theorem erdos_1074.parts.i.ii : EHSNumbers.HasDensity answer(sorry) := by
+theorem erdos_1074.part_i_ii : EHSNumbers.HasDensity answer(sorry) := by
   sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
@@ -62,7 +62,7 @@ $$
 $$
 exist? -/
 @[category research open, AMS 11]
-theorem erdos_1074.parts.ii.i : (∃ c, PillaiPrimes.HasDensity c {p | p.Prime}) ↔ answer(sorry) := by
+theorem erdos_1074.part_ii_i : answer(sorry) ↔ ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
   sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
@@ -71,12 +71,12 @@ $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}?
 $$ -/
 @[category research open, AMS 11]
-theorem erdos_1074.parts.ii.ii :
+theorem erdos_1074.parts_ii_ii :
     PillaiPrimes.HasDensity answer(sorry) {p | p.Prime} := by
   sorry
 
 /-- Pillai [Pi30] raised the question of whether there exist any primes in $P$. This was answered
-by Chowla, who noted that, for example, $14! + 1 \equiv 18! + 1 \equiv 0 \pmod{23}$.-/
+by Chowla, who noted that, for example, $14! + 1 \equiv 18! + 1 \equiv 0 \pmod{23}$. -/
 @[category test, AMS 11]
 theorem erdos_1074.variants.mem_pillaiPrimes : 23 ∈ PillaiPrimes := by
   norm_num

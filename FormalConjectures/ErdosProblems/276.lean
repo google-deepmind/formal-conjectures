@@ -43,9 +43,9 @@ $n \ge 0$ such that all $a_k$ are composite, and yet no integer has a common fac
 term of the sequence?
 -/
 @[category research open, AMS 11]
-theorem erdos_276 : (∃ (a : ℕ → ℕ),
-    IsLucasSequence a ∧ (∀ k, (a k).Composite) ∧ (∀ n > 1, ∃ k, Nat.gcd n (a k) = 1)) ↔
-    answer(sorry) := by
+theorem erdos_276 : answer(sorry) ↔
+    ∃ (a : ℕ → ℕ),
+    IsLucasSequence a ∧ (∀ k, (a k).Composite) ∧ (∀ n > 1, ∃ k, Nat.gcd n (a k) = 1) := by
   sorry
 
 end Erdos276
