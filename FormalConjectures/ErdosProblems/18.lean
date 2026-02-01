@@ -32,15 +32,11 @@ open Filter Asymptotics Real
 
 namespace Erdos18
 
-/-- The set of subset sums of a finite set of natural numbers. -/
-def subsetSums (D : Finset ℕ) : Set ℕ :=
-  {m | ∃ B : Finset ℕ, B ⊆ D ∧ m = ∑ i ∈ B, i}
-
-/-- For a practical number $n$, $h(n)$ is the minimum number of divisors of $n$ needed
-to represent all positive integers up to $n$ as sums of distinct divisors. -/
+/-- For a practical number `n`, `practicalH n` is the minimum number of divisors of `n` needed
+to represent all positive integers up to `n` as sums of distinct divisors. -/
 noncomputable def practicalH (n : ℕ) : ℕ :=
   sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
-    ∀ m, m ≤ n → m ∈ subsetSums D}
+    ∀ m, 0 < m → m ≤ n → m ∈ Nat.subsetSums D}
 
 /-! ### Examples for `practicalH` -/
 
@@ -68,7 +64,7 @@ theorem practicalH_one : practicalH 1 = 1 := by
         exact ⟨{1}, Finset.Subset.refl _, by simp⟩
     · -- lower bound
       intro k ⟨D, _, hD_card, hD_covers⟩
-      have h1 : 1 ∈ subsetSums D := hD_covers 1 (by omega) (by omega)
+      have h1 : 1 ∈ Nat.subsetSums D := hD_covers 1 (by omega) (by omega)
       obtain ⟨B, hB_sub, hB_sum⟩ := h1
       have hB_ne : B.Nonempty := by
         by_contra h
@@ -100,9 +96,9 @@ theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
     practicalH n ≤ n.divisors.card := by
   sorry
 
-$n!$ is practical. -/
+/-- h(n!) is well-defined since n! is practical for n ≥ 1. -/
 @[category test, AMS 11]
-theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
+theorem factorial_isPractical (n : ℕ) (hn : 1 ≤ n) : Nat.IsPractical n.factorial := by
   sorry
 
 /-! ### Erdős's Conjectures -/
@@ -116,7 +112,7 @@ $\{m \mid m \text{ is practical and } h(m) < (\log \log m)^C\}$ is infinite?
 -/
 @[category research open, AMS 11]
 theorem erdos_18a : answer(sorry) ↔
-    ∃ C : ℝ, {m : ℕ | Nat.IsPractical m ∧
+    ∃ C : ℝ, 0 < C ∧ {m : ℕ | Nat.IsPractical m ∧
       (practicalH m : ℝ) < (log (log m)) ^ C}.Infinite := by
   sorry
 
@@ -138,7 +134,7 @@ Erdős offered \$250 for a proof or disproof.
 -/
 @[category research open, AMS 11]
 theorem erdos_18c : answer(sorry) ↔
-    ∃ C : ℝ, ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (log n) ^ C := by
+    ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (log n) ^ C := by
   sorry
 
 /--
@@ -151,8 +147,8 @@ Theory. Monographies de L'Enseignement Mathématique, 28. Université de Genève
 sections on Egyptian fractions or practical numbers).
 -/
 @[category research solved, AMS 11]
-theorem erdos_18_upper_bound (n : ℕ) :
-    practicalH n.factorial ≤ n := by
+theorem erdos_18_upper_bound (n : ℕ) (hn : 1 ≤ n) :
+    practicalH n.factorial < n := by
   sorry
 
 /--
@@ -166,7 +162,7 @@ This gives a positive answer to a weaker form of Conjecture 1.
 -/
 @[category research solved, AMS 11]
 theorem erdos_18_vose :
-    ∃ C : ℝ, {m : ℕ | Nat.IsPractical m ∧
+    ∃ C : ℝ, 0 < C ∧ {m : ℕ | Nat.IsPractical m ∧
       (practicalH m : ℝ) < C * (log m) ^ (1 / 2 : ℝ)}.Infinite := by
   sorry
 
