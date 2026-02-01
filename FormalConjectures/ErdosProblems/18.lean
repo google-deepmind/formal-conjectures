@@ -44,35 +44,16 @@ noncomputable def practicalH (n : ℕ) : ℕ :=
 @[category test, AMS 11]
 theorem practicalH_one : practicalH 1 = 1 := by
   unfold practicalH
+  have hmem : ∀ m, 0 < m → m ≤ 1 → m ∈ Nat.subsetSums {1} := fun m hm hle => by
+    interval_cases m; exact ⟨{1}, Finset.Subset.refl _, by simp⟩
   apply le_antisymm
-  · -- sInf S ≤ 1
-    apply Nat.sInf_le
-    refine ⟨{1}, ?_, ?_, ?_⟩
-    · simp [Nat.divisors_one]
-    · simp
-    · intro m hm hle
-      interval_cases m
-      exact ⟨{1}, Finset.Subset.refl _, by simp⟩
-  · -- 1 ≤ sInf S
-    apply le_csInf
-    · -- nonempty
-      refine ⟨1, {1}, ?_, ?_, ?_⟩
-      · simp [Nat.divisors_one]
-      · simp
-      · intro m hm hle
-        interval_cases m
-        exact ⟨{1}, Finset.Subset.refl _, by simp⟩
-    · -- lower bound
-      intro k ⟨D, _, hD_card, hD_covers⟩
-      have h1 : 1 ∈ Nat.subsetSums D := hD_covers 1 (by omega) (by omega)
-      obtain ⟨B, hB_sub, hB_sum⟩ := h1
-      have hB_ne : B.Nonempty := by
-        by_contra h
-        simp only [Finset.not_nonempty_iff_eq_empty] at h
-        simp [h] at hB_sum
-      have hD_ne : D.Nonempty := hB_ne.mono hB_sub
-      have : D.card ≥ 1 := Finset.Nonempty.card_pos hD_ne
-      omega
+  · exact Nat.sInf_le ⟨{1}, by simp [Nat.divisors_one], rfl, hmem⟩
+  · refine le_csInf ⟨1, {1}, by simp [Nat.divisors_one], rfl, hmem⟩ ?_
+    intro k ⟨D, _, hD_card, hD_covers⟩
+    obtain ⟨B, hB_sub, hB_sum⟩ := hD_covers 1 (by omega) (by omega)
+    have hB_ne : B.Nonempty := by
+      rw [Finset.nonempty_iff_ne_empty]; intro h; simp [h] at hB_sum
+    exact Nat.one_le_iff_ne_zero.mpr (hD_card ▸ Finset.card_ne_zero.mpr (hB_ne.mono hB_sub))
 
 /-- h(2) = 2: divisors are {1, 2}, we need both to represent 1 and 2. -/
 @[category test, AMS 11]
