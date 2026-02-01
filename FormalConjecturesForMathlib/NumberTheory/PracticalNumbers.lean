@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 import Mathlib.NumberTheory.Divisors
 
 /-!
@@ -37,7 +38,7 @@ namespace Finset
 
 /-- The set of subset sums of a finite set in an additive commutative monoid. -/
 def subsetSums {M : Type*} [AddCommMonoid M] (S : Finset M) : Set M :=
-  {m | ∃ B : Finset M, B ⊆ S ∧ m = ∑ i ∈ B, i}
+  _root_.subsetSums ↑S
 
 end Finset
 
