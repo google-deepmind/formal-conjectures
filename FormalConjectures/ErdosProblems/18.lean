@@ -151,8 +151,8 @@ Theory. Monographies de L'Enseignement Mathématique, 28. Université de Genève
 sections on Egyptian fractions or practical numbers).
 -/
 @[category research solved, AMS 11]
-theorem erdos_18_upper_bound (n : ℕ) (hn : 1 ≤ n) :
-    practicalH n.factorial < n := by
+theorem erdos_18_upper_bound (n : ℕ) :
+    practicalH n.factorial ≤ n := by
   sorry
 
 /--
