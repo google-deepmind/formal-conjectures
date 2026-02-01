@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # Ben Green's Open Problem 14
 
 *References:*
-[Green's Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.14)
+- [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.14)
 -/
 
 open Set Filter
@@ -32,9 +32,9 @@ The set of natural numbers $N$ such that any 2-coloring of $[N]$ contains a mono
 arithmetic progression of length $k$ (color 0) or length $r$ (color 1).
 -/
 def mixed_monoAP_guarantee_set (k r : ℕ) : Set ℕ :=
-  { N | ∀ coloring : Finset.Icc 1 N → Fin 2,
-    (∃ (ap : Set (Finset.Icc 1 N)), ((·.1) '' ap).IsAPOfLength k ∧ ∀ x ∈ ap, coloring x = 0) ∨
-    (∃ (ap : Set (Finset.Icc 1 N)), ((·.1) '' ap).IsAPOfLength r ∧ ∀ x ∈ ap, coloring x = 1) }
+  { N | ∀ coloring : ℕ → Fin 2,
+    (∃ s : Set ℕ, s ⊆ Finset.Icc 1 N ∧ s.IsAPOfLength k ∧ ∀ x ∈ s, coloring x = 0) ∨
+    (∃ s : Set ℕ, s ⊆ Finset.Icc 1 N ∧ s.IsAPOfLength r ∧ ∀ x ∈ s, coloring x = 1) }
 
 /--
 We define the 2-colour van der Waerden numbers $W(k, r)$ to be the least quantities such that if
