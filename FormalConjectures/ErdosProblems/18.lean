@@ -166,7 +166,7 @@ This gives a positive answer to a weaker form of Conjecture 1.
 -/
 @[category research solved, AMS 11]
 theorem erdos_18_vose :
-    ∃ C : ℝ, 0 < C ∧ {m : ℕ | Nat.IsPractical m ∧
+    ∃ C : ℝ, {m : ℕ | Nat.IsPractical m ∧
       (practicalH m : ℝ) < C * (log m) ^ (1 / 2 : ℝ)}.Infinite := by
   sorry
 
