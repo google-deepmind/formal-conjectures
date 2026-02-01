@@ -74,11 +74,11 @@ theorem practicalH_twelve : practicalH 12 = 4 := by
 /-- For any practical number n, h(n) ≤ number of divisors of n. -/
 @[category test, AMS 11]
 theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
-    practicalH n ≤ n.divisors.card := by
-  sorry
+    practicalH n ≤ n.divisors.card :=
+  Nat.sInf_le ⟨n.divisors, Finset.Subset.refl _, rfl, fun _ _ hm_le => hn _ hm_le⟩
 
 /-- h(n!) is well-defined since n! is practical for n ≥ 1. -/
-@[category test, AMS 11]
+@[category undergraduate, AMS 11]
 theorem factorial_isPractical (n : ℕ) (hn : 1 ≤ n) : Nat.IsPractical n.factorial := by
   sorry
 
