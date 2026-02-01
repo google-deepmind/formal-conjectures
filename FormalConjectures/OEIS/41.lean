@@ -34,7 +34,7 @@ There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1
 See comment by Zhi-Wei Sun (Dec 02 2013).
 -/
 @[category research open, AMS 11]
-theorem noPowerPartitionNumber (k : ℕ) : answer(sorry) ↔ ¬IsPerfectPower (p k) := by
+theorem noPowerPartitionNumber : answer(sorry) ↔ ∀ (k : ℕ), ¬IsPerfectPower (p k) := by
     sorry
 
 end OeisA41
