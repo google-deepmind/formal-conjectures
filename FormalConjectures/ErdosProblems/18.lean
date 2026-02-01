@@ -138,7 +138,7 @@ Erdős offered \$250 for a proof or disproof.
 -/
 @[category research open, AMS 11]
 theorem erdos_18c : answer(sorry) ↔
-    ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (log n) ^ C := by
+    ∃ C : ℝ, ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (log n) ^ C := by
   sorry
 
 /--
