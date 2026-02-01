@@ -102,7 +102,7 @@ theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
 
 /-- h(n!) is well-defined since n! is practical for n ≥ 1. -/
 @[category test, AMS 11]
-theorem factorial_isPractical (n : ℕ) (hn : 1 ≤ n) : Nat.IsPractical n.factorial := by
+theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
   sorry
 
 /-! ### Erdős's Conjectures -/
