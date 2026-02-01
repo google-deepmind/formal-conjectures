@@ -29,6 +29,8 @@ import FormalConjectures.Util.ProblemImports
   Suppl 2 (2022): 1231-1252.
 - [Gr21] Green, Ben. "New lower bounds for van der Waerden numbers." Forum of Mathematics,
   Pi. Vol. 10. Cambridge University Press, 2022.
+- [Sc20] Schoen, Tomasz. "A subexponential upper bound for van der Waerden numbers W (3, k)."
+  arXiv preprint arXiv:2006.02877 (2020).
 -/
 
 open Filter Topology
@@ -138,6 +140,15 @@ theorem green_14_lower_bound_green :
 theorem green_14_lower_bound_hunter :
     answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
+  sorry
+
+/--
+[Gr21] cites [Sc20] for the upper bound $W(3, r) < \exp(r^{1-c})$ for some $c > 0$.
+-/
+@[category research solved, AMS 11]
+theorem green_14_upper_bound_schoen :
+    answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧
+    (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp ((r : ℝ) ^ (1 - c))) := by
   sorry
 
 /--
