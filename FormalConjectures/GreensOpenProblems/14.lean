@@ -65,14 +65,16 @@ We formulate this as asking if $W(k, r)$ has polynomial growth in $r$.
 @[category research open, AMS 11]
 theorem green_14_polynomial (k : ℕ) :
     answer(sorry) ↔ ∃ d : ℕ, (fun r => ((W k r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ d) := by
+    -- We know it is not the case for k=3.
   sorry
 
 /--
 Is $W(3, r) \ll r^2$?
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem green_14_quadratic :
-    answer(sorry) ↔ (fun r => ((W 3 r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ 2) := by
+    answer(False) ↔ (fun r => ((W 3 r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ 2) := by
+    -- [Gr21] proves a superpolynomial lower bound $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$.
   sorry
 
 /--
@@ -112,7 +114,7 @@ theorem green_14_lower_bound_li_shu :
   sorry
 
 /--
-[Gr21] cites [Sc20] for the upper bound $W(3, r) < \exp(r^{1-c})$ for some $c > 0$.
+[Sc20] proves the upper bound $W(3, r) < \exp(r^{1-c})$ for some $c > 0$.
 -/
 @[category research solved, AMS 11]
 theorem green_14_upper_bound_schoen :
