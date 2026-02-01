@@ -19,7 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 18
 
-*Reference:* [erdosproblems.com/18](https://www.erdosproblems.com/18)
+*Reference:*
+* [erdosproblems.com/18](https://www.erdosproblems.com/18)
+* Erdős, P. and Graham, R. L. (1980). Old and New Problems and Results in Combinatorial Number
+Theory. Monographies de L'Enseignement Mathématique, 28. Université de Genève. (See the
+sections on Egyptian fractions or practical numbers).
+* Vose, Michael D., Egyptian fractions. Bull. London Math. Soc. (1985), 21-24.
 -/
 
 open Filter Asymptotics Real
@@ -115,11 +120,6 @@ theorem erdos_18c : answer(sorry) ↔
 /--
 **Erdős's Theorem.**
 Erdős proved that $h(n!) < n$ for all $n \ge 1$.
-
-*Reference:*
-Erdős, P. and Graham, R. L. (1980). Old and New Problems and Results in Combinatorial Number
-Theory. Monographies de L'Enseignement Mathématique, 28. Université de Genève. (See the
-sections on Egyptian fractions or practical numbers).
 -/
 @[category research solved, AMS 11]
 theorem erdos_18_upper_bound (n : ℕ) (hn : 3 ≤ n) :
@@ -129,11 +129,7 @@ theorem erdos_18_upper_bound (n : ℕ) (hn : 3 ≤ n) :
 /--
 **Vose's Theorem.**
 Vose proved the existence of infinitely many practical numbers $m$ such that
-$h(m) \ll (\log m)^{1/2}$.
-
-This gives a positive answer to a weaker form of Conjecture 1.
-
-*Reference:* Vose, Michael D., Egyptian fractions. Bull. London Math. Soc. (1985), 21-24.
+$h(m) \ll (\log m)^{1/2}$. This gives a positive answer to a weaker form of Conjecture 1.
 -/
 @[category research solved, AMS 11]
 theorem erdos_18_vose :
