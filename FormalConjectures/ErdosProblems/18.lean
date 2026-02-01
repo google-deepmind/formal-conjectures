@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,17 +15,11 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 
 /-!
 # Erdős Problem 18
 
 *Reference:* [erdosproblems.com/18](https://www.erdosproblems.com/18)
-
-For a practical number $m$, let $h(m)$ be the minimum number of divisors of $m$
-needed to represent every positive integer $1 \le k \le m$ as a sum of distinct divisors.
-
-Erdős proved that $h(n!) < n$.
 -/
 
 open Filter Asymptotics Real
@@ -36,7 +30,7 @@ namespace Erdos18
 to represent all positive integers up to `n` as sums of distinct divisors. -/
 noncomputable def practicalH (n : ℕ) : ℕ :=
   sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
-    ∀ m, 0 < m → m ≤ n → m ∈ Nat.subsetSums D}
+    ∀ m, 0 < m → m ≤ n → m ∈ subsetSums D}
 
 /-! ### Examples for `practicalH` -/
 
@@ -85,7 +79,7 @@ theorem factorial_isPractical (n : ℕ) (hn : 1 ≤ n) : Nat.IsPractical n.facto
 /-! ### Erdős's Conjectures -/
 
 /--
-**Erdős Problem 18, Conjecture 1.**
+**Conjecture 1.**
 Are there infinitely many practical numbers $m$ such that $h(m) < (\log \log m)^{O(1)}$?
 
 More precisely: does there exist a constant $C > 0$ such that
@@ -98,7 +92,7 @@ theorem erdos_18a : answer(sorry) ↔
   sorry
 
 /--
-**Erdős Problem 18, Conjecture 2.**
+**Conjecture 2.**
 Is it true that $h(n!) < n^{o(1)}$? That is, for all $\varepsilon > 0$,
 is $h(n!) < n^\varepsilon$ for sufficiently large $n$?
 -/
@@ -108,7 +102,7 @@ theorem erdos_18b : answer(sorry) ↔
   sorry
 
 /--
-**Erdős Problem 18, Conjecture 3.**
+**Conjecture 3.**
 Or perhaps even $h(n!) < (\log n)^{O(1)}$?
 
 Erdős offered \$250 for a proof or disproof.
@@ -129,7 +123,7 @@ sections on Egyptian fractions or practical numbers).
 -/
 @[category research solved, AMS 11]
 theorem erdos_18_upper_bound (n : ℕ) (hn : 1 ≤ n) :
-    practicalH n.factorial < n := by
+    practicalH (n !) < n := by
   sorry
 
 /--
