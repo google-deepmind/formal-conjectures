@@ -79,7 +79,7 @@ theorem factorial_isPractical (n : ℕ) (hn : 1 ≤ n) : Nat.IsPractical n.facto
 /-! ### Erdős's Conjectures -/
 
 /--
-**Erdős Problem 18, Conjecture 1.**
+**Conjecture 1.**
 Are there infinitely many practical numbers $m$ such that $h(m) < (\log \log m)^{O(1)}$?
 
 More precisely: does there exist a constant $C > 0$ such that
