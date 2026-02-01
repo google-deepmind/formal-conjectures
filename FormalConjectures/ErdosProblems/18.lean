@@ -123,7 +123,7 @@ sections on Egyptian fractions or practical numbers).
 -/
 @[category research solved, AMS 11]
 theorem erdos_18_upper_bound (n : ℕ) (hn : 3 ≤ n) :
-    practicalH (n !) < n := by
+    practicalH (Nat.factorial n) < n := by
   sorry
 
 /--
