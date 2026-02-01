@@ -28,7 +28,7 @@ namespace Erdos1035
 The $n$-dimensional hypercube graph $Q_n$ has $2^n$ vertices (corresponding to binary strings
 of length $n$) with edges between vertices that differ in exactly one coordinate.
 -/
-def Hypercube (n : ℕ) : SimpleGraph (Fin n → Bool) where
+def hypercube (n : ℕ) : SimpleGraph (Fin n → Bool) where
   Adj v w := ∃! i, v i ≠ w i
   symm := by
     intros v w h
@@ -42,7 +42,7 @@ def Hypercube (n : ℕ) : SimpleGraph (Fin n → Bool) where
 A graph $G$ contains (or embeds) a graph $H$ if there exists an injective graph homomorphism
 from $H$ to $G$.
 -/
-def contains {α β : Type*} (G : SimpleGraph α) (H : SimpleGraph β) : Prop :=
+def Contains {α β : Type*} (G : SimpleGraph α) (H : SimpleGraph β) : Prop :=
   ∃ f : β → α, Function.Injective f ∧ ∀ {v w : β}, H.Adj v w → G.Adj (f v) (f w)
 
 /--
@@ -53,10 +53,10 @@ See also [576] for the extremal number of edges that guarantee a $Q_n$.
 -/
 @[category research open, AMS 05]
 theorem erdos_1035 :
-    (∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n))) [Fintype (Fin (2^n))]
+    (∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n)))
       [DecidableRel G.Adj],
       (∀ v, (G.degree v : ℝ) > (1 - c) * 2^n) →
-      contains G (Hypercube n)) ↔ answer(sorry) := by
+      Contains G (hypercube n)) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -68,10 +68,10 @@ such that every graph on $m$ vertices with minimum degree $> (1-c) \cdot 2^n$ co
 -/
 @[category research open, AMS 05]
 theorem erdos_1035.variant_m (c : ℝ) (hc : c > 0) :
-    (∀ n : ℕ, ∃ m > 2^n, ∀ (G : SimpleGraph (Fin m)) [Fintype (Fin m)]
+    (∀ n : ℕ, ∃ m > 2^n, ∀ (G : SimpleGraph (Fin m))
       [DecidableRel G.Adj],
       (∀ v, (G.degree v : ℝ) > (1 - c) * 2^n) →
-      contains G (Hypercube n)) ↔ answer(sorry) := by
+      Contains G (hypercube n)) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -83,10 +83,10 @@ with minimum degree $> 2^n - u_n$ contains a $Q_n$.
 -/
 @[category research open, AMS 05]
 theorem erdos_1035.variant_u :
-    (∃ u : ℕ → ℕ, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n))) [Fintype (Fin (2^n))]
+    (∃ u : ℕ → ℕ, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n)))
       [DecidableRel G.Adj],
       (∀ v, G.degree v > 2^n - u n) →
-      contains G (Hypercube n)) ↔ answer(sorry) := by
+      Contains G (hypercube n)) ↔ answer(sorry) := by
   sorry
 
 end Erdos1035
