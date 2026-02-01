@@ -87,13 +87,13 @@ theorem factorial_isPractical (n : ℕ) (hn : 1 ≤ n) : Nat.IsPractical n.facto
 **Conjecture 1.**
 Are there infinitely many practical numbers $m$ such that $h(m) < (\log \log m)^{O(1)}$?
 
-More precisely: does there exist a constant $C > 0$ such that
-$\{m \mid m \text{ is practical and } h(m) < (\log \log m)^C\}$ is infinite?
+More precisely: does there exist a constant $C > 0$ such that for all sufficiently large
+practical numbers $m$, we have $h(m) < (\log \log m)^C$?
 -/
 @[category research open, AMS 11]
 theorem erdos_18a : answer(sorry) ↔
-    ∃ C : ℝ, 0 < C ∧ {m : ℕ | Nat.IsPractical m ∧
-      (practicalH m : ℝ) < (log (log m)) ^ C}.Infinite := by
+    ∃ C : ℝ, 0 < C ∧ ∀ᶠ m in atTop, Nat.IsPractical m →
+      (practicalH m : ℝ) < (log (log m)) ^ C := by
   sorry
 
 /--
@@ -130,11 +130,13 @@ theorem erdos_18_upper_bound (n : ℕ) (hn : 3 ≤ n) :
 **Vose's Theorem.**
 Vose proved the existence of infinitely many practical numbers $m$ such that
 $h(m) \ll (\log m)^{1/2}$. This gives a positive answer to a weaker form of Conjecture 1.
+
+Note: The bound holds for sufficiently large $m$ (when $\log m > 0$).
 -/
 @[category research solved, AMS 11]
 theorem erdos_18_vose :
-    ∃ C : ℝ, 0 < C ∧ {m : ℕ | Nat.IsPractical m ∧
-      (practicalH m : ℝ) < C * (log m) ^ (1 / 2 : ℝ)}.Infinite := by
+    ∃ C : ℝ, 0 < C ∧ ∀ᶠ m in atTop, Nat.IsPractical m →
+      (practicalH m : ℝ) < C * (log m) ^ (1 / 2 : ℝ) := by
   sorry
 
 end Erdos18
