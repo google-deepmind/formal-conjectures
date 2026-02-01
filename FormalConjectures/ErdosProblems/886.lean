@@ -32,9 +32,9 @@ namespace Erdos886
 /--
 The set of divisors of $n$ in the interval $(n^{1/2}, n^{1/2} + n^{1/2-\epsilon})$.
 -/
-noncomputable def Erdos886Divisors (n : ℕ) (ε : ℝ) : Finset ℕ :=
+noncomputable def Erdos886Divisors (n : ℕ) (ε : ℝ) (C : ℝ) : Finset ℕ :=
   (divisors n).filter (fun d =>
-    (n : ℝ) ^ (1/2 : ℝ) < d ∧ (d : ℝ) < (n : ℝ) ^ (1/2 : ℝ) + (n : ℝ) ^ (1/2 - ε))
+    (n : ℝ) ^ (1/2 : ℝ) < d ∧ (d : ℝ) < (n : ℝ) ^ (1/2 : ℝ) + C * (n : ℝ) ^ (1/2 - ε))
 
 /--
 Let $\epsilon>0$. Is it true that, for all large $n$, the number of divisors of $n$ in
@@ -44,16 +44,21 @@ Erdős attributes this conjecture to Ruzsa.
 -/
 @[category research open, AMS 11]
 theorem erdos_886 :
-    answer(sorry) ↔ ∀ ε > 0, ∃ C : ℕ, ∀ᶠ n in atTop, (Erdos886Divisors n ε).card ≤ C := by
+    answer(sorry) ↔ ∀ ε > 0, ∃ K : ℕ, ∀ᶠ n in atTop, (Erdos886Divisors n ε 1).card ≤ K := by
   sorry
 
 /--
 Erdős and Rosenfeld [ErRo97] proved that there are infinitely many $n$ such that there are
-four divisors of $n$ in $(n^{1/2},n^{1/2}+n^{1/4})$.
+four divisors of $n$ in $(n^{1/2},n^{1/2}+Cn^{1/4})$ for some $C>1$.
+
+TODO: There is discussion in the comments of [erdosproblems.com/886] about whether the stated
+problem on the website accurately reflects the conjecture from [ErRo97]. This arose from AlphaProof
+disproving the conjecture. This TODO should be removed when the website is updated and the
+discussion is resolved.
 -/
 @[category research solved, AMS 11]
-theorem erdos_886.variants.rosenfeld :
-    Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4)).card} := by
+theorem erdos_886_variants_rosenfeld :
+    ∃ C : ℝ, 1 < C ∧ Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4) C).card} := by
   sorry
 
 end Erdos886
