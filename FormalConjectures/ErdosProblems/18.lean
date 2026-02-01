@@ -21,25 +21,25 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:*
 * [erdosproblems.com/18](https://www.erdosproblems.com/18)
-* Erdős, P. and Graham, R. L. (1980). Old and New Problems and Results in Combinatorial Number
+* [ErGr80] Erdős, P. and Graham, R. L. (1980). Old and New Problems and Results in Combinatorial Number
 Theory. Monographies de L'Enseignement Mathématique, 28. Université de Genève. (See the
 sections on Egyptian fractions or practical numbers).
-* Vose, Michael D., Egyptian fractions. Bull. London Math. Soc. (1985), 21-24.
+* [Vo85] Vose, Michael D., Egyptian fractions. Bull. London Math. Soc. (1985), 21-24.
 -/
 
 open Filter Asymptotics Real
 
 namespace Erdos18
 
-/-- For a practical number `n`, `practicalH n` is the minimum number of divisors of `n` needed
-to represent all positive integers up to `n` as sums of distinct divisors. -/
+/-- For a practical number $n$, $h(n)$ is the minimum number of divisors of $n$ needed
+to represent all positive integers up to $n$ as sums of distinct divisors. -/
 noncomputable def practicalH (n : ℕ) : ℕ :=
   sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
     ∀ m, 0 < m → m ≤ n → m ∈ subsetSums D}
 
 /-! ### Examples for `practicalH` -/
 
-/-- h(1) = 1: we need the single divisor {1} to represent 1. -/
+/-- $h(1) = 1$: we need the single divisor {1} to represent 1. -/
 @[category test, AMS 11]
 theorem practicalH_one : practicalH 1 = 1 := by
   unfold practicalH
@@ -54,29 +54,29 @@ theorem practicalH_one : practicalH 1 = 1 := by
       rw [Finset.nonempty_iff_ne_empty]; intro h; simp [h] at hB_sum
     exact Nat.one_le_iff_ne_zero.mpr (hD_card ▸ Finset.card_ne_zero.mpr (hB_ne.mono hB_sub))
 
-/-- h(2) = 2: divisors are {1, 2}, we need both to represent 1 and 2. -/
+/-- $h(2) = 2$: divisors are {1, 2}, we need both to represent 1 and 2. -/
 @[category test, AMS 11]
 theorem practicalH_two : practicalH 2 = 2 := by
   sorry
 
-/-- h(6) = 3: divisors are {1, 2, 3, 6}, but {1, 2, 3} suffices:
+/-- $h(6) = 3$: divisors are {1, 2, 3, 6}, but {1, 2, 3} suffices:
 1=1, 2=2, 3=3, 4=1+3, 5=2+3, 6=1+2+3. -/
 @[category test, AMS 11]
 theorem practicalH_six : practicalH 6 = 3 := by
   sorry
 
-/-- h(12) = 4: divisors are {1, 2, 3, 4, 6, 12}, but {1, 2, 3, 6} suffices. -/
+/-- $h(12) = 4$: divisors are {1, 2, 3, 4, 6, 12}, but {1, 2, 3, 6} suffices. -/
 @[category test, AMS 11]
 theorem practicalH_twelve : practicalH 12 = 4 := by
   sorry
 
-/-- For any practical number n, h(n) ≤ number of divisors of n. -/
+/-- For any practical number $n$, $h(n) ≤ number of divisors of $n$. -/
 @[category test, AMS 11]
 theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
     practicalH n ≤ n.divisors.card :=
   Nat.sInf_le ⟨n.divisors, Finset.Subset.refl _, rfl, fun _ _ hm_le => hn _ hm_le⟩
 
-/-- h(n!) is well-defined since n! is practical for n ≥ 1. -/
+/-- $h(n!)$ is well-defined since $n!$ is practical for $n ≥ 1$. -/
 @[category undergraduate, AMS 11]
 theorem factorial_isPractical (n : ℕ) (hn : 1 ≤ n) : Nat.IsPractical n.factorial := by
   sorry

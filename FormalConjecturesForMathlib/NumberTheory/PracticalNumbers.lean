@@ -20,8 +20,8 @@ import Mathlib.NumberTheory.Divisors
 /-!
 # Practical numbers
 
-A positive integer `n` is called a *practical number* if every positive integer `m ≤ n` can be
-represented as a sum of distinct divisors of `n`.
+A positive integer $n$ is called a *practical number* if every positive integer $m ≤ n$ can be
+represented as a sum of distinct divisors of $n$.
 
 *References*:
 - [Wikipedia, Practical number](https://en.wikipedia.org/wiki/Practical_number)
@@ -30,8 +30,8 @@ represented as a sum of distinct divisors of `n`.
 ## Main definitions
 
 * `Finset.subsetSums`: The set of all sums of distinct elements of a finite set.
-* `Nat.IsPractical`: A natural number `n` is practical if every positive integer `m ≤ n` can be
-  expressed as a sum of distinct divisors of `n`.
+* `Nat.IsPractical`: A natural number $n$ is practical if every positive integer $m ≤ n$ can be
+  expressed as a sum of distinct divisors of $n$.
 -/
 
 namespace Finset
@@ -50,8 +50,8 @@ abbrev subsetSums := @Finset.subsetSums ℕ _
 /-- The set of subset sums of divisors of `n`, i.e., all sums of distinct divisors of `n`. -/
 def divisorSubsetSums (n : ℕ) : Set ℕ := Finset.subsetSums n.divisors
 
-/-- A natural number `n` is *practical* if every positive integer `m ≤ n` can be represented
-as a sum of distinct divisors of `n`. -/
+/-- A natural number $n$ is *practical* if every positive integer $m ≤ n$ can be represented
+as a sum of distinct divisors of $n$. -/
 def IsPractical (n : ℕ) : Prop :=
   ∀ m, m ≤ n → m ∈ divisorSubsetSums n
 
