@@ -23,9 +23,15 @@ import FormalConjectures.Util.ProblemImports
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.14)
 - [AKS14] Ahmed, Tanbir, Oliver Kullmann, and Hunter Snevily. "On the van der Waerden numbers
   w (2; 3, t)." Discrete Applied Mathematics 174 (2014): 27-51.
+- [KeMe23] Kelley, Zander, and Raghu Meka. "Strong bounds for 3-progressions." 2023 IEEE 64th
+  Annual Symposium on Foundations of Computer Science (FOCS). IEEE, 2023.
+- [Hu22] Hunter, Zach. "Improved lower bounds for van der Waerden numbers." Combinatorica 42.
+  Suppl 2 (2022): 1231-1252.
+- [Gr21] Green, Ben. "New lower bounds for van der Waerden numbers." Forum of Mathematics,
+  Pi. Vol. 10. Cambridge University Press, 2022.
 -/
 
-open Set Filter
+open Filter Topology
 
 namespace Green14
 
@@ -115,5 +121,40 @@ theorem W_3_29_lower : answer(sorry) ↔ W 3 29 ≥ 868 := sorry
 
 @[category research open, AMS 11]
 theorem W_3_30_lower : answer(sorry) ↔ W 3 30 ≥ 903 := sorry
+
+/--
+[Gr21] proved a lower bound of shape $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$.
+-/
+@[category research solved, AMS 11]
+theorem green_14_lower_bound_green :
+    answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    (fun (r : ℕ) => Real.exp (c * (Real.log r)^(4/3 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
+  sorry
+
+/--
+[Hu22] improved this to $W(3, r) \gg \exp(c(\log r)^{2-o(1)})$.
+-/
+@[category research solved, AMS 11]
+theorem green_14_lower_bound_hunter :
+    answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
+  sorry
+
+/--
+[KeMe23] gives a corresponding upper bound $W(3, r) \ll \exp(C(\log r)^C)$.
+-/
+@[category research solved, AMS 11]
+theorem green_14_upper_bound_kelley_meka :
+    answer(sorry) ↔ ∃ C : ℝ,
+    (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp (C * (Real.log r)^C)) := by
+  sorry
+
+/--
+It remains an interesting open problem to actually write down a colouring showing (say)
+$W(3, r) \ge 2r^2$ for some $r$. [Gr24]
+-/
+@[category research open, AMS 11]
+theorem green_14_variant_2r2 : answer(sorry) ↔ ∃ r, W 3 r ≥ 2 * r^2 := by
+  sorry
 
 end Green14
