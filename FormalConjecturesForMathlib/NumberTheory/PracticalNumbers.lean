@@ -26,6 +26,7 @@ represented as a sum of distinct divisors of `n`.
 
 *References*:
 - [Wikipedia, Practical number](https://en.wikipedia.org/wiki/Practical_number)
+- [OEIS A005153](https://oeis.org/A005153)
 
 ## Main definitions
 
