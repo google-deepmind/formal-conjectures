@@ -31,6 +31,10 @@ import FormalConjectures.Util.ProblemImports
   Pi. Vol. 10. Cambridge University Press, 2022.
 - [Sc20] Schoen, Tomasz. "A subexponential upper bound for van der Waerden numbers W (3, k)."
   arXiv preprint arXiv:2006.02877 (2020).
+- [BLR08] Brown, Tom, Bruce M. Landman, and Aaron Robertson. "Bounds on some van der Waerden
+  numbers." Journal of Combinatorial Theory, Series A 115.7 (2008): 1304-1309.
+- [LiSh10] Li, Yusheng, and Jinlong Shu. "A lower bound for off-diagonal van der Waerden numbers."
+  Advances in Applied Mathematics 44.3 (2010): 243-247.
 -/
 
 open Filter Topology
@@ -140,6 +144,24 @@ theorem green_14_lower_bound_green :
 theorem green_14_lower_bound_hunter :
     answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
+  sorry
+
+/--
+[BLR08] proved $W(3, r) \gg r^{2 - 1/\log \log r}$.
+-/
+@[category research solved, AMS 11]
+theorem green_14_lower_bound_brown_landman_robertson :
+    answer(sorry) ↔
+    (fun (r : ℕ) => (r : ℝ)^(2 - 1 / Real.log (Real.log r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
+  sorry
+
+/--
+[LiSh10] proved $W(3, r) \gg (r / \log r)^2$.
+-/
+@[category research solved, AMS 11]
+theorem green_14_lower_bound_li_shu :
+    answer(sorry) ↔
+    (fun (r : ℕ) => ((r : ℝ) / Real.log r)^2) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
 /--
