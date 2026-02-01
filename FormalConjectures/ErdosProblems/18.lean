@@ -116,7 +116,7 @@ $\{m \mid m \text{ is practical and } h(m) < (\log \log m)^C\}$ is infinite?
 -/
 @[category research open, AMS 11]
 theorem erdos_18a : answer(sorry) ↔
-    ∃ C : ℝ, 0 < C ∧ {m : ℕ | Nat.IsPractical m ∧
+    ∃ C : ℝ, {m : ℕ | Nat.IsPractical m ∧
       (practicalH m : ℝ) < (log (log m)) ^ C}.Infinite := by
   sorry
 
