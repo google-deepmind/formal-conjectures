@@ -30,7 +30,7 @@ namespace Erdos18
 to represent all positive integers up to `n` as sums of distinct divisors. -/
 noncomputable def practicalH (n : ℕ) : ℕ :=
   sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
-    ∀ m, 0 < m → m ≤ n → m ∈ Nat.subsetSums D}
+    ∀ m, 0 < m → m ≤ n → m ∈ subsetSums D}
 
 /-! ### Examples for `practicalH` -/
 
