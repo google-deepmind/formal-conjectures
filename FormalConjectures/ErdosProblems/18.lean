@@ -102,7 +102,7 @@ theorem erdos_18b : answer(sorry) ↔
   sorry
 
 /--
-**Erdős Problem 18, Conjecture 3.**
+**Conjecture 3.**
 Or perhaps even $h(n!) < (\log n)^{O(1)}$?
 
 Erdős offered \$250 for a proof or disproof.
