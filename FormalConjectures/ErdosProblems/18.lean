@@ -36,11 +36,11 @@ namespace Erdos18
 def subsetSums (D : Finset ℕ) : Set ℕ :=
   {m | ∃ B : Finset ℕ, B ⊆ D ∧ m = ∑ i ∈ B, i}
 
-/-- For a practical number `n`, `practicalH n` is the minimum number of divisors of `n` needed
-to represent all positive integers up to `n` as sums of distinct divisors. -/
+/-- For a practical number $n$, $h(n)$ is the minimum number of divisors of $n$ needed
+to represent all positive integers up to $n$ as sums of distinct divisors. -/
 noncomputable def practicalH (n : ℕ) : ℕ :=
   sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
-    ∀ m, 0 < m → m ≤ n → m ∈ subsetSums D}
+    ∀ m, m ≤ n → m ∈ subsetSums D}
 
 /-! ### Examples for `practicalH` -/
 
