@@ -100,7 +100,7 @@ theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
     practicalH n ≤ n.divisors.card := by
   sorry
 
-/-- h(n!) is well-defined since n! is practical for n ≥ 1. -/
+$n!$ is practical. -/
 @[category test, AMS 11]
 theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
   sorry
