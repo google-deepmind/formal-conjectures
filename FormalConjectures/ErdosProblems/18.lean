@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 
 /-!
 # Erdős Problem 18
