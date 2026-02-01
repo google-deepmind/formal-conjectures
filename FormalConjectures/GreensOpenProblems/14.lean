@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.14)
+- [AKS14] Ahmed, Tanbir, Oliver Kullmann, and Hunter Snevily. "On the van der Waerden numbers
+  w (2; 3, t)." Discrete Applied Mathematics 174 (2014): 27-51.
 -/
 
 open Set Filter
@@ -60,5 +62,58 @@ Is $W(3, r) \ll r^2$?
 theorem green_14_quadratic :
     answer(sorry) ↔ (fun r => ((W 3 r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ 2) := by
   sorry
+
+-- Known exact values for `W(3,r)` from [AKS14].
+@[simp] axiom W_3_3 : W 3 3 = 9
+@[simp] axiom W_3_4 : W 3 4 = 18
+@[simp] axiom W_3_5 : W 3 5 = 22
+@[simp] axiom W_3_6 : W 3 6 = 32
+@[simp] axiom W_3_7 : W 3 7 = 46
+@[simp] axiom W_3_8 : W 3 8 = 58
+@[simp] axiom W_3_9 : W 3 9 = 77
+@[simp] axiom W_3_10 : W 3 10 = 97
+@[simp] axiom W_3_11 : W 3 11 = 114
+@[simp] axiom W_3_12 : W 3 12 = 135
+@[simp] axiom W_3_13 : W 3 13 = 160
+@[simp] axiom W_3_14 : W 3 14 = 186
+@[simp] axiom W_3_15 : W 3 15 = 218
+@[simp] axiom W_3_16 : W 3 16 = 238
+@[simp] axiom W_3_17 : W 3 17 = 279
+@[simp] axiom W_3_18 : W 3 18 = 312
+@[simp] axiom W_3_19 : W 3 19 = 349
+
+-- Conjectured lower bounds for W(3,r) from [AKS14, Table 2].
+@[category research open, AMS 11]
+theorem W_3_20_lower : answer(sorry) ↔ W 3 20 ≥ 389 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_21_lower : answer(sorry) ↔ W 3 21 ≥ 416 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_22_lower : answer(sorry) ↔ W 3 22 ≥ 464 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_23_lower : answer(sorry) ↔ W 3 23 ≥ 516 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_24_lower : answer(sorry) ↔ W 3 24 ≥ 593 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_25_lower : answer(sorry) ↔ W 3 25 ≥ 656 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_26_lower : answer(sorry) ↔ W 3 26 ≥ 727 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_27_lower : answer(sorry) ↔ W 3 27 ≥ 770 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_28_lower : answer(sorry) ↔ W 3 28 ≥ 827 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_29_lower : answer(sorry) ↔ W 3 29 ≥ 868 := sorry
+
+@[category research open, AMS 11]
+theorem W_3_30_lower : answer(sorry) ↔ W 3 30 ≥ 903 := sorry
 
 end Green14
