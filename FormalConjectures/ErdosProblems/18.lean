@@ -122,7 +122,7 @@ Theory. Monographies de L'Enseignement Mathématique, 28. Université de Genève
 sections on Egyptian fractions or practical numbers).
 -/
 @[category research solved, AMS 11]
-theorem erdos_18_upper_bound (n : ℕ) (hn : 1 ≤ n) :
+theorem erdos_18_upper_bound (n : ℕ) (hn : 3 ≤ n) :
     practicalH (n !) < n := by
   sorry
 
