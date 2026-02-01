@@ -37,7 +37,7 @@ $n$, there must exist an integer in $[n,n+p_1\cdots p_k)$ with $>k$ many prime f
 theorem erdos_891 :
     answer(sorry) ↔
       ∀ k ≥ 2, ∀ᶠ n in atTop,
-      ∃ m, n ≤ m ∧ m < n + (∏ i ∈ range k, nth Nat.Prime i) ∧ (primeFactorsList m).length > k := by
+      ∃ m, n ≤ m ∧ m < n + (∏ i ∈ range k, nth Nat.Prime i) ∧ m.primeFactors.card > k := by
   sorry
 
 /--
@@ -49,7 +49,7 @@ theorem erdos_891.variants.schinzel :
     ∀ k ≥ 2, ∀ᶠ n in atTop,
       ∃ m, n ≤ m ∧
       m < n + ((∏ i ∈ range (k - 1), nth Nat.Prime i) * nth Nat.Prime k) ∧
-      (Nat.primeFactorsList m).length > k := by
+      m.primeFactors.card > k := by
   sorry
 
 /--
@@ -59,7 +59,7 @@ This is unknown even for $k=2$ - that is, is it true that in every interval of $
 @[category research open, AMS 11]
 theorem erdos_891.variants.case_k_2 :
     answer(sorry) ↔ ∀ᶠ n in atTop,
-      ∃ m, n ≤ m ∧ m < n + 6 ∧ m.primeFactorsList.length ≥ 3 := by
+      ∃ m, n ≤ m ∧ m < n + 6 ∧ m.primeFactors.card ≥ 3 := by
   sorry
 
 /--
@@ -72,8 +72,7 @@ if $n=L_kn'+1$, then all integers in $[n,n+p_1\cdots p_k-1)$ have at most $k$ pr
 @[category research open, AMS 11]
 theorem erdos_891.variants.weisenberg (k : ℕ) (hk : k ≥ 2) :
     ∃ᶠ n in atTop, ∀ m,
-      n ≤ m ∧ m < n + (∏ i ∈ Finset.range k, nth Nat.Prime i) - 1 →
-      m.primeFactorsList.length ≤ k := by
+      n ≤ m ∧ m < n + (∏ i ∈ Finset.range k, nth Nat.Prime i) - 1 → m.primeFactors.card ≤ k := by
   sorry
 
 end Erdos891
