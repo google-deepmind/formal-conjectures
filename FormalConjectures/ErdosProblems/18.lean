@@ -92,7 +92,7 @@ theorem erdos_18a : answer(sorry) ↔
   sorry
 
 /--
-**Erdős Problem 18, Conjecture 2.**
+**Conjecture 2.**
 Is it true that $h(n!) < n^{o(1)}$? That is, for all $\varepsilon > 0$,
 is $h(n!) < n^\varepsilon$ for sufficiently large $n$?
 -/
