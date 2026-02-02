@@ -33,18 +33,21 @@ Note: This linter can be disabled with `set_option linter.style.answer_attribute
 theorem flagged_by_linter (h : True) (b : Nat) : answer(sorry) ↔ 1 + 1 = 2 := by
   sorry
 
-/--
--/
 #guard_msgs in
 /-- An non-exampe: we want don't to lint against this case -/
 theorem not_flagged_no_answer_sorry (_ : True) (_ : Nat) : 1 + 1 = 2 := by
   rfl
 
-/--
--/
 #guard_msgs in
 /-- An non-exampe: we want don't to lint against this case-/
 theorem not_flagged_no_arguments : answer(sorry) ↔ 1 + 1 = 2 := by
   sorry
+
+#guard_msgs in
+/-- An non-exampe: here `answer(sorry)` is not a `Prop`, and not the entire left
+hand side of the iff. -/
+theorem not_flagged_non_prop_answer (h : True) (b : Nat) : answer(sorry) = 2 ↔ 1 + 1 = 2 := by
+  sorry
+
 
 end AnswerLinter
