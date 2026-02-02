@@ -30,6 +30,7 @@ import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
 import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
+import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 import FormalConjecturesForMathlib.Combinatorics.Basic
 import FormalConjecturesForMathlib.Combinatorics.Ramsey
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
