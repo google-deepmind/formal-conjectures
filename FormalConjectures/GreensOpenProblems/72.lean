@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Ben Green's Open Problem 62
+# Ben Green's Open Problem 72
 
 More commonly known as the **no-three-in-line problem**.
 
@@ -24,7 +24,7 @@ Given $N \lt 2$ and a more than $2 * N$ points on an $N \times N$-grid,
 are there $3$ of the points on a common line?
 
 *References:*
-- [Ben Green's Open Problem 62](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.62)
+- [Ben Green's Open Problem 72](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.72)
 - [Wikipedia](https://en.wikipedia.org/wiki/No-three-in-line_problem)
 - [GK2025] Grebennikov, A. Kwan, M. No $(k + 1)$-in-line problem for large constant $k$.
   https://arxiv.org/abs/2510.17743
@@ -62,17 +62,17 @@ there is a set of $k * N$ points for which no $k$ lie on a line (and not such a 
 theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 1 < k) (h : k ≤ N) : NoKInLineFor k N := by
   sorry
 
-/-- **Green's Open Problem 62 / No-three-in-line problem**:
+/-- **Green's Open Problem 72 / No-three-in-line problem**:
 The no-k-in-line conjecture holds for $k = 3$. -/
 @[category research open, AMS 05 52]
-theorem green_62 {N : ℕ} (hN : 3 ≤ N) : NoKInLineFor 3 N := by
+theorem green_72 {N : ℕ} (hN : 3 ≤ N) : NoKInLineFor 3 N := by
   sorry
 
-alias no_three_in_line := green_62
+alias no_three_in_line := green_72
 
 /-- Does the no-three-in-line problem hold when $N$ is big enough? -/
 @[category research open, AMS 05 52]
-theorem green_62.variants.eventually : ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
+theorem green_72.variants.eventually : ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
   sorry
 
 /-- For $N \leq 60$, this has been verfied with computers. -/
