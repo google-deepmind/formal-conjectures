@@ -63,7 +63,7 @@ lemma univ_shatters : Shatters .univ A := .of_forall_subset <| by simp
 variable (𝒜 d) in
 /-- A set family `𝒜` has VC dimension at most `d` if there are no families `x` of elements indexed
 by `[d + 1]` and `A` of sets of `𝒜` indexed by `2^[d + 1]` such that `x i ∈ A s ↔ i ∈ s` for all
-`i ∈ [d], s ⊆ [d]`. -/
+`i ∈ [d + 1], s ⊆ [d + 1]`. -/
 def HasVCDimAtMost : Prop :=
   ∀ (x : Fin (d + 1) → α) (A : Set (Fin (d + 1)) → Set α),
     (∀ s, A s ∈ 𝒜) → ¬ ∀ i s, x i ∈ A s ↔ i ∈ s

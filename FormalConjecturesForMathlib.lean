@@ -33,6 +33,7 @@ import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 import FormalConjecturesForMathlib.Combinatorics.Basic
 import FormalConjecturesForMathlib.Combinatorics.Ramsey
+import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring

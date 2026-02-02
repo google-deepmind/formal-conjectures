@@ -13,21 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.ForMathlib.Combinatorics.SetFamily.VCDim
-import Mathlib
+import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
+import Mathlib.Algebra.Group.Action.Pointwise.Set.Basic
+
+/-!
+# VC dimension in a group
+
+This file defines the Vapnik–Chervonenkis (aka VC) dimension of a set in a group, defined as the
+VC dimension of its family of translates.
+
+It also defines the VCₙ dimension, which has no set family analogue.
+-/
 
 open scoped Pointwise
 
 variable {G : Type*} [CommGroup G] {A B : Set G} {n d d' : ℕ}
 
-variable (A d n) in
+variable (A d) in
 /-- A set `A` in an abelian group has VC dimension at most `d` iff one cannot find two sequences
-`x` and `y` of elements indexed by `[d + 1]` and `2 ^ [d + 1]ⁿ` respectively such that
-`y s * x i ∈ A ↔ i ∈ s` for all `i ∈ [d + 1]ⁿ`, `s ⊆ [d + 1]ⁿ`. -/
+`x` and `y` of elements indexed by `[d + 1]` and `2 ^ [d + 1]` respectively such that
+`y s * x i ∈ A ↔ i ∈ s` for all `i ∈ [d + 1]`, `s ⊆ [d + 1]`. -/
 @[to_additive
-/-- A set `A` in an abelian group has VCₙ dimension at most `d` iff one cannot find two sequences
-`x` and `y` of elements indexed by `[n] × [d + 1]` and `2 ^ [d + 1]ⁿ` respectively such that
-`y s + ∑ k, x (k, i k) ∈ A ↔ i ∈ s` for all `i ∈ [d + 1]ⁿ`, `s ⊆ [d + 1]ⁿ`. -/]
+/-- A set `A` in an abelian group has VC dimension at most `d` iff one cannot find two sequences
+`x` and `y` of elements indexed by `[d + 1]` and `2 ^ [d + 1]` respectively such that
+`y s + x i ∈ A ↔ i ∈ s` for all `i ∈ [d + 1]`, `s ⊆ [d + 1]`. -/]
 def HasMulVCDimAtMost : Prop :=
   ∀ (x : Fin (d + 1) → G) (y : Set (Fin (d + 1)) → G), ¬ ∀ i s, y s * x i ∈ A ↔ i ∈ s
 
