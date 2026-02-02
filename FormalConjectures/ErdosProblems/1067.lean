@@ -53,8 +53,8 @@ simpler elementary example was given by Bowler and Pitz [BoPi24].
 -/
 @[category research solved, AMS 5]
 theorem erdos_1067 :
-    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticNumber = aleph 1 →
-      ∃ (H : G.Subgraph), H.coe.chromaticNumber = aleph 1 ∧ InfinitelyConnected H.coe := by
+    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = aleph 1 →
+      ∃ (H : G.Subgraph), H.coe.chromaticCardinal = aleph 1 ∧ InfinitelyConnected H.coe := by
   sorry
 
 /--
@@ -63,8 +63,8 @@ edge-connectivity (that is, to disconnect the graph requires deleting infinitely
 -/
 @[category research solved, AMS 5]
 theorem erdos_1067.variant.infinite_edge_connectivity :
-    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticNumber = aleph 1 →
-      ∃ (H : G.Subgraph), H.coe.chromaticNumber = aleph 1 ∧ InfinitelyEdgeConnected H.coe := by
+    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = aleph 1 →
+      ∃ (H : G.Subgraph), H.coe.chromaticCardinal = aleph 1 ∧ InfinitelyEdgeConnected H.coe := by
   sorry
 
 -- TODO: Formalize variant independent of ZFC.
