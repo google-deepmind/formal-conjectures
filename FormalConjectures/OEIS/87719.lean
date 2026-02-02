@@ -26,7 +26,7 @@ of numbers with $k \le \varsigma(k)^n$.
 
 The conjecture states that $a_n = 3^n + 3 \cdot 2^n + 6$ for $n \ge 1$.
 
-*References:* [oeis.org/A087719](https://oeis.org/A087719)
+*References:* [A087719](https://oeis.org/A087719)
 -/
 
 namespace OeisA87719
