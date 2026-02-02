@@ -28,7 +28,8 @@ open Set Metric EuclideanGeometry
 
 namespace Erdos99
 
-/-- A set has minimum distance 1 if all pairwise distances are at least 1, and the minimum is achieved. -/
+/-- A set has minimum distance $1$ if all pairwise distances are at least $1$,
+and the minimum is achieved. -/
 def HasMinDist1 (A : Finset ℝ²) : Prop :=
   (∀ᵉ (p ∈ A) (q ∈ A), p ≠ q → dist p q ≥ 1) ∧
   (∃ᵉ (p ∈ A) (q ∈ A), dist p q = 1)
@@ -37,11 +38,14 @@ def HasMinDist1 (A : Finset ℝ²) : Prop :=
 def FormsEquilateralTriangle (p q r : ℝ²) : Prop :=
   dist p q = 1 ∧ dist q r = 1 ∧ dist p r = 1
 
-/-- For sufficiently large n, is it the case that any set of n points with minimum distance 1 that minimizes diameter must contain an equilateral triangle of side length 1? -/
+/-- For sufficiently large n, is it the case that any set of n points with minimum distance $1$
+that minimizes diameter must contain an equilateral triangle of side length 1? -/
 @[category research open, AMS 52]
 theorem erdos_99 :
     answer(sorry) ↔ ∀ᶠ n in Filter.atTop, ∀ A : Finset ℝ²,
-      (IsMinOn (fun B: Finset ℝ² => diam (B : Set ℝ²)) {B : Finset ℝ² | B.card = n ∧ HasMinDist1 B} A) →
+      letI min_dist_one_set := {B : Finset ℝ² | B.card = n ∧ HasMinDist1 B}
+      A ∈ min_dist_one_set →
+      (IsMinOn (fun B: Finset ℝ² => diam (B : Set ℝ²)) min_dist_one_set A) →
       ∃ᵉ (p ∈ A) (q ∈ A) (r ∈ A), FormsEquilateralTriangle p q r := by
 sorry
 
