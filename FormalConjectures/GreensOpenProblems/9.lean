@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 
 /-!
 # Green's Open Problem 9
