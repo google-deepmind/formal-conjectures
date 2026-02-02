@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1176](https://www.erdosproblems.com/1176)
 -/
 
-open SimpleGraph Cardinal Set
+open Cardinal
 
 namespace Erdos1176
 
