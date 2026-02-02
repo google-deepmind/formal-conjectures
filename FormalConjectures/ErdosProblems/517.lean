@@ -33,7 +33,7 @@ namespace Erdos517
 is it true that `f` assumes every value infinitely often? -/
 @[category research open, AMS 30]
 theorem erdos_517.fabry : answer(sorry) ↔ ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFabryGaps n)
-    {a : ℕ → ℂ} (hf : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (z : ℂ),
+    {a : ℕ → ℂ} (ha : ∀ k, a k ≠ 0) (hf : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (z : ℂ),
     {x : ℂ | f x = z}.Infinite := by
   sorry
 
@@ -41,7 +41,8 @@ theorem erdos_517.fabry : answer(sorry) ↔ ∀ {f : ℂ → ℂ} {n : ℕ → �
 then `f` assumes every value infinitely often. This theorem is proved in [Bi28]. -/
 @[category research solved, AMS 30]
 theorem erdos_517.fejer {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ}
-    (hf : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (z : ℂ) : {x : ℂ | f x = z}.Infinite := by
+    (ha : ∀ k, a k ≠ 0) (hf : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (z : ℂ) :
+    {x : ℂ | f x = z}.Infinite := by
   sorry
 
 end Erdos517
