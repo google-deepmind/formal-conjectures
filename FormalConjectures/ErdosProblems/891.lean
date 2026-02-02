@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Nat Filter Finset
+open scoped ArithmeticFunction
 
 namespace Erdos891
 
@@ -37,7 +38,7 @@ $n$, there must exist an integer in $[n,n+p_1\cdots p_k)$ with $>k$ many prime f
 theorem erdos_891 :
     answer(sorry) ↔
       ∀ k ≥ 2, ∀ᶠ n in atTop,
-      ∃ m, n ≤ m ∧ m < n + (∏ i ∈ range k, nth Nat.Prime i) ∧ m.primeFactors.card > k := by
+      ∃ m ∈ Ico n (n + ∏ i ∈ range k, i.nth Nat.Prime), k < ω m := by
   sorry
 
 /--
@@ -47,9 +48,8 @@ gaps) that this is true with $p_1\cdots p_k$ replaced by $p_1\cdots p_{k-1}p_{k+
 @[category research solved, AMS 11]
 theorem erdos_891.variants.schinzel :
     ∀ k ≥ 2, ∀ᶠ n in atTop,
-      ∃ m, n ≤ m ∧
-      m < n + ((∏ i ∈ range (k - 1), nth Nat.Prime i) * nth Nat.Prime k) ∧
-      m.primeFactors.card > k := by
+      ∃ m ∈ Ico n (n + (∏ i ∈ range (k - 1), i.nth Nat.Prime) * k.nth Nat.Prime),
+      k < ω m := by
   sorry
 
 /--
@@ -59,7 +59,7 @@ This is unknown even for $k=2$ - that is, is it true that in every interval of $
 @[category research open, AMS 11]
 theorem erdos_891.variants.case_k_2 :
     answer(sorry) ↔ ∀ᶠ n in atTop,
-      ∃ m, n ≤ m ∧ m < n + 6 ∧ m.primeFactors.card ≥ 3 := by
+      ∃ m ∈ Ico n (n + 6), 3 ≤ ω m := by
   sorry
 
 /--
@@ -71,8 +71,9 @@ if $n=L_kn'+1$, then all integers in $[n,n+p_1\cdots p_k-1)$ have at most $k$ pr
 -/
 @[category research open, AMS 11]
 theorem erdos_891.variants.weisenberg (k : ℕ) (hk : k ≥ 2) :
-    ∃ᶠ n in atTop, ∀ m,
-      n ≤ m ∧ m < n + (∏ i ∈ Finset.range k, nth Nat.Prime i) - 1 → m.primeFactors.card ≤ k := by
+    ∃ᶠ n in atTop,
+      ∀ m ∈ Ico n (n + (∏ i ∈ range k, i.nth Nat.Prime) - 1),
+      ω m ≤ k := by
   sorry
 
 end Erdos891
