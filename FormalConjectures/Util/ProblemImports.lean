@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 -- A standard set of imports for open problems.
-import Counterexamples
 import Mathlib
 import FormalConjecturesForMathlib
 import FormalConjectures.Util.Answer
