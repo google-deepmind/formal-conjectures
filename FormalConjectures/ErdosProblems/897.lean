@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/897](https://www.erdosproblems.com/897)
 -/
---TODO(lezeau): add `ArithmeticFunction.IsAdditive` to `ForMathlib`
+-- TODO(lezeau): add `ArithmeticFunction.IsAdditive` to `ForMathlib`
 
 namespace Erdos897
 

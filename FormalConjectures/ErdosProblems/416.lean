@@ -27,7 +27,7 @@ open scoped Topology Real
 
 namespace Erdos416
 
-/--Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable-/
+/-- Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. -/
 noncomputable abbrev V (x : ℝ) : ℝ :=
   (Finset.Icc 1 ⌊x⌋₊ |>.filter (fun n => ∃ (m : ℕ), m.totient = n)).card
 

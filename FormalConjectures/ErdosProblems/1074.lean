@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 open scoped Nat
 
 /-- The EHS numbers (after Erdős, Hardy, and Subbarao) are those $m\geq 1$ such that there
-exists a prime $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$.-/
+exists a prime $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$. -/
 abbrev Nat.EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, p.Prime ∧ ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
 /-- The Pillai primes are those primes $p$ such that there exists an $m$ with
@@ -76,7 +76,7 @@ theorem erdos_1074.parts_ii_ii :
   sorry
 
 /-- Pillai [Pi30] raised the question of whether there exist any primes in $P$. This was answered
-by Chowla, who noted that, for example, $14! + 1 \equiv 18! + 1 \equiv 0 \pmod{23}$.-/
+by Chowla, who noted that, for example, $14! + 1 \equiv 18! + 1 \equiv 0 \pmod{23}$. -/
 @[category test, AMS 11]
 theorem erdos_1074.variants.mem_pillaiPrimes : 23 ∈ PillaiPrimes := by
   norm_num

@@ -47,7 +47,7 @@ def Nat.SatisfiesSendovConjecture (n : ℕ) : Prop :=
 /-- **Sendov's conjecture** states that for a polynomial
 $$f(z)=(z-r_{1})\cdots (z-r_{n}),\qquad (n\geq 2)$$
 with all roots $r_1, ..., r_n$ inside the closed unit disk $|z| ≤ 1$, each of the $n$ roots is at a
-distance no more than $1$ from at least one critical point.-/
+distance no more than $1$ from at least one critical point. -/
 @[category research open, AMS 12 30 52]
 theorem sendov_conjecture (n : ℕ) (hn : 2 ≤ n) : n.SatisfiesSendovConjecture := by
   sorry

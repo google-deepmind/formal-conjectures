@@ -20,9 +20,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1094
 
-For all $n\ge 2k$ the least prime factor of $\binom{n}{k}$ is $\le\max(n/k,k)$, with only
-finitely many exceptions.
-
 *Reference:* [erdosproblems.com/1094](https://www.erdosproblems.com/1094)
 -/
 
@@ -31,10 +28,8 @@ namespace Erdos1094
 open scoped Nat
 
 /--
-**Erdős problem 1094**
-
-There are only finitely many pairs `(n,k)` with `n ≥ 2*k` for which the
-least prime factor of the binomial coefficient `Nat.choose n k` exceeds `max (n / k) k`.
+For all $n\ge 2k$ the least prime factor of $\binom{n}{k}$ is $\le\max(n/k,k)$, with only
+finitely many exceptions.
 -/
 @[category research open, AMS 11]
 theorem erdos_1094 :
