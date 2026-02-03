@@ -14,6 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
 import FormalConjectures.Util.ProblemImports
 
 open Filter Finset Real Classical
@@ -57,21 +73,21 @@ noncomputable def L (x : ℝ) : ℝ := answer(sorry)
 
 /-- Erdős conjectured h(n) is typically log*(n). -/
 @[category research open, AMS 11]
-theorem typical_h : ∀ ε > 0, Density1 (fun n => abs ((h n : ℝ) / L (n : ℝ) - 1) < ε) := by
+theorem typical_h : ∀ ε > 0, Density1 (fun (n : ℕ) => abs ((h n : ℝ) / L (n : ℝ) - 1) < (ε : ℝ)) := by
   sorry
 
 /-- Does H(n) tend to be much larger than h(n)? -/
 @[category research open, AMS 11]
-theorem ratio_limit : answer(sorry) ↔ ∀ M : ℝ, Density1 (fun n => h n > 0 ∧ (H n : ℝ) / (h n : ℝ) > M) := by
+theorem ratio_limit : answer(sorry) ↔ ∀ M : ℝ, Density1 (fun (n : ℕ) => (h n : ℝ) > 0 ∧ (H n : ℝ) / (h n : ℝ) > M) := by
   sorry
 
 /-- Estimation of the individual growth rates. -/
 @[category research open, AMS 11]
-theorem growth_h : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, Density1 (fun n => abs ((h n : ℝ) / f n - 1) < ε) := by
+theorem growth_h : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, Density1 (fun (n : ℕ) => abs ((h n : ℝ) / f n - 1) < (ε : ℝ)) := by
   sorry
 
 @[category research open, AMS 11]
-theorem growth_H : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, Density1 (fun n => abs ((H n : ℝ) / f n - 1) < ε) := by
+theorem growth_H : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, Density1 (fun (n : ℕ) => abs ((H n : ℝ) / f n - 1) < (ε : ℝ)) := by
   sorry
 
 end Erdos696
