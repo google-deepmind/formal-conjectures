@@ -19,6 +19,8 @@ import Mathlib.Data.ENat.Lattice
 import Mathlib.Data.Set.Card
 import Mathlib.Tactic.IntervalCases
 
+open scoped Classical
+
 /-! # Arithmetic Progressions
 
 Main definitions:
@@ -243,3 +245,10 @@ arithmetic progression `l` of length `k` in `α` such that its image under `f` i
 -/
 def HasMonotoneAP {β : Type*} [Preorder β] (f : α → β) (k : ℕ) : Prop :=
   ∃ l : List α, l.IsAPOfLength k ∧ (l.map f).Sorted (· < ·)
+
+/--
+Define the largest possible size of a subset of a finset `s` that does not contain
+any non-trivial `k`-term arithmetic progression.
+-/
+noncomputable def Finset.maxAPFreeCard (k : ℕ) (s : Finset α) : ℕ :=
+  (s.powerset.filter (fun t ↦ t.toSet.IsAPOfLengthFree k)).sup Finset.card
