@@ -22,36 +22,22 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1150](https://www.erdosproblems.com/1150)
 -/
 
-open scoped Polynomial Topology
+open scoped Polynomial
 
 namespace Erdos1150
 
 /--
-A polynomial with coefficients in $\{-1, 1\}$.
--/
-def IsPlusMinusOnePoly (P : Polynomial ℂ) : Prop :=
-  ∀ i ∈ P.support, P.coeff i = 1 ∨ P.coeff i = -1
-
-/--
-The maximum modulus of a polynomial on the unit circle.
--/
-noncomputable def maxModulusOnUnitCircle (P : Polynomial ℂ) : ℝ :=
-  ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖
-
-/--
 Is there some constant $c > 0$ such that, for all large enough $n$ and all polynomials $P$ of
 degree $n$ with coefficients in $\{-1, 1\}$,
-\[
-  \max_{|z|=1} |P(z)| > (1 + c) \sqrt{n}?
-\]
-
-The trivial lower bound $\max_{|z|=1} |P(z)| \geq \sqrt{n+1}$ follows from Parseval's identity.
+$$\max_{|z|=1} |P(z)| > (1 + c) \sqrt{n}?$$
 -/
 @[category research open, AMS 12 30]
 theorem erdos_1150 :
     answer(sorry) ↔ ∃ c > 0, ∀ᶠ n in Filter.atTop,
-      ∀ P : Polynomial ℂ, IsPlusMinusOnePoly P → P.natDegree = n →
-        maxModulusOnUnitCircle P > (1 + c) * Real.sqrt n := by
+      ∀ P : ℂ[X],  (∀ i ≤ P.natDegree, P.coeff i = - 1 ∨ P.coeff i = 1) → P.natDegree = n →
+        ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ > (1 + c) * Real.sqrt n := by
   sorry
+
+-- TODO: add the trivial lower bound from Parseval's theorem
 
 end Erdos1150
