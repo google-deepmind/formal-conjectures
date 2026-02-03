@@ -19,7 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 32
 
-*Reference:* [erdosproblems.com/32](https://www.erdosproblems.com/32)
+*Reference:*
+* [erdosproblems.com/32](https://www.erdosproblems.com/32)
+* [Erd54] Erdős, Paul, Some results on additive number theory. Proc. Amer. Math. Soc. (1954),
+ 847-853.
+* [Guy04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437
+* [Ru98c] Ruzsa, Imre Z., On the additive completion of primes. Acta Arith. (1998), 269-275.
 -/
 
 open Classical
@@ -35,12 +40,8 @@ def IsAdditiveComplementToPrimes (A : Set ℕ) : Prop :=
   ∀ᶠ n in atTop, ∃ p ∈ {p : ℕ | p.Prime}, ∃ a ∈ A, n = p + a
 
 /--
-Erdős proved that there exists an additive complement $A$ to the primes with
+Erdős proved in [Erd54] that there exists an additive complement $A$ to the primes with
 $|A \cap \{1, \ldots, N\}| = O((\log N)^2)$.
-
-**References**:
-* [Erd54] Erdős, Paul, Some results on additive number theory. Proc. Amer. Math. Soc. (1954),
- 847-853.
 -/
 @[category research solved, AMS 11]
 theorem erdos_32_log_squared : ∃ A : Set ℕ,
@@ -63,9 +64,6 @@ theorem erdos_32 : answer(sorry) ↔ ∃ A : Set ℕ,
 /--
 Can the bound $O(\log N)$ be achieved for an additive complement to the primes? [Guy04] writes
 that Erdős offered \$50 for the solution.
-
-**References**:
-* [Guy04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437
 -/
 @[category research open, AMS 11]
 theorem erdos_32.variants.log_bound : answer(sorry) ↔ ∃ A : Set ℕ,
@@ -75,28 +73,15 @@ theorem erdos_32.variants.log_bound : answer(sorry) ↔ ∃ A : Set ℕ,
   sorry
 
 /--
-Must every additive complement $A$ to the primes satisfy
-$\liminf_{N \to \infty} \frac{|A \cap \{1, \ldots, N\}|}{\log N} > 1$?
--/
-@[category research open, AMS 11]
-theorem erdos_32.variants.liminf_gt_one : answer(sorry) ↔ ∀ A : Set ℕ,
-    IsAdditiveComplementToPrimes A →
-    1 < liminf (fun N => ((Finset.Icc 1 N).filter (· ∈ A)).card / Real.log N) atTop := by
-  sorry
-
-/--
 Ruzsa proved that any additive complement $A$ to the primes must satisfy
 $\liminf_{N \to \infty} \frac{|A \cap \{1, \ldots, N\}|}{\log N} \geq e^\gamma$,
 where $\gamma$ is the Euler-Mascheroni constant.
-
-**References**:
-* [Ru98c] Ruzsa, Imre Z., On the additive completion of primes. Acta Arith. (1998), 269-275.
 -/
 @[category research solved, AMS 11]
 theorem erdos_32.variants.ruzsa : ∀ A : Set ℕ,
     IsAdditiveComplementToPrimes A →
-    Real.exp Real.eulerMascheroniConstant ≤
-      liminf (fun N => ((Finset.Icc 1 N).filter (· ∈ A)).card / Real.log N) atTop := by
+    (Real.exp Real.eulerMascheroniConstant : EReal) ≤
+      liminf (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card / Real.log N : EReal)) atTop := by
   sorry
 
 end Erdos32
