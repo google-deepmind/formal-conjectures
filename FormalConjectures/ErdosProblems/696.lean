@@ -38,11 +38,11 @@ def ValidChain (P : ℕ → Prop) (s : List ℕ) : Prop :=
 
 /-- Largest number of prime divisors in a chain. -/
 noncomputable def h : ℕ :=
-  Nat.findGreatest (fun k => ∃ s, s.length = k ∧ ValidChain n Nat.Prime s) n
+  Nat.findGreatest (fun k => ∃ s : List ℕ, s.length = k ∧ ValidChain n Nat.Prime s) n
 
 /-- Largest number of any divisors in a chain. -/
 noncomputable def H : ℕ :=
-  Nat.findGreatest (fun k => ∃ s, s.length = k ∧ ValidChain n (fun _ => True) s) n
+  Nat.findGreatest (fun k => ∃ s : List ℕ, s.length = k ∧ ValidChain n (fun _ => True) s) n
 
 /-
 Conjectures usually involve "almost all n", meaning the set of integers
@@ -50,28 +50,28 @@ satisfying the property has natural density 1.
 -/
 
 def Density1 (P : ℕ → Prop) : Prop :=
-  Tendsto (fun N => (((range N).filter P).card : ℝ) / (N : ℝ)) atTop (𝓝 1)
+  Tendsto (fun (N : ℕ) => (((range N).filter P).card : ℝ) / (N : ℝ)) atTop (𝓝 1)
 
 /-- The iterated logarithm: how many times we take log to get below e. -/
 noncomputable def L (x : ℝ) : ℝ := answer(sorry)
 
 /-- Erdős conjectured h(n) is typically log*(n). -/
 @[category research open, AMS 11]
-theorem typical_h : ∀ ε > 0, Density1 (fun n => |(h n : ℝ) / L n - 1| < ε) := by
+theorem typical_h : ∀ ε > 0, Density1 (fun n => abs ((h n : ℝ) / L (n : ℝ) - 1) < ε) := by
   sorry
 
 /-- Does H(n) tend to be much larger than h(n)? -/
 @[category research open, AMS 11]
-theorem ratio_limit : answer(sorry) ↔ ∀ M, Density1 (fun n => h n > 0 ∧ (H n : ℝ) / h n > M) := by
+theorem ratio_limit : answer(sorry) ↔ ∀ M : ℝ, Density1 (fun n => h n > 0 ∧ (H n : ℝ) / (h n : ℝ) > M) := by
   sorry
 
 /-- Estimation of the individual growth rates. -/
 @[category research open, AMS 11]
-theorem growth_h : answer(sorry) ↔ ∃ f, ∀ ε > 0, Density1 (fun n => |(h n : ℝ) / f n - 1| < ε) := by
+theorem growth_h : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, Density1 (fun n => abs ((h n : ℝ) / f n - 1) < ε) := by
   sorry
 
 @[category research open, AMS 11]
-theorem growth_H : answer(sorry) ↔ ∃ f, ∀ ε > 0, Density1 (fun n => |(H n : ℝ) / f n - 1| < ε) := by
+theorem growth_H : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, Density1 (fun n => abs ((H n : ℝ) / f n - 1) < ε) := by
   sorry
 
 end Erdos696
