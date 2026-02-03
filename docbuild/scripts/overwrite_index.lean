@@ -65,6 +65,8 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
   let openTag := s!"<{tag}>"
   let closeTag := s!"</{tag}>"
 
+  -- TODO(lezeau): reimplement this using String.Slice API
+
   -- Find the position right after "<tag>"
   let .some bodyOpenTagSubstring := inputHtmlContent.findSubstr? openTag
     | throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
@@ -77,9 +79,10 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
     throw <| IO.userError s!"{openTag} content appears invalid (start of content is after start of {closeTag} tag)."
 
   -- Extract the part of the HTML before the original body content (includes "<tag>")
-  let htmlPrefix := inputHtmlContent.extract 0 contentStartIndex
+  let htmlPrefix := inputHtmlContent.toRawSubstring.extract ⟨0⟩ contentStartIndex |>.toString
   -- Extract the part of the HTML from "</tag>" to the end
-  let htmlSuffix := inputHtmlContent.extract bodyCloseTagSubstring.startPos inputHtmlContent.endPos
+  let htmlSuffix := inputHtmlContent.toRawSubstring.extract bodyCloseTagSubstring.startPos
+    inputHtmlContent.toRawSubstring.stopPos |>.toString
 
   -- Construct the new full HTML content
   let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
