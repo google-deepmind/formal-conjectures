@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open scoped Topology
+
 /-!
 # Erdős Problem 442
 
@@ -24,7 +24,8 @@ open scoped Topology
 
 namespace Erdos442
 
-open Filter Erdos442
+open Filter Set Erdos442
+open scoped Topology
 
 section Prelims
 
@@ -45,10 +46,10 @@ of elements of `A` that are `≤ x`. Specifically, it is the set
 -/
 @[inline]
 abbrev bddProdUpper : Set (ℕ × ℕ) :=
-  {y ∈ A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊ | y.fst < y.snd}
+  {y ∈ (A ∩ Icc 1 ⌊x⌋₊) ×ˢ (A ∩ Icc 1 ⌊x⌋₊) | y.fst < y.snd}
 
 noncomputable instance : Fintype (A.bddProdUpper x) := Set.Finite.fintype <|
-  (Set.finite_interIcc.prod Set.finite_interIcc).subset (fun _ ha ↦ ha.left)
+  (Set.finite_inter_Icc.prod Set.finite_inter_Icc).subset (fun _ ha ↦ ha.left)
 
 end Set
 
@@ -79,8 +80,8 @@ Note: the informal and formal statements follow the solution paper https://arxiv
 @[category research solved, AMS 11]
 theorem erdos_442 : answer(False) ↔ ∀ (A : Set ℕ),
     Tendsto (fun (x : ℝ) =>
-      1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) atTop atTop →
-    Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 *
+      1 / x.maxLogOne.maxLogOne * ∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n) atTop atTop →
+    Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n) ^ 2 *
       ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop := by
   sorry
 
@@ -105,10 +106,10 @@ $$
 theorem erdos_442.variants.tao :
     ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : f =o[atTop] (1 : ℝ → ℝ)),
       ∀ᶠ (x : ℝ) in atTop,
-        ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n =
+        ∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
-        |∑ nm ∈ (A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤
-          C * (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 := by
+        |∑ nm ∈ ((A ∩ Icc 1 ⌊x⌋₊) ×ˢ (A ∩ Icc 1 ⌊x⌋₊)).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤
+          C * (∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n) ^ 2 := by
   sorry
 
 end Erdos442
