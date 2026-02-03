@@ -49,16 +49,23 @@ theorem erdos_886 :
 
 /--
 Erdős and Rosenfeld [ErRo97] proved that there are infinitely many $n$ such that there are
-four divisors of $n$ in $(n^{1/2},n^{1/2}+Cn^{1/4})$ for some $C>1$.
-
-TODO: There is discussion in the comments of [erdosproblems.com/886] about whether the stated
-problem on the website accurately reflects the conjecture from [ErRo97]. This arose from AlphaProof
-disproving the conjecture. This TODO should be removed when the website is updated and the
-discussion is resolved.
+four divisors of $n$ in $(n^{1/2},n^{1/2}+16n^{1/4})$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_886_variants_rosenfeld :
-    ∃ C : ℝ, 1 < C ∧ Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4) C).card} := by
+theorem erdos_886_variants_rosenfeld_infinite :
+    Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4) 16).card} := by
+  sorry
+
+/--
+Erdős and Rosenfeld [ErRo97] proved that, for any constant $C>0$, all large $n$ have at most
+$1+C^2$ many divisors in $[n^{1/2}, n^{1/2}+Cn^{1/4}]$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_886_variants_rosenfeld_bound :
+    ∀ C > 0, ∀ᶠ (n : ℕ) in atTop,
+    ((divisors n).filter (fun (d : ℕ) =>
+      (n : ℝ) ^ (1 / 2 : ℝ) ≤ (d : ℝ) ∧ (d : ℝ) ≤ (n : ℝ) ^ (1 / 2 : ℝ) + C * (n : ℝ) ^ (1 / 4 : ℝ))).card
+      ≤ 1 + C ^ 2 := by
   sorry
 
 end Erdos886
