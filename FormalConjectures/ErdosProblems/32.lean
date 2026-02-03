@@ -32,7 +32,7 @@ open Filter Set Asymptotics
 /-- A set $A \subseteq \mathbb{N}$ is an _additive complement to the primes_ if every sufficiently
 large natural number can be written as $p + a$ for some prime $p$ and $a \in A$. -/
 def IsAdditiveComplementToPrimes (A : Set ℕ) : Prop :=
-  ∃ N₀, ∀ n ≥ N₀, ∃ p ∈ {p : ℕ | p.Prime}, ∃ a ∈ A, n = p + a
+  ∀ᶠ n in atTop, ∃ p ∈ {p : ℕ | p.Prime}, ∃ a ∈ A, n = p + a
 
 /--
 Erdős proved that there exists an additive complement $A$ to the primes with
