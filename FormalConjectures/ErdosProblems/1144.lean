@@ -47,9 +47,9 @@ structure IsRandomCompletelyMultiplicative (f : ℕ → Ω → ℝ) : Prop where
 Let $f$ be a random completely multiplicative function on the positive integers,
 where for each prime $p$, we independently choose $f(p) \in \{-1, 1\}$ with equal probability.
 Is it true that, almost surely,
-\[
+$$
   \limsup_{N \to \infty} \frac{\sum_{m \leq N} f(m)}{\sqrt{N}} = \infty?
-\]
+$$
 -/
 @[category research open, AMS 11 60]
 theorem erdos_1144 :
