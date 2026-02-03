@@ -50,7 +50,7 @@ variable (Γ : Type*)
 variable (Λ : Type*)
 
 /-- A Turing machine "statement" is just a command to write a symbol on the tape
-(at the current position) and then move left or right-/
+(at the current position) and then move left or right. -/
 structure Stmt where write ::
   symbol : Γ
   dir : Dir
@@ -211,8 +211,8 @@ lemma not_isHalting_of_forall_isSome (H : ∀ l s, ∃ a b, M l s = some (some a
     simp [multiStep_succ, multiStep_succ, hab, step, hcd, hef]
 
 noncomputable def haltingNumber : PartENat :=
-  --The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
-  --If no such `n` exists then this is equal to `⊤`.
+  -- The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
+  -- If no such `n` exists then this is equal to `⊤`.
   sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
 
 theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some a)
