@@ -51,6 +51,17 @@ theorem erdos_32_log_squared : ∃ A : Set ℕ,
   sorry
 
 /--
+Must every additive complement $A$ to the primes satisfy
+$\liminf_{N \to \infty} \frac{|A \cap \{1, \ldots, N\}|}{\log N} > 1$?
+-/
+@[category test, AMS 11]
+theorem erdos_32.variants.liminf_gt_one : answer(sorry) ↔ ∀ A : Set ℕ,
+    IsAdditiveComplementToPrimes A →
+    (1 : EReal) < liminf (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card / Real.log N : EReal))
+      atTop := by
+  sorry
+
+/--
 Does there exist a set $A \subseteq \mathbb{N}$ such that $|A \cap \{1, \ldots, N\}| = o((\log N)^2)$
 and every sufficiently large integer can be written as $p + a$ for some prime $p$ and $a \in A$?
 -/
