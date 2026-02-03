@@ -1,0 +1,77 @@
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+open Filter Finset Real Classical
+
+/--
+Erdős Problem 696: Sequence Chains in Divisors
+See: https://www.erdosproblems.com/696
+-/
+
+namespace Erdos696
+
+/-
+This problem is about how long a chain of divisors can be if each element
+has to be 1 modulo the previous one. We define two variations:
+h(n) for prime divisors and H(n) for any divisors.
+-/
+
+variable (n : ℕ)
+
+def ValidChain (P : ℕ → Prop) (s : List ℕ) : Prop :=
+  s.Chain' (fun a b => a < b ∧ b % a = 1) ∧ ∀ d ∈ s, d ∣ n ∧ P d
+
+/-- Largest number of prime divisors in a chain. -/
+noncomputable def h : ℕ :=
+  Nat.findGreatest (fun k => ∃ s, s.length = k ∧ ValidChain n Nat.Prime s) n
+
+/-- Largest number of any divisors in a chain. -/
+noncomputable def H : ℕ :=
+  Nat.findGreatest (fun k => ∃ s, s.length = k ∧ ValidChain n (fun _ => True) s) n
+
+/-
+Conjectures usually involve "almost all n", meaning the set of integers
+satisfying the property has natural density 1.
+-/
+
+def Density1 (P : ℕ → Prop) : Prop :=
+  Tendsto (fun N => (((range N).filter P).card : ℝ) / (N : ℝ)) atTop (𝓝 1)
+
+/-- The iterated logarithm: how many times we take log to get below e. -/
+noncomputable def L (x : ℝ) : ℝ := answer(sorry)
+
+/-- Erdős conjectured h(n) is typically log*(n). -/
+@[category research open, AMS 11]
+theorem typical_h : ∀ ε > 0, Density1 (fun n => |(h n : ℝ) / L n - 1| < ε) := by
+  sorry
+
+/-- Does H(n) tend to be much larger than h(n)? -/
+@[category research open, AMS 11]
+theorem ratio_limit : answer(sorry) ↔ ∀ M, Density1 (fun n => h n > 0 ∧ (H n : ℝ) / h n > M) := by
+  sorry
+
+/-- Estimation of the individual growth rates. -/
+@[category research open, AMS 11]
+theorem growth_h : answer(sorry) ↔ ∃ f, ∀ ε > 0, Density1 (fun n => |(h n : ℝ) / f n - 1| < ε) := by
+  sorry
+
+@[category research open, AMS 11]
+theorem growth_H : answer(sorry) ↔ ∃ f, ∀ ε > 0, Density1 (fun n => |(H n : ℝ) / f n - 1| < ε) := by
+  sorry
+
+end Erdos696
