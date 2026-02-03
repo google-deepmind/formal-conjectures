@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/12](https://www.erdosproblems.com/12)
 -/
 
-open Classical Filter
+open Classical Filter Set
 
 namespace Erdos12
 
@@ -50,7 +50,7 @@ $\liminf \frac{|A \cap \{1, \dotsc, N\}|}{N^{1/2}} > 0$ ?
 @[category research open, AMS 11]
 theorem erdos_12.parts.i : answer(sorry) ↔ ∃ (A : Set ℕ), IsGood A ∧
     (0 : ℝ) < Filter.atTop.liminf
-      (fun N => (A.interIcc 1 N).ncard / (N : ℝ).sqrt) := by
+      (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ).sqrt) := by
   sorry
 
 /--
@@ -61,7 +61,7 @@ with $|A \cap \{1, \dotsc, N\}| < N^{1−c}$?
 -/
 @[category research open, AMS 11]
 theorem erdos_12.parts.ii : answer(sorry) ↔ ∃ c > (0 : ℝ), ∀ (A : Set ℕ), IsGood A →
-  {N : ℕ| (A.interIcc 1 N).ncard < (N : ℝ) ^ (1 - c)}.Infinite := by
+  {N : ℕ| (A ∩ Icc 1 N).ncard < (N : ℝ) ^ (1 - c)}.Infinite := by
   sorry
 
 /--
@@ -89,7 +89,7 @@ infinitely many $N$ such that \[\lvert A\cap\{1,\ldots,N\}\rvert > \frac{N}{f(N)
 -/
 @[category research solved, AMS 11]
 theorem erdos_12.variants.erdos_sarkozy (f : ℕ → ℕ) (hf : atTop.Tendsto f atTop) :
-    ∃ A, IsGood A ∧ {N : ℕ | (N : ℝ) / f N < (A.interIcc 1 N).ncard}.Infinite := by
+    ∃ A, IsGood A ∧ {N : ℕ | (N : ℝ) / f N < (A ∩ Icc 1 N).ncard}.Infinite := by
   sorry
 
 /--
@@ -101,7 +101,7 @@ is given by the set of $p^2$, where $p\equiv 3\pmod{4}$ is prime.
 @[category research solved, AMS 11]
 theorem erdos_12.variants.example (A : Set ℕ)
     (hA : A = {p ^ 2 | (p : ℕ) (_ : p.Prime) (_ : p ≡ 3 [MOD 4])}) :
-    IsGood A ∧ 0 < atTop.liminf (fun (N : ℕ) ↦ (A.interIcc 1 N).ncard * (N : ℝ).log / √N) := by
+    IsGood A ∧ 0 < atTop.liminf (fun (N : ℕ) ↦ (A ∩ Icc 1 N).ncard * (N : ℝ).log / √N) := by
   sorry
 
 
@@ -112,7 +112,7 @@ that $a \mid (b+c)$ and $b,c > a$. If all elements in $A$ are pairwise coprime t
 -/
 @[category research solved, AMS 11]
 theorem erdos_12.variants.schoen (A : Set ℕ) (hA : IsGood A) (hA' : A.Pairwise Nat.Coprime) :
-    (fun N ↦ ((A.interIcc 1 N).ncard : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ)) := by
+    (fun N ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ)) := by
   sorry
 
 /--
@@ -122,7 +122,7 @@ that $a \mid (b+c)$ and $b,c > a$. If all elements in $A$ are pairwise coprime t
 -/
 @[category research solved, AMS 11]
 theorem erdos_12.variants.baier (A : Set ℕ) (hA : IsGood A) (hA' : A.Pairwise Nat.Coprime) :
-    (fun N ↦ ((A.interIcc 1 N).ncard : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ) / (N : ℝ).log) := by
+    (fun N ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ) / (N : ℝ).log) := by
   sorry
 
 end Erdos12

@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1072](https://www.erdosproblems.com/1072)
 -/
 
-open Nat Filter Finset
+open Nat Filter Finset Set
 open scoped Topology
 
 namespace Erdos1072
@@ -50,7 +50,7 @@ Amer. Math. Monthly (2002), 554--559.
 -/
 @[category research open, AMS 11]
 theorem erdos_1072a.variants.littleo :
-    (fun x ↦ (({p | p.Prime ∧ f p = p - 1}.interIcc 0 x).ncard : ℝ)) =o[atTop]
+    (fun x ↦ (({p | p.Prime ∧ f p = p - 1} ∩ Icc 0 x).ncard : ℝ)) =o[atTop]
       (fun x ↦ x / Real.log x) := by
   sorry
 

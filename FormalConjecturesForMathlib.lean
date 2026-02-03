@@ -62,7 +62,7 @@ import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
 import FormalConjecturesForMathlib.Data.Nat.Squarefree
 import FormalConjecturesForMathlib.Data.Real.Cardinality
 import FormalConjecturesForMathlib.Data.Real.Constants
-import FormalConjecturesForMathlib.Data.Set.Bdd
+import FormalConjecturesForMathlib.Data.Set.Interval
 import FormalConjecturesForMathlib.Data.Set.Density
 import FormalConjecturesForMathlib.Data.Set.Triplewise
 import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet

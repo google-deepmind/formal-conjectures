@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
-import FormalConjecturesForMathlib.Data.Set.Bdd
+import FormalConjecturesForMathlib.Data.Set.Interval
 import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
 import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 import Batteries.Util.ProofWanted
@@ -36,7 +36,7 @@ This definition was inspired from https://github.com/b-mehta/unit-fractions
 @[inline]
 noncomputable abbrev partialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : ℝ :=
-  (Set.interIio (S ∩ A) b).ncard / (Set.interIio A b).ncard
+  ((S ∩ A) ∩ Iio b).ncard / (A ∩ Iio b).ncard
 
 theorem partialDensity_le_one {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : S.partialDensity A b ≤ 1 := by
@@ -143,7 +143,7 @@ open Set
 The natural density of the set of even numbers is `1 / 2`.
 -/
 theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
-  simp [HasDensity, partialDensity, Set.interIio]
+  simp [HasDensity, partialDensity]
   have h {n : ℕ} (hn : 1 ≤ n) : (({n : ℕ | Even n} ∩ Iio n).ncard : ℝ) / n =
       if Even n then 2⁻¹ else (n + 1 : ℝ) /  n * 2⁻¹ := by
     split_ifs with h
@@ -164,7 +164,7 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
 
 /-- A finite set has natural density zero. -/
 theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) : S.HasDensity 0 := by
-  simp [HasDensity, partialDensity, Set.interIio]
+  simp [HasDensity, partialDensity]
   have (n : ℕ) : ((S ∩ Set.Iio n).ncard : ℝ) / n ≤ S.ncard / n := by
     by_cases h₀ : n = 0; simp [h₀]
     exact div_le_div₀ (by simp) (by simpa using Set.ncard_inter_le_ncard_left _ _ h)

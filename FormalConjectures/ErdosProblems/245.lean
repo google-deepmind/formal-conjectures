@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos245
 
-open Filter Erdos245
+open Filter Set Erdos245
 
 open scoped Pointwise Topology
 
@@ -42,9 +42,10 @@ The answer is yes, proved by Freiman [Fr73].
 @[category research solved, AMS 5 11]
 theorem erdos_245 :
     answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
-      atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
+      atTop.Tendsto (fun N ↦ (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
       3 ≤ atTop.limsup
-        fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard := by
+        fun N : ℝ ↦ ((A + A) ∩ Icc 1 ⌊N⌋₊ |>.ncard : EReal)
+          / (A ∩ Icc 1 ⌊N⌋₊).ncard := by
   sorry
 
 /--
@@ -56,11 +57,12 @@ $$ as $N\to\infty$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.exists_limit (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
+    (hf : Tendsto (fun N => (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) atTop (𝓝 0)) :
     -- Use `EReal` to disinguish infinite limit from other types of non-existence
     ∃ (α : EReal),
       atTop.Tendsto
-        (fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard)
+        (fun N : ℝ ↦ ((A + A) ∩ Icc 1 ⌊N⌋₊ |>.ncard : EReal)
+          / (A ∩ Icc 1 ⌊N⌋₊).ncard)
         (𝓝 α) := by
   sorry
 
@@ -73,9 +75,10 @@ $$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0)) :
+    (hf : atTop.Tendsto (fun N ↦ (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0)) :
     2 ≤ atTop.limsup
-      fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard := by
+      fun N : ℝ ↦ ((A + A) ∩ Icc 1 ⌊N⌋₊ |>.ncard : EReal)
+        / (A ∩ Icc 1 ⌊N⌋₊).ncard := by
   sorry
 
 end Erdos245
