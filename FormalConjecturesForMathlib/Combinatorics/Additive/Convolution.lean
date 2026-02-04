@@ -61,7 +61,7 @@ lemma sumRep_def (A : Set ℕ) (n : ℕ) :
 
 open PowerSeries
 
-theorem sumRep_eq_powerSeries_coeff (A : Set ℕ) (n : ℕ) : (sumRep  A  n : ℕ) =
+theorem sumRep_eq_powerSeries_coeff (A : Set ℕ) (n : ℕ) : (sumRep A n : ℕ) =
     ((PowerSeries.mk (𝟙_A)) * (PowerSeries.mk (𝟙_A)) : PowerSeries ℕ).coeff ℕ n := by
   simp [sumRep, sumConv, indicatorOne, indicator, PowerSeries.coeff_mul, PowerSeries.coeff_mk]
 

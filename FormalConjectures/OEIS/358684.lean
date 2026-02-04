@@ -128,9 +128,9 @@ theorem seven : a 7 = 73 := by
   sorry
 
 /--
-Conjecture: the dyadic valuation of A093179(n) - 1 does not exceed 2^n - a(n).
+Conjecture: the dyadic valuation of A93179(n) - 1 does not exceed 2^n - a(n).
 
-A093179(n) is minFac(fermatNumber n), the smallest prime factor of the n-th Fermat number.
+A93179(n) is minFac(fermatNumber n), the smallest prime factor of the n-th Fermat number.
 The conjecture states that if $P_n$ is the smallest prime factor of the $n$-th Fermat number,
 then $\nu_2(P_n - 1) \le 2^n - a(n)$.
 Substituting the definition of $a(n)$, this is equivalent to $\nu_2(P_n - 1) \le \lfloor \log_2(P_n) \rfloor$.

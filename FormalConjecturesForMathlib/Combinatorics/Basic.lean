@@ -27,7 +27,7 @@ variable {α : Type*} [AddCommMonoid α]
 A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
 if the equation $a + b = c$ has no solution with $a, b, c \in A$.
 -/
-def IsSumFree (A : Set α) : Prop := Disjoint (A + A)  A
+def IsSumFree (A : Set α) : Prop := Disjoint (A + A) A
 
 /-- A set $A$ of natural numbers is said to have bounded gaps if there exists an integer $p$ such
 that $A ∩ [n, n + 1, ..., n + p]$ is nonempty for all $n$. -/
