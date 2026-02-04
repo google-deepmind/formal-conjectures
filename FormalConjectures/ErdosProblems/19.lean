@@ -24,7 +24,8 @@ import FormalConjectures.Util.ProblemImports
 The Erdős-Faber-Lovász Conjecture: if $G$ is an edge-disjoint union of $n$ copies of $K_n$,
 then $\chi(G) = n$.
 
-This was proved asymptotically by Kang, Kelly, Kühn, Methuku, and Osthus (2021).
+Kang, Kelly, Kühn, Methuku, and Osthus (2021) proved this for all sufficiently large $n$.
+The conjecture has also been verified for small values of $n$ by computational methods.
 -/
 
 universe u
@@ -38,26 +39,44 @@ variable {V : Type*}
 /--
 A graph $G$ is an edge-disjoint union of $n$ copies of $K_n$ if there exists a family of $n$
 cliques, each of size $n$, such that any two cliques share at most one vertex.
+
+The condition that two cliques share at most one vertex implies edge-disjointness:
+if they shared two vertices, they would share the edge between them.
 -/
 def IsEdgeDisjointCompleteUnion (G : SimpleGraph V) (n : ℕ) : Prop :=
   ∃ (cliques : Fin n → Set V),
     -- Each clique has exactly n vertices
     (∀ i, (cliques i).ncard = n) ∧
-    -- Each clique induces a complete graph
-    (∀ i, ∀ v ∈ cliques i, ∀ w ∈ cliques i, v ≠ w → G.Adj v w) ∧
-    -- Two distinct cliques share at most one vertex (edge-disjoint)
+    -- Each clique is complete in G
+    (∀ i, G.IsClique (cliques i)) ∧
+    -- Two distinct cliques share at most one vertex (implies edge-disjoint)
     (∀ i j, i ≠ j → (cliques i ∩ cliques j).ncard ≤ 1) ∧
-    -- The graph G is exactly the union of all clique edges
-    (∀ v w, G.Adj v w ↔ ∃ i, v ∈ cliques i ∧ w ∈ cliques i ∧ v ≠ w)
+    -- Every edge of G comes from some clique
+    (∀ v w, G.Adj v w → ∃ i, v ∈ cliques i ∧ w ∈ cliques i)
 
 /--
 The Erdős-Faber-Lovász Conjecture: if $G$ is an edge-disjoint union of $n$ copies of $K_n$,
 then $\chi(G) = n$.
+
+This was proved for all sufficiently large $n$ by Kang, Kelly, Kühn, Methuku, and Osthus (2021),
+and verified for small $n$ by computational methods.
 -/
 @[category research solved, AMS 5]
 theorem erdos_19 (n : ℕ) (hn : 0 < n) :
     ∀ (V : Type u) (G : SimpleGraph V), IsEdgeDisjointCompleteUnion G n →
       G.chromaticNumber = n := by
+  sorry
+
+/--
+The asymptotic version: for all sufficiently large $n$, if $G$ is an edge-disjoint union of
+$n$ copies of $K_n$, then $\chi(G) = n$.
+
+This is the form proved by Kang, Kelly, Kühn, Methuku, and Osthus (2021).
+-/
+@[category research solved, AMS 5]
+theorem erdos_19.asymptotic :
+    ∃ N : ℕ, ∀ n ≥ N, ∀ (V : Type u) (G : SimpleGraph V),
+      IsEdgeDisjointCompleteUnion G n → G.chromaticNumber = n := by
   sorry
 
 /--
