@@ -25,10 +25,10 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos1035
 
 /--
-The $n$-dimensional hypercube graph $Q_n$ has $2^n$ vertices (corresponding to binary strings
-of length $n$) with edges between vertices that differ in exactly one coordinate.
+The hypercube graph on a type `n` has vertices `n → Bool` with edges between vertices
+that differ in exactly one coordinate. For the $n$-dimensional hypercube $Q_n$, use `Fin n`.
 -/
-def hypercube (n : ℕ) : SimpleGraph (Fin n → Bool) where
+def hypercube (n : Type*) : SimpleGraph (n → Bool) where
   Adj v w := ∃! i, v i ≠ w i
   symm := by
     intros v w h
@@ -43,7 +43,7 @@ A graph $G$ contains (or embeds) a graph $H$ if there exists an injective graph 
 from $H$ to $G$.
 -/
 def Contains {α β : Type*} (G : SimpleGraph α) (H : SimpleGraph β) : Prop :=
-  ∃ f : β → α, Function.Injective f ∧ ∀ {v w : β}, H.Adj v w → G.Adj (f v) (f w)
+  ∃ f : H →g G, Function.Injective f
 
 /--
 Is there a constant $c > 0$ such that every graph on $2^n$ vertices with minimum degree
@@ -56,7 +56,7 @@ theorem erdos_1035 :
     (∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n)))
       [DecidableRel G.Adj],
       (∀ v, (G.degree v : ℝ) > (1 - c) * 2^n) →
-      Contains G (hypercube n)) ↔ answer(sorry) := by
+      Contains G (hypercube (Fin n))) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -71,7 +71,7 @@ theorem erdos_1035.variant_m (c : ℝ) (hc : c > 0) :
     (∀ n : ℕ, ∃ m > 2^n, ∀ (G : SimpleGraph (Fin m))
       [DecidableRel G.Adj],
       (∀ v, (G.degree v : ℝ) > (1 - c) * 2^n) →
-      Contains G (hypercube n)) ↔ answer(sorry) := by
+      Contains G (hypercube (Fin n))) ↔ answer(sorry) := by
   sorry
 
 /--
@@ -86,7 +86,7 @@ theorem erdos_1035.variant_u :
     (∃ u : ℕ → ℕ, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n)))
       [DecidableRel G.Adj],
       (∀ v, G.degree v > 2^n - u n) →
-      Contains G (hypercube n)) ↔ answer(sorry) := by
+      Contains G (hypercube (Fin n))) ↔ answer(sorry) := by
   sorry
 
 end Erdos1035
