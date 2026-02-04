@@ -21,16 +21,17 @@ import FormalConjectures.ErdosProblems.«274»
 
 The actual formalization is in `FormalConjectures.ErdosProblems.«274»`.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+- [arXiv:1803.08301](https://arxiv.org/abs/1803.08301)
+- [arXiv:1803.03569](https://arxiv.org/abs/1803.03569)
+- [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
+- [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
 
 namespace HerzogSchonheimConjecture
 
-@[category API, AMS 20]
-theorem herzog_schonheim_conjecture {G : Type*} [Group G] (hG : 1 < ENat.card G) {ι : Type*}
-        [Fintype ι] (hι : 1 < Fintype.card ι) (P : Erdos274.Group.ExactCovering G ι) :
-        type_of% (Erdos274.herzog_schonheim (G := G) (hG := hG) (ι := ι) (hι := hι) (P := P)) := by
-    simpa using
-        (Erdos274.herzog_schonheim (G := G) (hG := hG) (ι := ι) (hι := hι) (P := P))
+@[category research open, AMS 20]
+theorem herzog_schonheim_conjecture : type_of% @Erdos274.herzog_schonheim := by sorry
 
 end HerzogSchonheimConjecture
