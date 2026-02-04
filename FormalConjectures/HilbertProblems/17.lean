@@ -63,6 +63,7 @@ theorem f_not_sum_of_squares :
 /--
 For the polynomial version, Hilbert showed that every nonnegative homogeneous polynomial in
 $n$ variables of degree $2d$ can be written as a sum of squares of polynomials if and only if
+- $n = 1$
 - $n = 2$
 - $d = 1$
 - $(n, d) = (3, 2)$.
