@@ -54,8 +54,8 @@ theorem erdos_32_log_squared : ∃ A : Set ℕ,
 Must every additive complement $A$ to the primes satisfy
 $\liminf_{N \to \infty} \frac{|A \cap \{1, \ldots, N\}|}{\log N} > 1$?
 -/
-@[category test, AMS 11]
-theorem erdos_32.variants.liminf_gt_one : answer(sorry) ↔ ∀ A : Set ℕ,
+@[category research solved, AMS 11]
+theorem erdos_32.variants.liminf_gt_one : ∀ A : Set ℕ,
     IsAdditiveComplementToPrimes A →
     (1 : EReal) < liminf (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card / Real.log N : EReal))
       atTop := by
