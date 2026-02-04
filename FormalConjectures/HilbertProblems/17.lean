@@ -35,7 +35,7 @@ namespace Hilbert17
 abbrev MvRatFunc (σ K : Type*) [CommRing K] := FractionRing (MvPolynomial σ K)
 
 @[category research solved, AMS 12]
-theorem hilbert_17th_problem (n : ℕ) (f : MvPolynomial (Fin n) ℝ)
+theorem hilbert_17th_problem {n : ℕ} (hn : 0 < n) (f : MvPolynomial (Fin n) ℝ)
     (h : ∀ x : Fin n → ℝ, 0 ≤ f.eval x) :
     ∃ (m : ℕ) (g : Fin m → MvRatFunc (Fin n) ℝ), algebraMap _ _ f = ∑ i, (g i) ^ 2 := by
   sorry
@@ -57,7 +57,7 @@ theorem f_nonneg : ∀ x y : ℝ, 0 ≤ f.eval ![x, y] := by
 
 @[category high_school, AMS 12]
 theorem f_not_sum_of_squares :
-    ¬∃ (n : ℕ) (S : Fin n → MvPolynomial (Fin 2) ℝ), f = ∑ i, S i ^ 2 := by
+    ¬∃ (n : ℕ) (hn : 0 < n) (S : Fin n → MvPolynomial (Fin 2) ℝ), f = ∑ i, S i ^ 2 := by
   sorry
 
 /--
@@ -68,13 +68,32 @@ $n$ variables of degree $2d$ can be written as a sum of squares of polynomials i
 - $(n, d) = (3, 2)$.
 -/
 def Hilbert17thProblemHomogenousPoly (n d : ℕ) : Prop :=
-  ∀ f : MvPolynomial (Fin n) ℝ, f.IsHomogeneous n → f.totalDegree = 2 * d →
+  ∀ f : MvPolynomial (Fin n) ℝ, f.IsHomogeneous (2 * d) →
     (∀ x : Fin n → ℝ, 0 ≤ f.eval x) →
       ∃ (m : ℕ) (g : Fin m → MvPolynomial (Fin n) ℝ), f = ∑ i, (g i) ^ 2
 
+@[category test, AMS 12]
+theorem Hilbert17thProblemHomogenousPoly_zero_left (d : ℕ) :
+    Hilbert17thProblemHomogenousPoly 0 d := by
+  refine fun f hf hf₀ ↦ ⟨1, fun _ ↦ C √(f.coeff 0), ?_⟩
+  have hfd := hf.totalDegree
+  rw [f.eq_C_of_isEmpty] at hf₀ ⊢
+  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by simpa using hf₀]
+  simp
+
+@[category test, AMS 12]
+theorem Hilbert17thProblemHomogenousPoly_zero_right (n : ℕ) :
+    Hilbert17thProblemHomogenousPoly n 0 := by
+  intro f hf hf₀
+  rcases eq_or_ne f 0 with (rfl | hf_zero); · exact ⟨0, 0, by simp⟩
+  have hfd := f.totalDegree_eq_zero_iff_eq_C.1 <| by simpa using hf.totalDegree hf_zero
+  use 1, fun _ ↦ C √(f.coeff 0)
+  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by simpa using hf₀ 0]
+  simpa using hfd
+
 @[category research solved, AMS 12]
-theorem hilbert_17th_problem_poly : ∀ n d, Hilbert17thProblemHomogenousPoly n d ↔
-    n = 2 ∨ d = 1 ∨ n = 3 ∧ d = 2 := by
+theorem hilbert_17th_problem_poly {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
+    Hilbert17thProblemHomogenousPoly n d ↔ n = 1 ∨ n = 2 ∨ d = 1 ∨ n = 3 ∧ d = 2 := by
   sorry
 
 end Hilbert17
