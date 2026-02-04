@@ -36,15 +36,16 @@ def UnitDisk : Set Point := Metric.closedBall 0 1
 The minimum area of a triangle determined by three distinct points in a set `S`.
 -/
 noncomputable def minTriangleArea (S : Finset Point) : ℝ :=
-  sInf { a : ℝ | ∃ p ∈ S, ∃ q ∈ S, ∃ r ∈ S,
-    p ≠ q ∧ q ≠ r ∧ p ≠ r ∧ a = EuclideanGeometry.triangle_area p q r }
-
+  let triples := (S.product S).product S
+  let distinctTriples := triples.filter (fun ((p, q), r) => p ≠ q ∧ q ≠ r ∧ p ≠ r)
+  let areas := distinctTriples.image (fun ((p, q), r) => EuclideanGeometry.triangle_area p q r)
+  (areas.min).getD 0 -- Return the minimum, defaulting to 0 if the set is empty (n < 3)
 
 /--
 $\alpha(n)$ is the supremum of `minTriangleArea S` over all sets `S` of $n$ points in the unit disk.
 -/
 noncomputable def α (n : ℕ) : ℝ :=
-  sSup { minTriangleArea s | (s : Finset Point) (_ : (∀ p ∈ s, p ∈ UnitDisk)) (_ : s.card = n) }
+  sSup { minTriangleArea S | (S : Finset Point) (_ : S.card = n) (_ : ∀ p ∈ S, p ∈ UnitDisk) }
 
 /--
 Let $\alpha(n)$ be such that every set of $n$ points in the unit disk contains three points which
