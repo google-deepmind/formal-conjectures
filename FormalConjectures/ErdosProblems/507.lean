@@ -45,7 +45,7 @@ noncomputable def minTriangleArea (S : Finset Point) : ℝ :=
 $\alpha(n)$ is the supremum of `minTriangleArea S` over all sets `S` of $n$ points in the unit disk.
 -/
 noncomputable def α (n : ℕ) : ℝ :=
-  sSup { minTriangleArea S | (S : Finset Point) (_ : S.card = n) (_ : ∀ p ∈ S, p ∈ UnitDisk) }
+  sSup (minTriangleArea '' { S : Finset Point | S.card = n ∧ ↑S ⊆ UnitDisk })
 
 /--
 Let $\alpha(n)$ be such that every set of $n$ points in the unit disk contains three points which
