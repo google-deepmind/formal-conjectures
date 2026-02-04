@@ -44,8 +44,8 @@ noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
 @[category research solved, AMS 30]
 theorem erdos_516.limsup_ratio_eq_one_of_hasFabryGaps_ofFiniteOrder {f : ℂ → ℂ} {n : ℕ → ℕ}
-    (hn : HasFabryGaps n) {a : ℕ → ℂ} (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z))
-    (hf : OfFiniteOrder f) :
+    (hn : HasFabryGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
+    (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (hf : OfFiniteOrder f) :
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
@@ -53,7 +53,7 @@ theorem erdos_516.limsup_ratio_eq_one_of_hasFabryGaps_ofFiniteOrder {f : ℂ →
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65]. -/
 @[category research solved, AMS 30]
 theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
-    (hn : ∃ c > (0 : ℝ), ∀ k, n k > k * log k ^ (2 + c)) {a : ℕ → ℂ}
+    (hn : ∃ c > (0 : ℝ), ∀ k, n k > k * log k ^ (2 + c)) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) :
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
@@ -62,7 +62,7 @@ theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
 `limsup (fun r => ratio r f) atTop = 1`? -/
 @[category research open, AMS 30]
 theorem erdos_516.limsup_ratio_eq_one_of_hasFejerGaps : answer(sorry) ↔
-    ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ}
+    ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
