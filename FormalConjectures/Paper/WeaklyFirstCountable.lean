@@ -57,8 +57,23 @@ theorem exists_weakly_first_countable_not_first_countable : ∃ (X : Type) (_ : 
 simply take $N x$ as a countable neighborhood basis of $x$. -/
 @[category test, AMS 54]
 instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [TopologicalSpace X]
-    [FirstCountableTopology X] : WeaklyFirstCountableTopology X where
-  nhds_countable_weak_basis := by sorry
+    [FirstCountableTopology X] : WeaklyFirstCountableTopology X := by
+  have has_basis: ∀ a : X, ∃ x : ℕ → Set X, (𝓝 a).HasAntitoneBasis x := by
+    intro a
+    rw [← Filter.isCountablyGenerated_iff_exists_antitone_basis]
+    exact FirstCountableTopology.nhds_generated_countable a
+  let U : X → ℕ → Set X := fun x ↦ (has_basis x).choose
+  have hU : ∀ x, (𝓝 x).HasAntitoneBasis (U x) :=
+    fun x ↦ Exists.choose_spec (has_basis x)
+  use U
+  constructor
+  · exact fun x ↦ ⟨(hU x).antitone, fun n ↦ mem_of_mem_nhds (HasAntitoneBasis.mem (hU x) n)⟩
+  intro O
+  rw [isOpen_iff_mem_nhds]
+  constructor <;> intro h x hx
+  · exact (HasAntitoneBasis.mem_iff (hU x)).mp (h x hx)
+  · obtain ⟨n, hn⟩ := h x hx
+    exact mem_of_superset (HasAntitoneBasis.mem (hU x) n) hn
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact space X such that $𝔠 < |X|$. -/
