@@ -46,9 +46,9 @@ The set of natural numbers $N$ such that any 2-coloring of $[N]$ contains a mono
 arithmetic progression of length $k$ (color 0) or length $r$ (color 1).
 -/
 def mixed_monoAP_guarantee_set (k r : ℕ) : Set ℕ :=
-  { N | ∀ coloring : ℕ → Fin 2,
-    (∃ s : Set ℕ, s ⊆ Finset.Icc 1 N ∧ s.IsAPOfLength k ∧ ∀ x ∈ s, coloring x = 0) ∨
-    (∃ s : Set ℕ, s ⊆ Finset.Icc 1 N ∧ s.IsAPOfLength r ∧ ∀ x ∈ s, coloring x = 1) }
+  { N | ∀ coloring : Icc 1 N → Fin 2,
+    (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength k ∧ ∀ x ∈ s, coloring x = 0) ∨
+    (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength r ∧ ∀ x ∈ s, coloring x = 1) }
 
 /--
 We define the 2-colour van der Waerden numbers $W(k, r)$ to be the least quantities such that if
