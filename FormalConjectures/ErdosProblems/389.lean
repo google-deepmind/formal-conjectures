@@ -31,9 +31,8 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_389 :
-    (∀ n ≥ 1, ∃ k ≥ 1, ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i)) ↔
-    answer(sorry) := by
+theorem erdos_389 : answer(sorry) ↔
+    ∀ n ≥ 1, ∃ k ≥ 1, ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i) := by
   sorry
 
 /--

@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
 -/
 
---TODO: add more statements about Wall-Sun-Sun primes from the wiki page.
+-- TODO: add more statements about Wall-Sun-Sun primes from the wiki page.
 
 /--
 A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$, where $L_p$ is the
@@ -48,6 +48,7 @@ The discriminant of this number is the quantity $a^2 - 4b$. It is conjectured th
 infinitely many Lucas–Wieferich primes of any given discriminant.
 -/
 @[category research open, AMS 11]
-theorem infinite_isWallSunSunPrime_of_disc_eq (D : ℕ+) :
-    {p : ℕ | ∃ a b : ℕ, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p }.Infinite := by
+theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℕ} (hD₀ : 0 < D)
+    (hD : D ≡ 0 [MOD 4] ∨ D ≡ 1 [MOD 4]) :
+    {p : ℕ | ∃ a b : ℕ, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p}.Infinite := by
   sorry

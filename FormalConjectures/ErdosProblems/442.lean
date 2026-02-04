@@ -77,11 +77,11 @@ arXiv:2407.04226 (2024).
 Note: the informal and formal statements follow the solution paper https://arxiv.org/pdf/2407.04226
 -/
 @[category research solved, AMS 11]
-theorem erdos_442 : (∀ (A : Set ℕ),
+theorem erdos_442 : answer(False) ↔ ∀ (A : Set ℕ),
     Tendsto (fun (x : ℝ) =>
       1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) atTop atTop →
     Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 *
-      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop) ↔ answer(True) := by
+      ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop := by
   sorry
 
 /--
@@ -104,7 +104,7 @@ $$
 @[category research solved, AMS 11]
 theorem erdos_442.variants.tao :
     ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : f =o[atTop] (1 : ℝ → ℝ)),
-      ∀ (x : ℝ),
+      ∀ᶠ (x : ℝ) in atTop,
         ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
         |∑ nm ∈ (A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤

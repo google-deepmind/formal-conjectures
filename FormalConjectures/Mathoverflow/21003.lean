@@ -36,7 +36,7 @@ $f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 -/
 @[category research open, AMS 12]
 theorem mathoverflow_21003 :
-    (∃ f : MvPolynomial (Fin 2) ℚ, Function.Bijective fun x ↦ f.eval x) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ f : MvPolynomial (Fin 2) ℚ, Function.Bijective fun x ↦ f.eval x := by
   sorry
 
 end Mathoverflow21003

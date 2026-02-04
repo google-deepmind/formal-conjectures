@@ -29,7 +29,7 @@ open Classical
 namespace Erdos41
 
 /--
-For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for  `a₁, ..., aₙ` in `A`
+For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for `a₁, ..., aₙ` in `A`
 (aside from the trivial coincidences).
 -/
 def NtupleCondition (A : Set α) (n : ℕ) : Prop := ∀ (I : Finset α) (J : Finset α),

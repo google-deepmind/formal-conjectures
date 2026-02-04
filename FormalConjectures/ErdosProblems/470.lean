@@ -38,14 +38,14 @@ def AbundancyIndex (n : ℕ) : ℚ := (∑ d ∈ n.divisors, d) / n
 Are there any odd weird numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_470.part1 : (∃ n : ℕ, n.Weird ∧ Odd n) ↔ answer(sorry) := by
+theorem erdos_470.part1 : answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
   sorry
 
 /--
 Are there infinitely many primitive weird numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_470.part2 : (Set.Infinite PrimitiveWeird) ↔ answer(sorry) := by
+theorem erdos_470.part2 : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
   sorry
 
 /--
@@ -72,7 +72,7 @@ well-known conjectures concerning prime gaps.
 @[category research solved, AMS 11]
 theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
     ∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10 →
-      Set.Infinite PrimitiveWeird  := by
+      Set.Infinite PrimitiveWeird := by
   sorry
 
 /--

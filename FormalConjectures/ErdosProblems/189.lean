@@ -48,11 +48,12 @@ In fact, Kovač's colouring is even Jordan measurable (the topological boundary 
 monochromatic region is Lebesgue measurable and has measure zero). -/
 @[category research solved, AMS 5 51]
 theorem erdos_189 :
-    Erdos189For
+    answer(False) ↔ Erdos189For
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
-        line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction)
-      (fun a b c d ↦ dist a b * dist b c) ↔ answer(False) := by
+        line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧
+        line[ℝ, c, d].direction ⟂ line[ℝ, d, a].direction)
+      (fun a b c d ↦ dist a b * dist b c) := by
   sorry
 
 /-- Graham claims this is "easy to see". -/
@@ -62,6 +63,7 @@ theorem erdos_189.variants.square :
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
         line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧
+        line[ℝ, c, d].direction ⟂ line[ℝ, d, a].direction ∧
         dist a b = dist b c)
       (fun a b c d ↦ dist a b * dist b c) := by
   sorry

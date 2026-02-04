@@ -68,7 +68,7 @@ Is there such an $A$ for which $f(n)\to \infty$ as $n\to \infty$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_358.parts.i :
-    (∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop := by
   sorry
 
 /--
@@ -78,7 +78,7 @@ Is there an $A$ such that $f(n)\geq 2$ for all large $n$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_358.parts.ii :
-    (∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 2 ≤ f A n) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 2 ≤ f A n := by
   sorry
 
 /--

@@ -36,9 +36,10 @@ maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}`
 `(A - A) ∩ (B - B) = {0}`?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_42 : (∀ M ≥ 1, ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N),
+theorem erdos_42 : answer(sorry) ↔
+    ∀ M ≥ 1, ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N),
     ∃ᵉ (B : Set ℕ), B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
-    ((A - A) ∩ (B - B)) = {0}) ↔ answer(sorry) := by
+    ((A - A) ∩ (B - B)) = {0} := by
   sorry
 
 /--
@@ -49,10 +50,11 @@ every maximal Sidon set A ⊆ {1,…,N} has another Sidon set B ⊆ {1,…,N} of
 disjoint difference sets (apart from 0).
 -/
 @[category research open, AMS 5 11]
-theorem erdos_42.constructive : (∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
+theorem erdos_42.constructive : answer(sorry) ↔
+    ∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
     ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N), ∃ᵉ (B : Set ℕ),
       B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
-      ((A - A) ∩ (B - B)) = {0}) ↔ answer(sorry) := by
+      ((A - A) ∩ (B - B)) = {0} := by
   sorry
 
 
