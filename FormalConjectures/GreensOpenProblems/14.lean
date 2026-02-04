@@ -140,23 +140,56 @@ theorem green_14_variant_2r2 : answer(sorry) ↔ ∃ r, W 3 r ≥ 2 * r^2 := by
   sorry
 
 -- Known exact values for `W(3,r)` from [AKS14].
-@[simp] axiom W_3_3 : W 3 3 = 9
-@[simp] axiom W_3_4 : W 3 4 = 18
-@[simp] axiom W_3_5 : W 3 5 = 22
-@[simp] axiom W_3_6 : W 3 6 = 32
-@[simp] axiom W_3_7 : W 3 7 = 46
-@[simp] axiom W_3_8 : W 3 8 = 58
-@[simp] axiom W_3_9 : W 3 9 = 77
-@[simp] axiom W_3_10 : W 3 10 = 97
-@[simp] axiom W_3_11 : W 3 11 = 114
-@[simp] axiom W_3_12 : W 3 12 = 135
-@[simp] axiom W_3_13 : W 3 13 = 160
-@[simp] axiom W_3_14 : W 3 14 = 186
-@[simp] axiom W_3_15 : W 3 15 = 218
-@[simp] axiom W_3_16 : W 3 16 = 238
-@[simp] axiom W_3_17 : W 3 17 = 279
-@[simp] axiom W_3_18 : W 3 18 = 312
-@[simp] axiom W_3_19 : W 3 19 = 349
+@[category research open, AMS 5 11]
+theorem W_3_3 : W 3 3 = 9 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_4 : W 3 4 = 18 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_5 : W 3 5 = 22 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_6 : W 3 6 = 32 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_7 : W 3 7 = 46 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_8 : W 3 8 = 58 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_9 : W 3 9 = 77 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_10 : W 3 10 = 97 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_11 : W 3 11 = 114 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_12 : W 3 12 = 135 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_13 : W 3 13 = 160 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_14 : W 3 14 = 186 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_15 : W 3 15 = 218 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_16 : W 3 16 = 238 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_17 : W 3 17 = 279 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_18 : W 3 18 = 312 := by sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_19 : W 3 19 = 349 := by sorry
 
 -- Conjectured lower bounds for W(3,r) from [AKS14, Table 2].
 @[category research open, AMS 5 11]
