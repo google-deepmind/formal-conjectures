@@ -62,7 +62,7 @@ Is $W(k, r)$ a polynomial in $r$, for fixed $k$?
 
 We formulate this as asking if $W(k, r)$ has polynomial growth in $r$.
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem green_14_polynomial (k : ℕ) :
     answer(sorry) ↔ ∃ d : ℕ, (fun r => ((W k r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ d) := by
     -- We know it is not the case for k=3.
@@ -71,7 +71,7 @@ theorem green_14_polynomial (k : ℕ) :
 /--
 Is $W(3, r) \ll r^2$?
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5 11]
 theorem green_14_quadratic :
     answer(False) ↔ (fun r => ((W 3 r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ 2) := by
     -- [Gr21] proves a superpolynomial lower bound $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$.
@@ -80,7 +80,7 @@ theorem green_14_quadratic :
 /--
 [Gr21] proved a lower bound of shape $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5 11]
 theorem green_14_lower_bound_green :
     answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(4/3 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
@@ -89,7 +89,7 @@ theorem green_14_lower_bound_green :
 /--
 [Hu22] improved this to $W(3, r) \gg \exp(c(\log r)^{2-o(1)})$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5 11]
 theorem green_14_lower_bound_hunter :
     answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
@@ -98,7 +98,7 @@ theorem green_14_lower_bound_hunter :
 /--
 [BLR08] proved $W(3, r) \gg r^{2 - 1/\log \log r}$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5 11]
 theorem green_14_lower_bound_brown_landman_robertson :
     answer(sorry) ↔
     (fun (r : ℕ) => (r : ℝ)^(2 - 1 / Real.log (Real.log r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
@@ -107,7 +107,7 @@ theorem green_14_lower_bound_brown_landman_robertson :
 /--
 [LiSh10] proved $W(3, r) \gg (r / \log r)^2$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5 11]
 theorem green_14_lower_bound_li_shu :
     answer(sorry) ↔
     (fun (r : ℕ) => ((r : ℝ) / Real.log r)^2) =O[atTop] (fun r => (W 3 r : ℝ)) := by
@@ -116,7 +116,7 @@ theorem green_14_lower_bound_li_shu :
 /--
 [Sc20] proves the upper bound $W(3, r) < \exp(r^{1-c})$ for some $c > 0$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5 11]
 theorem green_14_upper_bound_schoen :
     answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧
     (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp ((r : ℝ) ^ (1 - c))) := by
@@ -125,7 +125,7 @@ theorem green_14_upper_bound_schoen :
 /--
 [KeMe23] gives a corresponding upper bound $W(3, r) \ll \exp(C(\log r)^C)$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5 11]
 theorem green_14_upper_bound_kelley_meka :
     answer(sorry) ↔ ∃ C : ℝ,
     (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp (C * (Real.log r)^C)) := by
@@ -135,7 +135,7 @@ theorem green_14_upper_bound_kelley_meka :
 It remains an interesting open problem to actually write down a colouring showing (say)
 $W(3, r) \ge 2r^2$ for some $r$. [Gr24]
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem green_14_variant_2r2 : answer(sorry) ↔ ∃ r, W 3 r ≥ 2 * r^2 := by
   sorry
 
@@ -159,37 +159,37 @@ theorem green_14_variant_2r2 : answer(sorry) ↔ ∃ r, W 3 r ≥ 2 * r^2 := by
 @[simp] axiom W_3_19 : W 3 19 = 349
 
 -- Conjectured lower bounds for W(3,r) from [AKS14, Table 2].
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_20_lower : answer(sorry) ↔ W 3 20 ≥ 389 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_21_lower : answer(sorry) ↔ W 3 21 ≥ 416 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_22_lower : answer(sorry) ↔ W 3 22 ≥ 464 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_23_lower : answer(sorry) ↔ W 3 23 ≥ 516 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_24_lower : answer(sorry) ↔ W 3 24 ≥ 593 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_25_lower : answer(sorry) ↔ W 3 25 ≥ 656 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_26_lower : answer(sorry) ↔ W 3 26 ≥ 727 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_27_lower : answer(sorry) ↔ W 3 27 ≥ 770 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_28_lower : answer(sorry) ↔ W 3 28 ≥ 827 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_29_lower : answer(sorry) ↔ W 3 29 ≥ 868 := sorry
 
-@[category research open, AMS 11]
+@[category research open, AMS 5 11]
 theorem W_3_30_lower : answer(sorry) ↔ W 3 30 ≥ 903 := sorry
 
 end Green14
