@@ -36,9 +36,9 @@ def UnitDisk : Set Point := Metric.closedBall 0 1
 The minimum area of a triangle determined by three distinct points in a set `S`.
 -/
 noncomputable def minTriangleArea (S : Finset Point) : ℝ :=
-  let triples := (S.product S).product S
-  let distinctTriples := triples.filter (fun ((p, q), r) => p ≠ q ∧ q ≠ r ∧ p ≠ r)
-  let areas := distinctTriples.image (fun ((p, q), r) => EuclideanGeometry.triangle_area p q r)
+  let triples := S ×ˢ S ×ˢ S
+  let distinctTriples := triples.filter fun ⟨p, q, r⟩ => p ≠ q ∧ q ≠ r ∧ p ≠ r
+  let areas := distinctTriples.image fun ⟨p, q, r⟩ => EuclideanGeometry.triangle_area p q r
   (areas.min).getD 0 -- Return the minimum, defaulting to 0 if the set is empty (n < 3)
 
 /--
