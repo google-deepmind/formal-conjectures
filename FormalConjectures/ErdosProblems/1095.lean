@@ -29,12 +29,9 @@ open scoped Asymptotics Topology
 namespace Erdos1095
 
 /--
-Let $g(k)>k+1$ be maximal such that
-if $n\leq g(k)$ then $\binom{n}{k}$ is divisible by a prime $\leq k$.
-Estimate $g(k)$.
+Let $g(k)>k+1$ be the smallest $n$ such that all prime factors of $\binom{n}{k}$ are $>k$.
 -/
-noncomputable def g (k : ℕ) : ℕ :=
-  sSup {m | ∀ n ∈ Set.Ioc k m, ∃ p ≤ k, p.Prime ∧ p ∣ choose n k}
+noncomputable def g (k : ℕ) : ℕ := sInf {m | k + 1 < m ∧ k < (m.choose k).minFac}
 
 /--
 The current record is\[g(k) \gg \exp(c(\log k)^2)\]for some $c>0$, due to Konyagin
@@ -46,12 +43,12 @@ theorem erdos_1095_lower_solved :
   sorry
 
 /--
-Ecklund, Erdős, and Selfridge conjectured $g(k)\leq \exp(k^{1+o(1)})$
+Ecklund, Erdős, and Selfridge conjectured $g(k)\leq \exp((1+o(1))k)$
 [EES74](https://mathscinet.ams.org/mathscinet/relay-station?mr=1199990)
 -/
 @[category research open, AMS 11]
 theorem erdos_1095_upper_conjecture :
-    ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧ ∀ k, g k ≤ exp (k ^ (1 + f k)) := by
+    ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧ ∀ᶠ k in atTop, g k ≤ exp (k * (1 + f k)) := by
   sorry
 
 /--
@@ -60,7 +57,7 @@ write 'it is clear to every right-thinking person' that
 $g(k)\geq\exp(c\frac{k}{\log k})$ for some constant $c>0$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1095_lower_conjecture : ∃ c > 0, ∀ k, g k ≥ exp (c * k / log k) := by
+theorem erdos_1095_lower_conjecture : ∃ c > 0, ∀ᶠ k in atTop, g k ≥ exp (c * k / log k) := by
   sorry
 
 /--
