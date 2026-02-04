@@ -40,12 +40,12 @@ namespace WeaklyFirstCountable
 $N : X → ℕ → Set X, such that:
 
 * For all $x : X, n : ℕ$ we have $x ∈ V x n$
-* For all $x : X, n : ℕ$: $V (n + 1) x ⊆ V n x$
+* For all $x : X, n : ℕ$: $V (n + 1) x ⊆ V x n$
 * $O ⊆ X$ is open iff $∀ x ∈ O, ∃ n : ℕ, V x n ⊆ O$
 -/
 class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
-  nhds_countable_weak_basis : ∃ V : X → ℕ → Set X, ∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x n ∧
-    ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
+  nhds_countable_weak_basis : ∃ V : X → ℕ → Set X, ∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x n
+    ∧ ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
 
 /-- There are weakly first countable spaces which are not first countable,
 for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
