@@ -31,7 +31,7 @@ around those.
   https://www.mathnet.ru/links/016f74007f9f96fa3aadae05cbd98457/dan40570.pdf (in Russian)
 -/
 
-open TopologicalSpace
+open TopologicalSpace Topology Filter
 open scoped Cardinal
 
 namespace WeaklyFirstCountable
