@@ -40,7 +40,7 @@ namespace WeaklyFirstCountable
 $N : X → ℕ → Set X, such that:
 
 * For all $x : X, n : ℕ$ we have $x ∈ V x n$
-* For all $x : X, n : ℕ$: $V (n + 1) x ⊆ V x n$
+* For all $x : X, n : ℕ$: $V x (n + 1) ⊆ V x n$
 * $O ⊆ X$ is open iff $∀ x ∈ O, ∃ n : ℕ, V x n ⊆ O$
 -/
 class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
