@@ -136,7 +136,7 @@ It remains an interesting open problem to actually write down a colouring showin
 $W(3, r) \ge 2r^2$ for some $r$. [Gr24]
 -/
 @[category research open, AMS 5 11]
-theorem green_14_variant_2r2 : answer(sorry) ↔ ∃ r, 1 < r ∧ W 3 r ≥ 2 * r^2 := by
+theorem green_14_variant_2r2 : answer(sorry) ↔ ∃ r, 3 ≤ r ∧ W 3 r ≥ 2 * r^2 := by
   sorry
 
 -- Known exact values for `W(3,r)` from [AKS14].
