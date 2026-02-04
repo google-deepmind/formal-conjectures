@@ -15,8 +15,10 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 open Filter Finset Real Classical
+open Set
 
 /--
 Erdős Problem 696: Sequence Chains in Divisors
@@ -44,34 +46,26 @@ noncomputable def h : ℕ :=
 noncomputable def H : ℕ :=
   Nat.findGreatest (fun k => ∃ s : List ℕ, s.length = k ∧ ValidChain n (fun _ => True) s) n
 
-/-
-Conjectures usually involve "almost all n", meaning the set of integers
-satisfying the property has natural density 1.
--/
-
-def Density1 (P : ℕ → Prop) : Prop :=
-  Tendsto (fun (N : ℕ) => (((range N).filter P).card : ℝ) / (N : ℝ)) atTop (𝓝 1)
-
 /-- The iterated logarithm: how many times we take log to get below e. -/
-noncomputable def L (x : ℝ) : ℝ := answer(sorry)
+noncomputable def L (x : ℝ) : ℝ := sorry
 
 /-- Erdős conjectured h(n) is typically log*(n). -/
 @[category research open, AMS 11]
-theorem typical_h : ∀ ε > 0, Density1 (fun (n : ℕ) => abs ((h n : ℝ) / L (n : ℝ) - 1) < (ε : ℝ)) := by
+theorem typical_h : ∀ ε > 0, {n : ℕ | abs ((h n : ℝ) / L (n : ℝ) - 1) < (ε : ℝ)}.HasDensity 1 := by
   sorry
 
 /-- Does H(n) tend to be much larger than h(n)? -/
 @[category research open, AMS 11]
-theorem ratio_limit : answer(sorry) ↔ ∀ M : ℝ, Density1 (fun (n : ℕ) => (h n : ℝ) > 0 ∧ (H n : ℝ) / (h n : ℝ) > M) := by
+theorem ratio_limit : answer(sorry) ↔ ∀ M : ℝ, {n : ℕ | (h n : ℝ) > 0 ∧ (H n : ℝ) / (h n : ℝ) > M}.HasDensity 1 := by
   sorry
 
 /-- Estimation of the individual growth rates. -/
 @[category research open, AMS 11]
-theorem growth_h : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, Density1 (fun (n : ℕ) => abs ((h n : ℝ) / f n - 1) < (ε : ℝ)) := by
+theorem growth_h : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, {n : ℕ | abs ((h n : ℝ) / f n - 1) < (ε : ℝ)}.HasDensity 1 := by
   sorry
 
 @[category research open, AMS 11]
-theorem growth_H : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, Density1 (fun (n : ℕ) => abs ((H n : ℝ) / f n - 1) < (ε : ℝ)) := by
+theorem growth_H : answer(sorry) ↔ ∃ f : ℕ → ℝ, ∀ ε > 0, {n : ℕ | abs ((H n : ℝ) / f n - 1) < (ε : ℝ)}.HasDensity 1 := by
   sorry
 
 end Erdos696
