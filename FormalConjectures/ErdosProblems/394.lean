@@ -87,34 +87,8 @@ theorem erdos_394_lower_bound :
   sorry
 
 /--
-Erdős and Hall [ErHa78] note that $t_{n-1}(n!)=2$.
--/
-@[category research solved, AMS 11]
-theorem erdos_394_factorial_n_minus_1 :
-    ∀ (n : ℕ), n > 1 →
-    sInf { m : ℕ | 0 < m ∧ (n !) ∣ ∏ i ∈ range (n - 1), (m + i) } = 2 := by
-  sorry
-
-/--
-Erdős and Hall [ErHa78] note that $t_{n-2}(n!)\ll n$.
--/
-@[category research solved, AMS 11]
-theorem erdos_394_factorial_n_minus_2_upper :
-    (fun (n : ℕ) ↦ ((sInf { m : ℕ | 0 < m ∧ (n !) ∣ ∏ i ∈ range (n - 2), (m + i) } : ℕ) : ℝ)) =O[atTop]
-    (fun n ↦ (n : ℝ)) := by
-  sorry
-
-/--
-$n=2^r$ shows that $t_{n-2}(n!)\ll n$ is the best possible (implying the lower bound is also linear).
--/
-@[category research solved, AMS 11]
-theorem erdos_394_factorial_n_minus_2_lower_pow2 :
-    (fun (r : ℕ) ↦ (2 ^ r : ℝ)) =O[atTop]
-    (fun r ↦ ((sInf { m : ℕ | 0 < m ∧ (2 ^ r) ! ∣ ∏ i ∈ range (2 ^ r - 2), (m + i) } : ℕ) : ℝ)) := by
-  sorry
-
-/--
-Is it true that, for infinitely many $n$, $t_k(n!) < t_{k-1}(n!) - 1$ for all $1 \leq k < n$?
+They ask about the behaviour of $t_{n-3}(n!)$ and also ask ask whether, for infinitely many $n$,
+$t_k(n!)< t_{k-1}(n!)-1$ for all $1\leq k < n$.
 -/
 @[category research open, AMS 11]
 theorem erdos_394_factorial_gap_conjecture :
