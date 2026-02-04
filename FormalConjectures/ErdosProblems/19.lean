@@ -20,12 +20,6 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 19
 
 *Reference:* [erdosproblems.com/19](https://www.erdosproblems.com/19)
-
-The Erdős-Faber-Lovász Conjecture: if $G$ is an edge-disjoint union of $n$ copies of $K_n$,
-then $\chi(G) = n$.
-
-Kang, Kelly, Kühn, Methuku, and Osthus (2021) proved this for all sufficiently large $n$.
-The conjecture has also been verified for small values of $n$ by computational methods.
 -/
 
 universe u
@@ -45,13 +39,9 @@ if they shared two vertices, they would share the edge between them.
 -/
 def IsEdgeDisjointCompleteUnion (G : SimpleGraph V) (n : ℕ) : Prop :=
   ∃ (cliques : Fin n → Set V),
-    -- Each clique has exactly n vertices
     (∀ i, (cliques i).ncard = n) ∧
-    -- Each clique is complete in G
     (∀ i, G.IsClique (cliques i)) ∧
-    -- Two distinct cliques share at most one vertex (implies edge-disjoint)
     (∀ i j, i ≠ j → (cliques i ∩ cliques j).ncard ≤ 1) ∧
-    -- Every edge of G comes from some clique
     (∀ v w, G.Adj v w → ∃ i, v ∈ cliques i ∧ w ∈ cliques i)
 
 /--
