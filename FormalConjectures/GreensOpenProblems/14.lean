@@ -37,12 +37,12 @@ import FormalConjectures.Util.ProblemImports
   Advances in Applied Mathematics 44.3 (2010): 243-247.
 -/
 
-open Filter Topology
+open Filter Set Topology
 
 namespace Green14
 
 /--
-The set of natural numbers $N$ such that any 2-coloring of $[N]$ contains a monochromatic
+The set of natural numbers $N$ such that any 2-coloring of ${1, ..., N}$ contains a monochromatic
 arithmetic progression of length $k$ (color 0) or length $r$ (color 1).
 -/
 def mixed_monoAP_guarantee_set (k r : ℕ) : Set ℕ :=
@@ -52,7 +52,7 @@ def mixed_monoAP_guarantee_set (k r : ℕ) : Set ℕ :=
 
 /--
 We define the 2-colour van der Waerden numbers $W(k, r)$ to be the least quantities such that if
-$\{1, . . . , W(k, r)\}$ is coloured red and blue then there is either a red $k$-term progression
+$\{1, ... , W(k, r)\}$ is coloured red and blue then there is either a red $k$-term progression
 or a blue $r$-term progression.
 -/
 noncomputable def W (k r : ℕ) : ℕ := sInf (mixed_monoAP_guarantee_set k r)
