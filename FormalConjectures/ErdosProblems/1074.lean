@@ -28,7 +28,7 @@ open scoped Nat
 exists a prime $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$. -/
 abbrev Nat.EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, p.Prime ∧ ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
-/-- The Pillai primes are those primes $p$ such that there exists an $m$ with
+/-- The Pillai primes are those primes $p$ such that there exists an $m \ge 1$ with
 $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$-/
 abbrev Nat.PillaiPrimes : Set ℕ := {p | p.Prime ∧ ∃ m ≥ 1, ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
