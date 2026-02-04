@@ -35,7 +35,7 @@ A real number satisfying a certain inequality about (auto)convolutions and $L^2$
 Such numbers are related to the maximal size of Sidon sets in additive combinatorics. -/
 def IsL2Bound (C : ℝ) : Prop :=
   ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f →  C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
-    ≤ sSup {r | ∃ t ∈ Icc (1 / 2 : ℝ) 1, r = ∫ x, f (t - x) * f x}
+    ≤ sSup {∫ x, f (t - x) * f x | t ∈ Icc (1 / 2 : ℝ) 1}
 
 /-- **Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets**:
 The biggest real number satisfying a certain inequality about integral. -/
