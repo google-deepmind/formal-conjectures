@@ -15,14 +15,23 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Erdős Problem 507
 
-*Reference:* [erdosproblems.com/507](https://www.erdosproblems.com/507)
+*References:*
+- [erdosproblems.com/507](https://www.erdosproblems.com/507)
+- [CPZ23] Cohen, Alex, Cosmin Pohoata, and Dmitrii Zakharov. "A new upper bound for the Heilbronn
+  triangle problem." arXiv preprint arXiv:2305.18253 (2023).
+- [CPZ24] Cohen, Alex, Cosmin Pohoata, and Dmitrii Zakharov. "Lower bounds for incidences."
+  Inventiones mathematicae (2025): 1-74.
+- [KPS82] Komlós, János, János Pintz, and Endre Szemerédi. "A lower bound for Heilbronn's problem."
+  Journal of the London Mathematical Society 2.1 (1982): 13-24.
+- [KPS81] Komlós, János, János Pintz, and Endre Szemerédi. "On Heilbronn's triangle problem."
+  Journal of the London Mathematical Society 2.3 (1981): 385-396.
 -/
 
+open Filter Topology
 open scoped EuclideanGeometry
 
 namespace Erdos507
@@ -51,9 +60,39 @@ noncomputable def α (n : ℕ) : ℝ :=
 Let $\alpha(n)$ be such that every set of $n$ points in the unit disk contains three points which
 determine a triangle of area at most $\alpha(n)$. Estimate $\alpha(n)$.
 -/
-@[category research open, AMS 52]
+@[category research open, AMS 51]
 theorem erdos_507 :
     α = answer(sorry) := by
+  sorry
+
+/--
+It is trivial that $\alpha(n) \ll 1/n$.
+-/
+@[category research solved, AMS 51]
+theorem upper_trivial : α ≪ (fun n ↦ 1 / (n : ℝ)) := by
+  sorry
+
+/--
+Erdős observed that $\alpha(n) \gg 1/n^2$.
+-/
+@[category research solved, AMS 51]
+theorem lower_erdos : α ≫ (fun n ↦ 1 / (n : ℝ) ^ 2) := by
+  sorry
+
+/--
+Current best lower bound [KPS82].
+-/
+@[category research solved, AMS 51]
+theorem lower : (fun n ↦ Real.log n / (n : ℝ) ^ 2) ≪ α := by
+  sorry
+
+/--
+Current best upper bound [CPZ24].
+-/
+@[category research solved, AMS 51]
+theorem upper :
+    ∃ (o : ℕ → ℝ), Tendsto o atTop (𝓝 0) ∧
+    α ≪ (fun n ↦ 1 / (n : ℝ) ^ ((7 : ℝ) / 6 + o n)) := by
   sorry
 
 end Erdos507
