@@ -48,7 +48,7 @@ There are various ways of contributing to this repository:
 
     * **Literature:** Textbooks, problem books and research papers (including [arXiv](https://arxiv.org/archive/math)).
     * **Community Resources:** [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics), [MathOverflow](https://mathoverflow.net/) and the [OEIS](https://oeis.org/).
-    * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
+    * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), [Kourovka notebook](https://arxiv.org/pdf/1401.0300) or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
 
     We are also interested in the formalised statements of solved variants of
     open conjectures and solved statements from dedicated problem lists.
