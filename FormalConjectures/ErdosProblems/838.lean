@@ -25,26 +25,17 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos838
 
-abbrev Point : Type := EuclideanSpace ℝ (Fin 2)
+open scoped EuclideanGeometry
 
-/-
-A set of points is in general position if no three points are collinear.
--/
-def GeneralPosition (S : Set Point) : Prop :=
-  ∀ s : Set Point, s ⊆ S → s.ncard = 3 → ¬ Collinear ℝ s
+abbrev Point : Type := ℝ^2
+
 
 /-
 `numberOfConvexSubsets S hS` counts all subsets of `S` that are in convex
 position (`ConvexIndependent`).
 -/
-
-noncomputable def numberOfConvexSubsets (S : Set Point) (hS : S.Finite) : ℕ := by
-  classical
-  let s : Finset Point := hS.toFinset
-  exact
-    ((s.powerset).filter (fun A : Finset Point =>
-      ConvexIndependent ℝ (fun x : (A : Set Point) => (x : Point))
-    )).card
+noncomputable def numberOfConvexSubsets (S : Set Point) (hS : S.Finite) : ℕ :=
+  {A ⊆ S | ConvexIndependent ℝ (fun x : A => (x : Point))}.ncard
 
 /-
 `f n` is the minimum number of convex subsets determined by any set of `n` points
@@ -54,11 +45,11 @@ noncomputable def f (n : ℕ) : ℕ :=
   sInf
     { k : ℕ |
       ∃ S : Set Point, ∃ hS : S.Finite,
-        S.ncard = n ∧ GeneralPosition S ∧
+        S.ncard = n ∧ GeneralPosition (R := ℝ) S ∧
         numberOfConvexSubsets S hS = k }
 
 /-
-There exists a constant c such that the limit of log(f(n)) / (log n)^2 is c.
+There exists a constant $c$ such that $\lim_{n \to \infty} \frac{\log f(n)}{(\log n)^2} = c$.
 -/
 @[category research open, AMS 52]
 theorem erdos_838 :
