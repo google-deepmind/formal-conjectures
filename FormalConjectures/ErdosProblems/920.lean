@@ -38,7 +38,7 @@ $f_k(n)$ is the maximum possible chromatic number of a graph with $n$ vertices
 which contains no $K_k$.
 -/
 noncomputable def f (k n : ℕ) : ℕ :=
-  sSup {χ | ∃ (G : SimpleGraph (Fin n)), G.CliqueFree k ∧ G.chromaticNumber = χ}
+  sSup {(G.chromaticNumber) | (G : SimpleGraph (Fin n)) (_ : G.CliqueFree k)}
 
 /--
 Is it true that, for $k\geq 4$, $f_k(n) \gg \frac{n^{1-\frac{1}{k-1}}}{(\log n)^{c_k}}$ for some
@@ -47,16 +47,16 @@ constant $c_k>0$?
 @[category research open, AMS 05]
 theorem erdos_920 :
     answer(sorry) ↔ ∀ k : ℕ, k ≥ 4 → ∃ c > 0,
-      (fun (n : ℕ) ↦ (n : ℝ) ^ (1 - 1 / ((k : ℝ) - 1)) / (log n) ^ c) =O[atTop] (fun n ↦ (f k n : ℝ)) := by
+      (fun n ↦ f k n) ≫ (fun n ↦ (n : ℝ) ^ (1 - 1 / ((k : ℝ) - 1)) / (log n) ^ c) := by
   sorry
 
 /--
-Graver and Yackel [GrYa68] proved that $f_k(n) \ll \left(n\frac{\log\log n}{\log n}\right)^{1-\frac{1}{k-1}}.$
+Graver and Yackel [GrYa68] proved that
+$f_k(n) \ll \left(n\frac{\log\log n}{\log n}\right)^{1-\frac{1}{k-1}}.$
 -/
 @[category research solved, AMS 05]
 theorem erdos_920.variants.upper_bound (k : ℕ) (hk : k ≥ 3) :
-    (fun n ↦ (f k n : ℝ)) =O[atTop]
-    (fun n ↦ ((n : ℝ) * (log (log n)) / (log n)) ^ (1 - 1 / ((k : ℝ) - 1))) := by
+    (fun n ↦ f k n) ≪ (fun n ↦ ((n : ℝ) * log (log n) / log n) ^ (1 - 1 / ((k : ℝ) - 1))) := by
   sorry
 
 /--
@@ -73,7 +73,7 @@ The lower bound $R(4,m) \gg m^3/(\log m)^4$ of Mattheus and Verstraete [MaVe23]
 -/
 @[category research solved, AMS 05]
 theorem erdos_920.variants.lower_bound_f4 :
-    (fun (n : ℕ) ↦ (n : ℝ) ^ (2 / 3 : ℝ) / (log n) ^ (4 / 3 : ℝ)) =O[atTop] (fun n ↦ (f 4 n : ℝ)) := by
+    (fun n ↦ f 4 n) ≫ (fun n ↦ (n : ℝ) ^ (2 / 3 : ℝ) / (log n) ^ (4 / 3 : ℝ)) := by
   sorry
 
 /--
@@ -82,7 +82,8 @@ that problem imply $f_k(n) \gg \frac{n^{1-\frac{2}{k+1}}}{(\log n)^{c_k}}.$
 -/
 @[category research solved, AMS 05]
 theorem erdos_920.variants.lower_bound (k : ℕ) (hk : k ≥ 3) :
-    ∃ c > 0, (fun (n : ℕ) ↦ (n : ℝ) ^ (1 - 2 / ((k : ℝ) + 1)) / (log n) ^ c) =O[atTop] (fun n ↦ (f k n : ℝ)) := by
+    ∃ c > 0, (fun n ↦ f k n) ≫ (fun (n : ℕ) ↦
+    (n : ℝ) ^ (1 - 2 / ((k : ℝ) + 1)) / (log n) ^ c) := by
   sorry
 
 end Erdos920
