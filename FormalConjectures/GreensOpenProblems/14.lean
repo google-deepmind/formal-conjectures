@@ -225,4 +225,32 @@ theorem W_3_29_lower : answer(sorry) ↔ W 3 29 ≥ 868 := sorry
 @[category research open, AMS 5 11]
 theorem W_3_30_lower : answer(sorry) ↔ W 3 30 ≥ 903 := sorry
 
+/-- Conjectured strict bounds for W(3,r) from [AKS14, Table 3]. -/
+@[category research open, AMS 5 11]
+theorem W_3_31_lower : answer(sorry) ↔ W 3 31 > 930 := sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_32_lower : answer(sorry) ↔ W 3 32 > 1006 := sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_33_lower : answer(sorry) ↔ W 3 33 > 1063 := sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_34_lower : answer(sorry) ↔ W 3 34 > 1143 := sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_35_lower : answer(sorry) ↔ W 3 35 > 1204 := sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_36_lower : answer(sorry) ↔ W 3 36 > 1257 := sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_37_lower : answer(sorry) ↔ W 3 37 > 1338 := sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_38_lower : answer(sorry) ↔ W 3 38 > 1378 := sorry
+
+@[category research open, AMS 5 11]
+theorem W_3_39_lower : answer(sorry) ↔ W 3 39 > 1418 := sorry
+
 end Green14
