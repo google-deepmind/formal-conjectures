@@ -32,7 +32,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Asymptotics Filter Topology
-open scoped EuclideanGeometry
+open scoped Classical EuclideanGeometry
 
 namespace Erdos507
 
@@ -41,8 +41,9 @@ The minimum area of a triangle determined by three distinct points in a set `S`.
 -/
 noncomputable def minTriangleArea (S : Finset ℝ²) : ℝ :=
   let triples := S ×ˢ S ×ˢ S
-  let distinctTriples := triples.filter fun ⟨p, q, r⟩ => p ≠ q ∧ q ≠ r ∧ p ≠ r
-  let areas := distinctTriples.image fun ⟨p, q, r⟩ => EuclideanGeometry.triangle_area p q r
+  let validTriples := triples.filter fun ⟨p, q, r⟩ => p ≠ q ∧ q ≠ r ∧ p ≠ r ∧
+    ¬ Collinear ℝ {p, q, r}
+  let areas := validTriples.image fun ⟨p, q, r⟩ => EuclideanGeometry.triangle_area p q r
   (areas.min).getD 0 -- Return the minimum, defaulting to 0 if the set is empty (n < 3)
 
 /--
