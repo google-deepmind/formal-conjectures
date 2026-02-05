@@ -30,10 +30,11 @@ namespace Erdos1145
 
 
 /--
-Let $A=\{1\leq a_1 < a_2 < \cdots\}$ and $B=\{1\leq b_1 < b_2 < \cdots\}$ be sets of integers
-with $a_n/b_n\to 1$.
+Let $A=\{1\leq a_1 < a_2 < \cdots\}$ and $B=\{1\leq b_1 < b_2 < \cdots\}$ be sets of integers with
+$a_n/b_n\to 1$.
 
-If $A+B=\mathbb{N}$ then is it true that $\limsup 1_A\ast 1_B(n)=\infty$?
+If $A+B$ contains all sufficiently large positive integers then is it true that
+$\limsup 1_A\ast 1_B(n)=\infty$?
 
 A conjecture of Erdős and Sárközy.
 
@@ -45,7 +46,7 @@ theorem erdos_1145 :
     0 ∉ A →
     0 ∉ B →
     Tendsto (fun n ↦ (Nat.nth (· ∈ A) n : ℝ) / (Nat.nth (· ∈ B) n : ℝ)) atTop (𝓝 1) →
-    Ici 2 ⊆ A + B →
+    (∀ᶠ n in atTop, n ∈ A + B) →
     limsup (fun n ↦ ({p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n}.ncard : ℕ∞)) atTop = ⊤ := by
   sorry
 
