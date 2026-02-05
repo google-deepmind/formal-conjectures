@@ -32,6 +32,7 @@ The actual formalization is in `FormalConjectures.ErdosProblems.«274»`.
 namespace HerzogSchonheimConjecture
 
 @[category research open, AMS 20]
-theorem herzog_schonheim_conjecture : type_of% @Erdos274.herzog_schonheim := by sorry
+theorem herzog_schonheim_conjecture : type_of% @Erdos274.herzog_schonheim := by 
+  sorry
 
 end HerzogSchonheimConjecture
