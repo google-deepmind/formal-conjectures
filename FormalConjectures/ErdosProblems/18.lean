@@ -43,12 +43,7 @@ noncomputable def practicalH (n : ℕ) : ℕ :=
 /-- $h(1) = 1$: we need the single divisor {1} to represent 1. -/
 @[category test, AMS 11]
 theorem practicalH_one : practicalH 1 = 1 := by
-  simp only [practicalH, Finset.Icc_self, Finset.sup_singleton]
-  refine le_antisymm (Nat.sInf_le ⟨{1}, by simp [Nat.divisors_one], rfl, {1}, rfl.subset, by simp⟩)
-    (le_csInf ⟨1, {1}, by simp [Nat.divisors_one], rfl, {1}, rfl.subset, by simp⟩ ?_)
-  intro k ⟨D, _, hD_card, B, hB_sub, hB_sum⟩
-  exact Nat.one_le_iff_ne_zero.mpr (hD_card ▸ Finset.card_ne_zero.mpr
-    ((Finset.nonempty_iff_ne_empty.mpr fun h => by simp [h] at hB_sum).mono hB_sub))
+  norm_num [subsetSums, practicalH]
 
 /-- $h(2) = 1$: divisors are {1, 2}, each of m=1,2 needs only 1 divisor. -/
 @[category test, AMS 11]
