@@ -31,7 +31,7 @@ import FormalConjectures.Util.ProblemImports
   Journal of the London Mathematical Society 2.3 (1981): 385-396.
 -/
 
-open Filter Topology
+open Asymptotics Filter Topology
 open scoped EuclideanGeometry
 
 namespace Erdos507
@@ -52,42 +52,70 @@ noncomputable def α (n : ℕ) : ℝ :=
   sSup (minTriangleArea '' { S : Finset ℝ² | S.card = n ∧ ↑S ⊆ Metric.closedBall (0 : ℝ²) 1 })
 
 /--
+Current best lower bound [KPS82].
+-/
+noncomputable def lowerBest (n : ℕ) : ℝ := Real.log n / (n : ℝ) ^ 2
+
+/--
+The "Barrier" function: n^(-7/6) used for the best upper bound [CPZ24].
+-/
+noncomputable def upperBarrier (n : ℕ) : ℝ := 1 / (n : ℝ) ^ ((7 : ℝ) / 6)
+
+/--
 Let $\alpha(n)$ be such that every set of $n$ points in the unit disk contains three points which
 determine a triangle of area at most $\alpha(n)$. Estimate $\alpha(n)$.
 -/
 @[category research open, AMS 51]
-theorem erdos_507 :
-    α = answer(sorry) := by
+theorem erdos_507.equivalent:
+    α ~[atTop] (answer(sorry) : ℕ → ℝ) := by
+  sorry
+
+/--
+Estimate a lower bound for$\alpha(n)$.
+-/
+@[category research open, AMS 51]
+theorem erdos_507.lower:
+    let ans := (answer(sorry) : ℕ → ℝ)
+    (lowerBest ≪ ans) ∧ (ans ≪ α) := by
+  sorry
+
+/--
+Estimate an upper bound for$\alpha(n)$.
+-/
+@[category research open, AMS 51]
+theorem erdos_507.upper:
+    let ans := (answer(sorry) : ℕ → ℝ)
+    (α ≪ ans) ∧ (ans ≪ upperBarrier) := by
   sorry
 
 /--
 It is trivial that $\alpha(n) \ll 1/n$.
 -/
 @[category research solved, AMS 51]
-theorem upper_trivial : α ≪ (fun n ↦ 1 / (n : ℝ)) := by
+theorem erdos_507.variants.upper_trivial : α ≪ (fun n ↦ 1 / (n : ℝ)) := by
   sorry
 
 /--
 Erdős observed that $\alpha(n) \gg 1/n^2$.
 -/
 @[category research solved, AMS 51]
-theorem lower_erdos : α ≫ (fun n ↦ 1 / (n : ℝ) ^ 2) := by
+theorem erdos_507.variants.lower_erdos : α ≫ (fun n ↦ 1 / (n : ℝ) ^ 2) := by
   sorry
 
 /--
 Current best lower bound [KPS82].
 -/
 @[category research solved, AMS 51]
-theorem lower : (fun n ↦ Real.log n / (n : ℝ) ^ 2) ≪ α := by
+theorem erdos_507.variants.lower_kps82 : lowerBest ≪ α := by
   sorry
 
 /--
-Current best upper bound [CPZ24].
+Current best upper bound [CPZ24]: $\alpha(n) \ll n^{-7/6 + o(1)}$.
 -/
 @[category research solved, AMS 51]
-theorem upper :
+theorem erdos_507.variants.upper_cpz24 :
     ∃ (o : ℕ → ℝ), Tendsto o atTop (𝓝 0) ∧
-    α ≪ (fun n ↦ 1 / (n : ℝ) ^ ((7 : ℝ) / 6 + o n)) := by
+    α ≪ (fun n ↦ upperBarrier n * (n : ℝ) ^ o n) := by
   sorry
 
 end Erdos507
