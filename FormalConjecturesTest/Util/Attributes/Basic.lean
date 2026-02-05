@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.Attributes
+import FormalConjectures.Util.Attributes.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.NumberTheory.FLT.Basic
 import Mathlib.RingTheory.Algebraic.Defs
@@ -22,18 +22,26 @@ import Mathlib.RingTheory.Algebraic.Defs
 
 -- The `Category` and `ProblemSubject` attributes
 
+#guard_msgs in
 @[category test]
 theorem test : 1 + 1 = 2 := by
   sorry
 
+#guard_msgs in
 @[category research solved, AMS 11]
 theorem FLT : FermatLastTheorem := by
   sorry
 
+#guard_msgs in
 open scoped Real in
 @[category research open, AMS 11 33]
 theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
   sorry
+
+#guard_msgs in
+@[category research formally solved using lean4 at "https://github.com/example/formal-proof"]
+theorem a_formally_solved_problem : 2 + 2 = 4 := by
+  rfl
 
 -- The `#AMS` command
 
