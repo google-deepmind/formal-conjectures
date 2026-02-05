@@ -38,10 +38,6 @@ has been studied in several works. In particular, see:
   - *The Boxdot Conjecture and the Generalized McKinsey Axiom*, Christopher Steinsvold,
     Australasian Journal of Logic (AJL).
 
-
-Jeřábek's proof of the Boxdot Conjecture has been formalised in Lean:
-https://github.com/FormalizedFormalLogic/Foundation. Note however that the statement's formalisation
-in that repository is different to the one presented in the current file.
 -/
 
 namespace Arxiv.«1308.0994»
@@ -142,7 +138,7 @@ open KProof KTProof
 
 
 /--
-If `KProof Γ φ`, then `KTProof Γ φ`.  In other words, KT extends K.
+If `KProof Γ φ`, then `KTProof Γ φ`. In other words, KT extends K.
 -/
 @[category API, AMS 3]
 lemma KTExtendsK {Γ φ} (h : KProof Γ φ) : KTProof Γ φ :=
@@ -160,7 +156,7 @@ structure NormalModalLogic : Type where
   /-- `extK` means that if `K ⊢ φ`, then `φ ∈ thms`. That is, the logic extends system K. -/
   extK : ∀ {φ}, KProof ∅ φ → φ ∈ thms
   /-- `mp` means that if `φ ∈ thms` and `(φ ~> ψ) ∈ thms`, then `ψ ∈ thms`. That is, thms is closed
-  under modus ponens.-/
+  under modus ponens. -/
   mp : ∀ {φ ψ}, φ ∈ thms → (φ ~> ψ) ∈ thms → ψ ∈ thms
   /-- `nec` means that if `φ ∈ thms`, then `□φ ∈ thms`. Equivalently, `thms` is closed under
   necessitation -/
@@ -202,7 +198,10 @@ def KT : NormalModalLogic := by
 Boxdot Conjecture: every normal modal logic that faithfully interprets KT
 by the boxdot translation is included in KT.
 -/
-@[category research solved, AMS 3]
+@[category research formally solved using lean4 at
+  "https://github.com/FormalizedFormalLogic/Foundation", AMS 3]
+-- The formal proof was done by Mashu Noguchi et al.
+-- see linked repo for the full list of contributors
 theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L ⊆ KT := by
   sorry
 

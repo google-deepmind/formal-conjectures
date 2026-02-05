@@ -35,11 +35,11 @@ This conjecture asserts that the integers satisfying (1)
 are exactly those satisfying (2).
 
 *Reference:*
-- [A080170](https://oeis.org/A080170)
-- [A051283](https://oeis.org/A051283)
+- [A80170](https://oeis.org/A80170)
+- [A51283](https://oeis.org/A51283)
 -/
 
-namespace OeisA080170
+namespace OeisA80170
 
 /--
 The gcd of the binomial coefficients
@@ -64,4 +64,4 @@ theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
     GCDCondition k ↔ PrimePowerCondition k := by
   sorry
 
-end OeisA080170
+end OeisA80170

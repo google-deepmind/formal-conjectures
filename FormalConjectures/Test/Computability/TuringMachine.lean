@@ -18,8 +18,8 @@ import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Tactic.FinCases
 
---sanity checks for the definition of halting added in `ForMathlib`.
---These should be easy to prove
+-- sanity checks for the definition of halting added in `ForMathlib`.
+-- These should be easy to prove
 
 namespace BusyBeasverTest
 
@@ -39,9 +39,9 @@ def alwaysHaltingMachine : Machine Γ Λ := fun _ _ =>
   none
 
 def haltsAfterOne : Machine Γ Λ
-  | --If the state is `S`, change state to `T` and move head to the right
+  | -- If the state is `S`, change state to `T` and move head to the right
     .S, _ => some (Λ.T, Stmt.write default Dir.right)
-  | --If the state is already `T` then halt
+  | -- If the state is already `T` then halt
     .T, _ => none
 
 instance : alwaysHaltingMachine.IsHalting := by

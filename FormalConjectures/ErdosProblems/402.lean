@@ -64,7 +64,7 @@ There exists an effectively computable $n_0$ with the following properties:
 $\max_{i, j} \frac{a_i}{(a_i, a_j)} \ge n$.
 (ii) If equality holds then the system $\{a_1, a_2, \dots, a_n\}$ is either of the
 type $\{k, 2k, \dots, nk\}$ or of the type
-$\left\{\frac{k}{1}, \frac{k}{2}, \dots, \frac{k}{n}\right\}$.-/
+$\left\{\frac{k}{1}, \frac{k}{2}, \dots, \frac{k}{n}\right\}$. -/
 @[category research solved, AMS 11]
 theorem erdos_402.variants.szegedy_zaharescu_weak : ∀ᶠ n in atTop,
     ∀ (A : Finset ℕ), A.card = n → 0 ∉ A →

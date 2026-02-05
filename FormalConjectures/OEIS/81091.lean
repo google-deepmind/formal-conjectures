@@ -24,24 +24,24 @@ See Wagstaff (2001) where this conjecture is posed.
 *References:*
   * Samuel S. Wagstaff, Jr., [Prime Numbers with a fixed number of one bits or zero bits in their binary
      representation](http://projecteuclid.org/euclid.em/999188636), Exp. Math. vol. 10, issue 2 (2001) 267.
-  * [A081091](https://oeis.org/A081091)
+  * [A81091](https://oeis.org/A81091)
 -/
 
-namespace OeisA081091
+namespace OeisA81091
 
 /-- Primes with $m$ one bits in their binary representation. -/
 def isPrimeBitsSet (m p : ℕ) : Prop :=
   p.Prime ∧ p.bits.count true = m
 
 /--
-**Conjecture (A081091)**: There are infinite primes of the form $2^n + 2^i + 1$,
+**Conjecture (A81091)**: There are infinite primes of the form $2^n + 2^i + 1$,
 with $0 < i < n$.
 -/
 @[category research open, AMS 11]
-theorem conjectureA081091 :
+theorem conjectureA81091 :
     answer(sorry) ↔ Set.Infinite {p : ℕ | isPrimeBitsSet 3 p} := by
   sorry
 
 -- TODO(Paul-Lez): add result that for m ≥ 3, there is no prime number with precisely 2m bits, exactly two of which are zero bits.
 
-end OeisA081091
+end OeisA81091

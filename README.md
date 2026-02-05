@@ -91,6 +91,8 @@ Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
 4.  Ensure the code builds (`lake build`).
 5.  Submit a Pull Request to the main repository.
 
+For the use of AI, the [same conventions and precautions as in mathlib](https://github.com/leanprover-community/leanprover-community.github.io/blob/478f0f4b8be577d6d3f913053918551dcf68b1c6/templates/contribute/index.md?plain=1#L68-L70) apply.
+
 ## Usage, Structure & Features
 
 This is a Lean 4 project managed with `lake` and a dependency `mathlib`. You
@@ -245,7 +247,7 @@ meaningful solution of the problem is outside of the scope of this repository.
 7.  Every file should start with the following copyright header:
     ```lean
     /-
-    Copyright 2025 The Formal Conjectures Authors.
+    Copyright 2026 The Formal Conjectures Authors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

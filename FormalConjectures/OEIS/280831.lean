@@ -25,12 +25,12 @@ integers such that $x^4 + 1680 y^3 z$ is a square.
 Zhi-Wei Sun has offered a prize of 1,680 RMB for the first proof.
 
 *References:*
-- [OEIS A280831](https://oeis.org/A280831)
+- [A280831](https://oeis.org/A280831)
 - Z.-W. Sun, "Refining Lagrange's four-square theorem," *J. Number Theory* **175** (2017), 167-190.
 - Z.-W. Sun, "Refining Lagrange's four-square theorem," arXiv:1604.06723 [math.NT], 2016.
 -/
 
-namespace OEIS.A280831
+namespace OeisA280831
 
 /-- The predicate that `n` can be written as $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative
 integers such that $x^4 + 1680 y^3 z$ is a square. -/
@@ -57,4 +57,4 @@ $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative integers such that $x^4 + 
 theorem conjecture (n : ℕ) : HasSquareCondition n := by
   sorry
 
-end OEIS.A280831
+end OeisA280831

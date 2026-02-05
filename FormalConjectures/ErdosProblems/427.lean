@@ -32,8 +32,8 @@ $$
 where $p_r$ denotes the $r$th prime?
 -/
 def erdos427 : Prop := ∀ (n d : ℕ),
-    --Need to allow `n = 0` since we're counting primes from `0` rather than `1`
-    --`d` needs to be `≠ 0` since the sum is never `0`!
+    -- Need to allow `n = 0` since we're counting primes from `0` rather than `1`
+    -- `d` needs to be `≠ 0` since the sum is never `0`!
     d ≠ 0 → ∃ k, k ≠ 0 ∧
     d ∣ ∑ i ∈ Finset.Ico n (n + k), i.nth Nat.Prime
 
