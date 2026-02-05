@@ -42,7 +42,7 @@ def HasClassNumber (k n : ℕ) : Prop :=
 
 /-- $k$ is maximal among squarefree numbers such that $\mathbb{Q}(\sqrt{-k})$ has class number $n$.
 This defines the $n$-th term of A038552. -/
-def a (n k : ℕ) : Prop :=
+def IsA038552 (n k : ℕ) : Prop :=
   MaximalFor (fun m => Squarefree m ∧ HasClassNumber m n) id k
 
 /-- An integer $d < 0$ is a negative fundamental discriminant if either:
@@ -88,7 +88,7 @@ theorem hasClassNumber_163_1 : HasClassNumber 163 1 := by
 
 /-- $163$ is the largest squarefree $k$ with class number $1$. -/
 @[category test, AMS 11]
-theorem a_1_163 : a 1 163 := by
+theorem isA038552_1_163 : IsA038552 1 163 := by
   refine ⟨⟨squarefree_163, hasClassNumber_163_1⟩, ?_⟩
   intro m ⟨hm_sq, hm_class⟩ (hle : 163 ≤ m)
   have h := starkHeegner_classNumberOne
@@ -107,13 +107,13 @@ pp. 907-938.
 
 /-- All terms of A038552 are congruent to $19 \pmod{24}$. -/
 @[category research open, AMS 11]
-theorem mod_24_of_a {n k : ℕ} (h : a n k) : k % 24 = 19 := by
+theorem mod_24_of_isA038552 {n k : ℕ} (h : IsA038552 n k) : k % 24 = 19 := by
   sorry
 
 /-- A038552 also gives the largest absolute value of negative fundamental discriminant
 for each class number. -/
 @[category research open, AMS 11]
-theorem a_eq_largestNegFundDisc {n k : ℕ} (h : a n k) :
+theorem isA038552_eq_largestNegFundDisc {n k : ℕ} (h : IsA038552 n k) :
   IsLargestNegFundDiscForClassNumber (n := n) k := by
   sorry
 
