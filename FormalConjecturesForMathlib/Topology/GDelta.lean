@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
--- A standard set of imports for open problems.
-import Mathlib
-import FormalConjecturesForMathlib
-import FormalConjectures.Util.Answer
-import FormalConjectures.Util.Linters.AMSLinter
-import FormalConjectures.Util.Linters.CategoryLinter
-import FormalConjectures.Util.Linters.CopyrightLinter
+import Mathlib.Topology.Separation.GDelta
+
+/--
+A space where all singletons are Gδ sets.
+-/
+class HasGδSingletons (X : Type*) [TopologicalSpace X] : Prop where
+  isGδ_singleton : ∀ ⦃x : X⦄, IsGδ {x}
+
+/-- Singletons are Gδ in first-countable T₁ spaces. -/
+instance HasGδSingletons.of_t1Space_firstCountableTopology (X : Type*) [TopologicalSpace X]
+    [FirstCountableTopology X] [T1Space X] : HasGδSingletons X where
+  isGδ_singleton := IsGδ.singleton
