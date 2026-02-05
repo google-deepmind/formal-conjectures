@@ -84,18 +84,17 @@ theorem squarefree_163 : Squarefree (163 : ℕ) :=
 theorem hasClassNumber_163_1 : HasClassNumber 163 1 := by
   have h := starkHeegner_classNumberOne
   simp only [Set.ext_iff, Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff] at h
-  exact ((h 163).mpr (by right; right; right; right; right; right; right; right; rfl)).2
+  exact ((h 163).mpr (by decide)).2
 
 /-- $163$ is the largest squarefree $k$ with class number $1$. -/
 @[category test, AMS 11]
 theorem isA038552_1_163 : IsA038552 1 163 := by
   refine ⟨⟨squarefree_163, hasClassNumber_163_1⟩, ?_⟩
   intro m ⟨hm_sq, hm_class⟩ (hle : 163 ≤ m)
-  have h := starkHeegner_classNumberOne
-  simp only [Set.ext_iff, Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff] at h
-  have hm_in : m ∈ ({1, 2, 3, 7, 11, 19, 43, 67, 163} : Set ℕ) := (h m).mp ⟨hm_sq, hm_class⟩
-  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hm_in
-  rcases hm_in with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;> simp_all
+  have hm_in : m ∈ ({1, 2, 3, 7, 11, 19, 43, 67, 163} : Set ℕ) :=
+    starkHeegner_classNumberOne ▸ Set.mem_setOf.mpr ⟨hm_sq, hm_class⟩
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff, id] at hm_in ⊢
+  omega
 
 /-!
 The values for other class numbers in A038552 come from the papers
