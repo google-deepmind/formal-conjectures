@@ -30,16 +30,13 @@ open Set
 
 namespace Constant1a
 
-/--
-A real number satisfying a certain inequality about (auto)convolutions and $L^2$-norms of functions.
-Such numbers are related to the maximal size of Sidon sets in additive combinatorics. -/
-def IsL2Bound (C : ℝ) : Prop :=
-  ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f →  C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
-    ≤ sSup {∫ x, f (t - x) * f x | t ∈ Icc (1 / 2 : ℝ) 1}
-
 /-- **Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets**:
-The biggest real number satisfying a certain inequality about integral. -/
-noncomputable def C1a : ℝ := sSup {C : ℝ | IsL2Bound C}
+The biggest real number satisfying a certain inequality about (auto)convolutions
+and $L^2$-norms of functions.
+This number is related to the maximal size of Sidon sets in additive combinatorics. -/
+noncomputable def C1a : ℝ :=
+  sSup {C : ℝ | ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f →  C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
+    ≤ sSup {∫ x, f (t - x) * f x | t ∈ Icc (1 / 2 : ℝ) 1}}
 
 /-- The best known lower bound, proven by Matolcsi-Vinuesa in [M2010]-/
 @[category research solved, AMS 05 11 26]
