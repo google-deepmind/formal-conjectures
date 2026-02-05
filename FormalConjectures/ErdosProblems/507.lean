@@ -36,11 +36,6 @@ open scoped EuclideanGeometry
 
 namespace Erdos507
 
-
-
-/-- The unit disk in the plane. -/
-def UnitDisk : Set ℝ² := Metric.closedBall 0 1
-
 /--
 The minimum area of a triangle determined by three distinct points in a set `S`.
 -/
@@ -54,7 +49,7 @@ noncomputable def minTriangleArea (S : Finset ℝ²) : ℝ :=
 $\alpha(n)$ is the supremum of `minTriangleArea S` over all sets `S` of $n$ points in the unit disk.
 -/
 noncomputable def α (n : ℕ) : ℝ :=
-  sSup (minTriangleArea '' { S : Finset ℝ² | S.card = n ∧ ↑S ⊆ UnitDisk })
+  sSup (minTriangleArea '' { S : Finset ℝ² | S.card = n ∧ ↑S ⊆ Metric.closedBall (0 : ℝ²) 1 })
 
 /--
 Let $\alpha(n)$ be such that every set of $n$ points in the unit disk contains three points which
