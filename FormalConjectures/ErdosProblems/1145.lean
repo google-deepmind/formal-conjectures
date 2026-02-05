@@ -47,7 +47,7 @@ theorem erdos_1145 :
     0 ∉ B →
     Tendsto (fun n ↦ (Nat.nth (· ∈ A) n : ℝ) / (Nat.nth (· ∈ B) n : ℝ)) atTop (𝓝 1) →
     (∀ᶠ n in atTop, n ∈ A + B) →
-    limsup (fun n ↦ ({p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n}.ncard : ℕ∞)) atTop = ⊤ := by
+    limsup (fun n => ↑(((𝟙_A ∗ 𝟙_B) : ℕ → ℕ) n)) atTop = (⊤ : ℕ∞) := by
   sorry
 
 end Erdos1145
