@@ -43,9 +43,8 @@ that minimizes diameter must contain an equilateral triangle of side length 1? -
 @[category research open, AMS 52]
 theorem erdos_99 :
     answer(sorry) ↔ ∀ᶠ n in Filter.atTop, ∀ A : Finset ℝ²,
-      letI min_dist_one_set := {B : Finset ℝ² | B.card = n ∧ HasMinDist1 B}
-      A ∈ min_dist_one_set →
-      (IsMinOn (fun B: Finset ℝ² => diam (B : Set ℝ²)) min_dist_one_set A) →
+      A.card = n → HasMinDist1 A →
+      (IsMinOn (fun B: Finset ℝ² => diam (B : Set ℝ²)) {B : Finset ℝ² | B.card = n ∧ HasMinDist1 B} A) →
       ∃ᵉ (p ∈ A) (q ∈ A) (r ∈ A), FormsEquilateralTriangle p q r := by
 sorry
 
