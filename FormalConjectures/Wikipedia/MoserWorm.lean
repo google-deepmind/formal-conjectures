@@ -33,10 +33,11 @@ def Worms : Set (Set ℝ²) :=
 
 /--
 The set of covers is the set of (measurable) sets
-that cover every worm by translation and rotation (i.e. through an isometry).
+that cover every worm by translation and rotation.
 -/
 def WormCovers : Set (Set ℝ²) :=
-    {X | MeasurableSet X ∧ ∀ w ∈ Worms, ∃ iso, Isometry iso ∧ w ⊆ iso '' X}
+    {X | MeasurableSet X ∧ ∀ w ∈ Worms, ∃ (e : ℝ² ≃ₗᵢ[ℝ] ℝ²) (v : ℝ²),
+      e.toLinearEquiv.det = 1 ∧ w ⊆ (fun x => e x + v) '' X}
 
 /--
 A disc of radius 1 / 2 is a worm cover.
@@ -98,7 +99,7 @@ Acta Mathematica Sinica, 49 (4): 835–846, MR 2264090.
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_upper_bound :
     ∃ X : Set ℝ², MeasurableSet X ∧ Convex ℝ X ∧ volume X = 0.270911861 ∧
-      ∀ w ∈ Worms, ∃ iso, Isometry iso ∧ w ⊆ iso '' X := by
+      ∀ w ∈ Worms, ∃ (e : ℝ² ≃ₗᵢ[ℝ] ℝ²) (v : ℝ²), e.toLinearEquiv.det = 1 ∧ w ⊆ (fun x => e x + v) '' X := by
   sorry
 
 /--

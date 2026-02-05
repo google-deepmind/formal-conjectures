@@ -13,24 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import Mathlib.Topology.EMetricSpace.Defs
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«341»
+open EMetric Set
+open scoped ENNReal
+
+noncomputable section
+
+namespace Metric
+variable {X : Type*} [PseudoEMetricSpace X]
 
 /-!
-# Ben Green's Open Problem 7
+### Metric-separated sets
 
-*References:*
- - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1 Problem 7)
- - [erdosproblems.com/341](https://www.erdosproblems.com/341)
+In this section we define the predicate `Metric.IsSeparated'` for `ε`-separated sets.
 -/
 
-namespace Green7
-
--- TODO: Add Green's Open Problem 7
-
-@[category research open, AMS 11]
-theorem green_7.variant.queneau : type_of% Erdos341.erdos_341 := by
-  sorry
-
-end Green7
+/-- A set `s` is `≥ ε`-separated if its elements are pairwise at distance greater or equal to
+ `ε` from each other. -/
+def IsSeparated' (ε : ℝ≥0∞) (s : Set X) : Prop := s.Pairwise (ε ≤ edist · ·)

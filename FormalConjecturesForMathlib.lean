@@ -30,8 +30,10 @@ import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
 import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
+import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 import FormalConjecturesForMathlib.Combinatorics.Basic
 import FormalConjecturesForMathlib.Combinatorics.Ramsey
+import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
@@ -89,3 +91,5 @@ import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
 import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
+import FormalConjecturesForMathlib.Topology.Discrete
+import FormalConjecturesForMathlib.Topology.MetricSpace.MetricSeparated

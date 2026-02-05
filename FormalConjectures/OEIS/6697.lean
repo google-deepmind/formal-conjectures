@@ -27,7 +27,7 @@ $$\sum_{n \geq 0} a_n x^n = 1 + \frac{1}{1-x} + \frac{1}{(1-x)^2}\left(\frac{1}{
   \sum_{k \geq 1} x^{2^k + k - 1}\right).$$
 
 *References:*
-- [OEIS A6697](https://oeis.org/A6697)
+- [A6697](https://oeis.org/A6697)
 - J.-P. Allouche and J. Shallit, "On the subword complexity of the fixed point of a → aab, b → b,
   and generalizations," arXiv:1605.02361 [math.CO], 2016.
 - N. J. A. Sloane and Simon Plouffe, *The Encyclopedia of Integer Sequences*, Academic Press, 1995.

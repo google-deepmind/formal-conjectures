@@ -30,20 +30,25 @@ open Set
 
 namespace Erdos741
 
-/-- Let `A ⊆ ℕ` be a set such that `A + A` has positive density. Can one always decompose
-`A` as a disjoint union of two subsets `A₁` and `A₂` such that both `A₁ + A₁` and `A₂ + A₂` have
-positive density? -/
+/-- Let $A\subseteq \mathbb{N}$ be such that $A+A$ has positive density.
+Can one always decompose $A=A_1\sqcup A_2$ such that $A_1+A_1$ and $A_2+A_2$
+both have positive density?
+-/
 @[category research open, AMS 5]
 theorem erdos_741.density : answer(sorry) ↔ ∀ A : Set ℕ, HasPosDensity (A + A) → ∃ A₁ A₂,
     A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ HasPosDensity (A₁ + A₁)
-    ∧ HasPosDensity (A₂ + A₂):= by
+    ∧ HasPosDensity (A₂ + A₂) := by
   sorry
 
-/-- Let `A ⊆ ℕ` be a basis of order 2. Can one always decompose `A` as a disjoint union of two
-subsets `A₁` and `A₂` such that `A₁ + A₁` and `A₂ + A₂` cannot both have bounded gaps? -/
+
+/--
+Is there a basis $A$ of order $2$ such that if $A=A_1\sqcup A_2$ then $A_1+A_1$ and $A_2+A_2$
+cannot both have bounded gaps?
+ -/
 @[category research open, AMS 5]
-theorem erdos_741.basis : answer(sorry) ↔ ∀ A : Set ℕ, IsAddBasisOfOrder (A ∪ {0}) 2 → ∃ A₁ A₂,
-    A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ ¬ (IsSyndetic A₁ ∧ IsSyndetic A₂):= by
+theorem erdos_741.basis : answer(sorry) ↔ ∃ A : Set ℕ, IsAddBasisOfOrder (A ∪ {0}) 2 ∧ ∀ A₁ A₂,
+    A = A₁ ∪ A₂ → Disjoint A₁ A₂ → ¬ (IsSyndetic (A₁ + A₁) ∧ IsSyndetic (A₂ + A₂)) := by
   sorry
+
 
 end Erdos741
