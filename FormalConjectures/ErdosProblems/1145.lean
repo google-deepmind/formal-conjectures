@@ -55,13 +55,19 @@ A stronger form of [erdosproblems.com/28].
 @[category test, AMS 11]
 theorem erdos_1145_implies_erdos_28 : Erdos1145Prop → type_of% Erdos28.erdos_28 := by
   delta sumRep
-  use fun and K V=>V.exists_le.elim fun R L=>by_contra fun and' =>?_
-  by_cases h:K.Finite
-  · use(h.add h).infinite_compl V
-  · bound [and h h
-      (tendsto_atTop_of_eventually_const fun and p =>
-        div_self (mod_cast (ne_of_gt (p.trans ((Nat.nth_strictMono h)).le_apply))))
-      ((Filter.eventually_gt_atTop R).mono fun and =>
-        not_imp_comm.1 (L _) ∘ not_le_of_gt)]
+  intro h1145 s hs
+  rcases hs.exists_le with ⟨m, hm⟩
+  by_cases hfin : s.Finite
+  · exact absurd hs (hfin.add hfin).infinite_compl
+  · have hinf : s.Infinite := hfin
+    refine h1145 hinf hinf ?_ ?_
+    · refine Filter.Tendsto.congr' ?_ tendsto_const_nhds
+      filter_upwards [Filter.eventually_gt_atTop 0] with n hn
+      rw [div_self]
+      exact mod_cast Nat.pos_iff_ne_zero.mp <|
+        lt_of_lt_of_le hn (Nat.nth_strictMono hinf).le_apply
+    · filter_upwards [Filter.eventually_gt_atTop m] with n hn
+      by_contra hns
+      exact not_le_of_gt hn (hm n hns)
 
 end Erdos1145
