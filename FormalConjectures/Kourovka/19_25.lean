@@ -25,7 +25,7 @@ namespace Kourovka.«19.25»
 
 by B. Curtin, G. R. Pourgholi
 
-*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300)
+*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 !-/
 
 /--
