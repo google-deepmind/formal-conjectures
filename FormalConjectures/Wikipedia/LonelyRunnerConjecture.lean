@@ -52,7 +52,7 @@ The unit circle `ℝ/ℤ` seen as `AddCircle (1 : ℝ)`.
 abbrev RModZ : Type := AddCircle (1 : ℝ)
 
 /--
-Distance in `ℝ/ℤ` to the nearest integer. 
+Distance in `ℝ/ℤ` to the nearest integer.
 -/
 noncomputable def distToInt (t : RModZ) : ℝ :=
   dist t 0
@@ -62,7 +62,7 @@ For an `n`-tuple of distinct integer velocities `v₁,...,vₙ`,
 `deltaTuple v` is the maximal value of `minᵢ ‖t vᵢ‖_{ℝ/ℤ}` over time.
 -/
 noncomputable def deltaTuple {n : ℕ} (v : Fin n ↪ ℤ) : ℝ :=
-  sSup { δ : ℝ | ∃ t : RModZ, ∀ i : Fin n, δ ≤ distToInt ((v i : ℝ) • t) }
+  sSup { δ : ℝ | ∃ t : RModZ, ∀ i : Fin n, δ ≤ distToInt ((v i) • t) }
 
 /--
 The `n`th *gap of loneliness* `δₙ`: the infimum of `deltaTuple`
@@ -73,9 +73,9 @@ noncomputable def deltaGap (n : ℕ) : ℝ :=
 
 /--
 **Theorem 1.3 (Tao, 2017; arXiv:1701.02048).**
-There exists an absolute constant `c > 0` such that for all sufficiently large `n`,
+There exists am absolute constant `c > 0` such that for all sufficiently large `n`,
 the gap of loneliness satisfies
-`δₙ ≥ 1/(2n) + c * log n / (n^2 * (log log n)^2)`.
+`δₙ.  1/(2n) + c * log n / (n^2 * (log log n)^2)`.
 -/
 @[category research solved, AMS 11]
 theorem lonely_runner_conjecture.variants.tao_2017 :
