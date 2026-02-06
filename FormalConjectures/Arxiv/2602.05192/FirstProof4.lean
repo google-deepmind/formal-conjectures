@@ -33,7 +33,17 @@ namespace Arxiv.«2602.05192»
 
 variable {F : Type} [Field F]
 
-/-- The finite additive convolution of two monic polynomials of degree n. -/
+/--
+Define $p \boxplus_n q(x)$ to be the polynomial
+$$
+(p \boxplus_n q)(x) = \sum_{k=0}^n c_k x^{n-k}
+$$
+where the coefficients $c_k$ are given by the formula:
+$$
+c_k = \sum_{i+j=k} \frac{(n-i)! (n-j)!}{n! (n-k)!} a_i b_j
+$$
+for $k = 0, 1, \dots, n$.
+ -/
 noncomputable def finiteAdditiveConvolution (n : ℕ) (p q : F[X]) : F[X] :=
   let c := fun k  => ∑ ij ∈ antidiagonal (k : ℕ),
       ((n - ij.1)! * (n - ij.2)! : F) / (n ! * (n - k)! : F) *
@@ -50,11 +60,15 @@ theorem finiteAdditiveConvolution_comm (n : ℕ) (p q : F[X]) :
     (congr_arg₂ _) (sum_equiv (.prodComm _ _) (by simp [add_comm]) fun _ _ => by ring!) rfl
 
 
-/-- The quantity $Φ_n(p)$ based on the sum of the squares of terms of roots. -/
+/--
+For a monic polynomial $p(x)=\prod_{i\le n}(x- \lambda_i)$, define
+$$\Phi_n(p):=\sum_{i\le n}(\sum_{j\neq i} \frac1{\lambda_i-\lambda_j})^2$$
+and $\Phi_n(p):=\infty$ if $p$ has a multiple root.
+-/
 noncomputable def Φ (n : ℕ) (p : ℝ[X]) : ℝ≥0∞ :=
   if p.Monic ∧ p.degree = n ∧ p.roots.Nodup then
     let roots := p.roots.toFinset
-    (∑ ij ∈ roots.offDiag, (1 : ℝ) / (ij.1 - ij.2)^(2 : ℝ)).toNNReal
+    (∑ i ∈ roots, (∑ j ∈ roots.erase i, (1 : ℝ) / (i - j))^(2 : ℝ)).toNNReal
   else
     ⊤
 
