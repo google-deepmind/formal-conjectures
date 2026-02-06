@@ -29,18 +29,25 @@ open scoped Nat
 
 open Classical
 
-variable {k : Type} [Field k] (n : ℕ) [DecidableEq k]
+variable {k : Type} [Field k]
 
 /-- The finite additive convolution of two monic polynomials of degree n. -/
-def finiteAdditiveConvolution (n : ℕ) (p q : k[X]) : k[X] :=
-  let a := fun i => p.coeff (n - i)
-  let b := fun j => q.coeff (n - j)
-  Polynomial.ofFn n <| fun m  =>
-    ∑ ij ∈ antidiagonal (m : ℕ),
-      ((n - ij.1)! * (n - ij.2)! : k) /
-       (n ! * (n - m)! : k) * a ij.1 * b ij.2
+noncomputable def finiteAdditiveConvolution (n : ℕ) (p q : k[X]) : k[X] :=
+  let c := fun m  => ∑ ij ∈ antidiagonal (m : ℕ),
+      ((n - ij.1)! * (n - ij.2)! : k) / (n ! * (n - m)! : k) * (p.coeff (n - ij.1)) * (q.coeff (n - ij.2))
+  ∑ m ∈ range (n + 1),  (c m) • X^(n - m)
 
-local notation p " (⊞_"n ")" q  => finiteAdditiveConvolution n p q
+local notation p " (⊞_"n ")" q:65  => finiteAdditiveConvolution n p q
+
+@[category test, AMS 26]
+theorem finiteAdditiveConvolution_comm (n : ℕ) (p q : k[X]) :
+    p (⊞_n) q = q (⊞_n) p := by
+  show ∑ a ∈_, _= ∑ a ∈_, _
+  exact sum_congr rfl fun m hm  =>
+    (congr_arg₂ _) (sum_equiv (.prodComm _ _) (by simp [add_comm]) fun _ _ => by ring!) rfl
+
+
+variable [DecidableEq k]
 
 /-- The quantity $Φ_n(p)$ based on the sum of the squares of terms of roots. -/
 noncomputable def Φ (n : ℕ) (p : ℝ[X]) : ℝ≥0∞ :=
@@ -53,10 +60,10 @@ noncomputable def Φ (n : ℕ) (p : ℝ[X]) : ℝ≥0∞ :=
 /--
 Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $n$, then
-$$\frac1{\Phi_n(p\boxplus_n q)} \ge \frac1{\Phi_n(p)}+\frac1{\Phi_n(q)}?$$
+$$\frac{1}{\Phi_n(p\boxplus_n q)} \ge \frac{1}{\Phi_n(p)}+\frac{1}{\Phi_n(q)}?$$
 -/
 @[category research open, AMS 26]
 theorem four : answer(sorry) ↔
-    ∀ (p q : ℝ[X]) (n : ℕ), p.degree = n → q.degree = n →
+    ∀ (p q : ℝ[X]) (n : ℕ), p.degree = n → q.degree = n → p.Monic → q.Monic →
     1 / Φ n (p (⊞_n) q) ≥ 1 / Φ n p + 1 / Φ n q := by
   sorry
