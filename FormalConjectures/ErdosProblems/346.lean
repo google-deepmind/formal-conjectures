@@ -35,7 +35,7 @@ namespace Erdos346
 infinitely many terms are removed from it, `lim A (n + 1) / A n = (1 + √5) / 2`? -/
 @[category research open, AMS 11]
 theorem erdos_346 : answer(sorry) ↔ ∀ {A : ℕ → ℕ}, IsLacunary A → IsAddStronglyCompleteNatSeq A →
-    (∀ B : Set ℕ, B.Infinite → ¬ IsAddComplete (range A \ B)) →
+    (∀ B : Set ℕ, B ⊆ range A → B.Infinite → ¬ IsAddComplete (range A \ B)) →
     Tendsto (fun n => A (n + 1) / (A n : ℝ)) atTop (𝓝 ((1 + √5) / 2)) := by
   sorry
 
@@ -53,7 +53,7 @@ theorem erdos_346.f_isAddStronglyCompleteNatSeq : IsAddStronglyCompleteNatSeq f 
 /-- The sequence `f` is not complete whenever infinitely many terms are removed from it, and this
 is proved in [Gr64d]. -/
 @[category test, AMS 11]
-theorem erdos_346.f_not_isAddComplete {B : Set ℕ} (hB : B.Infinite) :
+theorem erdos_346.f_not_isAddComplete {B : Set ℕ} (h : B ⊆ range f) (hB : B.Infinite) :
     ¬ IsAddComplete (range f \ B) := by
   sorry
 
@@ -61,15 +61,15 @@ theorem erdos_346.f_not_isAddComplete {B : Set ℕ} (hB : B.Infinite) :
 then the second property is automatically satisfied. -/
 @[category research solved, AMS 11]
 theorem erdos_346.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
-    (hA : ∀ n, (1 + √5) / 2 * A n < A (n + 1)) {B : Set ℕ} (hB : B.Infinite) :
+    (hA : ∀ n, (1 + √5) / 2 * A n < A (n + 1)) {B : Set ℕ} (h : B ⊆ range A) (hB : B.Infinite) :
     ¬ IsAddComplete (range A \ B) := by
   sorry
 
 /-- Erdős and Graham [ErGr80] also say that it is not hard to construct very irregular sequences
 satisfying the aforementioned properties. -/
 @[category research solved, AMS 11]
-theorem erdos_346.example : ∃ A : ℕ → ℕ, IsLacunary A ∧ IsAddStronglyCompleteNatSeq A ∧
-    (∀ B : Set ℕ, B.Infinite → ¬ IsAddComplete (range A \ B)) ∧
+theorem erdos_346.example : ∃ A : ℕ → ℕ, IsAddStronglyCompleteNatSeq A ∧
+    (∀ B : Set ℕ, B ⊆ range A → B.Infinite → ¬ IsAddComplete (range A \ B)) ∧
     liminf (fun n => A (n + 1) / (2 : ℝ)) atTop = 1 ∧
     limsup (fun n => A (n + 1) / (A n : ENNReal)) atTop = ⊤ := by
   sorry
