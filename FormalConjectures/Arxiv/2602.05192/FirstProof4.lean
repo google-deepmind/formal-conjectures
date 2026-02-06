@@ -31,14 +31,14 @@ open Classical
 
 namespace Arxiv.«2602.05192»
 
-variable {k : Type} [Field k]
+variable {F : Type} [Field F]
 
 /-- The finite additive convolution of two monic polynomials of degree n. -/
-noncomputable def finiteAdditiveConvolution (n : ℕ) (p q : k[X]) : k[X] :=
-  let c := fun m  => ∑ ij ∈ antidiagonal (m : ℕ),
-      ((n - ij.1)! * (n - ij.2)! : k) / (n ! * (n - m)! : k) *
+noncomputable def finiteAdditiveConvolution (n : ℕ) (p q : F[X]) : F[X] :=
+  let c := fun k  => ∑ ij ∈ antidiagonal (k : ℕ),
+      ((n - ij.1)! * (n - ij.2)! : F) / (n ! * (n - k)! : F) *
       (p.coeff (n - ij.1)) * (q.coeff (n - ij.2))
-  ∑ m ∈ range (n + 1),  (c m) • X^(n - m)
+  ∑ k ∈ range (n + 1),  (c k) • X^(n - k)
 
 local notation p " (⊞_"n ")" q:65  => finiteAdditiveConvolution n p q
 
@@ -49,8 +49,6 @@ theorem finiteAdditiveConvolution_comm (n : ℕ) (p q : k[X]) :
   exact sum_congr rfl fun m hm  =>
     (congr_arg₂ _) (sum_equiv (.prodComm _ _) (by simp [add_comm]) fun _ _ => by ring!) rfl
 
-
-variable [DecidableEq k]
 
 /-- The quantity $Φ_n(p)$ based on the sum of the squares of terms of roots. -/
 noncomputable def Φ (n : ℕ) (p : ℝ[X]) : ℝ≥0∞ :=
