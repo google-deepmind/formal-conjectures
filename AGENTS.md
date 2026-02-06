@@ -42,9 +42,11 @@ end Erdos10
 
 For variants of a problem, use dotted notation within the same namespace:
 ```lean
-theorem main_conjecture : ... := by sorry
+theorem main_conjecture : ... := by
+  sorry
 
-theorem main_conjecture.variants.special_case : ... := by sorry
+theorem main_conjecture.variants.special_case : ... := by
+  sorry
 ```
 
 ### The `category` Attribute
@@ -65,10 +67,12 @@ Every theorem/lemma should have exactly one `category` attribute indicating its 
 **Examples:**
 ```lean
 @[category research open, AMS 11]
-theorem riemann_hypothesis : ... := by sorry
+theorem riemann_hypothesis : ... := by
+  sorry
 
 @[category test, AMS 11]
-theorem sanity_check : ¬ SomeBadProperty := by sorry
+theorem sanity_check : ¬ SomeBadProperty := by
+  sorry
 
 @[category API]
 lemma basic_property_of_new_definition : ... := by exact ...
@@ -89,7 +93,8 @@ Every problem should have at least one AMS subject classification number from th
 Multiple subjects can be specified:
 ```lean
 @[AMS 5 11]  -- Both combinatorics and number theory
-theorem erdos_problem : ... := by sorry
+theorem erdos_problem : ... := by
+  sorry
 ```
 
 **In VS Code:** Use `#AMS` command to list all available subjects and their numbers. Hover over a number to see its description.
@@ -135,10 +140,12 @@ Variants should be in the same file as the main conjecture:
 
 ```lean
 @[category research open, AMS 11]
-theorem main_conjecture : MainStatement := by sorry
+theorem main_conjecture : MainStatement := by
+  sorry
 
 @[category research solved, AMS 11]
-theorem main_conjecture.variants.weaker_version : WeakerStatement := by sorry
+theorem main_conjecture.variants.weaker_version : WeakerStatement := by
+  sorry
 
 @[category test, AMS 11]
 theorem main_conjecture.variants.small_cases : MainStatement with (n < 100) := by
@@ -149,23 +156,65 @@ theorem main_conjecture.variants.small_cases : MainStatement with (n < 100) := b
 
 ### Naming Conventions
 
-- **Theorems/lemmas/definitions**: `snake_case`
-  ```lean
-  theorem fermat_last_theorem : ...
-  def left_factorial (n : ℕ) := ...
-  ```
+Follow [Mathlib's naming conventions](https://leanprover-community.github.io/contribute/naming.html). Unlike Lean 3, Lean 4 uses a combination of `snake_case`, `lowerCamelCase`, and `UpperCamelCase`:
 
-- **Type classes/structures**: `PascalCase`
-  ```lean
-  class HasGδSingletons (X : Type*) [TopologicalSpace X] : Prop
-  structure MyStructure where
-  ```
+#### Capitalization Rules
 
-- **Lemma naming patterns** (follow Mathlib conventions):
-  - `add_comm`, `mul_assoc` - operation + property
-  - `Nat.factorial_pos` - type + definition + property
-  - `foo_of_bar` - derive `foo` from `bar`
-  - `bar_iff_foo` - equivalence
+1. **Terms of Props** (proofs, theorem names) use `snake_case`:
+   ```lean
+   theorem fermat_last_theorem : FermatLastTheorem := by sorry
+   lemma add_comm (a b : ℕ) : a + b = b + a := by sorry
+   ```
+
+2. **Props and Types** (inductive types, structures, classes) use `UpperCamelCase`:
+   ```lean
+   class HasGδSingletons (X : Type*) [TopologicalSpace X] : Prop
+   structure MyStructure where
+     field1 : ℕ
+     field2 : String
+   inductive Color where
+     | Red | Green | Blue
+   ```
+
+3. **Functions** are named the same way as their return values:
+   - A function `A → B → C` is named as though it's a term of type `C`
+   - If `C` is a `Prop`, use `snake_case`
+   - If `C` is a `Type`, use `lowerCamelCase`
+
+4. **All other terms of Types** use `lowerCamelCase`:
+   ```lean
+   def leftFactorial (n : ℕ) : ℕ := ∑ i in Finset.range n, i!
+   def myFunction (x : ℕ) : ℕ := x + 1
+   ```
+
+5. **UpperCamelCase in snake_case contexts**: When something named with `UpperCamelCase` is part of something named with `snake_case`, it is referenced in `lowerCamelCase`:
+   ```lean
+   theorem fermat_last_theorem : FermatLastTheorem := by sorry
+   theorem nat_factorial_pos (n : ℕ) : 0 < n! := by sorry
+   ```
+
+6. **Acronyms**: Written as a group in upper-/lowercase depending on the first character:
+   - `LE`, `LT`, `GE`, `GT` (when in `UpperCamelCase` context)
+   - `le`, `lt`, `ge`, `gt` (when in `lowerCamelCase` context)
+
+7. **Structure fields and constructors**: Follow the same rules (1-6) as top-level declarations
+
+#### Common Naming Patterns
+
+- `add_comm`, `mul_assoc` - operation + property
+- `Nat.factorial_pos` - namespace + definition + property
+- `foo_of_bar` - derive `foo` from hypothesis `bar`
+- `bar_iff_foo` - equivalence between `bar` and `foo`
+- `foo_le_bar` - inequality statement
+
+#### Exceptions
+
+Some rare exceptions exist for consistency:
+- `Ne` (not `NE`) follows `Eq`
+- Intervals: `Set.Icc`, `Set.Iic` (capital `I` despite convention)
+- Some legacy structure fields may be lowercase
+
+**Note**: In this repository, most declarations are theorems (terms of Props), so you'll primarily use `snake_case`.
 
 ### Code Quality
 
@@ -186,7 +235,7 @@ theorem main_conjecture.variants.small_cases : MainStatement with (n < 100) := b
 
 - Be specific with imports - don't import more than needed
 - In FormalConjecturesForMathlib, import only from Mathlib
-- In problem files, import `FormalConjectures.Util.ProblemImports`
+- In problem files, import only `FormalConjectures.Util.ProblemImports`
 
 ## Agent-Specific Requirements
 
@@ -318,7 +367,7 @@ Brief description if helpful.
 namespace ProblemName
 
 /-- Main definition if needed -/
-def my_definition (x : ℕ) : ℕ := x + 1
+def myDefinition (x : ℕ) : ℕ := x + 1
 
 /-- The main conjecture -/
 @[category research open, AMS 11]
