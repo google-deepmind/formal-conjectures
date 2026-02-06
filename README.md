@@ -111,7 +111,7 @@ The directory structure is organised by the type of sources of the conjectures.
 There are two special directories:
 
 -   `FormalConjectures/Util` contains utilities like the
-    [`category` attribute](./FormalConjectures/Util/Attributes.lean), the
+    [`category` attribute](./FormalConjectures/Util/Attributes/Basic.lean), the
     [`answer( )` elaborator](./FormalConjectures/Util/Answer.lean) and some
     linters.
 -   `FormalConjecturesForMathlib` contains code potentially suitable to be upstreamed to
@@ -131,6 +131,12 @@ for the following categories:
     This includes problems that have a formal proof within this repository,
     a formal proof of an equivalent statement found elsewhere, or an informal
     solution widely accepted by experts in the field.
+-   Formally solved research problem: a research problem with a formal proof.
+    Use `@[category research formally solved using <kind> at "link"]` where
+    `<kind>` is one of:
+    - `formal_conjectures`: solved in this repository (link to commit)
+    - `lean4`: solved in Lean 4 (e.g., Mathlib or another repository)
+    - `other_system`: solved in another formal system (Coq, Isabelle, etc.)
 -   Graduate level problem.
 -   Undergraduate level problem.
 -   High school level problem.
@@ -244,10 +250,11 @@ meaningful solution of the problem is outside of the scope of this repository.
     ```
     If the problem has been solved to the negative, then `P` should be replaced with
     `¬ P`.
-7.  Every file should start with the following copyright header:
+7.  Every file should start with the following copyright header (replace YYYY with
+    the current year):
     ```lean
     /-
-    Copyright 2026 The Formal Conjectures Authors.
+    Copyright YYYY The Formal Conjectures Authors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -271,7 +278,7 @@ This repo will track the monthly tagged releases of mathlib (which correspond to
 Lean releases), rather than tracking mathlib master.
 
 To minimize friction when adding problem statements that need definitions that
-are not yet in mathlib, such definitions can be added to the `ForMathlib`
+are not yet in mathlib, such definitions can be added to the `FormalConjecturesForMathlib`
 directory. This ensures that the addition of these problems to
 formal-conjectures is not locked to the mathlib release cadence.
 
