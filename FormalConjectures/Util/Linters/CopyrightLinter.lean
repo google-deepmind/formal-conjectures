@@ -66,7 +66,7 @@ def copyrightLinter : Linter where run := withSetOptionIn fun stx ↦ do
   let startingStx : Syntax := .atom (.synthetic ⟨0⟩ ⟨1⟩) <| source.extract ⟨0⟩ ⟨1⟩
   -- We don't want to output an error message when building `FormalConjectures.All`
   unless (← getFileName) == "FormalConjectures.All" || hasCorrectCopyright source do
-    Lean.Linter.logLint linter.style.copyright startingStx <|
+    Lean.Linter.logLintIf linter.style.copyright startingStx <|
     "The copyright header is incorrect. Please copy and paste the following one:\n"
       ++ correctCopyrightHeader
 
