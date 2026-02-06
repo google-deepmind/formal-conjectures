@@ -95,4 +95,14 @@ theorem test_1 : 1 + 1 = 3 := by
 theorem test_3 : 1 + 1 = 3 := by
   sorry
 
+/--
+warning: Duplicate category attribute. There should be only one category attribute per declaration
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
+#guard_msgs in
+@[category research solved, category test]
+theorem test_duplicate_category : 1 + 1 = 2 := by
+  rfl
+
 end CategoryLinter
