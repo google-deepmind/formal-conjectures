@@ -32,8 +32,8 @@ register_option linter.style.answer_attribute : Bool := {
 }
 
 namespace AnswerLinter
--- Helper to check for arguments (h : True)
 
+-- Helper to check for arguments (h : True)
 def contains_early_args (stx : Syntax) : CommandElabM Bool := do
   let decl := stx[1]
   if decl.getKind != ``Lean.Parser.Command.theorem then return false
