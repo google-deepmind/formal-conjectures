@@ -62,6 +62,12 @@ noncomputable def Φ (n : ℕ) (p : ℝ[X]) : ℝ≥0∞ :=
 Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $n$, then
 $$\frac{1}{\Phi_n(p\boxplus_n q)} \ge \frac{1}{\Phi_n(p)}+\frac{1}{\Phi_n(q)}?$$
+
+Note: while no proof of this is published yet, the authors of
+[arxiv/2602.05192](https://arxiv.org/abs/2602.05192) announced that a proof will be released
+on 2026-02-13
+
+TODO(firsching): update category and remove Note when proof is published.
 -/
 @[category research open, AMS 26]
 theorem four : answer(sorry) ↔
