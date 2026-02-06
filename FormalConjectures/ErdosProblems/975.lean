@@ -32,7 +32,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Real Polynomial
-open scoped ArithmeticFunction Topology
+open scoped ArithmeticFunction.sigma Topology
 
 namespace Erdos975
 

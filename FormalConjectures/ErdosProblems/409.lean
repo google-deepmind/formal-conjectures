@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/409](https://www.erdosproblems.com/409)
 -/
 
-open scoped Topology ArithmeticFunction Nat
+open scoped Topology ArithmeticFunction.sigma Nat
 open Filter
 
 namespace Erdos409

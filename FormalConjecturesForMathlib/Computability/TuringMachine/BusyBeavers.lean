@@ -210,19 +210,18 @@ lemma not_isHalting_of_forall_isSome (H : ∀ l s, ∃ a b, M l s = some (some a
     obtain ⟨e, f, hef⟩ := H c (Tape.move d.dir (Tape.write d.symbol b)).head
     simp [multiStep_succ, multiStep_succ, hab, step, hcd, hef]
 
-noncomputable def haltingNumber : PartENat :=
+noncomputable def haltingNumber : ENat :=
   -- The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
   -- If no such `n` exists then this is equal to `⊤`.
-  sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
+  sInf {(n : ENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
 
 theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some a)
     (ha' : M.multiStep (init []) (n + 1) = none) :
     M.haltingNumber = n := by
   refine IsGLB.sInf_eq (IsLeast.isGLB ⟨⟨n, by rwa [HaltsAfter], rfl⟩, fun m ⟨k, _, _⟩ ↦ ?_⟩)
-  induction m using PartENat.casesOn
+  cases m
   · exact le_top
-  · refine ⟨fun h ↦ h, fun _ ↦ ?_⟩
-    by_contra! hc
+  · by_contra! hc
     simp_all [multiStep_eq_none_mono ‹_› (show k + 1 ≤ n by aesop)]
 
 end Machine

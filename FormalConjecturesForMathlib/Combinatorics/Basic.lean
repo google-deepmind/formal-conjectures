@@ -35,12 +35,8 @@ def IsSyndetic (A : Set ℕ) : Prop := ∃ p, ∀ n, (A ∩ .Icc n (n + p)).None
 
 /-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
 coincidences forced by the commutativity of addition. -/
-def IsSidon {S : Type*} [Membership α S] (A : S) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
+def IsSidon (A : Set α) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
   i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)
-
-@[simp, push_cast]
-theorem coe {S : Type*} [SetLike S α] {A : S} : IsSidon (A : Set α) ↔ IsSidon A := by
-  simp [IsSidon]
 
 namespace Set
 
@@ -49,7 +45,7 @@ lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
     (A ∩ Y).ncard ≤ 2 := by
   simp [IsAPOfLength, IsAPOfLengthWith] at hY
   obtain ⟨hc, ⟨a, d, hY⟩⟩ := hY
-  have hY_card : Y.ncard = 3 := by simp [ncard, encard, hc]
+  have hY_card : Y.ncard = 3 := by simp [ncard, hc]
   by_contra! h
   have hss : Y ⊆ A ∩ Y := by
     have hY_fin : Finite Y := finite_of_ncard_ne_zero (by linarith)
@@ -128,26 +124,15 @@ end Set
 
 namespace Finset
 
--- TODO: remove once https://github.com/leanprover-community/mathlib4/pull/28241 is merged
-@[simp, push_cast]
-theorem isSidon_toSet {A : Finset α} : IsSidon A.toSet ↔ IsSidon A := by
-  simp [IsSidon]
-
-instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon A) :=
+instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) :=
   decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
 
 /-- The maximum size of a Sidon set in the supplied `Finset`. -/
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
-  (A.powerset.filter IsSidon).sup Finset.card
-
-theorem IsSidon.insert {A : Finset α} {m : α} [DecidableEq α] [IsRightCancelAdd α]
-    [IsLeftCancelAdd α] (hA : IsSidon A) :
-    IsSidon (A ∪ {m}) ↔ (m ∈ A ∨ ∀ᵉ (a ∈ A) (b ∈ A), m + m ≠ a + b ∧ ∀ c ∈ A, m + a ≠ b + c) := by
-  rw [← isSidon_toSet, coe_union, coe_singleton, (isSidon_toSet.2 hA).insert]
-  simp
+  (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).sup Finset.card
 
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
-theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A) {s : ℕ}
+theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
     IsSidon (A ∪ {s}) := by
   have h₁ {a b c : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A) :
@@ -155,16 +140,16 @@ theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A
   have : s ∉ A := by
     exact mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
       linarith [A.le_max' _ ha]
-  exact (Finset.IsSidon.insert hA).2 <| by simpa [this] using fun a ha b hb ↦
+  exact (IsSidon.insert hA).2 <| by simpa [this] using fun a ha b hb ↦
     ⟨by linarith [A.le_max' _ ha, A.le_max' _ hb], fun c hc ↦ by linarith [h₁ hc hb ha]⟩
 
-theorem IsSidon.exists_insert {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A) :
+theorem IsSidon.exists_insert {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) :
     ∃ m ∉ A, IsSidon (A ∪ {m}) := by
   refine ⟨2 * A.max' h + 1, ?_, insert_ge_max' h hA le_rfl⟩
   exact mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
     linarith [A.le_max' _ ha]
 
-theorem IsSidon.exists_insert_ge {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A) (s : ℕ) :
+theorem IsSidon.exists_insert_ge {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) (s : ℕ) :
     ∃ m ≥ s, m ∉ A ∧ IsSidon (A ∪ {m}) := by
   refine ⟨if s ≥ 2 * A.max' h + 1 then s else 2 * A.max' h + 1, ?_, ?_, ?_⟩
   · split_ifs <;> linarith

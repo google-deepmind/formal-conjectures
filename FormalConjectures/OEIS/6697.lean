@@ -100,8 +100,9 @@ $$\sum_{n \geq 0} a_n x^n = 1 + \frac{1}{1-x} + \frac{1}{(1-x)^2}\left(\frac{1}{
 Equivalently, a(n) equals the n-th coefficient of this generating function.
 -/
 @[category research open, AMS 68]
-theorem conjecture : ∀ n, a n =
-    coeff ℚ n (1 + (1 - X)⁻¹ + (1 - X)⁻¹ ^ 2 * ((1 - X)⁻¹ - ∑' k, X ^ (2 ^ (k + 1) + k))) := by
+theorem conjecture (n : ℕ) :
+    a n = coeff (R := ℚ) n
+      (1 + (1 - X)⁻¹ + (1 - X)⁻¹ ^ 2 * ((1 - X)⁻¹ - ∑' k, X ^ (2 ^ (k + 1) + k))) := by
   sorry
 
 end OeisA6697

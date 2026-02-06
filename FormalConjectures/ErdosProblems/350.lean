@@ -37,12 +37,12 @@ theorem decidableDistinctSubsetSums_1_2 : DecidableDistinctSubsetSums {1, 2} := 
   rw [DecidableDistinctSubsetSums] ; decide
 
 @[category test, AMS 5 11]
-theorem distinctSubsetSums_1_2 : DistinctSubsetSums ({1, 2} : Finset ℕ).toSet := by
-  rw [DistinctSubsetSums]
+theorem distinctSubsetSums_1_2 : DistinctSubsetSums ({1, 2} : Set ℕ) := by
+  simp only [DistinctSubsetSums, Set.Pairwise, Set.mem_setOf_eq, ne_eq, id_eq]
   intro x hx y hy hxy
-  simp_rw [Finset.coe_subset, ←Finset.mem_powerset, Finset.setOf_mem, Finset.mem_coe] at *
+  -- FIXME: Why is `norm_cast` useless here?
+  simp_rw [← Finset.coe_singleton, ← Finset.coe_insert, Finset.coe_subset, ←Finset.mem_powerset] at *
   fin_cases hx <;> fin_cases hy <;> simp_all
-
 
 /-- Small sanity check: the two predicates are saying the same thing. -/
 @[category API, AMS 5 11]

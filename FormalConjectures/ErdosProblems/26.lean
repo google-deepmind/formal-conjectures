@@ -45,7 +45,8 @@ theorem not_isThick_of_geom_one_lt (r : ℕ) (hr : r > 1) : ¬IsThick fun n : �
 
 @[category test, AMS 11]
 theorem isThick_const {ι : Type*} [Infinite ι] (r : ℕ) (h : r > 0) : IsThick fun _ : ι ↦ r := by
-  field_simp [IsThick, h, summable_const_iff]
+  simp only [IsThick, one_div, summable_const_iff, inv_eq_zero, Nat.cast_eq_zero]
+  exact Nat.ne_zero_of_lt h
 
 /-- The set of multiples of a sequence $(a_i)$ is $\{na_i | n \in \mathbb{N}, i\}$. -/
 def MultiplesOf {ι : Type*} (A : ι → ℕ) : Set ℕ := Set.range fun (n, i) ↦ n * A i
@@ -69,7 +70,8 @@ theorem isBehrend_of_contains_one {ι : Type*} (A : ι → ℕ) (h : 1 ∈ Set.r
     IsBehrend A := by
   rw [IsBehrend, Set.HasDensity]
   exact tendsto_atTop_of_eventually_const (i₀ := 1) fun n hn ↦ by
-    field_simp [multiplesOf_eq_univ A h, Set.partialDensity]
+    simp [multiplesOf_eq_univ A h, Set.partialDensity]
+    lia
 
 @[category test, AMS 11]
 theorem isWeaklyBehrend_of_ge_one {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε : 1 ≤ ε) :

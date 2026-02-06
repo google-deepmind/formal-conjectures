@@ -34,7 +34,7 @@ namespace Erdos153
 /-- Define `f n` to be the minimum of
 `∑ (i : Set.Ico 1 ((A + A).card), (s i - s (i - 1)) ^ 2 / n` as `A` ranges over all Sidon sets
 of size `n`, where `s` is an order embedding from `Fin n` into `A`. -/
-noncomputable def f (n : ℕ) : ℝ := ⨅ A : {A : Finset ℕ | A.card = n ∧ IsSidon A},
+noncomputable def f (n : ℕ) : ℝ := ⨅ A : {A : Finset ℕ | A.card = n ∧ IsSidon (A : Set ℕ)},
   let s := (A.1 + A).orderIsoOfFin rfl
   ∑ i : Set.Ico 1 ((A.1 + A).card), (s ⟨i, i.2.2⟩ - s ⟨i - 1, by grind⟩) ^ 2 / (n : ℝ)
 

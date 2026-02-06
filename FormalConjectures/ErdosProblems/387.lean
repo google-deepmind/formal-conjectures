@@ -59,7 +59,7 @@ theorem erdos_387.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n) : ∃ d
     rw [← Nat.gcd_mul_right]
     refine Nat.le_of_dvd ?_ (Nat.dvd_gcd ⟨(n - 1).choose (k - 1), ?_⟩ (dvd_mul_right _ _))
     · exact Nat.gcd_pos_of_pos_right _ (by positivity)
-    · cases n <;> cases k <;> simp_all [Nat.succ_mul_choose_eq]
+    · cases n <;> cases k <;> simp_all [Nat.add_one_mul_choose_eq]
   · exact Nat.le_of_dvd (by linarith) (gcd_dvd_right _ _)
 
 /-- Is it true for any `c < 1` and all `n` sufficiently large, for all `1 ≤ k < n`, `n.choose k`

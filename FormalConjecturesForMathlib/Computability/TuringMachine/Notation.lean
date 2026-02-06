@@ -94,7 +94,7 @@ private def Nat.toStateSyntax (n : Nat) (stateName : Name) : TermElabM Term := d
 /-- `String.toStmtSyntax s stateName` parses a component of a Turing machine string representation
 and outputs the syntax of the corresponding `(state, statement) : State × Stmt` pair. -/
 private def String.toStmtSyntax (s : String) (stateName : Name) (numStates : Nat) : TermElabM Term := do
-  let [c_symbol, c_dir, c_state] := s.data |
+  let [c_symbol, c_dir, c_state] := s.toList |
     throwError m!"Invalid transition encoding: {s} should be 3 characters long."
   if c_symbol = '-' ∧ c_dir = '-' ∧ c_state = '-' then
     `(none)
@@ -107,9 +107,9 @@ private def String.toStmtSyntax (s : String) (stateName : Name) (numStates : Nat
 
 end Util
 
-private def String.nextn (s : String) (p : Pos) : Nat → Pos
+private def String.nextn (s : String) (p : Pos.Raw) : Nat → Pos.Raw
   | 0 => p
-  | n + 1 => s.next (s.nextn p n)
+  | n + 1 => Pos.Raw.next s (s.nextn p n)
 
 /--
 Take as input a list of strings and return an array of `matchAltExpr` syntaxes
@@ -130,7 +130,7 @@ def mkMachineMatchAltExpr (L : List String) (stateName : Name) (numSymbols numSt
     Array.range numSymbols |>.mapM fun symbolIdx ↦ do
       let pos1 := s.nextn ⟨0⟩ (3 * symbolIdx)
       let pos2 := s.nextn ⟨0⟩ (3 * (symbolIdx + 1))
-      let s_first : Term ← (s.extract pos1 pos2).toStmtSyntax stateName numStates
+      let s_first : Term ← (String.Pos.Raw.extract s pos1 pos2).toStmtSyntax stateName numStates
       `(matchAltExpr| | $(← i.toStateSyntax stateName), ($(quote symbolIdx)) => $s_first)
 
   return moves.flatten

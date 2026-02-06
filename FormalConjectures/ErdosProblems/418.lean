@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 Reviewed by @b-mehta on 2025-05-27
 -/
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos418
 

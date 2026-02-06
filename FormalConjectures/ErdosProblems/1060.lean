@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Asymptotics Finset Filter Real
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos1060
 
