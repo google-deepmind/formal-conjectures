@@ -21,23 +21,13 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/9](https://www.erdosproblems.com/9)
 -/
-open scoped Classical
-
-variable {α : Type*} [AddCommMonoid α]
-
-/--
-Define the largest possible size of a subset of a finset `s` that does not contain
-any non-trivial `k`-term arithmetic progression.
--/
-noncomputable def Finset.maxAPFreeCard (k : ℕ) (s : Finset α) : ℕ :=
-  (s.powerset.filter (fun t ↦ t.toSet.IsAPOfLengthFree k)).sup Finset.card
 
 namespace Erdos9
 
 /--
 The set of odd numbers that cannot be expressed as a prime plus two powers of 2.
 -/
-def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), p.Prime ∧ n = p + 2 ^ k + 2 ^ l }
+def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧ n = p + 2 ^ k + 2 ^ l }
 
 
 @[category test, AMS 5 11]
