@@ -29,6 +29,8 @@ open scoped Nat
 
 open Classical
 
+namespace Arxiv.«2602.05192»
+
 variable {k : Type} [Field k]
 
 /-- The finite additive convolution of two monic polynomials of degree n. -/
@@ -74,3 +76,5 @@ theorem four : answer(sorry) ↔
     ∀ (p q : ℝ[X]) (n : ℕ), p.degree = n → q.degree = n → p.Monic → q.Monic →
     1 / Φ n (p (⊞_n) q) ≥ 1 / Φ n p + 1 / Φ n q := by
   sorry
+
+end Arxiv.«2602.05192»
