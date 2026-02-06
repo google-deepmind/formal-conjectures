@@ -23,13 +23,13 @@ Let $A \subset \mathbb{Z}$ be a set of size $n$. For how many $\theta \in \mathb
 must we have $\sum_{a \in A} \cos(2\pi a\theta) = 0$?
 
 It is known that there are sets $A$ for which the number of zeros is at most $C(n \log n)^{2/3}$
-(Juškevičius & Sahasrabudhe, 2020). For $n \ge 2$, every set $A$ has at least $(\log \log n)^c$
-zeros (Bedert, 2025).
+(Juškevičius & Sahasrabudhe, 2020). For sufficiently large $n$, every set $A$ has at least
+$(\log \log n)^c$ zeros (Bedert, 2025).
 
-*Reference:*
-- [Gr24] [Ben Green's Open Problem 82](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.82)
-- Benjamin Bedert, "An improved lower bound for a problem of Littlewood on the zeros of cosine polynomials", arXiv:2407.16075 (2025)
-- Juškevičius & Sahasrabudhe, "Cosine polynomials with few zeros", arXiv:2005.01695 (2020)
+*References:*
+- [Ben Green's Open Problem 82](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.82)
+- [An improved lower bound for a problem of Littlewood on the zeros of cosine polynomials](https://arxiv.org/abs/2407.16075) (Bedert, 2025)
+- [Cosine polynomials with few zeros](https://arxiv.org/abs/2005.01695) (Juškevičius & Sahasrabudhe, 2020)
 -/
 
 open Real Set
@@ -37,35 +37,32 @@ open scoped Finset
 
 namespace Green82
 
-/--
-Let $A \subset \mathbb{Z}$ be a set of size $n$. For how many $\theta \in \mathbb{R}/\mathbb{Z}$
-must we have $\sum_{a \in A} \cos(2\pi a\theta) = 0$?
--/
+/-- The minimum number of zeros in $[0,1)$ of $\sum_{a \in A} \cos(2\pi a\theta)$
+over all sets $A \subset \mathbb{Z}$ of size $n$. -/
+noncomputable def minZeros (n : ℕ) : ℕ∞ :=
+  ⨅ A : {A : Finset ℤ // A.card = n},
+    ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A.val, cos (2 * π * a * θ) = 0} : Set ℝ).ncard
+
+/-- Let $A \subset \mathbb{Z}$ be a set of size $n$. For how many $\theta \in \mathbb{R}/\mathbb{Z}$
+must we have $\sum_{a \in A} \cos(2\pi a\theta) = 0$? The answer is `minZeros n`. -/
 @[category research open, AMS 11 42]
-theorem green_82 :
-    answer(sorry) ↔ ∃ f : ℕ → ℕ, ∀ n ≥ 1, ∀ A : Finset ℤ, A.card = n →
-      f n ≤ ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard := by
+theorem green_82 : ∀ n ≥ 1, answer(sorry) = minZeros n := by
   sorry
 
-/--
-For $n \ge 2$, there exists constant $c > 0$ such that every set $A \subset \mathbb{Z}$ with $|A| = n$
-has at least $(\log \log n)^c$ zeros [Bedert 2025].
--/
+/-- Lower bound: every set has at least $(\log \log n)^c$ zeros. -/
 @[category research solved, AMS 11 42]
 theorem green_82_lower_bound :
-    ∃ c > 0, ∀ n ≥ 2, ∀ A : Finset ℤ, A.card = n →
-      Real.log (Real.log n) ^ c ≤ ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard := by
+    ∃ c > 0, ∃ n₀, ∀ n ≥ n₀, ∀ A : Finset ℤ, A.card = n →
+      (⌊Real.log (Real.log n) ^ c⌋₊ : ℕ∞) ≤
+      ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard := by
   sorry
 
-/--
-There exists constant $C$ such that for all $n$, there exists $A \subset \mathbb{Z}$ with $|A| = n$
-having at most $C(n \log n)^{2/3}$ zeros [Juškevičius & Sahasrabudhe 2020].
--/
+/-- Upper bound: there exists $A$ with at most $C(n \log n)^{2/3}$ zeros. -/
 @[category research solved, AMS 11 42]
 theorem green_82_upper_bound :
-    ∃ C, ∀ n, ∃ A : Finset ℤ, A.card = n ∧
-      (({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard : ℝ) ≤
-      C * (n * Real.log n) ^ (2 / 3 : ℝ) := by
+    ∃ C > 0, ∀ n ≥ 1, ∃ A : Finset ℤ, A.card = n ∧
+      ({θ : ℝ | θ ∈ Ico 0 1 ∧ ∑ a ∈ A, cos (2 * π * a * θ) = 0} : Set ℝ).ncard ≤
+      (⌊C * (n * Real.log n) ^ (2 / 3 : ℝ)⌋₊ : ℕ∞) := by
   sorry
 
 end Green82
