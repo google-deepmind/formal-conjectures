@@ -43,7 +43,7 @@ noncomputable def finiteAdditiveConvolution (n : ℕ) (p q : F[X]) : F[X] :=
 local notation p " (⊞_"n ")" q:65  => finiteAdditiveConvolution n p q
 
 @[category test, AMS 26]
-theorem finiteAdditiveConvolution_comm (n : ℕ) (p q : k[X]) :
+theorem finiteAdditiveConvolution_comm (n : ℕ) (p q : F[X]) :
     p (⊞_n) q = q (⊞_n) p := by
   show ∑ a ∈_, _= ∑ a ∈_, _
   exact sum_congr rfl fun m hm  =>
@@ -54,7 +54,7 @@ theorem finiteAdditiveConvolution_comm (n : ℕ) (p q : k[X]) :
 noncomputable def Φ (n : ℕ) (p : ℝ[X]) : ℝ≥0∞ :=
   if p.Monic ∧ p.degree = n ∧ p.roots.Nodup then
     let roots := p.roots.toFinset
-    (∑ i ∈ roots, (∑ j ∈ roots.erase i, (1 : ℝ) / (i - j))^(2 : ℝ)).toNNReal
+    (∑ ij ∈ roots.offDiag, (1 : ℝ) / (ij.1 - ij.2)^(2 : ℝ)).toNNReal
   else
     ⊤
 
@@ -71,7 +71,7 @@ TODO(firsching): update category and remove Note when proof is published.
 -/
 @[category research open, AMS 26]
 theorem four : answer(sorry) ↔
-    ∀ (p q : ℝ[X]) (n : ℕ), p.degree = n → q.degree = n → p.Monic → q.Monic →
+    ∀ (p q : ℝ[X]) (n : ℕ), p.degree = n → p.roots.card = n → q.degree = n → p.Monic → q.Monic →
     1 / Φ n (p (⊞_n) q) ≥ 1 / Φ n p + 1 / Φ n q := by
   sorry
 
