@@ -34,7 +34,8 @@ variable {k : Type} [Field k]
 /-- The finite additive convolution of two monic polynomials of degree n. -/
 noncomputable def finiteAdditiveConvolution (n : ℕ) (p q : k[X]) : k[X] :=
   let c := fun m  => ∑ ij ∈ antidiagonal (m : ℕ),
-      ((n - ij.1)! * (n - ij.2)! : k) / (n ! * (n - m)! : k) * (p.coeff (n - ij.1)) * (q.coeff (n - ij.2))
+      ((n - ij.1)! * (n - ij.2)! : k) / (n ! * (n - m)! : k) *
+      (p.coeff (n - ij.1)) * (q.coeff (n - ij.2))
   ∑ m ∈ range (n + 1),  (c m) • X^(n - m)
 
 local notation p " (⊞_"n ")" q:65  => finiteAdditiveConvolution n p q
