@@ -45,8 +45,7 @@ The notion of a well-distributed sequence was introduced by Hlawka and Petersen 
 def IsWellDistributed (x : ℕ → ℝ) : Prop :=
   ∀ ε > 0, ∃ K : ℕ, ∀ k ≥ K, ∀ n : ℕ,
   ∀ a b, 0 ≤ a → a ≤ b → b ≤ 1 →
-    let I := Ico a b
-    let count := (Finset.Ioc n (n + k)).filter (fun m ↦ x m ∈ I)
+    let count := (Finset.Ioc n (n + k)).filter (fun m ↦ x m ∈ Ico a b)
     abs ((count.card : ℝ) - (b - a) * k) < ε * k
 
 /--
