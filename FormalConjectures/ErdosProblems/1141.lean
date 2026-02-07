@@ -59,10 +59,10 @@ theorem erdos_1141 :
 
 @[category test, AMS 11]
 example : ¬ Erdos1141Prop 968 := by
-  native_decide
+  decide +native
 
 @[category test, AMS 11]
 example : Erdos1141Prop 1722 := by
-  native_decide
+  decide +native
 
 end Erdos1141
