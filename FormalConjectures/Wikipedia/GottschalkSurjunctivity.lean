@@ -43,15 +43,16 @@ rather than a `MulAction` instance to avoid conflict with the pointwise `Pi.inst
 def shift {A : Type*} (g : G) (x : G → A) : G → A :=
   fun h => x (g⁻¹ * h)
 
-@[simp]
+@[simp, category API, AMS 20 37]
 theorem shift_apply {A : Type*} (g : G) (x : G → A) (h : G) :
     shift G g x h = x (g⁻¹ * h) := rfl
 
-@[simp]
+@[simp, category API, AMS 20 37]
 theorem shift_one {A : Type*} (x : G → A) :
     shift G 1 x = x := by
   ext h; simp [shift]
 
+@[category API, AMS 20 37]
 theorem shift_mul {A : Type*} (g₁ g₂ : G) (x : G → A) :
     shift G (g₁ * g₂) x = shift G g₁ (shift G g₂ x) := by
   ext h; simp [shift, mul_assoc]
@@ -67,9 +68,9 @@ continuous, shift-equivariant map `(G → A) → (G → A)` is also surjective.
 Continuity is with respect to the product topology on `G → A` where `A` carries the
 discrete topology. -/
 def IsSurjunctive : Prop :=
-  ∀ (A : Type) [Fintype A] [Nonempty A]
+  ∀ (A : Type) [Fintype A] [Nonempty A] [TopologicalSpace A] [DiscreteTopology A]
     (τ : (G → A) → (G → A)),
-    @Continuous (G → A) (G → A) Pi.topologicalSpace Pi.topologicalSpace τ →
+    Continuous τ →
     IsShiftEquivariant G τ →
     Function.Injective τ →
     Function.Surjective τ
