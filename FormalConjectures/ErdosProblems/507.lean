@@ -40,11 +40,9 @@ namespace Erdos507
 The minimum area of a triangle determined by three distinct points in a set `S`.
 -/
 noncomputable def minTriangleArea (S : Finset ℝ²) : ℝ :=
-  let triples := S ×ˢ S ×ˢ S
-  let validTriples := triples.filter fun ⟨p, q, r⟩ => p ≠ q ∧ q ≠ r ∧ p ≠ r ∧
-    ¬ Collinear ℝ {p, q, r}
-  let areas := validTriples.image fun ⟨p, q, r⟩ => EuclideanGeometry.triangle_area p q r
-  (areas.min).getD 0 -- Return the minimum, defaulting to 0 if the set is empty (n < 3)
+  let triangles : Set (Affine.Triangle ℝ ℝ²) := { t | ∀ i, t.points i ∈ S }
+  sInf ((fun t => EuclideanGeometry.triangle_area
+    (t.points 0) (t.points 1) (t.points 2)) '' triangles)
 
 /--
 $\alpha(n)$ is the supremum of `minTriangleArea S` over all sets `S` of $n$ points in the unit disk.
