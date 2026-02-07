@@ -36,21 +36,13 @@ The property that $n-k^2$ is prime for all $k$ with $(n,k)=1$ and $k^2 < n$.
 def Erdos1141Prop (n : ℕ) : Prop :=
   ∀ k, k ^ 2 < n → Coprime n k → (n - k ^ 2).Prime
 
-instance (n : ℕ) : Decidable (Erdos1141Prop n) := by
-  cases n with
-  | zero =>
-    apply isTrue
-    intro k h
-    contradiction
-  | succ n' =>
-    let bound := n'.sqrt
-    let P (k : ℕ) := Nat.Coprime (n' + 1) k → (n' + 1 - k ^ 2).Prime
-    have : DecidablePred P := inferInstance
-    apply decidable_of_iff (∀ k ∈ Finset.range (bound + 1), P k)
-    apply forall_congr'
-    intro k
-    dsimp [P, bound]
-    rw [Finset.mem_range, Nat.lt_succ_iff, Nat.lt_succ_iff, Nat.pow_two, ← Nat.le_sqrt]
+instance (n : ℕ) : Decidable (Erdos1141Prop n) :=
+  decidable_of_iff (∀ k ≤ .sqrt (n - 1), Coprime n k → (n - k ^ 2).Prime) <| by
+    cases n with
+    | zero => simp [Erdos1141Prop]
+    | succ n' =>
+      simp [Erdos1141Prop, Nat.lt_succ_iff, le_sqrt, pow_two]
+
 /--
 Are there infinitely many $n$ such that $n-k^2$ is prime for all $k$ with $(n,k)=1$ and $k^2 < n$?
 
