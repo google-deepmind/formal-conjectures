@@ -42,10 +42,6 @@ def commutator_n (x y : G) : ℕ → G
 def IsEngel : Prop :=
   ∀ x y : G, ∃ n : ℕ, commutator_n (G := G) x y n = 1
 
-/-- A torsion-free group: no non-identity element has finite order. -/
-def IsTorsionFree : Prop :=
-  ∀ x : G, x ≠ 1 → ∀ n : ℕ, 0 < n → x ^ n ≠ 1
-
 /-- A group is orderable if it admits a bi-invariant strict total order. -/
 def IsOrderable : Prop :=
   ∃ r : G → G → Prop,
@@ -58,9 +54,10 @@ def IsOrderable : Prop :=
 
 Does every torsion-free Engel group admit a bi-invariant linear order?
 -/
-@[category research open, AMS 20]
+@[category research solved, AMS 20]
 theorem kourovka_problem_2_24 :
-    answer(sorry) ↔ ∀ (H : Type*) [Group H], IsEngel H → IsTorsionFree H → IsOrderable H := by
+    answer(sorry) ↔
+      ∀ (H : Type*) [Group H], IsEngel H → Monoid.IsTorsionFree H → IsOrderable H := by
   sorry
 
 end KourovkaProblem2_24
