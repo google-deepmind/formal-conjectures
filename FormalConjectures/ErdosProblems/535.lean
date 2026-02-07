@@ -38,8 +38,8 @@ def ConstantPairwiseGcd (S : Finset ℕ) : Prop :=
 
 /-- A finite set has constant pairwise GCD and the quotients are coprime to that GCD. -/
 def ConstantPairwiseGcdCoprime (S : Finset ℕ) : Prop :=
-  ∃ d, (S : Set ℕ).Pairwise (fun a b => Nat.gcd a b = d) ∧
-    ∀ a ∈ S, Nat.gcd (a / d) d = 1
+  ∃ d, 0 < d ∧ (S : Set ℕ).Pairwise (fun a b => Nat.gcd a b = d) ∧
+    ∀ a ∈ S, ∃ b, a = d * b ∧ Nat.gcd b d = 1
 
 /-- No `r`-subset has constant pairwise GCD. -/
 def NoConstantPairwiseGcdSubsets (r : ℕ) (A : Finset ℕ) : Prop :=
@@ -49,9 +49,9 @@ def NoConstantPairwiseGcdSubsets (r : ℕ) (A : Finset ℕ) : Prop :=
 def NoConstantPairwiseGcdCoprimeSubsets (r : ℕ) (A : Finset ℕ) : Prop :=
   ∀ S ⊆ A, S.card = r → ¬ ConstantPairwiseGcdCoprime S
 
-/-- All elements of `A` have exactly `k` distinct prime factors. -/
+/-- All elements of `A` are positive and have exactly `k` distinct prime factors. -/
 def AllOmega (k : ℕ) (A : Finset ℕ) : Prop :=
-  ∀ a ∈ A, ω a = k
+  ∀ a ∈ A, 1 ≤ a ∧ ω a = k
 
 /-- `f r N` is the maximum size of a subset `A ⊆ {1,…,N}` such that no `r`-element
 subset of `A` has constant pairwise GCD. -/
