@@ -35,8 +35,9 @@ open SimpleGraph Asymptotics Filter
 Is $\mathrm{AR}(n, C_k) = \left(\frac{k-2}{2} + \frac{1}{k-1}\right)n + O(1)$?
 -/
 @[category research open, AMS 05]
-theorem erdos_1105_cycles (k : ℕ) (hk : 3 ≤ k) :
-    answer(sorry) ↔ ((fun n => (antiRamseyNum (cycleGraph k) n : ℝ) - ((k - 2 : ℝ) / 2 + 1 / (k - 1)) * n)
+theorem erdos_1105_cycles : answer(sorry) ↔
+    ∀ k, 3 ≤ k →
+    ((fun n => (antiRamseyNum (cycleGraph k) n : ℝ) - ((k - 2 : ℝ) / 2 + 1 / (k - 1)) * n)
       =O[atTop] (fun _ => (1 : ℝ))) := by
   sorry
 
@@ -45,10 +46,11 @@ For $n \geq k \geq 5$, let $\ell = \lfloor(k-1)/2\rfloor$ and $\epsilon = 1$ if 
 Is $\mathrm{AR}(n, P_k) = \max\left(\binom{k-2}{2}+1,\; \binom{\ell-1}{2}+(\ell-1)(n-\ell+1)+\epsilon\right)$?
 -/
 @[category research open, AMS 05]
-theorem erdos_1105_paths (k n : ℕ) (hk : 5 ≤ k) (hn : k ≤ n) :
+theorem erdos_1105_paths : answer(sorry) ↔
+    ∀ (k n : ℕ), 5 ≤ k → k ≤ n →
     let ℓ := (k - 1) / 2
     let ε := if Odd k then 1 else 2
-    answer(sorry) ↔ antiRamseyNum (pathGraph k) n = max ((k - 2).choose 2 + 1) ((ℓ - 1).choose 2 + (ℓ - 1) * (n - ℓ + 1) + ε) := by
+    antiRamseyNum (pathGraph k) n = max ((k - 2).choose 2 + 1) ((ℓ - 1).choose 2 + (ℓ - 1) * (n - ℓ + 1) + ε) := by
   sorry
 
 end Erdos1105
