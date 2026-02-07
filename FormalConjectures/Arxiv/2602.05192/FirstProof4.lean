@@ -48,7 +48,7 @@ noncomputable def finiteAdditiveConvolution (n : ℕ) (p q : F[X]) : F[X] :=
   let c := fun k  => ∑ ij ∈ antidiagonal (k : ℕ),
       ((n - ij.1)! * (n - ij.2)! : F) / (n ! * (n - k)! : F) *
       (p.coeff (n - ij.1)) * (q.coeff (n - ij.2))
-  ∑ k ∈ range (n + 1),  (c k) • X^(n - k)
+  ∑ k ∈ range (n + 1), (c k) • X^(n - k)
 
 local notation p " (⊞_"n ")" q:65  => finiteAdditiveConvolution n p q
 
