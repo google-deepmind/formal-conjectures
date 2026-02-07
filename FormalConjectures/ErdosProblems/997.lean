@@ -81,7 +81,7 @@ Champagne, Le, Liu, and Wooley [CLLW24] proved that there exists an irrational $
 $\{\alpha p_n\}$ is not well-distributed.
 -/
 @[category research solved, AMS 11]
-theorem erdos_997.variants.cllw24 :
+theorem erdos_997.variants.irrational :
     ∃ α : ℝ, Irrational α ∧
       ¬ IsWellDistributed (fun n ↦ Int.fract (α * (Nat.nth Nat.Prime n))) := by
   sorry
