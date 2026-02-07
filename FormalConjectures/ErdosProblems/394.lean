@@ -33,15 +33,19 @@ open scoped Asymptotics Topology Nat
 namespace Erdos394
 
 /--
-Let $t_k(n)$ denote the least $m$ such that $n\mid m(m+1)(m+2)\cdots (m+k-1).$ Is it true that
-$\sum_{n\leq x}t_2(n)\ll \frac{x^2}{(\log x)^c}$ for some $c>0$?
+Let $t_k(n)$ denote the least $m$ such that $n\mid m(m+1)(m+2)\cdots (m+k-1).$
+-/
+noncomputable def t (k n : ℕ) : ℕ :=
+  sInf { m : ℕ | 0 < m ∧ n ∣ ∏ i ∈ range k, (m + i) }
+
+/--
+Is it true that $\sum_{n\leq x}t_2(n)\ll \frac{x^2}{(\log x)^c}$ for some $c>0$?
 -/
 @[category research open, AMS 11]
 theorem erdos_394_part_a :
     answer(sorry) ↔
       ∃ c > 0, (fun x ↦ ∑ n ∈ Ioc 1 ⌊x⌋₊,
-      ((sInf { m : ℕ | 0 < m ∧ n ∣ m * (m + 1) } : ℕ) : ℝ)) =O[atTop]
-      (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
+      (t 2 n : ℝ)) ≪ (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
 
 /--
@@ -51,9 +55,9 @@ Is it true that, for $k\geq 2$, $\sum_{n\leq x}t_{k+1}(n) =o\left(\sum_{n\leq x}
 theorem erdos_394_part_b :
     answer(sorry) ↔
       ∀ k ≥ 2, (fun (x : ℝ) ↦ ∑ n ∈ Ioc 1 ⌊x⌋₊,
-      ((sInf { m : ℕ | 0 < m ∧ n ∣ ∏ i ∈ range (k + 1), (m + i) } : ℕ) : ℝ)) =o[atTop]
+      (t (k + 1) n : ℝ)) =o[atTop]
       (fun (x : ℝ) ↦ ∑ n ∈ Ioc 1 ⌊x⌋₊,
-      ((sInf { m : ℕ | 0 < m ∧ n ∣ ∏ i ∈ range k, (m + i) } : ℕ) : ℝ)) := by
+      (t k n : ℝ)) := by
   sorry
 
 /--
@@ -63,7 +67,7 @@ $\sum_{n\leq x}t_2(n)\ll \frac{\log\log\log x}{\log\log x}x^2.$
 -/
 @[category research solved, AMS 11]
 theorem erdos_394_hall_bound :
-    (fun x ↦ ∑ n ∈ Ioc 1 ⌊x⌋₊, ((sInf { m : ℕ | 0 < m ∧ n ∣ m * (m + 1) } : ℕ) : ℝ)) =O[atTop]
+    (fun x ↦ ∑ n ∈ Ioc 1 ⌊x⌋₊, (t 2 n : ℝ)) ≪
     (fun x ↦ x ^ 2 * (Real.log (Real.log (Real.log x)) / Real.log (Real.log x))) := by
   sorry
 
@@ -73,7 +77,7 @@ Erdős and Hall conjecture that the sum is $o(x^2/(\log x)^c)$ for any $c<\log 2
 @[category research open, AMS 11]
 theorem erdos_394_hall_conjecture :
     ∀ c < Real.log 2, (fun x ↦ ∑ n ∈ Ioc 1 ⌊x⌋₊,
-    ((sInf { m : ℕ | 0 < m ∧ n ∣ m * (m + 1) } : ℕ) : ℝ)) =o[atTop]
+    (t 2 n : ℝ)) =o[atTop]
     (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
 
@@ -82,20 +86,19 @@ Since $t_2(p)=p-1$ for prime $p$ it is trivial that $\sum_{n\leq x}t_2(n)\gg \fr
 -/
 @[category research solved, AMS 11]
 theorem erdos_394_lower_bound :
-    (fun x ↦ x ^ 2 / Real.log x) =O[atTop]
-    (fun x ↦ ∑ n ∈ Ioc 1 ⌊x⌋₊, ((sInf { m : ℕ | 0 < m ∧ n ∣ m * (m + 1) } : ℕ) : ℝ)) := by
+    (fun x ↦ x ^ 2 / Real.log x) ≫
+    (fun x ↦ ∑ n ∈ Ioc 1 ⌊x⌋₊, (t 2 n : ℝ)) := by
   sorry
 
 /--
-They ask about the behaviour of $t_{n-3}(n!)$ and also ask ask whether, for infinitely many $n$,
+They ask about the behaviour of $t_{n-3}(n!)$ and also ask whether, for infinitely many $n$,
 $t_k(n!)< t_{k-1}(n!)-1$ for all $1\leq k < n$.
 -/
 @[category research open, AMS 11]
 theorem erdos_394_factorial_gap_conjecture :
     answer(sorry) ↔
       Set.Infinite { n : ℕ | ∀ k, 2 ≤ k → k < n →
-      sInf { m : ℕ | 0 < m ∧ (n !) ∣ ∏ i ∈ range k, (m + i) } <
-      sInf { m : ℕ | 0 < m ∧ (n !) ∣ ∏ i ∈ range (k - 1), (m + i) } - 1 } := by
+      t k (n !) < t (k - 1) (n !) - 1 } := by
   sorry
 
 /--
@@ -104,8 +107,8 @@ They proved (with Selfridge) that this holds for $n=10$.
 @[category research solved, AMS 11]
 theorem erdos_394_factorial_gap_10 :
     ∀ (k : ℕ), 2 ≤ k → k < 10 →
-    sInf { m : ℕ | 0 < m ∧ (10 !) ∣ ∏ i ∈ range k, (m + i) } <
-    sInf { m : ℕ | 0 < m ∧ (10 !) ∣ ∏ i ∈ range (k - 1), (m + i) } - 1 := by
+    t k (10 !) <
+    t (k - 1) (10 !) - 1 := by
   sorry
 
 end Erdos394
