@@ -30,13 +30,11 @@ open scoped Topology
 /-- The set of positive integers not divisible by any element of `A`. -/
 def sievedSet (A : Set ℕ) : Set ℕ := {n : ℕ | 0 < n ∧ ∀ a ∈ A, ¬(a ∣ n)}
 
-/-- The enumeration of the sieved set in increasing order. -/
-noncomputable abbrev b (A : Set ℕ) (n : ℕ) : ℕ := Nat.nth (· ∈ sievedSet A) n
-
 /-- The squared-gap sum `∑_{b_i < x} (b_{i+1} - b_i)²`, where `b_i` enumerates the positive
 integers not divisible by any element of `A`. -/
 noncomputable def gapSumSq (A : Set ℕ) (x : ℕ) : ℝ :=
-  ∑ i < Nat.count (· ∈ sievedSet A) x, ((b A (i + 1) : ℝ) - b A i) ^ 2
+  let b := Nat.nth (· ∈ sievedSet A)
+  ∑ i < Nat.count (· ∈ sievedSet A) x, ((b (i + 1) : ℝ) - b i) ^ 2
 
 /--
 Let $A\subseteq \mathbb{N}$ be a set such that $\lvert A\cap [1,x]\rvert=o(x^{1/2})$. Let
