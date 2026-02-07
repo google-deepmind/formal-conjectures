@@ -31,7 +31,7 @@ namespace KourovkaProblem2_24
 
 variable (G : Type*) [Group G]
 
-/-- The `n`-fold iterated commutator `[x,_n y]`. -/
+/-- The $n$-fold iterated commutator $[x,_n y]$. -/
 def commutator_n (x y : G) : ℕ → G
   | 0 => x
   | n + 1 =>
