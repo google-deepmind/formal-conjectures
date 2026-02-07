@@ -51,11 +51,14 @@ def IsLeinster (G : Type*) [Group G] [Fintype G] : Prop :=
 
 This asks whether there exist infinitely many (non-isomorphic) finite groups that are
 Leinster groups.
+
+Formalized via the negation of "Does there exist an n such that all Leinster groups have
+order less than n".
 -/
 @[category research open, AMS 20]
 theorem infinitely_many_leinster_groups :
-    answer(sorry) ↔ ∀ n : ℕ, ∃ G : Type, ∃ (_ : Group G) (_ : Fintype G),
-      Fintype.card G > n ∧ IsLeinster G := by
+    ¬∃ n : ℕ, ∀ G : Type, ∀ (_ : Group G) (_ : Fintype G),
+      IsLeinster G → Fintype.card G < n := by
   sorry
 
 /--
