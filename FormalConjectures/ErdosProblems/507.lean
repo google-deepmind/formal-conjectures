@@ -77,7 +77,7 @@ Estimate a lower bound for$\alpha(n)$.
 @[category research open, AMS 51]
 theorem erdos_507.lower:
     let ans := (answer(sorry) : ℕ → ℝ)
-    (lowerBest ≪ ans) ∧ (ans ≪ α) := by
+    (lowerBest =o[atTop] ans) ∧ (ans ≪ α) := by
   sorry
 
 /--
@@ -86,7 +86,7 @@ Estimate an upper bound for$\alpha(n)$.
 @[category research open, AMS 51]
 theorem erdos_507.upper:
     let ans := (answer(sorry) : ℕ → ℝ)
-    (α ≪ ans) ∧ (ans ≪ upperBarrier) := by
+    (α ≪ ans) ∧ (ans =o[atTop] upperBarrier) := by
   sorry
 
 /--
