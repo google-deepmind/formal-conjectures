@@ -26,3 +26,11 @@ if $a_1, a_2 \in A$. Does $A$ have positive density?
  - [Ben Green's Open Problem 63](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 63)
  - [erdosproblems.com/424](https://www.erdosproblems.com/424)
 -/
+
+namespace Green63
+
+@[category research open, AMS 11]
+theorem green_63 : type_of% Erdos424.erdos_424 := by
+  sorry
+
+end Green63

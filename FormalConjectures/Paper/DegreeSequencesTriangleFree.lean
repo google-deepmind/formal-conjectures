@@ -120,9 +120,6 @@ namespace SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-/-- The degree sequence of a graph, sorted in nondecreasing order. -/
-noncomputable def degreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : List ℕ :=
-  (Finset.univ.val.map fun v : α => G.degree v).sort (· ≤ ·)
 
 /-- The degree sequence of `G` is **compact** if it satisfies
 `IsCompactSequenceOn` for all valid indices `k` such that `k + 2 < Fintype.card α`. -/
@@ -133,7 +130,8 @@ def HasCompactdegreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : Prop :=
 then it is bipartite, has minimum degree `1`, and
 its degree sequence is compact. -/
 @[category research solved, AMS 5]
-theorem theorem1 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 3) (h₂ : f G = 2) :
+theorem theorem1 (G : SimpleGraph α) (h_conn: G.Connected) [DecidableRel G.Adj]
+    (h₁ : G.CliqueFree 3) (h₂ : degreeSequenceMultiplicity G = 2) :
     G.IsBipartite ∧ G.minDegree = 1 ∧ HasCompactdegreeSequence G := by
   sorry
 
@@ -142,7 +140,7 @@ theorem theorem1 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 
 @[category API, AMS 5]
 lemma lemma3 (n : ℕ) (hn : 0 < n) :
     ∃ (G : SimpleGraph (Fin (8 * n))) (_ : DecidableRel G.Adj),
-      G.IsBipartite ∧ G.minDegree = n + 1 ∧ f G = 3 := by
+      G.IsBipartite ∧ G.minDegree = n + 1 ∧ degreeSequenceMultiplicity G = 3 := by
   sorry
 
 /-- **Lemma 4.** Let `G` be a triangle-free graph with `n` vertices and let `v` be a vertex of `G`.
@@ -151,21 +149,23 @@ There exists a triangle-free graph `H` containing `G` as an induced subgraph suc
 (ii) for every vertex `w` of `G` other than `v` the degree of `w` in `H` is the same as its degree in `G`;
 (iii) if `J` is the subgraph of `H` induced by the vertices not in `G`, then `f(J)=3` and `δ(J) ≥ 2n`. -/
 @[category API, AMS 5]
-lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h₁ : G.CliqueFree 3) (v : α) :
+lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn: G.Connected)
+    (h₁ : G.CliqueFree 3) (v : α) :
     ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : G ↪g H),
       H.CliqueFree 3 ∧
       H.degree (i v) = G.degree v + 1 ∧
       (∀ w ≠ v, H.degree (i w) = G.degree w) ∧
       let J := H.induce (Set.compl (Set.range i))
-      f J = 3 ∧ J.minDegree ≥ 2 * Fintype.card α := by
+      degreeSequenceMultiplicity J = 3 ∧ J.minDegree ≥ 2 * Fintype.card α := by
   sorry
 
 /-- **Theorem 2.** Every triangle-free graph is an induced subgraph of one
 with `f = 3`. -/
 @[category research solved, AMS 5]
-theorem theorem2 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.CliqueFree 3) :
+theorem theorem2 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn: G.Connected)
+    (h : G.CliqueFree 3) :
     ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : G ↪g H),
-      H.CliqueFree 3 ∧ f H = 3 := by
+      H.CliqueFree 3 ∧ degreeSequenceMultiplicity H = 3 := by
   sorry
 
 /-- `F n` is the smallest number of vertices of a triangle-free graph
@@ -173,7 +173,7 @@ with chromatic number `n` and `f = 3`. -/
 @[category research solved, AMS 5]
 noncomputable def F (n : ℕ) : ℕ :=
   sInf { p | ∃ (G : SimpleGraph (Fin p)) (_ : DecidableRel G.Adj),
-    G.CliqueFree 3 ∧ G.chromaticNumber = n ∧ f G = 3 }
+    G.CliqueFree 3 ∧ G.chromaticNumber = n ∧ degreeSequenceMultiplicity G = 3 }
 
 @[category research solved, AMS 5]
 theorem F_three : F 3 = 7 := by
