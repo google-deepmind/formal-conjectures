@@ -44,7 +44,7 @@ A finite group `G` is a **Leinster group** if the sum of the orders of all its n
 equals twice the group's order.
 -/
 def IsLeinster (G : Type*) [Group G] [Fintype G] : Prop :=
-  ∑ H : {H : Subgroup G // H.Normal}, Nat.card H.val = 2 * Fintype.card G
+  ∑ H : {H : Subgroup G // H.Normal}, Nat.card H = 2 * Fintype.card G
 
 /--
 **Conjecture:** Are there infinitely many Leinster groups?
