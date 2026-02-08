@@ -44,7 +44,7 @@ Is it true that $\sum_{n\leq x}t_2(n)\ll \frac{x^2}{(\log x)^c}$ for some $c>0$?
 @[category research open, AMS 11]
 theorem erdos_394_part_a :
     answer(sorry) ↔
-      ∃ c > 0, (fun x ↦ ∑ n ∈ Ioc 0 ⌊x⌋₊,
+      ∃ c > 0, (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
       (t 2 n : ℝ)) ≪ (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
 
@@ -54,9 +54,9 @@ Is it true that, for $k\geq 2$, $\sum_{n\leq x}t_{k+1}(n) =o\left(\sum_{n\leq x}
 @[category research open, AMS 11]
 theorem erdos_394_part_b :
     answer(sorry) ↔
-      ∀ k ≥ 2, (fun (x : ℝ) ↦ ∑ n ∈ Ioc 0 ⌊x⌋₊,
+      ∀ k ≥ 2, (fun (x : ℝ) ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
       (t (k + 1) n : ℝ)) =o[atTop]
-      (fun (x : ℝ) ↦ ∑ n ∈ Ioc 0 ⌊x⌋₊,
+      (fun (x : ℝ) ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
       (t k n : ℝ)) := by
   sorry
 
@@ -67,7 +67,7 @@ $\sum_{n\leq x}t_2(n)\ll \frac{\log\log\log x}{\log\log x}x^2.$
 -/
 @[category research solved, AMS 11]
 theorem erdos_394_hall_bound :
-    (fun x ↦ ∑ n ∈ Ioc 0 ⌊x⌋₊, (t 2 n : ℝ)) ≪
+    (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) ≪
     (fun x ↦ x ^ 2 * (Real.log (Real.log (Real.log x)) / Real.log (Real.log x))) := by
   sorry
 
@@ -76,7 +76,7 @@ Erdős and Hall conjecture that the sum is $o(x^2/(\log x)^c)$ for any $c<\log 2
 -/
 @[category research open, AMS 11]
 theorem erdos_394_hall_conjecture :
-    ∀ c < Real.log 2, (fun x ↦ ∑ n ∈ Ioc 0 ⌊x⌋₊,
+    ∀ c < Real.log 2, (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
     (t 2 n : ℝ)) =o[atTop]
     (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
@@ -87,7 +87,7 @@ Since $t_2(p)=p-1$ for prime $p$ it is trivial that $\sum_{n\leq x}t_2(n)\gg \fr
 @[category research solved, AMS 11]
 theorem erdos_394_lower_bound :
     (fun x ↦ x ^ 2 / Real.log x) ≫
-    (fun x ↦ ∑ n ∈ Ioc 0 ⌊x⌋₊, (t 2 n : ℝ)) := by
+    (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) := by
   sorry
 
 /--
