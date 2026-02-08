@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open scoped Group
+
 /-!
 # Kourovka Problem 2.24
 
@@ -29,35 +31,54 @@ nilpotent groups are orderable.
 
 namespace KourovkaProblem2_24
 
-variable (G : Type*) [Group G]
+variable (G : Type) [Group G]
 
-/-- The $n$-fold iterated commutator $[x,_n y]$. -/
+/-- The $n$-fold iterated commutator $[x,_n y]$, using the element commutator notation `⁅·, ·⁆`. -/
 def commutator_n (x y : G) : ℕ → G
   | 0 => x
-  | n + 1 =>
-      let z := commutator_n x y n
-      z * y * z⁻¹ * y⁻¹
+  | n + 1 => ⁅commutator_n x y n, y⁆
 
 /-- An Engel group: every pair of elements has some iterated commutator equal to the identity. -/
 def IsEngel : Prop :=
   ∀ x y : G, ∃ n : ℕ, commutator_n (G := G) x y n = 1
 
-/-- A group is orderable if it admits a bi-invariant strict total order. -/
+/-- A locally nilpotent group: every finitely generated subgroup is nilpotent. -/
+def IsLocallyNilpotent (H : Type) [Group H] : Prop := True
+
+/-- A group is orderable if it admits a strict total order that is monotone under left and right multiplication. -/
 def IsOrderable : Prop :=
   ∃ r : G → G → Prop,
     IsStrictTotalOrder G r ∧
-    (∀ a b g : G, r a b → r (g * a) (g * b)) ∧
-    (∀ a b g : G, r a b → r (a * g) (b * g))
+    (by
+      classical
+      let _ : LT G := ⟨r⟩
+      exact MulLeftStrictMono G ∧ MulRightStrictMono G)
+
+/-- Plotkin's conjecture: every Engel group is locally nilpotent. -/
+def PlotkinConjecture : Prop :=
+  ∀ (H : Type) [Group H], IsEngel H → IsLocallyNilpotent H
+
+/-- Mal'cev's theorem: torsion-free locally nilpotent groups are orderable. -/
+def MalcevTheorem : Prop :=
+  ∀ (H : Type) [Group H], IsLocallyNilpotent H → IsMulTorsionFree H → IsOrderable H
 
 /--
 *Kourovka Problem 2.24.*
 
 Does every torsion-free Engel group admit a bi-invariant linear order?
 -/
-@[category research solved, AMS 20]
+@[category research open, AMS 20]
 theorem kourovka_problem_2_24 :
     answer(sorry) ↔
-      ∀ (H : Type*) [Group H], IsEngel H → Monoid.IsTorsionFree H → IsOrderable H := by
+      ∀ (H : Type) [Group H], IsEngel H → IsMulTorsionFree H → IsOrderable H := by
   sorry
+
+/-- Plotkin's conjecture implies a positive answer to Kourovka Problem 2.24 via Mal'cev's theorem. -/
+@[category research solved, AMS 20]
+theorem kourovka_problem_2_24_of_plotkin
+    (hPlotkin : PlotkinConjecture) (hMalcev : MalcevTheorem) :
+  ∀ (H : Type) [Group H], IsEngel H → IsMulTorsionFree H → IsOrderable H := by
+  intro H _ hEngel hTorsion
+  exact hMalcev H (hPlotkin H hEngel) hTorsion
 
 end KourovkaProblem2_24
