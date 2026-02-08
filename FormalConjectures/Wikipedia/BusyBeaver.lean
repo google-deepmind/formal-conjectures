@@ -75,4 +75,10 @@ theorem BB_4 : BB 4 = 107 := by
 theorem BB_5 : BB 5 = 47176870 := by
   sorry
 
+/--
+Determine the Value of the Busy Beaver function at n = 6.
+-/
+@[category research solved, AMS 3]
+theorem BB_6 : BB 6 = answer(sorry) := by
+  sorry
 end BusyBeaver
