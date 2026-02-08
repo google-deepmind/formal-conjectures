@@ -1,3 +1,4 @@
+import Mathlib
 open YoungDiagram
 
 def YoungDiagram.Cell (μ : YoungDiagram) : Type := μ.cells
