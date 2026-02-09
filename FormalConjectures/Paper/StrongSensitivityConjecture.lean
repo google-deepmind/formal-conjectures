@@ -117,8 +117,8 @@ def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
 /-- Assuming `n` is a multiple of 4, the sensitivity of `nisanExample`
 is `n/2`, achieved by any `x` with Hamming weight `n/2`. -/
 @[category test, AMS 68]
-lemma nisanExample_sensitivity : ∃ (n : ℕ) (hn : 4 ∣ n),
-    sensitivity (nisanExample n) ≠ n / 2 := by
+lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
+    sensitivity (nisanExample n) = n / 2 := by
   sorry
 
 /-- Assuming `n` is a multiple of 4, the block sensitivity of `nisanExample`
