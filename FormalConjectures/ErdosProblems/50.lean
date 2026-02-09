@@ -34,11 +34,11 @@ namespace Erdos50
 
 /--
 A function $f : \mathbb{R} \to \mathbb{R}$ is the asymptotic distribution function of the values
-of $\varphi(n)/n$ if for all $c \in [0, 1]$, the natural density of $\{n : \varphi(n)/n < c\}$
+of $\varphi(n)/n$ if for all $c \in [0, 1]$, the natural density of $\{n : \varphi(n) < cn\}$
 exists and equals $f(c)$.
 -/
 def IsDistributionOfPhiRatio (f : ℝ → ℝ) : Prop :=
-  ∀ c : ℝ, {n : ℕ | (φ n : ℝ) / n < c}.HasDensity (f c)
+  ∀ c ∈ Icc (0 : ℝ) 1, {n : ℕ | (φ n : ℝ) < c * n}.HasDensity (f c)
 
 /--
 A monotone function $f : \mathbb{R} \to \mathbb{R}$ is purely singular (or singular continuous)
@@ -67,7 +67,9 @@ theorem erdos_50_singular (f : ℝ → ℝ) (hf : IsDistributionOfPhiRatio f) : 
   sorry
 
 /--
-Is it true that there is no $x$ such that the derivative $f'(x)$ exists and is positive?
+Let $f$ be the asymptotic distribution function of $\varphi(n)/n$, so that for each $c \in [0,1]$,
+$f(c)$ is the natural density of $\{n : \varphi(n) < cn\}$. Is it true that there is no $x$ such
+that the derivative $f'(x)$ exists and is positive?
 -/
 @[category research open, AMS 11]
 theorem erdos_50 (f : ℝ → ℝ) (hf : IsDistributionOfPhiRatio f) :
