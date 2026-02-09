@@ -92,4 +92,5 @@ import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
 import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
 import FormalConjecturesForMathlib.Topology.Discrete
+import FormalConjecturesForMathlib.Topology.GDelta
 import FormalConjecturesForMathlib.Topology.MetricSpace.MetricSeparated

@@ -10,6 +10,10 @@ green-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/GreensOpenProblems/**'
 
+linter:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Util/Linters/**'
+
 mathoverflow:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/Mathoverflow/**'

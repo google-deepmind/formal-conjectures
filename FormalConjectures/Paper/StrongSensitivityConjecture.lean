@@ -112,7 +112,7 @@ of the input. -/
 @[category test, AMS 68]
 def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
   let w := #{i | x i}
-  decide (w ∈ ({n / 2, n / 2 + 1} : Finset ℕ))
+  decide ((w : ℚ) ∈ ({(n / 2 : ℚ), (n / 2 : ℚ) + 1} : Finset ℚ))
 
 /-- Assuming `n` is a multiple of 4, the sensitivity of `nisanExample`
 is `n/2`, achieved by any `x` with Hamming weight `n/2`. -/
