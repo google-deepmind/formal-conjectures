@@ -47,22 +47,11 @@ theorem lonely_runner_conjecture (n : ℕ)
 -/
 
 /--
-The unit circle $\mathbb{R}/\mathbb{Z}$ seen as `AddCircle (1 : ℝ)`.
--/
-abbrev RModZ : Type := AddCircle (1 : ℝ)
-
-/--
-Distance in $\mathbb{R}/\mathbb{Z}$ to the nearest integer.
--/
-noncomputable def distToInt (t : RModZ) : ℝ :=
-  dist t 0
-
-/--
 For an $n$-tuple of distinct integer velocities $v_1,\dots,v_n$,
 `deltaTuple v` is the maximal value of $\min_i \|t v_i\|_{\mathbb{R}/\mathbb{Z}}$ over time.
 -/
-noncomputable def deltaTuple {n : ℕ} (v : Fin n ↪ ℤ) : ℝ :=
-  sSup { δ : ℝ | ∃ t : RModZ, ∀ i : Fin n, δ ≤ distToInt ((v i) • t) }
+noncomputable def deltaTuple {n : ℕ} (v : Fin n → ℤ) : ℝ :=
+  sSup { δ : ℝ | ∃ t : AddCircle (1 : ℝ), ∀ i : Fin n, δ ≤ dist (v i * t : AddCircle (1 : ℝ)) 0 }
 
 /--
 The $n$th *gap of loneliness* $\delta_n$: the infimum of `deltaTuple`
