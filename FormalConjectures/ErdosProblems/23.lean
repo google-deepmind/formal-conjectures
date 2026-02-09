@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 * [erdosproblems.com/23](https://www.erdosproblems.com/23)
+* [OEIS A389646](https://oeis.org/A389646)
 -/
 
 open SimpleGraph BigOperators Classical
