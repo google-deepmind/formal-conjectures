@@ -32,22 +32,11 @@ open scoped ArithmeticFunction
 
 namespace Erdos535
 
-/-- A finite set has constant pairwise GCD. -/
-def ConstantPairwiseGcd (S : Finset ℕ) : Prop :=
-  ∃ d, (S : Set ℕ).Pairwise fun a b => Nat.gcd a b = d
-
-/-- A finite set has constant pairwise GCD and the quotients are coprime to that GCD. -/
-def ConstantPairwiseGcdCoprime (S : Finset ℕ) : Prop :=
-  ∃ d, 0 < d ∧ (S : Set ℕ).Pairwise (fun a b => Nat.gcd a b = d) ∧
-    ∀ a ∈ S, ∃ b, a = d * b ∧ Nat.gcd b d = 1
-
-/-- No `r`-subset has constant pairwise GCD. -/
-def NoConstantPairwiseGcdSubsets (r : ℕ) (A : Finset ℕ) : Prop :=
-  ∀ S ⊆ A, S.card = r → ¬ ConstantPairwiseGcd S
-
 /-- No `r`-subset has constant pairwise GCD with coprime quotients. -/
 def NoConstantPairwiseGcdCoprimeSubsets (r : ℕ) (A : Finset ℕ) : Prop :=
-  ∀ S ⊆ A, S.card = r → ¬ ConstantPairwiseGcdCoprime S
+  ∀ S ⊆ A, S.card = r →
+    ¬ (∃ d, 0 < d ∧ (S : Set ℕ).Pairwise (fun a b => Nat.gcd a b = d) ∧
+      ∀ a ∈ S, ∃ b, a = d * b ∧ Nat.gcd b d = 1)
 
 /-- All elements of `A` are positive and have exactly `k` distinct prime factors. -/
 def AllOmega (k : ℕ) (A : Finset ℕ) : Prop :=
@@ -57,7 +46,8 @@ def AllOmega (k : ℕ) (A : Finset ℕ) : Prop :=
 subset of `A` has constant pairwise GCD. -/
 noncomputable def f (r N : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ A : Finset ℕ, A ⊆ Finset.Icc 1 N ∧
-    NoConstantPairwiseGcdSubsets r A ∧
+    (∀ S ⊆ A, S.card = r →
+      ¬ (∃ d, (S : Set ℕ).Pairwise fun a b => Nat.gcd a b = d)) ∧
     A.card = k}
 
 /--
