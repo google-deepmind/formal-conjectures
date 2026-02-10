@@ -47,9 +47,13 @@ theorem erdos_307 : answer(sorry) ↔ ∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prim
 Instead of asking for sets of primes, ask only that all elements in the sets be relatively coprime.
 
 Cambie has found several examples when this weakened version is true. For example,
-\[1=\left(1+\frac{1}{5}\right)\left(\frac{1}{2}+\frac{1}{3}\right)\]
+$$
+1=\left(1+\frac{1}{5}\right)\left(\frac{1}{2}+\frac{1}{3}\right)
+$$
 and
-\[1=\left(1+\frac{1}{41}\right)\left(\frac{1}{2}+\frac{1}{3}+\frac{1}{7}\right).\]
+$$
+1=\left(1+\frac{1}{41}\right)\left(\frac{1}{2}+\frac{1}{3}+\frac{1}{7}\right).
+$$
 -/
 @[category undergraduate, AMS 5 11]
 theorem erdos_307_coprime : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
