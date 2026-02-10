@@ -20,28 +20,34 @@ import FormalConjectures.Util.ProblemImports
 # Reed's omega, delta, and chi conjecture
 
 *References*:
-- [B. Reed,  ω Δ and χ, J. Graph Theory 27 (1998) 177-212.](https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-0118(199804)27:4%3C177::AID-JGT1%3E3.0.CO;2-K) 
+- [B. Reed,  ω Δ and χ, J. Graph Theory 27 (1998) 177-212.](https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-0118(199804)27:4%3C177::AID-JGT1%3E3.0.CO;2-K)
 -
 [openproblemgarden(http://www.openproblemgarden.org/op/reeds_omega_delta_and_chi_conjecture)
 - [mathoverflow/37923](https://mathoverflow.net/questions/37923) asked by user [Andrew D. King](https://mathoverflow.net/users/4580/andrew-d-king)
 -/
 
-namespace ReedOmegaDeltaChi
-
 open Classical
+open scoped Finset
 
-noncomputable
-def edegree (G : SimpleGraph V) (v : V) : ℕ∞ := (G.neighborSet v).encard
-
-def emaxDegree {V : Type*} (G : SimpleGraph V) : ℕ∞ := ⨆ v, G.edegree v
+namespace SimpleGraph
 
 /--
-For a nonempty graph, `G.cliqueNum` is 0 iff the clique size is unbounded. For the purposes of
-stating the conjecture, we actually want the max clique size to be `∞` in this case.
+For the purposes of stating the conjecture, we need to set up our definitions so that the maximum
+degree (resp. clique number) of a graph with unbounded degree (resp. clique size) is `∞` rather
+than 0.
 -/
 noncomputable
-def maxCliqueSize {V : Type} (G : SimpleGraph V) : ℕ∞ :=
-  if Nonempty V ∧ G.cliqueNum = 0 then ⊤ else G.cliqueNum
+def edegree {V : Type*} (G : SimpleGraph V) (v : V) : ℕ∞ := (G.neighborSet v).encard
+
+noncomputable
+def emaxDegree {V : Type*} (G : SimpleGraph V) : ℕ∞ := ⨆ v, G.edegree v
+
+noncomputable
+def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ : G.IsClique s), #s
+
+end SimpleGraph
+
+namespace ReedOmegaDeltaChi
 
 /--
 For a graph $G$, we define $\Delta(G)$ to be the maximum degree, $\omega(G)$ to be the size of the
@@ -52,18 +58,26 @@ conjecture states that $$\chi(G) \leq \lceil \frac{1}{2}(\omega(G) + \Delta(G) +
 theorem reed_omega_delta_chi_conjecture :
   ∀ {V : Type} (G : SimpleGraph V),
     let χ := G.chromaticNumber
-    let ω := maxCliqueSize G
-    let Δ := maxDegree G
-  /- (d+1)/2 = ⌈d/2⌉ -/
-  χ ≤ (ω + Δ + 1).map (fun d => (d + 1) / 2) := by
-    sorry
+    let ω := G.ecliqueNum
+    let Δ := G.emaxDegree
+    2 * χ ≤ ω + Δ + 2 := by
+  sorry
+
+@[category research open, AMS 5]
+theorem reed_omega_delta_chi_conjecture_for_finite_graphs :
+  ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
+    let χ := G.chromaticNumber
+    let ω := G.cliqueNum
+    let Δ := G.maxDegree
+    2 * χ ≤ ω + Δ + 2 := by
+  sorry
 
 /--
 The simplest open case is when $\Delta(G) = 6$ and $\omega(G) = 2$.
 -/
 @[category research open, AMS 5]
 theorem reed_conjecture_Δ_6_ω_2 :
-  ∀ {V : Type} (G : SimpleGraph V), maxDegree G = 6 ∧ G.cliqueNum = 2 → G.chromaticNumber ≤ 5 := by
+  ∀ {V : Type} (G : SimpleGraph V), G.emaxDegree = 6 ∧ G.cliqueNum = 2 → G.chromaticNumber ≤ 5 := by
     sorry
 
 end ReedOmegaDeltaChi
