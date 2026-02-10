@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/30](https://www.erdosproblems.com/30)
 -/
 
+namespace Erdos30
+
 /--
 Let $h(N)$ be the maximum size of a Sidon set in $\{1, \dots, N\}$.
 -/
@@ -39,3 +41,4 @@ theorem erdos_30 : answer(sorry) ↔
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+end Erdos30
