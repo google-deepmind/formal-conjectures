@@ -28,7 +28,6 @@ by *K. C. Au*
 
 namespace Gourevitch
 
-open scoped BigOperators
 
 /-- The $n$-th term of the Gourevitch series:
 $
