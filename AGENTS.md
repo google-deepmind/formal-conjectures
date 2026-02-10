@@ -217,6 +217,15 @@ When the problem is solved:
 4. **Import structure**:
    - Problem files: Import `FormalConjectures.Util.ProblemImports`
    - ForMathlib files: Import only necessary Mathlib modules
+5. If a problem fits in several directories then it should stated in one directory rather than copied
+   accross several. In other directories, one can simply add a file with a declaration pointing
+   to the original, e.g.
+   ```lean
+   @[category research open, AMS 11]
+   theorem pointer_to_original : type_of% my_original_theorem := by
+     sorry
+   ```
+   See for example `FormalConjectures/GreensOpenProblems/81.lean`.
 
 ### Variants and Related Results
 
@@ -304,7 +313,7 @@ Some rare exceptions exist for consistency:
 
 - **Use Unicode math symbols** where appropriate: `∀`, `∃`, `∈`, `⊆`, `∧`, `∨`, `¬`, etc.
 - **Format code properly**: Use consistent indentation (2 spaces)
-- **Add docstrings** for definitions and main theorems:
+- **Add docstrings** with the math written in Latex for definitions and main theorems:
   ```lean
   /--
   The left factorial of $n$, defined as $0! + 1! + 2! + ... + (n-1)!$
@@ -314,12 +323,17 @@ Some rare exceptions exist for consistency:
 - **Use `local notation`** for problem-specific notation within namespaces
 - **Avoid unnecessary type annotations** when Lean can infer them
 - **Use `by` tactic mode** for sorries: `by sorry` (not just `sorry`)
+- **Do not try to add a suggested informal proof for an open research problem**
+- **Avoid using tactics like `native_decide` in proofs**. These are completely banned in `FormalConjecturesForMathlib`
+  and may be considered on a case by case basis for in `category test` statements in problem files
+  when the goal is a large computation.
 
 ### Imports
 
 - Be specific with imports - don't import more than needed
 - In FormalConjecturesForMathlib, import only from Mathlib
-- In problem files, import only `FormalConjectures.Util.ProblemImports`
+- In problem files, import only `FormalConjectures.Util.ProblemImports`, unless you are adding a
+   pointer to another problem or need to state an implication.
 
 ## Agent-Specific Requirements
 
