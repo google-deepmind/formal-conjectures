@@ -43,10 +43,7 @@ register_option linter.style.namespace : Bool := {
 /-- The namespace linter checks that every declaration is inside a namespace. -/
 def namespaceLinter : Linter where run := withSetOptionIn fun stx ↦ do
   if getLinterValue linter.style.namespace (← getLinterOptions) then
-    let mut aliases := #[]
-    if let some exp := stx.find? (·.isOfKind `Lean.Parser.Command.export) then
-      aliases ← Mathlib.Linter.getAliasSyntax exp
-    for id in (← Mathlib.Linter.getNamesFrom (stx.getPos?.getD default)) ++ aliases do
+    for id in (← Mathlib.Linter.getNamesFrom (stx.getPos?.getD default)) do
       let declName := id.getId
       if declName.hasMacroScopes then continue
       let nm := declName.components
