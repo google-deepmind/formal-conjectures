@@ -44,11 +44,11 @@ theorem erdos_307 : answer(sorry) ↔ ∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prim
   sorry
 
 /--
-Instead of asking for sets of primes, ask only that all primes in the sets be relatively coprime.
+Instead of asking for sets of primes, ask only that all elements in the sets be relatively coprime.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_307_coprime : answer(sorry) ↔ ∃ P Q : Finset ℕ, 1 < #P ∧ 1 < #Q ∧ Set.Pairwise P Nat.Coprime ∧
-    Set.Pairwise Q Nat.Coprime ∧
+theorem erdos_307_coprime : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∧ 0 ∉ Q ∧ 1 < #P ∧ 1 < #Q ∧
+    Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     (1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) := by
   sorry
 
