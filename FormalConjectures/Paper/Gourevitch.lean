@@ -30,16 +30,13 @@ namespace Gourevitch
 
 open scoped BigOperators
 
-/-- Central binomial coefficient: $ \binom{2n}{n} $ -/
-def central_binom (n : ℕ) : ℕ := Nat.factorial (2 * n) / (Nat.factorial n * Nat.factorial n)
-
 /-- The $n$-th term of the Gourevitch series:
 $
 a_n = \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7
 $
 -/
 noncomputable inline def gourevitch_term (n : ℕ) : ℝ :=
-  ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ) * ((central_binom n : ℝ) ^ 7)
+  ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ) * ((Nat.centralBinom n : ℝ) ^ 7)
 
 /-- The infinite sum of the Gourevitch series:
 $
