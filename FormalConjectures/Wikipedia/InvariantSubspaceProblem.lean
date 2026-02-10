@@ -55,6 +55,13 @@ theorem Invariant_subspace_problem_finite_dimensional [Module ℂ H] (h : Finite
     (hdim : 2 ≤ Module.rank ℂ H) (T : H →L[ℂ] H) : Nonempty (ClosedInvariantSubspace T) := by
   sorry
 
+@[category API, AMS 47]
+def TopologicalSpace.nontrivial_of_not_separableSpace {H : Type*} [TopologicalSpace H]
+    (h : ¬ TopologicalSpace.SeparableSpace H) : Nontrivial H := by
+  rw [← not_subsingleton_iff_nontrivial]
+  contrapose! h
+  infer_instance
+
 /--
 Every bounded linear operator `T : H → H` on a non-separable Hilbert space `H` has a
 non-trivial closed `T`-invariant subspace. Such an invariant space is given by considering the
@@ -63,20 +70,16 @@ closure of the linear span of the orbit of any single non-zero vector. -/
 theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [CompleteSpace H]
     (h : ¬TopologicalSpace.SeparableSpace H) (T : H →L[ℂ] H) :
     Nonempty (ClosedInvariantSubspace T) := by
-  haveI : Nontrivial H := by
-    rw [← not_subsingleton_iff_nontrivial]
-    contrapose! h
-    infer_instance
+  have := TopologicalSpace.nontrivial_of_not_separableSpace h
   obtain ⟨x, hx⟩ := exists_ne (0 : H)
   -- W = closure of span of orbit {x, Tx, T²x, ...}
   set S := Set.range (fun n : ℕ => (T ^ n) x) with hS_def
   set W := (Submodule.span ℂ S).topologicalClosure with hW_def
   refine ⟨⟨W, ?_, ?_, isClosed_closure, ?_⟩⟩
   · -- x ∈ W and x ≠ 0
-    intro hbot
-    have : x ∈ (⊥ : Submodule ℂ H) := hbot ▸
+    have : x ∈ (W : Submodule ℂ H) :=
       Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨0, by simp⟩)
-    exact hx this
+    grind [Submodule.mem_bot]
   · --W is separable (orbit countable → span separable → closure separable) but H isn't
     have hsep : TopologicalSpace.IsSeparable (W : Set H) :=
       ((Set.countable_range _).isSeparable).span.closure
