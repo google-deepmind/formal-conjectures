@@ -34,25 +34,25 @@ open scoped BigOperators
 def central_binom (n : ℕ) : ℕ := Nat.factorial (2 * n) / (Nat.factorial n * Nat.factorial n)
 
 /-- The $n$-th term of the Gourevitch series:
-$$
+$
 a_n = \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7
-$$
+$
 -/
-noncomputable def gourevitch_term (n : ℕ) : ℝ :=
+noncomputable inline def gourevitch_term (n : ℕ) : ℝ :=
   ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ) * ((central_binom n : ℝ) ^ 7)
 
 /-- The infinite sum of the Gourevitch series:
-$$
+$
 \sum_{n=0}^{\infty} a_n
-$$
+$
 -/
 noncomputable def gourevitch_sum : ℝ := ∑' n, gourevitch_term n
 
 /-- The Gourevitch series identity:
 The infinite series evaluates to
-$$
+$
 \sum_{n=0}^{\infty} a_n = \frac{32}{\pi^3}.
-$$
+$
 -/
 @[category research solved, AMS 11 33 40]
 theorem gourevitch_series_identity :
