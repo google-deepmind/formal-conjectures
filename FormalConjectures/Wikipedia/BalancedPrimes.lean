@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Balanced_prime)
-- [OEIS A006562](https://oeis.org/A006562)
+- [OEIS A6562](https://oeis.org/A6562)
 -/
 
 namespace BalancedPrimes

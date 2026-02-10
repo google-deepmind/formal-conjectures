@@ -28,19 +28,19 @@ open Filter
 namespace Erdos455
 
 /-- Let `q : ℕ → ℕ` be a strictly increasing sequence of primes such that
-`q (n + 1) - q n ≥ q n - q (n - 1)`. Must `lim q n / (n ^ 2) = ∞`? -/
+`q (n + 2) - q (n + 1) ≥ q (n + 1) - q n`. Must `lim q n / (n ^ 2) = ∞`? -/
 @[category research open, AMS 11]
 theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
-    (∀ n, (q n).Prime ∧ q (n + 1) - q n ≥ q n - q (n - 1)) →
+    (∀ n, (q n).Prime ∧ q (n + 2) - q (n + 1) ≥ q (n + 1) - q n) →
     Tendsto (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop atTop := by
   sorry
 
 /--  Let `q : ℕ → ℕ` be a strictly increasing sequence of primes such that
-`q (n + 1) - q n ≥ q n - q (n - 1)`. Then `liminf q n / (n ^ 2) > 0.352`, and this is proved in
+`q (n + 2) - q (n + 1) ≥ q (n + 1) - q n`. Then `liminf q n / (n ^ 2) > 0.352`, and this is proved in
 [Ri76]. -/
 @[category research solved, AMS 11]
 theorem erdos_455.liminf : ∀ q : ℕ → ℕ, StrictMono q →
-    (∀ n, (q n).Prime ∧ q (n + 1) - q n ≥ q n - q (n - 1)) →
+    (∀ n, (q n).Prime ∧ q (n + 2) - q (n + 1) ≥ q (n + 1) - q n) →
     liminf (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop > 0.352 := by
   sorry
 

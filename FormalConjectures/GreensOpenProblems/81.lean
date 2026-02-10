@@ -26,3 +26,11 @@ such that $\sum_{a \in A} \cos(a \theta) \leq - c \sqrt{n}$?
  - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11 Problem 81)
  - [erdosproblems.com/510](https://www.erdosproblems.com/510)
 -/
+
+namespace Green81
+
+@[category research open, AMS 11]
+theorem green_81 : type_of% Erdos510.erdos_510 := by
+  sorry
+
+end Green81

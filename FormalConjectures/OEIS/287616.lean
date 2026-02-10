@@ -24,8 +24,8 @@ nonnegative integers.
 
 Zhi-Wei Sun has offered a USD 135 prize for the first proof of this conjecture.
 
-*References:* 
-- [OEIS A287616](https://oeis.org/A287616)
+*References:*
+- [A287616](https://oeis.org/A287616)
 - Zhi-Wei Sun, "Universal sums of three quadratic polynomials", arXiv:1502.03056 [math.NT]
 -/
 

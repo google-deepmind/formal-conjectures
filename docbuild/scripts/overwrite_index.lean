@@ -16,7 +16,7 @@ limitations under the License.
 import MD4Lean
 import Lean
 import Batteries.Data.String.Matcher
-import FormalConjectures.Util.Attributes
+import FormalConjectures.Util.Attributes.Basic
 import Mathlib.Data.String.Defs
 
 
@@ -146,6 +146,7 @@ classifications, please refer to the
 ## Repository growth
 "
     IO.println markdownBody
-    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throwError "Parsing failed"
+    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody
+      | throwError "Parsing failed"
     let finalHtml ← replaceTag "main" inputHtmlContent (newBody ++ graphHtml)
     IO.FS.writeFile file finalHtml

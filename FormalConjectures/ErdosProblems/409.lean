@@ -32,7 +32,7 @@ How many iterations of $n\mapsto\phi(n) + 1$ are needed before a prime is reache
 -/
 -- Formalisation note: the sequence of iterates always terminates if `n > 0`
 -- since it is strictly decreasing unless the input is prime, at which point
--- it becomes static. See also https://oeis.org/A039651
+-- it becomes static. See also https://oeis.org/A39651
 @[category research open, AMS 11]
 theorem erdos_409.parts.i (n : ℕ) (hn : 0 < n) :
     IsLeast { i | (φ · + 1)^[i] n |>.Prime } answer(sorry) := by

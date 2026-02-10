@@ -77,7 +77,7 @@ theorem erdos_494.variant.k_eq_4_card_gt_12 :
 
 @[category research solved, AMS 5]
 theorem erdos_494.variant.card_divisible_by_prime_gt_k :
-    ∀ (k card p : ℕ), p.Prime ∧ k < p ∧ p ∣ card → Erdos494Unique k card := by
+    ∀ (k card p : ℕ), p.Prime → k ∈ Set.Ioo 0 p → p ∣ card → Erdos494Unique k card := by
   sorry
 
 /--

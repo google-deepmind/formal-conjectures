@@ -28,17 +28,18 @@ open Filter
 
 namespace Erdos454
 
-/-- Define `f n` to be the minimum of `(n + i).nth Prime - (n - i).nth Prime` over `i < n`. -/
-noncomputable def f (n : ℕ) : ℕ := ⨅ i : Fin n, (n + i).nth Prime + (n - i).nth Prime
+/-- Define `f n` to be the minimum of `(n + i).nth Prime + (n - i).nth Prime` over `0 < i < n`. -/
+noncomputable def f (n : ℕ) : ℕ :=
+  if n ≤ 1 then 0 else ⨅ i : {i : Fin n // 0 < (i : ℕ)}, (n + i).nth Prime + (n - i).nth Prime
 
-/-- Is it true that `limsup (fun n => f n - 2 * (n.nth Prime) : ℕ∞) atTop = ⊤`? -/
+/-- Is it true that `limsup (fun n => (f n - 2 * n.nth Prime : ℕ∞)) atTop = ⊤`? -/
 @[category research open, AMS 11]
-theorem erdos_454 : answer(sorry) ↔ limsup (fun n => f n - 2 * (n.nth Prime : ℕ∞)) atTop = ⊤ := by
+theorem erdos_454 : answer(sorry) ↔ limsup (fun n => (f n - 2 * n.nth Prime : ℕ∞)) atTop = ⊤ := by
   sorry
 
-/-- `limsup (fun n => f n - 2 * (n.nth Prime) : ℕ∞) atTop ≥ 2`, and this is proved in [Po79]. -/
+/-- `limsup (fun n => (f n - 2 * n.nth Prime : ℕ∞)) atTop ≥ 2`, and this is proved in [Po79]. -/
 @[category research solved, AMS 11]
-theorem erdos_454.two_le_limsup : 2 ≤ limsup (fun n => f n - 2 * (n.nth Prime : ℕ∞)) atTop := by
+theorem erdos_454.two_le_limsup : 2 ≤ limsup (fun n => (f n - 2 * n.nth Prime : ℕ∞)) atTop := by
   sorry
 
 end Erdos454

@@ -42,9 +42,6 @@ noncomputable def m (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 
-/-- The independence number of a graph `G`. -/
-noncomputable def a (G : SimpleGraph α) : ℝ := (G.indepNum : ℝ)
-
 /-- The maximum cardinality among all independent sets `s`
     that maximize the quantity `|s| - |N(s)|`, where `N(s)`
     is the neighborhood of the set `s`. -/
@@ -56,14 +53,20 @@ noncomputable def aprime (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   letI max_card := (critical_sets.image Finset.card).max
   (max_card.getD 0 : ℝ)
 
-
 /-- `largestInducedForestSize G` is the size of a largest induced forest of `G`. -/
 noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
   sSup { n | ∃ s : Finset α, (G.induce s).IsAcyclic ∧ s.card = n }
 
-/-- `f G` is the number of vertices of a largest induced forest of `G` as a real. -/
-noncomputable def f (G : SimpleGraph α) : ℝ :=
-  (largestInducedForestSize G : ℝ)
+/-- The degree sequence of a graph, sorted in nondecreasing order. -/
+noncomputable def degreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : List ℕ :=
+  (Finset.univ.val.map fun v : α => G.degree v).sort (· ≤ ·)
+
+/--
+The maximum number of occurrences of any term of the degree sequence of `G`.
+-/
+noncomputable def degreeSequenceMultiplicity (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  letI degs := degreeSequence G
+  (List.max? (degs.map (fun d => degs.count d))).getD 0
 
 /-- `largestInducedBipartiteSubgraphSize G` is the size of a largest induced
 bipartite subgraph of `G`. -/
