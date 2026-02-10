@@ -43,7 +43,7 @@ $
 \sum_{n=0}^{\infty} a_n
 $
 -/
-noncomputable def gourevitch_sum : ℝ := ∑' n, gourevitch_term n
+noncomputable inline def gourevitch_sum : ℝ := ∑' n, gourevitch_term n
 
 /-- The Gourevitch series identity:
 The infinite series evaluates to
