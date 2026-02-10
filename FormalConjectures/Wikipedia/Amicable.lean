@@ -54,7 +54,7 @@ structure IsAmicable (a b : ℕ) : Prop where
 /-- The classic amicable pair $(220, 284)$. -/
 @[category test, AMS 11]
 theorem amicable_220_284 : IsAmicable 220 284 := by
-  constructor <;> native_decide
+  constructor <;> decide
 
 /-- `IsAmicable` is symmetric. -/
 @[category test, AMS 11]
