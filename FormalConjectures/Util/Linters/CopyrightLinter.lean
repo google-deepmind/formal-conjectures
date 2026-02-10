@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import Mathlib.Tactic.Linter.Header
-import Mathlib.Data.String.Defs
 
 open Lean Elab Meta Command Syntax
 
