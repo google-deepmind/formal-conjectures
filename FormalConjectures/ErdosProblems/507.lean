@@ -32,7 +32,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Asymptotics Filter Topology
-open scoped Classical EuclideanGeometry
+open scoped EuclideanGeometry
 
 namespace Erdos507
 
@@ -48,7 +48,7 @@ $\alpha(n)$ is the supremum of `minTriangleArea S` over all sets `S` of $n$ poin
 -/
 noncomputable def α (n : ℕ) : ℝ :=
   sSup (minTriangleArea '' { S : Finset ℝ² |
-    S.card = n ∧ ↑S ⊆ Metric.closedBall (0 : ℝ²) 1 ∧ ¬ Collinear ℝ (↑S : Set ℝ²) })
+    S.card = n ∧ ↑S ⊆ Metric.closedBall (0 : ℝ²) 1 ∧ ¬ Collinear ℝ (S : Set ℝ²) })
 
 /--
 Current best lower bound [KPS82].
