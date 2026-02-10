@@ -47,7 +47,8 @@ noncomputable def minTriangleArea (S : Finset ℝ²) : ℝ :=
 $\alpha(n)$ is the supremum of `minTriangleArea S` over all sets `S` of $n$ points in the unit disk.
 -/
 noncomputable def α (n : ℕ) : ℝ :=
-  sSup (minTriangleArea '' { S : Finset ℝ² | S.card = n ∧ ↑S ⊆ Metric.closedBall (0 : ℝ²) 1 })
+  sSup (minTriangleArea '' { S : Finset ℝ² |
+    S.card = n ∧ ↑S ⊆ Metric.closedBall (0 : ℝ²) 1 ∧ ¬ Collinear ℝ (↑S : Set ℝ²) })
 
 /--
 Current best lower bound [KPS82].
