@@ -40,16 +40,34 @@ Asked by Barbeau [Ba76].
 -/
 @[category research open, AMS 11]
 theorem erdos_307 : answer(sorry) ↔ ∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ (∀ q ∈ Q, q.Prime) ∧
-    (1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) := by
+    1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
   sorry
 
 /--
-Instead of asking for sets of primes, ask only that all primes in the sets be relatively coprime.
+Instead of asking for sets of primes, ask only that all elements in the sets be relatively coprime.
+
+Cambie has found several examples when this weakened version is true. For example,
+$$
+1=\left(1+\frac{1}{5}\right)\left(\frac{1}{2}+\frac{1}{3}\right)
+$$
+and
+$$
+1=\left(1+\frac{1}{41}\right)\left(\frac{1}{2}+\frac{1}{3}+\frac{1}{7}\right).
+$$
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_307_coprime : answer(sorry) ↔ ∃ P Q : Finset ℕ, 1 < #P ∧ 1 < #Q ∧ Set.Pairwise P Nat.Coprime ∧
-    Set.Pairwise Q Nat.Coprime ∧
-    (1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) := by
+@[category undergraduate, AMS 5 11]
+theorem erdos_307_coprime : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
+    Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
+    1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
+  sorry
+
+/--
+There are no examples known of the weakened coprime version if we insist that $1\not\in P\cup Q$.
+-/
+@[category research open, AMS 5 11]
+theorem erdos_307_coprime_one_notMem : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 ∉ P ∪ Q ∧
+    1 < #P ∧ 1 < #Q ∧ Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
+    1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
   sorry
 
 end Erdos307
