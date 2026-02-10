@@ -53,7 +53,7 @@ $
 -/
 @[category research solved, AMS 11 33 40]
 theorem gourevitch_series_identity :
-  gourevitch_sum = 32 / (Real.pi ^ 3) := by
+  ∑' n, gourevitchSeq n = 32 / (Real.pi ^ 3) := by
   sorry
 
 end Gourevitch
