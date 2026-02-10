@@ -35,7 +35,7 @@ $
 a_n = \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7
 $
 -/
-noncomputable inline def gourevitch_term (n : ℕ) : ℝ :=
+noncomputable def gourevitchSeq (n : ℕ) : ℝ :=
   ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ) * ((Nat.centralBinom n : ℝ) ^ 7)
 
 /-- The infinite sum of the Gourevitch series:
