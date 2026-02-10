@@ -19,11 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Gourevitch's series identity
 
-*Reference:* [About a New Kind of Ramanujan-Type Series](https://doi.org/10.1080/10586458.2003.10504518)
-by *Jesús Guillera*
-
-*Proof:* [Wilf-Zeilberger seeds and non-trivial hypergeometric identities](https://arxiv.org/abs/2312.14051)
-by *K. C. Au*
+*References:*
+ - [About a New Kind of Ramanujan-Type Series](https://doi.org/10.1080/10586458.2003.10504518) by *Jesús Guillera*
+ - [Wilf-Zeilberger seeds and non-trivial hypergeometric identities](https://arxiv.org/abs/2312.14051) proved by *K. C. Au*
 -/
 
 namespace Gourevitch
@@ -34,7 +32,7 @@ $
 a_n = \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7
 $
 -/
-noncomputable def gourevitchSeq (n : ℕ) : ℝ :=
+noncomputable inline def gourevitchSeq (n : ℕ) : ℝ :=
   ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ) * ((Nat.centralBinom n : ℝ) ^ 7)
 
 /-- The Gourevitch series identity:
