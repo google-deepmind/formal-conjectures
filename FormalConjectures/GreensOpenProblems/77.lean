@@ -36,7 +36,7 @@ determined by them?
 theorem green_77 :
     answer(sorry) ↔
     ∃ (o : ℕ → ℝ), Tendsto o atTop (𝓝 0) ∧
-      α ≪ (fun n ↦ (n : ℝ) ^ (-(2 : ℝ) + o n)) := by
+      α ≪ fun n ↦ n ^ (-2 + o n) := by
   sorry
 
 end Green77
