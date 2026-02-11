@@ -66,6 +66,9 @@ def ValidExponent (c : ℝ) : Prop :=
           (A.card : ℝ) ≥ α * N^2 →
           ∃ d : 𝔽₂ n, d ≠ 0 ∧ ((Sd A d).card : ℝ) ≥ K * α^c * N^2
 
+/-- The infimum of all valid exponents [Gr26]. -/
+noncomputable def C : ℝ := sInf {c | ValidExponent c}
+
 /--
 What is $C$, the infimum of all exponents $c$ for which the following is true, uniformly for
 $0 < \alpha < 1$? Suppose that $A \subset \mathbb{F}_2^n \times \mathbb{F}_2^n$ is a set of density
@@ -75,17 +78,17 @@ corners $(x,y), (x,y+d), (x+d,y)$.
 This question has been resolved by [FSS20], showing that $C = 4$.
 -/
 @[category research solved, AMS 5 11]
-theorem green_19 : sInf {c | ValidExponent c} = 4 := by
+theorem green_19 : C = 4 := by
   sorry
 
 /-- [Ma21] showed that $3.13 \leq C$. -/
 @[category research open, AMS 5 11]
-theorem green_19.lower : sInf {c | ValidExponent c} >= 3.13 := by
+theorem green_19.lower : C >= 3.13 := by
   sorry
 
 /-- [Ma21] showed that $C \leq 4$. -/
 @[category research open, AMS 5 11]
-theorem green_19.upper : sInf {c | ValidExponent c} <= 4 := by
+theorem green_19.upper : C <= 4 := by
   sorry
 
 /- TODO(jeangud) in [FSS20] they mention that the corresponding question for squares
