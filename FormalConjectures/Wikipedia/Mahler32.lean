@@ -32,7 +32,7 @@ $$
 -/
 noncomputable def Ω (α : ℝ) : ℝ :=
   sInf {Filter.atTop.limsup (fun n ↦ Int.fract (θ * α ^ n))
-    - Filter.atTop.liminf (fun n ↦ Int.fract (θ * α ^ n)) | (θ : ℝ) (_ : 0 < θ) }
+    - Filter.atTop.liminf (fun n ↦ Int.fract (θ * α ^ n)) | (θ : ℝ) (_ : 0 < θ)}
 
 /-- A Z-number is a real number `x` such that the fractional parts of `x(3/2)^n` are less than
 `1/2` for all positive integers `n`. -/
