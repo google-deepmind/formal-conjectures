@@ -45,7 +45,7 @@ structure IsBetrothed (m n : ℕ) : Prop where
 /-- The smallest known betrothed pair $(48, 75)$. -/
 @[category test, AMS 11]
 theorem betrothed_48_75 : IsBetrothed 48 75 := by
-  constructor <;> native_decide
+  constructor <;> decide
 
 /-- `IsBetrothed` is symmetric. -/
 @[category test, AMS 11]
@@ -59,18 +59,20 @@ Do there exist betrothed numbers $(m, n)$ where both have the same parity
 
 All known betrothed pairs consist of one even and one odd number.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Betrothed_numbers)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Betrothed_numbers),
+[List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
 @[category research open, AMS 11]
 theorem same_parity_betrothed :
-    answer(sorry) ↔ ∃ m n : ℕ, IsBetrothed m n ∧ m ≠ n ∧ (Even m ↔ Even n) := by
+    answer(sorry) ↔ ∃ m n : ℕ, IsBetrothed m n ∧ (Even m ↔ Even n) := by
   sorry
 
 /--
 **Infinitude of betrothed numbers conjecture.**
 Are there infinitely many betrothed number pairs?
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Betrothed_numbers)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Betrothed_numbers),
+[List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
 @[category research open, AMS 11]
 theorem infinitely_many_betrothed :
