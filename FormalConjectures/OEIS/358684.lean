@@ -25,6 +25,8 @@ $n$-th Fermat number exceeds $2^(2^n - k)$.
 -/
 
 
+namespace OeisA358684
+
 open Nat
 
 /--
@@ -153,3 +155,5 @@ theorem oeis_358684_conjecture_0 (n : ℕ) :
     refine Nat.le_of_lt_succ <| (2).log_lt_of_lt_pow ?_ ?_
     · exact Nat.minFac_pos _|>.ne'
     · exact (Nat.minFac_le (by bound)).trans_lt this
+
+end OeisA358684

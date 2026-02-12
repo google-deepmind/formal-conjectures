@@ -13,28 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
 
-open Nat
-namespace OeisA41
+import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«507»
 
 /-!
-Name: "No powers as partition numbers"
+# Ben Green's Open Problem 77
 
-There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
-
-*Reference*: [A41](https://oeis.org/A41)
+*Reference:*
+- [Ben Green's Open Problem 77](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.77)
 -/
 
-/-- The `n`-th partition number. -/
-def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
+open Erdos507 Filter Topology
+
+namespace Green77
 
 /--
-There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1$.
-See comment by Zhi-Wei Sun (Dec 02 2013).
+Given $n$ points in the unit disc, must there be a triangle of area at most $n^{-2+o(1)}$
+determined by them?
 -/
-@[category research open, AMS 11]
-theorem noPowerPartitionNumber : answer(sorry) ↔ ∀ k, ¬IsPerfectPower (p k) := by
+@[category research open, AMS 5 52]
+theorem green_77 :
+    answer(sorry) ↔
+    ∃ (o : ℕ → ℝ), Tendsto o atTop (𝓝 0) ∧
+      α ≪ fun n ↦ n ^ (-2 + o n) := by
   sorry
 
-end OeisA41
+end Green77

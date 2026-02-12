@@ -16,8 +16,13 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Filter Real
-open Nat
+/-!
+# Erdős Problem 1004
+
+*Reference:* [erdosproblems.com/1004](https://www.erdosproblems.com/1004)
+-/
+
+open Filter Real Nat
 
 namespace Erdos1004
 
@@ -42,7 +47,7 @@ K ≤ n / exp(c (log n)^{1/3}) for some constant c > 0.
 Here we state the existence of such a constant c.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1004.EPS87_theorem :
+theorem erdos_1004.variants.le_of_isDistinctTotientRun :
     answer(True) ↔ ∃ (c : ℝ) (hc : c > 0),
       ∀ᶠ n in atTop, ∀ (K : ℕ), IsDistinctTotientRun n K →
         (K : ℝ) ≤ (n : ℝ) / Real.exp (c * (Real.log n) ^ (1/3 : ℝ)) := by

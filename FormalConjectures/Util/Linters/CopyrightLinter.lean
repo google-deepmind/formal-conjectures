@@ -58,8 +58,13 @@ register_option linter.style.copyright : Bool := {
   descr := "enable the copyright header style linter"
 }
 
+
+
 /-- The copyright linter ensures that every file has the right copyright header. -/
 def copyrightLinter : Linter where run := withSetOptionIn fun stx ↦ do
+  -- The formal-conjectures CI uses a global import file called `All.lean` but we don't want
+  -- to run this linter there.
+  if (← getFileName).endsWith "FormalConjectures/All.lean" then return
   let source := (← getFileMap).source
   -- Get the syntax corresponding to the first character in the file since that's where the warning
   -- message will be logged.
