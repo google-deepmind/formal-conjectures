@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures about Nonvototient Numbers
+# Conjectures about Noncototient Numbers
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Noncototient)
 -/
