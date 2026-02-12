@@ -15,14 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.HahnSeries.Basic
-import Mathlib.Topology.Algebra.Valued.ValuedField
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # A conjecture by Margulis on matrix groups
@@ -48,8 +40,8 @@ instance : TopologicalSpace (SpecialLinearGroup n ℝ) :=
 
 end
 
-/- Let D be the diagonal group of SL_n(R) where n ≥ 3.
-Then any relatively compact D-orbit in SL_n(R)/ SLn(Z) is closed. -/
+/-- Let `D` be the diagonal group of `SL_n(ℝ)` where n ≥ 3.
+Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
 
 @[category research open, AMS 11 15 22]
 theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
@@ -105,13 +97,12 @@ abbrev A := Polynomial F
 /-- K = F⸨t⁻¹⸩, the  F. -/
 abbrev K := LaurentSeries F
 
-/- Die natürliche Einbettung `F[t] →+* F((t⁻¹))`:
-    Polynom → Potenzreihe → Laurentreihe. -/
+/- The natural embedding `F[t] →+* F((t⁻¹))`:
+    polynomial → power series → Laurent series. -/
 
 noncomputable def polyToLaurent_F :
    A F →+* K F :=
   polyToLaurent (K := F)
-
 
 abbrev SL4 (R : Type*) [CommRing R] :=
   Matrix.SpecialLinearGroup (Fin 4) R
@@ -151,8 +142,7 @@ theorem huang_shi_theorem_1_2
     (hchar : ringChar (K F) ∈ ({3, 5, 7, 11} : Finset ℕ)) :
     ∃ z : SL(4, K F) ⧸ Gamma (F),
       IsCompact (closure (MulAction.orbit (diagonalSubgroup (Fin 4) (K F)) z)) ∧
-      ¬ IsClosed (MulAction.orbit (diagonalSubgroup (Fin 4) (K F)) z) :=
-by
+      ¬ IsClosed (MulAction.orbit (diagonalSubgroup (Fin 4) (K F)) z) := by
   -- Placeholder: a Lean formalization would require a full development
   -- of the Huang–Shi paper in mathlib.
   sorry
