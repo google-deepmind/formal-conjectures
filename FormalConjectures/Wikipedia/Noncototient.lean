@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Noncototient)
 -/
 
-namespace Nat
+namespace Noncototient
 /--
 A number n is a Noncototient if the equation n = k - φ(k) has no solution where φ is Eulers totient
 function.
@@ -36,4 +36,4 @@ All Noncototients are even.
 theorem Noncototient_even (n : ℕ) (h : Noncototient n) : Even n := by
   sorry
 
-end Nat
+end Noncototient
