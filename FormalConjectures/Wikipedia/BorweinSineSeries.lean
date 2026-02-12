@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Convergence of the Borwein Series with Sinusoidal Coefficient
 
-*Reference:* [MathWorld, Harmonic Series](https://mathworld.wolfram.com/HarmonicSeries.html)
+*References:*
+- [MathWorld, Harmonic Series](https://mathworld.wolfram.com/HarmonicSeries.html)
+- Borwein, J.; Bailey, D.; Girgensohn, R. *Experimentation in Mathematics: Computational Paths
+  to Discovery*, A K Peters, 2004, p. 56.
 -/
 
 namespace BorweinSineSeries
