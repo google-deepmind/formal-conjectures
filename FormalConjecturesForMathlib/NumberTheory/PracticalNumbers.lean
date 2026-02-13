@@ -29,23 +29,11 @@ represented as a sum of distinct divisors of $n$.
 
 ## Main definitions
 
-* `Finset.subsetSums`: The set of all sums of distinct elements of a finite set.
 * `Nat.IsPractical`: A natural number $n$ is practical if every positive integer $m ≤ n$ can be
   expressed as a sum of distinct divisors of $n$.
 -/
 
-namespace Finset
-
-/-- The set of subset sums of a finite set in an additive commutative monoid. -/
-def subsetSums {M : Type*} [AddCommMonoid M] (S : Finset M) : Set M :=
-  _root_.subsetSums ↑S
-
-end Finset
-
 namespace Nat
-
-/-- The set of subset sums of a finite set of natural numbers. -/
-abbrev subsetSums := @Finset.subsetSums ℕ _
 
 /-- A natural number $n$ is *practical* if every positive integer $m ≤ n$ can be represented
 as a sum of distinct divisors of $n$. -/
