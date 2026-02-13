@@ -53,7 +53,7 @@ See also [208].
 theorem erdos_489 : answer(sorry) ↔
     ∀ (A : Set ℕ),
       (fun x : ℕ => (((Finset.Icc 1 x).filter (· ∈ A)).card : ℝ)) =o[atTop]
-        (fun x : ℕ => Real.sqrt (x : ℝ)) →
+        (fun x : ℕ => (x : ℝ).sqrt) →
       (sievedSet A).Infinite →
       ∃ L : ℝ, Tendsto (fun x : ℕ => GapSumSq A x / (x : ℝ)) atTop (𝓝 L) := by
   sorry
