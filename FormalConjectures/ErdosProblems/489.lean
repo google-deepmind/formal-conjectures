@@ -63,7 +63,7 @@ existence of this limit was proved by Erdős. This is the $\alpha = 2$ case of E
 @[category research solved, AMS 11]
 theorem erdos_489.variants.squarefree :
     ∃ L : ℝ, Tendsto
-      (fun x : ℕ => gapSumSq {n | ∃ p, Nat.Prime p ∧ n = p ^ 2} x / (x : ℝ))
+      (fun x : ℕ => GapSumSq {n | ∃ p, Nat.Prime p ∧ n = p ^ 2} x / (x : ℝ))
       atTop (𝓝 L) := by
   sorry
 
