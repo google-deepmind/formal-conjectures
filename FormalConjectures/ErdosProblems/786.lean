@@ -101,24 +101,25 @@ lemma consecutivePrimesFrom_two_one : consecutivePrimesFrom 2 1 = {2, 3} := by
     | succ i => grind
   · rintro (rfl | rfl); exact ⟨0, by grind, nth_zero Nat.prime_two⟩; exact ⟨1, by grind⟩
 
--- Reworded slightly from the link.
+-- Reworded slightly using https://users.renyi.hu/~p_erdos/1969-14.pdf p. 81
+-- See https://users.renyi.hu/~p_erdos/1965-02.pdf p. 182 for the multiplicity one condition
 /--
-Let $\epsilon > 0$ be given. Then, for a sufficiently large prime `p`, there is a sequence
+Let $\epsilon > 0$ be given. Then, for a sufficiently large prime `p`, take the sequence of
 consecutive primes $p_1 < \cdots < p_k$ such that
 $$
 \sum_{i=1}^k \frac{1}{p_i} < 1 < \sum_{i=1}^{k + 1} \frac{1}{p_i},
 $$
-and the set $A$ of all naturals divisible by exactly one of $p_1, ..., p_k$ has
-density $\frac{1}{e} - \epsilon$ and has the property that $a_1\cdots a_r = b_1\cdots b_s$
-with $a_i, b_j\in A$ can only hold when $r = s$.
+and let $A$ be the set of all naturals divisible by exactly one of $p_1, ..., p_k$ (with
+multiplicity $1$). Then $A$ has density $\frac{1}{e} - \epsilon$ and has the property
+that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when $r = s$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε < 1 / rexp 1) :
     ∀ᶠ (p : ℕ) in atTop, p.Prime → ∃ k,
       ∑ q ∈ consecutivePrimesFrom p k, (1 : ℝ) / q < 1 ∧
         1 < ∑ q ∈ consecutivePrimesFrom p (k + 1), (1 : ℝ) / q ∧
-          { n | ∃! q ∈ consecutivePrimesFrom p k, q ∣ n }.HasDensity (1 / rexp 1 - ε) ∧
-            {n | ∃! q ∈ consecutivePrimesFrom p k, q ∣ n}.IsMulCardSet := by
+          letI A := { n | ∑ q ∈ consecutivePrimesFrom p k, (n : ℕ).factorization q = 1 }
+          A.HasDensity (1 / rexp 1 - ε) ∧ A.IsMulCardSet := by
   sorry
 
 end Erdos786
