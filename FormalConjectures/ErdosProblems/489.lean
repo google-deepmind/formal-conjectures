@@ -55,7 +55,7 @@ theorem erdos_489 : answer(sorry) ↔
       (fun x : ℕ => (((Finset.Icc 1 x).filter (· ∈ A)).card : ℝ)) =o[atTop]
         (fun x : ℕ => Real.sqrt (x : ℝ)) →
       (sievedSet A).Infinite →
-      ∃ L : ℝ, Tendsto (fun x : ℕ => gapSumSq A x / (x : ℝ)) atTop (𝓝 L) := by
+      ∃ L : ℝ, Tendsto (fun x : ℕ => GapSumSq A x / (x : ℝ)) atTop (𝓝 L) := by
   sorry
 
 /-- When $A = \{p^2 : p \textrm{ prime}\}$, $B$ is the set of squarefree numbers, and the
