@@ -90,12 +90,12 @@ theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
 **Conjecture 1.**
 Are there infinitely many practical numbers $m$ such that $h(m) < (\log \log m)^{O(1)}$?
 
-More precisely: does there exist a constant $C > 0$ such that for all sufficiently large
+More precisely: does there exist a constant $C > 0$ such that for infinitely many
 practical numbers $m$, we have $h(m) < (\log \log m)^C$?
 -/
 @[category research open, AMS 11]
 theorem erdos_18a : answer(sorry) ↔
-    ∃ C : ℝ, 0 < C ∧ ∀ᶠ m in atTop, Nat.IsPractical m →
+    ∃ C : ℝ, 0 < C ∧ ∃ᶠ m in atTop, Nat.IsPractical m ∧
       (practicalH m : ℝ) < (log (log m)) ^ C := by
   sorry
 
@@ -136,7 +136,7 @@ $h(m) \ll (\log m)^{1/2}$. This gives a positive answer to a weaker form of Conj
 -/
 @[category research solved, AMS 11]
 theorem erdos_18_vose :
-    ∃ C : ℝ, 0 < C ∧ ∀ᶠ m in atTop, Nat.IsPractical m →
+    ∃ C : ℝ, 0 < C ∧ ∃ᶠ m in atTop, Nat.IsPractical m ∧
       (practicalH m : ℝ) < C * (log m) ^ (1 / 2 : ℝ) := by
   sorry
 

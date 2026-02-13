@@ -47,9 +47,6 @@ namespace Nat
 /-- The set of subset sums of a finite set of natural numbers. -/
 abbrev subsetSums := @Finset.subsetSums ℕ _
 
-/-- The set of subset sums of divisors of `n`, i.e., all sums of distinct divisors of `n`. -/
-def divisorSubsetSums (n : ℕ) : Set ℕ := Finset.subsetSums n.divisors
-
 /-- A natural number $n$ is *practical* if every positive integer $m ≤ n$ can be represented
 as a sum of distinct divisors of $n$. -/
 def IsPractical (n : ℕ) : Prop :=
