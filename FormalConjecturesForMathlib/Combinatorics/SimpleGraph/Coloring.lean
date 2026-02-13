@@ -17,6 +17,7 @@ import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.Combinatorics.SimpleGraph.Coloring
+import Mathlib.Data.Set.Card
 
 variable {V α ι : Type*} {G : SimpleGraph V} {n : ℕ}
 
