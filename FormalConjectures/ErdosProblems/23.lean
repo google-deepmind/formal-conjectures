@@ -37,7 +37,7 @@ theorem erdos_23_n1 :
     (∀ (G : SimpleGraph (Fin 5)) [DecidableRel G.Adj],
       G.CliqueFree 3 →
       ∃ (H : SimpleGraph (Fin 5)) (_ : DecidableRel H.Adj),
-        H ≤ G ∧ H.Colorable 2 ∧ (G.edgeFinset \ H.edgeFinset).card ≤ 1) ∧
+        H ≤ G ∧ H.IsBipartite∧ (G.edgeFinset \ H.edgeFinset).card ≤ 1) ∧
     (∃ (G : SimpleGraph (Fin 5)) (_ : DecidableRel G.Adj),
       G.CliqueFree 3 ∧
       ∀ (H : SimpleGraph (Fin 5)) [DecidableRel H.Adj],
