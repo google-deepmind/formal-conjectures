@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/313](https://www.erdosproblems.com/313)
-- OEIS: [A054377](https://oeis.org/A054377) (Primary pseudoperfect numbers)
+- [A54377](https://oeis.org/A54377) (Primary pseudoperfect numbers)
 -/
 
 namespace Erdos313
@@ -40,7 +40,7 @@ and `P` is a set of distinct primes such that the following equation holds:
 $\sum_{p \in P} \frac{1}{p} = 1 - \frac{1}{m}$?
 -/
 @[category research open, AMS 11]
-theorem erdos_313_conjecture : erdos_313_solutions.Infinite ↔ answer(sorry) := by
+theorem erdos_313_conjecture : answer(sorry) ↔ erdos_313_solutions.Infinite := by
   sorry
 
 @[category test, AMS 11]

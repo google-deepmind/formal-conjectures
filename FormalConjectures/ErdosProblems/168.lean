@@ -26,17 +26,17 @@ open scoped Topology
 
 namespace Erdos168
 
-/--Say a finite set of natural numbers is *non ternary* if it contains no
-3-term arithmetic progression of the form `n, 2n, 3n`.-/
+/-- Say a finite set of natural numbers is *non ternary* if it contains no
+3-term arithmetic progression of the form `n, 2n, 3n`. -/
 def NonTernary (S : Finset ℕ) : Prop := ∀ n : ℕ, n ∉ S ∨ 2*n ∉ S ∨ 3*n ∉ S
 
 /--`IntervalNonTernarySets N` is the (fin)set of non ternary subsets of `{1,...,N}`.
-The advantage of defining it as below is that some proofs (e.g. that of `F 3 = 2`) become `rfl`.-/
+The advantage of defining it as below is that some proofs (e.g. that of `F 3 = 2`) become `rfl`. -/
 def IntervalNonTernarySets (N : ℕ) : Finset (Finset ℕ) :=
   (Finset.Icc 1 N).powerset.filter
     fun S => ∀ n ∈ Finset.Icc 1 (N / 3 : ℕ), n ∉ S ∨ 2*n ∉ S ∨ 3*n ∉ S
 
-/--`F N` is the size of the largest non ternary subset of `{1,...,N}`.-/
+/--`F N` is the size of the largest non ternary subset of `{1,...,N}`. -/
 abbrev F (N : ℕ) : ℕ := (IntervalNonTernarySets N).sup Finset.card
 
 @[category API, AMS 5 11]
@@ -81,8 +81,8 @@ theorem erdos_168.parts.i :
 
 /-- Is the limit $F(N)/N$ as $N \to \infty$ irrational? -/
 @[category research open, AMS 5 11]
-theorem erdos_168.parts.ii :
-    Irrational (Filter.atTop.limsup (fun N => (F N / N : ℝ))) ↔ answer(sorry):= by
+theorem erdos_168.parts.ii : answer(sorry) ↔
+    Irrational (Filter.atTop.limsup (fun N => (F N / N : ℝ))) := by
   sorry
 
 /-- The limit $F(N)/N$ as $N \to \infty$ exists. (proved by Graham, Spencer, and Witsenhausen) -/

@@ -34,16 +34,16 @@ The answer is yes, proved by Bloom [Bl21].
 Note: The solution to this problem has been formalized in Lean 3 by T. Bloom and B. Mehta, see
 https://github.com/b-mehta/unit-fractions -/
 @[category research solved, AMS 11]
-theorem erdos_298 : (∀ (A : Set ℕ), 0 ∉ A → A.HasPosDensity →
-    ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) ↔ answer(True) := by
+theorem erdos_298 : answer(True) ↔ (∀ (A : Set ℕ), 0 ∉ A → A.HasPosDensity →
+    ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) := by
   sorry
 
 /--
 In [Bl21] it is proved under the weaker assumption that `A` only has positive upper density.
 -/
 @[category research solved, AMS 11]
-theorem erdos_298.variants.upper_density : (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
-    ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) ↔ answer(True) := by
+theorem erdos_298.variants.upper_density : answer(True) ↔ (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
+    ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) := by
   sorry
 
 end Erdos298

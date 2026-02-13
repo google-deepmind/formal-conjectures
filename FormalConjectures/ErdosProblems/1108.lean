@@ -42,8 +42,8 @@ def IsPowerful (n : ℕ) : Prop :=
 For each $k \geq 2$, does the set $A = \left\{ \sum_{n\in S}n! : S\subset \mathbb{N}\text{ finite}\right\}$ of all finite sums of distinct factorials contain only finitely many $k$-th powers?
 -/
 @[category research open, AMS 11]
-theorem erdos_1108.k_th_powers : (∀ k ≥ 2,
-    Set.Finite { a | a ∈ FactorialSums ∧ ∃ m : ℕ, m ^ k = a }) ↔ answer(sorry) := by
+theorem erdos_1108.k_th_powers : answer(sorry) ↔ ∀ k ≥ 2,
+    Set.Finite { a | a ∈ FactorialSums ∧ ∃ m : ℕ, m ^ k = a } := by
   sorry
 
 /--
@@ -51,7 +51,7 @@ Does the set $A = \left\{ \sum_{n\in S}n! : S\subset \mathbb{N}\text{ finite}\ri
 -/
 @[category research open, AMS 11]
 theorem erdos_1108.powerful_numbers :
-     {a ∈ FactorialSums | IsPowerful a}.Finite ↔ answer(sorry) := by
+     answer(sorry) ↔ {a ∈ FactorialSums | IsPowerful a}.Finite := by
   sorry
 
 end Erdos1108

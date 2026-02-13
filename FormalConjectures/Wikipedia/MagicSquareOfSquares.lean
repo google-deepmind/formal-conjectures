@@ -33,14 +33,13 @@ and all rows, columns, and diagonals add up to the same value?
 -/
 @[category research open, AMS 11]
 theorem exists_magic_square_squares :
-    (∃ m : Fin 3 → Fin 3 → ℕ, ∃ t : ℕ,
+    answer(sorry) ↔ ∃ m : Fin 3 → Fin 3 → ℕ, ∃ t : ℕ,
        m.Injective2 ∧
        (∀ i j, IsSquare (m i j)) ∧
        ∀ i, ∑ j, m i j = t ∧
        ∀ j, ∑ i, m i j = t ∧
        m 0 0 + m 1 1 + m 2 2 = t ∧
-       m 0 2 + m 1 1 + m 2 0 = t)
-     ↔ answer(sorry) := by
+       m 0 2 + m 1 1 + m 2 0 = t := by
   sorry
 
 end MagicSquareOfSquares

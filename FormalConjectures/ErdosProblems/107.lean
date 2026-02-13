@@ -44,13 +44,13 @@ contain $n$ points which form the vertices of a convex $n$-gon.
 Prove that $f(n) = 2^{n-2} + 1$.
 -/
 @[category research open, AMS 52]
-theorem erdos_107 : (∀ n ≥ 3, f n = 2^(n - 2) + 1) ↔ answer(sorry) := by
+theorem erdos_107 : answer(sorry) ↔ ∀ n ≥ 3, f n = 2^(n - 2) + 1 := by
   sorry
 
 /-- For every $n ≥ 3$, there exists $N$ such that any $N$ points, no three on a line,
 contain a convex $n$-gon. -/
 @[category research solved, AMS 52]
-theorem nonempty_cardSet : ∀ n ≥ 3, (cardSet n).Nonempty :=
+theorem nonempty_cardSet : ∀ n ≥ 3, (cardSet n).Nonempty := by
   sorry
 
 /-- Depending on details of definitions,

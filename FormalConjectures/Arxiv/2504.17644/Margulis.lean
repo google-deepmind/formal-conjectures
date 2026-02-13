@@ -48,7 +48,7 @@ Let `D` be the diagonal group of `SL_n(R)` where `n ≥ 3`. Then any relatively 
 theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     (g : SL(n, ℝ) ⧸ Subgroup.map (map (Int.castRingHom ℝ)) ⊤)
     (hg : IsCompact <| closure (MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g)) :
-    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g :=
+    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g := by
   sorry
 
 -- TODO(Paul-Lez): add main theorem from the paper.

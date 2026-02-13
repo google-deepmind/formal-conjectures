@@ -16,7 +16,7 @@ limitations under the License.
 import MD4Lean
 import Lean
 import Batteries.Data.String.Matcher
-import FormalConjectures.Util.Attributes
+import FormalConjectures.Util.Attributes.Basic
 import Mathlib.Data.String.Defs
 
 
@@ -28,7 +28,7 @@ open ProblemAttributes
 def getCategoryStatsMarkdown : CoreM String := do
   let stats ← getCategoryStats
   let githubSearchBaseUrl := "https://github.com/search?type=code&q=repo%3Agoogle-deepmind%2Fformal-conjectures+"
-  return  s!"| Count | Category          |
+  return s!"| Count | Category          |
 | ----- | ----------------- |
 | {stats (Category.research ProblemStatus.open)} | [Research (open)]({githubSearchBaseUrl}%22category+research+open%22)|
 | {stats (Category.research ProblemStatus.solved)} | [Research (solved)]({githubSearchBaseUrl}%22category+research+solved%22)|
@@ -146,6 +146,7 @@ classifications, please refer to the
 ## Repository growth
 "
     IO.println markdownBody
-    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throwError "Parsing failed"
+    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody
+      | throwError "Parsing failed"
     let finalHtml ← replaceTag "main" inputHtmlContent (newBody ++ graphHtml)
     IO.FS.writeFile file finalHtml

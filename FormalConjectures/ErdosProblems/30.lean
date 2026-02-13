@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/30](https://www.erdosproblems.com/30)
 -/
 
+namespace Erdos30
+
 /--
 Let $h(N)$ be the maximum size of a Sidon set in $\{1, \dots, N\}$.
 -/
@@ -34,9 +36,9 @@ open Filter
 Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varespilon}(N^\varespilon)
 -/
 @[category research open, AMS 11]
-theorem erdos_30 :
-    (∀ᵉ (ε > 0), (fun N => h N - (N : Real).sqrt) =O[atTop] fun N => (N : ℝ)^(ε : ℝ))
-    ↔ answer(sorry) := by
+theorem erdos_30 : answer(sorry) ↔
+    ∀ᵉ (ε > 0), (fun N => h N - (N : Real).sqrt) =O[atTop] fun N => (N : ℝ)^(ε : ℝ) := by
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+end Erdos30

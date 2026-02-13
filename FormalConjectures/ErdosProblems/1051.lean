@@ -44,8 +44,8 @@ $\sum_{n=0}^\infty \frac{1}{a_n \cdot a_{n+1}}$ is irrational?
 -/
 @[category research open, AMS 11]
 theorem erdos_1051 :
-    (∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
-      Irrational (ErdosSeries a)) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
+      Irrational (ErdosSeries a) := by
   sorry
 
 /--

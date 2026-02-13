@@ -27,8 +27,9 @@ open Polynomial MeasureTheory ENNReal Classical
 namespace Erdos1041
 
 variable (n : ℕ) (f : ℂ[X]) (hn : n ≥ 2) (hnum : f.natDegree = n)
+variable (h_monic : f.Monic)
 variable (h : f.rootSet ℂ ⊆ Metric.ball 0 1)
-include hn hnum h
+include hn hnum h h_monic
 
 /--
 The length of a subset $s$ of $\mathbb{C}$ is defined to be its 1-dimensional
@@ -38,7 +39,7 @@ noncomputable def length (s : Set ℂ) : ℝ≥0∞ := μH[1] s
 
 /--
 **Erdős–Herzog–Piranian Component Lemma** (Metric Properties of Polynomials, 1958):
-If $f$ is a degree $n$ polynomial with all roots in the unit disk,
+If $f$ is a monic degree $n$ polynomial with all roots in the unit disk,
 then some connected component
 of $\{z \mid |f(z)| < 1\}$ contains at least two roots with multiplicity.
 

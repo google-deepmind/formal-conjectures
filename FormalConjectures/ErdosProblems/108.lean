@@ -34,11 +34,11 @@ contains a subgraph of girth ≥ r and chromatic number ≥ k?
 -/
 @[category research open, AMS 5]
 theorem erdos_108 :
-    (∀ r ≥ 4, ∀ k ≥ (2 : ℕ), ∃ (f : ℕ),
+    answer(sorry) ↔ ∀ r ≥ 4, ∀ k ≥ (2 : ℕ), ∃ (f : ℕ),
     ∀ (V : Type u) (G : SimpleGraph V) (_ : Nonempty V)
       (hchro : f ≤ SimpleGraph.chromaticNumber G),
     ∃ (H : G.Subgraph), (SimpleGraph.girth H.coe ≥ r) ∧
-    (SimpleGraph.chromaticNumber H.coe ≥ k)) ↔ answer(sorry) := by
+    (SimpleGraph.chromaticNumber H.coe ≥ k) := by
   sorry
 
 -- TODO: Proof for the case r=4 and statement for the infinite case

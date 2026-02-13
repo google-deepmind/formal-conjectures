@@ -45,8 +45,8 @@ such that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold whe
 $r = s$?
 -/
 @[category research open, AMS 11]
-theorem erdos_786.parts.i : (∀ ε > 0, ε ≤ 1 →
-    ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet) ↔ answer(sorry) := by
+theorem erdos_786.parts.i : answer(sorry) ↔ ∀ ε > 0, ε ≤ 1 →
+    ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet := by
   sorry
 
 /--
@@ -55,9 +55,9 @@ $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when
 $r = s$?
 -/
 @[category research open, AMS 11]
-theorem erdos_786.parts.ii : (∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : f =o[atTop] (1 : ℕ → ℝ)),
-    ∀ N, A N ⊆ Set.Icc 1 (N + 1) ∧ (1 - f N) * N ≤ (A N).ncard ∧ (A N).IsMulCardSet) ↔
-    answer(sorry) := by
+theorem erdos_786.parts.ii : answer(sorry) ↔
+    ∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : f =o[atTop] (1 : ℕ → ℝ)),
+    ∀ N, A N ⊆ Set.Icc 1 (N + 1) ∧ (1 - f N) * N ≤ (A N).ncard ∧ (A N).IsMulCardSet := by
   sorry
 
 /--
@@ -89,9 +89,11 @@ with $a_i, b_j\in A$ can only hold when $r = s$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε ≤ 1) :
-    -- TODO(mercuris) : I think we want `k` to be allowed to vary somehow as well, but maybe the exists is sufficient
+    -- TODO(mercuris) : I think we want `k` to be allowed to vary somehow as well, but maybe the
+    -- exists is sufficient
     ∃ (k : ℕ),
-      -- Sufficient to take L^∞ norm to guarantee all primes are large, due to the consecutivePrimes assertion
+      -- Sufficient to take L^∞ norm to guarantee all primes are large, due to the consecutivePrimes
+      -- assertion
       ∀ᶠ (p : Fin (k + 2) → ℕ) in atTop, consecutivePrimes p ∧
         ∑ i ∈ Finset.univ.filter (· < Fin.last _), (1 : ℝ) / p i < 1 ∧
           1 < ∑ i, (1 : ℝ) / p i →
