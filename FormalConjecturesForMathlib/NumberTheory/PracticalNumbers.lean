@@ -53,6 +53,6 @@ def divisorSubsetSums (n : ℕ) : Set ℕ := Finset.subsetSums n.divisors
 /-- A natural number $n$ is *practical* if every positive integer $m ≤ n$ can be represented
 as a sum of distinct divisors of $n$. -/
 def IsPractical (n : ℕ) : Prop :=
-  ∀ m, m ≤ n → m ∈ divisorSubsetSums n
+  ∀ m, m ≤ n → m ∈ subsetSums n.divisors
 
 end Nat
