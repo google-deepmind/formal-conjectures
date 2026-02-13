@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 32
 
-*Reference:*
+*References:*
 * [erdosproblems.com/32](https://www.erdosproblems.com/32)
 * [Erd54] Erdős, Paul, Some results on additive number theory. Proc. Amer. Math. Soc. (1954),
  847-853.
