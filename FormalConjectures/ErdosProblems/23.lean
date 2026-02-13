@@ -29,19 +29,23 @@ open SimpleGraph BigOperators Classical
 namespace Erdos23
 
 /--
-The maximum number of edges that need to be removed from a triangle-free graph on $5$ vertices
-to make it bipartite is $1$. This is the $n = 1$ case of Erdős Problem 23.
+Every triangle-free graph on $5$ vertices can be made bipartite by removing at most $1$ edge.
+This is the $n = 1$ case of Erdős Problem 23.
 -/
 @[category test, AMS 5]
 theorem erdos_23_n1 :
-    (∀ (G : SimpleGraph (Fin 5)) [DecidableRel G.Adj],
-      G.CliqueFree 3 →
-      ∃ (H : SimpleGraph (Fin 5)) (_ : DecidableRel H.Adj),
-        H ≤ G ∧ H.IsBipartite∧ (G.edgeFinset \ H.edgeFinset).card ≤ 1) ∧
-    (∃ (G : SimpleGraph (Fin 5)) (_ : DecidableRel G.Adj),
-      G.CliqueFree 3 ∧
-      ∀ (H : SimpleGraph (Fin 5)) [DecidableRel H.Adj],
-        H ≤ G → H.Colorable 2 → 1 ≤ (G.edgeFinset \ H.edgeFinset).card) := by
+    ∀ (G : SimpleGraph (Fin 5)), G.CliqueFree 3 → ∃ (H : SimpleGraph (Fin 5)),
+        H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ 1 := by
+  sorry
+
+/--
+There exists a triangle-free graph on $5$ vertices such that at least $1$ edge must be removed
+to make it bipartite. This shows the bound in `erdos_23_n1` is tight.
+-/
+@[category test, AMS 5]
+theorem erdos_23_n1_tight :
+    ∃ (G : SimpleGraph (Fin 5)), G.CliqueFree 3 ∧ ∀ (H : SimpleGraph (Fin 5)),
+        H ≤ G → H.IsBipartite → 1 ≤ (G.edgeFinset \ H.edgeFinset).card := by
   sorry
 
 /--
@@ -59,7 +63,7 @@ any bipartite subgraph must omit at least $n^2$ edges.
 -/
 @[category test, AMS 5]
 theorem blowupC5_tight (n : ℕ) (_hn : 0 < n) (H : SimpleGraph (ZMod 5 × Fin n))
-    [DecidableRel H.Adj] (hH : H ≤ blowupC5 n) (hBip : H.Colorable 2) :
+    (hH : H ≤ blowupC5 n) (hBip : H.IsBipartite) :
     n ^ 2 ≤ ((blowupC5 n).edgeFinset \ H.edgeFinset).card := by
   sorry
 
@@ -68,14 +72,10 @@ Can every triangle-free graph on $5n$ vertices be made bipartite by deleting at 
 -/
 @[category research open, AMS 5]
 theorem erdos_23 : answer(sorry) ↔
-    ∀ (n : ℕ) (V : Type) [Fintype V] [DecidableEq V],
-      Fintype.card V = 5 * n →
-      ∀ (G : SimpleGraph V) [DecidableRel G.Adj],
-        G.CliqueFree 3 →
-        ∃ (H : SimpleGraph V) (_ : DecidableRel H.Adj),
-          H ≤ G ∧
-          H.Colorable 2 ∧
-          (G.edgeFinset \ H.edgeFinset).card ≤ n^2 := by
+    ∀ (n : ℕ) (V : Type) [Fintype V], Fintype.card V = 5 * n →
+      ∀ (G : SimpleGraph V), G.CliqueFree 3 →
+        ∃ (H : SimpleGraph V),
+          H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ n^2 := by
   sorry
 
 -- TODO: add the remaining variants/statements/comments
