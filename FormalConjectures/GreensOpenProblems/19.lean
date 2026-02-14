@@ -91,7 +91,7 @@ theorem green_19.lower : C >= 3.13 := by
 theorem green_19.upper : C <= 4 := by
   sorry
 
-/- TODO(jeangud) in [FSS20] they mention that the corresponding question for squares
+/- TODO(jeangud): in [FSS20] they mention that the corresponding question for squares
 $(x, y), (x, y + d), (x + d, y), (x + d, y + d)$ is wide open (and here it is not even clear that
 $C$ exists). -/
 
