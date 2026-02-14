@@ -418,7 +418,8 @@ theorem myNewClass_sanity_check :
 ✅ **DO:**
 - Follow existing file patterns in the repository
 - Keep formalisations clean and minimal
-- Add references to sources. These should all appear in the module docstring reference list.
+- Add references to sources. These should all appear in the module docstring reference list, and
+  ideally each conjecture statement docstring should have a reference.
 - Use namespaces appropriately
 - Test that `lake build` works
 - Add variants in the same file as the main problem
