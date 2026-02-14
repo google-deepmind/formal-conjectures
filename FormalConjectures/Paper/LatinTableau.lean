@@ -42,4 +42,4 @@ namespace SimpleGraph
   of a Young diagram, then G is CDSColorable. -/
 @[category research open, AMS 5]
 theorem LatinTableauConjecture (μ : YoungDiagram) :
-     (YoungDiagram.toSimpleGraph μ).CDSColorable := by sorry
+     μ.toSimpleGraph.CDSColorable := by sorry
