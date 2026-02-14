@@ -46,7 +46,7 @@ def IsCorner (A : Finset (G × G)) (x y d : G) : Prop :=
 From [FSS20]: given $A \subseteq G \times G$ and $d \in G$, let
 $$S_d(A) = \lbrace (x, y) \in G \times G : (x, y), (x + d, y), (x, y + d) \in A \rbrace$$
 -/
-noncomputable def Sd (A : Finset (G × G)) (d : G) : Finset (G × G) :=
+noncomputable def S (d : G) (A : Finset (G × G)) : Finset (G × G) :=
   univ.filter (fun p => IsCorner A p.1 p.2 d)
 
 end GroupDefs
@@ -64,7 +64,7 @@ def ValidExponent (c : ℝ) : Prop :=
         ∀ A : Finset (𝔽₂ n × 𝔽₂ n),
           let N : ℝ := (Fintype.card (𝔽₂ n) : ℝ)
           (A.card : ℝ) ≥ α * N^2 →
-          ∃ d : 𝔽₂ n, d ≠ 0 ∧ ((Sd A d).card : ℝ) ≥ K * α^c * N^2
+          ∃ d : 𝔽₂ n, d ≠ 0 ∧ ((S d A).card : ℝ) ≥ K * α^c * N^2
 
 /-- The infimum of all valid exponents [Gr26]. -/
 noncomputable def C : ℝ := sInf {c | ValidExponent c}
