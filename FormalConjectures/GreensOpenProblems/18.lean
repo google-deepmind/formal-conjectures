@@ -36,6 +36,10 @@ namespace Green18
 /--
 The number of triples $(x, y, g)$ in $G^3$ such that $g \neq e$, and $(x, y), (gx, y), (x, gy)$ are
 all in $A$. These are called "naive corners" by [Au16].
+
+Note: the shortened formulation from [Gr26] does not mention $g \neq e$, but this is the original
+statement from [Au16], which ensure non-trivial corners. Note however that [Au16] use more
+generally compact groups and not just finite discrete groups.
 -/
 def numNaiveCorners {G : Type*} [Group G] [Fintype G] [DecidableEq G] (A : Finset (G × G)) : ℕ :=
   ( (univ : Finset (G × G × G)).filter
