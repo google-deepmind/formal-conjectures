@@ -38,8 +38,7 @@ The number of triples $(x, y, g)$ in $G^3$ such that $g \neq e$, and $(x, y), (g
 all in $A$. These are called "naive corners" by [Au16].
 -/
 def numNaiveCorners {G : Type*} [Group G] [Fintype G] [DecidableEq G] (A : Finset (G × G)) : ℕ :=
-  (
-    (univ : Finset (G × G × G)).filter
+  ( (univ : Finset (G × G × G)).filter
     fun ⟨x, y, g⟩ => g ≠ 1 ∧ (x, y) ∈ A ∧ (g * x, y) ∈ A ∧ (x, g * y) ∈ A
   ).card
 
@@ -50,7 +49,7 @@ all lie in $A$?
 
 Note: A is taken as $\alpha$-dense, i.e. $|A| \ge \alpha |G|^2$ [Au16, Question 2]
 -/
-@[category research open, AMS 05 11 20]
+@[category research open, AMS 5 11 20]
 theorem green_18 : answer(sorry) ↔
     ∀ α > 0, ∃ c > 0, ∃ m₀ : ℕ,
       ∀ (G : Type*) [Group G] [Fintype G] [DecidableEq G] (A : Finset (G × G)),
@@ -72,7 +71,7 @@ def numBmzCorners {G : Type*} [Group G] [Fintype G] [DecidableEq G] (A : Finset 
 /--
 [So13] proved this is true for "BMZ corners". Follows from the proof of Theorem 2.1, p.1456-1457.
 -/
-@[category research solved, AMS 05 11 20]
+@[category research solved, AMS 5 11 20]
 theorem green_18.bmz_corners : ∀ α > 0, ∃ c > 0, ∃ m₀ : ℕ,
     ∀ (G : Type*) [Group G] [Fintype G] [DecidableEq G] (A : Finset (G × G)),
     Fintype.card G ≥ m₀ →
