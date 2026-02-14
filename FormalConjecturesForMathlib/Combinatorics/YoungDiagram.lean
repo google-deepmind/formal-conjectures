@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import Mathlib.Combinatorics.Young.YoungDiagram
-import Mathlib.Combinatorics.SimpleGraph
+import Mathlib.Combinatorics.SimpleGraph.Basic
 
 open YoungDiagram
 
