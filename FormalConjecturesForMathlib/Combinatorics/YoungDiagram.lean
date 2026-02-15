@@ -29,5 +29,4 @@ instance (μ : YoungDiagram) : DecidableEq μ.Cell :=
 /-- The simple graph of a Young diagram: two distinct cells are
   adjacent iff they lie in the same row or in the same column. -/
 def YoungDiagram.toSimpleGraph (μ : YoungDiagram) : SimpleGraph μ.Cell :=
-  SimpleGraph.fromRel fun a b =>
-    (Prod.fst a.val = Prod.fst b.val) ∨ (Prod.snd a.val = Prod.snd b.val)
+  .fromRel fun a b => a.val.fst = b.val.fst ∨ a.val.snd = b.val.snd
