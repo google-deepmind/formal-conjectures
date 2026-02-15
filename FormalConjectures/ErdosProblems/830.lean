@@ -24,16 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos830
 
-open scoped ArithmeticFunction
 open Classical Filter Real
-
-/--
-We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$.
--/
-@[mk_iff]
-structure IsAmicable (a b : ℕ) where
-  left : σ 1 a = a + b
-  right : σ 1 b = a + b
 
 /--
 Let $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$.

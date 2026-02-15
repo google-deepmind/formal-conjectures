@@ -39,8 +39,6 @@ Several open problems about amicable numbers are formalised here:
 
 namespace AmicableNumbers
 
-open Erdos830
-
 /-- The classic amicable pair $(220, 284)$. -/
 @[category test, AMS 11]
 theorem amicable_220_284 : IsAmicable 220 284 := by
