@@ -103,9 +103,8 @@ The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mo
 -/
 @[category high_school, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
-    IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 3 [MOD 5] := by
+    IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 4 [MOD 5] := by
   sorry
-
 
 end PrimalityTesting
 
@@ -116,7 +115,7 @@ section FermatNumbers
 -/
 
 /--
-**OEIS A046052**
+**OEIS A46052**
 The number of distinct prime factors of nth Fermat number.
 Known terms: 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 4, 5
 -/

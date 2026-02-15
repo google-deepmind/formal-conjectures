@@ -27,8 +27,8 @@ open Filter
 namespace Erdos361
 
 /--
-Let $c>0$ and $n$ be some large integer. What is the size of the largest
-$A\subseteq \{1,\ldots,\lfloor cn\rfloor\}$ such that $n$ is not a sum of a subset of $A$?
+Let $c > 0$ and $n$ be some large integer. What is the size of the largest set
+$A \subseteq \{1, \ldots, \lfloor c n \rfloor\}$ such that $n$ is not a sum of a subset of $A$?
 Does this depend on $n$ in an irregular way?
 -/
 @[category research open, AMS 11]
@@ -41,8 +41,8 @@ theorem erdos_361.bigO
   sorry
 
 /--
-Let $c>0$ and $n$ be some large integer. What is the size of the largest
-$A\subseteq \{1,\ldots,\lfloor cn\rfloor\}$ such that $n$ is not a sum of a subset of $A$?
+Let $c > 0$ and $n$ be some large integer. What is the size of the largest set
+$A \subseteq \{1, \ldots, \lfloor c n \rfloor\}$ such that $n$ is not a sum of a subset of $A$?
 Does this depend on $n$ in an irregular way?
 -/
 @[category research open, AMS 11]
@@ -55,8 +55,8 @@ theorem erdos_361.bigTheta
   sorry
 
 /--
-Let $c>0$ and $n$ be some large integer. What is the size of the largest
-$A\subseteq \{1,\ldots,\lfloor cn\rfloor\}$ such that $n$ is not a sum of a subset of $A$?
+Let $c > 0$ and $n$ be some large integer. What is the size of the largest set
+$A \subseteq \{1, \ldots, \lfloor c n \rfloor\}$ such that $n$ is not a sum of a subset of $A$?
 Does this depend on $n$ in an irregular way?
 -/
 @[category research open, AMS 11]

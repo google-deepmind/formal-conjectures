@@ -24,11 +24,11 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos350
 
-/--The predicate that all (finite) subsets of `A` have distinct sums-/
+/-- The predicate that all (finite) subsets of `A` have distinct sums. -/
 def DistinctSubsetSums {M : Type*} [AddCommMonoid M] (A : Set M) : Prop :=
   Set.Pairwise {X : Finset M | ↑X ⊆ A} fun X Y => X.sum id ≠ Y.sum id
 
-/--The predicate that all (finite) subsets of `A` have distinct sums, decidable version-/
+/-- The predicate that all (finite) subsets of `A` have distinct sums, decidable version -/
 def DecidableDistinctSubsetSums {M : Type*} [AddCommMonoid M] [DecidableEq M] (A : Finset M) : Prop :=
   ∀ X ⊆ A, ∀ Y ⊆ A, X ≠ Y → X.sum id ≠ Y.sum id
 
@@ -44,7 +44,7 @@ theorem distinctSubsetSums_1_2 : DistinctSubsetSums ({1, 2} : Finset ℕ).toSet 
   fin_cases hx <;> fin_cases hy <;> simp_all
 
 
-/--Small sanity check: the two predicates are saying the same thing.-/
+/-- Small sanity check: the two predicates are saying the same thing. -/
 @[category API, AMS 5 11]
 theorem DistinctSubsetSums_iff_DecidableDistinctSubsetSums
     {M : Type*} [AddCommMonoid M] [DecidableEq M] (A : Finset M) :

@@ -41,7 +41,7 @@ def FermatCatalanSet' : Set (Fin 6 → ℕ) :=
 def FermatCatalanSet : Set (ℕ × ℕ × ℕ) :=
     (fun f => ((f 0) ^ (f 3), (f 1) ^ (f 4), (f 2) ^ (f 5))) '' FermatCatalanSet'
 
-/--The proposition that the Fermat-Catalan Conjecture is true.-/
+/-- The proposition that the Fermat-Catalan Conjecture is true. -/
 def fermatCatalanConjecture : Prop :=
   FermatCatalanSet.Finite
 

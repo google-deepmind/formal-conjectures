@@ -20,7 +20,7 @@ namespace WrittenOnTheWallII.GraphConjecture5
 
 open SimpleGraph
 
-variable {V : Type*} [Fintype V] [DecidableEq V]
+variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
 
 open Classical
 

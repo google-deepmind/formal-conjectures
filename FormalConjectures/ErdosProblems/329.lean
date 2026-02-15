@@ -39,7 +39,7 @@ noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
 
 /--
 **Erdős Problem 329.**
-Let `A ⊆ ℕ` be a Sidon set.  How large can
+Let `A ⊆ ℕ` be a Sidon set. How large can
 `lim sup_{N → ∞} |A ∩ {1,…,N}| / N^{1/2}`
 be?
 -/

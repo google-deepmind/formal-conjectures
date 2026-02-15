@@ -25,23 +25,23 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos229
 
 /--
-Let $(S_n)_{n \geq 1}$ be a sequence of sets of complex numbers, none of which have a finite
-limit point. Does there exist an entire transcendental function $f(z)$ such that, for all $n \geq 1$, there
-exists some $k_n \geq 0$ such that
+Let $(S_n)_{n \ge 1}$ be a sequence of sets of complex numbers, none of which have a finite
+limit point. Does there exist an entire transcendental function $f(z)$ such that, for all $n \ge 1$, there
+exists some $k_n \ge 0$ such that
 $$
-  f^{(k_n)}(z) = 0\quad\text{for all $z\in S_n$?}
+  f^{(k_n)}(z) = 0 \quad \text{for all } z \in S_n?
 $$
 
 Solved in the affirmative by Barth and Schneider [BaSc72].
 
 [BaSc72] Barth, K. F. and Schneider, W. J., _On a problem of Erdős concerning the zeros of_
-_the derivatives of an entire function_. Proc. Amer. Math. Soc. (1972), 229--232.-/
+_the derivatives of an entire function_. Proc. Amer. Math. Soc. (1972), 229--232. -/
 @[category research solved, AMS 30]
 theorem erdos_229 :
     letI := Polynomial.algebraPi ℂ ℂ ℂ
-    (∀ (S : ℕ → Set ℂ), (∀ n, derivedSet (S n) = ∅) →
+    answer(True) ↔ ∀ (S : ℕ → Set ℂ), (∀ n, derivedSet (S n) = ∅) →
     ∃ (f : ℂ → ℂ), Transcendental (Polynomial ℂ) f ∧ Differentiable ℂ f ∧ ∀ n ≥ 1,
-      ∃ k, ∀ z ∈ S n, iteratedDeriv k f z = 0) ↔ answer(True) := by
+      ∃ k, ∀ z ∈ S n, iteratedDeriv k f z = 0 := by
   sorry
 
 /--

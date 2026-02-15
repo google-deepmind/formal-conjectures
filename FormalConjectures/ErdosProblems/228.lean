@@ -31,15 +31,15 @@ $z$ and $n$?
 
 The answer is yes, proved by Balister, Bollobás, Morris, Sahasrabudhe, and Tiba [BBMST19].
 
-[BBMST19] Balister, P. and Bollob\'{A}s, B. and Morris, R. and Sahasrabudhe, J. and Tiba, M., _Flat Littlewood Polynomials Exist_. arXiv:907.09464 (2019).
+[BBMST19] Balister, P. and Bollob\'{A}s, B. and Morris, R. and Sahasrabudhe, J. and Tiba, M., _Flat Littlewood Polynomials Exist_. arXiv:1907.09464 (2019).
 -/
-@[category research solved, AMS 5 12 41] --TODO(lezeau): I'm a little unhappy with the `41` tag
+@[category research solved, AMS 5 12 41] -- TODO(lezeau): I'm a little unhappy with the `41` tag
 theorem erdos_228 :
-    (∃ (c₁ : ℝ) (c₂ : ℝ), ∀ᶠ n : ℕ in Filter.atTop,
+    answer(True) ↔ ∃ (c₁ : ℝ) (c₂ : ℝ), ∀ᶠ n : ℕ in Filter.atTop,
     ∃ p : Polynomial ℂ, p.degree = n ∧
     (∀ i ≤ n, p.coeff i = 1 ∨ p.coeff i = -1) ∧
     ∀ z : ℂ, ‖z‖ = 1 →
-    ( √n < c₁ * ‖p.eval z‖ ∧ ‖p.eval z‖ < c₂ * √n )) ↔ answer(True) := by
+    ( √n < c₁ * ‖p.eval z‖ ∧ ‖p.eval z‖ < c₂ * √n ) := by
   sorry
 
 end Erdos228

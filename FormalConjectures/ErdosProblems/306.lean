@@ -32,10 +32,10 @@ Let $\frac a b\in \mathbb{Q}_{>0}$ with $b$ squarefree. Are there integers $1 < 
 each the product of two distinct primes, such that $\frac{a}{b}=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$?
 -/
 @[category research open, AMS 11]
-theorem erdos_306 : (∀ (q : ℚ), 0 < q → Squarefree q.den →
+theorem erdos_306 : answer(sorry) ↔ ∀ (q : ℚ), 0 < q → Squarefree q.den →
     ∃ k : ℕ, ∃ (n : Fin (k + 1) → ℕ), n 0 = 1 ∧ StrictMono n ∧
     (∀ i ∈ Finset.Icc 1 (Fin.last k), ω (n i) = 2 ∧ Ω (n i) = 2) ∧
-    q = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i)) ↔ answer(sorry) := by
+    q = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i) := by
   sorry
 
 /--

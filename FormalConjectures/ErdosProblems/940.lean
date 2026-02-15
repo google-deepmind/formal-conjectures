@@ -32,9 +32,8 @@ has density $0$?
 -/
 @[category research open, AMS 11]
 theorem erdos_940 :
-    (∀ r ≥ 3,
-      {n : ℕ | ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ n = S.sum}.HasDensity 0)
-    ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ r ≥ 3,
+      {n : ℕ | ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ n = S.sum}.HasDensity 0 := by
   sorry
 
 /--
@@ -51,8 +50,8 @@ Is it true that the set of integers which are the sum of at most three cubes has
 -/
 @[category research open, AMS 11]
 theorem erdos_940.variants.three_cubes :
-    {n : ℕ | ∃ (S : Multiset ℕ), S.card ≤ 3 ∧ n = (Multiset.map (· ^ 3) S).sum}.HasDensity 0
-    ↔ answer(sorry) := by
+    answer(sorry) ↔
+    {n : ℕ | ∃ (S : Multiset ℕ), S.card ≤ 3 ∧ n = (Multiset.map (· ^ 3) S).sum}.HasDensity 0 := by
   sorry
 
 
@@ -61,8 +60,8 @@ It is not known if all large integers are the sum of at most $r$-many $r$-powerf
 -/
 @[category research open, AMS 11]
 theorem erdos_940.variants.large_integers :
-    (∀ r ≥ 2, (∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ x = S.sum))
-    ↔ answer(sorry) := by
+    answer(sorry) ↔
+    ∀ r ≥ 2, (∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ x = S.sum) := by
   sorry
 
 /--

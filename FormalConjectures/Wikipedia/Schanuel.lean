@@ -28,21 +28,11 @@ open IntermediateField
 namespace Schanuel
 
 /--
-The transcendence degree is independent of the choice of a transcendence basis.
+The transcendence degree of $A$ adjoined $\{x_1, \dots, x_n\}$ is $\leq n$.
 -/
 @[category graduate, AMS 12 13 14]
-theorem isTranscendenceBasis_ncard_eq_trdeg (R : Type*) {A ι : Type*}
-    [CommRing R] [CommRing A] [Algebra R A] (h : Function.Injective (algebraMap R A))
-    (𝒷 : ι → A) (hS : IsTranscendenceBasis R 𝒷) :
-    (Set.univ : Set ι).ncard = Algebra.trdeg R A := by
-  sorry
-
-/--
-The transcendence degree of $A$ adjoined $\{x_1, ..., x_n\}$ is $\leq n$.
--/
-@[category graduate, AMS 12 13 14]
-theorem adjoin_trdeg_le_of_finite {A ι : Type*} [Field A] {S : Set A} (hS : S.Finite) :
-    Algebra.trdeg A (adjoin A S) ≤ S.ncard := by
+theorem adjoin_trdeg_le_of_finite {A B : Type*} [Field A] [Field B] [Algebra A B]
+    (n : ℕ) (z : Fin n → B) : n ≤ Algebra.trdeg A (adjoin A (Set.range z)) := by
   sorry
 
 /--

@@ -31,10 +31,9 @@ Let $A$ be a set of $n$ positive integers. Does $A$ contain a sum-free set
 of size at least $\frac n 3 + Ω(n)$, where $Ω(n) → ∞$ as $n → ∞$?
 -/
 @[category research open, AMS 5 11]
-theorem green_1 : (∃ Ω : ℕ → ℝ, atTop.Tendsto Ω atTop ∧
+theorem green_1 : answer(sorry) ↔ ∃ Ω : ℕ → ℝ, atTop.Tendsto Ω atTop ∧
      ∀ n, ∀ (A : Finset ℕ), (∀ a ∈ A, 0 < a) → A.card = n →
-     ∃ (S : Finset ℕ), S ⊆ A ∧ IsSumFree S.toSet ∧ ((n : ℝ) / 3) + Ω n ≤ S.card)
-     ↔ answer(sorry) := by
+     ∃ (S : Finset ℕ), S ⊆ A ∧ IsSumFree S.toSet ∧ ((n : ℝ) / 3) + Ω n ≤ S.card := by
   sorry
 
 -- TODO(firsching): add known/related results here.

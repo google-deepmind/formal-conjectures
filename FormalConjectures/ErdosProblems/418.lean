@@ -37,7 +37,7 @@ This is true, as shown by Browkin and Schinzel [BrSc95].
 Colloq. Math. (1995), 55-58.
 -/
 @[category research solved, AMS 11]
-theorem erdos_418 : { (n - n.totient : ℕ) | n }ᶜ.Infinite ↔ answer(True) := by
+theorem erdos_418 : answer(True) ↔ { (n - n.totient : ℕ) | n }ᶜ.Infinite := by
   sorry
 
 /--
@@ -99,7 +99,7 @@ not of the form $n - \phi(n)$.
 -/
 @[category research open, AMS 11]
 theorem erdos_418.variants.density :
-    (∃ (S : Set ℕ) (hS : S.HasPosDensity), S ⊆ { (n - n.totient : ℕ) | n }ᶜ) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ (S : Set ℕ) (hS : S.HasPosDensity), S ⊆ { (n - n.totient : ℕ) | n }ᶜ := by
   sorry
 
 end Erdos418

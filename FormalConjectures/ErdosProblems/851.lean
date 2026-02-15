@@ -41,8 +41,8 @@ theorem erdos_851.variants.romanoff : 0 < Set.lowerDensity (TwoPowAddSet 1) := b
   sorry
 
 /--
-Let $\epsilon > 0$. Is there some $r\ll_\epsilon 1$ such that the density of integers of the
-form $2^k+n$, where $k\geq 0$ and $n$ has at most $r$ prime divisors, is at least $1-\epsilon$?
+Let $\epsilon > 0$. Is there some $r \ll_\epsilon 1$ such that the density of integers of the
+form $2^k+n$, where $k \geq 0$ and $n$ has at most $r$ prime divisors, is at least $1-\epsilon$?
 -/
 @[category research open, AMS 11]
 theorem erdos_851 (ε : ℝ) (hε : ε ∈ Set.Ioo 0 1) : ∃ r d,

@@ -30,7 +30,7 @@ namespace Erdos1
 
 /--
 A finite set of naturals $A$ is said to be a sum-distinct set for $N \in \mathbb{N}$ if
-$A\subseteq\{1, ..., N\}$ and the sums  $\sum_{a\in S}a$ are distinct for all $S\subseteq A$
+$A\subseteq\{1, ..., N\}$ and the sums $\sum_{a\in S}a$ are distinct for all $S\subseteq A$
 -/
 abbrev IsSumDistinctSet (A : Finset ℕ) (N : ℕ) : Prop :=
     A ⊆ Finset.Icc 1 N ∧ (fun (⟨S, _⟩ : A.powerset) => S.sum id).Injective

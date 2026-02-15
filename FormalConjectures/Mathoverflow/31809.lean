@@ -17,10 +17,10 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Mathoverflow 31908
+# Mathoverflow 31809
 
 Source:
-[Mathoverflow/31908](https://mathoverflow.net/questions/31809/pre-triangulated-category-that-isnt-triangulated)
+[Mathoverflow/31809](https://mathoverflow.net/questions/31809/pre-triangulated-category-that-isnt-triangulated)
 
 -/
 
@@ -30,9 +30,9 @@ open CategoryTheory Limits Category Preadditive Pretriangulated
 
 /-- Does there exist a category that is pretriangulated but not triangulated? -/
 @[category research open, AMS 18]
-theorem mathoverflow_31809 : (∀ (C : Type*) [Category C] [Preadditive C]
+theorem mathoverflow_31809 : answer(sorry) ↔ (∀ (C : Type*) [Category C] [Preadditive C]
     [HasZeroObject C] [HasShift C ℤ] [∀ (n : ℤ), (shiftFunctor C n).Additive]
-    [Pretriangulated C], IsTriangulated C) ↔ answer(sorry) := by
+    [Pretriangulated C], IsTriangulated C) := by
   sorry
 
 end Mathoverflow31809

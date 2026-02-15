@@ -78,7 +78,7 @@ theorem erdos_160.better_lower:
     let lower_bound : ℕ → ℝ := answer(sorry)
     (lower_bound =O[atTop] fun n => (erdos_160.h n : ℝ)) ∧
     ∀ c > 0,
-    (fun (n : ℕ) => exp (c * log n  ^ ((1 : ℝ) / 12))) =O[atTop] (fun n => (erdos_160.h n : ℝ)) →
+    (fun (n : ℕ) => exp (c * log n ^ ((1 : ℝ) / 12))) =O[atTop] (fun n => (erdos_160.h n : ℝ)) →
     ∀ c > 0, (fun (n : ℕ) => exp (c * log n ^ ((1 : ℝ) / 12))) =o[atTop] lower_bound := by
   sorry
 

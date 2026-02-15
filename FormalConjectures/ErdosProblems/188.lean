@@ -46,8 +46,8 @@ theorem erdos_188.nonempty : s.Nonempty := by
 /--
 Old and new problems and results in combinatorial number theory by Erdős & Graham (Page 15):
 
-How small can $M$ be made? The only estimate currently known is that $M$ ≤ 10000000 (more or less).
-In the other direction, it has just been shown by R. Juhász [Ju (79)] that we must have $M$ ≥ 5.
+How small can $M$ be made? The only estimate currently known is that $M \le 10000000$ (more or less).
+In the other direction, it has just been shown by R. Juhász [Ju (79)] that we must have $M \ge 5$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_188.estimate : (∀ k, k ∈ s → 5 ≤ k) ∧ (∃ k ∈ s, k ≤ 10000000) := by

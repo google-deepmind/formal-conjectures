@@ -25,9 +25,7 @@ namespace Erdos196
 
 /-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
 @[category research open, AMS 5 11]
-theorem erdos_196 : (∀ (f : ℕ ≃ ℕ), ∃ (a : List ℕ),
-    ((a.Sorted (· < · )) ∨ (a.Sorted (· > · ))) ∧ Set.IsAPOfLength (f '' a.toFinset) 4)
-    ↔ answer(sorry) := by
+theorem erdos_196 : answer(sorry) ↔ ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 4 := by
   sorry
 
 end Erdos196

@@ -79,7 +79,7 @@ In [Er80] Erdős asks whether
 $$ \lim_{k \to \infty} (W(k))^{1/k} = \infty $$
 -/
 @[category research open, AMS 11]
-theorem erdos_138 : atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop ↔ answer(sorry) := by
+theorem erdos_138 : answer(sorry) ↔ atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
   sorry
 
 
@@ -87,7 +87,7 @@ theorem erdos_138 : atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop ↔
 When $p$ is prime Berlekamp [Be68] has proved $W(p+1) ≥ p^{2^p}$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_138.variants.prime (p : ℕ) (hp : p.Prime) : p^(2^ p) ≤ W (p + 1) := by
+theorem erdos_138.variants.prime (p : ℕ) (hp : p.Prime) : p * (2 ^ p) ≤ W (p + 1) := by
   sorry
 
 /--
@@ -102,7 +102,7 @@ In [Er81] Erdős asks whether $\frac{W(k+1)}{W(k)} \to \infty$.
 -/
 @[category research open, AMS 11]
 theorem erdos_138.variants.quotient :
-    atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop ↔ answer(sorry) := by
+    answer(sorry) ↔ atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
   sorry
 
 /--
@@ -110,7 +110,7 @@ In [Er81] Erdős asks whether $W(k+1) - W(k) \to \infty$.
 -/
 @[category research open, AMS 11]
 theorem erdos_138.variants.difference :
-    atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop ↔ answer(sorry) := by
+    answer(sorry) ↔ atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
   sorry
 
 /--
@@ -118,5 +118,5 @@ In [Er80] Erdős asks whether $W(k)/2^k\to \infty$.
 -/
 @[category research open, AMS 11]
 theorem erdos_138.variants.dvd_two_pow :
-    atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop ↔ answer(sorry) := by
+    answer(sorry) ↔ atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
   sorry

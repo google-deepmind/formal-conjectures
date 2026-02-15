@@ -78,7 +78,7 @@ theorem error_not_isLittleO : ¬E =o[atTop] (fun r => √r * √√r.log) := by
 /--
 It is conjectured that the correct bound is
 $$
-  |E(r)| = O\left(r^{1/2 + o(1)})\right)
+  |E(r)| = O\left(r^{1/2 + o(1)}\right)
 $$
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67

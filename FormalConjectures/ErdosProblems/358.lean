@@ -24,14 +24,14 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos358
 
-open Filter
+open Filter Finset
 
 /-
 Let $a$ be an infinite sequence of integers. `intervalRepresentations A n` is the set of solutions
-to \[n=\sum_{u\leq i\leq v}a_i.\]
+to \[n=\sum_{u\leq i\leq v}a_i.\] where `u` and `v` are positive integers.
 -/
 def intervalRepresentations (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
-  {(u, v) | n = ∑ i ∈ Finset.Icc u v, A i}
+  {(u, v) | 0 < u ∧ 0 < v ∧ n = ∑ i ∈ Icc u v, A i}
 
 /-
 Let $a$ be an infinite sequence of integers. Let $f(n)$ count the number of
@@ -45,7 +45,7 @@ Let $a$ be an infinite sequence of integers. `intervalRepresentationsNonTrivial 
 solutions to \[n=\sum_{u\leq i\leq v}a_i\] such that the sum has at least two terms.
 -/
 def intervalRepresentationsNonTrivial (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
-  {(u, v) | n = ∑ i ∈ Finset.Icc u v, A i ∧ u < v}
+  {(u, v) | 0 < u ∧ 0 < v ∧ u < v ∧ n = ∑ i ∈ Icc u v, A i}
 
 /-
 Let $a$ be an infinite sequence of integers. Let $g(n)$ count the number of
@@ -58,7 +58,7 @@ noncomputable def g (A : ℕ → ℕ) (n : ℕ) : ℕ :=
 When $A_n = n$, the function $f$ defined above counts the number of odd divisors of $n$.
 -/
 @[category high_school, AMS 5 11]
-theorem f_id : f id = fun n ↦ (n.divisors.filter Odd).card := by
+theorem f_id : f id = fun n ↦ #{d ∈ n.divisors | Odd d} := by
   sorry
 
 /--
@@ -68,7 +68,7 @@ Is there such an $A$ for which $f(n)\to \infty$ as $n\to \infty$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_358.parts.i :
-    (∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop := by
   sorry
 
 /--
@@ -78,7 +78,7 @@ Is there an $A$ such that $f(n)\geq 2$ for all large $n$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_358.parts.ii :
-    (∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 2 ≤ f A n) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 2 ≤ f A n := by
   sorry
 
 /--

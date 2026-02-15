@@ -30,8 +30,8 @@ namespace Erdos727
 Let $k ≥ 2$. Does $((n+k)!)^2∣(2n)!$ hold for infinitely many $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_727 : (∀ k ≥ 2,
-    Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)}) ↔ answer(sorry) := by
+theorem erdos_727 : answer(sorry) ↔ ∀ k ≥ 2,
+    Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)} := by
   sorry
 
 /--
@@ -41,7 +41,7 @@ Let $k = 2$. Does $((n+k)!)^2∣(2n)!$ hold for infinitely many n?
 @[category research open, AMS 11]
 theorem erdos_727_variants.k_2 :
     letI k := 2
-    Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)} ↔ answer(sorry) := by
+    answer(sorry) ↔ Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)} := by
   sorry
 
 /--
@@ -52,7 +52,7 @@ Let $k = 1$. Does $((n+k)!)^2∣(2n)!$ for infinitely many $n$?
 @[category research solved, AMS 11]
 theorem erdos_727_variants.k_1 :
     letI k := 1
-    Set.Infinite {n : ℕ | (n + k)! ^ 2 ∣ (2 * n)!} ↔ answer(True) := by
+    answer(True) ↔ Set.Infinite {n : ℕ | (n + k)! ^ 2 ∣ (2 * n)!} := by
   sorry
 
 /--

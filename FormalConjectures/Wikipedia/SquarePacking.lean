@@ -119,7 +119,7 @@ theorem least_seventeen_square_packing_in_square :
   sorry
 
 /--
-Three unit squares can be packed into a circle of radius (5 √17) / 16 ≈ 1.288.
+Three unit squares can be packed into a circle of radius $(5 \sqrt{17}) / 16 \approx 1.288$.
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle)
 -/
@@ -158,7 +158,7 @@ theorem least_twenty_one_circle_packing_in_square :
 
 /--
 Fifteen unit circles can be packed into a circle of radius
-1 + √ (6 + 2/√5 + 4 √(1 + 2/√5)) ≈ 4.521.
+$1 + \sqrt{6 + 2/\sqrt{5} + 4 \sqrt{1 + 2/\sqrt{5}}} \approx 4.521$.
 
 Reference:
 Graham RL, Lubachevsky BD, Nurmela KJ, Ostergard PRJ.

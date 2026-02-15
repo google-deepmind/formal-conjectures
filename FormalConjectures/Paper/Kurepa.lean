@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Kurepa's conjecture
 
-*Reference:* [On the left factorial function !N](https://oeis.org/A003422), by *Đuro Kurepa* Math. Balkanica 1, p. 147-153, 1971
+*Reference:* [On the left factorial function !N](https://oeis.org/A3422), by *Đuro Kurepa* Math. Balkanica 1, p. 147-153, 1971
 
 -/
 
@@ -28,11 +28,11 @@ open BigOperators Nat Finset
 
 /--
 Left factorial of n
-$$$!n = 0!+1!+2!+...+(n-1)!$$
+$$!n = 0! + 1! + 2! + \dots + (n-1)!$$
 -/
 def left_factorial (n : ℕ) := ∑ m ∈ Finset.range n, m !
 
-local notation  "!" n => left_factorial n
+local notation "!" n => left_factorial n
 
 /--
 ## Kurepa's conjecture

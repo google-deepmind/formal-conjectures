@@ -90,7 +90,7 @@ theorem erdos_707.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4, 8}) :
 
 
 /--
-Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture, showing that $\{1, 2, 4, 8, 13\}$) cannot be
+Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture, showing that $\{1, 2, 4, 8, 13\}$ cannot be
 extended to any perfect difference set.
 -/
 @[category research solved, AMS 5 11]

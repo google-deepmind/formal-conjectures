@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
   - [erdosproblems.com/233](https://www.erdosproblems.com/233)
-  - [A074741](https://oeis.org/A074741)
+  - [A74741](https://oeis.org/A74741)
   - [Wikipedia](https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_conjecture)
 -/
 

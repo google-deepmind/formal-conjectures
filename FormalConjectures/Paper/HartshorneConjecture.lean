@@ -43,11 +43,11 @@ local instance (X : TopologicalSpace.Opens S) :
     ((Opens.grothendieckTopology S).over X)
 
 local instance (X : TopologicalSpace.Opens S) :
-    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}):=
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}) :=
   inferInstance
 
 /--
-A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
+A vector bundle over a scheme `S` is a locally free $\mathcal{O}_S$-module of finite rank.
 -/
 structure VectorBundles where
   carrier : S.Modules
@@ -89,19 +89,19 @@ instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempt
   coe s := s.components
 
 end AlgebraicGeometry.Scheme
---TODO(lezeau): here we would really need some sanity checks and easier results.
+-- TODO(lezeau): here we would really need some sanity checks and easier results.
 
 open AlgebraicGeometry.Scheme
 
 /--
-There are no indecomposable vector bundles of rank 2 on `ℙⁿ` for `n ≥ 7`.
+There are no indecomposable vector bundles of rank 2 on $\mathbb{P}^n$ for $n \ge 7$.
 This is conjecture 6.3 in _VARIETIES OF SMALL CODIMENSION IN PROJECTIVE SPACE_, R. Hartshorne
 -/
 @[category research open, AMS 14]
 theorem harthshorne_conjecture (n : ℕ) (hn : 7 ≤ n)
     (𝓕 : VectorBundles ℙ(Fin (n + 1); Spec (.of ℂ)))
     (h𝓕 : 𝓕.rank = 2) :
-    Nonempty (𝓕.Splitting (Fin 2)) :=
+    Nonempty (𝓕.Splitting (Fin 2)) := by
   sorry
 
 end HartshorneConjecture

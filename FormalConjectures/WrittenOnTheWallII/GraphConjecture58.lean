@@ -20,7 +20,7 @@ namespace WrittenOnTheWallII.GraphConjecture58
 
 open SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
+variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (G : SimpleGraph α)
 
 /--
 WOWII [Conjecture 58](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
@@ -31,7 +31,7 @@ bipartite subgraph and `l(v)` is the independence number of `G.neighborSet v`.
 -/
 @[category research open, AMS 5]
 theorem conjecture58 (hG : G.Connected) :
-    Nat.ceil (G.b / G.l_avg) ≤ G.f := by
+    Nat.ceil (G.b / G.l_avg) ≤ G.largestInducedForestSize := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture58
