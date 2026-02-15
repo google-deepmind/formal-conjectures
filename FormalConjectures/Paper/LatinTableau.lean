@@ -39,7 +39,7 @@ variable {α : Type*} [DecidableEq α]
 namespace SimpleGraph
 
 /-- The Latin Tableau Conjecture: If G is the simple graph
-  of a Young diagram, then G is CDSColorable. -/
+  of a Young diagram, then G is CDS-colorable. -/
 @[category research open, AMS 5]
 theorem LatinTableauConjecture (μ : YoungDiagram) :
      μ.toSimpleGraph.CDSColorable := by sorry
