@@ -33,9 +33,10 @@ $
 \sum_{n=0}^{\infty} \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7 = \frac{32}{\pi^3}.
 $
 -/
-@[category research solved, AMS 11 33 40]
+@[category research solved, AMS 11 33]
 theorem gourevitch_series_identity :
-  ∑' n, ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ) * ((Nat.centralBinom n : ℝ) ^ 7) = 32 / (Real.pi ^ 3) := by
+    ∑' n, ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ)
+      * ((Nat.centralBinom n : ℝ) ^ 7) = 32 / (Real.pi ^ 3) := by
   sorry
 
 end Gourevitch
