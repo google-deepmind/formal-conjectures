@@ -100,7 +100,7 @@ that mixed-parity amicable pairs do not exist, but this remains open.
 -/
 @[category research open, AMS 11]
 theorem opposite_parity_amicable :
-    answer(sorry) ↔ ∃ a b : ℕ, IsAmicable a b ∧ a ≠ b ∧ (Even a ↔ ¬ Even b) := by
+    answer(sorry) ↔ ∃ a b : ℕ, IsAmicable a b ∧ (Even a ↔ Odd b) := by
   sorry
 
 end Amicable
