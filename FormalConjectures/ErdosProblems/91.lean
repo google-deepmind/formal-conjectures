@@ -21,6 +21,9 @@ import FormalConjecturesForMathlib.Geometry.«2d»
 # Erdős Problem 91
 
 *Reference:*
+- [Er87b] Erdős, P., Some combinatorial and metric problems in geometry.
+  Intuitive geometry (Siófok, 1985) (1987), 167-177.
+- [Ko24c] Z. Kovács, A note on Erdős's mysterious remark. arXiv:2412.05190 (2024).
 - [erdosproblems.com/91](https://www.erdosproblems.com/91)
 -/
 
