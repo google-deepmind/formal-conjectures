@@ -46,7 +46,8 @@ theorem betrothed_48_75 : IsBetrothed 48 75 := by
 /-- `IsBetrothed` is symmetric. -/
 @[category test, AMS 11]
 theorem IsBetrothed.symm {m n : ℕ} (h : IsBetrothed m n) : IsBetrothed n m := by
-  exact ⟨h.right.trans (by omega), h.left.trans (by omega)⟩
+  rw [isBetrothed_iff] at *
+  omega
 
 /--
 **Same parity betrothed numbers conjecture.**
