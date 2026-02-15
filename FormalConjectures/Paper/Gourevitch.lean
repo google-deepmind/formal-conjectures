@@ -21,7 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
  - [About a New Kind of Ramanujan-Type Series](https://doi.org/10.1080/10586458.2003.10504518) by *Jesús Guillera*
- - [Wilf-Zeilberger seeds and non-trivial hypergeometric identities](https://arxiv.org/abs/2312.14051) proved by *K. C. Au*
+ - [G2003] Guillera, Jesús. "About a new kind of Ramanujan-type series." Experimental Mathematics 12.4 (2003): 507-510.
+ - [A2025] Au, Kam Cheong. "Wilf-Zeilberger seeds and non-trivial hypergeometric identities." Journal of Symbolic Computation 130 (2025): 102421. [arXiv:2312.14051](https://arxiv.org/abs/2312.14051)
 -/
 
 namespace Gourevitch
