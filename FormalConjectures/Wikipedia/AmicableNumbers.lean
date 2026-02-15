@@ -58,8 +58,9 @@ theorem amicable_220_284 : IsAmicable 220 284 := by
 
 /-- `IsAmicable` is symmetric. -/
 @[category test, AMS 11]
-theorem IsAmicable.symm {a b : ℕ} (h : IsAmicable a b) : IsAmicable b a :=
-  ⟨h.right.trans (add_comm a b), h.left.trans (add_comm a b)⟩
+theorem IsAmicable.symm {a b : ℕ} (h : IsAmicable a b) : IsAmicable b a := by
+  rw [isAmicable_iff] at *
+  omega
 
 /--
 **Relatively prime amicable numbers conjecture.**
