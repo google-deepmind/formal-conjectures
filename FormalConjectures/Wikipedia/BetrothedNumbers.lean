@@ -66,8 +66,6 @@ theorem same_parity_betrothed :
 **Infinitude of betrothed numbers conjecture.**
 Are there infinitely many betrothed number pairs?
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Betrothed_numbers),
-[List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
 @[category research open, AMS 11]
 theorem infinitely_many_betrothed :
