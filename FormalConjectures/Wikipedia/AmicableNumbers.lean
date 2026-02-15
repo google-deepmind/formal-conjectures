@@ -66,6 +66,7 @@ theorem relatively_prime_amicable :
 
 /--
 **Infinitely many amicable numbers conjecture.**
+
 Are there infinitely many pairs of amicable numbers?
 
 While many amicable pairs are known, it remains open whether there are infinitely many.
