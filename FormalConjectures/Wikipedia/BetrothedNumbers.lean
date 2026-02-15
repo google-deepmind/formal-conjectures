@@ -56,8 +56,6 @@ Do there exist betrothed numbers $(m, n)$ where both have the same parity
 
 All known betrothed pairs consist of one even and one odd number.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Betrothed_numbers),
-[List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
 @[category research open, AMS 11]
 theorem same_parity_betrothed :
