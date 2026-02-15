@@ -94,7 +94,7 @@ lemma erdos_91.test.dissimilar_circleSeven_wheelSeven :
     two non-similar sets that minimize the number of distinct distances. -/
 @[category research open, AMS 52]
 theorem erdos_91 :
-  ∃ (n₀ : ℕ), ∀ (n : ℕ), n ≥ n₀ →
+  ∀ᶠ (n : ℕ) in Filter.atTop,
     ∃ (A B : Finset E²), IsOptimal A n ∧ IsOptimal B n ∧ ¬IsSimilar A B := by
   sorry
 
