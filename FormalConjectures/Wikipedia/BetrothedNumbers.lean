@@ -29,7 +29,7 @@ namespace BetrothedNumbers
 open scoped ArithmeticFunction
 
 /--
-Two natural numbers $m$ and $n$ are **betrothed** if $\sigma(m) = \sigma(n) = m + n + 1$,
+Two natural numbers $m$ and $n$ are **betrothed**  (or quasi-amicable) if $\sigma(m) = \sigma(n) = m + n + 1$,
 where $\sigma$ is the sum-of-divisors function. Equivalently, the sum of the proper divisors
 of $m$ equals $n + 1$, and the sum of the proper divisors of $n$ equals $m + 1$.
 -/
