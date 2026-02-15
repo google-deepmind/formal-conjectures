@@ -37,19 +37,9 @@ Several open problems about amicable numbers are formalised here:
 - [OEIS A063990](https://oeis.org/A063990)
 -/
 
-namespace Amicable
+namespace AmicableNumbers
 
-open scoped ArithmeticFunction
-
-/--
-Two natural numbers $a$ and $b$ are **amicable** if $\sigma(a) = \sigma(b) = a + b$,
-where $\sigma$ is the sum-of-divisors function. Equivalently, the sum of the proper
-divisors of $a$ equals $b$, and the sum of the proper divisors of $b$ equals $a$.
--/
-@[mk_iff]
-structure IsAmicable (a b : ℕ) : Prop where
-  left : σ 1 a = a + b
-  right : σ 1 b = a + b
+open Erdos830
 
 /-- The classic amicable pair $(220, 284)$. -/
 @[category test, AMS 11]
@@ -103,4 +93,4 @@ theorem opposite_parity_amicable :
     answer(sorry) ↔ ∃ a b : ℕ, IsAmicable a b ∧ (Even a ↔ Odd b) := by
   sorry
 
-end Amicable
+end AmicableNumbers
