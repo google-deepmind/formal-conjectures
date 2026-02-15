@@ -192,6 +192,12 @@ of points.
 noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
   (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
 
+/--
+The minimum number of distinct distances guaranteed for any set of $n$ points.
+-/
+noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
+  sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
+
 end EuclideanGeometry
 
 

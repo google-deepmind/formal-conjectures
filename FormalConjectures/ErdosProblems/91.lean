@@ -24,24 +24,18 @@ import FormalConjecturesForMathlib.Geometry.«2d»
 - [erdosproblems.com/91](https://www.erdosproblems.com/91)
 -/
 
-open Finset
-open scoped EuclideanGeometry
+open Finset EuclideanGeometry Filter
 
 namespace Erdos91
 
-/-- The minimum number of distinct distances possible for any set of n points in $\mathbb R^2$. -/
-noncomputable def minDistanceCount (n : ℕ) : ℕ :=
-  sInf { k | ∃ (A : Finset ℝ²), A.card = n ∧ distinctDistances A = k }
-
 /-- A set $A$ is 'optimal' if it has $n$ points and achieves the minimum distance count. -/
 noncomputable def IsOptimal (A : Finset ℝ²) (n : ℕ) : Prop :=
-  A.card = n ∧ distinctDistances A = minDistanceCount n
+  A.card = n ∧ distinctDistances A = minimalDistinctDistances n
 
-/-- Two sets are similar if one can be mapped to the other by scaling, rotation/reflection,
-and translation. -/
-def IsSimilar (A B : Finset ℝ²) : Prop :=
-  ∃ (c : ℝ) (f : ℝ² ≃ₗᵢ[ℝ] ℝ²) (v : ℝ²), 0 < c ∧
-    B = A.image (fun x => c • (f x) + v)
+/-- Two finite sets of points in $\mathbb{R}^2$ are similar if one can be mapped to the other by a
+DilationEquiv. -/
+def DilationEquivSimilar (A B : Finset ℝ²) : Prop :=
+  ∃ f : ℝ² ≃ᵈ ℝ², (f '' A.toSet) = B.toSet
 
 noncomputable def unitSquare : Finset ℝ² := {![0, 0], ![0, 1], ![1, 0], ![1, 1]}
 
@@ -70,7 +64,7 @@ lemma erdos_91.test.unitSquare_optimal : IsOptimal unitSquare 4 := by
 
 @[category test, AMS 52]
 lemma erdos_91.test.unitSquare_unique_optimal :
-    ∀ A : Finset ℝ², IsOptimal A 4 → IsSimilar A unitSquare := by
+    ∀ A : Finset ℝ², IsOptimal A 4 → DilationEquivSimilar A unitSquare := by
   sorry
 
 @[category test, AMS 52]
@@ -83,16 +77,86 @@ lemma erdos_91.test.wheelSeven_optimal : IsOptimal wheelSeven 7 := by
 
 @[category test, AMS 52]
 lemma erdos_91.test.dissimilar_circleSeven_wheelSeven :
-    ¬IsSimilar circleSeven wheelSeven := by
+    ¬DilationEquivSimilar circleSeven wheelSeven := by
   sorry
 
-/-- Erdős Problem 91: For sufficiently large $n$, there are at least
-    two non-similar sets that minimize the number of distinct distances. -/
+/--
+The predicate on $n$ asserting all $A, B\subset \mathbb{R}^2$,
+with $\lvert A\rvert=n = \lvert B\rvert$, which minimise the number of distinct points for all sets
+with $n$ elements are similar.
+-/
+def UniqueMinimizer (n : ℕ) : Prop :=
+  ∀ (A B : Finset ℝ²),  A.card = n → B.card = n →
+  minimalDistinctDistances n = distinctDistances A →
+  minimalDistinctDistances n = distinctDistances B → DilationEquivSimilar A B
+
+/--
+Suppose $A\subset \mathbb{R}^2$ has $\lvert A\rvert=n$ and minimises the number of distinct
+distances between points in $A$. Prove that for large $n$ there are at least two
+(and probably many) such $A$ which are non-similar.
+-/
 @[category research open, AMS 52]
 theorem erdos_91 :
-  ∀ᶠ (n : ℕ) in Filter.atTop,
-    ∃ (A B : Finset ℝ²), IsOptimal A n ∧ IsOptimal B n ∧ ¬IsSimilar A B := by
+    (∀ᶠ n : ℕ in atTop, ¬ UniqueMinimizer n) ↔ answer(sorry) := by
   sorry
 
+
+/--
+For $n = 3$ the equilateral triangle is the only such set.
+-/
+@[category research solved, AMS 52]
+theorem erdos_91.variants.three : UniqueMinimizer 3 := by
+  sorry
+
+
+/--
+For $n=4$ the square or two equilateral triangles sharing an edge give two
+non-similar examples.
+-/
+@[category research solved, AMS 52]
+theorem erdos_91.variants.four : ¬ UniqueMinimizer 4 := by
+  sorry
+
+
+/--
+For $n = 5$ the regular pentagon is the unique such set (which has two distinct distances).
+Erdős mysteriously remarks in [Er90] this was proved by 'a colleague'. (In [Er87b] this is
+described as 'a colleague from Zagreb (unfortunately I do not have his letter)'.)
+A published proof of this fact is provided by Kovács [Ko24c].
+-/
+@[category research solved, AMS 52]
+theorem erdos_91.variants.five : UniqueMinimizer 5 := by
+  sorry
+
+/--
+In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 6$.
+-/
+@[category research solved, AMS 52]
+theorem erdos_91.variants.six: ¬ UniqueMinimizer 6 := by
+  sorry
+
+
+/--
+In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 7$.
+-/
+@[category research solved, AMS 52]
+theorem erdos_91.variants.seven: ¬ UniqueMinimizer 7 := by
+  sorry
+
+
+/--
+In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 8$.
+-/
+@[category research solved, AMS 52]
+theorem erdos_91.variants.eight: ¬ UniqueMinimizer 8 := by
+  sorry
+
+
+/--
+In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 9$.
+-/
+@[category research solved, AMS 52]
+theorem erdos_91.variants.nine: ¬ UniqueMinimizer 9 := by
+  sorry
 
 end Erdos91
