@@ -29,10 +29,9 @@ namespace Gourevitch
   
 
 /-- The Gourevitch series identity:
-The infinite series evaluates to
-$
-\sum_{n=0}^{\infty} \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7 = \frac{32}{\pi^3}.
-$
+The following idenitity holds:
+$\sum_{n=0}^{\infty} \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7 = \frac{32}{\pi^3}.$
+This was originally conjectured in [G2003] by Guillera and proven in [A2025] by Au.
 -/
 @[category research solved, AMS 11 33]
 theorem gourevitch_series_identity :
