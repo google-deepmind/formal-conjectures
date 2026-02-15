@@ -19,10 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Betrothed numbers
 
-Two positive integers $(m, n)$ are called **betrothed** (or quasi-amicable) if the sum of the
-proper divisors of each equals the other plus one. Equivalently, $\sigma(m) = m + n + 1$ and
-$\sigma(n) = m + n + 1$, where $\sigma$ denotes the sum-of-divisors function.
-
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Betrothed_numbers)
 - [OEIS A005276](https://oeis.org/A005276)
