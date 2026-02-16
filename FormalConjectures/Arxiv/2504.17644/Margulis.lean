@@ -47,7 +47,7 @@ Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
 theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     (g : SL(n, ℝ) ⧸ Subgroup.map (map (Int.castRingHom ℝ)) ⊤)
     (hg : IsCompact <| closure (MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g)) :
-    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g := by
+    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g :=
   sorry
 
  /-!
@@ -74,17 +74,10 @@ noncomputable section
 
 variable (K : Type*) [Field K]
 
-/-- Natural inclusion `F⟦X⟧ → F⸨X⁻¹⸩` (power series → Laurent series). -/
-noncomputable def powerSeriesToLaurent : PowerSeries K→+* LaurentSeries K :=
-  HahnSeries.ofPowerSeries ℤ K
-
-#check powerSeriesToLaurent
-
-
 /-- Natural inclusion `Polynomial K → LaurentSeries K`
     (polynomial → power series → Laurent series). -/
 def polyToLaurent : Polynomial K →+* LaurentSeries K :=
-  (powerSeriesToLaurent K).comp  Polynomial.coeToPowerSeries.ringHom
+  ( HahnSeries.ofPowerSeries ℤ K).comp  Polynomial.coeToPowerSeries.ringHom
 
 #check polyToLaurent K
 
