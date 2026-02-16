@@ -70,49 +70,26 @@ universe u
 
 section FunctionFieldDiagonalOrbit
 
-noncomputable section
-
-variable (K : Type*) [Field K]
-
-/-- Natural inclusion `Polynomial K → LaurentSeries K`
-    (polynomial → power series → Laurent series). -/
-def polyToLaurent : Polynomial K →+* LaurentSeries K :=
-  ( HahnSeries.ofPowerSeries ℤ K).comp  Polynomial.coeToPowerSeries.ringHom
-
-#check polyToLaurent K
-
-end
 variable (F : Type u) [Field F] [Fintype F]
 
 /-- A = F[t]. -/
 abbrev A := Polynomial F
 
-/-- K = F⸨t⁻¹⸩, the  F. -/
+/-- `K = F⸨t⁻¹⸩`, the field of formal Laurent series over `F`. -/
 abbrev K := LaurentSeries F
-
-/- The natural embedding `F[t] →+* F((t⁻¹))`:
-    polynomial → power series → Laurent series. -/
-
-noncomputable def polyToLaurent_F :
-   A F →+* K F :=
-  polyToLaurent (K := F)
 
 abbrev SL4 (R : Type*) [CommRing R] :=
   Matrix.SpecialLinearGroup (Fin 4) R
 
-/-- Group hom `SL₄(F[t]) → SL₄(F((t⁻¹)))` induced by `polyToLaurent`. -/
+/-- Group hom `SL₄(F[t]) → SL₄(F((t⁻¹)))` induced by the natural inclusion `F[t] →+* F((t⁻¹))`. -/
 noncomputable def SL4_map_polyToLaurent :
     SL4 (A F) →* SL4 (K F) :=
-  Matrix.SpecialLinearGroup.map (polyToLaurent F)
+  Matrix.SpecialLinearGroup.map
+    ((HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom)
 
 /-- Γ = image of `SL₄(F[t])` inside `SL₄(F((t⁻¹)))`. -/
 noncomputable def Gamma : Subgroup (SL4 (K F)) :=
   (SL4_map_polyToLaurent (F := F)).range
-
-#check diagonalSubgroup (Fin 4) (K F)
-
-
-#check (inferInstance : TopologicalSpace (K F))   -- valuation topology on K
 
 variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
 
@@ -125,7 +102,7 @@ Let `F` be a finite field of characteristic `p ∈ {3, 5, 7, 11}`, and set
 `K = F((t⁻¹))`, `A = F[t]`. Let
 
 * `D` be the diagonal subgroup of `SL₄(K)`,
-* `Γ = SL₄(A)` the lattice subgroup embedded into `SL₄(K)` via `polyToLaurent`.
+* `Γ = SL₄(A)` the lattice subgroup embedded into `SL₄(K)` via the natural inclusion `A →+* K`.
 
 Then there exists `z : SL₄(K)/Γ` such that the `D`-orbit of `z` has compact
 closure but is not closed.
