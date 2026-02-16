@@ -1,4 +1,4 @@
-# This workflow allows any user to add or remove whitelisted labels
+# This workflow allows any user to add or remove one of the labels in the array `labelArray`
 # by commenting on the PR or issue.
 #
 # To remove a label: comment with "-labelname" (e.g., "-awaiting-author")
@@ -27,11 +27,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Add / remove whitelisted labels based on comment
+    - name: Add / remove label based on comment
       run: |
-        # Whitelist of labels that any contributor can add/remove
-        # Add or remove labels from this array to control which labels can be managed
-        labelArray=("awaiting-author" "WIP" "easy" "help-wanted")
+        labelArray=("awaiting-author" "WIP" "Easy" "documentation")
 
         # we strip `\r` since line endings from GitHub contain this character
         COMMENT="${COMMENT//$'\r'/}"
