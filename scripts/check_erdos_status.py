@@ -41,15 +41,17 @@ CATEGORY_THEN_THEOREM = re.compile(
 OPEN_STATES = {"open", "falsifiable", "verifiable"}
 SOLVED_STATES = {
     "solved",
-    "solved (Lean)",
     "proved",
     "disproved",
-    "proved (Lean)",
-    "disproved (Lean)",
     "not provable",
     "not disprovable",
     "independent",
     "decidable",
+}
+FORMALLY_SOLVED_STATES = {
+    "solved (Lean)",
+    "proved (Lean)",
+    "disproved (Lean)",
 }
 
 
@@ -59,20 +61,31 @@ def fetch_yaml():
 
 
 def yaml_status_to_category(state):
-    """Map a YAML status.state value to 'open', 'solved', or None.
+    """Map a YAML status.state value to 'open', 'solved', 'formally solved', or None.
 
     Returns None for unrecognized states.
     """
     if state in OPEN_STATES:
         return "open"
+    if state in FORMALLY_SOLVED_STATES:
+        return "formally solved"
     if state in SOLVED_STATES:
         return "solved"
     print(f"WARNING: unrecognized YAML status state: {state!r}", file=sys.stderr)
     return None  # unrecognized — skip comparison
 
 
+def lean_category(cat):
+    """Normalize a captured category string to 'open', 'solved', or 'formally solved'."""
+    if cat == "open":
+        return "open"
+    if cat.startswith("formally solved"):
+        return "formally solved"
+    return "solved"
+
+
 def scan_lean_files():
-    """Return dict mapping problem number (str) -> 'open' or 'solved'."""
+    """Return dict mapping problem number (str) -> 'open', 'solved', or 'formally solved'."""
     result = {}
     for fname in os.listdir(ERDOS_DIR):
         if not fname.endswith(".lean"):
@@ -86,8 +99,7 @@ def scan_lean_files():
         # Find the main theorem's category (first match for this problem number)
         for m in CATEGORY_THEN_THEOREM.finditer(content):
             if m.group(2) == file_number:
-                cat = m.group(1)
-                result[file_number] = "open" if cat == "open" else "solved"
+                result[file_number] = lean_category(m.group(1))
                 break
     return result
 
@@ -159,12 +171,13 @@ def create_issues(mismatches):
             f"Please verify and update the `@[category research ...]` "
             f"annotation if appropriate."
         )
-        subprocess.run(
-            ["gh", "issue", "create",
-             "--title", title,
-             "--body", body,
-             "--label", "erdos-status-sync"],
-        )
+        labels = ["erdos-status-sync"]
+        if m["yaml_status"] == "formally solved":
+            labels.append("formalisation exists elsewhere")
+        cmd = ["gh", "issue", "create", "--title", title, "--body", body]
+        for label in labels:
+            cmd.extend(["--label", label])
+        subprocess.run(cmd)
 
 
 def main():
