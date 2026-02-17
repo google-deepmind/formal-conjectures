@@ -54,7 +54,7 @@ theorem poincare_conjecture : ConjectureFor 3 := by
 The Generalized Poincaré Conjecture holds for surfaces.
 -/
 @[category undergraduate, AMS 54 57]
-theorem poincarre_conjecture.variants.dimension_two : ConjectureFor 2 := by
+theorem poincare_conjecture.variants.dimension_two : ConjectureFor 2 := by
   sorry
 
 /--
