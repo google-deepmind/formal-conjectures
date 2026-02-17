@@ -26,11 +26,12 @@ register_option linter.style.existsImplication : Bool := {
   descr := "Detects misformalisations caused by writing ∃ x, P x → Q rather than ∃ x, P x ∧ Q "
 }
 
+/-- Changes and expression of the form `∀ (h1 : Prop1) (h2 : Prop2) ..., Propn` to
+`Prop1 ∧ Prop2 ∧ ... ∧ Propn`. -/
 def forallToAnd (expr : Expr) : MetaM Expr :=
   forallTelescope expr fun vars final => do
     let varsAsProp ← vars.mapM inferType
-    varsAsProp.foldrM (fun var currentBigAnd =>
-      mkAppM ``And #[var, currentBigAnd]) final
+    varsAsProp.foldrM (fun var currentBigAnd => mkAppM ``And #[var, currentBigAnd]) final
 
 /--
 Checks if an expression contains the pattern `∃ x, P x → Q`.
