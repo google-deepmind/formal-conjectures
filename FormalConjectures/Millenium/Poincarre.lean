@@ -25,17 +25,12 @@ References:
 
 -/
 
-open scoped Manifold ContDiff
-open Metric (sphere)
+namespace PoincareConjecture
+
+open scoped Manifold ContDiff EuclideanGeometry ContinuousMap
 
 local macro:max "𝕊" noWs n:superscript(term) : term =>
-  `(sphere (0 : EuclideanSpace ℝ (Fin ($(⟨n.raw[0]⟩) + 1))) 1)
-
-open ContinuousMap
-
-open EuclideanGeometry
-
-namespace PoincareConjecture
+  `(Metric.sphere (0 : EuclideanSpace ℝ (Fin ($(⟨n.raw[0]⟩) + 1))) 1)
 
 /-- The predicate that the generalized Poincaré conjecture holds in dimension $n$, i.e. that
 any $n$-dimensional manifold that is homotopy equivalent to the sphere is in fact homeomorphic
@@ -73,7 +68,7 @@ theorem poincare_conjecture.variants.dimension_four : ConjectureFor 4 := by
 
 /-- The predicate that the smooth Poincaré conjecture holds in dimension $n$. -/
 def SmoothConjectureFor (n : ℕ) : Prop :=
-  ∀ (M : Type) (_ : TopologicalSpace M) (_ : ChartedSpace (ℝ^n) M) (_ : IsManifold (𝓡 n) ∞ M),
+  ∀ (M : Type) [TopologicalSpace M] [ChartedSpace (ℝ^n) M] [IsManifold (𝓡 n) ∞ M],
     M ≃ₕ 𝕊ⁿ → Nonempty (M ≃ₘ⟮𝓡 n, 𝓡 n⟯ 𝕊ⁿ)
 
 /-- A reformulation of the Millenium Problem in terms of smooth 3-folds. -/
