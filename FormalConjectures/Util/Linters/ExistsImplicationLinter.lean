@@ -1,3 +1,19 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
 import FormalConjecturesForMathlib.Tactic.Linter.Term
 import Mathlib
 
@@ -44,8 +60,10 @@ The `existsImplicationLinter` detects expressions of the form `∃ a, P a → Q`
 user since those are rarely correct.
 -/
 def existsImplicationLinter : Linter where
-  run := Lean.Elab.Command.Linter.runTermLinter (σ := Unit) linter.style.existsImplication fun expr stx => do
-    checkExistsArrow expr stx
+  -- TODO(Paul-Lez): Running in `StateT Unit MetaM Unit` is a bit of a hack.
+  -- Do this with a non-StateT version of `runTermLinter`?
+  run := Lean.Elab.Command.Linter.runTermLinter (σ := Unit) linter.style.existsImplication
+    fun expr stx => checkExistsArrow expr stx
 
 initialize addLinter existsImplicationLinter
 
