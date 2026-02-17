@@ -36,7 +36,7 @@ This was originally conjectured in [G2003] by Guillera and proven in [A2025] by 
 @[category research solved, AMS 11 33]
 theorem gourevitch_series_identity :
     ∑' n, ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ)
-      * ((Nat.centralBinom n : ℕ) ^ 7) = 32 / (Real.pi ^ 3) := by
+      * (Nat.centralBinom n ^ 7) = 32 / (Real.pi ^ 3) := by
   sorry
 
 end Gourevitch
