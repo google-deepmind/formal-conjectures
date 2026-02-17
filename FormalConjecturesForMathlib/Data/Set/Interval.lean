@@ -21,18 +21,10 @@ variable {S : Set β} {a b : β}
 
 namespace Set
 
-theorem finite_inter_Iio [LocallyFiniteOrderBot β] :
-    (S ∩ Iio b).Finite :=
-  Set.finite_Iio b |>.inter_of_right S
-
 noncomputable instance [LocallyFiniteOrderBot β] : Fintype (S ∩ Iio b : Set β) :=
-  Set.finite_inter_Iio.fintype
-
-theorem finite_inter_Icc [LocallyFiniteOrder β] [OrderBot β] :
-    (S ∩ Icc a b).Finite :=
-  Set.finite_Icc a b |>.inter_of_right S
+  (Set.finite_Iio b |>.inter_of_right S).fintype
 
 noncomputable instance [LocallyFiniteOrder β] [OrderBot β] : Fintype (S ∩ Icc a b : Set β) :=
-  Set.finite_inter_Icc.fintype
+  (Set.finite_Icc a b |>.inter_of_right S).fintype
 
 end Set
