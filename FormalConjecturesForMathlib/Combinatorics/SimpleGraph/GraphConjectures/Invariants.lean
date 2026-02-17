@@ -158,9 +158,7 @@ noncomputable def wienerIndex (G : SimpleGraph α) : ℕ :=
 
 /-- Auxiliary function for Szeged index: counts vertices closer to u than v. -/
 noncomputable def szeged_aux (G : SimpleGraph α) (u v : α) : ℕ :=
-  -- Note: this automatically excludes vertices that aren't connected to either u or v,
-  -- since their distance will be 0.
-  (Finset.univ.filter (fun w => G.dist w u ≠ 0 ∧ G.dist w u <= G.dist w v)).card
+  (Finset.univ.filter (fun w => G.edist w u < G.edist w v)).card
 
 /-- The Szeged index of `G`.
 

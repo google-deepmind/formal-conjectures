@@ -43,6 +43,7 @@ import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Do
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Johnson
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
+import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 import FormalConjecturesForMathlib.Computability.Encoding
 import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
@@ -92,4 +93,5 @@ import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
 import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
 import FormalConjecturesForMathlib.Topology.Discrete
+import FormalConjecturesForMathlib.Topology.GDelta
 import FormalConjecturesForMathlib.Topology.MetricSpace.MetricSeparated

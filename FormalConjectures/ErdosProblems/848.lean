@@ -45,7 +45,7 @@ def A₇ (N : ℕ) : Finset ℕ :=
 
 /-- The Erdős Problem 848 statement for a fixed $N$: any set $A ⊆ \{0, \dots, N-1\}$ with
 the non-squarefree product property has cardinality at most $|A₇(N)|$. -/
-def Erdos848 (N : ℕ) : Prop :=
+def Erdos848For (N : ℕ) : Prop :=
   ∀ A : Finset ℕ, A ⊆ Finset.range N → NonSquarefreeProductProp A →
     A.card ≤ (A₇ N).card
 
@@ -54,7 +54,7 @@ def Erdos848 (N : ℕ) : Prop :=
 
 This asks whether `Erdos848 N` holds for all $N$ (formulated using `A ⊆ Finset.range N`). -/
 @[category research open, AMS 11]
-theorem erdos_848 : answer(sorry) ↔ ∀ N, Erdos848 N := by
+theorem erdos_848 : answer(sorry) ↔ ∀ N, Erdos848For N := by
   sorry
 
 /-- There exists $N₀$ such that for all $N ≥ N₀$, if $A ⊆ \{1, \dots, N\}$ satisfies that $ab + 1$
@@ -67,7 +67,7 @@ $A ⊆ \{n : n ≡ 18 \pmod{25}\}$.
 A complete formal Lean 4 proof is available at:
 https://github.com/The-Obstacle-Is-The-Way/erdos-banger -/
 @[category research formally solved using lean4 at "https://github.com/The-Obstacle-Is-The-Way/erdos-banger/blob/1cc2ac8e9d70516e979733c6ea5c4d2eb652d1f5/formal/lean/Erdos/848.lean", AMS 11]
-theorem erdos_848_asymptotic : ∀ᶠ N in Filter.atTop, Erdos848 N := by
+theorem erdos_848_asymptotic : ∀ᶠ N in Filter.atTop, Erdos848For N := by
   sorry
 
 end Erdos848

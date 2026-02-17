@@ -17,6 +17,7 @@ import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.Combinatorics.SimpleGraph.Coloring
+import Mathlib.Data.Set.Card
 
 variable {V α ι : Type*} {G : SimpleGraph V} {n : ℕ}
 
@@ -134,6 +135,18 @@ noncomputable def cochromaticNumber (G : SimpleGraph V) : ℕ∞ := ⨅ n ∈ se
 returns a `Cardinal` and can therefore distinguish between different infinite chromatic numbers. -/
 noncomputable def chromaticCardinal.{u} {V : Type u} (G : SimpleGraph V) : Cardinal :=
   sInf {κ : Cardinal | ∃ (C : Type u) (_ : Cardinal.mk C = κ), Nonempty (G.Coloring C)}
+
+/-- The maximum size of the union of k finite independent sets. -/
+noncomputable def indepNumK (G : SimpleGraph V) (k : ℕ) : ℕ :=
+  sSup {n | ∃ f : Fin k → Set V, (∀ i, G.IsIndepSet (f i)) ∧ (⋃ i, f i).ncard = n}
+
+/-- A finite graph is CDS-colorable if it has a proper coloring
+by natural numbers such that for all `k > 0`, the number of
+vertices with color `< k` equals the maximum size of
+the union of `k` independent sets. -/
+def CDSColorable [Fintype α] {G : SimpleGraph α} : Prop :=
+    ∃ (C : G.Coloring Nat), ∀ k : Nat,
+   ∑ i < k, (C.colorClass i).ncard = indepNumK G k
 
 /-- A homomorphism is rainbow if it maps distinct edges to distinct colors. -/
 def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →g G) {C : Type*}
