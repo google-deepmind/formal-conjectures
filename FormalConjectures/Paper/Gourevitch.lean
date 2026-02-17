@@ -38,6 +38,5 @@ theorem gourevitch_series_identity :
     ∑' n : ℕ, ((1 + 14 * n + 76 * n ^ 2 + 168 * n ^ 3) / (2 ^ (20 * n)) : ℝ)
       * Nat.centralBinom n ^ 7 = 32 / (Real.pi ^ 3) := by
   sorry
-  sorry
 
 end Gourevitch
