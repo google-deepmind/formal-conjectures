@@ -105,17 +105,15 @@ theorem reachable_iff_of_two_le (m n : ℕ) (hm : 2 ≤ m) :
       · refine (Nat.lt_mul_iff_one_lt_left ?_).2 ?_ <;> omega
       all_goals omega
 
-/-- Auxiliary decision procedure for `Reachable`, taking a fuel argument `f` bounding `m`.
-
-`reachable_iff_of_two_le` reduces `Reachable m n` for `2 ≤ m` to statements `Reachable m' n'` with
-`m' < m`, so one unit of fuel per unit of `m` always suffices. Recursing on the fuel rather than on
-`m` makes this structural, so `Reachable.decide` below avoids well-founded recursion. -/
-def Reachable.decAux : ∀ (f m n : ℕ), m ≤ f → Decidable (Reachable m n)
-  |     _,     0,     n,  _ => isFalse (not_reachable_zero_fst n)
-  |     _,     1,     0,  _ => isFalse (not_reachable_zero_snd 1)
-  |     _,     1, _ + 1,  _ => isTrue (Reachable.one.le (by lia))
-  |     0, _ + 2,     _, hf => absurd hf (by lia)
-  | f + 1, m + 2,     n, hf => by
+/-- warning: instance `Mathoverflow75792.Reachable.decide._unary` must be marked with `@[reducible]`
+or `@[implicit_reducible]` -/
+-- TODO: I can't turn this warning off!
+#guard_msgs in
+instance Reachable.decide : ∀ m n, Decidable (Reachable m n)
+  | 0, n => isFalse (not_reachable_zero_fst n)
+  | 1, 0 => isFalse (not_reachable_zero_snd 1)
+  | 1, n+1 => isTrue (Reachable.one.le (by omega))
+  | m+2, n => by
       let d : ∀ {m₁} (h : m₁ < m + 2) {n}, Decidable (Reachable m₁ n) :=
         fun h ↦ Reachable.decAux f _ _ (by lia)
       refine @decidable_of_iff' _ _ (reachable_iff_of_two_le (m+2) n (by lia)) ?_

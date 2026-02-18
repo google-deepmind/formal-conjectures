@@ -165,7 +165,8 @@ theorem le_two_pow_additionChainLength {n : ℕ} (hne : (additionChainSteps n).N
 /-- The lower-bound tool: `r` steps cannot reach past `2 ^ r`. -/
 theorem lt_additionChainLength_of_two_pow_lt {n r : ℕ} (hne : (additionChainSteps n).Nonempty)
     (h : 2 ^ r < n) : r < additionChainLength n := by
-  by_contra! hcon
+  by_contra hcon
+  push Not at hcon
   have h1 := le_two_pow_additionChainLength hne
   have h2 : (2 : ℕ) ^ additionChainLength n ≤ 2 ^ r := Nat.pow_le_pow_right (by omega) hcon
   omega

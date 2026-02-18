@@ -68,16 +68,10 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
-    simp_all
+    simp_all [Walk.Nil.length_eq_zero]
   · rw [h]
-    let P : (fromRel fun a b : Finset (Fin 0) => (a ∆ b).card = 1).Walk ∅ ∅ := .nil
-    refine ⟨P.toSubgraph, ?_, ∅, ∅, P, ?_⟩
-    · intro v hv w hw hadj
-      simp [P] at hv hw
-      subst v
-      subst w
-      exact hadj.ne rfl
-    · simp [P]
+    use ⊤, by simp, ∅, ∅, .nil
+    simp [Subgraph.ext_iff, funext_iff]
 
 open List
 

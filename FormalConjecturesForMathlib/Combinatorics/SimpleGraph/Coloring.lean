@@ -18,7 +18,7 @@ module
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.NNRat.Floor
 public import Mathlib.Combinatorics.Enumerative.DoubleCounting
-public import Mathlib.Combinatorics.SimpleGraph.Coloring
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.VertexColoring
 public import Mathlib.Data.Set.Card
 
 @[expose] public section
@@ -92,7 +92,10 @@ open SimpleGraph
 set_option backward.isDefEq.respectTransparency false in
 theorem colorable_iff_induce_eq_bot (G : SimpleGraph V) (n : ℕ) :
     G.Colorable n ↔ ∃ coloring : V → Fin n, ∀ i, G.induce {v | coloring v = i} = ⊥ := by
-  refine ⟨fun ⟨a, h⟩ ↦ ⟨a, by aesop⟩, fun ⟨w, h⟩ ↦ ⟨w, @fun a b h_adj ↦ ?_⟩⟩
+  refine ⟨fun ⟨a, h⟩ ↦ ⟨a, fun i ↦ ?_⟩, fun ⟨w, h⟩ ↦ ⟨w, @fun a b h_adj ↦ ?_⟩⟩
+  · rw [SimpleGraph.eq_bot_iff_forall_not_adj]
+    rintro ⟨u, huv⟩ ⟨v, rfl⟩ huv'
+    exact (h huv').ne huv
   specialize h (w a)
   contrapose h
   intro hG

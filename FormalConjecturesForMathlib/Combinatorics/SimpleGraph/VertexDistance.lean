@@ -19,6 +19,7 @@ public import Mathlib.Analysis.RCLike.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
 public import Mathlib.Combinatorics.SimpleGraph.Metric
 public import Mathlib.Tactic.IntervalCases
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
 
 @[expose] public section
 
@@ -134,23 +135,19 @@ noncomputable def countInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ
     if a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d ∧
        isInducedC4 G a b c d = true then 1 else 0) / 24
 
-/-- BFS expansion: add all neighbors of S to S. -/
-def bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Finset α :=
-  S ∪ S.biUnion (fun v => Finset.univ.filter (G.Adj v))
-
 def bfs_dist_aux [DecidableEq α] [Fintype α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (target : α) :
     ℕ → ℕ → Finset α → ℕ
   | 0, _, _ => 0
   | fuel + 1, depth, reached =>
     if target ∈ reached then depth
-    else bfs_dist_aux G target fuel (depth + 1) (bfs_expand G reached)
+    else bfs_dist_aux G target fuel (depth + 1) (G.bfsStep reached)
 
 /-- Computable graph distance via BFS.
 Returns 0 if u = v or if v is unreachable from u. -/
 def computable_dist (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) : ℕ :=
   if u = v then 0
-  else bfs_dist_aux G v (Fintype.card α) 1 (bfs_expand G {u})
+  else bfs_dist_aux G v (Fintype.card α) 1 (G.bfsStep {u})
 
 /-- A computable version of `distMin` for a `Finset` of vertices. -/
 def computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : ℕ :=
@@ -167,14 +164,14 @@ def computable_avg_dist (G : SimpleGraph α) [DecidableRel G.Adj] : ℚ :=
   else 0
 
 
-private lemma mem_iterate_bfs_expand_dist_le (G : SimpleGraph α) [DecidableRel G.Adj]
-    (u w : α) (n : ℕ) (hw : w ∈ (G.bfs_expand)^[n] {u}) : G.dist u w ≤ n := by
+private lemma mem_iterate_bfsStep_dist_le (G : SimpleGraph α) [DecidableRel G.Adj]
+    (u w : α) (n : ℕ) (hw : w ∈ G.bfsStep^[n] {u}) : G.dist u w ≤ n := by
   induction n generalizing w with
   | zero => simp at hw; subst hw; simp
   | succ n ih =>
     rw [Function.iterate_succ', Function.comp] at hw
-    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter] at hw
-    rcases hw with hw | ⟨a, ha_mem, _, hadj⟩
+    simp only [mem_bfsStep] at hw
+    rcases hw with hw | ⟨a, ha_mem, hadj⟩
     · exact Nat.le_succ_of_le (ih w hw)
     · by_cases ha : a = u
       · subst ha
@@ -192,23 +189,9 @@ private lemma mem_iterate_bfs_expand_dist_le (G : SimpleGraph α) [DecidableRel 
           exact le_trans (dist_le (p.append (.cons hadj .nil)))
             (by simp [Walk.length_append, Walk.length_cons, Walk.length_nil, hp]; omega)
 
-private lemma reachable_of_mem_iterate_bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj]
-    (u w : α) (n : ℕ) (hw : w ∈ (G.bfs_expand)^[n] {u}) : w = u ∨ G.Reachable u w := by
-  induction n generalizing w with
-  | zero => simp at hw; exact Or.inl hw
-  | succ n ih =>
-    rw [Function.iterate_succ', Function.comp] at hw
-    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter] at hw
-    rcases hw with hw | ⟨a, ha_mem, _, hadj⟩
-    · exact ih w hw
-    · right
-      rcases ih a ha_mem with rfl | hr
-      · exact hadj.reachable
-      · exact hr.elim fun p => (p.append (.cons hadj .nil)).reachable
-
-private lemma dist_le_mem_iterate_bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj]
+private lemma dist_le_mem_iterate_bfsStep (G : SimpleGraph α) [DecidableRel G.Adj]
     (u w : α) (n : ℕ) (hdist : G.dist u w ≤ n) (hreach : w = u ∨ G.Reachable u w) :
-    w ∈ (G.bfs_expand)^[n] {u} := by
+    w ∈ G.bfsStep^[n] {u} := by
   induction n generalizing w with
   | zero =>
     rcases hreach with rfl | hr
@@ -220,14 +203,14 @@ private lemma dist_le_mem_iterate_bfs_expand (G : SimpleGraph α) [DecidableRel 
       · exact absurd hr h0
   | succ n ih =>
     rw [Function.iterate_succ', Function.comp]
-    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter]
+    simp only [mem_bfsStep]
     by_cases hle : G.dist u w ≤ n
     · left; exact ih w hle hreach
     · right
       have hdist_eq : G.dist u w = n + 1 := by omega
       obtain ⟨p, hp⟩ := exists_walk_of_dist_ne_zero (by omega : G.dist u w ≠ 0)
       have hlen : p.length = n + 1 := by omega
-      refine ⟨p.getVert n, ?_, Finset.mem_univ _, ?_⟩
+      refine ⟨p.getVert n, ?_, ?_⟩
       · exact ih _ (le_trans (dist_le (p.take n))
           (by rw [Walk.take_length]; omega)) (Or.inr (p.take n).reachable)
       · have := p.adj_getVert_succ (show n < p.length from by omega)
@@ -240,11 +223,11 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
   · subst h; simp [dist_self]
   · symm
     suffices hsuff : ∀ (fuel depth : ℕ) (reached : Finset α),
-        (∀ w, w ∈ reached ↔ w ∈ (G.bfs_expand)^[depth] {u}) →
-        (∀ d, d < depth → v ∉ (G.bfs_expand)^[d] {u}) →
+        (∀ w, w ∈ reached ↔ w ∈ G.bfsStep^[depth] {u}) →
+        (∀ d, d < depth → v ∉ G.bfsStep^[d] {u}) →
         fuel + depth ≥ Fintype.card α + 1 →
         G.bfs_dist_aux v fuel depth reached = G.dist u v by
-      exact hsuff (Fintype.card α) 1 (G.bfs_expand {u})
+      exact hsuff (Fintype.card α) 1 (G.bfsStep {u})
         (fun w => by simp)
         (fun d hd => by
           have := Nat.lt_of_lt_of_le hd (Nat.le_refl 1)
@@ -264,31 +247,27 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
           _ < Fintype.card α := hp_path.length_lt
           _ < depth := by omega
       exact h_not_found (G.dist u v) this
-        (dist_le_mem_iterate_bfs_expand G u v _ (le_refl _) (Or.inr hr))
+        (dist_le_mem_iterate_bfsStep G u v _ (le_refl _) (Or.inr hr))
     | succ fuel ih =>
       intro depth reached h_inv h_not_found h_fuel
       simp only [bfs_dist_aux]
       split_ifs with hv
       · -- v ∈ reached = iterate^depth {u}. Show depth = dist u v.
-        have hle := mem_iterate_bfs_expand_dist_le G u v depth ((h_inv v).mp hv)
+        have hle := mem_iterate_bfsStep_dist_le G u v depth ((h_inv v).mp hv)
         -- dist u v ≥ depth: if dist < depth, v ∈ iterate^(dist u v), contradicts h_not_found
         by_contra hne
         have hlt : G.dist u v < depth := by omega
-        have hreach : G.Reachable u v := by
-          rcases reachable_of_mem_iterate_bfs_expand G u v depth ((h_inv v).mp hv) with rfl | hr
-          · exact absurd rfl h
-          · exact hr
+        have hreach : G.Reachable u v := G.reachable_of_mem_iterate_bfsStep ((h_inv v).mp hv)
         exact h_not_found (G.dist u v) hlt
-          (dist_le_mem_iterate_bfs_expand G u v _ (le_refl _) (Or.inr hreach))
+          (dist_le_mem_iterate_bfsStep G u v _ le_rfl (Or.inr hreach))
       · -- v ∉ reached. Recurse.
-        have h_inv' : ∀ w, w ∈ G.bfs_expand reached ↔
-            w ∈ (G.bfs_expand)^[depth + 1] {u} := by
+        have h_inv' : ∀ w, w ∈ G.bfsStep reached ↔
+            w ∈ G.bfsStep^[depth + 1] {u} := by
           intro w
-          have heq : G.bfs_expand reached = G.bfs_expand ((G.bfs_expand)^[depth] {u}) := by
-            ext x; simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion,
-              Finset.mem_filter, h_inv]
+          have heq : G.bfsStep reached = G.bfsStep (G.bfsStep^[depth] {u}) := by
+            ext x; simp only [mem_bfsStep, h_inv]
           rw [heq, Function.iterate_succ', Function.comp]
-        exact ih (depth + 1) (G.bfs_expand reached) h_inv'
+        exact ih (depth + 1) (G.bfsStep reached) h_inv'
           (fun d hd => by
             rcases Nat.lt_succ_iff_lt_or_eq.mp hd with hd | hd
             · exact h_not_found d (by omega)

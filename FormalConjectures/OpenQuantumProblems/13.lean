@@ -140,8 +140,7 @@ def IsUnbiased {d : ℕ} (U V : UMat d) : Prop :=
 lemma IsUnbiased.symm {d : ℕ} {U V : UMat d} (hUV : IsUnbiased U V) :
     IsUnbiased V U := by
   intro i j
-  have hstar : relativeUnitary V U = star (relativeUnitary U V) := by
-    simp [relativeUnitary, Matrix.star_mul]
+  have hstar : relativeUnitary V U = star (relativeUnitary U V) := by simp [relativeUnitary]
   calc
     ‖relativeUnitary V U i j‖ ^ (2 : ℕ)
         = ‖star (relativeUnitary U V) i j‖ ^ (2 : ℕ) := by simp [hstar]

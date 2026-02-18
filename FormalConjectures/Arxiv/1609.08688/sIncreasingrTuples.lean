@@ -106,10 +106,11 @@ theorem isIncreasing₂_const_length {α : Type*} [LinearOrder α] {val : α} {s
     (h : IsIncreasing₂ s)
     (h_const : ∀ a ∈ s, ∀ j, a j = val) : s.length < 2 := by
   by_contra!
-  obtain ⟨i, j, -, hi, -⟩ :=
-    List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
-  rw [h_const _ (List.getElem_mem _) i, h_const _ (List.getElem_mem _) i] at hi
-  exact lt_irrefl _ hi
+  have h₀ : s[0] = fun _ => val := funext fun i => by simp [h_const s[0] (by simp)]
+  have h₁ : s[1] = fun _ => val := funext fun i => by simp [h_const s[1] (by simp)]
+  have := List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
+  erw [h₀, h₁] at this
+  exact not_lt₂_self _ this
 
 /--
 Let $F(n)$ be the maximal length of a $2$-increasing sequence of triples with each coordinate
@@ -234,7 +235,7 @@ theorem maximalLength_le_isBigO : ∃ Ω : ℕ → ℝ,
 
 /-- We define the product of two triples $(a, b, c)$ and $(d, e, f)$ by
 $((a, d), (b, e), (c, f))$, where the pairs are arranged in lexicographical order. -/
-def tripleProduct {α : Type*} (a b : Fin 3 → α) : Πₗ (_ : Fin 3), α × α := toLex (Pi.prod a b)
+def tripleProduct {α : Type*} (a b : Fin 3 → α) : Πₗ (_ : Fin 3), α × α := toLex (Function.prod a b)
 
 @[simp, category API, AMS 5]
 theorem tripleProduct_const {α : Type*} (a : α) :

@@ -137,7 +137,8 @@ theorem f_undefined_at_3 : f 5 = 0 := by
         · intro x hx hx2; simp only [Finset.mem_Iio] at *; exact hz x (by omega)
       · -- Three distinct divisors `1 < d₁ < d₂` force the sum to be at least `6`.
         have hc3 : 2 < hfin.toFinset.card := by
-          by_contra! hcon
+          by_contra hcon
+          push Not at hcon
           exact hg2 (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
         have hg1 := hlb 1 (by omega)
         have hg2' := hlb 2 (by omega)
@@ -147,7 +148,6 @@ theorem f_undefined_at_3 : f 5 = 0 := by
           · intros; positivity
         rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_succ,
           Finset.sum_range_one, hg0] at hsub
-        rw [Nat.Iio_eq_range] at hsum
-        omega
+        lia
 
 end Erdos1054
