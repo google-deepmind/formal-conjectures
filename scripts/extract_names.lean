@@ -18,9 +18,8 @@ import FormalConjectures.Util.Attributes
 
 open Lean ProblemAttributes
 
-def getModuleNameFromFile (file : String) : IO Name := do
-  let path := System.FilePath.mk file
-  let components := path.withExtension "" |>.components
+def getModuleNameFromFile (file : System.FilePath) : IO Name := do
+  let components := file.withExtension "" |>.components
   -- Assuming the file is under FormalConjectures/ or FormalConjecturesForMathlib/
   let mut moduleComponents := []
   let mut found := false
@@ -50,7 +49,7 @@ def nameAny (n : Name) (p : String → Bool) : Bool :=
   | .num p' _ => nameAny p' p
 
 def isInternal (n : Name) : Bool :=
-  nameAny n (fun s => s.startsWith "_" || s.contains "." || s.startsWith "match_" || s.startsWith "proof_")
+  nameAny n (fun s => s.startsWith "_" || s.startsWith "match_" || s.startsWith "proof_")
 
 def amsToNat (a : AMS) : Nat :=
   match a with
@@ -68,26 +67,49 @@ def amsToNat (a : AMS) : Nat :=
 
 structure TheoremInfo where
   name : String
+  file : String
   categories : List String
   subjects : List String
   deriving ToJson
 
-unsafe def runWithImport {α : Type} (moduleName : Name) (actionToRun : Name → CoreM α) : IO α := do
+unsafe def runWithImports {α : Type} (moduleNames : Array Name) (actionToRun : CoreM α) : IO α := do
   initSearchPath (← findSysroot)
-  let imports := #[{ module := moduleName }]
+  let imports := moduleNames.map fun n => { module := n }
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
   let env ← Lean.importModules imports {} (trustLevel := 1024) (loadExts := true)
-  let (result, _newState) ← Core.CoreM.toIO (actionToRun moduleName) currentCtx { env := env }
+  let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
   return result
 
-unsafe def main (args : List String) : IO Unit := do
-  let .some (file : String) := args[0]?
-    | IO.println "Usage: extract_names <file>"
-  
-  let moduleName ← getModuleNameFromFile file
+partial def getAllLeanFiles (dir : System.FilePath) : IO (Array System.FilePath) := do
+  let mut files := #[]
+  if ← dir.isDir then
+    for entry in ← dir.readDir do
+      if ← entry.path.isDir then
+        files := files ++ (← getAllLeanFiles entry.path)
+      else if entry.path.extension == some "lean" then
+        files := files.push entry.path
+  return files
 
-  runWithImport moduleName fun modName => do
+unsafe def main (args : List String) : IO Unit := do
+  let leanFiles ← match args with
+    | [] => 
+      let f1 ← getAllLeanFiles "FormalConjectures"
+      let f2 ← getAllLeanFiles "FormalConjecturesForMathlib"
+      pure (f1 ++ f2)
+    | [file] => pure #[System.FilePath.mk file]
+    | _ => throw <| IO.userError "Usage: extract_names [file]"
+  
+  let mut moduleToFile : Std.HashMap Name String := {}
+  let mut moduleNames := #[]
+  for file in leanFiles do
+    try
+      let modName ← getModuleNameFromFile file
+      moduleNames := moduleNames.push modName
+      moduleToFile := moduleToFile.insert modName file.toString
+    catch _ => pure ()
+
+  runWithImports moduleNames do
     let env ← getEnv
     let tags ← getTags
     let subjectTags ← getSubjectTags
@@ -102,19 +124,21 @@ unsafe def main (args : List String) : IO Unit := do
       let subjects := tag.subjects.map (fun (s : AMS) => s!"{amsToNat s}")
       subjectMap := subjectMap.insert tag.declName (subjects ++ subjectMap.getD tag.declName [])
 
-    let some modIdx := env.header.moduleNames.findIdx? (· == modName)
-      | throwError s!"Module {modName} not found in environment"
-
-    let mut results : List TheoremInfo := []
-    let modData := env.header.moduleData[modIdx]!
-    for info in modData.constants do
-      let name := info.name
-      match info with
-      | ConstantInfo.thmInfo .. => 
-        if !isInternal name then
-          let cats := categoryMap.getD name []
-          let subjs := subjectMap.getD name []
-          results := { name := name.toString, categories := cats, subjects := subjs } :: results
-      | _ => pure ()
+    let mut allResults : List TheoremInfo := []
+    for modName in moduleNames do
+      let some modIdx := env.header.moduleNames.findIdx? (· == modName)
+        | continue
+      let modData := env.header.moduleData[modIdx]!
+      let fileName := moduleToFile.getD modName "unknown"
+      for info in modData.constants do
+        let name := info.name
+        match info with
+        | ConstantInfo.thmInfo .. => 
+          if !isInternal name then
+            let cats := categoryMap.getD name []
+            let subjs := subjectMap.getD name []
+            if !cats.isEmpty || !subjs.isEmpty then
+              allResults := { name := name.toString, file := fileName, categories := cats, subjects := subjs } :: allResults
+        | _ => pure ()
     
-    IO.println (toJson results.reverse).compress
+    IO.println (toJson allResults.reverse).pretty
