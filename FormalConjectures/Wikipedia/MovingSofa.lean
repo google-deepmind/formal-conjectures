@@ -176,7 +176,7 @@ theorem maximalFor_isMovingSofa_volume_gerversSofa :
 /-- Gerver's sofa attains the unique maximal volume of a moving sofa. -/
 @[category research open, AMS 49]
 theorem maximalFor_isMovingSofa_volume_iff_eq_gerversSofa :
-    ∀ s : Set ℝ², MaximalFor (fun s ↦ ∃ m, IsMovingSofa s m) volume s ↔ s = gerversSofa :=
+    ∀ s : Set ℝ², MaximalFor (fun s ↦ ∃ m, IsMovingSofa s m) volume s ↔ s = gerversSofa := by
   sorry
 
 end MovingSofa
