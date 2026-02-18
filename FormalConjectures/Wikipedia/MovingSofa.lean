@@ -170,7 +170,7 @@ Gerver's sofa attains the maximal volume of a moving sofa, conjectured by [Ge92]
 -/
 @[category research open, AMS 49]
 theorem maximalFor_isMovingSofa_volume_gerversSofa :
-    MaximalFor (fun s ↦ ∃ m, IsMovingSofa s m) volume gerversSofa :=
+    MaximalFor (fun s ↦ ∃ m, IsMovingSofa s m) volume gerversSofa := by
   sorry
 
 /-- Gerver's sofa attains the unique maximal volume of a moving sofa. -/
