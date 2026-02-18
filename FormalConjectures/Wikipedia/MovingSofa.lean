@@ -19,11 +19,11 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Moving Sofa Problem
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Moving_sofa_problem)
-
-[Ge92] Gerver, J. L., _On moving a sofa around a corner_. Geometriae Dedicata 42.3 (1992): 267-283.
-[Ro18] Romik, D. _Differential equations and exact solutions in the moving sofa problem_. Experimental mathematics 27.3 (2018): 316-330.
-[Ba24] Baek, J. _Optimality of Gerver's Sofa_. arXiv preprint arXiv:2411.19826 (2024).
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Moving_sofa_problem)
+- [Ge92] Gerver, J. L., _On moving a sofa around a corner_. Geometriae Dedicata 42.3 (1992): 267-283.
+- [Ro18] Romik, D. _Differential equations and exact solutions in the moving sofa problem_. Experimental mathematics 27.3 (2018): 316-330.
+- [Ba24] Baek, J. _Optimality of Gerver's Sofa_. arXiv preprint arXiv:2411.19826 (2024).
 -/
 
 noncomputable section
@@ -38,17 +38,12 @@ def _root_.AffineIsometry.toContinuousAffineMap {𝕜 V V₂ P P₂ : Type*} [No
 namespace MovingSofa
 
 open Topology
-open scoped Real unitInterval
+open scoped Real unitInterval EuclideanGeometry
 
-open EuclideanGeometry
-instance : Fact (Module.finrank ℝ ℝ² = 2) := ⟨finrank_euclideanSpace_fin⟩
-instance : Module.Oriented ℝ ℝ² (Fin 2) :=
-  ⟨(EuclideanSpace.basisFun (Fin 2) ℝ).toBasis.orientation⟩
-
-/-- The **horizontal side** of the hallway is `(-∞, 1] × [0, 1]`. -/
+/-- The **horizontal side** of the hallway is $(-\infty, 1] \times [0, 1]$. -/
 def horizontalHallway : Set ℝ² := {!₂[x, y] | (x) (y) (_ : x ≤ 1 ∧ 0 ≤ y ∧ y ≤ 1)}
 
-/-- The **vertical side** of the hallway is `[0, 1] × (-∞, 1]`. -/
+/-- The **vertical side** of the hallway is $[0, 1] \times (-\infty, 1]$. -/
 def verticalHallway : Set ℝ² := {!₂[x, y] | (x) (y) (_ : 0 ≤ x ∧ x ≤ 1 ∧ y ≤ 1)}
 
 /-- The **hallway** is the union of its horizontal and vertical sides. -/
@@ -60,10 +55,10 @@ instance : TopologicalSpace E(2) :=
   .induced (·.toAffineIsometry.toContinuousAffineMap) inferInstance
 
 /--
-A connected closed set `s` is a **moving sofa** according to a rigid motion `m : I → SE(2)`,
+A connected closed set $s$ is a **moving sofa** according to a rigid motion $m:I\to\mathrm{SE}(2)$,
 if the sofa is initially in the horizontal side of the hallway and ends up in the vertical side.
-Here, since `SE(2)` is not in Mathlib yet, we use `E(2)` and rely on continuity and `m(0) = id` to
-ensure `m` is in `SE(2)`.
+Here, since $\mathrm{SE}(2)$ is not in Mathlib yet, we use $\mathrm{E}(2)$ and rely on continuity
+and $m(0) = \mathrm{id}$ to ensure $m$ is in $\mathrm{SE}(2)$.
 -/
 structure IsMovingSofa (s : Set ℝ²) (m : I → E(2)) : Prop where
   isConnected : IsConnected s
@@ -75,7 +70,7 @@ structure IsMovingSofa (s : Set ℝ²) (m : I → E(2)) : Prop where
   final : m 1 '' s ⊆ verticalHallway
 
 /--
-The rigid motion that translates by `p` and then rotates counterclockwise by `α`.
+The rigid motion that translates by $p$ and then rotates counterclockwise by $\alpha$.
 Note that [Ge92] used this definition while [Ro18] used rotation first and then translation.
 -/
 def rotateTranslate (α : Real.Angle) (p : ℝ²) : E(2) :=
@@ -83,10 +78,10 @@ def rotateTranslate (α : Real.Angle) (p : ℝ²) : E(2) :=
     |>.trans (AffineIsometryEquiv.vaddConst ℝ p)
 
 /--
-The sofa according to a rotation path `p : [0, π/2] → ℝ²` as in [Ge92] is the intersection over
-`α ∈ [0, π/2]` of hallways each translated by `p(α)` and then rotated by `α`,
-with the special cases that the hallway at `0` is the horizontal side
-and the hallway at `π/2` is the vertical side.
+The sofa according to a rotation path $p : [0, \pi/2] \to \mathbb{R}^2$ as in [Ge92] is the
+intersection over $\alpha \in [0, \pi/2]$ of hallways each translated by $p(\alpha)$ and then
+rotated by $\alpha$, with the special cases that the hallway at $0$ is the horizontal side
+and the hallway at $\pi/2$ is the vertical side.
 -/
 def sofaOfRotateTranslatePath (p : ℝ → ℝ²) : Set ℝ² :=
   rotateTranslate 0 (p 0) '' horizontalHallway ∩
@@ -102,7 +97,7 @@ This section follows Theorem 2 of Gerver's paper [Ge92].
 -/
 
 /--
-Eq. 1-4 of [Ro18], which specifies the constants `A`, `B`, `φ`, and `θ` of [Ge92].
+Eq. 1-4 of [Ro18], which specifies the constants $A$, $B$, $\varphi$, and $\theta$ of [Ge92].
 -/
 def ABφθSpec (A B φ θ : ℝ) : Prop :=
   0 ≤ φ ∧ φ ≤ θ ∧ θ ≤ π / 4 ∧ 0 ≤ A ∧ 0 ≤ B ∧
