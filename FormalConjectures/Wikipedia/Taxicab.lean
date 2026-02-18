@@ -73,6 +73,7 @@ theorem taxicab_possible_4 : is_possible_taxicab_for 1 2 2 4 := by
   simp [List.Disjoint, sum_of_kth_powers];
   simp [is_nonempty_nonzero]
 
+/-- Using Aristotle (Harmonic) we get a compact proof that 4 is the taxicab number for k=1, m=2, n=2. -/
 @[category test, AMS 11]
 theorem taxicab_4 : is_taxicab 1 2 2 4 := by
   constructor;
