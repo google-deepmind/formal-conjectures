@@ -40,8 +40,7 @@ namespace MovingSofa
 open Topology
 open scoped Real unitInterval
 
-scoped notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
-
+open EuclideanGeometry
 instance : Fact (Module.finrank ℝ ℝ² = 2) := ⟨finrank_euclideanSpace_fin⟩
 instance : Module.Oriented ℝ ℝ² (Fin 2) :=
   ⟨(EuclideanSpace.basisFun (Fin 2) ℝ).toBasis.orientation⟩
