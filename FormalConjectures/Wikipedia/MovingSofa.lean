@@ -29,6 +29,7 @@ import FormalConjectures.Util.ProblemImports
 noncomputable section
 
 /-- Interpret an affine isometry as a continuous affine map. This is already in Mathlib. -/
+-- TODO: remove this after bumping past v4.26.0
 def _root_.AffineIsometry.toContinuousAffineMap {𝕜 V V₂ P P₂ : Type*} [NormedField 𝕜]
     [SeminormedAddCommGroup V] [NormedSpace 𝕜 V] [PseudoMetricSpace P] [NormedAddTorsor V P]
     [SeminormedAddCommGroup V₂] [NormedSpace 𝕜 V₂] [PseudoMetricSpace P₂] [NormedAddTorsor V₂ P₂]
