@@ -161,7 +161,7 @@ open MeasureTheory
 /-- What is the maximal volume of a moving sofa? -/
 @[category research open, AMS 49]
 theorem iSup_isMovingSofa_volume :
-    ⨆ (s : Set ℝ²) (_ : ∃ m, IsMovingSofa s m), volume s = answer(sorry) :=
+    ⨆ (s : Set ℝ²) (_ : ∃ m, IsMovingSofa s m), volume s = answer(sorry) := by
   sorry
 
 /--
