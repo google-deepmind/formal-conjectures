@@ -58,9 +58,15 @@ theorem green_24 : ∀ n, max013AffineTranslates n = answer(sorry) := by
 namespace variants
 
 /-- From [Aa19] p.577: the trivial upper bound is $n^2$ (non asymptotic) -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem upper_trivial {n : ℕ} : max013AffineTranslates n ≤ n ^ 2 := by
-  sorry
+  unfold max013AffineTranslates
+  apply csSup_le
+  · obtain ⟨A, hA⟩ : ∃ A : Finset ℤ, A.card = n := ⟨(Finset.range n).image Int.ofNat, by rw [Finset.card_image_of_injective _ Int.ofNat_injective, Finset.card_range]⟩
+    exact ⟨_, ⟨A, hA, rfl⟩⟩
+  · rintro k ⟨A, hA, rfl⟩
+    apply le_trans (Finset.card_filter_le _ _)
+    rw [Finset.card_product, hA, pow_two]
 
 /-- The asymptotic constant $\gamma$ defined in [Aa19] p.579. -/
 noncomputable def gamma : ℝ :=
