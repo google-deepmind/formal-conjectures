@@ -94,9 +94,9 @@ theorem taxicab_4 : is_taxicab 1 2 2 4 := by
     · have := hS₂ _ hs _ ht; simp_all +decide [ List.Disjoint ] ;
       grind +ring
 
-/-- Taxicab number for k=5, m=2, n=2 is not-known. Whether such a number exists is also not known. -/
+/-- Taxicab number Ta(5, 2, n) is not-known for any n ≥ 2. Whether such a number exists is also not known. -/
 @[category research open, AMS 11]
-theorem taxicab_522 : answer(sorry) ↔ ∃ x : ℕ, is_taxicab 5 2 2 x := by
+theorem taxicab_for_5_2_n : answer(sorry) ↔ ∃ n : ℕ, n ≥ 2 ∧ (∃ x : ℕ, is_taxicab 5 2 n x) := by
   sorry
 
 end Taxicab
