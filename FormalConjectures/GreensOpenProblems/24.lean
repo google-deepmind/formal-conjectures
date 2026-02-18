@@ -60,10 +60,9 @@ namespace variants
 /-- From [Aa19] p.577: the trivial upper bound is $n^2$ (non asymptotic) -/
 @[category research solved, AMS 5 11]
 theorem upper_trivial {n : ℕ} : max013AffineTranslates n ≤ n ^ 2 := by
-  unfold max013AffineTranslates
   apply csSup_le
-  · obtain ⟨A, hA⟩ : ∃ A : Finset ℤ, A.card = n := ⟨(Finset.range n).image Int.ofNat, by rw [Finset.card_image_of_injective _ Int.ofNat_injective, Finset.card_range]⟩
-    exact ⟨_, ⟨A, hA, rfl⟩⟩
+  · exact ⟨_, ⟨(Finset.range n).image Int.ofNat, by
+      rw [Finset.card_image_of_injective _ Int.ofNat_injective, Finset.card_range], rfl⟩⟩
   · rintro k ⟨A, hA, rfl⟩
     apply le_trans (Finset.card_filter_le _ _)
     rw [Finset.card_product, hA, pow_two]
