@@ -66,8 +66,8 @@ def amsToNat (a : AMS) : Nat :=
   | .«94» => 94 | .«97» => 97
 
 structure TheoremInfo where
-  name : String
-  file : String
+  «theorem» : String
+  module : String
   categories : List String
   subjects : List String
   deriving ToJson
@@ -100,13 +100,11 @@ unsafe def main (args : List String) : IO Unit := do
     | [file] => pure #[System.FilePath.mk file]
     | _ => throw <| IO.userError "Usage: extract_names [file]"
   
-  let mut moduleToFile : Std.HashMap Name String := {}
   let mut moduleNames := #[]
   for file in leanFiles do
     try
       let modName ← getModuleNameFromFile file
       moduleNames := moduleNames.push modName
-      moduleToFile := moduleToFile.insert modName file.toString
     catch _ => pure ()
 
   runWithImports moduleNames do
@@ -129,7 +127,6 @@ unsafe def main (args : List String) : IO Unit := do
       let some modIdx := env.header.moduleNames.findIdx? (· == modName)
         | continue
       let modData := env.header.moduleData[modIdx]!
-      let fileName := moduleToFile.getD modName "unknown"
       for info in modData.constants do
         let name := info.name
         match info with
@@ -138,7 +135,7 @@ unsafe def main (args : List String) : IO Unit := do
             let cats := categoryMap.getD name []
             let subjs := subjectMap.getD name []
             if !cats.isEmpty || !subjs.isEmpty then
-              allResults := { name := name.toString, file := fileName, categories := cats, subjects := subjs } :: allResults
+              allResults := { «theorem» := name.toString, module := modName.toString, categories := cats, subjects := subjs } :: allResults
         | _ => pure ()
     
     IO.println (toJson allResults.reverse).pretty
