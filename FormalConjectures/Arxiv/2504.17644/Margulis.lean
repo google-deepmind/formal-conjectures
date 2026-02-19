@@ -42,7 +42,6 @@ end
 
 /-- Let `D` be the diagonal group of `SL_n(ℝ)` where n ≥ 3.
 Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
-
 @[category research open, AMS 11 15 22]
 theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     (g : SL(n, ℝ) ⧸ Subgroup.map (map (Int.castRingHom ℝ)) ⊤)
