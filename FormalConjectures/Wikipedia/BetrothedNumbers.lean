@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace BetrothedNumbers
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 /--
 Two natural numbers $m$ and $n$ are **betrothed**  (or quasi-amicable) if $\sigma(m) = \sigma(n) = m + n + 1$,

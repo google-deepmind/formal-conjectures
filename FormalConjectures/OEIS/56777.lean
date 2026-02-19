@@ -15,9 +15,6 @@ limitations under the License.
 -/
 import FormalConjectures.Util.ProblemImports
 
-open scoped ArithmeticFunction
-open Nat
-
 /-!
 # Conjectures associated with A56777
 
@@ -29,6 +26,9 @@ well as congruences satisfied by the members of A56777.
 
 *References:* [A56777](https://oeis.org/A56777)
 -/
+
+open Nat
+open scoped ArithmeticFunction.sigma
 
 namespace OeisA56777
 
