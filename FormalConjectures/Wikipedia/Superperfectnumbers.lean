@@ -32,17 +32,16 @@ namespace Superperfect
 /--
 The sum of divisors function σ(n) = `∑ d ∈ divisors n, d`
 -/
-def σ (n : ℕ) : ℕ := ArithmeticFunction.sigma 1 n
+def sumOfDivisors (n : ℕ) : ℕ := ArithmeticFunction.sigma 1 n
 
 /--
 An integer `n : ℕ` is `(m,k)-perfect` if `σᵐ(n) = kn` where `σᵐ` is the mᵗʰ iterate of `σ`.
 -/
-def Perfect (n m k : ℕ) : Prop := Nat.iterate σ m n = k * n
+def PerfectFor (n m k : ℕ) : Prop := Nat.iterate sumOfDivisors m n = k * n
 
-/-- An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and only if
-`n` is not `4` or `5` mod `9`. -/
+/-- There does not exist a (2,5)-perfect number -/
 @[category research open, AMS 11]
-theorem twoFivePerfect : ¬∃ (n : ℕ), Perfect n 2 5 := by
+theorem twoFivePerfect : ¬∃ (n : ℕ), PerfectFor n 2 5 := by
   sorry
 
 end Superperfect
