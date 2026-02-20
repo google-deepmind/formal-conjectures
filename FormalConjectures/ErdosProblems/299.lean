@@ -49,7 +49,7 @@ density) then there is a finite $S \subset A$ such that $\sum_{n \in S} \frac{1}
 -/
 @[category research solved, AMS 11 40]
 theorem erdos_299.variants.density : ∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
-    ∃ S : Finset ℕ, S.toSet ⊆ A ∧ ∑ n ∈ S, (1 : ℝ) / n = 1 := by
+    ∃ S : Finset ℕ, ↑S ⊆ A ∧ ∑ n ∈ S, (1 : ℝ) / n = 1 := by
   sorry
 
 end Erdos299

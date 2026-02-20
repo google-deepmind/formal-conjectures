@@ -25,7 +25,7 @@ where $a, b, c, d, x, y$ are nonnegative integers.
 Zhi-Wei Sun has offered a $2,500 prize for the first proof.
 
 *References:*
-- [OEIS A308734](https://oeis.org/A308734)
+- [A308734](https://oeis.org/A308734)
 - Z.-W. Sun, "Refining Lagrange's four-square theorem," *J. Number Theory* **175** (2017), 167-190.
   https://doi.org/10.1016/j.jnt.2016.11.008
 - Z.-W. Sun, "Restricted sums of four squares," *Int. J. Number Theory* **15** (2019), 1863-1893.

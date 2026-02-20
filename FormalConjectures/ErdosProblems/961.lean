@@ -18,7 +18,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 961
 
-*Reference:* [erdosproblems.com/961](https://www.erdosproblems.com/961)
+*References:*
+- [erdosproblems.com/961](https://www.erdosproblems.com/961)
+- [Ju74] Jutila, Matti, On numbers with a large prime factor. {II}. J. Indian Math. Soc. (N.S.) (1974), 125--130.
+- [RaSh73](https://eudml.org/doc/urn:eudml:doc:205214) Ramachandra, K. and Shorey, T. N., On gaps between numbers with a large prime factor. Acta Arith. (1973), 99--111.
 -/
 
 open Classical Filter Real

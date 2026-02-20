@@ -37,6 +37,6 @@ theorem erdos_39 : answer(sorry) ↔ ∃ (A : Set ℕ), A.Infinite ∧ IsSidon A
     (· ^ (1 / 2 - ε) : ℕ → ℝ) =O[atTop] fun N => (((Set.Icc 1 N) ∩ A).ncard : ℝ) := by
   sorry
 
---TODO(firsching): add the various known bounds as variants.
+-- TODO(firsching): add the various known bounds as variants.
 
 end Erdos39

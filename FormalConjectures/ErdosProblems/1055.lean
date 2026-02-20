@@ -80,6 +80,6 @@ theorem erdos_1055.variants.selfridge_limit :
     ∃ M, ∀ r, (p r : ℝ) ^ (1 / r : ℝ) ≤ M := by
   sorry
 
---TODO(Paul-Lez): formalize the rest of the problems on the page.
+-- TODO(Paul-Lez): formalize the rest of the problems on the page.
 
 end Erdos1055

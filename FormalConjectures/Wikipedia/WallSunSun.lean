@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
 -/
 
---TODO: add more statements about Wall-Sun-Sun primes from the wiki page.
+-- TODO: add more statements about Wall-Sun-Sun primes from the wiki page.
 
 /--
 A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$, where $L_p$ is the

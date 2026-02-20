@@ -23,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/306](https://www.erdosproblems.com/306)
 -/
 
-open scoped ArithmeticFunction
+open ArithmeticFunction
+open scoped omega Omega
 
 namespace Erdos306
 

@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Casas-Alvero Conjecture
 
-*Reference:*
+*References:*
 * [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)
 * [MathOverflow](https://mathoverflow.net/questions/27851)
 
@@ -99,7 +99,7 @@ lemma casas_alvero_iffᵣ :
   have ⟨α, eq⟩ := h (P.map (algebraMap K L)) (hP.map _) <|
     hasCasasAlveroProp_iffᵣ.mp <| HasCasasAlveroProp.map_iff.mpr hca
   by_cases h0 : P.natDegree = 0
-  · simp [hP.natDegree_eq_zero_iff_eq_one.mp h0]
+  · simp [hP.natDegree_eq_zero.mp h0]
   let α' := - P.nextCoeff / P.natDegree
   have : algebraMap K L α' = α := by
     simp_rw [α', div_eq_inv_mul, map_mul, map_neg, ← nextCoeff_map (algebraMap K L).injective,

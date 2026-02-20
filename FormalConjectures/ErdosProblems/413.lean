@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/413](https://www.erdosproblems.com/413)
-- [OEIS A005236](https://oeis.org/A005236)
+- [A5236](https://oeis.org/A5236)
 
 Erdős called a natural number `n` a *barrier* for `ω`, the number of distinct prime divisors,
 if `m + ω(m) ≤ n` for all `m < n`. He believed there should be infinitely many such barriers, and
@@ -29,7 +29,8 @@ even posed a relaxed variant asking whether there is some `ε > 0` for which inf
 satisfy `m + ε · ω(m) ≤ n` for every `m < n`.
 -/
 
-open scoped ArithmeticFunction
+open ArithmeticFunction
+open scoped omega Omega
 
 namespace Erdos413
 

@@ -34,7 +34,7 @@ namespace RegularPrimes
 
 /-- A natural prime number `p` is regular if `p` is coprime with the order of the class group
 of the `p`-th cyclotomic field. -/
-noncomputable def IsRegularPrime [hp : Fact p.Prime] : Prop :=
+noncomputable def IsRegularPrime [Fact p.Prime] : Prop :=
   p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField p ℚ)
 
 @[category undergraduate, AMS 11]

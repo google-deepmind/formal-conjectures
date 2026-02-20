@@ -35,14 +35,14 @@ namespace Koethe
 /-- Say a subset `I` of a ring `R` is nilpotent if all its elements are nilpotent. -/
 def IsNil {S : Type*} [SetLike S R] (I : S) := ∀ i ∈ I, IsNilpotent i
 
---TODO(lezeau): add some basic API and already known results for nil ideals
+-- TODO(lezeau): add some basic API and already known results for nil ideals
 
 variable (R) in
 /-- The *Kothe Radical* of a ring `R` is the sum of all (two-sided) nil ideals of `R`.
 Tags: Kothe Radical, upper nilradical-/
 def KotheRadical : TwoSidedIdeal R := sSup {I : TwoSidedIdeal R | IsNil I}
 
---This is often denoted `Nil*(R)`
+-- This is often denoted `Nil*(R)`
 local notation "Nil* " R => KotheRadical R
 
 /-- The **Köthe conjecture**: In any ring, the sum of two nil left ideals is nil. -/

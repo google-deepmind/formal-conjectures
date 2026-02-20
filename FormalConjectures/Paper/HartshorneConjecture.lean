@@ -43,7 +43,7 @@ local instance (X : TopologicalSpace.Opens S) :
     ((Opens.grothendieckTopology S).over X)
 
 local instance (X : TopologicalSpace.Opens S) :
-    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrp.{u}) :=
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrpCat.{u}) :=
   inferInstance
 
 /--
@@ -62,11 +62,11 @@ instance (S : Scheme) : Coe S.VectorBundles S.Modules where
 Vector bundles form a category.
 -/
 instance : Category S.VectorBundles :=
-  InducedCategory.category VectorBundles.carrier
+  inferInstanceAs <| Category <| InducedCategory _ VectorBundles.carrier
 
 def VectorBundles.toModule : S.VectorBundles ⥤ S.Modules where
   obj 𝓕 := 𝓕.carrier
-  map f := f
+  map f := f.hom
 
 @[category API, AMS 14]
 theorem hasFiniteCoproductsVectorBundles : HasFiniteCoproducts S.VectorBundles := by
@@ -89,7 +89,7 @@ instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempt
   coe s := s.components
 
 end AlgebraicGeometry.Scheme
---TODO(lezeau): here we would really need some sanity checks and easier results.
+-- TODO(lezeau): here we would really need some sanity checks and easier results.
 
 open AlgebraicGeometry.Scheme
 

@@ -26,8 +26,6 @@ variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
 
 namespace Polynomial
 
-@[simp] theorem eval₂_id {p : Polynomial R} {x : R} : eval₂ (RingHom.id _) x p = p.eval x := rfl
-
 instance instAlgebraPi : Algebra R[X] (S → S) :=
   (Pi.ringHom fun x ↦ (Polynomial.aeval x).toRingHom).toAlgebra
 

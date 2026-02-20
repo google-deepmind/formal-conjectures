@@ -33,7 +33,7 @@ We have chosen to formalise this using an inductive type.
  - [mathoverflow/75792](https://mathoverflow.net/a/75792) by user [Harry Altman](https://mathoverflow.net/users/5583)
  - http://arxiv.org/abs/1203.6462 by Jānis Iraids, Kaspars Balodis, Juris Čerņenoks, Mārtiņš Opmanis, Rihards Opmanis, Kārlis Podnieks
  - http://arxiv.org/abs/1207.4841 by Harry Altman, Joshua Zelinsky
- - https://oeis.org/A005245 : Mahler-Popken complexity.
+ - https://oeis.org/A5245 : Mahler-Popken complexity.
 -/
 
 namespace Mathoverflow75792

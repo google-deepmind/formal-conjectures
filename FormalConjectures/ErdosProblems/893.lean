@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Finset
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos893
 

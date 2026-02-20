@@ -15,15 +15,19 @@ limitations under the License.
 -/
 
 import Mathlib.Analysis.Normed.Field.Lemmas
+import Mathlib.Order.Filter.Defs
 import Mathlib.Tactic.Rify
 
-/-- Say a sequence is lacunary if there exists some $\lambda > 1$ such that
-$a_{n+1}/a_n > \lambda$ for all $n\geq 1$. -/
-def IsLacunary (n : ℕ → ℕ) : Prop := ∃ c > (1 : ℝ), ∀ k, c * n k < n (k + 1)
+open Filter
 
-/-- Every lacunary sequence is strictly increasing. -/
-lemma IsLacunary.strictMono {n : ℕ → ℕ} (hn : IsLacunary n) : StrictMono n := by
-  refine strictMono_nat_of_lt_succ fun k => (Nat.cast_lt (α := ℝ)).mp ?_
-  obtain ⟨c, hc⟩ := hn
-  refine (hc.2 k).trans_le' ?_
-  grw [hc.1, one_mul]
+/-- Say a sequence is lacunary if there exists some $\lambda > 1$ such that
+$a_{n+1}/a_n > \lambda$ for all sufficiently large $n$. -/
+def IsLacunary (n : ℕ → ℕ) : Prop := ∃ c > (1 : ℝ), ∀ᶠ k in atTop, c * n k < n (k + 1)
+
+/-- Every lacunary sequence is eventually strictly increasing. -/
+lemma IsLacunary.eventually_lt {n : ℕ → ℕ} (hn : IsLacunary n) : ∀ᶠ k in atTop, n k < n (k + 1) := by
+  obtain ⟨c, hc, h⟩ := hn
+  obtain ⟨N, h⟩ := eventually_atTop.1 h
+  refine eventually_atTop.2 ⟨N, fun b hb ↦ ?_⟩
+  grw [hc] at h
+  simpa using h _ hb
