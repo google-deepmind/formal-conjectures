@@ -16,30 +16,94 @@ limitations under the License.
 
 import Mathlib.Combinatorics.SimpleGraph.Copy
 import Mathlib.Data.Nat.Lattice
+import Mathlib.Data.Matrix.Notation
+import Lean.Elab.Term
 
 /-!
 # Graph Ramsey Number
 
-This file defines the classical Ramsey number `R(G, H)` for simple graphs.
+This file defines the graph Ramsey number for simple graphs.
 
-## Definition
+## Definitions
 
-The Ramsey number `R(G, H)` is the smallest natural number `N` such that any 2-coloring
-of the edges of the complete graph `K_N` contains a copy of `G` in the first color
-or a copy of `H` in the second color.
+* `graphRamseyNum` - The n-ary graph Ramsey number `R(H₀, H₁, ..., Hₙ₋₁)`.
+* `Ramsey` - The 2-ary specialization `R(G, H)`.
 
-Equivalently, for any graph `R` on `N` vertices, either `G` is a subgraph of `R`
-or `H` is a subgraph of the complement `Rᶜ`.
+## Main Definition
+
+The graph Ramsey number `R(H₀, H₁, ..., Hₙ₋₁)` is the smallest natural number `N` such that
+any edge-coloring of the complete graph `K_N` with `n` colors contains a monochromatic
+copy of `Hᵢ` in color `i` for some `i`.
+
+Equivalently, for any partition of `K_N`'s edges into `n` subgraphs `c 0, c 1, ..., c (n-1)`,
+there exists `i` such that `Hᵢ` is contained in `c i`.
+
+## Notation
+
+We provide an elaborator so that `R(G, H)` expands to `graphRamseyNum ![G, H]`.
 -/
 
 namespace SimpleGraph
 
 /--
-The Ramsey number `R(G, H)` is the smallest natural number `N` such that for any graph `R`
-on `N` vertices, either `G` is contained in `R` or `H` is contained in `Rᶜ`.
+An n-coloring of the edges of a graph `F` is a family of subgraphs `c : Fin n → SimpleGraph V`
+such that they are pairwise edge-disjoint and their union equals `F`.
+-/
+def IsEdgeColoring {V : Type*} (F : SimpleGraph V) (n : ℕ) (c : Fin n → SimpleGraph V) : Prop :=
+  (∀ i, c i ≤ F) ∧
+  (∀ i j, i ≠ j → Disjoint (c i) (c j)) ∧
+  (⨆ i, c i) = F
+
+/--
+The graph Ramsey number `R(H₀, H₁, ..., Hₙ₋₁)` is the smallest natural number `N` such that
+for any edge-coloring of `K_N` into `n` colors, there exists a color `i` with `Hᵢ` contained
+in the `i`-th color class.
+
+This is the non-induced graph Ramsey number.
+-/
+noncomputable def graphRamseyNum {n : ℕ} {V : Fin n → Type*} [∀ i, Fintype (V i)]
+    (H : (i : Fin n) → SimpleGraph (V i)) : ℕ :=
+  sInf { N | ∀ (c : Fin n → SimpleGraph (Fin N)),
+    IsEdgeColoring (⊤ : SimpleGraph (Fin N)) n c →
+    ∃ i, (H i).IsContained (c i) }
+
+/--
+The 2-ary graph Ramsey number `R(G, H)` is the smallest natural number `N` such that
+for any graph `R` on `N` vertices, either `G` is contained in `R` or `H` is contained in `Rᶜ`.
+
+This is a direct definition equivalent to the 2-ary case of `graphRamseyNum`.
 -/
 noncomputable def Ramsey {α β : Type*} [Fintype α] [Fintype β]
     (G : SimpleGraph α) (H : SimpleGraph β) : ℕ :=
   sInf { N | ∀ (R : SimpleGraph (Fin N)), G.IsContained R ∨ H.IsContained Rᶜ }
 
 end SimpleGraph
+
+/-!
+## Notation
+
+We define `R(G, H, ...)` as syntax for `graphRamseyNum ![G, H, ...]`.
+-/
+
+open Lean in
+/-- Syntax for Ramsey numbers: `R(G, H)` or `R(G, H, K)` etc. -/
+syntax (name := ramseyNotation) "R(" term,+ ")" : term
+
+open Lean Elab Term in
+/-- Elaborator for `R(G, H, ...)` that expands to `Ramsey G H` for 2 args
+    or `graphRamseyNum ![G, H, ...]` for more args. -/
+@[term_elab ramseyNotation]
+def elabRamseyNotation : TermElab := fun stx _ => do
+  match stx with
+  | `(R($args,*)) =>
+    let argsArr := args.getElems
+    if argsArr.size == 2 then
+      -- For exactly 2 arguments, use the direct Ramsey function (handles heterogeneous types)
+      let g := argsArr[0]!
+      let h := argsArr[1]!
+      elabTerm (← `(SimpleGraph.Ramsey $g $h)) none
+    else
+      -- For n > 2 arguments, use graphRamseyNum with matrix notation
+      let matrixLit ← `(![$[$argsArr],*])
+      elabTerm (← `(SimpleGraph.graphRamseyNum $matrixLit)) none
+  | _ => throwUnsupportedSyntax
