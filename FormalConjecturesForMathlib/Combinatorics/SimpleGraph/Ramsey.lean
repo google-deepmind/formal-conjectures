@@ -16,7 +16,7 @@ limitations under the License.
 
 import Mathlib.Combinatorics.SimpleGraph.Copy
 import Mathlib.Data.Nat.Lattice
-import Mathlib.Data.Matrix.Notation
+import Mathlib.Data.Fin.VecNotation
 import Lean.Elab.Term
 
 /-!
