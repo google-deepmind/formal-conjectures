@@ -40,16 +40,33 @@ def HasNoUniqueRepresentation {G : Type*} [AddCommMonoid G] (A : Finset G) : Pro
 The size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with at least two elements)
 for which no element in the sumset $A + A$ has a unique representation.
 -/
-noncomputable def minSizeNoUniqueRep (p : ℕ) [Fact p.Prime] : ℕ :=
+noncomputable def minSizeNoUniqueRep (p : ℕ) : ℕ :=
   sInf { Finset.card A | (A : Finset (ZMod p)) (_ : 2 ≤ A.card) (_ : HasNoUniqueRepresentation A) }
+
+/-- Same, coerced to `ℝ` for asymptotics. -/
+-- TODO(jeangud): Regroup directly with `minSizeNoUniqueRep` above?
+noncomputable def m (p : ℕ) : ℝ := (minSizeNoUniqueRep p : ℝ)
+
+/-- `atTop` restricted to prime numbers. -/
+def primesAtTop : Filter ℕ := atTop ⊓ Filter.principal {p : ℕ | p.Prime}
+
+/-- Best known upper barrier from Bedert: `(log p)^2`. -/
+noncomputable def upperBest (p : ℕ) : ℝ := (Real.log (p : ℝ)) ^ 2
 
 /--
 What is the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with at least two elements)
 for which no element in the sumset $A + A$ has a unique representation?
 -/
 @[category research open, AMS 5 11]
-theorem green_27 (p : ℕ) [Fact p.Prime] :
-  minSizeNoUniqueRep p = answer(sorry) := by
+theorem green_27.equivalent :
+  Asymptotics.IsEquivalent primesAtTop (answer(sorry) : ℕ → ℝ) m := by
+  sorry
+
+/-- Propose a better upper bound along primes. -/
+@[category research open, AMS 5 11]
+theorem green_27.upper :
+    let ans := (answer(sorry) : ℕ → ℝ)
+    (ans =o[primesAtTop] upperBest) ∧ (Asymptotics.IsBigO primesAtTop m ans) := by
   sorry
 
 /--
@@ -57,30 +74,27 @@ $m(p) \geq \omega(p) \log p$ for some function $\omega(p)$ tending to infinity [
 -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.lower_be23 :
-  ∃ ω : ℕ → ℝ, Tendsto ω atTop atTop ∧
-    ∀ᶠ p in atTop, ∀ [Fact p.Prime],
-      ω p * Real.log (p : ℝ) ≤ (minSizeNoUniqueRep p : ℝ) := by
+  ∃ ω : ℕ → ℝ, Tendsto ω primesAtTop atTop ∧
+    ∀ᶠ p in primesAtTop,
+      ω p * Real.log (p : ℝ) ≤ m p := by
   sorry
 
 /-- $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.upper_be23 :
-  ∃ C > 0, ∀ᶠ p in atTop, ∀ [Fact p.Prime],
-    (minSizeNoUniqueRep p : ℝ) ≤ C * (Real.log (p : ℝ)) ^ 2 := by
+  Asymptotics.IsBigO primesAtTop m upperBest := by
   sorry
 
 /-- Previous best-known lower bound [Be23]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.previous_lower :
-  ∃ C > 0, ∀ᶠ p : ℕ in atTop, ∀ [Fact p.Prime],
-    C * Real.log (p : ℝ) ≤ (minSizeNoUniqueRep p : ℝ) := by
+  Asymptotics.IsBigO primesAtTop (fun p ↦ Real.log (p : ℝ)) m := by
   sorry
 
 /-- Previous best-known upper bound [Be23]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.previous_upper :
-  ∃ C > 0, ∀ᶠ p : ℕ in atTop, ∀ [Fact p.Prime],
-    (minSizeNoUniqueRep p : ℝ) ≤ C * Real.sqrt (p : ℝ) := by
+  Asymptotics.IsBigO primesAtTop m (fun p ↦ Real.sqrt (p : ℝ)) := by
   sorry
 
 end Green27
