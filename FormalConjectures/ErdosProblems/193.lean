@@ -36,8 +36,8 @@ def IsSWalk {V : Type*} [AddCommGroup V] (S : Set V) (a : ℕ → V) : Prop :=
   ∀ n, a (n + 1) - a n ∈ S
 
 /-- True if set $A$ contains 3 distinct collinear points. -/
-def HasCollinearTriple {V : Type*} [AddCommGroup V] (A : Set V) : Prop :=
-  ∃ x ∈ A, ∃ y ∈ A, ∃ z ∈ A, x ≠ y ∧ y ≠ z ∧ x ≠ z ∧ ¬ AffineIndependent ℤ ![x,y,z]
+def HasCollinearTriple {R V : Type*} [DivisionRing R] [AddCommGroup V] [Module R V] (A : Set V) : Prop :=
+  ∃ x ∈ A, ∃ y ∈ A, ∃ z ∈ A, x ≠ y ∧ y ≠ z ∧ x ≠ z ∧ Collinear R ({x, y, z} : Set V)
 
 /--
 Let $S \subseteq \mathbb{Z}^3$ be a finite set and let $A = \lbrace a_1, a_2, \ldots \rbrace$ be
@@ -46,12 +46,12 @@ points?
 -/
 @[category research open, AMS 5]
 theorem erdos_193 :
-    answer(sorry) ↔ ∀ S : Set (ℤ × ℤ × ℤ), S.Finite →
+    answer(sorry) ↔ ∀ S : Set (Fin 3 → ℤ), S.Finite →
       /- The statement's $A = \lbrace a_1, a_2, \ldots \rbrace$ is an infinite set; we formalize
       this as an infinite range. This allows for repeats but forces infinitely many distinct points,
       thereby avoiding degenerate $S$-walks (e.g. constant sequences, non-collinear loops) -/
-      ∀ a : ℕ → ℤ × ℤ × ℤ, IsSWalk S a → (range a).Infinite →
-      HasCollinearTriple (range a) := by
+      ∀ a : ℕ → Fin 3 → ℤ, IsSWalk S a → (range a).Infinite →
+      HasCollinearTriple (R := ℚ) (range (fun n ↦ (↑) ∘ a n : ℕ → Fin 3 → ℚ)) := by
   sorry
 
 /--
@@ -59,9 +59,9 @@ theorem erdos_193 :
 -/
 @[category research solved, AMS 5]
 theorem erdos_193_z2 :
-    ∀ S : Set (ℤ × ℤ), S.Finite →
-      ∀ a : ℕ → ℤ × ℤ, IsSWalk S a → (range a).Infinite →
-      HasCollinearTriple (range a) := by
+    ∀ S : Set (Fin 2 → ℤ), S.Finite →
+      ∀ a : ℕ → Fin 2 → ℤ, IsSWalk S a → (range a).Infinite →
+      HasCollinearTriple (R := ℚ) (range (fun n ↦ (↑) ∘ a n : ℕ → Fin 2 → ℚ)) := by
   sorry
 
 -- TODO(jeangud): For $\mathbb{Z}^3$ the largest number of collinear points can be bounded [GeRa79].
