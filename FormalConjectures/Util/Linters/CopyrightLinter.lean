@@ -44,7 +44,7 @@ limitations under the License.
 /-- Check whether a file, given as a `String`, is prefixed with the correct copyright header. -/
 def hasCorrectCopyright (file : String) : Bool := Id.run do
   let .some suffix := file.dropPrefix? correctCopyrightPrefix | false
-  correctCopyrightSuffix.isPrefixOf (suffix.extract ⟨4⟩ suffix.stopPos).toString
+  correctCopyrightSuffix.isPrefixOf (suffix.extract (suffix.startPos.nextn 4) suffix.endPos)
 
 /-- The current correct copyright header. -/
 def correctCopyrightHeader : String := correctCopyrightPrefix ++ "2026" ++ correctCopyrightSuffix
@@ -68,7 +68,7 @@ def copyrightLinter : Linter where run := withSetOptionIn fun stx ↦ do
   let source := (← getFileMap).source
   -- Get the syntax corresponding to the first character in the file since that's where the warning
   -- message will be logged.
-  let startingStx : Syntax := .atom (.synthetic ⟨0⟩ ⟨1⟩) <| source.extract ⟨0⟩ ⟨1⟩
+  let startingStx : Syntax := .atom (.synthetic ⟨0⟩ ⟨1⟩) <| String.Pos.Raw.extract source ⟨0⟩ ⟨1⟩
   -- We don't want to output an error message when building `FormalConjectures.All`
   unless (← getFileName) == "FormalConjectures.All" || hasCorrectCopyright source do
     Lean.Linter.logLintIf linter.style.copyright startingStx <|

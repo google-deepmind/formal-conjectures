@@ -31,8 +31,8 @@ open Classical
 /-- We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
 `B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`. -/
 def NonTrilinearFor (A : Set ℝ²) (ε : ℝ) : Prop :=
-  ∀ (B : Finset ℝ²), B.toSet ⊆ A → ∃ C ⊆ B,
-    ε * B.card ≤ C.card ∧ NonTrilinear C.toSet
+  ∀ B : Finset ℝ², ↑B ⊆ A → ∃ C ⊆ B,
+    ε * B.card ≤ C.card ∧ NonTrilinear (C : Set ℝ²)
 
 /-- We say a subset `A` of points in the plane is weakly non-trilinear if it is
 a finite union of non-trilinear sets. -/

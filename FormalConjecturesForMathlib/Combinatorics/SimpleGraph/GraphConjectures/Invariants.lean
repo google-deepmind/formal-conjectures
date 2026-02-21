@@ -15,12 +15,10 @@ limitations under the License.
 -/
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
+import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.Data.Multiset.Interval
-import Mathlib.LinearAlgebra.Matrix.Spectrum
-import Mathlib.Order.CompletePartialOrder
-
 
 noncomputable def Matrix.IsHermitian.maxEigenvalue {𝕜 : Type*} [Field 𝕜] [RCLike 𝕜]
     {n : Type*} [Fintype n] [DecidableEq n] {A : Matrix n n 𝕜} (hA : A.IsHermitian) : ℝ :=
@@ -73,7 +71,7 @@ noncomputable def S (G : SimpleGraph α) : ℝ :=
   let card := Fintype.card α
   if card < 2 then 0 else
     let degrees := Multiset.ofList (List.map (fun v => G.degree v) Finset.univ.toList)
-    let sorted_degrees := Multiset.sort (·≤·) degrees
+    let sorted_degrees := degrees.sort (· ≤ ·)
     ↑((sorted_degrees[card - 2]?).getD 0)
 
 /-- Local eccentricity of a vertex. -/
@@ -158,9 +156,7 @@ noncomputable def wienerIndex (G : SimpleGraph α) : ℕ :=
 
 /-- Auxiliary function for Szeged index: counts vertices closer to u than v. -/
 noncomputable def szeged_aux (G : SimpleGraph α) (u v : α) : ℕ :=
-  -- Note: this automatically excludes vertices that aren't connected to either u or v,
-  -- since their distance will be 0.
-  (Finset.univ.filter (fun w => G.dist w u ≠ 0 ∧ G.dist w u <= G.dist w v)).card
+  (Finset.univ.filter (fun w => G.edist w u < G.edist w v)).card
 
 /-- The Szeged index of `G`.
 
