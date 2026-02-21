@@ -22,6 +22,7 @@ import FormalConjectures.Util.ProblemImports
 References:
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.27)
 - [Be23] Bedert, Benjamin. "On unique sums in Abelian groups." Combinatorica 44.2 (2024): 269-298.
+- [St76] Straus, E. G. "Differences of residues (mod p)." Journal of Number Theory 8.1 (1976): 40-42.
 -/
 
 open Filter Topology
@@ -37,20 +38,16 @@ def HasNoUniqueRepresentation {G : Type*} [AddCommMonoid G] (A : Finset G) : Pro
     a₁ + a₂ = b₁ + b₂ ∧ ¬((a₁ = b₁ ∧ a₂ = b₂) ∨ (a₁ = b₂ ∧ a₂ = b₁))
 
 /--
-The size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with at least two elements)
-for which no element in the sumset $A + A$ has a unique representation.
+m(p) in [Be23]: the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with at least
+two elements) for which no element in the sumset $A + A$ has a unique representation.
 -/
-noncomputable def minSizeNoUniqueRep (p : ℕ) : ℕ :=
-  sInf { Finset.card A | (A : Finset (ZMod p)) (_ : 2 ≤ A.card) (_ : HasNoUniqueRepresentation A) }
-
-/-- Same, coerced to `ℝ` for asymptotics. -/
--- TODO(jeangud): Regroup directly with `minSizeNoUniqueRep` above?
-noncomputable def m (p : ℕ) : ℝ := (minSizeNoUniqueRep p : ℝ)
+noncomputable def m (p : ℕ) : ℝ :=
+  (sInf { (A.card) | (A : Finset (ZMod p)) (_ : 2 ≤ A.card) (_ : HasNoUniqueRepresentation A) } : ℝ)
 
 /-- `atTop` restricted to prime numbers. -/
 def primesAtTop : Filter ℕ := atTop ⊓ Filter.principal {p : ℕ | p.Prime}
 
-/-- Best known upper barrier from Bedert: `(log p)^2`. -/
+/-- Best-known upper bound [Be23, Theorem 5]. -/
 noncomputable def upperBest (p : ℕ) : ℝ := (Real.log (p : ℝ)) ^ 2
 
 /--
