@@ -25,7 +25,7 @@ References:
 - [St76] Straus, E. G. "Differences of residues (mod p)." Journal of Number Theory 8.1 (1976): 40-42.
 -/
 
-open Filter Topology
+open Asymptotics Filter
 
 namespace Green27
 /--
@@ -45,12 +45,12 @@ noncomputable def m (p : ℕ) : ℝ :=
   (sInf { (A.card) | (A : Finset (ZMod p)) (_ : 2 ≤ A.card) (_ : HasNoUniqueRepresentation A) } : ℝ)
 
 /-- `atTop` restricted to prime numbers. -/
-def primesAtTop : Filter ℕ := atTop ⊓ Filter.principal {p : ℕ | p.Prime}
+def primesAtTop : Filter ℕ := atTop ⊓ 𝓟 {p : ℕ | p.Prime}
 
 /-- Best-known lower bound [Be23, Theorem 3]. -/
 noncomputable def lowerBest (p : ℕ) : ℝ :=
-  (Real.sqrt (Real.log (Real.log (Real.log p))) /
-   Real.log (Real.log (Real.log (Real.log p)))) * Real.log p
+  (Real.sqrt (Real.log (Real.log (Real.log (p : ℝ)))) /
+   Real.log (Real.log (Real.log (Real.log (p : ℝ))))) * Real.log (p : ℝ)
 
 /-- Best-known upper bound [Be23, Theorem 5]. -/
 noncomputable def upperBest (p : ℕ) : ℝ := (Real.log (p : ℝ)) ^ 2
@@ -61,7 +61,7 @@ for which no element in the sumset $A + A$ has a unique representation?
 -/
 @[category research open, AMS 5 11]
 theorem green_27.equivalent :
-  Asymptotics.IsEquivalent primesAtTop (answer(sorry) : ℕ → ℝ) m := by
+  (answer(sorry) : ℕ → ℝ) ~[primesAtTop] m := by
   sorry
 
 /-- Propose a better lower bound along primes. -/
@@ -75,7 +75,7 @@ theorem green_27.lower :
 @[category research open, AMS 5 11]
 theorem green_27.upper :
     let ans := (answer(sorry) : ℕ → ℝ)
-    (ans =o[primesAtTop] upperBest) ∧ (Asymptotics.IsBigO primesAtTop m ans) := by
+    (ans =o[primesAtTop] upperBest) ∧ (m =O[primesAtTop] ans) := by
   sorry
 
 /--
@@ -91,19 +91,19 @@ theorem green_27.variants.lower_be23 :
 /-- $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.upper_be23 :
-  Asymptotics.IsBigO primesAtTop m upperBest := by
+  m =O[primesAtTop] upperBest := by
   sorry
 
 /-- Previous best-known lower bound [Be23]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.previous_lower :
-  Asymptotics.IsBigO primesAtTop (fun p ↦ Real.log (p : ℝ)) m := by
+  (fun p ↦ Real.log (p : ℝ)) =O[primesAtTop] m := by
   sorry
 
 /-- Previous best-known upper bound [Be23]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.previous_upper :
-  Asymptotics.IsBigO primesAtTop m (fun p ↦ Real.sqrt (p : ℝ)) := by
+  m =O[primesAtTop] (fun p ↦ Real.sqrt (p : ℝ)) := by
   sorry
 
 end Green27
