@@ -47,6 +47,11 @@ noncomputable def m (p : ℕ) : ℝ :=
 /-- `atTop` restricted to prime numbers. -/
 def primesAtTop : Filter ℕ := atTop ⊓ Filter.principal {p : ℕ | p.Prime}
 
+/-- Best-known lower bound [Be23, Theorem 3]. -/
+noncomputable def lowerBest (p : ℕ) : ℝ :=
+  (Real.sqrt (Real.log (Real.log (Real.log p))) /
+   Real.log (Real.log (Real.log (Real.log p)))) * Real.log p
+
 /-- Best-known upper bound [Be23, Theorem 5]. -/
 noncomputable def upperBest (p : ℕ) : ℝ := (Real.log (p : ℝ)) ^ 2
 
@@ -57,6 +62,13 @@ for which no element in the sumset $A + A$ has a unique representation?
 @[category research open, AMS 5 11]
 theorem green_27.equivalent :
   Asymptotics.IsEquivalent primesAtTop (answer(sorry) : ℕ → ℝ) m := by
+  sorry
+
+/-- Propose a better lower bound along primes. -/
+@[category research open, AMS 5 11]
+theorem green_27.lower :
+    let ans := (answer(sorry) : ℕ → ℝ)
+    (lowerBest =o[primesAtTop] ans) ∧ (ans =O[primesAtTop] m) := by
   sorry
 
 /-- Propose a better upper bound along primes. -/
