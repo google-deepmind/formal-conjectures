@@ -163,11 +163,10 @@ def create_issues(mismatches):
 
         body = (
             f"The status of [Erdős problem {num}]"
-            f"(https://www.erdosproblems.com/{num}) "
             f"appears to have changed.\n\n"
-            f"- **This repo**: `{m['lean_status']}` "
+            f"- **[This repo](http://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/{num}.lean)**: `{m['lean_status']}` "
             f"(in `FormalConjectures/ErdosProblems/{num}.lean`)\n"
-            f"- **erdosproblems.com**: `{m['yaml_status']}`\n\n"
+            f"- **[erdosproblems.com/{num}](https://www.erdosproblems.com/{num})**: `{m['yaml_status']}`\n\n"
             f"Please verify and update the `@[category research ...]` "
             f"annotation if appropriate."
         )
