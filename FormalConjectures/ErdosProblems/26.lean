@@ -88,9 +88,12 @@ theorem not_isWeaklyBehrend_of_neg {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε
 Let $A\subset\mathbb{N}$ be infinite such that $\sum_{a \in A} \frac{1}{a} = \infty$. Must
 there exist some $k\geq 1$ such that almost all integers have a divisor of the form $a+k$
 for some $a\in A$?
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research open, AMS 11]
-theorem erdos_26 : answer(sorry) ↔ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos26.lean", AMS 11]
+theorem erdos_26 : answer(False) ↔ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
     ∃ k, IsBehrend (A · + k) := by
   sorry
 
