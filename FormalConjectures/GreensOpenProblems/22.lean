@@ -85,18 +85,10 @@ theorem green_22.variants.green_sawhney_bound :
 /--
 [Mo17, Corollary 1.5] For any finite coloring of $\mathbb{N}$ there exist (infinitely many)
 $x, y \in \mathbb{N}$ such that $\{xy, x + y\}$ is monochromatic.
+
 This guarantees that $N_0(r)$ is well-defined.
 
 Note: [Mo17] also establishes that $x$ is of the same colour.
--/
-@[category research solved, AMS 5 11]
-theorem green_22.variants.moreira_existence :
-    ∀ r : ℕ, {N | ∀ c : Icc 1 N → Fin r, HasMonochromaticSumProduct N r c}.Nonempty := by
-  sorry
-
-/--
-[Mo17, Corollary 1.5] For any finite coloring of $\mathbb{N}$ there exist (infinitely many)
-$x, y \in \mathbb{N}$ such that $\{x, xy, x+y\}$ is monochromatic.
 -/
 @[category research solved, AMS 5 11]
 theorem green_22.variants.moreira_infinite :
