@@ -44,17 +44,17 @@ The monochromatic sum-product property: a colouring $c$ of $\lbrace 1, \ldots, N
 pair $(x, y)$ with $x, y \geq 3$ such that $x + y$ and $xy$ are both in
 $\lbrace 1, \ldots, N \rbrace$ and receive the same colour.
 -/
-def HasMonochromaticSumProduct (N : ℕ) (r : ℕ) (coloring : ℕ → Fin r) : Prop :=
+def HasMonochromaticSumProduct (N : ℕ) (r : ℕ) (coloring : Icc 1 N → Fin r) : Prop :=
   ∃ x y : ℕ, 3 ≤ x ∧ 3 ≤ y ∧
-    x + y ∈ Icc 1 N ∧ x * y ∈ Icc 1 N ∧
-    coloring (x + y) = coloring (x * y)
+    ∃ h_sum : x + y ∈ Icc 1 N, ∃ h_prod : x * y ∈ Icc 1 N,
+      coloring ⟨x + y, h_sum⟩ = coloring ⟨x * y, h_prod⟩
 
 /--
 $N_0(r)$ is the smallest $N$ such that every $r$-colouring of $\lbrace 1, \ldots, N \rbrace$ has
 the monochromatic sum-product property.
 -/
 noncomputable def N₀ (r : ℕ) : ℕ :=
-  sInf {N | ∀ c : ℕ → Fin r, HasMonochromaticSumProduct N r c}
+  sInf {N | ∀ c : Icc 1 N → Fin r, HasMonochromaticSumProduct N r c}
 
 open scoped Asymptotics
 
@@ -91,7 +91,7 @@ Note: [Mo17] also establishes that $x$ is of the same colour.
 -/
 @[category research solved, AMS 5 11]
 theorem green_22.variants.moreira_existence :
-    ∀ r : ℕ, {N | ∀ c : ℕ → Fin r, HasMonochromaticSumProduct N r c}.Nonempty := by
+    ∀ r : ℕ, {N | ∀ c : Icc 1 N → Fin r, HasMonochromaticSumProduct N r c}.Nonempty := by
   sorry
 
 /--
