@@ -102,6 +102,7 @@ $x, y \in \mathbb{N}$ such that $\{x, xy, x+y\}$ is monochromatic.
 theorem green_22.variants.moreira_infinite :
     ∀ (r : ℕ) (coloring : ℕ → Fin r),
     Set.Infinite { p : ℕ × ℕ |
+      0 < p.1 ∧ 0 < p.2 ∧
       coloring p.1 = coloring (p.1 * p.2) ∧
       coloring p.1 = coloring (p.1 + p.2) } := by
   sorry
