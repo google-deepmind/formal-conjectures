@@ -39,10 +39,7 @@ abbrev 𝔽 (p n : ℕ) [Fact p.Prime] := Fin n → ZMod p
 /-- The vector space $\mathbb{F}_3^n$. -/
 abbrev 𝔽₃ (n : ℕ) := 𝔽 3 n
 
-/--
-The standard cube in $\mathbb{F}_p^n$ is the set of points with coordinates in
-$\lbrace 0, 1\rbrace$.
--/
+/-- The standard cube in $\mathbb{F}_p^n$ is the set of points with coordinates in $\{0, 1\}$. -/
 def StandardCube {p : ℕ} [Fact p.Prime] (n : ℕ) : Set (𝔽 p n) :=
   {x | ∀ i, x i = 0 ∨ x i = 1}
 
@@ -51,7 +48,7 @@ def IsCube {p n : ℕ} [Fact p.Prime] (A : Set (𝔽 p n)) : Prop :=
   ∃ φ : 𝔽 p n ≃ₗ[ZMod p] 𝔽 p n, A = φ '' StandardCube n
 
 /--
-Let $A_1, \dots, A_{100}$ be ‘cubes’ in $\mathbb{F}^n_3$.
+Let $A_1, \dots, A_{100}$ be "cubes" in $\mathbb{F}^n_3$.
 Is it true that $A_1 + \dots + A_{100} = \mathbb{F}^n_3$?
 -/
 @[category research solved, AMS 5 11 15]
