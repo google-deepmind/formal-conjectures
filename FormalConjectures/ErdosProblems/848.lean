@@ -52,9 +52,15 @@ def Erdos848For (N : ℕ) : Prop :=
 /-- Is the maximum size of a set $A ⊆ \{1, \dots, N\}$ such that $ab + 1$ is never squarefree
 (for all $a, b ∈ A$) achieved by taking those $n ≡ 7 \pmod{25}$?
 
-This asks whether `Erdos848 N` holds for all $N$ (formulated using `A ⊆ Finset.range N`). -/
-@[category research open, AMS 11]
-theorem erdos_848 : answer(sorry) ↔ ∀ N, Erdos848For N := by
+This asks whether `Erdos848 N` holds for all $N$ (formulated using `A ⊆ Finset.range N`).
+
+This was solved for all sufficiently large $N$ by Sawhney in this note. In fact, Sawhney proves
+something slightly stronger, that there exists some constant $c>0$ such that if
+$\lvert A\rvert \geq (\frac{1}{25}-c)N$ and $N$ is large then $A$ is contained in either
+$\{ n\equiv 7\pmod{25}\}$ or $\{n\equiv 18\pmod{25}\}$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_848 : answer(True) ↔ ∀ N, Erdos848For N := by
   sorry
 
 /-- There exists $N₀$ such that for all $N ≥ N₀$, if $A ⊆ \{1, \dots, N\}$ satisfies that $ab + 1$

@@ -71,7 +71,6 @@ theorem erdos_317.variants.counterexample : ¬ (∀  δ : (Fin 4) → ℚ, δ ''
   push_neg
   use ![0, 1, -1, -1]
   norm_num [Finset.sum]
-  refine ⟨by grind, le_of_eq ?_⟩
-  exact (abs_of_nonneg (by norm_num)).trans (one_div _)
+  exact ⟨by grind, by simp; rfl⟩
 
 end Erdos317

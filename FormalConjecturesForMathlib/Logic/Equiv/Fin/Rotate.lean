@@ -20,4 +20,4 @@ variable {n : ℕ}
 
 theorem lt_finRotate_of_ne_last {i : Fin (n + 1)} (hi : i ≠ Fin.last n) :
     i < finRotate _ i := by
-  rw [Fin.lt_iff_val_lt_val, coe_finRotate_of_ne_last hi, Nat.lt_add_one_iff]
+  rw [Fin.lt_def, coe_finRotate_of_ne_last hi, Nat.lt_add_one_iff]
