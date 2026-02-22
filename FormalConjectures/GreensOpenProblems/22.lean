@@ -40,9 +40,9 @@ open Finset Filter
 namespace Green22
 
 /--
-The monochromatic sum-product property: a colouring $c$ of $\lbrace 1, \ldots, N \rbrace$ has a
-pair $(x, y)$ with $x, y \geq 3$ such that $x + y$ and $xy$ are both in
-$\lbrace 1, \ldots, N \rbrace$ and receive the same colour.
+The monochromatic sum-product property: a colouring $c$ of $\{1, \ldots, N\}$ has a pair $(x, y)$
+with $x, y \geq 3$ such that $x + y$ and $xy$ are both in $\{1, \ldots, N\}$ and receive the same
+colour.
 -/
 def HasMonochromaticSumProduct (N : ℕ) (r : ℕ) (coloring : Icc 1 N → Fin r) : Prop :=
   ∃ x y : ℕ, 3 ≤ x ∧ 3 ≤ y ∧
@@ -50,8 +50,8 @@ def HasMonochromaticSumProduct (N : ℕ) (r : ℕ) (coloring : Icc 1 N → Fin r
       coloring ⟨x + y, h_sum⟩ = coloring ⟨x * y, h_prod⟩
 
 /--
-$N_0(r)$ is the smallest $N$ such that every $r$-colouring of $\lbrace 1, \ldots, N \rbrace$ has
-the monochromatic sum-product property.
+$N_0(r)$ is the smallest $N$ such that every $r$-colouring of $\{1, \ldots, N\}$ has the
+monochromatic sum-product property.
 -/
 noncomputable def N₀ (r : ℕ) : ℕ :=
   sInf {N | ∀ c : Icc 1 N → Fin r, HasMonochromaticSumProduct N r c}
@@ -62,8 +62,8 @@ open scoped Asymptotics
 noncomputable def GreenSawhneyBound (r : ℕ) : ℝ := Real.exp (Real.exp (r ^ 50))
 
 /--
-If $\lbrace 1, . . . , N \rbrace$ is $r$-coloured then, for $N \geqslant N_0(r)$, there are
-integers $x, y \geqslant 3$ such that $x + y, xy$ have the same colour.
+If $\{1, \ldots, N\}$ is $r$-coloured then, for $N \geqslant N_0(r)$, there are integers
+$x, y \geqslant 3$ such that $x + y, xy$ have the same colour.
 
 Find reasonable bounds for $N_0(r)$. The goal is to improve upon the Green-Sawhney bound.
 -/
