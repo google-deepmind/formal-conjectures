@@ -27,25 +27,24 @@ namespace Green28
 
 open PMF
 
-/-- A probability mass function on ℤ has finite support if its support is finite. -/
-def IsFinitelySupported (X : PMF ℤ) : Prop := X.support.Finite
-
-/-- A PMF on ℤ is uniformly distributed on its range if all non-zero probabilities are equal. -/
+/-- A PMF on $\mathbb{Z}$ is uniformly distributed on its range if all non-zero probabilities are equal. -/
 def IsUniformOnSupport (X : PMF ℤ) : Prop :=
   ∃ c : NNReal, ∀ x ∈ X.support, X x = c
 
-/-- The sum of two independent PMFs on ℤ. -/
+/-- The sum of two independent PMFs on $\mathbb{Z}$. -/
 noncomputable def indepSum (X Y : PMF ℤ) : PMF ℤ :=
   X.bind (fun x ↦ Y.map (fun y ↦ x + y))
 
 /--
-Suppose that $X, Y$ are two finitely-supported independent random variables taking integer values, and such that $X + Y$ is uniformly distributed on its range. Are $X$ and $Y$ themselves uniformly distributed on their ranges?
+Suppose that $X, Y$ are two finitely-supported independent random variables taking integer values,
+and such that $X + Y$ is uniformly distributed on its range. Are $X$ and $Y$ themselves uniformly
+distributed on their ranges?
 -/
 @[category research open, AMS 60]
 theorem green_28 : answer(sorry) ↔
   ∀ (X Y : PMF ℤ),
-    IsFinitelySupported X →
-    IsFinitelySupported Y →
+    X.support.Finite →
+    Y.support.Finite →
     IsUniformOnSupport (indepSum X Y) →
     IsUniformOnSupport X ∧ IsUniformOnSupport Y := by
   sorry
