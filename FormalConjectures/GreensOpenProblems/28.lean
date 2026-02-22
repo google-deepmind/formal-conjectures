@@ -43,10 +43,8 @@ distributed on their ranges?
 @[category research open, AMS 60]
 theorem green_28 : answer(sorry) ↔
   ∀ (X Y : PMF ℤ),
-    X.support.Finite →
-    Y.support.Finite →
-    IsUniformOnSupport (indepSum X Y) →
-    IsUniformOnSupport X ∧ IsUniformOnSupport Y := by
+    X.support.Finite ∧ Y.support.Finite ∧ IsUniformOnSupport (indepSum X Y) →
+      IsUniformOnSupport X ∧ IsUniformOnSupport Y := by
   sorry
 
 end Green28
