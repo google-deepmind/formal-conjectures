@@ -27,18 +27,12 @@ by *Qianlin Huang, Ronggang Shi*
 section MatrixGroupConjecture
 
 open Matrix SpecialLinearGroup
-open scoped MatrixGroups Polynomial
+open scoped MatrixGroups Polynomial LaurentSeries
 
 section
 
 variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
 
--- This instance can be made more general (this is being done in
--- https://github.com/leanprover-community/mathlib4/pull/27596)
-instance : TopologicalSpace (SpecialLinearGroup n ℝ) :=
-  inferInstanceAs (TopologicalSpace { A : Matrix n n ℝ // A.det = 1 })
-
-end
 
 /-- Let `D` be the diagonal group of `SL_n(ℝ)` where n ≥ 3.
 Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
@@ -48,6 +42,8 @@ theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     (hg : IsCompact <| closure (MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g)) :
     IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g :=
   sorry
+
+end
 
  /-!
 ## Diagonal orbits over function fields (Huang–Shi, Theorem 1.2)
@@ -71,29 +67,16 @@ section FunctionFieldDiagonalOrbit
 
 variable (F : Type u) [Field F] [Fintype F]
 
-/-- A = F[t]. -/
-abbrev A := Polynomial F
+/-- The natural inclusion `F[t] →+* F((t⁻¹))`. -/
+noncomputable def polyToLaurent :F[X] →+* F⸨X⸩ :=
+  (HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom
 
-/-- `K = F⸨t⁻¹⸩`, the field of formal Laurent series over `F`. -/
-abbrev K := LaurentSeries F
-
-abbrev SL4 (R : Type*) [CommRing R] :=
-  Matrix.SpecialLinearGroup (Fin 4) R
 
 /-- Group hom `SL₄(F[t]) → SL₄(F((t⁻¹)))` induced by the natural inclusion `F[t] →+* F((t⁻¹))`. -/
 noncomputable def SL4_map_polyToLaurent :
-    SL4 (A F) →* SL4 (K F) :=
+    SL(4, F[X]) →* SL(4, F⸨X⸩) :=
   Matrix.SpecialLinearGroup.map
-    ((HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom)
-
-/-- Γ = image of `SL₄(F[t])` inside `SL₄(F((t⁻¹)))`. -/
-noncomputable def Gamma : Subgroup (SL4 (K F)) :=
-  (SL4_map_polyToLaurent (F := F)).range
-
-variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
-
-instance : TopologicalSpace (SpecialLinearGroup n (K F)) :=
-  inferInstanceAs (TopologicalSpace { A : Matrix n n (K F) // A.det = 1 })
+    (polyToLaurent F)
 
 /-- **Huang–Shi, Theorem 1.2 (Lean statement).**
 
@@ -106,12 +89,12 @@ Let `F` be a finite field of characteristic `p ∈ {3, 5, 7, 11}`, and set
 Then there exists `z : SL₄(K)/Γ` such that the `D`-orbit of `z` has compact
 closure but is not closed.
 -/
-@[category research open, AMS 11 15 22]
+@[category research solved, AMS 11 15 22]
 theorem huang_shi_theorem_1_2
-    (hchar : ringChar (K F) ∈ ({3, 5, 7, 11} : Finset ℕ)) :
-    ∃ z : SL(4, K F) ⧸ Gamma (F),
-      IsCompact (closure (MulAction.orbit (diagonalSubgroup (Fin 4) (K F)) z)) ∧
-      ¬ IsClosed (MulAction.orbit (diagonalSubgroup (Fin 4) (K F)) z) := by
+    (hchar : ringChar (F⸨X⸩) ∈ ({3, 5, 7, 11} : Finset ℕ)) :
+    ∃ z : SL(4, F⸨X⸩) ⧸ (SL4_map_polyToLaurent (F := F)).range,
+      IsCompact (closure (MulAction.orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z)) ∧
+      ¬ IsClosed (MulAction.orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z) := by
   -- Placeholder: a Lean formalization would require a full development
   -- of the Huang–Shi paper in mathlib.
   sorry
