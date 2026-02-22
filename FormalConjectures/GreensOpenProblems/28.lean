@@ -25,11 +25,9 @@ References:
 
 namespace Green28
 
-open PMF
-
-/-- A PMF on $\mathbb{Z}$ is uniformly distributed on its range if all non-zero probabilities are equal. -/
+/-- True if a PMF on $\mathbb{Z}$ is uniformly distributed on its support. -/
 def IsUniformOnSupport (X : PMF ℤ) : Prop :=
-  ∃ c : NNReal, ∀ x ∈ X.support, X x = c
+  ∃ (s : Finset ℤ) (hs : s.Nonempty), X = PMF.uniformOfFinset s hs
 
 /-- The sum of two independent PMFs on $\mathbb{Z}$. -/
 noncomputable def indepSum (X Y : PMF ℤ) : PMF ℤ := do
@@ -44,7 +42,7 @@ distributed on their ranges?
 -/
 @[category research open, AMS 60]
 theorem green_28 : answer(sorry) ↔
-  ∀ (X Y : PMF ℤ),
+  ∀ (X Y : PMF ℤ), -- marginals, independence is built into indepSum
     X.support.Finite ∧ Y.support.Finite ∧ IsUniformOnSupport (indepSum X Y) →
       IsUniformOnSupport X ∧ IsUniformOnSupport Y := by
   sorry
