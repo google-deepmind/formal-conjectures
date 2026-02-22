@@ -32,8 +32,10 @@ def IsUniformOnSupport (X : PMF ℤ) : Prop :=
   ∃ c : NNReal, ∀ x ∈ X.support, X x = c
 
 /-- The sum of two independent PMFs on $\mathbb{Z}$. -/
-noncomputable def indepSum (X Y : PMF ℤ) : PMF ℤ :=
-  X.bind (fun x ↦ Y.map (fun y ↦ x + y))
+noncomputable def indepSum (X Y : PMF ℤ) : PMF ℤ := do
+  let x ← X
+  let y ← Y
+  PMF.pure (x + y)
 
 /--
 Suppose that $X, Y$ are two finitely-supported independent random variables taking integer values,
