@@ -94,13 +94,8 @@ noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
 A graph where the vertices V are a collection of points in ℝ² and there is
 an edge between two points if and only if the distance between them is 1. -/
 def UnitDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph V where
-  Adj := fun x y => dist x y = 1
-  symm := by
-    intros x y
-    simp [dist_comm]
-  loopless := by
-    intros x
-    simp [dist_self]
+  Adj x y := Dist.dist x y = 1
+  symm x y := by simp [PseudoMetricSpace.dist_comm]
 
 /--
 Two walks are internally disjoint if they share no vertices other than their endpoints.
