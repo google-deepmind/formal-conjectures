@@ -45,7 +45,7 @@ This is the official Millennium Prize Problem as posed by the
 This uses the `RiemannHypothesis` type from Mathlib, which is defined as
 `∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n : ℕ, s = -2 * (n + 1)) → s ≠ 1 → s.re = 1 / 2`. -/
 @[category research open, AMS 11]
-theorem riemann_hypothesis : RiemannHypothesis := by
+theorem Riemann_Hypothesis : RiemannHypothesis := by
   sorry
 
 end RiemannHypothesis
