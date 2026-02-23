@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 645
 
-*Reference:*
+*References:*
 - [erdosproblems.com/645](https://www.erdosproblems.com/645)
 - [BrLa99] Brown, Tom C. and Landman, Bruce M., Monochromatic arithmetic progressions with large
   differences. Bull. Austral. Math. Soc. (1999), 21--35.
