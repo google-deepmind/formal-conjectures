@@ -14,21 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import Lean
-import FormalConjectures.Util.Attributes
+import FormalConjectures.Util.Attributes.Basic
 
 open Lean ProblemAttributes
 
 def getModuleNameFromFile (file : System.FilePath) : IO Name := do
   let components := file.withExtension "" |>.components
-  -- Assuming the file is under FormalConjectures/ or FormalConjecturesForMathlib/
+  -- Assuming the file is under FormalConjectures/
   let mut moduleComponents := []
   let mut found := false
   for c in components do
-    if c == "FormalConjectures" || c == "FormalConjecturesForMathlib" || found then
+    if c == "FormalConjectures" || found then
       found := true
       moduleComponents := moduleComponents ++ [c]
   if moduleComponents.isEmpty then
-    throw <| IO.userError s!"Could not determine module name for {file}. Is it under FormalConjectures/ or FormalConjecturesForMathlib/?"
+    throw <| IO.userError s!"Could not determine module name for {file}. Is it under FormalConjectures/?"
   return moduleComponents.foldl (fun n s => Name.mkStr n s) Name.anonymous
 
 -- Helper to format Category as string
@@ -51,24 +51,10 @@ def nameAny (n : Name) (p : String → Bool) : Bool :=
 def isInternal (n : Name) : Bool :=
   nameAny n (fun s => s.startsWith "_" || s.startsWith "match_" || s.startsWith "proof_")
 
-def amsToNat (a : AMS) : Nat :=
-  match a with
-  | .«0» => 0 | .«1» => 1 | .«3» => 3 | .«5» => 5 | .«6» => 6 | .«8» => 8 | .«11» => 11
-  | .«12» => 12 | .«13» => 13 | .«14» => 14 | .«15» => 15 | .«16» => 16 | .«17» => 17
-  | .«18» => 18 | .«19» => 19 | .«20» => 20 | .«22» => 22 | .«26» => 26 | .«28» => 28
-  | .«30» => 30 | .«31» => 31 | .«32» => 32 | .«33» => 33 | .«34» => 34 | .«35» => 35
-  | .«37» => 37 | .«39» => 39 | .«40» => 40 | .«41» => 41 | .«42» => 42 | .«43» => 43
-  | .«44» => 44 | .«45» => 45 | .«46» => 46 | .«47» => 47 | .«49» => 49 | .«51» => 51
-  | .«52» => 52 | .«53» => 53 | .«54» => 54 | .«55» => 55 | .«57» => 57 | .«58» => 58
-  | .«60» => 60 | .«62» => 62 | .«65» => 65 | .«68» => 68 | .«70» => 70 | .«74» => 74
-  | .«76» => 76 | .«78» => 78 | .«80» => 80 | .«81» => 81 | .«82» => 82 | .«83» => 83
-  | .«85» => 85 | .«86» => 86 | .«90» => 90 | .«91» => 91 | .«92» => 92 | .«93» => 93
-  | .«94» => 94 | .«97» => 97
-
 structure TheoremInfo where
   «theorem» : String
   module : String
-  categories : List String
+  category : String
   subjects : List String
   deriving ToJson
 
@@ -93,13 +79,12 @@ partial def getAllLeanFiles (dir : System.FilePath) : IO (Array System.FilePath)
 
 unsafe def main (args : List String) : IO Unit := do
   let leanFiles ← match args with
-    | [] => 
+    | [] =>
       let f1 ← getAllLeanFiles "FormalConjectures"
-      let f2 ← getAllLeanFiles "FormalConjecturesForMathlib"
-      pure (f1 ++ f2)
+      pure (f1)
     | [file] => pure #[System.FilePath.mk file]
     | _ => throw <| IO.userError "Usage: extract_names [file]"
-  
+
   let mut moduleNames := #[]
   for file in leanFiles do
     try
@@ -119,7 +104,7 @@ unsafe def main (args : List String) : IO Unit := do
 
     let mut subjectMap : Std.HashMap Name (List String) := {}
     for tag in subjectTags do
-      let subjects := tag.subjects.map (fun (s : AMS) => s!"{amsToNat s}")
+      let subjects := tag.subjects.map (fun (s : AMS) => s!"{s.toNat?.get!}")
       subjectMap := subjectMap.insert tag.declName (subjects ++ subjectMap.getD tag.declName [])
 
     let mut allResults : List TheoremInfo := []
@@ -130,12 +115,14 @@ unsafe def main (args : List String) : IO Unit := do
       for info in modData.constants do
         let name := info.name
         match info with
-        | ConstantInfo.thmInfo .. => 
+        | ConstantInfo.thmInfo .. =>
           if !isInternal name then
             let cats := categoryMap.getD name []
             let subjs := subjectMap.getD name []
             if !cats.isEmpty || !subjs.isEmpty then
-              allResults := { «theorem» := name.toString, module := modName.toString, categories := cats, subjects := subjs } :: allResults
+              if cats.length ≠ 1 then
+                throwError m!"Theorem {name} must have exactly one category, found {cats.length}."
+              allResults := { «theorem» := name.toString, module := modName.toString, category := cats.head!, subjects := subjs } :: allResults
         | _ => pure ()
-    
+
     IO.println (toJson allResults.reverse).pretty
