@@ -24,9 +24,12 @@ import FormalConjectures.Util.ProblemImports
 - [Gr12] Green, Ben. "What is... an approximate group." Notices Amer. Math. Soc 59.5 (2012): 655-656.
 - [Br13] Breuillard, Emmanuel, Ben Green, and Terence Tao. "Small doubling in groups."
   Erdős Centennial. Berlin, Heidelberg: Springer Berlin Heidelberg, 2013. 129-151.
+- [Sa10] Sanders, Tom. "On a nonabelian Balog–Szemerédi-type lemma." Journal of the Australian
+  Mathematical Society 89.1 (2010): 127-132.
+- [CrSi10] Croot, Ernie, and Olof Sisask. "A probabilistic technique for finding almost-periods of
+  convolutions." Geometric and functional analysis 20.6 (2010): 1367-1396.
 -/
 
-open Finset Real
 open scoped Pointwise
 
 namespace Green29
@@ -46,6 +49,18 @@ theorem green_29 :
           1 ≤ K → IsApproximateGroup K A →
             ∃ S ⊆ A, C * K ^ (-c) * (A.card : ℝ) ≤ (S.card : ℝ) ∧
             S ^ 8 ⊆ A ^ 4 := by
+  sorry
+
+/-- Such a conclusion is known with $|S| \gg_K |A|$ [Br13 Problem 6.5, CrSi10, Sa10]. -/
+@[category research solved, AMS 20]
+theorem green_29.variant :
+    ∀ K : ℝ, 1 ≤ K →
+      ∃ c : ℝ, 0 < c ∧ -- Allow c to depend on K.
+        ∀ {G : Type*} [Group G] [DecidableEq G] (A : Finset G),
+          IsApproximateGroup K A →
+            ∃ S : Finset G, -- No S ⊆ A requirement in this variant.
+              c * (A.card : ℝ) ≤ (S.card : ℝ) ∧
+              S ^ 8 ⊆ A ^ 4 := by
   sorry
 
 end Green29
