@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 299
 
-*Reference:* [erdosproblems.com/299](https://www.erdosproblems.com/299)
+*References:*
+- [erdosproblems.com/298](https://www.erdosproblems.com/298)
+- [erdosproblems.com/299](https://www.erdosproblems.com/299)
+- [Bl21] Bloom, T. F., On a density conjecture about unit fractions. arXiv:2112.03726 (2021).
 -/
 
 open Filter
@@ -29,8 +32,14 @@ namespace Erdos299
 /--
 Is there an infinite sequence $a_1 < a_2 < \dots$ such that $a_{i+1} - a_i = O(1)$ and no finite
 sum of $\frac{1}{a_i}$ is equal to 1?
+
+There does not exist such a sequence, which follows from the positive solution to
+[erdosproblems.com/298] by Bloom [Bl21].
+
+This was formalized in Lean by Alexeev and Mehta.
 -/
-@[category research solved, AMS 11 40]
+@[category research formally solved using lean4 at
+"https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean", AMS 11 40]
 theorem erdos_299 : answer(False) ↔ (∃ (a : ℕ → ℕ),
     StrictMono a ∧ (∀ n, 0 < a n) ∧
     (fun n ↦ (a (n + 1) : ℝ) - a n) =O[atTop] (1 : ℕ → ℝ) ∧
