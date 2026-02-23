@@ -42,7 +42,7 @@ Is it true that $G$ is Ramsey size linear ($\hat{r}(G, H) \le O(m)$)?
 -/
 @[category research open, AMS 05]
 theorem erdos_568 : answer(sorry) ↔
-    ∀ {V : Type*} [Fintype V] (G : SimpleGraph V),
+    ∀ {V : Type} [Fintype V] (G : SimpleGraph V),
       -- Condition 1: R(G, Tn) ≤ O(n) for any tree Tn on n vertices
       (∃ c1 > (0 : ℝ), ∀ (n : ℕ) (T : SimpleGraph (Fin n)), T.IsTree →
         (R(G, T) : ℝ) ≤ c1 * n) →

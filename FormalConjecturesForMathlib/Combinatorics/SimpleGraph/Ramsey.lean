@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Data.Fin.VecNotation
+module
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Data.Fin.VecNotation
 import Lean.Elab.Term
 
 /-!
@@ -27,7 +27,11 @@ This file defines the graph Ramsey number for simple graphs.
 ## Definitions
 
 * `graphRamseyNum` - The n-ary graph Ramsey number `R(H₀, H₁, ..., Hₙ₋₁)`.
-* `Ramsey` - The 2-ary specialization `R(G, H)`.
+* `Ramsey` - The 2-ary graph Ramsey number `R(G, H)` via the complement formulation.
+
+## Main Results
+
+* `SimpleGraph.Ramsey.le` - If the complement Ramsey property holds at `N`, then `Ramsey G H ≤ N`.
 
 ## Main Definition
 
@@ -40,8 +44,11 @@ there exists `i` such that `Hᵢ` is contained in `c i`.
 
 ## Notation
 
-We provide an elaborator so that `R(G, H)` expands to `graphRamseyNum ![G, H]`.
+We provide an elaborator so that `R(G, H)` expands to `Ramsey G H` for 2 arguments,
+or `graphRamseyNum ![G, H, ...]` for more arguments.
 -/
+
+@[expose] public section
 
 namespace SimpleGraph
 
@@ -77,6 +84,13 @@ noncomputable def Ramsey {α β : Type*} [Fintype α] [Fintype β]
     (G : SimpleGraph α) (H : SimpleGraph β) : ℕ :=
   sInf { N | ∀ (R : SimpleGraph (Fin N)), G.IsContained R ∨ H.IsContained Rᶜ }
 
+/-- If the 2-color complement property holds at `N`, then `Ramsey G H ≤ N`. -/
+lemma Ramsey.le {α β : Type*} [Fintype α] [Fintype β]
+    {G : SimpleGraph α} {H : SimpleGraph β} {N : ℕ}
+    (h : ∀ R : SimpleGraph (Fin N), G.IsContained R ∨ H.IsContained Rᶜ) :
+    Ramsey G H ≤ N :=
+  Nat.sInf_le h
+
 end SimpleGraph
 
 /-!
@@ -93,7 +107,7 @@ open Lean Elab Term in
 /-- Elaborator for `R(G, H, ...)` that expands to `Ramsey G H` for 2 args
     or `graphRamseyNum ![G, H, ...]` for more args. -/
 @[term_elab ramseyNotation]
-def elabRamseyNotation : TermElab := fun stx _ => do
+meta def elabRamseyNotation : TermElab := fun stx _ => do
   match stx with
   | `(R($args,*)) =>
     let argsArr := args.getElems
