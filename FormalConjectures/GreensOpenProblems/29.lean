@@ -20,7 +20,10 @@ import FormalConjectures.Util.ProblemImports
 # Ben Green's Open Problem 29
 
 *References:*
-* [Ben Green's Open Problem 29](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.29)
+- [Ben Green's Open Problem 29](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.29)
+- [Gr12] Green, Ben. "What is... an approximate group." Notices Amer. Math. Soc 59.5 (2012): 655-656.
+- [Br13] Breuillard, Emmanuel, Ben Green, and Terence Tao. "Small doubling in groups."
+  Erdős Centennial. Berlin, Heidelberg: Springer Berlin Heidelberg, 2013. 129-151.
 -/
 
 open Finset Real
@@ -40,7 +43,7 @@ theorem green_29 :
     answer(sorry) ↔
       ∃ C c : ℝ, 0 < C ∧ 0 < c ∧
         ∀ {G : Type*} [Group G] [DecidableEq G] (K : ℝ) (A : Finset G),
-          IsApproximateGroup K A →
+          1 ≤ K → IsApproximateGroup K A →
             ∃ S ⊆ A, C * K ^ (-c) * (A.card : ℝ) ≤ (S.card : ℝ) ∧
             S ^ 8 ⊆ A ^ 4 := by
   sorry
