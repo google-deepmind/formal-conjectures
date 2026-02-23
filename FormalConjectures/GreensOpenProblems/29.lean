@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.Additive.ApproximateSubgroup
 
 /-!
 # Ben Green's Open Problem 29
@@ -34,11 +35,6 @@ open scoped Pointwise
 
 namespace Green29
 
-/-- A subset `A` of a group `G` is a `K`-approximate group if it is symmetric, contains the identity,
-and there exists a set `X` of size at most `K` such that `A * A ⊆ X * A`. -/
-def IsApproximateGroup {G : Type*} [Group G] [DecidableEq G] (K : ℝ) (A : Finset G) : Prop :=
-  (1 : G) ∈ A ∧ A⁻¹ = A ∧ ∃ X : Finset G, (X.card : ℝ) ≤ K ∧ A * A ⊆ X * A
-
 /-- Suppose that $A$ is a $K$-approximate group (not necessarily abelian). Is there $S \subset A$,
 $|S| \gg K^{-O(1)} |A|$, with $S^8 \subset A^4$? -/
 @[category research open, AMS 20]
@@ -46,7 +42,7 @@ theorem green_29 :
     answer(sorry) ↔
       ∃ C c : ℝ, 0 < C ∧ 0 < c ∧
         ∀ {G : Type*} [Group G] [DecidableEq G] (K : ℝ) (A : Finset G),
-          1 ≤ K → IsApproximateGroup K A →
+          1 ≤ K → IsApproximateSubgroup K (A : Set G) →
             ∃ S ⊆ A, C * K ^ (-c) * (A.card : ℝ) ≤ (S.card : ℝ) ∧
             S ^ 8 ⊆ A ^ 4 := by
   sorry
@@ -57,7 +53,7 @@ theorem green_29.variant :
     ∀ K : ℝ, 1 ≤ K →
       ∃ c : ℝ, 0 < c ∧ -- Allow c to depend on K.
         ∀ {G : Type*} [Group G] [DecidableEq G] (A : Finset G),
-          IsApproximateGroup K A →
+          IsApproximateSubgroup K (A : Set G) →
             ∃ S : Finset G, -- No S ⊆ A requirement in this variant.
               c * (A.card : ℝ) ≤ (S.card : ℝ) ∧
               S ^ 8 ⊆ A ^ 4 := by
