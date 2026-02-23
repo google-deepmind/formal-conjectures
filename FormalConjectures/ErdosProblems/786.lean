@@ -73,7 +73,7 @@ theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
 
 /--
 `consecutivePrimesFrom p k` gives the set of `k + 1` consecutive primes that are at least `p` in
-size. If `p` is prime then this is the set of `k + 1` consectuve primes `p, p_1, ..., p_k`-/
+size. If `p` is prime then this is the set of `k + 1` consecutive primes `p, p_1, ..., p_k`-/
 noncomputable def consecutivePrimesFrom (p : ℕ) (k : ℕ) : Finset ℕ :=
     (Finset.range (k + 1)).image (Nat.nth (fun q ↦ q.Prime ∧ p ≤ q))
 
