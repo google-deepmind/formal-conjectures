@@ -37,15 +37,11 @@ Solved affirmatively by [Da85], who gave an explicit construction. -/
 @[category research solved, AMS 52]
 theorem erdos_1071a :
     answer(True) ↔ ∃ S : Finset (ℝ² × ℝ²),
-      (∀ seg ∈ S, dist seg.1 seg.2 = 1 ∧
-        seg.1 0 ∈ Icc 0 1 ∧ seg.1 1 ∈ Icc 0 1 ∧
-        seg.2 0 ∈ Icc 0 1 ∧ seg.2 1 ∈ Icc 0 1) ∧
-      S.toSet.Pairwise SegmentsDisjoint ∧
       Maximal (fun T : Finset (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧
           seg.1 0 ∈ Icc 0 1 ∧ seg.1 1 ∈ Icc 0 1 ∧
           seg.2 0 ∈ Icc 0 1 ∧ seg.2 1 ∈ Icc 0 1) ∧
-        T.toSet.Pairwise SegmentsDisjoint) S := by
+          (T : Set (ℝ² × ℝ²)).Pairwise SegmentsDisjoint) S := by
   sorry
 
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite? -/

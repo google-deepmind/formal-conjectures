@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos647
 
-open Filter ArithmeticFunction
+open Filter ArithmeticFunction.sigma
 
 /-- Let $\tau(n)$ count the number of divisors of $n$. Is there some $n > 24$ such that
 $$

@@ -40,7 +40,7 @@ def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
   f ∘ (Subtype.val : (A \ {0} : Set ℕ) → ℕ) ≠ (fun _ => 1) →
   f ∘ (Subtype.val : (A \ {0} : Set ℕ) → ℕ) ≠ (fun _ => - 1) →
   Set.range f ⊆ {1, -1} →
-  ∃ S : Finset ℕ, S.Nonempty ∧ S.toSet ⊆ A \ {0} ∧ ∑ n ∈ S, f n / n = 0
+  ∃ S : Finset ℕ, S.Nonempty ∧ ↑S ⊆ A \ {0} ∧ ∑ n ∈ S, f n / n = 0
 
 /-- `ℕ` has property `P₁`. This is proved in [ErSt75]. -/
 @[category research solved, AMS 11]

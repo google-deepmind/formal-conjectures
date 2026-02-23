@@ -40,6 +40,7 @@ lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A where
       grind
     wlog h₂ : a₂ ≤ b₂
     · have := this hA _ ha₁ _ hb₂ _ hb₁ _ ha₂
+      clear ha₁ ha₂ hb₁ hb₂
       grind
     have := Set.encard_le_one_iff.1 (hA (a₁ + b₁)) ⟨a₁, b₁⟩ ⟨a₂, b₂⟩ (by simp [*]) (by simp [*])
     grind
