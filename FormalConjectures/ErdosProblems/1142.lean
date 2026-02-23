@@ -27,9 +27,6 @@ import FormalConjectures.Util.ProblemImports
 - [MiWe69] Mientka, W. E. and Weitzenkamp, R. C., On f-plentiful numbers, Journal of
   Combinatorial Theory, Volume 7, Issue 4, December 1969, pages 374-377.
 
-Are there infinitely many $n > 2$ such that $n - 2^k$ is prime for all $k \geq 1$ with $2^k < n$?
-The known such $n$ are $4, 7, 15, 21, 45, 75, 105$ (OEIS A039669).
-Mientka and Weitzenkamp have proved there are no other such $n \leq 2^{44}$.
 -/
 
 open Nat Set
