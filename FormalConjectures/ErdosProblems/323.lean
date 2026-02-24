@@ -37,12 +37,12 @@ noncomputable def f (k m x : ℕ) : ℕ :=
 /--
 Is it true that $f_{k,k}(x) \gg_\epsilon x^{1-\epsilon}$ for all $\epsilon>0$?
 
-This would have significant applications to Waring's problem. Erd\H{o}s and Graham describe this as
+This would have significant applications to Waring's problem. Erdős and Graham describe this as
 'unattackable by the methods at our disposal'.
 -/
 @[category research open, AMS 11]
 theorem erdos_323.parts.i :
-    answer(sorry) ↔ ∀ k ≥ 1, ∀ ε > 0,
+    answer(sorry) ↔ ∀ k ≥ 1, ∀ ε > (0 : ℝ),
       (fun (x : ℕ) ↦ (x : ℝ) ^ (1 - ε)) =O[atTop] (fun (x : ℕ) ↦ (f k k x : ℝ)) := by
   sorry
 
