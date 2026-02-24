@@ -36,9 +36,9 @@ sum of $\frac{1}{a_i}$ is equal to 1?
 There does not exist such a sequence, which follows from the positive solution to
 [erdosproblems.com/298] by Bloom [Bl21].
 
-This was formalized in Lean by Alexeev and Mehta.
+This was formalized in Lean3 by Alexeev and Mehta.
 -/
-@[category research formally solved using lean4 at
+@[category research formally solved using other_system at
 "https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean", AMS 11 40]
 theorem erdos_299 : answer(False) ↔ (∃ (a : ℕ → ℕ),
     StrictMono a ∧ (∀ n, 0 < a n) ∧

@@ -32,9 +32,9 @@ $\sum_{n \in S} \frac{1}{n} = 1$?
 
 The answer is yes, proved by Bloom [Bl21].
 
-This was formalized in Lean by Alexeev and Mehta.
+This was formalized in Lean3 by Alexeev and Mehta.
 -/
-@[category research formally solved using lean4 at
+@[category research formally solved using other_system at
 "https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean", AMS 11]
 theorem erdos_298 : answer(True) ↔ (∀ (A : Set ℕ), 0 ∉ A → A.HasPosDensity →
     ∃ (S : Finset ℕ), ↑S ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) := by
