@@ -53,7 +53,7 @@ theorem f_nonneg : ∀ x y : ℝ, 0 ≤ f.eval ![x, y] := by
   intro x y
   unfold f
   simp
-  exact Real.motzkin_polynomial_nonneg x y
+  exact motzkin_polynomial_nonneg x y
 
 @[category high_school, AMS 12]
 theorem f_not_sum_of_squares :
