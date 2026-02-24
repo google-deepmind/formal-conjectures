@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 module
+
 public import Mathlib.Combinatorics.SimpleGraph.Copy
 public import Mathlib.Data.Nat.Lattice
-public import Mathlib.Data.Fin.VecNotation
-import Lean.Elab.Term
+
+import Mathlib.Data.Fin.VecNotation
 
 /-!
 # Graph Ramsey Number
