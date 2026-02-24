@@ -106,7 +106,7 @@ syntax (name := ramseyNotation) "R(" term,+ ")" : term
 
 open Lean Elab Term in
 /-- Elaborator for `R(G, H, ...)` that expands to `Ramsey G H` for 2 args
-    or `graphRamseyNum ![G, H, ...]` for more args. -/
+or `graphRamseyNum ![G, H, ...]` for more arguments. -/
 @[term_elab ramseyNotation]
 meta def elabRamseyNotation : TermElab := fun stx _ => do
   match stx with
