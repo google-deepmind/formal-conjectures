@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References*:
 - [B. Reed,  ω Δ and χ, J. Graph Theory 27 (1998) 177-212.](https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-0118(199804)27:4%3C177::AID-JGT1%3E3.0.CO;2-K)
-- [openproblemgarden(http://www.openproblemgarden.org/op/reeds_omega_delta_and_chi_conjecture)
+- [openproblemgarden](http://www.openproblemgarden.org/op/reeds_omega_delta_and_chi_conjecture)
 - [mathoverflow/37923](https://mathoverflow.net/questions/37923) asked by user [Andrew D. King](https://mathoverflow.net/users/4580/andrew-d-king)
 -/
 
@@ -45,8 +45,8 @@ theorem reed_omega_delta_chi_conjecture :
   sorry
 
 /--
-For a finite graph $G$, we define $\Delta(G)$ to be the maximum degree, $\omega(G)$ to be the 
-size of the largest clique subgraph, and $\chi(G)$ to be the chromatic number. Reed's omega, 
+For a finite graph $G$, we define $\Delta(G)$ to be the maximum degree, $\omega(G)$ to be the
+size of the largest clique subgraph, and $\chi(G)$ to be the chromatic number. Reed's omega,
 delta, and chi conjecture states that $$\chi(G) \leq \lceil \frac{1}{2}(\omega(G) + \Delta(G) + 1) \rceil.$$
 -/
 @[category research open, AMS 5]
