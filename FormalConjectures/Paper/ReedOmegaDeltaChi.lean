@@ -29,24 +29,6 @@ import FormalConjectures.Util.ProblemImports
 open Classical
 open scoped Finset
 
-namespace SimpleGraph
-
-/--
-For the purposes of stating the conjecture, we need to set up our definitions so that the maximum
-degree (resp. clique number) of a graph with unbounded degree (resp. clique size) is `∞` rather
-than 0.
--/
-noncomputable
-def edegree {V : Type*} (G : SimpleGraph V) (v : V) : ℕ∞ := (G.neighborSet v).encard
-
-noncomputable
-def emaxDegree {V : Type*} (G : SimpleGraph V) : ℕ∞ := ⨆ v, G.edegree v
-
-noncomputable
-def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ : G.IsClique s), #s
-
-end SimpleGraph
-
 namespace ReedOmegaDeltaChi
 
 /--
