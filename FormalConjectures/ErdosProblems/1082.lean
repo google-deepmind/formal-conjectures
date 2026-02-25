@@ -62,7 +62,7 @@ A smaller counterexample has been formalised here: it comprised of $8$ points, w
 determines $3$ distances.
 -/
 @[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/0aca4d71095301c0fd2dca32611b7addb2ea735c/FormalConjectures/ErdosProblems/1082.lean", AMS 51]
-theorem erdos_1082b : answer(sorry) ↔
+theorem erdos_1082b : answer(False) ↔
     ∀ (A : Finset ℝ²) (hA : A.Nonempty) (hA_n3c : NonTrilinear A.toSet),
     ∃ (a : ℝ²) (ha : a ∈ A), A.card / 2 ≤ distinctDistancesFrom A a - 1 := by
   sorry
