@@ -56,7 +56,7 @@ This is discussed in problem C11 of Guy's collection [Gu04].
 -/
 @[category research open, AMS 5]
 theorem erdos_241 :
-    answer(sorry) ↔ (fun N ↦ (f N 3 : ℝ)) ~[atTop] (fun N ↦ (N : ℝ) ^ (1 : ℝ) / 3) := by
+    answer(sorry) ↔ (fun N ↦ (f N 3 : ℝ)) ~[atTop] (fun N ↦ (N : ℝ) ^ ((1 : ℝ) / 3)) := by
   sorry
 
 /--
