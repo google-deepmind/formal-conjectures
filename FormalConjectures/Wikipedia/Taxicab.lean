@@ -19,84 +19,80 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Taxicab numbers
 
-A "taxicab number" for natural numbers k, m, n is the smallest number x that can be expressed as a sum of m positive k-th powers in at least n distinct ways. The most famous taxicab number is
-1729 = 1³ + 12³ = 9³ + 10³, also known as the Hardy–Ramanujan number.
+A *taxicab number* for natural numbers $k, m, n$ is the smallest number $x$ that can be expressed as a sum of $m$ positive $k$-th powers in at least $n$ distinct ways. The most famous taxicab number is
+$ 1729 = 1³ + 12³ = 9³ + 10³, $
+also known as the Hardy–Ramanujan number.
 
-However, Taxicab(5, 2, n) is not known for any n ≥ 2:
+However, a taxicab number is not known for $k=5$, $m=2$, and any $n ≥ 2$:
 No positive integer is known that can be written as the sum of two 5th powers in more than one way, and it is not known whether such a number exists.
+
+In particular, it is not known whether there exists a taxicab number for $k=5$, $m=2$, and $n=2$.
 
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Taxicab_number)
  - [Generalized taxicab number](https://en.wikipedia.org/wiki/Generalized_taxicab_number)
+ - [OEIS taxicab cubes](https://oeis.org/A001235)
+ - [OEIS taxicab 4th powers](https://oeis.org/A018786)
+ - [OEIS taxicab conjecture](https://oeis.org/A088703)
 -/
 
 namespace Taxicab
 
-/-- Predicates for non-empty list with all non-zero elements -/
-def is_nonempty_nonzero (L : List ℕ) : Prop := L ≠ [] ∧ 0 ∉ L
-
-/-- The sum of the k-th powers of the elements of a list.
+/-- $x$ is a candidate for being a taxicab number for $k, m, n$ if there exists a (finite) set of at least $n$ distinct, pairwise disjoint, non-empty, non-zero lists of length $m$, such that the sum of the $k$-th powers of the elements of each list is $x$. The disjointness condition ensures that the representations do not share any common terms.
 -/
-def sum_of_kth_powers (k : ℕ) (L : List ℕ) : ℕ :=
-  (L.map (· ^ k)).sum
-
-/-- x is a candidate for being a taxicab number for k, m, n if there exists a (finite) set of at least n distinct, pairwise disjoint, non-empty, non-zero lists of length m, such that the sum of the k-th powers of the elements of each list is x. The disjointness condition ensures that the representations do not share any common terms.
--/
-def is_possible_taxicab_for (k m n : ℕ) (x : ℕ) : Prop :=
+def IsTaxicabFor' (k m n x : ℕ) : Prop :=
   ∃ (S : Finset (List ℕ)),
   S.card ≥ n ∧
   ∀ L ∈ S, ∀ M ∈ S, L ≠ M → List.Disjoint L M ∧
-  (∀ L ∈  S, L.length = m ∧ is_nonempty_nonzero L ∧ sum_of_kth_powers k L = x)
+  (∀ L ∈  S, L.length = m ∧ L ≠ [] ∧ 0 ∉ L ∧ (L.map (· ^ k)).sum = x)
 
-/-- 1729 is a possible taxicab number for k=3, m=2, n=2.
+/-- $1729$ is a possible taxicab number for $k=3, m=2, n=2$.
 -/
 @[category test, AMS 11]
-theorem taxicab_1729_is_possible : is_possible_taxicab_for 3 2 2 1729 := by
+theorem taxicab_1729 : IsTaxicabFor' 3 2 2 1729 := by
   use {{1, 12}, {9, 10}}
-  simp [List.Disjoint, sum_of_kth_powers];
-  simp [is_nonempty_nonzero]
+  simp [List.Disjoint];
   simp +decide
 
-
-/-- The set of all possible taxicab numbers for given k, m, n.
+/-- $x$ is a taxicab number if it is the smallest number that can be expressed as a sum of $m$ positive $k$-th powers in at least $n$ distinct ways.
 -/
-def set_of_possible_taxicab_numbers_for (k m n : ℕ) : Set ℕ := { x : ℕ | is_possible_taxicab_for k m n x }
-
-/-- x is a taxicab number if it is the smallest number that can be expressed as a sum of m positive k-th powers in at least n distinct ways.
--/
-def is_taxicab (k m n : ℕ) (x : ℕ) : Prop :=
-  IsLeast (set_of_possible_taxicab_numbers_for k m n) x
+def IsTaxicabFor (k m n : ℕ) (x : ℕ) : Prop :=
+  IsLeast { x : ℕ | IsTaxicabFor' k m n x } x
 
 @[category test, AMS 11]
-theorem taxicab_possible_4 : is_possible_taxicab_for 1 2 2 4 := by
+theorem taxicab_4' : IsTaxicabFor' 1 2 2 4 := by
   use {[1, 3], [2, 2]};
-  simp [List.Disjoint, sum_of_kth_powers];
-  simp [is_nonempty_nonzero]
+  simp [List.Disjoint];
 
-/-- Using Aristotle (Harmonic) we get a compact proof that 4 is the taxicab number for k=1, m=2, n=2. -/
+/-- Using Aristotle (Harmonic) we get a compact proof that 4 is the taxicab number for $k=1, m=2, n=2$. -/
 @[category test, AMS 11]
-theorem taxicab_4 : is_taxicab 1 2 2 4 := by
+theorem taxicab_4 : IsTaxicabFor 1 2 2 4 := by
   constructor;
-  · exact taxicab_possible_4;
+  · exact taxicab_4';
   · rintro x ⟨ S, hS₁, hS₂ ⟩;
     obtain ⟨ s, hs, t, ht, hst ⟩ := Finset.one_lt_card.mp hS₁;
     have := hS₂ s hs t ht hst;
     rcases this with ⟨ h₁, h₂ ⟩ ;
     specialize h₂ s hs;
     rcases s with ( _ | ⟨ a, _ | ⟨ b, _ | s ⟩ ⟩ ) <;> simp_all +arith +decide;
-    rcases t with ( _ | ⟨ c, _ | ⟨ d, _ | t ⟩ ⟩ ) <;> simp_all +arith +decide [ is_nonempty_nonzero ];
+    rcases t with ( _ | ⟨ c, _ | ⟨ d, _ | t ⟩ ⟩ ) <;> simp_all +arith +decide;
     · grind;
     · have := hS₂ _ ht _ hs; simp_all +decide ;
       grind;
     · have := hS₂ _ hs _ ht; simp_all +decide [ List.Disjoint ] ;
-      have := this.2 _ hs; have := this.2.2; simp_all +arith +decide [ sum_of_kth_powers ] ;
+      have := this.2 _ hs; have := this.2.2; simp_all +arith +decide;
       grind;
     · have := hS₂ _ hs _ ht; simp_all +decide [ List.Disjoint ] ;
       grind +ring
 
-/-- Taxicab number Ta(5, 2, n) is not-known for any n ≥ 2. Whether such a number exists is also not known. -/
+/-- Taxicab number for $k=5$, $m=2$, and $n=2$ is not known. Whether such a number exists is also not known. -/
 @[category research open, AMS 11]
-theorem taxicab_for_5_2_n : answer(sorry) ↔ ∃ n : ℕ, n ≥ 2 ∧ (∃ x : ℕ, is_taxicab 5 2 n x) := by
+theorem taxicab_for_5_2_2 : answer(sorry) ↔ ∃ x : ℕ, IsTaxicabFor 5 2 2 x := by
+  sorry
+
+/-- Taxicab number for $k=5$ and $m=2$ is not-known for any $n ≥ 2$. Whether such a number exists is also not known. -/
+@[category research open, AMS 11]
+theorem taxicab_for_5_2_n : answer(sorry) ↔ ∃ n : ℕ, n ≥ 2 ∧ (∃ x : ℕ, IsTaxicabFor 5 2 n x) := by
   sorry
 
 end Taxicab
