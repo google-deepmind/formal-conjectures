@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Generalized_Riemann_hypothesis)
 -/
 
-namespace ERH
+namespace ExtendedRiemannHypothesis
 
 /-- The (open) critical strip $\{ s \in \mathbb{C} \mid 0 < \Re(s) < 1 \}$. -/
 def IsInCriticalStrip (s : ℂ) : Prop :=
@@ -39,5 +39,4 @@ theorem extended_riemann_hypothesis_dedekindZeta (K : Type*) [Field K] [NumberFi
     s.re = 1 / 2 := by
   sorry
 
-end ERH
-
+end ExtendedRiemannHypothesis
