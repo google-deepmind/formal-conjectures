@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 198
 
-*Reference:* [erdosproblems.com/198](https://www.erdosproblems.com/198)
+*References:*
+- [erdosproblems.com/198](https://www.erdosproblems.com/198)
+- [Ba75] Baumgartner, James E., Partitioning vector spaces. J. Combinatorial Theory Ser. A (1975),
+  231-233.
 -/
 
 open Function Set Nat
@@ -31,9 +34,8 @@ positive integer. Then there is a set $X_k \subseteq V$ such that $X_k$ meets
 every infinite arithmetic progression in $V$ but $X_k$ intersects every
 $k$-element arithmetic progression in at most two points.
 
-At the end of:
- * Baumgartner, James E., Partitioning vector spaces. J. Combinatorial Theory Ser. A (1975), 231-233.
-the author claims that by "slightly modifying the method of [his proof]", one can prove this. -/
+At the end of [Ba75] the author claims that by "slightly modifying the method of [his proof]", one
+can prove this. -/
 @[category research solved, AMS 5]
 lemma baumgartner_strong (V : Type*) [AddCommGroup V] [Module ℚ V] (k : ℕ) :
     ∃ X : Set V,
@@ -50,31 +52,24 @@ lemma baumgartner_headline (V : Type*) [AddCommGroup V] [Module ℚ V] :
   baumgartner_strong V 3
 
 /--
-If $A \subseteq \mathbb{N}$ is a Sidon set then must the complement of $A$ contain an infinite arithmetic
-progression?
+The answer is no; Erdős and Graham report this was proved by Baumgartner, presumably referring to
+the paper [Ba75], which does not state this exactly, but the following simple construction is
+implicit in [Ba75].
 
-Answer "yes" according to remark on page 23 of:
+Let $P_1,P_2,\ldots$ be an enumeration of all countably many infinite arithmetic progressions. We
+choose $a_1$ to be the minimal element of $P_1\cap \mathbb{N}$, and in general choose $a_n$ to be an
+element of $P_n\cap \mathbb{N}$ such that $a_n>2a_{n-1}$. By construction $A=\{a_1 < a_2 < \cdots\}$
+contains at least one element from every infinite arithmetic progression, and is a lacunary set, so
+is certainly Sidon.
 
+AlphaProof has found the following explicit construction: $A = \{ (n+1)!+n : n\geq 0\}$. This is a
+Sidon set, and intersects every arithmetic progression, since for any $a,d\in \mathbb{N}$,
+$(a+d+1)!+(a+d)\in A$, and $d$ divides $(a+d+1)!+d$.
 
-- Erdös and Graham, "Old and new problems and results in combinatorial number theory", 1980.
-
-
-"Baumgartner also proved the conjecture of Erdös that if $A$ is a sequence of positive integers with
-all sums $a + a'$ distinct for $a, a' \in A$ then the complement of $A$ contains an
-infinite A.P."
-
-
-But this seems to be a misprint, since the opposite is true:
-There is a sequence of positive integers with all $a + a'$ distinct for $a, a' \in A$ such that the
-complement of $A$ contains no infinite A.P., i.e. there is a Sidon set $A$ which intersects all
-arithmetic progressions.
-
-So the answer should be "no".
-
-This can be seen, as pointed out by Thomas Bloom [erdosproblems.com/198](https://www.erdosproblems.com/198),
-by an elementary argument.
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos198.lean", AMS 5 11]
 theorem erdos_198 : (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ Aᶜ)) ↔
     answer(False) := by
   sorry

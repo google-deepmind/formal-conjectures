@@ -19,7 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 350
 
-*Reference:* [erdosproblems.com/350](https://www.erdosproblems.com/350)
+*References:*
+- [erdosproblems.com/350](https://www.erdosproblems.com/350)
+- [BeEr74] Benkoski, S. J. and Erdős, P., On weird and pseudoperfect numbers. Math. Comp. (1974),
+  617-623.
+- [HSS77] Hanson, F. and Steele, J. M. and Stenger, F., Distinct sums over subsets. Proc. Amer.
+  Math. Soc. (1977), 179-180.
 -/
 
 namespace Erdos350
@@ -54,15 +59,23 @@ theorem DistinctSubsetSums_iff_DecidableDistinctSubsetSums
 /--
 If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n < 2`.
 Proved by Ryavec.
+
+This was proved by Ryavec, who did not appear to ever publish the proof. Ryavec's proof is
+reproduced in [BeEr74]. More generally, Ryavec's proof delivers that
+$\sum_{n\in A}\frac{1}{n}\leq 2-2^{1-\lvert A\rvert},$ with equality if and only if
+$A=\{1,2,\ldots,2^k\}$.
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos350.lean", AMS 5 11]
 theorem erdos_350 (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A) :
     ∑ n ∈ A, (1 / n : ℝ) < 2 := by
   sorry
 
 /--
 If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n^s < 1/(1 - 2^(-s))`, for any `s > 0`.
-Proved by Hanson, Steele, and Stenger.
+Proved by Hanson, Steele, and Stenger [HSS77].
 
 We exlude here the case `s = 0`, because in the informal formulation then the right hand side is to be interpreted as `∞`, while the left hand side counts the elements in `A`.
 -/
