@@ -35,8 +35,8 @@ namespace Erdos193
 def IsSWalk {V : Type*} [AddCommGroup V] (S : Set V) (a : ℕ → V) : Prop :=
   ∀ n, a (n + 1) - a n ∈ S
 
-/-- True if set $A$ contains 3 distinct collinear points. -/
-def HasCollinearTriple {R V : Type*} [DivisionRing R] [AddCommGroup V] [Module R V] (A : Set V) : Prop :=
+/-- True if set $A$ contains 3 distinct collinear points over $R$. -/
+def HasCollinearTriple (R) {V : Type*} [DivisionRing R] [AddCommGroup V] [Module R V] (A : Set V) : Prop :=
   ∃ x ∈ A, ∃ y ∈ A, ∃ z ∈ A, x ≠ y ∧ y ≠ z ∧ x ≠ z ∧ Collinear R ({x, y, z} : Set V)
 
 /--
@@ -51,7 +51,7 @@ theorem erdos_193 :
       this as an infinite range. This allows for repeats but forces infinitely many distinct points,
       thereby avoiding degenerate $S$-walks (e.g. constant sequences, non-collinear loops) -/
       ∀ a : ℕ → Fin 3 → ℤ, IsSWalk S a → (range a).Infinite →
-      HasCollinearTriple (R := ℚ) (range (fun n ↦ (↑) ∘ a n : ℕ → Fin 3 → ℚ)) := by
+      HasCollinearTriple ℚ (range (fun n ↦ (↑) ∘ a n : ℕ → Fin 3 → ℚ)) := by
   sorry
 
 /--
@@ -61,7 +61,7 @@ theorem erdos_193 :
 theorem erdos_193_z2 :
     ∀ S : Set (Fin 2 → ℤ), S.Finite →
       ∀ a : ℕ → Fin 2 → ℤ, IsSWalk S a → (range a).Infinite →
-      HasCollinearTriple (R := ℚ) (range (fun n ↦ (↑) ∘ a n : ℕ → Fin 2 → ℚ)) := by
+      HasCollinearTriple ℚ (range (fun n ↦ (↑) ∘ a n : ℕ → Fin 2 → ℚ)) := by
   sorry
 
 -- TODO(jeangud): For $\mathbb{Z}^3$ the largest number of collinear points can be bounded [GeRa79].
