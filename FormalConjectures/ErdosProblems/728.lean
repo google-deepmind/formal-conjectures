@@ -22,22 +22,40 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/728](https://www.erdosproblems.com/728)
 -/
 
+open Real
+open scoped Nat Topology
+
 namespace Erdos728
 
 /--
-Let $\varepsilon, C > 0$. Are there integers $a, b, n$ such that
-$$a > \varepsilon n,\quad b > \varepsilon n, \quad a!\, b! \mid n!\, (a + b - n)!, $$
+Let $\varepsilon$ be sufficiently small and $C, C' > 0$. Are there integers $a, b, n$ such that
+$$a, b > \varepsilon n\quad a!\, b! \mid n!\, (a + b - n)!, $$
 and
-$$ a + b > n + C \log n ?$$
+$$C \log n < a + b - n < C' \log n ?$$
+
+Note that the website currently displays a simpler (trivial) version of this problem because
+$a + b$ isn't assumed to be in the $n + O(\log n)$ regime.
+
+Barreto and ChatGPT-5.2 have proved that, for any $0 < C_1 < C_2$, there are infinitely many
+$a, b, n$ with $b = n/2$, $a = n/2 + O(\log n)$, and $C_1 \log n < a + b - n < C_2 \log n$ such
+that $a! b! \mid n! (a + b - n)!$
+
+This appears to answer the question in the spirit it was intended.
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos56.lean", AMS 11]
 theorem erdos_728 :
-    (∀ (ε C : ℝ) (hε : 0 < ε) (hC : 0 < C), ∃ a b n : ℕ,
-      0 < n ∧
-      ε * n < a ∧
-      ε * n < b ∧
-      Nat.factorial a * Nat.factorial b ∣ Nat.factorial n * Nat.factorial (a + b - n) ∧
-      a + b > n + C * Real.log n) ↔ answer(sorry) := by
+    answer(True) ↔
+      ∀ᶠ ε : ℝ in 𝓝[>] 0, ∀ C > (0 : ℝ), ∀ C' > C,
+        ∃ a b n : ℕ,
+          0 < n ∧
+          ε * n < a ∧
+          ε * n < b ∧
+          a ! * b ! ∣ n ! * (a + b - n)! ∧
+          a + b > n + C * log n ∧
+          a + b < n + C' * log n := by
   sorry
 
 -- TODO(firsching): Use Legendre's formula to test divisibility in terms of p-adic valuations.

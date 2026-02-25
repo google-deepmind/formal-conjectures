@@ -44,14 +44,14 @@ partial def f : ℕ+ → ℕ+
 Does $f(n)$ miss infinitely many integers?
 -/
 @[category research open, AMS 11]
-theorem erdos_422 : Set.Infinite {n | ∀ x, f x ≠ n} ↔ answer(sorry) := by
+theorem erdos_422 : answer(sorry) ↔ Set.Infinite {n | ∀ x, f x ≠ n} := by
   sorry
 
 /--
 Is $f$ surjective?
 -/
 @[category research open, AMS 11]
-theorem erdos_422.variants.surjective : f.Surjective ↔ answer(sorry) := by
+theorem erdos_422.variants.surjective : answer(sorry) ↔ f.Surjective := by
   sorry
 
 /--
@@ -66,7 +66,7 @@ theorem erdos_422.variants.growth_rate :
 Does $f$ become stationary at some point?
 -/
 @[category research open, AMS 11]
-theorem erdos_422.variants.eventually_const : EventuallyConst f atTop ↔ answer(sorry) := by
+theorem erdos_422.variants.eventually_const : answer(sorry) ↔ EventuallyConst f atTop := by
   sorry
 
 end Erdos422

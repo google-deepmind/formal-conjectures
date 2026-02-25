@@ -69,7 +69,7 @@ often and even infinitely often?
 -/
 @[category research open, AMS 11]
 theorem erdos_349.variants.floor_3_halves_odd :
-    {n | Odd ⌊(3/2 : ℝ) ^ n⌋}.Infinite ↔ answer(sorry) := by
+    answer(sorry) ↔ {n | Odd ⌊(3/2 : ℝ) ^ n⌋}.Infinite := by
   sorry
 
 /--
@@ -77,7 +77,7 @@ Is it true that the terms of the sequence $\lfloor (3/2)^n\rfloor$ are even infi
 -/
 @[category research open, AMS 11]
 theorem erdos_349.variants.floor_3_halves_even :
-    {n | Even ⌊(3/2 : ℝ) ^ n⌋}.Infinite ↔ answer(sorry) := by
+    answer(sorry) ↔ {n | Even ⌊(3/2 : ℝ) ^ n⌋}.Infinite := by
   sorry
 
 end Erdos349

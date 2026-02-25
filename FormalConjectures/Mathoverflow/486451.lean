@@ -35,9 +35,9 @@ theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
 which are not the same as sets. -/
 @[category research open, AMS 16]
 theorem exists_semiring_unique_left_right_maximal_ne :
-    (∃ (R : Type) (_ : Semiring R) (hI : ∃! I : Ideal R, I.IsMaximal)
+    answer(sorry) ↔ ∃ (R : Type) (_ : Semiring R) (hI : ∃! I : Ideal R, I.IsMaximal)
       (hJ : ∃! J : Ideal Rᵐᵒᵖ, J.IsMaximal),
-        (hI.choose : Set R) ≠ MulOpposite.op ⁻¹' hJ.choose) ↔ answer(sorry) := by
+        (hI.choose : Set R) ≠ MulOpposite.op ⁻¹' hJ.choose := by
   sorry
 
 end Mathoverflow486451

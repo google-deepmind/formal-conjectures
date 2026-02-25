@@ -41,7 +41,7 @@ A subgraph `G'` is a 'snake' of length `k` in graph `G` if it is an induced path
 -/
 def IsSnakeInGraphOfLength {V : Type u} [DecidableEq V] (G : SimpleGraph V) (G' : Subgraph G)
     (k : ℕ) : Prop :=
-  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = P.support.toFinset.toSet ∧
+  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = {v | v ∈ P.support} ∧
   P.length = k
 
 /--
@@ -64,7 +64,7 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
   convert csSup_singleton 0
   ext n
-  refine ⟨fun  ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
+  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv

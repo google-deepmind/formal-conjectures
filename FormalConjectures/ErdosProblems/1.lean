@@ -30,7 +30,7 @@ namespace Erdos1
 
 /--
 A finite set of naturals $A$ is said to be a sum-distinct set for $N \in \mathbb{N}$ if
-$A\subseteq\{1, ..., N\}$ and the sums  $\sum_{a\in S}a$ are distinct for all $S\subseteq A$
+$A\subseteq\{1, ..., N\}$ and the sums $\sum_{a\in S}a$ are distinct for all $S\subseteq A$
 -/
 abbrev IsSumDistinctSet (A : Finset ℕ) (N : ℕ) : Prop :=
     A ⊆ Finset.Icc 1 N ∧ (fun (⟨S, _⟩ : A.powerset) => S.sum id).Injective
@@ -84,7 +84,8 @@ A finite set of real numbers is said to be sum-distinct if all the subset sums d
 at least $1$.
 -/
 abbrev IsSumDistinctRealSet (A : Finset ℝ) (N : ℕ) : Prop :=
-    A.toSet ⊆ Set.Ioc 0 N ∧ A.powerset.toSet.Pairwise fun S₁ S₂ => 1 ≤ dist (S₁.sum id) (S₂.sum id)
+  ↑A ⊆ Set.Ioc (0 : ℝ) N ∧ (A.powerset : Set (Finset ℝ)).Pairwise fun S₁ S₂ =>
+    1 ≤ dist (S₁.sum id) (S₂.sum id)
 
 /--
 A generalisation of the problem to sets $A \subseteq (0, N]$ of real numbers, such that the subset
@@ -116,7 +117,7 @@ theorem erdos_1.variants.least_N_3 :
       refine Finset.ext_iff.mpr (fun n => ?_)
       simp [show P = {{}, {1}, {2}, {4}, {1, 2}, {1, 4}, {2, 4}, {1, 2, 4}} by decide]
       omega
-    rw [Set.injective_iff_injOn_univ, ← Finset.coe_univ]
+    rw [← Set.injOn_univ, ← Finset.coe_univ]
     have : (Finset.univ.image (fun p : P ↦ ∑ x ∈ p.1, x)).card = (Finset.univ (α := P)).card := by
       rw [this]; aesop
     exact Finset.injOn_of_card_image_eq this

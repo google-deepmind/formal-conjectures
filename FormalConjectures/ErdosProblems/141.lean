@@ -43,7 +43,7 @@ theorem first_three_odd_primes : ({3, 5, 7} : Set ℕ).IsPrimeProgressionOfLengt
   use 1
   constructor
   · aesop
-  · norm_num [exists_lt_succ, or_assoc, eq_comm, Set.insert_def,
+  · norm_num [exists_lt_succ_right, or_assoc, eq_comm, Set.insert_def,
     show (2).nth Nat.Prime = 5 from nth_count prime_five,
     show (3).nth Nat.Prime = 7 from Nat.nth_count (by decide : (7).Prime)]
 
@@ -65,15 +65,15 @@ theorem exists_three_consecutive_primes_in_ap : ∃ (s : Set ℕ), s.IsAPAndPrim
     unfold Set.IsAPOfLengthWith
     constructor
     · aesop
-    · norm_num [exists_lt_succ, or_assoc, eq_comm, Set.insert_def]
+    · norm_num [exists_lt_succ_right, or_assoc, eq_comm, Set.insert_def]
   · exact first_three_odd_primes
 
 /--
 Let $k≥3$. Are there $k$ consecutive primes in arithmetic progression?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_141 : (∀ k ≥ 3, ∃ (s : Set ℕ), s.IsAPAndPrimeProgressionOfLength k)
-    ↔ answer(sorry) := by
+theorem erdos_141 : answer(sorry) ↔
+    ∀ k ≥ 3, ∃ (s : Set ℕ), s.IsAPAndPrimeProgressionOfLength k := by
   sorry
 
 /--
@@ -88,8 +88,8 @@ theorem erdos_141.variant.first_cases :
 Are there $11$ consecutive primes in arithmetic progression?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_141.variant.eleven : (∃ (s : Set ℕ), s.IsAPAndPrimeProgressionOfLength 11)
-    ↔ answer(sorry) := by
+theorem erdos_141.variant.eleven : answer(sorry) ↔
+    ∃ (s : Set ℕ), s.IsAPAndPrimeProgressionOfLength 11 := by
   sorry
 
 /--
@@ -102,16 +102,16 @@ def consecutivePrimeArithmeticProgressions (k : ℕ) : Set (Set ℕ) :=
 It is open, even for $k=3$, whether there are infinitely many such progressions.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_141.variant.infinite_three :
-    (consecutivePrimeArithmeticProgressions 3).Infinite ↔ answer(sorry) :=
+theorem erdos_141.variant.infinite_three : answer(sorry) ↔
+    (consecutivePrimeArithmeticProgressions 3).Infinite := by
   sorry
 
 /--
 Fix a $k \geq 3$. Is it true that there are infinitely many arithmetic prime progressions of length $k$?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_141.variant.infinite_general_case  (k : ℕ) (hk : k ≥ 3) :
-    (consecutivePrimeArithmeticProgressions k).Infinite ↔ answer(sorry) :=
+theorem erdos_141.variant.infinite_general_case : answer(sorry) ↔
+    ∀ k ≥ 3, (consecutivePrimeArithmeticProgressions k).Infinite := by
   sorry
 
 end Erdos141

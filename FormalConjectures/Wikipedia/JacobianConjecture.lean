@@ -33,17 +33,17 @@ variable {σ τ ι : Type*}
 
 variable (k σ τ) in
 
-/--Implicitly use `σ` as an index set and `k` as coefficient ring. -/
+/-- Implicitly use `σ` as an index set and `k` as coefficient ring. -/
 abbrev RegularFunction := τ → MvPolynomial σ k
 
 namespace RegularFunction
 
-/--The Jacobian of a vector valued polynomial function, viewed as a polynomial.-/
+/-- The Jacobian of a vector valued polynomial function, viewed as a polynomial. -/
 noncomputable def Jacobian (F : RegularFunction k σ τ) :
     Matrix σ τ (MvPolynomial σ k) :=
   Matrix.of fun i j => MvPolynomial.pderiv i (F j)
 
-/--The composition of two vector valued polynomial functions.-/
+/-- The composition of two vector valued polynomial functions. -/
 noncomputable def comp
     (F : RegularFunction k σ τ) (G : RegularFunction k τ ι) :
     RegularFunction k σ ι :=
@@ -64,7 +64,7 @@ open RegularFunction
 
 variable {σ : Type*} [Fintype σ]
 
-/--The **Jacobian Conjecture**: any regular function
+/-- The **Jacobian Conjecture**: any regular function
 (i.e. vector valued polynomial function from) `kⁿ → kᵐ`
 whose Jacobian is a non-zero constant has an inverse that
 is given by a regular function, where `k` is a field of characteristic `0`-/
@@ -83,7 +83,7 @@ open RegularFunction
 
 variable {σ τ ι : Type*} [Fintype σ]
 
-/--The evaluation of a regular function `f` over `k` at some point `a`
+/-- The evaluation of a regular function `f` over `k` at some point `a`
 with coordinates in some algebra over `k`-/
 noncomputable def RegularFunction.aeval {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
     (F : RegularFunction k σ τ) : (σ → S₁) → τ → S₁ :=
@@ -91,7 +91,7 @@ noncomputable def RegularFunction.aeval {S₁ : Type*} [CommSemiring S₁] [Alge
 
 
 omit [CharZero k] [Fintype σ] in
-/--`aeval` is compatible with composition of regular functions-/
+/--`aeval` is compatible with composition of regular functions. -/
 @[category API, AMS 14]
 lemma comp_aeval
     (F : RegularFunction k σ τ) (G : RegularFunction k τ ι)

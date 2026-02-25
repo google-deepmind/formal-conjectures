@@ -45,7 +45,7 @@ least integer which is not a sum of consecutive earlier $a_j$s. Show that $a_k /
 for any $c > 0$. -/
 @[category research open, AMS 11]
 theorem erdos_359.parts.ii (A : ℕ → ℕ) (hA : IsGoodFor A 1) (c : ℝ) (hc : 0 < c):
-    atTop.Tendsto (fun k ↦ A k / (k : ℝ) ^ (1 + c)) atTop := by
+    atTop.Tendsto (fun k ↦ A k / (k : ℝ) ^ (1 + c)) (nhds 0) := by
   sorry
 
 /-- Suppose monotone sequence $A$ satisfies the following: `A 0 = 1` and for all `j`, `A (j + 1)` is the

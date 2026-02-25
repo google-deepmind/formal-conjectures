@@ -163,7 +163,7 @@ by *Jan Kristian Haugland*, Journal of Number Theory Volume 58, Issue 1, p 71-78
 -/
 @[category research solved, AMS 5 11]
 theorem minimum_overlap.variants.upper.haugland_1996 :
-    atTop.limsup  MinOverlapQuotient  ≤ 0.38200298812318988 := by
+    atTop.limsup MinOverlapQuotient ≤ 0.38200298812318988 := by
   sorry
 
 /--

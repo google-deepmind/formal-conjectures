@@ -28,14 +28,14 @@ namespace Erdos846
 section Prelims
 open Classical
 
-/--We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
-`B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`.-/
+/-- We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
+`B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`. -/
 def NonTrilinearFor (A : Set ℝ²) (ε : ℝ) : Prop :=
-  ∀ (B : Finset ℝ²), B.toSet ⊆ A → ∃ C ⊆ B,
-    ε * B.card ≤ C.card ∧ NonTrilinear C.toSet
+  ∀ B : Finset ℝ², ↑B ⊆ A → ∃ C ⊆ B,
+    ε * B.card ≤ C.card ∧ NonTrilinear (C : Set ℝ²)
 
-/--We say a subset `A` of points in the plane is weakly non-trilinear if it is
-a finite union of non-trilinear sets.-/
+/-- We say a subset `A` of points in the plane is weakly non-trilinear if it is
+a finite union of non-trilinear sets. -/
 def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
   ∃ B : Finset (Set ℝ²), A = sSup B ∧ ∀ b ∈ B, NonTrilinear b
 
@@ -50,9 +50,9 @@ Is it true that `A` is the union of a finite number of sets where no three are o
 In other words, prove or disprove the following statement: every infinite `ε`-non-trilinear subset of the
 plane is weakly non-trilinar.
 -/
-@[category research open, AMS 11]
-theorem erdos_846 : (∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
-    WeaklyNonTrilinear A) ↔ answer(sorry) := by
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/2404258180688283e5141021c75464dc2acfb798/FormalConjectures/ErdosProblems/846.lean", AMS 11]
+theorem erdos_846 : answer(False) ↔ ∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
+    WeaklyNonTrilinear A := by
   sorry
 
 end Erdos846

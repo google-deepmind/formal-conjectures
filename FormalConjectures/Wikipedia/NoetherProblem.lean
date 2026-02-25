@@ -63,9 +63,9 @@ indeterminates over `K`. Is it true that `L/K` has the Noether property?
 Solution: False.
 -/
 @[category research solved, AMS 12 14]
-theorem noether_problem : (∀ (K L ι G : Type)
+theorem noether_problem : answer(False) ↔ ∀ (K L ι G : Type)
     [Field K] [Field L] [Fintype ι] [Algebra K L] [IsRationalExtension K L ι],
-    HasNoetherProperty K L ι) ↔ answer(False) := by
+    HasNoetherProperty K L ι := by
   sorry
 
 /--
