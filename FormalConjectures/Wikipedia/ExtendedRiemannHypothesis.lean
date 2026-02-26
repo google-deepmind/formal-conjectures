@@ -28,14 +28,22 @@ namespace ExtendedRiemannHypothesis
 def IsInCriticalStrip (s : ℂ) : Prop :=
   0 < s.re ∧ s.re < 1
 
+/-- A convenient (over-)approximation to the set of *trivial* zeros of a Dedekind zeta function:
+the non-positive integers. -/
+def trivialZeros : Set ℤ :=
+  Set.Iic 0
+
 /--
 The **Extended Riemann Hypothesis** (ERH) for Dedekind zeta functions asserts that if
 $K$ is a number field and $\zeta_K(s)$ is its Dedekind zeta function, then every zero of
-$\zeta_K(s)$ in the critical strip satisfies $\Re(s) = \tfrac12$.
+$\zeta_K(s)$ is either a *trivial* zero (at a non-positive integer) or lies on the critical line
+$\Re(s) = \tfrac12$.
 -/
 @[category research open, AMS 11 12 30]
 theorem extended_riemann_hypothesis_dedekindZeta (K : Type*) [Field K] [NumberField K] (s : ℂ)
-    (hs_strip : IsInCriticalStrip s) (hs : NumberField.dedekindZeta K s = 0) :
+    (hs : NumberField.dedekindZeta K s = 0)
+    (hs_nontrivial : s ∉ Int.cast '' trivialZeros)
+    (hs_ne_one : s ≠ 1) :
     s.re = 1 / 2 := by
   sorry
 
