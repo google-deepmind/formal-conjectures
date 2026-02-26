@@ -207,4 +207,4 @@ theorem beaver_math_olympiad_problem_5 : answer(sorry) ↔
     ∃ i, b i = f (a i) - 1 := by
   sorry
 
-end BusyBeaverMathOlympiad
+end BeaverMathOlympiad
