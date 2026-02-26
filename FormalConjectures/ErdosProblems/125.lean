@@ -33,9 +33,9 @@ be the set of integers which have only the digits $0, 1$ when written base 4.
 Does $A + B$ have positive density?
 -/
 
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/300bf771bdbef43d7b9aa2521e633a50fd54dd28/FormalConjectures/ErdosProblems/125.lean", AMS 11]
 theorem erdos_125 :
-    answer(sorry) ↔ ({ x : ℕ | (digits 3 x).toFinset ⊆ {0, 1} } +
+    answer(False) ↔ ({ x : ℕ | (digits 3 x).toFinset ⊆ {0, 1} } +
       { x : ℕ | (digits 4 x).toFinset ⊆ {0, 1} }).HasPosDensity := by
   sorry
 

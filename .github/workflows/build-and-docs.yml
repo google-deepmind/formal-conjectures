@@ -130,7 +130,7 @@ jobs:
         shell: bash
         run: |
           cd docbuild
-          lake exe overwrite_index ./out/index.html ./out/file_counts.html | tee -a "$GITHUB_STEP_SUMMARY"
+          lake exe overwrite_index ./out/index.html ./out/file_counts_dark.html ./out/file_counts_white.html | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload docs
         id: deployment
