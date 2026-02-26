@@ -5,7 +5,6 @@ The official list of Erdős problems can be found at [erdosproblems.com](https:/
 The purpose of this README is to standardize Lean formalization rules for Erdős problems. These standards will make it easier for new contributors to navigate the various formalizations within this repository.
 
 ## Naming Theorems
-
 An Erdős problem usually consists of two parts:
 1. **The main problem(s)**: The text within the red or green box on the website.
 2. **The additional text**: The text provided below the red or green box.
@@ -37,7 +36,6 @@ Choose a name that is descriptive of the variant. A common case is when the vari
 Please keep docstrings as close as possible to the text on the Erdős Problems website. You should generally be able to copy and paste the LaTeX statements into the docstrings with only minor formatting adjustments.
 
 ## References
-
 If the website lists references, include them at the top of the file and reference them via their citation. You can copy these directly from the "View the LaTeX source" section of the website.
 An example of this would be:
 
