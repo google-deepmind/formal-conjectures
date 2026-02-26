@@ -46,7 +46,6 @@ structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] wh
   covers : ⋃ i, reps i • (parts i : Set G) = Set.univ
 
 /--
-If `G` is a group then can there exist an exact covering of `G` by more than one cosets of
 Does there exist a group `G` with an exact covering by more than one cosets of
 different sizes? (i.e. each element is contained in exactly one of the cosets.)
 -/
