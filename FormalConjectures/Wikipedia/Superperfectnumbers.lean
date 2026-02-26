@@ -27,21 +27,18 @@ sum of divisors function.
  - [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
 
+open ArithmeticFunction
+
 namespace Superperfect
 
 /--
-The sum of divisors function σ(n) = `∑ d ∈ divisors n, d`
+An integer $n$ is $(m,k)$-perfect if $\sigma^m(n) = kn$ where $σ^m$ is the $m$-th iterate of $σ$.
 -/
-def sumOfDivisors (n : ℕ) : ℕ := ArithmeticFunction.sigma 1 n
+def PerfectFor (n m k : ℕ) : Prop := Nat.iterate (fun x => σ 1 x) m n = k * n
 
-/--
-An integer `n : ℕ` is `(m,k)-perfect` if `σᵐ(n) = kn` where `σᵐ` is the mᵗʰ iterate of `σ`.
--/
-def PerfectFor (n m k : ℕ) : Prop := Nat.iterate sumOfDivisors m n = k * n
-
-/-- There does not exist a (2,5)-perfect number -/
+/-- There does not exist a $(2,5)$-perfect number -/
 @[category research open, AMS 11]
-theorem twoFivePerfect : ¬∃ (n : ℕ), PerfectFor n 2 5 := by
+theorem twoFivePerfect : ¬ ∃ n, PerfectFor n 2 5 := by
   sorry
 
 end Superperfect
