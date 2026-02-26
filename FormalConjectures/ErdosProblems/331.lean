@@ -37,8 +37,11 @@ Ruzsa has observed that there is a simple counterexample: take $A$ to be the set
 binary representation has only non-zero digits in even places, and $B$ similarly but with non-zero
 digits only in odd places. It is easy to see $A$ and $B$ both grow like $\gg N^{1/2}$ and yet for
 any $n\geq 1$ there is exactly one solution to $n=a+b$ with $a\in A$ and $b\in B$.
+
+This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using lean4 at
+"https://github.com/Woett/Lean-files/blob/main/ErdosProblem%23331.lean", AMS 11]
 theorem erdos_331 :
     answer(False) ↔
       ∀ A B : Set ℕ,

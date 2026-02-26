@@ -50,8 +50,11 @@ chromatic number $\aleph_1$?
 Komjáth [Ko13] proved that it is consistent that the answer is no. This was improved by
 Soukup [So15], who constructed a counterexample using no extra set-theoretical assumptions. A
 simpler elementary example was given by Bowler and Pitz [BoPi24].
+
+This was formalized in Lean by Alexeev using Aristotle and Aleph Prover.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1067.lean", AMS 5]
 theorem erdos_1067 :
     answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyConnected H.coe := by
