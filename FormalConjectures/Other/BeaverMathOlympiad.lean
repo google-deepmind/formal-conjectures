@@ -38,7 +38,7 @@ Turing machine non-termination has been formally proved in Rocq, we indicate it 
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
 
-namespace BusyBeaverMathOlympiad
+namespace BeaverMathOlympiad
 
 /--
 [BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch))
@@ -65,7 +65,7 @@ The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor Jas
 June 25th 2024.
 -/
 @[category research open, AMS 5 11 68]
-theorem busy_beaver_math_olympiad_problem_1 :
+theorem beaver_math_olympiad_problem_1 :
     answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 1)
     (a_rec : ∀ n, a (n + 1) = if b n ≤ a n then a n - b n else 2 * a n + 1)
