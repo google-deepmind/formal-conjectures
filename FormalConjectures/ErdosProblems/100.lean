@@ -47,7 +47,7 @@ theorem erdos_100 :
 
 /-- Stronger conjecture: diameter $\geq n - 1$ for sufficiently large $n$. -/
 @[category research open, AMS 52]
-theorem erdos_100_strong :
+theorem erdos_100.variants.strong :
     ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →
       DistancesSeparated A →
@@ -57,7 +57,7 @@ theorem erdos_100_strong :
 /-- From [Kanold]: diameter $\geq n^{3/4}$.
 TODO: find reference -/
 @[category research open, AMS 52]
-theorem erdos_100_kanold :
+theorem erdos_100.variants.kanold :
     ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →
       DistancesSeparated A →
@@ -66,7 +66,7 @@ theorem erdos_100_kanold :
 
 /-- From [GuKa15]: diameter $\gg n / \log n$. -/
 @[category research open, AMS 52]
-theorem erdos_100_guth_katz :
+theorem erdos_100.variants.guth_katz :
     ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →
       DistancesSeparated A →
@@ -76,7 +76,7 @@ theorem erdos_100_guth_katz :
 /-- From [Piepmeyer]: 9 points with diameter $< 5$.
 TODO: find reference -/
 @[category research open, AMS 52]
-theorem erdos_100_piepmeyer :
+theorem erdos_100.variants.piepmeyer :
     ∃ A : Finset ℝ², A.card = 9 ∧ DistancesSeparated A ∧
       diam (A : Set ℝ²) < 5 := by
   sorry

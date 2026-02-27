@@ -45,7 +45,7 @@ Let $A\subset \mathbb{R}^2$ be a set of $n$ points with no three on a line.
 Does $A$ determine at least $\lfloor n/2\rfloor$ distinct distances?
 -/
 @[category research open, AMS 51]
-theorem erdos_1082a : answer(sorry) ↔ ∀ (A : Finset ℝ²) (hA_n3c : NonTrilinear A.toSet),
+theorem erdos_1082.parts.i : answer(sorry) ↔ ∀ (A : Finset ℝ²) (hA_n3c : NonTrilinear A.toSet),
     A.card / 2 ≤ distinctDistances A:= by
   sorry
 
@@ -61,8 +61,9 @@ $\mathbb{R}^2$, with no three on a line, such that each point determines only $2
 A smaller counterexample has been formalised here: it comprised of $8$ points, where each point only
 determines $3$ distances.
 -/
-@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/0aca4d71095301c0fd2dca32611b7addb2ea735c/FormalConjectures/ErdosProblems/1082.lean", AMS 51]
-theorem erdos_1082b : answer(False) ↔
+@[category research formally solved using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/0aca4d71095301c0fd2dca32611b7addb2ea735c/FormalConjectures/ErdosProblems/1082.lean", AMS 51]
+theorem erdos_1082.parts.ii : answer(False) ↔
     ∀ (A : Finset ℝ²) (hA : A.Nonempty) (hA_n3c : NonTrilinear A.toSet),
     ∃ (a : ℝ²) (ha : a ∈ A), A.card / 2 ≤ distinctDistancesFrom A a - 1 := by
   sorry

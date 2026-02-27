@@ -40,7 +40,7 @@ This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
 @[category research formally solved using lean4 at
 "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071.lean", AMS 52]
-theorem erdos_1071a :
+theorem erdos_1071.parts.i :
     answer(True) ↔ ∃ S : Finset (ℝ² × ℝ²),
       Maximal (fun T : Finset (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧
@@ -51,7 +51,7 @@ theorem erdos_1071a :
 
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite? -/
 @[category research open, AMS 52]
-theorem erdos_1071b :
+theorem erdos_1071.parts.ii :
     answer(sorry) ↔ ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
       S.Countable ∧ S.Infinite ∧
       Maximal (fun T : Set (ℝ² × ℝ²) =>
