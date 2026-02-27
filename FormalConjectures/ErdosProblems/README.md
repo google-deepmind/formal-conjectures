@@ -46,5 +46,3 @@ An example of this would be:
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
 ```
-
-Even if only a single reference exists, please use the plural heading `References`.
