@@ -70,7 +70,7 @@ theorem erdos_158.variants.isSidon' {A : Set ℕ} (hAinf : A.Infinite) (hAsid : 
 @[category research solved, AMS 5]
 theorem erdos_158.variants.isSidon {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
     liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
-  have := erdos_158.isSidon' hAinf hAsid
+  have := erdos_158.variants.isSidon' hAinf hAsid
   contrapose! this with h
   rw [Tendsto.liminf_eq]
   refine ENNReal.tendsto_ofReal_atTop.comp ?_
