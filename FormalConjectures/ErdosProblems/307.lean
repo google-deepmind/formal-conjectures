@@ -59,30 +59,9 @@ $$
 theorem erdos_307_coprime : answer(True) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
     Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
-  have H : ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
-    Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
-    1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
-    use {1, 5}, {2, 3}
-    refine ⟨by decide, by decide, by decide, ?_, ?_, by norm_num⟩
-    · intro x hx y hy _
-      simp only [Finset.coe_insert, Finset.coe_singleton, Set.mem_insert_iff, Set.mem_singleton_iff] at hx hy
-      rcases hx with rfl | rfl
-      · rcases hy with rfl | rfl
-        · contradiction
-        · exact Nat.coprime_one_left _
-      · rcases hy with rfl | rfl
-        · exact Nat.coprime_one_right _
-        · contradiction
-    · intro x hx y hy _
-      simp only [Finset.coe_insert, Finset.coe_singleton, Set.mem_insert_iff, Set.mem_singleton_iff] at hx hy
-      rcases hx with rfl | rfl
-      · rcases hy with rfl | rfl
-        · contradiction
-        · norm_num
-      · rcases hy with rfl | rfl
-        · norm_num
-        · contradiction
-  exact ⟨fun _ => H, fun _ => trivial⟩
+  simp only [Finset.mem_inter, not_and, true_iff]
+  use {1, 5}, {2, 3}
+  norm_num +decide 
 
 /--
 There are no examples known of the weakened coprime version if we insist that $1\not\in P\cup Q$.
