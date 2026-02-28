@@ -32,20 +32,21 @@ namespace Erdos1071
 def SegmentsDisjoint (seg1 seg2 : ℝ² × ℝ²) : Prop :=
   segment ℝ seg1.1 seg1.2 ∩ segment ℝ seg2.1 seg2.2 ⊆ {seg1.1, seg1.2, seg2.1, seg2.2}
 
-/-- Can a finite set of disjoint unit segments in a unit square be maximal?
-Solved affirmatively by [Da85], who gave an explicit construction. -/
-@[category research solved, AMS 52]
+/--
+Can a finite set of disjoint unit segments in a unit square be maximal?
+Solved affirmatively by [Da85], who gave an explicit construction.
+
+This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
+-/
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071.lean", AMS 52]
 theorem erdos_1071a :
     answer(True) ↔ ∃ S : Finset (ℝ² × ℝ²),
-      (∀ seg ∈ S, dist seg.1 seg.2 = 1 ∧
-        seg.1 0 ∈ Icc 0 1 ∧ seg.1 1 ∈ Icc 0 1 ∧
-        seg.2 0 ∈ Icc 0 1 ∧ seg.2 1 ∈ Icc 0 1) ∧
-      S.toSet.Pairwise SegmentsDisjoint ∧
       Maximal (fun T : Finset (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧
           seg.1 0 ∈ Icc 0 1 ∧ seg.1 1 ∈ Icc 0 1 ∧
           seg.2 0 ∈ Icc 0 1 ∧ seg.2 1 ∈ Icc 0 1) ∧
-        T.toSet.Pairwise SegmentsDisjoint) S := by
+          (T : Set (ℝ² × ℝ²)).Pairwise SegmentsDisjoint) S := by
   sorry
 
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite? -/

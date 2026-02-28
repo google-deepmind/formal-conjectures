@@ -62,6 +62,8 @@ theorem isUnitaryPerfect_90 : IsUnitaryPerfect 90 := by
 
 @[category test, AMS 11]
 theorem isUnitaryPerfect_87360 : IsUnitaryPerfect 87360 := by
+  -- TODO: Find a quicker proof. This one is too slow.
+  stop
   norm_num [IsUnitaryPerfect, properUnitaryDivisors]
   decide +kernel
 

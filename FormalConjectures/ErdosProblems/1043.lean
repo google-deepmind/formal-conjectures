@@ -18,7 +18,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1043
 
-*Reference:* [erdosproblems.com/1043](https://www.erdosproblems.com/1043)
+*References:*
+- [erdosproblems.com/1043](https://www.erdosproblems.com/1043)
+- [EHP58] Erdős, P. and Herzog, F. and Piranian, G., Metric properties of polynomials. J.
+  Analyse Math. (1958), 125-148.
+- [Po59] Pommerenke, Ch., On some problems by Erdős, Herzog and Piranian. Michigan Math. J.
+  (1959), 221-225.
+- [Po61] Pommerenke, Ch., On metric properties of complex polynomials. Michigan Math. J. (1961),
+  97-115.
 -/
 
 namespace Erdos1043
@@ -38,10 +45,10 @@ onto $\ell$ has measure at most $2$?
 
 Pommerenke [Po61] proved that the answer is no.
 
-[Po61] Pommerenke, Ch., _On metric properties of complex polynomials._ Michigan Math. J. (1961),
-97-115.
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 28 30]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1043.lean", AMS 28 30]
 theorem erdos_1043 :
     answer(False) ↔ ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
