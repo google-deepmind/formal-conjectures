@@ -39,6 +39,17 @@ async function init() {
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
 
   renderDetail(theorem, siblings);
+
+  // Voting integration
+  await FC.voting.handleOAuthCallback();
+  const widget = document.getElementById('vote-widget');
+  const diffWidget = document.getElementById('difficulty-widget');
+  if (widget) FC.voting.renderVoteButton(theorem.theorem, widget);
+  if (diffWidget) FC.voting.renderDifficultyWidget(theorem.theorem, diffWidget);
+  FC.voting.fetchAllVotes().then(() => {
+    if (widget) FC.voting.renderVoteButton(theorem.theorem, widget);
+    if (diffWidget) FC.voting.renderDifficultyWidget(theorem.theorem, diffWidget);
+  });
 }
 
 function renderError(msg) {
@@ -93,6 +104,9 @@ function renderDetail(theorem, siblings) {
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
     </header>
 
+    <div id="vote-widget"></div>
+    <div id="difficulty-widget"></div>
+
     <div class="theorem-detail__section">
       <div class="detail-label">Full Lean name</div>
       <div class="detail-mono">${FC.escapeHTML(theorem.theorem)}</div>
@@ -119,7 +133,7 @@ function renderDetail(theorem, siblings) {
       <div class="detail-label">View source</div>
       <div class="detail-value">
         <a href="${FC.escapeHTML(theorem.githubUrl)}" target="_blank" rel="noopener">
-          ${FC.escapeHTML(theorem.module.replace(/\./g, '/')}.lean on GitHub ↗
+          ${FC.escapeHTML(theorem.module.replace(/\./g, '/'))}.lean on GitHub ↗
         </a>
       </div>
     </div>

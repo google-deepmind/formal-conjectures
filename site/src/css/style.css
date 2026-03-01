@@ -35,6 +35,9 @@
   --cat-other:      #6b7280;  /* gray */
   --cat-other-bg:   #f9fafb;
 
+  /* Difficulty */
+  --color-difficulty:  #d97706;
+
   /* Layout */
   --max-width: 1100px;
   --nav-height: 56px;
@@ -718,6 +721,117 @@ main { flex: 1; }
   animation: spin 0.6s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   Voting system
+   ============================================================ */
+.vote-widget {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.vote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: white;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.vote-btn:hover {
+  border-color: var(--color-link);
+  color: var(--color-link);
+}
+.vote-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vote-btn--active {
+  background: #eff6ff;
+  border-color: var(--color-link);
+  color: var(--color-link);
+}
+
+.vote-count {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.theorem-card__votes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  color: var(--color-link);
+  margin-right: 0.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.auth-prompt {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+.auth-prompt:hover {
+  color: var(--color-link);
+}
+
+/* Difficulty rating */
+.difficulty-widget {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.difficulty-select {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-family: inherit;
+  background: white;
+  cursor: pointer;
+}
+.difficulty-select:focus {
+  outline: none;
+  border-color: var(--color-link);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+}
+
+.difficulty-display {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+.difficulty-display strong {
+  color: var(--color-text);
+}
+
+.difficulty-clear-btn {
+  font-size: 0.78rem;
+  padding: 0.25rem 0.6rem;
+}
+
+.theorem-card__difficulty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  color: var(--color-difficulty);
+  margin-right: 0.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 
 /* ============================================================
    Responsive tweaks

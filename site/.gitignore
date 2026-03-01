@@ -1,2 +1,4 @@
 node_modules/
 site/
+.dev.vars
+.wrangler/

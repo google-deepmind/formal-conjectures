@@ -81,6 +81,20 @@ function applyFilters() {
 
   // Sort
   filtered.sort((a, b) => {
+    if (state.sort === 'votes') {
+      const aVotes = FC.voting.getVote(a.theorem).count;
+      const bVotes = FC.voting.getVote(b.theorem).count;
+      return bVotes - aVotes || a.theorem.localeCompare(b.theorem);
+    }
+    if (state.sort === 'difficulty') {
+      const aDiff = FC.voting.getVote(a.theorem).avgDifficulty;
+      const bDiff = FC.voting.getVote(b.theorem).avgDifficulty;
+      // nulls sort last
+      if (aDiff === null && bDiff === null) return a.theorem.localeCompare(b.theorem);
+      if (aDiff === null) return 1;
+      if (bDiff === null) return -1;
+      return bDiff - aDiff || a.theorem.localeCompare(b.theorem);
+    }
     if (state.sort === 'category')   return a.category.localeCompare(b.category) || a.theorem.localeCompare(b.theorem);
     if (state.sort === 'collection') return a.collection.localeCompare(b.collection) || a.theorem.localeCompare(b.theorem);
     return a.theorem.localeCompare(b.theorem);
@@ -117,6 +131,8 @@ function renderCard(c) {
       </div>
     </div>
     <div class="theorem-card__badge">
+      ${FC.voting.renderCardVoteCount(c.theorem)}
+      ${FC.voting.renderCardDifficulty(c.theorem)}
       <span class="badge ${catMeta.css}">${FC.escapeHTML(catMeta.label)}</span>
     </div>
   `;
@@ -237,6 +253,10 @@ async function init() {
   }
 
   allConjectures = data.conjectures;
+
+  // Handle OAuth callback and prefetch votes
+  await FC.voting.handleOAuthCallback();
+  await FC.voting.fetchAllVotes();
 
   // Collect unique values for filters
   const categories  = new Set(allConjectures.map(c => c.category));
