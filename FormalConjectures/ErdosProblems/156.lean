@@ -48,17 +48,9 @@ theorem erdos_156 :
       (fun N ↦ (minMaximalSidonSet N : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (1 / 3 : ℝ)) := by
   sorry
 
-/--
-A greedy construction of a maximal Sidon set.
--/
-def greedyMaximalSidonSet (N : ℕ) : Finset ℕ :=
-  ((List.range N).map (· + 1)).foldl
-    (fun A x ↦
-      if ∀ a ∈ A, ∀ b ∈ A, ∀ c ∈ A, x + a ≠ b + c then
-        insert x A
-      else
-        A)
-    ∅
+@[category test, AMS 5]
+theorem greedySidonSet_isSidon (n : ℕ) : IsSidon (Finset.greedySidonSet n : Set ℕ) := by
+  sorry
 
 /--
 It is easy to prove that the greedy construction of a maximal Sidon set in $\{1,\ldots,N\}$ has size
@@ -66,7 +58,7 @@ $\gg N^{1/3}$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_156.variants.greedy_lower_bound :
-    (fun N ↦ ((greedyMaximalSidonSet N).card : ℝ)) ≫ (fun N ↦ (N : ℝ) ^ (1 / 3 : ℝ)) := by
+    (fun N ↦ ((Finset.greedySidonSet N).card : ℝ)) ≫ (fun N ↦ (N : ℝ) ^ (1 / 3 : ℝ)) := by
   sorry
 
 /--
