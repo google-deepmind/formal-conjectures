@@ -56,7 +56,7 @@ theorem erdos_100_strong :
 
 /-- From [Kanold]: diameter $\geq n^{3/4}$.
 TODO: find reference -/
-@[category research open, AMS 52]
+@[category research solved, AMS 52]
 theorem erdos_100_kanold :
     ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →
@@ -65,7 +65,7 @@ theorem erdos_100_kanold :
   sorry
 
 /-- From [GuKa15]: diameter $\gg n / \log n$. -/
-@[category research open, AMS 52]
+@[category research solved, AMS 52]
 theorem erdos_100_guth_katz :
     ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →
