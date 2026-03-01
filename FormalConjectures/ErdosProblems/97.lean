@@ -86,7 +86,7 @@ Danzer's construction is explained in [Er87b].
 [Er46b] Erdős, P., _On sets of distances of $n$ points_. Amer. Math. Monthly (1946), 248-250.
 [Er87b] Erdős, P., _Some combinatorial and metric problems in geometry_. Intuitive geometry (Siófok, 1985), 167-177.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-97-danzer/FormalConjectures/ErdosProblems/97.lean", AMS 52]
 theorem erdos_97.variants.three_equidistant :
     ∃ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A ∧ HasNEquidistantProperty 3 A := by
   let A₁ : ℝ² := !₂[(-√3), -1]
