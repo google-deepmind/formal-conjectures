@@ -19,8 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Non-Power-of-2 Almost Perfect Numbers Conjecture
 
-*Reference:* https://mathworld.wolfram.com/AlmostPerfectNumber.html
-*Reference:* https://en.wikipedia.org/wiki/Almost_perfect_number
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Almost_perfect_number)
+- [mathworld](https://mathworld.wolfram.com/AlmostPerfectNumber.html)
+- 
 -/
 
 namespace AlmostPerfectNumbers
