@@ -15,5 +15,15 @@ limitations under the License.
 -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 
 scoped[EuclideanGeometry] notation "ℝ^" n:65 => EuclideanSpace ℝ (Fin n)
+
+/-
+A set of points is in general position if no three points are collinear.
+-/
+def GeneralPosition
+    {R : Type*} {V P : Type*}
+    [DivisionRing R] [AddCommGroup V] [Module R V] [AddTorsor V P]
+    (S : Set P) : Prop :=
+  ∀ s : Set P, s ⊆ S → s.ncard = 3 → ¬ Collinear R s
