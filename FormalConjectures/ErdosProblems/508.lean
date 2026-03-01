@@ -17,6 +17,13 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Combinatorics.SimpleGraph.Coloring
+
+set_option linter.style.copyright false
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+set_option linter.unusedSimpArgs false
+set_option maxHeartbeats 0
 
 /-!
 # Erdős Problem 508
@@ -31,7 +38,9 @@ or the [Golomb graph]
 -/
 
 open SimpleGraph
+open SimpleGraph
 open scoped EuclideanGeometry
+open Real
 
 namespace Erdos508
 
@@ -66,6 +75,111 @@ theorem HadwigerNelsonAtLeastFive :
     5 ≤ χ(ℝ²) := by
   sorry
 
+
+noncomputable def s3 : ℝ := Real.sqrt 3
+@[simp] lemma s3_sq : s3 ^ 2 = 3 := by
+  dsimp [s3]; rw [Real.sq_sqrt (by norm_num)]
+
+noncomputable def s11 : ℝ := Real.sqrt 11
+@[simp] lemma s11_sq : s11 ^ 2 = 11 := by
+  dsimp [s11]; rw [Real.sq_sqrt (by norm_num)]
+
+noncomputable def s33 : ℝ := Real.sqrt 33
+@[simp] lemma s33_sq : s33 ^ 2 = 33 := by
+  dsimp [s33]; rw [Real.sq_sqrt (by norm_num)]
+
+@[simp] lemma s3_mul_s11 : s3 * s11 = s33 := by
+  dsimp [s3, s11, s33]
+  rw [← Real.sqrt_mul (by norm_num)]
+  congr
+  norm_num
+
+noncomputable def moser_points : Fin 7 → ℝ²
+  | 0 => !₂[0, 0]
+  | 1 => !₂[s3 / 2, -1 / 2]
+  | 2 => !₂[s3 / 2, 1 / 2]
+  | 3 => !₂[s3, 0]
+  | 4 => !₂[(5 * s3 + s11) / 12, (s33 - 5) / 12]
+  | 5 => !₂[(5 * s3 - s11) / 12, (s33 + 5) / 12]
+  | 6 => !₂[5 * s3 / 6, s33 / 6]
+
+lemma dist_sq_eq_sum (p q : ℝ²) :
+    dist p q ^ 2 = (p 0 - q 0)^2 + (p 1 - q 1)^2 := by
+  have hd : dist p q = Real.sqrt (Finset.sum Finset.univ fun (i : Fin 2) => dist (p i) (q i) ^ 2) := EuclideanSpace.dist_eq p q
+  rw [hd]
+  have hpos : 0 ≤ Finset.sum Finset.univ fun (i : Fin 2) => dist (p i) (q i) ^ 2 := by positivity
+  rw [Real.sq_sqrt hpos]
+  have hsum : Finset.sum Finset.univ (fun (i : Fin 2) => dist (p i) (q i) ^ 2) = dist (p 0) (q 0) ^ 2 + dist (p 1) (q 1) ^ 2 := by
+    rw [Fin.sum_univ_two]
+  rw [hsum]
+  have hd0 : dist (p 0) (q 0) = |p 0 - q 0| := Real.dist_eq (p 0) (q 0)
+  have hd1 : dist (p 1) (q 1) = |p 1 - q 1| := Real.dist_eq (p 1) (q 1)
+  rw [hd0, hd1]
+  have hsq0 : |p 0 - q 0| ^ 2 = (p 0 - q 0) ^ 2 := sq_abs (p 0 - q 0)
+  have hsq1 : |p 1 - q 1| ^ 2 = (p 1 - q 1) ^ 2 := sq_abs (p 1 - q 1)
+  rw [hsq0, hsq1]
+
+lemma check_edge (u v : Fin 7) (h_sq : dist (moser_points u) (moser_points v) ^ 2 = 1) :
+    UnitDistancePlaneGraph.Adj (moser_points u) (moser_points v) := by
+  dsimp [UnitDistancePlaneGraph]
+  have h1 : Real.sqrt (dist (moser_points u) (moser_points v) ^ 2) = Real.sqrt 1 := by rw [h_sq]
+  have h2 : Real.sqrt (dist (moser_points u) (moser_points v) ^ 2) = dist (moser_points u) (moser_points v) := Real.sqrt_sq dist_nonneg
+  have h3 : Real.sqrt 1 = (1:ℝ) := Real.sqrt_one
+  rw [h2, h3] at h1
+  exact h1
+
+lemma edge01 : UnitDistancePlaneGraph.Adj (moser_points 0) (moser_points 1) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge02 : UnitDistancePlaneGraph.Adj (moser_points 0) (moser_points 2) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge12 : UnitDistancePlaneGraph.Adj (moser_points 1) (moser_points 2) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge13 : UnitDistancePlaneGraph.Adj (moser_points 1) (moser_points 3) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge23 : UnitDistancePlaneGraph.Adj (moser_points 2) (moser_points 3) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge04 : UnitDistancePlaneGraph.Adj (moser_points 0) (moser_points 4) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge05 : UnitDistancePlaneGraph.Adj (moser_points 0) (moser_points 5) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge45 : UnitDistancePlaneGraph.Adj (moser_points 4) (moser_points 5) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge46 : UnitDistancePlaneGraph.Adj (moser_points 4) (moser_points 6) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge56 : UnitDistancePlaneGraph.Adj (moser_points 5) (moser_points 6) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+lemma edge36 : UnitDistancePlaneGraph.Adj (moser_points 3) (moser_points 6) := by
+  apply check_edge; rw [dist_sq_eq_sum]; dsimp [moser_points]
+  ring_nf; try simp only [s3_sq, s11_sq, s33_sq, s3_mul_s11]
+  try ring
+
+def is_valid_coloring (c0 c1 c2 c3 c4 c5 c6 : Fin 3) : Bool :=
+  c0 != c1 && c0 != c2 && c1 != c2 && c1 != c3 && c2 != c3 &&
+  c0 != c4 && c0 != c5 && c4 != c5 && c4 != c6 && c5 != c6 && c3 != c6
+
+theorem no_3_coloring : ∀ c0 c1 c2 c3 c4 c5 c6 : Fin 3, is_valid_coloring c0 c1 c2 c3 c4 c5 c6 = false := by
+  decide
+
 /--
 The "chromatic number of the plane" is at least 4. This can be
 proven by considering the [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)
@@ -73,7 +187,29 @@ or the [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph) graph.
 -/
 @[category research solved, AMS 5]
 theorem HadwigerNelsonAtLeast4 : 4 ≤ χ(ℝ²) := by
-  sorry
+  by_contra h
+  have h2 : χ(ℝ²) ≤ 3 := by
+    cases hx : χ(ℝ²) with
+    | top =>
+      rw [hx] at h
+      exact False.elim (h le_top)
+    | coe a =>
+      rw [hx] at h
+      have h_four : (4 : ENat) = ↑(4 : ℕ) := rfl
+      have h_three : (3 : ENat) = ↑(3 : ℕ) := rfl
+      rw [h_four] at h
+      rw [h_three]
+      norm_cast at h ⊢
+      omega
+  have hc : UnitDistancePlaneGraph.Colorable 3 := chromaticNumber_le_iff_colorable.mp h2
+  rcases hc with ⟨c⟩
+  have h_col : is_valid_coloring (c (moser_points 0)) (c (moser_points 1)) (c (moser_points 2)) (c (moser_points 3)) (c (moser_points 4)) (c (moser_points 5)) (c (moser_points 6)) = true := by
+    dsimp [is_valid_coloring]
+    simp only [Bool.and_eq_true, bne_iff_ne, ne_eq]
+    exact ⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨c.map_rel edge01, c.map_rel edge02⟩, c.map_rel edge12⟩, c.map_rel edge13⟩, c.map_rel edge23⟩, c.map_rel edge04⟩, c.map_rel edge05⟩, c.map_rel edge45⟩, c.map_rel edge46⟩, c.map_rel edge56⟩, c.map_rel edge36⟩
+  have h_no := no_3_coloring (c (moser_points 0)) (c (moser_points 1)) (c (moser_points 2)) (c (moser_points 3)) (c (moser_points 4)) (c (moser_points 5)) (c (moser_points 6))
+  rw [h_col] at h_no
+  contradiction
 
 /--
 This upper bound for the chromatic number of the plane was
