@@ -75,8 +75,8 @@ theorem erdos_100.variants.guth_katz :
 
 /-- From [Piepmeyer]: 9 points with diameter $< 5$.
 TODO: find reference -/
-@[category research solved, AMS 52]
-theorem erdos_100.variants.piepmeyer :
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-100-piepmeyer/FormalConjectures/ErdosProblems/100.lean", AMS 52]
+theorem erdos_100_piepmeyer :
     ∃ A : Finset ℝ², A.card = 9 ∧ DistancesSeparated A ∧
       diam (A : Set ℝ²) < 5 := by
   sorry
