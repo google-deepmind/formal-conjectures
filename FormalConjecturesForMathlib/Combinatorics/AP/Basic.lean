@@ -60,14 +60,12 @@ theorem eq (h : s.IsAPOfLengthWith l a d) : s = {a + n • d | (n : ℕ) (_ : n 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
 if `s` is empty. -/
 @[simp]
-theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by
-  simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
+theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by simp [IsAPOfLengthWith]
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length one if and only
 if `s` is a singleton. -/
 @[simp]
-theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by
-  simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
+theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by simp +contextual [IsAPOfLengthWith]
 
 end Set.IsAPOfLengthWith
 
@@ -217,7 +215,7 @@ Define the largest possible size of a subset of $\{1, \dots, N\}$ that does not 
 any non-trivial $k$-term arithmetic progression.
 -/
 noncomputable def Set.IsAPOfLengthFree.maxCard (k : ℕ) (N : ℕ) : ℕ :=
-  sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : S.toSet.IsAPOfLengthFree k)}
+  sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : (S : Set ℕ).IsAPOfLengthFree k)}
 
 theorem Set.IsAPOfLengthFree.maxCard_zero (N : ℕ) : maxCard 0 N = N := by
   simp only [maxCard, Nat.cast_zero, isAPOfLengthFree_zero, exists_const, exists_prop]
@@ -244,11 +242,11 @@ A function `f : α → β` has a monotone `k`-term arithmetic progression if the
 arithmetic progression `l` of length `k` in `α` such that its image under `f` is sorted.
 -/
 def HasMonotoneAP {β : Type*} [Preorder β] (f : α → β) (k : ℕ) : Prop :=
-  ∃ l : List α, l.IsAPOfLength k ∧ (l.map f).Sorted (· < ·)
+  ∃ l : List α, l.IsAPOfLength k ∧ (l.map f).Pairwise (· < ·)
 
 /--
 Define the largest possible size of a subset of a finset `s` that does not contain
 any non-trivial `k`-term arithmetic progression.
 -/
 noncomputable def Finset.maxAPFreeCard (k : ℕ) (s : Finset α) : ℕ :=
-  (s.powerset.filter (fun t ↦ t.toSet.IsAPOfLengthFree k)).sup Finset.card
+  (s.powerset.filter fun t : Finset α ↦ (t : Set α).IsAPOfLengthFree k).sup Finset.card

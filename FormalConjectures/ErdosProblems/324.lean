@@ -40,7 +40,7 @@ Probably $f(x) = x^5$ has the property that the sums $f(a)+f(b)$ with
 $a < b$ nonnegative integers are distinct.
 -/
 @[category research open, AMS 11]
-theorem erdos_324.variant.quintic : {(a, b) : ℕ × ℕ | a < b}.InjOn fun (a, b) => a ^ 5 + b ^ 5 := by
+theorem erdos_324.variants.quintic : {(a, b) : ℕ × ℕ | a < b}.InjOn fun (a, b) => a ^ 5 + b ^ 5 := by
   sorry
 
 end Erdos324

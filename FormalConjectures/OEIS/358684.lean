@@ -58,7 +58,7 @@ noncomputable def a' (n : ℕ) : ℕ :=
   )
 
 
-/-
+/--
 The log2 of the smallest prime factor of $F_n$ is at most $2^n$.
 -/
 @[category undergraduate, AMS 11]
@@ -66,8 +66,9 @@ private lemma log2_minFac_le (n : ℕ) : log2 (fermatNumber n).minFac ≤ 2^n :=
   rw [log2_eq_log_two]
   refine (log_mono_right (minFac_le (by rw [fermatNumber]; norm_num))).trans_eq ?_
   rw [fermatNumber, log_eq_of_pow_le_of_lt_pow (le_add_right _ _)]
-  rw [pow_succ, mul_two]; apply add_lt_add_left (one_lt_pow (by norm_num) (by norm_num))
-
+  rw [pow_succ, mul_two]
+  gcongr
+  exact one_lt_pow (by norm_num) (by norm_num)
 
 /--
 The minimization definition is equivalent to the closed form.
@@ -95,26 +96,21 @@ theorem a_equiv_a' (n : ℕ) : a n = a' n := by
     have := succ_le_of_lt hm
     omega
 
+@[category test, AMS 11]
+theorem zero : a 0 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem zero : a 0 = 0 := by
-  norm_num [a, Nat.log2]
+theorem one : a 1 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem one : a 1 = 0 := by
-  norm_num [a, Nat.log2]
-
-@[category test, AMS 11]
-theorem two : a 2 = 0 := by
-  norm_num [a, Nat.log2]
+theorem two : a 2 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
 theorem three : a 3 = 0 := by
   norm_num only [a, Nat.log2_eq_log_two,Nat.fermatNumber]
 
 @[category test, AMS 11]
-theorem four : a 0 = 0 := by
-  norm_num[a, Nat.log2]
+theorem four : a 0 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
 theorem five : a 5 = 23 := by

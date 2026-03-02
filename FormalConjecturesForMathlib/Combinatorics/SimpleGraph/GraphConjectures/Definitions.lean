@@ -94,13 +94,8 @@ noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
 A graph where the vertices V are a collection of points in ℝ² and there is
 an edge between two points if and only if the distance between them is 1. -/
 def UnitDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph V where
-  Adj := fun x y => dist x y = 1
-  symm := by
-    intros x y
-    simp [dist_comm]
-  loopless := by
-    intros x
-    simp [dist_self]
+  Adj x y := Dist.dist x y = 1
+  symm x y := by simp [PseudoMetricSpace.dist_comm]
 
 /--
 Two walks are internally disjoint if they share no vertices other than their endpoints.
@@ -116,5 +111,18 @@ pairwise disjoint paths.
 def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop :=
   Pairwise fun u v ↦ ∃ P : Set (G.Walk u v),
     P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
+
+/-- Infinite graphs: definitions for max degree and clique number so that the maximum
+degree (resp. clique number) of a graph with unbounded degree (resp. clique size) is
+`∞` rather than 0.
+-/
+noncomputable
+def edegree {V : Type*} (G : SimpleGraph V) (v : V) : ℕ∞ := (G.neighborSet v).encard
+
+noncomputable
+def emaxDegree {V : Type*} (G : SimpleGraph V) : ℕ∞ := ⨆ v, G.edegree v
+
+noncomputable
+def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ : G.IsClique s), #s
 
 end SimpleGraph
