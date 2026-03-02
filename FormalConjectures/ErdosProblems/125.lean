@@ -59,7 +59,7 @@ Does $A + B$ have positive upper density?
 -/
 @[category research open, AMS 11]
 theorem erdos_125.variants.positive_upper_density :
-    answer(False) ↔ 0 < ({ x : ℕ | (digits 3 x).toFinset ⊆ {0, 1} } +
+    answer(sorry) ↔ 0 < ({ x : ℕ | (digits 3 x).toFinset ⊆ {0, 1} } +
       { x : ℕ | (digits 4 x).toFinset ⊆ {0, 1} }).upperDensity := by
   sorry
 
