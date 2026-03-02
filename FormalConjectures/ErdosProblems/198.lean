@@ -78,7 +78,7 @@ theorem erdos_198 : (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ �
 In fact one such sequence is $n! + n$. This was found by AlphaProof. It also found $(n + 1)! + n$.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_198.variant_concrete :  ∃ (A : Set ℕ), A = {n ! + n | n} ∧
+theorem erdos_198.variants.concrete :  ∃ (A : Set ℕ), A = {n ! + n | n} ∧
     IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → (A ∩ Y).Nonempty) := by
   sorry
 

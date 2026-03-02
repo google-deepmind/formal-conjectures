@@ -49,7 +49,7 @@ This is problem A15 in Guy's collection [Gu04], where he reports that in a lette
 Erdős observed that $3 * 4 \equiv 5 * 6 * 7 \equiv 1 \mod 11$.
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_1056_k2 :
+theorem erdos_1056.variants.k2 :
     AllModProdEqualsOne 11 ![3, 5, 8] := by
   unfold AllModProdEqualsOne
   decide
@@ -59,7 +59,7 @@ Makowski [Ma83] found, for $k=3$:
 $2 * 3 * 4 * 5 \equiv 6 * 7 * 8 * 9 * 10 * 11 \equiv 12 * 13 * 14 * 15 \equiv 1 \mod 17$.
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_1056_k3 :
+theorem erdos_1056.variants.k3 :
     AllModProdEqualsOne 17 ![2, 6, 12, 16] := by
   unfold AllModProdEqualsOne
   decide
@@ -69,7 +69,7 @@ Noll and Simmons asked, more generally, whether there are solutions to
 $q_1! \equiv \dots \equiv q_k! \mod p$ for arbitrarily large $k$ (with $q_1 < \dots < q_k$).
 -/
 @[category research open, AMS 11]
-theorem noll_simmons :
+theorem erdos_1056.variants.noll_simmons :
     answer(sorry) ↔ ∀ᶠ k in Filter.atTop,
     ∃ (p : ℕ) (_ : p.Prime) (Q : Fin k → ℕ) (_ : StrictMono Q) (_ : ∀ i, Q i < p),
     ∀ i j : Fin k, (Q i)! ≡ (Q j)! [MOD p] := by

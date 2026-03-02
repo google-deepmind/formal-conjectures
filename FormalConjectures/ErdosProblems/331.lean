@@ -58,7 +58,7 @@ condition that $|A \cap \{1,\dots,N\}| \sim c_A N^{1/2}$ for some constant $c_A>
 for $B$.
 -/
 @[category research open, AMS 11]
-theorem erdos_331.variant.ruzsa :
+theorem erdos_331.variants.ruzsa :
     answer(sorry) ↔
       ∀ A B : Set ℕ,
       (∃ c_A > 0, (fun (n : ℕ) ↦ (count A n : ℝ)) ~[atTop] (fun (n : ℕ) ↦ c_A * (n : ℝ) ^ (1 / 2 : ℝ))) →

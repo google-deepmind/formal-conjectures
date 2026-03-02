@@ -56,10 +56,12 @@ $$
 $$
 -/
 @[category undergraduate, AMS 5 11]
-theorem erdos_307_coprime : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
+theorem erdos_307_coprime : answer(True) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
     Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
-  sorry
+  simp only [Finset.mem_inter, not_and, true_iff]
+  use {1, 5}, {2, 3}
+  norm_num +decide 
 
 /--
 There are no examples known of the weakened coprime version if we insist that $1\not\in P\cup Q$.

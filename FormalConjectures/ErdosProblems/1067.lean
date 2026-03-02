@@ -65,7 +65,7 @@ Thomassen [Th17] constructed a counterexample to the version which asks for infi
 edge-connectivity (that is, to disconnect the graph requires deleting infinitely many edges).
 -/
 @[category research solved, AMS 5]
-theorem erdos_1067.variant.infinite_edge_connectivity :
+theorem erdos_1067.variants.infinite_edge_connectivity :
     answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyEdgeConnected H.coe := by
   sorry
