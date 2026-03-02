@@ -57,15 +57,23 @@ theorem erdos_686.variants.four :
   sorry
 
 /--
-Can $4$ be written as
+The number $4$ cannot be written as
 $$4=\frac{\prod_{1\leq i\leq 2}(m+i)}{\prod_{1\leq i\leq 2}(n+i)}$$
-for $m≥n+2$?
+for $m≥n+2$!
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_686.variants.four_two :
-    answer(sorry) ↔ ∃ᵉ (n : ℕ) (m ≥ n + 2),
+    ¬ ∃ᵉ (n : ℕ) (m ≥ n + 2),
       (4 : ℚ) = (∏ i ∈ Finset.Icc 1 2, (m + i)) / (∏ i ∈ Finset.Icc 1 2, (n + i)) := by
-  sorry
+  simp only [Finset.prod_Icc_succ_top (by decide : 1 ≤ 2), Finset.Icc_self,
+    Finset.prod_singleton]
+  push_neg
+  intro n m hm
+  rw [ne_eq, eq_div_iff (by positivity : (↑((n + 1) * (n + (1 + 1))) : ℚ) ≠ 0)]
+  push_cast
+  intro h
+  have h' : 4 * ((n + 1) * (n + 2)) = (m + 1) * (m + 2) := by exact_mod_cast h
+  by_cases hc : m < 2 * (n + 1) <;> nlinarith
 
 /--
 Can $9$ be written as
