@@ -137,7 +137,7 @@ elements is $13$.
 
 https://oeis.org/A276661
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-1-n5/FormalConjectures/ErdosProblems/1.lean", AMS 5 11]
 theorem erdos_1.variants.least_N_5 :
     IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 5 } 13 := by
   sorry
