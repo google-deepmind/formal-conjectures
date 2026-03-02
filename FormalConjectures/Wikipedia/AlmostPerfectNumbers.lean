@@ -29,7 +29,7 @@ namespace AlmostPerfectNumbers
 
 open Nat
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 /-- 
 A number is almost perfect if the sum of its divisors is equal to $2n - 1$. 
