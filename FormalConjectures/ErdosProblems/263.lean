@@ -50,7 +50,8 @@ theorem erdos_263.parts.i : answer(sorry) ↔ IsIrrationalitySequence (fun n : �
 
 /--
 Must every irrationality sequence $a_n$ in the above sense
-satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
+satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$? 
+Answer: false.
 -/
 @[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/c8cf651906abe91051cf835d4232ad5648412113/FormalConjectures/ErdosProblems/263.lean#L298", AMS 11]
 theorem erdos_263.parts.ii : answer(False) ↔
