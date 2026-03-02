@@ -76,14 +76,36 @@ theorem erdos_686.variants.four_two :
   by_cases hc : m < 2 * (n + 1) <;> nlinarith
 
 /--
+The number $4$ cannot be written as
+$$4=\frac{\prod_{1\leq i\leq 2}(m+i)}{\prod_{1\leq i\leq 2}(n+i)}$$
+for $m≥n+2$!
+-/
+@[category research solved, AMS 11]
+theorem erdos_686.variants.four_three :
+    ¬ ∃ᵉ (n : ℕ) (m ≥ n + 3),
+      (4 : ℚ) = (∏ i ∈ Finset.Icc 1 3, (m + i)) / (∏ i ∈ Finset.Icc 1 3, (n + i)) := by
+  sorry
+
+/--
 Can $9$ be written as
 $$9=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
 for some $k≥2$ and $m≥n+k$?
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_686.variants.nine :
-    answer(sorry) ↔ ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+    answer(True) ↔ ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (9 : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
+  sorry
+
+/--
+Can $25$ be written as
+$$25=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
+for some $k≥2$ and $m≥n+k$?
+-/
+@[category research open, AMS 11]
+theorem erdos_686.variants.twenty_five :
+    answer(sorry) ↔ ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+      (25 : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
   sorry
 
 /--
