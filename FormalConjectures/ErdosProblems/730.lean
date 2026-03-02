@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,13 +37,67 @@ and $\binom{2m}{m}$ have the same set of prime divisors?
 theorem erdos_730 : answer(sorry) ↔ S.Infinite := by
   sorry
 
+@[category API]
+lemma dvd_of_dvd_pow2 {p x : ℕ} (hp : Nat.Prime p) (h : p ∣ x * x) : p ∣ x :=
+  or_self_iff.1 (hp.dvd_mul.1 h)
+
+@[category API]
+lemma dvd_of_dvd_pow3 {p x : ℕ} (hp : Nat.Prime p) (h : p ∣ x * (x * x)) : p ∣ x := by
+  cases hp.dvd_mul.1 h with
+  | inl h1 => exact h1
+  | inr h2 => exact dvd_of_dvd_pow2 hp h2
+
+@[category API]
+lemma dvd_of_dvd_pow4 {p x : ℕ} (hp : Nat.Prime p) (h : p ∣ x * (x * (x * x))) : p ∣ x := by
+  cases hp.dvd_mul.1 h with
+  | inl h1 => exact h1
+  | inr h2 => exact dvd_of_dvd_pow3 hp h2
+
+@[category API]
+lemma dvd_of_dvd_pow5 {p x : ℕ} (hp : Nat.Prime p) (h : p ∣ x * (x * (x * (x * x)))) : p ∣ x := by
+  cases hp.dvd_mul.1 h with
+  | inl h1 => exact h1
+  | inr h2 => exact dvd_of_dvd_pow4 hp h2
+
+@[category API]
+lemma dvd_of_dvd_pow6 {p x : ℕ} (hp : Nat.Prime p) (h : p ∣ x * (x * (x * (x * (x * x))))) : p ∣ x := by
+  cases hp.dvd_mul.1 h with
+  | inl h1 => exact h1
+  | inr h2 => exact dvd_of_dvd_pow5 hp h2
+
+set_option maxRecDepth 1000000
+
+@[category test]
+lemma check_87_88 : (87, 88) ∈ S := by
+  dsimp [S]
+  norm_num [Finset.ext_iff, Nat.choose_eq_zero_iff, Nat.centralBinom]
+  simp_rw [Nat.choose_eq_descFactorial_div_factorial]
+  intro p hp
+  refine Iff.intro ?_ ?_
+  · exact fun h' => dvd_of_dvd_pow2 hp (h'.trans (by exact of_decide_eq_true (by decide)))
+  · exact fun h' => dvd_of_dvd_pow3 hp (h'.trans (by exact of_decide_eq_true (by decide)))
+
+@[category test]
+lemma check_607_608 : (607, 608) ∈ S := by
+  dsimp [S]
+  norm_num [Finset.ext_iff, Nat.choose_eq_zero_iff, Nat.centralBinom]
+  simp_rw [Nat.choose_eq_descFactorial_div_factorial]
+  intro p hp
+  refine Iff.intro ?_ ?_
+  · exact fun h' => dvd_of_dvd_pow3 hp (h'.trans (by exact of_decide_eq_true (by decide)))
+  · exact fun h' => dvd_of_dvd_pow6 hp (h'.trans (by exact of_decide_eq_true (by decide)))
+
 /--
 For example, $(87,88)$ and $(607,608)$ are such pairs.
 -/
-@[category high_school, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_730.variants.explicit_pairs :
     {(87, 88), (607, 608)} ⊆ S := by
-  sorry
+  intro x hx
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx
+  rcases hx with rfl | rfl
+  · exact check_87_88
+  · exact check_607_608
 
 /--
 There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.
