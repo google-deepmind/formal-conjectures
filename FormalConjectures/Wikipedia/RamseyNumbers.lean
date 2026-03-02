@@ -22,6 +22,9 @@ import FormalConjectures.Util.ProblemImports
 This file records benchmark statements about (graph) Ramsey numbers. In particular, the exact
 value of $R(5,5)$ is currently unknown, but it is known to satisfy $43 \le R(5,5) \le 46$.
 
+Note: the diagonal Ramsey number $R(n,n)$ can also be formulated in terms of 2-colorings of
+$2$-subsets, as `Combinatorics.hypergraphRamsey 2 n` (see `FormalConjecturesForMathlib/Combinatorics/Ramsey.lean`).
+
 *References:*
 - [Wikipedia: Ramsey number](https://en.wikipedia.org/wiki/Ramsey_number)
 - [Rad] S. P. Radziszowski, *Small Ramsey Numbers*, Electronic Journal of Combinatorics, Dynamic
