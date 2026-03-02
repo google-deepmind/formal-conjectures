@@ -71,7 +71,7 @@ The "chromatic number of the plane" is at least 4. This can be
 proven by considering the [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)
 or the [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph) graph.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-508-moser-spindle/FormalConjectures/ErdosProblems/508.lean", AMS 5]
 theorem HadwigerNelsonAtLeast4 : 4 ≤ χ(ℝ²) := by
   sorry
 
