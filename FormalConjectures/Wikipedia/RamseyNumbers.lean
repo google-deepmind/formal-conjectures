@@ -19,8 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Ramsey numbers
 
-This file records benchmark statements about (graph) Ramsey numbers. In particular, the exact
-value of $R(5,5)$ is currently unknown, but it is known to satisfy $43 \le R(5,5) \le 46$.
+The (graph) Ramsey number $R(k,\ell)$ is the least natural number $n$ such that every simple graph
+on $n$ vertices contains either a clique of size $k$ or an independent set of size $\ell$
+(equivalently, the complement graph contains a clique of size $\ell$).
+
+We formalize the classical open problem of determining $R(5,5)$, together with the currently best
+known bounds $43 \le R(5,5) \le 46$.
 
 Note: the diagonal Ramsey number $R(n,n)$ can also be formulated in terms of 2-colorings of
 $2$-subsets, as `Combinatorics.hypergraphRamsey 2 n` (see `FormalConjecturesForMathlib/Combinatorics/Ramsey.lean`).
