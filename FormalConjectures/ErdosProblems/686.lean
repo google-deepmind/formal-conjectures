@@ -93,7 +93,8 @@ theorem erdos_686.variants.non_square :
 
   -- 1. Setup the existence for k = 2 and simplify the products
   exists 2, by valid
-  field_simp only [Finset.prod_Icc_succ_top, Finset.Icc_self, Finset.prod_singleton]
+  field_simp
+  simp [Finset.prod_Icc_succ_top, Finset.Icc_self, Finset.prod_singleton]
 
   -- 2. Case split on the existence of solutions for small bounds
   by_cases h : {n | ∃ k, N * ((n + 1) * (n + 2)) = (k + 1) * (k + 2)}.Nonempty
@@ -102,24 +103,27 @@ theorem erdos_686.variants.non_square :
         if a : ∃ a ∈ Finset.range 30, ∃ n ∈ Finset.range 30, _ then
           a.imp fun a s => s.2.imp fun and => And.right
         else
-          by tauto
+          by exact (a (by native_decide)).elim
 
     obtain rfl | hN_ne_3 := eq_or_ne N 3
     · exact mod_cast
         if a : ∃ a ∈ Finset.range 30, ∃ n ∈ Finset.range 30, _ then
           a.imp fun and μ => μ.2.imp fun and => And.right
         else
-          by tauto
+          by exact (a (by native_decide)).elim
 
     exact h.mono fun and =>
       .imp fun a s =>
-        mod_cast (by use (by nlinarith only [pow_three and, s, show N > 3 by valid]))
+        mod_cast (by refine ⟨by
+            nlinarith only [pow_three and, s, show N > 3 by valid], ?_⟩; push_cast [s.symm]; field_simp)
 
   -- 3. Reduce the general case to Pell's Equation
   convert (Pell.exists_of_not_isSquare _)
   show @@_ ↔ ¬ IsSquare (N * 4 : ℤ) → _
   · use
-      mod_cast h.elim ∘ .imp (by tauto),
+      mod_cast h.elim ∘ .imp (fun n ⟨m, hle, heq⟩ => ⟨m, by
+        push_cast at heq; rw [eq_div_iff (by positivity : ((n : ℚ) + 1) * (↑n + 2) ≠ 0)] at heq
+        exact_mod_cast heq⟩),
       (. (mod_cast hN_not_square' ∘ .rec (by
           use . / 2
           norm_num [←., true, Nat.div_mul_div_comm _, ((2).pow_dvd_pow_iff two_ne_zero).1, false, sq]))
@@ -137,7 +141,7 @@ theorem erdos_686.variants.non_square :
         (by valid)
 
     match a with
-    | 0 => field_simp [*] at and
+    | 0 => simp_all
     | S + 1 =>
         use A.natAbs + S, N * A.natAbs + S, by nlinarith only [‹_› ▸ and]
 
