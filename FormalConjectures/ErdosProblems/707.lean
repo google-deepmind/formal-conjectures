@@ -143,7 +143,13 @@ The set `{1, 2, 4}` is a Sidon set.
 -/
 @[category undergraduate, AMS 5 11]
 theorem erdos_707.variants.example_sidon_set : IsSidon ({1, 2, 4} : Set ℕ) := by
-  sorry
+  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ heq
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
+  rcases hi₁ with rfl | rfl | rfl <;>
+  rcases hj₁ with rfl | rfl | rfl <;>
+  rcases hi₂ with rfl | rfl | rfl <;>
+  rcases hj₂ with rfl | rfl | rfl <;>
+  simp_all
 
 /--
 The set `{1, 2, 4}` can be embedded in a perfect difference set modulo 7.
