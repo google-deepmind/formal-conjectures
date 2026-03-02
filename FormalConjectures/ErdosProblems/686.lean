@@ -80,7 +80,7 @@ The number $4$ cannot be written as
 $$4=\frac{\prod_{1\leq i\leq 2}(m+i)}{\prod_{1\leq i\leq 2}(n+i)}$$
 for $m≥n+2$!
 -/
-@[category research solved, AMS 11]
+@[category research open, AMS 11]
 theorem erdos_686.variants.four_three :
     ¬ ∃ᵉ (n : ℕ) (m ≥ n + 3),
       (4 : ℚ) = (∏ i ∈ Finset.Icc 1 3, (m + i)) / (∏ i ∈ Finset.Icc 1 3, (n + i)) := by
