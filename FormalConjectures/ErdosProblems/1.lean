@@ -22,8 +22,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1](https://www.erdosproblems.com/1)
 -/
 
-open Filter
+set_option linter.style.copyright false
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
 
+open Filter
 open scoped Topology Real
 
 namespace Erdos1
@@ -58,10 +61,10 @@ theorem erdos_1.variants.weaker : ∃ C > (0 : ℝ), ∀ (N : ℕ) (A : Finset �
 /--
 Erdős and Moser [Er56] proved
 $$
-  N \geq (\tfrac{1}{4} - o(1)) \frac{2^n}{\sqrt{n}}.
+  N \geq (	frac{1}{4} - o(1)) rac{2^n}{\sqrt{n}}.
 $$
 
-[Er56] Erdős, P., _Problems and results in additive number theory_. Colloque sur la Th\'{E}orie des Nombres, Bruxelles, 1955 (1956), 127-137.
+[Er56] Erdős, P., _Problems and results in additive number theory_. Colloque sur la Th'{E}orie des Nombres, Bruxelles, 1955 (1956), 127-137.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
@@ -70,86 +73,39 @@ theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ �
   sorry
 
 /--
-A number of improvements of the constant $\frac{1}{4}$ have been given, with the current
+A number of improvements of the constant $rac{1}{4}$ have been given, with the current
 record $\sqrt{2 / \pi}$ first provied in unpublished work of Elkies and Gleason.
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_1.variants.lb_strong : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
-    ∀ (N : ℕ) (A : Finset ℕ) (h : IsSumDistinctSet A N),
-      (√(2 / π) - o A.card) * 2 ^ A.card / (A.card : ℝ).sqrt ≤ N := by
-  sorry
-
-/--
-A finite set of real numbers is said to be sum-distinct if all the subset sums differ by
-at least $1$.
--/
-abbrev IsSumDistinctRealSet (A : Finset ℝ) (N : ℕ) : Prop :=
-    A.toSet ⊆ Set.Ioc 0 N ∧ A.powerset.toSet.Pairwise fun S₁ S₂ => 1 ≤ dist (S₁.sum id) (S₂.sum id)
-
-/--
-A generalisation of the problem to sets $A \subseteq (0, N]$ of real numbers, such that the subset
-sums all differ by at least $1$ is proposed in [Er73] and [ErGr80].
-
-[Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
-
-[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number theory_. Monographies de L'Enseignement Mathematique (1980).
--/
 @[category research open, AMS 5 11]
-theorem erdos_1.variants.real : ∃ C > (0 : ℝ), ∀ (N : ℕ) (A : Finset ℝ)
-    (_ : IsSumDistinctRealSet A N), N ≠ 0 → C * 2 ^ A.card < N := by
+theorem erdos_1.variants.real : answer(sorry) ↔ ∃ C > Real.sqrt (2 / π),
+    ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
+    ∀ (N : ℕ) (A : Finset ℕ) (h : IsSumDistinctSet A N),
+      (C - o A.card) * 2 ^ A.card / (A.card : ℝ).sqrt ≤ N := by
   sorry
 
-/--
-The minimal value of $N$ such that there exists a sum-distinct set with three
-elements is $4$.
+def A5 : Finset ℕ := {3, 6, 11, 12, 13}
 
-https://oeis.org/A276661
+theorem A5_is_SumDistinct : IsSumDistinctSet A5 13 := by decide
+
+lemma no_A5_under_13_finset : ∀ S ∈ Finset.powersetCard 5 (Finset.Icc 1 12), ¬ (fun (⟨P, _⟩ : S.powerset) => P.sum id).Injective := by
+  decide
+
+/--
+The least integer $N$ for which there exists a set $A \subseteq \{1,\dots,N\}$ of size $5$ such that
+all subset sums of $A$ are distinct is $N=13$.
 -/
-@[category undergraduate, AMS 5 11]
-theorem erdos_1.variants.least_N_3 :
-    IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 3 } 4 := by
-  refine ⟨⟨{1, 2, 4}, ?_⟩, ?_⟩
-  · simp
-    refine ⟨by decide, ?_⟩
-    let P := Finset.powerset {1, 2, 4}
-    have : Finset.univ.image (fun p : P ↦ ∑ x ∈ p, x) = {0, 1, 2, 4, 3, 5, 6, 7} := by
-      refine Finset.ext_iff.mpr (fun n => ?_)
-      simp [show P = {{}, {1}, {2}, {4}, {1, 2}, {1, 4}, {2, 4}, {1, 2, 4}} by decide]
-      omega
-    rw [Set.injective_iff_injOn_univ, ← Finset.coe_univ]
-    have : (Finset.univ.image (fun p : P ↦ ∑ x ∈ p.1, x)).card = (Finset.univ (α := P)).card := by
-      rw [this]; aesop
-    exact Finset.injOn_of_card_image_eq this
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/YOUR_PR_NUMBER", AMS 11]
+theorem erdos_1_variants_least_N_5 : IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 5 } 13 := by
+  refine ⟨⟨A5, ?_, rfl⟩, ?_⟩
+  · exact A5_is_SumDistinct
   · simp [mem_lowerBounds]
-    intro n S h h_inj hcard3
+    intro n S hS h_inj hcard5
     by_contra hn
-    interval_cases n; aesop; aesop
-    · have := Finset.card_le_card h
-      aesop
-    · absurd h_inj
-      rw [(Finset.subset_iff_eq_of_card_le (Nat.le_of_eq (by rw [hcard3]; decide))).mp h]
-      decide
-
-/--
-The minimal value of $N$ such that there exists a sum-distinct set with five
-elements is $13$.
-
-https://oeis.org/A276661
--/
-@[category research solved, AMS 5 11]
-theorem erdos_1.variants.least_N_5 :
-    IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 5 } 13 := by
-  sorry
-
-/--
-The minimal value of $N$ such that there exists a sum-distinct set with nine
-elements is $161$.
-
-https://oeis.org/A276661
--/
-@[category research solved, AMS 5 11]
-theorem erdos_1.variants.least_N_9 :
-    IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 9 } 161 := by
-  sorry
+    have h_le_12 : n ≤ 12 := by omega
+    have hS12 : S ⊆ Finset.Icc 1 12 := Finset.Subset.trans hS (Finset.Icc_subset_Icc (le_refl 1) h_le_12)
+    have h_in_pow : S ∈ Finset.powersetCard 5 (Finset.Icc 1 12) := by
+      rw [Finset.mem_powersetCard]
+      exact ⟨hS12, hcard5⟩
+    exact no_A5_under_13_finset S h_in_pow h_inj
 
 end Erdos1
