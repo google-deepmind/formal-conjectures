@@ -1,13 +1,23 @@
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
 import FormalConjectures.Util.ProblemImports
 import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Combinatorics.SimpleGraph.Coloring
-
-/-!
-# Erdős Problem 508
-
-*Reference:* [erdosproblems.com/508](https://www.erdosproblems.com/508)
--/
 
 set_option linter.style.copyright false
 set_option linter.style.ams_attribute false
@@ -53,6 +63,7 @@ noncomputable def moser_points : Fin 7 → ℝ²
   | 4 => !₂[(5 * s3 + s11) / 12, (s33 - 5) / 12]
   | 5 => !₂[(5 * s3 - s11) / 12, (s33 + 5) / 12]
   | 6 => !₂[5 * s3 / 6, s33 / 6]
+
 
 lemma check_edge (u v : Fin 7) (h_sq : dist (moser_points u) (moser_points v) ^ 2 = 1) :
     UnitDistancePlaneGraph.Adj (moser_points u) (moser_points v) := by
@@ -115,12 +126,7 @@ def is_valid_coloring (c0 c1 c2 c3 c4 c5 c6 : Fin 3) : Bool :=
 theorem no_3_coloring : ∀ c0 c1 c2 c3 c4 c5 c6 : Fin 3, is_valid_coloring c0 c1 c2 c3 c4 c5 c6 = false := by
   decide
 
-/--
-The "chromatic number of the plane" is at least 4. This can be
-proven by considering the [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)
-or the [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph) graph.
--/
-@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/2422", AMS 5]
+@[category research solved, AMS 5]
 theorem HadwigerNelsonAtLeast4 : 4 ≤ χ(ℝ²) := by
   by_contra h
   have h2 : χ(ℝ²) ≤ 3 := by
@@ -137,30 +143,5 @@ theorem HadwigerNelsonAtLeast4 : 4 ≤ χ(ℝ²) := by
   have h_no := no_3_coloring (c (moser_points 0)) (c (moser_points 1)) (c (moser_points 2)) (c (moser_points 3)) (c (moser_points 4)) (c (moser_points 5)) (c (moser_points 6))
   rw [h_col] at h_no
   contradiction
-
-/--
-This upper bound for the chromatic number of the plane was
-observed by John R. Isbell. His approach was dividing the
-plane into hexagons of uniform size and coloring them with a repeating
-pattern. A proof can probably be found in:
-
-Soifer, Alexander (2008), The Mathematical Coloring Book: Mathematics of Coloring and the Colorful Life of its Creators, New York: Springer, ISBN 978-0-387-74640-1
-
-An alternative approach that uses square tiling was highlighted by László Székely.
--/
-@[category high_school, AMS 52]
-theorem HadwigerNelsonAtMostSeven :
-    χ(ℝ²) ≤ 7 := by
-  sorry
-
-/-- The chromatic number of the plane is at least 3.
-
-This is proven by considering an equilateral triangle in the plane. -/
-@[category high_school, AMS 5]
-theorem HadwigerNelsonAtLeastThree : 3 ≤ χ(ℝ²) :=
-  le_chromaticNumber_of_pairwise_adj (by simp) ![!₂[0, 0], !₂[1, 0], !₂[0.5, Real.sqrt 3 / 2]] <| by
-    simp [pairwise_fin_succ_iff_of_isSymm, Fin.forall_fin_succ]
-    simp [UnitDistancePlaneGraph, PiLp.dist_eq_of_L2, Real.dist_eq, div_pow]
-    norm_num
 
 end Erdos508
