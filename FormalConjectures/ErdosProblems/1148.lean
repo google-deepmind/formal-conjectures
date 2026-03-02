@@ -43,12 +43,80 @@ Can every large integer $n$ be written as $n=x^2+y^2-z^2$ with $\max(x^2,y^2,z^2
 theorem erdos_1148 : answer(sorry) ↔ ∀ᶠ n in atTop, Erdos1148Prop n := by
   sorry
 
+/-- Check that for given `x, y`, the value `6563` cannot be represented as `x² + y² - z²`
+with `z² ≤ 6563`. -/
+private def check_1148_y (x y : ℕ) : Bool :=
+  let x2 := x * x
+  let y2 := y * y
+  if h : x2 + y2 < 6563 then true else
+  let z2 := x2 + y2 - 6563
+  if h2 : z2 > 6563 then true else
+  let z := Nat.sqrt z2
+  if h3 : z * z == z2 then false else true
+
+private def check_1148_x (x : ℕ) : Bool :=
+  (List.range 82).all fun y => check_1148_y x y
+
+private def check_1148 : Bool :=
+  (List.range 82).all check_1148_x
+
+private theorem check_1148_true : check_1148 = true := by
+  native_decide
+
+private lemma check_x_true (x : ℕ) (hx : x < 82) : check_1148_x x = true := by
+  have h := check_1148_true
+  unfold check_1148 at h
+  have h1 := List.all_eq_true.mp h x
+  apply h1
+  exact List.mem_range.mpr hx
+
+private lemma check_y_true (x y : ℕ) (hx : x < 82) (hy : y < 82) :
+    check_1148_y x y = true := by
+  have h := check_x_true x hx
+  unfold check_1148_x at h
+  have h1 := List.all_eq_true.mp h y
+  apply h1
+  exact List.mem_range.mpr hy
+
 /--
 The largest integer known which cannot be written this way is $6563$.
 -/
 @[category high_school, AMS 11]
 theorem erdos_1148.variants.lower_bound : ¬ Erdos1148Prop 6563 := by
-  sorry
+  intro h
+  rcases h with ⟨x, y, z, h1, h2, h3, h4⟩
+  have hx : x < 82 := by nlinarith [show x ^ 2 ≤ 6563 from h2]
+  have hy : y < 82 := by nlinarith [show y ^ 2 ≤ 6563 from h3]
+  have hz : z ^ 2 = x ^ 2 + y ^ 2 - 6563 := by omega
+  have h_y_true := check_y_true x y hx hy
+  unfold check_1148_y at h_y_true
+  have h_not_lt : ¬(x * x + y * y < 6563) := by
+    intro hlt
+    have h_rw : x * x + y * y = x ^ 2 + y ^ 2 := by ring
+    rw [h_rw] at hlt
+    omega
+  have h_not_gt : ¬(x * x + y * y - 6563 > 6563) := by
+    intro hgt
+    have h_rw : x * x + y * y = x ^ 2 + y ^ 2 := by ring
+    rw [h_rw] at hgt
+    omega
+  have h_eq : Nat.sqrt (x * x + y * y - 6563) * Nat.sqrt (x * x + y * y - 6563) =
+      x * x + y * y - 6563 := by
+    have h_rw : x * x + y * y - 6563 = z * z := by
+      have hrw1 : x * x = x ^ 2 := by ring
+      have hrw2 : y * y = y ^ 2 := by ring
+      have hrw3 : z * z = z ^ 2 := by ring
+      rw [hrw1, hrw2, hrw3]
+      omega
+    rw [h_rw]
+    rw [Nat.sqrt_eq]
+  rw [dif_neg h_not_lt] at h_y_true
+  rw [dif_neg h_not_gt] at h_y_true
+  have h_beq : (Nat.sqrt (x * x + y * y - 6563) * Nat.sqrt (x * x + y * y - 6563) ==
+      x * x + y * y - 6563) = true := by
+    exact beq_iff_eq.mpr h_eq
+  rw [dif_pos h_beq] at h_y_true
+  contradiction
 
 /--
 The weaker property: $n = x^2 + y^2 - z^2$ such that $\max(x^2, y^2, z^2) \leq n + 2\sqrt{n}$.
