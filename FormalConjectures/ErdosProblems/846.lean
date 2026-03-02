@@ -50,8 +50,8 @@ Is it true that `A` is the union of a finite number of sets where no three are o
 In other words, prove or disprove the following statement: every infinite `ε`-non-trilinear subset of the
 plane is weakly non-trilinar.
 -/
-@[category research open, AMS 11]
-theorem erdos_846 : answer(sorry) ↔ ∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/2404258180688283e5141021c75464dc2acfb798/FormalConjectures/ErdosProblems/846.lean", AMS 11]
+theorem erdos_846 : answer(False) ↔ ∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
     WeaklyNonTrilinear A := by
   sorry
 

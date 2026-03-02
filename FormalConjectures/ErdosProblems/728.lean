@@ -41,8 +41,11 @@ $a, b, n$ with $b = n/2$, $a = n/2 + O(\log n)$, and $C_1 \log n < a + b - n < C
 that $a! b! \mid n! (a + b - n)!$
 
 This appears to answer the question in the spirit it was intended.
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos56.lean", AMS 11]
 theorem erdos_728 :
     answer(True) ↔
       ∀ᶠ ε : ℝ in 𝓝[>] 0, ∀ C > (0 : ℝ), ∀ C' > C,

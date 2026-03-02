@@ -32,10 +32,15 @@ namespace Erdos1071
 def SegmentsDisjoint (seg1 seg2 : ℝ² × ℝ²) : Prop :=
   segment ℝ seg1.1 seg1.2 ∩ segment ℝ seg2.1 seg2.2 ⊆ {seg1.1, seg1.2, seg2.1, seg2.2}
 
-/-- Can a finite set of disjoint unit segments in a unit square be maximal?
-Solved affirmatively by [Da85], who gave an explicit construction. -/
-@[category research solved, AMS 52]
-theorem erdos_1071a :
+/--
+Can a finite set of disjoint unit segments in a unit square be maximal?
+Solved affirmatively by [Da85], who gave an explicit construction.
+
+This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
+-/
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071.lean", AMS 52]
+theorem erdos_1071.parts.i :
     answer(True) ↔ ∃ S : Finset (ℝ² × ℝ²),
       Maximal (fun T : Finset (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧
@@ -46,7 +51,7 @@ theorem erdos_1071a :
 
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite? -/
 @[category research open, AMS 52]
-theorem erdos_1071b :
+theorem erdos_1071.parts.ii :
     answer(sorry) ↔ ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
       S.Countable ∧ S.Infinite ∧
       Maximal (fun T : Set (ℝ² × ℝ²) =>
