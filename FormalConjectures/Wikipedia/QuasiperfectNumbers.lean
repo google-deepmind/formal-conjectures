@@ -27,7 +27,7 @@ namespace QuasiperfectNumbers
 
 open Nat
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 /-- 
 A number is quasiperfect if the sum of its divisors is equal to $2n + 1$. 
