@@ -59,7 +59,8 @@ theorem charmichaelTotient :
 
 /-- In Theorem 6 in [F1998], Kevin Ford proves that the smallest counterexample to
 Carmichael's totient function conjecture must be $≥ 10 ^ (10 ^ 10)$ -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/CarmichaelTotient.lean", AMS 11]
 theorem carchimaelTotient_bound {n : ℕ} (hn : 0 < n) (hn' : n < 10 ^ (10 ^ 10)) :
     CarmichaelTotientFor n := by
   sorry
