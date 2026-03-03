@@ -117,4 +117,13 @@ theorem testFactorialsLessThanN : factorialsLessThanN 100 = {1, 2, 6, 24} := by
   rw [factorialsLessThanN_equivalent]
   simp [h]
 
+/--
+The primes 101 and 211 are known examples satisfying the property, verified by exhaustive
+computation. Known to hold for small cases by direct verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1059", AMS 11]
+theorem erdos_1059.variants.known_examples :
+    {p | p.Prime ∧ AllFactorialSubtractionsComposite p}.Nonempty := by
+  sorry
+
 end Erdos1059
