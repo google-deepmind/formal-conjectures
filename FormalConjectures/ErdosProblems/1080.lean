@@ -67,3 +67,5 @@ theorem erdos_1080 :
 -- TODO: Add Lazebnik, Ustimenko, and Woldar's lower bound.
 
 end Erdos1080
+
+-- submitted
