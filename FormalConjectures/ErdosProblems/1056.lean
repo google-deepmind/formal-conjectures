@@ -75,4 +75,14 @@ theorem erdos_1056.variants.noll_simmons :
     ∀ i j : Fin k, (Q i)! ≡ (Q j)! [MOD p] := by
   sorry
 
+/--
+The $k=2$ case is solved: Erdős observed that $3 \cdot 4 \equiv 5 \cdot 6 \cdot 7 \equiv 1 \pmod{11}$,
+giving a concrete witness for $k=2$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1056", AMS 11]
+theorem erdos_1056.variants.k2_solved :
+    ∃ (p : ℕ) (_ : p.Prime) (boundaries : Fin 3 → ℕ) (_ : StrictMono boundaries),
+    AllModProdEqualsOne p boundaries := by
+  sorry
+
 end Erdos1056
