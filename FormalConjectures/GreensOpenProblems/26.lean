@@ -51,7 +51,7 @@ def IsCube {p n : ℕ} [Fact p.Prime] (A : Set (𝔽 p n)) : Prop :=
 Let $A_1, \dots, A_{100}$ be "cubes" in $\mathbb{F}^n_3$.
 Is it true that $A_1 + \dots + A_{100} = \mathbb{F}^n_3$?
 -/
-@[category research solved, AMS 5 11 15]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/abs/2510.01300", AMS 5 11 15]
 theorem green_26 :
     ∀ n : ℕ,
       ∀ A : Fin 100 → Set (𝔽₃ n), (∀ i, IsCube (A i)) →
@@ -59,7 +59,7 @@ theorem green_26 :
   sorry
 
 /-- [Yu25] has solved the original problem (with 100 replaced by 4) -/
-@[category research solved, AMS 5 11 15]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/abs/2510.01300", AMS 5 11 15]
 theorem green_26.variants.yu25 :
     ∀ n : ℕ,
     ∀ A : Fin 4 → Set (𝔽₃ n), (∀ i, IsCube (A i)) →
@@ -72,7 +72,7 @@ open Asymptotics Filter
 [ALM91] showed that if 100 is replaced by $\leq c(p) \log n$ then the result is true for
 $\mathbb{F}^n_p$.
 -/
-@[category research solved, AMS 5 11 15]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.1016/0097-3165(91)90046-I", AMS 5 11 15]
 theorem green_26.variants.alm91 :
     ∀ (p : ℕ) [Fact p.Prime],
       ∃ (k : ℕ → ℕ),
