@@ -41,4 +41,15 @@ theorem erdos_243 (a : ℕ → ℕ) (ha₀ : StrictMono a)
       ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The sequence $a_n = a_{n-1}^2 - a_{n-1} + 1$
+with $a_1 = 2$ is related to Sylvester's sequence and has rational sum $\sum 1/a_n = 1$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/243", AMS 40]
+theorem erdos_243.variants.known_result (a : ℕ → ℕ) (ha₀ : StrictMono a)
+    (ha₁ : Tendsto (fun n ↦ (a n : ℝ) / a (n - 1) ^ 2) atTop (𝓝 1))
+    (ha₂ : Summable ((1 : ℚ) / a ·)) :
+      ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := by
+  sorry
+
 end Erdos243
