@@ -34,4 +34,15 @@ theorem erdos_689 :
       2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
   sorry
 
+/--
+The Chinese Remainder Theorem guarantees that for any finite set of primes, one can choose
+residues such that each integer satisfies at least one congruence. The question of covering
+with multiplicity two is a stronger form of covering congruences.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/689", AMS 11]
+theorem erdos_689.variants.known_result :
+    ∀ᶠ n in Filter.atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
+      1 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
+  sorry
+
 end Erdos689
