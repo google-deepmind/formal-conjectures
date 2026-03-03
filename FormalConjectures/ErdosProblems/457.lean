@@ -68,4 +68,14 @@ theorem erdos_457.variants.one_sub : answer(sorry) ↔ ∃ ε > (0 : ℝ),
     ∀ᶠ n in Filter.atTop, q n (Real.log n) < (1 - ε) * Real.log n ^ 2 := by
   sorry
 
+/--
+It is known that $q(n, \log n) \ge 2 \log n$ for infinitely many $n$, since taking $n$
+to be a primorial (product of primes up to some bound) gives $q(n, \log n) \ge (2+o(1)) \log n$.
+This gives the lower bound direction unconditionally.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/457", AMS 11]
+theorem erdos_457.variants.known_result :
+    { (n : ℕ) | 2 * Real.log n ≤ q n (Real.log n) }.Infinite := by
+  sorry
+
 end Erdos457
