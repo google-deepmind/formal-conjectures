@@ -109,5 +109,14 @@ theorem erdos_358.variants.one_le :
     ∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 1 ≤ g A n := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The sequence $A = \{n\}$ gives
+$f(n)$ equal to the number of odd divisors of $n$, which grows unboundedly.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/358", AMS 5 11]
+theorem erdos_358.variants.known_result :
+    ∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop := by
+  sorry
+
 
 end Erdos358
