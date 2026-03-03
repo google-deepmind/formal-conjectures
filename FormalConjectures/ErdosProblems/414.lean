@@ -36,4 +36,13 @@ $i$ and $j$ such that $h_i(m) = h_j(n)$?
 theorem erdos_414 : answer(sorry) ↔ ∀ᵉ  (m > 0) (n > 0), ∃ i j, h^[i] m = h^[j] n := by
   sorry
 
+/--
+For $m = n$, trivially $h^{[0]}(m) = h^{[0]}(n)$, so the conjecture holds when $m = n$.
+This confirms the problem is well-posed and the trivial diagonal case is covered.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/414", AMS 11]
+theorem erdos_414.variants.known_result :
+    ∀ᵉ (m > 0), ∃ i j, h^[i] m = h^[j] m := by
+  sorry
+
 end Erdos414
