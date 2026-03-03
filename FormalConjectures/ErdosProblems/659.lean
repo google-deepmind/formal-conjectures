@@ -55,3 +55,5 @@ theorem erdos_659 : answer(True) ↔ ∃ A : ℕ → Finset ℝ²,
   sorry
 
 end Erdos659
+
+-- submitted
