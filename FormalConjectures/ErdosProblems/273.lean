@@ -34,7 +34,7 @@ theorem erdos_273 : answer(sorry) ↔ ∃ c : StrictCoveringSystem ℤ, ∀ i, �
 /--
 Is there a covering system all of whose moduli are of the form $p-1$ for some primes $p \geq 3$?
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/273.lean", AMS 5 11]
 theorem erdos_273.variants.three : answer(True) ↔ ∃ c : StrictCoveringSystem ℕ, ∀ i, ∃ p, p.Prime ∧ 3 ≤ p ∧
     c.moduli i = Ideal.span {↑(p - 1)} := by
   -- TODO(Paul-Lez): find reference for this and perhaps formalize the proof?
