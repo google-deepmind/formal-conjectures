@@ -82,4 +82,14 @@ theorem erdos_1055.variants.selfridge_limit :
 
 -- TODO(Paul-Lez): formalize the rest of the problems on the page.
 
+/--
+For class 1, the primes of class 1 are those where $p+1$ is 3-smooth (only factors 2 and 3).
+Known examples include $p = 2$ (since $3 = 3$), $p = 3$ (since $4 = 2^2$), $p = 5$ (since $6 = 2\cdot3$).
+Known to hold for small cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1055", AMS 11]
+theorem erdos_1055.variants.class_one_infinite :
+    {p | p.Prime ∧ IsOfClass 1 p}.Infinite := by
+  sorry
+
 end Erdos1055
