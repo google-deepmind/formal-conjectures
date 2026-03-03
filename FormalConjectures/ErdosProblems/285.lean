@@ -42,7 +42,7 @@ Proved by Martin [Ma00].
 
 [Ma00] Martin, Greg, _Denser Egyptian fractions_. Acta Arith. (2000), 231-260.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/285", AMS 5 11]
 theorem erdos_285 :
     answer(True) ↔ ∀ᵉ (f : ℕ → ℕ)
     (S : Set ℕ)
@@ -60,7 +60,7 @@ theorem erdos_285 :
 /--
 It is trivial that $f(k)\geq (1 + o(1)) \frac{e}{e - 1}k$.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/285", AMS 5 11]
 theorem erdos_285.variants.lb (f : ℕ → ℕ)
     (S : Set ℕ)
     (hS : S = {k | ∃ (n : Fin k.succ → ℕ), StrictMono n ∧ 0 ∉ Set.range n ∧
