@@ -103,7 +103,8 @@ theorem a_of_primitive_mul_squarefree (m s : ℕ) (hm : isPrimitiveTerm m)
 
 /-- Non-primitive terms have the form $m \cdot s$ where $m$ is primitive and $s$ is
 squarefree with $\gcd(m, s) = 1$. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/OEIS/63880.lean", AMS 11]
 theorem exists_primitive_of_a {n : ℕ} (h : a n) :
     ∃ m s, isPrimitiveTerm m ∧ Squarefree s ∧ m.Coprime s ∧ n = m * s := by
   sorry
