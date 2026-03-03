@@ -52,7 +52,7 @@ theorem erdos_470.part2 : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
 Benkoski and Erdős [BeEr74](https://mathscinet.ams.org/mathscinet/relay-station?mr=347726) proved
 that the set of weird numbers has positive density.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/470.lean", AMS 11]
 theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity := by
   sorry
 
@@ -60,8 +60,11 @@ theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity
 The smallest weird number is 70.
 -/
 @[category high_school, AMS 11]
+set_option maxRecDepth 4000 in
 theorem erdos_470.variants.smallest_weird_eq_70 : (∀ n < 70, ¬n.Weird) ∧ (70).Weird := by
-  sorry
+  refine ⟨fun n hn => ?_, Nat.weird_seventy⟩
+  simp only [Nat.Weird, Nat.Abundant, Nat.Pseudoperfect]
+  interval_cases n <;> decide
 
 /--
 Melfi [Me15](https://mathscinet.ams.org/mathscinet/relay-station?mr=3276337) has proved that there
@@ -69,7 +72,7 @@ are infinitely many primitive weird numbers, conditional on the fact that
 $p_{n+1} - p_n < \frac{1}{10} \sqrt{p_n}$ for all large $n$, which in turn would follow from
 well-known conjectures concerning prime gaps.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/470.lean", AMS 11]
 theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
     ∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10 →
       Set.Infinite PrimitiveWeird := by
@@ -78,7 +81,7 @@ theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
 /--
 Fang [Fa22](https://arxiv.org/abs/2207.12906) has shown there are no odd weird numbers below $10^{21}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/470.lean", AMS 11]
 theorem erdos_470.variants.odd_weird_10_pow_21 : ∀ n < 10 ^ 21, Odd n → ¬n.Weird := by
   sorry
 
@@ -86,7 +89,7 @@ theorem erdos_470.variants.odd_weird_10_pow_21 : ∀ n < 10 ^ 21, Odd n → ¬n.
 Liddy and Riedl [LiRi18](https://ideaexchange.uakron.edu/honors_research_projects/728/) have shown
 that an odd weird number must have at least 6 prime divisors.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/470.lean", AMS 11]
 theorem erdos_470.variants.odd_weird_prime_div :
     ∀ n : ℕ, Odd n → n.Weird → 6 ≤ {m | m ∈ n.divisors ∧ m.Prime}.ncard := by
   sorry
@@ -94,7 +97,7 @@ theorem erdos_470.variants.odd_weird_prime_div :
 /--
 If there are no odd weird numbers then every weird number has abundancy index < 4.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/470.lean", AMS 11]
 theorem erdos_470.variants.abundancy_index :
     (∀ n : ℕ, n.Weird → ¬Odd n) → ∀ n, n.Weird → AbundancyIndex n < 4 := by
   sorry
