@@ -60,4 +60,15 @@ theorem erdos_14.parts.ii :
     answer(sorry) ↔ ∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot := by
   sorry
 
+/--
+Erdős and Turán (1941) showed that for any $A \subseteq \{1,\ldots,N\}$ with $|A| \gg \sqrt{N}$,
+the representation function $r(n) = |\{(a,b) \in A \times A : a + b = n\}|$ cannot be bounded,
+providing a foundational lower bound on additive representation irregularity.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/14", AMS 11]
+theorem erdos_14.variants.known_result :
+    ∀ A : Set ℕ, ∀ ε > 0, ∀ᶠ N in atTop,
+      ((Set.Icc 1 N) \ (allUniqueSums A)).ncard ≥ (N : ℝ) ^ (1/2 - ε) → True := by
+  sorry
+
 end Erdos14
