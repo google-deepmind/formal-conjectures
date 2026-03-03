@@ -40,7 +40,7 @@ theorem legendre_conjecture :
 /-- If there exists a constant `c > 0` such that
 `(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all large `n`,
 then Legendre's conjecture is asymptotically true. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/LegendreConjecture.lean", AMS 11]
 theorem bounded_gap_legendre
     (H : ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
       (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c)) :
@@ -50,7 +50,7 @@ theorem bounded_gap_legendre
 /--
 Ferreira proved that the conjecture is true for sufficiently large n.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/LegendreConjecture.lean", AMS 11]
 theorem legendre_conjecture.ferreira_large_n :
     ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
