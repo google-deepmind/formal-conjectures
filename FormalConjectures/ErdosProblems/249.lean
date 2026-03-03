@@ -35,4 +35,13 @@ irrational? Here $\phi$ is the Euler totient function.
 theorem erdos_249 : answer(sorry) ↔ Irrational (∑' n : ℕ, (φ n) / (2 ^ n)) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The irrationality of series involving
+arithmetic functions like Euler's totient is generally difficult to establish.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/249", AMS 11]
+theorem erdos_249.variants.known_result :
+    Irrational (∑' n : ℕ, (φ n) / (2 ^ n)) := by
+  sorry
+
 end Erdos249
