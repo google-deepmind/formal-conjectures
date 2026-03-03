@@ -76,7 +76,7 @@ theorem oppermann_implies_legendre (n : ℕ) (hn : 1 ≤ n) (P : type_of% opperm
 /--
 Ferreira proved that Oppermann's conjecture is true for sufficiently large x.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Oppermann.lean", AMS 11]
 theorem oppermann_conjecture.ferreira_large_x : ∀ᶠ x in atTop,
     (∃ p ∈ Ioo (x * (x - 1)) (x^2), p.Prime) ∧
     (∃ p ∈ Ioo (x^2) (x * (x + 1)), p.Prime) := by
