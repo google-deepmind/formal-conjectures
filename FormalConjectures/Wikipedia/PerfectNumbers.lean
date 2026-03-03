@@ -87,7 +87,7 @@ and must have at least 101 prime factors (including multiplicities).
 *Reference:* Pascal Ochem, Michaël Rao (2012).
 "Odd perfect numbers are greater than 10^1500"
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/PerfectNumbers.lean", AMS 11]
 theorem odd_perfect_number.lower_bound (n : ℕ) (hn : Odd n) (hp : Perfect n) :
     n > 10^1500 ∧ (n.primeFactorsList).length ≥ 101 := by
   sorry
@@ -99,7 +99,7 @@ and $p \nmid m$.
 
 *Reference:* Euler's theorem on odd perfect numbers
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/PerfectNumbers.lean", AMS 11]
 theorem odd_perfect_number.euler_form (n : ℕ) (hn : Odd n) (hp : Perfect n) :
     ∃ (p m α : ℕ),
       p.Prime ∧
