@@ -36,4 +36,15 @@ theorem erdos_850 :
 
 -- TODO(Paul-Lez): formalise remaining problems
 
+/--
+It is easy to find pairs $x \neq y$ sharing the same prime factors (e.g., $x = 2$ and $y = 4$),
+or pairs sharing prime factors in two consecutive values. The question asks whether all three
+consecutive pairs can simultaneously share prime factors.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/850", AMS 11]
+theorem erdos_850.variants.known_result :
+    ∃ x y : ℕ, x ≠ y ∧ x.primeFactors = y.primeFactors
+      ∧ (x + 1).primeFactors = (y + 1).primeFactors := by
+  sorry
+
 end Erdos850
