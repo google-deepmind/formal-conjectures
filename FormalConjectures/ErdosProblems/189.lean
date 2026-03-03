@@ -61,7 +61,7 @@ theorem erdos_189 :
   sorry
 
 /-- Graham claims this is "easy to see". -/
-@[category research solved, AMS 5 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/189.lean", AMS 5 51]
 theorem erdos_189.variants.square :
     ¬ Erdos189For
       (fun a b c d ↦
