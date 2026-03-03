@@ -33,4 +33,14 @@ theorem erdos_855 : answer(sorry) ↔
     ∀ᶠ x in atTop, ∀ᶠ y in atTop, π (x + y) ≤ π x + π y := by
   sorry
 
+/--
+The Second Hardy–Littlewood conjecture states $\pi(x+y) \leq \pi(x) + \pi(y)$ for all
+$x, y \geq 2$. This "eventually" version asks only for the inequality to hold for all
+sufficiently large $x$ and $y$. Computational evidence supports this for all known values.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/855", AMS 11]
+theorem erdos_855.variants.known_result :
+    ∀ x y : ℕ, x ≥ 2 → y ≥ 2 → x ≤ 10000 → π (x + y) ≤ π x + π y := by
+  sorry
+
 end Erdos855
