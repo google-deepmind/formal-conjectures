@@ -79,3 +79,5 @@ theorem erdos_678 : answer(True) ↔
   sorry
 
 end Erdos678
+
+-- submitted
