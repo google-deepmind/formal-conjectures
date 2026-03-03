@@ -67,4 +67,15 @@ of $\{1, \dots, N\}$ that does not contain any non-trivial $3$-term arithmetic p
 theorem erdos_142.variants.three : (fun N => (r 3 N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
+/--
+Bloom and Sisask (2020) proved $r_3(N) = O(N / (\log N)^{1+c})$ for some absolute constant $c > 0$,
+improving on Bourgain's bound. Kelley and Meka (2023) further improved this to
+$r_3(N) = O(N \exp(-c (\log N)^{1/12}))$, giving the best known upper bound for AP-free sets.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/142", AMS 11]
+theorem erdos_142.variants.bloom_sisask :
+    ∃ c > 0, (fun N => (r 3 N : ℝ)) =O[atTop]
+      fun N : ℕ => (N : ℝ) / (N : ℝ).log ^ (1 + c) := by
+  sorry
+
 end Erdos142
