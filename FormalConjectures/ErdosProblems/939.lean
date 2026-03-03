@@ -65,7 +65,7 @@ Cambie has found several examples of the sum of $r - 2$ coprime $r$-powerful num
 $r$-powerful. For example when $r=5$ we have
 $$3761^5=2^8\cdot3^{10}\cdot 5^7 + 2^{12}\cdot 23^6 + 11^5\cdot 13^5$$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/939.lean", AMS 11]
 theorem erdos_939.variants.examples : (∃ r ≥ 4, (Erdos939Sums r).Nonempty) := by
   use 5
   simp only [ge_iff_le, reduceLeDiff, true_and]
@@ -80,12 +80,12 @@ theorem erdos_939.variants.examples : (∃ r ≥ 4, (Erdos939Sums r).Nonempty) :
 
 
 /-- Cambie has also found solutions when $r=7$. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/939.lean", AMS 11]
 theorem erdos_939.variants.seven : (Erdos939Sums 7).Nonempty := by
   sorry
 
 /-- Cambie has also found solutions when $r=8$. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/939.lean", AMS 11]
 theorem erdos_939.variants.eight : (Erdos939Sums 8).Nonempty := by
   sorry
 
@@ -97,7 +97,7 @@ $$27^5+84^5+110^5+133^5=144^5$$.
 [LaPa67] Lander, L. J. and Parkin, T. R., "A counterexample to Euler's sum of powers conjecture."
   Math. Comp. (1967), 101--103.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/939.lean", AMS 11]
 theorem erdos_939.variants.euler : ¬ (∀ k ≥ 4, ∀ S : Finset ℕ, S.card = k - 1 →
     ¬ (∃ q, ∑ s ∈ S, s ^ k = q ^k)) := by
   push_neg
