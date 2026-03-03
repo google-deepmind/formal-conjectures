@@ -41,7 +41,7 @@ Erdős [Er37b] proved that if $f_2(n)$ counts the number of solutions to $n = p_
 
 [Er37b] Erdős, Paul, On the Sum and Difference of Squares of Primes. J. London Math. Soc. (1937), 133--136.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/979.lean", AMS 11]
 theorem erdos_979_k2 :
     Filter.limsup (fun n => (solutionSet n 2).encard) Filter.atTop = ⊤ := by
   sorry
@@ -49,7 +49,7 @@ theorem erdos_979_k2 :
 /--
 Erdős (unpublished)
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/979.lean", AMS 11]
 theorem erdos_979_k3 :
     Filter.limsup (fun n => (solutionSet n 3).encard) Filter.atTop = ⊤ := by
   sorry
