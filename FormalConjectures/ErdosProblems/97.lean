@@ -86,7 +86,7 @@ Danzer's construction is explained in [Er87b].
 [Er46b] Erdős, P., _On sets of distances of $n$ points_. Amer. Math. Monthly (1946), 248-250.
 [Er87b] Erdős, P., _Some combinatorial and metric problems in geometry_. Intuitive geometry (Siófok, 1985), 167-177.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/97", AMS 52]
 theorem erdos_97.variants.three_equidistant :
     ∃ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A ∧ HasNEquidistantProperty 3 A := by
   let A₁ : ℝ² := !₂[(-√3), -1]
@@ -116,7 +116,7 @@ every vertex has three vertices equidistant from it (and this distance is the sa
 
 [FiRe92] Fishburn, P. C. and Reeds, J. A., _Unit distances between vertices of a convex polygon_. Comput. Geom. (1992), 81-91.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/97", AMS 52]
 theorem erdos_97.variants.three_unit_distance :
     ∃ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A ∧ HasNUnitDistanceProperty 3 A := by
   sorry
@@ -133,7 +133,7 @@ Fishburn and Reeds [FiRe92] also proved that the smallest $n$ for which there ex
 a convex $n$-gon and a cut $\{A, B\}$ of its vertices such that $|\{b \in B : d(a, b) = 1\}| ≥ 3$
 for all $a \in A$, and $|\{a \in A : d(a, b) = 1\}| ≥ 3$ for all $b \in B$, is $n = 20$.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/97", AMS 52]
 theorem erdos_97.variants.three_unit_distance_cut_min :
     sInf {n : ℕ | ∃ (V : Finset ℝ²) (A B : Finset ℝ²),
       n = V.card ∧ ConvexIndep V ∧ A.Nonempty ∧ B.Nonempty ∧ IsCut V A B ∧
