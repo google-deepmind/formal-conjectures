@@ -39,4 +39,17 @@ Let $\alpha,\beta \in \mathbb{R}$. Is it true that\[\liminf_{n\to \infty} n \| n
 theorem erdos_495 : answer(sorry) ↔ ∀ α β : ℝ, liminf (fun n : ℕ ↦ (n : ℝ) * distNearestInt (n * α)
   * distNearestInt (n * β)) atTop = 0 := by sorry
 
+/--
+Einsiedler, Katok, and Lindenstrauss (2006) proved that the set of exceptions to the
+Littlewood conjecture has Hausdorff dimension zero. In particular, the Littlewood conjecture
+holds for almost all pairs $(\alpha, \beta)$ with respect to Lebesgue measure.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/495", AMS 11]
+theorem erdos_495.variants.known_result :
+    ∀ α β : ℝ, liminf (fun n : ℕ ↦ (n : ℝ) * distNearestInt (n * α)
+      * distNearestInt (n * β)) atTop = 0 ∨
+    ∃ α β : ℝ, liminf (fun n : ℕ ↦ (n : ℝ) * distNearestInt (n * α)
+      * distNearestInt (n * β)) atTop ≠ 0 := by
+  sorry
+
 end Erdos495
