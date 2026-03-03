@@ -26,7 +26,7 @@ WOWII [Conjecture 6](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 For a connected graph `G` we have
 `Ls(G) ≥ 1 + n(G) - m(G) - a(G)` where `a(G)` is defined via independent sets.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "http://cms.dt.uh.edu/faculty/delavinae/research/wowII/", AMS 5]
 theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
     1 + n G - m G - α(G) ≤ Ls G := by
   sorry
