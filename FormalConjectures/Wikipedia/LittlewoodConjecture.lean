@@ -44,7 +44,7 @@ $$
 where $\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$ is the distance
 to the nearest integer.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Littlewood_conjecture"]
 theorem littlewood_conjecture (α β : ℝ) :
     atTop.liminf (fun (n : ℕ) ↦ n * distToNearestInt (n * α) * distToNearestInt (n * β)) = 0 := by
   sorry
@@ -57,7 +57,7 @@ $$
 where $\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$ is the distance
 to the nearest integer, and $|x|_{p}$ is the $p$-adic norm.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Littlewood_conjecture"]
 theorem padic_littlewood_conjecture (α : ℝ) (p : ℕ) (hp : p.Prime) :
     atTop.liminf (fun (n : ℕ) ↦ n * padicNorm p n * distToNearestInt (n * α)) = 0 := by
   sorry
