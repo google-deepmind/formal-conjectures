@@ -47,11 +47,13 @@ Two known Wolstenholme primes: 16843 and 2124679.
 -/
 @[category test, AMS 11]
 theorem wolstenholme_prime_16483 : IsWolstenholmePrime 16843 := by
-  sorry
+  refine ⟨by norm_num, by norm_num, ?_⟩
+  native_decide
 
 @[category test, AMS 11]
 theorem wolstenholme_prime_2124679 : IsWolstenholmePrime 2124679 := by
-  sorry
+  refine ⟨by norm_num, by norm_num, ?_⟩
+  native_decide
 
 /--
 Equivalently, a prime $p > 7$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
