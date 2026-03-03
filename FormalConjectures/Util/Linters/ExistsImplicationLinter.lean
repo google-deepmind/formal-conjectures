@@ -75,6 +75,6 @@ def existsImplicationLinter : Linter where
   run := Lean.Elab.Command.Linter.runTermLinter (σ := Unit) linter.style.existsImplication
     fun expr stx => checkExistsArrow expr stx
 
-initialize addLinter existsImplicationLinter
+initialize zzzzzzz : Unit ← do addLinter existsImplicationLinter
 
 end ExistsImplicationLinter
