@@ -56,7 +56,7 @@ Pólya's theorem that the set of $k$-smooth integers has unbounded gaps - indeed
 $n(n+1)\cdots (n+k-1)$ is divisible by all primes $\leq k$ and, provided $n$ is large, all but at
 most one of $n,n+1,\ldots,n+k-1$ has a prime factor $>k$ by Pólya's theorem.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/890.lean", AMS 11]
 theorem erdos_890.variants.liminf_lower_bound (k : ℕ) :
     liminf (fun n ↦ (∑ i ∈ range k, (ω (n + i) : EReal))) atTop ≥ k + π k - 1 := by
   sorry
@@ -64,7 +64,7 @@ theorem erdos_890.variants.liminf_lower_bound (k : ℕ) :
 /--
 It is a classical fact that $\limsup_{n\to \infty}\omega(n)\frac{\log\log n}{\log n}=1.$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/890.lean", AMS 11]
 theorem erdos_890.variants.omega_limsup :
     limsup (fun n ↦ (ω n : EReal) * (log (log n) / log n)) atTop = 1 := by
   sorry
