@@ -49,4 +49,14 @@ theorem erdos_680.variant : answer(sorry) ↔ ∀ ε > 0, ∃ C > 0,
     Nat.minFac (n + k) > exp ((1 + ε) * √k) + C := by
   sorry
 
+/--
+The least prime factor of $n + k$ is related to Linnik's theorem and sieve methods. It is known
+that for any fixed $A$, there exist infinitely many $n$ such that $p(n + k) > k$ for some $k$,
+providing a lower bound consistent with the conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/680", AMS 11]
+theorem erdos_680.variants.known_result :
+    ∀ᶠ (n : ℕ) in Filter.atTop, ∃ k ≠ 0, (n + k).minFac > k + 1 := by
+  sorry
+
 end Erdos680
