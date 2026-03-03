@@ -34,7 +34,7 @@ to be the number of distinct exponents $k_i$. -/
 noncomputable def h (n : ℕ) : ℕ := (n !).factorization.frange.card
 
 /-- Erdős and Selfridge prove in [Er82c] that $h(n) \asymp \left(\frac{n}{\log n}\right)^{1/2}$. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/912.lean", AMS 11]
 theorem erdos_912.variants.selfridge :
     (fun n => (h n : ℝ)) =Θ[atTop] (fun n => (n / Real.log n) ^ (1 / 2 : ℝ)) := by
   sorry
