@@ -28,4 +28,14 @@ namespace Erdos196
 theorem erdos_196 : answer(sorry) ↔ ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 4 := by
   sorry
 
+/--
+Davis, Entringer, Graham, and Simmons (1977) proved that every permutation of $\mathbb{N}$
+contains a monotone 3-term arithmetic progression, establishing the $k=3$ case; the
+problem of whether $k=4$ holds for all permutations remains open.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/196", AMS 5 11]
+theorem erdos_196.variants.monotone_3ap :
+    ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 3 := by
+  sorry
+
 end Erdos196
