@@ -65,7 +65,7 @@ theorem green_2 : answer(sorry) ↔
 /--
 From [Sa21] it is known that there is always such an S with $|S| \gt (\log |A|)^{1+c}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.4153/S0008414X19000610", AMS 11]
 theorem green_2_lower_bound_sanders :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℤ, A.card = n →
       maxRestrictedSumAvoidingSubsetSize A ≥ Real.log n ^ (1 + c) := by
@@ -74,7 +74,7 @@ theorem green_2_lower_bound_sanders :
 /--
 From [Er65] it is known that $M(A) \le \frac{1}{3}|A| + O(1)$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.2", AMS 11]
 theorem green_2_upper_bound_erdos :
     ∃ C : ℝ, ∀ A : Finset ℤ,
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ A.card / 3 + C := by
@@ -88,7 +88,7 @@ Choi [Er65, p190], and [BSS00].
 /--
 From [Ch71] it is known that $M(A) \le |A|^{2/5 + o(1)}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.1112/plms/s3-23.4.629", AMS 11]
 theorem green_2_upper_bound_choi :
     ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)), ∀ A : Finset ℤ,
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ A.card ^ (2 / 5 + o A.card) := by
@@ -97,7 +97,7 @@ theorem green_2_upper_bound_choi :
 /--
 From [Ru05] the best-known upper bound is $|S| \lt e^{C \sqrt{\log |A|}}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.2", AMS 11]
 theorem green_2_upper_bound_ruzsa :
     ∃ C > (0 : ℝ), ∀ A : Finset ℤ,
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) < Real.exp (C * Real.sqrt (Real.log A.card)) := by
