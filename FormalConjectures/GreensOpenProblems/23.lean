@@ -32,7 +32,7 @@ Suppose that $\mathbb{N}$ is finitely coloured. Are there $x,y$ of the same colo
 
 Solved in [FrKlMo25].
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/GreensOpenProblems/23.lean", AMS 5 11]
 theorem green_23 :
   answer(True) ↔
     -- For every finite colouring of the natural numbers
