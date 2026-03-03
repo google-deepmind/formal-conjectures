@@ -68,4 +68,14 @@ theorem erdos_434.parts.ii : answer(sorry) ↔ ∀ᵉ (n ≥ 1) (k ≥ 1), k ≤
       (Nat.NcardUnrepresentable <| Set.Icc (n - k + 1 : ℕ) n) := by
   sorry
 
+/--
+For $k = 1$, $n = 1$: the only set is $A = \{1\}$ with $\gcd = 1$, and every positive natural
+is representable, so the number of unrepresentable integers is $\{0\}$ (just $0$ itself),
+confirming the base case of the conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/434", AMS 11]
+theorem erdos_434.variants.known_result :
+    Nat.NcardUnrepresentable (Set.Icc 1 1) = 1 := by
+  sorry
+
 end Erdos434
