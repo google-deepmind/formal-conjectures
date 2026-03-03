@@ -35,4 +35,15 @@ theorem erdos_849 : answer(sorry) ↔
       {n : ℕ | ∃ k ≥ 1, 2 * k ≤ n ∧ choose n k = a}.ncard = t := by
   sorry
 
+/--
+Known to hold for small values of $t$. For $t = 1$, infinitely many values $a$ appear exactly
+once as a binomial coefficient $\binom{n}{k}$; for example, all primes $p$ appear only as
+$\binom{p}{1}$ (and $\binom{p}{p-1}$, excluded by $k \leq n/2$).
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/849", AMS 11]
+theorem erdos_849.variants.known_result :
+    ∀ p : ℕ, p.Prime →
+      {n : ℕ | ∃ k ≥ 1, 2 * k ≤ n ∧ choose n k = p}.ncard = 1 := by
+  sorry
+
 end Erdos849
