@@ -52,7 +52,8 @@ It has been shown that there is a large $M$ so that it is possible to partition 
 two sets $A$ and $B$ so that $A$ contains no pair of points with distance 1 and $B$ contains no A.P.
 of length $M$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+  "https://www.erdosproblems.com/188", AMS 5]
 theorem erdos_188.variants.nonempty : s.Nonempty := by
   sorry
 
@@ -62,7 +63,8 @@ Old and new problems and results in combinatorial number theory by Erdős & Grah
 How small can $M$ be made? The only estimate currently known is that $M \le 10000000$ (more or less).
 In the other direction, it has just been shown by R. Juhász [Ju (79)] that we must have $M \ge 5$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+  "https://www.erdosproblems.com/188", AMS 5]
 theorem erdos_188.variants.estimate : (∀ k, k ∈ s → 5 ≤ k) ∧ (∃ k ∈ s, k ≤ 10000000) := by
   sorry
 
