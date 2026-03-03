@@ -186,4 +186,15 @@ lemma isAsymptoticMulBasisOfOrder_iff_prod_atTop :
       ∀ᶠ a in atTop, ∃ f : Fin n → M, (∀ i, f i ∈ A) ∧ ∏ i, f i = a := by
   simp [isAsymptoticMulBasisOfOrder_iff_prod, cofinite_eq_atTop]
 
+/-- A set `A : Set M` is a weak multiplicative basis of order `n` if any element `a : M`
+can be expressed as a product of at most `n` elements lying in `A`. -/
+@[to_additive
+/-- A set `A : Set M` is a weak additive basis of order `n` if for any element
+`a : M`, it can be expressed as a sum of at most `n` elements lying in `A`. -/]
+def IsWeakMulBasisOfOrder (A : Set M) (n : ℕ) : Prop := ∀ a, ∃ m ≤ n, a ∈ A ^ m
+
+/-- A weak multiplicative basis of some order. -/
+@[to_additive /-- A weak additive basis of some order. -/]
+def IsWeakMulBasis (A : Set M) : Prop := ∃ n, A.IsWeakMulBasisOfOrder n
+
 end Set
