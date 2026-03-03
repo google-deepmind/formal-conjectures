@@ -155,12 +155,20 @@ theorem Reachable.complexity {n : ℕ} (hn : 0 < n) : Reachable n (complexity n)
 theorem complexity_zero : complexity 0 = 0 := rfl
 
 @[category test, AMS 11]
-theorem complexity_one : complexity 1 = 1 := by
-  sorry
+theorem complexity_one : complexity 1 = 1 :=
+  Reachable.complexity_eq Reachable.one fun n' hn' h ↦ by
+    have : n' = 0 := Nat.lt_one_iff.mp hn'
+    exact absurd (this ▸ h) (not_reachable_zero_snd 1)
 
 @[category test, AMS 11]
-theorem complexity_two : complexity 2 = 2 := by
-  sorry
+theorem complexity_two : complexity 2 = 2 :=
+  Reachable.complexity_eq (Reachable.add Reachable.one Reachable.one) fun n' hn' h ↦ by
+    have : n' = 0 ∨ n' = 1 := by omega
+    rcases this with rfl | rfl
+    · exact absurd h (not_reachable_zero_snd 2)
+    · rw [reachable_iff_of_two_le 2 1 (by omega)] at h
+      obtain ⟨_, _, _, _, _, hn₁, _, hn₂, hsum, -⟩ := h
+      omega
 
 @[category test, AMS 11]
 theorem Reachable.pow (m n : ℕ) (hm : 0 < m) (hn : 0 < n) : Reachable (m ^ n) (m * n) := by
