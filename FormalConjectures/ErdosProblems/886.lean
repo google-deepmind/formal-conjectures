@@ -51,7 +51,7 @@ theorem erdos_886 :
 Erdős and Rosenfeld [ErRo97] proved that there are infinitely many $n$ such that there are
 four divisors of $n$ in $(n^{1/2},n^{1/2}+16n^{1/4})$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/886.lean", AMS 11]
 theorem erdos_886_variants_rosenfeld_infinite :
     Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4) 16).card} := by
   sorry
@@ -60,7 +60,7 @@ theorem erdos_886_variants_rosenfeld_infinite :
 Erdős and Rosenfeld [ErRo97] proved that, for any constant $C>0$, all large $n$ have at most
 $1+C^2$ many divisors in $[n^{1/2}, n^{1/2}+Cn^{1/4}]$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/886.lean", AMS 11]
 theorem erdos_886_variants_rosenfeld_bound :
     ∀ C > 0, ∀ᶠ (n : ℕ) in atTop,
     ((divisors n).filter (fun (d : ℕ) =>
