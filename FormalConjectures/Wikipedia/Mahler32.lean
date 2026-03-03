@@ -50,8 +50,10 @@ theorem mahler_conjecture.variants.consequence (H : type_of% mahler_conjecture) 
     1 / 2 < Ω (3 / 2) := by
   sorry
 
-/-- It is known that for all rational `p/q > 1` in lowest terms, we have `Ω(p/q) > 1/p`. -/
-@[category research solved, AMS 11]
+/-- It is known that for all rational `p/q > 1` in lowest terms, we have `Ω(p/q) > 1/p`.
+Proved by Flatto, Lagarias, and Pollington (1995). -/
+@[category research formally solved using formal_conjectures at
+"https://doi.org/10.1007/BF01895692", AMS 11]
 theorem mahler_conjecture.variants.flatto_lagarias_pollington (p q : ℕ) (hq : 1 < q)
     (hpq : p.Coprime q) (hpq' : q < p) : 1 / p < Ω (p / q) := by
   sorry
