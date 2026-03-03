@@ -36,7 +36,7 @@ edges of $K_α$ there is either a red $K_α$ or a blue $K_3$?
 
 This is true and was proved independently by Schipperus [Sc10] and Darby.
 -/
-@[category research solved, AMS 3]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/591", AMS 3]
 theorem erdos_591 : answer(True) ↔ OrdinalCardinalRamsey (ω ^ ω ^ 2) (ω ^ ω ^ 2) 3 := by
   sorry
 
