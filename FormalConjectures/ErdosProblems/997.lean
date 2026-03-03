@@ -63,7 +63,7 @@ theorem erdos_997 :
 Erdős proved that, if $n_k$ is a lacunary sequence, then the sequence $\{ \alpha n_k\}$ is not
 well-distributed for almost all $\alpha$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/997.lean", AMS 11]
 theorem erdos_997.variants.lacunary (n : ℕ → ℕ) (h : IsLacunary n) :
     ∀ᵐ α, ¬ IsWellDistributed (fun k ↦ Int.fract (α * (n k : ℝ))) := by
   sorry
@@ -76,7 +76,7 @@ reconstruct my 'proof' which perhaps never existed."
 
 The existence of such an $\alpha$ was established by Champagne, Le, Liu, and Wooley [CLLW24].
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/997.lean", AMS 11]
 theorem erdos_997.variants.irrational :
     ∃ α : ℝ, Irrational α ∧
       ¬ IsWellDistributed (fun n ↦ Int.fract (α * (n.nth Nat.Prime))) := by
