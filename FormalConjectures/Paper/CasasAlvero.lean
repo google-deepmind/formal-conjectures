@@ -130,7 +130,7 @@ This was proved by Graf von Bothmer, Labs, Schicho, and van de Woestijne.
 
 Reference: [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)
 -/
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/pdf/math/0605090", AMS 12]
 theorem casas_alvero.prime_power (p k : ℕ) (hp : p.Prime) (hd : P.natDegree = p^k)
     (hP' : HasCasasAlveroProp P) : ∃ α : K, P = (X - C α) ^ P.natDegree := by
   sorry
@@ -141,7 +141,7 @@ This was proved by Graf von Bothmer, Labs, Schicho, and van de Woestijne.
 
 Reference: [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)
 -/
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/pdf/math/0605090", AMS 12]
 theorem casas_alvero.double_prime_power (p k : ℕ) (hp : p.Prime) (hd : P.natDegree = 2 * p^k)
     (hP' : HasCasasAlveroProp P) : ∃ α : K, P = (X - C α) ^ P.natDegree := by
   sorry
@@ -154,7 +154,7 @@ This was shown by Graf von Bothmer, Labs, Schicho, and van de Woestijne.
 
 Reference: [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)
 -/
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/pdf/math/0605090", AMS 12]
 theorem casas_alvero.positive_char_counterexample {p : ℕ} (hp : p.Prime) :
     ∃ (K : Type*) (_ : Field K) (_ : CharP K p),
       let P := X ^ (p + 1) - X ^ p
