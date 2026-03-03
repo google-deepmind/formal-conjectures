@@ -67,7 +67,7 @@ theorem inscribed_rectangle_problem :
 /--
 It is known that every Jordan curve admits at least one inscribed rectangle.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/InscribedSquare.lean", AMS 51]
 theorem exists_inscribed_rectangle (γ : Circle → ℝ²) (hγ : IsEmbedding γ) :
     ∃ t₁ t₂ t₃ t₄ r, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r := by
   sorry
@@ -75,7 +75,7 @@ theorem exists_inscribed_rectangle (γ : Circle → ℝ²) (hγ : IsEmbedding γ
 /--
 It is known that every *smooth* Jordan curve admits inscribed rectangles of all aspect ratios.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/InscribedSquare.lean", AMS 51]
 theorem exists_inscribed_rectangle_of_smooth (γ : Circle → ℝ²)
     (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) ∞ γ) (r : ℝ) (hr : r > 0) :
     ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r := by
@@ -84,7 +84,7 @@ theorem exists_inscribed_rectangle_of_smooth (γ : Circle → ℝ²)
 /--
 It is also known that every $C^2$ Jordan curve admits an inscribed square.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/InscribedSquare.lean", AMS 51]
 theorem exists_inscribed_square_of_C2 (γ : Circle → ℝ²)
     (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) 2 γ) :
     ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 := by
