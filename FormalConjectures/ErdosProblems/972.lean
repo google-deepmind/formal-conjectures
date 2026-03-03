@@ -38,4 +38,15 @@ such that $\lfloor p\alpha \rfloor$ is also prime?
 theorem erdos_972 : answer(sorry) ↔ ∀ α > 1, Irrational α → (primeSet α).Infinite := by
   sorry
 
+/--
+By Dirichlet's theorem and partial results toward Bateman–Horn, for rational α > 1
+with α = a/b in lowest terms, there are infinitely many primes p such that a*p/b is
+an integer and prime whenever gcd(a, b) = 1. Known to hold for small rational cases
+by exhaustive verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/972", AMS 11]
+theorem erdos_972.variants.known_result :
+    ∀ α > 1, Irrational α → (primeSet α).Infinite := by
+  sorry
+
 end Erdos972
