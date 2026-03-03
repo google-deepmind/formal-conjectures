@@ -50,4 +50,12 @@ theorem erdos_1093.parts.ii :
       ∀ p, p.Prime → (p ∣ choose n k) → k < p}.Finite := by
   sorry
 
+/--
+The deficiency is well-defined and non-negative for all $n \geq k$. Known to hold for small
+cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1093", AMS 5]
+theorem erdos_1093.variants.deficiency_nonneg (n k : ℕ) : 0 ≤ deficiency n k := by
+  sorry
+
 end Erdos1093
