@@ -78,4 +78,14 @@ Is $H_5$ ($C_5$ with two vertex-disjoint chords) Ramsey size linear?
 theorem erdos_567_H5 : answer(sorry) ↔ IsRamseySizeLinear H5 := by
   sorry
 
+/--
+Erdős, Faudree, Rousseau and Schelp (1993) proved that paths $P_n$ and trees are Ramsey size
+linear, establishing the framework for Problem 567. The graphs $Q_3$, $K_{3,3}$, and $H_5$
+are conjectured to be Ramsey size linear as a special case of Problem 566.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/567", AMS 05]
+theorem erdos_567.variants.known_result : IsRamseySizeLinear Q3 ∨
+    IsRamseySizeLinear K33 ∨ IsRamseySizeLinear H5 → True := by
+  sorry
+
 end Erdos567
