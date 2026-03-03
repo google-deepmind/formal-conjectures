@@ -22,7 +22,7 @@ import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 
 *Reference:*
  - [erdosproblems.com/1038](https://www.erdosproblems.com/1038)
- - [Tao25] Tao, Terence. Sublevel Sets of Logarithmic Potentials. Terry Tao’s Blog, Dec. 2025
+ - [Tao25] Tao, Terence. Sublevel Sets of Logarithmic Potentials. Terry Tao's Blog, Dec. 2025
   (https://terrytao.wordpress.com/wp-content/uploads/2025/12/erdos-1038-1.pdf)
 -/
 
@@ -43,7 +43,8 @@ theorem erdos_1038.parts.i (n : ℕ) : answer(sorry) =
 /-- The supremum of `|{x ∈ ℝ : |f x| < 1}|` over all monic polynomials `f` such that
 all of its roots are real and contained in `[-1,1]` is `2 * 2 ^ (1 / 2)`. This is proved in
 [Tao25]. -/
-@[category research solved, AMS 28]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1038", AMS 28]
 theorem erdos_1038.parts.ii (n : ℕ) : 2 * 2 ^ (1 / 2 : ℝ) =
     ⨆ f : {f : Polynomial ℝ // f.Monic ∧
     (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
@@ -52,7 +53,8 @@ theorem erdos_1038.parts.ii (n : ℕ) : 2 * 2 ^ (1 / 2 : ℝ) =
 
 /-- The infimum of `|{x ∈ ℝ : |f x| < 1}|` over all nonconstant monic polynomials `f` such that
 all of its roots are real and contained in `[-1,1]` is `< 1.835`. -/
-@[category research solved, AMS 28]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1038", AMS 28]
 theorem erdos_1038.variants.inf_upperBound (n : ℕ) : ⨅ f : {f : Polynomial ℝ // f.Monic ∧ f ≠ 1 ∧
     (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
     volume {x | |f.1.eval x| < 1} < 1.835 := by
@@ -60,7 +62,8 @@ theorem erdos_1038.variants.inf_upperBound (n : ℕ) : ⨅ f : {f : Polynomial �
 
 /-- The infimum of `|{x ∈ ℝ : |f x| < 1}|` over all nonconstant monic polynomials `f` such that
 all of its roots are real and contained in `[-1,1]` is `≥ 2 ^ (4 / 3) - 1`. -/
-@[category research solved, AMS 28]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1038", AMS 28]
 theorem erdos_1038.varaints.inf_lowerBound (n : ℕ) : 2 ^ (4 / 3 : ℝ) - 1 ≤
     ⨅ f : {f : Polynomial ℝ // f.Monic ∧ f ≠ 1 ∧
     (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
