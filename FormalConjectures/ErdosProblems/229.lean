@@ -53,7 +53,7 @@ Let $\{S_k\}$ be any sequence of sets in the complex plane, each of which has no
 limit point. Then there exists a sequence $\{n_k\}$ of positive integers and a
 transcendental entire function $f(z)$ such that $f^{(n_k)}(z) = 0$ if $z \in S_k$.
 -/
-@[category research solved, AMS 30]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/229.lean", AMS 30]
 theorem theorem_1
     {S : ℕ → Set ℂ}
     (h : ∀ (k), derivedSet (S k) = ∅) :
