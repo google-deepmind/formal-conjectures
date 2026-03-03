@@ -56,7 +56,9 @@ There exists a connected bijection ℝ → ℝ^2 where the inverse is not connec
 proven in [mathoverflow/260589](https://mathoverflow.net/questions/260589) by user
 [Gro-Tsen](https://mathoverflow.net/users/17064/gro-tsen).
 -/
-@[category research solved, AMS 26 54]
+@[category research formally solved using formal_conjectures at
+  "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Mathoverflow/235893.lean",
+  AMS 26 54]
 theorem mathoverflow_260589 :
     ∃ f : ℝ ≃ ℝ^2, IsConnectedMap f ∧ ¬ IsConnectedMap f.symm := by
   sorry
