@@ -81,7 +81,8 @@ Erdős and Lewin proved this conjecture when $a = 3$, $b = 5$, and $c = 7$.
 Reference: [ErLe96] Erdős, P. and Lewin, Mordechai,
 _$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://www.erdosproblems.com/123", AMS 11]
 theorem erdos_123.variants.erdos_lewin_3_5_7 :
     IsDComplete (↑(powers 3) * ↑(powers 5) * ↑(powers 7)) := by sorry
 
@@ -97,7 +98,8 @@ problem, but it was quickly proven by Jansen and others using a simple inductive
 Reference: [Er92b] Erdős, Paul, _Some of my favourite problems in various branches
 of combinatorics_. Matematiche (Catania) (1992), 231-240.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://www.erdosproblems.com/123", AMS 11]
 theorem erdos_123.variants.powers_2_3 : IsDComplete (↑(powers 2) * ↑(powers 3)) := by sorry
 
 /--
