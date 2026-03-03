@@ -39,4 +39,16 @@ theorem erdos_28 (A : Set ℕ) (h : (A + A)ᶜ.Finite) :
 
 -- TODO(firsching): add the theorems/conjectures for the comments on the page
 
+/--
+Erdős and Turán (1941) conjectured that if $A \subseteq \mathbb{N}$ is an additive basis of order 2
+(i.e., $A + A$ covers all sufficiently large integers), then $\limsup r_{A}(n) = \infty$,
+where $r_A(n)$ counts representations. This is the Erdős–Turán conjecture on additive bases.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/28", AMS 11]
+theorem erdos_28.variants.erdos_turan :
+    ∀ (A : Set ℕ), (A + A)ᶜ.Finite →
+      ∃ c : ℝ, 0 < c ∧ ∀ N : ℕ, c * Real.log N ≤
+        ∑ n in Finset.range N, (sumRep A n : ℝ) ^ 2 / N := by
+  sorry
+
 end Erdos28
