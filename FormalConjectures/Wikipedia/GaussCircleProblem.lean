@@ -61,7 +61,7 @@ for sufficiently large $r$.
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/GaussCircleProblem.lean", AMS 11]
 theorem error_le : ∀ᶠ r in atTop, |E r| ≤ 2 * √2 * π * r := by
   sorry
 
@@ -71,7 +71,7 @@ $$
   |E(r)| \neq o\left(r^{1/2}(\log r)^{1/4}\right)
 $$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/GaussCircleProblem.lean", AMS 11]
 theorem error_not_isLittleO : ¬E =o[atTop] (fun r => √r * √√r.log) := by
   sorry
 
@@ -97,7 +97,7 @@ $$
     \left\lfloor\frac{r^2}{4i + 3}\right\rfloor\right).
 $$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/GaussCircleProblem.lean", AMS 11]
 theorem exact_form_floor (r : ℝ) (hr : 0 ≤ r) :
     N r = 1 + 4 * ∑' (i : ℕ), (⌊r ^ 2 / (4 * i + 1)⌋ - ⌊r ^ 2 / (4 * i + 3)⌋) := by
   sorry
