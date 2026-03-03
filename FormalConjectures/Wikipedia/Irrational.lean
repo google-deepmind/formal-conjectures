@@ -32,7 +32,7 @@ local notation "e" => exp 1
 namespace Irrational
 
 /-- Are $e$ and $\pi$ algebraically independent? -/
-@[category research open, AMS 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem algebraicIndependent_e_pi :
     answer(sorry) ↔ AlgebraicIndependent ℚ ![e, π] := by
   sorry
@@ -40,7 +40,7 @@ theorem algebraicIndependent_e_pi :
 /--
 Is $e + \pi$ irrational?
 -/
-@[category research open, AMS 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem irrational_e_plus_pi :
     answer(sorry) ↔ Irrational (e + π) := by
   sorry
@@ -48,7 +48,7 @@ theorem irrational_e_plus_pi :
 /--
 Is $e \pi$ irrational?
 -/
-@[category research open, AMS 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem irrational_e_times_pi :
     answer(sorry) ↔ Irrational (e * π) := by
   sorry
@@ -56,7 +56,7 @@ theorem irrational_e_times_pi :
 /--
 Is $e ^ e$ irrational?
 -/
-@[category research open, AMS 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem irrational_e_to_e :
     answer(sorry) ↔ Irrational (e ^ e) := by
   sorry
@@ -64,7 +64,7 @@ theorem irrational_e_to_e :
 /--
 Is $\pi ^ e$ irrational?
 -/
-@[category research open, AMS 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem irrational_pi_to_e :
     answer(sorry) ↔ Irrational (π ^ e) := by
   sorry
@@ -72,7 +72,7 @@ theorem irrational_pi_to_e :
 /--
 Is $\pi ^ \pi$ irrational?
 -/
-@[category research open, AMS 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem irrational_pi_to_pi :
     answer(sorry) ↔ Irrational (π ^ π) := by
   sorry
@@ -80,7 +80,7 @@ theorem irrational_pi_to_pi :
 /--
 Is $\ln(\pi)$ irrational?
 -/
-@[category research open, AMS 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem irrational_ln_pi :
     answer(sorry) ↔ Irrational (log π) := by
   sorry
@@ -88,7 +88,7 @@ theorem irrational_ln_pi :
 /--
 Is the Euler-Mascheroni constant $\gamma$ irrational?
 -/
-@[category research open, AMS 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem irrational_eulerMascheroniConstant :
     answer(sorry) ↔ Irrational eulerMascheroniConstant := by
   sorry
@@ -96,7 +96,7 @@ theorem irrational_eulerMascheroniConstant :
 /--
 Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$ irrational?
 -/
-@[category research open, AMS 11 33]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Irrational_number#Open_questions"]
 theorem irrational_catalanConstant :
     answer(sorry) ↔ Irrational catalanConstant := by
   sorry
