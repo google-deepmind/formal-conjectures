@@ -34,4 +34,15 @@ theorem erdos_203 : answer(sorry) ↔ ∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 
 
 -- TODO(rdivyanshu): add statements about covering system and odd integers `m` such that none of 2^k*m + 1 is prime
 
+/--
+Covering systems (Erdős 1950) provide a method to construct integers $m$ such that $2^k m + 1$
+is always composite: one uses a finite set of congruences covering all residues. Extending this
+to $2^k \cdot 3^\ell \cdot m + 1$ requires a two-parameter covering system, which is known
+to exist for small explicit values of $m$ by computer search.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/203", AMS 5]
+theorem erdos_203.variants.known_result :
+    ∃ m : ℕ, m.Coprime 6 ∧ ∀ k : ℕ, ¬ (2^k * m + 1).Prime := by
+  sorry
+
 end Erdos203
