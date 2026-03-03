@@ -38,4 +38,13 @@ theorem erdos_681 : answer(sorry) ↔
     ∀ᶠ n in .atTop, ∃ k > 0, (n + k).Composite ∧ ∀ p, IsLPF p (n + k) → p > k ^ 2 := by
   sorry
 
+/--
+It is known that there exist infinitely many composite numbers $m$ whose least prime factor
+exceeds $m^{1/3}$, via results on smooth numbers and sieve methods.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/681", AMS 11]
+theorem erdos_681.variants.known_result :
+    {m : ℕ | m.Composite ∧ ∀ p, IsLPF p m → (m : ℝ) ^ (1/3 : ℝ) < p}.Infinite := by
+  sorry
+
 end Erdos681
