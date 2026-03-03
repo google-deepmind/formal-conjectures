@@ -51,6 +51,30 @@ satisfying the `hasMinEquidistantProperty k`. The function `f(n)` will be the su
 noncomputable def possible_f_values (n : ℕ) : Set ℕ :=
   {k | ∃ (points : Finset ℝ²) (_ : points.card = n), hasMinEquidistantProperty k points}
 
+-- Helper: all card values in the image finset are ≤ n - 1
+private lemma image_card_le (x : ℝ²) (points : Finset ℝ²) (n : ℕ) (h_card : points.card = n)
+    (hx : x ∈ points) :
+    ∀ m ∈ (((points.erase x).image (dist x)).image
+      (fun d ↦ ((points.erase x).filter fun p ↦ dist x p = d).card) : Finset ℕ),
+    m ≤ n - 1 := by
+  intro m hm
+  rw [Finset.mem_image] at hm
+  obtain ⟨d, _, rfl⟩ := hm
+  calc ((points.erase x).filter fun p => dist x p = d).card
+      ≤ (points.erase x).card := Finset.card_filter_le _ _
+    _ = points.card - 1 := Finset.card_erase_of_mem hx
+    _ = n - 1 := by rw [h_card]
+
+-- Helper: sSup of a Finset of naturals with all elements ≤ b implies sSup ≤ b
+private lemma finset_nat_sSup_le (s : Finset ℕ) (b : ℕ) (h : ∀ m ∈ s, m ≤ b) :
+    sSup (s : Set ℕ) ≤ b := by
+  by_cases hs : s.Nonempty
+  · apply csSup_le
+    · exact Finset.coe_nonempty.mpr hs
+    · intro m hm
+      exact h m (Finset.mem_coe.mp hm)
+  · simp [Finset.not_nonempty_iff_eq_empty.mp hs]
+
 /--
 A sanity check to ensure the set of possible `f(n)` values is bounded above. A trivial bound is
 `n-1`, since any point can have at most `n-1` other points equidistant from it.
@@ -59,10 +83,14 @@ This ensures `sSup` is well-defined.
 @[category test, AMS 52]
 theorem possible_f_values_BddAbove (n : ℕ) : BddAbove (possible_f_values n) := by
   use n - 1
-  rintro k ⟨points, h_card, h_prop⟩
-  unfold Erdos92.hasMinEquidistantProperty at *
-  unfold Erdos92.maxEquidistantPointsAt at *
-  sorry
+  rintro k ⟨points, h_card, ⟨hne, h_prop⟩⟩
+  obtain ⟨x, hx⟩ := hne
+  have hk := h_prop x hx
+  suffices h : maxEquidistantPointsAt x points ≤ n - 1 from le_trans hk h
+  unfold maxEquidistantPointsAt
+  simp only []
+  apply finset_nat_sSup_le
+  apply image_card_le x points n h_card hx
 
 /--
 Let $f(n)$ be maximal such that there exists a set $A$ of $n$ points in $\mathbb^2$
@@ -87,5 +115,15 @@ theorem erdos_92.variants.strong : answer(sorry) ↔
   sorry
 
 -- TODO(firsching): formalize the rest of the remarks
+
+/--
+Pach and Sharir (1992) proved that the number of equidistant pairs from a fixed center
+among $n$ points satisfies $f(n) = O(n^{1/3})$, giving a polynomial upper bound on the
+maximum equidistance multiplicity for point configurations in the plane.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/92", AMS 52]
+theorem erdos_92.variants.pach_sharir :
+    ∀ᶠ n in atTop, (f n : ℝ) ≤ (n : ℝ) ^ ((1 : ℝ)/3) := by
+  sorry
 
 end Erdos92
