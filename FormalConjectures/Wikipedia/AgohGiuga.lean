@@ -32,8 +32,8 @@ References:
 * Wikipedia: https://en.wikipedia.org/wiki/Giuga_number
 * G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 * E. Bedocchi, _Note on a conjecture about prime numbers_
-* D. Borwein, J. M. Borwein, P. B. Borwein, and R. Girgensohn, _Giuga’s conjecture on primality_
-* V. Tipu, _A Note on Giuga’s Conjecture_
+* D. Borwein, J. M. Borwein, P. B. Borwein, and R. Girgensohn, _Giuga's conjecture on primality_
+* V. Tipu, _A Note on Giuga's Conjecture_
 
 -/
 
@@ -68,7 +68,8 @@ theorem agoh_giuga.variants.giuga : AgohGiugaSum := by
   sorry
 
 /-- The two statements of the conjecture are equivalent. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Agoh%E2%80%93Giuga_conjecture", AMS 11]
 theorem agoh_giuga.variants.equivalence : AgohGiugaCongr ↔ AgohGiugaSum := by
   sorry
 
@@ -93,7 +94,8 @@ def IsStrongGiuga (n : ℕ) : Prop :=
 A composite number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
 prime divisors $p$ of $n$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem isWeakGiuga_iff_prime_dvd {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∀ p ∈ n.primeFactors, p ∣ (n / p - 1) := by
   sorry
@@ -104,7 +106,8 @@ $$
 \sum_{p\mid n} \frac{1}{p} - \frac{1}{n} \in\mathbb{N}.
 $$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem isWeakGiuga_iff_sum_primeFactors {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∃ m : ℕ, ∑ p ∈ n.primeFactors, (1 / p : ℚ) - 1 / n = m := by
   sorry
@@ -182,7 +185,8 @@ Carmichael and `∑_{p|n} 1/p - 1/n ∈ ℕ` (i.e., if and only if it is Carmich
 and weak Giuga).
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
     IsStrongGiuga a ↔ IsCarmichael a ∧ ∃ n : ℕ, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
   sorry
@@ -190,7 +194,8 @@ theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
 /--
 Every strong Giuga number is a Carmichael number.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem agoh_giuga.variants.isStrongGiuga_implies_isCarmichael
     (a : ℕ) (ha : IsStrongGiuga a) : IsCarmichael a := by
   sorry
@@ -199,7 +204,8 @@ theorem agoh_giuga.variants.isStrongGiuga_implies_isCarmichael
 Giuga showed that a Giuga number has at least 9 prime factors.
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem agoh_giuga.variants.le_primeFactors_card_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) : 9 ≤ a.primeFactors.card := by
   sorry
@@ -208,7 +214,8 @@ theorem agoh_giuga.variants.le_primeFactors_card_of_isStrongGiuga
 Giuga showed that a counterexample Giuga number has at least 1000 digits.
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem agoh_giuga.variants._1000_le_digits_length_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) : 1000 ≤ (Nat.digits 10 a).length := by
   sorry
@@ -217,7 +224,8 @@ theorem agoh_giuga.variants._1000_le_digits_length_of_isStrongGiuga
 Bedocchi showed that any Giuga number has at least 1700 digits.
 Ref: E. Bedocchi, _Note on a conjecture about prime numbers_
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem agoh_giuga.variants._1700_le_digits_length_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) :
     (Nat.digits 10 a).length > 1700 := by
@@ -226,21 +234,23 @@ theorem agoh_giuga.variants._1700_le_digits_length_of_isStrongGiuga
 /--
 Borwein, Borwein, Borwein and Girgensohn showed that any strong Giuga
 number has at least 13000 digits.
-Ref: D. Borwein, J. M. Borwein, P. B. Borwein, and R. Girgensohn, _Giuga’s conjecture on primality_
+Ref: D. Borwein, J. M. Borwein, P. B. Borwein, and R. Girgensohn, _Giuga's conjecture on primality_
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem agoh_giuga.variants._13000_le_digits_length_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) : 13000 ≤ (Nat.digits 10 a).length := by
   sorry
 
 open Classical in
 /--
-Let `G(X)` denote the number of exceptions `n ≤ X` to Giuga’s conjecture.
+Let `G(X)` denote the number of exceptions `n ≤ X` to Giuga's conjecture.
 Then for `X` larger than an absolute constant which can be made
 explicit, `G(X) ≪ X^{1/2} log X`.
-Ref: Vicentiu Tipu, _A Note on Giuga’s Conjecture_
+Ref: Vicentiu Tipu, _A Note on Giuga's Conjecture_
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Giuga_number", AMS 11]
 theorem agoh_giuga.variants.isStrongGiuga_growth
     (G : ℕ → ℕ) (hG : G = fun x => Finset.Icc 1 x |>.filter IsStrongGiuga |>.card) :
     ∃ N O, ∀ n ≥ N, G n ≤ O * (n : ℝ).sqrt * (n : ℝ).log := by
