@@ -34,7 +34,7 @@ This is true, and was proved by Marcus and Minc [MaMi62]
 
 [MaMi62] Marcus, Marvin and Minc, Henryk, Some results on doubly stochastic matrices. Proc. Amer. Math. Soc. (1962), 571-579.
 -/
-@[category research solved, AMS 15]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/499", AMS 15]
 lemma erdos_499 :
     answer(True) ↔ (∀ n, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
       n ^ (- n : ℤ) ≤ ∏ i, M i (σ i)) := by
@@ -50,7 +50,7 @@ Proved by Gyires [Gy80], Egorychev [Eg81], and Falikman [Fa81].
 [Eg81] Egorychev, G. P., The solution of the van der Waerden problem for permanents. Dokl. Akad. Nauk SSSR (1981), 1041-1044.
 [Fa81] Falikman, D. I., Proof of the van der Waerden conjecture on the permanent of a doubly stochastic matrix. Mat. Zametki (1981), 931-938, 957.
 -/
-@[category research solved, AMS 15]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/499", AMS 15]
 lemma vanDerWaerden (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) (hM : M ∈ doublyStochastic ℝ (Fin n)) :
     n ^ (- n : ℤ) * n ! ≤ M.permanent := by
   sorry
@@ -65,7 +65,7 @@ Proved by Marcus and Ree [MaRe59].
 
 [MaRe59] Marcus, M. and Ree, R., Diagonals of doubly stochastic matrices. Quart. J. Math. Oxford Ser. (2) (1959), 296-302.
 -/
-@[category research solved, AMS 15]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/499", AMS 15]
 lemma erdos_499.variants.one_le :
     answer(True) ↔ ∀ n > 0, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
       (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∑ i, M i (σ i) := by
