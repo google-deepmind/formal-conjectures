@@ -51,7 +51,7 @@ $\limsup \frac{n_k}{k^t} = \infty$ for all $t\geq 1$.
 _Old and new problems and results in combinatorial number theory_.
 Monographies de L'Enseignement Mathematique (1980).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/247", AMS 11]
 theorem erdos_247.variants.strong_condition (n : ℕ → ℕ)
     (hn : StrictMono n)
     (h : ∀ t ≥ (1 : ℝ),
