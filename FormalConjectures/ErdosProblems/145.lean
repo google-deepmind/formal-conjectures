@@ -54,7 +54,8 @@ Erdős [Er51] proved this for all $0\leq \alpha\leq 2$.
 [Er51] Erdös, P., Some problems and results in elementary number theory.
   Publ. Math. Debrecen (1951), 103-109.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://www.erdosproblems.com/145", AMS 11]
 theorem erdos_145.variants.le_two {α : ℝ} (hα : α ∈ Set.Icc 0 2) :
     ∃ β : ℝ,
       atTop.Tendsto (fun x : ℝ ↦ 1 / x * ∑ n ∈ A x, (s (n + 1) - s n : ℝ) ^ α) (𝓝 β) := by
@@ -65,7 +66,8 @@ Hooley [Ho73] extended this to all $0 \leq \alpha\leq 3$.
 
 [Ho73] Hooley, Christopher, On the intervals between consecutive terms of sequences. Proc. Symp. Pure Math, vol. 24, pp. 129-140. 1973.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://www.erdosproblems.com/145", AMS 11]
 theorem erdos_145.variants.le_three {α : ℝ} (hα : α ∈ Set.Icc 0 3) :
     ∃ β : ℝ,
       atTop.Tendsto (fun x : ℝ ↦ 1 / x * ∑ n ∈ A x, (s (n + 1) - s n : ℝ) ^ α) (𝓝 β) := by
@@ -77,7 +79,8 @@ Greaves, Harman, and Huxley [GHH97] showed that this is true for $0 \leq \alpha\
 [GHH97] Greaves, G. R. H. and Harman, G. and Huxley, M. N., Sieve Methods, Exponential Sums, and
   their Applications in Number Theory. (1997).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://www.erdosproblems.com/145", AMS 11]
 theorem erdos_145.variants.le_eleven_thirds {α : ℝ} (hα : α ∈ Set.Icc 0 (11 / 3)) :
     ∃ β : ℝ,
       atTop.Tendsto (fun x : ℝ ↦ 1 / x * ∑ n ∈ A x, (s (n + 1) - s n : ℝ) ^ α) (𝓝 β) := by
