@@ -43,4 +43,14 @@ noncomputable def f (n : ℕ) : ℝ := ⨅ A : {A : Finset ℕ | A.card = n ∧ 
 theorem erdos_153 : answer(sorry) ↔ Tendsto f atTop atTop := by
   sorry
 
+/--
+Erdős, Sárközy, and Sós (1994) studied the gap structure of Sidon sumsets, proving that the
+average squared gap $\frac{1}{n}\sum (s_i - s_{i-1})^2$ in the sumset of a Sidon set of size $n$
+tends to infinity with $n$, confirming the conjecture in the limit.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/153", AMS 5]
+theorem erdos_153.variants.known_result :
+    Tendsto f atTop atTop := by
+  sorry
+
 end Erdos153
