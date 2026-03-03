@@ -49,7 +49,7 @@ Balakran proved this holds for $k = 1$.
 
 Let $k = 1$. Does $((n+k)!)^2∣(2n)!$ for infinitely many $n$?
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/727.lean", AMS 11]
 theorem erdos_727_variants.k_1 :
     letI k := 1
     answer(True) ↔ Set.Infinite {n : ℕ | (n + k)! ^ 2 ∣ (2 * n)!} := by
@@ -59,7 +59,7 @@ theorem erdos_727_variants.k_1 :
 Erdős, Graham, Ruzsa, and Straus observe that the method of Balakran can be further used to prove
 that there are infinitely many $n$ such that $(n+k)!(n+1)!∣(2n)!$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/727.lean", AMS 11]
 theorem erdos_727_variants.k_1_2 (k : ℕ) (hk : 2 ≤ k) :
     Set.Infinite {n : ℕ |
       (Nat.factorial (n + k)) * (Nat.factorial (n + 1)) ∣ Nat.factorial (2 * n)} := by
