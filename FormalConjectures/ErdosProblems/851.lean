@@ -36,7 +36,7 @@ The set of integers of the form `2^k+p` (where `p` is prime) has positive lower 
 Formalisation note: here we also allow `p = 1` since this simplifies the code and is equivalent
 to the original statement.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/851.lean", AMS 11]
 theorem erdos_851.variants.romanoff : 0 < Set.lowerDensity (TwoPowAddSet 1) := by
   sorry
 
