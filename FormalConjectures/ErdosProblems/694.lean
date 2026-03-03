@@ -55,7 +55,7 @@ theorem erdos_694.variants.carmichael :
 Erdős has proved that if there exists an integer $n$ for which $\phi(m) = n$ has
 exactly one solution, then there must be infinitely many such $n$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/694.lean", AMS 11]
 theorem erdos_694.variants.inf_unique (h : ∃ n > 0, ∃! m, Nat.totient m = n) :
     { n | ∃! m, Nat.totient m = n }.Infinite := by
   sorry
