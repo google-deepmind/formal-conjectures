@@ -61,7 +61,6 @@ The smallest weird number is 70.
 -/
 set_option maxRecDepth 4000 in
 @[category high_school, AMS 11]
-set_option maxRecDepth 4000 in
 theorem erdos_470.variants.smallest_weird_eq_70 : (∀ n < 70, ¬n.Weird) ∧ (70).Weird := by
   refine ⟨fun n hn => ?_, Nat.weird_seventy⟩
   simp only [Nat.Weird, Nat.Abundant, Nat.Pseudoperfect]
