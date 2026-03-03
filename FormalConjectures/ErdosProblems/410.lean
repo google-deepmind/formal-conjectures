@@ -41,4 +41,14 @@ theorem erdos_410 : answer(sorry) ↔ ∀ n > 1,
     Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop := by
   sorry
 
+/--
+For any $n > 1$, the iterated sigma function $\sigma_k(n)$ grows without bound as $k \to \infty$,
+since $\sigma(n) > n$ for any $n > 1$ that is not a prime power with exponent one. This growth
+property is a necessary condition for the limit of the $k$-th roots to diverge.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/410", AMS 11]
+theorem erdos_410.variants.known_result :
+    ∀ n > 1, Tendsto (fun k : ℕ ↦ (sigma 1)^[k] n) atTop atTop := by
+  sorry
+
 end Erdos410
