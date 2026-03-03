@@ -32,4 +32,17 @@ theorem erdos_906 : answer(sorry) ↔ ∃ f : ℂ → ℂ, Transcendental (Polyn
     Dense { z | ∃ k, iteratedDeriv (n k) f z = 0 } := by
   sorry
 
+/--
+It is known that for any entire function $f$ and any fixed $m$, the zero set of the $m$-th
+derivative $f^{(m)}$ is either finite or dense (by the identity theorem for holomorphic functions).
+The question asks about sequences of derivatives simultaneously having dense zero sets.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/906", AMS 30]
+theorem erdos_906.variants.known_result :
+    ∀ (f : ℂ → ℂ), Differentiable ℂ f → ∀ m : ℕ,
+      (∃ z, iteratedDeriv m f z = 0) →
+      Dense { z | iteratedDeriv m f z = 0 } ∨
+      { z | iteratedDeriv m f z = 0 }.Finite := by
+  sorry
+
 end Erdos906
