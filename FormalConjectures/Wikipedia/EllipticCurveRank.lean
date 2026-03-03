@@ -48,7 +48,7 @@ open Module (finrank)
 /-- The rank of an elliptic curve over a number field is always finite by the Mordell–Weil theorem.
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank. -/
-@[category research solved, AMS 11 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/EllipticCurveRank.lean", AMS 11 14]
 instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic]
     [AddCommMonoid E⟮K⟯] [Module ℤ E⟮K⟯] :
       Module.Finite ℤ E⟮K⟯ := by
@@ -98,7 +98,7 @@ theorem half_rank_zero_and_half_rank_one (r : ℕ) (hr : r = 0 ∨ r = 1) :
 
 /-- Theorem 3 of [BS2013]:
 when elliptic curves over ℚ are ordered by height, their average rank is < .885. -/
-@[category research solved, AMS 11 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/EllipticCurveRank.lean", AMS 11 14]
 theorem avg_rank_lt_0885 :
     atTop.limsup (fun H ↦ ((∑ᶠ E : heightLE H, E.1.rank) / (heightLE H).ncard : ℝ)) < 0.885 := by
   sorry
@@ -106,14 +106,14 @@ theorem avg_rank_lt_0885 :
 /-- Theorem 4 of [BS2013]:
 when elliptic curves over ℚ are ordered by height, a density of at least 83.75% have
 rank 0 or 1. -/
-@[category research solved, AMS 11 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/EllipticCurveRank.lean", AMS 11 14]
 theorem _08375_le_density_rank_zero_one : 0.8375 ≤ atTop.liminf
     fun H ↦ ({E ∈ heightLE H | E.rank = 0 ∨ E.rank = 1}.ncard / (heightLE H).ncard : ℝ) := by
   sorry
 
 /-- Theorem 5 of [BS2013]:
 when elliptic curves over ℚ are ordered by height, a density of at least 20.62% have rank 0. -/
-@[category research solved, AMS 11 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/EllipticCurveRank.lean", AMS 11 14]
 theorem _02062_le_density_rank_zero : 0.2062 ≤ atTop.liminf
     fun H ↦ ({E ∈ heightLE H | E.rank = 0}.ncard / (heightLE H).ncard : ℝ) := by
   sorry
@@ -183,7 +183,7 @@ theorem Δ_elkiesKlagsbrun29 : elkiesKlagsbrun29.Δ =
 instance : elkiesKlagsbrun29.IsElliptic where
   isUnit := by rw [Δ_elkiesKlagsbrun29]; norm_num
 
-@[category research solved, AMS 11 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/EllipticCurveRank.lean", AMS 11 14]
 theorem twentynine_le_rank_elkiesKlagsbrun29 : 29 ≤ finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ := by
   sorry
 
@@ -212,7 +212,7 @@ theorem Δ_elkies28 : elkies28.Δ =
 instance : elkies28.IsElliptic where
   isUnit := by rw [Δ_elkies28]; norm_num
 
-@[category research solved, AMS 11 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/EllipticCurveRank.lean", AMS 11 14]
 theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28⟮ℚ⟯ := by
   sorry
 
