@@ -68,4 +68,17 @@ theorem erdos_361.smallO
     (fun n ↦ (A n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The size of the largest subset of
+$\{1,\ldots,\lfloor cn\rfloor\}$ avoiding $n$ as a subset sum grows at most as $O(\sqrt{n})$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/361", AMS 11]
+theorem erdos_361.variants.known_result
+    (c : ℝ) (hc : 0 < c)
+    (A : ℕ → ℕ)
+    (hA : ∀ c n, A n = ((Finset.Icc 1 ⌊c * n⌋₊).powerset.filter
+      (fun B ↦ n ≠ ∑ a ∈ B, a)).sup Finset.card) :
+    (fun n ↦ (A n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+  sorry
+
 end Erdos361
