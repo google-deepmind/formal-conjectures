@@ -78,4 +78,14 @@ theorem erdos_90 : answer(sorry) ↔ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fu
 
 -- TODO(firsching): add the statements from the rest of the page.
 
+/--
+Spencer, Szemerédi, and Trotter (1984) proved that the maximum number of unit distances among
+$n$ points in the plane is $O(n^{4/3})$, improving the trivial $O(n^{3/2})$ bound and providing
+the best known upper bound to date.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/90", AMS 52]
+theorem erdos_90.variants.spencer_szemeredi_trotter :
+    (fun n => (maxUnitDistances n : ℝ)) =O[atTop] fun n => (n : ℝ) ^ ((4 : ℝ)/3) := by
+  sorry
+
 end Erdos90
