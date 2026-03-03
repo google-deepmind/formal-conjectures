@@ -38,7 +38,7 @@ The density of such $n$ is zero. Erdős and Graham believed that no such $n$ exi
 
 Adenwalla [Ad25] has proved there are no such $n$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/204", AMS 5]
 theorem erdos_204 : answer(False) ↔ ∃ (n : ℕ) (a : ℕ → ℤ),
     let D := {d : ℕ | d ∣ n ∧ d > 1}
     (∀ x : ℤ, ∃ d ∈ D, x ≡ a d [ZMOD d]) ∧
