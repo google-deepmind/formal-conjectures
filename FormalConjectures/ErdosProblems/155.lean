@@ -44,4 +44,14 @@ theorem erdos_155 : answer(sorry) ↔ ∀ k ≥ 1, ∀ᶠ N in atTop, F (N + k) 
 
 -- TODO: This may even hold with $k \approx ε * N ^ (1 / 2)$.
 
+/--
+It is trivially true that $F(N+1) \leq F(N) + 1$ for all $N$, since extending the interval
+by one element can increase the maximum Sidon set size by at most $1$; the conjecture asks
+whether this remains true when the interval grows by $k$ steps for fixed $k$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/155", AMS 5]
+theorem erdos_155.variants.known_result :
+    ∀ N : ℕ, F (N + 1) ≤ F N + 1 := by
+  sorry
+
 end Erdos155
