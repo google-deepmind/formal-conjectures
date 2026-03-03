@@ -56,7 +56,7 @@ theorem erdos_325.variants.weaker :
 For $k = 3$, the best known is due to Wooley [Wo15]
 [Wo15] Wooley, Trevor D., Sums of three cubes, II. Acta Arith. (2015), 73-100.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/325", AMS 11]
 theorem erdos_325.variants.wooley :
     (fun x : ℕ => (x : ℝ) ^ (0.917 : ℝ)) =O[atTop] (fun x => (cardIsSumThreePowerBelow 3 x : ℝ)) := by
   sorry
