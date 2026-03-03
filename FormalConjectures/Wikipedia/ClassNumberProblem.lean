@@ -43,7 +43,7 @@ theorem class_number_problem :
 **Stark–Heegner theorem** : For any squarefree integer `d < 0`, the class number of the imaginary
 quadratic field Q(√d) is one if and only if `d ∈ {-1, -2, -3, -7, -11, -19, -43, -67, -163}`.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/ClassNumberProblem.lean", AMS 11]
 theorem class_number_problem.variants.imaginary :
     { d : ℤ | Squarefree d ∧ d < 0 ∧ IsClassNumberOne d } =
     {-1, -2, -3, -7, -11, -19, -43, -67, -163} := by
