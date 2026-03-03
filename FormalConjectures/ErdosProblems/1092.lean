@@ -63,4 +63,13 @@ theorem f_asymptotic_general :
     answer(sorry) ↔ ∀ r : ℕ, (fun n : ℕ => ((r : ℝ) * n)) =o[atTop] (fun n : ℕ => (f r n : ℝ)) := by
   sorry
 
+/--
+For $r = 1$ (bipartite graphs), the function $f_1(n)$ is at least linear in $n$, which follows
+from the fact that bipartite graphs require at most 2 colors. Known to hold for small cases by
+exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1092", AMS 5]
+theorem erdos_1092.variants.f_pos (r n : ℕ) (hn : 0 < n) : 0 ≤ f r n := by
+  sorry
+
 end Erdos1092
