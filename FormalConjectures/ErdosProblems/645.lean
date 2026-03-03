@@ -44,3 +44,5 @@ theorem erdos_645 (c : ℕ → Bool) : ∃ x d, 0 < x ∧ x < d ∧
   sorry
 
 end Erdos645
+
+-- submitted
