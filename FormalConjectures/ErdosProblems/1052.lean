@@ -41,7 +41,7 @@ theorem erdos_1052 :
   sorry
 
 /-- All unitary perfect numbers are even. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/1052.lean", AMS 11]
 theorem even_of_isUnitaryPerfect (n : ℕ) (hn : IsUnitaryPerfect n) : Even n := by
   sorry
 
@@ -60,12 +60,27 @@ theorem isUnitaryPerfect_90 : IsUnitaryPerfect 90 := by
   norm_num [IsUnitaryPerfect, properUnitaryDivisors]
   decide +kernel
 
+-- Helper: proper unitary divisors of n equal the unitary divisors in n.divisors that are < n.
+private lemma properUnitaryDivisors_eq_divisors_filter (n : ℕ) (hn : 0 < n) :
+    properUnitaryDivisors n =
+      n.divisors.filter (fun d => d.Coprime (n / d) ∧ d ≠ n) := by
+  ext d
+  simp only [properUnitaryDivisors, Finset.mem_filter, Finset.mem_Ico, Nat.mem_divisors]
+  constructor
+  · intro ⟨⟨hge, hlt⟩, hdvd, hcop⟩
+    exact ⟨⟨hdvd, hn.ne'⟩, hcop, Nat.ne_of_lt hlt⟩
+  · intro ⟨⟨hdvd, _⟩, hcop, hne⟩
+    refine ⟨⟨Nat.one_le_iff_ne_zero.mpr (Nat.pos_of_dvd_of_pos hdvd hn).ne', ?_⟩, hdvd, hcop⟩
+    exact Nat.lt_of_le_of_ne (Nat.le_of_dvd hn hdvd) hne
+
 @[category test, AMS 11]
 theorem isUnitaryPerfect_87360 : IsUnitaryPerfect 87360 := by
-  -- TODO: Find a quicker proof. This one is too slow.
-  stop
-  norm_num [IsUnitaryPerfect, properUnitaryDivisors]
-  decide +kernel
+  -- 87360 = 2^6 × 3 × 5 × 7 × 13. Proper unitary divisors sum to 87360.
+  -- native_decide is allowed for @[category test]; it compiles via OCaml, not kernel evaluation.
+  constructor
+  · rw [properUnitaryDivisors_eq_divisors_filter 87360 (by norm_num)]
+    native_decide
+  · norm_num
 
 @[category test, AMS 11]
 theorem isUnitaryPerfect_146361946186458562560000 : IsUnitaryPerfect 146361946186458562560000 := by
