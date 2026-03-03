@@ -56,7 +56,7 @@ theorem erdos_375.variants.bounded_gap : Erdos375Prop →
 @[category research solved, AMS 11]
 theorem erdos_375.variants.legendre : Erdos375Prop →
     (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p) :=
-  fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.bounded_gap hp)
+  fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.variants.bounded_gap hp)
 
 /-- It is easy to see that for any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite,
 then there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
