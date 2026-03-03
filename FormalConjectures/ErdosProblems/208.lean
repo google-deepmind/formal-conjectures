@@ -56,4 +56,13 @@ In [Er79] Erdős says perhaps $s_{n+1} - s_n \ll \log s_n$, but he is 'very doub
 theorem erdos_208.variants.log_bound :
     (fun n ↦ (s (n + 1) - s n : ℝ)) =O[atTop] fun n ↦ log (s n) := by sorry
 
+/--
+Known that consecutive squarefree numbers satisfy $s_{n+1} - s_n = O(s_n^{1/2})$ unconditionally,
+and $O(s_n^\epsilon)$ for any $\epsilon > 0$ follows from the abc conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/208", AMS 11]
+theorem erdos_208.variants.known_result :
+    ∀ ε > (0 : ℝ), (fun n => (s (n + 1) - s n : ℝ)) =O[atTop] (fun n => (s n : ℝ)^ε) := by
+  sorry
+
 end Erdos208
