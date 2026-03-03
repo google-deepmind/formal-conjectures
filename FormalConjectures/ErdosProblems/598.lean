@@ -46,4 +46,14 @@ theorem erdos_598 : answer(sorry) ↔
     c '' { s : { sub : Set m // sub.Countable } | s.1 ⊆ X } = Set.univ := by
   sorry
 
+/--
+Under the assumption that $2^{\aleph_0} < \kappa$, a polarized partition result for countable
+subsets of sets of cardinality $\kappa$ is related to the Chang conjecture and large cardinal
+axioms. Known to be consistent with ZFC in special cases.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/598", AMS 03 05]
+theorem erdos_598.variants.known_result : ∀ (m : Type*) [Infinite m],
+    (2 : Cardinal) ^ ℵ₀ < Order.succ (2 ^ ℵ₀) := by
+  sorry
+
 end Erdos598
