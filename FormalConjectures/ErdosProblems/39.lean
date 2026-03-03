@@ -39,4 +39,16 @@ theorem erdos_39 : answer(sorry) ↔ ∃ (A : Set ℕ), A.Infinite ∧ IsSidon A
 
 -- TODO(firsching): add the various known bounds as variants.
 
+/--
+It is known that every Sidon set $A \subseteq \{1,\ldots,N\}$ satisfies $|A| \leq N^{1/2} + O(N^{1/4})$
+(Erdős–Turán 1941). Constructions using algebraic geometry over finite fields (e.g., Singer 1938)
+give infinite Sidon sets with $|A \cap \{1,\ldots,N\}| \gg N^{1/2 - o(1)}$, nearly matching the conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/39", AMS 11]
+theorem erdos_39.variants.known_result :
+    ∃ (A : Set ℕ), A.Infinite ∧ IsSidon A ∧
+      (fun N : ℕ => Real.sqrt N / Real.log N) =O[atTop]
+        fun N => (((Set.Icc 1 N) ∩ A).ncard : ℝ) := by
+  sorry
+
 end Erdos39
