@@ -65,7 +65,7 @@ There is a set of area 0.260437 that covers all worms.
 Norwood, Rick; Poole, George (2003), "An improved upper bound for Leo Moser's worm problem",
 Discrete and Computational Geometry, 29 (3): 409–417, doi:10.1007/s00454-002-0774-3, MR 1961007.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/MoserWorm.lean", AMS 52]
 theorem mosers_worm_problem_upper_bound :
     ∃ X ∈ WormCovers, volume X = 0.260437 := by
   sorry
@@ -84,7 +84,7 @@ theorem convex_mosers_worm_problem :
 The minimal area of a convex shape that can cover every unit-length curve is attained.
 This follows from the Blaschke selection theorem.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/MoserWorm.lean", AMS 52]
 theorem convex_mosers_worm_problem_bound_attained :
     ∃ bound, IsLeast {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} bound := by
   sorry
@@ -96,7 +96,7 @@ There is a convex set of area 0.270911861 that covers all worms.
 Wang, Wei (2006), "An improved upper bound for the worm problem",
 Acta Mathematica Sinica, 49 (4): 835–846, MR 2264090.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/MoserWorm.lean", AMS 52]
 theorem convex_mosers_worm_problem_upper_bound :
     ∃ X : Set ℝ², MeasurableSet X ∧ Convex ℝ X ∧ volume X = 0.270911861 ∧
       ∀ w ∈ Worms, ∃ (e : ℝ² ≃ₗᵢ[ℝ] ℝ²) (v : ℝ²), e.toLinearEquiv.det = 1 ∧ w ⊆ (fun x => e x + v) '' X := by
@@ -111,7 +111,7 @@ Khandhawit, Tirasan; Pagonakis, Dimitrios; Sriswasdi, Sira (2013),
 International Journal of Computational Geometry & Applications,
 23 (3): 197–212, arXiv:1101.5638, doi:10.1142/S0218195913500076, MR 3158583, S2CID 207132316.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/MoserWorm.lean", AMS 52]
 theorem convex_mosers_worm_problem_lower_bound :
     0.232239 ∈ lowerBounds {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} := by
   sorry
