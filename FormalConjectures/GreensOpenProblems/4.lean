@@ -45,7 +45,7 @@ def extremalFamily {n : ℕ} (x : Fin n) (I : Set (Fin n)) : Set <| alternatingG
 [On the largest product-free subsets of the alternating groups](https://arxiv.org/pdf/2205.15191).
 Specifically, this theorem formalizes the statement of theorem 1.1 in the mentioned paper
 -/
-@[category research solved, AMS 20]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/pdf/2205.15191", AMS 20]
 theorem large_green_4 : ∀ᶠ n in .atTop,
     ∀ S, MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard S →
     ∃ x I, S = extremalFamily x I ∨ S = (extremalFamily x I).image (·⁻¹) := by
