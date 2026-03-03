@@ -65,7 +65,8 @@ $\zeta(3)$ is irrational.
 
 [Ap79] Apéry, R. (1979). _Irrationalité de ζ(2) et ζ(3)_. Astérisque. 61: 11–13.
 -/
-@[category research solved, AMS 11 33]
+@[category research formally solved using other_system at
+"https://en.wikipedia.org/wiki/Ap%C3%A9ry%27s_theorem", AMS 11 33]
 theorem irrational_three : ∃ x, Irrational x ∧ riemannZeta 3 = x := by
   sorry
 
@@ -74,7 +75,8 @@ There are infinitely many $\zeta(2n + 1)$, $n \in \mathbb{N}$, that are irration
 
 [Ri00] Rivoal, T. (2000). _La fonction zeta de Riemann prend une infinité de valeurs irrationnelles aux entiers impairs_. Comptes Rendus de l'Académie des Sciences, Série I. 331 (4): 267–270.
 -/
-@[category research solved, AMS 11 33]
+@[category research formally solved using other_system at
+"https://arxiv.org/abs/math/0008051", AMS 11 33]
 theorem infinite_irrational_at_odd :
     { n : ℕ | ∃ x, Irrational x ∧ riemannZeta (2 * n + 1) = x }.Infinite := by
   sorry
@@ -84,7 +86,8 @@ At least one of $\zeta(5), \zeta(7), \zeta(9)$ or $\zeta(11)$ is irrational.
 
 [Zu01]  W. Zudilin (2001). _One of the numbers ζ(5), ζ(7), ζ(9), ζ(11) is irrational_. Russ. Math. Surv. 56 (4): 774–776.
 -/
-@[category research solved, AMS 11 33]
+@[category research formally solved using other_system at
+"https://arxiv.org/abs/math/0104090", AMS 11 33]
 theorem exists_irrational_of_five_seven_nine_eleven :
     {5, 7, 9, 11} ∩ { a | ∃ x, Irrational x ∧ riemannZeta a = x} |>.Nonempty := by
   sorry
