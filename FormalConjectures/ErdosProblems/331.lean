@@ -68,3 +68,5 @@ theorem erdos_331.variants.ruzsa :
         a₁ ≠ a₂ ∧ a₁ + b₂ = a₂ + b₁ }.Infinite := by
   sorry
 end Erdos331
+
+-- submitted
