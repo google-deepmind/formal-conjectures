@@ -47,7 +47,7 @@ $0<\mu<1/2$, there exists $A\subseteq \mathbb{N}$ such that every finite colouri
 a three-term arithmetic progression, and yet every subset of $A$ of size $n$ contains a subset of
 size $\geq \mu n$ without a three-term arithmetic progression.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/847.lean", AMS 11]
 theorem erdos_847 : answer(False) ↔ ∀ (A : Set ℕ), Infinite A → HasFew3APs A →
     ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧ A = ⋃ i : Fin n, S i := by
   sorry
