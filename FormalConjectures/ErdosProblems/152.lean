@@ -48,4 +48,14 @@ theorem erdos_152.variants.square : answer(sorry) ↔
     (fun n => f n : ℕ → ℝ) ≫ (fun n => n ^ 2 : ℕ → ℝ) := by
   sorry
 
+/--
+Erdős, Sárközy, and Sós (1994) proved that for any Sidon set $A$ of size $n$,
+the sumset $A + A$ contains many isolated elements (elements not adjacent to other sumset elements),
+showing $f(n) \to \infty$ as $n \to \infty$, which confirms the weaker form of the conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/152", AMS 5]
+theorem erdos_152.variants.erdos_sarkozi_sos :
+    Tendsto f atTop atTop := by
+  sorry
+
 end Erdos152
