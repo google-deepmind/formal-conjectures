@@ -32,7 +32,7 @@ Is it true that
 $$\inf_n \liminf_{m\to \infty} n \lvert x_{m+n}-x_m\rvert\leq 5^{-1/2}\approx 0.447?$$
 A conjecture of Newman.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/480", AMS 11]
 theorem erdos_480 : answer(True) ↔ ∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
     ⨅ (n : ℕ+), atTop.liminf (fun m => (n : ℕ) * |x (m + (n : ℕ)) - x m|) ≤ 1 / √5 := by
   sorry
@@ -44,7 +44,7 @@ where
 $$c=1+\sum_{k\geq 1}\frac{1}{F_{2k}}=2.5353705\cdots$$
 and $F_m$ is the $m$th Fibonacci number.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/480", AMS 11]
 theorem erdos_480.variants.chung_graham :
     let c : ℝ := 1 + ∑' (k : ℕ+), (1 : ℝ) / (2*k : ℕ).fib
     ∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
@@ -54,7 +54,7 @@ theorem erdos_480.variants.chung_graham :
 /--
 They also prove that this constant is best possible.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/480", AMS 11]
 theorem erdos_480.variants.chung_graham_best_possible :
     let c : ℝ := 1 + ∑' (k : ℕ+), (1 : ℝ) / (2*k : ℕ).fib
     ∀ ε > (0 : ℝ), ¬ (∀ (x : ℕ → ℝ), (∀ n, x n ∈ Set.Icc 0 1) →
