@@ -113,7 +113,7 @@ and let $A$ be the set of all naturals divisible by exactly one of $p_1, ..., p_
 multiplicity $1$). Then $A$ has density $\frac{1}{e} - \epsilon$ and has the property
 that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when $r = s$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/786.lean", AMS 11]
 theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε < 1 / rexp 1) :
     ∀ᶠ (p : ℕ) in atTop, p.Prime → ∃ k,
       ∑ q ∈ consecutivePrimesFrom p k, (1 : ℝ) / q < 1 ∧
