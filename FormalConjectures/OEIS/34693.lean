@@ -66,7 +66,7 @@ theorem exists_k_stronger {n : ℕ} (hn : 0 < n) : ∃ k : ℕ,
   sorry
 
 /-- The expression $1 + n^{0.74}$ does not work as an upper bound. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/OEIS/34693.lean", AMS 11]
 theorem exists_k_best_possible : ∃ n > (0 : ℕ), ∀ (k : ℕ),
     k < 1 + (Real.nthRoot 100 n) ^ 74 → ¬(n * k + 1).Prime := by
   sorry
