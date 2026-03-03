@@ -48,7 +48,7 @@ Erdős [Er49c] proved that the statement in `erdos_971` holds for infinitely man
 [Er49c] Erdős, P., _On some applications of Brun's method_. Acta Univ. Szeged. Sect. Sci. Math.
 (1949), 57--63.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/971.lean", AMS 11]
 theorem erdos_971.variants.infinite_sequence :
     ∃ c > (0 : ℝ), ∃ C > (0 : ℝ),
       {d : ℕ | C * (d.totient : ℝ) ≤
@@ -63,7 +63,7 @@ values of `a` (for all large `d`).
 [Er49c] Erdős, P., _On some applications of Brun's method_. Acta Univ. Szeged. Sect. Sci. Math.
 (1949), 57--63.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/971.lean", AMS 11]
 theorem erdos_971.variants.many_small :
     ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ᶠ d in atTop,
       C * (d.totient : ℝ) ≤
