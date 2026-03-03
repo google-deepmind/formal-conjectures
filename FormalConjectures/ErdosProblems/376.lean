@@ -35,7 +35,7 @@ theorem erdos_376 : answer(sorry) ↔ { (n : ℕ) | n.centralBinom.Coprime 105 }
 Erdős, Graham, Ruzsa, and Straus [EGRS75] have shown that, for any two odd primes $p$ and $q$,
 there are infinite many $n$ such that ${2n\choose n}$ is coprime to $pq$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/376", AMS 11]
 theorem erdos_376.variants.prime {p q : ℕ} (h₁ : p.Prime)
     (h₂ : Odd p) (h₃ : q.Prime) (h₄ : Odd q) :
     { (n : ℕ) | n.centralBinom.Coprime (p * q) }.Infinite := by
