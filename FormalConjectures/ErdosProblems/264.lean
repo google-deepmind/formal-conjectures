@@ -47,7 +47,8 @@ Is $2^n$ an example of an irrationality sequence? Kovač and Tao proved that it 
 
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series. arXiv:2406.17593 (2024).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://arxiv.org/abs/2406.17593", AMS 11]
 theorem erdos_264.parts.i : ¬IsIrrationalitySequence (2 ^ ·) := by sorry
 
 /--
@@ -59,7 +60,8 @@ theorem erdos_264.parts.ii : answer(sorry) ↔ IsIrrationalitySequence Nat.facto
 /--
 One example is $2^{2^n}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://arxiv.org/abs/2406.17593", AMS 11]
 theorem erdos_264.variants.example : IsIrrationalitySequence (fun n ↦ 2 ^ (2 ^ n)) := by sorry
 
 /--
@@ -72,7 +74,8 @@ is not an irrationality sequence.
 
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series. arXiv:2406.17593 (2024).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://arxiv.org/abs/2406.17593", AMS 11]
 theorem erdos_264.variants.ko_tao_neg {a : ℕ → ℕ} (h₁ : StrictMono a) (h₂ : 0 ∉ Set.range a)
     (h₃ : Summable ((1 : ℝ) / a ·))
     (h₄ : 0 < atTop.liminf fun n ↦ a n ^ 2 * ∑' k : Set.Ioi n, (1 : ℝ) / a k ^ 2) :
@@ -85,7 +88,8 @@ $\lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \infty$ there exists such an irrati
 
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series. arXiv:2406.17593 (2024).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://arxiv.org/abs/2406.17593", AMS 11]
 theorem erdos_264.variants.ko_tao_pos {F : ℕ → ℕ}
     (hF : atTop.Tendsto (fun n ↦ (F (n + 1) : ℝ) / F n) atTop) :
     ∃ a : ℕ → ℕ, IsIrrationalitySequence a ∧ (fun n ↦ (a n : ℝ)) ~[atTop] fun n ↦ (F n : ℝ) := by
