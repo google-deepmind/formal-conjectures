@@ -51,7 +51,7 @@ Kovač and Luca [KoLu25] (building on a heuristic independently found by
 Cambie (personal communication)) have shown that there is no finite limit, in that
 $\lim_{n\to\infty} \frac{f(2n)}{f(n)}$ is unbounded.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/893.lean", AMS 5]
 theorem erdos_893.variants.unbounded :
    ¬ BddAbove (Set.range fun n : ℕ => (f (2 * n) : ℝ) / f n) := by
   sorry
