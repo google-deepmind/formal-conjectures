@@ -56,7 +56,7 @@ Theorem 1.4 from [AKS07]
 
 [AKS07] Alon, N. and Krivelevich, M. and Sudakov, B., Large nearly regular induced subgraphs. arXiv:0710.2106 (2007).
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/82", AMS 5]
 theorem erdos_82.variants.F_upper_bound :
     (fun n => (F n : ℝ)) =O[atTop] (fun n => Real.sqrt n * (Real.log n) ^ (3 / 4 : ℝ)) := by
   sorry
