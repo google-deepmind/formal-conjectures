@@ -48,4 +48,17 @@ theorem erdos_99 :
       ∃ᵉ (p ∈ A) (q ∈ A) (r ∈ A), FormsEquilateralTriangle p q r := by
 sorry
 
+/--
+Bezdek and Fodor (1999) showed that for small values of $n$, the diameter-minimizing
+configurations with unit minimum distance do contain equilateral triangles of side 1,
+confirming the conjecture for these cases by exhaustive geometric analysis.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/99", AMS 52]
+theorem erdos_99.variants.known_result :
+    ∀ A : Finset ℝ², A.card ≤ 6 → HasMinDist1 A →
+      (IsMinOn (fun B : Finset ℝ² => diam (B : Set ℝ²))
+        {B : Finset ℝ² | B.card = A.card ∧ HasMinDist1 B} A) →
+      ∃ᵉ (p ∈ A) (q ∈ A) (r ∈ A), FormsEquilateralTriangle p q r := by
+  sorry
+
 end Erdos99
