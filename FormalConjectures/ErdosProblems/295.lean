@@ -58,7 +58,7 @@ theorem erdos_295 :
 Erdős and Straus have proved the existence of some constant $c>0$
 such that $-c < k(N)-(e-1)N \ll \frac N {\log N}$
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/295", AMS 5 11]
 theorem erdos_295.variants.erdos_straus :
     ∃ᵉ (C > 0) (O > 0), ∀ᶠ (N : ℕ) in Filter.atTop,
       (k N - (rexp 1 - 1)*N) ∈ Set.Ioc (-C) (O * N / (N : ℝ).log):= by
