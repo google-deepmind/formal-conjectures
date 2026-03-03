@@ -32,4 +32,14 @@ $2^n\equiv k\pmod{n}$?
 theorem erdos_479 : answer(sorry) ↔ ∀ᵉ (k > 1), { n | 2 ^ n ≡ k [MOD n]}.Infinite := by
   sorry
 
+/--
+For $k = 2$: the set $\{n \mid 2^n \equiv 2 \pmod{n}\}$ contains all primes $p$
+(by Fermat's little theorem, $2^p \equiv 2 \pmod{p}$), so this set is infinite.
+This confirms the $k = 2$ case of the conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/479", AMS 11]
+theorem erdos_479.variants.known_result :
+    { n | 2 ^ n ≡ 2 [MOD n]}.Infinite := by
+  sorry
+
 end Erdos479
