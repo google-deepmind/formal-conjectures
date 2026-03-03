@@ -88,4 +88,14 @@ theorem erdos_92.variants.strong : answer(sorry) ↔
 
 -- TODO(firsching): formalize the rest of the remarks
 
+/--
+Pach and Sharir (1992) proved that the number of equidistant pairs from a fixed center
+among $n$ points satisfies $f(n) = O(n^{1/3})$, giving a polynomial upper bound on the
+maximum equidistance multiplicity for point configurations in the plane.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/92", AMS 52]
+theorem erdos_92.variants.pach_sharir :
+    ∀ᶠ n in atTop, (f n : ℝ) ≤ (n : ℝ) ^ ((1 : ℝ)/3) := by
+  sorry
+
 end Erdos92
