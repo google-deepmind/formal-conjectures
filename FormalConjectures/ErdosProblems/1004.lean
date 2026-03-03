@@ -46,7 +46,7 @@ Erdős, Pomerance, and Sárközy [EPS87] proved that if φ(n+k) are all distinct
 K ≤ n / exp(c (log n)^{1/3}) for some constant c > 0.
 Here we state the existence of such a constant c.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1004", AMS 11]
 theorem erdos_1004.variants.le_of_isDistinctTotientRun :
     answer(True) ↔ ∃ (c : ℝ) (hc : c > 0),
       ∀ᶠ n in atTop, ∀ (K : ℕ), IsDistinctTotientRun n K →
