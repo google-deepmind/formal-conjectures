@@ -78,8 +78,14 @@ open List
 /-
 The maximum length for the snake-in-the-box problem is known for dimensions zero through eight;
 it is $0, 1, 2, 4, 7, 13, 26, 50, 98$.
+
+*References:*
+- Kautz, W.H. (1958). Unit-distance error-checking codes. IRE Trans. Electron. Comput. 7, 179–180.
+- Davies, D.W. (1965). Longest 'separated' paths and loops in an N cube. IEEE Trans. Electron. Comput. 14, 261–261.
+- Potter, W., et al. (1994). 50 + snakes in a box of 7 dimensions. Congr. Numerantium 99, 377–381.
+- Casella, D.A., Potter, W.D. (2005). New lower bounds for the snake-in-the-box problem: using metaheuristics to derive solutions. Proc. 18th Internat. FLAIRS Conf. 462–467.
 --/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-snake-small-dimensions/FormalConjectures/Wikipedia/SnakeInTheBox.lean", AMS 5]
 theorem snake_small_dimensions :
     map LongestSnakeInTheBox (range 9) = [0, 1, 2, 4, 7, 13, 26, 50, 98] := by
   sorry
@@ -94,8 +100,9 @@ theorem snake_dim_nine : LongestSnakeInTheBox 9 = answer(sorry) := by
 
 /-
 The best length found so far for dimension nine is 190.
+*Reference:* Abbott, H.L., Katchalski, M. (1988). On the snake in the box problem. J. Combin. Theory Ser. B 45, 13–24.
 --/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-snake-small-dimensions/FormalConjectures/Wikipedia/SnakeInTheBox.lean", AMS 5]
 theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
   sorry
 
@@ -106,8 +113,9 @@ An upper bound of the maximal length of the longest snake in a box is given by
 $$
 1 + 2^{n-1}\frac{6n}{6n + \frac{1}{6\sqrt{6}}n^{\frac 1 2} - 7}.
 $$
+*Reference:* Abbott, H.L., Katchalski, M. (1988). On the snake in the box problem. J. Combin. Theory Ser. B 45, 13–24.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-snake-small-dimensions/FormalConjectures/Wikipedia/SnakeInTheBox.lean", AMS 5]
 theorem snake_upper_bound (n : ℕ) : LongestSnakeInTheBox n
     ≤ (1 : ℝ) + 2 ^ (n - 1) * (6 * n) / (6 * n + (1 / (6 * √6) * √n)) := by
   sorry
