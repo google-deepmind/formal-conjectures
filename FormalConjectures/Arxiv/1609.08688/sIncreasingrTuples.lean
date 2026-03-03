@@ -161,12 +161,12 @@ lemma exists_pair_of_mem_Icc {s : List (Fin 3 → ℕ)} {n : ℕ} (hn : 2 ≤ n)
   sorry
 
 /-- For all $n$ we have $F(n) \leq n^2$. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/abs/1609.08688", AMS 5]
 theorem maximalLength_le (n : ℕ) : F n ≤ n ^ 2 := by
   sorry
 
 /-- Moreover, whenever $n$ is a perfect square we have $F(n) \geq n^{3/2}$. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/abs/1609.08688", AMS 5]
 theorem maximalLength_ge_of_isSquare {n : ℕ} (h : IsSquare n) :
     n.sqrt ^ 3 ≤ F n := by
   sorry
@@ -182,7 +182,7 @@ def IsComparableSet₂ {α : Type*} [LT α] (s : List (Fin 3 → α)) : Prop :=
 
 open Filter in
 /-- $F(n) \leq n^2 / \exp(\Omega(\log^*(n)))$. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/abs/1609.08688", AMS 5]
 theorem maximalLength_le_isBigO : ∃ Ω : ℕ → ℝ,
     (fun (n : ℕ) => (Real.iteratedLog n : ℝ)) =O[atTop] Ω ∧
       ∀ n, F n ≤ n ^ 2 / Real.exp (Ω n) := by
@@ -218,7 +218,7 @@ theorem sequenceProduct_example : [![1, 1, 1]] ⊗₂ [![1, 1, 1]] = toLex [toLe
 
 /-- Suppose that for some $n$ we have $F(n) = n ^ {\alpha}$. Then there are arbitrarily
 large $m$ such that $F(m) \geq m^{\alpha}$. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/abs/1609.08688", AMS 5]
 theorem maximalLength_pow {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) ^ e) :
     ∀ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ e ≤ F m := by
   sorry
