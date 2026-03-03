@@ -54,4 +54,13 @@ Are there any consecutive pairs of $3$-full integers?
 theorem erdos_366.variants.weaker : answer(sorry) ↔ ∃ n > 0, (3).Full n ∧ (3).Full (n + 1) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The question of consecutive $k$-full
+integers is related to the $abc$ conjecture; no example of consecutive 3-full integers is known.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/366", AMS 11]
+theorem erdos_366.variants.known_result :
+    ∃ n > 0, (2).Full n ∧ (3).Full (n + 1) := by
+  sorry
+
 end Erdos366
