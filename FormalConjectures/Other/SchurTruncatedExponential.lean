@@ -50,7 +50,7 @@ exponential polynomial over `ℚ`. Then for `n ≥ 2`:
 - If `n ≡ 0 (mod 4)`, the Galois group of `f_n` is isomorphic to the alternating group `A_n`
 - If `n ≢ 0 (mod 4)`, the Galois group of `f_n` is isomorphic to the symmetric group `S_n`
 -/
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Other/SchurTruncatedExponential.lean", AMS 12]
 theorem schur_truncatedExp_galoisGroup_equiv (n : ℕ) (hn : n ≥ 2) :
   letI f := truncatedExp n
   if n % 4 = 0 then
