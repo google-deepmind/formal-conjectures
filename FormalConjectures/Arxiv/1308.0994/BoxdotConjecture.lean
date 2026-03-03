@@ -120,7 +120,7 @@ inductive KProof : Set Formula → Formula → Prop
 
 /--
 `KTProof Γ φ` denotes that `φ` is provable from the premises `Γ` in the normal modal logic KT
-(also called T). KT extends system K by adding the instances of the T-axiom schema `□φ ~> φ` to K’s
+(also called T). KT extends system K by adding the instances of the T-axiom schema `□φ ~> φ` to K's
 usual axioms and rules of inference.
 -/
 inductive KTProof : Set Formula → Formula → Prop
@@ -145,7 +145,7 @@ lemma KTExtendsK {Γ φ} (h : KProof Γ φ) : KTProof Γ φ :=
   lift_K h
 
 /--
-A “normal modal logic” L is any `Set Formula` such that:
+A "normal modal logic" L is any `Set Formula` such that:
   1. If `K ⊢ φ`, then `φ ∈ L`          (L extends K)
   2. If `φ ∈ L` and `(φ ~> ψ) ∈ L`, then `ψ ∈ L`  (Closed under MP)
   3. If `φ ∈ L`, then `□φ ∈ L`          (Closed under Necessitation)
