@@ -43,4 +43,16 @@ theorem erdos_38 : answer(sorry) ↔
         ∃ b ∈ B, (Ioc 0 N ∩ (A ∪ (A + {b}))).ncard ≥ (α + f α) * N := by
   sorry
 
+/--
+Mann's theorem (1942) states that for sets $A, B \subseteq \mathbb{N}$ with $0 \in A \cap B$,
+the Schnirelmann density satisfies $\sigma(A + B) \geq \min(1, \sigma(A) + \sigma(B))$,
+providing a foundational density increment result in additive combinatorics.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/38", AMS 11]
+theorem erdos_38.variants.mann_theorem :
+    ∀ (A B : Set ℕ), 0 ∈ A → 0 ∈ B →
+      min 1 (schnirelmannDensity A + schnirelmannDensity B) ≤
+        schnirelmannDensity (A + B) := by
+  sorry
+
 end Erdos38
