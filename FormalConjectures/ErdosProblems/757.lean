@@ -42,12 +42,12 @@ theorem erdos_757 {A : Set ℝ} :
   sorry
 
 /-- The supremum is strictly larger than `1 / 2`, which is proved in [GyLe95]. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/757.lean", AMS 5]
 theorem erdos_757.lowerBound {A : Set ℝ} : 1 / (2 : ℝ) < sSup {c | IsAdmissible c} := by
   sorry
 
 /-- In [GyLe95], the authors also prove that the supremum is smaller than `3 / 5`. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/757.lean", AMS 5]
 theorem erdos_757.upperBound {A : Set ℝ} : sSup {c | IsAdmissible c} < 3 / (5 : ℝ) := by
   sorry
 
