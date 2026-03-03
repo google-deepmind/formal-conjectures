@@ -36,7 +36,7 @@ open Asymptotics Filter
 The density `dₜ` of `DivisorSumSet (t : ℕ)` is bounded from below by `1 / log (t) ^ c₃` and
 from above by `1 / log (t) ^ c₄` for some positive constants `c₃` and `c₄`.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/859.lean", AMS 11]
 theorem erdos_859.variants.erdos_upper_lower_bounds : ∃ᵉ (c₃ > (0 : ℝ)) (c₄ > (0 : ℝ)) (t₀ : ℕ),
     ∀ᶠ t in atTop, ∃ dₜ : ℝ, (DivisorSumSet t).HasDensity dₜ ∧
     1 / Real.log t ^ c₃ < dₜ ∧ dₜ < 1 / Real.log t ^ c₄ := by
