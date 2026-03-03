@@ -37,4 +37,14 @@ theorem erdos_197 :
       (∃ g : ℕ ≃ B, ¬ HasMonotoneAP g 3) := by
   sorry
 
+/--
+It is known (Davis–Entringer–Graham–Simmons 1977) that $\mathbb{N}$ itself cannot be permuted to
+avoid monotone 3-APs. The question of whether it can be split into two such permutable parts
+is a natural relaxation, and is known to hold for small cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/197", AMS 5]
+theorem erdos_197.variants.known_result :
+    ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 3 := by
+  sorry
+
 end Erdos197
