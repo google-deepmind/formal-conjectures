@@ -79,7 +79,9 @@ Proved by Hanson, Steele, and Stenger [HSS77].
 
 We exlude here the case `s = 0`, because in the informal formulation then the right hand side is to be interpreted as `∞`, while the left hand side counts the elements in `A`.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/350.lean",
+AMS 5 11]
 theorem erdos_350.variants.strengthening (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A)
     (s : ℝ) (hs : 0 < s) : ∑ n ∈ A, (1 / n : ℝ)^s < 1 / (1 - 2^(-s)) := by
   sorry
