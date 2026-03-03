@@ -39,7 +39,7 @@ theorem erdos_517.fabry : answer(sorry) ↔ ∀ {f : ℂ → ℂ} {n : ℕ → �
 
 /-- If `f(z) = ∑ aₖzⁿₖ` is an entire function (with `aₖ ≠ 0` for all `k`) such that `∑ 1 / nₖ < ∞`,
 then `f` assumes every value infinitely often. This theorem is proved in [Bi28]. -/
-@[category research solved, AMS 30]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/517.lean", AMS 30]
 theorem erdos_517.fejer {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ}
     (ha : ∀ k, a k ≠ 0) (hf : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (z : ℂ) :
     {x : ℂ | f x = z}.Infinite := by
