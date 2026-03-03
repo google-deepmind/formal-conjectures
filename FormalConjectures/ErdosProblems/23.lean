@@ -80,4 +80,17 @@ theorem erdos_23 : answer(sorry) ↔
 
 -- TODO: add the remaining variants/statements/comments
 
+/--
+Erdős and Faudree (1990s) studied the bipartite edit distance of triangle-free graphs;
+the conjecture that every triangle-free graph on $5n$ vertices can be made bipartite by deleting
+at most $n^2$ edges is known to hold for small values of $n$ by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/23", AMS 5]
+theorem erdos_23.variants.known_result :
+    ∀ (n : ℕ) (hn : n ≤ 2) (V : Type) [Fintype V], Fintype.card V = 5 * n →
+      ∀ (G : SimpleGraph V), G.CliqueFree 3 →
+        ∃ (H : SimpleGraph V),
+          H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ n^2 := by
+  sorry
+
 end Erdos23
