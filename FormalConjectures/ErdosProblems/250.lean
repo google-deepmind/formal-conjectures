@@ -38,7 +38,7 @@ The answer is yes, as shown by Nesterenko [Ne96].
 [Ne96] Nesterenko, Yu V., _Modular functions and transcendence questions_,
 Mat. Sb. 187 *9* (1996), 1319--1348.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/250", AMS 11]
 theorem erdos_250  : (∀ x, HasSum (fun (n : ℕ) => σ 1 n / (2 : ℝ) ^ n) x → Irrational x) ↔
     answer(True):= by
   sorry
