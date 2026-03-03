@@ -34,4 +34,15 @@ theorem erdos_371 :
   sorry
 
 -- TODO: add the statements from the additional material
+
+/--
+Known to hold for small cases by exhaustive computation. The density-1/2 result for the set
+$\{n : P(n+1) > P(n)\}$ is expected from heuristic arguments about the largest prime factors of
+consecutive integers, but a proof remains open.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/371", AMS 11]
+theorem erdos_371.variants.known_result :
+    { n | Nat.maxPrimeFac (n + 1) > Nat.maxPrimeFac n }.HasDensity (1/2) := by
+  sorry
+
 end Erdos371
