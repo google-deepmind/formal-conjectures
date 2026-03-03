@@ -92,7 +92,7 @@ theorem pierce_birkhoff_conjecture {n : ℕ} (f : (Fin n → ℝ) → ℝ)
 The Pierce-Birkhoff conjecture holds for `n = 1`.
 This was proved by Louis Mahé.
 -/
-@[category research solved, AMS 13]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/PierceBirkhoff.lean", AMS 13]
 theorem pierce_birkhoff_conjecture_dim_one (f : ℝ → ℝ)
     (hf : IsPiecewisePolynomial f) :
     ∃ (ι κ : Type) (g : ι → κ → Polynomial ℝ), Finite ι ∧ Finite κ ∧
@@ -103,7 +103,7 @@ theorem pierce_birkhoff_conjecture_dim_one (f : ℝ → ℝ)
 The Pierce-Birkhoff conjecture holds for `n = 2`.
 This was proved by Louis Mahé.
 -/
-@[category research solved, AMS 13]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/PierceBirkhoff.lean", AMS 13]
 theorem pierce_birkhoff_conjecture_dim_two
     (f : (Fin 2 → ℝ) → ℝ) (hf : IsPiecewiseMvPolynomial f) :
     ∃ (ι κ : Type) (g : ι → κ → MvPolynomial (Fin 2) ℝ), Finite ι ∧ Finite κ ∧
