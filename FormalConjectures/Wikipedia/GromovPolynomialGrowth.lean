@@ -179,7 +179,8 @@ def HasPolynomialGrowth : Prop :=
 
 /-- **Gromov's Polynomial Growth Theorem** : A finitely generated group has
     polynomial growth if and only if it is virtually nilpotent. -/
-@[category research solved, AMS 20]
+@[category research formally solved using other_system at
+"https://www.ihes.fr/~gromov/wp-content/uploads/2018/08/8.pdf", AMS 20]
 theorem GromovPolynomialGrowthTheorem [Group.FG G] :
     HasPolynomialGrowth G ↔ Group.IsVirtuallyNilpotent G := by
   sorry
