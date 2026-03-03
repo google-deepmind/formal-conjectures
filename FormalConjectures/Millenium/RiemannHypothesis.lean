@@ -110,10 +110,9 @@ equation for the completed zeta function. In particular, they occur at non-posit
 the exact pattern depending on the signature of $K$.
 -/
 def trivialZeros (K : Type*) [Field K] [NumberField K] : Set ℤ :=
-  if NumberField.InfinitePlace.nrComplexPlaces K = 0 then
-    { -2 * n | (n : ℕ) }
-  else
-    Set.Iic 0
+  by
+    classical
+    exact if NumberField.IsTotallyReal K then { -2 * n | (n : ℕ) } else Set.Iic 0
 
 /--
 The **Extended Riemann Hypothesis** (ERH) for Dedekind zeta functions asserts that if
@@ -136,7 +135,7 @@ theorem extended_riemann_hypothesis_dedekindZeta (K : Type*) [Field K] [NumberFi
 A common formulation of ERH: every zero of $\zeta_K$ in the critical strip lies on the critical
 line.
 -/
-@[category API, AMS 11 12 30]
+@[category test, AMS 11 12 30]
 theorem extended_riemann_hypothesis_dedekindZeta_of_isInCriticalStrip (K : Type*) [Field K]
     [NumberField K] (s : ℂ) (hs_strip : IsInCriticalStrip s)
     (hs : NumberField.dedekindZeta K s = 0) :
@@ -147,7 +146,7 @@ theorem extended_riemann_hypothesis_dedekindZeta_of_isInCriticalStrip (K : Type*
     rcases hs_strip with ⟨hs_re_pos, _⟩
     have hz_le : (z : ℝ) ≤ 0 := by
       have hz_le_int : z ≤ 0 := by
-        by_cases h : NumberField.InfinitePlace.nrComplexPlaces K = 0
+        by_cases h : NumberField.IsTotallyReal K
         · simp [trivialZeros, h] at hz
           rcases hz with ⟨n, rfl⟩
           have hn : (0 : ℤ) ≤ (n : ℤ) := by exact_mod_cast (Nat.zero_le n)
