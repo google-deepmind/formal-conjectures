@@ -43,7 +43,8 @@ theorem erdos_1107 : ∀ r ≥ 2, ∀ᶠ n in atTop, SumOfRPowerful r n := by
 /--
 Heath-Brown [He88] proved every large integer the sum of at most three $2$-powerful numbers.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1107", AMS 11]
 theorem erdos_1107.variants.two : ∀ᶠ n in atTop, SumOfRPowerful 2 n := by
   sorry
 
