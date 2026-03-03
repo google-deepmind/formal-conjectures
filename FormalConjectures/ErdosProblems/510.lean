@@ -46,7 +46,7 @@ theorem erdos_510 :
 /--
 Ruzsa [Ru04] proved an upper bound of $-\exp(O(\sqrt{\log N})$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/510.lean", AMS 11]
 theorem erdos_510.variants.ruzsa :
     ∃ (c : ℝ) (hc : 0 < c),
       ∀ᶠ N in atTop, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
@@ -56,7 +56,7 @@ theorem erdos_510.variants.ruzsa :
 /--
 Bedert [Be25c] proved an upper bound of $-c N^{1/7}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/510.lean", AMS 11]
 theorem erdos_510.variants.bedert :
     ∃ (c : ℝ) (hc : 0 < c),
       ∀ᶠ N in atTop, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
