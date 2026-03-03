@@ -35,4 +35,15 @@ theorem erdos_421 : answer(sorry) ↔
     {(u, v) : ℕ × ℕ | u ≤ v}.InjOn fun (u, v) => ∏ i ∈ Finset.Icc u v, d i := by
   sorry
 
+/--
+For the sequence $d_i = i + 1$ (the natural numbers starting from 2), consecutive products
+$\prod_{u \le i \le v} d_i = (v+1)!/(u!)$ are distinct for distinct intervals,
+providing a natural candidate (though this sequence does not have density 1).
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/421", AMS 11]
+theorem erdos_421.variants.known_result :
+    ∃ (d : ℕ → ℕ), StrictMono d ∧ 1 ≤ d 0 ∧
+    {(u, v) : ℕ × ℕ | u ≤ v}.InjOn fun (u, v) => ∏ i ∈ Finset.Icc u v, d i := by
+  sorry
+
 end Erdos421
