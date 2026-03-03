@@ -40,7 +40,7 @@ theorem erdos_238 : answer(sorry) ↔ ∀ᵉ (c₁ > 0) (c₂ > 0), ∀ᶠ (x : 
 /--
 It is well-known that the conjecture above is true when `c₁` is sufficiently small.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/238", AMS 11]
 theorem erdos_238.variant : ∀ c₂ > 0, ∀ᶠ c₁ in 𝓝[>] 0, ∀ᶠ (x : ℝ) in atTop, ∃ (k : ℕ),
     c₁ * log x < k ∧ ∃ f : Fin k → ℕ, ∃ m, (∀ i, f i ≤ x ∧ f i = (m + i.1).nth Nat.Prime)
     ∧ ∀ i : Fin (k - 1), c₂ < primeGap (m + i.1) := by
