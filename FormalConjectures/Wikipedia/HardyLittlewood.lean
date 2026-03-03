@@ -105,7 +105,8 @@ theorem second_hardy_littlewood_conjecture {x y : ℕ} (hx : 2 ≤ x) (hy : 2 �
 
 [Ri74] Richards, Ian (1974). _On the Incompatibility of Two Conjectures Concerning Primes_. Bull. Amer. Math. Soc. 80: 419–438.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://doi.org/10.1090/S0002-9904-1974-13434-8", AMS 11]
 theorem not_first_and_secondHardyLittlewoodConjecture :
     (∀ {k : ℕ} (m : Fin k.succ → ℕ), FirstHardyLittlewoodConjectureFor m) →
       ¬(∀ {x y : ℕ} (hx : 2 ≤ x) (hy : 2 ≤ y), SecondHardyLittlewoodConjectureFor x y) := by
