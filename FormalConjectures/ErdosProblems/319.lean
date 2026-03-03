@@ -118,7 +118,7 @@ follows from the main result of Croot [Cr01].
 [Cr01] Croot, III, Ernest S., _On unit fractions with denominators in short intervals_.
 Acta Arith. (2001), 99-114.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/319", AMS 5]
 theorem erdos_319.variants.lb : ∃ (o : ℕ → ℝ), (o =o[atTop] (1 : ℕ → ℝ)) ∧
     ∀ᶠ N in atTop, (1 - 1 / rexp 1 + o N) * N ≤ sSup { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
