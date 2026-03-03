@@ -35,7 +35,7 @@ This was disproven by Kovač and Tao in [KoTa24].
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series.
          [arXiv:2406.17593](https://arxiv.org/abs/2406.17593) (2024).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/266", AMS 11]
 theorem erdos_266 :
     ¬ ∀ (a : ℕ → ℕ), ((∀ n : ℕ, a n ≥ 1) ∧ Summable ((1 : ℝ) / a ·) →
       ∃ t ≥ (1 : ℕ), Irrational <| ∑' n, (1 : ℝ) / ((a n) + t)) := by
@@ -49,7 +49,7 @@ number for all $t \in \mathbb{Q}$ such that $t \ne -a_n$ for any $n$.
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series.
          [arXiv:2406.17593](https://arxiv.org/abs/2406.17593) (2024).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/266", AMS 11]
 theorem erdos_266.variants.all_rationals:
     ∃ a : ℕ → ℕ, StrictMono a ∧ a 0 ≥ 1 ∧
       (∀ t : ℚ, (¬ ∃ n : ℕ, t = -(a n)) →
