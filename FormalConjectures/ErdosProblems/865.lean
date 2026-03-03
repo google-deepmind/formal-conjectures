@@ -49,7 +49,7 @@ theorem erdos_865 :
 It is a classical folklore fact that if $A\subseteq \{1,\ldots,2N\}$ has size $\geq N+2$ then
 there are distinct $a,b\in A$ such that $a+b\in A$, which establishes the $k=2$ case.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/865.lean", AMS 5 11]
 theorem erdos_865.variants.k2 (N : ℕ) :
     ∀ A ⊆ Icc 1 (2 * N), A.card ≥ N + 2 →
     ∃ a ∈ A, ∃ b ∈ A, a ≠ b ∧ a + b ∈ A := by
@@ -76,7 +76,7 @@ theorem erdos_865.variants.sos :
 Choi, Erdős, and Szemerédi [CES75] have proved that, for all $k\geq 3$, there exists $\epsilon_k>0$
 such that (for large enough $N$) $f_k(N)\leq \left(\frac{2}{3}-\epsilon_k\right)N$.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/865.lean", AMS 5 11]
 theorem erdos_865.variants.upper_bound (k : ℕ) (hk : 3 ≤ k) :
     ∃ ε > 0, ∀ᶠ N in atTop, (f N k : ℝ) ≤ (2 / 3 - ε) * N := by
   sorry
