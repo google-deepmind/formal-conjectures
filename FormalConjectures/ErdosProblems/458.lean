@@ -47,7 +47,7 @@ while $\operatorname{lcm}(1, 2) = 2 < 4$. This confirms the $k=1$ base case.
 -/
 @[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/458", AMS 11]
 theorem erdos_458.variants.known_result :
-    lcm_upto (1 .nth Nat.Prime - 1) < 0 .nth Nat.Prime * lcm_upto (0 .nth Nat.Prime) := by
+    lcm_upto ((1 : ℕ).nth Nat.Prime - 1) < (0 : ℕ).nth Nat.Prime * lcm_upto ((0 : ℕ).nth Nat.Prime) := by
   sorry
 
 end Erdos458
