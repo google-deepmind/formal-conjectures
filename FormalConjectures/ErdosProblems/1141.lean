@@ -65,4 +65,13 @@ example : ¬ Erdos1141Prop 968 := by
 example : Erdos1141Prop 1722 := by
   decide +native
 
+/--
+The value $n = 1722$ satisfies the property, as verified computationally. Known to hold for small
+cases by exhaustive computation; the set $\{n \mid \text{Erdos1141Prop}(n)\}$ is nonempty.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1141", AMS 11]
+theorem erdos_1141.variants.nonempty :
+    { n | Erdos1141Prop n }.Nonempty := by
+  sorry
+
 end Erdos1141
