@@ -65,4 +65,14 @@ of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=5$, i.e. we get the 
 theorem f_undefined_at_3 : f 5 = 0 := by
   sorry
 
+/--
+For $n = 1$, $f(1) = 1$ since $1$ is the smallest divisor of $1$, giving the sum of the first
+divisor as $1$. Known to hold by direct verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1054", AMS 11]
+theorem erdos_1054.variants.known_result :
+    (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) ∨
+    ∃ (A : Set ℕ), A.HasDensity 1 ∧ (fun (n : A) ↦ (f ↑n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
+  sorry
+
 end Erdos1054
