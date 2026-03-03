@@ -41,4 +41,14 @@ theorem erdos_463 : answer(sorry) ↔ ∃ (f : ℕ → ℕ) (_ : Tendsto f atTop
         n + f n < m ∧ m < n + m.minFac := by
   sorry
 
+/--
+For constant $f = 1$, the existence of composite $m$ with $n + 1 < m < n + p(m)$
+follows from the fact that between consecutive primes there are composite numbers
+with small least prime factors; this weaker version is known to hold.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/463", AMS 11]
+theorem erdos_463.variants.known_result :
+    ∃ᶠ n in atTop, ∃ m, m.Composite ∧ n < m ∧ m < n + m.minFac := by
+  sorry
+
 end Erdos463
