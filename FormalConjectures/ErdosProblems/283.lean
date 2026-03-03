@@ -56,7 +56,7 @@ theorem erdos_283 : answer(sorry) ↔ ∀ p : ℤ[X], Condition p := by
 /--
 Graham [Gr63] has proved this when $p(x)=x$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/283", AMS 11]
 theorem erdos_283.variants.graham : Condition X := by
   sorry
 
