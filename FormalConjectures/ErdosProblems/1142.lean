@@ -57,7 +57,9 @@ theorem erdos_1142 :
 Mientka and Weitzenkamp [MiWe69] proved that the only $n \leq 2^{44}$ such that $n > 2$ and
 $n - 2^k$ is prime for all $k \geq 1$ with $2^k < n$ are $4, 7, 15, 21, 45, 75, 105$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/1142.lean",
+AMS 11]
 theorem erdos_1142.variants.mientka_weitzenkamp :
     { n : ℕ | n ≤ 2 ^ 44 ∧ Erdos1142Prop n } = {4, 7, 15, 21, 45, 75, 105} := by
   sorry
