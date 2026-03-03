@@ -39,4 +39,15 @@ theorem erdos_873 : answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (ε > (0 : ℝ)),
     ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal := by
   sorry
 
+/--
+For $k = 1$, the count $F(A,X,1)$ equals the number of elements of $A$ less than $X$, which
+for a strictly monotone sequence $A \subseteq \mathbb{N}$ is at most $X$. So the $k=1$ case
+gives $F(A,X,1) \leq X$ rather than $X^\epsilon$, motivating the search for larger $k$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/873", AMS 11]
+theorem erdos_873.variants.known_result :
+    ∀ (a : ℕ → ℕ), 0 < a 0 → StrictMono a →
+    ∀ X > 0, F a X 1 ≤ (X.toEReal) := by
+  sorry
+
 end Erdos873
