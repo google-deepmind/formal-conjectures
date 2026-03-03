@@ -49,4 +49,13 @@ length $3$, see `erdos_141.variants.infinite_three`.
 theorem erdos_218.variants.infinite_equal_prime_gap : {n | primeGap n = primeGap (n + 1)}.Infinite := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The density-1/2 conjecture for prime gaps
+is related to Chowla's conjecture and remains open in general.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/218", AMS 11]
+theorem erdos_218.variants.known_result :
+    {n | primeGap n ≤ primeGap (n + 1)}.HasDensity <| 1 / 2 := by
+  sorry
+
 end Erdos218
