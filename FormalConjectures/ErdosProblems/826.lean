@@ -37,4 +37,15 @@ theorem erdos_826 : answer(sorry) ↔
     ∃ C > (0 : ℝ), { n | ∀ k ≥ 1, σ 0 (n + k) ≤ C * k }.Infinite := by
   sorry
 
+/--
+It is known that $\tau(n) = O(n^\epsilon)$ for any $\epsilon > 0$, and the average order of
+$\tau(n)$ is $\log n$. These classical results show that the divisor function cannot grow
+too fast on average, but the question of arbitrarily long intervals with linear divisor counts
+remains open.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/826", AMS 11]
+theorem erdos_826.variants.known_result :
+    ∀ k ≥ 1, ∃ n, σ 0 (n + k) ≤ 2 * k := by
+  sorry
+
 end Erdos826
