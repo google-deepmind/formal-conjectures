@@ -43,12 +43,16 @@ def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
   ∃ S : Finset ℕ, S.Nonempty ∧ ↑S ⊆ A \ {0} ∧ ∑ n ∈ S, f n / n = 0
 
 /-- `ℕ` has property `P₁`. This is proved in [ErSt75]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-318-p1/FormalConjectures/ErdosProblems/318.lean",
+AMS 11]
 theorem erdos_318.univ : P₁ univ := by
   sorry
 
 /-- Sattler proved in [Sa75] that the set of odd numbers has property `P₁`. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-318-p1/FormalConjectures/ErdosProblems/318.lean",
+AMS 11]
 theorem erdos_318.odd : P₁ {n | Odd n} := by
   sorry
 
@@ -100,19 +104,25 @@ theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n}) := by
 
 /-- For any set `A` containing exactly one even number, `A` does not have property `P₁`. Sattler
 [Sa82] credits this observation to Erdős, who presumably found this after [ErGr80]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-318-p1/FormalConjectures/ErdosProblems/318.lean",
+AMS 11]
 theorem erdos_318.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even n}.ncard = 1) :
     ¬ P₁ {n | IsSquare n} := by
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
 #TODO: prove this lemma by assuming `erdos_318.contain_single_even`. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-318-p1/FormalConjectures/ErdosProblems/318.lean",
+AMS 11]
 theorem erdos_318.posDensity : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
 
 /-- Every infinite arithmetic progression has property `P₁`. This is proved in [Sa82b]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-318-p1/FormalConjectures/ErdosProblems/318.lean",
+AMS 11]
 theorem erdos_318.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
