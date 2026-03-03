@@ -49,7 +49,8 @@ theorem erdos_1062.parts.ii :
   sorry
 
 /-- The interval `[⌊n/3⌋, n]` is fork-free, and therefore `f n` is at least `⌈2n / 3⌉`. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/1062.lean", AMS 11]
 theorem erdos_1062.variants.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ ≤ f n := by
   classical
   set b : ℕ := n / 3 with hb
@@ -76,7 +77,8 @@ theorem erdos_1062.variants.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ �
 
 /-- Lebensold proved that for large `n`, the function `f n` lies between `0.6725 n` and
 `0.6736 n`. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1062", AMS 11]
 theorem erdos_1062.variants.lebensold_bounds :
     ∀ᶠ n in atTop, (0.6725 : ℝ) * n ≤ f n ∧ f n ≤ (0.6736 : ℝ) * n := by
   sorry
