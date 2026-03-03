@@ -62,7 +62,7 @@ is strongly complete, in the sense that, for any finite set $B$,
 \[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
 contains all sufficiently large integers.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/351", AMS 11]
 protected theorem erdos_351.variants.X : HasCompleteImage X := by
   sorry
 
@@ -71,7 +71,7 @@ protected theorem erdos_351.variants.X : HasCompleteImage X := by
 is strongly complete, in the sense that, for any finite set $B$,
 \[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
 contains all sufficiently large integers. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/351", AMS 11]
 theorem erdos_351.variants.X_sq : HasCompleteImage (X ^ 2) := by
   sorry
 
