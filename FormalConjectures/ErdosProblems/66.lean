@@ -40,4 +40,17 @@ theorem erdos_66 : answer(sorry) ↔ ∃ (A : Set ℕ) (c : ℝ), c ≠ 0 ∧
 
 -- TODO(firsching): add the theorems/conjectures for the comments on the page
 
+/--
+The set of primes $\mathbb{P}$ satisfies $r_{\mathbb{P}}(n) \sim n / (\log n)^2$ by the
+Hardy–Littlewood prime $k$-tuples conjecture (heuristic), and conditionally on GRH, the
+Goldbach-type representation count grows like $n / \log^2 n$, suggesting that
+$r_A(n) / \log n \to c$ is plausible but not yet proved for any explicit $A$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/66", AMS 11]
+theorem erdos_66.variants.known_result :
+    ∀ (A : Set ℕ) (c : ℝ), c ≠ 0 →
+      Tendsto (fun n ↦ (sumRep A n : ℝ) / Real.log n) atTop (𝓝 c) →
+      A.Infinite := by
+  sorry
+
 end Erdos66
