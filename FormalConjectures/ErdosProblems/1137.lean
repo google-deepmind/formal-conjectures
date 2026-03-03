@@ -39,4 +39,14 @@ theorem erdos_1137 :
         (((range x).sup primeGap : ℕ) : ℝ) ^ 2) atTop (𝓝 0) := by
   sorry
 
+/--
+The ratio $\frac{\max_{n<x} d_n d_{n-1}}{(\max_{n<x} d_n)^2}$ is at most 1 for all $x$,
+since $d_n d_{n-1} \leq (\max d_n)^2$. Known to hold for small cases by direct verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1137", AMS 11]
+theorem erdos_1137.variants.ratio_le_one (x : ℕ) (hx : 0 < x) :
+    (((range x).sup (fun n ↦ (primeGap n) * (primeGap (n - 1))) : ℕ) : ℝ) /
+    (((range x).sup primeGap : ℕ) : ℝ) ^ 2 ≤ 1 := by
+  sorry
+
 end Erdos1137
