@@ -40,7 +40,7 @@ Problem 9 (i): is $r_3(N) \ll N(\log N)^{-10}$?
 
 Solved in [BlSi20].
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/abs/2007.03528", AMS 5]
 theorem green_9_i :
     (fun (N : ℕ) ↦ (r 3 N : ℝ)) ≪ fun (N : ℕ) ↦ (N : ℝ) * (Real.log N) ^ (-10 : ℝ) := by
   sorry
