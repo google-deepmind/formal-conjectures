@@ -45,7 +45,8 @@ Can every odd integer greater than 5 be written as the sum of three primes?
 NB. While Harald Helfgott's solution is not published in a peer-reviewed journal yet,
 his results seem generally accepted.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://arxiv.org/abs/1305.2897", AMS 11]
 theorem ternaryGoldbach (n : ℕ) (hn : 5 < n) (hn_odd : Odd n) :
     ∃ p q r, Nat.Prime p ∧ Nat.Prime q ∧ Nat.Prime r ∧ n = p + q + r := by
   sorry
