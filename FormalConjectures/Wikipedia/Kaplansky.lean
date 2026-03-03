@@ -84,7 +84,7 @@ lemma promislow_group_is_torsionfree :
 /--
 If $P$ is the Promislow group, then the group ring $\mathbb{F}_p[P]$ has a non-trivial unit.
 -/
-@[category research solved, AMS 16 20]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Kaplansky.lean", AMS 16 20]
 theorem UnitConjecture.counterexamples.i (p : ℕ) [hp : Fact p.Prime] :
     ∃ (u : (MonoidAlgebra (ZMod p) PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
@@ -92,7 +92,7 @@ theorem UnitConjecture.counterexamples.i (p : ℕ) [hp : Fact p.Prime] :
 /--
 If $P$ is the Promislow group, then the group ring $\mathbb{C}[P]$ has a non-trivial unit.
 -/
-@[category research solved, AMS 16 20]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Kaplansky.lean", AMS 16 20]
 theorem UnitConjecture.counterexamples.ii :
     ∃ (u : (MonoidAlgebra ℂ PromislowGroup)ˣ), ¬IsTrivialUnit u.val := by
   sorry
@@ -105,7 +105,7 @@ At least there is a counterexample for any prime and zero characteristic:
 [Pa21] Passman, D. (2021). On the counterexamples to the unit conjecture for group rings.
 [Ga24] Gardam, G. (2024). Non-trivial units of complex group rings.
 -/
-@[category research solved, AMS 16 20]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Kaplansky.lean", AMS 16 20]
 theorem counter_unit_conjecture :
     ∃ (G : Type) (_ : Group G) (_ : IsMulTorsionFree G),
     ∀ (p : ℕ) (_ : p = 0 ∨ p.Prime),
@@ -117,7 +117,7 @@ theorem counter_unit_conjecture :
 /--
 There is a counterexample to **Unit Conjecture** in any characteristic.
 -/
-@[category research solved, AMS 16 20]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Kaplansky.lean", AMS 16 20]
 theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
     ∃ (G : Type) (_ : Group G) (_ : IsMulTorsionFree G)
       (K : Type) (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val :=
