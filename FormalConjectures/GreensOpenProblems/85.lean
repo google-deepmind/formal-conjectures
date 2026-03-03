@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Green's Open Problem 85
 
-*Carbery’s rectangle problem*
+*Carbery's rectangle problem*
 
 References:
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.85)
@@ -54,7 +54,7 @@ theorem green_85 :
 From [Gr24] "It is quite easy to show using Cauchy-Schwarz that there must be such a rectangle with
 area $\gg \alpha^2 (\log 1/\alpha)^{-1}$."
 -/
-@[category research solved, AMS 28 52]
+@[category research formally solved using formal_conjectures at "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.85", AMS 28 52]
 theorem green_85_loose :
     ∃ c > 0, ∀ A : Set (ℝ × ℝ),
     IsOpen A →
