@@ -55,4 +55,14 @@ theorem erdos_386.variants_two :
       2 ≤ n - 2 ∧ ∃ p q : ℕ, n.choose 2 = ∏ i ∈ .Ico p q, nth Nat.Prime i := by
     sorry
 
+/--
+For $k = 2$, $\binom{n}{2} = n(n-1)/2$; known cases include $\binom{4}{2} = 6 = 2 \cdot 3$,
+the product of the first two consecutive primes. Such finite verifications confirm the
+problem is non-trivially posed for small $n$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/386", AMS 11]
+theorem erdos_386.variants.known_result :
+    (4 : ℕ).choose 2 = ∏ i ∈ Finset.Ico 0 2, nth Nat.Prime i := by
+  sorry
+
 end Erdos386
