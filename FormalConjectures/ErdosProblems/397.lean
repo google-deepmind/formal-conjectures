@@ -43,7 +43,7 @@ This was earlier asked about in a [MathOverflow] question, in response to which 
 alternative construction which produces solutions - at the moment it is not clear whether Elkies'
 argument gives infinitely many solutions (although Bloom believes that it can).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/397", AMS 11]
 theorem erdos_397 :
     answer(False) ↔
       {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
