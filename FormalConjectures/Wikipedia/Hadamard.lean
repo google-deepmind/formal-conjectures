@@ -118,7 +118,7 @@ theorem isHadamard_H12 : IsHadamard H12 := by
 /--
 For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.
 -/
-@[category research solved, AMS 15]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Hadamard.lean", AMS 15]
 theorem HadamardConjecture.variants.first_cases (k : ℕ) (h : k ≤ 166) :
     ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
