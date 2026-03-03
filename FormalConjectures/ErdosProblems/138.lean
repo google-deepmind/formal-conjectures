@@ -16,7 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-
 /-!
 # Erdős Problem 138
 
@@ -28,7 +27,7 @@ import FormalConjectures.Util.ProblemImports
 - [Go01] Gowers, W. T., A new proof of Szemerédi's theorem. Geom. Funct. Anal. (2001), 465-588.
 -/
 
-open Nat Filter
+open Nat Filter Set
 
 namespace Erdos138
 
@@ -48,7 +47,7 @@ always exists some number `N` large enough to guarantee a monochromatic arithmet
 In other words, the set `monoAP_guarantee_set` is non-empty. This is the fundamental existence
 result that allows for the definition of the van der Waerden numbers.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/138.lean", AMS 11]
 theorem monoAP_guarantee_set_nonempty (r k) : (monoAP_guarantee_set r k).Nonempty := by
   sorry
 
@@ -68,7 +67,52 @@ noncomputable abbrev W : ℕ → ℕ := monoAPNumber 2
 
 @[category test, AMS 11]
 theorem monoAPNumber_two_one : W 1 = 1 := by
-  sorry
+  have h1_in_S : 1 ∈ monoAP_guarantee_set 2 1 := by
+    intro c
+    have h1 : 1 ∈ Finset.Icc 1 1 := by simp
+    use c ⟨1, h1⟩
+    use {⟨1, h1⟩}
+    constructor
+    · have : ((fun (x : Finset.Icc 1 1) ↦ (x : ℕ)) '' {⟨1, h1⟩}) = {1} := by
+        ext x
+        simp only [mem_image, mem_singleton_iff]
+        constructor
+        · rintro ⟨a, ha, rfl⟩
+          have a_mem := a.2
+          rw [Finset.mem_Icc] at a_mem
+          omega
+        · rintro rfl
+          exact ⟨⟨1, h1⟩, rfl, rfl⟩
+      have hap : Set.IsAPOfLength ((fun (x : Finset.Icc 1 1) ↦ (x : ℕ)) '' {⟨1, h1⟩}) 1 := by
+        rw [this]
+        rw [@Set.IsAPOfLength.one ℕ]
+        use 1
+      exact hap
+    · intro m hm
+      simp at hm
+      subst hm
+      rfl
+  apply le_antisymm
+  · exact Nat.sInf_le h1_in_S
+  · have h0 : 0 ∉ monoAP_guarantee_set 2 1 := by
+      intro h
+      specialize h (fun _ => 0)
+      rcases h with ⟨c, ap, hap, _⟩
+      have hE : IsEmpty (Finset.Icc 1 0) := by
+        constructor
+        rintro ⟨x, hx⟩
+        rw [Finset.mem_Icc] at hx
+        omega
+      have hap_empty : ap = ∅ := Set.eq_empty_of_isEmpty ap
+      have hap_image_empty : ((fun (x : Finset.Icc 1 0) ↦ (x : ℕ)) '' ap) = ∅ := by
+        rw [hap_empty, Set.image_empty]
+      have hap_empty_is : Set.IsAPOfLength (∅ : Set ℕ) 1 := by
+        rw [← hap_image_empty]
+        exact hap
+      rw [@Set.IsAPOfLength.one ℕ] at hap_empty_is
+      rcases hap_empty_is with ⟨a, ha⟩
+      exact Set.singleton_ne_empty a ha.symm
+    exact Nat.succ_le_of_lt (Nat.pos_of_ne_zero (fun heq => h0 (heq ▸ Nat.sInf_mem ⟨1, h1_in_S⟩)))
 
 @[category test, AMS 11]
 theorem monoAPNumber_two_two : W 2 = 3 := by
@@ -82,18 +126,17 @@ $$ \lim_{k \to \infty} (W(k))^{1/k} = \infty $$
 theorem erdos_138 : answer(sorry) ↔ atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
   sorry
 
-
 /--
 When $p$ is prime Berlekamp [Be68] has proved $W(p+1) ≥ p^{2^p}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/138.lean", AMS 11]
 theorem erdos_138.variants.prime (p : ℕ) (hp : p.Prime) : p * (2 ^ p) ≤ W (p + 1) := by
   sorry
 
 /--
 Gowers [Go01] has proved $$W(k) \leq 2^{2^{2^{2^{2^{k+9}}}}.$$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/138.lean", AMS 11]
 theorem erdos_138.variants.upper (k : ℕ) : W k ≤ 2 ^ (2 ^ (2 ^ 2 ^ 2 ^ (k + 9))) := by
   sorry
 
@@ -120,3 +163,5 @@ In [Er80] Erdős asks whether $W(k)/2^k\to \infty$.
 theorem erdos_138.variants.dvd_two_pow :
     answer(sorry) ↔ atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
   sorry
+
+end Erdos138
