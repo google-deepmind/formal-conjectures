@@ -49,4 +49,18 @@ theorem erdos_566 : answer(sorry) ↔
         (sizeRamsey G H : ℝ) ≤ c * H.edgeSet.ncard := by
   sorry
 
+/--
+It is known that paths $P_k$ are Ramsey size linear (Erdős-Faudree-Rousseau-Schelp, 1993),
+since paths satisfy the sparseness condition (every induced subgraph of $P_k$ on $m$
+vertices has at most $m - 1 \leq 2m - 3$ edges for $m \geq 2$).
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/566", AMS 05]
+theorem erdos_566.variants.known_result :
+    ∀ (k : ℕ) (p : ℕ) (G : SimpleGraph (Fin p)),
+      (∀ S : Finset (Fin p), 2 ≤ S.card → (G.induce S).edgeSet.ncard ≤ S.card - 1) →
+      ∃ c > (0 : ℝ), ∀ (n : ℕ) (H : SimpleGraph (Fin n)) [DecidableRel H.Adj],
+        (∀ v, 0 < H.degree v) →
+        (sizeRamsey G H : ℝ) ≤ c * H.edgeSet.ncard := by
+  sorry
+
 end Erdos566
