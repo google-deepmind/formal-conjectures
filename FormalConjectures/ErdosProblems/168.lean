@@ -86,7 +86,7 @@ theorem erdos_168.parts.ii : answer(sorry) ↔
   sorry
 
 /-- The limit $F(N)/N$ as $N \to \infty$ exists. (proved by Graham, Spencer, and Witsenhausen) -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/168", AMS 5 11]
 theorem erdos_168.variants.limit_exists :
     ∃ x, Filter.Tendsto (fun N => (F N / N : ℝ)) Filter.atTop (𝓝 x) := by
   sorry
