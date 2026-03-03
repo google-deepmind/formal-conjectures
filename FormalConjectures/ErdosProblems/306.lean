@@ -43,7 +43,7 @@ theorem erdos_306 : answer(sorry) ↔ ∀ (q : ℚ), 0 < q → Squarefree q.den 
 Every positive integer can be expressed as an Egyptian fraction where each denominator is the
 product of three distinct primes.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/306", AMS 11]
 theorem erdos_306.variants.integer_three_primes (m : ℕ) (h : 0 < m) :
     ∃ k > (0 : ℕ), ∃ (n : Fin (k + 1) → ℕ), n 0 = 1 ∧
     ∀ i, (hik : i < k) → n ⟨i, by omega⟩ < n ⟨(i + 1), by omega⟩ ∧
