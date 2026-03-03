@@ -58,7 +58,7 @@ theorem isSumOfTwoSquaresAndPowersOf3And5_25 : IsSumOfTwoSquaresAndPowersOf3And5
 **Zhi-Wei Sun's Conjecture (A303656)**: Any integer $n > 1$ can be written as the sum of two
 squares, a power of 3, and a power of 5.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://oeis.org/A303656", AMS 11]
 theorem conjecture (n : ℕ) (hn : 1 < n) : IsSumOfTwoSquaresAndPowersOf3And5 n := by
   sorry
 
