@@ -33,7 +33,28 @@ noncomputable def F (n : ℕ) : ℕ := sSup {m + m.minFac | (m < n) (_ : m.Compo
 /-- Note that trivially $F(n) \leq n + \sqrt{n}$. -/
 @[category test, AMS 11]
 theorem trivial_ub (n : ℕ) : F n ≤ n + √n := by
-  sorry
+  -- First prove the ℕ-valued bound: F n ≤ n + Nat.sqrt n
+  have key : F n ≤ n + Nat.sqrt n := by
+    simp only [F]
+    rcases Set.eq_empty_or_nonempty {m + m.minFac | (m < n) (_ : m.Composite)} with hempty | hne
+    · simp only [hempty, csSup_empty]; exact bot_le
+    · apply csSup_le hne
+      rintro x ⟨m, hm, hcomp, rfl⟩
+      have hpos : 0 < m := Nat.lt_trans Nat.zero_lt_one hcomp.1
+      have hminFac_sq : m.minFac ^ 2 ≤ m := Nat.minFac_sq_le_self hpos hcomp.2
+      have hminFac_le : m.minFac ≤ Nat.sqrt n := by
+        rw [Nat.le_sqrt]
+        calc m.minFac * m.minFac = m.minFac ^ 2 := (sq m.minFac).symm
+          _ ≤ m := hminFac_sq
+          _ ≤ n := Nat.le_of_lt hm
+      have hm_le : m ≤ n - 1 := Nat.le_sub_one_of_lt hm
+      omega
+  -- Cast to ℝ, using Nat.sqrt n ≤ Real.sqrt n
+  calc (F n : ℝ) ≤ (n + Nat.sqrt n : ℕ) := by exact_mod_cast key
+    _ = (n : ℝ) + (Nat.sqrt n : ℝ) := by push_cast; ring
+    _ ≤ (n : ℝ) + Real.sqrt n := by
+        gcongr
+        exact Real.nat_sqrt_le_real_sqrt
 
 /-- Let $F(n) := \max\{m + p(m) \mid  \textrm{$m < n$ composite}\}\}$ where $p(m)$ is the least
 prime divisor of $m$. Is it true that $F(n)>n$ for all sufficiently large $n$? -/
