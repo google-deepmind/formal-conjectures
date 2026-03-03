@@ -31,7 +31,7 @@ that
 $$
   \gcd(a, b)\leq a/|A|.
 $$ -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/402", AMS 11]
 theorem erdos_402 (A : Finset ℕ) (h₁ : 0 ∉ A) (h₂ : A.Nonempty) : ∃ᵉ (a ∈ A) (b ∈ A),
     a.gcd b ≤ (a / A.card : ℚ) := by
   sorry
@@ -46,7 +46,7 @@ quantifiers to use for "where equality is achieved". See Theorem 1.1 there.
 TODO(firsching): Consider if we should have the other direction here as well or
 an iff statement.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/402", AMS 11]
 theorem erdos_402.variants.equality (A : Finset ℕ) (h₁ : 0 ∉ A) (h₂ : A.Nonempty)
     (h₃ : A.gcd id = 1)
     (h : ∀ᵉ (a ∈ A) (b ∈ A), (a / A.card : ℚ) ≤ a.gcd b) :
@@ -65,7 +65,7 @@ $\max_{i, j} \frac{a_i}{(a_i, a_j)} \ge n$.
 (ii) If equality holds then the system $\{a_1, a_2, \dots, a_n\}$ is either of the
 type $\{k, 2k, \dots, nk\}$ or of the type
 $\left\{\frac{k}{1}, \frac{k}{2}, \dots, \frac{k}{n}\right\}$. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/402", AMS 11]
 theorem erdos_402.variants.szegedy_zaharescu_weak : ∀ᶠ n in atTop,
     ∀ (A : Finset ℕ), A.card = n → 0 ∉ A →
       (n ≤ (A ×ˢ A).sup (fun x => x.1 / x.1.gcd x.2)) ∧
