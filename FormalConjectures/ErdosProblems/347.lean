@@ -41,7 +41,7 @@ has density $1$ for every cofinite subsequence $A'$ of $A$?
 This has been solved in the affirmative by ebarschkis in the comments (based on idea of Tao and
 van Doorn, also in the comments).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/347", AMS 11]
 theorem erdos_347 :
     answer(True) ↔ ∃ a : ℕ → ℕ, (Monotone a) ∧
       (Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (𝓝 2)) ∧
