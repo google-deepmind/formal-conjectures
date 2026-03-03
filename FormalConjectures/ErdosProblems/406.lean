@@ -41,4 +41,13 @@ theorem erdos_406.variants.one_two :
     IsGreatest { n | n.isPowerOfTwo ∧ Nat.digits 3 n ⊆ [1, 2] } (2 ^ 15) := by
   sorry
 
+/--
+The known powers of $2$ with only digits $0$ and $1$ in base $3$ are $1, 2, 4, 256$ (i.e., $2^0, 2^1, 2^2, 2^8$).
+No further examples have been found by exhaustive search for small exponents.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/406", AMS 11]
+theorem erdos_406.variants.known_result :
+    (256 : ℕ).isPowerOfTwo ∧ Nat.digits 3 256 ⊆ [0, 1] := by
+  sorry
+
 end Erdos406
