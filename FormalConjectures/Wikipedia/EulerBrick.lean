@@ -134,7 +134,7 @@ theorem cuboidThree : CuboidThree := by
 
 /-- In [Sh12], Ruslan notes that a perfect Euler brick does not exist
 if all three Cuboid conjectures hold. -/
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/EulerBrick.lean", AMS 12]
 theorem cuboid_perfect_euler_brick (h₁ : CuboidOne) (h₂ : CuboidTwo) (h₃ : CuboidThree) :
     ¬ ∃ a b c : ℕ+, IsPerfectCuboid a b c := by
   sorry
