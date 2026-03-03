@@ -65,14 +65,49 @@ The set `{1, 2, 4}` is a maximal Sidon set in `{1, ..., 4}`.
 -/
 @[category undergraduate, AMS 5 11]
 theorem example_maximal_sidon : IsMaximalSidonSetIn {1, 2, 4} 4 := by
-  sorry
+  refine ⟨?_, ?_, ?_⟩
+  · -- {1,2,4} ⊆ Icc 1 4
+    intro x hx
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx
+    rcases hx with rfl | rfl | rfl <;> simp [Set.mem_Icc]
+  · -- IsSidon {1,2,4}
+    intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ heq
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
+    rcases hi₁ with rfl | rfl | rfl <;>
+    rcases hj₁ with rfl | rfl | rfl <;>
+    rcases hi₂ with rfl | rfl | rfl <;>
+    rcases hj₂ with rfl | rfl | rfl <;>
+    simp_all
+  · -- Maximality: for x ∈ Icc 1 4, x ∉ {1,2,4} → ¬IsSidon({1,2,4} ∪ {x})
+    intro x hx hxA hS
+    simp only [Set.mem_Icc] at hx
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hxA
+    -- x ∈ {1,2,3,4} and x ∉ {1,2,4}, so x = 3
+    have hx3 : x = 3 := by omega
+    subst hx3
+    -- {1,2,4} ∪ {3} = {1,2,3,4}; 1+4=2+3=5, so not Sidon
+    have h := hS 1 (by simp) 2 (by simp) 4 (by simp) 3 (by simp) (by norm_num)
+    simp at h
 
 /--
 The difference set of `{1, 2, 4}` is `{0, 1, 2, 3}`.
 -/
 @[category undergraduate, AMS 5 11]
 theorem example_difference_set : ({1, 2, 4} : Set ℕ) - {1, 2, 4} = {0, 1, 2, 3} := by
-  sorry
+  ext n
+  simp only [Set.mem_sub, Set.mem_insert_iff, Set.mem_singleton_iff,
+             Set.mem_insert_iff, Set.mem_singleton_iff]
+  constructor
+  · rintro ⟨a, ha, b, hb, rfl⟩
+    rcases ha with rfl | rfl | rfl <;>
+    rcases hb with rfl | rfl | rfl <;>
+    simp_all
+  · intro h
+    rcases h with rfl | rfl | rfl | rfl
+    · exact ⟨1, by simp, 1, by simp, by norm_num⟩
+    · exact ⟨2, by simp, 1, by simp, by norm_num⟩
+    · exact ⟨4, by simp, 2, by simp, by norm_num⟩
+    · exact ⟨4, by simp, 1, by simp, by norm_num⟩
 
 /--
 For any maximal Sidon set, the difference set contains 0.
@@ -80,6 +115,20 @@ For any maximal Sidon set, the difference set contains 0.
 @[category undergraduate, AMS 5 11]
 theorem maximal_sidon_contains_zero (A : Set ℕ) (N : ℕ) (hN : 1 ≤ N)
     (hA : IsMaximalSidonSetIn A N) : 0 ∈ A - A := by
-  sorry
+  -- A is nonempty: if A were empty, we could add 1, contradicting maximality
+  have hne : A.Nonempty := by
+    by_contra h
+    rw [Set.not_nonempty_iff_eq_empty] at h
+    have h1mem : (1 : ℕ) ∈ Set.Icc 1 N := Set.mem_Icc.mpr ⟨le_refl 1, hN⟩
+    have h1A : (1 : ℕ) ∉ A := by simp [h]
+    have hbad := hA.maximal h1mem h1A
+    apply hbad
+    intro i hi j hj i₂ hi₂ j₂ hj₂ heq
+    simp only [h, Set.empty_union, Set.mem_singleton_iff] at hi hj hi₂ hj₂
+    subst hi; subst hj; subst hi₂; subst hj₂
+    exact Or.inl ⟨rfl, rfl⟩
+  -- Take any element a ∈ A; then a - a = 0 ∈ A - A
+  obtain ⟨a, ha⟩ := hne
+  exact ⟨a, ha, a, ha, Nat.sub_self a⟩
 
 end Erdos42
