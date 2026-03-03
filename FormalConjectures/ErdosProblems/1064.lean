@@ -32,7 +32,8 @@ Reference: [LuPo02] Luca, Florian and Pomerance, Carl, On some problems of {M}\p
 os concerning the arithmetical functions {$\phi$} and
 {$\sigma$}. Colloq. Math.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1064", AMS 11]
 theorem erdos_1064 : {n | φ n > φ (n - φ n)}.HasDensity 1 := by
   sorry
 
@@ -42,7 +43,8 @@ such that $ϕ(n)< ϕ(n - ϕ(n))$
 Reference: [GLW01] Grytczuk, A. and Luca, F. and W\'ojtowicz, M., A conjecture of {E}rdős concerning inequalities for the
 {E}uler totient function.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1064", AMS 11]
 theorem erdos_1064.variants.k2 : {n | φ n < φ (n - φ n)}.Infinite := by
   sorry
 
@@ -56,7 +58,8 @@ Reference:
 os concerning the arithmetical functions {$\phi$} and
 {$\sigma$}. Colloq. Math. (2002), 111--130.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1064", AMS 11]
 theorem erdos_1064.variants.general_function (f : ℕ → ℕ)
     (hf : (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ))) :
     {n : ℕ | φ (n - φ n) + f n < φ n}.HasDensity 1 := by
