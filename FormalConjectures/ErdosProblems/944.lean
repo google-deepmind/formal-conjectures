@@ -64,7 +64,8 @@ has no critical edge.
 
 [Br92] Brown, Jason I., A vertex critical graph without critical edges. Discrete Math. (1992), 99--101
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/944.lean", AMS 11]
 theorem erdos_944.variants.dirac_conjecture.k_eq_5 :
     ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 5 1 := by
   sorry
@@ -75,7 +76,8 @@ $k - 1$ is not prime.
 
 [La02] Lattanzio, John J., A note on a conjecture of {D}irac. Discrete Math. (2002), 323--330
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/944.lean", AMS 11]
 theorem erdos_944.variants.dirac_conjecture.k_sub_one_not_prime (k : ℕ) (hk : 4 ≤ k)
     (h : ¬ (k - 1).Prime) : ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1 := by
   sorry
@@ -85,7 +87,8 @@ Jensen [Je02] gave an construction for $k$-critical graphs without any critical 
 
 [Je02] Jensen, Tommy R., Dense critical and vertex-critical graphs. Discrete Math. (2002), 63--84.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/944.lean", AMS 11]
 theorem erdos_944.variants.dirac_conjecture.k_ge_five (k : ℕ) (hk : 5 ≤ k) :
     ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1 := by
   sorry
@@ -105,7 +108,8 @@ yet every critical set of edges has size $>r$.
 
 [MaSt25] Martinsson, Anders and Steiner, Raphael, Vertex-critical graphs far from edge-criticality. Combin. Probab. Comput. (2025), 151--157
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/944.lean", AMS 11]
 theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∀ᶠ k in Filter.atTop,
     ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k r := by
   sorry
