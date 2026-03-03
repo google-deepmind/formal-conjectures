@@ -40,7 +40,8 @@ $a < \min(b,c)$, then $|A| \le N/3 + O(1)$. This has been solved by Bedert [Be23
 [Be23] Bedert, B., _On a problem of Erdős and Sárközy about sequences with no term dividing
 the sum of two larger terms_. arXiv:2301.07065 (2023).
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at
+  "https://arxiv.org/abs/2301.07065", AMS 5 11]
 theorem erdos_13 : ∃ C : ℝ, ∀ N : ℕ, ∀ A ⊆ Icc 1 N, IsForbiddenTripleFree A →
     (A.card : ℝ) ≤ (N : ℝ) / 3 + C := by
   sorry
