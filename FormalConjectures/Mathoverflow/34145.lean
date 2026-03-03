@@ -156,7 +156,7 @@ theorem rectangles_pack_unit_square :
 
 Reference: https://www.sciencedirect.com/science/article/pii/0097316594901163
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Mathoverflow/34145.lean", AMS 51]
 theorem rectangles_pack_square_133_div_132 :
     (∃ c : Configuration,
       (∀ n, (c.rect n).toSet ⊆ Rectangle.toSet ⟨133/132, 133/132, (0, 0), 0⟩) ∧
@@ -167,7 +167,7 @@ theorem rectangles_pack_square_133_div_132 :
 
 Reference: https://www.sciencedirect.com/science/article/pii/S0167506008706009
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Mathoverflow/34145.lean", AMS 51]
 theorem rectangles_pack_square_501_div_500 :
     (∃ c : Configuration,
       (∀ n, (c.rect n).toSet ⊆ Rectangle.toSet ⟨501/500, 501/500, (0, 0), 0⟩) ∧
