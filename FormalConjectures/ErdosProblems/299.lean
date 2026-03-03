@@ -54,7 +54,7 @@ The statement is as follows:
 If $A \subset \mathbb{N}$ has positive upper density (and hence certainly if $A$ has positive
 density) then there is a finite $S \subset A$ such that $\sum_{n \in S} \frac{1}{n} = 1$.
 -/
-@[category research solved, AMS 11 40]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/299", AMS 11 40]
 theorem erdos_299.variants.density : ∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
     ∃ S : Finset ℕ, ↑S ⊆ A ∧ ∑ n ∈ S, (1 : ℝ) / n = 1 := by
   sorry
