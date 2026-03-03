@@ -30,7 +30,7 @@ namespace Erdos268
 `fun i : Fin d => ∑' n : A, (1 : ℝ) / (n + i)` for some infinite subset `A ⊆ ℕ` such that
 `1 / n` is summable over `A`. `X` has nonempty interior. This is proved in [KoTa24].
 -/
-@[category research solved, AMS 40 54]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/268", AMS 40 54]
 theorem erdos_268 (d : ℕ) : (interior {x : Fin d → ℝ | ∃ A : Set ℕ, A.Infinite ∧
     Summable (fun n : A => (1 : ℝ) / n ) ∧
     x = fun i : Fin d => ∑' n : A, (1 : ℝ) / (n + i)}).Nonempty := by
