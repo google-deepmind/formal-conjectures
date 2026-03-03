@@ -38,4 +38,16 @@ theorem erdos_749 : answer(sorry) ↔ ∀ ε > (0 : ℝ),
 
 
 -- TODO(firsching): add a "similar question" for the upper density.
+
+/--
+It is known that if $A$ is a Sidon set (B₂ set), then $1_A \ast 1_A(n) \leq 2$ for all $n \neq 0$.
+However, Sidon sets have density zero, so the challenge is to achieve near-full lower density
+of $A + A$ while maintaining bounded representation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/749", AMS 11]
+theorem erdos_749.variants.known_result :
+    ∃ A : Set ℕ, 0 < lowerDensity (A + A) ∧
+    ((Nat.cast (R := ℝ) ∘ sumRep A) ≪ (fun n => (1: ℝ))) := by
+  sorry
+
 end Erdos749
