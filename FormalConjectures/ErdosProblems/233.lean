@@ -33,7 +33,7 @@ namespace Erdos233
 The prime number theorem immediately implies a lower bound of $\gg N(\log N)^2$ for the sum of
 squares of gaps between consecutive primes.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/233", AMS 11]
 theorem sum_of_squares_of_prime_gaps_lower_bound :
     (fun (N : ℕ) => N * (log N)^2) =O[atTop]
     (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) := by
@@ -51,7 +51,7 @@ theorem erdos_233 :
 /--
 Cramér proved an upper bound of $O(N(\log N)^4)$ conditional on the Riemann hypothesis.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/233", AMS 11]
 theorem erdos_233.variant (h : RiemannHypothesis) :
     (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) =O[atTop] fun N => N * (log N)^4 := by
   sorry
