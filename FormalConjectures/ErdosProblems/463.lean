@@ -48,7 +48,7 @@ with small least prime factors; this weaker version is known to hold.
 -/
 @[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/463", AMS 11]
 theorem erdos_463.variants.known_result :
-    ∃ᶠ n in atTop, ∃ m, m.Composite ∧ n < m ∧ m < n + m.minFac := by
+    ∃ᶠ n : ℕ in atTop, ∃ m : ℕ, m.Composite ∧ n < m ∧ m < n + m.minFac := by
   sorry
 
 end Erdos463
