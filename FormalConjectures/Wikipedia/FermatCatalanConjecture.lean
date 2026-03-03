@@ -61,7 +61,7 @@ By the **Darmon-Granville** theorem,
 for any fixed choice of positive integers m, n and k satisfying $\frac 1 m + \frac 1 n + \frac 1 k < 1$,
 only finitely many coprime triples $(a, b, c)$ solving $a^m + b^n = c^k$ exist.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/FermatCatalanConjecture.lean", AMS 11]
 theorem fermat_catalan.variants.darmon_granville
     (m n k : ℕ) (hm : 0 < m) (hn : 0 < n) (hk : 0 < k)
     (H : (1 / m : ℝ) + 1 / n + 1 / k < 1) :
