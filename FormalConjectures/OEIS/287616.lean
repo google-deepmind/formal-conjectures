@@ -61,7 +61,7 @@ theorem isSumOfTriangularAndGeneralizedPolygonal_4 :
 a triangular number $x(x+1)/2$, a generalized pentagonal number $y(3y+1)/2$, and a generalized
 heptagonal number $z(5z+1)/2$, where $x, y, z$ are nonnegative integers.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://oeis.org/A287616", AMS 11]
 theorem conjecture (n : ℕ) : IsSumOfTriangularAndGeneralizedPolygonal n := by
   sorry
 
