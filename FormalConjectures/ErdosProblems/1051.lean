@@ -73,7 +73,7 @@ theorem erdos_1051 :
 Erdős [Er88c] notes that if the sequence grows rapidly to infinity (specifically, if
 $a_{n+1} \geq C \cdot a_n^2$ for some constant $C > 0$), then the series is irrational.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/1051.lean", AMS 11]
 theorem erdos_1051.variants.rapid_growth (a : ℕ → ℤ) (h_mono : StrictMono a)
     (h_rapid : ∃ C > 0, ∀ n, (a (n + 1) : ℝ) ≥ C * (a n : ℝ) ^ 2) :
     Irrational (ErdosSeries a) := by
