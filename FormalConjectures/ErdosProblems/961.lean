@@ -35,7 +35,7 @@ noncomputable def Erdos961Prop (k n : ℕ) : Prop :=
 Sylvester and Schur [Er34] proved that every set of $k$ consecutive integers greater than $k$
 contains an integer divisible by a prime greater than $k$, i.e. not $(k+1)$-smooth.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/961.lean", AMS 11]
 theorem erdos_961.sylvester_schur (k : ℕ) (hk : 0 < k) : Erdos961Prop k k := by
   sorry
 
@@ -73,7 +73,8 @@ theorem erdos_961 : answer(sorry) ↔ ∃ C > 0, ∀ᶠ k in atTop, f k < (log (
 /--
 Erdos [Er55d] proved $f(k) < 3 \frac{k}{\log k}$ for sufficiently large $k$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/961.lean", AMS 11]
 theorem erdos_961.erdos_upper_bound :
     ∀ᶠ k in atTop, f k < 3 * k / log k := by
   sorry
@@ -82,7 +83,8 @@ theorem erdos_961.erdos_upper_bound :
 Jutila [Ju74], and Ramachandra--Shorey [RaSh73] proved a stronger upper bound
 $f(k) \ll \frac{\log \log \log k}{\log \log k} \frac{k}{\log k}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/961.lean", AMS 11]
 theorem erdos_961.jutila_ramachandra_shorey_upper_bound :
     (fun k => (f k : ℝ)) =O[atTop] fun k => log (log (log k)) / log (log k) * (k / log k) := by
   sorry
