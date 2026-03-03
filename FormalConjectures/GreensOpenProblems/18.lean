@@ -75,7 +75,7 @@ def numBmzCorners {G : Type*} [Group G] [Fintype G] [DecidableEq G] (A : Finset 
 /--
 [So13] proved this is true for "BMZ corners". Follows from the proof of Theorem 2.1, p.1456-1457.
 -/
-@[category research solved, AMS 5 11 20]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/GreensOpenProblems/18.lean", AMS 5 11 20]
 theorem green_18.bmz_corners : ∀ α > 0, ∃ c > 0, ∃ m₀ : ℕ,
     ∀ (G : Type*) [Group G] [Fintype G] [DecidableEq G] (A : Finset (G × G)),
     Fintype.card G ≥ m₀ →
