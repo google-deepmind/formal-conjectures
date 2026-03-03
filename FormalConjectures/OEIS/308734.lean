@@ -58,7 +58,7 @@ theorem isSumOfFourSquaresWithPowers_5 : IsSumOfFourSquaresWithPowers 5 :=
 **Zhi-Wei Sun's Four-Square Conjecture (A308734)**: Any integer $n > 1$ can be written as
 $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$ for nonnegative integers $a, b, c, d, x, y$.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://oeis.org/A308734", AMS 11]
 theorem conjecture (n : ℕ) (hn : 1 < n) : IsSumOfFourSquaresWithPowers n := by
   sorry
 
