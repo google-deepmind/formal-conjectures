@@ -69,17 +69,17 @@ theorem green_35.upper :
 namespace variants
 
 /-- Lower bound for $c(2)$ from Green's first paper ([Gr01]); the constant is `sqrt(4/7)` (about 0.7559). -/
-@[category research solved, AMS 26 28 42]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/GreensOpenProblems/35.lean", AMS 26 28 42]
 theorem c_2_lower : ENNReal.ofReal (Real.sqrt (4 / 7)) ≤ c 2 := by
   sorry
 
 /-- Best-known lower bound for $c(\infty)$ due to Cloninger and Steinerberger ([CS17]). -/
-@[category research solved, AMS 26 28 42]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/GreensOpenProblems/35.lean", AMS 26 28 42]
 theorem c_inf_lower : 0.64 ≤ c ∞ := by
   sorry
 
 /-- Best-known upper bound for $c(\infty)$ due to Matolcsi and Vinuesa ([MV10]). -/
-@[category research solved, AMS 26 28 42]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/GreensOpenProblems/35.lean", AMS 26 28 42]
 theorem c_inf_upper : c ∞ ≤ 0.7505 := by
   sorry
 
