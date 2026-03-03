@@ -38,7 +38,7 @@ $\frac{a_{i+1}}{a_i} \to 1$. If every arithmetic progression contains infinitely
 integers which are the sum of distinct $a_i$ then every sufficiently large integer is
 the sum of distinct $a_i$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/253", AMS 11]
 theorem erdos_253 : ¬ ∀ a : ℕ → ℕ, 0 < a 0 →
     RepresentsAPs a → (Filter.atTop.Tendsto (fun n ↦ (a <| n + 1 : ℝ) / a n) (𝓝 1)) →
       subsetSums (Set.range a) ∈ Filter.cofinite := by
