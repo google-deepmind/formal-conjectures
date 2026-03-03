@@ -45,7 +45,8 @@ If `A = {a₁ < a₂ < …}` has property P,
 then `A` has natural density `0`.
 Equivalently, `(a_j / j) → ∞` as `j → ∞`.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1102", AMS 11]
 theorem erdos_1102.density_zero_of_P
     (A : ℕ → ℕ)
     (h_inc : StrictMono A)
@@ -58,7 +59,8 @@ Conversely, for any function `f : ℕ → ℕ` that goes to infinity,
 there exists a strictly increasing sequence `A = {a₁ < a₂ < …}`
 with property P such that `(a_j / j) ≤ f(j)` for all `j`.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1102", AMS 11]
 theorem erdos_1102.exists_sequence_with_P
     (f : ℕ → ℕ) (h_inf : Tendsto f atTop atTop)
     (h_pos : ∀ n, f n ≠ 0) :
@@ -70,7 +72,8 @@ theorem erdos_1102.exists_sequence_with_P
 /--
 Every sequence with property Q has upper density at most `6 / π^2`.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1102", AMS 11]
 theorem erdos_1102.upper_density_Q
     (A : ℕ → ℕ) (h_inc : StrictMono A)
     (hQ : HasPropertyQ (range A)) :
@@ -83,7 +86,8 @@ $\mathsf{SF} := \mathbb{N} \setminus \bigcup_{p} p^{2}\mathbb{N}$, i.e. the set 
 squarefree numbers. The set `A` has property `Q` and natural density `6 / π^2`.
 Equivalently, `(j / a_j) → 6/π^2` as `j → ∞`.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1102", AMS 11]
 theorem erdos_1102.lower_density_Q_exists :
     ∃ A : ℕ → ℕ, StrictMono A ∧
     (∀ j, Squarefree (A j)) ∧
