@@ -251,11 +251,15 @@ lemma ehs_17 : 17 ∈ EHSNumbers := by
 lemma count_ehs_succ_mem {m : ℕ} (h : m ∈ EHSNumbers) : count EHSNumbers (m + 1) = count EHSNumbers m + 1 := by
   classical
   rw [Nat.count_succ]
-  simp [h]
+  split_ifs with hd
+  · ring
+  · exact absurd h hd
 lemma count_ehs_succ_not_mem {m : ℕ} (h : m ∉ EHSNumbers) : count EHSNumbers (m + 1) = count EHSNumbers m := by
   classical
   rw [Nat.count_succ]
-  simp [h]
+  split_ifs with hd
+  · exact absurd hd h
+  · ring
 
 lemma count_ehs_8 : count EHSNumbers 8 = 0 := by
   classical
