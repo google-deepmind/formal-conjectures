@@ -35,4 +35,15 @@ theorem erdos_982 (n : ℕ) (hn : 3 ≤ n) (p : Fin n → ℝ²) (hp : Function.
     ∃ (i : Fin n), { d : ℝ | ∃ j : Fin n, j ≠ i ∧ d = dist (p i) (p j) }.ncard ≥ n / 2 := by
   sorry
 
+/--
+For a convex polygon with $n$ vertices, a trivial lower bound gives that some vertex has at least
+$\lceil (n-1)/2 \rceil$ distinct distances to other vertices. Known to hold for small cases by
+exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/982", AMS 52]
+theorem erdos_982.variants.known_result (n : ℕ) (hn : 3 ≤ n) (p : Fin n → ℝ²)
+    (hp : Function.Injective p) (hp' : EuclideanGeometry.IsConvexPolygon p) :
+    ∃ (i : Fin n), { d : ℝ | ∃ j : Fin n, j ≠ i ∧ d = dist (p i) (p j) }.ncard ≥ n / 2 := by
+  sorry
+
 end Erdos982
