@@ -49,7 +49,7 @@ theorem erdos_107 : answer(sorry) ↔ ∀ n ≥ 3, f n = 2^(n - 2) + 1 := by
 
 /-- For every $n ≥ 3$, there exists $N$ such that any $N$ points, no three on a line,
 contain a convex $n$-gon. -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/107", AMS 52]
 theorem nonempty_cardSet : ∀ n ≥ 3, (cardSet n).Nonempty := by
   sorry
 
@@ -80,7 +80,7 @@ $$
 [ErSz35] Erdős, P. and Szekeres, G., _A combinatorial problem in geometry_.
   Compos. Math. (1935), 463-470.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/107", AMS 52]
 theorem ersz_bounds :
     ∀ n ≥ 3, 2^(n - 2) + 1 ≤ f n ∧ f n ≤ Nat.choose (2 * n - 4) (n - 2) + 1 := by
   sorry
@@ -94,7 +94,7 @@ $$
 [Su17] Suk, Andrew, _On the Erdős-Szekeres convex polygon problem_.
   J. Amer. Math. Soc. (2017), 1047-1053.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/107", AMS 52]
 theorem su_bound :
     ∃ r : ℕ → ℝ, r =o[atTop] (fun n => (n : ℝ)) ∧
       ∀ n ≥ 3, (f n : ℝ) ≤ 2^(n + r n) := by
@@ -110,7 +110,7 @@ $$
 [HMPT20] Holmsen, Andreas F. and Mojarrad, Hossein Nassajian and Pach, János and Tardos, Gábor,
   _Two extensions of the Erdős-Szekeres problem_. J. Eur. Math. Soc. (JEMS) (2020), 3981-3995.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/107", AMS 52]
 theorem hmpt_bound :
     ∃ r : ℕ → ℝ, r =O[atTop] (fun n => Real.sqrt (n * Real.log n)) ∧
       ∀ n ≥ 3, (f n : ℝ) ≤ 2^(n + r n) := by
