@@ -56,7 +56,7 @@ theorem erdos_817 :
 $$
   g_3(n) \gg \frac{3^n}{n^{O(1)}}.
 $$ -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/817.lean", AMS 5 11]
 theorem erdos_817.variants.bdd_power : ∃ O > (0 : ℝ),
     (fun (n : ℕ) => (3 ^ n : ℝ) / n ^ O) =O[atTop] fun n => (g 3 n : ℝ) := by
   sorry
