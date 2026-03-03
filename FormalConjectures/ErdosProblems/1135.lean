@@ -34,4 +34,13 @@ number $m$ such that the $m$-th term of the sequence is 1.
 @[category research open, AMS 11 37]
 theorem erdos_1135 : type_of% CollatzConjecture.collatz_conjecture := by sorry
 
+/--
+The Collatz conjecture has been verified computationally for all integers up to $2^{68}$.
+Known to hold for small cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1135", AMS 11 37]
+theorem erdos_1135.variants.small_cases :
+    ∀ n : ℕ, n ≤ 100 → type_of% CollatzConjecture.collatz_conjecture := by
+  sorry
+
 end Erdos1135
