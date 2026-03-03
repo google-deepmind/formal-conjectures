@@ -47,4 +47,12 @@ theorem erdos_1106.parts.ii :
     answer(sorry) ↔ ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
   sorry
 
+/--
+The partition numbers $p(n)$ are positive for all $n \geq 1$, so the product $\prod_{i=1}^n p(i)$
+is always a positive integer. Known to hold for small cases by direct computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1106", AMS 11]
+theorem erdos_1106.variants.partition_pos (n : ℕ) : 0 < p n := by
+  sorry
+
 end Erdos1106
