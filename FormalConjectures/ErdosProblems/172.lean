@@ -35,4 +35,17 @@ theorem erdos_172 : answer(sorry) ↔
   sorry
 
 -- TODO: add the statements from the additional material
+
+/--
+Hindman's theorem (1974) guarantees monochromatic IP sets for finite colorings of $\mathbb{N}$,
+meaning there exist infinite sets where all finite sums share a color; combining sums and products
+simultaneously is the content of the Erdős conjecture on monochromatic sum-product sets.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/172", AMS 5]
+theorem erdos_172.variants.hindman :
+    ∀ (n : ℕ) (color : ℕ → Fin n),
+      ∃ (A : Set ℕ), A.Infinite ∧ ∃ c, ∀ (S : Finset A),
+        S.Nonempty → color (∑ x ∈ S, x) = c := by
+  sorry
+
 end Erdos172
