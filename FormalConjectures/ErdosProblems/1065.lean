@@ -46,4 +46,14 @@ theorem erdos_1065.parts.ii : answer(sorry) ↔
     Set.Infinite {p | ∃ q k l, p.Prime ∧ q.Prime ∧ p = 2^k * 3^l * q + 1} := by
   sorry
 
+/--
+Small examples: $p = 3 = 2^0 \cdot 3 + 0$... actually $p = 7 = 2^1 \cdot 3 + 1$ with $k=1, q=3$.
+Also $p = 11 = 2^0 \cdot 11 + 0$... $p = 5 = 2^2 \cdot 1 + 1$... there are many small examples.
+Known to hold for small cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1065", AMS 11]
+theorem erdos_1065.variants.small_cases :
+    {p | ∃ q k, p.Prime ∧ q.Prime ∧ p = 2^k * q + 1}.Nonempty := by
+  sorry
+
 end Erdos1065
