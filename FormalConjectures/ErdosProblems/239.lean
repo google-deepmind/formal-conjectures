@@ -38,7 +38,7 @@ Let $f:\mathbb{N}\to \{-1,1\}$ be a multiplicative function. Is it true that
 
 The answer is yes, as proved by Wirsing [Wi67], and generalised by Halász [Ha68].
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/239", AMS 11]
 theorem erdos_239 :
     answer(True) ↔ ∀ f : ℕ → ℝ,
     (∀ n ≥ 1, f n = 1 ∨ f n = -1) ∧
