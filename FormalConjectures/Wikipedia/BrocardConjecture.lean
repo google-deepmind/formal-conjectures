@@ -43,7 +43,7 @@ theorem brocard_conjecture (n : ℕ) (hn : 1 ≤ n) :
 /--
 Ferreira proved that Brocard's conjecture is true for sufficiently large n.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/BrocardConjecture.lean", AMS 11]
 theorem brocard_conjecture.ferreira_large_n : ∀ᶠ n in atTop,
     letI prev := n.nth Nat.Prime;
     letI next := (n+1).nth Nat.Prime;
