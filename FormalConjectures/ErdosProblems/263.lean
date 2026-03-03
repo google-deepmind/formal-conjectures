@@ -64,7 +64,7 @@ theorem erdos_263.parts.ii : answer(False) ↔
 A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{\frac{1}{2^n}} = \infty$
 has $\sum \frac{1}{a_n}$ converging to an irrational number.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/263.lean", AMS 11]
 theorem erdos_263.variants.folklore (a : ℕ -> ℕ)
     (ha : atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (2 ^ n : ℝ))) atTop) :
     Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ) := by
@@ -78,7 +78,7 @@ an irrationality sequence in the above sense.
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series.
          arXiv:2406.17593 (2024).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/263.lean", AMS 11]
 theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ)
     (ha' : StrictMono a)
     (ha'' : Summable (fun n : ℕ => 1 / (a n : ℝ)))
@@ -91,7 +91,7 @@ On the other hand, if there exists some $\varepsilon > 0$ such that $a_n$ satisf
 $\liminf \frac{a_{n+1}}{a_n^{2+\varepsilon}} > 0$, then $a_n$ is an irrationality sequence
 by the above folklore result `erdos_263.variants.folklore`.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/263.lean", AMS 11]
 theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
     (ha : ∀ n : ℕ, a n > 0)
     (ha' : StrictMono a)
@@ -107,7 +107,7 @@ for all but countably many $\alpha > 1$.
 [Ko25] Koizumi, J., Irrationality of the reciprocal sum of doubly exponential sequences,
        arXiv:2504.05933 (2025).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/263.lean", AMS 11]
 theorem erdos_263.variants.doubly_exponential_all_but_countable :
     ∀ᶠ (α : ℝ) in .cocountable, α > 1 → IsIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
   sorry
