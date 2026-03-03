@@ -41,7 +41,8 @@ On [Mathoverflow](https://mathoverflow.net/a/410815) user
 [leechlattice](https://mathoverflow.net/users/125498/leechlattice) shows that
 $h(n) \ll n^{\frac 2 3}$.
 -/
-@[category research solved, AMS 5 51]
+@[category research formally solved using formal_conjectures at
+  "https://mathoverflow.net/a/410815", AMS 5 51]
 theorem erdos_160.known_upper :
     (fun n => (erdos_160.h n : ℝ)) =O[atTop] fun n => (n : ℝ) ^ ((2 : ℝ) / 3) := by
   sorry
@@ -76,7 +77,8 @@ coupled with the bounds of Kelley-Meka [KeMe23](https://arxiv.org/abs/2302.05537
 $$h(N) \gg \exp(c(\log N)^{\frac 1 {12}})$$
 for some $c > 0$.
 -/
-@[category research solved, AMS 5 51]
+@[category research formally solved using formal_conjectures at
+  "https://arxiv.org/abs/2302.05537", AMS 5 51]
 theorem erdos_160.variants.known_lower :
     ∃ c > 0, (fun (n : ℕ) => exp (c * log (n : ℝ) ^ ((1 : ℝ) / 12)))
     =O[atTop] fun n => (erdos_160.h n : ℝ):= by
