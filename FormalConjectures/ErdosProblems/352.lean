@@ -39,4 +39,16 @@ theorem erdos_352 :
            EuclideanGeometry.triangle_area (t.points 0) (t.points 1) (t.points 2) = 1) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. Sets of positive measure contain
+similar copies of many configurations by Furstenberg–Katznelson–Weiss type results.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/352", AMS 51]
+theorem erdos_352.variants.known_result :
+    ∃ c > (0: ℝ), ∀ A : Set ℝ², MeasurableSet A → ℙ A ≥ c.toEReal
+       → (∃ t : Affine.Triangle ℝ ℝ²,
+           (∀ p : Fin 3, t.points p ∈ A) ∧
+           EuclideanGeometry.triangle_area (t.points 0) (t.points 1) (t.points 2) = 1) := by
+  sorry
+
 end Erdos352
