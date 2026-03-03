@@ -65,7 +65,7 @@ Yu [Yu23] showed that the union-closed sets conjecture holds with a constant of 
 0.38234 instead of 1/2.
 [Yu23] Yu, Lei (2023). "Dimension-free bounds for the union-closed sets conjecture". Entropy. 25 (5): 767.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/UnionClosed.lean", AMS 5]
 theorem union_closed.variants.yu
     [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
@@ -78,7 +78,7 @@ Vuckovic and Zivkovic [Vu17] showed that the union-closed sets conjecture holds 
 whose universal set has cardinality at most 12.
 [Vu17] Vuckovic, Bojan; Zivkovic, Miodrag (2017). "The 12-Element Case of Frankl's Conjecture" (PDF). IPSI BGD Transactions on Internet Research. 13 (1): 65.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/UnionClosed.lean", AMS 5]
 theorem union_closed.variants.univ_card
     [Fintype n] [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
@@ -95,7 +95,7 @@ as well.
 [Ro10] Roberts, Ian; Simpson, Jamie (2010). "A note on the union-closed sets conjecture" (PDF). Australas. J. Combin. 47: 265–267.
 [Vu17] Vuckovic, Bojan; Zivkovic, Miodrag (2017). "The 12-Element Case of Frankl's Conjecture" (PDF). IPSI BGD Transactions on Internet Research. 13 (1): 65.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/UnionClosed.lean", AMS 5]
 theorem union_closed.variants.family_card
     [Nonempty n]
     (h_ne_singleton_empty : A ≠ {∅})
@@ -108,7 +108,7 @@ theorem union_closed.variants.family_card
 We can show the union-closed sets conjecture is true for the case where the universal set has
 cardinality 2, by brute force.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/UnionClosed.lean", AMS 5]
 theorem union_closed.variants.univ_card_two (A : Finset (Finset (Fin 2)))
     (h_ne_singleton_empty : A ≠ {∅})
     (h_union_closed : IsUnionClosed A) :
@@ -119,7 +119,7 @@ theorem union_closed.variants.univ_card_two (A : Finset (Finset (Fin 2)))
 We can show the union-closed sets conjecture is true for the case where the set family contains
 some singleton.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/UnionClosed.lean", AMS 5]
 theorem union_closed.variants.singleton_mem
     (h_union_closed : IsUnionClosed A)
     (i : n) (hi : {i} ∈ A) :
@@ -148,7 +148,7 @@ theorem union_closed.variants.singleton_mem
 The union-closed sets conjecture is sharp in the sense that if we replace the constant `1/2` with
 any larger constant, then the conjecture fails.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/UnionClosed.lean", AMS 5]
 theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     ¬ (∀ A : Finset (Finset n), A ≠ {∅} → IsUnionClosed A →
         ∃ i : n, c * #A ≤ #{x ∈ A | i ∈ x}) := by
