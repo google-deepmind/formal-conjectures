@@ -79,7 +79,7 @@ theorem isEquidistributedModuloOne_three_halves_pow :
 /--
 The sequence `(3/2)^n` has infinitely many accumulation points modulo `1`.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Equidistributed_sequence", AMS 11]
 theorem isAccumulationPoint_three_halves_pow_infinite :
     {x | IsAccumulationPoint x (fun n => Int.fract <| (3 / 2 : ℝ)^n)}.Infinite := by
   sorry
