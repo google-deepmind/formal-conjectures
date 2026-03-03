@@ -52,7 +52,7 @@ of $n \leq x$ with $\phi(n) = \phi(n+1)$ is at most $$\frac{x}{\exp((\log x)^{1/
 
 [EPS87] Erd\H os, Paul and Pomerance, Carl and S\'ark\"ozy, Andr\'as, _On locally repeated values of certain arithmetic functions_. {II}. Proc. Amer. Math. Soc. (1987), 1--7.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1003", AMS 11]
 theorem erdos_1003.variants.eps87 :  ∀ᶠ x in atTop,
     {(n : ℕ) | (n ≤ x) ∧ φ n = φ (n + 1)}.ncard ≤
       x / Real.exp ((x.log) ^ ((1 : ℝ) / 3)) := by
