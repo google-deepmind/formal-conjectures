@@ -52,7 +52,7 @@ theorem erdos_885 : answer(sorry) ↔ ∀ k ≥ 1,
 /--
 Erdős and Rosenfeld [ErRo97] proved this is true for $k=2$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-885-k2-k3/FormalConjectures/ErdosProblems/885.lean", AMS 11]
 theorem erdos_885.variants.k_eq_2 :
     ∃ Ns : Finset ℕ,
       (∀ n ∈ Ns, 1 ≤ n) ∧
@@ -63,7 +63,7 @@ theorem erdos_885.variants.k_eq_2 :
 /--
 Jiménez-Urroz [Ji99] proved this for $k=3$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-885-k2-k3/FormalConjectures/ErdosProblems/885.lean", AMS 11]
 theorem erdos_885.variants.k_eq_3 :
     ∃ Ns : Finset ℕ,
       (∀ n ∈ Ns, 1 ≤ n) ∧
@@ -74,7 +74,7 @@ theorem erdos_885.variants.k_eq_3 :
 /--
 Bremner [Br19] proved this for $k=4$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/885.lean", AMS 11]
 theorem erdos_885.variants.k_eq_4 :
     ∃ Ns : Finset ℕ,
       (∀ n ∈ Ns, 1 ≤ n) ∧
