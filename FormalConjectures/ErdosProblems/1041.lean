@@ -47,7 +47,8 @@ See p. 139, above Problem 5:
 [EHP58] Erdős, P. and Herzog, F. and Piranian, G., _Metric properties of polynomials_.
   J. Analyse Math. (1958), 125-148.
 -/
-@[category research solved, AMS 32]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1041", AMS 32]
 theorem exists_connected_component_contains_two_roots :
     ∃ C, C ⊆ {z | ‖f.eval z‖ < 1} ∧ IsConnected C ∧
       2 ≤ (f.roots.filter (· ∈ C)).card := by
