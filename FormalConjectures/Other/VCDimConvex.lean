@@ -32,19 +32,19 @@ open scoped EuclideanGeometry Pointwise
 /-! ### What's known in the literature -/
 
 /-- Every convex set in $\mathbb R^2$ has VC dimension at most 3. -/
-@[category research solved, AMS 5 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Other/VCDimConvex.lean", AMS 5 52]
 lemma hasAddVCDimAtMost_three_of_convex_r2 {C : Set ℝ²} (hC : Convex ℝ C) : HasAddVCDimAtMost C 3 :=
   sorry
 
 /-- There exists a set in $\mathbb R^3$ shattering an infinite set. -/
-@[category research solved, AMS 5 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Other/VCDimConvex.lean", AMS 5 52]
 lemma exists_infinite_convex_r3_shatters :
     ∃ A C : Set ℝ³, A.Infinite ∧ Convex ℝ C ∧ Shatters {t +ᵥ C | t : ℝ³} A := sorry
 
 /-! ### What's not in the literature -/
 
 /-- There exists a set of infinite $\mathrm{VC}_n$ dimension in $\mathbb R^{n + 2}$. -/
-@[category research solved, AMS 5 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Other/VCDimConvex.lean", AMS 5 52]
 lemma exists_convex_rn_add_two_vc_n_forall_not_hasAddVCNDimAtMost (n : ℕ) :
     ∃ C : Set (Fin (n + 2) → ℝ), Convex ℝ C ∧ ∀ d, ¬ HasAddVCNDimAtMost C n d := sorry
 
