@@ -100,7 +100,9 @@ theorem erdos_26 : answer(False) ↔ ∀ A : ℕ → ℕ, StrictMono A → IsThi
 /--
 If we allow for $\sum_{a\in A} \frac{1}{a} < \infty$ then Rusza has found a counter-example.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-26-rusza/FormalConjectures/ErdosProblems/26.lean",
+AMS 11]
 theorem erdos_26.variants.rusza : ∃ A : ℕ → ℕ,
     StrictMono A ∧ ¬IsThick A ∧ ∀ k, ¬IsBehrend (A · + k) := by
   sorry
