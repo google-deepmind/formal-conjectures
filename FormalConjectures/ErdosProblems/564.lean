@@ -38,4 +38,14 @@ theorem erdos_564 : answer(sorry) ↔
     ∃ c > 0, ∀ᶠ n in atTop, (2 : ℝ)^(2 : ℝ)^(c * n) ≤ hypergraphRamsey 3 n := by
   sorry
 
+/--
+The classical Erdős-Rado stepping-up lemma gives a double-exponential lower bound for
+$R_3(n)$: there exist constants $c > 0$ such that $R_3(n) \geq 2^{cn}$ for all $n$,
+establishing at least a single-exponential lower bound.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/564", AMS 05]
+theorem erdos_564.variants.known_result :
+    ∃ c > 0, ∀ᶠ n in atTop, (2 : ℝ)^(c * n) ≤ hypergraphRamsey 3 n := by
+  sorry
+
 end Erdos564
