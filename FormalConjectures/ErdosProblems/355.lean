@@ -39,7 +39,7 @@ Bleicher and Erdős conjectured the answer is no.
 In fact the answer is yes, with any lacunarity constant $\lambda\in (1,2)$ (though not $\lambda=2$),
 as proved by van Doorn and Kova\v{c} [DoKo25].
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/355", AMS 11]
 theorem erdos_355 :
     answer(True) ↔ ∃ A : ℕ → ℕ, IsLacunary A ∧ ∃ u v : ℝ, u < v ∧ ∀ q : ℚ, ↑q ∈ Set.Ioo u v →
       q ∈ {∑ a ∈ A', (1 / a : ℚ) | (A' : Finset ℕ) (_ : ↑A' ⊆ Set.range A)} := by
