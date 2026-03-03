@@ -49,28 +49,33 @@ theorem erdos_252 :
   sorry
 
 /-- `∑ σ 0 n / n!` is irrational. This is proved in [ErSt71]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/252.lean", AMS 11]
 theorem erdos_252.variants.k_eq_zero : Irrational (erdos_252_sum 0) := by
   sorry
 
 /-- `∑ σ 1 n / n!` is irrational. This is proved in [ErSt74]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/252.lean", AMS 11]
 theorem erdos_252.variants.k_eq_one : Irrational (erdos_252_sum 1) := by
   sorry
 
 
 /-- `∑ σ 2 n / n!` is irrational. This is proved in [ErKa54]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/252.lean", AMS 11]
 theorem erdos_252.variants.k_eq_two : Irrational (erdos_252_sum 2) := by
   sorry
 
 /-- `∑ σ 3 n / n!` is irrational. This is proved in [ScPu06] and [FLC07]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/252.lean", AMS 11]
 theorem erdos_252.variants.k_eq_three : Irrational (erdos_252_sum 3) := by
   sorry
 
 /-- `∑ σ 4 n / n!` is irrational. This is proved in [Pr22]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/252.lean", AMS 11]
 theorem erdos_252.variants.k_eq_four : Irrational (erdos_252_sum 4) := by
   sorry
 
@@ -82,7 +87,8 @@ theorem erdos_252.variants.k_ge_five :
 
 /-- If Schinzel's conjecture is true, then `∑ σ k n / n!` is irrational for all `k`. This is proved
 in [ScPu06]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/252.lean", AMS 11]
 theorem erdos_252.variants.schinzel (hs : ∀ (fs : Finset (Polynomial ℤ)),
     (∀ f ∈ fs, BunyakovskyCondition f) → SchinzelCondition fs →
     Infinite ↑{n | ∀ f ∈ fs, Prime (Polynomial.eval (↑n) f).natAbs}) :
@@ -91,7 +97,8 @@ theorem erdos_252.variants.schinzel (hs : ∀ (fs : Finset (Polynomial ℤ)),
 
 /-- If the prime `k`-tuples conjecture is true, then `∑ σ k n / n!` is irrational. This is proved
 in [FLC07]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/252.lean", AMS 11]
 theorem erdos_252.variants.prime_tuples {k : ℕ} (hk : 4 ≤ k) (hp : ∀ (a : Fin k → ℕ+)
     (b : Fin k → ℕ) (hab : ∀ p, p.Prime → ∃ n, ¬ p ∣ ∏ i, (a i * n + b i)),
     Set.Infinite {n | ∀ i : Fin k, (a i * n + b i).Prime} ) :
