@@ -79,7 +79,7 @@ theorem erdos_269.variants.irrational : answer(sorry) ↔
 This theorem addresses the case where the set of primes $P$ is infinite. In this case the sum is
 irrational.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/269", AMS 11]
 theorem erdos_269.variants.infinite (P : Set ℕ) (h : ∀ p ∈ P, p.Prime) (h_inf : P.Infinite) :
   Irrational (series P) := by
   sorry
