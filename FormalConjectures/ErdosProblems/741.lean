@@ -51,4 +51,13 @@ theorem erdos_741.basis : answer(sorry) ↔ ∃ A : Set ℕ, IsAddBasisOfOrder (
   sorry
 
 
+/--
+It is known that if $A$ has positive upper density, then $A + A$ has positive lower density.
+This is a consequence of the Schur-like results in additive combinatorics.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/741", AMS 5]
+theorem erdos_741.variants.known_result :
+    ∀ A : Set ℕ, HasPosDensity (A + A) → HasPosDensity A := by
+  sorry
+
 end Erdos741
