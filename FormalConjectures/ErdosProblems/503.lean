@@ -42,7 +42,7 @@ When $n = 2$, the answer is 6 (due to Kelly [ErKe47] - an alternative proof is g
 [ErKe47] Erdős, Paul and Kelly, L. M., Elementary Problems and Solutions: Solutions: E735. Amer. Math. Monthly (1947), 227-229.
 [Ko24c] Z. Kovács, A note on Erdős's mysterious remark. arXiv:2412.05190 (2024).
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/503.lean", AMS 51]
 theorem erdos_503.variants.R2 :
     IsGreatest {(A.ncard) | (A : Set ℝ²) (hA : A.IsIsosceles)} 6 := by
   sorry
@@ -52,7 +52,7 @@ When $n = 3$, the answer is 8 (due to Croft [Cr62]).
 
 [Cr62] Croft, H. T., $9$-point and $7$-point configurations in $3$-space. Proc. London Math. Soc. (3) (1962), 400-424.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/503.lean", AMS 51]
 theorem erdos_503.variants.R3 :
     IsGreatest {(A.ncard) | (A : Set ℝ³) (hA : A.IsIsosceles)} 8 := by
   sorry
@@ -65,7 +65,7 @@ $$
 
 [Bl84] Blokhuis, A., Few-distance sets. (1984), iv+70.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/503.lean", AMS 51]
 theorem erdos_503.variants.upper_bound (n : ℕ) :
     ∀ m ∈ {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)}, m ≤ (n + 2).choose 2 := by
   sorry
@@ -76,7 +76,7 @@ $\mathbb{R}^{n + 1}$ formed of all vectors $e_i + e_j$ where $e_i$, $e_j$ are di
 vectors. This set can be viewed as a subset of some $\mathbb{R}^n$, and is easily checked to have
 the required property.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/503.lean", AMS 51]
 theorem erdos_503.variants.lower_bound (n : ℕ) :
     (n + 1).choose 2 ≤ sSup {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} := by
   sorry
