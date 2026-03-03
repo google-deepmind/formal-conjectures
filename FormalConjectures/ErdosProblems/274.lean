@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ If `G` is a finite abelian group then there cannot exist an exact covering of `G
 than one cosets of different sizes? (i.e. each element is contained in exactly one
 of the cosets.)
 -/
-@[category research solved, AMS 20]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/274", AMS 20]
 theorem erdos_274.variants.abelian {G : Type*} [Fintype G] [CommGroup G]
     (hG : 1 < Fintype.card G) {ι : Type*} [Fintype ι] (P : Group.ExactCovering G ι)
     (hι : 1 < Fintype.card ι) :
