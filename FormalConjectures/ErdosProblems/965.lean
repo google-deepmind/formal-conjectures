@@ -39,7 +39,7 @@ all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour.
 In [Ko16] Péter Komjáth constructed a counterexample.
 The same result was proven independently in [SWCol] by Sokoup and Weiss.
 -/
-@[category research solved, AMS 03 05]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/965.lean", AMS 03 05]
 theorem erdos_965 :
     answer(False) ↔ ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧
       ∀ᵉ (a ∈ A) (b ∈ A) (c ∈ A) (d ∈ A), a ≠ b → c ≠ d → f (a + b) = f (c + d) := by
@@ -48,7 +48,7 @@ theorem erdos_965 :
 /--
 In fact, in both [Ko16] and [SWCol] a generalized example for $k$-sums is constructed.
 -/
-@[category research solved, AMS 03 05]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/965.lean", AMS 03 05]
 theorem erdos_965.generalization : answer(False) ↔
      ∀ᵉ (k ≥ 2), ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧ ∀ s t : Finset ℝ,
       ↑s ⊆ A → ↑t ⊆ A → s.card = k → t.card = k → f (s.sum id) = f (t.sum id) := by
