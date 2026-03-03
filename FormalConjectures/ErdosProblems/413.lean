@@ -50,7 +50,7 @@ def expProd (n : ℕ) : ℕ :=
   n.factorization.prod fun _ e => e
 
 /-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/413.lean", AMS 11]
 theorem erdos_413_hasPosDensity_barrier_expProd :
     { n | IsBarrier (fun m => expProd m) n }.HasPosDensity := by
   sorry
@@ -62,7 +62,7 @@ theorem erdos_413_bigOmega :
   sorry
 
 /-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/413.lean", AMS 11]
 theorem erdos_413_bigOmega_largest_barrier_lt_100k :
     IsGreatest {n : ℕ | n < 10 ^ 5 ∧ IsBarrier (fun m => Ω m) n} 99840 := by
   sorry
