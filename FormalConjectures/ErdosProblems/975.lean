@@ -60,12 +60,14 @@ theorem erdos_975 : answer(sorry) ↔
 /--
 The correctness of the growth rate is shown in [Va39] (lower bound) and [Er52b] (upper bound).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/975.lean", AMS 11]
 theorem erdos_975.variants.upper_bound (f : ℤ[X]) (hf : Irreducible f)
     (hf_pos : ∀ᶠ n in atTop, 1 ≤ f.eval n) : Erdos975Sum f =O[atTop] (fun x ↦ x * log x) := by
   sorry
 
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/975.lean", AMS 11]
 theorem erdos_975.variants.lower_bound (f : ℤ[X]) (hf : Irreducible f) (hfdeg : f.natDegree ≠ 0)
     (hf_pos : ∀ᶠ n in atTop, 1 ≤ f.eval n) :
     (fun x ↦ x * log x) =O[atTop] Erdos975Sum f := by
@@ -78,7 +80,7 @@ is given by McKey in [Mc95], [Mc97], [Mc99].
 
 TODO: formalize Hurwitz class numbers and the expression of the constant in terms of them.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/975.lean", AMS 11]
 theorem erdos_975.variants.quadratic (f : ℤ[X]) (hf : Irreducible f)
     (hf_pos : ∀ᶠ n : ℕ in atTop, 1 ≤ f.eval ↑n) (hf_degree : f.degree = 2) (c : ℝ) :
     c = answer(sorry) → 0 < c ∧ Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
@@ -88,12 +90,14 @@ theorem erdos_975.variants.quadratic (f : ℤ[X]) (hf : Irreducible f)
 More concrete example for $f(n) = n^2 + 1$, where the asymptote is
 $\sum_{n \le x} \tau(n^2 + 1) \sim \frac{3}{\pi} x \log x + O(x)$. See Tao's blog [T].
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/975.lean", AMS 11]
 theorem erdos_975.variants.n2_plus_1_strong :
     (fun x ↦ Erdos975Sum (X ^ 2 + 1) x - (3 / π) * x * log x) =O[atTop] id := by
   sorry
 
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/975.lean", AMS 11]
 theorem erdos_975.variants.n2_plus_1 :
     ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum (X ^ 2 + 1) x / (x * log x)) atTop (𝓝 c) := by
   sorry
