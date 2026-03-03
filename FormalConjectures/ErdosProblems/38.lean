@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 38
 
-*Reference:* [erdosproblems.com/38](https://www.erdosproblems.com/38)
+*Reference:*
+- [erdosproblems.com/38](https://www.erdosproblems.com/38)
+- [Er56](Erdős, P., Problems and results in additive number theory.
+  Colloque sur la Théorie des Nombres, Bruxelles, 1955 (1956), 127-137.)
 -/
 
 open Classical Set Pointwise
@@ -34,6 +37,11 @@ and every $N$ there exists $b \in B$ such that
   \lvert (A \cup (A+b)) \cap \{1, \ldots, N\} \rvert \geq (\alpha + f(\alpha)) N
 \]
 where $f(\alpha) > 0$ for $0 < \alpha < 1$?
+
+Note: here Erdős seems to use a slightly weaker notion of an additive basis (see [Er56] at the top
+of page 135). In particular, for this problem, a set is an additive basis of order $k$ if every
+natural number can be written as a sum of _at most_ $k$ elements of the set, rather than as a sum of
+_precisely_ $k$ elements.
 -/
 @[category research open, AMS 11]
 theorem erdos_38 : answer(sorry) ↔
