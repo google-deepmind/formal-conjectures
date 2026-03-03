@@ -71,352 +71,352 @@ def Star5 : SimpleGraph (Fin 1 ⊕ Fin 5) := completeBipartiteGraph (Fin 1) (Fin
 
 @[category test, AMS 5]
 theorem house_indep : α(HouseGraph) = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_dom : dominationNumber HouseGraph = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_avg_dist : averageDistance HouseGraph = 7/5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_diameter : maxEccentricity HouseGraph = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_radius : minEccentricity HouseGraph = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_girth : HouseGraph.girth = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_order : n HouseGraph = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_size : HouseGraph.edgeFinset.card = 6 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_szeged : szegedIndex HouseGraph = 24 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_wiener : wienerIndex HouseGraph = 14 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_min_deg : HouseGraph.minDegree = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_max_deg : HouseGraph.maxDegree = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_avg_deg : averageDegree HouseGraph = 12/5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_matching : m HouseGraph = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_residue : residue HouseGraph = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_annihilation : annihilationNumber HouseGraph = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
-  sorry
+  native_decide
 
 
 /-! ### K4 Tests -/
 
 @[category test, AMS 5]
 theorem K4_indep : α(K4) = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_dom : dominationNumber K4 = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_avg_dist : averageDistance K4 = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_diameter : maxEccentricity K4 = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_radius : minEccentricity K4 = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_girth : K4.girth = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_order : n K4 = 4 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_size : K4.edgeFinset.card = 6 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_szeged : szegedIndex K4 = 6 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_wiener : wienerIndex K4 = 6 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_min_deg : K4.minDegree = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_max_deg : K4.maxDegree = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_avg_deg : averageDegree K4 = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_matching : m K4 = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_residue : residue K4 = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_annihilation : annihilationNumber K4 = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem K4_cvetkovic : cvetkovic K4 = 1 := by
-  sorry
+  native_decide
 
 
 /-! ### Petersen Graph Tests -/
 
 @[category test, AMS 5]
 theorem petersen_indep : α(PetersenGraph) = 4 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_dom : dominationNumber PetersenGraph = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_diameter : maxEccentricity PetersenGraph = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_radius : minEccentricity PetersenGraph = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_girth : PetersenGraph.girth = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_order : n PetersenGraph = 10 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_size : PetersenGraph.edgeFinset.card = 15 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_szeged : szegedIndex PetersenGraph = 135 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_wiener : wienerIndex PetersenGraph = 75 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_min_deg : PetersenGraph.minDegree = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_max_deg : PetersenGraph.maxDegree = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_avg_deg : averageDegree PetersenGraph = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_matching : m PetersenGraph = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_residue : residue PetersenGraph = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_annihilation : annihilationNumber PetersenGraph = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem petersen_cvetkovic : cvetkovic PetersenGraph = 4 := by
-  sorry
+  native_decide
 
 
 /-! ### C6 Tests -/
 
 @[category test, AMS 5]
 theorem C6_indep : α(C6) = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_dom : dominationNumber C6 = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_avg_dist : averageDistance C6 = 9/5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_diameter : maxEccentricity C6 = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_radius : minEccentricity C6 = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_girth : C6.girth = 6 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_order : n C6 = 6 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_size : C6.edgeFinset.card = 6 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_szeged : szegedIndex C6 = 54 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_wiener : wienerIndex C6 = 27 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_min_deg : C6.minDegree = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_max_deg : C6.maxDegree = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_avg_deg : averageDegree C6 = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_matching : m C6 = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_residue : residue C6 = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_annihilation : annihilationNumber C6 = 3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem C6_cvetkovic : cvetkovic C6 = 3 := by
-  sorry
+  native_decide
 
 
 /-! ### Star5 Tests -/
 
 @[category test, AMS 5]
 theorem Star5_indep : α(Star5) = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_dom : dominationNumber Star5 = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_avg_dist : averageDistance Star5 = 5/3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_diameter : maxEccentricity Star5 = 2 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_radius : minEccentricity Star5 = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_girth : Star5.egirth = ⊤ := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_order : n Star5 = 6 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_size : Star5.edgeFinset.card = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_szeged : szegedIndex Star5 = 25 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_wiener : wienerIndex Star5 = 25 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_min_deg : Star5.minDegree = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_max_deg : Star5.maxDegree = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_matching : m Star5 = 1 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_residue : residue Star5 = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_annihilation : annihilationNumber Star5 = 5 := by
-  sorry
+  native_decide
 
 @[category test, AMS 5]
 theorem Star5_cvetkovic : cvetkovic Star5 = 5 := by
-  sorry
+  native_decide
