@@ -63,7 +63,7 @@ theorem isSumOfFourSquaresWithSquareConditions_24 : IsSumOfFourSquaresWithSquare
 **Zhi-Wei Sun's Conjecture (A281976)**: Any integer $n \geq 0$ can be written as $x^2 + y^2 + z^2 + w^2$
 with $x, y, z, w$ nonnegative integers and $z \leq w$, such that both $x$ and $x + 24y$ are squares.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://oeis.org/A281976", AMS 11]
 theorem conjecture (n : ℕ) : IsSumOfFourSquaresWithSquareConditions n := by
   sorry
 
