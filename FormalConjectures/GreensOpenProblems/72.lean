@@ -76,13 +76,13 @@ theorem green_72.variants.eventually : ∀ᶠ N in Filter.atTop, NoKInLineFor 3 
   sorry
 
 /-- For $N \leq 60$, this has been verfied with computers. -/
-@[category research solved, AMS 05 52]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/No-three-in-line_problem", AMS 05 52]
 theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
     NoKInLineFor 3 N := by
   sorry
 
 /-- In [GK2025] Grebennikov and Kwan prove the no-k-in-line conjecture for $k > 10 ^ 37$. -/
-@[category research solved, AMS 05 52]
+@[category research formally solved using formal_conjectures at "https://arxiv.org/abs/2510.17743", AMS 05 52]
 theorem no_k_in_line_big {k : ℕ} (N : ℕ) (h : 10 ^ 37 < k) :
     NoKInLineFor k N := by
   sorry
