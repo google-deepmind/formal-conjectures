@@ -39,4 +39,16 @@ theorem erdos_289 : answer(sorry) ↔
     ∑ i, ∑ n ∈ .Icc (I i).1 (I i).2, (n⁻¹ : ℚ) = 1) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The problem of representing 1 as a sum
+of unit fractions from disjoint intervals is related to Egyptian fraction representations.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/289", AMS 11]
+theorem erdos_289.variants.known_result :
+    ∀ᶠ k : ℕ in atTop, ∃ I : Fin k → ℕ × ℕ,
+    (∀ i, (I i).1 < (I i).2) ∧
+    (∀ i j, i ≠ j → (I i).2 < (I j).1 ∨ (I j).2 < (I i).1) ∧
+    ∑ i, ∑ n ∈ .Icc (I i).1 (I i).2, (n⁻¹ : ℚ) = 1 := by
+  sorry
+
 end Erdos289
