@@ -61,3 +61,5 @@ theorem erdos_728 :
 -- TODO(firsching): Use Legendre's formula to test divisibility in terms of p-adic valuations.
 
 end Erdos728
+
+-- submitted
