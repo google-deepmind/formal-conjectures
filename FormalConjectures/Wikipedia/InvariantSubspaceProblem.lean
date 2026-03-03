@@ -91,7 +91,7 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
       _ ≤ (Submodule.span ℂ S).topologicalClosure := by
             apply Submodule.topologicalClosure_mono
             rw [Submodule.map_span]
-            apply Submodule.span_mono
+            gcongr
             rintro _ ⟨_, ⟨n, rfl⟩, rfl⟩
             exact ⟨n + 1, by simp [pow_succ']⟩
 
