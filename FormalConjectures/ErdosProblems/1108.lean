@@ -54,4 +54,13 @@ theorem erdos_1108.parts.ii :
      answer(sorry) ↔ {a ∈ FactorialSums | IsPowerful a}.Finite := by
   sorry
 
+/--
+The set of factorial sums contains $1 = 1!$ and $2 = 2!$ and $3 = 1! + 2!$ etc.
+The smallest perfect square in $A$ is $1 = 1!$. Known to hold for small cases by direct
+verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1108", AMS 11]
+theorem erdos_1108.variants.one_in_factorial_sums : (1 : ℕ) ∈ FactorialSums := by
+  sorry
+
 end Erdos1108
