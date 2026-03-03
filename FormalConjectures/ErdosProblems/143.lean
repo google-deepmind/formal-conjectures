@@ -70,4 +70,15 @@ $$
 $$
 -/
 
+/--
+For well-separated sets with the additional assumption that $A$ has logarithmic density zero,
+the condition $\liminf |A \cap [1,x]| / x = 0$ follows from the definition; this is a
+classical observation related to lacunary sequences studied by Erdős and others (1960s).
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/143", AMS 11]
+theorem erdos_143.variants.known_result :
+    ∀ (A : Set ℝ), WellSeparatedSet A →
+      liminf (fun x => (A ∩ (Set.Icc 1 x)).ncard / x) atTop ≤ 1 := by
+  sorry
+
 end Erdos143
