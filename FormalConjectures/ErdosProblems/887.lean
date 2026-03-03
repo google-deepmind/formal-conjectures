@@ -49,7 +49,7 @@ theorem erdos_887.variant_i : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
 A question of Erdős and Rosenfeld, who proved that there are infinitely many $n$ with $4$ divisors
 in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/887.lean", AMS 11]
 theorem erdos_887.variant_ii :
     Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = 4)} := by
   sorry
