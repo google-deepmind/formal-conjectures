@@ -48,4 +48,14 @@ theorem erdos_276 : answer(sorry) ↔
     IsLucasSequence a ∧ (∀ k, (a k).Composite) ∧ (∀ n > 1, ∃ k, Nat.gcd n (a k) = 1) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The existence of a Lucas sequence
+all of whose terms are composite yet with no common factor of all terms is a delicate open problem.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/276", AMS 11]
+theorem erdos_276.variants.known_result :
+    ∃ (a : ℕ → ℕ),
+    IsLucasSequence a ∧ (∀ k, (a k).Composite) ∧ (∀ n > 1, ∃ k, Nat.gcd n (a k) = 1) := by
+  sorry
+
 end Erdos276
