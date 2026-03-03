@@ -44,7 +44,7 @@ There is no such $A$ for the polynomial $f(x) = X^2$.
 
 This is shown in [Sek59].
 -/
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/477.lean", AMS 12]
 theorem erdos_477.S_sq :
     letI f := X ^ 2
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
@@ -55,7 +55,7 @@ There is no such $A$ for any polynomial $f(x) = aX^2 + bX + c$, if $a | b$
 with $a \ne 0$ and $b \ne 0.
 This was found be AlphaProof for the specific instance $X^2 - X + 1$ and then generalised.
  -/
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/477.lean", AMS 12]
 theorem erdos_477.degree_two_dvd_condition_b_ne_zero {a b c : ℤ} (ha : a ≠ 0) (hb : b ≠ 0)
     (hab : a ∣ b) :
     let f := a • X ^ 2 + b • X + C c
