@@ -31,7 +31,7 @@ Does the set of integers of the form $n + \varphi(n)$ have positive (lower) dens
 
 [GIL24] proved this was true.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/822.lean", AMS 11]
 theorem erdos_822 :
     answer(True) ↔ (Set.range fun n => n + Nat.totient n).HasPosDensity := by
   -- TODO: Replace `sorry` with a formal proof using the results of
