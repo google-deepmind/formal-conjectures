@@ -43,7 +43,7 @@ $$
 \sum_{n\geq 2}\frac{\omega(n)}{2^n} = \sum_p \frac{1}{2^p - 1}.
 $$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/69", AMS 11]
 theorem erdos_69.specialisation_of_erdos_257 :
     let A := { n : ℕ | n.Prime }
     ∑' n, ω (n + 2) / (2 ^ (n + 2) : ℝ) = ∑' p : A, 1 / (2 ^ p.1 - 1) := by
