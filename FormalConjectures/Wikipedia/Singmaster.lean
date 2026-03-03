@@ -38,7 +38,7 @@ The set of pairs (n, k) representing the solutions to the equation
 def solutions (t : ℕ) : Set (ℕ × ℕ) :=
   {(n, k) | 1 ≤ k ∧ k < n ∧ Nat.choose n k = t}
 
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Singmaster%27s_conjecture"]
 theorem singmaster: ∃ (C : ℕ), ∀ (t : ℕ), t > 1 →
     (Singmaster.solutions t).Finite ∧ (Singmaster.solutions t).ncard ≤ C := by
   sorry
