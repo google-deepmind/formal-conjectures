@@ -42,4 +42,13 @@ theorem erdos_1060.parts.ii :
     ∃ (C : ℝ), (fun n ↦ (#{k ≤ n | k * σ 1 k = n} : ℝ)) =O[atTop]
       (fun n ↦ log n ^ C) := by sorry
 
+/--
+The number of solutions to $k \sigma(k) = n$ is bounded for each fixed $n$, as there are only
+finitely many divisors to check. Known to hold for small cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1060", AMS 11]
+theorem erdos_1060.variants.finite_solutions (n : ℕ) :
+    {k : ℕ | k * σ 1 k = n}.Finite := by
+  sorry
+
 end Erdos1060
