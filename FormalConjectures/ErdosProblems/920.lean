@@ -54,7 +54,8 @@ theorem erdos_920 :
 Graver and Yackel [GrYa68] proved that
 $f_k(n) \ll \left(n\frac{\log\log n}{\log n}\right)^{1-\frac{1}{k-1}}.$
 -/
-@[category research solved, AMS 05]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/920.lean", AMS 05]
 theorem erdos_920.variants.upper_bound (k : ℕ) (hk : k ≥ 3) :
     (fun n ↦ f k n) ≪ (fun n ↦ ((n : ℝ) * log (log n) / log n) ^ (1 - 1 / ((k : ℝ) - 1))) := by
   sorry
@@ -62,7 +63,8 @@ theorem erdos_920.variants.upper_bound (k : ℕ) (hk : k ≥ 3) :
 /--
 It is known that $f_3(n)\asymp (n/\log n)^{1/2}$ (see [erdosproblems.com/1104]).
 -/
-@[category research solved, AMS 05]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/920.lean", AMS 05]
 theorem erdos_920.variants.k_eq_3 :
     (fun n ↦ (f 3 n : ℝ)) =Θ[atTop] (fun n ↦ ((n : ℝ) / log n) ^ (1 / 2 : ℝ)) := by
   sorry
@@ -71,7 +73,8 @@ theorem erdos_920.variants.k_eq_3 :
 The lower bound $R(4,m) \gg m^3/(\log m)^4$ of Mattheus and Verstraete [MaVe23]
 (see [erdosproblems.com/166]) implies $f_4(n) \gg \frac{n^{2/3}}{(\log n)^{4/3}}$.
 -/
-@[category research solved, AMS 05]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/920.lean", AMS 05]
 theorem erdos_920.variants.lower_bound_f4 :
     (fun n ↦ f 4 n) ≫ (fun n ↦ (n : ℝ) ^ (2 / 3 : ℝ) / (log n) ^ (4 / 3 : ℝ)) := by
   sorry
@@ -80,7 +83,8 @@ theorem erdos_920.variants.lower_bound_f4 :
 A positive answer to this question would follow from [erdosproblems.com/986]. The known bounds for
 that problem imply $f_k(n) \gg \frac{n^{1-\frac{2}{k+1}}}{(\log n)^{c_k}}.$
 -/
-@[category research solved, AMS 05]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/920.lean", AMS 05]
 theorem erdos_920.variants.lower_bound (k : ℕ) (hk : k ≥ 3) :
     ∃ c > 0, (fun n ↦ f k n) ≫ (fun (n : ℕ) ↦
     (n : ℝ) ^ (1 - 2 / ((k : ℝ) + 1)) / (log n) ^ c) := by
