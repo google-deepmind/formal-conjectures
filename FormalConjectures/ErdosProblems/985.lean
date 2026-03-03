@@ -38,7 +38,7 @@ theorem erdos_985 : answer(sorry) ↔ ∀ᵉ (p : ℕ) (hp_prime : p.Prime) (hp_
 /--
 Heath-Brown proved that at least one of 2, 3, or 5 is a primitive root for infinitely many primes $p$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/985.lean", AMS 11]
 theorem erdos_985.variants.two_three_five_primitive_root :
     Set.Infinite
       {p : ℕ | p.Prime ∧
