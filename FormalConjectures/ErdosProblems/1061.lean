@@ -46,4 +46,14 @@ Is it true that this number is asymptotic to `c * x` for some constant `c > 0`?
 theorem erdos_1061 : answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧ S ~[atTop] (fun x : ℝ ↦ c * x) := by
   sorry
 
+/--
+The number of solutions $S(x)$ satisfies $S(x) \geq 1$ for all $x \geq 2$, since for example
+$\sigma(1) + \sigma(1) = \sigma(2)$ gives the pair $(1, 1)$. Known to hold for small cases by
+direct verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1061", AMS 11]
+theorem erdos_1061.variants.nonempty_solutions :
+    ∀ x : ℝ, 2 ≤ x → 0 < S x := by
+  sorry
+
 end Erdos1061
