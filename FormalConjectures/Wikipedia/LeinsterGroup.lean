@@ -80,7 +80,7 @@ to a perfect number.
 
 Reference: Leinster, Tom (2001). "Perfect numbers and groups". Theorem 2.1.
 -/
-@[category research solved, AMS 20]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/LeinsterGroup.lean", AMS 20]
 theorem abelian_is_leinster_iff_cyclic_perfect (G : Type*) [CommGroup G] [Fintype G] :
     IsLeinster G ↔ IsCyclic G ∧ Nat.Perfect (Fintype.card G) := by
   sorry
@@ -92,7 +92,7 @@ For example, `S₃ × C₅` (order 30) and `A₅ × C₁₅₁₂₈` are Leinst
 
 Reference: Leinster, Tom (2001). "Perfect numbers and groups".
 -/
-@[category research solved, AMS 20]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/LeinsterGroup.lean", AMS 20]
 theorem exists_nonabelian_leinster_group :
     ∃ G : Type, ∃ (_ : Group G) (_ : Fintype G),
       IsLeinster G ∧ ¬ ∀ (a b : G), a * b = b * a := by
@@ -108,7 +108,7 @@ dihedral Leinster groups.
 
 Reference: Leinster, Tom (2001). "Perfect numbers and groups".
 -/
-@[category research solved, AMS 20]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/LeinsterGroup.lean", AMS 20]
 theorem dihedral_is_leinster_iff_odd_perfect (n : ℕ) [NeZero n] :
     IsLeinster (DihedralGroup n) ↔ Nat.Perfect n ∧ Odd n := by
   sorry
