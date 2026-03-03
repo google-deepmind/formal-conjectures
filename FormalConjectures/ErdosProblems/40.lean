@@ -93,4 +93,14 @@ theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40ForSet .univ) : type_of% Erdos
       omega
     · exact (Set.finite_Icc _ _).inter_of_right A
 
+/--
+It is known that $\text{Erdos40For}(g)$ holds whenever $g(N) = (\log N)^c$ for any $c > 0$
+by work related to Fourier-analytic methods in additive combinatorics (Bourgain 2010 and subsequent
+work), providing a partial result toward the full conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/40", AMS 11]
+theorem erdos_40.variants.known_result :
+    ∀ c > (0 : ℝ), Erdos40For (fun N => Real.log N ^ c) := by
+  sorry
+
 end Erdos40
