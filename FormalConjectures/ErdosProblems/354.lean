@@ -49,4 +49,14 @@ theorem erdos_354.parts.ii : answer(sorry) ↔ ∃ γ ∈ Set.Ioo (1 : ℝ) 2, �
     IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The completeness of interleaved
+geometric sequences with irrational ratio is related to Beatty sequence theory.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/354", AMS 11]
+theorem erdos_354.variants.known_result :
+    ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
+    IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2) := by
+  sorry
+
 end Erdos354
