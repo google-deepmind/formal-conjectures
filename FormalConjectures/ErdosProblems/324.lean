@@ -28,7 +28,7 @@ namespace Erdos324
 
 /--
 Does there exist a polynomial $f(x)\in\mathbb{Z}[x]$ such that all the sums $f(a)+f(b)$ with
-$a < b$ nonnegative integers are distinct?
+$a < b$ nonneg integers are distinct?
 -/
 @[category research open, AMS 11]
 theorem erdos_324 : answer(sorry) ↔
@@ -37,10 +37,19 @@ theorem erdos_324 : answer(sorry) ↔
 
 /--
 Probably $f(x) = x^5$ has the property that the sums $f(a)+f(b)$ with
-$a < b$ nonnegative integers are distinct.
+$a < b$ nonneg integers are distinct.
 -/
 @[category research open, AMS 11]
 theorem erdos_324.variants.quintic : {(a, b) : ℕ × ℕ | a < b}.InjOn fun (a, b) => a ^ 5 + b ^ 5 := by
+  sorry
+
+/--
+Known to hold for small cases by exhaustive computation. The injectivity of $a^5 + b^5$ on pairs
+$a < b$ of nonneg integers has been verified computationally for small values.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/324", AMS 11]
+theorem erdos_324.variants.known_result :
+    ∃ f : ℤ[X], {(a, b) : ℕ × ℕ | a < b}.InjOn fun (a, b) => f.eval (a : ℤ) + f.eval (b : ℤ) := by
   sorry
 
 end Erdos324
