@@ -43,7 +43,7 @@ theorem erdos_200 : answer(sorry) ↔
 /--
 It follows from the prime number theorem that such a progression has length $\leq(1+o(1))\log N$.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/200", AMS 5 11]
 theorem erdos_200.variants.upper : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
     ∀ n, longestPrimeArithmeticProgressions n ≤ (1 + o n) * log n := by
   sorry
