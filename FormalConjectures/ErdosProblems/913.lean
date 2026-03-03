@@ -47,7 +47,7 @@ theorem erdos_913.variants.infinite_many_8p_sq_add_one_primes :
   sorry
 
 /-- If there are infinitely many primes $p$ such that $8p^2 - 1$ is prime, then this is true. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/913.lean", AMS 11]
 theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Prime }.Infinite) :
     { n | Set.InjOn (n * (n + 1)).factorization (n * (n + 1)).primeFactors }.Infinite := by
   set S := { p | p.Prime ∧ (8 * p ^ 2 - 1).Prime }
