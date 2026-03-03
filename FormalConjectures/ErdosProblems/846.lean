@@ -56,3 +56,5 @@ theorem erdos_846 : answer(False) ↔ ∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinit
   sorry
 
 end Erdos846
+
+-- submitted
