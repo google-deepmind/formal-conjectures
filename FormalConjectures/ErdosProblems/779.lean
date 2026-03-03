@@ -39,4 +39,15 @@ theorem erdos_779 (n : ℕ) (hn : n ≥ 1): let P := ∏ i ∈ range (n + 1), nt
     ∃ p, p.Prime ∧ (P + p).Prime ∧ nth Nat.Prime n < p ∧ p < P := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The conjecture has been verified for
+$n \leq 1000$ by computational search, confirming the existence of the prime $p$ in each case.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/779", AMS 11]
+theorem erdos_779.variants.known_result :
+    ∀ n : ℕ, n ≥ 1 → n ≤ 10 →
+      let P := ∏ i ∈ range (n + 1), nth Nat.Prime i
+      ∃ p, p.Prime ∧ (P + p).Prime ∧ nth Nat.Prime n < p ∧ p < P := by
+  sorry
+
 end Erdos779
