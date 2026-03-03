@@ -79,7 +79,8 @@ open List
 The maximum length for the snake-in-the-box problem is known for dimensions zero through eight;
 it is $0, 1, 2, 4, 7, 13, 26, 50, 98$.
 --/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Snake-in-the-box", AMS 5]
 theorem snake_small_dimensions :
     map LongestSnakeInTheBox (range 9) = [0, 1, 2, 4, 7, 13, 26, 50, 98] := by
   sorry
@@ -95,7 +96,8 @@ theorem snake_dim_nine : LongestSnakeInTheBox 9 = answer(sorry) := by
 /-
 The best length found so far for dimension nine is 190.
 --/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Snake-in-the-box", AMS 5]
 theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
   sorry
 
@@ -107,7 +109,8 @@ $$
 1 + 2^{n-1}\frac{6n}{6n + \frac{1}{6\sqrt{6}}n^{\frac 1 2} - 7}.
 $$
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Snake-in-the-box", AMS 5]
 theorem snake_upper_bound (n : ℕ) : LongestSnakeInTheBox n
     ≤ (1 : ℝ) + 2 ^ (n - 1) * (6 * n) / (6 * n + (1 / (6 * √6) * √n)) := by
   sorry
