@@ -95,7 +95,7 @@ theorem existsWeaklyFirstCountableCompactNotFirstCountable :
     ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
 
 /-- Under CH, such a space exists as constructed in [Ya1976] by Yakovlev. -/
-@[category research solved, AMS 54]
+@[category research formally solved using formal_conjectures at "https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf", AMS 54]
 theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable [Fact (ℵ₁ = 𝔠)] :
     ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
 
