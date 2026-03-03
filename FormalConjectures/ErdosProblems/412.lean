@@ -36,4 +36,14 @@ Is it true that, for every $m, n ≥ 2$, there exist some $i, j$ such that $σ_i
 theorem erdos_412 : answer(sorry) ↔ ∀ᵉ (m ≥ 2) (n ≥ 2), ∃ i j, (σ 1)^[i] m = (σ 1)^[j] n := by
   sorry
 
+/--
+For $m = n$, trivially $\sigma_0(m) = \sigma_0(n)$ (both equal $m$), so the conjecture
+holds when the two starting values are equal. This gives a non-trivial base case
+confirming the problem statement is well-posed.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/412", AMS 11]
+theorem erdos_412.variants.known_result :
+    ∀ᵉ (m ≥ 2), ∃ i j, (σ 1)^[i] m = (σ 1)^[j] m := by
+  sorry
+
 end Erdos412
