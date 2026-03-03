@@ -57,4 +57,13 @@ theorem erdos_364.variants.weak :
   rcases h2mod4 with (_|_|_|_) <;>
   simp_all [not_full_of_prime_mod_prime_sq _ 1 (Nat.prime_two)]
 
+/--
+Known to hold for small cases by exhaustive computation. No triple of consecutive powerful numbers
+has been found; the smallest powerful numbers are 1, 4, 8, 9, 16, 25, 27, 32, ...
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/364", AMS 11]
+theorem erdos_364.variants.known_result :
+    ¬ ∃ (n : ℕ), Powerful n ∧ Powerful (n + 1) ∧ Powerful (n + 2) := by
+  sorry
+
 end Erdos364
