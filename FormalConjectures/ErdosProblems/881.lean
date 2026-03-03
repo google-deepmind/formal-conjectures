@@ -54,4 +54,15 @@ theorem erdos_881 :
           (A \ B).IsAsymptoticAddBasisOfOrder (k + 1) := by
   sorry
 
+/--
+It is known that every asymptotic additive basis of order $k$ contains a minimal sub-basis of
+order $k$. This result, due to Härtter (1956), provides the existence of minimal bases but
+says nothing about whether removing an infinite set still gives a basis of order $k+1$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/881", AMS 5 11]
+theorem erdos_881.variants.known_result :
+    ∀ (k : ℕ) (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder k →
+      ∃ A' ⊆ A, IsMinimalAsymptoticAddBasisOfOrder k A' := by
+  sorry
+
 end Erdos881
