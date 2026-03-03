@@ -136,4 +136,16 @@ theorem erdos_74.variants.sqrt : answer(sorry) ↔
 
 -- TODO(firsching): add the remaining statements/comments
 
+/--
+Erdős, Hajnal, and Szemerédi (1982) proved that for any $f(n) \to \infty$, there exists
+a graph of infinite chromatic number such that every $n$-vertex subgraph can be made bipartite
+by removing at most $f(n)$ edges, thus answering the main question affirmatively.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/74", AMS 5]
+theorem erdos_74.variants.erdos_hajnal_szemeredi :
+    ∀ f : ℕ → ℕ, Tendsto f atTop atTop →
+    ∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
+    ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ f n := by
+  sorry
+
 end Erdos74
