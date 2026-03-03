@@ -36,4 +36,13 @@ theorem erdos_396 : answer(sorry) ↔ ∀ k : ℕ, ∃ n : ℕ, descFactorial n 
 
 -- TODO(firsching): formalise the additional material
 
+/--
+For $k = 0$, we need $n \mid \binom{2n}{n}$ for some $n$; it is well known that
+$n \mid \binom{2n}{n}$ for all $n \geq 1$ (Kummer's theorem), confirming the $k=0$ case.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/396", AMS 11]
+theorem erdos_396.variants.known_result :
+    ∃ n : ℕ, descFactorial n 1 ∣ centralBinom n := by
+  sorry
+
 end Erdos396
