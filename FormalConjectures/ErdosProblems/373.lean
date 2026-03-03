@@ -47,7 +47,7 @@ Show that if `P(n(n+1)) / log n → ∞` where `P(m)` denotes the largest prime 
 the equation `n!=a_1!a_2!···a_k!`, with `n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k`, has only
 finitely many solutions.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/373", AMS 11]
 theorem erdos_373.variants.of_limit
     (H : Filter.atTop.Tendsto (fun (n : ℕ) => (n*(n+1)).maxPrimeFac / (n : ℝ).log) Filter.atTop) :
     S.Finite := by
@@ -64,7 +64,7 @@ Show that if `P(n(n−1)) > 4 log n` for large enough `n`, where `P(m)` denotes 
 largest prime factor of `m`, then the equation `n!=a_1!a_2!···a_k!`, with
 `n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k`, has only finitely many solutions.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/373", AMS 11]
 theorem erdos_373.variants.of_lower_bound
     (H : ∀ᶠ (n : ℕ) in Filter.atTop, 4*(n : ℝ).log < (n*(n-1 : ℕ)).maxPrimeFac) :
     S.Finite := by
