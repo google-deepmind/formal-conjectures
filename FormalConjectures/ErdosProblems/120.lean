@@ -48,7 +48,7 @@ theorem erdos_120 : answer(sorry) ↔ ∀ A : Set ℝ, A.Infinite → Erdos120Fo
 /--
 Steinhaus [St20] has proved Erdős 120 to be false whenever $A$ is a finite set.
 -/
-@[category research solved, AMS 05 28]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/120", AMS 05 28]
 theorem erdos_120.variants.finite_set {A : Set ℝ} (h : A.Finite) : ¬ Erdos120For A := by
   sorry
 
