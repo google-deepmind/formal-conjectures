@@ -62,7 +62,7 @@ In particular, we assume that every even number greater than 6 can be written as
 *distinct* primes, in contrast to the usual Goldbach conjecture that every even number greater than
 2 can be written as the sum of two primes.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/418.lean", AMS 11]
 theorem erdos_418.variants.conditional
     (goldbach : ∀ (n : ℕ), 6 < n → Even n → ∃ p q, p ≠ q ∧ p.Prime ∧ q.Prime ∧ n = p + q)
     (m : ℕ) (h : Odd m) :
@@ -88,7 +88,7 @@ theorem erdos_418.variants.conditional
 Erdős [Er73b] has shown that a positive density set of natural numbers cannot be written as
 $\sigma(n)-n$ (numbers not of this form are called nonaliquot, or sometimes untouchable).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/418.lean", AMS 11]
 theorem erdos_418.variants.sigma :
     ∃ (S : Set ℕ) (hS : S.HasPosDensity),
       S ⊆ { (σ 1 n - n : ℕ) | n }ᶜ := by
@@ -98,7 +98,7 @@ theorem erdos_418.variants.sigma :
 A solution to erdos_418 was shown by Browkin and Schinzel [BrSc95] by showing that any integer of
 the form $2^(k + 1)\cdot 509203$ is not of the form $n - \phi(n)$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/418.lean", AMS 11]
 theorem erdos_418.variants.soln :
     { 2 ^ (k + 1) * 509203 | k } ⊆ { (n - n.totient : ℕ) | n }ᶜ := by
   sorry
