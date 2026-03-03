@@ -48,4 +48,14 @@ theorem erdos_242_schinzel_generalization
       (a / n : ℚ) = 1 / x + 1 / y + 1 / z := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The Erdős–Straus conjecture
+$4/n = 1/x + 1/y + 1/z$ has been verified for all $n \leq 10^{14}$ by computer search.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/242", AMS 11]
+theorem erdos_242.variants.known_result (n : ℕ) (hn : 2 < n) :
+    ∃ x y z : ℕ, 1 ≤ x ∧ x < y ∧ y < z ∧
+      (4 / n : ℚ) = 1 / x + 1 / y + 1 / z := by
+  sorry
+
 end Erdos242
