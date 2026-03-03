@@ -38,4 +38,14 @@ theorem erdos_1139 :
       atTop.limsup (fun k : ℕ ↦ (((u (k + 1) : ℝ) - (u k : ℝ)) / Real.log (↑k + 1) : EReal)) = ⊤ := by
   sorry
 
+/--
+Integers with at most 2 prime factors (also called 2-almost primes or semiprimes together with
+primes) include 2, 3, 4, 5, 6, 7, 9, 10, ... The sequence is infinite. Known to hold for small
+cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1139", AMS 11]
+theorem erdos_1139.variants.sequence_infinite :
+    {n : ℕ | 0 < n ∧ Ω n ≤ 2}.Infinite := by
+  sorry
+
 end Erdos1139
