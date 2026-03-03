@@ -56,7 +56,7 @@ theorem erdos_100.variants.strong :
 
 /-- From [Kanold]: diameter $\geq n^{3/4}$.
 TODO: find reference -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/100.lean", AMS 52]
 theorem erdos_100.variants.kanold :
     ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →
@@ -65,7 +65,7 @@ theorem erdos_100.variants.kanold :
   sorry
 
 /-- From [GuKa15]: diameter $\gg n / \log n$. -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/100.lean", AMS 52]
 theorem erdos_100.variants.guth_katz :
     ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →
