@@ -57,4 +57,14 @@ theorem erdos_424 : answer(sorry) ↔ generatedSet.HasPosDensity := by
 
 -- TODO(firsching): formalize the statements from the additional material
 
+/--
+The first few elements of the generated set are known: $\{2, 3, 5, 9, 14, 17, 26, 29, \ldots\}$,
+where $5 = 2 \cdot 3 - 1$, $9 = 2 \cdot 5 - 1$, $14 = 3 \cdot 5 - 1$, etc.
+In particular, $5 \in \text{generatedSet}$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/424", AMS 11]
+theorem erdos_424.variants.known_result :
+    (5 : ℕ) ∈ generatedSet := by
+  sorry
+
 end Erdos424
