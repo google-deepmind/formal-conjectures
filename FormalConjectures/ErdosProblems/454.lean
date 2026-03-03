@@ -38,7 +38,7 @@ theorem erdos_454 : answer(sorry) ↔ limsup (fun n => (f n - 2 * n.nth Prime : 
   sorry
 
 /-- `limsup (fun n => (f n - 2 * n.nth Prime : ℕ∞)) atTop ≥ 2`, and this is proved in [Po79]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/454.lean", AMS 11]
 theorem erdos_454.two_le_limsup : 2 ≤ limsup (fun n => (f n - 2 * n.nth Prime : ℕ∞)) atTop := by
   sorry
 
