@@ -40,4 +40,14 @@ theorem erdos_623 : answer(sorry) ↔ ∀ (X : Type u) (hX : #X = ℵ_ ω)
 
 -- TODO(firsching): formalize the statement about X < ℵ_ω
 
+/--
+It is known that if $|X| < \aleph_\omega$, then an independent set always exists. The case
+$|X| = \aleph_\omega$ remains open, making this a boundary problem in infinite combinatorics.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/623", AMS 3]
+theorem erdos_623.variants.known_result : ∀ (X : Type u) (hX : #X < ℵ_ ω)
+    (f : Finset X → X), (∀ A : Finset X, f A ∉ A) →
+    (∃ Y : Set X, Set.Infinite Y ∧ (∀ (B : Finset X), ↑B ⊆ Y → f B ∉ Y)) := by
+  sorry
+
 end Erdos623
