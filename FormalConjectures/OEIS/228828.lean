@@ -60,7 +60,7 @@ lemma a_two : a 2 = 7 := by
 /--
 Conjecture: the sequence A228828 is infinite.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://oeis.org/A228828", AMS 11]
 theorem a.infinite : {a n | n}.Infinite := by
   sorry
 
