@@ -68,3 +68,5 @@ theorem erdos_1082.parts.ii : answer(False) ↔
     ∃ (a : ℝ²) (ha : a ∈ A), A.card / 2 ≤ distinctDistancesFrom A a - 1 := by
   sorry
 end Erdos1082
+
+-- submitted
