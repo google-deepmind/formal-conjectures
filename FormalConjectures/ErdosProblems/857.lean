@@ -56,7 +56,7 @@ noncomputable def m (n k : ℕ) : ℕ :=
 /-- Existence of an asymptotic formula for `m(·,k)` up to asymptotic equivalence. -/
 def hasAsymptoticFormula (k : ℕ) : Prop :=
   ∃ g : ℕ → ℝ,
-    Tendsto (fun n : ℕ => (m n k : ℝ) / g n) atTop (𝓝 1)
+    Tendsto (fun n : ℕ => (m n k : ℝ) / g n) atTop (nhds 1)
 
 /--
 Estimate `m(n,k)`, or better give an asymptotic formula.
