@@ -89,3 +89,5 @@ theorem conjecture : gamma = 1/3 := by
 end variants
 
 end Green24
+
+-- submitted
