@@ -40,7 +40,7 @@ where $c_i \in \{0, 1\}$ and $a_i$ has only the digits $0, 1$ when written in ba
 
 Conjectured by Erdős [Er97], solved by Boris Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/124", AMS 11]
 lemma erdos124.zero : answer(True) ↔
     ∀ D : Finset ℕ, (∀ d ∈ D, 3 ≤ d) → 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ →
       ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d 0 := sorry
@@ -66,7 +66,7 @@ in base $3$, $b$ only the digits $0, 1$ in base $4$, $c$ only the digits $0, 1$ 
 
 Provee by Burr, Erdős, Graham, and Li [BEGL96]
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/124", AMS 11]
 lemma erdos124.ne_zero_three_four_seven {k : ℕ} (hk : k ≠ 0) :
     ∀ᶠ n in atTop,
       n ∈ sumsOfDistinctPowers 3 k + sumsOfDistinctPowers 4 k + sumsOfDistinctPowers 7 k :=
@@ -80,7 +80,7 @@ $$\sum_{1 \le i \le r}\frac 1{d_i - 1} \ge 1.$$
 
 Reported by Burr, Erdős, Graham, and Li [BEGL96] as an observation of Pomerance
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/124", AMS 11]
 lemma erdos124.converse {D : Finset ℕ} (hD₃ : ∀ d ∈ D, 3 ≤ d)
     (h : ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d 0) : 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ :=
   sorry
@@ -93,7 +93,7 @@ but $\sum_{i \in I} \frac 1{d_i - 1} \le \varepsilon$.
 
 Proved by Melfi [Me04]
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/124", AMS 11]
 lemma erdos124.melfi_construction {ε : ℝ} (hε : 0 < ε) :
     ∃ d : ℕ → ℕ, StrictMono d ∧ ∑' i, (d i - 1 : ℝ)⁻¹ ≤ ε ∧ ∀ᶠ n in atTop,
       ∃ (I : Finset ℕ) (a : ℕ → ℕ), (∀ i ∈ I, a i ∈ sumsOfDistinctPowers (d i) 0) ∧
