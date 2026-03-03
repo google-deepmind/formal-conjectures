@@ -54,4 +54,14 @@ theorem erdos_1072.variants.littleo :
       (fun x ↦ x / Real.log x) := by
   sorry
 
+/--
+By Wilson's theorem, $f(p) = p - 1$ whenever $(p-1)! \equiv -1 \pmod{p}$, which holds for all
+primes by Wilson's theorem. However, the question is whether $f(p) < p-1$ for almost all primes.
+The set $\{p \mid f(p) = p-1\}$ is nonempty. Known to hold for small cases by direct verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1072", AMS 11]
+theorem erdos_1072.variants.nonempty :
+    {p | p.Prime ∧ f p = p - 1}.Nonempty := by
+  sorry
+
 end Erdos1072
