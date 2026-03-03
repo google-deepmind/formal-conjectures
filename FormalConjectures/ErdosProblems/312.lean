@@ -42,4 +42,20 @@ theorem erdos_312 :
                 ∑ i ∈ S, (a i : ℝ)⁻¹ ≤ 1 := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. Related results on subset sums of unit
+fractions close to 1 appear in the study of greedy algorithms for Egyptian fraction representations.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/312", AMS 5 11]
+theorem erdos_312.variants.known_result :
+    ∃ (c : ℝ), 0 < c ∧
+      ∀ (K : ℝ), 1 < K →
+        ∃ (N₀ : ℕ),
+          ∀ (n : ℕ) (a : Fin n → ℕ),
+            (n ≥ N₀ ∧ (∑ i : Fin n, (a i : ℝ)⁻¹) > K) →
+              ∃ (S : Finset (Fin n)),
+                1 - Real.exp (-(c * K)) < (∑ i ∈ S, (a i : ℝ)⁻¹) ∧
+                ∑ i ∈ S, (a i : ℝ)⁻¹ ≤ 1 := by
+  sorry
+
 end Erdos312
