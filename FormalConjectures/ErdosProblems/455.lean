@@ -38,7 +38,7 @@ theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
 /--  Let `q : ℕ → ℕ` be a strictly increasing sequence of primes such that
 `q (n + 2) - q (n + 1) ≥ q (n + 1) - q n`. Then `liminf q n / (n ^ 2) > 0.352`, and this is proved in
 [Ri76]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/455.lean", AMS 11]
 theorem erdos_455.liminf : ∀ q : ℕ → ℕ, StrictMono q →
     (∀ n, (q n).Prime ∧ q (n + 2) - q (n + 1) ≥ q (n + 1) - q n) →
     liminf (fun n : ℕ => (q n : ℝ≥0∞) / n ^ 2) atTop > 0.352 := by
