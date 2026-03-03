@@ -59,7 +59,7 @@ distance no more than $1$ from at least one critical point.
 
 It has been shown that Sendov's conjecture holds when the degree of $n$ is at most $9$.
 -/
-@[category research solved, AMS 12 30 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Sendov.lean", AMS 12 30 52]
 theorem sendov_conjecture.variants.le_nine (n : ℕ) (hn : n ∈ Set.Icc 2 9) :
     n.SatisfiesSendovConjecture := by
   sorry
@@ -71,7 +71,7 @@ distance no more than $1$ from at least one critical point.
 
 It has been shown that Sendov's conjecture holds for polynomials of sufficiently large degree.
 -/
-@[category research solved, AMS 12 30 52]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Sendov.lean", AMS 12 30 52]
 theorem sendov_conjecture.variants.eventually_true :
     ∀ᶠ (n : ℕ) in Filter.atTop, n.SatisfiesSendovConjecture := by
   sorry
