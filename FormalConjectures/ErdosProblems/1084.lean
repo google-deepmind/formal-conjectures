@@ -44,17 +44,20 @@ noncomputable def f (d n : ℕ) : ℕ :=
 -- TODO: Add erdos_1084.
 
 /-- It is easy to check that $f_1(n) = n - 1$. -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1084", AMS 52]
 theorem erdos_1084.variants.upper_d1 : f 1 n = n - 1 := by
   sorry
 
 /-- It is easy to check that $f_2(n) < 3n$. -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1084", AMS 52]
 theorem erdos_1084.variants.easy_upper_d2 (hn : n ≠ 0) : f 2 n < 3 * n := by
   sorry
 
 /-- Erdős showed that there is some constant $c > 0$ such that $f_2(n) < 3n - c n^{1/2}$. -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1084", AMS 52]
 theorem erdos_1084.variants.upper_d2 : ∃ c > (0 : ℝ), ∀ n > 0, f 2 n < 3 * n - c * sqrt n := by
   sorry
 
@@ -69,7 +72,8 @@ theorem erdos_1084.variants.triangular_optimal_d2 : f 2 (3 * n ^ 2 + 3 * n + 1) 
 
 /-- Erdős claims the existence of two constants $c_1, c_2 > 0$
 such that $6n - c_1 n^{2/3} ≤ f_3(n) \le 6n - c_2 n^{2/3}$. -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1084", AMS 52]
 theorem erdos_1084.variants.upper_lower_d3 :
     ∃ c₁ : ℝ, ∃ c₂ > (0 : ℝ), ∀ᶠ n in atTop,
       6 * n - c₁ * n ^ (2 / 3 : ℝ) ≤ f 3 n ∧ f 3 n ≤ 6 * n - c₂ * n ^ (2 / 3 : ℝ) := by
