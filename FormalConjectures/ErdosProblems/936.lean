@@ -54,4 +54,14 @@ theorem erdos_936.variants.factorial_sub_one :
    answer(sorry) ↔ EventuallyNotPowerful (·! - 1) := by
   sorry
 
+/--
+It is known that powerful numbers have density zero: the count of powerful numbers up to $x$ is
+$\Theta(\sqrt{x})$. In particular, a "random" integer is very unlikely to be powerful, providing
+heuristic support for the conjectured finiteness.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/936", AMS 11]
+theorem erdos_936.variants.known_result :
+    { n : ℕ | n.Powerful }.Infinite := by
+  sorry
+
 end Erdos936
