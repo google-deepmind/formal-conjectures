@@ -32,7 +32,7 @@ $b_t \leq Cb_1$ has density $0$?
 van Doorn and Everts \cite{vDEv25} have disproved this with $C=6$ - in fact, they prove that all
 integers can be written as such a sum in which $b_t<6b_1$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/845.lean", AMS 11]
 theorem erdos_845 :
     answer(False) ↔
       ∀ᵉ (C : ℝ) (hC : 0 < C),
