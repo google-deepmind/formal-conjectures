@@ -50,7 +50,7 @@ theorem erdos_996.log3 : answer(sorry) ↔
   sorry
 
 /-- The following theorem is proved in [Ma66]. -/
-@[category research solved, AMS 42]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/996.lean", AMS 42]
 theorem erdos_996.log2 : ∀ (C : ℝ), 0.5 < C →
     ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
