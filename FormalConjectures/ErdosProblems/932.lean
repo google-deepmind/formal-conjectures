@@ -37,7 +37,7 @@ theorem erdos_932 :
 /--
 Erdős could show that the density of $r$ such that at least one such $n$ exists is $0$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/932.lean", AMS 11]
 theorem erdos_932.variants.one_le :
     { r : ℕ | 1 ≤ (Finset.Ioo (r.nth Nat.Prime) (r.succ.nth Nat.Prime) |>.filter
       (fun m => m.maxPrimeFac < r.succ.nth Nat.Prime - r.nth Nat.Prime)).card }.HasDensity 0 := by
