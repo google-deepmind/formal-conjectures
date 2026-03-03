@@ -76,7 +76,7 @@ arXiv:2407.04226 (2024).
 
 Note: the informal and formal statements follow the solution paper https://arxiv.org/pdf/2407.04226
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/442", AMS 11]
 theorem erdos_442 : answer(False) ↔ ∀ (A : Set ℕ),
     Tendsto (fun (x : ℝ) =>
       1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) atTop atTop →
@@ -101,7 +101,7 @@ $$
 \sum_{n, m\in A: n, m\leq x} \frac{1}{\operatorname{lcm}(n, m)}\ll\left(\sum_{n\in A: n\leq x} \frac{1}{n}\right)^2
 $$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/442", AMS 11]
 theorem erdos_442.variants.tao :
     ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : f =o[atTop] (1 : ℝ → ℝ)),
       ∀ᶠ (x : ℝ) in atTop,
