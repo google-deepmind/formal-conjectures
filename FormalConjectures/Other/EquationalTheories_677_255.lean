@@ -39,7 +39,7 @@ theorem Equation255_not_implies_Equation677 :
   ⟨Fin 3, ⟨![![1, 2, 0], ![2, 0, 1], ![0, 1, 2]]⟩,
     fun x ↦ by fin_cases x <;> rfl, of_decide_eq_false rfl⟩
 
-@[category research solved, AMS 8]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Challenge_Eq677.lean", AMS 8]
 theorem Equation677_not_implies_Equation255 :
     ∃ (G : Type) (_ : Magma G), Equation677 G ∧ ¬ Equation255 G := by
   sorry
@@ -47,8 +47,9 @@ theorem Equation677_not_implies_Equation255 :
 /-- Note that this is a stronger form of `Equation255_not_implies_Equation677`. -/
 @[category research solved, AMS 8]
 theorem Finite.Equation255_not_implies_Equation677 :
-    ∃ (G : Type) (_ : Magma G), Finite G ∧ Equation255 G ∧ ¬ Equation677 G := by
-  sorry
+    ∃ (G : Type) (_ : Magma G), Finite G ∧ Equation255 G ∧ ¬ Equation677 G :=
+  ⟨Fin 3, ⟨![![1, 2, 0], ![2, 0, 1], ![0, 1, 2]]⟩, Finite.of_fintype _,
+    fun x ↦ by fin_cases x <;> rfl, of_decide_eq_false rfl⟩
 
 /-- The negation of `Finite.Equation677_implies_Equation255`.
 
