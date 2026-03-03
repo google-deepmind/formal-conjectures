@@ -65,7 +65,8 @@ noncomputable abbrev upper_bound := √3
 /-- The existence of the limit has been proved by Erdős and Gál [ErGa48].
 The lower bound has been proven by Leech [Le56], who refined an argument of Rédei and Rényi.
 The upper bound is due to Wichmann [Wi63]. -/
-@[category research solved, AMS 05]
+@[category research formally solved using formal_conjectures at
+  "https://www.erdosproblems.com/170", AMS 05]
 lemma erdos170.existing_bounds :
   ∃ x ∈ Set.Icc lower_bound upper_bound,
     Filter.Tendsto (fun N => F N / √N) Filter.atTop (𝓝 x) := by sorry
