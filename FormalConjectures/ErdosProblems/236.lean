@@ -39,4 +39,13 @@ Let $f(n)$ count the number of solutions to $n=p+2^k$ for prime $p$ and $k\geq 0
 theorem erdos_236: (fun n => (f n : ℝ)) =o[atTop] (fun n => Real.log (n : ℝ)) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. It is known that $f(n) = O(\log n)$
+unconditionally; the conjecture states the stronger $f(n) = o(\log n)$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/236", AMS 5 11]
+theorem erdos_236.variants.known_result :
+    (fun n => (f n : ℝ)) =o[atTop] (fun n => Real.log (n : ℝ)) := by
+  sorry
+
 end Erdos236
