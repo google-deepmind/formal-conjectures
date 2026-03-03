@@ -84,12 +84,12 @@ def D (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y 
 
 /-! Tunnell's theorem. -/
 
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/CongruentNumber.lean", AMS 11]
 theorem Tunnell_odd (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
     congruentNumber n → 2 * (A n).ncard = (B n).ncard := by
   sorry
 
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/CongruentNumber.lean", AMS 11]
 theorem Tunnell_even (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     congruentNumber n → 2 * (C n).ncard = (D n).ncard := by
   sorry
