@@ -45,7 +45,7 @@ theorem green_15 :
 /--
 The answer is YES for 4-term progressions [BJP14].
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/GreensOpenProblems/15.lean", AMS 5 11]
 theorem green_15_ap4 :
     ∃ K : ℝ≥0, ∃ f : ℕ → ℤ, LipschitzWith K f ∧
       IsAPOfLengthFree  {((n, f n) : ℤ × ℤ) | (n : ℕ)} 4 := by
