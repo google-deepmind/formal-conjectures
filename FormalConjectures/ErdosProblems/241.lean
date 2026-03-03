@@ -63,7 +63,7 @@ theorem erdos_241 :
 Bose and Chowla [BoCh62] provided a construction proving one half of this, namely
 $(1+o(1))N^{1/3}\leq f(N)$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/241", AMS 5]
 theorem erdos_241.variants.lower_bound :
     ∃ ε : ℕ → ℝ, ε =o[atTop] (fun _ ↦ (1 : ℝ)) ∧
     ∀ᶠ N in atTop, (1 + ε N) * (N : ℝ) ^ ((1 : ℝ) / 3) ≤ (f N 3 : ℝ) := by
@@ -73,7 +73,7 @@ theorem erdos_241.variants.lower_bound :
 The best upper bound known to date is due to Green [Gr01], $f(N) \leq ((7/2)^{1/3}+o(1))N^{1/3}$.
 (note that $(7/2)^{1/3}\approx 1.519$).
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/241", AMS 5]
 theorem erdos_241.variants.upper_bound :
     ∃ ε : ℕ → ℝ, ε =o[atTop] (fun _ ↦ (1 : ℝ)) ∧
     ∀ᶠ N in atTop, (f N 3 : ℝ) ≤ ((7 / 2 : ℝ) ^ ((1 : ℝ) / 3) + ε N) * (N : ℝ) ^ ((1 : ℝ) / 3) := by
@@ -97,7 +97,7 @@ theorem erdos_241.variants.generalization (r : ℕ) (hr : r ≥ 2) :  BoseChowla
 /--
 This is known only for $r=2$ (see [erdosproblems.com/30]).
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/241", AMS 5]
 theorem erdos_241.variants.r_eq_2 :
     BoseChowlaConjecture 2 := by
   sorry
