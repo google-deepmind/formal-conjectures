@@ -25,7 +25,7 @@ asked by user [*Junyan Xu*](https://mathoverflow.net/users/3332/junyan-xu)
 namespace Mathoverflow486451
 
 /-- There exists a semiring with a unique left maximal ideal but more than one right maximal ideals. -/
-@[category research solved, AMS 16]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Mathoverflow/486451.lean", AMS 16]
 theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
     ∃ (R : Type) (_ : Semiring R), (∃! I : Ideal R, I.IsMaximal) ∧
       ∃ I J : Ideal Rᵐᵒᵖ, I.IsMaximal ∧ J.IsMaximal ∧ I ≠ J := by
