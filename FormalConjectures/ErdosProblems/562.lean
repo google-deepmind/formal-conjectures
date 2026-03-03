@@ -40,4 +40,14 @@ theorem erdos_562 : answer(sorry) ↔
     ∀ r ≥ 3, (fun n ↦ log^[r - 1] (hypergraphRamsey r n)) ~[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
+/--
+For $r = 3$, the lower bound $R_3(n) \geq 2^{2^{cn}}$ for some $c > 0$ is an open problem
+(see Problem 564). The upper bound tower-type $R_3(n) \leq \exp\exp(cn)$ is classical
+(Erdős and Rado), giving one direction of the asymptotic equivalence of $\log\log R_3(n) \asymp n$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/562", AMS 05]
+theorem erdos_562.variants.known_result :
+    ∃ c > 0, ∀ᶠ n in atTop, (hypergraphRamsey 3 n : ℝ) ≤ Real.exp (Real.exp (c * n)) := by
+  sorry
+
 end Erdos562
