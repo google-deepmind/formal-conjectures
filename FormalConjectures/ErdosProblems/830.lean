@@ -64,7 +64,7 @@ theorem erdos_830.parts.ii : answer(sorry) ↔ ∃ o : ℝ → ℝ, o =o[atTop] 
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$.
 If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then one can show that $A(x) = o(x)$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/830.lean", AMS 11]
 theorem erdos_830.variants.erdos : A =o[atTop] id := by
   sorry
 
@@ -73,7 +73,7 @@ We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b
 If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then one can show that
 $A(x) \leq x \exp(-(\log x)^{1/3})$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/830.lean", AMS 11]
 theorem erdos_830.variants.pomerance : ∀ᶠ x in atTop, A x ≤ x * rexp (- Real.nthRoot 3 x.log) := by
   sorry
 
@@ -82,7 +82,7 @@ We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b
 If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then one can show that
 $A(x) \leq x \exp(-(\tfrac{1}{2}+o(1))(\log x\log\log x)^{1/2})$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/830.lean", AMS 11]
 theorem erdos_830.variants.pomerance_stronger :
     ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → ℝ) ∧
     ∀ᶠ x in atTop, A x ≤ x * rexp (- (1/ 2 + o x) * √(x.log * x.log.log)) := by
