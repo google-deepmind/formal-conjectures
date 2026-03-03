@@ -46,4 +46,12 @@ theorem erdos_389.variants.mehta_four :
       207 := by
   sorry
 
+/--
+For $n = 1$, $k = 1$ works: $1 \mid 2$, confirming the conjecture for the base case.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/389", AMS 11]
+theorem erdos_389.variants.known_result :
+    ∃ k ≥ 1, ∏ i ∈ Finset.range k, (1 + i) ∣ ∏ i ∈ Finset.range k, (1 + k + i) := by
+  sorry
+
 end Erdos389
