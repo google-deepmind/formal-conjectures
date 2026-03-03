@@ -52,7 +52,7 @@ theorem erdos_11.variants.two_pow_two (n : ℕ) (hn : Odd n) (hn' : 1 < n) :
 /--
 Every odd $1 < n < 10^7$ is the sum of a squarefree number and a power of 2.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/11", AMS 11]
 theorem erdos_11.variants.finite_bound1 (n : ℕ) (hn : Odd n) (h : n < 10^7) (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
@@ -60,7 +60,7 @@ theorem erdos_11.variants.finite_bound1 (n : ℕ) (hn : Odd n) (h : n < 10^7) (h
 /--
 Every odd $1 < n < 2^50$ is the sum of a squarefree number and a power of 2.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/11", AMS 11]
 theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
@@ -70,7 +70,7 @@ Suppose that every odd $n$ is the sum of a squarefree number and a power of 2. T
 $p$ such that $2 ^ p ≡ 2 \mod p ^ 2$ is infinite. This is Theorem 1 in [GrSo98].
 [GrSo98] Granville, A. and Soundararajan, K., A Binary Additive Problem of Erdős and the Order of $2$ mod $p^2$. The Ramanujan Journal (1998), 283-298.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/11", AMS 11]
 theorem erdos_11.variants.granville_soundararajan (H : type_of% erdos_11) :
     {p : ℕ | p.Prime ∧ 2 ^ p ≡ 2 [MOD p ^ 2]}.Infinite := by
   sorry
