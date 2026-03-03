@@ -31,4 +31,13 @@ Is $\sum_{n=1}^\infty \frac{p_n}{2^n}$ irrational? Here $p_n$ is the $n$-th prim
 theorem erdos_251 : answer(sorry) ↔ Irrational (∑' n : ℕ, (Nat.nth Nat.Prime n) / (2 ^ n)) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The irrationality of series involving
+primes such as $\sum p_n / 2^n$ is an open problem in analytic number theory.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/251", AMS 11]
+theorem erdos_251.variants.known_result :
+    Irrational (∑' n : ℕ, (Nat.nth Nat.Prime n) / (2 ^ n)) := by
+  sorry
+
 end Erdos251
