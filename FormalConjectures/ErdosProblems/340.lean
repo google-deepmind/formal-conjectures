@@ -91,6 +91,14 @@ theorem greedySidon_five : greedySidon 5 = 21 := by
 theorem greedySidon_ten : greedySidon 10 = 97 := by
   decide +native
 
+@[category test, AMS 5]
+theorem greedySidon_thirteen : greedySidon 13 = 182 := by
+  decide +native
+
+@[category test, AMS 5]
+theorem greedySidon_fourteen : greedySidon 14 = 204 := by
+  decide +native
+
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
 we begin with $1$ and iteratively include the next smallest integer that preserves the
@@ -145,10 +153,11 @@ contains $22$, which it does.
 [ErGr80] Erdős, P. and Graham, R., Old and new problems and results in combinatorial number
 theory. Monographies de L'Enseignement Mathematique (1980).
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/340", AMS 5]
 theorem erdos_340.variants._22_mem_sub :
     22 ∈ Set.range greedySidon - Set.range greedySidon := by
-  sorry
+  simp only [Set.mem_sub, Set.mem_range]
+  exact ⟨204, ⟨14, greedySidon_fourteen⟩, 182, ⟨13, greedySidon_thirteen⟩, by norm_num⟩
 
 /--
 The smallest integer which is unknown to be in $A - A$ is $33$.
