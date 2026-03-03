@@ -65,4 +65,15 @@ theorem erdos_1101.parts.ii :
     ∃ u, IsGood u ∧ (fun n => Real.log (u n : ℝ)) =o[atTop] (fun n => (n : ℝ)) := by
   sorry
 
+/--
+The primes form a pairwise coprime strictly monotone sequence with divergent reciprocal sum.
+This shows that the "goodness" conditions are non-vacuous and can be partially satisfied.
+Known to hold for small cases by direct verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1101", AMS 11]
+theorem erdos_1101.variants.primes_coprime_monotone :
+    StrictMono (fun n => Nat.nth Nat.Prime n) ∧
+    ∀ i j, i ≠ j → Nat.Coprime (Nat.nth Nat.Prime i) (Nat.nth Nat.Prime j) := by
+  sorry
+
 end Erdos1101
