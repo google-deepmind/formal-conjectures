@@ -58,7 +58,7 @@ $c$.
 [Wi70] Wirsing, E., _A characterization of $\log n$ as an additive arithmetic function_.
 Symposia Math. (1970), 45-47.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/897.lean", AMS 11]
 theorem erdos_897.variants.log_growth
     (f : ℕ → ℝ)
     (hf : ∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b)
