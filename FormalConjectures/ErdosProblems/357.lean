@@ -96,14 +96,14 @@ such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 It is known that $f(n) \geq (2+o(1))\sqrt{n}$.
 Source: See comment by Desmond Weisenberg here: https://www.erdosproblems.com/forum/thread/357.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/357", AMS 11]
 theorem erdos_357.variants.weisenberg : ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
     ∀ᶠ n in atTop, (2 + o n) * √n ≤ f n := by
   sorry
 
 /-- Suppose $A$ is an infinite set such that all finite sums of consecutive terms of $A$ are distinct.
 Then $A$ has lower density 0. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/357", AMS 11]
 theorem erdos_357.variants.infinite_set_lower_density (A : ℕ → ℕ) (hA : StrictMono A)
     (hA : HasDistinctSums A) : (Set.range A).lowerDensity = 0 := by
   sorry
