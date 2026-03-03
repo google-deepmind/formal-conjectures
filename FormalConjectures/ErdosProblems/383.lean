@@ -37,4 +37,13 @@ theorem erdos_383 : answer(sorry) ↔
     ∀ k, {p : ℕ | p.Prime ∧ Nat.maxPrimeFac (∏ i ∈ Finset.Icc 0 k, (p ^ 2 + i)) = p}.Infinite := by
   sorry
 
+/--
+For $k = 0$, any prime $p$ satisfies the condition since $\prod_{i=0}^{0}(p^2 + i) = p^2$
+and the largest prime factor of $p^2$ is $p$ itself.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/383", AMS 11]
+theorem erdos_383.variants.known_result :
+    {p : ℕ | p.Prime ∧ Nat.maxPrimeFac (∏ i ∈ Finset.Icc 0 0, (p ^ 2 + i)) = p}.Infinite := by
+  sorry
+
 end Erdos383
