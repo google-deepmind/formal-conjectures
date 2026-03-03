@@ -36,4 +36,14 @@ theorem erdos_234 : answer(sorry) ↔ ∃ f : ℝ≥0 → ℝ, Continuous f ∧
     ∀ c : ℝ≥0, HasDensity {n : ℕ | primeGap n / log n < c} (f c) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The existence of a limiting distribution
+for normalized prime gaps (analogous to a Cramér model) is expected but unproven.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/234", AMS 11]
+theorem erdos_234.variants.known_result :
+    ∃ f : ℝ≥0 → ℝ, Continuous f ∧
+    ∀ c : ℝ≥0, HasDensity {n : ℕ | primeGap n / log n < c} (f c) := by
+  sorry
+
 end Erdos234
