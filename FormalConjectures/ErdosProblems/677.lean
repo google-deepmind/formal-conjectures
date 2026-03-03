@@ -43,3 +43,16 @@ theorem erdos_677 :
   sorry
 
 -- TODO: Add the other statements from the reference.
+
+/--
+Known to hold for small cases by exhaustive computation. The only known counterexamples to
+the related problem $M(n,k) = M(m,l)$ with $m \geq n+k$ and $l > 1$ are
+$M(4,3) = M(13,2)$ and $M(3,4) = M(19,2)$, which Erdős expected to be the only ones.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/677", AMS 11]
+theorem erdos_677.variants.known_result :
+    ∀ (m n k : ℕ), k > 0 → m < 100 → n < 100 → m ≥ n + k →
+      lcmInterval m k ≠ lcmInterval n k := by
+  sorry
+
+end Erdos677
