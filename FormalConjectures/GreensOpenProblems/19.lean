@@ -77,7 +77,7 @@ corners $(x,y), (x,y+d), (x+d,y)$.
 
 This question has been resolved by [FSS20], showing that $C = 4$.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.1017/S0305004119000501", AMS 5 11]
 theorem green_19 : C = 4 := by
   sorry
 
