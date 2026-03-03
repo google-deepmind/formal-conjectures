@@ -76,7 +76,8 @@ theorem erdos_1062.variants.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ �
 
 /-- Lebensold proved that for large `n`, the function `f n` lies between `0.6725 n` and
 `0.6736 n`. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1062", AMS 11]
 theorem erdos_1062.variants.lebensold_bounds :
     ∀ᶠ n in atTop, (0.6725 : ℝ) * n ≤ f n ∧ f n ≤ (0.6736 : ℝ) * n := by
   sorry
