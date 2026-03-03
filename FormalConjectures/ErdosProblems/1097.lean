@@ -58,4 +58,15 @@ theorem erdos_1097.variants.lower_bound : ∃ c > (0 : ℝ), ∀ᶠ n in Filter.
     A.card = n ∧ c * (n : ℝ) ≤ (CommonDifferencesThreeTermAP A).ncard := by
   sorry
 
+/--
+For the set $A = \{1, 2, \ldots, n\}$, the common differences of three-term APs are exactly
+$\{1, 2, \ldots, \lfloor n/2 \rfloor\}$, giving $\lfloor n/2 \rfloor$ values. Known to hold
+for small cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1097", AMS 11]
+theorem erdos_1097.variants.interval_example (n : ℕ) (hn : 3 ≤ n) :
+    ∃ C > (0 : ℝ), (CommonDifferencesThreeTermAP (Finset.Icc (1 : ℤ) n)).ncard ≤
+      C * (n : ℝ) ^ (3 / 2 : ℝ) := by
+  sorry
+
 end Erdos1097
