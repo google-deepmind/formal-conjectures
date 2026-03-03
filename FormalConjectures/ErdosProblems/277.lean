@@ -35,7 +35,7 @@ covering system whose moduli all divide $n$?
 
 This was answered affirmatively by Haight [Ha79].
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/277", AMS 11]
 theorem erdos_277 :
    answer(True) ↔ ∀ c : ℝ, ∃ n : ℕ, (sigma 1 n : ℝ) > c * n ∧
       ¬ ∃ (S : Finset (ℤ × ℕ)),
