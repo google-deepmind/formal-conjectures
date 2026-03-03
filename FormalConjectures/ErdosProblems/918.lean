@@ -72,7 +72,7 @@ there is a graph with chromatic number $\aleph_1$ and $\aleph_k$ vertices where 
 less than $\aleph_k$ vertices has chromatic number $\leq \aleph_0$. -/
 -- Formalisation note: the source is missing the assumption that the graph have ℵₖ vertices
 -- which can be found in [ErHa68b]
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/918.lean", AMS 5]
 theorem erdos_918.variants.erdos_hajnal (k : ℕ) (hk : 0 < k) : ∃ (V : Type u) (G : SimpleGraph V),
     #V = ℵ_ k ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W < ℵ_ k), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
