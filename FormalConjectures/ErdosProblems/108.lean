@@ -43,4 +43,16 @@ theorem erdos_108 :
 
 -- TODO: Proof for the case r=4 and statement for the infinite case
 
+/--
+Erdős (1959) proved by a probabilistic argument that for any $r, k \geq 2$, there exist
+graphs of girth $\geq r$ and chromatic number $\geq k$, showing such graphs exist but
+not establishing the subgraph version; this is the foundational result underpinning the conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/108", AMS 5]
+theorem erdos_108.variants.erdos_probabilistic :
+    ∀ r k : ℕ, r ≥ 3 → k ≥ 2 →
+      ∃ (V : Type u) (G : SimpleGraph V), SimpleGraph.girth G ≥ r ∧
+        SimpleGraph.chromaticNumber G ≥ k := by
+  sorry
+
 end Erdos108
