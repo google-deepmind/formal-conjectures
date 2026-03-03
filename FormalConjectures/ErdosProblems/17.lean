@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/17](https://www.erdosproblems.com/17)
 -/
 
-open Filter Asymptotics Real
+open Filter Asymptotics Real Nat
 
 namespace Erdos17
 
@@ -34,7 +34,7 @@ def IsClusterPrime (p : ℕ) : Prop :=
       ∃ q₁ q₂ : ℕ, q₁.Prime ∧ q₂.Prime ∧
         q₁ ≤ p ∧ q₂ ≤ p ∧ n = (q₁ - q₂ : ℤ)
 
-/-- **Erdős Problem 17.** Are there infinitely many cluster primes? -/
+/-- **Erdős Problem 17.** Are there infinitely many cluster primes? -/
 @[category research open, AMS 11]
 theorem erdos_17 : answer(sorry) ↔ {p : ℕ | IsClusterPrime p}.Infinite := by
   sorry
@@ -49,7 +49,7 @@ $$\pi^{\mathcal{C}}(x) \ll_A x(\log x)^{-A}$$ for every real $A > 0$.
 
 [BES99] Blecksmith, Richard and Erd\H os, Paul and Selfridge, J. L., Cluster primes. Amer. Math. Monthly (1999), 43--48.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/17.lean", AMS 11]
 theorem erdos_17.variants.upper_BES {A : ℝ} (hA : 0 < A) :
   (fun x ↦ (clusterPrimeCount x : ℝ)) =O[atTop] fun x ↦ x / (log x) ^ A := by
     sorry
@@ -61,7 +61,7 @@ for every real $0 < c < 1/8$.
 
 [El03] Elsholtz, Christian, On cluster primes. Acta Arith. (2003), 281--284.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/17.lean", AMS 11]
 theorem erdos_17.variants.upper_Elsholtz :
   ∃ C : ℝ, 0 < C ∧
     ∀ c ∈ Set.Ioo 0 (1 / 8),
@@ -69,9 +69,57 @@ theorem erdos_17.variants.upper_Elsholtz :
         (fun x ↦ x * exp (-c * (log (log x)) ^ 2)) := by
   sorry
 
+def isClusterPrimeDec (p : ℕ) : Bool :=
+  let evens := (List.range (p - 2)).filter (fun n => n % 2 == 0)
+  let primes_le_p := (List.range (p + 1)).filter (fun q => q.Prime)
+  evens.all (fun n =>
+    primes_le_p.any (fun q1 =>
+      primes_le_p.any (fun q2 =>
+        (q1 : ℤ) - (q2 : ℤ) == (n : ℤ)
+      )
+    )
+  )
+
+lemma isClusterPrime_iff (p : ℕ) :
+    IsClusterPrime p ↔ p.Prime ∧ isClusterPrimeDec p = true := by
+  unfold IsClusterPrime isClusterPrimeDec
+  simp only [List.all_eq_true, List.mem_filter, List.mem_range, Bool.and_eq_true,
+    decide_eq_true_eq, List.any_eq_true, beq_iff_eq]
+  apply and_congr Iff.rfl
+  constructor
+  · intro h n hn_lt hn_even
+    have hn_le : n ≤ (p - 3 : ℤ) := by omega
+    rcases h hn_even hn_le with ⟨q1, q2, hq1, hq2, hq1_le, hq2_le, h_eq⟩
+    refine ⟨q1, ⟨by omega, hq1⟩, q2, ⟨by omega, hq2⟩, h_eq.symm⟩
+  · intro h n hn_even hn_le
+    have hn_lt : n < p - 2 := by omega
+    rcases h n hn_lt hn_even with ⟨q1, ⟨hq1_lt, hq1⟩, q2, ⟨hq2_lt, hq2⟩, h_eq⟩
+    refine ⟨q1, q2, hq1, hq2, by omega, by omega, h_eq.symm⟩
+
+lemma allPrimesLT97AreCluster :
+    ((List.range 97).all (fun b => if b.Prime then isClusterPrimeDec b else true)) = true := by
+  set_option maxRecDepth 100000 in decide
+
 /-- $97$ is the smallest prime that is not a cluster prime. -/
 @[category test, AMS 11]
 theorem isClusterPrime_97_isLeast_non_cluster : IsLeast {p : ℕ | p.Prime ∧ ¬ IsClusterPrime p} 97 := by
-  sorry
+  constructor
+  · simp only [Set.mem_setOf_eq]
+    refine ⟨by decide, ?_⟩
+    rw [isClusterPrime_iff]
+    simp only [show (97 : ℕ).Prime from by decide, true_and]
+    set_option maxRecDepth 100000 in decide
+  · intro b hb
+    simp only [Set.mem_setOf_eq] at hb
+    rcases hb with ⟨hb_prime, hb_not_cluster⟩
+    by_contra h_lt
+    push_neg at h_lt
+    have h_lt' : b < 97 := h_lt
+    have H := allPrimesLT97AreCluster
+    rw [List.all_eq_true] at H
+    have H2 := H b (List.mem_range.mpr h_lt')
+    simp only [hb_prime, ite_true] at H2
+    have H3 : IsClusterPrime b := (isClusterPrime_iff b).mpr ⟨hb_prime, H2⟩
+    exact hb_not_cluster H3
 
 end Erdos17
