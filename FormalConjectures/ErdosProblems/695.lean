@@ -59,4 +59,15 @@ theorem erdos_695.variants.upperBound : answer(sorry) ↔
         ∀ k, q k ≤ exp ((k + 1) * log (k + 1) ^ (1 + o k)) := by
   sorry
 
+/--
+It is known that any sequence of primes $q_1 < q_2 < \cdots$ with $q_{i+1} \equiv 1 \pmod{q_i}$
+grows at least as fast as $q_k \geq 2^k$, since each term must be at least one more than a
+multiple of the previous prime.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/695", AMS 11]
+theorem erdos_695.variants.known_result :
+    ∀ {q : ℕ → ℕ}, StrictMono q → (∀ i, (q i).Prime) →
+      (∀ i, q (i + 1) % q i = 1) → ∀ k, (2 : ℝ) ^ k ≤ q k := by
+  sorry
+
 end Erdos695
