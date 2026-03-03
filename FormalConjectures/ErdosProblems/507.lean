@@ -90,28 +90,28 @@ theorem erdos_507.upper:
 /--
 It is trivial that $\alpha(n) \ll 1/n$.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/507.lean", AMS 51]
 theorem erdos_507.variants.upper_trivial : α ≪ (fun n ↦ 1 / (n : ℝ)) := by
   sorry
 
 /--
 Erdős observed that $\alpha(n) \gg 1/n^2$.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/507.lean", AMS 51]
 theorem erdos_507.variants.lower_erdos : α ≫ (fun n ↦ 1 / (n : ℝ) ^ 2) := by
   sorry
 
 /--
 Current best lower bound [KPS82].
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/507.lean", AMS 51]
 theorem erdos_507.variants.lower_kps82 : lowerBest ≪ α := by
   sorry
 
 /--
 Current best upper bound [CPZ24]: $\alpha(n) \ll n^{-7/6 + o(1)}$.
 -/
-@[category research solved, AMS 51]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/507.lean", AMS 51]
 theorem erdos_507.variants.upper_cpz24 :
     ∃ (o : ℕ → ℝ), Tendsto o atTop (𝓝 0) ∧
     α ≪ (fun n ↦ upperBarrier n * (n : ℝ) ^ o n) := by
