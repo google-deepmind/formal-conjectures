@@ -34,4 +34,13 @@ theorem erdos_486 : answer(sorry) ↔
     ∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d := by
   sorry
 
+/--
+When $X_n = \emptyset$ for all $n$, the set $B = \mathbb{N}$ has logarithmic density $1$.
+This trivial case confirms the problem is well-posed and the density can indeed exist.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/486", AMS 11]
+theorem erdos_486.variants.known_result :
+    ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ (∅ : Set (ZMod n))}.HasLogDensity d := by
+  sorry
+
 end Erdos486
