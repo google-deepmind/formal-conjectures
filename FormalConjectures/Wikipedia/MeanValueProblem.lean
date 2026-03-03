@@ -52,7 +52,7 @@ The following weaker version of the mean value problem has been proven.
 Given a complex polynomial $p$ of degree $d ≥ 2$ and a complex number $z$
 there a critical point $c$ of $p$, such that $|p(z)-p(c)|/|z-c| ≤ 4|p'(z)|$.
 -/
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/MeanValueProblem.lean", AMS 12]
 lemma mean_value_problem_leq_4 (p : Polynomial ℂ) (hp : 2 ≤ p.degree) (z : ℂ) (K : ℝ):
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
       ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ 4 *‖p.derivative.eval z‖ := by
@@ -64,7 +64,7 @@ in the case of $p$ only having real roots has been shown by Tischler.
 $|p(z)-p(c)|/|z-c| \le (d-1)/d \cdot |p'(z)|$
 -/
 
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/MeanValueProblem.lean", AMS 12]
 lemma mean_value_problem_of_real_roots (p : Polynomial ℂ) (hp : 2 ≤ p.natDegree)
     (h : ∀ x : ℂ, p.IsRoot x → x.im = 0) (z : ℂ) (K : ℝ) :
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
@@ -77,7 +77,7 @@ in the case of $p$ all roots having the same norm has been shown by Tischler.
 $|p(z) - p(c)|/|z-c| \le (d-1)/d \cdot |p'(z)|$.
 -/
 
-@[category research solved, AMS 12]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/MeanValueProblem.lean", AMS 12]
 lemma mean_value_problem_of_roots_same_norm (p : Polynomial ℂ) (hp : 2 ≤ p.natDegree)
     (h : ∀ x y : ℂ, p.IsRoot x ∧ p.IsRoot y → ‖x‖=‖y‖) (z : ℂ) (K : ℝ) :
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
