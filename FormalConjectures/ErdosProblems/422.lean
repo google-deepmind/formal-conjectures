@@ -69,4 +69,14 @@ Does $f$ become stationary at some point?
 theorem erdos_422.variants.eventually_const : answer(sorry) ↔ EventuallyConst f atTop := by
   sorry
 
+/--
+By direct computation: $f(1) = f(2) = 1$, $f(3) = f(4) = 2$, $f(5) = 3$, $f(6) = 4$, etc.
+The first several values of Hofstadter's Q-sequence are known by exhaustive calculation
+for small inputs.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/422", AMS 11]
+theorem erdos_422.variants.known_result :
+    f 1 = 1 ∧ f 2 = 1 := by
+  sorry
+
 end Erdos422
