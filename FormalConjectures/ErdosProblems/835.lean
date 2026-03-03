@@ -71,7 +71,8 @@ theorem erdos_835.variants.johnson : (∃ l,
 It is known that for $3 \leq k \leq 8$, the chromatic number of $J(2k, k)$ is greater than $k+1$,
 see [Johnson graphs](https://aeb.win.tue.nl/graphs/Johnson.html).
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/835.lean", AMS 5]
 theorem johnsonGraph_2k_k_chromaticNumber_known_cases (k : ℕ) (hk : 3 ≤ k) (hk' : k ≤ 8) :
     J(2 * k, k).chromaticNumber > k + 1 := by
   sorry
@@ -81,7 +82,8 @@ The smallest case not on this page is $k=9$:
 But that one can be solved as well:
 The chromatic number of $J(18, 9)$ is at least $11$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/835.lean", AMS 5]
 theorem johnsonGraph_18_9_chromaticNumber : J(18, 9).chromaticNumber > 9 + 1 := by
   sorry
 
@@ -96,7 +98,8 @@ def johnsonBound : ℕ → ℕ → ℕ → ℕ
   | n + 1, d, w + 1 => if 2 * (w + 1) < d then 1 else (n + 1) * johnsonBound n d w / (w + 1)
 
 /-- Johnson's bound for the independence number of the Johnson graph. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/835.lean", AMS 5]
 lemma indepNum_johnson_le_johnsonBound : α(J(n, k)) ≤ johnsonBound n 4 k := sorry
 
 /-- Johnson's bound for the chromatic number of the Johnson graph. -/
@@ -111,7 +114,8 @@ lemma div_johnsonBound_le_chromaticNum_johnson :
 
 /-- It is known that for $3 \leq k \leq 8$, the chromatic number of $J(2k, k)$ is greater than
 $k+1$, see [Johnson graphs](https://aeb.win.tue.nl/graphs/Johnson.html). -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/835.lean", AMS 5]
 theorem chromaticNumber_johnson_2k_k_lower_bound (hk : 3 ≤ k) (hk' : k ≤ 8) :
     k + 1 < J(2 * k, k).chromaticNumber := by
   sorry
@@ -127,7 +131,8 @@ theorem chromaticNumber_johnson_2k_k_lower_bound_odd (hk : 3 ≤ k) (hk' : k ≤
 /--
 It can be seen that the chromatic number of $J(2k,k)$ is $>k+1$ for all odd $k>2$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/835.lean", AMS 5]
 theorem johnson_chromaticNumber_odd (k : ℕ) (hk : 2 < k) (h : Odd k) :
     k + 1 < J(2 * k, k).chromaticNumber :=
   sorry
@@ -136,7 +141,8 @@ theorem johnson_chromaticNumber_odd (k : ℕ) (hk : 2 < k) (h : Odd k) :
 Ma and Tang have proved that the chromatic number of $J(2k,k)$ is $>k+1$ for all $k>2$ not of the
 form $p-1$ for prime $p$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/835.lean", AMS 5]
 theorem johnson_chromaticNumber_composite (k : ℕ) (hk : 2 < k) (h : (k + 1).Composite) :
     k + 1 < J(2 * k, k).chromaticNumber :=
   sorry
