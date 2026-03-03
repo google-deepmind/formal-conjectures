@@ -134,7 +134,7 @@ some positive integer $k$?
 The machine was found and informally proven not to halt by [bbchallenge.org](bbchallenge.org)
 contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
 -/
-@[category research solved, AMS 5 11 68]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Other/BeaverMathOlympiad.lean", AMS 5 11 68]
 theorem beaver_math_olympiad_problem_3
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
@@ -163,7 +163,7 @@ is equivalent to the non-termination of 2-state 5-symbol Turing machine
 The machine was informally proven not to halt [bbchallenge.org](bbchallenge.org)
 contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) and [Discord discussion](https://discord.com/channels/960643023006490684/960643023530762343/1263666591900631210).
 -/
-@[category research solved, AMS 5 11 68]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Other/BeaverMathOlympiad.lean", AMS 5 11 68]
 theorem beaver_math_olympiad_problem_4
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
