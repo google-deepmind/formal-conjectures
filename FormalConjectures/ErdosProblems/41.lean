@@ -52,7 +52,7 @@ Let `A ⊆ ℕ` be an infinite set such that the pairwise sums `a + b` are all d
 in `A` (aside from the trivial coincidences).
 Is it true that `liminf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/41", AMS 11]
 theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
     Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry
