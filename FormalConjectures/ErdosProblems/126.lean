@@ -50,7 +50,7 @@ $$
 
 [ErTu34] Erdős, Paul and Turan, Paul, _On a Problem in the Elementary Theory of Numbers_. Amer. Math. Monthly (1934), 608-611.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/126", AMS 11]
 theorem erdos_126.variants.IsBigO
     (f : ℕ → ℕ)
     (hf : IsMaximalAddFactorsCard f) :
