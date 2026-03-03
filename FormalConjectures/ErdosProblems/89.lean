@@ -47,7 +47,7 @@ Guth and Katz [GuKa15] proved that there are always $\gg \frac{n}{\log n}$ many 
 
 [GuKa15] Guth, Larry and Katz, Nets Hawk, On the Erdős distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190.
 -/
-@[category research solved, AMS 52]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/89", AMS 52]
 theorem erdos_89.variants.n_dvd_log_n :
     (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
   sorry
