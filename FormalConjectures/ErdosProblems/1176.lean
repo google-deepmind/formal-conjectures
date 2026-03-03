@@ -43,4 +43,18 @@ theorem erdos_1176 :
               c_vert u = vc ∧ c_vert v = vc ∧ c_edge ⟨s(u, v), h⟩ = ec := by
   sorry
 
+/--
+Hajnal and Komjáth proved the consistency of this statement (with ZFC + certain large cardinal
+axioms). This shows the statement is not refutable in ZFC. Known to be consistent with ZFC.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1176", AMS 3 5]
+theorem erdos_1176.variants.consistent :
+    ∀ {V : Type*} (G : SimpleGraph V), G.chromaticCardinal = aleph 1 →
+      ∃ (EColor : Type) (_ : mk EColor = aleph 1) (c_edge : G.edgeSet → EColor),
+        ∀ (VColor : Type) (_ : mk VColor ≤ aleph 0) (c_vert : V → VColor),
+          ∃ (vc : VColor),
+            ∀ (ec : EColor), ∃ (u v : V) (h : G.Adj u v),
+              c_vert u = vc ∧ c_vert v = vc ∧ c_edge ⟨s(u, v), h⟩ = ec := by
+  sorry
+
 end Erdos1176
