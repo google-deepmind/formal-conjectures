@@ -37,4 +37,14 @@ theorem erdos_1073 :
     answer(sorry) ↔ ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ x, A x ≤ x ^ (o x) := by
   sorry
 
+/--
+The set of composite $u$ such that $n! + 1 \equiv 0 \pmod{u}$ for some $n$ is nonempty.
+For example, $u = 4$ works since $1! + 1 = 2 \not\equiv 0$, but $u = 341$ (a Carmichael-type example)
+is composite. Known to hold for small cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1073", AMS 11]
+theorem erdos_1073.variants.nonempty :
+    {u | u.Composite ∧ ∃ n, n ! + 1 ≡ 0 [MOD u]}.Nonempty := by
+  sorry
+
 end Erdos1073
