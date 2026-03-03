@@ -54,7 +54,7 @@ $v_0(n) > 1$ for all $n$ except $n$ = 0, 1, 2, 3, 4, 7, 8, 16
 
 [ErSe67] Erdős, P. and Selfridge, J. L., Some problems on the prime factors of consecutive integers. Illinois J. Math. (1967), 428--430.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/889.lean", AMS 11]
 theorem erdos_889.variants.v0_gt_1 :
     ∀ n : ℕ, n ∉ ({0, 1, 2, 3, 4, 7, 8, 16} : Finset ℕ) → 1 < v₀ n := by
   sorry
