@@ -59,4 +59,15 @@ theorem erdos_942.variants.density :
     ∑' l, δ l = 1 := by
   sorry
 
+/--
+The count of powerful numbers in $[n^2, (n+1)^2)$ is related to the distribution of powerful
+numbers in short intervals. It is known that the number of powerful numbers up to $x$ is
+$\Theta(\sqrt{x})$, so the interval $[n^2, (n+1)^2)$ of length $2n$ contains about $\Theta(1)$
+powerful numbers on average.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/942", AMS 11]
+theorem erdos_942.variants.known_result :
+    ∀ᶠ n in atTop, erdos_942.h n ≥ 1 := by
+  sorry
+
 end Erdos942
