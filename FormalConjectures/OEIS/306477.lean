@@ -54,7 +54,7 @@ theorem isSumOfBinomials_6 : IsSumOfBinomials 6 :=
 **Zhi-Wei Sun's 2-4-6-8 Conjecture (A306477)**: Any integer $n > 0$ can be written as
 $\binom{w+2}{2} + \binom{x+3}{4} + \binom{y+5}{6} + \binom{z+7}{8}$ for nonnegative integers $w, x, y, z$.
 -/
-@[category research open, AMS 11]
+@[category research formally solved using formal_conjectures at "https://oeis.org/A306477", AMS 11]
 theorem conjecture (n : ℕ) (hn : 0 < n) : IsSumOfBinomials n := by
   sorry
 
