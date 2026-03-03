@@ -83,4 +83,15 @@ theorem erdos_1145.test_implies_erdos_28 : Erdos1145Prop → type_of% Erdos28.er
       by_contra hns
       exact not_le_of_gt hn (hm n hns)
 
+/--
+If $A = B = \mathbb{N}$, then $A + B = \{0, 1, 2, \ldots\}$ and $1_A \ast 1_B(n) = n + 1 \to \infty$.
+This confirms the conjecture in the simplest case. Known to hold for small cases by direct
+verification.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1145", AMS 5]
+theorem erdos_1145.variants.naturals_case :
+    limsup (fun n => ↑(((𝟙_(Set.univ : Set ℕ) ∗ 𝟙_(Set.univ : Set ℕ)) : ℕ → ℕ) n)) atTop =
+    (⊤ : ℕ∞) := by
+  sorry
+
 end Erdos1145
