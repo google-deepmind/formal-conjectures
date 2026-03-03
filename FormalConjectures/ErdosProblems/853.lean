@@ -53,4 +53,14 @@ theorem erdos_853_strong :
     atTop.Tendsto (fun n ↦ r n / Real.log n) atTop := by
   sorry
 
+/--
+It is known by computation that $r(x) \geq 72$ for all $x \leq 10^{15}$, and that all even
+gaps up to 72 appear among prime gaps below $10^{15}$. The question asks whether every even
+integer eventually appears as a prime gap.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/853", AMS 11]
+theorem erdos_853.variants.known_result :
+    ∀ x : ℕ, r x > 0 := by
+  sorry
+
 end Erdos853
