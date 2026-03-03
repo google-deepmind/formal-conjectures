@@ -56,7 +56,7 @@ For any $k$ there exists some $t_k\in (0,1)$ such that the set of $\alpha$
 such that the sequence $\lfloor t_k\alpha^n\rfloor$ is complete consists of at least $k$
 disjoint line segments.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/349", AMS 11]
 theorem exists_t_for_k_disjoint_segments (k : ℕ) :
     ∃ t ∈ Ioo 0 1, ∃ (ι : Type), k ≤ (Set.univ : Set ι).encard ∧ ∃ I : ι → Set ℝ,
       (∀ i, 2 ≤ (I i).encard ∧ (I i).Nonempty ∧ IsConnected (I i)) ∧
