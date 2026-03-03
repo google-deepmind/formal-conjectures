@@ -65,7 +65,7 @@ In [ErGr80] they mention a conjecture of Erdős that the sum is $o(x^2)$. This w
 and Hall [ErHa78], who proved that in fact
 $\sum_{n\leq x}t_2(n)\ll \frac{\log\log\log x}{\log\log x}x^2.$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/394.lean", AMS 11]
 theorem erdos_394_hall_bound :
     (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) ≪
     (fun x ↦ x ^ 2 * (Real.log (Real.log (Real.log x)) / Real.log (Real.log x))) := by
@@ -84,7 +84,7 @@ theorem erdos_394_hall_conjecture :
 /--
 Since $t_2(p)=p-1$ for prime $p$ it is trivial that $\sum_{n\leq x}t_2(n)\gg \frac{x^2}{\log x}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/394.lean", AMS 11]
 theorem erdos_394_lower_bound :
     (fun x ↦ x ^ 2 / Real.log x) ≫
     (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) := by
@@ -104,7 +104,7 @@ theorem erdos_394_factorial_gap_conjecture :
 /--
 They proved (with Selfridge) that this holds for $n=10$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/394.lean", AMS 11]
 theorem erdos_394_factorial_gap_10 :
     ∀ (k : ℕ), 2 ≤ k → k < 10 →
     t k (10 !) <
