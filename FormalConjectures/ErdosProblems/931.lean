@@ -54,7 +54,7 @@ theorem erdos_931.variants.additional_condition : answer(sorry) ↔ ∀ᵉ (k₁
 /--
 In fact there exist counterexamples, like this one found by AlphaProof.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/931.lean", AMS 11]
 theorem erdos_931.variants.additional_condition_nonempty : ∃ (k₁ k₂ : ℕ), ∃ (_h₁ : k₂ ≤ k₁), ∃ (_h₂ : 3 ≤ k₂),
   {(n₁, n₂) | n₁ + k₁ ≤ n₂ ∧ n₂ ≤ 2 * (n₁ + k₁) ∧
       (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
