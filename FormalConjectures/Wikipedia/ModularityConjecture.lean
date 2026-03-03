@@ -82,7 +82,8 @@ def modularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
   ∃ (N : ℕ+) (f : CuspForm (Gamma0 N) 2), IsNormalisedEigenform f ∧
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
 
-@[category research solved, AMS 11]
+@[category research formally solved using other_system at
+"https://annals.math.princeton.edu/wp-content/uploads/annals-v154-n2-p10.pdf", AMS 11]
 theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : modularityConjecture E := by
   sorry
 
