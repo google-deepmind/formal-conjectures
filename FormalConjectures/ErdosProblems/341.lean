@@ -44,4 +44,17 @@ theorem erdos_341 :
         ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. For specific initial sets, the eventual
+periodicity of differences has been verified computationally for short sequences.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/341", AMS 11]
+theorem erdos_341.variants.known_result :
+    ∀ (a : ℕ → ℤ),
+      (∀ᶠ n in atTop,
+        IsLeast { x | a n < x ∧ x ∉ { a i + a j | (i ≤ n) (j ≤ n) } } (a (n + 1))) →
+      let d := fun i ↦ a (i + 1) - a i
+      ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
+  sorry
+
 end Erdos341
