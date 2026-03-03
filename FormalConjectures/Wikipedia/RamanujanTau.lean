@@ -28,6 +28,7 @@ There are two conjectures related to the Ramanujan τ-function:
 *References:*
 - [Ramanujan-Petersson conjecture](https://en.wikipedia.org/wiki/Ramanujan%E2%80%93Petersson_conjecture)
 - [Lehmer's conjecture](https://en.wikipedia.org/wiki/Ramanujan_tau_function#Conjectures_on_the_tau_function)
+- [Deligne, Pierre (1974). "La conjecture de Weil. I". Publications Mathématiques de l'IHÉS. 43: 273–307.](https://doi.org/10.1007/BF02684373)
 -/
 
 namespace RamanujanTau
@@ -56,7 +57,8 @@ lemma τ_two : τ 2 = -24 := by
   sorry
 
 
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://doi.org/10.1007/BF02684373", AMS 11]
 theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : ℝ) ^ ((11 : ℝ) / 2) := by
   sorry
 
