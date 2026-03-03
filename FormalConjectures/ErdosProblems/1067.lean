@@ -64,7 +64,7 @@ theorem erdos_1067 :
 Thomassen [Th17] constructed a counterexample to the version which asks for infinite
 edge-connectivity (that is, to disconnect the graph requires deleting infinitely many edges).
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/1067.lean", AMS 5]
 theorem erdos_1067.variants.infinite_edge_connectivity :
     answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyEdgeConnected H.coe := by
