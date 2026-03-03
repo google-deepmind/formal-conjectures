@@ -43,7 +43,38 @@ reaches a prime. -/
 @[category test, AMS 11]
 theorem erdos_409.termination (n : ℕ) (hn : 0 < n) :
     ∃ i, (φ · + 1)^[i] n |>.Prime := by
-  sorry
+  -- We use strong induction on n.
+  -- Key insight: for composite n ≥ 2, φ(n) < n-1 (since φ(n) = n-1 iff n is prime),
+  -- so φ(n) + 1 < n, giving strict descent.
+  revert hn
+  induction n using Nat.strongRecOn with
+  | _ n ih =>
+    intro hn
+    -- Case 1: n is prime → take i = 0
+    by_cases hprime : n.Prime
+    · exact ⟨0, hprime⟩
+    -- Case 2: n = 1 → φ(1) + 1 = 2, which is prime
+    · by_cases h1 : n = 1
+      · subst h1
+        exact ⟨1, by norm_num [Nat.totient_one]⟩
+      -- Case 3: n ≥ 2 and composite
+      · have hn2 : 1 < n := by omega
+        -- φ(n) < n for n > 1
+        have htot_lt : Nat.totient n < n := Nat.totient_lt n hn2
+        -- φ(n) ≠ n - 1 because n is not prime
+        have htot_ne : Nat.totient n ≠ n - 1 := by
+          intro heq
+          apply hprime
+          rwa [Nat.totient_eq_iff_prime (by omega)] at heq
+        -- Therefore φ(n) ≤ n - 2, so φ(n) + 1 ≤ n - 1 < n
+        have hlt : Nat.totient n + 1 < n := by omega
+        -- Apply induction hypothesis to φ(n) + 1
+        have hpos : 0 < Nat.totient n + 1 := Nat.succ_pos _
+        obtain ⟨i, hi⟩ := ih (Nat.totient n + 1) hlt hpos
+        -- The iterate starting from n goes through φ(n)+1 first
+        exact ⟨i + 1, by
+          simp only [Function.iterate_succ, Function.comp]
+          exact hi⟩
 
 -- Formalisation note: it's possible that solution to `erdos_409.parts.i` needs to be
 -- expressed asymptotically. To handle this we include `IsTheta`, `IsBigO`
