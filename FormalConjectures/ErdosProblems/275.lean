@@ -46,3 +46,5 @@ theorem erdos_275 (r : ℕ) (a : Fin r → ℤ) (n : Fin r → ℕ)
   sorry
 
 end Erdos275
+
+-- submitted
