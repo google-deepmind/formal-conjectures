@@ -134,7 +134,7 @@ theorem exp_add_pi_or_exp_add_mul_transcendental :
 /--
 At least one of Catalan constant and the Gompertz constant is transcendental.
 -/
-@[category research solved, AMS 11 33]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/Transcendental.lean", AMS 11 33]
 theorem transcendental_catalanConstant_or_gompertzConstant :
     Transcendental ℚ catalanConstant ∨ Transcendental ℚ gompertzConstant := by
   sorry
@@ -158,7 +158,8 @@ $\Gamma(1/2)$ is transcendental.
 
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 33]
+@[category research formally solved using other_system at
+"https://www.ams.org/books/surv/019/", AMS 33]
 theorem transcendental_gamma_one_div_two : Transcendental ℚ (1 / 2 : ℝ).Gamma := by
   sorry
 
@@ -167,7 +168,8 @@ $\Gamma(1/3)$ is transcendental.
 
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 33]
+@[category research formally solved using other_system at
+"https://www.ams.org/books/surv/019/", AMS 33]
 theorem transcendental_gamma_one_div_three : Transcendental ℚ (1 / 3 : ℝ).Gamma := by
   sorry
 
@@ -176,7 +178,8 @@ $\Gamma(1/4)$ is transcendental.
 
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 33]
+@[category research formally solved using other_system at
+"https://www.ams.org/books/surv/019/", AMS 33]
 theorem transcendental_gamma_one_div_four : Transcendental ℚ (1 / 4 : ℝ).Gamma := by
   sorry
 
@@ -185,7 +188,8 @@ $\Gamma(1/6)$ is transcendental.
 
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 33]
+@[category research formally solved using other_system at
+"https://www.ams.org/books/surv/019/", AMS 33]
 theorem transcendental_gamma_one_div_six : Transcendental ℚ (1 / 6 : ℝ).Gamma := by
   sorry
 
