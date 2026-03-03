@@ -56,4 +56,15 @@ theorem erdos_520 :
       ∀ᵐ ω, limsup (fun N ↦ ∑ m ≤ N, f m ω / sqrt (N * log (log N))) atTop = c := by
   sorry
 
+/--
+Harper (2023) showed that the law of the iterated logarithm holds for Rademacher multiplicative
+functions: the $\limsup$ of $\sum_{m \le N} f(m) / \sqrt{N \log \log N}$ is almost surely
+a positive constant. The exact value of the constant $c$ is the remaining open question.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/520", AMS 11 60]
+theorem erdos_520.variants.known_result :
+    ∃ c > 0, ∀ (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
+      ∀ᵐ ω, 0 < limsup (fun N ↦ ∑ m ≤ N, f m ω / sqrt (N * log (log N))) atTop := by
+  sorry
+
 end Erdos520
