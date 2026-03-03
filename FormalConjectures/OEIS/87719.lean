@@ -78,3 +78,5 @@ theorem a_formula {n : ℕ} (hn : n ≥ 1) : a n = 3 ^ n + 3 * 2 ^ n + 6 := by
   sorry
 
 end OeisA87719
+
+-- submitted
