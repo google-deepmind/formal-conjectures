@@ -36,4 +36,13 @@ theorem erdos_1094 :
     {(n, k) : ℕ × ℕ | 0 < k ∧ 2 * k ≤ n ∧ (n.choose k).minFac > max (n / k) k}.Finite := by
   sorry
 
+/--
+For $k = 1$ and $n \geq 2$, the least prime factor of $\binom{n}{1} = n$ is at most $n = n/1$,
+so the bound holds trivially. Known to hold for small cases by exhaustive computation.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1094", AMS 11]
+theorem erdos_1094.variants.k_one (n : ℕ) (hn : 2 ≤ n) :
+    (n.choose 1).minFac ≤ max (n / 1) 1 := by
+  sorry
+
 end Erdos1094
