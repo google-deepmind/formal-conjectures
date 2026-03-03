@@ -43,7 +43,7 @@ def IsAdditiveComplementToPrimes (A : Set ℕ) : Prop :=
 Erdős proved in [Erd54] that there exists an additive complement $A$ to the primes with
 $|A \cap \{1, \ldots, N\}| = O((\log N)^2)$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/32", AMS 11]
 theorem erdos_32.varaints.log_squared : ∃ A : Set ℕ,
     IsAdditiveComplementToPrimes A ∧
     (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) =O[atTop]
@@ -54,7 +54,7 @@ theorem erdos_32.varaints.log_squared : ∃ A : Set ℕ,
 Must every additive complement $A$ to the primes satisfy
 $\liminf_{N \to \infty} \frac{|A \cap \{1, \ldots, N\}|}{\log N} > 1$?
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/32", AMS 11]
 theorem erdos_32.variants.liminf_gt_one : ∀ A : Set ℕ,
     IsAdditiveComplementToPrimes A →
     (1 : EReal) < liminf (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card / Real.log N : EReal))
@@ -88,7 +88,7 @@ Ruzsa proved that any additive complement $A$ to the primes must satisfy
 $\liminf_{N \to \infty} \frac{|A \cap \{1, \ldots, N\}|}{\log N} \geq e^\gamma$,
 where $\gamma$ is the Euler-Mascheroni constant.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/32", AMS 11]
 theorem erdos_32.variants.ruzsa : ∀ A : Set ℕ,
     IsAdditiveComplementToPrimes A →
     (Real.exp Real.eulerMascheroniConstant : EReal) ≤
