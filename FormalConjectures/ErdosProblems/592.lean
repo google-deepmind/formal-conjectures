@@ -39,4 +39,14 @@ theorem erdos_592 (β : Ordinal.{u}) : β.card ≤ ℵ₀ →
 
 -- TODO(firsching): add condition by Galvin and Larson.
 
+/--
+Galvin and Larson characterized exactly which countable ordinals $\beta$ satisfy the Ramsey
+property $\omega^\beta \to (\omega^\beta, 3)^2$: the condition holds if and only if
+$\beta < \omega^\omega$. This partial characterization was established in the 1970s.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/592", AMS 3]
+theorem erdos_592.variants.known_result : ∀ (β : Ordinal.{u}), β.card ≤ ℵ₀ →
+    β < ω ^ ω → OrdinalCardinalRamsey (ω ^ β) (ω ^ β) 3 := by
+  sorry
+
 end Erdos592
