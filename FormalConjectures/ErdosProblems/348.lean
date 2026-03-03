@@ -40,4 +40,16 @@ theorem erdos_348 :
     answer(sorry) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The characterisation of pairs $(m,n)$
+for which such robustly-but-not-totally complete sequences exist is an open combinatorial problem.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/348", AMS 11]
+theorem erdos_348.variants.known_result :
+    { (m, n) | (m) (n) (_ : m < n) (a : ℕ → ℕ) (_ : Monotone a)
+      (_ : ∀ s, s.card = m → IsAddComplete (Set.range (Function.updateFinset a s 0)))
+        (_ : ∀ t, t.card = n → ¬IsAddComplete (Set.range (Function.updateFinset a t 0))) } =
+    answer(sorry) := by
+  sorry
+
 end Erdos348
