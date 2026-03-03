@@ -59,7 +59,7 @@ theorem erdos_1043 :
 On the other hand, Pommerenke also proved there always exists a line such that the projection has
 measure at most 3.3.
 -/
-@[category research solved, AMS 28 30]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/1043.lean", AMS 28 30]
 theorem erdos_1043.variants.weak :
     ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
