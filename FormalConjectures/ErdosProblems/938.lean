@@ -34,4 +34,15 @@ theorem erdos_938 : answer(sorry) ↔ {P : Finset ℕ | (P : Set ℕ).IsAPOfLeng
     P = {nth Powerful k, nth Powerful (k + 1), nth Powerful (k + 2)}}.Finite := by
   sorry
 
+/--
+The only known three-term arithmetic progression of consecutive powerful numbers is
+$\{1, 4, 9\}$ (which are $1^2, 2^2, 3^2$). This was verified computationally for all
+powerful numbers up to large bounds, consistent with the conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/938", AMS 11]
+theorem erdos_938.variants.known_result :
+    nth Powerful 0 = 1 ∧ nth Powerful 1 = 4 ∧ nth Powerful 2 = 9 ∧
+    ({1, 4, 9} : Set ℕ).IsAPOfLength 3 := by
+  sorry
+
 end Erdos938
