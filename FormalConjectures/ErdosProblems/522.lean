@@ -93,7 +93,7 @@ theorem erdos_522 :
 Erdős and Offord showed that the number of real roots of a random degree `n` polynomial with `±1`
 coefficients is `(2/π+o(1))log n`.
 -/
-@[category research solved, AMS 12 60]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/522.lean", AMS 12 60]
 theorem erdos_522.variants.number_real_roots : ∃ p o : ℕ → ℝ,
     Filter.Tendsto o Filter.atTop (𝓝 0) ∧ Filter.Tendsto p Filter.atTop (𝓝 0) ∧
     ∀ (Ω : Type*) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
@@ -104,7 +104,7 @@ theorem erdos_522.variants.number_real_roots : ∃ p o : ℕ → ℝ,
 /--
 Yakir proved that almost all Kac polynomials have `n/2+O(n^(9/10))` many roots in `{z∈C:|z|≤1}`.
 -/
-@[category research solved, AMS 12 60]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/522.lean", AMS 12 60]
 theorem erdos_522.variants.yakir_solution :
     ∃ p : ℕ → ℝ, Filter.Tendsto p Filter.atTop (𝓝 0) ∧
     ∀ (Ω : Type*) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
