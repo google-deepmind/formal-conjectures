@@ -60,7 +60,7 @@ theorem erdos_489 : answer(sorry) ↔
 
 /-- When $A = \{p^2 : p \textrm{ prime}\}$, $B$ is the set of squarefree numbers, and the
 existence of this limit was proved by Erdős. This is the $\alpha = 2$ case of Erdős Problem 145. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/489.lean", AMS 11]
 theorem erdos_489.variants.squarefree :
     ∃ L : ℝ, Tendsto
       (fun x : ℕ => GapSumSq {n | ∃ p, Nat.Prime p ∧ n = p ^ 2} x / (x : ℝ))
