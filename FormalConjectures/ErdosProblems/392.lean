@@ -53,7 +53,7 @@ $$
   A(n) = n - \frac{n}{\log n} + o\left(\frac{n}{\log n}\right)
 $$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/392.lean", AMS 11]
 theorem erdos_392.variants.lower (A : ℕ → ℕ)
     (hA : ∀ n > 0, IsLeast
       { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧
@@ -66,7 +66,7 @@ Cambie has observed that a positive answer follows from the result above with $a
 by pairing variables together, e.g. taking $a'_i = a_{2i-1}a_{2i}$ (and the lower bound follows from
 Stirling's approximation).
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/392.lean", AMS 11]
 theorem erdos_392.variants.implication (h : type_of% erdos_392) :
     type_of% erdos_392.variants.lower := by
   sorry
