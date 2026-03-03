@@ -50,4 +50,14 @@ theorem erdos_828.variants.phi_dvd_self_iff_pow2_pow3 {n : ℕ} :
     φ n ∣ n ↔ n ≤ 1 ∨ ∃ᵉ (a > 0) (b), n = 2 ^ a * 3 ^ b := by
   sorry
 
+/--
+It is known that $\phi(n) \mid n$ for infinitely many $n$ (e.g., $n = 2^a 3^b$), which
+establishes the $a = 0$ case of the general problem. The case of arbitrary integer shift $a$
+remains open.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/828", AMS 11]
+theorem erdos_828.variants.known_result :
+    Set.Infinite {n : ℕ | (φ n : ℤ) ∣ n} := by
+  sorry
+
 end Erdos828
