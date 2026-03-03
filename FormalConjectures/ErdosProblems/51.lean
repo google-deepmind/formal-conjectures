@@ -44,4 +44,16 @@ The remarks from the erdosproblems site are the same as those in
 [erdosproblems.com/694](https://www.erdosproblems.com/694).
 -/
 
+/--
+Ford (1998) determined the asymptotic behavior of Euler's totient function preimages,
+showing that the counting function of totient values up to $x$ is $\sim x / \log x$,
+implying that most totient values $a$ have $n_a / a$ bounded, but leaving open whether
+a subsequence with $n_a / a \to \infty$ exists.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/51", AMS 11]
+theorem erdos_51.variants.known_result :
+    ∀ᶠ a : ℕ in atTop, (φ ⁻¹' {a}).Nonempty →
+      ∃ n : ℕ, n ∈ φ ⁻¹' {a} ∧ (a : ℝ) ≤ (n : ℝ) := by
+  sorry
+
 end Erdos51
