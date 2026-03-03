@@ -30,7 +30,7 @@ WOWII [Conjecture 5](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 For a simple connected graph `G`, `Ls(G)` is bounded below by the maximal size
 of a sphere of radius `radius(G)` around the centres of `G`.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "http://cms.dt.uh.edu/faculty/delavinae/research/wowII/", AMS 5]
 theorem conjecture5 (G : SimpleGraph V) (h_conn : G.Connected) :
     letI centers := { v : V | G.eccent v = G.radius }
     letI r_nat := G.radius.toNat
