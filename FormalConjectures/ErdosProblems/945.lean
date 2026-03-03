@@ -73,7 +73,7 @@ theorem erdos_945.equivalence : Erdos945Prop ↔ Erdos945Constant := by
 /--
 Erdős and Mirsky [ErMi52] proved that $\frac{(\log x)^{1/2}}{\log\log x}\ll F(x)$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/945.lean", AMS 11]
 theorem erdos_945.variants.lower_bound :
     (fun (x : ℕ) => (log x).sqrt /(log x).log) =O[atTop] fun (n : ℕ) => (F n : ℝ) := by
   sorry
@@ -81,7 +81,7 @@ theorem erdos_945.variants.lower_bound :
 /--
 Erdős and Mirsky [ErMi52] proved that $\log F(x) \ll \frac{(\log x)^{1/2}}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/945.lean", AMS 11]
 theorem erdos_945.variants.upper_bound :
     (fun (n : ℕ) => (F n : ℝ).log) =O[atTop] fun (x : ℕ) => (log x).sqrt /(log x).log := by
   sorry
