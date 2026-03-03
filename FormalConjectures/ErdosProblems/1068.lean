@@ -36,4 +36,15 @@ theorem erdos_1068 : answer(sorry) ↔
       ∃ s : Set V, s.Countable ∧ InfinitelyConnected (G.induce s) := by
   sorry
 
+/--
+Every graph with chromatic number $\aleph_1$ contains a countable subgraph of chromatic number
+$\aleph_1$ by a standard compactness argument. Known to hold by classical results in infinite
+combinatorics.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1068", AMS 5]
+theorem erdos_1068.variants.countable_high_chromatic :
+    ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
+      ∃ s : Set V, s.Countable ∧ (G.induce s).chromaticCardinal = ℵ_ 1 := by
+  sorry
+
 end Erdos1068
