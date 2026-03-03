@@ -129,7 +129,7 @@ def HasCompactdegreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : Prop :=
 /-- **Theorem 1.** If a triangle-free graph has `f = 2`,
 then it is bipartite, has minimum degree `1`, and
 its degree sequence is compact. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.1016/0012-365X(91)90057-Q", AMS 5]
 theorem theorem1 (G : SimpleGraph α) (h_conn: G.Connected) [DecidableRel G.Adj]
     (h₁ : G.CliqueFree 3) (h₂ : degreeSequenceMultiplicity G = 2) :
     G.IsBipartite ∧ G.minDegree = 1 ∧ HasCompactdegreeSequence G := by
@@ -161,7 +161,7 @@ lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn: G.Connected)
 
 /-- **Theorem 2.** Every triangle-free graph is an induced subgraph of one
 with `f = 3`. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.1016/0012-365X(91)90057-Q", AMS 5]
 theorem theorem2 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn: G.Connected)
     (h : G.CliqueFree 3) :
     ∃ (β : Type*) (_ : Fintype β) (H : SimpleGraph β) (_ : DecidableRel H.Adj) (i : G ↪g H),
@@ -170,16 +170,16 @@ theorem theorem2 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn: G.Connected)
 
 /-- `F n` is the smallest number of vertices of a triangle-free graph
 with chromatic number `n` and `f = 3`. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.1016/0012-365X(91)90057-Q", AMS 5]
 noncomputable def F (n : ℕ) : ℕ :=
   sInf { p | ∃ (G : SimpleGraph (Fin p)) (_ : DecidableRel G.Adj),
     G.CliqueFree 3 ∧ G.chromaticNumber = n ∧ degreeSequenceMultiplicity G = 3 }
 
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.1016/0012-365X(91)90057-Q", AMS 5]
 theorem F_three : F 3 = 7 := by
   sorry
 
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://doi.org/10.1016/0012-365X(91)90057-Q", AMS 5]
 theorem F_four_le : F 4 ≤ 19 := by
   sorry
 
