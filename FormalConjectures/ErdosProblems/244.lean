@@ -35,7 +35,7 @@ theorem erdos_244 : answer(sorry) ↔
 
 [Ro34] Romanoff, N. P., _Über einige Sätze der additiven Zahlentheorie_.
 Math. Ann. (1934), 668-678. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/244", AMS 11]
 theorem erdos_244.variants.Romanoff {C : ℕ} (hC : 1 < C) :
     0 < { p + ⌊C ^ k⌋₊ | (p) (k) (_ : p.Prime) }.lowerDensity := by
   sorry
