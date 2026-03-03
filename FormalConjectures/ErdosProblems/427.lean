@@ -44,7 +44,7 @@ $$
 $$
 where $p_r$ denotes the $r$th prime?
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/427", AMS 11]
 theorem erdos_427 : answer(True) ↔ erdos427 := by
   sorry
 
@@ -65,7 +65,7 @@ $p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/427", AMS 11]
 theorem erdos_427.shiu : ShiuTheorem := by
   sorry
 
@@ -73,7 +73,7 @@ theorem erdos_427.shiu : ShiuTheorem := by
 /--
 Cedric Pilatte has observed that a positive solution to Erdős Problem 427 follows from Shiu's theorem.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/427", AMS 11]
 theorem erdos_427.of_shiu (H : ShiuTheorem) : erdos427 := by
   sorry
 
