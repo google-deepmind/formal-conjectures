@@ -46,27 +46,27 @@ theorem erdos_1148 : answer(sorry) ↔ ∀ᶠ n in atTop, Erdos1148Prop n := by
 /--
 The largest integer known which cannot be written this way is $6563$.
 -/
+@[category test, AMS 11]
+theorem erdos_1148.variants.lower_bound_aux :
+    ¬ ∃ x : Fin 82, ∃ y : Fin 82, ∃ z : Fin 82,
+        6563 = x.val ^ 2 + y.val ^ 2 - z.val ^ 2 ∧
+        x.val ^ 2 ≤ 6563 ∧ y.val ^ 2 ≤ 6563 ∧ z.val ^ 2 ≤ 6563 := by
+  native_decide
+
 @[category high_school, AMS 11]
 theorem erdos_1148.variants.lower_bound : ¬ Erdos1148Prop 6563 := by
   intro ⟨x, y, z, heq, hx, hy, hz⟩
   have hx' : x ≤ 81 := by
     by_contra h; push_neg at h
-    have : 82 ≤ x := h
-    nlinarith [Nat.pow_le_pow_left this 2]
+    nlinarith [Nat.pow_le_pow_left (show 82 ≤ x from h) 2]
   have hy' : y ≤ 81 := by
     by_contra h; push_neg at h
-    have : 82 ≤ y := h
-    nlinarith [Nat.pow_le_pow_left this 2]
+    nlinarith [Nat.pow_le_pow_left (show 82 ≤ y from h) 2]
   have hz' : z ≤ 81 := by
     by_contra h; push_neg at h
-    have : 82 ≤ z := h
-    nlinarith [Nat.pow_le_pow_left this 2]
-  have key : ∃ x' : Fin 82, ∃ y' : Fin 82, ∃ z' : Fin 82,
-      6563 = x'.val ^ 2 + y'.val ^ 2 - z'.val ^ 2 ∧
-      x'.val ^ 2 ≤ 6563 ∧ y'.val ^ 2 ≤ 6563 ∧ z'.val ^ 2 ≤ 6563 :=
+    nlinarith [Nat.pow_le_pow_left (show 82 ≤ z from h) 2]
+  exact erdos_1148.variants.lower_bound_aux
     ⟨⟨x, by omega⟩, ⟨y, by omega⟩, ⟨z, by omega⟩, heq, hx, hy, hz⟩
-  revert key
-  decide +kernel
 
 /--
 The weaker property: $n = x^2 + y^2 - z^2$ such that $\max(x^2, y^2, z^2) \leq n + 2\sqrt{n}$.
