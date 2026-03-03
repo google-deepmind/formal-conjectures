@@ -79,7 +79,9 @@ theorem erdos_141 : answer(sorry) ↔
 /--
 The existence of such progressions has been verified for $k≤10$.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-141-first-cases/FormalConjectures/ErdosProblems/141.lean",
+AMS 5 11]
 theorem erdos_141.variants.first_cases :
     (∀ k ≥ 3, k ≤ 10 → ∃ (s : Set ℕ), s.IsAPAndPrimeProgressionOfLength k) := by
   sorry
