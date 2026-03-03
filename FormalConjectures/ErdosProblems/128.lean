@@ -37,4 +37,16 @@ theorem erdos_128 :
         50 * (G.induce V').edgeSet.ncard > Fintype.card V ^ 2) → ¬ G.CliqueFree 3 := by
   sorry
 
+/--
+Kruskal–Katona and Turán-type results (Turán 1941) imply that a graph on $n$ vertices with
+more than $n^2/4$ edges must contain a triangle. The hypothesis that every large subgraph is
+dense is a strengthening that should force triangles at lower edge densities, known for
+small cases.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/128", AMS 5]
+theorem erdos_128.variants.turan :
+    ∀ (W : Type*) [Fintype W] (H : SimpleGraph W),
+      4 * H.edgeFinset.card > Fintype.card W ^ 2 → ¬ H.CliqueFree 3 := by
+  sorry
+
 end Erdos128
