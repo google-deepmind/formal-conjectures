@@ -60,3 +60,5 @@ theorem erdos_1071.parts.ii :
   sorry
 
 end Erdos1071
+
+-- submitted
