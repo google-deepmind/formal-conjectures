@@ -81,4 +81,15 @@ theorem erdos_20 : answer(sorry) ↔ ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+
+/--
+Alweiss, Lovett, Wu and Zhang (2020) proved $f(n,k) \leq (Ck \log(nk))^n$ for some absolute constant
+$C$, dramatically improving previous bounds and nearly resolving the Erdős–Ko sunflower conjecture.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/20", AMS 5]
+theorem erdos_20.variants.alweiss_lovett_wu_zhang :
+    ∃ (C : ℝ), ∀ n k : ℕ, n > 0 → k > 0 →
+      f n k < (C * k * Real.log (n * k)) ^ n := by
+  sorry
+
 end Erdos20
