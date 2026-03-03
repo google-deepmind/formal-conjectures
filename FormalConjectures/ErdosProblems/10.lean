@@ -47,7 +47,8 @@ many powers of $2$ has lower density at least $1 - ϵ$.
 
 Ref: Gallagher, P. X., _Primes and powers of 2_.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at
+"https://www.erdosproblems.com/10", AMS 5 11]
 theorem erdos_10.variants.gallagher (ε : ℝ)
     (hε : 0 < ε) : ∃ k, 1 - ε ≤ (sumPrimeAndTwoPows k).lowerDensity := by
   sorry
@@ -68,8 +69,10 @@ theorem erdos_10.variants.granville_soundararajan_odd :
 /--
 Bogdan Grechuk has observed that `1117175146` is not the sum of a prime
 and at most $3$ powers of $2$.
+
+Ref: Grechuk, B., _Landscape of 21st Century Mathematics: Selected Advances, 2001-2020_, Springer 2021.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-10-grechuk/FormalConjectures/ErdosProblems/10.lean", AMS 5 11]
 theorem erdos_10.variants.grechuk_example :
     1117175146 ∉ sumPrimeAndTwoPows 3 := by
   sorry
@@ -77,7 +80,8 @@ theorem erdos_10.variants.grechuk_example :
 /--
 There are infinitely many even integers not the sum of a prime and $2$ powers of $2$
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at
+"https://www.erdosproblems.com/10", AMS 5 11]
 theorem erdos_10.variants.two_pows :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 2 := by
   sorry
