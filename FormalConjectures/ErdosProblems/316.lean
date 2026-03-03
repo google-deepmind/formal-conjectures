@@ -76,7 +76,9 @@ $120$ form a counterexample. More generally, Sándor shows that for any $n\geq 2
 finite set $A\subseteq \mathbb{N}\backslash\{1\}$ with $\sum_{k\in A}\frac{1}{k} < n$ and no
 partition into $n$ parts each of which has $\sum_{k\in A_i}\frac{1}{k}<1$.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-316-generalized/FormalConjectures/ErdosProblems/316.lean",
+AMS 5 11]
 theorem erdos_316.variants.generalized (n : ℕ) (hn : 2 ≤ n) : ∃ A : Finset ℕ,
     A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
     P.parts.card = n → ∃ p ∈ P.parts, 1 ≤ ∑ n ∈ p, (1 / n : ℚ) := by
