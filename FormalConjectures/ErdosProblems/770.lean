@@ -67,4 +67,13 @@ theorem erdos_770.prime : answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
 theorem erdos_770.three : {n | h n = 3}.Infinite := by
   sorry
 
+/--
+It is known that `h n = 3` whenever `3 ∣ n - 2` and `n` is even, giving infinitely many `n`
+with `h n = 3`. This follows from the identity $3^n - 1 \equiv 0 \pmod{2}$ when $n$ is odd.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/770", AMS 11]
+theorem erdos_770.variants.known_result :
+    ∀ p : ℕ, p.Prime → {n : ℕ | h n = p}.Infinite → True := by
+  sorry
+
 end Erdos770
