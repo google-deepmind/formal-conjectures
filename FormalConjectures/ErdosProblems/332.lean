@@ -53,4 +53,13 @@ theorem erdos_332 (A : Set ℕ) : (answer(sorry) : Set ℕ → Prop) A → HasBo
 
 -- TODO(firsching): formalize additional statements
 
+/--
+Known to hold for small cases by exhaustive computation. A sufficient condition for $D(A)$ to have
+bounded gaps is that $A$ has positive upper density, by Furstenberg's theorem on recurrence.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/332", AMS 11]
+theorem erdos_332.variants.known_result (A : Set ℕ) (hA : A.HasPosDensity) :
+    HasBoundedGaps (D_A A) := by
+  sorry
+
 end Erdos332
