@@ -45,7 +45,7 @@ theorem erdos_891 :
 Schinzel deduced from Pólya's theorem [Po18] (that the sequence of $k$-smooth integers has unbounded
 gaps) that this is true with $p_1\cdots p_k$ replaced by $p_1\cdots p_{k-1}p_{k+1}$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/891.lean", AMS 11]
 theorem erdos_891.variants.schinzel :
     ∀ k ≥ 2, ∀ᶠ n in atTop,
       ∃ m ∈ Ico n (n + (∏ i ∈ range (k - 1), i.nth Nat.Prime) * k.nth Nat.Prime),
