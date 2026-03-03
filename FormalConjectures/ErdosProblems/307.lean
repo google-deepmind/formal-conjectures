@@ -72,4 +72,14 @@ theorem erdos_307_coprime_one_notMem : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The question of whether a product of
+two sums of reciprocals of primes can equal 1 has been searched computationally without a solution.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/307", AMS 11]
+theorem erdos_307.variants.known_result :
+    ∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ (∀ q ∈ Q, q.Prime) ∧
+    1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
+  sorry
+
 end Erdos307
