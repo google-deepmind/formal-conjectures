@@ -140,7 +140,9 @@ noncomputable def smallestCollectionTo (b : ℕ) : ℕ :=
 In 1950, Erdős [Er50c] proved the upper bound $$N(b) \ll \log b / \log \log b$$.
 [Er50c] Erdős, P., Az ${1}/{x_1} + {1}/{x_2} + \ldots + {1}/{x_n} =A/B$ egyenlet eg\'{E}sz sz\'{A}m\'{u} megold\'{A}sairól. Mat. Lapok (1950), 192-210.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/304.lean",
+AMS 11]
 theorem erdos_304.variants.upper_1950 :
     (fun b => (smallestCollectionTo b : ℝ)) =O[atTop]
       (fun b => Real.log b / Real.log (Real.log b)) := by
@@ -150,7 +152,9 @@ theorem erdos_304.variants.upper_1950 :
 In 1950, Erdős [Er50c] proved the lower bound $$\log \log b \ll N(b)$$.
 [Er50c] Erdős, P., Az ${1}/{x_1} + {1}/{x_2} + \ldots + {1}/{x_n} =A/B$ egyenlet eg\'{E}sz sz\'{A}m\'{u} megold\'{A}sairól. Mat. Lapok (1950), 192-210.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/304.lean",
+AMS 11]
 theorem erdos_304.variants.lower_1950 :
     (fun b : ℕ => Real.log (Real.log b)) =O[atTop]
       (fun b => (smallestCollectionTo b : ℝ)) := by
@@ -160,7 +164,9 @@ theorem erdos_304.variants.lower_1950 :
 In 1985 Vose [Vo85] proved the upper bound $$N(b) \ll \sqrt{\log b}$$.
 [Vo85] Vose, Michael D., Egyptian fractions. Bull. London Math. Soc. (1985), 21-24.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/304.lean",
+AMS 11]
 theorem erdos_304.variants.upper_1985 :
     (fun b => (smallestCollectionTo b : ℝ)) =O[atTop]
       (fun b => Real.sqrt (Real.log b)) := by
