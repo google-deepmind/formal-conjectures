@@ -36,11 +36,11 @@ $$
   p_{n + 1} - p_n > C \frac{\log\log n\log\log\log\log n}{(\log\log\log n) ^ 2}\log n
 $$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/4", AMS 11]
 theorem erdos_4 : answer(True) ↔ (∀ C > 0, Erdos4For C) := by
   sorry
 
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/4", AMS 11]
 theorem erdos_4.variants.rankin :
     ∃ C > 0, Erdos4For C := by
   sorry
