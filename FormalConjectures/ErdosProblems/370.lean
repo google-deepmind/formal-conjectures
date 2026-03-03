@@ -39,3 +39,5 @@ theorem erdos_370 : answer(True) ↔
   sorry
 
 end Erdos370
+
+-- submitted
