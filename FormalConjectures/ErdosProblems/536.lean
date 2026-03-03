@@ -41,4 +41,15 @@ theorem erdos_536 :
 
 -- TODO(firsching): add the statements from the additional material
 
+/--
+The triple $\{a, b, c\} = \{1, 1, 1\}$ is excluded since elements must be distinct.
+However, any set of the form $\{d, d, 2d\}$ for a common divisor $d$ has
+$\text{lcm}(d, d) = \text{lcm}(d, 2d)$ only if $d = 2d$, which is impossible for $d > 0$.
+The conjecture asks about large dense subsets; known to be open.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/536", AMS 11]
+theorem erdos_536.variants.known_result :
+    ∃ a b c : ℕ, a ≠ b ∧ b ≠ c ∧ a ≠ c ∧ a.lcm b = b.lcm c ∧ b.lcm c = a.lcm c := by
+  sorry
+
 end Erdos536
