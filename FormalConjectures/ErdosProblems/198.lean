@@ -36,7 +36,7 @@ $k$-element arithmetic progression in at most two points.
 
 At the end of [Ba75] the author claims that by "slightly modifying the method of [his proof]", one
 can prove this. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/198.lean", AMS 5]
 lemma baumgartner_strong (V : Type*) [AddCommGroup V] [Module ℚ V] (k : ℕ) :
     ∃ X : Set V,
       (∀ Y, Y.IsAPOfLength ⊤ → (X ∩ Y).Nonempty) ∧
@@ -44,7 +44,7 @@ lemma baumgartner_strong (V : Type*) [AddCommGroup V] [Module ℚ V] (k : ℕ) :
   sorry
 
 /-- The statement for which Baumgartner actually writes a proof. -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/198.lean", AMS 5]
 lemma baumgartner_headline (V : Type*) [AddCommGroup V] [Module ℚ V] :
     ∃ X : Set V,
       (∀ Y, IsAPOfLength Y ⊤ → (X ∩ Y).Nonempty) ∧
@@ -77,7 +77,7 @@ theorem erdos_198 : (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ �
 /--
 In fact one such sequence is $n! + n$. This was found by AlphaProof. It also found $(n + 1)! + n$.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/198.lean", AMS 5 11]
 theorem erdos_198.variants.concrete :  ∃ (A : Set ℕ), A = {n ! + n | n} ∧
     IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → (A ∩ Y).Nonempty) := by
   sorry
