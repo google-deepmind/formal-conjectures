@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.RingTheory.Ideal.Defs
+module
+
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.RingTheory.Ideal.Defs
+
+@[expose] public section
 
 open Pointwise
 

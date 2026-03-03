@@ -61,7 +61,7 @@ def IsPrimaryPseudoperfect (n : ℕ) : Prop := ∃ P, (n, P) ∈ erdos_313_solut
 It is conjectured that the set of primary pseudoperfect numbers is infinite.
 -/
 @[category research open, AMS 11]
-theorem erdos_313.variant.primary_pseudoperfect_are_infinite :
+theorem erdos_313.variants.primary_pseudoperfect_are_infinite :
     Set.Infinite {n | IsPrimaryPseudoperfect n} := by
   sorry
 

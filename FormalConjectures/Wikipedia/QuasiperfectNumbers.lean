@@ -15,22 +15,33 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«341»
 
 /-!
-# Ben Green's Open Problem 7
+# Quasiperfect Numbers
 
-*References:*
- - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1 Problem 7)
- - [erdosproblems.com/341](https://www.erdosproblems.com/341)
+*Reference:* 
+- [Wikipedia](https://en.wikipedia.org/wiki/Quasiperfect_number)
 -/
 
-namespace Green7
+namespace QuasiperfectNumbers
 
--- TODO: Add Green's Open Problem 7
+open Nat
 
+open scoped ArithmeticFunction.sigma
+
+/-- 
+A number is quasiperfect if the sum of its divisors is equal to $2n + 1$. 
+-/
+def Quasiperfect (n : ℕ) : Prop :=
+  σ 1 n = 2 * n + 1
+
+/--
+**Quasiperfect Numbers Conjecture.**
+Do quasiperfect numbers exist?
+-/
 @[category research open, AMS 11]
-theorem green_7.variants.queneau : type_of% Erdos341.erdos_341 := by
+theorem exists_quasiperfect :
+    answer(sorry) ↔ ∃ n, Quasiperfect n := by
   sorry
 
-end Green7
+end QuasiperfectNumbers

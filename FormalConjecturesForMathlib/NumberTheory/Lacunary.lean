@@ -13,10 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Analysis.Normed.Field.Lemmas
-import Mathlib.Order.Filter.Defs
+
+public import Mathlib.Analysis.Normed.Field.Lemmas
+public import Mathlib.Order.Filter.Defs
 import Mathlib.Tactic.Rify
+
+@[expose] public section
 
 open Filter
 

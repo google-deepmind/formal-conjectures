@@ -61,7 +61,7 @@ This is equivalent to asking whether there exists $k > 2$ such that the chromati
 Johnson graph $J(2k, k)$ is $k+1$.
 -/
 @[category research open, AMS 5]
-theorem erdos_835.variant.johnson : (∃ l,
+theorem erdos_835.variants.johnson : (∃ l,
     -- making sure k > 2
     letI k := l + 3
     J(2 * k, k).chromaticNumber = k + 1) ↔ answer(sorry) := by
