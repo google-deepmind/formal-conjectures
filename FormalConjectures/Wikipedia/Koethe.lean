@@ -86,7 +86,8 @@ Sanity check that the current mathlib definition is what I want.
 The **Amitsur Conjecture**: If `J` is a nil ideal in `R`, then `J[x]` is a nil ideal of the polynomial ring `R[x]`.
 This is known to be false, see Agata Smoktunowicz, _Polynomial rings over nil rings need not be nil_.
 -/
-@[category research solved, AMS 16]
+@[category research formally solved using formal_conjectures at
+"https://doi.org/10.1090/S0894-0347-00-00337-3", AMS 16]
 theorem amitsur_conjecture (J : TwoSidedIdeal R) (hJ : IsNil J) :
     IsNil (TwoSidedIdeal.map (Polynomial.C) J) := by
   sorry
