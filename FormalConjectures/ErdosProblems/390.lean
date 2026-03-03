@@ -37,7 +37,7 @@ noncomputable def f (n : ℕ) : ℕ := sInf {m : ℕ | ∃ k, ∃ f : ℕ → �
   n < f 0 ∧ f (k - 1) = m ∧ ∏ i < k, f i = n !}
 
 /-- `f n - 2 * n = θ (n / log n)`. This is proved in [EGS82]. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/390", AMS 11]
 theorem erdos_390.variants.theta :
     (fun n => f n - 2 * n : ℕ → ℝ) =Θ[atTop] (fun n => n / log (n : ℝ)) := by
   sorry
