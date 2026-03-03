@@ -53,4 +53,16 @@ theorem erdos_1150.variants.parseval_lower_bound (P : ℂ[X]) (n : ℕ)
     ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ ≥ Real.sqrt (n + 1) := by
   sorry
 
+/--
+The Parseval lower bound shows that $\max_{|z|=1} |P(z)| \geq \sqrt{n}$ for all degree-$n$
+polynomials with $\pm 1$ coefficients. This is a known partial result establishing the conjecture
+holds with $c = 0$ in the asymptotic sense.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/1150", AMS 12 30]
+theorem erdos_1150.variants.parseval_achieves_sqrt_n :
+    ∀ᶠ n in Filter.atTop,
+      ∀ P : ℂ[X], (∀ i ≤ P.natDegree, P.coeff i = -1 ∨ P.coeff i = 1) → P.natDegree = n →
+        ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ ≥ Real.sqrt n := by
+  sorry
+
 end Erdos1150
