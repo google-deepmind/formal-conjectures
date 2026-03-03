@@ -39,7 +39,7 @@ theorem erdos_672 :
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/672.lean", AMS 11]
 lemma erdos_672.variants.euler :
     Erdos672With 4 2 := by
   sorry
@@ -48,7 +48,7 @@ lemma erdos_672.variants.euler :
 
 [Ob51] Oblath, Richard, Eine Bemerkung über Produkte aufeinander folgender Zahlen.
 J. Indian Math. Soc. (N.S.) (1951), 135-139. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/672.lean", AMS 11]
 lemma erdos_672.variants.oblath :
     Erdos672With 5 2 ∧ Erdos672With 3 3 ∧ Erdos672With 3 4 ∧ Erdos672With 3 5 := by
   sorry
