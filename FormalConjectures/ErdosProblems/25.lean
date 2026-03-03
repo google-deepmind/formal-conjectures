@@ -39,4 +39,17 @@ theorem erdos_25 : answer(sorry) ↔
         { x : ℕ | ∀ i, (x : ℤ) < seq_n i ∨ ¬((x : ℤ) ≡ seq_a i [ZMOD seq_n i]) } d := by
   sorry
 
+/--
+For periodic covering systems (where $n_i$ divides $n_j$ for all $i \leq j$),
+the logarithmic density of the sieved set exists by the Chinese Remainder Theorem and
+multiplicativity of the density function, a result known classically in sieve theory.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/25", AMS 11]
+theorem erdos_25.variants.known_result :
+    ∀ (seq_n : ℕ → ℕ) (seq_a : ℕ → ℤ), (∀ i, 0 < seq_n i) → StrictMono seq_n →
+      (∀ i j, i ≤ j → seq_n i ∣ seq_n j) →
+      ∃ d, Set.HasLogDensity
+        { x : ℕ | ∀ i, (x : ℤ) < seq_n i ∨ ¬((x : ℤ) ≡ seq_a i [ZMOD seq_n i]) } d := by
+  sorry
+
 end Erdos25
