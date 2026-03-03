@@ -63,8 +63,9 @@ theorem isRegularPrime_iff_Bernoulli (p : ℕ) [Fact p.Prime] :
     IsRegularPrime p ↔ ∀ k ∈ Finset.Icc 2 (p - 3), ¬ (p : ℤ) ∣ (bernoulli' k).num := by
   sorry
 
-/-- The set of irregular primes is infinite. -/
-@[category research solved, AMS 11]
+/-- The set of irregular primes is infinite. Jensen (1915) proved this result. -/
+@[category research formally solved using formal_conjectures at
+"https://en.wikipedia.org/wiki/Regular_prime#Irregular_primes", AMS 11]
 theorem infinitude_of_irregularprimes : irregularPrimes.Infinite := by
   sorry
 
