@@ -43,4 +43,14 @@ theorem erdos_428 :
       liminf (fun n ↦ primeDensityRatio A n) atTop > 0 := by
   sorry
 
+/--
+Taking $A = \{2\}$ (the singleton containing 2): for every even prime gap candidate $n$,
+$n - 2$ is prime whenever $n$ and $n - 2$ are both prime (twin primes). The twin prime
+conjecture implies infinitely many such $n$, but this is a weaker finite test case.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/428", AMS 11]
+theorem erdos_428.variants.known_result :
+    ∃ A : Set ℕ, ∃ᶠ n in atTop, ∀ a ∈ A, 0 < a → a < n → (n - a).Prime := by
+  sorry
+
 end Erdos428
