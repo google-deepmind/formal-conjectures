@@ -52,7 +52,7 @@ Ref:
 * [Go74] Good, I. J., _A reciprocal series of Fibonacci numbers_
 * [BiHo76] Hoggatt, Jr., V. E. and Bicknell, Marjorie, _A reciprocal series of Fibonacci numbers with subscripts $2\sp{n}k$_
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/267", AMS 11]
 theorem erdos_267.variants.specialization_pow_two :
     Irrational <| ∑' k, 1 / (Nat.fib <| 2^k) := by
   sorry
@@ -63,7 +63,7 @@ The sum $\sum_n \frac 1 {F_{n}}$ itself was proved to be irrational by André-Je
 
 Ref: André-Jeannin, Richard, _Irrationalité de la somme des inverses de certaines suites récurrentes_.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/267", AMS 11]
 theorem erdos_267.variants.fibonacci_inverse_sum :
     Irrational <| ∑' k, 1 / (Nat.fib k) := by
   sorry
