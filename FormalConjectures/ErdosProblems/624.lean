@@ -57,4 +57,13 @@ theorem erdos_624 :
     atTop.Tendsto (fun n : ℕ => H n - Real.logb 2 (n : ℝ)) atTop := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The lower bound $H(n) \geq \log_2 n$
+follows from a simple counting argument: each function value can depend on at most $n$ inputs,
+so at least $\log_2 n$ elements are needed in $Y$ to cover all of $X$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/624", AMS 5]
+theorem erdos_624.variants.known_result : ∀ n : ℕ, 0 < n → Real.logb 2 n ≤ H n := by
+  sorry
+
 end Erdos624
