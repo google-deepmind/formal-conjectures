@@ -36,7 +36,7 @@ Is there some $k$ such that if $G$ has girth $≥ k$, then $\chi(G) ≤ 3$?
 The general case was solved by O'Donnell [OD99], who constructed finite unit distance graphs with
 chromatic number $4$ and arbitrarily large girth.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/705.lean", AMS 5]
 theorem erdos_705:
   answer(False) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
     (UnitDistancePlaneGraph V).girth ≥ k → (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by
