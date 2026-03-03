@@ -60,7 +60,7 @@ difference set modulo `p^2 + p + 1` for some prime power `p`.
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
 The proof of this has been formalized.
 --/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/707.lean", AMS 5 11]
 theorem erdos_707.variants.prime_power : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ (B : Set ℕ) (p : ℕ), IsPrimePow p ∧ A ⊆ B ∧
     IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ False := by
@@ -74,7 +74,7 @@ difference set modulo `p^2 + p + 1` for some prime `p`.
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
 The proof of this has been formalized.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/707.lean", AMS 5 11]
 theorem erdos_707.variants.prime : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ᵉ (B : Set ℕ) (p : ℕ), p.Prime ∧ A ⊆ B ∧ IsPerfectDifferenceSet B (p^2 + p + 1)) ↔ False := by
   sorry
@@ -85,7 +85,7 @@ Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture, proving tha
 cannot be extended to a perfect difference set modulo $p^2+p+1$
 for any prime $p$.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/707.lean", AMS 5 11]
 theorem erdos_707.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4, 8}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (p : ℕ),
@@ -97,7 +97,7 @@ theorem erdos_707.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4, 8}) :
 Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture, showing that $\{1, 2, 4, 8, 13\}$ cannot be
 extended to any perfect difference set.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/707.lean", AMS 5 11]
 theorem erdos_707.counterexample_mian_chowla (A : Set ℕ) (hA : A = {1, 2, 4, 8, 13}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
@@ -110,7 +110,7 @@ A counterexample for any modulus from from [Ha47] in the paragraph following The
 was given as $\{-8, -6, 0, 1, 4\}$, but this can be shifted to natural numbers
 as pointed out in [arxiv/2510.19804].
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/707.lean", AMS 5 11]
 theorem erdos_707.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
@@ -143,7 +143,13 @@ The set `{1, 2, 4}` is a Sidon set.
 -/
 @[category undergraduate, AMS 5 11]
 theorem erdos_707.variants.example_sidon_set : IsSidon ({1, 2, 4} : Set ℕ) := by
-  sorry
+  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ heq
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
+  rcases hi₁ with rfl | rfl | rfl <;>
+  rcases hj₁ with rfl | rfl | rfl <;>
+  rcases hi₂ with rfl | rfl | rfl <;>
+  rcases hj₂ with rfl | rfl | rfl <;>
+  simp_all
 
 /--
 The set `{1, 2, 4}` can be embedded in a perfect difference set modulo 7.
