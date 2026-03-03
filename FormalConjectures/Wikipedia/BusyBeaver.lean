@@ -82,7 +82,12 @@ theorem BB_3 : BB 3 = 21 := by
 theorem BB_4 : BB 4 = 107 := by
   sorry
 
-@[category research solved, AMS 3]
+/--
+BB(5) = 47176870 was verified in 2024 by the Busy Beaver Challenge community.
+See https://wiki.bbchallenge.org/wiki/BB(5)
+-/
+@[category research formally solved using formal_conjectures at
+"https://wiki.bbchallenge.org/wiki/BB(5)", AMS 3]
 theorem BB_5 : BB 5 = 47176870 := by
   sorry
 
