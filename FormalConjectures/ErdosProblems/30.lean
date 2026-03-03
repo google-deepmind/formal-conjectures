@@ -41,4 +41,15 @@ theorem erdos_30 : answer(sorry) ↔
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+
+/--
+It is known that $h(N) \leq \sqrt{N} + O(N^{1/4})$ (Lindström 1969, and independently
+Erdős-Turán 1941 showed $h(N) \leq N^{1/2} + N^{1/4} + 1$), providing a classical upper bound
+on the size of Sidon sets that is significantly stronger than $\sqrt{N} + O(\sqrt{N})$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/30", AMS 11]
+theorem erdos_30.variants.lindstrom_upper_bound :
+    ∀ᶠ N in atTop, (h N : ℝ) ≤ Real.sqrt N + (N : ℝ) ^ ((1 : ℝ)/4) + 1 := by
+  sorry
+
 end Erdos30
