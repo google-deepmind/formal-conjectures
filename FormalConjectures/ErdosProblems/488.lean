@@ -40,4 +40,17 @@ theorem erdos_488 : answer(sorry) ↔ ∀ (A : Finset ℕ), A.Nonempty →
         2 * ((Finset.Icc 1 n).filter (· ∈ B)).card / n := by
   sorry
 
+/--
+For $A = \{1\}$, the set $B = \mathbb{N}_{\geq 1}$, so $|B \cap [1,n]| = n$ for all $n$.
+Then the inequality becomes $m/m < 2 \cdot n/n$, i.e., $1 < 2$, which holds trivially.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/488", AMS 5 11]
+theorem erdos_488.variants.known_result :
+    letI A : Finset ℕ := {1}
+    letI B := {n ≥ 1 | ∃ a ∈ A, a ∣ n}
+    ∀ᵉ (n : ℕ) (m > n), A.max ≤ n →
+      ((Finset.Icc 1 m).filter (· ∈ B)).card / (m : ℚ) <
+        2 * ((Finset.Icc 1 n).filter (· ∈ B)).card / n := by
+  sorry
+
 end Erdos488
