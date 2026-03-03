@@ -33,7 +33,7 @@ progression?
 
 The answer is no, even for $k=3$, as shown by Ardal, Brown, and Jungić [ABJ11].
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/194", AMS 5]
 theorem erdos_194 :
   answer(False) ↔ ∀ k ≥ 3, ∀ r : ℝ → ℝ → Prop, IsStrictTotalOrder ℝ r →
     ∃ s : List ℝ, s.IsAPOfLength k ∧ (s.Pairwise r ∨ s.Pairwise (flip r)) := by
