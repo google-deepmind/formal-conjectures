@@ -62,7 +62,7 @@ indeterminates over `K`. Is it true that `L/K` has the Noether property?
 
 Solution: False.
 -/
-@[category research solved, AMS 12 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/NoetherProblem.lean", AMS 12 14]
 theorem noether_problem : answer(False) ↔ ∀ (K L ι G : Type)
     [Field K] [Field L] [Fintype ι] [Algebra K L] [IsRationalExtension K L ι],
     HasNoetherProperty K L ι := by
@@ -71,7 +71,7 @@ theorem noether_problem : answer(False) ↔ ∀ (K L ι G : Type)
 /--
 The Noether problem has a positive solution in the two indeterminate case.
 -/
-@[category research solved, AMS 12 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/NoetherProblem.lean", AMS 12 14]
 theorem noether_problem.variants.two {K L ι G : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 2) :
@@ -81,7 +81,7 @@ theorem noether_problem.variants.two {K L ι G : Type}
 /--
 The Noether problem has a positive solution in the three indeterminate case.
 -/
-@[category research solved, AMS 12 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/NoetherProblem.lean", AMS 12 14]
 theorem noether_problem.variants.three {K L ι G : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 3) :
@@ -91,7 +91,7 @@ theorem noether_problem.variants.three {K L ι G : Type}
 /--
 The Noether problem has a positive solution in the four indeterminate case.
 -/
-@[category research solved, AMS 12 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/NoetherProblem.lean", AMS 12 14]
 theorem noether_problem.variants.four {K L ι G : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 4) :
@@ -102,7 +102,7 @@ theorem noether_problem.variants.four {K L ι G : Type}
 One can find a counterexample to the Noether Problem's claim by considering a
 rational function field in 47 indeterminates.
 -/
-@[category research solved, AMS 12 14]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/NoetherProblem.lean", AMS 12 14]
 theorem noether_problem.variants.forty_seven :
     ∃ (K L ι G : Type)
     (_ :  Field K) (_ : Field L) (_ : Fintype ι) (_ : Algebra K L)
