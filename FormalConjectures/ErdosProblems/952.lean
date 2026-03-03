@@ -38,4 +38,17 @@ theorem erdos_952 :
       ∀ n, Prime (x n) ∧ (x (n + 1) - x n).norm < C := by
   sorry
 
+/--
+The Gaussian moat problem asks whether one can walk to infinity in the Gaussian integers by
+stepping only between Gaussian primes with bounded step size. Computational searches have found
+that no walk of step size $\leq 26$ can escape to infinity from the origin among Gaussian
+primes of small norm.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/952", AMS 11]
+theorem erdos_952.variants.known_result :
+    ∃ (x : ℕ → GaussianInt) (C : ℤ), C > 0 ∧
+      Function.Injective x ∧
+      ∀ n, Prime (x n) := by
+  sorry
+
 end Erdos952
