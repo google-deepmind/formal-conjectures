@@ -50,7 +50,7 @@ Every (bounded) linear operator `T : H → H` on a finite-dimensional linear spa
 at least 2 has a non-trivial (closed) `T`-invariant subspace. This can be solved using the Jordan
 normal form, which is
 [not yet in mathlib](https://leanprover-community.github.io/undergrad_todo.html). -/
-@[category research solved, AMS 47]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/InvariantSubspaceProblem.lean", AMS 47]
 theorem Invariant_subspace_problem_finite_dimensional [Module ℂ H] (h : FiniteDimensional ℂ H)
     (hdim : 2 ≤ Module.rank ℂ H) (T : H →L[ℂ] H) : Nonempty (ClosedInvariantSubspace T) := by
   sorry
@@ -59,7 +59,7 @@ theorem Invariant_subspace_problem_finite_dimensional [Module ℂ H] (h : Finite
 Every bounded linear operator `T : H → H` on a non-separable Hilbert space `H` has a
 non-trivial closed `T`-invariant subspace. Such an invariant space is given by considering the
 closure of the linear span of the orbit of any single non-zero vector. -/
-@[category research solved, AMS 47]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/InvariantSubspaceProblem.lean", AMS 47]
 theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [CompleteSpace H]
     (h : ¬TopologicalSpace.SeparableSpace H) (T : H →L[ℂ] H) :
     Nonempty (ClosedInvariantSubspace T) := by
@@ -69,7 +69,7 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
 Every normal linear operator `T : H → H` on a Hilbert space `H` of dimension at least 2 has a
 non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can take any
 non-trivial subspace . If not, one can take any nontrivial spectral subspace of `T`. -/
-@[category research solved, AMS 47]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/InvariantSubspaceProblem.lean", AMS 47]
 theorem Invariant_subspace_problem_normal_operator [InnerProductSpace ℂ H] [CompleteSpace H]
     (hdim : 2 ≤ Module.rank ℂ H) (T : H →L[ℂ] H) [IsStarNormal T]:
     Nonempty (ClosedInvariantSubspace T) := by
@@ -80,7 +80,7 @@ There exists a bounded linear operator `T` on the l1 space `(lp (fun (_ : ℕ) =
 non-trivial closed `T`-invariant subspace [Read 1985](https://doi.org/10.1112/blms/17.4.305), see
 also the first counterexample by Enflo [Enflo 1987](https://doi.org/10.1007%2FBF02392260), submitted
 in 1981. -/
-@[category research solved, AMS 47]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Wikipedia/InvariantSubspaceProblem.lean", AMS 47]
 theorem Invariant_subspace_problem_l1 :
     ∃ (T : (lp (fun (_ : ℕ) => ℂ) 1) →L[ℂ] (lp (fun (_ : ℕ) => ℂ) 1)),
     IsEmpty (ClosedInvariantSubspace T) := by
