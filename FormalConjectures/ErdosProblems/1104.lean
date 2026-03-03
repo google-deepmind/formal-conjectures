@@ -41,7 +41,8 @@ $$
 where $f(n)$ denotes the maximum chromatic number of a triangle-free graph on
 $n$ vertices, formalized as `triangleFreeMaxChromatic n`.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1104", AMS 5]
 theorem erdos_1104.variants.lower :
     ∃ c₁ : ℝ, 0 < c₁ ∧ c₁ ≤ 1 ∧
       (∀ᶠ n : ℕ in atTop,
@@ -58,7 +59,8 @@ $$
 where $f(n)$ denotes the maximum chromatic number of a triangle-free graph on
 $n$ vertices, formalized as `triangleFreeMaxChromatic n`.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1104", AMS 5]
 theorem erdos_1104.variants.upper :
     ∃ c₂ : ℝ, 2 ≤ c₂ ∧
       (∀ᶠ n : ℕ in atTop,
