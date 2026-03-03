@@ -158,7 +158,8 @@ $\Gamma(1/2)$ is transcendental.
 
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 33]
+@[category research formally solved using other_system at
+"https://www.ams.org/books/surv/019/", AMS 33]
 theorem transcendental_gamma_one_div_two : Transcendental ℚ (1 / 2 : ℝ).Gamma := by
   sorry
 
@@ -167,7 +168,8 @@ $\Gamma(1/3)$ is transcendental.
 
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 33]
+@[category research formally solved using other_system at
+"https://www.ams.org/books/surv/019/", AMS 33]
 theorem transcendental_gamma_one_div_three : Transcendental ℚ (1 / 3 : ℝ).Gamma := by
   sorry
 
@@ -176,7 +178,8 @@ $\Gamma(1/4)$ is transcendental.
 
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 33]
+@[category research formally solved using other_system at
+"https://www.ams.org/books/surv/019/", AMS 33]
 theorem transcendental_gamma_one_div_four : Transcendental ℚ (1 / 4 : ℝ).Gamma := by
   sorry
 
@@ -185,7 +188,8 @@ $\Gamma(1/6)$ is transcendental.
 
 [Ch84] Chudnovsky, G. (1984). Contributions to the theory of transcendental numbers.
 -/
-@[category research solved, AMS 33]
+@[category research formally solved using other_system at
+"https://www.ams.org/books/surv/019/", AMS 33]
 theorem transcendental_gamma_one_div_six : Transcendental ℚ (1 / 6 : ℝ).Gamma := by
   sorry
 
