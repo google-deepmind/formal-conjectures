@@ -40,7 +40,8 @@ integers $N$ cannot be a perfect power.
 [ES75] P. Erdös, J. L. Selfridge, "The product of consecutive integers is never a power",
   Illinois J. Math. 19(2): 292-301, 1975
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+  "https://doi.org/10.1215/ijm/1256050816", AMS 11]
 theorem erdos_137.variants.perfect_power (k : ℕ) (hk : k ≥ 2) (n : ℕ) (x l : ℕ) (hl : 2 ≤ l) :
     (∏ x ∈ Finset.Ioc n (n + k), x) ≠ x ^ l := by
   sorry
