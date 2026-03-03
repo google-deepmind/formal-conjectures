@@ -34,6 +34,20 @@ theorem erdos_3 : answer(sorry) ↔ ∀ A : Set ℕ,
     ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k := by
   sorry
 
--- TODO(firsching): add the various known bounds as variants.
+/--
+Green and Tao [GT08] proved that the set of primes contains arbitrarily long arithmetic
+progressions. Bloom and Sisask [BS20] proved that any set of positive integers with divergent
+reciprocal sum contains a 3-term arithmetic progression, resolving the k=3 case.
+
+[GT08] Green, B. and Tao, T., _The primes contain arbitrarily long arithmetic progressions_.
+Annals of Mathematics (2008), 481-547.
+[BS20] Bloom, T. F. and Sisask, O., _Breaking the logarithmic barrier in Roth's theorem on
+arithmetic progressions_. arXiv:2007.03528 (2020).
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/3", AMS 11]
+theorem erdos_3.variants.bloom_sisask :
+    ∀ A : Set ℕ, (¬ Summable fun a : A ↦ 1 / (a : ℝ)) →
+    ∃ S ⊆ A, S.IsAPOfLength 3 := by
+  sorry
 
 end Erdos3
