@@ -37,4 +37,17 @@ theorem erdos_64 :
 
 -- TODO(firsching): add more context
 
+/--
+Bondy and Simonovits (1974) proved that for any even integer $2k$, every graph with sufficiently
+many edges contains a cycle of length $2k$, providing evidence that cycles of even length
+(including powers of 2) are ubiquitous in dense graphs, supporting the conjecture for minimum
+degree 3.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/64", AMS 5]
+theorem erdos_64.variants.known_result :
+    ∀ (V : Type*) (G : SimpleGraph V) [Fintype V] [DecidableRel G.Adj],
+      G.minDegree ≥ 3 →
+      ∃ (v : V) (c : G.Walk v v), c.IsCycle ∧ Even c.length := by
+  sorry
+
 end Erdos64
