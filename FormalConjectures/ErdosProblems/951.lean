@@ -60,7 +60,7 @@ theorem erdos_951 : answer(sorry) ↔
 
 /-- Beurling conjectured that if the number of Beurling integer in `[1, x]`
 is `x + o(log x)`, then `a` must be the sequence of primes. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/951.lean", AMS 11]
 theorem erdos_951.variants.beurling :
     ∀ a : ℕ → ℝ, IsBeurlingPrimes a →
     ((fun x => (BeurlingInteger a ∩ .Iic x).ncard - x) =o[atTop] Real.log) →
