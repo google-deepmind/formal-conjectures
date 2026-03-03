@@ -59,7 +59,9 @@ theorem erdos_346.f_not_isAddComplete {B : Set ℕ} (h : B ⊆ range f) (hB : B.
 
 /-- Erdős and Graham [ErGr80] remark that it is easy to see that if `A (n + 1) / A n > (1 + √5) / 2`
 then the second property is automatically satisfied. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-346-golden-ratio/FormalConjectures/ErdosProblems/346.lean",
+AMS 11]
 theorem erdos_346.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
     (hA : ∀ n, (1 + √5) / 2 * A n < A (n + 1)) {B : Set ℕ} (h : B ⊆ range A) (hB : B.Infinite) :
     ¬ IsAddComplete (range A \ B) := by
@@ -67,7 +69,9 @@ theorem erdos_346.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
 
 /-- Erdős and Graham [ErGr80] also say that it is not hard to construct very irregular sequences
 satisfying the aforementioned properties. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+"https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-346-golden-ratio/FormalConjectures/ErdosProblems/346.lean",
+AMS 11]
 theorem erdos_346.example : ∃ A : ℕ → ℕ, IsAddStronglyCompleteNatSeq A ∧
     (∀ B : Set ℕ, B ⊆ range A → B.Infinite → ¬ IsAddComplete (range A \ B)) ∧
     liminf (fun n => A (n + 1) / (2 : ℝ)) atTop = 1 ∧
