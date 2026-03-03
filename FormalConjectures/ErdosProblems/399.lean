@@ -57,14 +57,14 @@ theorem erdos_399 : answer(False) ↔
   exact ⟨10, 48, 36, 4, by decide⟩
 
 /-- Erdős and Obláth [ErOb37] proved this is true when $(x,y)=1$ and $k\neq 4$. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/399.lean", AMS 11]
 theorem erdos_399.variants.erdos_oblath {n x y k : ℕ} :
     x.Coprime y → 1 < x * y → 2 < k → k ≠ 4 →
       n ! ≠ x ^ k + y ^ k ∧ n ! + y ^ k ≠ x ^ k := by
   sorry
 
 /-- Pollack and Shapiro [PoSh73] proved there are no solutions to $n!=x^4-1$. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/399.lean", AMS 11]
 theorem erdos_399.variants.pollack_shapiro (n x : ℕ) : n ! + 1 ≠ x ^ 4 := by
   sorry
 
@@ -72,7 +72,7 @@ theorem erdos_399.variants.pollack_shapiro (n x : ℕ) : n ! + 1 ≠ x ^ 4 := by
 Cambie has also observed that considerations modulo $8$ rule out any solutions to $n!=x^4+y^4$ with
 $(x,y)=1$ and $xy>1$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/399.lean", AMS 11]
 theorem erdos_399.variants.cambie {n x y : ℕ} :
     x.Coprime y → 1 < x * y → n ! ≠ x ^ 4 + y ^ 4 := by
   sorry
@@ -83,7 +83,7 @@ $q_i$ is the sequence of primes congruent to $3\pmod{4}$ then $q_{i+1}<2q_i$ exc
 together with Fermat's theorem on the sums of two squares implies that the only solution to
 $n!=x^2+y^2$ is $6!=12^2+24^2$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/399.lean", AMS 11]
 theorem erdos_399.variants.sum_two_squares :
     ∀ {n x y : ℕ}, 1 < x * y → n ! = x ^ 2 + y ^ 2 →
       n = 6 ∧ (x = 12 ∧ y = 24 ∨ x = 24 ∧ y = 12) := by
