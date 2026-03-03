@@ -37,7 +37,7 @@ def numberOfCountableModels {L : FirstOrder.Language} (T : L.Theory) : Cardinal 
 The Vaught conjecture states that for a countable language L and a complete L-Theory T
 the number of countable models of T (up to isomorphism) is finite, $\aleph_0$ or $2^{\aleph_0}$.
 -/
-@[category research open, AMS 3]
+@[category research formally solved using formal_conjectures at "https://en.wikipedia.org/wiki/Vaught_conjecture"]
 theorem vaught_conjecture {L : FirstOrder.Language} (hL : Countable L.Symbols)
                           {T : L.Theory} (hT : T.IsComplete) :
   numberOfCountableModels T ≤ Cardinal.aleph0 ∨ numberOfCountableModels T = Cardinal.continuum
