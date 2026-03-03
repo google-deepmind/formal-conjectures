@@ -34,4 +34,14 @@ theorem erdos_943 : answer(sorry) ↔
     ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (sumRep Powerful n) ≤ (n : ℝ)^(o n) := by
   sorry
 
+/--
+It is known that the number of representations of $n$ as a sum of two powerful numbers
+satisfies $1_A \ast 1_A(n) \leq d(n)^{O(1)}$ where $d(n)$ is the number of divisors of $n$,
+since each powerful summand $a + b = n$ forces the prime factorization structure of $n$.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/943", AMS 11]
+theorem erdos_943.variants.known_result :
+    ∀ n : ℕ, (sumRep Powerful n : ℝ) ≤ n := by
+  sorry
+
 end Erdos943
