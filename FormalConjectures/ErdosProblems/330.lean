@@ -52,4 +52,14 @@ theorem erdos_330_statement :
     ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n h) := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. The existence of a minimal additive
+basis of positive density where each element is essential is a delicate open problem in additive combinatorics.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/330", AMS 5 11]
+theorem erdos_330.variants.known_result :
+    ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧ A.HasPosDensity ∧
+    ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n h) := by
+  sorry
+
 end Erdos330
