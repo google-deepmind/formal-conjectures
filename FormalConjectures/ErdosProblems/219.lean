@@ -71,9 +71,10 @@ lemma pair_mem_primeArithmeticProgressions
 Are there arbitrarily long arithmetic progressions of primes?
 Solution: yes.
 Ref: Green, Ben and Tao, Terence, _The primes contain arbitrarily long arithmetic progressions_
+Ann. of Math. (2) 167 (2008), no. 2, 481–547. https://doi.org/10.4007/annals.2008.167.481
 -/
 
-@[category research solved, AMS 5 11]
+@[category research formally solved using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-219-green-tao/FormalConjectures/ErdosProblems/219.lean", AMS 5 11]
 theorem erdos_219 : answer(True) ↔ ∀ N : ℕ, ∃ l ∈ primeArithmeticProgressions, N ≤ ENat.card l := by
   sorry
 
