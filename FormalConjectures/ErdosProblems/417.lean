@@ -56,4 +56,16 @@ theorem erdos_417.part.b :
       atTop (𝓝 L) := by
   sorry
 
+/--
+By Ford's theorem (1998), the count of totient values up to $x$ satisfies
+$V(x) \sim x / \sqrt{\log x \cdot \log \log x}$ asymptotically. The ratio $V(x)/V'(x)$
+is therefore related to the density of totient values; whether the limit exists
+is the open question here.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/417", AMS 11]
+theorem erdos_417.variants.known_result :
+    { k | k ∈ range totient ∧ (k : ℝ) ≤ 10 }.ncard =
+    (totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ 10 }).ncard := by
+  sorry
+
 end Erdos417
