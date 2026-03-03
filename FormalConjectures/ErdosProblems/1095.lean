@@ -47,7 +47,8 @@ noncomputable def g (k : ℕ) : ℕ := sInf {m | k + 1 < m ∧ k < (m.choose k).
 -- TODO: Add erdos_1095.
 
 /-- The current record is $g(k) \gg \exp(c(\log k)^2)$ for some $c>0$, due to Konyagin [Ko99b]. --/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at
+    "https://www.erdosproblems.com/1095", AMS 11]
 theorem erdos_1095.variants.lower_solved :
     ∃ c > 0, (fun k : ℕ ↦ exp (c * log k ^ 2)) =O[atTop] fun k ↦ (g k : ℝ) := by
   sorry
