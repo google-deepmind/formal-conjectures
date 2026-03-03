@@ -44,4 +44,15 @@ theorem erdos_469 :
     answer(sorry) ↔ Summable fun n : A ↦ 1 / (n : ℝ) := by
   sorry
 
+/--
+The number $6$ is in the set $A$: $6 = 1 + 2 + 3$ where $1, 2, 3$ are the proper divisors
+of $6$, and no proper divisor of $6$ has this property. This provides a concrete element
+confirming the set $A$ is nonempty.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/469", AMS 11]
+theorem erdos_469.variants.known_result :
+    letI A := {n : ℕ | 0 < n ∧ n.IsSumDivisors ∧ ∀ m < n, m ∣ n → ¬ m.IsSumDivisors}
+    (6 : ℕ) ∈ A := by
+  sorry
+
 end Erdos469
