@@ -39,7 +39,7 @@ theorem erdos_940 :
 /--
 The set of integers which are the sum of at most two $2$-powerful numbers has density $0$.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/940.lean", AMS 11]
 theorem erdos_940.variants.two :
     {n : ℕ | ∃ (S : Multiset ℕ),
       S.card ≤ 2 ∧ (∀ s ∈ S, (2).Full s) ∧ n = S.sum}.HasDensity 0 := by
@@ -70,7 +70,7 @@ $2$-powerful numbers.
 
 [He88] Heath-Brown, D. R., Ternary quadratic forms and sums of three square-full numbers. (1988), 137--163.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/940.lean", AMS 11]
 theorem erdos_940.variants.three_powerful :
     ∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ 3 ∧ (∀ s ∈ S, (2).Full s) ∧ x = S.sum := by
   sorry
