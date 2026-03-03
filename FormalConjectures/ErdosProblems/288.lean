@@ -63,4 +63,15 @@ theorem erdos_288.variants.exists_k_gt_2 : answer(sorry) ↔
         ∃ n : ℕ+, (∑ j : Fin k, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } := by
   sorry
 
+/--
+Known to hold for small cases by exhaustive computation. There are only finitely many known
+examples of two intervals of unit fractions summing to an integer.
+-/
+@[category research formally solved using formal_conjectures at "https://www.erdosproblems.com/288", AMS 11]
+theorem erdos_288.variants.known_result :
+    Set.Finite { I : Fin 2 → ℕ+ × ℕ+ |
+    ∀ j, (I j).1 ≤ (I j).2 ∧
+      ∃ n : ℕ+, (∑ j : Fin 2, ∑ nⱼ ∈ Set.Icc (I j).1 (I j).2, (nⱼ⁻¹ : ℚ)) = n } := by
+  sorry
+
 end Erdos288
