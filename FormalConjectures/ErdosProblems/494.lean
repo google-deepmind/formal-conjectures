@@ -48,12 +48,14 @@ Selfridge and Straus [SeSt58] showed that the conjecture is true when $k = 2$ an
 $|A| \ne 2^l$ for $l \ge 0$.
 They also gave counterexamples when $k = 2$ and $|A| = 2^l$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.k_eq_2_card_not_pow_two :
     ∀ card : ℕ, (∀ l : ℕ, card ≠ 2 ^ l) → Erdos494Unique 2 card := by
   sorry
 
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.k_eq_2_card_pow_two :
     ∀ card : ℕ, (∃ l : ℕ, card = 2 ^ l) → ¬Erdos494Unique 2 card := by
   sorry
@@ -65,17 +67,20 @@ Selfridge and Straus [SeSt58] also showed that the conjecture is true when
 More generally, they proved that $A$ is determined by $A_k$ (and $|A|$) if $|A|$ is divisible by
 a prime greater than $k$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.k_eq_3_card_gt_6 :
     ∀ card > 6, Erdos494Unique 3 card := by
   sorry
 
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.k_eq_4_card_gt_12 :
     ∀ card > 12, Erdos494Unique 4 card := by
   sorry
 
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.card_divisible_by_prime_gt_k :
     ∀ (k card p : ℕ), p.Prime → k ∈ Set.Ioo 0 p → p ∣ card → Erdos494Unique k card := by
   sorry
@@ -83,7 +88,8 @@ theorem erdos_494.variants.card_divisible_by_prime_gt_k :
 /--
 Kruyt noted that the conjecture fails when $|A| = k$, by rotating $A$ around an appropriate point.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.k_eq_card :
     ∀ k > 2, ¬Erdos494Unique k k := by
   sorry
@@ -92,7 +98,8 @@ theorem erdos_494.variants.k_eq_card :
 Similarly, Tao noted that the conjecture fails when $|A| = 2k$, by taking $A$ to be a set of
 the total sum 0 and considering $-A$.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.card_eq_2k :
     ∀ k > 2, ¬Erdos494Unique k (2 * k) := by
   sorry
@@ -101,7 +108,8 @@ theorem erdos_494.variants.card_eq_2k :
 Gordon, Fraenkel, and Straus [GRS62] proved that the claim is true for all $k > 2$ when
 $|A|$ is sufficiently large.
 -/
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.gordon_fraenkel_straus :
     ∀ k > 2, ∀ᶠ card in atTop, Erdos494Unique k card := by
   sorry
@@ -114,7 +122,8 @@ $A = \{1, \zeta_6, \zeta_6^2, \zeta_6^4\}$ and $B = \{1, \zeta_6^2, \zeta_6^3, \
 noncomputable def prodMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
   ((A.powersetCard k).val.map (fun s => s.prod id))
 
-@[category research solved, AMS 5]
+@[category research formally solved using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/494.lean", AMS 5]
 theorem erdos_494.variants.product :
     ∃ (A B : Finset ℂ), A.card = B.card ∧ prodMultiset A 3 = prodMultiset B 3 ∧
       A ≠ B := by
