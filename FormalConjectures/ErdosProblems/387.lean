@@ -38,7 +38,7 @@ theorem erdos_387 : answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧ ∀ n k : ℕ, 1 �
     ∃ d : ℕ, (d : ℝ) ∈ Set.Ioc (c * n) n ∧ d ∣ n.choose k := by
   sorry
 
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/387", AMS 11]
 example : ∀ i < 15, ¬ 99215 - i ∣ Nat.choose 99215 15 :=
   fun i hi => by interval_cases i <;> native_decide
 
@@ -49,7 +49,7 @@ theorem erdos_387.schinzel : answer(sorry) ↔
   sorry
 
 /-- It is easy to see that `n.choose k` has a divisor in `[n / k, n]`. -/
-@[category research solved, AMS 11]
+@[category research formally solved using formal_conjectures at "https://erdosproblems.com/387", AMS 11]
 theorem erdos_387.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n) : ∃ d : ℕ,
     (d : ℝ) ∈ Set.Icc (n / k : ℝ) n ∧ d ∣ n.choose k := by
   by_cases k = 0 <;> simp_all
