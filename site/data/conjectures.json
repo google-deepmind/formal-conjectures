@@ -1,0 +1,16 @@
+[
+  {"theorem": "FormalConjectures.ErdosProblems.1.erdos_1", "module": "FormalConjectures.ErdosProblems.1", "category": "research open", "subjects": ["5", "11"]},
+  {"theorem": "FormalConjectures.ErdosProblems.1.erdos_1.variants.lb", "module": "FormalConjectures.ErdosProblems.1", "category": "research solved", "subjects": ["5", "11"]},
+  {"theorem": "FormalConjectures.ErdosProblems.2.erdos_2", "module": "FormalConjectures.ErdosProblems.2", "category": "research open", "subjects": ["5"]},
+  {"theorem": "FormalConjectures.Wikipedia.Catalan.catalans_conjecture", "module": "FormalConjectures.Wikipedia.Catalan", "category": "research formally solved", "subjects": ["11"]},
+  {"theorem": "FormalConjectures.Wikipedia.Catalan.pillais_conjecture", "module": "FormalConjectures.Wikipedia.Catalan", "category": "research open", "subjects": ["11"]},
+  {"theorem": "FormalConjectures.Wikipedia.RiemannHypothesis.riemann_hypothesis", "module": "FormalConjectures.Wikipedia.RiemannHypothesis", "category": "research open", "subjects": ["11", "30"]},
+  {"theorem": "FormalConjectures.Wikipedia.Collatz.collatz_conjecture", "module": "FormalConjectures.Wikipedia.Collatz", "category": "research open", "subjects": ["11", "37"]},
+  {"theorem": "FormalConjectures.Millenium.P_NP.p_ne_np", "module": "FormalConjectures.Millenium.P_NP", "category": "research open", "subjects": ["68", "3"]},
+  {"theorem": "FormalConjectures.HilbertProblems.Problem8.goldbach", "module": "FormalConjectures.HilbertProblems.Problem8", "category": "research open", "subjects": ["11"]},
+  {"theorem": "FormalConjectures.Mathoverflow.12345.foo_conjecture", "module": "FormalConjectures.Mathoverflow.12345", "category": "research open", "subjects": ["14"]},
+  {"theorem": "FormalConjectures.OEIS.A000001.question", "module": "FormalConjectures.OEIS.A000001", "category": "research solved", "subjects": ["20"]},
+  {"theorem": "FormalConjectures.GreensOpenProblems.1.green_1", "module": "FormalConjectures.GreensOpenProblems.1", "category": "research open", "subjects": ["5", "11"]},
+  {"theorem": "FormalConjectures.Arxiv.SomeResult.some_theorem", "module": "FormalConjectures.Arxiv.SomeResult", "category": "graduate", "subjects": ["35"]},
+  {"theorem": "FormalConjectures.Other.TwinPrimes.twin_prime_conjecture", "module": "FormalConjectures.Other.TwinPrimes", "category": "research open", "subjects": ["11"]}
+]
