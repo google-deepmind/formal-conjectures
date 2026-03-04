@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.NumberTheory.ArithmeticFunction
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
 /-!
 # Amicable numbers
@@ -22,7 +22,7 @@ Two natural numbers $a$ and $b$ are amicable if $\sigma(a) = \sigma(b) = a + b$,
 where $\sigma$ is the sum-of-divisors function.
 -/
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 /--
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$.
