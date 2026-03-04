@@ -13,20 +13,35 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-module
 
+import FormalConjectures.Util.ProblemImports
 
-public import Mathlib.Topology.Separation.GDelta
+/-!
+# Quasiperfect Numbers
 
-@[expose] public section
+*Reference:* 
+- [Wikipedia](https://en.wikipedia.org/wiki/Quasiperfect_number)
+-/
+
+namespace QuasiperfectNumbers
+
+open Nat
+
+open scoped ArithmeticFunction.sigma
+
+/-- 
+A number is quasiperfect if the sum of its divisors is equal to $2n + 1$. 
+-/
+def Quasiperfect (n : ℕ) : Prop :=
+  σ 1 n = 2 * n + 1
 
 /--
-A space where all singletons are Gδ sets.
+**Quasiperfect Numbers Conjecture.**
+Do quasiperfect numbers exist?
 -/
-class HasGδSingletons (X : Type*) [TopologicalSpace X] : Prop where
-  isGδ_singleton : ∀ ⦃x : X⦄, IsGδ {x}
+@[category research open, AMS 11]
+theorem exists_quasiperfect :
+    answer(sorry) ↔ ∃ n, Quasiperfect n := by
+  sorry
 
-/-- Singletons are Gδ in first-countable T₁ spaces. -/
-instance HasGδSingletons.of_t1Space_firstCountableTopology (X : Type*) [TopologicalSpace X]
-    [FirstCountableTopology X] [T1Space X] : HasGδSingletons X where
-  isGδ_singleton := IsGδ.singleton
+end QuasiperfectNumbers

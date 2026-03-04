@@ -47,8 +47,9 @@ theorem Equation677_not_implies_Equation255 :
 /-- Note that this is a stronger form of `Equation255_not_implies_Equation677`. -/
 @[category research solved, AMS 8]
 theorem Finite.Equation255_not_implies_Equation677 :
-    ∃ (G : Type) (_ : Magma G), Finite G ∧ Equation255 G ∧ ¬ Equation677 G := by
-  sorry
+    ∃ (G : Type) (_ : Magma G), Finite G ∧ Equation255 G ∧ ¬ Equation677 G :=
+  ⟨Fin 3, ⟨![![1, 2, 0], ![2, 0, 1], ![0, 1, 2]]⟩, Finite.intro (Fintype.equivFin _),
+    fun x ↦ by fin_cases x <;> rfl, of_decide_eq_false rfl⟩
 
 /-- The negation of `Finite.Equation677_implies_Equation255`.
 
