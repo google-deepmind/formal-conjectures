@@ -36,8 +36,8 @@ The property that there exist $a,b\in(n,n+p^c)$ such that $ab\equiv 1\pmod{p}$.
 -/
 def Erdos445Prop (c : ℝ) (p n : ℕ) : Prop :=
   ∃ a b : ℕ,
-    (n : ℝ) < (a : ℝ) ∧ (a : ℝ) < (n : ℝ) + (p : ℝ) ^ c ∧
-    (n : ℝ) < (b : ℝ) ∧ (b : ℝ) < (n : ℝ) + (p : ℝ) ^ c ∧
+    n < a ∧ (a : ℝ) < (n : ℝ) + (p : ℝ) ^ c ∧
+    n < b ∧ (b : ℝ) < (n : ℝ) + (p : ℝ) ^ c ∧
     a * b ≡ 1 [MOD p]
 
 /--
