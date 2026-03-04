@@ -28,7 +28,7 @@ $W(M_1)$ and $W(M_2)$ are isomorphic as abstract groups.
 - B. Mühlherr, [*The isomorphism problem for Coxeter groups*](https://arxiv.org/abs/math/0506572), 2005.
 -/
 
-namespace IsomorphismProblemCoxeterGroups
+namespace CoxeterGroupIsomorphismProblem
 
 open CoxeterMatrix CoxeterSystem
 
@@ -44,7 +44,7 @@ This is Problem 1 from Mühlherr's paper:
 
 This formulation is *constructive*: `Decidable` requires an actual decision procedure. -/
 @[category research open, AMS 20]
-noncomputable def coxeterGroup_isomorphism_decidable (n m : ℕ) 
+def coxeterGroup_isomorphism_decidable (n m : ℕ) 
     (M₁ : CoxeterMatrix (Fin n))
     (M₂ : CoxeterMatrix (Fin m)) :
     Decidable (Nonempty (M₁.Group ≃* M₂.Group)) := by
@@ -77,7 +77,7 @@ This is Problem 2 from Mühlherr's paper:
 
 This formulation is *constructive*: `Encodable` provides actual `encode`/`decode` functions. -/
 @[category research open, AMS 20]
-noncomputable def coxeterGroup_isomorphisms_encodable (n m : ℕ)
+def coxeterGroup_isomorphisms_encodable (n m : ℕ)
     (M₁ : CoxeterMatrix (Fin n))
     (M₂ : CoxeterMatrix (Fin m)) :
     Encodable (M₁.Group ≃* M₂.Group) := by
@@ -92,4 +92,4 @@ theorem coxeterGroup_find_all_isomorphisms_of_encodable (n m : ℕ)
     Countable (M₁.Group ≃* M₂.Group) :=
   @Encodable.countable _ h
 
-end IsomorphismProblemCoxeterGroups
+end CoxeterGroupIsomorphismProblem
