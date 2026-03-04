@@ -22,9 +22,10 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/830](https://www.erdosproblems.com/830)
 -/
 
-namespace Erdos830
-
+open scoped ArithmeticFunction.sigma
 open Classical Filter Real
+
+namespace Erdos830
 
 /--
 Let $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$.

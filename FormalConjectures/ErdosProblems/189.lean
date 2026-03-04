@@ -45,8 +45,12 @@ Solved (with answer `False`, as formalised below) in:
 Vjekoslav Kovač, "Coloring and density theorems for configurations of a given volume", 2023
 https://arxiv.org/abs/2309.09973
 In fact, Kovač's colouring is even Jordan measurable (the topological boundary of each
-monochromatic region is Lebesgue measurable and has measure zero). -/
-@[category research solved, AMS 5 51]
+monochromatic region is Lebesgue measurable and has measure zero).
+
+This was formalized in Lean by Alexeev and Kovac using Aristotle.
+-/
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos189.lean", AMS 5 51]
 theorem erdos_189 :
     answer(False) ↔ Erdos189For
       (fun a b c d ↦

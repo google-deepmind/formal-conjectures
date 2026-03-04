@@ -31,18 +31,22 @@ open Set ENat Filter
 
 namespace Erdos770
 
-/-- Let `h n` be the minimal number such that `2 ^ n - 1, ..., (h n) ^ n - 1` are mutually
-coprime. -/
+
+/-- Let $h n$ be the minimal number such that $2 ^ n - 1, \dots, h(n) ^ n - 1$
+are collectively coprime. -/
 noncomputable def h (n : ℕ) : ℕ∞ := sInf {m | 2 < m ∧
-  (Set.Icc 2 m).Pairwise fun i j => (i.toNat ^ n - 1).Coprime (j.toNat ^ n - 1)}
+  ((Finset.Icc 2 m.toNat).image fun i => (i ^ n - 1)).gcd id = 1}
 
-/-- `n + 1` is prime iff `h n = n + 1`. #TODO: prove this theorem. -/
+/-- `n + 1` is prime iff `h n = n + 1`. -/
 @[category test, AMS 11]
-theorem Nat.Prime.h_eq_add_one {n : ℕ} : h n = n + 1 ↔ (n + 1).Prime := by sorry
+theorem Nat.Prime.h_eq_add_one {n : ℕ} (hn : 2 < n) : h n = n + 1 ↔ (n + 1).Prime := by
+  sorry
 
-/-- If `n` is odd, then `h n = ∞`. #TODO: prove this theorem. -/
+/-- For odd `n`, the values of `h n` form an unbounded set. -/
 @[category test, AMS 11]
-theorem Odd.h_unbounded {n : ℕ} (pn : Odd n) : h n = ⊤ := by sorry
+theorem odd_h_unbounded : Unbounded (· ≤ ·) (ENat.toNat '' (h '' Odd)):= by
+  sorry
+
 
 /-- For every prime `p`, does the density of integers with `h n = p` exist? -/
 @[category research open, AMS 11]

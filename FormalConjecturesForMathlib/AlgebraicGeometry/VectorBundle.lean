@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous
-import Mathlib.CategoryTheory.Sites.CoversTop
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous
+public import Mathlib.CategoryTheory.Sites.CoversTop
+
+@[expose] public section
 
 universe u v
 
@@ -26,9 +30,9 @@ open CategoryTheory Limits
 variable {C : Type u} [Category.{v, u} C]
 variable {J : GrothendieckTopology C}
 variable {R : Sheaf J RingCat} (M : SheafOfModules R)
-variable [∀ (X : C), (J.over X).HasSheafCompose (forget₂ RingCat AddCommGrp)]
-variable [∀ (X : C), HasWeakSheafify (J.over X) AddCommGrp]
-variable [∀ (X : C), (J.over X).WEqualsLocallyBijective AddCommGrp]
+variable [∀ (X : C), (J.over X).HasSheafCompose (forget₂ RingCat AddCommGrpCat)]
+variable [∀ (X : C), HasWeakSheafify (J.over X) AddCommGrpCat]
+variable [∀ (X : C), (J.over X).WEqualsLocallyBijective AddCommGrpCat]
 
 /-- A vector bundle is a sheaf of modules that is locally isomorphic to
 a free sheaf. -/

@@ -57,7 +57,7 @@ def H5 : SimpleGraph (Fin 5) :=
 Is $Q_3$ (the 3-dimensional hypercube) Ramsey size linear?
 -/
 @[category research open, AMS 05]
-theorem erdos_567_Q3 : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
+theorem erdos_567.parts.Q3 : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
   sorry
 
 /--
@@ -66,7 +66,7 @@ theorem erdos_567_Q3 : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
 Is $K_{3,3}$ Ramsey size linear?
 -/
 @[category research open, AMS 05]
-theorem erdos_567_K33 : answer(sorry) ↔ IsRamseySizeLinear K33 := by
+theorem erdos_567.parts.K33 : answer(sorry) ↔ IsRamseySizeLinear K33 := by
   sorry
 
 /--
@@ -75,7 +75,7 @@ theorem erdos_567_K33 : answer(sorry) ↔ IsRamseySizeLinear K33 := by
 Is $H_5$ ($C_5$ with two vertex-disjoint chords) Ramsey size linear?
 -/
 @[category research open, AMS 05]
-theorem erdos_567_H5 : answer(sorry) ↔ IsRamseySizeLinear H5 := by
+theorem erdos_567.parts.H5 : answer(sorry) ↔ IsRamseySizeLinear H5 := by
   sorry
 
 end Erdos567

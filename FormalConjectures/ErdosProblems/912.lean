@@ -35,7 +35,7 @@ noncomputable def h (n : ℕ) : ℕ := (n !).factorization.frange.card
 
 /-- Erdős and Selfridge prove in [Er82c] that $h(n) \asymp \left(\frac{n}{\log n}\right)^{1/2}$. -/
 @[category research solved, AMS 11]
-theorem erdos_912_theta :
+theorem erdos_912.variants.selfridge :
     (fun n => (h n : ℝ)) =Θ[atTop] (fun n => (n / Real.log n) ^ (1 / 2 : ℝ)) := by
   sorry
 
@@ -44,14 +44,14 @@ $$h(n) \sim c \left(\frac{n}{\log n}\right)^{1/2}$$
 as $n\to \infty$.
 -/
 @[category research open, AMS 11]
-theorem erdos_912.equivalent : ∃ c > 0,
+theorem erdos_912 : ∃ c > 0,
     (fun n => (h n : ℝ)) ~[atTop] (fun n => c * (n / Real.log n) ^ (1 / 2 : ℝ)) := by
   sorry
 
 /-- A heuristic of Tao using the Cramér model for the primes suggests this is true with
 $c=\sqrt{2\pi}$. -/
 @[category research open, AMS 11]
-theorem erdos_912.variant :
+theorem erdos_912.variants.tao :
     (fun n => (h n : ℝ)) ~[atTop] (fun n => √(2 * Real.pi) * (n / Real.log n) ^ (1 / 2 : ℝ)) := by
   sorry
 
