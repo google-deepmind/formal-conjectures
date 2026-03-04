@@ -99,7 +99,7 @@ jobs:
       - name: Build documentation
         run: |
           cd docbuild
-          timeout 900 lake build FormalConjectures:docs || echo "Documentation build timed out, continuing with what was built..."
+          lake build FormalConjectures:docs
 
       - name: Extract documentation
         run: |
