@@ -42,6 +42,12 @@ def categoryToString : Category → String
   | .test => "test"
   | .API => "API"
 
+-- Helper to format FormalProofKind as string
+def formalProofKindToString : FormalProofKind → String
+  | .formalConjecturesProof => "formal_conjectures"
+  | .lean4 => "lean4"
+  | .otherSystem => "other_system"
+
 def nameAny (n : Name) (p : String → Bool) : Bool :=
   match n with
   | .anonymous => false
@@ -56,6 +62,10 @@ structure TheoremInfo where
   module : String
   category : String
   subjects : List String
+  statement : String
+  docstring : Option String
+  formalProofKind : Option String
+  formalProofLink : Option String
   deriving ToJson
 
 unsafe def runWithImports {α : Type} (moduleNames : Array Name) (actionToRun : CoreM α) : IO α := do
@@ -99,8 +109,10 @@ unsafe def main (args : List String) : IO Unit := do
 
     -- Create maps for quick lookup
     let mut categoryMap : Std.HashMap Name (List String) := {}
+    let mut categoryFullMap : Std.HashMap Name CategoryTag := {}
     for tag in tags do
       categoryMap := categoryMap.insert tag.declName (categoryToString tag.category :: categoryMap.getD tag.declName [])
+      categoryFullMap := categoryFullMap.insert tag.declName tag
 
     let mut subjectMap : Std.HashMap Name (List String) := {}
     for tag in subjectTags do
@@ -122,7 +134,26 @@ unsafe def main (args : List String) : IO Unit := do
             if !cats.isEmpty || !subjs.isEmpty then
               if cats.length ≠ 1 then
                 throwError m!"Theorem {name} must have exactly one category, found {cats.length}."
-              allResults := { «theorem» := name.toString, module := modName.toString, category := cats.head!, subjects := subjs } :: allResults
+              let statement := toString (← Meta.MetaM.run' (Meta.ppExpr info.type))
+              let docstring ← findDocString? env name
+              let (formalProofKind, formalProofLink) :=
+                if let some tag := categoryFullMap.get? name then
+                  if let .research (.formallySolvedAt kind link) := tag.category then
+                    (some (formalProofKindToString kind), some link)
+                  else
+                    (none, none)
+                else
+                  (none, none)
+              allResults := {
+                «theorem» := name.toString,
+                module := modName.toString,
+                category := cats.head!,
+                subjects := subjs,
+                statement := statement,
+                docstring := docstring,
+                formalProofKind := formalProofKind,
+                formalProofLink := formalProofLink
+              } :: allResults
         | _ => pure ()
 
     IO.println (toJson allResults.reverse).pretty
