@@ -122,7 +122,7 @@ lemma tsum_area_eq_one : ∑' (n : ℕ), ((1 / (n + 1)) * (1 / (n + 2)) : ℝ) =
   have (n : ℕ) : ∑ i ∈ Finset.range n, (1 / (i + 1) * (1 / (i + 2)) : ℝ) = 1 - 1 / (n + 1) := by
     induction n with
     | zero => simp
-    | succ n ih => rw [Finset.sum_range_succ, ih]; field_simp; ring
+    | succ n ih => rw [Finset.sum_range_succ, ih]; field_simp; push_cast; ring
   refine HasSum.tsum_eq ((hasSum_iff_tendsto_nat_of_nonneg (fun i ↦ ?_) _).2 ?_)
   · positivity
   · simp_rw [this]

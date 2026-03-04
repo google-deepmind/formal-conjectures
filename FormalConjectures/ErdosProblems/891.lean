@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Nat Filter Finset
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.omega
 
 namespace Erdos891
 

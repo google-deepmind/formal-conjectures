@@ -13,18 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Computability.PostTuringMachine
-import Mathlib.Logic.Relation
+public import Mathlib.Computability.PostTuringMachine
+public import Mathlib.Logic.Relation
 
-theorem Part.eq_of_get_eq_get {σ : Type*} {a b : Part σ} (ha : a.Dom) (hb : b.Dom)
-    (hab : a.get ha = b.get hb) : a = b := by
-  ext
-  rw [← Part.eq_get_iff_mem ha, ← Part.eq_get_iff_mem hb, hab]
-
-theorem Part.eq_iff_of_dom {σ : Type*} {a b : Part σ} (ha : a.Dom) (hb : b.Dom) :
-    a.get ha = b.get hb ↔ a = b :=
-  ⟨fun H ↦ Part.eq_of_get_eq_get ha hb H, fun H ↦ Part.get_eq_get_of_eq a ha H⟩
+@[expose] public section
 
 theorem Part.get_eq_get {σ : Type*} {a b : Part σ} (ha : a.Dom) (hb : a.get ha ∈ b) : a = b := by
   have hb' : b.Dom := Part.dom_iff_mem.mpr ⟨a.get ha, hb⟩

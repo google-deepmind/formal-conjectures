@@ -21,7 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/707](https://www.erdosproblems.com/707)
-- [arxiv/2510.19804](https://arxiv.org/abs/2510.19804) Boris Alexeev and Dustin G. Mixon, Forbidden Sidon subsets of perfect difference sets, featuring a human-assisted proof (2025)
+- [arxiv/2510.19804](https://arxiv.org/abs/2510.19804) Boris Alexeev and Dustin G. Mixon, Forbidden
+  Sidon subsets of perfect difference sets, featuring a human-assisted proof (2025)
 - [Ha47] Marshall Hall, Jr., Cyclic projective planes, Duke Math. J. 14 (1947), 1079–1090.
 
 Let `A ⊆ ℕ` be a finite Sidon set. Is there some set `B` with `A ⊆ B` which is a perfect
@@ -42,8 +43,11 @@ different set modulo some $n$.
 
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
 The proof of this has been formalized.
+
+This was formalized in Lean by Alexeev using ChatGPT.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos707.lean", AMS 5 11]
 theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ False := by
   sorry
