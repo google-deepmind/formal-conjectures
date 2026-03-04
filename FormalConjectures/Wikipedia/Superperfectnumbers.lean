@@ -27,7 +27,7 @@ sum of divisors function.
  - [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
 
-open ArithmeticFunction
+open ArithmeticFunction.sigma
 
 namespace Superperfect
 
