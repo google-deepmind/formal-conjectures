@@ -47,7 +47,7 @@ This formulation is *constructive*: `Decidable` requires an actual decision proc
 noncomputable def coxeterGroup_isomorphism_decidable (n m : ℕ) 
     (M₁ : CoxeterMatrix (Fin n))
     (M₂ : CoxeterMatrix (Fin m)) :
-    Decidable (Nonempty (M₁.Group ≃* M₂.Group)) :=
+    Decidable (Nonempty (M₁.Group ≃* M₂.Group)) := by
   sorry
 
 /-! ### Finding All Isomorphisms -/
@@ -65,7 +65,7 @@ For a constructive version, see `coxeterGroup_isomorphisms_encodable`. -/
 theorem coxeterGroup_find_all_isomorphisms (n m : ℕ)
     (M₁ : CoxeterMatrix (Fin n))
     (M₂ : CoxeterMatrix (Fin m)) :
-    Countable (M₁.Group ≃* M₂.Group) :=
+    Countable (M₁.Group ≃* M₂.Group) := by
   sorry
 
 /-- **The Isomorphism Problem for Coxeter Groups (Finding All Isomorphisms, Constructive).**
@@ -80,7 +80,7 @@ This formulation is *constructive*: `Encodable` provides actual `encode`/`decode
 noncomputable def coxeterGroup_isomorphisms_encodable (n m : ℕ)
     (M₁ : CoxeterMatrix (Fin n))
     (M₂ : CoxeterMatrix (Fin m)) :
-    Encodable (M₁.Group ≃* M₂.Group) :=
+    Encodable (M₁.Group ≃* M₂.Group) := by
   sorry
 
 /-- The constructive formulation (`Encodable`) implies the non-constructive one (`Countable`). -/
