@@ -32,7 +32,7 @@ open ArithmeticFunction
 namespace Superperfect
 
 /--
-An integer $n$ is $(m,k)$-perfect if $\sigma^m(n) = kn$ where $σ^m$ is the $m$-th iterate of $σ$.
+An integer $n$ is $(m,k)$-perfect if $\sigma^m(n) = kn$ where $\sigma^m$ is the $m$-th iterate of $σ$.
 -/
 def PerfectFor (n m k : ℕ) : Prop := Nat.iterate (fun x => σ 1 x) m n = k * n
 
