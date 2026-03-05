@@ -113,9 +113,22 @@ unsafe def main (args : List String) : IO Unit := do
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a welcome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
-  let .some (graphFile : String) := args[1]?
+  let .some (graphFileDark : String) := args[1]?
     | IO.println "Repository growth graph not supplied, generating docs without graph."
-  let graphHtml ← IO.FS.readFile graphFile
+  let .some (graphFileLight : String) := args[2]?
+    | IO.println "Repository growth graph not supplied, generating docs without graph."
+  let graphHtmlDark ← IO.FS.readFile graphFileDark
+  let graphHtmlLight ← IO.FS.readFile graphFileLight
+  let graphHtml :=
+    s!"<style>
+        .theme-dark \{ display: none; }
+        @media (prefers-color-scheme: dark) \{
+          .theme-light \{ display: none; }
+          .theme-dark \{ display: block; }
+        }
+      </style>
+      <div class=\"theme-light\">{graphHtmlLight}</div>
+      <div class=\"theme-dark\">{graphHtmlDark}</div>"
 
   runWithImports do
     let categoryStats ← getCategoryStatsMarkdown

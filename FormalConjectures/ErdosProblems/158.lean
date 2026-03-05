@@ -53,14 +53,14 @@ namespace Erdos158
 
 /-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0`? -/
 @[category research open, AMS 5]
-theorem erdos_158.B22 : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → B2 2 A →
+theorem erdos_158 : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → B2 2 A →
     liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
   sorry
 
 /-- Let `A` be an infinite Sidon set. Then
 `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) * (log N) ^ (1 / 2) < ∞`. This is proved in [ESS94]. -/
 @[category research solved, AMS 5]
-theorem erdos_158.isSidon' {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
+theorem erdos_158.variants.isSidon' {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
     liminf (fun N ↦ ENNReal.ofReal ((A ∩ .Iio N).ncard * N ^ (- 1 / 2 : ℝ) * log N ^ (1 / 2 : ℝ)))
       atTop < ⊤ := by
   sorry
@@ -68,9 +68,9 @@ theorem erdos_158.isSidon' {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A
 /-- As a corollary of `erdos_158.isSidon'`, we can prove that
 `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0` for any infinite Sidon set `A`. -/
 @[category research solved, AMS 5]
-theorem erdos_158.isSidon {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
+theorem erdos_158.variants.isSidon {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
     liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
-  have := erdos_158.isSidon' hAinf hAsid
+  have := erdos_158.variants.isSidon' hAinf hAsid
   contrapose! this with h
   rw [Tendsto.liminf_eq]
   refine ENNReal.tendsto_ofReal_atTop.comp ?_

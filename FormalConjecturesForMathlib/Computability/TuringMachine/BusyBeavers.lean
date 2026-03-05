@@ -13,11 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
-import Mathlib.Computability.TuringMachine
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Data.Nat.PartENat
+public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
+public import Mathlib.Computability.TuringMachine
+public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Data.Nat.PartENat
+
+@[expose] public section
 
 
 /-! # Turing Machines, Busy Beaver version.
