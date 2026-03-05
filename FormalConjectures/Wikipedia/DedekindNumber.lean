@@ -38,6 +38,9 @@ We formalize two definitions:
 We prove their values for small `n` and show that the two definitions agree for all `n`.
 
 The problem is to determine the exact values of $M(n)$ for $n ≥ 10$. In particular, the value of $M(10)$ is currently unknown.
+
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Dedekind_number)
+
 -/
 
 namespace DedekindNumber
