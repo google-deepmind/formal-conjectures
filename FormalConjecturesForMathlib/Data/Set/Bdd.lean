@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Order.Interval.Finset.Defs
+public import Mathlib.Order.Interval.Finset.Defs
+
+@[expose] public section
 
 variable {β : Type*} [Preorder β]
 variable (S : Set β) (a b : β)

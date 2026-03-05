@@ -32,10 +32,14 @@ theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
   sorry
 
 /-- There exists a semiring with a unique left maximal ideal and a unique right maximal ideal
-which are not the same as sets. -/
-@[category research open, AMS 16]
+which are not the same as sets.
+
+This has been shown by Goran Žužić and Moritz Firsching using an experimental pipeline:
+An example is the the monoid algebra of the monoid of maps from $mathbb{n}$ to $mathbb{N}$.
+ -/
+@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/f7502b9ed3e32d193ab8fee53d2e28f7d67f2dc3/FormalConjectures/Mathoverflow/486451.lean#L333", AMS 16]
 theorem exists_semiring_unique_left_right_maximal_ne :
-    answer(sorry) ↔ ∃ (R : Type) (_ : Semiring R) (hI : ∃! I : Ideal R, I.IsMaximal)
+    answer(True) ↔ ∃ (R : Type) (_ : Semiring R) (hI : ∃! I : Ideal R, I.IsMaximal)
       (hJ : ∃! J : Ideal Rᵐᵒᵖ, J.IsMaximal),
         (hI.choose : Set R) ≠ MulOpposite.op ⁻¹' hJ.choose := by
   sorry

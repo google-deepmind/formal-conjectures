@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Topology.Separation.GDelta
+
+public import Mathlib.Topology.Separation.GDelta
+
+@[expose] public section
 
 /--
 A space where all singletons are Gδ sets.
