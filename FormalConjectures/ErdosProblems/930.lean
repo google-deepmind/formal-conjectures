@@ -67,7 +67,7 @@ Theorem 2 from [ErSe75].
 [ErSe75] Erdős, P. and Selfridge, J. L., The product of consecutive integers is never a power. Illinois J. Math. (1975), 292-301.
 -/
 @[category research solved, AMS 11]
-theorem erdos_930.variant.consecutive_strong :
+theorem erdos_930.variants.consecutive_strong :
     ∀ k l n, 3 ≤ k → 2 ≤ l → nextPrime k ≤ n + k →
       ∃ p, k ≤ p ∧ p.Prime ∧
         ¬ (l ∣ Nat.factorization (∏ m ∈ Icc (n + 1) (n + k), m) p) := by
@@ -79,12 +79,12 @@ consecutive integers is never a power (establishing the case $r=1$).
 
 Theorem 1 from [ErSe75].
 
-It is implied from `erdos_930.variant.consecutive_strong`.
+It is implied from `erdos_930.variants.consecutive_strong`.
 
 [ErSe75] Erdős, P. and Selfridge, J. L., The product of consecutive integers is never a power. Illinois J. Math. (1975), 292-301.
 -/
 @[category research solved, AMS 11]
-theorem erdos_930.variant.consecutive_integers :
+theorem erdos_930.variants.consecutive_integers :
     ∀ n k, 0 ≤ n → 2 ≤ k →
       ¬ IsPower (∏ m ∈ Icc (n + 1) (n + k), m) := by
   sorry

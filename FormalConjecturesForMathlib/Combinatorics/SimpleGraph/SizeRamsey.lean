@@ -13,11 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Set.Card
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
 
 /-!
 # Size Ramsey Number

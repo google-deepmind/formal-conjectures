@@ -13,7 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Data.Set.Card
+module
+
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
 
 /-!
 # VC dimension of a set family
