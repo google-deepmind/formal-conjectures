@@ -33,7 +33,6 @@ section
 
 variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
 
-
 /-- Let `D` be the diagonal group of `SL_n(ℝ)` where n ≥ 3.
 Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
 @[category research open, AMS 11 15 22]
@@ -94,6 +93,5 @@ theorem huang_shi_theorem_1_2
   sorry
 
 end FunctionFieldDiagonalOrbit
-
 
 end MatrixGroupConjecture
