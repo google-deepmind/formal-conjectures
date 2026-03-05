@@ -35,7 +35,8 @@ theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
 which are not the same as sets.
 
 This has been shown by Goran Žužić and Moritz Firsching using an experimental pipeline:
-An example is the the monoid algebra of the monoid of maps from $mathbb{n}$ to $mathbb{N}$.
+An example is the monoid algebra of the monoid of maps from $\mathbb{N}$ to $\mathbb{N}$
+over $\mathbb{N}$.
  -/
 @[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/f7502b9ed3e32d193ab8fee53d2e28f7d67f2dc3/FormalConjectures/Mathoverflow/486451.lean#L333", AMS 16]
 theorem exists_semiring_unique_left_right_maximal_ne :
