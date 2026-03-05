@@ -97,6 +97,8 @@ jobs:
             MathlibDoc-
 
       - name: Build documentation
+        env:
+          LAKE_OPTS: "-KmaxHeartbeats=1000000 -KmaxRecDepth=1000"
         run: |
           cd docbuild
           lake build FormalConjectures:docs
