@@ -33,7 +33,7 @@ Every triangle-free graph on $5$ vertices can be made bipartite by removing at m
 This is the $n = 1$ case of Erdős Problem 23.
 -/
 @[category test, AMS 5]
-theorem erdos_23.variants.n1 :
+theorem erdos_23_n1 :
     ∀ (G : SimpleGraph (Fin 5)), G.CliqueFree 3 → ∃ (H : SimpleGraph (Fin 5)),
         H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ 1 := by
   sorry
@@ -43,7 +43,7 @@ There exists a triangle-free graph on $5$ vertices such that at least $1$ edge m
 to make it bipartite. This shows the bound in `erdos_23_n1` is tight.
 -/
 @[category test, AMS 5]
-theorem erdos_23.variants.n1_tight :
+theorem erdos_23_n1_tight :
     ∃ (G : SimpleGraph (Fin 5)), G.CliqueFree 3 ∧ ∀ (H : SimpleGraph (Fin 5)),
         H ≤ G → H.IsBipartite → 1 ≤ (G.edgeFinset \ H.edgeFinset).card := by
   sorry

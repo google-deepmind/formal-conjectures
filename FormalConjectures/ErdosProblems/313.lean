@@ -40,15 +40,15 @@ and `P` is a set of distinct primes such that the following equation holds:
 $\sum_{p \in P} \frac{1}{p} = 1 - \frac{1}{m}$?
 -/
 @[category research open, AMS 11]
-theorem erdos_313 : answer(sorry) ↔ erdos_313_solutions.Infinite := by
+theorem erdos_313_conjecture : answer(sorry) ↔ erdos_313_solutions.Infinite := by
   sorry
 
 @[category test, AMS 11]
-theorem erdos_313.variants.solution_6_2_3 : (6, {2, 3}) ∈ erdos_313_solutions := by
+theorem erdos_313_solution_6_2_3 : (6, {2, 3}) ∈ erdos_313_solutions := by
   norm_num [erdos_313_solutions]
 
 @[category test, AMS 11]
-theorem erdos_313.variants.solution_42_2_3_7 : (42, {2, 3, 7}) ∈ erdos_313_solutions := by
+theorem erdos_313_solution_42_2_3_7 : (42, {2, 3, 7}) ∈ erdos_313_solutions := by
   norm_num [erdos_313_solutions]
 
 /--
@@ -69,7 +69,7 @@ theorem erdos_313.variants.primary_pseudoperfect_are_infinite :
 There are at least 8 primary pseudoperfect numbers.
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_313.variants.exists_at_least_eight_primary_pseudoperfect :
+theorem exists_at_least_eight_primary_pseudoperfect :
     8 ≤ (Set.encard {n | IsPrimaryPseudoperfect n}) := by
   sorry
 

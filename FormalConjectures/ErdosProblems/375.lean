@@ -47,21 +47,21 @@ theorem erdos_375 : answer(sorry) ↔ Erdos375Prop := by
 /-- If `Erdos375Prop` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
 for some `c > 0`. -/
 @[category research solved, AMS 11]
-theorem erdos_375.variants.bounded_gap : Erdos375Prop →
+theorem erdos_375.bounded_gap : Erdos375Prop →
     ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime
     < (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
   sorry
 
 /-- In particular, if `Erdos375Prop` is true, then Legendre's conjecture is asymptotically true. -/
 @[category research solved, AMS 11]
-theorem erdos_375.variants.legendre : Erdos375Prop →
+theorem erdos_375.legendre : Erdos375Prop →
     (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p) :=
-  fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.variants.bounded_gap hp)
+  fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.bounded_gap hp)
 
 /-- It is easy to see that for any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite,
 then there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
 @[category research solved, AMS 11]
-theorem erdos_375.variants.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
+theorem erdos_375.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
   intro n hn k hk
   interval_cases k <;> intro h
@@ -85,7 +85,7 @@ in [RST75]. There is no need to only consider sufficiently large `n` because one
 `c` small enough so that `k < c * (log n / (log (log n))) ^ 3` implies that `k = 0` until `n` is
 large. -/
 @[category research solved, AMS 11]
-theorem erdos_375.variants.log : ∃ c > 0, ∀ n k : ℕ,
+theorem erdos_375.log : ∃ c > 0, ∀ n k : ℕ,
     k < c * (Real.log n / (Real.log (Real.log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
   sorry

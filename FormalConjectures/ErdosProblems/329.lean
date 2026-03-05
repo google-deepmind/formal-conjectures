@@ -53,7 +53,7 @@ Erdős proved that upper density `1 / 2` can be attained; in particular,
 there exists a Sidon set whose upper density is *at least* `1 / 2`.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_329.variants.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
+theorem erdos_329.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
   sorry
 
 /--
@@ -64,7 +64,7 @@ Krückeberg ([Kr61]) exhibited an infinite Sidon set `A` with
 [Kr61] Krückeberg, Fritz, $B\sb{2}$-Folgen und verwandte Zahlenfolgen. J. Reine Angew. Math. (1961), 53-60.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_329.variants.kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧
+theorem kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧
     sidonUpperDensity A = 1 / Real.sqrt 2 := by
   sorry
 
@@ -74,7 +74,7 @@ Erdős and Turán [ErTu41] proved the upper bound of 1.
 [ErTu41] Erdős, P. and Turán, P., On a problem of Sidon in additive number theory, and on some related problems. J. London Math. Soc. (1941), 212-215.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_329.variants.turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUpperDensity A ≤ 1 := by
+theorem erdos_turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUpperDensity A ≤ 1 := by
   sorry
 
 /--
@@ -82,7 +82,7 @@ If any finite Sidon set can be embedded in a perfect difference set,
 then the maximum density would be 1.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_329.variants.of_sub_perfectDifferenceSet :
+theorem erdos_329.of_sub_perfectDifferenceSet :
     (∀ (A : Finset ℕ), IsSidon (A : Set ℕ) → ∃ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) →
     sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1 := by
@@ -93,7 +93,7 @@ The converse: if the maximum density is 1, then any finite Sidon set
 can be embedded in a perfect difference set.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_329.variants.converse_implication :
+theorem erdos_329.converse_implication :
     (sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1) →
     (∀ (A : Finset ℕ), IsSidon (A : Set ℕ) → ∃ (D : Set ℕ) (n : ℕ),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) := by

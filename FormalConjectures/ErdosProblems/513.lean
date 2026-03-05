@@ -36,7 +36,7 @@ noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
 /-- Let `f` be a transcendental entire function. What is the greatest possible value of
 `liminf (fun r : ℝ => ratio r f) atTop`? -/
 @[category research open, AMS 30]
-theorem erdos_513 : answer(sorry) =
+theorem erdos_513.sup : answer(sorry) =
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},
     (liminf (fun r : ℝ => ratio r f) atTop) := by
   sorry
@@ -44,14 +44,14 @@ theorem erdos_513 : answer(sorry) =
 /-- For all transcendental entire function `f`, `liminf (fun r : ℝ => ratio r f) atTop ≤ 2 / π - c`
 for some `c > 0`. This is proved in [ClHa64]. -/
 @[category research solved, AMS 30]
-theorem erdos_513.variants.upper_bound : ∃ c > 0,
+theorem erdos_513.upper_bound : ∃ c > 0,
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},
     (liminf (fun r : ℝ => ratio r f) atTop) ≤ 2 / π - c := by
   sorry
 
 /-- For all transcendental entire function `f`, `liminf (fun r : ℝ => ratio r f) atTop > 1 / 2`. -/
 @[category research solved, AMS 30]
-theorem erdos_513.variants.lower_bound :
+theorem erdos_513.lower_bound :
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},
     (liminf (fun r : ℝ => ratio r f) atTop) > 1 / 2 := by
   sorry

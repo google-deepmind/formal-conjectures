@@ -41,7 +41,7 @@ theorem erdos_409.parts.i (n : ℕ) (hn : 0 < n) :
 /-- If $n > 0$, then the iteration $n\mapsto\phi(n) + 1$ necessarily
 reaches a prime. -/
 @[category test, AMS 11]
-theorem erdos_409.variants.termination (n : ℕ) (hn : 0 < n) :
+theorem erdos_409.termination (n : ℕ) (hn : 0 < n) :
     ∃ i, (φ · + 1)^[i] n |>.Prime := by
   sorry
 

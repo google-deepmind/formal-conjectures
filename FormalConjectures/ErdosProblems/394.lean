@@ -42,7 +42,7 @@ noncomputable def t (k n : ℕ) : ℕ :=
 Is it true that $\sum_{n\leq x}t_2(n)\ll \frac{x^2}{(\log x)^c}$ for some $c>0$?
 -/
 @[category research open, AMS 11]
-theorem erdos_394.parts.i :
+theorem erdos_394_part_a :
     answer(sorry) ↔
       ∃ c > 0, (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
       (t 2 n : ℝ)) ≪ (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
@@ -52,7 +52,7 @@ theorem erdos_394.parts.i :
 Is it true that, for $k\geq 2$, $\sum_{n\leq x}t_{k+1}(n) =o\left(\sum_{n\leq x}t_k(n)\right)?$
 -/
 @[category research open, AMS 11]
-theorem erdos_394.parts.ii :
+theorem erdos_394_part_b :
     answer(sorry) ↔
       ∀ k ≥ 2, (fun (x : ℝ) ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
       (t (k + 1) n : ℝ)) =o[atTop]
@@ -66,7 +66,7 @@ and Hall [ErHa78], who proved that in fact
 $\sum_{n\leq x}t_2(n)\ll \frac{\log\log\log x}{\log\log x}x^2.$
 -/
 @[category research solved, AMS 11]
-theorem erdos_394.variants.hall_bound :
+theorem erdos_394_hall_bound :
     (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) ≪
     (fun x ↦ x ^ 2 * (Real.log (Real.log (Real.log x)) / Real.log (Real.log x))) := by
   sorry
@@ -75,7 +75,7 @@ theorem erdos_394.variants.hall_bound :
 Erdős and Hall conjecture that the sum is $o(x^2/(\log x)^c)$ for any $c<\log 2$.
 -/
 @[category research open, AMS 11]
-theorem erdos_394.variants.hall_conjecture :
+theorem erdos_394_hall_conjecture :
     ∀ c < Real.log 2, (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
     (t 2 n : ℝ)) =o[atTop]
     (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
@@ -85,7 +85,7 @@ theorem erdos_394.variants.hall_conjecture :
 Since $t_2(p)=p-1$ for prime $p$ it is trivial that $\sum_{n\leq x}t_2(n)\gg \frac{x^2}{\log x}$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_394.variants.lower_bound :
+theorem erdos_394_lower_bound :
     (fun x ↦ x ^ 2 / Real.log x) ≫
     (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) := by
   sorry
@@ -95,7 +95,7 @@ They ask about the behaviour of $t_{n-3}(n!)$ and also ask whether, for infinite
 $t_k(n!)< t_{k-1}(n!)-1$ for all $1\leq k < n$.
 -/
 @[category research open, AMS 11]
-theorem erdos_394.variants.factorial_gap_conjecture :
+theorem erdos_394_factorial_gap_conjecture :
     answer(sorry) ↔
       Set.Infinite { n : ℕ | ∀ k, 2 ≤ k → k < n →
       t k (n !) < t (k - 1) (n !) - 1 } := by
@@ -105,7 +105,7 @@ theorem erdos_394.variants.factorial_gap_conjecture :
 They proved (with Selfridge) that this holds for $n=10$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_394.variants.factorial_gap_10 :
+theorem erdos_394_factorial_gap_10 :
     ∀ (k : ℕ), 2 ≤ k → k < 10 →
     t k (10 !) <
     t (k - 1) (10 !) - 1 := by
