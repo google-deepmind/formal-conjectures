@@ -1,0 +1,66 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Erdős Problem 435
+
+Determine the largest natural number not representable as a non-negative integer
+linear combination of the interior binomial coefficients $\binom{n}{i}$ for
+$1 \le i \le n-1$, when $n \ge 2$ is not a prime power.
+
+*Reference:* [erdosproblems.com/435](https://www.erdosproblems.com/435)
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[HwSo24] Hwang, F. K. and Song, J. (2024).
+-/
+
+open Finset BigOperators
+
+namespace Erdos435
+
+/-- The set of natural numbers representable as a non-negative integer linear
+combination of the binomial coefficients $\binom{n}{i}$ for $1 \le i \le n-1$. -/
+def BinomialRepresentable (n : ℕ) : Set ℕ :=
+  {m : ℕ | ∃ c : ℕ → ℕ, m = ∑ i ∈ range (n - 1), c i * n.choose (i + 1)}
+
+/-- The formula for the answer to Erdős Problem 435:
+$$\sum_p \left(\sum_{d=1}^{v_p(n)} \binom{n}{p^d}\right) \cdot (p - 1) - n$$
+where the outer sum ranges over primes $p$ dividing $n$ and $v_p(n)$ is the
+$p$-adic valuation of $n$. -/
+noncomputable def erdos435Formula (n : ℕ) : ℕ :=
+  (∑ p ∈ n.factorization.support,
+    (∑ d ∈ range (n.factorization p), n.choose (p ^ (d + 1))) * (p - 1)) - n
+
+/-- Erdős Problem 435 [ErGr80, p.86]:
+
+Let $n \in \mathbb{N}$ with $n \ge 2$ and $n$ not a prime power. The largest natural number
+not representable as $\sum_{1 \le i < n} c_i \binom{n}{i}$ with non-negative integers $c_i$
+equals
+$$\sum_p \left(\sum_{d=1}^{v_p(n)} \binom{n}{p^d}\right) \cdot (p - 1) - n,$$
+where the outer sum is over primes $p$ dividing $n$.
+
+First proved by Hwang and Song [HwSo24]. Independently found by Peake and Cambie. -/
+@[category research solved, AMS 5 11]
+theorem erdos_435 (n : ℕ) (hn : 2 ≤ n) (hnpp : ¬IsPrimePow n) :
+    erdos435Formula n ∉ BinomialRepresentable n ∧
+    ∀ m : ℕ, m > erdos435Formula n → m ∈ BinomialRepresentable n := by
+  sorry
+
+end Erdos435
