@@ -40,7 +40,7 @@ Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
 theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     (g : SL(n, ℝ) ⧸ Subgroup.map (map (Int.castRingHom ℝ)) ⊤)
     (hg : IsCompact <| closure (MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g)) :
-    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g :=
+    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g := by
   sorry
 
 end
@@ -68,15 +68,8 @@ section FunctionFieldDiagonalOrbit
 variable (F : Type u) [Field F] [Fintype F]
 
 /-- The natural inclusion `F[t] →+* F((t⁻¹))`. -/
-noncomputable def polyToLaurent :F[X] →+* F⸨X⸩ :=
+noncomputable def polyToLaurent : F[X] →+* F⸨X⸩ :=
   (HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom
-
-
-/-- Group hom `SL₄(F[t]) → SL₄(F((t⁻¹)))` induced by the natural inclusion `F[t] →+* F((t⁻¹))`. -/
-noncomputable def SL4_map_polyToLaurent :
-    SL(4, F[X]) →* SL(4, F⸨X⸩) :=
-  Matrix.SpecialLinearGroup.map
-    (polyToLaurent F)
 
 /-- **Huang–Shi, Theorem 1.2 (Lean statement).**
 
@@ -91,8 +84,9 @@ closure but is not closed.
 -/
 @[category research solved, AMS 11 15 22]
 theorem huang_shi_theorem_1_2
-    (hchar : ringChar (F⸨X⸩) ∈ ({3, 5, 7, 11} : Finset ℕ)) :
-    ∃ z : SL(4, F⸨X⸩) ⧸ (SL4_map_polyToLaurent (F := F)).range,
+    (hchar : ringChar F ∈ ({3, 5, 7, 11} : Finset ℕ)) :
+    ∃ z : SL(4, F⸨X⸩) ⧸ (  Matrix.SpecialLinearGroup.map
+    (polyToLaurent F)).range,
       IsCompact (closure (MulAction.orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z)) ∧
       ¬ IsClosed (MulAction.orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z) := by
   -- Placeholder: a Lean formalization would require a full development
