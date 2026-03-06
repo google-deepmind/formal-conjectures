@@ -84,54 +84,42 @@ theorem green_14_quadratic :
     answer(False) ↔ (fun r => ((W 3 r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ 2) := by
   sorry
 
-/--
-[Gr21] proved a lower bound of shape $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$.
--/
+/-- [Gr21] proved a lower bound of shape $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_green :
     answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(4/3 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
-/--
-[Hu22] improved this to $W(3, r) \gg \exp(c(\log r)^{2-o(1)})$.
--/
+/-- [Hu22] improved this to $W(3, r) \gg \exp(c(\log r)^{2-o(1)})$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_hunter :
     answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
-/--
-[BLR08] proved $W(3, r) \gg r^{2 - 1/\log \log r}$.
--/
+/-- [BLR08] proved $W(3, r) \gg r^{2 - 1/\log \log r}$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_brown_landman_robertson :
     answer(sorry) ↔
     (fun (r : ℕ) => (r : ℝ)^(2 - 1 / Real.log (Real.log r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
-/--
-[LiSh10] proved $W(3, r) \gg (r / \log r)^2$.
--/
+/-- [LiSh10] proved $W(3, r) \gg (r / \log r)^2$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_li_shu :
     answer(sorry) ↔
     (fun (r : ℕ) => ((r : ℝ) / Real.log r)^2) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
-/--
-[Sc20] proves the upper bound $W(3, r) < \exp(r^{1-c})$ for some $c > 0$.
--/
+/-- [Sc20] proves the upper bound $W(3, r) < \exp(r^{1-c})$ for some $c > 0$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_upper_bound_schoen :
     answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧
     (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp ((r : ℝ) ^ (1 - c))) := by
   sorry
 
-/--
-[KeMe23] gives a corresponding upper bound $W(3, r) \ll \exp(C(\log r)^C)$.
--/
+/-- [KeMe23] gives a corresponding upper bound $W(3, r) \ll \exp(C(\log r)^C)$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_upper_bound_kelley_meka :
     answer(sorry) ↔ ∃ C : ℝ,
