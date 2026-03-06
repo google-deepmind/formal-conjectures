@@ -70,11 +70,12 @@ theorem green_14_polynomial (k : ℕ) :
 
 /--
 Is $W(3, r) \ll r^2$?
+
+[Gr21] proves a superpolynomial lower bound $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$.
 -/
 @[category research solved, AMS 5 11]
 theorem green_14_quadratic :
     answer(False) ↔ (fun r => ((W 3 r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ 2) := by
-    -- [Gr21] proves a superpolynomial lower bound $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$.
   sorry
 
 /--
