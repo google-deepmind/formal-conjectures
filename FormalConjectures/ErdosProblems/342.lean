@@ -48,11 +48,10 @@ def IsUlamSequence (u : ℕ → ℕ) : Prop :=
     ∀ m : ℕ, u n < m → UniqueUlamSum u n m → u (n + 1) ≤ m
 
 /--
-**Ulam pair conjecture**
-There are infinitely many pairs of consecutive Ulam numbers differing by `2`.
+Do infinitely many pairs (a, a+2) occur in Ulam's sequence?
 -/
-@[category research open, AMS 11]
-theorem ulam_infinitely_many_pairs :
+@[category research open, AMS 05 40]
+theorem erdos_342_infinitely_many_pairs :
     answer(sorry) ↔
       ∀ u : ℕ → ℕ, IsUlamSequence u →
         ∀ N : ℕ, ∃ n ≥ N, u (n + 1) = u n + 2 := by
