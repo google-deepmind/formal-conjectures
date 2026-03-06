@@ -61,11 +61,17 @@ noncomputable def W (k r : ℕ) : ℕ := sInf (mixedMonoAPGuaranteeSet k r)
 Is $W(k, r)$ a polynomial in $r$, for fixed $k$?
 
 We formulate this as asking if $W(k, r)$ has polynomial growth in $r$.
+We know it is not the case for $k = 3$ [Gr21, p.3].
 -/
 @[category research open, AMS 5 11]
-theorem green_14_polynomial (k : ℕ) :
-    answer(sorry) ↔ ∃ d : ℕ, (fun r => ((W k r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ d) := by
-    -- We know it is not the case for k=3.
+theorem green_14_polynomial :
+    answer(sorry) ↔ ∀ k ≥ 4, ∃ d : ℕ, (fun r => ((W k r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ d) := by
+  sorry
+
+/-- We know $W(3, r)$ does not have polynomial growth in $r$ [Gr21, p.3]. -/
+@[category research solved, AMS 5 11]
+theorem green_14_polynomial_k_eq_3 :
+    ¬ ∃ d : ℕ, (fun r => ((W 3 r) : ℝ)) =O[atTop] (fun r => (r : ℝ) ^ d) := by
   sorry
 
 /--
@@ -254,7 +260,7 @@ theorem W_3_29_lower : answer(sorry) ↔ W 3 29 ≥ 868 := sorry
 @[category research open, AMS 5 11]
 theorem W_3_30_lower : answer(sorry) ↔ W 3 30 ≥ 903 := sorry
 
-/-- Conjectured strict bounds for W(3,r) from [AKS14, Table 3]. -/
+-- Conjectured strict bounds for W(3,r) from [AKS14, Table 3].
 /-- $W(3, 31) > 930$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_31_lower : answer(sorry) ↔ W 3 31 > 930 := sorry
