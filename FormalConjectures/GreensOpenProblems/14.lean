@@ -131,7 +131,16 @@ It remains an interesting open problem to actually write down a colouring showin
 $W(3, r) \ge 2r^2$ for some $r$. [Gr24]
 -/
 @[category research open, AMS 5 11]
-theorem green_14_variant_2r2 : answer(sorry) ↔ ∃ r, 3 ≤ r ∧ W 3 r ≥ 2 * r^2 := by
+theorem green_14_variant_2r2 :
+    -- Provide a pair (r, associated coloring) that avoids the monochromatic APs
+    -- To show $W(3, r) > 2r^2 - 1$, we need a coloring of $\{1, \ldots, 2r^2 - 1\}$
+    -- that avoids monochromatic APs of length 3 and $r$.
+    let ans : Σ r : ℕ, Icc 1 (2 * r^2 - 1) → Fin 2 := answer(sorry)
+    let r := ans.1
+    let c := ans.2
+    3 ≤ r ∧
+    ¬ ((∃ s : Finset (Icc 1 (2 * r^2 - 1)), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 0) ∨
+       (∃ s : Finset (Icc 1 (2 * r^2 - 1)), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength r ∧ ∀ x ∈ s, c x = 1)) := by
   sorry
 
 -- Known exact values for `W(3,r)` from [AKS14].
