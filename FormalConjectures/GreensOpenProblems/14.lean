@@ -45,7 +45,7 @@ namespace Green14
 The set of natural numbers $N$ such that any 2-coloring of ${1, ..., N}$ contains a monochromatic
 arithmetic progression of length $k$ (color 0) or length $r$ (color 1).
 -/
-def mixed_monoAP_guarantee_set (k r : ℕ) : Set ℕ :=
+def mixedMonoAPGuaranteeSet (k r : ℕ) : Set ℕ :=
   { N | ∀ coloring : Icc 1 N → Fin 2,
     (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength k ∧ ∀ x ∈ s, coloring x = 0) ∨
     (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength r ∧ ∀ x ∈ s, coloring x = 1) }
@@ -55,7 +55,7 @@ We define the 2-colour van der Waerden numbers $W(k, r)$ to be the least quantit
 $\{1, ... , W(k, r)\}$ is coloured red and blue then there is either a red $k$-term progression
 or a blue $r$-term progression.
 -/
-noncomputable def W (k r : ℕ) : ℕ := sInf (mixed_monoAP_guarantee_set k r)
+noncomputable def W (k r : ℕ) : ℕ := sInf (mixedMonoAPGuaranteeSet k r)
 
 /--
 Is $W(k, r)$ a polynomial in $r$, for fixed $k$?
