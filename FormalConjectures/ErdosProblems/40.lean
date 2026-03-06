@@ -77,7 +77,8 @@ theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40ForSet .univ) : type_of% Erdos
     use n + 1
     intro m hm
     have : 0 < m := by omega
-    field_simp [norm_one, Real.norm_natCast, one_mul, Nat.one_le_cast, ge_iff_le]
+    field_simp
+    simp only [one_mem, CStarRing.norm_of_mem_unitary, RCLike.norm_natCast, Nat.one_le_cast]
     apply Nat.card_pos_iff.mpr
     constructor
     · by_contra h_empty

@@ -20,7 +20,8 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 397
 
 *References:*
- - [erdosproblems.com/397](https://www.erdosproblems.com/397)
+- [erdosproblems.com/397](https://www.erdosproblems.com/397)
+- [MathOverflow] (https://mathoverflow.net/questions/138209/product-of-central-binomial-coefficients)
 -/
 
 open Nat
@@ -33,11 +34,20 @@ $$
   \prod_i \binom{2m_i}{m_i}=\prod_j \binom{2n_j}{n_j}
 $$
 with the $m_i,n_j$ distinct?
+
+Somani, using ChatGPT, has given a negative answer. In fact, for any $a\geq 2$, if $c=8a^2+8a+1$,
+$\binom{2a}{a}\binom{4a+4}{2a+2}\binom{2c}{c}= \binom{2a+2}{a+1}\binom{4a}{2a}\binom{2c+2}{c+1}.$
+Further families of solutions are given in the comments by SharkyKesa.
+
+This was earlier asked about in a [MathOverflow] question, in response to which Elkies also gave an
+alternative construction which produces solutions - at the moment it is not clear whether Elkies'
+argument gives infinitely many solutions (although Bloom believes that it can).
 -/
-@[category research open, AMS 11]
-theorem erdos_397 : answer(sorry) ↔
-    {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
-    ∏ i ∈ M, centralBinom i = ∏ j ∈ N, centralBinom j}.Finite := by
+@[category research solved, AMS 11]
+theorem erdos_397 :
+    answer(False) ↔
+      {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
+      ∏ i ∈ M, centralBinom i = ∏ j ∈ N, centralBinom j}.Finite := by
   sorry
 
 end Erdos397

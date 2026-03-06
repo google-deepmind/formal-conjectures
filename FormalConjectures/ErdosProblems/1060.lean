@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Asymptotics Finset Filter Real
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos1060
 
@@ -33,12 +33,12 @@ $\log n$.
 -/
 
 @[category research open, AMS 11]
-theorem erdos_1060.bound_one :
+theorem erdos_1060.parts.i :
     ∃ h : ℕ → ℝ,
       h =o[atTop] (fun n ↦ 1 / log (log n)) ∧ ∀ᶠ n in atTop, #{k ≤ n | k * σ 1 k = n} ≤ (n : ℝ) ^ h n := by sorry
 
 @[category research open, AMS 11]
-theorem erdos_1060.bound_two :
+theorem erdos_1060.parts.ii :
     ∃ (C : ℝ), (fun n ↦ (#{k ≤ n | k * σ 1 k = n} : ℝ)) =O[atTop]
       (fun n ↦ log n ^ C) := by sorry
 
