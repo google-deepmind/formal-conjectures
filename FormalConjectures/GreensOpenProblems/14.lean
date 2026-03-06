@@ -140,116 +140,153 @@ theorem green_14_variant_2r2 : answer(sorry) ↔ ∃ r, 3 ≤ r ∧ W 3 r ≥ 2 
   sorry
 
 -- Known exact values for `W(3,r)` from [AKS14].
+/-- $W(3, 3) = 9$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_3 : W 3 3 = 9 := by sorry
 
+/-- $W(3, 4) = 18$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_4 : W 3 4 = 18 := by sorry
 
+/-- $W(3, 5) = 22$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_5 : W 3 5 = 22 := by sorry
 
+/-- $W(3, 6) = 32$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_6 : W 3 6 = 32 := by sorry
 
+/-- $W(3, 7) = 46$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_7 : W 3 7 = 46 := by sorry
 
+/-- $W(3, 8) = 58$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_8 : W 3 8 = 58 := by sorry
 
+/-- $W(3, 9) = 77$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_9 : W 3 9 = 77 := by sorry
 
+/-- $W(3, 10) = 97$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_10 : W 3 10 = 97 := by sorry
 
+/-- $W(3, 11) = 114$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_11 : W 3 11 = 114 := by sorry
 
+/-- $W(3, 12) = 135$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_12 : W 3 12 = 135 := by sorry
 
+/-- $W(3, 13) = 160$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_13 : W 3 13 = 160 := by sorry
 
+/-- $W(3, 14) = 186$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_14 : W 3 14 = 186 := by sorry
 
+/-- $W(3, 15) = 218$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_15 : W 3 15 = 218 := by sorry
 
+/-- $W(3, 16) = 238$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_16 : W 3 16 = 238 := by sorry
 
+/-- $W(3, 17) = 279$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_17 : W 3 17 = 279 := by sorry
 
+/-- $W(3, 18) = 312$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_18 : W 3 18 = 312 := by sorry
 
+/-- $W(3, 19) = 349$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
 theorem W_3_19 : W 3 19 = 349 := by sorry
 
 -- Conjectured lower bounds for W(3,r) from [AKS14, Table 2].
+/-- $W(3, 20) \ge 389$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_20_lower : answer(sorry) ↔ W 3 20 ≥ 389 := sorry
 
+/-- $W(3, 21) \ge 416$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_21_lower : answer(sorry) ↔ W 3 21 ≥ 416 := sorry
 
+/-- $W(3, 22) \ge 464$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_22_lower : answer(sorry) ↔ W 3 22 ≥ 464 := sorry
 
+/-- $W(3, 23) \ge 516$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_23_lower : answer(sorry) ↔ W 3 23 ≥ 516 := sorry
 
+/-- $W(3, 24) \ge 593$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_24_lower : answer(sorry) ↔ W 3 24 ≥ 593 := sorry
 
+/-- $W(3, 25) \ge 656$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_25_lower : answer(sorry) ↔ W 3 25 ≥ 656 := sorry
 
+/-- $W(3, 26) \ge 727$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_26_lower : answer(sorry) ↔ W 3 26 ≥ 727 := sorry
 
+/-- $W(3, 27) \ge 770$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_27_lower : answer(sorry) ↔ W 3 27 ≥ 770 := sorry
 
+/-- $W(3, 28) \ge 827$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_28_lower : answer(sorry) ↔ W 3 28 ≥ 827 := sorry
 
+/-- $W(3, 29) \ge 868$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_29_lower : answer(sorry) ↔ W 3 29 ≥ 868 := sorry
 
+/-- $W(3, 30) \ge 903$ from [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
 theorem W_3_30_lower : answer(sorry) ↔ W 3 30 ≥ 903 := sorry
 
 /-- Conjectured strict bounds for W(3,r) from [AKS14, Table 3]. -/
+/-- $W(3, 31) > 930$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_31_lower : answer(sorry) ↔ W 3 31 > 930 := sorry
 
+/-- $W(3, 32) > 1006$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_32_lower : answer(sorry) ↔ W 3 32 > 1006 := sorry
 
+/-- $W(3, 33) > 1063$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_33_lower : answer(sorry) ↔ W 3 33 > 1063 := sorry
 
+/-- $W(3, 34) > 1143$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_34_lower : answer(sorry) ↔ W 3 34 > 1143 := sorry
 
+/-- $W(3, 35) > 1204$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_35_lower : answer(sorry) ↔ W 3 35 > 1204 := sorry
 
+/-- $W(3, 36) > 1257$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_36_lower : answer(sorry) ↔ W 3 36 > 1257 := sorry
 
+/-- $W(3, 37) > 1338$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_37_lower : answer(sorry) ↔ W 3 37 > 1338 := sorry
 
+/-- $W(3, 38) > 1378$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_38_lower : answer(sorry) ↔ W 3 38 > 1378 := sorry
 
+/-- $W(3, 39) > 1418$ from [AKS14, Table 3]. -/
 @[category research open, AMS 5 11]
 theorem W_3_39_lower : answer(sorry) ↔ W 3 39 > 1418 := sorry
 
