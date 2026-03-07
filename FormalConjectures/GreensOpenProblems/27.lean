@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Green's Open Problem 27
@@ -34,8 +35,7 @@ A set `A` has no unique representation in its sumset `A + A` if for every pair o
 and `{a₁, a₂} ≠ {b₁, b₂}`.
 -/
 def HasNoUniqueRepresentation {G : Type*} [AddCommMonoid G] (A : Finset G) : Prop :=
-  ∀ a₁ ∈ A, ∀ a₂ ∈ A, ∃ b₁ ∈ A, ∃ b₂ ∈ A,
-    a₁ + a₂ = b₁ + b₂ ∧ ¬((a₁ = b₁ ∧ a₂ = b₂) ∨ (a₁ = b₂ ∧ a₂ = b₁))
+  allUniqueSums (A : Set G) = ∅
 
 /--
 This is $m(p)$ in [Be23]: the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with
