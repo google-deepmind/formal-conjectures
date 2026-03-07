@@ -38,8 +38,8 @@ def HasNoUniqueRepresentation {G : Type*} [AddCommMonoid G] (A : Finset G) : Pro
     a₁ + a₂ = b₁ + b₂ ∧ ¬((a₁ = b₁ ∧ a₂ = b₂) ∨ (a₁ = b₂ ∧ a₂ = b₁))
 
 /--
-m(p) in [Be23]: the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with at least
-two elements) for which no element in the sumset $A + A$ has a unique representation.
+This is $m(p)$ in [Be23]: the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with
+at least two elements) for which no element in the sumset $A + A$ has a unique representation.
 -/
 noncomputable def m (p : ℕ) : ℝ :=
   (sInf { (A.card) | (A : Finset (ZMod p)) (_ : 2 ≤ A.card) (_ : HasNoUniqueRepresentation A) } : ℝ)
@@ -79,7 +79,7 @@ theorem green_27.upper :
   sorry
 
 /--
-$m(p) \geq \omega(p) \log p$ for some function $\omega(p)$ tending to infinity [Be23, Theorem 3].
+We have $m(p) \geq \omega(p) \log p$ for some function $\omega(p)$ tending to infinity [Be23, Theorem 3].
 -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.lower_be23 :
@@ -88,19 +88,19 @@ theorem green_27.variants.lower_be23 :
       ω p * Real.log (p : ℝ) ≤ m p := by
   sorry
 
-/-- $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
+/-- Upper bound: $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.upper_be23 :
   m =O[primesAtTop] upperBest := by
   sorry
 
-/-- Previous best-known lower bound [Be23]. -/
+/-- Previous best-known lower bound $\log p \ll m(p)$ from [St76]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.previous_lower :
   (fun p ↦ Real.log (p : ℝ)) =O[primesAtTop] m := by
   sorry
 
-/-- Previous best-known upper bound [Be23]. -/
+/-- Previous best-known upper bound $m(p) \ll \sqrt{p}$ from [Be23]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.previous_upper :
   m =O[primesAtTop] (fun p ↦ Real.sqrt (p : ℝ)) := by
