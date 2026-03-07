@@ -44,23 +44,23 @@ def f (n : ℕ) : ℕ := if Even n then n.fib - 1 else n.fib + 1
 
 /-- The sequence `f` is lacunary. -/
 @[category test, AMS 11]
-theorem erdos_346.f_isLacunary : IsLacunary f := by sorry
+theorem erdos_346.variants.f_isLacunary : IsLacunary f := by sorry
 
 /-- The sequence `f` is strongly complete, and this is proved in [Gr64d]. -/
 @[category test, AMS 11]
-theorem erdos_346.f_isAddStronglyCompleteNatSeq : IsAddStronglyCompleteNatSeq f := by sorry
+theorem erdos_346.variants.f_isAddStronglyCompleteNatSeq : IsAddStronglyCompleteNatSeq f := by sorry
 
 /-- The sequence `f` is not complete whenever infinitely many terms are removed from it, and this
 is proved in [Gr64d]. -/
 @[category test, AMS 11]
-theorem erdos_346.f_not_isAddComplete {B : Set ℕ} (h : B ⊆ range f) (hB : B.Infinite) :
+theorem erdos_346.variants.f_not_isAddComplete {B : Set ℕ} (h : B ⊆ range f) (hB : B.Infinite) :
     ¬ IsAddComplete (range f \ B) := by
   sorry
 
 /-- Erdős and Graham [ErGr80] remark that it is easy to see that if `A (n + 1) / A n > (1 + √5) / 2`
 then the second property is automatically satisfied. -/
 @[category research solved, AMS 11]
-theorem erdos_346.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
+theorem erdos_346.variants.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
     (hA : ∀ n, (1 + √5) / 2 * A n < A (n + 1)) {B : Set ℕ} (h : B ⊆ range A) (hB : B.Infinite) :
     ¬ IsAddComplete (range A \ B) := by
   sorry
@@ -68,7 +68,7 @@ theorem erdos_346.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
 /-- Erdős and Graham [ErGr80] also say that it is not hard to construct very irregular sequences
 satisfying the aforementioned properties. -/
 @[category research solved, AMS 11]
-theorem erdos_346.example : ∃ A : ℕ → ℕ, IsAddStronglyCompleteNatSeq A ∧
+theorem erdos_346.variants.example : ∃ A : ℕ → ℕ, IsAddStronglyCompleteNatSeq A ∧
     (∀ B : Set ℕ, B ⊆ range A → B.Infinite → ¬ IsAddComplete (range A \ B)) ∧
     liminf (fun n => A (n + 1) / (2 : ℝ)) atTop = 1 ∧
     limsup (fun n => A (n + 1) / (A n : ENNReal)) atTop = ⊤ := by
