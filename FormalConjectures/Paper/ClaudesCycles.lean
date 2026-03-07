@@ -28,13 +28,13 @@ Fix `m ≥ 2`. Consider the directed graph with vertex set `(ZMod m)³`, where f
 edge-disjoint directed Hamiltonian cycles (each of length `m³`).
 
 Knuth describes an explicit construction, found by Claude (Anthropic), that achieves this
-decomposition for all odd `m ≥ 3`. The case `m = 2` is known to be impossible
-(Aubert–Schneider, 1982). The even case `m > 2` remains open.
+decomposition for all odd `m ≥ 3`. The case `m = 2` is known to be impossible [Aub82].
+The even case `m > 2` remains open.
 
 ## References
 
-- D. E. Knuth, "Claude's Cycles" (2026).
-- J. Aubert, B. Schneider, "Graphes orientés indécomposables en circuits hamiltoniens",
+- [Knu26] D. E. Knuth, "Claude's Cycles" (2026).
+- [Aub82] J. Aubert, B. Schneider, "Graphes orientés indécomposables en circuits hamiltoniens",
   J. Combin. Theory Ser. B 32 (1982), 347–349.
 -/
 
@@ -61,43 +61,35 @@ def IsDirectedHamiltonianCycle {V : Type*} [Fintype V] [DecidableEq V]
     (adj : V → V → Prop) (σ : Equiv.Perm V) : Prop :=
   (∀ v, adj v (σ v)) ∧ σ.IsCycle ∧ σ.support = Finset.univ
 
-/--
-For odd `m > 1`, the arcs of the cube digraph on `(ZMod m)³` can be decomposed into three
-directed Hamiltonian cycles: there exist three permutations, each forming a directed Hamiltonian
-cycle, such that every arc `(v, bumpAt b v)` belongs to exactly one cycle.
--/
+/-- The arcs of the cube digraph on `(ZMod m)³` can be decomposed into three directed
+Hamiltonian cycles: there exist three permutations, each forming a directed Hamiltonian
+cycle, such that every arc `(v, bumpAt b v)` belongs to exactly one cycle. -/
+def HasHamiltonianArcDecomposition (m : ℕ) [NeZero m] : Prop :=
+  ∃ σ : Fin 3 → Equiv.Perm (Vertex m),
+    (∀ c, IsDirectedHamiltonianCycle (cubeAdj (m := m)) (σ c)) ∧
+    (∀ v : Vertex m, ∀ b : Fin 3, ∃! c : Fin 3, σ c v = bumpAt b v)
+
+/-- For odd `m > 1`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition
+into three directed cycles [Knu26]. -/
 @[category research formally solved using lean4 at
   "https://github.com/kim-em/KnuthClaudeLean", AMS 5]
 theorem cube_hamiltonian_arc_decomposition {m : ℕ} [NeZero m] (hm : Odd m) (hm' : 1 < m) :
-    ∃ σ : Fin 3 → Equiv.Perm (Vertex m),
-      (∀ c, IsDirectedHamiltonianCycle (cubeAdj (m := m)) (σ c)) ∧
-      (∀ v : Vertex m, ∀ b : Fin 3, ∃! c : Fin 3, σ c v = bumpAt b v) := by
+    HasHamiltonianArcDecomposition m := by
   sorry
 
-/--
-The case `m = 2` is impossible: there is no decomposition of the arcs of the cube digraph
-on `(ZMod 2)³` into three directed Hamiltonian cycles.
-
-*Reference:* J. Aubert, B. Schneider, "Graphes orientés indécomposables en circuits hamiltoniens",
-J. Combin. Theory Ser. B 32 (1982), 347–349.
--/
+/-- The case `m = 2` is impossible: the cube digraph on `(ZMod 2)³` does not have a
+Hamiltonian arc decomposition [Aub82]. -/
 @[category research solved, AMS 5]
 theorem cube_hamiltonian_arc_decomposition_impossible_m2 :
-    ¬ ∃ σ : Fin 3 → Equiv.Perm (Vertex 2),
-      (∀ c, IsDirectedHamiltonianCycle (cubeAdj (m := 2)) (σ c)) ∧
-      (∀ v : Vertex 2, ∀ b : Fin 3, ∃! c : Fin 3, σ c v = bumpAt b v) := by
+    ¬ HasHamiltonianArcDecomposition 2 := by
   sorry
 
-/--
-For even `m > 2`, it is open whether the arcs of the cube digraph on `(ZMod m)³` can be
-decomposed into three directed Hamiltonian cycles.
--/
+/-- For even `m > 2`, it is open whether the cube digraph on `(ZMod m)³` has a Hamiltonian
+arc decomposition. -/
 @[category research open, AMS 5]
-theorem cube_hamiltonian_arc_decomposition_even {m : ℕ} [NeZero m]
-    (hm : Even m) (hm' : 2 < m) :
-    ∃ σ : Fin 3 → Equiv.Perm (Vertex m),
-      (∀ c, IsDirectedHamiltonianCycle (cubeAdj (m := m)) (σ c)) ∧
-      (∀ v : Vertex m, ∀ b : Fin 3, ∃! c : Fin 3, σ c v = bumpAt b v) := by
+theorem cube_hamiltonian_arc_decomposition_even :
+    answer(sorry) ↔ ∀ᵉ (m : ℕ) (_ : NeZero m) (_ : Even m) (_ : 2 < m),
+      HasHamiltonianArcDecomposition m := by
   sorry
 
 end ClaudesCycles
