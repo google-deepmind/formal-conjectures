@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«20»
 
 /-!
 # Erdős Problem 857
@@ -30,28 +31,12 @@ open Filter
 
 namespace Erdos857
 
-variable {α : Type}
-
-/--
-A sunflower `F` with kernel `S` is a collection of sets in which all possible distinct pairs
-of sets have intersection `S`.
--/
-def IsSunflowerWithKernel (F : Set (Set α)) (S : Set α) : Prop :=
-  F.Pairwise (fun A B => A ∩ B = S)
-
-/--
-A sunflower is a collection of sets in which all possible distinct pairs have the
-same intersection.
--/
-def IsSunflower (F : Set (Set α)) : Prop :=
-  ∃ S, IsSunflowerWithKernel F S
-
 /--
 `m(n, k)`: minimal sunflower-forcing family size in the non-uniform `[n]` model.
 -/
 noncomputable def m (n k : ℕ) : ℕ :=
   sInf {t : ℕ | ∀ (F : Set (Set (Fin n))), t ≤ F.ncard →
-    ∃ S ⊆ F, S.ncard = k ∧ IsSunflower S}
+    ∃ S ⊆ F, S.ncard = k ∧ Erdos20.IsSunflower S}
 
 /-- Existence of an asymptotic formula for `m(·,k)` up to asymptotic equivalence. -/
 def hasAsymptoticFormula (k : ℕ) : Prop :=
