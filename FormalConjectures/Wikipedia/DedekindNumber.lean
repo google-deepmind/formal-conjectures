@@ -39,7 +39,9 @@ We prove their values for small `n` and show that the two definitions agree for 
 
 The problem is to determine the exact values of $M(n)$ for $n ≥ 10$. In particular, the value of $M(10)$ is currently unknown.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Dedekind_number)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Dedekind_number)
+- [Oeis/A372](https://oeis.org/A000372)
 
 -/
 
