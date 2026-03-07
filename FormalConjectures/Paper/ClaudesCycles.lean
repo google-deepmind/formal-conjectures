@@ -40,15 +40,12 @@ The even case `m > 2` remains open.
 
 namespace ClaudesCycles
 
-/-- The vertex type: triples in `(ZMod m)³`. -/
-abbrev Vertex (m : ℕ) := ZMod m × ZMod m × ZMod m
+/-- The vertex type: vectors in `(ZMod m)³`. -/
+abbrev Vertex (m : ℕ) := Fin 3 → ZMod m
 
 /-- Bump coordinate `b` of vertex `v`: add 1 to the `b`-th component. -/
 def bumpAt {m : ℕ} [NeZero m] (b : Fin 3) (v : Vertex m) : Vertex m :=
-  match b with
-  | 0 => (v.1 + 1, v.2.1, v.2.2)
-  | 1 => (v.1, v.2.1 + 1, v.2.2)
-  | 2 => (v.1, v.2.1, v.2.2 + 1)
+  Function.update v b (v b + 1)
 
 /-- Adjacency in the cube digraph: `u` is adjacent to `v` if `v` is obtained from `u` by
 bumping one coordinate. -/
