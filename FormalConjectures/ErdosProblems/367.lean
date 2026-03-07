@@ -26,30 +26,34 @@ import FormalConjectures.Util.ProblemImports
 The problem asks about bounds on products of 2-full parts over short intervals.
 -/
 
+open Asymptotics Filter
+
 namespace Erdos367
 
 /-- Product of primes dividing `n` with exponent exactly one. -/
-noncomputable def exactlyOncePrimeDivisorProduct (n : ℕ) : ℕ :=
+def exactlyOncePrimeDivisorProduct (n : ℕ) : ℕ :=
   (n.factorization.support.filter (fun p => n.factorization p = 1)).prod id
 
 /--
 `B₂(n)` in the Erdős Problem 367 statement:
 `B₂(n) = n / n'`, where `n'` is the product of all primes dividing `n` exactly once.
 -/
-noncomputable def B2 (n : ℕ) : ℕ :=
+def B2 (n : ℕ) : ℕ :=
   n / exactlyOncePrimeDivisorProduct n
 
 /-- Product `∏_{n ≤ m < n+k} B₂(m)`. -/
-noncomputable def intervalB2Product (n k : ℕ) : ℕ :=
+def intervalB2Product (n k : ℕ) : ℕ :=
   (Finset.range k).prod (fun i => B2 (n + i))
 
-/-- Discrete formulation of a `n^(2+o(1))`-type upper bound with integer slack. -/
+/-- Asymptotic formulation of an `n^(2+o(1))`-type upper bound. -/
 def nearlyQuadraticBound (k : ℕ) : Prop :=
-  ∀ s : ℕ, 1 ≤ s → ∃ C : ℕ, ∀ n : ℕ, 1 ≤ n → intervalB2Product n k ≤ C * n ^ (2 + s)
+  ∃ e : ℕ → ℝ,
+    e =o[atTop] (1 : ℕ → ℝ) ∧
+    ∀ᶠ n in atTop, (intervalB2Product n k : ℝ) ≤ (n : ℝ) ^ (2 + e n)
 
 /-- The stronger variant `≪_k n^2`. -/
 def quadraticBound (k : ℕ) : Prop :=
-  ∃ C : ℕ, ∀ n : ℕ, 1 ≤ n → intervalB2Product n k ≤ C * n ^ 2
+  (fun n ↦ (intervalB2Product n k : ℝ)) =O[atTop] fun n ↦ (n : ℝ) ^ (2 : ℝ)
 
 /--
 For fixed `k ≥ 1`, is `∏_{n ≤ m < n+k} B₂(m) ≪ n^(2+o(1))`?
@@ -73,12 +77,12 @@ theorem erdos_367.variants.k_le_two : ∀ k : ℕ, k ≤ 2 → quadraticBound k 
   sorry
 
 /-- `B_r(n)`: product of prime powers `p^a ‖ n` with `a ≥ r`. -/
-noncomputable def Br (r n : ℕ) : ℕ :=
+def Br (r n : ℕ) : ℕ :=
   (n.factorization.support.filter (fun p => r ≤ n.factorization p)).prod
     (fun p => p ^ (n.factorization p))
 
 /-- Product `∏_{n ≤ m < n+k} B_r(m)`. -/
-noncomputable def intervalBrProduct (r n k : ℕ) : ℕ :=
+def intervalBrProduct (r n k : ℕ) : ℕ :=
   (Finset.range k).prod (fun i => Br r (n + i))
 
 /--
