@@ -13,11 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Mathlib.Combinatorics.SimpleGraph.Coloring
-import Mathlib.Data.Set.Card
+module
+
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.NNRat.Floor
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Combinatorics.SimpleGraph.Coloring
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
 
 variable {V α ι : Type*} {G : SimpleGraph V} {n : ℕ}
 

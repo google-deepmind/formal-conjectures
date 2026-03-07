@@ -33,10 +33,11 @@ noncomputable def S (n : ℕ) : ℕ :=
 Let $S(n)$ denote the largest integer such that, for all $1 ≤ k < n$, the binomial coefficient
 $\binom{n}{k}$ is divisible by $p^S(n)$ for some prime $p$ (depending on $k$).Then
 $\limsup S(n) = \infty$.
-See solution in the comments on erdosproblems.com, and
-https://github.com/teorth/analysis/blob/3522239c96742eaa0b3e8db9e7d41fe4c4907b37/analysis/Analysis/Misc/erdos_379.lean#L111
+
+This was formalized in Lean by Tao.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using lean4 at
+"https://github.com/teorth/analysis/blob/main/analysis/Analysis/Misc/erdos_379.lean", AMS 11]
 theorem erdos_379 : atTop.limsup (fun n => (S n : ℕ∞)) = ⊤ := by
   sorry
 

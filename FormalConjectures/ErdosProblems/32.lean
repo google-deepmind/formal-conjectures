@@ -44,7 +44,7 @@ Erdős proved in [Erd54] that there exists an additive complement $A$ to the pri
 $|A \cap \{1, \ldots, N\}| = O((\log N)^2)$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_32_log_squared : ∃ A : Set ℕ,
+theorem erdos_32.varaints.log_squared : ∃ A : Set ℕ,
     IsAdditiveComplementToPrimes A ∧
     (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) =O[atTop]
       fun N => (Real.log N) ^ 2 := by
