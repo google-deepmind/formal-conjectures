@@ -25,6 +25,7 @@ iteration
 $$a_{0} = n, \qquad a_{k+1} = a_k + \operatorname{rev}_{10}(a_k).$$
 
 One commonly stated conjectural direction is that there are no Lychrel numbers in base 10.
+The smallest widely studied open case is `196`.
 
 *References:*
 * [Wikipedia: Lychrel number](https://en.wikipedia.org/wiki/Lychrel_number)
@@ -70,6 +71,13 @@ theorem no_lychrel_numbers_base10 :
     answer(sorry) ↔ ∀ n : ℕ, 0 < n → ¬ IsLychrel10 n := by
   sorry
 
+/--
+The first widely studied open case: whether `196` is a base-10 Lychrel number.
+-/
+@[category research open, AMS 11]
+theorem isLychrel10_196 : answer(sorry) ↔ IsLychrel10 196 := by
+  sorry
+
 /-- An equivalent formulation of `no_lychrel_numbers_base10`. -/
 @[category API, AMS 11]
 theorem eventually_palindrome_base10 :
@@ -100,7 +108,7 @@ theorem palindrome_121 : IsPalindrome10 121 := by
 
 /-- Sanity check: `56 → 121` in one Lychrel step. -/
 @[category test, AMS 11]
-theorem lychrelIter_56_one : (lychrelStep^[1]) 56 = 121 := by
+theorem lychrelIter_56_one : lychrelStep^[1] 56 = 121 := by
   native_decide
 
 /-- Sanity check: the Lychrel iteration at `56` reaches a palindrome. -/
