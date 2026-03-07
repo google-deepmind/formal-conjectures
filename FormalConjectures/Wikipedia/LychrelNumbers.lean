@@ -24,7 +24,7 @@ iteration
 
 $$a_{0} = n, \qquad a_{k+1} = a_k + \operatorname{rev}_{10}(a_k).$$
 
-The main conjecture asserts that there are no Lychrel numbers in base 10.
+One commonly stated conjectural direction is that there are no Lychrel numbers in base 10.
 
 *References:*
 * [Wikipedia: Lychrel number](https://en.wikipedia.org/wiki/Lychrel_number)
@@ -56,27 +56,24 @@ def IsPalindrome10 (n : ℕ) : Prop :=
 def lychrelStep (n : ℕ) : ℕ :=
   n + rev10 n
 
-/-- The `k`-th iterate of the Lychrel step, starting from `n`. -/
-def lychrelIter (n k : ℕ) : ℕ :=
-  Nat.rec n (fun _ acc ↦ lychrelStep acc) k
-
-/-- `n` is a (base-10) Lychrel number if no iterate of the Lychrel process is a palindrome. -/
+/-- The number $n$ is a (base-10) Lychrel number if no iterate of the Lychrel process is a palindrome. -/
 def IsLychrel10 (n : ℕ) : Prop :=
-  ∀ k : ℕ, ¬ IsPalindrome10 (lychrelIter n k)
+  ∀ k : ℕ, ¬ IsPalindrome10 (lychrelStep^[k] n)
 
 /--
-**Lychrel conjecture (base 10):** there are no Lychrel numbers in base 10.
+**Lychrel conjecture (base 10):** conjecturally, there are no Lychrel numbers in base 10.
 
 Equivalently, every positive integer eventually becomes a palindrome under the Lychrel iteration.
 -/
 @[category research open, AMS 11]
-theorem no_lychrel_numbers_base10 : ∀ n : ℕ, 0 < n → ¬ IsLychrel10 n := by
+theorem no_lychrel_numbers_base10 :
+    answer(sorry) ↔ ∀ n : ℕ, 0 < n → ¬ IsLychrel10 n := by
   sorry
 
 /-- An equivalent formulation of `no_lychrel_numbers_base10`. -/
 @[category API, AMS 11]
 theorem eventually_palindrome_base10 :
-    (∀ n : ℕ, 0 < n → ∃ k : ℕ, IsPalindrome10 (lychrelIter n k)) ↔
+    (∀ n : ℕ, 0 < n → ∃ k : ℕ, IsPalindrome10 (lychrelStep^[k] n)) ↔
       (∀ n : ℕ, 0 < n → ¬ IsLychrel10 n) := by
   constructor
   · intro h n hn hn_lychrel
@@ -103,12 +100,12 @@ theorem palindrome_121 : IsPalindrome10 121 := by
 
 /-- Sanity check: `56 → 121` in one Lychrel step. -/
 @[category test, AMS 11]
-theorem lychrelIter_56_one : lychrelIter 56 1 = 121 := by
+theorem lychrelIter_56_one : (lychrelStep^[1]) 56 = 121 := by
   native_decide
 
 /-- Sanity check: the Lychrel iteration at `56` reaches a palindrome. -/
 @[category test, AMS 11]
-theorem eventually_palindrome_56 : ∃ k : ℕ, IsPalindrome10 (lychrelIter 56 k) := by
+theorem eventually_palindrome_56 : ∃ k : ℕ, IsPalindrome10 (lychrelStep^[k] 56) := by
   refine ⟨1, ?_⟩
   dsimp [IsPalindrome10]
   native_decide
