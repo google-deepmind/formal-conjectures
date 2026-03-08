@@ -24,11 +24,9 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos740
 
-variable {V : Type*}
-
-/-- A graph avoids odd cycles of length ≤ r if it contains no odd cycles of length at most r -/
-def avoidsOddCyclesOfLength (G : SimpleGraph V) (r : ℕ) : Prop :=
-  ∀ (n : ℕ) (v : V) (c : G.Walk v v), c.length = n → n ≤ r → Odd n → ¬c.IsCycle
+/-- A graph avoids odd cycles of length $≤ r$ if it contains no odd cycles of length at most $r$. -/
+def NoShortOddCycle {V : Type*} (G : SimpleGraph V) (r : ℕ) : Prop :=
+  ∀ (v : V) (c : G.Walk v v), c.IsCycle → Odd c.length → c.length > r
 
 /--
 Does every graph $G$ with $\chi(G) = \infty$ contain, for every $r \in \mathbb{N}$, a subgraph
@@ -37,9 +35,11 @@ $H \subseteq G$ such that $\chi(H) = \infty$ and $H$ contains no odd cycle of le
 @[category research open, AMS 5]
 theorem erdos_740 :
     answer(sorry) ↔
-      ∀ (r : ℕ) (G : SimpleGraph V),
+      ∀ (V : Type*) (r : ℕ) (G : SimpleGraph V),
         G.chromaticNumber = ⊤ →
-          ∃ (H : G.Subgraph), H.coe.chromaticNumber = ⊤ ∧ avoidsOddCyclesOfLength H.coe r := by
+          ∃ (H : G.Subgraph), H.coe.chromaticNumber = ⊤ ∧ NoShortOddCycle H.coe r := by
   sorry
+
+-- TODO: add the related infinitary chromatic-number statements from erdosproblems.com.
 
 end Erdos740
