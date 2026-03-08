@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,8 +37,8 @@ The Idoneal Numbers Completeness Conjecture asserts that the following list of
 namespace Idoneal
 
 /--
-Equivalent definition: A positive integer n is idoneal if and only if it cannot be written as
-ab + bc + ac for distinct positive integers a, b, and c.
+Equivalent definition: A positive integer $n$ is idoneal if and only if it cannot be written as
+$ab + bc + ac$ for distinct positive integers $a, b,$ and $c$.
 -/
 def IsIdoneal (n : ℕ) : Prop :=
   0 < n ∧
@@ -53,6 +53,11 @@ def knownIdonealNumbers : Finset ℕ :=
    30, 33, 37, 40, 42, 45, 48, 57, 58, 60, 70, 72, 78, 85, 88, 93, 102, 105,
    112, 120, 130, 133, 165, 168, 177, 190, 210, 232, 240, 253, 273, 280, 312,
    330, 345, 357, 385, 408, 462, 520, 760, 840, 1320, 1365, 1848}
+
+/-- All 65 known idoneal numbers are indeed idoneal. -/
+@[category test, AMS 11]
+theorem knownIdonealNumbers_are_idoneal : ∀ n ∈ knownIdonealNumbers, IsIdoneal n := by
+  sorry
 
 /--
 Idoneal numbers completeness conjecture.
