@@ -30,12 +30,6 @@ open Filter Set
 namespace Erdos254
 
 /--
-The distance of $x$ from the nearest integer.
--/
-noncomputable def nearestIntDist (x : ℝ) : ℝ :=
-  min (Int.fract x) (1 - Int.fract x)
-
-/--
 An integer `n` can be written as a sum of distinct elements of `A`.
 -/
 def IsSumOfDistinct (A : Set ℕ) (n : ℕ) : Prop :=
@@ -51,7 +45,7 @@ integer is the sum of distinct elements of $A$.
 theorem erdos_254 :
     ∀ (A : Set ℕ),
       (Tendsto (fun x : ℕ ↦ (A ∩ Icc 1 (2 * x)).ncard - (A ∩ Icc 1 x).ncard) atTop atTop) ∧
-      (∀ θ : ℝ, 0 < θ → θ < 1 → ¬ Summable (fun n : A ↦ nearestIntDist (θ * (n : ℝ)))) →
+      (∀ θ : ℝ, 0 < θ → θ < 1 → ¬ Summable (fun n : A ↦ distToNearestInt (θ * (n : ℝ)))) →
         ∀ᶠ m in atTop, IsSumOfDistinct A m := by
   sorry
 
@@ -65,7 +59,7 @@ theorem erdos_254.variants.cassels :
     ∀ (A : Set ℕ),
       (Tendsto (fun x : ℕ ↦ (((A ∩ Icc 1 (2 * x)).ncard : ℝ) -
         ((A ∩ Icc 1 x).ncard : ℝ)) / Real.log (Real.log x)) atTop atTop) ∧
-      (∀ θ : ℝ, 0 < θ → θ < 1 → ¬ Summable (fun n : A ↦ (nearestIntDist (θ * (n : ℝ)))^2)) →
+      (∀ θ : ℝ, 0 < θ → θ < 1 → ¬ Summable (fun n : A ↦ (distToNearestInt (θ * (n : ℝ)))^2)) →
         ∀ᶠ m in atTop, IsSumOfDistinct A m := by
   sorry
 
