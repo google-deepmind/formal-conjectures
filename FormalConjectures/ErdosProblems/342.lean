@@ -16,45 +16,38 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdos Problem 342
+# Erdős Problem 342
 
 *References:*
 - [erdosproblems.com/342](https://www.erdosproblems.com/342)
 - [OEIS A002858](https://oeis.org/A002858)
 -/
 
-namespace Ulam
+namespace Erdos342
+
+/-- `UniqueUlamSum a n m` means that $m$ has a unique representation as $a(i) + a(j)$
+with $i < j < n$. -/
+def UniqueUlamSum (a : ℕ → ℕ) (n m : ℕ) : Prop :=
+  ∃! p : ℕ × ℕ, p.1 < p.2 ∧ p.2 < n ∧ m = a p.1 + a p.2
+
+/-- `IsUlamSequence a` means that $a$ is the Ulam sequence (OEIS A002858):
+$a(0) = 1$, $a(1) = 2$, and for each $n \geq 2$, $a(n)$ is the least integer
+greater than $a(n-1)$ that has a unique representation as $a(i) + a(j)$
+with $i < j < n$. -/
+def IsUlamSequence (a : ℕ → ℕ) : Prop :=
+  a 0 = 1 ∧ a 1 = 2 ∧
+  ∀ n, 2 ≤ n →
+    a (n - 1) < a n ∧
+    UniqueUlamSum a n (a n) ∧
+    ∀ m, a (n - 1) < m → m < a n → ¬ UniqueUlamSum a n m
 
 /--
-`UniqueUlamSum u n m` means that `m` has a unique representation as `u i + u j`
-with `1 ≤ i < j ≤ n`.
--/
-def UniqueUlamSum (u : ℕ → ℕ) (n m : ℕ) : Prop :=
-  ∃! ij : ℕ × ℕ,
-    1 ≤ ij.1 ∧ ij.1 < ij.2 ∧ ij.2 ≤ n ∧
-    m = u ij.1 + u ij.2
-
-/--
-`IsUlamSequence u` means that the sequence `u` satisfies the recurrence for Ulam's sequence:
-`u 1 = 1`, `u 2 = 2`, and for `n ≥ 2`, `u (n+1)` is the least integer greater than `u n`
-that has a unique representation as `u i + u j` with `1 ≤ i < j ≤ n`.
--/
-def IsUlamSequence (u : ℕ → ℕ) : Prop :=
-  u 1 = 1 ∧
-  u 2 = 2 ∧
-  ∀ n : ℕ, 2 ≤ n →
-    u (n + 1) > u n ∧
-    UniqueUlamSum u n (u (n + 1)) ∧
-    ∀ m : ℕ, u n < m → UniqueUlamSum u n m → u (n + 1) ≤ m
-
-/--
-Do infinitely many pairs (a, a+2) occur in Ulam's sequence?
--/
-@[category research open, AMS 05 40]
-theorem erdos_342_infinitely_many_pairs :
+Do infinitely many pairs $(a, a+2)$ occur in Ulam's sequence? -/
+@[category research open, AMS 11]
+theorem erdos_342.parts.i :
     answer(sorry) ↔
-      ∀ u : ℕ → ℕ, IsUlamSequence u →
-        ∀ N : ℕ, ∃ n ≥ N, u (n + 1) = u n + 2 := by
+      ∀ a : ℕ → ℕ, IsUlamSequence a →
+        ∀ N : ℕ, ∃ n ≥ N, a (n + 1) = a n + 2 := by
   sorry
 
-end Ulam
+end Erdo342
