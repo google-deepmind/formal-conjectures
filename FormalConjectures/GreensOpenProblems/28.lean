@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # Green's Open Problem 28
 
 References:
-- [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.28) 
+- [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.28)
 - [Mathoverflow/339137](https://mathoverflow.net/questions/339137/why-do-polynomials-with-coefficients-0-1-like-to-have-only-factors-with-0-1) asked by user [Sil](https://mathoverflow.net/users/136794/sil)
 - [MathStackexchange/3325163](https://math.stackexchange.com/questions/3325163/) asked by user [Emmanuel Amiot](https://math.stackexchange.com/users/403309/emmanuel-amiot)
 -/
@@ -31,7 +31,10 @@ namespace Green28
 def IsUniformOnSupport (X : PMF ℤ) : Prop :=
   ∃ (s : Finset ℤ) (hs : s.Nonempty), X = PMF.uniformOfFinset s hs
 
-/-- The sum of two independent PMFs on $\mathbb{Z}$. -/
+/--
+The discrete convolution of two PMFs on $\mathbb{Z}$, representing the distribution of the sum of
+two independent random variables.
+-/
 noncomputable def indepSum (X Y : PMF ℤ) : PMF ℤ := do
   let x ← X
   let y ← Y
