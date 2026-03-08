@@ -26,3 +26,14 @@ This file is a Wikipedia-facing entry point for the formalization in
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
 -/
 
+namespace ErdosRadoSunflowerConjecture
+
+/--
+This Wikipedia entry points to the canonical formalization of the Erdős-Rado sunflower
+conjecture in `FormalConjectures.ErdosProblems.«20»`.
+-/
+@[category research open, AMS 05]
+theorem erdos_rado_sunflower_conjecture : type_of% @Erdos20.erdos_20 := by
+  sorry
+
+end ErdosRadoSunflowerConjecture
