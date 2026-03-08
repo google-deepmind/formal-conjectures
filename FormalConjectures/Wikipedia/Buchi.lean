@@ -25,17 +25,35 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Buchi
 
+/-- `IsBuchi M` asserts that whenever `M` consecutive values `(x + n)² + a` (for
+`n = 0, …, M - 1`) are all perfect squares, then `a` must be `0`. -/
+def IsBuchi (M : ℕ) : Prop :=
+  ∀ x a : ℤ, (∀ n ∈ Finset.range M, IsSquare ((x + (n : ℤ)) ^ 2 + a)) → a = 0
+
 /--
 **Büchi's problem**
-There exists a positive integer M such that, for all integers x and a,
-if $(x+n)^2 + a$ is a square for M consecutive values of n, then a = 0.
+There exists a positive integer $M$ such that, for all integers $x$ and $a$,
+if $(x+n)^2 + a$ is a square for $M$ consecutive values of $n$, then $a = 0$.
 -/
 @[category research open, AMS 11]
 theorem buchi_problem :
-    answer(sorry) ↔
-      ∃ M : ℕ, 1 ≤ M ∧ ∀ x a : ℤ,
-        (∀ n ∈ Finset.range M, IsSquare ((x + (n : ℤ)) * (x + (n : ℤ)) + a)) →
-        a = 0 := by
+    answer(sorry) ↔ ∃ M : ℕ, 1 ≤ M ∧ IsBuchi M := by
   sorry
+
+
+/--
+**Büchi's problem (first open case, $M = 5$)**:
+For all integers $x$ and $a$, if $(x+n)^2 + a$ is a perfect square for $n = 0, 1, 2, 3, 4$,
+then $a = 0$.
+
+Non-trivial sequences of length 3 and 4 are known to exist, so $M = 5$ is the first open case.
+-/
+@[category research open, AMS 11]
+theorem buchi_problem_M5 :
+    ∀ x a : ℤ,
+      (∀ n ∈ Finset.range 5, IsSquare ((x + (n : ℤ)) ^ 2 + a)) →
+      a = 0 := by
+  sorry
+
 
 end Buchi
