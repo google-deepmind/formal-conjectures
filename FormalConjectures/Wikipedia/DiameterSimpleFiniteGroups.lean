@@ -49,28 +49,27 @@ reverse relation) and enforces irreflexivity (via $g \neq h$). -/
 def cayleyGraph {G : Type*} [Group G] (S : Set G) : SimpleGraph G :=
   SimpleGraph.fromRel (fun g h => g⁻¹ * h ∈ S)
 
+/-- The diameter of a finite group $G$, defined as the maximum diameter of the Cayley graphs
+$\Gamma(G, A)$ over all generating sets $A$ of $G$.
+-/
+noncomputable def groupDiam (G : Type*) [Group G] [Fintype G] : ℕ :=
+  sSup { d : ℕ | ∃ S : Set G, Subgroup.closure S = ⊤ ∧ (cayleyGraph S).diam = d }
+
 /-- **Babai–Seress Conjecture (Conjecture 1.5)**: There exists an absolute constant $C$ such
-that for every $n$ and every symmetric generating set $S$ of the alternating group $A_n$,
-the diameter of the Cayley graph satisfies
-$$\operatorname{diam}(\operatorname{Cay}(A_n, S)) \leq n^C.$$
+that the diameter of the alternating group $A_n$ satisfies
+$$\operatorname{diam}(A_n) \leq n^C.$$
 
 *Reference:* [L. Babai and Á. Seress, *On the diameter of permutation groups*,
 European Journal of Combinatorics 13 (1992), Conjecture 1.5](https://doi.org/10.1016/S0195-6698(05)80029-0) -/
 @[category research open, AMS 5 20 68]
 theorem babai_seress_conjecture_alternating :
     ∃ C : ℕ, ∀ n : ℕ,
-    ∀ S : Set (alternatingGroup (Fin n)),
-    -- S is symmetric
-    (∀ s ∈ S, s⁻¹ ∈ S) →
-    -- S generates Aₙ
-    Subgroup.closure S = ⊤ →
-    ((cayleyGraph S).diam : ℝ) ≤ (n : ℝ) ^ C := by
+    (groupDiam (alternatingGroup (Fin n)) : ℝ) ≤ (n : ℝ) ^ C := by
   sorry
 
 /-- **Babai–Seress Conjecture (Conjecture 1.7)**: There exists an absolute constant $C$ such
-that for every finite simple non-abelian group $G$ and every symmetric generating set $S$
-of $G$, the diameter of the Cayley graph $\operatorname{Cay}(G, S)$ satisfies
-$$\operatorname{diam}(\operatorname{Cay}(G, S)) \leq (\log |G|)^C.$$
+that every finite simple non-abelian group $G$ satisfies
+$$\operatorname{diam}(G) \leq (\log |G|)^C.$$
 
 *Reference:* [L. Babai and Á. Seress, *On the diameter of permutation groups*,
 European Journal of Combinatorics 13 (1992), Conjecture 1.7](https://doi.org/10.1016/S0195-6698(05)80029-0) -/
@@ -79,12 +78,7 @@ theorem babai_seress_conjecture :
     ∃ C : ℕ,
     ∀ (G : Type) [Group G] [Fintype G] [IsSimpleGroup G],
     (∃ a b : G, a * b ≠ b * a) →
-    ∀ S : Set G,
-    -- S is symmetric
-    (∀ s ∈ S, s⁻¹ ∈ S) →
-    -- S generates G
-    Subgroup.closure S = ⊤ →
-    ((cayleyGraph S).diam : ℝ) ≤ (Real.log (Fintype.card G : ℝ)) ^ C := by
+    (groupDiam G : ℝ) ≤ (Real.log (Fintype.card G : ℝ)) ^ C := by
   sorry
 
 end BabaiSeressConjectures
