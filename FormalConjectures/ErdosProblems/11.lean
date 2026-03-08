@@ -37,7 +37,7 @@ Erdős often asked this under the weaker assumption that $n > 1$
 is not divisible by 4.
 -/
 @[category research open, AMS 11]
-theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n)  (hn' : 1 < n) :
+theorem erdos_11.variants.not_four_dvd (n : ℕ) (hn : ¬ 4 ∣ n) (hn' : 1 < n) :
     ∃ k l : ℕ , Squarefree k ∧ n = k + 2^l := by
   sorry
 

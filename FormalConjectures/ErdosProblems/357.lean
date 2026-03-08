@@ -27,7 +27,7 @@ namespace Erdos357
 open Filter Asymptotics
 
 def HasDistinctSums {ι α : Type*} [Preorder ι] [AddCommMonoid α] (a : ι → α) : Prop :=
-  {J : Finset ι | J.OrdConnected}.InjOn (fun J ↦ ∑ x ∈ J, a x)
+  {J : Finset ι | (J : Set ι).OrdConnected}.InjOn (fun J ↦ ∑ x ∈ J, a x)
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
@@ -64,7 +64,7 @@ such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $f = O(g)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.parts.ii.bigO_version_symm :
-    (fun n ↦ (f n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ)  := by
+    (fun n ↦ (f n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
@@ -105,8 +105,7 @@ theorem erdos_357.variants.weisenberg : ∃ o : ℕ → ℝ, o =o[atTop] (1 : �
 Then $A$ has lower density 0. -/
 @[category research solved, AMS 11]
 theorem erdos_357.variants.infinite_set_lower_density (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, I.OrdConnected → J.OrdConnected → HasDistinctSums A) :
-    (Set.range A).lowerDensity = 0 := by
+    (hA : HasDistinctSums A) : (Set.range A).lowerDensity = 0 := by
   sorry
 
 /--  Suppose $A$ is an infinite set such that all finite sums of consecutive terms of $A$ are distinct.
@@ -168,7 +167,7 @@ such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How doe
 Can we find a (good) explicit function $g$ such that $h = O(g)$ ? -/
 @[category research open, AMS 11]
 theorem erdos_357.variants.monotone.parts.ii.bigO_version_symm :
-    (fun n ↦ (h n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ)  := by
+    (fun n ↦ (h n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$

@@ -83,7 +83,7 @@ Does $v_1(n) = 1$ have finite solutions?
 -/
 @[category research open, AMS 11]
 theorem erdos_889.variants.v1_eq_1_finite :
-    {n | v_l 1 n = 1}.Finite ↔ answer(sorry) := by
+    answer(sorry) ↔ {n | v_l 1 n = 1}.Finite := by
   sorry
 
 /--
@@ -112,7 +112,7 @@ which might make it more amenable to attack according to [ErSe67].
 -/
 @[category research open, AMS 11]
 theorem erdos_889.variants.V1_eq_1_finite :
-    {n | V_l 1 n = 1}.Finite ↔ answer(sorry) := by
+    answer(sorry) ↔ {n | V_l 1 n = 1}.Finite := by
   sorry
 
 end Erdos889

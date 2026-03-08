@@ -83,7 +83,7 @@ theorem first_hardy_littlewood_conjecture {k : ℕ} (m : Fin k.succ → ℕ) :
     FirstHardyLittlewoodConjectureFor m := by
   sorry
 
---Wikipedia URL: https://en.wikipedia.org/wiki/Second_Hardy%E2%80%93Littlewood_conjecture
+-- Wikipedia URL: https://en.wikipedia.org/wiki/Second_Hardy%E2%80%93Littlewood_conjecture
 /-! ## Second Hardy-Littlewood Conjecture -/
 def SecondHardyLittlewoodConjectureFor (x y : ℕ) : Prop :=
   π (x + y) ≤ π x + π y

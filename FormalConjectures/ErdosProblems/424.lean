@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
  - [erdosproblems.com/424](https://www.erdosproblems.com/424)
- - [A005244](https://oeis.org/A005244)
+ - [A5244](https://oeis.org/A5244)
  - [Ben Green's Open Problem 63](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 63)
 -/
 
@@ -52,7 +52,7 @@ values of $a_i a_j - 1$ with $i \neq j$.
 Is it true that the set of integers which eventually appear has positive density?
 -/
 @[category research open, AMS 11]
-theorem erdos_424 : generatedSet.HasPosDensity ↔ answer(sorry) := by
+theorem erdos_424 : answer(sorry) ↔ generatedSet.HasPosDensity := by
   sorry
 
 -- TODO(firsching): formalize the statements from the additional material

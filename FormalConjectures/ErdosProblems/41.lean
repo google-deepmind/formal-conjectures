@@ -16,7 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-variable {α : Type} [AddCommMonoid α]
 
 /-!
 # Erdős Problem 41
@@ -27,13 +26,14 @@ variable {α : Type} [AddCommMonoid α]
 open Classical
 
 namespace Erdos41
+variable {α : Type} [AddCommMonoid α]
 
 /--
-For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for  `a₁, ..., aₙ` in `A`
+For a given set `A`, the n-tuple sums `a₁ + ... + aₙ` are all distinct for `a₁, ..., aₙ` in `A`
 (aside from the trivial coincidences).
 -/
 def NtupleCondition (A : Set α) (n : ℕ) : Prop := ∀ (I : Finset α) (J : Finset α),
-  I.toSet ⊆ A ∧ J.toSet ⊆ A ∧ I.card = n ∧ J.card = n ∧
+  ↑I ⊆ A ∧ ↑J ⊆ A ∧ I.card = n ∧ J.card = n ∧
   (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J
 
 /--
@@ -53,7 +53,7 @@ in `A` (aside from the trivial coincidences).
 Is it true that `liminf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research solved, AMS 11]
-theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
+theorem erdos_41.variants.pairwise (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
     Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry
 

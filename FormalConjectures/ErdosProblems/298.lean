@@ -19,31 +19,33 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 298
 
-*Reference:* [erdosproblems.com/298](https://www.erdosproblems.com/298)
+*References:*
+- [erdosproblems.com/298](https://www.erdosproblems.com/298)
+- [Bl21] Bloom, T. F., On a density conjecture about unit fractions. arXiv:2112.03726 (2021).
 -/
 
 namespace Erdos298
 
-/-- Does every set $A \subseteq \mathbb{N}$ of positive density contain some finite $S \subset A$ such that
+/--
+Does every set $A \subseteq \mathbb{N}$ of positive density contain some finite $S \subset A$ such that
 $\sum_{n \in S} \frac{1}{n} = 1$?
 
 The answer is yes, proved by Bloom [Bl21].
 
-[Bl21] Bloom, T. F., _On a density conjecture about unit fractions_. arXiv:2112.03726 (2021).
-
-Note: The solution to this problem has been formalized in Lean 3 by T. Bloom and B. Mehta, see
-https://github.com/b-mehta/unit-fractions -/
-@[category research solved, AMS 11]
-theorem erdos_298 : (∀ (A : Set ℕ), 0 ∉ A → A.HasPosDensity →
-    ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) ↔ answer(True) := by
+This was formalized in Lean 3 by Bloom and Mehta.
+-/
+@[category research formally solved using other_system at
+"https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean", AMS 11]
+theorem erdos_298 : answer(True) ↔ (∀ (A : Set ℕ), 0 ∉ A → A.HasPosDensity →
+    ∃ (S : Finset ℕ), ↑S ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) := by
   sorry
 
 /--
 In [Bl21] it is proved under the weaker assumption that `A` only has positive upper density.
 -/
 @[category research solved, AMS 11]
-theorem erdos_298.variants.upper_density : (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
-    ∃ (S : Finset ℕ), S.toSet ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) ↔ answer(True) := by
+theorem erdos_298.variants.upper_density : answer(True) ↔ (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
+    ∃ (S : Finset ℕ), ↑S ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) := by
   sorry
 
 end Erdos298

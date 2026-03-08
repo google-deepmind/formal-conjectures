@@ -29,9 +29,9 @@ $x+1,y+1$ have the same prime factors, and $x+2,y+2$ also have the same prime fa
 -/
 @[category research open, AMS 11]
 theorem erdos_850 :
-    (∃ x y : ℕ, x ≠ y ∧ x.primeFactors = y.primeFactors
+    answer(sorry) ↔ ∃ x y : ℕ, x ≠ y ∧ x.primeFactors = y.primeFactors
       ∧ (x + 1).primeFactors = (y + 1).primeFactors
-      ∧ (x + 2).primeFactors = (y + 2).primeFactors) ↔ answer(sorry) := by
+      ∧ (x + 2).primeFactors = (y + 2).primeFactors := by
     sorry
 
 -- TODO(Paul-Lez): formalise remaining problems

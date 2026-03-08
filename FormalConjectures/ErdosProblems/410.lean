@@ -37,8 +37,8 @@ Erdos, Granville, Pomerance, Spiro
 (page 169 of the book "Analytic Number Theory", 1990).
 -/
 @[category research open, AMS 11]
-theorem erdos_410 : (∀ᵉ (n > 1),
-    Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop) ↔ answer(sorry) := by
+theorem erdos_410 : answer(sorry) ↔ ∀ n > 1,
+    Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop := by
   sorry
 
 end Erdos410

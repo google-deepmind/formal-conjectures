@@ -45,14 +45,19 @@ Solved (with answer `False`, as formalised below) in:
 Vjekoslav Kovač, "Coloring and density theorems for configurations of a given volume", 2023
 https://arxiv.org/abs/2309.09973
 In fact, Kovač's colouring is even Jordan measurable (the topological boundary of each
-monochromatic region is Lebesgue measurable and has measure zero). -/
-@[category research solved, AMS 5 51]
+monochromatic region is Lebesgue measurable and has measure zero).
+
+This was formalized in Lean by Alexeev and Kovac using Aristotle.
+-/
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos189.lean", AMS 5 51]
 theorem erdos_189 :
-    Erdos189For
+    answer(False) ↔ Erdos189For
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
-        line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction)
-      (fun a b c d ↦ dist a b * dist b c) ↔ answer(False) := by
+        line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧
+        line[ℝ, c, d].direction ⟂ line[ℝ, d, a].direction)
+      (fun a b c d ↦ dist a b * dist b c) := by
   sorry
 
 /-- Graham claims this is "easy to see". -/
@@ -62,6 +67,7 @@ theorem erdos_189.variants.square :
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
         line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧
+        line[ℝ, c, d].direction ⟂ line[ℝ, d, a].direction ∧
         dist a b = dist b c)
       (fun a b c d ↦ dist a b * dist b c) := by
   sorry

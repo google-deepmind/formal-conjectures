@@ -22,6 +22,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/20](https://www.erdosproblems.com/20)
 -/
 universe u
+
+namespace Erdos20
+
 variable {α : Type}
 
 /--
@@ -74,8 +77,8 @@ theorem f_0_1 : f 0 1 = 1 := by
 Is it true that $f(n,k) < c_k^n$ for some constant $c_k>0$ and for all $n > 0$?
 -/
 @[category research open, AMS 5]
-theorem erdos_20 :
-    (∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f n k < (c k) ^ n ↔ answer(sorry)) := by
+theorem erdos_20 : answer(sorry) ↔ ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f n k < (c k) ^ n := by
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+end Erdos20

@@ -30,26 +30,28 @@ namespace Erdos340
 /-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
 such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
 the lower bound is required to avoid `0` being a contender in some cases. -/
-private def greedySidon.go (A : Finset ℕ) (hA : IsSidon A) (m : ℕ) :
-    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (A ∪ {m'})} :=
+private def greedySidon.go (A : Finset ℕ) (hA : IsSidon (A : Set ℕ)) (m : ℕ) :
+    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ)} :=
   if h : A.Nonempty then
-    ⟨Nat.find (hA.exists_insert_ge h m), Nat.find_spec (hA.exists_insert_ge h m)⟩
+    haveI : ∃ m', m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ) := by
+      simpa [and_assoc] using hA.exists_insert_ge h m
+    ⟨Nat.find this, Nat.find_spec this⟩
   else ⟨m, by simp_all [IsSidon]⟩
 
 @[category test, AMS 5]
 theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
-  decide
+  decide +native
 
 /-- Main search loop for generating the greedy Sidon sequence. The return value for step `n` is the
 finite set of numbers generated so far, a proof that it is Sidon, and the greatest element of
 the finite set at that point. This is initialised at `{1}`, then `greedySidon.go` is
 called iteratively using the lower bound `max + 1` to find the next smallest Sidon preserving
 number. -/
-private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon A} × ℕ) :=
+private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon (A : Set ℕ)} × ℕ) :=
   match n with
   | 0 => (⟨{1}, by simp [IsSidon]⟩, 1)
   | k + 1 =>
@@ -68,22 +70,22 @@ theorem greedySidon_zero : greedySidon 0 = 1 := rfl
 
 @[category test, AMS 5]
 theorem greedySidon_one : greedySidon 1 = 2 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_two : greedySidon 2 = 4 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_three : greedySidon 3 = 8 := by
-  decide
+  decide +native
 @[category test, AMS 5]
 theorem greedySidon_four : greedySidon 4 = 13 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_five : greedySidon 5 = 21 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_ten : greedySidon 10 = 97 := by
@@ -133,7 +135,7 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 -/
 @[category research open, AMS 5]
 theorem erdos_340.variants.sub_hasPosDensity :
-    Set.HasPosDensity (Set.range greedySidon - Set.range greedySidon) :=
+    Set.HasPosDensity (Set.range greedySidon - Set.range greedySidon) := by
   sorry
 
 /--
@@ -152,8 +154,8 @@ theorem erdos_340.variants._22_mem_sub :
 The smallest integer which is unknown to be in $A - A$ is $33$.
  -/
 @[category research open, AMS 5]
-theorem erdos_340.variants._33_mem_sub :
-    33 ∈ Set.range greedySidon - Set.range greedySidon ↔ answer(sorry) :=
+theorem erdos_340.variants._33_mem_sub : answer(sorry) ↔
+    33 ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 -- Formalisation note: there is some slight ambiguity in the meaning of
@@ -164,17 +166,16 @@ theorem erdos_340.variants._33_mem_sub :
 It may be true that all or almost all integers are in $A - A$.
 -/
 @[category research open, AMS 5]
-theorem erdos_340.variants.cofinite_sub :
-    (∀ᶠ n in cofinite, n ∈ Set.range greedySidon - Set.range greedySidon) ↔ answer(sorry) :=
+theorem erdos_340.variants.cofinite_sub : answer(sorry) ↔
+    ∀ᶠ n in cofinite, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 /--
 It may be true that all or almost all integers are in $A - A$.
 -/
 @[category research open, AMS 5]
-theorem erdos_340.variants.co_density_zero_sub :
-    (∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon)
-      ↔ answer(sorry) :=
+theorem erdos_340.variants.co_density_zero_sub : answer(sorry) ↔
+    ∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 end Erdos340
