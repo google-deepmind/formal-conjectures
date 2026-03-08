@@ -43,11 +43,15 @@ def IsUlamSequence (a : ℕ → ℕ) : Prop :=
 
 /--
 Do infinitely many pairs $(a, a+2)$ occur in Ulam's sequence? -/
-@[category research open, AMS 11]
+@[category research open, AMS 05 11 40]
 theorem erdos_342.parts.i :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →
         ∀ N : ℕ, ∃ n ≥ N, a (n + 1) = a n + 2 := by
   sorry
 
-end Erdo342
+-- TODO: Part (ii), does this sequence eventually have periodic differences?
+
+-- TODO: Part (iii), is the density of the sequence 0? Equivalently, Ben Green's problem 7: does this sequence have positive density?
+
+end Erdos342
