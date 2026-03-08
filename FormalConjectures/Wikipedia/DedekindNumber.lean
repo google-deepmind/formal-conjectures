@@ -27,8 +27,8 @@ $$M ( 0 ) = 2 , M ( 1 ) = 3 , M ( 2 ) = 6 , and M ( 3 ) = 20 .$$
 The first few values grew slowly:
 $$M ( 4 ) = 168 , M ( 5 ) = 7581$$,
 but then rapidly:
-$$M ( 6 ) = 7828354 , M ( 7 ) = 2414682040998 , M ( 8 ) = 56286674523351680$$, and
-$$M ( 9 ) = 286386577668298411128469151667200$$
+$$M ( 6 ) = 7828354 , M ( 7 ) = 2414682040998 , M ( 8 ) = 56130437228687557907788$$, and
+$$M ( 9 ) = 286386577668298411128469151667598498812366$$
 (computed in 2023).
 
 We formalize two definitions:
@@ -37,7 +37,8 @@ We formalize two definitions:
 
 We prove their values for small `n` and show that the two definitions agree for all `n`.
 
-The problem is to determine the exact values of $M(n)$ for $n ≥ 10$. In particular, the value of $M(10)$ is currently unknown.
+The problem is to determine the exact values of $M(n)$ for $n ≥ 10$.
+In particular, the value of $M(10)$ is currently unknown.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Dedekind_number)
@@ -49,7 +50,8 @@ namespace DedekindNumber
 
 open Finset
 
-instance piFinBoolDecidableLE {n : ℕ} : DecidableRel (fun (a b : Fin n → Bool) => a ≤ b) :=
+instance piFinBoolDecidableLE {n : ℕ} :
+DecidableRel (fun (a b : Fin n → Bool) => a ≤ b) :=
   fun a b => show Decidable (a ≤ b) from by
     rw [Pi.le_def]
     exact Fintype.decidableForallFintype
@@ -61,11 +63,14 @@ def M (n : ℕ) : ℕ :=
 /-- A Sperner family (antichain) of subsets of `Fin n`: a family of sets such that
     no member is a subset of another. -/
 def IsSperner {n : ℕ} (A : Finset (Finset (Fin n))) : Prop :=
-  ∀ s ∈ A, ∀ t ∈ A, s ⊆ t → s = t
+  IsAntichain (fun s t => s ⊆ t) (A : Set (Finset (Fin n)))
 
 instance isSpernerDecidable {n : ℕ} :
     DecidablePred (fun A : Finset (Finset (Fin n)) => IsSperner A) :=
-  fun A => by unfold IsSperner; infer_instance
+  fun A => by
+    unfold IsSperner IsAntichain Set.Pairwise
+    simp only [Finset.mem_coe, Pi.compl_apply, compl_iff_not]
+    exact inferInstance
 
 /-- $M'(n)$ is the number of antichains (Sperner families) of subsets of `Fin n`. -/
 def M' (n : ℕ) : ℕ :=
@@ -129,10 +134,10 @@ lemma supp_χ {n : ℕ} (s : Finset (Fin n)) : supp (χ s) = s := by
 
 @[category API, AMS 6]
 lemma χ_le_iff {n : ℕ} (s t : Finset (Fin n)) : χ s ≤ χ t ↔ s ⊆ t := by
-  constructor;
-  · intro h i hi;
-    contrapose! h;
-    exact fun H => by have := H i; simp_all +decide [ χ ] ;
+  constructor
+  · intro h i hi
+    contrapose! h
+    exact fun H => by have := H i; simp_all +decide [ χ ]
   · intro h i; simp [χ];
     by_cases hi : i ∈ s <;> simp_all +decide [ Finset.subset_iff ]
 
@@ -143,64 +148,69 @@ lemma mem_supp_iff {n : ℕ} (v : Fin n → Bool) (i : Fin n) : i ∈ supp v ↔
 @[category API, AMS 6]
 lemma toSperner_isSperner {n : ℕ} (f : (Fin n → Bool) → Bool) (_ : Monotone f) :
     IsSperner (toSperner f) := by
-      intro s hs t ht hst;
-      unfold toSperner at hs ht; aesop;
+  intro s hs t ht hst; simp_all +decide [ Finset.ext_iff]
+  contrapose! hst; unfold toSperner at *; aesop
 
 @[category API, AMS 6]
 lemma fromSperner_monotone {n : ℕ} (A : Finset (Finset (Fin n))) (_ : IsSperner A) :
     Monotone (fromSperner A) := by
       intro v w hvw hfv
       obtain ⟨s, hsA, hs⟩ : ∃ s ∈ A, s ⊆ supp v := by
-        unfold fromSperner at hfv;
-        simp_all +decide [ Finset.subset_iff, mem_supp_iff ];
+        unfold fromSperner at hfv
+        simp_all +decide [ Finset.subset_iff, mem_supp_iff ]
       have hs_w : s ⊆ supp w := by
-        intro i hi; have := hs hi; simp_all +decide [ Finset.subset_iff, mem_supp_iff ] ;
-        exact?;
-      exact decide_eq_true ( ⟨ s, hsA, fun i hi => by simpa using Finset.mem_filter.mp ( hs_w hi ) |>.2 ⟩ )
+        intro i hi; have := hs hi
+        simp_all +decide [ Finset.subset_iff, mem_supp_iff ]
+        exact Bool.eq_false_imp_eq_true.mp fun a ↦ hvw i (hs hi)
+      exact decide_eq_true
+        ( ⟨ s, hsA, fun i hi => by simpa using Finset.mem_filter.mp ( hs_w hi ) |>.2 ⟩ )
 
 @[category graduate, AMS 5 6]
 lemma exists_minimal_true_subset {n : ℕ} {f : (Fin n → Bool) → Bool} (_ : Monotone f)
     {s : Finset (Fin n)} (hs : f (χ s) = true) :
     ∃ t, t ⊆ s ∧ f (χ t) = true ∧ ∀ u, u ⊆ t → f (χ u) = true → t ⊆ u := by
-      obtain ⟨t, ht₁, ht₂⟩ : ∃ t ∈ {t : Finset (Fin n) | t ⊆ s ∧ f (χ t) = true}, ∀ u ∈ {t : Finset (Fin n) | t ⊆ s ∧ f (χ t) = true}, t.card ≤ u.card := by
-        apply_rules [ Set.exists_min_image ];
-        · exact Set.finite_iff_bddAbove.mpr ⟨ s, fun t ht => ht.1 ⟩;
-        · exact ⟨ s, Finset.Subset.refl _, hs ⟩;
-      refine' ⟨ t, ht₁.1, ht₁.2, fun u hu hu' => _ ⟩;
-      exact Classical.not_not.1 fun h => not_lt_of_ge ( ht₂ u ⟨ hu.trans ht₁.1, hu' ⟩ ) ( Finset.card_lt_card <| Finset.ssubset_iff_subset_ne.2 ⟨ hu, by aesop ⟩ )
+      obtain ⟨t, ht₁, ht₂⟩ :
+        ∃ t ∈ {t : Finset (Fin n) | t ⊆ s ∧ f (χ t) = true},
+        ∀ u ∈ {t : Finset (Fin n) | t ⊆ s ∧ f (χ t) = true}, t.card ≤ u.card := by
+        apply_rules [ Set.exists_min_image ]
+        · exact Set.finite_iff_bddAbove.mpr ⟨ s, fun t ht => ht.1 ⟩
+        · exact ⟨ s, Finset.Subset.refl _, hs ⟩
+      refine' ⟨ t, ht₁.1, ht₁.2, fun u hu hu' => _ ⟩
+      exact Classical.not_not.1 fun h =>
+        not_lt_of_ge ( ht₂ u ⟨ hu.trans ht₁.1, hu' ⟩ )
+        ( Finset.card_lt_card <| Finset.ssubset_iff_subset_ne.2 ⟨ hu, by aesop ⟩ )
 
 @[category graduate, AMS 5 6]
 lemma fromSperner_toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) (hf : Monotone f) :
     fromSperner (toSperner f) = f := by
-
-      funext v
-      by_cases hv : f v = true
-      ·
-        obtain ⟨s, hs₁, hs₂⟩ : ∃ s ∈ toSperner f, ∀ i ∈ s, v i = true := by
-          obtain ⟨ s, hs ⟩ := exists_minimal_true_subset hf ( show f ( χ ( supp v ) ) = true from by simpa [ χ_supp ] using hv );
-          exact ⟨ s, Finset.mem_filter.mpr ⟨ Finset.mem_univ _, hs.2.1, hs.2.2 ⟩, fun i hi => mem_supp_iff v i |>.1 ( hs.1 hi ) ⟩;
-        unfold fromSperner; aesop;
-      · unfold fromSperner toSperner at *; simp_all +decide [ Monotone ] ;
-        intro s hs hs'; contrapose! hv; simp_all +decide [ Pi.le_def ] ;
-        specialize hf ( show χ s ≤ v from fun i => by by_cases hi : i ∈ s <;> simp_all +decide [ χ ] ) ; aesop;
+  funext v
+  by_cases h : f v <;> simp_all +decide [ fromSperner ]
+  · obtain ⟨t, ht₁, ht₂⟩ : ∃ t : Finset (Fin n),
+    t ⊆ Finset.univ.filter (fun i => v i = true) ∧
+    f (χ t) = true ∧
+    ∀ u : Finset (Fin n), u ⊆ t → f (χ u) = true → t ⊆ u := by
+      apply exists_minimal_true_subset hf;
+      convert h using 2
+      exact funext fun i => by unfold χ; aesop;
+    exact ⟨ t, Finset.mem_filter.mpr ⟨ Finset.mem_univ _, ht₂.1, ht₂.2 ⟩,
+    fun i hi => Finset.mem_filter.mp ( ht₁ hi ) |>.2 ⟩
+  · intro s hs; contrapose! h; simp_all +decide [ toSperner ]
+    refine' hf _ hs.1
+    intro i; by_cases hi : i ∈ s <;> simp_all +decide [ χ ]
 
 @[category graduate, AMS 5 6]
 lemma toSperner_fromSperner {n : ℕ} (A : Finset (Finset (Fin n))) (hA : IsSperner A) :
     toSperner (fromSperner A) = A := by
-      apply Finset.ext;
-      intro s
-      unfold toSperner fromSperner
-      simp [χ];
-      constructor;
-      · intro hs
-        obtain ⟨t, htA, ht⟩ := hs.left
-        have ht_min : s ⊆ t := by
-          exact hs.2 t ht t htA fun i hi => hi;
-        convert htA using 1 ; ext i ; aesop;
-      · intro hs;
-        refine' ⟨ ⟨ s, hs, fun i hi => hi ⟩, fun t ht x hx hx' => _ ⟩;
-        exact hA _ hx _ hs ( by tauto ) ▸ by tauto;
-
+  ext s; simp [toSperner, fromSperner]
+  constructor <;> intro hs
+  all_goals generalize_proofs at *
+  · obtain ⟨ ⟨ t, ht₁, ht₂ ⟩, ht₃ ⟩ := hs
+    convert ht₁ using 1
+    exact subset_antisymm ( ht₃ t ( by unfold χ at ht₂; aesop ) t ht₁ ( by unfold χ; aesop ) )
+      ( by unfold χ at ht₂; aesop )
+  · refine' ⟨ ⟨ s, hs, _ ⟩, _ ⟩ <;> simp_all +decide [ IsSperner ]
+    · exact fun i hi => by unfold χ; aesop
+    · intro t ht x hx hx'; have := hA hx hs; simp_all +decide [ Finset.subset_iff, χ ]
 /--
   The set of monotone Boolean functions on `n` variables is in bijection
   with the set of Sperner families of subsets of `Fin n`.
@@ -214,14 +224,15 @@ def equivMonotoneSperner (n : ℕ) :
   right_inv := fun ⟨A, hA⟩ => Subtype.ext (toSperner_fromSperner A hA)
 
 @[category test, AMS 5 6]
-theorem M_eq_M' (n : ℕ) : M n = M' n :=
-  Fintype.card_congr (equivMonotoneSperner n)
+theorem M_eq_M' : M  = M' := by
+  ext n
+  exact Fintype.card_congr (equivMonotoneSperner n)
 
 /--
-  The Dedekind numbers for `n ≥ 10` are currently unknown.
+  No closed form for the Dedekind numbers are currently unknown.
 -/
 @[category research open, AMS 5 6]
-theorem Dedekind_n (n : ℕ) (_ : n ≥ 9) : M n = answer(sorry) := by
+theorem DedekindNumbers : M = answer(sorry) := by
   sorry
 
 /--
