@@ -41,7 +41,7 @@ Let $A\subseteq \mathbb{N}$ be such that $\lvert A\cap [1,2x]\rvert -\lvert A\ca
 (0,1)$, where $\{x\}$ is the distance of $x$ from the nearest integer. Then every sufficiently large
 integer is the sum of distinct elements of $A$.
 -/
-@[category research open, AMS 5]
+@[category research open, AMS 11]
 theorem erdos_254 :
     ∀ (A : Set ℕ),
       (Tendsto (fun x : ℕ ↦ (A ∩ Icc 1 (2 * x)).ncard - (A ∩ Icc 1 x).ncard) atTop atTop) ∧
@@ -54,7 +54,7 @@ Cassels [Ca60] proved this under the alternative hypotheses $\lim \frac{\lvert A
 -\lvert A\cap [1,x]\rvert}{\log\log x}=\infty$ and $\sum_{n\in A} \{ \theta n\}^2=\infty$ for every
 $\theta\in (0,1)$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 11]
 theorem erdos_254.variants.cassels :
     ∀ (A : Set ℕ),
       (Tendsto (fun x : ℕ ↦ (((A ∩ Icc 1 (2 * x)).ncard : ℝ) -
