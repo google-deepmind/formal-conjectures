@@ -30,11 +30,6 @@ open Filter
 
 namespace LittlewoodConjecture
 
-/--
-The distance to the nearest integer is the function
-$\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$.
--/
-noncomputable abbrev distToNearestInt (x : ℝ) : ℝ := |x - round x|
 
 /--
 For any two real numbers $\alpha$ and $\beta$,

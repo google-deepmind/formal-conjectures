@@ -197,6 +197,12 @@ of points.
 noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
   (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
 
+
+/-- Given a finite set of points in the, we define the number of distinct distances between
+a given point and all other points -/
+noncomputable def distinctDistancesFrom (points : Finset ℝ²) (pt : ℝ²) : ℕ :=
+  (points.image fun x => dist x pt).card
+
 end EuclideanGeometry
 
 
