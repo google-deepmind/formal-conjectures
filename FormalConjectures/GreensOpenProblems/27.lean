@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Green's Open Problem 27
@@ -29,13 +28,6 @@ References:
 open Asymptotics Filter
 
 namespace Green27
-/--
-A set `A` has no unique representation in its sumset `A + A` if for every pair of elements
-`a₁, a₂ ∈ A`, there exist another pair of elements `b₁, b₂ ∈ A` such that `a₁ + a₂ = b₁ + b₂`
-and `{a₁, a₂} ≠ {b₁, b₂}`.
--/
-def HasNoUniqueRepresentation {G : Type*} [AddCommMonoid G] (A : Finset G) : Prop :=
-  allUniqueSums (A : Set G) = ∅
 
 /--
 This is $m(p)$ in [Be23]: the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with
