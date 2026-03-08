@@ -26,3 +26,14 @@ This file is a Wikipedia-facing entry point for the formalization in
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/No-three-in-line_problem)
 -/
 
+namespace NoThreeInLineProblem
+
+/--
+This Wikipedia entry points to the canonical formalization of the no-three-in-line problem in
+`FormalConjectures.GreensOpenProblems.«72»`.
+-/
+@[category research open, AMS 05 52]
+theorem no_three_in_line_problem : type_of% @Green72.no_three_in_line := by
+  sorry
+
+end NoThreeInLineProblem

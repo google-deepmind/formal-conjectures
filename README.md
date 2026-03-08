@@ -89,7 +89,11 @@ Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
     *   Use the `AMS` attribute to specify what mathematical areas each of the
         statements are related to.
 4.  Ensure the code builds (`lake build`).
-5.  Submit a Pull Request to the main repository.
+5.  Keep Pull Requests focused. In particular, if you are adding a duplicate
+    entry point for a problem that is already formalised elsewhere in the
+    repository, the preferred style is a small PR for that single duplication
+    issue rather than bundling several unrelated duplicate files together.
+6.  Submit a Pull Request to the main repository.
 
 For the use of AI, the [same conventions and precautions as in mathlib](https://github.com/leanprover-community/leanprover-community.github.io/blob/478f0f4b8be577d6d3f913053918551dcf68b1c6/templates/contribute/index.md?plain=1#L68-L70) apply.
 
@@ -230,7 +234,12 @@ meaningful solution of the problem is outside of the scope of this repository.
 5.  Every file should come with a reference to where the problem was sourced
     from, and be put in the corresponding directory of the repository, e.g. a
     problem sourced from wikipedia should live in `FormalConjectures/Wikipedia`.
-6.  When a problem is stated as a question in English, the preferred style is to
+6.  If the same problem naturally belongs in several source directories, then it
+    should have one canonical formalization and the other directories should
+    contain lightweight duplicate entry points rather than a second copy of the
+    statement. In practice, this usually means importing the canonical file and
+    adding a short theorem that points to the original result via `type_of%`.
+7.  When a problem is stated as a question in English, the preferred style is to
     use `answer(sorry)` in the following way:
     ```lean
     /-- English version: "Does P hold ?" -/
@@ -250,7 +259,7 @@ meaningful solution of the problem is outside of the scope of this repository.
     ```
     If the problem has been solved to the negative, then `P` should be replaced with
     `¬ P`.
-7.  Every file should start with the following copyright header (replace YYYY with
+8.  Every file should start with the following copyright header (replace YYYY with
     the current year):
     ```lean
     /-
