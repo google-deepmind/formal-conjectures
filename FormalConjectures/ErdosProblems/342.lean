@@ -20,8 +20,12 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/342](https://www.erdosproblems.com/342)
+- [Ben Green's Open Problem 7](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.7)
 - [OEIS A002858](https://oeis.org/A002858)
 -/
+
+open Nat Set Filter
+open scoped Topology
 
 namespace Erdos342
 
@@ -50,7 +54,16 @@ theorem erdos_342.parts.i :
         ∀ N : ℕ, ∃ n ≥ N, a (n + 1) = a n + 2 := by
   sorry
 
--- TODO: Part (ii), does this sequence eventually have periodic differences?
+/--
+Does Ulam's sequence eventually have periodic differences? That is, is $a(n+1) - a(n)$ eventually periodic?
+-/
+@[category research open, AMS 05 11 40]
+theorem erdos_342.parts.ii :
+    answer(sorry) ↔
+      ∀ a : ℕ → ℕ, IsUlamSequence a →
+        let d : ℕ → ℤ := fun n ↦ (a (n + 1) : ℤ) - (a n : ℤ)
+        ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
+  sorry
 
 -- TODO: Part (iii), is the density of the sequence 0? Equivalently, Ben Green's problem 7: does this sequence have positive density?
 
