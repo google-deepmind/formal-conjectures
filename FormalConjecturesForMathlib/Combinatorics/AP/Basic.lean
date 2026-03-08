@@ -13,11 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Module.NatInt
-import Mathlib.Data.ENat.Lattice
-import Mathlib.Data.Set.Card
+public import Mathlib.Algebra.Module.NatInt
+public import Mathlib.Data.ENat.Lattice
+public import Mathlib.Data.Set.Card
 import Mathlib.Tactic.IntervalCases
+
+@[expose] public section
 
 open scoped Classical
 
