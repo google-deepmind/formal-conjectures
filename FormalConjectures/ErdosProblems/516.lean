@@ -43,7 +43,7 @@ noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function of finite order such that `nₖ / k → ∞`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
 @[category research solved, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one_of_hasFabryGaps_ofFiniteOrder {f : ℂ → ℂ} {n : ℕ → ℕ}
+theorem erdos_516 {f : ℂ → ℂ} {n : ℕ → ℕ}
     (hn : HasFabryGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (hf : OfFiniteOrder f) :
     limsup (fun r => ratio r f) atTop = 1 := by
@@ -52,7 +52,7 @@ theorem erdos_516.limsup_ratio_eq_one_of_hasFabryGaps_ofFiniteOrder {f : ℂ →
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function such that `nₖ > k (log k) ^ (2 + c)`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65]. -/
 @[category research solved, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
+theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
     (hn : ∃ c > (0 : ℝ), ∀ k, n k > k * log k ^ (2 + c)) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) :
     limsup (fun r => ratio r f) atTop = 1 := by
@@ -61,7 +61,7 @@ theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
 /-- Is it true that for all entire functions `f = ∑ aₖzⁿₖ` such that `∑' 1 / nₖ < ∞`,
 `limsup (fun r => ratio r f) atTop = 1`? -/
 @[category research open, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one_of_hasFejerGaps : answer(sorry) ↔
+theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps : answer(sorry) ↔
     ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
     limsup (fun r => ratio r f) atTop = 1 := by
