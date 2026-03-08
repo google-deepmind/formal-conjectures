@@ -53,7 +53,7 @@ in `A` (aside from the trivial coincidences).
 Is it true that `liminf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research solved, AMS 11]
-theorem erdos_41_i (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
+theorem erdos_41.variants.pairwise (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
     Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry
 
