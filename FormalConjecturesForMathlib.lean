@@ -61,6 +61,7 @@ import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
 import FormalConjecturesForMathlib.Data.Nat.Squarefree
 import FormalConjecturesForMathlib.Data.Real.Constants
+import FormalConjecturesForMathlib.Data.Real.NearestInt
 import FormalConjecturesForMathlib.Data.Set.Bdd
 import FormalConjecturesForMathlib.Data.Set.Density
 import FormalConjecturesForMathlib.Data.Set.Triplewise

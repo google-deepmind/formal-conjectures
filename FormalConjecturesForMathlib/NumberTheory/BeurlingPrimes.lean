@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Order.Filter.AtTopBot.Defs
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Order.Filter.AtTopBot.Defs
+
+@[expose] public section
 
 /-!
 # Beurling primes
