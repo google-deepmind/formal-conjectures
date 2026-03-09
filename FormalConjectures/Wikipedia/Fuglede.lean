@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Fuglede
 
-open Real Set Complex MeasureTheory
+open Real Set Complex MeasureTheory Quaternion
 
 /--
 Translate set Ω by vector t.
@@ -39,6 +39,35 @@ Exponential function e^(2πi ⟨ξ, x⟩).
 -/
 noncomputable def expFunction {d : ℕ} (ξ x : Fin d → ℝ) : ℂ :=
   Complex.exp (2 * π * Complex.I * (∑ i, ξ i * x i))
+
+
+/--
+Exponential function as an element of L^2(Ω) which is `Lp ℂ 2 (volume.restrict Ω)`.
+First we prove that it's continuous and measurable.
+-/
+lemma expFunction_is_L2 {d : ℕ} (Ω : Set (Fin d → ℝ)) (ξ : Fin d → ℝ) (hΩ_finite : volume Ω ≠ ⊤) :
+    MemLp (expFunction ξ) 2 (volume.restrict Ω) := by
+    have h_expFunction_continuous : Continuous (expFunction ξ) := by
+      unfold expFunction
+      continuity
+    have h_expFunction_measurable : AEStronglyMeasurable (expFunction ξ) (volume.restrict Ω) := by
+      exact (h_expFunction_continuous).aestronglyMeasurable
+    have h_expFunction_sqnorm1 (x : Fin d → ℝ) : ‖expFunction ξ x‖^2 = 1 := by
+      have h_norm1 : ‖expFunction ξ x‖ = 1 := by
+        unfold expFunction
+        have h_simp :
+          2 * π * Complex.I * (∑ i, ξ i * x i) = Complex.I * ((2 * π * ∑ i, ξ i * x i) : ℝ) := by
+            simp
+            ring
+        rw [h_simp]
+        simpa using Complex.norm_exp_I_mul_ofReal (2 * π * ∑ i, ξ i * x i)
+      rw [h_norm1]
+      norm_num
+    rw [MeasureTheory.memLp_two_iff_integrable_sq_norm h_expFunction_measurable]
+    simp_rw [h_expFunction_sqnorm1]
+    change IntegrableOn (fun _ ↦ (1 : ℝ)) Ω volume
+    exact MeasureTheory.integrableOn_const hΩ_finite
+
 
 /--
 `isSpectral Ω` means there exists a set Λ of frequencies such that the functions
@@ -59,7 +88,7 @@ def TilesByTranslation {d : ℕ} (Ω : Set (Fin d → ℝ)) : Prop :=
       volume (translatedSet Ω t₁ ∩ translatedSet Ω t₂) = 0)
 
 /--
-A bounded subset of ℝ with positive Lebesgue measure is spectral iff it tiles ℝ by translation.
+**Fuglede's conjecture** in one dimension: A bounded subset of ℝ with positive Lebesgue measure is spectral iff it tiles ℝ by translation.
 -/
 @[category research open, AMS 42 46 47]
 theorem FugledeConjecture.variants.dim_1 :
@@ -70,7 +99,7 @@ theorem FugledeConjecture.variants.dim_1 :
   sorry
 
 /--
-A bounded subset of ℝ^2 with positive Lebesgue measure is spectral iff it tiles ℝ^2 by translation.
+**Fuglede's conjecture** in two dimensions: A bounded subset of ℝ^2 with positive Lebesgue measure is spectral iff it tiles ℝ^2 by translation.
 -/
 @[category research open, AMS 42 46 47]
 theorem FugledeConjecture.variants.dim_2 :
