@@ -60,8 +60,11 @@ Green's Open Problem 28 is the probabilistic reformulation of Mathoverflow 33913
 Suppose that $X, Y$ are two finitely-supported independent random variables taking integer values,
 and such that $X + Y$ is uniformly distributed on its range. Are $X$ and $Y$ themselves uniformly
 distributed on their ranges?
+
+Mathematically, this equivalence is established via Probability Generating Functions (PGFs),
+shifting the support to $\mathbb{N}$, and appropriately scaling the coefficients.
 -/
-@[category research open, AMS 60]
+@[category undergraduate, AMS 60]
 theorem mathoverflow_339137_probabilistic :
     type_of% Mathoverflow339137.mathoverflow_339137 ↔ type_of% Green28.green_28 := by
   sorry
