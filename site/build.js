@@ -12,6 +12,10 @@
 const fs = require('fs');
 const path = require('path');
 
+// Base path for deployment (e.g. '/formal-conjectures' for GitHub Pages project sites).
+// Set via BASE_PATH env var. Must NOT have a trailing slash.
+const BASE_PATH = (process.env.BASE_PATH || '').replace(/\/$/, '');
+
 // ---------------------------------------------------------------------------
 // AMS MSC2020 subject classification map (code → description)
 // ---------------------------------------------------------------------------
@@ -247,7 +251,7 @@ function categoryStatsHTML(byCategory) {
 function collectionListHTML(byCollection) {
   return Object.entries(byCollection)
     .sort((a, b) => b[1] - a[1])
-    .map(([name, count]) => `<li><a href="/browse/?collection=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
+    .map(([name, count]) => `<li><a href="${BASE_PATH}/browse/?collection=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
     .join('\n');
 }
 
@@ -255,7 +259,7 @@ function subjectListHTML(bySubject) {
   return Object.entries(bySubject)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 20) // top 20 subjects on landing page
-    .map(([name, count]) => `<li><a href="/browse/?subject=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
+    .map(([name, count]) => `<li><a href="${BASE_PATH}/browse/?subject=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
     .join('\n');
 }
 
@@ -298,7 +302,7 @@ function main() {
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
-  writePage('site/index.html', fill(indexHtml, {
+  writePage('site/index.html', applyBasePath(fill(indexHtml, {
     totalCount:      stats.total,
     openCount:       stats.byCategory['research open'] || 0,
     solvedCount:     stats.byCategory['research solved'] || 0,
@@ -306,7 +310,7 @@ function main() {
     categoryStats:   categoryStatsHTML(stats.byCategory),
     collectionList:  collectionListHTML(stats.byCollection),
     subjectList:     subjectListHTML(stats.bySubject),
-  }));
+  })));
 
   // ---- Browse page ----
   copyStaticTemplate('browse.html', 'site/browse/index.html');
@@ -324,8 +328,22 @@ function main() {
 }
 
 function copyStaticTemplate(templateName, dest) {
-  const html = readTemplate(templateName);
+  const html = applyBasePath(readTemplate(templateName));
   writePage(dest, html);
+}
+
+/**
+ * Rewrite absolute paths in HTML to include the BASE_PATH prefix.
+ * Matches href="/..." and src="/..." attributes (but not href="//" or src="//"
+ * which are protocol-relative URLs, and not href="https://" etc.).
+ * Also sets the data-base attribute on the <html> tag for JavaScript use.
+ */
+function applyBasePath(html) {
+  if (!BASE_PATH) return html;
+  // Set data-base on <html> for client-side JS (main.js uses this for fetch paths)
+  html = html.replace('data-base=""', `data-base="${BASE_PATH}"`);
+  // Rewrite href="/..." and src="/..." to include the base path
+  return html.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`);
 }
 
 main();
