@@ -61,7 +61,7 @@ For $k$, let $f(k)$ be the minimal $n$ such that every set of $n$ consecutive in
 an integer divisible by a prime $>k$, i.e. not $(k+1)$-smooth.
 -/
 noncomputable def f (k : ℕ) : ℕ :=
-  if hk : 0 < k then Nat.find (erdos_961.well_defined k hk) else 0
+  if hk : 0 < k then Nat.find (erdos_961.variants.well_defined k hk) else 0
 
 /--
 It is conjectured that $f(k) \ll (\log k)^O(1)$.
