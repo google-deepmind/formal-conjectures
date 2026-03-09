@@ -15,23 +15,25 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«20»
 
 /-!
-# Erdős Problem 495
+# Erdős–Rado sunflower conjecture
 
-*Reference:* [erdosproblems.com/495](https://www.erdosproblems.com/495)
+This file is a Wikipedia-facing entry point for the formalization in
+`FormalConjectures/ErdosProblems/20.lean`.
+
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
 -/
 
-open Filter
-
-namespace Erdos495
+namespace ErdosRadoSunflowerConjecture
 
 /--
-Let $\alpha,\beta \in \mathbb{R}$. Is it true that\[\liminf_{n\to \infty} n \| n\alpha \|
-  \| n\beta\| =0\]? This is also known as the Littlewood conjecture.
+This Wikipedia entry points to the canonical formalization of the Erdős-Rado sunflower
+conjecture in `FormalConjectures.ErdosProblems.«20»`.
 -/
-@[category research open, AMS 11]
-theorem erdos_495 : answer(sorry) ↔ ∀ α β : ℝ, liminf (fun n : ℕ ↦ (n : ℝ) * distToNearestInt (n * α)
-  * distToNearestInt (n * β)) atTop = 0 := by sorry
+@[category research open, AMS 05]
+theorem erdos_rado_sunflower_conjecture : type_of% @Erdos20.erdos_20 := by
+  sorry
 
-end Erdos495
+end ErdosRadoSunflowerConjecture

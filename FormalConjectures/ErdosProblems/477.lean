@@ -45,7 +45,7 @@ There is no such $A$ for the polynomial $f(x) = X^2$.
 This is shown in [Sek59].
 -/
 @[category research solved, AMS 12]
-theorem erdos_477.S_sq :
+theorem erdos_477.variants.S_sq :
     letI f := X ^ 2
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
   sorry
@@ -56,7 +56,7 @@ with $a \ne 0$ and $b \ne 0.
 This was found be AlphaProof for the specific instance $X^2 - X + 1$ and then generalised.
  -/
 @[category research solved, AMS 12]
-theorem erdos_477.degree_two_dvd_condition_b_ne_zero {a b c : ℤ} (ha : a ≠ 0) (hb : b ≠ 0)
+theorem erdos_477.variants.degree_two_dvd_condition_b_ne_zero {a b c : ℤ} (ha : a ≠ 0) (hb : b ≠ 0)
     (hab : a ∣ b) :
     let f := a • X ^ 2 + b • X + C c
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
@@ -66,7 +66,7 @@ theorem erdos_477.degree_two_dvd_condition_b_ne_zero {a b c : ℤ} (ha : a ≠ 0
 Probably there is no such $A$ for the polynomial $X^3$.
 -/
 @[category research open, AMS 12]
-theorem erdos_477.X_pow_three :
+theorem erdos_477.variants.X_pow_three :
     letI f := X ^ 3
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
   sorry
@@ -75,7 +75,7 @@ theorem erdos_477.X_pow_three :
 Probably there is no such $A$ for the polynomial $X^k$ for any $k \ge 2$. This is asked in [Sek59].
 -/
 @[category research open, AMS 12]
-theorem erdos_477.monomial (k : ℕ) (hk : 2 ≤ k) :
+theorem erdos_477.variants.monomial (k : ℕ) (hk : 2 ≤ k) :
     letI f := X ^ k
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (f.eval '' {n | 0 < n}), z = a.1 + a.2 := by
   sorry
