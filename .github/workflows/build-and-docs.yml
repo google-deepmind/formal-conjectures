@@ -145,6 +145,8 @@ jobs:
         run: |
           cd site
           node build.js
+        env:
+          BASE_PATH: /formal-conjectures
 
       - name: Assemble deploy artifact
         run: |

@@ -8,13 +8,14 @@
 'use strict';
 
 const detailEl = document.getElementById('theorem-detail');
+const _base = document.documentElement.dataset.base || '';
 
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const name   = params.get('name');
 
   if (!name) {
-    renderError('No theorem name specified. Try browsing the <a href="/browse/">full list</a>.');
+    renderError(`No theorem name specified. Try browsing the <a href="${_base}/browse/">full list</a>.`);
     return;
   }
 
@@ -60,7 +61,7 @@ async function init() {
 function renderError(msg) {
   detailEl.innerHTML = `
     <div class="theorem-detail__breadcrumb">
-      <a href="/browse/">&larr; Browse</a>
+      <a href="${_base}/browse/">&larr; Browse</a>
     </div>
     <div class="empty-state">
       <div class="empty-state__text">${msg}</div>
@@ -99,9 +100,9 @@ function renderDetail(theorem, siblings) {
 
   detailEl.innerHTML = `
     <div class="theorem-detail__breadcrumb">
-      <a href="/browse/">&larr; Browse</a>
+      <a href="${_base}/browse/">&larr; Browse</a>
       &nbsp;&rsaquo;&nbsp;
-      <a href="/browse/?collection=${encodeURIComponent(theorem.collection)}">${FC.escapeHTML(theorem.collection)}</a>
+      <a href="${_base}/browse/?collection=${encodeURIComponent(theorem.collection)}">${FC.escapeHTML(theorem.collection)}</a>
     </div>
 
     <header class="theorem-detail__header">
@@ -154,7 +155,7 @@ function renderDetail(theorem, siblings) {
     </div>` : ''}
 
     <nav class="theorem-detail__nav" aria-label="Page actions">
-      <a href="/browse/" class="btn btn-outline">&larr; Back to browse</a>
+      <a href="${_base}/browse/" class="btn btn-outline">&larr; Back to browse</a>
       <a href="${FC.escapeHTML(theorem.githubUrl)}" class="btn btn-outline" target="_blank" rel="noopener">
         View on GitHub ↗
       </a>
