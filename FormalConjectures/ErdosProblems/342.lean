@@ -51,7 +51,7 @@ Do infinitely many pairs $(a, a+2)$ occur in Ulam's sequence? -/
 theorem erdos_342.parts.i :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →
-        ∀ N : ℕ, ∃ n ≥ N, a (n + 1) = a n + 2 := by
+        ∀ N : ℕ, ∃ n ≥ N, (a (n + 1)) = (a n) + 2 := by
   sorry
 
 /--
@@ -65,6 +65,17 @@ theorem erdos_342.parts.ii :
         ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
   sorry
 
--- TODO: Part (iii), is the density of the sequence 0? Equivalently, Ben Green's problem 7: does this sequence have positive density?
+/--
+Part (iii), is the density of the sequence 0?
+-/
+@[category research open, AMS 05 11 40]
+theorem erdos_342.parts.iii :
+    answer(sorry) ↔
+      ∀ a : ℕ → ℕ, IsUlamSequence a →
+        Tendsto
+          (fun N : ℕ =>
+            (Finset.card (Finset.filter (fun n ↦ a n ≤ N) (Finset.range N)) : ℝ) / N)
+          atTop (𝓝 0) := by
+  sorry
 
 end Erdos342
