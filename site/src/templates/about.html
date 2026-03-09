@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-base="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Formal Conjectures</title>
+  <meta name="description" content="About the Formal Conjectures project — formalised mathematical conjectures in Lean 4.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="container site-nav__inner">
+    <a href="/" class="site-nav__brand">Formal Conjectures</a>
+    <ul class="site-nav__links" role="list">
+      <li><a href="/browse/">Browse</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">About Formal Conjectures</h1>
+    <p class="page-header__subtitle">A growing library of formalised mathematical problem statements in Lean 4.</p>
+  </div>
+</header>
+
+<main>
+  <div class="container section">
+    <div class="prose">
+
+      <h2>What is this project?</h2>
+      <p>
+        <strong>Formal Conjectures</strong> is an open collection of formalised statements of
+        mathematical conjectures in <a href="https://leanprover.github.io/lean4/doc/whatIsLean.html" target="_blank" rel="noopener">Lean 4</a>,
+        building on the <a href="https://github.com/leanprover-community/mathlib4" target="_blank" rel="noopener">Mathlib</a> library.
+      </p>
+      <p>
+        While there is a growing corpus of formalised theorems <em>with proofs</em>, there has been a
+        shortage of open conjectures where only the formal statement has been written down. This
+        repository fills that gap.
+      </p>
+
+      <h2>Goals</h2>
+      <ul>
+        <li>
+          <strong>Benchmark for automated theorem provers.</strong>
+          A collection of open problems provides a natural testbed for AI systems
+          attempting to discover mathematical proofs.
+        </li>
+        <li>
+          <strong>Clarify conjecture statements.</strong>
+          Formalisation forces precision, often revealing hidden ambiguities in informal statements.
+        </li>
+        <li>
+          <strong>Expand Mathlib.</strong>
+          Highlighting definitions that are needed but missing from Mathlib encourages the
+          mathematical community to fill those gaps.
+        </li>
+      </ul>
+
+      <h2>Structure</h2>
+      <p>Conjectures are organised by their source:</p>
+      <ul>
+        <li><strong>Erdős Problems</strong> — from <a href="https://www.erdosproblems.com" target="_blank" rel="noopener">erdosproblems.com</a></li>
+        <li><strong>Wikipedia</strong> — famous named conjectures (Riemann, Collatz, …)</li>
+        <li><strong>MathOverflow</strong> — community-sourced open questions</li>
+        <li><strong>OEIS</strong> — sequence-related conjectures</li>
+        <li><strong>arXiv / Papers / Books</strong> — from the research literature</li>
+        <li><strong>Millennium Prize Problems</strong> — the Clay Institute's seven problems</li>
+        <li><strong>Hilbert Problems</strong> — Hilbert's 1900 problem list</li>
+        <li><strong>Green's Open Problems</strong> — Ben Green's combinatorics list</li>
+        <li><strong>Kourovka Notebook</strong> — open problems in group theory</li>
+        <li><strong>Written on the Wall II</strong> — and more</li>
+      </ul>
+
+      <h2>Categories</h2>
+      <p>Every statement is tagged with a category reflecting its status:</p>
+      <ul>
+        <li><span class="badge cat-open">Open</span> &mdash; no solution currently accepted by the mathematical community.</li>
+        <li><span class="badge cat-solved">Solved</span> &mdash; an established solution exists (informal or formal).</li>
+        <li><span class="badge cat-formal">Formally Solved</span> &mdash; a machine-checkable formal proof exists.</li>
+        <li><span class="badge cat-graduate">Graduate</span> / <span class="badge cat-undergrad">Undergraduate</span> / <span class="badge cat-highschool">High School</span> &mdash; difficulty level, only included when directly related to a research-level problem.</li>
+      </ul>
+
+      <h2>AMS subject classification</h2>
+      <p>
+        Every statement also carries one or more
+        <a href="https://mathscinet.ams.org/mathscinet/msc/pdfs/classifications2020.pdf" target="_blank" rel="noopener">AMS MSC2020</a>
+        subject tags (e.g. <em>Number Theory</em>, <em>Combinatorics</em>), enabling filtering
+        by mathematical area.
+      </p>
+
+      <h2>A note on accuracy</h2>
+      <p>
+        Formalising mathematical statements without proofs is inherently challenging.
+        Subtle inaccuracies can arise where the formal statement might not perfectly capture
+        the nuances of the original conjecture. The project relies on careful human review
+        and plans to leverage automated tools to help identify potential misformalisations.
+      </p>
+
+      <h2>Licensing</h2>
+      <p>
+        All software is licensed under
+        <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache 2.0</a>.
+        All other materials are licensed under
+        <a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank" rel="noopener">CC-BY 4.0</a>.
+        Third-party content may be subject to different licensing requirements as noted in each file.
+      </p>
+      <p><em>This is not an official Google product.</em></p>
+
+      <h2>Links</h2>
+      <ul>
+        <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub repository</a></li>
+        <li><a href="https://google-deepmind.github.io/formal-conjectures/" target="_blank" rel="noopener">Lean documentation (lake docs)</a></li>
+        <li><a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Zulip channel</a></li>
+        <li><a href="https://leanprover-community.github.io/get_started.html" target="_blank" rel="noopener">Getting started with Lean 4</a></li>
+        <li><a href="/contribute/">How to contribute</a></li>
+      </ul>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>Formal Conjectures &mdash; Apache 2.0 / CC-BY 4.0</span>
+    <span>
+      <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a>
+      &middot;
+      <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Zulip</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+name: Build and deploy website
+
+# Triggered when:
+#  - data/conjectures.json is updated (pushed by the formal-conjectures CI)
+#  - manually via the Actions UI
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/conjectures.json'
+      - 'src/**'
+      - 'build.js'
+      - 'package.json'
+  workflow_dispatch:
+
+# Allow one concurrent deployment
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build site
+        run: node build.js
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

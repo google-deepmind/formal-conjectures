@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-base="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contribute — Formal Conjectures</title>
+  <meta name="description" content="How to contribute formalisations of mathematical conjectures to the Formal Conjectures Lean 4 repository.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="container site-nav__inner">
+    <a href="/" class="site-nav__brand">Formal Conjectures</a>
+    <ul class="site-nav__links" role="list">
+      <li><a href="/browse/">Browse</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">How to Contribute</h1>
+    <p class="page-header__subtitle">Contributions of all kinds are welcome — from adding new formalisations to fixing inaccuracies.</p>
+  </div>
+</header>
+
+<main>
+  <div class="container section">
+    <div class="prose">
+
+      <h2>Ways to contribute</h2>
+      <ol>
+        <li>
+          <strong>Add new problem formalisations.</strong>
+          We encourage adding formalisations of open conjectures from:
+          <ul>
+            <li><em>Literature:</em> textbooks, problem books, research papers (including <a href="https://arxiv.org/archive/math" target="_blank" rel="noopener">arXiv</a>)</li>
+            <li><em>Community resources:</em> <a href="https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics" target="_blank" rel="noopener">Wikipedia</a>, <a href="https://mathoverflow.net" target="_blank" rel="noopener">MathOverflow</a>, <a href="https://oeis.org" target="_blank" rel="noopener">OEIS</a></li>
+            <li><em>Problem lists:</em> <a href="https://www.claymath.org/millennium-problems/" target="_blank" rel="noopener">Millennium Problems</a>, <a href="https://www.erdosproblems.com" target="_blank" rel="noopener">Erdős Problems</a>, <a href="https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf" target="_blank" rel="noopener">Ben Green's list</a>, <a href="https://arxiv.org/pdf/1401.0300" target="_blank" rel="noopener">Kourovka notebook</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Open issues</strong> describing problems you'd like to see formalised. Include
+          links to references and a precise informal statement.
+        </li>
+        <li>
+          <strong>Formalise a proposed problem.</strong>
+          Browse <a href="https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee+label%3A%22new+conjecture%22" target="_blank" rel="noopener">unassigned new conjectures</a>
+          or <a href="https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22" target="_blank" rel="noopener">good first issues</a>
+          and comment to claim one.
+        </li>
+        <li>
+          <strong>Improve tagging and referencing</strong> — add missing
+          <code>@[AMS]</code> tags or source links to existing files.
+        </li>
+        <li>
+          <strong>Fix misformalisations.</strong> PRs fixing incorrect formal
+          statements are especially appreciated.
+        </li>
+      </ol>
+
+      <h2>Contribution process</h2>
+      <ol>
+        <li>
+          <strong>Sign the <a href="https://cla.developers.google.com/" target="_blank" rel="noopener">Google CLA</a></strong>
+          (required once per contributor).
+        </li>
+        <li>Open a GitHub issue describing your planned contribution.</li>
+        <li>Fork the <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">repository</a> and create a branch.</li>
+        <li>Add your formalised conjecture(s) in the appropriate directory.</li>
+        <li>Ensure the project builds: <code>lake build</code>.</li>
+        <li>Submit a Pull Request.</li>
+      </ol>
+
+      <h2>File structure conventions</h2>
+      <p>
+        Every <code>.lean</code> file should follow this structure:
+      </p>
+      <pre><code>/-
+Copyright YYYY The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 …
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Problem Title
+*Reference:* [source](https://…)
+-/
+
+namespace MyProblem
+
+@[category research open, AMS 11]
+theorem my_conjecture : Statement := by
+  sorry
+
+end MyProblem</code></pre>
+
+      <h2>The <code>@[category]</code> attribute</h2>
+      <p>Every statement must have exactly one category tag:</p>
+      <ul>
+        <li><code>@[category research open]</code> — unsolved open problem</li>
+        <li><code>@[category research solved]</code> — informally or formally solved</li>
+        <li><code>@[category research formally solved using lean4 at "url"]</code> — has a formal Lean 4 proof</li>
+        <li><code>@[category graduate]</code> / <code>undergraduate</code> / <code>high_school]</code></li>
+        <li><code>@[category test]</code> / <code>API]</code> — internal use</li>
+      </ul>
+
+      <h2>The <code>@[AMS]</code> attribute</h2>
+      <p>
+        Every statement must have at least one
+        <a href="https://mathscinet.ams.org/mathscinet/msc/pdfs/classifications2020.pdf" target="_blank" rel="noopener">AMS MSC2020</a>
+        subject tag. Use <code>#AMS</code> in VS Code to list all valid values.
+      </p>
+      <pre><code>@[AMS 11]       -- Number Theory
+@[AMS 5 11]     -- Combinatorics + Number Theory</code></pre>
+
+      <h2>Style guidelines</h2>
+      <ul>
+        <li>One problem per file (variants and special cases may share a file).</li>
+        <li>Include a reference comment linking to the source of the conjecture.</li>
+        <li>Use <code>theorem</code> or <code>lemma</code> for problem statements.</li>
+        <li>For questions ("Does P hold?"), use the <code>answer(sorry)</code> elaborator.</li>
+        <li>Bespoke definitions are fine; add basic API tests for them.</li>
+        <li>Follow the same AI usage conventions as <a href="https://leanprover-community.github.io/contribute/index.html" target="_blank" rel="noopener">Mathlib</a>.</li>
+      </ul>
+
+      <h2>Getting started with Lean 4</h2>
+      <p>
+        If you're new to Lean 4, install
+        <a href="https://leanprover-community.github.io/get_started.html" target="_blank" rel="noopener">elan, lake, and Lean</a>,
+        then:
+      </p>
+      <pre><code>git clone https://github.com/google-deepmind/formal-conjectures
+cd formal-conjectures
+lake exe cache get   # download prebuilt Mathlib oleans
+lake build</code></pre>
+
+      <p>
+        Join the
+        <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Formal Conjectures Zulip channel</a>
+        for help and discussion.
+      </p>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>Formal Conjectures &mdash; Apache 2.0 / CC-BY 4.0</span>
+    <span>
+      <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a>
+      &middot;
+      <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Zulip</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

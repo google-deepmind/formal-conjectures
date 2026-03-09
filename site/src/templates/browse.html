@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-base="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse — Formal Conjectures</title>
+  <meta name="description" content="Browse and filter all formalised conjectures in the Formal Conjectures Lean 4 repository.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="container site-nav__inner">
+    <a href="/" class="site-nav__brand">Formal Conjectures</a>
+    <ul class="site-nav__links" role="list">
+      <li><a href="/browse/">Browse</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="container browse-layout">
+
+    <!-- Sidebar filters -->
+    <aside class="filter-panel" id="filter-panel" aria-label="Filters">
+      <div class="filter-panel__title">Filters</div>
+
+      <div class="filter-section">
+        <span class="filter-section__label">Category</span>
+        <div class="filter-checkbox-list" id="category-filters">
+          <!-- populated by browse.js -->
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <span class="filter-section__label">Source</span>
+        <div class="filter-checkbox-list" id="collection-filters">
+          <!-- populated by browse.js -->
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <span class="filter-section__label">AMS Subject</span>
+        <div class="filter-checkbox-list" id="subject-filters">
+          <!-- populated by browse.js -->
+        </div>
+      </div>
+
+      <button class="filter-reset" id="reset-filters">Clear all filters</button>
+    </aside>
+
+    <!-- Results pane -->
+    <section aria-label="Results">
+      <div class="search-bar">
+        <input
+          type="search"
+          class="search-input"
+          id="search-input"
+          placeholder="Search by theorem name…"
+          aria-label="Search theorems"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+
+      <div class="results-meta" id="results-meta">
+        <span id="result-count"></span>
+        <select class="sort-select" id="sort-select" aria-label="Sort results">
+          <option value="name">Sort: Name (A–Z)</option>
+          <option value="category">Sort: Category</option>
+          <option value="collection">Sort: Source</option>
+          <option value="votes">Sort: Most voted</option>
+          <option value="difficulty">Sort: Difficulty</option>
+        </select>
+      </div>
+
+      <div id="theorem-list" class="theorem-list" role="list">
+        <div class="empty-state">
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+
+      <div id="pagination" class="pagination" aria-label="Pagination"></div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>Formal Conjectures &mdash; Apache 2.0 / CC-BY 4.0</span>
+    <span>
+      <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a>
+      &middot;
+      <a href="/contribute/">Contribute</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/voting.js"></script>
+<script src="/assets/js/browse.js"></script>
+</body>
+</html>
