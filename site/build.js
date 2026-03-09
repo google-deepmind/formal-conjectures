@@ -251,7 +251,7 @@ function categoryStatsHTML(byCategory) {
 function collectionListHTML(byCollection) {
   return Object.entries(byCollection)
     .sort((a, b) => b[1] - a[1])
-    .map(([name, count]) => `<li><a href="${BASE_PATH}/browse/?collection=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
+    .map(([name, count]) => `<li><a href="/browse/?collection=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
     .join('\n');
 }
 
@@ -259,7 +259,7 @@ function subjectListHTML(bySubject) {
   return Object.entries(bySubject)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 20) // top 20 subjects on landing page
-    .map(([name, count]) => `<li><a href="${BASE_PATH}/browse/?subject=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
+    .map(([name, count]) => `<li><a href="/browse/?subject=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
     .join('\n');
 }
 
