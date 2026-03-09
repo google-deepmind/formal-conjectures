@@ -53,8 +53,10 @@ def isSpectral {d : ℕ} (Ω : Set (Fin d → ℝ)) : Prop :=
 such that all of the translates of Ω by T tile ℝ^d (cover ℝ^d without overlap).
 -/
 def TilesByTranslation {d : ℕ} (Ω : Set (Fin d → ℝ)) : Prop :=
-  ∃ T : Set (Fin d → ℝ), True
-  -- TODO
+  ∃ T : Set (Fin d → ℝ), T.Countable ∧
+    volume (Set.univ \ (⋃ t ∈ T, translatedSet Ω t)) = 0 ∧
+    (∀ {t₁ t₂ : Fin d → ℝ}, t₁ ∈ T → t₂ ∈ T → t₁ ≠ t₂ →
+      volume (translatedSet Ω t₁ ∩ translatedSet Ω t₂) = 0)
 
 /--
 A bounded subset of ℝ with positive Lebesgue measure is spectral iff it tiles ℝ by translation.
@@ -77,7 +79,5 @@ theorem FugledeConjecture.variants.dim_2 :
         Bornology.IsBounded Ω → MeasurableSet Ω → 0 < volume Ω →
           (isSpectral Ω ↔ TilesByTranslation Ω) := by
   sorry
-
-
 
 end Fuglede
