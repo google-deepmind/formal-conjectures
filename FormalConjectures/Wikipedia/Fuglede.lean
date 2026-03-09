@@ -27,12 +27,22 @@ namespace Fuglede
 
 open Real Set Complex MeasureTheory
 
+/--
+Translate set Ω by vector t.
+-/
+def translatedSet {d : ℕ} (Ω: Set (Fin d → ℝ)) (t : Fin d → ℝ) :
+  Set (Fin d → ℝ) :=
+  {x | x - t ∈ Ω}
 
--- TODO: definitions I need, e.g. translationBy, expFunction
+/--
+Exponential function e^(2πi ⟨ξ, x⟩).
+-/
+noncomputable def expFunction {d : ℕ} (ξ x : Fin d → ℝ) : ℂ :=
+  Complex.exp (2 * π * Complex.I * (∑ i, ξ i * x i))
 
 /--
 `isSpectral Ω` means there exists a set Λ of frequencies such that the functions
-e^(2πi ⟨λ, x⟩) for λ in Λ form an orthogonal basis of L^2(Ω).
+e^(2πi ⟨ξ, x⟩) for ξ in Λ form an orthogonal basis of L^2(Ω).
 -/
 def isSpectral {d : ℕ} (Ω : Set (Fin d → ℝ)) : Prop :=
   ∃ Λ : Set (Fin d → ℝ), True
@@ -40,7 +50,7 @@ def isSpectral {d : ℕ} (Ω : Set (Fin d → ℝ)) : Prop :=
 
 /--
 `tilesByTranslation Ω` means there exists a set T of translation vectors
-such that all of the translates of Ω by T tile ℝ^d.
+such that all of the translates of Ω by T tile ℝ^d (cover ℝ^d without overlap).
 -/
 def TilesByTranslation {d : ℕ} (Ω : Set (Fin d → ℝ)) : Prop :=
   ∃ T : Set (Fin d → ℝ), True
