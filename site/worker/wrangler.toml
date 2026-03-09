@@ -1,0 +1,8 @@
+name = "fc-oauth-proxy"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+ALLOWED_ORIGIN = "https://formal-conjectures.github.io"
+GH_REPO_OWNER = "zond"
+GH_REPO_NAME = "formal-conjectures"
