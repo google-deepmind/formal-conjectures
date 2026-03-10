@@ -104,4 +104,24 @@ theorem green_32.variants.log_regime :
       HasLargeGapDilate ω) := by
   sorry
 
+/--
+A set $A$ has a coset hole of size $L$ if there exists a subspace $W$ and a vector $v$ such that
+the affine space $v + W$ has size at least $L$ and is disjoint from $A$.
+-/
+def HasCosetHole {n : ℕ} (A : Finset (Fin n → ZMod 2)) (L : ℕ) : Prop :=
+  ∃ W : Submodule (ZMod 2) (Fin n → ZMod 2), ∃ v : Fin n → ZMod 2,
+    L ≤ Nat.card W ∧ ∀ w : W, v + (w : Fin n → ZMod 2) ∉ A
+
+/--
+Tom Sanders' finite field variant [Gr24].
+If $N = 2^n$ and $A$ is a subset of size $\lfloor \sqrt{N} \rfloor$, then $A^c$ contains a coset of
+size at least $100\sqrt{N}$ for sufficiently large $n$.
+-/
+@[category research solved, AMS 5 11]
+theorem green_32.variants.finite_field :
+    ∀ᶠ n in atTop,
+      ∀ A : Finset (Fin n → ZMod 2), A.card = ⌊Real.sqrt (2^n : ℝ)⌋₊ →
+      HasCosetHole A ⌊100 * Real.sqrt (2^n : ℝ)⌋₊ := by
+  sorry
+
 end Green32
