@@ -30,11 +30,7 @@ universe u
 namespace SnakeInBox
 
 open SimpleGraph symmDiff
-
-/--
-A graph on the power set of `Fin n`, where two sets are adjacent if they differ by a single element.
--/
-def Hypercube (n : ℕ) : SimpleGraph (Finset (Fin n)) := fromRel fun a b => (a ∆ b).card = 1
+open scoped SimpleGraph
 
 /--
 A subgraph `G'` is a 'snake' of length `k` in graph `G` if it is an induced path of length `k`.
@@ -53,7 +49,7 @@ noncomputable def LongestSnakeInGraph {V : Type u} [DecidableEq V] (G : SimpleGr
 /--
 The length of the longest snake for the `Hypercube n` graph.
 -/
-noncomputable def LongestSnakeInTheBox (n : ℕ) : ℕ := LongestSnakeInGraph <| Hypercube n
+noncomputable def LongestSnakeInTheBox (n : ℕ) : ℕ := LongestSnakeInGraph <| Q(n)
 
 /--
 The longest snake in the $0$-dimensional cube, i.e. the cube consisting of one point, is zero,
@@ -61,7 +57,7 @@ since there only is one induced path and it is of length zero.
 -/
 @[category test, AMS 5]
 theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
-  simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
+  simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, hypercubeGraph]
   convert csSup_singleton 0
   ext n
   refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
