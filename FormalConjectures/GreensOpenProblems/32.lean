@@ -25,6 +25,7 @@ import FormalConjectures.Util.ProblemImports
   34.4 (2020): 2553-2555.
 -/
 
+open Filter
 open scoped Pointwise
 
 namespace Green32
@@ -43,9 +44,9 @@ Is there a dilate of $A$ containing a gap of length $100\sqrt{p}$?
 @[category research open, AMS 5 11]
 theorem green_32 :
     answer(sorry) ↔
-    (∀ (p : ℕ) [Fact p.Prime], ∀ A : Finset (ZMod p),
-      A.card = Nat.sqrt p →
-      ∃ d : ZMod p, d ≠ 0 ∧ HasGap (d • A) (100 * Nat.sqrt p)) := by
+    (∀ᶠ p in atTop, p.Prime →
+      ∀ A : Finset (ZMod p), A.card = Nat.sqrt p →
+      ∃ c : (ZMod p)ˣ, HasGap (c • A) ⌊100 * Real.sqrt (p : ℝ)⌋₊) := by
   sorry
 
 end Green32
