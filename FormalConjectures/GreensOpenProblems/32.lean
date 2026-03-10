@@ -81,7 +81,7 @@ theorem green_32.variants.sh20_sqrt :
 /-- In the regime $\omega(p) \sim c p$, this is Szemerédi's theorem [Gr24]. -/
 @[category research solved, AMS 5 11]
 theorem green_32.variants.szemeredi_regime :
-    ∀ c > 0, ∀ ω : ℕ → ℝ, ω ~[atTop] (fun p ↦ c * p) →
+    ∀ c, 0 < c ∧ c < 1 → ∀ ω : ℕ → ℝ, ω ~[atTop] (fun p ↦ c * p) →
       HasLargeGapDilate ω := by
   sorry
 
