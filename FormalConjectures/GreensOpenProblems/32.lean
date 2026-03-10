@@ -43,7 +43,7 @@ $\lfloor \omega(p) \rfloor$, is there a dilate of $A$ containing a gap of length
 $\lfloor 100p/\omega(p) \rfloor$?
 -/
 def HasLargeGapDilate (ω : ℕ → ℝ) : Prop :=
-  ∀ᶠ p in atTop, p.Prime →
+  ∀ᶠ p in atTop, p.Prime ∧ 1 < ω p ∧ ω p < p →
     ∀ A : Finset (ZMod p), A.card = ⌊ω p⌋₊ →
     ∃ c : (ZMod p)ˣ, HasGap (c • A) ⌊100 * (p : ℝ) / ω p⌋₊
 
