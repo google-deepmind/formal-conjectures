@@ -20,5 +20,7 @@ public import Mathlib.Algebra.Order.Round
 public import Mathlib.Data.Real.Archimedean
 public import Mathlib.Data.Real.Basic
 
+@[expose] public section
+
 /-- The distance from a real number to the nearest integer. -/
 noncomputable def distToNearestInt (x : ℝ) : ℝ := |x - round x|
