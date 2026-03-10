@@ -40,8 +40,8 @@ bound in $n$.
 
 namespace BabaiSeressConjectures
 
-/-- The Cayley graph of a group $G$ with respect to a set $S$. Two elements $g, h \in G$ are
-adjacent iff $g^{-1} h \in S$ (or equivalently $h^{-1} g \in S$ when $S$ is symmetric).
+/-- The (undirected) Cayley graph of a group $G$ with respect to a (symmetric) generating set $S$. Two elements $g, h \in G$ are
+adjacent iff $g^{-1} h \in S$.
 
 This is constructed using `SimpleGraph.fromRel`, which takes the relation
 $g \sim h \iff g^{-1} h \in S$ and automatically symmetrizes it (via disjunction with the
