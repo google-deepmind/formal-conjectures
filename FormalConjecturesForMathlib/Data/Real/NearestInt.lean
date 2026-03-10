@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Order.Round
-import Mathlib.Data.Real.Archimedean
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.Algebra.Order.Round
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Data.Real.Basic
 
 /-- The distance from a real number to the nearest integer. -/
 noncomputable def distToNearestInt (x : ℝ) : ℝ := |x - round x|
