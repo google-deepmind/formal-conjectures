@@ -26,8 +26,7 @@ import FormalConjecturesForMathlib.Analysis.Fourier.Fuglede
 
 namespace Fuglede
 
-open Real Set Complex MeasureTheory
-open scoped InnerProductSpace
+open MeasureTheory
 
 /--
 **Fuglede's conjecture** in one dimension: A bounded subset of ℝ with positive Lebesgue measure is spectral iff it tiles ℝ by translation.
