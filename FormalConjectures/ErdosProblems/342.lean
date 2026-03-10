@@ -61,7 +61,7 @@ Does Ulam's sequence eventually have periodic differences? That is, is $a(n+1) -
 theorem erdos_342.parts.ii :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →
-        let d : ℕ → ℤ := fun n ↦ (a (n + 1) : ℤ) - (a n : ℤ)
+        let d (n : ℕ) : ℤ := a (n + 1) - a n
         ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
   sorry
 
