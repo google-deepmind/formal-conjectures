@@ -49,4 +49,18 @@ theorem green_32 :
       ∃ c : (ZMod p)ˣ, HasGap (c • A) ⌊100 * Real.sqrt (p : ℝ)⌋₊) := by
   sorry
 
+/--
+[Sh20] has used the polynomial method to show that this is true with 100 replaced by 2 [Gr24].
+
+Note: More precisely [Sh20, Theorem 1] implies a gap of at least $\lceil 2p/|A| - 2 \rceil$.
+For a set $A$ of size $\lfloor \sqrt{p} \rfloor$, this guarantees a gap of at least
+$\lfloor 2\sqrt{p} \rfloor - 2$.
+-/
+@[category research solved, AMS 5 11]
+theorem green_32.variants.sh20 :
+    ∀ᶠ p in atTop, p.Prime →
+      ∀ A : Finset (ZMod p), A.card = Nat.sqrt p →
+      ∃ c : (ZMod p)ˣ, HasGap (c • A) (⌊2 * Real.sqrt (p : ℝ)⌋₊ - 2) := by
+  sorry
+
 end Green32
