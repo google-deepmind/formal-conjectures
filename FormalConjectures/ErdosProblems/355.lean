@@ -39,7 +39,7 @@ Bleicher and Erdős conjectured the answer is no.
 In fact the answer is yes, with any lacunarity constant $\lambda\in (1,2)$ (though not $\lambda=2$),
 as proved by van Doorn and Kova\v{c} [DoKo25].
 
-This was formalized by in Lean by Woett using Aristotle.
+This was formalized in Lean by van Doorn using Aristotle.
 -/
 @[category research formally solved using lean4 at
 "https://github.com/Woett/Lean-files/blob/main/ErdosProblem355.lean", AMS 11]
