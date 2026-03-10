@@ -229,7 +229,9 @@ theorem M_eq_M' : M  = M' := by
   exact Fintype.card_congr (equivMonotoneSperner n)
 
 /--
-  No closed form for the Dedekind numbers are currently unknown.
+  The Dedekind numbers M(n) represent the number of Boolean functions of n variables.
+While a logical closed-form summation exists, it is not computationally efficient for large n.
+The exact values for n > 9 remain a significant computing challenge.
 -/
 @[category research open, AMS 5 6]
 theorem DedekindNumbers : M = answer(sorry) := by
