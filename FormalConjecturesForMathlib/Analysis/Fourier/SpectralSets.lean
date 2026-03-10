@@ -37,7 +37,7 @@ open Real Set Complex MeasureTheory
 open scoped InnerProductSpace
 
 /-- The translate of a set `Ω` by a vector `t`.-/
-def translate {d : ℕ} (Ω: Set (Fin d → ℝ)) (t : Fin d → ℝ) :
+def translateSet {d : ℕ} (Ω: Set (Fin d → ℝ)) (t : Fin d → ℝ) :
   Set (Fin d → ℝ) :=
   {x | x - t ∈ Ω}
 
@@ -89,6 +89,6 @@ such that the translates of Ω by T cover ℝ^d without overlap.
 -/
 def tilesByTranslation {d : ℕ} (Ω : Set (Fin d → ℝ)) : Prop :=
   ∃ T : Set (Fin d → ℝ), T.Countable ∧
-    volume (Set.univ \ (⋃ t ∈ T, translate Ω t)) = 0 ∧
+    volume (Set.univ \ (⋃ t ∈ T, translateSet Ω t)) = 0 ∧
     (∀ {t₁ t₂ : Fin d → ℝ}, t₁ ∈ T → t₂ ∈ T → t₁ ≠ t₂ →
-      volume (translate Ω t₁ ∩ translate Ω t₂) = 0)
+      volume (translateSet Ω t₁ ∩ translateSet Ω t₂) = 0)
