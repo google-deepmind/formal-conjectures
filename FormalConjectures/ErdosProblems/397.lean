@@ -42,8 +42,11 @@ Further families of solutions are given in the comments by SharkyKesa.
 This was earlier asked about in a [MathOverflow] question, in response to which Elkies also gave an
 alternative construction which produces solutions - at the moment it is not clear whether Elkies'
 argument gives infinitely many solutions (although Bloom believes that it can).
+
+This was formalized by in Lean by Wu using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using lean4 at
+"https://gist.github.com/llllvvuu/40d68cfa9de9f43eece07ff4fdc3b0ef", AMS 11]
 theorem erdos_397 :
     answer(False) ↔
       {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
