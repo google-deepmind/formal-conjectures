@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
   34.4 (2020): 2553-2555.
 -/
 
-open Filter
+open Asymptotics Filter
 open scoped Pointwise
 
 namespace Green32
@@ -38,15 +38,22 @@ def HasGap {p : ℕ} (A : Finset (ZMod p)) (L : ℕ) : Prop :=
   ∃ x : ZMod p, ∀ (i : ℕ), i < L → x + (i : ZMod p) ∉ A
 
 /--
+The generalized problem: for a prime $p$ and a set $A \subset \mathbb{Z}/p\mathbb{Z}$ of size
+$\lfloor \omega(p) \rfloor$, is there a dilate of $A$ containing a gap of length
+$\lfloor 100p/\omega(p) \rfloor$?
+-/
+def HasLargeGapDilate (ω : ℕ → ℝ) : Prop :=
+  ∀ᶠ p in atTop, p.Prime →
+    ∀ A : Finset (ZMod p), A.card = ⌊ω p⌋₊ →
+    ∃ c : (ZMod p)ˣ, HasGap (c • A) ⌊100 * (p : ℝ) / ω p⌋₊
+
+/--
 Let $p$ be a prime and let $A \subset \mathbb{Z}/p\mathbb{Z}$ be a set of size $\lfloor \sqrt{p} \rfloor$.
 Is there a dilate of $A$ containing a gap of length $100\sqrt{p}$?
 -/
 @[category research open, AMS 5 11]
 theorem green_32 :
-    answer(sorry) ↔
-    (∀ᶠ p in atTop, p.Prime →
-      ∀ A : Finset (ZMod p), A.card = Nat.sqrt p →
-      ∃ c : (ZMod p)ˣ, HasGap (c • A) ⌊100 * Real.sqrt (p : ℝ)⌋₊) := by
+    answer(sorry) ↔ HasLargeGapDilate (fun p ↦ Real.sqrt p) := by
   sorry
 
 /--
@@ -61,6 +68,31 @@ theorem green_32.variants.sh20 :
     ∀ᶠ p in atTop, p.Prime →
       ∀ A : Finset (ZMod p), A.card = Nat.sqrt p →
       ∃ c : (ZMod p)ˣ, HasGap (c • A) (⌊2 * Real.sqrt (p : ℝ)⌋₊ - 2) := by
+  sorry
+
+/-- In the regime $\omega(p) \sim c p$, this is Szemerédi's theorem [Gr24]. -/
+@[category research solved, AMS 5 11]
+theorem green_32.variants.szemeredi_regime :
+    ∀ c > 0, ∀ ω : ℕ → ℝ, ω ~[atTop] (fun p ↦ c * p) →
+      HasLargeGapDilate ω := by
+  sorry
+
+/--
+In the regime $\omega(p) \le c \log p$, this is basically Dirichlet's lower bound for the size of
+Bohr sets [Gr24].
+-/
+@[category research solved, AMS 5 11]
+theorem green_32.variants.dirichlet_regime :
+    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 0 < ω p ∧ ω p ≤ c * Real.log p) →
+      HasLargeGapDilate ω := by
+  sorry
+
+/-- Even what happens in the regime $\omega(p) \sim 10 \log p$ is unclear [Gr24]. -/
+@[category research open, AMS 5 11]
+theorem green_32.variants.log_regime :
+    answer(sorry) ↔
+    (∀ ω : ℕ → ℝ, ω ~[atTop] (fun p ↦ 10 * Real.log p) →
+      HasLargeGapDilate ω) := by
   sorry
 
 end Green32
