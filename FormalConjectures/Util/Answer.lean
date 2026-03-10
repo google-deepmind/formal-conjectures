@@ -32,8 +32,6 @@ which is a job for human mathematicians, not Lean alone.
 -/
 namespace Google
 
-universe u
-
 open Lean Elab Term
 
 /-- A type that captures the current setting for the `answer()` elaborator. -/
