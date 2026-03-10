@@ -26,11 +26,11 @@ public import Mathlib.Tactic.Continuity
 @[expose] public section
 
 /-!
-# Fuglede and spectral sets machinery
+# Spectral sets
 
-This file defines the basic notions used in Fuglede's conjecture and related problems:
-translations, exponential characters, spectral pairs, spectral sets, and
-translational tilings in Euclidean space.
+This file defines the basic notions used in problems related to spectral sets
+and Fuglede's conjecture: translations, exponential characters,
+spectral pairs, spectral sets, and translational tilings in Euclidean space.
 -/
 
 open Real Set Complex MeasureTheory
