@@ -30,9 +30,12 @@ many $n$ where all primes $p \le (2 + \epsilon) \log n$ divide
 $$
   \prod_{1 \le i \le \log n} (n + i)?
 $$
+
+This was formalized in Lean by Baretto and van Doorn using Aristotle.
 -/
-@[category research open, AMS 11]
-theorem erdos_457 : answer(sorry) ↔ ∃ ε > (0 : ℝ),
+@[category research formally solved using lean4 at
+"https://github.com/Woett/Lean-files/blob/main/ErdosProblem457.lean", AMS 11]
+theorem erdos_457 : answer(true) ↔ ∃ ε > (0 : ℝ),
     { (n : ℕ) | ∀ (p : ℕ), p ≤ (2 + ε) * Real.log n → p.Prime →
       p ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) }.Infinite := by
   sorry
