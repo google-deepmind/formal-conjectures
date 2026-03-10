@@ -86,7 +86,7 @@ cannot be extended to a perfect difference set modulo $p^2+p+1$
 for any prime $p$.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4, 8}) :
+theorem erdos_707.variants.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4, 8}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (p : ℕ),
     Prime p → A ⊆ B → ¬IsPerfectDifferenceSet B (p ^ 2 + p + 1) := by
@@ -98,7 +98,7 @@ Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture, showing tha
 extended to any perfect difference set.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707.counterexample_mian_chowla (A : Set ℕ) (hA : A = {1, 2, 4, 8, 13}) :
+theorem erdos_707.variants.counterexample_mian_chowla (A : Set ℕ) (hA : A = {1, 2, 4, 8, 13}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
   sorry
@@ -111,7 +111,7 @@ was given as $\{-8, -6, 0, 1, 4\}$, but this can be shifted to natural numbers
 as pointed out in [arxiv/2510.19804].
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
+theorem erdos_707.variants.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
   sorry

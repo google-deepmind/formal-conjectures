@@ -44,31 +44,31 @@ theorem Nat.Prime.h_eq_add_one {n : ℕ} (hn : 2 < n) : h n = n + 1 ↔ (n + 1).
 
 /-- For odd `n`, the values of `h n` form an unbounded set. -/
 @[category test, AMS 11]
-theorem odd_h_unbounded : Unbounded (· ≤ ·) (ENat.toNat '' (h '' Odd)):= by
+theorem erdos_770.variants.odd_h_unbounded : Unbounded (· ≤ ·) (ENat.toNat '' (h '' Odd)):= by
   sorry
 
 
 /-- For every prime `p`, does the density of integers with `h n = p` exist? -/
 @[category research open, AMS 11]
-theorem erdos_770.density : answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∃ a, HasDensity {n | h n = p} a := by
+theorem erdos_770.parts.i : answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∃ a, HasDensity {n | h n = p} a := by
   sorry
 
 /-- Does `liminf h n = ∞`? -/
 @[category research open, AMS 11]
-theorem erdos_770.liminf : answer(sorry) ↔ liminf h atTop = ⊤ := by
+theorem erdos_770.parts.ii : answer(sorry) ↔ liminf h atTop = ⊤ := by
   sorry
 
 /-- Is it true that if `p` is the greatest prime such that `p - 1 ∣ n` and `p > n ^ ε`, then
 `h n = p`? -/
 @[category research open, AMS 11]
-theorem erdos_770.prime : answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
+theorem erdos_770.parts.iii : answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
     let p := sSup {m : ℕ | m.Prime ∧ m - 1 ∣ n}
     p > (n : ℝ) ^ (ε : ℝ) → h n = p := by
   sorry
 
 /-- It is probably true that `h n = 3` for infinitely many `n`. -/
 @[category research open, AMS 11]
-theorem erdos_770.three : {n | h n = 3}.Infinite := by
+theorem erdos_770.variants.three : {n | h n = 3}.Infinite := by
   sorry
 
 end Erdos770
