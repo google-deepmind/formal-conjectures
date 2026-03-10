@@ -43,7 +43,8 @@ $\lfloor \omega(p) \rfloor$, is there a dilate of $A$ containing a gap of length
 $\lfloor 100p/\omega(p) \rfloor$?
 -/
 def HasLargeGapDilate (ω : ℕ → ℝ) : Prop :=
-  ∀ᶠ p in atTop, p.Prime ∧ 1 < ω p ∧ ω p < p →
+  ∀ᶠ p in atTop, p.Prime →
+    100 < ω p ∧ ω p < p ∧
     ∀ A : Finset (ZMod p), A.card = ⌊ω p⌋₊ →
     ∃ c : (ZMod p)ˣ, HasGap (c • A) ⌊100 * (p : ℝ) / ω p⌋₊
 
@@ -56,26 +57,26 @@ theorem green_32 :
     answer(sorry) ↔ HasLargeGapDilate (fun p ↦ Real.sqrt p) := by
   sorry
 
-/-- [Sh20, Theorem 1] implies a gap of at least $\lceil 2p/|A| - 2 \rceil$. -/
+/-- [Sh20, Theorem 1] implies a gap of at least $\lfloor 2p/|A| - 2 \rfloor$. -/
 @[category research solved, AMS 5 11]
 theorem green_32.variants.sh20_general :
-    ∀ᶠ p in atTop, p.Prime →
+    ∀ (p : ℕ), p.Prime → -- Theorem 1 is for any prime p, not just asymptotically
       ∀ A : Finset (ZMod p), 1 < A.card →
-      ∃ c : (ZMod p)ˣ, HasGap (c • A) ⌈2 * (p : ℝ) / A.card - 2⌉₊ := by
+      ∃ c : (ZMod p)ˣ, HasGap (c • A) ⌊2 * (p : ℝ) / A.card - 2⌋₊ := by
   sorry
 
 /--
 [Sh20] has used the polynomial method to show that this is true with 100 replaced by 2 [Gr24].
 
-Note: More precisely [Sh20, Theorem 1] implies a gap of at least $\lceil 2p/|A| - 2 \rceil$.
+Note: More precisely [Sh20, Theorem 1] implies a gap of at least $\lfloor 2p/|A| - 2 \rfloor$.
 For a set $A$ of size $\lfloor \sqrt{p} \rfloor$, this guarantees a gap of at least
 $\lfloor 2\sqrt{p} \rfloor - 2$.
 -/
 @[category research solved, AMS 5 11]
 theorem green_32.variants.sh20_sqrt :
     ∀ᶠ p in atTop, p.Prime →
-      ∀ A : Finset (ZMod p), A.card = Nat.sqrt p →
-      ∃ c : (ZMod p)ˣ, HasGap (c • A) (⌊2 * Real.sqrt (p : ℝ)⌋₊ - 2) := by
+      ∀ A : Finset (ZMod p), A.card = ⌊Real.sqrt p⌋₊ →
+      ∃ c : (ZMod p)ˣ, HasGap (c • A) (⌊2 * Real.sqrt p⌋₊ - 2) := by
   sorry
 
 /-- In the regime $\omega(p) \sim c p$, this is Szemerédi's theorem [Gr24]. -/
@@ -91,7 +92,7 @@ Bohr sets [Gr24].
 -/
 @[category research solved, AMS 5 11]
 theorem green_32.variants.dirichlet_regime :
-    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 0 < ω p ∧ ω p ≤ c * Real.log p) →
+    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 100 < ω p ∧ ω p ≤ c * Real.log p) →
       HasLargeGapDilate ω := by
   sorry
 
