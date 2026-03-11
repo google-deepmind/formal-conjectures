@@ -37,110 +37,50 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install elan
-        run: |
-          set -o pipefail
-          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
-          ./elan-init -y --default-toolchain none
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+      # NOTE: Lean build and extract_names are disabled for now.
+      # conjectures.json is committed directly to site/data/.
+      # To regenerate: lake build && lake exe extract_names > site/data/conjectures.json
 
-      - name: Generate All.lean
-        run: |
-          lake exe mk_all --lib FormalConjectures || true
-          # Avoid including Test files from `Util/` to avoid inflating the
-          # stats. This stop-gap should be removed after doing the TODO at
-          # `fetchStatsMarkdown` in `docbuild/overwrite-index.lean`.
-          grep -v "FormalConjectures\.Util\." FormalConjectures.lean > FormalConjectures/All.lean
-
-      - name: Restore ~/.cache/mathlib
-        uses: actions/cache/restore@v3
-        with:
-          path: ~/.cache/mathlib
-          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
-          restore-keys: |
-            oleans-${{ hashFiles('lake-manifest.json') }}-
-            oleans-
-
-      - name: Get olean cache
-        run: |
-          lake exe cache unpack
-          lake exe cache get
-
-      - name: Build project
-        run: |
-          lake build
-
-      - name: Pack olean cache
-        run: |
-          lake exe cache pack
-          ls ~/.cache/mathlib
-
-      - name: Save ~/.cache/mathlib
-        uses: actions/cache/save@v3
-        with:
-          path: ~/.cache
-          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
-
-      # NOTE: docgen is disabled for now because it is very slow.
-      # To re-enable, uncomment the steps below and update the deploy artifact
-      # to include docbuild/out under _deploy/doc.
-
-      # - name: Prepare documentation
+      # - name: Install elan
       #   run: |
-      #     cd docbuild
-      #     export MATHLIB_NO_CACHE_ON_UPDATE=1
-      #     lake update formal_conjectures
+      #     set -o pipefail
+      #     curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+      #     ./elan-init -y --default-toolchain none
+      #     echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
-      # - name: Cache documentation
-      #   uses: actions/cache@v5
+      # - name: Generate All.lean
+      #   run: |
+      #     lake exe mk_all --lib FormalConjectures || true
+      #     grep -v "FormalConjectures\.Util\." FormalConjectures.lean > FormalConjectures/All.lean
+
+      # - name: Restore ~/.cache/mathlib
+      #   uses: actions/cache/restore@v3
       #   with:
-      #     path: docbuild/.lake/build/doc
-      #     key: MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+      #     path: ~/.cache/mathlib
+      #     key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
       #     restore-keys: |
-      #       MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-
-      #       MathlibDoc-
+      #       oleans-${{ hashFiles('lake-manifest.json') }}-
+      #       oleans-
 
-      # - name: Build documentation
+      # - name: Get olean cache
       #   run: |
-      #     cd docbuild
-      #     lake build FormalConjectures:docs
+      #     lake exe cache unpack
+      #     lake exe cache get
 
-      # - name: Extract documentation
+      # - name: Build project
       #   run: |
-      #     cd docbuild
-      #     mkdir out
-      #     lake query FormalConjectures:docs > out-files.txt
-      #     sed -i 's|^.*\.lake/build/doc/||' out-files.txt
-      #     rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
+      #     lake build
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v6
+      # - name: Pack olean cache
+      #   run: |
+      #     lake exe cache pack
+      #     ls ~/.cache/mathlib
+
+      # - name: Save ~/.cache/mathlib
+      #   uses: actions/cache/save@v3
       #   with:
-      #     python-version: '3.12.9'
-
-      # - name: Install Python dependencies
-      #   run: |
-      #     python -m pip install --upgrade pip
-      #     pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0
-
-      # - name: Run plotting script
-      #   run: |
-      #     python docbuild/scripts/plot_growth.py
-
-      # - name: Inject stats into index.html
-      #   shell: bash
-      #   run: |
-      #     cd docbuild
-      #     lake exe overwrite_index ./out/index.html ./out/file_counts_dark.html ./out/file_counts_white.html | tee -a "$GITHUB_STEP_SUMMARY"
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Generate conjectures data for website
-        run: |
-          lake exe extract_names > site/data/conjectures.json || true
+      #     path: ~/.cache
+      #     key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
       - name: Build website
         run: |
