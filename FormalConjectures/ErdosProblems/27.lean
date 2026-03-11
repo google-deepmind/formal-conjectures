@@ -31,7 +31,7 @@ This was disproved by Filaseta, Ford, Konyagin, Pomerance, and Yu [FFKPY07].
 
 [FFKPY07] Filaseta, M., Ford, K., Konyagin, S., Pomerance, C., and Yu, G.,
 _Sieving by large integers and covering systems of congruences_.
-Journal of the American Mathematical Society (2007), 495-517.
+J. Amer. Math. Soc. **20** (2007), no. 2, 495–517.
 -/
 
 open Finset
