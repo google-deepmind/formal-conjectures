@@ -22,48 +22,58 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/2](https://www.erdosproblems.com/2)
 
 Erdős asked whether the smallest modulus of a covering system can be arbitrarily large.
-Hough [Hou15] showed the answer is no; the best bounds are due to Balister, Bollobás,
+Hough [Ho15] showed the answer is no; the best bounds are due to Balister, Bollobás,
 Morris, Sahasrabudhe, and Tiba [BBMST22].
 
-[Hou15] Hough, R. D., _Solution of the minimum modulus problem for covering systems_.
-Annals of Mathematics (2015), 361-382.
+Related OEIS sequence: [A160559](https://oeis.org/A160559).
+
+[Ho15] Hough, R. D., _Solution of the minimum modulus problem for covering systems_.
+Ann. of Math. (2) **181** (2015), no. 1, 361–382.
 
 [FFKPY07] Filaseta, M., Ford, K., Konyagin, S., Pomerance, C., and Yu, G., _Sieving by
-large integers and covering systems of congruences_. Journal of the American Mathematical
-Society (2007), 495-517.
+large integers and covering systems of congruences_. J. Amer. Math. Soc. **20** (2007),
+no. 2, 495–517.
 
 [BBMST22] Balister, P., Bollobás, B., Morris, R., Sahasrabudhe, J., and Tiba, M.,
-_The Erdős covering conjecture_. Annals of Mathematics (2022).
+_The Erdős covering problem: the density of the uncovered set_. Ann. of Math. (2) **198**
+(2023), no. 1, 1–92.
 
 [Ow14] Owens, T., _A covering system with minimum modulus 42_. (2014).
 -/
 
-namespace Erdos2
-
-/--
-A finite system of congruences $\{(a_i, m_i)\}$ is a **covering system** if every
-modulus is positive and every integer satisfies at least one congruence $n \equiv a_i \pmod{m_i}$.
--/
-def IsCoveringSystem (S : Finset (ℤ × ℕ)) : Prop :=
-  S.Nonempty ∧
-  (∀ p ∈ S, 0 < p.2) ∧
-  (∀ n : ℤ, ∃ p ∈ S, (p.2 : ℤ) ∣ (n - p.1))
-
 /--
 Erdős asked whether the smallest modulus of a covering system can be arbitrarily
-large (he expected the answer to be yes). Hough [Hou15], building on work of
+large (he expected the answer to be yes). Hough [Ho15], building on work of
 Filaseta, Ford, Konyagin, Pomerance, and Yu [FFKPY07], showed the answer is **no**:
 every covering system has smallest modulus at most $10^{16}$. Balister, Bollobás,
 Morris, Sahasrabudhe, and Tiba [BBMST22] gave a simpler proof and improved the
 bound to $616000$. The best known lower bound is $42$, due to Owens [Ow14].
 
 Formally: there exists an absolute constant $B$ such that every covering system
-contains a congruence whose modulus is at most $B$.
+of $\mathbb{Z}$ contains a congruence whose modulus is at most $B$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_2 :
-    ∃ B : ℕ, ∀ S : Finset (ℤ × ℕ), IsCoveringSystem S →
-      ∃ p ∈ S, p.2 ≤ B := by
+    ∃ B : ℕ, ∀ c : CoveringSystem ℤ,
+      ∃ i, ∃ m : ℕ, c.moduli i = Ideal.span {(m : ℤ)} ∧ m ≤ B := by
   sorry
 
-end Erdos2
+/--
+Balister, Bollobás, Morris, Sahasrabudhe, and Tiba [BBMST22] proved that every covering
+system has a modulus at most $616000$. This is the best known explicit upper bound.
+-/
+@[category research solved, AMS 11]
+theorem erdos_2_upper :
+    ∀ c : CoveringSystem ℤ,
+      ∃ i, ∃ m : ℕ, c.moduli i = Ideal.span {(m : ℤ)} ∧ m ≤ 616000 := by
+  sorry
+
+/--
+Owens [Ow14] constructed a covering system whose minimum modulus is $42$. This is the
+best known lower bound for the minimum modulus of a covering system.
+-/
+@[category research solved, AMS 11]
+theorem erdos_2_lower :
+    ∃ c : CoveringSystem ℤ,
+      ∀ i, ∃ m : ℕ, c.moduli i = Ideal.span {(m : ℤ)} ∧ 42 ≤ m := by
+  sorry
