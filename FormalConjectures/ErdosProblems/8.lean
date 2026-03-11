@@ -21,8 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/8](https://www.erdosproblems.com/8)
 
-The original Erdős–Graham conjecture asked: for any finite colouring of the positive integers,
-must there exist a covering system all of whose moduli are monochromatic?
+The original Erdős–Graham conjecture [ErGr80, p.25] asked: for any finite colouring of the
+positive integers, must there exist a covering system (with distinct moduli ≥ 2) all of whose
+moduli are monochromatic?
 
 The answer is **no**, as a consequence of Hough's theorem [Ho15] that every covering system
 must contain a modulus below an absolute bound (at most $10^{16}$, later improved to $616000$
@@ -30,6 +31,20 @@ by Balister, Bollobás, Morris, Sahasrabudhe, and Tiba [BBMST22]). One can there
 distinct colour to each integer up to this bound and a single fresh colour to all larger integers;
 any covering system must then contain a small modulus with a unique colour, making
 monochromaticity impossible.
+
+Erdős also asked a density-type version: whether $\sum_{a \in A,\, a > N} 1/a \gg \log N$
+suffices for $A$ to contain the moduli of a covering system. Hough's theorem also answers this
+negatively.
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[Er96b] Erdős, P., (1996).
+
+[Er97] Erdős, P., _Some of my new and almost new problems and results in combinatorial
+number theory_ (1997).
+
+[Er97e] Erdős, P., _Some problems and results on combinatorial number theory_ (1997).
 
 [Ho15] Hough, R. D., _The interval of covering congruences_. Ann. of Math. (2) **181** (2015),
 no. 1, 361–382.
@@ -43,12 +58,17 @@ namespace Erdos8
 
 /--
 A finite system of congruences $\{(a_i, m_i)\}$ is a **covering system** if every
-modulus is positive and every integer satisfies at least one congruence $n \equiv a_i \pmod{m_i}$.
+modulus is at least 2 and every integer satisfies at least one congruence
+$n \equiv a_i \pmod{m_i}$.
 -/
 def IsCoveringSystem (S : Finset (ℤ × ℕ)) : Prop :=
   S.Nonempty ∧
-  (∀ p ∈ S, 0 < p.2) ∧
+  (∀ p ∈ S, 2 ≤ p.2) ∧
   (∀ n : ℤ, ∃ p ∈ S, (p.2 : ℤ) ∣ (n - p.1))
+
+/-- A congruence system has distinct moduli if no two pairs share the same modulus. -/
+def HasDistinctModuli (S : Finset (ℤ × ℕ)) : Prop :=
+  S.card = (S.image Prod.snd).card
 
 /--
 All moduli in a covering system are **monochromatic** under a colouring $\chi : \mathbb{N} \to \text{Fin}\, k$
@@ -58,16 +78,18 @@ def HasMonochromaticModuli {k : ℕ} (χ : ℕ → Fin k) (S : Finset (ℤ × �
   ∃ c : Fin k, ∀ p ∈ S, χ p.2 = c
 
 /--
-The Erdős–Graham conjecture asked: for any finite colouring of the positive integers,
-must there exist a covering system all of whose moduli are monochromatic?
+The Erdős–Graham conjecture [ErGr80, p.25] asked: for any finite colouring of the positive
+integers, must there exist a covering system with distinct moduli all of whose moduli are
+monochromatic?
 
 The answer is **no**, as a consequence of Hough's theorem [Ho15] that every covering system
-must contain a modulus below an absolute bound.
+(with distinct moduli ≥ 2) must contain a modulus below an absolute bound.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 11]
 theorem erdos_8 : answer(False) ↔
     (∀ k : ℕ, 0 < k → ∀ χ : ℕ → Fin k,
-      ∃ S : Finset (ℤ × ℕ), IsCoveringSystem S ∧ HasMonochromaticModuli χ S) := by
+      ∃ S : Finset (ℤ × ℕ), IsCoveringSystem S ∧ HasDistinctModuli S ∧
+        HasMonochromaticModuli χ S) := by
   sorry
 
 end Erdos8
