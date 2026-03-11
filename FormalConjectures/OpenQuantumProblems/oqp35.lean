@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Open Quantum Problem 35: existence of absolutely maximally entangled pure states
+# Open Quantum Problem 35: existence of absolutely maximally entangled pure states (Mario)
 
 **Problem:** For which numbers of parties `n` and local dimensions `d` does there
 exist a pure **absolutely maximally entangled** state `ψ`?
@@ -198,11 +198,6 @@ lemma maximallyMixed_apply {m d : ℕ} (x y : Config m d) :
   · subst h
     simp [maximallyMixed]
   · simp [maximallyMixed, h]
-
-@[category API, AMS 5 15 81 94]
-lemma existsAME_of_witness {n d : ℕ} {ψ : StateVector n d}
-    (hψ : IsAME (n := n) (d := d) ψ) : ExistsAME n d := by
-  exact ⟨ψ, hψ⟩
 
 /-! ## Constant-support diagonal states -/
 
@@ -508,46 +503,40 @@ lemma diagonalState_hasMaximallyMixedFirstReduction_one {n d : ℕ} (hn : 2 ≤ 
 /-! ## Bell and GHZ witnesses -/
 
 @[category API, AMS 5 15 81 94]
-lemma diagonalState_isAME_two {d : ℕ} (hd : 2 ≤ d) :
-    IsAME (n := 2) (d := d) (diagonalState 2 d) := by
+lemma diagonalState_isAME_of_div_two_eq_one {n d : ℕ}
+    (hn : 2 ≤ n) (hhalf : n / 2 = 1) (hd : 2 ≤ d) :
+    IsAME (n := n) (d := d) (diagonalState n d) := by
   refine ⟨?_, ?_⟩
   · have hd1 : 1 ≤ d := by omega
-    exact diagonalState_isNormalized (n := 2) (d := d) (by decide) hd1
+    exact diagonalState_isNormalized (n := n) (d := d) (by omega) hd1
   · intro π
-    rw [diagonalState_permute 2 d π]
-    simpa using diagonalState_hasMaximallyMixedFirstReduction_one (n := 2) (d := d) (by decide)
-
-@[category API, AMS 5 15 81 94]
-lemma diagonalState_isAME_three {d : ℕ} (hd : 2 ≤ d) :
-    IsAME (n := 3) (d := d) (diagonalState 3 d) := by
-  refine ⟨?_, ?_⟩
-  · have hd1 : 1 ≤ d := by omega
-    exact diagonalState_isNormalized (n := 3) (d := d) (by decide) hd1
-  · intro π
-    rw [diagonalState_permute 3 d π]
-    simpa using diagonalState_hasMaximallyMixedFirstReduction_one (n := 3) (d := d) (by decide)
+    rw [diagonalState_permute n d π]
+    simpa [hhalf] using
+      diagonalState_hasMaximallyMixedFirstReduction_one (n := n) (d := d) hn
 
 /-- The standard Bell state is `AME(2,d)` for every physical local dimension `d ≥ 2`. -/
 @[category API, AMS 5 15 81 94]
 lemma bellState_isAME {d : ℕ} (hd : 2 ≤ d) :
     IsAME (n := 2) (d := d) (bellState d) := by
-  simpa [bellState] using diagonalState_isAME_two (d := d) hd
+  simpa [bellState] using
+    diagonalState_isAME_of_div_two_eq_one (n := 2) (d := d) (by decide) (by norm_num) hd
 
 /-- The standard `3`-party GHZ state is `AME(3,d)` for every physical local dimension `d ≥ 2`. -/
 @[category API, AMS 5 15 81 94]
 lemma ghzState_isAME {d : ℕ} (hd : 2 ≤ d) :
     IsAME (n := 3) (d := d) (ghzState d) := by
-  simpa [ghzState] using diagonalState_isAME_three (d := d) hd
+  simpa [ghzState] using
+    diagonalState_isAME_of_div_two_eq_one (n := 3) (d := d) (by decide) (by norm_num) hd
 
 /-- The Bell state witnesses `AME(2,d)` for every local dimension `d ≥ 2`. -/
 @[category research solved, AMS 5 15 81 94]
 theorem ame_2_exists {d : ℕ} (hd : 2 ≤ d) : ExistsAME 2 d := by
-  exact existsAME_of_witness (ψ := bellState d) (bellState_isAME (d := d) hd)
+  exact ⟨bellState d, bellState_isAME (d := d) hd⟩
 
 /-- The `3`-party GHZ state witnesses `AME(3,d)` for every local dimension `d ≥ 2`. -/
 @[category research solved, AMS 5 15 81 94]
 theorem ame_3_exists {d : ℕ} (hd : 2 ≤ d) : ExistsAME 3 d := by
-  exact existsAME_of_witness (ψ := ghzState d) (ghzState_isAME (d := d) hd)
+  exact ⟨ghzState d, ghzState_isAME (d := d) hd⟩
 
 /-! ## A generic negative result for the `4`-party GHZ family -/
 
@@ -564,61 +553,44 @@ lemma diagonalState_combineFirst_two_of_ne {d : ℕ} {x z : Config 2 d}
     exact h hx
   rw [diagonalState, if_neg hnot]
 
-@[category API, AMS 5 15 81 94]
-lemma diagonalState4_not_ame {d : ℕ} (hd : 2 ≤ d) :
-    ¬ IsAME (n := 4) (d := d) (diagonalState 4 d) := by
-  intro hAME
-  let a0 : Fin d := ⟨0, by omega⟩
-  let a1 : Fin d := ⟨1, by omega⟩
-  have ha01 : a0 ≠ a1 := by
-    intro hEq
-    have hVals : (0 : ℕ) = 1 := by
-      simpa [a0, a1] using congrArg Fin.val hEq
-    omega
-  let x01 : Config 2 d := fun i => if i = 0 then a0 else a1
-  have hx01zero : x01 0 = a0 := by
-    simp [x01]
-  have hx01one : x01 1 = a1 := by
-    simp [x01]
-  have hx01 : x01 0 ≠ x01 1 := by
-    rw [hx01zero, hx01one]
-    exact ha01
-  have hred0 :
-      reducedDensityFirst (n := 4) (d := d) 2 (by decide) (diagonalState 4 d) x01 x01 = 0 := by
-    rw [reducedDensityFirst]
-    apply Finset.sum_eq_zero
-    intro z _
-    have hzero :
-        diagonalState 4 d (combineFirst (n := 4) (d := d) 2 (by decide) x01 z) = 0 := by
-      exact diagonalState_combineFirst_two_of_ne (x := x01) (z := z) hx01
-    simp [hzero]
-  have hredEq :
-      reducedDensityFirst (n := 4) (d := d) 2 (by decide) (diagonalState 4 d) =
-        maximallyMixed 2 d := by
-    simpa [HasMaximallyMixedFirstReduction, permuteState, permuteConfig] using
-      (hAME.2 (Equiv.refl (Fin 4)))
-  have hentry :
-      reducedDensityFirst (n := 4) (d := d) 2 (by decide) (diagonalState 4 d) x01 x01 =
-        maximallyMixed 2 d x01 x01 := by
-    exact congrArg (fun M : Matrix (Config 2 d) (Config 2 d) ℂ => M x01 x01) hredEq
-  have hmix :
-      maximallyMixed 2 d x01 x01 = ((Fintype.card (Config 2 d) : ℂ)⁻¹) := by
-    simpa using (maximallyMixed_apply (m := 2) (d := d) x01 x01)
-  have hcontra : (0 : ℂ) = ((Fintype.card (Config 2 d) : ℂ)⁻¹) := by
-    simpa [hred0, hmix] using hentry
-  have hd0 : d ≠ 0 := by omega
-  have hcard_ne_nat : Fintype.card (Config 2 d) ≠ 0 := by
-    rw [card_config]
-    exact pow_ne_zero 2 hd0
-  have hcard_ne : (Fintype.card (Config 2 d) : ℂ) ≠ 0 := by
-    exact_mod_cast hcard_ne_nat
-  exact (inv_ne_zero hcard_ne) hcontra.symm
-
 /-- The `4`-party GHZ family is a sanity check: for `d ≥ 2`, it is never AME. -/
 @[category test, AMS 5 15 81 94]
 lemma ghzState4_not_ame {d : ℕ} (hd : 2 ≤ d) :
     ¬ IsAME (n := 4) (d := d) (ghzState4 d) := by
-  simpa [ghzState4] using diagonalState4_not_ame (d := d) hd
+  intro hGHZ
+  have hAME : IsAME (n := 4) (d := d) (diagonalState 4 d) := by
+    simpa [ghzState4] using hGHZ
+  let a0 : Fin d := ⟨0, by omega⟩
+  let a1 : Fin d := ⟨1, by omega⟩
+  let x01 : Config 2 d := fun i => if i = 0 then a0 else a1
+  have hx01 : x01 0 ≠ x01 1 := by
+    intro hEq
+    have : (0 : ℕ) = 1 := by
+      simpa [x01, a0, a1] using congrArg Fin.val hEq
+    omega
+  have hred0 :
+      reducedDensityFirst (n := 4) (d := d) 2 (by decide) (diagonalState 4 d) x01 x01 = 0 := by
+    rw [reducedDensityFirst]
+    refine Finset.sum_eq_zero ?_
+    intro z _
+    simp [diagonalState_combineFirst_two_of_ne (x := x01) (z := z) hx01]
+  have hentry :
+      reducedDensityFirst (n := 4) (d := d) 2 (by decide) (diagonalState 4 d) x01 x01 =
+        maximallyMixed 2 d x01 x01 := by
+    have hredEq :
+        reducedDensityFirst (n := 4) (d := d) 2 (by decide) (diagonalState 4 d) =
+          maximallyMixed 2 d := by
+      simpa [HasMaximallyMixedFirstReduction, permuteState, permuteConfig] using
+        (hAME.2 (Equiv.refl (Fin 4)))
+    exact congrArg (fun M : Matrix (Config 2 d) (Config 2 d) ℂ => M x01 x01) hredEq
+  have hcontra : (0 : ℂ) = ((Fintype.card (Config 2 d) : ℂ)⁻¹) := by
+    simpa [hred0, maximallyMixed_apply] using hentry
+  have hcard_ne : (Fintype.card (Config 2 d) : ℂ) ≠ 0 := by
+    have hd0 : d ≠ 0 := by omega
+    have hcard_ne_nat : Fintype.card (Config 2 d) ≠ 0 := by
+      simpa [card_config] using (pow_ne_zero 2 hd0)
+    exact_mod_cast hcard_ne_nat
+  exact (inv_ne_zero hcard_ne) hcontra.symm
 
 /-! ## Solved benchmark cases -/
 
@@ -690,25 +662,92 @@ theorem ame_4_6_exists : ExistsAME 4 6 := by
 /-! ## Open benchmark cases -/
 
 /--
-English version: "Does there exist an `AME(8,4)` state?"
-
-This is one of the smallest unresolved cases singled out on the current OQP page and in the
-2025 survey cited above.
+Special case statement: Does the `AME(n,d)` state exists?
 -/
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_7_6_open :
+    answer(sorry) ↔ ExistsAME 7 6 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_7_10_open :
+    answer(sorry) ↔ ExistsAME 7 10 := by
+  sorry
+
 @[category research open, AMS 5 15 81 94]
 theorem ame_8_4_open :
     answer(sorry) ↔ ExistsAME 8 4 := by
   sorry
 
-/--
-English version: "Does there exist an `AME(7,6)` state?"
-
-This is one of the smallest unresolved cases singled out on the current OQP page and in the
-2025 survey cited above.
--/
 @[category research open, AMS 5 15 81 94]
-theorem ame_7_6_open :
-    answer(sorry) ↔ ExistsAME 7 6 := by
+theorem ame_8_6_open :
+    answer(sorry) ↔ ExistsAME 8 6 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_8_10_open :
+    answer(sorry) ↔ ExistsAME 8 10 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_9_6_open :
+    answer(sorry) ↔ ExistsAME 9 6 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_9_10_open :
+    answer(sorry) ↔ ExistsAME 9 10 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_10_6_open :
+    answer(sorry) ↔ ExistsAME 10 6 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_10_10_open :
+    answer(sorry) ↔ ExistsAME 10 10 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_11_3_open :
+    answer(sorry) ↔ ExistsAME 11 3 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_11_4_open :
+    answer(sorry) ↔ ExistsAME 11 4 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_11_5_open :
+    answer(sorry) ↔ ExistsAME 11 5 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_11_6_open :
+    answer(sorry) ↔ ExistsAME 11 6 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_11_10_open :
+    answer(sorry) ↔ ExistsAME 11 10 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_12_5_open :
+    answer(sorry) ↔ ExistsAME 12 5 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_12_6_open :
+    answer(sorry) ↔ ExistsAME 12 6 := by
+  sorry
+
+@[category research open, AMS 5 15 81 94]
+theorem ame_12_10_open :
+    answer(sorry) ↔ ExistsAME 12 10 := by
   sorry
 
 /-! ## General conjecture -/
