@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Open Quantum Problem 35: existence of absolutely maximally entangled pure states (Mario)
+# Open Quantum Problem 35: existence of absolutely maximally entangled pure states
 
 **Problem:** For which numbers of parties `n` and local dimensions `d` does there
 exist a pure **absolutely maximally entangled** state `ψ`?
