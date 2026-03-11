@@ -34,7 +34,7 @@ async function init() {
   }
 
   // Update page title
-  document.title = `${theorem.displayName} — Formal Conjectures`;
+  document.title = `${theorem.theorem} — Formal Conjectures`;
 
   // Find siblings (same module)
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
@@ -87,8 +87,8 @@ function renderDetail(theorem, siblings) {
           <div class="sibling-item ${isCurrent ? 'current' : ''}">
             <span class="badge ${sCatMeta.css}">${FC.escapeHTML(sCatMeta.label)}</span>
             ${isCurrent
-              ? `<span style="font-weight:500;color:var(--color-text)">${FC.escapeHTML(s.displayName)}</span>`
-              : `<a href="${FC.escapeHTML(FC.theoremURL(s.theorem))}">${FC.escapeHTML(s.displayName)}</a>`}
+          ? `<span style="font-weight:500;color:var(--color-text)">${FC.escapeHTML(s.theorem)}</span>`
+          : `<a href="${FC.escapeHTML(FC.theoremURL(s.theorem))}">${FC.escapeHTML(s.theorem)}</a>`}
           </div>`;
       }).join('\n')
     : '';
@@ -101,18 +101,13 @@ function renderDetail(theorem, siblings) {
     </div>
 
     <header class="theorem-detail__header">
-      <h1 class="theorem-detail__title">${FC.escapeHTML(theorem.displayName)}</h1>
+      <h1 class="theorem-detail__title">${FC.escapeHTML(theorem.theorem)}</h1>
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
     </header>
 
     <!-- voting disabled -->
     <!-- <div id="vote-widget"></div> -->
     <!-- <div id="difficulty-widget"></div> -->
-
-    <div class="theorem-detail__section">
-      <div class="detail-label">Full Lean name</div>
-      <div class="detail-mono">${FC.escapeHTML(theorem.theorem)}</div>
-    </div>
 
     <div class="theorem-detail__section">
       <div class="detail-label">Module</div>

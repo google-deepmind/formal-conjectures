@@ -73,7 +73,7 @@ function writeURL() {
 function applyFilters() {
   const q = state.query.toLowerCase();
   filtered = allConjectures.filter(c => {
-    if (q && !c.theorem.toLowerCase().includes(q) && !c.displayName.toLowerCase().includes(q)) return false;
+    if (q && !c.theorem.toLowerCase().includes(q)) return false;
     if (state.categories.size  && !state.categories.has(c.category))   return false;
     if (state.collections.size && !state.collections.has(c.collection)) return false;
     if (state.subjects.size) {
@@ -122,8 +122,8 @@ function renderCard(c) {
   article.innerHTML = `
     <div class="theorem-card__body">
       <div class="theorem-card__name">
-        <a href="${FC.escapeHTML(FC.theoremURL(c.theorem))}" title="${FC.escapeHTML(c.theorem)}">
-          ${FC.escapeHTML(c.displayName)}
+        <a href="${FC.escapeHTML(FC.theoremURL(c.theorem))}">
+          ${FC.escapeHTML(c.theorem)}
         </a>
       </div>
       <div class="theorem-card__meta">

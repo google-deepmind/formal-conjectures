@@ -122,15 +122,6 @@ function getCollection(module) {
   return SOURCE_COLLECTIONS[key] || { name: key || 'Unknown', url: null };
 }
 
-/**
- * Produce a human-readable display name from a fully-qualified theorem name.
- * e.g. "FormalConjectures.ErdosProblems.1.erdos_1" → "erdos 1"
- */
-function getDisplayName(theorem) {
-  const parts = theorem.split('.');
-  return parts[parts.length - 1].replace(/_/g, ' ');
-}
-
 /** Category metadata: label and CSS class for styling. */
 const CATEGORY_META = {
   'research open':             { label: 'Open',             css: 'cat-open' },
@@ -157,7 +148,6 @@ function processEntry(entry) {
   }));
   return {
     ...entry,
-    displayName: getDisplayName(entry.theorem),
     githubUrl: moduleToGitHubURL(entry.module),
     collection: collection.name,
     collectionUrl: collection.url,
