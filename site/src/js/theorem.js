@@ -41,16 +41,16 @@ async function init() {
 
   renderDetail(theorem, siblings);
 
-  // Voting integration
-  await FC.voting.handleOAuthCallback();
-  const widget = document.getElementById('vote-widget');
-  const diffWidget = document.getElementById('difficulty-widget');
-  if (widget) FC.voting.renderVoteButton(theorem.theorem, widget);
-  if (diffWidget) FC.voting.renderDifficultyWidget(theorem.theorem, diffWidget);
-  FC.voting.fetchAllVotes().then(() => {
-    if (widget) FC.voting.renderVoteButton(theorem.theorem, widget);
-    if (diffWidget) FC.voting.renderDifficultyWidget(theorem.theorem, diffWidget);
-  });
+  // Voting integration (disabled)
+  // await FC.voting.handleOAuthCallback();
+  // const widget = document.getElementById('vote-widget');
+  // const diffWidget = document.getElementById('difficulty-widget');
+  // if (widget) FC.voting.renderVoteButton(theorem.theorem, widget);
+  // if (diffWidget) FC.voting.renderDifficultyWidget(theorem.theorem, diffWidget);
+  // FC.voting.fetchAllVotes().then(() => {
+  //   if (widget) FC.voting.renderVoteButton(theorem.theorem, widget);
+  //   if (diffWidget) FC.voting.renderDifficultyWidget(theorem.theorem, diffWidget);
+  // });
 }
 
 function renderError(msg) {
@@ -105,8 +105,9 @@ function renderDetail(theorem, siblings) {
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
     </header>
 
-    <div id="vote-widget"></div>
-    <div id="difficulty-widget"></div>
+    <!-- voting disabled -->
+    <!-- <div id="vote-widget"></div> -->
+    <!-- <div id="difficulty-widget"></div> -->
 
     <div class="theorem-detail__section">
       <div class="detail-label">Full Lean name</div>
