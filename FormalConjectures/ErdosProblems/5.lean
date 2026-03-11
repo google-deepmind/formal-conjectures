@@ -25,6 +25,9 @@ This problem concerns the set of limit points of the normalized prime gap sequen
 $(p_{n+1} - p_n) / \log n$, where $p_n$ denotes the $n$-th prime. The conjecture,
 posed in several papers of Erdős [Er55c, Er57, Er61, Er65b, Er85c, Er90, Er97c],
 asserts that this set of limit points equals $[0, \infty]$.
+
+Related: Erdős Problem 234 (density of normalized prime gaps).
+OEIS: [A001223](https://oeis.org/A001223) (prime gaps).
 -/
 
 open Filter Nat Real
@@ -38,7 +41,7 @@ where $p_n = \texttt{nth Nat.Prime}\; n$ is the $n$-th prime (so $p_0 = 2$, $p_1
 We use $n+1$ in the denominator so that $\log$ is evaluated at a positive argument.
 -/
 noncomputable def normalizedPrimeGap (n : ℕ) : ℝ :=
-  ((nth Nat.Prime (n + 1) : ℝ) - (nth Nat.Prime n : ℝ)) / Real.log ((n : ℝ) + 1)
+  (primeGap n : ℝ) / Real.log ((n : ℝ) + 1)
 
 /--
 Let $p_n$ denote the $n$-th prime. Let $S$ be the set of limit points of the sequence
