@@ -99,7 +99,7 @@ For all $n \geq 5$,
 $$
 15^{n/5} \leq T(n) \leq c^n \sqrt{n} \cdot n!
 $$
-where $c = \left(\sqrt{\frac{3 - \sqrt{3}}{6}} \cdot e^{\sqrt{3}/6}\right)$
+where $c = \sqrt{\frac{3 - \sqrt{3}}{6}} \cdot e^{\sqrt{3}/6}$
 -/
 @[category research solved, AMS 5]
 theorem maxTransversalsBound :
