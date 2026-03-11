@@ -63,4 +63,27 @@ theorem erdos_19 (n : ℕ) (hn : 2 ≤ n)
     G.chromaticNumber = n := by
   sorry
 
+/--
+**Erdős–Füredi Conjecture** (variant of Erdős Problem 19):
+
+If $G$ is a union of $n$ copies of $K_n$ where any two distinct copies share at most $k$
+vertices, then $\chi(G) \leq k \cdot n$.
+
+This generalizes the Erdős–Faber–Lovász conjecture (which is the $k = 1$ case with equality).
+Proved for all sufficiently large $n$ by [KKKMO21].
+-/
+@[category research solved, AMS 5]
+theorem erdos_19_erdos_furedi (n k : ℕ) (hn : 2 ≤ n)
+    {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj]
+    (cliques : Fin n → Finset V)
+    -- Each clique is a copy of K_n in G
+    (hclique : ∀ i : Fin n, G.IsNClique n (cliques i))
+    -- Any two distinct cliques share at most k vertices
+    (hpairwise : ∀ i j : Fin n, i ≠ j → ((cliques i) ∩ (cliques j)).card ≤ k)
+    -- Every edge of G lies in some clique
+    (hcover : ∀ u v : V, G.Adj u v → ∃ i : Fin n, u ∈ cliques i ∧ v ∈ cliques i) :
+    G.chromaticNumber ≤ k * n := by
+  sorry
+
 end Erdos19
