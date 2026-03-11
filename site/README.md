@@ -1,4 +1,4 @@
-# (unoficial) formal-conjectures-website
+# (work-in-progress) formal-conjectures-website
 
 **THIS IS EXPERIMENTAL FOR NOW**
 
