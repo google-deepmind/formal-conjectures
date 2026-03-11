@@ -44,9 +44,13 @@ const paginationEl      = document.getElementById('pagination');
 function readURL() {
   const params = new URLSearchParams(window.location.search);
   state.query = params.get('q') || '';
-  state.categories  = new Set(params.getAll('category'));
-  state.collections = new Set(params.getAll('collection'));
-  state.subjects    = new Set(params.getAll('subject'));
+  // Clear and repopulate (don't replace) so checkbox listeners keep their references
+  state.categories.clear();
+  for (const v of params.getAll('category')) state.categories.add(v);
+  state.collections.clear();
+  for (const v of params.getAll('collection')) state.collections.add(v);
+  state.subjects.clear();
+  for (const v of params.getAll('subject')) state.subjects.add(v);
   state.sort        = params.get('sort') || 'name';
   currentPage       = parseInt(params.get('page') || '1', 10) || 1;
 }
@@ -269,16 +273,17 @@ async function init() {
     renderList();
   };
 
+  // Read initial state from URL (must come before buildCheckboxes so
+  // the filter sets are populated when checkboxes are created)
+  readURL();
+
   // Build filter UI
   buildCheckboxes(categoryFilters,   categories,  state.categories,  update);
   buildCheckboxes(collectionFilters, collections, state.collections, update);
   buildCheckboxes(subjectFilters,    subjects,    state.subjects,    update);
 
-  // Read initial state from URL
-  readURL();
   searchInput.value  = state.query;
-  sortSelect.value   = state.sort;
-  syncCheckboxes();
+  sortSelect.value = state.sort;
 
   // Wire events
   searchInput.addEventListener('input', () => {
