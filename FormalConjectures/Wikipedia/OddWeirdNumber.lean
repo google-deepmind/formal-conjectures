@@ -27,33 +27,12 @@ import FormalConjectures.Util.ProblemImports
 namespace OddWeirdNumber
 
 /-
-Given n ∈ ℕ, n is abundant if the sum of the proper divisors of n
-is greater than n.
--/
-def is_abundant (n : ℕ) : Prop :=
-  n.properDivisors.sum id > n
-
-/-
-Given n ∈ ℕ, n is pseudoperfect if there exists a subset S of
-proper divisors of n such that S sums to n.
--/
-def pseudoperfect (n : ℕ) : Prop :=
-  ∃ S ⊆ n.properDivisors, S.sum id = n
-
-/-
-A weird number is a natural number that is abundant
-but not pseudoperfect.
--/
-def is_weird (n : ℕ) : Prop :=
-  is_abundant n ∧ ¬pseudoperfect n
-
-/-
 The Existence of Odd Weird Number Conjecture asks if there exists
 an odd number that is weird.
 -/
 @[category research open, AMS 11]
 theorem existence_odd_weird :
-    answer(sorry) ↔ ∃ n : ℕ, is_weird n ∧ Odd n := by
+    answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
   sorry
 
 end OddWeirdNumber
