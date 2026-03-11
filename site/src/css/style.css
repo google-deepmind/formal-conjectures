@@ -105,6 +105,13 @@ ul, ol { list-style: none; }
 }
 .site-nav__brand:hover { color: var(--color-nav-hover); text-decoration: none; }
 
+.site-nav__logo {
+  height: 28px;
+  width: auto;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+  filter: brightness(0) invert(1);
+}
 .site-nav__links {
   display: flex;
   gap: 0.25rem;
@@ -173,6 +180,13 @@ main { flex: 1; }
   text-align: center;
 }
 
+.hero__logo {
+  display: block;
+  height: 80px;
+  width: auto;
+  margin: 0 auto 1.5rem;
+  filter: brightness(0) invert(1);
+}
 .hero__title {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 5vw, 3.25rem);

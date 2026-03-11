@@ -282,6 +282,7 @@ function main() {
   // Copy static assets
   copyDir('src/css', 'site/assets/css');
   copyDir('src/js', 'site/assets/js');
+  if (fs.existsSync('src/img')) copyDir('src/img', 'site/assets/img');
 
   // Write processed data (for client-side pages)
   ensureDir('site/data');
