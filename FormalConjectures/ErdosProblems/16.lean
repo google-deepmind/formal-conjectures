@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
+import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 
 /-!
 # Erdős Problem 16
@@ -33,9 +35,9 @@ Combinatorics '94 (1995), 167–189.
 
 [Ch23] Chen, J., _The set of odd integers not of the form $2^k + p$ is not the union of an
 infinite arithmetic progression and a density-zero set_ (2023).
--/
 
-open Filter
+OEIS: [A006285](https://oeis.org/A006285) — Odd numbers not of the form $2^k + p$.
+-/
 
 namespace Erdos16
 
@@ -44,22 +46,7 @@ The set of odd positive integers that cannot be expressed as $2^k + p$ for any
 non-negative integer $k$ and any prime $p$.
 -/
 def oddNotPowerOfTwoPlusPrime : Set ℕ :=
-  {n : ℕ | Odd n ∧ ∀ (k : ℕ) (q : ℕ), Nat.Prime q → n ≠ 2 ^ k + q}
-
-/--
-A set $S \subseteq \mathbb{N}$ has natural density zero if
-$|S \cap \{1, \ldots, N\}| / N \to 0$ as $N \to \infty$.
--/
-def HasNaturalDensityZero (S : Set ℕ) : Prop :=
-  Tendsto (fun N : ℕ => (Set.ncard (S ∩ Set.Icc 1 N) : ℝ) / (N : ℝ))
-    atTop (nhds 0)
-
-/--
-A set $AP \subseteq \mathbb{N}$ is an infinite arithmetic progression if there exist $a, d \in \mathbb{N}$
-with $d > 0$ and $AP = \{a + md \mid m \in \mathbb{N}\}$.
--/
-def IsInfiniteAP (AP : Set ℕ) : Prop :=
-  ∃ (a d : ℕ), 0 < d ∧ AP = {n : ℕ | ∃ m : ℕ, n = a + m * d}
+  {n : ℕ | Odd n ∧ ∀ (k : ℕ) (p : ℕ), Nat.Prime p → n ≠ 2 ^ k + p}
 
 /--
 The set of odd integers not of the form $2^k + p$ (where $p$ is prime and $k \geq 0$)
@@ -73,8 +60,8 @@ Chen [Ch23] resolved the question negatively.
 @[category research solved, AMS 11]
 theorem erdos_16 : answer(False) ↔
     ∃ (AP D : Set ℕ),
-      IsInfiniteAP AP ∧
-      HasNaturalDensityZero D ∧
+      AP.IsAPOfLength ⊤ ∧
+      D.HasDensity 0 ∧
       oddNotPowerOfTwoPlusPrime = AP ∪ D := by
   sorry
 
