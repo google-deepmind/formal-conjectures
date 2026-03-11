@@ -32,11 +32,14 @@ Three questions:
 
 Known: Erdős showed $h(n!) < n$. Vose [Vo85] proved infinitely many practical $m$ with
 $h(m) \ll (\log m)^{1/2}$. Erdős offered \$250 for a proof or disproof of whether
-$h(n!) < (\log n)^{O(1)}$ [Er81h].
+$h(n!) < (\log n)^{O(1)}$ [Er81h, p.172].
+
+Related problems: [erdosproblems.com/304](https://www.erdosproblems.com/304),
+[erdosproblems.com/825](https://www.erdosproblems.com/825).
 
 ## References
 
-- [Er74b], [Er79], [Er81h], [Er95], [Er96b], [Er98]: Various papers by Erdős on practical numbers.
+- [Er74b], [Er79], [Er81h, p.172], [Er95], [Er96b], [Er98]: Various papers by Erdős on practical numbers.
 - [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number theory_. Monographies de L'Enseignement Mathematique (1980).
 - [Vo85] Vose, M.: Proof of a conjecture of Erdős concerning practical numbers.
 -/
@@ -59,7 +62,7 @@ noncomputable def practicalH (m : ℕ) : ℕ :=
     ∃ S : Finset ℕ, S ⊆ Nat.divisors m ∧ S.card ≤ k ∧ S.sum id = n}
 
 /--
-Erdős Problem 18 [Er74b, Er79, ErGr80, Er81h, Er95, Er96b, Er98]:
+Erdős Problem 18 [Er74b, Er79, ErGr80, Er81h (p.172), Er95, Er96b, Er98]:
 
 Conjecture (1): There are infinitely many practical $m$ such that
 $h(m) < (\log \log m)^{O(1)}$, i.e., there exists a constant $C > 0$ such that
@@ -73,7 +76,7 @@ theorem erdos_18 :
   sorry
 
 /--
-Erdős Problem 18 [Er74b, Er79, ErGr80, Er81h, Er95, Er96b, Er98]:
+Erdős Problem 18 [Er74b, Er79, ErGr80, Er81h (p.172), Er95, Er96b, Er98]:
 
 Conjecture (2): $h(n!) < n^{o(1)}$, i.e., for every $\varepsilon > 0$, for all
 sufficiently large $n$, $h(n!) < n^\varepsilon$.
@@ -85,15 +88,16 @@ theorem erdos_18.variants.factorial_subpolynomial :
   sorry
 
 /--
-Erdős Problem 18 [Er74b, Er79, ErGr80, Er81h, Er95, Er96b, Er98]:
+Erdős Problem 18 [Er74b, Er79, ErGr80, Er81h (p.172), Er95, Er96b, Er98]:
 
 Conjecture (3): $h(n!) < (\log n)^{O(1)}$, i.e., there exists a constant $C > 0$
 such that for all sufficiently large $n$, $h(n!) < (\log n)^C$.
 
-Erdős offered \$250 for a proof or disproof of this statement [Er81h].
+Erdős offered \$250 for a proof or disproof of this statement [Er81h, p.172].
 -/
 @[category research open, AMS 11]
 theorem erdos_18.variants.factorial_polylog :
+    answer(sorry) ↔
     ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop,
       (practicalH n.factorial : ℝ) < (Real.log (n : ℝ)) ^ C := by
   sorry
