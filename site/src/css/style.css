@@ -28,8 +28,9 @@
   --cat-open-bg:    #fffbeb;
   --cat-solved:     #10b981;  /* emerald */
   --cat-solved-bg:  #ecfdf5;
-  --cat-formal:     #8b5cf6;  /* violet */
-  --cat-formal-bg:  #f5f3ff;
+  --cat-formal: #047857;
+    /* darker green */
+    --cat-formal-bg: #ecfdf5;
   --cat-grad:       #3b82f6;  /* blue */
   --cat-grad-bg:    #eff6ff;
   --cat-other:      #6b7280;  /* gray */
@@ -353,7 +354,11 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
 .cat-open       { background: var(--cat-open-bg);   color: #92400e; border: 1px solid #fde68a; }
 .cat-solved     { background: var(--cat-solved-bg); color: #064e3b; border: 1px solid #a7f3d0; }
-.cat-formal     { background: var(--cat-formal-bg); color: #4c1d95; border: 1px solid #ddd6fe; }
+.cat-formal {
+  background: var(--cat-formal-bg);
+  color: #064e3b;
+  border: 1px solid #6ee7b7;
+}
 .cat-graduate   { background: var(--cat-grad-bg);   color: #1e40af; border: 1px solid #bfdbfe; }
 .cat-undergrad  { background: #eff6ff;              color: #1d4ed8; border: 1px solid #bfdbfe; }
 .cat-highschool { background: #ecfeff;              color: #164e63; border: 1px solid #a5f3fc; }
