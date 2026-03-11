@@ -34,6 +34,14 @@ his 60th birthday), Vol. II (1975), 609–627.
 
 [Ka94] Kahn, J., _On a problem of Erdős and Lovász II: $n(r) = O(r)$_. J. Amer. Math. Soc. **7**
 (1994), no. 1, 125–143.
+
+[Tr14] Tripathi, A., _A note on uniform intersecting families with maximum transversal size_.
+Preprint (2014), arXiv:1409.4610.
+
+[BaWa21] Barát, J. and Wanless, I. M., _Intersecting and 2-intersecting hypergraphs with maximal
+covering number: the Erdős–Lovász theme revisited_. J. Combin. Des. **29** (2021), no. 3, 193–209.
+
+See also OEIS sequence [A391599](https://oeis.org/A391599).
 -/
 
 namespace Erdos21
@@ -73,6 +81,26 @@ Kahn [Ka94] proved $f(n) \ll n$, settling the conjecture.
 theorem erdos_21 : answer(True) ↔
     (∃ C : ℝ, 0 < C ∧ ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
       (erdosLovaszF n : ℝ) ≤ C * n) := by
+  sorry
+
+/--
+The Erdős–Lovász lower bound [ErLo75]: $f(n) \geq \lceil (8/3)n - 3 \rceil$ for all $n \geq 1$.
+This was proved in the same paper that introduced the conjecture.
+-/
+@[category research solved, AMS 5]
+theorem erdos_21_lower_bound :
+    ∀ n : ℕ, 1 ≤ n → (8 / 3 : ℝ) * n - 3 ≤ (erdosLovaszF n : ℝ) := by
+  sorry
+
+/--
+Conjectured exact asymptotics: $f(n) = 3n + O(1)$, i.e., there exists a constant $C$
+such that $|f(n) - 3n| \leq C$ for all sufficiently large $n$. This is a stronger
+conjecture than the $f(n) = O(n)$ bound proved by Kahn [Ka94].
+-/
+@[category research open, AMS 5]
+theorem erdos_21_exact_asymptotics : answer(True) ↔
+    (∃ C : ℝ, ∀ n : ℕ, 1 ≤ n →
+      |(erdosLovaszF n : ℝ) - 3 * n| ≤ C) := by
   sorry
 
 end Erdos21
