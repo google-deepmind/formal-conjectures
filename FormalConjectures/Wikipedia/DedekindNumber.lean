@@ -229,18 +229,19 @@ theorem M_eq_M' : M  = M' := by
   exact Fintype.card_congr (equivMonotoneSperner n)
 
 /--
-The Dedekind numbers M(n) are the number of Boolean functions of n variables.
-While a logical closed-form summation exists (Kisielewicz, 1988), no simple or
-efficient closed-form expression is currently known for M(n).
-The exact value of M(n) for n > 9 still remains as computational challenge.
+Calculates the Dedekind number M(n), which represents the number of
+Boolean functions of n variables (or, equivalently, the number
+of antichains of the power set of an n-element set). While a closed-form
+summation exists (Kisielewicz, 1988), it is logical rather than algebraic
+in nature.
 -/
 @[category research open, AMS 5 6]
 theorem DedekindNumbers (n : ℕ) :
 
   M n = (∑ k in range (2^(2^n)), (-1)^k * (2^(2^(2^n - k)) - 1)) := by
   -- Note: This is a known closed-form summation, but it is computationally
-  -- intractable for large n. The challenge is finding an efficient form
-  -- or the specific values for n ≥ 10.
+  -- intractable for large n. The challenge is finding a specific form
+  -- that satisfies values for n ≥ 10.
 
   sorry
 
