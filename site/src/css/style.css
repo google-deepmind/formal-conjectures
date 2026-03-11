@@ -256,7 +256,10 @@ main { flex: 1; }
   text-align: center;
   box-shadow: var(--shadow-sm);
   min-width: 140px;
+  transition: box-shadow 0.15s, transform 0.15s;
 }
+a.stat-card { color: inherit; text-decoration: none; cursor: pointer; }
+a.stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); text-decoration: none; }
 
 .stat-value {
   display: block;
@@ -307,6 +310,8 @@ main { flex: 1; }
   align-items: center;
   gap: 0.5rem;
 }
+a.cat-stat { color: inherit; text-decoration: none; }
+a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
 .cat-count {
   font-weight: 600;

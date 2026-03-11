@@ -40,22 +40,22 @@
 <section class="stats-bar" aria-label="Repository statistics">
   <div class="container">
     <div class="stats-bar__grid">
-      <div class="stat-card">
+      <a href="/browse/" class="stat-card">
         <span class="stat-value">{{totalCount}}</span>
         <span class="stat-label">Total results</span>
-      </div>
-      <div class="stat-card">
+      </a>
+      <a href="/browse/?category=research+open" class="stat-card">
         <span class="stat-value">{{openCount}}</span>
         <span class="stat-label">Open problems</span>
-      </div>
-      <div class="stat-card">
+      </a>
+      <a href="/browse/?category=research+solved" class="stat-card">
         <span class="stat-value">{{solvedCount}}</span>
         <span class="stat-label">Solved</span>
-      </div>
-      <div class="stat-card">
+      </a>
+      <a href="/browse/?category=research+formally+solved" class="stat-card">
         <span class="stat-value">{{formalCount}}</span>
         <span class="stat-label">Formally solved</span>
-      </div>
+      </a>
     </div>
   </div>
 </section>

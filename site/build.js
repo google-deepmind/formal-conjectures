@@ -233,7 +233,7 @@ function categoryStatsHTML(byCategory) {
     .filter(k => byCategory[k])
     .map(k => {
       const meta = getCategoryMeta(k);
-      return `<div class="cat-stat"><span class="badge ${meta.css}">${meta.label}</span><span class="cat-count">${byCategory[k]}</span></div>`;
+      return `<a href="/browse/?category=${encodeURIComponent(k)}" class="cat-stat"><span class="badge ${meta.css}">${meta.label}</span><span class="cat-count">${byCategory[k]}</span></a>`;
     })
     .join('\n');
 }
