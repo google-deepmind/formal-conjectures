@@ -39,7 +39,7 @@ infinitely many Giuga Numbers
 -/
 @[category research open, AMS 11]
 theorem infinite_giuga_number :
-  Set.Infinite {n : ℕ | is_giuga_number n} := by
+  answer(sorry) ↔ Set.Infinite {n : ℕ | is_giuga_number n} := by
   sorry
 
 namespace GiugaNumbers
