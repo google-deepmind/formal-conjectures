@@ -41,6 +41,8 @@ _The Erdős covering problem: the density of the uncovered set_. Ann. of Math. (
 [Ow14] Owens, T., _A covering system with minimum modulus 42_. (2014).
 -/
 
+namespace Erdos2
+
 /--
 Erdős asked whether the smallest modulus of a covering system can be arbitrarily
 large (he expected the answer to be yes). Hough [Ho15], building on work of
@@ -77,3 +79,5 @@ theorem erdos_2_lower :
     ∃ c : CoveringSystem ℤ,
       ∀ i, ∃ m : ℕ, c.moduli i = Ideal.span {(m : ℤ)} ∧ 42 ≤ m := by
   sorry
+
+end Erdos2

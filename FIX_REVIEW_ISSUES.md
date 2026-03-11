@@ -28,6 +28,10 @@ If the review identifies local definitions that duplicate library code:
 
 If the review says "No issues" or the section has no actionable recommendations, skip this section.
 
+**Important constraints:**
+- Only import definitions that already exist in the library or other problem files. Do **not** create new definitions in the library.
+- Preserve the existing `ErdosNUM` namespace. Every problem file uses a `namespace ErdosNUM` / `end ErdosNUM` block — do not remove or rename it, even if the local definitions it originally scoped are deleted.
+
 ---
 
 ### Section 2: Citations
