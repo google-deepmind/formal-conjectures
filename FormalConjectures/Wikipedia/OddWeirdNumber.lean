@@ -53,7 +53,7 @@ an odd number that is weird.
 -/
 @[category research open, AMS 11]
 theorem existence_odd_weird :
-    ∃ n : ℕ, is_weird n ∧ Odd n := by
+    answer(sorry) ↔ ∃ n : ℕ, is_weird n ∧ Odd n := by
   sorry
 
 end OddWeirdNumber
