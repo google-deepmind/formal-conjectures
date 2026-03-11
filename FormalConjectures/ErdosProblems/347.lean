@@ -40,8 +40,11 @@ has density $1$ for every cofinite subsequence $A'$ of $A$?
 
 This has been solved in the affirmative by ebarschkis in the comments (based on idea of Tao and
 van Doorn, also in the comments).
+
+Thos was formalized in Lean by Barschkis using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using lean4 at
+"https://github.com/ebarschkis/ErdosProblem/blob/main/Problem347/Formalization.lean", AMS 11]
 theorem erdos_347 :
     answer(True) ↔ ∃ a : ℕ → ℕ, (Monotone a) ∧
       (Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (𝓝 2)) ∧
