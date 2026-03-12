@@ -21,17 +21,22 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/70](https://www.erdosproblems.com/70)
 
-Is it true that $\mathfrak{c} \to (\beta, n)^2_3$ for every countable ordinal $\beta$ and
+Is it true that $\mathfrak{c} \to (\beta, n)^3_2$ for every countable ordinal $\beta$ and
 every finite $n \geq 2$, where $\mathfrak{c}$ is the cardinality of the continuum?
 
+Erdős and Rado proved that $\mathfrak{c} \to (\omega + n, 4)^3_2$ for any $2 \leq n < \omega$.
+
 [Er87] Erdős, P., *On some of my favourite unsolved problems* (1987).
+
+[Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
+and his mathematics", Budapest, July 1999 (1999), 7.83.
 -/
 
 open Ordinal Cardinal
 
 namespace Erdos70
 
-/-- The ordinal partition relation $\alpha \to (\beta, \gamma)^2_3$:
+/-- The ordinal partition relation $\alpha \to (\beta, \gamma)^3_2$:
 for every 2-coloring of increasing triples from ordinals below $\alpha$,
 there is either a homogeneous set of order type $\beta$ for color 0,
 or a homogeneous set of order type $\gamma$ for color 1.
@@ -55,7 +60,7 @@ def OrdinalPartition3_2 (α β γ : Ordinal) : Prop :=
 
 Let $\mathfrak{c}$ be the cardinality of the continuum (viewed as an initial ordinal),
 $\beta$ be any countable ordinal, and $2 \le n < \omega$. Is it true that
-$\mathfrak{c} \to (\beta, n)^2_3$?
+$\mathfrak{c} \to (\beta, n)^3_2$?
 -/
 @[category research open, AMS 3 5]
 theorem erdos_70 : answer(sorry) ↔
