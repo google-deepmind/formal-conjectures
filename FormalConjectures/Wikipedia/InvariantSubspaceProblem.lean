@@ -56,7 +56,7 @@ theorem Invariant_subspace_problem_finite_dimensional [Module ℂ H] (h : Finite
   sorry
 
 @[category API, AMS 47]
-def TopologicalSpace.nontrivial_of_not_separableSpace {H : Type*} [TopologicalSpace H]
+lemma TopologicalSpace.nontrivial_of_not_separableSpace {H : Type*} [TopologicalSpace H]
     (h : ¬ TopologicalSpace.SeparableSpace H) : Nontrivial H := by
   rw [← not_subsingleton_iff_nontrivial]
   contrapose! h
