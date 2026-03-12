@@ -25,8 +25,9 @@ For every $r \geq 2$, there exists an $r$-Ramsey complete set $A$ with
 $|A \cap \{1,\ldots,N\}| \leq C \cdot r \cdot (\log N)^2$, and this bound is best possible.
 Solved by Conlon, Fox, and Pham [CFP21].
 
-[CFP21] Conlon, D., Fox, J., and Pham, H. T., _The upper bound for Ramsey complete
-sequences_, 2021.
+See also Problems 54 and 843.
+
+[CFP21] Conlon, D., Fox, J., and Pham, H.T., _Subset sums, completeness and colorings_ (2021).
 -/
 
 open scoped Classical
@@ -50,27 +51,29 @@ def IsRamseyComplete (A : Set ℕ) (r : ℕ) : Prop :=
 Erdős Problem 55 (solved by Conlon, Fox, and Pham [CFP21]):
 For every $r \geq 2$, there exists an $r$-Ramsey complete set $A$ such that
 $|A \cap \{1, \ldots, N\}| \leq C \cdot r \cdot (\log N)^2$ for all sufficiently large $N$.
+This is a generalization of Problem 54 to arbitrary $r \geq 2$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_55 :
-    ∀ r : ℕ, 2 ≤ r →
-      ∃ (A : Set ℕ),
-        IsRamseyComplete A r ∧
-          ∃ C : ℝ, C > 0 ∧
+    ∃ C : ℝ, C > 0 ∧
+      ∀ r : ℕ, 2 ≤ r →
+        ∃ (A : Set ℕ),
+          IsRamseyComplete A r ∧
             ∃ N₀ : ℕ, ∀ N ≥ N₀,
               (((Finset.Icc 1 N).filter (fun n => n ∈ A)).card : ℝ) ≤
                 C * (r : ℝ) * (Real.log (N : ℝ)) ^ 2 := by
   sorry
 
 /--
-There exists $c > 0$ such that any set $A$ with
+There exists $c > 0$ such that for every $r \geq 2$, any set $A$ with
 $|A \cap \{1, \ldots, N\}| \leq c \cdot r \cdot (\log N)^2$ for all large $N$
-cannot be $r$-Ramsey complete, showing the upper bound is best possible [CFP21].
+cannot be $r$-Ramsey complete, showing that the growth rate $\Theta(r (\log N)^2)$
+is optimal [CFP21].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_55.variants.lower_bound :
-    ∀ r : ℕ, 2 ≤ r →
-      ∃ c : ℝ, c > 0 ∧
+    ∃ c : ℝ, c > 0 ∧
+      ∀ r : ℕ, 2 ≤ r →
         ∀ (A : Set ℕ),
           (∃ N₀ : ℕ, ∀ N ≥ N₀,
             (((Finset.Icc 1 N).filter (fun n => n ∈ A)).card : ℝ) ≤
