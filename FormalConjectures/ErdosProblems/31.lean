@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 31
@@ -24,21 +25,24 @@ import FormalConjectures.Util.ProblemImports
 Given any infinite set $A \subset \mathbb{N}$, there exists a set $B$ of natural density zero
 such that $A + B$ contains all except finitely many natural numbers. Proved by Lorentz [Lo54].
 
-[Lo54] Lorentz, G. G., _On a problem of additive number theory_. Proc. Amer. Math. Soc. 5 (1954), 838–840.
+[Er56] Erdős, P., _Problems and results in additive number theory_. Colloque sur la Théorie
+des Nombres, Bruxelles, 1955 (1956), 127-137.
+
+[Er59] Erdős, P., 1959.
+
+[Er65b] Erdős, P., _Extremal problems in number theory_ (1965).
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of
+combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo.,
+1971) (1973), 117-138.
+
+[Lo54] Lorentz, G. G., _On a problem of additive number theory_. Proc. Amer. Math. Soc. 5
+(1954), 838–840.
 -/
 
-open scoped Classical
+open scoped Classical Pointwise
 
 namespace Erdos31
-
-/-- The sumset $A + B$: the set of all $a + b$ with $a \in A$, $b \in B$. -/
-def sumset (A B : Set ℕ) : Set ℕ := {n : ℕ | ∃ a ∈ A, ∃ b ∈ B, n = a + b}
-
-/-- A set $B \subseteq \mathbb{N}$ has natural density zero if
-    $|B \cap \{0, \ldots, N-1\}| / N \to 0$ as $N \to \infty$. -/
-def HasNaturalDensityZero (B : Set ℕ) : Prop :=
-  ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
-    (((Finset.range N).filter (· ∈ B)).card : ℝ) / (N : ℝ) < ε
 
 /--
 **Erdős Problem 31** (Erdős–Straus, proved by Lorentz [Lo54]):
@@ -48,8 +52,8 @@ of natural density $0$ such that $A + B$ contains all except finitely many natur
 -/
 @[category research solved, AMS 11]
 theorem erdos_31 (A : Set ℕ) (hA : A.Infinite) :
-    ∃ B : Set ℕ, HasNaturalDensityZero B ∧
-      Set.Finite {n : ℕ | n ∉ sumset A B} := by
+    ∃ B : Set ℕ, B.HasDensity 0 ∧
+      Set.Finite {n : ℕ | n ∉ A + B} := by
   sorry
 
 end Erdos31
