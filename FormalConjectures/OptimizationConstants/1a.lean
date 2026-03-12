@@ -63,6 +63,7 @@ theorem mem_Ioc_c1a : answer(sorry) ∈ Set.Ioc 1.2748 C1a := by
 theorem c1a_eq : C1a = answer(sorry) := by
   sorry
 
--- TODO : Formalise relationship with Sidon sets.
+-- TODO: Formalise relationship to Sidon sets.
+-- TODO: State results from https://arxiv.org/abs/2602.07292
 
 end Constant1a
