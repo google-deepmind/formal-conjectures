@@ -5,6 +5,38 @@
    Class names follow BEM-ish conventions; nothing is deeply
    nested so migrating to React / CSS Modules later is simple.
    ============================================================ */
+/* ---- Self-hosted Libertinus fonts (OFL license) ---- */
+@font-face {
+  font-family: 'Libertinus Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/LibertinusSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Libertinus Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/LibertinusSans-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Libertinus Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/fonts/LibertinusSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Libertinus Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/LibertinusMono-Regular.woff2') format('woff2');
+}
 
 /* ---- Custom properties ---- */
 :root {
@@ -46,16 +78,20 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
   --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.04);
 
-  /* Typography */
-  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
-  --font-serif: Georgia, 'Times New Roman', serif;
+  /* Typography — Libertinus Sans throughout (Biolinum lineage) */
+    --font-body: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
+    --font-display: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Libertinus Mono', 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
+    --font-serif: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
 }
 
 /* ---- Reset / base ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 16px; scroll-behavior: smooth; }
+html {
+  font-size: 17px;
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: var(--font-body);
@@ -98,7 +134,7 @@ ul, ol { list-style: none; }
 
 .site-nav__brand {
   color: var(--color-nav-text);
-  font-weight: 700;
+  font-family: var(--font-display);
   font-size: 1.1rem;
   letter-spacing: -0.01em;
   flex-shrink: 0;
@@ -188,7 +224,7 @@ main { flex: 1; }
   filter: brightness(0) invert(1);
 }
 .hero__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3.25rem);
   font-weight: normal;
   letter-spacing: -0.02em;
@@ -304,7 +340,7 @@ a.stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); t
 }
 
 .section__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: normal;
   margin-bottom: 1.5rem;
@@ -587,7 +623,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 }
 
 .theorem-detail__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: normal;
   flex: 1;
@@ -654,7 +690,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 }
 
 .page-header__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 2rem;
   font-weight: normal;
 }

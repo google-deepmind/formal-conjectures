@@ -290,6 +290,7 @@ function main() {
   copyDir('src/css', 'site/assets/css');
   copyDir('src/js', 'site/assets/js');
   if (fs.existsSync('src/img')) copyDir('src/img', 'site/assets/img');
+  if (fs.existsSync('src/fonts')) copyDir('src/fonts', 'site/assets/fonts');
 
   // Write processed data (for client-side pages)
   ensureDir('site/data');
