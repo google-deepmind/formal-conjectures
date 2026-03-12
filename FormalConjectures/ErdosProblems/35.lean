@@ -22,32 +22,33 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/35](https://www.erdosproblems.com/35)
 
 If $B$ is an additive basis of order $k$ and $A$ has Schnirelmann density $\alpha$, then
-$d_s(A + B) \geq \alpha + \alpha(1-\alpha)/k$. Proved by Plünnecke [Pl70].
+$d_s(A + B) \geq \alpha + \alpha(1-\alpha)/k$. Erdős [Er36c] proved the result with $2k$ in
+the denominator. Plünnecke [Pl70] proved the stronger inequality
+$d_s(A + B) \geq \alpha^{1-1/k}$, as observed by Ruzsa.
+
+See also Problem 38.
+
+[Er36c] Erdős, P., 1936.
+
+[Er56] Erdős, P., _Problems and results in additive number theory_. Colloque sur la Théorie
+des Nombres, Bruxelles, 1955 (1956), 127-137.
 
 [Pl70] Plünnecke, H., _Eine zahlentheoretische Anwendung der Graphentheorie_. J. Reine Angew.
 Math. 243 (1970), 171–183.
 -/
 
-open Classical Finset BigOperators
+open Classical Finset
+open scoped Pointwise
 
 namespace Erdos35
-
-/-- The sumset $A + B$: the set of all $a + b$ with $a \in A$, $b \in B$. -/
-def sumset (A B : Set ℕ) : Set ℕ := {n : ℕ | ∃ a ∈ A, ∃ b ∈ B, n = a + b}
 
 /-- Schnirelmann density of a set $A \subseteq \mathbb{N}$:
 $$d_s(A) = \inf_{N \geq 1} \frac{|A \cap \{1, \ldots, N\}|}{N}$$ -/
 noncomputable def schnirelmannDensity (A : Set ℕ) : ℝ :=
   sInf {x : ℝ | ∃ N : ℕ, N ≥ 1 ∧ x = ((Icc 1 N).filter (· ∈ A)).card / (N : ℝ)}
 
-/-- A set $B \subseteq \mathbb{N}$ is an additive basis of order $k$ if every natural number
-can be written as a sum of exactly $k$ elements from $B$ (with repetition).
-Since $0 \in B$ is assumed separately, "exactly $k$" is equivalent to "at most $k$". -/
-def IsAdditiveBasis (B : Set ℕ) (k : ℕ) : Prop :=
-  ∀ n : ℕ, ∃ f : Fin k → ℕ, (∀ i, f i ∈ B) ∧ ∑ i, f i = n
-
 /--
-Let $B \subseteq \mathbb{N}$ be an additive basis of order $k$ with $0 \in B$, and let
+Let $B \subseteq \mathbb{N}$ be an additive basis of order $k$ and let
 $\alpha = d_s(A)$ be the Schnirelmann density of $A \subseteq \mathbb{N}$. Then
 $$d_s(A + B) \geq \alpha + \frac{\alpha(1 - \alpha)}{k}.$$
 
@@ -57,9 +58,22 @@ $d_s(A + B) \geq \alpha^{1-1/k}$, as observed by Ruzsa.
 @[category research solved, AMS 11]
 theorem erdos_35
     (A B : Set ℕ) (k : ℕ) (hk : k ≥ 1)
-    (hB : IsAdditiveBasis B k) (h0 : (0 : ℕ) ∈ B) :
+    (hB : B.IsAddBasisOfOrder k) :
     let α := schnirelmannDensity A
-    schnirelmannDensity (sumset A B) ≥ α + α * (1 - α) / (k : ℝ) := by
+    schnirelmannDensity (A + B) ≥ α + α * (1 - α) / (k : ℝ) := by
+  sorry
+
+/--
+Plünnecke's strengthening of Erdős Problem 35: if $B$ is an additive basis of order $k$
+and $\alpha = d_s(A)$, then $d_s(A + B) \geq \alpha^{1-1/k}$. This implies the bound
+$\alpha + \alpha(1-\alpha)/k$ from the main problem.
+-/
+@[category research solved, AMS 11]
+theorem erdos_35_plunnecke
+    (A B : Set ℕ) (k : ℕ) (hk : k ≥ 1)
+    (hB : B.IsAddBasisOfOrder k) :
+    let α := schnirelmannDensity A
+    schnirelmannDensity (A + B) ≥ α ^ (1 - 1 / (k : ℝ)) := by
   sorry
 
 end Erdos35
