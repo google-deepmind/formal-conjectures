@@ -25,16 +25,14 @@ If every induced subgraph of $G$ on $n$ vertices has an independent set of size
 $\geq (n - k)/2$, then removing $O_k(1)$ vertices makes $G$ bipartite.
 Proved by Reed [Re99].
 
+See also: Erdős Problem 922 (related independent-set condition yielding bounded chromatic
+number).
+
+[EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., _On almost bipartite large chromatic graphs_,
+Annals of Discrete Mathematics 12 (1982), 117–123.
+
 [Re99] Reed, B., _Mangoes and blueberries_. Combinatorica 19 (1999), 267–296.
 -/
-
-/--
-An independent set of a simple graph within a vertex subset $S$:
-a subset $I \subseteq S$ such that no two vertices in $I$ are adjacent in $G$.
--/
-def SimpleGraph.IndepSetIn {V : Type*} (G : SimpleGraph V)
-    (I S : Finset V) : Prop :=
-  I ⊆ S ∧ ∀ ⦃u⦄, u ∈ I → ∀ ⦃v⦄, v ∈ I → u ≠ v → ¬G.Adj u v
 
 namespace Erdos73
 
@@ -54,10 +52,26 @@ Proved by Reed [Re99].
 theorem erdos_73 : answer(True) ↔
     ∀ k : ℕ, ∃ C : ℕ,
       ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
-        (∀ S : Finset (Fin n), ∃ I : Finset (Fin n), G.IndepSetIn I S ∧
+        -- The condition `2 * I.card ≥ S.card - k` encodes |I| ≥ (|S| - k) / 2.
+        (∀ S : Finset (Fin n), ∃ I : Finset (Fin n), I ⊆ S ∧ G.IsIndepSet ↑I ∧
           2 * I.card ≥ S.card - k) →
         ∃ T : Finset (Fin n), T.card ≤ C ∧
           ∃ f : Fin n → Bool, ∀ ⦃u v⦄, u ∉ T → v ∉ T → G.Adj u v → f u ≠ f v := by
+  sorry
+
+/--
+The $k = 0$ case of Erdős Problem 73: if every vertex subset $S$ of $G$ contains
+an independent set of size $\geq |S| / 2$, then $G$ is bipartite (no vertex removal needed).
+
+This is trivial: a non-bipartite graph contains an odd cycle, which violates the
+independent-set hypothesis. Noted by Reed [Re99].
+-/
+@[category research solved, AMS 5]
+theorem erdos_73.variants.k_eq_zero :
+    ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
+      (∀ S : Finset (Fin n), ∃ I : Finset (Fin n), I ⊆ S ∧ G.IsIndepSet ↑I ∧
+        2 * I.card ≥ S.card) →
+      ∃ f : Fin n → Bool, ∀ ⦃u v⦄, G.Adj u v → f u ≠ f v := by
   sorry
 
 end Erdos73
