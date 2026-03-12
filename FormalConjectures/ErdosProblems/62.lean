@@ -28,18 +28,20 @@ subgraph with infinite chromatic number?
 Topics in topology (Proc. Colloq., Keszthely, 1972), Colloq. Math. Soc. Janos Bolyai (1974),
 243-255.
 
-[Er87] Erdős, P., *Some problems on finite and infinite graphs*.
+[Er87] Erdős, P., _Some problems on finite and infinite graphs_, 1987.
+
+[Er90] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1990),
+467–478.
+
+[Er95d] Erdős, P., _Problems and results in discrete mathematics_, Discrete Math., 1995.
+
+[Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
+and his mathematics", Budapest, July 1999 (1999).
 -/
 
 open SimpleGraph Cardinal
 
 namespace Erdos62
-
-/-- A graph $G$ has chromatic number $\aleph_1$ if it cannot be properly colored by any
-countable set of colors, but can be colored by a set of cardinality $\aleph_1$. -/
-def HasChromaticNumberAleph1 {V : Type*} (G : SimpleGraph V) : Prop :=
-  (∀ (α : Type*) [Countable α], IsEmpty (G.Coloring α)) ∧
-  (∃ α : Type*, #α = aleph 1 ∧ Nonempty (G.Coloring α))
 
 /-- $G$ contains $H$ as a subgraph via an injective adjacency-preserving map. -/
 def ContainsSubgraph {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
@@ -58,8 +60,8 @@ chromatic number $\aleph_1$.
 @[category research open, AMS 5]
 theorem erdos_62 : answer(sorry) ↔
     ∀ (V₁ : Type*) (V₂ : Type*) (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph V₂),
-    HasChromaticNumberAleph1 G₁ →
-    HasChromaticNumberAleph1 G₂ →
+    G₁.chromaticCardinal = aleph 1 →
+    G₂.chromaticCardinal = aleph 1 →
     ∃ (U : Type*) (H : SimpleGraph U),
       H.chromaticNumber = ⊤ ∧
       ContainsSubgraph G₁ H ∧
@@ -81,12 +83,29 @@ large girth.
 @[category research open, AMS 5]
 theorem erdos_62.variants.weak : answer(sorry) ↔
     ∀ (V₁ : Type*) (V₂ : Type*) (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph V₂),
-    HasChromaticNumberAleph1 G₁ →
-    HasChromaticNumberAleph1 G₂ →
+    G₁.chromaticCardinal = aleph 1 →
+    G₂.chromaticCardinal = aleph 1 →
     ∃ (U : Type*) (H : SimpleGraph U),
       ¬ H.Colorable 3 ∧
       ContainsSubgraph G₁ H ∧
       ContainsSubgraph G₂ H := by
+  sorry
+
+/--
+Erdős Problem 62 (finite collection variant) [Er87]:
+
+If $G_1, \ldots, G_n$ are finitely many graphs each with chromatic number $\aleph_1$, must
+there exist a graph $H$ with infinite chromatic number which is a subgraph of every $G_i$?
+
+This is a strictly stronger form of the conjecture, mentioned by Erdős in [Er87].
+-/
+@[category research open, AMS 5]
+theorem erdos_62.variants.finite_collection : answer(sorry) ↔
+    ∀ (n : ℕ) (V : Fin n → Type*) (G : ∀ i, SimpleGraph (V i)),
+    (∀ i, (G i).chromaticCardinal = aleph 1) →
+    ∃ (U : Type*) (H : SimpleGraph U),
+      H.chromaticNumber = ⊤ ∧
+      ∀ i, ContainsSubgraph (G i) H := by
   sorry
 
 end Erdos62
