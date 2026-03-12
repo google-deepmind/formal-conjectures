@@ -21,11 +21,19 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/58](https://www.erdosproblems.com/58)
 
-Conjectured by Bollobás and Erdős. Bollobás and Shelah confirmed it for $k = 1$.
+Conjectured by Bollobás and Erdős [Er90]. Bollobás and Shelah confirmed it for $k = 1$.
 Proved by Gyárfás [Gy92], who showed the stronger result that if $G$ is 2-connected,
 then $G$ is either $K_{2k+2}$ or contains a vertex of degree at most $2k$.
+Gao, Huo, and Ma [GaHuMa21] proved the stronger result that if $\chi(G) \geq 2k+3$
+then $G$ contains cycles of $k+1$ consecutive odd lengths.
+
+[Er90] Erdős, P., *Some of my favourite unsolved problems*. A tribute to Paul Erdős (1990),
+467–478.
 
 [Gy92] Gyárfás, A., *Graphs with $k$ odd cycle lengths*, Discrete Mathematics 103 (1992), 41–48.
+
+[GaHuMa21] Gao, J., Huo, Q., Ma, J., *A strengthening on odd cycles in graphs of given
+chromatic number*. SIAM Journal on Discrete Mathematics **35** (2021), 2317–2327.
 -/
 
 open SimpleGraph
