@@ -31,6 +31,8 @@ Annals of Discrete Mathematics 12 (1982), 117-123.
 [Er95] Erdős, P., _On some of my favourite theorems_, 1995.
 
 [Er95d] Erdős, P., _Problems and results in discrete mathematics_, Discrete Math., 1995.
+
+Erdős offered $1000 for a complete solution. See also Problems 74 and 750.
 -/
 
 open SimpleGraph Cardinal
@@ -49,7 +51,7 @@ theorem erdos_75 :
     answer(sorry) ↔
     ∃ (V : Type) (_ : DecidableEq V) (G : SimpleGraph V),
       #V = aleph 1 ∧
-      ¬Nonempty (G.Coloring ℕ) ∧
+      G.chromaticCardinal = ℵ_ 1 ∧
       ∀ ε : ℝ, ε > 0 →
         ∃ N : ℕ, ∀ n : ℕ, n ≥ N →
           ∀ S : Finset V, S.card = n →
@@ -70,7 +72,7 @@ theorem erdos_75.variants.linear :
     answer(sorry) ↔
     ∃ (V : Type) (_ : DecidableEq V) (G : SimpleGraph V),
       #V = aleph 1 ∧
-      ¬Nonempty (G.Coloring ℕ) ∧
+      G.chromaticCardinal = ℵ_ 1 ∧
       ∃ c : ℝ, c > 0 ∧
         ∀ n : ℕ, n ≥ 1 →
           ∀ S : Finset V, S.card = n →
