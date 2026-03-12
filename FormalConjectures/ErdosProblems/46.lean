@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«296»
 
 /-!
 # Erdős Problem 46
@@ -24,7 +25,13 @@ import FormalConjectures.Util.ProblemImports
 For every finite colouring of the integers $\geq 2$, there exists a monochromatic finite
 set whose reciprocals sum to $1$. Proved by Croot [Cr03].
 
-[Cr03] Croot, E.S., _On a coloring conjecture about unit fractions_, Annals of Mathematics **157** (2003), 545–556.
+See also: Problem #298.
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980), p. 36.
+
+[Cr03] Croot, E.S., _On a coloring conjecture about unit fractions_, Annals of Mathematics
+**157** (2003), 545–556.
 -/
 
 open Finset BigOperators
@@ -32,19 +39,39 @@ open Finset BigOperators
 namespace Erdos46
 
 /--
-For every finite colouring of the positive integers $\ge 2$, there exists a
-monochromatic finite set $\{n_1, \ldots, n_k\}$ with $2 \le n_1 < \cdots < n_k$ whose
+For every $k$-colouring (with $k \ge 2$) of the positive integers $\ge 2$, there exists a
+monochromatic finite set $\{n_1, \ldots, n_m\}$ with $2 \le n_1 < \cdots < n_m$ whose
 reciprocals sum to $1$, i.e. $\sum 1/n_i = 1$.
 
-Proved by Croot [Cr03].
+Proved by Croot [Cr03]. Originally posed by Erdős and Graham [ErGr80].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_46 : answer(True) ↔
-    ∀ (α : Type*) [Finite α] (c : ℕ → α),
+    ∀ k : ℕ, k ≥ 2 →
+    ∀ (c : ℕ → Fin k),
       ∃ S : Finset ℕ, S.Nonempty ∧
         (∀ n ∈ S, n ≥ 2) ∧
-        (∃ color : α, ∀ n ∈ S, c n = color) ∧
-        (∑ n ∈ S, (1 : ℚ) / (n : ℚ)) = 1 := by
+        (∃ j : Fin k, ∀ n ∈ S, c n = j) ∧
+        Erdos296.reciprocalSum S = 1 := by
+  sorry
+
+/--
+Generalization of `erdos_46` to arbitrary positive rationals: for every $k$-colouring
+(with $k \ge 2$) of the positive integers $\ge 2$ and every positive rational $q$, there
+exists a monochromatic finite subset whose reciprocals sum to $q$.
+
+This follows from the unit case by considering induced colorings on $\{n/b : b \mid n\}$.
+Originally posed by Erdős and Graham [ErGr80].
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_46_rational_generalization :
+    ∀ k : ℕ, k ≥ 2 →
+    ∀ (q : ℚ), 0 < q →
+    ∀ (c : ℕ → Fin k),
+      ∃ S : Finset ℕ, S.Nonempty ∧
+        (∀ n ∈ S, n ≥ 2) ∧
+        (∃ j : Fin k, ∀ n ∈ S, c n = j) ∧
+        Erdos296.reciprocalSum S = q := by
   sorry
 
 end Erdos46
