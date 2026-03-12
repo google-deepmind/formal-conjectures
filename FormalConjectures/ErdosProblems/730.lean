@@ -43,7 +43,15 @@ For example, $(87,88)$ and $(607,608)$ are such pairs.
 @[category high_school, AMS 11]
 theorem erdos_730.variants.explicit_pairs :
     {(87, 88), (607, 608)} ⊆ S := by
-  sorry
+  have h87 : (87, 88) ∈ S := by
+    native_decide
+  have h607 : (607, 608) ∈ S := by
+    native_decide
+  intro x hx
+  simp at hx
+  rcases hx with rfl | rfl
+  · exact h87
+  · exact h607
 
 /--
 There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.
