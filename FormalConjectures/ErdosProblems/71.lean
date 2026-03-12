@@ -23,9 +23,17 @@ import FormalConjectures.Util.ProblemImports
 
 For every infinite arithmetic progression containing even numbers, there exists $c > 0$
 such that every graph with average degree at least $c$ contains a cycle whose length
-belongs to the progression. Proved by Bollobás [Bo77].
+belongs to the progression. Credited to Erdős and Burr [Er82e]. Proved by Bollobás [Bo77].
+
+See also Problem 72.
 
 [Bo77] Bollobás, B., *Cycles modulo k*. Bull. London Math. Soc. 9 (1977), 97-98.
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_,
+L'Enseignement Math. 27 (1982), 163–176.
+[Er95] Erdős, P., _Some recent problems and results in graph theory_.
+Discrete Math. 164 (1997), 81–85.
+[Er97b] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Proceedings of the International Conference on Discrete Mathematics (ICDM) (1997).
 -/
 
 open SimpleGraph
@@ -33,7 +41,7 @@ open SimpleGraph
 namespace Erdos71
 
 /--
-Erdős Problem #71 (Erdős-Burr conjecture, proved by Bollobás [Bo77]):
+Erdős Problem #71 (credited to Erdős and Burr [Er82e], proved by Bollobás [Bo77]):
 For every infinite arithmetic progression $P = \{a, a+d, a+2d, \ldots\}$ (with $d \geq 1$)
 that contains even numbers, there exists a constant $c = c(P) > 0$ such that every
 finite graph with average degree at least $c$ contains a cycle whose length belongs to $P$.
