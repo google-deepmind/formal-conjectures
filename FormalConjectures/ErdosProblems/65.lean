@@ -15,36 +15,35 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«751»
 
 /-!
 # Erdős Problem 65
 
 *Reference:* [erdosproblems.com/65](https://www.erdosproblems.com/65)
 
+*Related:* Erdős Problem 57.
+
 Is the sum of reciprocals of distinct cycle lengths in a graph on $n$ vertices with $kn$
 edges minimised by the complete bipartite graph? Gyárfás, Komlós, and Szemerédi [GKS84]
 proved $\sum 1/a_i \gg \log k$; Liu and Montgomery [LiMo20] proved the sharp bound.
+
+Montgomery, Milojević, Pokrovskiy, and Sudakov [MMPS] showed that for sufficiently large
+$k$, the sum $\sum 1/a_i$ is in fact *maximised* (not minimised) when $G$ is a complete
+bipartite graph, suggesting the original minimisation conjecture is false.
 
 [GKS84] Gyárfás, A., Komlós, J., and Szemerédi, E., *On the distribution of cycle lengths in
 graphs*, J. Graph Theory 8 (1984), 441–462.
 
 [LiMo20] Liu, H. and Montgomery, R., *A solution to Erdős and Hajnal's odd cycle problem*,
 J. Amer. Math. Soc. 36 (2023), 1191–1234.
+
+[MMPS] Montgomery, R., Milojević, A., Pokrovskiy, A., and Sudakov, B., *forthcoming*.
 -/
 
 open SimpleGraph Finset
 
 namespace Erdos65
-
-/-- The complete bipartite graph $K_{a,b}$ on `Fin (a + b)`, where vertices
-$\{0, \ldots, a-1\}$ form one part and $\{a, \ldots, a+b-1\}$ form the other. -/
-def completeBipartiteGraph65 (a b : ℕ) : SimpleGraph (Fin (a + b)) where
-  Adj u v := (u.val < a ∧ a ≤ v.val) ∨ (a ≤ u.val ∧ v.val < a)
-  symm u v h := by
-    rcases h with ⟨hu, hv⟩ | ⟨hu, hv⟩
-    · exact Or.inr ⟨hv, hu⟩
-    · exact Or.inl ⟨hv, hu⟩
-  loopless v h := by rcases h with ⟨h1, h2⟩ | ⟨h1, h2⟩ <;> omega
 
 /--
 Erdős Problem #65 (Erdős–Hajnal) [GKS84] [LiMo20]:
@@ -56,6 +55,10 @@ The first question was proved by Gyárfás, Komlós, and Szemerédi [GKS84].
 Liu and Montgomery [LiMo20] proved the asymptotically sharp lower bound
 $\geq (1/2 - o(1)) \log k$.
 
+Montgomery, Milojević, Pokrovskiy, and Sudakov [MMPS] showed that for sufficiently large
+$k$, the sum is actually maximised by the complete bipartite graph, suggesting the original
+minimisation conjecture is false.
+
 The remaining open question is formalized below: for any graph $G$ on $n$ vertices whose edge
 count equals $a \cdot b$ for some partition $a + b = n$, the sum of reciprocals of distinct cycle
 lengths of $G$ is at least the corresponding sum for the complete bipartite graph $K_{a,b}$.
@@ -65,13 +68,9 @@ theorem erdos_65 : answer(sorry) ↔
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)) (a b : ℕ), a + b = n →
       ∀ [DecidableRel G.Adj], a * b = G.edgeFinset.card →
       ∀ (T_G : Finset ℕ),
-        (∀ m ∈ T_G, ∃ v : Fin n, ∃ p : G.Walk v v, p.IsCycle ∧ p.length = m) →
-        (∀ m : ℕ, (∃ v : Fin n, ∃ p : G.Walk v v, p.IsCycle ∧ p.length = m) → m ∈ T_G) →
-        ∃ (T_K : Finset ℕ),
-          (∀ m ∈ T_K, ∃ v : Fin (a + b),
-            ∃ p : (completeBipartiteGraph65 a b).Walk v v, p.IsCycle ∧ p.length = m) ∧
-          (∀ m : ℕ, (∃ v : Fin (a + b),
-            ∃ p : (completeBipartiteGraph65 a b).Walk v v, p.IsCycle ∧ p.length = m) → m ∈ T_K) ∧
+        (↑T_G : Set ℕ) = Erdos751.cycleLengths G →
+        ∀ (T_K : Finset ℕ),
+          (↑T_K : Set ℕ) = Erdos751.cycleLengths (completeBipartiteGraph (Fin a) (Fin b)) →
           ∑ m ∈ T_K, (1 / (m : ℝ)) ≤ ∑ m ∈ T_G, (1 / (m : ℝ)) := by
   sorry
 
