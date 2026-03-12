@@ -30,6 +30,8 @@ namespace Green94
 
 /--
 Let `A ⊂ R` be a set of positive outer measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
+
+The answer is "no".
 -/
 @[category research formally solved using formal_conjectures at
 "https://github.com/google-deepmind/formal-conjectures/blob/153d79d6c82c76fe1bee860742af800840c974d9/FormalConjectures/GreensOpenProblems/94.lean#L174",
@@ -40,5 +42,14 @@ theorem green_94_outer_measure :
    ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry
 
+/--
+Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
+-/
+@[category research open, AMS 28]
+theorem green_94 :
+   answer(sorry) ↔ ∀ A : Set ℝ,
+   MeasurableSet A ∧ volume A > 0 →
+   ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
+  sorry
 
 end Green94
