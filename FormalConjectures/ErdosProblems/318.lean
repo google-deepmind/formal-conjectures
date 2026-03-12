@@ -106,7 +106,7 @@ theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A 
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
-#TODO: prove this lemma by assuming `erdos_318.variants.contain_single_even`. -/
+#TODO: prove this lemma by assuming `erdos_318.contain_single_even`. -/
 @[category research solved, AMS 11]
 theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry

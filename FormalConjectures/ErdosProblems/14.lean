@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 14
@@ -26,8 +27,6 @@ namespace Erdos14
 
 open Asymptotics Filter
 
-abbrev allUniqueSums (A : Set ℕ) : Set ℕ :=
-  { n | ∃! (a : ℕ × ℕ), a.1 ≤ a.2 ∧ a.1 ∈ A ∧ a.2 ∈ A ∧ a.1 + a.2 = n }
 
 /--
 The number of integers in $\{1,\ldots,N\}$ which are not representable in exactly one way
