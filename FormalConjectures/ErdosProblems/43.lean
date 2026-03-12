@@ -27,18 +27,13 @@ size of a Sidon set in $\{1, \ldots, N\}$?
 
 [Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
 Combinatorics, Paul Erdős is Eighty, Vol. 2 (1996), 1–25.
+
+OEIS: A143824, A227590, A003022
 -/
 
-open Finset
+open Finset Filter
 
 namespace Erdos43
-
-/-- A finite set of natural numbers is a Sidon set (also called a $B_2$ set) if all
-    pairwise sums $a + b$ (allowing $a = b$) are distinct: whenever $a + b = c + d$
-    with $a, b, c, d \in A$, we have $\{a, b\} = \{c, d\}$ as multisets. -/
-def IsSidonSet (A : Finset ℕ) : Prop :=
-  ∀ a ∈ A, ∀ b ∈ A, ∀ c ∈ A, ∀ d ∈ A,
-    a + b = c + d → (a = c ∧ b = d) ∨ (a = d ∧ b = c)
 
 /-- Two sets $A$, $B$ have disjoint difference sets (intersecting only at $0$):
     $(A - A) \cap (B - B) = \{0\}$. Equivalently, if $a_1 - a_2 = b_1 - b_2$ for
@@ -59,13 +54,40 @@ def DisjointDifferences (A B : Finset ℕ) : Prop :=
 -/
 @[category research open, AMS 5 11]
 theorem erdos_43 : answer(sorry) ↔ ∃ C : ℕ, ∀ (N : ℕ) (A B S : Finset ℕ),
-    IsSidonSet A → IsSidonSet B → IsSidonSet S →
+    IsSidon (A : Set ℕ) → IsSidon (B : Set ℕ) → IsSidon (S : Set ℕ) →
     (∀ a ∈ A, 1 ≤ a ∧ a ≤ N) →
     (∀ b ∈ B, 1 ≤ b ∧ b ≤ N) →
     (∀ s ∈ S, 1 ≤ s ∧ s ≤ N) →
-    (∀ T : Finset ℕ, IsSidonSet T → (∀ t ∈ T, 1 ≤ t ∧ t ≤ N) → T.card ≤ S.card) →
+    (∀ T : Finset ℕ, IsSidon (T : Set ℕ) → (∀ t ∈ T, 1 ≤ t ∧ t ≤ N) → T.card ≤ S.card) →
     DisjointDifferences A B →
     Nat.choose A.card 2 + Nat.choose B.card 2 ≤ Nat.choose S.card 2 + C := by
+  sorry
+
+/-- Secondary question from Erdős Problem 43: if $|A| = |B|$, can the bound be improved to
+    $\binom{|A|}{2} + \binom{|B|}{2} \leq (1 - c + o(1)) \binom{f(N)}{2}$ for some constant
+    $c > 0$?
+
+    Barreto showed the answer is no: for infinitely many $N$, there exist equal-sized Sidon sets
+    $A, B$ with disjoint differences achieving $(1 - o(1)) \binom{f(N)}{2}$.
+
+    This is formalized as: for every $c > 0$, for all sufficiently large $N$, there exist
+    equal-sized Sidon sets $A, B \subseteq \{1, \ldots, N\}$ with disjoint differences such that
+    $\binom{|A|}{2} + \binom{|B|}{2} > (1 - c) \binom{f(N)}{2}$.
+
+    *Reference:* [Er95]
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_43_equal_size_negative :
+    ∀ (c : ℝ) (_ : 0 < c), ∀ᶠ N in Filter.atTop,
+    ∃ (A B S : Finset ℕ),
+    IsSidon (A : Set ℕ) ∧ IsSidon (B : Set ℕ) ∧ IsSidon (S : Set ℕ) ∧
+    (∀ a ∈ A, 1 ≤ a ∧ a ≤ N) ∧
+    (∀ b ∈ B, 1 ≤ b ∧ b ≤ N) ∧
+    (∀ s ∈ S, 1 ≤ s ∧ s ≤ N) ∧
+    (∀ T : Finset ℕ, IsSidon (T : Set ℕ) → (∀ t ∈ T, 1 ≤ t ∧ t ≤ N) → T.card ≤ S.card) ∧
+    A.card = B.card ∧
+    DisjointDifferences A B ∧
+    (1 - c) * Nat.choose S.card 2 < ↑(Nat.choose A.card 2 + Nat.choose B.card 2) := by
   sorry
 
 end Erdos43
