@@ -24,12 +24,23 @@ import FormalConjectures.Util.ProblemImports
 In any 2-colouring of the edges of $K_n$ there must exist at least
 $(1 + o(1)) \, n^2/12$ many edge-disjoint monochromatic triangles.
 
-Conjectured by Erdős, Faudree, and Ordman. Proved by Gruslys and Letzter [GrLe20].
+Conjectured by Erdős, Faudree, and Ordman [Er95][Er97d]. Proved by Gruslys and
+Letzter [GrLe20].
 
 The bound is tight: partition $V(K_n)$ into two equal halves, colour edges
 between parts red and edges within parts blue — any edge-disjoint monochromatic
 triangle must either use 3 blue edges (within a part) or 3 red edges (between
 parts), and a careful count shows $\approx n^2/12$ is achievable but not more.
+
+See also OEIS sequence A060407.
+
+[Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Combinatorics '94 (Catania), Congressus Numerantium 107 (1995).
+
+[Er97d] Erdős, P., _Some of my favourite problems in number theory, combinatorics,
+and geometry_.
+
+[Va99, 3.54] See erdosproblems.com/76.
 
 [GrLe20] Gruslys, V. and Letzter, S., _Minimising the number of triangles in a
 two-colouring of the edges of $K_n$_, J. Combin. Theory Ser. B (2020).
@@ -75,6 +86,28 @@ theorem erdos_76 : answer(True) ↔
       (∀ T ∈ 𝒯, IsMonochromaticTriangle col T) ∧
       IsEdgeDisjointFamily 𝒯 ∧
       (1 - ε) * (n : ℝ) ^ 2 / 12 ≤ (𝒯.card : ℝ) := by
+  sorry
+
+/--
+**Erdős Problem 76, single-color variant** [Er97d]:
+
+In any 2-colouring of the edges of $K_n$, there exist at least $c \cdot n^2$
+edge-disjoint monochromatic triangles *all of the same colour* (choosing the
+better colour), for some absolute constant $c > 1/24$.
+
+This is strictly stronger than the main problem: it asks for many edge-disjoint
+triangles in a single colour class rather than across both colours.
+-/
+@[category research open, AMS 5]
+theorem erdos_76_single_color : answer(True) ↔
+    ∃ c : ℝ, 1 / 24 < c ∧
+    ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
+    ∀ col : EdgeTwoColoring n,
+    ∃ (color : Bool) (𝒯 : Finset (Finset (Fin n))),
+      (∀ T ∈ 𝒯, IsMonochromaticTriangle col T ∧
+        ∀ e ∈ triangleEdges T, col e = color) ∧
+      IsEdgeDisjointFamily 𝒯 ∧
+      c * (n : ℝ) ^ 2 ≤ (𝒯.card : ℝ) := by
   sorry
 
 end Erdos76
