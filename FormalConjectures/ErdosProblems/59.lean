@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
+import Mathlib.Combinatorics.SimpleGraph.Extremal.Basic
 
 /-!
 # Erdős Problem 59
@@ -25,30 +27,30 @@ Is it true that for every graph $G$, the number of labeled $G$-free graphs on $n
 is at most $2^{(1+o(1)) \cdot \operatorname{ex}(n; G)}$? Disproved: the answer is no for
 $G = C_6$ (Morris and Saxton [MoSa16]). Erdős, Frankl, and Rödl [EFR86] proved the
 answer is yes when $G$ is not bipartite.
+
+[Er90] Erdős, P. (1990).
+
+[Er93, p.335] Erdős, P. (1993).
+
+[Er97c] Erdős, P. (1997).
+
+[Va99, 3.56] Vaughan, R.C. (1999).
+
+[EFR86] Erdős, P., Frankl, P., Rödl, V. (1986).
+
+[MoSa16] Morris, R., Saxton, D. (2016).
 -/
 
 open SimpleGraph
 
 namespace Erdos59
 
-/-- An injective graph homomorphism from $H$ to $G$; witnesses that $G$ contains a
-subgraph isomorphic to $H$. -/
-def ContainsSubgraph {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → G.Adj (f u) (f v)
-
-/-- The Turán number $\operatorname{ex}(n; H)$: the maximum number of edges in a simple graph on
-$n$ vertices that contains no copy of $H$ as a subgraph. -/
-noncomputable def turanNumber {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
-  sSup {m : ℕ | ∃ (V : Type) (fv : Fintype V) (F : SimpleGraph V) (dr : DecidableRel F.Adj),
-    haveI := fv; haveI := dr;
-    Fintype.card V = n ∧ ¬ContainsSubgraph F H ∧ F.edgeFinset.card = m}
-
 /-- The number of labeled simple graphs on $n$ vertices that do not contain $H$ as a subgraph. -/
-noncomputable def countGFreeGraphs {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
-  Nat.card {F : SimpleGraph (Fin n) // ¬ContainsSubgraph F H}
+noncomputable def countHFreeGraphs {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
+  Nat.card {F : SimpleGraph (Fin n) // H.Free F}
 
 /--
-Erdős Problem 59 [Er90, Er93, Er97c, Va99]:
+Erdős Problem 59 [Er90, Er93, p.335, Er97c, Va99, 3.56]:
 
 Is it true that, for every graph $G$, the number of labeled graphs on $n$ vertices that
 contain no copy of $G$ is at most $2^{(1+o(1)) \cdot \operatorname{ex}(n; G)}$?
@@ -66,7 +68,35 @@ theorem erdos_59 : answer(False) ↔
     ∀ (U : Type*) (H : SimpleGraph U) [Fintype U] [DecidableRel H.Adj],
     ∀ ε : ℝ, 0 < ε →
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
-      (countGFreeGraphs H n : ℝ) ≤ (2 : ℝ) ^ ((1 + ε) * (turanNumber H n : ℝ)) := by
+      (countHFreeGraphs H n : ℝ) ≤ (2 : ℝ) ^ ((1 + ε) * (extremalNumber n H : ℝ)) := by
+  sorry
+
+/--
+Morris–Saxton weaker conjecture: for every graph $G$, the number of labeled $G$-free graphs
+on $n$ vertices is at most $2^{O(\operatorname{ex}(n; G))}$. That is, there exists a constant
+$C$ (depending on $G$) such that the count is at most $2^{C \cdot \operatorname{ex}(n; G)}$
+for all sufficiently large $n$. This weaker bound is conjectured to hold even though the
+original conjecture (with $1 + o(1)$ in the exponent) was disproved for $C_6$.
+-/
+@[category research open, AMS 5]
+theorem erdos_59_weakened : answer(sorry) ↔
+    ∀ (U : Type*) (H : SimpleGraph U) [Fintype U] [DecidableRel H.Adj],
+    ∃ (C : ℝ) (_ : 0 < C) (N : ℕ), ∀ n : ℕ, N ≤ n →
+      (countHFreeGraphs H n : ℝ) ≤ (2 : ℝ) ^ (C * (extremalNumber n H : ℝ)) := by
+  sorry
+
+/--
+The $C_4$ case of Erdős Problem 59 [Va99, 3.56]: does the original bound
+$2^{(1+o(1)) \cdot \operatorname{ex}(n; C_4)}$ hold for the number of labeled $C_4$-free
+graphs on $n$ vertices? This remains open even though the general conjecture was
+disproved for $C_6$.
+-/
+@[category research open, AMS 5]
+theorem erdos_59_C4 : answer(sorry) ↔
+    ∀ (H : SimpleGraph (Fin 4)) [DecidableRel H.Adj],
+    ∀ ε : ℝ, 0 < ε →
+    ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
+      (countHFreeGraphs H n : ℝ) ≤ (2 : ℝ) ^ ((1 + ε) * (extremalNumber n H : ℝ)) := by
   sorry
 
 end Erdos59
