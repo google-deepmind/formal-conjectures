@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«296»
 
 /-!
 # Erdős Problem 45
@@ -24,8 +25,15 @@ import FormalConjectures.Util.ProblemImports
 For every $k$-colouring of the divisors of $n$ (excluding $1$ and $n$), there is a
 monochromatic subset whose reciprocals sum to $1$. Proved by Croot [Cr03].
 
+[Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Combinatorics, Paul Erdős is Eighty, Vol. 2 (1996), 1–25.
+
+[Er96b] Erdős, P., (1996).
+
 [Cr03] Croot, E., _On a coloring conjecture about unit fractions_. Annals of Mathematics,
 157 (2003), 545–556.
+
+[Gu04] Guy, R., _Unsolved Problems in Number Theory_, 3rd ed. Springer, 2004, Problem B2.
 -/
 
 open Finset BigOperators
@@ -55,7 +63,7 @@ theorem erdos_45 :
         ∃ D' : Finset ℕ, D' ⊆ middleDivisors n ∧
           D'.Nonempty ∧
           (∃ j : Fin k, ∀ d ∈ D', c d = j) ∧
-          (∑ d ∈ D', (1 : ℚ) / (d : ℚ)) = 1 := by
+          Erdos296.reciprocalSum D' = 1 := by
   sorry
 
 end Erdos45
