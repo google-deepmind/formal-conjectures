@@ -7,6 +7,6 @@
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "wrangler": "^3"
+    "wrangler": "^4"
   }
 }
