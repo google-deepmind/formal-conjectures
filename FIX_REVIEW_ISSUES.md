@@ -7,7 +7,7 @@ You are a PhD-level mathematician and Lean 4 expert. Your task is to fix all iss
 - **Review:** `ai-review/NUM.md`
 - **Lean file:** `FormalConjectures/ErdosProblems/NUM.lean`
 - **Library:** `FormalConjecturesForMathlib/` (shared definitions to reuse)
-- **Website:** `https://www.erdosproblems.com/NUM` (authoritative source for citations and variants)
+- **Website:** `https://www.erdosproblems.com/latex/NUM` (LaTeX source — authoritative source for citations and variants)
 
 ## Instructions
 
@@ -19,7 +19,7 @@ Read the review at `ai-review/NUM.md` in full. Then implement **all** fixes desc
 
 If the review identifies local definitions that duplicate library code:
 
-1. Find the library equivalent mentioned in the review (search `FormalConjecturesForMathlib/` and other problem files).
+1. Find the library equivalent mentioned in the review (search Mathlib and `FormalConjecturesForMathlib/` only — do **not** look at other Erdős problem files).
 2. Read both the local definition and the library version. Confirm they are semantically equivalent or that the library version is strictly better.
 3. Delete the local definition(s).
 4. Add the necessary `import` statement(s) and `open` declarations.
@@ -29,7 +29,7 @@ If the review identifies local definitions that duplicate library code:
 If the review says "No issues" or the section has no actionable recommendations, skip this section.
 
 **Important constraints:**
-- Only import definitions that already exist in the library or other problem files. Do **not** create new definitions in the library.
+- Only import definitions that already exist in Mathlib or `FormalConjecturesForMathlib/`. Do **not** look at other Erdős problem files for code to reuse, and do **not** create new definitions in the library.
 - Preserve the existing `ErdosNUM` namespace. Every problem file uses a `namespace ErdosNUM` / `end ErdosNUM` block — do not remove or rename it, even if the local definitions it originally scoped are deleted.
 
 ---
@@ -38,12 +38,13 @@ If the review says "No issues" or the section has no actionable recommendations,
 
 If the review identifies citation issues:
 
-1. Fetch `https://www.erdosproblems.com/NUM` to get the authoritative reference list.
-2. For each citation issue flagged in the review:
+1. Fetch `https://www.erdosproblems.com/latex/NUM` to get the LaTeX source with exact citations. This is the **sole authoritative source** for all citation data — do not search the web or use any other sources.
+2. When extracting citations from the LaTeX source, convert LaTeX-encoded names to plain text (e.g., `Erd\H{o}s` → `Erdős`, `Szemer\'edi` → `Szemerédi`, `Tur\'an` → `Turán`).
+3. For each citation issue flagged in the review:
    - **Missing reference:** Add it to the module docstring in the standard format: `[TAG] Last, F., Last, F., _Title_. Journal **vol** (year), pages.`
-   - **Incomplete reference:** Expand it with title, journal, volume, and page numbers. Use the website and cross-reference with other problem files for formatting examples.
+   - **Incomplete reference:** Expand it with title, journal, volume, and page numbers from the LaTeX source.
    - **Tag mismatch:** Standardize the tag to match other files that cite the same paper. Search the codebase for the same author/year to find the canonical tag.
-3. If the review mentions missing OEIS sequences or other cross-references from the website, add them to the docstring.
+4. If the review mentions missing OEIS sequences or other cross-references from the website, add them to the docstring.
 
 If the review says "No issues" or the section has no actionable recommendations, skip this section.
 
