@@ -93,10 +93,13 @@ Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
 
 For the use of AI, the [same conventions and precautions as in mathlib](https://github.com/leanprover-community/leanprover-community.github.io/blob/478f0f4b8be577d6d3f913053918551dcf68b1c6/templates/contribute/index.md?plain=1#L68-L70) apply.
 
-> **Note on AI-generated proofs:** PRs that add proofs longer than 20 lines will generally
-> not be accepted without prior discussion. If you would like to contribute such a proof,
-> please discuss it with the maintainers first — either by opening an issue on GitHub or
-> by posting in our [Zulip channel](https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures).
+> **Note on AI-generated proofs:** PRs that add proofs longer than 20 lines, or that depend
+> on a significant number of additional lemmas, will generally not be accepted without prior
+> discussion. If you would like to contribute such a proof, please discuss it with the
+> maintainers first — either by opening an issue on GitHub or by posting in our
+> [Zulip channel](https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures).
+> This does not apply to contributions to `FormalConjecturesForMathlib`, which follows
+> mathlib's own conventions.
 
 ## Usage, Structure & Features
 
