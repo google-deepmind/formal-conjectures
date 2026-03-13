@@ -136,8 +136,9 @@ overwrites the contents of the `main` tag of a html `file` with a welcome page i
     let markdownBody :=
       s!"# Welcome to the *Formal Conjectures* Documentation!
 
-Check out the main
-[Formal Conjectures GitHub repository](https://github.com/google-deepmind/formal-conjectures)
+Visit the [Formal Conjectures website](https://google-deepmind.github.io/formal-conjectures/)
+to browse and filter all formalised conjectures, or check out the
+[GitHub repository](https://github.com/google-deepmind/formal-conjectures)
 for more details.
 
 This page provides an overview of the problem categories and subject classifications used
