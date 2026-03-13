@@ -13,7 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+
+@[expose] public section
 
 /-!
 # Amicable numbers
