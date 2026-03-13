@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.Attributes
+import FormalConjectures.Util.Attributes.Basic
 import Mathlib.Tactic.Lemma
 
 
@@ -32,6 +32,9 @@ register_option linter.style.category_attribute : Bool := {
   defValue := true
   descr := "enable the `category` attribute style linter"
 }
+
+-- FIXME: False positive
+set_option linter.style.docString.empty false
 
 namespace CategoryLinter
 
@@ -56,10 +59,14 @@ def categoryLinter : Linter where
       | `(command| $a:declModifiers lemma $_ $_:bracketedBinder* : $_ := $_)
       | `(command| $a:declModifiers example $_:bracketedBinder* : $_ := $_) =>
         let prob_status ← toCategory a
+        let outStx := match a with
+        | `(declModifiers| $(_)? $atts $(_)? $(_)? $(_)? $(_)?) => atts.raw
+        | _ => stx
+        if prob_status.size > 1 then
+          logLintIf linter.style.category_attribute outStx
+            "Duplicate category attribute. There should be only one category attribute per declaration"
+          return
         if prob_status.size == 0 then
-          let outStx := match a with
-          | `(declModifiers| $(_)? $atts $(_)? $(_)? $(_)? $(_)?) => atts.raw
-          | _ => stx
           logLintIf linter.style.category_attribute outStx
             "Missing problem category attribute"
       | _ => return

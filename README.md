@@ -48,7 +48,7 @@ There are various ways of contributing to this repository:
 
     * **Literature:** Textbooks, problem books and research papers (including [arXiv](https://arxiv.org/archive/math)).
     * **Community Resources:** [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics), [MathOverflow](https://mathoverflow.net/) and the [OEIS](https://oeis.org/).
-    * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
+    * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), [Kourovka notebook](https://arxiv.org/pdf/1401.0300) or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
 
     We are also interested in the formalised statements of solved variants of
     open conjectures and solved statements from dedicated problem lists.
@@ -91,6 +91,8 @@ Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
 4.  Ensure the code builds (`lake build`).
 5.  Submit a Pull Request to the main repository.
 
+For the use of AI, the [same conventions and precautions as in mathlib](https://github.com/leanprover-community/leanprover-community.github.io/blob/478f0f4b8be577d6d3f913053918551dcf68b1c6/templates/contribute/index.md?plain=1#L68-L70) apply.
+
 ## Usage, Structure & Features
 
 This is a Lean 4 project managed with `lake` and a dependency `mathlib`. You
@@ -109,7 +111,7 @@ The directory structure is organised by the type of sources of the conjectures.
 There are two special directories:
 
 -   `FormalConjectures/Util` contains utilities like the
-    [`category` attribute](./FormalConjectures/Util/Attributes.lean), the
+    [`category` attribute](./FormalConjectures/Util/Attributes/Basic.lean), the
     [`answer( )` elaborator](./FormalConjectures/Util/Answer.lean) and some
     linters.
 -   `FormalConjecturesForMathlib` contains code potentially suitable to be upstreamed to
@@ -129,6 +131,12 @@ for the following categories:
     This includes problems that have a formal proof within this repository,
     a formal proof of an equivalent statement found elsewhere, or an informal
     solution widely accepted by experts in the field.
+-   Formally solved research problem: a research problem with a formal proof.
+    Use `@[category research formally solved using <kind> at "link"]` where
+    `<kind>` is one of:
+    - `formal_conjectures`: solved in this repository (link to commit)
+    - `lean4`: solved in Lean 4 (e.g., Mathlib or another repository)
+    - `other_system`: solved in another formal system (Coq, Isabelle, etc.)
 -   Graduate level problem.
 -   Undergraduate level problem.
 -   High school level problem.
@@ -242,10 +250,11 @@ meaningful solution of the problem is outside of the scope of this repository.
     ```
     If the problem has been solved to the negative, then `P` should be replaced with
     `¬ P`.
-7.  Every file should start with the following copyright header:
+7.  Every file should start with the following copyright header (replace YYYY with
+    the current year):
     ```lean
     /-
-    Copyright 2026 The Formal Conjectures Authors.
+    Copyright YYYY The Formal Conjectures Authors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -269,7 +278,7 @@ This repo will track the monthly tagged releases of mathlib (which correspond to
 Lean releases), rather than tracking mathlib master.
 
 To minimize friction when adding problem statements that need definitions that
-are not yet in mathlib, such definitions can be added to the `ForMathlib`
+are not yet in mathlib, such definitions can be added to the `FormalConjecturesForMathlib`
 directory. This ensures that the addition of these problems to
 formal-conjectures is not locked to the mathlib release cadence.
 

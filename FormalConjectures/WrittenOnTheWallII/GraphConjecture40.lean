@@ -31,7 +31,7 @@ number and `b(G)` is the largest induced bipartite subgraph size.
 -/
 @[category research open, AMS 5]
 theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :
-    ⌈((p G + b G + 1) / 2)⌉ ≤ f G := by
+    ⌈((p G + b G + 1) / 2)⌉ ≤  G.largestInducedForestSize := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture40

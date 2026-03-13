@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Polynomial.Bivariate
-import Mathlib.RingTheory.Algebraic.Pi
+
+public import Mathlib.Algebra.Polynomial.Bivariate
+public import Mathlib.RingTheory.Algebraic.Pi
+
+@[expose] public section
 
 /-!
 # Algebra over the Ring of Polynomials
@@ -25,8 +29,6 @@ import Mathlib.RingTheory.Algebraic.Pi
 variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
 
 namespace Polynomial
-
-@[simp] theorem eval₂_id {p : Polynomial R} {x : R} : eval₂ (RingHom.id _) x p = p.eval x := rfl
 
 instance instAlgebraPi : Algebra R[X] (S → S) :=
   (Pi.ringHom fun x ↦ (Polynomial.aeval x).toRingHom).toAlgebra

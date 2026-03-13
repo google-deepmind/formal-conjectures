@@ -13,6 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Data.Real.Cardinality
+module
 
-attribute [simp] Cardinal.mk_real
+
+public import Mathlib.Topology.Separation.GDelta
+
+@[expose] public section
+
+/--
+A space where all singletons are Gδ sets.
+-/
+class HasGδSingletons (X : Type*) [TopologicalSpace X] : Prop where
+  isGδ_singleton : ∀ ⦃x : X⦄, IsGδ {x}
+
+/-- Singletons are Gδ in first-countable T₁ spaces. -/
+instance HasGδSingletons.of_t1Space_firstCountableTopology (X : Type*) [TopologicalSpace X]
+    [FirstCountableTopology X] [T1Space X] : HasGδSingletons X where
+  isGδ_singleton := IsGδ.singleton

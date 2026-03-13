@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.RingTheory.Ideal.Defs
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.RingTheory.Ideal.Defs
+
+@[expose] public section
 
 open Pointwise
 
@@ -29,7 +33,7 @@ structure CoveringSystem (R : Type*) [CommSemiring R] where
   [fintypeIndex : Fintype ι]
   residue : ι → R
   moduli : ι → Ideal R
-  unionCovers : ⋃ i, {residue i} + (moduli i : Set R) = @Set.univ R
+  unionCovers : ⋃ i, ({residue i} : Set R) + (moduli i : Set R) = @Set.univ R
   non_trivial : ∀ i, moduli i ≠ ⊥
 
 /--
