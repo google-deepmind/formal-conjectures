@@ -162,7 +162,8 @@ ul, ol { list-style: none; }
   height: 28px;
   width: auto;
   margin-right: 0.75rem;
-  vertical-align: middle;
+  margin-bottom: 2px;
+    vertical-align: text-bottom;
   filter: brightness(0) invert(1);
 }
 .site-nav__links {
