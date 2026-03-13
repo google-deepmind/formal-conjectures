@@ -238,7 +238,7 @@ in nature.
 @[category research open, AMS 5 6]
 theorem DedekindNumbers (n : ℕ) :
 
-  M n = (∑ k in range (2^(2^n)), (-1)^k * (2^(2^(2^n - k)) - 1)) := by
+  M n = (∑ k in Finset.range (2^(2^n)), (-1)^k * (2^(2^(2^n - k)) - 1)) := by
   -- Note: This is a known closed-form summation, but it is computationally
   -- intractable for large n. The challenge is finding a specific form
   -- that satisfies values for n ≥ 10.
