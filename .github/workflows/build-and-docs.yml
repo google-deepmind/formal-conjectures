@@ -81,57 +81,56 @@ jobs:
           path: ~/.cache
           key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
-      # NOTE: docgen is disabled for now because it is very slow.
-      # To re-enable, uncomment the steps below and update the deploy artifact
-      # to include docbuild/out under _deploy/doc.
+      - name: Prepare documentation
+        run: |
+          cd docbuild
+          export MATHLIB_NO_CACHE_ON_UPDATE=1  # avoids "Failed to prune ProofWidgets cloud release: no such file or directory"
+          lake update formal_conjectures
 
-      # - name: Prepare documentation
-      #   run: |
-      #     cd docbuild
-      #     export MATHLIB_NO_CACHE_ON_UPDATE=1
-      #     lake update formal_conjectures
+      - name: Cache documentation
+        uses: actions/cache@v5
+        with:
+          path: docbuild/.lake/build/doc
+          key: MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          restore-keys: |
+            MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-
+            MathlibDoc-
 
-      # - name: Cache documentation
-      #   uses: actions/cache@v5
-      #   with:
-      #     path: docbuild/.lake/build/doc
-      #     key: MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
-      #     restore-keys: |
-      #       MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-
-      #       MathlibDoc-
+      - name: Build documentation
+        run: |
+          cd docbuild
+          lake build FormalConjectures:docs
 
-      # - name: Build documentation
-      #   run: |
-      #     cd docbuild
-      #     lake build FormalConjectures:docs
+      - name: Extract documentation
+        run: |
+          cd docbuild
+          mkdir out
+          lake query FormalConjectures:docs > out-files.txt
+          sed -i 's|^.*\.lake/build/doc/||' out-files.txt
+          echo "::group::Generated files"
+          cat out-files.txt
+          echo "::endgroup::"
+          rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
 
-      # - name: Extract documentation
-      #   run: |
-      #     cd docbuild
-      #     mkdir out
-      #     lake query FormalConjectures:docs > out-files.txt
-      #     sed -i 's|^.*\.lake/build/doc/||' out-files.txt
-      #     rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12.9'
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v6
-      #   with:
-      #     python-version: '3.12.9'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0
 
-      # - name: Install Python dependencies
-      #   run: |
-      #     python -m pip install --upgrade pip
-      #     pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0
+      - name: Run plotting script
+        run: |
+          python docbuild/scripts/plot_growth.py
 
-      # - name: Run plotting script
-      #   run: |
-      #     python docbuild/scripts/plot_growth.py
-
-      # - name: Inject stats into index.html
-      #   shell: bash
-      #   run: |
-      #     cd docbuild
-      #     lake exe overwrite_index ./out/index.html ./out/file_counts_dark.html ./out/file_counts_white.html | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Inject stats into index.html
+        shell: bash
+        run: |
+          cd docbuild
+          lake exe overwrite_index ./out/index.html ./out/file_counts_dark.html ./out/file_counts_white.html | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -149,11 +148,19 @@ jobs:
         env:
           BASE_PATH: /formal-conjectures
 
+      - name: Assemble deploy artifact
+        run: |
+          mkdir -p _deploy
+          # Website goes at root
+          cp -r site/site/* _deploy/
+          # Lean docs go under /doc
+          cp -r docbuild/out _deploy/doc
+
       - name: Upload deploy artifact
         id: deployment
         uses: actions/upload-pages-artifact@v4
         with:
-          path: site/site
+          path: _deploy
 
   # Deployment job
   deploy:
