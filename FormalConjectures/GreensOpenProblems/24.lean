@@ -57,8 +57,9 @@ theorem green_24 : ∀ n, max013AffineTranslates n = answer(sorry) := by
 
 namespace variants
 
-/-- From [Aa19] p.577: the trivial upper bound is $n^2$ (non asymptotic) -/
-@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/2358", AMS 5 11]
+
+/-- From [Aa19] p.577: the trivial upper bound is $n^2$ (non asymptotic). -/
+@[category research solved, AMS 5 11]
 theorem upper_trivial {n : ℕ} : max013AffineTranslates n ≤ n ^ 2 := by
   apply csSup_le
   · exact ⟨_, ⟨(Finset.range n).image Int.ofNat, by
@@ -72,12 +73,12 @@ noncomputable def gamma : ℝ :=
   limsup (fun n : ℕ => (max013AffineTranslates n : ℝ) / ((n : ℝ)^2)) atTop
 
 /-- Asymptotic upper bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem upper_HL : gamma ≤ 3/4 := by
   sorry
 
 /-- Asymptotic lower bound (1.2) in [Aa19]. Named after Hardy and Littlewood [HaL28]. -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem lower_HL : gamma ≥ 1/12 := by
   sorry
 
