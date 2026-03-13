@@ -270,11 +270,14 @@ function main() {
   // Read raw data
   let rawData = [];
   if (fs.existsSync('data/conjectures.json')) {
-    try {
-      rawData = JSON.parse(fs.readFileSync('data/conjectures.json', 'utf8'));
-    } catch (e) {
-      console.warn('Warning: could not parse data/conjectures.json:', e.message);
-    }
+    const parsed = JSON.parse(fs.readFileSync('data/conjectures.json', 'utf8'));
+    // extract_names outputs { problems: [...], moduleDocstrings: {...} }
+    rawData = parsed.problems || [];
+  }
+
+  if (rawData.length === 0) {
+    console.error('Error: no conjectures loaded. Run `lake exe extract_names > site/data/conjectures.json` first.');
+    process.exit(1);
   }
 
   const conjectures = rawData.map(processEntry);
