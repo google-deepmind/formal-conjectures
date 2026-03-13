@@ -26,7 +26,7 @@ by *Qianlin Huang, Ronggang Shi*
 
 section MatrixGroupConjecture
 
-open Matrix SpecialLinearGroup
+open Matrix SpecialLinearGroup MulAction
 open scoped MatrixGroups Polynomial LaurentSeries
 
 section
@@ -38,8 +38,8 @@ Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
 @[category research open, AMS 11 15 22]
 theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     (g : SL(n, ℝ) ⧸ Subgroup.map (map (Int.castRingHom ℝ)) ⊤)
-    (hg : IsCompact <| closure (MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g)) :
-    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g := by
+    (hg : IsCompact <| closure (orbit (diagonalSubgroup (Fin n) ℝ) g)) :
+    IsClosed <| orbit (diagonalSubgroup (Fin n) ℝ) g := by
   sorry
 
 end
@@ -84,10 +84,10 @@ closure but is not closed.
 @[category research solved, AMS 11 15 22]
 theorem huang_shi_theorem_1_2
     (hchar : ringChar F ∈ ({3, 5, 7, 11} : Finset ℕ)) :
-    ∃ z : SL(4, F⸨X⸩) ⧸ (  Matrix.SpecialLinearGroup.map
+    ∃ z : SL(4, F⸨X⸩) ⧸ ( SpecialLinearGroup.map
     (polyToLaurent F)).range,
-      IsCompact (closure (MulAction.orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z)) ∧
-      ¬ IsClosed (MulAction.orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z) := by
+      IsCompact (closure (orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z)) ∧
+      ¬ IsClosed (orbit (diagonalSubgroup (Fin 4) F⸨X⸩) z) := by
   -- Placeholder: a Lean formalization would require a full development
   -- of the Huang–Shi paper in mathlib.
   sorry
