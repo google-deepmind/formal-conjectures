@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,12 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib
 
-/-!
-# ForMathlib (deprecated)
+import FormalConjecturesTest.Util.Linters.ModuleDocstringLinter
 
-This module is deprecated since 2026-01-08. Use `FormalConjecturesForMathlib` directly.
--/
-
-deprecated_module (since := "2026-01-08")
+-- The imported file contains multiple module docstrings, but per-file tracking
+-- means the first module docstring in *this* file should not trigger a warning.
+#guard_msgs in
+/-! This is the first module docstring in this file; it should not trigger a warning. -/

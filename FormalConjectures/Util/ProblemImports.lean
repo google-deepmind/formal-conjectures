@@ -21,9 +21,12 @@ import FormalConjectures.Util.Linters.AMSLinter
 import FormalConjectures.Util.Linters.AnswerLinter
 import FormalConjectures.Util.Linters.CategoryLinter
 import FormalConjectures.Util.Linters.CopyrightLinter
+import FormalConjectures.Util.Linters.ModuleDocstringLinter
+
 
 /-!
 # Standard imports for open problems
 
 This file provides a standard set of imports used by problem files throughout the project.
 -/
+

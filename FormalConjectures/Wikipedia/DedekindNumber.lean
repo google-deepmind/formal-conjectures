@@ -101,7 +101,7 @@ theorem M'_two : M' 2 = 6 := by native_decide
 @[category test, AMS 6]
 theorem M'_three : M' 3 = 20 := by native_decide
 
-/-! ## Equivalence of M and M'
+/-  ## Equivalence of M and M'
 -/
 
 /-- The indicator function of a finset: `χ s i = true ↔ i ∈ s`. -/
@@ -121,7 +121,7 @@ def toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) : Finset (Finset (Fin n)
 def fromSperner {n : ℕ} (A : Finset (Finset (Fin n))) (v : Fin n → Bool) : Bool :=
   decide (∃ s ∈ A, ∀ i ∈ s, v i = true)
 
-/-! ### Helper lemmas about χ and supp -/
+/-  ### Helper lemmas about χ and supp -/
 
 @[category API, AMS 5]
 lemma χ_supp {n : ℕ} (v : Fin n → Bool) : χ (supp v) = v := by
