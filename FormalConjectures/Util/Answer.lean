@@ -79,7 +79,7 @@ def elabTermAndAnnotate (stx : TSyntax `term) (expectedType? : Option Expr)
 def answerElab : TermElab := fun stx expectedType? => do
   match stx with
   | `(answer($a:term)) =>
-    match (← getOptions).get? `google.answer |>.get! with
+    match (← getOptions).get? `google.answer |>.getD .alwaysTrue with
     |  AnswerSetting.postpone => elabTermAndAnnotate a expectedType? true
     | .withAuxiliary =>
       let expr ← elabTermAndAnnotate a expectedType?
