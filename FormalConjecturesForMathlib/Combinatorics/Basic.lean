@@ -182,4 +182,20 @@ theorem IsSidon.exists_insert_ge {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon
     · exact insert_ge_max' h hA hs
     · exact insert_ge_max' h hA le_rfl
 
+/-- A predicate checking whether inserting `x` into a Sidon set `A` preserves the Sidon
+property. This requires both that `x + x` does not collide with any sum `a + b` for
+`a, b ∈ A`, and that `x + a` does not collide with `b + c` for `a, b, c ∈ A`. -/
+def canInsertSidon (A : Finset ℕ) (x : ℕ) : Prop :=
+  ∀ a ∈ A, ∀ b ∈ A, x + x ≠ a + b ∧ ∀ c ∈ A, x + a ≠ b + c
+
+instance (A : Finset ℕ) (x : ℕ) : Decidable (canInsertSidon A x) :=
+  inferInstanceAs (Decidable (∀ a ∈ A, ∀ b ∈ A, x + x ≠ a + b ∧ ∀ c ∈ A, x + a ≠ b + c))
+
+/-- The greedy Sidon set in `{1, …, N}`: starting from `∅`, iterate through `1, …, N` and
+include `x` if and only if `A ∪ {x}` remains Sidon. -/
+def greedySidonSet (N : ℕ) : Finset ℕ :=
+  ((List.range N).map (· + 1)).foldl
+    (fun A x => if canInsertSidon A x then insert x A else A)
+    ∅
+
 end Finset
