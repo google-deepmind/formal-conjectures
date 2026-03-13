@@ -86,7 +86,7 @@ theorem huang_shi_theorem_1_2
     (hchar : ringChar F ∈ ({3, 5, 7, 11} : Finset ℕ)) :
     ∃ z : SL(4, F⸨X⸩) ⧸ ( SpecialLinearGroup.map
     (polyToLaurent F)).range,
-      IsCompact (closure (orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z)) ∧
+      IsCompact (closure (orbit (diagonalSubgroup (Fin 4) F⸨X⸩) z)) ∧
       ¬ IsClosed (orbit (diagonalSubgroup (Fin 4) F⸨X⸩) z) := by
   -- Placeholder: a Lean formalization would require a full development
   -- of the Huang–Shi paper in mathlib.
