@@ -39,7 +39,7 @@ namespace Erdos996
 sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k ^ C)`, then for almost every `x`,
 `lim ∑ k ∈ Finset.range N, f (n k • x)) / N = ∫ t, f t ∂t`? -/
 @[category research open, AMS 42]
-theorem erdos_996.log3 : answer(sorry) ↔
+theorem erdos_996 : answer(sorry) ↔
     ∃ (C : ℝ), 0 < C ∧ ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
     (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
@@ -51,7 +51,7 @@ theorem erdos_996.log3 : answer(sorry) ↔
 
 /-- The following theorem is proved in [Ma66]. -/
 @[category research solved, AMS 42]
-theorem erdos_996.log2 : ∀ (C : ℝ), 0.5 < C →
+theorem erdos_996.variants.log2 : ∀ (C : ℝ), 0.5 < C →
     ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
     (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]

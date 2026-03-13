@@ -32,6 +32,22 @@ if the equation $a + b = c$ has no solution with $a, b, c \in A$.
 -/
 def IsSumFree (A : Set α) : Prop := Disjoint (A + A) A
 
+/--
+`allUniqueSums A` is the set of elements in `α` that can be written as the sum of exactly one
+unordered pair of elements from `A`.
+-/
+def allUniqueSums (A : Set α) : Set α :=
+  { n | ∃ p : α × α, p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n ∧
+      ∀ a₁ ∈ A, ∀ a₂ ∈ A, a₁ + a₂ = n → (a₁ = p.1 ∧ a₂ = p.2) ∨ (a₁ = p.2 ∧ a₂ = p.1) }
+
+/--
+A set `A` has no unique representation in its sumset `A + A` if for every pair of elements
+`a₁, a₂ ∈ A`, there exist another pair of elements `b₁, b₂ ∈ A` such that `a₁ + a₂ = b₁ + b₂`
+and `{a₁, a₂} ≠ {b₁, b₂}`.
+-/
+def HasNoUniqueRepresentation {α : Type*} [AddCommMonoid α] (A : Finset α) : Prop :=
+  allUniqueSums (A : Set α) = ∅
+
 /-- A set $A$ of natural numbers is said to have bounded gaps if there exists an integer $p$ such
 that $A ∩ [n, n + 1, ..., n + p]$ is nonempty for all $n$. -/
 def IsSyndetic (A : Set ℕ) : Prop := ∃ p, ∀ n, (A ∩ .Icc n (n + p)).Nonempty
