@@ -14,7 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
--- A standard set of imports for open problems.
+/-!
+# Standard imports for open problems
+
+This file provides a standard set of imports used by problem files throughout the project.
+-/
+
 import Mathlib
 import FormalConjecturesForMathlib
 import FormalConjectures.Util.Answer
