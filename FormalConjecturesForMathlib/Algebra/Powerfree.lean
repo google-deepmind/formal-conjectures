@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Squarefree.Basic
+
+public import Mathlib.Algebra.Squarefree.Basic
+
+@[expose] public section
 
 variable {M M₀ : Type*} {r m : M} {k : ℕ}
 
@@ -73,5 +77,5 @@ theorem not_powerfree_zero [MonoidWithZero M₀] [Nontrivial M₀] (k : ℕ) :
   rw [Powerfree, not_forall]
   exact ⟨0, by simp⟩
 
-theorem Prime.powerfree [CancelCommMonoidWithZero M₀] {m : M₀} (h : Prime m) (hk : 2 ≤ k) :
-    Powerfree k m := h.irreducible.powerfree hk
+theorem Prime.powerfree [CommMonoidWithZero M₀] [IsCancelMulZero M₀] {m : M₀} (h : Prime m)
+    (hk : 2 ≤ k) : Powerfree k m := h.irreducible.powerfree hk

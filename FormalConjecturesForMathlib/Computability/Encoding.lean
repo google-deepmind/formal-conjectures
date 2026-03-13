@@ -13,9 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Computability.Encoding
-import Mathlib.Data.List.SplitOn
+public import Mathlib.Computability.Encoding
+public import Mathlib.Data.List.SplitOn
+
+@[expose] public section
 
 open Computability
 
@@ -54,11 +57,6 @@ lemma splitOnP_append_cons {α : Type} (l1 l2 : List α)
   | cons hd tl ih =>
     obtain ⟨hd1, tl1, h1'⟩ := List.exists_cons_of_ne_nil (List.splitOnP_ne_nil P tl)
     by_cases hPh : P hd <;> simp [*]
-
-@[simp]
-lemma Option.getD_comp_some : (fun x ↦ x.getD false) ∘ some = id := by
-  ext
-  simp
 
 def finEncodingListBoolProdListBool : Computability.FinEncoding (List Bool × List Bool) where
   Γ := Option Bool

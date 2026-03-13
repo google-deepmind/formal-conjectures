@@ -32,7 +32,7 @@ structure ClosedInvariantSubspace [Module ℂ H] (T : H →L[ℂ] H) where
   ne_bot : toSubspace ≠ ⊥
   ne_top : toSubspace ≠ ⊤
   is_closed : IsClosed (toSubspace : Set H)
-  is_fixed : toSubspace.map T ≤ toSubspace
+  is_fixed : toSubspace.map T.toLinearMap ≤ toSubspace
 
 /--
 Show that every bounded linear operator `T : H → H` on a separable Hilbert space `H` of dimension

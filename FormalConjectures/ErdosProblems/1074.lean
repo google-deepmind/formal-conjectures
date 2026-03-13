@@ -55,7 +55,7 @@ $$
 $$
 exist? -/
 @[category research open, AMS 11]
-theorem erdos_1074.part8_i_i : answer(sorry) ↔ ∃ c, EHSNumbers.HasDensity c := by
+theorem erdos_1074.parts.i : answer(sorry) ↔ ∃ c, EHSNumbers.HasDensity c := by
   sorry
 
 /-- Let $S$ be the set of all $m\geq 1$ such that there exists a prime $p\not\equiv 1\pmod{m}$ such
@@ -64,7 +64,7 @@ $$
   \lim\frac{|S\cap[1, x]|}{x}?
 $$ -/
 @[category research open, AMS 11]
-theorem erdos_1074.part_i_ii : EHSNumbers.HasDensity answer(sorry) := by
+theorem erdos_1074.parts.ii : EHSNumbers.HasDensity answer(sorry) := by
   sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
@@ -74,7 +74,7 @@ $$
 $$
 exist? -/
 @[category research open, AMS 11]
-theorem erdos_1074.part_ii_i : answer(sorry) ↔ ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
+theorem erdos_1074.parts.iii : answer(sorry) ↔ ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
   sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
@@ -83,7 +83,7 @@ $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}?
 $$ -/
 @[category research open, AMS 11]
-theorem erdos_1074.parts_ii_ii :
+theorem erdos_1074.parts.iv :
     PillaiPrimes.HasDensity answer(sorry) {p | p.Prime} := by
   sorry
 
