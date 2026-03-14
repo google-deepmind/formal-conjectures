@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-base="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formal Conjectures</title>
+  <meta name="description" content="A collection of formalised mathematical conjectures in Lean 4, using Mathlib.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="/assets/img/formal_conjectures_logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="container site-nav__inner">
+    <a href="/" class="site-nav__brand"><img src="/assets/img/formal_conjectures_logo.svg" alt=""
+        class="site-nav__logo">Formal Conjectures</a>
+    <ul class="site-nav__links" role="list">
+      <li><a href="/browse/">Browse</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="/doc/">Docs</a></li>
+      <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wip-banner">
+  <strong>🚧 Work in progress</strong>  This site just launched and is under active development with some more features to come.
+  <a href="https://github.com/google-deepmind/formal-conjectures/issues/new?labels=website&title=Website+feedback"
+    target="_blank" rel="noopener">Open an issue</a> if you spot something off!
+</div>
+
+<header class="hero">
+  <div class="container">
+    <img src="/assets/img/formal_conjectures_logo.svg" alt="Formal Conjectures" class="hero__logo">
+    <h1 class="hero__title">Formal Conjectures</h1>
+    <p class="hero__subtitle">
+      A collection of formalised statements of open mathematical conjectures
+      in <a href="https://leanprover.github.io/lean4/doc/whatIsLean.html" style="color:#93c5fd">Lean&nbsp;4</a>,
+      using <a href="https://github.com/leanprover-community/mathlib4" style="color:#93c5fd">Mathlib</a>.
+    </p>
+    <div class="hero__actions">
+      <a href="/browse/" class="btn btn-primary">Browse Conjectures</a>
+      <a href="https://github.com/google-deepmind/formal-conjectures" class="btn btn-secondary" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<!-- Stats bar (values injected by build.js) -->
+<section class="stats-bar" aria-label="Repository statistics">
+  <div class="container">
+    <div class="stats-bar__grid">
+      <a href="/browse/" class="stat-card">
+        <span class="stat-value">{{totalCount}}</span>
+        <span class="stat-label">Total results</span>
+      </a>
+      <a href="/browse/?category=research+open" class="stat-card">
+        <span class="stat-value">{{openCount}}</span>
+        <span class="stat-label">Open problems</span>
+      </a>
+      <a href="/browse/?category=research+solved" class="stat-card">
+        <span class="stat-value">{{solvedCount}}</span>
+        <span class="stat-label">Solved</span>
+      </a>
+      <a href="/browse/?category=research+formally+solved" class="stat-card">
+        <span class="stat-value">{{formalCount}}</span>
+        <span class="stat-label">Formally solved</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- Category overview -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">Browse by category</h2>
+      <div class="cat-stats">
+        {{categoryStats}}
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection + Subject lists -->
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <h2 class="section__title">Browse by source</h2>
+        <ul class="list-links">
+          {{collectionList}}
+        </ul>
+      </div>
+      <div>
+        <h2 class="section__title">Browse by subject</h2>
+        <ul class="list-links">
+          {{subjectList}}
+        </ul>
+        <p style="margin-top:.75rem;font-size:.85rem;color:var(--color-text-muted)">
+          <a href="/browse/">View all &rarr;</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About blurb -->
+  <section class="section" style="background:var(--color-bg-alt)">
+    <div class="container" style="max-width:720px">
+      <h2 class="section__title">What is this?</h2>
+      <p>
+        While there is a growing corpus of formalised theorems including proofs, there
+        is a lack of open conjectures where only the statement has been formalised.
+        This repository collects such statements from diverse sources — Erdős&rsquo;s problem
+        lists, Wikipedia, MathOverflow, the OEIS, research papers, and more.
+      </p>
+      <p style="margin-top:1rem">
+        The project aims to become a benchmark for automated theorem provers, help
+        clarify conjectures through formalisation, and highlight gaps in Mathlib.
+      </p>
+      <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="/about/" class="btn btn-outline">Learn more</a>
+        <a href="/contribute/" class="btn btn-outline">How to contribute</a>
+        <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" class="btn btn-outline" target="_blank" rel="noopener">Join the Zulip</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>Formal Conjectures &mdash; Apache 2.0 / CC-BY 4.0</span>
+    <span>
+      <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a>
+      &middot;
+      <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Zulip</a>
+      &middot;
+      <a href="/contribute/">Contribute</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

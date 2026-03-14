@@ -28,7 +28,7 @@ open Real
 
 namespace Erdos61
 
-/-!
+/-
 For a graph $H$, consider all graphs $G$ that do not contain $H$ as an induced subgraph.
 We would like to find a lower bound $f(n)$ such that every such $G$ on $n$ vertices
 has a clique or independent set of size $\ge f(n)$ for sufficiently large $n$.
