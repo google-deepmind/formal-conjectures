@@ -38,7 +38,7 @@ noncomputable def practicalH (n : ℕ) : ℕ :=
   Finset.sup (Finset.Icc 1 n) fun m =>
     sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧ m ∈ subsetSums D}
 
-/-! ### Examples for `practicalH` -/
+/- ### Examples for `practicalH` -/
 
 /-- $h(1) = 1$: we need the single divisor {1} to represent 1. -/
 @[category test, AMS 11]
