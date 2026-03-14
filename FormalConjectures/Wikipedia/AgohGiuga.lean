@@ -23,7 +23,7 @@ open scoped Nat
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Agoh-Giuga_conjecture)
 -/
-/-!
+/-
 
 The **Agoh-Giuga Conjecture**.
 

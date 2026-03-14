@@ -26,7 +26,7 @@ open Filter
 
 open scoped EuclideanGeometry Real Topology
 
-/-! # Gauss Circle Problem
+/-  # Gauss Circle Problem
 
 Consider a circle in $\mathbb{R}^2$ with center at the origin and radius $r\geq 0$.
 Gauss's circle problem asks how many points there are inside this circle of the form

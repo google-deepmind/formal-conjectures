@@ -26,7 +26,7 @@ open Filter
 
 open scoped Nat.Prime Classical
 
-/-! ## First Hardy-Littlewood Conjecture -/
+/-  ## First Hardy-Littlewood Conjecture -/
 
 namespace HardyLittlewood
 
@@ -84,7 +84,7 @@ theorem first_hardy_littlewood_conjecture {k : ℕ} (m : Fin k.succ → ℕ) :
   sorry
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Second_Hardy%E2%80%93Littlewood_conjecture
-/-! ## Second Hardy-Littlewood Conjecture -/
+/-  ## Second Hardy-Littlewood Conjecture -/
 def SecondHardyLittlewoodConjectureFor (x y : ℕ) : Prop :=
   π (x + y) ≤ π x + π y
 
