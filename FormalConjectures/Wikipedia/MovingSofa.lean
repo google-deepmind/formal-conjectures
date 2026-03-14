@@ -28,7 +28,6 @@ import FormalConjectures.Util.ProblemImports
 
 noncomputable section
 
-
 namespace MovingSofa
 
 open Topology
@@ -63,6 +62,18 @@ structure IsMovingSofa (s : Set ℝ²) (m : I → E(2)) : Prop where
   subset_hallway : ∀ t, m t '' s ⊆ hallway
   final : m 1 '' s ⊆ verticalHallway
 
+/-- The unit square. -/
+def unitSquare : Set ℝ² := parallelepiped (EuclideanSpace.basisFun (Fin 2) ℝ)
+
+/--
+The unit square $[0,1]^2$ is a valid moving sofa (with the identity motion).
+It sits in the corner where both hallways overlap, so the stationary motion works.
+This is a sanity check that the `IsMovingSofa` definition is not vacuous.
+-/
+@[category test, AMS 49]
+theorem isMovingSofa_unitSquare : ∃ m, IsMovingSofa unitSquare m := by
+  sorry
+
 /--
 The rigid motion that translates by $p$ and then rotates counterclockwise by $\alpha$.
 Note that [Ge92] used this definition while [Ro18] used rotation first and then translation.
@@ -84,7 +95,7 @@ def sofaOfRotateTranslatePath (p : ℝ → ℝ²) : Set ℝ² :=
 
 namespace GerversSofa
 
-/-!
+/-
 Gerver's constants defining the sofa.
 
 This section follows Theorem 2 of Gerver's paper [Ge92].
@@ -145,26 +156,32 @@ def gerversSofa : Set ℝ² :=
   sofaOfRotateTranslatePath GerversSofa.p
 
 open MeasureTheory
+open scoped ENNReal
 
-/-- What is the maximal area of a moving sofa? -/
-@[category research open, AMS 49]
-theorem iSup_isMovingSofa_volume :
-    ⨆ (s : Set ℝ²) (_ : ∃ m, IsMovingSofa s m), volume s = answer(sorry) := by
+/-- The **sofa constant** is the maximal area of a moving sofa. -/
+def sofaConstant : ℝ≥0∞ := ⨆ (s : Set ℝ²) (_ : ∃ m, IsMovingSofa s m), volume s
+
+/-- The sofa constant is at least 1, as witnessed by the unit square. -/
+@[category test, AMS 49]
+theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
+  calc
+    _ = volume unitSquare := (OrthonormalBasis.volume_parallelepiped _).symm
+    _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
+
+/-- What is the sofa constant? -/
+@[category research solved, AMS 49]
+theorem sofaConstant_eq : sofaConstant = answer(sorry) := by
   sorry
 
-/--
-Gerver's sofa attains the maximal volume of a moving sofa, conjectured by [Ge92] and claimed by
-[Ba24].
--/
-@[category research open, AMS 49]
-theorem maximalFor_isMovingSofa_volume_gerversSofa :
-    MaximalFor (fun s ↦ ∃ m, IsMovingSofa s m) volume gerversSofa := by
+/-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
+@[category research solved, AMS 49]
+theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
-/-- Gerver's sofa attains the unique maximal volume of a moving sofa. -/
+/-- Gerver's sofa is the unique sofa that attains the sofa constant. -/
 @[category research open, AMS 49]
-theorem maximalFor_isMovingSofa_volume_iff_eq_gerversSofa :
-    ∀ s : Set ℝ², MaximalFor (fun s ↦ ∃ m, IsMovingSofa s m) volume s ↔ s = gerversSofa := by
+theorem sofaConstant_eq_volume_iff_eq_gerversSofa :
+    ∀ s : Set ℝ², sofaConstant = volume s ↔ s = gerversSofa := by
   sorry
 
 end MovingSofa
