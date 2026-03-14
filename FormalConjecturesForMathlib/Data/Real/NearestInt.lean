@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Data.Finset.Defs
-import Mathlib.Order.Interval.Set.Defs
+module
 
-abbrev Finset.OrdConnected {α} [Preorder α] (s : Finset α) := s.toSet.OrdConnected
+public import Mathlib.Algebra.Order.Round
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
+
+/-- The distance from a real number to the nearest integer. -/
+noncomputable def distToNearestInt (x : ℝ) : ℝ := |x - round x|

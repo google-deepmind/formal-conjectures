@@ -36,7 +36,6 @@ def IsCrystalWithComponents (n a b : ℕ) : Prop :=
 @[category test, AMS 11]
 theorem isCrystalWithComponents_35_5_7 : IsCrystalWithComponents 35 5 7 := by
   norm_num [IsCrystalWithComponents]
-  decide
 
 -- TODO(firsching): show divisibility properties from section 3.
 

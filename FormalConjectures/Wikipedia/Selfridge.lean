@@ -110,7 +110,7 @@ end PrimalityTesting
 
 section FermatNumbers
 
-/-!
+/-
 # Selfridge's conjectures about Fermat numbers
 -/
 

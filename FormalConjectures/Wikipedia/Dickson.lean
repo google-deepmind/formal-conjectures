@@ -37,7 +37,7 @@ theorem dickson_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, f.degree = 
     (hfs' : SchinzelCondition fs) : Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
   sorry
 
-/-! ## Special cases -/
+/-  ## Special cases -/
 
 /--
 **Polignac's conjecture**

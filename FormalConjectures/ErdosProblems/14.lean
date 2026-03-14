@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 14
@@ -26,8 +27,6 @@ namespace Erdos14
 
 open Asymptotics Filter
 
-abbrev allUniqueSums (A : Set ℕ) : Set ℕ :=
-  { n | ∃! (a : ℕ × ℕ), a.1 ≤ a.2 ∧ a.1 ∈ A ∧ a.2 ∈ A ∧ a.1 + a.2 = n }
 
 /--
 The number of integers in $\{1,\ldots,N\}$ which are not representable in exactly one way
@@ -49,14 +48,14 @@ in exactly one way as the sum of two elements from $A$. Is it true that for all
 $\epsilon > 0$ and large $N$, $|\{1,\ldots,N\} \setminus B| \gg_\epsilon N^{1/2 - \epsilon}$?
 -/
 @[category research open, AMS 11]
-theorem erdos_14a :
+theorem erdos_14.parts.i :
     answer(sorry) ↔ ∀ A, ∀ ε > 0, nonUniqueSumCount A ≫ almostSquareRoot ε := by sorry
 
 /--
 Is it possible that $|\{1,\ldots,N\} \setminus B| = o(N^\frac{1}{2})$?
 -/
 @[category research open, AMS 11]
-theorem erdos_14b :
+theorem erdos_14.parts.ii :
     answer(sorry) ↔ ∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot := by
   sorry
 

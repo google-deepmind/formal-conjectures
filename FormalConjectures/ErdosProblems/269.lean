@@ -80,7 +80,7 @@ This theorem addresses the case where the set of primes $P$ is infinite. In this
 irrational.
 -/
 @[category research solved, AMS 11]
-theorem erdos_269.variant.infinite (P : Set ℕ) (h : ∀ p ∈ P, p.Prime) (h_inf : P.Infinite) :
+theorem erdos_269.variants.infinite (P : Set ℕ) (h : ∀ p ∈ P, p.Prime) (h_inf : P.Infinite) :
   Irrational (series P) := by
   sorry
 

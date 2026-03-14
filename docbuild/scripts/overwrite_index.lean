@@ -65,6 +65,8 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
   let openTag := s!"<{tag}>"
   let closeTag := s!"</{tag}>"
 
+  -- TODO(lezeau): reimplement this using String.Slice API
+
   -- Find the position right after "<tag>"
   let .some bodyOpenTagSubstring := inputHtmlContent.findSubstr? openTag
     | throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
@@ -77,9 +79,10 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
     throw <| IO.userError s!"{openTag} content appears invalid (start of content is after start of {closeTag} tag)."
 
   -- Extract the part of the HTML before the original body content (includes "<tag>")
-  let htmlPrefix := inputHtmlContent.extract 0 contentStartIndex
+  let htmlPrefix := inputHtmlContent.toRawSubstring.extract ⟨0⟩ contentStartIndex |>.toString
   -- Extract the part of the HTML from "</tag>" to the end
-  let htmlSuffix := inputHtmlContent.extract bodyCloseTagSubstring.startPos inputHtmlContent.endPos
+  let htmlSuffix := inputHtmlContent.toRawSubstring.extract bodyCloseTagSubstring.startPos
+    inputHtmlContent.toRawSubstring.stopPos |>.toString
 
   -- Construct the new full HTML content
   let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
@@ -110,9 +113,22 @@ unsafe def main (args : List String) : IO Unit := do
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a welcome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
-  let .some (graphFile : String) := args[1]?
+  let .some (graphFileDark : String) := args[1]?
     | IO.println "Repository growth graph not supplied, generating docs without graph."
-  let graphHtml ← IO.FS.readFile graphFile
+  let .some (graphFileLight : String) := args[2]?
+    | IO.println "Repository growth graph not supplied, generating docs without graph."
+  let graphHtmlDark ← IO.FS.readFile graphFileDark
+  let graphHtmlLight ← IO.FS.readFile graphFileLight
+  let graphHtml :=
+    s!"<style>
+        .theme-dark \{ display: none; }
+        @media (prefers-color-scheme: dark) \{
+          .theme-light \{ display: none; }
+          .theme-dark \{ display: block; }
+        }
+      </style>
+      <div class=\"theme-light\">{graphHtmlLight}</div>
+      <div class=\"theme-dark\">{graphHtmlDark}</div>"
 
   runWithImports do
     let categoryStats ← getCategoryStatsMarkdown
@@ -120,8 +136,9 @@ overwrites the contents of the `main` tag of a html `file` with a welcome page i
     let markdownBody :=
       s!"# Welcome to the *Formal Conjectures* Documentation!
 
-Check out the main
-[Formal Conjectures GitHub repository](https://github.com/google-deepmind/formal-conjectures)
+Visit the [Formal Conjectures website](https://google-deepmind.github.io/formal-conjectures/)
+to browse and filter all formalised conjectures, or check out the
+[GitHub repository](https://github.com/google-deepmind/formal-conjectures)
 for more details.
 
 This page provides an overview of the problem categories and subject classifications used
