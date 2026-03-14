@@ -84,7 +84,7 @@ theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
 theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
   sorry
 
-/-! ### Erdős's Conjectures -/
+/- ### Erdős's Conjectures -/
 
 /--
 **Conjecture 1.**
