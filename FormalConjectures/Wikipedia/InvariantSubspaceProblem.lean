@@ -85,8 +85,8 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
       ((Set.countable_range _).isSeparable).span.closure
     grind [Submodule.top_coe, TopologicalSpace.isSeparable_univ_iff]
   · -- T maps orbit into orbit, hence span into span, hence closure into closure
-    calc Submodule.map T (Submodule.span ℂ S).topologicalClosure
-        ≤ (Submodule.map T (Submodule.span ℂ S)).topologicalClosure :=
+    calc Submodule.map T.toLinearMap (Submodule.span ℂ S).topologicalClosure
+        ≤ (Submodule.map T.toLinearMap (Submodule.span ℂ S)).topologicalClosure :=
           Submodule.topologicalClosure_map T _
       _ ≤ (Submodule.span ℂ S).topologicalClosure := by
             apply Submodule.topologicalClosure_mono
