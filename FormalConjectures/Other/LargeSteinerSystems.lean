@@ -76,33 +76,6 @@ def large_steiner_systems : LargeSteinerSystemWitness := by
   sorry
 
 /--
-A constructive witness for the warm-up problem: concrete values of $n$ and $q$
-satisfying $n > q > 5$ and $n < 200$, together with an explicit $(n, q, 5)$-Steiner system.
--/
-structure WarmupWitness where
-  /-- The size of the ground set. -/
-  n : ℕ
-  /-- The block size. -/
-  q : ℕ
-  h_nq : n > q
-  h_q : q > 5
-  h_n : n < 200
-  /-- The explicit Steiner system with $r = 5$. -/
-  system : SteinerSystem n q 5
-
-/--
-**Warm-up.** Construct an $(n, q, 5)$-Steiner system with $n > q > 5$ and $n < 200$.
-
-Such examples are known; for instance, the Steiner systems $S(5, 6, 12)$ and $S(5, 8, 24)$
-are classical examples with $r = 5$.
-
-*Reference:* [Large Steiner Systems](https://epoch.ai/frontiermath/open-problems/large-steiner-systems)
--/
-@[category research solved, AMS 5]
-def large_steiner_systems_warmup : WarmupWitness := by
-  sorry
-
-/--
 Sanity check: the Fano plane is a $(7, 3, 2)$-Steiner system.
 
 The Fano plane consists of $7$ blocks of size $3$ over $7$ points,
