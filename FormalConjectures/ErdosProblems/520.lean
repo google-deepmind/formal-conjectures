@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 open MeasureTheory ProbabilityTheory Nat Real Filter
 
-section Erdos520
+namespace Erdos520
 
 variable {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
 

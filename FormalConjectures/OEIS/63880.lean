@@ -15,8 +15,6 @@ limitations under the License.
 -/
 import FormalConjectures.Util.ProblemImports
 
-open scoped ArithmeticFunction
-
 /-!
 # Conjectures associated with A063880
 
@@ -29,8 +27,10 @@ The conjectures state that all members satisfy $n \equiv 108 \pmod{216}$, and th
 primitive terms (those whose proper divisors aren't in the sequence) are powerful numbers,
 with $108$ being the only primitive term.
 
-*References:* [oeis.org/A063880](https://oeis.org/A063880)
+*References:* [A063880](https://oeis.org/A063880)
 -/
+
+open scoped ArithmeticFunction.sigma
 
 namespace OeisA63880
 

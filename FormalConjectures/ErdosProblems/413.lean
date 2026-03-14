@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/413](https://www.erdosproblems.com/413)
-- [OEIS A5236](https://oeis.org/A5236)
+- [A5236](https://oeis.org/A5236)
 
 Erdős called a natural number `n` a *barrier* for `ω`, the number of distinct prime divisors,
 if `m + ω(m) ≤ n` for all `m < n`. He believed there should be infinitely many such barriers, and
@@ -29,7 +29,8 @@ even posed a relaxed variant asking whether there is some `ε > 0` for which inf
 satisfy `m + ε · ω(m) ≤ n` for every `m < n`.
 -/
 
-open scoped ArithmeticFunction
+open ArithmeticFunction
+open scoped omega Omega
 
 namespace Erdos413
 
@@ -40,7 +41,7 @@ def IsBarrier (f : ℕ → ℝ) (n : ℕ) : Prop :=
 
 /-- Are there infinitely many barriers for `ω`? -/
 @[category research open, AMS 11]
-theorem erdos_413 :
+theorem erdos_413.parts.i :
     answer(sorry) ↔ { n | IsBarrier (fun m => ω m) n }.Infinite := by
   sorry
 
@@ -50,25 +51,25 @@ def expProd (n : ℕ) : ℕ :=
 
 /-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density. -/
 @[category research solved, AMS 11]
-theorem erdos_413_hasPosDensity_barrier_expProd :
+theorem erdos_413.variants.hasPosDensity_barrier_expProd :
     { n | IsBarrier (fun m => expProd m) n }.HasPosDensity := by
   sorry
 
 /-- Erdős believed there should be infinitely many barriers for `Ω`, the total prime multiplicity. -/
 @[category research open, AMS 11]
-theorem erdos_413_bigOmega :
+theorem erdos_413.variants.bigOmega :
     answer(sorry) ↔ { n | IsBarrier (fun m => Ω m) n }.Infinite := by
   sorry
 
 /-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`. -/
 @[category research solved, AMS 11]
-theorem erdos_413_bigOmega_largest_barrier_lt_100k :
+theorem erdos_413.variants.bigOmega_largest_barrier_lt_100k :
     IsGreatest {n : ℕ | n < 10 ^ 5 ∧ IsBarrier (fun m => Ω m) n} 99840 := by
   sorry
 
 /-- Does there exist some `ε > 0` such that there are infinitely many `ε`-barriers for `ω`? -/
 @[category research open, AMS 11]
-theorem erdos_413_epsilon :
+theorem erdos_413.parts.ii :
     answer(sorry) ↔
         (∃ ε > (0 : ℝ), { n | IsBarrier (fun n => ε * ω n) n }.Infinite) := by
   sorry

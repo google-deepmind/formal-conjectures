@@ -49,7 +49,7 @@ theorem erdos_33 : ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTo
 Erdos observed that this value is finite and > 1.
 -/
 @[category research solved, AMS 11]
-theorem erdos_33.variants.one_mem_lowerBounds : ∃ A, AdditiveBasisCondition A →
+theorem erdos_33.variants.one_mem_lowerBounds : ∃ A, AdditiveBasisCondition A ∧
     1 < Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) := by
   sorry
 

@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/259](https://www.erdosproblems.com/259)
 -/
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.Moebius
 
 namespace Erdos259
 

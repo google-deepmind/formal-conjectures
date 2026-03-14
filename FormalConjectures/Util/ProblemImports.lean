@@ -14,11 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
--- A standard set of imports for open problems.
 import Mathlib
 import FormalConjecturesForMathlib
 import FormalConjectures.Util.Answer
-import FormalConjectures.Util.Attributes
 import FormalConjectures.Util.Linters.AMSLinter
+import FormalConjectures.Util.Linters.AnswerLinter
 import FormalConjectures.Util.Linters.CategoryLinter
 import FormalConjectures.Util.Linters.CopyrightLinter
+import FormalConjectures.Util.Linters.ModuleDocstringLinter
+
+
+/-!
+# Standard imports for open problems
+
+This file provides a standard set of imports used by problem files throughout the project.
+-/
+
