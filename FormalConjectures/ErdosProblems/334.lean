@@ -29,6 +29,8 @@ number theory, Vol. 1 (Durham, 1979), Academic Press, London-New York (1981), 1-
 
 [Ba89] Balog, A., _On the distribution of integers having no large prime factor_. Astérisque
 (1989).
+
+OEIS: [A062241](https://oeis.org/A062241), [A045535](https://oeis.org/A045535)
 -/
 
 namespace Erdos334
