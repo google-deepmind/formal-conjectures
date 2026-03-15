@@ -61,4 +61,25 @@ theorem erdos_220 :
       (sumSquaredGaps (sortedTotatives n) : ℝ) ≤ C * (n : ℝ) ^ 2 / (Nat.totient n : ℝ) := by
   sorry
 
+/-- The sum of consecutive gaps raised to a real power `γ` in a sorted list of natural numbers. -/
+noncomputable def sumGapPowers (γ : ℝ) : List ℕ → ℝ
+  | [] => 0
+  | [_] => 0
+  | a :: b :: rest => ((b - a : ℕ) : ℝ) ^ γ + sumGapPowers γ (b :: rest)
+
+/--
+Montgomery–Vaughan generalization of Erdős Problem 220 [MoVa86]:
+
+For any `γ ≥ 1`, the sum of `γ`-th powers of consecutive gaps between totatives of `n`
+is `O(n^γ / φ(n)^{γ-1})`. The case `γ = 2` is the original Erdős Problem 220.
+-/
+@[category research solved, AMS 11]
+theorem erdos_220_general :
+    ∀ γ : ℝ, 1 ≤ γ →
+    ∃ C : ℝ, 0 < C ∧
+    ∀ n : ℕ, 1 ≤ n →
+      sumGapPowers γ (sortedTotatives n) ≤
+        C * (n : ℝ) ^ γ / (Nat.totient n : ℝ) ^ (γ - 1) := by
+  sorry
+
 end Erdos220
