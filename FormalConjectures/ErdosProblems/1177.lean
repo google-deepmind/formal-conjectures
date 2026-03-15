@@ -26,7 +26,8 @@ $3$-uniform hypergraphs with chromatic number $\kappa$ not containing $G$.
 
 A problem of Erdős, Galvin, and Hajnal.
 
-[Va99] is the source reference for all parts (Section 7.94).
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999), §7.94.
 -/
 
 open Cardinal
@@ -36,16 +37,16 @@ namespace Erdos1177
 /-- A proper coloring of a $3$-uniform hypergraph with vertex type $V$ using colors from $\alpha$
     is a function $c : V \to \alpha$ such that no hyperedge is monochromatic: for every edge $e$
     there exist two vertices in $e$ assigned different colors. -/
-def IsProperColoring3 {V α : Type*} (edges : Set (Finset V)) (c : V → α) : Prop :=
+def IsProperHypergraphColoring {V α : Type*} (edges : Set (Finset V)) (c : V → α) : Prop :=
   ∀ e ∈ edges, ∃ v ∈ e, ∃ w ∈ e, c v ≠ c w
 
 /-- A $3$-uniform hypergraph (on vertex type $V$, with edge set `edges`) has cardinal chromatic
     number $\kappa$ if $\kappa$ is the least cardinality of a color set admitting a proper coloring:
     - there exists a proper coloring with a color set of cardinality $\le \kappa$, and
     - every proper coloring requires a color set of cardinality $\ge \kappa$. -/
-def HasChromaticNumber3 {V : Type} (edges : Set (Finset V)) (κ : Cardinal.{0}) : Prop :=
-  (∃ (α : Type), #α ≤ κ ∧ ∃ c : V → α, IsProperColoring3 edges c) ∧
-  ∀ (α : Type), (∃ c : V → α, IsProperColoring3 edges c) → κ ≤ #α
+def HasHypergraphChromaticNumber {V : Type} (edges : Set (Finset V)) (κ : Cardinal.{0}) : Prop :=
+  (∃ (α : Type), #α ≤ κ ∧ ∃ c : V → α, IsProperHypergraphColoring edges c) ∧
+  ∀ (α : Type), (∃ c : V → α, IsProperHypergraphColoring edges c) → κ ≤ #α
 
 /-- $H$ is $G$-free if there is no injective map $f : V_G \to V_H$ sending every edge of $G$ to an
     edge of $H$ (i.e., $G$ does not embed as a sub-hypergraph of $H$). Each edge of $G$ maps to
@@ -70,11 +71,11 @@ theorem erdos_1177
     (edgesG_finite : edgesG.Finite) (hG : ∀ e ∈ edgesG, e.card = 3)
     (h : ∃ (VH : Type) (edgesH : Set (Finset VH)),
       (∀ e ∈ edgesH, e.card = 3) ∧
-      HasChromaticNumber3 edgesH (aleph 1) ∧
+      HasHypergraphChromaticNumber edgesH (aleph 1) ∧
       IsFreeOf edgesG edgesH) :
     ∃ (VH : Type) (edgesH : Set (Finset VH)),
       (∀ e ∈ edgesH, e.card = 3) ∧
-      HasChromaticNumber3 edgesH (aleph 1) ∧
+      HasHypergraphChromaticNumber edgesH (aleph 1) ∧
       IsFreeOf edgesG edgesH ∧
       #VH ≤ (2 : Cardinal.{0}) ^ (2 : Cardinal.{0}) ^ aleph 0 := by
   sorry
@@ -97,15 +98,15 @@ theorem erdos_1177.variants.intersection
     (edgesH_finite : edgesH.Finite) (hH : ∀ e ∈ edgesH, e.card = 3)
     (hFG : ∃ (W : Type) (edgesW : Set (Finset W)),
       (∀ e ∈ edgesW, e.card = 3) ∧
-      HasChromaticNumber3 edgesW (aleph 1) ∧
+      HasHypergraphChromaticNumber edgesW (aleph 1) ∧
       IsFreeOf edgesG edgesW)
     (hFH : ∃ (W : Type) (edgesW : Set (Finset W)),
       (∀ e ∈ edgesW, e.card = 3) ∧
-      HasChromaticNumber3 edgesW (aleph 1) ∧
+      HasHypergraphChromaticNumber edgesW (aleph 1) ∧
       IsFreeOf edgesH edgesW) :
     ∃ (W : Type) (edgesW : Set (Finset W)),
       (∀ e ∈ edgesW, e.card = 3) ∧
-      HasChromaticNumber3 edgesW (aleph 1) ∧
+      HasHypergraphChromaticNumber edgesW (aleph 1) ∧
       IsFreeOf edgesG edgesW ∧ IsFreeOf edgesH edgesW := by
   sorry
 
@@ -126,11 +127,11 @@ theorem erdos_1177.variants.cardinal_transfer
     (κ μ : Cardinal.{0}) (hκ : aleph 1 ≤ κ) (hμ : aleph 1 ≤ μ)
     (h : ∃ (W : Type) (edgesW : Set (Finset W)),
       (∀ e ∈ edgesW, e.card = 3) ∧
-      HasChromaticNumber3 edgesW κ ∧
+      HasHypergraphChromaticNumber edgesW κ ∧
       IsFreeOf edgesG edgesW) :
     ∃ (W : Type) (edgesW : Set (Finset W)),
       (∀ e ∈ edgesW, e.card = 3) ∧
-      HasChromaticNumber3 edgesW μ ∧
+      HasHypergraphChromaticNumber edgesW μ ∧
       IsFreeOf edgesG edgesW := by
   sorry
 
