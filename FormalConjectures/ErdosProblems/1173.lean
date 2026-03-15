@@ -23,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 [Ko25b] Koepke, P., Problem 35.
 
-[Va99] Vaughan, J.E., 7.88.
+[Va99] Vaughan, J.E., _Small uncountable cardinals and topology_. Open Problems in
+Topology (1999), §7.88.
 
 A problem of Erdős and Hajnal.
 -/
