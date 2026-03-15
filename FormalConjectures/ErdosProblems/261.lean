@@ -30,6 +30,9 @@ number theory*.
 
 [BoLo90] Borwein, D. and Loring, T., *Some questions of Erdős and Graham on numbers
 of the form $\sum g_n / 2^{g_n}$*.
+
+[TUZ20] Tengely, Sz., Ulas, M., and Zygadło, J., *On a Diophantine equation of Erdős
+and Graham*. J. Number Theory (2020), 445–459.
 -/
 
 open scoped BigOperators
@@ -39,7 +42,7 @@ namespace Erdos261
 /-- A positive integer $n$ has the Erdős-261 property if $n/2^n$ can be written as
 a finite sum $\sum_{a \in S} a/2^a$ for some set $S$ of at least 2 distinct positive
 integers. -/
-noncomputable def HasErdos261Property (n : ℕ) : Prop :=
+def HasErdos261Property (n : ℕ) : Prop :=
   ∃ S : Finset ℕ, 2 ≤ S.card ∧ (∀ a ∈ S, 0 < a) ∧
     (n : ℝ) / (2 : ℝ) ^ n = ∑ a ∈ S, (a : ℝ) / (2 : ℝ) ^ a
 
