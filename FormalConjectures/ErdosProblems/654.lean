@@ -29,35 +29,37 @@ The trivial bound is $f(n) \geq (n-1)/3$. The stronger conjecture $f(n) > (1-o(1
 was disproved by Aletheia [Fe26].
 
 A problem of Erdős and Pach [Er87b][ErPa90][Er97e].
+
+[Er87b] Erdős, P., _Some combinatorial and metric problems in geometry_. Intuitive geometry
+(Siófok, 1985) (1987), 167-177.
+
+[ErPa90] Erdős, P. and Pach, J., _Variations on the theme of repeated distances_,
+Combinatorica (1990), 261-269.
+
+[Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Proc. Int. Conf. on Discrete Math. (1997), 527-537.
+
+[Fe26] Feng, T. et al., _Semi-Autonomous Mathematics Discovery with Gemini: A Case Study on
+the Erdős Problems_. arXiv:2601.22401 (2026).
 -/
 
-open Finset Classical
+open Finset Classical EuclideanGeometry
+
+open scoped EuclideanGeometry
 
 namespace Erdos654
 
-/-- Squared Euclidean distance between two points in $\mathbb{R}^2$. -/
-noncomputable def sqEuclideanDist (p q : ℝ × ℝ) : ℝ :=
-  (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2
-
-/-- Four points in $\mathbb{R}^2$ are concyclic if they all lie on a common circle
-    (with positive radius). Expressed using squared distances. -/
-def FourConcyclic (p₁ p₂ p₃ p₄ : ℝ × ℝ) : Prop :=
-  ∃ (c : ℝ × ℝ) (r_sq : ℝ), r_sq > 0 ∧
-    sqEuclideanDist p₁ c = r_sq ∧ sqEuclideanDist p₂ c = r_sq ∧
-    sqEuclideanDist p₃ c = r_sq ∧ sqEuclideanDist p₄ c = r_sq
-
 /-- A configuration of $n$ points in $\mathbb{R}^2$ has no four concyclic points
     if no four distinct points lie on a common circle. -/
-def NoFourConcyclic (n : ℕ) (pts : Fin n → ℝ × ℝ) : Prop :=
+def NoFourConcyclic (n : ℕ) (pts : Fin n → ℝ²) : Prop :=
   ∀ (i₁ i₂ i₃ i₄ : Fin n),
     i₁ ≠ i₂ → i₁ ≠ i₃ → i₁ ≠ i₄ → i₂ ≠ i₃ → i₂ ≠ i₄ → i₃ ≠ i₄ →
-    ¬FourConcyclic (pts i₁) (pts i₂) (pts i₃) (pts i₄)
+    ¬Concyclic ({pts i₁, pts i₂, pts i₃, pts i₄} : Set ℝ²)
 
 /-- The number of distinct distances from point $i$ to all other points in the
-    configuration. Uses squared distances since $d(p,q) = d(p',q')$ iff
-    $d(p,q)^2 = d(p',q')^2$ for nonnegative distances. -/
-noncomputable def numDistinctDistances (n : ℕ) (pts : Fin n → ℝ × ℝ) (i : Fin n) : ℕ :=
-  ((univ.filter (· ≠ i)).image (fun j => sqEuclideanDist (pts i) (pts j))).card
+    configuration. -/
+noncomputable def numDistinctDistances (n : ℕ) (pts : Fin n → ℝ²) (i : Fin n) : ℕ :=
+  ((univ.filter (· ≠ i)).image (fun j => dist (pts i) (pts j))).card
 
 /--
 Erdős Problem 654 [Er87b][ErPa90][Er97e]:
@@ -69,7 +71,7 @@ point with at least $(1/3 + c) \cdot n$ distinct distances to the other points.
 @[category research open, AMS 5 52]
 theorem erdos_654 : answer(sorry) ↔
     ∃ c : ℝ, c > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-      ∀ pts : Fin n → ℝ × ℝ, Function.Injective pts →
+      ∀ pts : Fin n → ℝ², Function.Injective pts →
         NoFourConcyclic n pts →
         ∃ i : Fin n, (numDistinctDistances n pts i : ℝ) > (1 / 3 + c) * ↑n := by
   sorry
