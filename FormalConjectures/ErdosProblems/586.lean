@@ -23,7 +23,22 @@ import FormalConjectures.Util.ProblemImports
 
 Asked by Schinzel, motivated by a question of Erdős and Selfridge.
 The answer is no, as proved by Balister, Bollobás, Morris, Sahasrabudhe,
-and Tiba [BBMST22].
+and Tiba [BBMST22]. Selfridge showed that a positive answer to this problem
+would imply a positive answer to Problem 7 (odd covering systems).
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathématique (1980).
+
+[Er96b] Erdős, P., _Some problems I presented or planned to present in my short talk_.
+Analytic number theory, Vol. 1 (Allerton Park, IL, 1995) (1996), 333–335.
+
+[Er97] Erdős, P., _Some of my new and almost new problems and results in combinatorial
+number theory_ (1997).
+
+[Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
+**164** (1997), 81–85.
+
+[Er97e] Erdős, P., _Some problems and results on combinatorial number theory_ (1997).
 
 [BBMST22] Balister, P., Bollobás, B., Morris, R., Sahasrabudhe, J., and Tiba, M.,
 _On the Erdős covering problem: the density of the uncovered set_, Inventiones
