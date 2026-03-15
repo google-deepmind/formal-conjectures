@@ -32,12 +32,15 @@ due to Ford, Green, Konyagin, Maynard, and Tao [FGKMT18].
 
 This is a more general form of the function considered in problem 687.
 
+OEIS: [A048669](https://oeis.org/A048669)
+
 [Er65b] Erdős, P., *Extremal problems in number theory*.
 
-[Iw78] Iwaniec, H., *On the problem of Jacobsthal*.
+[Iw78] Iwaniec, H., *On the problem of Jacobsthal*. Demonstratio Mathematica
+**11** (1978), 225-231.
 
-[FGKMT18] Ford, B., Green, B., Konyagin, S., Maynard, J., and Tao, T.,
-*Long gaps between primes*.
+[FGKMT18] Ford, K., Green, B., Konyagin, S., Maynard, J., and Tao, T.,
+*Long gaps between primes*. J. Amer. Math. Soc. **31** (2018), 65-105.
 -/
 
 namespace Erdos970
