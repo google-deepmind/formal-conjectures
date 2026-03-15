@@ -53,8 +53,8 @@ from each path, such that $S$ separates $A$ from $B$ (every $A$-$B$ walk meets $
 theorem erdos_599 : answer(True) ↔
     ∀ (V : Type*) (G : SimpleGraph V) (A B : Set V),
       Disjoint A B →
-      (∀ u ∈ A, ∀ v ∈ A, ¬G.Adj u v) →
-      (∀ u ∈ B, ∀ v ∈ B, ¬G.Adj u v) →
+      G.IsIndepSet A →
+      G.IsIndepSet B →
       ∃ (ι : Type) (src : ι → V) (dst : ι → V)
         (p : (i : ι) → G.Walk (src i) (dst i))
         (S : Set V),
