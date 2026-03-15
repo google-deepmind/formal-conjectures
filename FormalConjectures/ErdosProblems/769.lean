@@ -27,24 +27,18 @@ $c(n) \gg n^n$?
 
 A problem first investigated by Hadwiger, who proved $c(n) \geq 2^n + 2^{n-1}$.
 
-[Er74b] Burgess, D.A. and Erdős, P., on a problem in combinatorial geometry, 1974.
+[Er74b] Erdős, P., *Remarks on some problems in number theory*. Math. Balkanica (1974), 197-202.
 
-[CoMa18] Connor, S. and Marmorino, M., on cube decompositions, 2018.
+[CoMa18] Connor, P. and Marmorino, P., *Decomposing cubes into smaller cubes*. J. Geom.
+(2018), Paper No. 19, 11.
+
+[Hu98] Hudelson, M., *Dissecting d-cubes into smaller d-cubes*. J. Combin. Theory Ser. A
+(1998), 190-200.
 -/
 
 namespace Erdos769
 
-/-- The unit cube $[0,1]^n$ in $\mathbb{R}^n$. -/
-def unitCube (n : ℕ) : Set (Fin n → ℝ) :=
-  {x | ∀ i, 0 ≤ x i ∧ x i ≤ 1}
-
-/-- An axis-aligned cube in $\mathbb{R}^n$ with given corner and side length. -/
-def axisCube {n : ℕ} (corner : Fin n → ℝ) (s : ℝ) : Set (Fin n → ℝ) :=
-  {x | ∀ i, corner i ≤ x i ∧ x i ≤ corner i + s}
-
-/-- The interior of an axis-aligned cube in $\mathbb{R}^n$. -/
-def axisCubeInterior {n : ℕ} (corner : Fin n → ℝ) (s : ℝ) : Set (Fin n → ℝ) :=
-  {x | ∀ i, corner i < x i ∧ x i < corner i + s}
+open Set
 
 /-- The $n$-dimensional unit cube $[0,1]^n$ can be decomposed into exactly $k$
 homothetic cubes (axis-aligned cubes with positive side lengths) such that
@@ -52,11 +46,13 @@ the cubes cover the unit cube and have pairwise disjoint interiors. -/
 def CanDecomposeUnitCube (n k : ℕ) : Prop :=
   ∃ (corners : Fin k → Fin n → ℝ) (sides : Fin k → ℝ),
     (∀ j, sides j > 0) ∧
-    (∀ j, axisCube (corners j) (sides j) ⊆ unitCube n) ∧
-    (∀ x ∈ unitCube n, ∃ j, x ∈ axisCube (corners j) (sides j)) ∧
+    (∀ j, pi univ (fun i => Icc (corners j i) (corners j i + sides j)) ⊆
+      pi univ (fun _ => Icc 0 1)) ∧
+    (∀ x ∈ pi univ (fun _ => Icc (0 : ℝ) 1), ∃ j,
+      x ∈ pi univ (fun i => Icc (corners j i) (corners j i + sides j))) ∧
     (∀ i j, i ≠ j → ∀ x,
-      ¬(x ∈ axisCubeInterior (corners i) (sides i) ∧
-        x ∈ axisCubeInterior (corners j) (sides j)))
+      ¬(x ∈ pi univ (fun l => Ioo (corners i l) (corners i l + sides i)) ∧
+        x ∈ pi univ (fun l => Ioo (corners j l) (corners j l + sides j))))
 
 /--
 Erdős Problem 769 [Er74b]:
