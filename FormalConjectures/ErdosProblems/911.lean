@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 
 /-!
 # Erdős Problem 911
@@ -31,26 +32,6 @@ $\hat{R}(G) > f(C) \cdot |E(G)|$?
 open SimpleGraph
 
 namespace Erdos911
-
-/-- The size Ramsey number $\hat{R}(G)$: the minimum number of edges in a graph $H$
-    that is Ramsey for $G$.
-
-    A graph $H$ on $N$ vertices is Ramsey for $G$ if every 2-coloring of the edges
-    of $H$ (represented as a symmetric function $c : \operatorname{Fin} N \to
-    \operatorname{Fin} N \to \operatorname{Bool}$) contains a monochromatic copy of
-    $G$, i.e., an injective map $f$ from the vertices of $G$ into
-    $\operatorname{Fin} N$ that preserves adjacency in $H$ and maps all edges to the
-    same color. -/
-noncomputable def sizeRamseyNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {m : ℕ | ∃ (N : ℕ) (H : SimpleGraph (Fin N)),
-    Nat.card H.edgeSet = m ∧
-    ∀ (c : Fin N → Fin N → Bool),
-      (∀ i j, c i j = c j i) →
-      ∃ (b : Bool) (f : V → Fin N),
-        Function.Injective f ∧
-        (∀ u v, G.Adj u v → H.Adj (f u) (f v)) ∧
-        (∀ u v, G.Adj u v → c (f u) (f v) = b)}
 
 /--
 Erdős Problem #911 [Er82e, p.78]:
@@ -69,8 +50,8 @@ theorem erdos_911 :
       -- For all large C, the bound holds
       ∃ C₀ : ℕ, ∀ C : ℕ, C ≥ C₀ →
         ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
-          Nat.card G.edgeSet ≥ C * n →
-          sizeRamseyNumber G > f C * Nat.card G.edgeSet := by
+          G.edgeSet.ncard ≥ C * n →
+          sizeRamsey G G > f C * G.edgeSet.ncard := by
   sorry
 
 end Erdos911
