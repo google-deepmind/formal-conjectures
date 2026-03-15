@@ -27,13 +27,16 @@ $\mathbb{R} \setminus A$ contain an infinite arithmetic progression?
 The answer is no, as shown by Baumgartner [Ba75] (whose construction uses
 the axiom of choice to provide a basis for $\mathbb{R}$ over $\mathbb{Q}$).
 
-[Er75b] Erdős, P.
+[Er75b] Erdős, P., _Problems and results on combinatorial number theory II_.
 
-[ErGr79] Erdős, P. and Graham, R.
+[ErGr79] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory: some problems on additive number theory_ (1979).
 
-[ErGr80] Erdős, P. and Graham, R.
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
 
-[Ba75] Baumgartner, J.E.
+[Ba75] Baumgartner, J.E., _Partitioning vector spaces_. J. Combinatorial Theory Ser. A (1975),
+231-233.
 -/
 
 namespace Erdos199
