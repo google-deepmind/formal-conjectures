@@ -86,4 +86,18 @@ theorem erdos_1042.variants.upper_bound (F : Set ℂ) (hF : IsClosed F)
       (Nat.card (ConnectedComponents ↥(sublevelSet z)) : ℝ) ≤ (1 - c) * n := by
   sorry
 
+/--
+Erdős Problem 1042, connected unique component [GhRa24]:
+
+If $F \subset \mathbb{C}$ is closed, connected, and has transfinite diameter at most $1/4$, then
+for all $n$ and all $z_1,\ldots,z_n \in F$, the sublevel set $\{z : |\prod(z - z_i)| < 1\}$ has
+exactly one connected component.
+-/
+@[category research solved, AMS 30 31]
+theorem erdos_1042.variants.connected_unique_component (F : Set ℂ) (hF : IsClosed F)
+    (hconn : IsConnected F) (hd : transfiniteDiameter F ≤ 1 / 4) :
+    ∀ (n : ℕ) (z : Fin n → ℂ), (∀ i, z i ∈ F) →
+      Nat.card (ConnectedComponents ↥(sublevelSet z)) = 1 := by
+  sorry
+
 end Erdos1042
