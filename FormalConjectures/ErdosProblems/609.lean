@@ -33,9 +33,16 @@ $f(n) \leq O(n^{3/2} \cdot 2^{n/2})$.
 
 [ErGr75] Erdős, P. and Graham, R.
 
-[DaJo17] Day, A. N. and Johnson, J. R.
+[Ch97] Chung, F. R. K., _Open problems of Paul Erdős in graph theory_. J. Graph Theory (1997), 3–36.
 
-[JaYi25] Janzer, O. and Yip, C. H.
+[DaJo17] Day, A. N. and Johnson, J. R., _Multicolour Ramsey numbers of odd cycles_.
+J. Combin. Theory Ser. B (2017), 56–63.
+
+[GiHu24] Girão, A. and Hunter, Z., _Monochromatic odd cycles in edge-coloured complete
+graphs_. arXiv:2412.07708 (2024).
+
+[JaYi25] Janzer, O. and Yip, C. H., _Short monochromatic odd cycles_.
+arXiv:2506.14910 (2025).
 -/
 
 namespace Erdos609
@@ -94,6 +101,23 @@ theorem erdos_609.variants.upper_bound :
         (∀ u v, χ u v = χ v u) →
         ∃ k, Odd k ∧ HasMonoCycle609 χ k ∧
           (k : ℝ) ≤ C * (n : ℝ) ^ ((3 : ℝ) / 2) * (2 : ℝ) ^ ((n : ℝ) / 2) := by
+  sorry
+
+/--
+**Erdős Problem 609** (Girão–Hunter upper bound) [GiHu24]:
+
+There exists $n_0$ such that for all $n \geq n_0$, every symmetric $n$-coloring
+of $K_{2^n+1}$ contains a monochromatic odd cycle of length at most $2^n / n^{1-o(1)}$.
+More precisely, for every $\varepsilon > 0$ and all sufficiently large $n$, there is a
+monochromatic odd cycle of length at most $2^n / n^{1-\varepsilon}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_609.variants.upper_bound_GiHu :
+    ∀ ε : ℝ, ε > 0 → ∃ n₀ : ℕ, ∀ n : ℕ, n ≥ n₀ →
+      ∀ χ : Fin (2^n + 1) → Fin (2^n + 1) → Fin n,
+        (∀ u v, χ u v = χ v u) →
+        ∃ k, Odd k ∧ HasMonoCycle609 χ k ∧
+          (k : ℝ) ≤ (2 : ℝ) ^ (n : ℝ) / (n : ℝ) ^ (1 - ε) := by
   sorry
 
 end Erdos609
