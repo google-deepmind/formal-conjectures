@@ -35,6 +35,9 @@ Bohman, Frieze, and Lubetzky [BFL15] proved that $f(n) = n^{3/2 + o(1)}$ a.s.
 
 [Va99] Vu, V. H. (1999), 3.61.
 
+[Gr97] Grable, D. A., _On random greedy triangle packing_, Electronic Journal of
+Combinatorics 4 (1997), Research Paper 11.
+
 [BFL15] Bohman, T., Frieze, A., and Lubetzky, E., _Random triangle removal_,
 Advances in Mathematics 280 (2015), 379--438.
 -/
@@ -44,15 +47,6 @@ open SimpleGraph Filter
 open scoped Topology
 
 namespace Erdos1155
-
-/-- A simple graph contains a triangle if there exist three distinct mutually
-    adjacent vertices. -/
-def ContainsTriangle {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∃ a b c : V, a ≠ b ∧ a ≠ c ∧ b ≠ c ∧ G.Adj a b ∧ G.Adj b c ∧ G.Adj a c
-
-/-- A simple graph is triangle-free if it contains no triangle. -/
-def TriangleFree {V : Type*} (G : SimpleGraph V) : Prop :=
-  ¬ContainsTriangle G
 
 /-- The triangle removal process on $K_n$: starting from the complete graph on $n$
     vertices, repeatedly choose a uniformly random triangle and remove all three
@@ -91,6 +85,23 @@ theorem erdos_1155.variants.almost_sure : answer(sorry) ↔
     ∃ C : ℝ, 0 < C ∧
       Tendsto (fun n : ℕ =>
         triangleRemovalEdgeProb n (fun k => (k : ℝ) ≤ C * (n : ℝ) ^ ((3 : ℝ) / 2)))
+        atTop (nhds 1) := by
+  sorry
+
+/--
+Erdős Problem #1155, Variant (Bohman–Frieze–Lubetzky [BFL15]):
+
+$f(n) = n^{3/2 + o(1)}$ almost surely, i.e., for every $\varepsilon > 0$, the probability that
+$n^{3/2 - \varepsilon} \leq f(n) \leq n^{3/2 + \varepsilon}$ tends to $1$ as $n \to \infty$.
+This strengthens Part 2 by providing a matching almost-sure lower bound.
+-/
+@[category research solved, AMS 5 60]
+theorem erdos_1155.variants.bfl15 : answer(sorry) ↔
+    ∀ ε : ℝ, 0 < ε →
+      Tendsto (fun n : ℕ =>
+        triangleRemovalEdgeProb n (fun k =>
+          (n : ℝ) ^ ((3 : ℝ) / 2 - ε) ≤ (k : ℝ) ∧
+          (k : ℝ) ≤ (n : ℝ) ^ ((3 : ℝ) / 2 + ε)))
         atTop (nhds 1) := by
   sorry
 
