@@ -33,6 +33,18 @@ on the ABC conjecture.
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in
 combinatorial number theory*. Monographies de L'Enseignement Mathematique (1980).
+
+[BeOs92] Berend, D. and Osgood, C. F., *On the equation P(x)=n! and a question of
+Erdős*. Journal of Number Theory (1992), 189–193.
+
+[Lu02] Luca, F., *The Diophantine equation P(x)=n! and a result of M. Overholt*.
+Glasnik Matematički, Series III (2002), 269–273.
+
+[BPZ23] Bui, H. M., Pratt, K., and Zaharescu, A., *Power savings for counting
+solutions to polynomial-factorial equations*. Advances in Mathematics (2023),
+Paper No. 109021, 32 pages.
+
+OEIS: [A388302](https://oeis.org/A388302)
 -/
 
 open Finset BigOperators Filter
@@ -66,6 +78,18 @@ via a result of Luca.
 @[category research open, AMS 11]
 theorem erdos_393 :
     Tendsto (fun n : ℕ => erdos393_f n) atTop atTop := by
+  sorry
+
+/--
+Erdős Problem 393 — Variant [ErGr80]:
+
+Is $f(n) = 1$ infinitely often? That is, is $n!$ the product of consecutive integers
+for infinitely many $n$? Erdős and Graham write that they do not even know whether
+this holds.
+-/
+@[category research open, AMS 11]
+theorem erdos_393.variants.f_eq_one_infinitely_often :
+    answer(sorry) ↔ ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ erdos393_f n = 1 := by
   sorry
 
 end Erdos393
