@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 408
@@ -25,14 +26,27 @@ Let $f(n)$ be the number of iterations of Euler's totient function needed to rea
 Is it true that $f(n)/\log(n)$ has a distribution function, and that $f(n)/\log(n)$
 concentrates around a constant $\alpha$ (expected to be $1/\log 2$)?
 
+Pillai [Pi29] established the bounds $\log_3 n < f(n) < \log_2 n$ for all large $n$.
+Shapiro [Sh50] proved that $f(n)$ is essentially multiplicative.
+
+See also OEIS [A049108](https://oeis.org/A049108).
+
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
 number theory*. Monographies de L'Enseignement Mathematique (1980).
 
 [EGPS90] Erdős, P., Granville, A., Pomerance, C., and Spiro, C., *On the normal behavior
 of the iterates of some arithmetic functions*. Analytic Number Theory (1990), 165–204.
+
+[Pi29] Pillai, S. S., *On some functions connected with φ(n)*. Bulletin of the American
+Mathematical Society **35** (1929), 832–836.
+
+[Sh50] Shapiro, H. N., *On the iterates of a certain class of arithmetic functions*.
+Communications on Pure and Applied Mathematics **3** (1950), 259–272.
+
+[Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 -/
 
-open Filter Finset
+open Filter Set
 
 namespace Erdos408
 
@@ -67,7 +81,7 @@ of $\varphi$, so that $\varphi_1(n) = \varphi(n)$ and
 $\varphi_k(n) = \varphi(\varphi_{k-1}(n))$. Let $f(n) = \min\{k : \varphi_k(n) = 1\}$.
 
 $f(n)/\log(n)$ has a distribution function, i.e., for every real $c$, the natural density
-of $\{n \le N : f(n)/\log(n) \le c\}$ exists.
+of $\{n : f(n)/\log(n) \le c\}$ exists.
 
 Erdős, Granville, Pomerance, and Spiro [EGPS90] proved this conditional on a form of the
 Elliott–Halberstam conjecture.
@@ -75,11 +89,8 @@ Elliott–Halberstam conjecture.
 @[category research open, AMS 11]
 theorem erdos_408 :
     ∀ c : ℝ,
-      ∃ d : ℝ, Tendsto
-        (fun N : ℕ =>
-          (((range N).filter (fun n =>
-            (totientIterationLength n : ℝ) / Real.log n ≤ c)).card : ℝ) / (N : ℝ))
-        atTop (nhds d) := by
+      ∃ d : ℝ,
+        {n : ℕ | (totientIterationLength n : ℝ) / Real.log n ≤ c}.HasDensity d := by
   sorry
 
 /--
@@ -96,11 +107,25 @@ proved this conditional on a form of the Elliott–Halberstam conjecture.
 theorem erdos_408.variants.concentration :
     ∃ α : ℝ, α > 0 ∧
       ∀ ε : ℝ, ε > 0 →
-        Tendsto
-          (fun N : ℕ =>
-            (((range N).filter (fun n =>
-              ε ≤ |((totientIterationLength n : ℝ) / Real.log n) - α|)).card : ℝ) / (N : ℝ))
-          atTop (nhds 0) := by
+        {n : ℕ | ε ≤ |((totientIterationLength n : ℝ) / Real.log n) - α|}.HasDensity 0 := by
+  sorry
+
+/--
+Erdős Problem 408 — Part (c).
+
+For $k \to \infty$ however slowly with $n$, for almost all $n$ the largest prime factor
+of $\varphi_k(n)$ is at most $n^{o(1)}$. In particular, when $k = \lfloor \log \log n \rfloor$,
+the largest prime factor of $\varphi_k(n)$ should be subpolynomial in $n$.
+
+This formalizes the weaker statement: for all $\varepsilon > 0$, the natural density of
+$\{n : P(\varphi_k(n)) > n^\varepsilon\}$ is zero, where $k = \lfloor \log \log n \rfloor$
+and $P$ denotes the largest prime factor.
+-/
+@[category research open, AMS 11]
+theorem erdos_408.variants.largest_prime_factor :
+    ∀ ε : ℝ, ε > 0 →
+      {n : ℕ | (n : ℝ) ^ ε <
+        (Nat.maxPrimeFac (iteratedTotient (⌊Real.log (Real.log n)⌋₊) n) : ℝ)}.HasDensity 0 := by
   sorry
 
 end Erdos408
