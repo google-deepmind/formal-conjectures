@@ -29,6 +29,8 @@ Asked by Erdős in the 1940s, who thought the answer to both questions is yes.
 The answer to both is in fact no, as shown by Rudin [Ru58] (conditional on the
 continuum hypothesis).
 
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_, 1982.
+
 [Ru58] Rudin, M. E., _A connected subset of the plane_, Fund. Math. 46 (1958), 15-24.
 -/
 
