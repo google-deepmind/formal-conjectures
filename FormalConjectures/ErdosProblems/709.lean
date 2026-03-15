@@ -33,7 +33,11 @@ for some constant $c > 0$.
 
 See also [708].
 
-[ErSu59] Erdős, P. and Surányi, J. (1959).
+[ErSu59] Erdős, P. and Surányi, J., _Bemerkungen zu einer Aufgabe eines mathematischen
+Wettbewerbs_, Mat. Lapok (1959), 39–48.
+
+[Er92c] Erdős, P., _Some of my forgotten problems in number theory_, Hardy-Ramanujan J.
+(1992), 34–50.
 -/
 
 open Nat Finset
@@ -53,7 +57,7 @@ noncomputable def f (n : ℕ) : ℕ :=
     ∃ g : ℕ → ℕ,
       (∀ a ∈ A, g a ∈ Finset.Icc k (k + m * A.max' hA - 1)) ∧
       (∀ a ∈ A, a ∣ g a) ∧
-      (∀ a₁ ∈ A, ∀ a₂ ∈ A, a₁ ≠ a₂ → g a₁ ≠ g a₂)}
+      Set.InjOn g ↑A}
 
 /--
 Erdős Problem 709, known lower bound [ErSu59]:
