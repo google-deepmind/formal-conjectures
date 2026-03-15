@@ -25,13 +25,18 @@ Erdős asked (after Coxeter): what is the maximum size of a subset of $\mathbb{R
 with only two distinct pairwise distances? Bannai, Bannai, and Stanton proved an
 upper bound of $\binom{n+2}{2}$.
 
-[Er61] Erdős, P., *Számelmélet és gráfelmélet* (1961).
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. **6**
+(1961), 221–254. (p. 244)
 
-[BBS83] Bannai, E., Bannai, E., and Stanton, D., *An upper bound for the cardinality of an
-$s$-distance subset in real Euclidean space II*, Combinatorica (1983).
+[BBS83] Bannai, E., Bannai, E., and Stanton, D., _An upper bound for the cardinality of an
+$s$-distance subset in real Euclidean space. II_. Combinatorica (1983), 147–152.
 
-[PePo21] Petrov, F. and Pohoata, C., *The answer to a question of Naimark and Sternfeld on
-two-distance sets*, European J. Combin. (2021).
+[PePo21] Petrov, F. and Pohoata, C., _A remark on sets with few distances in $\mathbb{R}^d$_.
+Proc. Amer. Math. Soc. (2021), 569–571.
+
+See also Problem 1089 for the general $s$-distance version of this question.
+
+OEIS: [A027627](https://oeis.org/A027627)
 -/
 
 namespace Erdos502
@@ -39,7 +44,8 @@ namespace Erdos502
 /--
 A finite set of points in $\mathbb{R}^n$ is a two-distance set if there are exactly
 two distinct positive real numbers that occur as distances between pairs
-of distinct points.
+of distinct points. (Positivity is automatic since `dist x y > 0` for `x ≠ y`
+in Euclidean space.)
 -/
 noncomputable def IsTwoDistanceSet {n : ℕ} (A : Finset (EuclideanSpace ℝ (Fin n))) : Prop :=
   Set.ncard {d : ℝ | ∃ x ∈ A, ∃ y ∈ A, x ≠ y ∧ d = dist x y} = 2
@@ -56,6 +62,20 @@ theorem erdos_502
     (n : ℕ) (A : Finset (EuclideanSpace ℝ (Fin n)))
     (hA : IsTwoDistanceSet A) :
     A.card ≤ Nat.choose (n + 2) 2 := by
+  sorry
+
+/--
+Erdős Problem 502 — Lower Bound (Alweiss construction):
+
+There exists a two-distance set in $\mathbb{R}^n$ of size $\binom{n+1}{2}$.
+This is the best known lower bound, complementing the Bannai–Bannai–Stanton
+upper bound of $\binom{n+2}{2}$. See also Problem 503.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_502_lower
+    (n : ℕ) :
+    ∃ A : Finset (EuclideanSpace ℝ (Fin n)),
+      IsTwoDistanceSet A ∧ A.card = Nat.choose (n + 1) 2 := by
   sorry
 
 end Erdos502
