@@ -27,7 +27,15 @@ This is the Erdős–Sós conjecture.
 
 [Er74c] Erdős, P., *Problems and results on graph theory and combinatorics*, 1974.
 
-[Er93] Erdős, P., 1993.
+[Er78] Erdős, P., _Problems and results in combinatorial analysis and combinatorial
+  number theory_, Proceedings of the Ninth Southeastern Conference on Combinatorics,
+  Graph Theory, and Computing (1978), 29–40.
+
+[Er93] Erdős, P., *Some of my favorite solved and unsolved problems in graph theory*.
+  Quaestiones Mathematicae **16** (1993), 333–350.
+
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+  "Paul Erdős and his mathematics", Budapest, July 1999 (1999), §3.55.
 -/
 
 open SimpleGraph
@@ -40,7 +48,7 @@ def ContainsSubgraphCopy {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) :
   ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
 
 /--
-Erdős Problem 548 [Er64c][Er74c, p.78][Er93, p.345]:
+Erdős Problem 548 [Er64c][Er74c, p.78][Er78, p.30][Er93, p.345][Va99, 3.55]:
 
 Let $n \geq k + 1$. Every graph on $n$ vertices with at least
 $\frac{k-1}{2} \cdot n + 1$ edges contains every tree on $k + 1$ vertices.
