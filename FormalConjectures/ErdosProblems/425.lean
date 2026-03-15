@@ -26,7 +26,26 @@ for some constant $c > 0$, and poses a generalization to $r$-fold products.
 
 *Reference:* [erdosproblems.com/425](https://www.erdosproblems.com/425)
 
-[Er68] Erdős, P., _On some properties of prime factors of integers_. Nagoya Math. J. (1968).
+[Er68] Erdős, P., _On some applications of graph theory to number theoretic problems_. Publ.
+Ramanujan Inst. (1968/69), 131-136.
+
+[Er69] Erdős, P., _On some applications of graph theory to number theoretic problems_. Publ.
+Ramanujan Inst. 1 (1969), 131-136.
+
+[Er70b] Erdős, P., _Some applications of graph theory to number theory_. Proc. Second Chapel Hill
+Conf. on Combinatorial Mathematics and its Applications (1970), 136-145.
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973), 117-138.
+
+[Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._. Number Theory Day
+(Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43-72.
+
+[Er80] Erdős, P., _A survey of problems in combinatorial number theory_. Ann. Discrete Math.
+(1980), 89-115.
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
 -/
 
 open Filter
@@ -90,7 +109,7 @@ $$
 $$
 -/
 @[category research open, AMS 5 11]
-theorem erdos_425.variants.part2 :
+theorem erdos_425.variants.part2 : answer(sorry) ↔
     ∀ r : ℕ, 2 ≤ r →
     ∃ C : ℝ, C > 0 ∧
       ∀ n : ℕ, ∀ A : Finset ℕ,
