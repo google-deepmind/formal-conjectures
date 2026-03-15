@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 163
@@ -27,23 +28,20 @@ $d$-degenerate), then $R(H) \leq C_d \cdot n$ for some constant $C_d$ depending 
 
 Proved by Lee [Le17], who showed $R(H) \leq 2^{2^{O(d)}} \cdot n$.
 
-[BuEr75] Burr, S.A. and Erdős, P., *On the Ramsey multiplicity of graphs — problems
-and recent results*. J. Graph Theory (1975).
+[BuEr75] Burr, S. A. and Erdős, P., _On the magnitude of generalized Ramsey numbers for graphs_.
+Infinite and finite sets, Vol. 1 (1975), 214–240.
 
-[Er82e] Erdős, P., *Problems and results on finite and infinite graphs*. Recent advances
+[Er82e] Erdős, P., _Problems and results on finite and infinite graphs_. Recent advances
 in graph theory (Proc. Second Czechoslovak Sympos., Prague, 1982).
 
-[Le17] Lee, C., *Ramsey numbers of degenerate graphs*. Ann. of Math. (2017).
+[Le17] Lee, C., _Ramsey numbers of degenerate graphs_. Ann. of Math. **186** (2017), 791–829.
+
+See also Problem 800, which is a special case of this conjecture.
 -/
 
 open SimpleGraph Finset
 
 namespace Erdos163
-
-/-- An injective graph homomorphism from $H$ to $G$: $G$ contains a (not necessarily
-    induced) copy of $H$ as a subgraph. -/
-def containsCopy {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → G.Adj (f u) (f v)
 
 /-- A simple graph $H$ on a finite vertex type is $d$-degenerate if every nonempty
     subset $S$ of vertices contains a vertex $v$ with at most $d$ neighbours in $S$. -/
@@ -56,7 +54,7 @@ def IsDDegenerate {V : Type*} [Fintype V] [DecidableEq V]
     graph $G$ on $\operatorname{Fin} N$, either $G$ or $G^c$ contains a copy of $H$. -/
 noncomputable def ramseyDiag {U : Type*} (H : SimpleGraph U) : ℕ :=
   sInf {N : ℕ | ∀ (G : SimpleGraph (Fin N)),
-    containsCopy G H ∨ containsCopy Gᶜ H}
+    H.IsContained G ∨ H.IsContained Gᶜ}
 
 /--
 Erdős Problem 163 [BuEr75, Er82e] — The Burr-Erdős Conjecture:
