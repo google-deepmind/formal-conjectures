@@ -31,12 +31,22 @@ $f_3(N) > N^{c/\log\log N}$ for some constant $c > 0$, and conjectured this
 should also be an upper bound.
 
 This problem is intimately connected with the sunflower problem [20].
+See also Problem 536, the dual problem about triples with equal pairwise LCM.
 
-[Er64] Erdős, P., *On extremal problems of graphs and generalized graphs*,
-Israel J. Math. 2 (1964), 183--190.
+[Er64] Erdős, P., *On a problem in elementary number theory and a
+combinatorial problem*. Math. Comp. (1964), 644--646.
 
-[AbHa70] Abbott, H.L. and Hanson, D., *A problem of Schur and its
-generalizations*, Acta Arith. 20 (1970), 175--187.
+[Er69] Erdős, P., *On some applications of graph theory to number theoretic
+problems*. Publ. Ramanujan Inst. 1 (1969), 131--136.
+
+[Er70] Erdős, P. (1970)
+
+[Er73] Erdős, P., *Problems and results on combinatorial number theory*.
+A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State
+Univ., Fort Collins, Colo., 1971) (1973), 117--138.
+
+[AbHa70] Abbott, H.L. and Hanson, D., *An extremal problem in number theory*.
+Bull. London Math. Soc. (1970), 324--326.
 -/
 
 open Finset Real
@@ -54,17 +64,20 @@ def IsGCDUniformFree (A : Finset ℕ) (r : ℕ) : Prop :=
 /--
 **Erdős Problem 535** (Upper bound conjecture):
 
-For each $r \geq 3$, there exists a constant $c > 0$ and $N_0$ such that for all
-$N \geq N_0$, every $r$-GCD-uniform-free subset of $\{1, \ldots, N\}$ has size
-at most $N^{c / \log\log N}$.
+There exists a constant $c > 0$ and $N_0$ such that for all $N \geq N_0$, every
+$3$-GCD-uniform-free subset of $\{1, \ldots, N\}$ has size at most
+$N^{c / \log\log N}$.
+
+Erdős [Er64] conjectured this specifically for $r = 3$, matching the proved
+lower bound.
 
 See [Er64].
 -/
 @[category research open, AMS 5 11]
-theorem erdos_535 (r : ℕ) (hr : 3 ≤ r) :
+theorem erdos_535 :
     ∃ c : ℝ, 0 < c ∧
     ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      ∀ A : Finset ℕ, A ⊆ Icc 1 N → IsGCDUniformFree A r →
+      ∀ A : Finset ℕ, A ⊆ Icc 1 N → IsGCDUniformFree A 3 →
         (A.card : ℝ) ≤ (N : ℝ) ^ (c / Real.log (Real.log (N : ℝ))) := by
   sorry
 
@@ -83,6 +96,40 @@ theorem erdos_535.variants.lower_bound :
     ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
       ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ IsGCDUniformFree A 3 ∧
         (N : ℝ) ^ (c / Real.log (Real.log (N : ℝ))) ≤ (A.card : ℝ) := by
+  sorry
+
+/--
+**Erdős Problem 535** (Erdős's original upper bound [Er64]):
+
+There exists $N_0$ such that for all $r \geq 3$ and $N \geq N_0$, every
+$r$-GCD-uniform-free subset of $\{1, \ldots, N\}$ has size at most
+$N^{3/4 + o(1)}$. More precisely, for every $\varepsilon > 0$ there exists
+$N_0$ such that $f_r(N) \leq N^{3/4 + \varepsilon}$ for all $N \geq N_0$.
+
+See [Er64].
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_535.variants.erdos_upper_bound (r : ℕ) (hr : 3 ≤ r) (ε : ℝ) (hε : 0 < ε) :
+    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
+      ∀ A : Finset ℕ, A ⊆ Icc 1 N → IsGCDUniformFree A r →
+        (A.card : ℝ) ≤ (N : ℝ) ^ (3 / 4 + ε) := by
+  sorry
+
+/--
+**Erdős Problem 535** (Abbott-Hanson upper bound [AbHa70]):
+
+For all $r \geq 3$, for every $\varepsilon > 0$ there exists $N_0$ such that
+for all $N \geq N_0$, every $r$-GCD-uniform-free subset of $\{1, \ldots, N\}$
+has size at most $N^{1/2 + \varepsilon}$. This improves Erdős's original
+$3/4$ exponent.
+
+See [AbHa70].
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_535.variants.abbott_hanson_upper_bound (r : ℕ) (hr : 3 ≤ r) (ε : ℝ) (hε : 0 < ε) :
+    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
+      ∀ A : Finset ℕ, A ⊆ Icc 1 N → IsGCDUniformFree A r →
+        (A.card : ℝ) ≤ (N : ℝ) ^ (1 / 2 + ε) := by
   sorry
 
 end Erdos535
