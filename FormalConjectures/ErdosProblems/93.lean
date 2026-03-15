@@ -28,23 +28,9 @@ determine at least $\lfloor n/2 \rfloor$ distinct distances. Proved by Altman.
 -/
 
 open scoped Classical
+open EuclideanGeometry
 
 namespace Erdos93
-
-/--
-A finite set of points in $\mathbb{R}^2$ is in convex position if no point lies in the
-convex hull of the remaining points. Equivalently, the points are the vertices
-of a convex polygon.
--/
-def InConvexPosition (A : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∀ p ∈ A, p ∉ convexHull ℝ ((↑A : Set (EuclideanSpace ℝ (Fin 2))) \ {p})
-
-/--
-The set of distinct pairwise distances between distinct points in a finite
-point set in $\mathbb{R}^2$.
--/
-noncomputable def distinctDistances (A : Finset (EuclideanSpace ℝ (Fin 2))) : Finset ℝ :=
-  A.offDiag.image (fun pq => dist pq.1 pq.2)
 
 /--
 Erdős Problem 93: If $n$ distinct points in $\mathbb{R}^2$ form a convex polygon, then they
@@ -53,9 +39,9 @@ determine at least $\lfloor n/2 \rfloor$ distinct distances. Proved by Altman [A
 @[category research solved, AMS 52]
 theorem erdos_93
     (A : Finset (EuclideanSpace ℝ (Fin 2)))
-    (hconv : InConvexPosition A)
+    (hconv : ConvexIndep (↑A : Set (EuclideanSpace ℝ (Fin 2))))
     (hn : 2 ≤ A.card) :
-    A.card / 2 ≤ (distinctDistances A).card := by
+    A.card / 2 ≤ distinctDistances A := by
   sorry
 
 end Erdos93
