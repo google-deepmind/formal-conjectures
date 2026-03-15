@@ -28,35 +28,19 @@ of the edges of $H$ contains a monochromatic copy of $G$).
 The conjecture: if $G$ has $n$ vertices and maximum degree $d$ then $\hat{R}(G) \ll_d n$
 (i.e., $\hat{R}(G) \leq C_d \cdot n$ for some constant $C_d$ depending only on $d$).
 
-This was disproved by Rödl and Szemerédi [RoSz00] for $d = 3$, who
-constructed graphs on $n$ vertices with maximum degree 3 such that
-$\hat{R}(G) \gg n (\log n)^c$ for some absolute constant $c > 0$.
+This question was originally posed by Beck [Be83b]. It was disproved by Rödl and
+Szemerédi [RoSz00] for $d = 3$, who constructed graphs on $n$ vertices with maximum
+degree 3 such that $\hat{R}(G) \gg n (\log n)^c$ for some absolute constant $c > 0$.
+Tikhomirov [Ti22b] improved this lower bound to $n \cdot \exp(c\sqrt{\log n})$.
 
+[Be83b] Beck, J., _On size Ramsey number of paths, trees, and circuits. I_. J. Graph Theory (1983), 115-129.
 [RoSz00] Rödl, V. and Szemerédi, E., _On size Ramsey numbers of graphs with bounded degree_. Combinatorica 20 (2000), 257-262.
+[Ti22b] Tikhomirov, K., _On bounded degree graphs with large size-Ramsey numbers_. arXiv:2210.05818 (2022).
 -/
 
 open SimpleGraph
 
 namespace Erdos559
-
-/-- The size Ramsey number $\hat{R}(G)$: the minimum number of edges in a graph $H$
-    that is Ramsey for $G$.
-
-    A graph $H$ on $N$ vertices is Ramsey for $G$ if every 2-coloring of the edges
-    of $H$ (represented as a symmetric function $c : \text{Fin}\ N \to \text{Fin}\ N \to \text{Bool}$)
-    contains a monochromatic copy of $G$, i.e., an injective map $f$ from the
-    vertices of $G$ into $\text{Fin}\ N$ that preserves adjacency in $H$ and maps all
-    edges to the same color. -/
-noncomputable def sizeRamseyNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {m : ℕ | ∃ (N : ℕ) (H : SimpleGraph (Fin N)),
-    Nat.card H.edgeSet = m ∧
-    ∀ (c : Fin N → Fin N → Bool),
-      (∀ i j, c i j = c j i) →
-      ∃ (b : Bool) (f : V → Fin N),
-        Function.Injective f ∧
-        (∀ u v, G.Adj u v → H.Adj (f u) (f v)) ∧
-        (∀ u v, G.Adj u v → c (f u) (f v) = b)}
 
 /--
 Erdős Problem 559 (DISPROVED) [RoSz00]:
@@ -73,7 +57,7 @@ theorem erdos_559 :
       ∃ C : ℕ, ∀ n : ℕ, n ≥ 1 →
         ∀ G : SimpleGraph (Fin n),
           (∀ v, Nat.card (G.neighborSet v) ≤ d) →
-            sizeRamseyNumber G ≤ C * n) := by
+            sizeRamsey G G ≤ C * n) := by
   sorry
 
 end Erdos559
