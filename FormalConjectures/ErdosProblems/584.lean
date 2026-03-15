@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 
 /-!
 # Erdős Problem 584
@@ -23,9 +24,16 @@ import FormalConjectures.Util.ProblemImports
 
 A problem of Erdős, Duke, and Rödl.
 
-[DuEr82] Duke, R.A. and Erdős, P., 1982.
+[DuEr82] Duke, R.A. and Erdős, P., _Subgraphs in which each pair of edges lies in a short
+common cycle_. Proceedings of the thirteenth Southeastern conference on combinatorics, graph
+theory and computing (1982), 253-260.
 
-[DER84] Duke, R.A., Erdős, P., and Rödl, V., 1984.
+[DER84] Duke, R.A., Erdős, P., and Rödl, V., _More results on subgraphs with many short
+cycles_. Proceedings of the fifteenth Southeastern conference on combinatorics, graph theory
+and computing (1984), 295-300.
+
+[FoSu08b] Fox, J. and Sudakov, B., _On a problem of Duke-Erdős-Rödl on cycle-connected
+subgraphs_. Journal of Combinatorial Theory, Series B (2008), 1056-1062.
 -/
 
 open SimpleGraph
@@ -38,16 +46,18 @@ def EdgesOnCommonCycle {V : Type*} (G : SimpleGraph V)
   ∃ (u : V) (c : G.Walk u u), c.IsCycle ∧ c.length ≤ k ∧
     e₁ ∈ c.edges ∧ e₂ ∈ c.edges
 
-/-- Two edges share a vertex. -/
-def EdgesShareVertex {V : Type*} (e₁ e₂ : Sym2 V) : Prop :=
-  ∃ v : V, v ∈ e₁ ∧ v ∈ e₂
+/-- Two edges of a graph lie on a common cycle of exactly length $k$. -/
+def EdgesOnCommonCycleExact {V : Type*} (G : SimpleGraph V)
+    (e₁ e₂ : Sym2 V) (k : ℕ) : Prop :=
+  ∃ (u : V) (c : G.Walk u u), c.IsCycle ∧ c.length = k ∧
+    e₁ ∈ c.edges ∧ e₂ ∈ c.edges
 
 /--
 Erdős Problem 584, Part 1:
 For every graph $G$ on $n$ vertices with $\delta n^2$ edges, there exists a subgraph $H_1$
 with $\gg \delta^3 n^2$ edges such that every two edges of $H_1$ lie on a common cycle of
 length at most $6$ in $G$, and any two edges sharing a vertex lie on a common
-cycle of length $4$.
+cycle of length exactly $4$.
 
 A problem of Erdős, Duke, and Rödl [DuEr82, DER84].
 -/
@@ -64,7 +74,7 @@ theorem erdos_584 :
         (∀ e₁ ∈ H.edgeFinset, ∀ e₂ ∈ H.edgeFinset,
           EdgesOnCommonCycle G e₁ e₂ 6) ∧
         (∀ e₁ ∈ H.edgeFinset, ∀ e₂ ∈ H.edgeFinset,
-          EdgesShareVertex e₁ e₂ → EdgesOnCommonCycle G e₁ e₂ 4) := by
+          edgesAdjacent e₁ e₂ → EdgesOnCommonCycleExact G e₁ e₂ 4) := by
   sorry
 
 /--
