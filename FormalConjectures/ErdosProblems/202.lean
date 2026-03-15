@@ -26,7 +26,11 @@ classes are disjoint (every integer is $\equiv a_i \pmod{n_i}$ for at most one $
 How large can $r$ be in terms of $N$?
 
 Let $f(N)$ denote the maximum such $r$. Erdős and Stein conjectured $f(N) = o(N)$,
-proved by Erdős and Szemerédi [ErSz68]. The exact asymptotics remain open.
+proved by Erdős and Szemerédi [ErSz68], who showed
+$N / \exp((\log N)^{1/2+\varepsilon}) \ll f(N) < N / (\log N)^c$.
+
+Croot [Cr03b] improved this to $N / L(N)^{\sqrt{2}+o(1)} < f(N) < N / L(N)^{1/6-o(1)}$,
+and Chen [Ch05] further tightened the bounds.
 
 The best known bounds, due to de la Bretèche, Ford, and Vandehey [BFV13], are:
 $$N / L(N)^{1+o(1)} < f(N) < N / L(N)^{\sqrt{3}/2+o(1)}$$
@@ -34,9 +38,19 @@ where $L(N) = \exp(\sqrt{\log N \cdot \log \log N})$.
 
 They conjecture the lower bound is the truth, i.e., $f(N) = N / L(N)^{1+o(1)}$.
 
-[ErSz68] Erdős, P. and Szemerédi, E.
+OEIS: [A389975](https://oeis.org/A389975)
 
-[BFV13] de la Bretèche, R., Ford, K., and Vandehey, J.
+[ErSz68] Erdős, P. and Szemerédi, E., _On a problem of P. Erdős and S. Stein_.
+Acta Arithmetica **14** (1968), 85–90.
+
+[Cr03b] Croot III, E. S., _On non-intersecting arithmetic progressions_.
+Acta Arithmetica **110** (2003), 233–238.
+
+[Ch05] Chen, Y.-G., _On disjoint arithmetic progressions_.
+Acta Arithmetica **118** (2005), 143–148.
+
+[BFV13] de la Bretèche, R., Ford, K., and Vandehey, J.,
+_On non-intersecting arithmetic progressions_. Acta Arithmetica **157** (2013), 381–392.
 
 [Er61, Er65, Er65b, Er73, Er77c, ErGr80, Va99] — see
 [erdosproblems.com/202](https://www.erdosproblems.com/202) for full references.
@@ -54,8 +68,7 @@ def IsPairwiseDisjointSystem (S : Finset (ℕ × ℤ)) (N : ℕ) : Prop :=
   (∀ p ∈ S, 1 ≤ p.1 ∧ p.1 ≤ N) ∧
   (∀ p ∈ S, ∀ q ∈ S, p ≠ q → p.1 ≠ q.1) ∧
   (∀ p ∈ S, ∀ q ∈ S, p ≠ q →
-    ∀ x : ℤ, ¬(x % (↑p.1 : ℤ) = p.2 % (↑p.1 : ℤ) ∧
-               x % (↑q.1 : ℤ) = q.2 % (↑q.1 : ℤ)))
+    ∀ x : ℤ, ¬(x ≡ p.2 [ZMOD p.1] ∧ x ≡ q.2 [ZMOD q.1]))
 
 /--
 Erdős Problem 202 (de la Bretèche–Ford–Vandehey conjecture) — OPEN.
@@ -71,12 +84,12 @@ gives the conjectured asymptotics $f(N) = N / L(N)^{1+o(1)}$.
 -/
 @[category research open, AMS 11]
 theorem erdos_202 :
+    let L := fun N : ℝ => Real.exp (Real.sqrt (Real.log N * Real.log (Real.log N)))
     ∀ ε : ℝ, ε > 0 →
     ∀ᶠ N : ℕ in atTop,
     ∀ S : Finset (ℕ × ℤ),
     IsPairwiseDisjointSystem S N →
-    (S.card : ℝ) ≤ (N : ℝ) /
-      Real.exp ((1 - ε) * Real.sqrt (Real.log (N : ℝ) * Real.log (Real.log (N : ℝ)))) := by
+    (S.card : ℝ) ≤ (N : ℝ) / L (N : ℝ) ^ (1 - ε) := by
   sorry
 
 end Erdos202
