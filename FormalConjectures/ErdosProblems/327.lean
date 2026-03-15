@@ -23,6 +23,9 @@ import FormalConjectures.Util.ProblemImports
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
+
+Related problems: #301, #302.
+OEIS: [A384927](https://oeis.org/A384927).
 -/
 
 open Finset
@@ -57,9 +60,10 @@ theorem erdos_327 :
   sorry
 
 /--
-The odd numbers in $\{1, \ldots, N\}$ witness that there exists a `UnitFractionPairFree` subset
-of size $\geq (\frac{1}{2} - \varepsilon) N$ for any $\varepsilon > 0$ and sufficiently
-large $N$.
+Lower bound for Erdős Problem 327: the odd numbers in $\{1, \ldots, N\}$ witness that there
+exists a `UnitFractionPairFree` subset of size $\geq (\frac{1}{2} - \varepsilon) N$ for any
+$\varepsilon > 0$ and sufficiently large $N$. Together with `erdos_327`, this shows the maximum
+size is $(\frac{1}{2} + o(1))N$.
 -/
 @[category undergraduate, AMS 5 11]
 theorem erdos_327.variants.lower_bound :
@@ -70,8 +74,9 @@ theorem erdos_327.variants.lower_bound :
   sorry
 
 /--
-Erdős Problem 327, Part 2 [ErGr80]: If $a, b \in A$ with $a \neq b$ implies
-$(a + b) \nmid 2ab$, must $|A| = o(N)$?
+Strong variant of Erdős Problem 327 [ErGr80]: If $a, b \in A$ with $a \neq b$ implies
+$(a + b) \nmid 2ab$, must $|A| = o(N)$? This strengthens the divisibility condition in
+`erdos_327` by replacing $ab$ with $2ab$.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_327.variants.strong :
