@@ -24,11 +24,17 @@ Bradač and Christoph proved that $f(n) = o(2^{\binom{n}{2}} / n!)$.
 
 *Reference:* [erdosproblems.com/426](https://www.erdosproblems.com/426)
 
-[EnEr72] Erdős, P. and Entringer, R. C. (1972).
+[EnEr72] Entringer, R. C. and Erdős, P., _On the number of unique subgraphs of a graph_.
+J. Combin. Theory Ser. B 13 (1972), 112-115.
 
-[Br75] Brouwer, A. E. (1975).
+[HaSc73] Harary, F. and Schwenk, A. J., _On the number of unique subgraphs_.
+J. Combin. Theory Ser. B 15 (1973), 156-160.
 
-[BrCh24] Bradač, D. and Christoph, M. (2024).
+[Br75] Brouwer, A. E., _A note on unique subgraphs_.
+J. Combin. Theory Ser. B 18 (1975), 184-185.
+
+[BrCh24] Bradač, D. and Christoph, M., _Unique subgraphs are rare_.
+arXiv:2410.16233 (2024).
 -/
 
 open SimpleGraph
@@ -73,8 +79,8 @@ distinct unique subgraphs in a graph on $n$ vertices.
 
 A problem of Erdős and Entringer [EnEr72], who constructed a graph with
 $\gg 2^{\binom{n}{2} - O(n^{3/2+o(1)})}$ many unique subgraphs. This was improved by
-Brouwer [Br75], who constructed a graph with $\gg 2^{\binom{n}{2} - O(n)} / n!$ many
-unique subgraphs.
+Harary and Schwenk [HaSc73], and then further by Brouwer [Br75], who constructed a graph
+with $\gg 2^{\binom{n}{2} - O(n)} / n!$ many unique subgraphs.
 
 Note that there are approximately $2^{\binom{n}{2}} / n!$ non-isomorphic graphs on $n$
 vertices, so the bound in the problem statement is trivially best possible.
