@@ -32,11 +32,24 @@ Erdős, Goodman, and Pósa [EGP66] proved that $f(n,k) \le \lfloor n^2/4 \rfloor
 as witnessed by a complete bipartite graph. Erdős [Er71] asks whether this
 bound can be sharpened when $k > n^2/4$.
 
+Lovász [Lo68] proved that every graph on $n$ vertices and $k$ edges can be expressed
+as a union of $\binom{n}{2} - k + t$ complete graphs, where $t$ is maximal such that
+$t^2 - t \le \binom{n}{2} - k$.
+
+Győri and Keszegh [GyKe17] proved that every $K_4$-free graph with $n$ vertices and
+$\lfloor n^2/4 \rfloor + m$ edges contains $m$ pairwise edge-disjoint triangles.
+
 [EGP66] Erdős, P., Goodman, A. W., and Pósa, L., _The representation of a graph by set
 intersections_. Canadian Journal of Mathematics 18 (1966), 106-112.
 
 [Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
 Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
+
+[Lo68] Lovász, L., _On covering of graphs_. Theory of Graphs (Proc. Colloq., Tihany, 1966)
+(1968), 231-236.
+
+[GyKe17] Győri, E. and Keszegh, B., _On the number of edge-disjoint triangles in K₄-free
+graphs_. Combinatorica **37** (2017), 1113-1124.
 -/
 
 open SimpleGraph Finset Filter
