@@ -25,7 +25,8 @@ The distribution function $f(c) = d(\{n : \varphi(n) < cn\})$ is purely singular
 no $x$ at which $f'(x)$ exists and is positive. Proved by Erdős.
 See also [Er95].
 
-[Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+[Er95] Erdős, P., _Some of my favourite problems in number theory, combinatorics, and geometry_.
+Resenhas **1** (1995), 165–186.
 -/
 
 open Nat Finset Filter Set Classical
