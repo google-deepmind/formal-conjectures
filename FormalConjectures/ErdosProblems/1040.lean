@@ -35,6 +35,12 @@ or disc.
 
 [EHP58] Erdős, P., Herzog, F., and Piranian, G., *Metric properties of polynomials*,
 J. Analyse Math. **6** (1958), 125–148.
+
+[ErNe73] Erdős, P. and Netanyahu, E., *A remark on polynomials and the transfinite diameter*,
+Israel J. Math. (1973), 23–25.
+
+[Fe26] Feng, T. et al., _Semi-Autonomous Mathematics Discovery with Gemini: A Case Study on
+the Erdős Problems_. arXiv:2601.22401 (2026).
 -/
 
 open scoped ENNReal
@@ -78,6 +84,33 @@ over monic polynomials with all roots in $F$ is zero?
 theorem erdos_1040 : answer(sorry) ↔
     ∀ (F : Set ℂ), IsClosed F → F.Infinite → transfiniteDiameter F ≥ 1 →
     ∀ (μ : Measure ℂ) [μ.IsAddHaarMeasure], sublevelMeasure F μ = 0 := by
+  sorry
+
+/--
+Erdős Problem 1040, partial result [EHP58]:
+
+Erdős, Herzog, and Piranian showed that the answer to Problem 1040 is affirmative
+when $F$ is a closed disc or a line segment with transfinite diameter $\geq 1$.
+That is, for such $F$, the infimum $\mu(F) = 0$.
+-/
+@[category research solved, AMS 28 30]
+theorem erdos_1040_disc (c : ℂ) (r : ℝ) (hr : r > 0)
+    (hd : transfiniteDiameter (Metric.closedBall c r) ≥ 1) :
+    ∀ (μ : Measure ℂ) [μ.IsAddHaarMeasure],
+    sublevelMeasure (Metric.closedBall c r) μ = 0 := by
+  sorry
+
+/--
+Erdős Problem 1040, partial result [EHP58]:
+
+Erdős, Herzog, and Piranian showed that $\mu(F) = 0$ when $F$ is a line segment
+(i.e., a closed interval in $\mathbb{C}$) with transfinite diameter $\geq 1$.
+-/
+@[category research solved, AMS 28 30]
+theorem erdos_1040_segment (a b : ℂ) (hab : a ≠ b)
+    (hd : transfiniteDiameter (Set.image (fun t : ℝ => (1 - ↑t) * a + ↑t * b) (Set.Icc 0 1)) ≥ 1) :
+    ∀ (μ : Measure ℂ) [μ.IsAddHaarMeasure],
+    sublevelMeasure (Set.image (fun t : ℝ => (1 - ↑t) * a + ↑t * b) (Set.Icc 0 1)) μ = 0 := by
   sorry
 
 end Erdos1040
