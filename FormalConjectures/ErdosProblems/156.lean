@@ -24,31 +24,21 @@ import FormalConjectures.Util.ProblemImports
 A question of Erdős, Sárközy, and Sós [ESS94]. Ruzsa [Ru98b] constructed a maximal Sidon set
 of size $\ll (N \log N)^{1/3}$, but whether $O(N^{1/3})$ is achievable remains open.
 
-[ESS94] Erdős, P., Sárközy, A., and Sós, V. T.
+See also Problem 340, which concerns the greedy Sidon sequence specifically.
 
-[Ru98b] Ruzsa, I. Z.
+OEIS: [A382397](https://oeis.org/A382397)
+
+[ESS94] Erdős, P., Sárközy, A., and Sós, V. T., _On Sum Sets of Sidon Sets, I_.
+Journal of Number Theory (1994), 329–347.
+
+[Ru98b] Ruzsa, I. Z., _A small maximal Sidon set_. Ramanujan Journal (1998), 55–58.
 -/
 
-open Filter
+open Filter Set
 
 open scoped Topology Real
 
 namespace Erdos156
-
-/-- A finite set of natural numbers is a Sidon set (also called a $B_2$ set) if all
-pairwise sums $a + b$ (allowing $a = b$) are distinct: whenever $a + b = c + d$
-with $a, b, c, d \in A$, we have $\{a, b\} = \{c, d\}$ as multisets. -/
-def IsSidonSet (A : Finset ℕ) : Prop :=
-  ∀ a ∈ A, ∀ b ∈ A, ∀ c ∈ A, ∀ d ∈ A,
-    a + b = c + d → (a = c ∧ b = d) ∨ (a = d ∧ b = c)
-
-/-- A Sidon set $A \subseteq \{0, \ldots, N-1\}$ is maximal (in $\{0, \ldots, N-1\}$) if no
-element of $\{0, \ldots, N-1\} \setminus A$ can be added to $A$ while preserving the Sidon
-property. -/
-def IsMaximalSidonSet (N : ℕ) (A : Finset ℕ) : Prop :=
-  A ⊆ Finset.range N ∧
-  IsSidonSet A ∧
-  ∀ n ∈ Finset.range N, n ∉ A → ¬IsSidonSet (insert n A)
 
 /--
 Erdős–Sárközy–Sós Conjecture (Problem 156) [ESS94]:
@@ -60,15 +50,43 @@ Ruzsa [Ru98b] constructed a maximal Sidon set of size $\ll (N \log N)^{1/3}$, wh
 close but does not reach $O(N^{1/3})$.
 
 Formalized as: there exists a constant $C > 0$ such that for all sufficiently large $N$,
-there exists a maximal Sidon set $A \subseteq \{0, \ldots, N-1\}$ with
+there exists a maximal Sidon set $A \subseteq \{1, \ldots, N\}$ with
 $|A| \leq C \cdot N^{1/3}$.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_156 : answer(sorry) ↔
     ∃ C : ℝ, 0 < C ∧
       ∀ᶠ N : ℕ in atTop,
-        ∃ A : Finset ℕ, IsMaximalSidonSet N A ∧
-          (A.card : ℝ) ≤ C * (N : ℝ) ^ ((1 : ℝ) / 3) := by
+        ∃ A : Set ℕ, A.IsMaximalSidonSetIn N ∧
+          (A.ncard : ℝ) ≤ C * (N : ℝ) ^ ((1 : ℝ) / 3) := by
+  sorry
+
+/--
+Ruzsa's upper bound (Problem 156) [Ru98b]:
+
+Ruzsa constructed a maximal Sidon set of size $O((N \log N)^{1/3})$. This is the best
+known upper bound on the minimum size of a maximal Sidon set in $\{1, \ldots, N\}$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_156_ruzsa_upper :
+    ∃ C : ℝ, 0 < C ∧
+      ∀ᶠ N : ℕ in atTop,
+        ∃ A : Set ℕ, A.IsMaximalSidonSetIn N ∧
+          (A.ncard : ℝ) ≤ C * ((N : ℝ) * Real.log N) ^ ((1 : ℝ) / 3) := by
+  sorry
+
+/--
+Lower bound on maximal Sidon sets (Problem 156):
+
+Every maximal Sidon set in $\{1, \ldots, N\}$ has size $\gg N^{1/3}$. This is a known result
+(the greedy algorithm witnesses this, but the bound holds for all maximal Sidon sets).
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_156_lower :
+    ∃ C : ℝ, 0 < C ∧
+      ∀ᶠ N : ℕ in atTop,
+        ∀ A : Set ℕ, A.IsMaximalSidonSetIn N →
+          C * (N : ℝ) ^ ((1 : ℝ) / 3) ≤ (A.ncard : ℝ) := by
   sorry
 
 end Erdos156
