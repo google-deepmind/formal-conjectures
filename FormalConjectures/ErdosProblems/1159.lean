@@ -25,11 +25,18 @@ Determine whether there exists a constant $C > 1$ such that every finite project
 has a blocking set where no line is hit more than $C$ times. A blocking set is a set of
 points that meets every line.
 
+Erdős [Er81] posed the stronger question for all pairwise balanced block designs, not just
+projective planes. See also Problem #664 for a related (stronger) variant.
+
 Erdős, Silverman, and Stein [ESS83] proved this is true with
 $|S \cap \ell| \ll \log n$ for all lines $\ell$ (where $n$ is the order of the projective
 plane).
 
-[ESS83] Erdős, P., Silverman, R., and Stein, A.
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica 1 (1981), 25–42.
+
+[ESS83] Erdős, P., Silverman, R., Stein, A., _Intersection properties of families
+containing sets of nearly the same size_, Ars Combinatoria (1983), 247–259.
 
 [Va99] Vardy, A.
 -/
@@ -52,6 +59,20 @@ theorem erdos_1159 : answer(sorry) ↔
         ∃ S : Finset P,
           ∀ l : L, 1 ≤ (S.filter (fun p => p ∈ l)).card ∧
                     (S.filter (fun p => p ∈ l)).card ≤ C := by
+  sorry
+
+/--
+Erdős–Silverman–Stein [ESS83] proved that every finite projective plane of order $n$ has a
+blocking set $S$ such that $|S \cap \ell| \ll \log n$ for all lines $\ell$.
+-/
+@[category research solved, AMS 5 51]
+theorem erdos_1159_ess_log_bound :
+    ∃ C : ℝ, 0 < C ∧
+      ∀ (P L : Type) [Membership P L] [Fintype P] [Fintype L]
+        (pp : Configuration.ProjectivePlane P L),
+        ∃ S : Finset P,
+          ∀ l : L, 1 ≤ (S.filter (fun p => p ∈ l)).card ∧
+                    (S.filter (fun p => p ∈ l)).card ≤ ⌈C * Real.log pp.order⌉₊ := by
   sorry
 
 end Erdos1159
