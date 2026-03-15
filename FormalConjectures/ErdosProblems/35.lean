@@ -28,7 +28,8 @@ $d_s(A + B) \geq \alpha^{1-1/k}$, as observed by Ruzsa.
 
 See also Problem 38.
 
-[Er36c] Erdős, P., 1936.
+[Er36c] Erdős, P., _On the arithmetical density of the sum of two sequences, one of which
+forms a basis for the integers_. Acta Arith. (1936), 201-207.
 
 [Er56] Erdős, P., _Problems and results in additive number theory_. Colloque sur la Théorie
 des Nombres, Bruxelles, 1955 (1956), 127-137.
