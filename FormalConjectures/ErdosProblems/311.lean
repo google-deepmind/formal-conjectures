@@ -24,6 +24,10 @@ import FormalConjectures.Util.ProblemImports
 Let δ(N) denote the minimal non-zero value of |1 − Σ_{n ∈ A} 1/n| over subsets A of {1, …, N}.
 The problem conjectures that δ(N) = e^{-(c+o(1))·N} for some constant c ∈ (0, 1).
 
+The original formulation in [ErGr80] additionally required that A contain no subset S with
+∑_{n ∈ S} 1/n = 1 (i.e., A is Egyptian-1-free). Kovac showed that this restriction does not
+affect the value of δ(N), so the two formulations are equivalent.
+
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980), p. 40.
 -/
