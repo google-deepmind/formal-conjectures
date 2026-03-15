@@ -25,7 +25,8 @@ can take. Is it true that $g(n) \geq (1 - o(1))n$?
 
 *Reference:* [erdosproblems.com/653](https://www.erdosproblems.com/653)
 
-[Er97e] Erdős, P., *Some of my favourite problems which recently have been solved*.
+[Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Proc. Int. Conf. on Discrete Math. (1997), 527–533.
 -/
 
 open Finset Classical
