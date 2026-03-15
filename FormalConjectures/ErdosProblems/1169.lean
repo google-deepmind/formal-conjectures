@@ -22,7 +22,18 @@ import FormalConjectures.Util.ProblemImports
 Erdős and Hajnal asked whether for all finite $k < \omega$, the ordinal partition
 relation $\omega_1^2 \to (\omega_1^2, k)^2$ fails.
 
+Hajnal proved this holds assuming the Continuum Hypothesis. The problem is
+independent of ZFC: it is consistent with ZFC but not provable from ZFC alone.
+
+See also Problem 592 (a related question concerning countable ordinals)
+and Problem 1172 (which uses the same `OrdinalPartitionPair` definition).
+
 *Reference:* [erdosproblems.com/1169](https://www.erdosproblems.com/1169)
+
+[Va99] Hajnal, A. and Larson, J., _Partition relations_. Handbook of Set Theory (2010), §7.85.
+
+[Ha71] Hajnal, A., _A negative partition relation_. Proceedings of the National Academy of
+  Sciences U.S.A. (1971), 142–144.
 -/
 
 open Ordinal Cardinal
@@ -48,22 +59,26 @@ def OrdinalPartitionPair (α β γ : Ordinal) : Prop :=
       ∀ i j : {x : Ordinal // x < γ}, i < j → f (g i) (g j) = false)
 
 /--
-Erdős Problem #1169 (Erdős and Hajnal):
+Erdős Problem #1169 [Va99, 7.85] (Erdős and Hajnal):
 
-Is it true that, for all finite $k < \omega$,
+Is it true that, for all finite $k \geq 3$,
 $$\omega_1^2 \not\to (\omega_1^2, k)^2?$$
 
-That is, for every natural number $k$, there exists a 2-coloring of the pairs
+That is, for every natural number $k \geq 3$, there exists a 2-coloring of the pairs
 of ordinals below $\omega_1^2$ such that no subset of order type $\omega_1^2$ is monochromatic
 in the first color and no subset of order type $k$ is monochromatic in the
 second color.
 
-Hajnal proved this holds assuming the Continuum Hypothesis.
-The problem is "not disprovable": open in ZFC, but true in some models.
+Hajnal proved this holds assuming the Continuum Hypothesis [Ha71].
+The problem is independent of ZFC: consistent with ZFC but not provable
+from ZFC alone.
+
+The restriction to $k \geq 3$ is necessary because the partition relation
+$\omega_1^2 \to (\omega_1^2, k)^2$ holds trivially for $k \leq 2$.
 -/
 @[category research open, AMS 3 5]
 theorem erdos_1169 : answer(sorry) ↔
-    ∀ k : ℕ, ¬ OrdinalPartitionPair (omega1 ^ 2) (omega1 ^ 2) (↑k) := by
+    ∀ k : ℕ, 3 ≤ k → ¬ OrdinalPartitionPair (omega1 ^ 2) (omega1 ^ 2) (↑k) := by
   sorry
 
 end Erdos1169
