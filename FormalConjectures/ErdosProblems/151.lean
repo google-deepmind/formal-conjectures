@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 
 /-!
 # Erdős Problem 151
@@ -23,13 +24,16 @@ Erdős and Gallai conjectured that the clique transversal number of any graph on
 is at most $n - H(n)$, where $H(n)$ is the minimum independence number over all triangle-free
 graphs on $n$ vertices.
 
+This appears as Problem 1 in [EGT92]. The general behaviour of $\tau(G)$ is the subject of
+Problem 610.
+
 *Reference:* [erdosproblems.com/151](https://www.erdosproblems.com/151)
 
-[Er88] Erdős, P., _Problems and results on chromatic numbers in finite and infinite graphs_,
-1988, p.82.
+[Er88] Erdős, P., _Problems and results in combinatorial analysis and graph theory_.
+Discrete Mathematics **72** (1988), 81-92.
 
-[EGT92] Erdős, P., Gallai, T. and Tuza, Zs., _Covering the cliques of a graph with vertices_,
-1992, p.280.
+[EGT92] Erdős, P., Gallai, T. and Tuza, Zs., _Covering the cliques of a graph with vertices_.
+Discrete Mathematics **108** (1992), 279-289.
 -/
 
 open SimpleGraph
@@ -52,19 +56,11 @@ transversal of $G$. -/
 noncomputable def cliqueTransversalNumber {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
   sInf { k : ℕ | ∃ T : Finset (Fin n), IsCliqueTransversal G T ∧ T.card = k }
 
-/-- $S$ is an independent set in $G$: no two distinct vertices of $S$ are adjacent. -/
-def IsIndependentSet {n : ℕ} (G : SimpleGraph (Fin n)) (S : Finset (Fin n)) : Prop :=
-  ∀ u v : Fin n, u ∈ S → v ∈ S → u ≠ v → ¬G.Adj u v
-
-/-- The independence number $\alpha(G)$: the maximum cardinality of an independent set. -/
-noncomputable def independenceNumber {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
-  sSup { k : ℕ | ∃ S : Finset (Fin n), IsIndependentSet G S ∧ S.card = k }
-
 /-- $H(n)$ is maximal such that every triangle-free graph on $n$ vertices contains
 an independent set of size $H(n)$; equivalently, $H(n)$ is the minimum
 independence number over all triangle-free graphs on $n$ vertices. -/
 noncomputable def H (n : ℕ) : ℕ :=
-  sInf { k : ℕ | ∃ G : SimpleGraph (Fin n), G.CliqueFree 3 ∧ independenceNumber G = k }
+  sInf { k : ℕ | ∃ G : SimpleGraph (Fin n), G.CliqueFree 3 ∧ G.indepNum = k }
 
 /--
 Erdős Problem 151 [Er88, p.82] [EGT92, p.280] (problem of Erdős and Gallai):
