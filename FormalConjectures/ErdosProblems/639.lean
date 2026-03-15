@@ -20,15 +20,22 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 639
 
 Erdős conjectured that in any 2-coloring of the edges of $K_n$, at most $\lfloor n^2/4 \rfloor$
-edges do not lie in a monochromatic triangle. This was proved by Keevash and Sudakov for $n \geq 7$.
+edges do not lie in a monochromatic triangle. This was solved by Erdős, Rousseau, and Schelp
+for large $n$ (unpublished). Alon observed that the conjecture also follows from a result of
+Pyber [Py86], who showed that at most $\lfloor n^2/4 \rfloor + 2$ monochromatic cliques cover
+all edges of a 2-coloured $K_n$ for sufficiently large $n$. Keevash and Sudakov [KeSu04]
+completely solved the problem, establishing the exact threshold for all $n$: the answer is
+$\binom{n}{2}$ for $n \leq 5$, $10$ for $n = 6$, and $\lfloor n^2/4 \rfloor$ for $n \geq 7$.
 
 *Reference:* [erdosproblems.com/639](https://www.erdosproblems.com/639)
 
 [Er97d] Erdős, P., _Some of my favourite problems in various branches of combinatorics_,
 Matematiche (Catania), 1997.
 
+[Py86] Pyber, L., _Clique covering of graphs_, Combinatorica **6** (1986), 393–398.
+
 [KeSu04] Keevash, P. and Sudakov, B., _On the number of edges not covered by monochromatic
-copies of a fixed graph_, 2004.
+copies of a fixed graph_, J. Combin. Theory Ser. B **90** (2004), 41–53.
 -/
 
 namespace Erdos639
