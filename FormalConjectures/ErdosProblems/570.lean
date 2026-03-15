@@ -25,8 +25,27 @@ For any integer $k \geq 3$, is it true that for all sufficiently large $m$, ever
 $m$ edges and no isolated vertices satisfies $R(C_k, H) \leq 2m + \lfloor(k-1)/2\rfloor$, where
 $R$ denotes the two-colour Ramsey number and $C_k$ the cycle on $k$ vertices?
 
-[EFRS93] Erdős, P., Faudree, R., Rousseau, C., and Schelp, R., _Multipartite graph—sparse
-graph Ramsey numbers_ (1993).
+This was proved in stages: for even $k$ by Erdős, Faudree, Rousseau, and Schelp [EFRS93];
+for $k = 3$ independently by Goddard–Kleitman [GoKl94] and Sidorenko [Si91]; for $k = 5$ by
+Jayawardene [Ja99]; and for all odd $k \geq 7$ by Cambie, Freschi, Morawski, Petrova, and
+Pokrovskiy [CFMPP26].
+
+See also Erdős Problem 569, which asks for the weaker linear bound $R(C_{2k+1}, H) \leq c_k m$.
+
+[EFRS93] Erdős, P., Faudree, R., Rousseau, C., and Schelp, R., _Ramsey size linear graphs_.
+Combin. Probab. Comput. (1993), 389-399.
+
+[GoKl94] Goddard, W. and Kleitman, D., _An upper bound for the Ramsey numbers $r(K_3, G)$_.
+Discrete Math. (1994), 177-182.
+
+[Si91] Sidorenko, A., _An upper bound on the Ramsey number $r(K_3, G)$ depending only on the
+size of the graph $G$_. J. Graph Theory (1991), 15-17.
+
+[Ja99] Jayawardene, C., _Ramsey numbers related to small cycles_. Ph.D. dissertation,
+University of Memphis (1999).
+
+[CFMPP26] Cambie, S., Freschi, A., Morawski, P., Petrova, K., and Pokrovskiy, A.,
+_Ramsey number of a cycle versus a graph of a given size_. arXiv:2601.10238 (2026).
 -/
 
 open SimpleGraph
