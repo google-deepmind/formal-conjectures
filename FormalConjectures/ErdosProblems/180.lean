@@ -24,7 +24,14 @@ constant factor of the family's Turán number.
 
 *Reference:* [erdosproblems.com/180](https://www.erdosproblems.com/180)
 
-[ErSi82] Erdős, P. and Simonovits, M., 1982.
+See also Problem 575 for the bipartite refinement of this problem.
+
+Note: The website marks this problem as OPEN, possibly because the "real" open question is the
+bipartite refinement (Problem 575). The literal statement formalized here is disproved by the
+Hunter counterexample described below.
+
+[ErSi82] Erdős, P. and Simonovits, M., _Compactness results in extremal graph theory_,
+Combinatorica **2** (1982), 275-288.
 -/
 
 namespace Erdos180
