@@ -47,7 +47,8 @@ of $G$ and an edge between $g$ and $h$ if and only if $gh \neq hg$. If $\Gamma$ 
 infinite complete subgraph (i.e., no infinite set of pairwise non-commuting
 elements), then there is a finite bound on the size of complete subgraphs of $\Gamma$.
 
-Neumann proved that $\Gamma$ contains no infinite complete subgraph if and only if
+This formalizes the forward direction of Neumann's result. The full result also
+establishes that $\Gamma$ contains no infinite complete subgraph if and only if
 the centre of $G$ has finite index, and if the centre has index $n$ then $\Gamma$
 contains no complete subgraph on more than $n$ vertices.
 -/
