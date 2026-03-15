@@ -24,34 +24,30 @@ import FormalConjectures.Util.ProblemImports
 For large $n$, is it true that every $n$-point set in $\mathbb{R}^2$ minimizing the number of
 distinct distances admits another minimizer of the same size that is not similar to it?
 
-[Er87b] Erdős, P., _Some combinatorial, probabilistic and number theoretic problems_ (1987), p.171.
+[Er87b] Erdős, P., _Some combinatorial and metric problems in geometry_. Intuitive geometry
+(Siófok, 1985) (1987), 167-177.
 
-[Er90] Erdős, P., (1990).
+[Er90] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1990),
+467-478.
 
-[Er97e] Erdős, P., (1997).
+[Er97e] Erdős, P., _Some problems and results on combinatorial number theory_ (1997).
 
-[Ko24c] Kovács, (2024).
+[Ko24c] Kovács, Z., _A note on Erdős's mysterious remark_. arXiv:2412.05190 (2024).
 -/
 
-open Finset Classical
+open Finset Classical EuclideanGeometry
 
 namespace Erdos91
-
-/--
-The number of distinct positive distances determined by a finite point set $A$ in $\mathbb{R}^2$.
--/
-noncomputable def numDistinctDistances (A : Finset (EuclideanSpace ℝ (Fin 2))) : ℕ :=
-  ((A ×ˢ A).filter (fun pq => pq.1 ≠ pq.2)).image (fun pq => dist pq.1 pq.2) |>.card
 
 /--
 Two finite point sets in $\mathbb{R}^2$ are similar if there exists a map
 $f : \mathbb{R}^2 \to \mathbb{R}^2$ that scales all distances by the same positive constant $r$
 and maps one set onto the other.
 -/
-def AreSimilar (A B : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∃ (f : EuclideanSpace ℝ (Fin 2) → EuclideanSpace ℝ (Fin 2)) (r : ℝ),
+def AreSimilar (A B : Finset ℝ²) : Prop :=
+  ∃ (f : ℝ² → ℝ²) (r : ℝ),
     r > 0 ∧
-    (∀ x y : EuclideanSpace ℝ (Fin 2), dist (f x) (f y) = r * dist x y) ∧
+    (∀ x y : ℝ², dist (f x) (f y) = r * dist x y) ∧
     (∀ a, a ∈ A → f a ∈ B) ∧
     (∀ b, b ∈ B → ∃ a ∈ A, f a = b)
 
@@ -64,14 +60,14 @@ there are at least two non-similar sets that minimise the number of distinct dis
 @[category research open, AMS 52]
 theorem erdos_91 : answer(sorry) ↔
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
-    ∀ A : Finset (EuclideanSpace ℝ (Fin 2)),
+    ∀ A : Finset ℝ²,
       A.card = n →
-      (∀ B : Finset (EuclideanSpace ℝ (Fin 2)), B.card = n →
-        numDistinctDistances A ≤ numDistinctDistances B) →
-      ∃ A' : Finset (EuclideanSpace ℝ (Fin 2)),
+      (∀ B : Finset ℝ², B.card = n →
+        distinctDistances A ≤ distinctDistances B) →
+      ∃ A' : Finset ℝ²,
         A'.card = n ∧
-        (∀ B : Finset (EuclideanSpace ℝ (Fin 2)), B.card = n →
-          numDistinctDistances A' ≤ numDistinctDistances B) ∧
+        (∀ B : Finset ℝ², B.card = n →
+          distinctDistances A' ≤ distinctDistances B) ∧
         ¬ AreSimilar A A' := by
   sorry
 
