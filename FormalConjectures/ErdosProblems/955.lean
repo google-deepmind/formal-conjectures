@@ -27,6 +27,22 @@ natural density zero, where $s(n)$ denotes the sum of proper divisors of $n$?
 [EGPS90] Erdős, P., Granville, A., Pomerance, C., and Spiro, C., _On the normal behavior of
 the iterates of some arithmetic functions_. Analytic number theory (Allerton Park, IL, 1989),
 Progr. Math., 85 (1990), 165-204.
+
+[Er73b] Erdős, P., _Über die Zahlen der Form σ(n)-n und n-φ(n)_. Elem. Math. (1973), 83-86.
+
+[Gu04] Guy, R., _Unsolved Problems in Number Theory_, 3rd ed. Springer, 2004.
+
+[Po14b] Pollack, P., _Some arithmetic properties of the sum of proper divisors and the sum of
+prime divisors_. Illinois J. Math. (2014), 125-147.
+
+[Tr15] Troupe, L., _On the number of prime factors of values of the sum-of-proper-divisors
+function_. J. Number Theory (2015), 120-135.
+
+[PPT18] Pollack, P., Pomerance, C., Thompson, L., _Divisor-sum fibers_. Mathematika (2018),
+330-342.
+
+[Tr20] Troupe, L., _Divisor sums representable as the sum of two squares_. Proc. Amer. Math.
+Soc. (2020), 4189-4202.
 -/
 
 open scoped Classical
