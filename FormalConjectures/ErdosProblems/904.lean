@@ -24,7 +24,12 @@ triangle on vertices $x, y, z$ such that $d(x) + d(y) + d(z) \geq 3n/2$.
 
 *Reference:* [erdosproblems.com/904](https://www.erdosproblems.com/904)
 
-[Ed78] Edwards, C. S., _Recent results on the Bollobás-Erdős conjecture_. (1978)
+[Er75] Erdős, P., _Some recent progress on extremal problems in graph theory_,
+  Congressus Numerantium (1975), 3–14.
+
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_, 1982.
+
+[Ed78] Edwards, C. S., _Complete subgraphs with largest sum of vertex degrees_. (1978), 293–306.
 -/
 
 open SimpleGraph
