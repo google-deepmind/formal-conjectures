@@ -41,6 +41,9 @@ L'Enseignement Math. 27 (1982), 163–176.
 
 [Er87] Erdős, P., _Some problems on finite and infinite graphs_, Logic and combinatorics,
 Contemp. Math. 65 (1987), 223–228.
+
+[La90] Larson, J.A., _Martin's axiom and ordinal graphs: large independent sets or infinite
+paths_, Ann. Pure Appl. Logic (1990), 31–39.
 -/
 
 open SimpleGraph Ordinal
