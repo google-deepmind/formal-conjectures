@@ -68,4 +68,26 @@ theorem erdos_1099 : answer(True) ↔
     ∀ α : ℝ, α > 1 → ∃ C : ℝ, ∀ N : ℕ, ∃ n : ℕ, n ≥ N ∧ hAlpha α n ≤ C := by
   sorry
 
+/--
+Is $h_\alpha(n!)$ bounded for each $\alpha > 1$?
+
+Erdős [Er81h] suggested that $n!$ would be a good candidate for achieving bounded
+$h_\alpha$. This remains open.
+-/
+@[category research open, AMS 11]
+theorem erdos_1099_factorial : answer(sorry) ↔
+    ∀ α : ℝ, α > 1 → ∃ C : ℝ, ∀ n : ℕ, hAlpha α n.factorial ≤ C := by
+  sorry
+
+/--
+Is $h_\alpha(\mathrm{lcm}\{1, \ldots, n\})$ bounded for each $\alpha > 1$?
+
+Erdős [Er81h] suggested that $\mathrm{lcm}\{1, \ldots, n\}$ would be a good candidate for
+achieving bounded $h_\alpha$. This remains open.
+-/
+@[category research open, AMS 11]
+theorem erdos_1099_lcm : answer(sorry) ↔
+    ∀ α : ℝ, α > 1 → ∃ C : ℝ, ∀ n : ℕ, hAlpha α ((Finset.Icc 1 n).lcm id) ≤ C := by
+  sorry
+
 end Erdos1099
