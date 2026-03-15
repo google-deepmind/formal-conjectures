@@ -22,7 +22,14 @@ import FormalConjectures.Util.ProblemImports
 Is it true that the product of the 2-full parts of $k$ consecutive integers starting at $n$ is
 $O(n^{2+\varepsilon})$ for every fixed $k \geq 1$ and $\varepsilon > 0$?
 
+This problem is equivalent (up to constants) to Problem 935, though the two formalizations capture
+different mathematical quantities: Problem 367 computes the product of the 2-full parts of each
+individual consecutive integer, while Problem 935 computes the 2-full part of the product.
+
 *Reference:* [erdosproblems.com/367](https://www.erdosproblems.com/367)
+
+*See also:* [Problem 935](https://www.erdosproblems.com/935),
+[OEIS A057521](https://oeis.org/A057521)
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
@@ -61,6 +68,31 @@ theorem erdos_367 :
     ∃ C : ℝ, 0 < C ∧
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       ((∏ i ∈ Finset.range k, twoFullPart (n + i) : ℕ) : ℝ) ≤ C * (n : ℝ) ^ (2 + ε) := by
+  sorry
+
+/-- The r-full part of a natural number $n$: the product of all prime power
+factors $p^a$ where $a \geq r$. When $r = 2$, this is `twoFullPart`. -/
+noncomputable def rFullPart (r : ℕ) (n : ℕ) : ℕ :=
+  (n.factorization.support.filter (fun p => r ≤ n.factorization p)).prod
+    (fun p => p ^ n.factorization p)
+
+/--
+Erdős Problem 367, r-full variant:
+
+The website asks whether, for fixed $r, k \geq 2$ and $\varepsilon > 0$,
+$$\limsup_{n \to \infty} \frac{\prod_{n \leq m < n+k} B_r(m)}{n^{1+\varepsilon}} = \infty,$$
+i.e., the product of $r$-full parts of $k$ consecutive integers grows faster than
+$n^{1+\varepsilon}$ for any $\varepsilon > 0$.
+-/
+@[category research open, AMS 11]
+theorem erdos_367_rFull :
+    answer(sorry) ↔
+    ∀ r : ℕ, 2 ≤ r →
+    ∀ k : ℕ, 2 ≤ k →
+    ∀ ε : ℝ, 0 < ε →
+    ∀ C : ℝ, ∃ n : ℕ,
+      C * (n : ℝ) ^ (1 + ε) ≤
+        ((∏ i ∈ Finset.range k, rFullPart r (n + i) : ℕ) : ℝ) := by
   sorry
 
 end Erdos367
