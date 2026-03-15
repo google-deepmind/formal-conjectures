@@ -28,6 +28,13 @@ distinct $a \in A$. Is it true that $b_{n+1} - b_n = O(1)$?
 A problem of Burr and Erdős [Er98]. Hegyvári, Hennecart, and Plagne [HHP07] showed the
 answer is yes for $k = 2$ (in fact with $b_{n+1} - b_n \leq 2$ for sufficiently large $n$)
 but no for $k \geq 3$.
+
+[Er98] Erdős, P., _Some of my new and almost new problems and results in
+combinatorial number theory_. Number theory (Eger, 1996) (1998), 169–180.
+
+[HHP07] Hegyvári, N., Hennecart, F., Plagne, A., _Answer to a question by Burr and Erdős on
+restricted addition, and related results_. Combinatorics, Probability and Computing (2007),
+747–756.
 -/
 
 open Finset BigOperators
