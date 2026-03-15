@@ -23,10 +23,14 @@ Let $k \geq 2$ and $n$ be sufficiently large. Consider the set of integers in $[
 have a divisor in the open interval $(n, 2n)$. Is the maximum gap between consecutive elements of
 this set at most $(\log n)^{O(1)}$?
 
+See also Problem 446 for a related problem about integers with divisors in $(n, 2n)$.
+
+OEIS: [A391118](https://oeis.org/A391118) (possibly related sequence).
+
 *Reference:* [erdosproblems.com/693](https://www.erdosproblems.com/693)
 
-[Er79e] Erdős, P., _Some unconventional problems in number theory_. Acta Math. Acad. Sci.
-Hungar. (1979).
+[Er79e] Erdős, P., _Some unconventional problems in number theory_. Math. Mag. **52** (1979),
+67-70.
 -/
 
 open Real

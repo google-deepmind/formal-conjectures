@@ -25,7 +25,12 @@ import FormalConjectures.Util.ProblemImports
 
 [Ob1] Oberwolfach problem session (1986).
 
-[Ca25] Cambie, S., disproved the conjecture by exhibiting non-unimodality for $n = 3$.
+[Fo08] Ford, K., _The distribution of integers with a divisor in a given interval_.
+  Ann. of Math. (2) (2008), 367-433.
+
+[Ca25] Cambie, S., _Resolution of Erdős' problems about unimodularity_. arXiv:2501.10333 (2025).
+
+See also: Problem 446.
 -/
 
 open Finset Filter
@@ -60,7 +65,8 @@ exhibiting a "valley" at $m = 7$ that contradicts unimodality.
 Furthermore, for fixed $n$, the sequence $\delta_1(n, m)$ has superpolynomially many
 local maxima in $m$.
 
-The RHS formalizes unimodality: for every $n$ and $m_1 < m_2 < m_3$ (all $> n + 1$),
+The RHS formalizes unimodality via quasiconcavity (no strict local minima):
+for every $n$ and $m_1 < m_2 < m_3$ (all $> n + 1$),
 the density at $m_2$ is not a strict local minimum (i.e., $d_1 \le d_2$ or $d_3 \le d_2$).
 The answer is `False` because Cambie exhibited a counterexample.
 -/
