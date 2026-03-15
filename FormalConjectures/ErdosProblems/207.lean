@@ -29,6 +29,8 @@ any $j$ edges (for $2 \leq j \leq g$) span at least $j + 3$ vertices.
 The congruence condition $n \equiv 1, 3 \pmod{6}$ is the necessary and sufficient
 divisibility condition for a Steiner triple system on $n$ points to exist.
 
+[Er76] Erdős, P., _Problems and results in graph theory and combinatorics_ (1976).
+
 [KSSS22b] Kwan, M., Sah, A., Sawhney, M., and Simkin, M., _High-girth Steiner
 triple systems_ (2022).
 -/
@@ -41,8 +43,15 @@ def IsSteinerTripleSystem {n : ℕ} (edges : Finset (Finset (Fin n))) : Prop :=
   (∀ e ∈ edges, e.card = 3) ∧
   (∀ u v : Fin n, u ≠ v → ∃! e, e ∈ edges ∧ u ∈ e ∧ v ∈ e)
 
+/-- A hypergraph has girth greater than `g` if any `j` edges (for `2 ≤ j ≤ g`)
+    span at least `j + 3` vertices. -/
+def HasGirthGreaterThan {n : ℕ} (edges : Finset (Finset (Fin n))) (g : ℕ) : Prop :=
+  ∀ j : ℕ, 2 ≤ j → j ≤ g →
+    ∀ S : Finset (Finset (Fin n)), S ⊆ edges → S.card = j →
+      j + 3 ≤ (S.biUnion id).card
+
 /--
-Erdős Problem 207 [KSSS22b]:
+Erdős Problem 207 [Er76] [KSSS22b]:
 
 For any $g \geq 2$, if $n$ is sufficiently large and $n \equiv 1$ or $3 \pmod{6}$, there exists
 a Steiner triple system on $n$ vertices such that any $j$ edges (for $2 \leq j \leq g$)
@@ -60,9 +69,7 @@ theorem erdos_207 :
         (n % 6 = 1 ∨ n % 6 = 3) →
           ∃ edges : Finset (Finset (Fin n)),
             IsSteinerTripleSystem edges ∧
-            ∀ j : ℕ, 2 ≤ j → j ≤ g →
-              ∀ S : Finset (Finset (Fin n)), S ⊆ edges → S.card = j →
-                j + 3 ≤ (S.biUnion id).card := by
+            HasGirthGreaterThan edges g := by
   sorry
 
 end Erdos207
