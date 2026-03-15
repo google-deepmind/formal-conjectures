@@ -33,7 +33,7 @@ Cambie showed:
 - $f(n) = (1 + o(1))n$ for almost all $n$
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
-number theory*. Monographies de L'Enseignement Mathematique (1980).
+number theory*. Monographies de L'Enseignement Mathématique (1980).
 -/
 
 open Filter
@@ -88,6 +88,26 @@ For every prime $p$, $f(p) = p^2$.
 @[category research solved, AMS 11]
 theorem erdos_459.variants.prime (p : ℕ) (hp : Nat.Prime p) :
     f p = p ^ 2 := by
+  sorry
+
+/--
+Erdős Problem 459 (power of two case, Cambie):
+
+$f(u) = u + 2$ whenever $u = 2^k - 2$ for $k \geq 2$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_459.variants.power_of_two_minus_two (k : ℕ) (hk : 2 ≤ k) :
+    f (2 ^ k - 2) = 2 ^ k := by
+  sorry
+
+/--
+Erdős Problem 459 (even upper bound, Cambie):
+
+If $u$ is even, then $f(u) \leq 2^k$, where $2^k$ is the smallest power of $2$ exceeding $u$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_459.variants.even_upper_bound (u : ℕ) (hu : 2 ≤ u) (heven : Even u) :
+    f u ≤ 2 ^ (Nat.log 2 u + 1) := by
   sorry
 
 end Erdos459
