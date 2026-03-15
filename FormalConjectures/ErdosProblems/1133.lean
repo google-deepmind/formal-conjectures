@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1133](https://www.erdosproblems.com/1133)
 
+[Er67] Erdős, P., _Problems and results on the convergence and divergence properties of the
+Lagrange interpolation polynomials and some extremal problems_. Mathematica (Cluj) (1967), 65–73.
+
 Erdős proved that, for any $C > 0$, there exists $\varepsilon > 0$ such that if $n$ is sufficiently
 large and $m = \lfloor(1+\varepsilon)n\rfloor$ then for any $x_1, \ldots, x_m \in [-1,1]$ there is
 a polynomial $P$ of degree $n$ such that $|P(x_i)| \le 1$ for $1 \le i \le m$ and
