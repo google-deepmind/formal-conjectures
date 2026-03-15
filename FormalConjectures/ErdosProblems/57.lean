@@ -29,10 +29,14 @@ Erdős later asked ([Er81]) whether the odd cycle lengths must have positive upp
 among the odd numbers, a strictly stronger property. See also Problem 65 for a related
 result on sums of reciprocals of all cycle lengths.
 
-[ErHa66] Erdős, P. and Hajnal, A., _On chromatic number of graphs and set-systems_, 1966.
+[ErHa66] Erdős, P. and Hajnal, A., _On chromatic number of graphs and set-systems_.
+Acta Math. Acad. Sci. Hungar. **17** (1966), 61–99.
 
-[LiMo20] Liu, H. and Montgomery, R., _A solution to Erdős and Hajnal's odd cycle problem_,
-J. Amer. Math. Soc. 36 (2023), 1191-1234.
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_.
+Combinatorica **1** (1981), 25–42.
+
+[LiMo20] Liu, H. and Montgomery, R., _A solution to Erdős and Hajnal's odd cycle problem_.
+J. Amer. Math. Soc. **36** (2023), 1191–1234.
 -/
 
 open SimpleGraph Finset
