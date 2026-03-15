@@ -25,7 +25,7 @@ Let $k \geq 3$ and let $g_k(N)$ be minimal such that if $A \subseteq \{1, \ldots
 $|A| \geq N + g_k(N)$ then there exist integers $b_1, \ldots, b_k$ such that all $\binom{k}{2}$
 pairwise sums $b_i + b_j$ are in $A$ (but the $b_i$ themselves need not be in $A$).
 
-Estimate $g_k(N)$.
+Estimate $g_k(N)$ [Er92c, p.41].
 
 Known results:
 - $g_3(N) = 2$ and $g_4(N) \leq 2032$
@@ -35,6 +35,9 @@ Known results:
 
 [CES75] Choi, S. L. G., Erdős, P., and Szemerédi, E., _Some additive and multiplicative
 problems in combinatorics_, 1975.
+
+[Er92c] Erdős, P., _Some of my forgotten problems in number theory_. Hardy-Ramanujan J. 15
+(1992), 34-50.
 -/
 
 namespace Erdos866
@@ -42,7 +45,8 @@ namespace Erdos866
 /-- A finset $A$ of integers contains all pairwise sums of some $k$ integers: there exist
 $b_1, \ldots, b_k \in \mathbb{Z}$ such that $b_i + b_j \in A$ for all $i < j$. -/
 def HasPairwiseSums (A : Finset ℤ) (k : ℕ) : Prop :=
-  ∃ b : Fin k → ℤ, ∀ i j : Fin k, i < j → (b i + b j) ∈ A
+  ∃ b : Fin k → ℤ, Function.Injective b ∧
+    ∀ i j : Fin k, i < j → (b i + b j) ∈ A
 
 /-- $g_k(N)$ is the minimal $g \in \mathbb{N}$ such that every $A \subseteq \{1, \ldots, 2N\}$
 with $|A| \geq N + g$ contains all pairwise sums of some $k$ integers. -/
