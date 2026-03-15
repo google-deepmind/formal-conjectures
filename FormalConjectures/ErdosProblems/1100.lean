@@ -21,6 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1100](https://www.erdosproblems.com/1100)
 
+[ErHa78] Erdős, P. and Hall, R. R., _On some unconventional problems on the divisors of
+integers_. J. Austral. Math. Soc. Ser. A (1978), 479–485.
+
+[Er81h] Erdős, P., _Some problems and results on additive and multiplicative number theory_.
+Analytic number theory (Philadelphia, Pa., 1980) (1981), 171–182.
+
 If $1 = d_1 < \cdots < d_{\tau(n)} = n$ are the divisors of $n$, let $\tau^\perp(n)$ count the
 number of $i$ for which $\gcd(d_i, d_{i+1}) = 1$.
 
@@ -100,7 +106,7 @@ theorem erdos_1100.variants.part3_lower :
     ∀ ε : ℝ, ε > 0 →
       ∃ K₀ : ℕ, ∀ k : ℕ, k ≥ K₀ →
         ∃ n : ℕ, Squarefree n ∧ n.primeFactors.card = k ∧
-          (tauPerp n : ℝ) > ((2 : ℝ) ^ ((1 : ℝ) / 2) - ε) ^ k := by
+          (tauPerp n : ℝ) > (Real.sqrt 2 - ε) ^ k := by
   sorry
 
 end Erdos1100
