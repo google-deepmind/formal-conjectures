@@ -21,10 +21,36 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/554](https://www.erdosproblems.com/554)
 
-A problem of Erdős and Graham [Er81c]. The problem is open even for $n = 2$.
+A problem of Erdős and Graham [Er81c]. Schur [Sc16] established $C^k \ll R_k(K_3) \ll k!$.
+Bondy and Erdős [BoEr73] and Erdős and Graham [ErGr75] proved
+$n 2^k + 1 \leq R_k(C_{2n+1}) \leq 2n(k+2)!$. Day and Johnson [DaJo17] improved the lower
+bound for fixed $n$. Jenssen and Skokan [JeSk21] showed the Bondy–Erdős lower bound is sharp
+for fixed $k$ and large $n$. Axenovich, Cames van Batenburg, Janzer, Michel, and Rundström
+[ACJMR25] improved the upper bound to $R_k(C_{2n+1}) \leq (4n-2)^k k^{k/n} + 1$.
+The problem is open even for $n = 2$.
 
 [Er81c] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathématique, 1981.
+
+[Sc16] Schur, I., _Über die Kongruenz x^m+y^m=z^m (mod p)_.
+Jahresbericht der Deutschen Mathematiker-Vereinigung (1916), 114–117.
+
+[BoEr73] Bondy, J. A. and Erdős, P., _Ramsey numbers for cycles in graphs_.
+J. Combin. Theory Ser. B (1973), 46–54.
+
+[ErGr75] Erdős, P. and Graham, R., _On partition theorems for finite graphs_.
+Infinite and finite sets (Colloq., Keszthely, 1973; dedicated to P. Erdős on his 60th birthday),
+Vol. I; Colloq. Math. Soc. János Bolyai, Vol. 10, North-Holland, Amsterdam, 1975, pp. 515–527.
+
+[DaJo17] Day, A. N. and Johnson, J. R., _Multicolour Ramsey numbers of odd cycles_.
+J. Combin. Theory Ser. B (2017), 56–63.
+
+[JeSk21] Jenssen, M. and Skokan, J., _Exact Ramsey numbers of odd cycles via nonlinear
+optimisation_. Adv. Math. (2021), Paper No. 107444.
+
+[ACJMR25] Axenovich, M., Cames van Batenburg, W., Janzer, O., Michel, L., and Rundström, M.,
+_An improved upper bound for the multicolour Ramsey number of odd cycles_. arXiv:2510.17981,
+2025.
 -/
 
 open SimpleGraph
