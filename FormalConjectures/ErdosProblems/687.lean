@@ -24,6 +24,27 @@ for every prime $p \le x$ so that every integer in $\{1, \ldots, y\}$ is covered
 least one of these classes. Is it true that $Y(x) = o(x^2)$? Or even
 $Y(x) \ll x^{1+o(1)}$?
 
+Iwaniec [Iw78] proved the upper bound $Y(x) \ll x^2$. Ford, Green, Konyagin,
+Maynard, and Tao [FGKMT18] proved the lower bound
+$Y(x) \gg x \cdot (\log x)(\log \log \log x)/(\log \log x)$.
+Maier and Pomerance conjectured $Y(x) \ll x(\log x)^{2+o(1)}$.
+
+[Er80] Erdős, P., *A survey of problems in combinatorial number theory*.
+Annals of Discrete Mathematics (1980), 89–115.
+
+[Iw78] Iwaniec, H., *On the problem of Jacobsthal*.
+Demonstratio Mathematica (1978), 225–231.
+
+[FGKMT18] Ford, K., Green, B., Konyagin, S., Maynard, J., Tao, T.,
+*Long gaps between primes*. Journal of the American Mathematical Society (2018), 65–105.
+
+[Ra38] Rankin, R. A., *The Difference between Consecutive Prime Numbers*.
+Journal of the London Mathematical Society (1938), 242–247.
+
+OEIS: A048670, A058989.
+
+See also problems #4, #688, #689, #970.
+
 *Reference:* [erdosproblems.com/687](https://www.erdosproblems.com/687)
 -/
 
@@ -32,7 +53,7 @@ namespace Erdos687
 /--
 A choice of residue classes for primes $p \le x$ covers $[1, y]$ if every
 integer $n \in \{1, \ldots, y\}$ is congruent to $a(p) \pmod{p}$ for some prime $p \le x$.
-This captures the covering system used in the Jacobsthal function.
+This captures a covering system related to the Jacobsthal function.
 -/
 def PrimeCovering (x y : ℕ) (a : ℕ → ℕ) : Prop :=
   ∀ n : ℕ, 1 ≤ n → n ≤ y → ∃ p : ℕ, p.Prime ∧ p ≤ x ∧ n % p = a p % p
