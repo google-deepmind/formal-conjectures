@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 
 /-!
 # Erdős Problem 344
@@ -26,16 +27,14 @@ theory*. Monographies de L'Enseignement Mathématique (1980).
 
 [SzVu06] Szemerédi, E. and Vu, V.H., *Finite and infinite arithmetic progressions in sumsets*.
 Annals of Mathematics (2006).
+
+[Er61b] Erdős, P., *On the representation of large integers as sums of distinct summands taken
+from a fixed set*. Acta Arithmetica (1961/62), 345-354.
 -/
 
 open Classical
 
 namespace Erdos344
-
-/-- The subset sum set $P(A)$: the set of all sums $\sum_{n \in B} n$ for finite
-$B \subseteq A$. -/
-def subsetSums (A : Set ℕ) : Set ℕ :=
-  {s : ℕ | ∃ (B : Finset ℕ), (↑B : Set ℕ) ⊆ A ∧ B.sum id = s}
 
 /-- A set of natural numbers contains an infinite arithmetic progression:
 there exist $a \geq 0$ and $d > 0$ such that $a + nd \in S$ for all $n \in \mathbb{N}$. -/
@@ -61,6 +60,22 @@ theorem erdos_344
     (c : ℝ) (hc : 0 < c)
     (hgrowth : ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
       c * Real.sqrt (N : ℝ) ≤ (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) :
+    ContainsInfiniteAP (subsetSums A) := by
+  sorry
+
+/--
+Erdős Problem 344, sharp variant [Er61b]:
+
+The stronger conjecture that the subset sums of $A$ contain an infinite arithmetic progression
+under the condition $|A \cap \{1,\ldots,N\}| \geq (2N)^{1/2}$ for all $N$. This would be best
+possible, as shown by Erdős [Er61b]. This variant remains open.
+-/
+@[category research open, AMS 5 11]
+theorem erdos_344_sharp
+    (A : Set ℕ)
+    (hA_pos : ∀ a ∈ A, 0 < a)
+    (hgrowth : ∀ N : ℕ, Real.sqrt (2 * N : ℝ) ≤
+      (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) :
     ContainsInfiniteAP (subsetSums A) := by
   sorry
 
