@@ -21,10 +21,21 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/362](https://www.erdosproblems.com/362)
 
-[SaSz] Sárközy, A. and Szemerédi, E., on the number of subsets whose sum is equal to a given
-number.
+[Er65] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math. **VIII**
+(1965), 181–189.
 
-[Ha] Halász, G., on the number of subsets with given sum and cardinality.
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of
+combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo.,
+1971) (1973), 117–138.
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[SaSz65] Sárközy, A. and Szemerédi, E., _Über ein Problem von Erdős und Moser_. Acta
+Arithmetica (1965), 205–208.
+
+[Ha77] Halász, G., _Estimates for the concentration function of combinatorial number theory and
+probability_. Periodica Mathematica Hungarica (1977), 197–211.
 -/
 
 open Finset
@@ -35,8 +46,8 @@ namespace Erdos362
 Let $A \subseteq \mathbb{N}$ be a finite set of size $N$. For any fixed $t$, the number of
 subsets $S \subseteq A$ with $\sum_{n \in S} n = t$ is $\ll 2^N / N^{3/2}$.
 
-Proved by Sárközy and Szemerédi [SaSz], removing a log factor from the earlier
-bound of Erdős and Moser.
+Proved by Sárközy and Szemerédi [SaSz65], removing a log factor from the earlier
+bound of Erdős and Moser [Er65].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_362 :
@@ -44,7 +55,7 @@ theorem erdos_362 :
     ∀ (N : ℕ), 0 < N →
     ∀ (A : Finset ℕ), A.card = N →
     ∀ (t : ℕ),
-    ((A.powerset.filter (fun S => decide (S.sum id = t))).card : ℝ) ≤
+    ((A.powerset.filter (fun S => S.sum id = t)).card : ℝ) ≤
       C * (2 : ℝ) ^ N / ((N : ℝ) ^ ((3 : ℝ) / 2)) := by
   sorry
 
@@ -53,7 +64,7 @@ Let $A \subseteq \mathbb{N}$ be a finite set of size $N$. For any fixed $t$ and 
 subsets $S \subseteq A$ with $\sum_{n \in S} n = t$ and $|S| = l$ is $\ll 2^N / N^2$,
 with the implied constant independent of $l$ and $t$.
 
-Proved by Halász [Ha] as a consequence of a more general multi-dimensional result.
+Proved by Halász [Ha77] as a consequence of a more general multi-dimensional result.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_362.variants.fixed_size :
@@ -61,7 +72,7 @@ theorem erdos_362.variants.fixed_size :
     ∀ (N : ℕ), 0 < N →
     ∀ (A : Finset ℕ), A.card = N →
     ∀ (t l : ℕ),
-    ((A.powerset.filter (fun S => decide (S.sum id = t ∧ S.card = l))).card : ℝ) ≤
+    ((A.powerset.filter (fun S => S.sum id = t ∧ S.card = l)).card : ℝ) ≤
       C * (2 : ℝ) ^ N / ((N : ℝ) ^ 2) := by
   sorry
 
