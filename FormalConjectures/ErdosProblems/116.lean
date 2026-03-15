@@ -31,13 +31,16 @@ Math. 6 (1958), 125–148.
 [Er61] Erdős, P., *Some unsolved problems*, Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
 221–254.
 
-[Po61] Pommerenke, Ch., *On the derivative of a polynomial*, Michigan Math. J. 6 (1959), 373–375.
+[Po61] Pommerenke, Ch., *On metric properties of complex polynomials*, Michigan Math. J. 8 (1961),
+97–115.
 
 [Po28] Pólya, G., *Beitrag zur Verallgemeinerung des Verzerrungssatzes auf mehrfach
-zusammenhängende Gebiete*, S.-B. Preuss. Akad. Wiss. (1928), 228–232.
+zusammenhängende Gebiete*, S.-B. Preuss. Akad. Wiss. (1928), 228–232, 280–282.
 
-[KLR25] Krishnapur, M., Lundberg, E., and Ramachandran, K., *On the area of the lemniscate of a
-polynomial*, 2025.
+[Wa88] Wagner, G., *On the area of lemniscate domains*, J. Analyse Math. 50 (1988), 159–167.
+
+[KLR25] Krishnapur, M., Lundberg, E., and Ramachandran, K., *On the area of polynomial
+lemniscates*, arXiv:2503.18270, 2025.
 -/
 
 open scoped ENNReal
@@ -50,10 +53,6 @@ namespace Erdos116
     the open sublevel set $\{z \in \mathbb{C} : |p(z)| < 1\}$. -/
 def lemniscateInterior (p : Polynomial ℂ) : Set ℂ :=
   {z : ℂ | ‖p.eval z‖ < 1}
-
-/-- The 2D area of a subset of $\mathbb{C}$, given by the 2-dimensional Hausdorff measure. -/
-noncomputable def area (S : Set ℂ) : ℝ≥0∞ :=
-  Measure.hausdorffMeasure 2 S
 
 /--
 Erdős–Herzog–Piranian Conjecture (Problem #116) [EHP58, Er61]:
@@ -73,7 +72,8 @@ The stronger lower bound $\gg (\log n)^{-1}$ was proved by Krishnapur, Lundberg,
 and Ramachandran [KLR25], which in particular settles this conjecture.
 
 Pólya [Po28] showed the area is always at most $\pi$, with equality only when all
-roots are equal.
+roots are equal. Wagner [Wa88] showed the existence of polynomials with measure
+$\ll_\varepsilon (\log \log n)^{-1/2+\varepsilon}$, providing a near-tight upper bound.
 -/
 @[category research solved, AMS 28 30]
 theorem erdos_116 : answer(True) ↔
@@ -81,7 +81,28 @@ theorem erdos_116 : answer(True) ↔
     ∀ (n : ℕ), 1 ≤ n →
     ∀ (roots : Fin n → ℂ), (∀ i, ‖roots i‖ ≤ 1) →
     ENNReal.ofReal (δ * (n : ℝ) ^ (-κ)) ≤
-      area (lemniscateInterior (∏ i : Fin n, (X - C (roots i)))) := by
+      volume (lemniscateInterior (∏ i : Fin n, (X - C (roots i)))) := by
+  sorry
+
+/--
+Stronger logarithmic lower bound for the lemniscate area (Problem #116) [KLR25]:
+
+Krishnapur, Lundberg, and Ramachandran proved that the area of the lemniscate interior
+$\{z : |p(z)| < 1\}$ of a degree-$n$ monic polynomial with roots in the unit disk satisfies
+$$
+  |\{z : |p(z)| < 1\}| \gg (\log n)^{-\gamma}
+$$
+for some universal constant $\gamma > 0$. In fact, they show $\gamma = 1$ suffices.
+This is strictly stronger than the polynomial bound `erdos_116` and captures
+the main result of [KLR25].
+-/
+@[category research solved, AMS 28 30]
+theorem erdos_116_log_lower_bound :
+    ∃ (γ δ : ℝ), 0 < δ ∧ 0 < γ ∧
+    ∀ (n : ℕ), 2 ≤ n →
+    ∀ (roots : Fin n → ℂ), (∀ i, ‖roots i‖ ≤ 1) →
+    ENNReal.ofReal (δ * (Real.log n) ^ (-γ)) ≤
+      volume (lemniscateInterior (∏ i : Fin n, (X - C (roots i)))) := by
   sorry
 
 end Erdos116
