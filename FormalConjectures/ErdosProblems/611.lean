@@ -26,8 +26,8 @@ clique of a graph $G$. Erdős, Gallai, and Tuza conjectured that if every maxima
 of $G$ on $n$ vertices has at least $cn$ vertices (for a fixed constant $c > 0$), then
 $\tau(G) = o(n)$.
 
-[EGT92] Erdős, P., Gallai, T., and Tuza, Z., _Covering the cliques of a graph with vertices_.
-Discrete Mathematics (1992).
+[EGT92] Erdős, P., Gallai, T., and Tuza, Zs., _Covering the cliques of a graph with vertices_.
+Discrete Mathematics (1992), 279-289.
 
 [Er94] Erdős, P., _Some old and new problems in various branches of combinatorics_.
 Discrete Mathematics (1994).
@@ -100,8 +100,24 @@ then $\tau(G) \le 1$. (This threshold is best possible.)
 @[category research solved, AMS 5]
 theorem erdos_611.variants.bollobas_erdos (n : ℕ) (hn : n ≥ 4)
     (G : SimpleGraph (Fin n)) :
-    AllMaxCliquesAtLeast G (n + 3 - 2 * Nat.sqrt n) →
+    AllMaxCliquesAtLeast G (⌈(n : ℝ) + 3 - 2 * Real.sqrt (n : ℝ)⌉₊) →
     cliqueTransversalNum G ≤ 1 := by
+  sorry
+
+/--
+**Erdős Problem 611** (k_c(n) estimation) [EGT92]:
+
+For $c > 0$, let $k_c(n)$ be the minimal value such that if every maximal clique of $G$ on
+$n$ vertices has at least $k_c(n)$ vertices, then $\tau(G) < (1 - c) n$. Erdős, Gallai, and
+Tuza proved that $k_c(n) \ge n^{c' / \log \log n}$ for some $c' > 0$ depending on $c$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_611.variants.kc_lower_bound (c : ℝ) (hc : 0 < c) (hc1 : c < 1) :
+    ∃ c' : ℝ, c' > 0 ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      ∀ G : SimpleGraph (Fin n),
+        AllMaxCliquesAtLeast G ⌈(n : ℝ) ^ (c' / Real.log (Real.log (n : ℝ)))⌉₊ →
+        (cliqueTransversalNum G : ℝ) < (1 - c) * (n : ℝ) := by
   sorry
 
 end Erdos611
