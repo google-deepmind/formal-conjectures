@@ -29,11 +29,15 @@ $f(9) = 8$. Erdős believed the upper bound is closer to the truth. In fact the
 lower bound is: Bennett, Cushman, Dudek, and Pralat [BCDP22] proved that
 $f(n) \sim \frac{5}{6}n$. Joos and Mubayi [JoMu22] found a shorter proof.
 
-[Er97b] Erdős, P. and Gyárfás, A., *A variant of the classical Ramsey problem* (1997).
+[Er97b] Erdős, P. and Gyárfás, A., *A variant of the classical Ramsey problem*,
+Combinatorica **17** (1997), 459–467.
 
-[BCDP22] Bennett, P., Cushman, R., Dudek, A., and Pralat, P. (2022).
+[BCDP22] Bennett, P., Cushman, R., Dudek, A., and Pralat, P.,
+*The Erdős–Gyárfás function f(n,4,5) = 5/6 n + o(n) — so Gyárfás was right*,
+arXiv:2207.02920 (2022).
 
-[JoMu22] Joos, F. and Mubayi, D. (2022).
+[JoMu22] Joos, F. and Mubayi, D., *Ramsey theory constructions from hypergraph matchings*,
+arXiv:2208.12563 (2022).
 -/
 
 open Classical Filter
@@ -41,15 +45,14 @@ open Classical Filter
 namespace Erdos136
 
 /-- An edge coloring of $K_n$ with colors from $\operatorname{Fin} k$, represented as a function
-on ordered pairs of vertices. -/
-def EdgeColoring (n k : ℕ) : Type := Fin n → Fin n → Fin k
+on unordered pairs of vertices via `Sym2`. -/
+def EdgeColoring (n k : ℕ) : Type := Sym2 (Fin n) → Fin k
 
 /-- The set of distinct colors used on edges within vertex subset $S$
-under coloring $\chi$ (using `offDiag` to enumerate all ordered pairs of
-distinct vertices in $S$). -/
+under coloring $\chi$, computed over the unordered pairs of distinct vertices in $S$. -/
 noncomputable def edgeColors {n k : ℕ} (χ : EdgeColoring n k)
     (S : Finset (Fin n)) : Finset (Fin k) :=
-  S.offDiag.image (fun p => χ p.1 p.2)
+  (S.offDiag.image (fun p => Sym2.mk p)).image χ
 
 /-- A coloring $\chi$ of $K_n$ is $K_4$-five-colored if every 4-element vertex subset
 has at least 5 distinct colors on its edges. -/
