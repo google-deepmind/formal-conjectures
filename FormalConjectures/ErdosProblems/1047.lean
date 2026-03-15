@@ -33,6 +33,15 @@ the set $\{ z : |f(z)| \leq 1 \}$ has two components and the one containing $0$ 
 not convex.
 
 Goodman [Go66] gave further examples, including $(z^2+1)(z-2)^2$ with explicit $c$.
+
+[EHP58] Erdős, P., Herzog, F., and Piranian, G., _Metric properties of polynomials_. J. Analyse
+Math. 6 (1958), 125-148.
+
+[Po61] Pommerenke, Ch., _On metric properties of complex polynomials_. Michigan Math. J. 8 (1961),
+97–115.
+
+[Go66] Goodman, A. W., _On the convexity of the level curves of a polynomial_. Proc. Amer. Math.
+Soc. 17 (1966), 358-361.
 -/
 
 open Complex Polynomial Set
