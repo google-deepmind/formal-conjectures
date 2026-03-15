@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 761
@@ -31,6 +32,8 @@ are no monochromatic oriented cycles.
 The first question is due to Erdős and Neumann-Lara. The second question is
 due to Erdős and Gimbel. A positive answer to the second question implies a
 positive answer to the first via the bound mentioned in Problem 760.
+
+[ErGi93] Erdős, P. and Gimbel, J., *Some problems and results in cochromatic theory* (1993).
 -/
 
 open SimpleGraph
@@ -59,20 +62,6 @@ noncomputable def dichromaticNumber {V : Type*} [Fintype V]
   sInf {k : ℕ | ∀ D : V → V → Prop, IsOrientation G D →
     ∃ c : V → Fin k, IsAcyclicColouring D k c}
 
-/-- A cochromatic colouring: each colour class induces either a complete
-subgraph or an independent set. -/
-def IsCochromaticColouring {V : Type*} (G : SimpleGraph V) (k : ℕ)
-    (c : V → Fin k) : Prop :=
-  ∀ i : Fin k,
-    (∀ u v, c u = i → c v = i → u ≠ v → G.Adj u v) ∨
-    (∀ u v, c u = i → c v = i → u ≠ v → ¬G.Adj u v)
-
-/-- The cochromatic number $\zeta(G)$: minimum number of colours in a cochromatic
-colouring. -/
-noncomputable def cochromaticNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {k : ℕ | ∃ c : V → Fin k, IsCochromaticColouring G k c}
-
 /--
 **Erdős Problem 761, Question 1** (Erdős–Neumann-Lara):
 
@@ -96,7 +85,7 @@ $G$ contains an induced subgraph with $\delta \geq n$.
 @[category research open, AMS 5]
 theorem erdos_761.variants.cochromatic : answer(sorry) ↔
     (∀ n : ℕ, ∃ m : ℕ, ∀ (s : ℕ) (G : SimpleGraph (Fin s)),
-      cochromaticNumber G ≥ m →
+      G.cochromaticNumber.toNat ≥ m →
         ∃ (S : Finset (Fin s)),
           dichromaticNumber (G.induce (↑S : Set (Fin s))) ≥ n) := by
   sorry
