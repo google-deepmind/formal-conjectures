@@ -31,13 +31,13 @@ Montgomery, Milojević, Pokrovskiy, and Sudakov [MMPS] showed that for sufficien
 $k$, the sum $\sum 1/a_i$ is in fact *maximised* (not minimised) when $G$ is a complete
 bipartite graph, suggesting the original minimisation conjecture is false.
 
-[GKS84] Gyárfás, A., Komlós, J., and Szemerédi, E., *On the distribution of cycle lengths in
-graphs*, J. Graph Theory 8 (1984), 441–462.
+[GKS84] Gyárfás, A., Komlós, J., and Szemerédi, E., _On the distribution of cycle lengths in
+graphs_. J. Graph Theory **8** (1984), 441–462.
 
-[LiMo20] Liu, H. and Montgomery, R., *A solution to Erdős and Hajnal's odd cycle problem*,
-J. Amer. Math. Soc. 36 (2023), 1191–1234.
+[LiMo20] Liu, H. and Montgomery, R., _A solution to Erdős and Hajnal's odd cycle problem_.
+J. Amer. Math. Soc. **36** (2023), 1191–1234.
 
-[MMPS] Montgomery, R., Milojević, A., Pokrovskiy, A., and Sudakov, B., *forthcoming*.
+[MMPS] Montgomery, R., Milojević, A., Pokrovskiy, A., and Sudakov, B., _forthcoming_.
 -/
 
 open SimpleGraph Finset
