@@ -26,7 +26,22 @@ girth $> 2s$. Must there be $\gg k^s$ many distinct cycle lengths in $G$?
 
 Erdős, Faudree, and Schelp proved it when $s = 2$.
 
-[SuVe08] Sudakov, B. and Verstraëte, J., *Cycle lengths in sparse graphs*. Combinatorica 28
+Sudakov and Verstraëte proved the full conjecture, and moreover showed that under the weaker
+assumption of average degree $k$ and girth $> 2s$, there are $\gg k^s$ many consecutive even
+integers that are cycle lengths in $G$.
+
+Additional thanks to Raphael Steiner.
+
+[Er92b] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Matematiche (Catania) (1992), 231–240.
+
+[Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is eighty,
+Vol. 2 (Keszthely, 1993), 97–132.
+
+[Er94b] Erdős, P., _Some old and new problems in various branches of combinatorics_.
+Discrete Math. 165/166 (1997), 227–231.
+
+[SuVe08] Sudakov, B. and Verstraëte, J., _Cycle lengths in sparse graphs_. Combinatorica 28
 (2008), 357–372.
 -/
 
@@ -39,7 +54,8 @@ def cycleLengths {V : Type*} (G : SimpleGraph V) : Set ℕ :=
   {n | ∃ (v : V) (p : G.Walk v v), p.IsCycle ∧ p.length = n}
 
 /--
-**Sudakov–Verstraëte Theorem (Erdős Problem 752)** [SuVe08]:
+**Erdős–Faudree–Schelp Conjecture (proved by Sudakov–Verstraëte)
+(Erdős Problem 752)** [Er92b][Er93][Er94b][SuVe08]:
 
 There exists an absolute constant $c > 0$ such that for every finite graph $G$
 with minimum degree at least $k$ and girth greater than $2s$, the number of
@@ -51,8 +67,8 @@ theorem erdos_752 : answer(True) ↔
     ∀ (V : Type*) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj]
       (k s : ℕ),
-      (∀ v : V, k ≤ G.degree v) →
-      (∀ (v : V) (p : G.Walk v v), p.IsCycle → 2 * s < p.length) →
+      k ≤ G.minDegree →
+      2 * s < G.girth →
       c * (k : ℝ) ^ s ≤ ((cycleLengths G).ncard : ℝ) := by
   sorry
 
