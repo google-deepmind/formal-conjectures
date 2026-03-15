@@ -26,7 +26,7 @@ that $\binom{|A|}{2} + \binom{|B|}{2} \leq \binom{f(N)}{2} + O(1)$, where $f(N)$
 size of a Sidon set in $\{1, \ldots, N\}$?
 
 [Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
-Combinatorics, Paul Erdős is Eighty, Vol. 2 (1996), 1–25.
+Combinatorics, Paul Erdős is Eighty **2** (1996), 1–25.
 
 OEIS: A143824, A227590, A003022
 -/
