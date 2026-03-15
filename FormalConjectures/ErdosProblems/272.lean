@@ -24,10 +24,14 @@ import FormalConjectures.Util.ProblemImports
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980), p. 20.
 
-[SiSo81] Simonovits, M. and Sós, V., *Intersection theorems for subsets of integers*. European
-Journal of Combinatorics (1981).
+[GSS80] Graham, R., Simonovits, M. and Sós, V., *A note on the intersection properties of subsets
+of integers*. Journal of Combinatorial Theory Series A (1980), 106–110.
 
-[Sz99] Szabó, T. (1999).
+[SiSo81] Simonovits, M. and Sós, V., *Intersection properties of subsets of integers*. European
+Journal of Combinatorics (1981), 363–372.
+
+[Sz99] Szabó, T., *Intersection properties of subsets of integers*. European Journal of
+Combinatorics (1999), 429–444.
 -/
 
 open Finset
@@ -65,11 +69,11 @@ $\leq N^2/2 + C \cdot N$, and
 theorem erdos_272 :
     ∃ C : ℝ, 0 < C ∧ ∀ N : ℕ, 1 ≤ N →
       (∀ (𝓕 : Finset (Finset ℕ)),
-        (∀ A ∈ 𝓕, A ⊆ Finset.Icc 1 N) →
+        (∀ A ∈ 𝓕, A ⊆ Icc 1 N) →
         (∀ A ∈ 𝓕, ∀ B ∈ 𝓕, A ≠ B → IsNonEmptyFiniteAP (A ∩ B)) →
         (𝓕.card : ℝ) ≤ (N : ℝ) ^ 2 / 2 + C * (N : ℝ)) ∧
       (∃ (𝓕 : Finset (Finset ℕ)),
-        (∀ A ∈ 𝓕, A ⊆ Finset.Icc 1 N) ∧
+        (∀ A ∈ 𝓕, A ⊆ Icc 1 N) ∧
         (∀ A ∈ 𝓕, ∀ B ∈ 𝓕, A ≠ B → IsNonEmptyFiniteAP (A ∩ B)) ∧
         (𝓕.card : ℝ) ≥ (N : ℝ) ^ 2 / 2 - C * (N : ℝ)) := by
   sorry
