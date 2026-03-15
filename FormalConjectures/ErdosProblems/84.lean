@@ -38,8 +38,11 @@ Matematiche (Catania) 47 (1992), 231–240.
 
 [Er97d] Erdős, P., _Some problems and results in combinatorial number theory_.
 
-[Ve04] Verstraëte, J., _On arithmetic progressions of cycle lengths in graphs_.
-Combin. Probab. Comput. 9 (2000), 369–373.
+[Ve04] Verstraëte, J., _On the number of sets of cycle lengths_.
+Combinatorica (2004), 719–730.
+
+[Ne25] Nenadov, R., _Improved bound on the number of cycle sets_.
+arXiv:2501.09904 (2025).
 -/
 
 open SimpleGraph
@@ -58,6 +61,8 @@ noncomputable def cycleSetCount (n : ℕ) : ℕ :=
 Erdős Problem 84, Part 2 (open) [Er94b][Er95][Er96][Er97d]:
 $f(n) / 2^{n/2} \to \infty$.
 That is, for every $B > 0$, for all sufficiently large $n$, $f(n) \geq B \cdot 2^{n/2}$.
+
+This is the main open conjecture; Part 1 (the solved upper bound) appears below as a variant.
 -/
 @[category research open, AMS 5]
 theorem erdos_84 :
@@ -80,6 +85,16 @@ theorem erdos_84.variants.subexponential :
     ∀ ε : ℝ, ε > 0 →
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
       (cycleSetCount n : ℝ) ≤ ε * (2 : ℝ) ^ n := by
+  sorry
+
+/--
+Erdős Problem 84, variant: does $\lim_{n \to \infty} f(n)^{1/n}$ exist, and if so, what is its
+value? This is noted as an open question on the website.
+-/
+@[category research open, AMS 5]
+theorem erdos_84.variants.limit_exists :
+    ∃ L : ℝ, Filter.Tendsto (fun n => (cycleSetCount n : ℝ) ^ ((1 : ℝ) / n))
+      Filter.atTop (nhds L) := by
   sorry
 
 end Erdos84
