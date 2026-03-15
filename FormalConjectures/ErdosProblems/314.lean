@@ -32,10 +32,11 @@ $n^2 \left|\sum_{k=n}^{m} \frac{1}{k} - 1\right| \ll \frac{1}{(\log n)^{5/4 - \d
 Erdős and Graham [ErGr80] believe the exponent $2$ is best possible, i.e.,
 $\liminf \varepsilon(n) n^{2+\delta} = \infty$ for all $\delta > 0$.
 
-[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
-theory_. Monographies de L'Enseignement Mathematique (1980).
+[ErGr80, p. 41] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
+number theory_. Monographies de L'Enseignement Mathematique (1980).
 
-[LiSt24] Lim, T. and Steinerberger, S., _On a problem of Erdős and Graham_ (2024).
+[LiSt24] Lim, J. and Steinerberger, S., _On differences of two harmonic numbers_.
+arXiv:2405.11354 (2024).
 -/
 
 open Finset BigOperators Filter Classical
@@ -74,6 +75,20 @@ $n \geq 1$ such that $n^2 \varepsilon(n) < \delta$.
 theorem erdos_314 : answer(True) ↔
     (∀ δ : ℝ, 0 < δ → ∀ N₀ : ℕ, ∃ n : ℕ, N₀ ≤ n ∧ 1 ≤ n ∧
       (n : ℝ) ^ 2 * erdos314Epsilon n < δ) := by
+  sorry
+
+/--
+Erdős–Graham optimality conjecture [ErGr80, p. 41]:
+
+The exponent $2$ in Problem 314 is best possible, i.e.,
+$\liminf_{n \to \infty} \varepsilon(n) n^{2+\delta} = \infty$ for all $\delta > 0$.
+
+Equivalently: for every $\delta > 0$ and every $C > 0$, for all sufficiently large $n$ with
+$n \geq 1$, we have $n^{2+\delta} \varepsilon(n) \geq C$.
+-/
+@[category research open, AMS 11 40]
+theorem erdos_314_optimality (δ : ℝ) (hδ : 0 < δ) :
+    Tendsto (fun n : ℕ => (n : ℝ) ^ (2 + δ) * erdos314Epsilon n) atTop atTop := by
   sorry
 
 end Erdos314
