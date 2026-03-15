@@ -22,13 +22,21 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/867](https://www.erdosproblems.com/867)
 
 Erdős asked whether a consecutive-sum-free subset of $\{1, \ldots, N\}$ can have at most
-$N/2 + C$ elements for some absolute constant $C$. This was disproved by Coppersmith and Phillips.
+$N/2 + C$ elements for some absolute constant $C$. This is a finitary version of
+[Problem #839](https://www.erdosproblems.com/839). Freud [Fr93] first disproved it by
+constructing sets of density ≥ 19/36. Coppersmith and Phillips [CoPh96] later proved the
+tighter bounds $(13/24)N - O(1) \le |A| \le (2/3 - 1/512)N + \log N$. Adenwalla observed
+the upper bound $|A| \le (2/3 + o(1))N$.
 
-[Er92c] Erdős, P., _Some of my favourite problems which recently have been solved_. Proceedings
+[Er92c] Erdős, P., _Some of my favourite problems which recently have been solved_, Proceedings
 of the international conference on set-theoretic topology and its applications, Part 2, Matsuyama
-(1992).
+(1992), p. 43.
 
-[CoPh96] Coppersmith, D. and Phillips, S., _Sums along the rationals_. Preprint (1996).
+[Fr93] Freud, R., _Adding numbers — on a problem of P. Erdős_, James Cook Mathematical Notes
+(1993), 6199–6202.
+
+[CoPh96] Coppersmith, D. and Phillips, S., _On a question of Erdős on subsequence sums_,
+SIAM J. Discrete Math. (1996), 173–177.
 -/
 
 open Finset
@@ -42,7 +50,7 @@ lies in $A$. -/
 def ConsecutiveSumFree (A : Finset ℕ) : Prop :=
   let s := A.sort (· ≤ ·)
   ∀ i j : ℕ, i < j → j < s.length →
-    (∑ k ∈ Finset.Icc i j, s.getD k 0) ∉ A
+    (∑ k ∈ Icc i j, s.getD k 0) ∉ A
 
 /--
 Erdős Problem 867 (disproved) [Er92c]:
