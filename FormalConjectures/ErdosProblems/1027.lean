@@ -28,7 +28,16 @@ $X = \bigcup_{A \in \mathcal{F}} A$.
 Must there exist $\gg_c 2^{|X|}$ many sets $B \subset X$ which intersect every set in
 $\mathcal{F}$, yet contain none of them?
 
-This was proved in the affirmative by Koishi Chan.
+Note: The existence of a single such set $B$ is equivalent to $\mathcal{F}$ having Property B
+(see Problem 901). This problem asks for a quantitative strengthening.
+
+This was proved in the affirmative by Koishi Chan, with contributions from Stijn Cambie.
+
+[Er64e] Erdős, P., _On a combinatorial problem. II_. Acta Mathematica Academiae Scientiarum
+Hungaricae **15** (1964), 445–447.
+
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97–109.
 -/
 
 open Finset
