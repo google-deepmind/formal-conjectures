@@ -27,9 +27,16 @@ $a_0 < a_1 < \ldots$ is any strictly increasing sequence of positive integers wi
 $\sum 1/a_n = 1$ other than the Sylvester sequence, is $\liminf a_n^{1/2^n} < c_0$,
 where $c_0$ is the Vardi constant?
 
-[Ka25] Kamio, 2025.
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number theory_.
+Monographies de L'Enseignement Mathématique (1980).
 
-[LiTa25] Li and Tang, 2025.
+[Ka25] Kamio, Y., _Asymptotic analysis of infinite decompositions of a unit fraction into unit
+fractions_. arXiv:2503.02317 (2025).
+
+[LiTa25] Li, Z. and Tang, Q., _On a conjecture of Erdős and Graham about the Sylvester's sequence_.
+arXiv:2503.12277 (2025).
+
+See also OEIS sequences A000058 and A076393.
 -/
 
 open Filter
@@ -50,7 +57,7 @@ def sylvesterU : ℕ → ℕ
 def sylvesterSeq (n : ℕ) : ℕ := sylvesterU n + 1
 
 /--
-Erdős Problem 315 (Erdős–Graham, 1980):
+Erdős Problem 315 [ErGr80, p.41]:
 
 The Sylvester sequence $(2, 3, 7, 43, 1807, \ldots)$ is defined by $s_0 = 2$ and
 $s_{n+1} = s_n^2 - s_n + 1$. It satisfies $\sum 1/s_n = 1$ and
@@ -61,7 +68,7 @@ sequence of positive integers with $\sum 1/a_n = 1$, other than the Sylvester
 sequence, then $\liminf a_n^{1/2^n} < c_0$. In other words, the Sylvester (greedy)
 representation uniquely maximizes the growth rate $\liminf$.
 
-This was proved independently by Kamio [Ka25] and Li–Tang [LiTa25].
+This was proved independently by Kamio [Ka25] and Li–Tang [LiTa25] in 2025.
 -/
 @[category research solved, AMS 11 40]
 theorem erdos_315 : answer(True) ↔
@@ -70,8 +77,8 @@ theorem erdos_315 : answer(True) ↔
       (∀ n, 0 < a n) →
       HasSum (fun n => (1 : ℝ) / (a n : ℝ)) 1 →
       a ≠ sylvesterSeq →
-      Filter.liminf (fun n => ((a n : ℝ)) ^ ((2 : ℝ) ^ (n : ℕ))⁻¹) atTop <
-        Filter.liminf (fun n => ((sylvesterSeq n : ℝ)) ^ ((2 : ℝ) ^ (n : ℕ))⁻¹) atTop := by
+      Filter.liminf (fun n => (a n : ℝ) ^ ((2 : ℝ) ^ (n : ℕ))⁻¹) atTop <
+        Filter.liminf (fun n => (sylvesterSeq n : ℝ) ^ ((2 : ℝ) ^ (n : ℕ))⁻¹) atTop := by
   sorry
 
 end Erdos315
