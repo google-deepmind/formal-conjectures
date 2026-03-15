@@ -25,7 +25,11 @@ Are there infinitely many $n$ such that $n - 2x^2$ is prime for all $x$ with $2x
 
 [Va99] Vaughan, R. C., *The Hardy-Littlewood Method*, 2nd ed., 1997.
 
-[EpGi10] Epure, R. and Gica, A., 2010.
+[EpGi10] Epure, R. and Gica, A., _Principal quadratic real fields in connection with some
+additive problems_. Bull. Math. Soc. Sci. Math. Roumanie (N.S.) (2010), 251–259.
+
+[MoWi89] Mollin, R. A. and Williams, H. C., _Period four and real quadratic fields of class
+number one_. Proc. Japan Acad. Ser. A Math. Sci. (1989), 89–93.
 -/
 
 namespace Erdos1140
@@ -42,7 +46,8 @@ with $2x^2 < n$?
 
 The known such $n$ are $2, 5, 7, 13, 31, 61, 181, 199$. Epure and Gica [EpGi10]
 proved that the only such $n \equiv 1 \pmod{4}$ are $5, 13, 61, 181$, and the only
-such $n \equiv 3 \pmod{4}$ are $7, 31, 199$ (with at most one exception).
+such $n \equiv 3 \pmod{4}$ are $7, 31, 199$ (with at most one exception,
+using [MoWi89]).
 This implies that, with at most one exception, the list above is complete.
 -/
 @[category research solved, AMS 11]
