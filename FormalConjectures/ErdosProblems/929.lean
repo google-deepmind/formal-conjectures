@@ -26,6 +26,9 @@ all $x$-smooth has positive upper density. Erdős conjectured that $S(k) \geq k^
 
 [Er76d] Erdős, P., *Problems in number theory and combinatorics*. Proceedings of the Sixth
 Manitoba Conference on Numerical Mathematics (1976), 35-58.
+
+[FGKMT18] Ford, K., Green, B., Konyagin, S., Maynard, J., Tao, T.,
+*Long gaps between primes*. Journal of the American Mathematical Society (2018), 65–105.
 -/
 
 namespace Erdos929
@@ -40,7 +43,7 @@ def smoothConsecutiveBlockSet (k x : ℕ) : Set ℕ :=
 
 /-- A set $S \subseteq \mathbb{N}$ has positive upper density: there exists $\delta > 0$ such that
 $|S \cap [1, N]| / N \geq \delta$ for infinitely many $N$. -/
-noncomputable def HasPositiveUpperDensity (S : Set ℕ) : Prop :=
+def HasPositiveUpperDensity (S : Set ℕ) : Prop :=
   ∃ δ : ℝ, δ > 0 ∧ ∀ N₀ : ℕ, ∃ N : ℕ, N ≥ N₀ ∧
     ((S ∩ {i | 1 ≤ i ∧ i ≤ N}).ncard : ℝ) / (N : ℝ) ≥ δ
 
