@@ -40,28 +40,37 @@ attribute [local instance] Classical.propDecidable
 
 namespace Erdos745
 
-/-- The simple graph on `Fin n` determined by a Boolean edge configuration. -/
-def toGraph745 {n : ℕ} (ec : Fin n → Fin n → Bool) : SimpleGraph (Fin n) where
-  Adj u v := u ≠ v ∧ ec (min u v) (max u v) = true
-  symm := fun _ _ ⟨hne, h⟩ => ⟨hne.symm, by rwa [min_comm, max_comm]⟩
-  loopless := fun v ⟨h, _⟩ => h rfl
+/-- An edge configuration on `Fin n`: a Boolean assignment to each
+unordered pair $\{i, j\}$ with $i < j$. -/
+abbrev EdgeConfig745 (n : ℕ) := {p : Fin n × Fin n // p.1 < p.2} → Bool
 
-/-- The number of edges in a Boolean edge configuration on `Fin n`
-(counting only pairs $i < j$ to avoid double-counting). -/
-def edgeCount745 {n : ℕ} (ec : Fin n → Fin n → Bool) : ℕ :=
-  (Finset.univ.filter (fun p : Fin n × Fin n => p.1 < p.2 ∧ ec p.1 p.2 = true)).card
+/-- The simple graph on `Fin n` determined by an edge configuration. -/
+def toGraph745 {n : ℕ} (ec : EdgeConfig745 n) : SimpleGraph (Fin n) where
+  Adj u v := ∃ h : min u v < max u v, ec ⟨(min u v, max u v), h⟩ = true
+  symm := by
+    intro u v ⟨h, he⟩
+    refine ⟨by rwa [min_comm, max_comm] at h, ?_⟩
+    have : (⟨(min u v, max u v), h⟩ : {p : Fin n × Fin n // p.1 < p.2}) =
+           ⟨(min v u, max v u), by rwa [min_comm, max_comm] at h⟩ := by
+      ext <;> simp [min_comm, max_comm]
+    rwa [← this]
+  loopless := fun v ⟨h, _⟩ => by simp at h
+
+/-- The number of edges in an edge configuration on `Fin n`. -/
+def edgeCount745 {n : ℕ} (ec : EdgeConfig745 n) : ℕ :=
+  (Finset.univ.filter (fun p : {p : Fin n × Fin n // p.1 < p.2} => ec p = true)).card
 
 /-- The probability weight of a specific edge configuration under the
 Erdős–Rényi model $G(n, 1/n)$: each edge is included independently
 with probability $1/n$. -/
-noncomputable def gnpWeight745 (n : ℕ) (ec : Fin n → Fin n → Bool) : ℝ :=
+noncomputable def gnpWeight745 (n : ℕ) (ec : EdgeConfig745 n) : ℝ :=
   (1 / (n : ℝ)) ^ edgeCount745 ec *
   (1 - 1 / (n : ℝ)) ^ (n.choose 2 - edgeCount745 ec)
 
 /-- The $G(n, 1/n)$-probability of a graph property $P$: the sum of weights
 over all edge configurations whose graph satisfies $P$. -/
 noncomputable def gnpProb745 (n : ℕ) (P : SimpleGraph (Fin n) → Prop) : ℝ :=
-  (Finset.univ.filter (fun ec : Fin n → Fin n → Bool =>
+  (Finset.univ.filter (fun ec : EdgeConfig745 n =>
     P (toGraph745 ec))).sum (gnpWeight745 n)
 
 /-- The size of the connected component containing vertex $v$ in graph $G$. -/
