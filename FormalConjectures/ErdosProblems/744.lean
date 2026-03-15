@@ -26,11 +26,17 @@ that must be deleted from $G$ to make it bipartite. Erdős asked whether $f_k(n)
 $n \to \infty$ for $k \ge 4$. Rödl and Tuza disproved this by showing that $f_k(n) = \binom{k-1}{2}$
 for all sufficiently large $n$.
 
-[Er81] Erdős, P.
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+  Combinatorica 1 (1981), 25–42.
 
-[EHS82] Erdős, P., Hajnal, A., and Szemerédi, E.
+[EHS82] Erdős, P. and Hajnal, A. and Szemerédi, E.,
+  _On almost bipartite large chromatic graphs_, Theory and practice of combinatorics (1982), 117–123.
 
-[RoTu85] Rödl, V. and Tuza, Zs.
+[Ga68] Gallai, T., _On covering of graphs_, Theory of Graphs, Proc. Coll. Tihany, Hungary (1968),
+  231–236.
+
+[RoTu85] Rödl, V. and Tuza, Zs., _On color critical graphs_, J. Combin. Theory Ser. B (1985),
+  204–213.
 -/
 
 open SimpleGraph Filter
