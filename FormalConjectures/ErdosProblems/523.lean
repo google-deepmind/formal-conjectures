@@ -22,6 +22,24 @@ import FormalConjectures.Util.ProblemImports
 Erdős asked whether the supremum of a random Rademacher polynomial on the unit
 circle is asymptotically $C\sqrt{n \log n}$ for some constant $C > 0$.
 
+Salem and Zygmund [SaZy54] proved that $\sqrt{n \log n}$ is the right order of
+magnitude. Halász [Ha73] settled the problem, proving this is true with $C = 1$.
+
+## References
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int.
+Közl. **6** (1961), 221–254, p.253.
+
+[SaZy54] Salem, R., Zygmund, A., _Some properties of trigonometric series whose
+terms have random signs_. Acta Mathematica (1954), 245–301.
+
+[Ha73] Halász, G., _On a result of Salem and Zygmund concerning random
+polynomials_. Studia Scientiarum Mathematicarum Hungarica (1973), 369–377.
+
+## Acknowledgements
+
+Thanks to Adrian Beker.
+
 *Reference:* [erdosproblems.com/523](https://www.erdosproblems.com/523)
 -/
 
@@ -63,6 +81,42 @@ theorem erdos_523 : answer(True) ↔
         (fun n => supNormCircle (fun k => ε k ω) n /
           Real.sqrt ((n : ℝ) * Real.log (n : ℝ)))
         atTop (nhds C) := by
+  sorry
+
+/--
+Halász's precise result: the constant $C$ in Erdős Problem 523 is exactly $1$.
+That is, almost surely,
+$$\max_{|z|=1} \left|\sum_{k \le n} \varepsilon_k z^k\right| / \sqrt{n \log n} \to 1.$$
+-/
+@[category research solved, AMS 42 60]
+theorem erdos_523_halasz :
+    ∀ {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+      {ε : ℕ → Ω → ℝ},
+    (∀ k, IsRademacher μ (ε k)) → iIndepFun ε μ →
+      ∀ᵐ ω ∂μ, Tendsto
+        (fun n => supNormCircle (fun k => ε k ω) n /
+          Real.sqrt ((n : ℝ) * Real.log (n : ℝ)))
+        atTop (nhds 1) := by
+  sorry
+
+/--
+Salem–Zygmund order-of-magnitude bound: the supremum of a random Rademacher
+polynomial on the unit circle is $\Theta(\sqrt{n \log n})$ almost surely.
+That is, there exist constants $0 < c \le C$ such that, almost surely, for all
+sufficiently large $n$,
+$$c \sqrt{n \log n} \le \max_{|z|=1} |f(z)| \le C \sqrt{n \log n}.$$
+-/
+@[category research solved, AMS 42 60]
+theorem erdos_523_salem_zygmund :
+    ∀ {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+      {ε : ℕ → Ω → ℝ},
+    (∀ k, IsRademacher μ (ε k)) → iIndepFun ε μ →
+      ∃ c C : ℝ, 0 < c ∧ c ≤ C ∧
+      ∀ᵐ ω ∂μ, ∀ᶠ (n : ℕ) in atTop,
+        c * Real.sqrt ((n : ℝ) * Real.log (n : ℝ)) ≤
+          supNormCircle (fun k => ε k ω) n ∧
+        supNormCircle (fun k => ε k ω) n ≤
+          C * Real.sqrt ((n : ℝ) * Real.log (n : ℝ)) := by
   sorry
 
 end Erdos523
