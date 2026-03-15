@@ -39,13 +39,16 @@ at Boulder, 1999.
 [Sc10] Schipperus, R., *Countable partition ordinals*, Ann. Pure Appl. Logic 161 (2010),
 no. 10, 1195–1215.
 
-[Da99] Darby, C., PhD thesis, 1999.
+[Da99] Darby, C., *Negative partition relations for ordinals $\omega^{\omega^\alpha}$*,
+J. Combin. Theory Ser. B (1999), 205–222.
 
-[La00] Larson, J.A., *A short proof of a partition theorem for the ordinal
-$\omega^\omega$*, Ann. Pure Appl. Logic 101 (2000), 97–106.
+[La00] Larson, J.A., *An ordinal partition avoiding pentagrams*, J. Symbolic Logic (2000),
+969–978.
 
 [HST10] Hajnal, A. and Larson, J.A., *Partition relations*, in: Handbook of Set Theory,
 Springer, 2010.
+
+See also Erdős problems 590, 591, 592.
 -/
 
 open Ordinal
@@ -57,8 +60,8 @@ than $\alpha$, linearly ordered by the natural ordering on ordinals. -/
 abbrev OrdinalSet (α : Ordinal) := {a : Ordinal // a < α}
 
 /-- The ordinal partition relation $\alpha \to (\beta, \gamma)^2$:
-every $2$-coloring of the pairs of elements of $\alpha$ (viewed as the linearly
-ordered set $\{0, 1, \ldots, \alpha\}$) contains either:
+every $2$-coloring of the pairs of elements of $\alpha$ (viewed as the set of
+ordinals less than $\alpha$) contains either:
 - an order-embedded copy of $\beta$ whose pairs are all colored $0$ (red), or
 - an order-embedded copy of $\gamma$ whose pairs are all colored $1$ (blue).
 
@@ -94,6 +97,20 @@ See also Hajnal–Larson, Chapter 2.9 of [HST10] for background and proof sketch
 @[category research solved, AMS 3 5]
 theorem erdos_118 : answer(False) ↔ ∀ (α : Ordinal), OrdPartition α α 3 →
       ∀ n : ℕ, 3 ≤ n → OrdPartition α α (↑n) := by
+  sorry
+
+/--
+Explicit counterexample to the Erdős–Hajnal conjecture (Problem 118):
+$\omega^{\omega^2} \to (\omega^{\omega^2}, 3)^2$ holds (i.e., $\omega^{\omega^2}$ is a
+partition ordinal), but $\omega^{\omega^2} \to (\omega^{\omega^2}, 5)^2$ fails.
+
+This was shown by Larson [La00] (the partition ordinal property) and the failure for $n = 5$
+follows from the counterexamples of Schipperus [Sc99, Sc10] and Darby [Da99].
+-/
+@[category research solved, AMS 3 5]
+theorem erdos_118_counterexample :
+    OrdPartition (ω ^ (ω ^ 2)) (ω ^ (ω ^ 2)) 3 ∧
+    ¬ OrdPartition (ω ^ (ω ^ 2)) (ω ^ (ω ^ 2)) 5 := by
   sorry
 
 end Erdos118
