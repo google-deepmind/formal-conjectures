@@ -59,7 +59,7 @@ theorem erdos_1058 :
       -- r is the next prime after q
       Nat.Prime r ∧ q < r ∧ (∀ p, Nat.Prime p → q < p → r ≤ p) ∧
       -- every prime factor of n! + 1 is either q or r
-      (∀ p, Nat.Prime p → p ∣ (n.factorial + 1) → p = q ∨ p = r)} := by
+      (n.factorial + 1).primeFactors ⊆ {q, r}} := by
   sorry
 
 end Erdos1058
