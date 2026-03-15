@@ -23,21 +23,26 @@ import FormalConjectures.Util.ProblemImports
 
 Is it true that $\operatorname{ex}(n; \{C_3, C_4\}) \sim (n/2)^{3/2}$?
 
+This is the $k = 2$ case of [Erdős Problem 574](https://www.erdosproblems.com/574).
+See also [Erdős Problem 765](https://www.erdosproblems.com/765) concerning
+$\operatorname{ex}(n; C_4)$ specifically.
+
+OEIS: [A006856](https://oeis.org/A006856)
+
 [Er71] Erdős, P., *Topics in combinatorial analysis*, 1971, p.103.
 [Er75] Erdős, P., *Problems and results on combinatorial number theory*, 1975.
-[ErSi82] Erdős, P. and Simonovits, M., 1982.
+[ErSi82] Erdős, P. and Simonovits, M., *Compactness results in extremal graph theory*.
+Combinatorica **2** (1982), 275-288.
 [Er93] Erdős, P., 1993, p.336.
+[KST54] Kővári, T., Sós, V. T., and Turán, P., *On a problem of K. Zarankiewicz*.
+Colloq. Math. **3** (1954), 50-57.
 -/
 
-open Filter
+open Filter SimpleGraph
 
 open scoped Topology Real
 
 namespace Erdos573
-
-/-- A simple graph is triangle-free ($C_3$-free) if no three vertices are mutually adjacent. -/
-def TriangleFree {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∀ u v w : V, G.Adj u v → G.Adj v w → ¬G.Adj u w
 
 /-- A simple graph is $C_4$-free if it contains no 4-cycle.
 The conditions $a \neq c$ and $b \neq d$ ensure the four vertices are distinct
@@ -47,10 +52,11 @@ def C4Free {V : Type*} (G : SimpleGraph V) : Prop :=
     G.Adj a b → G.Adj b c → G.Adj c d → ¬G.Adj d a
 
 /-- The extremal number $\operatorname{ex}(n; \{C_3, C_4\})$: the maximum number of edges in a
-simple graph on $n$ vertices containing neither a triangle nor a 4-cycle. -/
+simple graph on $n$ vertices containing neither a triangle ($C_3$, i.e. a $3$-clique)
+nor a 4-cycle ($C_4$). -/
 noncomputable def exC3C4 (n : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ G : SimpleGraph (Fin n),
-    TriangleFree G ∧ C4Free G ∧ G.edgeSet.ncard = k}
+    G.CliqueFree 3 ∧ C4Free G ∧ G.edgeSet.ncard = k}
 
 /--
 Is it true that $\operatorname{ex}(n; \{C_3, C_4\}) \sim (n/2)^{3/2}$?
@@ -66,7 +72,7 @@ Kővári, Sós, and Turán proved that the extremal number for forbidding $C_4$
 together with any odd cycle is $\sim (n/2)^{3/2}$. This problem asks whether
 the same holds when only $C_3$ (triangles) are forbidden alongside $C_4$.
 
-References: [Er71,p.103], [Er75], [ErSi82], [Er93,p.336]
+References: [Er71,p.103], [Er75], [ErSi82], [Er93,p.336], [KST54]
 -/
 @[category research open, AMS 5]
 theorem erdos_573 :
