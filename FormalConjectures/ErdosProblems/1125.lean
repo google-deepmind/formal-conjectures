@@ -24,11 +24,13 @@ import FormalConjectures.Util.ProblemImports
 If $f : \mathbb{R} \to \mathbb{R}$ satisfies $2f(x) \leq f(x+h) + f(x+2h)$ for every $x \in \mathbb{R}$
 and $h > 0$, must $f$ be monotonic?
 
-[Ke69] Kemperman, J.H.B., (1969) - proved the result for measurable $f$.
+[Ke69] Kemperman, J.H.B., _On the regularity of generalized convex functions_.
+Trans. Amer. Math. Soc. (1969), 69-93.
 
-[Er81b] Erdős, P., (1981).
+[Er81b] Erdős, P., _My Scottish Book 'Problems'_. The Scottish Book (1981), 27-35.
 
-[La84] Laczkovich, M., (1984) - solved the problem in the affirmative.
+[La84] Laczkovich, M., _On Kemperman's inequality 2f(x)≤f(x+h)+f(x+2h)_.
+Colloq. Math. (1984), 109-115.
 -/
 
 namespace Erdos1125
