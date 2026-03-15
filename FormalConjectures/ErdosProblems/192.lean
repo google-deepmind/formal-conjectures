@@ -31,11 +31,17 @@ that are permutations of each other)?
 
 The answer is: true for $d \le 3$, false for $d \ge 4$.
 
+[ErGr79] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+theory*.
+
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
 
 [Ke92] Keränen, V., *Abelian squares are avoidable on 4 letters*. Automata, languages and
 programming (Vienna, 1992), Lecture Notes in Comput. Sci. 623, Springer (1992), 41–52.
+
+[FiPu23] Fici, G. and Puzynina, S., *Abelian combinatorics on words: a survey*. Comput. Sci.
+Rev. (2023), Paper No. 100532.
 -/
 
 namespace Erdos192
