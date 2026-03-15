@@ -24,8 +24,14 @@ import FormalConjectures.Util.ProblemImports
 - [A039669](https://oeis.org/A039669)
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
-- [MiWe69] Mientka, W. E. and Weitzenkamp, R. C., On f-plentiful numbers, Journal of
-  Combinatorial Theory, Volume 7, Issue 4, December 1969, pages 374-377.
+- [MiWe69] Mientka, W. E. and Weitzenkamp, R. C., _On f-plentiful numbers_, Journal of
+  Combinatorial Theory, Volume 7, Issue 4, December 1969, pages 374–377.
+- [Va73] Vaughan, R. C., _Some applications of Montgomery's sieve_, Journal of Number Theory
+  **5** (1973), 64–79.
+- [Gu04] Guy, R., _Unsolved Problems in Number Theory_, 3rd ed. Springer, 2004, Problem A19.
+
+See also [Erdős Problem #236](https://www.erdosproblems.com/236) for the related conjecture that
+the number of $1 < 2^k < n$ for which $n - 2^k$ is prime is $o(\log n)$.
 
 -/
 
@@ -47,6 +53,8 @@ def Erdos1142Prop (n : ℕ) : Prop :=
 Are there infinitely many $n > 2$ such that $n - 2^k$ is prime for all $k \geq 1$ with $2^k < n$?
 
 The only known such $n$ are $4, 7, 15, 21, 45, 75, 105$ (OEIS [A039669](https://oeis.org/A039669)).
+The problem remains open; Vaughan [Va73] proved an upper bound showing qualifying $n$ are
+extremely sparse, suggesting the answer may be "no".
 -/
 @[category research open, AMS 11]
 theorem erdos_1142 :
