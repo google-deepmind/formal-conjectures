@@ -36,13 +36,23 @@ and similarly for $B$.
 Elsholtz [El01] proved there are no sets $A$, $B$, $C$ (all of size at least 2) such that
 $A + B + C$ agrees with the primes up to finitely many exceptions.
 
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
+p. 225.
+
+[Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._.
+
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
-number theory_. Monographies de L'Enseignement Mathematique (1980).
+number theory_. Monographies de L'Enseignement Mathematique (1980), p. 85.
+
+[El01] Elsholtz, C., _The inverse Goldbach problem_. Mathematika (2001), 151–158.
 
 [ElHa15] Elsholtz, C. and Harper, A. J., _Additive decompositions of sets with restricted
-prime factors_, (2015).
+prime factors_. Trans. Amer. Math. Soc. (2015), 7403–7427.
 
-[El01] Elsholtz, C., _A remark on Hofmann's conjecture_, (2001).
+[Gr90] Granville, A., _A note on sums of primes_. Canad. Math. Bull. (1990), 452–454.
+
+[TaZi23] Tao, T. and Ziegler, T., _Infinite partial sumsets in the primes_. J. Anal. Math.
+(2023), 375–389.
 -/
 
 namespace Erdos431
