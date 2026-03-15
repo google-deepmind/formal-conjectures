@@ -40,7 +40,8 @@ $n = q^2 + q + 1$ where $q$ is an even integer.
 [Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is
 eighty, Vol. 2 (Keszthely, 1993), 97–132.
 
-[HeMaYa21] He, J., Ma, J., Yang, T., _Cycles in graphs with extra edges_ (2021).
+[HeMaYa21] He, J., Ma, J., Yang, T., _Some extremal results on 4-cycles_.
+J. Combin. Theory Ser. B (2021).
 -/
 
 open SimpleGraph
