@@ -21,10 +21,18 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1109](https://www.erdosproblems.com/1109)
 
-[ErSa87] Erdős, P. and Sárközy, A., *On the number of pairs of integers with
-least common multiple not exceeding $x$*. (1987)
+[ErSa87] Erdős, P. and Sárközy, A., _On divisibility properties of integers of the form
+a + a'_. Acta Math. Hungar. (1987), 117–122.
 
-[Ko04] Konyagin, S. V. (2004)
+[Sa92c] Sárközy, G. N., _On a problem of P. Erdős_. Acta Math. Hungar. (1992), 271–282.
+
+[Gy01] Gyarmati, K., _On divisibility properties of integers of the form ab + 1_. Period. Math.
+Hungar. (2001), 71–79.
+
+[Ko04] Konyagin, S. V., _Problems of the set of square-free numbers_. Izv. Ross. Akad. Nauk
+Ser. Mat. (2004), 63–90.
+
+OEIS: A392164, A392165
 -/
 
 open Finset Pointwise Real
@@ -43,6 +51,9 @@ First studied by Erdős and Sárközy [ErSa87], who proved
 $$\log N \ll f(N) \ll N^{3/4} \cdot \log N.$$
 Konyagin [Ko04] improved this to
 $$(\log \log N) \cdot (\log N)^2 \ll f(N) \ll N^{11/15 + o(1)}.$$
+
+See also `erdos_1103` for the infinite analogue; upper bounds for this problem directly
+imply lower bounds for Problem 1103.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_1109 :
@@ -53,6 +64,25 @@ theorem erdos_1109 :
       (∀ a ∈ A, 1 ≤ a ∧ a ≤ N) →
       (∀ n ∈ A + A, Squarefree n) →
       (A.card : ℝ) ≤ C * (Real.log N) ^ k := by
+  sorry
+
+/--
+Weaker variant of `erdos_1109`: is $f(N) \leq N^{o(1)}$, i.e., does $f(N)$ grow
+sub-polynomially? This asks whether for every $\varepsilon > 0$, we have
+$f(N) \leq N^\varepsilon$ for all sufficiently large $N$.
+
+This is implied by the stronger polylogarithmic conjecture `erdos_1109`, but may be
+more tractable.
+-/
+@[category research open, AMS 5 11]
+theorem erdos_1109_subpolynomial :
+    answer(sorry) ↔
+    ∀ ε : ℝ, ε > 0 →
+    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
+    ∀ A : Finset ℕ,
+      (∀ a ∈ A, 1 ≤ a ∧ a ≤ N) →
+      (∀ n ∈ A + A, Squarefree n) →
+      (A.card : ℝ) ≤ (N : ℝ) ^ ε := by
   sorry
 
 end Erdos1109
