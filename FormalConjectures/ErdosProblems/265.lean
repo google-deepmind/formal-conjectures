@@ -29,7 +29,8 @@ theory_. Monographies de L'Enseignement Mathematique (1980).
 
 [Er88c] Erdős, P., _Problems and results on analytic number theory_ (1988).
 
-[KoTa24] Kovač, V. and Tao, T. (2024).
+[KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series.
+arXiv:2406.17593 (2024).
 -/
 
 open Filter
@@ -58,6 +59,40 @@ theorem erdos_265
     (h_sum_rat : ∃ q : ℚ, HasSum (fun n => (1 : ℝ) / (a n : ℝ)) (q : ℝ))
     (h_shifted_sum_rat : ∃ q : ℚ, HasSum (fun n => (1 : ℝ) / ((a n : ℝ) - 1)) (q : ℝ)) :
     Tendsto (fun n => ((a n : ℝ) ^ ((1 : ℝ) / (2 : ℝ) ^ (n : ℕ)))) atTop (nhds 1) := by
+  sorry
+
+/--
+Kovač and Tao [KoTa24] proved that there exists a strictly increasing sequence of integers
+with $a_n \ge 2$ such that both $\sum 1/a_n$ and $\sum 1/(a_n - 1)$ are rational and
+$a_n^{1/n} \to \infty$. This shows the conjectured bound in `erdos_265` is approximately tight.
+
+[KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series.
+         arXiv:2406.17593 (2024).
+-/
+@[category research solved, AMS 11 40]
+theorem erdos_265_kovac_tao :
+    ∃ a : ℕ → ℕ,
+      StrictMono a ∧
+      (∀ n, 2 ≤ a n) ∧
+      (∃ q : ℚ, HasSum (fun n => (1 : ℝ) / (a n : ℝ)) (q : ℝ)) ∧
+      (∃ q : ℚ, HasSum (fun n => (1 : ℝ) / ((a n : ℝ) - 1)) (q : ℝ)) ∧
+      Tendsto (fun n => ((a n : ℝ) ^ ((1 : ℝ) / (n : ℝ)))) atTop atTop := by
+  sorry
+
+/--
+Can $\limsup a_n^{1/2^n} > 1$ hold for a strictly increasing sequence with $a_n \ge 2$
+and both $\sum 1/a_n$ and $\sum 1/(a_n - 1)$ rational? This is the key remaining open
+question highlighted on erdosproblems.com. A positive answer would refute `erdos_265`.
+-/
+@[category research open, AMS 11 40]
+theorem erdos_265_limsup :
+    answer(sorry) ↔
+    ∃ a : ℕ → ℕ,
+      StrictMono a ∧
+      (∀ n, 2 ≤ a n) ∧
+      (∃ q : ℚ, HasSum (fun n => (1 : ℝ) / (a n : ℝ)) (q : ℝ)) ∧
+      (∃ q : ℚ, HasSum (fun n => (1 : ℝ) / ((a n : ℝ) - 1)) (q : ℝ)) ∧
+      1 < atTop.limsup (fun n => ((a n : ℝ) ^ ((1 : ℝ) / (2 : ℝ) ^ (n : ℕ)))) := by
   sorry
 
 end Erdos265
