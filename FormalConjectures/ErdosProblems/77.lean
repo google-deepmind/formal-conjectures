@@ -60,7 +60,7 @@ combinatorics_. Congressus Numerantium (1990).
 Vol. 2 (1993).
 
 [Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
-Congressus Numerantium 107 (1995).
+Congressus Numerantium **107** (1995).
 
 [Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
 **164** (1997), 81–85.
