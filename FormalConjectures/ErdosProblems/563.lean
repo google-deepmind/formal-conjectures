@@ -25,8 +25,8 @@ asserts that F(n, α) ~ c_α · log n for some constant c_α > 0.
 
 *Reference:* [erdosproblems.com/563](https://www.erdosproblems.com/563)
 
-[Er90b] Erdős, P., *Problems and results on graphs and hypergraphs: similarities and
-differences* (1990), p.21.
+[Er90b] Erdős, P., _Problems and results on graphs and hypergraphs: similarities and
+differences_. Mathematics of Ramsey theory, Algorithms Combin. 5 (1990), 12-28.
 -/
 
 open Finset Filter
