@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Extremal.Basic
+import Mathlib.Combinatorics.SimpleGraph.Circulant
 
 /-!
 # Erdős Problem 765
@@ -29,8 +31,13 @@ Erdős–Rényi and independently Brown showed that for $n = q^2 + q + 1$ with $
 prime power, $\mathrm{ex}(n; C_4) \geq \frac{q(q+1)^2}{2}$, which together with Reiman's
 upper bound gives $\mathrm{ex}(n; C_4) \sim \frac{1}{2} n^{3/2}$.
 
+Füredi [Fu83] proved exact values for $q > 13$:
+$\mathrm{ex}(n; C_4) = \frac{1}{2} q(q+1)^2$ when $n = q^2 + q + 1$ and $q$ is a prime power.
+
 [Er93] Erdős, P., *On some of my favourite theorems*. Combinatorics, Paul Erdős is eighty,
 Vol. 2 (Keszthely, 1993), 97–132.
+
+[Fu83] Füredi, Z., *Graphs without quadrilaterals*. J. Combin. Theory Ser. B (1983), 187–190.
 
 [MaYa23] Ma, J. and Yang, T., *On the extremal number of subdivisions*. Combinatorica 43
 (2023), 1019–1027.
@@ -39,22 +46,6 @@ Vol. 2 (Keszthely, 1993), 97–132.
 open SimpleGraph
 
 namespace Erdos765
-
-/-- The cycle graph $C_m$ on $m$ vertices ($m \geq 3$). -/
-def cycleGraph (m : ℕ) (_ : m ≥ 3) : SimpleGraph (Fin m) where
-  Adj i j := i ≠ j ∧ (j.val = (i.val + 1) % m ∨ i.val = (j.val + 1) % m)
-  symm := fun _ _ ⟨hne, h⟩ => ⟨hne.symm, h.elim Or.inr Or.inl⟩
-  loopless := fun _ ⟨h, _⟩ => h rfl
-
-/-- A graph $G$ contains $H$ as a subgraph via an injective graph homomorphism. -/
-def ContainsSubgraph {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → G.Adj (f u) (f v)
-
-/-- The Turán extremal number $\mathrm{ex}(n; H)$: the maximum number of edges in a
-simple graph on $n$ vertices that does not contain $H$ as a subgraph. -/
-noncomputable def extremalNumber {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
-  sSup {m : ℕ | ∃ G : SimpleGraph (Fin n),
-    ¬ContainsSubgraph G H ∧ G.edgeSet.ncard = m}
 
 /--
 Erdős Problem 765 (SOLVED):
@@ -69,7 +60,7 @@ $$\left|\frac{\mathrm{ex}(n; C_4)}{n^{3/2}} - \frac{1}{2}\right| < \varepsilon.$
 theorem erdos_765 :
     ∀ ε : ℝ, ε > 0 →
     ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
-      |(↑(extremalNumber (cycleGraph 4 (by omega)) n) / (n : ℝ) ^ ((3 : ℝ) / 2) - 1 / 2)| < ε := by
+      |(↑(extremalNumber n (cycleGraph 4)) / (n : ℝ) ^ ((3 : ℝ) / 2) - 1 / 2)| < ε := by
   sorry
 
 /--
@@ -80,14 +71,34 @@ $\mathrm{ex}(n; C_4) = \frac{n^{3/2}}{2} + O(n)$.
 Formally: there exists a constant $C > 0$ such that for all $n \geq 1$,
 $$\left|\mathrm{ex}(n; C_4) - \frac{n^{3/2}}{2}\right| \leq C \cdot n.$$
 
-His even stronger conjecture with $n/4$ second-order term was disproved by Ma–Yang [MaYa23].
+His even stronger conjecture $\mathrm{ex}(n; C_4) = \frac{n^{3/2}}{2} + \frac{n}{4} +
+O(n^{1/2})$ was disproved by Ma–Yang [MaYa23].
 -/
 @[category research open, AMS 5]
 theorem erdos_765.variants.refined :
     ∃ C : ℝ, 0 < C ∧
     ∀ n : ℕ, 1 ≤ n →
-      |(↑(extremalNumber (cycleGraph 4 (by omega)) n) - (n : ℝ) ^ ((3 : ℝ) / 2) / 2)| ≤
+      |(↑(extremalNumber n (cycleGraph 4)) - (n : ℝ) ^ ((3 : ℝ) / 2) / 2)| ≤
         C * (n : ℝ) := by
+  sorry
+
+/--
+Erdős's stronger conjecture (DISPROVED by Ma–Yang [MaYa23]):
+
+$\mathrm{ex}(n; C_4) = \frac{n^{3/2}}{2} + \frac{n}{4} + O(n^{1/2})$.
+
+Formally: there exists a constant $C > 0$ such that for all $n \geq 1$,
+$$\left|\mathrm{ex}(n; C_4) - \frac{n^{3/2}}{2} - \frac{n}{4}\right| \leq C \cdot n^{1/2}.$$
+
+This is a refinement of the O(n) variant; it pins down the second-order term as $n/4$.
+Ma and Yang showed this is false.
+-/
+@[category research solved, AMS 5]
+theorem erdos_765.variants.strong_conjecture :
+    ∃ C : ℝ, 0 < C ∧
+    ∀ n : ℕ, 1 ≤ n →
+      |(↑(extremalNumber n (cycleGraph 4)) - (n : ℝ) ^ ((3 : ℝ) / 2) / 2 -
+        (n : ℝ) / 4)| ≤ C * (n : ℝ) ^ ((1 : ℝ) / 2) := by
   sorry
 
 end Erdos765
