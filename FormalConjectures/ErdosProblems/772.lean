@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 772
@@ -29,20 +30,21 @@ Is it true that $H_k(n)/n^{1/2} \to \infty$? Or even $H_k(n) > n^{1/2+c}$ for so
 constant $c > 0$?
 
 **Proved**: The answer is yes, and in fact $H_k(n) \gg_k n^{2/3}$, proved by
-Alon and Erdős.
+Alon and Erdős. Erdős also proved the matching upper bound $H_k(n) \ll n^{2/3}$.
+Originally posed by Erdős [Er80e, Er84d].
+
+[Er80e] Erdős, P., *Some applications of Ramsey's theorem to additive number theory*.
+European Journal of Combinatorics (1980), 43–46.
+
+[Er84d] Erdős, P., *Extremal problems in number theory, combinatorics and geometry*.
+Proceedings of the International Congress of Mathematicians, Vol. 1, 2 (Warsaw, 1983) (1984),
+51–70.
 
 [AlEr85] Alon, N. and Erdős, P., *An application of graph theory to additive number theory*,
 European J. Combin. 6 (1985), 201–203.
 -/
 
 namespace Erdos772
-
-/-- A finite set of natural numbers is a Sidon set ($B_2$ set) if all pairwise
-sums are distinct: for $a, b, c, d \in S$ with $a + b = c + d$, we have
-$\{a, b\} = \{c, d\}$ as multisets. -/
-def IsSidonSet (S : Finset ℕ) : Prop :=
-  ∀ a ∈ S, ∀ b ∈ S, ∀ c ∈ S, ∀ d ∈ S,
-    a + b = c + d → (a = c ∧ b = d) ∨ (a = d ∧ b = c)
 
 /-- The additive representation count: the number of ordered pairs $(a, b) \in A \times A$
 with $a + b = m$. The condition $\|1_A \ast 1_A\|_\infty \leq k$ is equivalent to
@@ -64,7 +66,7 @@ theorem erdos_772 : answer(True) ↔
     ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       ∀ A : Finset ℕ, A.card = n →
         (∀ m : ℕ, addRepCount A m ≤ k) →
-        ∃ S : Finset ℕ, S ⊆ A ∧ IsSidonSet S ∧
+        ∃ S : Finset ℕ, S ⊆ A ∧ IsSidon (S : Set ℕ) ∧
           (S.card : ℝ) ≥ C * (n : ℝ) ^ ((1 : ℝ) / 2) := by
   sorry
 
@@ -81,8 +83,25 @@ theorem erdos_772.variants.alon_erdos_bound :
     ∃ C : ℝ, C > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       ∀ A : Finset ℕ, A.card = n →
         (∀ m : ℕ, addRepCount A m ≤ k) →
-        ∃ S : Finset ℕ, S ⊆ A ∧ IsSidonSet S ∧
+        ∃ S : Finset ℕ, S ⊆ A ∧ IsSidon (S : Set ℕ) ∧
           (S.card : ℝ) ≥ C * (n : ℝ) ^ ((2 : ℝ) / 3) := by
+  sorry
+
+/--
+Erdős Problem 772 — upper bound variant (Erdős [Er84d]):
+
+Erdős proved the matching upper bound $H_k(n) \ll n^{2/3}$: there exists an absolute constant
+$C > 0$ such that for every $k \geq 1$, eventually there exist $n$-element sets with additive
+representation bounded by $k$ whose largest Sidon subset has size at most $C \cdot n^{2/3}$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_772.variants.upper_bound :
+    ∃ C : ℝ, C > 0 ∧ ∀ k : ℕ, k ≥ 1 →
+    ∀ᶠ n in Filter.atTop,
+      ∃ A : Finset ℕ, A.card = n ∧
+        (∀ m : ℕ, addRepCount A m ≤ k) ∧
+        ∀ S : Finset ℕ, S ⊆ A → IsSidon (S : Set ℕ) →
+          (S.card : ℝ) ≤ C * (n : ℝ) ^ ((2 : ℝ) / 3) := by
   sorry
 
 end Erdos772
