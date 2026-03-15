@@ -26,10 +26,12 @@ be the integers less than $N_k$ coprime to $N_k$. Erdős conjectured that the fr
 consecutive gaps $a_{i+1} - a_i \le c \cdot N_k / \varphi(N_k)$ tends to a limit that is a
 continuous function of $c$. This was proved by Hooley.
 
+See also Problem 234, which is a more difficult variant using actual primes instead of primorials.
+
 [Er55c] Erdős, P., _Some problems on number theory_ (1955).
 
-[Ho65] Hooley, C., _On the difference of consecutive numbers prime to n_, Acta Arith. 8 (1963),
-343-347.
+[Ho65] Hooley, C., _On the difference between consecutive numbers prime to n. II_.
+Publ. Math. Debrecen (1965), 39–49.
 -/
 
 open Filter Nat Classical
@@ -42,7 +44,7 @@ namespace Erdos235
 noncomputable def primorial (k : ℕ) : ℕ := ∏ i ∈ Finset.range k, nth Nat.Prime i
 
 /-- The sorted list of natural numbers less than $n$ that are coprime to $n$. -/
-def sortedCoprimes (n : ℕ) : List ℕ :=
+def sortedTotatives (n : ℕ) : List ℕ :=
   ((Finset.range n).filter (fun a => Nat.Coprime a n)).sort (· ≤ ·)
 
 /-- Count consecutive gaps $\le$ threshold in a sorted list of naturals. -/
@@ -56,7 +58,7 @@ noncomputable def countSmallGaps : List ℕ → ℝ → ℕ
 that are at most $c \cdot N_k / \varphi(N_k)$. -/
 noncomputable def gapFraction (k : ℕ) (c : ℝ) : ℝ :=
   let Nk := primorial k
-  let residues := sortedCoprimes Nk
+  let residues := sortedTotatives Nk
   let threshold := c * (Nk : ℝ) / (Nat.totient Nk : ℝ)
   (countSmallGaps residues threshold : ℝ) / (Nat.totient Nk : ℝ)
 
@@ -78,6 +80,18 @@ theorem erdos_235 :
     ∃ f : ℝ → ℝ, Continuous f ∧
       ∀ c : ℝ, 0 ≤ c →
         Tendsto (fun k => gapFraction k c) atTop (nhds (f c)) := by
+  sorry
+
+/--
+Hooley's stronger result [Ho65] for Erdős Problem 235: the limiting distribution of
+normalized gaps between consecutive integers coprime to the $k$-th primorial is
+exponential, i.e., $f(c) = 1 - e^{-c}$. This implies `erdos_235` since
+$c \mapsto 1 - e^{-c}$ is continuous.
+-/
+@[category research solved, AMS 11]
+theorem erdos_235_hooley :
+    ∀ c : ℝ, 0 ≤ c →
+      Tendsto (fun k => gapFraction k c) atTop (nhds (1 - Real.exp (-c))) := by
   sorry
 
 end Erdos235
