@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
+import FormalConjecturesForMathlib.Data.Nat.Full
 
 /-!
 # Erdős Problem 380
@@ -23,21 +25,21 @@ import FormalConjectures.Util.ProblemImports
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
+
+See also: Problem 382.
+
+OEIS sequences: A070003, A388654, A387054, A389100.
 -/
 
-open Finset BigOperators
+open Finset BigOperators Nat
 
 namespace Erdos380
-
-/-- The largest prime factor of a natural number $n$. Returns $0$ if $n \le 1$. -/
-noncomputable def largestPrimeFactor380 (n : ℕ) : ℕ :=
-  n.factorization.support.sup id
 
 /-- An interval $[u, v]$ is *bad* if the greatest prime factor of $\prod_{u \le m \le v} m$
 occurs with exponent greater than $1$ in the factorization of that product. -/
 def IsBadInterval (u v : ℕ) : Prop :=
   let P := ∏ m ∈ Finset.Icc u v, m
-  let p := largestPrimeFactor380 P
+  let p := maxPrimeFac P
   u ≤ v ∧ 0 < p ∧ 1 < P.factorization p
 
 /-- A natural number $n$ is contained in at least one bad interval. -/
@@ -52,7 +54,7 @@ noncomputable def B380 (x : ℕ) : ℕ :=
 factor. -/
 noncomputable def squareDivCount380 (x : ℕ) : ℕ :=
   Set.ncard {n : ℕ | 1 ≤ n ∧ n ≤ x ∧
-    0 < largestPrimeFactor380 n ∧ (largestPrimeFactor380 n) ^ 2 ∣ n}
+    0 < maxPrimeFac n ∧ (maxPrimeFac n) ^ 2 ∣ n}
 
 /--
 Erdős Problem 380 [ErGr80, p. 73]:
@@ -72,6 +74,38 @@ theorem erdos_380 : answer(sorry) ↔
     ∃ x₀ : ℕ, ∀ x : ℕ, x₀ ≤ x →
       (1 - ε) * (squareDivCount380 x : ℝ) ≤ (B380 x : ℝ) ∧
       (B380 x : ℝ) ≤ (1 + ε) * (squareDivCount380 x : ℝ) := by
+  sorry
+
+/-- An interval $[u, v]$ is *very bad* if the product $\prod_{u \le m \le v} m$ is powerful
+(every prime factor appears with exponent $\ge 2$). -/
+def IsVeryBadInterval (u v : ℕ) : Prop :=
+  u ≤ v ∧ Nat.Powerful (∏ m ∈ Finset.Icc u v, m)
+
+/-- A natural number $n$ is contained in at least one very bad interval. -/
+def InVeryBadInterval (n : ℕ) : Prop :=
+  ∃ u v : ℕ, u ≤ n ∧ n ≤ v ∧ IsVeryBadInterval u v
+
+/-- The count of $n \le x$ contained in at least one very bad interval. -/
+noncomputable def VB380 (x : ℕ) : ℕ :=
+  Set.ncard {n : ℕ | 1 ≤ n ∧ n ≤ x ∧ InVeryBadInterval n}
+
+/-- The count of powerful numbers $n \le x$. -/
+noncomputable def powerfulCount380 (x : ℕ) : ℕ :=
+  Set.ncard {n : ℕ | 1 ≤ n ∧ n ≤ x ∧ Nat.Powerful n}
+
+/--
+Erdős Problem 380, "very bad" interval variant:
+
+An interval $[u,v]$ is *very bad* if $\prod_{u \le m \le v} m$ is powerful (every prime factor
+appears with exponent $\ge 2$). The number of $n \le x$ contained in at least one very bad
+interval should be asymptotically equivalent to the count of powerful numbers $\le x$.
+-/
+@[category research open, AMS 11]
+theorem erdos_380_very_bad : answer(sorry) ↔
+    ∀ ε : ℝ, 0 < ε →
+    ∃ x₀ : ℕ, ∀ x : ℕ, x₀ ≤ x →
+      (1 - ε) * (powerfulCount380 x : ℝ) ≤ (VB380 x : ℝ) ∧
+      (VB380 x : ℝ) ≤ (1 + ε) * (powerfulCount380 x : ℝ) := by
   sorry
 
 end Erdos380
