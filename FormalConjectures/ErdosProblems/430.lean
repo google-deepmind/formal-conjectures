@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.Prime.Composite
 
 /-!
 # Erdős Problem 430
@@ -30,6 +31,8 @@ Conjecture: for sufficiently large $n$, not all terms of the sequence are prime.
 Erdős and Graham [ErGr80] write 'preliminary calculations made by Selfridge indicate
 that this is the case but no proof is in sight'. For example if $n = 8$ we have
 $a_1 = 7$ and $a_2 = 5$ and then the sequence terminates.
+
+Note: This problem is equivalent to Erdős Problem 385 (see `erdos_385`).
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathematique (1980).
@@ -64,7 +67,7 @@ must contain a composite number.
 theorem erdos_430 :
     answer(sorry) ↔
     (∃ N : ℕ, ∀ n : ℕ, N ≤ n →
-    ∃ k : ℕ, 2 ≤ seq n k ∧ ¬(seq n k).Prime) := by
+    ∃ k : ℕ, (seq n k).Composite) := by
   sorry
 
 end Erdos430
