@@ -38,15 +38,21 @@ $$
 $$
 due to Razborov [Ra10].
 
+See also: Problem 712 (general case for r-uniform, k-clique).
+
+OEIS: [A140462](https://oeis.org/A140462)
+
 [Er61] Erdős, P., _Problems in combinatorics_ (1961).
 
-[Er71] Erdős, P., _Topics in combinatorial analysis_ (1971).
+[Er71] Erdős, P., _Topics in combinatorial analysis_. Proc. Second Louisiana Conf. on
+Combinatorics, Graph Theory and Computing (1971), 2–20.
 
 [Er74c] Erdős, P., _Problems and results on combinatorial number theory III_ (1974).
 
 [Er81] Erdős, P., _Combinatorial problems and results_ (1981).
 
-[Ra10] Razborov, A., _On 3-hypergraphs with forbidden 4-vertex configurations_ (2010).
+[Ra10] Razborov, A., _On 3-hypergraphs with forbidden 4-vertex configurations_.
+SIAM J. Discrete Math. (2010), 946–963.
 -/
 
 open Finset Filter
