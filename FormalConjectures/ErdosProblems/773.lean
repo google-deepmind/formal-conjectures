@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 773
@@ -26,17 +27,12 @@ A question of Alon and Erdős [AlEr85], who proved $|A| \geq N^{2/3-o(1)}$ is po
 by Landau) the density of the sums of two squares decays like $(\log N)^{-1/2}$.
 The lower bound was improved to $|A| \gg N^{2/3}$ by Lefmann and Thiele [LeTh95].
 
-[AlEr85] Alon, N. and Erdős, P., *On the size of the largest Sidon subset of a random set of integers*, 1985.
+[AlEr85] Alon, N. and Erdős, P., *An application of graph theory to additive number theory*. European Journal of Combinatorics (1985), 201–203.
 
-[LeTh95] Lefmann, H. and Thiele, T., *Point sets with distinct distances*, 1995.
+[LeTh95] Lefmann, H. and Thiele, T., *Point sets with distinct distances*. Combinatorica (1995), 379–408.
 -/
 
 namespace Erdos773
-
-/-- A finite set of natural numbers is a Sidon set if all pairwise sums are distinct. -/
-def IsSidonSet (S : Finset ℕ) : Prop :=
-  ∀ a ∈ S, ∀ b ∈ S, ∀ c ∈ S, ∀ d ∈ S,
-    a + b = c + d → (a = c ∧ b = d) ∨ (a = d ∧ b = c)
 
 /-- The set of perfect squares $\{1^2, 2^2, \ldots, N^2\}$. -/
 def squaresUpTo (N : ℕ) : Finset ℕ :=
@@ -56,7 +52,7 @@ Known bounds:
 theorem erdos_773 : answer(sorry) ↔
     ∀ ε : ℝ, ε > 0 →
       ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
-        ∃ A : Finset ℕ, A ⊆ squaresUpTo N ∧ IsSidonSet A ∧
+        ∃ A : Finset ℕ, A ⊆ squaresUpTo N ∧ IsSidon (↑A : Set ℕ) ∧
           (A.card : ℝ) ≥ (N : ℝ) ^ (1 - ε) := by
   sorry
 
