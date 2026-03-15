@@ -31,8 +31,10 @@ show that if $m > n$ then the set in question has size
 $\leq m^{O(1/\log\log m)}$, and that for any integer $s$ there exist infinitely
 many pairs $(m,n)$ such that the set in question has size $s$.
 
-[He25] Hegyvári, N., _On a problem of Erdős on integers which are simultaneously
-of the form $ab$ and $(a+k)(b+k)$_ (2025).
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[He25] Hegyvári, N., _An elementary question of Erdős and Graham_. arXiv:2503.24201 (2025).
 -/
 
 open Finset Real
@@ -70,6 +72,17 @@ theorem erdos_443.variants.upper_bound :
     ∃ C : ℝ, 0 < C ∧ ∃ m₀ : ℕ, ∀ m : ℕ, m₀ ≤ m →
     ∀ n : ℕ, 1 ≤ n → n < m →
     (commonProducts m n : ℝ) ≤ (m : ℝ) ^ (C / Real.log (Real.log (m : ℝ))) := by
+  sorry
+
+/-- Erdős Problem 443, variant:
+For any integer $s$, there exist infinitely many pairs $(m, n)$ such that
+$|\operatorname{productSet}(m) \cap \operatorname{productSet}(n)| = s$ (exact size).
+
+This is a strengthening of `erdos_443`, which only shows $\geq s$.
+Proved independently by Hegyvári [He25] and Cambie (unpublished). -/
+@[category research solved, AMS 5 11]
+theorem erdos_443.variants.exact_size (s : ℕ) :
+    ∀ m₀ : ℕ, ∃ m : ℕ, m₀ ≤ m ∧ ∃ n : ℕ, 1 ≤ n ∧ commonProducts m n = s := by
   sorry
 
 end Erdos443
