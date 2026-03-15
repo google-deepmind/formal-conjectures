@@ -25,11 +25,29 @@ Let $h(n)$ be maximal such that if $A \subseteq \mathbb{Z}$ with $|A| = n$ then 
 $B \subseteq A$ with $|B| \geq h(n)$ such that if $a_1 + \cdots + a_r = b_1 + \cdots + b_s$
 with $a_i, b_i \in B$ then $r = s$.
 
-Estimate $h(n)$.
+Estimate $h(n)$. This problem is open; the best known bounds are stated below.
 
 Erdős [Er62c] proved $h(n) \ll n^{5/6}$. Straus [St66] proved $h(n) \ll n^{1/2}$.
 Erdős noted $h(n) \gg n^{1/3}$. Erdős [Er62c] and Choi [Ch74b] improved the
 lower bound to $h(n) \gg (n \log n)^{1/3}$.
+
+See also: Problems #186, #874.
+
+## References
+
+[Er62c] Erdős, P., _Some remarks on number theory. III_. Mat. Lapok **13** (1962), 28–38.
+
+[Er65] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math. **VIII**
+(1965), 181–189.
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973).
+
+[St66] Straus, E. G., _On a problem in combinatorial number theory_. J. Math. Sci. **1**
+(1966), 77–80.
+
+[Ch74b] Choi, S. L. G., _On an extremal problem in number theory_. J. Number Theory **6**
+(1974), 105–111.
 -/
 
 namespace Erdos789
