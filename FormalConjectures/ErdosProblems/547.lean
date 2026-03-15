@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 547
@@ -23,32 +24,29 @@ import FormalConjectures.Util.ProblemImports
 
 If $T$ is a tree on $n$ vertices then $R(T) \leq 2n - 2$.
 
-This was conjectured by Burr and Erdős [BuEr76]. It follows from the Erdős–Sós
+This was conjectured by Burr [Bu74]. It follows from the Erdős–Sós
 conjecture [548], and has been proved for all large $n$ by Zhao [Zh11].
 
-[BuEr76] Burr, S. A. and Erdős, P. (1976).
+[Bu74] Burr, S. A., _Generalized Ramsey theory for graphs — a survey_.
+(1974), 52-75.
 
-[Zh11] Zhao, Y. (2011).
+[Zh11] Zhao, Y., _Proof of the (n/2-n/2-n/2) conjecture for large n_.
+Electronic Journal of Combinatorics (2011), Paper 27, 61 pages.
 -/
 
 open SimpleGraph
 
 namespace Erdos547
 
-/-- A graph $H$ contains a copy of graph $G$ (as a subgraph) if there is an injective
-function from $V(G)$ to $V(H)$ that preserves adjacency. -/
-def ContainsSubgraphCopy {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
-
-/-- The diagonal Ramsey number $R(G)$ for a graph $G$ on $\operatorname{Fin}(k)$: the minimum $N$
+/-- The diagonal Ramsey number $R(G)$ for a graph $G$: the minimum $N$
 such that every graph $H$ on $N$ vertices contains a copy of $G$ or its complement contains
 a copy of $G$. -/
-noncomputable def ramseyNumber {k : ℕ} (G : SimpleGraph (Fin k)) : ℕ :=
+noncomputable def ramseyNumber {U : Type*} (G : SimpleGraph U) : ℕ :=
   sInf {N : ℕ | ∀ (H : SimpleGraph (Fin N)),
-    ContainsSubgraphCopy G H ∨ ContainsSubgraphCopy G Hᶜ}
+    G.IsContained H ∨ G.IsContained Hᶜ}
 
 /--
-Erdős Problem 547 [BuEr76]:
+Erdős Problem 547 [Bu74]:
 
 If $T$ is a tree on $n$ vertices then $R(T) \leq 2n - 2$.
 -/
