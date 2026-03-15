@@ -34,17 +34,41 @@ Known results:
 - Erdős [Er60b] proved that for $d \geq 4$,
   $f_d(n) = \left(\frac{p-1}{2p} + o(1)\right) n^2$ where $p = \lfloor d/2 \rfloor$.
 - Swanepoel [Sw09] gave exact values for all $d \geq 4$ and sufficiently large $n$.
+
+Related problems: #132, #1084.
+
+## References
+
+[Er46b] Erdős, P., _On sets of distances of n points_, American Mathematical Monthly (1946),
+248–250.
+
+[Er57] Erdős, P., _Some unsolved problems_, 1957.
+
+[Er60b] Erdős, P., _On sets of distances of n points in Euclidean space_, Magyar Tudományos
+Akadémia Matematikai Kutatóintézet Közleményei (1960), 165–169.
+
+[Er75f] Erdős, P., _Problems and results in combinatorial geometry_, 1975, p. 102.
+
+[Gr56] Grünbaum, B., _A proof of Vázsonyi's conjecture_, Bulletin of the Research Council
+of Israel, Section A (1956), 77–78.
+
+[He56] Heppes, A., _Beweis einer Vermutung von A. Vázsonyi_, Acta Mathematica Academiae
+Scientiarum Hungaricae (1956), 463–466.
+
+[HoPa34] Hopf, H., Pannwitz, E., _Aufgabe 167_, Jahresbericht der Deutschen
+Mathematiker-Vereinigung (1934), 114.
+
+[St57] Straszewicz, S., _Sur un problème géométrique de P. Erdős_, Bulletin of the Polish
+Academy of Sciences, Class III (1957), 39–40.
+
+[Sw09] Swanepoel, K. J., _Unit distances and diameters in Euclidean spaces_, Discrete &
+Computational Geometry (2009), 1–27.
 -/
 
 open Classical
+open scoped EuclideanGeometry
 
 namespace Erdos223
-
-/-- The number of unordered pairs $\{x, y\}$ in $A$ with $x \neq y$ and
-$\operatorname{dist}(x, y) = 1$. Defined as half the ordered pair count
-(always even by symmetry of $\operatorname{dist}$). -/
-noncomputable def unitDistPairs {d : ℕ} (A : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
-  ((A ×ˢ A).filter (fun p => p.1 ≠ p.2 ∧ dist p.1 p.2 = 1)).card / 2
 
 /--
 Erdős Problem 223 ($d \geq 4$), upper bound — Erdős [Er60b]:
@@ -54,11 +78,12 @@ $\left(\frac{p-1}{2p} + \varepsilon\right) n^2$ unit-distance pairs.
 -/
 @[category research solved, AMS 52]
 theorem erdos_223 (d : ℕ) (hd : 4 ≤ d) (ε : ℝ) (hε : 0 < ε) :
-    ∃ N₀ : ℕ, ∀ (A : Finset (EuclideanSpace ℝ (Fin d))),
+    ∃ N₀ : ℕ, ∀ (A : Finset (ℝ^ d)),
       N₀ ≤ A.card →
       (∀ x ∈ A, ∀ y ∈ A, dist x y ≤ 1) →
-      (unitDistPairs A : ℝ) ≤
-        ((↑(d / 2) - 1) / (2 * ↑(d / 2)) + ε) * (A.card : ℝ) ^ 2 := by
+      let p := d / 2
+      (unitDistNum A : ℝ) ≤
+        ((↑p - 1) / (2 * ↑p) + ε) * (A.card : ℝ) ^ 2 := by
   sorry
 
 /--
@@ -70,10 +95,11 @@ $\left(\frac{p-1}{2p} - \varepsilon\right) n^2$ unit-distance pairs.
 @[category research solved, AMS 52]
 theorem erdos_223.variants.d_ge4_lower (d : ℕ) (hd : 4 ≤ d) (ε : ℝ) (hε : 0 < ε) :
     ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
-      ∃ A : Finset (EuclideanSpace ℝ (Fin d)),
+      ∃ A : Finset (ℝ^ d),
         A.card = n ∧
         (∀ x ∈ A, ∀ y ∈ A, dist x y ≤ 1) ∧
-        ((↑(d / 2) - 1) / (2 * ↑(d / 2)) - ε) * (n : ℝ) ^ 2 ≤ (unitDistPairs A : ℝ) := by
+        let p := d / 2
+        ((↑p - 1) / (2 * ↑p) - ε) * (n : ℝ) ^ 2 ≤ (unitDistNum A : ℝ) := by
   sorry
 
 /--
@@ -84,20 +110,20 @@ occurs between at most $n$ pairs.
 @[category research solved, AMS 52]
 theorem erdos_223.variants.d2_upper (A : Finset (EuclideanSpace ℝ (Fin 2)))
     (hdiam : ∀ x ∈ A, ∀ y ∈ A, dist x y ≤ 1) :
-    unitDistPairs A ≤ A.card := by
+    unitDistNum A ≤ A.card := by
   sorry
 
 /--
 Erdős Problem 223 ($d = 2$), tightness:
-For every $n \geq 2$, there exist $n$ points in $\mathbb{R}^2$ with diameter $1$ and
+For every $n \geq 3$, there exist $n$ points in $\mathbb{R}^2$ with diameter $1$ and
 exactly $n$ pairs at distance $1$.
 -/
 @[category research solved, AMS 52]
-theorem erdos_223.variants.d2_tight (n : ℕ) (hn : 2 ≤ n) :
+theorem erdos_223.variants.d2_tight (n : ℕ) (hn : 3 ≤ n) :
     ∃ A : Finset (EuclideanSpace ℝ (Fin 2)),
       A.card = n ∧
       (∀ x ∈ A, ∀ y ∈ A, dist x y ≤ 1) ∧
-      unitDistPairs A = n := by
+      unitDistNum A = n := by
   sorry
 
 /--
@@ -109,7 +135,7 @@ occurs between at most $2n - 2$ pairs.
 theorem erdos_223.variants.d3_upper (A : Finset (EuclideanSpace ℝ (Fin 3)))
     (hdiam : ∀ x ∈ A, ∀ y ∈ A, dist x y ≤ 1)
     (hcard : 2 ≤ A.card) :
-    unitDistPairs A ≤ 2 * A.card - 2 := by
+    unitDistNum A ≤ 2 * A.card - 2 := by
   sorry
 
 /--
@@ -122,7 +148,7 @@ theorem erdos_223.variants.d3_tight (n : ℕ) (hn : 2 ≤ n) :
     ∃ A : Finset (EuclideanSpace ℝ (Fin 3)),
       A.card = n ∧
       (∀ x ∈ A, ∀ y ∈ A, dist x y ≤ 1) ∧
-      unitDistPairs A = 2 * n - 2 := by
+      unitDistNum A = 2 * n - 2 := by
   sorry
 
 end Erdos223
