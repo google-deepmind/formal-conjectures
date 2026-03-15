@@ -25,8 +25,10 @@ with $\alpha > 2$.
 
 *Reference:* [erdosproblems.com/1143](https://www.erdosproblems.com/1143)
 
-[Va99] Vaughan, R.C., *On a problem of Erdős, Straus, and Schinzel*, Combinatorica 19 (1999),
-111–115.
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+  "Paul Erdős and his mathematics", Budapest, July 1999 (1999), §1.8.
+
+See also: Erdős Problem 970 (Jacobsthal's function), which is closely related.
 -/
 
 open Finset
@@ -35,11 +37,15 @@ namespace Erdos1143
 
 /-- Count of integers in $\{n+1, \ldots, n+k\}$ divisible by at least one element of $S$. -/
 def countDivisible (S : Finset ℕ) (k n : ℕ) : ℕ :=
-  ((Icc (n + 1) (n + k)).filter (fun m =>
-    (S.filter (· ∣ m)).Nonempty)).card
+  ((Icc (n + 1) (n + k)).filter (fun m => ∃ p ∈ S, p ∣ m)).card
+
+/-- $F_k(S)$ is the minimum, over all starting points $n$, of the count of integers in
+$\{n+1, \ldots, n+k\}$ divisible by at least one element of $S$. -/
+noncomputable def F_k (S : Finset ℕ) (k : ℕ) : ℕ :=
+  iInf (countDivisible S k)
 
 /--
-Erdős Problem 1143 [Va99, §1.8]:
+Erdős Problem 1143 [Va99, 1.8]:
 
 Let $p_1 < \cdots < p_u$ be primes and $k \geq 1$. Define $F_k(p_1, \ldots, p_u)$ to be the
 minimum, over all starting points $n \geq 0$, of the count of integers in
@@ -55,6 +61,8 @@ We formalize a sieve lower bound: for any finite set of primes $S$,
 every interval of $k$ consecutive positive integers contains at least
 $$k \cdot \left(1 - \prod_{p \in S}\left(1 - \frac{1}{p}\right)\right) - 2^{|S|}$$
 multiples of some element of $S$.
+The error term $2^{|S|}$ arises from truncated inclusion-exclusion, where each of the
+$2^{|S|}$ subsets of $S$ contributes at most $1$ to the rounding error.
 The open problem is to determine sharper estimates, particularly
 the exact value of $F_k$ for $\alpha > 3$.
 -/
