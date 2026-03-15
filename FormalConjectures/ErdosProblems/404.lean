@@ -66,8 +66,8 @@ Is there a prime $p$ and strictly increasing sequence $a_1 < a_2 < \cdots$ of na
 numbers such that the $p$-adic valuation of the partial sums $\sum_{i \leq k} a_i!$ tends
 to infinity?
 
-This is expected to be a consequence of Part 1: if $f(a,p)$ is always finite, then for any
-sequence starting at $a_1$, the $p$-adic valuation of partial sums is bounded by
+If Part 1 is true (i.e., $f(a,p)$ is always finite), then the answer to Part 2 is negative:
+for any sequence starting at $a_1$, the $p$-adic valuation of partial sums is bounded by
 $f(a_1, p)$.
 -/
 @[category research open, AMS 11]
