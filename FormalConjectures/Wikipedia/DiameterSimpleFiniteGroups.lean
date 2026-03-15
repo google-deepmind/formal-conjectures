@@ -40,12 +40,15 @@ bound in $n$.
 
 namespace BabaiSeressConjectures
 
-/-- The (undirected) Cayley graph of a group $G$ with respect to a (symmetric) generating set $S$. Two elements $g, h \in G$ are
-adjacent iff $g^{-1} h \in S$.
+/-- The (undirected) Cayley graph of a group $G$ with respect to a generating set $S$.
+Two elements $g, h \in G$ are adjacent iff $g \neq h$ and
+$g^{-1} h \in S$ or $h^{-1} g \in S$.
 
 This is constructed using `SimpleGraph.fromRel`, which takes the relation
 $g \sim h \iff g^{-1} h \in S$ and automatically symmetrizes it (via disjunction with the
-reverse relation) and enforces irreflexivity (via $g \neq h$). -/
+reverse relation) and enforces irreflexivity (via $g \neq h$). In particular, this definition
+effectively uses the symmetrization $S \cup S^{-1}$, so it produces a standard undirected
+Cayley graph even when $S$ is not itself symmetric. -/
 def cayleyGraph {G : Type*} [Group G] (S : Set G) : SimpleGraph G :=
   SimpleGraph.fromRel (fun g h => g⁻¹ * h ∈ S)
 
