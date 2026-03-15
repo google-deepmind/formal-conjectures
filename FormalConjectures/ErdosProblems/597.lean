@@ -24,9 +24,11 @@ every graph G on at most ℵ₁ vertices that is K₄-free and contains no K_{�
 
 *Reference:* [erdosproblems.com/597](https://www.erdosproblems.com/597)
 
-[Er87] Erdős, P., _Some problems on finite and infinite graphs_, 1987.
+[Er87] Erdős, P., _Some problems on finite and infinite graphs_, Logic and combinatorics,
+Contemp. Math. **65** (1987), 223–228.
 
-[Va99] Todorcevic, S., _Partition Problems in Topology_, 1999, Problem 7.84.
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999, §7.84.
 -/
 
 open Cardinal SimpleGraph
@@ -52,7 +54,10 @@ Here a "copy of $\beta$" is given by an order embedding
 $e : \operatorname{OrdinalSet}(\beta) \hookrightarrow \operatorname{OrdinalSet}(\alpha)$,
 and monochromaticity means $f(e(i), e(j)) = 0$ for all $i < j$. A "copy of $G$"
 is an injective map $g : V \to \operatorname{OrdinalSet}(\alpha)$ such that every edge of $G$
-maps to a pair colored $1$. -/
+maps to a pair colored $1$.
+
+Note: the coloring `f` is not required to be symmetric — only the "upper triangle"
+(pairs with `i < j`) is consulted. -/
 def OrdGraphPartition (α β : Ordinal) {V : Type*} (G : SimpleGraph V) : Prop :=
   ∀ (f : OrdinalSet α → OrdinalSet α → Fin 2),
     (∃ e : OrdinalSet β ↪o OrdinalSet α,
