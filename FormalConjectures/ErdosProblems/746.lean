@@ -25,6 +25,20 @@ A conjecture of Erdős and Rényi [ErRe66]. Pósa [Po76] showed this with $Cn \l
 for some large $C$, Korshunov [Ko77] improved the threshold, and Komlós and Szemerédi [KoSz83]
 proved the sharp result that with $(1/2)n \log n + (1/2)n \log \log n + cn$ edges the probability
 of being Hamiltonian tends to $e^{-e^{-2c}}$.
+
+[Er71] Erdős, P., _Topics in combinatorial analysis_. Proc. Second Louisiana Conf. on
+Combinatorics, Graph Theory and Computing (1971), 2–20.
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_.
+Combinatorica **1** (1981), 25–42.
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_.
+L'Enseignement Math. **27** (1982), 163–176.
+[ErRe66] Erdős, P. and Rényi, A., _On the existence of a factor of degree one of a connected
+random graph_. Acta Math. Acad. Sci. Hungar. (1966), 359–368.
+[Po76] Pósa, L., _Hamiltonian circuits in random graphs_. Discrete Math. (1976), 359–364.
+[Ko77] Korshunov, A. D., _Solution of a problem of P. Erdős and A. Rényi on Hamiltonian cycles
+in nonoriented graphs_. Diskret. Analiz (1977), 17–56, 90.
+[KoSz83] Komlós, J. and Szemerédi, E., _Limit distribution for the existence of Hamiltonian
+cycles in a random graph_. Discrete Math. (1983), 55–63.
 -/
 
 open SimpleGraph Finset
@@ -55,7 +69,7 @@ noncomputable def gnmFraction (n m : ℕ) (P : SimpleGraph (Fin n) → Prop) : �
   ((graphsWithEdges n m).card : ℝ)
 
 /--
-Erdős Problem 746 [ErRe66, KoSz83]:
+Erdős Problem 746 [Er71, p.98], [Er81, p.16], [Er82e, p.69]:
 
 For every $\varepsilon > 0$, almost surely a random graph on $n$ vertices with at least
 $(1/2 + \varepsilon) \cdot n \cdot \log n$ edges is Hamiltonian.
