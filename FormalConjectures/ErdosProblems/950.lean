@@ -29,7 +29,8 @@ Is it true that $f(n) = o(\log \log n)$?
 This function was considered by de Bruijn, Erdős, and Turán, who showed that
 $\sum_{n < x} f(n) \sim \sum_{n < x} f(n)^2 \sim x$.
 
-[Er77c] Erdős, P., *Problems and results on number theory and combinatorics*.
+[Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._. Number Theory Day
+(Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43–72.
 -/
 
 namespace Erdos950
