@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 144
@@ -23,20 +24,22 @@ import FormalConjectures.Util.ProblemImports
 
 [Er61, Er77c, Er79, Er79e, ErGr80, Er81h, Er82e, Er85e, Er97c, Er98] Erdős, P., various papers.
 
-[MaTe84] Maier, H. and Tenenbaum, G., *On the set of divisors of an integer*, Invent. Math. 76
+[ErHa79] Erdős, P. and Hall, R. R., *The propinquity of divisors*, Bull. London Math. Soc.
+(1979), 304–307.
+
+[MaTe84] Maier, H. and Tenenbaum, G., *On the set of divisors of an integer*, Invent. Math. **76**
 (1984), 121–128.
+
+*Related problems:* [449](https://www.erdosproblems.com/449),
+[884](https://www.erdosproblems.com/884)
+
+*OEIS:* [A005279](https://oeis.org/A005279)
 -/
-
-open Filter
-
-open scoped Topology
-
-attribute [local instance] Classical.propDecidable
 
 namespace Erdos144
 
 /-- A positive integer $n$ has two divisors $d_1, d_2$ with $d_1 < d_2 < 2d_1$. -/
-def HasCloseConsecutiveDivisors (n : ℕ) : Prop :=
+def HasCloseDivisorPair (n : ℕ) : Prop :=
   ∃ d₁ d₂ : ℕ, d₁ ∣ n ∧ d₂ ∣ n ∧ d₁ < d₂ ∧ d₂ < 2 * d₁
 
 /--
@@ -51,12 +54,20 @@ Proved by Maier and Tenenbaum [MaTe84].
 -/
 @[category research solved, AMS 11]
 theorem erdos_144 :
-    Tendsto
-      (fun N : ℕ =>
-        (((Finset.range N).filter (fun n => HasCloseConsecutiveDivisors (n + 1))).card : ℝ) /
-        (N : ℝ))
-      atTop
-      (𝓝 (1 : ℝ)) := by
+    {n : ℕ | HasCloseDivisorPair n}.HasDensity 1 := by
+  sorry
+
+/--
+Erdős Problem 144, generalized [MaTe84]:
+For any constant $c > 1$, the density of integers which have two divisors
+$d_1, d_2$ such that $d_1 < d_2 < c \cdot d_1$ exists and is equal to $1$.
+
+This is the stronger result proved by Maier and Tenenbaum, generalizing the
+original problem where $c = 2$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_144_generalized (c : ℝ) (hc : 1 < c) :
+    {n : ℕ | ∃ d₁ d₂ : ℕ, d₁ ∣ n ∧ d₂ ∣ n ∧ d₁ < d₂ ∧ (d₂ : ℝ) < c * d₁}.HasDensity 1 := by
   sorry
 
 end Erdos144
