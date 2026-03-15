@@ -31,9 +31,11 @@ The lower bound was improved to $(21/16)n$ by Fan [Fa88].
 
 [Er93] Erdős, P., _On some of my favourite theorems_ (1993).
 
-[ErLa85] Erdős, P. and Laskar, R.
+[ErLa85] Erdős, P. and Laskar, R., _A note on the size of a chordal subgraph_.
+Congr. Numer. (1985), 81–86.
 
-[Fa88] Fan, G. (1988).
+[Fa88] Fan, G., _Degree sum for a triangle in a graph_.
+J. Graph Theory (1988), 249–263.
 -/
 
 open SimpleGraph Finset
