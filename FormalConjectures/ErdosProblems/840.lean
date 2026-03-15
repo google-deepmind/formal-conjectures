@@ -31,9 +31,17 @@ $(2/\sqrt{3} + o(1))N^{1/2} \leq f(N) \leq (2 + o(1))N^{1/2}$.
 The upper bound was improved by Pikhurko [Pi06] to
 $f(N) \leq ((1/4 + 1/(\pi+2)^2)^{-1/2} + o(1))N^{1/2} \approx 1.863\, N^{1/2}$.
 
-[ErFr91] Erdős, P. and Freud, R., 1991.
+[Er81h] Erdős, P., _Some problems and results on additive and multiplicative number theory_.
+Analytic number theory (Philadelphia, Pa., 1980), 1981, pp. 171–182.
 
-[Pi06] Pikhurko, O., 2006.
+[ErFr91] Erdős, P. and Freud, R., _On sums of a Sidon-sequence_. J. Number Theory (1991),
+196–205.
+
+[Er92c] Erdős, P., _Some of my favourite problems in various branches of combinatorics_,
+Matematiche (Catania) **47** (1992), no. 2, 231–240.
+
+[Pi06] Pikhurko, O., _Dense edge-magic graphs and thin additive bases_. Discrete Mathematics
+(2006), 2097–2107.
 -/
 
 open Finset Classical
@@ -63,8 +71,8 @@ It is known that $2/\sqrt{3} \leq c \leq (1/4 + 1/(\pi+2)^2)^{-1/2} \approx 1.86
 -/
 @[category research open, AMS 5 11]
 theorem erdos_840 :
-    ∀ δ : ℝ, δ > 0 →
     ∀ ε : ℝ, ε > 0 →
+    ∀ δ : ℝ, δ > 0 →
     ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
     |(maxQuasiSidonCard δ N : ℝ) - answer(sorry) * Real.sqrt (N : ℝ)| ≤
       ε * Real.sqrt (N : ℝ) := by
