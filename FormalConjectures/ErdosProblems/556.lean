@@ -23,9 +23,22 @@ import FormalConjectures.Util.ProblemImports
 
 A problem of Bondy and Erdős. This inequality is best possible for odd $n$.
 
-[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_ (1981).
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+  Combinatorica **1** (1981), 25–42.
 
-[Er81c] Erdős, P., (1981).
+[Er81c] Erdős, P., _Some new problems and results in graph theory and other branches of
+  combinatorial mathematics_. Combinatorics and graph theory (1981), 9–17.
+
+[Lu99] Łuczak, T., _R(Cₙ,Cₙ,Cₙ)≤(4+o(1))n_. Journal of Combinatorial Theory Series B
+  (1999), 174–187.
+
+[KSS05] Kohayakawa, Y., Simonovits, M., Skokan, J., _The 3-colored Ramsey number of odd
+  cycles_. Proceedings of GRACO2005 (2005), 397–402.
+
+[BeSk09] Benevides, F.S., Skokan, J., _The 3-colored Ramsey number of even cycles_. Journal
+  of Combinatorial Theory Series B (2009), 690–708.
+
+See also OEIS [A389335](https://oeis.org/A389335).
 -/
 
 open SimpleGraph
