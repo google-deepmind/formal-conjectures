@@ -25,11 +25,15 @@ For an entire function $f$ which is not a monomial, let $\nu(r)$ count the numbe
 on the circle $|z| = r$ where $|f(z)|$ attains its maximum. Is it possible that
 $\liminf_{r \to \infty} \nu(r) = \infty$?
 
-[Ha74] Hayman, W. K., *Research Problems in Function Theory*, Athlone Press, 1967 (updated 1974).
+This is Problem 2.16 from [Ha74].
 
-[HePi68] Herzog, F. and Piranian, G., *Sets of radii of parity for entire functions*, 1968.
+[Ha74] Hayman, W. K., *Research problems in function theory: new problems* (1974), 155–180.
 
-[GlPa24] Glücksam, A. and Pardo-Simón, L., *An approximate answer to a question of Erdős*, 2024.
+[HePi68] Herzog, F. and Piranian, G., *The counting function for points of maximum modulus*
+(1968), 240–243.
+
+[GlPa24] Glücksam, A. and Pardo-Simón, L., *An approximate solution to Erdős' maximum modulus
+points problem*. J. Math. Anal. Appl. (2024), Paper No. 127768, 20.
 -/
 
 open Complex Set
@@ -68,6 +72,19 @@ affirmative answer is given by Glücksam and Pardo-Simón [GlPa24].
 theorem erdos_1117 : answer(sorry) ↔
     ∃ f : ℂ → ℂ, Differentiable ℂ f ∧ ¬IsMonomial f ∧
       ∀ N : ℕ, ∃ R : ℝ, ∀ r : ℝ, R ≤ r → N ≤ nu f r := by
+  sorry
+
+/--
+Erdős Problem 1117 — Limsup variant [HePi68]
+
+The analogous question for $\limsup$: does there exist an entire non-monomial function $f$
+such that $\limsup_{r \to \infty} \nu(r) = \infty$? This was answered affirmatively by
+Herzog and Piranian [HePi68].
+-/
+@[category research solved, AMS 30]
+theorem erdos_1117_limsup :
+    ∃ f : ℂ → ℂ, Differentiable ℂ f ∧ ¬IsMonomial f ∧
+      ∀ N : ℕ, ∃ r : ℝ, N ≤ nu f r := by
   sorry
 
 end Erdos1117
