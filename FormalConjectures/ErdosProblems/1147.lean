@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 
 /-!
 # Erdős Problem 1147
@@ -27,10 +28,11 @@ basis of order $2$ for every irrational $\alpha > 0$? Disproved by Konieczny.
 [Va99] Vaughan, R.C., *The Hardy-Littlewood method*, 2nd edition, Cambridge University Press,
 1997.
 
-[Ko16b] Konieczny, J., 2016.
+[Ko16b] Konieczny, J., *Sets of recurrence as bases for the positive integers*. Acta Arithmetica
+(2016), 309–338.
 -/
 
-open Set
+open Set Filter
 
 namespace Erdos1147
 
@@ -42,10 +44,10 @@ noncomputable def distNearestInt (x : ℝ) : ℝ :=
 noncomputable def setA (α : ℝ) : Set ℕ :=
   {n : ℕ | n ≥ 1 ∧ distNearestInt (α * (↑n) ^ 2) < 1 / Real.log (↑n)}
 
-/-- A set $S \subseteq \mathbb{N}$ is an additive basis of order $2$ if every sufficiently large
-natural number can be written as a sum of two elements from $S$. -/
-def IsAdditiveBasisOrder2 (S : Set ℕ) : Prop :=
-  ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ → ∃ a ∈ S, ∃ b ∈ S, n = a + b
+/-- The set $A(\alpha, \varepsilon) = \{ n \ge 1 : \lVert \alpha n^2 \rVert < \varepsilon(n) \}$
+for a general threshold function $\varepsilon$. -/
+noncomputable def setAGen (α : ℝ) (ε : ℕ → ℝ) : Set ℕ :=
+  {n : ℕ | n ≥ 1 ∧ distNearestInt (α * (↑n) ^ 2) < ε n}
 
 /--
 Erdős Problem 1147 [Va99, 1.21]:
@@ -61,7 +63,19 @@ the set $A$ is not an additive basis of order $2$.
 @[category research solved, AMS 11]
 theorem erdos_1147 : answer(False) ↔
     ∀ α : ℝ, Irrational α → α > 0 →
-      IsAdditiveBasisOrder2 (setA α) := by
+      (setA α).IsAsymptoticAddBasisOfOrder 2 := by
+  sorry
+
+/--
+Generalization of Erdős Problem 1147 [Ko16b]:
+
+For any function $\varepsilon(n) \to 0$, the set
+$A = \{ n \ge 1 : \lVert \alpha n^2 \rVert < \varepsilon(n) \}$ is not an additive basis
+of order $2$ for almost every $\alpha > 0$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_1147_general (ε : ℕ → ℝ) (hε : Tendsto (fun n => ε n) atTop (nhds 0)) :
+    ∀ᵐ α : ℝ, α > 0 → ¬(setAGen α ε).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
 
 end Erdos1147
