@@ -37,6 +37,8 @@ by adding at most $O(n^{2 - \varepsilon})$ edges.
 [Al94] Alon, N., _Explicit Ramsey graphs and orthonormal labelings_ (1994).
 
 [Er97b] Erdős, P., _Some old and new problems in various branches of combinatorics_ (1997).
+
+See also Problem 618.
 -/
 
 open Filter
