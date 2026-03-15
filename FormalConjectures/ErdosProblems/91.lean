@@ -38,7 +38,7 @@ noncomputable def IsOptimal (A : Finset ℝ²) (n : ℕ) : Prop :=
 /-- Two finite sets of points in $\mathbb{R}^2$ are similar if one can be mapped to the other by a
 DilationEquiv. -/
 def DilationEquivSimilar (A B : Finset ℝ²) : Prop :=
-  ∃ f : ℝ² ≃ᵈ ℝ², (f '' A.toSet) = B.toSet
+  ∃ f : ℝ² ≃ᵈ ℝ², (f '' A) = B
 
 noncomputable def unitSquare : Finset ℝ² := {![0, 0], ![0, 1], ![1, 0], ![1, 1]}
 
