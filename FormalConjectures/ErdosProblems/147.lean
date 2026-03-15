@@ -15,37 +15,35 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Extremal.Basic
 
 /-!
 # Erdős Problem 147
 
 *Reference:* [erdosproblems.com/147](https://www.erdosproblems.com/147)
 
-[ErSi84] Erdős, P. and Simonovits, M., _Cube-supersaturated graphs and related problems_,
-Progress in graph theory (1984).
+See also problems #113, #146, and #714 for related conjectures on Turán numbers of
+bipartite graphs.
 
-[Ja23] Janzer, O., _Disproof of a conjecture of Erdős and Simonovits on the Turán number_,
-(2023).
+[ErSi84] Erdős, P. and Simonovits, M., _Cube-supersaturated graphs and related problems_,
+Progress in graph theory (Waterloo, Ont., 1982), Academic Press, Toronto, ON, 1984, 203–218.
+
+[Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+Quaestiones Mathematicae **16** (1993), 333–350.
+
+[Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
+**164** (1997), 81–85.
+
+[Ja23] Janzer, O., _Rainbow Turán number of even cycles, repeated patterns and blow-ups
+of cycles_. Israel J. Math. (2023), 813–840.
 
 [Ja23b] Janzer, O., _Disproof of a conjecture of Erdős and Simonovits on the Turán number
-(the case r = 3)_, (2023).
+of graphs with minimum degree 3_. Int. Math. Res. Not. IMRN (2023), 8478–8494.
 -/
 
 open SimpleGraph
 
 namespace Erdos147
-
-/-- An injective graph homomorphism from $H$ to $F$; witnesses that $F$ contains a
-subgraph isomorphic to $H$. -/
-def ContainsSubgraph {V U : Type*} (F : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → F.Adj (f u) (f v)
-
-/-- The Turán number $\mathrm{ex}(n; H)$: the maximum number of edges in a simple graph on $n$
-vertices that contains no copy of $H$ as a subgraph. -/
-noncomputable def turanNumber {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
-  sSup {m : ℕ | ∃ (V : Type) (fv : Fintype V) (F : SimpleGraph V) (dr : DecidableRel F.Adj),
-    haveI := fv; haveI := dr;
-    Fintype.card V = n ∧ ¬ContainsSubgraph F H ∧ F.edgeFinset.card = m}
 
 /--
 Erdős Problem 147 [ErSi84]:
@@ -73,7 +71,7 @@ theorem erdos_147 : answer(False) ↔
       ∃ ε : ℝ, 0 < ε ∧
         ∃ C : ℝ, 0 < C ∧
           ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
-            C * (n : ℝ) ^ ((2 : ℝ) - 1 / ((r : ℝ) - 1) + ε) ≤ (turanNumber H n : ℝ) := by
+            C * (n : ℝ) ^ ((2 : ℝ) - 1 / ((r : ℝ) - 1) + ε) ≤ (extremalNumber n H : ℝ) := by
   sorry
 
 end Erdos147
