@@ -25,8 +25,14 @@ of (0,1)? Disproved by Marstrand [Ma70].
 
 *Reference:* [erdosproblems.com/994](https://www.erdosproblems.com/994)
 
+[Er64b] Erdős, P., _Problems and results on diophantine approximations_.
+Compositio Math. (1964), 52–65.
+
+[Kh23] Khintchine, A., _Ein Satz über Kettenbrüche, mit arithmetischen Anwendungen_.
+Math. Z. **18** (1923), 289–306.
+
 [Ma70] Marstrand, J. M., _On Khintchine's conjecture about strong uniform distribution_.
-Proc. London Math. Soc. (3) 21 (1970), 540-556.
+Proc. London Math. Soc. (3) **21** (1970), 540–556.
 -/
 
 open scoped MeasureTheory
