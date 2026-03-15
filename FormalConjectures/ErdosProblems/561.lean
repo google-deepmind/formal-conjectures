@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 
 /-!
 # Erdős Problem 561
@@ -26,11 +27,21 @@ $F_1$ and $F_2$ are disjoint unions of stars with non-increasing degree sequence
 prove that $\hat{R}(F_1, F_2) = \sum \ell_k$ where each $\ell_k$ is the maximum of
 $n_i + m_j - 1$ over pairs with $i + j = k$.
 
+[BEFRS78] proved the special case where all $n_i$ are identical and all $m_j$ are
+identical. The general conjecture remains open.
+
 [BEFRS78] Burr, S. A., Erdős, P., Faudree, R. J., Rousseau, C. C., and Schelp, R. H.,
-_Ramsey numbers for the pair sparse graph-path or cycle_, Trans. Amer. Math. Soc. (1978).
+_Ramsey-minimal graphs for multiple copies_, Nederl. Akad. Wetensch. Indag. Math. (1978),
+187-195.
+
+[GySc02] Győri, E., Schelp, R. H., _Two-edge colorings of graphs with bounded degree in
+both colors_, Discrete Math. (2002), 105-110.
+
+[DJKR25] Davoodi, A., Javadi, R., Kamranian, A., Raeisi, G., _On a conjecture of Erdős
+on size Ramsey number of star forests_, Ars Math. Contemp. (2025), Paper No. 9, 10 pages.
 -/
 
-open Finset
+open Finset SimpleGraph
 
 namespace Erdos561
 
@@ -43,20 +54,6 @@ def disjointUnionStars (s : ℕ) (deg : Fin s → ℕ) :
     ⟨heq.symm, h.elim (fun ⟨a, b⟩ => Or.inr ⟨b, a⟩) (fun ⟨a, b⟩ => Or.inl ⟨b, a⟩)⟩
   loopless _x := fun ⟨_, h⟩ =>
     h.elim (fun ⟨a, b⟩ => b a) (fun ⟨a, b⟩ => a b)
-
-/-- The two-color size Ramsey number $\hat{R}(G_1, G_2)$: the minimum number of edges in
-a graph $H$ such that for every 2-coloring of the edges of $H$, either color 1
-contains a copy of $G_1$ or color 2 contains a copy of $G_2$. -/
-noncomputable def twoColorSizeRamseyNumber {V₁ V₂ : Type*} [Fintype V₁] [Fintype V₂]
-    (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph V₂) : ℕ :=
-  sInf {m : ℕ | ∃ (n : ℕ) (H : SimpleGraph (Fin n)),
-    H.edgeSet.ncard = m ∧
-    ∀ c : Fin n → Fin n → Bool,
-      (∀ i j, c i j = c j i) →
-      (∃ f : V₁ → Fin n, Function.Injective f ∧
-        ∀ u v, G₁.Adj u v → H.Adj (f u) (f v) ∧ c (f u) (f v) = true) ∨
-      (∃ f : V₂ → Fin n, Function.Injective f ∧
-        ∀ u v, G₂.Adj u v → H.Adj (f u) (f v) ∧ c (f u) (f v) = false)}
 
 /-- $\ell_k = \max\{n_i + m_j - 1 : i + j = k\}$ for $0$-indexed $i < s$, $j < t$.
 Returns $0$ when no valid $(i, j)$ pair exists with $i + j = k$. -/
@@ -83,10 +80,28 @@ theorem erdos_561
     (hm_pos : ∀ j, m j ≥ 1)
     (hn_mono : ∀ i₁ i₂ : Fin s, i₁ ≤ i₂ → n i₂ ≤ n i₁)
     (hm_mono : ∀ j₁ j₂ : Fin t, j₁ ≤ j₂ → m j₂ ≤ m j₁) :
-    twoColorSizeRamseyNumber
+    sizeRamsey
       (disjointUnionStars s n)
       (disjointUnionStars t m) =
     Finset.sum (Finset.range (s + t - 1)) (lFun s t n m) := by
+  sorry
+
+/--
+Erdős Problem 561, special case [BEFRS78]:
+
+When all stars in $F_1$ have the same degree $n$ and all stars in $F_2$ have the same
+degree $m$, the size Ramsey number $\hat{R}(F_1, F_2)$ equals the predicted formula.
+This was proved by Burr, Erdős, Faudree, Rousseau, and Schelp.
+-/
+@[category research solved, AMS 5]
+theorem erdos_561_identical_stars
+    (s t : ℕ) (hs : s ≥ 1) (ht : t ≥ 1)
+    (n_val m_val : ℕ) (hn_pos : n_val ≥ 1) (hm_pos : m_val ≥ 1) :
+    sizeRamsey
+      (disjointUnionStars s (fun _ => n_val))
+      (disjointUnionStars t (fun _ => m_val)) =
+    Finset.sum (Finset.range (s + t - 1))
+      (lFun s t (fun _ => n_val) (fun _ => m_val)) := by
   sorry
 
 end Erdos561
