@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 673
@@ -57,12 +58,6 @@ noncomputable def erdosG (n : ℕ) : ℝ :=
   let divs := sortedDivisors n
   ((divs.zip divs.tail).map (fun p => (p.1 : ℝ) / (p.2 : ℝ))).sum
 
-/-- The natural density of a set $A \subseteq \mathbb{N}$ is zero. -/
-def HasNaturalDensityZero (A : Set ℕ) [DecidablePred (· ∈ A)] : Prop :=
-  Tendsto
-    (fun N : ℕ => (((Finset.range N).filter (· ∈ A)).card : ℝ) / (N : ℝ))
-    atTop (nhds 0)
-
 /--
 Erdős Problem 673, Part 1 [Er79e, Er82e]:
 
@@ -71,7 +66,7 @@ has natural density zero.
 -/
 @[category research solved, AMS 11]
 theorem erdos_673 :
-    answer(True) ↔ ∀ M : ℝ, HasNaturalDensityZero {n : ℕ | erdosG n ≤ M} := by
+    answer(True) ↔ ∀ M : ℝ, Set.HasDensity {n : ℕ | erdosG n ≤ M} 0 := by
   sorry
 
 /--
