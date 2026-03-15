@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/896](https://www.erdosproblems.com/896)
 
+*See also:* Problem #490.
+
 [Er72] Erdős, P., _Quelques problèmes de théorie des nombres_, p. 81, 1972.
 
 Estimate the maximum of $F(A,B)$ as $A, B$ range over all subsets of $\{1,\ldots,N\}$,
@@ -33,7 +35,8 @@ $$
 $$
 where $\delta = 1 - \frac{1 + \log \log 2}{\log 2} \approx 0.086$.
 
-The open problem is to determine the exact asymptotic order.
+The conjectured answer is that the maximum is $\Theta(N^2 / \log N)$, matching the known
+lower bound.
 -/
 
 open Finset Real
@@ -48,8 +51,8 @@ def uniqueProductCount (A B : Finset ℕ) : ℕ :=
   ((A ×ˢ B).image (fun p => p.1 * p.2)).filter (fun m =>
     ((A ×ˢ B).filter (fun p => p.1 * p.2 = m)).card = 1) |>.card
 
-/-- The maximum of $F(A,B)$ over all $A, B \subseteq \{1,\ldots,N\}$ is $O(N^2 / \log N)$,
-i.e., the lower bound gives the correct order of magnitude. [Er72] -/
+/-- Conjectured: the maximum of $F(A,B)$ over all $A, B \subseteq \{1,\ldots,N\}$ is
+$O(N^2 / \log N)$, matching the known lower bound. [Er72] -/
 @[category research open, AMS 5 11]
 theorem erdos_896 :
     ∃ C : ℝ, 0 < C ∧
@@ -67,6 +70,20 @@ theorem erdos_896.variants.lower_bound :
     ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
       ∃ A B : Finset ℕ, A ⊆ Finset.Icc 1 N ∧ B ⊆ Finset.Icc 1 N ∧
         (uniqueProductCount A B : ℝ) ≥ (1 - ε) * (N : ℝ) ^ 2 / Real.log (N : ℝ) := by
+  sorry
+
+/-- Known upper bound (van Doorn): for all sufficiently large $N$ and all
+$A, B \subseteq \{1,\ldots,N\}$,
+$F(A,B) \ll N^2 / ((\log N)^\delta (\log \log N)^{3/2})$
+where $\delta = 1 - \frac{1 + \log \log 2}{\log 2} \approx 0.086$. -/
+@[category research solved, AMS 5 11]
+theorem erdos_896.variants.upper_bound :
+    let δ : ℝ := 1 - (1 + Real.log (Real.log 2)) / Real.log 2
+    ∃ C : ℝ, 0 < C ∧
+    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
+      ∀ A B : Finset ℕ, A ⊆ Finset.Icc 1 N → B ⊆ Finset.Icc 1 N →
+        (uniqueProductCount A B : ℝ) ≤
+          C * (N : ℝ) ^ 2 / ((Real.log (N : ℝ)) ^ δ * (Real.log (Real.log (N : ℝ))) ^ (3/2 : ℝ)) := by
   sorry
 
 end Erdos896
