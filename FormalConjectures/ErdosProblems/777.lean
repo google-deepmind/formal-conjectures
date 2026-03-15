@@ -26,15 +26,21 @@ Three questions of Daykin and Erdős on comparability graphs of families of subs
 The first question was answered affirmatively by Alon, Das, Glebov, and Sudakov.
 The second question was answered negatively by Alon and Frankl.
 The third question was answered affirmatively by Alon and Frankl.
+
+[Gu83] Guy, R.K., _Unsolved Problems in Number Theory_, 1983.
+[ADGS15] Alon, N., Das, S., Glebov, R., Sudakov, B., _Comparable pairs in families of sets_.
+  J. Combin. Theory Ser. B **114** (2015), 164–185.
+[AlFr85] Alon, N., Frankl, P., _The maximum number of disjoint pairs in a family of subsets_.
+  Graphs Combin. **1** (1985), 13–21.
 -/
 
 namespace Erdos777
 
 /--
 The number of edges of the comparability graph of a family $F$ of subsets of
-$\mathrm{Fin}(n)$: the number of ordered pairs $(A, B)$ in $F \times F$ with $A \neq B$ and
-$A \subseteq B$. Each unordered comparable pair $\{A, B\}$ is counted exactly once
-(the one with $A \subsetneq B$).
+$\mathrm{Fin}(n)$: counts pairs $(A, B)$ in $F \times F$ with $A \subsetneq B$.
+Since the filter is asymmetric ($A \subsetneq B$ does not imply $B \subsetneq A$),
+each unordered comparable pair is counted exactly once.
 -/
 def comparableEdges (n : ℕ) (F : Finset (Finset (Fin n))) : ℕ :=
   ((F ×ˢ F).filter (fun p => p.1 ≠ p.2 ∧ p.1 ⊆ p.2)).card
