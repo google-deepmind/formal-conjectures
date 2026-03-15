@@ -21,13 +21,18 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/447](https://www.erdosproblems.com/447)
 
-How large can a union-free collection $\mathcal{F}$ of subsets of $[n]$ be? Erdős conjectured
-that $|\mathcal{F}| < (1 + o(1)) \binom{n}{\lfloor n/2 \rfloor}$.
+How large can a union-free collection $\mathcal{F}$ of subsets of $[n]$ be? Erdős [Er65b]
+conjectured that $|\mathcal{F}| < (1 + o(1)) \binom{n}{\lfloor n/2 \rfloor}$.
 
 Solved by Kleitman [Kl71], who proved the conjectured bound.
 
-[Kl71] Kleitman, D., *No four subsets forming an N*, J. Combinatorial Theory Ser. A 5 (1968),
-313-318.
+See also Problem 487 and Problem 1023 for related problems.
+
+[Er65b] Erdős, P., _Extremal problems in number theory_. Lectures on Modern Mathematics,
+Vol. III (1965), 196-244.
+
+[Kl71] Kleitman, D., _Collections of subsets containing no two sets and their union_.
+Proc. LA Meeting AMS (1971), 153-155.
 -/
 
 namespace Erdos447
