@@ -32,7 +32,9 @@ $\geq \exp(c \cdot \sqrt{n} \cdot \log n)$ many block-compatible sequences for $
 Proved by Alon, who showed there are at least $2^{(1/2 + o(1)) \cdot \sqrt{n} \cdot \log n}$
 block-compatible sequences. Erdős proved the upper bound $\exp(O(\sqrt{n} \cdot \log n))$.
 
-[Er81] Erdős, P., 1981.
+[Er81] Erdős, P., _Problems and results in graph theory and combinatorics_,
+Proceedings of the Southeastern Conference on Combinatorics, Graph Theory,
+and Computing (1981), p. 35.
 -/
 
 namespace Erdos732
