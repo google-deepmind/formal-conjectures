@@ -29,37 +29,51 @@ This is Problem 7.21 in Halberstam and Roth [Ha74], attributed to
 Erdős [Er64b][Er65b].
 
 Erdős remarks the analogous statement with $\sup_n$ in place of
-$\limsup_n$ is 'easy to see'. Clunie [Cl67] proved $A_k \gg k^{1/2}$
-infinitely often, and showed there exist sequences with $A_k \leq k$
-for all $k$.
+$\limsup_n$ is 'easy to see'. Erdős [Er65b] later found a 'very easy'
+proof that $A_k \gg \log k$ for infinitely many $k$.
+Clunie [Cl67] proved $A_k \gg k^{1/2}$ infinitely often, and showed
+there exist sequences with $A_k \leq k$ for all $k$.
+Tao has independently found a proof that $A_k \gg k^{1/2}$ infinitely
+often. Lindström [Li69] showed that under a finite distinct points
+assumption, $A_k \gg k^{1-\varepsilon}$ infinitely often for any
+$\varepsilon > 0$; Clunie observed this implies $A_k = \infty$
+infinitely often.
 
-[Er64b] Erdős, P., 1964.
+[Er64b] Erdős, P., _Problems and results on diophantine approximations_.
+Compositio Math. (1964), 52–65.
 
-[Er65b] Erdős, P., 1965.
+[Er65b] Erdős, P., _Some recent advances and current problems in number theory_.
+Lectures on Modern Mathematics, Vol. III (1965), 196–244.
 
 [Ha74] Halberstam, H. and Roth, K. F., *Sequences*, 1974.
 
-[Cl67] Clunie, J., 1967.
+[Cl67] Clunie, J., _On a problem of Erdős_. J. London Math. Soc. (1967), 133–136.
+
+[Li69] Lindström, B., _An inequality for B₂-sequences_. J. Combinatorial Theory
+(1969), 211–212.
 -/
 
 namespace Erdos987
 
 /-- The exponential sum $S(x, k, n) = \sum_{j < n} e^{2\pi i k x_j}$. -/
 noncomputable def exponentialSum (x : ℕ → ℝ) (k : ℕ) (n : ℕ) : ℂ :=
+  -- e(k·xⱼ) = e^{2πikxⱼ}
   ∑ j ∈ Finset.range n, Complex.exp (2 * ↑Real.pi * Complex.I * ↑((k : ℝ) * x j))
 
 /--
 Erdős Problem 987, Part 1 [Er64b][Er65b]:
-For any sequence $x_1, x_2, \ldots \in (0,1)$, $\limsup_{k \to \infty} A_k = \infty$ where
+For any sequence $x_1, x_2, \ldots \in (0,1)$, $\sup_{k \geq 1} A_k = \infty$ where
 $A_k = \limsup_{n \to \infty} \lVert\sum_{j < n} e^{2\pi i k x_j}\rVert$.
 
-Equivalently: for every $M$, there exists $k$ such that
+Equivalently: for every $M$, there exists $k > 0$ such that
 $\lVert\sum_{j < n} e^{2\pi i k x_j}\rVert \geq M$ for infinitely many $n$.
+(This is equivalent to $\limsup_{k \to \infty} A_k = \infty$ since
+$\sup_k = \infty \iff \limsup_k = \infty$ for extended-real-valued sequences.)
 -/
 @[category research open, AMS 11 42]
 theorem erdos_987 :
     ∀ (x : ℕ → ℝ), (∀ j, x j ∈ Set.Ioo 0 1) →
-    ∀ M : ℝ, ∃ k : ℕ, ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧
+    ∀ M : ℝ, ∃ k : ℕ, 0 < k ∧ ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧
       M ≤ ‖exponentialSum x k n‖ := by
   sorry
 
