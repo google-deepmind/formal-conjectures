@@ -32,16 +32,10 @@ Brun's sieve implies $h(x) \to \infty$ as $x \to \infty$.
 
 namespace Erdos852
 
-/-- The $n$-th prime (0-indexed): $p_0 = 2$, $p_1 = 3$, etc. -/
-noncomputable def nthPrime (n : ℕ) : ℕ := Nat.nth Nat.Prime n
-
-/-- The $n$-th prime gap: $d_n = p_{n+1} - p_n$. -/
-noncomputable def primeGap (n : ℕ) : ℕ := nthPrime (n + 1) - nthPrime n
-
 /-- A run of $k$ consecutive prime gaps starting at position $n$ are all distinct:
 $d_n, d_{n+1}, \ldots, d_{n+k-1}$ are pairwise different. -/
 def IsDistinctPrimeGapRun (n k : ℕ) : Prop :=
-  Function.Injective (fun i : Fin k => primeGap (n + i.val))
+  Function.Injective (fun i : Fin k => _root_.primeGap (n + i.val))
 
 /-- $h(x)$: the maximal length of a run of distinct consecutive prime gaps
 $d_n, d_{n+1}, \ldots, d_{n+h-1}$ for some $n < x$. -/
