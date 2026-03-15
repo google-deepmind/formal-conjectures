@@ -31,10 +31,17 @@ Asked by Hofstadter (Erdős says Hofstadter was inspired by a similar question o
 Bolan and Tang have independently proved that $a_n - n$ is nondecreasing and unbounded,
 so there are infinitely many integers not appearing in the sequence.
 
-[Er77c] Erdős, P., *Problems and results on combinatorial number theory*, 1977.
+[Er77c] Erdős, P., *Problems and results on combinatorial number theory. III*,
+Number theory day (Proc. Conf., Rockefeller Univ., New York, 1976), 1977, pp. 43–72.
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
 number theory*, Monographies de L'Enseignement Mathématique (1980).
+
+[Bolan] Bolan, M., *Hofstader–Ulam Sequence*,
+https://github.com/mjtb49/HofstaderUlam/blob/main/HofstaderUlamSequence.pdf
+
+[Tang] Tang, Q., *On Erdős Problem 423*,
+https://github.com/QuanyuTang/erdos-problem-423/blob/main/On_Erd%C5%91s_Problem_423.pdf
 -/
 
 open Finset BigOperators
@@ -74,6 +81,19 @@ of the sequence remains an open question.
 theorem erdos_423 :
     ∀ a : ℕ → ℕ, IsHofstadterSeq a →
     ∀ M : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → M + n ≤ a n := by
+  sorry
+
+/--
+Erdős Problem 423 — nondecreasing variant [Bolan; Tang]:
+
+The sequence $a(n) - n$ is nondecreasing. This is a stronger structural property than
+the unboundedness stated in `erdos_423`, and was also proved independently by Bolan and
+Tang.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_423_nondecreasing :
+    ∀ a : ℕ → ℕ, IsHofstadterSeq a →
+    ∀ n m : ℕ, n ≤ m → a n - n ≤ a m - m := by
   sorry
 
 end Erdos423
