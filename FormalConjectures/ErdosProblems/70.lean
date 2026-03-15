@@ -26,10 +26,10 @@ every finite $n \geq 2$, where $\mathfrak{c}$ is the cardinality of the continuu
 
 Erdős and Rado proved that $\mathfrak{c} \to (\omega + n, 4)^3_2$ for any $2 \leq n < \omega$.
 
-[Er87] Erdős, P., *On some of my favourite unsolved problems* (1987).
+[Er87] Erdős, P., _On some of my favourite unsolved problems_ (1987).
 
-[Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
-and his mathematics", Budapest, July 1999 (1999), 7.83.
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999), §7.83.
 -/
 
 open Ordinal Cardinal
