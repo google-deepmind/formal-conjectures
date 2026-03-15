@@ -29,11 +29,18 @@ where the maximum is over all $A \subseteq \{1,\ldots,n\}$ with $|A| = k$ and $\
 
 Is it true that $g(k,n) \sim n^2/(k-1)$?
 
+Erdős and Graham [ErGr72] proved $g(k,n) < 2n^2/k$, and examples show
+$g(k,n) \geq n^2/(k-1) - 5n$ for $k \geq 2$.
+
 This was proved by Dixmier [Di90], who showed that for all $2 \leq k < n$,
 $$\lfloor(n-2)/(k-1)\rfloor(n-k+1) - 1 \leq g(k,n) \leq (\lfloor(n-1)/(k-1)\rfloor - 1)n - 1.$$
+Dixmier also determined $g(k,n)$ exactly when $k-1 \mid n$, $k-1 \mid n-1$, or $k-1 \mid n-2$.
 
 [Di90] Dixmier, J., _Proof of a conjecture by Erdős and Graham concerning the problem of
 Frobenius_. J. London Math. Soc. (2) 41 (1990), 227-237.
+
+[ErGr72] Erdős, P. and Graham, R. L., _On a linear diophantine problem of Frobenius_.
+Acta Arithmetica **21** (1972), 399-408.
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
