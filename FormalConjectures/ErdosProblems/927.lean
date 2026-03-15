@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Clique
 
 /-!
 # Erdős Problem 927
@@ -29,29 +30,39 @@ $$
 where $\log^*(n)$ is the iterated logarithm (the number of times the logarithm
 must be applied before the result is less than $1$)?
 
+Moon and Moser [MoMo65] first studied $g(n)$ and proved
+$n - \log_2 n - 2\log\log n < g(n) \leq n - \lfloor \log_2 n \rfloor$.
+Erdős [Er66b] improved the lower bound to $g(n) > n - \log_2 n - \log^*(n) - O(1)$
+and conjectured this was the correct order of magnitude.
+
 DISPROVED by Spencer [Sp71], who proved that $g(n) > n - \log_2 n - O(1)$,
 showing the $\log^*$ correction term is unnecessary.
 
 See also [775].
 
-[Sp71] Spencer, J., *The number of distinct clique sizes of a graph*.
+[Er66b] Erdős, P., _On cliques in graphs_. Israel Journal of Mathematics (1966), 233–234.
+
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_. Proof Techniques in Graph
+Theory (1969), 27-35.
+
+[Er71] Erdős, P., _Topics in combinatorial analysis_. Proc. Second Louisiana Conf. on
+Combinatorics, Graph Theory and Computing (1971), 2–20.
+
+[MoMo65] Moon, J. W. and Moser, L., _On cliques in graphs_. Israel Journal of Mathematics
+(1965), 23–28.
+
+[Sp71] Spencer, J. H., _The number of distinct clique sizes of a graph_. Israel Journal of
+Mathematics (1971), 419–421.
 -/
+
+open SimpleGraph
 
 namespace Erdos927
 
-/-- A set of vertices forms a clique (complete subgraph) in $G$ if every pair
-    of distinct vertices in the set is adjacent. -/
-def IsCliqueSet {n : ℕ} (G : SimpleGraph (Fin n)) (S : Finset (Fin n)) : Prop :=
-  ∀ u ∈ S, ∀ v ∈ S, u ≠ v → G.Adj u v
-
-/-- A maximal clique: a clique not properly contained in any other clique. -/
-def IsMaxCliqueSet {n : ℕ} (G : SimpleGraph (Fin n))
-    (S : Finset (Fin n)) : Prop :=
-  IsCliqueSet G S ∧ ∀ T : Finset (Fin n), S ⊂ T → ¬IsCliqueSet G T
-
-/-- The set of distinct sizes of maximal cliques in a simple graph. -/
+/-- The set of distinct sizes of maximal cliques in a simple graph on `n` vertices. -/
 def graphCliqueSizes {n : ℕ} (G : SimpleGraph (Fin n)) : Set ℕ :=
-  {m : ℕ | ∃ S : Finset (Fin n), IsMaxCliqueSet G S ∧ S.card = m}
+  {m : ℕ | ∃ S : Finset (Fin n), Maximal (fun T : Finset (Fin n) => G.IsClique ↑T) S ∧
+    S.card = m}
 
 /--
 Erdős Problem 927 (DISPROVED by Spencer [Sp71]):
@@ -79,6 +90,17 @@ maximal clique sizes.
 theorem erdos_927.variants.spencer_lower_bound :
     ∃ C : ℕ, ∀ n : ℕ, ∃ G : SimpleGraph (Fin n),
       (graphCliqueSizes G).ncard + C ≥ n - Nat.log 2 n := by
+  sorry
+
+/--
+Moon–Moser upper bound [MoMo65]: $g(n) \leq n - \lfloor \log_2 n \rfloor$, i.e.,
+every graph on $n$ vertices has at most $n - \lfloor \log_2 n \rfloor$ distinct
+maximal clique sizes.
+-/
+@[category research solved, AMS 5]
+theorem erdos_927.variants.moon_moser_upper_bound :
+    ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
+      (graphCliqueSizes G).ncard ≤ n - Nat.log 2 n := by
   sorry
 
 end Erdos927
