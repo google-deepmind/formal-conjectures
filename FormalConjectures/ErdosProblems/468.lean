@@ -24,8 +24,13 @@ import FormalConjectures.Util.ProblemImports
 For any $n$ let $D_n$ be the set of partial sums $d_1, d_1+d_2, d_1+d_2+d_3, \ldots$
 where $1 < d_1 < d_2 < \cdots$ are the divisors of $n$.
 
-If $f(N)$ is the minimal $n$ such that $N \in D_n$, is it true that $f(N) = o(N)$?
-Perhaps just for almost all $N$?
+The problem asks two questions:
+1. What is the size of $D_n \setminus \bigcup_{m < n} D_m$? (Not formalized — too imprecise.)
+2. If $f(N)$ is the minimal $n$ such that $N \in D_n$, is it true that $f(N) = o(N)$?
+   Perhaps just for almost all $N$?
+
+The formalization captures question 2 in both a strong form ($f(N) = o(N)$ for all $N$)
+and a weak form ($f(N) = o(N)$ for almost all $N$, in the natural density sense).
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathematique (1980).
