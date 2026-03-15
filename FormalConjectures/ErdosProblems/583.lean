@@ -26,6 +26,9 @@ edge-disjoint paths.
 
 [ErGa59] Erdős, P. and Gallai, T., *On the minimal number of vertices representing the
 edges of a graph*, 1959.
+
+[Er71] Erdős, P., _Topics in combinatorial analysis_. Proc. Second Louisiana Conf. on
+Combinatorics, Graph Theory and Computing (1971), 2–20.
 -/
 
 open SimpleGraph
@@ -33,7 +36,7 @@ open SimpleGraph
 namespace Erdos583
 
 /--
-Erdős Problem 583 [ErGa59]:
+Erdős Problem 583 [ErGa59][Er71]:
 
 Every connected graph on $n$ vertices can be partitioned into at most $\lceil n/2 \rceil$
 edge-disjoint paths.
