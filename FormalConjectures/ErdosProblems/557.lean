@@ -23,6 +23,9 @@ import FormalConjectures.Util.ProblemImports
 
 A problem of Erdős and Graham on multicolour Ramsey numbers for trees.
 
+This conjecture is implied by Problem 548 (the Erdős–Sós conjecture). The bound would be
+best possible, since $R_k(S_n) \geq kn - O(k)$ for the star $S_n = K_{1,n-1}$.
+
 [ErGr75] Erdős, P. and Graham, R., _On partition theorems for finite graphs_.
 Infinite and finite sets (Colloq., Keszthely, 1973; dedicated to P. Erdős on his 60th birthday),
 Vol. I; Colloq. Math. Soc. János Bolyai, Vol. 10, North-Holland, Amsterdam, 1975, pp. 515–527.
@@ -46,7 +49,7 @@ noncomputable def multicolorRamseyNumber {V : Type*} [Fintype V]
       ∀ u v, G.Adj u v → c (f u) (f v) = a}
 
 /--
-Erdős Problem 557 [ErGr75]:
+Erdős Problem 557 [ErGr75, p. 516]:
 
 Is it true that there exists an absolute constant $C$ such that for all $k \ge 1$, all $n \ge 1$,
 and all trees $T$ on $n$ vertices, $R_k(T) \le kn + C$?
