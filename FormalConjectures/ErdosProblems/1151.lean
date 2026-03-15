@@ -29,10 +29,19 @@ $f$ with $\lim_{n \to \infty} \mathcal{L}^n f(x) = \infty$. In [Er43] he claims
 (without proof) that for any closed set $A$ there exists continuous $f$ achieving $A$
 as the limit set.
 
-[Va99] Varga, R.S., _Scientific Computation on Mathematical Problems and Conjectures_, 1999.
+[Er41] Erdős, P., _On divergence properties of the Lagrange interpolation parabolas_.
+Annals of Mathematics, Series 2 (1941), 309–315.
+
+[Er43] Erdős, P., _A note on Farey series_. Quarterly Journal of Mathematics, Oxford
+Series (1943), 82–85.
+
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics," Budapest, July 1999.
 -/
 
-open Classical Finset BigOperators
+open Classical Finset BigOperators Filter
+
+open scoped Topology
 
 namespace Erdos1151
 
@@ -50,23 +59,32 @@ $L(x) = \sum_i f(x_i) \cdot \ell_i(x)$. -/
 noncomputable def lagrangeInterp {n : ℕ} (nodes : Fin n → ℝ) (f : ℝ → ℝ) (x : ℝ) : ℝ :=
   ∑ i : Fin n, f (nodes i) * lagrangeBasis nodes i x
 
-/-- The set of limit points (cluster points) of a sequence of reals.
-A real $y$ is a limit point of $a$ if for every $\varepsilon > 0$ and every $N$,
-there exists $n \geq N$ with $|a(n) - y| < \varepsilon$. -/
-def limitPoints (a : ℕ → ℝ) : Set ℝ :=
-  {y : ℝ | ∀ ε > 0, ∀ N : ℕ, ∃ n, N ≤ n ∧ |a n - y| < ε}
-
 /--
 Erdős Problem 1151 [Va99, 2.41]:
 For any $x \in [-1,1]$ and any closed $A \subseteq [-1,1]$, there exists a continuous
-function $f$ such that $A$ is the set of limit points of the Lagrange interpolation
+function $f$ such that $A$ is the set of cluster points of the Lagrange interpolation
 polynomials $L^n f(x)$ at the Chebyshev nodes as $n \to \infty$.
 -/
 @[category research open, AMS 26 41]
 theorem erdos_1151 (x : ℝ) (hx : x ∈ Set.Icc (-1 : ℝ) 1)
     (A : Set ℝ) (hA : IsClosed A) (hAsub : A ⊆ Set.Icc (-1 : ℝ) 1) :
     ∃ f : ℝ → ℝ, Continuous f ∧
-      limitPoints (fun n => lagrangeInterp (chebyshevNode (n + 1)) f x) = A := by
+      {y | MapClusterPt y atTop (fun n => lagrangeInterp (chebyshevNode (n + 1)) f x)} = A := by
+  sorry
+
+/--
+Variant of Erdős Problem 1151 restricted to the special points from [Er41]:
+For $x = \cos(\pi p / q)$ with $p, q$ odd positive integers and any closed
+$A \subseteq [-1,1]$, there exists a continuous function $f$ such that $A$ is
+the set of cluster points of the Lagrange interpolation polynomials at the
+Chebyshev nodes. This is the more conservative reading of Erdős's claim in [Er43].
+-/
+@[category research open, AMS 26 41]
+theorem erdos_1151_variant (p q : ℕ) (hp : Odd p) (hq : Odd q) (hq_pos : 0 < q)
+    (A : Set ℝ) (hA : IsClosed A) (hAsub : A ⊆ Set.Icc (-1 : ℝ) 1) :
+    let x := Real.cos (↑p * Real.pi / ↑q)
+    ∃ f : ℝ → ℝ, Continuous f ∧
+      {y | MapClusterPt y atTop (fun n => lagrangeInterp (chebyshevNode (n + 1)) f x)} = A := by
   sorry
 
 end Erdos1151
