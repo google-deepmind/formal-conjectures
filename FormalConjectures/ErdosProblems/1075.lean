@@ -24,7 +24,11 @@ sufficiently large, any $r$-uniform hypergraph on $n$ vertices with at least
 $(1+\varepsilon)(n/r)^r$ edges contains a subgraph on $m$ vertices with at least $c_r m^r$ edges,
 where $m \to \infty$ as $n \to \infty$.
 
-*Reference:* [erdosproblems.com/1075](https://www.erdosproblems.com/1075)
+*References:*
+- [Er74c] Erdős, P., _Extremal problems on graphs and hypergraphs_. (1974), p.80.
+- [Er64f] Erdős, P., _On extremal problems of graphs and generalized graphs_. Israel J. Math. **2**
+  (1964), 183-190.
+- [erdosproblems.com/1075](https://www.erdosproblems.com/1075)
 -/
 
 open Finset
@@ -36,7 +40,8 @@ structure UniformHypergraph (n r : ℕ) where
   edges : Finset (Finset (Fin n))
   uniform : ∀ e ∈ edges, e.card = r
 
-/-- The subhypergraph of $H$ induced by a vertex set $S$: all edges entirely within $S$. -/
+/-- The subhypergraph of $H$ induced by a vertex set $S$: all edges entirely within $S$.
+Returns the edge set (as a `Finset`) rather than a `UniformHypergraph`. -/
 def UniformHypergraph.inducedSubgraph {n r : ℕ}
     (H : UniformHypergraph n r) (S : Finset (Fin n)) :
     Finset (Finset (Fin n)) :=
@@ -64,6 +69,23 @@ theorem erdos_1075 (r : ℕ) (hr : r ≥ 3) :
     ∃ S : Finset (Fin n),
       S.card ≥ M ∧
       ((H.inducedSubgraph S).card : ℝ) ≥ c_r * (S.card : ℝ) ^ r := by
+  sorry
+
+/--
+Erdős [Er64f] proved that the conclusion of Problem 1075 holds with the weaker density constant
+$c_r = r^{-r}$ when the edge threshold is strengthened to $\varepsilon n^r$ (instead of
+$(1+\varepsilon)(n/r)^r$). This is a solved, weaker variant of the main conjecture.
+-/
+@[category research solved, AMS 5]
+theorem erdos_1075_erdos_1964 (r : ℕ) (hr : r ≥ 3) :
+    ∀ ε : ℝ, ε > 0 →
+    ∀ M : ℕ,
+    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+    ∀ H : UniformHypergraph n r,
+    (H.edges.card : ℝ) ≥ ε * (n : ℝ) ^ r →
+    ∃ S : Finset (Fin n),
+      S.card ≥ M ∧
+      ((H.inducedSubgraph S).card : ℝ) ≥ (1 / (r : ℝ) ^ r) * (S.card : ℝ) ^ r := by
   sorry
 
 end Erdos1075
