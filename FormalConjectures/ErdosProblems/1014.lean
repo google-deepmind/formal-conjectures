@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 Erdős conjectured that for fixed $k \geq 3$, the ratio of consecutive Ramsey numbers
 $R(k, l+1) / R(k, l)$ tends to $1$ as $l \to \infty$.
 
+See also problems [544] and [1030].
+
 *Reference:* [erdosproblems.com/1014](https://www.erdosproblems.com/1014)
 
 [Er71] Erdős, P., _Topics in combinatorial analysis_, pp. 95-99, 1971.
