@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 576
@@ -24,7 +25,15 @@ satisfies $\mathrm{ex}(n; Q_3) \asymp n^{8/5}$.
 
 *Reference:* [erdosproblems.com/576](https://www.erdosproblems.com/576)
 
-References: [Er64c], [ErSi70,p.378], [Er74c,p.78], [Er75], [Er81], [Er93,p.334]
+References:
+- [Er64c] Erdős, P. (1964).
+- [Er74c] Erdős, P., _Extremal problems on graphs and hypergraphs_. (1974), 75-84.
+- [Er75] Erdős, P., _Some recent progress on extremal problems in graph theory_. (1975).
+- [Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_. Combinatorica (1981), 25-42.
+- [Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_. Quaestiones Mathematicae (1993), 333-350.
+- [ErSi70] Erdős, P., Simonovits, M., _Some extremal problems in graph theory_. Combinatorial Theory and Its Applications, I-III (1970), 377-390.
+- [JaSu22] Janzer, O., Sudakov, B., _On the Turán number of the hypercube_. arXiv:2211.02015 (2024).
+- [SuTo22] Sudakov, B., Tomon, I., _The extremal number of tight cycles_. International Mathematics Research Notices (IMRN) (2022), 9663-9684.
 -/
 
 open SimpleGraph Finset
@@ -46,17 +55,12 @@ def hypercubeGraph (k : ℕ) : SimpleGraph (Fin k → Bool) where
     exact hcard
   loopless := fun v ⟨hne, _⟩ => hne rfl
 
-/-- An injective graph homomorphism from $H$ to $G$: $G$ contains a copy of $H$
-as a subgraph. -/
-def ContainsSubgraph {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → G.Adj (f u) (f v)
-
 /-- The Turán number $\mathrm{ex}(n; H)$: the maximum number of edges in a simple graph
 on $n$ vertices that contains no copy of $H$ as a subgraph. -/
 noncomputable def turanNumber {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ (V : Type) (fv : Fintype V) (F : SimpleGraph V) (dr : DecidableRel F.Adj),
     haveI := fv; haveI := dr;
-    Fintype.card V = n ∧ ¬ContainsSubgraph F H ∧ F.edgeFinset.card = m}
+    Fintype.card V = n ∧ ¬(H ⊑ F) ∧ F.edgeFinset.card = m}
 
 /--
 Erdős Conjecture (Problem 576) [Er64c], [ErSi70], [Er74c], [Er81], [Er93]:
