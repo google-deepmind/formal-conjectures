@@ -27,9 +27,14 @@ triangles, right-angled triangles, and cyclic quadrilaterals of area $1$.
 
 [Er83d] Erdős, P., _Problems and results on combinatorial geometry_.
 
-[Ko25] Koizumi, S., _On geometric configurations in measurable sets of infinite measure_.
+[Ko23] Kovač, V., _Coloring and density theorems for configurations of a given volume_.
+arXiv:2309.09973 (2023).
 
-[KoPr24] Kovač, V. and Predojević, B., _Cyclic quadrilaterals in measurable sets_.
+[Ko25] Koizumi, S., _Isosceles trapezoids of unit area with vertices in sets of infinite
+planar measure_. arXiv:2501.01914 (2025).
+
+[KoPr24] Kovač, V. and Predojević, B., _Polygons of unit area with vertices in sets of
+infinite planar measure_. arXiv:2412.11725 (2024).
 -/
 
 open MeasureTheory
@@ -45,10 +50,11 @@ noncomputable def triangleArea (p₁ p₂ p₃ : ℝ × ℝ) : ℝ :=
   |(p₂.1 - p₁.1) * (p₃.2 - p₁.2) - (p₃.1 - p₁.1) * (p₂.2 - p₁.2)| / 2
 
 /-- Area of a quadrilateral with consecutive vertices $p_1$, $p_2$, $p_3$, $p_4$ via the
-shoelace formula. -/
+shoelace formula: $\frac{1}{2} |x_1 y_2 - x_2 y_1 + x_2 y_3 - x_3 y_2
++ x_3 y_4 - x_4 y_3 + x_4 y_1 - x_1 y_4|$. -/
 noncomputable def quadArea (p₁ p₂ p₃ p₄ : ℝ × ℝ) : ℝ :=
-  |(p₁.1 * p₂.2 - p₂.1 * p₁.2 + p₂.1 * p₃.2 - p₃.1 * p₂.2 +
-    p₃.1 * p₄.2 - p₄.1 * p₃.2 + p₄.1 * p₁.2 - p₁.1 * p₄.2)| / 2
+  |(p₁.1 * p₂.2 - p₂.1 * p₁.2) + (p₂.1 * p₃.2 - p₃.1 * p₂.2) +
+   (p₃.1 * p₄.2 - p₄.1 * p₃.2) + (p₄.1 * p₁.2 - p₁.1 * p₄.2)| / 2
 
 /-- Two vectors in $\mathbb{R}^2$ are parallel (cross product is zero). -/
 def Parallel (v w : ℝ × ℝ) : Prop :=
@@ -72,8 +78,8 @@ def IsRightTriangle (p₁ p₂ p₃ : ℝ × ℝ) : Prop :=
 
 /-- Four points (in order) form an isosceles trapezoid: exactly one pair of
 parallel opposite sides, with the non-parallel sides (legs) of equal length.
-Here $p_1 p_2 \parallel p_4 p_3$ are the parallel sides and $p_1 p_4$, $p_2 p_3$
-are the equal legs. -/
+The side from $p_1$ to $p_2$ is parallel to the side from $p_4$ to $p_3$, and
+$p_1 p_4$, $p_2 p_3$ are the equal legs. -/
 def IsIsoscelesTrapezoid (p₁ p₂ p₃ p₄ : ℝ × ℝ) : Prop :=
   p₁ ≠ p₂ ∧ p₁ ≠ p₃ ∧ p₁ ≠ p₄ ∧ p₂ ≠ p₃ ∧ p₂ ≠ p₄ ∧ p₃ ≠ p₄ ∧
   Parallel (p₂.1 - p₁.1, p₂.2 - p₁.2) (p₃.1 - p₄.1, p₃.2 - p₄.2) ∧
@@ -153,6 +159,74 @@ theorem erdos_353.variants.cyclic_quadrilateral : answer(True) ↔
       p₁ ∈ A ∧ p₂ ∈ A ∧ p₃ ∈ A ∧ p₄ ∈ A ∧
       IsCyclicQuadrilateral p₁ p₂ p₃ p₄ ∧
       quadArea p₁ p₂ p₃ p₄ = 1 := by
+  sorry
+
+/-- Four points (in order) form a trapezoid: exactly one pair of parallel opposite sides.
+The side from $p_1$ to $p_2$ is parallel to the side from $p_4$ to $p_3$, and the
+legs $p_1 p_4$, $p_2 p_3$ are not parallel. -/
+def IsTrapezoid (p₁ p₂ p₃ p₄ : ℝ × ℝ) : Prop :=
+  p₁ ≠ p₂ ∧ p₁ ≠ p₃ ∧ p₁ ≠ p₄ ∧ p₂ ≠ p₃ ∧ p₂ ≠ p₄ ∧ p₃ ≠ p₄ ∧
+  Parallel (p₂.1 - p₁.1, p₂.2 - p₁.2) (p₃.1 - p₄.1, p₃.2 - p₄.2) ∧
+  ¬ Parallel (p₄.1 - p₁.1, p₄.2 - p₁.2) (p₃.1 - p₂.1, p₃.2 - p₂.2)
+
+/-- Four points form a parallelogram: both pairs of opposite sides are parallel. -/
+def IsParallelogram (p₁ p₂ p₃ p₄ : ℝ × ℝ) : Prop :=
+  p₁ ≠ p₂ ∧ p₁ ≠ p₃ ∧ p₁ ≠ p₄ ∧ p₂ ≠ p₃ ∧ p₂ ≠ p₄ ∧ p₃ ≠ p₄ ∧
+  Parallel (p₂.1 - p₁.1, p₂.2 - p₁.2) (p₃.1 - p₄.1, p₃.2 - p₄.2) ∧
+  Parallel (p₄.1 - p₁.1, p₄.2 - p₁.2) (p₃.1 - p₂.1, p₃.2 - p₂.2)
+
+/--
+Erdős Problem 353, Variant (general trapezoid) [Er83d]:
+
+Must a measurable set $A \subseteq \mathbb{R}^2$ with infinite measure contain the vertices of
+a (not necessarily isosceles) trapezoid of area $1$?
+
+Erdős and Mauldin claim the result holds for general trapezoids.
+-/
+@[category research solved, AMS 28 52]
+theorem erdos_353.variants.trapezoid : answer(True) ↔
+    ∀ (A : Set (ℝ × ℝ)), MeasurableSet A → volume A = ⊤ →
+    ∃ p₁ p₂ p₃ p₄ : ℝ × ℝ,
+      p₁ ∈ A ∧ p₂ ∈ A ∧ p₃ ∈ A ∧ p₄ ∈ A ∧
+      IsTrapezoid p₁ p₂ p₃ p₄ ∧
+      quadArea p₁ p₂ p₃ p₄ = 1 := by
+  sorry
+
+/--
+Erdős Problem 353, Variant (parallelogram counterexample) [Ko23]:
+
+There exists a measurable set $A \subseteq \mathbb{R}^2$ with infinite measure such that $A$
+does not contain the vertices of any parallelogram of area $1$.
+
+Kovač [Ko23] constructed such a counterexample, showing the result fails for parallelograms.
+-/
+@[category research solved, AMS 28 52]
+theorem erdos_353.variants.parallelogram_counterexample : answer(True) ↔
+    ∃ (A : Set (ℝ × ℝ)), MeasurableSet A ∧ volume A = ⊤ ∧
+    ∀ p₁ p₂ p₃ p₄ : ℝ × ℝ,
+      p₁ ∈ A → p₂ ∈ A → p₃ ∈ A → p₄ ∈ A →
+      IsParallelogram p₁ p₂ p₃ p₄ →
+      quadArea p₁ p₂ p₃ p₄ ≠ 1 := by
+  sorry
+
+/--
+Erdős Problem 353, Variant (congruent-sided polygon counterexample) [KoPr24]:
+
+There exists a measurable set $A \subseteq \mathbb{R}^2$ with infinite measure such that
+every convex polygon with congruent sides and all vertices in $A$ has area less than $1$.
+
+Proved by Kovač and Predojević [KoPr24].
+-/
+@[category research solved, AMS 28 52]
+theorem erdos_353.variants.congruent_sided_polygon_counterexample : answer(True) ↔
+    ∃ (A : Set (ℝ × ℝ)), MeasurableSet A ∧ volume A = ⊤ ∧
+    ∀ (n : ℕ) (pts : Fin (n + 3) → ℝ × ℝ) (s : ℝ),
+      (∀ i, pts i ∈ A) →
+      (∀ i : Fin (n + 3), sqDist (pts i) (pts ⟨(i.val + 1) % (n + 3), Nat.mod_lt _ (by omega)⟩) = s) →
+      Convex ℝ (Set.range pts) →
+      ∑ i : Fin (n + 1),
+        triangleArea (pts ⟨0, by omega⟩) (pts ⟨i.val + 1, by omega⟩)
+          (pts ⟨i.val + 2, by omega⟩) < 1 := by
   sorry
 
 end Erdos353
