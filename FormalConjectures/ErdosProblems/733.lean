@@ -39,17 +39,12 @@ open Classical
 
 namespace Erdos733
 
-/-- Three points in $\mathbb{R}^2$ are collinear: the cross product of the displacement
-vectors $(q - p)$ and $(r - p)$ vanishes. -/
-def Collinear (p q r : ℝ × ℝ) : Prop :=
-  (q.1 - p.1) * (r.2 - p.2) = (r.1 - p.1) * (q.2 - p.2)
-
 /-- A line determined by a point set $P$: the set of all points in $P$ collinear
 with a given pair of distinct points. -/
 def IsLine (P : Finset (ℝ × ℝ)) (L : Finset (ℝ × ℝ)) : Prop :=
   L ⊆ P ∧ 2 ≤ L.card ∧
   ∃ p q : ℝ × ℝ, p ∈ P ∧ q ∈ P ∧ p ≠ q ∧
-    L = P.filter (fun r => Collinear p q r)
+    L = P.filter (fun r => Collinear ℝ ({p, q, r} : Set (ℝ × ℝ)))
 
 /-- A multiset of natural numbers is line-compatible for $n$ if there exists a
 point set $P$ of size $n$ in $\mathbb{R}^2$ whose collection of determined lines yields
