@@ -24,11 +24,17 @@ import FormalConjectures.Util.ProblemImports
 Give an asymptotic formula for the number of subgroups of $S_n$.
 Is there a statistical theorem on their order?
 
-A problem of Erdős and Turán.
+A problem of Erdős and Turán [Va99, 5.73].
 
 Let $f(n)$ count the number of subgroups of $S_n$.
 Pyber [Py93] proved that $\log f(n) \asymp n^2$.
 Roney-Dougal and Tracey [RoTr25] proved that $\log f(n) = (\tfrac{1}{16} + o(1))n^2$.
+
+See also Erdős Problem 1163 for a formalization of the "statistical theorem on subgroup orders" aspect.
+
+[Va99] Vardi, I., *Computational Recreations in Mathematica* (1999).
+[Py93] Pyber, L., _Asymptotic results for permutation groups_ (1993), 197–219.
+[RoTr25] Roney-Dougal, C., Tracey, G., _Subgroups of symmetric groups: enumeration and asymptotic properties_. arXiv:2503.05416 (2025).
 -/
 
 open Filter Real
@@ -42,8 +48,8 @@ noncomputable def numSubgroups (n : ℕ) : ℕ :=
 /--
 Erdős Problem 1162 (partially resolved by Roney-Dougal and Tracey [RoTr25]):
 
-$\log f(n) / n^2 \to \tfrac{1}{16}$ as $n \to \infty$, where $f(n)$ is the number of
-subgroups of $S_n$.
+$\log_2 f(n) / n^2 \to \tfrac{1}{16}$ as $n \to \infty$, where $f(n)$ is the number of
+subgroups of $S_n$. Equivalently, $\ln f(n) / n^2 \to (\ln 2)/16$.
 
 The full problem, asking for an asymptotic formula for $f(n)$ and a statistical
 theorem on the orders of subgroups, remains open.
@@ -51,7 +57,7 @@ theorem on the orders of subgroups, remains open.
 @[category research solved, AMS 20]
 theorem erdos_1162 :
     Tendsto (fun n : ℕ => Real.log (numSubgroups n : ℝ) / ((n : ℝ) ^ 2))
-      atTop (nhds (1 / 16)) := by
+      atTop (nhds (Real.log 2 / 16)) := by
   sorry
 
 end Erdos1162
