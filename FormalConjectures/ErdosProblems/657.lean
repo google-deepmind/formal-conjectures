@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 657
@@ -25,23 +26,26 @@ Is it true that if $A \subseteq \mathbb{R}^2$ is a set of $n$ points with no iso
 (every $3$-point subset determines $3$ distinct distances), then $A$ must determine at least
 $f(n) \cdot n$ distinct distances for some $f(n) \to \infty$?
 
-- [Er73] Erdős, P., *Problems and results on combinatorial number theory*.
-- [Er75f] Erdős, P., *Problems and results in combinatorial geometry*.
-- [ErPa90] Erdős, P. and Pach, J., *Variations on the theme of repeated distances*.
-- [Er97e] Erdős, P., *Some of my favourite problems which recently have been solved*.
+- [Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+  Combinatorial Theory (1973), 117–138.
+- [Er75f] Erdős, P., _Problems and results in combinatorial geometry_, 1975.
+- [ErPa90] Erdős, P. and Pach, J., _Variations on the theme of repeated distances_,
+  Combinatorica (1990).
+- [Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_,
+  Proc. Int. Conf. on Discrete Math. (1997), 527–533.
+- [Du08] Dumitrescu, A., _On distinct distances and λ-free point sets_. Discrete Mathematics
+  (2008), 6533–6538.
 -/
 
-namespace Erdos657
+open EuclideanGeometry
 
-/-- The number of distinct pairwise distances in a finite point set $A \subseteq \mathbb{R}^2$. -/
-noncomputable def numDistances (A : Finset (EuclideanSpace ℝ (Fin 2))) : ℕ :=
-  (((A ×ˢ A).filter (fun p => p.1 ≠ p.2)).image (fun p => dist p.1 p.2)).card
+namespace Erdos657
 
 /-- A finite point set $A \subseteq \mathbb{R}^2$ has no isosceles triangles if every $3$-element
 subset determines $3$ distinct pairwise distances. -/
 def NoIsoscelesTriangles (A : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
   ∀ S : Finset (EuclideanSpace ℝ (Fin 2)),
-    S ⊆ A → S.card = 3 → numDistances S = 3
+    S ⊆ A → S.card = 3 → distinctDistances S = 3
 
 /--
 **Erdős Problem 657** [Er73, Er75f, ErPa90, Er97e]:
@@ -60,7 +64,7 @@ theorem erdos_657 : answer(sorry) ↔
       ∃ N₀ : ℕ, ∀ A : Finset (EuclideanSpace ℝ (Fin 2)),
         NoIsoscelesTriangles A →
         N₀ ≤ A.card →
-        C * (A.card : ℝ) ≤ (numDistances A : ℝ) := by
+        C * (A.card : ℝ) ≤ (distinctDistances A : ℝ) := by
   sorry
 
 end Erdos657
