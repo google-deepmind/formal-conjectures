@@ -22,9 +22,15 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/492](https://www.erdosproblems.com/492)
 
 Let $A = \{a_1 < a_2 < \cdots\} \subseteq \mathbb{N}$ be infinite with $a_{i+1}/a_i \to 1$.
-The problem asked whether, for almost all $\alpha$, the sequence of fractional positions
+The problem asked whether, for almost all $\alpha > 0$, the sequence of fractional positions
 $f(\alpha n)$ is uniformly distributed in $[0,1)$. Disproved by Schmidt.
 
+[LV53] Le Veque, W.J., _On uniform distribution modulo a subdivision_,
+  Pacific J. Math. (1953), 757-771.
+[DaLe63] Davenport, H., LeVeque, W.J., _Uniform distribution relative to a fixed sequence_,
+  Michigan Math. J. (1963), 315-319.
+[DaEr63] Davenport, H., Erdős, P., _A theorem on uniform distribution_,
+  Magyar Tud. Akad. Mat. Kutató Int. Közl. (1963), 3-11.
 [Sc69] Schmidt, W.M., _Irregularities of distribution. IV_, Invent. Math. 7 (1969), 55-82.
 -/
 
@@ -65,7 +71,7 @@ For $x \geq a_1$, define $f(x) = (x - a_i)/(a_{i+1} - a_i) \in [0,1)$
 where $a_i \leq x < a_{i+1}$. For example if $A = \mathbb{N}$ then $f(x) = \{x\}$ is
 the usual fractional part operator.
 
-The conjecture asked whether for almost all $\alpha$, the sequence
+The conjecture asked whether for almost all $\alpha > 0$, the sequence
 $f(\alpha n)$ is uniformly distributed in $[0,1)$. Schmidt showed this is false:
 there exists such a sequence for which equidistribution fails on a
 set of positive measure.
@@ -74,7 +80,36 @@ set of positive measure.
 theorem erdos_492 : answer(False) ↔
     ∀ (a : ℕ → ℕ), StrictMono a → (∀ i, 0 < a i) →
       Tendsto (fun i => (a (i + 1) : ℝ) / (a i : ℝ)) atTop (nhds 1) →
-      ∀ᵐ α ∂(volume : Measure ℝ),
+      ∀ᵐ α ∂(volume : Measure ℝ).restrict (Set.Ioi 0),
+        IsEquidistributed (fun n => fractionalPosition a (α * (n : ℝ))) := by
+  sorry
+
+/--
+Davenport–LeVeque (1963) [DaLe63]: If $a_{n+1} - a_n$ is monotone and $a_{n+1}/a_n \to 1$,
+then for almost all $\alpha > 0$, the sequence $f(\alpha n)$ is equidistributed in $[0,1)$.
+This is a positive partial result for Erdős Problem 492 under a monotone-differences hypothesis.
+-/
+@[category research solved, AMS 11 28]
+theorem erdos_492_monotone_differences :
+    ∀ (a : ℕ → ℕ), StrictMono a → (∀ i, 0 < a i) →
+      Tendsto (fun i => (a (i + 1) : ℝ) / (a i : ℝ)) atTop (nhds 1) →
+      Monotone (fun i => a (i + 1) - a i) →
+      ∀ᵐ α ∂(volume : Measure ℝ).restrict (Set.Ioi 0),
+        IsEquidistributed (fun n => fractionalPosition a (α * (n : ℝ))) := by
+  sorry
+
+/--
+Davenport–Erdős (1963) [DaEr63]: If $a_n \gg n^{1/2+\varepsilon}$ for some $\varepsilon > 0$
+(i.e., $a_n$ grows at least as fast as $n^{1/2+\varepsilon}$), then for almost all $\alpha > 0$,
+the sequence $f(\alpha n)$ is equidistributed in $[0,1)$.
+This is a positive partial result for Erdős Problem 492 under a growth-rate hypothesis.
+-/
+@[category research solved, AMS 11 28]
+theorem erdos_492_growth_rate :
+    ∀ (a : ℕ → ℕ), StrictMono a → (∀ i, 0 < a i) →
+      Tendsto (fun i => (a (i + 1) : ℝ) / (a i : ℝ)) atTop (nhds 1) →
+      (∃ ε : ℝ, 0 < ε ∧ ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, C * (n : ℝ) ^ (1/2 + ε) ≤ (a n : ℝ)) →
+      ∀ᵐ α ∂(volume : Measure ℝ).restrict (Set.Ioi 0),
         IsEquidistributed (fun n => fractionalPosition a (α * (n : ℝ))) := by
   sorry
 
