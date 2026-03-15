@@ -25,7 +25,7 @@ Let $k \geq 3$. Does there exist a finite set $A \subset \mathbb{R}^2$ such that
 2-colouring of $A$, there exists a line which contains at least $k$ points from $A$, and all the
 points of $A$ on the line have the same colour?
 
-[Er75f] Erdős, P., *Problems and results on combinatorial number theory III*.
+[Er75f] Erdős, P., *On some problems of elementary and combinatorial geometry*. Annali di Matematica Pura ed Applicata (4) (1975), 99–108.
 -/
 
 namespace Erdos1090
@@ -35,8 +35,8 @@ Let $k \geq 3$. Does there exist a finite set $A \subset \mathbb{R}^2$ such that
 2-colouring of $A$, there exists a line which contains at least $k$ points from $A$, and all the
 points of $A$ on the line have the same colour?
 
-The answer is yes. Erdős [Er75f] notes that Graham and Selfridge proved the
-case $k = 3$. Hunter observed that for sufficiently large $n$, a generic projection
+The answer is yes. Erdős [Er75f, p.106] notes that Graham and Selfridge proved the
+case $k = 3$. Zach Hunter observed that for sufficiently large $n$, a generic projection
 of $[k]^n$ into $\mathbb{R}^2$ has this property, by the Hales–Jewett theorem.
 -/
 @[category research solved, AMS 5 51]
