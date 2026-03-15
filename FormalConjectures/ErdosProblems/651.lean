@@ -27,23 +27,25 @@ Erdős conjectured that $f_k(n)$ grows at least exponentially in $n$ for each fi
 $k \geq 2$. This was disproved for $k \geq 3$ by Pohoata and Zakharov, who showed
 $f_3(n) \leq 2^{o(n)}$.
 
-[Er97e] Erdős, P., *Some of my favourite problems which recently have been solved*, 1997.
+[Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Proc. Int. Conf. on Discrete Math. (1997), 527–533.
 
-[PoZa22] Pohoata, C. and Zakharov, D., *Convex polytopes from fewer points*, 2022.
+[PoZa22] Pohoata, C. and Zakharov, D., _Convex polytopes from fewer points_,
+arXiv:2208.04878 (2022).
 -/
 
 namespace Erdos651
 
 /-- A finite point set in $\mathbb{R}^k$ is in general position if any $k+1$ distinct
 points are affinely independent (no $k+1$ points lie on a common hyperplane). -/
-def InGeneralPositionRk (k : ℕ) (P : Finset (EuclideanSpace ℝ (Fin k))) : Prop :=
+def InGeneralPosition (k : ℕ) (P : Finset (EuclideanSpace ℝ (Fin k))) : Prop :=
   ∀ f : Fin (k + 1) → EuclideanSpace ℝ (Fin k),
     (∀ i, f i ∈ P) → Function.Injective f →
     AffineIndependent ℝ f
 
 /-- A finite point set in $\mathbb{R}^k$ is in convex position if no point lies in the
 convex hull of the remaining points (the points are the vertices of a convex polytope). -/
-def InConvexPositionRk (k : ℕ) (S : Finset (EuclideanSpace ℝ (Fin k))) : Prop :=
+def InConvexPosition (k : ℕ) (S : Finset (EuclideanSpace ℝ (Fin k))) : Prop :=
   ∀ p ∈ S, p ∉ convexHull ℝ (↑(S.erase p) : Set (EuclideanSpace ℝ (Fin k)))
 
 /-- $f_k(n)$: the smallest integer $m$ such that any $m$ points in general position
@@ -52,9 +54,9 @@ convex polytope). -/
 noncomputable def fk (k n : ℕ) : ℕ :=
   sInf {m : ℕ | ∀ P : Finset (EuclideanSpace ℝ (Fin k)),
     P.card = m →
-    InGeneralPositionRk k P →
+    InGeneralPosition k P →
     ∃ Q : Finset (EuclideanSpace ℝ (Fin k)),
-      Q ⊆ P ∧ Q.card = n ∧ InConvexPositionRk k Q}
+      Q ⊆ P ∧ Q.card = n ∧ InConvexPosition k Q}
 
 /--
 Erdős Problem 651 [Er97e]:
@@ -71,6 +73,28 @@ DISPROVED for $k \geq 3$: Pohoata and Zakharov [PoZa22] proved $f_3(n) \leq 2^{o
 theorem erdos_651 : answer(False) ↔
     ∀ (k : ℕ), k ≥ 2 → ∃ c : ℝ, c > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       (fk k n : ℝ) > (1 + c) ^ n := by
+  sorry
+
+/--
+Monotonicity of $f_k(n)$: the convex position number is strictly decreasing in dimension,
+i.e., $f_2(n) > f_3(n) > f_4(n) > \cdots$ for all sufficiently large $n$.
+Points in general position in $\mathbb{R}^k$ can be projected to $\mathbb{R}^{k-1}$
+while preserving general position, so fewer points suffice in higher dimensions.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_651_monotone :
+    ∀ (k : ℕ), k ≥ 2 → ∀ n : ℕ, fk k n ≥ fk (k + 1) n := by
+  sorry
+
+/--
+Pohoata–Zakharov upper bound [PoZa22]: $f_3(n) \leq 2^{o(n)}$, i.e., for every $c > 0$,
+$f_3(n) \leq 2^{c \cdot n}$ for all sufficiently large $n$. This disproves the
+exponential lower bound conjecture for $k = 3$.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_651_pohoata_zakharov :
+    ∀ c : ℝ, c > 0 → ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      (fk 3 n : ℝ) ≤ 2 ^ (c * n) := by
   sorry
 
 end Erdos651
