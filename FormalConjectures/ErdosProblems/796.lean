@@ -24,6 +24,8 @@ integer has fewer than $k$ representations as a product $a_1 \cdot a_2$ with $a_
 $a_1, a_2 \in A$. Is it true that
 $g_3(n) = \frac{n \log \log n}{\log n} + (c + o(1)) \frac{n}{\log n}$ for some constant $c$?
 
+The special case $k = 2$ is the subject of Erdős Problem 425 (see `Erdos425`).
+
 *Reference:* [erdosproblems.com/796](https://www.erdosproblems.com/796)
 
 [Er69] Erdős, P., _On some applications of graph theory to number theoretic problems_. Publ.
@@ -66,6 +68,28 @@ theorem erdos_796 :
         (n : ℝ) * Real.log (Real.log (n : ℝ)) / Real.log (n : ℝ) -
         c * (n : ℝ) / Real.log (n : ℝ)| ≤
       ε * (n : ℝ) / Real.log (n : ℝ) := by
+  sorry
+
+/--
+Erdős's general leading-term asymptotic [Er69]: for $2^{r-1} < k \le 2^r$ with $r \ge 1$,
+$$g_k(n) \sim \frac{(\log \log n)^{r-1}}{(r-1)! \cdot \log n} \cdot n.$$
+
+Formulated as: for every $\varepsilon > 0$, there exists $N_0$ such that for all $n \ge N_0$,
+$$\left| g_k(n) - \frac{n \, (\log \log n)^{r-1}}{(r-1)! \cdot \log n} \right|
+  \le \varepsilon \cdot \frac{n \, (\log \log n)^{r-1}}{(r-1)! \cdot \log n}.$$
+
+See also `erdos_796` for the refined second-order conjecture in the $k = 3$ case.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_796_general (k r : ℕ) (hr : 1 ≤ r) (hk_lower : 2 ^ (r - 1) < k)
+    (hk_upper : k ≤ 2 ^ r) :
+    ∀ ε : ℝ, ε > 0 →
+    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      |(multiplicativeBkMax k n : ℝ) -
+        (n : ℝ) * (Real.log (Real.log (n : ℝ))) ^ (r - 1) /
+        (↑(Nat.factorial (r - 1)) * Real.log (n : ℝ))| ≤
+      ε * (n : ℝ) * (Real.log (Real.log (n : ℝ))) ^ (r - 1) /
+        (↑(Nat.factorial (r - 1)) * Real.log (n : ℝ)) := by
   sorry
 
 end Erdos796
