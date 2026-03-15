@@ -15,29 +15,25 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 333
 
 *Reference:* [erdosproblems.com/333](https://www.erdosproblems.com/333)
 
+See also Problem 806.
+
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
 number theory*. Monographies de L'Enseignement Mathématique (1980).
 
-[ErNe77] Erdős, P. and Newman, D.J.
+[ErNe77] Erdős, P. and Newman, D.J., *Bases for sets of integers*. Journal of Number
+Theory **9** (1977), 420–425.
 -/
 
 open scoped Classical
 
 namespace Erdos333
-
-/--
-The upper density of $A \subseteq \mathbb{N}$:
-$$\overline{d}(A) = \limsup_{N \to \infty} |A \cap \{0, 1, \ldots, N-1\}| / N$$
--/
-noncomputable def upperDensity333 (A : Set ℕ) : ℝ :=
-  Filter.limsup (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    Filter.atTop
 
 /--
 Erdős Problem 333 [ErGr80] (DISPROVED):
@@ -55,7 +51,7 @@ problem in general, though this was overlooked by Erdős and Graham.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_333 : answer(False) ↔
-    ∀ A : Set ℕ, upperDensity333 A = 0 →
+    ∀ A : Set ℕ, A.upperDensity = 0 →
       ∃ B : Set ℕ,
         A ⊆ Set.image2 (· + ·) B B ∧
         ∀ ε : ℝ, 0 < ε →
