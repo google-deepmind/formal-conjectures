@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/884](https://www.erdosproblems.com/884)
 
 [Er98] Erdős, P., _Some of my new and almost new problems and results in
-combinatorial number theory_ (1998).
+combinatorial number theory_. Number theory (Eger, 1996) (1998), 169–180.
 -/
 
 open Finset
