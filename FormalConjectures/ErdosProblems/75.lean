@@ -25,12 +25,14 @@ Does there exist a graph on $\aleph_1$ vertices with chromatic number $\aleph_1$
 every set of $n$ vertices contains an independent set of size $> n^{1-\varepsilon}$ for all
 $\varepsilon > 0$ and large $n$?
 
-[EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., _On almost bipartite large chromatic graphs_,
-Annals of Discrete Mathematics 12 (1982), 117-123.
+[EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., _On almost bipartite large chromatic graphs_.
+Annals of Discrete Mathematics **12** (1982), 117–123.
 
-[Er95] Erdős, P., _On some of my favourite theorems_, 1995.
+[Er95] Erdős, P., _Some of my favourite problems in number theory, combinatorics, and geometry_.
+Resenhas (1995), 165–186.
 
-[Er95d] Erdős, P., _Problems and results in discrete mathematics_, Discrete Math., 1995.
+[Er95d] Erdős, P., _On some problems in combinatorial set theory_.
+Publ. Inst. Math. (Beograd) (N.S.) (1995), 61–65.
 
 Erdős offered $1000 for a complete solution. See also Problems 74 and 750.
 -/
