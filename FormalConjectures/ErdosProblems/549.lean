@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 549
@@ -30,29 +31,35 @@ This conjecture is false: Norin, Sun, and Zhao [NSZ16] proved that if $T$ is the
 union of two stars on $k$ and $2k$ vertices with an edge joining their centres,
 then $R(T) \geq (4.2 - o(1))k$.
 
-[EFRS82] Erdős, P., Faudree, R.J., Rousseau, C.C., and Schelp, R.H., *The size Ramsey
-number*, Period. Math. Hungar. 13 (1982), 145-161.
+[Bu74] Burr, S.A., *Generalized Ramsey theory for graphs — a survey*, 1974, 52-75.
 
-[Bu74] Burr, S.A., *Ramsey numbers of trees*, 1974.
+[BuEr76] Burr, S.A. and Erdős, P., *Extremal Ramsey theory for graphs*. Utilitas
+Mathematica (1976), 247-258.
 
-[NSZ16] Norin, S., Sun, H., and Zhao, Y., *The Ramsey number of a triple star*, 2016.
+[EFRS82] Erdős, P., Faudree, R.J., Rousseau, C.C., and Schelp, R.H., *Ramsey numbers
+for brooms*. Proceedings of the Thirteenth Southeastern Conference on Combinatorics,
+Graph Theory and Computing (1982), 283-293.
+
+[NSZ16] Norin, S., Sun, Y.R., and Zhao, Y., *Asymptotics of Ramsey numbers of double
+stars*. arXiv:1605.03612 (2016).
+
+[DuSt24] Dubó, F.F. and Stein, M., *On the Ramsey number of the double star*.
+arXiv:2401.01274 (2024).
+
+[MPY25] Montgomery, R., Pavez-Signé, M., and Yan, J., *Ramsey numbers of trees*.
+arXiv:2509.07934 (2025).
 -/
 
 open SimpleGraph Finset
 
 namespace Erdos549
 
-/-- A graph $H$ contains a copy of graph $G$ (as a subgraph) if there is an injective
-function from $V(G)$ to $V(H)$ that preserves adjacency. -/
-def ContainsSubgraphCopy {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
-
-/-- The diagonal Ramsey number $R(G)$ for a graph $G$ on $\operatorname{Fin}(m)$: the minimum $N$
-such that every graph $H$ on $N$ vertices contains a copy of $G$ or its complement contains
-a copy of $G$. -/
-noncomputable def ramseyNumber {m : ℕ} (G : SimpleGraph (Fin m)) : ℕ :=
+/-- The diagonal Ramsey number $R(G)$ for a graph $G$: the minimum
+$N$ such that every graph $H$ on $N$ vertices contains a copy of $G$ or its complement
+contains a copy of $G$. -/
+noncomputable def ramseyNumber {U : Type*} (G : SimpleGraph U) : ℕ :=
   sInf {N : ℕ | ∀ (H : SimpleGraph (Fin N)),
-    ContainsSubgraphCopy G H ∨ ContainsSubgraphCopy G Hᶜ}
+    G.IsContained H ∨ G.IsContained Hᶜ}
 
 /--
 Erdős Problem 549 [EFRS82]:
