@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 736
@@ -43,12 +44,6 @@ def ContainsCopy {V W : Type*}
     (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
   ∃ f : W → V, Function.Injective f ∧ ∀ u v, H.Adj u v → G.Adj (f u) (f v)
 
-/-- The cardinal chromatic number of a graph: the infimum of cardinals $\kappa$
-for which $G$ admits a proper $\kappa$-coloring. -/
-noncomputable def cardChromaticNumber {V : Type u}
-    (G : SimpleGraph V) : Cardinal.{u} :=
-  sInf {κ : Cardinal.{u} | ∃ (α : Type u), #α = κ ∧ Nonempty (G.Coloring α)}
-
 /--
 Erdős Problem 736 [Er81] [Er93, p. 343]:
 
@@ -62,10 +57,10 @@ this is consistently false (not provable in ZFC).
 @[category research open, AMS 3 5]
 theorem erdos_736 : answer(sorry) ↔
     ∀ (V : Type u) (G : SimpleGraph V),
-    cardChromaticNumber G = aleph 1 →
+    G.chromaticCardinal = aleph 1 →
     ∀ (m : Cardinal.{u}),
     ∃ (W : Type u) (Gm : SimpleGraph W),
-      cardChromaticNumber Gm = m ∧
+      Gm.chromaticCardinal = m ∧
       ∀ (U : Type u) [Fintype U] (H : SimpleGraph U),
         ContainsCopy Gm H → ContainsCopy G H := by
   sorry
