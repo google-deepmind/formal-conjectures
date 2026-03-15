@@ -19,10 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 47
 
-*References:*
-- [erdosproblems.com/47](https://www.erdosproblems.com/47)
-- [Bl21] Bloom, T. F., _On a density conjecture about unit fractions_. arXiv:2112.03726 (2021).
-- [LiSa24] Liu, J. and Sawhney, M., _Unit fractions_ (2024).
+*Reference:* [erdosproblems.com/47](https://www.erdosproblems.com/47)
 
 If $A \subseteq \{1, \ldots, N\}$ satisfies $\sum_{a \in A} 1/a > \delta \cdot \log N$ for some
 $\delta > 0$ and $N$ sufficiently large, then $A$ contains a subset whose reciprocals sum to $1$.
@@ -36,6 +33,11 @@ Erdős conjectured that a threshold of $(\log \log N)^2$ might suffice; a constr
 Pomerance (discussed in [Bl21]) shows this would be optimal.
 
 Related problems: 46, 298.
+
+[Bl21] Bloom, T. F., _On a density conjecture about unit fractions_. arXiv:2112.03726 (2021).
+
+[LiSa24] Liu, Y. and Sawhney, M., _On further questions regarding unit fractions_.
+arXiv:2404.07113 (2024).
 -/
 
 open scoped BigOperators
