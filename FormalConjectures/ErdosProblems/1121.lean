@@ -59,4 +59,30 @@ theorem erdos_1121
       ∀ i, dist (center i) p + radius i ≤ ∑ j : Fin n, radius j := by
   sorry
 
+/--
+Higher-dimensional generalization of Erdős Problem #1121:
+
+The Goodman–Goodman result generalizes to $\mathbb{R}^d$: if $n$ closed balls in $\mathbb{R}^d$
+with radii $r_1, \ldots, r_n$ cannot be separated into two non-empty groups by a hyperplane
+disjoint from all of them, then they can be covered by a single ball of radius $\sum r_i$.
+
+A hyperplane in $\mathbb{R}^d$ is parameterized by a unit normal vector $v$ and offset $d$,
+defining $H = \{x : \langle x, v \rangle = d\}$. The non-separability condition is the same as
+in the planar case.
+-/
+@[category research solved, AMS 52]
+theorem erdos_1121_generalized
+    (d : ℕ)
+    (n : ℕ)
+    (center : Fin n → EuclideanSpace ℝ (Fin d))
+    (radius : Fin n → ℝ)
+    (hr : ∀ i, 0 < radius i)
+    (hns : ∀ (v : EuclideanSpace ℝ (Fin d)) (δ : ℝ),
+      ‖v‖ = 1 →
+      (∀ i, |@inner ℝ _ _ (center i) v - δ| > radius i) →
+      (∀ i j, @inner ℝ _ _ (center i) v > δ ↔ @inner ℝ _ _ (center j) v > δ)) :
+    ∃ p : EuclideanSpace ℝ (Fin d),
+      ∀ i, dist (center i) p + radius i ≤ ∑ j : Fin n, radius j := by
+  sorry
+
 end Erdos1121
