@@ -69,6 +69,8 @@ def densityJumpSet (k : ℕ) : Set ℝ :=
     ∃ β : ℝ, β > α ∧
       -- (a) Density jump: liminf density > α implies dense growing subgraphs
       (∀ (sizes : ℕ → ℕ) (G : ∀ i, UniformHypergraph (sizes i) k),
+        -- Hypothesis: |Gᵢ| → ∞
+        (∀ M : ℕ, ∃ N : ℕ, ∀ i : ℕ, i ≥ N → sizes i ≥ M) →
         -- Hypothesis: liminf density(Gᵢ) > α
         (∃ δ : ℝ, δ > 0 ∧ ∃ N₀ : ℕ, ∀ i : ℕ, i ≥ N₀ →
           (G i).density ≥ α + δ) →
@@ -81,6 +83,8 @@ def densityJumpSet (k : ℕ) : Set ℝ :=
             (H i).density ≥ β + δ')) ∧
       -- (b) Fails with ≥ α
       ¬(∀ (sizes : ℕ → ℕ) (G : ∀ i, UniformHypergraph (sizes i) k),
+        -- Hypothesis: |Gᵢ| → ∞
+        (∀ M : ℕ, ∃ N : ℕ, ∀ i : ℕ, i ≥ N → sizes i ≥ M) →
         (∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ i : ℕ, i ≥ N₀ →
           (G i).density ≥ α - ε) →
         ∃ (subSizes : ℕ → ℕ) (H : ∀ i, UniformHypergraph (subSizes i) k),
