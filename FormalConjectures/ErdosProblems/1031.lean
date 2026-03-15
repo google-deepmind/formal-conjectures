@@ -23,10 +23,11 @@ import FormalConjectures.Util.ProblemImports
 
 A question of Erdős, Fajtlowicz, and Staton [Er93, p.340].
 
-[Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is eighty,
-Vol. 2 (Keszthely, 1993), 97-132.
+[Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+Quaestiones Mathematicae **16** (1993), 333–350.
 
-[PrRo99] Prömel, H.J. and Rödl, V., _Non-canonical Ramsey-type theorems_. To appear.
+[PrRo99] Prömel, H.J. and Rödl, V., _Non-Ramsey graphs are c log n-universal_.
+J. Combin. Theory Ser. A (1999), 379–384.
 -/
 
 open scoped Topology Real
