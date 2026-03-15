@@ -24,19 +24,19 @@ import FormalConjectures.Util.ProblemImports
 If $G_1$ and $G_2$ are graphs with chromatic number $\aleph_1$, must they share a common
 subgraph with infinite chromatic number?
 
-[EHS74] Erdős, P., Hajnal, A., and Shelah, S., *On some general properties of chromatic numbers*.
-Topics in topology (Proc. Colloq., Keszthely, 1972), Colloq. Math. Soc. Janos Bolyai (1974),
-243-255.
+[EHS74] Erdős, P., Hajnal, A., and Shelah, S., _On some general properties of chromatic numbers_,
+Topics in Topology, Colloq. Math. Soc. Janos Bolyai **8** (1974), 243–255.
 
-[Er87] Erdős, P., _Some problems on finite and infinite graphs_, 1987.
+[Er87] Erdős, P., _Some problems on finite and infinite graphs_, Logic and combinatorics,
+Contemp. Math. **65** (1987), 223–228.
 
 [Er90] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1990),
 467–478.
 
 [Er95d] Erdős, P., _Problems and results in discrete mathematics_, Discrete Math., 1995.
 
-[Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
-and his mathematics", Budapest, July 1999 (1999).
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999.
 -/
 
 open SimpleGraph Cardinal
