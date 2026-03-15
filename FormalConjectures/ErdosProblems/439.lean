@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.RingTheory.Polynomial.Basic
 
 /-!
 # Erdős Problem 439
@@ -61,6 +62,20 @@ Also follows from the result of Khalfalah and Szemerédi [KhSz06]. -/
 theorem erdos_439.variants.kth_powers : answer(True) ↔
     ∀ (k : ℕ), 2 ≤ k → ∀ (c : ℕ) (f : ℕ → Fin c),
       ∃ x y : ℕ, x ≠ y ∧ f x = f y ∧ ∃ z : ℕ, z ^ k = x + y := by
+  sorry
+
+/-- Erdős Problem 439, polynomial generalization (Khalfalah-Szemerédi [KhSz06]):
+For any non-constant polynomial $f(z) \in \mathbb{Z}[z]$ such that $2 \mid f(z)$ for some
+$z \in \mathbb{Z}$, in any finite colouring of the natural numbers there exist distinct $x$ and
+$y$ of the same colour such that $x + y = f(z)$ for some integer $z$.
+
+This is the main result of Khalfalah and Szemerédi [KhSz06], from which both the square
+and $k$-th power cases follow. -/
+@[category research solved, AMS 5 11]
+theorem erdos_439.variants.polynomial (f : Polynomial ℤ) (hf : f.degree ≥ 1)
+    (heven : ∃ z : ℤ, 2 ∣ f.eval z) :
+    ∀ (c : ℕ) (g : ℕ → Fin c),
+      ∃ x y : ℕ, x ≠ y ∧ g x = g y ∧ ∃ z : ℤ, f.eval z = ↑(x + y) := by
   sorry
 
 end Erdos439
