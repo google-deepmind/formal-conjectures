@@ -47,6 +47,12 @@ Univ. Tomsk 2 (1938), 74–82.
 
 [Be66] Benson, C.T., _Minimal regular graphs of girths eight and twelve_.
 Canad. J. Math. 18 (1966), 1091–1094.
+
+[LUW95] Lazebnik, F., Ustimenko, V.A., Woldar, A.J., _A new series of dense graphs
+of high girth_. Bull. Amer. Math. Soc. (N.S.) 32 (1995), 73–79.
+
+[LUW99] Lazebnik, F., Ustimenko, V.A., Woldar, A.J., _Polarities and 2k-cycle-free
+graphs_. Discrete Math. 197/198 (1999), 503–513.
 -/
 
 open SimpleGraph
@@ -82,6 +88,58 @@ theorem erdos_572 (k : ℕ) (hk : k ≥ 3) :
     ∃ c : ℝ, 0 < c ∧
     ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
       c * (n : ℝ) ^ (1 + 1 / (k : ℝ)) ≤ (extremalNumber (cycleGraph (2 * k) (by omega)) n : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 572, solved case $k = 2$ (Erdős–Klein [Er38]):
+
+There exists a constant $c > 0$ such that for all sufficiently large $n$,
+$\mathrm{ex}(n; C_4) \geq c \cdot n^{3/2}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_572_k2 :
+    ∃ c : ℝ, 0 < c ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      c * (n : ℝ) ^ (1 + 1 / (2 : ℝ)) ≤ (extremalNumber (cycleGraph 4 (by omega)) n : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 572, solved case $k = 3$ (Benson [Be66]):
+
+There exists a constant $c > 0$ such that for all sufficiently large $n$,
+$\mathrm{ex}(n; C_6) \geq c \cdot n^{4/3}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_572_k3 :
+    ∃ c : ℝ, 0 < c ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      c * (n : ℝ) ^ (1 + 1 / (3 : ℝ)) ≤ (extremalNumber (cycleGraph 6 (by omega)) n : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 572, solved case $k = 4$ (Wenger):
+
+There exists a constant $c > 0$ such that for all sufficiently large $n$,
+$\mathrm{ex}(n; C_8) \geq c \cdot n^{5/4}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_572_k4 :
+    ∃ c : ℝ, 0 < c ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      c * (n : ℝ) ^ (1 + 1 / (4 : ℝ)) ≤ (extremalNumber (cycleGraph 8 (by omega)) n : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 572, solved case $k = 5$ (Benson [Be66]):
+
+There exists a constant $c > 0$ such that for all sufficiently large $n$,
+$\mathrm{ex}(n; C_{10}) \geq c \cdot n^{6/5}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_572_k5 :
+    ∃ c : ℝ, 0 < c ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      c * (n : ℝ) ^ (1 + 1 / (5 : ℝ)) ≤ (extremalNumber (cycleGraph 10 (by omega)) n : ℝ) := by
   sorry
 
 end Erdos572
