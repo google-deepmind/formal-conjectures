@@ -31,8 +31,8 @@ size $n$.
 
 [Er84d] Erdős, P., *Some old and new problems on combinatorial geometry*.
 
-[CDL25] Clemen, F., Dumitrescu, A., and Liu, J., *On the gap between the most frequent and
-second most frequent distances*.
+[CDL25] Clemen, F., Dumitrescu, A., and Liu, D., _On multiplicities of interpoint distances_.
+arXiv:2505.04283 (2025).
 -/
 
 open Classical
@@ -59,7 +59,7 @@ are the two largest distance multiplicities.
 
 This lower bound was proved by Clemen, Dumitrescu, and Liu [CDL25].
 -/
-@[category research solved, AMS 52]
+@[category research open, AMS 52]
 theorem erdos_959 :
     ∃ c : ℝ, c > 0 ∧ ∃ N : ℕ, ∀ n : ℕ, n ≥ N →
       ∃ (A : Finset (EuclideanSpace ℝ (Fin 2))),
