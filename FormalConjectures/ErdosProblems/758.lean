@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 758
@@ -35,25 +36,10 @@ open SimpleGraph
 
 namespace Erdos758
 
-/-- A cochromatic coloring of a simple graph $G$ with $k$ colors is a function
-$c : V \to \text{Fin}(k)$ such that each color class is either a clique (all pairs
-adjacent) or an independent set (no pairs adjacent). -/
-def IsCochromaticColoring {V : Type*} (G : SimpleGraph V) (k : ℕ)
-    (c : V → Fin k) : Prop :=
-  ∀ i : Fin k,
-    (∀ u v : V, c u = i → c v = i → u ≠ v → G.Adj u v) ∨
-    (∀ u v : V, c u = i → c v = i → u ≠ v → ¬G.Adj u v)
-
-/-- The cochromatic number $\zeta(G)$: the minimum number of colors needed for a
-cochromatic coloring of $G$. -/
-noncomputable def cochromaticNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {k : ℕ | ∃ c : V → Fin k, IsCochromaticColoring G k c}
-
 /-- $z(n)$: the maximum cochromatic number over all simple graphs on $n$
 vertices. -/
 noncomputable def maxCochromaticNumber (n : ℕ) : ℕ :=
-  sSup {k : ℕ | ∃ G : SimpleGraph (Fin n), cochromaticNumber G = k}
+  sSup {k : ℕ | ∃ G : SimpleGraph (Fin n), G.cochromaticNumber = (k : ℕ∞)}
 
 /--
 Erdős Problem 758 [ErGi93]:
