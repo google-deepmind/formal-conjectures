@@ -22,15 +22,24 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/633](https://www.erdosproblems.com/633)
 
 Classify those triangles which can only be cut into a square number of congruent
-triangles.
+triangles. **$25 reward.**
 
-Any triangle can be cut into $n^2$ congruent triangles for any $n \geq 1$. Soifer [So09]
-proved that there exists at least one triangle (e.g. one with sides $\sqrt{2}$, $\sqrt{3}$,
-$\sqrt{4}$) which can only be cut into a square number of congruent triangles. In fact,
-Soifer proved that any triangle for which the angles and sides are both
-integrally independent has this property. The full classification remains open.
+Any triangle can be cut into $n^2$ congruent triangles for any $n \geq 1$ [So09].
+Soifer [So09c] reported Erdős's question and proved that there exists at least one
+triangle (e.g. one with sides $\sqrt{2}$, $\sqrt{3}$, $\sqrt{4}$) which can only be cut
+into a square number of congruent triangles. In fact, Soifer [So09b] proved that any
+triangle for which the angles and sides are both integrally independent has this property.
+The full classification remains open.
 
-[So09] Soifer, A., *The Mathematical Coloring Book*, Springer, 2009.
+See also Problem 634 for related results on which numbers $n$ admit a congruent dissection
+of an equilateral triangle.
+
+[So09] Soifer, A., *How Does One Cut a Triangle? I*, The Mathematical Coloring Book,
+Springer, 2009, pp. 15–23.
+[So09b] Soifer, A., *How Does One Cut a Triangle? II*, The Mathematical Coloring Book,
+Springer, 2009, pp. 37–39.
+[So09c] Soifer, A., *Is There Anything Beyond the Solution?*, The Mathematical Coloring
+Book, Springer, 2009, pp. 47–50.
 -/
 
 namespace Erdos633
@@ -126,7 +135,7 @@ theorem erdos_633.variants.square_dissection
 
 /--
 There exists a non-degenerate triangle which can be dissected into $n$
-congruent triangles only when $n$ is a perfect square. [So09]
+congruent triangles only when $n$ is a perfect square. [So09c]
 -/
 @[category research solved, AMS 51]
 theorem erdos_633.variants.existence :
@@ -137,7 +146,7 @@ theorem erdos_633.variants.existence :
 /--
 If a non-degenerate triangle has integrally independent sides and angles,
 then it can only be dissected into a perfect square number of congruent
-triangles. [So09]
+triangles. [So09b]
 -/
 @[category research solved, AMS 51]
 theorem erdos_633.variants.soifer
