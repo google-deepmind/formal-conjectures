@@ -26,10 +26,14 @@ Is it true that, for almost all choices of signs $\varepsilon_n = \pm 1$, there 
 some $z$ with $|z| = 1$ such that $\sum \varepsilon_n a_n z^n$ converges?
 Solved affirmatively by Michelen and Sawhney.
 
+[DE59] Dvoretzky, A. and Erdős, P., *Divergence of random power series*, Michigan Math. J.
+(1959), 343–347.
+
 [Er61] Erdős, P., *Some unsolved problems*, Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961),
 p.254.
 
-[MiSa25] Michelen, M. and Sawhney, M., *Random signs of power series* (2025).
+[MiSa25] Michelen, M. and Sawhney, M., *Convergent points for random power series on the
+unit circle*, arXiv:2509.02729 (2025).
 -/
 
 open MeasureTheory ProbabilityTheory Filter Finset BigOperators
@@ -53,8 +57,12 @@ Let $a_n \in \mathbb{R}$ be such that $\sum |a_n|^2 = \infty$ and $|a_n| = o(1/\
 Is it true that, for almost all $\varepsilon_n = \pm 1$, there exists some $z$ with $|z| = 1$
 (depending on the choice of signs) such that $\sum \varepsilon_n a_n z^n$ converges?
 
-Proved by Michelen and Sawhney [MiSa25], who showed that the set of such $z$
-has Hausdorff dimension 1.
+It is unclear whether Erdős intended to also assume monotonicity $|a_{n+1}| \leq |a_n|$;
+the formalization omits this assumption, matching the stronger result of Michelen and
+Sawhney [MiSa25], who proved the statement without monotonicity and showed that the set
+of such $z$ has Hausdorff dimension 1. Dvoretzky and Erdős [DE59] showed that if
+$|a_n| > c/\sqrt{n}$ for some $c > 0$, then the series diverges almost surely at every
+$|z| = 1$, so the $o(1/\sqrt{n})$ condition is essentially sharp.
 -/
 @[category research solved, AMS 40 60]
 theorem erdos_527 : answer(True) ↔
