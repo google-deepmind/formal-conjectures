@@ -26,7 +26,10 @@ If $g(n)$ denotes the number of groups of order $n$, then $g(n) \le g(2^m)$ for 
 [Va99] Vaughan, R.C., _Problems in combinatorial number theory_, 1999.
 
 [BNV07] Blackburn, S.R., Neumann, P.M. and Venkataraman, G., _Enumeration of finite groups_,
-Cambridge Tracts in Mathematics, 2007.
+Cambridge Tracts in Mathematics, 2007, xii+281 pp.
+
+[Pa03] Pantelidakis, I., _On the Number of Non-isomorphic Groups of the Same Order_,
+DPhil Thesis, University of Oxford, 2003.
 -/
 
 open Classical
@@ -67,6 +70,19 @@ point). Listed as Question 22.16 in [BNV07], attributed to Erdős and Higman.
 @[category research open, AMS 20]
 theorem erdos_1160 (n m : ℕ) (h : n ≤ 2 ^ m) :
     numGroupsOfOrder n ≤ numGroupsOfOrder (2 ^ m) := by
+  sorry
+
+/--
+A stronger variant of Erdős Problem 1160, listed as Question 22.18 in [BNV07]:
+
+The sum $\sum_{n < 2^m} g(n) \le g(2^m)$ for all sufficiently large $m$ (perhaps $m \ge 7$).
+
+This asserts that $g(2^m)$ dominates not just each individual $g(n)$ for $n \le 2^m$,
+but the entire sum of all $g(n)$ for $n < 2^m$.
+-/
+@[category research open, AMS 20]
+theorem erdos_1160_sum_variant (m : ℕ) :
+    ∑ n ∈ Finset.range (2 ^ m), numGroupsOfOrder n ≤ numGroupsOfOrder (2 ^ m) := by
   sorry
 
 end Erdos1160
