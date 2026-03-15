@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 432
@@ -24,21 +25,12 @@ import FormalConjectures.Util.ProblemImports
 Asked by Straus, inspired by a problem of Ostmann (see Problem #431).
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
-theory*. Monographies de L'Enseignement Mathematique (1980).
+theory*. Monographies de L'Enseignement Mathematique (1980), p.85.
 -/
 
-open scoped Classical
 open Filter
 
 namespace Erdos432
-
-/--
-The upper density of $A \subseteq \mathbb{N}$:
-$$d^*(A) = \limsup_{N \to \infty} \frac{|A \cap \{0, 1, \ldots, N-1\}|}{N}$$
--/
-noncomputable def upperDensity (A : Set ℕ) : ℝ :=
-  limsup (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    atTop
 
 /--
 Erdős Problem 432 [ErGr80, p.85]:
@@ -50,9 +42,8 @@ zero upper density.
 @[category research open, AMS 5 11]
 theorem erdos_432
     (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
-    (h_coprime : ∀ x ∈ Set.image2 (· + ·) A B,
-      ∀ y ∈ Set.image2 (· + ·) A B, x ≠ y → Nat.Coprime x y) :
-    upperDensity (Set.image2 (· + ·) A B) = 0 := by
+    (h_coprime : (Set.image2 (· + ·) A B).Pairwise Nat.Coprime) :
+    (Set.image2 (· + ·) A B).upperDensity = 0 := by
   sorry
 
 end Erdos432
