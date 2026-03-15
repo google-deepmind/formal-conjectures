@@ -27,6 +27,8 @@ for fixed $r, k \geq 2$, and more strongly whether $f_{r,k}(n) = O(n)$.
 *Reference:* [erdosproblems.com/960](https://www.erdosproblems.com/960)
 
 [Er84] Erdős, P., _Some old and new problems on combinatorial geometry_, 1984.
+
+See also: [Erdős Problem 209](https://www.erdosproblems.com/209).
 -/
 
 namespace Erdos960
