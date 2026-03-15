@@ -25,7 +25,8 @@ PA + PB + PC ≥ 2(PD_a + PD_b + PD_c).
 
 *Reference:* [erdosproblems.com/898](https://www.erdosproblems.com/898)
 
-[Er82e] Erdős, P., *Personal favorites*, p.61.
+[Er82e] Erdős, P., _Some of my favourite problems which recently have been solved_,
+1982, pp. 59–79, p. 61.
 -/
 
 namespace Erdos898
