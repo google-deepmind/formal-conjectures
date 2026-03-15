@@ -24,10 +24,12 @@ $B + B$ for some $B \subset \mathbb{Z}$ with $|B| = o(\sqrt{n})$?
 
 *Reference:* [erdosproblems.com/806](https://www.erdosproblems.com/806)
 
-[ErNe77] Erdős, P. and Newman, D.J., *Bases for sets of integers*, J. Number Theory (1977).
+[ErNe77] Erdős, P. and Newman, D.J., *Bases for sets of integers*, J. Number Theory (1977), 420-425.
 
 [ABS09] Alon, N., Bukh, B., and Sudakov, B., *Discrete Kakeya-type problems and small bases for
-the integers*, Israel J. Math. (2009).
+the integers*, Israel J. Math. (2009), 285-301.
+
+See also: Erdős Problem 333 (the infinite/density-zero version of this finite problem).
 -/
 
 namespace Erdos806
@@ -49,7 +51,7 @@ theorem erdos_806 : answer(True) ↔
     ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
     ∀ A : Finset ℕ, (∀ a ∈ A, 1 ≤ a ∧ a ≤ n) → (A.card : ℝ) ≤ Real.sqrt n →
     ∃ B : Finset ℤ, (B.card : ℝ) ≤ ε * Real.sqrt n ∧
-      ∀ a ∈ A, ∃ b₁ ∈ B, ∃ b₂ ∈ B, (a : ℤ) = b₁ + b₂ := by
+      ∀ a ∈ A, (a : ℤ) ∈ Finset.image₂ (· + ·) B B := by
   sorry
 
 end Erdos806
