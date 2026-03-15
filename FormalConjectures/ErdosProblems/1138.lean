@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 
 /-!
 # Erdős Problem 1138
@@ -35,8 +36,7 @@ For each index $k$ with the $k$-th prime (0-indexed) less than $x$,
 compute the gap to the next prime and take the maximum.
 Returns $0$ when there are no primes less than $x$. -/
 noncomputable def maxPrimeGap (x : ℕ) : ℕ :=
-  (Finset.range (Nat.primeCounting' x)).sup
-    (fun k => Nat.nth Nat.Prime (k + 1) - Nat.nth Nat.Prime k)
+  (Finset.range (Nat.primeCounting' x)).sup primeGap
 
 /--
 Erdős Problem 1138 [Va99, 1.3]:
