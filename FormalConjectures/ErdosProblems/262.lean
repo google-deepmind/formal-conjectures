@@ -24,11 +24,14 @@ import FormalConjectures.Util.ProblemImports
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
 number theory*. Monographies de L'Enseignement Mathematique (1980).
 
-[Er88c] Erdős, P. (1988).
+[Er88c] Erdős, P., *On the irrationality of certain series: problems and results*.
+New advances in transcendence theory (Durham, 1986) (1988), 102–109.
 
-[Er75c] Erdős, P. (1975).
+[Er75c] Erdős, P., *Some problems and results on the irrationality of the sum of
+infinite series*. J. Math. Sci. (1975), 1–7.
 
-[Ha91] Hančl, J. (1991).
+[Ha91] Hančl, J., *Expression of real numbers with the help of infinite series*.
+Acta Arith. **59**.2 (1991), 97–104.
 -/
 
 open Filter
@@ -36,14 +39,17 @@ open Filter
 namespace Erdos262
 
 /-- A strictly increasing sequence of positive integers is an irrationality sequence
-if for every sequence of positive integers $t$, the sum $\sum 1/(t_n \cdot a_n)$ is irrational. -/
+if for every sequence of positive integers $t$, the sum $\sum 1/(t_n \cdot a_n)$ is irrational.
+
+Note: Problems 263 and 264 use different (inequivalent) definitions of irrationality sequence.
+See `Erdos263.IsIrrationalitySequence` and `Erdos264.IsIrrationalitySequence`. -/
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
   StrictMono a ∧ (∀ n, 0 < a n) ∧
   ∀ t : ℕ → ℕ, (∀ n, 0 < t n) →
     Irrational (∑' n, (1 : ℝ) / ((t n : ℝ) * (a n : ℝ)))
 
 /--
-Erdős Problem 262 [ErGr80] [Er88c]:
+Erdős Problem 262 [ErGr80, p.63] [Er88c, p.105]:
 Suppose $a_1 < a_2 < \cdots$ is a sequence of positive integers such that for all
 sequences of positive integers $t_n$, the sum $\sum 1/(t_n a_n)$ is irrational
 (i.e., $a$ is an irrationality sequence). How slowly can $a_n$ grow?
@@ -61,6 +67,28 @@ theorem erdos_262
     (c : ℝ) (hc : c < 1) :
     Filter.Frequently (fun (n : ℕ) => c * (↑n : ℝ) < Real.logb 2 (Real.logb 2 (↑(a n) : ℝ)))
       atTop := by
+  sorry
+
+/-- The sequence $a_n = 2^{2^n}$ is an irrationality sequence in the sense of Problem 262
+(Erdős [Er75c]). -/
+@[category research solved, AMS 11]
+theorem erdos_262_example_double_exp :
+    IsIrrationalitySequence (fun n => 2 ^ (2 ^ n)) := by
+  sorry
+
+/-- The sequence $a_n = n!$ is **not** an irrationality sequence in the sense of Problem 262. -/
+@[category research solved, AMS 11]
+theorem erdos_262_factorial_not_irrationality_seq :
+    ¬ IsIrrationalitySequence (fun n => n.factorial) := by
+  sorry
+
+/-- Any irrationality sequence (in the sense of Problem 262) must satisfy
+$a_n^{1/n} \to \infty$. This is a weaker necessary condition than the limsup result
+in `erdos_262`. -/
+@[category research solved, AMS 11]
+theorem erdos_262_necessary_growth
+    (a : ℕ → ℕ) (ha : IsIrrationalitySequence a) :
+    Filter.Tendsto (fun n => (↑(a n) : ℝ) ^ ((1 : ℝ) / (↑n : ℝ))) Filter.atTop Filter.atTop := by
   sorry
 
 end Erdos262
