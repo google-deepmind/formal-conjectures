@@ -15,11 +15,23 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.NumberTheory.Lacunary
 
 /-!
 # Erdős Problem 992
 
-*Reference:* [erdosproblems.com/992](https://www.erdosproblems.com/992)
+*References:*
+- [erdosproblems.com/992](https://www.erdosproblems.com/992)
+- [Er64b] Erdős, P., _Problems and results on diophantine approximations_. Compositio Math.
+  (1964), 52–65.
+- [ErKo49] Erdős, P. and Koksma, J. F., _On the uniform distribution modulo 1 of sequences_.
+  Nederl. Akad. Wetensch., Proc. (1949), 851–854 = Indagationes Math. 11, 299–302.
+- [Ca50] Cassels, J. W. S., _Some metrical theorems of Diophantine approximation. III_. Proc.
+  Cambridge Philos. Soc. (1950), 219–225.
+- [Ba81] Baker, R. C., _Metric number theory and the large sieve_. J. London Math. Soc. (2)
+  (1981), 34–40.
+- [BePh94] Berkes, I. and Philipp, W., _The size of trigonometric and Walsh series and uniform
+  distribution mod 1_. J. London Math. Soc. (2) (1994), 454–464.
 
 Let $x_1 < x_2 < \cdots$ be an infinite sequence of integers. Is it true that, for
 almost all $\alpha \in [0,1]$, the discrepancy
@@ -30,8 +42,13 @@ Erdős and Koksma [ErKo49] and Cassels [Ca50] independently proved that, for any
 sequence $x_i$ and almost all $\alpha$, $D(N) \ll N^{1/2} (\log N)^{5/2 + o(1)}$. Baker [Ba81]
 improved this to $D(N) \ll N^{1/2} (\log N)^{3/2 + o(1)}$.
 
-This was disproved by Berkes and Philipp [BePh94], who constructed a sequence
-of integers $x_1 < x_2 < \cdots$ such that, for almost all $\alpha \in [0,1]$,
+Erdős and Gál (unpublished) proved that for lacunary sequences (where
+$x_{i+1}/x_i > \lambda > 1$ for all $i$), the stronger bound
+$D(N) \ll N^{1/2} (\log \log N)^{O(1)}$ holds for almost all $\alpha$.
+
+This was disproved (for general sequences) by Berkes and Philipp [BePh94], who
+constructed a sequence of integers $x_1 < x_2 < \cdots$ such that, for almost all
+$\alpha \in [0,1]$,
 $$\limsup_{N \to \infty} D(N) / (N \log N)^{1/2} > 0.$$
 -/
 
@@ -102,6 +119,23 @@ theorem erdos_992.variants.berkes_philipp :
         ∃ᶠ N in atTop,
           discrepancy x α N ≥
             c * Real.sqrt ((N : ℝ) * Real.log (N : ℝ)) := by
+  sorry
+
+/--
+Erdős–Gál (unpublished): for lacunary sequences (where $x_{i+1}/x_i > \lambda > 1$),
+the stronger bound $D(N) \ll N^{1/2} (\log \log N)^{O(1)}$ holds for almost all
+$\alpha \in [0,1]$. Here this is formalized as: there exist $C > 0$ and $K > 0$
+such that $D(N) \le C \sqrt{N} (\log \log N)^K$ for all sufficiently large $N$.
+-/
+@[category research solved, AMS 11 28]
+theorem erdos_992.variants.erdos_gal :
+    ∀ (x : ℕ → ℕ), IsLacunary x →
+    ∀ᵐ α ∂(volume.restrict (Set.Icc (0 : ℝ) 1)),
+      ∃ C : ℝ, C > 0 ∧ ∃ K : ℝ, K > 0 ∧
+        ∀ᶠ N in atTop,
+          discrepancy (fun n => (x n : ℤ)) α N ≤
+            C * Real.sqrt (N : ℝ) *
+              (Real.log (Real.log (N : ℝ))) ^ K := by
   sorry
 
 end Erdos992
