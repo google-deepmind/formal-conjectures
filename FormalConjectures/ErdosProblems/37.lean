@@ -27,12 +27,12 @@ Schnirelmann density of every set it is added to). Proved by Ruzsa [Ru87].
 See also Problem 1146 (whether $\{2^m \cdot 3^n\}$ is an essential component).
 
 [Er56] Erdős, P., _Problems and results in additive number theory_. Colloque sur la Théorie
-des Nombres, Bruxelles, 1955 (1956), 127-137.
+des Nombres, Bruxelles, 1955 (1956), 127–137.
 
 [Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl.
 **6** (1961), 221–254.
 
-[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. A Survey of
 Combinatorial Theory (1973), 117–138.
 
 [ErGr80] Erdős, P. and Graham, R.L., _Old and new problems and results in combinatorial
