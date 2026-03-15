@@ -25,6 +25,13 @@ Let $h(n)$ be such that, for any set $A \subseteq \mathbb{N}$ of size $n$, the s
 $$\left\{ \frac{a}{\gcd(a,b)} : a, b \in A \right\}$$
 has size at least $h(n)$. Erdős and Szemerédi proved that $n^{1/2} \ll h(n) \ll n^{1-c}$ for some
 constant $c > 0$. The upper bound has been improved to $h(n) \ll n^{2/3}$ by Freiman and Lev.
+
+[Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
+combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo.,
+1971) (1973), 117–138.
+
+[GrRo99] Granville, A., Roesler, F., *The set of differences of a given set*. American
+Mathematical Monthly (1999), 338–344.
 -/
 
 open Finset
