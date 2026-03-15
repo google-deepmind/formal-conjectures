@@ -26,8 +26,8 @@ $\ge k$ of the points) is $\ll n^2 / k^3$, provided $k \le \sqrt{n}$.
 
 Conjectured by Erdős, Croft, and Purdy [Er87b]. Proved by Szemerédi and Trotter [SzTr83].
 
-[Er87b] Erdős, P., Croft, H.T., and Purdy, G.B., _Unsolved problems in combinatorial
-geometry_ (1987).
+[Er87b] Erdős, P., _Some combinatorial and metric problems in geometry_,
+Intuitive geometry (Siófok, 1985), 1987, pp. 167–177. (see p. 169)
 
 [SzTr83] Szemerédi, E. and Trotter, W.T., _Extremal problems in discrete geometry_,
 Combinatorica 3 (1983), 381–392.
