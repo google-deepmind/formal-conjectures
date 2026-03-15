@@ -24,6 +24,13 @@ Property B (i.e., is not $2$-colorable). Erdős and Lovász conjectured that $m(
 $n \cdot 2^n$.
 
 *Reference:* [erdosproblems.com/901](https://www.erdosproblems.com/901)
+
+[ErLo75] Erdős, P. and Lovász, L., _Problems and results on 3-chromatic hypergraphs and some
+related questions_. Infinite and finite sets (Colloq., Keszthely, 1973; dedicated to P. Erdős on
+his 60th birthday), Vol. II (1975), 609–627.
+
+[Er64e] Erdős, P., _On a combinatorial problem. II_. Acta Mathematica Academiae Scientiarum
+Hungaricae **15** (1964), 445–447.
 -/
 
 open Finset
@@ -67,7 +74,7 @@ Erdős Problem 901 (Erdős–Lovász Conjecture), upper bound:
 There exists $c > 0$ such that for all sufficiently large $n$, there exists
 an $n$-uniform hypergraph without Property B with at most $c \cdot n \cdot 2^n$ edges.
 -/
-@[category research solved, AMS 5]
+@[category research open, AMS 5]
 theorem erdos_901.variants.upper_bound :
     ∃ c : ℝ, c > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
       ∃ (H : Finset (Finset ℕ)),
