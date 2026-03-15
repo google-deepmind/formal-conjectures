@@ -28,8 +28,11 @@ Here $R(n)$ denotes the diagonal Ramsey number $R(n,n)$: the minimum $N$ such th
 every simple graph on $N$ vertices contains either a clique of size $n$ or an
 independent set of size $n$.
 
-[BEFS89] Burr, S.A., Erdős, P., Faudree, R.J., and Schelp, R.H., proved that
-$R(n+1) - R(n) \geq 4n - 8$ for all $n \geq 2$.
+[BEFS89] Burr, S.A., Erdős, P., Faudree, R.J., and Schelp, R.H.,
+_On the difference between consecutive Ramsey numbers_. Utilitas Math. (1989), 115–118.
+Proved that $R(n+1) - R(n) \geq 4n - 8$ for all $n \geq 2$.
+
+Results from Problem 165 imply $R(n+2) - R(n) \gg n^{2-o(1)}$.
 
 [Er91] Erdős, P., _Problems and results on graphs and hypergraphs_, 1991.
 -/
