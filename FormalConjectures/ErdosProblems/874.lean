@@ -30,6 +30,22 @@ Straus [St66] calls such sets admissible and showed
 $\liminf k(N)/N^{1/2} \geq 2$ and $\limsup k(N)/N^{1/2} \leq 4/\sqrt{3}$.
 Erdős–Nicolas–Sárközy [ENS91] improved the upper bound to $(143/27)^{1/2}$.
 The conjecture was proved for all large $N$ by Deshouillers and Freiman [DeFr99].
+
+See also Problem 875 (the infinite analogue), and related Problems 186 and 789.
+
+[Er62c] Erdős, P., _Some remarks on number theory. III_. Mat. Lapok **13** (1962), 28–38.
+
+[Er98] Erdős, P., _Some of my new and almost new problems and results in
+combinatorial number theory_. Number theory (Eger, 1996) (1998), 169–180.
+
+[St66] Straus, E. G., _On a problem in combinatorial number theory_. J. Math. Sci.
+**1** (1966), 77–80.
+
+[ENS91] Erdős, P., Nicolas, J.-L., Sárközy, A., _Sommes de sous-ensembles_.
+Séminaire de Théorie des Nombres Bordeaux (2) (1991), 55–72.
+
+[DeFr99] Deshouillers, J.-M., Freiman, G. A., _On an additive problem of Erdős and
+Straus. II_. Astérisque (1999), xii, 141–148.
 -/
 
 open Filter
