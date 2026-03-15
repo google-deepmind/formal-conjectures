@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
+import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 
 /-!
 # Erdős Problem 157
@@ -37,21 +39,6 @@ open Filter Set
 
 namespace Erdos157
 
-/-- An infinite set $A \subseteq \mathbb{N}$ is a Sidon set ($B_2$ set) if all pairwise sums
-are distinct: whenever $a + b = c + d$ with $a, b, c, d \in A$, we have
-$\{a, b\} = \{c, d\}$ as multisets (i.e. either $a = c$ and $b = d$, or
-$a = d$ and $b = c$). -/
-def IsInfiniteSidonSet (A : Set ℕ) : Prop :=
-  Set.Infinite A ∧
-  ∀ a ∈ A, ∀ b ∈ A, ∀ c ∈ A, ∀ d ∈ A,
-    a + b = c + d → (a = c ∧ b = d) ∨ (a = d ∧ b = c)
-
-/-- A set $A \subseteq \mathbb{N}$ is an asymptotic basis of order $3$ if every sufficiently
-large natural number can be represented as a sum of exactly $3$ elements
-(with repetition allowed) from $A$. -/
-def IsAsymptoticBasisOrder3 (A : Set ℕ) : Prop :=
-  ∀ᶠ n : ℕ in atTop, ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, n = a + b + c
-
 /--
 Erdős Problem 157 [ESS94, Er94b]:
 
@@ -65,7 +52,8 @@ Answered YES by Pilatte [Pi23].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_157 :
-    answer(True) ↔ ∃ A : Set ℕ, IsInfiniteSidonSet A ∧ IsAsymptoticBasisOrder3 A := by
+    answer(True) ↔
+      ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧ Set.IsAsymptoticAddBasisOfOrder A 3 := by
   sorry
 
 end Erdos157
