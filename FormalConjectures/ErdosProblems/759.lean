@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 759
@@ -45,20 +46,6 @@ open SimpleGraph Real
 
 namespace Erdos759
 
-/-- A colouring $c : V \to \operatorname{Fin}(k)$ is a cochromatic colouring of $G$ if every colour
-class induces either a complete subgraph or an independent set. -/
-def IsCochromaticColouring {V : Type*} (G : SimpleGraph V) (k : ℕ)
-    (c : V → Fin k) : Prop :=
-  ∀ i : Fin k,
-    (∀ u v, c u = i → c v = i → u ≠ v → G.Adj u v) ∨
-    (∀ u v, c u = i → c v = i → u ≠ v → ¬G.Adj u v)
-
-/-- The cochromatic number $\zeta(G)$ of a finite graph $G$: the minimum number of
-colours in a cochromatic colouring. -/
-noncomputable def cochromaticNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {k : ℕ | ∃ c : V → Fin k, IsCochromaticColouring G k c}
-
 /-- Embeddability of a finite simple graph on the orientable surface of genus $n$.
 This is axiomatized since surface topology is not available in Mathlib. -/
 opaque IsEmbeddableOnSurface {m : ℕ} (_ : SimpleGraph (Fin m)) (_ : ℕ) : Prop
@@ -67,7 +54,7 @@ opaque IsEmbeddableOnSurface {m : ℕ} (_ : SimpleGraph (Fin m)) (_ : ℕ) : Pro
 on the orientable surface of genus $n$. -/
 noncomputable def maxCochromaticOnSurface (n : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ (m : ℕ) (G : SimpleGraph (Fin m)),
-    IsEmbeddableOnSurface G n ∧ cochromaticNumber G = k}
+    IsEmbeddableOnSurface G n ∧ (cochromaticNumber G).toNat = k}
 
 /--
 Erdős Problem 759, upper bound (Gimbel–Thomassen [GiTh97]):
