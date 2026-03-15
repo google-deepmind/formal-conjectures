@@ -21,10 +21,18 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/519](https://www.erdosproblems.com/519)
 
-A problem of Turán, who proved that the maximum is $\gg 1/n$. This was solved
-by Atkinson [At61b], who showed that $c = 1/6$ suffices. This has been improved
-by Biró, first to $c = 1/2$ [Bi94], and later to an absolute constant $c > 1/2$
-[Bi00].
+A problem of Turán [Er61, p.251] [Er65b, p.213], who proved that the maximum is
+$\gg 1/n$. This was solved by Atkinson [At61b], who showed that $c = 1/6$ suffices.
+This has been improved by Biró, first to $c = 1/2$ [Bi94], and later to an absolute
+constant $c > 1/2$ [Bi00].
+
+See also Problem 973 for a related problem on power sums of complex numbers.
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl.
+**6** (1961), 221–254.
+
+[Er65b] Erdős, P., _Extremal problems in number theory_. Lectures on Modern
+Mathematics, Vol. III (1965), 196-244.
 
 [At61b] Atkinson, F.V., _On sums of powers of complex numbers_. Acta Math. Acad.
 Sci. Hungar. 12 (1961), 185-188.
