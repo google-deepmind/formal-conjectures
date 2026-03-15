@@ -30,6 +30,12 @@ Graham [Gr64g] proved that $\Lambda(k,\ell) = \infty$ for all $k \geq 2$ and $\e
 Lehmer and Lehmer [LeLe62] proved that $\Lambda(k,3) = \infty$ for all even $k$.
 
 The remaining open question is whether $\Lambda(k,3)$ is finite for all odd $k \geq 5$.
+
+## References
+
+- [Hi91] Hildebrand, A., _On consecutive k-th power residues. II_. Michigan Math. J. **38** (1991), 241–253.
+- [Gr64g] Graham, R. L., _On quadruples of consecutive k-th power residues_. Proc. Amer. Math. Soc. **15** (1964), 196–197.
+- [LeLe62] Lehmer, D. H., Lehmer, E., _On runs of residues_. Proc. Amer. Math. Soc. **13** (1962), 102–106.
 -/
 
 namespace Erdos436
@@ -60,6 +66,22 @@ power residues modulo $p$ in $[1, O_k(1)]$. -/
 @[category research solved, AMS 11]
 theorem erdos_436.variants.hildebrand (k : ℕ) (hk : 2 ≤ k) :
     LambdaFinite k 2 := by
+  sorry
+
+/-- Graham [Gr64g] proved that $\Lambda(k,\ell) = \infty$ for all $k \geq 2$ and $\ell \geq 4$.
+That is, for any bound $R$, there are infinitely many primes $p$ for which no run of $\ell$
+consecutive $k$-th power residues begins in $[1, R]$. -/
+@[category research solved, AMS 11]
+theorem erdos_436.variants.graham (k : ℕ) (hk : 2 ≤ k) (m : ℕ) (hm : 4 ≤ m) :
+    ¬ LambdaFinite k m := by
+  sorry
+
+/-- Lehmer and Lehmer [LeLe62] proved that $\Lambda(k,3) = \infty$ for all even $k \geq 2$.
+That is, for any bound $R$, there are infinitely many primes $p$ for which no run of three
+consecutive $k$-th power residues begins in $[1, R]$. -/
+@[category research solved, AMS 11]
+theorem erdos_436.variants.lehmer_lehmer (k : ℕ) (hk : 2 ≤ k) (heven : k % 2 = 0) :
+    ¬ LambdaFinite k 3 := by
   sorry
 
 end Erdos436
