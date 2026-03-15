@@ -38,10 +38,11 @@ whenever $k \geq (r - t)s + t + 1$.
 The case $t = 2$ is problem [1178]. The case $r = 3$, $k = 6$, $s = 3$ is problem [716]
 (proved by Ruzsa–Szemerédi). The case $r = 3$ and $k = s + 2$ is problem [1076].
 
-[BES73] Brown, W.G., Erdős, P., and Sós, V.T., *Some extremal problems on r-graphs*,
-New Directions in the Theory of Graphs (1973).
+[BES73] Brown, W.G., Erdős, P., and Sós, V.T., _Some extremal problems on r-graphs_.
+New Directions in the Theory of Graphs (1973), 53–63.
 
-[Va99] See erdosproblems.com/1157.
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999), §3.64.
 -/
 
 open Finset
