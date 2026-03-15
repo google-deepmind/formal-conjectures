@@ -27,8 +27,27 @@ $g(n) > n^{1 - \varepsilon}$?
 
 Pillai proved that $\limsup g(n) = \infty$ and Erdős [Er35b] proved that there
 exists some constant $c > 0$ such that $g(n) > n^c$ for infinitely many $n$.
-The best known bound is $g(n) > n^{0.71568\ldots}$ for infinitely many $n$,
-obtained by Lichtman [Li22].
+Baker and Harman [BaHa98] made improvements on the exponent, and the best known
+bound is $g(n) > n^{0.71568\ldots}$ for infinitely many $n$, obtained by
+Lichtman [Li22]. Luca and Pollack [LuPo11] investigated the average size of
+$g(n)$.
+
+Related to Problem #416. See also OEIS sequence
+[A014197](https://oeis.org/A014197).
+
+[Er35b] Erdős, P., _On the normal number of prime factors of p−1 and some
+related problems concerning Euler's φ-function_. Quarterly Journal of
+Mathematics (1935), 205–213.
+
+[BaHa98] Baker, R. C., Harman, G., _Shifted primes without large prime
+factors_. Acta Arithmetica (1998), 331–361.
+
+[Li22] Lichtman, J. D., _Primes in arithmetic progressions to large moduli and
+shifted primes without large prime factors_. arXiv:2211.09641 (2022).
+
+[LuPo11] Luca, F., Pollack, P., _An arithmetic function arising from
+Carmichael's conjecture_. Journal de Théorie des Nombres de Bordeaux (2011),
+697–714.
 -/
 
 namespace Erdos821
