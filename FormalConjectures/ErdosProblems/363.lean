@@ -26,20 +26,20 @@ $I_1, \ldots, I_n$ of consecutive integers with $|I_i| \geq 4$ for all $i$, such
 $\prod_i \prod_{m \in I_i} m$ is a perfect square?
 
 This was disproved:
-- [Ul05] Ulas proved infinitely many solutions exist when $n = 4$ or $n \geq 6$, $|I_i| = 4$.
-- [BaBe07] Bauer and Bennett proved the same for $n = 3$ and $n = 5$, $|I_i| = 4$.
-- [BeVL12] Bennett and Van Luijk found infinitely many solutions for $n \geq 5$, $|I_i| = 5$.
+- [Ul05] Ulas, M., _On products of disjoint blocks of consecutive integers_.
+  Enseignement Mathématique (2) (2005), 331–334.
+- [BaBe07] Bauer, M., Bennett, M. A., _On a question of Erdős and Graham_.
+  Enseignement Mathématique (2) (2007), 259–264.
+- [BeVL12] Bennett, M. A., Van Luijk, R., _Squares from blocks of consecutive integers:
+  a problem of Erdős and Graham_. Indagationes Mathematicae (N.S.) (2012), 123–127.
 -/
 
 namespace Erdos363
 
-/-- The product of $4$ consecutive natural numbers starting at $a$. -/
-def prod4 (a : ℕ) : ℕ := a * (a + 1) * (a + 2) * (a + 3)
-
 /--
 Erdős Problem 363 (Disproved by Bauer–Bennett [BaBe07]):
 
-Are there only finitely many triples $(a, b, c)$ of natural numbers with
+Are there only finitely many triples $(a, b, c)$ of positive natural numbers with
 $a + 4 \leq b$ and $b + 4 \leq c$ (so the three intervals of four consecutive integers
 starting at $a$, $b$, $c$ are pairwise disjoint) such that the product of all $12$ elements
 is a perfect square? The answer is no.
@@ -47,8 +47,10 @@ is a perfect square? The answer is no.
 @[category research solved, AMS 11]
 theorem erdos_363 : answer(False) ↔
     Set.Finite {t : ℕ × ℕ × ℕ |
-      t.1 + 4 ≤ t.2.1 ∧ t.2.1 + 4 ≤ t.2.2 ∧
-      IsSquare (prod4 t.1 * prod4 t.2.1 * prod4 t.2.2)} := by
+      0 < t.1 ∧ t.1 + 4 ≤ t.2.1 ∧ t.2.1 + 4 ≤ t.2.2 ∧
+      IsSquare ((∏ m ∈ Finset.Icc t.1 (t.1 + 3), m) *
+                (∏ m ∈ Finset.Icc t.2.1 (t.2.1 + 3), m) *
+                (∏ m ∈ Finset.Icc t.2.2 (t.2.2 + 3), m))} := by
   sorry
 
 end Erdos363
