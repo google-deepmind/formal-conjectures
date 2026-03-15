@@ -27,15 +27,23 @@ the unit circle), with $\max_{\theta \in [0,2\pi]} |f(\theta)| = 1$. Then
 $\int_0^{2\pi} |f(\theta)| \, d\theta \leq 4$.
 
 This was proved independently by Kristiansen [Kr74] (for real $c_k$) and
-Saff and Sheil-Small [SaSh74] (for complex $c_k$).
+Saff and Sheil-Small [SaSh74] (for complex $c_k$). The original proof of
+Kristiansen contained an error which was later fixed in [Kr76].
 
 [Er40b, Er57, Er61] Erdős, P., original references.
 
-[Ha74] Hajós, G. et al., _Combinatorial theory and its applications_ (1974), Problem 4.20.
+[Ha74] Hayman, W. K., _Research problems in function theory: new problems_ (1974), pp. 155–180,
+Problem 4.20.
 
-[Kr74] Kristiansen, G. K. (1974).
+[Kr74] Kristiansen, G. K., _Proof of an inequality for trigonometric polynomials_.
+Proceedings of the American Mathematical Society (1974), pp. 49–57.
 
-[SaSh74] Saff, E. B. and Sheil-Small, T. (1974).
+[Kr76] Kristiansen, G. K., _Erratum to 'Proof of a polynomial conjecture'_.
+Proceedings of the American Mathematical Society (1976), p. 377.
+
+[SaSh74] Saff, E. B. and Sheil-Small, T., _Coefficient and integral mean estimates for algebraic
+and trigonometric polynomials with restricted zeros_. Journal of the London Mathematical
+Society (2) (1974/75), pp. 16–22.
 -/
 
 open Finset BigOperators MeasureTheory
