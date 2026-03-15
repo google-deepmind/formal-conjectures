@@ -29,10 +29,12 @@ See also [Er95], [Er95c].
 OEIS: [A365339](https://oeis.org/A365339), [A365474](https://oeis.org/A365474).
 
 [Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Combinatorics '94 (Catania), Congressus Numerantium **107** (1995).
 
-[Er95c] Erdős, P., *Problems and results in combinatorial number theory*.
+[Er95c] Erdős, P., _Some problems in number theory_. Octogon Math. Mag. (1995), 3–5.
 
-[Ta23b] Tao, T., _Bounding the number of integers with a prescribed totient_.
+[Ta23b] Tao, T., _Monotone non-decreasing sequences of the Euler totient function_.
+arXiv:2309.02325 (2023).
 -/
 
 namespace Erdos49
