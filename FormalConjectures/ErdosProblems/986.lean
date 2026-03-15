@@ -33,6 +33,7 @@ n^{(k+1)/2} / (\log n)^{1/(k-2) - (k+1)/2} \ll_k R(k,n) \ll_k n^{k-1} / (\log n)
 $$
 The lower bound was proved by Bohman and Keevash [BoKe10].
 The upper bound was proved by Ajtai, Komlós, and Szemerédi [AKS80].
+Li, Rousseau, and Zang [LRZ01] improved the upper bound constant.
 
 [Sp77] Spencer, J., _Asymptotic lower bounds for Ramsey functions_. Discrete Math. 20 (1977),
 69-76.
@@ -46,8 +47,16 @@ Math. 181 (2010), 291-336.
 [AKS80] Ajtai, M., Komlós, J. and Szemerédi, E., _A note on Ramsey numbers_. J. Combin.
 Theory Ser. A 29 (1980), 354-360.
 
+[LRZ01] Li, Y., Rousseau, C. C. and Zang, W., _Asymptotic upper bounds for Ramsey functions_.
+Graphs Combin. 17 (2001), 123-128.
+
 [Er90b] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
 Matematiche (Catania) 47 (1992), 231-240.
+
+See also Problem 165 (k=3 case), Problem 166 (k=4 case), Problem 920 (chromatic number
+connection).
+
+OEIS sequences: [A000791](https://oeis.org/A000791), [A059442](https://oeis.org/A059442).
 -/
 
 open SimpleGraph Real
@@ -76,6 +85,66 @@ theorem erdos_986 (k : ℕ) (hk : 3 ≤ k) :
     ∃ c : ℕ, 0 < c ∧
     ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
       C * ((n : ℝ) ^ (k - 1) / (Real.log (n : ℝ)) ^ c) ≤ (ramseyR k n : ℝ) := by
+  sorry
+
+/--
+Spencer's theorem (1977) [Sp77]: the $k = 3$ case of Erdős Problem 986.
+
+There exist constants $C > 0$ and $c \in \mathbb{N}$ with $c > 0$ such that for all
+sufficiently large $n$, $R(3,n) \geq C \cdot n^2 / (\log n)^c$.
+
+See also Problem 165.
+-/
+@[category research solved, AMS 5]
+theorem erdos_986_k_eq_3 :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ c : ℕ, 0 < c ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      C * ((n : ℝ) ^ 2 / (Real.log (n : ℝ)) ^ c) ≤ (ramseyR 3 n : ℝ) := by
+  sorry
+
+/--
+Mattheus–Verstraëte theorem (2023) [MaVe23]: the $k = 4$ case of Erdős Problem 986.
+
+There exist constants $C > 0$ and $c \in \mathbb{N}$ with $c > 0$ such that for all
+sufficiently large $n$, $R(4,n) \geq C \cdot n^3 / (\log n)^c$.
+
+See also Problem 166.
+-/
+@[category research solved, AMS 5]
+theorem erdos_986_k_eq_4 :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ c : ℕ, 0 < c ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      C * ((n : ℝ) ^ 3 / (Real.log (n : ℝ)) ^ c) ≤ (ramseyR 4 n : ℝ) := by
+  sorry
+
+/--
+Ajtai–Komlós–Szemerédi upper bound (1980) [AKS80]:
+
+For any fixed $k \geq 3$, there exists a constant $C > 0$ such that for all sufficiently
+large $n$, $R(k,n) \leq C \cdot n^{k-1} / (\log n)^{k-2}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_986_upper (k : ℕ) (hk : 3 ≤ k) :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      (ramseyR k n : ℝ) ≤ C * ((n : ℝ) ^ (k - 1) / (Real.log (n : ℝ)) ^ (k - 2)) := by
+  sorry
+
+/--
+Bohman–Keevash lower bound (2010) [BoKe10]:
+
+For any fixed $k \geq 3$, there exists a constant $C > 0$ such that for all sufficiently
+large $n$, $R(k,n) \geq C \cdot n^{(k+1)/2} / (\log n)^{(k+1)/2 - 1/(k-2)}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_986_lower (k : ℕ) (hk : 3 ≤ k) :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      C * (((n : ℝ) ^ (((k : ℝ) + 1) / 2)) /
+        ((Real.log (n : ℝ)) ^ (((k : ℝ) + 1) / 2 - 1 / ((k : ℝ) - 2)))) ≤
+        (ramseyR k n : ℝ) := by
   sorry
 
 end Erdos986
