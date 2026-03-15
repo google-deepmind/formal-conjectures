@@ -34,6 +34,23 @@ $\mathcal{L}^n f(x) \to f(x)$?
 Part 2: Is there such an array where the Lebesgue function has infinite limsup
 for every $x \in [-1,1]$ and yet for every continuous $f$ there exists $x$ with
 $\mathcal{L}^n f(x) \to f(x)$?
+
+Bernstein [Be31] proved that for any choice of interpolation points, there exists a point
+where the Lebesgue function diverges. Erdős and Vértesi [ErVe80] proved that for any choice
+of nodes there exists a continuous $f$ such that the Lagrange interpolation diverges at
+almost all points.
+
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_,
+L'Enseignement Math. 27 (1982), 163–176.
+[Er97f] Erdős, P., _Some of my new and almost new problems and results in combinatorial
+geometry_. (1997)
+[Va99] Vértesi, P., _Classical (unweighted) and weighted interpolation_ (1999).
+[Be31] Bernstein, S., _Sur la limitation des valeurs d'un polynome de degré n sur tout un
+segment par ses valeurs en (n+1) points du segment_. Izv. Akad. Nauk. SSSR (1931),
+1025–1050.
+[ErVe80] Erdős, P., Vértesi, P., _On the almost everywhere divergence of Lagrange
+interpolatory polynomials for arbitrary system of nodes_. Acta Math. Acad. Sci. Hungar.
+(1980), 71–89.
 -/
 
 open scoped BigOperators
