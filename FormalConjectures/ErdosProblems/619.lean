@@ -27,6 +27,15 @@ of being triangle-free).
 
 [EGR98] Erdős, P., Gyárfás, A. and Ruszinkó, M., *How to decrease the diameter of
 triangle-free graphs*, Combinatorica **18** (1998), 493–501.
+
+[Er99] Erdős, P., *Some of my favourite problems in various branches of combinatorics*,
+Le Matematiche, 1999.
+
+[AGR00] Alon, N., Gyárfás, A. and Ruszinkó, M., *Decreasing the diameter of bounded
+degree graphs*, J. Graph Theory **35** (2000), 161–172.
+
+See also Erdős Problems [#134](https://www.erdosproblems.com/134) and
+[#618](https://www.erdosproblems.com/618).
 -/
 
 open SimpleGraph
