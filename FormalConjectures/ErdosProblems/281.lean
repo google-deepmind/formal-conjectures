@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 281
@@ -29,23 +30,17 @@ $\varepsilon$, regardless of the choice of $a_i$?
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[DaEr36] Davenport, H. and Erdős, P., _On sequences of positive integers_.
+Acta Arithmetica **2** (1936), 147-151.
+
+[HaRo66] Halberstam, H. and Roth, K. F., _Sequences. Vol. I_.
+Oxford University Press (1966).
 -/
 
-open Classical
+open Classical Set
 
 namespace Erdos281
-
-/-- Count of integers in $\{0, \ldots, N-1\}$ not in any congruence class $a(i) \bmod n(i)$
-for all $i$. -/
-noncomputable def avoidCountAll (n a : ℕ → ℕ) (N : ℕ) : ℕ :=
-  ((Finset.range N).filter fun m =>
-    ∀ i : ℕ, ¬(m ≡ a i [MOD n i])).card
-
-/-- Count of integers in $\{0, \ldots, N-1\}$ avoiding congruences $a(i) \bmod n(i)$
-for $i < k$. -/
-noncomputable def avoidCountFin (n a : ℕ → ℕ) (k N : ℕ) : ℕ :=
-  ((Finset.range N).filter fun m =>
-    ∀ i, i < k → ¬(m ≡ a i [MOD n i])).card
 
 /--
 Erdős Problem 281 (Proved) [ErGr80, p.29]:
@@ -56,15 +51,15 @@ any of the congruences has density $0$. Then for every $\varepsilon > 0$ there e
 such that, for every choice of congruence classes $a_i$, the density of integers not
 satisfying any of the congruences $a_i \pmod{n_i}$ for $i < k$ is less than $\varepsilon$.
 
-The proof combines the Davenport–Erdős theorem with Rogers' optimal sieve bound.
+The proof combines the Davenport–Erdős theorem [DaEr36] with Rogers' optimal sieve
+bound [HaRo66].
 -/
 @[category research solved, AMS 11]
 theorem erdos_281 : answer(True) ↔
     ∀ (n : ℕ → ℕ), (∀ i, 0 < n i) → StrictMono n →
-    (∀ a : ℕ → ℕ, ∀ ε : ℝ, 0 < ε →
-      ∃ N₀ : ℕ, ∀ N, N₀ ≤ N → (avoidCountAll n a N : ℝ) / (N : ℝ) < ε) →
+    (∀ a : ℕ → ℕ, {m : ℕ | ∀ i, ¬(m ≡ a i [MOD n i])}.HasDensity 0) →
     ∀ ε : ℝ, 0 < ε → ∃ k : ℕ, ∀ a : ℕ → ℕ,
-      ∃ N₀ : ℕ, ∀ N, N₀ ≤ N → (avoidCountFin n a k N : ℝ) / (N : ℝ) < ε := by
+      {m : ℕ | ∀ i, i < k → ¬(m ≡ a i [MOD n i])}.upperDensity < ε := by
   sorry
 
 end Erdos281
