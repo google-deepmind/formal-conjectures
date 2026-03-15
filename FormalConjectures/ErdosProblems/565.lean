@@ -25,8 +25,34 @@ Let $R^*(G)$ be the induced Ramsey number: the minimal $m$ such that there is a
 graph $H$ on $m$ vertices such that any 2-colouring of the edges of $H$ contains
 an induced monochromatic copy of $G$.
 
-A problem of Erdős and Rödl. Proved by Aragão, Campos, Dahia, Filipe,
-and Marciano.
+The existence of $R^*(G)$ for all finite graphs was established independently by
+Deuber [De75], Erdős, Hajnal, and Pósa [EHP75], and Rödl [Ro73].
+
+A problem of Erdős and Rödl. Kohayakawa, Prömel, and Rödl [KPR98] proved
+$R^*(G) < 2^{O(n(\log n)^2)}$. Fox and Sudakov [FoSu08] gave an alternative
+proof. Conlon, Fox, and Sudakov [CFS12] improved this to $R^*(G) < 2^{O(n \log n)}$.
+Proved by Aragão, Campos, Dahia, Filipe, and Marciano [ACDFM25].
+
+[De75] Deuber, W., _Generalizations of Ramsey's theorem_. Infinite and finite sets
+(Colloq., Keszthely, 1973) (1975), 323-332.
+
+[EHP75] Erdős, P., Hajnal, A., and Pósa, L., _Strong embeddings of graphs into
+colored graphs_. Infinite and finite sets (Colloq., Keszthely, 1973) (1975), 585-595.
+
+[Ro73] Rödl, V., _The dimension of a graph and generalized Ramsey theorems_. Thesis
+(1973).
+
+[KPR98] Kohayakawa, Y., Prömel, H. J., and Rödl, V., _Induced Ramsey numbers_.
+Combinatorica **18** (1998), 373-404.
+
+[FoSu08] Fox, J. and Sudakov, B., _Induced Ramsey-type theorems_. Advances in
+Mathematics **219** (2008), 1771-1800.
+
+[CFS12] Conlon, D., Fox, J., and Sudakov, B., _On two problems in graph Ramsey
+theory_. Combinatorica **32** (2012), 513-535.
+
+[ACDFM25] Aragão, L., Campos, M., Dahia, G., Filipe, J., and Marciano, J., _An
+exponential upper bound for induced Ramsey numbers_. arXiv:2509.22629 (2025).
 -/
 
 open SimpleGraph
@@ -54,7 +80,7 @@ Erdős Problem 565: There exists a constant $C$ such that for any graph $G$ on
 $n$ vertices, the induced Ramsey number $R^*(G) \leq 2^{Cn}$.
 
 A problem of Erdős and Rödl. Proved by Aragão, Campos, Dahia, Filipe,
-and Marciano.
+and Marciano [ACDFM25].
 -/
 @[category research solved, AMS 5]
 theorem erdos_565 :
