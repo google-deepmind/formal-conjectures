@@ -26,28 +26,31 @@ $$\sum_{k=1}^{n} \frac{1}{k} = \frac{a_n}{L_n}.$$
 Is it true that $\gcd(a_n, L_n) = 1$ and $\gcd(a_n, L_n) > 1$ both occur for infinitely
 many $n$?
 
-The second question is trivially yes (Steinerberger): any $n$ whose leading digit in
+The second question is yes (Steinerberger): any $n$ whose leading digit in
 base 3 is 2 has $3 \mid \gcd(a_n, L_n)$.
 
 The first question remains open.
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[Sh16] Shiu, P., _The denominators of harmonic numbers_. arXiv:1607.02863 (2016).
+
+[WuYa22] Wu, B.-L. and Yan, X.-H., _On the denominators of harmonic numbers. IV_.
+C. R. Math. Acad. Sci. Paris (2022), 53–57.
+
+See also OEIS sequence [A110566](https://oeis.org/A110566).
 -/
 
 open Finset
 
 namespace Erdos291
 
-/-- The least common multiple of $\{1, \ldots, n\}$. -/
-def lcmUpTo (n : ℕ) : ℕ :=
-  (Finset.Icc 1 n).lcm id
-
 /-- The numerator $a_n$ defined by $\sum_{k=1}^{n} \frac{1}{k} = \frac{a_n}{L_n}$, i.e.,
-$a_n = \sum_{k=1}^{n} \frac{L_n}{k}$. Since $L_n$ is divisible by every $k \leq n$,
-each summand is a natural number. -/
+$a_n = \sum_{k=1}^{n} \frac{L_n}{k}$, where $L_n = \mathrm{lcm}(1, \ldots, n)$.
+Since $L_n$ is divisible by every $k \leq n$, each summand is a natural number. -/
 def harmonicLcmNumerator (n : ℕ) : ℕ :=
-  (Finset.Icc 1 n).sum fun k => lcmUpTo n / k
+  (Finset.Icc 1 n).sum fun k => lcmInterval 0 n / k
 
 /--
 Erdős Problem 291 [ErGr80, p.34]:
@@ -59,20 +62,30 @@ $a_n = L_n \cdot H_n = \sum_{k=1}^{n} \frac{L_n}{k}$.
 @[category research open, AMS 11]
 theorem erdos_291 : answer(sorry) ↔
     (∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ 1 ≤ n ∧
-      Nat.gcd (harmonicLcmNumerator n) (lcmUpTo n) = 1) ∧
+      Nat.gcd (harmonicLcmNumerator n) (lcmInterval 0 n) = 1) ∧
     (∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ 1 ≤ n ∧
-      Nat.gcd (harmonicLcmNumerator n) (lcmUpTo n) > 1) := by
+      Nat.gcd (harmonicLcmNumerator n) (lcmInterval 0 n) > 1) := by
+  sorry
+
+/--
+The first part of Erdős Problem 291: $\gcd(a_n, L_n) = 1$ occurs for infinitely many $n$.
+This remains open. Shiu [Sh16] predicts approximately $x / \log x$ coprime cases in $[1, x]$.
+-/
+@[category research open, AMS 11]
+theorem erdos_291.variants.gcd_eq_one :
+    ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ 1 ≤ n ∧
+      Nat.gcd (harmonicLcmNumerator n) (lcmInterval 0 n) = 1 := by
   sorry
 
 /--
 The second part of Erdős Problem 291: $\gcd(a_n, L_n) > 1$ occurs for infinitely many $n$.
-This is trivially true (Steinerberger): any $n$ whose leading digit in base 3 is 2 has
+This is true (Steinerberger): any $n$ whose leading digit in base 3 is 2 has
 $3 \mid \gcd(a_n, L_n)$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_291.variants.gcd_gt_one :
     ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ 1 ≤ n ∧
-      Nat.gcd (harmonicLcmNumerator n) (lcmUpTo n) > 1 := by
+      Nat.gcd (harmonicLcmNumerator n) (lcmInterval 0 n) > 1 := by
   sorry
 
 end Erdos291
