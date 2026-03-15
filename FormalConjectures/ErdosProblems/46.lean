@@ -26,10 +26,25 @@ set whose reciprocals sum to $1$. Proved by Croot [Cr03].
 
 See also: Problem #298.
 
+[Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._. Number Theory Day
+(Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43–72.
+
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980), p. 36.
 
-[Cr03] Croot, E.S., _On a coloring conjecture about unit fractions_, Annals of Mathematics
+[Er92c] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Matematiche (Catania) **47** (1992), 231–240.
+
+[Er95] Erdős, P., _Some of my favourite problems in number theory, combinatorics, and geometry_.
+Resenhas **1** (1995), 165–186.
+
+[Er96b] Erdős, P., _Some problems I presented or planned to present in my short talk_. Analytic
+number theory, Vol. 1 (Allerton Park, IL, 1995) (1996), 333–335.
+
+[Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
+**164** (1997), 81–85.
+
+[Cr03] Croot, E. S., _On a coloring conjecture about unit fractions_. Annals of Mathematics
 **157** (2003), 545–556.
 -/
 
