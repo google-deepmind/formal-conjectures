@@ -29,7 +29,15 @@ $f_d(n) = 2^{o(d)}$?
 A problem of Erdős [Er75f]. It is easy to prove that $f_d(n) \leq n^{O_d(1)}$.
 Erdős claimed that he and Straus proved $f_d(n) \leq c_n^d$ for some constant $c_n > 0$.
 
-When $d = 1$, $f_1(n) \asymp n^2$. When $n = 3$, $f_d(3) = d^2/2 + O(d)$.
+When $d = 1$, $f_1(n) \asymp n^2$ (see Problem 530). When $n = 3$,
+$f_d(3) = d^2/2 + O(d)$ (see Problem 503). Specific known values include
+$f_2(3) = 7$ (Erdős) and $f_3(3) = 9$ (Croft [Cr62]).
+
+[Er75f] Erdős, P., _On some problems of elementary and combinatorial geometry_.
+Ann. Mat. Pura Appl. (4) (1975), 99-108.
+
+[Cr62] Croft, H. T., _9-point and 7-point configurations in 3-space_.
+Proc. London Math. Soc. (3) (1962), 400-424.
 -/
 
 namespace Erdos1088
@@ -65,6 +73,18 @@ theorem erdos_1088 :
         ∀ ε : ℝ, ε > 0 →
           ∃ D₀ : ℕ, ∀ d : ℕ, d ≥ D₀ →
             (erdosF d n : ℝ) ≤ (2 : ℝ) ^ (ε * (d : ℝ)) := by
+  sorry
+
+/-- $f_2(3) = 7$: the minimum number of points in $\mathbb{R}^2$ that guarantees a subset
+of $3$ points with all pairwise distances distinct is $7$. Due to Erdős. -/
+@[category research solved, AMS 5 52]
+theorem erdos_1088_f2_3 : erdosF 2 3 = 7 := by
+  sorry
+
+/-- $f_3(3) = 9$: the minimum number of points in $\mathbb{R}^3$ that guarantees a subset
+of $3$ points with all pairwise distances distinct is $9$. Due to Croft [Cr62]. -/
+@[category research solved, AMS 5 52]
+theorem erdos_1088_f3_3 : erdosF 3 3 = 9 := by
   sorry
 
 end Erdos1088
