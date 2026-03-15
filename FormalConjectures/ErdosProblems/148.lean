@@ -39,6 +39,9 @@ equation and sums of $k$ unit fractions_, Proc. R. Soc. Edinb. A Math. (2021).
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_, Monographies de L'Enseignement Mathématique (1980).
+
+Related OEIS sequences: [A076393](https://oeis.org/A076393),
+[A006585](https://oeis.org/A006585).
 -/
 
 open BigOperators Real Filter
@@ -78,7 +81,7 @@ as a sum of exactly $k$ distinct unit fractions.
 
 The open problem is to close the gap between the known bounds. This
 conjecture asserts that the correct order of magnitude is exponential
-in $2^k$: there exist constants $1 < c_1 \le c_2$ such that
+in $2^k$: there exist constants $c_1, c_2 > 1$ such that
 $c_1^{2^k} \le F(k) \le c_2^{2^k}$ for all sufficiently large $k$.
 In particular, the Konyagin lower bound should be improvable to
 exponential in $2^k$ to match the Elsholtz–Planitzer upper bound. -/
