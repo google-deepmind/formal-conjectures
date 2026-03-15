@@ -33,11 +33,26 @@ $$
 $$
 where each $\ell_k(x)$ is defined with respect to $x_1, \ldots, x_n$.
 
-[Be31] Bernstein proved that the set of $x \in (-1,1)$ for which the limsup
-condition (Part 2) holds is everywhere dense.
+Bernstein [Be31] proved that the set of $x \in (-1,1)$ for which the limsup
+condition $\limsup_{n \to \infty} L_n(x) / \log n \geq 2/\pi$ holds is everywhere dense.
+Erdős [Er61c] proved that for any fixed nodes, $\max_{x \in [-1,1]} L_n(x) > (2/\pi) \log n - O(1)$.
+
+[Er67,p.68] Erdős, P., _Some recent results on extremal problems in graph theory. Results_,
+  Theory of Graphs (Internat. Sympos., Rome, 1966) (1967), 117–123.
+
+[Er61c] Erdős, P., _Problems and results on the theory of interpolation. II_,
+  Acta Math. Acad. Sci. Hungar. (1961), 235–244.
+
+[Be31] Bernstein, S., _Sur la limitation des valeurs d'un polynome $P_n(x)$ de degré $n$ sur
+  tout un segment par ses valeurs en $(n+1)$ points du segment_, Izv. Akad. Nauk. SSSR (1931),
+  1025–1050.
+
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+  "Paul Erdős and his mathematics", Budapest, July 1999 (1999), §2.43.
 -/
 
-open Finset BigOperators Filter MeasureTheory
+open Finset Filter MeasureTheory
+open scoped BigOperators
 
 namespace Erdos1132
 
@@ -83,14 +98,15 @@ For any infinite sequence $x_1, x_2, \ldots \in [-1,1]$ of distinct points, is i
 $\limsup_{n \to \infty} L_n(x) / \log n \geq \frac{2}{\pi}$
 for almost all $x \in (-1,1)$?
 
-Bernstein [Be31] proved that the set of $x \in (-1,1)$ for which the limsup
-condition holds is everywhere dense.
+Bernstein [Be31] proved that the set of $x \in (-1,1)$ satisfying this limsup
+condition is everywhere dense.
 -/
 @[category research open, AMS 26 41]
 theorem erdos_1132.variants.part2 : answer(sorry) ↔
     ∀ (seq : ℕ → ℝ), ValidSeq seq →
       ∀ᵐ x ∂(volume.restrict (Set.Ioo (-1 : ℝ) 1)),
-        Filter.limsup (fun n => L seq n x / Real.log (n : ℝ)) atTop ≥ 2 / Real.pi := by
+        ∀ c < 2 / Real.pi,
+          ∃ᶠ n in atTop, L seq n x / Real.log (n : ℝ) ≥ c := by
   sorry
 
 end Erdos1132

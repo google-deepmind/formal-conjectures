@@ -25,14 +25,19 @@ the Lebesgue function. This was proved by Kilgore and de Boor–Pinkus.
 
 *Reference:* [erdosproblems.com/1129](https://www.erdosproblems.com/1129)
 
-[Ki77] Kilgore, T., *A characterization of the Lagrange interpolation projection with
-minimal Tchebycheff norm*, J. Approx. Theory (1977).
+[Ki77] Kilgore, T. A., *Optimization of the norm of the Lagrange interpolation operator*,
+Bull. Amer. Math. Soc. **83** (1977), 1069-1071.
+
+[KiCh76] Kilgore, T. A. and Cheney, E. W., *A theorem on interpolation in Haar subspaces*,
+Aequationes Math. (1976), 391-400.
 
 [dBPi78] de Boor, C. and Pinkus, A., *Proof of the conjectures of Bernstein and Erdős
-concerning the optimal nodes for polynomial interpolation*, J. Approx. Theory (1978).
+concerning the optimal nodes for polynomial interpolation*, J. Approx. Theory (1978),
+289-303.
 -/
 
-open Finset BigOperators
+open Finset
+open scoped BigOperators
 
 namespace Erdos1129
 
@@ -62,16 +67,17 @@ noncomputable def boundary {n : ℕ} (nodes : Fin n → ℝ) : Fin (n + 2) → �
     else if h₂ : i.val ≤ n then nodes ⟨i.val - 1, by omega⟩
     else 1
 
+/-- The local maximum of the Lebesgue function on the $i$-th subinterval
+    $[b_i, b_{i+1}]$ of the partition induced by the nodes. -/
+noncomputable def localMax {n : ℕ} (nodes : Fin n → ℝ) (i : Fin (n + 1)) : ℝ :=
+  sSup ((lebesgueFunction nodes) ''
+    (Set.Icc (boundary nodes ⟨i.val, by omega⟩)
+             (boundary nodes ⟨i.val + 1, by omega⟩)))
+
 /-- The equioscillation property: the local maximum of the Lebesgue function is the
     same on each of the $n + 1$ subintervals $[b_i, b_{i+1}]$. -/
 def HasEquioscillation {n : ℕ} (nodes : Fin n → ℝ) : Prop :=
-  ∀ i j : Fin (n + 1),
-    sSup ((lebesgueFunction nodes) ''
-      (Set.Icc (boundary nodes ⟨i.val, by omega⟩)
-               (boundary nodes ⟨i.val + 1, by omega⟩))) =
-    sSup ((lebesgueFunction nodes) ''
-      (Set.Icc (boundary nodes ⟨j.val, by omega⟩)
-               (boundary nodes ⟨j.val + 1, by omega⟩)))
+  ∀ i j : Fin (n + 1), localMax nodes i = localMax nodes j
 
 /--
 Erdős Problem 1129 (Proved by Kilgore [Ki77] and de Boor–Pinkus [dBPi78]):
@@ -85,7 +91,7 @@ and characterised by the equioscillation property: if
 $-1 = x_0 < x_1 < \cdots < x_n < x_{n+1} = 1$ then
 $\max_{x \in [x_i, x_{i+1}]} \sum_k |\ell_k(x)|$ is the same for all $0 \leq i \leq n$.
 
-Kilgore proved $\Lambda$ is minimised only when equioscillation holds.
+Kilgore proved $\Lambda$ is minimised if and only if equioscillation holds.
 De Boor and Pinkus proved the minimising configuration is unique.
 -/
 @[category research solved, AMS 41]
@@ -98,7 +104,10 @@ theorem erdos_1129 (n : ℕ) (hn : 2 ≤ n) :
       (∀ nodes : Fin n → ℝ, ValidNodes nodes →
         lebesgueConstant nodes = lebesgueConstant opt → nodes = opt) ∧
       -- the minimiser satisfies the equioscillation property
-      HasEquioscillation opt := by
+      HasEquioscillation opt ∧
+      -- converse: equioscillation characterises the minimiser (Kilgore)
+      (∀ nodes : Fin n → ℝ, ValidNodes nodes → HasEquioscillation nodes →
+        lebesgueConstant nodes = lebesgueConstant opt) := by
   sorry
 
 end Erdos1129

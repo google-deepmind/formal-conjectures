@@ -28,8 +28,12 @@ whether $\Upsilon(x_1, \ldots, x_n) \ll \log n$.
 
 *Reference:* [erdosproblems.com/1130](https://www.erdosproblems.com/1130)
 
-[dBPi78] de Boor, C. and Pinkus, A., *Proof of the conjectures of Bernstein
-and Erdős concerning the optimal nodes for polynomial interpolation*, 1978.
+[Er47] Erdős, P., _Some remarks on polynomials_. Bull. Amer. Math. Soc. (1947),
+1169-1176.
+
+[dBPi78] de Boor, C. and Pinkus, A., _Proof of the conjectures of Bernstein
+and Erdős concerning the optimal nodes for polynomial interpolation_,
+J. Approx. Theory (1978), 289-303.
 -/
 
 open Finset
