@@ -29,21 +29,14 @@ $a, b, c \in A$ such that $\text{lcm}(a, b) = c$?
 [Er65b] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math. 8 (1965),
 p. 228.
 
-[Kl71] Kleitman, D., _On a combinatorial conjecture of Erdős_. J. Combin. Theory Ser. A 1
-(1971).
--/
+[Kl71] Kleitman, D., _Collections of subsets containing no two sets and their union_.
+Proc. LA Meeting AMS (1971), 153-155.
 
-open Finset
+[DaEr36] Davenport, H. and Erdős, P., _On sequences of positive integers_.
+Acta Arithmetica **2** (1936), 147-151.
+-/
 
 namespace Erdos487
-
-/--
-A set $A \subseteq \mathbb{N}$ has positive upper density if there exists $\delta > 0$ such that
-for arbitrarily large $N$, $|A \cap \{1, \ldots, N\}| / N \geq \delta$.
--/
-noncomputable def HasPositiveUpperDensity487 (A : Set ℕ) : Prop :=
-  ∃ δ : ℝ, 0 < δ ∧ ∀ N₀ : ℕ, ∃ N : ℕ, N₀ ≤ N ∧
-    ((A ∩ {i | 1 ≤ i ∧ i ≤ N}).ncard : ℝ) ≥ δ * (N : ℝ)
 
 /--
 Erdős Problem 487 [Er61, p. 236] [Er65b, p. 228]:
@@ -57,7 +50,7 @@ by Kleitman [Kl71].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_487 : answer(True) ↔
-    ∀ (A : Set ℕ), HasPositiveUpperDensity487 A →
+    ∀ (A : Set ℕ), A.upperDensity > 0 →
     ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, a ≠ b ∧ a ≠ c ∧ b ≠ c ∧ Nat.lcm a b = c := by
   sorry
 
