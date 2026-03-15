@@ -25,13 +25,16 @@ Is it true that for any two primes $p, q$ there exists an integer $n$ such that
 $P(n) = p$ and $P(n+1) = q$, where $P(m)$ denotes the greatest prime factor of $m$?
 
 [Er95c] Erdős, P., *Some of my favourite problems which recently have been solved*.
+
+[Ma35] Mahler, K., *Über den größten Primteiler spezieller Polynome zweiten Grades*.
+Archiv för mathematik og naturvidenskab (1935).
+
+[Ro64b] Rotkiewicz, A., *Sur les nombres naturels n et k tels que les nombres n et nk sont
+à la fois pseudopremiers*. Atti Accademia Nazionale dei Lincei, Rendiconti, Classe di Scienze
+Fisiche, Matematiche e Naturali, Series 8 (1964), 816–818.
 -/
 
 namespace Erdos649
-
-/-- The greatest prime factor of $n$, or $0$ if $n \le 1$. -/
-def greatestPrimeFactor (n : ℕ) : ℕ :=
-  n.primeFactorsList.foldr max 0
 
 /--
 Erdős Problem 649 (disproved):
@@ -44,7 +47,7 @@ so this fails with $p = 2$ and $q = 7$. [Er95c]
 -/
 @[category research solved, AMS 11]
 theorem erdos_649 : answer(False) ↔ ∀ p q : ℕ, Nat.Prime p → Nat.Prime q →
-    ∃ n : ℕ, 0 < n ∧ greatestPrimeFactor n = p ∧ greatestPrimeFactor (n + 1) = q := by
+    ∃ n : ℕ, 0 < n ∧ Nat.maxPrimeFac n = p ∧ Nat.maxPrimeFac (n + 1) = q := by
   sorry
 
 end Erdos649
