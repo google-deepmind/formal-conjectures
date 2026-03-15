@@ -77,4 +77,40 @@ theorem erdos_793 : answer(sorry) ↔
         (nhds c) := by
   sorry
 
+/--
+A finite set $A \subseteq \mathbb{N}$ is *r-primitive-like* if no element divides the product
+of $r$ distinct other elements: for all $a \in A$ and all multisets $B$ of size $r$ drawn from
+$A \setminus \{a\}$, $a \nmid \prod B$. When $r = 2$, this reduces to `IsPrimitiveLike`.
+-/
+def IsRPrimitiveLike (r : ℕ) (A : Finset ℕ) : Prop :=
+  ∀ a ∈ A, ∀ B : Finset ℕ, B ⊆ A.erase a → B.card = r →
+    ¬(a ∣ B.prod id)
+
+/--
+$F_r(n)$ is the maximum cardinality of an r-primitive-like subset of $\{1, \ldots, n\}$.
+-/
+noncomputable def rPrimitiveLikeMaxSize (r : ℕ) (n : ℕ) : ℕ :=
+  sSup {k : ℕ | ∃ A : Finset ℕ, IsRPrimitiveLike r A ∧
+    (∀ x ∈ A, 1 ≤ x ∧ x ≤ n) ∧ A.card = k}
+
+/--
+Generalization of Erdős Problem 793: for sets where no $a \in A$ divides the product
+of $r$ distinct other elements of $A$, is there a constant $C_r > 0$ such that
+$$
+  \frac{F_r(n) - \pi(n)}{n^{2/(r+1)} / (\log n)^2} \to C_r?
+$$
+The case $r = 2$ recovers the original problem with exponent $2/3$.
+-/
+@[category research open, AMS 5 11]
+theorem erdos_793.variant : answer(sorry) ↔
+    ∀ᵉ (r : ℕ) (_ : 2 ≤ r),
+    ∃ c : ℝ, c > 0 ∧
+      Tendsto
+        (fun n : ℕ =>
+          ((rPrimitiveLikeMaxSize r n : ℝ) - (Nat.primeCounting n : ℝ)) /
+          ((n : ℝ) ^ ((2 : ℝ) / (r + 1 : ℝ)) / (Real.log (n : ℝ)) ^ (2 : ℝ)))
+        atTop
+        (nhds c) := by
+  sorry
+
 end Erdos793
