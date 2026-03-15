@@ -25,10 +25,10 @@ For every $k$, if $|A|$ is sufficiently large, then there are at least $|A|^k$ d
 that are either a sum or product of distinct elements of $A$. Solved by Chang [Ch03].
 
 [ErSz83] Erdős, P. and Szemerédi, E., _On sums and products of integers_. Studies in Pure
-Mathematics, Birkhäuser, Basel (1983), 213-218.
+Mathematics, Birkhäuser, Basel (1983), 213–218.
 
 [Ch03] Chang, M.-C., _The Erdős-Szemerédi problem on sum set and product set_. Annals of
-Mathematics (2003), 157(3), 939-957.
+Mathematics **157** (2003), 939–957.
 -/
 
 open Finset BigOperators
