@@ -22,6 +22,11 @@ import FormalConjectures.Util.ProblemImports
 Conjecture on the maximum number of edges in an $r$-uniform hypergraph on $n$ vertices
 containing no matching of size $k$ (the Erdős Matching Conjecture).
 
+The two terms in the conjectured maximum correspond to two extremal constructions:
+(1) taking all $r$-subsets of a fixed set of $rk - 1$ vertices (clique construction), and
+(2) taking all $r$-subsets that intersect a fixed set of $k - 1$ vertices (star/covering
+construction).
+
 *Reference:* [erdosproblems.com/1020](https://www.erdosproblems.com/1020)
 
 [Er65d] Erdős, P., *A problem on independent r-tuples*, Ann. Univ. Sci. Budapest. Eötvös Sect.
@@ -51,7 +56,7 @@ noncomputable def maxEdgesNoMatching (n r k : ℕ) : ℕ :=
     IsRUniform H r ∧ ¬HasMatching H k ∧ H.card = m}
 
 /--
-Erdős Problem 1020 (Erdős Matching Conjecture) [Er65d, Er71, p.103]:
+Erdős Problem 1020 (Erdős Matching Conjecture) [Er65d], [Er71, p.103]:
 
 For all $r \geq 3$, the maximum number of edges in an $r$-uniform hypergraph on $n$ vertices
 containing no matching of size $k$ equals
