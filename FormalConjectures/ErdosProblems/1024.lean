@@ -28,8 +28,11 @@ A hypergraph is linear if $|A \cap B| \leq 1$ for all edges $A$ and $B$. An inde
 set of vertices is one which contains no edges. A $3$-uniform linear hypergraph
 is sometimes called a partial Steiner triple system.
 
-Erdős proved $n^{1/2} \ll f(n) \ll n^{2/3}$. Phelps and Rödl [PhRo86] proved
-$f(n) \asymp (n \log n)^{1/2}$.
+A question of Erdős [Er71, p.106], who proved $n^{1/2} \ll f(n) \ll n^{2/3}$.
+Phelps and Rödl [PhRo86] proved $f(n) \asymp (n \log n)^{1/2}$.
+
+[Er71] Erdős, P., _Topics in combinatorial analysis_. Proc. Second Louisiana Conf. on
+Combinatorics, Graph Theory and Computing (1971), 2–20.
 
 [PhRo86] Phelps, K. T. and Rödl, V., _Steiner triple systems with minimum independence
 number_. Ars Combin. 21 (1986), 167–172.
