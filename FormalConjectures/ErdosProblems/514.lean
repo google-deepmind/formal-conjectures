@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Analysis.BoundedVariation
 
 /-!
 # Erdős Problem 514
@@ -24,9 +25,15 @@ the function grows faster than any polynomial? A related question asks whether t
 along such a path can be estimated in terms of the maximum modulus.
 
 *Reference:* [erdosproblems.com/514](https://www.erdosproblems.com/514)
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
+p. 249.
+
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_,
+L'Enseignement Math. 27 (1982), 163–176.
 -/
 
-open Complex Filter Topology
+open Complex Filter Topology Set
 
 namespace Erdos514
 
@@ -48,17 +55,34 @@ theorem erdos_514 :
   sorry
 
 /-- Erdős Problem 514, growth rate variant (open):
-For every entire transcendental function $f$ and every $\varepsilon > 0$, does there exist a
+For every entire transcendental function $f$ and every $\varepsilon \in (0, 1)$, does there exist a
 continuous path $\gamma$ going to infinity along which $|f(z)| \geq M(|z|)^\varepsilon$? -/
 @[category research open, AMS 30]
 theorem erdos_514.variants.max_modulus_growth :
     answer(sorry) ↔
       ∀ f : ℂ → ℂ, Differentiable ℂ f →
         (¬ ∃ p : Polynomial ℂ, ∀ z, f z = p.eval z) →
-        ∀ ε : ℝ, 0 < ε →
+        ∀ ε : ℝ, 0 < ε → ε < 1 →
           ∃ γ : ℝ → ℂ, Continuous γ ∧
             Tendsto (fun t => ‖γ t‖) atTop atTop ∧
             ∀ᶠ t in atTop, (maxModulus f ‖γ t‖) ^ ε ≤ ‖f (γ t)‖ := by
+  sorry
+
+/-- Erdős Problem 514, path length variant (open):
+Can the length of a path $\gamma$ to infinity (along which an entire transcendental function
+grows faster than any polynomial) be estimated in terms of the maximum modulus
+$M(r) = \sup_{|z|=r} |f(z)|$? More precisely, does there exist a function $g$ such that
+the arc length of $\gamma$ restricted to the disk of radius $R$ is at most $g(M(R))$? -/
+@[category research open, AMS 30]
+theorem erdos_514.variants.path_length :
+    answer(sorry) ↔
+      ∀ f : ℂ → ℂ, Differentiable ℂ f →
+        (¬ ∃ p : Polynomial ℂ, ∀ z, f z = p.eval z) →
+        ∃ γ : ℝ → ℂ, Continuous γ ∧
+          Tendsto (fun t => ‖γ t‖) atTop atTop ∧
+          (∀ n : ℕ, Tendsto (fun t => ‖f (γ t)‖ / ‖γ t‖ ^ n) atTop atTop) ∧
+          ∃ g : ℝ → ℝ, ∀ R : ℝ, 0 < R →
+            eVariationOn γ {t | ‖γ t‖ ≤ R} ≤ ENNReal.ofReal (g (maxModulus f R)) := by
   sorry
 
 end Erdos514
