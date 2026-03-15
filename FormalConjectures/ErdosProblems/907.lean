@@ -25,6 +25,13 @@ If $f : \mathbb{R} \to \mathbb{R}$ is such that for every $h > 0$ the difference
 $x \mapsto f(x+h) - f(x)$ is continuous, must $f$ decompose as $g + \varphi$ where $g$ is
 continuous and $\varphi$ is additive?
 
+See also Problem 908.
+
+[Er81b] Erdős, P., _My Scottish Book 'Problems'_. The Scottish Book (1981), 27-35.
+
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_,
+L'Enseignement Math. 27 (1982), 163–176.
+
 [dB51] de Bruijn, N. G., _Functions whose differences belong to a given class_,
 Nieuw Arch. Wiskunde (2) 23 (1951), 194-218.
 -/
