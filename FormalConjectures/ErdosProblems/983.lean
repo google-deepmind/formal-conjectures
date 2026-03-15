@@ -25,16 +25,12 @@ Let $n \geq 2$ and $\pi(n) < k \leq n$. Let $f(k,n)$ be the smallest integer $r$
 in any $A \subseteq \{1,\ldots,n\}$ of size $|A| = k$ there exist primes $p_1,\ldots,p_r$ such
 that more than $r$ elements $a \in A$ are only divisible by primes from $\{p_1,\ldots,p_r\}$.
 
-[Er70b] Erdős, P. and Straus, E.G.
+[Er70b, p. 138] Erdős, P. and Straus, E.G.
 -/
 
 open Classical
 
 namespace Erdos983
-
-/-- The prime counting function $\pi(n)$: the number of primes $\leq n$. -/
-def primeCounting (n : ℕ) : ℕ :=
-  ((Finset.range (n + 1)).filter Nat.Prime).card
 
 /-- A natural number $a$ is smooth with respect to a set of primes $P$ if every
 prime factor of $a$ belongs to $P$. -/
@@ -61,7 +57,7 @@ $f(\pi(n)+1, n) + M \leq 2\pi(\lfloor\sqrt{n}\rfloor)$.
 theorem erdos_983 :
     answer(sorry) ↔
     ∀ M : ℕ, ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-      smoothCoveringNumber (primeCounting n + 1) n + M ≤ 2 * primeCounting (Nat.sqrt n) := by
+      smoothCoveringNumber (Nat.primeCounting n + 1) n + M ≤ 2 * Nat.primeCounting (Nat.sqrt n) := by
   sorry
 
 end Erdos983
