@@ -34,7 +34,7 @@ Hungar. 31 (1978), no. 1-2, 125-149.
 namespace Erdos465
 
 /-- The distance of a real number from the nearest integer. -/
-noncomputable def distNearestInt465 (x : ℝ) : ℝ :=
+noncomputable def distNearestInt (x : ℝ) : ℝ :=
   min (Int.fract x) (1 - Int.fract x)
 
 /--
@@ -52,7 +52,7 @@ theorem erdos_465 (δ : ℝ) (hδ₀ : 0 < δ) (hδ₁ : δ < 1 / 2)
     ∀ (X : ℝ), X₀ ≤ X →
     ∀ (A : Finset (EuclideanSpace ℝ (Fin 2))),
       (∀ p ∈ A, dist p 0 ≤ X) →
-      (∀ p ∈ A, ∀ q ∈ A, p ≠ q → distNearestInt465 (dist p q) ≥ δ) →
+      (∀ p ∈ A, ∀ q ∈ A, p ≠ q → distNearestInt (dist p q) ≥ δ) →
       (A.card : ℝ) ≤ ε * X := by
   sorry
 
@@ -70,7 +70,7 @@ theorem erdos_465.variants.strong (δ : ℝ) (hδ : 0 < δ) :
     ∀ (X : ℝ), 0 < X →
     ∀ (A : Finset (EuclideanSpace ℝ (Fin 2))),
       (∀ p ∈ A, dist p 0 ≤ X) →
-      (∀ p ∈ A, ∀ q ∈ A, p ≠ q → distNearestInt465 (dist p q) ≥ δ) →
+      (∀ p ∈ A, ∀ q ∈ A, p ≠ q → distNearestInt (dist p q) ≥ δ) →
       (A.card : ℝ) ≤ C * Real.sqrt X := by
   sorry
 
