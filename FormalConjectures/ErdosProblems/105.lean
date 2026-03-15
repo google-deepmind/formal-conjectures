@@ -21,9 +21,24 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/105](https://www.erdosproblems.com/105)
 
-Erdős–Purdy conjecture (disproved): given $n$ points in $\mathbb{R}^2$, not all collinear, and
-a disjoint set of $n - 3$ points, must there exist a line through at least two of the first
-set that avoids the second? Counterexamples were found by Xichuan.
+Erdős–Purdy conjecture (disproved, $50 prize): given $n$ points in $\mathbb{R}^2$, not all
+collinear, and a disjoint set of $n - 3$ points, must there exist a line through at least two
+of the first set that avoids the second? Counterexamples were found by Xichuan.
+
+Beck [Be83] and Szemerédi–Trotter [SzTr83] proved the analogous statement holds when
+$|B| = cn$ for a constant $c > 0$ (see Problem #211).
+
+[Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Combinatorics '94 (Catania), Congressus Numerantium 107 (1995).
+
+[ErPu95] Erdős, P. and Purdy, G., _Two combinatorial problems in the plane_.
+Discrete & Computational Geometry (1995), 441–443.
+
+[Be83] Beck, J., _On the lattice property of the plane and some problems of Dirac,
+Motzkin and Erdős in combinatorial geometry_. Combinatorica 3 (1983), 281–297.
+
+[SzTr83] Szemerédi, E. and Trotter, W.T., _Extremal problems in discrete geometry_.
+Combinatorica 3 (1983), 381–392.
 -/
 
 namespace Erdos105
