@@ -41,20 +41,27 @@ This is known:
 - For $4$-colourable graphs (weaker than $K_5$-free), by Czabarka, Smith,
   Székely [CSS23]
 
+Cambie and Jooken [CaJo25] have given constructions for $K_4$-free graphs with minimum
+degree $16$ achieving diameter at least $(31/216)n + O(1)$, providing another
+counterexample to the original conjecture.
+
 It is also known that any connected graph on $n$ vertices with minimum degree $d$ has
 $D \leq 3n/(d+1) + O(1)$.
 
 [EPPT89] Erdős, P., Pach, J., Pollack, R., and Tuza, Zs., _Radius, diameter, and
-minimum degree_. J. Combin. Theory Ser. B 47 (1989), 73-79.
+minimum degree_. J. Combin. Theory Ser. B 47 (1989), 73–79.
 
-[CSS21] Czabarka, É., Singgih, O., and Székely, L.A., _Counterexample to a conjecture
-of Erdős, Pach, Pollack, and Tuza on diameter and minimum degree_. 2021.
+[CSS21] Czabarka, É., Singgih, O., and Székely, L.A., _Counterexamples to a conjecture
+of Erdős, Pach, Pollack, and Tuza_. J. Combin. Theory Ser. B (2021), 38–45.
 
-[CDS09] Czabarka, É., Dankelmann, P., and Székely, L.A., _Diameter and degree
-conditions for $K_{t,t}$-free graphs_. 2009.
+[CDS09] Czabarka, É., Dankelmann, P., and Székely, L.A., _Diameter of 4-colourable
+graphs_. European J. Combin. (2009), 1082–1089.
 
-[CSS23] Czabarka, É., Smith, S.J., and Székely, L.A., _Diameter bounds for
-4-colourable graphs_. 2023.
+[CSS23] Czabarka, É., Smith, S.J., and Székely, L.A., _Maximum diameter of 3- and
+4-colorable graphs_. J. Graph Theory (2023), 262–270.
+
+[CaJo25] Cambie, S. and Jooken, J., _Sharp results for the Erdős, Pach, Pollack and
+Tuza problem_. arXiv:2502.08626 (2025).
 -/
 
 open SimpleGraph
@@ -107,6 +114,42 @@ theorem erdos_612.variants.general_bound :
       G.Connected →
       G.minDegree ≥ 1 →
       (G.diam : ℝ) ≤ 3 * ((n : ℝ) / ((G.minDegree : ℝ) + 1)) + C := by
+  sorry
+
+/--
+**Erdős Problem 612** (Known case: 3-colourable graphs, [CDS09]):
+
+If $G$ is a connected $3$-colourable graph on $n$ vertices with minimum degree $d \geq 1$,
+then
+$$\operatorname{diam}(G) \leq \frac{7}{3} \cdot \frac{n}{d} + C$$
+for some absolute constant $C$. This is weaker than the $K_4$-free case ($k = 3$) of the
+amended conjecture.
+-/
+@[category research solved, AMS 5]
+theorem erdos_612.variants.three_colorable :
+    ∃ C : ℝ, ∀ (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
+      G.Connected →
+      G.Colorable 3 →
+      G.minDegree ≥ 1 →
+      (G.diam : ℝ) ≤ (7 / 3 : ℝ) * ((n : ℝ) / (G.minDegree : ℝ)) + C := by
+  sorry
+
+/--
+**Erdős Problem 612** (Known case: 4-colourable graphs, [CSS23]):
+
+If $G$ is a connected $4$-colourable graph on $n$ vertices with minimum degree $d \geq 1$,
+then
+$$\operatorname{diam}(G) \leq \frac{5}{2} \cdot \frac{n}{d} + C$$
+for some absolute constant $C$. This is weaker than the $K_5$-free case ($k = 4$) of the
+amended conjecture.
+-/
+@[category research solved, AMS 5]
+theorem erdos_612.variants.four_colorable :
+    ∃ C : ℝ, ∀ (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
+      G.Connected →
+      G.Colorable 4 →
+      G.minDegree ≥ 1 →
+      (G.diam : ℝ) ≤ (5 / 2 : ℝ) * ((n : ℝ) / (G.minDegree : ℝ)) + C := by
   sorry
 
 end Erdos612
