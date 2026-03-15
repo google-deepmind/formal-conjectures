@@ -93,4 +93,25 @@ theorem erdos_127 : answer(True) ↔
       Filter.Tendsto (fun i => f (seq i)) Filter.atTop Filter.atTop := by
   sorry
 
+/--
+Alon's lower bound [Al96]: $f(n^2/2) \gg n^{1/2}$, i.e., there exists a constant $c > 0$ such
+that for all sufficiently large $n$, $f(\lfloor n^2/2 \rfloor) \geq c \sqrt{n}$.
+This is the quantitative content of Alon's proof that $f$ is unbounded.
+-/
+@[category research solved, AMS 5]
+theorem erdos_127_alon_lower_bound :
+    ∃ c : ℝ, c > 0 ∧ ∀ᶠ n : ℕ in Filter.atTop,
+      f (n ^ 2 / 2) ≥ c * Real.sqrt (n : ℝ) := by
+  sorry
+
+/--
+Alon's upper bound [Al96]: $f(m) \ll m^{1/4}$, i.e., there exists a constant $C > 0$ such
+that $f(m) \leq C \cdot m^{1/4}$ for all $m$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_127_alon_upper_bound :
+    ∃ C : ℝ, C > 0 ∧ ∀ m : ℕ,
+      f m ≤ C * (m : ℝ) ^ (1 / 4 : ℝ) := by
+  sorry
+
 end Erdos127
