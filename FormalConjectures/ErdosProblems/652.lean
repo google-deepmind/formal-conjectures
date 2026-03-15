@@ -35,7 +35,11 @@ This was proved in the affirmative. Mathialagan [Ma21] showed that given sets $P
 determines $\gg (kn)^{1/2}$ distances to $Q$, implying
 $R(x_k) \gg (kn)^{1/2}$ for $2 \leq k \leq n^{1/3}$.
 
-[Ma21] Mathialagan, S., *Distinct distances for points along a curve in the plane*. 2021.
+[Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Proc. Int. Conf. on Discrete Math. (1997), 527–533.
+
+[Ma21] Mathialagan, S., _On bipartite distinct distances in the plane_.
+Electronic Journal of Combinatorics (2021), Paper No. 4.33, 1–25.
 -/
 
 namespace Erdos652
