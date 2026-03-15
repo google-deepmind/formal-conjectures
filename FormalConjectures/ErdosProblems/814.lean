@@ -31,13 +31,21 @@ exists with at most $n - c_k\sqrt{n}$ vertices. Mousset, Noever, and Skorić [MN
 this to $n - c_k \cdot n / \log n$. The full conjecture was proved by Sauermann [Sa19] with
 $c_k \gg 1/k^3$.
 
-[EFRS90] Erdős, P., Faudree, R., Rousseau, C., and Schelp, R.
+[EFRS90] Erdős, P., Faudree, R. J., Rousseau, C. C., and Schelp, R. H.,
+_Subgraphs of minimal degree k_. Discrete Mathematics (1990), 53–58.
 
-[Er91] Erdős, P.
+[Er91] Erdős, P., _Problems and results in combinatorial analysis and combinatorial number
+theory_. Graph theory, combinatorics, and applications, Vol. 1 (Kalamazoo, MI, 1988), 1991,
+397–406.
 
-[MNS17] Mousset, F., Noever, A., and Skorić, N.
+[Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is eighty,
+Vol. 2 (Keszthely, 1993), 97–132, p.344.
 
-[Sa19] Sauermann, L.
+[MNS17] Mousset, F., Noever, A., and Skorić, N., _Smaller subgraphs of minimum degree k_.
+Electronic Journal of Combinatorics (2017), Paper No. 4.9, 8 pp.
+
+[Sa19] Sauermann, L., _A proof of a conjecture of Erdős, Faudree, Rousseau and Schelp on
+subgraphs of minimum degree k_. Journal of Combinatorial Theory, Series B (2019), 36–75.
 -/
 
 open SimpleGraph Finset
