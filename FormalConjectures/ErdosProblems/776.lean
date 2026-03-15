@@ -19,7 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 776
 
-*Reference:* [erdosproblems.com/776](https://www.erdosproblems.com/776)
+*Reference:* [Gu83] Guy, R.K., _Unsolved Problems in Number Theory_, 1983;
+[erdosproblems.com/776](https://www.erdosproblems.com/776)
 
 A problem of Erdős and Trotter. Let $r \geq 2$ and $A_1, \ldots, A_m \subseteq \{1, \ldots, n\}$
 be an antichain such that every set size that appears does so at least $r$ times. How large must
@@ -30,10 +31,6 @@ $n$ sufficiently large, $n - 3$ is achievable but $n - 2$ is never achievable.
 -/
 
 namespace Erdos776
-
-/-- A family of sets is an antichain if no set is a subset of another. -/
-def IsAntichain (F : Finset (Finset ℕ)) : Prop :=
-  ∀ A ∈ F, ∀ B ∈ F, A ≠ B → ¬(A ⊆ B)
 
 /-- Every size that appears in the family appears at least $r$ times. -/
 def HasMinMultiplicity (F : Finset (Finset ℕ)) (r : ℕ) : Prop :=
@@ -62,7 +59,7 @@ theorem erdos_776 :
       ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
         ∃ F : Finset (Finset ℕ),
           AllSubsetsOfRange F n ∧
-          IsAntichain F ∧
+          IsAntichain (· ⊆ ·) (F : Set (Finset ℕ)) ∧
           HasMinMultiplicity F r ∧
           numDistinctSizes F = n - 3 := by
   sorry
@@ -76,11 +73,11 @@ theorem erdos_776.variants.r_eq_1 :
     ∀ n : ℕ, n > 3 →
       (∃ F : Finset (Finset ℕ),
         AllSubsetsOfRange F n ∧
-        IsAntichain F ∧
+        IsAntichain (· ⊆ ·) (F : Set (Finset ℕ)) ∧
         numDistinctSizes F = n - 2) ∧
       (∀ F : Finset (Finset ℕ),
         AllSubsetsOfRange F n →
-        IsAntichain F →
+        IsAntichain (· ⊆ ·) (F : Set (Finset ℕ)) →
         numDistinctSizes F ≤ n - 2) := by
   sorry
 
@@ -93,9 +90,9 @@ theorem erdos_776.variants.upper_bound :
     ∀ r : ℕ, r ≥ 2 → ∀ n : ℕ,
       ∀ F : Finset (Finset ℕ),
         AllSubsetsOfRange F n →
-        IsAntichain F →
+        IsAntichain (· ⊆ ·) (F : Set (Finset ℕ)) →
         HasMinMultiplicity F r →
-        numDistinctSizes F ≤ n - 3 := by
+        numDistinctSizes F ≠ n - 2 := by
   sorry
 
 end Erdos776
