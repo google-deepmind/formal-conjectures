@@ -31,27 +31,28 @@ different colour.)
 
 A problem of Erdős, Pyber, and Tuza.
 
-[Er91] Erdős, P., _Some of my favourite problems in various branches of combinatorics_, 1991.
+[Er91] Erdős, P., _Problems and results in combinatorial analysis and combinatorial number theory_.
+Graph theory, combinatorics, and applications, Vol. 1 (Kalamazoo, MI, 1988), 1991, 397–406.
 
-[ErTu93] Erdős, P. and Tuza, Zs., _Rainbow subgraphs in edge-colorings of complete graphs_, 1993.
+[Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+Quaestiones Mathematicae **16** (1993), 333–350, p. 346.
 
-[Er96] Erdős, P., _Some recent problems and results in graph theory_, 1996.
+[ErTu93] Erdős, P. and Tuza, Zs., _Rainbow subgraphs in edge-colorings of complete graphs_ (1993),
+81–88.
 
-[ClWa23] Clemen, F. and Wagner, A., 2023.
+[Er96] Erdős, P., _Some of my favourite problems on cycles and colourings_.
+Tatra Mt. Math. Publ. (1996), 7–9.
 
-[AxCl24] Axenovich, M. and Clemen, F., 2024.
+[ClWa23] Clemen, F. C. and Wagner, A. Z., _Balanced edge-colorings avoiding rainbow cliques of
+size four_. Electron. J. Combin. (2023), Paper No. 3.17.
+
+[AxCl24] Axenovich, M. and Clemen, F. C., _Rainbow subgraphs in edge-colored complete graphs:
+answering two questions by Erdős and Tuza_. J. Graph Theory (2024), 57–66.
 -/
 
 open SimpleGraph Finset
 
 namespace Erdos811
-
-/-- The cycle graph on $m$ vertices (for $m \ge 3$): vertex $i$ is adjacent
-    to vertices $(i+1) \bmod m$ and $(i-1) \bmod m$. -/
-def cycleGraph811 (m : ℕ) (_ : m ≥ 3) : SimpleGraph (Fin m) where
-  Adj i j := i ≠ j ∧ (j.val = (i.val + 1) % m ∨ i.val = (j.val + 1) % m)
-  symm := fun _ _ ⟨hne, h⟩ => ⟨hne.symm, h.elim Or.inr Or.inl⟩
-  loopless := fun _ ⟨h, _⟩ => h rfl
 
 /-- An edge-colouring of the complete graph on $\operatorname{Fin} n$ with $m$ colours is
     **balanced** if every vertex sees exactly $\lfloor n / m \rfloor$ edges of each colour.
@@ -61,16 +62,6 @@ def IsBalancedColoring (n m : ℕ) (c : Sym2 (Fin n) → Fin m) : Prop :=
   ∀ (v : Fin n) (i : Fin m),
     (Finset.univ.filter (fun w : Fin n => w ≠ v ∧
       c (Sym2.mk (v, w)) = i)).card = n / m
-
-/-- A **rainbow copy** of a graph $G$ in a coloured complete graph on $\operatorname{Fin} n$
-    is an injective vertex map such that all edges of $G$ receive pairwise
-    distinct colours. -/
-def HasRainbowCopy {V : Type*} (G : SimpleGraph V)
-    {n m : ℕ} (c : Sym2 (Fin n) → Fin m) : Prop :=
-  ∃ f : V → Fin n, Function.Injective f ∧
-    ∀ a b a' b' : V, G.Adj a b → G.Adj a' b' →
-      Sym2.mk (a, b) ≠ Sym2.mk (a', b') →
-      c (Sym2.mk (f a, f b)) ≠ c (Sym2.mk (f a', f b'))
 
 /--
 **Erdős Problem 811** (specific challenge from [Er91] and [Er96]):
@@ -86,7 +77,8 @@ theorem erdos_811 :
     ∃ N : ℕ, ∀ n : ℕ, n ≥ N → n % 6 = 1 →
       ∀ c : Sym2 (Fin n) → Fin 6,
         IsBalancedColoring n 6 c →
-        HasRainbowCopy (cycleGraph811 6 (by omega)) c := by
+        ∃ f : (cycleGraph 6) →g (⊤ : SimpleGraph (Fin n)),
+          Function.Injective f ∧ IsRainbow f c := by
   sorry
 
 end Erdos811
