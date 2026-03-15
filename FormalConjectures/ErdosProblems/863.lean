@@ -25,7 +25,8 @@ A problem of Erdős [Er92c], first formulated in conversation with Berend, and l
 independently reformulated with Freud. It is known that $c_1 = c_1' = 1$ (the classical
 bound on Sidon sets).
 
-[Er92c] Erdős, P.
+[Er92c] Erdős, P., *Some of my favourite problems in various branches of combinatorics*,
+Matematiche (Catania) 47 (1992), no. 2, 231–240.
 -/
 
 open Classical Finset Filter
