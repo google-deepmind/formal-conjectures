@@ -25,6 +25,9 @@ This problem arose in work of Eggleton, Erdős, and Selfridge.
 
 [Er77c] Erdős, P., *Problems and results on combinatorial number theory III*,
 Number Theory Day (Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43–72.
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
 -/
 
 open Finset Filter Classical
@@ -47,7 +50,7 @@ noncomputable def erdos460Sum (n : ℕ) : ℝ :=
     (fun k => (1 : ℝ) / (erdos460Seq n k : ℝ))
 
 /--
-Erdős Problem 460 [Er77c]:
+Erdős Problem 460 [Er77c] [ErGr80, p.91]:
 
 Does $\sum_{0 < a_i < n} 1/a_i \to \infty$ as $n \to \infty$, where
 $(a_k)$ is the greedy sequence with $a_0 = 0$ and each $a_{k+1}$ the least
