@@ -25,10 +25,11 @@ $\sum_{m \leq N} f(m) / \sqrt{N}$ is infinite with probability 1?
 
 *Reference:* [erdosproblems.com/1144](https://www.erdosproblems.com/1144)
 
-[Va99] Vaughan, R.C., *Multiplicative Number Theory I: Classical Theory*. Cambridge Tracts in
-Advanced Mathematics, 1999.
+[Va99] Montgomery, H.L. and Vaughan, R.C., *Multiplicative Number Theory I: Classical Theory*.
+Cambridge Studies in Advanced Mathematics, Cambridge University Press, 2007.
 
-[At25] Atherfold, A., *Almost sure upper bounds for random multiplicative functions*, 2025.
+[At25] Atherfold, C., *Almost sure bounds for weighted sums of Rademacher random multiplicative
+functions*. arXiv:2501.11076, 2025.
 -/
 
 open MeasureTheory ProbabilityTheory Filter Finset BigOperators
@@ -40,9 +41,10 @@ def IsRademacher {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) (X : Ω →
   (∀ ω, X ω = 1 ∨ X ω = -1) ∧
   μ {ω | X ω = 1} = μ {ω | X ω = -1}
 
-/-- The random completely multiplicative function built from Rademacher signs at primes.
+/-- The random *completely* multiplicative function built from Rademacher signs at primes.
 For $n \geq 1$: $f(n) = \prod_{p \in \operatorname{primeFactors}(n)} \varepsilon(p)^{v_p(n)}$.
-For $n = 0$: $f(0) = 0$. -/
+For $n = 0$: $f(0) = 0$.
+This is completely multiplicative (as opposed to merely multiplicative, cf. Problem 520). -/
 noncomputable def randMultFun {Ω : Type*} (ε : ℕ → Ω → ℝ) (ω : Ω) (n : ℕ) : ℝ :=
   if n = 0 then 0
   else ∏ p ∈ n.factorization.support, (ε p ω) ^ (n.factorization p)
