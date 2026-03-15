@@ -30,6 +30,12 @@ $$k^{1 + 1/(2n)} \ll R_k(C_{2n}) \ll k^{1 + 1/(n-1)}.$$
 Chung and Graham [ChGr75] showed that
 $R_k(C_4) > k^2 - k + 1$ when $k-1$ is a prime power, and
 $R_k(C_4) \leq k^2 + k + 1$ for all $k$.
+
+[Er81c] Erdős, P., _Some new problems and results in graph theory and other branches of
+combinatorial mathematics_. Combinatorics and graph theory (1981), 9–17.
+
+[ChGr75] Chung, F. R. K., Graham, R. L., _On multicolor Ramsey numbers for complete bipartite
+graphs_. J. Combin. Theory Ser. B (1975), 164–169.
 -/
 
 open SimpleGraph
@@ -88,6 +94,15 @@ Chung–Graham upper bound [ChGr75]: $R_k(C_4) \leq k^2 + k + 1$ for all $k \geq
 @[category research solved, AMS 5]
 theorem erdos_555.variants.chung_graham_upper (k : ℕ) (hk : k ≥ 2) :
     multicolorRamseyNumber (cycleGraph 4 (by omega)) k ≤ k ^ 2 + k + 1 := by
+  sorry
+
+/--
+Chung–Graham lower bound [ChGr75]: $R_k(C_4) > k^2 - k + 1$ when $k - 1$ is a prime power.
+-/
+@[category research solved, AMS 5]
+theorem erdos_555.variants.chung_graham_lower (k : ℕ) (hk : k ≥ 2)
+    (hp : IsPrimePow (k - 1 : ℕ)) :
+    multicolorRamseyNumber (cycleGraph 4 (by omega)) k > k ^ 2 - k + 1 := by
   sorry
 
 end Erdos555
