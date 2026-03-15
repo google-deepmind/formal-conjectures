@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.NumberTheory.Lacunary
 
 /-!
 # Erdős Problem 995
@@ -33,19 +34,15 @@ open MeasureTheory Filter Finset Set
 
 namespace Erdos995
 
-/-- A sequence of positive integers is lacunary if it is strictly increasing
-and there exists $q > 1$ such that $n_{k+1} \geq q \cdot n_k$ for all $k$. -/
-def IsLacunary (n : ℕ → ℕ) : Prop :=
-  StrictMono n ∧ ∃ q : ℝ, q > 1 ∧ ∀ k : ℕ, (n k : ℝ) * q ≤ n (k + 1)
-
 /--
 Erdős Problem 995 [Er64b]:
 
 Is it true that for every lacunary sequence $(n_k)$ of positive integers and every
-$f \in L^2([0,1])$, for almost all $\alpha \in [0,1]$,
+$f \in L^2([0,1])$ with $\int_0^1 f = 0$, for almost all $\alpha \in [0,1]$,
 $$\sum_{k < N} f(\{\alpha \cdot n_k\}) = o(N \cdot \sqrt{\log \log N})?$$
 
 Formulated as: for every $\varepsilon > 0$, for almost all $\alpha$, eventually (for large $N$),
+(The zero-mean condition $\int_0^1 f = 0$ is required, as otherwise the sum grows linearly.)
 $\left|\sum_{k < N} f(\{\alpha \cdot n_k\})\right| \leq \varepsilon \cdot N \cdot
 \sqrt{\log \log N}$.
 -/
@@ -54,6 +51,7 @@ theorem erdos_995 : answer(sorry) ↔
     ∀ (n : ℕ → ℕ), IsLacunary n →
     ∀ (f : ℝ → ℝ), Measurable f →
     Integrable (fun x => f x ^ 2) (volume.restrict (Icc (0 : ℝ) 1)) →
+    ∫ x in (0 : ℝ)..1, f x = 0 →
     ∀ ε : ℝ, ε > 0 →
     ∀ᵐ α ∂(volume.restrict (Icc (0 : ℝ) 1)),
       ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
