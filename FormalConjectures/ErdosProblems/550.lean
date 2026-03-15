@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 550
@@ -41,18 +42,13 @@ open SimpleGraph
 
 namespace Erdos550
 
-/-- A graph $H$ contains a copy of graph $G$ (as a subgraph) if there is an injective
-function from $V(G)$ to $V(H)$ that preserves adjacency. -/
-def ContainsSubgraphCopy {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
-
 /-- The off-diagonal Ramsey number $R(G_1, G_2)$: the minimum $N$ such that every
 graph $H$ on $N$ vertices contains a copy of $G_1$ or its complement contains a
 copy of $G_2$. -/
 noncomputable def offDiagRamseyNumber {V₁ V₂ : Type*}
     (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph V₂) : ℕ :=
   sInf {N : ℕ | ∀ (H : SimpleGraph (Fin N)),
-    ContainsSubgraphCopy G₁ H ∨ ContainsSubgraphCopy G₂ Hᶜ}
+    G₁.IsContained H ∨ G₂.IsContained Hᶜ}
 
 /-- The complete multipartite graph with vertex class sizes given by `sizes`.
 Vertices are pairs $(i, j)$ where $i$ indexes the part and $j$ is within the part.
