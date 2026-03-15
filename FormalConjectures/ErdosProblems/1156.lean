@@ -24,13 +24,29 @@ import FormalConjectures.Util.ProblemImports
 Let $G$ be a random graph on $n$ vertices, in which every edge is included
 independently with probability $1/2$ (the Erdős–Rényi model $G(n, 1/2)$).
 
-Bollobás proved that $\chi(G) \sim n / (2 \log_2 n)$ with high probability.
-Shamir and Spencer proved concentration within $o(\sqrt{n})$.
-Heckel and Riordan proved concentration cannot be within $n^c$ for $c < 1/2$.
+Bollobás [Bo88] proved that $\chi(G) \sim n / (2 \log_2 n)$ with high probability.
+Shamir and Spencer [ShSp87] proved concentration within $o(\sqrt{n})$.
+Heckel and Riordan [HeRi23] proved concentration cannot be within $n^c$ for $c < 1/2$.
 
 [AlSp92] Alon, N. and Spencer, J., _The Probabilistic Method_, Wiley, 1992.
 
-[Vu99] Vu, V.H., 1999.
+[AlSp16] Alon, N. and Spencer, J. H., _The Probabilistic Method_, 4th ed., Wiley, 2016.
+
+[Bo88] Bollobás, B., _The chromatic number of random graphs_. Combinatorica (1988), 49–55.
+
+[He21] Heckel, A., _Non-concentration of the chromatic number of a random graph_.
+J. Amer. Math. Soc. (2021), 245–260.
+
+[HeRi23] Heckel, A. and Riordan, O., _How does the chromatic number of a random graph vary?_
+J. Lond. Math. Soc. (2) (2023), 1769–1815.
+
+[Sc17] Scott, A., _On the concentration of the chromatic number of random graphs_.
+arXiv:0806.0178 (2017).
+
+[ShSp87] Shamir, E. and Spencer, J., _Sharp concentration of the chromatic number on random
+graphs $G_{n,p}$_. Combinatorica (1987), 121–129.
+
+[Va99] Vu, V. H. (1999), 3.64.
 -/
 
 open Filter
@@ -63,7 +79,7 @@ theorem erdos_1156 :
   sorry
 
 /--
-Erdős Problem 1156, Part 2 [AlSp92] [Vu99]:
+Erdős Problem 1156, Part 2 [AlSp92] [Va99]:
 
 There exists a function $\omega : \mathbb{N} \to \mathbb{R}$ with $\omega(n) \to \infty$ such that
 for every function $f : \mathbb{N} \to \mathbb{R}$, for all sufficiently large $n$,
