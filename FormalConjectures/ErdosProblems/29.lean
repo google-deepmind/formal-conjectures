@@ -34,11 +34,14 @@ theory_. Monographies de L'Enseignement Mathematique (1980), p. 48.
 
 [Er89d] Erdős, P., _On some of my problems in number theory_ (1989).
 
-[Er95] Erdős, P., _On some of my favourite theorems_ (1995).
+[Er95] Erdős, P., _Some of my favourite problems in number theory, combinatorics, and geometry_.
+Resenhas **1** (1995), 165–186.
 
-[Er97c] Erdős, P. (1997).
+[Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
+**164** (1997), 81–85.
 
-[JPSZ24] Jain, V., Pham, H.T., Sawhney, M., and Zakharov, D., _Explicit Sidon sets_ (2024).
+[JPSZ24] Jain, V., Pham, H.T., Sawhney, M., and Zakharov, D., _An explicit economical additive
+basis_. arXiv:2405.08650 (2024).
 -/
 
 open Filter Asymptotics Classical
