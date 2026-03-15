@@ -21,12 +21,19 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/844](https://www.erdosproblems.com/844)
 
-A problem of Erdős and Sárközy [Er92b]. Proved affirmatively by Weisenberg,
-and independently by Alexeev, Mixon, and Sawin [AMS25].
+A problem of Erdős and Sárközy [Er92b, p.239]. Proved affirmatively by Weisenberg,
+and independently by Alexeev, Mixon, and Sawin [AMS25]. The proof reduces to
+Chvátal's result [Ch74]; see also problems [701] and [848].
 
-[Er92b] Erdős, P. and Sárközy, A., on products of elements not being squarefree (1992).
+## References
 
-[AMS25] Alexeev, B., Mixon, D., and Sawin, W. (2025).
+[Er92b] Erdős, P. and Sárközy, A. (1992).
+
+[AMS25] Alexeev, B., Mixon, D., and Sawin, W., _The independence and clique cover numbers
+  of the squarefree graph_. arXiv:2507.01928 (2025).
+
+[Ch74] Chvátal, V., _Intersecting families of edges in hypergraphs having the hereditary
+  property_ (1974), 61–66.
 -/
 
 namespace Erdos844
