@@ -31,14 +31,21 @@ $\tau(G) \leq n - c\sqrt{n \log n}$ for some absolute constant $c > 0$?
 A problem of Erdős, Gallai, and Tuza [EGT92], who proved that
 $\tau(G) \leq n - \sqrt{2n} + O(1)$.
 
+A positive answer to the strong form would follow from Problem 151 (Erdős–Gallai conjecture
+on $\tau(G) \leq n - H(n)$), since Ajtai, Komlós, and Szemerédi [AKS80] proved
+$H(n) \gg \sqrt{n \log n}$. See also the related Problem 611.
+
 [EGT92] Erdős, P., Gallai, T., and Tuza, Zs., *Covering the cliques of a graph with
-vertices*, Discrete Mathematics, 1992.
+vertices*, Discrete Mathematics **108** (1992), 279-289.
 
 [Er94] Erdős, P., *Some old and new problems in various branches of combinatorics*,
 Discrete Mathematics, 1994.
 
 [Er99] Erdős, P., *Some of my favourite problems in various branches of combinatorics*,
 Le Matematiche, 1999.
+
+[AKS80] Ajtai, M., Komlós, J., and Szemerédi, E., *A note on Ramsey numbers*,
+Journal of Combinatorial Theory, Series A (1980), 354-360.
 -/
 
 open SimpleGraph Filter
@@ -52,7 +59,8 @@ def IsMaximalCliqueFS {n : ℕ} (G : SimpleGraph (Fin n)) (S : Finset (Fin n)) :
   ∀ v : Fin n, v ∉ S → ¬G.IsClique (↑(insert v S) : Set (Fin n))
 
 /-- $T$ is a clique transversal of $G$ if $T$ meets every maximal clique of $G$
-that has at least $2$ vertices. -/
+that has at least $2$ vertices. (Singleton maximal cliques — i.e., isolated vertices —
+are excluded by convention, as otherwise $\tau(G) = n$ trivially.) -/
 def IsCliqueTransversal {n : ℕ} (G : SimpleGraph (Fin n)) (T : Finset (Fin n)) : Prop :=
   ∀ S : Finset (Fin n), IsMaximalCliqueFS G S → 2 ≤ S.card → (T ∩ S).Nonempty
 
