@@ -30,9 +30,21 @@ Estimate $h(n)$.
 A problem of Erdős and Pomerance [ErPo80], who proved that
 $h(n) \ll n^{3/2} / (\log n)^{1/2}$.
 Erdős and Selfridge proved $h(n) > (3 - o(1))n$, and Ruzsa proved $h(n)/n \to \infty$.
+The individual bounds are established, but the problem of determining the true order of
+$h(n)$ remains open.
+
+See also: Problem 375 (Grimm's conjecture), which involves a related injective assignment
+of primes to integers with divisibility constraints.
+
+OEIS: [A048670](https://oeis.org/A048670), [A058989](https://oeis.org/A058989).
 
 [ErPo80] Erdős, P. and Pomerance, C., *Matching the natural numbers up to n with distinct
-multiples in another interval*, Nederl. Akad. Wetensch. Indag. Math. (1980).
+multiples in another interval*. Indigationes Math. (1980), 147–151.
+
+[Er92c] Erdős, P., *Some of my favourite problems in various branches of combinatorics*,
+Matematiche (Catania) 47 (1992), no. 2, 231–240.
+
+[Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437, Problem B32.
 -/
 
 open Filter
