@@ -27,7 +27,7 @@ width $(e - 1 + o(1))k$ whose reciprocals sum to $1$? Solved affirmatively by Cr
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathématique (1980).
 
-[Cr01] Croot, E., *On a coloring conjecture about unit fractions*. Annals of Mathematics (2001).
+[Cr01] Croot, III, Ernest S., _On unit fractions with denominators in short intervals_. Acta Arith. (2001), 99-114.
 -/
 
 open Filter Finset
