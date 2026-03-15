@@ -93,6 +93,18 @@ Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
 
 For the use of AI, the [same conventions and precautions as in mathlib](https://github.com/leanprover-community/leanprover-community.github.io/blob/478f0f4b8be577d6d3f913053918551dcf68b1c6/templates/contribute/index.md?plain=1#L68-L70) apply.
 
+> **Note on proofs:** PRs that add proofs longer than 20 lines, or that depend on a
+> significant number of additional lemmas, will generally not be accepted without prior
+> discussion — regardless of whether the proof is hand-written or AI-generated. If you
+> would like to contribute such a proof, please discuss it with the maintainers first,
+> either by opening an issue on GitHub or by posting in our
+> [Zulip channel](https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures).
+> Proofs of this kind are most welcome, however: if your proof lives in an external
+> repository, you can link to it using the
+> `@[category research formally solved using formal_conjectures at "link"]` mechanism
+> described below. This policy does not apply to contributions to `FormalConjecturesForMathlib`,
+> which follows mathlib's own conventions.
+
 ## Usage, Structure & Features
 
 This is a Lean 4 project managed with `lake` and a dependency `mathlib`. You
