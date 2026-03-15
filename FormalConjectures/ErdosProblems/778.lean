@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Clique
 
 /-!
 # Erdős Problem 778
@@ -30,7 +31,7 @@ for which Bob wins has density at least $3/4$.
 
 [Gu83] Guy, R.K., _Unsolved Problems in Number Theory_, 1983.
 
-[MaSp24] Malekshahian, A. and Spiro, S., 2024.
+[MaSp24] Malekshahian, A. and Spiro, S., _On a clique-building game of Erdős_. arXiv:2410.18304 (2024).
 -/
 
 open SimpleGraph
@@ -56,11 +57,6 @@ opaque playStandardGame (n : ℕ) (alice bob : Strategy n) : GameState n
     repeating) to completion. Returns the final game state with all edges colored. -/
 opaque playModifiedGame (n : ℕ) (alice bob : Strategy n) : GameState n
 
-/-- The clique number of a simple graph on $\operatorname{Fin} n$: the size of the largest
-    clique. -/
-noncomputable def cliqueNumber {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
-  sSup {k : ℕ | ¬G.CliqueFree k}
-
 /--
 Erdős Problem 778, Part 1 [Gu83]:
 
@@ -74,8 +70,8 @@ theorem erdos_778 : answer(sorry) ↔
     ∃ bob : Strategy n,
       ∀ alice : Strategy n,
         let final := playStandardGame n alice bob
-        cliqueNumber (fromEdgeSet (final.blue : Set (Sym2 (Fin n)))) ≥
-        cliqueNumber (fromEdgeSet (final.red : Set (Sym2 (Fin n)))) := by
+        cliqueNum (fromEdgeSet (final.blue : Set (Sym2 (Fin n)))) ≥
+        cliqueNum (fromEdgeSet (final.red : Set (Sym2 (Fin n)))) := by
   sorry
 
 /--
@@ -91,8 +87,26 @@ theorem erdos_778.variants.modified_game : answer(sorry) ↔
     ∃ bob : Strategy n,
       ∀ alice : Strategy n,
         let final := playModifiedGame n alice bob
-        cliqueNumber (fromEdgeSet (final.blue : Set (Sym2 (Fin n)))) >
-        cliqueNumber (fromEdgeSet (final.red : Set (Sym2 (Fin n)))) := by
+        cliqueNum (fromEdgeSet (final.blue : Set (Sym2 (Fin n)))) >
+        cliqueNum (fromEdgeSet (final.red : Set (Sym2 (Fin n)))) := by
+  sorry
+
+/--
+Erdős Problem 778, Variant 3 (max-degree game) [Gu83]:
+
+In the standard edge-coloring game on $K_n$ (alternating, Alice first), Alice wins if the
+maximum degree of the red subgraph exceeds the maximum degree of the blue subgraph. Does Bob
+have a winning strategy for all sufficiently large $n$? Malekshahian and Spiro [MaSp24] proved
+that the set of $n$ for which Bob wins has density at least $2/3$.
+-/
+@[category research open, AMS 5 91]
+theorem erdos_778.variants.max_degree_game : answer(sorry) ↔
+    ∀ n : ℕ, 3 ≤ n →
+    ∃ bob : Strategy n,
+      ∀ alice : Strategy n,
+        let final := playStandardGame n alice bob
+        (fromEdgeSet (final.blue : Set (Sym2 (Fin n)))).maxDegree ≥
+        (fromEdgeSet (final.red : Set (Sym2 (Fin n)))).maxDegree := by
   sorry
 
 end Erdos778
