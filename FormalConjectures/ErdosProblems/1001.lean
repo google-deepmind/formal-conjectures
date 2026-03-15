@@ -35,15 +35,20 @@ The existence of the limit was proved by Kesten and Sós [KeSo66].
 Alternative, more explicit proofs were given by Boca [Bo08] and
 Xiong–Zaharescu [XiZa06].
 
-[Er64b] Erdős, P.
+[Er64b] Erdős, P., _Problems and results on diophantine approximations_.
+Compositio Math. (1964), 52–65.
 
-[EST58] Erdős, P., Szüsz, P., and Turán, P.
+[EST58] Erdős, P., Szüsz, P., and Turán, P., _Remarks on the theory of
+diophantine approximation_. Colloq. Math. (1958), 119–126.
 
-[KeSo66] Kesten, H. and Sós, V. T.
+[KeSo66] Kesten, H. and Sós, V. T., _On two problems of Erdős, Szüsz and
+Turán concerning diophantine approximations_. Acta Arith. (1966/67), 183–192.
 
-[Bo08] Boca, F. P.
+[Bo08] Boca, F. P., _A problem of Erdős, Szüsz and Turán concerning
+Diophantine approximations_. Int. J. Number Theory (2008), 691–708.
 
-[XiZa06] Xiong, M. and Zaharescu, A.
+[XiZa06] Xiong, M. and Zaharescu, A., _A problem of Erdős-Szüsz-Turán on
+Diophantine approximation_. Acta Arith. (2006), 163–177.
 -/
 
 open MeasureTheory Set Filter
@@ -73,6 +78,20 @@ Proved by Kesten and Sós [KeSo66].
 theorem erdos_1001 : answer(True) ↔
     ∀ (A c : ℝ), 0 < A → 1 < c →
       ∃ L : ℝ, Tendsto (fun N : ℕ => sMeasure N A c) atTop (nhds L) := by
+  sorry
+
+/--
+Erdős Problem 1001 — EST58 explicit formula [EST58]:
+
+When $0 < A < c/(1 + c^2)$, the limit $f(A, c) = 12A \log c / \pi^2$.
+
+Proved by Erdős, Szüsz, and Turán.
+-/
+@[category research solved, AMS 11 28]
+theorem erdos_1001_explicit_formula :
+    ∀ (A c : ℝ), 0 < A → 1 < c → A < c / (1 + c ^ 2) →
+      Tendsto (fun N : ℕ => sMeasure N A c) atTop
+        (nhds (12 * A * Real.log c / Real.pi ^ 2)) := by
   sorry
 
 end Erdos1001
