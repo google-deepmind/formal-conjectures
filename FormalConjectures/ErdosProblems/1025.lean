@@ -28,17 +28,22 @@ independent if whenever $x,y \in X$ we have $f(x,y) \notin X$.
 Let $g(n)$ be such that, in every function $f$, there is an independent set of
 size at least $g(n)$. Estimate $g(n)$.
 
-A question of Erdős and Hajnal [ErHa58], who proved
+A question of Erdős and Hajnal [ErHa58] (see also [Er71, p.106]), who proved
 $n^{1/3} \ll g(n) \ll (n \log n)^{1/2}$.
 Spencer [Sp72] proved $g(n) \gg n^{1/2}$.
 Conlon, Fox, and Sudakov [CFS16] proved $g(n) \ll n^{1/2}$.
 Thus $g(n) = \Theta(\sqrt{n})$.
 
-[ErHa58] Erdős, P. and Hajnal, A., 1958.
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97–109.
 
-[Sp72] Spencer, J., 1972.
+[ErHa58] Erdős, P. and Hajnal, A., _On the structure of set-mappings_. Acta Math. Acad.
+Sci. Hungar. **9** (1958), 111–133.
 
-[CFS16] Conlon, D., Fox, J., and Sudakov, B., 2016.
+[Sp72] Spencer, J., _Turán's theorem for k-graphs_. Discrete Math. **2** (1972), 183–186.
+
+[CFS16] Conlon, D., Fox, J., and Sudakov, B., _Short proofs of some extremal results II_.
+J. Combin. Theory Ser. B **121** (2016), 173–196.
 -/
 
 open Finset
