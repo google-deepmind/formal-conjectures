@@ -19,6 +19,19 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 1082
 
 *Reference:* [erdosproblems.com/1082](https://www.erdosproblems.com/1082)
+
+A conjecture attributed to Szemerédi. Szemerédi proved the weaker result with ⌊n/2⌋ replaced
+by n/3, and also showed that if no k points are collinear then some point determines ≫ n/k
+distinct distances. This proof is unpublished but appears in [Er75f].
+
+Related problems: 89, 93, 660, 982.
+
+[Er75f] Erdős, P., _Problems and results in combinatorial geometry_, 1975, p. 101.
+
+[Er87b] Erdős, P., _Some combinatorial and metric problems in geometry_. Intuitive geometry
+(Siófok, 1985) (1987), 167–177.
+
+[Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_, 1997.
 -/
 
 namespace Erdos1082
