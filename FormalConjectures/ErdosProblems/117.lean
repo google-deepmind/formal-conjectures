@@ -28,13 +28,15 @@ $c_1^n < h(n) < c_2^n$ for constants $c_2 > c_1 > 1$.
 [Er90] Erdős, P., *Some of my favourite unsolved problems*. A tribute to Paul Erdős (1990),
 467-478.
 
-[Er97f] Erdős, P., *Some of my favourite problems which recently have been solved*. Proceedings
-of the International Conference on Discrete Mathematics (ICDM) (1997).
+[Er97f] Erdős, P., *Some unsolved problems*. Combinatorics, geometry and probability
+(Cambridge, 1993) (1997), 1-10.
 
-[Va99] Vadász, V., *On the commuting properties of finite groups* (1999).
+[Va99,5.75] Varopoulos, N. (1999), Problem 5.75.
 
-[Py87] Pyber, L., *The number of pairwise non-commuting elements and the index of the centre in
+[Py87] Pyber, L., *The number of pairwise noncommuting elements and the index of the centre in
 a finite group*. J. London Math. Soc. (2) 35 (1987), 287-295.
+
+See also: Erdős Problem 1098 (non-commuting graph formulation).
 -/
 
 namespace Erdos117
@@ -43,14 +45,14 @@ namespace Erdos117
 greater than $n$ contains two distinct elements $x \neq y$ with $xy = yx$. -/
 def HasNCommutingProperty (n : ℕ) (G : Type*) [Group G] : Prop :=
   ∀ (S : Finset G), n < S.card →
-    ∃ x ∈ S, ∃ y ∈ S, x ≠ y ∧ x * y = y * x
+    ∃ x ∈ S, ∃ y ∈ S, x ≠ y ∧ Commute x y
 
 /-- A group $G$ can be covered by at most $k$ Abelian subgroups: there exist $k$ subgroups
 $H_0, \ldots, H_{k-1}$ (possibly with repetition), each of which is abelian, whose union
 is all of $G$. -/
 def CoveredByAbelianSubgroups (k : ℕ) (G : Type*) [Group G] : Prop :=
   ∃ (H : Fin k → Subgroup G),
-    (∀ i, ∀ a b : G, a ∈ H i → b ∈ H i → a * b = b * a) ∧
+    (∀ i, IsMulCommutative (H i)) ∧
     ∀ g : G, ∃ i, g ∈ H i
 
 /-- $h(n)$ is the least $k$ such that every group satisfying the $n$-commuting property
