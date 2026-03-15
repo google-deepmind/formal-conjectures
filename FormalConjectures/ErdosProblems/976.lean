@@ -23,6 +23,28 @@ For an irreducible polynomial $f \in \mathbb{Z}[x]$ of degree $d \geq 2$, estima
 prime factor of $\prod_{m=1}^{n} f(m)$. In particular, is this $\gg n^{1+c}$ for some $c > 0$,
 or even $\gg n^d$?
 
+Nagell [Na22] and Ricci [Ri34] independently proved that $F_f(n) \gg n \log n$. Erdős [Er52c]
+improved this to $F_f(n) \gg n(\log n)^{\log\log\log n}$. Erdős [Er65b] claimed a proof of
+$F_f(n) \gg n \exp((\log n)^c)$ for some $c > 0$, but the argument was flawed; a weaker result
+was published in [ErSc90]. Tenenbaum [Te90] proved the stronger bound.
+
+## References
+
+[Er52c] Erdős, P., _On the greatest prime factor of $\prod^x_{k=1} f(k)$_.
+  J. London Math. Soc. (1952), 379–384.
+
+[Er65b] Erdős, P., _Some recent advances and current problems in number theory_.
+  Lectures on Modern Mathematics, Vol. III (1965), 196–244.
+
+[ErSc90] Erdős, P., Schinzel, A., _On the greatest prime factor of $\prod^x_{k=1} f(k)$_.
+  Acta Arith. (1990), 191–200.
+
+[Na22] Nagell, T., _Abh. Math. Sem. Hamburg_ (1922), 179–194.
+
+[Ri34] Ricci, G., _Ann. Mat._ (1934), 295–303.
+
+[Te90] Tenenbaum, G., _Sur une question d'Erdős et Schinzel_ (1990), 405–443.
+
 *Reference:* [erdosproblems.com/976](https://www.erdosproblems.com/976)
 -/
 
