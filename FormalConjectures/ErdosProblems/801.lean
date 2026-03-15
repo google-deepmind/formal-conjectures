@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 
 /-!
 # Erdős Problem 801
@@ -24,9 +25,10 @@ import FormalConjectures.Util.ProblemImports
 If a graph on $n$ vertices has no independent set of size $> \sqrt{n}$, then there
 exists a set of $\leq \sqrt{n}$ vertices containing $\gg \sqrt{n} \log n$ edges.
 
-[Er79g] Erdős, P., original problem statement.
+[Er79g] Erdős, P., original problem statement (1979).
 
-[Al96b] Alon, N., proof of the conjecture.
+[Al96b] Alon, N., _Independence numbers of locally sparse graphs and a Ramsey type problem_.
+Random Structures & Algorithms **9** (1996), 271–278.
 -/
 
 open SimpleGraph Real Classical
@@ -60,7 +62,7 @@ theorem erdos_801 :
     ∃ C : ℝ, 0 < C ∧
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
     ∀ G : SimpleGraph (Fin n),
-    (∀ S : Finset (Fin n), Gᶜ.IsClique (S : Set (Fin n)) → S.card ≤ Nat.sqrt n) →
+    α(G) ≤ Nat.sqrt n →
     ∃ S : Finset (Fin n),
       S.card ≤ Nat.sqrt n ∧
       C * (n : ℝ) ^ ((1 : ℝ) / 2) * Real.log (n : ℝ) ≤
