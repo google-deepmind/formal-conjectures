@@ -25,11 +25,18 @@ For any $t, c \geq 1$, does there exist $d$ such that every finite graph with ch
 number at least $d$ and clique number less than $t$ contains two anticomplete vertex sets
 each with chromatic number at least $c$?
 
-[ElEr85] El Zahar, M. and Erdős, P., *On the existence of two non-neighboring
-subgraphs in a graph*, Combinatorica, 1985.
+[ElEr85] El-Zahar, M. and Erdős, P., *On the existence of two nonneighboring
+subgraphs in a graph*. Combinatorica **5** (1985), 295–300.
+
+[Er85b] Erdős, P., *Problems and results on chromatic numbers in finite and infinite
+graphs*. Graph theory with applications to algorithms and computer science
+(Kalamazoo, Mich., 1984) (1985), 201–213.
 
 [Wa80b] Wagon, S., *A bound on the chromatic number of graphs without certain
-induced subgraphs*, J. Combin. Theory Ser. B, 1980.
+induced subgraphs*. J. Combin. Theory Ser. B **29** (1980), 345–346.
+
+[NSS24] Nguyen, T., Scott, A. and Seymour, P., *On a problem of El-Zahar and
+Erdős*. J. Combin. Theory Ser. B **165** (2024), 211–222.
 -/
 
 open SimpleGraph Classical
