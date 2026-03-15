@@ -36,9 +36,14 @@ subsequence with sum at least $1/k$. This shows $c = 1$.
 This was proved by Tidor, Wang, and Yang [TWY16], and is also implicit in
 work of Wagner [Wa17]. It has been formalised in Lean.
 
-[TWY16] Tidor, J., Wang, V., and Yang, K., _Weighted monotone subsequences_ (2016).
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97–109.
 
-[Wa17] Wagner, A. Z. (2017).
+[TWY16] Tidor, J., Wang, V., and Yang, B., _1-color avoiding paths, special tournaments,
+and incidence geometry_. arXiv:1608.04153 (2016).
+
+[Wa17] Wagner, A. Z., _Large subgraphs in rainbow-triangle free colorings_. J. Graph Theory
+(2017), 141–148.
 -/
 
 open Finset
