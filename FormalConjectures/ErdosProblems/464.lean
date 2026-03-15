@@ -23,6 +23,28 @@ For any lacunary sequence of natural numbers (where the ratio of consecutive ter
 away from 1), there exists an irrational number θ such that the sequence of distances from
 θ·nₖ to the nearest integer is not dense in [0, 1/2].
 
+Proved independently by de Mathan and Pollington. Peres and Schlag proved the quantitative
+strengthening that $\inf_{k \geq 1} \|\theta n_k\| \gg \varepsilon / \log(1/\varepsilon)$.
+
+## References
+
+* [dM80] de Mathan, B., _Numbers contravening a condition in density modulo 1_.
+  Acta Math. Acad. Sci. Hungar. (1980), 237–241.
+* [Po79b] Pollington, A. D., _On the density of sequence {nₖξ}_.
+  Illinois J. Math. (1979), 511–515.
+* [Ka01] Katznelson, Y., _Chromatic numbers of Cayley graphs on Z and recurrence_.
+  Combinatorica (2001), 211–219.
+* [AkMo04] Akhunzhanov, R. K. and Moshchevitin, N. G.,
+  _On the chromatic number of a distance graph associated with a lacunary sequence_.
+  Dokl. Akad. Nauk (2004), 295–296.
+* [Du06] Dubickas, A., _On the fractional parts of lacunary sequences_.
+  Math. Scand. (2006), 136–146.
+* [PeSc10] Peres, Y. and Schlag, W.,
+  _Two Erdős problems on lacunary sequences: chromatic number and Diophantine approximation_.
+  Bull. Lond. Math. Soc. (2010), 295–300.
+
+See also Problem 894.
+
 *Reference:* [erdosproblems.com/464](https://www.erdosproblems.com/464)
 -/
 
@@ -57,6 +79,22 @@ theorem erdos_464 :
     ∃ θ : ℝ, Irrational θ ∧
       ∃ c d : ℝ, 0 ≤ c ∧ c < d ∧ d ≤ 1 / 2 ∧
         ∀ k : ℕ, distNearestInt (θ * ↑(a k)) ∉ Set.Ioo c d := by
+  sorry
+
+/--
+Quantitative strengthening of Erdős Problem 464 (Peres–Schlag, 2010):
+
+For any lacunary sequence with ratio parameter ε, there exists an irrational θ and a constant
+C > 0 (independent of ε) such that $\inf_{k \geq 1} \|\theta n_k\| \geq C \cdot \varepsilon
+/ \log(1/\varepsilon)$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_464_quantitative :
+    ∃ C : ℝ, C > 0 ∧
+    ∀ (a : ℕ → ℕ) (ε : ℝ), ε > 0 ∧ ε < 1 ∧
+      StrictMono a ∧ (∀ k : ℕ, (a (k + 1) : ℝ) ≥ (1 + ε) * (a k : ℝ)) →
+    ∃ θ : ℝ, Irrational θ ∧
+      ∀ k : ℕ, distNearestInt (θ * ↑(a k)) ≥ C * ε / Real.log (1 / ε) := by
   sorry
 
 end Erdos464
