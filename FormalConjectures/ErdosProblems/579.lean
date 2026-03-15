@@ -19,40 +19,41 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 579
 
-Erdős, Hajnal, Sós, and Szemerédi conjectured that for any δ > 0, if n is sufficiently large
-and G is a K_{2,2,2}-free graph on n vertices with at least δn² edges, then G contains an
+Erdős, Hajnal, Sós, and Szemerédi [EHSS83] conjectured that for any δ > 0, if n is sufficiently
+large and G is a K_{2,2,2}-free graph on n vertices with at least δn² edges, then G contains an
 independent set of size linear in n.
 
+Erdős, Hajnal, Sós, and Szemerédi proved the conjecture for δ > 1/8.
+
+Related to Problem 533.
+
 *Reference:* [erdosproblems.com/579](https://www.erdosproblems.com/579)
+
+**References:**
+
+[EHSS83] Erdős, P., Hajnal, A., Sós, V. T., and Szemerédi, E.,
+_More results on Ramsey-Turán type problems_. Combinatorica **3** (1983), 69–81.
+
+[Er90] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1990),
+467–478.
+
+[Er91] Erdős, P., _Problems and results in combinatorial number theory_.
+
+[Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is eighty,
+Vol. 2 (Keszthely, 1993), 97–132, p.340.
 -/
 
 open SimpleGraph
 
 namespace Erdos579
 
-/-- A graph $G$ on vertex type $V$ contains $K_{2,2,2}$ (the complete tripartite graph
-with three parts of size $2$, also known as the octahedron) if there exist $6$ distinct
-vertices partitioned into $3$ pairs with all cross-pair edges present. -/
-def ContainsK222 {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∃ (a₁ a₂ b₁ b₂ c₁ c₂ : V),
-    -- All 6 vertices are distinct
-    a₁ ≠ a₂ ∧ b₁ ≠ b₂ ∧ c₁ ≠ c₂ ∧
-    a₁ ≠ b₁ ∧ a₁ ≠ b₂ ∧ a₁ ≠ c₁ ∧ a₁ ≠ c₂ ∧
-    a₂ ≠ b₁ ∧ a₂ ≠ b₂ ∧ a₂ ≠ c₁ ∧ a₂ ≠ c₂ ∧
-    b₁ ≠ c₁ ∧ b₁ ≠ c₂ ∧ b₂ ≠ c₁ ∧ b₂ ≠ c₂ ∧
-    -- All edges between parts A and B
-    G.Adj a₁ b₁ ∧ G.Adj a₁ b₂ ∧ G.Adj a₂ b₁ ∧ G.Adj a₂ b₂ ∧
-    -- All edges between parts A and C
-    G.Adj a₁ c₁ ∧ G.Adj a₁ c₂ ∧ G.Adj a₂ c₁ ∧ G.Adj a₂ c₂ ∧
-    -- All edges between parts B and C
-    G.Adj b₁ c₁ ∧ G.Adj b₁ c₂ ∧ G.Adj b₂ c₁ ∧ G.Adj b₂ c₂
-
 /--
 Let $\delta > 0$. If $n$ is sufficiently large and $G$ is a graph on $n$ vertices with no
-$K_{2,2,2}$ and at least $\delta n^2$ edges then $G$ contains an independent set of size
+$K_{2,2,2}$ (the complete tripartite graph with three parts of size $2$, also known as the
+octahedron) and at least $\delta n^2$ edges then $G$ contains an independent set of size
 $\gg_\delta n$.
 
-A problem of Erdős, Hajnal, Sós, and Szemerédi, who proved this for $\delta > 1/8$.
+A problem of Erdős, Hajnal, Sós, and Szemerédi [EHSS83], who proved this for $\delta > 1/8$.
 -/
 @[category research open, AMS 5]
 theorem erdos_579 :
@@ -61,7 +62,7 @@ theorem erdos_579 :
         ∃ N : ℕ,
           ∀ n : ℕ, N ≤ n →
             ∀ G : SimpleGraph (Fin n),
-              ¬ContainsK222 G →
+              ¬(completeEquipartiteGraph 3 2).IsContained G →
               δ * (n : ℝ) ^ 2 ≤ (G.edgeSet.ncard : ℝ) →
                 ∃ S : Finset (Fin n),
                   c * (n : ℝ) ≤ (S.card : ℝ) ∧
