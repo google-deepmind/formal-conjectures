@@ -29,6 +29,9 @@ $\chi(G) \leq L(r)$.
 The case $r = 1$ is the Hadwiger–Nelson problem, for which $5 \leq L(1) \leq 7$.
 
 See also [508], [704], [705].
+
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+  Combinatorica **1** (1981), 25–42.
 -/
 
 namespace Erdos706
