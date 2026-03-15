@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 292
@@ -42,10 +43,6 @@ def IsEgyptianRepresentable (n : ℕ) : Prop :=
   ∃ S : Finset ℕ, n ∈ S ∧ (∀ m ∈ S, 1 ≤ m) ∧ (∀ m ∈ S, m ≤ n) ∧
     (S.sum fun m => (1 : ℚ) / m) = 1
 
-/-- Count of Egyptian representable numbers in $\{1, \ldots, N\}$. -/
-noncomputable def egyptianCount (N : ℕ) : ℕ :=
-  ((Finset.Icc 1 N).filter fun n => IsEgyptianRepresentable n).card
-
 /--
 Erdős Problem 292 (Proved) [ErGr80, p.35]:
 
@@ -57,9 +54,7 @@ $|B \cap [1,x]| / x \asymp \log \log x / \log x$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_292 : answer(True) ↔
-    ∀ ε : ℝ, 0 < ε →
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      (egyptianCount N : ℝ) / (N : ℝ) ≥ 1 - ε := by
+    {n : ℕ | IsEgyptianRepresentable n}.HasDensity 1 := by
   sorry
 
 end Erdos292
