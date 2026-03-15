@@ -25,21 +25,22 @@ Given α ≥ 1, is there a sequence of positive integers n_k, m_k such that n_k 
 σ(n_k) = σ(m_k) for all k, where σ is the sum of divisors function? The answer is yes, proved by
 Pollack.
 
-[Er59c] Erdős, P., 1959.
+Erdős [Er74b] observed that it is easy to prove the analogous result for φ(n) (Euler's totient
+function).
 
-[Er74b] Erdős, P., 1974.
+[Er59c] Erdős, P., _Remarks on number theory II. Some problems on the σ function_.
+Acta Arith. 5 (1959), 171-177.
 
-[Po15b] Pollack, P., 2015.
+[Er74b] Erdős, P., _On abundant-like numbers_. Canad. Math. Bull. 17 (1974), 599-602.
+
+[Po15b] Pollack, P., _Remarks on fibers of the sum-of-divisors function_. (2015), 305-320.
 -/
 
 open Finset Filter
 
-open scoped BigOperators Topology
+open scoped ArithmeticFunction.sigma BigOperators Topology
 
 namespace Erdos823
-
-/-- The sum of divisors function $\sigma(n) = \sum_{d \mid n} d$. -/
-noncomputable def Nat.sumDivisors (n : ℕ) : ℕ := ∑ d ∈ n.divisors, d
 
 /--
 Erdős Problem 823 [Er59c] [Er74b]:
@@ -54,7 +55,22 @@ The answer is yes, proved by Pollack [Po15b].
 theorem erdos_823 : answer(True) ↔
     ∀ (α : ℝ), α ≥ 1 →
       ∃ (n m : ℕ → ℕ), (∀ k, 0 < n k) ∧ (∀ k, 0 < m k) ∧
-      (∀ k, Nat.sumDivisors (n k) = Nat.sumDivisors (m k)) ∧
+      (∀ k, σ 1 (n k) = σ 1 (m k)) ∧
+      Tendsto (fun k => (n k : ℝ) / (m k : ℝ)) atTop (nhds α) := by
+  sorry
+
+/--
+Variant of Erdős Problem 823 for Euler's totient function φ(n):
+
+Erdős [Er74b] observed that it is easy to prove the analogous result for φ(n). That is,
+for every α ≥ 1, there exist sequences of positive integers n_k, m_k such that
+n_k / m_k → α and φ(n_k) = φ(m_k) for all k.
+-/
+@[category research solved, AMS 11]
+theorem erdos_823_totient :
+    ∀ (α : ℝ), α ≥ 1 →
+      ∃ (n m : ℕ → ℕ), (∀ k, 0 < n k) ∧ (∀ k, 0 < m k) ∧
+      (∀ k, Nat.totient (n k) = Nat.totient (m k)) ∧
       Tendsto (fun k => (n k : ℝ) / (m k : ℝ)) atTop (nhds α) := by
   sorry
 
