@@ -36,21 +36,19 @@ of $\{2q_1, \ldots, 2q_j, q_1 \cdots q_j\}$.
 
 This was proved by Ahlswede and Khachatrian [AhKh96].
 
+See also: Problem 56. OEIS: A387543, A387698.
+
 [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
 combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins,
 Colo., 1971) (1973), 117-138.
 
-[AhKh96] Ahlswede, R. and Khachatrian, L.H., *Sets of integers and quasi-integers with
-pairwise common divisor* (1996).
+[AhKh96] Ahlswede, R., Khachatrian, L.H., *Sets of integers with pairwise common divisor
+and a factor from a specified set of primes*. Acta Arithmetica (1996), 259-276.
 -/
 
 open Finset BigOperators Classical
 
 namespace Erdos534
-
-/-- The set of prime factors of $N$. -/
-noncomputable def primeFactors (N : ℕ) : Finset ℕ :=
-  (Icc 1 N).filter (fun p => Nat.Prime p ∧ p ∣ N)
 
 /-- The Erdős–Ahlswede–Khachatrian candidate family: for a set $S$ of primes,
     all $m \in \{1, \ldots, N\}$ divisible by $2p$ for some $p \in S$ or by
@@ -69,8 +67,8 @@ $\{q_1, \ldots, q_j\}$ of the prime factors.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_534 (N : ℕ) (hN : 2 ≤ N) :
-    ∃ S : Finset ℕ, S ⊆ primeFactors N ∧ S.Nonempty ∧
-      (∀ p ∈ primeFactors N, ∀ q ∈ S, p ≤ q → p ∈ S) ∧
+    ∃ S : Finset ℕ, S ⊆ N.primeFactors ∧ S.Nonempty ∧
+      (∀ p ∈ N.primeFactors, ∀ q ∈ S, p ≤ q → p ∈ S) ∧
       N ∈ candidate N S ∧
       (∀ a ∈ candidate N S, ∀ b ∈ candidate N S,
         a ≠ b → 1 < Nat.gcd a b) ∧
