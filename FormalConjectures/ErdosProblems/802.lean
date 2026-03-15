@@ -27,16 +27,23 @@ $\gg_r (\log t / (\log \log(t+1) \cdot t)) \cdot n$. Ajtai, Komlós, and Szemer�
 proved the conjectured bound when $r = 3$. Alon [Al96b] proved the conjectured
 bound under the stronger assumption that the induced graph on every vertex
 neighbourhood has chromatic number $\leq r - 2$.
+
+[AEKS81] Ajtai, M., Erdős, P., Komlós, J. and Szemerédi, E., _On Turán's theorem for
+sparse graphs_. Combinatorica (1981), 313-317.
+
+[AKS80] Ajtai, M., Komlós, J. and Szemerédi, E., _A note on Ramsey numbers_. J. Combin.
+Theory Ser. A (1980), 354-360.
+
+[Sh95] Shearer, J. B., _On the independence number of sparse graphs_. Random Structures
+Algorithms (1995), 269-271.
+
+[Al96b] Alon, N., _Independence numbers of locally sparse graphs and a Ramsey type
+problem_. Random Structures Algorithms (1996), 271-278.
 -/
 
 open SimpleGraph Finset
 
 namespace Erdos802
-
-/-- The average degree of a finite simple graph on `Fin n`. -/
-noncomputable def avgDegree {n : ℕ}
-    (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] : ℝ :=
-  (∑ v : Fin n, (G.degree v : ℝ)) / (n : ℝ)
 
 /--
 Erdős Problem 802 [AEKS81]:
@@ -51,10 +58,11 @@ theorem erdos_802 : answer(sorry) ↔
     ∃ c : ℝ, c > 0 ∧
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
     G.CliqueFree r →
-    avgDegree G ≥ 2 →
+    let t : ℝ := (G.averageDegree : ℝ)
+    t ≥ 2 →
     ∃ S : Finset (Fin n),
-      (∀ u ∈ S, ∀ v ∈ S, u ≠ v → ¬G.Adj u v) ∧
-      (S.card : ℝ) ≥ c * (Real.log (avgDegree G) / avgDegree G) * (n : ℝ) := by
+      G.IsIndepSet ↑S ∧
+      (S.card : ℝ) ≥ c * (Real.log t / t) * (n : ℝ) := by
   sorry
 
 end Erdos802
