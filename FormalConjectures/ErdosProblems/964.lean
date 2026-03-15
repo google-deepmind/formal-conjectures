@@ -27,9 +27,11 @@ $\tau(n+1)/\tau(n)$ everywhere dense in $(0,\infty)$?
 This has been proved unconditionally by Eberhard [Eb25], who in fact showed
 that every positive rational can be written as such a ratio.
 
+See also Problem 946 for a related problem.
+
 [Er86b] Erdős, P., original problem statement.
 
-[Eb25] Eberhard, S., proof that the sequence is dense.
+[Eb25] Eberhard, S., _Ratios of consecutive values of the divisor function_. arXiv:2505.00727 (2025).
 -/
 
 namespace Erdos964
@@ -49,6 +51,21 @@ theorem erdos_964 : answer(True) ↔
     ∀ r : ℝ, r > 0 → ∀ ε : ℝ, ε > 0 →
     ∃ n : ℕ, n ≥ 1 ∧
       |((Nat.divisors (n + 1)).card : ℝ) / ((Nat.divisors n).card : ℝ) - r| < ε := by
+  sorry
+
+/--
+Erdős Problem 964, stronger variant [Eb25]:
+
+Every positive rational number can be written as $\tau(n+1)/\tau(n)$ for some $n \geq 1$.
+
+This is strictly stronger than density in $(0, \infty)$ and was proved unconditionally
+by Eberhard.
+-/
+@[category research solved, AMS 11]
+theorem erdos_964_rational_values :
+    ∀ q : ℚ, q > 0 →
+    ∃ n : ℕ, n ≥ 1 ∧
+      ((Nat.divisors (n + 1)).card : ℚ) / ((Nat.divisors n).card : ℚ) = q := by
   sorry
 
 end Erdos964
