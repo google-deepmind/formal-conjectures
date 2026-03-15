@@ -31,10 +31,10 @@ Chen, Erdős, and Staton [CES96] proved $f(n) \ll n^{3/2}$. Draganić, Methuku,
 Munhá Correia, and Sudakov [DMMS24] improved this to $f(n) \ll n(\log n)^8$.
 
 [CES96] Chen, G., Erdős, P., and Staton, W., _Proof of a conjecture of
-Bollobás on nested cycles_. J. Combin. Theory Ser. B (1996).
+Bollobás on nested cycles_. J. Combin. Theory Ser. B (1996), 38–43.
 
 [DMMS24] Draganić, N., Methuku, A., Munhá Correia, D., and Sudakov, B.,
-_Cycles with many chords_. (2024).
+_Cycles with many chords_. Random Structures & Algorithms (2024), 3–16.
 
 [Er97d] Erdős, P., _Some old and new problems in various branches of
 combinatorics_. Discrete Math. (1997).
