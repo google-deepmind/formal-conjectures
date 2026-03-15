@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 506
@@ -24,39 +25,41 @@ import FormalConjectures.Util.ProblemImports
 What is the minimum number of circles determined by $n$ points in $\mathbb{R}^2$,
 not all on a circle and not all on a line?
 
+Related problems: [#104](https://www.erdosproblems.com/104),
+[#831](https://www.erdosproblems.com/831).
+
 [Er61] Erdős, P., _Some unsolved problems_, 1961, p. 245.
 
-[El67] Elliott, P. D. T. A., _On the number of circles determined by $n$ points_, 1967.
+[El67] Elliott, P. D. T. A., _On the number of circles determined by $n$ points_,
+Acta Mathematica Academiae Scientiarum Hungaricae (1967), 181–188.
 
 [PuSm] Purdy, G. and Smith, J. W., _Lines, circles, and the number of determined circles_.
+
+[BaBa94] Bálintová, A. and Bálint, V., _On the number of circles determined by $n$ points
+in the Euclidean plane_, Acta Mathematica Hungarica (1994), 283–289.
 -/
 
-open Finset
+open Finset EuclideanGeometry
 
 namespace Erdos506
 
 /-- All points in $S$ lie on a common circle with positive radius. -/
-noncomputable def AllOnCircle (S : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∃ c : EuclideanSpace ℝ (Fin 2), ∃ r : ℝ, 0 < r ∧ ∀ p ∈ S, dist p c = r
-
-/-- All points in $S$ are collinear: they lie on a common affine line. -/
-noncomputable def AllCollinear (S : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∃ a b : EuclideanSpace ℝ (Fin 2), a ≠ b ∧
-    ∀ p ∈ S, ∃ t : ℝ, p = a + t • (b - a)
+noncomputable def AllOnCircle (S : Finset ℝ²) : Prop :=
+  ∃ c : ℝ², ∃ r : ℝ, 0 < r ∧ ∀ p ∈ S, dist p c = r
 
 /-- The number of distinct circles determined by $S$. A circle is identified by its
 center and positive radius. It is "determined" by $S$ if at least $3$ points of $S$
 lie on it. -/
-noncomputable def numDeterminedCircles (S : Finset (EuclideanSpace ℝ (Fin 2))) : ℕ :=
-  Set.ncard {p : EuclideanSpace ℝ (Fin 2) × ℝ |
-    0 < p.2 ∧ 3 ≤ Set.ncard {q ∈ (↑S : Set (EuclideanSpace ℝ (Fin 2))) | dist q p.1 = p.2}}
+noncomputable def numDeterminedCircles (S : Finset ℝ²) : ℕ :=
+  Set.ncard {p : ℝ² × ℝ |
+    0 < p.2 ∧ 3 ≤ Set.ncard {q ∈ (↑S : Set ℝ²) | dist q p.1 = p.2}}
 
 /-- The minimum number of circles determined by any configuration of $n$ points in
 $\mathbb{R}^2$ that are neither all on a circle nor all collinear. Returns $0$ when
 no such configuration exists. -/
 noncomputable def minDeterminedCircles (n : ℕ) : ℕ :=
-  sInf (numDeterminedCircles '' {S : Finset (EuclideanSpace ℝ (Fin 2)) |
-    S.card = n ∧ ¬AllOnCircle S ∧ ¬AllCollinear S})
+  sInf (numDeterminedCircles '' {S : Finset ℝ² |
+    S.card = n ∧ ¬AllOnCircle S ∧ ¬Collinear ℝ (↑S : Set ℝ²)})
 
 /--
 Erdős Problem 506 [Er61, p. 245]:

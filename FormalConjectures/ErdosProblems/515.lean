@@ -25,15 +25,27 @@ Let $f(z)$ be an entire function, not a polynomial. Does there exist a locally
 rectifiable path $C$ tending to infinity such that, for every $\lambda > 0$, the integral
 $\int_C |f(z)|^{-\lambda} \, |dz|$ is finite?
 
-This was proved in the affirmative. The case when $f$ has finite order was proved
-by Zhang [Zh77]. The general case was proved by Lewis, Rossi, and Weitsman
-[LRW84], who in fact proved this with $|f|$ replaced by $e^u$ where $u$ is any
-subharmonic function.
+Huber [Hu57] proved the weaker result that for *each* $\lambda > 0$ there exists a
+path $C_\lambda$ with finite integral, but the path may depend on $\lambda$. The full
+result — a *single* path that works for all $\lambda > 0$ simultaneously — was proved
+in the affirmative. The case when $f$ has finite order was proved by Zhang [Zh77].
+The general case was proved by Lewis, Rossi, and Weitsman [LRW84], who in fact
+proved this with $|f|$ replaced by $e^u$ where $u$ is any subharmonic function.
 
-[Zh77] Zhang, G., _Asymptotic paths of entire functions_, 1977.
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
+p. 249.
+
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_,
+L'Enseignement Math. 27 (1982), 163–176.
+
+[Hu57] Huber, A., _On subharmonic functions and differential geometry in the large_. Comment.
+Math. Helv. 32 (1957), 13–72.
+
+[Zh77] Zhang, G., _Asymptotic values of entire and meromorphic functions_. Kexue Tongbao
+(1977), 480, 486.
 
 [LRW84] Lewis, J., Rossi, J. and Weitsman, A., _On the growth of subharmonic
-functions along paths_, Ark. Mat. 22 (1984), 109-114.
+functions along paths_. Ark. Mat. 22 (1984), 109–119.
 -/
 
 open MeasureTheory Filter Set
