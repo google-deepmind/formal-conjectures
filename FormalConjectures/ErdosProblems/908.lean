@@ -26,7 +26,13 @@ Laczkovich.
 
 *Reference:* [erdosproblems.com/908](https://www.erdosproblems.com/908)
 
-[La80] Laczkovich, M., _Functions with measurable differences_, 1980.
+[Er81b] Erdős, P., _My Scottish Book 'Problems'_. The Scottish Book (1981), 27-35.
+
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_,
+L'Enseignement Math. 27 (1982), 163–176.
+
+[La80] Laczkovich, M., _Functions with measurable differences_,
+Acta Mathematica Academiae Scientiarum Hungaricae **35** (1980), 217–235.
 -/
 
 open MeasureTheory
@@ -39,7 +45,8 @@ Erdős Problem 908 (proved by Laczkovich [La80]):
 Let $f : \mathbb{R} \to \mathbb{R}$ be such that for every $h > 0$, the function
 $x \mapsto f(x + h) - f(x)$ is measurable. Is it true that $f = g + \varphi + r$ where
 $g$ is continuous, $\varphi$ is additive (i.e., $\varphi(x + y) = \varphi(x) + \varphi(y)$),
-and $r(x + h) - r(x) = 0$ for every $h$ and almost all (depending on $h$) $x$?
+and $r(x + h) - r(x) = 0$ for every $h > 0$ (equivalently, every $h$) and almost all
+(depending on $h$) $x$?
 
 A conjecture of de Bruijn and Erdős. Answered in the affirmative by Laczkovich.
 See also [907].
