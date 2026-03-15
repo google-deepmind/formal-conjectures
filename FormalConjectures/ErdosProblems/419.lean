@@ -27,16 +27,19 @@ points of $\tau((n+1)!) / \tau(n!)$?
 Erdős and Graham [ErGr80] noted that any number of the shape $1 + 1/k$ for $k \geq 1$
 is a limit point (and thus so too is $1$), but knew of no others.
 
-Sawhney (and independently Erdős–Graham–Ivić–Pomerance [EGIP96]) proved that
-these are the only limit points: the set of limit points of the ratio is
-exactly $\{1 + 1/k : k \geq 1\} \cup \{1\}$.
+Erdős, Graham, Ivić, and Pomerance [EGIP96] proved that these are the only limit
+points: the set of limit points of the ratio is exactly
+$\{1 + 1/k : k \geq 1\} \cup \{1\}$. Mehtaab Sawhney independently found a
+simplified proof of the same result.
+
+Thanks to Zachary Chase and Mehtaab Sawhney for contributions to this problem.
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathématique (1980).
 
-[EGIP96] Erdős, P., Graham, R., Ivić, A., and Pomerance, C., _On the number of
+[EGIP96] Erdős, P., Graham, S. W., Ivić, A., and Pomerance, C., _On the number of
 divisors of n!_. Analytic Number Theory (Proceedings of a Conference in Honor of
-Heini Halberstam) (1996).
+Heini Halberstam) (1996), 337–355.
 -/
 
 open Filter
