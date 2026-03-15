@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Extremal.Basic
 
 /-!
 # Erdős Problem 146
@@ -22,11 +23,23 @@ import FormalConjectures.Util.ProblemImports
 Erdős and Simonovits conjectured that the Turán number of any $r$-degenerate bipartite
 graph $H$ satisfies $\text{ex}(n; H) = O(n^{2 - 1/r})$.
 
+See also problems #113 and #147 for related conjectures on Turán numbers of degenerate
+bipartite graphs.
+
 *Reference:* [erdosproblems.com/146](https://www.erdosproblems.com/146)
 
 [ErSi84] Erdős, P. and Simonovits, M., *Cube-supersaturated graphs and related
 problems*, Progress in graph theory (Waterloo, Ont., 1982), Academic Press,
 Toronto, ON, 1984, 203-218.
+
+[Er91] Erdős, P., *Problems and results on graphs and hypergraphs: similarities and
+differences*. Mathematics of Ramsey theory, Algorithms Combin., 5 (1990), 12-28.
+
+[Er93] Erdős, P., *Some of my favorite solved and unsolved problems in graph theory*.
+Quaestiones Mathematicae **16** (1993), 333–350.
+
+[Er97c] Erdős, P., *Some recent problems and results in graph theory*. Discrete Math.
+**164** (1997), 81–85.
 
 [AKS03] Alon, N., Krivelevich, M., and Sudakov, B., *Turán numbers of bipartite
 graphs and related Ramsey-type questions*, Combinatorics, Probability and
@@ -36,18 +49,6 @@ Computing 12 (2003), no. 5-6, 477-494.
 open SimpleGraph
 
 namespace Erdos146
-
-/-- An injective graph homomorphism from $H$ to $F$; witnesses that $F$ contains a
-subgraph isomorphic to $H$. -/
-def ContainsSubgraph {V U : Type*} (F : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → F.Adj (f u) (f v)
-
-/-- The Turán number $\text{ex}(n; H)$: the maximum number of edges in a simple graph on $n$
-vertices that contains no copy of $H$ as a subgraph. -/
-noncomputable def turanNumber {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
-  sSup {m : ℕ | ∃ (V : Type) (fv : Fintype V) (F : SimpleGraph V) (dr : DecidableRel F.Adj),
-    haveI := fv; haveI := dr;
-    Fintype.card V = n ∧ ¬ContainsSubgraph F H ∧ F.edgeFinset.card = m}
 
 /-- A graph $G$ is $r$-degenerate if every non-empty finite set of vertices contains
 a vertex with at most $r$ neighbors within that set. Equivalently, every induced
@@ -74,7 +75,7 @@ theorem erdos_146 :
       Nonempty (H.Coloring (Fin 2)) →
       IsRDegenerateGraph H r →
       ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, 1 ≤ n →
-        (turanNumber H n : ℝ) ≤ C * (n : ℝ) ^ ((2 : ℝ) - 1 / (r : ℝ)) := by
+        (extremalNumber n H : ℝ) ≤ C * (n : ℝ) ^ ((2 : ℝ) - 1 / (r : ℝ)) := by
   sorry
 
 end Erdos146
