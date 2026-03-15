@@ -53,13 +53,13 @@ noncomputable def circleSeven : Finset ℝ² :=
 /-- Wheel graph on 7 vertices (center + regular hexagon) with unit side length,
 touching both axes in the first quadrant. -/
 noncomputable def wheelSeven : Finset ℝ² :=
-  {![1, Real.sqrt 3 / 2],
-   ![2, Real.sqrt 3 / 2],
-   ![3 / 2, Real.sqrt 3],
-   ![1 / 2, Real.sqrt 3],
-   ![0, Real.sqrt 3 / 2],
-   ![1 / 2, 0],
-   ![3 / 2, 0]}
+  {!₂[1, Real.sqrt 3 / 2],
+   !₂[2, Real.sqrt 3 / 2],
+   !₂[3 / 2, Real.sqrt 3],
+   !₂[1 / 2, Real.sqrt 3],
+   !₂[0, Real.sqrt 3 / 2],
+   !₂[1 / 2, 0],
+   !₂[3 / 2, 0]}
 
 @[category test, AMS 52]
 lemma erdos_91.test.unitSquare_optimal : IsOptimal unitSquare 4 := by
