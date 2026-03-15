@@ -26,6 +26,21 @@ than $1$ somewhere on the unit circle?
 
 [Er61] Erdős, P., _Some unsolved problems_, Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
 221-254.
+
+[Li66] Littlewood, J. E., _On polynomials ∑ⁿ±zᵐ, ∑ⁿeᵃᵐⁱzᵐ, z=eᶿⁱ_, J. London Math. Soc.
+(1966), 367-376.
+
+[Ka87] Kashin, B. S., _The properties of random trigonometric polynomials with ±1 coefficients_,
+Vestnik Moskov. Univ. Ser. I Mat. Mekh. (1987), 40-46, 105.
+
+[Ko94] Konyagin, S. V., _On the minimum modulus of random trigonometric polynomials with
+coefficients ±1_, Mat. Zametki (1994), 80-101, 158.
+
+[KoSc99] Konyagin, S. V., Schlag, W., _Lower bounds for the absolute value of random polynomials
+on a neighborhood of the unit circle_, Trans. Amer. Math. Soc. (1999), 4963-4980.
+
+[CoNg21] Cook, N. A., Nguyen, H. H., _Universality of the minimum modulus for random
+trigonometric polynomials_, Discrete Analysis (2021), Paper No. 20, 46.
 -/
 
 open Finset BigOperators Filter Classical
