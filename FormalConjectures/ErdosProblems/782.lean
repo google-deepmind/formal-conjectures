@@ -25,8 +25,17 @@ A question of Brown, Erdős, and Freedman [BEF90]. It is a classical fact that
 the squares do not contain arithmetic progressions of length 4. An affirmative
 answer to the first question implies an affirmative answer to the second.
 
+Solymosi [So07] conjectured that the answer to Part 2 is no. Cilleruelo and
+Granville [CiGr07] showed that the answer to Part 2 is no conditional on the
+Bombieri–Lang conjecture.
+
 [BEF90] Brown, T. C., Erdős, P., and Freedman, A. R., _Quasi-progressions and
 descending waves_. J. Combin. Theory Ser. A 53 (1990), no. 1, 81-95.
+[So07] Solymosi, J., _Elementary additive combinatorics_. Additive Combinatorics,
+CRM Proc. Lecture Notes **43** (2007), 29-38.
+[CiGr07] Cilleruelo, J. and Granville, A., _Lattice points on circles, squares in
+arithmetic progressions and sumsets of squares_. Additive Combinatorics, CRM Proc.
+Lecture Notes **43** (2007), 241-262.
 -/
 
 open Finset
