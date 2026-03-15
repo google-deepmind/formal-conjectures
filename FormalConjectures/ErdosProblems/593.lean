@@ -34,9 +34,10 @@ in every $3$-uniform hypergraph of uncountable chromatic number. By analogy
 with the graph case, we conjecture that the obligatory finite $3$-uniform
 hypergraphs are exactly the $2$-colorable ones.
 
-[EGH75] Erdős, P., Galvin, F., and Hajnal, A.
+[EGH75] Erdős, P., Galvin, F., and Hajnal, A., _On set-systems having large chromatic
+number and not containing prescribed subsystems_ (1975), 425–513.
 
-[Er95d] Erdős, P.
+[Er95d] Erdős, P., _Problems and results in discrete mathematics_, Discrete Math., 1995.
 -/
 
 namespace Erdos593
@@ -59,8 +60,9 @@ def Hypergraph3.HasUncountableChromaticNumber {V : Type*}
     (H : Hypergraph3 V) : Prop :=
   ∀ (C : Type*) [Countable C], ¬∃ c : V → C, H.IsProperColoring c
 
-/-- A finite $3$-uniform hypergraph $F$ on $W$ embeds into $H$ on $V$: there is an
-    injective map from $W$ to $V$ sending every edge of $F$ to an edge of $H$. -/
+/-- A finite $3$-uniform hypergraph $F$ on $W$ embeds (non-induced) into $H$ on $V$:
+    there is an injective map from $W$ to $V$ sending every edge of $F$ to an edge of $H$.
+    Non-edges of $F$ are unconstrained in $H$. -/
 def Hypergraph3.ContainsCopy {V W : Type*}
     (H : Hypergraph3 V) (F : Hypergraph3 W) : Prop :=
   ∃ f : W ↪ V, ∀ e ∈ F.edges, e.map f ∈ H.edges
