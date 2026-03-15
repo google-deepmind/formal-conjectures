@@ -23,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 A conjecture of Erdős and Sauer.
 
-[Er81] Erdős, P., *On the combinatorial problems which I would most like to see solved*, 1981.
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica 1 (1981), 25–42.
 -/
 
 open Finset
@@ -62,6 +63,7 @@ $\mathrm{ex}_r(n; K_{r+1}^r)$ edge-disjoint copies of $K_r^r$ (single edges) and
 -/
 @[category research open, AMS 5]
 theorem erdos_719 : answer(sorry) ↔ ∀ (n r : ℕ) (H : Finset (Finset (Fin n))),
+    2 ≤ r →
     IsRUniformHypergraph n r H →
     ∃ (pieces : Finset (Finset (Fin n))),
       (∀ S ∈ pieces, S.card = r ∨ S.card = r + 1) ∧
