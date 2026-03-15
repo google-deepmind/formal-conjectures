@@ -29,7 +29,8 @@ theory*. Monographies de L'Enseignement Mathematique (1980).
 [LiSa24] Liu, J. and Sawhney, M., *On a conjecture of Erdős on unit fractions* (2024).
 -/
 
-open Finset BigOperators
+open Finset
+open scoped BigOperators
 
 namespace Erdos310
 
@@ -52,7 +53,7 @@ theorem erdos_310 :
     ∀ α : ℝ, α > 0 →
       ∃ C : ℕ, 0 < C ∧
         ∀ N : ℕ, 1 ≤ N →
-          ∀ A : Finset ℕ, (∀ n ∈ A, 1 ≤ n ∧ n ≤ N) →
+          ∀ A : Finset ℕ, A ⊆ Finset.Icc 1 N →
             α * (N : ℝ) ≤ (A.card : ℝ) →
               ∃ S : Finset ℕ, S ⊆ A ∧ S.Nonempty ∧
                 ∃ a b : ℕ, 0 < a ∧ a ≤ b ∧ b ≤ C ∧
