@@ -28,6 +28,12 @@ Vol. 2 (Keszthely, 1993), p.346.
 
 [Sh98] Shelah, S., _Erdős and Rényi conjecture_. J. Combin. Theory Ser. A 82 (1998), no. 2,
 179–185.
+
+[AlHa91] Alon, N. and Hajnal, A., _Ramsey graphs contain many distinct induced subgraphs_.
+Graphs Combin. (1991), 1–6.
+
+[ErHa89b] Erdős, P. and Hajnal, A., _On the number of distinct induced subgraphs of a graph_.
+Discrete Math. (1989), 145–154.
 -/
 
 open SimpleGraph Finset
