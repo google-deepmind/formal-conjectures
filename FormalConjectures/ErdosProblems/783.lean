@@ -29,6 +29,15 @@ by any $a \in A$?
 
 Erdős suggests the optimal set is consecutive largest primes up to $N$.
 Tao conjectures the minimum is $(\rho(e^C) + o(1))N$ where $\rho$ is the Dickman function.
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973), 117–138.
+
+[ErRu80] Erdős, P., Ruzsa, I. Z., _On the small sieve. I. Sifting by primes_. J. Number Theory
+(1980), 385–394.
+
+[Hi87b] Hildebrand, A., _Quantitative mean value theorems for nonnegative multiplicative
+functions. II_. Acta Arith. (1987), 209–260.
 -/
 
 open Finset BigOperators
@@ -42,7 +51,7 @@ noncomputable opaque dickmanRho : ℝ → ℝ
 
 /-- Count of integers in $\{1, \ldots, N\}$ not divisible by any element of $A$. -/
 def unsievedCount (N : ℕ) (A : Finset ℕ) : ℕ :=
-  ((Finset.range N).image (· + 1)).filter
+  (Finset.Icc 1 N).filter
     (fun m => ∀ a ∈ A, ¬(a ∣ m)) |>.card
 
 /--
