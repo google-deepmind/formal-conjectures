@@ -24,7 +24,10 @@ Must the complement of $S$ contain four points which form a unit square?
 
 *Reference:* [erdosproblems.com/214](https://www.erdosproblems.com/214)
 
-[Ju79] Juhász, R., _Ramsey type theorems in the plane_, 1979.
+[Er83c] Erdős, P., _Old and new problems in combinatorial analysis and graph theory_, 1983.
+
+[Ju79] Juhász, R., _Ramsey type theorems in the plane_. Journal of Combinatorial Theory, Series A
+**27** (1979), 152–160.
 -/
 
 namespace Erdos214
@@ -53,6 +56,35 @@ theorem erdos_214 :
       ∃ a b c d : EuclideanSpace ℝ (Fin 2),
         a ∈ Sᶜ ∧ b ∈ Sᶜ ∧ c ∈ Sᶜ ∧ d ∈ Sᶜ ∧
         IsUnitSquare a b c d := by
+  sorry
+
+/--
+Juhász's general theorem: if $S \subset \mathbb{R}^2$ is such that no two points in $S$ are
+distance $1$ apart, then for any set of four points $P$, the complement of $S$ contains a
+congruent copy of $P$. This is strictly stronger than `erdos_214`, which only asserts the
+existence of a unit square in the complement.
+-/
+@[category research solved, AMS 52]
+theorem erdos_214_general :
+    ∀ (S : Set (EuclideanSpace ℝ (Fin 2))),
+      (∀ p ∈ S, ∀ q ∈ S, dist p q ≠ 1) →
+      ∀ (P : Fin 4 → EuclideanSpace ℝ (Fin 2)),
+        ∃ f : EuclideanSpace ℝ (Fin 2) → EuclideanSpace ℝ (Fin 2),
+          Isometry f ∧ ∀ i, f (P i) ∈ Sᶜ := by
+  sorry
+
+/--
+Does Juhász's result extend to five-point configurations? That is, if $S \subset \mathbb{R}^2$
+has no two points at unit distance, must the complement of $S$ contain a congruent copy of
+every set of five points? This remains open.
+-/
+@[category research open, AMS 52]
+theorem erdos_214_five_points :
+    ∀ (S : Set (EuclideanSpace ℝ (Fin 2))),
+      (∀ p ∈ S, ∀ q ∈ S, dist p q ≠ 1) →
+      ∀ (P : Fin 5 → EuclideanSpace ℝ (Fin 2)),
+        ∃ f : EuclideanSpace ℝ (Fin 2) → EuclideanSpace ℝ (Fin 2),
+          Isometry f ∧ ∀ i, f (P i) ∈ Sᶜ := by
   sorry
 
 end Erdos214
