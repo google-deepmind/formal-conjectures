@@ -76,7 +76,7 @@ $$
 g(n)^2 \le \left(\frac{3459}{1000} + \varepsilon\right) \cdot n.
 $$
 
-The constant $3459/1000$ approximates $3.458\ldots$
+The constant $3459/1000$ provides a rational upper approximation to $3.4584\ldots$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_791.variants.upper_bound :
