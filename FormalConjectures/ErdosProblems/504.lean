@@ -23,20 +23,22 @@ Determine the maximum guaranteed angle α_N for N-point planar sets: the supremu
 angles α such that every set of N points in the plane contains three distinct points forming
 an angle of at least α.
 
-*Reference:* [erdosproblems.com/504](https://www.erdosproblems.com/504)
+*References:*
+- [erdosproblems.com/504](https://www.erdosproblems.com/504)
+- [Sz41] Szekeres, Gy., _On an extremum problem in the plane_. American Journal of
+  Mathematics **63** (1941), 208–210.
+- [ErSz60] Erdős, P., Szekeres, G., _On some extremum problems in elementary geometry_.
+  Annales Universitatis Scientiarum Budapestinensis de Rolando Eötvös Nominatae, Sectio
+  Mathematica **3** (1960/61), 53–62.
+- [Se92] Sendov, Bl., _On a conjecture of P. Erdős and G. Szekeres_. Comptes Rendus de
+  l'Académie Bulgare des Sciences **45** (1992), 17–20.
+- [Se93] Sendov, Bl., _Angles in a plane configuration of points_. Comptes Rendus de
+  l'Académie Bulgare des Sciences **46** (1993), 27–30.
 -/
+
+open scoped EuclideanGeometry
 
 namespace Erdos504
-
-/--
-The angle at point $y$ determined by three points $x$, $y$, $z$ in $\mathbb{R}^2$:
-the angle between vectors $(x - y)$ and $(z - y)$, computed as
-$\arccos$ of their normalized inner product. Returns a value in $[0, \pi]$.
--/
-noncomputable def angleAt (x y z : EuclideanSpace ℝ (Fin 2)) : ℝ :=
-  let u := x - y
-  let v := z - y
-  Real.arccos (@inner ℝ _ _ u v / (‖u‖ * ‖v‖))
 
 /--
 $\alpha_N$: the maximum guaranteed angle for $N$-point planar sets.
@@ -49,7 +51,7 @@ noncomputable def maxGuaranteedAngle (N : ℕ) : ℝ :=
       A.card = N →
       ∃ x ∈ A, ∃ y ∈ A, ∃ z ∈ A,
         x ≠ y ∧ y ≠ z ∧ x ≠ z ∧
-        angleAt x y z ≥ α}
+        ∠ x y z ≥ α}
 
 /--
 Erdős Problem 504 (Blumenthal's problem, solved by Sendov):
@@ -59,7 +61,7 @@ $A \subset \mathbb{R}^2$ of size $N$ there exist three distinct points $x, y, z 
 such that the angle at $y$ (between rays $yx$ and $yz$) is at least $\alpha$.
 Determine $\alpha_N$.
 
-Sendov (1993) proved that for $n \geq 3$ and $2^{n-1} < N \leq 2^n$:
+Sendov [Se93] proved that for $n \geq 3$ and $2^{n-1} < N \leq 2^n$:
 $$\alpha_N = \pi(1 - 1/n) \quad \text{when } N > 2^{n-1} + 2^{n-3}$$
 $$\alpha_N = \pi(1 - 1/(2n-1)) \quad \text{when } N \leq 2^{n-1} + 2^{n-3}$$
 -/
