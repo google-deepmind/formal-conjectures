@@ -29,7 +29,19 @@ $$
 A problem of Erdős and Sós, who could not even prove whether
 $R(k+1,k) - R(k,k) > k^c$ for any $c > 1$.
 
-[Er93] Erdős, P., _On some of my favourite theorems_ (1993), p. 339.
+Burr, Erdős, Faudree, and Schelp [BEFS89] proved that
+$R(k+1,k) - R(k,k) \geq 2k - 5$.
+
+See also problems [544](https://www.erdosproblems.com/544) and
+[1014](https://www.erdosproblems.com/1014).
+
+OEIS: [A000791](https://oeis.org/A000791), [A059442](https://oeis.org/A059442).
+
+[Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is eighty,
+Vol. 2 (Keszthely, 1993), 97–132, p. 339.
+
+[BEFS89] Burr, S.A., Erdős, P., Faudree, R.J., and Schelp, R.H.,
+_On the difference between consecutive Ramsey numbers_. Utilitas Math. (1989), 115–118.
 -/
 
 open SimpleGraph
@@ -58,6 +70,19 @@ theorem erdos_1030 :
     ∃ c : ℝ, c > 0 ∧
     ∃ K₀ : ℕ, ∀ k : ℕ, k ≥ K₀ →
       (ramseyR (k + 1) k : ℝ) / (ramseyR k k : ℝ) ≥ 1 + c := by
+  sorry
+
+/--
+Weaker variant of Erdős Problem 1030 [Er93, p. 339]:
+
+There exists $c > 1$ such that $R(k+1,k) - R(k,k) > k^c$ for all sufficiently large $k$.
+
+Erdős and Sós could not even prove this weaker statement.
+-/
+@[category research open, AMS 5]
+theorem erdos_1030_weak :
+    ∃ c : ℝ, c > 1 ∧ ∃ K₀ : ℕ, ∀ k : ℕ, k ≥ K₀ →
+      (ramseyR (k + 1) k : ℝ) - (ramseyR k k : ℝ) > (k : ℝ) ^ c := by
   sorry
 
 end Erdos1030
