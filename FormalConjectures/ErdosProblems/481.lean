@@ -27,6 +27,12 @@ elements.
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
+
+[Kl82] Klarner, D., _A sufficient condition for certain semigroups to be free_. J. Algebra
+(1982), 140–148.
+
+[KoTa22] Kolpakov, A. and Talambutsa, A., _On free semigroups of affine maps on the real line_.
+Proc. Amer. Math. Soc. (2022), 2301–2307.
 -/
 
 namespace Erdos481
