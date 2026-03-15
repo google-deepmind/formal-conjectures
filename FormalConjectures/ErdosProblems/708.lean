@@ -30,7 +30,11 @@ Is it true that $g(n) \leq (2+o(1))n$? Or perhaps even $g(n) \leq 2n$?
 A problem of Erdős and Surányi [ErSu59], who proved that $g(n) \geq (2-o(1))n$,
 and that $g(3) = 4$. Gallai first considered such problems and observed $g(2) = 2$.
 
-[ErSu59] Erdős, P. and Surányi, J., 1959.
+[ErSu59] Erdős, P. and Surányi, J., _Bemerkungen zu einer Aufgabe eines mathematischen
+Wettbewerbs_. Mat. Lapok (1959), 39-48.
+
+[Er92c] Erdős, P., _Some of my forgotten problems in number theory_. Hardy-Ramanujan J.
+(1992), 34-50.
 -/
 
 open Nat Finset
@@ -72,6 +76,61 @@ theorem erdos_708.variants.strong : answer(sorry) ↔
     ∃ B : Finset ℕ, B ⊆ Finset.Icc k (k + A.max' hA - 1) ∧
       B.card ≤ 2 * A.card ∧
       (∏ a ∈ A, a) ∣ (∏ b ∈ B, b) := by
+  sorry
+
+/--
+Erdős Problem 708 (lower bound, solved) [ErSu59]: $g(n) \geq (2-o(1))n$.
+
+Erdős and Surányi proved that for every $\varepsilon > 0$ and all sufficiently large $n$,
+there exists a set $A \subseteq \{2, 3, \ldots\}$ with $|A| = n$ and an interval of $\max(A)$
+consecutive natural numbers such that any subset $B$ of that interval whose product is
+divisible by the product of $A$ must have $|B| \geq (2 - \varepsilon) n$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_708.variants.lower_bound :
+    ∀ ε : ℝ, 0 < ε →
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+    ∃ (A : Finset ℕ) (hA : A.Nonempty),
+      A.card = n ∧ (∀ a ∈ A, 2 ≤ a) ∧
+      ∃ k : ℕ, ∀ B : Finset ℕ,
+        B ⊆ Finset.Icc k (k + A.max' hA - 1) →
+        (∏ a ∈ A, a) ∣ (∏ b ∈ B, b) →
+        ((2 - ε) * n : ℝ) ≤ (B.card : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 708 (exact value, solved): $g(2) = 2$.
+
+Gallai observed that $g(2) = 2$: for any two-element set $A \subseteq \{2, 3, \ldots\}$
+and any interval of $\max(A)$ consecutive naturals, there exists a subset $B$ of size at
+most 2 whose product is divisible by $\prod A$, and this bound is tight.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_708.variants.g_two :
+    (∀ (A : Finset ℕ) (hA : A.Nonempty), A.card = 2 → (∀ a ∈ A, 2 ≤ a) → ∀ k : ℕ,
+      ∃ B : Finset ℕ, B ⊆ Finset.Icc k (k + A.max' hA - 1) ∧
+        B.card ≤ 2 ∧ (∏ a ∈ A, a) ∣ (∏ b ∈ B, b)) ∧
+    (∃ (A : Finset ℕ) (hA : A.Nonempty), A.card = 2 ∧ (∀ a ∈ A, 2 ≤ a) ∧
+      ∃ k : ℕ, ∀ B : Finset ℕ, B ⊆ Finset.Icc k (k + A.max' hA - 1) →
+        (∏ a ∈ A, a) ∣ (∏ b ∈ B, b) → 2 ≤ B.card) := by
+  sorry
+
+/--
+Erdős Problem 708 (exact value, solved) [ErSu59]: $g(3) = 4$.
+
+Erdős and Surányi proved that $g(3) = 4$: for any three-element set
+$A \subseteq \{2, 3, \ldots\}$ and any interval of $\max(A)$ consecutive naturals, there
+exists a subset $B$ of size at most 4 whose product is divisible by $\prod A$, and this
+bound is tight.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_708.variants.g_three :
+    (∀ (A : Finset ℕ) (hA : A.Nonempty), A.card = 3 → (∀ a ∈ A, 2 ≤ a) → ∀ k : ℕ,
+      ∃ B : Finset ℕ, B ⊆ Finset.Icc k (k + A.max' hA - 1) ∧
+        B.card ≤ 4 ∧ (∏ a ∈ A, a) ∣ (∏ b ∈ B, b)) ∧
+    (∃ (A : Finset ℕ) (hA : A.Nonempty), A.card = 3 ∧ (∀ a ∈ A, 2 ≤ a) ∧
+      ∃ k : ℕ, ∀ B : Finset ℕ, B ⊆ Finset.Icc k (k + A.max' hA - 1) →
+        (∏ a ∈ A, a) ∣ (∏ b ∈ B, b) → 4 ≤ B.card) := by
   sorry
 
 end Erdos708
