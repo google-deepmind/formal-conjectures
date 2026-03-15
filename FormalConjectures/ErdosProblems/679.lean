@@ -23,16 +23,20 @@ Erdős asked whether, for every ε > 0, there are infinitely many n such that
 ω(n − k) < (1 + ε) log k / log log k for all sufficiently large k < n. A stronger
 form with O(1) error was disproved.
 
+A similar question can be asked for Ω (prime factors with multiplicity), replacing
+log k / log log k with log₂ k.
+
 *Reference:* [erdosproblems.com/679](https://www.erdosproblems.com/679)
+
+*Related problems:* [#248](https://www.erdosproblems.com/248),
+[#413](https://www.erdosproblems.com/413)
 
 [Er79d] Erdős, P., _Some unconventional problems in number theory_. Math. Mag. 52 (1979), 67-70.
 -/
 
-namespace Erdos679
+open scoped ArithmeticFunction.omega ArithmeticFunction.Omega
 
-/-- The number of distinct prime factors of $n$ ($\omega(n)$ in analytic number theory). -/
-noncomputable def omega (n : ℕ) : ℕ :=
-  (Nat.primeFactorsList n).toFinset.card
+namespace Erdos679
 
 /--
 Erdős Problem 679, Part 1 [Er79d]:
@@ -51,7 +55,7 @@ theorem erdos_679 :
     ∃ k₀ : ℕ,
     Set.Infinite {n : ℕ |
       ∀ k : ℕ, k₀ ≤ k → k < n →
-        (omega (n - k) : ℝ) <
+        (ω (n - k) : ℝ) <
           (1 + ε) * Real.log (k : ℝ) / Real.log (Real.log (k : ℝ))} := by
   sorry
 
@@ -60,17 +64,35 @@ Erdős Problem 679, Part 2 (disproved by DottedCalculator) [Er79d]:
 
 The stronger version asking whether $\omega(n - k) < \log k / \log \log k + O(1)$
 holds for infinitely many $n$ is false. In fact, there exists a constant $c > 0$
-such that for all sufficiently large $n$, there exists $k < n$ with
+such that for all sufficiently large $n$, there exists $k \geq 3$ with $k < n$ and
 $$\omega(n - k) \geq \log k / \log \log k + c \cdot \log k / (\log \log k)^2.$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_679.variants.disproof :
     ∃ c : ℝ, c > 0 ∧
     ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-      ∃ k : ℕ, k < n ∧
-        (omega (n - k) : ℝ) ≥
+      ∃ k : ℕ, k ≥ 3 ∧ k < n ∧
+        (ω (n - k) : ℝ) ≥
           Real.log (k : ℝ) / Real.log (Real.log (k : ℝ)) +
           c * Real.log (k : ℝ) / (Real.log (Real.log (k : ℝ))) ^ 2 := by
+  sorry
+
+/--
+Erdős Problem 679, Ω variant [Er79d]:
+
+A similar question to Part 1 can be asked for $\Omega$ (prime factors counted with
+multiplicity): for every $\varepsilon > 0$, are there infinitely many $n$ such that
+$\Omega(n - k) < (1 + \varepsilon) \log_2 k$ for all sufficiently large $k < n$?
+-/
+@[category research open, AMS 11]
+theorem erdos_679.variants.bigOmega :
+    answer(sorry) ↔
+    ∀ ε : ℝ, ε > 0 →
+    ∃ k₀ : ℕ,
+    Set.Infinite {n : ℕ |
+      ∀ k : ℕ, k₀ ≤ k → k < n →
+        (Ω (n - k) : ℝ) <
+          (1 + ε) * Real.log (k : ℝ) / Real.log 2} := by
   sorry
 
 end Erdos679
