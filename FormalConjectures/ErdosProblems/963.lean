@@ -22,6 +22,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/963](https://www.erdosproblems.com/963)
 
 [Er65] Erdős, P., _Extremal problems in number theory_, 1965.
+
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+  "Paul Erdős and his mathematics", Budapest, July 1999 (1999), §1.22.
 -/
 
 open Finset BigOperators
