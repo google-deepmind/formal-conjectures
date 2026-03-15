@@ -21,12 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/55](https://www.erdosproblems.com/55)
 
-For every $r \geq 2$, there exists an $r$-Ramsey complete set $A$ with
-$|A \cap \{1,\ldots,N\}| \leq C \cdot r \cdot (\log N)^2$, and this bound is best possible.
-Solved by Conlon, Fox, and Pham [CFP21].
+A problem of Burr and Erdős [BuEr85]. For every $r \geq 2$, there exists an $r$-Ramsey
+complete set $A$ with $|A \cap \{1,\ldots,N\}| \leq C \cdot r \cdot (\log N)^2$, and this
+bound is best possible. Solved by Conlon, Fox, and Pham [CFP21].
 
 See also Problems 54 and 843.
 
+[BuEr85] Burr, S. A. and Erdős, P., _A Ramsey-type property in additive number theory_.
+Glasgow Math. J. (1985), 5–10.
 [CFP21] Conlon, D., Fox, J., and Pham, H.T., _Subset sums, completeness and colorings_ (2021).
 -/
 
