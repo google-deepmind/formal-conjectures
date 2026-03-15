@@ -48,7 +48,7 @@ noncomputable def circleSeven : Finset ℝ² :=
   let cx := r * Real.cos (Real.pi / 7)
   let cy := r * Real.sin (4 * Real.pi / 7)
   (Finset.range 7).image fun k : ℕ =>
-    ![r * Real.cos (2 * Real.pi * ↑k / 7) + cx, r * Real.sin (2 * Real.pi * ↑k / 7) + cy]
+    !₂[r * Real.cos (2 * Real.pi * ↑k / 7) + cx, r * Real.sin (2 * Real.pi * ↑k / 7) + cy]
 
 /-- Wheel graph on 7 vertices (center + regular hexagon) with unit side length,
 touching both axes in the first quadrant. -/
