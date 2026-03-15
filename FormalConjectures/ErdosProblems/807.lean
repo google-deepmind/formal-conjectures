@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 
 /-!
 # Erdős Problem 807
@@ -25,6 +26,9 @@ Is it true that for a random graph $G$ on $n$ vertices with edge probability $1/
 $\tau(G) = n - \alpha(G)$ almost surely? Here $\tau(G)$ is the bipartition number (the
 smallest number of pairwise edge-disjoint complete bipartite graphs whose union is $G$)
 and $\alpha(G)$ is the independence number. Disproved by Alon [Al15].
+
+[KRW88] Kratzke, T., Reznick, B., West, D., _Eigensharp graphs: decomposition into complete
+bipartite subgraphs_, Trans. Amer. Math. Soc. (1988).
 
 [Al15] Alon, N., _Bipartite decomposition of random graphs_, J. Graph Theory, 2015.
 
@@ -61,14 +65,6 @@ noncomputable def bipartitionNumber {V : Type*} (G : SimpleGraph V) : ℕ :=
   sInf {k : ℕ | ∃ (A B : Fin k → Set V), IsBicliqueCover G k A B}
 
 /--
-The independence number $\alpha(G)$ of a finite graph is the maximum cardinality of
-an independent set (a set of vertices with no edges between them).
--/
-noncomputable def independenceNumber {V : Type*} [Fintype V] (G : SimpleGraph V) : ℕ :=
-  sSup {k : ℕ | ∃ S : Finset V, S.card = k ∧
-    ∀ v ∈ S, ∀ w ∈ S, v ≠ w → ¬G.Adj v w}
-
-/--
 Erdős Problem 807 (disproved by Alon [Al15]):
 
 Is it true that for a random graph $G$ on $n$ vertices with edge probability $1/2$,
@@ -90,7 +86,7 @@ almost surely $\tau(G) \leq n - (1 + c)\alpha(G)$.
 theorem erdos_807 : answer(False) ↔
     Tendsto (fun n : ℕ =>
       (Nat.card {G : SimpleGraph (Fin n) //
-        bipartitionNumber G = n - independenceNumber G} : ℝ) /
+        bipartitionNumber G = n - G.indepNum} : ℝ) /
       (Nat.card (SimpleGraph (Fin n)) : ℝ))
     atTop (nhds 1) := by
   sorry
