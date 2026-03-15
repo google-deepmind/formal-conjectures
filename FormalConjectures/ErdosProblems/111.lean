@@ -30,19 +30,24 @@ graphs_. Annals of Discrete Mathematics, 12 (1982), 117-123.
 
 [Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_.
 Combinatorica, 1 (1981), 25-42.
+
+[Er87] Erdős, P., _Some problems on finite and infinite graphs_.
+
+[Er90] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1990),
+467-478.
+
+[Er97d] Erdős, P., _Some of my new and almost new problems and results in
+combinatorics and graph theory_ (1997).
+
+[Er97f] Erdős, P., _Some of my new and almost new problems and results in combinatorial
+geometry_. (1997)
+
+See also Problem 74.
 -/
 
 open SimpleGraph Cardinal
 
 namespace Erdos111
-
-/--
-A graph $G$ (on vertex type $V$) has chromatic number $\aleph_1$ if it cannot be properly
-colored with countably many colors but can be properly colored with $\aleph_1$ colors.
--/
-def HasChromaticNumberAleph1 {V : Type*} (G : SimpleGraph V) : Prop :=
-  (∀ (α : Type*) [Countable α], IsEmpty (G.Coloring α)) ∧
-  (∃ α : Type*, #α = aleph 1 ∧ Nonempty (G.Coloring α))
 
 /--
 The minimum number of edges that must be deleted from a finite graph $H$ to make
@@ -56,14 +61,11 @@ noncomputable def minEdgeDeletionsForBipartite {W : Type*} [Fintype W]
     (H.edgeSet \ H'.edgeSet).ncard = k}
 
 /--
-For a graph $G$ and $n \in \mathbb{N}$, $h(G, n)$ is defined as the maximum over all $n$-vertex
-induced subgraphs $H$ of $G$ of the minimum number of edges that must be deleted
+For a graph $G$ and $n \in \mathbb{N}$, $h(G, n)$ is the maximum, over all $n$-vertex
+induced subgraphs $H$ of $G$, of the minimum number of edges that must be deleted
 from $H$ to make it bipartite.
-
-That is, $h(G, n)$ is the smallest $k$ such that every induced subgraph of $G$ on
-exactly $n$ vertices can be made bipartite by deleting at most $k$ edges.
 -/
-noncomputable def hFun {V : Type*} (G : SimpleGraph V) (n : ℕ) : ℕ :=
+noncomputable def maxMinEdgeDeletionsForBipartite {V : Type*} (G : SimpleGraph V) (n : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ (S : Finset V),
     S.card = n ∧
     k = minEdgeDeletionsForBipartite (G.induce (S : Set V))}
@@ -83,10 +85,10 @@ $h(G, n) \ll n^{1+\varepsilon}$ for every $\varepsilon > 0$.
 @[category research open, AMS 5]
 theorem erdos_111 : answer(sorry) ↔
     ∃ (V : Type*) (G : SimpleGraph V),
-      HasChromaticNumberAleph1 G ∧
+      G.chromaticCardinal = aleph 1 ∧
       ∀ ε : ℝ, 0 < ε →
         ∃ C : ℝ, 0 < C ∧
-          ∀ n : ℕ, (hFun G n : ℝ) ≤ C * (n : ℝ) ^ (1 + ε) := by
+          ∀ n : ℕ, (maxMinEdgeDeletionsForBipartite G n : ℝ) ≤ C * (n : ℝ) ^ (1 + ε) := by
   sorry
 
 end Erdos111
