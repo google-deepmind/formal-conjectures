@@ -21,8 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/206](https://www.erdosproblems.com/206)
 
-[Ko24b] Kovač, V., _Disproof of a conjecture of Erdős and Graham on the greedy algorithm for
-Egyptian fractions_ (2024).
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[Ko24b] Kovač, V., _On eventually greedy best underapproximations by Egyptian fractions_ (2024).
 -/
 
 open scoped BigOperators
@@ -82,6 +84,29 @@ We formalize Kovač's result (the negation of the original conjecture).
 @[category research solved, AMS 11 28]
 theorem erdos_206 :
     volume {x : ℝ | 0 < x ∧ IsEventuallyGreedy x} = 0 := by
+  sorry
+
+/--
+Erdős Problem 206 — Variant (Curtiss [Cu22]):
+
+The greedy property holds for $x = 1$: the best underapproximations of $1$ by sums of
+distinct unit fractions are eventually constructed greedily.
+-/
+@[category research solved, AMS 11 28]
+theorem erdos_206_unit : IsEventuallyGreedy 1 := by
+  sorry
+
+/--
+Erdős Problem 206 — Open Variant:
+
+It remains open whether the greedy property holds for every rational $x > 0$.
+Kovač's measure-zero result [Ko24b] does not resolve this, as the set of rationals
+has measure zero. Positive results are known for $x = 1$ (Curtiss), $x = 1/m$
+(Erdős [Er50b]), and $x = a/b$ when $a \mid (b+1)$ (Nathanson [Na23]).
+-/
+@[category research open, AMS 11 28]
+theorem erdos_206_rational :
+    ∀ q : ℚ, 0 < q → IsEventuallyGreedy (q : ℝ) := by
   sorry
 
 end Erdos206
