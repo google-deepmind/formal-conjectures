@@ -31,27 +31,26 @@ this problem. A complete proof that $h(x)/x \to \infty$ was provided by Pollack 
 Pomerance [PoPo16].
 
 [Er59c] Erdős, P., _Remarks on number theory II. Some problems on the σ function_.
-Acta Arith. 5 (1959), 171-177.
+Acta Arith. 5 (1959), 171-177. (p.172)
 
-[Er74b] Erdős, P., _On abundant-like numbers_. Canad. Math. Bull. 17 (1974), 599-602.
+[Er74b] Erdős, P., _Remarks on some problems in number theory_.
+Math. Balkanica (1974), 197-202. (p.202)
 
 [PoPo16] Pollack, P. and Pomerance, C., _Some problems of Erdős on the sum-of-divisors
 function_. Trans. Amer. Math. Soc. Ser. B 3 (2016), 1-26.
 -/
 
 open Finset BigOperators Nat
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos824
-
-/-- The sum of divisors function $\sigma(n) = \sum_{d \mid n} d$. -/
-def sumDivisors (n : ℕ) : ℕ := ∑ d ∈ n.divisors, d
 
 /-- $h(x)$ counts the number of pairs of coprime integers $1 \le a < b < x$
 with equal sum-of-divisors values. -/
 def erdos824_h (x : ℕ) : ℕ :=
   ((Finset.range x ×ˢ Finset.range x).filter
     (fun p => 0 < p.1 ∧ p.1 < p.2 ∧ Nat.Coprime p.1 p.2 ∧
-      sumDivisors p.1 = sumDivisors p.2)).card
+      σ 1 p.1 = σ 1 p.2)).card
 
 /--
 Erdős Problem 824 [Er59c, Er74b]:
@@ -64,6 +63,29 @@ theorem erdos_824 : answer(sorry) ↔
     ∀ ε : ℝ, ε > 0 →
     ∃ X₀ : ℕ, ∀ x : ℕ, x ≥ X₀ →
       (erdos824_h x : ℝ) > (x : ℝ) ^ ((2 : ℝ) - ε) := by
+  sorry
+
+/-- Weisenberg's variant of $h(x)$: count pairs $1 \le a < b < x$ with $\sigma(a) = \sigma(b)$
+such that no proper divisors $u \mid a$ and $v \mid b$ satisfy $\sigma(u) = \sigma(v)$,
+$(u, a/u) = 1$, and $(v, b/v) = 1$. This is a weaker restriction than coprimality,
+described as the weakest condition that still eliminates trivial duplicates. -/
+def erdos824_h_weisenberg (x : ℕ) : ℕ :=
+  ((Finset.range x ×ˢ Finset.range x).filter
+    (fun p => 0 < p.1 ∧ p.1 < p.2 ∧ σ 1 p.1 = σ 1 p.2 ∧
+      ¬∃ u ∈ p.1.properDivisors, ∃ v ∈ p.2.properDivisors,
+        σ 1 u = σ 1 v ∧ Nat.Coprime u (p.1 / u) ∧ Nat.Coprime v (p.2 / v))).card
+
+/--
+Weisenberg's variant of Erdős Problem 824:
+
+Is it true that $h_W(x) > x^{2-o(1)}$, where $h_W$ uses the weaker Weisenberg condition
+instead of coprimality?
+-/
+@[category research open, AMS 11]
+theorem erdos_824_weisenberg : answer(sorry) ↔
+    ∀ ε : ℝ, ε > 0 →
+    ∃ X₀ : ℕ, ∀ x : ℕ, x ≥ X₀ →
+      (erdos824_h_weisenberg x : ℝ) > (x : ℝ) ^ ((2 : ℝ) - ε) := by
   sorry
 
 end Erdos824
