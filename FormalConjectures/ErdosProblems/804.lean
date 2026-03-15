@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 
 /-!
 # Erdős Problem 804
@@ -33,21 +34,18 @@ who proved that
 $$(\log n)^2 / \log(\log n) \ll f((\log n)^2, n) \ll (\log n)^2$$
 and
 $$f((\log n)^3, n) \asymp (\log n)^2 / \log(\log n).$$
+
+See also problem 805.
+
+[Er91] Erdős, P., _Problems and results in combinatorial number theory_.
+
+[AlSu07] Alon, N. and Sudakov, B., _On graphs with subgraphs having large independence
+numbers_. J. Graph Theory (2007), 149-157.
 -/
 
 open Classical SimpleGraph Finset
 
 namespace Erdos804
-
-/-- An independent set in a simple graph: a finset of vertices with no edges
-    between any two of its members. -/
-def IsIndepSet {V : Type*} (G : SimpleGraph V) (S : Finset V) : Prop :=
-  ∀ u ∈ S, ∀ v ∈ S, ¬G.Adj u v
-
-/-- The independence number of a graph on $n$ vertices: the maximum cardinality
-    of an independent set. -/
-noncomputable def independenceNum {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
-  ((univ : Finset (Fin n)).powerset.filter (IsIndepSet G)).sup Finset.card
 
 /-- $f(m, n)$ is the largest $k$ such that every graph on $n$ vertices
     in which every induced subgraph on $m$ vertices has an independent set of
@@ -56,11 +54,13 @@ noncomputable def independenceNum {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
     Equivalently, the infimum of independence numbers over all qualifying
     graphs. -/
 noncomputable def erdos804_f (m n : ℕ) : ℕ :=
+  -- Infimum over independence numbers of graphs satisfying the local
+  -- independence condition on every m-vertex induced subgraph.
   sInf { k : ℕ | ∃ G : SimpleGraph (Fin n),
     (∀ S : Finset (Fin n), S.card = m →
       ∃ T : Finset (Fin n), T ⊆ S ∧ T.card ≥ Nat.ceil (Real.log (n : ℝ)) ∧
-        IsIndepSet G T) ∧
-    independenceNum G = k }
+        G.IsIndepSet (T : Set (Fin n))) ∧
+    α(G) = k }
 
 /--
 Alon-Sudakov [AlSu07] upper bound: $f((\log n)^2, n) \leq C \cdot (\log n)^2$
