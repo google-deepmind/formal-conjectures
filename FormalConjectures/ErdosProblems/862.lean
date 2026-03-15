@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 862
@@ -45,20 +46,10 @@ open Finset Classical
 
 namespace Erdos862
 
-/-- A finite set of natural numbers is a Sidon set if all pairwise sums are distinct. -/
-def IsSidonSet (S : Finset ℕ) : Prop :=
-  ∀ a ∈ S, ∀ b ∈ S, ∀ c ∈ S, ∀ d ∈ S,
-    a + b = c + d → (a = c ∧ b = d) ∨ (a = d ∧ b = c)
-
-/-- A Sidon subset of $\{1,\ldots,N\}$ is maximal if no element of $\{1,\ldots,N\}$ can be added
-while keeping it Sidon. -/
-def IsMaximalSidonIn (S : Finset ℕ) (N : ℕ) : Prop :=
-  S ⊆ Icc 1 N ∧ IsSidonSet S ∧
-    ∀ x ∈ Icc 1 N, x ∉ S → ¬IsSidonSet (S ∪ {x})
-
 /-- $A_1(N)$ is the number of maximal Sidon subsets of $\{1,\ldots,N\}$. -/
 noncomputable def countMaximalSidon (N : ℕ) : ℕ :=
-  ((Icc 1 N).powerset.filter (fun S => IsMaximalSidonIn S N)).card
+  ((Icc 1 N).powerset.filter
+    (fun S => Set.IsMaximalSidonSetIn (S : Set ℕ) N)).card
 
 /--
 Erdős Problem 862, first question (Cameron–Erdős [Er92c], disproved by Saxton–Thomason [SaTh15]):
