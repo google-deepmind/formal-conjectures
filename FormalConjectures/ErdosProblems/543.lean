@@ -26,11 +26,17 @@ of order $N$ is subset-sum complete with probability $\geq 1/2$. Erdős and Rén
 $f(N) \leq \log_2 N + O(\log \log N)$. This problem asks whether the bound can be improved
 to $f(N) \leq \log_2 N + o(\log \log N)$. Disproved by ChatGPT and Tang.
 
+Related: [Erdős Problem 1179](https://www.erdosproblems.com/1179).
+
 [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
 combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971)
 (1973), 117-138.
 
-[ErHa78b] Erdős, P. and Hajnal, A., 1978.
+[ErRe65] Erdős, P. and Rényi, A., *Probabilistic methods in group theory*. J. Analyse Math.
+(1965), 127-138.
+
+[ErHa78b] Erdős, P. and Hall, R.R., *Some new results in probabilistic group theory*. Comment.
+Math. Helv. (1978), 448-457.
 -/
 
 open Finset Filter Classical
@@ -67,7 +73,7 @@ Erdős Problem 543 (disproved):
 
 Define $f(N)$ as the minimal $k$ such that for every abelian group $G$ of size $N$,
 a uniformly random subset $A \subseteq G$ of size $k$ is subset-sum complete with
-probability $\geq 1/2$. Erdős and Rényi proved $f(N) \leq \log_2 N + O(\log \log N)$.
+probability $\geq 1/2$. Erdős and Rényi [ErRe65] proved $f(N) \leq \log_2 N + O(\log \log N)$.
 
 The conjecture asked whether $f(N) \leq \log_2 N + o(\log \log N)$. Erdős believed
 this improvement is impossible [Er73, p.127], [ErHa78b].
