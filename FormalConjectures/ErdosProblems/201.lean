@@ -42,29 +42,16 @@ theory I*. Enseign. Math. (1979).
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
 
+[Ri69] Riddell, J., *On sets of numbers containing no l terms in arithmetic progression*.
+Nieuw Arch. Wisk. (3) **17** (1969), 204-209.
+
 [KSS75] Komlós, J., Sulyok, M. and Szemerédi, E., *Linear problems in combinatorial number
-theory*. Acta Math. Acad. Sci. Hungar. (1975).
+theory*. Acta Math. Acad. Sci. Hungar. **26** (1975), 113-121.
 -/
 
 open Classical
 
 namespace Erdos201
-
-/--
-A finset of integers contains a $k$-term arithmetic progression if there
-exist integers $a$, $d$ with $d \neq 0$ such that $a + i \cdot d \in S$ for all
-$0 \leq i < k$.
--/
-def HasKTermAP (k : ℕ) (S : Finset ℤ) : Prop :=
-  ∃ a d : ℤ, d ≠ 0 ∧ ∀ i : Fin k, (a + (i.val : ℤ) * d) ∈ S
-
-/-- The maximum cardinality of a subset of $S$ that contains no $k$-term AP. -/
-noncomputable def maxAPFreeSize (k : ℕ) (S : Finset ℤ) : ℕ :=
-  Finset.sup (S.powerset.filter (fun T => ¬HasKTermAP k T)) Finset.card
-
-/-- $R_k(N)$: the size of the largest subset of $\{1, \ldots, N\}$ without a $k$-term AP. -/
-noncomputable def rAp (k N : ℕ) : ℕ :=
-  maxAPFreeSize k (Finset.Icc (1 : ℤ) (N : ℤ))
 
 /--
 Erdős Problem #201 [Er73, Er75b, ErGr79, ErGr80]:
@@ -80,8 +67,8 @@ theorem erdos_201 :
     answer(sorry) ↔
     ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
       ∀ S : Finset ℤ, S.card = N →
-        ∃ T ⊆ S, ¬HasKTermAP 3 T ∧
-          (1 - ε) * (rAp 3 N : ℝ) ≤ (T.card : ℝ) := by
+        ∃ T ⊆ S, (↑T : Set ℤ).IsAPOfLengthFree 3 ∧
+          (1 - ε) * ((Finset.Icc (1 : ℤ) (N : ℤ)).maxAPFreeCard 3 : ℝ) ≤ (T.card : ℝ) := by
   sorry
 
 end Erdos201
