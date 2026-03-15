@@ -26,7 +26,15 @@ If $1 = a_1 < a_2 < \cdots < a_{\varphi(n_k)} = n_k - 1$ is the sequence of inte
 coprime to $n_k$, are there $\gg \max_i (a_{i+1} - a_i)$ many even integers
 of the form $a_{j+1} - a_j$?
 
-This was asked by Erdős in Oberwolfach (most likely in 1986) [Er85c, Ob1].
+Erdős initially conjectured that all even integers up to the maximum gap appear as
+consecutive differences, but computational work by Lacampagne and Selfridge for
+$n_k = 2 \cdot 3 \cdot 5 \cdot 7 \cdot 11 \cdot 13 = 30030$ produced counterexamples,
+leading him to retreat to the weaker "$\gg$ many" formulation.
+
+This was asked by Erdős in Oberwolfach (most likely in 1986) [Er85c, p.80], [Ob1].
+
+See also OEIS sequences [A389839](https://oeis.org/A389839) and
+[A048670](https://oeis.org/A048670).
 -/
 
 open Nat Finset
@@ -40,7 +48,8 @@ noncomputable def primorial : ℕ → ℕ
   | 0 => 1
   | k + 1 => Nat.nth Nat.Prime k * primorial k
 
-/-- The sorted list of integers in $\{1, \ldots, n-1\}$ coprime to $n$. -/
+/-- The sorted list of integers in $\{1, \ldots, n-1\}$ coprime to $n$.
+We exclude 0 because the coprime sequence starts at $a_1 = 1$. -/
 noncomputable def coprimeList (n : ℕ) : List ℕ :=
   ((Finset.range n).filter (fun a => 0 < a ∧ Nat.Coprime a n)).sort (· ≤ ·)
 
@@ -54,7 +63,8 @@ def consecutiveDiffs : List ℕ → List ℕ
 noncomputable def gapValues (n : ℕ) : Finset ℕ :=
   (consecutiveDiffs (coprimeList n)).toFinset
 
-/-- The maximum consecutive gap in the coprime sequence for $n$. -/
+/-- The maximum consecutive gap in the coprime sequence for $n$.
+Equivalently, one could use `List.maximum?` on the consecutive differences. -/
 noncomputable def maxGap (n : ℕ) : ℕ :=
   (consecutiveDiffs (coprimeList n)).foldl max 0
 
