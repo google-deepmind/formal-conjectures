@@ -28,18 +28,40 @@ Is it attained by choosing all integers in $[1, (N/2)^{1/2}]$ together with
 all even integers in $[(N/2)^{1/2}, (2N)^{1/2}]$?
 
 This construction gives $g(N) \geq (9N/8)^{1/2} + O(1)$. Erdős [Er51b] proved
-$g(N) \leq (4N)^{1/2} + O(1)$. Chen [Ch98] established the asymptotic
-$g(N) \sim (9N/8)^{1/2}$. Chen and Dai [ChDa07] proved that, infinitely often,
-Erdős' construction is not optimal, disproving the conjecture.
+$g(N) \leq (4N)^{1/2} + O(1)$. Choi [Ch72b] improved the upper bound. Chen [Ch98]
+established the asymptotic $g(N) \sim (9N/8)^{1/2}$. Dai and Chen [DaCh06] proved a
+refined upper bound with error term. Chen and Dai [ChDa07] proved that, infinitely
+often, Erdős' construction is not optimal, disproving the conjecture.
 
-[Er51b] Erdős, P., _On a problem in elementary number theory and a
-combinatorial problem_. Proc. Amer. Math. Soc. (1951), 2, 308-311.
+See also OEIS sequence [A068509](https://oeis.org/A068509).
 
-[Ch98] Chen, S., _On the size of sets whose elements have perfect power
-pairwise l.c.m._. Acta Arith. (1998).
+[Er51b] Erdős, P., _Problem_. Matematikai Lapok (1951), 233.
 
-[ChDa07] Chen, S. and Dai, L.-X., _On the lcm-sum problem_. J. Number Theory
-(2007).
+[Er65] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math.
+**8** (1965), 181–189.
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A
+Survey of Combinatorial Theory (1973), 117–138.
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in
+combinatorial number theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[Er98] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Challenges for the 21st century (Singapore, 2000), 2001.
+
+[Ch72b] Choi, S. L. G., _The largest subset in {1,...,n} whose integers have
+pairwise L.C.M. not exceeding n_. Mathematika (1972), 221–230.
+
+[Ch98] Chen, Y.-G., _Sequences with bounded l.c.m. of each pair of terms_. Acta
+Arith. (1998), 71–95.
+
+[DaCh06] Dai, L.-X. and Chen, Y.-G., _Sequences with bounded l.c.m. of each pair
+of terms. II_. Acta Arith. (2006), 315–326.
+
+[ChDa07] Chen, Y.-G. and Dai, L.-X., _Sequences with bounded l.c.m. of each pair
+of terms. III_. Acta Arith. (2007), 125–133.
+
+[Gu04] Guy, Richard K., _Unsolved problems in number theory_. (2004), xviii+437.
 -/
 
 namespace Erdos441
