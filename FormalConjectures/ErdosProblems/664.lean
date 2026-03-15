@@ -31,10 +31,13 @@ This was disproved by Alon, who showed that for $c = 2/5$ and appropriate famili
 from random subsets of lines of a projective plane, any transversal $B$ must intersect
 some $A_j$ in $\Omega(\log n)$ points.
 
-[Er81] Erdős, P., _Combinatorial problems in geometry and number theory_ (1981).
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica 1 (1981), 25–42.
 
 [Er97f] Erdős, P., _Some of my new and almost new problems and results in combinatorial
 number theory_ (1997).
+
+See also: Erdős Problem 1159 for the weaker projective plane variant.
 -/
 
 open Finset
