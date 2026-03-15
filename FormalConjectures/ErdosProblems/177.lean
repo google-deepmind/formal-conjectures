@@ -34,9 +34,23 @@ Known bounds:
 - Van der Waerden's theorem implies $h(d) \to \infty$.
 - Cantor, Erdős, Schreiber, and Straus proved $h(d) \ll d!$.
 
+[Er66] Erdős, P., *Remarks on number theory. V. Extremal problems in number theory. II*.
+Mat. Lapok (1966), 135–155.
+
+[Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
+combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo.,
+1971) (1973), 117–138.
+
+[ErGr79] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+number theory I*. Enseign. Math. (1979).
+
+[ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+number theory*. Monographies de L'Enseignement Mathematique (1980).
+
 [Ro64] Roth, K. F., *Remark concerning integer sequences*, Acta Arithmetica 9 (1964), 257–260.
 
-[Be17] Beck, J., *Probabilistic Diophantine Approximation*, Springer Monographs in Mathematics (2017).
+[Be17] Beck, J., *A discrepancy problem: balancing infinite dimensional vectors*. Number
+theory—Diophantine problems, uniform distribution and applications (2017), 61–82.
 -/
 
 open Finset BigOperators Real
