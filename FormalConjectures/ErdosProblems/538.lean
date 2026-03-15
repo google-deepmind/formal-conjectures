@@ -32,6 +32,11 @@ and hence
 $$\sum_{n \in A} \frac{1}{n} \ll r \frac{\log N}{\log \log N}.$$
 
 The problem asks whether this bound is the best possible.
+
+See also [536] and [537].
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973), 117–138.
 -/
 
 open Finset Real
