@@ -25,6 +25,8 @@ Does there exist a set $S \subseteq \mathbb{R}^2$ such that every set congruent 
 contains exactly one point of $\mathbb{Z}^2$? The answer is yes, proved by Jackson and
 Mauldin [JaMa02] using the axiom of choice.
 
+[Er83c] Erdős, P., _Old and new problems in combinatorial analysis and graph theory_, 1983.
+
 [JaMa02] Jackson, S. and Mauldin, R.D., _On a lattice problem of H. Steinhaus_, Journal of the
 American Mathematical Society 15 (2002), 817-856.
 -/
