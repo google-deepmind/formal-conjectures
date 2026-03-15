@@ -24,7 +24,10 @@ $a_i \pmod{n_i}$ with distinct moduli $n_i \geq 2$ such that every integer belon
 exactly one of these congruence classes. This was proved independently by
 Mirsky–Newman and Davenport–Rado.
 
-*Reference:* [erdosproblems.com/947](https://www.erdosproblems.com/947)
+*References:*
+- [erdosproblems.com/947](https://www.erdosproblems.com/947)
+- [Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._.
+  Number Theory Day (Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43–72.
 -/
 
 namespace Erdos947
