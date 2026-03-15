@@ -26,10 +26,12 @@ on $n$ vertices are $t$-coloured. Prove that some colour class must contain $k$ 
 disjoint edges.
 
 In other words, this problem asks to determine the chromatic number of the Kneser
-graph. The bound is best possible.
+hypergraph. The bound is best possible.
 
 When $k = 2$ this was conjectured by Kneser and proved by Lovász [Lo78].
 The general case was proved by Alon, Frankl, and Lovász [AFL86].
+
+[Er76] Erdős, P., _Problems and results in graph theory and combinatorics_ (1976).
 
 [Lo78] Lovász, L., _Kneser's conjecture, chromatic number, and homotopy_. J. Combin.
 Theory Ser. A **25** (1978), 319--324.
@@ -59,6 +61,23 @@ theorem erdos_780
     ∃ (i : Fin t) (edges : Fin k → {s : Finset (Fin n) // s.card = r}),
       (∀ j, c (edges j) = i) ∧
       (∀ j₁ j₂, j₁ ≠ j₂ → Disjoint (edges j₁).val (edges j₂).val) := by
+  sorry
+
+/--
+**Erdős Problem 780 — Sharpness:**
+
+The bound in `erdos_780` is tight: when `n = k * r + (t - 1) * (k - 1) - 1`,
+there exists a $t$-colouring of the complete $r$-uniform hypergraph on $n$ vertices
+such that no colour class contains $k$ pairwise disjoint edges.
+-/
+@[category research solved, AMS 5]
+theorem erdos_780_tight
+    (k r t : ℕ) (hk : k ≥ 2) (hr : r ≥ 1) (ht : t ≥ 2)
+    (n : ℕ) (hn : n = k * r + (t - 1) * (k - 1) - 1) :
+    ∃ (c : {s : Finset (Fin n) // s.card = r} → Fin t),
+      ∀ (i : Fin t) (edges : Fin k → {s : Finset (Fin n) // s.card = r}),
+        (∀ j, c (edges j) = i) →
+        ¬(∀ j₁ j₂, j₁ ≠ j₂ → Disjoint (edges j₁).val (edges j₂).val) := by
   sorry
 
 end Erdos780
