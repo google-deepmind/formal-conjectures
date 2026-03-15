@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
 
 /-!
 # Erdős Problem 372
@@ -27,10 +28,13 @@ such that $P(n) > P(n+1) > P(n+2)$.
 Conjectured by Erdős and Pomerance [ErPo78], who proved the analogous result
 for $P(n) < P(n+1) < P(n+2)$. Solved by Balog [Ba01], who proved that this is
 true for $\gg \sqrt{x}$ many $n \leq x$ (for all large $x$). Balog suggests the natural
-conjecture that the density of such $n$ is $1/6$.
+conjecture that the density of such $n$ is $1/6$. A generalised form of this
+conjecture was presented by De Koninck and Doyon [DeDo11].
+
+OEIS: [A071870](https://oeis.org/A071870)
 
 [ErPo78] Erdős, P. and Pomerance, C., _On the largest prime factors of n and n+1_,
-Aequationes Math. 17 (1978), 311-321.
+Aequationes Math. **17** (1978), 311-321.
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathematique (1980).
@@ -38,14 +42,13 @@ number theory_. Monographies de L'Enseignement Mathematique (1980).
 [Er85c] Erdős, P., _Some problems and results on combinatorial number theory_ (1985).
 
 [Ba01] Balog, A., _On triplets with descending largest prime factors_, Studia Sci.
-Math. Hungar. 38 (2001), 45-50.
+Math. Hungar. **38** (2001), 45-50.
+
+[DeDo11] De Koninck, J.-M. and Doyon, N., _On the distance between smooth numbers_,
+Integers **11** (2011), A25.
 -/
 
 namespace Erdos372
-
-/-- The largest prime factor of a natural number $n$. Returns $0$ if $n \leq 1$. -/
-noncomputable def largestPrimeFactor (n : ℕ) : ℕ :=
-  n.factorization.support.sup id
 
 /--
 Erdős Problem 372 [ErPo78] [ErGr80] [Er85c]:
@@ -56,8 +59,8 @@ $P(n)$ denotes the largest prime factor of $n$.
 @[category research solved, AMS 11]
 theorem erdos_372 :
     Set.Infinite {n : ℕ |
-      largestPrimeFactor n > largestPrimeFactor (n + 1) ∧
-      largestPrimeFactor (n + 1) > largestPrimeFactor (n + 2)} := by
+      n.maxPrimeFac > (n + 1).maxPrimeFac ∧
+      (n + 1).maxPrimeFac > (n + 2).maxPrimeFac} := by
   sorry
 
 end Erdos372
