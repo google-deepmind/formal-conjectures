@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 760
@@ -43,20 +44,6 @@ open SimpleGraph Real
 
 namespace Erdos760
 
-/-- A colouring $c : V \to \operatorname{Fin} k$ is a cochromatic colouring of $G$ if every
-colour class induces either a complete subgraph or an independent set. -/
-def IsCochromaticColouring {V : Type*} (G : SimpleGraph V) (k : ℕ)
-    (c : V → Fin k) : Prop :=
-  ∀ i : Fin k,
-    (∀ u v, c u = i → c v = i → u ≠ v → G.Adj u v) ∨
-    (∀ u v, c u = i → c v = i → u ≠ v → ¬G.Adj u v)
-
-/-- The cochromatic number $\zeta(G)$ of a finite graph $G$: the minimum number of
-colours in a cochromatic colouring. -/
-noncomputable def cochromaticNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {k : ℕ | ∃ c : V → Fin k, IsCochromaticColouring G k c}
-
 /--
 **Erdős Problem 760** (Proved, Alon–Krivelevich–Sudakov [AKS97]):
 
@@ -70,7 +57,7 @@ theorem erdos_760 :
     ∃ C : ℝ, C > 0 ∧ ∃ N₀ : ℕ, ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
       G.chromaticNumber.toNat ≥ N₀ →
         ∃ (S : Finset (Fin n)),
-          (cochromaticNumber (G.induce (↑S : Set (Fin n))) : ℝ) ≥
+          (SimpleGraph.cochromaticNumber (G.induce (↑S : Set (Fin n))) |>.toNat : ℝ) ≥
             C * (G.chromaticNumber.toNat : ℝ) / Real.log (G.chromaticNumber.toNat : ℝ) := by
   sorry
 
