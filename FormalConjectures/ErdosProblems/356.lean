@@ -27,7 +27,10 @@ $a_1 < \cdots < a_k \leq n$ with at least $cn^2$ distinct contiguous subsequence
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
 
-[Be23b] Beker, A., _On distinct consecutive differences_. (2023).
+[Be23b] Beker, A., _On a problem of Erdős and Graham about consecutive sums in strictly
+increasing sequences_. arXiv:2311.10087 (2023).
+
+[Ko15] Konieczny, J., _On consecutive sums in permutations_. arXiv:1504.07156 (2015).
 -/
 
 open Finset BigOperators
@@ -45,7 +48,7 @@ def contiguousSubSums {k : ℕ} (a : Fin k → ℤ) : Finset ℤ :=
 Erdős Problem 356 [ErGr80, p.58]:
 
 Is there some $c > 0$ such that, for all sufficiently large $n$, there exist
-integers $a_1 < \cdots < a_k \leq n$ such that there are at least $cn^2$ distinct integers
+integers $1 \leq a_1 < \cdots < a_k \leq n$ such that there are at least $cn^2$ distinct integers
 of the form $\sum_{u \leq i \leq v} a_i$ (contiguous subsequence sums)?
 
 Solved in the affirmative by Beker [Be23b].
@@ -57,8 +60,25 @@ theorem erdos_356 :
     ∃ N : ℕ, ∀ n : ℕ, n ≥ N →
     ∃ (k : ℕ) (a : Fin k → ℤ),
       StrictMono a ∧
-      (∀ i : Fin k, a i ≤ ↑n) ∧
+      Set.range a ⊆ Set.Icc 1 ↑n ∧
       (↑(contiguousSubSums a).card : ℝ) ≥ c * (↑n : ℝ) ^ 2 := by
+  sorry
+
+/--
+Erdős Problem 356, permutation variant [Ko15]:
+
+Does there exist some $c > 0$ such that, for all sufficiently large $n$, there exists a
+permutation of $\{1, \ldots, n\}$ with at least $cn^2$ distinct contiguous subsequence sums?
+
+Proved in the affirmative by Konieczny [Ko15].
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_356_permutation_variant :
+    answer(True) ↔
+    ∃ c : ℝ, c > 0 ∧
+    ∃ N : ℕ, ∀ n : ℕ, n ≥ N →
+    ∃ σ : Equiv.Perm (Fin n),
+      (↑(contiguousSubSums (fun i => (↑(σ i) : ℤ) + 1)).card : ℝ) ≥ c * (↑n : ℝ) ^ 2 := by
   sorry
 
 end Erdos356
