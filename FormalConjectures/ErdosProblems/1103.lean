@@ -33,6 +33,9 @@ exists such a sequence with $a_j < \exp(5j / \log j)$ for all large $j$.
 [Er81h] Erdős, P., _Some applications of graph theory and combinatorial methods to number theory
 and geometry_ (1981).
 
+[Ko04] Konyagin, S. V., _Problems of the set of square-free numbers_. Izv. Ross. Akad. Nauk
+Ser. Mat. (2004), 63–90.
+
 [vDTa25] van Doorn, F. and Tao, T., _Sumsets of squarefree numbers_ (2025).
 -/
 
