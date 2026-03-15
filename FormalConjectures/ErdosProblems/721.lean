@@ -24,15 +24,27 @@ import FormalConjectures.Util.ProblemImports
 Erdős asked for reasonable bounds on the van der Waerden number $W(3,k)$, in particular
 whether $W(3,k) < \exp(k^c)$ for some $c < 1$, and for non-trivial lower bounds.
 
-[Sc21] Schoen, T. (2021)
+OEIS: [A171081](https://oeis.org/A171081)
 
-[BlSi23] Bloom, T. and Sisask, O. (2023)
+[Er80] Erdős, P., _A survey of problems in combinatorial number theory_.
+Ann. Discrete Math. (1980), 89–115.
 
-[KeMe23] Kelley, Z. and Meka, R. (2023)
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica 1 (1981), 25–42.
 
-[Gr22] Green, B. (2022)
+[Sc21] Schoen, T., _A subexponential upper bound for van der Waerden numbers W(3, k)_.
+Electron. J. Combin. (2021), Paper No. 2.34, 10.
 
-[Hu22] Hunter, Z. (2022)
+[BlSi23] Bloom, T. F., Sisask, O., _An improvement to the Kelley-Meka bounds on three-term
+arithmetic progressions_. arXiv:2309.02353 (2023).
+
+[KeMe23] Kelley, Z., Meka, R., _Strong Bounds for 3-Progressions_. arXiv:2302.05537 (2023).
+
+[Gr22] Green, B., _New lower bounds for van der Waerden numbers_. Forum Math. Pi (2022),
+Paper No. e18, 51.
+
+[Hu22] Hunter, Z., _Improved lower bounds for van der Waerden numbers_. Combinatorica (2022),
+1231–1252.
 -/
 
 open Real
