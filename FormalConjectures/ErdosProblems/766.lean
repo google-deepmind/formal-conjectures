@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/766](https://www.erdosproblems.com/766)
 
+[Er64c] Erdős, P., _On extremal problems of graphs and generalized graphs_.
+Israel J. Math. **2** (1964), 183–190.
+
 Let $f(n;k,l) = \min \operatorname{ex}(n;G)$, where $G$ ranges over all graphs with $k$ vertices
 and $l$ edges.
 
@@ -35,21 +38,11 @@ open SimpleGraph
 
 namespace Erdos766
 
-/-- A graph $G$ contains $H$ as a subgraph via an injective graph homomorphism. -/
-def ContainsSubgraph {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → G.Adj (f u) (f v)
-
-/-- The Turán extremal number $\operatorname{ex}(n; H)$: the maximum number of edges in a
-simple graph on $n$ vertices that does not contain $H$ as a subgraph. -/
-noncomputable def extremalNumber {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
-  sSup {m : ℕ | ∃ G : SimpleGraph (Fin n),
-    ¬ContainsSubgraph G H ∧ G.edgeSet.ncard = m}
-
 /-- The minimum extremal number $f(n;k,l)$: the minimum of $\operatorname{ex}(n;G)$ over all
 graphs $G$ on $k$ vertices with exactly $l$ edges. -/
 noncomputable def minExtremalNumber (n k l : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ G : SimpleGraph (Fin k),
-    G.edgeSet.ncard = l ∧ extremalNumber G n = m}
+    G.edgeSet.ncard = l ∧ SimpleGraph.extremalNumber n G = m}
 
 /--
 Erdős Problem 766, monotonicity conjecture:
