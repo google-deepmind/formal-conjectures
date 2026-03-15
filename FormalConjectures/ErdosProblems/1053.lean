@@ -24,22 +24,21 @@ import FormalConjectures.Util.ProblemImports
 Call a number $k$-perfect if $\sigma(n) = kn$, where $\sigma(n)$ is the sum of the divisors
 of $n$. Must $k = o(\log \log n)$?
 
-A question of Erdős, as reported in problem B2 of Guy's collection.
+A question of Erdős, as reported in problem B2 of Guy's collection. Guy also notes that it has
+been suggested that there may be only finitely many $k$-perfect numbers with $k \geq 3$. The
+largest known $k$-value for which a $k$-perfect number has been discovered is $k = 11$.
 
 [Gu04] Guy, R., *Unsolved Problems in Number Theory*, 3rd edition, Springer, 2004.
 -/
 
-open Finset Real
+open scoped ArithmeticFunction.sigma
+open Real
 
 namespace Erdos1053
 
-/-- The sum-of-divisors function $\sigma(n) = \sum_{d \mid n} d$. -/
-def sumOfDivisors (n : ℕ) : ℕ :=
-  (Nat.divisors n).sum id
-
 /-- A natural number $n$ is $k$-perfect if $n \geq 1$ and $\sigma(n) = k \cdot n$. -/
 def IsMultiplyPerfect (n k : ℕ) : Prop :=
-  n ≥ 1 ∧ sumOfDivisors n = k * n
+  n ≥ 1 ∧ σ 1 n = k * n
 
 /--
 Erdős Problem 1053 [Gu04]:
@@ -55,6 +54,15 @@ theorem erdos_1053 : answer(sorry) ↔
     ∀ ε : ℝ, ε > 0 →
     Set.Finite {n : ℕ | ∃ k : ℕ, IsMultiplyPerfect n k ∧
       (k : ℝ) ≥ ε * Real.log (Real.log (n : ℝ))} := by
+  sorry
+
+/--
+A stronger variant suggested by Guy [Gu04]: there are only finitely many $k$-perfect numbers
+with $k \geq 3$. This implies the main conjecture `erdos_1053`.
+-/
+@[category research open, AMS 11]
+theorem erdos_1053_variant : answer(sorry) ↔
+    Set.Finite {n : ℕ | ∃ k : ℕ, k ≥ 3 ∧ IsMultiplyPerfect n k} := by
   sorry
 
 end Erdos1053
