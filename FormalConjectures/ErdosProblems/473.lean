@@ -21,8 +21,13 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/473](https://www.erdosproblems.com/473)
 
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
 Is there a permutation $a_1, a_2, \ldots$ of the positive integers such that $a_k + a_{k+1}$ is
 always prime? Asked by Segal. The answer is yes, as shown by Odlyzko.
+
+See also OEIS sequence [A055265](https://oeis.org/A055265).
 -/
 
 namespace Erdos473
