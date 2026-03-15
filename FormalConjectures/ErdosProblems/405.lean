@@ -60,4 +60,19 @@ theorem erdos_405 : answer(True) ↔
       Nat.Prime p ∧ p ≠ 2 ∧ (p - 1).factorial + a ^ (p - 1) = p ^ k} := by
   sorry
 
+/--
+Yu and Liu [YuLi96] proved the stronger result that the complete set of solutions
+$(p, a, k)$ with $p$ an odd prime and $(p-1)! + a^{p-1} = p^k$ is exactly
+$\{(3, 1, 1), (3, 5, 3), (5, 1, 2)\}$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_405_yu_liu :
+    {t : ℕ × ℕ × ℕ |
+      let p := t.1
+      let a := t.2.1
+      let k := t.2.2
+      Nat.Prime p ∧ p ≠ 2 ∧ (p - 1).factorial + a ^ (p - 1) = p ^ k} =
+    {(3, 1, 1), (3, 5, 3), (5, 1, 2)} := by
+  sorry
+
 end Erdos405
