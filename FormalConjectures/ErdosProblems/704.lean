@@ -33,11 +33,17 @@ A generalisation of the Hadwiger–Nelson problem (which addresses $n = 2$).
 - Frankl–Wilson [FrWi81]: $\chi(G_n) \geq (1+o(1)) \cdot 1.2^n$
 - Larman–Rogers [LaRo72]: $\chi(G_n) \leq (3+o(1))^n$
 
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica 1 (1981), 25–42.
+
 [FrWi81] Frankl, P. and Wilson, R. M., _Intersection theorems with geometric consequences_.
 Combinatorica 1 (1981), 357–368.
 
 [LaRo72] Larman, D. G. and Rogers, C. A., _The realization of distances within sets in
 Euclidean space_. Mathematika 19 (1972), 1–24.
+
+[Pr20] Prosanov, R., _A new proof of the Larman–Rogers upper bound for the chromatic number
+of the Euclidean space_. Discrete Appl. Math. (2020), 115–120.
 -/
 
 open Filter
@@ -91,13 +97,13 @@ Erdős Problem 704, Larman–Rogers upper bound [LaRo72]:
 
 $\chi(G_n) \leq (3+o(1))^n$.
 
-Formalized as: there exist $C > 0$ and $N_0$ such that for all $n \geq N_0$,
-$\chi(G_n) \leq C \cdot 3^n$.
+Formalized as: for every $\varepsilon > 0$, there exists $N_0$ such that for all $n \geq N_0$,
+$\chi(G_n) \leq (3 + \varepsilon)^n$.
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_704.variants.upper_bound :
-    ∃ C : ℝ, C > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
-      (chromaticNumber_unitDist n : ℝ) ≤ C * (3 : ℝ) ^ n := by
+    ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      (chromaticNumber_unitDist n : ℝ) ≤ (3 + ε) ^ n := by
   sorry
 
 end Erdos704
