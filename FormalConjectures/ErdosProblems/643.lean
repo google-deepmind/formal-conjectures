@@ -43,15 +43,18 @@ Pikhurko and Verstraëte proved
 $1 \leq \limsup_{n\to\infty} f(n;t)/\binom{n}{t-1} \leq \min(7/4, 1+2/\sqrt{t})$
 for all $t \geq 3$.
 
-[Er77b] Erdős, P., _Problems and results on combinatorial number theory III_.
+[Er77b] Erdős, P., _Problems and results in combinatorial analysis_.
+Proceedings of the Eighth Southeastern Conference on Combinatorics, Graph Theory
+and Computing (1977), 3–12.
 
-[Er97d] Erdős, P., _Some of my favourite problems in number theory, combinatorics,
-and geometry_.
+[Er97d] Erdős, P., _Some recent problems and results in graph theory_.
+Discrete Math. (1997), 81–85.
 
 [Fu84] Füredi, Z., _Hypergraphs in which all disjoint pairs have distinct unions_.
+Combinatorica (1984), 161–168.
 
-[PiVe09] Pikhurko, O. and Verstraëte, J., _Bounds on the size of a set with
-complementary pairs_.
+[PiVe09] Pikhurko, O. and Verstraëte, J., _The maximum size of hypergraphs without
+generalized 4-cycles_. J. Combin. Theory Ser. A (2009), 637–649.
 -/
 
 namespace Erdos643
