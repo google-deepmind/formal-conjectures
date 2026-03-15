@@ -36,10 +36,11 @@ Known results:
 [EHP58] Erdős, P., Herzog, F., and Piranian, G., _Metric properties of polynomials_. J. Analyse
 Math. 6 (1958), 125-148.
 
-[Po61] Pommerenke, Ch., _On the derivative of a polynomial_. Michigan Math. J. 6 (1959), 373-375.
+[Po61] Pommerenke, Ch., _On metric properties of complex polynomials_. Michigan Math. J. 8 (1961),
+97–115.
 
-[KLR25] Krishnapur, M., Lundberg, E., and Ramachandran, K., _The sublevel set radius for
-polynomials_. Preprint (2025).
+[KLR25] Krishnapur, M., Lundberg, E., and Ramachandran, K., _On the area of polynomial
+lemniscates_. arXiv:2503.18270 (2025).
 -/
 
 open Polynomial Classical
