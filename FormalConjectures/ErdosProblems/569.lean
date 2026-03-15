@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
+import Mathlib.Combinatorics.SimpleGraph.Circulant
 
 /-!
 # Erdős Problem 569
@@ -24,17 +26,13 @@ with $m$ edges and no isolated vertices, $R(C_{2k+1}, H) \leq c_k \cdot m$?
 
 *Reference:* [erdosproblems.com/569](https://www.erdosproblems.com/569)
 
-[EFRS93] Erdős, P., Faudree, R., Rousseau, C., and Schelp, R.
+[EFRS93] Erdős, P., Faudree, R., Rousseau, C., and Schelp, R., _Multipartite graph—sparse
+graph Ramsey numbers_ (1993).
 -/
 
 open SimpleGraph
 
 namespace Erdos569
-
-/-- A graph $G$ embeds into a graph $H$: there is an injective map from
-vertices of $G$ to vertices of $H$ preserving adjacency. -/
-def Embeds {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
 
 /-- The Ramsey number $R(G, H)$: the minimum $N$ such that for any graph $F$
 on $\operatorname{Fin} N$, either $G$ embeds in $F$ or $H$ embeds in the complement
@@ -42,14 +40,7 @@ of $F$. -/
 noncomputable def ramseyNum {V W : Type*}
     (G : SimpleGraph V) (H : SimpleGraph W) : ℕ :=
   sInf {N : ℕ | ∀ (F : SimpleGraph (Fin N)),
-    Embeds G F ∨ Embeds H Fᶜ}
-
-/-- The cycle graph $C_m$ on $m$ vertices ($m \geq 3$). Vertex $i$ is adjacent to vertex
-$i + 1 \pmod{m}$ and vertex $i - 1 \pmod{m}$. -/
-def cycleGraph (m : ℕ) (_ : m ≥ 3) : SimpleGraph (Fin m) where
-  Adj i j := i ≠ j ∧ (j.val = (i.val + 1) % m ∨ i.val = (j.val + 1) % m)
-  symm := fun _ _ ⟨hne, h⟩ => ⟨hne.symm, h.elim Or.inr Or.inl⟩
-  loopless := fun _ ⟨h, _⟩ => h rfl
+    G.IsContained F ∨ H.IsContained Fᶜ}
 
 /--
 Erdős Problem 569 [EFRS93]:
@@ -63,7 +54,7 @@ Here $C_{2k+1}$ is the odd cycle on $2k+1$ vertices.
 theorem erdos_569 (k : ℕ) (hk : k ≥ 1) :
     ∃ c : ℕ, ∀ (n : ℕ) (H : SimpleGraph (Fin n)),
       (∀ v : Fin n, ∃ w, H.Adj v w) →
-      ramseyNum (cycleGraph (2 * k + 1) (by omega)) H ≤ c * H.edgeSet.ncard := by
+      ramseyNum (SimpleGraph.cycleGraph (2 * k + 1)) H ≤ c * H.edgeSet.ncard := by
   sorry
 
 end Erdos569
