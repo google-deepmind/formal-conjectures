@@ -32,6 +32,11 @@ Math. Mag. **52** (1979), 67-70.
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathematique (1980).
+
+Sarosh Adenwalla observed that $n_k \leq \prod_{k < p < 2k} p = e^{O(k)}$, giving an
+elementary upper bound that establishes existence.
+
+See also [OEIS A386620](https://oeis.org/A386620).
 -/
 
 open Finset BigOperators Classical
@@ -64,5 +69,17 @@ theorem erdos_451 :
     (∀ ε : ℝ, 0 < ε → ∃ K₀ : ℕ, ∀ k : ℕ, K₀ ≤ k →
       (erdos451_nk k : ℝ) < Real.exp (ε * (k : ℝ))) := by
   sorry
+
+/--
+Erdős–Graham lower bound [ErGr80]:
+
+Erdős and Graham proved that $n_k > k^{1+c}$ for some constant $c > 0$.
+This is a weaker (proved) version of the superpolynomial lower bound conjectured
+in `erdos_451`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_451.variants.erdos_graham_lower_bound :
+    ∃ c : ℝ, 0 < c ∧ ∃ K₀ : ℕ, ∀ k : ℕ, K₀ ≤ k →
+      (k : ℝ) ^ (1 + c) < (erdos451_nk k : ℝ) := by sorry
 
 end Erdos451
