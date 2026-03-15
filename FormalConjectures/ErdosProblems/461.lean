@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 /-!
 # Erdős Problem 461
@@ -54,6 +55,17 @@ theorem erdos_461 :
     answer(sorry) ↔
       ∃ c : ℝ, c > 0 ∧ ∀ n t : ℕ, 0 < t →
         (f n t : ℝ) ≥ c * (t : ℝ) := by
+  sorry
+
+/--
+Erdős and Graham state that they can prove $f(n,t) \gg t / \log t$, i.e., there exists
+an absolute constant $c > 0$ such that $f(n,t) \geq c \cdot t / \log t$ for all $n$ and $t \geq 1$.
+This is a weaker but proven lower bound for Problem 461.
+-/
+@[category research solved, AMS 11]
+theorem erdos_461_lower_bound :
+    ∃ c : ℝ, c > 0 ∧ ∀ n t : ℕ, 0 < t →
+      (f n t : ℝ) ≥ c * ((t : ℝ) / Real.log (t : ℝ)) := by
   sorry
 
 end Erdos461
