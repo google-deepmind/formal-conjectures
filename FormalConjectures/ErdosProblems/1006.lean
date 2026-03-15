@@ -23,14 +23,16 @@ import FormalConjectures.Util.ProblemImports
 
 Let $G$ be a graph with girth $> 4$. Can the edges of $G$ always be oriented so that the
 resulting directed graph is acyclic, and reversing any single edge also leaves it acyclic?
-Disproved by Nešetřil and Rödl.
+Originally due to Ore (cited in [Er71]). Ore gave a counterexample with girth 4;
+Gallai observed the Grötzsch graph also fails. Disproved by Nešetřil and Rödl [NeRo78b].
 
-[Er71] Erdős, P., *Some unsolved problems in graph theory and combinatorial analysis*, 1971.
+[Er71] Erdős, P., *Some unsolved problems in graph theory and combinatorial analysis*.
+Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969), pp. 97–109, 1971.
 
-[Er76b] Erdős, P., *Problems and results in graph theory*, 1976.
+[Er76b] Erdős, P., *Problems in combinatorial and graph theory* (1976).
 
-[NeRo78b] Nešetřil, J. and Rödl, V., *A short proof of the existence of highly chromatic
-hypergraphs without short cycles*, 1978.
+[NeRo78b] Nešetřil, J. and Rödl, V., *On a probabilistic graph-theoretical method*.
+Proceedings of the American Mathematical Society, pp. 417–421, 1978.
 -/
 
 open SimpleGraph
@@ -79,6 +81,19 @@ contains a directed cycle or contains a cycle obtained by reversing one edge.
 @[category research solved, AMS 5]
 theorem erdos_1006 : answer(False) ↔
     ∀ (V : Type*) (G : SimpleGraph V), 5 ≤ G.egirth →
+    ∃ o : Orientation G, o.IsRobustlyAcyclic := by
+  sorry
+
+/--
+Variant of Erdős Problem 1006 (Nešetřil–Rödl [NeRo78b]):
+
+For every integer $g$, there exists a graph $G$ with girth $\ge g$ such that no orientation of
+$G$ is robustly acyclic. This strengthens the original problem by showing that high girth alone
+never suffices.
+-/
+@[category research solved, AMS 5]
+theorem erdos_1006_arbitrary_girth : answer(False) ↔
+    ∀ (g : ℕ) (V : Type*) (G : SimpleGraph V), g ≤ G.egirth →
     ∃ o : Orientation G, o.IsRobustlyAcyclic := by
   sorry
 
