@@ -24,6 +24,11 @@ contain either a subgraph on 4 vertices with 3 edges or a subgraph on 5 vertices
 Disproved by Harris.
 
 *Reference:* [erdosproblems.com/794](https://www.erdosproblems.com/794)
+
+[Er69, p.81] Erdős, P., _Some applications of graph theory to number theory_. The Many Facets of
+Graph Theory (Proc. Conf., Western Mich. Univ., Kalamazoo, Mich., 1968), Springer (1969), 77-82.
+[FrFu84] Frankl, P. and Füredi, Z., _An exact result for 3-graphs_. Discrete Mathematics (1984),
+323-328.
 -/
 
 namespace Erdos794
