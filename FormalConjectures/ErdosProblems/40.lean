@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«28»
 
 /-!
 # Erdős Problem 40
@@ -62,7 +61,9 @@ Erdős-Turán conjecture, see Erdõs Problem 28,
 Problem 28).
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40ForSet .univ) : type_of% Erdos28.erdos_28 := by
+theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40ForSet .univ) :
+    ∀ (A : Set ℕ), (A + A)ᶜ.Finite →
+      limsup (fun (n : ℕ) => (sumRep A n : ℕ∞)) atTop = (⊤ : ℕ∞) := by
   simp only [Erdos40ForSet, Erdos40For, sumRep, sumConv, indicatorOne, mem_univ, forall_const]
     at h_erdos_40
   intro A hA

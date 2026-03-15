@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«87»
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 77
@@ -81,11 +81,22 @@ Morris, R., Sahasrabudhe, J., and Tiba, M., _A simple proof of the upper bound f
 diagonal Ramsey numbers_. (2024).
 -/
 
-open Filter Erdos87
+open Filter SimpleGraph
 
 open scoped Topology
 
 namespace Erdos77
+
+/-- The (diagonal) graph Ramsey number $R(H)$: the minimum $N$ such that every simple
+graph $G$ on $N$ vertices either contains a copy of $H$ as a subgraph or its
+complement contains a copy of $H$. -/
+noncomputable def graphRamseyNumber {U : Type*} (H : SimpleGraph U) : ℕ :=
+  sInf {N : ℕ | ∀ (G : SimpleGraph (Fin N)),
+    H.IsContained G ∨ H.IsContained Gᶜ}
+
+/-- The classical diagonal Ramsey number $R(k) := R(K_k, K_k)$. -/
+noncomputable def diagRamsey (k : ℕ) : ℕ :=
+  graphRamseyNumber (⊤ : SimpleGraph (Fin k))
 
 /--
 Erdős Problem 77:

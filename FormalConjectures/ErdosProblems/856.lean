@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«857»
 
 /-!
 # Erdős Problem 856
@@ -41,6 +40,11 @@ arXiv:2512.20055 (2025).
 open Finset Real
 
 namespace Erdos856
+
+/-- A family of sets forms a sunflower if every pair of distinct members
+has the same intersection (the "kernel"). -/
+def IsSunflower {n : ℕ} (S : Finset (Finset (Fin n))) : Prop :=
+  ∃ K : Finset (Fin n), (S : Set (Finset (Fin n))).Pairwise (fun A B => A ∩ B = K)
 
 /-- A finite set of natural numbers has no $k$-element subset where all pairwise
 LCMs are equal. That is, there is no $S \subseteq A$ with $|S| = k$ and a value $L$
@@ -100,7 +104,7 @@ theorem erdos_856.variants.tang_zhang_upper (k : ℕ) (hk : k ≥ 3)
     (hsunflower : ∃ c : ℝ, 0 < c ∧ c < 2 ∧
       ∀ n : ℕ, ∀ F : Finset (Finset (Fin n)),
         (F.card : ℝ) > c ^ n →
-        ∃ S ⊆ F, S.card = k ∧ Erdos857.IsSunflower S) :
+        ∃ S ⊆ F, S.card = k ∧ IsSunflower S) :
     ∃ c : ℝ, 0 < c ∧ c < 1 ∧
     ∃ C : ℝ, C > 0 ∧
     ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →

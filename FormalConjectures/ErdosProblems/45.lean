@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«296»
 
 /-!
 # Erdős Problem 45
@@ -40,6 +39,10 @@ open Finset BigOperators
 
 namespace Erdos45
 
+/-- The reciprocal sum $\sum_{n \in A} 1/n$ of a finite set of natural numbers. -/
+noncomputable def reciprocalSum (A : Finset ℕ) : ℚ :=
+  ∑ n ∈ A, (1 : ℚ) / (n : ℚ)
+
 /--
 The set of divisors of $n$ strictly between $1$ and $n$:
 $$D(n) = \{ d \in \mathbb{N} \mid d \mid n,\; 1 < d < n \}$$
@@ -63,7 +66,7 @@ theorem erdos_45 :
         ∃ D' : Finset ℕ, D' ⊆ middleDivisors n ∧
           D'.Nonempty ∧
           (∃ j : Fin k, ∀ d ∈ D', c d = j) ∧
-          Erdos296.reciprocalSum D' = 1 := by
+          reciprocalSum D' = 1 := by
   sorry
 
 end Erdos45

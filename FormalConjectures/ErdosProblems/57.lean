@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«58»
 
 /-!
 # Erdős Problem 57
@@ -36,9 +35,13 @@ result on sums of reciprocals of all cycle lengths.
 J. Amer. Math. Soc. 36 (2023), 1191-1234.
 -/
 
-open SimpleGraph Finset Erdos58
+open SimpleGraph Finset
 
 namespace Erdos57
+
+/-- The set of lengths of odd cycles in a graph $G$. -/
+def oddCycleLengths {V : Type*} (G : SimpleGraph V) : Set ℕ :=
+  {n : ℕ | Odd n ∧ ∃ (v : V) (p : G.Walk v v), p.IsCycle ∧ p.length = n}
 
 /--
 Erdős Problem 57 (Conjectured by Erdős-Hajnal [ErHa66], proved by Liu-Montgomery [LiMo20]):

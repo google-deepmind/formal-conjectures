@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«28»
 
 /-!
 # Erdős Problem 1145
@@ -66,7 +65,9 @@ theorem erdos_1145 : answer(sorry) ↔ Erdos1145Prop := by
 A stronger form of [erdosproblems.com/28].
 -/
 @[category test, AMS 11]
-theorem erdos_1145.test_implies_erdos_28 : Erdos1145Prop → type_of% Erdos28.erdos_28 := by
+theorem erdos_1145.test_implies_erdos_28 : Erdos1145Prop →
+    ∀ (A : Set ℕ), (A + A)ᶜ.Finite →
+      limsup (fun (n : ℕ) => (sumRep A n : ℕ∞)) atTop = (⊤ : ℕ∞) := by
   delta sumRep
   intro h1145 s hs
   rcases hs.exists_le with ⟨m, hm⟩

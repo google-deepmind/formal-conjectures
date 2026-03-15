@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«751»
 
 /-!
 # Erdős Problem 65
@@ -45,6 +44,10 @@ open SimpleGraph Finset
 
 namespace Erdos65
 
+/-- The set of cycle lengths occurring in a simple graph. -/
+def cycleLengths {V : Type*} (G : SimpleGraph V) : Set ℕ :=
+  {n | ∃ (v : V) (p : G.Walk v v), p.IsCycle ∧ p.length = n}
+
 /--
 Erdős Problem #65 (Erdős–Hajnal) [GKS84] [LiMo20]:
 Let $G$ be a graph with $n$ vertices and $kn$ edges, and let $a_1 < a_2 < \cdots$ be the
@@ -68,9 +71,9 @@ theorem erdos_65 : answer(sorry) ↔
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)) (a b : ℕ), a + b = n →
       ∀ [DecidableRel G.Adj], a * b = G.edgeFinset.card →
       ∀ (T_G : Finset ℕ),
-        (↑T_G : Set ℕ) = Erdos751.cycleLengths G →
+        (↑T_G : Set ℕ) = cycleLengths G →
         ∀ (T_K : Finset ℕ),
-          (↑T_K : Set ℕ) = Erdos751.cycleLengths (completeBipartiteGraph (Fin a) (Fin b)) →
+          (↑T_K : Set ℕ) = cycleLengths (completeBipartiteGraph (Fin a) (Fin b)) →
           ∑ m ∈ T_K, (1 / (m : ℝ)) ≤ ∑ m ∈ T_G, (1 / (m : ℝ)) := by
   sorry
 

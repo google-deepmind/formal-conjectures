@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«55»
 
 /-!
 # Erdős Problem 54
@@ -40,6 +39,18 @@ open Finset Real
 namespace Erdos54
 
 /--
+A set $A$ of natural numbers is Ramsey $r$-complete if for every $r$-coloring of $\mathbb{N}$,
+all sufficiently large natural numbers can be represented as a sum of distinct
+elements of $A$ that all receive the same color.
+-/
+def IsRamseyComplete (A : Set ℕ) (r : ℕ) : Prop :=
+  ∀ (χ : ℕ → Fin r),
+    ∃ N₀ : ℕ, ∀ n ≥ N₀,
+      ∃ (S : Finset ℕ), (↑S : Set ℕ) ⊆ A ∧
+        (∃ c : Fin r, ∀ x ∈ S, χ x = c) ∧
+        S.sum id = n
+
+/--
 Erdős Problem 54 (resolved by Conlon, Fox, and Pham [CFP21]):
 There exists a Ramsey 2-complete set $A$ of positive integers and a constant $c > 0$
 such that $|A \cap \{1, \ldots, N\}| \leq c \cdot (\log N)^2$ for all sufficiently large $N$.
@@ -50,7 +61,7 @@ lower bound order of $(\log N)^2$.
 @[category research solved, AMS 5 11]
 theorem erdos_54 :
     ∃ (A : Set ℕ),
-      Erdos55.IsRamseyComplete A 2 ∧
+      IsRamseyComplete A 2 ∧
         ∃ c : ℝ, c > 0 ∧
           ∃ N₀ : ℕ, ∀ N ≥ N₀,
             (((Finset.Icc 1 N).filter (fun n => n ∈ A)).card : ℝ) ≤
@@ -70,7 +81,7 @@ theorem erdos_54.variants.lower_bound :
         (∃ N₀ : ℕ, ∀ N ≥ N₀,
           (((Finset.Icc 1 N).filter (fun n => n ∈ A)).card : ℝ) ≤
             c * (Real.log (N : ℝ)) ^ 2) →
-        ¬ Erdos55.IsRamseyComplete A 2 := by
+        ¬ IsRamseyComplete A 2 := by
   sorry
 
 end Erdos54

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«296»
 
 /-!
 # Erdős Problem 46
@@ -38,6 +37,10 @@ open Finset BigOperators
 
 namespace Erdos46
 
+/-- The reciprocal sum $\sum_{n \in A} 1/n$ of a finite set of natural numbers. -/
+noncomputable def reciprocalSum (A : Finset ℕ) : ℚ :=
+  ∑ n ∈ A, (1 : ℚ) / (n : ℚ)
+
 /--
 For every $k$-colouring (with $k \ge 2$) of the positive integers $\ge 2$, there exists a
 monochromatic finite set $\{n_1, \ldots, n_m\}$ with $2 \le n_1 < \cdots < n_m$ whose
@@ -52,7 +55,7 @@ theorem erdos_46 : answer(True) ↔
       ∃ S : Finset ℕ, S.Nonempty ∧
         (∀ n ∈ S, n ≥ 2) ∧
         (∃ j : Fin k, ∀ n ∈ S, c n = j) ∧
-        Erdos296.reciprocalSum S = 1 := by
+        reciprocalSum S = 1 := by
   sorry
 
 /--
@@ -71,7 +74,7 @@ theorem erdos_46_rational_generalization :
       ∃ S : Finset ℕ, S.Nonempty ∧
         (∀ n ∈ S, n ≥ 2) ∧
         (∃ j : Fin k, ∀ n ∈ S, c n = j) ∧
-        Erdos296.reciprocalSum S = q := by
+        reciprocalSum S = q := by
   sorry
 
 end Erdos46
