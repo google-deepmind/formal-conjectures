@@ -70,6 +70,79 @@ theorem groupDiam_fin_one : groupDiam (alternatingGroup (Fin 0)) = 0 := by
   · rintro d ⟨S, _, hd⟩
     exact Nat.le_zero.mpr (hd ▸ SimpleGraph.diam_eq_zero.mpr (Or.inr inferInstance))
 
+/-- The alternating group $A_3 \cong \mathbb{Z}/3\mathbb{Z}$ has group diameter $1$: every
+non-trivial generating set produces a complete Cayley graph $K_3$, since any single non-identity
+element and its inverse already reach the entire group. -/
+@[category test, AMS 20]
+theorem groupDiam_alternating_three : groupDiam (alternatingGroup (Fin 3)) = 1 := by
+  have hnt : Nontrivial ↥(alternatingGroup (Fin 3)) :=
+    Fintype.one_lt_card_iff_nontrivial.mp (by decide)
+  -- Key: for any generating set S of A₃, cayleyGraph S is the complete graph
+  have key : ∀ S : Set ↥(alternatingGroup (Fin 3)),
+      Subgroup.closure S = ⊤ → cayleyGraph S = ⊤ := by
+    intro S hS
+    rw [SimpleGraph.eq_top_iff_forall_ne_adj]
+    intro u v hne
+    simp only [cayleyGraph, SimpleGraph.fromRel_adj]
+    refine ⟨hne, ?_⟩
+    -- S must contain a non-identity element
+    obtain ⟨y, hy, hy1⟩ : ∃ y ∈ S, y ≠ 1 := by
+      by_contra! h
+      have : Subgroup.closure S ≤ ⊥ :=
+        (Subgroup.closure_le _).mpr fun x hx => Subgroup.mem_bot.mpr (h x hx)
+      exact absurd (le_antisymm this bot_le |>.symm ▸ hS) bot_ne_top
+    -- In A₃ (order 3), any two non-identity elements are equal or inverses
+    have h3 : ∀ x y : ↥(alternatingGroup (Fin 3)), x ≠ 1 → y ≠ 1 → x = y ∨ x = y⁻¹ := by
+      decide
+    have hg1 : u⁻¹ * v ≠ 1 := by rwa [ne_eq, inv_mul_eq_one]
+    rcases h3 (u⁻¹ * v) y hg1 hy1 with rfl | h
+    · exact Or.inl hy
+    · exact Or.inr (by rwa [show v⁻¹ * u = (u⁻¹ * v)⁻¹ from by group, h, inv_inv])
+  -- The set of diameters equals {1}, so sSup = 1
+  unfold groupDiam
+  have h_eq : { d | ∃ S : Set ↥(alternatingGroup (Fin 3)),
+      Subgroup.closure S = ⊤ ∧ (cayleyGraph S).diam = d } = {1} := by
+    ext d; simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]; constructor
+    · rintro ⟨S, hS, rfl⟩; rw [key S hS, SimpleGraph.diam_top]
+    · rintro rfl
+      exact ⟨Set.univ, Subgroup.closure_univ, by rw [key _ Subgroup.closure_univ,
+        SimpleGraph.diam_top]⟩
+  rw [h_eq, csSup_singleton]
+
+/-- The symmetric group $S_2 \cong \mathbb{Z}/2\mathbb{Z}$ has group diameter $1$: the unique
+generating set $\{(01)\}$ produces the complete graph $K_2$, since the single non-identity
+element and its inverse (which are equal) cover the only other vertex. -/
+@[category test, AMS 20]
+theorem groupDiam_perm_two : groupDiam (Equiv.Perm (Fin 2)) = 1 := by
+  have hnt : Nontrivial (Equiv.Perm (Fin 2)) :=
+    Fintype.one_lt_card_iff_nontrivial.mp (by decide)
+  have key : ∀ S : Set (Equiv.Perm (Fin 2)),
+      Subgroup.closure S = ⊤ → cayleyGraph S = ⊤ := by
+    intro S hS
+    rw [SimpleGraph.eq_top_iff_forall_ne_adj]
+    intro u v hne
+    simp only [cayleyGraph, SimpleGraph.fromRel_adj]
+    refine ⟨hne, ?_⟩
+    obtain ⟨y, hy, hy1⟩ : ∃ y ∈ S, y ≠ 1 := by
+      by_contra! h
+      have : Subgroup.closure S ≤ ⊥ :=
+        (Subgroup.closure_le _).mpr fun x hx => Subgroup.mem_bot.mpr (h x hx)
+      exact absurd (le_antisymm this bot_le |>.symm ▸ hS) bot_ne_top
+    have h2 : ∀ x y : Equiv.Perm (Fin 2), x ≠ 1 → y ≠ 1 → x = y ∨ x = y⁻¹ := by decide
+    have hg1 : u⁻¹ * v ≠ 1 := by rwa [ne_eq, inv_mul_eq_one]
+    rcases h2 (u⁻¹ * v) y hg1 hy1 with rfl | h
+    · exact Or.inl hy
+    · exact Or.inr (by rwa [show v⁻¹ * u = (u⁻¹ * v)⁻¹ from by group, h, inv_inv])
+  unfold groupDiam
+  have h_eq : { d | ∃ S : Set (Equiv.Perm (Fin 2)),
+      Subgroup.closure S = ⊤ ∧ (cayleyGraph S).diam = d } = {1} := by
+    ext d; simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]; constructor
+    · rintro ⟨S, hS, rfl⟩; rw [key S hS, SimpleGraph.diam_top]
+    · rintro rfl
+      exact ⟨Set.univ, Subgroup.closure_univ, by rw [key _ Subgroup.closure_univ,
+        SimpleGraph.diam_top]⟩
+  rw [h_eq, csSup_singleton]
+
 /-- **Babai–Seress Conjecture (Conjecture 1.5)**: There exists an absolute constant $C$ such
 that the diameter of the alternating group $A_n$ satisfies
 $$\operatorname{diam}(A_n) \leq n^C.$$
