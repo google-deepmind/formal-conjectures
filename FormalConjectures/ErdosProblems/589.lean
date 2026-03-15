@@ -26,9 +26,18 @@ points on a line there exists a subset of $g(n)$ points with no three points
 on a line. Estimate $g(n)$.
 
 The trivial greedy algorithm gives $g(n) \gg n^{1/2}$. Füredi [Fu91b] proved
-$n^{1/2} \log n \ll g(n) = o(n)$.
+$g(n) \gg n^{1/2} \log n$. Furstenberg and Katznelson [FuKa91] proved
+$g(n) = o(n)$ as a consequence of the density Hales-Jewett theorem.
 Balogh and Solymosi [BaSo18] improved the upper bound to
 $g(n) \ll n^{5/6+o(1)}$.
+
+[Er84] Erdős, P., _Some old and new problems on combinatorial geometry_, 1984.
+[Fu91b] Füredi, Z., _Maximal independent subsets in Steiner systems and in planar sets_.
+SIAM J. Discrete Math. (1991), 196–199.
+[FuKa91] Furstenberg, H. and Katznelson, Y., _A density version of the Hales-Jewett theorem_.
+J. Anal. Math. 57 (1991), 64–119.
+[BaSo18] Balogh, J. and Solymosi, J., _On the number of points in general position in the plane_.
+Discrete Analysis (2018), Paper No. 16, 20.
 -/
 
 namespace Erdos589
@@ -71,6 +80,19 @@ $\operatorname{erdos589\_g}(n) \leq C \cdot n^{5/6 + \varepsilon}$.
 theorem erdos_589.variants.upper_bound (ε : ℝ) (hε : ε > 0) :
     ∃ C : ℝ, C > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       (erdos589_g n : ℝ) ≤ C * (↑n : ℝ) ^ ((5 : ℝ) / 6 + ε) := by
+  sorry
+
+/--
+Erdős Problem 589 (sublinear upper bound, Furstenberg–Katznelson [FuKa91]):
+
+$g(n) = o(n)$: for any $\varepsilon > 0$, for all sufficiently large $n$,
+$\operatorname{erdos589\_g}(n) \leq \varepsilon \cdot n$.
+This follows from the density Hales-Jewett theorem.
+-/
+@[category research solved, AMS 05 52]
+theorem erdos_589.variants.sublinear (ε : ℝ) (hε : ε > 0) :
+    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      (erdos589_g n : ℝ) ≤ ε * (↑n : ℝ) := by
   sorry
 
 end Erdos589
