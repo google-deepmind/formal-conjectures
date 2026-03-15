@@ -23,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 A conjecture of Murty and Plesnik (see [CaHa79]), also attributed to Ore.
 The complete bipartite graph shows that this would be best possible.
-This is true (for sufficiently large $n$) and was proved by Füredi [Fu92].
+This was proved for sufficiently large $n$ by Füredi [Fu92]; the conjecture
+as originally posed is for all $n$.
 -/
 
 open Classical SimpleGraph
