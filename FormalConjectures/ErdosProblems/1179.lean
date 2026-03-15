@@ -35,7 +35,19 @@ $g_\varepsilon(N) \leq (2 + o(1)) \log_2 N + O_\varepsilon(1)$, and Erdős and H
 this to
 $$g_\varepsilon(N) \leq (1 + O_\varepsilon(\log \log \log N / \log \log N)) \log_2 N.$$
 
+Related: [Erdős Problem 543](https://www.erdosproblems.com/543).
+
 A problem of Erdős.
+
+[Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
+combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971)
+(1973), 117-138.
+
+[ErRe65] Erdős, P. and Rényi, A., *Probabilistic methods in group theory*. J. Analyse Math.
+(1965), 127-138.
+
+[ErHa76] Erdős, P. and Hall, R. R., *Probabilistic methods in group theory. II*. Houston J. Math.
+(1976), 173-180.
 -/
 
 open Filter
@@ -91,12 +103,12 @@ $$|F_A(g) - 2^k/N| \leq \varepsilon \cdot 2^k/N \quad \text{for all } g \in G,$$
 where $F_A(g) = \#\{S \subseteq A : \sum_{x \in S} x = g\}$.
 
 The lower bound $g_\varepsilon(N) \geq \log_2 N$ is trivial.
-Erdős and Rényi proved $g_\varepsilon(N) \leq (2 + o(1)) \log_2 N + O_\varepsilon(1)$.
-Erdős and Hall proved
+Erdős and Rényi [ErRe65] proved $g_\varepsilon(N) \leq (2 + o(1)) \log_2 N + O_\varepsilon(1)$.
+Erdős and Hall [ErHa76] proved
 $g_\varepsilon(N) \leq (1 + O_\varepsilon(\log \log \log N / \log \log N)) \log_2 N$.
 -/
-@[category research open, AMS 5 60]
-theorem erdos_1179 : answer(sorry) ↔
+@[category research solved, AMS 5 60]
+theorem erdos_1179 : answer(True) ↔
     ∀ ε : ℝ, 0 < ε → ε < 1 →
     Tendsto (fun N : ℕ => (gEps ε N : ℝ) / Real.logb 2 N)
       atTop (nhds 1) := by
