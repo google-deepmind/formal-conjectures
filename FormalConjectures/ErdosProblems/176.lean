@@ -30,14 +30,30 @@ $N(k, ck) \leq C^k$? What about $N(k, 2) \leq C^k$ or $N(k, \sqrt{k}) \leq C^k$?
 
 When $\ell = k$, $N(k, k)$ is the van der Waerden number $W(k)$.
 
+[Er63d] Erdős, P., _On combinatorial questions connected with a theorem of Ramsey and
+van der Waerden_. Mat. Lapok (1963), 29-37.
+
 [Er65b] Erdős, P., _Extremal problems in number theory_ (1965).
 
 [Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of
 combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo.,
 1971) (1973), 117-138.
 
+[Er74b] Erdős, P., _Problems and results on combinatorial number theory_.
+
+[Er75b] Erdős, P., _Problems and results on combinatorial number theory III_. Number
+Theory Day (Proc. Conf., Rockefeller Univ., New York, 1976) (1975).
+
+[ErGr79] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
+number theory I_. Enseign. Math. (1979).
+
+[Er80] Erdős, P., _A survey of problems in combinatorial number theory_. Ann. Discrete
+Math. (1980), 89-115.
+
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
-number theory_. Monographies de L'Enseignement Mathematique (1980).
+number theory_. Monographies de L'Enseignement Mathematique (1980), p.15.
+
+[Sp73] Spencer, J., _Problems 185_. Bull. Canad. Math. Soc. (1973).
 -/
 
 open Finset BigOperators Real
