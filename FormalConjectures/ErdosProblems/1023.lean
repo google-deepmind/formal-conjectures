@@ -25,7 +25,15 @@ constant $c > 0$.
 
 *Reference:* [erdosproblems.com/1023](https://www.erdosproblems.com/1023)
 
-[Er71] Erdős, P., *Some unsolved problems*, 1971, p. 105.
+Note: The original source [Er71] contains a typographical error (exponent $3/2$ instead of $1/2$).
+
+Contributors: Stijn Cambie, Zach Hunter.
+
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969), 1971, pp. 97-109.
+
+[Kl71] Kleitman, D., _Collections of subsets containing no two sets and their union_.
+Proc. LA Meeting AMS (1971), 153-155.
 -/
 
 open Finset Filter
@@ -52,8 +60,8 @@ is the maximum size of a union-free family of subsets of $\{1, \ldots, n\}$.
 
 Formulated as: $\lim_{n \to \infty} F(n) \cdot \sqrt{n} \,/\, (c \cdot 2^n) = 1$.
 
-Erdős and Kleitman proved that $F(n) \asymp 2^n / \sqrt{n}$. Hunter observes that the
-answer follows from the solution to problem 447, which implies
+Erdős and Kleitman proved that $F(n) \asymp 2^n / \sqrt{n}$. Zach Hunter observes that the
+answer follows from the solution to Problem 447 [Kl71], which implies
 $F(n) \sim \binom{n}{\lfloor n/2 \rfloor}$.
 -/
 @[category research solved, AMS 5]
@@ -61,6 +69,19 @@ theorem erdos_1023 :
     ∃ c : ℝ, c > 0 ∧
     Tendsto
       (fun n : ℕ => (unionFreeMax n : ℝ) * Real.sqrt (↑n) / (c * (2 : ℝ) ^ n))
+      atTop (nhds 1) := by
+  sorry
+
+/--
+Stronger form of Erdős Problem 1023, making the connection to Problem 447 explicit:
+
+$F(n) \sim \binom{n}{\lfloor n/2 \rfloor}$, i.e., the ratio $F(n) / \binom{n}{\lfloor n/2 \rfloor}$
+tends to $1$. This pins down the constant $c = \sqrt{2/\pi}$ via Stirling's approximation.
+-/
+@[category research solved, AMS 5]
+theorem erdos_1023_central_binomial :
+    Tendsto
+      (fun n : ℕ => (unionFreeMax n : ℝ) / (Nat.choose n (n / 2) : ℝ))
       atTop (nhds 1) := by
   sorry
 
