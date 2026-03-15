@@ -23,6 +23,26 @@ Let $f(n)$ denote the minimum number of ordinary lines determined by $n$
 non-collinear points in the plane. Erdős asked whether $f(n) \to \infty$ and
 how fast it grows.
 
+Motzkin proved that $f(n) \to \infty$ and conjectured $f(n) \geq n/2$ for
+$n \geq 13$. Kelly and Moser proved $f(n) \geq 3n/7$, Csima and Sawyer improved
+this to $f(n) \geq 6n/13$ for $n \geq 8$, and Green and Tao proved
+$f(n) \geq n/2$ for sufficiently large $n$, resolving the conjecture of Motzkin.
+
+## References
+
+* [Mo51] Motzkin, Th., _The lines and planes connecting the points of a finite
+  set_. Transactions of the American Mathematical Society **70** (1951), 451–464.
+* [KeMo58] Kelly, L. M. and Moser, W. O. J., _On the number of ordinary lines
+  determined by n points_. Canadian Journal of Mathematics **10** (1958), 210–219.
+* [CsSa93] Csima, J. and Sawyer, E. T., _There exist 6n/13 ordinary points_.
+  Discrete & Computational Geometry **9** (1993), 187–202.
+* [GrTa13] Green, B. and Tao, T., _On sets defining few ordinary lines_.
+  Discrete & Computational Geometry **50** (2013), 409–468.
+
+## See also
+
+* OEIS sequence [A003034](https://oeis.org/A003034)
+
 *Reference:* [erdosproblems.com/210](https://www.erdosproblems.com/210)
 -/
 
@@ -48,17 +68,20 @@ def IsOrdinaryPair (S : Finset Point2) (p q : Point2) : Prop :=
   p ∈ S ∧ q ∈ S ∧ p ≠ q ∧ ∀ r ∈ S, r ≠ p → r ≠ q → ¬LiesOnLine p q r
 
 /-- The number of ordinary lines determined by $S$.
-Counts ordered pairs forming ordinary lines and divides by $2$. -/
+Counts ordered pairs forming ordinary lines and divides by $2$.
+This is exact because `IsOrdinaryPair S p q ↔ IsOrdinaryPair S q p`
+(the collinearity condition is symmetric when `p ≠ q`), so each ordinary
+line contributes exactly two ordered pairs. -/
 noncomputable def ordinaryLineCount (S : Finset Point2) : ℕ :=
   ((S ×ˢ S).filter (fun pq => IsOrdinaryPair S pq.1 pq.2)).card / 2
 
 /--
 Let $f(n)$ be minimal such that for any $n$ points in $\mathbb{R}^2$, not all on a line,
 there are at least $f(n)$ ordinary lines (lines containing exactly $2$ of the
-points). Green and Tao proved that $f(n) \geq n/2$ for all sufficiently large $n$,
-resolving the conjecture of Erdős and de Bruijn and strengthening earlier
-results of Motzkin ($f(n) \to \infty$), Kelly-Moser ($f(n) \geq 3n/7$), and
-Csima-Sawyer ($f(n) \geq 6n/13$).
+points). Green and Tao [GrTa13] proved that $f(n) \geq n/2$ for all sufficiently
+large $n$, resolving the conjecture of Motzkin and strengthening earlier results
+of Motzkin [Mo51] ($f(n) \to \infty$), Kelly–Moser [KeMo58] ($f(n) \geq 3n/7$),
+and Csima–Sawyer [CsSa93] ($f(n) \geq 6n/13$).
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_210 :
@@ -66,6 +89,39 @@ theorem erdos_210 :
       S.card ≥ N₀ →
       NotAllCollinear S →
       ordinaryLineCount S ≥ S.card / 2 := by
+  sorry
+
+/--
+The **Sylvester–Gallai theorem**: any finite set of at least 3 non-collinear
+points in the plane determines at least one ordinary line. This is the base
+case $f(n) \geq 1$ of the ordinary lines problem.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_210_sylvester_gallai :
+    ∀ (S : Finset Point2), S.card ≥ 3 →
+      NotAllCollinear S →
+      ordinaryLineCount S ≥ 1 := by
+  sorry
+
+/--
+**Motzkin's theorem** [Mo51]: the number of ordinary lines $f(n) \to \infty$
+as $n \to \infty$. This was the first resolution of Erdős's question of whether
+$f(n) \to \infty$.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_210_motzkin :
+    ∀ K : ℕ, ∃ N₀ : ℕ, ∀ (S : Finset Point2),
+      S.card ≥ N₀ → NotAllCollinear S → ordinaryLineCount S ≥ K := by
+  sorry
+
+/--
+**Kelly–Moser bound** [KeMo58]: any set of $n \geq 3$ non-collinear points
+determines at least $3n/7$ ordinary lines. This bound is tight for $n = 7$.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_210_kelly_moser :
+    ∀ (S : Finset Point2), S.card ≥ 3 →
+      NotAllCollinear S → ordinaryLineCount S ≥ 3 * S.card / 7 := by
   sorry
 
 end Erdos210
