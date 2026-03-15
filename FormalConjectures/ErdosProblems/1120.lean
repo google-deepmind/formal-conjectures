@@ -23,9 +23,11 @@ For a monic polynomial of degree $n$ with all roots in the unit disk, consider t
 $E = \{z : |f(z)| \leq 1\}$. Erdős conjectured that the worst-case shortest path length in $E$
 from the origin to the unit circle tends to infinity with $n$.
 
+See also Erdős Problem 1041 (paths connecting roots within lemniscate sets).
+
 *Reference:* [erdosproblems.com/1120](https://www.erdosproblems.com/1120)
 
-[Ha74] Hayman, W. K., *Research Problems in Function Theory*, Athlone Press, 1974.
+[Ha74] Hayman, W. K., _Research problems in function theory: new problems_ (1974), 155–180.
 -/
 
 open Complex Polynomial Set
