@@ -29,9 +29,15 @@ $|A| \le (1+o(1))\frac{2}{\sqrt{3}} N^{1/2}$?
 A problem of Erdős and Freud [ErFr91], who prove the matching lower bound
 $|A| \ge (1+o(1))\frac{2}{\sqrt{3}} N^{1/2}$.
 
-This is a weaker form of Problem 840.
+For the analogous question with $n = a - b$, they proved $|A| \sim N^{1/2}$.
 
-[ErFr91] Erdős, P. and Freud, R., *On Sidon-sequences and related problems*, 1991.
+This is a weaker form of Problem 840. See also OEIS sequence A389182.
+
+[ErFr91] Erdős, P. and Freud, R., *On Sidon-sequences and related problems*,
+Mat. Lapok (1991).
+
+[Er92c] Erdős, P., *Some of my favourite problems in various branches of combinatorics*,
+Matematiche (Catania) 47 (1992), no. 2, 231–240.
 -/
 
 open Finset Classical
@@ -75,6 +81,35 @@ theorem erdos_864.variants.lower_bound :
     ∀ ε : ℝ, ε > 0 →
     ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
     (maxAlmostSidonCard N : ℝ) ≥ (2 / Real.sqrt 3 - ε) * Real.sqrt (N : ℝ) := by
+  sorry
+
+/-- The number of representations of $n$ as $a - b$ with $a > b$, $a \in A$, $b \in A$. -/
+def diffRepCount (A : Finset ℕ) (n : ℕ) : ℕ :=
+  (A.filter (fun b => (n + b) ∈ A)).card
+
+/-- A set $A$ is *almost Sidon for differences* if at most one nonzero integer $n$ has more than
+    one representation as $n = a - b$ with $a, b \in A$. -/
+def IsAlmostSidonDiff (A : Finset ℕ) : Prop :=
+  ∃ S : Finset ℕ, S.card ≤ 1 ∧
+    ∀ n : ℕ, n ≠ 0 → n ∉ S → diffRepCount A n ≤ 1
+
+/-- The maximum size of an almost-Sidon-for-differences subset of $\{1, \ldots, N\}$. -/
+noncomputable def maxAlmostSidonDiffCard (N : ℕ) : ℕ :=
+  ((Finset.Icc 1 N).powerset.filter IsAlmostSidonDiff).sup Finset.card
+
+/--
+**Erdős Problem 864** — Difference analogue (Erdős–Freud [ErFr91]):
+
+For the analogous question with differences $n = a - b$, the maximum size satisfies
+$|A| \sim N^{1/2}$, i.e., for every $\varepsilon > 0$ and sufficiently large $N$,
+$(1 - \varepsilon) \sqrt{N} \le f_{\mathrm{diff}}(N) \le (1 + \varepsilon) \sqrt{N}$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_864.variants.diff_analogue :
+    ∀ ε : ℝ, ε > 0 →
+    ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
+    (1 - ε) * Real.sqrt (N : ℝ) ≤ (maxAlmostSidonDiffCard N : ℝ) ∧
+    (maxAlmostSidonDiffCard N : ℝ) ≤ (1 + ε) * Real.sqrt (N : ℝ) := by
   sorry
 
 end Erdos864
