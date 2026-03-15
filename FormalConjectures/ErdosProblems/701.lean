@@ -23,6 +23,22 @@ Chvátal's Conjecture: if a family of finite sets is downward closed (closed und
 then the maximum size of an intersecting subfamily is at most the maximum degree (the largest
 number of sets containing any single element).
 
+## References
+
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+  Combinatorica 1 (1981), 25–42.
+
+[Ch74] Chvátal, V., _Intersecting families of edges in hypergraphs having the hereditary
+  property_ (1974), 61–66.
+
+[St74] Sterboul, F., _Sur une conjecture de V. Chvátal_ (1974), 152–164.
+
+[FrKu23] Frankl, P., Kupavskii, A., _Perfect matchings in down-sets_, Discrete Math. (2023),
+  Paper No. 113323.
+
+[Bo11] Borg, P., _On Chvátal's conjecture and a conjecture on families of signed sets_,
+  European J. Combin. (2011), 140–145.
+
 *Reference:* [erdosproblems.com/701](https://www.erdosproblems.com/701)
 -/
 
