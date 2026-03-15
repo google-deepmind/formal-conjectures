@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 378
@@ -23,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 For every $r \ge 0$, the natural density of the set of integers $n$ for which $\binom{n}{k}$
 is squarefree for at least $r$ values of $1 \le k < n$ exists and is positive.
+
+As noted by Aggarwal and Cambie, this is resolved by Granville and Ramaré [GrRa96].
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
@@ -34,20 +37,6 @@ squarefree binomial coefficients*. Mathematika 43 (1996), 73-107.
 open Classical Filter
 
 namespace Erdos378
-
-/-- The upper density of $A \subseteq \mathbb{N}$. -/
-noncomputable def upperDensity (A : Set ℕ) : ℝ :=
-  Filter.limsup (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    Filter.atTop
-
-/-- The lower density of $A \subseteq \mathbb{N}$. -/
-noncomputable def lowerDensity (A : Set ℕ) : ℝ :=
-  Filter.liminf (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    Filter.atTop
-
-/-- A set of natural numbers has natural density $d$. -/
-def HasNaturalDensity (A : Set ℕ) (d : ℝ) : Prop :=
-  upperDensity A = d ∧ lowerDensity A = d
 
 /-- The number of values $k$ with $1 \le k < n$ such that $\binom{n}{k}$ is squarefree. -/
 noncomputable def squarefreeBinomCount (n : ℕ) : ℕ :=
@@ -63,13 +52,25 @@ Erdős Problem 378 [ErGr80, p.72]:
 For every $r \ge 0$, the natural density of the set of integers $n$ for which $\binom{n}{k}$
 is squarefree for at least $r$ values of $1 \le k < n$ exists and is positive.
 
-Resolved in the affirmative by the results of Granville and Ramaré [GrRa96], who show that for
-each $m$, the density of the set of $n$ such that $\binom{n}{k}$ is squarefree for exactly
-$2m + 2$ values of $k$ exists.
+Resolved in the affirmative by the results of Granville and Ramaré [GrRa96], as noted by
+Aggarwal and Cambie. Granville and Ramaré show that for each $m$, the density of the set of $n$
+such that $\binom{n}{k}$ is squarefree for exactly $2m + 2$ values of $k$ exists.
 -/
 @[category research solved, AMS 11]
 theorem erdos_378 (r : ℕ) :
-    ∃ d : ℝ, d > 0 ∧ HasNaturalDensity (squarefreeBinomAtLeast r) d := by
+    (squarefreeBinomAtLeast r).HasPosDensity := by
+  sorry
+
+/--
+For each $m$, the natural density of the set of integers $n$ such that $\binom{n}{k}$ is
+squarefree for exactly $2m + 2$ values of $1 \le k < n$ exists.
+
+This is a stronger structural result shown by Granville and Ramaré [GrRa96], from which
+`erdos_378` follows.
+-/
+@[category research solved, AMS 11]
+theorem erdos_378_exact (m : ℕ) :
+    ∃ d : ℝ, {n : ℕ | squarefreeBinomCount n = 2 * m + 2}.HasDensity d := by
   sorry
 
 end Erdos378
