@@ -22,9 +22,14 @@ import FormalConjectures.Util.ProblemImports
 Erdős asked whether the limsup of the ratio of the {2,3}-smooth part of n(n+1)
 to n·log(n) is infinite.
 
+Stefan Steinerberger noted a simple proof that 2^k · 3^l > n · log n holds for
+infinitely many n, by taking n = 2^{3^r}.
+
 *Reference:* [erdosproblems.com/933](https://www.erdosproblems.com/933)
 
-[Er76d] Erdős, P., _Problems in number theory and combinatorics_ (1976).
+[Er76d] Erdős, P., _Problems and results on number theoretic properties of consecutive
+integers and related questions_. Proceedings of the Fifth Manitoba Conference on Numerical
+Mathematics (Univ. Manitoba, Winnipeg, Man., 1975) (1976), 25-44.
 -/
 
 open Real
