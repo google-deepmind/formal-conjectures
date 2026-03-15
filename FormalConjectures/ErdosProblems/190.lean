@@ -31,6 +31,9 @@ This type of problem belongs to 'canonical' Ramsey theory. The existence
 of $H(k)$ follows from Szemerédi's theorem, and it is easy to show that
 $H(k)^{1/k} \to \infty$.
 
+[ErGr79] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
+number theory: van der Waerden's theorem and related topics_. Enseign. Math. (1979).
+
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathématique (1980).
 -/
@@ -59,7 +62,7 @@ noncomputable def H (k : ℕ) : ℕ :=
   sInf {N : ℕ | ∀ χ : ℕ → ℕ, HasMonoAP χ N k ∨ HasRainbowAP χ N}
 
 /--
-Erdős Problem 190 [ErGr80]:
+Erdős Problem 190 [ErGr79, ErGr80]:
 
 Is it true that $H(k)^{1/k}/k \to \infty$ as $k \to \infty$, where $H(k)$ is the smallest $N$
 such that any finite colouring of $\{1,\ldots,N\}$ always contains either a monochromatic
@@ -68,6 +71,15 @@ $k$-term arithmetic progression or a rainbow arithmetic progression?
 @[category research open, AMS 5]
 theorem erdos_190 : answer(sorry) ↔
     Tendsto (fun k : ℕ => (H k : ℝ) ^ ((1 : ℝ) / (k : ℝ)) / (k : ℝ)) atTop atTop := by
+  sorry
+
+/--
+Known weaker result: $H(k)^{1/k} \to \infty$ as $k \to \infty$ (without the additional
+division by $k$). This is described as "easy to show" on the website.
+-/
+@[category research solved, AMS 5]
+theorem erdos_190_weaker :
+    Tendsto (fun k : ℕ => (H k : ℝ) ^ ((1 : ℝ) / (k : ℝ))) atTop atTop := by
   sorry
 
 end Erdos190
