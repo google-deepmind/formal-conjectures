@@ -24,15 +24,16 @@ import FormalConjectures.Util.ProblemImports
 Establish whether certain ordinal partition relations hold under the Generalized Continuum
 Hypothesis or the Continuum Hypothesis. A problem of Erdős and Hajnal.
 
-[Va99] Hajnal, A. and Larson, J., *Partition relations*. Handbook of Set Theory (2010).
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the
+conference "Paul Erdős and his mathematics", Budapest (1999).
+
+[ErRa56] Erdős, P. and Rado, R., _A partition calculus in set theory_.
+Bulletin of the American Mathematical Society (1956), 427–489.
 -/
 
 open Ordinal Cardinal
 
 namespace Erdos1172
-
-/-- $\omega$, the first infinite ordinal. -/
-noncomputable def omega0 : Ordinal := (aleph 0).ord
 
 /-- $\omega_1$, the first uncountable ordinal. -/
 noncomputable def omega1 : Ordinal := (aleph 1).ord
