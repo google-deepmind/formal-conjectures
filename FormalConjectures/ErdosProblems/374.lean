@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 374
@@ -26,10 +27,13 @@ $a_1 < \cdots < a_k = m$ with $a_1! \cdots a_k!$ a perfect square, and let $D_k 
 The conjecture asserts that $D_6$ has positive lower density, i.e., $|D_6 \cap \{1,\ldots,n\}| \gg n$.
 
 [ErGr76] Erdős, P. and Graham, R., _On products of factorials_. Bull. Inst. Math. Acad. Sinica
-(1976).
+(1976), 337-355.
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[LSS14] Luca, F., Saradha, N., and Shorey, T. N., _Squares and factorials in products of
+factorials_. Monatshefte für Mathematik (2014), 385-400.
 -/
 
 open scoped BigOperators
@@ -56,22 +60,17 @@ def IsInD (k : ℕ) (m : ℕ) : Prop :=
   HasFactorialSquareSeq m k ∧ ∀ j, j < k → ¬HasFactorialSquareSeq m j
 
 /--
-Erdős Problem 374 [ErGr76][ErGr80]:
+Erdős Problem 374 [ErGr76][ErGr80][LSS14]:
 
 For $m \in \mathbb{N}$, let $F(m)$ be the minimal $k \ge 2$ such that there exist
 $a_1 < \cdots < a_k = m$ with $a_1! \cdots a_k!$ a perfect square.
 Let $D_k = \{m : F(m) = k\}$.
 
-Conjecture: $|D_6 \cap \{1, \ldots, n\}| \gg n$.
-
-That is, there exists $c > 0$ such that for all sufficiently large $n$,
-the count of $m \le n$ with $F(m) = 6$ is at least $c \cdot n$.
+Conjecture: $|D_6 \cap \{1, \ldots, n\}| \gg n$, i.e., $D_6$ has positive lower density.
 -/
 @[category research open, AMS 11]
 theorem erdos_374 :
-    ∃ c : ℝ, c > 0 ∧
-      ∀ᶠ n : ℕ in atTop,
-        (((Finset.Icc 1 n).filter (fun m => IsInD 6 m)).card : ℝ) ≥ c * (n : ℝ) := by
+    0 < Set.lowerDensity {m : ℕ | IsInD 6 m} := by
   sorry
 
 end Erdos374
