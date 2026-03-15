@@ -22,28 +22,27 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/164](https://www.erdosproblems.com/164)
 
 [Er35] Erdős, P., *Note on sequences of integers no one of which is divisible by any other*.
-J. London Math. Soc. (1935).
+J. London Math. Soc. (1935), 126-128.
 
 [Er76g] Erdős, P., *Problems and results on combinatorial number theory* (1976).
 
 [Er86] Erdős, P., *Some problems and results on combinatorial number theory* (1986).
 
-[Li23] Lichtman, J.D., *The Erdős primitive set conjecture*. Forum Math. Pi (2023).
+[Li23] Lichtman, J.D., *A proof of the Erdős primitive set conjecture*.
+arXiv:2202.02384 (2023).
+
+[Va99] §1.12.
 -/
 
 open Real
 
 namespace Erdos164
 
-/-- A set $A$ of natural numbers is primitive (an antichain under divisibility)
-if no element divides a distinct element: for all $a, b \in A$, $a \mid b \implies a = b$. -/
-def IsPrimitive (A : Set ℕ) : Prop :=
-  ∀ a ∈ A, ∀ b ∈ A, a ∣ b → a = b
-
 /--
-Erdős Conjecture (Problem 164) [Er76g, Er86]:
+The Erdős primitive set conjecture (Problem 164) [Er76g, Er86]:
 
-For any primitive set $A \subseteq \{2, 3, 4, \ldots\}$ of natural numbers,
+For any primitive set $A \subseteq \{2, 3, 4, \ldots\}$ of natural numbers (i.e., an antichain
+under divisibility), we have
 $$\sum_{n \in A} \frac{1}{n \cdot \log n} \leq \sum_{p \text{ prime}} \frac{1}{p \cdot \log p}.$$
 
 That is, the sum $\sum \frac{1}{n \log n}$ over any primitive set is maximised when
@@ -53,9 +52,20 @@ Proved by Lichtman [Li23].
 -/
 @[category research solved, AMS 11]
 theorem erdos_164 :
-    ∀ A : Set ℕ, IsPrimitive A → A ⊆ {n : ℕ | 2 ≤ n} →
+    ∀ A : Set ℕ, IsAntichain (· ∣ ·) A → A ⊆ {n : ℕ | 2 ≤ n} →
     ∑' n : A, (1 : ℝ) / (((n : ℕ) : ℝ) * Real.log ((n : ℕ) : ℝ)) ≤
     ∑' p : {p : ℕ | Nat.Prime p}, (1 : ℝ) / (((p : ℕ) : ℝ) * Real.log ((p : ℕ) : ℝ)) := by
+  sorry
+
+/--
+Erdős [Er35] proved that for any primitive set $A \subseteq \{2, 3, 4, \ldots\}$,
+the sum $\sum_{n \in A} \frac{1}{n \log n}$ converges. This is a prerequisite for the
+main conjecture `erdos_164`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_164_convergence :
+    ∀ A : Set ℕ, IsAntichain (· ∣ ·) A → A ⊆ {n : ℕ | 2 ≤ n} →
+    Summable (fun n : A => (1 : ℝ) / (((n : ℕ) : ℝ) * Real.log ((n : ℕ) : ℝ))) := by
   sorry
 
 end Erdos164
