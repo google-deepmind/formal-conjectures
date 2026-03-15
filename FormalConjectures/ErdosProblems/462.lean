@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.Prime.Composite
 
 /-!
 # Erdős Problem 462
@@ -47,7 +48,7 @@ theorem erdos_462 : answer(sorry) ↔
     ∃ C : ℝ, C > 0 ∧ ∃ δ : ℝ, δ > 0 ∧ ∃ x₀ : ℕ, ∀ x : ℕ, x₀ ≤ x →
       δ ≤ ∑ n ∈ (Finset.Icc x
         (x + ⌊C * Real.sqrt (x : ℝ) * (Real.log (x : ℝ)) ^ 2⌋₊)).filter
-        (fun n => ¬ Nat.Prime n),
+        (fun n => n.Composite),
         (Nat.minFac n : ℝ) / (n : ℝ) := by
   sorry
 
