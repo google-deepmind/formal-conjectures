@@ -51,7 +51,7 @@ noncomputable def F (n : ℕ) (α : ℝ) : ℕ :=
 /--
 Erdős Conjecture (Problem 162) [Er90b, p.21]:
 
-For every fixed $0 \leq \alpha \leq 1/2$, $F(n, \alpha) \sim c_\alpha \log n$ for some
+For every fixed $0 < \alpha < 1/2$, $F(n, \alpha) \sim c_\alpha \log n$ for some
 constant $c_\alpha > 0$. That is, the ratio $F(n, \alpha) / \log n$ converges to a positive
 constant $c_\alpha$ as $n \to \infty$.
 
@@ -60,7 +60,7 @@ probabilistic method) to an exact asymptotic with a well-defined constant.
 -/
 @[category research open, AMS 5]
 theorem erdos_162 :
-    ∀ α : ℝ, 0 ≤ α → α ≤ 1 / 2 →
+    ∀ α : ℝ, 0 < α → α < 1 / 2 →
     ∃ c : ℝ, 0 < c ∧
       ∀ ε : ℝ, 0 < ε →
         ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
