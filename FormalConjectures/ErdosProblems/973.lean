@@ -25,7 +25,18 @@ Does there exist a constant $C > 1$ such that for every $n \geq 2$ there is a se
 numbers $z_1, \ldots, z_n$ with $z_1 = 1$ and $|z_i| \geq 1$, whose power sums satisfy
 $\max_{2 \leq k \leq n+1} |\sum z_i^k| < C^{-n}$?
 
-[Er65b] Erdős, P., _Extremal problems in number theory_ (1965), p.213.
+[Er65b] Erdős, P., _Extremal problems in number theory_. Lectures on Modern Mathematics,
+Vol. III (1965), 196–244.
+
+[Er92f] Erdős, P., _On some problems of Paul Turán concerning power sums of complex numbers_.
+Acta Mathematica Hungarica (1992), 11–24.
+
+[Ha74] Hayman, W. K., _Research problems in function theory: new problems_ (1974), 155–180.
+
+[Tu84b] Turán, P., _On a new method of analysis and its applications_ (1984), xvi+584.
+
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999).
 -/
 
 namespace Erdos973
@@ -36,7 +47,8 @@ exists a sequence $z_1, \ldots, z_n \in \mathbb{C}$ with $z_1 = 1$ and
 $|z_i| \geq 1$ for all $i$, such that
 $$\max_{2 \leq k \leq n+1} \left| \sum_{i=1}^{n} z_i^k \right| < C^{-n}?$$
 
-A problem of Erdős [Er65b, p.213]. See also [519].
+A problem of Erdős [Er65b, p.213]. This is Problem 7.3 in [Ha74]. See also [Tu84b], [Er92f],
+[Va99], and [519].
 -/
 @[category research open, AMS 30]
 theorem erdos_973 : answer(sorry) ↔
