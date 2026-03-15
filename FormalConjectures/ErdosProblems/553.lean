@@ -29,6 +29,16 @@ but with two colours.
 A problem of Erdős and Sós [ErSo80]. This was solved by Alon and Rödl [AlRo05], who
 showed $R(3,3,n) \asymp n^3 (\log n)^{O(1)}$, recalling that Shearer [Sh83] showed
 $R(3,n) \ll n^2 / \log n$.
+
+Related problems: [925](https://www.erdosproblems.com/925).
+
+[ErSo80] Erdős, P. and Sós, V. T. (1980).
+
+[AlRo05] Alon, N. and Rödl, V., _Sharp bounds for some multicolor Ramsey numbers_,
+Combinatorica 25 (2005), 125-141.
+
+[Sh83] Shearer, J. B., _A note on the independence number of triangle-free
+graphs_. Discrete Math. **46** (1983), 83-87.
 -/
 
 open SimpleGraph
