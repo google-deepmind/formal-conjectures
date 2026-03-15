@@ -37,11 +37,18 @@ $h(n!) < (\log n)^{O(1)}$ [Er81h, p.172].
 Related problems: [erdosproblems.com/304](https://www.erdosproblems.com/304),
 [erdosproblems.com/825](https://www.erdosproblems.com/825).
 
+OEIS: [A005153](https://oeis.org/A005153) — practical numbers.
+
 ## References
 
-- [Er74b], [Er79], [Er81h, p.172], [Er95], [Er96b], [Er98]: Various papers by Erdős on practical numbers.
+- [Er74b] Erdős, P. (1974).
+- [Er79] Erdős, P., _Some unconventional problems in number theory_. Math. Mag. **52** (1979), 67–70.
 - [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number theory_. Monographies de L'Enseignement Mathematique (1980).
-- [Vo85] Vose, M.: Proof of a conjecture of Erdős concerning practical numbers.
+- [Er81h] Erdős, P., _Some problems and results on additive and multiplicative number theory_. Analytic number theory (Philadelphia, Pa., 1980) (1981), 171–182.
+- [Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_. Combinatorics '94 (Catania), Congressus Numerantium **107** (1995).
+- [Er96b] Erdős, P., _Some problems I presented or planned to present in my short talk_. Analytic number theory, Vol. 1 (Allerton Park, IL, 1995) (1996), 333–335.
+- [Er98] Erdős, P., _Some of my new and almost new problems and results in combinatorial number theory_. Number theory (Eger, 1996) (1998), 169–180.
+- [Vo85] Vose, Michael D., _Egyptian fractions_. Bull. London Math. Soc. (1985), 21–24.
 -/
 
 open Real Filter
