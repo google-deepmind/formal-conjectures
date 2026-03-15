@@ -28,10 +28,10 @@ Proved by Reed [Re99].
 See also: Erdős Problem 922 (related independent-set condition yielding bounded chromatic
 number).
 
-[EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., _On almost bipartite large chromatic graphs_,
-Annals of Discrete Mathematics 12 (1982), 117–123.
+[EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., _On almost bipartite large chromatic graphs_.
+Annals of Discrete Mathematics **12** (1982), 117–123.
 
-[Re99] Reed, B., _Mangoes and blueberries_. Combinatorica 19 (1999), 267–296.
+[Re99] Reed, B., _Mangoes and blueberries_. Combinatorica **19** (1999), 267–296.
 -/
 
 namespace Erdos73
