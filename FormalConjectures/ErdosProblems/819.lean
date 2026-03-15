@@ -29,7 +29,9 @@ $(3/8-o(1))N \leq f(N) \leq (1/2+o(1))N$,
 and note that it is closely connected to the size of the largest quasi-Sidon set
 (see [840]).
 
-[ErFr91] Erdős, P. and Freud, R.
+[Er91] Erdős, P., _Problems and results in combinatorial number theory_.
+
+[ErFr91] Erdős, P. and Freud, R., _On sums of a Sidon-sequence_. J. Number Theory (1991), 196–205.
 -/
 
 open Finset
