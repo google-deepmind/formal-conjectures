@@ -50,7 +50,7 @@ For $0 < r \leq 1$, the answer is yes (also Pommerenke [Po61]).
 -/
 @[category research solved, AMS 30]
 theorem erdos_1048 : answer(False) ↔
-    ∀ (r : ℝ), r < 2 → ∀ (f : Polynomial ℂ), f.Monic →
+    ∀ (r : ℝ), 0 < r → r < 2 → ∀ (f : Polynomial ℂ), f.Monic →
       (∀ z ∈ f.roots, ‖z‖ ≤ r) →
       let S := {z : ℂ | ‖Polynomial.eval z f‖ < 1}
       ∃ z ∈ S, 2 - r < diam (connectedComponentIn S z) := by
