@@ -25,25 +25,30 @@ Let $A(x)$ count the number of $n \leq x$ which are the sum of two squarefull nu
 (a number $m$ is squarefull if $p \mid m$ implies $p^2 \mid m$). Is it true that
 $A(x) \sim c \cdot x / \sqrt{\log x}$ for some $c > 0$?
 
-This was disproved by Odoni [Od81].
+This was disproved by Odoni [Od81]. See also Problem #940.
 
 [Er76e] Erdős, P.
 
-[Od81] Odoni, R. W. K.
+[Od81] Odoni, R. W. K., _A problem of Erdős on sums of two squarefull numbers_.
+Acta Arith. (1981), 145–162.
+
+[BaBr94] Baker, R. C., Brüdern, J., _On sums of two squarefull numbers_.
+Math. Proc. Cambridge Philos. Soc. (1994), 1–5.
+
+[Bl04] Blomer, V., _Binary quadratic forms with large discriminants and sums of two
+squareful numbers_. J. Reine Angew. Math. (2004), 213–234.
+
+[BlGr06] Blomer, V., Granville, A., _Estimates for representation numbers of quadratic
+forms_. Duke Math. J. (2006), 261–302.
 -/
 
 open Filter Classical
 
 namespace Erdos1081
 
-/-- A natural number is squarefull (powerful) if it is positive and for every
-prime $p$ dividing it, $p^2$ also divides it. -/
-def IsSquarefull (m : ℕ) : Prop :=
-  0 < m ∧ ∀ p : ℕ, p.Prime → p ∣ m → p ^ 2 ∣ m
-
-/-- A natural number is expressible as the sum of two squarefull numbers. -/
+/-- A natural number is expressible as the sum of two squarefull (powerful) numbers. -/
 def IsSumOfTwoSquarefull (n : ℕ) : Prop :=
-  ∃ a b : ℕ, IsSquarefull a ∧ IsSquarefull b ∧ n = a + b
+  ∃ a b : ℕ, 0 < a ∧ Nat.Powerful a ∧ 0 < b ∧ Nat.Powerful b ∧ n = a + b
 
 /-- $A(x)$: the count of natural numbers $n$ in $[1, x]$ that are sums of two
 squarefull numbers. -/
