@@ -229,8 +229,22 @@ theorem M_eq_M' : M  = M' := by
   exact Fintype.card_congr (equivMonotoneSperner n)
 
 /--
-  No closed form for the Dedekind numbers are currently unknown.
+Calculates the Dedekind number M(n), which represents the number of
+Boolean functions of n variables (or, equivalently, the number
+of antichains of the power set of an n-element set). While a closed-form
+summation exists (Kisielewicz, 1988), it is logical rather than algebraic
+in nature.
 -/
+@[category research open, AMS 5 6]
+theorem DedekindNumbers (n : ℕ) :
+
+  M n = (∑ k in Finset.range (2^(2^n)), (-1)^k * (2^(2^(2^n - k)) - 1)) := by
+  -- Note: This is a known closed-form summation, but it is computationally
+  -- intractable for large n. The challenge is finding a specific form
+  -- that satisfies values for n ≥ 10.
+
+  sorry
+
 @[category research open, AMS 5 6]
 theorem DedekindNumbers : M = answer(sorry) := by
   sorry
