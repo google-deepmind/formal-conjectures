@@ -29,7 +29,9 @@ differences* (1995), p.64.
 
 [Va99] Väänänen, J., *Problems from the Erdős notebook* (1999), 7.81.
 
-[Sh88] Shelah, S., *Was Sierpiński right? I* (1988).
+[Sh88] Shelah, S., *Was Sierpiński right? I*. Israel Journal of Mathematics (1988), 355–380.
+
+Erdős offered $100 for deciding the answer without CH.
 -/
 
 open Cardinal
