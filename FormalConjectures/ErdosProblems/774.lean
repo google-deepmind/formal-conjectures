@@ -22,9 +22,25 @@ import FormalConjectures.Util.ProblemImports
 Is every proportionately dissociated set of natural numbers the union of finitely many
 dissociated sets?
 
+Pisier [Pi83] showed that proportionately dissociated sets are equivalent to Sidon sets in the
+harmonic analysis sense. The analogous question for Sidon sets (in the additive combinatorics
+sense) was answered negatively by Nešetřil, Rödl, and Sales [NRS24].
+
+See also **Problem 328** (the Sidon set analogue).
+
 *Reference:* [erdosproblems.com/774](https://www.erdosproblems.com/774)
 
-[AlEr85] Alon, N. and Erdős, P., 1985.
+[AlEr85] Alon, N. and Erdős, P., _An application of graph theory to additive number theory_.
+European J. Combin. **6** (1985), 201–203.
+
+[Er92b] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Matematiche (Catania) **47** (1992), 231–240.
+
+[Pi83] Pisier, G., _Arithmetic characterizations of Sidon sets_.
+Bull. Amer. Math. Soc. (N.S.) **8** (1983), 87–89.
+
+[NRS24] Nešetřil, J., Rödl, V., and Sales, M., _On Pisier type theorems_.
+Combinatorica **44** (2024), 1211–1232.
 -/
 
 open Finset
@@ -44,7 +60,7 @@ def ProportionatelyDissociated (A : Set ℕ) : Prop :=
     ∃ D : Finset ℕ, D ⊆ B ∧ Dissociated ↑D ∧ (D.card : ℝ) ≥ c * B.card
 
 /--
-**Erdős Problem 774** (Alon–Erdős [AlEr85]):
+**Erdős Problem 774** (Alon–Erdős conjecture [AlEr85]):
 Is every proportionately dissociated set the union of finitely many
 dissociated sets?
 -/
