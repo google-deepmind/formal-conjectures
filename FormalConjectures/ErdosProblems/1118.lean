@@ -21,13 +21,19 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1118](https://www.erdosproblems.com/1118)
 
+This is Problem 2.40 in [Ha74].
+
 Let $f(z)$ be a non-constant entire function and let $E(c) = \{z : |f(z)| > c\}$. If $E(c)$ has
 finite measure for some $c > 0$, what is the minimum growth rate of $f$? Moreover, must there
 exist $c' < c$ such that $E(c')$ also has finite measure?
 
-[Ca77] Camera, G., *A short proof of an extremal result of Hayman* (1977).
+[Ha74] Hayman, W. K., *Research problems in function theory: new problems* (1974), 155–180.
 
-[Go79b] Gol'dberg, A. A., *The set of deficient values of meromorphic functions of finite order* (1979).
+[Ca77] Camera, G., *On the minimum rate of growth of certain classes on integral and subharmonic
+functions*, PhD Thesis, Imperial College, University of London (1977).
+
+[Go79b] Gol'dberg, A. A., *Sets on which the modulus of an entire function has a lower bound*,
+Sibirsk. Mat. Zh. (1979), 512–518, 691.
 -/
 
 open Complex Set MeasureTheory
