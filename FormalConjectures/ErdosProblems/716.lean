@@ -22,14 +22,19 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/716](https://www.erdosproblems.com/716)
 
 Let $\mathcal{F}$ be the family of all 3-uniform hypergraphs on 6 vertices with 3 edges.
-Is it true that $\mathrm{ex}_3(n, \mathcal{F}) = o(n^2)$? Answered affirmatively by
-Ruzsa and Szemerédi [RuSz78].
+Is it true that $\mathrm{ex}_3(n, \mathcal{F}) = o(n^2)$? A conjecture of Brown, Erdős,
+and Sós [BES73], answered affirmatively by Ruzsa and Szemerédi [RuSz78]. This is known as
+the Ruzsa–Szemerédi problem.
+
+See also Problem 1178 for the generalisation to $k$ vertices and $k-3$ edges, and
+Problem 1157 for the completely general Brown–Erdős–Sós conjecture.
 
 [BES73] Brown, W.G., Erdős, P., and Sós, V.T., *Some extremal problems on r-graphs*.
-New Directions in the Theory of Graphs (1973), 55-63.
+(1973), 53-63.
 
 [RuSz78] Ruzsa, I.Z. and Szemerédi, E., *Triple systems with no six points carrying three
-triangles*. Combinatorics (1978), 939-945.
+triangles*. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II
+(1978), 939-945.
 -/
 
 namespace Erdos716
@@ -42,7 +47,7 @@ structure Hypergraph3 (n : ℕ) where
 /-- A 3-uniform hypergraph is $\mathcal{F}$-free (where $\mathcal{F}$ is the family of all
 3-uniform hypergraphs on 6 vertices with 3 edges) if every 6-element subset of
 vertices contains at most 2 edges. -/
-def Hypergraph3.isFree {n : ℕ} (H : Hypergraph3 n) : Prop :=
+def Hypergraph3.isFamilyFree {n : ℕ} (H : Hypergraph3 n) : Prop :=
   ∀ S : Finset (Fin n), S.card = 6 →
     (H.edges.filter (· ⊆ S)).card ≤ 2
 
@@ -54,7 +59,7 @@ $\varepsilon \cdot n^2$ edges. -/
 theorem erdos_716 : answer(True) ↔
     ∀ ε : ℝ, ε > 0 →
     ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-    ∀ H : Hypergraph3 n, H.isFree →
+    ∀ H : Hypergraph3 n, H.isFamilyFree →
     (H.edges.card : ℝ) ≤ ε * (n : ℝ) ^ 2 := by
   sorry
 
