@@ -30,7 +30,8 @@ des Nombres, Bruxelles, 1955 (1956), 127-137.
 
 [Er59] Erdős, P., 1959.
 
-[Er65b] Erdős, P., _Extremal problems in number theory_ (1965).
+[Er65b] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math. 8 (1965),
+221–232.
 
 [Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of
 combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo.,
