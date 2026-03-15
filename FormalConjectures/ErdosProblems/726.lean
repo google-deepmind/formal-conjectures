@@ -23,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 A conjecture of Erdős, Graham, Ruzsa, and Straus.
 
-[EGRS75] Erdős, P., Graham, R., Ruzsa, I., and Straus, E.
+[EGRS75] Erdős, P., Graham, R. L., Ruzsa, I. Z., and Straus, E. G.,
+_On the prime factors of $\binom{2n}{n}$_. Mathematics of Computation **29** (1975), 83–92.
 -/
 
 open Filter Nat
