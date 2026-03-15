@@ -31,7 +31,14 @@ Wilson's theorem gives the upper bound $|A_p| \leq p - 2$.
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
 number theory*. Monographies de L'Enseignement Mathematique (1980).
 
-[GSSV24] Grebennikov, Sagdeev, Semchankau, and Vasilevskii (2024).
+[GSSV24] Grebennikov, A., Sagdeev, A., Semchankau, A., and Vasilevskii, A.,
+*On the sequence n! mod p*. Revista Matemática Iberoamericana (2024), 637–648.
+
+[HaSu02] Hardy, G. E. and Subbarao, M. V., *A modified problem of Pillai and some
+related questions*. Amer. Math. Monthly (2002), 554–559.
+
+[KlMu17] Klurman, O. and Munsch, M., *Distribution of factorials modulo p*.
+J. Théor. Nombres Bordeaux (2017), 169–177.
 -/
 
 open Filter
@@ -61,6 +68,16 @@ theorem erdos_478 : answer(sorry) ↔
         (factorialResidues p).card / ((1 - Real.exp (-1)) * (p : ℝ)))
       (atTop ⊓ Filter.principal {p | Nat.Prime p})
       (nhds 1) := by
+  sorry
+
+/--
+Hardy–Subbarao conjecture [HaSu02]: only finitely many primes $p$ satisfy
+$|A_p| = p - 2$, and perhaps only $p = 5$. Any such prime must satisfy
+$p \equiv 1 \pmod{4}$.
+-/
+@[category research open, AMS 11]
+theorem erdos_478_variant_hardy_subbarao : answer(sorry) ↔
+    Set.Finite {p : ℕ | Nat.Prime p ∧ (factorialResidues p).card = p - 2} := by
   sorry
 
 end Erdos478
