@@ -23,10 +23,12 @@ Is it true that if, for an irrational $\alpha$, the number of $m \leq n$ with
 $\{\alpha m\} \in [u,v)$ is $n(v-u) + O(1)$, then $u$ and $v$ must be fractional
 parts of integer multiples of $\alpha$? Proved by Kesten.
 
-*Reference:* [erdosproblems.com/998](https://www.erdosproblems.com/998)
-
-[Ke66] Kesten, H., _On a conjecture of Erdős and Szüsz related to uniform distribution mod 1_.
-Acta Arithmetica (1966), 193-212.
+*References:*
+- [erdosproblems.com/998](https://www.erdosproblems.com/998)
+- [Er64b] Erdős, P., _Problems and results on diophantine approximations_. Compositio Math.
+  **16** (1964), 52–65.
+- [Ke66] Kesten, H., _On a conjecture of Erdős and Szüsz related to uniform distribution mod 1_.
+  Acta Arithmetica **12** (1966), 193–212.
 -/
 
 open Classical Finset
@@ -53,7 +55,7 @@ was proved by Kesten [Ke66].
 @[category research solved, AMS 11]
 theorem erdos_998 : answer(True) ↔
     ∀ (α : ℝ), Irrational α →
-    ∀ (u v : ℝ), 0 ≤ u → u < v → v ≤ 1 →
+    ∀ (u v : ℝ), 0 ≤ u → u < v → v < 1 →
     (∃ C : ℝ, ∀ n : ℕ, 0 < n →
       |(↑(countFracInInterval α u v n) : ℝ) - ↑n * (v - u)| ≤ C) →
     (∃ k : ℤ, u = Int.fract (α * ↑k)) ∧ (∃ ℓ : ℤ, v = Int.fract (α * ↑ℓ)) := by
