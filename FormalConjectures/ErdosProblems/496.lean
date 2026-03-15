@@ -20,8 +20,20 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 496
 
 Erdős asked whether for every irrational α and every ε > 0 there exist positive integers x, y, z
-with |x² + y² − z²α| < ε. This was proved by Margulis (1989) as a consequence of the Oppenheim
-conjecture.
+with |x² + y² − z²α| < ε. An analogous result for quadratic forms in five variables was proved
+by Davenport and Heilbronn (1946). The full result was proved by Margulis (1989) as a consequence
+of the Oppenheim conjecture.
+
+## References
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. **6**
+(1961), 221–254.
+
+[DaHe46] Davenport, H., Heilbronn, H., _On indefinite quadratic forms in five variables_.
+J. London Math. Soc. (1946), 185–193.
+
+[Ma89] Margulis, G. A., _Discrete subgroups and ergodic theory_. Number theory, trace formulas
+and discrete groups (Oslo, 1987) (1989), 377–398.
 
 *Reference:* [erdosproblems.com/496](https://www.erdosproblems.com/496)
 -/
@@ -36,7 +48,7 @@ $x$, $y$, $z$ such that $|x^2 + y^2 - z^2 \alpha| < \varepsilon$.
 @[category research solved, AMS 11]
 theorem erdos_496 (α : ℝ) (hα : Irrational α) (ε : ℝ) (hε : ε > 0) :
     ∃ x y z : ℕ, 0 < x ∧ 0 < y ∧ 0 < z ∧
-      |((x : ℝ) ^ 2 + (y : ℝ) ^ 2 - (z : ℝ) ^ 2 * α)| < ε := by
+      |(x : ℝ) ^ 2 + (y : ℝ) ^ 2 - (z : ℝ) ^ 2 * α| < ε := by
   sorry
 
 end Erdos496
