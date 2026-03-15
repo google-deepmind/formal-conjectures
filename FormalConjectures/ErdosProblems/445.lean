@@ -27,6 +27,12 @@ $ab \equiv 1 \pmod{p}$?
 
 Heilbronn (unpublished) proved this for $c$ sufficiently close to $1$.
 Heath-Brown [He00] used Kloosterman sums to prove this for all $c > 3/4$.
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980), p. 89.
+
+[He00] Heath-Brown, D. R., _Arithmetic applications of Kloosterman sums_. Nieuw Arch. Wiskd.
+(5) (2000), 380–384.
 -/
 
 open Real
