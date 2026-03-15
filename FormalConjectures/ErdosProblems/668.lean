@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Geometry.Metric
+import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 668
@@ -33,28 +35,31 @@ The actual maximal number of unit distances is the subject of problem #90.
 [Er97f] Erdős, P., _Some of my favourite problems which recently have been solved_.
 Proceedings of the International Conference on Set-theoretic Topology and its Applications
 (Matsuyama, 1994) (1997), 59-79.
+
+[EHSVZ25] Engel, P., Hammond-Lee, O., Su, Y., Varga, D., Zsámboki, P., _Diverse beam search
+to find densest-known planar unit distance graphs_. arXiv:2406.15317 (2025).
+
+[AMP25] Alexeev, B., Mixon, D., Parshall, H., _The Erdős unit distance problem for small
+point sets_. arXiv:2412.11914 (2025).
 -/
+
+open scoped EuclideanGeometry
 
 namespace Erdos668
 
-/-- The number of ordered pairs of distinct points in $P$ at unit distance. -/
-noncomputable def unitDistanceCount
-    (P : Finset (EuclideanSpace ℝ (Fin 2))) : ℕ :=
-  ((P ×ˢ P).filter (fun pq => pq.1 ≠ pq.2 ∧ dist pq.1 pq.2 = 1)).card
-
-/-- The maximum number of ordered unit distance pairs among all $n$-point
+/-- The maximum number of unit distance pairs among all $n$-point
     sets in $\mathbb{R}^2$. -/
 noncomputable def maxUnitDistances (n : ℕ) : ℕ :=
-  sSup {k : ℕ | ∃ P : Finset (EuclideanSpace ℝ (Fin 2)),
-    P.card = n ∧ unitDistanceCount P = k}
+  sSup {k : ℕ | ∃ P : Finset ℝ²,
+    P.card = n ∧ unitDistNum P = k}
 
 /-- Two finite point sets in $\mathbb{R}^2$ are congruent if there is a distance-preserving
     map of $\mathbb{R}^2$ sending one onto the other. -/
 def AreCongruent
-    (P Q : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∃ f : EuclideanSpace ℝ (Fin 2) → EuclideanSpace ℝ (Fin 2),
+    (P Q : Finset ℝ²) : Prop :=
+  ∃ f : ℝ² → ℝ²,
     (∀ x y, dist (f x) (f y) = dist x y) ∧
-    f '' (↑P : Set (EuclideanSpace ℝ (Fin 2))) = ↑Q
+    f '' (↑P : Set ℝ²) = ↑Q
 
 /--
 **Erdős Problem 668** [Er97f]:
@@ -70,9 +75,9 @@ unit distance count.
 theorem erdos_668 :
     answer(sorry) ↔
     ∀ M : ℕ, ∃ N : ℕ, ∀ n : ℕ, n ≥ N →
-      ∃ (Ps : Fin M → Finset (EuclideanSpace ℝ (Fin 2))),
+      ∃ (Ps : Fin M → Finset ℝ²),
         (∀ i, (Ps i).card = n ∧
-              unitDistanceCount (Ps i) = maxUnitDistances n) ∧
+              unitDistNum (Ps i) = maxUnitDistances n) ∧
         (∀ i j, i ≠ j → ¬AreCongruent (Ps i) (Ps j)) := by
   sorry
 
@@ -84,16 +89,18 @@ achieving the maximum number of unit distances?
 
 Note: the additional commentary on the problem states that the count of
 incongruent maximisers is in fact $= 1$ for $n = 4$, so this part of the
-conjecture may be false as stated.
+conjecture may be false as stated. Computational evidence [EHSVZ25] [AMP25]
+suggests uniqueness (up to graph isomorphism, which implies uniqueness up to
+congruence) for $5 \le n \le 21$.
 -/
 @[category research open, AMS 5 52]
 theorem erdos_668.variants.part2 :
     answer(sorry) ↔
     ∀ (n : ℕ), n > 3 →
-    ∃ (P Q : Finset (EuclideanSpace ℝ (Fin 2))),
+    ∃ (P Q : Finset ℝ²),
       P.card = n ∧ Q.card = n ∧
-      unitDistanceCount P = maxUnitDistances n ∧
-      unitDistanceCount Q = maxUnitDistances n ∧
+      unitDistNum P = maxUnitDistances n ∧
+      unitDistNum Q = maxUnitDistances n ∧
       ¬AreCongruent P Q := by
   sorry
 
