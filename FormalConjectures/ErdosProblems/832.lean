@@ -46,7 +46,11 @@ structure UniformHypergraph (V : Type*) [DecidableEq V] (r : ℕ) where
   uniform : ∀ e ∈ edges, e.card = r
 
 /-- A proper $k$-coloring of a hypergraph: a vertex coloring such that no edge
-is monochromatic (for every edge, not all vertices receive the same color). -/
+is monochromatic (for every edge, not all vertices receive the same color).
+
+Note: the formulation `∀ c, ∃ v ∈ e, f v ≠ c` is equivalent to "not all vertices of `e`
+share the same color" for nonempty edges: if all vertices had color `c₀`, the universal
+would fail at `c = c₀`. -/
 def UniformHypergraph.IsProperColoring {V : Type*} [DecidableEq V] {r : ℕ}
     (H : UniformHypergraph V r) (k : ℕ) (f : V → Fin k) : Prop :=
   ∀ e ∈ H.edges, ∀ c : Fin k, ∃ v ∈ e, f v ≠ c
