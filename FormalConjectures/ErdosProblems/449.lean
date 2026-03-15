@@ -15,11 +15,18 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 449
 
 *Reference:* [erdosproblems.com/449](https://www.erdosproblems.com/449)
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980), p. 89.
+
+[HaTe88] Hall, R.R. and Tenenbaum, G., _Divisors_. Cambridge University Press (1988),
+Section 4.6.
 
 Let $r(n)$ count the number of pairs $(d_1, d_2)$ such that $d_1 \mid n$ and
 $d_2 \mid n$ and $d_1 < d_2 < 2d_1$. Is it true that, for every $\epsilon > 0$,
@@ -47,11 +54,17 @@ almost all $n$? The answer is no. -/
 @[category research solved, AMS 11]
 theorem erdos_449 : answer(False) ↔
     ∀ ε : ℝ, ε > 0 →
-    ∀ δ : ℝ, δ > 0 →
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      ((Finset.Icc 1 N).filter (fun n =>
-        (closeDivisorPairs n : ℝ) ≥ ε * (n.divisors.card : ℝ))).card /
-          (N : ℝ) < δ := by
+    Set.HasDensity {n : ℕ | (closeDivisorPairs n : ℝ) ≥ ε * (n.divisors.card : ℝ)} 0 := by
+  sorry
+
+/-- Stronger variant of Erdős Problem 449: for any constant $K > 0$, the set
+of $n$ with $r(n) > K \cdot \tau(n)$ has positive natural density. This follows
+from the negative solution to Problem 448 via the Cauchy–Schwarz inequality. -/
+@[category research solved, AMS 11]
+theorem erdos_449.variants.positive_density :
+    ∀ K : ℝ, K > 0 →
+    Set.HasPosDensity
+      {n : ℕ | (closeDivisorPairs n : ℝ) > K * (n.divisors.card : ℝ)} := by
   sorry
 
 end Erdos449
