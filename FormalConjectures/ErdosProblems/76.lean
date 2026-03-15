@@ -35,12 +35,13 @@ parts), and a careful count shows $\approx n^2/12$ is achievable but not more.
 See also OEIS sequence A060407.
 
 [Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
-Combinatorics '94 (Catania), Congressus Numerantium 107 (1995).
+Combinatorics '94 (Catania), Congressus Numerantium **107** (1995).
 
 [Er97d] Erdős, P., _Some of my favourite problems in number theory, combinatorics,
-and geometry_.
+and geometry_. Resenhas **1** (1995), 165–186.
 
-[Va99, 3.54] See erdosproblems.com/76.
+[Va99, 3.54] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999.
 
 [GrLe20] Gruslys, V. and Letzter, S., _Minimising the number of triangles in a
 two-colouring of the edges of $K_n$_, J. Combin. Theory Ser. B (2020).
