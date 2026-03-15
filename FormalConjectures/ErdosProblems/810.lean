@@ -24,6 +24,11 @@ import FormalConjectures.Util.ProblemImports
 A problem of Burr, Erdős, Graham, and Sós. Asks whether there exists ε > 0 such that, for all
 sufficiently large n, some n-vertex graph with at least εn² edges admits an n-coloring of its edges
 where every C₄ is rainbow.
+
+See also Problem 809.
+
+[Er91] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Matematiche (Catania) **47** (1992), no. 2, 231-240 (1993).
 -/
 
 namespace Erdos810
@@ -32,16 +37,12 @@ namespace Erdos810
     exists an edge coloring using $n$ colors such that every 4-cycle in the
     graph has all 4 edges receiving distinct colors. -/
 def AdmitsRainbowC4Coloring (n : ℕ) (G : SimpleGraph (Fin n)) : Prop :=
-  ∃ c : Sym2 (Fin n) → Fin n,
-    ∀ (a b d e : Fin n),
-      a ≠ b → a ≠ d → a ≠ e → b ≠ d → b ≠ e → d ≠ e →
-      G.Adj a b → G.Adj b d → G.Adj d e → G.Adj e a →
-      c (Sym2.mk (a, b)) ≠ c (Sym2.mk (b, d)) ∧
-      c (Sym2.mk (a, b)) ≠ c (Sym2.mk (d, e)) ∧
-      c (Sym2.mk (a, b)) ≠ c (Sym2.mk (e, a)) ∧
-      c (Sym2.mk (b, d)) ≠ c (Sym2.mk (d, e)) ∧
-      c (Sym2.mk (b, d)) ≠ c (Sym2.mk (e, a)) ∧
-      c (Sym2.mk (d, e)) ≠ c (Sym2.mk (e, a))
+  ∃ col : Sym2 (Fin n) → Fin n,
+    ∀ (a b c d : Fin n),
+      [a, b, c, d].Nodup →
+      G.Adj a b → G.Adj b c → G.Adj c d → G.Adj d a →
+      [col (Sym2.mk (a, b)), col (Sym2.mk (b, c)),
+       col (Sym2.mk (c, d)), col (Sym2.mk (d, a))].Nodup
 
 /--
 **Erdős Problem 810**: Does there exist some $\varepsilon > 0$ such that, for all
