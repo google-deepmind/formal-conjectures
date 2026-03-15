@@ -43,6 +43,10 @@ J. Combin. Theory Ser. A **29** (1980), 354–360.
 Ann. of Math. **199** (2024), 919–941.
 
 [Er90b, Er91, Er93, Er97c] Various papers of Erdős posing and discussing this problem.
+
+See also Problem 986 for the general conjecture on $R(k,n)$, of which this is the $k = 4$ case.
+
+OEIS: [A059442](https://oeis.org/A059442)
 -/
 
 open SimpleGraph Real
@@ -74,6 +78,29 @@ theorem erdos_166 :
     ∃ α : ℕ,
     ∃ N₀ : ℕ, ∀ k : ℕ, N₀ ≤ k →
       C * ((k : ℝ) ^ 3 / (Real.log (k : ℝ)) ^ α) ≤ (ramseyR4 k : ℝ) := by
+  sorry
+
+/--
+Mattheus and Verstraëte [MaVe23] proved the specific bound $R(4,k) \gg k^3 / (\log k)^4$,
+resolving Erdős Problem 166 with exponent $\alpha = 4$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_166_mattheus_verstraete :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ N₀ : ℕ, ∀ k : ℕ, N₀ ≤ k →
+      C * ((k : ℝ) ^ 3 / (Real.log (k : ℝ)) ^ 4) ≤ (ramseyR4 k : ℝ) := by
+  sorry
+
+/--
+Ajtai, Komlós, and Szemerédi [AKS80] proved the upper bound $R(4,k) \ll k^3 / (\log k)^2$,
+i.e., there exists a constant $C > 0$ such that $R(4,k) \leq C \cdot k^3 / (\log k)^2$
+for all sufficiently large $k$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_166_upper_bound :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ N₀ : ℕ, ∀ k : ℕ, N₀ ≤ k →
+      (ramseyR4 k : ℝ) ≤ C * ((k : ℝ) ^ 3 / (Real.log (k : ℝ)) ^ 2) := by
   sorry
 
 end Erdos166
