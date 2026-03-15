@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 596
@@ -30,7 +31,8 @@ Erdős and Hajnal originally conjectured that no such $G_1$, $G_2$ exist, but $G
 and $G_2 = C_6$ is an example (Nešetřil–Rödl for the finite Ramsey property, Erdős–Hajnal
 for the countable case). Whether $G_1 = K_4$, $G_2 = K_3$ works is problem 595.
 
-[Er87] Erdős, P., _Some problems and results in combinatorial number theory_ (1987).
+[Er87] Erdős, P., _Some problems and results on combinatorial number theory_,
+Graph theory and its applications: East and West (1987).
 -/
 
 open SimpleGraph
@@ -38,10 +40,11 @@ open SimpleGraph
 namespace Erdos596
 
 /-- A graph $H$ contains a monochromatic copy of $G$ under edge coloring $c$: there exists
-an embedding of $G$ into $H$ such that all edges in the image receive the same color. -/
+a copy (injective homomorphism) of $G$ into $H$ such that all edges in the image receive the
+same color. -/
 def HasMonochromaticCopy {W : Type*} {V : Type*}
     (H : SimpleGraph V) (G : SimpleGraph W) {α : Type*} (c : V → V → α) : Prop :=
-  ∃ (φ : G ↪g H) (color : α), ∀ u v, G.Adj u v → c (φ u) (φ v) = color
+  ∃ (φ : G.Copy H) (color : α), ∀ u v, G.Adj u v → c (φ u) (φ v) = color
 
 /--
 Erdős Problem 596 [Er87]:
@@ -63,12 +66,12 @@ theorem erdos_596 :
       -- whose edges cannot be n-colored without a monochromatic G₂
       (∀ n : ℕ, 1 ≤ n →
         ∃ (V : Type) (H : SimpleGraph V),
-          IsEmpty (G₁ ↪g H) ∧
+          G₁.Free H ∧
           ∀ c : V → V → Fin n, HasMonochromaticCopy H G₂ c) ∧
       -- (b) Countable failure: every G₁-free graph can be countably colored
       -- without a monochromatic G₂
       (∀ (V : Type) (H : SimpleGraph V),
-        IsEmpty (G₁ ↪g H) →
+        G₁.Free H →
         ∃ c : V → V → ℕ, ¬HasMonochromaticCopy H G₂ c) := by
   sorry
 
