@@ -31,6 +31,13 @@ This was proved by Chen and Ma [ChMa25], who showed the stronger statement that,
 provided $n \geq 600$, all graphs with $2n+1$ vertices and at least $n^2+n$ edges
 contain two vertices of the same degree joined by a path of length $3$, except
 $K_{n,n+1}$.
+
+[Er91] Erdős, P., _Problems and results in combinatorial analysis and combinatorial
+number theory_. Graph theory, combinatorics, and applications, Vol. 1 (Kalamazoo,
+MI, 1988), 1991, 397–406.
+
+[ChMa25] Chen, K., Ma, J., _A problem of Erdős and Hajnal on paths with
+equal-degree endpoints_. arXiv:2503.19569, 2025.
 -/
 
 open SimpleGraph
@@ -45,10 +52,10 @@ two vertices of the same degree joined by a path of length $3$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_816 : answer(True) ↔
-    ∀ n : ℕ, ∀ G : SimpleGraph (Fin (2 * n + 1)),
+    ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2 * n + 1))) [DecidableRel G.Adj],
       G.edgeSet.ncard = n ^ 2 + n + 1 →
         ∃ v w : Fin (2 * n + 1), v ≠ w ∧
-          (G.neighborSet v).ncard = (G.neighborSet w).ncard ∧
+          G.degree v = G.degree w ∧
           ∃ p : G.Walk v w, p.IsPath ∧ p.length = 3 := by
   sorry
 
