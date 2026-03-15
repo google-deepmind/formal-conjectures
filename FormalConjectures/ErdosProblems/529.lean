@@ -25,8 +25,22 @@ $d_2(n)/\sqrt{n} \to \infty$ (Part 1) and whether $d_k(n) \ll \sqrt{n}$ for $k \
 
 *Reference:* [erdosproblems.com/529](https://www.erdosproblems.com/529)
 
-[DuHa13] Duminil-Copin, H. and Hammond, A., *Self-avoiding walk is sub-ballistic*,
-J. Eur. Math. Soc. (2013).
+[Er61] Erdős, P., _Some unsolved problems_, Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
+221–254, p. 254.
+
+[Sl87] Slade, G., _The diffusion of self-avoiding random walk in high dimensions_,
+Comm. Math. Phys. **108** (1987), 661–683.
+
+[HaSl91] Hara, T., Slade, G., _Critical behaviour of self-avoiding walk in five or more
+dimensions_, Bull. Amer. Math. Soc. (N.S.) **25** (1991), 417–423.
+
+[HaSl92] Hara, T., Slade, G., _Self-avoiding walk in five or more dimensions. I. The critical
+behaviour_, Comm. Math. Phys. **147** (1992), 101–136.
+
+[MaSl93] Madras, N., Slade, G., _The Self-Avoiding Walk_, Birkhäuser (1993), xiv+425 pp.
+
+[DuHa13] Duminil-Copin, H., Hammond, A., _Self-avoiding walk is sub-ballistic_,
+Comm. Math. Phys. **324** (2013), 401–423.
 -/
 
 open BigOperators Filter Classical
