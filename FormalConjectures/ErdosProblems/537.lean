@@ -20,11 +20,15 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 537
 
 *Reference:* [erdosproblems.com/537](https://www.erdosproblems.com/537)
+
+[Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
+combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo.,
+1971) (1973), 117-138.
 -/
 
-open Finset
-
 namespace Erdos537
+
+open Finset Nat Filter
 
 /--
 **Erdős Problem 537** (Disproved by Ruzsa):
@@ -43,10 +47,9 @@ $a_1 p_1 = a_2 p_2 = a_3 p_3$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_537 : answer(False) ↔
-    ∀ (ε : ℝ), 0 < ε →
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      ∀ A : Finset ℕ, A ⊆ Icc 1 N → ε * ↑N ≤ ↑A.card →
-        ∃ a₁ ∈ A, ∃ a₂ ∈ A, ∃ a₃ ∈ A,
+    ∀ᵉ (ε > (0 : ℝ)), ∀ᶠ N in atTop,
+      ∀ (A : Finset ℕ), A ⊆ Icc 1 N → (ε * (N : ℝ)) ≤ (A.card : ℝ) →
+        ∃ᵉ (a₁ ∈ A) (a₂ ∈ A) (a₃ ∈ A),
           ∃ p₁ p₂ p₃ : ℕ,
             Nat.Prime p₁ ∧ Nat.Prime p₂ ∧ Nat.Prime p₃ ∧
             p₁ ≠ p₂ ∧ p₁ ≠ p₃ ∧ p₂ ≠ p₃ ∧
