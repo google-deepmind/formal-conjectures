@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-!
 # Erdős Problem 270
@@ -23,13 +24,18 @@ import FormalConjectures.Util.ProblemImports
 
 Let $f(n) \to \infty$. Is it true that $\sum 1/(n+1)\cdots(n+f(n))$ is irrational?
 
+OEIS: [A073016](https://oeis.org/A073016)
+
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980), p.66.
 
-[CrKo25] Crmarić and Kovač, disproof of the conjecture.
+[Ha75] Hansen, E. R., *A Table of Series and Products*. Prentice-Hall (1975), p.87.
+
+[CrKo25] Crmarić, T. and Kovač, V., *On the irrationality of certain super-polynomially
+decaying series*. arXiv:2504.18712 (2025).
 -/
 
-open Filter Finset BigOperators
+open Filter Finset BigOperators MeasureTheory
 
 namespace Erdos270
 
@@ -60,6 +66,31 @@ theorem erdos_270.variants.stronger_disproof :
         Tendsto f atTop atTop ∧
         HasSum (fun n => (1 : ℝ) / (∏ i ∈ Finset.range (f (n + 1)),
           ((n : ℝ) + 2 + (i : ℝ)))) α := by
+  sorry
+
+/--
+Nondecreasing variant (OPEN) [ErGr80, p.66]:
+
+Erdős and Graham suggested that the sum $\sum_{n \geq 1} 1/((n+1)\cdots(n+f(n)))$
+is "almost surely" irrational if $f$ is assumed to be nondecreasing. This remains open.
+-/
+@[category research open, AMS 11 40]
+theorem erdos_270.variants.nondecreasing :
+    ∀ f : ℕ → ℕ, Monotone f → Tendsto f atTop atTop →
+      Irrational (∑' n, (1 : ℝ) / ∏ i ∈ Finset.range (f (n + 1)),
+        ((n : ℝ) + 2 + (i : ℝ))) := by
+  sorry
+
+/--
+Crmarić and Kovač [CrKo25] showed that under the nondecreasing constraint on $f$,
+the set of achievable values of the sum $\sum_{n \geq 1} 1/((n+1)\cdots(n+f(n)))$
+has Lebesgue measure zero.
+-/
+@[category research solved, AMS 11 40]
+theorem erdos_270.variants.nondecreasing_measure_zero :
+    volume {α : ℝ | ∃ f : ℕ → ℕ, Monotone f ∧ Tendsto f atTop atTop ∧
+      HasSum (fun n => (1 : ℝ) / (∏ i ∈ Finset.range (f (n + 1)),
+        ((n : ℝ) + 2 + (i : ℝ)))) α} = 0 := by
   sorry
 
 end Erdos270
