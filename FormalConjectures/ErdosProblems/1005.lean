@@ -26,10 +26,16 @@ the largest integer such that for all pairs of indices $k < l$ with $l \leq k + 
 the fractions $a_k/b_k$ and $a_l/b_l$ are "similarly ordered":
 $(a_k - a_l)(b_k - b_l) \geq 0$.
 
-[Er43] Erdős, P., *On the distribution of the convergents of almost all real numbers*.
-Bull. Amer. Math. Soc. (1943).
+[Er43] Erdős, P., *A note on Farey series*.
+Quarterly Journal of Mathematics, Oxford Series (1943), 82–85.
 
-[vD25b] van Doorn, T. (2025).
+[Ma42] Mayer, A. E., *A mean value theorem concerning Farey series*.
+Quarterly Journal of Mathematics, Oxford Series (1942), 48–57.
+
+[vD25b] van Doorn, W., *Improved bounds for the Mayer-Erdős phenomenon on similarly ordered
+Farey fractions*. arXiv:2509.00121 (2025).
+
+OEIS sequence: A386893.
 -/
 
 open Filter Finset
