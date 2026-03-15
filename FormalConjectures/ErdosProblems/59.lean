@@ -28,17 +28,24 @@ is at most $2^{(1+o(1)) \cdot \operatorname{ex}(n; G)}$? Disproved: the answer i
 $G = C_6$ (Morris and Saxton [MoSa16]). Erdős, Frankl, and Rödl [EFR86] proved the
 answer is yes when $G$ is not bipartite.
 
-[Er90] Erdős, P. (1990).
+[Er90] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1990),
+467–478.
 
-[Er93, p.335] Erdős, P. (1993).
+[Er93, p.335] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+Quaestiones Mathematicae (1993), 333–350.
 
-[Er97c] Erdős, P. (1997).
+[Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
+**164** (1997), 81–85.
 
-[Va99, 3.56] Vaughan, R.C. (1999).
+[Va99, 3.56] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999).
 
-[EFR86] Erdős, P., Frankl, P., Rödl, V. (1986).
+[EFR86] Erdős, P., Frankl, P., Rödl, V., _The asymptotic number of graphs not containing
+a fixed subgraph and a problem for hypergraphs having no exponent_. Graphs and
+Combinatorics (1986), 113–121.
 
-[MoSa16] Morris, R., Saxton, D. (2016).
+[MoSa16] Morris, R., Saxton, D., _The number of $C_{2\ell}$-free graphs_. Adv. Math. (2016),
+534–580.
 -/
 
 open SimpleGraph
