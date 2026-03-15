@@ -29,17 +29,17 @@ conjectured $f(n) = O(n)$, proved by Kahn [Ka94].
 related questions_. Infinite and finite sets (Colloq., Keszthely, 1973; dedicated to P. Erdős on
 his 60th birthday), Vol. II (1975), 609–627.
 
-[Ka92b] Kahn, J., _On a problem of Erdős and Lovász: Random methods in combinatorics_. Preprint
-(1992).
+[Ka92b] Kahn, J., _On a problem of Erdős and Lovász: random lines in a projective plane_.
+Combinatorica **12** (1992), 417–423.
 
 [Ka94] Kahn, J., _On a problem of Erdős and Lovász II: $n(r) = O(r)$_. J. Amer. Math. Soc. **7**
 (1994), no. 1, 125–143.
 
-[Tr14] Tripathi, A., _A note on uniform intersecting families with maximum transversal size_.
+[Tr14] Tripathi, A., _A result on intersecting families with maximum transversal size_.
 Preprint (2014), arXiv:1409.4610.
 
 [BaWa21] Barát, J. and Wanless, I. M., _Intersecting and 2-intersecting hypergraphs with maximal
-covering number: the Erdős–Lovász theme revisited_. J. Combin. Des. **29** (2021), no. 3, 193–209.
+covering number_. J. Combin. Des. **29** (2021), no. 3, 260–286.
 
 See also OEIS sequence [A391599](https://oeis.org/A391599).
 -/
