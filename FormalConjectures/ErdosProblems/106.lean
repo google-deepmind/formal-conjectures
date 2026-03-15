@@ -23,6 +23,22 @@ import FormalConjectures.Util.ProblemImports
 
 Draw $n$ non-overlapping squares (possibly rotated) inside the unit square. Let $f(n)$ be
 the maximum total side length. Is $f(k^2 + 1) = k$ for every positive integer $k$?
+
+## References
+
+* [Er94b] Erdős, P., _Some problems in number theory, combinatorics and combinatorial
+  geometry_. Math. Pannon. **5** (1994), 261–269.
+* [ErSo95] Erdős, P., Soifer, A., _Squares in a square_. Geombinatorics **4** (1995),
+  110–114.
+* [Ha84] Halász, S., _Packing a convex domain with similar convex domains_. J. Combin.
+  Theory Ser. A **37** (1984), 85–90.
+* [CaSt05] Campbell, C., Staton, W., _A square-packing problem of Erdős_. Amer. Math.
+  Monthly **112** (2005), 165–167.
+* [Pr08] Praton, I., _Packing squares in a square_. Math. Mag. **81** (2008), 358–361.
+* [BKU24] Baek, J., Koizumi, J., Ueoro, T., _A note on the Erdős conjecture about
+  square packing_. arXiv:2411.07274 (2024).
+* [Ra26] Raj Singh, A., _On a square packing conjecture of Erdős_. arXiv:2601.22163
+  (2026).
 -/
 
 open BigOperators Real
@@ -101,13 +117,56 @@ Background:
   $1/(2k)$; the total side-length is $(k^2 - 1)/k + 2 \cdot 1/(2k) = k$.
 - The conjecture asserts that this lower bound is tight: no configuration of
   $k^2 + 1$ squares can exceed the total side-length $k$ achievable with $k^2$ squares.
-- Baek, Koizumi, and Ueoro (2024) proved the axis-aligned variant: if all
+- Baek, Koizumi, and Ueoro [BKU24] proved the axis-aligned variant: if all
   squares are required to have sides parallel to the coordinate axes, then the
   supremum equals $k$.
+- Praton [Pr08] proved that the full conjecture (determining $f(n)$ for all $n$) is
+  equivalent to $f(k^2 + 1) = k$.
+- Raj Singh [Ra26] proved that $f(k^2+1) = k$ for all $k$ is equivalent to
+  $f(k^2+1) = k$ for infinitely many $k$.
 -/
 @[category research open, AMS 52]
 theorem erdos_106 :
     answer(sorry) ↔ ∀ k : ℕ, 0 < k → f (k ^ 2 + 1) = (k : ℝ) := by
+  sorry
+
+/--
+A valid axis-aligned configuration of $n$ squares inside the unit square: each square
+has rotation angle $0$ (sides parallel to the coordinate axes), each square's closed
+region is contained in the unit square, and distinct squares have disjoint open interiors.
+-/
+def IsValidAxisAlignedConfig (n : ℕ) (config : Fin n → SquarePlacement) : Prop :=
+  (∀ i : Fin n, (config i).angle = 0) ∧ IsValidSquareConfig n config
+
+/--
+$g(n)$ is the supremum of the total side-length sum over all valid axis-aligned
+configurations of $n$ squares inside the unit square with pairwise disjoint interiors.
+-/
+noncomputable def g (n : ℕ) : ℝ :=
+  sSup {s : ℝ | ∃ config : Fin n → SquarePlacement,
+    IsValidAxisAlignedConfig n config ∧ s = ∑ i : Fin n, (config i).side}
+
+/--
+Axis-aligned variant of Erdős Problem 106, proved by Baek, Koizumi, and Ueoro [BKU24]:
+if all $n$ squares are required to have sides parallel to the coordinate axes, then
+$g(k^2 + 1) = k$ for every positive integer $k$. They also proved the more general
+result $g(k^2 + 2c + 1) = k + c/k$ for $-k < c < k$.
+-/
+@[category research solved, AMS 52]
+theorem erdos_106_axis_aligned :
+    ∀ k : ℕ, 0 < k → g (k ^ 2 + 1) = (k : ℝ) := by
+  sorry
+
+/--
+Praton's equivalence [Pr08]: the conjecture $f(k^2 + 2c + 1) = k + c/k$ for all
+positive integers $k$ and all integers $-k < c < k$ is equivalent to the special
+case $f(k^2 + 1) = k$ for all positive integers $k$.
+-/
+@[category research solved, AMS 52]
+theorem erdos_106_praton_equivalence :
+    (∀ k : ℕ, 0 < k → f (k ^ 2 + 1) = (k : ℝ)) ↔
+    (∀ k : ℕ, 0 < k → ∀ c : ℤ, -↑k < c → c < ↑k →
+      f (k ^ 2 + (2 * c + 1).toNat) = (k : ℝ) + (c : ℝ) / (k : ℝ)) := by
   sorry
 
 end Erdos106
