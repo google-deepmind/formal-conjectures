@@ -32,7 +32,10 @@ Is $f(r)$ unbounded for every $A$? How fast does $f(r)$ grow?
 This was settled by Beck [Be87], who proved that $f(r) \gg r^{1/2}$ for all $A$,
 and there exists $A$ such that $f(r) \ll (r \log r)^{1/2}$.
 
-[Be87] Beck, J., _Irregularities of distribution. I_, Acta Math. 159 (1987), 1-49.
+[Er64b] Erdős, P., _Problems and results on diophantine approximations_.
+Compositio Math. (1964), 52–65.
+
+[Be87] Beck, J., _Irregularities of distribution. I_, Acta Math. 159 (1987), 1–49.
 -/
 
 namespace Erdos989
@@ -57,25 +60,36 @@ noncomputable def discrepancy (A : ℕ → ℝ × ℝ) (r : ℝ) : ℝ :=
 /--
 Erdős Problem 989, Beck's lower bound [Be87]:
 For every locally finite sequence $A$ in $\mathbb{R}^2$, there exists $C > 0$ such that
-$f(r) \geq C \cdot \sqrt{r}$ for all sufficiently large $r$.
+for all sufficiently large $r$, there exists a center $c$ with
+$\left| |A \cap \mathrm{disk}(c,r)| - \pi r^2 \right| \geq C \cdot \sqrt{r}$.
 In particular, $f(r)$ is unbounded for every such $A$.
+
+This is formulated existentially over the center $c$ rather than using `discrepancy`
+(which takes a supremum via `⨆` on `ℝ`) to avoid the issue that `iSup` on a
+`ConditionallyCompleteLattice` requires `BddAbove`, which may not hold.
 -/
 @[category research solved, AMS 11]
 theorem erdos_989 (A : ℕ → ℝ × ℝ) (hA : IsLocallyFinite A) :
     ∃ C : ℝ, C > 0 ∧ ∃ R₀ : ℝ, ∀ r : ℝ, r ≥ R₀ →
-      discrepancy A r ≥ C * Real.sqrt r := by
+      ∃ c : ℝ × ℝ, |↑(countInDisk A c r) - Real.pi * r ^ 2| ≥ C * Real.sqrt r := by
   sorry
 
 /--
 Erdős Problem 989, Beck's upper bound [Be87]:
 There exists a locally finite sequence $A$ in $\mathbb{R}^2$ and $C > 0$ such that
-$f(r) \leq C \cdot \sqrt{r \cdot \log r}$ for all sufficiently large $r$.
+for all sufficiently large $r$ and all centers $c$,
+$\left| |A \cap \mathrm{disk}(c,r)| - \pi r^2 \right| \leq C \cdot \sqrt{r \cdot \log r}$.
+
+This is formulated universally over the center $c$ rather than using `discrepancy`
+(which takes a supremum via `⨆` on `ℝ`) to avoid the issue that `iSup` on a
+`ConditionallyCompleteLattice` requires `BddAbove`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_989.variants.upper_bound :
     ∃ (A : ℕ → ℝ × ℝ), IsLocallyFinite A ∧
     ∃ C : ℝ, C > 0 ∧ ∃ R₀ : ℝ, ∀ r : ℝ, r ≥ R₀ →
-      discrepancy A r ≤ C * Real.sqrt (r * Real.log r) := by
+      ∀ c : ℝ × ℝ,
+        |↑(countInDisk A c r) - Real.pi * r ^ 2| ≤ C * Real.sqrt (r * Real.log r) := by
   sorry
 
 end Erdos989
