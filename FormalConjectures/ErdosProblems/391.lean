@@ -23,6 +23,27 @@ Let $t(n)$ be the maximal value such that $n!$ can be written as a product
 of $n$ positive integers, each at least $t(n)$. Erdős conjectured that
 $t(n)/n \to 1/e$.
 
+Erdős, Selfridge, and Straus claimed to have proved the corresponding lower bound,
+but the proof was lost after Straus's death and could never be reconstructed.
+The full conjecture (and more) was resolved by Alexeev, Conway, Rosenfeld, Sutherland,
+Tao, Uhr, and Ventullo [ACRSTUV25], who proved that
+$t(n)/n = 1/e - c_0/\log n + O(1/(\log n)^{1+c})$ where $c_0 = 0.3044\cdots$
+is an explicit constant.
+
+## References
+
+* [ACRSTUV25] Alexeev, B., Conway, E., Rosenfeld, M., Sutherland, A., Tao, T., Uhr, M.,
+  Ventullo, K., _Decomposing a factorial into large factors_. arXiv:2503.20170 (2025).
+* [AlGr77] Alladi, K., Grinstead, C., _On the decomposition of n! into prime powers_.
+  J. Number Theory **9** (1977), 452–458.
+* [Er96b] Erdős, P., _Some problems I presented or planned to present in my short talk_.
+  Analytic number theory, Vol. 1 (Allerton Park, IL, 1995) (1996), 333–335.
+* [Gu04] Guy, R.K., _Unsolved problems in number theory_. (2004), xviii+437.
+* [GuSe98] Guy, R.K., Selfridge, J.L., _Factoring Factorial n_.
+  Amer. Math. Monthly **105** (1998), 766–767.
+
+OEIS: [A034258](https://oeis.org/A034258), [A034259](https://oeis.org/A034259)
+
 *Reference:* [erdosproblems.com/391](https://www.erdosproblems.com/391)
 -/
 
@@ -59,7 +80,7 @@ theorem erdos_391 :
 There exists a constant $c > 0$ such that $t(n)/n \leq 1/e - c/\log(n)$ for
 infinitely many $n$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_391.variants.rate_of_convergence :
     ∃ c : ℝ, c > 0 ∧ ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧
       (erdos391_t n : ℝ) / (n : ℝ) ≤ 1 / Real.exp 1 - c / Real.log (n : ℝ) := by
