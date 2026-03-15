@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 861
@@ -32,14 +33,17 @@ $$2^{1.16\,f(N)} \leq A(N) \leq 2^{6.442\,f(N)}.$$
 The lower bound is due to Saxton–Thomason [SaTh15]; the upper bound is due to
 Kohayakawa–Lee–Rödl–Samotij [KLRS15].
 
-[Er92c] Erdős, P., *Some of my favourite problems in number theory, combinatorics, and geometry*,
-Resenhas (1995).
+See also problem 862.
 
-[SaTh15] Saxton, D. and Thomason, A., *The number of Sidon sets and the maximum size of Sidon
-sets contained in a sparse random set of integers* (2015).
+[Er92c] Erdős, P., *Some of my favourite problems in various branches of combinatorics*,
+Matematiche (Catania) 47 (1992), no. 2, 231–240.
+
+[SaTh15] Saxton, D. and Thomason, A., *Hypergraph containers*, Inventiones Mathematicae
+201 (2015), 925–992.
 
 [KLRS15] Kohayakawa, Y., Lee, S. J., Rödl, V., and Samotij, W., *The number of Sidon sets and
-the maximum size of Sidon sets contained in a sparse random set of integers* (2015).
+the maximum size of Sidon sets contained in a sparse random set of integers*, Random Structures
+& Algorithms 46 (2015), no. 1, 1–25.
 -/
 
 open scoped Classical
@@ -48,18 +52,9 @@ open Finset Filter
 
 namespace Erdos861
 
-/-- A finite set of natural numbers is a Sidon set if all pairwise sums are distinct. -/
-def IsSidonSet (S : Finset ℕ) : Prop :=
-  ∀ a ∈ S, ∀ b ∈ S, ∀ c ∈ S, ∀ d ∈ S,
-    a + b = c + d → (a = c ∧ b = d) ∨ (a = d ∧ b = c)
-
-/-- $f(N)$, the cardinality of the largest Sidon subset of $\{1, \ldots, N\}$. -/
-noncomputable def maxSidonSize (N : ℕ) : ℕ :=
-  ((Icc 1 N).powerset.filter IsSidonSet).sup Finset.card
-
 /-- $A(N)$, the number of Sidon subsets of $\{1, \ldots, N\}$. -/
 noncomputable def countSidonSubsets (N : ℕ) : ℕ :=
-  ((Icc 1 N).powerset.filter IsSidonSet).card
+  ((Icc 1 N).powerset.filter fun S : Finset ℕ ↦ IsSidon (S : Set ℕ)).card
 
 /--
 Erdős Problem 861, first question (Cameron–Erdős [Er92c], proved):
@@ -68,7 +63,7 @@ $A(N) / 2^{f(N)} \to \infty$ as $N \to \infty$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_861 : answer(True) ↔
-    Tendsto (fun N => (countSidonSubsets N : ℝ) / (2 : ℝ) ^ (maxSidonSize N))
+    Tendsto (fun N => (countSidonSubsets N : ℝ) / (2 : ℝ) ^ ((Icc 1 N).maxSidonSubsetCard))
       atTop atTop := by
   sorry
 
@@ -81,7 +76,7 @@ $A(N) \geq 2^{1.16 \cdot f(N)}$.
 @[category research solved, AMS 5 11]
 theorem erdos_861.variants.lower :
     ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
-      (countSidonSubsets N : ℝ) ≥ (2 : ℝ) ^ ((1.16 : ℝ) * (maxSidonSize N : ℝ)) := by
+      (countSidonSubsets N : ℝ) ≥ (2 : ℝ) ^ ((1.16 : ℝ) * ((Icc 1 N).maxSidonSubsetCard : ℝ)) := by
   sorry
 
 /--
@@ -93,7 +88,7 @@ $A(N) \leq 2^{6.442 \cdot f(N)}$.
 @[category research solved, AMS 5 11]
 theorem erdos_861.variants.upper :
     ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
-      (countSidonSubsets N : ℝ) ≤ (2 : ℝ) ^ ((6.442 : ℝ) * (maxSidonSize N : ℝ)) := by
+      (countSidonSubsets N : ℝ) ≤ (2 : ℝ) ^ ((6.442 : ℝ) * ((Icc 1 N).maxSidonSubsetCard : ℝ)) := by
   sorry
 
 end Erdos861
