@@ -48,4 +48,14 @@ theorem erdos_698 : answer(True) ↔
       h n ≤ Nat.gcd (Nat.choose n i) (Nat.choose n j) := by
   sorry
 
+/-- Bergman's quantitative bound [Be11]: for $2 \leq i < j \leq n/2$,
+$$\gcd\left(\binom{n}{i}, \binom{n}{j}\right) \gg n^{1/2} \cdot 2^i / i^{3/2},$$
+where the implied constant is absolute. -/
+@[category research solved, AMS 5 11]
+theorem erdos_698_bergman_bound :
+    ∃ C : ℝ, C > 0 ∧ ∀ n i j : ℕ, 2 ≤ i → i < j → j ≤ n / 2 →
+      C * (n : ℝ) ^ ((1 : ℝ) / 2) * (2 : ℝ) ^ (i : ℕ) / (i : ℝ) ^ ((3 : ℝ) / 2) ≤
+        ↑(Nat.gcd (Nat.choose n i) (Nat.choose n j)) := by
+  sorry
+
 end Erdos698
