@@ -22,6 +22,17 @@ import FormalConjectures.Util.ProblemImports
 Is it true that $\operatorname{ex}(n; K_{r,r}) \gg n^{2-1/r}$ for all $r \geq 2$?
 
 *Reference:* [erdosproblems.com/714](https://www.erdosproblems.com/714)
+
+See also Erdős Problems [#147](https://www.erdosproblems.com/147),
+[#768](https://www.erdosproblems.com/768) (the $K_{2,2} = C_4$ case), and
+[#1158](https://www.erdosproblems.com/1158) (hypergraph generalization).
+
+[KST54] Kővári, T., Sós, V. T., and Turán, P., *On a problem of K. Zarankiewicz*.
+Colloq. Math. **3** (1954), 50-57.
+[Br66] Brown, W. G., *On graphs that do not contain a Thomsen graph*.
+Canad. Math. Bull. (1966), 281-285.
+[ERS66] Erdős, P., Rényi, A., and Sós, V. T., *On a problem of graph theory*.
+Studia Sci. Math. Hungar. (1966), 215-235.
 -/
 
 open SimpleGraph
@@ -53,7 +64,8 @@ Kövári, Sós, and Turán proved the matching upper bound
 $\operatorname{ex}(n; K_{r,r}) \ll n^{2-1/r}$ for all $r \geq 2$. The conjecture asks whether
 the lower bound of the same order also holds.
 
-The conjectured lower bound is known for $r = 2$ and $r = 3$.
+The conjectured lower bound is known for $r = 2$ and $r = 3$; the $r = 3$ case was
+proved independently by Brown [Br66] and by Erdős, Rényi, and Sós [ERS66].
 -/
 @[category research open, AMS 5]
 theorem erdos_714 : answer(sorry) ↔
