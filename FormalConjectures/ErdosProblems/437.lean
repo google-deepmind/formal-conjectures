@@ -31,7 +31,14 @@ although this is not quite trivial, using Siegel's theorem.
 A positive answer follows from work of Bui, Pratt, and Zaharescu [BPZ24],
 as noted by Tao.
 
-[BPZ24] Bui, H. M., Pratt, K., and Zaharescu, A.
+See also Problem 841 for a related problem.
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[BPZ24] Bui, H. M., Pratt, K., and Zaharescu, A., _A problem of
+Erdős-Graham-Granville-Selfridge on integral points on hyperelliptic curves_.
+Mathematical Proceedings of the Cambridge Philosophical Society (2024), 309–323.
 -/
 
 open scoped BigOperators
@@ -41,7 +48,7 @@ namespace Erdos437
 /-- The partial product of the first $j+1$ elements of a finite sequence
 $a \colon \mathrm{Fin}\; k \to \mathbb{N}$, i.e., $a(0) \cdot a(1) \cdots a(j)$. -/
 def partialProd {k : ℕ} (a : Fin k → ℕ) (j : Fin k) : ℕ :=
-  ∏ i ∈ Finset.univ.filter (fun i : Fin k => i ≤ j), a i
+  ∏ i ∈ Finset.Iic j, a i
 
 /-- The count of indices $j \in \{0, \ldots, k-1\}$ for which the partial product
 $a(0) \cdots a(j)$ is a perfect square. -/
