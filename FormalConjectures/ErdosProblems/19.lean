@@ -28,7 +28,7 @@ large $n$ by Kang, Kelly, Kühn, Methuku, and Osthus; the remaining small cases
 are decidable (resolved up to a finite check).
 
 [KKKMO21] Kang, D.Y., Kelly, T., Kühn, D., Methuku, A. and Osthus, D.,
-_A proof of the Erdős–Faber–Lovász conjecture_, Annals of Mathematics (2023).
+_A proof of the Erdős–Faber–Lovász conjecture_. Annals of Mathematics **198** (2023), 537–618.
 -/
 
 open SimpleGraph
