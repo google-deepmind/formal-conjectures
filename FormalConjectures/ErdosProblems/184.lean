@@ -26,13 +26,25 @@ and edges.
 
 Conjectured by Erdős and Gallai [EGP66], who proved that $O(n \log n)$ many cycles
 and edges suffice. The best bound is due to Bucić and Montgomery [BM22], who
-prove that $O(n \log^* n)$ suffice.
+prove that $O(n \log^* n)$ suffice. Conlon, Fox, and Sudakov [CFS14] proved that
+$O_\varepsilon(n)$ cycles and edges suffice if $G$ has minimum degree at least
+$\varepsilon n$. The graph $K_{3,n-3}$ shows that at least $(1+c)n$ parts are
+needed for some constant $c > 0$.
+
+See also Problem 583 (decomposition into paths) and Problem 1017 (decomposition
+into complete graphs).
 
 [EGP66] Erdős, P. and Gallai, T., _On the maximal number of vertices representing
 the edges of a graph_, 1966.
 
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial
+analysis_. Combinatorial Mathematics and its Applications (1971), 97-109.
+
 [BM22] Bucić, M. and Montgomery, R., _Towards the Erdős-Gallai cycle decomposition
-conjecture_, 2022.
+conjecture_. arXiv:2211.07689 (2022).
+
+[CFS14] Conlon, D., Fox, J., and Sudakov, B., _Cycle packing_. Random Structures
+Algorithms (2014), 608-626.
 -/
 
 open SimpleGraph
