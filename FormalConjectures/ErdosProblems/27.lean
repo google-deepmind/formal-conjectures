@@ -29,9 +29,9 @@ Erdős asked whether there exists a constant $C > 1$ such that for every $\varep
 $N \geq 1$, there is an $\varepsilon$-almost covering system with $N \leq n_1 < \cdots < n_k \leq CN$.
 This was disproved by Filaseta, Ford, Konyagin, Pomerance, and Yu [FFKPY07].
 
-[FFKPY07] Filaseta, M., Ford, K., Konyagin, S., Pomerance, C., and Yu, G.,
-_Sieving by large integers and covering systems of congruences_.
-J. Amer. Math. Soc. **20** (2007), no. 2, 495–517.
+[FFKPY07] Filaseta, M., Ford, K., Konyagin, S., Pomerance, C., and Yu, G., _Sieving by
+large integers and covering systems of congruences_. J. Amer. Math. Soc. **20** (2007),
+no. 2, 495–517.
 -/
 
 open Finset
