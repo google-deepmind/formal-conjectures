@@ -34,12 +34,18 @@ when the squares are superimposed.
 
 [Er81] Erdős, P., 1981.
 
-[CES60] Chowla, S., Erdős, P., and Straus, E.G., on the maximal number of pairwise
-orthogonal Latin squares of a given order, 1960.
+[CES60] Chowla, S., Erdős, P., and Straus, E.G., _On the maximal number of pairwise
+orthogonal Latin squares of a given order_. Canadian J. Math. (1960), 204-208.
 
-[Wi74] Wilson, R.M., Concerning the number of mutually orthogonal Latin squares, 1974.
+[Wi74] Wilson, R.M., _Concerning the number of mutually orthogonal Latin squares_. Discrete
+Math. (1974), 181-198.
 
-[Be83c] Beth, T., A remark on the number of mutually orthogonal Latin squares, 1983.
+[Be83c] Beth, T., _Eine Bemerkung zur Abschätzung der Anzahl orthogonaler lateinischer
+Quadrate mittels Siebverfahren_. Abh. Math. Sem. Univ. Hamburg (1983), 284-288.
+
+[BPS60] Bose, R.C., Shrikhande, S.S., and Parker, E.T., _Further results on the construction
+of mutually orthogonal Latin squares and the falsity of Euler's conjecture_. Canadian J. Math.
+(1960), 189-203.
 -/
 
 namespace Erdos724
