@@ -23,13 +23,18 @@ Erdős conjectured that for $t$-uniform hypergraph 2-colourings, the balanced-co
 $F^{(t)}(n,\alpha)$ grows polynomially in $\log n$ for any $\alpha > 0$, in contrast with the
 iterated-logarithm growth at $\alpha = 0$.
 
+Erdős offered a $500 prize for resolving this problem.
+
+See also Problem 562 (conjectured asymptotics for $F^{(t)}(n,0)$) and Problem 563 (the case
+$t = 2$).
+
 *Reference:* [erdosproblems.com/161](https://www.erdosproblems.com/161)
 
 [Er90b] Erdős, P., _Problems and results on graphs and hypergraphs: similarities and
 differences_. Mathematics of Ramsey theory, Algorithms Combin. 5 (1990), 12-28.
 
-[CFS11] Conlon, D., Fox, J., and Sudakov, B., _An approximate version of Sidorenko's
-conjecture_. Geometric and Functional Analysis 20 (2010), 1354-1366.
+[CFS11] Conlon, D., Fox, J., and Sudakov, B., _Large almost monochromatic subsets in
+hypergraphs_. Israel J. Math. (2011), 423-432.
 -/
 
 open Finset Real
