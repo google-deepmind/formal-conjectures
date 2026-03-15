@@ -33,8 +33,7 @@ Math. **2** (1950), 113–123.
 [Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
 Combinatorics '94 (1995), 167–189.
 
-[Ch23] Chen, J., _The set of odd integers not of the form $2^k + p$ is not the union of an
-infinite arithmetic progression and a density-zero set_ (2023).
+[Ch23] Chen, Y.-G., _A conjecture of Erdős on $p+2^k$_. arXiv:2312.04120 (2023).
 
 OEIS: [A006285](https://oeis.org/A006285) — Odd numbers not of the form $2^k + p$.
 -/
