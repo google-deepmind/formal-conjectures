@@ -25,7 +25,9 @@ Erdős asked whether $H(n)/h(n) \to \infty$ for almost all $n$, where $h(n)$ is 
 the longest mod-chain of prime divisors of $n$ and $H(n)$ is the length of the longest mod-chain
 of divisors of $n$.
 
-[Er79e] Erdős, P., _Some unconventional problems in number theory_ (1979), p. 81.
+See also Erdős Problem 695.
+
+[Er79e] Erdős, P., _Some unconventional problems in number theory_. Math. Mag. 52 (1979), 67-70.
 -/
 
 open Classical Filter Finset
