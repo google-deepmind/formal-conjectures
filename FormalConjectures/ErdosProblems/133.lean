@@ -24,14 +24,29 @@ import FormalConjectures.Util.ProblemImports
 Let $f(n)$ be minimal such that every triangle-free graph $G$ with $n$ vertices
 and diameter $2$ contains a vertex with degree $\geq f(n)$.
 
-Does $f(n)/\sqrt{n}\to \infty$? This was asked by Erdős and Pach [ErPa90]. The answer is
+Does $f(n)/\sqrt{n}\to \infty$? This was asked by Erdős [Er97b]. The answer is
 **No**: $f(n) = \Theta(\sqrt{n})$.
 
 Key results:
 - Lower bound: $f(n) \geq \lfloor\sqrt{n-1}\rfloor$ from the Moore bound.
 - [HaSe84] Hanson–Seyffarth: $f(n) \leq (\sqrt{2}+o(1))\sqrt{n}$.
 - [FuSe94] Füredi–Seress: $f(n) \leq (\frac{2}{\sqrt{3}}+o(1))\sqrt{n}$.
+- [HaLe18] Haviv–Levy: alternative construction of symmetric complete sum-free sets.
 - The precise asymptotic constant is unknown; Alon conjectures $f(n) \sim \sqrt{n}$.
+
+## References
+
+[Er97b] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Proceedings of the International Conference on Discrete Mathematics (ICDM) (1997).
+
+[HaSe84] Hanson, D., Seyffarth, K., _k-saturated graphs of prescribed maximum degree_.
+Congressus Numerantium (1984), 169-182.
+
+[FuSe94] Füredi, Z., Seress, Á., _Maximal triangle-free graphs with restrictions on the degrees_.
+Journal of Graph Theory (1994), 11-24.
+
+[HaLe18] Haviv, I., Levy, D., _Symmetric complete sum-free sets in cyclic groups_.
+Israel Journal of Mathematics (2018), 931-956.
 -/
 
 open SimpleGraph Filter
@@ -40,22 +55,17 @@ open scoped Topology
 
 namespace Erdos133
 
-/-- A graph $G$ contains a triangle if there are three mutually adjacent vertices. -/
-def HasTriangle {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∃ a b c : V, G.Adj a b ∧ G.Adj b c ∧ G.Adj a c
-
 /-- A graph has diameter at most $2$ if every pair of distinct vertices is
 either directly adjacent or has a common neighbor. -/
 def HasDiameterAtMostTwo {V : Type*} (G : SimpleGraph V) : Prop :=
   ∀ u v : V, u ≠ v → G.Adj u v ∨ ∃ w : V, G.Adj u w ∧ G.Adj w v
 
-/-- $f(n)$ is the minimum $k$ such that every triangle-free graph on $n$ vertices
+/-- $f(n)$ is the largest $k$ such that every triangle-free graph on $n$ vertices
 with diameter at most $2$ contains a vertex of degree at least $k$. Equivalently,
-it is the minimum maximum-degree over all such graphs. When no such graph exists
-(e.g. for $n = 1$) the infimum of the empty set is $0$. -/
+it is the minimum of the maximum degree over all such graphs. -/
 noncomputable def erdos133_f (n : ℕ) : ℕ :=
-  sInf { k : ℕ | ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
-    ¬HasTriangle G → HasDiameterAtMostTwo G →
+  sSup { k : ℕ | ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
+    G.CliqueFree 3 → HasDiameterAtMostTwo G →
     ∃ v : Fin n, k ≤ G.degree v }
 
 /--
@@ -70,7 +80,7 @@ theorem erdos_133 : answer(False) ↔
   sorry
 
 /--
-Erdős Problem 133 (Moore bound lower bound [ErPa90]):
+Erdős Problem 133 (Moore bound lower bound [Er97b]):
 $f(n) \geq \lfloor\sqrt{n-1}\rfloor$ for all $n \geq 1$.
 
 Proof sketch: a graph with max degree $d$ and diameter $\leq 2$ has at most
