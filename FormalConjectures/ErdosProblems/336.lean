@@ -27,6 +27,17 @@ $\lim_{r\to\infty} h(r)/r^2$. It is known that $1/3 \leq \lim h(r)/r^2 \leq 1/2$
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[ErGr80b] Erdős, P. and Graham, R., _On bases with an exact order_. Acta Arithmetica
+(1980), 201–207.
+
+[Gr88] Grekos, G., _Sur l'ordre d'une base additive_. (1988), Exp. No. 31, 13 pp.
+
+[Na93] Nash, J.C.M., _Some applications of a theorem of M. Kneser_. Journal of Number
+Theory (1993), 1–8.
+
+[Pl04] Plagne, A., _À propos de la fonction X d'Erdős et Graham_. Annales de l'Institut
+Fourier (Grenoble) (2004), 1717–1767.
 -/
 
 open Filter
@@ -63,8 +74,8 @@ exactly $k$ elements from $A$).
 
 Find the value of $\lim_{r\to\infty} h(r)/r^2$.
 
-Known bounds: $1/3 \leq \lim h(r)/r^2 \leq 1/2$ (lower bound due to Grekos, upper bound
-due to Nash).
+Known bounds: $1/3 \leq \lim h(r)/r^2 \leq 1/2$ (lower bound due to Grekos [Gr88], upper
+bound due to Nash [Na93]).
 -/
 @[category research open, AMS 11]
 theorem erdos_336 :
