@@ -29,13 +29,18 @@ A problem of Erdős and Sárkőzy [Er98]. The greedy algorithm shows
 $|A| \geq (1 - o(1)) \log_3 n$. Erdős, Lev, Rauzy, Sándor, and Sárközy [ELRSS99]
 proved $|A| > \log_2 n - 1$ is achievable. The upper bound
 $|A| \leq \log_2 n + \tfrac{1}{2} \log_2 \log n + O(1)$ follows from the distinct subset
-sums property. It is conjectured that $|A| \leq \log_2 n + O(1)$.
+sums property (see also Problem 13). It is conjectured that $|A| \leq \log_2 n + O(1)$.
 
-[Er98] Erdős, P., _Some of my favourite problems which recently have been solved_,
-Challenges for the 21st century (Singapore, 2000), 2001.
+The website considers this problem solved because the asymptotic answer $\sim \log_2 n$ is
+established. The main theorem `erdos_882` formalizes the stronger conjecture
+$|A| \leq \log_2 n + O(1)$, which remains open.
+
+[Er98] Erdős, P., _Some of my new and almost new problems and results in combinatorial
+number theory_. Number theory (Eger, 1996), 169–180, 1998.
 
 [ELRSS99] Erdős, P., Lev, V., Rauzy, G., Sándor, C., and Sárközy, A., _Greedy algorithm,
-arithmetic progressions, subset sums and divisibility_, 1999.
+arithmetic progressions, subset sums and divisibility_. Discrete Mathematics (1999),
+119–135.
 -/
 
 open Finset BigOperators Real
@@ -46,8 +51,8 @@ namespace Erdos882
 def subsetSums (A : Finset ℕ) : Finset ℕ :=
   (A.powerset.filter (· ≠ ∅)).image (fun S => S.sum id)
 
-/-- A finset of natural numbers is *primitive* if no element divides another
-distinct element. -/
+/-- A finset of natural numbers is *primitive* (an antichain under divisibility) if no element
+divides another distinct element. -/
 def IsPrimitive (B : Finset ℕ) : Prop :=
   ∀ a ∈ B, ∀ b ∈ B, a ∣ b → a = b
 
@@ -80,6 +85,21 @@ $|A| > \log_2 n - 1$ such that the non-empty subset sums of $A$ form a primitive
 theorem erdos_882.variants.lower_bound :
     ∃ N₀ : ℕ, ∀ n ≥ N₀,
       (maxPrimitiveSubsetSumSize n : ℝ) > Real.log n / Real.log 2 - 1 := by
+  sorry
+
+/--
+Erdős Problem 882, known upper bound [ELRSS99]:
+
+For all sufficiently large $n$, the maximum size of $A \subseteq \{1, \ldots, n\}$ whose
+non-empty subset sums are primitive satisfies
+$|A| \leq \log_2 n + \tfrac{1}{2} \log_2 \log n + C$ for some constant $C$.
+This follows from the connection to the distinct subset sums problem (Problem 13).
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_882.variants.upper_bound :
+    ∃ C : ℝ, ∃ N₀ : ℕ, ∀ n ≥ N₀,
+      (maxPrimitiveSubsetSumSize n : ℝ) ≤
+        Real.log n / Real.log 2 + Real.log (Real.log n) / (2 * Real.log 2) + C := by
   sorry
 
 end Erdos882
