@@ -23,6 +23,9 @@ Does there exist a $k$ such that every sufficiently large integer can be written
 in the form $\prod_i a_i - \sum_i a_i$ for some integers $a_i \geq 2$?
 
 *Reference:* [erdosproblems.com/493](https://www.erdosproblems.com/493)
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
+p. 238.
 -/
 
 open Finset BigOperators
@@ -35,7 +38,7 @@ Does there exist a $k$ such that every sufficiently large integer can be written
 in the form $\prod_i a_i - \sum_i a_i$ for some integers $a_i \geq 2$?
 
 The answer is yes with $k = 2$: for any integer $n$ we have
-$n = 2 \cdot (n+2) - (2 + (n+2))$.
+$n = 2 \cdot (n+2) - (2 + (n+2))$ (observed by Eli Seamans).
 -/
 @[category research solved, AMS 11]
 theorem erdos_493 : answer(True) ↔
