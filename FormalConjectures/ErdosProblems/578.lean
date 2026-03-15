@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 578
@@ -79,10 +80,7 @@ theorem erdos_578 :
     ∀ ε : ℝ, ε > 0 →
     ∃ d₀ : ℕ, ∀ d : ℕ, d ≥ d₀ →
       ((Finset.univ.filter (fun ec : Fin (2 ^ d) → Fin (2 ^ d) → Bool =>
-        ∃ f : (Fin d → Bool) → Fin (2 ^ d),
-          Function.Injective f ∧
-          ∀ u v, (hypercubeGraph d).Adj u v →
-            (toGraph578 ec).Adj (f u) (f v))).card : ℝ) ≥
+        (hypercubeGraph d).IsContained (toGraph578 ec))).card : ℝ) ≥
       (1 - ε) * (Fintype.card (Fin (2 ^ d) → Fin (2 ^ d) → Bool) : ℝ) := by
   sorry
 
