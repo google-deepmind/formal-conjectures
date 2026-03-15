@@ -24,58 +24,72 @@ import FormalConjectures.Util.ProblemImports
 Find all $n$ such that there is at least one triangle which can be cut into $n$
 congruent triangles.
 
-[So09c] Soifer, A., *The Mathematical Coloring Book*, Springer, 2009.
+[So09c] Soifer, A., *Is There Anything Beyond the Solution?*, The Mathematical Coloring
+Book, Springer, 2009, pp. 47–50.
+[SWW91] Snover, S., Waiveris, C., Williams, J., *Rep-tiling for triangles*,
+Discrete Mathematics (1991), 193–200.
+[Zh25] Zhang, Y., *Tiling Triangles With 2π/3 Angles*, arXiv:2512.22696, 2025.
 -/
+
+open scoped EuclideanGeometry
 
 namespace Erdos634
 
-/-- Squared Euclidean distance between two points in $\mathbb{R}^2$. -/
-noncomputable def sqDist (p q : ℝ × ℝ) : ℝ :=
-  (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2
-
-/-- Multiset of squared side lengths of a triangle.
+/-- Multiset of side lengths of a triangle with vertices `T : Fin 3 → ℝ²`.
     Two triangles are congruent (by SSS) iff these multisets agree. -/
-noncomputable def sideLengthsSq (A B C : ℝ × ℝ) : Multiset ℝ :=
-  ↑[sqDist A B, sqDist B C, sqDist A C]
+noncomputable def sideLengths (T : Fin 3 → ℝ²) : Multiset ℝ :=
+  ↑[dist (T 0) (T 1), dist (T 1) (T 2), dist (T 0) (T 2)]
 
-/-- A triangle is non-degenerate (vertices not collinear). -/
-def NonDegenerate (A B C : ℝ × ℝ) : Prop :=
-  (B.1 - A.1) * (C.2 - A.2) - (C.1 - A.1) * (B.2 - A.2) ≠ 0
-
-/-- The closed triangular region: convex hull of vertices $A$, $B$, $C$.
-    A point $p$ lies in the triangle iff $p = \alpha A + \beta B + \gamma C$ for some
-    $\alpha, \beta, \gamma \ge 0$ with $\alpha + \beta + \gamma = 1$. -/
-def triangleRegion (A B C : ℝ × ℝ) : Set (ℝ × ℝ) :=
-  {p | ∃ (α β γ : ℝ), 0 ≤ α ∧ 0 ≤ β ∧ 0 ≤ γ ∧ α + β + γ = 1 ∧
-    p.1 = α * A.1 + β * B.1 + γ * C.1 ∧
-    p.2 = α * A.2 + β * B.2 + γ * C.2}
-
-/-- The open interior of a triangular region: strictly positive
-    barycentric coordinates. -/
-def triangleInterior (A B C : ℝ × ℝ) : Set (ℝ × ℝ) :=
-  {p | ∃ (α β γ : ℝ), 0 < α ∧ 0 < β ∧ 0 < γ ∧ α + β + γ = 1 ∧
-    p.1 = α * A.1 + β * B.1 + γ * C.1 ∧
-    p.2 = α * A.2 + β * B.2 + γ * C.2}
-
-/-- Triangle $(A, B, C)$ can be dissected into exactly $n$ pairwise-congruent
-    non-degenerate triangles that tile it: each is contained in the original,
+/-- Triangle `T` can be dissected into exactly `n` pairwise-congruent
+    non-degenerate triangles that tile it: each piece has affinely independent
+    vertices, all pieces are congruent, each is contained in the original,
     their interiors are pairwise disjoint, and their union covers the original. -/
-def CanDissectInto (A B C : ℝ × ℝ) (n : ℕ) : Prop :=
-  ∃ (V : Fin n → (ℝ × ℝ) × (ℝ × ℝ) × (ℝ × ℝ)),
-    (∀ i, NonDegenerate (V i).1 (V i).2.1 (V i).2.2) ∧
-    (∀ i j, sideLengthsSq (V i).1 (V i).2.1 (V i).2.2 =
-            sideLengthsSq (V j).1 (V j).2.1 (V j).2.2) ∧
-    (∀ i, triangleRegion (V i).1 (V i).2.1 (V i).2.2 ⊆
-           triangleRegion A B C) ∧
+def CanDissectInto (T : Fin 3 → ℝ²) (n : ℕ) : Prop :=
+  ∃ (V : Fin n → Fin 3 → ℝ²),
+    (∀ i, AffineIndependent ℝ (V i)) ∧
+    (∀ i j, sideLengths (V i) = sideLengths (V j)) ∧
+    (∀ i, convexHull ℝ (Set.range (V i)) ⊆ convexHull ℝ (Set.range T)) ∧
     (∀ i j, i ≠ j →
-      triangleInterior (V i).1 (V i).2.1 (V i).2.2 ∩
-      triangleInterior (V j).1 (V j).2.1 (V j).2.2 = ∅) ∧
-    (∀ p, p ∈ triangleRegion A B C →
-      ∃ i, p ∈ triangleRegion (V i).1 (V i).2.1 (V i).2.2)
+      interior (convexHull ℝ (Set.range (V i))) ∩
+      interior (convexHull ℝ (Set.range (V j))) = ∅) ∧
+    (∀ p, p ∈ convexHull ℝ (Set.range T) →
+      ∃ i, p ∈ convexHull ℝ (Set.range (V i)))
 
-/-- There exists a triangle that can be dissected into $n$ congruent triangles. -/
+/-- There exists a triangle that can be dissected into `n` congruent triangles. -/
 def HasCongruentDissection (n : ℕ) : Prop :=
-  ∃ A B C : ℝ × ℝ, NonDegenerate A B C ∧ CanDissectInto A B C n
+  ∃ T : Fin 3 → ℝ², AffineIndependent ℝ T ∧ CanDissectInto T n
+
+/-- Two triangles are similar if their side length multisets are proportional. -/
+noncomputable def AreSimilar (T₁ T₂ : Fin 3 → ℝ²) : Prop :=
+  ∃ c : ℝ, 0 < c ∧ sideLengths T₁ = (sideLengths T₂).map (c * ·)
+
+/-- Triangle `T` can be dissected into `n` pairwise-similar non-degenerate triangles. -/
+def CanDissectIntoSimilar (T : Fin 3 → ℝ²) (n : ℕ) : Prop :=
+  ∃ (V : Fin n → Fin 3 → ℝ²),
+    (∀ i, AffineIndependent ℝ (V i)) ∧
+    (∀ i j, AreSimilar (V i) (V j)) ∧
+    (∀ i, convexHull ℝ (Set.range (V i)) ⊆ convexHull ℝ (Set.range T)) ∧
+    (∀ i j, i ≠ j →
+      interior (convexHull ℝ (Set.range (V i))) ∩
+      interior (convexHull ℝ (Set.range (V j))) = ∅) ∧
+    (∀ p, p ∈ convexHull ℝ (Set.range T) →
+      ∃ i, p ∈ convexHull ℝ (Set.range (V i)))
+
+/-- Triangle `T` can be dissected into `n` non-degenerate triangles each similar to `T`. -/
+def CanDissectIntoSelfSimilar (T : Fin 3 → ℝ²) (n : ℕ) : Prop :=
+  ∃ (V : Fin n → Fin 3 → ℝ²),
+    (∀ i, AffineIndependent ℝ (V i)) ∧
+    (∀ i, AreSimilar (V i) T) ∧
+    (∀ i, convexHull ℝ (Set.range (V i)) ⊆ convexHull ℝ (Set.range T)) ∧
+    (∀ i j, i ≠ j →
+      interior (convexHull ℝ (Set.range (V i))) ∩
+      interior (convexHull ℝ (Set.range (V j))) = ∅) ∧
+    (∀ p, p ∈ convexHull ℝ (Set.range T) →
+      ∃ i, p ∈ convexHull ℝ (Set.range (V i)))
+
+/-- There exists a triangle that can be dissected into `n` triangles similar to itself. -/
+def HasSelfSimilarDissection (n : ℕ) : Prop :=
+  ∃ T : Fin 3 → ℝ², AffineIndependent ℝ T ∧ CanDissectIntoSelfSimilar T n
 
 /--
 Erdős Problem 634: It is conjectured that no prime $p \equiv 3 \pmod{4}$
@@ -140,6 +154,49 @@ There is no triangle that can be cut into exactly $11$ congruent triangles. (Bee
 -/
 @[category research solved, AMS 52]
 theorem erdos_634.variants.not_eleven : ¬ HasCongruentDissection 11 := by
+  sorry
+
+/--
+Zhang [Zh25] proved that for integers $a \ge b \ge 1$, if
+$n \ge 3\lceil(a^2 + b^2 + ab - a - b)/(ab)\rceil$, then $n^2 ab$ has a
+congruent dissection.
+-/
+@[category research solved, AMS 52]
+theorem erdos_634.variants.zhang (a b n : ℕ) (ha : 1 ≤ a) (hb : 1 ≤ b) (hab : b ≤ a)
+    (hn : 3 * ⌈((a : ℚ) ^ 2 + b ^ 2 + a * b - a - b) / (a * b)⌉₊ ≤ n) :
+    HasCongruentDissection (n ^ 2 * a * b) := by
+  sorry
+
+/--
+Every triangle can be cut into $N$ similar (not necessarily congruent) triangles
+for all $N \ne 2, 3, 5$. [So09c]
+-/
+@[category research solved, AMS 52]
+theorem erdos_634.variants.similar (T : Fin 3 → ℝ²) (hT : AffineIndependent ℝ T)
+    (n : ℕ) (hn₁ : 1 ≤ n) (hn₂ : n ≠ 2) (hn₃ : n ≠ 3) (hn₅ : n ≠ 5) :
+    CanDissectIntoSimilar T n := by
+  sorry
+
+/--
+If the smaller triangles must be similar to the original triangle, the possible
+values of $n$ are exactly those of the form $k^2$, $k^2 + m^2$, or $3k^2$
+for positive integers $k, m$. [SWW91]
+-/
+@[category research solved, AMS 52]
+theorem erdos_634.variants.self_similar_characterization (n : ℕ) :
+    HasSelfSimilarDissection n ↔
+    (∃ k : ℕ, 1 ≤ k ∧ n = k ^ 2) ∨
+    (∃ k m : ℕ, 1 ≤ k ∧ 1 ≤ m ∧ n = k ^ 2 + m ^ 2) ∨
+    (∃ k : ℕ, 1 ≤ k ∧ n = 3 * k ^ 2) := by
+  sorry
+
+/--
+The case $n = 19$ is the smallest open case: it is unknown whether any triangle
+can be cut into exactly $19$ congruent triangles. Since $19 \equiv 3 \pmod{4}$
+is prime, the main conjecture predicts this is impossible.
+-/
+@[category research open, AMS 52]
+theorem erdos_634.variants.not_nineteen : ¬ HasCongruentDissection 19 := by
   sorry
 
 end Erdos634
