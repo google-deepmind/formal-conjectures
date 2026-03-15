@@ -15,51 +15,49 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 1123
 
 *Reference:* [erdosproblems.com/1123](https://www.erdosproblems.com/1123)
 
-Let $B_1$ be the Boolean algebra of sets of integers modulo sets of density $0$
-and let $B_2$ be the Boolean algebra of sets modulo sets of logarithmic density $0$.
-Are $B_1$ and $B_2$ isomorphic?
+A problem of Erdős and Ulam. Let $B_1$ be the Boolean algebra of sets of integers modulo sets
+of density $0$ and let $B_2$ be the Boolean algebra of sets modulo sets of logarithmic
+density $0$. Are $B_1$ and $B_2$ isomorphic? Erdős offered $100 for a proof or disproof.
 
-[JuKr84] Just, W. and Krawczyk, A., *On certain Boolean algebras $\mathcal{P}(\omega)/I$*,
-Trans. Amer. Math. Soc. 285 (1984), 411-429.
+This is independent of ZFC: Just and Krawczyk [JuKr84] proved under the continuum hypothesis
+that $B_1 \cong B_2$, while Farah [Fa00] proved under OCA + MA that $B_1 \not\cong B_2$.
+
+[Er81b] Erdős, P., _My Scottish Book 'Problems'_. The Scottish Book (1981), 27-35.
+
+[VMR80] van Douwen, E., Monk, J. and Rubin, M., _Some questions about Boolean algebras_.
+Algebra Universalis **10** (1980), 220-243.
+
+[JuKr84] Just, W. and Krawczyk, A., _On certain Boolean algebras $\mathcal{P}(\omega)/I$_.
+Trans. Amer. Math. Soc. **285** (1984), 411-429.
+
+[ARS85] Abraham, U., Rubin, M. and Shelah, S., _On the consistency of some partition theorems
+for continuous colorings, and the structure of $\aleph_1$-dense real order types_.
+Ann. Pure Appl. Logic (1985), 123-206.
+
+[Fa00] Farah, I., _Analytic quotients: theory of liftings for quotients over analytic ideals
+on the integers_. Mem. Amer. Math. Soc. (2000), xvi+177.
 -/
 
-open Filter Finset Classical
-
-open scoped BigOperators
+open Filter Classical
 
 namespace Erdos1123
-
-/-- The natural (asymptotic) density of a set $A \subseteq \mathbb{N}$ is zero if
-$|A \cap \{0, \ldots, n\}| / (n+1) \to 0$ as $n \to \infty$. -/
-def HasNaturalDensityZero (A : Set ℕ) : Prop :=
-  Tendsto (fun n : ℕ =>
-    ((Finset.filter (· ∈ A) (Finset.range (n + 1))).card : ℝ) / ((n : ℝ) + 1))
-    atTop (nhds 0)
-
-/-- The logarithmic density of a set $A \subseteq \mathbb{N}$ is zero if
-$(1/\log n) \cdot \sum_{\substack{k \in A \\ 1 \leq k \leq n}} 1/k \to 0$
-as $n \to \infty$. -/
-def HasLogDensityZero (A : Set ℕ) : Prop :=
-  Tendsto (fun n : ℕ =>
-    (∑ k ∈ Finset.filter (· ∈ A) (Finset.Icc 1 n), (1 : ℝ) / (k : ℝ)) /
-    Real.log (n : ℝ))
-    atTop (nhds 0)
 
 /-- Two sets of naturals are equivalent mod natural-density-$0$ sets
 iff their symmetric difference has natural density zero. -/
 def NatDensityEquiv (A B : Set ℕ) : Prop :=
-  HasNaturalDensityZero (symmDiff A B)
+  Set.HasDensity (symmDiff A B) 0
 
 /-- Two sets of naturals are equivalent mod log-density-$0$ sets
 iff their symmetric difference has logarithmic density zero. -/
 def LogDensityEquiv (A B : Set ℕ) : Prop :=
-  HasLogDensityZero (symmDiff A B)
+  Set.HasLogDensity (symmDiff A B) 0
 
 /-- Natural density equivalence is an equivalence relation. -/
 axiom natDensityEquiv_equivalence : Equivalence NatDensityEquiv
@@ -95,12 +93,12 @@ noncomputable instance : BooleanAlgebra BoolAlgModLogDensity :=
   instBooleanAlgebraBoolAlgModLogDensity
 
 /--
-Let $B_1$ be the Boolean algebra of sets of integers modulo sets of density $0$
-and let $B_2$ be the Boolean algebra of sets modulo sets of logarithmic density $0$.
-Is $B_1$ isomorphic to $B_2$?
+A problem of Erdős and Ulam. Let $B_1$ be the Boolean algebra of sets of integers modulo sets
+of density $0$ and let $B_2$ be the Boolean algebra of sets modulo sets of logarithmic
+density $0$. Is $B_1$ isomorphic to $B_2$?
 
-Note: This is independent of ZFC. Just and Krawczyk [JuKr84] proved under the
-continuum hypothesis that these two algebras ARE isomorphic.
+This is independent of ZFC. Just and Krawczyk [JuKr84] proved under the continuum hypothesis
+that $B_1 \cong B_2$. Farah [Fa00] proved under OCA + MA that $B_1 \not\cong B_2$.
 -/
 @[category research open, AMS 06 11]
 theorem erdos_1123 :
