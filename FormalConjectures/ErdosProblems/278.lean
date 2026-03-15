@@ -41,7 +41,7 @@ number theory*. Monographies de L'Enseignement Mathématique (1980).
 Discrete Mathematics 59 (1986), 181–190.
 -/
 
-open Classical
+open scoped Classical
 
 namespace Erdos278
 
