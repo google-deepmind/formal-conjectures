@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 546
@@ -24,32 +25,32 @@ import FormalConjectures.Util.ProblemImports
 Let $G$ be a graph with no isolated vertices and $m$ edges. Is it true that
 $R(G) \leq 2^{O(m^{1/2})}$?
 
-This is true, and was proved by Sudakov [Su11]. The analogous question for
-$\geq 3$ colours is still open. A more precise question is Problem 545.
+This is true, and was proved by Sudakov [Su11]. Alon, Krivelevich, and Sudakov
+[AKS03] gave a short proof of this when $G$ is bipartite. The analogous question
+for $\geq 3$ colours is still open. A more precise question is Problem 545.
 
 [Er84b] Erdős, P., _On some problems in graph theory, combinatorial analysis and
 combinatorial number theory_. Graph theory and combinatorics (Cambridge, 1983),
 Academic Press, London (1984), 1-17.
 
+[AKS03] Alon, N., Krivelevich, M., and Sudakov, B., _Turán numbers of bipartite
+graphs and related Ramsey-type questions_. Combinatorics, Probability and
+Computing **12** (2003), 477-494.
+
 [Su11] Sudakov, B., _A conjecture of Erdős on graph Ramsey numbers_. Advances in
-Mathematics 227 (2011), 601-609.
+Mathematics **227** (2011), 601-609.
 -/
 
 open SimpleGraph
 
 namespace Erdos546
 
-/-- A graph $H$ contains a copy of graph $G$ (as a subgraph) if there is an injective
-function from $V(G)$ to $V(H)$ that preserves adjacency. -/
-def ContainsSubgraphCopy {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
-
-/-- The diagonal Ramsey number $R(G)$ for a graph $G$ on $\operatorname{Fin} k$: the minimum
+/-- The diagonal Ramsey number $R(G)$ for a graph $G$: the minimum
 $N$ such that every graph $H$ on $N$ vertices contains a copy of $G$ or its complement
 contains a copy of $G$. -/
-noncomputable def ramseyNumber {k : ℕ} (G : SimpleGraph (Fin k)) : ℕ :=
+noncomputable def ramseyNumber {U : Type*} (G : SimpleGraph U) : ℕ :=
   sInf {N : ℕ | ∀ (H : SimpleGraph (Fin N)),
-    ContainsSubgraphCopy G H ∨ ContainsSubgraphCopy G Hᶜ}
+    G.IsContained H ∨ G.IsContained Hᶜ}
 
 /--
 Erdős Problem 546 [Er84b, p.10]:
