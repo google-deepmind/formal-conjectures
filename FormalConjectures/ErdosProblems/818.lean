@@ -30,7 +30,9 @@ $|AA| \gg |A|^2 / \log |A|$.
 
 [Er91] Erdős, P., _Some of my favourite problems in number theory, combinatorics, and geometry_. Resenhas do Instituto de Matemática e Estatística da Universidade de São Paulo (1991).
 
-[So09d] Solymosi, J., _Bounding multiplicative energy by the sumset_. Advances in Mathematics (2009).
+[So09d] Solymosi, J., _Bounding multiplicative energy by the sumset_. Advances in Mathematics (2009), 402-408.
+
+See also [erdosproblems.com/52](https://www.erdosproblems.com/52) (Erdős–Szemerédi sum-product conjecture).
 -/
 
 open Finset Real
@@ -55,6 +57,22 @@ theorem erdos_818 :
     ∀ A : Finset ℤ, (A.card : ℝ) ≥ 2 →
     ((A + A).card : ℝ) ≤ K * A.card →
     ((A * A).card : ℝ) ≥ c * (A.card : ℝ) ^ 2 / (Real.log (A.card : ℝ)) ^ C := by
+  sorry
+
+/--
+**Solymosi's theorem** (strong form of Erdős Problem 818):
+
+Solymosi [So09d] proved that for every $K > 0$, there exists $c > 0$ such that for every
+finite set $A$ of integers with $|A + A| \leq K \cdot |A|$, we have
+$|A \cdot A| \geq c \cdot |A|^2 / \log |A|$. This is the case $C = 1$ of the main problem.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_818.variants.solymosi :
+    ∀ K : ℝ, K > 0 →
+    ∃ c : ℝ, c > 0 ∧
+    ∀ A : Finset ℤ, (A.card : ℝ) ≥ 2 →
+    ((A + A).card : ℝ) ≤ K * A.card →
+    ((A * A).card : ℝ) ≥ c * (A.card : ℝ) ^ 2 / Real.log (A.card : ℝ) := by
   sorry
 
 end Erdos818
