@@ -26,6 +26,8 @@ Similarly, prove or disprove that $R(3,k+1) - R(3,k) = o(k)$.
 
 A problem of Erdős and Sós. See also [165] and [1014].
 
+Related OEIS sequence: [A000791](https://oeis.org/A000791).
+
 [Er81c] Erdős, P., _Some problems in combinatorics, graph theory and probability_ (1981).
 
 [Er93] Erdős, P., _Some of my favourite problems in various branches of combinatorics_ (1993), p. 339.
