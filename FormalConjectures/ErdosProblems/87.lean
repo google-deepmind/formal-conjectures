@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
 
 /-!
 # Erdős Problem 87
@@ -23,28 +24,26 @@ import FormalConjectures.Util.ProblemImports
 
 [Er95] Erdős, P., _Problems and results in combinatorial analysis and graph theory_, 1995, p. 14.
 
+[FaMc93] Faudree, R. J. and McKay, B., _A conjecture of Erdős and the Ramsey number r(W)_,
+J. Combin. Math. Combin. Comput. **13** (1993), 23–31.
+
 Is it true that for every $\varepsilon > 0$ and all sufficiently large $k$, we have
 $R(G) > (1 - \varepsilon)^k R(k)$ for every graph $G$ with chromatic number $\chi(G) = k$?
 A stronger form asks whether $R(G) > c \cdot R(k)$ for some absolute constant $c > 0$.
-Erdős originally conjectured $R(G) \geq R(k)$, which fails already for $k = 4$.
+Erdős originally conjectured $R(G) \geq R(k)$, which fails already for $k = 4$ [FaMc93].
 -/
 
 open SimpleGraph
 
 namespace Erdos87
 
-/-- An injective graph homomorphism (embedding) from $H$ into $G$:
-$G$ contains a copy of $H$ as a subgraph. -/
-def ContainsSubgraph {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → G.Adj (f u) (f v)
-
 /-- The (diagonal) graph Ramsey number $R(H)$: the minimum $N$ such that every simple
-graph $G$ on $N$ vertices either contains a copy of $H$ as a subgraph or whose
+graph $G$ on $N$ vertices either contains a copy of $H$ as a subgraph or its
 complement contains a copy of $H$ (equivalently, every 2-colouring of $K_N$
 contains a monochromatic copy of $H$). -/
 noncomputable def graphRamseyNumber {U : Type*} (H : SimpleGraph U) : ℕ :=
   sInf {N : ℕ | ∀ (G : SimpleGraph (Fin N)),
-    ContainsSubgraph G H ∨ ContainsSubgraph Gᶜ H}
+    H.IsContained G ∨ H.IsContained Gᶜ}
 
 /-- The classical diagonal Ramsey number $R(k) := R(K_k, K_k)$. -/
 noncomputable def diagRamsey (k : ℕ) : ℕ :=
