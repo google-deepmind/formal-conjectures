@@ -39,7 +39,8 @@ negatively.
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
 
-[Er96b] Erdős, P., (1996).
+[Er96b] Erdős, P., _Some problems I presented or planned to present in my short talk_.
+Analytic number theory, Vol. 1 (Allerton Park, IL, 1995) (1996), 333–335.
 
 [Er97] Erdős, P., _Some of my new and almost new problems and results in combinatorial
 number theory_ (1997).
