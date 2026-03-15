@@ -26,6 +26,8 @@ theory*. Monographies de L'Enseignement Mathematique (1980).
 
 [Cr03] Croot, E., *On a coloring conjecture about unit fractions*. Annals of Mathematics (2003).
 
+[Va99] Vardi, I., §1.14.
+
 [LiSa24] Liu, J. and Sawhney, M., *On a conjecture of Erdős and Graham about Egyptian
 fractions* (2024).
 -/
@@ -46,8 +48,9 @@ Let $A(N)$ denote the maximal cardinality of $A \subseteq \{1, \ldots, N\}$ such
 $\sum_{n \in S} 1/n \neq 1$ for all nonempty $S \subseteq A$. Estimate $A(N)$.
 
 Erdős and Graham believed $A(N) = (1 + o(1))N$. Croot [Cr03] disproved this, showing
-the existence of some constant $c < 1$ such that $A(N) < cN$ for all large $N$. It is
-trivial that $A(N) \geq (1 - 1/e + o(1))N$.
+the existence of some constant $c < 1$ such that $A(N) < cN$ for all large $N$. The lower
+bound $A(N) \geq (1 - 1/e + o(1))N$ is trivial (a greedy argument gives an Egyptian-1-free
+set of this size).
 
 Liu and Sawhney [LiSa24] proved that $A(N) = (1 - 1/e + o(1))N$, resolving the problem.
 

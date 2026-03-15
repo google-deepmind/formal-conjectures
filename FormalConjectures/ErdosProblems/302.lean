@@ -24,6 +24,16 @@ import FormalConjectures.Util.ProblemImports
 Let $f(N)$ be the size of the largest subset of $\{1, \ldots, N\}$ with no solution to
 $\frac{1}{a} = \frac{1}{b} + \frac{1}{c}$ among distinct elements. Is $f(N) = (\frac{1}{2} + o(1))N$?
 
+The example $A$ = all odd integers in $[1,N]$ or $A = [\frac{N}{2}, N]$ shows
+$f(N) \geq (\frac{1}{2} + o(1))N$. Stijn Cambie improved this to
+$f(N) \geq (\frac{5}{8} + o(1))N$. Wouter van Doorn proved
+$f(N) \leq (\frac{9}{10} + o(1))N$. Zachary Hunter and Mehtaab Sawhney also
+contributed to this problem.
+
+OEIS sequence: [A390395](https://oeis.org/A390395).
+
+Related problems: #301, #303, #327.
+
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
 -/
@@ -72,6 +82,53 @@ theorem erdos_302 : answer(False) ↔
           (A.card : ℝ) ≤ (1 / 2 + ε) * (N : ℝ)) ∧
         (∃ (A : Finset ℕ), A ⊆ Finset.Icc 1 N ∧ UnitFractionTripleFree A ∧
           (A.card : ℝ) ≥ (1 / 2 - ε) * (N : ℝ)) := by
+  sorry
+
+/--
+Erdős Problem 302 — Lower bound (Cambie):
+
+Stijn Cambie proved $f(N) \geq (\frac{5}{8} + o(1))N$ by taking all odd integers
+$\leq N/4$ together with all integers in $[N/2, N]$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_302_lower_bound :
+    ∀ ε : ℝ, 0 < ε →
+      ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
+        ∃ (A : Finset ℕ), A ⊆ Finset.Icc 1 N ∧ UnitFractionTripleFree A ∧
+          (A.card : ℝ) ≥ (5 / 8 - ε) * (N : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 302 — Upper bound (van Doorn):
+
+Wouter van Doorn proved $f(N) \leq (\frac{9}{10} + o(1))N$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_302_upper_bound :
+    ∀ ε : ℝ, 0 < ε →
+      ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
+        ∀ (A : Finset ℕ), A ⊆ Finset.Icc 1 N → UnitFractionTripleFree A →
+          (A.card : ℝ) ≤ (9 / 10 + ε) * (N : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 302 — Variant allowing $b = c$:
+
+When $b = c$ is permitted (i.e., $\frac{1}{a} = \frac{2}{b}$), the maximum density
+drops to at most $\frac{2}{3}$, since any set with $|A| > (\frac{2}{3} + o(1))N$
+must contain some $n$ and $2n$. This variant asks whether the maximum size of a
+subset of $\{1, \ldots, N\}$ with no solution to $\frac{1}{a} = \frac{1}{b} + \frac{1}{c}$
+(allowing $b = c$) is $(\frac{2}{3} + o(1))N$.
+-/
+@[category research open, AMS 5 11]
+theorem erdos_302_variant_equal_denominators :
+    ∀ ε : ℝ, 0 < ε →
+      ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
+        ∀ (A : Finset ℕ), A ⊆ Finset.Icc 1 N →
+          (∀ a ∈ A, ∀ b ∈ A, ∀ c ∈ A,
+            a ≠ b ∨ a ≠ c →
+            (1 : ℝ) / (a : ℝ) ≠ (1 : ℝ) / (b : ℝ) + (1 : ℝ) / (c : ℝ)) →
+          (A.card : ℝ) ≤ (2 / 3 + ε) * (N : ℝ) := by
   sorry
 
 end Erdos302
