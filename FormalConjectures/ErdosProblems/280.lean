@@ -26,7 +26,7 @@ classes $a_k \pmod{n_k}$, such that for some $\varepsilon > 0$ we have
 $n_k > (1+\varepsilon)k \log k$ for all $k \geq 1$. Erdős and Graham conjectured that
 $$\#\{m < n_k : m \not\equiv a_i \pmod{n_i} \text{ for } 1 \leq i \leq k\} \neq o(k).$$
 
-This was disproved by Cambie, who observed that taking $n_k = 2^k$ and
+This was disproved by Stijn Cambie, who observed that taking $n_k = 2^k$ and
 $a_k = 2^{k-1} + 1$ for $k \geq 1$ gives a trivial counterexample: the only $m$
 not in any congruence class is $1$, so the count is $1$ for all $k$.
 
