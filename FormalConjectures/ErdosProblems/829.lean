@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 
 /-!
 # Erdős Problem 829
@@ -32,15 +33,12 @@ $1_A * 1_A(n) \gg (\log n)^{1/4}$ for infinitely many $n$. Stewart [St08] improv
 this to $1_A * 1_A(n) \gg (\log n)^{11/13}$.
 -/
 
-open Real Finset
+open Real Finset AdditiveCombinatorics
 
 namespace Erdos829
 
-/-- The number of representations of $n$ as a sum of two positive cubes:
-$|\{(a, b) \in \mathbb{N} \times \mathbb{N} : a \geq 1 \land b \geq 1 \land a^3 + b^3 = n\}|$. -/
-def sumOfTwoCubesRepr (n : ℕ) : ℕ :=
-  ((Finset.range n).product (Finset.range n)).filter
-    (fun p => p.1 ≥ 1 ∧ p.2 ≥ 1 ∧ p.1 ^ 3 + p.2 ^ 3 = n) |>.card
+/-- The set of positive cubes: $A = \{m \in \mathbb{N} \mid \exists k \geq 1,\, k^3 = m\}$. -/
+def positiveCubes : Set ℕ := {m : ℕ | ∃ k ≥ 1, k ^ 3 = m}
 
 /--
 **Erdős Problem 829** [Er83]:
@@ -48,12 +46,13 @@ def sumOfTwoCubesRepr (n : ℕ) : ℕ :=
 Is it true that the number of representations of $n$ as a sum of two positive cubes is bounded
 by a polynomial in $\log n$? That is, do there exist constants $C > 0$ and $k > 0$
 such that for all sufficiently large $n$,
-$$\operatorname{sumOfTwoCubesRepr}(n) \leq C \cdot (\log n)^k?$$
+$$1_A * 1_A(n) \leq C \cdot (\log n)^k,$$
+where $A$ is the set of positive cubes?
 -/
 @[category research open, AMS 11]
 theorem erdos_829 : answer(sorry) ↔
     ∃ C : ℝ, C > 0 ∧ ∃ k : ℝ, k > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-      (sumOfTwoCubesRepr n : ℝ) ≤ C * (Real.log n) ^ k := by
+      (sumRep positiveCubes n : ℝ) ≤ C * (Real.log n) ^ k := by
   sorry
 
 end Erdos829
