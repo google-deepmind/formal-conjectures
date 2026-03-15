@@ -32,10 +32,12 @@ every strictly smaller subgraph has chromatic number $\leq \aleph_0$.
 A similar construction produces a graph on $\omega_2^2$ with chromatic number
 $\aleph_2$ such that every smaller subgraph has chromatic number $\leq \aleph_1$.
 
-[Er69b] Erdős, P., _Problems and results in chromatic number theory_.
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_. Proof Techniques in Graph
+Theory (Proc. Second Ann Arbor Graph Theory Conf., Ann Arbor, Mich., 1968) (1969), 27-35.
 -/
 
 open SimpleGraph Cardinal Ordinal
+open scoped Cardinal
 
 namespace Erdos919
 
@@ -52,11 +54,11 @@ theorem erdos_919 : answer(sorry) ↔
       (G : SimpleGraph V),
       Ordinal.type ((· < ·) : V → V → Prop) =
         Cardinal.ord (aleph 2) * Cardinal.ord (aleph 2) ∧
-      (∀ (α : Type), Nonempty (G.Coloring α) → aleph 2 ≤ #α) ∧
+      G.chromaticCardinal = ℵ_ 2 ∧
       (∀ (S : Set V),
         Ordinal.type (Subrel (· < ·) S) <
           Cardinal.ord (aleph 2) * Cardinal.ord (aleph 2) →
-        Nonempty ((G.induce S).Coloring ℕ)) := by
+        (G.induce S).chromaticCardinal ≤ ℵ₀) := by
   sorry
 
 /--
@@ -74,12 +76,11 @@ theorem erdos_919.variants.aleph_1 : answer(sorry) ↔
       (G : SimpleGraph V),
       Ordinal.type ((· < ·) : V → V → Prop) =
         Cardinal.ord (aleph 2) * Cardinal.ord (aleph 2) ∧
-      (∀ (α : Type), Nonempty (G.Coloring α) → aleph 1 ≤ #α) ∧
-      (∃ (α : Type), #α ≤ aleph 1 ∧ Nonempty (G.Coloring α)) ∧
+      G.chromaticCardinal = ℵ_ 1 ∧
       (∀ (S : Set V),
         Ordinal.type (Subrel (· < ·) S) <
           Cardinal.ord (aleph 2) * Cardinal.ord (aleph 2) →
-        Nonempty ((G.induce S).Coloring ℕ)) := by
+        (G.induce S).chromaticCardinal ≤ ℵ₀) := by
   sorry
 
 end Erdos919
