@@ -25,11 +25,19 @@ For almost all $n$, there exists an integer $m$ strictly between consecutive pri
 $p_n$ and $p_{n+1}$ whose least prime factor is at least as large as the prime gap
 $p_{n+1} - p_n$.
 
-[GaTa25] Gafni, A. and Tao, T., who showed the number of exceptional
-$n \in [1, X]$ is $\ll X / (\log X)^2$.
+Erdős originally conjectured this for all sufficiently large $n$, but a conditional
+counterexample via Dickson's conjecture shows this fails: if infinitely many pairs
+$(2183 + 30030d, 2201 + 30030d)$ are both prime, they form consecutive primes with no
+suitable $m$, since $30030 = 2 \cdot 3 \cdot 5 \cdot 7 \cdot 11 \cdot 13$ divides every
+integer in the interval.
+
+See also Erdős Problems 680 and 681. OEIS: [A386978](https://oeis.org/A386978).
+
+[GaTa25] Gafni, A., Tao, T., _Rough numbers between consecutive primes_. arXiv:2508.06463
+(2025).
 -/
 
-open Nat Classical
+open Nat Classical Set
 
 namespace Erdos682
 
@@ -44,12 +52,8 @@ Proved by Gafni and Tao [GaTa25].
 -/
 @[category research solved, AMS 11]
 theorem erdos_682 :
-    ∀ ε : ℝ, ε > 0 →
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      (((Finset.range N).filter (fun n =>
-        ¬ ∃ m : ℕ, nth Nat.Prime n < m ∧ m < nth Nat.Prime (n + 1) ∧
-          nth Nat.Prime (n + 1) - nth Nat.Prime n ≤ minFac m)).card : ℝ)
-      ≤ ε * (N : ℝ) := by
+    {n : ℕ | ¬ ∃ m : ℕ, nth Nat.Prime n < m ∧ m < nth Nat.Prime (n + 1) ∧
+      primeGap n ≤ minFac m}.HasDensity 0 := by
   sorry
 
 end Erdos682
