@@ -64,4 +64,24 @@ theorem erdos_663 : answer(sorry) ↔
       (leastNondividingPrime n k : ℝ) < (1 + ε) * Real.log (n : ℝ) := by
   sorry
 
+/--
+Variant of Erdős Problem 663:
+
+It may be true that the bound $q(n, k) < (1 + o(1)) \log n$ holds even when $k$ grows with $n$,
+as long as $k = o(\log n)$. This strengthens the main conjecture by allowing $k$ to depend on $n$
+rather than being fixed.
+
+Formulated as: for every function $f : \mathbb{N} \to \mathbb{N}$ with $f(n) / \log n \to 0$,
+and every $\varepsilon > 0$, there exists $N_0$ such that for all $n \geq N_0$,
+$q(n, f(n)) < (1 + \varepsilon) \cdot \log n$.
+-/
+@[category research open, AMS 11]
+theorem erdos_663_growing_k : answer(sorry) ↔
+    ∀ f : ℕ → ℕ,
+    Filter.Tendsto (fun n => (f n : ℝ) / Real.log (n : ℝ)) Filter.atTop (nhds 0) →
+    ∀ ε : ℝ, ε > 0 →
+    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      (leastNondividingPrime n (f n) : ℝ) < (1 + ε) * Real.log (n : ℝ) := by
+  sorry
+
 end Erdos663
