@@ -24,8 +24,8 @@ import FormalConjectures.Util.ProblemImports
 Can the Erdős–Turán bound on the distribution of polynomial root arguments be improved by
 replacing the degree with the number of non-zero coefficients?
 
-[ErTu50] Erdős, P. and Turán, P., *On the distribution of roots of polynomials*, Annals of
-Mathematics (1950).
+[ErTu50] Erdős, P. and Turán, P., *On the distribution of roots of polynomials*. Ann. of Math.
+(2) (1950), 105–119.
 
 [Er64b] Erdős, P., *On some problems relating to the distribution of roots of polynomials* (1964).
 -/
