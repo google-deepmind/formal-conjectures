@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 
 /-!
 # Erdős Problem 328
@@ -22,43 +23,43 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/328](https://www.erdosproblems.com/328)
 
 Suppose $A \subseteq \mathbb{N}$ has bounded additive representation function
-($1_A * 1_A(n) \leq C$ for all $n$). Can $A$ be partitioned into finitely many subsets,
+($(1_A \ast 1_A)(n) \leq C$ for all $n$). Can $A$ be partitioned into finitely many subsets,
 each with strictly smaller representation function? Nešetřil and Rödl showed the answer is no.
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
 
-[NeRo85] Nešetřil, J. and Rödl, V. (1985).
+[Er80e] Erdős, P., *Some applications of Ramsey's theorem to additive number theory*.
+European Journal of Combinatorics (1980), 43–46.
+
+[NeRo85] Nešetřil, J. and Rödl, V., *Two proofs in combinatorial number theory*.
+Proceedings of the American Mathematical Society (1985), 185–188.
 -/
 
-open Classical Finset
+open Classical Finset AdditiveCombinatorics
 
 namespace Erdos328
-
-/-- The additive representation count: the number of pairs $(a, b)$ with $a + b = n$
-and both $a, b \in A$. This formalizes $1_A * 1_A(n)$. -/
-noncomputable def repCount (A : Set ℕ) (n : ℕ) : ℕ :=
-  ((Finset.range (n + 1)).filter (fun a => a ∈ A ∧ (n - a) ∈ A)).card
 
 /--
 Erdős Problem 328 [ErGr80, p.48]:
 
-Suppose $A \subseteq \mathbb{N}$ and $C > 0$ is such that $1_A * 1_A(n) \leq C$ for all
+Suppose $A \subseteq \mathbb{N}$ and $C > 0$ is such that $(1_A \ast 1_A)(n) \leq C$ for all
 $n \in \mathbb{N}$. Can $A$ be partitioned into $t$ many subsets $A_1, \ldots, A_t$
-(where $t = t(C)$ depends only on $C$) such that $1_{A_i} * 1_{A_i}(n) < C$ for all
+(where $t = t(C)$ depends only on $C$) such that $(1_{A_i} \ast 1_{A_i})(n) < C$ for all
 $1 \leq i \leq t$ and $n \in \mathbb{N}$?
 
 Asked by Erdős and Newman. Nešetřil and Rödl [NeRo85] showed the answer is no
-for all $C$ (even if $t$ is also allowed to depend on $A$).
+for all $C$ (even if $t$ is also allowed to depend on $A$). Erdős [Er80e] had
+previously shown this for $C = 3, 4$ and infinitely many other values of $C$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_328 : answer(False) ↔
-    ∀ C : ℕ, 1 ≤ C →
-      ∀ A : Set ℕ, (∀ n, repCount A n ≤ C) →
+    ¬(∀ C : ℕ, 1 ≤ C →
+      ∀ A : Set ℕ, (∀ n, sumRep A n ≤ C) →
         ∃ t : ℕ, 1 ≤ t ∧
           ∃ f : ℕ → Fin t,
             ∀ (i : Fin t) (n : ℕ),
-              repCount ({a | a ∈ A ∧ f a = i}) n < C := by
+              sumRep {a ∈ A | f a = i} n < C) := by
   sorry
 
 end Erdos328
