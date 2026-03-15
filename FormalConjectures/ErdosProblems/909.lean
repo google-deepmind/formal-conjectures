@@ -24,7 +24,11 @@ has covering dimension $n$? Proved by Anderson and Keisler.
 
 *Reference:* [erdosproblems.com/909](https://www.erdosproblems.com/909)
 
-[AnKe67] Anderson, R. D. and Keisler, J. E., _An example in dimension theory_, 1967.
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_,
+L'Enseignement Math. 27 (1982), 163–176.
+
+[AnKe67] Anderson, R. D. and Keisler, J. E., _An example in dimension theory_.
+Proc. Amer. Math. Soc. (1967), 709–713.
 -/
 
 open TopologicalSpace Set Classical
