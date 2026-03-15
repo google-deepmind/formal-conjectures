@@ -15,6 +15,9 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Geometry.«2d»
+
+open scoped EuclideanGeometry
 
 /-!
 # Erdős Problem 606
@@ -31,9 +34,11 @@ $[cn^{3/2}, \binom{n}{2}]$ are possible except $\binom{n}{2} - 1$ and $\binom{n}
 
 Solved (for all sufficiently large $n$) completely by Erdős and Salamon [ErSa88].
 
-[Er85] Erdős, P.
+[Er85] Erdős, P., _Problems and results in combinatorial geometry_. Discrete geometry and
+convexity (New York, 1982), Ann. New York Acad. Sci. 440 (1985), 1–11.
 
-[ErSa88] Erdős, P. and Salamon, P.
+[ErSa88] Erdős, P. and Salamon, P., _The solution to a problem of Grünbaum_.
+Canad. Math. Bull. **31** (1988), 129–138.
 -/
 
 namespace Erdos606
@@ -41,14 +46,14 @@ namespace Erdos606
 /-- The number of distinct lines determined by a finite point set $A$ in $\mathbb{R}^2$.
 A line is the affine span of a pair of distinct points from $A$. -/
 noncomputable def numLinesDetermined
-    (A : Finset (EuclideanSpace ℝ (Fin 2))) : ℕ :=
-  Set.ncard {l : AffineSubspace ℝ (EuclideanSpace ℝ (Fin 2)) |
-    ∃ a ∈ A, ∃ b ∈ A, a ≠ b ∧ l = affineSpan ℝ ({a, b} : Set (EuclideanSpace ℝ (Fin 2)))}
+    (A : Finset (ℝ²)) : ℕ :=
+  Set.ncard {l : AffineSubspace ℝ (ℝ²) |
+    ∃ a ∈ A, ∃ b ∈ A, a ≠ b ∧ l = affineSpan ℝ ({a, b} : Set (ℝ²))}
 
 /-- The set of achievable line counts for configurations of exactly $n$ points
 in $\mathbb{R}^2$. -/
 noncomputable def achievableLineCounts (n : ℕ) : Set ℕ :=
-  {k | ∃ A : Finset (EuclideanSpace ℝ (Fin 2)),
+  {k | ∃ A : Finset (ℝ²),
     A.card = n ∧ numLinesDetermined A = k}
 
 /--
@@ -62,7 +67,7 @@ $\binom{n}{2} - 1$ and $\binom{n}{2} - 3$.
 theorem erdos_606 :
     ∃ c : ℝ, c > 0 ∧
     ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-      (∀ k : ℕ, (k : ℝ) ≥ c * (n : ℝ) ^ ((3 : ℝ) / 2) →
+      (∀ k : ℕ, (k : ℝ) ≥ c * (n : ℝ) ^ (3 / 2 : ℝ) →
         k ≤ n.choose 2 →
         k ≠ n.choose 2 - 1 →
         k ≠ n.choose 2 - 3 →
@@ -79,7 +84,7 @@ determine more than $1$ line), the number of distinct lines determined is at lea
 -/
 @[category research solved, AMS 52]
 theorem erdos_606.variants.sylvester_gallai :
-    ∀ A : Finset (EuclideanSpace ℝ (Fin 2)),
+    ∀ A : Finset (ℝ²),
       A.card ≥ 2 →
       numLinesDetermined A > 1 →
       numLinesDetermined A ≥ A.card := by
