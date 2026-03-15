@@ -24,8 +24,9 @@ such that `f = g` almost everywhere.
 
 *Reference:* [erdosproblems.com/1126](https://www.erdosproblems.com/1126)
 
-[dB66] de Bruijn, N.G., _A difference property for Riemann integrable functions and for
-some similar classes of functions_. Indag. Math. 28 (1966), 145-151.
+[Er60c] Erdős, P. (c. 1960). Original problem source.
+
+[dB66] de Bruijn, N.G., _On almost additive functions_. Colloq. Math. (1966), 59-63.
 
 [Ju65] Jurkat, W.B., _On Cauchy's functional equation_. Proc. Amer. Math. Soc. 16 (1965),
 683-686.
