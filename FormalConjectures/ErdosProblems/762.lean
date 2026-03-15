@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 762
@@ -35,26 +36,14 @@ $\omega(G) = 4$, $\zeta(G) = 4$, and $\chi(G) = 7$.
 [EGS90] Erdős, P., Gimbel, J., and Straight, H.J., _Chromatic number versus cochromatic
 number in graphs with bounded clique number_, European J. Combin. 11 (1990), 235–240.
 
+[ErGi93] Erdős, P. and Gimbel, J., _Some problems and results in cochromatic theory_ (1993).
+
 [St24b] Steiner, R., _A counterexample to the Erdős–Gimbel–Straight conjecture_, 2024.
 -/
 
 open SimpleGraph
 
 namespace Erdos762
-
-/-- A cochromatic colouring: each colour class induces either a complete
-    subgraph or an independent set. -/
-def IsCochromaticColouring {V : Type*} (G : SimpleGraph V) (k : ℕ)
-    (c : V → Fin k) : Prop :=
-  ∀ i : Fin k,
-    (∀ u v, c u = i → c v = i → u ≠ v → G.Adj u v) ∨
-    (∀ u v, c u = i → c v = i → u ≠ v → ¬G.Adj u v)
-
-/-- The cochromatic number $\zeta(G)$: minimum number of colours in a cochromatic
-    colouring. -/
-noncomputable def cochromaticNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {k : ℕ | ∃ c : V → Fin k, IsCochromaticColouring G k c}
 
 /--
 **Erdős Problem 762** (disproved, Steiner [St24b]):
@@ -70,8 +59,8 @@ theorem erdos_762 :
     answer(False) ↔
       ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
         G.CliqueFree 5 →
-          cochromaticNumber G ≥ 4 →
-            G.chromaticNumber ≤ cochromaticNumber G + 2 := by
+          G.cochromaticNumber ≥ 4 →
+            G.chromaticNumber ≤ G.cochromaticNumber + 2 := by
   sorry
 
 end Erdos762
