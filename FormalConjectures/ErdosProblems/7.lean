@@ -23,11 +23,12 @@ import FormalConjectures.Util.ProblemImports
 
 Erdős asked whether there exists a distinct covering system all of whose moduli are odd.
 
-[HN19] Hough, B. and Nielsen, N., _Solution of the minimum modulus problem for covering
-systems_. Ann. of Math. (2019).
+[HoNi19] Hough, R. D. and Nielsen, P. P., _Covering systems with restricted divisibility_.
+Duke Math. J. **168** (2019), 3261–3295.
 
-[Ba22] Balister, P., Bollobás, B., Morris, R., Sahasrabudhe, J. and Tiba, M., _Covering
-systems, matchings, and odd covering systems_. (2022).
+[BBMST22] Balister, P., Bollobás, B., Morris, R., Sahasrabudhe, J., and Tiba, M.,
+_On the Erdős covering problem: the density of the uncovered set_. Inventiones
+mathematicae (2022), 377–414.
 -/
 
 namespace Erdos7
@@ -56,10 +57,10 @@ covering every integer. The question asks whether such a system can exist with a
 moduli odd.
 
 Known results:
-- [HN19] proved that in any distinct covering system, at least one modulus must be
-  divisible by 2 or 3. A simpler proof was given by [Ba22], who also showed that the
+- [HoNi19] proved that in any distinct covering system, at least one modulus must be
+  divisible by 2 or 3. A simpler proof was given by [BBMST22], who also showed that the
   lcm of any odd covering system's moduli must be divisible by 9 or 15.
-- [Ba22] proved no odd distinct covering system exists if the moduli are additionally
+- [BBMST22] proved no odd distinct covering system exists if the moduli are additionally
   required to be squarefree. The general odd case remains open.
 -/
 @[category research open, AMS 11]
