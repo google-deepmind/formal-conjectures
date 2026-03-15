@@ -47,7 +47,8 @@ open SimpleGraph Classical
 
 namespace Erdos637
 
-/-- The degree of vertex $v$ in the induced subgraph $G[S]$. -/
+/-- The number of neighbors of vertex $v$ within $S$. When $v \in S$, this equals the degree
+    of $v$ in the induced subgraph $G[S]$. -/
 noncomputable def inducedDegree {n : ℕ} (G : SimpleGraph (Fin n))
     (S : Finset (Fin n)) (v : Fin n) : ℕ :=
   (S.filter fun w => G.Adj v w).card
@@ -82,6 +83,27 @@ theorem erdos_637 :
       (S.card : ℝ) ≤ C * Real.logb 2 (↑n : ℝ)) →
     ∃ S : Finset (Fin n), (S.card : ℝ) ≥ c₁ * (↑n : ℝ) ∧
       (inducedDistinctDegrees G S : ℝ) ≥ c₂ * (↑n : ℝ) ^ ((1 : ℝ) / 2) := by
+  sorry
+
+/--
+**Erdős Problem 637 — JKLY20 variant** (PROVED) [JKLY20]:
+
+A strengthening of Problem 637 due to Jenssen, Keevash, Long, and Yepremyan: under the
+same Ramsey-type hypothesis, there exists an induced subgraph (with no restriction on
+the number of vertices) having $\gg n^{2/3}$ distinct degrees.
+-/
+@[category research solved, AMS 5]
+theorem erdos_637_jkly20 :
+    ∀ C : ℝ, C > 0 →
+    ∃ c : ℝ, c > 0 ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+    ∀ G : SimpleGraph (Fin n),
+    (∀ S : Finset (Fin n), G.IsClique (↑S : Set (Fin n)) →
+      (S.card : ℝ) ≤ C * Real.logb 2 (↑n : ℝ)) →
+    (∀ S : Finset (Fin n), Gᶜ.IsClique (↑S : Set (Fin n)) →
+      (S.card : ℝ) ≤ C * Real.logb 2 (↑n : ℝ)) →
+    ∃ S : Finset (Fin n),
+      (inducedDistinctDegrees G S : ℝ) ≥ c * (↑n : ℝ) ^ ((2 : ℝ) / 3) := by
   sorry
 
 end Erdos637
