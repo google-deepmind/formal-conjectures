@@ -30,6 +30,8 @@ as proved by Altman [Al63] (see [93]).
 [Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_,
 Proc. Int. Conf. on Discrete Math. (1997), 527–533.
 
+[Er75f] Erdős, P., _Problems and results in combinatorial geometry_, 1975.
+
 [Al63] Altman, E., _On a problem of P. Erdős_, Amer. Math. Monthly 70 (1963), 148–157.
 -/
 
