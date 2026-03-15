@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 A problem of Komjáth. The existence of such a $2$-colouring is sometimes known as
 Property B.
 
-[Er87] Erdős, P., _Some problems and results on combinatorial number theory_.
+[Er87] Erdős, P., _Some problems and results on combinatorial number theory_ (1987).
 -/
 
 open Cardinal Set
@@ -32,7 +32,7 @@ open Cardinal Set
 namespace Erdos602
 
 /-- Property B for a family of sets: there exists a $2$-colouring of the union
-such that no set in the family is monochromatic (both colours appear). -/
+such that every set in the family contains elements of both colours. -/
 def HasPropertyB {α : Type*} {ι : Type*} (A : ι → Set α) : Prop :=
   ∃ c : α → Bool, ∀ i : ι, (∃ x ∈ A i, c x = true) ∧ (∃ x ∈ A i, c x = false)
 
