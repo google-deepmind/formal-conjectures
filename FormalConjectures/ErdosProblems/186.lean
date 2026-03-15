@@ -43,13 +43,21 @@ theory*.
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
 
-[Bo89] Bosznay, A. P., *On the lower estimation of non-averaging sets* (1989).
+[Bo89] Bosznay, Á. P., *On the lower estimation of non-averaging sets*.
+Acta Mathematica Hungarica (1989), 155-157.
 
-[ErSa90] Erdős, P. and Sárközy, A. (1990).
+[ErSa90] Erdős, P. and Sárközy, A., *On a problem of Straus*.
+Disorder in Physical Systems (1990), 55-66.
 
-[CFP23] Conlon, D., Fox, J., and Pham, H. T. (2023).
+[CFP23] Conlon, D., Fox, J., and Pham, H. T., *Homogeneous structures in subset sums
+and non-averaging sets*. arXiv:2311.01416 (2023).
 
-[PhZa24] Pham, H. T. and Zakharov, D. (2024).
+[PhZa24] Pham, H. T. and Zakharov, D., *Sharp bound for the Erdős-Straus non-averaging
+set problem*. arXiv:2410.14624 (2024).
+
+[Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
+
+See also: [Erdős Problem 789](https://www.erdosproblems.com/789).
 -/
 
 open Filter
