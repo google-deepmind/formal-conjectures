@@ -28,9 +28,11 @@ with $(r_i, s_i) = 1$ and $s_2 < s_1$?
 For example, $\sum_{3 \le n \le 5} 1/n = 47/60$ and $\sum_{3 \le n \le 6} 1/n = 19/20$,
 and $20 < 60$.
 
+The smallest such $b$ for each $a$ is listed in OEIS sequence A375081.
+
 This was resolved in the affirmative by van Doorn [vD24], who proved $b = b(a)$
 always exists and $b(a) \ll a$. More precisely, $b(a) < 4.374a$ for all $a > 1$,
-and $b(a) > a + 0.54 \log a$ for all large $a$.
+and $b(a) > a + (1/2 - o(1)) \log a$ for large $a$.
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
