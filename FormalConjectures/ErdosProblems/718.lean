@@ -21,11 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/718](https://www.erdosproblems.com/718)
 
-A conjecture of Erdős, Hajnal, and Mader. Dirac proved that every graph on $n$ vertices
-with at least $2n - 2$ edges contains a subdivision of $K_4$, and conjectured that $3n - 5$
-edges forces a subdivision of $K_5$.
+A conjecture of Erdős, Hajnal, and Mader [Er81]. Dirac proved that every graph on $n$
+vertices with at least $2n - 2$ edges contains a subdivision of $K_4$, and conjectured that
+$3n - 5$ edges forces a subdivision of $K_5$.
 
 Mader proved that $\geq 2^{\binom{r}{2}} \cdot n$ edges suffices.
+
+[Er81] Erdős, P., _Problems and results in graph theory and combinatorics_. Proceedings of
+the Southeastern Conference on Combinatorics, Graph Theory, and Computing (1981), p. 35.
 
 [KoSz96] Komlós, J. and Szemerédi, E., _Topological cliques in graphs II_. Combinatorics,
 Probability and Computing (1996), 5, 79–90.
@@ -62,7 +65,7 @@ with at least $C \cdot r^2 \cdot n$ edges contains a subdivision of $K_r$.
 @[category research solved, AMS 5]
 theorem erdos_718 :
     ∃ C : ℝ, C > 0 ∧
-      ∀ (n r : ℕ),
+      ∀ (n r : ℕ), r ≤ n →
         ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
           (G.edgeFinset.card : ℝ) ≥ C * (r : ℝ) ^ 2 * (n : ℝ) →
           ContainsSubdivision G r := by
