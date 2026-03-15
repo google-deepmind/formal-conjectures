@@ -54,4 +54,15 @@ theorem erdos_632 : answer(False) ↔ ∀ (V : Type*) (G : SimpleGraph V) (a b m
     1 ≤ m → IsABChoosable G a b → IsABChoosable G (a * m) (b * m) := by
   sorry
 
+/--
+Dvořák, Hu, and Sereni [DHS19] constructed a specific counterexample: a graph that is
+4-choosable (i.e., (4,1)-choosable) but not (8,2)-choosable, disproving the conjecture
+of Erdős, Rubin, and Taylor [ERT80] for the case $m = 2$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_632_counterexample : answer(True) ↔
+    ∃ (V : Type) (_ : Fintype V) (G : SimpleGraph V),
+      IsABChoosable G 4 1 ∧ ¬IsABChoosable G 8 2 := by
+  sorry
+
 end Erdos632

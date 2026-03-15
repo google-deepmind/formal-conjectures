@@ -24,8 +24,9 @@ import FormalConjectures.Util.ProblemImports
 Erdős, Rubin, and Taylor asked whether every planar bipartite graph is 3-choosable
 (i.e., 3-list-colorable). This was proved by Alon and Tarsi.
 
-[ERT80] Erdős, P., Rubin, A. L., and Taylor, H., _Choosability in graphs_. Proceedings of the
-West Coast Conference on Combinatorics, Graph Theory and Computing (1980).
+[ERT80] Erdős, P., Rubin, A. L., and Taylor, H., _Choosability in graphs_.
+Proc. West Coast Conf. on Combinatorics, Graph Theory and Computing,
+Congressus Numerantium XXVI (1980), 125-157.
 
 [AlTa92] Alon, N. and Tarsi, M., _Colorings and orientations of graphs_. Combinatorica 12
 (1992), 125-134.
@@ -48,11 +49,6 @@ proper list coloring. -/
 def IsChoosable {V : Type*} (G : SimpleGraph V) (k : ℕ) : Prop :=
   ∀ L : V → Finset ℕ, (∀ v, k ≤ (L v).card) →
     ∃ f : V → ℕ, IsProperListColoring G L f
-
-/-- The list chromatic number (choice number) of a graph $G$: the minimum $k$
-such that $G$ is $k$-choosable. -/
-noncomputable def listChromaticNumber {V : Type*} (G : SimpleGraph V) : ℕ :=
-  sInf {k : ℕ | IsChoosable G k}
 
 /-- A graph is planar if it can be embedded in the plane without edge crossings.
 Mathlib does not yet have a formalization of graph planarity; we axiomatize it
