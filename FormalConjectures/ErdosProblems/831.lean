@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 831
@@ -23,18 +24,20 @@ Estimate the function $h(n)$, where $h(n)$ is the minimum number of distinct cir
 determined by $n$ points in $\mathbb{R}^2$ in general position (no three collinear, no four
 concyclic).
 
-*Reference:* [erdosproblems.com/831](https://www.erdosproblems.com/831)
+## References
+
+- [Er75h] Erdős, P., _Some problems on elementary geometry_. Australian Mathematical Society
+  Gazette (1975), 2–3.
+- [Er92e] Erdős, P., _Some unsolved problems in geometry, number theory and combinatorics_.
+  Eureka (1992), 44–48.
+
+See also Erdős Problems [104], [506], [827], and
+[erdosproblems.com/831](https://www.erdosproblems.com/831).
 -/
+
+open EuclideanGeometry
 
 namespace Erdos831
-
-/--
-A finite point set in $\mathbb{R}^2$ has no three collinear if every three-element subset
-is not collinear (i.e., no line contains three or more of the points).
--/
-def NoThreeCollinear (P : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∀ S : Finset (EuclideanSpace ℝ (Fin 2)),
-    S ⊆ P → S.card = 3 → ¬Collinear ℝ (S : Set (EuclideanSpace ℝ (Fin 2)))
 
 /--
 Four points in $\mathbb{R}^2$ are concyclic if they all lie on a common circle, i.e.,
@@ -63,9 +66,8 @@ noncomputable def distinctCircumradiiCount (P : Finset (EuclideanSpace ℝ (Fin 
     ∃ o : EuclideanSpace ℝ (Fin 2), dist a o = r ∧ dist b o = r ∧ dist c o = r}
 
 /--
-Let $h(n)$ be maximal such that in any $n$ points in $\mathbb{R}^2$ (with no three on a line
-and no four on a circle) there are at least $h(n)$ many circles of different radii
-passing through three points. Estimate $h(n)$.
+Let $h(n)$ be the minimum number of distinct circumradii over all $n$-point configurations
+in $\mathbb{R}^2$ in general position (no three on a line, no four on a circle). Estimate $h(n)$.
 
 Formalized as: $h(n) \to \infty$, i.e., for every $C$ there exists $N$ such that for all
 $n \geq N$ and every set $P$ of $n$ points in $\mathbb{R}^2$ in general position (no three collinear,
@@ -78,7 +80,7 @@ theorem erdos_831 :
     ∃ N : ℕ, ∀ n : ℕ, n ≥ N →
       ∀ P : Finset (EuclideanSpace ℝ (Fin 2)),
         P.card = n →
-        NoThreeCollinear P →
+        NonTrilinear (P : Set (EuclideanSpace ℝ (Fin 2))) →
         NoFourConcyclic P →
         distinctCircumradiiCount P ≥ C := by
   sorry
