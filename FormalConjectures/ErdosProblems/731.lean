@@ -25,8 +25,10 @@ function $f(n)$ such that $m \sim f(n)$ for almost all $n$.
 
 *Reference:* [erdosproblems.com/731](https://www.erdosproblems.com/731)
 
-[EGRS75] Erdős, P., Graham, R., Ruzsa, I., and Straus, E.,
-_On the number theory of binomial coefficients_, 1975.
+[EGRS75] Erdős, P., Graham, R. L., Ruzsa, I. Z., and Straus, E. G.,
+_On the prime factors of $\binom{2n}{n}$_. Mathematics of Computation **29** (1975), 83–92.
+
+- [A006197](https://oeis.org/A006197)
 -/
 
 open Finset Filter Real
@@ -37,7 +39,7 @@ namespace Erdos731
 
 /-- The least integer $m \geq 2$ that does not divide $\binom{2n}{n}$. -/
 noncomputable def leastNonDivisorCentralBinom (n : ℕ) : ℕ :=
-  sInf {m : ℕ | 2 ≤ m ∧ ¬(m ∣ Nat.choose (2 * n) n)}
+  sInf {m : ℕ | 2 ≤ m ∧ ¬(m ∣ n.centralBinom)}
 
 /--
 Erdős Problem 731 [EGRS75]:
@@ -50,9 +52,10 @@ $$[\exp((\log n)^{1/2 - \varepsilon}),\, \exp((\log n)^{1/2 + \varepsilon})]$$
 is zero.
 
 The open problem asks to find a precise closed-form function $f(n)$ such
-that $m \sim f(n)$ for almost all $n$.
+that $m \sim f(n)$ for almost all $n$. This theorem formalizes the known
+asymptotic from [EGRS75]; the full open problem (identifying $f$) remains open.
 -/
-@[category research solved, AMS 5 11]
+@[category research open, AMS 5 11]
 theorem erdos_731 (ε : ℝ) (hε : 0 < ε) :
     Tendsto (fun x : ℕ =>
       (((Finset.Icc 1 x).filter (fun n : ℕ =>
