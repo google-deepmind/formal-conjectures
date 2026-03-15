@@ -25,6 +25,9 @@ integers representable as a monochromatic sum $a + b$ with $a \neq b$.
 
 *Reference:* [erdosproblems.com/484](https://www.erdosproblems.com/484)
 
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató
+Int. Közl. **6** (1961), 221–254.
+
 [ESS89] Erdős, P., Sárközy, A., and Sós, V. T., *On sum sets of Sidon sets*,
 Journal of Number Theory (1989).
 -/

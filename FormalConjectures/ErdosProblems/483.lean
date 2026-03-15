@@ -21,11 +21,23 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/483](https://www.erdosproblems.com/483)
 
-[Er61] Erdős, P., _Some unsolved problems_, Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
-221-254.
+See also Problem 183.
 
-[Er65] Erdős, P., _Extremal problems in number theory_, Proc. Sympos. Pure Math. 8 (1965),
-181-189.
+OEIS: [A030126](https://oeis.org/A030126)
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
+221–254.
+
+[Er65] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math. 8 (1965),
+181–189.
+
+[ACPPRT21] Ageron, R., Casteras, P., Pellerin, T., Portella, Y., Rimmel, A., Tomasik, J.,
+_New lower bounds for Schur and weak Schur numbers_. arXiv:2112.03175 (2021).
+
+[Wh73] Whitehead, E. G., Jr., _The Ramsey number N(3,3,3,3;2)_. Discrete Mathematics (1973),
+389–396.
+
+[He17] Heule, M., _Schur Number Five_. arXiv:1711.08076 (2017).
 -/
 
 namespace Erdos483
