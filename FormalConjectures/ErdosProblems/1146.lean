@@ -15,20 +15,28 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Algebra.Group.Pointwise.Set.Basic
 
 /-!
 # Erdős Problem 1146
 
 Erdős asked whether the set of 3-smooth numbers {2^m · 3^n : m, n ≥ 0} is an essential component
-with respect to Schnirelmann density.
+with respect to Schnirelmann density. 3-smooth numbers are not lacunary, so Ruzsa's result
+that lacunary sets cannot be essential components (see Problem 37) does not rule them out;
+this makes them "the simplest set with a chance" to be an essential component.
 
 *Reference:* [erdosproblems.com/1146](https://www.erdosproblems.com/1146)
 
+*See also:* Problem 37.
+
 [Va99] Ruzsa, I. Z., *Sumsets and structure*, Combinatorial Number Theory and Additive
 Group Theory (1999).
+
+[Ru99] Ruzsa, I., *Erdős and the Integers*. Journal of Number Theory (1999), 115-163.
 -/
 
 open Classical
+open scoped Pointwise
 
 namespace Erdos1146
 
@@ -40,18 +48,12 @@ noncomputable def schnirelmannDensity (A : Set ℕ) : ℝ :=
   ⨅ n : ℕ+, (((Finset.Icc 1 (n : ℕ)).filter (· ∈ A)).card : ℝ) / ((n : ℕ) : ℝ)
 
 /--
-The sumset $A + B = \{a + b \mid a \in A, b \in B\}$ for sets of natural numbers.
--/
-def sumset (A B : Set ℕ) : Set ℕ :=
-  {n | ∃ a ∈ A, ∃ b ∈ B, n = a + b}
-
-/--
 A set $A \subseteq \mathbb{N}$ is an essential component if $d_s(A + B) > d_s(B)$ for every
 $B \subseteq \mathbb{N}$ with $0 < d_s(B) < 1$, where $d_s$ is the Schnirelmann density.
 -/
 def IsEssentialComponent (A : Set ℕ) : Prop :=
   ∀ (B : Set ℕ), 0 < schnirelmannDensity B → schnirelmannDensity B < 1 →
-    schnirelmannDensity (sumset A B) > schnirelmannDensity B
+    schnirelmannDensity (A + B) > schnirelmannDensity B
 
 /--
 The set of 3-smooth numbers: $\{2^m \cdot 3^n \mid m, n \geq 0\}$.
