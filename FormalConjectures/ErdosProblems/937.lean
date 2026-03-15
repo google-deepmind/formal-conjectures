@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.Full
 
 /-!
 # Erdős Problem 937
@@ -26,16 +27,17 @@ numbers (i.e. if $p \mid n$ then $p^2 \mid n$)?
 
 This was proved in the affirmative by Bajpai, Bennett, and Chan [BBC24].
 
-[BBC24] Bajpai, P., Bennett, M.A., and Chan, T.H., *Arithmetic progressions of
-powerful numbers*, 2024.
+[Er76d] Erdős, P., _Problems and results on number theoretic properties of consecutive
+integers and related questions_. Proceedings of the Fifth Manitoba Conference on
+Numerical Mathematics (Univ. Manitoba, Winnipeg, Man., 1975) (1976), 25–44.
+
+[BBC24] Bajpai, P., Bennett, M.A., and Chan, T.H., _Arithmetic progressions in
+squarefull numbers_. Int. J. Number Theory (2024), 19–45.
 -/
 
-namespace Erdos937
+open Nat
 
-/-- A natural number $n$ is powerful (also called 2-full) if for every prime $p$
-dividing $n$, $p^2$ also divides $n$. -/
-def IsPowerful (n : ℕ) : Prop :=
-  ∀ p : ℕ, p.Prime → p ∣ n → p ^ 2 ∣ n
+namespace Erdos937
 
 /--
 Erdős Problem 937 (proved by Bajpai–Bennett–Chan [BBC24]):
@@ -48,14 +50,48 @@ $a \geq N$ such that $a$, $a+d$, $a+2d$, $a+3d$ are all powerful and pairwise co
 theorem erdos_937 :
     answer(True) ↔
       ∀ N : ℕ, ∃ a d : ℕ, N ≤ a ∧ 0 < a ∧ 0 < d ∧
-        IsPowerful a ∧ IsPowerful (a + d) ∧
-        IsPowerful (a + 2 * d) ∧ IsPowerful (a + 3 * d) ∧
+        a.Powerful ∧ (a + d).Powerful ∧
+        (a + 2 * d).Powerful ∧ (a + 3 * d).Powerful ∧
         Nat.Coprime a (a + d) ∧
         Nat.Coprime a (a + 2 * d) ∧
         Nat.Coprime a (a + 3 * d) ∧
         Nat.Coprime (a + d) (a + 2 * d) ∧
         Nat.Coprime (a + d) (a + 3 * d) ∧
         Nat.Coprime (a + 2 * d) (a + 3 * d) := by
+  sorry
+
+/--
+Variant (proved by Bajpai–Bennett–Chan [BBC24]):
+
+There are infinitely many three-term arithmetic progressions of pairwise coprime
+3-powerful numbers (i.e. if $p \mid n$ then $p^3 \mid n$).
+-/
+@[category research solved, AMS 11]
+theorem erdos_937_three_powerful_three_term :
+    answer(True) ↔
+      ∀ N : ℕ, ∃ a d : ℕ, N ≤ a ∧ 0 < a ∧ 0 < d ∧
+        Full 3 a ∧ Full 3 (a + d) ∧ Full 3 (a + 2 * d) ∧
+        Nat.Coprime a (a + d) ∧
+        Nat.Coprime a (a + 2 * d) ∧
+        Nat.Coprime (a + d) (a + 2 * d) := by
+  sorry
+
+/--
+Variant (Erdős conjecture [Er76d], proved conditionally on the ABC conjecture by
+Bajpai–Bennett–Chan [BBC24]):
+
+For $r \geq 4$, there are only finitely many three-term arithmetic progressions of
+pairwise coprime $r$-powerful numbers.
+-/
+@[category research open, AMS 11]
+theorem erdos_937_r_powerful_three_term :
+    answer(sorry) ↔
+      ∀ r : ℕ, 4 ≤ r →
+      {x : ℕ × ℕ | 0 < x.1 ∧ 0 < x.2 ∧
+        Full r x.1 ∧ Full r (x.1 + x.2) ∧ Full r (x.1 + 2 * x.2) ∧
+        Nat.Coprime x.1 (x.1 + x.2) ∧
+        Nat.Coprime x.1 (x.1 + 2 * x.2) ∧
+        Nat.Coprime (x.1 + x.2) (x.1 + 2 * x.2)}.Finite := by
   sorry
 
 end Erdos937
