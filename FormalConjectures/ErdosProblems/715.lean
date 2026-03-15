@@ -36,10 +36,11 @@ The answer is yes, proved by Tashkinov [Ta82].
 
 [Er81] Erdős, P. (1981).
 
-[Ta82] Tashkinov, V. A., _Regular subgraphs of regular graphs_ (1982).
+[Ta82] Tashkinov, V. A., _Regular subgraphs of regular graphs_. Soviet Mathematics
+Doklady (1982), 37-38.
 
 [AFK84] Alon, N., Friedland, S., and Kalai, G., _Regular subgraphs of almost
-regular graphs_ (1984).
+regular graphs_. Journal of Combinatorial Theory Series B (1984), 92-93.
 -/
 
 open Classical SimpleGraph
