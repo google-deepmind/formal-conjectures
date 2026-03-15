@@ -39,6 +39,8 @@ theory_. Monographies de L'Enseignement Mathématique (1980).
 
 [St06] Stoll, T., _A fancy way to obtain the binary digits of certain irrational numbers_,
 Amer. Math. Monthly 113 (2006), 323–328.
+
+See also OEIS sequence [A004539](https://oeis.org/A004539) (binary expansion of √2).
 -/
 
 namespace Erdos482
@@ -51,7 +53,7 @@ noncomputable def grahamPollakSeq : ℕ → ℤ
   | n + 2 => ⌊Real.sqrt 2 * ((grahamPollakSeq (n + 1) : ℝ) + 1 / 2)⌋
 
 /-- The $n$th binary digit (0-indexed) of a nonnegative real number $x$.
-Position 0 is the integer-part bit. Equals $\lfloor x \cdot 2^n \rfloor \bmod 2$. -/
+Position 0 is the units (2⁰) bit. Equals $\lfloor x \cdot 2^n \rfloor \bmod 2$. -/
 noncomputable def binaryDigit (x : ℝ) (n : ℕ) : ℤ :=
   ⌊x * (2 : ℝ) ^ n⌋ % 2
 
