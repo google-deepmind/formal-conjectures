@@ -25,8 +25,16 @@ $|A \hat{+} A| \geq \min(2|A| - 3, p)$.
 
 *Reference:* [erdosproblems.com/476](https://www.erdosproblems.com/476)
 
+[Er65b] Erdős, P., *Some recent advances and current problems in number theory*.
+Lectures on Modern Mathematics, Vol. III (1965), 196-244.
+
+[ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+theory*. Monographies de L'Enseignement Mathematique (1980).
+
 [dSHa94] da Silva, J.A.D. and Hamidoune, Y.O., *Cyclic spaces for Grassmann derivatives and
 additive theory*, Bull. London Math. Soc. 26 (1994), 140-146.
+
+[Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437, Problem C15.
 -/
 
 open Finset
@@ -54,6 +62,28 @@ da Silva and Hamidoune [dSHa94].
 theorem erdos_476 : answer(True) ↔
     ∀ (p : ℕ) [Fact (Nat.Prime p)] (A : Finset (ZMod p)),
       (restrictedSumset A).card ≥ min (2 * A.card - 3) p := by
+  sorry
+
+/--
+The restricted $r$-fold sumset of $A$: the set of all sums of exactly $r$ distinct elements of $A$.
+-/
+def restrictedSumset_r {p : ℕ} (A : Finset (ZMod p)) (r : ℕ) : Finset (ZMod p) :=
+  A.powersetCard r |>.image (fun s => s.sum id)
+
+/--
+Erdős–Heilbronn generalized conjecture (Problem 476, variant):
+
+Let $p$ be a prime, $A \subseteq \mathbb{F}_p$, and $r \geq 1$. The number of elements of
+$\mathbb{F}_p$ that can be written as the sum of $r$ distinct elements of $A$ is at least
+$\min(r|A| - r^2 + 1, p)$.
+
+This generalization is mentioned by Erdős [Er65b] and appears as Problem C15 in Guy's
+collection [Gu04]. Setting $r = 2$ recovers the original bound $\min(2|A| - 3, p)$.
+-/
+@[category research open, AMS 5 11]
+theorem erdos_476_generalized :
+    ∀ (p : ℕ) [Fact (Nat.Prime p)] (A : Finset (ZMod p)) (r : ℕ),
+      (restrictedSumset_r A r).card ≥ min (r * A.card - r ^ 2 + 1) p := by
   sorry
 
 end Erdos476
