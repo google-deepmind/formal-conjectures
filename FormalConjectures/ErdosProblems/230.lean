@@ -31,15 +31,24 @@ DISPROVED: Kahane [Ka80] constructed 'ultraflat' polynomials with unimodular
 coefficients such that $|P(z)| = (1+o(1))\sqrt{n}$ uniformly on the unit circle.
 Bombieri and Bourgain [BoBo09] later improved the error term.
 
-[Er57] Erdős, P.
+[Er57] Erdős, P., _Some unsolved problems_, 1957, p. 297.
 
-[Er61] Erdős, P.
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató
+Int. Közl. **6** (1961), p. 248.
 
-[Er80h] Erdős, P.
+[Er80h] Erdős, P., 1980, p. 385.
 
-[Ka80] Kahane, J.-P.
+[Ha74] Hayman, W. K., _Research problems in function theory: new problems_
+(1974), 155–180. (Problem 4.31; described as a conjecture of Erdős and Newman.)
 
-[BoBo09] Bombieri, E. and Bourgain, J.
+[Ka80] Kahane, J.-P., _Sur les polynômes à coefficients unimodulaires_.
+Bull. London Math. Soc. (1980), 321–342.
+
+[Ko80] Körner, T. W., _On a polynomial of Byrnes_. Bull. London Math. Soc.
+(1980), 219–224.
+
+[BoBo09] Bombieri, E. and Bourgain, J., _On Kahane's ultraflat polynomials_.
+J. Eur. Math. Soc. (JEMS) (2009), 627–703.
 -/
 
 open Finset BigOperators
