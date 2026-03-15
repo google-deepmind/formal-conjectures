@@ -25,11 +25,17 @@ A pairwise balanced design for $\{1, \ldots, n\}$ is a collection of sets
 $A_1, \ldots, A_m \subseteq \{1, \ldots, n\}$ such that $2 \leq |A_i| < n$ and every pair
 of distinct elements $x, y \in \{1, \ldots, n\}$ is contained in exactly one $A_i$.
 
-[ErLa82] Erdős, P. and Larson, J. A., 1982.
+See also Problem 723 for the conjecture that the order of every projective plane is a
+prime power.
 
-[ShSi85] Shrikhande, S. S. and Singhi, N. M., 1985.
+[ErLa82] Erdős, P. and Larson, J. A., _On pairwise balanced block designs with the sizes
+of blocks as uniform as possible_. Annals of Discrete Mathematics (1982), 129–134.
 
-[Er97f] Erdős, P., 1997.
+[ShSi85] Shrikhande, S. S. and Singhi, N. M., _On a problem of Erdős and Larson_.
+Combinatorica (1985), 351–358.
+
+[Er97f, p.3] Erdős, P., _Some unsolved problems_. Combinatorics, geometry and probability
+(Cambridge, 1993) (1997), 1–10.
 -/
 
 open Finset
@@ -60,6 +66,34 @@ theorem erdos_665 : answer(sorry) ↔
     ∃ blocks : Finset (Finset (Fin n)),
       IsPairwiseBalancedDesign n blocks ∧
       ∀ B ∈ blocks, (↑B.card : ℝ) > Real.sqrt ↑n - C := by
+  sorry
+
+/--
+Erdős Problem 665, general variant [ErLa82][Er97f]:
+
+Find the slowest-growing function $h(n)$ such that for all sufficiently large $n$,
+there exists a pairwise balanced design on $\{1, \ldots, n\}$ where every block has size
+$> \sqrt{n} - h(n)$.
+
+Erdős and Larson [ErLa82] proved that $h(n) \ll n^{1/2 - c}$ for some $c > 0$.
+Under the conjecture that the order of every projective plane is a prime power
+(Problem 723), Shrikhande and Singhi [ShSi85] showed $h(n) \asymp H(n)$,
+where $H(n)$ is the largest prime gap below $n$.
+-/
+@[category research open, AMS 5]
+theorem erdos_665_general :
+    ∃ h : ℕ → ℝ,
+    (∀ ε > 0, ∃ n₀ : ℕ, ∀ n : ℕ, n ≥ n₀ → h n ≤ ε * (↑n : ℝ) ^ ((1 : ℝ) / 2)) ∧
+    (∃ n₀ : ℕ, ∀ n : ℕ, n ≥ n₀ →
+      ∃ blocks : Finset (Finset (Fin n)),
+        IsPairwiseBalancedDesign n blocks ∧
+        ∀ B ∈ blocks, (↑B.card : ℝ) > Real.sqrt ↑n - h n) ∧
+    (∀ h' : ℕ → ℝ,
+      (∃ n₀ : ℕ, ∀ n : ℕ, n ≥ n₀ →
+        ∃ blocks : Finset (Finset (Fin n)),
+          IsPairwiseBalancedDesign n blocks ∧
+          ∀ B ∈ blocks, (↑B.card : ℝ) > Real.sqrt ↑n - h' n) →
+      ∃ C > 0, ∃ n₀ : ℕ, ∀ n : ℕ, n ≥ n₀ → h n ≤ C * h' n) := by
   sorry
 
 end Erdos665
