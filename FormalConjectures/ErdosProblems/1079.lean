@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Extremal.Basic
 
 /-!
 # Erdős Problem 1079
@@ -30,23 +31,20 @@ As Erdős [Er75] says 'if true this would be a nice generalisation of Turán's t
 This is true (unless $G$ is itself the Turán graph), proved by Bollobás and Thomason [BoTh81].
 Bondy [Bo83b] showed that if $G$ has $> \operatorname{ex}(n; K_r)$ edges then the corresponding
 vertex can be chosen to be of maximum degree in $G$.
+
+[Er75] Erdős, P., _Some recent progress on extremal problems in graph theory_. Congressus
+Numerantium (1975), 3–14.
+
+[BoTh81] Bollobás, B., Thomason, A., _Dense neighbourhoods and Turán's theorem_. Journal of
+Combinatorial Theory, Series B (1981), 111–114.
+
+[Bo83b] Bondy, J. A., _Large dense neighbourhoods and Turán's theorem_. Journal of Combinatorial
+Theory, Series B (1983), 109–111.
 -/
 
 open SimpleGraph Finset
 
 namespace Erdos1079
-
-/-- An injective graph homomorphism from $H$ to $G$; witnesses that $G$ contains a
-    subgraph isomorphic to $H$. -/
-def ContainsSubgraph {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → G.Adj (f u) (f v)
-
-/-- The Turán number $\operatorname{ex}(n; H)$: the maximum number of edges in a simple graph
-    on $n$ vertices that contains no copy of $H$ as a subgraph. -/
-noncomputable def turanNumber {U : Type*} (H : SimpleGraph U) (n : ℕ) : ℕ :=
-  sSup {m : ℕ | ∃ (V : Type) (fv : Fintype V) (F : SimpleGraph V) (dr : DecidableRel F.Adj),
-    haveI := fv; haveI := dr;
-    Fintype.card V = n ∧ ¬ContainsSubgraph F H ∧ F.edgeFinset.card = m}
 
 /-- The number of edges of $G$ both of whose endpoints lie in a set $S$.
     Counts pairs $(i, j)$ in $S$ with $i < j$ and `G.Adj i j`. -/
@@ -75,11 +73,29 @@ theorem erdos_1079 : answer(True) ↔
     ∃ c : ℝ, c > 0 ∧
     ∃ n₀ : ℕ, ∀ n : ℕ, n ≥ n₀ →
     ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
-      G.edgeFinset.card ≥ turanNumber (⊤ : SimpleGraph (Fin r)) n →
+      G.edgeFinset.card ≥ extremalNumber n (⊤ : SimpleGraph (Fin r)) →
       ∃ v : Fin n,
         (G.degree v : ℝ) ≥ c * (n : ℝ) ∧
         neighborhoodEdgeCount G (G.neighborFinset v) ≥
-          turanNumber (⊤ : SimpleGraph (Fin (r - 1))) (G.degree v) := by
+          extremalNumber (G.degree v) (⊤ : SimpleGraph (Fin (r - 1))) := by
+  sorry
+
+/--
+Bondy's strengthening of Erdős Problem 1079 [Bo83b]:
+
+If $r \geq 4$ and $G$ is a graph on $n$ vertices with strictly more than
+$\operatorname{ex}(n; K_r)$ edges, then a vertex of maximum degree in $G$ has at least
+$\operatorname{ex}(d; K_{r-1})$ edges in its neighbourhood, where $d$ is that maximum degree.
+-/
+@[category research solved, AMS 5]
+theorem erdos_1079_bondy_strengthening :
+    ∀ r : ℕ, r ≥ 4 →
+    ∃ n₀ : ℕ, ∀ n : ℕ, n ≥ n₀ →
+    ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
+      G.edgeFinset.card > extremalNumber n (⊤ : SimpleGraph (Fin r)) →
+      ∀ v : Fin n, (∀ w : Fin n, G.degree w ≤ G.degree v) →
+        neighborhoodEdgeCount G (G.neighborFinset v) ≥
+          extremalNumber (G.degree v) (⊤ : SimpleGraph (Fin (r - 1))) := by
   sorry
 
 end Erdos1079
