@@ -28,7 +28,13 @@ contains all odd cycles of length at most $n/3 + 1$, and also whether $G(A)$ mus
 a complete $(1,\ell,\ell)$ tripartite subgraph for every fixed $\ell$ when $n$ is sufficiently
 large (the latter was proved by Sárközy).
 
-[ErSa97] Erdős, P. and Sárközy, A., on cycles in the coprime graph of integers.
+[ErSa97] Erdős, P. and Sárközy, G. N., _On cycles in the coprime graph of integers_.
+Electron. J. Combin. (1997).
+
+[Er98] Erdős, P., various problems papers.
+
+[Sa99] Sárközy, G. N., _Complete tripartite subgraphs in the coprime graph of integers_.
+Discrete Math. (1999), 227–238.
 -/
 
 open Finset
@@ -98,7 +104,7 @@ For $A \subseteq \{1, \ldots, n\}$, is it true that for every $\ell \geq 1$, if 
 sufficiently large and $|A| > \lfloor n/2 \rfloor + \lfloor n/3 \rfloor - \lfloor n/6 \rfloor$,
 then $G(A)$ must contain a complete $(1,\ell,\ell)$ tripartite subgraph?
 
-Proved by Sárközy [ErSa97].
+Proved by Sárközy [Sa99].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_883.variants.tripartite : answer(True) ↔
