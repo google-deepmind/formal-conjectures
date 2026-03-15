@@ -25,6 +25,18 @@ Erdős–McKay conjecture (proved by Kwan–Sah–Sauermann–Sawhney): if a gra
 has no clique or independent set of size $\geq \varepsilon \log n$, then it contains an induced
 subgraph with exactly $m$ edges for every $m \leq \delta n^2$.
 
+Conjectured by Erdős and McKay [Er92b][Er95][Er97d]. Proved by
+Kwan, Sah, Sauermann, and Sawhney [KSSS22].
+
+[Er92b] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Matematiche (Catania) (1992), 231-240.
+
+[Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Combinatorics, Paul Erdős is Eighty, vol. 2 (1995).
+
+[Er97d] Erdős, P., _Some of my new and almost new problems and results in
+combinatorics and graph theory_ (1997).
+
 [KSSS22] Kwan, M., Sah, A., Sauermann, L., and Sawhney, M.,
 _Anticoncentration in Ramsey graphs and a proof of the Erdős–McKay conjecture_,
 Forum of Mathematics, Pi (2023).
