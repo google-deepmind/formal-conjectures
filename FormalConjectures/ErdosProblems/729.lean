@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.NumberTheory.SmoothNumbers
 
 /-!
 # Erdős Problem 729
@@ -27,20 +28,13 @@ primes," i.e., the denominator of $n!/(a! b!)$ is supported only on bounded prim
 
 The answer is yes (the bound still holds). Proved by Barreto and Leeham.
 
-[EGRS75] Erdős, P., Graham, R., Ruzsa, I. Z., and Straus, E. G.,
-_On the prime factors of $\binom{2n}{n}$_, Math. Comp. **29** (1975), 83–92.
+[Er68c] Erdős, P., _Aufgabe 557_. Elemente Math. (1968), 111–113.
 -/
 
 namespace Erdos729
 
-/-- The denominator of $n!/(a! \cdot b!)$, when written in lowest terms, is $P$-smooth:
-all its prime factors are at most $P$. -/
-def DenomPSmooth (a b n P : ℕ) : Prop :=
-  ∀ p : ℕ, Nat.Prime p →
-    p ∣ ((n.factorial : ℚ) / ((a.factorial : ℚ) * (b.factorial : ℚ))).den → p ≤ P
-
 /--
-Erdős Problem 729 [EGRS75]:
+Erdős Problem 729 [Er68c]:
 
 For any $C > 0$ and any prime bound $P$, the set of triples $(a, b, n)$ such that
 $a + b > n + C \cdot \log n$ and the denominator of $n!/(a! b!)$ is $P$-smooth, is finite.
@@ -49,7 +43,8 @@ $a + b > n + C \cdot \log n$ and the denominator of $n!/(a! b!)$ is $P$-smooth, 
 theorem erdos_729 : answer(True) ↔
     ∀ (C : ℝ), C > 0 → ∀ (P : ℕ), Set.Finite {t : ℕ × ℕ × ℕ |
       (t.1 : ℝ) + (t.2.1 : ℝ) > (t.2.2 : ℝ) + C * Real.log (t.2.2 : ℝ) ∧
-      DenomPSmooth t.1 t.2.1 t.2.2 P} := by
+      ((t.2.2.factorial : ℚ) / ((t.1.factorial : ℚ) * (t.2.1.factorial : ℚ))).den ∈
+        Nat.smoothNumbers (P + 1)} := by
   sorry
 
 end Erdos729
