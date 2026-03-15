@@ -25,6 +25,8 @@ For each fixed $k \geq 1$, is $d_k(p)$ unimodal in $p$?
 *Reference:* [erdosproblems.com/690](https://www.erdosproblems.com/690)
 
 [Er79e] Erdős, P., _Some unconventional problems in number theory_. Math. Mag. 52 (1979), 67-70.
+
+[Ca25] Cambie, S., _Resolution of Erdős' problems about unimodularity_. arXiv:2501.10333 (2025).
 -/
 
 open Filter Finset
@@ -58,10 +60,10 @@ def IsUnimodalOnPrimes (f : ℕ → ℝ) : Prop :=
 Erdős Problem 690: Let $d_k(p)$ be the density of those integers whose $k$-th smallest
 prime factor is $p$. For each fixed $k \geq 1$, is $d_k(p)$ unimodal in $p$?
 
-Erdős believed the answer is negative. Cambie confirmed $d_k(p)$ is unimodal for
+Erdős believed the answer is negative. Cambie [Ca25] confirmed $d_k(p)$ is unimodal for
 $1 \leq k \leq 3$ but not for $4 \leq k \leq 20$.
 
-[Er79e]
+[Er79e] [Ca25]
 -/
 @[category research solved, AMS 11]
 theorem erdos_690 : answer(False) ↔
