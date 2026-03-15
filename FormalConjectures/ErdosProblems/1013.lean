@@ -22,9 +22,16 @@ import FormalConjectures.Util.ProblemImports
 Is it true that the ratio $h_3(k+1)/h_3(k)$ tends to 1, where $h_3(k)$ is the minimum number of
 vertices of a triangle-free graph with chromatic number $k$?
 
+Related problems: #920 (generalization to $K_r$-free graphs), #1104 (dual formulation).
+
+OEIS: [A292528](https://oeis.org/A292528).
+
 *Reference:* [erdosproblems.com/1013](https://www.erdosproblems.com/1013)
 
 [Er71] Erdős, P., *Some unsolved problems in graph theory and combinatorial analysis*.
+
+[GrYa68] Graver, J., Yackel, J., _Some graph theoretic results associated with Ramsey's theorem_.
+Journal of Combinatorial Theory (1968), 125–175.
 -/
 
 open SimpleGraph
@@ -46,6 +53,9 @@ chromatic number $k$.
 
 Formulated as: for every $\varepsilon > 0$, there exists $K_0$ such that for all $k \geq K_0$,
 $\left| \frac{h_3(k+1)}{h_3(k)} - 1 \right| \leq \varepsilon$.
+
+Note: this would follow from the known asymptotic bounds
+$(1/2 - o(1))k^2 \log k \leq h_3(k) \leq (1 + o(1))k^2 \log k$ (see Problem 1104).
 -/
 @[category research open, AMS 5]
 theorem erdos_1013 :
