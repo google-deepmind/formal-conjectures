@@ -33,6 +33,14 @@ Erdős offered \$500 for the determination of this value for any fixed $k > r > 
 and \$1000 for 'clearing up the whole set of problems'.
 
 See also [500] for the case $r = 3$ and $k = 4$.
+
+[Er71] Erdős, P., _Topics in combinatorial analysis_. Proc. Second Louisiana Conf. on
+Combinatorics, Graph Theory and Computing (1971), 2–20.
+
+[Er74c] Erdős, P., _Problems and results on combinatorial number theory III_ (1974).
+
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_.
+Combinatorica (1981), 25–42.
 -/
 
 open Finset Filter
