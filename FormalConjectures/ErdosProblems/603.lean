@@ -27,7 +27,8 @@ $\bigcup A_i$ can always be coloured with at most $C$ colours so that no $A_i$ i
 monochromatic. If instead we have $|A_i \cap A_j| \neq 1$ then Komjáth showed that this is
 possible with at most $\aleph_0$ colours.
 
-[Er87] Erdős, P., _Some problems on finite and infinite graphs_.
+[Er87] Erdős, P., _Some problems on finite and infinite graphs_, Logic and combinatorics,
+Contemp. Math. **65** (1987), 223–228.
 -/
 
 open Cardinal Set
