@@ -61,4 +61,14 @@ theorem erdos_284 :
         atTop (nhds 1) := by
   sorry
 
+/--
+The trivial upper bound $f(k) \leq (1+o(1)) \, k/(e-1)$, which follows from the fact that
+$\sum_{u \leq n \leq eu} 1/n = 1 + o(1)$ for any $u \geq 1$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_284.variants.ub :
+    Filter.limsup (fun k => (erdos284_f k : ℝ) * (Real.exp 1 - 1) / (k : ℝ))
+      atTop ≤ 1 := by
+  sorry
+
 end Erdos284
