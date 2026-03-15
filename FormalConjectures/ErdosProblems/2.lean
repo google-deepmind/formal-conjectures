@@ -35,10 +35,11 @@ large integers and covering systems of congruences_. J. Amer. Math. Soc. **20** 
 no. 2, 495–517.
 
 [BBMST22] Balister, P., Bollobás, B., Morris, R., Sahasrabudhe, J., and Tiba, M.,
-_The Erdős covering problem: the density of the uncovered set_. Ann. of Math. (2) **198**
-(2023), no. 1, 1–92.
+_On the Erdős covering problem: the density of the uncovered set_. Inventiones
+mathematicae (2022), 377–414.
 
-[Ow14] Owens, T., _A covering system with minimum modulus 42_. (2014).
+[Ow14] Owens, T., _A covering system with minimum modulus 42_. Thesis, Brigham Young
+University (2014).
 -/
 
 namespace Erdos2
