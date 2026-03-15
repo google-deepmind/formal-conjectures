@@ -22,9 +22,15 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/857](https://www.erdosproblems.com/857)
 
 This is sometimes known as the weak sunflower problem (see problem \#20
-for the strong sunflower problem).
+for the strong sunflower problem). See also problems \#536 and \#856.
 
-[NaSa17] Naslund, E. and Sawin, W., _Upper bounds for sunflower-free sets_, 2017.
+[Er70] Erdős, P., _Some extremal problems in combinatorial number theory_.
+Mathematical Essays Dedicated to A. J. Macintyre (1970), pp. 123–133.
+
+[Er71] Erdős, P., _Topics in combinatorial analysis_ (1971), p. 105.
+
+[NaSa17] Naslund, E. and Sawin, W., _Upper bounds for sunflower-free sets_.
+Forum Mathematicum Sigma (2017), Paper No. e15.
 -/
 
 open Finset
@@ -34,7 +40,7 @@ namespace Erdos857
 /-- A family of sets forms a sunflower if every pair of distinct members
 has the same intersection (the "kernel"). -/
 def IsSunflower {n : ℕ} (S : Finset (Finset (Fin n))) : Prop :=
-  ∃ K : Finset (Fin n), ∀ A ∈ S, ∀ B ∈ S, A ≠ B → A ∩ B = K
+  ∃ K : Finset (Fin n), (S : Set (Finset (Fin n))).Pairwise (fun A B => A ∩ B = K)
 
 /--
 **Erdős Problem 857** — Weak Sunflower Problem:
