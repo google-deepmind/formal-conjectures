@@ -30,10 +30,19 @@ In other words, must some colour class be an IP set. Asked by Graham and Rothsch
 Proved by Hindman [Hi74] for any number of colours. This is now known as
 **Hindman's theorem** (or the Finite Sums theorem).
 
-See also [531] for the finite version (Folkman numbers).
+See also [531] for the finite version (Folkman numbers) and [948].
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973), 117–138.
+
+[Er75b] Erdős, P., _Problems and results in combinatorial number theory_. Journées
+Arithmétiques de Bordeaux (Conf., Univ. Bordeaux, Bordeaux, 1974) (1975), 295–310.
+
+[Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._. Number Theory Day
+(Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43–72.
 
 [Hi74] Hindman, N., _Finite sums from sequences within cells of a partition of N_,
-Journal of Combinatorial Theory, Series A **17** (1974), 1-11.
+Journal of Combinatorial Theory, Series A **17** (1974), 1–11.
 -/
 
 open Finset BigOperators
@@ -48,6 +57,19 @@ of $A$ are monochromatic. -/
 theorem erdos_532 : answer(True) ↔
     ∀ χ : ℕ → Bool, ∃ (A : Set ℕ), A.Infinite ∧ (∀ a ∈ A, 0 < a) ∧
     ∃ c : Bool, ∀ S : Finset ℕ, S.Nonempty → (↑S : Set ℕ) ⊆ A →
+      χ (∑ i ∈ S, i) = c := by
+  sorry
+
+/-- **Hindman's theorem (general version)** (Erdős Problem 532, [Hi74]):
+For any finite colouring $\chi : \mathbb{N} \to \mathrm{Fin}\, r$ with $r \geq 1$,
+there exists an infinite set $A$ of positive naturals such that all non-empty finite
+subset sums of elements of $A$ are monochromatic.
+This is the full strength of Hindman's theorem, generalising `erdos_532` from 2 colours
+to any finite number of colours. -/
+@[category research solved, AMS 5]
+theorem erdos_532_general (r : ℕ) (hr : 0 < r) (χ : ℕ → Fin r) :
+    ∃ (A : Set ℕ), A.Infinite ∧ (∀ a ∈ A, 0 < a) ∧
+    ∃ c : Fin r, ∀ S : Finset ℕ, S.Nonempty → (↑S : Set ℕ) ⊆ A →
       χ (∑ i ∈ S, i) = c := by
   sorry
 
