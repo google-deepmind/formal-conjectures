@@ -52,6 +52,7 @@ consecutive integers in $[n/2, n]$ that are all $n^{\varepsilon}$-smooth.
 theorem erdos_369 : answer(sorry) ↔
     ∀ (ε : ℝ) (_ : 0 < ε) (k : ℕ) (_ : 2 ≤ k),
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
+      -- i.e., a, a+1, ..., a+k-1 all lie in [n/2, n]
       ∃ a : ℕ, n / 2 ≤ a ∧ a + k ≤ n + 1 ∧
         ∀ j : ℕ, j < k → IsSmooth ((n : ℝ) ^ ε) (a + j) := by
   sorry
