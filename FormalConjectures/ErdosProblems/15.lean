@@ -39,11 +39,11 @@ number theory_ (1997).
 
 [Er97e] Erdős, P., _Some problems and results on combinatorial number theory_ (1997).
 
-[Er98] Erdős, P., _Some of my favourite problems which recently have been solved_,
-Challenges for the 21st century (Singapore, 2000), 2001.
+[Er98] Erdős, P., _Some of my new and almost new problems and results in combinatorial
+number theory_. Number theory (Eger, 1996) (1998), 169–180.
 
-[Ta23] Tao, T., _Monotone non-decreasing sequences of the Euler totient function_,
-arXiv:2309.02325 (2023).
+[Ta23] Tao, T., _The convergence of an alternating series of Erdős, assuming the
+Hardy-Littlewood prime tuples conjecture_. arXiv:2308.07205 (2023).
 
 [Zh14] Zhang, Y., _Bounded gaps between primes_. Ann. of Math. (2) **179** (2014), 1121–1174.
 -/
