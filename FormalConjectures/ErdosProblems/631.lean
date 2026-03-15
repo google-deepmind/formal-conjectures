@@ -39,6 +39,9 @@ Journal of Combinatorial Theory, Series B 62 (1994), 180–181.
 
 [Vo93] Voigt, M., _List colourings of planar graphs_.
 Discrete Mathematics 120 (1993), 215–219.
+
+[Gu96] Gutner, S., _The complexity of planar graph choosability_.
+Discrete Mathematics (1996), 119–130.
 -/
 
 open SimpleGraph
