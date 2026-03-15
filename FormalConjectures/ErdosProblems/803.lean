@@ -15,11 +15,14 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
 
 /-!
 # Erdős Problem 803
 
 *Reference:* [erdosproblems.com/803](https://www.erdosproblems.com/803)
+
+*Related:* [Erdős Problem 1077](https://www.erdosproblems.com/1077)
 
 We call a graph $H$ *$D$-balanced* (or *$D$-almost-regular*) if the maximum
 degree of $H$ is at most $D$ times the minimum degree of $H$.
@@ -29,20 +32,25 @@ showed that for every $D > 1$ and large $n$ there is a graph $G$ with $n$
 vertices and $\geq n \log n$ edges such that every $D$-balanced subgraph on $m$
 vertices has $\ll m \sqrt{\log m} + \log D$ edges.
 
-[ErSi70] Erdős, P. and Simonovits, M., 1970.
+Janzer and Sudakov [JaSu23] proved a partial positive result: any graph on $n$
+vertices with $\geq n \log n$ edges contains an $O(1)$-balanced subgraph on
+$m \geq k$ vertices with $\gg_k \sqrt{\log m} / (\log \log m)^{3/2} \cdot m$
+edges.
 
-[Al08] Alon, N., 2008.
+[ErSi70] Erdős, P. and Simonovits, M., _Some extremal problems in graph
+theory_. Combinatorial theory and its applications, I–III (Proc. Colloq.,
+Balatonfüred, 1969) (1970), 377–390.
+
+[Al08] Alon, N., _Problems and results in extremal combinatorics. II_.
+Discrete Mathematics (2008), 4460–4472.
+
+[JaSu23] Janzer, O. and Sudakov, B., _Resolution of the Erdős–Sauer problem
+on regular subgraphs_. Forum Mathematics Pi (2023), Paper No. e19, 13 pages.
 -/
 
 open SimpleGraph Classical
 
 namespace Erdos803
-
-/-- A simple graph on `Fin m` is *$D$-balanced* if for every pair of vertices
-$u$, $v$, the degree of $u$ is at most $D$ times the degree of $v$. This is
-equivalent to: $\max \deg \leq D \cdot \min \deg$. -/
-noncomputable def IsDBalanced {m : ℕ} (H : SimpleGraph (Fin m)) (D : ℕ) : Prop :=
-  ∀ u v : Fin m, H.degree u ≤ D * H.degree v
 
 /--
 Erdős Problem 803 [ErSi70] (Disproved by Alon [Al08]):
@@ -64,7 +72,7 @@ theorem erdos_803 :
       ∃ (H : SimpleGraph (Fin m)) (f : Fin m → Fin n),
         Function.Injective f ∧
         (∀ u v, H.Adj u v → G.Adj (f u) (f v)) ∧
-        IsDBalanced H D ∧
+        H.IsBalanced (D : ℝ) ∧
         (H.edgeFinset.card : ℝ) ≥ C * (m : ℝ) * Real.log (m : ℝ) := by
   sorry
 
