@@ -25,6 +25,9 @@ Shamir's problem (1979): How large should $\ell(n)$ be such that, almost surely,
 $3$-uniform hypergraph on $3n$ vertices with $\ell(n)$ edges must contain $n$ vertex-disjoint
 edges?
 
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+  Combinatorica **1** (1981), 25–42.
+
 [JKV08] Johansson, A., Kahn, J., and Vu, V., _Factors in random graphs_, Random Structures
 & Algorithms 33 (2008), 1-28.
 
@@ -38,11 +41,11 @@ namespace Erdos747
 
 /-- The set of all $3$-element subsets of $\operatorname{Fin} N$ (potential hyperedges). -/
 def threeEdges (N : ℕ) : Finset (Finset (Fin N)) :=
-  Finset.univ.powerset.filter (fun s => s.card = 3)
+  Finset.univ.powersetCard 3
 
 /-- The set of all $3$-uniform hypergraphs on $\operatorname{Fin} N$ with exactly $m$ edges. -/
 def hypergraphsWithEdges (N m : ℕ) : Finset (Finset (Finset (Fin N))) :=
-  (threeEdges N).powerset.filter (fun H => H.card = m)
+  (threeEdges N).powersetCard m
 
 /-- A $3$-uniform hypergraph $H$ contains a matching of size $k$: there exist
     $k$ pairwise vertex-disjoint edges in $H$. -/
