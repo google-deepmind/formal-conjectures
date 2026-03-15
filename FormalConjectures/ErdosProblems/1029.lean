@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Ramsey
 
 /-!
 # Erdős Problem 1029
@@ -38,17 +39,9 @@ improved by Spencer [Sp75] to $R(k) \geq (1+o(1)) \cdot \frac{\sqrt{2}}{e} \cdot
 [Er93] Erdős, P., *On some of my favourite theorems* (1993).
 -/
 
-open Finset
+open Finset Combinatorics
 
 namespace Erdos1029
-
-/-- The diagonal Ramsey number $R(k)$: the minimum $N$ such that for every
-symmetric 2-colouring of the edges of $K_N$, there is a monochromatic
-clique of size $k$ in some colour. -/
-noncomputable def diagonalRamseyNumber (k : ℕ) : ℕ :=
-  sInf {N : ℕ | ∀ (c : Fin N → Fin N → Bool), (∀ i j, c i j = c j i) →
-    ∃ (b : Bool) (S : Finset (Fin N)), S.card = k ∧
-      ∀ i ∈ S, ∀ j ∈ S, i ≠ j → c i j = b}
 
 /--
 Erdős Problem 1029 [Er93, p.337]:
@@ -57,12 +50,14 @@ $R(k) / (k \cdot 2^{k/2}) \to \infty$ as $k \to \infty$.
 
 Formulated as: for every $C > 0$, there exists $K_0$ such that for all $k \geq K_0$,
 $R(k) \geq C \cdot k \cdot 2^{k/2}$.
+
+Here $R(k)$ is the diagonal Ramsey number, expressed as `hypergraphRamsey 2 k`.
 -/
 @[category research open, AMS 5]
 theorem erdos_1029 :
     ∀ C : ℝ, C > 0 →
     ∃ K₀ : ℕ, ∀ k : ℕ, k ≥ K₀ →
-      (diagonalRamseyNumber k : ℝ) ≥ C * (k : ℝ) * (2 : ℝ) ^ ((k : ℝ) / 2) := by
+      (hypergraphRamsey 2 k : ℝ) ≥ C * (k : ℝ) * (2 : ℝ) ^ ((k : ℝ) / 2) := by
   sorry
 
 end Erdos1029
