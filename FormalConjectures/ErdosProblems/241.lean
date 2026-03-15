@@ -26,6 +26,7 @@ import FormalConjectures.Util.ProblemImports
   Helv. (1962/63), 141-147.
 - [Gr01] Green, Ben, The number of squares and {$B_h[g]$} sets. Acta Arith. (2001), 365-390.
 - [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
+- OEIS sequence [A387704](https://oeis.org/A387704).
 -/
 
 open Filter Finset
@@ -40,7 +41,7 @@ $a,b,c\in A$ are all distinct (aside from the trivial coincidences).
 Formalization note: this is generalized to allow for different $r$.
 -/
 noncomputable def f (N r : ℕ) : ℕ :=
-  letI candidates := (Icc 1 N).powerset.filter (fun A ↦
+  let candidates := (Icc 1 N).powerset.filter (fun A ↦
     ∀ m₁ m₂ : Multiset ℕ,
       m₁.card = r → m₂.card = r →
       (∀ x ∈ m₁, x ∈ A) → (∀ x ∈ m₂, x ∈ A) →
@@ -96,6 +97,9 @@ theorem erdos_241.variants.generalization (r : ℕ) (hr : r ≥ 2) :  BoseChowla
 
 /--
 This is known only for $r=2$ (see [erdosproblems.com/30]).
+
+Note: at $r=2$, `f N 2` coincides with `Finset.maxSidonSubsetCard (Finset.Icc 1 N)` from the
+Sidon set infrastructure in `FormalConjecturesForMathlib/Combinatorics/Basic.lean`.
 -/
 @[category research solved, AMS 5]
 theorem erdos_241.variants.r_eq_2 :
