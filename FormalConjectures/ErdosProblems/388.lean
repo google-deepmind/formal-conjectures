@@ -58,25 +58,27 @@ $$(m_1+1)(m_1+2)\cdots(m_1+k_1) = (m_2+1)(m_2+2)\cdots(m_2+k_2)?$$
 @[category research open, AMS 11]
 theorem erdos_388 :
     answer(sorry) ↔
-    Set.Finite {t : ℕ × ℕ × ℕ × ℕ |
-      3 < t.2.1 ∧ 3 < t.2.2.2 ∧
-      t.1 + t.2.1 ≤ t.2.2.1 ∧
-      consecutiveProduct t.1 t.2.1 = consecutiveProduct t.2.2.1 t.2.2.2} := by
+    Set.Finite {(m₁, k₁, m₂, k₂) : ℕ × ℕ × ℕ × ℕ |
+      3 < k₁ ∧ 3 < k₂ ∧
+      m₁ + k₁ ≤ m₂ ∧
+      consecutiveProduct m₁ k₁ = consecutiveProduct m₂ k₂} := by
   sorry
 
 /--
 Erdős Problem 388 (General conjecture) [Er76d] [ErGr80] [Er92e]:
 
-For $k_1 > 2$ and fixed $a, b$, the equation
+For $k_1 > 2$ and fixed positive $a, b$, the equation
 $$a \cdot \prod_{1 \le i \le k_1} (m_1 + i) = b \cdot \prod_{1 \le j \le k_2} (m_2 + j)$$
-should have only finitely many solutions.
+with $m_1 + k_1 \le m_2$ should have only finitely many solutions.
 -/
 @[category research open, AMS 11]
 theorem erdos_388.variants.general :
     answer(sorry) ↔
-    ∀ (a b : ℕ) (k₁ : ℕ), 2 < k₁ →
+    ∀ (a b : ℕ), 0 < a → 0 < b →
+    ∀ (k₁ : ℕ), 2 < k₁ →
     ∀ k₂ : ℕ,
     Set.Finite {t : ℕ × ℕ |
+      t.1 + k₁ ≤ t.2 ∧
       a * consecutiveProduct t.1 k₁ = b * consecutiveProduct t.2 k₂} := by
   sorry
 
