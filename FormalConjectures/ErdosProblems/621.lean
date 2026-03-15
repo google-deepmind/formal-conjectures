@@ -36,7 +36,7 @@ open SimpleGraph
 namespace Erdos621
 
 /-- Create an unordered pair from two vertices, representing an edge. -/
-abbrev mkEdge {V : Type*} (a b : V) : Sym2 V := Quot.mk _ (a, b)
+abbrev mkEdge {V : Type*} (a b : V) : Sym2 V := Sym2.mk (a, b)
 
 /--
 A set of edges $S$ is triangle-independent in $G$ if $S \subseteq E(G)$ and every
@@ -80,6 +80,28 @@ theorem erdos_621 (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (T : Finset (Sym2 (Fin n)))
     (hT : IsTriangleTransversal G T)
     (hT_min : ∀ T' : Finset (Sym2 (Fin n)), IsTriangleTransversal G T' → T.card ≤ T'.card) :
+    4 * (S.card + T.card) ≤ n ^ 2 := by
+  sorry
+
+/--
+**Erdős Problem 621 — Stronger Norin–Sun result** [NoSu16]:
+
+Norin and Sun proved a stronger version of the Erdős–Gallai–Tuza conjecture:
+$\alpha_1(G) + \tau_B(G) \leq n^2/4$, where $\tau_B(G)$ is the minimum number of edges
+whose removal makes $G$ bipartite. This is strictly stronger than the original conjecture
+since $\tau_1(G) \leq \tau_B(G)$ (every set of edges whose removal makes $G$ bipartite
+is in particular a triangle transversal).
+-/
+@[category research solved, AMS 5]
+theorem erdos_621_stronger (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+    (S : Finset (Sym2 (Fin n)))
+    (hS : IsTriangleIndependent G S)
+    (hS_max : ∀ S' : Finset (Sym2 (Fin n)), IsTriangleIndependent G S' → S'.card ≤ S.card)
+    (T : Finset (Sym2 (Fin n)))
+    (hT_sub : ↑T ⊆ G.edgeSet)
+    (hT_bip : (G.deleteEdges ↑T).IsBipartite)
+    (hT_min : ∀ T' : Finset (Sym2 (Fin n)),
+      ↑T' ⊆ G.edgeSet → (G.deleteEdges ↑T').IsBipartite → T.card ≤ T'.card) :
     4 * (S.card + T.card) ≤ n ^ 2 := by
   sorry
 
