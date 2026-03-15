@@ -33,13 +33,17 @@ $$f_k(n) \sim \tfrac{1}{2}\left(1 - \tfrac{1}{\lfloor k/3 \rfloor}\right) n^2?$$
 Toft [To70] proved that $f_k(n) \gg_k n^2$ for $k \geq 4$.
 Stiebitz [St87] disproved the asymptotic for $k \not\equiv 0 \pmod{3}$.
 
-[Er69b] Erdős, P. (1969).
+[Di52] Dirac, G. A., _A property of 4-chromatic graphs and some remarks on critical graphs_. J. London Math. Soc. (1952), 85–92.
 
-[Er93] Erdős, P. (1993).
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_. Proof Techniques in Graph Theory (1969), 27–35.
 
-[To70] Toft, B. (1970).
+[Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_. Quaestiones Math. (1993), 333–350.
 
-[St87] Stiebitz, M. (1987).
+[To70] Toft, B., _On the maximal number of edges of critical k-chromatic graphs_. Studia Sci. Math. Hungar. (1970), 461–470.
+
+[St87] Stiebitz, M., _Subgraphs of colour-critical graphs_. Combinatorica (1987), 303–312.
+
+[LMY23] Luo, C., Ma, J., Yang, T., _On the maximum number of edges in k-critical graphs_. Combin. Probab. Comput. (2023), 900–911.
 -/
 
 open SimpleGraph
@@ -53,7 +57,7 @@ than $k$.
 -/
 def IsCritical {V : Type*} (G : SimpleGraph V) (k : ℕ) : Prop :=
   G.chromaticNumber = (k : ℕ∞) ∧
-  ∀ e ∈ G.edgeSet, (G.deleteEdges {e}).chromaticNumber < (k : ℕ∞)
+  ∀ e ∈ G.edgeSet, G.IsCriticalEdge e
 
 /--
 Erdős Problem 917, Part 1 [Er69b]:
@@ -75,6 +79,8 @@ theorem erdos_917 :
 Erdős Problem 917, Part 2 [Er69b][Er93]:
 $f_6(n) \sim n^2/4$. For all $\varepsilon > 0$ and sufficiently large $n$, the maximum number of
 edges in a $6$-critical graph on $n$ vertices is asymptotically $n^2/4$.
+
+This problem remains open.
 -/
 @[category research open, AMS 5]
 theorem erdos_917.variants.f6_asymptotic :
