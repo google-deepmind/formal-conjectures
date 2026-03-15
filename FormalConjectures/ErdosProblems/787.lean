@@ -32,11 +32,25 @@ $$(\log n)^{1+c} \ll g(n) \ll \exp(\sqrt{\log n})$$
 for some constant $c > 0$, the lower bound due to Sanders [Sa21] and the upper bound due to
 Ruzsa [Ru05]. Beker [Be25] proved the lower bound with $c = 1/68$.
 
-[Sa21] Sanders, T., _On the Erdős sum-avoiding set problem_ (2021).
+[Er65, p.187] Erdős, P., _Extremal problems in number theory_. In: Proc. Sympos. Pure Math.,
+Vol. VIII, pp. 181–189, Amer. Math. Soc., Providence, R.I., 1965.
 
-[Be25] Beker, A., _Sum-avoiding sets in groups_ (2025).
+[Er73, p.130] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973), 117–138.
 
-[Ru05] Ruzsa, I. Z., _Sum-avoiding subsets_ (2005).
+[Va99, 1.22] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999.
+
+[Ch71] Choi, S. L. G., _On a combinatorial problem in number theory_. Proc. London Math. Soc.
+(3), 23:629–642, 1971.
+
+[Sa21] Sanders, T., _The Erdős–Moser Sum-free Set Problem_. Canadian Journal of Mathematics
+**73**.1 (2021), 63–107.
+
+[Ru05] Ruzsa, I. Z., _Sum-avoiding subsets_. Ramanujan J. **9** (2005), no. 1-2, 77–82.
+
+[Be25] Beker, A., _The Erdős-Moser sum-free set problem via improved bounds for
+k-configurations_. arXiv:2501.10203 (2025).
 -/
 
 open Finset Real
@@ -69,12 +83,12 @@ theorem erdos_787 :
 /--
 **Erdős Problem 787** — Upper bound (Ruzsa [Ru05]):
 
-$g(n) \ll \exp(\sqrt{\log n})$ for all sufficiently large $n$.
+$g(n) < \exp(C \sqrt{\log n})$ for some constant $C > 0$ and all sufficiently large $n$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_787.variants.upper_bound :
     ∃ C : ℝ, C > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-      (g n : ℝ) ≤ C * Real.exp (Real.sqrt (Real.log (n : ℝ))) := by
+      (g n : ℝ) ≤ Real.exp (C * Real.sqrt (Real.log (n : ℝ))) := by
   sorry
 
 end Erdos787
