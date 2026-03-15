@@ -30,9 +30,12 @@ Known results (Erdős, Fon-Der-Flaass, Kostochka, and Tuza [EFKT92]):
 $f(k,3) = 2k$, $f(k,4) = \lfloor 3k/2 \rfloor$,
 $f(k,5) = \lfloor 5k/4 \rfloor$, and $f(k,6) = k$.
 
-[EFKT92] Erdős, P., Fon-Der-Flaass, D., Kostochka, A., and Tuza, Z.
+[EFKT92] Erdős, P., Fon-Der-Flaass, D., Kostochka, A. V., and Tuza, Zs.,
+_Small transversals in uniform hypergraphs_. Siberian Advances in Mathematics
+(1992), 82–88.
 
-[Er97d] Erdős, P.
+[Er97d] Erdős, P., _Some of my favourite problems in various branches of
+combinatorics_, Matematiche (Catania), 1997.
 -/
 
 namespace Erdos644
@@ -42,9 +45,13 @@ def IsKUniformFamily {ι : Type*} (F : ι → Finset ℕ) (k : ℕ) : Prop :=
   ∀ i, (F i).card = k
 
 /-- The $r$-wise pair-hitting property: for every $r$ members of the family,
-    there exist two elements that together hit all of them. -/
+    there exist two distinct elements that together hit all of them. -/
 def HasRWisePairHitting {ι : Type*} (F : ι → Finset ℕ) (r : ℕ) : Prop :=
-  ∀ (S : Fin r → ι), ∃ x y : ℕ, ∀ j, x ∈ F (S j) ∨ y ∈ F (S j)
+  ∀ (S : Fin r → ι), ∃ x y : ℕ, x ≠ y ∧ ∀ j, x ∈ F (S j) ∨ y ∈ F (S j)
+
+/-- A set $T$ is a transversal (hitting set) of the family $F$: it intersects every member. -/
+def IsTransversal {ι : Type*} (F : ι → Finset ℕ) (T : Finset ℕ) : Prop :=
+  ∀ i : ι, ∃ x ∈ T, x ∈ F i
 
 /--
 **Erdős Problem 644, Part 1** [EFKT92][Er97d]:
@@ -64,10 +71,10 @@ theorem erdos_644 :
       (∀ (ι : Type) (F : ι → Finset ℕ),
         IsKUniformFamily F k → HasRWisePairHitting F 7 →
         ∃ T : Finset ℕ, (T.card : ℝ) ≤ (3 / 4 + ε) * (k : ℝ) ∧
-          ∀ i : ι, ∃ x ∈ T, x ∈ F i) ∧
+          IsTransversal F T) ∧
       (∃ (ι : Type) (F : ι → Finset ℕ),
         IsKUniformFamily F k ∧ HasRWisePairHitting F 7 ∧
-        ∀ T : Finset ℕ, (∀ i : ι, ∃ x ∈ T, x ∈ F i) →
+        ∀ T : Finset ℕ, IsTransversal F T →
           (T.card : ℝ) ≥ (3 / 4 - ε) * (k : ℝ)) := by
   sorry
 
@@ -87,10 +94,10 @@ theorem erdos_644.variants.general_constant :
       (∀ (ι : Type) (F : ι → Finset ℕ),
         IsKUniformFamily F k → HasRWisePairHitting F r →
         ∃ T : Finset ℕ, (T.card : ℝ) ≤ (c + ε) * (k : ℝ) ∧
-          ∀ i : ι, ∃ x ∈ T, x ∈ F i) ∧
+          IsTransversal F T) ∧
       (∃ (ι : Type) (F : ι → Finset ℕ),
         IsKUniformFamily F k ∧ HasRWisePairHitting F r ∧
-        ∀ T : Finset ℕ, (∀ i : ι, ∃ x ∈ T, x ∈ F i) →
+        ∀ T : Finset ℕ, IsTransversal F T →
           (T.card : ℝ) ≥ (c - ε) * (k : ℝ)) := by
   sorry
 
