@@ -34,6 +34,9 @@ Congressus Numerantium XXVI (1980), 125-157.
 
 [HMT96] Hanson, D., MacGillivray, G., and Toft, B., _Choosability of bipartite graphs_,
 Ars Combinatoria 44 (1996), 183-192.
+
+[RaSr00] Radhakrishnan, J. and Srinivasan, A., _Improved bounds and algorithms for
+hypergraph 2-coloring_, Random Structures & Algorithms (2000), 4-32.
 -/
 
 open SimpleGraph
@@ -63,7 +66,7 @@ noncomputable def listChromaticNumber {V : Type*} (G : SimpleGraph V) : ℕ :=
 chromatic number greater than $k$. -/
 noncomputable def erdos629_n (k : ℕ) : ℕ :=
   sInf {n : ℕ | ∃ G : SimpleGraph (Fin n),
-    G.Colorable 2 ∧ listChromaticNumber G > k}
+    G.IsBipartite ∧ listChromaticNumber G > k}
 
 /--
 Erdős Problem 629, lower bound [ERT80]:
