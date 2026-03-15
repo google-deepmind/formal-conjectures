@@ -25,10 +25,11 @@ The Erdős–Szemerédi sum-product conjecture [ErSz83]: for every $\varepsilon 
 $c > 0$ such that $\max(|A+A|, |A \cdot A|) \geq c \cdot |A|^{2-\varepsilon}$ for every finite
 set $A$ of integers. The best known bound is due to Bloom [Bl25].
 
-[ErSz83] Erdős, P. and Szemerédi, E., *On sums and products of integers*.
+[ErSz83] Erdős, P. and Szemerédi, E., _On sums and products of integers_.
 Studies in pure mathematics, Birkhäuser, Basel (1983), 213–218.
 
-[Bl25] Bloom, T., *New bounds on the sum-product problem* (2025).
+[Bl25] Bloom, T. F., _Control and its applications in additive combinatorics_.
+arXiv:2501.09470 (2025).
 -/
 
 open Finset Real
