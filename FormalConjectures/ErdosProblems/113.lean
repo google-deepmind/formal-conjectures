@@ -27,7 +27,11 @@ the Turán number satisfies $\mathrm{ex}(n; G) \ll n^{3/2}$ if and only if $G$ i
 [ErSi84] Erdős, P. and Simonovits, M., *Cube-supersaturated graphs and related problems*,
 Progress in graph theory (Waterloo, Ont., 1982), Academic Press, Toronto, ON, 1984, 203–218.
 
-[Ja23b] Janzer, O., *Resolution of the Erdős–Simonovits conjecture on walks*, 2023.
+[Er93] Erdős, P., *Some of my favorite solved and unsolved problems in graph theory*.
+Quaestiones Mathematicae **16** (1993), 333–350.
+
+[Ja23b] Janzer, O., *Disproof of a conjecture of Erdős and Simonovits on the Turán number
+of graphs with minimum degree 3*. International Mathematics Research Notices (2023), 8478–8494.
 -/
 
 open SimpleGraph
