@@ -29,6 +29,9 @@ and McGehee, Pigno, and Smith [MPS81].
 
 [MPS81] McGehee, O.C., Pigno, L., and Smith, B., _Hardy's inequality and the $L^1$
 norm of exponential sums_, Ann. of Math. 113 (1981), 613–618.
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl.
+6 (1961), 221–254.
 -/
 
 open Finset BigOperators MeasureTheory
