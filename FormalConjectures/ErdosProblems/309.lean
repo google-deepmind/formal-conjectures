@@ -28,7 +28,16 @@ disproved by Yokota, who showed $F(N) = \Theta(\log N)$.
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial
 number theory_. Monographies de L'Enseignement Mathematique (1980).
 
-[Yo97] Yokota, H., _On a problem of Erdős and Graham_. (1997).
+[Yo97] Yokota, H., _On number of integers representable as a sum of unit fractions. II_.
+J. Number Theory (1997), 162-169.
+
+[Cr99] Croot III, E. S., _On some questions of Erdős and Graham about Egyptian fractions_.
+Mathematika (1999), 359-372.
+
+[Yo02] Yokota, H., _On the number of integers representable as sums of unit fractions. III_.
+J. Number Theory (2002), 351-372.
+
+See also OEIS A217693.
 -/
 
 open Classical Filter
@@ -70,6 +79,31 @@ constant $c$ such that $F(N) \geq c \cdot \log N$ for all sufficiently large $N$
 theorem erdos_309 :
     ∃ c : ℝ, c > 0 ∧ ∀ᶠ (N : ℕ) in atTop,
       c * Real.log (N : ℝ) ≤ (countRepresentableIntegers N : ℝ) := by
+  sorry
+
+/--
+Trivial upper bound for $F(N)$: the number of representable integers is at most $\log N + O(1)$,
+since the full harmonic sum $\sum_{n=1}^{N} 1/n = \log N + \gamma + O(1/N)$ bounds the largest
+representable integer.
+-/
+@[category research solved, AMS 11]
+theorem erdos_309_upper :
+    ∃ C : ℝ, ∀ᶠ (N : ℕ) in atTop,
+      (countRepresentableIntegers N : ℝ) ≤ Real.log (N : ℝ) + C := by
+  sorry
+
+/--
+Yokota's refined lower bound [Yo02]: $F(N) \geq \log N + \gamma -
+(\pi^2/3 + o(1))(\log \log N)^2 / \log N$, where $\gamma$ is the Euler–Mascheroni constant.
+This is the current best lower bound and establishes $F(N) = \Theta(\log N)$ together with the
+trivial upper bound.
+-/
+@[category research solved, AMS 11]
+theorem erdos_309_yokota_lower :
+    ∀ ε > 0, ∀ᶠ (N : ℕ) in atTop,
+      Real.log (N : ℝ) + Real.eulerMascheroniConstant -
+        (Real.pi ^ 2 / 3 + ε) * (Real.log (Real.log (N : ℝ))) ^ 2 / Real.log (N : ℝ)
+      ≤ (countRepresentableIntegers N : ℝ) := by
   sorry
 
 end Erdos309
