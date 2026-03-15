@@ -23,11 +23,13 @@ import FormalConjectures.Util.ProblemImports
 
 Erdős asked for an upper bound on the number of distinct line spectra achievable by
 $n$-point configurations in $\mathbb{R}^2$. Szemerédi and Trotter proved it is at most
-$\exp(C\sqrt{n})$ for some constant $C > 0$.
+$\exp(C\sqrt{n})$ for some constant $C > 0$. Erdős noted that this bound is best possible,
+i.e., the exponential order $\exp(\Theta(\sqrt{n}))$ is tight.
 
 [Er85] Erdős, P., *Problems and results in combinatorial geometry*.
 
-[SzTr83] Szemerédi, E. and Trotter, W. T., *Extremal problems in discrete geometry* (1983).
+[SzTr83] Szemerédi, E. and Trotter, W. T., Jr., *Extremal problems in discrete geometry*.
+Combinatorica (1983), 381-392.
 -/
 
 namespace Erdos607
@@ -69,6 +71,23 @@ theorem erdos_607 :
     ∃ C : ℝ, 0 < C ∧ ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       (achievableSpectra607 n).Finite ∧
       ((achievableSpectra607 n).ncard : ℝ) ≤ Real.exp (C * Real.sqrt (n : ℝ)) := by
+  sorry
+
+/--
+**Erdős Problem 607 (lower bound)** [Er85]:
+
+There exists a constant $c > 0$ such that for infinitely many $n$, the number
+$F(n)$ of distinct line spectra achievable by $n$-point configurations in $\mathbb{R}^2$
+satisfies $F(n) \geq \exp(c \cdot \sqrt{n})$.
+
+Erdős noted that this lower bound is "easy to see," confirming that the
+$\exp(\Theta(\sqrt{n}))$ growth rate is tight.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_607_lower :
+    ∃ c : ℝ, 0 < c ∧ ∀ n₀ : ℕ, ∃ n : ℕ, n₀ ≤ n ∧
+      (achievableSpectra607 n).Finite ∧
+      Real.exp (c * Real.sqrt (n : ℝ)) ≤ ((achievableSpectra607 n).ncard : ℝ) := by
   sorry
 
 end Erdos607
