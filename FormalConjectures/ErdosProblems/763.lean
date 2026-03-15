@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 
 /-!
 # Erdős Problem 763
@@ -34,18 +35,13 @@ is impossible. The error term was later improved to $o(N^{1/4})$ by
 Jurkat (unpublished) and Montgomery–Vaughan [MoVa90].
 -/
 
-open Finset BigOperators Classical
+open Finset BigOperators Classical AdditiveCombinatorics
 
 namespace Erdos763
 
-/-- The number of representations of $n$ as $a + b$ with $a, b \in A$,
-i.e., the additive convolution $1_A \ast 1_A(n)$. -/
-noncomputable def repCount (A : Set ℕ) (n : ℕ) : ℕ :=
-  ((Finset.range (n + 1)).filter (fun a => a ∈ A ∧ (n - a) ∈ A)).card
-
 /-- The partial sum $\sum_{n=0}^{N} 1_A \ast 1_A(n)$. -/
 noncomputable def repSum (A : Set ℕ) (N : ℕ) : ℕ :=
-  (Finset.range (N + 1)).sum (fun n => repCount A n)
+  (Finset.range (N + 1)).sum (fun n => sumRep A n)
 
 /--
 Erdős Problem 763 (Erdős–Fuchs theorem) [ErFu56]:
