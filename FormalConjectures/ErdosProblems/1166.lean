@@ -26,7 +26,8 @@ maximum number of visits up to time $k$. The problem asks whether the cumulative
 distinct favourite sites $\left|\bigcup_{k \le n} F(k)\right|$ is bounded by a power of $\log n$
 almost surely, for all but finitely many $n$.
 
-[Va99] Varga, L., *Problems and results on random walks*, 1999.
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999), §6.78.
 
 [ErTa60] Erdős, P. and Taylor, S. J., *Some problems concerning the structure of random walk
 paths*, Acta Math. Acad. Sci. Hungar. 11, 137–162, 1960.
