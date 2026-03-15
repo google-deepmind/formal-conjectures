@@ -23,6 +23,15 @@ import FormalConjectures.Util.ProblemImports
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
+
+[Ke57] Kelly, J. B., *Restricted bases*. American Journal of Mathematics **79** (1957), 258–264.
+
+[He05] Hennecart, F., *On the restricted order of asymptotic bases of order two*. Ramanujan
+Journal (2005), 123–130.
+
+[HHP07] Hegyvári, N., Hennecart, F., Plagne, A., *Answer to a question by Burr and Erdős on
+restricted addition, and related results*. Combinatorics, Probability and Computing (2007),
+747–756.
 -/
 
 open scoped BigOperators
@@ -73,6 +82,29 @@ theorem erdos_338 :
     ∀ (A : Set ℕ) (h : ℕ),
       (∀ (F : Finset ℕ), IsAdditiveBasis (A \ ↑F) h) →
       HasRestrictedOrder A := by
+  sorry
+
+/--
+Bateman's observation [ErGr80]:
+
+For $h \geq 3$, the set $A = \{1\} \cup \{x > 0 : h \mid x\}$ is a basis of order $h$
+but has no restricted order. This shows that not every basis has a restricted order.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_338_bateman :
+    ∀ h : ℕ, h ≥ 3 →
+      let A : Set ℕ := {1} ∪ {x | 0 < x ∧ h ∣ x}
+      IsAdditiveBasis A h ∧ ¬HasRestrictedOrder A := by
+  sorry
+
+/--
+Kelly's theorem [Ke57]:
+
+Any additive basis of order $2$ has restricted order at most $4$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_338_kelly :
+    ∀ A : Set ℕ, IsAdditiveBasis A 2 → HasRestrictedOrderAtMost A 4 := by
   sorry
 
 end Erdos338
