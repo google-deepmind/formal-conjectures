@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 
 /-!
 # Erdős Problem 925
@@ -33,6 +34,8 @@ Equivalently, this asks whether $R(3,3,m) \ll m^{3-c}$ for some $c > 0$.
 DISPROVED by Alon and Rödl [AlRo05], who proved that
 $$m^3 / (\log m)^{4+o(1)} \ll R(3,3,m) \ll m^3 / (\log m)^2.$$
 Sudakov observed that the $\log \log m$ in the upper bound can be removed.
+
+See also [Problem 553](https://www.erdosproblems.com/553).
 
 [Er69b] Erdős, P.
 
@@ -61,9 +64,7 @@ of size at least $C \cdot n^{1/3 + \delta}$.
 theorem erdos_925 : answer(False) ↔
     ∃ δ : ℝ, δ > 0 ∧ ∃ C : ℝ, C > 0 ∧ ∃ n₀ : ℕ, ∀ n : ℕ, n ≥ n₀ →
       ∀ G : SimpleGraph (Fin n), IsNotRamseyForTriangle G →
-        ∃ S : Finset (Fin n),
-          (S.card : ℝ) ≥ C * (n : ℝ) ^ ((1 : ℝ) / 3 + δ) ∧
-          ∀ u ∈ S, ∀ v ∈ S, u ≠ v → ¬G.Adj u v := by
+        (α(G) : ℝ) ≥ C * (n : ℝ) ^ ((1 : ℝ) / 3 + δ) := by
   sorry
 
 end Erdos925
