@@ -28,9 +28,11 @@ other vertex. Estimate $f(n)$.
 Schütte asked Erdős this in the early 1960s. It is easy to check that
 $f(1) = 3$ and $f(2) = 7$.
 
-[Er63c] Erdős, P. (1963).
+[Er63c] Erdős, P., _On a problem in graph theory_. Mathematical Gazette **47** (1963), 220–223.
 
-[SzSz65] Szekeres, E. and Szekeres, G. (1965).
+[SzSz65] Szekeres, E. and Szekeres, G., _On a problem of Schütte and Erdős_. Mathematical Gazette **49** (1965), 290–293.
+
+[Er82e] Erdős, P., _Some of my favourite problems which recently have been solved_ (1982), 59–79.
 -/
 
 namespace Erdos902
@@ -56,10 +58,34 @@ noncomputable def tournamentDominationNumber (n : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ (T : Tournament (Fin m)), T.hasDominationProperty n}
 
 /--
-Erdős Problem 902, lower bound [Er63c]: $f(n) \geq 2^{n+1} - 1$ for all $n \geq 1$.
+Erdős Problem 902, exact value: $f(1) = 3$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_902 (n : ℕ) (hn : n ≥ 1) :
+theorem erdos_902.variants.f1 :
+    tournamentDominationNumber 1 = 3 := by
+  sorry
+
+/--
+Erdős Problem 902, exact value: $f(2) = 7$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_902.variants.f2 :
+    tournamentDominationNumber 2 = 7 := by
+  sorry
+
+/--
+Erdős Problem 902, exact value [SzSz65]: $f(3) = 19$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_902.variants.f3 :
+    tournamentDominationNumber 3 = 19 := by
+  sorry
+
+/--
+Erdős Problem 902, Erdős lower bound [Er63c]: $f(n) \geq 2^{n+1} - 1$ for all $n \geq 1$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_902.variants.erdos_lower (n : ℕ) (hn : n ≥ 1) :
     tournamentDominationNumber n ≥ 2 ^ (n + 1) - 1 := by
   sorry
 
