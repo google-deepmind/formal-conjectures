@@ -21,8 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1114](https://www.erdosproblems.com/1114)
 
-[Ba60b] Balint, proved the conjecture on monotonicity of gaps between consecutive
-zeros of the derivative of a polynomial with roots in arithmetic progression.
+[Ba60b] Bálint, E., _Proof of a conjecture of P. Erdős_. Mathematikai Lapok (1960), 33–40.
+
+[Lo76] Lorch, L., _Some monotonicity properties of polynomials with equally spaced zeros_.
+Acta Mathematica Academiae Scientiarum Hungaricae (1976), 293–300.
+
+The conjecture was proved by Bálint [Ba60b]. Bálint gives no source for the conjecture —
+presumably it was from Erdős in personal communication. Generalizations were provided
+by Lorch [Lo76].
 -/
 
 open scoped BigOperators
