@@ -25,6 +25,12 @@ Is there a function $f(r) \to \infty$ such that for infinitely many $n$ there ex
 with $a_1! \cdot a_2! \mid n! \cdot p_1^n \cdots p_r^n$ and
 $a_1 + a_2 > n + f(r) \log n$, where $p_1, \ldots, p_r$ are the first $r$ primes?
 
+Solved in the affirmative by Barreto and Leeham, using essentially the same construction as
+their solution to Problem 729. Sothanaphan disproved the "for all large $n$" variant.
+
+Related problems: #400, #728, #729. Problem 401 is arguably a more precisely stated form of
+Problem 729.
+
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
 -/
@@ -51,6 +57,21 @@ theorem erdos_401 :
         (a₁.factorial * a₂.factorial) ∣
           (n.factorial * ∏ i ∈ Finset.range r, (Nat.nth Nat.Prime i) ^ n) ∧
         ((a₁ + a₂ : ℕ) : ℝ) > (n : ℝ) + f r * Real.log (n : ℝ)}.Infinite := by
+  sorry
+
+/--
+Variant of Erdős Problem 401 with "for all sufficiently large $n$" in place of "for infinitely
+many $n$". Disproved by Sothanaphan, who showed that when $n = p_{r+1}^k - 1$ the divisibility
+condition constrains $a_1 + a_2 \leq n + O(\log n)$ with a bounded constant.
+-/
+@[category research solved, AMS 11]
+theorem erdos_401_forall_large :
+    answer(False) ↔
+    ∃ f : ℕ → ℝ, Tendsto f atTop atTop ∧
+      ∀ r : ℕ, ∃ N : ℕ, ∀ n : ℕ, n ≥ N → ∃ a₁ a₂ : ℕ,
+        (a₁.factorial * a₂.factorial) ∣
+          (n.factorial * ∏ i ∈ Finset.range r, (Nat.nth Nat.Prime i) ^ n) ∧
+        ((a₁ + a₂ : ℕ) : ℝ) > (n : ℝ) + f r * Real.log (n : ℝ) := by
   sorry
 
 end Erdos401
