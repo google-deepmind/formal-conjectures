@@ -28,6 +28,18 @@ A question of Erdős and Hajnal [Er69b][Er75b]. Folkman [Fo70] proved this
 when $k = 2$. The case for general $k$ was proved by Nešetřil and Rödl [NeRo76].
 
 See #582 for the special case $k = 2$, $l = 3$ and #966 for an arithmetic analogue.
+
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_. Proof Techniques in
+Graph Theory (1969), 27–35.
+
+[Er75b] Erdős, P., _Problems and results on finite and infinite graphs_. Recent Advances in
+Graph Theory (1975), 183–192.
+
+[Fo70] Folkman, J., _Graphs with monochromatic complete subgraphs in every edge coloring_.
+SIAM J. Appl. Math. 18 (1970), 19–24.
+
+[NeRo76] Nešetřil, J. and Rödl, V., _The Ramsey property for graphs with forbidden complete
+subgraphs_. J. Combin. Theory Ser. B 20 (1976), 243–249.
 -/
 
 namespace Erdos924
