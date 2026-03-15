@@ -21,14 +21,33 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/528](https://www.erdosproblems.com/528)
 
+*Related problems:* [Problem 529](https://www.erdosproblems.com/529)
+
 Let $f(n,k)$ count the number of self-avoiding walks of $n$ steps beginning at the origin
 in the integer lattice $\mathbb{Z}^k$. The connective constant $C_k$ is defined as
 $C_k = \lim_{n \to \infty} f(n,k)^{1/n}$. The problem asks to determine $C_k$ exactly.
 
-[HM54] Hammersley, J. M. and Morton, K. W., *Poor man's Monte Carlo*. J. Roy. Statist.
-Soc. Ser. B (1954), 23–38.
+OEIS: [A387897](https://oeis.org/A387897), [A156816](https://oeis.org/A156816)
 
-[Ke63] Kesten, H., *On the number of self-avoiding walks*. J. Math. Phys. (1963), 960–969.
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
+221–254.
+
+[HM54] Hammersley, J. M. and Morton, K. W., _Poor man's Monte Carlo_. J. Roy. Statist.
+Soc. Ser. B (1954), 23–38; discussion 61–75.
+
+[Ke63] Kesten, H., _On the number of self-avoiding walks_. J. Math. Phys. (1963), 960–969.
+
+[CG93] Conway, A. R. and Guttmann, A. J., _Lower bound on the connective constant for
+square lattice self-avoiding walks_. J. Phys. A (1993), 3719–3724.
+
+[Al93] Alm, S. E., _Upper bounds for the connective constant of self-avoiding walks_.
+Combin. Probab. Comput. (1993), 115–136.
+
+[CLS07] Clisby, N., Liang, R., and Slade, G., _Self-avoiding walk enumeration via the lace
+expansion_. J. Phys. A (2007), 10973–11017.
+
+[JSG16] Jacobsen, J. L., Scullard, C. R., and Guttmann, A. J., _On the growth constant for
+square-lattice self-avoiding walks_. J. Phys. A (2016), 494004, 18.
 -/
 
 open Classical Finset BigOperators Filter
@@ -53,6 +72,7 @@ noncomputable def selfAvoidingWalkCount (n k : ℕ) : ℕ :=
 $C_k = \lim_{n \to \infty} f(n,k)^{1/n}$ where $f(n,k)$ is the number of self-avoiding
 walks of $n$ steps. Returns the limit value if it exists, or $0$ otherwise. -/
 noncomputable def connectiveConstant (k : ℕ) : ℝ :=
+  -- The limit, if it exists, is unique (ℝ is Hausdorff), so `h.choose` is well-defined.
   if h : ∃ C : ℝ, Filter.Tendsto
     (fun n : ℕ => ((selfAvoidingWalkCount n k : ℝ)) ^ ((1 : ℝ) / (n : ℝ)))
     atTop (nhds C)
@@ -74,7 +94,9 @@ theorem erdos_528 :
   sorry
 
 /-- Variant: The connective constant $C_k$ exists and satisfies the known bounds
-$k \le C_k \le 2k - 1$ [HM54] [Ke63]. -/
+$k \le C_k \le 2k - 1$. The upper bound $C_k \le 2k - 1$ is due to [HM54] (at each step
+there are at most $2k - 1$ non-backtracking choices); the lower bound $C_k \ge k$ follows
+from [Ke63]. -/
 @[category research solved, AMS 5 82]
 theorem erdos_528.variants.existence_with_bounds :
     ∀ k : ℕ, 0 < k →
