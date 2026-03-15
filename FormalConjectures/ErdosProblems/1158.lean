@@ -27,7 +27,8 @@ $\mathrm{ex}_t(n, K_t(r)) \geq n^{t - r^{1-t} - o(1)}$.
 [Er64f] Erdős, P., _On extremal problems of graphs and generalized graphs_. Israel J. Math. 2
 (1964), 183-190.
 
-[Va99] Vu, V. H., _Extremal set systems_. Handbook of Combinatorics (1999), 3.65.
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999), §3.65.
 -/
 
 namespace Erdos1158
