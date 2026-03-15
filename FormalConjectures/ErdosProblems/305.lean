@@ -68,12 +68,15 @@ $D(b) \ll b(\log b)(\log \log b)^4(\log \log \log b)^2$,
 and Liu and Sawhney [LiSa24] further improved it to
 $D(b) \ll b(\log b)(\log \log b)^3(\log \log \log b)^{O(1)}$.
 
+For primes $p$, it is known that $D(p) \gg p \log p$, showing that the conjectured
+bound is essentially tight.
+
 We formalize: for every $\varepsilon > 0$, there exist $C > 0$ and $b_0$ such that
 for all $b \geq b_0$ and all $1 \leq a < b$, there exists an Egyptian fraction
 representation of $a/b$ whose largest denominator is at most
 $C \cdot b \cdot (\log b)^{1+\varepsilon}$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_305 :
     answer(sorry) ↔
     ∀ ε : ℝ, 0 < ε →
