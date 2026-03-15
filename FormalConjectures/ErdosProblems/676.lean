@@ -29,14 +29,16 @@ and the Brun–Selberg sieve implies the number of exceptions in $[1,x]$ is
 $\ll x/(\log x)^c$ for some constant $c > 0$. Erdős believed it is "rather unlikely"
 that all large integers are of this form.
 
-[Er79] Erdős, P., _Some unconventional problems in number theory_. Acta Math. Acad. Sci.
+[Er79] Erdős, P., _Some unconventional problems in number theory_. Math. Mag. 52 (1979), 67–70.
+
+[Er79d] Erdős, P., _Some unconventional problems in number theory_. Acta Math. Acad. Sci.
 Hungar. 33 (1979), 71–80.
 -/
 
 namespace Erdos676
 
 /--
-Erdős Problem 676 [Er79]:
+Erdős Problem 676 [Er79][Er79d]:
 
 Is every sufficiently large integer of the form $ap^2 + b$ for some prime $p$
 and integer $a \geq 1$ and $0 \leq b < p$?
@@ -49,6 +51,28 @@ theorem erdos_676 :
     answer(sorry) ↔
       ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
         ∃ p a b : ℕ, Nat.Prime p ∧ a ≥ 1 ∧ b < p ∧ n = a * p ^ 2 + b := by
+  sorry
+
+/--
+Variant of Erdős Problem 676 (Selfridge–Wagstaff): If the primality requirement on $p$ is
+dropped, a preliminary computer search by Selfridge and Wagstaff suggested that there are
+infinitely many integers not of the form $am^2 + b$ with $m \geq 2$, $a \geq 1$,
+$0 \leq b < m$. -/
+@[category research open, AMS 11]
+theorem erdos_676_non_prime :
+    ∀ N₀ : ℕ, ∃ n : ℕ, n ≥ N₀ ∧
+      ∀ m a b : ℕ, m ≥ 2 → a ≥ 1 → b < m → n ≠ a * m ^ 2 + b := by
+  sorry
+
+/--
+Variant of Erdős Problem 676 [Er79d]: Erdős conjectured that $\limsup c_n = \infty$,
+where $c_n$ is the minimal coefficient such that $n = ap^2 + b$ with $0 \leq b < c_n p$
+for some prime $p$ with $p^2 \leq n$. Equivalently, for every $C$, there are infinitely
+many $n$ such that $n \bmod p^2 \geq C \cdot p$ for every prime $p$ with $p^2 \leq n$. -/
+@[category research open, AMS 11]
+theorem erdos_676_limsup_minimal_coefficient :
+    ∀ C : ℕ, ∀ N₀ : ℕ, ∃ n : ℕ, n ≥ N₀ ∧
+      ∀ p : ℕ, Nat.Prime p → p ^ 2 ≤ n → n % (p ^ 2) ≥ C * p := by
   sorry
 
 end Erdos676
