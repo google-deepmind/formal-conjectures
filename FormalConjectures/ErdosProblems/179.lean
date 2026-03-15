@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 
 /-!
 # Erdős Problem 179
@@ -26,20 +27,28 @@ $F_3(N, 4) = o(N^2)$.
 
 *Reference:* [erdosproblems.com/179](https://www.erdosproblems.com/179)
 
-[FoPo20] Fox, J. and Pohoata, C., *Subset sums, completeness and colorings*. (2020).
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973), 117–138.
+
+[Er75b] Erdős, P., _Problems and results on combinatorial number theory III_. Number
+Theory Day (Proc. Conf., Rockefeller Univ., New York, 1976) (1975).
+
+[ErGr79] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory I_. Enseign. Math. (1979).
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[FoPo20] Fox, J. and Pohoata, C., _Sets without k-term progressions can have many shorter
+progressions_. arXiv:1908.09905 (2020).
+
+[LSS24] Leng, J., Sah, A. and Sawhney, M., _Improved bounds for Szemerédi's theorem_.
+arXiv:2402.17995 (2024).
 -/
 
 open Finset
 
 namespace Erdos179
-
-/--
-A finite set of natural numbers contains a $k$-term arithmetic progression
-if there exist natural numbers $a$ and $d$ with $d \geq 1$ such that
-$a + i \cdot d \in A$ for all $0 \leq i < k$.
--/
-def ContainsAP (A : Finset ℕ) (k : ℕ) : Prop :=
-  ∃ a d : ℕ, d ≥ 1 ∧ ∀ i : ℕ, i < k → a + i * d ∈ A
 
 /--
 The number of $k$-term arithmetic progressions in $A$, counted as pairs $(a, d)$
@@ -65,7 +74,7 @@ theorem erdos_179 :
     ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
     ∀ A : Finset ℕ, A.card = N →
     (numAP A 3 : ℝ) ≥ ε * (N : ℝ) ^ 2 →
-    ContainsAP A 4 := by
+    ∃ s ⊆ (↑A : Set ℕ), s.IsAPOfLength 4 := by
   sorry
 
 /--
@@ -82,7 +91,25 @@ theorem erdos_179.variants.part2 :
     ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
     ∃ A : Finset ℕ, A.card = N ∧
     (numAP A 3 : ℝ) ≥ (N : ℝ) ^ (2 - ε) ∧
-    ¬ContainsAP A ℓ := by
+    ¬∃ s ⊆ (↑A : Set ℕ), s.IsAPOfLength ℓ := by
+  sorry
+
+/--
+For every $\ell > 3$, $F_3(N, \ell) = o(N^2)$: for every $\varepsilon > 0$, for sufficiently
+large $N$, any $N$-element set with at least $\varepsilon N^2$ three-term arithmetic progressions
+must contain an $\ell$-term arithmetic progression.
+
+This generalizes the main theorem `erdos_179` (the $\ell = 4$ case) to all fixed $\ell > 3$,
+completing the upper bound direction of question 2 from the website.
+
+Proved by Fox and Pohoata [FoPo20].
+-/
+@[category research solved, AMS 5]
+theorem erdos_179.variants.part3 :
+    ∀ ℓ : ℕ, ℓ > 3 → ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
+    ∀ A : Finset ℕ, A.card = N →
+    (numAP A 3 : ℝ) ≥ ε * (N : ℝ) ^ 2 →
+    ∃ s ⊆ (↑A : Set ℕ), s.IsAPOfLength ℓ := by
   sorry
 
 end Erdos179
