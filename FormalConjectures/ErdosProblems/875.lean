@@ -19,9 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 875
 
-*Reference:* [erdosproblems.com/875](https://www.erdosproblems.com/875)
-
 A problem of Deshouillers and Erdős (an infinite version of problem #874).
+
+* [Er98] Erdős, P., _Some of my new and almost new problems and results in
+  combinatorial number theory_. Number theory (Eger, 1996) (1998), 169–180.
+
+*Reference:* [erdosproblems.com/875](https://www.erdosproblems.com/875)
 -/
 
 open Filter Finset BigOperators
