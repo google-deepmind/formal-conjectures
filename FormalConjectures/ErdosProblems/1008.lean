@@ -21,20 +21,26 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1008](https://www.erdosproblems.com/1008)
 
-[CFS14b] Conlon, D., Fox, J., and Sudakov, B., on the existence of $C_4$-free subgraphs
-with large number of edges.
+[CFS14b] Conlon, D., Fox, J., and Sudakov, B., _Large subgraphs without complete bipartite
+graphs_. arXiv:1401.6711 (2014).
 
-[Er71] Erdős, P., revised the conjecture from $m^{3/4}$ to $m^{2/3}$.
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+Combinatorial Mathematics and its Applications (Proceedings of Conference, Oxford, 1969)
+(1971), 97-109.
+
+Additional thanks to Zach Hunter (simple proof in comments) and Boris Alexeev.
 -/
 
 open SimpleGraph Classical
 
 namespace Erdos1008
 
-/-- A simple graph contains a 4-cycle ($C_4$) if there exist four distinct vertices
-    $a, b, c, d$ forming the cycle $a$-$b$-$c$-$d$-$a$. -/
+/-- A simple graph contains a 4-cycle ($C_4$) if there exist four vertices
+    $a, b, c, d$ forming the cycle $a$-$b$-$c$-$d$-$a$. Only two distinctness
+    conditions ($a \ne c$ and $b \ne d$) are needed; the other four follow from
+    irreflexivity of `SimpleGraph.Adj`. -/
 def ContainsCycleFour {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∃ a b c d : V, a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d ∧
+  ∃ a b c d : V, a ≠ c ∧ b ≠ d ∧
     G.Adj a b ∧ G.Adj b c ∧ G.Adj c d ∧ G.Adj d a
 
 /-- A simple graph is $C_4$-free if it contains no 4-cycle as a subgraph. -/
@@ -47,8 +53,10 @@ There exists an absolute constant $c > 0$ such that every graph with $m$ edges
 contains a $C_4$-free subgraph with at least $c \cdot m^{2/3}$ edges.
 
 Originally asked by Bollobás and Erdős with $m^{3/4}$ in place of $m^{2/3}$,
-but Folkman showed the $m^{3/4}$ version is false. Erdős [Er71] revised the
-conjecture to $m^{2/3}$, noting $\gg m^{1/2}$ is trivial.
+but Folkman showed the $m^{3/4}$ version is false (counterexample: $K_{n,n^2}$).
+Erdős [Er71] revised the conjecture to $m^{2/3}$, noting $\gg m^{1/2}$ is trivial.
+Erdős also noted in a footnote that Szemerédi proved this conjecture, but gave
+no reference.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1008 :
