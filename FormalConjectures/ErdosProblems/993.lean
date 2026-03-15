@@ -25,8 +25,14 @@ A question of Alavi, Malde, Schwenk, and Erdős [AMSE87], who showed that the in
 sequence is not constrained for general graphs (in fact every possible pattern of inequalities
 is achieved by some graph).
 
+Schwenk [Sc81] proved the analogous result for independent edge sets (matchings): the matching
+sequence of any graph is unimodal.
+
 [AMSE87] Alavi, Y., Malde, P. J., Schwenk, A. J., and Erdős, P., *The vertex independence
 sequence of a graph is not constrained*. Congressus Numerantium (1987), 58, 15-23.
+
+[Sc81] Schwenk, A. J., *On unimodal sequences of graphical invariants*. J. Combin. Theory
+Ser. B (1981), 247–250.
 -/
 
 open SimpleGraph
@@ -38,7 +44,7 @@ An independent set is a set of vertices that are pairwise non-adjacent. -/
 def numIndepSets {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (k : ℕ) : ℕ :=
   (Finset.univ.powerset.filter (fun s : Finset V =>
-    s.card = k ∧ ∀ ⦃u⦄, u ∈ s → ∀ ⦃v⦄, v ∈ s → u ≠ v → ¬G.Adj u v)).card
+    s.card = k ∧ G.IsIndepSet (s : Set V))).card
 
 /--
 Erdős Problem 993 [AMSE87]:
