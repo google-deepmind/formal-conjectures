@@ -25,11 +25,17 @@ Let $g_d(n)$ be minimal such that every collection of $g_d(n)$ points in $\mathb
 determines at least $n$ distinct distances. Does $\lim_{d \to \infty} g_d(n) / d^{n-1}$
 exist for all $n \geq 2$? The answer is yes, and the limit equals $1/(n-1)!$.
 
-[Fe26] Aletheia-Zomlefer, established the lower bound
-$\binom{d+1}{n-1} + 1 \leq g_d(n)$.
+[BBS83] Bannai, E., Bannai, E., and Stanton, D., _An upper bound for the cardinality of an
+$s$-distance subset in real Euclidean space. II_. Combinatorica (1983), 147–152.
 
-[BBS83] Bannai, E., Bannai, E., and Stanton, D., established the upper bound
-$g_d(n) \leq \binom{d+n-1}{n-1} + 1$.
+[Cr62] Croft, H. T., _9-point and 7-point configurations in 3-space_.
+Proc. London Math. Soc. (3) (1962), 400-424.
+
+[Er75f] Erdős, P., _On some problems of elementary and combinatorial geometry_.
+Ann. Mat. Pura Appl. (4) (1975), 99-108.
+
+[Fe26] T. Feng et al, _Semi-Autonomous Mathematics Discovery with Gemini: A Case Study on the
+Erdős Problems_. arXiv:2601.22401 (2026).
 -/
 
 open Classical Finset Filter
@@ -39,7 +45,7 @@ namespace Erdos1089
 /-- The set of distinct distances determined by a finite set of points
 in $d$-dimensional Euclidean space. -/
 noncomputable def distinctDistances {d : ℕ} (S : Finset (EuclideanSpace ℝ (Fin d))) : Finset ℝ :=
-  S.biUnion (fun a => (S.erase a).image (fun b => dist a b))
+  S.offDiag.image (fun pq => dist pq.1 pq.2)
 
 /-- The number of distinct distances determined by a finite set of points. -/
 noncomputable def distinctDistanceCount {d : ℕ} (S : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
