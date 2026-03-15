@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
+
+The problem of odd denominators was originally posed by Stein; see [ErGr80, p.30].
 -/
 
 namespace Erdos282
