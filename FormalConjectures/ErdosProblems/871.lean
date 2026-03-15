@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 
 /-!
 # Erdős Problem 871
@@ -25,10 +26,10 @@ If $A$ is an additive basis of order $2$ whose representation function tends to 
 can $A$ always be partitioned into two disjoint additive bases of order $2$?
 
 [ErNa88] Erdős, P. and Nathanson, M.B., *Partitions of bases into disjoint unions of bases*,
-J. Number Theory (1988).
+J. Number Theory (1988), 1-9.
 
-[ErNa89] Erdős, P. and Nathanson, M.B., *Sets of natural numbers with no minimal asymptotic
-bases*, Proc. Amer. Math. Soc. (1989).
+[ErNa89] Erdős, P. and Nathanson, M.B., *Additive bases with many representations*,
+Acta Arith. (1989), 399-406.
 -/
 
 open Classical Filter
@@ -36,15 +37,6 @@ open Classical Filter
 open scoped Topology
 
 namespace Erdos871
-
-/-- The sumset $A + A = \{a + b : a, b \in A\}$. -/
-def sumset (A : Set ℕ) : Set ℕ :=
-  {n : ℕ | ∃ a ∈ A, ∃ b ∈ A, n = a + b}
-
-/-- $A \subseteq \mathbb{N}$ is an additive basis of order $2$ if every sufficiently large
-natural number can be written as the sum of two elements of $A$. -/
-def IsAdditiveBasis2 (A : Set ℕ) : Prop :=
-  ∃ N₀ : ℕ, ∀ n ≥ N₀, n ∈ sumset A
 
 /-- The representation function $r_A(n) = |\{a \in \{0, \ldots, n\} : a \in A \land n - a \in A\}|$,
 i.e., the number of ways to write $n$ as a sum of two elements of $A$. -/
@@ -64,16 +56,18 @@ $c > (\log(4/3))^{-1}$. They also proved [ErNa89] that for every $t$ there exist
 a basis $A$ of order $2$ with $1_A * 1_A(n) \geq t$ for all large $n$ that cannot
 be partitioned into two disjoint additive bases.
 
-Disproved by Larsen using Claude Opus 4.5 — only a small modification of
+Disproved by Larsen using Claude Opus 4.5, with contributions from
+Wouter van Doorn and Terence Tao — only a small modification of
 the argument of [ErNa89] is required.
 -/
 @[category research solved, AMS 11]
 theorem erdos_871 : answer(False) ↔
-    ∀ A : Set ℕ, IsAdditiveBasis2 A ∧
+    ∀ A : Set ℕ, Set.IsAsymptoticAddBasisOfOrder A 2 ∧
       Tendsto (fun n => (repCount A n : ℝ)) atTop atTop →
       ∃ A₁ A₂ : Set ℕ,
         A₁ ∪ A₂ = A ∧ Disjoint A₁ A₂ ∧
-        IsAdditiveBasis2 A₁ ∧ IsAdditiveBasis2 A₂ := by
+        Set.IsAsymptoticAddBasisOfOrder A₁ 2 ∧
+        Set.IsAsymptoticAddBasisOfOrder A₂ 2 := by
   sorry
 
 end Erdos871
