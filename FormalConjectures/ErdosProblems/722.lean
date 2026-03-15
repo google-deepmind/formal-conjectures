@@ -42,6 +42,9 @@ Ann. Math. Statist. 32 (1961), 361-386.
 J. Combin. Theory Ser. A (1972-1975).
 
 [Ke14] Keevash, P., *The existence of designs*, arXiv:1401.3665 (2014).
+
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica 1 (1981), 25–42.
 -/
 
 open Finset Nat
