@@ -26,6 +26,21 @@ in a disk of radius $X$ in $\mathbb{R}^2$ such that $\| |P_i - P_j| \| \geq \del
 $1 \leq i < j \leq n$, where $\|x\|$ denotes the distance from $x$ to the nearest integer.
 
 This was proved by Graham, who showed $N(X, 1/10) > (\log X)/10$.
+Sárközy substantially improved this, proving that for all sufficiently small $\delta > 0$,
+$N(X, \delta) > X^{1/2 - \delta^{1/7}}$.
+
+See also Problem 465, which gives complementary upper bounds on $N(X, \delta)$.
+
+[Er72] Erdős, P., _Quelques problèmes de théorie des nombres_, p. 81, 1972.
+
+[ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+theory*. Monographies de L'Enseignement Mathematique (1980).
+
+[Er82e] Erdős, P., _Problems and results on finite and infinite graphs_. Recent advances
+in graph theory (Proc. Second Czechoslovak Sympos., Prague, 1982).
+
+[Sa76] Sárközy, A., _On difference sets of sequences of integers. I._ Acta Math. Acad. Sci.
+Hungar. 31 (1978), no. 1-2, 125-149.
 -/
 
 namespace Erdos466
@@ -49,6 +64,40 @@ theorem erdos_466 :
     ∀ (X : ℝ), X₀ ≤ X →
     ∃ (A : Finset (EuclideanSpace ℝ (Fin 2))),
       M ≤ A.card ∧
+      (∀ p ∈ A, dist p 0 ≤ X) ∧
+      (∀ p ∈ A, ∀ q ∈ A, p ≠ q → distNearestInt (dist p q) ≥ δ) := by
+  sorry
+
+/--
+Graham's quantitative bound for Erdős Problem 466 [ErGr80]:
+
+$N(X, 1/10) > (\log X) / 10$ for sufficiently large $X$.
+This gives the first explicit lower bound with $\delta = 1/10$.
+-/
+@[category research solved, AMS 11 52]
+theorem erdos_466_graham :
+    ∀ X : ℝ, 1 < X →
+    ∃ (A : Finset (EuclideanSpace ℝ (Fin 2))),
+      (Real.log X / 10 : ℝ) ≤ ↑A.card ∧
+      (∀ p ∈ A, dist p 0 ≤ X) ∧
+      (∀ p ∈ A, ∀ q ∈ A, p ≠ q → distNearestInt (dist p q) ≥ 1 / 10) := by
+  sorry
+
+/--
+Sárközy's improvement for Erdős Problem 466 [Sa76]:
+
+For all sufficiently small $\delta > 0$ and all sufficiently large $X$,
+$N(X, \delta) > X^{1/2 - \delta^{1/7}}$.
+This is a polynomial lower bound, much stronger than Graham's logarithmic bound.
+-/
+@[category research solved, AMS 11 52]
+theorem erdos_466_sarkozy :
+    ∃ δ₀ : ℝ, 0 < δ₀ ∧
+    ∀ δ : ℝ, 0 < δ → δ < δ₀ →
+    ∃ X₀ : ℝ, 0 < X₀ ∧
+    ∀ X : ℝ, X₀ ≤ X →
+    ∃ (A : Finset (EuclideanSpace ℝ (Fin 2))),
+      (X ^ (1 / 2 - δ ^ (1 / 7)) : ℝ) ≤ ↑A.card ∧
       (∀ p ∈ A, dist p 0 ≤ X) ∧
       (∀ p ∈ A, ∀ q ∈ A, p ≠ q → distNearestInt (dist p q) ≥ δ) := by
   sorry
