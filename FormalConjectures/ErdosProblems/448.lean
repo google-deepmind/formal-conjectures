@@ -32,6 +32,29 @@ is $\asymp \epsilon^{1-o(1)}$ (positive for each fixed $\epsilon$).
 Hall and Tenenbaum [HaTe88] showed the upper density is
 $\ll \epsilon \log(2/\epsilon)$ and proved that $\tau^+(n)/\tau(n)$ has a
 distribution function.
+
+Ford [Fo08] answered a follow-up question, proving an asymptotic formula
+$\sum_{n \leq x} \tau^+(n) \asymp x (\log x)^{1-\alpha} / (\log \log x)^{3/2}$
+where $\alpha = 1 - (1 + \log \log 2)/\log 2 \approx 0.08607$.
+
+See also problems #446 and #449.
+
+[Er79] Erdős, P., _Some unconventional problems in number theory_ (1979).
+
+[Er79e] Erdős, P., _Some unconventional problems in number theory_ (1979).
+
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980), p. 89.
+
+[Er81h] Erdős, P., _Some problems and results in number theory_ (1981), p. 173.
+
+[ErTe81] Erdős, P. and Tenenbaum, G., _Sur la structure de la suite des diviseurs d'un entier_.
+Ann. Inst. Fourier (Grenoble) **31** (1981), 17–37.
+
+[HaTe88] Hall, R. R. and Tenenbaum, G., _Divisors_. Cambridge Tracts in Mathematics (1988).
+
+[Fo08] Ford, K., _The distribution of integers with a divisor in a given interval_. Ann. of Math.
+(2) **168** (2008), 367–433.
 -/
 
 open Finset Classical
@@ -39,7 +62,10 @@ open Finset Classical
 namespace Erdos448
 
 /-- $\tau^+(n)$: the number of $k \in \mathbb{N}$ such that $n$ has a divisor $d$ with
-$2^k \leq d < 2^{k+1}$. -/
+$2^k \leq d < 2^{k+1}$.
+
+`Finset.range n` suffices because any divisor $d$ of $n$ satisfies $d \leq n$,
+so $2^k \leq d \leq n$ implies $k \leq \log_2(n) < n$ for $n \geq 1$. -/
 noncomputable def tauPlus (n : ℕ) : ℕ :=
   ((Finset.range n).filter (fun k =>
     (n.divisors.filter (fun d => 2 ^ k ≤ d ∧ d < 2 ^ (k + 1))).Nonempty)).card
