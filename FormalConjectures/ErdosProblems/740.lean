@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 740
@@ -42,14 +43,8 @@ universe u
 
 namespace Erdos740
 
-/-- The cardinal chromatic number of a graph: the infimum of cardinals $\kappa$
-for which $G$ admits a proper $\kappa$-coloring. -/
-noncomputable def cardChromaticNumber {V : Type u}
-    (G : SimpleGraph V) : Cardinal.{u} :=
-  sInf {κ : Cardinal.{u} | ∃ (α : Type u), #α = κ ∧ Nonempty (G.Coloring α)}
-
 /--
-Erdős Problem 740 [Er69b][Er71][Er81][Er95d]:
+Erdős Problem 740 [Er69b][Er71, p.100][Er81][Er95d]:
 
 If $G$ is a graph with infinite chromatic number $\mathfrak{m}$, then for every
 $r \geq 1$, $G$ contains a subgraph with chromatic number $\mathfrak{m}$ that has
@@ -61,9 +56,9 @@ $\mathfrak{m} = \aleph_0$, $r = 3$.
 @[category research open, AMS 5]
 theorem erdos_740 : answer(sorry) ↔
     ∀ {V : Type u} (G : SimpleGraph V) (𝔪 : Cardinal.{u}),
-      ℵ₀ ≤ 𝔪 → cardChromaticNumber G = 𝔪 → ∀ (r : ℕ), 1 ≤ r →
+      ℵ₀ ≤ 𝔪 → chromaticCardinal G = 𝔪 → ∀ (r : ℕ), 1 ≤ r →
         ∃ (W : Type u) (H : SimpleGraph W),
-          cardChromaticNumber H = 𝔪 ∧
+          chromaticCardinal H = 𝔪 ∧
           (∃ f : W → V, Function.Injective f ∧ ∀ a b, H.Adj a b → G.Adj (f a) (f b)) ∧
           (∀ (w : W) (p : H.Walk w w), p.IsCycle → Odd p.length → r < p.length) := by
   sorry
