@@ -28,9 +28,9 @@ from any single class.
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
 
-[AlEr96] Alon, N. and Erdős, P. (1996).
+[AlEr96] Alon, N. and Erdős, P., *Sure monochromatic subset sums*. Acta Arithmetica (1996), 269–272.
 
-[Vu07] Vu, V.H. (2007).
+[Vu07] Vu, V.H., *Some new results on subset sums*. Journal of Number Theory (2007), 229–233.
 
 [CFP21] Conlon, D., Fox, J. and Pham, H.T., *Sum-free partitions* (2021).
 -/
