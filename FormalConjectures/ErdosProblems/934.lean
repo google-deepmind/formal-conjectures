@@ -39,11 +39,14 @@ $h_t(d) \geq (1 - o(1))d^t$ for infinitely many $d$.
 
 [Er88] Erdős, P. and Nešetřil, J., _Irregularities of partitions_ (1989).
 
+[BBPP83] Bermond, J.-C., Bond, J., Paoli, M., and Peyrat, C., _Graphs and Interconnection
+Networks: Diameter and Vulnerability_. Surveys in Combinatorics (1983), 1–30.
+
 [CGTT90] Chung, F.R.K., Gyárfás, A., Tuza, Z., and Trotter, W.T., _The maximum number of edges
 in $2K_2$-free graphs of bounded degree_. Discrete Mathematics (1990).
 
 [CCJK22] Cambie, S., Cames van Batenburg, W., de Joannis de Verclos, R., and Kang, R.J.,
-_Packing graphs of bounded codegree_ (2022).
+_Packing graphs of bounded codegree_. SIAM J. Discrete Math. (2022), 939–950.
 -/
 
 open SimpleGraph Classical
