@@ -30,12 +30,14 @@ $2^{(1+o(1))N}$. In fact the former is true, and the correct value of $c$ is now
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
 
-[St24] Steinerberger, S., proved the count is at most $2^{0.93N}$.
+[St24] Steinerberger, S., *On a problem involving unit fractions* (2024).
 
-[LiSa24] Liu, H. and Sawhney, M., gave both upper and lower bounds, proving that the
-count is $2^{(0.91\ldots+o(1))N}$.
+[LiSa24] Liu, Y. and Sawhney, M., *On further questions regarding unit fractions* (2024).
 
-[CFHMPSV24] Conlon, D., Fox, J., He, X., Mubayi, D., Pham, H.T., Suk, A., and Verstraëte, J.
+[CFHMPSV24] Conlon, D., Fox, J., He, X., Mubayi, D., Pham, H.T., Suk, A., and Verstraëte, J.,
+*A question of Erdős and Graham on Egyptian fractions* (2024).
+
+See also: Problem 362, OEIS A092670.
 -/
 
 open Filter
@@ -69,6 +71,27 @@ theorem erdos_297 :
     ∃ c : ℝ, 0 < c ∧ c < 1 ∧
       Tendsto (fun N : ℕ =>
         Real.log (unitFractionSubsetCount N : ℝ) / (Real.log 2 * (N : ℝ)))
+        atTop (nhds c) := by
+  sorry
+
+/-- Count of subsets $A \subseteq \{1, \ldots, N\}$ such that
+$\sum_{n \in A} \frac{1}{n} = q$ for a given rational $q$. -/
+noncomputable def unitFractionSubsetCount_q (q : ℚ) (N : ℕ) : ℕ :=
+  ((Finset.Icc 1 N).powerset.filter fun (A : Finset ℕ) =>
+    (A.sum fun n => (1 : ℚ) / (n : ℚ)) = q).card
+
+/--
+Erdős Problem 297 — Generalization to arbitrary positive rationals [CFHMPSV24]:
+
+Conlon–Fox–He–Mubayi–Pham–Suk–Verstraëte proved that for any fixed $q \in \mathbb{Q}_{>0}$,
+the number of subsets $A \subseteq \{1, \ldots, N\}$ with $\sum_{n \in A} 1/n = q$ satisfies
+the same asymptotic $2^{(c+o(1))N}$ for the same constant $c \approx 0.91\ldots$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_297_variant (q : ℚ) (hq : 0 < q) :
+    ∃ c : ℝ, 0 < c ∧ c < 1 ∧
+      Tendsto (fun N : ℕ =>
+        Real.log (unitFractionSubsetCount_q q N : ℝ) / (Real.log 2 * (N : ℝ)))
         atTop (nhds c) := by
   sorry
 

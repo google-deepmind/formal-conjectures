@@ -46,11 +46,14 @@ $1/n_1 + \cdots + 1/n_k$ with $t = n_1 < \cdots < n_k \leq N$. Formally: there e
 finite set $S \subseteq \{t, \ldots, N\}$ containing $t$ whose reciprocals sum to $1$. -/
 def HasUnitFractionRepFrom (t N : ℕ) : Prop :=
   ∃ S : Finset ℕ, t ∈ S ∧ (∀ m ∈ S, t ≤ m) ∧ (∀ m ∈ S, m ≤ N) ∧
+    -- Positivity guard: `ℚ`-division by zero yields 0 in Lean, so without this
+    -- the sum could silently drop terms and give a mathematically wrong result.
     (∀ m ∈ S, 1 ≤ m) ∧ (S.sum fun m => (1 : ℚ) / m) = 1
 
 /-- $t(N)$: the least positive integer $t$ such that there is no unit fraction
 representation of $1$ using distinct integers from $\{t, \ldots, N\}$ starting at $t$.
-Returns $N + 1$ as a default if no such $t$ exists. -/
+Returns $N + 1$ as a default if no such $t$ exists (this default is never expected to
+be reached for large $N$, since eventually the harmonic tail is too small). -/
 noncomputable def leastNoRep (N : ℕ) : ℕ :=
   if h : ∃ t : ℕ, 1 ≤ t ∧ ¬HasUnitFractionRepFrom t N then
     Nat.find h
