@@ -48,8 +48,39 @@ Proved by Pommerenke [Po59].
 @[category research solved, AMS 30]
 theorem erdos_1046 : answer(True) ↔
     ∀ (f : Polynomial ℂ), f.Monic →
-      IsConnected {z : ℂ | ‖Polynomial.eval z f‖ < 1} →
-      ∃ c : ℂ, {z : ℂ | ‖Polynomial.eval z f‖ < 1} ⊆ closedBall c 2 := by
+      let E := {z : ℂ | ‖Polynomial.eval z f‖ < 1}
+      IsConnected E →
+      ∃ c : ℂ, E ⊆ closedBall c 2 := by
+  sorry
+
+/--
+Strengthening of Erdős Problem 1046: Pommerenke [Po59] proved that the center of the
+containing disc of radius $2$ can be taken to be the centroid (arithmetic mean) of the
+roots of $f$, i.e., $\frac{z_1 + \cdots + z_n}{n}$.
+-/
+@[category research solved, AMS 30]
+theorem erdos_1046_centroid :
+    ∀ (f : Polynomial ℂ), f.Monic →
+      let E := {z : ℂ | ‖Polynomial.eval z f‖ < 1}
+      IsConnected E →
+      E ⊆ closedBall (f.roots.sum / (f.natDegree : ℂ)) 2 := by
+  sorry
+
+/--
+Width conjecture from [EHP58]: Erdős, Herzog, and Piranian conjectured that if
+$\{ z : |f(z)| \leq 1 \}$ is connected, then its width is at most $2$. This was disproved
+by Pommerenke [Po59], who gave an example with width $> \sqrt{3} \cdot 2^{1/3} \approx 2.18$.
+
+The width of a planar set $S$ is the infimum over unit directions $u$ of
+$\sup_{z_1, z_2 \in S} |\operatorname{Re}((z_1 - z_2) \cdot \bar{u})|$.
+-/
+@[category research solved, AMS 30]
+theorem erdos_1046_width : answer(False) ↔
+    ∀ (f : Polynomial ℂ), f.Monic →
+      let E := {z : ℂ | ‖Polynomial.eval z f‖ ≤ 1}
+      IsConnected E →
+      ∃ u : ℂ, ‖u‖ = 1 ∧ ∀ z₁ ∈ E, ∀ z₂ ∈ E,
+        |((z₁ - z₂) * starRingEnd ℂ u).re| ≤ 2 := by
   sorry
 
 end Erdos1046
