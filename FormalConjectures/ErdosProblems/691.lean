@@ -33,31 +33,7 @@ The general characterization remains open.
 [Er79e] Erdős, P., _Some old and new problems on combinatorial number theory_ (1979), p.77.
 -/
 
-open Classical Filter
-
-open scoped BigOperators Topology
-
 namespace Erdos691
-
-/-- Count of integers $m \in \{1, \ldots, N\}$ such that some element of $A$ divides $m$. -/
-noncomputable def countMultiples (A : Set ℕ) (N : ℕ) : ℕ :=
-  ((Finset.range N).filter (fun n => ∃ a ∈ A, a ∣ (n + 1))).card
-
-/-- A set $A \subseteq \mathbb{N}$ is a *Behrend sequence* if the set of multiples of $A$ has
-natural density $1$, i.e., $|M_A \cap \{1, \ldots, N\}| / N \to 1$ as $N \to \infty$. -/
-def IsBehrend (A : Set ℕ) : Prop :=
-  Tendsto (fun N : ℕ => (countMultiples A (N + 1) : ℝ) / ((N + 1 : ℕ) : ℝ))
-    atTop (nhds 1)
-
-/-- A set of natural numbers is *pairwise coprime*. -/
-def SetPairwiseCoprime (A : Set ℕ) : Prop :=
-  ∀ a ∈ A, ∀ b ∈ A, a ≠ b → Nat.Coprime a b
-
-/-- The sum of reciprocals of elements of $A$ diverges: for every bound $C > 0$,
-some finite subset of $A$ achieves a reciprocal sum exceeding $C$. -/
-def ReciprocalSumDiverges (A : Set ℕ) : Prop :=
-  ∀ C : ℝ, C > 0 → ∃ F : Finset ℕ, (∀ a ∈ F, a ∈ A) ∧
-    C < ∑ a ∈ F, (1 : ℝ) / (a : ℝ)
 
 /--
 Erdős Problem 691 (pairwise coprime case) [Er79e]:
@@ -66,8 +42,9 @@ sequence if and only if the sum of reciprocals $\sum_{a \in A} 1/a$ diverges.
 -/
 @[category research solved, AMS 11]
 theorem erdos_691 (A : Set ℕ) (hA : ∀ a ∈ A, a ≥ 2)
-    (hCoprime : SetPairwiseCoprime A) :
-    IsBehrend A ↔ ReciprocalSumDiverges A := by
+    (hCoprime : A.Pairwise Nat.Coprime) :
+    ({n : ℕ | ∃ a ∈ A, a ∣ n}).HasDensity 1 ↔
+      ¬Summable (fun a : ↥A ↦ (1 : ℝ) / (a : ℕ)) := by
   sorry
 
 end Erdos691
