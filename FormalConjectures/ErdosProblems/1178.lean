@@ -25,12 +25,19 @@ For $r, e \geq 3$, determine the minimal $d$ such that the $r$-uniform Turán nu
 $\operatorname{ex}_r(n; d, e) = o(n^2)$ as $n \to \infty$. The conjecture is that this
 minimal $d$ equals $(r-2) \cdot e + 3$.
 
-[BES73] Brown, W. G., Erdős, P., and Sós, V. T., *On the existence of triangulated spheres
-in 3-graphs, and related problems*, 1973.
+[BES73] Brown, W.G., Erdős, P., and Sós, V.T., *Some extremal problems on r-graphs*.
+1973, pp. 53–63.
 
-[Er75b] Erdős, P., *Problems and results on finite and infinite combinatorial analysis*, 1975.
+[Er75b] Erdős, P., *Problems and results in combinatorial number theory*. Journées
+Arithmétiques de Bordeaux (1974), 1975, pp. 295–310.
 
-[Er81] Erdős, P., *On the combinatorial problems which I would most like to see solved*, 1981.
+[RuSz78] Ruzsa, I.Z. and Szemerédi, E., *Triple systems with no six points carrying
+three triangles*. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976),
+Vol. II, Colloq. Math. Soc. János Bolyai 18, North-Holland, 1978, pp. 939–945.
+
+[EFR86] Erdős, P., Frankl, P., Rödl, V., *The asymptotic number of graphs not containing
+a fixed subgraph and a problem for hypergraphs having no exponent*. Graphs and
+Combinatorics (1986), pp. 113–121.
 -/
 
 open Filter Asymptotics
@@ -41,11 +48,7 @@ namespace Erdos1178
 def IsRUniform (r : ℕ) {V : Type*} (E : Finset (Finset V)) : Prop :=
   ∀ e ∈ E, e.card = r
 
-/-- An $r$-uniform hypergraph on $n$ vertices contains a sub-hypergraph on $d$ vertices
-with $e$ edges: there exist $d$ vertices in $\operatorname{Fin} n$ such that the hypergraph has
-at least $e$ $r$-uniform edges entirely within those $d$ vertices. Since $F_r(d,e)$
-contains all $r$-uniform hypergraphs on $d$ vertices with $e$ edges, avoiding $F$ means
-no $d$ vertices span $e$ or more $r$-uniform edges. -/
+/-- There exist $d$ vertices spanning at least $e$ edges from $E$. -/
 def ContainsConfig (d e n : ℕ) (E : Finset (Finset (Fin n))) : Prop :=
   ∃ S : Finset (Fin n), S.card = d ∧ e ≤ (E.filter (fun edge => edge ⊆ S)).card
 
@@ -74,8 +77,9 @@ on $n$ vertices avoiding all configurations on $d$ vertices with $e$ edges: form
 is no $d$-element set $S \subseteq \operatorname{Fin} n$ with $e$ or more $r$-uniform edges
 in $S$. `minD r e` is the least such $d$.
 
-Brown, Erdős, and Sós proved the lower bound $d_r(e) \geq (r-2) \cdot e + 3$.
-Erdős, Frankl, and Rödl proved the case $e = 3$: $d_r(3) = 3(r-2)+3$ for all $r \geq 3$.
+Brown, Erdős, and Sós [BES73] proved the lower bound $d_r(e) \geq (r-2) \cdot e + 3$.
+Ruzsa and Szemerédi [RuSz78] proved $d_3(3) = 6$.
+Erdős, Frankl, and Rödl [EFR86] proved the case $e = 3$: $d_r(3) = 3(r-2)+3$ for all $r \geq 3$.
 -/
 @[category research open, AMS 5]
 theorem erdos_1178 (r e : ℕ) (hr : 3 ≤ r) (he : 3 ≤ e) :
