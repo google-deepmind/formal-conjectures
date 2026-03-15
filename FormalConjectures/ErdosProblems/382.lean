@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
 
 /-!
 # Erdős Problem 382
@@ -33,15 +34,11 @@ open Finset BigOperators Real
 
 namespace Erdos382
 
-/-- The largest prime factor of a natural number $n$. Returns $0$ if $n \le 1$. -/
-noncomputable def largestPrimeFactor (n : ℕ) : ℕ :=
-  n.factorization.support.sup id
-
 /-- An interval $[u, v]$ has its largest prime factor appearing with exponent $\ge 2$
 in the factorization of the product $\prod_{u \le m \le v} m$. -/
 noncomputable def HasSquaredLargestPrime (u v : ℕ) : Prop :=
   let P := ∏ m ∈ Finset.Icc u v, m
-  let p := largestPrimeFactor P
+  let p := Nat.maxPrimeFac P
   u ≤ v ∧ 0 < p ∧ 1 < P.factorization p
 
 /--
