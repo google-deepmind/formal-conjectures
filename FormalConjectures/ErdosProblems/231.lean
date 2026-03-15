@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/231](https://www.erdosproblems.com/231)
 
-Let $S$ be a string of length $2^k - 1$ formed from an alphabet of $k$ characters.
+Let $S$ be a string of length $2^k$ formed from an alphabet of $k$ characters.
 Must $S$ contain an abelian square: two consecutive blocks $x$ and $y$ such that
 $y$ is a permutation of $x$?
 
@@ -34,8 +34,17 @@ The answer is:
   abelian square)
 - No for $k \ge 4$
 
+[Er57] Erdős, P., _Some unsolved problems_, 1957.
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató
+Int. Közl. **6** (1961), 221–254.
+
 [Ke92] Keränen, V., _Abelian squares are avoidable on 4 letters_. Automata, Languages
-and Programming (1992), 41-52.
+and Programming (Vienna, 1992), Lecture Notes in Comput. Sci. 623, Springer (1992),
+41–52.
+
+[FiPu23] Fici, G. and Puzynina, S., _Abelian combinatorics on words: a survey_.
+Comput. Sci. Rev. (2023), Paper No. 100532.
 -/
 
 namespace Erdos231
@@ -47,33 +56,33 @@ def ContainsAbelianSquare {α : Type*} (w : List α) : Prop :=
     List.Perm ((w.drop i).take n) ((w.drop (i + n)).take n)
 
 /--
-Must every string of length $2^k - 1$ over an alphabet of $k \ge 2$ characters
-contain an abelian square? The answer is no, disproved by Keränen [Ke92] for
-$k \ge 4$.
+Must every string of length $2^k$ over an alphabet of $k \ge 2$ characters
+contain an abelian square? The answer is no in general: the conjecture holds for
+$k \le 3$ but is disproved by Keränen [Ke92] for $k \ge 4$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_231 : answer(False) ↔
-    ∀ k, 2 ≤ k → ∀ w : List (Fin k), w.length = 2 ^ k - 1 →
+    ∀ k, 2 ≤ k → ∀ w : List (Fin k), w.length = 2 ^ k →
       ContainsAbelianSquare w := by
   sorry
 
 /--
-For $k \le 3$ (with $k \ge 2$), every string of length $2^k - 1$ over $k$
+For $k \le 3$ (with $k \ge 2$), every string of length $2^k$ over $k$
 characters contains an abelian square.
 -/
 @[category research solved, AMS 5]
 theorem erdos_231.variants.small_alphabet (k : ℕ) (hk : 2 ≤ k) (hk3 : k ≤ 3)
-    (w : List (Fin k)) (hw : w.length = 2 ^ k - 1) :
+    (w : List (Fin k)) (hw : w.length = 2 ^ k) :
     ContainsAbelianSquare w := by
   sorry
 
 /--
-For $k \ge 4$, there exists a string of length $2^k - 1$ over $k$ characters with
+For $k \ge 4$, there exists a string of length $2^k$ over $k$ characters with
 no abelian square, disproving the original conjecture. See [Ke92].
 -/
 @[category research solved, AMS 5]
 theorem erdos_231.variants.large_alphabet (k : ℕ) (hk : 4 ≤ k) :
-    ∃ w : List (Fin k), w.length = 2 ^ k - 1 ∧ ¬ContainsAbelianSquare w := by
+    ∃ w : List (Fin k), w.length = 2 ^ k ∧ ¬ContainsAbelianSquare w := by
   sorry
 
 end Erdos231
