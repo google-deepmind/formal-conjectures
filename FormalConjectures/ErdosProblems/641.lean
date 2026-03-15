@@ -46,15 +46,14 @@ in fact, this fails even at $k = 2$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_641 : answer(False) ↔
-    ∀ k : ℕ, 1 ≤ k →
-      ∃ f : ℕ,
-        ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
-          (f : ℕ∞) ≤ G.chromaticNumber →
-          ∃ (cycles : Fin k → Σ (v : Fin n), G.Walk v v),
-            (∀ i, (cycles i).2.IsCycle) ∧
-            (∀ i j, (cycles i).2.support.toFinset = (cycles j).2.support.toFinset) ∧
-            (∀ i j, i ≠ j →
-              Disjoint (cycles i).2.edges.toFinset (cycles j).2.edges.toFinset) := by
+    ∃ f : ℕ → ℕ, ∀ k : ℕ, 1 ≤ k →
+      ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
+        (f k : ℕ∞) ≤ G.chromaticNumber →
+        ∃ (cycles : Fin k → Σ (v : Fin n), G.Walk v v),
+          (∀ i, (cycles i).2.IsCycle) ∧
+          (∀ i j, (cycles i).2.support.toFinset = (cycles j).2.support.toFinset) ∧
+          (∀ i j, i ≠ j →
+            Disjoint (cycles i).2.edges.toFinset (cycles j).2.edges.toFinset) := by
   sorry
 
 /--
