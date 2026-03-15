@@ -15,6 +15,9 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Circulant
+import Mathlib.Combinatorics.SimpleGraph.Copy
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 594
@@ -40,29 +43,12 @@ open SimpleGraph Cardinal
 
 namespace Erdos594
 
-/-- A graph has uncountable chromatic number: it cannot be properly colored
-with countably many colors. -/
-def HasUncountableChromaticNumber {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∀ (α : Type*) [Countable α], IsEmpty (G.Coloring α)
-
-/-- The cycle graph $C_m$ on $m$ vertices ($m \geq 3$). Vertex $i$ is adjacent to vertex
-$i + 1 \pmod{m}$ and vertex $i - 1 \pmod{m}$. -/
-def cycleGraph (m : ℕ) (_ : m ≥ 3) : SimpleGraph (Fin m) where
-  Adj i j := i ≠ j ∧ (j.val = (i.val + 1) % m ∨ i.val = (j.val + 1) % m)
-  symm := fun _ _ ⟨hne, h⟩ => ⟨hne.symm, h.elim Or.inr Or.inl⟩
-  loopless := fun _ h => h.1 rfl
-
-/-- $G$ contains a copy of $H$: there is an injective map preserving adjacency. -/
-def ContainsCopy {V W : Type*}
-    (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : W → V, Function.Injective f ∧ ∀ u v, H.Adj u v → G.Adj (f u) (f v)
-
 /--
 Erdős Problem 594 [ErHa66] [Er69b]:
 
 Every graph with uncountable chromatic number (i.e., chromatic number
 $\geq \aleph_1$) contains all sufficiently large odd cycles. That is, there exists
-$N_0$ such that for all odd $n \geq N_0$ (with $n \geq 3$), the graph contains $C_n$
+$N_0$ such that for all odd $n \geq N_0$, the graph contains $C_n$
 as a subgraph.
 
 Proved by Erdős, Hajnal, and Shelah [EHS74].
@@ -70,9 +56,9 @@ Proved by Erdős, Hajnal, and Shelah [EHS74].
 @[category research solved, AMS 5]
 theorem erdos_594 : answer(True) ↔
     ∀ {V : Type*} (G : SimpleGraph V),
-      HasUncountableChromaticNumber G →
-      ∃ N₀ : ℕ, ∀ (n : ℕ) (hn : n ≥ 3), Odd n → n ≥ N₀ →
-        ContainsCopy G (cycleGraph n hn) := by
+      Cardinal.aleph 1 ≤ G.chromaticCardinal →
+      ∃ N₀ : ℕ, ∀ (n : ℕ), Odd n → n ≥ N₀ →
+        (cycleGraph n).IsContained G := by
   sorry
 
 end Erdos594
