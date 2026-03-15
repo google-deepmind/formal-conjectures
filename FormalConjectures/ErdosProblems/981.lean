@@ -25,6 +25,9 @@ For every ε > 0, let f_ε(p) be the smallest m such that ∑_{n≤N} (n/p) < ε
 Is it true that ∑_{p<x} f_ε(p) ~ c_ε · x/(log x) for some constant c_ε > 0?
 Proved by Elliott [El69].
 
+[Er65b] Erdős, P., _Extremal problems in number theory_. Lectures on Modern Mathematics,
+Vol. III (1965), 196-244.
+
 [El69] Elliott, P. D. T. A., _On the mean value of $f(p)$_. Proc. London Math. Soc. (3) 21
 (1970), 28–96.
 -/
