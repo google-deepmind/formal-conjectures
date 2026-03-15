@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 
 /-!
 # Erdős Problem 720
@@ -37,8 +38,25 @@ This resolves all three questions:
 - Question 1 is answered in the negative ($\hat{R}(P_n)/n$ is bounded).
 - Questions 2 and 3 are answered in the affirmative (in a much stronger form).
 
-[Be83b] Beck, J., _On size Ramsey number of paths, trees, and circuits I_.
-J. Graph Theory 7 (1983), 115-129.
+This problem carried a **$100 prize**. See also: Problem #559.
+
+[Er76c] Erdős, P., _Problems in combinatorics and graph theory_ (1976), p. 5.
+
+[EFRS78b] Erdős, P., Faudree, R.J., Rousseau, C.C., and Schelp, R.H., _The size Ramsey
+number_, Periodica Mathematica Hungarica **9** (1978), 145–161.
+
+[Er78] Erdős, P., _Problems and results in combinatorial analysis and combinatorial
+number theory_, Proceedings of the Ninth Southeastern Conference on Combinatorics,
+Graph Theory, and Computing (1978), 29–40, p. 33.
+
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica **1** (1981), 25–42.
+
+[Er82e] Erdős, P., _Problems and results on finite and infinite combinatorial analysis II_,
+1982.
+
+[Be83b] Beck, J., _On size Ramsey number of paths, trees, and circuits I_,
+J. Graph Theory **7** (1983), 115–129.
 -/
 
 open SimpleGraph
@@ -59,24 +77,6 @@ def cycleGraph (n : ℕ) (_ : n ≥ 3) : SimpleGraph (Fin n) where
   symm := fun _ _ ⟨hne, h⟩ => ⟨hne.symm, h.elim Or.inr Or.inl⟩
   loopless := fun _ ⟨h, _⟩ => h rfl
 
-/-- The size Ramsey number $\hat{R}(G)$: the minimum number of edges in a graph $H$
-    that is Ramsey for $G$.
-
-    A graph $H$ on $N$ vertices is Ramsey for $G$ if every 2-coloring of the edges
-    of $H$ contains a monochromatic copy of $G$, i.e., an injective map $f$ from the
-    vertices of $G$ into $\operatorname{Fin} N$ that preserves adjacency in $H$ and maps all
-    edges to the same color. -/
-noncomputable def sizeRamseyNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {m : ℕ | ∃ (N : ℕ) (H : SimpleGraph (Fin N)),
-    Nat.card H.edgeSet = m ∧
-    ∀ (c : Fin N → Fin N → Bool),
-      (∀ i j, c i j = c j i) →
-      ∃ (b : Bool) (f : V → Fin N),
-        Function.Injective f ∧
-        (∀ u v, G.Adj u v → H.Adj (f u) (f v)) ∧
-        (∀ u v, G.Adj u v → c (f u) (f v) = b)}
-
 /--
 Erdős Problem 720, Part 1 (Beck's theorem for paths) [Be83b]:
 
@@ -89,7 +89,7 @@ $\hat{R}(P_n)/n^2 \to 0$.
 @[category research solved, AMS 5]
 theorem erdos_720 :
     ∃ C : ℕ, ∀ n : ℕ,
-      sizeRamseyNumber (pathGraph n) ≤ C * (n + 1) := by
+      sizeRamsey (pathGraph n) (pathGraph n) ≤ C * (n + 1) := by
   sorry
 
 /--
@@ -103,7 +103,7 @@ This proves (in a much stronger form) the conjecture that $\hat{R}(C_n) = o(n^2)
 @[category research solved, AMS 5]
 theorem erdos_720.variants.cycles :
     ∃ C : ℕ, ∀ n : ℕ, (hn : n ≥ 3) →
-      sizeRamseyNumber (cycleGraph n hn) ≤ C * n := by
+      sizeRamsey (cycleGraph n hn) (cycleGraph n hn) ≤ C * n := by
   sorry
 
 end Erdos720
