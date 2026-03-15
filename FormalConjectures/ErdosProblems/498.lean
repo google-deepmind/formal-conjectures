@@ -25,23 +25,29 @@ Given complex numbers $z_1, \ldots, z_n$ with $|z_i| \geq 1$, the number of sign
 $\varepsilon \in \{-1,1\}^n$ for which the signed sum $\sum \varepsilon_i z_i$ lands in any unit
 disc is at most $\binom{n}{\lfloor n/2 \rfloor}$.
 
-[Er45] Erdős, P., _On a lemma of Littlewood and Offord_, Bull. Amer. Math. Soc. 51 (1945),
-898-902.
+See also: Problem 395 (reverse Littlewood–Offord problem).
+
+[Er45] Erdős, P., _On a lemma of Littlewood and Offord_. Bull. Amer. Math. Soc. **51** (1945),
+898–902.
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. **6** (1961),
+221–254.
 
 [Kl65] Kleitman, D., _On a lemma of Littlewood and Offord on the distributions of linear
-combinations of vectors_, Advances in Math. 1 (1965), 155-157.
+combinations of vectors_. Advances in Math. **1** (1965), 155–157.
 
-[Kl70] Kleitman, D., _On a lemma of Littlewood and Offord on the distribution of certain sums_,
-Math. Z. 90 (1970), 251-259.
+[Kl70] Kleitman, D., _On a lemma of Littlewood and Offord on the distribution of certain sums_.
+Math. Z. **90** (1970), 251–259.
 -/
 
-open Finset BigOperators
+open Finset
+open scoped BigOperators
 
 namespace Erdos498
 
 /-- The signed sum of complex numbers $z$ with signs $\varepsilon \in \{-1, 1\}^n$ (encoded as
 `Bool`). -/
-noncomputable def signedSum498 {n : ℕ} (z : Fin n → ℂ) (ε : Fin n → Bool) : ℂ :=
+noncomputable def signedSum {n : ℕ} (z : Fin n → ℂ) (ε : Fin n → Bool) : ℂ :=
   ∑ i : Fin n, (if ε i then (1 : ℂ) else (-1 : ℂ)) * z i
 
 /--
@@ -59,7 +65,7 @@ generalised the result to arbitrary Hilbert spaces [Kl70].
 theorem erdos_498 (n : ℕ) (z : Fin n → ℂ) (w : ℂ)
     (hz : ∀ i, 1 ≤ ‖z i‖) :
     (Finset.univ.filter (fun ε : Fin n → Bool =>
-      ‖signedSum498 z ε - w‖ ≤ 1)).card ≤ n.choose (n / 2) := by
+      ‖signedSum z ε - w‖ ≤ 1)).card ≤ n.choose (n / 2) := by
   sorry
 
 end Erdos498
