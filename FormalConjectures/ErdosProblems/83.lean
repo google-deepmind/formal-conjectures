@@ -24,12 +24,29 @@ import FormalConjectures.Util.ProblemImports
 If $\mathcal{F}$ is a family of $2n$-element subsets of $[4n]$ with pairwise intersections
 of size $\geq 2$, then $|\mathcal{F}| \leq \frac{1}{2}(\binom{4n}{2n} - \binom{2n}{n}^2)$.
 Conjectured by Erdős, Ko, and Rado [ErKoRa61], proved by Ahlswede and Khachatrian [AhKh97].
+This problem carried a \$500 reward.
+
+The extremal family consists of all subsets of $[4n]$ of size $2n$ containing at least $n+1$
+elements from $[2n]$.
+
+OEIS: [A071799](https://oeis.org/A071799), [A387635](https://oeis.org/A387635).
 
 [ErKoRa61] Erdős, P., Ko, C., and Rado, R., _Intersection theorems for systems of
 finite sets_. Quart. J. Math. Oxford Ser. (2) 12 (1961), 313-320.
 
 [AhKh97] Ahlswede, R. and Khachatrian, L.H., _The complete intersection theorem for
 systems of finite sets_. European J. Combin. 18 (1997), 125-136.
+
+[Er71] Erdős, P., _Topics in combinatorial analysis_ (1971).
+
+[Er90] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1990),
+467-478.
+
+[Er92e] Erdős, P., _Some unsolved problems in geometry, number theory and combinatorics_.
+Eureka (1992), 44-48.
+
+[Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Combinatorics '94 (Catania), Congressus Numerantium 107 (1995).
 -/
 
 open Finset
