@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Bipartite
 
 /-!
 # Erdős Problem 575
@@ -53,11 +54,6 @@ noncomputable def turanNumberFamily
   sSup {m : ℕ | ∃ (V : Type) (fv : Fintype V) (F : SimpleGraph V) (dr : DecidableRel F.Adj),
     haveI := fv; haveI := dr;
     Fintype.card V = n ∧ (∀ i : ι, ¬ContainsSubgraph F (H i)) ∧ F.edgeFinset.card = m}
-
-/-- A graph is bipartite if there is a $2$-colouring of its vertices such that every edge connects
-vertices of different colours. -/
-def IsBipartite {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∃ f : V → Fin 2, ∀ u v : V, G.Adj u v → f u ≠ f v
 
 /--
 Erdős Conjecture (Problem 575) [ErSi82]:
