@@ -26,8 +26,9 @@ $\omega_1^2 \to (\omega_1 \cdot \omega, 3, \ldots, 3)^2_{k+1}$ holds — that is
 $(k+1)$-coloring of pairs below $\omega_1^2$ yields either a homogeneous set of order type
 $\omega_1 \cdot \omega$ for the first color or a monochromatic triple for some other color.
 
-- [Va99] Section 7.84.
-- [Ba89b] Baumgartner.
+- [Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999), §7.84.
+- [Ba89b] Baumgartner, J. E., _Remarks on partition ordinals_ (1989), 5–17.
 -/
 
 open Ordinal Cardinal
@@ -38,7 +39,8 @@ namespace Erdos1171
 noncomputable def omega1 : Ordinal := (aleph 1).ord
 
 /-- The multi-color ordinal partition relation
-$\alpha \to (\beta_0, \beta_1, \ldots, \beta_1)^2$ with $(k+1)$ colors.
+$\alpha \to (\beta_0, \beta_1, \ldots, \beta_1)^2$ with $(k+1)$ colors,
+where $\beta_1$ appears $k$ times.
 For every $(k+1)$-coloring of pairs of ordinals below $\alpha$, either
 there is a homogeneous set of order type $\beta_0$ for color $0$, or there exists some
 color $c > 0$ with a homogeneous set of order type $\beta_1$. -/
