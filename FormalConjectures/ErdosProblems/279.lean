@@ -35,6 +35,9 @@ For $k = 1$ or $k = 2$, any set $A$ with $\sum_{n \in A} 1/n = \infty$ has this 
 theory*. Monographies de L'Enseignement Mathematique (1980).
 -/
 
+open scoped Classical
+open Filter
+
 namespace Erdos279
 
 /--
@@ -50,6 +53,49 @@ theorem erdos_279 : answer(sorry) ↔ ∀ (k : ℕ), 3 ≤ k →
       ∃ N₀ : ℤ, ∀ n : ℤ, N₀ ≤ n →
         ∃ p : ℕ, Nat.Prime p ∧
           ∃ t : ℤ, (k : ℤ) ≤ t ∧ n = a p + t * (p : ℤ) := by
+  sorry
+
+/--
+Erdős Problem 279 — Generalization to dense sets [ErGr80, p.29]:
+
+The conjecture may hold with the primes replaced by any set $A \subseteq \mathbb{N}$
+satisfying $|A \cap [1,N]| \gg N / \log N$ and
+$\sum_{n \in A, n \leq N} 1/n - \log \log N \to \infty$.
+-/
+@[category research open, AMS 11]
+theorem erdos_279_general : answer(sorry) ↔ ∀ (k : ℕ), 3 ≤ k →
+    ∀ A : Set ℕ,
+      (∃ c : ℝ, 0 < c ∧ ∀ᶠ N : ℕ in atTop,
+        c * (N : ℝ) / Real.log (N : ℝ) ≤
+          (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) →
+      (Tendsto (fun (N : ℕ) =>
+        (∑ n ∈ (Finset.Icc 1 N).filter (· ∈ A), (1 : ℝ) / (n : ℝ)) -
+          Real.log (Real.log (N : ℝ)))
+        atTop atTop) →
+      ∃ a : ℕ → ℤ,
+        ∃ N₀ : ℤ, ∀ n : ℤ, N₀ ≤ n →
+          ∃ m : ℕ, m ∈ A ∧
+            ∃ t : ℤ, (k : ℤ) ≤ t ∧ n = a m + t * (m : ℤ) := by
+  sorry
+
+/--
+Erdős Problem 279 — Small $k$ case [ErGr80, p.29]:
+
+For $k = 1$ or $k = 2$, any set $A \subseteq \mathbb{N}$ with
+$\sum_{n \in A} 1/n = \infty$ has the covering property: there exists a choice of
+residue classes $a_n \pmod{n}$ for every $n \in A$ such that all sufficiently large
+integers can be written as $a_n + t \cdot n$ for some $n \in A$ and $t \geq k$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_279_small_k (k : ℕ) (hk : k = 1 ∨ k = 2)
+    (A : Set ℕ)
+    (hA : Tendsto (fun (N : ℕ) =>
+      ∑ n ∈ (Finset.Icc 1 N).filter (· ∈ A), (1 : ℝ) / (n : ℝ))
+      atTop atTop) :
+    ∃ a : ℕ → ℤ,
+      ∃ N₀ : ℤ, ∀ n : ℤ, N₀ ≤ n →
+        ∃ m : ℕ, m ∈ A ∧
+          ∃ t : ℤ, (k : ℤ) ≤ t ∧ n = a m + t * (m : ℤ) := by
   sorry
 
 end Erdos279
