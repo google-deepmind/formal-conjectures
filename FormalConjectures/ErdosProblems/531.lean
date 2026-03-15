@@ -25,12 +25,24 @@ Let $F(k)$ be the minimal $N$ such that if we two-colour $\{1,\ldots,N\}$ there
 is a set $A$ of size $k$ such that all subset sums $\sum_{a\in S}a$
 (for $\emptyset\neq S\subseteq A$) are monochromatic. Estimate $F(k)$.
 
+Originally posed by Erdős [Er73].
+
 The existence of $F(k)$ was established by Sanders and Folkman, and also follows
 from Rado's theorem. This is commonly known as Folkman's theorem.
 
 Known lower bounds:
 - Erdős–Spencer [ErSp89]: $F(k) \geq 2^{ck^2/\log k}$ for some $c > 0$.
 - Balogh–Eberhard–Narayanan–Treglown–Wagner [BENTW17]: $F(k) \geq 2^{2^{k-1}/k}$.
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973), 117–138.
+
+[ErSp89] Erdős, P. and Spencer, J., _Monochromatic sumsets_. Journal of Combinatorial
+Theory, Series A **50** (1989), 162–163.
+
+[BENTW17] Balogh, J., Eberhard, S., Narayanan, B., Treglown, A. and Wagner, A. Z.,
+_An improved lower bound for Folkman's theorem_. Bulletin of the London Mathematical
+Society **49** (2017), 745–747.
 -/
 
 open Finset
