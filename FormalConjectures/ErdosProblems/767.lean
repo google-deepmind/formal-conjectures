@@ -24,10 +24,19 @@ import FormalConjectures.Util.ProblemImports
 Let $g_k(n)$ be the maximal number of edges possible on a graph with $n$ vertices
 which does not contain a cycle with $k$ chords incident to a vertex on the cycle.
 
+Erdős conjectured that $g_k(n) = (k+1)n - (k+1)^2$ for sufficiently large $n$, noting
+that the lower bound $g_k(n) \geq (k+1)n - (k+1)^2$ is "easy to see."
 Czipszer proved that $g_k(n)$ exists for all $k$, and in fact $g_k(n) \leq (k+1)n$.
 Pósa proved that $g_1(n) = 2n - 4$ for $n \geq 4$.
+Erdős verified the conjecture for $k = 2$ and $k = 3$ when $n \geq 2k + 2$.
 The conjectured equality was proved for $n \geq 3k + 3$ by Jiang [Ji04].
 
+In [Er69b], Erdős mentions that Lewin disproved the conjecture for general $k$ (oral
+communication), though it is unclear whether this applied only to small $n$ or was incorrect,
+given Jiang's later proof.
+
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_. Proof Techniques in Graph
+  Theory (1969), 27-35.
 [Ji04] Jiang, T., _On the Turán number of cycles with $k$ chords_, 2004.
 -/
 
@@ -66,6 +75,26 @@ For all $k \geq 1$, $g_k(n) = (k+1)n - (k+1)^2$ for all sufficiently large $n$.
 theorem erdos_767 : answer(True) ↔
     ∀ (k : ℕ), k ≥ 1 → ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
       maxEdgesAvoidingCycleChords k n = (k + 1) * n - (k + 1) ^ 2 := by
+  sorry
+
+/--
+**Czipszer's upper bound:**
+
+For all $k$, $g_k(n) \leq (k+1)n$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_767_czipszer_upper_bound :
+    ∀ (k n : ℕ), maxEdgesAvoidingCycleChords k n ≤ (k + 1) * n := by
+  sorry
+
+/--
+**Pósa's exact result:**
+
+$g_1(n) = 2n - 4$ for $n \geq 4$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_767_posa :
+    ∀ (n : ℕ), n ≥ 4 → maxEdgesAvoidingCycleChords 1 n = 2 * n - 4 := by
   sorry
 
 end Erdos767
