@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«857»
 
 /-!
 # Erdős Problem 856
@@ -27,9 +28,14 @@ with the same pairwise least common multiple.
 
 Estimate $f_k(N)$.
 
-[Er70] Erdős, P. (1970)
+See also problem #536 for the analogous question with natural density in place of
+logarithmic density.
 
-[TaZh25b] Tang, R. and Zhang, R. (2025)
+[Er70] Erdős, P., _Some extremal problems in combinatorial number theory_.
+Mathematical Essays Dedicated to A. J. Macintyre (1970), 123–133.
+
+[TaZh25b] Tang, R. and Zhang, R., _Harmonic LCM patterns and sunflower-free capacity_.
+arXiv:2512.20055 (2025).
 -/
 
 open Finset Real
@@ -81,7 +87,8 @@ theorem erdos_856.variants.tang_zhang_lower (k : ℕ) (hk : k ≥ 3) :
 /--
 **Erdős Problem 856** — Tang–Zhang upper bound [TaZh25b]:
 
-For every $k \geq 3$, there exist constants $c$ with $0 < c \leq 1$ and $C > 0$ such that
+Assuming the sunflower conjecture (problem #857) holds for $k$-sunflowers,
+for every $k \geq 3$, there exist constants $c$ with $0 < c < 1$ and $C > 0$ such that
 for all sufficiently large $N$,
 $$f_k(N) \leq C \cdot (\log N)^{c}.$$
 
@@ -89,8 +96,12 @@ The exponents $c_k$ are $< 1$ (improving over the trivial bound) if and only if
 the sunflower conjecture [857] holds for $k$-sunflowers.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_856.variants.tang_zhang_upper (k : ℕ) (hk : k ≥ 3) :
-    ∃ c : ℝ, 0 < c ∧ c ≤ 1 ∧
+theorem erdos_856.variants.tang_zhang_upper (k : ℕ) (hk : k ≥ 3)
+    (hsunflower : ∃ c : ℝ, 0 < c ∧ c < 2 ∧
+      ∀ n : ℕ, ∀ F : Finset (Finset (Fin n)),
+        (F.card : ℝ) > c ^ n →
+        ∃ S ⊆ F, S.card = k ∧ Erdos857.IsSunflower S) :
+    ∃ c : ℝ, 0 < c ∧ c < 1 ∧
     ∃ C : ℝ, C > 0 ∧
     ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ →
       fk k N ≤ C * (Real.log (N : ℝ)) ^ c := by
