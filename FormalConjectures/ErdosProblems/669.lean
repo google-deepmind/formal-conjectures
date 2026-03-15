@@ -42,7 +42,10 @@ A problem of Erdős [Er97f]. See also problem \#101.
 combinatorial geometry_. (1997).
 
 [BGS74] Burr, S. A., Grünbaum, B., and Sloane, N. J. A., _The orchard problem_.
-Geometriae Dedicata (1974).
+Geometriae Dedicata (1974), 397–424.
+
+OEIS sequences: [A003035](https://oeis.org/A003035),
+[A006065](https://oeis.org/A006065), [A008997](https://oeis.org/A008997).
 -/
 
 open Classical
