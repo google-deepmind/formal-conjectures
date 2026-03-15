@@ -35,6 +35,8 @@ combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collin
 
 [FuKa91] Furstenberg, H. and Katznelson, Y., *A density version of the Hales-Jewett
 theorem*. J. Anal. Math. 57 (1991), 64-119.
+
+OEIS: [A003142](https://oeis.org/A003142)
 -/
 
 namespace Erdos185
