@@ -30,19 +30,17 @@ Erdős originally believed this was impossible for $n \geq 5$, but Pomerance
 constructed a set with $n = 5$, and Palásti proved such sets exist for all $n \leq 8$.
 Erdős believed this is impossible for all sufficiently large $n$.
 
-[Er83c] [Er87b] [Er97e]
+[Er83c] Erdős, P., _Old and new problems in combinatorial analysis and graph theory_, 1983.
+
+[Er87b, p.167] Erdős, P., _Some combinatorial and metric problems in geometry_. Intuitive geometry
+(Siófok, 1985) (1987), 167-177.
+
+[Er97e] Erdős, P., _Some problems and results on combinatorial number theory_ (1997).
 -/
 
+open EuclideanGeometry
+
 namespace Erdos217
-
-/-- Three points in $\mathbb{R}^2$ are collinear if the cross product of $(q - p)$ and $(r - p)$
-vanishes, i.e. the signed area of the triangle is zero. -/
-def Collinear3 (p q r : EuclideanSpace ℝ (Fin 2)) : Prop :=
-  (q 0 - p 0) * (r 1 - p 1) = (q 1 - p 1) * (r 0 - p 0)
-
-/-- A finite point set in $\mathbb{R}^2$ has no three collinear points. -/
-def NoThreeCollinear (S : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∀ p ∈ S, ∀ q ∈ S, ∀ r ∈ S, p ≠ q → p ≠ r → q ≠ r → ¬Collinear3 p q r
 
 /-- Four points in $\mathbb{R}^2$ are concyclic if they are all equidistant from some center. -/
 def Concyclic4 (p₁ p₂ p₃ p₄ : EuclideanSpace ℝ (Fin 2)) : Prop :=
@@ -61,14 +59,14 @@ occurs exactly $j$ times as an unordered pair. We count ordered pairs from
 `S.offDiag`, so the $j$-th distance yields $2(j+1)$ ordered pairs (since
 `Fin (n-1)` is 0-indexed). -/
 def HasDistanceMultiplicityProperty (S : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∃ (d : Fin (S.card - 1) → ℝ),
-    Function.Injective d ∧
-    (∀ p ∈ S, ∀ q ∈ S, p ≠ q → ∃ i, dist p q = d i) ∧
+  ∃ (distances : Fin (S.card - 1) → ℝ),
+    Function.Injective distances ∧
+    (∀ p ∈ S, ∀ q ∈ S, p ≠ q → ∃ i, dist p q = distances i) ∧
     (∀ i : Fin (S.card - 1),
-      (S.offDiag.filter (fun pq => dist pq.1 pq.2 = d i)).card = 2 * (i.val + 1))
+      (S.offDiag.filter (fun pq => dist pq.1 pq.2 = distances i)).card = 2 * (i.val + 1))
 
 /--
-Erdős Conjecture (Problem 217) [Er83c, Er87b, Er97e]:
+Erdős Conjecture (Problem 217) [Er83c, Er87b, p.167, Er97e]:
 
 For all sufficiently large $n$, there does not exist a set of $n$ points in $\mathbb{R}^2$,
 no three on a line and no four on a circle, which determine $n-1$ distinct
@@ -81,7 +79,7 @@ this is impossible for all sufficiently large $n$.
 theorem erdos_217 :
     ∃ N₀ : ℕ, ∀ (S : Finset (EuclideanSpace ℝ (Fin 2))),
       N₀ ≤ S.card →
-      NoThreeCollinear S →
+      NonTrilinear (↑S : Set ℝ²) →
       NoFourConcyclic S →
       ¬HasDistanceMultiplicityProperty S := by
   sorry
