@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Circulant
 
 /-!
 # Erdős Problem 666
@@ -64,13 +65,6 @@ def hypercubeGraph (n : ℕ) : SimpleGraph (Fin n → Bool) where
     exact hcard
   loopless v := fun ⟨hne, _⟩ => hne rfl
 
-/-- The cycle graph $C_m$ on $m$ vertices ($m \geq 3$). Vertex $i$ is adjacent to vertex
-$i + 1 \pmod{m}$ and vertex $i - 1 \pmod{m}$. -/
-def cycleGraph (m : ℕ) (_ : m ≥ 3) : SimpleGraph (Fin m) where
-  Adj i j := i ≠ j ∧ (j.val = (i.val + 1) % m ∨ i.val = (j.val + 1) % m)
-  symm := fun _ _ ⟨hne, h⟩ => ⟨hne.symm, h.elim Or.inr Or.inl⟩
-  loopless _ := fun ⟨h, _⟩ => h rfl
-
 /--
 Erdős Problem 666 (disproved) [Er91][Er92b][Er97f]:
 
@@ -88,7 +82,7 @@ theorem erdos_666 : answer(False) ↔
         (∀ u v, H.Adj u v → (hypercubeGraph n).Adj u v) →
         (↑(H.edgeFinset.card) : ℝ) ≥ ε * ↑n * (2 : ℝ) ^ (n - 1 : ℕ) →
         ∃ f : Fin 6 → (Fin n → Bool), Function.Injective f ∧
-          ∀ i j, (cycleGraph 6 (by omega)).Adj i j → H.Adj (f i) (f j)) := by
+          ∀ i j, (SimpleGraph.cycleGraph 6).Adj i j → H.Adj (f i) (f j)) := by
   sorry
 
 end Erdos666
