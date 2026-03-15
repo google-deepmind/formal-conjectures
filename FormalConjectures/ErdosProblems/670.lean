@@ -34,7 +34,7 @@ All pairwise distances in a finite point set are separated by at least $1$:
 for any two distinct unordered pairs $\{a, b\}$ and $\{c, d\}$ of points from $A$
 (where $a \neq b$ and $c \neq d$), $|d(a, b) - d(c, d)| \geq 1$.
 -/
-def AllPairwiseDistancesDifferByOne {X : Type*} [PseudoMetricSpace X]
+def AllPairwiseDistsSeparatedByOne {X : Type*} [PseudoMetricSpace X]
     (A : Finset X) : Prop :=
   ∀ a b c d : X, a ∈ A → b ∈ A → c ∈ A → d ∈ A →
     a ≠ b → c ≠ d →
@@ -59,7 +59,7 @@ theorem erdos_670 : answer(sorry) ↔
         ∀ d : ℕ,
           ∀ A : Finset (EuclideanSpace ℝ (Fin d)),
             A.card = n →
-            AllPairwiseDistancesDifferByOne A →
+            AllPairwiseDistsSeparatedByOne A →
             (1 - ε) * (n : ℝ) ^ 2 ≤
               Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
   sorry
