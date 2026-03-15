@@ -32,8 +32,8 @@ nearest integer). Beck [Be80] improved this using the probabilistic method,
 constructing a colouring that shows $f(d) \le (1+o(1))\log_2 d$. Van der Waerden's
 theorem implies $f(d) \to \infty$ is necessary.
 
-[Be80] Beck, J., *Roth's estimate of the discrepancy of integer sequences is nearly
-sharp*. Combinatorica (1981).
+[Be80] Beck, J., *A remark concerning arithmetic progressions*. J. Combin. Theory
+Ser. A (1980), 376-379.
 
 [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
 combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins,
@@ -42,7 +42,7 @@ Colo., 1971) (1973), 117-138.
 [ErGr79] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
 number theory: van der Waerden's theorem and related topics*. Enseign. Math. (1979).
 
-[ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+[ErGr80, p.17] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
 number theory*. Monographies de L'Enseignement Mathematique (1980).
 -/
 
