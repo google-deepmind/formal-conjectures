@@ -26,7 +26,8 @@ $a, b, c, d \geq 0$ integers. Is it true that $w(n)$ is bounded by some absolute
 constant?
 
 A conjecture originally due to Newman. This was proved by Evertse, Györy,
-Stewart, and Tijdeman [EGST88]. Bajpai and Bennett [BaBe24] showed that
+Stewart, and Tijdeman [EGST88]. Tijdeman and Wang [TiWa88] showed that
+$w(n) \leq 4$ for all large $n$. Bajpai and Bennett [BaBe24] showed that
 $w(n) \leq 4$ for $n \geq 131082$ and $w(n) \leq 9$ for all $n$.
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in
@@ -36,7 +37,11 @@ combinatorial number theory*. Monographies de L'Enseignement Mathematique (1980)
 *S-unit equations and their applications*. New advances in transcendence theory
 (Durham, 1986), Cambridge Univ. Press (1988), 110-174.
 
-[BaBe24] Bajpai, P. and Bennett, M. A., *On sums of four smooth numbers*. (2024).
+[TiWa88] Tijdeman, R. and Wang, L. X., *Sums of products of powers of given prime
+numbers*. Pacific Journal of Mathematics (1988), 177-193.
+
+[BaBe24] Bajpai, P. and Bennett, M. A., *Effective S-unit equations beyond three
+terms: Newman's conjecture*. Acta Arithmetica (2024), 421-458.
 -/
 
 namespace Erdos407
