@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
 
 /-!
 # Erdős Problem 700
@@ -29,7 +30,10 @@ It is easy to see that $f(n) \le n/P(n)$ for composite $n$, and that $f(n) \ge p
 $f(n) \le (1+o(1))\, n / \log n$ in general. It is known that $f(n) = n/P(n)$ when $n$
 is a product of two primes, or $n = 30$.
 
-[ErSz78] Erdős, P. and Szekeres, G., 1978.
+See also OEIS sequence [A091963](https://oeis.org/A091963).
+
+[ErSz78] Erdős, P., Szekeres, G., _Some number theoretic problems on binomial
+coefficients_. Australian Mathematical Society Gazette **5** (1978), 97–99.
 -/
 
 namespace Erdos700
@@ -43,9 +47,6 @@ def f (n : ℕ) : ℕ :=
         ⟨2, Finset.mem_Icc.mpr ⟨le_refl _, by omega⟩, rfl⟩⟩)
   else 0
 
-/-- The largest prime factor of $n$. Returns $0$ if $n \le 1$. -/
-def greatestPrimeFactor (n : ℕ) : ℕ := n.primeFactorsList.foldl max 0
-
 /--
 Erdős Problem 700, Part (a) [ErSz78]:
 For any composite $n \ge 4$, $f(n) \le n / P(n)$ where $P(n)$ is the largest prime factor.
@@ -53,7 +54,16 @@ The characterization of those $n$ where equality holds is the open question.
 -/
 @[category research solved, AMS 11]
 theorem erdos_700.variants.upper_bound (n : ℕ) (hn : 4 ≤ n) (hcomp : ¬ Nat.Prime n) :
-    f n ≤ n / greatestPrimeFactor n := by
+    f n ≤ n / Nat.maxPrimeFac n := by
+  sorry
+
+/--
+Erdős Problem 700, Part (a') [ErSz78]:
+For any composite $n \ge 4$, $f(n) \ge p(n)$ where $p(n)$ is the smallest prime factor of $n$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_700.variants.lower_bound (n : ℕ) (hn : 4 ≤ n) (hcomp : ¬ Nat.Prime n) :
+    Nat.minFac n ≤ f n := by
   sorry
 
 /--
