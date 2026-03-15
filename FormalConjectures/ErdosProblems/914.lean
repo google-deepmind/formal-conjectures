@@ -29,6 +29,12 @@ Hajnal and Szemerédi proved this for all $r \geq 4$.
 
 This is known as the Hajnal–Szemerédi theorem.
 
+[Er67b] Erdős, P., _Some recent results on extremal problems in graph theory (Results)_.
+Theory of Graphs (Internat. Sympos., Rome, 1966) (1967), 117-123.
+
+[CoHa63] Corrádi, K. and Hajnal, A., _On the maximal number of independent circuits in a
+graph_. Acta Math. Acad. Sci. Hungar. **14** (1963), 423-439.
+
 [HaSz70] Hajnal, A. and Szemerédi, E., _Proof of a conjecture of P. Erdős_. Combinatorial theory
 and its applications, II (Proc. Colloq., Balatonfüred, 1969) (1970), 601-623.
 -/
