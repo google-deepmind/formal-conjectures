@@ -34,9 +34,11 @@ implies there must be some block size $t$ appearing at least
 $\Omega(\sqrt{n})$ times. This conjecture asks whether $O(\sqrt{n})$ is
 achievable for every block size simultaneously.
 
-[Er81] Erdős, P., _Problems and results in graph theory and combinatorics_,
-Proceedings of the Southeastern Conference on Combinatorics, Graph Theory,
-and Computing (1981), p. 35.
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica (1981), 25-42.
+
+[dBEr48] de Bruijn, N.G. and Erdős, P., _On a combinatorial problem_,
+Nederl. Akad. Wetensch., Proc. (1948), 1277–1279.
 -/
 
 open Finset
@@ -46,9 +48,9 @@ namespace Erdos734
 /-- A pairwise balanced block design (PBBD) on `Fin n`: a collection of
 subsets such that every pair of distinct elements is contained in
 exactly one block. -/
-def IsPBBD (n : ℕ) (blocks : Finset (Finset (Fin n))) : Prop :=
+def IsPairwiseBalancedDesign (n : ℕ) (blocks : Finset (Finset (Fin n))) : Prop :=
   ∀ (a b : Fin n), a ≠ b →
-    (blocks.filter (fun B => a ∈ B ∧ b ∈ B)).card = 1
+    ∃! B ∈ blocks, a ∈ B ∧ b ∈ B
 
 /--
 Erdős Problem 734 [Er81, p.35]:
@@ -62,7 +64,7 @@ theorem erdos_734 :
     ∃ C : ℝ, C > 0 ∧
     ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
       ∃ blocks : Finset (Finset (Fin n)),
-        IsPBBD n blocks ∧
+        IsPairwiseBalancedDesign n blocks ∧
         (∃ B ∈ blocks, 2 < B.card) ∧
         ∀ t : ℕ, ((blocks.filter (fun B => B.card = t)).card : ℝ) ≤
           C * (n : ℝ) ^ ((1 : ℝ) / 2) := by
