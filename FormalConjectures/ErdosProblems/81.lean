@@ -26,6 +26,12 @@ $n^2/6 + O(n)$ cliques?
 
 [EOZ93] Erdős, P., Ordman, E.T., and Zalcstein, Y., *Clique partitions of chordal graphs*,
 Combinatorics, Probability and Computing **2** (1993), 409-415.
+
+[CEO94] Chen, G., Erdős, P., and Ordman, E.T., *Clique partitions of split graphs*,
+Combinatorics, graph theory, algorithms and applications (Beijing, 1993) (1994), 21-30.
+
+See also: [Erdős Problem 1017](https://www.erdosproblems.com/1017) (general clique partition
+numbers).
 -/
 
 open SimpleGraph
@@ -75,11 +81,39 @@ theorem erdos_81 : answer(sorry) ↔
         (∀ S ∈ P, G.IsClique (↑S : Set (Fin n))) ∧
         -- Every edge of G is covered by some clique in P
         (∀ u v : Fin n, G.Adj u v → ∃ S ∈ P, u ∈ S ∧ v ∈ S) ∧
-        -- No edge belongs to two distinct cliques (partition, not just cover)
+        -- No edge belongs to two distinct cliques (partition, not just cover):
+        -- if u, v are both in S₁ and S₂ with S₁ ≠ S₂, then {u,v} is not an edge.
         (∀ S₁ ∈ P, ∀ S₂ ∈ P, S₁ ≠ S₂ →
           ∀ u v : Fin n, u ∈ S₁ → v ∈ S₁ → u ∈ S₂ → v ∈ S₂ → ¬G.Adj u v) ∧
         -- The number of cliques is at most n²/6 + C·n
         (P.card : ℝ) ≤ (n : ℝ) ^ 2 / 6 + C * (n : ℝ) := by
+  sorry
+
+/--
+A graph is a split graph if its vertices can be partitioned into a clique and an
+independent set.
+-/
+def IsSplitGraph {V : Type*} (G : SimpleGraph V) : Prop :=
+  ∃ (S T : Set V), S ∪ T = Set.univ ∧ Disjoint S T ∧
+    G.IsClique S ∧ ∀ u ∈ T, ∀ v ∈ T, u ≠ v → ¬G.Adj u v
+
+/--
+Split graph variant of Erdős Problem 81 (Chen, Erdős, Ordman [CEO94]):
+
+For split graphs (vertices partition into a clique and an independent set), the edges
+can be partitioned into at most $3n^2/16 + O(n)$ cliques.
+-/
+@[category research solved, AMS 5]
+theorem erdos_81_split :
+    ∃ C : ℝ, 0 < C ∧
+    ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
+      IsSplitGraph G →
+      ∃ P : Finset (Finset (Fin n)),
+        (∀ S ∈ P, G.IsClique (↑S : Set (Fin n))) ∧
+        (∀ u v : Fin n, G.Adj u v → ∃ S ∈ P, u ∈ S ∧ v ∈ S) ∧
+        (∀ S₁ ∈ P, ∀ S₂ ∈ P, S₁ ≠ S₂ →
+          ∀ u v : Fin n, u ∈ S₁ → v ∈ S₁ → u ∈ S₂ → v ∈ S₂ → ¬G.Adj u v) ∧
+        (P.card : ℝ) ≤ 3 * (n : ℝ) ^ 2 / 16 + C * (n : ℝ) := by
   sorry
 
 end Erdos81
