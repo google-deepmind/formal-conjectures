@@ -23,7 +23,21 @@ This problem concerns the powerful (2-full) part $Q_2$ of products of consecutiv
 $n(n+1)\cdots(n+\ell)$. It asks whether $Q_2 < n^{2+\varepsilon}$ for all sufficiently large $n$,
 and whether $Q_2 / n^{\ell+1} \to 0$ as $n \to \infty$.
 
+The second part is essentially the same (up to constants) as Problem 367.
+The ABC conjecture implies a positive answer to the third question.
+
 *Reference:* [erdosproblems.com/935](https://www.erdosproblems.com/935)
+
+*See also:* [Problem 367](https://www.erdosproblems.com/367),
+[OEIS A057521](https://oeis.org/A057521),
+[OEIS A389244](https://oeis.org/A389244)
+
+[Er76d] Erdős, P., _Problems and results on number theoretic properties of consecutive
+integers and related questions_. Proceedings of the Fifth Manitoba Conference on Numerical
+Mathematics (Univ. Manitoba, Winnipeg, Man., 1975) (1976), 25-44.
+
+[Fe26] Feng, T. et al., _Semi-Autonomous Mathematics Discovery with Gemini: A Case Study on
+the Erdős Problems_. arXiv:2601.22401 (2026).
 -/
 
 open Finset
@@ -78,6 +92,8 @@ Is it true that for every $\ell \geq 2$,
 $\lim_{n \to \infty} Q_2(n(n+1)\cdots(n+\ell))/n^{\ell+1} = 0$?
 Formulated as: for every $\varepsilon > 0$,
 $Q_2(n(n+1)\cdots(n+\ell)) < \varepsilon \cdot n^{\ell+1}$ for all sufficiently large $n$.
+
+The ABC conjecture implies a positive answer to this question.
 -/
 @[category research open, AMS 11]
 theorem erdos_935.variants.part3 :
