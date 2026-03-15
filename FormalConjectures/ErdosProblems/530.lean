@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 530
@@ -31,33 +32,35 @@ $A = \{1, \ldots, N\}$). The lower bound was improved to $N^{1/2} \ll \ell(N)$ b
 Sulyok, and Szemerédi [KSS75]. The correct constant is unknown, but it is likely that the
 upper bound is true, so that $\ell(N) \sim N^{1/2}$.
 
+Alon and Erdős [AlEr85] posed the stronger conjecture that any set of size $N$ can be
+decomposed into at most $(1+o(1))N^{1/2}$ Sidon sets.
+
+See also Problem 1088 (higher-dimensional generalization), Guy's collection [Gu04]
+(Problem C9), and OEIS sequence A143824.
+
 [Er73] Erdős, P., p.120. [Er75f] Erdős, P., p.104. [Er80e] Erdős, P.
 
-[Ri69] Riddell, J.
+[Ri69] Riddell, J., *On sets of numbers containing no l terms in arithmetic progression*,
+Nieuw Arch. Wisk. (3) (1969), 204–209.
 
-[KSS75] Komlós, J., Sulyok, M. and Szemerédi, E.
+[KSS75] Komlós, J., Sulyok, M. and Szemerédi, E., *Linear problems in combinatorial number
+theory*, Acta Math. Acad. Sci. Hungar. (1975), 113–121.
+
+[AlEr85] Alon, N. and Erdős, P., *An application of graph theory to additive number theory*,
+European J. Combin. 6 (1985), 201–203.
+
+[Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 -/
 
 open Finset Filter
 
 namespace Erdos530
 
-/-- A `Finset` of real numbers is a *Sidon set* if for all $a, b, c, d$ in the set
-with $a + b = c + d$, we have $\{a, b\} = \{c, d\}$ (i.e., all pairwise sums
-are distinct). -/
-def IsSidonSet (S : Finset ℝ) : Prop :=
-  ∀ a ∈ S, ∀ b ∈ S, ∀ c ∈ S, ∀ d ∈ S,
-    a + b = c + d → (a = c ∧ b = d) ∨ (a = d ∧ b = c)
-
-/-- The maximum size of a Sidon subset of $A$. -/
-noncomputable def maxSidonSubsetSize (A : Finset ℝ) : ℕ :=
-  sSup {k : ℕ | ∃ S : Finset ℝ, S ⊆ A ∧ IsSidonSet S ∧ S.card = k}
-
 /-- $\ell(N)$: the largest $k$ such that every $N$-element subset of $\mathbb{R}$ contains
-a Sidon subset of size at least $k$. Equivalently, the minimum of `maxSidonSubsetSize A`
+a Sidon subset of size at least $k$. Equivalently, the minimum of `Finset.maxSidonSubsetCard A`
 over all $N$-element sets $A \subset \mathbb{R}$. -/
 noncomputable def sidonSubsetNumber (N : ℕ) : ℕ :=
-  sInf {m : ℕ | ∃ A : Finset ℝ, A.card = N ∧ maxSidonSubsetSize A = m}
+  sInf {m : ℕ | ∃ A : Finset ℝ, A.card = N ∧ A.maxSidonSubsetCard = m}
 
 /--
 Is it true that $\ell(N) \sim N^{1/2}$, i.e. the ratio $\ell(N) / \sqrt{N}$ tends to $1$
