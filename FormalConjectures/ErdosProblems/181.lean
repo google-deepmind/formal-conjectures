@@ -26,6 +26,11 @@ graph $Q_n$ is at most linear in $2^n$, i.e., $R(Q_n) \ll 2^n$.
 
 [BuEr75] Burr, S. A. and Erdős, P., *On the magnitude of generalized Ramsey numbers for graphs*.
 Infinite and finite sets, Vol. 1 (1975), 214–240.
+
+[Er93] Erdős, P., *Some of my favorite solved and unsolved problems in graph theory*.
+Quaestiones Mathematicae **16** (1993), 333–350.
+
+[Ti22] Tikhomirov, K., *A remark on the Ramsey number of the hypercube*. arXiv:2208.14568 (2022).
 -/
 
 open SimpleGraph Finset
@@ -70,6 +75,19 @@ theorem erdos_181 :
     ∃ C : ℝ, 0 < C ∧
     ∀ n : ℕ, 1 ≤ n →
       (ramseyDiag (hypercubeGraph n) : ℝ) ≤ C * (2 ^ n : ℝ) := by
+  sorry
+
+/--
+Tikhomirov (2022) [Ti22] proved that $R(Q_n) \ll 2^{(2-c)n}$ for some constant $c > 0$.
+This is the best known upper bound toward Erdős Problem 181, improving over
+the trivial $R(Q_n) \leq R(2^n) \leq 4^{2^n}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_181_tikhomirov :
+    ∃ c : ℝ, 0 < c ∧
+    ∃ C : ℝ, 0 < C ∧
+    ∀ n : ℕ, 1 ≤ n →
+      (ramseyDiag (hypercubeGraph n) : ℝ) ≤ C * (2 : ℝ) ^ ((2 - c) * n) := by
   sorry
 
 end Erdos181
