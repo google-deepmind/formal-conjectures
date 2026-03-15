@@ -22,10 +22,15 @@ import FormalConjectures.Util.ProblemImports
 For unit complex vectors, the probability that a random signed sum has norm
 at most √2 is at least proportional to 1/n.
 
+See also Erdős Problem 498 (the classical Littlewood–Offord problem).
+
 *Reference:* [erdosproblems.com/395](https://www.erdosproblems.com/395)
 
+[CaCa11] Carnielli, W., Carolino, P. K., _Adjusting a conjecture of Erdős_.
+Contributions to Discrete Mathematics (2011), 154–159.
+
 [HJNS24] He, X., Juškevičius, T., Narayanan, B., and Spiro, S.,
-_A reverse Littlewood-Offord problem_.
+_The Reverse Littlewood-Offord problem of Erdős_. arXiv:2408.11034 (2024).
 -/
 
 open Finset
