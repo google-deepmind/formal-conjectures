@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/688](https://www.erdosproblems.com/688)
 
+[Er79d] Erdős, P., _Some unconventional problems in number theory_. Math. Mag. 52 (1979), 67-70.
+
 Define $\varepsilon_n$ to be maximal such that there exists some choice of congruence
 class $a_p$ for all primes $n^{\varepsilon_n} < p \leq n$ such that every integer in $[1, n]$
 satisfies at least one of the congruences $\equiv a_p \pmod{p}$.
