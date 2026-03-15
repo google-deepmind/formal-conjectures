@@ -24,6 +24,16 @@ import FormalConjectures.Util.ProblemImports
 Also known as the Erdős–Lovász Tihany conjecture.
 
 [Er68b] Erdős, P., _On chromatic number of graphs and set-systems_ (1968).
+
+[BrJu69] Brown, W. G. and Jung, H. A., _On odd circuits in chromatic graphs_.
+Acta Math. Acad. Sci. Hungar. (1969), 129-134.
+
+[BKPS09] Balogh, J., Kostochka, A. V., Prince, N., and Stiebitz, M.,
+_The Erdős–Lovász Tihany conjecture for quasi-line graphs_.
+Discrete Math. (2009), 3985-3991.
+
+[So22] Song, Z.-X., _A survey on the Erdős–Lovász Tihany conjecture_.
+Adv. Math. (China) (2022), 259–274.
 -/
 
 open SimpleGraph
