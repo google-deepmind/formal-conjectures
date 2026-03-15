@@ -28,6 +28,9 @@ entire circle with probability one if and only if $\sum \exp(a_1+\cdots+a_n)/n^2
 [Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961),
 p. 253.
 
+[Dv56] Dvoretzky, A., _On covering a circle by randomly placed arcs_. Proc. Nat. Acad. Sci. U.S.A.
+(1956), 199–203.
+
 [Sh72] Shepp, L. A., _Covering the circle with random arcs_. Israel J. Math. 11 (1972), 328–345.
 -/
 
@@ -41,7 +44,7 @@ part of $(y - x)$. -/
 noncomputable def CircArcCovers (x y ℓ : ℝ) : Prop :=
   Int.fract (y - x) < ℓ
 
-/-- The full unit circle $[0,1)$ is covered by arcs at centers $\omega(n)$ of lengths $a(n)$. -/
+/-- The full unit circle $[0,1)$ is covered by arcs starting at $\omega(n)$ of lengths $a(n)$. -/
 noncomputable def CircleFullyCovered (ω a : ℕ → ℝ) : Prop :=
   ∀ y : ℝ, 0 ≤ y → y < 1 → ∃ n : ℕ, CircArcCovers (ω n) y (a n)
 
