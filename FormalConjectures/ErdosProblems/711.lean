@@ -25,9 +25,16 @@ A problem of Erdős and Pomerance on the function $f(n,m)$, the minimal $f$ such
 in the open interval $(m, m+f)$ there exist distinct integers $a_1, \ldots, a_n$ with
 $k \mid a_k$ for all $1 \leq k \leq n$.
 
-[ErPo80] Erdős, P. and Pomerance, C., 1980.
+Erdős [Er92c] offered 1000 rupees for solutions to either part. See also [710].
 
-[vD26] van Doorn, 2026.
+[ErPo80] Erdős, P. and Pomerance, C., _Matching the natural numbers up to n with distinct multiples
+in another interval_. Nederl. Akad. Wetensch. Proc. Ser. A 83 (= Indag. Math. 42) (1980), 147-161.
+
+[Er92c] Erdős, P., _Some of my forgotten problems in number theory_. Hardy-Ramanujan J. 15 (1992),
+34-50.
+
+[vD26] van Doorn, W., _On the length of an interval that contains distinct multiples of the first
+n positive integers_. Integers (2026), #A7.
 -/
 
 open Nat
