@@ -21,12 +21,21 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/922](https://www.erdosproblems.com/922)
 
-Let $k \geq 0$. Let $G$ be a graph such that every subgraph $H$ contains an independent
+Let $k \geq 0$. Let $G$ be a graph such that every induced subgraph $H$ contains an independent
 set of size $\geq (n - k) / 2$, where $n$ is the number of vertices of $H$. Must $G$ have
 chromatic number at most $k + 2$?
 
 A question of Erdős and Hajnal [ErHa67b]. This is true, and was proved by
 Folkman [Fo70b].
+
+See also [Problem #73](https://www.erdosproblems.com/73).
+
+[ErHa67b] Erdős, P. and Hajnal, A., _On chromatic graphs_. Mat. Lapok (1967), 1-4.
+
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_. Proof Techniques in Graph
+Theory (1969), 27-35.
+
+[Fo70b] Folkman, J. H., _An upper bound on the chromatic number of a graph_ (1970), 437-457.
 -/
 
 open SimpleGraph
@@ -46,7 +55,7 @@ theorem erdos_922 : answer(True) ↔
     ∀ (V : Type*) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) (k : ℕ),
       (∀ S : Finset V, ∃ T : Finset V, T ⊆ S ∧
-        (↑T : Set V).Pairwise (fun u v => ¬G.Adj u v) ∧
+        G.IsIndepSet ↑T ∧
         2 * T.card + k ≥ S.card) →
       G.Colorable (k + 2) := by
   sorry
