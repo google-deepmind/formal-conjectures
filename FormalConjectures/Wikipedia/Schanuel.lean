@@ -28,14 +28,6 @@ open IntermediateField
 namespace Schanuel
 
 /--
-The transcendence degree of $A$ adjoined $\{x_1, \dots, x_n\}$ is $\leq n$.
--/
-@[category graduate, AMS 12 13 14]
-theorem adjoin_trdeg_le_of_finite {A B : Type*} [Field A] [Field B] [Algebra A B]
-    (n : ℕ) (z : Fin n → B) : n ≤ Algebra.trdeg A (adjoin A (Set.range z)) := by
-  sorry
-
-/--
 Given any set of $n$ complex numbers $\{z_1, ..., z_n\}$ that are linearly independent over
 $\mathbb{Q}$, the field extension $\mathbb{Q}(z_1, ..., z_n, e^{z_1}, ..., e^{z_n})$
 has transcendence degree at least $n$ over $\mathbb{Q}$.

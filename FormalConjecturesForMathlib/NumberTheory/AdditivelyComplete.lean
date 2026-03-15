@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Set.Finite.Lattice
-import Mathlib.Order.Filter.AtTopBot.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Set.Finite.Lattice
+public import Mathlib.Order.Filter.AtTopBot.Defs
+
+@[expose] public section
 
 variable {M : Type*} [AddCommMonoid M]
 

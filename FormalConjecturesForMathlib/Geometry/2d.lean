@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.LinearAlgebra.Orientation
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
-import Mathlib.Geometry.Euclidean.Triangle
+public import Mathlib.LinearAlgebra.Orientation
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
+public import Mathlib.Geometry.Euclidean.Triangle
 
-import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
-import FormalConjecturesForMathlib.Data.Set.Triplewise
+public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
+public import FormalConjecturesForMathlib.Data.Set.Triplewise
+
+@[expose] public section
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
@@ -193,6 +196,12 @@ of points.
 -/
 noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
   (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
+
+
+/-- Given a finite set of points in the, we define the number of distinct distances between
+a given point and all other points -/
+noncomputable def distinctDistancesFrom (points : Finset ℝ²) (pt : ℝ²) : ℕ :=
+  (points.image fun x => dist x pt).card
 
 end EuclideanGeometry
 

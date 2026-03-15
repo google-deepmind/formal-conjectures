@@ -13,12 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Mathlib.Combinatorics.SimpleGraph.Matching
-import Mathlib.Data.Real.Archimedean
-import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Mathlib.Combinatorics.SimpleGraph.Matching
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+
+@[expose] public section
 
 namespace SimpleGraph
 

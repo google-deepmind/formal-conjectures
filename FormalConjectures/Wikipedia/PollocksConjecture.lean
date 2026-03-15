@@ -34,19 +34,19 @@ namespace PollocksConjecture
 
 open scoped BigOperators
 
-/-! ## Definitions -/
+/-  ## Definitions -/
 
 /-- The $n$-th tetrahedral number: $T_n = \frac{n(n+1)(n+2)}{6}$. -/
 def tetrahedral (n : ℕ) : ℕ :=
   n * (n + 1) * (n + 2) / 6
 
-/-! ## Auxiliary definition -/
+/-  ## Auxiliary definition -/
 
 /-- The set of natural numbers that are **not** a sum of $4$ tetrahedral numbers. -/
 def NotSumOfFourTetrahedral : Set ℕ :=
   {N : ℕ | ∀ f : Fin 4 → ℕ, N ≠ ∑ i, tetrahedral (f i)}
 
-/-! ## Statements -/
+/-  ## Statements -/
 
 /--
 Pollock's (tetrahedral numbers) conjecture:
