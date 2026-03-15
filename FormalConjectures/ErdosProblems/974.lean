@@ -21,9 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/974](https://www.erdosproblems.com/974)
 
-A conjecture of Turán, proved by Tijdeman [Ti66].
+A conjecture of Turán [Er65b, p.213], proved by Tijdeman [Ti66].
 
-[Ti66] Tijdeman, R., _On a conjecture of Turán_, 1966.
+[Er65b] Erdős, P., _Extremal problems in number theory_ (1965), p.213.
+[Ti66] Tijdeman, R., _On a conjecture of Turán and Erdős_. Indag. Math. (1966), 374–383.
 -/
 
 open Finset BigOperators Complex
