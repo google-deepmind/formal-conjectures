@@ -25,15 +25,23 @@ Let $G$ be a graph on $n$ vertices with chromatic number $\chi(G)$ and let $\sig
 the maximal $k$ such that $G$ contains a subdivision of $K_k$. Is it true that
 $$\chi(G) \ll \frac{n^{1/2}}{\log n} \cdot \sigma(G)?$$
 
-Hajós originally conjectured that $\chi(G) \leq \sigma(G)$, which was proved by Dirac
-when $\chi(G) = 4$. Catlin disproved Hajós' conjecture for all $\chi(G) \geq 7$, and
-Erdős and Fajtlowicz disproved it in a strong form, showing that for almost
+Hajós originally conjectured that $\chi(G) \leq \sigma(G)$, which was proved by Dirac [Di52]
+when $\chi(G) = 4$. Catlin [Ca74] disproved Hajós' conjecture for all $\chi(G) \geq 7$, and
+Erdős and Fajtlowicz [ErFa81] disproved it in a strong form, showing that for almost
 all graphs on $n$ vertices, $\chi(G) \gg \frac{n^{1/2}}{\log n} \cdot \sigma(G)$.
 
 The answer is yes, proved by Fox, Lee, and Sudakov [FLS13].
 
+[Di52] Dirac, G. A., _A property of 4-chromatic graphs and some remarks on critical graphs_.
+J. London Math. Soc. **27** (1952), 85–92.
+
+[Ca74] Catlin, P. A., _Subgraphs of graphs, I_. Discrete Mathematics **10** (1974), 225–233.
+
+[ErFa81] Erdős, P. and Fajtlowicz, S., _On the conjecture of Hajós_. Combinatorica **1**
+(1981), 141–143.
+
 [FLS13] Fox, J., Lee, C., and Sudakov, B., _Chromatic number, clique subdivisions, and the
-conjectures of Hajós and Erdős–Fajtlowicz_, Combinatorica 33 (2013), 181–197.
+conjectures of Hajós and Erdős–Fajtlowicz_. Combinatorica **33** (2013), 181–197.
 -/
 
 open SimpleGraph
