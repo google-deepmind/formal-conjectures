@@ -25,8 +25,15 @@ Let $f(z)$ be an entire function of finite order, and let $\Gamma$ be a rectifia
 on which $f(z) \to \infty$. Let $\ell(r)$ be the length of $\Gamma$ in the disc $|z| < r$.
 Can such a path $\Gamma$ always be found with $\ell(r) \ll r$?
 
-[GoEr79] Gol'dberg, A. A. and Eremenko, A. È., *Asymptotic curves of entire functions*,
-1979.
+[GoEr79] Gol'dberg, A. A. and Eremenko, A. È., *Asymptotic curves of entire functions of
+finite order*. Mat. Sb. (N.S.) (1979), 555–581, 647.
+
+[Ha60] Hayman, W. K., *Defective values and asymptotic paths*. Matematika (1960), 21–27.
+
+[Ha60b] Hayman, W. K., *Slowly growing integral and subharmonic functions*. Comment. Math.
+Helv. (1960), 75–84.
+
+[Ha74] Hayman, W. K., *Research problems in function theory: new problems* (1974), 155–180.
 -/
 
 open Complex Filter Topology Set MeasureTheory
