@@ -24,6 +24,21 @@ import FormalConjectures.Util.ProblemImports
 Erdős–Purdy conjecture: if an $n$-point set in $\mathbb{R}^2$ determines at least $cn^2$ lines
 each containing more than three points, then some line must contain an unbounded number of
 points as $n \to \infty$.
+
+It is not even known whether $h_c(n) \geq 5$ (see Problem 101).
+
+Erdős originally conjectured the stronger bound $h_c(n) \gg_c n^{1/2}$, but this was disproven
+by Hunter using point sets in $\{1, \ldots, m\}^d$ projected to $\mathbb{R}^2$, which shows
+$h_c(n) \ll n^{1/\log(1/c)}$. It is easy to see that $h_c(n) \ll_c n^{1/2}$.
+
+[Er92e] Erdős, P., _Some unsolved problems in geometry, number theory and combinatorics_.
+Eureka (1992), 44-48.
+
+[Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Congressus Numerantium 107 (1995).
+
+[Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
+**164** (1997), 81–85.
 -/
 
 namespace Erdos102
@@ -60,6 +75,28 @@ theorem erdos_102 :
           ∃ L : AffineSubspace ℝ (EuclideanSpace ℝ (Fin 2)),
             Module.finrank ℝ L.direction = 1 ∧
             M ≤ Set.ncard {p : EuclideanSpace ℝ (Fin 2) | p ∈ (P : Set _) ∧ p ∈ L} := by
+  sorry
+
+/--
+Erdős Problem 102 (stronger conjecture, disproven):
+
+Erdős originally conjectured that $h_c(n) \gg_c n^{1/2}$, i.e., for each fixed $c > 0$ there
+exists a constant $C > 0$ such that for all sufficiently large $n$, every $n$-point configuration
+in $\mathbb{R}^2$ with at least $c \cdot n^2$ four-rich lines must contain some line with at least
+$C \cdot n^{1/2}$ points. This was disproven by Zach Hunter, who showed that point sets in
+$\{1, \ldots, m\}^d$ projected to $\mathbb{R}^2$ yield $h_c(n) \ll n^{1/\log(1/c)}$.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_102_strong_conjecture_false :
+    ¬ (∀ c : ℝ, c > 0 →
+      ∃ C : ℝ, C > 0 ∧
+        ∃ N : ℕ, ∀ n : ℕ, n ≥ N →
+          ∀ P : Finset (EuclideanSpace ℝ (Fin 2)),
+            P.card = n →
+            c * (n : ℝ) ^ 2 ≤ (fourPlusRichLineCount P : ℝ) →
+            ∃ L : AffineSubspace ℝ (EuclideanSpace ℝ (Fin 2)),
+              Module.finrank ℝ L.direction = 1 ∧
+              C * (n : ℝ) ^ (1/2 : ℝ) ≤ Set.ncard {p : EuclideanSpace ℝ (Fin 2) | p ∈ (P : Set _) ∧ p ∈ L}) := by
   sorry
 
 end Erdos102
