@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
 
 /-!
 # Erdős Problem 368
@@ -39,12 +40,8 @@ open Real
 
 namespace Erdos368
 
-/-- The largest prime factor of a natural number $n$. Returns $0$ if $n \leq 1$. -/
-noncomputable def largestPrimeFactor (n : ℕ) : ℕ :=
-  n.factorization.support.sup id
-
 /-- $F(n)$ is the largest prime factor of $n(n+1)$. -/
-noncomputable def F368 (n : ℕ) : ℕ := largestPrimeFactor (n * (n + 1))
+noncomputable def F368 (n : ℕ) : ℕ := (n * (n + 1)).maxPrimeFac
 
 /--
 Erdős Problem 368 — Lower bound conjecture [Er65b, Er76d, ErGr80]:
