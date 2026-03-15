@@ -25,17 +25,22 @@ Is it true that $\mathrm{ex}(n; H_k) \ll_k n^{3/2}$, where $H_k$ is the graph on
 $x, y_1, \ldots, y_k, z_1, \ldots, z_{\binom{k}{2}}$ in which $x$ is adjacent to every $y_i$ and
 each pair $y_i, y_j$ is adjacent to a unique $z_{ij}$?
 
-[Er69b] Erdős, P., 1969.
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_. Proof Techniques in Graph
+Theory (1969), 27-35.
 
-[Er71] Erdős, P., 1971.
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
 
-[Er74c] Erdős, P., 1974.
+[Er74c] Erdős, P., _Extremal problems on graphs and hypergraphs_. (1974), 75-84.
 
-[Er93] Erdős, P., 1993.
+[Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+Quaestiones Mathematicae (1993), 333-350.
 
-[Fu91] Füredi, Z., 1991.
+[Fu91] Füredi, Z., _On a Turán type problem of Erdős_. Combinatorica (1991), 75-79.
 
-[AKS03] Alon, N., Krivelevich, M., and Sudakov, B., 2003.
+[AKS03] Alon, N., Krivelevich, M., and Sudakov, B., _Turán numbers of bipartite graphs and
+related Ramsey-type questions_. Combinatorics, Probability and Computing 12 (2003),
+no. 5-6, 477-494.
 -/
 
 open SimpleGraph
