@@ -29,11 +29,13 @@ for some constant $c_k > 0$?
 Proved by Erdős [Er61e] for $k = 2$, with $c_2 = \sum_{j=1}^{\infty} p_j / 2^j$.
 The general case was proved by Elliott [El67b].
 
-[Er65b] Erdős, P.
+[Er65b] Erdős, P., _Extremal problems in number theory_. Lectures on Modern Mathematics,
+Vol. III (1965), 196–244.
 
-[Er61e] Erdős, P.
+[Er61e] Erdős, P., _Remarks on number theory. I_. Mat. Lapok (1961), 10–17.
 
-[El67b] Elliott, P.D.T.A.
+[El67b] Elliott, P.D.T.A., _A problem of Erdős concerning power residue sums_.
+Acta Arith. (1967/68), 131–149.
 -/
 
 open Real
