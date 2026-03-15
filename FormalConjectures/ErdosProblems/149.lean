@@ -34,7 +34,8 @@ namespace Erdos149
 /-- A set $S$ of edges of $G$ is strongly independent if for any two distinct edges
 $e_1, e_2 \in S$, every endpoint $u$ of $e_1$ and every endpoint $v$ of $e_2$ satisfy
 $u \neq v$ and $\neg G.\text{Adj}\; u\; v$. Equivalently, $S$ is an independent set in $L(G)^2$
-(the square of the line graph of $G$). -/
+(the square of the line graph of $G$).
+See also `strongChromaticIndex`, which inlines this condition. -/
 def IsStronglyIndepEdgeSet {V : Type*} (G : SimpleGraph V)
     (S : Set (Sym2 V)) : Prop :=
   S ⊆ G.edgeSet ∧
@@ -62,6 +63,22 @@ theorem erdos_149 :
     ∀ (V : Type*) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj],
       (strongChromaticIndex G : ℝ) ≤ (5 / 4 : ℝ) * (G.maxDegree : ℝ) ^ 2 := by
+  sorry
+
+/-- Precise Erdős–Nešetřil Conjecture for odd maximum degree (Erdős Problem 149) [ErNe85]:
+For any finite graph $G$ with odd maximum degree $\Delta = 2k + 1$,
+$$
+  \chi'_s(G) \leq 5k^2 + 4k + 1 = \frac{5\Delta^2 - 2\Delta + 1}{4}.
+$$
+This is strictly stronger than the uniform $\frac{5}{4}\Delta^2$ bound (see `erdos_149`)
+when $\Delta$ is odd, improving the bound by $k = (\Delta - 1) / 2$. -/
+@[category research open, AMS 5]
+theorem erdos_149_odd :
+    ∀ (V : Type*) [Fintype V] [DecidableEq V]
+      (G : SimpleGraph V) [DecidableRel G.Adj],
+      Odd G.maxDegree →
+      (strongChromaticIndex G : ℝ) ≤
+        (5 * (G.maxDegree : ℝ) ^ 2 - 2 * (G.maxDegree : ℝ) + 1) / 4 := by
   sorry
 
 end Erdos149
