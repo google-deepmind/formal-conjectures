@@ -30,12 +30,17 @@ How large can $\liminf A(x)/x^{1/2}$ be?
 Taking $A = \mathbb{N}$ shows that $\liminf A(x)/x^{1/2} = 1$ is possible. Erdős and
 Szemerédi [ErSz80] proved that it is always $\leq 1$.
 
-Tao proved that $A(x) \ll x^{1/2}$. van Doorn proved that
-$A(x) \leq (c + o(1))x^{1/2}$ where $c = \sum_{n \geq 1} 1/(n^{1/2}(n+1)) \approx 1.86$.
+Tao proved that $A(x) \ll x^{1/2}$. Chase also contributed to the problem.
+van Doorn proved that $A(x) \leq (c + o(1))x^{1/2}$ where
+$c = \sum_{n \geq 1} 1/(n^{1/2}(n+1)) \approx 1.86$.
 This was already proved by Erdős and Szemerédi, who showed this constant
 is best possible.
 
-[ErSz80] Erdős, P. and Szemerédi, E.
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[ErSz80] Erdős, P. and Szemerédi, E., _Remarks on a problem of the American Mathematical
+Monthly_. Mat. Lapok (1980), 121-124.
 -/
 
 open Filter
