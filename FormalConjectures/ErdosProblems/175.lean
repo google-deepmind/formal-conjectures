@@ -34,18 +34,23 @@ Granville and Ramaré [GrRa96] and Velammal [Ve95] for all $n \geq 5$.
 [GrRa96] Granville, A. and Ramaré, O., *Explicit bounds on exponential sums and the scarcity of squarefree binomial coefficients*. Mathematika **43** (1996), 73-107.
 
 [Ve95] Velammal, G., *Is the binomial coefficient $\binom{2n}{n}$ squarefree?*. Hardy-Ramanujan J. **18** (1995), 23-45.
+
+[Er79] Erdős, P., *Some unconventional problems in number theory*. Acta Math. Acad. Sci. Hungar. **33** (1979), 71-80.
+
+[ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+theory*. Monographies de L'Enseignement Mathématique (1980).
 -/
 
 namespace Erdos175
 
 /--
-Erdős Problem 175 [Er79, ErGr80]:
+Erdős Problem 175 [Er79, p.67] [ErGr80, p.71]:
 For any $n \geq 5$, the central binomial coefficient $\binom{2n}{n}$ is not squarefree.
 That is, there exists some prime $p$ such that $p^2$ divides $\binom{2n}{n}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_175 :
-    ∀ n : ℕ, 5 ≤ n → ¬Squarefree (Nat.choose (2 * n) n) := by
+    ∀ n : ℕ, 5 ≤ n → ¬Squarefree n.centralBinom := by
   sorry
 
 end Erdos175
