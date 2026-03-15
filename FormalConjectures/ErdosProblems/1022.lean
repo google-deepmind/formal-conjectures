@@ -21,11 +21,13 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1022](https://www.erdosproblems.com/1022)
 
-[Er71] Erdős, P., _Problems and results on graphs and hypergraphs: similarities and
-differences_ (1971), p. 105.
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
 
-[Wo13b] Wood, D.R., counterexample construction of triangle-free 2-degenerate
-$r$-uniform hypergraphs with chromatic number 3.
+[Lo68] Lovász, L., _On covering of graphs_. Theory of Graphs (Proc. Colloq., Tihany, 1966)
+(1968), 231-236.
+
+[Wo13b] Wood, D.R., _Hypergraph colouring and degeneracy_. arXiv:1310.2972 (2013).
 -/
 
 open Finset Filter
@@ -55,7 +57,7 @@ theorem erdos_1022 : answer(False) ↔
       ∀ (t : ℕ) (n : ℕ) (F : Finset (Finset (Fin n))),
         (∀ e ∈ F, t ≤ e.card) →
         (∀ X : Finset (Fin n),
-          ((F.filter (fun e => e ⊆ X)).card : ℝ) < c t * (X.card : ℝ)) →
+          ((F.filter (fun e => e ⊆ X)).card : ℝ) ≤ c t * (X.card : ℝ)) →
         HasPropertyB F := by sorry
 
 end Erdos1022
