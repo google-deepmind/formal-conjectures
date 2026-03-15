@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 877
@@ -27,29 +28,38 @@ property (no element of $\{1, \ldots, n\} \setminus A$ can be added while preser
 
 Is it true that $f_m(n) = o(2^{n/2})$?
 
-Cameron and Erdős [CaEr90] proved that $f_m(n) > 2^{n/4}$. Luczak and Schoen [LuSc01] proved
+Cameron and Erdős [CaEr90] proved that $f_m(n) > 2^{n/4}$. Łuczak and Schoen [LuSc01] proved
 that there exists $c < 1/2$ with $f_m(n) < 2^{cn}$, resolving the conjecture.
 Balogh, Liu, Sharifzadeh, and Treglown [BLST15] proved $f_m(n) = 2^{(1/4+o(1))n}$,
 later refined [BLST18] to $f_m(n) = (C_n + o(1)) \cdot 2^{n/4}$.
+
+[CaEr90] Cameron, P.J. and Erdős, P.
+
+[Er98] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Challenges for the 21st century (Singapore, 2000), 2001.
+
+[LuSc01] Łuczak, T. and Schoen, T., _On the number of maximal sum-free sets_,
+Proc. Amer. Math. Soc. (2001), 2205–2207.
+
+[BLST15] Balogh, J., Liu, H., Sharifzadeh, M., and Treglown, A., _The number of maximal
+sum-free subsets of integers_, Proc. Amer. Math. Soc. (2015), 4713–4721.
+
+[BLST18] Balogh, J., Liu, H., Sharifzadeh, M., and Treglown, A., _Sharp bound on the number
+of maximal sum-free subsets of integers_, J. Eur. Math. Soc. (JEMS) (2018), 1885–1911.
 -/
 
-open scoped Classical
+open scoped Classical Pointwise
 open Finset
 
 namespace Erdos877
-
-/-- A finite set of natural numbers is *sum-free* if for all $b, c \in A$,
-we have $b + c \notin A$. -/
-def IsSumFree (A : Finset ℕ) : Prop :=
-  ∀ b ∈ A, ∀ c ∈ A, b + c ∉ A
 
 /-- A subset $A$ of $\{1, \ldots, n\}$ is a *maximal sum-free subset* if it is sum-free
 and no element of $\{1, \ldots, n\} \setminus A$ can be added while preserving
 sum-freeness. -/
 def IsMaximalSumFree (A : Finset ℕ) (n : ℕ) : Prop :=
   A ⊆ Finset.Icc 1 n ∧
-  IsSumFree A ∧
-  ∀ x ∈ Finset.Icc 1 n, x ∉ A → ¬ IsSumFree (insert x A)
+  IsSumFree (A : Set ℕ) ∧
+  ∀ x ∈ Finset.Icc 1 n, x ∉ A → ¬ IsSumFree (↑(insert x A) : Set ℕ)
 
 /-- The number of maximal sum-free subsets of $\{1, \ldots, n\}$. -/
 noncomputable def maximalSumFreeCount (n : ℕ) : ℕ :=
@@ -64,7 +74,7 @@ $$f_m(n) = o(2^{n/2}).$$
 That is, for every $\varepsilon > 0$, for all sufficiently large $n$,
 $$f_m(n) \leq \varepsilon \cdot 2^{n/2}.$$
 
-Proved by Luczak and Schoen [LuSc01], with the sharp asymptotics
+Proved by Łuczak and Schoen [LuSc01], with the sharp asymptotics
 $f_m(n) = 2^{(1/4+o(1))n}$ established by Balogh–Liu–Sharifzadeh–Treglown [BLST15].
 -/
 @[category research solved, AMS 5]
