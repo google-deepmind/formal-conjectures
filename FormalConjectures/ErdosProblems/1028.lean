@@ -24,10 +24,18 @@ import FormalConjectures.Util.ProblemImports
 Let $H(n) = \min_f \max_{X \subseteq \{1,\ldots,n\}} \left|\sum_{x \neq y \in X} f(x,y)\right|$,
 where $f$ ranges over all functions $f\colon \{1,\ldots,n\}^2 \to \{-1,1\}$. Estimate $H(n)$.
 
-Erdős [Er63d] proved $n/4 \le H(n) \ll n^{3/2}$.
+Erdős [Er63d] proved $n/4 \le H(n)$ and Erdős [Er71, p.107] proved $H(n) \ll n^{3/2}$.
 Erdős and Spencer [ErSp71] proved that $H(n) \gg n^{3/2}$.
 
 Together these give $H(n) = \Theta(n^{3/2})$.
+
+[Er63d] Erdős, P., _On combinatorial questions connected with a theorem of Ramsey and van
+der Waerden_, Mat. Lapok (1963), 29–37.
+
+[Er71] Erdős, P., _Topics in combinatorial analysis_, Proc. Second Louisiana Conf. on
+Combinatorics, Graph Theory and Computing (1971), 2–20.
+
+[ErSp71] Erdős, P., Spencer, J., _Imbalances in k-colorations_, Networks (1971/72), 379–385.
 -/
 
 open Finset
