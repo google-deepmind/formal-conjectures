@@ -30,9 +30,27 @@ The conjecture asks: for each $k \geq 3$, does there exist some $c > 0$ and
 infinitely many $n$ such that $1_A^{(k)}(n) > n^c$?
 
 Connected to Waring's problem. The famous Hypothesis K of Hardy and Littlewood
-asserted $1_A^{(k)}(n) \leq n^{o(1)}$, which was disproved by Mahler for $k = 3$,
-who showed $1_A^{(3)}(n) \gg n^{1/12}$ for infinitely many $n$. Erdős believed
-Hypothesis K fails for all $k \geq 4$, but this remains unknown.
+asserted $1_A^{(k)}(n) \leq n^{o(1)}$, which was disproved by Mahler [Ma36] for
+$k = 3$, who showed $1_A^{(3)}(n) \gg n^{1/12}$ for infinitely many $n$. Erdős
+[Er36] believed Hypothesis K fails for all $k \geq 4$, but this remains unknown.
+
+## References
+
+[Er36] Erdős, P., *On the representation of an integer as the sum of k k-th powers*.
+Journal of the London Mathematical Society (1936), 133-136.
+
+[Ma36] Mahler, K., *Note on Hypothesis K of Hardy and Littlewood*. Journal of the
+London Mathematical Society (1936), 136-138.
+
+[Er65b] Erdős, P., *Some recent advances and current problems in number theory*.
+Lectures on Modern Mathematics, Vol. III (1965), 196-244.
+
+[ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+number theory*. Monographies de L'Enseignement Mathématique (1980).
+
+[Gu04] Guy, R., *Unsolved problems in number theory* (2004).
+
+OEIS: A025456, A025418
 -/
 
 open Finset
