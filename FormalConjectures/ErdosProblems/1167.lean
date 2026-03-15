@@ -21,7 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1167](https://www.erdosproblems.com/1167)
 
-A problem of Erdős, Hajnal, and Rado on cardinal partition relations.
+A problem of Erdős, Hajnal, and Rado on cardinal partition relations:
+does the stepping-up lemma hold for partition relations, i.e., does
+$2^\lambda \to (\kappa_\alpha + 1)^{r+1}$ imply $\lambda \to (\kappa_\alpha)^r$
+for $r \geq 2$ and $\lambda$ infinite?
+
+[Va99] Vaughan, J., *Small uncountable cardinals and topology*. Open Problems in Topology (1999).
 -/
 
 open Cardinal
@@ -38,7 +43,7 @@ def CardinalPartitionRel (κ : Cardinal) {ι : Type*} (targets : ι → Cardinal
       Cardinal.mk H ≥ targets i ∧
       ∀ s : Finset S, s.card = r → (↑s : Set S) ⊆ H → c s = i
 
-/-- **Erdős Problem 1167** (Erdős–Hajnal–Rado):
+/-- **Erdős Problem 1167** [Va99, 7.79] (Erdős–Hajnal–Rado):
     For $r \geq 2$ and $\lambda$ infinite, does
     $2^\lambda \to (\kappa_\alpha + 1)^{r+1}$ imply $\lambda \to (\kappa_\alpha)^r$? -/
 @[category research open, AMS 3 5]
