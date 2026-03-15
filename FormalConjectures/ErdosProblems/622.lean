@@ -34,6 +34,12 @@ with degree $n$, as $K_{n,n}$ shows.
 This has been resolved by Draganić, Keevash, and Müyesser [DKM25], who prove the
 asymptotically tight result that there are at least $(1/2 + o(1))2^{2n}$ subsets
 which are spanned by a cycle.
+
+[Er99] Erdős, P., *Some of my favourite problems in various branches of combinatorics*,
+Le Matematiche, 1999.
+
+[DKM25] Draganić, N., Keevash, P., Müyesser, A., *Cyclic subsets in regular Dirac graphs*,
+arXiv:2503.01826 (2025).
 -/
 
 open scoped Classical
