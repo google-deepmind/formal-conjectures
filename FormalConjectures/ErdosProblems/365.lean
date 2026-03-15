@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.Full
 
 /-!
 # Erdős Problem 365
@@ -27,20 +28,19 @@ Numerical Mathematics (1976), p. 31.
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*, Monographies de L'Enseignement Mathematique (1980), p. 68.
 
-[Go70] Golomb, S.W., *Powerful numbers*, Amer. Math. Monthly 77 (1970), 848–852.
+[Go70] Golomb, S.W., *Powerful numbers*, Amer. Math. Monthly **77** (1970), 848–855.
 
 [Wa76] Walker, D.T., *Consecutive integer pairs of powerful numbers and related Diophantine
-equations*, Fibonacci Quart. 14 (1976), 111–116.
+equations*, Fibonacci Quart. **14** (1976), 111–116.
+
+[Gu04] Guy, R.K., *Unsolved Problems in Number Theory*, 3rd ed., Springer (2004), Problem B16.
+
+See also OEIS sequences A060355, A060859, A175155. Related: Erdős Problem 364.
 -/
 
 open Finset Real
 
 namespace Erdos365
-
-/-- A positive integer $n$ is *powerful* (also called squarefull) if for every
-prime $p$ dividing $n$, $p^2$ also divides $n$. -/
-def IsPowerful (n : ℕ) : Prop :=
-  0 < n ∧ ∀ p : ℕ, p.Prime → p ∣ n → p ^ 2 ∣ n
 
 /--
 Erdős Problem 365 [Er76d, p. 31] [ErGr80, p. 68]:
@@ -49,6 +49,10 @@ Do all pairs of consecutive powerful numbers $n$ and $n+1$ come from solutions t
 Pell equations? In other words, must either $n$ or $n+1$ be a square?
 
 Is the number of such $n \leq x$ bounded by $(\log x)^{O(1)}$?
+
+Erdős originally asked Mahler whether infinitely many consecutive powerful pairs exist.
+Mahler immediately observed that the answer is yes from the infinitely many solutions to
+the Pell equation $x^2 = 2^3 y^2 + 1$.
 
 The first question was answered negatively by Golomb [Go70], who observed that
 $12167 = 23^3$ and $12168 = 2^3 \cdot 3^2 \cdot 13^2$ are both powerful (neither is a square).
@@ -64,7 +68,7 @@ theorem erdos_365 : answer(sorry) ↔
     ∃ C : ℝ, 0 < C ∧
       ∃ x₀ : ℕ, ∀ x : ℕ, x₀ ≤ x →
         ∀ S : Finset ℕ, S ⊆ Finset.Icc 1 x →
-          (∀ n ∈ S, IsPowerful n ∧ IsPowerful (n + 1)) →
+          (∀ n ∈ S, Nat.Powerful n ∧ Nat.Powerful (n + 1)) →
           (S.card : ℝ) ≤ (Real.log (x : ℝ)) ^ C := by
   sorry
 
