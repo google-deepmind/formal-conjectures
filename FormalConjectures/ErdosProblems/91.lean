@@ -40,7 +40,7 @@ DilationEquiv. -/
 def DilationEquivSimilar (A B : Finset ℝ²) : Prop :=
   ∃ f : ℝ² ≃ᵈ ℝ², (f '' A) = B
 
-noncomputable def unitSquare : Finset ℝ² := {![0, 0], ![0, 1], ![1, 0], ![1, 1]}
+noncomputable def unitSquare : Finset ℝ² := {!₂[0, 0], !₂[0, 1], !₂[1, 0], !₂[1, 1]}
 
 /-- Regular 7-gon with unit side length, touching both axes in the first quadrant. -/
 noncomputable def circleSeven : Finset ℝ² :=
