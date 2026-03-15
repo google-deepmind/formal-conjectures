@@ -35,8 +35,8 @@ namespace Erdos1174
 Erdős Problem 1174, Part 1 [Va99, §7.91]:
 
 Does there exist a graph $G$ with no $K_4$ (no 4-clique) such that for every
-edge colouring of $G$ with countably many colours ($\mathbb{N}$), some monochromatic $K_3$
-(a 3-clique whose three edges all receive the same colour) exists in $G$?
+edge colouring of $G$ with countably many colours ($\mathbb{N}$), some monochromatic
+$K_3$ (a 3-clique whose three edges all receive the same colour) exists in $G$?
 
 This is an open problem of Erdős and Hajnal. Shelah proved that such a graph
 can consistently exist (i.e., its existence is consistent with ZFC).
@@ -45,9 +45,9 @@ can consistently exist (i.e., its existence is consistent with ZFC).
 theorem erdos_1174 : answer(sorry) ↔
     ∃ (V : Type) (G : SimpleGraph V),
       (∀ S : Finset V, ¬G.IsNClique 4 S) ∧
-      ∀ (col : V → V → ℕ), (∀ u v : V, col u v = col v u) →
+      ∀ (col : Sym2 V → ℕ),
         ∃ (S : Finset V) (c : ℕ), G.IsNClique 3 S ∧
-          ∀ u ∈ S, ∀ v ∈ S, u ≠ v → col u v = c := by
+          ∀ u ∈ S, ∀ v ∈ S, u ≠ v → col s(u, v) = c := by
   sorry
 
 /--
@@ -65,9 +65,9 @@ can consistently exist (i.e., its existence is consistent with ZFC).
 theorem erdos_1174.variants.infinite_clique : answer(sorry) ↔
     ∃ (V : Type) (G : SimpleGraph V),
       (¬∃ S : Set V, aleph 1 ≤ Cardinal.mk ↥S ∧ G.IsClique S) ∧
-      ∀ (col : V → V → ℕ), (∀ u v : V, col u v = col v u) →
+      ∀ (col : Sym2 V → ℕ),
         ∃ (S : Set V) (c : ℕ), aleph 0 ≤ Cardinal.mk ↥S ∧ G.IsClique S ∧
-          ∀ u ∈ S, ∀ v ∈ S, u ≠ v → col u v = c := by
+          ∀ u ∈ S, ∀ v ∈ S, u ≠ v → col s(u, v) = c := by
   sorry
 
 end Erdos1174
