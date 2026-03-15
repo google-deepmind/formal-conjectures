@@ -29,6 +29,18 @@ A problem of Erdős, Hajnal, and Shelah [EHS74], who proved that $G$ must
 contain all sufficiently large cycles (see [594]).
 
 This is true, and was proved by Thomassen [Th83].
+
+## References
+
+[EHS74] Erdős, P., Hajnal, A., and Shelah, S., *On some general properties of chromatic numbers*.
+Topics in topology (Proc. Colloq., Keszthely, 1972), Colloq. Math. Soc. Janos Bolyai (1974),
+243-255.
+
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+Combinatorica **1** (1981), 25–42.
+
+[Th83] Thomassen, C., _Cycles in graphs of uncountable chromatic number_,
+Combinatorica **3** (1983), 133–134.
 -/
 
 open SimpleGraph
