@@ -31,7 +31,11 @@ large such graphs with no cycle of length $23$.
 
 It remains open whether the answer is affirmative when restricted to even $k$.
 
-[NPS17] Narins, L., Pokrovskiy, A. and Szabó, T., _Graphs without long cycles_, 2017.
+[EFGS88] Erdős, P., Faudree, R., Gyárfás, A. and Schelp, R. H., _Cycles in graphs without
+proper subgraphs of minimum degree 3_. Ars Combinatoria (1988), 195–201.
+
+[NPS17] Narins, L., Pokrovskiy, A. and Szabó, T., _Graphs without proper subgraphs of
+minimum degree 3 and short cycles_. Combinatorica (2017), 495–519.
 -/
 
 open Filter SimpleGraph
@@ -56,6 +60,19 @@ theorem erdos_815 : answer(False) ↔
     ∀ k : ℕ, k ≥ 3 → ∀ᶠ n in atTop,
       ∀ (G : SimpleGraph (Fin n)), IsDegree3Critical G →
         ∃ (v : Fin n) (p : G.Walk v v), p.IsCycle ∧ p.length = k := by
+  sorry
+
+/--
+**Erdős Problem 815 (even-k variant):**
+
+It remains open whether for every $k \geq 2$, every sufficiently large degree 3
+critical graph contains a cycle of length $2k$ (i.e., every even length $\geq 4$).
+-/
+@[category research open, AMS 5]
+theorem erdos_815.variants.even_cycle :
+    ∀ k : ℕ, k ≥ 2 → ∀ᶠ n in atTop,
+      ∀ (G : SimpleGraph (Fin n)), IsDegree3Critical G →
+        ∃ (v : Fin n) (p : G.Walk v v), p.IsCycle ∧ p.length = 2 * k := by
   sorry
 
 end Erdos815
