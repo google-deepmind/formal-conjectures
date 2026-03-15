@@ -39,9 +39,12 @@ Li [Li25] resolved both formulations:
 - In the chromatic formulation, there exists a $3$-critical $3$-uniform
   hypergraph on $9$ vertices with minimum degree $7$ (answer: YES).
 
-[Er74d] Erdős, P. and Lovász, L. (1974).
+[Er74d, p.282] Erdős, P. and Lovász, L., _Problems and results on 3-chromatic hypergraphs
+and some related questions_. Infinite and Finite Sets, Colloq. Math. Soc. J. Bolyai **10**
+(1975), 609–627.
 
-[Li25] Li (2025).
+[Li25] Li, R., _On an Erdős-Lovász problem: 3-critical 3-graphs of minimum degree 7_.
+arXiv:2512.24850 (2025).
 -/
 
 open Finset
