@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 Does there exist, for every α ∈ [0,1], a subring of ℝ with Hausdorff dimension α?
 
 [Er79h] Erdős, P., _Some unconventional problems in number theory_. Math. Mag. 52 (1979), p. 119.
+
+[Va99] Varga, R.S., _Scientific Computation on Mathematical Problems and Conjectures_, 1999.
 -/
 
 open MeasureTheory
