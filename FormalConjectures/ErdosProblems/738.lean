@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 738
@@ -29,11 +30,6 @@ open SimpleGraph
 
 namespace Erdos738
 
-/-- A graph has infinite chromatic number: it cannot be properly colored
-with finitely many colors. -/
-def HasInfiniteChromaticNumber {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∀ n : ℕ, IsEmpty (G.Coloring (Fin n))
-
 /--
 Erdős Problem 738 (Gyárfás conjecture) [Er81]:
 
@@ -43,7 +39,7 @@ If $G$ is a graph with infinite chromatic number and $G$ is triangle-free
 @[category research open, AMS 5]
 theorem erdos_738 : answer(sorry) ↔
     ∀ (V : Type*) (G : SimpleGraph V),
-    HasInfiniteChromaticNumber G → G.CliqueFree 3 →
+    χ(G) = ⊤ → G.CliqueFree 3 →
     ∀ (m : ℕ) (T : SimpleGraph (Fin m)), T.IsTree →
       Nonempty (T ↪g G) := by
   sorry
