@@ -26,8 +26,11 @@ and the only primes dividing $v$ are in $(k,n]$. Let $f(n)$ be the smallest $k$ 
 that $u > n^2$. Give bounds for $f(n)$.
 
 Mahler's theorem implies $f(n) \to \infty$ as $n \to \infty$, but is ineffective and gives
-no explicit bounds. Tang proved $f(n) \le n^{30/43 + o(1)}$.
-A heuristic suggests $f(n) \sim 2 \log n$ for most $n$.
+no explicit bounds. Tang and ChatGPT proved $f(n) \le n^{30/43 + o(1)}$, and the same proof
+yields $f(n) \le n^{2/3 + o(1)}$ under the Riemann Hypothesis.
+A heuristic due to Sothanaphan and ChatGPT suggests $f(n) \sim 2 \log n$ for most $n$.
+
+Possibly related OEIS sequence: [A392019](https://oeis.org/A392019).
 
 [Er79d] Erdős, P., _Problems and results on number theoretic properties of consecutive integers
 and related questions_. Proceedings of the Fifth Manitoba Conference on Numerical Mathematics
@@ -42,7 +45,7 @@ namespace Erdos684
 all primes $p \le k$. This is the largest divisor of $m$ whose prime factors
 are all at most $k$. -/
 noncomputable def smoothPart (m k : ℕ) : ℕ :=
-  ∏ p ∈ (Finset.range (k + 1)).filter Nat.Prime, p ^ (m.factorization p)
+  ∏ p ∈ (Finset.Icc 2 k).filter Nat.Prime, p ^ (m.factorization p)
 
 /-- $f(n)$ for Erdős Problem 684: the smallest $k$ such that the $k$-smooth part
 of $\binom{n}{k}$ exceeds $n^2$. Returns $0$ if no such $k$ exists. -/
@@ -58,23 +61,37 @@ For every bound $K$, for all sufficiently large $n$, the smallest $k$ such that 
 $k$-smooth part of $\binom{n}{k}$ exceeds $n^2$ is greater than $K$.
 
 This follows from Mahler's theorem. The problem asks for effective bounds
-on the growth of $f(n)$.
+on the growth of $f(n)$, which remains open.
 -/
-@[category research solved, AMS 11]
+@[category research open, AMS 11]
 theorem erdos_684 :
     ∀ K : ℕ, ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ → erdos684F n > K := by
   sorry
 
 /--
-Erdős Problem 684, upper bound (Tang):
+Erdős Problem 684, upper bound (Tang and ChatGPT):
 
 $f(n) \le n^{30/43 + o(1)}$. For every $\varepsilon > 0$, for all sufficiently large $n$,
 $f(n) \le n^{30/43 + \varepsilon}$.
 -/
-@[category research solved, AMS 11]
+@[category research open, AMS 11]
 theorem erdos_684.variants.upper_bound :
     ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       (erdos684F n : ℝ) ≤ (n : ℝ) ^ ((30 : ℝ) / 43 + ε) := by
+  sorry
+
+/--
+Erdős Problem 684, conditional upper bound under the Riemann Hypothesis
+(Tang and ChatGPT):
+
+$f(n) \le n^{2/3 + o(1)}$ assuming RH. For every $\varepsilon > 0$, for all sufficiently
+large $n$, $f(n) \le n^{2/3 + \varepsilon}$.
+-/
+@[category research open, AMS 11]
+theorem erdos_684.variants.upper_bound_conditional_RH :
+    RiemannHypothesis →
+    ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      (erdos684F n : ℝ) ≤ (n : ℝ) ^ ((2 : ℝ) / 3 + ε) := by
   sorry
 
 end Erdos684
