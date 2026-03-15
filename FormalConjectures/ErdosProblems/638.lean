@@ -23,7 +23,16 @@ Is it true that for every infinite cardinal $\kappa$ there is a graph $G$ such t
 finite induced subgraph of $G$ belongs to a given family $S$ with the Ramsey property, and
 every $\kappa$-colouring of the edges of $G$ contains a monochromatic triangle?
 
+Erdős noted: "if the answer is affirmative many extensions and generalisations will be
+possible."
+
+See also Problem 639, which comes from the same paper and concerns monochromatic triangles
+in 2-colourings of $K_n$.
+
 *Reference:* [erdosproblems.com/638](https://www.erdosproblems.com/638)
+
+[Er97d] Erdős, P., _Some of my favourite problems in various branches of combinatorics_,
+Matematiche (Catania), 1997.
 -/
 
 open SimpleGraph Cardinal
@@ -36,18 +45,6 @@ def HasMonoTriangle {V : Type*} (G : SimpleGraph V) {α : Type*}
     (c : V → V → α) : Prop :=
   ∃ a b d : V, G.Adj a b ∧ G.Adj b d ∧ G.Adj a d ∧
     c a b = c b d ∧ c a b = c a d
-
-/-- The induced subgraph of $G$ pulled back along an embedding
-    $f : \operatorname{Fin} m \hookrightarrow V$. -/
-def inducedFinSubgraph {V : Type*} (G : SimpleGraph V) {m : ℕ}
-    (f : Fin m ↪ V) : SimpleGraph (Fin m) where
-  Adj i j := G.Adj (f i) (f j)
-  symm _ _ h := G.symm h
-  loopless i h := G.loopless (f i) h
-
-/-- Two graphs on $\operatorname{Fin} m$ are isomorphic via a permutation of vertices. -/
-def FinGraphIso {m : ℕ} (G H : SimpleGraph (Fin m)) : Prop :=
-  ∃ σ : Equiv.Perm (Fin m), ∀ i j, G.Adj i j ↔ H.Adj (σ i) (σ j)
 
 /--
 **Erdős Problem 638**
@@ -70,7 +67,7 @@ theorem erdos_638 : answer(sorry) ↔
       (κ : Cardinal) (_ : ℵ₀ ≤ κ),
     ∃ (V : Type) (G : SimpleGraph V),
       (∀ (m : ℕ) (f : Fin m ↪ V),
-        ∃ H ∈ S m, FinGraphIso (inducedFinSubgraph G f) H) ∧
+        ∃ H ∈ S m, Nonempty (G.comap f ≃g H)) ∧
       ∀ (α : Type) (_ : #α = κ) (c : V → V → α),
         (∀ u v, c u v = c v u) → HasMonoTriangle G c := by
   sorry
