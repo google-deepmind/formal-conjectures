@@ -31,6 +31,9 @@ $\tau(G) \leq t$.
 
 [EHT91] Erdős, P., Hajnal, A., and Tuza, Zs., _Local constraints ensuring small representing
 sets_. J. Combin. Theory Ser. A 58 (1991), 78-84.
+
+[Er99] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
+Matematiche (Catania) (1999).
 -/
 
 open Finset
