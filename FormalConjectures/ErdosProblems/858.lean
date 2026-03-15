@@ -33,13 +33,19 @@ $$\frac{1}{\log N} \sum_{n \in A} \frac{1}{n} \ll \frac{1}{\sqrt{\log \log N}}.$
 An example of such a set $A$ is the set of all integers in $[N^{1/2}, N]$
 divisible by some prime $> N^{1/2}$.
 
-[Al66] Alexander, R., *Density and sequence of subsets of integers*.
+See also [Erdős Problem 143](https://www.erdosproblems.com/143) concerning primitive sets.
 
-[ESS68] Erdős, P., Sárközi, A., and Szemerédi, E., *On divisibility properties of
-sequences of integers*.
+[Er70] Erdős, P. (1970), p. 128.
+
+[Al66] Alexander, R., *Density and multiplicative structure of sets of integers*.
+Acta Arith. (1966/67), 321-332.
+
+[ESS68] Erdős, P., Sárközi, A., and Szemerédi, E., *On the solvability of certain
+equations in sequences of positive upper logarithmic density*.
+J. London Math. Soc. (1968), 71-78.
 
 [Be35] Behrend, F., *On sequences of numbers not divisible one by another*.
-J. London Math. Soc. **10** (1935), 42-44.
+J. London Math. Soc. **10** (1935), 42-45.
 -/
 
 open scoped BigOperators
