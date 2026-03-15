@@ -27,6 +27,9 @@ must exist a monochromatic non-trivial arithmetic progression of length $k$?
 
 A problem of Erdős [Er75b]. Spencer has shown that such a set exists.
 This is an arithmetic analogue of the graph theory version [924].
+
+[Er75b] Erdős, P., _Problems and results in combinatorial number theory_. Journées
+Arithmétiques de Bordeaux (Conf., Univ. Bordeaux, Bordeaux, 1974) (1975), 295–310.
 -/
 
 namespace Erdos966
