@@ -25,12 +25,13 @@ Let $S_n$ denote a simple random walk on $\mathbb{Z}^2$ starting at the origin, 
 be the largest integer such that the walk visits every lattice point within distance $R_n$ of the
 origin in its first $n$ steps. Is it true that $\log R_n \asymp \sqrt{\log n}$ almost surely?
 
-[Va99] Vershik, A., *Random walks on random and changing graphs*, 1999, Problem 6.76.
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999), §6.76.
 
-[Re90] Révész, P., *Random Walk in Random and Non-Random Environments*, World Scientific, 1990.
+[Re90] Révész, P., _Random walk in random and nonrandom environments_, World Scientific, 1990.
 
-[DPRZ04] Dembo, A., Peres, Y., Rosen, J. and Zeitouni, O., *Cover times for Brownian motion
-and random walks in two dimensions*, Annals of Mathematics, 2004.
+[DPRZ04] Dembo, A., Peres, Y., Rosen, J. and Zeitouni, O., _Cover times for Brownian motion
+and random walks in two dimensions_, Annals of Mathematics **160** (2004), 433–464.
 -/
 
 open MeasureTheory ProbabilityTheory Filter Finset BigOperators
@@ -83,6 +84,24 @@ theorem erdos_1164 : answer(True) ↔
           ∀ᵐ ω ∂μ, ∀ᶠ (n : ℕ) in atTop,
             c₁ * Real.sqrt (Real.log (n : ℝ)) ≤ Real.log (coveringRadius X ω n : ℝ) ∧
             Real.log (coveringRadius X ω n : ℝ) ≤ c₂ * Real.sqrt (Real.log (n : ℝ)) := by
+  sorry
+
+/--
+Erdős Problem 1164 — Stronger distributional result [DPRZ04]:
+
+Dembo, Peres, Rosen, and Zeitouni proved the stronger conjecture that
+$$\lim_{n \to \infty} \mathbb{P}\left(\frac{(\log R_n)^2}{\log n} \le x\right) = e^{-4x}$$
+for all $x > 0$. This subsumes the original asymptotic statement `erdos_1164`.
+-/
+@[category research solved, AMS 60]
+theorem erdos_1164_strong :
+    ∀ (Ω : Type*) [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+      (X : ℕ → Ω → ℤ × ℤ),
+      (∀ i, IsUniformStep μ (X i)) → iIndepFun X μ →
+        ∀ x : ℝ, 0 < x →
+          Filter.Tendsto (fun n : ℕ =>
+            (μ {ω | (Real.log (coveringRadius X ω n : ℝ)) ^ 2 / Real.log (n : ℝ) ≤ x}).toReal)
+          Filter.atTop (nhds (Real.exp (-4 * x))) := by
   sorry
 
 end Erdos1164

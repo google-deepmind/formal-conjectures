@@ -26,11 +26,14 @@ maximum number of times up to step $n$. Tóth proved that $|F(n)| = r$ occurs on
 often almost surely for every $r \ge 4$, and Hao–Li–Okada–Zheng proved that $|F(n)| = 3$
 occurs infinitely often almost surely.
 
-[Va99] Vize, R., *Open problems on random walks* (1999), §6.77.
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+"Paul Erdős and his mathematics", Budapest, July 1999 (1999), §6.77.
 
-[To01] Tóth, B., proved that $\mathbb{P}(|F(n)| = r \text{ i.o.}) = 0$ for all $r \ge 4$.
+[To01] Tóth, B., _No more than three favorite sites for simple random walk_.
+Ann. Probab. (2001), 484–503.
 
-[HLOZ24] Hao, Li, Okada, and Zheng proved that $\mathbb{P}(|F(n)| = 3 \text{ i.o.}) = 1$.
+[HLOZ24] Hao, C., Li, X., Okada, I., Zheng, Y., _Favorite sites for simple random walk
+in two and more dimensions_. arXiv:2409.00995 (2024).
 -/
 
 open MeasureTheory ProbabilityTheory Filter Finset BigOperators
