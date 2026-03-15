@@ -89,9 +89,7 @@ with $\lvert A\rvert=n = \lvert B\rvert$, which minimise the number of distinct 
 with $n$ elements are similar.
 -/
 def UniqueMinimizer (n : ℕ) : Prop :=
-  ∀ (A B : Finset ℝ²),  A.card = n → B.card = n →
-  minimalDistinctDistances n = distinctDistances A →
-  minimalDistinctDistances n = distinctDistances B → DilationEquivSimilar A B
+  ∀ A B : Finset ℝ², IsOptimal A n → IsOptimal B n → DilationEquivSimilar A B
 
 /--
 Suppose $A\subset \mathbb{R}^2$ has $\lvert A\rvert=n$ and minimises the number of distinct
