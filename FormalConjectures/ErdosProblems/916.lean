@@ -58,6 +58,7 @@ theorem erdos_916 : answer(True) ↔
     ∀ (n : ℕ), n ≥ 4 →
     ∀ (G : SimpleGraph (Fin n)) (_ : DecidableRel G.Adj),
     G.edgeFinset.card ≥ 2 * n - 2 →
+    -- `k + 3` encodes a cycle of length at least 3
     ∃ (k : ℕ) (cycle : Fin (k + 3) → Fin n),
       Function.Injective cycle ∧
       (∀ i : Fin (k + 3), G.Adj (cycle i)
