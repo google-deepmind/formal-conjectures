@@ -27,10 +27,11 @@ infinitely many $n$? Proved by Liu and Montgomery [LiMo20]. See also Problem #64
 [Er93, p.342] [Er94b] [Er95] [Er95d] [Er96] [Er97b] Various papers by Erdős where this
 problem appears.
 
-[ErHa66] Erdős, P. and Hajnal, A., On chromatic number of graphs and set-systems. Acta Math. Acad.
-Sci. Hungar. (1966), 61-99.
+[ErHa66] Erdős, P. and Hajnal, A., _On chromatic number of graphs and set-systems_.
+Acta Math. Acad. Sci. Hungar. **17** (1966), 61–99.
 
-[LiMo20] Liu, H. and Montgomery, R., _A solution to Erdős and Hajnal's odd cycle problem_, 2020.
+[LiMo20] Liu, H. and Montgomery, R., _A solution to Erdős and Hajnal's odd cycle problem_.
+J. Amer. Math. Soc. **36** (2023), 1191–1234.
 -/
 
 open SimpleGraph
