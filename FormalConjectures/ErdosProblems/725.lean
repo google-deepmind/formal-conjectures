@@ -28,11 +28,15 @@ $$
 when $k = o((\log n)^{3/2-\varepsilon})$. Yamamoto [Ya51] extended this to
 $k \leq n^{1/3-o(1)}$.
 
-[ErKa46] Erdős, P. and Kaplansky, I., _The asymptotic number of Latin rectangles_ (1946).
+[ErKa46] Erdős, P., Kaplansky, I., _The asymptotic number of Latin rectangles_.
+American Journal of Mathematics **68** (1946), 230-236.
 
-[Ya51] Yamamoto, K., _On the asymptotic number of Latin rectangles_ (1951).
+[Ya51] Yamamoto, K., _On the asymptotic number of Latin rectangles_.
+Japanese Journal of Mathematics **21** (1951), 113-119.
 
 [Er81] Erdős, P. (1981).
+
+See also OEIS sequence [A001009](https://oeis.org/A001009).
 -/
 
 open Filter
