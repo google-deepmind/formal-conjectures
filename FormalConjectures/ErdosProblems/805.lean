@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 
 /-!
 # Erdős Problem 805
@@ -27,34 +28,33 @@ and an independent set of size $\geq \log n$?
 
 In particular, is there such a graph for $g(n) = (\log n)^3$?
 
+See also [Problem #804](https://www.erdosproblems.com/804).
+
+Additional thanks to Zach Hunter.
+
 [Er91] Erdős, P., _Problems and results in combinatorial number theory_.
 
-[AlSu07] Alon, N. and Sudakov, B., _Ramsey-type properties of graphs_.
+[AlSu07] Alon, N. and Sudakov, B., _On graphs with subgraphs having large independence
+numbers_. J. Graph Theory (2007), 149-157.
 
-[ABS21] Alon, N., Bucić, M. and Sudakov, B., _Induced subgraphs of Ramsey graphs_.
+[ABS21] Alon, N., Bucić, M. and Sudakov, B., _Large cliques and independent sets all over
+the place_. Proc. Amer. Math. Soc. (2021), 3145-3157.
 -/
 
 open SimpleGraph Finset
 
 namespace Erdos805
 
-/-- A clique in a simple graph: a finset of vertices where every two distinct
-    members are adjacent. -/
-def IsFinsetClique {V : Type*} (G : SimpleGraph V) (S : Finset V) : Prop :=
-  ∀ u ∈ S, ∀ v ∈ S, u ≠ v → G.Adj u v
-
-/-- An independent set in a simple graph: a finset of vertices with no edges
-    between any two of its members. -/
-def IsIndepSet {V : Type*} (G : SimpleGraph V) (S : Finset V) : Prop :=
-  ∀ u ∈ S, ∀ v ∈ S, ¬G.Adj u v
-
 /-- The Erdős–Hajnal property for Problem 805: a graph $G$ on $\operatorname{Fin}(n)$ has
     the property that every induced subgraph on $m$ vertices contains both a clique and an
-    independent set of size at least $k$. -/
+    independent set of size at least $k$.
+
+    Note: This is distinct from the more famous "Erdős–Hajnal conjecture" about hereditary
+    graph properties and polynomial Ramsey numbers. -/
 def ErdosHajnalProperty {n : ℕ} (G : SimpleGraph (Fin n)) (m k : ℕ) : Prop :=
   ∀ S : Finset (Fin n), S.card = m →
-    (∃ T : Finset (Fin n), T ⊆ S ∧ T.card ≥ k ∧ IsFinsetClique G T) ∧
-    (∃ T : Finset (Fin n), T ⊆ S ∧ T.card ≥ k ∧ IsIndepSet G T)
+    (∃ T : Finset (Fin n), T ⊆ S ∧ T.card ≥ k ∧ G.IsClique ↑T) ∧
+    (∃ T : Finset (Fin n), T ⊆ S ∧ T.card ≥ k ∧ G.IsIndepSet ↑T)
 
 /--
 Erdős–Hajnal conjecture [Er91]: is there a graph on $n$ vertices such that every
