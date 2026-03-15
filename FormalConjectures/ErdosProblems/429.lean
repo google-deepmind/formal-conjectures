@@ -24,7 +24,10 @@ in the primes. Weisenberg showed the answer is no.
 
 *Reference:* [erdosproblems.com/429](https://www.erdosproblems.com/429)
 
-[We24] Weisenberg, *A counterexample to Erdős' conjecture on sparse sets and primes*, 2024.
+[ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+theory*. Monographies de L'Enseignement Mathematique (1980), p. 85.
+
+[We24] Weisenberg, D., *Sparse Admissible Sets and a Problem of Erdős and Graham*. Integers (2024).
 -/
 
 namespace Erdos429
