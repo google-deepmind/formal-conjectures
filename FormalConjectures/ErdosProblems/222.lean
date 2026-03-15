@@ -26,12 +26,23 @@ squares. Explore the behaviour of the consecutive differences $n_{k+1} - n_k$.
 
 ## References
 
-- [BaCh47] Bambah, R. P. and Chowla, S. (1947), on the upper bound
-  $n_{k+1} - n_k \ll n_k^{1/4}$.
-- [Ri82] Richards, I. (1982),
-  $\limsup_{k \to \infty} (n_{k+1} - n_k) / \log n_k \geq 1/4$.
+- [Er51] Erdős, P., _Some problems and results in elementary number theory_.
+  Publ. Math. Debrecen (1951), 103–109.
+- [Er57] Erdős, P., _Some unsolved problems_, 1957.
+- [Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató
+  Int. Közl. **6** (1961), 221–254.
+- [BaCh47] Bambah, R. P. and Chowla, S., _On numbers which can be expressed
+  as a sum of two squares_. Proc. Nat. Inst. Sci. India (1947), 101–103.
+- [Ri82] Richards, I., _On the gaps between numbers which are sums of two
+  squares_. Adv. in Math. (1982), 1–2.
 - [DEKKM22] Dietmann, R., Elsholtz, C., Kalmynin, A., Konyagin, S., and
-  Maynard, J. (2022), improved the constant to $0.868\ldots$.
+  Maynard, J., _Longer Gaps Between Values of Binary Quadratic Forms_.
+  International Mathematics Research Notices (2023), 10313–10349.
+
+## OEIS
+
+- [A256435](https://oeis.org/A256435) Differences of consecutive integers
+  that are sums of two squares.
 -/
 
 open Filter
@@ -73,6 +84,33 @@ theorem erdos_222.variants.lower_bound :
     ∀ δ : ℝ, δ > 0 → ∃ᶠ k in atTop,
       ((sumTwoSqSeq (k + 1) : ℝ) - (sumTwoSqSeq k : ℝ)) ≥
         (1 / 4 - δ) * Real.log (sumTwoSqSeq k : ℝ) := by
+  sorry
+
+/--
+Erdős's lower bound on gaps in the sum-of-two-squares sequence [Er51]:
+there exist infinitely many $k$ such that
+$n_{k+1} - n_k \gg \frac{\log n_k}{\sqrt{\log \log n_k}}$,
+i.e. there exists a constant $C > 0$ such that for infinitely many $k$,
+$n_{k+1} - n_k \geq C \cdot \frac{\log n_k}{\sqrt{\log \log n_k}}$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_222.variants.erdos_lower_bound :
+    ∃ C : ℝ, C > 0 ∧ ∃ᶠ k in atTop,
+      ((sumTwoSqSeq (k + 1) : ℝ) - (sumTwoSqSeq k : ℝ)) ≥
+        C * (Real.log (sumTwoSqSeq k : ℝ) /
+          Real.sqrt (Real.log (Real.log (sumTwoSqSeq k : ℝ)))) := by
+  sorry
+
+/--
+Dietmann–Elsholtz–Kalmynin–Konyagin–Maynard (2022) improvement [DEKKM22]:
+the limsup of $(n_{k+1} - n_k) / \log n_k$ is at least $0.868\ldots$,
+improving the constant $1/4$ from Richards [Ri82].
+-/
+@[category research solved, AMS 11]
+theorem erdos_222.variants.dekkm22_lower_bound :
+    ∀ δ : ℝ, δ > 0 → ∃ᶠ k in atTop,
+      ((sumTwoSqSeq (k + 1) : ℝ) - (sumTwoSqSeq k : ℝ)) ≥
+        (0.868 - δ) * Real.log (sumTwoSqSeq k : ℝ) := by
   sorry
 
 end Erdos222
