@@ -29,7 +29,7 @@ to Erdős and Straus. The answer is no, as shown by Pomerance [Po79], who
 proved there are infinitely many $n$ such that $p_n^2 > p_{n+i} \cdot p_{n-i}$
 for all $0 < i < n$.
 
-[Po79] Pomerance, C., _A note on the least prime in an arithmetic progression_.
+[Po79] Pomerance, Carl, The prime number graph. Math. Comp. (1979), 399-408.
 -/
 
 namespace Erdos453
