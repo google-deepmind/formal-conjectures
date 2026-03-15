@@ -30,7 +30,7 @@ edges in a $K_k$-free graph on $n$ vertices with independence number $< \ell$), 
 question asks whether $\mathrm{rt}(n; 4, \lceil n / \log n \rceil) < (1/8 - c)n^2$ for some
 $c > 0$.
 
-A problem of Erdős, Hajnal, Simonovits, Sós, and Szemerédi [EHSSS93].
+A problem of Erdős, Hajnal, Simonovits, Sós, and Szemerédi [Er91][EHSSS93].
 
 Erdős, Hajnal, Sós, and Szemerédi [EHSS83] proved that for any fixed $\varepsilon > 0$,
 $$\mathrm{rt}(n; 4, \varepsilon n) < (1/8 + o(1))n^2.$$
@@ -42,25 +42,29 @@ Disproved by Fox, Loh, and Zhao [FLZ15], who showed that
 $\mathrm{rt}(n; 4, n \cdot e^{-f(n)}) \geq (1/8 - o(1))n^2$
 whenever $f(n) = o(\sqrt{\log n / \log \log n})$.
 
+See also Problem 22.
+
 **References:**
 
-[EHSSS93] Erdős, P., Hajnal, A., Simonovits, M., Sós, V. T., and Szemerédi, E. (1993).
+[Er91] Erdős, P., *Some of my favourite problems in various branches of combinatorics*.
+Matematiche (Catania) 47 (1992), no. 2, 231-240 (1993).
 
-[EHSS83] Erdős, P., Hajnal, A., Sós, V. T., and Szemerédi, E. (1983).
+[EHSSS93] Erdős, P., Hajnal, A., Simonovits, M., Sós, V. T., and Szemerédi, E.,
+_Turán-Ramsey theorems and simple asymptotically extremal structures_. Combinatorica (1993), 31-56.
 
-[Su03] Sudakov, B. (2003).
+[EHSS83] Erdős, P., Hajnal, A., Sós, V. T., and Szemerédi, E.,
+_More results on Ramsey-Turán type problems_. Combinatorica (1983), 69-81.
 
-[FLZ15] Fox, J., Loh, P.-S., and Zhao, Y. (2015).
+[Su03] Sudakov, B., _A few remarks on Ramsey-Turán-type problems_.
+J. Combin. Theory Ser. B (2003), 99-106.
+
+[FLZ15] Fox, J., Loh, P.-S., and Zhao, Y., _The critical window for the classical
+Ramsey-Turán problem_. Combinatorica (2015), 435-476.
 -/
 
 open SimpleGraph Classical
 
 namespace Erdos615
-
-/-- A set of vertices is independent in $G$ if no two distinct vertices in the set
-    are adjacent. -/
-def IsIndependentSet {V : Type*} (G : SimpleGraph V) (S : Finset V) : Prop :=
-  ∀ u ∈ S, ∀ v ∈ S, u ≠ v → ¬G.Adj u v
 
 /-- The Ramsey-Turán number $\mathrm{rt}(n; k, \ell)$: the maximum number of edges in a graph
     on $n$ vertices that contains no $k$-clique and has no independent set of size
@@ -68,7 +72,7 @@ def IsIndependentSet {V : Type*} (G : SimpleGraph V) (S : Finset V) : Prop :=
 noncomputable def ramseyTuranNumber (n k ℓ : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ G : SimpleGraph (Fin n),
     G.edgeFinset.card = m ∧ G.CliqueFree k ∧
-    ∀ S : Finset (Fin n), IsIndependentSet G S → S.card < ℓ}
+    ∀ S : Finset (Fin n), G.IsIndepSet ↑S → S.card < ℓ}
 
 /--
 **Erdős Problem 615** (DISPROVED) [EHSSS93]:
@@ -86,7 +90,7 @@ theorem erdos_615 : answer(False) ↔
         (G.edgeFinset.card : ℝ) ≥ (1 / 8 - c) * (n : ℝ) ^ 2 →
         (¬G.CliqueFree 4) ∨
         ∃ S : Finset (Fin n), (S.card : ℝ) ≥ (n : ℝ) / Real.log (n : ℝ) ∧
-          IsIndependentSet G S := by
+          G.IsIndepSet ↑S := by
   sorry
 
 /--
@@ -100,8 +104,47 @@ theorem erdos_615.variants.EHSS (ε : ℝ) (hε : ε > 0) :
     ∀ δ : ℝ, δ > 0 → ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       ∀ G : SimpleGraph (Fin n),
         G.CliqueFree 4 →
-        (∀ S : Finset (Fin n), IsIndependentSet G S → (S.card : ℝ) < ε * (n : ℝ)) →
+        (∀ S : Finset (Fin n), G.IsIndepSet ↑S → (S.card : ℝ) < ε * (n : ℝ)) →
         (G.edgeFinset.card : ℝ) ≤ (1 / 8 + δ) * (n : ℝ) ^ 2 := by
+  sorry
+
+/--
+**Sudakov** [Su03]:
+
+$\mathrm{rt}(n; 4, n \cdot e^{-f(n)}) = o(n^2)$ whenever $f(n)/\sqrt{\log n} \to \infty$.
+That is, for any function $f$ with $f(n)/\sqrt{\log n} \to \infty$, the number of edges
+in any $K_4$-free graph on $n$ vertices with independence number $< n \cdot e^{-f(n)}$
+is $o(n^2)$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_615.variants.Sudakov (f : ℕ → ℝ)
+    (hf : Filter.Tendsto (fun n : ℕ => f n / Real.sqrt (Real.log n))
+      Filter.atTop Filter.atTop) :
+    ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      ∀ G : SimpleGraph (Fin n),
+        G.CliqueFree 4 →
+        (∀ S : Finset (Fin n), G.IsIndepSet ↑S →
+          (S.card : ℝ) < (n : ℝ) * Real.exp (-f n)) →
+        (G.edgeFinset.card : ℝ) ≤ ε * (n : ℝ) ^ 2 := by
+  sorry
+
+/--
+**Fox-Loh-Zhao** [FLZ15]:
+
+$\mathrm{rt}(n; 4, n \cdot e^{-f(n)}) \geq (1/8 - o(1))n^2$ whenever
+$f(n) = o(\sqrt{\log n / \log \log n})$. This is the key result disproving the conjecture.
+-/
+@[category research solved, AMS 5]
+theorem erdos_615.variants.FLZ (f : ℕ → ℝ)
+    (hf : Filter.Tendsto
+      (fun n : ℕ => f n / Real.sqrt (Real.log n / Real.log (Real.log n)))
+      Filter.atTop (nhds 0)) :
+    ∀ ε : ℝ, ε > 0 → ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      ∃ G : SimpleGraph (Fin n),
+        G.CliqueFree 4 ∧
+        (∀ S : Finset (Fin n), G.IsIndepSet ↑S →
+          (S.card : ℝ) < (n : ℝ) * Real.exp (-f n)) ∧
+        (G.edgeFinset.card : ℝ) ≥ (1 / 8 - ε) * (n : ℝ) ^ 2 := by
   sorry
 
 end Erdos615
