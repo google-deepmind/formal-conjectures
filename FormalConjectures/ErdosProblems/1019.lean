@@ -24,7 +24,15 @@ edges contain a saturated (maximal) planar subgraph on more than 3 vertices?
 
 *Reference:* [erdosproblems.com/1019](https://www.erdosproblems.com/1019)
 
-[Er64f] [Er69c] [Er71]
+[Er64f] Erdős, P., _On extremal problems of graphs and generalized graphs_. Israel J. Math. **2**
+(1964), 183–190.
+
+[Er69c] Erdős, P., _Über die in Graphen enthaltenen saturierten planaren Graphen_.
+Mathematische Nachrichten (1969), 13–17.
+
+[Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+Combinatorial Mathematics and its Applications (Proceedings of Conference, Oxford, 1969)
+(1971), 97–109.
 -/
 
 open SimpleGraph Finset
