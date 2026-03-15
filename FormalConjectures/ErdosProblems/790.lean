@@ -31,8 +31,19 @@ $$
 $$
 They further conjecture that $l(n) \geq n^{1 - o(1)}$.
 
+[Er65] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math. **VIII** (1965),
+181–189.
+
+[Er73] Erdős, P., _Problems and results on combinatorial number theory_. In: A Survey of
+Combinatorial Theory (1973), 117–138.
+
 [CKS75] Choi, S. L. G., Komlós, J., and Szemerédi, E., _On sum-free subsequences_,
 Trans. Amer. Math. Soc. 212 (1975), 307–313.
+
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference "Paul Erdős
+and his mathematics", Budapest, July 1999 (1999), §1.22.
+
+See also: Problem 876.
 -/
 
 namespace Erdos790
@@ -52,8 +63,8 @@ noncomputable def maxSumFreeSize (n : ℕ) : ℕ :=
 **Erdős Problem 790** — Is it true that $l(n) n^{-1/2} \to \infty$? That is, for every $C > 0$
 there exists $N_0$ such that $l(n) \geq C \cdot n^{1/2}$ for all $n \geq N_0$.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_790 : answer(sorry) ↔
+@[category research solved, AMS 5 11]
+theorem erdos_790 : answer(True) ↔
     ∀ C : ℝ, C > 0 → ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       (maxSumFreeSize n : ℝ) ≥ C * (n : ℝ) ^ ((1 : ℝ) / 2) := by
   sorry
