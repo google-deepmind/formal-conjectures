@@ -51,7 +51,7 @@ $k(N) = (1 - o(1)) \log N$, where $k(N)$ is the maximum number of pairwise
 disjoint subsets of $\{1, \ldots, N\}$ whose reciprocal sums each equal $1$.
 
 We formalize the non-trivial lower bound: for every $\varepsilon > 0$, for all
-sufficiently large $N$, one can find at least $\lfloor (1 - \varepsilon) \ln N \rfloor$
+sufficiently large $N$, one can find at least $(1 - \varepsilon) \ln N$
 pairwise disjoint subsets of $\{1, \ldots, N\}$, each with reciprocal sum exactly $1$.
 -/
 @[category research solved, AMS 5 11]
