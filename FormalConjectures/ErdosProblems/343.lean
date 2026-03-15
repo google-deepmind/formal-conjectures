@@ -28,8 +28,11 @@ Proved by Szemerédi and Vu.
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
 
-[SzVu06] Szemerédi, E. and Vu, V.H., *Finite and infinite arithmetic progressions in sumsets*.
-Annals of Mathematics (2006).
+[SzVu06] Szemerédi, E. and Vu, V.H., *Long arithmetic progressions in sumsets: thresholds and
+bounds*. Journal of the American Mathematical Society (2006), 119-169.
+
+[Fo66] Folkman, J., *On the representation of integers as sums of distinct terms from a fixed
+sequence*. Canadian Journal of Mathematics (1966), 643-655.
 -/
 
 open scoped BigOperators
