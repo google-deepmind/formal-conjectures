@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
+import Mathlib.Combinatorics.SimpleGraph.Acyclic
 
 /-!
 # Erdős Problem 568
@@ -23,15 +25,13 @@ import FormalConjectures.Util.ProblemImports
 
 A problem of Erdős, Faudree, Rousseau, and Schelp.
 
-[EFRS93] Erdős, P., Faudree, R., Rousseau, C., and Schelp, R.
+[EFRS93] Erdős, P., Faudree, R., Rousseau, C., and Schelp, R., _Ramsey size linear graphs_.
+Combin. Probab. Comput. (1993), 389-399.
 -/
 
 namespace Erdos568
 
-/-- A graph $G$ embeds into a graph $H$: there is an injective map from
-vertices of $G$ to vertices of $H$ preserving adjacency. -/
-def Embeds {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
+open SimpleGraph
 
 /-- The Ramsey number $R(G, H)$: the minimum $N$ such that for any graph $F$
 on $\operatorname{Fin} N$, either $G$ embeds in $F$ or $H$ embeds in the
@@ -39,16 +39,7 @@ complement of $F$. -/
 noncomputable def ramseyNum {V W : Type*}
     (G : SimpleGraph V) (H : SimpleGraph W) : ℕ :=
   sInf {N : ℕ | ∀ (F : SimpleGraph (Fin N)),
-    Embeds G F ∨ Embeds H Fᶜ}
-
-/-- A graph is connected if any two vertices are related by the reflexive
-transitive closure of adjacency. -/
-def IsConnectedGraph {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∀ u v : V, Relation.ReflTransGen G.Adj u v
-
-/-- A tree is a connected graph on $n$ vertices with exactly $n - 1$ edges. -/
-def IsTreeGraph {V : Type*} [Fintype V] (G : SimpleGraph V) : Prop :=
-  IsConnectedGraph G ∧ G.edgeSet.ncard + 1 = Fintype.card V
+    G ⊑ F ∨ H ⊑ Fᶜ}
 
 /--
 Erdős Problem 568:
@@ -68,7 +59,7 @@ In other words, is $G$ Ramsey size linear?
 theorem erdos_568 : answer(sorry) ↔
     ∀ (V : Type*) [Fintype V] (G : SimpleGraph V),
     (∃ C₁ : ℕ, ∀ (n : ℕ) (T : SimpleGraph (Fin n)),
-      IsTreeGraph T → ramseyNum G T ≤ C₁ * n) →
+      T.IsTree → ramseyNum G T ≤ C₁ * n) →
     (∃ C₂ : ℕ, ∀ (n : ℕ),
       ramseyNum G (⊤ : SimpleGraph (Fin n)) ≤ C₂ * n ^ 2) →
     ∃ C : ℕ, ∀ (k : ℕ) (H : SimpleGraph (Fin k)),

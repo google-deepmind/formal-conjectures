@@ -23,6 +23,19 @@ Is it true that for every rational α ∈ [1, 2), there exists a bipartite graph
 the Turán extremal number satisfies ex(n; G) ≍ n^α?
 
 *Reference:* [erdosproblems.com/571](https://www.erdosproblems.com/571)
+
+[Er78] Erdős, P., _Problems and results in combinatorial analysis and combinatorial
+  number theory_, Proceedings of the Ninth Southeastern Conference on Combinatorics,
+  Graph Theory, and Computing (1978), 29–40.
+
+[Er81] Erdős, P., _On the combinatorial problems which I would most like to see solved_,
+  Combinatorica **1** (1981), 25–42.
+
+[ErSi84] Erdős, P. and Simonovits, M., _Cube-supersaturated graphs and related problems_,
+  Progress in graph theory (Waterloo, Ont., 1982), Academic Press, Toronto, ON, 1984, 203–218.
+
+[BuCo18] Bukh, B. and Conlon, D., _Rational exponents in extremal graph theory_,
+  Journal of the European Mathematical Society (JEMS) (2018), 1747–1757.
 -/
 
 open SimpleGraph
@@ -47,7 +60,7 @@ the Turán extremal number satisfies $\mathrm{ex}(n; G) \asymp n^\alpha$, meanin
 constants $c_1, c_2 > 0$ and a threshold $N_0$ such that for all $n \geq N_0$,
 $$c_1 \cdot n^\alpha \leq \mathrm{ex}(n; G) \leq c_2 \cdot n^\alpha.$$
 -/
-@[category research solved, AMS 5]
+@[category research open, AMS 5]
 theorem erdos_571 :
     ∀ α : ℚ, 1 ≤ α → α < 2 →
     ∃ (U : Type) (_ : Fintype U) (G : SimpleGraph U),
