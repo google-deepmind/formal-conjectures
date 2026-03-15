@@ -28,11 +28,15 @@ appropriately normalised measure of $C$.
 
 Is it true that $\min_{|P|=n} D(P) \to \infty$ as $n \to \infty$?
 
+Roth [Ro54] proved that the answer is yes if the sphere is replaced by a square.
 This was proved (in any number of dimensions) by Schmidt [Sc69b].
 
 [Er64b] Erdős, P., *On some problems in number theory*, 1964.
 
-[Sc69b] Schmidt, W. M., *Irregularities of distribution. IV.* Invent. Math. 7
+[Ro54] Roth, K. F., *On irregularities of distribution.* Mathematika **1**
+(1954), 73–79.
+
+[Sc69b] Schmidt, W. M., *Irregularities of distribution. IV.* Invent. Math. **7**
 (1969), 55–82.
 -/
 
