@@ -28,8 +28,7 @@ that the gaps between consecutive elements tend to zero?
 [EJK90] Erdős, P., Joó, I., and Komornik, V., *Characterization of the unique expansions
 $1 = \sum q^{-n_i}$ and related problems*, Bull. Soc. Math. France (1990).
 
-[GWNT91] Galambos, J., *Representations of real numbers by infinite series*, Lecture Notes
-in Mathematics, Springer (1991).
+[GWNT91] Great Western Number Theory Problem Session (1991).
 -/
 
 open Finset
