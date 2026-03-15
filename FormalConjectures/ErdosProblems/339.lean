@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 339
@@ -48,12 +49,6 @@ def IsAdditiveBasis (A : Set ℕ) (r : ℕ) : Prop :=
 def distinctExactSumset (A : Set ℕ) (r : ℕ) : Set ℕ :=
   {n : ℕ | ∃ (s : Finset ℕ), ↑s ⊆ A ∧ s.card = r ∧ s.sum id = n}
 
-/-- The lower density of $A \subseteq \mathbb{N}$:
-$$d_*(A) = \liminf_{N\to\infty} \frac{|A \cap \{0, 1, \ldots, N-1\}|}{N}$$ -/
-noncomputable def lowerDensity (A : Set ℕ) : ℝ :=
-  Filter.liminf (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    Filter.atTop
-
 /--
 Erdős Problem 339 [ErGr80, p.52]:
 
@@ -66,7 +61,23 @@ The answer is yes, as proved by Hegyvári, Hennecart, and Plagne [HHP03].
 theorem erdos_339 :
     answer(True) ↔ ∀ (A : Set ℕ) (r : ℕ),
       IsAdditiveBasis A r →
-      0 < lowerDensity (distinctExactSumset A r) := by
+      0 < Set.lowerDensity (distinctExactSumset A r) := by
+  sorry
+
+/--
+Erdős Problem 339 — Variant [ErGr80]:
+
+Erdős and Graham also asked: if the set of integers which are the sum of $r$ elements from $A$
+has positive upper density, must the set of integers representable as the sum of exactly $r$
+distinct elements have positive upper density?
+
+The answer is yes, as proved by Hegyvári, Hennecart, and Plagne [HHP03].
+-/
+@[category research solved, AMS 11]
+theorem erdos_339_variant :
+    answer(True) ↔ ∀ (A : Set ℕ) (r : ℕ),
+      0 < Set.upperDensity (exactSumset A r) →
+      0 < Set.upperDensity (distinctExactSumset A r) := by
   sorry
 
 end Erdos339
