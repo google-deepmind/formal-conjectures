@@ -27,12 +27,22 @@ $c_1 \neq c_2 \in C$ and $|C| + |B| \geq f(n)$.
 
 Estimate $f(n)$. In particular is it true that $f(n) \leq n^{1/2+o(1)}$?
 
-A conjecture of Choi, who proved $f(n) \ll n^{3/4}$. Adenwalla provided a construction proving
-$f(n) \gg n^{1/2}$. The bound $f(n) \ll (n \log n)^{2/3}$ was proved by Baltz, Schoen, and
-Srivastav. The work of Alon and Pham on random Cayley graphs implies
-$f(n) \leq n^{3/5+o(1)}$.
+A conjecture of Choi [Ch71], who proved $f(n) \ll n^{3/4}$. Adenwalla provided a construction
+proving $f(n) \gg n^{1/2}$. The bound $f(n) \ll (n \log n)^{2/3}$ was proved by Baltz, Schoen,
+and Srivastav [BSS00]. Hunter sketched an argument yielding $f(n) \ll n^{2/3+o(1)}$. The work
+of Alon and Pham [AlPh25] on random Cayley graphs implies $f(n) \leq n^{3/5+o(1)}$.
 
-[AlPh25] Alon, N. and Pham, H.T., _Random Cayley graphs_.
+[Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
+combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins,
+Colo., 1971) (1973), 117-138.
+
+[Ch71] Choi, S. L. G., *On a combinatorial problem in number theory*. Proc. London Math.
+Soc. (3), 23:629–642, 1971.
+
+[BSS00] Baltz, A., Schoen, T., and Srivastav, A., *Probabilistic construction of small strongly
+sum-free sets via large Sidon sets*. Colloq. Math., 86(2):171–176, 2000.
+
+[AlPh25] Alon, N. and Pham, H.T., *Random Cayley graphs*. arXiv:2509.02561 (2025).
 -/
 
 open Finset Real
@@ -64,7 +74,7 @@ $f(n) \geq C \cdot n^{1/2}$ for all sufficiently large $n$. -/
 @[category research solved, AMS 5]
 theorem erdos_788.variants.lower :
     ∃ C : ℝ, C > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-      (erdos788F n : ℝ) ≥ C * (n : ℝ) ^ ((1 : ℝ) / 2) := by
+      (erdos788F n : ℝ) ≥ C * (n : ℝ) ^ (1 / 2) := by
   sorry
 
 /-- Upper bound (Alon–Pham [AlPh25]): $f(n) \leq n^{3/5+o(1)}$, i.e., for every
