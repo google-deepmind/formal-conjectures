@@ -25,13 +25,17 @@ bipartite distances $d(x_i, y_j)$ is $o(n / \sqrt{\log n})$.
 
 *Reference:* [erdosproblems.com/661](https://www.erdosproblems.com/661)
 
-[ErPa90] Erdős, P. and Pach, J. (1990)
+[ErPa90] Erdős, P. and Pach, J., _Variations on the theme of repeated distances_,
+Combinatorica (1990).
 
-[Er92e] Erdős, P. (1992)
+[Er92e] Erdős, P., _Some unsolved problems in geometry, number theory and combinatorics_.
+Eureka (1992), 44–48.
 
-[Er97e] Erdős, P. (1997)
+[Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Proc. Int. Conf. on Discrete Math. (1997), 527–533.
 
-[Er97f] Erdős, P. (1997)
+[Er97f] Erdős, P., _Some of my new and almost new problems and results in combinatorial
+geometry_. (1997)
 -/
 
 open Real
@@ -43,7 +47,7 @@ in $\mathbb{R}^2$, i.e., the number of distinct values $\operatorname{dist}(x, y
 for $x \in X$, $y \in Y$. -/
 noncomputable def bipartiteDistinctDistances
     (X Y : Finset (EuclideanSpace ℝ (Fin 2))) : ℕ :=
-  Set.ncard {d : ℝ | ∃ x ∈ X, ∃ y ∈ Y, d = dist x y}
+  ((X ×ˢ Y).image (fun p => dist p.1 p.2)).card
 
 /--
 **Erdős Problem 661** [ErPa90, Er92e, Er97e, Er97f]:
