@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
 
 /-!
 # Erdős Problem 841
@@ -27,9 +28,15 @@ Estimate $t_n$.
 
 A problem of Erdős, Graham, and Selfridge.
 
-[ErSe92] Erdős, P. and Selfridge, J. L., 1992.
+See also OEIS [A092487](https://oeis.org/A092487) and Problem 437.
 
-[BPZ24] Bui, H. M., Pratt, K., and Zaharescu, A., 2024.
+[ErGrSe92] Erdős, P., Graham, R. L., and Selfridge, J. L., 1992.
+
+[BPZ24] Bui, H. M., Pratt, K., and Zaharescu, A., _A problem of
+Erdős-Graham-Granville-Selfridge on integral points on hyperelliptic curves_.
+Math. Proc. Cambridge Philos. Soc. (2024), 309–323.
+
+[Gu04] Guy, R. K., _Unsolved problems in number theory_. (2004), Problem B30.
 -/
 
 open Finset
@@ -48,10 +55,6 @@ noncomputable def erdos841T (n : ℕ) : ℕ :=
   if IsSquare n then 0
   else sInf {t : ℕ | HasSquareProductSubset n t}
 
-/-- The largest prime factor of $n$, or $0$ if $n \leq 1$. -/
-noncomputable def largestPrimeFactor (n : ℕ) : ℕ :=
-  (Nat.primeFactors n).sup id
-
 /--
 **Erdős Problem 841** — Trivial lower bound:
 
@@ -59,22 +62,22 @@ For all non-square $n \geq 2$, $t_n \geq P(n)$ where $P(n)$ is the largest prime
 -/
 @[category undergraduate, AMS 11]
 theorem erdos_841 (n : ℕ) (hn : n ≥ 2) (hns : ¬IsSquare n) :
-    erdos841T n ≥ largestPrimeFactor n := by
+    erdos841T n ≥ Nat.maxPrimeFac n := by
   sorry
 
 /--
-**Erdős Problem 841** — Selfridge's result [ErSe92]:
+**Erdős Problem 841** — Selfridge's result [ErGrSe92]:
 
 If the largest prime factor $P(n) > \sqrt{2n} + 1$, then $t_n = P(n)$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_841.variants.selfridge (n : ℕ) (hn : n ≥ 2) (hns : ¬IsSquare n)
-    (hP : (largestPrimeFactor n : ℝ) > Real.sqrt (2 * (n : ℝ)) + 1) :
-    erdos841T n = largestPrimeFactor n := by
+    (hP : (Nat.maxPrimeFac n : ℝ) > Real.sqrt (2 * (n : ℝ)) + 1) :
+    erdos841T n = Nat.maxPrimeFac n := by
   sorry
 
 /--
-**Erdős Problem 841** — Selfridge's upper bound [ErSe92]:
+**Erdős Problem 841** — Selfridge's upper bound [ErGrSe92]:
 
 If $P(n) \leq \sqrt{2n} + 1$, then $t_n \ll \sqrt{n}$. Formally: there exists $C > 0$ such that
 for all non-square $n \geq 2$ with $P(n) \leq \sqrt{2n} + 1$, we have $t_n \leq C \cdot \sqrt{n}$.
@@ -82,7 +85,7 @@ for all non-square $n \geq 2$ with $P(n) \leq \sqrt{2n} + 1$, we have $t_n \leq 
 @[category research solved, AMS 11]
 theorem erdos_841.variants.selfridge_upper :
     ∃ C : ℝ, C > 0 ∧ ∀ n : ℕ, n ≥ 2 → ¬IsSquare n →
-    (largestPrimeFactor n : ℝ) ≤ Real.sqrt (2 * (n : ℝ)) + 1 →
+    (Nat.maxPrimeFac n : ℝ) ≤ Real.sqrt (2 * (n : ℝ)) + 1 →
     (erdos841T n : ℝ) ≤ C * Real.sqrt (n : ℝ) := by
   sorry
 
