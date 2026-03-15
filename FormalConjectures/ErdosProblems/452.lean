@@ -40,10 +40,6 @@ theory*. Monographies de L'Enseignement Mathematique (1980).
 
 namespace Erdos452
 
-/-- The number of distinct prime factors of $n$ ($\omega(n)$ in analytic number theory). -/
-noncomputable def omega (n : ℕ) : ℕ :=
-  (Nat.primeFactorsList n).toFinset.card
-
 /--
 Erdős Problem 452 [ErGr80, p.90]:
 
@@ -58,7 +54,7 @@ theorem erdos_452 :
       ∃ a L : ℕ, x ≤ a ∧ a + L ≤ 2 * x ∧
         (Real.log (x : ℝ)) ^ k ≤ (L : ℝ) ∧
         ∀ n ∈ Finset.Icc a (a + L),
-          (omega n : ℝ) > Real.log (Real.log (n : ℝ)) := by
+          (n.primeFactors.card : ℝ) > Real.log (Real.log (n : ℝ)) := by
   sorry
 
 end Erdos452
