@@ -34,10 +34,11 @@ graph can have at most $n \cdot (\log n)^{O(1)}$ many edges (upper bound).
 
 [Er76b] Erdős, P., _Problems in combinatorial and graph theory_ (1976).
 
-[PRS95] Pyber, L., Rödl, V., and Szemerédi, E., _Dense graphs without
-3-regular subgraphs_ (1995).
+[PRS95] Pyber, L., Rödl, V., Szemerédi, E., _Dense graphs without
+3-regular subgraphs_. Journal of Combinatorial Theory, Series B (1995), 41-54.
 
-[CJMM24] Chakraborti, D., Janzer, O., Methuku, A., and Montgomery, R. (2024).
+[CJMM24] Chakraborti, D., Janzer, O., Methuku, A., Montgomery, R.,
+_Edge-disjoint cycles with the same vertex set_. arXiv:2404.07190 (2024).
 -/
 
 open SimpleGraph Classical
@@ -96,6 +97,27 @@ theorem erdos_585.variants.upper_bound :
     ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
       (maxEdgesNoEdgeDisjointCycles n : ℝ) ≤
         (n : ℝ) * (Real.log (n : ℝ)) ^ C := by
+  sorry
+
+/--
+Erdős Problem 585, k-wise generalization [CJMM24]:
+
+There exist constants $C > 0$ (universal) such that for any $k \geq 2$, there exists a constant
+$c_k > 0$ such that every graph on $n$ vertices with at least $c_k \cdot n \cdot (\log n)^C$ edges
+contains $k$ pairwise edge-disjoint cycles sharing the same vertex set.
+-/
+@[category research solved, AMS 5]
+theorem erdos_585.variants.k_wise_generalization :
+    ∃ C : ℝ, 0 < C ∧
+    ∀ k : ℕ, 2 ≤ k →
+    ∃ c_k : ℝ, 0 < c_k ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+    ∀ G : SimpleGraph (Fin n),
+      c_k * (n : ℝ) * (Real.log (n : ℝ)) ^ C ≤ (G.edgeFinset.card : ℝ) →
+      ∃ (u : Fin n) (cycles : Fin k → G.Walk u u),
+        (∀ i, (cycles i).IsCycle) ∧
+        (∀ i j, i ≠ j → Disjoint (cycles i).edges.toFinset (cycles j).edges.toFinset) ∧
+        (∀ i j, (cycles i).support.toFinset = (cycles j).support.toFinset) := by
   sorry
 
 end Erdos585
