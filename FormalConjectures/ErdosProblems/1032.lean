@@ -24,10 +24,14 @@ import FormalConjectures.Util.ProblemImports
 Erdős asked whether there exists a constant $c > 0$ such that for arbitrarily large $n$,
 there is a $4$-chromatic critical graph on $n$ vertices with minimum degree at least $c \cdot n$.
 
-- [Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is Eighty,
-  Vol. 2 (1993), 97-132.
-- [Si72] Simonovits, M., 1972.
-- [To72] Toft, B., 1972.
+- [Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+  Quaestiones Mathematicae **16** (1993), 333–350.
+- [Si72] Simonovits, M., _On colour-critical graphs_. Studia Scientiarum Mathematicarum
+  Hungarica (1972), 67–81.
+- [To72] Toft, B., _Two theorems on critical 4-chromatic graphs_. Studia Scientiarum
+  Mathematicarum Hungarica (1972), 83–89.
+- [Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the conference
+  "Paul Erdős and his mathematics", Budapest, July 1999 (1999), §3.60.
 
 See also problems 917 and 944.
 -/
@@ -42,8 +46,7 @@ edge $e$, the graph obtained by deleting $e$ has chromatic number strictly less
 than $k$.
 -/
 def IsCritical {V : Type*} (G : SimpleGraph V) (k : ℕ) : Prop :=
-  G.chromaticNumber = (k : ℕ∞) ∧
-  ∀ e ∈ G.edgeSet, (G.deleteEdges {e}).chromaticNumber < (k : ℕ∞)
+  G.chromaticNumber = (k : ℕ∞) ∧ ∀ e ∈ G.edgeSet, G.IsCriticalEdge e
 
 /--
 **Erdős Problem 1032** [Er93, p.341]:
@@ -62,6 +65,21 @@ theorem erdos_1032 : answer(sorry) ↔
     ∃ c : ℝ, c > 0 ∧ ∀ N₀ : ℕ, ∃ n : ℕ, n ≥ N₀ ∧
       ∃ (G : SimpleGraph (Fin n)) (_ : DecidableRel G.Adj),
         IsCritical G 4 ∧ (G.minDegree : ℝ) ≥ c * (n : ℝ) := by
+  sorry
+
+/--
+**Erdős Problem 1032 (5-chromatic variant)**:
+
+Is there a constant $c > 0$ such that for arbitrarily large $n$, there exists
+a $5$-chromatic critical graph on $n$ vertices with minimum degree at least $c \cdot n$?
+
+This variant is also mentioned as open in [Er93, p.341].
+-/
+@[category research open, AMS 5]
+theorem erdos_1032.variants.five_chromatic : answer(sorry) ↔
+    ∃ c : ℝ, c > 0 ∧ ∀ N₀ : ℕ, ∃ n : ℕ, n ≥ N₀ ∧
+      ∃ (G : SimpleGraph (Fin n)) (_ : DecidableRel G.Adj),
+        IsCritical G 5 ∧ (G.minDegree : ℝ) ≥ c * (n : ℝ) := by
   sorry
 
 end Erdos1032
