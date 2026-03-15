@@ -25,9 +25,15 @@ in at least $(1+c)^r$ edges?
 
 *Reference:* [erdosproblems.com/833](https://www.erdosproblems.com/833)
 
+[Er71] Erdős, P., _Topics in combinatorial analysis_. Proc. Second Louisiana Conf. on
+Combinatorics, Graph Theory and Computing (1971), 2–20, p. 105.
+
+[Er74d] Erdős, P., _Problems and results on graphs and hypergraphs: similarities and
+differences_. Mathematics of Ramsey Theory (1974).
+
 [ErLo75] Erdős, P. and Lovász, L., *Problems and results on 3-chromatic hypergraphs and some
 related questions*. Infinite and Finite Sets (Colloq., Keszthely, 1973), Vol. II, Colloq.
-Math. Soc. János Bolyai, Vol. 10 (1975), 609-627.
+Math. Soc. János Bolyai, Vol. 10 (1975), 609–627.
 -/
 
 open Finset
@@ -75,6 +81,27 @@ theorem erdos_833 :
           ∀ (n : ℕ) (H : Hypergraph (Fin n)),
             H.IsUniform r → H.HasChromaticNumber 3 →
               ∃ v : Fin n, (H.degree v : ℝ) ≥ (1 + c) ^ r := by
+  sorry
+
+/--
+Determine the largest integer $f(r)$ such that every $r$-uniform hypergraph
+with chromatic number $3$ has a vertex contained in at least $f(r)$ edges.
+
+This is a refinement of `erdos_833`: while the main problem asks whether $f(r)$
+grows exponentially, this variant asks for the exact value. Known values are
+$f(2) = 2$ and $f(3) = 3$. Erdős noted that $f(4)$ was unknown.
+-/
+@[category research open, AMS 5]
+theorem erdos_833_variant :
+    ∃ f : ℕ → ℕ,
+      (∀ (r : ℕ), 2 ≤ r →
+        (∀ (n : ℕ) (H : Hypergraph (Fin n)),
+          H.IsUniform r → H.HasChromaticNumber 3 →
+            ∃ v : Fin n, H.degree v ≥ f r) ∧
+        (∀ m, (∀ (n : ℕ) (H : Hypergraph (Fin n)),
+          H.IsUniform r → H.HasChromaticNumber 3 →
+            ∃ v : Fin n, H.degree v ≥ m) → m ≤ f r)) ∧
+      f 2 = 2 ∧ f 3 = 3 := by
   sorry
 
 end Erdos833
