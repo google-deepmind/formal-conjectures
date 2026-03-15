@@ -83,6 +83,8 @@ Erdős Problem 872 (weak form) [Er92c, p. 47]:
 In the primitive-set saturation game on $\{2, 3, \ldots, n\}$, there exists $\varepsilon > 0$
 such that, regardless of who moves first, the Lengthener can guarantee
 at least $\varepsilon n$ moves for all sufficiently large $n$.
+
+The number of moves (`playGame` returns `ℕ`) is cast to `ℝ` for comparison with $\varepsilon n$.
 -/
 @[category research open, AMS 5 91]
 theorem erdos_872 :
@@ -100,6 +102,9 @@ Erdős Problem 872 (strong form) [Er92c, p. 47]:
 For every $\varepsilon > 0$ and all sufficiently large $n$, regardless of who moves first,
 the Lengthener can guarantee at least $(1 - \varepsilon) \cdot n / 2$ moves in the
 primitive-set saturation game on $\{2, 3, \ldots, n\}$.
+
+The number of moves (`playGame` returns `ℕ`) is cast to `ℝ` for comparison with
+$(1 - \varepsilon) n / 2$.
 -/
 @[category research open, AMS 5 91]
 theorem erdos_872.variants.strong :
