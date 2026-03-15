@@ -25,26 +25,25 @@ Is there a function $F$ such that every graph with chromatic number $\aleph_1$ h
 large $n$, a subgraph with chromatic number $n$ on at most $F(n)$ vertices? Disproved:
 Lambie-Hanson constructed a ZFC counterexample.
 
-[EHS82] Erdős, P., Hajnal, A., and Szemerédi, E. — original conjecture.
+[dBEr51] de Bruijn, N. G. and Erdős, P., _A colour problem for infinite graphs and a problem in
+the theory of relations_. Indag. Math. (1951), 369–373.
 
-[KoSh05] Komjáth, P. and Shelah, S. — proved it is consistent with ZFC that the answer is no.
+[EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., _On almost bipartite large chromatic graphs_.
+Theory and Practice of Combinatorics (1982), 117–123.
 
-[La20] Lambie-Hanson, C. — constructed a ZFC counterexample.
+[Er95d] Erdős, P., _On some problems in combinatorial set theory_. Publ. Inst. Math. (Beograd)
+(N.S.) (1995), 61–65.
+
+[KoSh05] Komjáth, P. and Shelah, S., _Finite subgraphs of uncountably chromatic graphs_.
+J. Graph Theory (2005), 28–38.
+
+[La20] Lambie-Hanson, C., _On the growth rate of chromatic numbers of finite subgraphs_.
+Advances in Mathematics (2020), 107176.
 -/
 
 open SimpleGraph Cardinal
 
 namespace Erdos110
-
-/--
-A graph $G$ (on vertex type $V$) has chromatic number $\aleph_1$ if:
-(1) $G$ cannot be properly colored by any countable set of colors
-    (i.e., the chromatic number exceeds $\aleph_0$), and
-(2) $G$ can be properly colored by a set of cardinality $\aleph_1$.
--/
-def HasChromaticNumberAleph1 {V : Type*} (G : SimpleGraph V) : Prop :=
-  (∀ (α : Type*) [Countable α], IsEmpty (G.Coloring α)) ∧
-  (∃ α : Type*, #α = aleph 1 ∧ Nonempty (G.Coloring α))
 
 /--
 Erdős-Hajnal-Szemerédi Conjecture (Problem #110):
@@ -61,7 +60,7 @@ Lambie-Hanson [La20] constructed a ZFC counterexample, so the conjecture is **fa
 theorem erdos_110 : answer(False) ↔
     ∃ F : ℕ → ℕ,
       ∀ (V : Type*) (G : SimpleGraph V),
-        HasChromaticNumberAleph1 G →
+        G.chromaticCardinal = aleph 1 →
         ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
           ∃ H : G.Subgraph,
             H.verts.Finite ∧
