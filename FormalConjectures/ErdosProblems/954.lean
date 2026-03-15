@@ -27,7 +27,8 @@ $j \ge 1$, and $a_i + a_j \le n$ is strictly less than $n$. Is the total pair co
 $R(x) = \#\{(i,j) : i \le j,\, j \ge 1,\, a_i + a_j \le x\}$ equal to
 $x + O(x^{1/4 + o(1)})$?
 
-[Er77c] Erdős, P., *Problems and results in combinatorial number theory*, p.71.
+[Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._. Number Theory Day
+(Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43–72.
 -/
 
 open Finset BigOperators Filter
