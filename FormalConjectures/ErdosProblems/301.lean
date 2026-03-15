@@ -23,6 +23,10 @@ Let $f(N)$ be the size of the largest subset of $\{1, \ldots, N\}$ such that no 
 reciprocal equal to a sum of reciprocals of other elements. Erdős and Graham conjectured that
 $f(N) = (1/2 + o(1))N$.
 
+*OEIS:* [A390394](https://oeis.org/A390394)
+
+*Related problems:* [302](https://www.erdosproblems.com/302), [327](https://www.erdosproblems.com/327)
+
 *Reference:* [erdosproblems.com/301](https://www.erdosproblems.com/301)
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
