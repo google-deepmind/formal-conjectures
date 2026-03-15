@@ -22,6 +22,12 @@ import FormalConjectures.Util.ProblemImports
 Is it true that for every lacunary sequence $A \subset \mathbb{N}$, there exists a finite colouring
 of $\mathbb{N}$ with no monochromatic pair whose difference lies in $A$?
 
+[Ka01] Katznelson, Y., _Chromatic numbers of Cayley graphs on ℤ and recurrence_.
+Combinatorica (2001), 211–219.
+
+[PeSc10] Peres, Y., Schlag, W., _Two Erdős problems on lacunary sequences: chromatic
+number and Diophantine approximation_. Bull. Lond. Math. Soc. (2010), 295–300.
+
 *Reference:* [erdosproblems.com/894](https://www.erdosproblems.com/894)
 -/
 
@@ -44,9 +50,10 @@ solutions to $a - b \in A$?
 Equivalently, does the Cayley graph on $\mathbb{Z}$ defined by a lacunary set have finite
 chromatic number?
 
-This was proved: the answer is yes. Katznelson observed it follows from the
+This was proved: the answer is yes. Katznelson [Ka01] observed it follows from the
 solution to Problem 464 (on the Littlewood conjecture). The best quantitative
-bound, due to Peres and Schlag, gives at most $\ll \varepsilon^{-1} \log(1/\varepsilon)$ colours.
+bound, due to Peres and Schlag [PeSc10], gives at most
+$\ll \varepsilon^{-1} \log(1/\varepsilon)$ colours.
 -/
 @[category research solved, AMS 5]
 theorem erdos_894 : answer(True) ↔
