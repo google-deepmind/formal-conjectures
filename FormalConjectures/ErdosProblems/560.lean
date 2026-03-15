@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 
 /-!
 # Erdős Problem 560
@@ -54,25 +55,6 @@ open SimpleGraph
 
 namespace Erdos560
 
-/-- The size Ramsey number $\hat{R}(G)$: the minimum number of edges in a graph $H$
-that is Ramsey for $G$.
-
-A graph $H$ on $N$ vertices is Ramsey for $G$ if every 2-coloring of the edges
-of $H$ (represented as a symmetric function $c : \operatorname{Fin} N \to \operatorname{Fin} N \to \operatorname{Bool}$)
-contains a monochromatic copy of $G$, i.e., an injective map $f$ from the
-vertices of $G$ into $\operatorname{Fin} N$ that preserves adjacency in $H$ and maps all
-edges to the same color. -/
-noncomputable def sizeRamseyNumber {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℕ :=
-  sInf {m : ℕ | ∃ (N : ℕ) (H : SimpleGraph (Fin N)),
-    Nat.card H.edgeSet = m ∧
-    ∀ (c : Fin N → Fin N → Bool),
-      (∀ i j, c i j = c j i) →
-      ∃ (b : Bool) (f : V → Fin N),
-        Function.Injective f ∧
-        (∀ u v, G.Adj u v → H.Adj (f u) (f v)) ∧
-        (∀ u v, G.Adj u v → c (f u) (f v) = b)}
-
 /--
 Erdős Problem 560, lower bound [ErRo93]:
 
@@ -81,7 +63,7 @@ For all $n \geq 6$, $\hat{R}(K_{n,n}) > \frac{1}{60} n^2 \cdot 2^n$.
 @[category research solved, AMS 5]
 theorem erdos_560.variants.lower_bound :
     ∀ n : ℕ, n ≥ 6 →
-      (sizeRamseyNumber (completeBipartiteGraph (Fin n) (Fin n)) : ℝ) >
+      (sizeRamsey (completeBipartiteGraph (Fin n) (Fin n)) (completeBipartiteGraph (Fin n) (Fin n)) : ℝ) >
         (1 / 60 : ℝ) * (n : ℝ) ^ 2 * 2 ^ n := by
   sorry
 
@@ -93,7 +75,7 @@ For all $n \geq 1$, $\hat{R}(K_{n,n}) < \frac{3}{2} n^3 \cdot 2^n$.
 @[category research solved, AMS 5]
 theorem erdos_560.variants.upper_bound :
     ∀ n : ℕ, n ≥ 1 →
-      (sizeRamseyNumber (completeBipartiteGraph (Fin n) (Fin n)) : ℝ) <
+      (sizeRamsey (completeBipartiteGraph (Fin n) (Fin n)) (completeBipartiteGraph (Fin n) (Fin n)) : ℝ) <
         (3 / 2 : ℝ) * (n : ℝ) ^ 3 * 2 ^ n := by
   sorry
 
@@ -109,8 +91,8 @@ theorem erdos_560 :
     ∃ C₁ : ℝ, C₁ > 0 ∧ ∃ C₂ : ℝ, C₂ > 0 ∧
     ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       C₁ * (n : ℝ) ^ 3 * 2 ^ n ≤
-        (sizeRamseyNumber (completeBipartiteGraph (Fin n) (Fin n)) : ℝ) ∧
-      (sizeRamseyNumber (completeBipartiteGraph (Fin n) (Fin n)) : ℝ) ≤
+        (sizeRamsey (completeBipartiteGraph (Fin n) (Fin n)) (completeBipartiteGraph (Fin n) (Fin n)) : ℝ) ∧
+      (sizeRamsey (completeBipartiteGraph (Fin n) (Fin n)) (completeBipartiteGraph (Fin n) (Fin n)) : ℝ) ≤
         C₂ * (n : ℝ) ^ 3 * 2 ^ n := by
   sorry
 
