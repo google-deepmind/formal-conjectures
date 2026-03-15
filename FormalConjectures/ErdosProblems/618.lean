@@ -23,7 +23,17 @@ import FormalConjectures.Util.ProblemImports
 
 A problem of Erdős, Gyárfás, and Ruszinkó [EGR98]. Simonovits showed that there exist
 graphs $G$ with maximum degree $\gg n^{1/2}$ and $h_2(G) \gg n^2$. Proved in the
-affirmative by Alon.
+affirmative by Alon [Al99]. This problem is essentially equivalent to Problem 134.
+
+See also: Problem 619.
+
+[EGR98] Erdős, P., Gyárfás, A. and Ruszinkó, M., *How to decrease the diameter of
+triangle-free graphs*, Combinatorica **18** (1998), 493–501.
+
+[Er99] Erdős, P., *Some of my favourite problems in various branches of combinatorics*,
+Le Matematiche, 1999.
+
+[Al99] Alon, N., *Remark on a problem of Erdős*.
 -/
 
 open SimpleGraph
@@ -59,7 +69,7 @@ theorem erdos_618 :
     ∃ δ : ℝ, δ > 0 ∧ ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
     ∀ G : SimpleGraph (Fin n),
       G.CliqueFree 3 →
-      (∀ v : Fin n, (G.degree v : ℝ) ≤ δ * (n : ℝ) ^ ((1 : ℝ) / 2)) →
+      (∀ v : Fin n, (G.degree v : ℝ) ≤ δ * (n : ℝ) ^ ((1 / 2 : ℝ))) →
       (triangleFreeDiam2Completion G : ℝ) ≤ ε * (n : ℝ) ^ 2 := by
   sorry
 
