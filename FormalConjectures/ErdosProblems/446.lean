@@ -26,14 +26,27 @@ Erdős studied the rate at which $\delta(n) \to 0$ and conjectured that
 $\delta_1(n) = o(\delta(n))$, where $\delta_1(n)$ is the density of integers with exactly
 one such divisor.
 
+**Related problems:** [#448](https://www.erdosproblems.com/448),
+[#692](https://www.erdosproblems.com/692), [#693](https://www.erdosproblems.com/693)
+
+**OEIS:** [A074738](https://oeis.org/A074738)
+
 **Bibliography:**
 
-- [Be34] Besicovitch, A. S., proved $\liminf \delta(n) = 0$.
-- [Er35] Erdős, P., proved $\delta(n) = o(1)$.
-- [Er60] Erdős, P., proved $\delta(n) = (\log n)^{-\alpha + o(1)}$.
-- [Te84] Tenenbaum, G., refined Erdős's estimate.
-- [Fo08] Ford, K., determined the exact growth rate of $\delta(n)$ and disproved the conjecture
-  that $\delta_1(n) = o(\delta(n))$.
+- [Be34] Besicovitch, A. S., _On the density of certain sequences of integers_.
+  Math. Annalen (1934), 336-341.
+- [Er35] Erdős, P., _Note on sequences of integers no one of which is divisible by any other_.
+  J. London Math. Soc. (1935), 126-128.
+- [Er60] Erdős, P., _An asymptotic inequality in the theory of numbers_.
+  Vestnik Leningrad. Univ. (1960), 41-49.
+- [Er79e] Erdős, P., _Some unconventional problems in number theory_ (1979).
+- [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+  theory_. Monographies de L'Enseignement Mathematique (1980).
+- [Te84] Tenenbaum, G., _Sur la probabilité qu'un entier possède un diviseur dans un intervalle
+  donné_. Compositio Math. (1984), 243-263.
+- [Fo08] Ford, K., _The distribution of integers with a divisor in a given interval_.
+  Ann. of Math. (2) (2008), 367-433.
+- [Ob1] Oberwolfach problem session (1986).
 -/
 
 open Filter
