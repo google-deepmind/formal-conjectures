@@ -25,6 +25,15 @@ Let $H(n)$ be the smallest integer $l \geq 2$ such that there exists $k$ with
 $2 \leq k < l$ and $\gcd(k^n - 1, l^n - 1) = 1$.
 
 The sequence $H(n)$ for $1 \leq n \leq 10$ is $3, 3, 3, 6, 3, 18, 3, 6, 3, 12$.
+
+Erdős proved $H(n) > \exp(n^{c/(\log\log n)^2})$ for infinitely many $n$.
+Wouter van Doorn sketched a proof of the stronger bound
+$H(n) > \exp(n^{c/\log\log n})$ for infinitely many $n$.
+
+See also: [Problem 770](https://www.erdosproblems.com/770),
+[OEIS A263647](https://oeis.org/A263647) (values of $n$ where $\gcd(2^n - 1, 3^n - 1) = 1$).
+
+[Er74b] Erdős, P., *Remarks on some problems in number theory*. Math. Balkanica (1974), 197-202.
 -/
 
 namespace Erdos820
@@ -46,35 +55,42 @@ theorem erdos_820 : answer(sorry) ↔
   sorry
 
 /--
-**Erdős Problem 820** — Part 2 (lower bound):
+**Erdős Problem 820** — Part 2 (asymptotic growth of $H(n)$):
 
-Is it true that there exists $c > 0$ such that for all $\varepsilon > 0$,
-for infinitely many $n$,
-$H(n) > \exp(n^{(c - \varepsilon)/\log\log n})$?
+Does there exist a single constant $c > 0$ such that for all $\varepsilon > 0$:
+- $H(n) > \exp(n^{(c - \varepsilon)/\log\log n})$ for infinitely many $n$, and
+- $H(n) < \exp(n^{(c + \varepsilon)/\log\log n})$ for all sufficiently large $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_820.variants.lower_bound : answer(sorry) ↔
+theorem erdos_820.variants.asymptotic_growth : answer(sorry) ↔
     ∃ c : ℝ, c > 0 ∧
-    ∀ ε : ℝ, ε > 0 →
-    ∀ N : ℕ, ∃ n : ℕ, n ≥ N ∧
-    (H n : ℝ) >
-      Real.exp ((↑n : ℝ) ^ ((c - ε) / Real.log (Real.log (↑n : ℝ)))) := by
+    (∀ ε : ℝ, ε > 0 →
+      ∀ N : ℕ, ∃ n : ℕ, n ≥ N ∧
+      (H n : ℝ) >
+        Real.exp ((↑n : ℝ) ^ ((c - ε) / Real.log (Real.log (↑n : ℝ))))) ∧
+    (∀ ε : ℝ, ε > 0 →
+      ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      (H n : ℝ) <
+        Real.exp ((↑n : ℝ) ^ ((c + ε) / Real.log (Real.log (↑n : ℝ))))) := by
   sorry
 
 /--
-**Erdős Problem 820** — Part 3 (upper bound):
+**Erdős Problem 820** — Part 3 (dual variant):
 
-Is it true that there exists $c > 0$ such that for all $\varepsilon > 0$,
-for all sufficiently large $n$,
-$H(n) < \exp(n^{(c + \varepsilon)/\log\log n})$?
+Let $K(n)$ be the smallest integer $k \geq 2$ such that $\gcd(k^n - 1, 2^n - 1) = 1$.
+Do similar bounds hold for $K(n)$ as conjectured for $H(n)$?
 -/
 @[category research open, AMS 11]
-theorem erdos_820.variants.upper_bound : answer(sorry) ↔
+theorem erdos_820.variants.dual : answer(sorry) ↔
     ∃ c : ℝ, c > 0 ∧
-    ∀ ε : ℝ, ε > 0 →
-    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
-    (H n : ℝ) <
-      Real.exp ((↑n : ℝ) ^ ((c + ε) / Real.log (Real.log (↑n : ℝ)))) := by
+    (∀ ε : ℝ, ε > 0 →
+      ∀ N : ℕ, ∃ n : ℕ, n ≥ N ∧
+      (↑(sInf {k : ℕ | 2 ≤ k ∧ Nat.Coprime (k ^ n - 1) (2 ^ n - 1)}) : ℝ) >
+        Real.exp ((↑n : ℝ) ^ ((c - ε) / Real.log (Real.log (↑n : ℝ))))) ∧
+    (∀ ε : ℝ, ε > 0 →
+      ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      (↑(sInf {k : ℕ | 2 ≤ k ∧ Nat.Coprime (k ^ n - 1) (2 ^ n - 1)}) : ℝ) <
+        Real.exp ((↑n : ℝ) ^ ((c + ε) / Real.log (Real.log (↑n : ℝ))))) := by
   sorry
 
 end Erdos820
