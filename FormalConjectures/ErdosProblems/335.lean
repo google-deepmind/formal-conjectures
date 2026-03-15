@@ -33,22 +33,6 @@ open Classical Filter MeasureTheory
 
 namespace Erdos335
 
-/-- The upper density of $A \subseteq \mathbb{N}$:
-$\overline{d}(A) = \limsup_{N\to\infty} |A \cap \{0, 1, \ldots, N-1\}| / N$ -/
-noncomputable def upperDensity (A : Set ℕ) : ℝ :=
-  Filter.limsup (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    Filter.atTop
-
-/-- The lower density of $A \subseteq \mathbb{N}$:
-$\underline{d}(A) = \liminf_{N\to\infty} |A \cap \{0, 1, \ldots, N-1\}| / N$ -/
-noncomputable def lowerDensity (A : Set ℕ) : ℝ :=
-  Filter.liminf (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    Filter.atTop
-
-/-- A set has natural density $d$ if its upper and lower densities both equal $d$. -/
-def HasNaturalDensity (A : Set ℕ) (d : ℝ) : Prop :=
-  upperDensity A = d ∧ lowerDensity A = d
-
 /--
 Erdős Problem 335 [ErGr80, p.51]:
 
@@ -72,16 +56,17 @@ constructions yield additive density) is not formalized here.
 @[category research open, AMS 5 11]
 theorem erdos_335 :
     ∀ (A B : Set ℕ) (dA dB : ℝ),
-      HasNaturalDensity A dA →
-      HasNaturalDensity B dB →
+      A.HasDensity dA →
+      B.HasDensity dB →
       0 < dA → 0 < dB →
-      HasNaturalDensity (Set.image2 (· + ·) A B) (dA + dB) →
+      (Set.image2 (· + ·) A B).HasDensity (dA + dB) →
       ∃ (θ : ℝ) (X_A X_B : Set ℝ),
         Irrational θ ∧
         MeasurableSet X_A ∧ MeasurableSet X_B ∧
         X_A ⊆ Set.Ico 0 1 ∧ X_B ⊆ Set.Ico 0 1 ∧
         volume X_A = ENNReal.ofReal dA ∧
         volume X_B = ENNReal.ofReal dB ∧
+        -- Sumset in ℝ/ℤ, identified with [0,1) via fractional parts
         volume (Set.image2 (fun a b => Int.fract (a + b)) X_A X_B) =
           volume X_A + volume X_B ∧
         (∀ n : ℕ, 0 < n → (n ∈ A ↔ Int.fract ((n : ℝ) * θ) ∈ X_A)) ∧
