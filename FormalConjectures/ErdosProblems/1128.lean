@@ -47,7 +47,7 @@ theorem erdos_1128 : answer(False) ↔
       (f : α × β × γ → Fin 2),
       ∃ (A₁ : Set α) (B₁ : Set β) (C₁ : Set γ),
         #A₁ = aleph 0 ∧ #B₁ = aleph 0 ∧ #C₁ = aleph 0 ∧
-        ∃ c : Fin 2, ∀ a ∈ A₁, ∀ b ∈ B₁, ∀ x ∈ C₁, f (a, b, x) = c := by
+        ∃ c : Fin 2, ∀ a ∈ A₁, ∀ b ∈ B₁, ∀ z ∈ C₁, f (a, b, z) = c := by
   sorry
 
 end Erdos1128

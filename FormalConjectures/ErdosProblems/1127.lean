@@ -29,6 +29,8 @@ distances*, Proc. Cambridge Philos. Soc. 72 (1972), 179-183.
 
 [Ku87] Kunen, K., *Partitioning Euclidean space*, Math. Proc. Cambridge Philos. Soc. 102 (1987),
 379-383.
+
+[Er81b] Erdős, P., _My Scottish Book 'Problems'_. The Scottish Book (1981), 27-35.
 -/
 
 namespace Erdos1127
@@ -37,9 +39,10 @@ namespace Erdos1127
 Can $\mathbb{R}^n$ be decomposed into countably many sets, such that within each set all the
 pairwise distances are distinct?
 
-This is true assuming the continuum hypothesis for $n = 1$ (Erdős-Kakutani [ErKa43]),
-for $n = 2$ (Davies [Da72]), and for all $n$ (Kunen [Ku87]). The dependence on the
-continuum hypothesis is necessary by a result of Erdős and Hajnal.
+This is a problem of Erdős [Er81b, p.31]. It is true assuming the continuum hypothesis
+for $n = 1$ (Erdős-Kakutani [ErKa43]), for $n = 2$ (Davies [Da72]), and for all $n$
+(Kunen [Ku87]). The dependence on the continuum hypothesis is necessary by a result of
+Erdős and Hajnal.
 -/
 @[category research solved, AMS 3 5]
 theorem erdos_1127 : answer(sorry) ↔
