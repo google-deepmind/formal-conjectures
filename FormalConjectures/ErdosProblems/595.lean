@@ -25,14 +25,14 @@ A problem of Erdős and Hajnal. Folkman [Fo70] and Nešetřil and Rödl [NeRo75]
 have proved that for every $n \geq 1$ there is a graph $G$ which contains no
 $K_4$ and is not the union of $n$ triangle-free graphs.
 
-[Er87] Erdős, P., _Some problems and results on combinatorial number theory_,
+[Er87] Erdős, P., _Some problems and results in combinatorial number theory_,
 Graph theory and its applications: East and West (1987).
 
 [Fo70] Folkman, J., _Graphs with monochromatic complete subgraphs in every edge
 coloring_, SIAM J. Appl. Math. 18 (1970), 19-24.
 
-[NeRo75] Nešetřil, J. and Rödl, V., _The Ramsey property for graphs with
-forbidden complete subgraphs_, J. Combinatorial Theory Ser. B 20 (1976), 243-249.
+[NeRo75] Nešetřil, J. and Rödl, V., _Type theory of partition properties of
+graphs_ (1975), 405-412.
 -/
 
 namespace Erdos595
