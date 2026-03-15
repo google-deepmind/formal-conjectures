@@ -34,20 +34,22 @@ This was proved by Clemen, Dumitrescu, and Liu [CDL25], who observed that equidi
 points on a short circular arc on a circle of radius 1, together with the centre, provide
 a counterexample.
 
-[Er84c] Erdős, P., _Some old and new problems on combinatorial geometry_, 1984.
+[Er84c] Erdős, P., _Some old and new problems in combinatorial geometry_,
+Convexity and graph theory (Jerusalem, 1981), 1984, pp. 129–136.
 
-[CDL25] Clemen, F., Dumitrescu, A., and Liu, Y., 2025.
+[CDL25] Clemen, F., Dumitrescu, A., and Liu, D., _On multiplicities of interpoint distances_.
+arXiv:2505.04283 (2025).
 -/
 
 namespace Erdos958
 
 /-- The set of distinct distances determined by a finite point set in $\mathbb{R}^2$. -/
 noncomputable def distinctDistances (A : Finset (EuclideanSpace ℝ (Fin 2))) : Finset ℝ :=
-  ((A ×ˢ A).filter (fun p => p.1 ≠ p.2)).image (fun p => dist p.1 p.2)
+  (A.offDiag).image (fun p => dist p.1 p.2)
 
 /-- The number of unordered pairs in $A$ at distance $d$. -/
 noncomputable def distMultiplicity (A : Finset (EuclideanSpace ℝ (Fin 2))) (d : ℝ) : ℕ :=
-  ((A ×ˢ A).filter (fun p => p.1 ≠ p.2 ∧ dist p.1 p.2 = d)).card / 2
+  (A.offDiag.filter (fun p => dist p.1 p.2 = d)).card / 2
 
 /-- The distance multiplicity property: $A$ has exactly $n-1$ distinct distances and the
 multiplicities are exactly $\{1, 2, \ldots, n-1\}$. -/
