@@ -27,6 +27,13 @@ $n - O(1)$ different sizes of cliques (maximal complete subgraphs)?
 DISPROVED: The answer is no, as proved by Gao [Ga25]. More generally, for any
 $k \geq 3$, every $k$-uniform hypergraph on $n$ vertices contains at most
 $n - f_k(n)$ different sizes of cliques, where $f_k(n) \to \infty$ as $n \to \infty$.
+
+See also [927].
+
+[Gu83] Guy, R.K., _Unsolved Problems in Number Theory_, 1983.
+[Sp71] Spencer, J., _On cliques in graphs_. Israel J. Math. (1971), 419–421.
+[MoMo65] Moon, J.W., Moser, L., _On cliques in graphs_. Israel J. Math. (1965), 23–28.
+[Ga25] Gao, J., _On cliques in hypergraphs_. arXiv:2510.14804 (2025).
 -/
 
 namespace Erdos775
@@ -64,6 +71,19 @@ theorem erdos_775 : answer(False) ↔
     (∃ C : ℕ, ∀ n : ℕ, ∃ H : Finset (Finset (Fin n)),
       (∀ e ∈ H, e.card = 3) ∧
       (cliqueSizeSet H 3).ncard ≥ n - C) := by
+  sorry
+
+/--
+General version of Erdős Problem 775 (Gao [Ga25]):
+For any $k \geq 3$, the number of distinct clique sizes in any $k$-uniform
+hypergraph on $n$ vertices is at most $n - f_k(n)$ where $f_k(n) \to \infty$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_775_general_k :
+    ∀ k : ℕ, k ≥ 3 → ∃ f : ℕ → ℕ, Filter.Tendsto f Filter.atTop Filter.atTop ∧
+      ∀ n : ℕ, ∀ H : Finset (Finset (Fin n)),
+        (∀ e ∈ H, e.card = k) →
+        (cliqueSizeSet H k).ncard + f n ≤ n := by
   sorry
 
 end Erdos775
