@@ -35,11 +35,12 @@ f(t, n) = R(t, t-1) + x(t, n),
 $$
 where $0 \leq x(t, n) < t$ is such that $n + 1 \equiv R(t, t-1) + x \pmod{t}$.
 
-[Er71] Erdős, P.
+[Er71] Erdős, P., _Topics in combinatorial analysis_, pp. 95-99, 1971.
 
-[Mo66b] Moon, J.W.
+[Mo66b] Moon, J.W., _Disjoint triangles in chromatic graphs_. Math. Mag. (1966), 259-261.
 
-[BES75] Burr, S.A., Erdős, P., and Spencer, J.H.
+[BES75] Burr, S.A., Erdős, P., Spencer, J.H., _Ramsey theorems for multiple copies of graphs_.
+Trans. Amer. Math. Soc. (1975), 87-99.
 -/
 
 open Finset
@@ -58,6 +59,8 @@ that for every symmetric 2-colouring of the edges of $K_n$, one can find
 pairwise disjoint monochromatic $K_t$'s covering all but at most $r$
 vertices. -/
 noncomputable def minLeftover (t n : ℕ) : ℕ :=
+  -- The infimum over r of: for every symmetric 2-colouring, one can cover
+  -- all but at most r vertices by pairwise disjoint monochromatic K_t's.
   sInf {r : ℕ | ∀ (c : Fin n → Fin n → Bool), (∀ i j, c i j = c j i) →
     ∃ (cliques : Finset (Finset (Fin n))),
       (∀ S ∈ cliques, S.card = t) ∧
@@ -76,7 +79,7 @@ noncomputable def ramseyNumber₂ (s t : ℕ) : ℕ :=
 /--
 Erdős Problem 1015 [Er71]:
 
-For all $t \geq 2$, for $n$ sufficiently large depending on $t$, the minimum number
+For all $t \geq 3$, for $n$ sufficiently large depending on $t$, the minimum number
 of leftover vertices when partitioning any 2-colouring of $K_n$ into
 vertex-disjoint monochromatic $K_t$'s is exactly
 $$
@@ -87,10 +90,19 @@ where $x \in \{0, \ldots, t-1\}$ satisfies $n + 1 \equiv R(t, t-1) + x \pmod{t}$
 Proved by Burr, Erdős, and Spencer [BES75].
 -/
 @[category research solved, AMS 5]
-theorem erdos_1015 (t : ℕ) (ht : t ≥ 2) :
+theorem erdos_1015 (t : ℕ) (ht : t ≥ 3) :
     ∃ N₀ : ℕ, ∀ n ≥ N₀,
       minLeftover t n =
         ramseyNumber₂ t (t - 1) + (n + 1 - ramseyNumber₂ t (t - 1)) % t := by
+  sorry
+
+/--
+Moon's result [Mo66b]: for $n \geq 8$, the minimum number of leftover vertices
+when covering a 2-coloured $K_n$ by vertex-disjoint monochromatic triangles is
+exactly 4.
+-/
+@[category research solved, AMS 5]
+theorem erdos_1015_moon (n : ℕ) (hn : n ≥ 8) : minLeftover 3 n = 4 := by
   sorry
 
 end Erdos1015
