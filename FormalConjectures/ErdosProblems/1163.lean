@@ -25,7 +25,8 @@ Describe (by statistical means) the arithmetic structure of the orders of
 subgroups of $S_n$. A concrete interpretation: the proportion of divisors of
 $n!$ that are orders of subgroups of $S_n$ tends to $0$ as $n \to \infty$.
 
-[Va99] Vardi, I., *Computational Recreations in Mathematica* (1999).
+[Va99] Various, _Some of Paul's favorite problems_. Booklet produced for the
+conference "Paul Erdős and his mathematics", Budapest (1999).
 -/
 
 open Equiv Classical
