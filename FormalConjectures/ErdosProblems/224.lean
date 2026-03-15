@@ -30,6 +30,11 @@ points in $A$ determine an obtuse angle.
 - For $d = 3$ there is an unpublished proof by Kuiper and Boerdijk.
 - The general case was proved by Danzer and Grünbaum [DaGr62].
 
+[Er57] Erdős, P., _Some unsolved problems_, 1957.
+
+[Er61, p.244] Erdős, P., _Some unsolved problems_, Magyar Tud. Akad. Mat. Kutató
+Int. Közl. 6 (1961), 221–254.
+
 [DaGr62] Danzer, L. and Grünbaum, B., _Über zwei Probleme bezüglich konvexer
 Körper von P. Erdős und von V.L. Klee_, Math. Z. 79 (1962), 95–99.
 -/
