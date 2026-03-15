@@ -29,7 +29,7 @@ Estimate $t(n)$. In particular, is it true that $t(n) = o(n)$?
 A problem of Erdős and Purdy, who proved $t(n) \gg n^{2/3}$.
 Resolved by Alon [Al91] who proved $t(n) \ll n^{2/3} \log n$, confirming $t(n) = o(n)$.
 
-[Al91] Alon, N., _A note on the covering number of $\{1, \ldots, n\}^2$_ (1991).
+[Al91] Alon, N., _Economical coverings of sets of lattice points_. Geom. Funct. Anal. (1991), 224–230.
 -/
 
 namespace Erdos798
@@ -66,6 +66,34 @@ theorem erdos_798 :
     ∀ ε : ℝ, ε > 0 →
     ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
       (gridCoveringNumber n : ℝ) ≤ ε * (n : ℝ) := by
+  sorry
+
+/--
+Erdős–Purdy lower bound for Problem 798:
+
+$t(n) \gg n^{2/3}$, i.e., there exists a constant $C > 0$ such that
+$t(n) \geq C \cdot n^{2/3}$ for all sufficiently large $n$.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_798_lower :
+    ∃ C : ℝ, C > 0 ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      (gridCoveringNumber n : ℝ) ≥ C * (n : ℝ) ^ ((2 : ℝ) / 3) := by
+  sorry
+
+/--
+Alon's upper bound for Problem 798 [Al91]:
+
+$t(n) \ll n^{2/3} \log n$, i.e., there exists a constant $C > 0$ such that
+$t(n) \leq C \cdot n^{2/3} \cdot \log n$ for all sufficiently large $n$.
+
+This is the result that implies $t(n) = o(n)$.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_798_upper :
+    ∃ C : ℝ, C > 0 ∧
+    ∃ N₀ : ℕ, ∀ n : ℕ, n ≥ N₀ →
+      (gridCoveringNumber n : ℝ) ≤ C * (n : ℝ) ^ ((2 : ℝ) / 3) * Real.log n := by
   sorry
 
 end Erdos798
