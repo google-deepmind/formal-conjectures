@@ -40,6 +40,9 @@ DilationEquiv. -/
 def DilationEquivSimilar (A B : Finset ℝ²) : Prop :=
   ∃ f : ℝ² ≃ᵈ ℝ², (f '' A) = B
 
+/-- Equilateral triangle with unit side length, resting on the x-axis with one vertex at the origin. -/
+noncomputable def equiTriangle : Finset ℝ² := {!₂[0, 0], !₂[1, 0], !₂[1 / 2, Real.sqrt 3 / 2]}
+
 noncomputable def unitSquare : Finset ℝ² := {!₂[0, 0], !₂[0, 1], !₂[1, 0], !₂[1, 1]}
 
 /-- Regular 7-gon with unit side length, touching both axes in the first quadrant. -/
@@ -62,12 +65,57 @@ noncomputable def wheelSeven : Finset ℝ² :=
    !₂[3 / 2, 0]}
 
 @[category test, AMS 52]
-lemma erdos_91.test.unitSquare_optimal : IsOptimal unitSquare 4 := by
+lemma erdos_91.test.equiTriangle_optimal : IsOptimal equiTriangle 3 := by
+  have hcard : equiTriangle.card = 3 := by
+    simp [equiTriangle, Finset.mem_insert, Finset.mem_singleton]
+  have hdist : distinctDistances equiTriangle = 1 := by
+    unfold distinctDistances equiTriangle
+    have eucl_dist_one_of_sq : ∀ {x y : ℝ²}, dist x y ^ 2 = 1 → dist x y = 1 := by
+      intro x y h; nlinarith [dist_nonneg (x := x) (y := y), sq_nonneg (dist x y)]
+    have hd01 : dist (!₂[(0 : ℝ), 0]) (!₂[(1 : ℝ), 0]) = 1 := eucl_dist_one_of_sq <| by
+      rw [EuclideanSpace.dist_sq_eq, Fin.sum_univ_two]; simp [Real.dist_eq]
+    have hd02 : dist (!₂[(0 : ℝ), 0]) (!₂[(1 : ℝ) / 2, Real.sqrt 3 / 2]) = 1 :=
+      eucl_dist_one_of_sq <| by
+        rw [EuclideanSpace.dist_sq_eq, Fin.sum_univ_two, Real.dist_eq, Real.dist_eq]
+        simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
+        nlinarith [Real.sq_sqrt (show (3 : ℝ) ≥ 0 by norm_num), Real.sqrt_nonneg 3,
+          sq_abs ((0 : ℝ) - 1 / 2), sq_abs ((0 : ℝ) - Real.sqrt 3 / 2)]
+    have hd12 : dist (!₂[(1 : ℝ), 0]) (!₂[(1 : ℝ) / 2, Real.sqrt 3 / 2]) = 1 :=
+      eucl_dist_one_of_sq <| by
+        rw [EuclideanSpace.dist_sq_eq, Fin.sum_univ_two, Real.dist_eq, Real.dist_eq]
+        simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
+        nlinarith [Real.sq_sqrt (show (3 : ℝ) ≥ 0 by norm_num), Real.sqrt_nonneg 3,
+          sq_abs ((1 : ℝ) - 1 / 2), sq_abs ((0 : ℝ) - Real.sqrt 3 / 2)]
+    suffices h : ({!₂[(0 : ℝ), 0], !₂[(1 : ℝ), 0], !₂[(1 : ℝ) / 2, Real.sqrt 3 / 2]} :
+        Finset ℝ²).offDiag.image (fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2) = {1} by
+      simp only [h, Finset.card_singleton]
+    refine Finset.eq_singleton_iff_unique_mem.mpr ⟨Finset.mem_image.mpr
+      ⟨⟨!₂[0, 0], !₂[1, 0]⟩, by simp [Finset.mem_offDiag], hd01⟩, fun d hd => ?_⟩
+    obtain ⟨⟨a, b⟩, hab, rfl⟩ := Finset.mem_image.mp hd
+    simp only [Finset.mem_offDiag, Finset.mem_insert, Finset.mem_singleton] at hab
+    obtain ⟨ha, hb, _⟩ := hab
+    rcases ha with rfl | rfl | rfl <;> rcases hb with rfl | rfl | rfl <;> first
+      | contradiction | exact hd01 | exact hd02 | exact hd12
+      | (rw [dist_comm]; first | exact hd01 | exact hd02 | exact hd12)
+  have hmin : minimalDistinctDistances 3 = 1 := by
+    unfold minimalDistinctDistances
+    apply le_antisymm
+    · exact Nat.sInf_le ⟨equiTriangle, hcard, by exact_mod_cast hdist⟩
+    · apply le_csInf
+      · exact ⟨_, equiTriangle, hcard, rfl⟩
+      rintro d ⟨points, hcard', hd⟩
+      rw [← show distinctDistances points = d from by exact_mod_cast hd]
+      exact Finset.card_pos.mpr ((Finset.card_pos.mp (by rw [Finset.offDiag_card, hcard']; norm_num :
+        0 < points.offDiag.card)).image _)
+  exact ⟨hcard, by rw [hdist, hmin]⟩
+
+@[category test, AMS 52]
+lemma erdos_91.test.equiTriangle_unique_optimal :
+    ∀ A : Finset ℝ², IsOptimal A 3 → DilationEquivSimilar A equiTriangle := by
   sorry
 
 @[category test, AMS 52]
-lemma erdos_91.test.unitSquare_unique_optimal :
-    ∀ A : Finset ℝ², IsOptimal A 4 → DilationEquivSimilar A unitSquare := by
+lemma erdos_91.test.unitSquare_optimal : IsOptimal unitSquare 4 := by
   sorry
 
 @[category test, AMS 52]
