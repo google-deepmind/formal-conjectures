@@ -23,31 +23,26 @@ Is there some constant $c > 0$ such that $R(C_4, K_n) \ll n^{2-c}$?
 
 *Reference:* [erdosproblems.com/159](https://www.erdosproblems.com/159)
 
-[Er81] Erdős, P., *Problems and results in graph theory*.
+[Er78] Erdős, P., *Problems and results in combinatorial analysis and combinatorial number
+theory*, Proceedings of the Ninth Southeastern Conference on Combinatorics, Graph Theory, and
+Computing (1978), 29–40.
+
+[Er81] Erdős, P., *On the combinatorial problems which I would most like to see solved*,
+Combinatorica 1 (1981), 25–42.
 
 [Er84d] Erdős, P., *On some problems in graph theory, combinatorial analysis and
 combinatorial number theory*.
 
-[EFRS78] Erdős, P., Faudree, R.J., Rousseau, C.C., and Schelp, R.H.
+[EFRS78] Erdős, P., Faudree, R. J., Rousseau, C. C., and Schelp, R. H.,
+*On cycle-complete graph Ramsey numbers*, J. Graph Theory 2 (1978), 53–64.
 
-[Sp77] Spencer, J.
+[Sp77] Spencer, J., *Asymptotic lower bounds for Ramsey functions*, Discrete Math.
+**20** (1977), 69–76.
 -/
 
 open SimpleGraph
 
 namespace Erdos159
-
-/-- An injective graph homomorphism from $H$ to $G$ witnesses that $G$ contains
-    a subgraph isomorphic to $H$. -/
-def ContainsSubgraph {V U : Type*} (G : SimpleGraph V) (H : SimpleGraph U) : Prop :=
-  ∃ f : U → V, Function.Injective f ∧ ∀ u v : U, H.Adj u v → G.Adj (f u) (f v)
-
-/-- The 4-cycle $C_4$: vertices $\operatorname{Fin} 4$, with $i$ adjacent to $j$ iff they are
-    consecutive modulo 4 (i.e., the edges are $0$–$1$, $1$–$2$, $2$–$3$, $3$–$0$). -/
-def C4 : SimpleGraph (Fin 4) where
-  Adj i j := (i.val + 1) % 4 = j.val ∨ (j.val + 1) % 4 = i.val
-  symm := fun _ _ h => h.elim Or.inr Or.inl
-  loopless := by intro i; fin_cases i <;> decide
 
 /-- The graph Ramsey number $R(C_4, K_n)$: the minimum $N$ such that every simple
     graph $G$ on $N$ vertices either contains a copy of $C_4$ as a subgraph, or the
@@ -55,10 +50,10 @@ def C4 : SimpleGraph (Fin 4) where
     size $n$). -/
 noncomputable def ramseyC4Kn (n : ℕ) : ℕ :=
   sInf {N : ℕ | ∀ (G : SimpleGraph (Fin N)),
-    ContainsSubgraph G C4 ∨ ContainsSubgraph Gᶜ (⊤ : SimpleGraph (Fin n))}
+    (cycleGraph 4).IsContained G ∨ (⊤ : SimpleGraph (Fin n)).IsContained Gᶜ}
 
 /--
-Erdős Conjecture (Problem 159) [Er81, Er84d]:
+Erdős Conjecture (Problem 159) [Er78, Er81, Er84d]:
 
 There exists a constant $c > 0$ such that $R(C_4, K_n) \ll n^{2-c}$, i.e.,
 $R(C_4, K_n) = O(n^{2-c})$ as $n \to \infty$.
