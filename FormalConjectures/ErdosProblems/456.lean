@@ -101,4 +101,24 @@ theorem erdos_456.variants.unique_preimage :
       ∀ n : ℕ, smallestTotientDiv n = p → n = p - 1} := by
   sorry
 
+/--
+The trivial bound $m_n \leq p_n$ always holds: the smallest positive integer $m$
+with $n \mid \phi(m)$ is at most the smallest prime $p \equiv 1 \pmod{n}$, since
+$\phi(p) = p - 1 \equiv 0 \pmod{n}$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_456.variants.trivial_bound (n : ℕ) (hn : 1 ≤ n) :
+    smallestTotientDiv n ≤ smallestPrimeCong1 n := by
+  sorry
+
+/--
+When $n = q - 1$ for a prime $q$, we have $m_n = p_n = q$: the smallest
+prime $\equiv 1 \pmod{q - 1}$ is $q$ itself, and the smallest $m$ with
+$(q - 1) \mid \phi(m)$ is also $q$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_456.variants.prime_minus_one (q : ℕ) (hq : Nat.Prime q) :
+    smallestTotientDiv (q - 1) = q ∧ smallestPrimeCong1 (q - 1) = q := by
+  sorry
+
 end Erdos456
