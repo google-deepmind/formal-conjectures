@@ -25,6 +25,9 @@ where a 4-element subset is degenerate if some two distinct pairs determine the 
 *Reference:* [erdosproblems.com/1087](https://www.erdosproblems.com/1087)
 
 [ErPu71] Erdős, P. and Purdy, G., _Some extremal problems in geometry_.
+  Journal of Combinatorial Theory, Series A (1971), 246–252.
+
+[Er75f] Erdős, P., _Problems and results in combinatorial geometry_, 1975, p. 104.
 -/
 
 open Classical
@@ -40,7 +43,7 @@ def HasRepeatedDistance (S : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
 /-- The number of "degenerate" 4-element subsets (those with a repeated distance)
     of a point set $P$ in $\mathbb{R}^2$. -/
 noncomputable def degenerateQuadrupleCount (P : Finset (EuclideanSpace ℝ (Fin 2))) : ℕ :=
-  (P.powerset.filter (fun S => S.card = 4 ∧ HasRepeatedDistance S)).card
+  ((P.powersetCard 4).filter HasRepeatedDistance).card
 
 /--
 Erdős Problem 1087 (Erdős–Purdy [ErPu71]):
