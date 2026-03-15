@@ -38,6 +38,17 @@ Conjectures:
 
 [Er84e] Erdős proved (3) along a subsequence of $x \to \infty$.
 [Er84e] Erdős proved $x \log\log\log\log x \ll H(x) \ll x \log\log\log x$.
+
+## References
+
+* [Er84e] Erdős, P., _On two unconventional number theoretic functions and on some
+  related problems_. (1984), 113–121.
+* [Er98] Erdős, P., _Some of my new and almost new problems and results in
+  combinatorial number theory_. Number theory (Eger, 1996) (1998), 169–180.
+
+## See also
+
+* OEIS sequence [A339378](https://oeis.org/A339378) (possible).
 -/
 
 open Finset BigOperators Real
