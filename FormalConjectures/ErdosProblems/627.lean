@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Clique
+import Mathlib.Combinatorics.SimpleGraph.Coloring
 
 /-!
 # Erdős Problem 627
@@ -28,6 +30,19 @@ exist?
 
 Erdős [Er67c] proved that $f(n) \asymp n / (\log_2 n)^2$ and that the limit, if it exists,
 must be in $[1/4, 4]$.
+
+[Er61d] Erdős, P., _Graph theory and probability. II_. Canadian Journal of Mathematics (1961),
+346–352.
+
+[Er67c] Erdős, P., _Some remarks on chromatic graphs_. Colloquium Mathematicum (1967), 253–256.
+
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_, 1969.
+
+[Zy52] Zykov, A. A., _On some properties of linear complexes_. American Mathematical Society
+Translation (1952), 33.
+
+[AFM25] Araujo, I., Filipe, R., Miyazaki, R., _A note on the maximum ratio between chromatic
+number and clique number_. arXiv:2502.16062 (2025).
 -/
 
 open SimpleGraph Filter
@@ -36,21 +51,12 @@ open scoped Topology
 
 namespace Erdos627
 
-/-- The chromatic number of a simple graph on `Fin n`: the minimum number of colors
-    such that there exists a proper coloring. -/
-noncomputable def chromaticNumber627 {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
-  sInf {k : ℕ | ∃ f : Fin n → Fin k, ∀ u v, G.Adj u v → f u ≠ f v}
-
-/-- The clique number of a simple graph on `Fin n`: the maximum size of a clique. -/
-noncomputable def cliqueNumber627 {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
-  sSup {k : ℕ | ¬G.CliqueFree k}
-
 /-- $f_{627}(n)$ is the maximum of $\chi(G)/\omega(G)$ over all simple graphs $G$
 on $n$ vertices. -/
 noncomputable def f627 (n : ℕ) : ℝ :=
   sSup {r : ℝ | ∃ G : SimpleGraph (Fin n),
-    cliqueNumber627 G > 0 ∧
-    r = (chromaticNumber627 G : ℝ) / (cliqueNumber627 G : ℝ)}
+    G.cliqueNum > 0 ∧
+    r = (G.chromaticNumber.toNat : ℝ) / (G.cliqueNum : ℝ)}
 
 /--
 **Erdős Problem 627** [Er61d][Er67c][Er69b]:
