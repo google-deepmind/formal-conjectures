@@ -29,24 +29,25 @@ Erdős was "almost certain" that powers of $2$ would not work, and offered \$100
 
 See also Problem 71.
 
-[Bo77] Bollobás, B., *Cycles modulo k*. Bull. London Math. Soc. 9 (1977), 97-98.
+[Bo77] Bollobás, B., _Cycles modulo k_. Bull. London Math. Soc. **9** (1977), 97–98.
 
 [Er94b] Erdős, P., _Some old and new problems in various branches of combinatorics_.
-Math. Pannon. (1994), 261-269.
+Math. Pannon. (1994), 261–269.
 
 [Er95] Erdős, P., _Some recent problems and results in graph theory_.
-Discrete Math. 164 (1997), 81–85.
+Discrete Math. **164** (1997), 81–85.
 
 [Er97b] Erdős, P., _Some of my favourite problems which recently have been solved_,
 Proceedings of the International Conference on Discrete Mathematics (ICDM) (1997).
 
-[Er97c] Erdős, P. (1997).
+[Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
+**164** (1997), 81–85.
 
-[Ve05] Verstraëte, J., *A note on vertex-disjoint cycles*, Combinatorics, Probability and
-Computing 14 (2005), 127-143.
+[Ve05] Verstraëte, J., _A note on vertex-disjoint cycles_. Combinatorics, Probability and
+Computing **14** (2005), 127–143.
 
-[LiMo20] Liu, H. and Montgomery, R., *A solution to Erdős and Hajnal's odd cycle problem*,
-Journal of the American Mathematical Society 36 (2023), 1191-1234.
+[LiMo20] Liu, H. and Montgomery, R., _A solution to Erdős and Hajnal's odd cycle problem_.
+J. Amer. Math. Soc. **36** (2023), 1191–1234.
 -/
 
 open SimpleGraph
