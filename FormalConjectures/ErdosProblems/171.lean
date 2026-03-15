@@ -44,6 +44,8 @@ theory: some problems on additive number theory_. (1979).
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
+
+See also OEIS sequence [A156989](https://oeis.org/A156989).
 -/
 
 namespace Erdos171
@@ -52,10 +54,9 @@ namespace Erdos171
 determined by a non-empty set $S$ of "active" coordinates and fixed values $c$
 for inactive coordinates. The $i$-th point has coordinate $j$ equal to $i$ if $j$ is
 active, and equal to $c(j)$ if $j$ is inactive. -/
-def IsCombLine (t N : ℕ) (P : Fin t → (Fin N → Fin t)) : Prop :=
-  ∃ (S : Finset (Fin N)) (c : Fin N → Fin t),
-    S.Nonempty ∧
-    ∀ (i : Fin t) (j : Fin N),
+def IsCombinatorialLine (t N : ℕ) (P : Fin t → (Fin N → Fin t)) : Prop :=
+  ∃ (S : Finset (Fin N)), S.Nonempty ∧
+    ∃ (c : Fin N → Fin t), ∀ (i : Fin t) (j : Fin N),
       P i j = if j ∈ S then i else c j
 
 /--
@@ -73,7 +74,7 @@ theorem erdos_171 :
     ∀ (A : Finset (Fin N → Fin t)),
     (A.card : ℝ) ≥ ε * (t : ℝ) ^ N →
     ∃ (P : Fin t → (Fin N → Fin t)),
-      IsCombLine t N P ∧ ∀ (i : Fin t), P i ∈ A := by
+      IsCombinatorialLine t N P ∧ ∀ (i : Fin t), P i ∈ A := by
   sorry
 
 end Erdos171
