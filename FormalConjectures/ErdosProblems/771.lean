@@ -28,8 +28,11 @@ for all $A \subseteq S$.
 Is it true that $f(n) = (\tfrac{1}{2} + o(1)) \cdot n / \log n$?
 
 The lower bound $f(n) \geq (\tfrac{1}{2} + o(1)) \cdot n / \log n$ was proved by Erdős
-and Graham, who took $S = \{kp : 1 \leq k < n/p\}$ where $p$ is the least prime not
+and Graham [Er89], who took $S = \{kp : 1 \leq k < n/p\}$ where $p$ is the least prime not
 dividing $m$. The matching upper bound was proved by Alon and Freiman [AlFr88].
+
+[Er89] Erdős, P., _Some problems and results on combinatorial number theory_. Annals of the
+New York Academy of Sciences **576** (1989), 132-145.
 
 [AlFr88] Alon, N. and Freiman, G., _On sums of subsets of a set of integers_. Combinatorica
 8 (1988), 297-306.
