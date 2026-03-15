@@ -26,9 +26,24 @@ $b_1 < b_2 < \cdots$ that ensures there exists a primitive sequence
 $a_1 < a_2 < \cdots$ (i.e. no element divides another) with $a_n \ll b_n$
 for all $n$?
 
-[ESS68] Erdős, P., Sárközy, A., and Szemerédi, E.
+Erdős [Er35] proved the necessary condition $\sum \frac{1}{b_n \log b_n} < \infty$,
+and Erdős, Sárközy, and Szemerédi [ESS67] proved the necessary condition
+$\sum_{b_n < x} \frac{1}{b_n} = o\!\left(\frac{\log x}{\sqrt{\log\log x}}\right)$.
 
-[Er98] Erdős, P.
+See also Problem 143 for an analogous question for sequences of real numbers.
+
+[Er35] Erdős, P., _Note on sequences of integers no one of which is divisible by any
+other_. J. London Math. Soc. (1935), 126-128.
+
+[ESS67] Erdős, P., Sárközy, A., and Szemerédi, E., _On a theorem of Behrend_.
+J. Austral. Math. Soc. (1967), 9-16.
+
+[ESS68] Erdős, P., Sárközy, A., and Szemerédi, E., _On the solvability of certain
+equations in sequences of positive upper logarithmic density_.
+J. London Math. Soc. (1968), 71-78.
+
+[Er98] Erdős, P., _Some of my new and almost new problems and results in
+combinatorial number theory_. Number theory (Eger, 1996) (1998), 169-180.
 -/
 
 namespace Erdos892
@@ -41,7 +56,8 @@ def IsPrimitiveSeq (a : ℕ → ℕ) : Prop :=
 Erdős Problem 892 (particular case) [Er98]:
 
 If $b : \mathbb{N} \to \mathbb{N}$ is a strictly increasing sequence of positive integers such that
-$\gcd(b_i, b_j) \neq b_k$ for all pairwise distinct $i, j, k$ (no non-trivial GCD solutions),
+$\gcd(b_i, b_j) \neq b_k$ for all pairwise distinct $i, j, k$ (no $b_k$ equals $\gcd(b_i, b_j)$
+for pairwise distinct indices),
 then there exists a strictly increasing primitive sequence $a : \mathbb{N} \to \mathbb{N}$ with
 $a_n \ll b_n$ (i.e. there exists $C$ such that $a_n \leq C \cdot b_n$ for all $n$).
 -/
