@@ -22,7 +22,31 @@ import FormalConjectures.Util.ProblemImports
 Is it true that the maximum number of k-rich lines determined by n points in the plane with no
 k+1 collinear is o(n²) for all k ≥ 4? This generalises Problem #101 (the case k = 4).
 
+Kárteszi [Ka63] proved f_k(n) ≫_k n log n for k ≥ 4. Grünbaum [Gr76] improved this to
+f_k(n) ≫_k n^{1+1/(k-2)}. Solymosi and Stojaković [SoSt13] constructed point sets with
+no (k+1) collinear and ≥ n^{2 - O_k(1/√(log n))} k-rich lines, showing the answer is close
+to quadratic if false.
+
+Erdős offered $100 for a resolution of this problem.
+
 *Reference:* [erdosproblems.com/588](https://www.erdosproblems.com/588)
+
+[Er84] Erdős, P., _Some old and new problems on combinatorial geometry_, 1984.
+
+[BGS74] Burr, S. A., Grünbaum, B., and Sloane, N. J. A., _The orchard problem_.
+Geometriae Dedicata (1974), 397–424.
+
+[FuPa84] Füredi, Z. and Palásti, I., _Arrangements of lines with a large number of
+triangles_. Proc. Amer. Math. Soc. (1984), 561–566.
+
+[Ka63] Kárteszi, F., _Sylvester egy tételéről és Erdős egy sejtéséről_.
+Matematikai Lapok (1963), 3–10.
+
+[Gr76] Grünbaum, B., _New views on some old questions of combinatorial geometry_.
+Colloquio Internazionale sulle Teorie Combinatorie (Roma, 1973), Tomo I (1976), 451–468.
+
+[SoSt13] Solymosi, J. and Stojaković, M., _Many collinear k-tuples with no k+1 collinear
+points_. Discrete Comput. Geom. (2013), 811–820.
 -/
 
 namespace Erdos588
