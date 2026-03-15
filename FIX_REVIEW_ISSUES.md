@@ -7,7 +7,8 @@ You are a PhD-level mathematician and Lean 4 expert. Your task is to fix all iss
 - **Review:** `ai-review/NUM.md`
 - **Lean file:** `FormalConjectures/ErdosProblems/NUM.lean`
 - **Library:** `FormalConjecturesForMathlib/` (shared definitions to reuse)
-- **Website:** `https://www.erdosproblems.com/latex/NUM` (LaTeX source — authoritative source for citations and variants)
+- **Website:** `https://www.erdosproblems.com/NUM` (detailed problem info — variants, context, related problems)
+- **LaTeX source:** `https://www.erdosproblems.com/latex/NUM` (authoritative source for citations — most complete bibliographic data)
 
 ## Instructions
 
@@ -38,7 +39,7 @@ If the review says "No issues" or the section has no actionable recommendations,
 
 If the review identifies citation issues:
 
-1. Fetch `https://www.erdosproblems.com/latex/NUM` to get the LaTeX source with exact citations. This is the **sole authoritative source** for all citation data — do not search the web or use any other sources.
+1. Fetch `https://www.erdosproblems.com/latex/NUM` to get the LaTeX source with exact citations. This is the **most complete source** for bibliographic data (titles, journals, volumes, pages). You may also fetch `https://www.erdosproblems.com/NUM` for additional context, but the LaTeX endpoint has the most complete citation details. Do not search the web or use any other sources.
 2. When extracting citations from the LaTeX source, convert LaTeX-encoded names to plain text (e.g., `Erd\H{o}s` → `Erdős`, `Szemer\'edi` → `Szemerédi`, `Tur\'an` → `Turán`).
 3. For each citation issue flagged in the review:
    - **Missing reference:** Add it to the module docstring in the standard format: `[TAG] Last, F., Last, F., _Title_. Journal **vol** (year), pages.`
