@@ -50,10 +50,11 @@ $$d^{4/3} / (\log d)^{1/3} \ll f(d) \ll d^{4/3}.$$
 theorem erdos_797 :
     -- Upper bound: f(d) ≪ d^{4/3}
     (∃ C : ℝ, 0 < C ∧
-      ∀ (d n : ℕ) (G : SimpleGraph (Fin n)),
-        (∀ v, G.degree v ≤ d) →
-        ∃ (k : ℕ) (c : G.Coloring (Fin k)),
-          IsAcyclicColoring G c ∧ (k : ℝ) ≤ C * (d : ℝ) ^ ((4 : ℝ) / 3)) ∧
+      ∃ d₀ : ℕ, ∀ d : ℕ, d₀ ≤ d →
+        ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
+          (∀ v, G.degree v ≤ d) →
+          ∃ (k : ℕ) (c : G.Coloring (Fin k)),
+            IsAcyclicColoring G c ∧ (k : ℝ) ≤ C * (d : ℝ) ^ ((4 : ℝ) / 3)) ∧
     -- Lower bound: f(d) ≫ d^{4/3} / (log d)^{1/3}
     (∃ C : ℝ, 0 < C ∧
       ∃ d₀ : ℕ, ∀ d : ℕ, d₀ ≤ d →
