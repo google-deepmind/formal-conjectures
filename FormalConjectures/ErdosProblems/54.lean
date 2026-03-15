@@ -27,10 +27,12 @@ Resolved by Conlon, Fox, and Pham [CFP21].
 
 See also Problems 55 and 843.
 
-[BuEr85] Burr, S. A. and Erdős, P., _On the completeness of sequences of sums of powers
-of integers_ (1985).
-[Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
-[CFP21] Conlon, D., Fox, J., and Pham, H.T., _Subset sums, completeness and colorings_ (2021).
+[BuEr85] Burr, S. A. and Erdős, P., _A Ramsey-type property in additive number theory_.
+Glasgow Math. J. (1985), 5–10.
+[Er95] Erdős, P., _Some of my favourite problems in number theory, combinatorics, and
+geometry_. Resenhas (1995), 165–186.
+[CFP21] Conlon, D., Fox, J., and Pham, H.T., _Subset sums, completeness and colorings_.
+arXiv:2104.14766 (2021).
 -/
 
 open scoped Classical
