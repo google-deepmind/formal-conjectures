@@ -29,14 +29,24 @@ In other words, estimate the minimal independence number of a unit distance
 graph with $n$ vertices.
 
 The Moser spindle shows $f(n) \leq (2/7)n \approx 0.285n$. Croft [Cr67] gave the
-best-known lower bound of $f(n) \geq 0.22936n$. Matolcsi, Ruzsa, Varga, and
-Zsámboki [MRVZ23] improved the upper bound to $f(n) \leq (1/4 + o(1))n$.
+best-known lower bound of $f(n) \geq 0.22936n$, using the density approach of
+Larman and Rogers [LaRo72]. Matolcsi, Ruzsa, Varga, and Zsámboki [MRVZ23]
+improved the upper bound to $f(n) \leq (1/4 + o(1))n$. Ambrus, Csiszárik,
+Matolcsi, Varga, and Zsámboki [ACMVZ23] showed that the density $m_1 \leq 0.247$,
+so the density approach alone cannot achieve $f(n) \geq n/4$.
 
 [Er87b] Erdős, P., _Some problems on number theory, combinatorics and geometry_, 1987.
 
-[Cr67] Croft, H. T., _Incidence incidents_, 1967.
+[Cr67] Croft, H. T., _Incidence incidents_, Eureka (1967), 22–26.
 
-[MRVZ23] Matolcsi, M., Ruzsa, I. Z., Varga, D. A., and Zsámboki, P., 2023.
+[LaRo72] Larman, D. G. and Rogers, C. A., _The realization of distances within sets in
+Euclidean space_. Mathematika 19 (1972), 1–24.
+
+[ACMVZ23] Ambrus, G., Csiszárik, A., Matolcsi, M., Varga, D., and Zsámboki, P.,
+_The density of planar sets avoiding unit distances_, 2023.
+
+[MRVZ23] Matolcsi, M., Ruzsa, I. Z., Varga, D., and Zsámboki, P.,
+_The fractional chromatic number of the plane is at least 4_, 2023.
 -/
 
 namespace Erdos1070
@@ -66,7 +76,7 @@ of at least $0.22936n$ points with no two at distance exactly $1$.
 theorem erdos_1070.variants.lower_bound (n : ℕ) (hn : n ≥ 1)
     (f : Fin n → EuclideanSpace ℝ (Fin 2)) :
     ∃ S : Finset (Fin n),
-      (S.card : ℝ) ≥ 22936 / 100000 * (n : ℝ) ∧
+      (S.card : ℝ) ≥ 22936 / 100000 * (n : ℝ) ∧  -- 0.22936
       ∀ i ∈ S, ∀ j ∈ S, i ≠ j → dist (f i) (f j) ≠ 1 := by
   sorry
 
