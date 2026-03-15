@@ -28,6 +28,8 @@ than 1 must have a consecutive gap of at least 3?
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
+
+[Va99] §1.15.
 -/
 
 namespace Erdos287
@@ -48,7 +50,8 @@ theorem erdos_287 : answer(sorry) ↔
       2 ≤ S.card →
       (∀ n ∈ S, 1 < n) →
       S.sum (fun n => (1 : ℚ) / ↑n) = 1 →
-      ∃ a ∈ S, ∃ b ∈ S, a < b ∧ (∀ c ∈ S, c ≤ a ∨ b ≤ c) ∧ 3 ≤ b - a := by
+      ∃ a ∈ S, ∃ b ∈ S, a < b ∧ (∀ c ∈ S, c ≤ a ∨ b ≤ c) /- a, b consecutive in S -/
+        ∧ 3 ≤ b - a := by
   sorry
 
 end Erdos287
