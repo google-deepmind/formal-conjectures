@@ -37,7 +37,7 @@ distinct vertices $v_0, \ldots, v_{m-1}$ such that $v_i$ is adjacent to
 $v_{(i+1) \bmod m}$ for all $i$. -/
 def ContainsCycleOfLength {V : Type*} (G : SimpleGraph V) (m : ℕ) (_ : m ≥ 3) : Prop :=
   ∃ (f : Fin m → V), Function.Injective f ∧
-    ∀ i j : Fin m, j.val = (i.val + 1) % m → G.Adj (f i) (f j)
+    ∀ i : Fin m, G.Adj (f i) (f ⟨(i.val + 1) % m, Nat.mod_lt _ (by omega)⟩)
 
 /-- The extremal number $\operatorname{ex}(n; \{C_{2k-1}, C_{2k}\})$: the maximum number of edges
 in a simple graph on $n$ vertices containing no cycle of length $2k-1$ or $2k$. -/
@@ -60,7 +60,7 @@ asymptotically $(n/2)^{1+1/k}$, i.e. the ratio tends to $1$ as $n \to \infty$.
 
 The case $k = 2$ (forbidding $C_3$ and $C_4$) is Erdős Problem 573.
 
-[ErSi82]
+See [ErSi82] for the original statement.
 -/
 @[category research open, AMS 5]
 theorem erdos_574 : answer(sorry) ↔
