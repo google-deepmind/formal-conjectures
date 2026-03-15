@@ -36,13 +36,13 @@ namespace Erdos581
 /--
 The maximum number of edges in a bipartite spanning subgraph of a graph $G$ on
 a finite vertex type. A spanning subgraph $H \leq G$ is bipartite iff it admits a
-proper 2-coloring. We use `Set.ncard` to count edges, avoiding the need for
+proper 2-coloring (i.e., is bipartite). We use `Set.ncard` to count edges, avoiding the need for
 decidability instances.
 -/
 noncomputable def maxBipartiteEdges {V : Type*} [Fintype V]
     (G : SimpleGraph V) : ℕ :=
   sSup {k : ℕ | ∃ H : SimpleGraph V, H ≤ G ∧
-    Nonempty (H.Coloring (Fin 2)) ∧
+    H.IsBipartite ∧
     H.edgeSet.ncard = k}
 
 /--
