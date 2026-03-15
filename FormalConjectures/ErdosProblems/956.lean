@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open scoped Pointwise
+
 /-!
 # Erdős Problem 956
 
@@ -29,7 +31,8 @@ translates. That is, the maximal $m$ such that there is a compact convex set
 $C \subset \mathbb{R}^2$ and a set $X$ of size $n$ such that all $(C + x)_{x \in X}$ are disjoint
 and there are $m$ pairs $x_1, x_2 \in X$ such that $\delta(C + x_1, C + x_2) = 1$.
 
-[ErPa90] Erdős, P. and Pach, J.
+[ErPa90] Erdős, P. and Pach, J., _Variations on the theme of repeated distances_,
+Combinatorica **10** (1990), 261–269.
 -/
 
 namespace Erdos956
@@ -39,10 +42,6 @@ $\delta(C, D) = \inf \{ \operatorname{dist}(c, d) \mid c \in C, d \in D \}$. -/
 noncomputable def setDist956 {α : Type*} [PseudoMetricSpace α]
     (C D : Set α) : ℝ :=
   sInf {r : ℝ | ∃ c ∈ C, ∃ d ∈ D, r = dist c d}
-
-/-- The translate of a set $C$ by a vector $x$: $C + x = \{ c + x \mid c \in C \}$. -/
-def translate956 {α : Type*} [Add α] (C : Set α) (x : α) : Set α :=
-  (· + x) '' C
 
 /--
 **Erdős Problem 956** [ErPa90]:
@@ -61,10 +60,10 @@ theorem erdos_956 :
       ∃ (X : Finset (EuclideanSpace ℝ (Fin 2))),
         X.card = n ∧
         (∀ x₁ ∈ X, ∀ x₂ ∈ X, x₁ ≠ x₂ →
-          Disjoint (translate956 C x₁) (translate956 C x₂)) ∧
+          Disjoint (C + {x₁}) (C + {x₂})) ∧
       ∃ (P : Finset (EuclideanSpace ℝ (Fin 2) × EuclideanSpace ℝ (Fin 2))),
         (∀ p ∈ P, p.1 ∈ X ∧ p.2 ∈ X ∧ p.1 ≠ p.2 ∧
-          setDist956 (translate956 C p.1) (translate956 C p.2) = 1) ∧
+          setDist956 (C + {p.1}) (C + {p.2}) = 1) ∧
         (∀ p ∈ P, (p.2, p.1) ∉ P) ∧
         ((P.card : ℝ) > (n : ℝ) ^ ((1 : ℝ) + c)) := by
   sorry
@@ -83,10 +82,10 @@ theorem erdos_956.variants.upper_bound :
       IsCompact C → Convex ℝ C → C.Nonempty →
     ∀ (X : Finset (EuclideanSpace ℝ (Fin 2))),
       (∀ x₁ ∈ X, ∀ x₂ ∈ X, x₁ ≠ x₂ →
-        Disjoint (translate956 C x₁) (translate956 C x₂)) →
+        Disjoint (C + {x₁}) (C + {x₂})) →
     ∀ (P : Finset (EuclideanSpace ℝ (Fin 2) × EuclideanSpace ℝ (Fin 2))),
       (∀ p ∈ P, p.1 ∈ X ∧ p.2 ∈ X ∧ p.1 ≠ p.2 ∧
-        setDist956 (translate956 C p.1) (translate956 C p.2) = 1) →
+        setDist956 (C + {p.1}) (C + {p.2}) = 1) →
       (∀ p ∈ P, (p.2, p.1) ∉ P) →
       (P.card : ℝ) ≤ K * (X.card : ℝ) ^ ((4 : ℝ) / 3) := by
   sorry
