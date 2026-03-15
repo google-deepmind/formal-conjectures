@@ -38,9 +38,11 @@ combinatorial number theory_. Monographies de L'Enseignement Mathematique (1980)
 
 [Er82e] Erdős, P., 1982.
 
-[Ro03] Rödl, V., 2003.
+[Ro03] Rödl, V., _On homogeneous sets of positive integers_.
+J. Combin. Theory Ser. A (2003), 229-240.
 
-[CFS13] Conlon, D., Fox, J., and Sudakov, B., 2013.
+[CFS13] Conlon, D., Fox, J., and Sudakov, B., _Two extensions of Ramsey's theorem_.
+Duke Math. J. (2013), 2903-2927.
 -/
 
 open SimpleGraph Real BigOperators
