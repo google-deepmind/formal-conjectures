@@ -21,7 +21,30 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/713](https://www.erdosproblems.com/713)
 
-A problem of Erdős and Simonovits, worth \$500. See also Problem \#571.
+A problem of Erdős and Simonovits, worth \$500. Is it true that for every finite bipartite graph
+$G$, there exist $\alpha \in [1, 2)$ and $c > 0$ such that $\operatorname{ex}(n; G) \sim cn^\alpha$?
+Must $\alpha$ be rational?
+
+Erdős [Er67] initially conjectured that $\alpha$ must have the form $1 + 1/k$ or $2 - 1/k$ for
+some integer $k \geq 2$, but this was disproved by Erdős and Simonovits [ErSi70].
+The analogous statement fails for hypergraphs: Frankl and Füredi [FrFu87] constructed a
+5-uniform counterexample, and Füredi and Gerbner [FuGe21] extended these counterexamples to all
+$k \geq 5$.
+
+See also Problem \#571.
+
+[Er67] Erdős, P., _Some recent results on extremal problems in graph theory. Results_,
+Theory of Graphs (Internat. Sympos., Rome, 1966) (1967), 117–123.
+
+[ErSi70] Erdős, P. and Simonovits, M., _Some extremal problems in graph theory_,
+Combinatorial theory and its applications, I–III (Proc. Colloq., Balatonfüred, 1969) (1970),
+377–390.
+
+[FrFu87] Frankl, P. and Füredi, Z., _Exact solution of some Turán-type problems_,
+J. Combin. Theory Ser. A (1987), 226–262.
+
+[FuGe21] Füredi, Z. and Gerbner, D., _Hypergraphs without exponents_,
+J. Combin. Theory Ser. A (2021), Paper No. 105517, 9 pp.
 -/
 
 open SimpleGraph Filter
