@@ -22,14 +22,17 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/751](https://www.erdosproblems.com/751)
 
 Let $G$ be a graph with chromatic number $\chi(G) = 4$. If $m_1 < m_2 < \cdots$ are the
-lengths of the cycles in $G$, can $\min(m_{i+1} - m_i)$ be arbitrarily large?
+lengths of the cycles in $G$, can $\min(m_{i+1} - m_i)$ be arbitrarily large? Can this
+happen if the girth of $G$ is large?
 
 The answer is no: Bondy and Vince [BoVi98] proved that every graph with minimum degree
 at least $3$ has two cycles whose lengths differ by at most $2$, and hence the same is
-true for every graph with chromatic number $4$.
+true for every graph with chromatic number $4$ (regardless of girth).
+
+[Er94b] Erdős, P., _Some old and new problems in various branches of combinatorics_ (1994).
 
 [BoVi98] Bondy, J. A. and Vince, A., _Cycles in a graph whose lengths differ by one or
-two_. Journal of Graph Theory (1998), 11-15.
+two_. Journal of Graph Theory **27** (1998), 11–15.
 -/
 
 open SimpleGraph
@@ -55,17 +58,28 @@ theorem erdos_751 : answer(False) ↔
           m₁ < m₂ → C ≤ m₂ - m₁) := by
   sorry
 
-/-- **Bondy–Vince Theorem**: Every graph with minimum degree at least $3$ contains two
-cycles whose lengths differ by at most $2$. This is the stronger result that resolves
-Erdős Problem 751.
-
-[BoVi98] -/
+/-- **Bondy–Vince Theorem** [BoVi98]: Every graph with minimum degree at least $3$
+contains two cycles whose lengths differ by at most $2$. This is the stronger result
+that resolves Erdős Problem 751. -/
 @[category research solved, AMS 5]
 theorem erdos_751.variants.bondy_vince {V : Type*} [Fintype V] [DecidableEq V]
+    [Nonempty V]
     (G : SimpleGraph V) [DecidableRel G.Adj]
-    (hmin : ∀ v : V, 3 ≤ G.degree v) :
+    (hmin : 3 ≤ G.minDegree) :
     ∃ m₁ ∈ cycleLengths G, ∃ m₂ ∈ cycleLengths G,
       m₁ < m₂ ∧ m₂ - m₁ ≤ 2 := by
+  sorry
+
+/-- **Erdős Problem 751 (girth variant)**: Even if we additionally require the girth of
+$G$ to be large, the minimum gap between consecutive cycle lengths in a graph with
+$\chi(G) = 4$ cannot be made arbitrarily large. This follows from the Bondy–Vince theorem,
+which makes no assumption on girth. -/
+@[category research solved, AMS 5]
+theorem erdos_751.variants.large_girth : answer(False) ↔
+    (∀ C : ℕ, ∀ g : ℕ, ∃ (V : Type) (_ : Fintype V) (G : SimpleGraph V),
+      G.chromaticNumber = 4 ∧ g < G.girth ∧
+        ∀ m₁ ∈ cycleLengths G, ∀ m₂ ∈ cycleLengths G,
+          m₁ < m₂ → C ≤ m₂ - m₁) := by
   sorry
 
 end Erdos751
