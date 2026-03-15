@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
+import Mathlib.Combinatorics.SimpleGraph.Circulant
 
 /-!
 # Erdős Problem 552
@@ -24,19 +26,29 @@ import FormalConjectures.Util.ProblemImports
 Determine the Ramsey number $R(C_4, S_n)$, where $S_n = K_{1,n}$ is the star on
 $n + 1$ vertices.
 
-[BEFRS89] Burr, Erdős, Faudree, Rousseau, and Schelp.
+[BEFRS89] Burr, S. A., Erdős, P., Faudree, R. J., Rousseau, C. C., and Schelp, R. H.,
+*Some complete bipartite graph-tree Ramsey numbers*,
+Graph theory in memory of G. A. Dirac (Sandbjerg, 1985), 79–89, 1989.
 
-[Pa75] Parsons.
+[Pa75] Parsons, T. D., *Ramsey graphs and block designs. I*,
+Trans. Amer. Math. Soc. (1975), 33–44.
+
+[WSZR15] Wu, Y., Sun, Y., Zhang, R., and Radziszowski, S. P.,
+*Ramsey numbers of C₄ versus wheels and stars*,
+Graphs Combin. (2015), 2437–2446.
+
+[ZCC17] Zhang, X., Chen, Y., and Cheng, T. C. E.,
+*Some values of Ramsey numbers for C₄ versus stars*,
+Finite Fields Appl. (2017), 73–85.
+
+[ZCC17b] Zhang, X., Chen, Y., and Cheng, T. C. E.,
+*Polarity graphs and Ramsey numbers for C₄ versus stars*,
+Discrete Math. (2017), 655–660.
 -/
 
 open SimpleGraph
 
 namespace Erdos552
-
-/-- A graph $H$ contains a copy of graph $G$ (as a subgraph) if there is an injective
-function from $V(G)$ to $V(H)$ that preserves adjacency. -/
-def ContainsSubgraphCopy {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
 
 /-- The off-diagonal Ramsey number $R(G_1, G_2)$: the minimum $N$ such that every
 graph $H$ on $N$ vertices contains a copy of $G_1$ or its complement contains a
@@ -44,20 +56,7 @@ copy of $G_2$. -/
 noncomputable def offDiagRamseyNumber {V₁ V₂ : Type*}
     (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph V₂) : ℕ :=
   sInf {N : ℕ | ∀ (H : SimpleGraph (Fin N)),
-    ContainsSubgraphCopy G₁ H ∨ ContainsSubgraphCopy G₂ Hᶜ}
-
-/-- The cycle graph on $k$ vertices ($k \geq 3$): vertex $i$ is adjacent to vertex $j$ iff
-they differ by exactly $1$ modulo $k$. -/
-def cycleGraph (k : ℕ) (hk : k ≥ 3) : SimpleGraph (Fin k) where
-  Adj i j := (i.val + 1) % k = j.val ∨ (j.val + 1) % k = i.val
-  symm _ _ h := h.elim Or.inr Or.inl
-  loopless v h := by
-    rcases h with h | h <;> {
-      have := v.isLt
-      by_cases heq : v.val + 1 = k
-      · rw [heq, Nat.mod_self] at h; omega
-      · rw [Nat.mod_eq_of_lt (by omega)] at h; omega
-    }
+    G₁.IsContained H ∨ G₂.IsContained Hᶜ}
 
 /-- The star graph $S_n = K_{1,n}$ on $n + 1$ vertices: vertex $0$ is the center,
 adjacent to all other vertices. -/
@@ -86,7 +85,7 @@ Erdős offered \$100 for a proof or disproof.
 theorem erdos_552 : answer(sorry) ↔
     ∀ c : ℝ, c > 0 →
     ∀ N : ℕ, ∃ n : ℕ, n ≥ N ∧
-      (offDiagRamseyNumber (cycleGraph 4 (by omega)) (starGraph n) : ℝ) ≤
+      (offDiagRamseyNumber (cycleGraph 4) (starGraph n) : ℝ) ≤
         ↑n + Real.sqrt ↑n - c := by
   sorry
 
