@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 
 /-!
 # Erdős Problem 345
@@ -26,20 +27,18 @@ representable as a finite subset sum) satisfies $T(n^k) > T(n^{k+1})$ for infini
 
 [ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
 theory_. Monographies de L'Enseignement Mathematique (1980).
+
+See also OEIS sequence [A001661](https://oeis.org/A001661) for the known threshold values.
 -/
 
 open Finset BigOperators
 
 namespace Erdos345
 
-/-- The set of all finite subset sums of a set $A \subseteq \mathbb{N}$. That is,
-$P(A) = \{\sum_{n \in B} n : B \subseteq A, B \text{ finite}\}$. -/
-def subsetSums (A : Set ℕ) : Set ℕ :=
-  {s | ∃ (B : Finset ℕ), (↑B : Set ℕ) ⊆ A ∧ s = ∑ n ∈ B, n}
-
 /-- The threshold of completeness $T(A)$: the least $m$ such that
 all $n \ge m$ are in $P(A)$, the set of finite subset sums of $A$.
-(Only meaningful for complete sequences.) -/
+(Only meaningful for complete sequences. Related to `IsAddComplete` from
+`AdditivelyComplete.lean`, which asserts that this threshold set is nonempty.) -/
 noncomputable def thresholdOfCompleteness (A : Set ℕ) : ℕ :=
   sInf {m : ℕ | ∀ n : ℕ, n ≥ m → n ∈ subsetSums A}
 
@@ -63,6 +62,27 @@ and $T(n^5) = 67898771$.
 theorem erdos_345 :
     answer(sorry) ↔ Set.Infinite {k : ℕ | thresholdOfCompleteness (kthPowers k) >
       thresholdOfCompleteness (kthPowers (k + 1))} := by
+  sorry
+
+/--
+Variant of Erdős Problem 345 for powers of two exponents.
+
+Erdős and Graham specifically suggest investigating $k = 2^t$ for large $t$ as promising
+candidates, "because of the highly restricted values of $n^{2^t} \pmod{2^{t+1}}$."
+
+This asks whether there are infinitely many $t$ such that $T(n^{2^t}) > T(n^{2^{t+1}})$.
+-/
+@[category research open, AMS 5 11]
+theorem erdos_345_power_of_two_variant :
+    answer(sorry) ↔ Set.Infinite {t : ℕ | thresholdOfCompleteness (kthPowers (2 ^ t)) >
+      thresholdOfCompleteness (kthPowers (2 ^ (t + 1)))} := by
+  sorry
+
+/-- The simplest known threshold value: $T(n) = 1$, meaning every positive integer is a sum of
+distinct positive integers (which is trivially true). -/
+@[category test, AMS 5 11]
+theorem erdos_345_threshold_linear :
+    thresholdOfCompleteness (kthPowers 1) = 1 := by
   sorry
 
 end Erdos345
