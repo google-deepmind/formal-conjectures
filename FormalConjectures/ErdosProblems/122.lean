@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 122
@@ -34,7 +35,7 @@ number theory* (1997).
 arithmetic functions, III* (1997).
 -/
 
-open scoped Classical
+open scoped Classical ArithmeticFunction.sigma
 
 open Filter
 
@@ -48,18 +49,11 @@ noncomputable def shiftCount (f : ℕ → ℕ) (F : ℕ → ℝ) (x : ℕ) : ℕ
     (fun (n : ℕ) => (x : ℝ) < (n : ℝ) + (f n : ℝ) ∧
               (n : ℝ) + (f n : ℝ) < (x : ℝ) + F x)).card
 
-/-- The natural density of a set $A \subseteq \mathbb{N}$ is zero: the proportion of elements
-in $\{0, \ldots, N-1\}$ belonging to $A$ tends to $0$ as $N \to \infty$. -/
-def HasNaturalDensityZero (A : Set ℕ) : Prop :=
-  Tendsto
-    (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    atTop (nhds 0)
-
 /-- $f(n)/F(n) \to 0$ for almost all $n$ in the natural-density sense:
 for every $\varepsilon > 0$, the set $\{n : f(n)/F(n) \ge \varepsilon\}$ has natural
 density zero. -/
 def AlmostAllRatioVanishes (f : ℕ → ℕ) (F : ℕ → ℝ) : Prop :=
-  ∀ ε : ℝ, 0 < ε → HasNaturalDensityZero {n : ℕ | ε ≤ (f n : ℝ) / F n}
+  ∀ ε : ℝ, 0 < ε → Set.HasDensity {n : ℕ | ε ≤ (f n : ℝ) / F n} 0
 
 /-- The Erdős-122 property of $f$: for any positive $F$ with $f(n)/F(n) \to 0$
 in natural density, the ratio $\#\{n \in \mathbb{N} : n+f(n) \in (x, x+F(x))\} / F(x)$
@@ -90,7 +84,20 @@ The theorem below records the two proved instances.
 @[category research solved, AMS 11]
 theorem erdos_122 :
     HasErdos122Property (fun n => (Nat.divisors n).card) ∧
-    HasErdos122Property (fun n => (Nat.primeFactorsList n).toFinset.card) := by
+    HasErdos122Property (fun n => n.primeFactors.card) := by
   sorry
+
+/--
+Erdős conjectured that `HasErdos122Property` is FALSE for Euler's totient function $\varphi$.
+-/
+@[category research open, AMS 11]
+theorem erdos_122_totient : ¬ HasErdos122Property Nat.totient := by sorry
+
+/--
+Erdős conjectured that `HasErdos122Property` is FALSE for the sum-of-divisors function $\sigma$.
+Here $\sigma_1(n)$ denotes $\sum_{d \mid n} d$.
+-/
+@[category research open, AMS 11]
+theorem erdos_122_sigma : ¬ HasErdos122Property (fun n => σ 1 n) := by sorry
 
 end Erdos122
