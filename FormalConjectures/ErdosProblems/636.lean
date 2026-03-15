@@ -27,10 +27,12 @@ pairwise differ in either the number of vertices or the number of edges?
 
 A problem of Erdős, Faudree, and Sós [Er93, p.346], who proved there exist
 $\gg n^{3/2}$ many such subgraphs, and note that $n^{5/2}$ would be best possible.
+Erdős credits Alon and Bollobás in [Er93].
 
 This was proved by Kwan and Sudakov [KwSu21].
 
-[Er93] Erdős, P., _On some of my favourite theorems_ (1993), p.346.
+[Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph
+theory_. Quaestiones Mathematicae (1993), 333-350.
 
 [Er97d] Erdős, P., _Some of my new and almost new problems and results in
 combinatorics and graph theory_ (1997).
@@ -52,7 +54,7 @@ noncomputable def inducedSubgraphSignatures {n : ℕ} (G : SimpleGraph (Fin n)) 
     (S.card, (G.induce (↑S : Set (Fin n))).edgeSet.ncard)
 
 /--
-**Erdős Problem 636** [Er93, p.346][Er97d]:
+**Erdős Problem 636** [Er93, p.346]; [Er97d]:
 
 For every $C > 0$, there exist $c > 0$ and $N_0$ such that for all $n \geq N_0$, if $G$ is a
 graph on $n$ vertices with clique number at most $C \cdot \log_2(n)$ and independence number
