@@ -16,9 +16,10 @@ limitations under the License.
 module
 
 
-import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
-import Mathlib.NumberTheory.Divisors
+public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
+public import Mathlib.NumberTheory.Divisors
 
+@[expose] public section
 /-!
 # Practical numbers
 
