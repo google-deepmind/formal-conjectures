@@ -28,23 +28,34 @@ $f_d(n) = n^{2/d - o(1)}$?
 Erdős [Er46b] proved $n^{1/d} \ll_d f_d(n) \ll_d n^{2/d}$, the upper bound
 construction being given by a set of lattice points.
 
-[Er46b] Erdős, P., _On sets of distances of n points_, 1946.
+[Er46b] Erdős, P., _On sets of distances of $n$ points_. Amer. Math. Monthly (1946), 248-250.
 
-[Er75f] Erdős, P., _Problems and results in combinatorial geometry_, 1975.
+[Er75f] Erdős, P., _Problems and results in combinatorial geometry_, 1975, p. 101.
+
+[CEGSW90] Clarkson, K. L., Edelsbrunner, H., Guibas, L. J., Sharir, M., Welzl, E.,
+_Combinatorial complexity bounds for arrangements of curves and spheres_.
+Discrete Comput. Geom. (1990), 99-160.
+
+[APST04] Aronov, B., Pach, J., Sharir, M., Tardos, G.,
+_Distinct distances in three and higher dimensions_.
+Combin. Probab. Comput. (2004), 283-293.
+
+[SoVu08] Solymosi, J., Vu, V. H., _Near optimal bounds for the Erdős distinct
+distances problem in high dimensions_. Combinatorica (2008), 113-125.
 -/
 
 namespace Erdos1083
 
 /-- The number of distinct pairwise distances determined by a finite point set
 in $\mathbb{R}^d$. -/
-noncomputable def distinctDistanceCountInDim (d : ℕ) (P : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
+noncomputable def distinctDistanceCount {d : ℕ} (P : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
   Set.ncard {r : ℝ | ∃ p ∈ P, ∃ q ∈ P, p ≠ q ∧ r = dist p q}
 
 /-- $f_d(n)$: the minimal number of distinct distances determined by any set of
 $n$ points in $\mathbb{R}^d$. -/
 noncomputable def minDistinctDistances (d : ℕ) (n : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ (P : Finset (EuclideanSpace ℝ (Fin d))),
-    P.card = n ∧ distinctDistanceCountInDim d P = m}
+    P.card = n ∧ distinctDistanceCount P = m}
 
 /--
 **Erdős Problem 1083** [Er46b][Er75f, p.101]:
