@@ -28,7 +28,14 @@ The answer is yes, proved by Berend [Be97], who further proved that the
 sequence of such $n$ has bounded gaps (where the bound depends on the initial
 set of primes).
 
-[Be97] Berend, D., *On the parity of exponents in the factorization of $n!$*. J. Number Theory **64** (1997), 13–19.
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number theory_,
+Monographies de L'Enseignement Mathématique (1980), p. 77.
+
+[Er97e] Erdős, P., _Some of my favourite problems which recently have been solved_,
+Proc. Int. Conf. on Discrete Math. (1997), 527–533.
+
+[Be97] Berend, D., _On the parity of exponents in the factorization of $n!$_.
+J. Number Theory **64** (1997), 13–19.
 -/
 
 namespace Erdos646
@@ -44,6 +51,19 @@ for each prime $p$ in the set, the $p$-adic valuation of $n!$ is even.
 theorem erdos_646 : answer(True) ↔
     ∀ (primes : Finset ℕ), (∀ p ∈ primes, Nat.Prime p) →
     Set.Infinite {n : ℕ | ∀ p ∈ primes, Even (padicValNat p n.factorial)} := by
+  sorry
+
+/--
+Berend's stronger result [Be97]: for any finite set of primes, the sequence of $n$
+such that $n!$ has even $p$-adic valuation for every prime in the set has bounded gaps.
+That is, there exists a bound $B$ (depending on the set of primes) such that in every
+interval of length $B$ there is such an $n$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_646_bounded_gaps :
+    ∀ (primes : Finset ℕ), (∀ p ∈ primes, Nat.Prime p) →
+    ∃ B : ℕ, ∀ n : ℕ, ∃ m ∈ Set.Icc n (n + B),
+      ∀ p ∈ primes, Even (padicValNat p m.factorial) := by
   sorry
 
 end Erdos646
