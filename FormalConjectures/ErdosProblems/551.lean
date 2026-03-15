@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import Mathlib.Combinatorics.SimpleGraph.Copy
+import Mathlib.Combinatorics.SimpleGraph.Circulant
 
 /-!
 # Erdős Problem 551
@@ -28,30 +30,26 @@ $k$ vertices, and $K_n$ is the complete graph on $n$ vertices.
 
 Asked by Erdős, Faudree, Rousseau, and Schelp [EFRS78]. This identity was
 proved for $k > n^2 - 2$ by Bondy and Erdős [BoEr73], extended to $k \geq 4n + 2$ by
-Nikiforov [Ni05], and established for sufficiently large $n$ by Keevash, Long,
-and Skokan [KLS21].
+Nikiforov [Ni05], and established for $k \geq C \frac{\log n}{\log \log n}$ (for some
+constant $C$), thus resolving the conjecture for sufficiently large $n$, by Keevash,
+Long, and Skokan [KLS21].
 
 [EFRS78] Erdős, P., Faudree, R. J., Rousseau, C. C., and Schelp, R. H.,
 *On cycle-complete graph Ramsey numbers*, J. Graph Theory 2 (1978), 53–64.
 
 [BoEr73] Bondy, J. A. and Erdős, P., *Ramsey numbers for cycles in graphs*,
-J. Combin. Theory Ser. B 14 (1973), 46–54.
+J. Combin. Theory Ser. B (1973), 46–54.
 
 [Ni05] Nikiforov, V., *The cycle-complete graph Ramsey numbers*,
-Combin. Probab. Comput. 14 (2005), 349–370.
+Combin. Probab. Comput. (2005), 349–370.
 
 [KLS21] Keevash, P., Long, E., and Skokan, J.,
-*Cycle-complete graph Ramsey numbers*, Trans. Amer. Math. Soc. 374 (2021), 5469–5481.
+*Cycle-complete Ramsey numbers*, Int. Math. Res. Not. IMRN (2021), 277–302.
 -/
 
 open SimpleGraph
 
 namespace Erdos551
-
-/-- A graph $H$ contains a copy of graph $G$ (as a subgraph) if there is an injective
-function from $V(G)$ to $V(H)$ that preserves adjacency. -/
-def ContainsSubgraphCopy {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∃ f : V → W, Function.Injective f ∧ ∀ u v, G.Adj u v → H.Adj (f u) (f v)
 
 /-- The off-diagonal Ramsey number $R(G_1, G_2)$: the minimum $N$ such that every
 graph $H$ on $N$ vertices contains a copy of $G_1$ or its complement contains a
@@ -59,20 +57,7 @@ copy of $G_2$. -/
 noncomputable def offDiagRamseyNumber {V₁ V₂ : Type*}
     (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph V₂) : ℕ :=
   sInf {N : ℕ | ∀ (H : SimpleGraph (Fin N)),
-    ContainsSubgraphCopy G₁ H ∨ ContainsSubgraphCopy G₂ Hᶜ}
-
-/-- The cycle graph on $k$ vertices ($k \geq 3$): vertex $i$ is adjacent to vertex $j$ iff
-they differ by exactly $1$ modulo $k$. -/
-def cycleGraph (k : ℕ) (hk : k ≥ 3) : SimpleGraph (Fin k) where
-  Adj i j := (i.val + 1) % k = j.val ∨ (j.val + 1) % k = i.val
-  symm _ _ h := h.elim Or.inr Or.inl
-  loopless v h := by
-    rcases h with h | h <;> {
-      have := v.isLt
-      by_cases heq : v.val + 1 = k
-      · rw [heq, Nat.mod_self] at h; omega
-      · rw [Nat.mod_eq_of_lt (by omega)] at h; omega
-    }
+    G₁ ⊑ H ∨ G₂ ⊑ Hᶜ}
 
 /--
 Erdős Problem 551 [EFRS78]:
@@ -84,7 +69,7 @@ vertices (expressed as $\top : \text{SimpleGraph}(\text{Fin}\; n)$).
 -/
 @[category research open, AMS 5]
 theorem erdos_551 (k n : ℕ) (hk : k ≥ n) (hn : n ≥ 3) (hne : ¬(k = 3 ∧ n = 3)) :
-    offDiagRamseyNumber (cycleGraph k (by omega)) (⊤ : SimpleGraph (Fin n)) =
+    offDiagRamseyNumber (cycleGraph k) (⊤ : SimpleGraph (Fin n)) =
       (k - 1) * (n - 1) + 1 := by
   sorry
 
