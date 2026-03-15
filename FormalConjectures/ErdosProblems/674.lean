@@ -30,15 +30,29 @@ $x = 2^{12} \cdot 3^6$, $y = 2^8 \cdot 3^8$, $z = 2^{11} \cdot 3^7$.
 In [Er79] Erdős asked if the infinite families found by Ko are the only
 solutions.
 
-[Ko40] Ko, C., _On a problem of Erdős_, 1940.
+[Ko40] Ko, C., _Note on the Diophantine equation $x^x y^y = z^z$_.
+J. Chinese Math. Soc. (1940), 205–207.
 
-[Er79] Erdős, P., _Some old and new problems on combinatorial number theory_, 1979.
+[Er79] Erdős, P., _Some unconventional problems in number theory_.
+Math. Mag. (1979), 67–70.
+
+[Sc58] Schinzel, A., _Sur un problème de P. Erdős_. Colloq. Math. (1958), 198–204.
+
+[Mi59] Mills, W. H., _An unsolved Diophantine equation_.
+Rep. Inst. in the theory of numbers, University of Colorado (1959), 258–268.
+
+[De75b] Dem'janenko, V. A., _On a conjecture of A. Schinzel_.
+Izv. Vyssh. Ucheb. Zaved. Matematika (1975), 39–45.
+
+[Uc84] Uchiyama, S., _On the Diophantine equation $x^x y^y = z^z$_.
+Trudy Mat. Inst. Steklov. (1984), 237–243.
 -/
 
 namespace Erdos674
 
 /--
-Are there any natural numbers $x, y, z > 1$ such that $x^x \cdot y^y = z^z$? Yes. [Ko40]
+Are there any natural numbers $x, y, z > 1$ such that $x^x \cdot y^y = z^z$? Yes — infinitely
+many solutions exist, including the family found by Ko [Ko40].
 -/
 @[category research solved, AMS 11]
 theorem erdos_674 : answer(True) ↔
@@ -51,6 +65,23 @@ to $x^x \cdot y^y = z^z$ with $x, y, z > 1$? [Er79] -/
 theorem erdos_674.variants.unique_families : answer(sorry) ↔
     ∀ x y z : ℕ, x > 1 → y > 1 → z > 1 → x ^ x * y ^ y = z ^ z →
       sorry := by
+  sorry
+
+/-- Ko [Ko40] proved that there are no solutions to $x^x \cdot y^y = z^z$ with $x, y, z > 1$
+when $\gcd(x, y) = 1$. -/
+@[category research solved, AMS 11]
+theorem erdos_674.variants.coprime_no_solution :
+    ¬∃ x y z : ℕ, x > 1 ∧ y > 1 ∧ z > 1 ∧ Nat.Coprime x y ∧ x ^ x * y ^ y = z ^ z := by
+  sorry
+
+/-- The triple $(2^{12} \cdot 3^6,\; 2^8 \cdot 3^8,\; 2^{11} \cdot 3^7)$ is a solution
+to $x^x \cdot y^y = z^z$. -/
+@[category research solved, AMS 11]
+theorem erdos_674.variants.witness :
+    let x := 2 ^ 12 * 3 ^ 6
+    let y := 2 ^ 8 * 3 ^ 8
+    let z := 2 ^ 11 * 3 ^ 7
+    x > 1 ∧ y > 1 ∧ z > 1 ∧ x ^ x * y ^ y = z ^ z := by
   sorry
 
 end Erdos674
