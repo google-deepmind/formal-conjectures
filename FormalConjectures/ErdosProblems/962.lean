@@ -25,7 +25,9 @@ Let $k(n)$ be the maximal $k$ such that there exists $m \leq n$ such that each
 of the integers $m+1, \ldots, m+k$ are divisible by at least one prime $> k$.
 Estimate $k(n)$.
 
-[Er65] Erdős, P., _Extremal problems in number theory_, 1965.
+[Er65] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math. **VIII** (1965), 181–189.
+
+OEIS: [A327909](https://oeis.org/A327909)
 -/
 
 open Real
@@ -79,7 +81,7 @@ theorem erdos_962.variants.erdos_lower (ε : ℝ) (hε : ε > 0) :
   sorry
 
 /--
-Erdős Problem 962, Tang's lower bound:
+Erdős Problem 962, Quanyu Tang's lower bound:
 
 $k(n) \geq \exp((1/\sqrt{2} - o(1))\sqrt{\log n \cdot \log\log n})$.
 Formulated as: for every $\epsilon > 0$, there exists $N_0$ such that for all
