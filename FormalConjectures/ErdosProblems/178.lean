@@ -37,12 +37,14 @@ number theory. I*.
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
 number theory*. Monographies de L'Enseignement Mathématique (1980).
 
-[Be81] Beck, J., *Roth's estimate of the discrepancy of integer sequences is nearly sharp*.
-Combinatorica 1 (1981), 319–325.
+[Be81] Beck, J., *Balancing families of integer sequences*.
+Combinatorica (1981), 209–216.
 
-[Be17] Beck, J., *Balanced two-colorings of finite sets in the square*.
-Combinatorica 37 (2017), 631–660.
+[Be17] Beck, J., *A discrepancy problem: balancing infinite dimensional vectors*. Number
+theory—Diophantine problems, uniform distribution and applications (2017), 61–82.
 -/
+
+open Finset BigOperators
 
 namespace Erdos178
 
@@ -63,6 +65,23 @@ theorem erdos_178 :
         ∃ f : ℕ → ℤ, (∀ n, f n = 1 ∨ f n = -1) ∧
           ∀ d : ℕ, ∃ C : ℤ, 0 < C ∧
             ∀ m i, i < d → |∑ j ∈ Finset.range m, f (a i j)| ≤ C := by
+  sorry
+
+/--
+Erdős Problem 178 — Beck's refinement [Be17]:
+Beck proved the stronger result that the bound constant can be taken to grow
+polynomially in $d$: for every $\varepsilon > 0$, the partial sums can be bounded
+by $C \cdot d^{4+\varepsilon}$ for some absolute constant $C > 0$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_178_beck_refinement :
+    answer(True) ↔
+      ∀ ε : ℝ, 0 < ε →
+        ∀ a : ℕ → ℕ → ℕ, (∀ i, StrictMono (a i)) →
+          ∃ f : ℕ → ℤ, (∀ n, f n = 1 ∨ f n = -1) ∧
+            ∃ C : ℝ, 0 < C ∧
+              ∀ d m i, i < d →
+                (|∑ j ∈ Finset.range m, f (a i j)| : ℝ) ≤ C * (↑d) ^ ((4 : ℝ) + ε) := by
   sorry
 
 end Erdos178
