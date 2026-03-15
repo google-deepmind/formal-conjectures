@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 342
@@ -27,6 +28,10 @@ whether the upper density of the sequence is zero.
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
+
+[Gu04] Guy, R. K., *Unsolved problems in number theory*. (2004), xviii+437.
+
+See also Green's open problems list, Problem 7.
 -/
 
 open Filter
@@ -50,12 +55,6 @@ def IsUlamSequence (a : ℕ → ℕ) : Prop :=
     a (n - 1) < a n ∧
     ulamRepCount a n (a n) = 1 ∧
     ∀ m, a (n - 1) < m → m < a n → ulamRepCount a n m ≠ 1
-
-/-- The upper density of $A \subseteq \mathbb{N}$:
-$d^*(A) = \limsup_{N \to \infty} |A \cap \{0, 1, \ldots, N-1\}| / N$ -/
-noncomputable def upperDensity (A : Set ℕ) : ℝ :=
-  limsup (fun N : ℕ => ((Finset.range N).filter (· ∈ A)).card / (N : ℝ))
-    atTop
 
 /--
 Erdős Problem 342, Part 1 [ErGr80, p.53]:
@@ -94,7 +93,7 @@ Is the (upper) density of the Ulam sequence equal to $0$?
 @[category research open, AMS 5 11]
 theorem erdos_342.variants.density : answer(sorry) ↔
     ∀ a : ℕ → ℕ, IsUlamSequence a →
-      upperDensity (Set.range a) = 0 := by
+      Set.upperDensity (Set.range a) = 0 := by
   sorry
 
 end Erdos342
