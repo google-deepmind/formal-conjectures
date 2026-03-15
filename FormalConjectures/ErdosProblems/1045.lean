@@ -27,12 +27,21 @@ $$\Delta(z_1, \ldots, z_n) = \prod_{i \neq j} |z_i - z_j|.$$
 What is the maximum possible value of $\Delta$? Is it maximised by taking the $z_i$
 to be the vertices of a regular polygon inscribed in a circle of diameter $2$?
 
-A problem of Erdős, Herzog, and Piranian [EHP58]. Hu and Tang found
-counterexamples for $n = 4$ and $n = 6$. Cambie showed that the regular polygon
-does not maximise $\Delta$ for any even $n \ge 4$. The question remains open for odd $n$.
+A problem of Erdős, Herzog, and Piranian [EHP58]. Pommerenke [Po61] proved
+the upper bound $\Delta \le 2^{O(n)} n^n$. Hu and Tang found counterexamples for
+$n = 4$ and $n = 6$. Cambie showed that the regular polygon does not maximise
+$\Delta$ for any even $n \ge 4$. Cambie, Dong, and Tang gave better constructions.
+Sothanaphan [So25] proved a lower bound $\liminf (\max \Delta / n^n) \ge C \approx 1.0378$.
+The question remains open for odd $n$.
 
 [EHP58] Erdős, P., Herzog, F., and Piranian, G., _Metric properties of polynomials_,
-J. Analyse Math. 6 (1958), 125–148.
+J. Analyse Math. **6** (1958), 125–148.
+
+[Po61] Pommerenke, Ch., _On metric properties of complex polynomials_,
+Michigan Math. J. (1961), 97–115.
+
+[So25] Sothanaphan, N., _An improved lower bound to Erdős' problem concerning
+products of distances for fixed diameter_, arXiv:2512.14251 (2025).
 -/
 
 open Complex Finset BigOperators
