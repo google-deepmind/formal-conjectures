@@ -43,6 +43,9 @@ noncomputable def lemniscateSublevel (f : ℂ → ℂ) : Set ℂ :=
 $\Lambda(f)$: the supremum of the 1-dimensional Hausdorff measures of the frontiers
 of the connected components of $\{z \in \mathbb{C} \mid \|f(z)\| < 1\}$. A connected component
 containing $x$ in the sublevel set $S$ is `connectedComponentIn S x`.
+
+Note: this computes a supremum (`sSup`), not a literal maximum. For polynomial lemniscates
+the number of connected components is finite, so the supremum is attained.
 -/
 noncomputable def maxBoundaryLength (f : ℂ → ℂ) : ℝ :=
   sSup {ℓ : ℝ | ∃ x ∈ lemniscateSublevel f,
@@ -62,6 +65,19 @@ Resolved by Tang, who proved that the infimum of $\Lambda(f)$ over all such $f$ 
 theorem erdos_1044 :
     sInf {L : ℝ | ∃ (f : Polynomial ℂ), f.Monic ∧ (∀ z, f.IsRoot z → ‖z‖ ≤ 1) ∧
       L = maxBoundaryLength (fun z => Polynomial.eval z f)} = answer((2 : ℝ)) := by
+  sorry
+
+/--
+Tang's conjecture: For fixed degree $n \geq 1$, the infimum of $\Lambda(f)$ over all monic
+polynomials of degree $n$ with roots in the closed unit disk is attained by $f_n(z) = z^n - 1$.
+Tang has verified this for $n = 1$ and $n = 2$.
+-/
+@[category research open, AMS 30]
+theorem erdos_1044_variant (n : ℕ) (hn : 1 ≤ n) :
+    maxBoundaryLength (fun z => Polynomial.eval z (X ^ n - 1 : Polynomial ℂ)) =
+    sInf {L : ℝ | ∃ (f : Polynomial ℂ), f.Monic ∧ f.natDegree = n ∧
+      (∀ z, f.IsRoot z → ‖z‖ ≤ 1) ∧
+      L = maxBoundaryLength (fun z => Polynomial.eval z f)} := by
   sorry
 
 end Erdos1044
