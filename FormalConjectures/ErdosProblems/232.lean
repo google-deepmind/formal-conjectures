@@ -32,6 +32,7 @@ Originally a question of Moser [Mo66]. The trivial upper bound is $m_1 \le 1/2$,
 since for any unit vector $u$ the sets $A$ and $A + u$ must be disjoint.
 A lower bound of $m_1 \ge \pi/(8\sqrt{3}) \approx 0.2267$ comes from the union of open
 circular discs of radius $1/2$ at a regular hexagonal lattice.
+Croft [Cr67] gave a small improvement to $m_1 \ge 0.22936$.
 
 Proved by Ambrus, Csiszárik, Matolcsi, Varga, and Zsámboki [ACMVZ23],
 who showed $m_1 \le 0.247 < 1/4$.
@@ -39,6 +40,8 @@ who showed $m_1 \le 0.247 < 1/4$.
 [Mo66] Moser, L., *Problem 10*, Canad. Math. Bull. 9 (1966).
 
 [Er85] Erdős, P., *Problems and results in combinatorial geometry*, 1985, p. 4.
+
+[Cr67] Croft, H. T., *Incidence incidents*, Eureka (1967), 22–26.
 
 [ACMVZ23] Ambrus, G., Csiszárik, A., Matolcsi, M., Varga, D., and Zsámboki, P.,
 *The density of planar sets avoiding unit distances*, 2023.
