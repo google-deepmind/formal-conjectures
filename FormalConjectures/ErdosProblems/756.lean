@@ -27,10 +27,10 @@ distinct distances each of which occurs for more than $n$ many pairs from $A$?
 [ErPa90] Erdős, P. and Pach, J., _Variations on the theme of repeated distances_,
 Combinatorica (1990).
 
-[Er97b] Erdős, P., _Some of my favourite problems which recently have been solved_,
-Proceedings of the International Conference on Discrete Mathematics (ICDM) (1997).
+[Bh24] Bhowmick, K., _A problem of Erdős about rich distances_. arXiv:2407.01174 (2024).
 
-[Bh24] Bhowmick, A., _On a problem of Erdős and Pach on distances_ (2024).
+[CDL25] Clemen, F., Dumitrescu, A., and Liu, D., _On multiplicities of interpoint
+distances_. arXiv:2505.04283 (2025).
 
 See also problems #132 and #957.
 -/
@@ -51,7 +51,7 @@ noncomputable def highMultiplicityDistances (A : Finset (EuclideanSpace ℝ (Fin
   {d : ℝ | A.card < pairCount A d}
 
 /--
-Erdős Problem 756 [ErPa90, Er97b] (proved by Bhowmick [Bh24]):
+Erdős Problem 756 [ErPa90] (proved by Bhowmick [Bh24]):
 There exists a constant $c > 0$ such that for all sufficiently large $n$,
 there is a set $A$ of $n$ points in $\mathbb{R}^2$ with the number of
 distinct distances occurring more than $n$ times (as ordered pairs) being
@@ -63,6 +63,22 @@ theorem erdos_756 : answer(True) ↔
     ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
       ∃ A : Finset (EuclideanSpace ℝ (Fin 2)), A.card = n ∧
         c * (n : ℝ) ≤ Set.ncard (highMultiplicityDistances A) := by
+  sorry
+
+/--
+Stronger variant of Erdős Problem 756 (Erdős–Pach [ErPa90]): for sufficiently
+large $n$, there exists a set $A$ of $n$ points in $\mathbb{R}^2$ such that every
+realized distance except the largest occurs with multiplicity greater than $|A|$
+(as ordered pairs). Hopf and Pannwitz (1934) showed the largest distance occurs
+at most $n$ times, so it must be excluded.
+-/
+@[category research open, AMS 5 52]
+theorem erdos_756_all_except_largest :
+    ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n →
+      ∃ A : Finset (EuclideanSpace ℝ (Fin 2)), A.card = n ∧
+        ∀ d : ℝ, 0 < pairCount A d →
+          (∃ x ∈ A, ∃ y ∈ A, x ≠ y ∧ dist x y > d) →
+          A.card < pairCount A d := by
   sorry
 
 end Erdos756
