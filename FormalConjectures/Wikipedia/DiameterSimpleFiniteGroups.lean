@@ -55,6 +55,18 @@ $\Gamma(G, A)$ over all generating sets $A$ of $G$.
 noncomputable def groupDiam (G : Type*) [Group G] [Fintype G] : ℕ :=
   sSup { d : ℕ | ∃ S : Set G, Subgroup.closure S = ⊤ ∧ (cayleyGraph S).diam = d }
 
+/-- For the trivial group (with one element), the group diameter is zero, since
+every Cayley graph has only one vertex and hence diameter zero. -/
+@[category test, AMS 20]
+theorem groupDiam_fin_one : groupDiam (alternatingGroup (Fin 0)) = 0 := by
+  unfold groupDiam
+  apply Nat.le_zero.mp
+  apply csSup_le
+  · exact ⟨0, Set.univ, Subgroup.closure_univ,
+      SimpleGraph.diam_eq_zero.mpr (Or.inr inferInstance)⟩
+  · rintro d ⟨S, _, hd⟩
+    exact Nat.le_zero.mpr (hd ▸ SimpleGraph.diam_eq_zero.mpr (Or.inr inferInstance))
+
 /-- **Babai–Seress Conjecture (Conjecture 1.5)**: There exists an absolute constant $C$ such
 that the diameter of the alternating group $A_n$ satisfies
 $$\operatorname{diam}(A_n) \leq n^C.$$
