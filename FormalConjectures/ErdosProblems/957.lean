@@ -32,9 +32,11 @@ proved $f(d_1) f(d_k) \leq \frac{9}{8} n^2 + O(n)$.
 
 See also problems #132 and #756.
 
-[ErPa90] Erdős, P. and Pach, J., _Variation on the theme of repeated distances_ (1990).
+[ErPa90] Erdős, P. and Pach, J., _Variations on the theme of repeated distances_,
+Combinatorica (1990).
 
-[Du19] Dumitrescu, A. (2019).
+[Du19] Dumitrescu, A., _A product inequality for extreme distances_,
+Computational Geometry (2019).
 -/
 
 open Classical
