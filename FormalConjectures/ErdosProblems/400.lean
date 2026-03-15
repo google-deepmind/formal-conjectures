@@ -27,7 +27,10 @@ $a_1, \ldots, a_k$ are natural numbers such that $a_1! \cdots a_k! \mid n!$.
 Erdős and Graham note that $g_k(n) \ll_k \log n$ always, but the best possible constant is unknown.
 
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
-theory*. Monographies de L'Enseignement Mathematique (1980).
+theory*. Monographies de L'Enseignement Mathématique (1980).
+
+The two parts below are stated as separate questions on the website and are independent
+conjectures (neither implies the other).
 -/
 
 open Filter
