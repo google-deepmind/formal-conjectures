@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 827
@@ -26,18 +27,24 @@ position then there exists a subset of $k$ points such that all $\binom{k}{3}$
 triples determine circles of different radii.
 
 Erdős [Er75h] asked whether $n_k$ exists. In [Er78c] he gave a simple argument
-proving existence, but the argument was incorrect as noted by Martinez and
+proving existence, but the argument was incorrect as noted by Martínez and
 Roldán-Pensado [MaRo15]. A corrected argument gives $n_k \ll k^9$.
+
+## References
+
+- [Er75h] Erdős, P., _Some problems on elementary geometry_. Australian Mathematical Society
+  Gazette (1975), 2–3.
+- [Er78c] Erdős, P., _Some more problems on elementary geometry_. Australian Mathematical Society
+  Gazette (1978), 52–54.
+- [Er92e] Erdős, P., _Some unsolved problems in geometry, number theory and combinatorics_.
+  Eureka (1992), 44–48.
+- [MaRo15] Martínez, L., Roldán-Pensado, E., _Points defining triangles with distinct
+  circumradii_. Acta Mathematica Hungarica (2015), 136–141.
 -/
 
-open Finset
+open Finset EuclideanGeometry
 
 namespace Erdos827
-
-/-- Points in $\mathbb{R}^2$ are in general position if no three are collinear. -/
-def InGeneralPosition (P : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
-  ∀ S : Finset (EuclideanSpace ℝ (Fin 2)),
-    S ⊆ P → S.card = 3 → ¬Collinear ℝ (S : Set (EuclideanSpace ℝ (Fin 2)))
 
 /-- The circumradius of three points in $\mathbb{R}^2$, defined via Heron's formula.
     For a non-degenerate triangle with side lengths $a$, $b$, $c$ and semiperimeter
@@ -64,20 +71,36 @@ def AllDistinctCircumradii (S : Finset (EuclideanSpace ℝ (Fin 2))) : Prop :=
     circumradius a b c ≠ circumradius d e f
 
 /--
-**Erdős Problem 827** [Er75h, Er78c, Er92e]:
+**Erdős Problem 827** [Er75h, Er78c, Er92e, MaRo15]:
 
 For every $k \geq 3$, there exists $n$ such that any set of $n$ points in
 $\mathbb{R}^2$ in general position contains a $k$-element subset whose
 $\binom{k}{3}$ triples all determine circumscribed circles of pairwise
 different radii.
 
-Martinez and Roldán-Pensado [MaRo15] proved this with $n \leq C \cdot k^9$.
+Martínez and Roldán-Pensado [MaRo15] proved this with $n \leq C \cdot k^9$.
 -/
 @[category research solved, AMS 5 51]
 theorem erdos_827 (k : ℕ) (hk : k ≥ 3) :
     ∃ n : ℕ, ∀ P : Finset (EuclideanSpace ℝ (Fin 2)),
       P.card ≥ n →
-      InGeneralPosition P →
+      NonTrilinear (P : Set (EuclideanSpace ℝ (Fin 2))) →
+      ∃ S : Finset (EuclideanSpace ℝ (Fin 2)),
+        S ⊆ P ∧ S.card = k ∧ AllDistinctCircumradii S := by
+  sorry
+
+/--
+**Erdős Problem 827 (Upper bound)** [MaRo15]:
+
+Martínez and Roldán-Pensado proved that $n_k \ll k^9$, i.e., there exists
+a constant $C$ such that any set of $C \cdot k^9$ points in general position
+contains a $k$-subset with all-distinct circumradii.
+-/
+@[category research solved, AMS 5 51]
+theorem erdos_827_upper (k : ℕ) (hk : k ≥ 3) :
+    ∃ C : ℕ, ∀ P : Finset (EuclideanSpace ℝ (Fin 2)),
+      P.card ≥ C * k ^ 9 →
+      NonTrilinear (P : Set (EuclideanSpace ℝ (Fin 2))) →
       ∃ S : Finset (EuclideanSpace ℝ (Fin 2)),
         S ⊆ P ∧ S.card = k ∧ AllDistinctCircumradii S := by
   sorry
