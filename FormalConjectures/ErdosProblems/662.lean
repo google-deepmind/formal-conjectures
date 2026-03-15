@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 662
@@ -39,6 +40,7 @@ A problem of Erdős, Lovász, and Vesztergombi.
 -/
 
 open Classical
+open scoped EuclideanGeometry
 
 namespace Erdos662
 
@@ -53,7 +55,7 @@ noncomputable def triangularLatticeNeighborCount (t : ℝ) : ℕ :=
 
 /-- The number of ordered pairs of distinct points in $P$ with distance at most $t$. -/
 noncomputable def closePairCount
-    (P : Finset (EuclideanSpace ℝ (Fin 2))) (t : ℝ) : ℕ :=
+    (P : Finset (ℝ²)) (t : ℝ) : ℕ :=
   ((P ×ˢ P).filter (fun pq => pq.1 ≠ pq.2 ∧ dist pq.1 pq.2 ≤ t)).card
 
 /--
@@ -67,7 +69,7 @@ $f(t)$ is the number of neighbors within distance $t$ in the triangular lattice?
 theorem erdos_662 : answer(sorry) ↔
     ∀ t : ℝ, t > 0 →
       ∃ N : ℕ, ∀ n : ℕ, n ≥ N →
-        ∀ P : Finset (EuclideanSpace ℝ (Fin 2)),
+        ∀ P : Finset (ℝ²),
           P.card = n →
           (∀ p ∈ P, ∀ q ∈ P, p ≠ q → dist p q ≥ 1) →
           closePairCount P t ≤ n * triangularLatticeNeighborCount t := by
