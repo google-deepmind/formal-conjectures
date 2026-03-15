@@ -23,8 +23,9 @@ import FormalConjectures.Util.ProblemImports
 
 Does there exist some constant $c > 0$ such that
 $\chi_L(G) + \chi_L(G^c) > n^{1/2+c}$ for every graph $G$ on $n$ vertices?
-Disproved by Alon [Al92], who showed that the sum can be bounded above by
-$C \sqrt{n \log n}$ for some absolute constant $C > 0$.
+Disproved by Alon [Al92], who showed that for every $n$, there exists a graph $G$ on
+$n$ vertices with $\chi_L(G) + \chi_L(G^c) \leq C \sqrt{n \log n}$ for some absolute
+constant $C > 0$.
 
 [ERT80] Erdős, P., Rubin, A. L., and Taylor, H., _Choosability in graphs_. Proceedings of the
 West Coast Conference on Combinatorics, Graph Theory and Computing (1980), 125-157.
