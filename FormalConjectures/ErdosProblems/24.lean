@@ -29,13 +29,13 @@ Razborov [HHKNR13].
 467-478.
 
 [Er92b] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
-Matematiche (Catania) (1992), 231-240.
+Matematiche (Catania) **47** (1992), 231-240.
 
 [Er97b] Erdős, P., _Some of my favourite problems which recently have been solved_,
 Proceedings of the International Conference on Discrete Mathematics (ICDM) (1997).
 
-[Er97f] Erdős, P., _Some of my new and almost new problems and results in combinatorial
-geometry_. (1997)
+[Er97f] Erdős, P., _Some unsolved problems_. Combinatorics, geometry and probability
+(Cambridge, 1993) (1997), 1-10.
 
 [Gr12] Grzesik, A., _On the maximum number of five-cycles in a triangle-free graph_.
 Journal of Combinatorial Theory, Series B (2012), 1061-1066.
