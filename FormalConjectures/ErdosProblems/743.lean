@@ -32,10 +32,14 @@ Bollobás proved that the smallest $\lfloor n/\sqrt{2} \rfloor$ many trees can a
 greedily into $K_n$.
 
 Joos, Kim, Kühn, and Osthus proved this conjecture holds when the trees
-have bounded maximum degree. Janzer and Montgomery proved that there exists
+have bounded maximum degree. Allen, Böttcher, Clemens, Hladký, Piguet, and Taraz
+proved it holds when all trees have maximum degree at most $c \cdot n / \log n$ for
+some constant $c > 0$. Janzer and Montgomery proved that there exists
 some $c > 0$ such that the largest $cn$ trees can be packed into $K_n$.
 
 [Er81] Erdős, P.
+[ABCHPT21] Allen, P., Böttcher, J., Clemens, D., Hladký, J., Piguet, D., Taraz, A.,
+  _The tree packing conjecture for trees of almost linear maximum degree_. arXiv:2106.11720 (2021).
 -/
 
 open SimpleGraph
