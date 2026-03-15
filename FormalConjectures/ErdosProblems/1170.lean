@@ -24,6 +24,11 @@ import FormalConjectures.Util.ProblemImports
 Erdős asked whether it is consistent that the ordinal partition relation
 $\omega_2 \to (\alpha)^2_2$ holds for every $\alpha < \omega_2$.
 
+- [Va99] Section 7.86.
+- [La82] Laver, R., _An (ℵ₂, ℵ₂, ℵ₀)-saturated ideal on ω₁_ (1982), 173–180.
+- [FoHa03] Foreman, M. and Hajnal, A., _A partition relation for successors of large cardinals_,
+  Math. Ann. (2003), 583–623.
+
 Known partial results:
 - [La82] Laver proved the consistency of $\omega_2 \to (\omega_1 \cdot 2 + 1, \alpha)^2$
   for all $\alpha < \omega_2$.
