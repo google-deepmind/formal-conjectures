@@ -27,11 +27,18 @@ Taking all integers $\equiv 1 \pmod{3}$ shows that $|A| \geq N/3$ is possible. T
 be improved to $(11/32)N$ by taking all integers $\equiv 1,5,9,13,14,17,21,25,26,29,30
 \pmod{32}$, as observed by Massias.
 
-Khalfalah, Lodha, and Szemerédi [KLS02] proved that the maximal such $A$ satisfies
-$|A| \leq (11/32 + o(1))N$, showing that $11/32$ is sharp.
+Lagarias, Odlyzko, and Shearer [LOS83] proved the bound $|A| \leq 0.475N$ and showed the
+modular version is sharp. Khalfalah, Lodha, and Szemerédi [KLS02] proved that the maximal
+such $A$ satisfies $|A| \leq (11/32 + o(1))N$, showing that $11/32$ is sharp.
+
+[LOS83] Lagarias, J. C., Odlyzko, A. M., and Shearer, J. B., _On the density of sequences
+of integers the sum of no two of which is a square. II. General sequences_. Journal of
+Combinatorial Theory, Series A (1983), 123–139.
 
 [KLS02] Khalfalah, A., Lodha, S., and Szemerédi, E., _On the density of sumsets not
-containing a square_, 2002.
+containing a square_. Discrete Mathematics (2002), 243–255.
+
+See also: Erdős Problems 439, 587.
 -/
 
 open Finset
