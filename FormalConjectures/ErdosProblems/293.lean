@@ -96,4 +96,15 @@ theorem erdos_293 :
       exp (exp (c * (k : ℝ))) ≤ (v k : ℝ) := by
   sorry
 
+/-- Weaker form of Erdős Problem 293:
+$v(k)$ grows doubly exponentially in $\sqrt{k}$. That is, there exists a
+constant $c > 0$ such that $v(k) \geq e^{e^{c\sqrt{k}}}$ for all sufficiently large $k$.
+
+This is implied by the main conjecture `erdos_293` but may be easier to establish. -/
+@[category research open, AMS 11]
+theorem erdos_293.variants.weak_conjecture :
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ k : ℕ in atTop,
+      exp (exp (c * Real.sqrt k)) ≤ (v k : ℝ) := by
+  sorry
+
 end Erdos293
