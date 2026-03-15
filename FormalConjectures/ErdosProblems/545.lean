@@ -26,11 +26,22 @@ maximised when $G$ is 'as complete as possible'? That is, if $m = \binom{n}{2} +
 with $0 \leq t < n$ then is $R(G) \leq R(H)$, where $H$ is the graph formed by connecting a
 new vertex to $t$ of the vertices of $K_n$?
 
-A question of Erdős and Graham [ErGr75, Er84b].
+A question of Erdős and Graham [ErGr75, p.526] [Er84b, p.11].
 
-[ErGr75] Erdős, P. and Graham, R.
+The weaker question of whether $R(G) \leq 2^{O(\sqrt{m})}$ is Problem 546, proved by
+Sudakov [Su11]. Known counterexamples to the literal statement exist for small $m$
+($2 \leq m \leq 5$ and $7 \leq m \leq 9$).
 
-[Er84b] Erdős, P.
+[ErGr75] Erdős, P. and Graham, R., _On partition theorems for finite graphs_.
+Infinite and finite sets (Colloq., Keszthely, 1973; dedicated to P. Erdős on his 60th birthday),
+Vol. I; Colloq. Math. Soc. János Bolyai, Vol. 10, North-Holland, Amsterdam, 1975, pp. 515–527.
+
+[Er84b] Erdős, P., _On some problems in graph theory, combinatorial analysis and
+combinatorial number theory_. Graph theory and combinatorics (Cambridge, 1983),
+Academic Press, London (1984), 1-17.
+
+[Su11] Sudakov, B., _A conjecture of Erdős on graph Ramsey numbers_. Advances in
+Mathematics 227 (2011), 601-609.
 -/
 
 open SimpleGraph
