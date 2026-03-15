@@ -25,15 +25,18 @@ Let $k \geq 4$ and let $f_k(n)$ be the largest $m$ such that there is a graph on
 vertices with chromatic number $k$ in which every odd cycle has length $> m$.
 Is it true that $f_k(n) \asymp n^{1/(k-2)}$?
 
-A question of Erdős and Gallai [Er69b]. Gallai proved that $f_4(n) \gg n^{1/2}$
+A question of Erdős and Gallai [Er69b]. Gallai [Ga63] proved that $f_4(n) \gg n^{1/2}$
 and Erdős (unpublished) proved $f_4(n) \ll n^{1/2}$.
 
 This was proved for all $k \geq 4$ by Kierstead, Szemerédi, and Trotter [KST84].
 
 [Er69b] Erdős, P., *Problems and results in graph theory and combinatorics*, 1969.
 
-[KST84] Kierstead, H., Szemerédi, E., and Trotter, W., *On coloring graphs with locally
-few colors*, 1984.
+[Ga63] Gallai, T., *Kritische Graphen I*. Magyar Tudományos Akadémia Matematikai
+Kutatóintézet Közleményei (1963), 165–192.
+
+[KST84] Kierstead, H. A., Szemerédi, E., and Trotter, W. T., *On coloring graphs with
+locally small chromatic number*. Combinatorica (1984), 183–185.
 -/
 
 open SimpleGraph
