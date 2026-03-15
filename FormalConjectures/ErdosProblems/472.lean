@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/472](https://www.erdosproblems.com/472)
 
+[ErGr80] Erdős, P. and Graham, R., _Old and new problems and results in combinatorial number
+theory_. Monographies de L'Enseignement Mathematique (1980).
+
 Given some initial finite sequence of primes $q_1 < \cdots < q_m$, extend it so that
 $q_{n+1}$ is the smallest prime of the form $q_n + q_i - 1$ for $n \geq m$. Is there an
 initial starting sequence so that the resulting sequence is infinite?
