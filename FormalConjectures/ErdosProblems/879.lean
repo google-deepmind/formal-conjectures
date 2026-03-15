@@ -25,21 +25,32 @@ whether $G(n) > H(n) - n^{1+\varepsilon}$ for every $\varepsilon > 0$ and all
 sufficiently large $n$ (Part 1), and whether for every $k \geq 2$ the optimal
 admissible set must contain an element with at least $k$ distinct prime factors (Part 2).
 
+Erdős and Van Lint proved that $H(n) - n^{3/2-o(1)} < G(n) < H(n)$ and
+$(H(n) - G(n))/n \to \infty$. They also verified Part 2 for $k = 2$.
+
 *Reference:* [erdosproblems.com/879](https://www.erdosproblems.com/879)
+
+## References
+
+* [Er84e] Erdős, P., _On two unconventional number theoretic functions and on some
+  related problems_. (1984), 113–121.
+* [Er98] Erdős, P., _Some of my new and almost new problems and results in
+  combinatorial number theory_. Number theory (Eger, 1996) (1998), 169–180.
+
+## See also
+
+* [Problem 878](https://www.erdosproblems.com/878)
+* OEIS sequence [A186736](https://oeis.org/A186736)
 -/
 
 namespace Erdos879
 
-/-- A finset of natural numbers is *admissible* (pairwise coprime) if every two
-distinct elements are coprime. -/
-def IsAdmissible (S : Finset ℕ) : Prop :=
-  ∀ a ∈ S, ∀ b ∈ S, a ≠ b → Nat.Coprime a b
-
 /-- An admissible subset of $\{1, \ldots, n\}$ that achieves the maximum sum among all
-admissible subsets of $\{1, \ldots, n\}$. -/
+pairwise coprime subsets of $\{1, \ldots, n\}$. -/
 def IsMaxAdmissible (S : Finset ℕ) (n : ℕ) : Prop :=
-  S ⊆ Finset.Icc 1 n ∧ IsAdmissible S ∧
-  ∀ T : Finset ℕ, T ⊆ Finset.Icc 1 n → IsAdmissible T → T.sum id ≤ S.sum id
+  S ⊆ Finset.Icc 1 n ∧ (↑S : Set ℕ).Pairwise Nat.Coprime ∧
+  ∀ T : Finset ℕ, T ⊆ Finset.Icc 1 n → (↑T : Set ℕ).Pairwise Nat.Coprime →
+    T.sum id ≤ S.sum id
 
 /-- $H(n) = \sum_{p < n,\, p \text{ prime}} p + n \cdot \pi(\sqrt{n})$. -/
 noncomputable def H (n : ℕ) : ℕ :=
@@ -47,7 +58,7 @@ noncomputable def H (n : ℕ) : ℕ :=
   n * ((Finset.range (Nat.sqrt n + 1)).filter Nat.Prime).card
 
 /--
-Erdős Problem 879, Part 1:
+Erdős Problem 879, Part 1 [Er84e, Er98]:
 For every $\varepsilon > 0$, for all sufficiently large $n$,
 $G(n) > H(n) - n^{1+\varepsilon}$.
 -/
@@ -61,7 +72,7 @@ theorem erdos_879 :
   sorry
 
 /--
-Erdős Problem 879, Part 2:
+Erdős Problem 879, Part 2 [Er84e, Er98]:
 For every $k \geq 2$, if $n$ is sufficiently large then any admissible set maximising
 $G(n)$ contains at least one integer with at least $k$ distinct prime factors.
 -/
