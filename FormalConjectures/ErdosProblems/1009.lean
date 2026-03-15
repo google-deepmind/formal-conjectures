@@ -26,7 +26,7 @@ vertices with at least $\lfloor n^2/4 \rfloor + k$ edges, where $k < cn$, contai
 $k - f(c)$ many edge-disjoint triangles?
 
 Erdős proved this for $c < 1/2$. Sauer showed $f(2) \geq 1$. This was proved in
-general by Györi [Gy88] who showed $f(c) \ll c^2$, and also that $f(c) = 0$ if
+general by Győri [Gy88] who showed $f(c) \ll c^2$, and also that $f(c) = 0$ if
 $c < 2$ for odd $n$ or $c < 3/2$ for even $n$.
 
 [Er71] Erdős, P., _Some problems in graph theory_, 1971.
@@ -39,9 +39,7 @@ open SimpleGraph Classical
 
 namespace Erdos1009
 
-/-- A collection of $t$ edge-disjoint triangles in a simple graph on $n$ vertices.
-Each triangle is an injective map from three indices to vertices whose image is a clique,
-and distinct triangles share no edge (unordered pair of vertices). -/
+/-- A graph `G` on `n` vertices contains a collection of `t` edge-disjoint triangles. -/
 def HasEdgeDisjointTriangles {n : ℕ} (G : SimpleGraph (Fin n)) (t : ℕ) : Prop :=
   ∃ (tri : Fin t → Fin 3 → Fin n),
     (∀ i, Function.Injective (tri i)) ∧
@@ -57,7 +55,7 @@ Erdős Problem 1009 [Er71, p.98]:
 
 For every $c > 0$, there exists $f(c)$ such that every graph on $n$ vertices with at
 least $\lfloor n^2/4 \rfloor + k$ edges, where $k < cn$, contains at least $k - f(c)$
-many edge-disjoint triangles. Proved by Györi [Gy88].
+many edge-disjoint triangles. Proved by Győri [Gy88].
 -/
 @[category research solved, AMS 5]
 theorem erdos_1009 : answer(True) ↔
