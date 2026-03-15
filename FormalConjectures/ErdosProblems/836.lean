@@ -35,6 +35,13 @@ $r$-uniform 3-chromatic hypergraph with $\sim 4^r / \sqrt{r}$ vertices.
 
 Erdős and Lovász [ErLo75] proved that there must be two edges meeting
 in $\Omega(r / \log r)$ vertices. The second question ($\Omega(r)$) remains open.
+
+[Er74d] Erdős, P., *Problems and results on graphs and hypergraphs: similarities and
+differences*. Mathematics of Ramsey Theory (1974).
+
+[ErLo75] Erdős, P. and Lovász, L., *Problems and results on 3-chromatic hypergraphs and some
+related questions*. Infinite and Finite Sets (Colloq., Keszthely, 1973), Vol. II, Colloq.
+Math. Soc. János Bolyai, Vol. 10 (1975), 609–627.
 -/
 
 open Finset
@@ -89,6 +96,44 @@ theorem erdos_836 : answer(sorry) ↔
       H.IsIntersecting →
       ∃ e₁ ∈ H.edges, ∃ e₂ ∈ H.edges, e₁ ≠ e₂ ∧
         ((e₁ ∩ e₂).card : ℝ) ≥ C * (r : ℝ) := by
+  sorry
+
+/--
+**Alon's counterexample to the first question of Erdős Problem 836:**
+
+The first question of Problem 836 asks whether every $r$-uniform intersecting
+hypergraph with chromatic number 3 must have $O(r^2)$ vertices. Alon showed
+this is false: for all sufficiently large $r$, there exists such a hypergraph
+with more than $r^2$ vertices.
+-/
+@[category research solved, AMS 5]
+theorem erdos_836_alon_counterexample :
+    ∃ᶠ r in Filter.atTop,
+    ∃ (n : ℕ) (H : Hypergraph (Fin n)),
+      H.IsUniform r ∧
+      H.HasChromaticNumber3 ∧
+      H.IsIntersecting ∧
+      n > r ^ 2 := by
+  sorry
+
+/--
+**Erdős–Lovász result for Problem 836** [ErLo75]:
+
+Erdős and Lovász proved that for every $r$-uniform intersecting hypergraph
+with chromatic number 3, there exist two edges meeting in
+$\Omega(r / \log r)$ vertices. This is a weaker form of the main conjecture
+(Problem 836), which asks for $\Omega(r)$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_836_erdos_lovasz :
+    ∃ C : ℝ, C > 0 ∧
+    ∀ r : ℕ, r ≥ 2 →
+    ∀ (n : ℕ) (H : Hypergraph (Fin n)),
+      H.IsUniform r →
+      H.HasChromaticNumber3 →
+      H.IsIntersecting →
+      ∃ e₁ ∈ H.edges, ∃ e₂ ∈ H.edges, e₁ ≠ e₂ ∧
+        ((e₁ ∩ e₂).card : ℝ) ≥ C * ((r : ℝ) / Real.log (r : ℝ)) := by
   sorry
 
 end Erdos836
