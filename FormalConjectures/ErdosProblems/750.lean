@@ -25,12 +25,15 @@ Does there exist, for every function $f$ with $f(m) \to \infty$, a graph with in
 number such that every finite set of $m$ vertices contains an independent set of size at least
 $m/2 - f(m)$?
 
-[Er69b] Erdős, P., _Problems and results in graph theory and combinatorial analysis_ (1969).
+See also [Problem #75](https://www.erdosproblems.com/75).
 
-[ErHa67b] Erdős, P. and Hajnal, A., _On chromatic number of graphs and set-systems_ (1967).
+[Er69b] Erdős, P., _Problems and results in chromatic graph theory_. Proof Techniques in Graph
+Theory (1969), 27-35.
+
+[ErHa67b] Erdős, P. and Hajnal, A., _On chromatic graphs_. Mat. Lapok (1967), 1-4.
 
 [EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., _On almost bipartite large chromatic
-graphs_ (1982).
+graphs_. Theory and practice of combinatorics (1982), 117-123.
 
 [Er94b] Erdős, P., _Some old and new problems in various branches of combinatorics_ (1994).
 
@@ -40,11 +43,6 @@ graphs_ (1982).
 open SimpleGraph
 
 namespace Erdos750
-
-/-- A finite set of vertices is independent in $G$ if no two distinct vertices
-    in the set are adjacent. -/
-def IsIndepSet {V : Type*} (G : SimpleGraph V) (S : Finset V) : Prop :=
-  ∀ u ∈ S, ∀ v ∈ S, u ≠ v → ¬G.Adj u v
 
 /--
 Erdős Problem 750 [Er94b][Er95d]:
@@ -64,8 +62,47 @@ theorem erdos_750 : answer(sorry) ↔
     ∃ (V : Type) (G : SimpleGraph V),
       (∀ k : ℕ, ¬G.Colorable k) ∧
       ∀ (S : Finset V), ∃ I : Finset V,
-        I ⊆ S ∧ IsIndepSet G I ∧
+        I ⊆ S ∧ G.IsIndepSet ↑I ∧
         (S.card : ℝ) / 2 - (f S.card : ℝ) ≤ (I.card : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 750 — εm variant [EHS82]:
+
+For every $\varepsilon > 0$, there exists a graph $G$ with infinite chromatic number such that
+every finite set of $m$ vertices in $G$ contains an independent set of size at least
+$(1/2 - \varepsilon) m$.
+
+This was conjectured by Erdős [Er69b] and follows from a result of Erdős, Hajnal, and
+Szemerédi [EHS82].
+-/
+@[category research solved, AMS 5]
+theorem erdos_750_eps :
+    ∀ ε : ℝ, ε > 0 →
+    ∃ (V : Type) (G : SimpleGraph V),
+      (∀ k : ℕ, ¬G.Colorable k) ∧
+      ∀ (S : Finset V), ∃ I : Finset V,
+        I ⊆ S ∧ G.IsIndepSet ↑I ∧
+        (1 / 2 - ε) * (S.card : ℝ) ≤ (I.card : ℝ) := by
+  sorry
+
+/--
+Erdős Problem 750 — c > 1/4 variant [ErHa67b]:
+
+For every $c > 1/4$, there exists a graph $G$ with infinite chromatic number such that
+every finite set of $m$ vertices in $G$ contains an independent set of size at least
+$(1/2 - c) m$.
+
+Proved by Erdős and Hajnal [ErHa67b].
+-/
+@[category research solved, AMS 5]
+theorem erdos_750_quarter :
+    ∀ c : ℝ, c > 1 / 4 →
+    ∃ (V : Type) (G : SimpleGraph V),
+      (∀ k : ℕ, ¬G.Colorable k) ∧
+      ∀ (S : Finset V), ∃ I : Finset V,
+        I ⊆ S ∧ G.IsIndepSet ↑I ∧
+        (1 / 2 - c) * (S.card : ℝ) ≤ (I.card : ℝ) := by
   sorry
 
 end Erdos750
