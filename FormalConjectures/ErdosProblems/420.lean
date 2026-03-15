@@ -38,8 +38,17 @@ Erdős and Graham note it is easy to show $\lim F(n^{1/2}, n) = \infty$.
 - $\lim F(n^{4/9}, n) = \infty$
 - if $f(n) = o((\log n)^2)$, then $F(f,n) \sim 1$ for almost all $n$.
 
+Van Doorn observes:
+- The existence of infinitely many bounded prime gaps implies
+  $\limsup_{n \to \infty} F(g(n), n) = \infty$ for any $g(n) \to \infty$.
+- Cramér's conjecture implies $\lim F(g(n)(\log n)^2, n) = \infty$ for any $g(n) \to \infty$.
+
 [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
 theory*. Monographies de L'Enseignement Mathematique (1980).
+
+[EGIP96] Erdős, P., Graham, R., Ivić, A., and Pomerance, C., _On the number of
+divisors of n!_. Analytic Number Theory (Proceedings of a Conference in Honor of
+Heini Halberstam) (1996), 337–355.
 -/
 
 open Filter
