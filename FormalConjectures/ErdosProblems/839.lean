@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 839
@@ -31,6 +32,9 @@ A problem of Erdős [Er78f][Er92c].
 Numerical Math. (1978), 35-58.
 
 [Er92c] Erdős, P., *Some of my favourite unsolved problems*, J. Combin. Theory Ser. A (1992).
+
+[Fr93] Freud, R., *Adding numbers — on a problem of P. Erdős*, James Cook Mathematical Notes
+(1993), 6199–6202.
 -/
 
 open Filter Real Finset
@@ -67,10 +71,7 @@ Is it true that $\lim_{x \to \infty} \frac{1}{\log x} \sum_{a_n < x} \frac{1}{a_
 @[category research open, AMS 11]
 theorem erdos_839.variants.stronger : answer(sorry) ↔
     ∀ (a : ℕ → ℕ), (∀ n, 1 ≤ a n) → StrictMono a → SumOfConsecutiveFree a →
-    Tendsto (fun x : ℕ =>
-      (∑ n ∈ (Finset.range x).filter (fun n => a n < x), (1 / (a n : ℝ))) /
-      Real.log (x : ℝ))
-      atTop (nhds 0) := by
+    Set.HasLogDensity (Set.range a) 0 := by
   sorry
 
 end Erdos839
