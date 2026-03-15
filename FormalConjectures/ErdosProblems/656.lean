@@ -23,22 +23,20 @@ import FormalConjectures.Util.ProblemImports
 
 Let $A \subseteq \mathbb{N}$ have positive upper density. Must there exist an infinite set
 $B \subseteq \mathbb{N}$ and an integer $t$ such that $B + B + t \subseteq A$?
+This is a density version of Hindman's theorem, and a strengthening of Problem 109.
 Solved affirmatively by Kra, Moreira, Richter, and Robertson [KMRR24].
 
-[Er75b] Erdős, P., *Problems and results on combinatorial number theory III*, 1975.
+[Er75b] Erdős, P., *Problems and results in combinatorial number theory*,
+Journées Arithmétiques de Bordeaux (1974), 1975, pp. 295–310.
 
-[KMRR24] Kra, B., Moreira, J., Richter, F., and Robertson, D., 2024.
+[KMRR24] Kra, B., Moreira, J., Richter, F.K., and Robertson, D.,
+*A proof of Erdős's B+B+t conjecture*, Communications of the American Mathematical Society
+(2024), pp. 480–494.
 -/
 
 open Filter
 
 namespace Erdos656
-
-/-- The upper density of a set $A \subseteq \mathbb{N}$, defined as
-$\limsup_{N \to \infty} |A \cap \{0, \ldots, N-1\}| / N$. -/
-noncomputable def Nat.upperDensity (A : Set ℕ) : ℝ :=
-  Filter.limsup (fun N : ℕ =>
-    ((@Finset.filter _ (· ∈ A) (Classical.decPred (· ∈ A)) (Finset.range N)).card : ℝ) / N) atTop
 
 /--
 **Erdős Problem 656** [Er75b]:
@@ -51,7 +49,7 @@ Proved by Kra, Moreira, Richter, and Robertson [KMRR24].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_656 : answer(True) ↔
-    ∀ (A : Set ℕ), Nat.upperDensity A > 0 →
+    ∀ (A : Set ℕ), A.upperDensity > 0 →
       ∃ (B : Set ℕ) (t : ℤ), Set.Infinite B ∧
         ∀ b₁ ∈ B, ∀ b₂ ∈ B, ∃ a ∈ A, (a : ℤ) = ↑b₁ + ↑b₂ + t := by
   sorry
