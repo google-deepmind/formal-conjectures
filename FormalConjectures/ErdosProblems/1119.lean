@@ -26,12 +26,16 @@ $\aleph_0 < \mathfrak{m} < \mathfrak{c}$. If a family of entire functions takes 
 $\mathfrak{m}$ distinct values at every point of $\mathbb{C}$, must the family contain at most
 $\mathfrak{m}$ distinct functions? This generalizes Wetzel's problem and is independent of ZFC.
 
-[Ha74] Hajnal, A., *Proof of a conjecture of S. Ruziewicz*, Fund. Math. 50 (1961/62), 123–128.
+[Er64g] Erdős, P., *An interpolation problem associated with the continuum hypothesis*,
+Michigan Math. J. 11 (1964), 9–10.
+
+[Ha74] Hayman, W. K., *Research problems in function theory: new problems*, 1974, 155–180.
 
 [KuSh17] Kumar, A. and Shelah, S., *On a question about families of entire functions*,
 Fund. Math. 239 (2017), 279–288.
 
-[ScWe24] Schilhan, J. and Weinert, T., *On Wetzel's problem and its relatives*, preprint (2024).
+[ScWe24] Schilhan, J. and Weinert, T., *Wetzel families and the continuum*,
+J. London Math. Soc. (2) (2024), e12918.
 -/
 
 open Cardinal Classical Set
@@ -47,7 +51,7 @@ entire functions such that, for every $z_0 \in \mathbb{C}$, the set $\{f_\alpha(
 values has at most $\mathfrak{m}$ distinct elements. Must the family of distinct functions
 have cardinality at most $\mathfrak{m}$?
 
-This generalizes Wetzel's problem. Erdős proved that for the countable case
+This generalizes Wetzel's problem. Erdős [Er64g] proved that for the countable case
 ($\aleph_0$ values), the answer is yes if $\mathfrak{c} > \aleph_1$ and no if
 $\mathfrak{c} = \aleph_1$.
 Kumar–Shelah [KuSh17] showed the answer can be yes (with $\mathfrak{m} = \aleph_1$,
