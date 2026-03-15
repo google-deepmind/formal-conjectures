@@ -19,9 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 524
 
-*Reference:* [erdosproblems.com/524](https://www.erdosproblems.com/524)
-
-A problem of Salem and Zygmund. For any $t \in (0,1)$ let
+A problem of Salem and Zygmund [SaZy54]. For any $t \in (0,1)$ let
 $t = \sum_{k=1}^{\infty} \varepsilon_k(t) 2^{-k}$ be the binary expansion (where
 $\varepsilon_k(t) \in \{0,1\}$). What is the correct order of magnitude (for almost all
 $t \in (0,1)$) of
@@ -31,10 +29,20 @@ The binary digits $\varepsilon_k(t)$ are i.i.d. Bernoulli$(1/2)$ under Lebesgue 
 $(-1)^{\varepsilon_k(t)}$ are i.i.d. Rademacher random variables.
 
 **Known partial results:**
-- Erdős (unpublished) showed: for a.a. $t$ and every $\delta > 0$,
-  $\lim_{n \to \infty} M_n(t)/n^{1/2 - \delta} = \infty$.
+- Erdős showed: for a.a. $t$ and every $\delta > 0$,
+  $\limsup_{n \to \infty} M_n(t)/n^{1/2 - \delta} = \infty$.
 - Chung showed: for a.a. $t$, there exist infinitely many $n$ such that
   $M_n(t) \ll (n / \log \log n)^{1/2}$.
+
+## References
+
+[Er61] Erdős, P., _Some unsolved problems_. Magyar Tud. Akad. Mat. Kutató Int.
+Közl. **6** (1961), 221–254, p.253.
+
+[SaZy54] Salem, R., Zygmund, A., _Some properties of trigonometric series whose
+terms have random signs_. Acta Mathematica (1954), 245–301.
+
+*Reference:* [erdosproblems.com/524](https://www.erdosproblems.com/524)
 -/
 
 open MeasureTheory ProbabilityTheory Filter Finset BigOperators Set Asymptotics
@@ -67,17 +75,31 @@ theorem erdos_524
   sorry
 
 /-- Erdős showed that for almost all $\omega$ and every $\delta > 0$,
-$M_n(\omega) / n^{1/2 - \delta} \to \infty$. -/
+$\limsup_{n \to \infty} M_n(\omega) / n^{1/2 - \delta} = \infty$. -/
 @[category research solved, AMS 42 60]
 theorem erdos_524.variants.lower_bound
     {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
     {ε : ℕ → Ω → ℝ}
     (hRad : ∀ k, IsRademacher μ (ε k))
     (hIndep : iIndepFun ε μ) :
-    ∀ᵐ ω ∂μ, ∀ δ > (0 : ℝ),
-      Tendsto (fun n => supNormInterval (fun k => ε k ω) n /
-        (↑n : ℝ) ^ ((1 : ℝ)/2 - δ))
-        atTop atTop := by
+    ∀ᵐ ω ∂μ, ∀ δ > (0 : ℝ), ∀ C > (0 : ℝ),
+      ∃ᶠ n in atTop,
+        C ≤ supNormInterval (fun k => ε k ω) n /
+          (↑n : ℝ) ^ ((1 : ℝ)/2 - δ) := by
+  sorry
+
+/-- Chung showed that for almost all $\omega$, there exist infinitely many $n$ such that
+$M_n(\omega) \ll (n / \log \log n)^{1/2}$. -/
+@[category research solved, AMS 42 60]
+theorem erdos_524.variants.upper_bound
+    {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    {ε : ℕ → Ω → ℝ}
+    (hRad : ∀ k, IsRademacher μ (ε k))
+    (hIndep : iIndepFun ε μ) :
+    ∃ C > (0 : ℝ), ∀ᵐ ω ∂μ,
+      ∃ᶠ n in atTop,
+        supNormInterval (fun k => ε k ω) n ≤
+          C * ((↑n : ℝ) / Real.log (Real.log (↑n : ℝ))) ^ ((1 : ℝ)/2) := by
   sorry
 
 end Erdos524
