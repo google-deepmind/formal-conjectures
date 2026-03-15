@@ -26,15 +26,23 @@ vertices and $k - 2$ edges. Is it true that $\mathrm{ex}_3(n, \mathcal{F}_k) \si
 
 A question of Brown, Erdős, and Sós [BES73] who proved this is true for $k = 4$,
 and that for all $k \geq 4$, $\mathrm{ex}_3(n, \mathcal{F}_k) \asymp_k n^2$.
+Erdős [Er74c] presents the conjecture with a supporting theorem.
 
 The asymptotic version was proved independently by Bohman and Warnke [BoWa19]
 and Glock, Kühn, Lo, and Osthus [GKLO20].
 
-[BES73] Brown, W.G., Erdős, P., and Sós, V.T., *Some extremal problems on r-graphs*, 1973.
+This is related to Problem #207, which is an essentially stronger version.
 
-[BoWa19] Bohman, T. and Warnke, L., 2019.
+[BES73] Brown, W.G., Erdős, P., and Sós, V.T., *Some extremal problems on r-graphs* (1973), 53–63.
 
-[GKLO20] Glock, S., Kühn, D., Lo, A., and Osthus, D., 2020.
+[Er74c] Erdős, P., *Extremal problems on graphs and hypergraphs*. (1974), 75–84.
+
+[BoWa19] Bohman, T. and Warnke, L., *Large girth approximate Steiner triple systems*.
+J. London Math. Soc. (2) (2019), 895–913.
+
+[GKLO20] Glock, S., Kühn, D., Lo, A., and Osthus, D.,
+*On a conjecture of Erdős on locally sparse Steiner triple systems*.
+Combinatorica (2020), 363–403.
 -/
 
 open Finset
