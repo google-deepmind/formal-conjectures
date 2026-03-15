@@ -29,11 +29,12 @@ Is it true that $f(n) \leq n/2 + O(1)$?
 Avis, Erdős, and Pach [AEP88] proved that $n/2 + 2 \leq f(n) \leq (1 + o(1))n/2$.
 This was proved by Swanepoel [Sw13].
 
-[Er94b] Erdős, P., *Some old and new problems on combinatorial geometry*.
+[Er94b] Erdős, P., _Some old and new problems on combinatorial geometry_.
 
-[AEP88] Avis, D., Erdős, P., and Pach, J.
+[AEP88] Avis, D., Erdős, P., and Pach, J., _Repeated distances in space_.
+Graphs Combin. (1988), 207–217.
 
-[Sw13] Swanepoel, K.J.
+[Sw13] Swanepoel, K.J., _Favorite distances in high dimensions_. (2013), 499–519.
 -/
 
 open Classical
