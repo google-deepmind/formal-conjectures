@@ -81,7 +81,7 @@ def answerElab : TermElab := fun stx expectedType? => do
     match google.answer.get (← getOptions) with
     |  AnswerSetting.postpone => elabTermAndAnnotate a expectedType? true
     | .withAuxiliary =>
-      let expr ← elabTermAndAnnotate a expectedType?
+      let expr ← elabTermAndSynthesize a expectedType?
       let exprType ← (Meta.inferType expr) >>= instantiateMVars
       if exprType.hasExprMVar then throwPostpone
       let some declName := (← read).declName?
