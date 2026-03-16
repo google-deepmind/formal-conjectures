@@ -45,6 +45,14 @@ The *extended Sierpiński problem* asks: is 271129 the second-smallest Sierpińs
 namespace SierpinskiNumber
 
 /--
+Selfridge proved in 1962 that 78557 is a Sierpiński number by showing that all numbers of the
+form $78557 \cdot 2^n + 1$ have a factor in the covering set $\{3, 5, 7, 13, 19, 37, 73\}$.
+-/
+@[category research solved, AMS 11]
+theorem selfridge_78557 : Nat.IsSierpinskiNumber 78557 := by
+  sorry
+
+/--
 **The Sierpiński problem (Selfridge's conjecture).** Is 78557 the smallest Sierpiński number?
 
 Selfridge conjectured that 78557 is the smallest Sierpiński number. He proved in 1962 that
