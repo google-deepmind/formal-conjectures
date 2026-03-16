@@ -156,4 +156,21 @@ unsafe def main (args : List String) : IO Unit := do
               } :: allResults
         | _ => pure ()
 
-    IO.println (toJson allResults.reverse).pretty
+    -- Collect module docstrings via Lean's getModuleDoc? API
+    let mut moduleDocstrings : List (String × String) := []
+    for modName in moduleNames do
+      if let some docs := getModuleDoc? env modName then
+        if docs.size != 1 then
+          IO.eprintln s!"WARNING: Module {modName} has {docs.size} module docstrings"
+        if docs.size > 0 then
+          let combined := "\n\n".intercalate (docs.toList.map (·.doc))
+          moduleDocstrings := (modName.toString, combined) :: moduleDocstrings
+
+    -- Build structured output: { problems: [...], moduleDocstrings: {...} }
+    let problemsJson := toJson allResults.reverse
+    let moduleDocJson := Json.mkObj (moduleDocstrings.reverse.map fun (k, v) => (k, toJson v))
+    let output := Json.mkObj [
+      ("problems", problemsJson),
+      ("moduleDocstrings", moduleDocJson)
+    ]
+    IO.println output.pretty
