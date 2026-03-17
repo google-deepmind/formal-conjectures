@@ -55,7 +55,10 @@ There are various ways of contributing to this repository:
     While the main goal is to collect conjecture statements, we appreciate the
     inclusion of very short proofs for solved items or counterexamples,
     especially if they are illuminating and testing the definitions.
-    Lengthy proofs are outside the scope of this repository.
+    **Longer proofs (i.e. more than 25-50 lines) are not to be included in this repository.** 
+    Instead, we welcome you to host your proof in your own repository and link to it using
+    the `formally solved` mechanism described below. This does not apply to 
+    `FormalConjecturesForMathlib`, where we want all statements to have proofs.
 
 2.  **Opening issues with problems that you would like to see formalised.** Such
     an issue should contain links to suitable references, and ideally a precise
@@ -92,18 +95,6 @@ Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
 5.  Submit a Pull Request to the main repository.
 
 For the use of AI, the [same conventions and precautions as in mathlib](https://github.com/leanprover-community/leanprover-community.github.io/blob/478f0f4b8be577d6d3f913053918551dcf68b1c6/templates/contribute/index.md?plain=1#L68-L70) apply.
-
-> **Note on proofs:** PRs that add proofs longer than 20 lines, or that depend on a
-> significant number of additional lemmas, will generally not be accepted without prior
-> discussion — regardless of whether the proof is hand-written or AI-generated. If you
-> would like to contribute such a proof, please discuss it with the maintainers first,
-> either by opening an issue on GitHub or by posting in our
-> [Zulip channel](https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures).
-> Proofs of this kind are most welcome, however: if your proof lives in an external
-> repository, you can link to it using the
-> `@[category research formally solved using formal_conjectures at "link"]` mechanism
-> described below. This policy does not apply to contributions to `FormalConjecturesForMathlib`,
-> which follows mathlib's own conventions.
 
 ## Usage, Structure & Features
 
