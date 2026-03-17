@@ -1,70 +1,93 @@
 # Voting System
 
-The Formal Conjectures website includes a voting and difficulty rating system. Votes and ratings are stored in Cloudflare KV via a worker. GitHub OAuth is used only for identity verification — the consent screen requires zero permissions ("Verify your GitHub identity").
+The Formal Conjectures website includes a voting, truth prediction, and difficulty rating system backed by GitHub Discussions. GitHub OAuth is used for identity verification — the consent screen requires zero permissions ("Verify your GitHub identity").
 
 ## Architecture
 
 ```
 Browser (voting.js)
-  └── All operations → Cloudflare Worker (worker/)
-        ├── OAuth token exchange
-        ├── Vote and difficulty CRUD
-        └── Cloudflare KV storage
+  ├── Reads: GET /discussions → App Engine proxy → GitHub GraphQL (read-only PAT)
+  └── Writes: directly → GitHub GraphQL (user's OAuth token)
+        ├── Likes = HEART reactions on Discussion
+        ├── Truth predictions = THUMBS_UP / THUMBS_DOWN reactions
+        └── Difficulty ratings = comments matching /^difficulty [0-9]$/i
 ```
 
-No GitHub API calls are made from the browser except `/user` during OAuth login to fetch the username. See [`worker/README.md`](../worker/README.md) for API endpoints, KV data model, and worker setup.
+All data is stored as native GitHub Discussions features (reactions and comments) on the repository. There is no separate database.
 
 ## How Votes Work
 
-- Each user can vote once per theorem (like/unlike toggle)
-- Deduplication is handled via a `voters` array in the KV value
-- When a vote is removed and there are no remaining votes or ratings, the KV key is deleted
+- Each user can vote once per theorem (like/unlike toggle via HEART reaction)
+- Discussions are created lazily: a Discussion is created when a logged-in user first views a theorem detail page (or when the first interaction occurs)
+- Discussion titles are the fully-qualified Lean theorem name
+
+## Truth Predictions
+
+- Users can predict whether a conjecture is true (thumbs up) or false (thumbs down)
+- Each user can have one prediction per theorem; changing your prediction removes the old one
+- The browse page shows aggregated prediction counts
 
 ## Difficulty Ratings
 
-- Users can independently rate the difficulty of each theorem on a 0–10 scale
-- Each user can rate each theorem once; submitting again overwrites the previous rating
+- Users can rate the difficulty of each theorem on a 0–9 scale
+- Ratings are stored as discussion comments matching `difficulty N`
+- Submitting a new rating deletes the previous rating comment
 - The browse page shows the average difficulty alongside the vote count
-- The theorem detail page shows a dropdown to rate difficulty and the current average
+
+## Consent Modal
+
+The first time a user clicks vote, predict, or rate difficulty, a modal dialog explains:
+- Why GitHub login is needed (identity verification only, zero permissions)
+- That all activity is public (stored as GitHub Discussions, visible to anyone)
+- What specifically is stored (heart reactions, thumbs reactions, comments)
+
+The acknowledgement is stored in `localStorage` so it only appears once.
 
 ## OAuth Flow
 
-1. User clicks "Sign in with GitHub"
-2. Browser redirects to `https://github.com/login/oauth/authorize` with `client_id` and `redirect_uri` (no scopes — zero permissions)
-3. GitHub redirects back to the page with `?code=...`
-4. `voting.js` detects the code, POSTs `{ code }` to the worker's `/token` endpoint
-5. The worker exchanges the code for an access token using the client secret
-6. `voting.js` fetches `/user` from GitHub to get the username
-7. Token and username are stored in `localStorage`
+1. User clicks a voting/prediction/rating action
+2. Consent modal appears (first time only) explaining public nature of activity
+3. Browser redirects to `https://github.com/login/oauth/authorize` with `client_id` and `redirect_uri` (no scopes — zero permissions)
+4. GitHub redirects back to the page with `?code=...`
+5. `voting.js` detects the code, POSTs `{ code }` to the App Engine proxy's `/token` endpoint
+6. The proxy exchanges the code for an access token using the client secret
+7. `voting.js` fetches `/user` from GitHub to get the username
+8. Token and username are stored in `localStorage`
 
 ## Client Configuration
 
-Two constants at the top of `src/js/voting.js`:
+Constants at the top of `src/js/voting.js`:
 
 | Constant | Description |
 |---|---|
-| `WORKER_URL` | URL of the Cloudflare Worker |
-| `GH_CLIENT_ID` | GitHub OAuth App client ID |
+| `WORKER_URL` | URL of the App Engine proxy |
+| `GH_CLIENT_ID` | GitHub App client ID |
+| `REPO_OWNER` | GitHub repo owner |
+| `REPO_NAME` | GitHub repo name |
+| `REPO_ID` | GitHub repo GraphQL node ID |
 
 ## Setting Up for Development
 
-1. **Register a GitHub OAuth App** at https://github.com/settings/developers
+1. **Register a GitHub App** at https://github.com/settings/apps
+   - Enable Discussions: Read & Write permission
    - Set the callback URL to your local dev URL (e.g., `http://localhost:8000`)
-   - Do NOT request any scopes (zero permissions)
-2. **Set up the worker** — follow [`worker/README.md`](../worker/README.md) for KV namespace creation, secrets, and local dev
-3. **Update `voting.js` constants** — point `WORKER_URL` to `http://localhost:8787`, set `GH_CLIENT_ID`
-4. **Start the worker**: `cd worker && npm run dev`
-5. **Build and serve the site**: `npm run build && cd site && python3 -m http.server 8000`
+   - Install it on the target repo
+2. **Create a fine-grained PAT** with read-only Discussions access for the read proxy
+3. **Set up the App Engine proxy** — see [`appengine/README.md`](../appengine/README.md)
+4. **Update `voting.js` constants** — point `WORKER_URL` to `http://localhost:8080`, set `GH_CLIENT_ID`
+5. **Start the proxy**: `cd appengine && npm start`
+6. **Build and serve the site**: `npm run build && cd site && python3 -m http.server 8000`
 
 ## Deploying to Production
 
-1. **Create a GitHub OAuth App** (or reuse the dev one) — set the **Authorization callback URL** to your production site URL
-2. **Deploy the worker** — follow [`worker/README.md`](../worker/README.md) for KV namespace, secrets, CORS origin, and deployment
-3. **Update `voting.js` constants** — set `WORKER_URL` to your deployed worker URL and `GH_CLIENT_ID` to your production client ID
+1. **Create a GitHub App** (or reuse the dev one) — set the **Authorization callback URL** to your production site URL
+2. **Deploy the App Engine proxy** — see [`appengine/README.md`](../appengine/README.md)
+3. **Update `voting.js` constants** — set `WORKER_URL` to your deployed proxy URL and `GH_CLIENT_ID` to your production client ID
 4. **Build and deploy the site**: `npm run build` and deploy the `site/` directory (e.g., via GitHub Pages)
 
 ## Limitations
 
-- Cloudflare KV is eventually consistent — there may be brief delays before vote counts update across regions
-- The `GET /votes` endpoint lists all KV keys, which may be slow with very large numbers of voted theorems
+- GitHub GraphQL API has rate limits (5000 points/hour for authenticated users)
+- The `GET /discussions` endpoint paginates through all discussions, which may be slow with very large numbers
 - Vote counts are cached in memory after the first fetch within a page session
+- The App Engine proxy caches discussion data for 60 seconds

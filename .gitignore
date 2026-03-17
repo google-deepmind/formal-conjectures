@@ -4,3 +4,5 @@
 .cache
 # `lake` stores its files here:
 .lake
+# App Engine secrets (never commit real credentials)
+site/appengine/app.secrets.yaml

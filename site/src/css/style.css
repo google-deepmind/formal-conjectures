@@ -912,6 +912,145 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   font-variant-numeric: tabular-nums;
 }
 
+/* Discussion link */
+.discussion-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--color-link);
+  margin-bottom: 1rem;
+}
+.discussion-link--loading {
+  color: var(--color-text-muted);
+}
+
+/* Truth prediction */
+.truth-widget {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.truth-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: white;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.truth-btn:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+.truth-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.truth-btn__icon { font-size: 1rem; line-height: 1; }
+.truth-btn__count { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.truth-btn--active-up {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+.truth-btn--active-up:hover {
+  border-color: #059669;
+  color: #064e3b;
+}
+
+.truth-btn--active-down {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #991b1b;
+}
+.truth-btn--active-down:hover {
+  border-color: #dc2626;
+  color: #7f1d1d;
+}
+
+.theorem-card__truth {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-right: 0.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Consent modal
+   ============================================================ */
+.consent-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.consent-dialog {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 520px;
+  width: 100%;
+  padding: 2rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.consent-dialog__title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.consent-dialog__body {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+}
+
+.consent-dialog__body p {
+  margin-bottom: 0.75rem;
+}
+
+.consent-dialog__body ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.consent-dialog__body li {
+  margin-bottom: 0.25rem;
+}
+
+.consent-dialog__body a {
+  color: var(--color-link);
+}
+
+.consent-dialog__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 /* ============================================================
    Hamburger menu button (hidden on desktop)
    ============================================================ */
