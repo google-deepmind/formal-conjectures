@@ -23,6 +23,32 @@
 })();
 
 // ---------------------------------------------------------------------------
+// Mobile nav toggle
+// ---------------------------------------------------------------------------
+(function setupNavToggle() {
+  const btn = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  if (!btn || !links) return;
+  btn.addEventListener('click', () => {
+    const open = links.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open);
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Mobile filter toggle (browse page only)
+// ---------------------------------------------------------------------------
+(function setupFilterToggle() {
+  const btn = document.getElementById('filter-toggle');
+  const panel = document.getElementById('filter-panel');
+  if (!btn || !panel) return;
+  btn.addEventListener('click', () => {
+    panel.classList.toggle('is-open');
+    btn.textContent = panel.classList.contains('is-open') ? 'Hide filters' : 'Filters';
+  });
+})();
+
+// ---------------------------------------------------------------------------
 // Data loading
 // ---------------------------------------------------------------------------
 let _dataCache = null;
