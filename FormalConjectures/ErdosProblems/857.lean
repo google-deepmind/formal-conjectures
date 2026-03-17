@@ -38,16 +38,13 @@ noncomputable def m (n k : ℕ) : ℕ :=
   sInf {t : ℕ | ∀ (F : Set (Set (Fin n))), t ≤ F.ncard →
     ∃ S ⊆ F, S.ncard = k ∧ Erdos20.IsSunflower S}
 
-/-- Existence of an asymptotic formula for `m(·,k)` up to asymptotic equivalence. -/
-def hasAsymptoticFormula (k : ℕ) : Prop :=
-  ∃ g : ℕ → ℝ,
-    Tendsto (fun n : ℕ => (m n k : ℝ) / g n) atTop (nhds 1)
-
 /--
 Estimate `m(n,k)`, or better give an asymptotic formula.
 -/
 @[category research open, AMS 5]
-theorem erdos_857 : answer(sorry) ↔ ∀ k : ℕ, 3 ≤ k → hasAsymptoticFormula k := by
+theorem erdos_857 :
+    let f : ℕ → ℕ → ℝ := answer(sorry)
+    ∀ k : ℕ, 3 ≤ k → Tendsto (fun n : ℕ => (m n k : ℝ) / f k n) atTop (nhds 1) := by
   sorry
 
 end Erdos857
