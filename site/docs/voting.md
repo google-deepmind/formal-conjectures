@@ -6,7 +6,7 @@ The Formal Conjectures website includes a voting, truth prediction, and difficul
 
 ```
 Browser (voting.js)
-  ├── Reads: GET /discussions → App Engine proxy → GitHub GraphQL (read-only PAT)
+  ├── Reads: GET /discussions?owner=X&repo=Y → App Engine proxy → GitHub GraphQL (read-only PAT)
   └── Writes: directly → GitHub GraphQL (user's OAuth token)
         ├── Likes = HEART reactions on Discussion
         ├── Truth predictions = THUMBS_UP / THUMBS_DOWN reactions
@@ -14,6 +14,20 @@ Browser (voting.js)
 ```
 
 All data is stored as native GitHub Discussions features (reactions and comments) on the repository. There is no separate database.
+
+A shared App Engine proxy (`formal-conjectures-web-worker`) handles OAuth token exchange and anonymous discussion reads for all forks. The proxy is repo-agnostic — the client passes the repo owner and name as query parameters.
+
+## How It Works for Forkers
+
+The default configuration works out of the box for any fork:
+
+1. **Enable GitHub Pages** on the fork (Settings > Pages > GitHub Actions)
+2. **Enable Discussions** on the fork (Settings > General > Features)
+3. **Install the GitHub App** on the fork — the shared app handles OAuth for all repos
+
+The CI workflow (`-webtest` branches) automatically sets `REPO_OWNER`, `REPO_NAME`, and `REPO_ID` from the repository context. The shared proxy URL and GitHub App client ID are built into the defaults.
+
+No GCP project, secrets, or tokens are needed for a forker to use the voting system.
 
 ## How Votes Work
 
@@ -29,7 +43,7 @@ All data is stored as native GitHub Discussions features (reactions and comments
 
 ## Difficulty Ratings
 
-- Users can rate the difficulty of each theorem on a 0–9 scale
+- Users can rate the difficulty of each theorem on a 0-9 scale
 - Ratings are stored as discussion comments matching `difficulty N`
 - Submitting a new rating deletes the previous rating comment
 - The browse page shows the average difficulty alongside the vote count
@@ -50,7 +64,7 @@ The acknowledgement is stored in `localStorage` so it only appears once.
 3. Browser redirects to `https://github.com/login/oauth/authorize` with `client_id` and `redirect_uri` (no scopes — zero permissions)
 4. GitHub redirects back to the page with `?code=...`
 5. `voting.js` detects the code, POSTs `{ code }` to the App Engine proxy's `/token` endpoint
-6. The proxy exchanges the code for an access token using the client secret
+6. The proxy exchanges the code for an access token using the GitHub App's client secret
 7. `voting.js` fetches `/user` from GitHub to get the username
 8. Token and username are stored in `localStorage`
 
@@ -58,32 +72,52 @@ The acknowledgement is stored in `localStorage` so it only appears once.
 
 Constants at the top of `src/js/voting.js`:
 
-| Constant | Description |
-|---|---|
-| `WORKER_URL` | URL of the App Engine proxy |
-| `GH_CLIENT_ID` | GitHub App client ID |
-| `REPO_OWNER` | GitHub repo owner |
-| `REPO_NAME` | GitHub repo name |
-| `REPO_ID` | GitHub repo GraphQL node ID |
+| Constant | Default | Description |
+|---|---|---|
+| `WORKER_URL` | Shared `formal-conjectures-web-worker` App Engine URL | Proxy for OAuth + discussion reads |
+| `GH_CLIENT_ID` | `Iv23lid2mjCGp7EIKrJn` | Shared GitHub App client ID |
+| `REPO_OWNER` | Set by CI workflow | GitHub repo owner |
+| `REPO_NAME` | Set by CI workflow | GitHub repo name |
+| `REPO_ID` | Set by CI workflow | GitHub repo GraphQL node ID |
 
-## Setting Up for Development
+For local development, edit these constants directly in `voting.js`.
 
-1. **Register a GitHub App** at https://github.com/settings/apps
-   - Enable Discussions: Read & Write permission
-   - Set the callback URL to your local dev URL (e.g., `http://localhost:8000`)
-   - Install it on the target repo
-2. **Create a fine-grained PAT** with read-only Discussions access for the read proxy
-3. **Set up the App Engine proxy** — see [`appengine/README.md`](../appengine/README.md)
-4. **Update `voting.js` constants** — point `WORKER_URL` to `http://localhost:8080`, set `GH_CLIENT_ID`
-5. **Start the proxy**: `cd appengine && npm start`
-6. **Build and serve the site**: `npm run build && cd site && python3 -m http.server 8000`
+## Local Development
 
-## Deploying to Production
+To run the full voting system locally:
 
-1. **Create a GitHub App** (or reuse the dev one) — set the **Authorization callback URL** to your production site URL
-2. **Deploy the App Engine proxy** — see [`appengine/README.md`](../appengine/README.md)
-3. **Update `voting.js` constants** — set `WORKER_URL` to your deployed proxy URL and `GH_CLIENT_ID` to your production client ID
-4. **Build and deploy the site**: `npm run build` and deploy the `site/` directory (e.g., via GitHub Pages)
+1. **Start the App Engine proxy** (see [`appengine/README.md`](../appengine/README.md)):
+
+```bash
+cd site/appengine
+export GH_CLIENT_ID=your_client_id
+export GH_CLIENT_SECRET=your_client_secret
+export GH_READ_TOKEN=your_read_token
+export ALLOWED_ORIGIN=http://localhost:8000
+node server.js
+```
+
+2. **Edit `voting.js`** to point at localhost:
+
+```js
+const WORKER_URL = 'http://localhost:8080';
+const REPO_OWNER = 'your_github_user';
+const REPO_NAME  = 'formal-conjectures';
+// ...
+```
+
+3. **Build and serve the site**:
+
+```bash
+cd site
+node build.js
+cd site
+python3 -m http.server 8000
+```
+
+## Running Your Own Proxy
+
+If you want to run your own App Engine proxy instead of using the shared one, see [`appengine/README.md`](../appengine/README.md) for full setup instructions.
 
 ## Limitations
 
@@ -91,3 +125,4 @@ Constants at the top of `src/js/voting.js`:
 - The `GET /discussions` endpoint paginates through all discussions, which may be slow with very large numbers
 - Vote counts are cached in memory after the first fetch within a page session
 - The App Engine proxy caches discussion data for 60 seconds
+- The shared proxy's `GH_READ_TOKEN` must have Discussions read access on any repo that uses it
