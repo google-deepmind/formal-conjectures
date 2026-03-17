@@ -1,4 +1,4 @@
-runtime: nodejs20
+runtime: nodejs22
 
 instance_class: F1
 
@@ -6,7 +6,9 @@ automatic_scaling:
   max_instances: 1
 
 env_variables:
-  ALLOWED_ORIGIN: "REPLACE_WITH_SITE_ORIGIN"
   GH_APP_ID: "3005907"
+  # CORS: any *.github.io origin is allowed automatically.
+  # ALLOWED_ORIGIN is only needed for additional origins (e.g. custom domains).
+  ALLOWED_ORIGIN: ""
   # Secrets (GH_CLIENT_ID, GH_CLIENT_SECRET, GH_APP_PRIVATE_KEY) are loaded
   # from Google Cloud Secret Manager at startup. See README.md for setup.

@@ -2,7 +2,7 @@
   "name": "fc-oauth-proxy",
   "private": true,
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "start": "node server.js"

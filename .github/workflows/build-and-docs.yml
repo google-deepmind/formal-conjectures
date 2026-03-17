@@ -188,7 +188,7 @@ jobs:
           REPO_ID=$(curl -sS -H "Authorization: Bearer ${{ github.token }}" \
             "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}" | jq -r '.node_id')
           echo "::notice::Configuring voting for ${REPO_OWNER}/${REPO_NAME} (${REPO_ID})"
-          sed -i "s|REPLACE_WITH_PROXY_URL|https://formal-conjectures-web-worker.ew.r.appspot.com|" site/src/js/voting.js
+          sed -i "s|REPLACE_WITH_PROXY_URL|https://formal-conjectures-web-worker.uc.r.appspot.com|" site/src/js/voting.js
           sed -i "s|REPLACE_WITH_CLIENT_ID|Iv23lid2mjCGp7EIKrJn|" site/src/js/voting.js
           sed -i "s|REPLACE_WITH_REPO_OWNER|${REPO_OWNER}|" site/src/js/voting.js
           sed -i "s|REPLACE_WITH_REPO_NAME|${REPO_NAME}|" site/src/js/voting.js

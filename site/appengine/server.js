@@ -129,8 +129,11 @@ async function getInstallationToken(owner, repo) {
 // ---------------------------------------------------------------------------
 function getCorsHeaders(req) {
   const origin = req.headers.origin || '';
+  // Allow any *.github.io origin (all GitHub Pages sites), plus any
+  // explicitly listed origins (e.g. localhost for local dev).
   const allowed = config.ALLOWED_ORIGIN.split(',').map(s => s.trim());
-  const corsOrigin = allowed.includes(origin) ? origin : allowed[0] || '*';
+  const isGitHubPages = /^https:\/\/[a-zA-Z0-9_-]+\.github\.io$/.test(origin);
+  const corsOrigin = (isGitHubPages || allowed.includes(origin)) ? origin : allowed[0] || '*';
   return {
     'Access-Control-Allow-Origin': corsOrigin,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
