@@ -37,7 +37,7 @@ def ncard_add_repr (A : Set ℕ) (o : ℕ) (n : ℕ) : ℕ :=
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
 $n$ can be written as the sum of two elements from $A$. If $f(n) \to \infty$ as $n \to \infty$, then
 must $A$ contain a minimal additive basis of order $2$? -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_868.parts.i :
     answer(sorry) ↔ ∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
       atTop.Tendsto (fun n => ncard_add_repr A 2 n) atTop → ∃ B ⊆ A,
@@ -48,7 +48,7 @@ theorem erdos_868.parts.i :
 $n$ can be written as the sum of two elements from $A$. If $f(n) > \epsilon \log n$ for large $n$
 and an arbitrary fixed $\epsilon > 0$, then must $A$ contain a minimal additive
 basis of order $2$? -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_868.parts.ii :
     answer(sorry) ↔ ∀ᵉ (A : Set ℕ) (ε > 0), A.IsAsymptoticAddBasisOfOrder 2 →
       (∀ᶠ (n : ℕ) in atTop, ε * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
