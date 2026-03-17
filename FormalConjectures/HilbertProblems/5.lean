@@ -36,6 +36,10 @@ namespace HilbertSmith
 
 open scoped Manifold ContDiff EuclideanGeometry
 
+variable {G : Type*} [Group G] [TopologicalSpace G]
+variable {n : ℕ} {X : Type*} [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
+  [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
+
 /-- A topological group `G` admits a Lie group structure if there exists a finite-dimensional
 smooth manifold structure on `G` making it a real Lie group. -/
 def AdmitsLieGroupStructure (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
@@ -43,13 +47,49 @@ def AdmitsLieGroupStructure (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
     letI := cs
     LieGroup (𝓡 k) ⊤ G
 
+/-- Every Lie group trivially admits a Lie group structure. -/
+@[category API, AMS 22]
+theorem admitsLieGroupStructure_of_lieGroup
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] [LieGroup (𝓡 n) ⊤ G] :
+    AdmitsLieGroupStructure G :=
+  ⟨n, inferInstance, inferInstance⟩
+
+/-- A group admitting a Lie group structure is locally compact. -/
+@[category API, AMS 22]
+theorem locallyCompact_of_admitsLieGroupStructure
+    (h : AdmitsLieGroupStructure G) : LocallyCompactSpace G := by
+  obtain ⟨k, cs, _⟩ := h
+  haveI := cs
+  haveI := (𝓡 k).locallyCompactSpace
+  exact ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin k)) G
+
 /-- **Hilbert–Smith conjecture**: every locally compact topological group acting continuously
 and faithfully on a connected finite-dimensional topological manifold is a Lie group. -/
 @[category research open, AMS 22 57 58]
-theorem hilbert_smith_conjecture {G : Type*} {n : ℕ} {X : Type*}
-    [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G]
+theorem hilbert_smith_conjecture
+    [IsTopologicalGroup G] [LocallyCompactSpace G]
+    [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X] :
+    AdmitsLieGroupStructure G := by
+  sorry
+
+/-- The conjecture holds when `G` acts by isometries on a Riemannian manifold, since `G`
+embeds as a closed subgroup of the isometry group, which is a Lie group by Myers–Steenrod. -/
+@[category research solved, AMS 22 53 57 58]
+theorem hilbert_smith_conjecture.variants.riemannian
+    [IsTopologicalGroup G] [LocallyCompactSpace G]
+    [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X]
+    [MetricSpace X] [IsManifold (𝓡 n) ∞ X]
+    (hiso : ∀ g : G, Isometry (g • · : X → X)) :
+    AdmitsLieGroupStructure G := by
+  sorry
+
+/-- Pardon (2013): the Hilbert–Smith conjecture holds for 3-dimensional manifolds.
+See [arXiv:1112.2324](https://arxiv.org/abs/1112.2324). -/
+@[category research solved, AMS 22 57 58]
+theorem hilbert_smith_conjecture.variants.dimension_three {X : Type*}
     [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
-    [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
+    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) X]
+    [IsTopologicalGroup G] [LocallyCompactSpace G]
     [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X] :
     AdmitsLieGroupStructure G := by
   sorry
@@ -58,59 +98,19 @@ theorem hilbert_smith_conjecture {G : Type*} {n : ℕ} {X : Type*}
 faithfully on any connected finite-dimensional topological manifold. By the Gleason–Yamabe
 theorem, this is equivalent to `hilbert_smith_conjecture`. -/
 @[category research open, AMS 22 57 58]
-theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime] {n : ℕ} {X : Type*}
-    [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
-    [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
+theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime]
     [AddAction (PadicInt p) X] [ContinuousVAdd (PadicInt p) X]
     (hfaithful : ∀ g₁ g₂ : PadicInt p, (∀ x : X, g₁ +ᵥ x = g₂ +ᵥ x) → g₁ = g₂) :
     False := by
   sorry
 
-/-- Pardon (2013): the Hilbert–Smith conjecture holds for 3-dimensional manifolds.
-See [arXiv:1112.2324](https://arxiv.org/abs/1112.2324). -/
-@[category research solved, AMS 22 57 58]
-theorem hilbert_smith_conjecture.variants.dimension_three {G : Type*} {X : Type*}
-    [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G]
-    [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
-    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) X]
-    [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X] :
-    AdmitsLieGroupStructure G := by
-  sorry
-
-/-- The conjecture holds when `G` acts by isometries on a Riemannian manifold, since `G`
-embeds as a closed subgroup of the isometry group, which is a Lie group by Myers–Steenrod. -/
-@[category research solved, AMS 22 53 57 58]
-theorem hilbert_smith_conjecture.variants.riemannian {G : Type*} {n : ℕ} {X : Type*}
-    [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G]
-    [MetricSpace X] [ConnectedSpace X]
-    [ChartedSpace (EuclideanSpace ℝ (Fin n)) X] [IsManifold (𝓡 n) ∞ X]
-    [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X]
-    (hiso : ∀ g : G, Isometry (g • · : X → X)) :
-    AdmitsLieGroupStructure G := by
-  sorry
-
 /-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every locally Euclidean
 topological group is a Lie group. -/
 @[category research solved, AMS 22 57]
-theorem hilbert_fifth_problem {G : Type*} {n : ℕ}
-    [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
+theorem hilbert_fifth_problem
+    [IsTopologicalGroup G]
     [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] [T2Space G] [LocallyConnectedSpace G] :
     LieGroup (𝓡 n) ⊤ G := by
-  sorry
-
-/-- Every Lie group trivially admits a Lie group structure. -/
-@[category API, AMS 22]
-theorem admitsLieGroupStructure_of_lieGroup {G : Type*} {n : ℕ}
-    [Group G] [TopologicalSpace G]
-    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] [LieGroup (𝓡 n) ⊤ G] :
-    AdmitsLieGroupStructure G :=
-  ⟨n, inferInstance, inferInstance⟩
-
-/-- A group admitting a Lie group structure is locally compact. -/
-@[category API, AMS 22]
-theorem locallyCompact_of_admitsLieGroupStructure {G : Type*}
-    [Group G] [TopologicalSpace G]
-    (h : AdmitsLieGroupStructure G) : LocallyCompactSpace G := by
   sorry
 
 end HilbertSmith
