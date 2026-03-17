@@ -9,10 +9,8 @@ app.use(express.json());
 // Configuration — loaded at startup, secrets filled in by loadSecrets()
 // ---------------------------------------------------------------------------
 const config = {
-  ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN || '*',
-  GH_REPO_OWNER:  process.env.GH_REPO_OWNER || '',
-  GH_REPO_NAME:   process.env.GH_REPO_NAME || '',
-  GH_CLIENT_ID:     process.env.GH_CLIENT_ID || '',
+  ALLOWED_ORIGIN:    process.env.ALLOWED_ORIGIN || '*',
+  GH_CLIENT_ID:      process.env.GH_CLIENT_ID || '',
   GH_CLIENT_SECRET:  process.env.GH_CLIENT_SECRET || '',
   GH_READ_TOKEN:     process.env.GH_READ_TOKEN || '',
 };
@@ -103,10 +101,8 @@ async function ghGraphQL(query, variables, token) {
 // ---------------------------------------------------------------------------
 // Fetch all discussions
 // ---------------------------------------------------------------------------
-async function fetchAllDiscussions() {
+async function fetchAllDiscussions(owner, name) {
   const token = config.GH_READ_TOKEN;
-  const owner = config.GH_REPO_OWNER;
-  const name = config.GH_REPO_NAME;
   const result = {};
 
   let hasNextPage = true;
@@ -240,13 +236,19 @@ app.post('/token', async (req, res) => {
   }
 });
 
-// GET /discussions — read-only proxy for anonymous users
+// GET /discussions?owner=X&repo=Y — read-only proxy for anonymous users
 app.get('/discussions', async (req, res) => {
   const cors = getCorsHeaders(req);
   res.set(cors);
 
+  const owner = req.query.owner;
+  const repo = req.query.repo;
+  if (!owner || !repo) {
+    return res.status(400).json({ error: 'Missing owner or repo query parameter' });
+  }
+
   try {
-    const data = await fetchAllDiscussions();
+    const data = await fetchAllDiscussions(owner, repo);
     res.set('Cache-Control', 'public, max-age=60').json(data);
   } catch (e) {
     console.error('Failed to fetch discussions:', e);

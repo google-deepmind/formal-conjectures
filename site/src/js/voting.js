@@ -299,7 +299,7 @@
 
     // Always fetch aggregates from the proxy (uses read-only PAT, cached)
     try {
-      const resp = await fetch(`${WORKER_URL}/discussions`);
+      const resp = await fetch(`${WORKER_URL}/discussions?owner=${encodeURIComponent(REPO_OWNER)}&repo=${encodeURIComponent(REPO_NAME)}`);
       if (!resp.ok) throw new Error('Failed to fetch discussions');
       const data = await resp.json();
 
