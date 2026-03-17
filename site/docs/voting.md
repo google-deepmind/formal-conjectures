@@ -100,9 +100,10 @@ To run the full voting system locally:
 
 ```bash
 cd site/appengine
+export GH_APP_ID=your_app_id
 export GH_CLIENT_ID=your_client_id
 export GH_CLIENT_SECRET=your_client_secret
-export GH_READ_TOKEN=your_read_token
+export GH_APP_PRIVATE_KEY="$(cat path/to/private-key.pem)"
 export ALLOWED_ORIGIN=http://localhost:8000
 node server.js
 ```
@@ -135,4 +136,4 @@ If you want to run your own App Engine proxy instead of using the shared one, se
 - The `GET /discussions` endpoint paginates through all discussions, which may be slow with very large numbers
 - Vote counts are cached in memory after the first fetch within a page session
 - The App Engine proxy caches discussion data for 60 seconds
-- The shared proxy's `GH_READ_TOKEN` must have Discussions read access on any repo that uses it
+- The GitHub App must be installed on any repo that uses the shared proxy

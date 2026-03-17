@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(express.json());
@@ -9,20 +10,20 @@ app.use(express.json());
 // Configuration — loaded at startup, secrets filled in by loadSecrets()
 // ---------------------------------------------------------------------------
 const config = {
-  ALLOWED_ORIGIN:    process.env.ALLOWED_ORIGIN || '*',
-  GH_CLIENT_ID:      process.env.GH_CLIENT_ID || '',
-  GH_CLIENT_SECRET:  process.env.GH_CLIENT_SECRET || '',
-  GH_READ_TOKEN:     process.env.GH_READ_TOKEN || '',
+  ALLOWED_ORIGIN:      process.env.ALLOWED_ORIGIN || '*',
+  GH_APP_ID:           process.env.GH_APP_ID || '',
+  GH_CLIENT_ID:        process.env.GH_CLIENT_ID || '',
+  GH_CLIENT_SECRET:    process.env.GH_CLIENT_SECRET || '',
+  GH_APP_PRIVATE_KEY:  process.env.GH_APP_PRIVATE_KEY || '',
 };
 
-// Names of secrets to load from Secret Manager (only those not already set)
-const SECRET_NAMES = ['GH_CLIENT_ID', 'GH_CLIENT_SECRET', 'GH_READ_TOKEN'];
+// Secrets to load from Secret Manager when not set via env vars
+const SECRET_NAMES = ['GH_CLIENT_ID', 'GH_CLIENT_SECRET', 'GH_APP_PRIVATE_KEY'];
 
 /**
  * Load any missing secrets from Google Cloud Secret Manager.
- * If all secrets are already set via environment variables (local dev), this
- * is a no-op. In production on App Engine, environment variables are not set
- * for secrets — they come from Secret Manager instead.
+ * Env vars take precedence (for local dev). In production on App Engine,
+ * secrets come from Secret Manager.
  */
 async function loadSecrets() {
   const missing = SECRET_NAMES.filter(name => !config[name]);
@@ -38,7 +39,6 @@ async function loadSecrets() {
     process.exit(1);
   }
 
-  // Resolve project ID from the client (uses ADC / metadata server)
   const [projectId] = await client.getProjectId().then(id => [id]);
 
   for (const name of missing) {
@@ -53,6 +53,75 @@ async function loadSecrets() {
       process.exit(1);
     }
   }
+}
+
+// ---------------------------------------------------------------------------
+// GitHub App installation token management
+// ---------------------------------------------------------------------------
+
+// Cache: "owner/repo" -> { token, expiresAt }
+const installationTokenCache = new Map();
+
+/**
+ * Create a JWT for the GitHub App, valid for 10 minutes.
+ */
+function createAppJWT() {
+  const now = Math.floor(Date.now() / 1000);
+  return jwt.sign(
+    { iat: now - 60, exp: now + 600, iss: config.GH_APP_ID },
+    config.GH_APP_PRIVATE_KEY,
+    { algorithm: 'RS256' },
+  );
+}
+
+/**
+ * Get a GitHub API installation token for the given repo.
+ * Returns a cached token if still valid (with 5-minute margin).
+ */
+async function getInstallationToken(owner, repo) {
+  const cacheKey = `${owner}/${repo}`;
+  const cached = installationTokenCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now() + 5 * 60 * 1000) {
+    return cached.token;
+  }
+
+  const appJWT = createAppJWT();
+
+  // Find the installation ID for this repo
+  const installResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/installation`, {
+    headers: {
+      Authorization: `Bearer ${appJWT}`,
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'fc-oauth-proxy',
+    },
+  });
+  if (!installResp.ok) {
+    const text = await installResp.text();
+    throw new Error(`Failed to find app installation for ${owner}/${repo}: ${installResp.status} ${text}`);
+  }
+  const { id: installationId } = await installResp.json();
+
+  // Create an installation access token
+  const tokenResp = await fetch(`https://api.github.com/app/installations/${installationId}/access_tokens`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${appJWT}`,
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'fc-oauth-proxy',
+    },
+  });
+  if (!tokenResp.ok) {
+    const text = await tokenResp.text();
+    throw new Error(`Failed to create installation token: ${tokenResp.status} ${text}`);
+  }
+  const { token, expires_at } = await tokenResp.json();
+
+  installationTokenCache.set(cacheKey, {
+    token,
+    expiresAt: new Date(expires_at).getTime(),
+  });
+
+  return token;
 }
 
 // ---------------------------------------------------------------------------
@@ -92,7 +161,7 @@ async function ghGraphQL(query, variables, token) {
     },
     body: JSON.stringify({ query, variables }),
   });
-  if (!resp.ok) throw new Error(`GitHub API error: ${resp.status}`);
+  if (!resp.ok) throw new Error(`GraphQL request failed: ${resp.status}`);
   const json = await resp.json();
   if (json.errors) throw new Error(json.errors[0].message);
   return json.data;
@@ -102,7 +171,7 @@ async function ghGraphQL(query, variables, token) {
 // Fetch all discussions
 // ---------------------------------------------------------------------------
 async function fetchAllDiscussions(owner, name) {
-  const token = config.GH_READ_TOKEN;
+  const token = await getInstallationToken(owner, name);
   const result = {};
 
   let hasNextPage = true;
@@ -137,7 +206,6 @@ async function fetchAllDiscussions(owner, name) {
     const discussions = data.repository.discussions;
 
     for (const disc of discussions.nodes) {
-      // Paginate comments if needed
       let allComments = [...disc.comments.nodes];
       let commentPage = disc.comments.pageInfo;
       while (commentPage.hasNextPage) {
@@ -161,8 +229,6 @@ async function fetchAllDiscussions(owner, name) {
         commentPage = moreComments.pageInfo;
       }
 
-      // Parse difficulty from comments: scan each line for /^difficulty [0-9]$/i
-      // Latest match per user wins (comments are in chronological order)
       const difficultyByUser = {};
       for (const comment of allComments) {
         if (!comment.author) continue;

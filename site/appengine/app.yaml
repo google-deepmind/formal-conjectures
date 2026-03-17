@@ -7,5 +7,6 @@ automatic_scaling:
 
 env_variables:
   ALLOWED_ORIGIN: "REPLACE_WITH_SITE_ORIGIN"
-  # Secrets (GH_CLIENT_ID, GH_CLIENT_SECRET, GH_READ_TOKEN) are loaded from
-  # Google Cloud Secret Manager at startup. See README.md for setup.
+  GH_APP_ID: "3005907"
+  # Secrets (GH_CLIENT_ID, GH_CLIENT_SECRET, GH_APP_PRIVATE_KEY) are loaded
+  # from Google Cloud Secret Manager at startup. See README.md for setup.

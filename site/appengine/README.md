@@ -1,6 +1,6 @@
 # OAuth Proxy & Discussions Reader — App Engine
 
-A repo-agnostic App Engine service that provides GitHub App OAuth token exchange and a read-only proxy for GitHub Discussions data. One deployment can serve multiple repositories.
+A repo-agnostic App Engine service that provides GitHub App OAuth token exchange and a read-only proxy for GitHub Discussions data. One deployment can serve multiple repositories — any repo with the GitHub App installed works automatically.
 
 ## Default Shared Proxy
 
@@ -8,12 +8,12 @@ The Formal Conjectures project runs a shared proxy on the `formal-conjectures-we
 
 The shared proxy:
 - Handles OAuth token exchange for the [formal-conjectures-voting](https://github.com/apps/formal-conjectures-voting) GitHub App (`Iv23lid2mjCGp7EIKrJn`)
-- Reads discussions from any repo passed via `?owner=X&repo=Y`
-- Requires its `GH_READ_TOKEN` to have Discussions read access on repos that use it
+- Reads discussions from any repo where the app is installed, via `?owner=X&repo=Y`
+- Uses GitHub App installation tokens — no per-repo PAT needed
 
 To use the shared proxy with a new fork:
 1. Install the GitHub App on your fork: https://github.com/apps/formal-conjectures-voting/installations/new
-2. The `GH_READ_TOKEN` PAT must be updated to include the fork's repo in its scope — contact the maintainer to request access.
+2. That's it. The proxy automatically obtains an installation token for your repo.
 
 ## Running Your Own Proxy
 
@@ -32,9 +32,7 @@ cd site/appengine
 npm install
 ```
 
-### Creating the GitHub App and Tokens
-
-#### GitHub App (`GH_CLIENT_ID` and `GH_CLIENT_SECRET`)
+### Creating the GitHub App
 
 1. Go to https://github.com/settings/apps/new
 2. Fill in:
@@ -44,21 +42,11 @@ npm install
    - **Webhook**: uncheck "Active" (not needed)
 3. Under **Permissions > Repository permissions**, set **Discussions** to **Read & write**
 4. Click **Create GitHub App**
-5. On the app's settings page, copy the **Client ID** (`GH_CLIENT_ID`)
-6. Click **Generate a new client secret** and copy it (`GH_CLIENT_SECRET`)
-7. **Install the app** on your repo: go to https://github.com/settings/apps, click your app, then **Install App**, and select the target repository
-
-#### Fine-grained PAT (`GH_READ_TOKEN`)
-
-This token is used by the proxy to read discussions without requiring the user to be logged in.
-
-1. Go to https://github.com/settings/personal-access-tokens/new
-2. Fill in:
-   - **Token name**: anything (e.g. "FC Discussions Reader")
-   - **Expiration**: choose an appropriate lifetime
-   - **Repository access**: select **Only select repositories** and pick the repos that will use this proxy
-3. Under **Permissions > Repository permissions**, set **Discussions** to **Read-only**
-4. Click **Generate token** and copy it (`GH_READ_TOKEN`)
+5. Note the **App ID** (shown at the top of the app's settings page)
+6. Copy the **Client ID** (`GH_CLIENT_ID`)
+7. Click **Generate a new client secret** and copy it (`GH_CLIENT_SECRET`)
+8. Scroll to **Private keys** and click **Generate a private key** — save the downloaded PEM file (`GH_APP_PRIVATE_KEY`)
+9. **Install the app** on your repo: go to https://github.com/settings/apps, click your app, then **Install App**, and select the target repository
 
 ### Secrets
 
@@ -67,16 +55,16 @@ The server loads secrets from environment variables if set, otherwise from [Goog
 #### Storing secrets in Secret Manager (production)
 
 ```bash
-echo -n "your_client_id"     | gcloud secrets create GH_CLIENT_ID --data-file=-
+echo -n "your_client_id" | gcloud secrets create GH_CLIENT_ID --data-file=-
 echo -n "your_client_secret" | gcloud secrets create GH_CLIENT_SECRET --data-file=-
-echo -n "your_read_token"    | gcloud secrets create GH_READ_TOKEN --data-file=-
+gcloud secrets create GH_APP_PRIVATE_KEY --data-file=path/to/private-key.pem
 ```
 
 Grant the App Engine service account access:
 
 ```bash
 PROJECT_ID=$(gcloud config get-value project)
-for SECRET in GH_CLIENT_ID GH_CLIENT_SECRET GH_READ_TOKEN; do
+for SECRET in GH_CLIENT_ID GH_CLIENT_SECRET GH_APP_PRIVATE_KEY; do
   gcloud secrets add-iam-policy-binding $SECRET \
     --member="serviceAccount:${PROJECT_ID}@appspot.gserviceaccount.com" \
     --role="roles/secretmanager.secretAccessor"
@@ -87,9 +75,10 @@ done
 
 ```bash
 cd site/appengine
+export GH_APP_ID=your_app_id
 export GH_CLIENT_ID=your_client_id
 export GH_CLIENT_SECRET=your_client_secret
-export GH_READ_TOKEN=your_read_token
+export GH_APP_PRIVATE_KEY="$(cat path/to/private-key.pem)"
 export ALLOWED_ORIGIN=http://localhost:8000
 node server.js
 ```
@@ -103,7 +92,7 @@ python3 -m http.server 8000
 
 ### Deploy
 
-Edit `app.yaml` to set `ALLOWED_ORIGIN` for your deployment (comma-separated list of allowed origins), then:
+Edit `app.yaml` to set `ALLOWED_ORIGIN` and `GH_APP_ID` for your deployment, then:
 
 ```bash
 gcloud app deploy
@@ -121,16 +110,17 @@ OAuth code exchange. Receives `{ "code": "..." }` and exchanges it for a GitHub 
 
 ### `GET /discussions?owner=OWNER&repo=REPO`
 
-Returns aggregated discussion data for the given repository. Includes vote counts (HEART reactions), truth predictions (THUMBS_UP/DOWN), and average difficulty ratings (parsed from comments). Response is cached for 60 seconds.
+Returns aggregated discussion data for the given repository. The proxy obtains a GitHub App installation token for the repo automatically (the app must be installed there). Includes vote counts (HEART reactions), truth predictions (THUMBS_UP/DOWN), and average difficulty ratings (parsed from comments). Response is cached for 60 seconds.
 
 ## Configuration
 
 | Variable | Source | Description |
 |---|---|---|
 | `ALLOWED_ORIGIN` | `app.yaml` / env | CORS allowed origin(s), comma-separated |
+| `GH_APP_ID` | `app.yaml` / env | GitHub App ID (not a secret) |
 | `GH_CLIENT_ID` | Secret Manager / env | GitHub App client ID |
 | `GH_CLIENT_SECRET` | Secret Manager / env | GitHub App client secret |
-| `GH_READ_TOKEN` | Secret Manager / env | Fine-grained PAT for anonymous reads |
+| `GH_APP_PRIVATE_KEY` | Secret Manager / env | GitHub App private key (PEM) |
 
 ## Cost
 
