@@ -182,7 +182,6 @@ jobs:
           node-version: '18'
 
       - name: Inject voting config
-        if: steps.mode.outputs.webtest == 'true'
         run: |
           REPO_OWNER="${{ github.repository_owner }}"
           REPO_NAME="${{ github.event.repository.name }}"
