@@ -111,10 +111,17 @@ const GITHUB_BASE = 'https://github.com/google-deepmind/formal-conjectures/blob/
 // ---------------------------------------------------------------------------
 
 /** Convert a module name to a GitHub file URL. */
+function moduleToGitHubPath(module) {
+  // Replace periods with slashes outside guillemets
+  const withSlashes = module.replace(/«[^»]*»|\./g, (match) =>
+    match[0] === '«' ? match : '/'
+  );
+  // and then strip Lean «guillemets» used to quote numeric/special segments
+  const clean = withSlashes.replace(/[«»]/g, '');
+  return `${clean}.lean`;
+}
 function moduleToGitHubURL(module) {
-  // Strip Lean «guillemets» used to quote numeric/special segments
-  const clean = module.replace(/[«»]/g, '');
-  return `${GITHUB_BASE}/${clean.replace(/\./g, '/')}.lean`;
+  return `${GITHUB_BASE}/${moduleToGitHubPath(module)}`;
 }
 
 /** Extract the source collection from a module name. */
@@ -155,6 +162,7 @@ function processEntry(entry) {
     ...entry,
     theorem,
     module,
+    githubPath: moduleToGitHubPath(entry.module),
     githubUrl: moduleToGitHubURL(entry.module),
     collection: collection.name,
     collectionUrl: collection.url,
