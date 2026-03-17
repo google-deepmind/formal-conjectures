@@ -111,10 +111,17 @@ const GITHUB_BASE = 'https://github.com/google-deepmind/formal-conjectures/blob/
 // ---------------------------------------------------------------------------
 
 /** Convert a module name to a GitHub file URL. */
+function moduleToGitHubPath(module) {
+  // Replace periods with slashes outside guillemets
+  const withSlashes = module.replace(/«[^»]*»|\./g, (match) =>
+    match[0] === '«' ? match : '/'
+  );
+  // and then strip Lean «guillemets» used to quote numeric/special segments
+  const clean = withSlashes.replace(/[«»]/g, '');
+  return `${clean}.lean`;
+}
 function moduleToGitHubURL(module) {
-  // Strip Lean «guillemets» used to quote numeric/special segments
-  const clean = module.replace(/[«»]/g, '');
-  return `${GITHUB_BASE}/${clean.replace(/\./g, '/')}.lean`;
+  return `${GITHUB_BASE}/${moduleToGitHubPath(module)}`;
 }
 
 /** Extract the source collection from a module name. */
@@ -155,6 +162,7 @@ function processEntry(entry) {
     ...entry,
     theorem,
     module,
+    githubPath: moduleToGitHubPath(entry.module),
     githubUrl: moduleToGitHubURL(entry.module),
     collection: collection.name,
     collectionUrl: collection.url,
@@ -270,11 +278,14 @@ function main() {
   // Read raw data
   let rawData = [];
   if (fs.existsSync('data/conjectures.json')) {
-    try {
-      rawData = JSON.parse(fs.readFileSync('data/conjectures.json', 'utf8'));
-    } catch (e) {
-      console.warn('Warning: could not parse data/conjectures.json:', e.message);
-    }
+    const parsed = JSON.parse(fs.readFileSync('data/conjectures.json', 'utf8'));
+    // extract_names outputs { problems: [...], moduleDocstrings: {...} }
+    rawData = parsed.problems || [];
+  }
+
+  if (rawData.length === 0) {
+    console.error('Error: no conjectures loaded. Run `lake exe extract_names > site/data/conjectures.json` first.');
+    process.exit(1);
   }
 
   const conjectures = rawData.map(processEntry);

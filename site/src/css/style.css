@@ -351,7 +351,8 @@ a.stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); t
    Section layout
    ============================================================ */
 .section {
-  padding: 3rem 0;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 .section + .section {
   border-top: 1px solid var(--color-border);
@@ -912,11 +913,119 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 }
 
 /* ============================================================
+   Hamburger menu button (hidden on desktop)
+   ============================================================ */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-nav-text);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  margin-left: auto;
+}
+
+/* ============================================================
+   Filter toggle button (hidden on desktop)
+   ============================================================ */
+.filter-toggle {
+  display: none;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* ============================================================
    Responsive tweaks
    ============================================================ */
+
+/* --- Tablet and below: collapsible filters --- */
+@media (max-width: 800px) {
+  .filter-toggle { display: block; }
+
+  .filter-panel {
+    position: static;
+    display: none;
+  }
+  .filter-panel.is-open { display: block; }
+}
+
+/* --- Phone --- */
 @media (max-width: 600px) {
+  .container { padding: 0 2rem; }
+  .page-header .container { padding: 0 2rem; }
   .hero { padding: 3rem 0 2.5rem; }
   .stats-bar__grid { flex-direction: column; align-items: center; }
   .theorem-detail__header { flex-direction: column; }
-  .site-nav__links a { padding: 0.4rem 0.5rem; font-size: 0.82rem; }
+
+  /* Hamburger nav */
+  .nav-toggle { display: block; }
+
+  .site-nav { height: auto; min-height: var(--nav-height); }
+  .site-nav__inner { flex-wrap: wrap; }
+
+  .site-nav__links {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 0.5rem;
+  }
+  .site-nav__links.is-open { display: flex; }
+
+  .site-nav__links a {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.95rem;
+    opacity: 1;
+  }
+
+  /* Theorem card: stack body and badge vertically */
+  .theorem-card {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .theorem-card__badge {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  /* Theorem card: allow name wrapping */
+  .theorem-card__name {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* Stack search bar and results meta */
+  .results-meta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  /* Larger tap targets for buttons */
+  .vote-btn, .truth-btn {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .filter-checkbox-list label {
+    padding: 0.3rem 0;
+    font-size: 0.95rem;
+  }
+
+  .page-btn {
+    padding: 0.5rem 0.85rem;
+  }
 }

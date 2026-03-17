@@ -130,7 +130,7 @@ function renderDetail(theorem, siblings) {
       <div class="detail-label">View source</div>
       <div class="detail-value">
         <a href="${FC.escapeHTML(theorem.githubUrl)}" target="_blank" rel="noopener">
-          ${FC.escapeHTML(theorem.module.replace(/\./g, '/'))}.lean on GitHub ↗
+          ${FC.escapeHTML(theorem.githubPath)} on GitHub ↗
         </a>
       </div>
     </div>
