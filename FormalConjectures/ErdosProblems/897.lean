@@ -30,7 +30,7 @@ Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
 if $(a,b)=1$ such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$.
 Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 -/
-@[category research open, AMS 11]
+@[category research formally solved, AMS 11]
 theorem erdos_897.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
@@ -43,7 +43,7 @@ Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
 if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$.
 Is it true that $\limsup_n f(n+1)/ f(n) = ∞$?
 -/
-@[category research open, AMS 11]
+@[category research formally solved, AMS 11]
 theorem erdos_897.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
@@ -74,7 +74,7 @@ if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$ and $f(p^k) = f(p
 or $f(p^k) = kf(p)$.
 Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 -/
-@[category research open, AMS 11]
+@[category research formally solved, AMS 11]
 theorem erdos_897.variants.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
@@ -89,7 +89,7 @@ if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$ and $f(p^k) = f(p
 or $f(p^k) = kf(p)$.
 Is it true that $\limsup_n f(n+1)/f(n) = ∞$?
 -/
-@[category research open, AMS 11]
+@[category research formally solved, AMS 11]
 theorem erdos_897.variants.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
