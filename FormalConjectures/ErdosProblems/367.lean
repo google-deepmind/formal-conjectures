@@ -30,30 +30,30 @@ open Asymptotics Filter
 
 namespace Erdos367
 
-/-- Product of primes dividing `n` with exponent exactly one. -/
-def exactlyOncePrimeDivisorProduct (n : ℕ) : ℕ :=
-  (n.factorization.support.filter (fun p => n.factorization p = 1)).prod id
+/-- `B r n` is the `r`-full part of `n`: the product of prime powers `p^a ‖ n` with `a ≥ r`. -/
+def B (r n : ℕ) : ℕ :=
+  (n.factorization.support.filter (fun p => r ≤ n.factorization p)).prod
+    (fun p => p ^ (n.factorization p))
 
 /--
-`B₂(n)` in the Erdős Problem 367 statement:
-`B₂(n) = n / n'`, where `n'` is the product of all primes dividing `n` exactly once.
+`B₂(n) = n / n'`, where `n'` is the product of all primes dividing `n` exactly once,
+equivalently the `2`-full part of `n`.
 -/
-def B2 (n : ℕ) : ℕ :=
-  n / exactlyOncePrimeDivisorProduct n
+abbrev B₂ (n : ℕ) : ℕ := B 2 n
 
-/-- Product `∏_{n ≤ m < n+k} B₂(m)`. -/
-def intervalB2Product (n k : ℕ) : ℕ :=
-  (Finset.range k).prod (fun i => B2 (n + i))
+/-- Product `∏_{n ≤ m < n+k} B_r(m)`. -/
+def intervalBProduct (r n k : ℕ) : ℕ :=
+  (Finset.range k).prod (fun i => B r (n + i))
 
 /-- Asymptotic formulation of an `n^(2+o(1))`-type upper bound. -/
 def nearlyQuadraticBound (k : ℕ) : Prop :=
   ∃ e : ℕ → ℝ,
     e =o[atTop] (1 : ℕ → ℝ) ∧
-    ∀ᶠ n in atTop, (intervalB2Product n k : ℝ) ≤ (n : ℝ) ^ (2 + e n)
+    ∀ᶠ n in atTop, (intervalBProduct 2 n k : ℝ) ≤ (n : ℝ) ^ (2 + e n)
 
 /-- The stronger variant `≪_k n^2`. -/
 def quadraticBound (k : ℕ) : Prop :=
-  (fun n ↦ (intervalB2Product n k : ℝ)) =O[atTop] fun n ↦ (n : ℝ) ^ (2 : ℝ)
+  (fun n ↦ (intervalBProduct 2 n k : ℝ)) =O[atTop] fun n ↦ (n : ℝ) ^ (2 : ℝ)
 
 /--
 For fixed `k ≥ 1`, is `∏_{n ≤ m < n+k} B₂(m) ≪ n^(2+o(1))`?
@@ -76,23 +76,15 @@ The page notes the easy range `k ≤ 2`; this variant captures that solved subre
 theorem erdos_367.variants.k_le_two : ∀ k : ℕ, k ≤ 2 → quadraticBound k := by
   sorry
 
-/-- `B_r(n)`: product of prime powers `p^a ‖ n` with `a ≥ r`. -/
-def Br (r n : ℕ) : ℕ :=
-  (n.factorization.support.filter (fun p => r ≤ n.factorization p)).prod
-    (fun p => p ^ (n.factorization p))
-
-/-- Product `∏_{n ≤ m < n+k} B_r(m)`. -/
-def intervalBrProduct (r n k : ℕ) : ℕ :=
-  (Finset.range k).prod (fun i => Br r (n + i))
-
 /--
-Discrete limsup-unbounded formulation for the variant in the additional text.
+Discrete limsup-unbounded formulation for the `B_r` variant.
 -/
 def brRatioUnbounded (r k : ℕ) : Prop :=
-  ∀ A : ℕ, ∃ n : ℕ, 1 ≤ n ∧ A * n ≤ intervalBrProduct r n k
+  ∀ A : ℕ, ∃ n : ℕ, 1 ≤ n ∧ A * n ≤ intervalBProduct r n k
 
 /--
-Variant question from the additional text: for fixed `r, k ≥ 2`, does there exist `ε > 0`
+Variant question from the additional text: for fixed `r ≥ 3`, `k ≥ 2`, does there exist
+`ε > 0`
 with unbounded `limsup` behavior for `∏ B_r(m) / n^(1+ε)`?
 -/
 @[category research open, AMS 11]
