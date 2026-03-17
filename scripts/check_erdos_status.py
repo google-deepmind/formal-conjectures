@@ -28,13 +28,12 @@ ERDOS_DIR = os.path.join(
     "ErdosProblems",
 )
 
-# Matches the category annotation line immediately before a main theorem.
-# Captures the status word ("open" or "solved") and the problem number.
-# The main theorem is `erdos_{N}` possibly followed by a suffix like `_statement`,
-# but NOT containing a dot (which indicates a variant).
+# Matches the category annotation line immediately before any erdos theorem.
+# Captures the category, the problem number, and the full theorem name suffix.
+# Used to find all theorems for a given problem number.
 CATEGORY_THEN_THEOREM = re.compile(
     r"@\[category research (open|solved|formally solved[^]]*),.*\]\s*\n"
-    r"theorem erdos_(\d+)\w*[\s:]",
+    r"theorem erdos_(\d+)([\w.]*)\s",
     re.MULTILINE,
 )
 
@@ -84,8 +83,18 @@ def lean_category(cat):
     return "solved"
 
 
+def is_variant(suffix):
+    """Check if a theorem name suffix indicates a variant (not a main part)."""
+    return ".variants." in suffix
+
+
 def scan_lean_files():
-    """Return dict mapping problem number (str) -> 'open', 'solved', or 'formally solved'."""
+    """Return dict mapping problem number (str) -> 'open', 'solved', or 'formally solved'.
+
+    For multi-part problems (no single `erdos_{N}` theorem), collects all
+    non-variant theorems. The problem is 'open' if any part is open,
+    'formally solved' if all parts are formally solved, and 'solved' otherwise.
+    """
     result = {}
     for fname in os.listdir(ERDOS_DIR):
         if not fname.endswith(".lean"):
@@ -96,11 +105,35 @@ def scan_lean_files():
         filepath = os.path.join(ERDOS_DIR, fname)
         with open(filepath) as f:
             content = f.read()
-        # Find the main theorem's category (first match for this problem number)
+
+        # Collect all non-variant theorem categories for this problem number
+        main_categories = []
+        has_exact_main = False
+        exact_main_cat = None
         for m in CATEGORY_THEN_THEOREM.finditer(content):
-            if m.group(2) == file_number:
-                result[file_number] = lean_category(m.group(1))
-                break
+            if m.group(2) != file_number:
+                continue
+            suffix = m.group(3)  # e.g. "", "_cycles", ".parts.i", ".variants.foo"
+            cat = lean_category(m.group(1))
+            if suffix == "" or suffix == ":":
+                # Exact match: `erdos_{N}` with no suffix
+                has_exact_main = True
+                exact_main_cat = cat
+            elif not is_variant(suffix):
+                main_categories.append(cat)
+
+        if has_exact_main:
+            # Single main theorem exists — use its category directly
+            result[file_number] = exact_main_cat
+        elif main_categories:
+            # Multi-part problem: open if any part is open
+            if "open" in main_categories:
+                result[file_number] = "open"
+            elif all(c == "formally solved" for c in main_categories):
+                result[file_number] = "formally solved"
+            else:
+                result[file_number] = "solved"
+
     return result
 
 
