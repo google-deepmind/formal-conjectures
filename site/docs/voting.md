@@ -17,17 +17,27 @@ All data is stored as native GitHub Discussions features (reactions and comments
 
 A shared App Engine proxy (`formal-conjectures-web-worker`) handles OAuth token exchange and anonymous discussion reads for all forks. The proxy is repo-agnostic — the client passes the repo owner and name as query parameters.
 
+## Webtest Branches
+
+Branches whose name ends with `-webtest` trigger a fast website-only build:
+
+- The expensive Lean build, docgen, and `extract_names` steps are **skipped**
+- The processed conjectures JSON is **downloaded from the live site** (https://google-deepmind.github.io/formal-conjectures/)
+- `REPO_OWNER`, `REPO_NAME`, and `REPO_ID` are **injected automatically** from the repository context
+- The site is **deployed to GitHub Pages** on the fork
+
+This works on any repo, including the upstream `google-deepmind/formal-conjectures`. On the `main` branch, the full Lean build runs as usual.
+
 ## How It Works for Forkers
 
-The default configuration works out of the box for any fork:
+To deploy the website with voting on your fork:
 
 1. **Enable GitHub Pages** on the fork (Settings > Pages > GitHub Actions)
 2. **Enable Discussions** on the fork (Settings > General > Features)
 3. **Install the GitHub App** on the fork: go to https://github.com/apps/formal-conjectures-voting/installations/new, select your fork, and grant it access
+4. **Push a branch ending in `-webtest`** (e.g. `my-feature-webtest`)
 
-The CI workflow (`-webtest` branches) automatically sets `REPO_OWNER`, `REPO_NAME`, and `REPO_ID` from the repository context. The shared proxy URL and GitHub App client ID are built into the defaults.
-
-No GCP project, secrets, or tokens are needed for a forker to use the voting system.
+The CI workflow automatically configures the voting system for your fork. No GCP project, secrets, or tokens are needed.
 
 ## How Votes Work
 
