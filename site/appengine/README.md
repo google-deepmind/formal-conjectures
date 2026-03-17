@@ -7,11 +7,13 @@ A repo-agnostic App Engine service that provides GitHub App OAuth token exchange
 The Formal Conjectures project runs a shared proxy on the `formal-conjectures-web-worker` GCP project. This is used by the default `voting.js` configuration, so **forkers do not need to deploy their own proxy**.
 
 The shared proxy:
-- Handles OAuth token exchange for the GitHub App (`Iv23lid2mjCGp7EIKrJn`)
+- Handles OAuth token exchange for the [formal-conjectures-voting](https://github.com/apps/formal-conjectures-voting) GitHub App (`Iv23lid2mjCGp7EIKrJn`)
 - Reads discussions from any repo passed via `?owner=X&repo=Y`
 - Requires its `GH_READ_TOKEN` to have Discussions read access on repos that use it
 
-To use the shared proxy with a new fork, the `GH_READ_TOKEN` PAT must be updated to include the fork's repo in its scope. Contact the maintainer to request access.
+To use the shared proxy with a new fork:
+1. Install the GitHub App on your fork: https://github.com/apps/formal-conjectures-voting/installations/new
+2. The `GH_READ_TOKEN` PAT must be updated to include the fork's repo in its scope — contact the maintainer to request access.
 
 ## Running Your Own Proxy
 

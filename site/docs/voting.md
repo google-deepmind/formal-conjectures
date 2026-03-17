@@ -23,7 +23,7 @@ The default configuration works out of the box for any fork:
 
 1. **Enable GitHub Pages** on the fork (Settings > Pages > GitHub Actions)
 2. **Enable Discussions** on the fork (Settings > General > Features)
-3. **Install the GitHub App** on the fork — the shared app handles OAuth for all repos
+3. **Install the GitHub App** on the fork: go to https://github.com/apps/formal-conjectures-voting/installations/new, select your fork, and grant it access
 
 The CI workflow (`-webtest` branches) automatically sets `REPO_OWNER`, `REPO_NAME`, and `REPO_ID` from the repository context. The shared proxy URL and GitHub App client ID are built into the defaults.
 
