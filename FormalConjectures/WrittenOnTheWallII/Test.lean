@@ -36,7 +36,7 @@ open SimpleGraph
 
 open Classical
 
-/-! ### Graph Definitions -/
+/-  ### Graph Definitions -/
 
 /-- House Graph: Square 0-1-2-3-0 with roof 4 connected to 2,3. -/
 def HouseGraph : SimpleGraph (Fin 5) :=
@@ -67,7 +67,7 @@ abbrev C6 : SimpleGraph (Fin 6) := cycleGraph 6
 def Star5 : SimpleGraph (Fin 1 ⊕ Fin 5) := completeBipartiteGraph (Fin 1) (Fin 5)
 
 
-/-! ### House Graph Tests -/
+/-  ### House Graph Tests -/
 
 @[category test, AMS 5]
 theorem house_indep : α(HouseGraph) = 2 := by
@@ -138,7 +138,7 @@ theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
   sorry
 
 
-/-! ### K4 Tests -/
+/-  ### K4 Tests -/
 
 @[category test, AMS 5]
 theorem K4_indep : α(K4) = 1 := by
@@ -209,7 +209,7 @@ theorem K4_cvetkovic : cvetkovic K4 = 1 := by
   sorry
 
 
-/-! ### Petersen Graph Tests -/
+/-  ### Petersen Graph Tests -/
 
 @[category test, AMS 5]
 theorem petersen_indep : α(PetersenGraph) = 4 := by
@@ -280,7 +280,7 @@ theorem petersen_cvetkovic : cvetkovic PetersenGraph = 4 := by
   sorry
 
 
-/-! ### C6 Tests -/
+/-  ### C6 Tests -/
 
 @[category test, AMS 5]
 theorem C6_indep : α(C6) = 3 := by
@@ -351,7 +351,7 @@ theorem C6_cvetkovic : cvetkovic C6 = 3 := by
   sorry
 
 
-/-! ### Star5 Tests -/
+/-  ### Star5 Tests -/
 
 @[category test, AMS 5]
 theorem Star5_indep : α(Star5) = 5 := by

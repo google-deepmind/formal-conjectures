@@ -45,7 +45,7 @@ This appears to answer the question in the spirit it was intended.
 This was formalized in Lean by Alexeev using Aristotle.
 -/
 @[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos56.lean", AMS 11]
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos728p.lean", AMS 11]
 theorem erdos_728 :
     answer(True) ↔
       ∀ᶠ ε : ℝ in 𝓝[>] 0, ∀ C > (0 : ℝ), ∀ C' > C,

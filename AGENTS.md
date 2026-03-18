@@ -209,11 +209,14 @@ When the problem is solved:
    /-!
    # Problem Name
 
-   *Reference:* [Title](URL)
+   *References:*
+   - [Title](URL) by *Author Name*, Journal (Year)
+   - [Title](URL)
 
    Brief description if needed.
    -/
    ```
+   For a single reference, `*Reference:*` (singular) is also acceptable.
 4. **Import structure**:
    - Problem files: Import `FormalConjectures.Util.ProblemImports`
    - ForMathlib files: Import only necessary Mathlib modules

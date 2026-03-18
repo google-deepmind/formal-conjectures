@@ -58,7 +58,7 @@ theorem erdos_42.variants.constructive : answer(sorry) ↔
   sorry
 
 
-/-! ## Related results and examples -/
+/-  ## Related results and examples -/
 
 /--
 The set `{1, 2, 4}` is a maximal Sidon set in `{1, ..., 4}`.

@@ -117,7 +117,7 @@ theorem erdos_707.variants.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9,
   sorry
 
 
-/-! ## Perfect difference sets and their properties -/
+/-  ## Perfect difference sets and their properties -/
 
 /--
 A perfect difference set modulo `n` must have size `≤ √n + 1`.
@@ -136,7 +136,7 @@ theorem erdos_707.variants.singer_construction (p : ℕ) (hp : IsPrimePow p) :
     ∃ (B : Set ℕ), IsPerfectDifferenceSet B (p^2 + p + 1) ∧ B.ncard = p + 1 := by
   sorry
 
-/-! ## Examples and special cases -/
+/-  ## Examples and special cases -/
 
 /--
 The set `{1, 2, 4}` is a Sidon set.

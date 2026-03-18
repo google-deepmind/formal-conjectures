@@ -136,6 +136,8 @@ unsafe def main (args : List String) : IO Unit := do
                 throwError m!"Theorem {name} must have exactly one category, found {cats.length}."
               let statement := toString (← Meta.MetaM.run' (Meta.ppExpr info.type))
               let docstring ← findDocString? env name
+              if docstring.isNone then
+                IO.eprintln s!"WARNING: Theorem {name} (category: {cats.head!}) is missing a docstring"
               let (formalProofKind, formalProofLink) :=
                 if let some tag := categoryFullMap.get? name then
                   if let .research (.formallySolvedAt kind link) := tag.category then
@@ -156,4 +158,21 @@ unsafe def main (args : List String) : IO Unit := do
               } :: allResults
         | _ => pure ()
 
-    IO.println (toJson allResults.reverse).pretty
+    -- Collect module docstrings via Lean's getModuleDoc? API
+    let mut moduleDocstrings : List (String × String) := []
+    for modName in moduleNames do
+      if let some docs := getModuleDoc? env modName then
+        if docs.size != 1 then
+          IO.eprintln s!"WARNING: Module {modName} has {docs.size} module docstrings"
+        if docs.size > 0 then
+          let combined := "\n\n".intercalate (docs.toList.map (·.doc))
+          moduleDocstrings := (modName.toString, combined) :: moduleDocstrings
+
+    -- Build structured output: { problems: [...], moduleDocstrings: {...} }
+    let problemsJson := toJson allResults.reverse
+    let moduleDocJson := Json.mkObj (moduleDocstrings.reverse.map fun (k, v) => (k, toJson v))
+    let output := Json.mkObj [
+      ("problems", problemsJson),
+      ("moduleDocstrings", moduleDocJson)
+    ]
+    IO.println output.pretty

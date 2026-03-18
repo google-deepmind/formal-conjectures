@@ -62,7 +62,7 @@ theorem congruentNumber_157_zagier : congruentNumber 157 := by
     224403517704336969924557513090674863160948472041 /
       8912332268928859588025535178967163570016480830
   norm_num
-/-!
+/-
 Tunnell's theorem:
 Let $A_n$, $B_n$, $C_n$, and $D_n$ be the sets defined as follows:
 - $A_n = \{(x, y, z) \in \mathbb{Z}^3 : n = 2x^2 + y^2 + 32z^2\}$
@@ -82,7 +82,7 @@ def B (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 2 * x ^ 2 + y ^ 2 
 def C (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 64 * z ^ 2}
 def D (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y ^ 2 + 16 * z ^ 2}
 
-/-! Tunnell's theorem. -/
+/-  Tunnell's theorem. -/
 
 @[category research solved, AMS 11]
 theorem Tunnell_odd (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
@@ -94,7 +94,7 @@ theorem Tunnell_even (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     congruentNumber n → 2 * (C n).ncard = (D n).ncard := by
   sorry
 
-/-! Converse of Tunnell's theorem. -/
+/-  Converse of Tunnell's theorem. -/
 
 @[category research open, AMS 11]
 theorem Tunnell_odd_converse (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
