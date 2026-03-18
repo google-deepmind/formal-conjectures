@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«30»
 
 /-!
 # Ben Green's Open Problem 31
@@ -48,7 +47,7 @@ namespace Green31
 open Filter
 
 /-- Let $F(N)$ be the largest Sidon subset of $[N]$. -/
-noncomputable def F (N : ℕ) : ℝ := Erdos30.h N
+noncomputable def F (N : ℕ) : ℝ := Finset.maxSidonSubsetCard (Finset.Icc 1 N)
 
 /-- Can we improve the lower bound $N^{1/2} + O(1)$? -/
 @[category research open, AMS 5 11]
