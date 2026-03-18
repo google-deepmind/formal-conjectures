@@ -30,62 +30,73 @@ open Asymptotics Filter
 
 namespace Erdos367
 
-/-- `B r n` is the `r`-full part of `n`: the product of prime powers `p^a ‖ n` with `a ≥ r`. -/
+/-- `B r n` is the $r$-full part of $n$: the product of prime powers $p^a \| n$ with $a \geq r$. -/
 def B (r n : ℕ) : ℕ :=
-  (n.factorization.support.filter (fun p => r ≤ n.factorization p)).prod
-    (fun p => p ^ (n.factorization p))
+  ∏ i ∈ n.factorization.support.filter (r ≤ n.factorization ·), i ^ n.factorization i
 
 /--
-`B₂(n) = n / n'`, where `n'` is the product of all primes dividing `n` exactly once,
-equivalently the `2`-full part of `n`.
+$B_2(n) = n / n'$, where $n'$ is the product of all primes dividing $n$ exactly once,
+equivalently the $2$-full part of $n$.
 -/
 abbrev B₂ (n : ℕ) : ℕ := B 2 n
 
-/-- Product `∏_{n ≤ m < n+k} B_r(m)`. -/
+/-- Product $\prod_{n \leq m < n+k} B_r(m)$. -/
 def intervalBProduct (r n k : ℕ) : ℕ :=
-  (Finset.range k).prod (fun i => B r (n + i))
+  ∏ i ∈ Finset.range k, B r (n + i)
 
-/-- Asymptotic formulation of an `n^(2+o(1))`-type upper bound. -/
+/-- Asymptotic formulation of an $n^{2+o(1)}$-type upper bound. -/
 def nearlyQuadraticBound (k : ℕ) : Prop :=
   ∃ e : ℕ → ℝ,
     e =o[atTop] (1 : ℕ → ℝ) ∧
     ∀ᶠ n in atTop, (intervalBProduct 2 n k : ℝ) ≤ (n : ℝ) ^ (2 + e n)
 
-/-- The stronger variant `≪_k n^2`. -/
+/-- The stronger variant $\ll_k n^2$. -/
 def quadraticBound (k : ℕ) : Prop :=
   (fun n ↦ (intervalBProduct 2 n k : ℝ)) =O[atTop] fun n ↦ (n : ℝ) ^ (2 : ℝ)
 
 /--
-For fixed `k ≥ 1`, is `∏_{n ≤ m < n+k} B₂(m) ≪ n^(2+o(1))`?
+Let $B_2(n)$ be the $2$-full part of $n$. Is it true that, for every fixed $k \geq 1$,
+$\prod_{n \leq m < n+k} B_2(m) \ll n^{2+o(1)}$?
 -/
 @[category research open, AMS 11]
 theorem erdos_367.parts.i : answer(sorry) ↔ ∀ k : ℕ, 1 ≤ k → nearlyQuadraticBound k := by
   sorry
 
 /--
-Or perhaps even `∏_{n ≤ m < n+k} B₂(m) ≪_k n^2`?
+Or perhaps even $\prod_{n \leq m < n+k} B_2(m) \ll_k n^2$?
 -/
 @[category research open, AMS 11]
 theorem erdos_367.parts.ii : answer(sorry) ↔ ∀ k : ℕ, 1 ≤ k → quadraticBound k := by
   sorry
 
 /--
-The page notes the easy range `k ≤ 2`; this variant captures that solved subregime.
+van Doorn notes that for $k \leq 2$ we trivially have
+$\prod_{n \leq m < n+k} B_2(m) \ll n^2$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_367.variants.k_le_two : ∀ k : ℕ, k ≤ 2 → quadraticBound k := by
   sorry
 
 /--
-Discrete limsup-unbounded formulation for the `B_r` variant.
+van Doorn also notes that the quadratic bound fails for all $k \geq 3$, and in fact
+$\prod_{n \leq m < n+3} B_2(m) \gg n^2 \log n$ infinitely often.
+-/
+@[category research solved, AMS 11]
+theorem erdos_367.variants.k_ge_three_lower :
+    ∃ c > (0 : ℝ), ∀ᶠ (n : ℕ) in atTop,
+      c * ((n : ℝ) ^ 2 * Real.log (n : ℝ)) ≤ (intervalBProduct 2 n 3 : ℝ) := by
+  sorry
+
+/--
+Discrete limsup-unbounded formulation for the $B_r$ variant.
 -/
 def brRatioUnbounded (r k : ℕ) : Prop :=
   ∀ A : ℕ, ∃ n : ℕ, 1 ≤ n ∧ A * n ≤ intervalBProduct r n k
 
 /--
-Variant question from the additional text: for fixed `r ≥ 3`, `k ≥ 2`, does there exist
-`ε > 0`
-with unbounded `limsup` behavior for `∏ B_r(m) / n^(1+ε)`?
+It would also be interesting to find upper and lower bounds for the analogous product with $B_r$
+for $r \geq 3$. Is it true that, for every fixed $r \geq 3$, $k \geq 2$, and $\epsilon > 0$,
+$\limsup \frac{\prod_{n \leq m < n+k} B_r(m)}{n^{1+\epsilon}} \to \infty$?
 -/
 @[category research open, AMS 11]
 theorem erdos_367.variants.higher_full_parts : answer(sorry) ↔
