@@ -136,6 +136,8 @@ unsafe def main (args : List String) : IO Unit := do
                 throwError m!"Theorem {name} must have exactly one category, found {cats.length}."
               let statement := toString (← Meta.MetaM.run' (Meta.ppExpr info.type))
               let docstring ← findDocString? env name
+              if docstring.isNone then
+                IO.eprintln s!"WARNING: Theorem {name} (category: {cats.head!}) is missing a docstring"
               let (formalProofKind, formalProofLink) :=
                 if let some tag := categoryFullMap.get? name then
                   if let .research (.formallySolvedAt kind link) := tag.category then
