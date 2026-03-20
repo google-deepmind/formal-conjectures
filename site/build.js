@@ -124,6 +124,23 @@ function moduleToGitHubURL(module) {
   return `${GITHUB_BASE}/${moduleToGitHubPath(module)}`;
 }
 
+/** Convert a module name to a Verso literate source page URL. */
+function moduleToSourceURL(module) {
+  // Use the same approach as moduleToGitHubPath: replace dots with slashes,
+  // but preserve dots that are inside guillemets.
+  const withSlashes = module.replace(/«[^»]*»|\./g, (match) =>
+    match[0] === '«' ? match : '/'
+  );
+  // Add guillemets «» around path segments starting with a digit,
+  // matching verso-html's output directory naming convention.
+  const segments = withSlashes.split('/');
+  const withGuillemets = segments.map(s =>
+    // If already has guillemets, keep as-is; if starts with digit, wrap
+    s.startsWith('«') ? s : /^\d/.test(s) ? `«${s}»` : s
+  );
+  return `/src/${withGuillemets.join('/')}/`;
+}
+
 /** Extract the source collection from a module name. */
 function getCollection(module) {
   const parts = module.split('.');
@@ -149,10 +166,10 @@ function getCategoryMeta(category) {
 
 /** Enrich a raw theorem entry with derived fields. */
 function processEntry(entry) {
-  // Strip Lean «guillemets» from names for display
-  const theorem = entry.theorem.replace(/[«»]/g, '');
-  const module = entry.module.replace(/[«»]/g, '');
-  const collection = getCollection(module);
+  // Keep guillemets in theorem/module for exact lookups (avoids collisions
+  // between e.g. «A.B».C and A.«B.C» which are distinct Lean names).
+  // Provide display* variants with guillemets stripped for HTML rendering.
+  const collection = getCollection(entry.module);
   const catMeta = getCategoryMeta(entry.category);
   const subjects = entry.subjects.map(code => ({
     code,
@@ -160,10 +177,11 @@ function processEntry(entry) {
   }));
   return {
     ...entry,
-    theorem,
-    module,
+    displayTheorem: entry.theorem.replace(/[«»]/g, ''),
+    displayModule: entry.module.replace(/[«»]/g, ''),
     githubPath: moduleToGitHubPath(entry.module),
     githubUrl: moduleToGitHubURL(entry.module),
+    sourceUrl: moduleToSourceURL(entry.module),
     collection: collection.name,
     collectionUrl: collection.url,
     categoryLabel: catMeta.label,
@@ -291,6 +309,15 @@ function main() {
   const conjectures = rawData.map(processEntry);
   const stats = computeStats(conjectures);
 
+  // Load Verso literate fragments (module docstrings + const links)
+  let versoFragments = { moduleDocs: {}, constLinks: {} };
+  if (fs.existsSync('data/verso-fragments.json')) {
+    versoFragments = JSON.parse(fs.readFileSync('data/verso-fragments.json', 'utf8'));
+    console.log(`  Loaded ${Object.keys(versoFragments.moduleDocs).length} module docstrings, ${Object.keys(versoFragments.constLinks).length} constant links from Verso.`);
+  } else {
+    console.log('  No Verso fragments found (run extract_verso_fragments.py first).');
+  }
+
   console.log(`  Loaded ${conjectures.length} conjectures.`);
 
   // Clean and recreate site directory
@@ -307,7 +334,7 @@ function main() {
   ensureDir('site/data');
   fs.writeFileSync(
     'site/data/conjectures.json',
-    JSON.stringify({ conjectures, stats, amsSubjects: AMS_SUBJECTS }),
+    JSON.stringify({ conjectures, stats, amsSubjects: AMS_SUBJECTS, versoFragments }),
   );
 
   // ---- Landing page ----
@@ -353,7 +380,10 @@ function applyBasePath(html) {
   // Set data-base on <html> for client-side JS (main.js uses this for fetch paths)
   html = html.replace('data-base=""', `data-base="${BASE_PATH}"`);
   // Rewrite href="/..." and src="/..." to include the base path
-  return html.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`);
+  html = html.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`);
+  // Rewrite url('/...') in CSS (e.g. @font-face src)
+  html = html.replace(/url\('\/(?!\/)/g, `url('${BASE_PATH}/`);
+  return html;
 }
 
 main();

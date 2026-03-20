@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/assets/fonts/LibertinusSans-Regular.woff2') format('woff2');
+  src: url('../fonts/LibertinusSans-Regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url('/assets/fonts/LibertinusSans-Italic.woff2') format('woff2');
+  src: url('../fonts/LibertinusSans-Italic.woff2') format('woff2');
 }
 
 @font-face {
@@ -27,7 +27,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/assets/fonts/LibertinusSans-Bold.woff2') format('woff2');
+  src: url('../fonts/LibertinusSans-Bold.woff2') format('woff2');
 }
 
 @font-face {
@@ -35,7 +35,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/assets/fonts/LibertinusMono-Regular.woff2') format('woff2');
+  src: url('../fonts/LibertinusMono-Regular.woff2') format('woff2');
 }
 
 /* ---- Custom properties ---- */
@@ -1027,5 +1027,64 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
   .page-btn {
     padding: 0.5rem 0.85rem;
+  }
+}
+
+/* ---- Verso literate integration ---- */
+.verso-doc-content {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin-top: 0.5rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.verso-doc-content h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+}
+
+.verso-doc-content p {
+  margin: 0.4rem 0;
+}
+
+.verso-doc-content a {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.verso-code-container {
+  margin-top: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  background: var(--color-bg-alt);
+}
+
+.verso-code-container code.hl {
+  display: block;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.verso-code-loading {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.verso-code-fallback {
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .verso-code-container code.hl {
+    font-size: 0.8rem;
+    padding: 0.75rem 1rem;
   }
 }
