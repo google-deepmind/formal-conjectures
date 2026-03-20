@@ -65,8 +65,8 @@ public import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
 public import FormalConjecturesForMathlib.Data.Nat.Squarefree
 public import FormalConjecturesForMathlib.Data.Real.Constants
 public import FormalConjecturesForMathlib.Data.Real.NearestInt
-public import FormalConjecturesForMathlib.Data.Set.Bdd
 public import FormalConjecturesForMathlib.Data.Set.Density
+public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.Geometry.Euclidean
