@@ -48,8 +48,8 @@ of elements of `A` that are `≤ x`. Specifically, it is the set
 abbrev bddProdUpper : Set (ℕ × ℕ) :=
   {y ∈ (A ∩ Icc 1 ⌊x⌋₊) ×ˢ (A ∩ Icc 1 ⌊x⌋₊) | y.fst < y.snd}
 
-noncomputable instance : Fintype (A.bddProdUpper x) := Set.Finite.fintype <|
-  (Set.finite_inter_Icc.prod Set.finite_inter_Icc).subset (fun _ ha ↦ ha.left)
+noncomputable instance : Fintype (A.bddProdUpper x) :=
+  (((Set.finite_Icc 1 ⌊x⌋₊).prod (Set.finite_Icc 1 ⌊x⌋₊)).subset <| by grind).fintype
 
 end Set
 
