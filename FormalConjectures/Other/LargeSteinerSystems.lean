@@ -20,14 +20,6 @@ import FormalConjectures.Util.ProblemImports
 # Large Steiner Systems
 
 *Reference:* [Large Steiner Systems](https://epoch.ai/frontiermath/open-problems/large-steiner-systems) by Kunal Marwaha
-
-Given a set $S$ of size $n$, an $(n, q, r)$-Steiner system is a collection of $q$-element subsets
-(called blocks) of $S$ such that every $r$-element subset of $S$ is contained in exactly one block.
-
-No example of a Steiner system with $r > 5$ is known, despite a theorem (Keevash, 2014) that
-Steiner systems exist for all sufficiently large $n$ satisfying the necessary divisibility
-conditions. The conjecture asks to explicitly construct one with $n > q > r > 5$, $r < 10$,
-and $n < 200$.
 -/
 
 namespace LargeSteinerSystems
