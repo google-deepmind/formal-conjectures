@@ -62,7 +62,7 @@ systems to construct suitable covering sets for any $k$ satisfying a certain con
 -/
 @[category research solved, AMS 11]
 theorem erdos_1113.variants.infinitely_many_sierpinski :
-    Set.Infinite {k | k.IsSierpinskiNumber} := by
+    Set.Infinite {k : ℕ | k.IsSierpinskiNumber} := by
   sorry
 
 /--
