@@ -37,8 +37,8 @@ theorem exists_magic_square_squares :
     answer(sorry) ↔ ∃ m : Fin 3 → Fin 3 → ℕ, ∃ t : ℕ,
        m.Injective2 ∧
        (∀ i j, IsSquare (m i j)) ∧
-       ∀ i, ∑ j, m i j = t ∧
-       ∀ j, ∑ i, m i j = t ∧
+       (∀ i, ∑ j, m i j = t) ∧
+       (∀ j, ∑ i, m i j = t) ∧
        m 0 0 + m 1 1 + m 2 2 = t ∧
        m 0 2 + m 1 1 + m 2 0 = t := by
   sorry
