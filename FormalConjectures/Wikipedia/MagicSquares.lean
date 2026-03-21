@@ -33,7 +33,7 @@ namespace MagicSquares
 Does there exist a $3 \times 3$ matrix such that every entry is a distinct square,
 and all rows, columns, and diagonals add up to the same value?
 
-0 is excluded, as there exists a Magic Square of Squares with 0 and 8 distinct squares.
+0 is excluded, as a Magic Square of Squares with 0 and 8 distinct squares is know is knownn.
 See [Magic Square of Squares](https://static.nsta.org/pdfs/QuantumV6N3.pdf)
 -/
 @[category research open, AMS 11]
