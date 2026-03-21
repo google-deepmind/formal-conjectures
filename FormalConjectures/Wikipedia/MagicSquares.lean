@@ -24,6 +24,7 @@ import FormalConjectures.Util.ProblemImports
 * [Magic Square of Squares - Wikipedia](https://en.wikipedia.org/wiki/Magic_square_of_squares)
 * [multimagie.com](http://www.multimagie.com/English/SquaresOfSquaresSearch.htm)
 * [Semi-Magic Square of Cubes](https://unsolvedproblems.org/index_files/SquareofCubes.htm)
+* [Magic Square of Squares](https://static.nsta.org/pdfs/QuantumV6N3.pdf)
 -/
 
 namespace MagicSquares
@@ -31,12 +32,15 @@ namespace MagicSquares
 /--
 Does there exist a $3 \times 3$ matrix such that every entry is a distinct square,
 and all rows, columns, and diagonals add up to the same value?
+
+0 is excluded, as there exists a Magic Square of Squares with 0 and 8 distinct squares.
+See [Magic Square of Squares](https://static.nsta.org/pdfs/QuantumV6N3.pdf)
 -/
 @[category research open, AMS 11]
 theorem exists_magic_square_squares :
     answer(sorry) ↔ ∃ m : Fin 3 → Fin 3 → ℕ, ∃ t : ℕ,
        m.Injective2 ∧
-       (∀ i j, IsSquare (m i j)) ∧
+       (∀ i j, 0 < (m i j) ∧ IsSquare (m i j)) ∧
        (∀ i, ∑ j, m i j = t) ∧
        (∀ j, ∑ i, m i j = t) ∧
        m 0 0 + m 1 1 + m 2 2 = t ∧
