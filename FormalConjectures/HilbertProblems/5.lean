@@ -32,7 +32,7 @@ connected finite-dimensional topological manifold.
 - [arXiv:math/0103145](https://arxiv.org/abs/math/0103145)
 -/
 
-namespace HilbertSmith
+namespace Hilbert5
 
 open scoped Manifold ContDiff EuclideanGeometry
 
@@ -100,7 +100,7 @@ theorem, this is equivalent to `hilbert_smith_conjecture`. -/
 @[category research open, AMS 22 57 58]
 theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime]
     [AddAction (PadicInt p) X] [ContinuousVAdd (PadicInt p) X]
-    (hfaithful : ∀ g₁ g₂ : PadicInt p, (∀ x : X, g₁ +ᵥ x = g₂ +ᵥ x) → g₁ = g₂) :
+    [FaithfulVAdd (PadicInt p) X] :
     False := by
   sorry
 
@@ -109,8 +109,8 @@ topological group is a Lie group. -/
 @[category research solved, AMS 22 57]
 theorem hilbert_fifth_problem
     [IsTopologicalGroup G]
-    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] [T2Space G] [LocallyConnectedSpace G] :
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] :
     LieGroup (𝓡 n) ⊤ G := by
   sorry
 
-end HilbertSmith
+end Hilbert5

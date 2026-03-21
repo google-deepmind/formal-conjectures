@@ -31,10 +31,3 @@ structure. This was resolved affirmatively by Gleason, Montgomery, and Zippin in
 - [Tao's blog](https://terrytao.wordpress.com/2011/08/13/the-hilbert-smith-conjecture/)
 -/
 
-namespace HilbertFifthProblem
-
-@[category research solved, AMS 22 57]
-theorem hilbert_fifth_problem : type_of% @HilbertSmith.hilbert_fifth_problem := by
-  sorry
-
-end HilbertFifthProblem
