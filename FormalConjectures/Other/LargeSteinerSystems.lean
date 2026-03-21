@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Large Steiner Systems
 
-*Reference:* [Large Steiner Systems](https://epoch.ai/frontiermath/open-problems/large-steiner-systems)
+*Reference:* [Large Steiner Systems](https://epoch.ai/frontiermath/open-problems/large-steiner-systems) by Kunal Marwaha
 
 Given a set $S$ of size $n$, an $(n, q, r)$-Steiner system is a collection of $q$-element subsets
 (called blocks) of $S$ such that every $r$-element subset of $S$ is contained in exactly one block.
