@@ -46,4 +46,6 @@ theorem green_33 :
             |((A.card : ℝ) / Real.sqrt q - Real.sqrt 2)| < ε := by
   sorry
 
+-- TODO(jgd): Add variants from comments in [Gr24]
+
 end Green33
