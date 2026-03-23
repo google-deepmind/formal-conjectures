@@ -16,7 +16,7 @@ let allConjectures = [];
 let filtered       = [];
 let currentPage    = 1;
 
-// Active filter state (driven by URL ↔ UI)
+// Active filter state (driven by URL <-> UI)
 const state = {
   query:       '',
   categories:  new Set(),
@@ -85,19 +85,29 @@ function applyFilters() {
 
   // Sort
   filtered.sort((a, b) => {
-    if (state.sort === 'votes' && FC.voting) {
-      const aVotes = FC.voting.getVote(a.theorem).count;
-      const bVotes = FC.voting.getVote(b.theorem).count;
-      return bVotes - aVotes || a.theorem.localeCompare(b.theorem);
+    if (state.sort === 'most-liked') {
+      const aLikes = FC.voting.getVote(a.theorem).count;
+      const bLikes = FC.voting.getVote(b.theorem).count;
+      return bLikes - aLikes || a.theorem.localeCompare(b.theorem);
     }
-    if (state.sort === 'difficulty' && FC.voting) {
+    if (state.sort === 'difficulty-desc' || state.sort === 'difficulty-asc') {
       const aDiff = FC.voting.getVote(a.theorem).avgDifficulty;
       const bDiff = FC.voting.getVote(b.theorem).avgDifficulty;
-      // nulls sort last
       if (aDiff === null && bDiff === null) return a.theorem.localeCompare(b.theorem);
       if (aDiff === null) return 1;
       if (bDiff === null) return -1;
-      return bDiff - aDiff || a.theorem.localeCompare(b.theorem);
+      const dir = state.sort === 'difficulty-desc' ? -1 : 1;
+      return dir * (aDiff - bDiff) || a.theorem.localeCompare(b.theorem);
+    }
+    if (state.sort === 'prediction-true' || state.sort === 'prediction-false') {
+      const aVote = FC.voting.getVote(a.theorem);
+      const bVote = FC.voting.getVote(b.theorem);
+      const aScore = aVote.thumbsUp - aVote.thumbsDown;
+      const bScore = bVote.thumbsUp - bVote.thumbsDown;
+      const aTotal = aVote.thumbsUp + aVote.thumbsDown;
+      const bTotal = bVote.thumbsUp + bVote.thumbsDown;
+      const dir = state.sort === 'prediction-true' ? -1 : 1;
+      return dir * (aScore - bScore) || bTotal - aTotal || a.theorem.localeCompare(b.theorem);
     }
     if (state.sort === 'category')   return a.category.localeCompare(b.category) || a.theorem.localeCompare(b.theorem);
     if (state.sort === 'collection') return a.collection.localeCompare(b.collection) || a.theorem.localeCompare(b.theorem);
@@ -135,8 +145,9 @@ function renderCard(c) {
       </div>
     </div>
     <div class="theorem-card__badge">
-      ${FC.voting ? FC.voting.renderCardVoteCount(c.theorem) : ''}
-      ${FC.voting ? FC.voting.renderCardDifficulty(c.theorem) : ''}
+      ${FC.voting.renderCardVoteCount(c.theorem)}
+      ${FC.voting.renderCardTruth(c.theorem)}
+      ${FC.voting.renderCardDifficulty(c.theorem)}
       <span class="badge ${catMeta.css}">${FC.escapeHTML(catMeta.label)}</span>
     </div>
   `;
@@ -187,7 +198,7 @@ function renderPagination() {
     paginationEl.appendChild(btn);
   };
 
-  addBtn('‹', currentPage - 1, currentPage === 1);
+  addBtn('\u2039', currentPage - 1, currentPage === 1);
 
   // Show pages around the current page
   const WINDOW = 2;
@@ -196,13 +207,13 @@ function renderPagination() {
       addBtn(p, p);
     } else if (Math.abs(p - currentPage) === WINDOW + 1) {
       const ellipsis = document.createElement('span');
-      ellipsis.textContent = '…';
+      ellipsis.textContent = '\u2026';
       ellipsis.style.padding = '0 0.25rem';
       paginationEl.appendChild(ellipsis);
     }
   }
 
-  addBtn('›', currentPage + 1, currentPage === totalPages);
+  addBtn('\u203A', currentPage + 1, currentPage === totalPages);
 }
 
 // ---------------------------------------------------------------------------
@@ -258,9 +269,9 @@ async function init() {
 
   allConjectures = data.conjectures;
 
-  // Handle OAuth callback and prefetch votes (disabled)
-  // await FC.voting.handleOAuthCallback();
-  // await FC.voting.fetchAllVotes();
+  // Handle OAuth callback and prefetch votes
+  await FC.voting.handleOAuthCallback();
+  await FC.voting.fetchAllVotes();
 
   // Collect unique values for filters
   const categories  = new Set(allConjectures.map(c => c.category));

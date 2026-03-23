@@ -18,13 +18,16 @@ on:
   push:
     branches:
       - main
+      - '*-webtest'
   pull_request:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# and creation of Discussions for conjectures (see site/create_discussions.js)
 permissions:
   contents: read
   pages: write
   id-token: write
+  discussions: write
 
 jobs:
   build:
@@ -37,7 +40,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Detect webtest mode
+        id: mode
+        run: |
+          if [[ "${{ github.ref_name }}" == *-webtest ]]; then
+            echo "webtest=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Webtest mode: skipping Lean build, downloading JSON from live site"
+          else
+            echo "webtest=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ---- Full Lean build (skipped on -webtest branches) ----
+
       - name: Install elan
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           set -o pipefail
           curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
@@ -45,6 +61,7 @@ jobs:
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
       - name: Generate All.lean
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           lake exe mk_all --lib FormalConjectures || true
           # Avoid including Test files from `Util/` to avoid inflating the
@@ -53,6 +70,7 @@ jobs:
           grep -v "FormalConjectures\.Util\." FormalConjectures.lean > FormalConjectures/All.lean
 
       - name: Restore ~/.cache/mathlib
+        if: steps.mode.outputs.webtest == 'false'
         uses: actions/cache/restore@v3
         with:
           path: ~/.cache/mathlib
@@ -62,15 +80,18 @@ jobs:
             oleans-
 
       - name: Get olean cache
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           lake exe cache unpack
           lake exe cache get
 
       - name: Build project
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           lake build
 
       - name: Build literate source pages
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           cd docbuild
           # Some modules crash verso-literate (e.g. metaprogramming-heavy util files),
@@ -82,27 +103,32 @@ jobs:
           lake exe verso-html .lake/build/literate ../_literate_html || true
 
       - name: Post-process literate HTML
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           python3 site/fix_literate_html.py _literate_html
 
       - name: Pack olean cache
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           lake exe cache pack
           ls ~/.cache/mathlib
 
       - name: Save ~/.cache/mathlib
+        if: steps.mode.outputs.webtest == 'false'
         uses: actions/cache/save@v3
         with:
           path: ~/.cache
           key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
       - name: Prepare documentation
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           cd docbuild
           export MATHLIB_NO_CACHE_ON_UPDATE=1  # avoids "Failed to prune ProofWidgets cloud release: no such file or directory"
           lake update formal_conjectures
 
       - name: Cache documentation
+        if: steps.mode.outputs.webtest == 'false'
         uses: actions/cache@v5
         with:
           path: docbuild/.lake/build/doc
@@ -112,11 +138,13 @@ jobs:
             MathlibDoc-
 
       - name: Build documentation
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           cd docbuild
           lake build FormalConjectures:docs
 
       - name: Extract documentation
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           cd docbuild
           mkdir out
@@ -128,36 +156,71 @@ jobs:
           rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
 
       - name: Set up Python
+        if: steps.mode.outputs.webtest == 'false'
         uses: actions/setup-python@v6
         with:
           python-version: '3.12.9'
 
       - name: Install Python dependencies
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           python -m pip install --upgrade pip
           pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0 beautifulsoup4 lxml
 
       - name: Run plotting script
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           python docbuild/scripts/plot_growth.py
 
       - name: Inject stats into index.html
+        if: steps.mode.outputs.webtest == 'false'
         shell: bash
         run: |
           cd docbuild
           lake exe overwrite_index ./out/index.html ./out/file_counts_dark.html ./out/file_counts_white.html | tee -a "$GITHUB_STEP_SUMMARY"
 
+      # ---- Webtest mode: download processed JSON from live site ----
+
+      - name: Download conjectures JSON from live site
+        if: steps.mode.outputs.webtest == 'true'
+        run: |
+          mkdir -p site/data
+          curl -sSfL https://google-deepmind.github.io/formal-conjectures/data/conjectures.json \
+            -o site/data/conjectures.json
+          echo "::notice::Downloaded $(wc -c < site/data/conjectures.json) bytes from live site"
+
+      # ---- Website build (always runs) ----
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Generate conjectures data for website
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           mkdir -p site/data
-          lake exe extract_names --exclude=statement,docstring,formalProofKind,formalProofLink,moduleDocstrings > site/data/conjectures.json || true
+          lake exe extract_names > site/data/conjectures.json || true
+
+      - name: Inject voting config
+        run: |
+          REPO_OWNER="${{ github.repository_owner }}"
+          REPO_NAME="${{ github.event.repository.name }}"
+          REPO_ID=$(curl -sSf -H "Authorization: Bearer ${{ github.token }}" \
+            "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}" | jq -r '.node_id')
+          if [ -z "$REPO_ID" ] || [ "$REPO_ID" = "null" ]; then
+            echo "::error::Failed to fetch repo node_id for ${REPO_OWNER}/${REPO_NAME}"
+            exit 1
+          fi
+          echo "::notice::Configuring voting for ${REPO_OWNER}/${REPO_NAME} (${REPO_ID})"
+          sed -i "s|REPLACE_WITH_PROXY_URL|https://formal-conjectures-web-worker.uc.r.appspot.com|" site/src/js/voting.js
+          sed -i "s|REPLACE_WITH_CLIENT_ID|Iv23lid2mjCGp7EIKrJn|" site/src/js/voting.js
+          sed -i "s|REPLACE_WITH_REPO_OWNER|${REPO_OWNER}|" site/src/js/voting.js
+          sed -i "s|REPLACE_WITH_REPO_NAME|${REPO_NAME}|" site/src/js/voting.js
+          sed -i "s|REPLACE_WITH_REPO_ID|${REPO_ID}|" site/src/js/voting.js
 
       - name: Extract Verso fragments for website
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
 
@@ -166,9 +229,19 @@ jobs:
           cd site
           node build.js
         env:
-          BASE_PATH: /formal-conjectures
+          BASE_PATH: /${{ github.event.repository.name }}
 
-      - name: Assemble deploy artifact
+      - name: Create missing discussions
+        if: github.ref == 'refs/heads/main' || endsWith(github.ref_name, '-webtest')
+        run: |
+          node site/create_discussions.js "${{ github.repository_owner }}" "${{ github.event.repository.name }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      # ---- Deploy artifact ----
+
+      - name: Assemble deploy artifact (full)
+        if: steps.mode.outputs.webtest == 'false'
         run: |
           mkdir -p _deploy
           # Website goes at root
@@ -178,6 +251,12 @@ jobs:
           # Literate source pages go under /src
           cp -r _literate_html _deploy/src
 
+      - name: Assemble deploy artifact (webtest)
+        if: steps.mode.outputs.webtest == 'true'
+        run: |
+          mkdir -p _deploy
+          cp -r site/site/* _deploy/
+
       - name: Upload deploy artifact
         id: deployment
         uses: actions/upload-pages-artifact@v4
@@ -186,7 +265,7 @@ jobs:
 
   # Deployment job
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || endsWith(github.ref_name, '-webtest')
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -196,3 +275,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Print site URL
+        run: echo "::notice::Site deployed to ${{ steps.deployment.outputs.page_url }}"
