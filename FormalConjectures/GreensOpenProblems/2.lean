@@ -85,22 +85,6 @@ TODO(jeangud): Add additional bounds on non-negative integers from Selfridge [Er
 Choi [Er65, p190], and [BSS00].
 -/
 
-open MeasureTheory
-open Polynomial
-open scoped BigOperators
-open scoped Classical
-open scoped ENNReal
-open scoped EuclideanGeometry
-open scoped InnerProductSpace
-open scoped intervalIntegral
-open scoped List
-open scoped Matrix
-open scoped Nat
-open scoped NNReal
-open scoped Pointwise
-open scoped ProbabilityTheory
-open scoped Real
-open scoped symmDiff
 /--
 From [Ch71] it is known that $M(A) \le |A|^{2/5 + o(1)}$.
 -/
