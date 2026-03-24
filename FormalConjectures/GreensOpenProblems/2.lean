@@ -58,7 +58,7 @@ $(\log n)^{100}$ such that the restricted sumset$S \hat{+} S$ is disjoint from $
 -/
 @[category research open, AMS 11]
 theorem green_2 : answer(sorry) ↔
-    ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℤ, A.card = n →
+    ∀ᶠ n : ℕ in atTop, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≥ (Real.log n) ^ 100 := by
   sorry
 
@@ -67,7 +67,7 @@ From [Sa21] it is known that there is always such an S with $|S| \gt (\log |A|)^
 -/
 @[category research solved, AMS 11]
 theorem green_2_lower_bound_sanders :
-    ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℤ, A.card = n →
+    ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
       maxRestrictedSumAvoidingSubsetSize A ≥ Real.log n ^ (1 + c) := by
   sorry
 
@@ -76,7 +76,7 @@ From [Er65] it is known that $M(A) \le \frac{1}{3}|A| + O(1)$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_erdos :
-    ∃ C : ℝ, ∀ A : Finset ℤ,
+    ∃ C : ℝ, ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ A.card / 3 + C := by
   sorry
 
@@ -85,12 +85,28 @@ TODO(jeangud): Add additional bounds on non-negative integers from Selfridge [Er
 Choi [Er65, p190], and [BSS00].
 -/
 
+open MeasureTheory
+open Polynomial
+open scoped BigOperators
+open scoped Classical
+open scoped ENNReal
+open scoped EuclideanGeometry
+open scoped InnerProductSpace
+open scoped intervalIntegral
+open scoped List
+open scoped Matrix
+open scoped Nat
+open scoped NNReal
+open scoped Pointwise
+open scoped ProbabilityTheory
+open scoped Real
+open scoped symmDiff
 /--
 From [Ch71] it is known that $M(A) \le |A|^{2/5 + o(1)}$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_choi :
-    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)), ∀ A : Finset ℤ,
+    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)), ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ A.card ^ (2 / 5 + o A.card) := by
   sorry
 
@@ -99,7 +115,7 @@ From [Ru05] the best-known upper bound is $|S| \lt e^{C \sqrt{\log |A|}}$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_ruzsa :
-    ∃ C > (0 : ℝ), ∀ A : Finset ℤ,
+    ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) < Real.exp (C * Real.sqrt (Real.log A.card)) := by
   sorry
 
