@@ -58,7 +58,7 @@ $(\log n)^{100}$ such that the restricted sumset$S \hat{+} S$ is disjoint from $
 -/
 @[category research open, AMS 11]
 theorem green_2 : answer(sorry) ↔
-    ∀ᶠ n : ℕ in atTop, ∃ A : Finset ℤ, A.card = n ∧
+    ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℤ, A.card = n →
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≥ (Real.log n) ^ 100 := by
   sorry
 
@@ -67,7 +67,7 @@ From [Sa21] it is known that there is always such an S with $|S| \gt (\log |A|)^
 -/
 @[category research solved, AMS 11]
 theorem green_2_lower_bound_sanders :
-    ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
+    ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℤ, A.card = n →
       maxRestrictedSumAvoidingSubsetSize A ≥ Real.log n ^ (1 + c) := by
   sorry
 
