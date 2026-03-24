@@ -62,10 +62,6 @@ A stronger version of Agrawal's conjecture, which also considers the congruence
 $(X+2)^n \equiv X^n + 2 \pmod{n, X^r-1}$.
 If both congruences hold, then $n$ is either prime or $n^2 \equiv 1 \pmod{r}$.
 This variant was proposed by Roman B. Popovych in 2018.
-
-*References:*
-- [Wikipedia](https://en.wikipedia.org/wiki/Agrawal%27s_conjecture#cite_note-6)
-- [Paper](https://eprint.iacr.org/2009/008.pdf)
 -/
 @[category research open, AMS 11]
 theorem agrawal_conjecture.variants.popovych :
