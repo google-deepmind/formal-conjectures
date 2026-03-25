@@ -52,7 +52,6 @@ theorem erdos_1071.parts.i :
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite?
 Solved affirmatively by [Fo99], who gave an explicit construction.
 
-
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
 @[category research formally solved using lean4 at
