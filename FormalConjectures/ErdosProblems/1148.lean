@@ -61,7 +61,7 @@ private instance (n : ℕ) : Decidable (Erdos1148Prop n) :=
 
 @[category high_school, AMS 11]
 theorem erdos_1148.variants.lower_bound : ¬ Erdos1148Prop 6563 := by
-  native_decide
+  decide +native
 
 /--
 The weaker property: $n = x^2 + y^2 - z^2$ such that $\max(x^2, y^2, z^2) \leq n + 2\sqrt{n}$.
