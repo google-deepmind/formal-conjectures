@@ -33,7 +33,7 @@ $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{
 -/
 @[category research open, AMS 11]
 theorem erdos_887.parts.i : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
-    #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ answer(sorry) := by
+    #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ answer(sorry) := by
   sorry
 
 /--
@@ -42,7 +42,7 @@ $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{
 -/
 @[category research open, AMS 11]
 theorem erdos_887.parts.ii : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
-    #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ K := by
+    #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ K := by
   sorry
 
 /--
@@ -51,7 +51,7 @@ in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_887.variants.rosenfeld_infinite :
-    Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = 4)} := by
+    Infinite {n : ℕ | (#{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + n^((1 : ℝ) / 4)⌉₊ | d ∣ n } = 4)} := by
   sorry
 
 /--
@@ -61,8 +61,7 @@ with $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
 @[category research open, AMS 11]
 theorem erdos_887.variants.rosenfeld_4 :
     IsGreatest
-      {K | Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = K)}} 4 := by
+      {K | Infinite {n : ℕ | (#{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + n^((1 : ℝ) / 4)⌉₊ | d ∣ n } = K)}} 4 := by
   sorry
-
 
 end Erdos887
