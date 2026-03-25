@@ -244,8 +244,8 @@ def ContainsMonoAPofLength {κ : Type} [Finite κ] {M : Set α}
 A function `f : α → β` has a monotone `k`-term arithmetic progression if there exists an
 arithmetic progression `l` of length `k` in `α` such that its image under `f` is sorted.
 -/
-def HasMonotoneAP {β : Type*} [Preorder β] (f : α → β) (k : ℕ) : Prop :=
-  ∃ l : List α, l.IsAPOfLength k ∧ (l.map f).Pairwise (· < ·)
+def HasMonotoneAP {β : Type*} [Preorder β] (f : β → α) (k : ℕ) : Prop :=
+  ∃ l : List β, (l.map f).IsAPOfLength k ∧ l.Pairwise (· < ·)
 
 /--
 Define the largest possible size of a subset of a finset `s` that does not contain
