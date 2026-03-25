@@ -53,7 +53,27 @@ The trivial lower bound is $N \gg 2^n / n$.
 @[category undergraduate, AMS 5 11]
 theorem erdos_1.variants.weaker : ∃ C > (0 : ℝ), ∀ (N : ℕ) (A : Finset ℕ)
     (_ : IsSumDistinctSet A N), N ≠ 0 → C * 2 ^ A.card / A.card < N := by
-  sorry
+  refine ⟨1/3, by norm_num, ?_⟩
+  intro N A hA hN
+  obtain ⟨hA1, hA2⟩ := hA
+  have key : 2 ^ A.card ≤ A.card * N + 1
+  rw [← Finset.card_powerset A]
+  have h1 : (A.powerset.image (fun S => S.sum id)).card = A.powerset.card
+  refine Finset.card_image_of_injOn ?_
+  intro a ha b hb hab; have h := @hA2 ⟨a, ha⟩ ⟨b, hb⟩; simp at h; exact h hab
+  have h2 : A.powerset.image (fun S => S.sum id) ⊆ Finset.range (A.card * N + 1)
+  intro x; simp only [Finset.mem_image, Finset.mem_range]; rintro ⟨S, hS, rfl⟩
+  exact Nat.lt_add_one_of_le (le_trans (Finset.sum_le_card_nsmul S id N (fun i hi => (Finset.mem_Icc.mp (hA1 (Finset.mem_powerset.mp hS hi))).2)) (Nat.mul_le_mul_right N (Finset.card_le_card (Finset.mem_powerset.mp hS))))
+  rw [← h1]; exact le_trans (Finset.card_le_card h2) (by simp [Finset.card_range])
+  have key_r : (2 : ℝ) ^ A.card ≤ ↑A.card * ↑N + 1 := by exact_mod_cast key
+  have hN_pos : (0 : ℝ) < ↑N := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hN)
+  by_cases hc : A.card = 0
+  simp [hc]; positivity
+  have hc_pos : (0 : ℝ) < ↑A.card := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hc)
+  field_simp
+  have h_one_le : (1 : ℝ) ≤ ↑A.card := by exact_mod_cast Nat.pos_of_ne_zero hc
+  have h_one_le_n : (1 : ℝ) ≤ ↑N := by exact_mod_cast Nat.pos_of_ne_zero hN
+  nlinarith
 
 /--
 Erdős and Moser [Er56] proved
