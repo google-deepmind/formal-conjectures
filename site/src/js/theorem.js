@@ -42,6 +42,22 @@ async function init() {
   const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
 
   renderDetail(theorem, siblings, verso);
+
+  // Voting integration (sign-in temporarily hidden)
+  await FC.voting.handleOAuthCallback();
+  const widget = document.getElementById('vote-widget');
+  const discLink = document.getElementById('discussion-link');
+  const truthWidget = document.getElementById('truth-widget');
+  const diffWidget = document.getElementById('difficulty-widget');
+  if (widget) FC.voting.renderVoteButton(theorem.theorem, widget);
+  if (truthWidget) FC.voting.renderTruthWidget(theorem.theorem, truthWidget);
+  if (diffWidget) FC.voting.renderDifficultyWidget(theorem.theorem, diffWidget);
+  FC.voting.fetchAllVotes().then(() => {
+    if (widget) FC.voting.renderVoteButton(theorem.theorem, widget);
+    if (discLink) FC.voting.renderDiscussionLink(theorem.theorem, discLink);
+    if (truthWidget) FC.voting.renderTruthWidget(theorem.theorem, truthWidget);
+    if (diffWidget) FC.voting.renderDifficultyWidget(theorem.theorem, diffWidget);
+  });
 }
 
 /**
@@ -461,6 +477,11 @@ function renderDetail(theorem, siblings, verso) {
       <h1 class="theorem-detail__title">${FC.escapeHTML(theorem.displayTheorem)}</h1>
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
     </header>
+
+    <div id="vote-widget"></div>
+    <div id="discussion-link"></div>
+    <div id="truth-widget"></div>
+    <div id="difficulty-widget"></div>
 
     ${moduleDocSection}
 

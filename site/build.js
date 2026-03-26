@@ -175,13 +175,8 @@ function processEntry(entry) {
     code,
     name: AMS_SUBJECTS[parseInt(code, 10)] || `AMS ${code}`,
   }));
-  // Pick only the fields the website actually uses. Avoids leaking large
-  // unused fields (statement, docstring, formalProofKind, formalProofLink)
-  // into the client-side JSON. Docstrings come from versoFragments instead.
   return {
-    theorem: entry.theorem,
-    module: entry.module,
-    category: entry.category,
+    ...entry,
     displayTheorem: entry.theorem.replace(/[«»]/g, ''),
     displayModule: entry.module.replace(/[«»]/g, ''),
     githubPath: moduleToGitHubPath(entry.module),
@@ -298,21 +293,30 @@ function subjectListHTML(bySubject) {
 function main() {
   console.log('Building Formal Conjectures website...');
 
-  // Read raw data
-  let rawData = [];
+  // Read data — accepts either the raw extract_names format ({ problems: [...] })
+  // or the already-processed format ({ conjectures: [...], stats: {...} }).
+  let conjectures = [];
+  let stats = null;
   if (fs.existsSync('data/conjectures.json')) {
     const parsed = JSON.parse(fs.readFileSync('data/conjectures.json', 'utf8'));
-    // extract_names outputs { problems: [...], moduleDocstrings: {...} }
-    rawData = parsed.problems || [];
+    if (parsed.problems) {
+      // Raw extract_names format
+      conjectures = parsed.problems.map(processEntry);
+    } else if (parsed.conjectures) {
+      // Already-processed format (e.g. downloaded from the live site)
+      conjectures = parsed.conjectures;
+      stats = parsed.stats || null;
+      console.log('  Using pre-processed data.');
+    }
   }
 
-  if (rawData.length === 0) {
-    console.error('Error: no conjectures loaded. Run `lake exe extract_names > site/data/conjectures.json` first.');
+  if (conjectures.length === 0) {
+    console.error('Error: no conjectures loaded. Run `lake exe extract_names > site/data/conjectures.json` first,');
+    console.error('or download the processed JSON from the live site into data/conjectures.json.');
     process.exit(1);
   }
 
-  const conjectures = rawData.map(processEntry);
-  const stats = computeStats(conjectures);
+  if (!stats) stats = computeStats(conjectures);
 
   // Load Verso literate fragments (module docstrings + const links)
   let versoFragments = { moduleDocs: {}, constLinks: {} };
