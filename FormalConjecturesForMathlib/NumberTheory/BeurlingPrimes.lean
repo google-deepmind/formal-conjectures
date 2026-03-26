@@ -36,6 +36,8 @@ it tends to infinity. -/
 noncomputable def IsBeurlingPrimes (a : ℕ → ℝ) : Prop :=
   1 < a 0 ∧ StrictMono a ∧ Tendsto a atTop atTop
 
+/-- A Beurling integer is a number of the form `∏ i, (a i) ^ (k i)` for a given sequence `a` and a
+finitely-supported sequence of naturals `k`. -/
 def beurlingInteger (a : ℕ → ℝ) (k : ℕ →₀ ℕ) : ℝ := k.prod fun x y ↦ (a x) ^ y
 
 @[simp] theorem beurlingInteger_def (a k) : beurlingInteger a k =  k.prod fun x y ↦ (a x) ^ y := rfl
