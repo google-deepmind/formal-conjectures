@@ -37,6 +37,4 @@ theorem erdos_197 :
       (∃ g : ℕ ≃ B, ¬HasMonotoneAP (Subtype.val ∘ g) 3) := by
   sorry
 
-
-
 end Erdos197
