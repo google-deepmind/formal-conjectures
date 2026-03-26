@@ -52,10 +52,11 @@ theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     exact he (by grind) (generator_mem_beurling a (N + 1)) (generator_mem_beurling a N)
   linarith [abs_lt.1 (hN N le_rfl), abs_lt.1 (hN (N + 1) (by grind))]
 
-/-- If `a` has property `Erdos951_prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
+/-- If `1 < a 0 < ...` has property `Erdos951_prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
 @[category research open, AMS 11]
 theorem erdos_951 : answer(sorry) ↔
-    ∀ a : ℕ → ℝ, Erdos951_prop a → ∀ (x : ℝ), {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
+    ∀ a : ℕ → ℝ, 1 < a 0 → StrictMono a → Erdos951_prop a →
+      ∀ (x : ℝ), {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry
 
 /-- Beurling conjectured that if the number of Beurling integer in `[1, x]`
