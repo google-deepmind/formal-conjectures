@@ -22,10 +22,16 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [Landau Problems Wikipedia Page](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
 - [Twin Primes Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Twin_prime#Twin_prime_conjecture)
+- [OEIS A081947](https://oeis.org/A081947)
+- [Prime Puzzles: Conjecture 32](https://www.primepuzzles.net/conjectures/conj_032.htm)
 -/
 
 
 namespace TwinPrimes
+
+/-- A twin prime is a prime number with another prime at distance `2`. -/
+def IsTwinPrime (p : ℕ) : Prop :=
+  p.Prime ∧ ((p + 2).Prime ∨ (p - 2).Prime)
 
 /--
 Are there infinitely many primes p such that p + 2 is prime?
@@ -33,6 +39,14 @@ Are there infinitely many primes p such that p + 2 is prime?
 @[category research open, AMS 11]
 theorem twin_primes :
     answer(sorry) ↔ {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite := by
+  sorry
+
+/--
+Dubner's conjecture: every even integer greater than `4208` is the sum of two twin primes.
+-/
+@[category research open, AMS 11]
+theorem twin_primes.variants.dubner_conjecture (n : ℕ) (hn : 4208 < n) (hn_even : Even n) :
+    ∃ p q, IsTwinPrime p ∧ IsTwinPrime q ∧ n = p + q := by
   sorry
 
 end TwinPrimes
