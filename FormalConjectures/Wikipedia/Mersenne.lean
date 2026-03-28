@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Conjectures about Mersenne primes
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_conjectures)
+*References:*
+- [Wikipedia: Mersenne conjectures](https://en.wikipedia.org/wiki/Mersenne_conjectures)
+- [Wikipedia: Catalan's Mersenne conjecture](https://en.wikipedia.org/wiki/Catalan%27s_Mersenne_conjecture)
+- [MathWorld: Catalan-Mersenne Number](https://mathworld.wolfram.com/Catalan-MersenneNumber.html)
 -/
 
 namespace Mersenne
@@ -47,6 +50,14 @@ def IsSpecialForm (p : ℕ) : Prop :=
 end Nat
 
 open Mersenne
+
+/--
+The Catalan-Mersenne numbers, defined recursively by $c_0 = 2$ and
+$c_{n+1} = 2^{c_n} - 1$.
+-/
+def catalanMersenne : ℕ → ℕ
+  | 0 => 2
+  | n + 1 => 2 ^ catalanMersenne n - 1
 
 /--
 A natural number `p` satisfies the statement of the New Mersenne Conjecture if whenever
@@ -92,5 +103,14 @@ Are there infinitely many Mersenne primes?
 theorem infinitely_many_mersenne_primes :
   answer(sorry) ↔ Set.Infinite { p : ℕ | p.GivesMersennePrime } := by
     sorry
+
+/--
+Catalan's Mersenne conjecture:
+all Catalan-Mersenne numbers from index `5` onward are prime.
+-/
+@[category research open, AMS 11]
+theorem catalans_mersenne_conjecture :
+    answer(sorry) ↔ ∀ n ≥ 5, Nat.Prime (catalanMersenne n) := by
+  sorry
 
 end Mersenne
