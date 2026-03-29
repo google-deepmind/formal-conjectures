@@ -60,8 +60,6 @@ Every theorem/lemma should have exactly one `category` attribute indicating its 
 - `@[category graduate]` - Graduate level math problem
 - `@[category research open]` - Open research problem (no accepted solution exists)
 - `@[category research solved]` - Solved research problem (informal proof widely accepted)
-- `@[category research formally solved using <kind> at "link"]` - Formally solved problem
-  - `<kind>` must be one of: `formal_conjectures`, `lean4`, or `other_system`
 - `@[category test]` - Sanity check or unit test for definitions
 - `@[category API]` - Basic theory around a new definition
 
@@ -78,6 +76,31 @@ theorem sanity_check : ¬ SomeBadProperty := by
 @[category API]
 lemma basic_property_of_new_definition : ... := by exact ...
 ```
+
+### The `formal_proof` Attribute
+
+The `formal_proof` attribute records the existence and location of a formal proof.
+It is independent of the `category` attribute and can be used with any category.
+
+**Values:**
+- `@[formal_proof using formal_conjectures at "link"]` - Formally proved in this repository
+- `@[formal_proof using lean4 at "link"]` - Formally proved in Lean 4 elsewhere
+- `@[formal_proof using other_system at "link"]` - Formally proved in another system
+  (Roqc, Isabelle, Lean 3, HOL, etc.)
+
+**Examples:**
+```lean
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/example"]
+theorem some_solved_problem : ... := by
+  sorry
+
+@[category graduate, AMS 11, formal_proof using formal_conjectures at "https://..."]
+theorem a_graduate_problem_with_proof : ... := by
+  sorry
+```
+
+**Note:** A `formal_proof` annotation on a `research open` problem will trigger a lint warning,
+since open problems should not have proofs.
 
 ### The `AMS` Attribute
 
@@ -196,7 +219,8 @@ theorem problem_name (n) : answer(sorry) ↔ P n := by
 
 When the problem is solved:
 - Replace `answer(sorry)` with `answer(True)` or `answer(False)` as appropriate
-- Update the category to `research solved` or `research formally solved ...`
+- Update the category to `research solved`
+- If a formal proof exists, add `formal_proof using <kind> at "<link>"`
 
 **Note:** Providing a term inside `answer()` does NOT automatically mean the problem is mathematically solved - trivial or tautological answers don't count as solutions.
 

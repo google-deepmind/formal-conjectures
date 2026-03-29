@@ -39,18 +39,17 @@ open Classical
 /-  ### Graph Definitions -/
 
 /-- House Graph: Square 0-1-2-3-0 with roof 4 connected to 2,3. -/
-def HouseGraph : SimpleGraph (Fin 5) :=
+abbrev HouseGraph : SimpleGraph (Fin 5) :=
   SimpleGraph.fromEdgeSet {
     s(0, 1), s(1, 2), s(2, 3), s(3, 0),
     s(2, 4), s(3, 4)
   }
-instance : DecidableRel HouseGraph.Adj := by unfold HouseGraph; infer_instance
 
 /-- K4: Complete graph on 4 vertices. -/
 abbrev K4 : SimpleGraph (Fin 4) := completeGraph (Fin 4)
 
 /-- Petersen Graph on 10 vertices. -/
-def PetersenGraph : SimpleGraph (Fin 10) :=
+abbrev PetersenGraph : SimpleGraph (Fin 10) :=
   SimpleGraph.fromEdgeSet {
     -- Outer Cycle
     s(0, 1), s(1, 2), s(2, 3), s(3, 4), s(4, 0),
@@ -64,7 +63,9 @@ def PetersenGraph : SimpleGraph (Fin 10) :=
 abbrev C6 : SimpleGraph (Fin 6) := cycleGraph 6
 
 /-- Star5: Star graph with center 0 and 5 leaves. -/
-def Star5 : SimpleGraph (Fin 1 ⊕ Fin 5) := completeBipartiteGraph (Fin 1) (Fin 5)
+abbrev Star5 : SimpleGraph (Fin 1 ⊕ Fin 5) := completeBipartiteGraph (Fin 1) (Fin 5)
+
+instance : DecidableRel Star5.Adj := by unfold Star5 completeBipartiteGraph; infer_instance
 
 
 /-  ### House Graph Tests -/
@@ -99,7 +100,7 @@ theorem house_order : n HouseGraph = 5 := by
 
 @[category test, AMS 5]
 theorem house_size : HouseGraph.edgeFinset.card = 6 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem house_szeged : szegedIndex HouseGraph = 24 := by
@@ -111,11 +112,11 @@ theorem house_wiener : wienerIndex HouseGraph = 14 := by
 
 @[category test, AMS 5]
 theorem house_min_deg : HouseGraph.minDegree = 2 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem house_max_deg : HouseGraph.maxDegree = 3 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem house_avg_deg : averageDegree HouseGraph = 12/5 := by
@@ -131,7 +132,7 @@ theorem house_residue : residue HouseGraph = 2 := by
 
 @[category test, AMS 5]
 theorem house_annihilation : annihilationNumber HouseGraph = 3 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
@@ -170,7 +171,7 @@ theorem K4_order : n K4 = 4 := by
 
 @[category test, AMS 5]
 theorem K4_size : K4.edgeFinset.card = 6 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem K4_szeged : szegedIndex K4 = 6 := by
@@ -182,11 +183,11 @@ theorem K4_wiener : wienerIndex K4 = 6 := by
 
 @[category test, AMS 5]
 theorem K4_min_deg : K4.minDegree = 3 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem K4_max_deg : K4.maxDegree = 3 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem K4_avg_deg : averageDegree K4 = 3 := by
@@ -202,7 +203,7 @@ theorem K4_residue : residue K4 = 1 := by
 
 @[category test, AMS 5]
 theorem K4_annihilation : annihilationNumber K4 = 2 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem K4_cvetkovic : cvetkovic K4 = 1 := by
@@ -241,7 +242,7 @@ theorem petersen_order : n PetersenGraph = 10 := by
 
 @[category test, AMS 5]
 theorem petersen_size : PetersenGraph.edgeFinset.card = 15 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem petersen_szeged : szegedIndex PetersenGraph = 135 := by
@@ -253,11 +254,11 @@ theorem petersen_wiener : wienerIndex PetersenGraph = 75 := by
 
 @[category test, AMS 5]
 theorem petersen_min_deg : PetersenGraph.minDegree = 3 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem petersen_max_deg : PetersenGraph.maxDegree = 3 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem petersen_avg_deg : averageDegree PetersenGraph = 3 := by
@@ -273,7 +274,7 @@ theorem petersen_residue : residue PetersenGraph = 3 := by
 
 @[category test, AMS 5]
 theorem petersen_annihilation : annihilationNumber PetersenGraph = 5 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem petersen_cvetkovic : cvetkovic PetersenGraph = 4 := by
@@ -312,7 +313,7 @@ theorem C6_order : n C6 = 6 := by
 
 @[category test, AMS 5]
 theorem C6_size : C6.edgeFinset.card = 6 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem C6_szeged : szegedIndex C6 = 54 := by
@@ -324,11 +325,11 @@ theorem C6_wiener : wienerIndex C6 = 27 := by
 
 @[category test, AMS 5]
 theorem C6_min_deg : C6.minDegree = 2 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem C6_max_deg : C6.maxDegree = 2 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem C6_avg_deg : averageDegree C6 = 2 := by
@@ -344,12 +345,11 @@ theorem C6_residue : residue C6 = 2 := by
 
 @[category test, AMS 5]
 theorem C6_annihilation : annihilationNumber C6 = 3 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem C6_cvetkovic : cvetkovic C6 = 3 := by
   sorry
-
 
 /-  ### Star5 Tests -/
 
@@ -383,7 +383,7 @@ theorem Star5_order : n Star5 = 6 := by
 
 @[category test, AMS 5]
 theorem Star5_size : Star5.edgeFinset.card = 5 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem Star5_szeged : szegedIndex Star5 = 25 := by
@@ -395,11 +395,11 @@ theorem Star5_wiener : wienerIndex Star5 = 25 := by
 
 @[category test, AMS 5]
 theorem Star5_min_deg : Star5.minDegree = 1 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem Star5_max_deg : Star5.maxDegree = 5 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
@@ -415,7 +415,7 @@ theorem Star5_residue : residue Star5 = 5 := by
 
 @[category test, AMS 5]
 theorem Star5_annihilation : annihilationNumber Star5 = 5 := by
-  sorry
+  decide +native
 
 @[category test, AMS 5]
 theorem Star5_cvetkovic : cvetkovic Star5 = 5 := by

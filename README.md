@@ -57,7 +57,7 @@ There are various ways of contributing to this repository:
     especially if they are illuminating and testing the definitions.
     **Longer proofs (i.e. more than 25-50 lines) are not to be included in this repository.** 
     Instead, we welcome you to host your proof in your own repository and link to it using
-    the `formally solved` mechanism described below. This does not apply to 
+    the `formal_proof` attribute described below. This does not apply to 
     `FormalConjecturesForMathlib`, where we want all statements to have proofs.
 
 2.  **Opening issues with problems that you would like to see formalised.** Such
@@ -134,12 +134,6 @@ for the following categories:
     This includes problems that have a formal proof within this repository,
     a formal proof of an equivalent statement found elsewhere, or an informal
     solution widely accepted by experts in the field.
--   Formally solved research problem: a research problem with a formal proof.
-    Use `@[category research formally solved using <kind> at "link"]` where
-    `<kind>` is one of:
-    - `formal_conjectures`: solved in this repository (link to commit)
-    - `lean4`: solved in Lean 4 (e.g., Mathlib or another repository)
-    - `other_system`: solved in another formal system (Coq, Isabelle, etc.)
 -   Graduate level problem.
 -   Undergraduate level problem.
 -   High school level problem.
@@ -164,6 +158,22 @@ theorem foo : Transcendental ℚ (rexp 1 + π) := by
 theorem bar : FermatLastTheorem := by
   sorry
 
+```
+
+#### The `formal_proof` attribute
+
+The `formal_proof` attribute records the existence and location of a formal proof.
+This is independent of the `category` attribute and can be used with any category.
+
+Use `@[formal_proof using <kind> at "link"]` where `<kind>` is one of:
+- `formal_conjectures`: formally proved in this repository (link to commit)
+- `lean4`: formally proved in Lean 4 elsewhere (e.g., Mathlib or another repository)
+- `other_system`: formally proved in another formal system (Roqc, Isabelle, etc.)
+
+```lean
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/example"]
+theorem some_problem : ... := by
+  sorry
 ```
 
 #### The `AMS` attribute

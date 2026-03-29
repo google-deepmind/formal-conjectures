@@ -19,7 +19,7 @@ import FormalConjectures.ErdosProblems.«274»
 /-!
 # Herzog–Schönheim conjecture
 
-The actual formalization is in `FormalConjectures.ErdosProblems.«274»`.
+This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«274»`.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
@@ -28,11 +28,3 @@ The actual formalization is in `FormalConjectures.ErdosProblems.«274»`.
 - [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
 - [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
-
-namespace HerzogSchonheimConjecture
-
-@[category research open, AMS 20]
-theorem herzog_schonheim_conjecture : type_of% @Erdos274.herzog_schonheim := by 
-  sorry
-
-end HerzogSchonheimConjecture

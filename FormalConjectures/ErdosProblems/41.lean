@@ -16,14 +16,13 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-
 /-!
 # Erdős Problem 41
 
 *Reference:* [erdosproblems.com/41](https://www.erdosproblems.com/41)
 -/
 
-open Classical
+open Filter Set
 
 namespace Erdos41
 variable {α : Type} [AddCommMonoid α]
@@ -43,7 +42,7 @@ Let `A ⊆ ℕ` be an infinite set such that the triple sums `a + b + c` are all
 -/
 @[category research open, AMS 11]
 theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.Infinite) :
-    Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ)^(1/3 : ℝ)) = 0 := by
+    Filter.atTop.liminf (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ)^(1/3 : ℝ)) = 0 := by
   sorry
 
 /--
@@ -53,8 +52,8 @@ in `A` (aside from the trivial coincidences).
 Is it true that `liminf n → ∞ |A ∩ {1, …, N}| / N^(1/2) = 0`?
 -/
 @[category research solved, AMS 11]
-theorem erdos_41.variants.pairwise (A : Set ℕ) (h_pair : NtupleCondition A 2) (h_infinite : A.Infinite) :
-    Filter.atTop.liminf (fun N => (A.interIcc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
+theorem erdos_41.variants.pairwise (A : Set ℕ) (hA₂ : NtupleCondition A 2) (hA : A.Infinite) :
+    Filter.atTop.liminf (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry
 
 end Erdos41

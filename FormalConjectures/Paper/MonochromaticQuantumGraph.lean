@@ -212,7 +212,7 @@ def Witness4_d2 : WeightsN 4 2 α :=
     (0 : α)
 
 set_option maxHeartbeats 5000000 in
-@[category test, AMS 05 14 81]
+@[category test, AMS 5 14 81]
 theorem eqSystem4_has_solution_d2 :
     ∃ W : WeightsN 4 2 α, EqSystemN 4 2 W := by
   classical
@@ -250,7 +250,7 @@ def Witness4_d3 : WeightsN 4 3 ℂ :=
     (0 : ℂ)
 
 set_option maxHeartbeats 5000000 in
-@[category test, AMS 05 14 81]
+@[category test, AMS 5 14 81]
 theorem eqSystem4_has_solution_d3 :
     ∃ W : WeightsN 4 3 ℂ, EqSystemN 4 3 W := by
   classical
@@ -288,7 +288,7 @@ def Witness6_d2 : WeightsN 6 2 α :=
     (0 : α)
 
 set_option maxHeartbeats 5000000 in
-@[category test, AMS 05 14 81]
+@[category test, AMS 5 14 81]
 theorem eqSystem6_has_solution_d2 :
     ∃ W : WeightsN 6 2 α, EqSystemN 6 2 W := by
   classical
@@ -324,14 +324,14 @@ We record it as `research solved` statements over `ℝ≥0`, without formalizing
 -/
 
 /-- Bogdanov: for $N = 4$ and all $D \geq 4$, no solution exists over $\mathbb{R}_{\geq 0}$. -/
-@[category research solved, AMS 05 14 81]
+@[category research solved, AMS 5 14 81]
 theorem eqSystem4_no_solution_nnreal_ge4 :
     ∀ D : Nat, D ≥ 4 →
       ¬ ∃ W : WeightsN 4 D ℝ≥0, EqSystemN 4 D W := by
   sorry
 
 /-- Bogdanov: for all even $N \geq 6$ and $D \geq 3$, no solution exists over $\mathbb{R}_{\geq 0}$. -/
-@[category research solved, AMS 05 14 81]
+@[category research solved, AMS 5 14 81]
 theorem eqSystem_no_solution_nnreal_even_ge6_ge3 :
     ∀ N D : Nat,
       N ≥ 6 → Even N → D ≥ 3 →
@@ -355,7 +355,7 @@ All "general" conjectures are restricted to even `N`.
 
 /-- For $N = 4$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem4_no_solution_d4 :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 4 4 ℂ, EqSystemN 4 4 W := by
@@ -363,7 +363,7 @@ theorem eqSystem4_no_solution_d4 :
 
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem4_no_solution_ge4 :
     answer(sorry) ↔
       ∀ D : Nat, D ≥ 4 →
@@ -372,7 +372,7 @@ theorem eqSystem4_no_solution_ge4 :
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem6_no_solution_d3 :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 6 3 ℂ, EqSystemN 6 3 W := by
@@ -380,16 +380,72 @@ theorem eqSystem6_no_solution_d3 :
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem6_no_solution_ge3 :
     answer(sorry) ↔
       ∀ D : Nat, D ≥ 3 →
         ¬ ∃ W : WeightsN 6 D ℂ, EqSystemN 6 D W := by
   sorry
 
+/-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem8_no_solution_d3 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 8 3 ℂ, EqSystemN 8 3 W := by
+  sorry
+
+/-- For $N = 8$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem8_no_solution_d10 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 8 10 ℂ, EqSystemN 8 10 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d3 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 3 ℂ, EqSystemN 10 3 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d10 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 10 ℂ, EqSystemN 10 10 W := by
+  sorry
+
+/-- For $N = 12$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem12_no_solution_d3 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 12 3 ℂ, EqSystemN 12 3 W := by
+  sorry
+
+/-- For $N = 14$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem14_no_solution_d3 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 14 3 ℂ, EqSystemN 14 3 W := by
+  sorry
+
+/-- For $N = 16$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem16_no_solution_d3 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 16 3 ℂ, EqSystemN 16 3 W := by
+  sorry
+
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{C}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem_no_solution_ge6_ge3 :
     answer(sorry) ↔
       ∀ N D : Nat, N ≥ 6 → Even N → D ≥ 3 →
@@ -400,7 +456,7 @@ theorem eqSystem_no_solution_ge6_ge3 :
 
 /-- For $N = 4$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem4_no_solution_d4_real :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 4 4 ℝ, EqSystemN 4 4 W := by
@@ -408,7 +464,7 @@ theorem eqSystem4_no_solution_d4_real :
 
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem4_no_solution_ge4_real :
     answer(sorry) ↔
       ∀ D : Nat, D ≥ 4 →
@@ -417,7 +473,7 @@ theorem eqSystem4_no_solution_ge4_real :
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem6_no_solution_d3_real :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W := by
@@ -425,16 +481,48 @@ theorem eqSystem6_no_solution_d3_real :
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem6_no_solution_ge3_real :
     answer(sorry) ↔
       ∀ D : Nat, D ≥ 3 →
         ¬ ∃ W : WeightsN 6 D ℝ, EqSystemN 6 D W := by
   sorry
 
+/-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{R}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem8_no_solution_d3_real :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 8 3 ℝ, EqSystemN 8 3 W := by
+  sorry
+
+/-- For $N = 8$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{R}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem8_no_solution_d10_real :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 8 10 ℝ, EqSystemN 8 10 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{R}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d3_real :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 3 ℝ, EqSystemN 10 3 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{R}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d10_real :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 10 ℝ, EqSystemN 10 10 W := by
+  sorry
+
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{R}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem_no_solution_ge6_ge3_real :
     answer(sorry) ↔
       ∀ N D : Nat, N ≥ 6 → Even N → D ≥ 3 →
@@ -445,7 +533,7 @@ theorem eqSystem_no_solution_ge6_ge3_real :
 
 /-- For $N = 4$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem4_no_solution_d4_int :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 4 4 ℤ, EqSystemN 4 4 W := by
@@ -453,7 +541,7 @@ theorem eqSystem4_no_solution_d4_int :
 
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem4_no_solution_ge4_int :
     answer(sorry) ↔
       ∀ D : Nat, D ≥ 4 →
@@ -462,7 +550,7 @@ theorem eqSystem4_no_solution_ge4_int :
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem6_no_solution_d3_int :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 6 3 ℤ, EqSystemN 6 3 W := by
@@ -470,16 +558,48 @@ theorem eqSystem6_no_solution_d3_int :
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem6_no_solution_ge3_int :
     answer(sorry) ↔
       ∀ D : Nat, D ≥ 3 →
         ¬ ∃ W : WeightsN 6 D ℤ, EqSystemN 6 D W := by
   sorry
 
+/-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem8_no_solution_d3_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 8 3 ℤ, EqSystemN 8 3 W := by
+  sorry
+
+/-- For $N = 8$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem8_no_solution_d10_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 8 10 ℤ, EqSystemN 8 10 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d3_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 3 ℤ, EqSystemN 10 3 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d10_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 10 ℤ, EqSystemN 10 10 W := by
+  sorry
+
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem_no_solution_ge6_ge3_int :
     answer(sorry) ↔
       ∀ N D : Nat, N ≥ 6 → Even N → D ≥ 3 →
@@ -491,7 +611,7 @@ theorem eqSystem_no_solution_ge6_ge3_int :
 
 /-- For $N = 4$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem4_no_solution_d4_trinary_int :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 4 4 ℤ,
@@ -501,7 +621,7 @@ theorem eqSystem4_no_solution_d4_trinary_int :
 
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem4_no_solution_ge4_trinary_int :
     answer(sorry) ↔
       ∀ D : Nat, D ≥ 4 →
@@ -512,7 +632,7 @@ theorem eqSystem4_no_solution_ge4_trinary_int :
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem6_no_solution_d3_trinary_int :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 6 3 ℤ,
@@ -522,7 +642,7 @@ theorem eqSystem6_no_solution_d3_trinary_int :
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem6_no_solution_ge3_trinary_int :
     answer(sorry) ↔
       ∀ D : Nat, D ≥ 3 →
@@ -531,9 +651,49 @@ theorem eqSystem6_no_solution_ge3_trinary_int :
               EqSystemN 6 D W := by
   sorry
 
+/-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem8_no_solution_d3_trinary_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 8 3 ℤ,
+          (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
+            EqSystemN 8 3 W := by
+  sorry
+
+/-- For $N = 8$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem8_no_solution_d10_trinary_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 8 10 ℤ,
+          (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
+            EqSystemN 8 10 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d3_trinary_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 3 ℤ,
+          (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
+            EqSystemN 10 3 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d10_trinary_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 10 ℤ,
+          (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
+            EqSystemN 10 10 W := by
+  sorry
+
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 05 14 81]
+@[category research open, AMS 5 14 81]
 theorem eqSystem_no_solution_ge6_ge3_trinary_int :
     answer(sorry) ↔
       ∀ N D : Nat, N ≥ 6 → Even N → D ≥ 3 →

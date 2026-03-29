@@ -103,7 +103,7 @@ def answerElab : TermElab := fun stx expectedType? => do
       if expectedType? == some (Expr.sort .zero) && a == (← `(term| sorry)) then
         return .const `True []
       else
-        elabTermAndAnnotate a expectedType?
+        elabTermAndAnnotate a expectedType? true
   | _ => Elab.throwUnsupportedSyntax
 
 -- TODO: add delaborator (for the auxiliary declaration mode!)

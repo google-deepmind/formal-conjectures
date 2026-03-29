@@ -33,9 +33,7 @@ Let `A ⊂ R` be a set of positive outer measure. Does $A$ contain an affine cop
 
 The answer is "no".
 -/
-@[category research formally solved using formal_conjectures at
-"https://github.com/google-deepmind/formal-conjectures/blob/153d79d6c82c76fe1bee860742af800840c974d9/FormalConjectures/GreensOpenProblems/94.lean#L174",
-AMS 28]
+@[category research solved, AMS 28, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/153d79d6c82c76fe1bee860742af800840c974d9/FormalConjectures/GreensOpenProblems/94.lean#L174"]
 theorem green_94_outer_measure :
    answer(False) ↔ ∀ A : Set ℝ,
    volume A > 0 →

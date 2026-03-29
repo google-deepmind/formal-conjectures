@@ -110,9 +110,16 @@ end MyProblem</code></pre>
       <ul>
         <li><code>@[category research open]</code> — unsolved open problem</li>
         <li><code>@[category research solved]</code> — informally or formally solved</li>
-        <li><code>@[category research formally solved using lean4 at "url"]</code> — has a formal Lean 4 proof</li>
         <li><code>@[category graduate]</code> / <code>undergraduate</code> / <code>high_school]</code></li>
         <li><code>@[category test]</code> / <code>API]</code> — internal use</li>
+      </ul>
+
+      <h2>The <code>@[formal_proof]</code> attribute</h2>
+      <p>If a formal proof exists, add a <code>formal_proof</code> attribute (independent of category):</p>
+      <ul>
+        <li><code>@[formal_proof using formal_conjectures at "url"]</code> — proved in this repository</li>
+        <li><code>@[formal_proof using lean4 at "url"]</code> — proved in Lean 4 elsewhere</li>
+        <li><code>@[formal_proof using other_system at "url"]</code> — proved in another system</li>
       </ul>
 
       <h2>The <code>@[AMS]</code> attribute</h2>

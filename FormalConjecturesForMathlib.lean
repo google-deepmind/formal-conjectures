@@ -35,6 +35,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
@@ -64,8 +65,8 @@ public import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
 public import FormalConjecturesForMathlib.Data.Nat.Squarefree
 public import FormalConjecturesForMathlib.Data.Real.Constants
 public import FormalConjecturesForMathlib.Data.Real.NearestInt
-public import FormalConjecturesForMathlib.Data.Set.Bdd
 public import FormalConjecturesForMathlib.Data.Set.Density
+public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.Geometry.Euclidean

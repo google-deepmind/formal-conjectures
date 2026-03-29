@@ -91,8 +91,7 @@ for some $a\in A$?
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos26.lean", AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos26.lean"]
 theorem erdos_26 : answer(False) ↔ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
     ∃ k, IsBehrend (A · + k) := by
   sorry

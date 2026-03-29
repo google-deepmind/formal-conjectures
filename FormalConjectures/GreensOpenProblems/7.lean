@@ -14,23 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
 import FormalConjectures.ErdosProblems.«341»
 
 /-!
 # Ben Green's Open Problem 7
 
 *References:*
- - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1 Problem 7)
- - [erdosproblems.com/341](https://www.erdosproblems.com/341)
+- [Ben Green's Open Problem 7](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1)
+- [erdosproblems.com/341](https://www.erdosproblems.com/341)
+
+This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«341»`.
 -/
-
-namespace Green7
-
--- TODO: Add Green's Open Problem 7
-
-@[category research open, AMS 11]
-theorem green_7.variants.queneau : type_of% Erdos341.erdos_341 := by
-  sorry
-
-end Green7
