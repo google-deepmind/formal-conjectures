@@ -36,6 +36,26 @@ open SimpleGraph
 
 open Classical
 
+/-  ### Helper Lemmas -/
+
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+/-- In a complete graph, dist u v = 0 if u = v, else 1. -/
+private lemma top_dist_eq {V : Type*} [Fintype V] [DecidableEq V] (u v : V) :
+    (⊤ : SimpleGraph V).dist u v = if u = v then 0 else 1 := by
+  split
+  · next h => subst h; exact SimpleGraph.dist_self
+  · next h => exact dist_eq_one_iff_adj.mpr ((top_adj _ _).mpr h)
+
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+/-- In a complete graph, edist u v = 0 if u = v, else 1. -/
+private lemma top_edist_eq {V : Type*} [Fintype V] [DecidableEq V] (u v : V) :
+    (⊤ : SimpleGraph V).edist u v = if u = v then 0 else 1 := by
+  split
+  · next h => subst h; exact SimpleGraph.edist_self
+  · next h => exact edist_eq_one_iff_adj.mpr ((top_adj _ _).mpr h)
+
 /-  ### Graph Definitions -/
 
 /-- House Graph: Square 0-1-2-3-0 with roof 4 connected to 2,3. -/
@@ -143,15 +163,50 @@ theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
 
 @[category test, AMS 5]
 theorem K4_indep : α(K4) = 1 := by
-  sorry
+  simp only [indepNum]
+  apply le_antisymm
+  · -- α ≤ 1: every independent set in K4 has at most 1 element
+    apply csSup_le
+    · exact ⟨0, ∅, by simp [isNIndepSet_iff]⟩
+    · rintro n ⟨s, hs⟩
+      rw [isNIndepSet_iff] at hs
+      rw [← hs.2]
+      exact Finset.card_le_one.mpr fun a ha b hb => by
+        by_contra h; exact hs.1 ha hb h ((top_adj a b).mpr h)
+  · -- 1 ≤ α: {0} is an independent set of size 1
+    apply le_csSup
+    · exact ⟨Nat.card (Fin 4), by
+        intro n hn
+        obtain ⟨s, hs⟩ := hn
+        rw [isNIndepSet_iff] at hs
+        calc n = s.card := hs.2.symm
+          _ ≤ Finset.univ.card := s.card_le_univ
+          _ = Nat.card (Fin 4) := by simp⟩
+    · exact ⟨{0}, by simp [isNIndepSet_iff]⟩
 
 @[category test, AMS 5]
 theorem K4_dom : dominationNumber K4 = 1 := by
-  sorry
+  unfold dominationNumber
+  apply le_antisymm
+  · -- sInf ≤ 1: {0} is a 1-dominating set
+    apply Nat.sInf_le
+    exact ⟨{0}, fun v => by fin_cases v <;> simp, rfl⟩
+  · -- 1 ≤ sInf: no 0-dominating set (empty set doesn't dominate)
+    apply le_csInf
+    · exact ⟨1, {0}, fun v => by fin_cases v <;> simp, rfl⟩
+    · rintro n ⟨D, hdom, hcard⟩
+      by_contra h
+      push_neg at h
+      interval_cases n
+      rw [Finset.card_eq_zero] at hcard
+      subst hcard
+      exact (hdom (0 : Fin 4)).elim (by simp) (by rintro ⟨w, hw, -⟩; simp at hw)
 
 @[category test, AMS 5]
 theorem K4_avg_dist : averageDistance K4 = 1 := by
-  sorry
+  unfold averageDistance
+  simp [Fintype.card_fin, top_dist_eq, Fin.sum_univ_four]
+  norm_num
 
 @[category test, AMS 5]
 theorem K4_diameter : maxEccentricity K4 = 1 := by
@@ -175,11 +230,11 @@ theorem K4_size : K4.edgeFinset.card = 6 := by
 
 @[category test, AMS 5]
 theorem K4_szeged : szegedIndex K4 = 6 := by
-  sorry
+  unfold szegedIndex szeged_aux; simp only [top_edist_eq]; decide
 
 @[category test, AMS 5]
 theorem K4_wiener : wienerIndex K4 = 6 := by
-  sorry
+  unfold wienerIndex; simp only [top_dist_eq]; decide
 
 @[category test, AMS 5]
 theorem K4_min_deg : K4.minDegree = 3 := by
