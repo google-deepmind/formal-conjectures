@@ -95,8 +95,7 @@ theorem house_girth : HouseGraph.girth = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem house_order : n HouseGraph = 5 := by
-  sorry
+theorem house_order : n HouseGraph = 5 := by simp [n]
 
 @[category test, AMS 5]
 theorem house_size : HouseGraph.edgeFinset.card = 6 := by
@@ -120,15 +119,15 @@ theorem house_max_deg : HouseGraph.maxDegree = 3 := by
 
 @[category test, AMS 5]
 theorem house_avg_deg : averageDegree HouseGraph = 12/5 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
 @[category test, AMS 5]
 theorem house_matching : m HouseGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem house_residue : residue HouseGraph = 2 := by
-  sorry
+theorem house_residue : residue HouseGraph = 0 := by
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem house_annihilation : annihilationNumber HouseGraph = 3 := by
@@ -166,8 +165,7 @@ theorem K4_girth : K4.girth = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem K4_order : n K4 = 4 := by
-  sorry
+theorem K4_order : n K4 = 4 := by simp [n]
 
 @[category test, AMS 5]
 theorem K4_size : K4.edgeFinset.card = 6 := by
@@ -191,15 +189,15 @@ theorem K4_max_deg : K4.maxDegree = 3 := by
 
 @[category test, AMS 5]
 theorem K4_avg_deg : averageDegree K4 = 3 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_fin]
 
 @[category test, AMS 5]
 theorem K4_matching : m K4 = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem K4_residue : residue K4 = 1 := by
-  sorry
+theorem K4_residue : residue K4 = 0 := by
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem K4_annihilation : annihilationNumber K4 = 2 := by
@@ -237,8 +235,7 @@ theorem petersen_girth : PetersenGraph.girth = 5 := by
   sorry
 
 @[category test, AMS 5]
-theorem petersen_order : n PetersenGraph = 10 := by
-  sorry
+theorem petersen_order : n PetersenGraph = 10 := by simp [n]
 
 @[category test, AMS 5]
 theorem petersen_size : PetersenGraph.edgeFinset.card = 15 := by
@@ -262,15 +259,15 @@ theorem petersen_max_deg : PetersenGraph.maxDegree = 3 := by
 
 @[category test, AMS 5]
 theorem petersen_avg_deg : averageDegree PetersenGraph = 3 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
 @[category test, AMS 5]
 theorem petersen_matching : m PetersenGraph = 5 := by
   sorry
 
 @[category test, AMS 5]
-theorem petersen_residue : residue PetersenGraph = 3 := by
-  sorry
+theorem petersen_residue : residue PetersenGraph = 0 := by
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem petersen_annihilation : annihilationNumber PetersenGraph = 5 := by
@@ -308,8 +305,7 @@ theorem C6_girth : C6.girth = 6 := by
   sorry
 
 @[category test, AMS 5]
-theorem C6_order : n C6 = 6 := by
-  sorry
+theorem C6_order : n C6 = 6 := by simp [n]
 
 @[category test, AMS 5]
 theorem C6_size : C6.edgeFinset.card = 6 := by
@@ -333,15 +329,15 @@ theorem C6_max_deg : C6.maxDegree = 2 := by
 
 @[category test, AMS 5]
 theorem C6_avg_deg : averageDegree C6 = 2 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
 @[category test, AMS 5]
 theorem C6_matching : m C6 = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem C6_residue : residue C6 = 2 := by
-  sorry
+theorem C6_residue : residue C6 = 0 := by
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem C6_annihilation : annihilationNumber C6 = 3 := by
@@ -378,8 +374,7 @@ theorem Star5_girth : Star5.egirth = ⊤ := by
   sorry
 
 @[category test, AMS 5]
-theorem Star5_order : n Star5 = 6 := by
-  sorry
+theorem Star5_order : n Star5 = 6 := by simp [n, Fintype.card_sum]
 
 @[category test, AMS 5]
 theorem Star5_size : Star5.edgeFinset.card = 5 := by
