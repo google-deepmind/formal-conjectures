@@ -67,6 +67,104 @@ abbrev Star5 : SimpleGraph (Fin 1 ⊕ Fin 5) := completeBipartiteGraph (Fin 1) (
 
 instance : DecidableRel Star5.Adj := by unfold Star5 completeBipartiteGraph; infer_instance
 
+/-  ### Distance Helper Lemmas -/
+
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+/-- Helper: dist = 2 for non-adjacent pairs with a 2-step walk. -/
+private lemma dist_eq_two_of_walk {V : Type*} {G : SimpleGraph V}
+    {u w v : V} (h1 : G.Adj u w) (h2 : G.Adj w v) (hnadj : ¬G.Adj u v) (hne : u ≠ v) :
+    G.dist u v = 2 := by
+  have hle : G.dist u v ≤ 2 :=
+    calc G.dist u v ≤ (Walk.cons h1 (Walk.cons h2 Walk.nil)).length := dist_le _
+      _ = 2 := rfl
+  have hr : G.Reachable u v := ⟨Walk.cons h1 (Walk.cons h2 Walk.nil)⟩
+  have hlt := hr.one_lt_dist_of_ne_of_not_adj hne hnadj
+  omega
+
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+/-- Distance table for HouseGraph (diameter 2). -/
+private lemma house_dist_eq (u v : Fin 5) :
+    HouseGraph.dist u v = if u = v then 0 else if HouseGraph.Adj u v then 1 else 2 := by
+  split_ifs with h1 h2
+  · subst h1; exact SimpleGraph.dist_self
+  · exact dist_eq_one_iff_adj.mpr h2
+  · fin_cases u <;> fin_cases v <;> simp_all (config := { decide := true })
+    all_goals first
+      | exact dist_eq_two_of_walk (G := HouseGraph) (w := 1) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := HouseGraph) (w := 2) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := HouseGraph) (w := 3) (by decide) (by decide) (by decide) (by decide)
+
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+/-- Helper: dist = 3 for pairs with a 3-step walk and no common neighbor. -/
+private lemma dist_eq_three_of_walk {V : Type*} {G : SimpleGraph V}
+    {u w₁ w₂ v : V} (h1 : G.Adj u w₁) (h2 : G.Adj w₁ w₂) (h3 : G.Adj w₂ v)
+    (hnadj : ¬G.Adj u v) (hne : u ≠ v)
+    (hno_common : ∀ x, G.Adj u x → G.Adj x v → False) : G.dist u v = 3 := by
+  let walk3 := Walk.cons h1 (Walk.cons h2 (Walk.cons h3 Walk.nil))
+  have hle : G.dist u v ≤ 3 :=
+    calc G.dist u v ≤ walk3.length := dist_le _
+      _ = 3 := rfl
+  have hr : G.Reachable u v := ⟨walk3⟩
+  have hgt := hr.one_lt_dist_of_ne_of_not_adj hne hnadj
+  suffices G.dist u v ≠ 2 by omega
+  intro h2eq
+  obtain ⟨p, hp⟩ := hr.exists_walk_length_eq_dist
+  rw [h2eq] at hp
+  match p, hp with
+  | Walk.cons ha (Walk.cons hb Walk.nil), hp =>
+    exact hno_common _ ha hb
+
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+/-- Distance table for C6 (diameter 3). -/
+private lemma c6_dist_eq (u v : Fin 6) :
+    C6.dist u v = if u = v then 0 else if C6.Adj u v then 1
+      else if (u = 0 ∧ v = 3) ∨ (u = 3 ∧ v = 0) ∨ (u = 1 ∧ v = 4) ∨ (u = 4 ∧ v = 1)
+            ∨ (u = 2 ∧ v = 5) ∨ (u = 5 ∧ v = 2) then 3 else 2 := by
+  split_ifs with h1 h2 h3
+  · subst h1; exact SimpleGraph.dist_self
+  · exact dist_eq_one_iff_adj.mpr h2
+  · rcases h3 with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
+    all_goals first
+      | exact dist_eq_three_of_walk (G := C6) (w₁ := 1) (w₂ := 2) (by decide) (by decide) (by decide) (by decide) (by decide) (fun x h1 h2 => by fin_cases x <;> simp_all (config := { decide := true }))
+      | exact dist_eq_three_of_walk (G := C6) (w₁ := 2) (w₂ := 1) (by decide) (by decide) (by decide) (by decide) (by decide) (fun x h1 h2 => by fin_cases x <;> simp_all (config := { decide := true }))
+      | exact dist_eq_three_of_walk (G := C6) (w₁ := 2) (w₂ := 3) (by decide) (by decide) (by decide) (by decide) (by decide) (fun x h1 h2 => by fin_cases x <;> simp_all (config := { decide := true }))
+      | exact dist_eq_three_of_walk (G := C6) (w₁ := 3) (w₂ := 2) (by decide) (by decide) (by decide) (by decide) (by decide) (fun x h1 h2 => by fin_cases x <;> simp_all (config := { decide := true }))
+      | exact dist_eq_three_of_walk (G := C6) (w₁ := 3) (w₂ := 4) (by decide) (by decide) (by decide) (by decide) (by decide) (fun x h1 h2 => by fin_cases x <;> simp_all (config := { decide := true }))
+      | exact dist_eq_three_of_walk (G := C6) (w₁ := 4) (w₂ := 3) (by decide) (by decide) (by decide) (by decide) (by decide) (fun x h1 h2 => by fin_cases x <;> simp_all (config := { decide := true }))
+  · fin_cases u <;> fin_cases v <;> simp_all (config := { decide := true })
+    all_goals first
+      | exact dist_eq_two_of_walk (G := C6) (w := 0) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := C6) (w := 1) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := C6) (w := 2) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := C6) (w := 3) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := C6) (w := 4) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := C6) (w := 5) (by decide) (by decide) (by decide) (by decide)
+
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+set_option maxHeartbeats 400000 in
+/-- Distance table for PetersenGraph (diameter 2). -/
+private lemma petersen_dist_eq (u v : Fin 10) :
+    PetersenGraph.dist u v = if u = v then 0 else if PetersenGraph.Adj u v then 1 else 2 := by
+  split_ifs with h1 h2
+  · subst h1; exact SimpleGraph.dist_self
+  · exact dist_eq_one_iff_adj.mpr h2
+  · fin_cases u <;> fin_cases v <;> simp_all (config := { decide := true })
+    all_goals first
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 0) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 1) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 2) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 3) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 4) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 5) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 6) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 7) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 8) (by decide) (by decide) (by decide) (by decide)
+      | exact dist_eq_two_of_walk (G := PetersenGraph) (w := 9) (by decide) (by decide) (by decide) (by decide)
 
 /-  ### House Graph Tests -/
 
@@ -80,7 +178,8 @@ theorem house_dom : dominationNumber HouseGraph = 2 := by
 
 @[category test, AMS 5]
 theorem house_avg_dist : averageDistance HouseGraph = 7/5 := by
-  sorry
+  unfold averageDistance
+  simp (config := { decide := true }) [Fintype.card_fin, house_dist_eq, Fin.sum_univ_five]; norm_num
 
 @[category test, AMS 5]
 theorem house_diameter : maxEccentricity HouseGraph = 2 := by
@@ -108,7 +207,7 @@ theorem house_szeged : szegedIndex HouseGraph = 24 := by
 
 @[category test, AMS 5]
 theorem house_wiener : wienerIndex HouseGraph = 14 := by
-  sorry
+  unfold wienerIndex; simp (config := { decide := true }) only [house_dist_eq]
 
 @[category test, AMS 5]
 theorem house_min_deg : HouseGraph.minDegree = 2 := by
@@ -222,7 +321,8 @@ theorem petersen_dom : dominationNumber PetersenGraph = 3 := by
 
 @[category test, AMS 5]
 theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
-  sorry
+  unfold averageDistance
+  simp (config := { decide := true }) [Fintype.card_fin, petersen_dist_eq, Fin.sum_univ_succ]; norm_num
 
 @[category test, AMS 5]
 theorem petersen_diameter : maxEccentricity PetersenGraph = 2 := by
@@ -250,7 +350,7 @@ theorem petersen_szeged : szegedIndex PetersenGraph = 135 := by
 
 @[category test, AMS 5]
 theorem petersen_wiener : wienerIndex PetersenGraph = 75 := by
-  sorry
+  unfold wienerIndex; simp (config := { decide := true }) only [petersen_dist_eq]
 
 @[category test, AMS 5]
 theorem petersen_min_deg : PetersenGraph.minDegree = 3 := by
@@ -293,7 +393,8 @@ theorem C6_dom : dominationNumber C6 = 2 := by
 
 @[category test, AMS 5]
 theorem C6_avg_dist : averageDistance C6 = 9/5 := by
-  sorry
+  unfold averageDistance
+  simp (config := { decide := true }) [Fintype.card_fin, c6_dist_eq, Fin.sum_univ_six]; norm_num
 
 @[category test, AMS 5]
 theorem C6_diameter : maxEccentricity C6 = 3 := by
@@ -321,7 +422,7 @@ theorem C6_szeged : szegedIndex C6 = 54 := by
 
 @[category test, AMS 5]
 theorem C6_wiener : wienerIndex C6 = 27 := by
-  sorry
+  unfold wienerIndex; simp (config := { decide := true }) only [c6_dist_eq]
 
 @[category test, AMS 5]
 theorem C6_min_deg : C6.minDegree = 2 := by
