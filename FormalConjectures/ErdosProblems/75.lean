@@ -19,20 +19,25 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 75
 
-Is there a graph of chromatic number \(\aleph_1\) with \(\aleph_1\) vertices such that for all
-\(\epsilon > 0\), if \(n\) is sufficiently large and \(H\) is a subgraph on \(n\) vertices,
-then \(H\) contains an independent set of size \(> n^{1-\epsilon}\)?
-
-**Reference:** https://www.erdosproblems.com/75
+*Reference:*
+* [erdosproblems.com/75] (https://www.erdosproblems.com/75)
 -/
-namespace Erdos075
+
 open Cardinal
 
+namespace Erdos75
+
+/--
+Is there a graph of chromatic number `ℵ_ 1` with `ℵ_ 1` vertices such that for all
+`ε > 0`, if `n` is sufficiently large and `H` is a subgraph on `n` vertices,
+then `H` contains an independent set of size `> n ^ (1 - ε)`?
+-/
 @[category research open, AMS 05]
-theorem erdos_problem_75 :
+theorem erdos_75 :
+    answer(sorry) ↔
     ∃ (V : Type) (G : SimpleGraph V),
-      Cardinal.lift.{1} (G.chromaticNumber : Cardinal) = Cardinal.aleph 1 ∧
-      Cardinal.mk V = Cardinal.aleph 1 ∧
+      G.chromaticCardinal = ℵ_ 1 ∧
+      #V = ℵ_ 1 ∧
       ∀ (ε : ℝ), 0 < ε →
         ∃ (N : ℕ),
           ∀ (n : ℕ) (H : G.Subgraph),
@@ -44,4 +49,4 @@ theorem erdos_problem_75 :
               (I.card : ℝ) > (n : ℝ) ^ (1 - ε) := by
   sorry
 
-end Erdos075
+end Erdos75
