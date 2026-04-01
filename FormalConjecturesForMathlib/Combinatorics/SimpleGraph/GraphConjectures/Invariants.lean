@@ -13,14 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
-import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
-import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
-import Mathlib.Combinatorics.SimpleGraph.Metric
-import Mathlib.Data.Multiset.Interval
-import Mathlib.LinearAlgebra.Matrix.Spectrum
-import Mathlib.Order.CompletePartialOrder
+module
 
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
+public import Mathlib.Combinatorics.SimpleGraph.Metric
+public import Mathlib.Data.Multiset.Interval
+
+@[expose] public section
 
 noncomputable def Matrix.IsHermitian.maxEigenvalue {𝕜 : Type*} [Field 𝕜] [RCLike 𝕜]
     {n : Type*} [Fintype n] [DecidableEq n] {A : Matrix n n 𝕜} (hA : A.IsHermitian) : ℝ :=
@@ -73,7 +75,7 @@ noncomputable def S (G : SimpleGraph α) : ℝ :=
   let card := Fintype.card α
   if card < 2 then 0 else
     let degrees := Multiset.ofList (List.map (fun v => G.degree v) Finset.univ.toList)
-    let sorted_degrees := Multiset.sort (·≤·) degrees
+    let sorted_degrees := degrees.sort (· ≤ ·)
     ↑((sorted_degrees[card - 2]?).getD 0)
 
 /-- Local eccentricity of a vertex. -/
@@ -158,9 +160,7 @@ noncomputable def wienerIndex (G : SimpleGraph α) : ℕ :=
 
 /-- Auxiliary function for Szeged index: counts vertices closer to u than v. -/
 noncomputable def szeged_aux (G : SimpleGraph α) (u v : α) : ℕ :=
-  -- Note: this automatically excludes vertices that aren't connected to either u or v,
-  -- since their distance will be 0.
-  (Finset.univ.filter (fun w => G.dist w u ≠ 0 ∧ G.dist w u <= G.dist w v)).card
+  (Finset.univ.filter (fun w => G.edist w u < G.edist w v)).card
 
 /-- The Szeged index of `G`.
 
@@ -233,7 +233,7 @@ Removes the first element `d`, decrements the next `d` elements by 1, and re-sor
 Note: when `s` is the list of vertices arising from a simple graph, if the first index is `s` then
 the degree list always has length at least `s+1` so this makes sense.
 -/
-private def havelHakimiStep (s : List ℕ) : List ℕ :=
+def havelHakimiStep (s : List ℕ) : List ℕ :=
   match s with
   | [] => []
   | d :: rest =>
@@ -248,7 +248,7 @@ private def havelHakimiStep (s : List ℕ) : List ℕ :=
 Auxiliary function to calculate the residue recursively.
 Applies Havel-Hakimi steps until the sequence consists only of zeros or is empty.
 -/
-private partial def residueAux : List ℕ → ℕ
+partial def residueAux : List ℕ → ℕ
   | [] => 0        -- Empty sequence, residue is 0.
   | 0 :: s => 1 + s.length -- If the largest degree is 0 (and the list is sorted), all are 0.
   | s => residueAux (havelHakimiStep s) -- Apply one reduction step and recurse.

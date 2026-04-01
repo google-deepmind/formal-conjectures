@@ -13,10 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Order.Filter.Cofinite
-import Mathlib.Order.Interval.Finset.Defs
-import Mathlib.Order.SuccPred.Basic
+
+public import Mathlib.Order.Filter.Cofinite
+public import Mathlib.Order.Interval.Finset.Defs
+public import Mathlib.Order.SuccPred.Basic
+
+@[expose] public section
 
 open Set
 

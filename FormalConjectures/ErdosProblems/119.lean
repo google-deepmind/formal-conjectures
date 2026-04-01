@@ -50,7 +50,7 @@ Wagner [Wa80] proved that there is some $c > 0$ with $M_n > (\log n)^c$ infintel
 [Wa80] Wagner, Gerold, On a problem of {E}rdős in {D}iophantine approximation. Bull. London Math. Soc. (1980), 81--88.
 -/
 @[category research solved, AMS 30]
-theorem erdos_119_1 :
+theorem erdos_119.parts.i :
     answer(True) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
       atTop.limsup (fun n => (M z n : EReal)) = ⊤ := by
   sorry
@@ -64,7 +64,7 @@ Beck [Be91] proved that there exists some $c > 0$ such that $\max_{n \leq N} M_n
 [Be91] Beck, J., The modulus of polynomials with zeros on the unit circle: A problem of Erdős. Annals of Math. (1991), 609-651.
 -/
 @[category research solved, AMS 30]
-theorem erdos_119_2 :
+theorem erdos_119.parts.ii :
     answer(True) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
       ∃ (c : ℝ) (hc : c > 0), Infinite {n : ℕ | M z n > n ^ c} := by
   sorry
@@ -74,7 +74,7 @@ theorem erdos_119_2 :
 Is it true that there exists $c > 0$ such that, for all large $n$, $\sum_{k \leq n} M_k > n^{1 + c}$?
 -/
 @[category research open, AMS 30]
-theorem erdos_119_3 :
+theorem erdos_119.parts.iii :
     answer(sorry) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
       ∃ (c : ℝ) (hc : c > 0), ∀ᶠ n in atTop,
         ∑ k ∈ range n, M z k > n ^ (1 + c) := by

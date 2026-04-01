@@ -32,7 +32,7 @@ Is there an absolute constant $K$ such that, for every $C > 0$, if $n$ is suffic
 $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{1}{4}})$.
 -/
 @[category research open, AMS 11]
-theorem erdos_887 : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
+theorem erdos_887.parts.i : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
     #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ answer(sorry) := by
   sorry
 
@@ -41,7 +41,7 @@ Is there an absolute constant $K$ such that, for every $C > 0$, if $n$ is suffic
 $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{1}{4}})$.
 -/
 @[category research open, AMS 11]
-theorem erdos_887.variant_i : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
+theorem erdos_887.parts.ii : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
     #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ K := by
   sorry
 
@@ -50,7 +50,7 @@ A question of Erdős and Rosenfeld, who proved that there are infinitely many $n
 in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_887.variant_ii :
+theorem erdos_887.variants.rosenfeld_infinite :
     Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = 4)} := by
   sorry
 
@@ -59,7 +59,7 @@ Erdős and Rosenfeld, ask whether $4$ is the best possible $K$ for the infinitud
 with $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
 -/
 @[category research open, AMS 11]
-theorem erdos_887.variant_iii :
+theorem erdos_887.variants.rosenfeld_4 :
     IsGreatest
       {K | Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = K)}} 4 := by
   sorry

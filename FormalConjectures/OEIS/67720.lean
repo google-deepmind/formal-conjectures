@@ -24,7 +24,7 @@ where $\varphi$ is Euler's totient function.
 The sequence exhibits a strong connection to primes: for almost all terms $k$,
 $k + 1$ is prime. The conjecture states that $k = 8$ is the only exception.
 
-*References:* [oeis.org/A067720](https://oeis.org/A067720)
+*References:* [A067720](https://oeis.org/A067720)
 -/
 
 open Nat

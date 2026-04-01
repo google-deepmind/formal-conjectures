@@ -28,8 +28,6 @@ open scoped Pointwise
 
 noncomputable section
 
-section
-
 variable (G : Type*) [AddCommGroup G] [Fintype G] [DecidableEq G]
 
 /-- Uniform average over pairs `(x₁, x₂)` in `G × G`, with the third variable determined by
@@ -75,3 +73,5 @@ theorem green_57 :
   sorry
 
 end
+
+end Green57

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.Attributes
+import FormalConjectures.Util.Attributes.Basic
 import Mathlib.Tactic.Lemma
 import Batteries.Data.Array.Merge
 
@@ -32,6 +32,9 @@ register_option linter.style.ams_attribute : Bool := {
   defValue := true
   descr := "enable the `AMS` attribute style linter"
 }
+
+-- FIXME: False positive
+set_option linter.style.docString.empty false
 
 namespace AMSLinter
 

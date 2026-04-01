@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Asymptotics
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos1061
 

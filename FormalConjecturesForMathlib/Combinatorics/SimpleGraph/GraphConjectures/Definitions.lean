@@ -13,12 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Mathlib.Combinatorics.SimpleGraph.Matching
-import Mathlib.Data.Real.Archimedean
-import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Mathlib.Combinatorics.SimpleGraph.Matching
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+
+@[expose] public section
 
 namespace SimpleGraph
 
@@ -57,9 +60,16 @@ noncomputable def aprime (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
 noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
   sSup { n | ∃ s : Finset α, (G.induce s).IsAcyclic ∧ s.card = n }
 
-/-- `f G` is the number of vertices of a largest induced forest of `G` as a real. -/
-noncomputable def f (G : SimpleGraph α) : ℝ :=
-  (largestInducedForestSize G : ℝ)
+/-- The degree sequence of a graph, sorted in nondecreasing order. -/
+noncomputable def degreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : List ℕ :=
+  (Finset.univ.val.map fun v : α => G.degree v).sort (· ≤ ·)
+
+/--
+The maximum number of occurrences of any term of the degree sequence of `G`.
+-/
+noncomputable def degreeSequenceMultiplicity (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  letI degs := degreeSequence G
+  (List.max? (degs.map (fun d => degs.count d))).getD 0
 
 /-- `largestInducedBipartiteSubgraphSize G` is the size of a largest induced
 bipartite subgraph of `G`. -/
@@ -87,13 +97,8 @@ noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
 A graph where the vertices V are a collection of points in ℝ² and there is
 an edge between two points if and only if the distance between them is 1. -/
 def UnitDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph V where
-  Adj := fun x y => dist x y = 1
-  symm := by
-    intros x y
-    simp [dist_comm]
-  loopless := by
-    intros x
-    simp [dist_self]
+  Adj x y := Dist.dist x y = 1
+  symm x y := by simp [PseudoMetricSpace.dist_comm]
 
 /--
 Two walks are internally disjoint if they share no vertices other than their endpoints.
@@ -109,5 +114,18 @@ pairwise disjoint paths.
 def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop :=
   Pairwise fun u v ↦ ∃ P : Set (G.Walk u v),
     P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
+
+/-- Infinite graphs: definitions for max degree and clique number so that the maximum
+degree (resp. clique number) of a graph with unbounded degree (resp. clique size) is
+`∞` rather than 0.
+-/
+noncomputable
+def edegree {V : Type*} (G : SimpleGraph V) (v : V) : ℕ∞ := (G.neighborSet v).encard
+
+noncomputable
+def emaxDegree {V : Type*} (G : SimpleGraph V) : ℕ∞ := ⨆ v, G.edegree v
+
+noncomputable
+def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ : G.IsClique s), #s
 
 end SimpleGraph

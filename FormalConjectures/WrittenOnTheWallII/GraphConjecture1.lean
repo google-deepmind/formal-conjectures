@@ -16,6 +16,13 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Written on the Wall II - Conjecture 1
+
+*Reference:*
+[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+-/
+
 namespace WrittenOnTheWallII.GraphConjecture1
 
 open SimpleGraph
