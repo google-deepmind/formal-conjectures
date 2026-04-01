@@ -31,8 +31,8 @@ For an integer $k ≥ 2$, the following are equivalent:
     $P = \max_i p_i^{e_i}$,
     one has $k / P > P$.
 
-This conjecture asserts that the integers satisfying (1)
-are exactly those satisfying (2).
+This conjecture asserts that the sequence defined by 1. is obtained by
+taking 1 off each number in the sequence defined by 2.
 
 *Reference:*
 - [A80170](https://oeis.org/A80170)
@@ -61,7 +61,7 @@ Conjecture: The gcd condition is equivalent to the prime power condition.
 -/
 @[category research open, AMS 11]
 theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
-    GCDCondition k ↔ PrimePowerCondition k := by
+    GCDCondition k ↔ PrimePowerCondition (k - 1) := by
   sorry
 
 end OeisA80170
