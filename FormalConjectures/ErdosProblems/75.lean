@@ -39,9 +39,7 @@ theorem erdos_75 :
       G.chromaticCardinal = ℵ_ 1 ∧
       #V = ℵ_ 1 ∧
       ∀ ε > (0 : ℝ),
-        ∃ (N : ℕ),
-          ∀ (n : ℕ) (H : G.Subgraph),
-            n ≥ N →
+        ∀ᶠ (n : ℕ) in Filter.atTop, ∀ (H : G.Subgraph),
             H.verts.ncard = n →
             ∃ (I : Finset V),
               (I : Set V) ⊆ H.verts ∧
