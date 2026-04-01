@@ -63,11 +63,6 @@ There are various ways of contributing to this repository:
    an issue should contain links to suitable references, and ideally a precise
    informal statement of the conjecture.
 
-   We encourage adding formalisations of open conjectures from all sorts of sources, including:
-   - **Literature:** Textbooks, problem books and research papers (including [arXiv](https://arxiv.org/archive/math)).
-   - **Community Resources:** [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics), [MathOverflow](https://mathoverflow.net/) and the [OEIS](https://oeis.org/).
-   - **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), [Kourovka notebook](https://arxiv.org/pdf/1401.0300) or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
-
 3. **Improving the referencing and tagging of problems.** For example, adding
    pointers to references in already existing files, or adding additional
    relevant `AMS` subject attributes to statements.
