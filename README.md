@@ -46,6 +46,12 @@ There are various ways of contributing to this repository:
    to be worked on in our [list of Milestones](https://github.com/google-deepmind/formal-conjectures/milestones), if you have deeper mathematical expertise in a specific field you can also filter by the AMS 2020 Classification (e.g. [Group Theory Issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22ams-20%20Group%20theory%20and%20generalizations%22)) or
    take a look at [good first issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22) if you are new to Lean.
 
+   More generally, we encourage adding formalisations of open conjectures from all sorts of sources, including:
+
+      * **Literature:** Textbooks, problem books and research papers (including [arXiv](https://arxiv.org/archive/math)).
+      * **Community Resources:** [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics), [MathOverflow](https://mathoverflow.net/) and the [OEIS](https://oeis.org/).
+      * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), [Kourovka notebook](https://arxiv.org/pdf/1401.0300) or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
+    
    Just pick one and comment on the issue (e.g., "I plan to work on this") to
    have it assigned to you.
 
