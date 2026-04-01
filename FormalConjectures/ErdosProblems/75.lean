@@ -38,7 +38,7 @@ theorem erdos_75 :
     ∃ (V : Type) (G : SimpleGraph V),
       G.chromaticCardinal = ℵ_ 1 ∧
       #V = ℵ_ 1 ∧
-      ∀ (ε : ℝ), 0 < ε →
+      ∀ ε > (0 : ℝ),
         ∃ (N : ℕ),
           ∀ (n : ℕ) (H : G.Subgraph),
             n ≥ N →
