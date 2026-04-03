@@ -71,7 +71,7 @@ theorem green_14_polynomial :
 /-- We know $W(3, r)$ does not have polynomial growth in $r$ [Gr21, p.3]. -/
 @[category research solved, AMS 5 11]
 theorem green_14_polynomial_k_eq_3 :
-    ¬ ∃ d : ℕ, (fun r => (W 3 r): ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
+    ¬ ∃ d : ℕ, (fun r => (W 3 r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
   sorry
 
 /--
