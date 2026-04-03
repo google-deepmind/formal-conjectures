@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Data.Finset.Defs
-import Mathlib.Order.Interval.Set.Defs
+import FormalConjectures.ErdosProblems.«20»
 
-abbrev Finset.OrdConnected {α} [Preorder α] (s : Finset α) := s.toSet.OrdConnected
+/-!
+# Erdős–Rado sunflower conjecture
+
+This file is a Wikipedia-facing entry point for the formalization in
+`FormalConjectures.ErdosProblems.«20»`.
+
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
+-/

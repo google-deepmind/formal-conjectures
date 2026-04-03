@@ -15,9 +15,6 @@ limitations under the License.
 -/
 import FormalConjectures.Util.ProblemImports
 
-open scoped ArithmeticFunction
-open Nat
-
 /-!
 # Conjectures associated with A56777
 
@@ -29,6 +26,9 @@ well as congruences satisfied by the members of A56777.
 
 *References:* [A56777](https://oeis.org/A56777)
 -/
+
+open Nat
+open scoped ArithmeticFunction.sigma
 
 namespace OeisA56777
 
@@ -77,9 +77,10 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
     n % 72 = 65 := by
   sorry
 
-/-- Numbers coming from prime quadruples satisfy $n \equiv 9 \pmod{100}$. -/
+/-- Numbers coming from prime quadruples satisfy $n \equiv 9 \pmod{100}$,
+except the first value "65". -/
 @[category undergraduate, AMS 11]
-theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
+theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h : 65 < n) (h : ComesFromPrimeQuadruple n) :
     n % 100 = 9 := by
   sorry
 

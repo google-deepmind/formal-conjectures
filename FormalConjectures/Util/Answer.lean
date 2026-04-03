@@ -27,20 +27,86 @@ This file provides syntax for marking up answers in a problem statement.
 Note: certain problems also providing an answer, and can be formalised
 using `answer(sorry)` as a placeholder. While providing a proof simply requires
 finding any way to replace `:= sorry`, providing an answer is not just finding
-any way to replace answer(sorry): it requires evaluation of mathematical meaning,
+any way to replace `answer(sorry)`: it requires evaluation of mathematical meaning,
 which is a job for human mathematicians, not Lean alone.
 -/
 namespace Google
 
-open Lean Elab Term
+open Lean Elab Meta Term
+
+/-- A type that captures the current setting for the `answer()` elaborator. -/
+inductive AnswerSetting
+  /--Default mode: `answer(sorry)` defaults to `True` when `sorry` has type `Prop`. -/
+  | alwaysTrue
+  /-- Default mode for `answer(foo)`: just postpones elaboration. -/
+  | postpone
+  /-- Elaborate `answer(foo)` by creating an auxiliary definition with value `foo`. -/
+  | withAuxiliary
+deriving Inhabited, ToJson, BEq
+
+instance : ToString AnswerSetting where
+  toString
+    | .postpone => "postpone"
+    | .withAuxiliary  => "with_auxiliary"
+    | .alwaysTrue => "always_true"
+
+instance : KVMap.Value AnswerSetting where
+  toDataValue := DataValue.ofString ∘ ToString.toString
+  ofDataValue?
+    | .ofString "postpone" => some .postpone
+    | .ofString "with_auxiliary" => some .withAuxiliary
+    | .ofString "always_true" => some .alwaysTrue
+    | _ => none
+
+register_option google.answer : AnswerSetting := {
+  defValue := .alwaysTrue
+  descr := "Modifies the behaviour of the answer() elaborator."
+}
+
+def mkAnswerAnnotation (e : Expr) : Expr := mkAnnotation `answer e
+
+def elabTermAndAnnotate (stx : TSyntax `term) (expectedType? : Option Expr)
+    (postpone : Bool := false) :=
+  mkAnswerAnnotation <$> do
+    if postpone then
+      postponeElabTerm (← `(by exact $stx)) expectedType?
+    else
+      elabTerm stx expectedType?
 
 /-- Indicates where the answer is in a problem statement. -/
 @[term_elab answer]
 def answerElab : TermElab := fun stx expectedType? => do
   match stx with
-  | `(answer($a:term)) => do
-    mkSaveInfoAnnotation <$> postponeElabTerm (← `(by exact $a)) expectedType?
+  | `(answer($a:term)) =>
+    match google.answer.get (← getOptions) with
+    |  AnswerSetting.postpone => elabTermAndAnnotate a expectedType? true
+    | .withAuxiliary =>
+      let expr ← elabTermAndSynthesize a expectedType?
+      let exprType ← (Meta.inferType expr) >>= instantiateMVars
+      if exprType.hasExprMVar then throwPostpone
+      let some declName := (← read).declName?
+        | throwError "Failed to find the name of the declaration"
+      let answerName : Name := declName.str "_answer"
+      let levelParamNames : List Name := (collectLevelParams {} exprType).params.toList
+      let answerAuxiliaryDecl : DefinitionVal := {
+        name := answerName
+        levelParams := levelParamNames
+        type := exprType
+        value := expr
+        hints := .abbrev
+        safety := .safe
+      }
+      addDecl (.defnDecl answerAuxiliaryDecl) true
+      return mkAnswerAnnotation (.const answerName <| levelParamNames.map Level.param)
+    | .alwaysTrue =>
+      -- If the answer is a `sorry` of type `Prop` then default to `True` in this setting
+      if expectedType? == some (Expr.sort .zero) && a == (← `(term| sorry)) then
+        return .const `True []
+      else
+        elabTermAndAnnotate a expectedType?
   | _ => Elab.throwUnsupportedSyntax
+
+-- TODO: add delaborator (for the auxiliary declaration mode!)
 
 open InfoTree
 

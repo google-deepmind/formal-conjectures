@@ -38,7 +38,8 @@ $$
   A(n) = \frac{n}{2} - \frac{n}{2\log n} + o\left(\frac{n}{\log n}\right).
 $$
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using lean4 at
+  "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/blob/main/PrimeNumberTheoremAnd/Erdos392.lean", AMS 11]
 theorem erdos_392 (A : ℕ → ℕ) (h : ∀ n > 0,
     IsLeast { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧
       Monotone a ∧ a (Fin.last t) ≤ n ^ 2) } (A n)) :

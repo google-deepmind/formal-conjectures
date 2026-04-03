@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.GCDMonoid.Finset
-import Mathlib.Order.Interval.Finset.Defs
+
+public import Mathlib.Algebra.GCDMonoid.Finset
+public import Mathlib.Order.Interval.Finset.Defs
+
+@[expose] public section
 
 namespace Finset
 
 /-- The least common multiple of ${n+1, \dotsc, n+k}$. -/
-def lcmInterval {α : Type*} [AddMonoid α] [CancelCommMonoidWithZero α] [NormalizedGCDMonoid α]
+def lcmInterval {α : Type*} [AddMonoid α] [CommMonoidWithZero α] [NormalizedGCDMonoid α]
     [Preorder α] [LocallyFiniteOrder α] (n k : α) : α := (Finset.Ioc n (n + k)).lcm id
 
 end Finset

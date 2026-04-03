@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Finset Real
-open scoped Nat.Prime ArithmeticFunction
+open scoped Nat.Prime ArithmeticFunction.omega
 
 namespace Erdos890
 

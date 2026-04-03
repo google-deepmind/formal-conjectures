@@ -62,7 +62,7 @@ infinitely many odd integers not of this form, but gives no reference.
 [Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_9_infinite : Erdos9A.Infinite := by
+theorem erdos_9.variants.infinite : Erdos9A.Infinite := by
   sorry
 
 /--

@@ -19,21 +19,24 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 303
 
-*Reference:* [erdosproblems.com/303](https://www.erdosproblems.com/303)
+*References:*
+- [erdosproblems.com/303](https://www.erdosproblems.com/303)
+- [BrRo91] Brown, Tom C. and Rödl, Voijtech, Monochromatic solutions to equations with unit
+  fractions. Bull. Austral. Math. Soc. (1991), 387-392.
 -/
 
 namespace Erdos303
 
-/-- Is it true that in any finite colouring of the integers there exists a monochromatic solution
+/--
+Is it true that in any finite colouring of the integers there exists a monochromatic solution
 to $\frac 1 a = \frac 1 b + \frac 1 c$ with distinct $a, b, c$?
 
 This is true, as proved by Brown and Rödl [BrRo91].
 
-[BrRo91] Brown, Tom C. and Rödl, Voijtech,
-_Monochromatic solutions to equations with unit fractions_.
-Bull. Austral. Math. Soc. (1991), 387-392.
+This was formalized in Lean by Yuan using Seed-Prover.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using lean4 at
+"https://www.erdosproblems.com/forum/thread/303", AMS 5 11]
 theorem erdos_303 :
     answer(True) ↔
     -- For any finite colouring of the integers

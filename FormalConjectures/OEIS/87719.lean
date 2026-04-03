@@ -52,25 +52,25 @@ noncomputable def a (n : ℕ) : ℕ :=
 @[category test, AMS 11]
 theorem a_one : a 1 = 15 := by
   rw [a, Nat.find_eq_iff]
-  refine ⟨by decide, ?_⟩
+  refine ⟨by decide +native, ?_⟩
   intro m hm
-  interval_cases m <;> decide
+  interval_cases m <;> decide +native
 
 /-- a(2) = 27. -/
 @[category test, AMS 11]
 theorem a_two : a 2 = 27 := by
   rw [a, Nat.find_eq_iff]
-  refine ⟨by decide, ?_⟩
+  refine ⟨by decide +native, ?_⟩
   intro m hm
-  interval_cases m <;> decide
+  interval_cases m <;> decide +native
 
 /-- a(3) = 57. -/
 @[category test, AMS 11]
 theorem a_three : a 3 = 57 := by
   rw [a, Nat.find_eq_iff]
-  refine ⟨by decide, ?_⟩
+  refine ⟨by decide +native, ?_⟩
   intro m hm
-  interval_cases m <;> decide
+  interval_cases m <;> decide +native
 
 /-- Conjecture: a(n) = 3^n + 3 * 2^n + 6 for n ≥ 1. -/
 @[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/1894/commits/7a286754f623759d69a3dd18f482c53c1d70959b", AMS 11]

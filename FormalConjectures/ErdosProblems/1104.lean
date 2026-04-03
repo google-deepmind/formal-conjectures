@@ -30,6 +30,8 @@ open scoped Real
 noncomputable def triangleFreeMaxChromatic (n : ℕ) : ℕ :=
   sSup {χ | ∃ G : SimpleGraph (Fin n), G.CliqueFree 3 ∧ G.chromaticNumber = χ}
 
+-- TODO: Add erdos_1104.
+
 /--
 Lower bound (Hefty–Horn–King–Pfender 2025).
 There exists a constant $c_1 \in (0,1]$ such that, for sufficiently large $n$,
@@ -40,7 +42,7 @@ where $f(n)$ denotes the maximum chromatic number of a triangle-free graph on
 $n$ vertices, formalized as `triangleFreeMaxChromatic n`.
 -/
 @[category research solved, AMS 5]
-theorem erdos_1104_lower :
+theorem erdos_1104.variants.lower :
     ∃ c₁ : ℝ, 0 < c₁ ∧ c₁ ≤ 1 ∧
       (∀ᶠ n : ℕ in atTop,
         c₁ * Real.sqrt (n : ℝ) / Real.sqrt (Real.log (n : ℝ))
@@ -57,7 +59,7 @@ where $f(n)$ denotes the maximum chromatic number of a triangle-free graph on
 $n$ vertices, formalized as `triangleFreeMaxChromatic n`.
 -/
 @[category research solved, AMS 5]
-theorem erdos_1104_upper :
+theorem erdos_1104.variants.upper :
     ∃ c₂ : ℝ, 2 ≤ c₂ ∧
       (∀ᶠ n : ℕ in atTop,
         (triangleFreeMaxChromatic n : ℝ)

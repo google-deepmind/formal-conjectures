@@ -41,7 +41,7 @@ instance (n : ℕ) : Decidable (Erdos1141Prop n) :=
     cases n with
     | zero => simp [Erdos1141Prop]
     | succ n' =>
-      simp [Erdos1141Prop, Nat.lt_succ_iff, le_sqrt, pow_two]
+      simp [Erdos1141Prop, le_sqrt, pow_two]
 
 /--
 Are there infinitely many $n$ such that $n-k^2$ is prime for all $k$ with $(n,k)=1$ and $k^2 < n$?

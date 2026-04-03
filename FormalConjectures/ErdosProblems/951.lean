@@ -37,7 +37,7 @@ def Erdos951_prop (a : ℕ → ℝ) : Prop :=
 
 /-- If `a` has property `Erdos951_prop` and `1 < a 0`, then `a` is a set of Beurling prime numbers. -/
 @[category API, AMS 11]
-theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
+theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     (hm : StrictMono a) (he : Erdos951_prop a) :
     IsBeurlingPrimes a := by
   refine ⟨ha, hm, tendsto_atTop_atTop.2 fun x => ?_⟩

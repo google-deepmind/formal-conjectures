@@ -19,7 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 541
 
-*Reference:* [erdosproblems.com/541](https://www.erdosproblems.com/541)
+*References:*
+- [erdosproblems.com/541](https://www.erdosproblems.com/541)
+- [ErSz76] Erdős, E. and Szemerédi, E., On a problem of Graham. Publ. Math. Debrecen (1976),
+  123--127.
+- [GHW10] Gao, Weidong and Hamidoune, Yahya Ould and Wang, Guoqing, Distinct length modular zero-sum
+  subsequences: a proof of Graham's conjecture. J. Number Theory (2010), 1425--1431.
 -/
 
 open Filter
@@ -33,30 +38,24 @@ $$\sum_{i \in S} a_i \equiv 0 \pmod{p}$$
 then $|S| = r$.
 
 Must there be at most two distinct residues amongst the $a_i$?
+
+This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research solved, AMS 11]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos541.lean", AMS 11]
 theorem erdos_541 : answer(True) ↔ (∀ p, Fact p.Prime → ∀ (a : Fin p → ZMod p),
     (∃ r, ∀ (S : Finset (Fin p)), S ≠ ∅ → ∑ i ∈ S, a i = 0 → S.card = r) →
       (Set.range a).ncard ≤ 2) := by
   sorry
 
-/-- Gao, Hamidoune, and Wang [GHW10] solved this for all moduli `p` (not necessarily prime).
-
-[GHW10] Gao, Weidong and Hamidoune, Yahya Ould and Wang, Guoqing,
-Distinct length modular zero-sum subsequences: a proof of Graham's conjecture.
-J. Number Theory (2010), 1425--1431.
--/
+/-- Gao, Hamidoune, and Wang [GHW10] solved this for all moduli `p` (not necessarily prime). -/
 @[category research solved, AMS 11]
 theorem erdos_541.variants.general_moduli (p : ℕ) (a : Fin p → ZMod p)
     (ha₀ : ∃ r, ∀ (S : Finset (Fin p)), S ≠ ∅ → ∑ i ∈ S, a i = 0 → S.card = r) :
       (Set.range a).ncard ≤ 2 := by
   sorry
 
-/-- This was proved by Erdős and Szemerédi [ErSz76] for p sufficiently large.
-
-[ErSz76] Erd\H os, E. and Szemerédi, E., On a problem of Graham.
-Publ. Math. Debrecen (1976), 123--127.
--/
+/-- This was proved by Erdős and Szemerédi [ErSz76] for p sufficiently large. -/
 @[category research solved, AMS 11]
 theorem erdos_541.variants.large_primes : ∀ᶠ p in atTop, p.Prime → ∀ a : Fin p → ZMod p,
     (∃ r, ∀ (S : Finset (Fin p)), S ≠ ∅ → ∑ i ∈ S, a i = 0 → S.card = r) →

@@ -38,7 +38,7 @@ Formalization note: We formalize the limit of the inverse fraction V'(x)/V(x)
 to ensure the limit is finite (bounded between 0 and 1).
 -/
 @[category research open, AMS 11]
-theorem erdos_417.part.a :
+theorem erdos_417.parts.i :
     answer(sorry) ↔ ∃ L : ℝ, Tendsto (fun x ↦
       ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ℝ) /
       ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ℝ))
@@ -49,7 +49,7 @@ theorem erdos_417.part.a :
 Is it $>1$?
 -/
 @[category research open, AMS 11]
-theorem erdos_417.part.b :
+theorem erdos_417.parts.ii :
     answer(sorry) ↔ ∃ L < 1, Tendsto (fun x ↦
       ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ℝ) /
       ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ℝ))

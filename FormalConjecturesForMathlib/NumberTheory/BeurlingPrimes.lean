@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Order.Filter.AtTopBot.Defs
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Order.Filter.AtTopBot.Defs
+
+@[expose] public section
 
 /-!
 # Beurling primes
@@ -53,6 +56,6 @@ lemma mul_mem_beurling {a : ℕ → ℝ} {x y : ℝ} (hx : x ∈ BeurlingInteger
 /-- The set of Beurling integers is closed under taking powers. -/
 lemma pow_mem_beurling {a : ℕ → ℝ} {x : ℝ} (k : ℕ) (hx : x ∈ BeurlingInteger a) :
     x ^ k ∈ BeurlingInteger a := by
-  induction' k with k ih <;> simp [pow_succ']
-  · exact ⟨0, by norm_num⟩
-  · exact mul_mem_beurling hx ih
+  induction k with
+  | zero => exact ⟨0, by norm_num⟩
+  | succ k ih => simpa [pow_succ'] using mul_mem_beurling hx ih

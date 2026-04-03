@@ -33,6 +33,9 @@ register_option linter.style.ams_attribute : Bool := {
   descr := "enable the `AMS` attribute style linter"
 }
 
+-- FIXME: False positive
+set_option linter.style.docString.empty false
+
 namespace AMSLinter
 
 /-- Checks if a command has the `AMS` attribute. -/

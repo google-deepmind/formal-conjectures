@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 645
 
-*Reference:* [erdosproblems.com/645](https://www.erdosproblems.com/645)
+*References:*
+- [erdosproblems.com/645](https://www.erdosproblems.com/645)
+- [BrLa99] Brown, Tom C. and Landman, Bruce M., Monochromatic arithmetic progressions with large
+  differences. Bull. Austral. Math. Soc. (1999), 21--35.
 -/
 
 
@@ -28,8 +31,14 @@ namespace Erdos645
 /--
 If ℕ is $2$-coloured then there must exist a monochromatic three-term arithmetic progression
 $x,x+d,x+2d$ such that $d>x$.
+
+This was first proved by Brown and Landman [BrLa99], who in fact show that this is always possible
+with $d>f(x)$ for any increasing function $f$.
+
+This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research solved, AMS 5 11]
+@[category research formally solved using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos645.lean", AMS 5 11]
 theorem erdos_645 (c : ℕ → Bool) : ∃ x d, 0 < x ∧ x < d ∧
     (∃ C, c x = C ∧ c (x + d) = C ∧ c (x + 2 * d) = C) := by
   sorry
