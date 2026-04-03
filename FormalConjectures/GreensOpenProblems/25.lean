@@ -32,13 +32,7 @@ open Asymptotics Filter Finset
 
 namespace Green25
 
-/--
-The restricted sumset of a set $A$, denoted $A \hat{+} A$, is the set
-$\lbrace a_1 + a_2 : a_1, a_2 \in A, a_1 \neq a_2 \rbrace$.
--/
-def restrictedSumset (A : Finset ℕ) : Finset ℕ :=
-  -- TODO(jeangud): add a generic `restrictedSumset` utility to `FormalConjecturesForMathlib`
-  A.offDiag.image (fun ⟨x, y⟩ ↦ x + y)
+
 
 /--
 For which values of $k$ is the following true: whenever we partition $[N] = A_1 \cup \dots \cup A_k$,
@@ -47,7 +41,7 @@ $\left|\bigcup^k_{i=1} (A_i \hat{+} A_i)\right| \geq \frac{1}{10} N$?
 def Property25 (k N : ℕ) : Prop :=
   1 ≤ k ∧ k ≤ N ∧
   ∀ P : Finpartition (Icc 1 N), P.parts.card = k →
-  10 * (P.parts.biUnion restrictedSumset).card ≥ N
+  10 * (P.parts.biUnion Finset.restrictedSumset).card ≥ N
 
 /-- The best-known lower bound [ESS89]. -/
 noncomputable def bestLower (N : ℕ) : ℝ := Real.log (Real.log N)
