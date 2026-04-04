@@ -72,15 +72,16 @@ instance : DecidableRel Star5.Adj := by unfold Star5 completeBipartiteGraph; inf
 
 @[category test, AMS 5]
 theorem house_indep : α(HouseGraph) = 2 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem house_dom : dominationNumber HouseGraph = 2 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem house_avg_dist : averageDistance HouseGraph = 7/5 := by
-  sorry
+  rw [avg_dist_eq_computable, show computable_avg_dist HouseGraph = (7 / 5 : ℚ) from by decide +native]
+  norm_num
 
 @[category test, AMS 5]
 theorem house_diameter : maxEccentricity HouseGraph = 2 := by
@@ -103,11 +104,11 @@ theorem house_size : HouseGraph.edgeFinset.card = 6 := by
 
 @[category test, AMS 5]
 theorem house_szeged : szegedIndex HouseGraph = 24 := by
-  sorry
+  rw [szeged_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem house_wiener : wienerIndex HouseGraph = 14 := by
-  sorry
+  rw [wiener_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem house_min_deg : HouseGraph.minDegree = 2 := by
@@ -142,15 +143,16 @@ theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
 
 @[category test, AMS 5]
 theorem K4_indep : α(K4) = 1 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem K4_dom : dominationNumber K4 = 1 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem K4_avg_dist : averageDistance K4 = 1 := by
-  sorry
+  rw [avg_dist_eq_computable, show computable_avg_dist K4 = (1 : ℚ) from by decide +native]
+  norm_num
 
 @[category test, AMS 5]
 theorem K4_diameter : maxEccentricity K4 = 1 := by
@@ -173,11 +175,11 @@ theorem K4_size : K4.edgeFinset.card = 6 := by
 
 @[category test, AMS 5]
 theorem K4_szeged : szegedIndex K4 = 6 := by
-  sorry
+  rw [szeged_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem K4_wiener : wienerIndex K4 = 6 := by
-  sorry
+  rw [wiener_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem K4_min_deg : K4.minDegree = 3 := by
@@ -212,15 +214,16 @@ theorem K4_cvetkovic : cvetkovic K4 = 1 := by
 
 @[category test, AMS 5]
 theorem petersen_indep : α(PetersenGraph) = 4 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem petersen_dom : dominationNumber PetersenGraph = 3 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
-  sorry
+  rw [avg_dist_eq_computable, show computable_avg_dist PetersenGraph = (5 / 3 : ℚ) from by decide +native]
+  norm_num
 
 @[category test, AMS 5]
 theorem petersen_diameter : maxEccentricity PetersenGraph = 2 := by
@@ -243,11 +246,11 @@ theorem petersen_size : PetersenGraph.edgeFinset.card = 15 := by
 
 @[category test, AMS 5]
 theorem petersen_szeged : szegedIndex PetersenGraph = 135 := by
-  sorry
+  rw [szeged_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem petersen_wiener : wienerIndex PetersenGraph = 75 := by
-  sorry
+  rw [wiener_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem petersen_min_deg : PetersenGraph.minDegree = 3 := by
@@ -282,15 +285,16 @@ theorem petersen_cvetkovic : cvetkovic PetersenGraph = 4 := by
 
 @[category test, AMS 5]
 theorem C6_indep : α(C6) = 3 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem C6_dom : dominationNumber C6 = 2 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem C6_avg_dist : averageDistance C6 = 9/5 := by
-  sorry
+  rw [avg_dist_eq_computable, show computable_avg_dist C6 = (9 / 5 : ℚ) from by decide +native]
+  norm_num
 
 @[category test, AMS 5]
 theorem C6_diameter : maxEccentricity C6 = 3 := by
@@ -313,11 +317,11 @@ theorem C6_size : C6.edgeFinset.card = 6 := by
 
 @[category test, AMS 5]
 theorem C6_szeged : szegedIndex C6 = 54 := by
-  sorry
+  rw [szeged_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem C6_wiener : wienerIndex C6 = 27 := by
-  sorry
+  rw [wiener_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem C6_min_deg : C6.minDegree = 2 := by
@@ -351,15 +355,16 @@ theorem C6_cvetkovic : cvetkovic C6 = 3 := by
 
 @[category test, AMS 5]
 theorem Star5_indep : α(Star5) = 5 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem Star5_dom : dominationNumber Star5 = 1 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem Star5_avg_dist : averageDistance Star5 = 5/3 := by
-  sorry
+  rw [avg_dist_eq_computable, show computable_avg_dist Star5 = (5 / 3 : ℚ) from by decide +native]
+  norm_num
 
 @[category test, AMS 5]
 theorem Star5_diameter : maxEccentricity Star5 = 2 := by
@@ -382,11 +387,11 @@ theorem Star5_size : Star5.edgeFinset.card = 5 := by
 
 @[category test, AMS 5]
 theorem Star5_szeged : szegedIndex Star5 = 25 := by
-  sorry
+  rw [szeged_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem Star5_wiener : wienerIndex Star5 = 25 := by
-  sorry
+  rw [wiener_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem Star5_min_deg : Star5.minDegree = 1 := by

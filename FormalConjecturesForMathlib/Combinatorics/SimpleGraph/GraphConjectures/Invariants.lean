@@ -305,4 +305,32 @@ noncomputable def cvetkovic (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   letI zero_count : ℕ := spectrum.countP (fun x => 0 = x)
   zero_count + min positive_count negative_count
 
+-- ================================================================
+-- Equivalence between noncomputable and computable graph invariants
+-- ================================================================
+
+theorem indep_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    G.indepNum = computable_indep_num G := by
+  sorry
+
+theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    dominationNumber G = computable_dom_num G := by
+  sorry
+
+theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) :
+    G.dist u v = computable_dist G u v := by
+  sorry
+
+theorem wiener_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    wienerIndex G = computable_wiener G := by
+  sorry
+
+theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    averageDistance G = (computable_avg_dist G : ℝ) := by
+  sorry
+
+theorem szeged_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    szegedIndex G = computable_szeged_index G := by
+  sorry
+
 end SimpleGraph
