@@ -43,7 +43,7 @@ describing) your favourite conjecture.
 There are various ways of contributing to this repository:
 
 1. **Formalise a Problem**. You can find problem lists ready
-   to be worked on in our [list of Milestones](https://github.com/google-deepmind/formal-conjectures/milestones), if you have deeper mathematical expertise in a specific field you can also filter by the AMS 2020 Classification (e.g. [Group Theory Issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22ams-20%20Group%20theory%20and%20generalizations%22)) or
+   to be worked on in our [list of Milestones](https://github.com/google-deepmind/formal-conjectures/milestones), you can also filter by the AMS 2020 Classification (e.g. [Group Theory Issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22ams-20%20Group%20theory%20and%20generalizations%22)) or
    take a look at [good first issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22) if you are new to Lean.
 
    More generally, we encourage adding formalisations of open conjectures from all sorts of sources, including:
