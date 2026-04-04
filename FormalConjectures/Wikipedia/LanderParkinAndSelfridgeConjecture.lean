@@ -25,11 +25,13 @@ import FormalConjectures.Util.ProblemImports
 namespace LanderParkinSelfridge
 
 /-- The Lander–Parkin–Selfridge conjecture: if the sum of `n` positive integer `k`-th powers
-equals the sum of `m` positive integer `k`-th powers, then `n + m ≥ k`. -/
+equals the sum of `m` positive integer `k`-th powers, with all values on the left distinct from
+all values on the right, then `n + m ≥ k`. -/
 @[category research open, AMS 11]
 theorem lander_parkin_selfridge :
     ∀ (k n m : ℕ) (x : Fin n → ℕ) (y : Fin m → ℕ),
       (∀ i, 0 < x i) → (∀ j, 0 < y j) →
+      (∀ i j, x i ≠ y j) →
       ∑ i, x i ^ k = ∑ j, y j ^ k →
       k ≤ n + m := by
   sorry
