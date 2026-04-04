@@ -24,9 +24,15 @@ import FormalConjectures.Util.ProblemImports
 
 namespace LanderParkinSelfridge
 
-/-- The Lander–Parkin–Selfridge conjecture: if the sum of `n` positive integer `k`-th powers
-equals the sum of `m` positive integer `k`-th powers, with all values on the left distinct from
-all values on the right, then `n + m ≥ k`. -/
+/-- The Lander–Parkin–Selfridge conjecture: if the sum of $n$ positive integer $k$-th powers
+equals the sum of $m$ positive integer $k$-th powers, with all values on the left distinct from
+all values on the right, then $n + m \geq k$.
+
+Formally, for positive integers $k, n, m \in \mathbb{N}$ and sequences
+$x : \{0, \ldots, n-1\} \to \mathbb{N}$ and $y : \{0, \ldots, m-1\} \to \mathbb{N}$
+with $x_i > 0$, $y_j > 0$, and $x_i \neq y_j$ for all $i, j$, if
+$$\sum_{i=0}^{n-1} x_i^k = \sum_{j=0}^{m-1} y_j^k,$$
+then $k \leq n + m$. -/
 @[category research open, AMS 11]
 theorem lander_parkin_selfridge :
     ∀ (k n m : ℕ) (x : Fin n → ℕ) (y : Fin m → ℕ),
@@ -37,7 +43,12 @@ theorem lander_parkin_selfridge :
   sorry
 
 /-- Special case of the Lander–Parkin–Selfridge conjecture: there is no solution in positive
-integers to `x₁^5 + x₂^5 + x₃^5 = y^5`. -/
+integers to
+$$x_1^5 + x_2^5 + x_3^5 = y^5.$$
+That is, for all $x_1, x_2, x_3, y \in \mathbb{N}$ with $x_1, x_2, x_3, y > 0$,
+$$x_1^5 + x_2^5 + x_3^5 \neq y^5.$$
+This corresponds to the case $k = 5$, $n = 3$, $m = 1$ of the general conjecture,
+where $n + m = 4 < 5 = k$ would be required to yield a counterexample. -/
 @[category research open, AMS 11]
 theorem lander_parkin_selfridge.variants.five_three :
     ∀ x₁ x₂ x₃ y : ℕ,
