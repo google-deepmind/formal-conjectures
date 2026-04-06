@@ -44,17 +44,17 @@ def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
 
 /-- `ℕ` has property `P₁`. This is proved in [ErSt75]. -/
 @[category research solved, AMS 11]
-theorem erdos_318.univ : P₁ univ := by
+theorem erdos_318.variants.univ : P₁ univ := by
   sorry
 
 /-- Sattler proved in [Sa75] that the set of odd numbers has property `P₁`. -/
 @[category research solved, AMS 11]
-theorem erdos_318.odd : P₁ {n | Odd n} := by
+theorem erdos_318.variants.odd : P₁ {n | Odd n} := by
   sorry
 
 /-- The set of squares does not have property `P₁`. -/
 @[category test, AMS 11]
-theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n}) := by
+theorem erdos_318.variants.squares : ¬ P₁ ({n | IsSquare n}) := by
   simp only [P₁, not_forall, not_exists, not_and]
   -- Consider the function `f` that sends `1` to `1` and sends all other numbers to `-1`.
   refine ⟨fun n => if n = 1 then 1 else - 1, fun h => ?_, fun h => ?_,
@@ -101,24 +101,24 @@ theorem erdos_318.squares : ¬ P₁ ({n | IsSquare n}) := by
 /-- For any set `A` containing exactly one even number, `A` does not have property `P₁`. Sattler
 [Sa82] credits this observation to Erdős, who presumably found this after [ErGr80]. -/
 @[category research solved, AMS 11]
-theorem erdos_318.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even n}.ncard = 1) :
+theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even n}.ncard = 1) :
     ¬ P₁ {n | IsSquare n} := by
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
 #TODO: prove this lemma by assuming `erdos_318.contain_single_even`. -/
 @[category research solved, AMS 11]
-theorem erdos_318.posDensity : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
+theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
 
 /-- Every infinite arithmetic progression has property `P₁`. This is proved in [Sa82b]. -/
 @[category research solved, AMS 11]
-theorem erdos_318.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
+theorem erdos_318.variants.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
 /-- Does the set of squares excluding 1 have property `P₁`? -/
 @[category research open, AMS 11]
-theorem erdos_318.square_excluding_one : answer(sorry) ↔  P₁ ({n | IsSquare n} \ {1}) := by
+theorem erdos_318.parts.ii : answer(sorry) ↔  P₁ ({n | IsSquare n} \ {1}) := by
   sorry
 
 end Erdos318

@@ -68,8 +68,7 @@ $(a+d+1)!+(a+d)\in A$, and $d$ divides $(a+d+1)!+d$.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos198.lean", AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos198.lean"]
 theorem erdos_198 : (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ Aᶜ)) ↔
     answer(False) := by
   sorry

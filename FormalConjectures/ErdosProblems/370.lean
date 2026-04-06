@@ -32,8 +32,7 @@ Steinerberger has pointed out this problem has a trivial solution.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos370.lean", AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos370.lean"]
 theorem erdos_370 : answer(True) ↔
     { n | Nat.maxPrimeFac n < √n ∧ Nat.maxPrimeFac (n + 1) < √(n + 1) }.Infinite := by
   sorry

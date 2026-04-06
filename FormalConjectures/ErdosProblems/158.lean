@@ -26,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Real
 
+namespace Erdos158
+
 /-- A set `A ⊆ ℕ` is said to be a `B₂[g]` set if for all `n`, the equation
 `a + a' = n, a ≤ a', a, a' ∈ A` has at most `g` solutions. This is defined in [ESS94]. -/
 def B2 (g : ℕ) (A : Set ℕ) : Prop :=
@@ -48,8 +50,6 @@ lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A where
     refine Set.encard_le_one_iff.2 fun x y ⟨h, p, q⟩ ⟨r, s, t⟩ => ?_
     have := hA x.1 q.1 y.1 t.1 x.2 q.2 y.2 t.2 (h.trans r.symm)
     grind
-
-namespace Erdos158
 
 /-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0`? -/
 @[category research open, AMS 5]

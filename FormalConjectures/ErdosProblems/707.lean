@@ -46,8 +46,7 @@ The proof of this has been formalized.
 
 This was formalized in Lean by Alexeev using ChatGPT.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos707.lean", AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos707.lean"]
 theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ False := by
   sorry
@@ -86,7 +85,7 @@ cannot be extended to a perfect difference set modulo $p^2+p+1$
 for any prime $p$.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4, 8}) :
+theorem erdos_707.variants.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4, 8}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (p : ℕ),
     Prime p → A ⊆ B → ¬IsPerfectDifferenceSet B (p ^ 2 + p + 1) := by
@@ -98,7 +97,7 @@ Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture, showing tha
 extended to any perfect difference set.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707.counterexample_mian_chowla (A : Set ℕ) (hA : A = {1, 2, 4, 8, 13}) :
+theorem erdos_707.variants.counterexample_mian_chowla (A : Set ℕ) (hA : A = {1, 2, 4, 8, 13}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
   sorry
@@ -111,13 +110,13 @@ was given as $\{-8, -6, 0, 1, 4\}$, but this can be shifted to natural numbers
 as pointed out in [arxiv/2510.19804].
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_707.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
+theorem erdos_707.variants.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
    Finite A ∧ IsSidon A ∧
    ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
   sorry
 
 
-/-! ## Perfect difference sets and their properties -/
+/-  ## Perfect difference sets and their properties -/
 
 /--
 A perfect difference set modulo `n` must have size `≤ √n + 1`.
@@ -136,7 +135,7 @@ theorem erdos_707.variants.singer_construction (p : ℕ) (hp : IsPrimePow p) :
     ∃ (B : Set ℕ), IsPerfectDifferenceSet B (p^2 + p + 1) ∧ B.ncard = p + 1 := by
   sorry
 
-/-! ## Examples and special cases -/
+/-  ## Examples and special cases -/
 
 /--
 The set `{1, 2, 4}` is a Sidon set.

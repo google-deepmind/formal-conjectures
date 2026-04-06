@@ -38,7 +38,6 @@ def categoryToString : Category → String
   | .graduate => "graduate"
   | .research .open => "research open"
   | .research .solved => "research solved"
-  | .research (.formallySolvedAt _ _) => "research formally solved"
   | .test => "test"
   | .API => "API"
 
@@ -57,6 +56,10 @@ def nameAny (n : Name) (p : String → Bool) : Bool :=
 def isInternal (n : Name) : Bool :=
   nameAny n (fun s => s.startsWith "_" || s.startsWith "match_" || s.startsWith "proof_")
 
+/-- Valid keys for the `--exclude` flag. -/
+def validExcludeKeys : List String :=
+  ["docstring", "statement", "subjects", "formalProofKind", "formalProofLink", "moduleDocstrings"]
+
 structure TheoremInfo where
   «theorem» : String
   module : String
@@ -66,7 +69,25 @@ structure TheoremInfo where
   docstring : Option String
   formalProofKind : Option String
   formalProofLink : Option String
-  deriving ToJson
+
+
+/-- Serialize `TheoremInfo` to JSON, omitting fields whose keys are in `exclude`. -/
+def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet String := {}) : Json :=
+  let fields : List (String × Json) :=
+    [("theorem", toJson info.theorem),
+     ("module", toJson info.module),
+     ("category", toJson info.category)]
+    ++ (if exclude.contains "subjects" then [] else [("subjects", toJson info.subjects)])
+    ++ (if exclude.contains "statement" then [] else [("statement", toJson info.statement)])
+    ++ (if exclude.contains "docstring" then [] else [("docstring", toJson info.docstring)])
+    ++ (if exclude.contains "formalProofKind" then [] else
+        [("formalProofKind", toJson info.formalProofKind)])
+    ++ (if exclude.contains "formalProofLink" then [] else
+        [("formalProofLink", toJson info.formalProofLink)])
+  Json.mkObj fields
+
+instance : ToJson TheoremInfo where
+  toJson info := info.toFilteredJson
 
 unsafe def runWithImports {α : Type} (moduleNames : Array Name) (actionToRun : CoreM α) : IO α := do
   initSearchPath (← findSysroot)
@@ -88,12 +109,32 @@ partial def getAllLeanFiles (dir : System.FilePath) : IO (Array System.FilePath)
   return files
 
 unsafe def main (args : List String) : IO Unit := do
-  let leanFiles ← match args with
+  -- Parse flags vs file arguments
+  let (flags, fileArgs) := args.partition (·.startsWith "--")
+  let mut excludeSet : Std.HashSet String := {}
+  for flag in flags do
+    if flag == "--no-docstrings" then
+      excludeSet := excludeSet.insert "docstring" |>.insert "moduleDocstrings"
+    else if flag.startsWith "--exclude=" then
+      let excludeStr := flag.drop 10 |>.toString
+      let fields := excludeStr.splitOn ","
+      for f in fields do
+        if f ∉ validExcludeKeys then
+          throw <| IO.userError s!"Unknown exclude key: '{f}'. Valid keys: {validExcludeKeys}"
+        excludeSet := excludeSet.insert f
+    else
+      throw <| IO.userError s!"Unknown flag: '{flag}'. Supported: --exclude=key1,key2 --no-docstrings"
+  let leanFiles ← match fileArgs with
     | [] =>
       let f1 ← getAllLeanFiles "FormalConjectures"
       pure (f1)
-    | [file] => pure #[System.FilePath.mk file]
-    | _ => throw <| IO.userError "Usage: extract_names [file]"
+    | [arg] =>
+      let p := System.FilePath.mk arg
+      if ← p.isDir then
+        getAllLeanFiles p
+      else
+        pure #[p]
+    | _ => throw <| IO.userError "Usage: extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]"
 
   let mut moduleNames := #[]
   for file in leanFiles do
@@ -106,6 +147,7 @@ unsafe def main (args : List String) : IO Unit := do
     let env ← getEnv
     let tags ← getTags
     let subjectTags ← getSubjectTags
+    let formalProofTags ← getFormalProofTags
 
     -- Create maps for quick lookup
     let mut categoryMap : Std.HashMap Name (List String) := {}
@@ -113,6 +155,11 @@ unsafe def main (args : List String) : IO Unit := do
     for tag in tags do
       categoryMap := categoryMap.insert tag.declName (categoryToString tag.category :: categoryMap.getD tag.declName [])
       categoryFullMap := categoryFullMap.insert tag.declName tag
+
+    -- Create formal proof map
+    let mut formalProofMap : Std.HashMap Name FormalProofTag := {}
+    for tag in formalProofTags do
+      formalProofMap := formalProofMap.insert tag.declName tag
 
     let mut subjectMap : Std.HashMap Name (List String) := {}
     for tag in subjectTags do
@@ -136,12 +183,12 @@ unsafe def main (args : List String) : IO Unit := do
                 throwError m!"Theorem {name} must have exactly one category, found {cats.length}."
               let statement := toString (← Meta.MetaM.run' (Meta.ppExpr info.type))
               let docstring ← findDocString? env name
+              if docstring.isNone then
+                IO.eprintln s!"WARNING: Theorem {name} (category: {cats.head!}) is missing a docstring"
+              -- Extract formal proof info from the separate formal_proof attribute
               let (formalProofKind, formalProofLink) :=
-                if let some tag := categoryFullMap.get? name then
-                  if let .research (.formallySolvedAt kind link) := tag.category then
-                    (some (formalProofKindToString kind), some link)
-                  else
-                    (none, none)
+                if let some tag := formalProofMap.get? name then
+                  (some (formalProofKindToString tag.proofKind), some tag.proofLink)
                 else
                   (none, none)
               allResults := {
@@ -156,4 +203,22 @@ unsafe def main (args : List String) : IO Unit := do
               } :: allResults
         | _ => pure ()
 
-    IO.println (toJson allResults.reverse).pretty
+    -- Collect module docstrings via Lean's getModuleDoc? API
+    let mut moduleDocstrings : List (String × String) := []
+    if !excludeSet.contains "moduleDocstrings" then
+      for modName in moduleNames do
+        if let some docs := getModuleDoc? env modName then
+          if docs.size != 1 then
+            IO.eprintln s!"WARNING: Module {modName} has {docs.size} module docstrings"
+          if docs.size > 0 then
+            let combined := "\n\n".intercalate (docs.toList.map (·.doc))
+            moduleDocstrings := (modName.toString, combined) :: moduleDocstrings
+
+    -- Build structured output: { problems: [...], moduleDocstrings: {...} }
+    let problemsJson := toJson (allResults.reverse.map (·.toFilteredJson excludeSet))
+    let mut outputFields : List (String × Json) := [("problems", problemsJson)]
+    if !excludeSet.contains "moduleDocstrings" then
+      let moduleDocJson := Json.mkObj (moduleDocstrings.reverse.map fun (k, v) => (k, toJson v))
+      outputFields := outputFields ++ [("moduleDocstrings", moduleDocJson)]
+    let output := Json.mkObj outputFields
+    IO.println output.pretty

@@ -44,7 +44,7 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem erdos_69.specialisation_of_erdos_257 :
+theorem erdos_69.variants.specialisation_of_erdos_257 :
     let A := { n : ℕ | n.Prime }
     ∑' n, ω (n + 2) / (2 ^ (n + 2) : ℝ) = ∑' p : A, 1 / (2 ^ p.1 - 1) := by
   sorry
