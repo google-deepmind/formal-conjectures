@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 open Metric Set
 
 /-!
-# Infinitude of Wall–Sun–Sun primes
+# Bloch and Landau constants
 
 *References:*
 - [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
