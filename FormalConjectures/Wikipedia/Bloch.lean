@@ -26,12 +26,12 @@ open Metric Set
 - [Bhowmik–Sen](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/improved-bloch-and-landau-constants-for-meromorphic-functions/FD465D1F2CEF7E8C62AFF16C3E89B7B4)
 -/
 
-/-- The **Bloch radius** $R$ of a function $f$ is the radius of the largest univalent disk in the
+/-- The **Bloch radius** $B_f$ of a function $f$ is the radius of the largest univalent disk in the
 image of the unit disk under $f$. -/
 noncomputable def blochRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ S ⊆ ball 0 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S}
 
-/-- The **Landau radius** $R$ of a function $f$ is the radius of the largest disk in the image of
+/-- The **Landau radius** $L_f$ of a function $f$ is the radius of the largest disk in the image of
 the unit disk under $f$. -/
 noncomputable def landauRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ x, ball x r ⊆ f '' (ball 0 1)}
@@ -56,9 +56,8 @@ theorem blochConstant_upper_bound :
     (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
   sorry
 
-/--
-Ahlfors and Grunsky conjectured that this upper bound is the precise value of the Bloch constant.
--/
+/-- Ahlfors and Grunsky conjectured that this upper bound is the precise value of the Bloch
+constant. -/
 @[category research open, AMS 30]
 theorem blochConstant_exact_value :
     blochConstant = Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /
@@ -74,9 +73,7 @@ theorem landauConstant_upper_bound :
     landauConstant ≤ Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
   sorry
 
-/--
-Rademacher conjectured that this upper bound is the precise value of the Bloch constant.
--/
+/-- Rademacher conjectured that this upper bound is the precise value of the Landau constant. -/
 @[category research open, AMS 30]
 theorem landauConstant_exact_value :
     landauConstant = Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
