@@ -156,13 +156,13 @@ lemma wordBall_zero_element_eq_one (S : Finset G) :
 lemma wordBall_is_wordBall_union_wordShell (S : Finset G) (n : ℕ) :
   wordBall S (n + 1) = wordBall S n ∪ wordShell S (n + 1) := by
     rw [wordBall]
-    rw [Finset.range_succ, Finset.biUnion_insert]
+    rw [Finset.range_add_one, Finset.biUnion_insert]
     apply Finset.union_comm
 
 lemma wordBall_n_subset_wordBall_n_plus_one (S : Finset G) (n : ℕ) :
   wordBall S n ⊆ wordBall S (n + 1) := by
     have h : Finset.range (n + 1) ⊆ Finset.range (n + 1 + 1) := by
-      simp only [Finset.range_subset, Nat.le_add_right]
+      simp only [Finset.range_subset_range, le_add_iff_nonneg_right, zero_le]
     exact Finset.biUnion_subset_biUnion_of_subset_left (fun x ↦ wordShell S x) h
 
 lemma wordBall_monotone (S : Finset G) {m n : ℕ} (hmn : m ≤ n) :
