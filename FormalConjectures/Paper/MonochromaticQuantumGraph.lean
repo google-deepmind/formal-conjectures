@@ -378,6 +378,33 @@ theorem eqSystem6_no_solution_d3 :
       ¬ ∃ W : WeightsN 6 3 ℂ, EqSystemN 6 3 W := by
   sorry
 
+
+/-- For $N = 6$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem6_no_solution_d4 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 6 4 ℂ, EqSystemN 6 4 W := by
+  sorry
+
+
+/-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem6_no_solution_d5 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 6 5 ℂ, EqSystemN 6 5 W := by
+  sorry
+
+
+/-- For $N = 6$ and $D = 6$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem6_no_solution_d6 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 6 6 ℂ, EqSystemN 6 6 W := by
+  sorry
+
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
 @[category research open, AMS 5 14 81]
@@ -409,6 +436,54 @@ equation system over $\mathbb{C}$? -/
 theorem eqSystem10_no_solution_d3 :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 10 3 ℂ, EqSystemN 10 3 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d4 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 4 ℂ, EqSystemN 10 4 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d5 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 5 ℂ, EqSystemN 10 5 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 6$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d6 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 6 ℂ, EqSystemN 10 6 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 7$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d7 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 7 ℂ, EqSystemN 10 7 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 8$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d8 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 8 ℂ, EqSystemN 10 8 W := by
+  sorry
+
+/-- For $N = 10$ and $D = 9$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem10_no_solution_d9 :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 10 9 ℂ, EqSystemN 10 9 W := by
   sorry
 
 /-- For $N = 10$ and $D = 10$, does there exist no solution to the monochromatic quantum graph

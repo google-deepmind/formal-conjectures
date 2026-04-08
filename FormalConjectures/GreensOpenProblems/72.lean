@@ -41,7 +41,7 @@ structure AllowedSet (k : ℕ) (N : ℕ) (s : Finset (ℕ × ℕ)) : Prop where
 
 /-- The maximal size of an allowed set -/
 noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
-  sSup {r | ∃ s, r = s.card ∧ AllowedSet N k s}
+  sSup {r | ∃ s, r = s.card ∧ AllowedSet k N s}
 
 /-- By the pigeon hole principle, the size of a subset of an $N \times N$ grid such that no $k$
 points lie on a line is bounded by $\leq (k - 1) * N$ for $N \geq k$. -/
@@ -72,7 +72,7 @@ alias no_three_in_line := green_72
 
 /-- Does the no-three-in-line problem hold when $N$ is big enough? -/
 @[category research open, AMS 05 52]
-theorem green_72.variants.eventually : ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
+theorem green_72.variants.eventually : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
   sorry
 
 /-- For $N \leq 60$, this has been verfied with computers. -/
