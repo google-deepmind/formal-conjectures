@@ -35,7 +35,7 @@ of length ≥ 4, with $(n, d) = 1$, be a perfect power?
 -/
 @[category research open, AMS 11]
 theorem erdos_672 :
-    (∀ᵉ (k) (l > 1), k ≥ 4 → Erdos672With k l) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ᵉ (k) (l > 1), k ≥ 4 → Erdos672With k l := by
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/

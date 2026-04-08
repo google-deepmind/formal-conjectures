@@ -62,7 +62,7 @@ infinitely many odd integers not of this form, but gives no reference.
 [Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_9_infinite : Erdos9A.Infinite := by
+theorem erdos_9.variants.infinite : Erdos9A.Infinite := by
   sorry
 
 /--
@@ -70,7 +70,7 @@ Is the upper density of the set of odd numbers that cannot be expressed as a pri
 two powers of 2 positive?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_9 : 0 < Erdos9A.upperDensity ↔ answer(sorry) := by
+theorem erdos_9 : answer(sorry) ↔ 0 < Erdos9A.upperDensity := by
   sorry
 
 end Erdos9

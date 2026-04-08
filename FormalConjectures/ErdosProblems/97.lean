@@ -74,7 +74,7 @@ Does every convex polygon have a vertex with no other 4 vertices equidistant fro
 -/
 @[category research open, AMS 52]
 theorem erdos_97 :
-    (∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A := by
   sorry
 
 /--
@@ -89,15 +89,15 @@ Danzer's construction is explained in [Er87b].
 @[category research solved, AMS 52]
 theorem erdos_97.variants.three_equidistant :
     ∃ A : Finset ℝ², A.Nonempty ∧ ConvexIndep A ∧ HasNEquidistantProperty 3 A := by
-  let A₁ : ℝ² := ![(-√3), -1]
-  let A₂ : ℝ² := ![(√3), -1]
-  let A₃ : ℝ² := ![0, 2]
-  let B₁ : ℝ² := ![(-8991 / 10927 * √3), -26503 / 10927]
-  let B₂ : ℝ² := ![(-17747 / 10947 * √3), -235 / 10927]
-  let B₃ : ℝ² := ![(-8756 / 10927 * √3), 26738 / 10927]
-  let C₁ : ℝ² := ![(-10753 / 18529 * √3), -44665 / 18529]
-  let C₂ : ℝ² := ![(27709 / 18529 * √3), 6203 / 18529]
-  let C₃ : ℝ² := ![(-16956 / 18529 * √3), 38462 / 18529]
+  let A₁ : ℝ² := !₂[(-√3), -1]
+  let A₂ : ℝ² := !₂[(√3), -1]
+  let A₃ : ℝ² := !₂[0, 2]
+  let B₁ : ℝ² := !₂[(-8991 / 10927 * √3), -26503 / 10927]
+  let B₂ : ℝ² := !₂[(-17747 / 10947 * √3), -235 / 10927]
+  let B₃ : ℝ² := !₂[(-8756 / 10927 * √3), 26738 / 10927]
+  let C₁ : ℝ² := !₂[(-10753 / 18529 * √3), -44665 / 18529]
+  let C₂ : ℝ² := !₂[(27709 / 18529 * √3), 6203 / 18529]
+  let C₃ : ℝ² := !₂[(-16956 / 18529 * √3), 38462 / 18529]
   use {A₁, A₂, A₃, B₁, B₂, B₃, C₁, C₂, C₃}
   sorry
 
@@ -106,8 +106,8 @@ Erdős also conjectured that there is a $k$ for which every convex polygon has a
 with no other $k$ vertices equidistant from it.
 -/
 @[category research open, AMS 52]
-theorem erdos_97.variants.k_equidistant :
-    (∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty k A) ↔ answer(sorry) := by
+theorem erdos_97.variants.k_equidistant : answer(sorry) ↔
+    ∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty k A := by
   sorry
 
 /--

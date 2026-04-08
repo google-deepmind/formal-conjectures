@@ -90,7 +90,7 @@ Are there infinitely many Mersenne primes?
 -/
 @[category research open, AMS 11]
 theorem infinitely_many_mersenne_primes :
-  Set.Infinite { p : ℕ | p.GivesMersennePrime } ↔ answer(sorry) := by
+  answer(sorry) ↔ Set.Infinite { p : ℕ | p.GivesMersennePrime } := by
     sorry
 
 end Mersenne

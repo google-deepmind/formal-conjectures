@@ -110,12 +110,12 @@ end PrimalityTesting
 
 section FermatNumbers
 
-/-!
+/-
 # Selfridge's conjectures about Fermat numbers
 -/
 
 /--
-**OEIS A046052**
+**OEIS A46052**
 The number of distinct prime factors of nth Fermat number.
 Known terms: 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 4, 5
 -/

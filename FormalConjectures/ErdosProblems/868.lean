@@ -39,10 +39,9 @@ $n$ can be written as the sum of two elements from $A$. If $f(n) \to \infty$ as 
 must $A$ contain a minimal additive basis of order $2$? -/
 @[category research open, AMS 5 11]
 theorem erdos_868.parts.i :
-    (∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
+    answer(sorry) ↔ ∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
       atTop.Tendsto (fun n => ncard_add_repr A 2 n) atTop → ∃ B ⊆ A,
-      B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2) ↔
-    answer(sorry) := by
+      B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
 
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
@@ -51,20 +50,18 @@ and an arbitrary fixed $\epsilon > 0$, then must $A$ contain a minimal additive
 basis of order $2$? -/
 @[category research open, AMS 5 11]
 theorem erdos_868.parts.ii :
-    (∀ᵉ (A : Set ℕ) (ε > 0), A.IsAsymptoticAddBasisOfOrder 2 →
+    answer(sorry) ↔ ∀ᵉ (A : Set ℕ) (ε > 0), A.IsAsymptoticAddBasisOfOrder 2 →
       (∀ᶠ (n : ℕ) in atTop, ε * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
-      B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2) ↔
-    answer(sorry) := by
+      B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
 
 /-- Erdős and Nathanson proved that this is true if $f(n) > (\log \frac{4}{3})^{-1} \log n$ for
 all large $n$. -/
 @[category research solved, AMS 5 11]
 theorem erdos_868.variants.fixed_ε :
-    (∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
+    answer(True) ↔ ∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
       (∀ᶠ (n : ℕ) in atTop, (Real.log (4 / 3))⁻¹ * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
-      B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2) ↔
-    answer(True) := by
+      B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
 
 /-- Härtter and Nathanson proved that there exist additive bases which do not contain

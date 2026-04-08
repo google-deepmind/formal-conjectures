@@ -27,7 +27,7 @@ open Real
 namespace Erdos4
 
 def Erdos4For (C : ℝ) : Prop :=
-  {n : ℕ | (n + 1).nth Nat.Prime  - n.nth Nat.Prime >
+  {n : ℕ | (n + 1).nth Nat.Prime - n.nth Nat.Prime >
     C * log (log n) * log (log (log (log n))) / (log (log (log n))) ^ 2 * log n}.Infinite
 
 /--
@@ -37,7 +37,7 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem erdos_4 : (∀ C > 0, Erdos4For C) ↔ answer(True) := by
+theorem erdos_4 : answer(True) ↔ (∀ C > 0, Erdos4For C) := by
   sorry
 
 @[category research solved, AMS 11]

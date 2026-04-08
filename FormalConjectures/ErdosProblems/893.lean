@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Finset
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos893
 
@@ -42,7 +42,7 @@ Does the limit $\lim_{n\to\infty} \frac{f(2n)}{f(n)}$ tend to infinity?
 -/
 @[category research open, AMS 5]
 theorem erdos_893 :
-    Tendsto (fun n : ℕ => (f (2 * n) : ℝ) / (f n : ℝ)) atTop atTop ↔ answer(sorry) := by
+    answer(sorry) ↔ Tendsto (fun n : ℕ => (f (2 * n) : ℝ) / (f n : ℝ)) atTop atTop := by
   sorry
 
 
