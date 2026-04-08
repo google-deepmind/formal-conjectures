@@ -13,30 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Batteries.Data.List.Lemmas
-import Init.Data.List.OfFn
-import Init.Data.Nat.Basic
-import Init.Prelude
-import Init.PropLemmas
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Algebra.Group.Subgroup.Defs
-import Mathlib.Algebra.Group.Subgroup.Lattice
-import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Lattice.Basic
-import Mathlib.Data.Finset.Union
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Real.Basic
 import Mathlib.GroupTheory.Finiteness
-import Mathlib.Order.BoundedOrder.Basic
 import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Order.Filter.AtTopBot.Defs
-import Mathlib.Order.Filter.Basic
-import Mathlib.Order.MinMax
-
 
 open Classical
 
