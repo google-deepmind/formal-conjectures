@@ -24,9 +24,10 @@ import Mathlib.Topology.MetricSpace.Basic
 /-!
 # Brennan's Conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Brennan_conjecture) |
-[arXiv:2409.15074](https://arxiv.org/abs/2409.15074) |
-[arXiv:2512.09330](https://arxiv.org/abs/2512.09330)
+*Reference:* 
+ - [Wikipedia](https://en.wikipedia.org/wiki/Brennan_conjecture) |
+ - [arXiv:2409.15074](https://arxiv.org/abs/2409.15074) |
+ - [arXiv:2512.09330](https://arxiv.org/abs/2512.09330)
 -/
 
 namespace BrennanConjecture
