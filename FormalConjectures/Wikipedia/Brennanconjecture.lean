@@ -15,11 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Mathlib.Topology.MetricSpace.Basic
 
 /-!
 # Brennan's Conjecture
