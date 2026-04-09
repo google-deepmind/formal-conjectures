@@ -46,8 +46,7 @@ The proof of this has been formalized.
 
 This was formalized in Lean by Alexeev using ChatGPT.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos707.lean", AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos707.lean"]
 theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
     ∃ᵉ (B : Set ℕ) (n > 0), A ⊆ B ∧ IsPerfectDifferenceSet B n) ↔ False := by
   sorry

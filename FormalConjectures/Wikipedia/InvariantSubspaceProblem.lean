@@ -66,7 +66,7 @@ lemma TopologicalSpace.nontrivial_of_not_separableSpace {H : Type*} [Topological
 Every bounded linear operator `T : H → H` on a non-separable Hilbert space `H` has a
 non-trivial closed `T`-invariant subspace. Such an invariant space is given by considering the
 closure of the linear span of the orbit of any single non-zero vector. -/
-@[category research formally solved using formal_conjectures at "", AMS 47]
+@[category research solved, AMS 47, formal_proof using formal_conjectures at ""]
 theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [CompleteSpace H]
     (h : ¬TopologicalSpace.SeparableSpace H) (T : H →L[ℂ] H) :
     Nonempty (ClosedInvariantSubspace T) := by

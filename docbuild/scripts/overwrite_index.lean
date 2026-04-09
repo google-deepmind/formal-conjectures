@@ -27,11 +27,13 @@ open ProblemAttributes
 -- https://github.com/google-deepmind/formal-conjectures/issues/5
 def getCategoryStatsMarkdown : CoreM String := do
   let stats ← getCategoryStats
+  let formalProofCount := (← getFormalProofTags).size
   let githubSearchBaseUrl := "https://github.com/search?type=code&q=repo%3Agoogle-deepmind%2Fformal-conjectures+"
   return s!"| Count | Category          |
 | ----- | ----------------- |
 | {stats (Category.research ProblemStatus.open)} | [Research (open)]({githubSearchBaseUrl}%22category+research+open%22)|
 | {stats (Category.research ProblemStatus.solved)} | [Research (solved)]({githubSearchBaseUrl}%22category+research+solved%22)|
+| {formalProofCount} | [Formally proved]({githubSearchBaseUrl}%22formal_proof+using%22)|
 | {stats (Category.graduate)} | [Graduate]({githubSearchBaseUrl}%22category+graduate%22)|
 | {stats (Category.undergraduate)} | [Undergraduate]({githubSearchBaseUrl}%22category+undergraduate%22)|
 | {stats (Category.highSchool)} | [High School]({githubSearchBaseUrl}%22category+high_school%22)|

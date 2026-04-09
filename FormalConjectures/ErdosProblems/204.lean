@@ -40,8 +40,7 @@ Adenwalla [Ad25] has proved there are no such $n$.
 
 This was formalized by van Doorn in Lean using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/Woett/Lean-files/blob/main/ErdosProblem204.lean", AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem204.lean"]
 theorem erdos_204 : answer(False) ↔ ∃ (n : ℕ) (a : ℕ → ℤ),
     let D := {d : ℕ | d ∣ n ∧ d > 1}
     (∀ x : ℤ, ∃ d ∈ D, x ≡ a d [ZMOD d]) ∧

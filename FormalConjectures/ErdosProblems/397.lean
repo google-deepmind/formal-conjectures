@@ -45,8 +45,7 @@ argument gives infinitely many solutions (although Bloom believes that it can).
 
 This was formalized in Lean by Wu using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://gist.github.com/llllvvuu/40d68cfa9de9f43eece07ff4fdc3b0ef", AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://gist.github.com/llllvvuu/40d68cfa9de9f43eece07ff4fdc3b0ef"]
 theorem erdos_397 :
     answer(False) ↔
       {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧

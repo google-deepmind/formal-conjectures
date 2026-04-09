@@ -72,14 +72,13 @@ async function loadData() {
 // Badge / category helpers (duplicated from build.js for client-side use)
 // ---------------------------------------------------------------------------
 const CATEGORY_META = {
-  'research open':            { label: 'Open',            css: 'cat-open' },
-  'research solved':          { label: 'Solved',          css: 'cat-solved' },
-  'research formally solved': { label: 'Formally Solved', css: 'cat-formal' },
-  'graduate':                 { label: 'Graduate',        css: 'cat-graduate' },
-  'undergraduate':            { label: 'Undergraduate',   css: 'cat-undergrad' },
-  'high_school':              { label: 'High School',     css: 'cat-highschool' },
-  'test':                     { label: 'Test',            css: 'cat-test' },
-  'API':                      { label: 'API',             css: 'cat-api' },
+  'research open':    { label: 'Open',          css: 'cat-open' },
+  'research solved':  { label: 'Solved',        css: 'cat-solved' },
+  'graduate':         { label: 'Graduate',      css: 'cat-graduate' },
+  'undergraduate':    { label: 'Undergraduate', css: 'cat-undergrad' },
+  'high_school':      { label: 'High School',   css: 'cat-highschool' },
+  'test':             { label: 'Test',          css: 'cat-test' },
+  'API':              { label: 'API',           css: 'cat-api' },
 };
 
 function getCategoryMeta(category) {

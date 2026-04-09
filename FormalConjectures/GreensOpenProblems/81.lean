@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+
 import FormalConjectures.ErdosProblems.«510»
 
 /-!
@@ -23,14 +23,8 @@ Let $A$ be a set of size $n$ integers. Is there some absolute constant $c > 0$ a
 such that $\sum_{a \in A} \cos(a \theta) \leq - c \sqrt{n}$?
 
 *References:*
- - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11 Problem 81)
- - [erdosproblems.com/510](https://www.erdosproblems.com/510)
+- [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11)
+- [erdosproblems.com/510](https://www.erdosproblems.com/510)
+
+This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«510»`.
 -/
-
-namespace Green81
-
-@[category research open, AMS 11]
-theorem green_81 : type_of% Erdos510.erdos_510 := by
-  sorry
-
-end Green81

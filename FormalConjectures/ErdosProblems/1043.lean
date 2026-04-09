@@ -47,8 +47,7 @@ Pommerenke [Po61] proved that the answer is no.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1043.lean", AMS 28 30]
+@[category research solved, AMS 28 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1043.lean"]
 theorem erdos_1043 :
     answer(False) ↔ ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
