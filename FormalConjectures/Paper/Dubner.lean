@@ -26,17 +26,37 @@ by *Harvey Dubner*.
 namespace DubnerConjecture
 
 /--
-A twin prime is a prime number that has a prime gap of 2, meaning either p - 2 or p + 2 is also prime.
+A twin prime is a prime number that has a prime gap of 2, meaning either p - 2 or p + 2
+is also prime.
 -/
 def IsTwinPrime (p : ℕ) : Prop :=
   p.Prime ∧ ((p - 2).Prime ∨ (p + 2).Prime)
+
+@[category test, AMS 11]
+theorem t1 : ¬IsTwinPrime 2 := by
+  norm_num [IsTwinPrime]
+
+@[category test, AMS 11]
+theorem t2 : IsTwinPrime 3 := by
+  norm_num [IsTwinPrime]
+
+@[category test, AMS 11]
+theorem t3 : IsTwinPrime 5 := by
+  norm_num [IsTwinPrime]
+
+@[category test, AMS 11]
+theorem t4 : IsTwinPrime 101 := by
+  norm_num [IsTwinPrime]
+
+@[category test, AMS 11]
+theorem t5 : ¬IsTwinPrime 100 := by
+  norm_num [IsTwinPrime]
 
 /--
 Every even number greater than 4208 is the sum of two twin primes.
 -/
 @[category research open, AMS 11]
-theorem dubner_conjecture :
-  ∀ n : ℕ, n > 4208 → Even n →
+theorem dubner_conjecture (n : ℕ) (hn : 4208 < n) (h : Even n) :
     ∃ p q : ℕ,
       IsTwinPrime p ∧
       IsTwinPrime q ∧
