@@ -15,4 +15,10 @@ limitations under the License.
 -/
 import FormalConjecturesForMathlib
 
+/-!
+# ForMathlib (deprecated)
+
+This module is deprecated since 2026-01-08. Use `FormalConjecturesForMathlib` directly.
+-/
+
 deprecated_module (since := "2026-01-08")

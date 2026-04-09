@@ -36,8 +36,7 @@ $\limsup S(n) = \infty$.
 
 This was formalized in Lean by Tao.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/teorth/analysis/blob/main/analysis/Analysis/Misc/erdos_379.lean", AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/teorth/analysis/blob/main/analysis/Analysis/Misc/erdos_379.lean"]
 theorem erdos_379 : atTop.limsup (fun n => (S n : ℕ∞)) = ⊤ := by
   sorry
 

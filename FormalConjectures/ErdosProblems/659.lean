@@ -48,7 +48,7 @@ and Grayzel [Gr26] (using Gemini) has noted in the comments that this configurat
 ruled out, thus giving a complete solution to this problem. Boris Alexeev using Aristotle provides
 a formalisation of the proof.
 -/
-@[category research formally solved using lean4 at "https://github.com/plby/lean-proofs/blob/226d5fad7143dcebea2bbb5ec87f18a3a1dcea69/src/v4.24.0/ErdosProblems/Erdos659.lean", AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/226d5fad7143dcebea2bbb5ec87f18a3a1dcea69/src/v4.24.0/ErdosProblems/Erdos659.lean"]
 theorem erdos_659 : answer(True) ↔ ∃ A : ℕ → Finset ℝ²,
    (∀ n, #(A n) = n ∧ ∀ S ⊆ A n, #S = 4 → 3 ≤ distinctDistances S) ∧
     (fun n ↦ distinctDistances (A n)) ≪ fun n ↦ n / sqrt (log n) := by

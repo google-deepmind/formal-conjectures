@@ -37,8 +37,7 @@ with $d>f(x)$ for any increasing function $f$.
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos645.lean", AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos645.lean"]
 theorem erdos_645 (c : ℕ → Bool) : ∃ x d, 0 < x ∧ x < d ∧
     (∃ C, c x = C ∧ c (x + d) = C ∧ c (x + 2 * d) = C) := by
   sorry

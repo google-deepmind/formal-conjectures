@@ -40,13 +40,20 @@ The values of this attribute are
   The criterion for being solved is that there exists an informal solution
   that is widely accepted by experts in the area. In particular, this
   does *not* require a formal solution to exist.
-- @[category research formally solved using <kind> at "link"]` : a formally solved research problem.
-   `<kind>` must be one of:
-  - `formal_conjectures` : solved in this repository (e.g. filling the `sorry` in the current file).
-  - `lean4` : solved in Lean 4 (e.g. Mathlib, or some other repo) as an equivalent statement.
-  - `other_system` : solved in another formal system (Roqc, Isabelle, Lean3, HOL, etc.).
 - `@[category test]` : a statement that serves as a sanity check (e.g. for a new definition).
 - `@[category API]` : a statement that constructs basic theory around a new definition
+
+## The Formal Proof Attribute:
+
+### Overview
+Provides information about the existence of a formal proof for a statement.
+This is independent of the category attribute and can be used with any category.
+
+### Values
+- `@[formal_proof using formal_conjectures at "link"]` : formally proved in this repository.
+- `@[formal_proof using lean4 at "link"]` : formally proved in Lean 4 elsewhere.
+- `@[formal_proof using other_system at "link"]` : formally proved in another system
+  (Roqc, Isabelle, Lean 3, HOL, etc.)
 
 ### Usage examples
 The tag should be used as follows:
@@ -62,6 +69,10 @@ theorem imo_2024_p6
 
 @[category research open]
 theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
+  sorry
+
+@[category research solved, formal_proof using lean4 at "https://example.com/proof"]
+theorem a_solved_problem_with_formal_proof : ... := by
   sorry
 
 @[category test]
@@ -96,8 +107,7 @@ in the AMS classification for completeness. Some are not relevant to this reposi
 
 namespace ProblemAttributes
 
-/-- The type of formal proof that exists for a problem. This is meant to be used
-for the `research formally solved` category. -/
+/-- The type of formal proof that exists for a problem. -/
 inductive FormalProofKind
   /-- The problem exactly as stated in formal-conjectures has a formal proof.
   The link points to a commit that fills the `sorry` relative to the current
@@ -117,9 +127,6 @@ inductive ProblemStatus
   /-- Indicates that a mathematical problem is already solved,
   i.e., there is a published (informal) proof that is widely accepted by experts. -/
   | solved
-  /-- Indicates that a mathematical problem is formally solved in this repository,
-  with a link to the formal proof. -/
-  | formallySolvedAt : FormalProofKind → String → ProblemStatus
   deriving Inhabited, BEq, Hashable, ToExpr
 
 syntax formalProofKind := &"formal_conjectures" <|> &"lean4" <|> &"other_system"
@@ -132,14 +139,12 @@ def formalProofKind.toName (stx : TSyntax ``formalProofKind) : Option Name :=
   | _ => none
 
 syntax problemStatus := &"open" <|> &"solved"
-  <|> (&"formally" &"solved" &"using" formalProofKind &"at" str)
 
 /-- Convert from a syntax node to a name. -/
 def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
   match stx with
     | `(problemStatus| open) => ``ProblemStatus.open
     | `(problemStatus| solved) => ``ProblemStatus.solved
-    | `(problemStatus| formally solved using $_ at $_) => ``ProblemStatus.formallySolvedAt
     | _ => none
 
 /-- A type to capture the various types of statements that appear in our Lean files. -/
@@ -184,6 +189,29 @@ def addCategoryEntry {m : Type → Type} [MonadEnv m]
   modifyEnv (categoryExt.addEntry ·
     { declName := declName, category := cat, informal := comment })
 
+/-- A tag recording the existence and location of a formal proof for a declaration. -/
+structure FormalProofTag where
+  /-- The name of the declaration with the given tag. -/
+  declName : Name
+  /-- The kind of formal proof. -/
+  proofKind : FormalProofKind
+  /-- A link to the formal proof. -/
+  proofLink : String
+  deriving Inhabited, BEq, Hashable, ToExpr
+
+/-- Defines the `formalProofExt` extension for recording formal proof annotations. -/
+initialize formalProofExt :
+    SimplePersistentEnvExtension FormalProofTag (Std.HashSet FormalProofTag) ←
+  registerSimplePersistentEnvExtension {
+    addImportedFn := fun as => as.foldl Std.HashSet.insertMany {}
+    addEntryFn := .insert
+  }
+
+def addFormalProofEntry {m : Type → Type} [MonadEnv m]
+    (declName : Name) (kind : FormalProofKind) (link : String) : m Unit :=
+  modifyEnv (formalProofExt.addEntry ·
+    { declName := declName, proofKind := kind, proofLink := link })
+
 structure SubjectTag where
   /-- The name of the declaration with the given tag. -/
   declName : Name
@@ -220,18 +248,11 @@ def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
     Elab.addConstInfo stx ``Category.graduate
     return Category.graduate
   | `(CategorySyntax| research $status) =>
-    let problemStatus ← match status with
-      | `(problemStatus| formally solved using $kind at $link) => do
-        Elab.addConstInfo status ``ProblemStatus.formallySolvedAt
-        let some n := formalProofKind.toName kind | throwUnsupportedSyntax
-        let pfKind ← Lean.Meta.MetaM.run' <|
-          unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
-        pure (ProblemStatus.formallySolvedAt pfKind link.getString)
-      | _ => do
-        let some n := problemStatus.toName status | throwUnsupportedSyntax
-        Elab.addConstInfo status n
-        Lean.Meta.MetaM.run' <|
-          unsafe Meta.evalExpr ProblemStatus q(ProblemStatus) (.const n [])
+    let problemStatus ← do
+      let some n := problemStatus.toName status | throwUnsupportedSyntax
+      Elab.addConstInfo status n
+      Lean.Meta.MetaM.run' <|
+        unsafe Meta.evalExpr ProblemStatus q(ProblemStatus) (.const n [])
     Elab.addConstInfo stx ``Category.research
     return Category.research problemStatus
   | `(CategorySyntax| test) =>
@@ -252,7 +273,6 @@ This is used as follows: `@[category my_cat]` where `my_cat` is one of:
 - `graduate` : a graduate level math problem.
 - `research open` : an open reseach level math problem.
 - `research solved` : a solved reseach level math problem.
-- `research formally solved here "link"` : a formally solved research problem with a permalink.
 - `test` : a statement that serves as a sanity check (e.g. for a new definition).
 - `API` : a statement that constructs basic theory around a new definition -/
 initialize Lean.registerBuiltinAttribute {
@@ -270,6 +290,39 @@ initialize Lean.registerBuiltinAttribute {
       if (env.find? decl).bind (·.value?) |>.any (!·.hasSorry) then
         logWarning "If a problem has a sorry-free proof, it should not be categorised as `open`."
     addCategoryEntry decl status oldDoc
+  applicationTime := .afterTypeChecking
+}
+
+syntax (name := FormalProof_attr) "formal_proof" &"using" formalProofKind &"at" str : attr
+
+/-- Records the existence and location of a formal proof for a statement.
+
+This is independent of the `category` attribute and can be used with any category.
+
+Usage: `@[formal_proof using <kind> at "<link>"]` where `<kind>` is one of:
+- `formal_conjectures` : formally proved in this repository.
+- `lean4` : formally proved in Lean 4 elsewhere (e.g. Mathlib).
+- `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.) -/
+initialize Lean.registerBuiltinAttribute {
+  name := `FormalProof_attr
+  descr := "Annotation of the existence and location of a formal proof."
+  add := fun decl stx _attrKind => do
+    match stx with
+    | `(attr| formal_proof using $kind at $link) => do
+      let some n := formalProofKind.toName kind | throwUnsupportedSyntax
+      let pfKind ← Lean.Meta.MetaM.run' <|
+        unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
+      Elab.addConstInfo kind n
+      -- Warn if this is attached to a `research open` problem.
+      let env ← getEnv
+      let catTags := categoryExt.getState env
+      if catTags.toArray.any fun tag => tag.declName == decl &&
+          tag.category == .research .open then
+        logWarning
+          "A `formal_proof` annotation on a `research open` problem is suspicious. \
+           If a formal proof exists, the problem should not be categorised as `open`."
+      addFormalProofEntry decl pfKind link.getString
+    | _ => throwUnsupportedSyntax
   applicationTime := .afterTypeChecking
 }
 
@@ -342,6 +395,14 @@ def getCategoryStats : m (Category → Nat) := do
 
 def getSubjectTags : m (Array SubjectTag) := do
   return subjectExt.getState (← MonadEnv.getEnv) |>.toArray
+
+def getFormalProofTags : m (Array FormalProofTag) := do
+  return formalProofExt.getState (← MonadEnv.getEnv) |>.toArray
+
+/-- Get the formal proof tag for a given declaration, if any. -/
+def getFormalProofTag (declName : Name) : m (Option FormalProofTag) := do
+  let tags ← getFormalProofTags
+  return tags.find? (·.declName == declName)
 
 end Helper
 

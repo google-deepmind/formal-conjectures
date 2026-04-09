@@ -15,6 +15,13 @@ limitations under the License.
 -/
 import Mathlib.Tactic.Linter.Header
 
+/-!
+# The copyright linter
+
+This file implements a linter that checks that every file in the project
+has the correct copyright header.
+-/
+
 open Lean Elab Meta Command Syntax
 
 namespace CopyrightLinter

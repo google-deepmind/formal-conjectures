@@ -17,6 +17,14 @@ limitations under the License.
 import FormalConjectures.Util.Linters.AnswerLinter
 import FormalConjectures.Util.Answer
 
+/-!
+# Tests for the answer linter
+
+This file contains test cases for the `AnswerLinter`, verifying that it correctly flags
+theorems with early arguments when `answer(sorry)` is the left-hand side of an iff,
+and does not flag theorems without `answer(sorry)` or without early arguments.
+-/
+
 namespace AnswerLinter
 
 /--

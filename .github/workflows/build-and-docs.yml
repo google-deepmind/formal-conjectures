@@ -70,6 +70,21 @@ jobs:
         run: |
           lake build
 
+      - name: Build literate source pages
+        run: |
+          cd docbuild
+          # Some modules crash verso-literate (e.g. metaprogramming-heavy util files),
+          # so we make this best-effort: render whatever succeeds.
+          # TODO(firsching): examine exactly what fails and fix or report as bug to verso
+          lake build FormalConjectures:literate || true
+          # Remove empty/corrupt JSON files left by failed builds
+          find .lake/build/literate -name "*.json" -empty -delete 2>/dev/null || true
+          lake exe verso-html .lake/build/literate ../_literate_html || true
+
+      - name: Post-process literate HTML
+        run: |
+          python3 site/fix_literate_html.py _literate_html
+
       - name: Pack olean cache
         run: |
           lake exe cache pack
@@ -120,7 +135,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0
+          pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0 beautifulsoup4 lxml
 
       - name: Run plotting script
         run: |
@@ -132,11 +147,42 @@ jobs:
           cd docbuild
           lake exe overwrite_index ./out/index.html ./out/file_counts_dark.html ./out/file_counts_white.html | tee -a "$GITHUB_STEP_SUMMARY"
 
-      - name: Upload docs
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Generate conjectures data for website
+        run: |
+          mkdir -p site/data
+          lake exe extract_names --exclude=statement,docstring,moduleDocstrings > site/data/conjectures.json || true
+
+      - name: Extract Verso fragments for website
+        run: |
+          python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
+
+      - name: Build website
+        run: |
+          cd site
+          node build.js
+        env:
+          BASE_PATH: /formal-conjectures
+
+      - name: Assemble deploy artifact
+        run: |
+          mkdir -p _deploy
+          # Website goes at root
+          cp -r site/site/* _deploy/
+          # Lean docs go under /doc
+          cp -r docbuild/out _deploy/doc
+          # Literate source pages go under /src
+          cp -r _literate_html _deploy/src
+
+      - name: Upload deploy artifact
         id: deployment
         uses: actions/upload-pages-artifact@v4
         with:
-          path: docbuild/out
+          path: _deploy
 
   # Deployment job
   deploy:
