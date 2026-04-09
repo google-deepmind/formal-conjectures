@@ -40,6 +40,6 @@ is composite for all natural numbers $n$. In other words, every member of the se
 $\{k \cdot 2^n + 1 : n \in \mathbb{N}\}$ is composite.
 -/
 def IsSierpinskiNumber (k : ℕ) : Prop :=
-  0 < k ∧ ¬ 2 ∣ k ∧ ∀ n, (k * 2 ^ n + 1).Composite
+  ¬ 2 ∣ k ∧ ∀ n, (k * 2 ^ n + 1).Composite
 
 end Nat
