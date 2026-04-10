@@ -347,6 +347,18 @@ Some rare exceptions exist for consistency:
   -/
   def left_factorial (n : ℕ) := ...
   ```
+- **`research open` and `research solved` docstrings MUST include** a concise description of the
+  problem and a reference to a source:
+  ```lean
+  /--
+  Can every even integer greater than 2 be written as the sum of two primes?
+  See [Goldbach's conjecture](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture).
+  -/
+  @[category research open, AMS 11]
+  theorem goldbach (n : ℕ) (hn : 2 < n) (hn_even : Even n) :
+      ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+    sorry
+  ```
 - **Use `local notation`** for problem-specific notation within namespaces
 - **Avoid unnecessary type annotations** when Lean can infer them
 - **Use `by` tactic mode** for sorries: `by sorry` (not just `sorry`)
@@ -412,6 +424,7 @@ Before considering your work complete, verify:
 - [ ] `lake build` succeeds
 - [ ] No `sorry` in FormalConjecturesForMathlib/
 - [ ] Docstrings present for main definitions
+- [ ] `research open` and `research solved` docstrings include a source reference and a concise description
 - [ ] Code properly formatted and readable
 
 ### Testing Definitions
@@ -446,7 +459,8 @@ theorem myNewClass_sanity_check :
 - Follow existing file patterns in the repository
 - Keep formalisations clean and minimal
 - Add references to sources. These should all appear in the module docstring reference list, and
-  ideally each conjecture statement docstring should have a reference.
+  each `research open` and `research solved` theorem docstring MUST have a reference and a
+  concise description of the problem.
 - Use namespaces appropriately
 - Test that `lake build` works
 - Add variants in the same file as the main problem
