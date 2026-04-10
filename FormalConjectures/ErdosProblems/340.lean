@@ -148,7 +148,7 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 @[category research solved, AMS 5]
 theorem erdos_340.variants._22_mem_sub :
     22 ∈ Set.range greedySidon - Set.range greedySidon := by
-  sorry
+  exact ⟨greedySidon 14, ⟨14, rfl⟩, greedySidon 13, ⟨13, rfl⟩, by decide +native⟩
 
 /--
 The smallest integer which is unknown to be in $A - A$ is $33$.
