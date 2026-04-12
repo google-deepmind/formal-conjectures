@@ -87,6 +87,9 @@ node build.js        # output goes to site/
 # 4. Serve locally
 python3 -m http.server 8080 --directory site
 # then open http://localhost:8080
+
+# Alternative: serve with uv (no Python installation required)
+uv run --no-project python -m http.server 8080 --directory site
 ```
 
 To iterate on templates or styles, re-run `node build.js` after each change and refresh the browser. There is no watch mode, but Node's built-in `--watch` flag works:
