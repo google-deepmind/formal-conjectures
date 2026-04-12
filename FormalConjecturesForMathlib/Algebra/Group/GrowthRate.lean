@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,11 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Real.Basic
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.Order.Filter.AtTopBot.Basic
+module
+
+public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Real.Basic
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.Order.Filter.AtTopBot.Basic
+
+@[expose] public section
 
 open Classical
 

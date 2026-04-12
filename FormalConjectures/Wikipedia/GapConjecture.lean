@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ noncomputable
 def expSqrt : GrowthClass :=
   ⟦fun n => Real.exp (Real.sqrt n)⟧
 
-/-!
+/-
 If the growth rate of a finitely generated group $G$ is superpolynomial, then the growth rate is at
 least $e^{\sqrt{n}}$.
 -/
