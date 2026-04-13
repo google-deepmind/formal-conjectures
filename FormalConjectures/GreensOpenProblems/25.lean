@@ -88,8 +88,8 @@ for any constant. We thus prefer a little-o statement.
 theorem green_25.variants.lower_ess89 :
   ∀ k : ℕ → ℕ,
     (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧ -- Ensure Property25 is not False due to non-existent partitions
-    ((fun N => (k N : ℝ)) =o[atTop] bestLower)
-    → ∀ᶠ N in atTop, Property25 (k N) N := by
+    ((fun N => (k N : ℝ)) =o[atTop] bestLower) →
+    ∀ᶠ N in atTop, Property25 (k N) N := by
   sorry
 
 /--
