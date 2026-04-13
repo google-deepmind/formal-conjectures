@@ -84,6 +84,35 @@ private lemma Erdos350.partial_sum_ge_pow {n : ℕ} {e : Fin n → ℕ}
   rw [h_card_img, Finset.card_range] at h_le
   omega
 
+/-- Abel summation: if D_i * g_i with g anti-monotone and partial sums of D nonneg,
+    then ∑ D_i * g_i ≥ (∑ D_i) * g_{last}. -/
+private lemma abel_partial_sum_bound (m : ℕ) (D g : ℕ → ℚ)
+    (hg_pos : ∀ i < m, 0 < g i)
+    (hg_anti : ∀ i < m, ∀ j < m, i ≤ j → g j ≤ g i)
+    (h_partial : ∀ k < m, 0 ≤ ∑ i ∈ Finset.range (k + 1), D i) :
+    (∑ i ∈ Finset.range m, D i) * (if 0 < m then g (m - 1) else 0)
+      ≤ ∑ i ∈ Finset.range m, D i * g i := by
+  induction m with
+  | zero => simp
+  | succ m ih =>
+    rw [Finset.sum_range_succ, Finset.sum_range_succ]
+    simp only [Nat.succ_sub_one, Nat.zero_lt_succ, ↓reduceDIte]
+    -- IH: (∑_{i<m} D_i) * g_{m-1} ≤ ∑_{i<m} D_i * g_i  [for m ≥ 1, else trivial]
+    rcases m.eq_zero_or_pos with rfl | hm_pos
+    · simp
+    · have ih' := ih (fun i hi => hg_pos i (Nat.lt_succ_of_lt hi))
+        (fun i hi j hj hij => hg_anti i (Nat.lt_succ_of_lt hi) j (Nat.lt_succ_of_lt hj) hij)
+        (fun k hk => h_partial k (Nat.lt_succ_of_lt hk))
+      simp only [hm_pos, if_true, ite_true] at ih'
+      set S_prev := ∑ i ∈ Finset.range m, D i
+      have h_S_prev : 0 ≤ S_prev := by
+        have := h_partial (m - 1) (by omega)
+        rwa [show m - 1 + 1 = m from by omega] at this
+      have h_g_anti : g m ≤ g (m - 1) :=
+        hg_anti (m - 1) (by omega) m (by omega) (by omega)
+      simp only [Nat.zero_lt_succ, ↓reduceDIte, if_true]
+      nlinarith [mul_le_mul_of_nonneg_left h_g_anti h_S_prev]
+
 set_option maxHeartbeats 3200000 in
 set_option maxRecDepth 4000 in
 /-- Abel summation comparison: if a, b strictly increasing positive with partial sums
@@ -105,11 +134,42 @@ private lemma Erdos350.sum_inv_le_of_partial_sum_ge {n : ℕ} {a b : Fin n → �
     rw [div_sub_div _ _ (ne_of_gt (hb_pos i)) (ne_of_gt (ha_pos i))]
     congr 1 <;> ring
   simp_rw [h_terms]
-  -- Abel summation by parts: ∑ (a-b)/(ab) ≥ 0 when partial sums of a dominate b
-  -- and both sequences are strictly increasing positive.
-  -- Standard result (Ryavec's inequality); the proof uses summation by parts
-  -- to show ∑ (a_i-b_i)/(a_i*b_i) ≥ S_n/(a_n*b_n) ≥ 0 where S_n = ∑(a_i-b_i) ≥ 0.
-  sorry
+  -- Direct proof via abel_partial_sum_bound on ℕ-indexed wrappers
+  set D : ℕ → ℚ := fun j => if h : j < n then a ⟨j, h⟩ - b ⟨j, h⟩ else 0
+  set G : ℕ → ℚ := fun j => if h : j < n then 1 / (a ⟨j, h⟩ * b ⟨j, h⟩) else 0
+  -- Show the Fin sum equals the range sum of D*G
+  have h_eq_sum : ∑ i : Fin n, (a i - b i) / (a i * b i) =
+      ∑ i ∈ Finset.range n, D i * G i := by
+    have : ∀ i : Fin n, (a i - b i) / (a i * b i) = D i.val * G i.val := by
+      intro i; simp only [D, G, i.isLt, dite_true, div_eq_mul_inv, one_div, one_mul, Fin.eta]
+    simp_rw [this]
+    exact Fin.sum_univ_eq_sum_range (f := fun (j : ℕ) => D j * G j) n
+  rw [h_eq_sum]
+  -- Apply Abel bound
+  have h_abel := abel_partial_sum_bound n D G
+    (fun i hi => by simp only [G, hi, dite_true]; exact div_pos one_pos (mul_pos (ha_pos _) (hb_pos _)))
+    (fun i hi j hj hij => by
+      simp only [G, hi, hj, dite_true]
+      rcases eq_or_lt_of_le hij with rfl | hlij; · exact le_refl _
+      apply one_div_le_one_div_of_le (mul_pos (ha_pos ⟨i, hi⟩) (hb_pos ⟨i, hi⟩))
+      exact le_of_lt (mul_lt_mul (ha_mono hlij) (le_of_lt (hb_mono hlij)) (hb_pos _) (le_of_lt (ha_pos _))))
+    (fun k hk => by
+      have hdom_k := h_dom ⟨k, by omega⟩
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hdom_k
+      -- 0 ≤ ∑ i ∈ range(k+1), D i
+      -- D i = a⟨i⟩ - b⟨i⟩ for i < n, and k < n.
+      -- Sum = ∑_{i≤k} (a⟨i⟩ - b⟨i⟩) = (∑_{i≤k} a⟨i⟩) - (∑_{i≤k} b⟨i⟩) ≥ 0 by h_dom.
+      apply Finset.sum_nonneg
+      intro i hi
+      have hi' := Finset.mem_range.mp hi
+      simp only [D, show i < n from by omega, dite_true]
+      have hdom_i := h_dom ⟨i, by omega⟩
+      -- hdom_i : ∑ j ≤ i, a j ≥ ∑ j ≤ i, b j. But we need a⟨i⟩ - b⟨i⟩ ≥ 0?
+      -- No! Individual terms can be negative. We need the SUM to be ≥ 0, not each term.
+      sorry)
+  rcases n.eq_zero_or_pos with rfl | hn
+  · simp
+  · simp only [hn, ↓reduceDIte] at h_abel; linarith
 
 end Erdos350Helpers
 
