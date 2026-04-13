@@ -109,9 +109,10 @@ def InternallyDisjoint {V : Type*} {G : SimpleGraph V} {u v x y : V}
 
 /--
 We say a graph is infinitely connected if any two vertices are connected by infinitely many
-pairwise disjoint paths.
+pairwise disjoint paths. Note that graphs with at most one vertex are not classed as
+infinitely connected.
 -/
-def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop :=
+def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop := Nontrivial V ∧
   Pairwise fun u v ↦ ∃ P : Set (G.Walk u v),
     P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
 

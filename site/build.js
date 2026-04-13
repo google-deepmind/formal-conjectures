@@ -347,11 +347,14 @@ function main() {
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
+  const openCount   = stats.byCategory['research open'] || 0;
+  const solvedCount = stats.byCategory['research solved'] || 0;
+  const formalCount = conjectures.filter(c => c.hasFormalProof).length;
   writePage('site/index.html', applyBasePath(fill(indexHtml, {
-    totalCount:      stats.total,
-    openCount:       stats.byCategory['research open'] || 0,
-    solvedCount:     stats.byCategory['research solved'] || 0,
-    formalCount:     conjectures.filter(c => c.hasFormalProof).length,
+    totalCount:      openCount + solvedCount,
+    openCount,
+    solvedCount,
+    formalCount,
     categoryStats:   categoryStatsHTML(stats.byCategory),
     collectionList:  collectionListHTML(stats.byCollection),
     subjectList:     subjectListHTML(stats.bySubject),

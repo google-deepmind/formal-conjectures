@@ -13,28 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 
-/-!
-# Erdős Problem 197
+public section
 
-*Reference:* [erdosproblems.com/197](https://www.erdosproblems.com/197)
--/
+namespace Affine.Simplex
+variable {k V P : Type*} [Ring k] [AddCommGroup V] [Module k V] [AddTorsor V P] [PartialOrder k]
+  [ZeroLEOneClass k] {n : ℕ}
 
-open Set
+@[simp] lemma closedInterior_nonempty (s : Simplex k P n) : s.closedInterior.Nonempty :=
+  ⟨_, s.point_mem_closedInterior 0⟩
 
-namespace Erdos197
-
-/--
-Can $\mathbb{N}$ be partitioned into two sets, each of which can be permuted to avoid monotone
-3-term arithmetic progressions?
--/
-@[category research open, AMS 5]
-theorem erdos_197 :
-    answer(sorry) ↔ ∃ A B : Set ℕ, IsCompl A B ∧
-      (∃ f : ℕ ≃ A, ¬HasMonotoneAP (Subtype.val ∘ f) 3) ∧
-      (∃ g : ℕ ≃ B, ¬HasMonotoneAP (Subtype.val ∘ g) 3) := by
-  sorry
-
-end Erdos197
+end Affine.Simplex
