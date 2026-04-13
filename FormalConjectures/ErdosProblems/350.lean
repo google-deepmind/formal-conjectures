@@ -67,7 +67,9 @@ $A=\{1,2,\ldots,2^k\}$.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos350.lean"]
+@[category research solved, AMS 5 11,
+formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos350.lean",
+formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/ba788c9124b563bce98a3413d474b3a2731fd0af/FormalConjectures/ErdosProblems/350.lean#L226"]
 theorem erdos_350 (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A) :
     ∑ n ∈ A, (1 / n : ℝ) < 2 := by
   sorry
