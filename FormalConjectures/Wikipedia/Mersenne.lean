@@ -30,12 +30,6 @@ namespace Mersenne
 namespace Nat
 
 /--
-A Mersenne prime is a prime number of the form $2^p-1$.
--/
-def GivesMersennePrime (p : ℕ) : Prop :=
-  Nat.Prime (2^p - 1)
-
-/--
 A Wagstaff prime is a prime number of the form $(2^p+1)/3$.
 -/
 def GivesWagstaffPrime (p : ℕ) : Prop :=
@@ -68,9 +62,9 @@ then all three must hold:
 3. Exists a number `k` such that $p = 2^k \\pm 1$ or $p = 4^k \\pm 3$
 -/
 def NewMersenneConjectureStatement (p : ℕ) : Prop :=
-  (p.GivesMersennePrime ∧ p.GivesWagstaffPrime → p.IsSpecialForm) ∧
-  (p.GivesMersennePrime ∧ p.IsSpecialForm → p.GivesWagstaffPrime) ∧
-  (p.GivesWagstaffPrime ∧ p.IsSpecialForm → p.GivesMersennePrime)
+  ((mersenne p).Prime ∧ p.GivesWagstaffPrime → p.IsSpecialForm) ∧
+  ((mersenne p).Prime ∧ p.IsSpecialForm → p.GivesWagstaffPrime) ∧
+  (p.GivesWagstaffPrime ∧ p.IsSpecialForm → (mersenne p).Prime)
 
 /--
 For any odd natural number `p` if two of the following conditions hold,
@@ -101,12 +95,13 @@ Are there infinitely many Mersenne primes?
 -/
 @[category research open, AMS 11]
 theorem infinitely_many_mersenne_primes :
-  answer(sorry) ↔ Set.Infinite { p : ℕ | p.GivesMersennePrime } := by
+  answer(sorry) ↔ Set.Infinite { p : ℕ | (mersenne p).Prime } := by
     sorry
 
 /--
-Catalan's Mersenne conjecture:
-all Catalan-Mersenne numbers from index `5` onward are prime.
+The first five Catalan-Mersenne numbers $c_0, \ldots, c_4$ are known to be prime.
+Catalan conjectured that they are prime "up to a certain limit".
+Are all Catalan-Mersenne numbers $c_n$ with $n \geq 5$ prime?
 -/
 @[category research open, AMS 11]
 theorem catalans_mersenne_conjecture :
