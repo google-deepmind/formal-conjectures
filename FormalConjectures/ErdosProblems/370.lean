@@ -150,7 +150,9 @@ theorem erdos_370 : answer(True) ↔
             simp only [hm_def]
             exact Nat.dvd_add (Nat.dvd_factorial (by linarith) (by linarith)) dvd_rfl
           have := hp.eq_one_or_self_of_dvd 3 this; omega
-        conv_rhs => rw [show (↑(m ^ 2 - 1) : ℝ) + 1 = ↑(m ^ 2) from by push_cast [Nat.sub_add_cancel (show 1 ≤ m ^ 2 by nlinarith)]]
+        have h_cast_eq : ((m ^ 2 - 1 : ℕ) : ℝ) + 1 = ((m ^ 2 : ℕ) : ℝ) := by
+          rw [Nat.cast_sub (show 1 ≤ m ^ 2 by nlinarith)]; ring
+        simp only [h_cast_eq]
         have h_bound : Nat.maxPrimeFac (m ^ 2) ≤ m / 2 := by
           apply maxPrimeFac_le_of_all_prime_factors_le (by nlinarith)
           intro p hp hpd
