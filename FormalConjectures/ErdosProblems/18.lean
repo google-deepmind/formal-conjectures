@@ -82,37 +82,46 @@ theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
 /-- $h(n!)$ is well-defined since $n!$ is practical for $n ≥ 1$. -/
 @[category undergraduate, AMS 11]
 theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
-  induction n with | zero => ?_ | succ n ih => ?_
-  intro m hm; simp only [Nat.factorial_zero] at hm; interval_cases m
-  exact ⟨∅, by simp, by simp⟩
-  exact ⟨{1}, by simp, by simp⟩
-  simp only [Nat.IsPractical] at ih ⊢
-  intro m hm
-  have h_sub : n.factorial.divisors ⊆ (n + 1).factorial.divisors := Nat.divisors_subset_of_dvd (Nat.factorial_ne_zero _) (Nat.factorial_dvd_factorial (Nat.le_succ n))
-  by_cases hle : m ≤ n.factorial
-  exact subsetSums_mono (by exact_mod_cast h_sub) (ih m hle)
-  push_neg at hle
-  rw [Nat.factorial_succ] at hm
-  set q := m / (n + 1)
-  set r := m % (n + 1)
-  have h_div : m = (n + 1) * q + r := (Nat.div_add_mod m (n + 1)).symm
-  have h_r_bound : r < n + 1 := Nat.mod_lt m (Nat.succ_pos n)
-  have h_r_le : r ≤ n := by omega
-  have h_q_le : q ≤ n.factorial := Nat.div_le_of_le_mul (by linarith)
-  obtain ⟨B, hB_sub, hB_sum⟩ := ih q h_q_le
-  have hB_pos : ∀ d ∈ B, 0 < d := fun d hd => by have := hB_sub hd; simp [Nat.mem_divisors] at this; exact Nat.pos_of_dvd_of_pos this.1 (Nat.factorial_pos n)
-  by_cases hr : r = 0
-  simp only [hr, Nat.add_zero] at h_div
-  simp only [subsetSums, Set.mem_setOf_eq]
-  refine ⟨B.image (· * (n + 1)), ?_, ?_⟩
-  intro x; simp only [Finset.coe_image, Set.mem_image]; rintro ⟨d, hd, rfl⟩; have h := Nat.dvd_of_mem_divisors (by exact_mod_cast hB_sub hd : d ∈ n.factorial.divisors); exact Nat.mem_divisors.mpr ⟨by rw [mul_comm d, Nat.factorial_succ]; exact mul_dvd_mul_left _ h, Nat.factorial_ne_zero _⟩
-  rw [h_div, Finset.sum_image (fun a _ b _ h => mul_right_cancel₀ (by omega : (n+1:ℕ) ≠ 0) h)]; simp [Finset.mul_sum, mul_comm, hB_sum]
-  simp only [subsetSums, Set.mem_setOf_eq]
-  refine ⟨B.image (· * (n + 1)) ∪ {r}, ?_, ?_⟩
-  intro x; simp only [Finset.coe_union, Finset.coe_image, Finset.coe_singleton, Set.mem_union, Set.mem_image, Set.mem_singleton_iff]; rintro (⟨d, hd, rfl⟩ | rfl)
-  have h := Nat.dvd_of_mem_divisors (by exact_mod_cast hB_sub hd : d ∈ n.factorial.divisors); exact Nat.mem_divisors.mpr ⟨by rw [mul_comm d, Nat.factorial_succ]; exact mul_dvd_mul_left _ h, Nat.factorial_ne_zero _⟩
-  exact Nat.mem_divisors.mpr ⟨(Nat.dvd_factorial (by omega) h_r_le).trans (Nat.factorial_dvd_factorial (Nat.le_succ n)), Nat.factorial_ne_zero _⟩
-  rw [h_div, Finset.sum_union (by rw [Finset.disjoint_left]; intro x hx hxr; simp only [Finset.mem_singleton] at hxr; rw [Finset.mem_image] at hx; obtain ⟨d, hd, rfl⟩ := hx; have hd_pos := hB_pos d hd; have : n + 1 ≤ d * (n + 1) := le_mul_of_one_le_left (Nat.zero_le _) hd_pos; omega), Finset.sum_singleton, Finset.sum_image (fun a _ b _ h => mul_right_cancel₀ (by omega : (n+1:ℕ) ≠ 0) h)]; simp [Finset.mul_sum, mul_comm, hB_sum]
+    induction n with
+  | zero =>
+    intro m hm; simp at hm; interval_cases m
+    · exact ⟨∅, by simp, by simp⟩
+    · exact ⟨{1}, by simp, by simp⟩
+  | succ n ih =>
+    intro m hm
+    by_cases hle : m ≤ n.factorial
+    · exact subsetSums_mono (by exact_mod_cast (Nat.divisors_subset_of_dvd
+        (Nat.factorial_ne_zero _) (Nat.factorial_dvd_factorial n.le_succ))) (ih m hle)
+    · push_neg at hle; rw [Nat.factorial_succ] at hm
+      set q := m / (n + 1); set r := m % (n + 1)
+      have h_div : m = (n + 1) * q + r := (Nat.div_add_mod m (n + 1)).symm
+      have h_r_lt : r < n + 1 := Nat.mod_lt m (Nat.succ_pos n)
+      obtain ⟨B, hB_sub, hB_sum⟩ := ih q (Nat.div_le_of_le_mul (by linarith))
+      have hdvd : ∀ d ∈ B, d * (n + 1) ∈ (n + 1).factorial.divisors := fun d hd => by
+        refine Nat.mem_divisors.mpr ⟨?_, Nat.factorial_ne_zero _⟩
+        rw [mul_comm, Nat.factorial_succ]
+        exact mul_dvd_mul_left _ (Nat.dvd_of_mem_divisors (by exact_mod_cast hB_sub hd))
+      have hB'_sum : (B.image (· * (n + 1))).sum id = (n + 1) * q := by
+        rw [Finset.sum_image (fun a _ b _ h => mul_right_cancel₀ (by omega) h)]
+        simp [Finset.mul_sum, mul_comm, hB_sum]
+      by_cases hr : r = 0
+      · rw [show m = (B.image (· * (n + 1))).sum id from by rw [hB'_sum]; omega]
+        exact ⟨_, fun x hx => by
+          obtain ⟨d, hd, rfl⟩ := Finset.mem_image.mp hx; exact hdvd d hd, rfl⟩
+      · have h_disj : Disjoint (B.image (· * (n + 1))) {r} := by
+          rw [Finset.disjoint_singleton_right, Finset.mem_image]; rintro ⟨d, hd, hdr⟩
+          have : 0 < d := Nat.pos_of_dvd_of_pos
+            (Nat.dvd_of_mem_divisors (by exact_mod_cast hB_sub hd)) (Nat.factorial_pos n)
+          have := le_mul_of_one_le_left (Nat.zero_le (n + 1)) this
+          omega
+        rw [show m = (B.image (· * (n + 1)) ∪ {r}).sum id from by
+          rw [Finset.sum_union h_disj, Finset.sum_singleton, hB'_sum, id_eq]; exact h_div]
+        exact ⟨_, fun x hx => by
+          rcases Finset.mem_union.mp hx with h | h
+          · obtain ⟨d, hd, rfl⟩ := Finset.mem_image.mp h; exact hdvd d hd
+          · rw [Finset.mem_singleton.mp h]; exact Nat.mem_divisors.mpr
+              ⟨(Nat.dvd_factorial (by omega) (by omega)).trans
+                (Nat.factorial_dvd_factorial n.le_succ), Nat.factorial_ne_zero _⟩, rfl⟩
 
 /- ### Erdős's Conjectures -/
 
