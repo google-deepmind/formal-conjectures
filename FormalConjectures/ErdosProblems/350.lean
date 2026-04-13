@@ -155,21 +155,55 @@ private lemma Erdos350.sum_inv_le_of_partial_sum_ge {n : ℕ} {a b : Fin n → �
       exact le_of_lt (mul_lt_mul (ha_mono hlij) (le_of_lt (hb_mono hlij)) (hb_pos _) (le_of_lt (ha_pos _))))
     (fun k hk => by
       have hdom_k := h_dom ⟨k, by omega⟩
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hdom_k
-      -- 0 ≤ ∑ i ∈ range(k+1), D i
-      -- D i = a⟨i⟩ - b⟨i⟩ for i < n, and k < n.
-      -- Sum = ∑_{i≤k} (a⟨i⟩ - b⟨i⟩) = (∑_{i≤k} a⟨i⟩) - (∑_{i≤k} b⟨i⟩) ≥ 0 by h_dom.
-      apply Finset.sum_nonneg
-      intro i hi
-      have hi' := Finset.mem_range.mp hi
-      simp only [D, show i < n from by omega, dite_true]
-      have hdom_i := h_dom ⟨i, by omega⟩
-      -- hdom_i : ∑ j ≤ i, a j ≥ ∑ j ≤ i, b j. But we need a⟨i⟩ - b⟨i⟩ ≥ 0?
-      -- No! Individual terms can be negative. We need the SUM to be ≥ 0, not each term.
-      sorry)
+      set kf : Fin n := ⟨k, by omega⟩
+      -- Convert filter to Iic in h_dom
+      have h_filter_iic : Finset.univ.filter (fun j : Fin n => j ≤ kf) = Finset.Iic kf := by
+        ext; simp [Finset.mem_Iic]
+      rw [h_filter_iic] at hdom_k
+      -- range(k+1) = (Iic kf).image Fin.val
+      have h_range_iic : Finset.range (k + 1) = (Finset.Iic kf).image Fin.val := by
+        ext i; constructor
+        · intro hi
+          have him := Finset.mem_range.mp hi
+          exact Finset.mem_image.mpr ⟨⟨i, by omega⟩,
+            Finset.mem_Iic.mpr (by simp [Fin.le_def, kf]; omega), rfl⟩
+        · intro hi
+          obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hi
+          have := Finset.mem_Iic.mp hj
+          exact Finset.mem_range.mpr (by simp [Fin.le_def, kf] at this; omega)
+      rw [h_range_iic, Finset.sum_image (fun i _ j _ h => Fin.val_injective h)]
+      -- Goal: 0 ≤ ∑ j ∈ Iic kf, D j.val
+      -- D j.val = a j - b j since j.val < n
+      have hD_fin : ∀ j ∈ Finset.Iic kf, D j.val = a j - b j := by
+        intro j _; simp only [D, dif_pos j.isLt]
+      rw [Finset.sum_congr rfl hD_fin, Finset.sum_sub_distrib]
+      linarith)
   rcases n.eq_zero_or_pos with rfl | hn
   · simp
-  · simp only [hn, ↓reduceDIte] at h_abel; linarith
+  · simp only [hn, ite_true] at h_abel
+    have hG_nn : 0 ≤ G (n - 1) := by
+      simp only [G, show n - 1 < n from by omega, dite_true]
+      exact le_of_lt (div_pos one_pos (mul_pos (ha_pos _) (hb_pos _)))
+    have hD_nn : 0 ≤ ∑ i ∈ Finset.range n, D i := by
+      have hdom_last := h_dom ⟨n - 1, by omega⟩
+      set kf : Fin n := ⟨n - 1, by omega⟩
+      have h_filter_iic : Finset.univ.filter (fun j : Fin n => j ≤ kf) = Finset.Iic kf := by
+        ext; simp [Finset.mem_Iic]
+      rw [h_filter_iic] at hdom_last
+      have h_range_iic : Finset.range n = (Finset.Iic kf).image Fin.val := by
+        ext i; constructor
+        · intro hi
+          have him := Finset.mem_range.mp hi
+          exact Finset.mem_image.mpr ⟨⟨i, by omega⟩,
+            Finset.mem_Iic.mpr (by simp [Fin.le_def, kf]; omega), rfl⟩
+        · intro hi
+          obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hi
+          exact Finset.mem_range.mpr j.isLt
+      rw [h_range_iic, Finset.sum_image (fun i _ j _ h => Fin.val_injective h)]
+      have : ∀ j ∈ Finset.Iic kf, D j.val = a j - b j := by
+        intro j _; simp only [D, dif_pos j.isLt]
+      rw [Finset.sum_congr rfl this, Finset.sum_sub_distrib]; linarith
+    linarith [mul_nonneg hD_nn hG_nn]
 
 end Erdos350Helpers
 
