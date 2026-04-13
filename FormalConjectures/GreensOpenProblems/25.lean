@@ -62,8 +62,8 @@ theorem green_25 : {k : ℕ → ℕ | ∀ᶠ N in atTop, Property25 (k N) N} = a
 theorem green_25.upper :
     let ans := (answer(sorry) : ℕ → ℕ)
     (∀ᶠ N in atTop, 1 ≤ ans N ∧ ans N ≤ N) ∧ -- Ensure k is a valid partition size
-    ((fun N => (ans N : ℝ)) =o[atTop] bestUpper) ∧
-    ¬ (∀ᶠ N in atTop, Property25 (ans N) N) := by
+    (fun N => (ans N : ℝ)) =o[atTop] bestUpper ∧
+    ¬ ∀ᶠ N in atTop, Property25 (ans N) N := by
   sorry
 
 /-- We conjecture that the best-known lower bound can be raised. -/
@@ -88,7 +88,7 @@ for any constant. We thus prefer a little-o statement.
 theorem green_25.variants.lower_ess89 :
   ∀ k : ℕ → ℕ,
     (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧ -- Ensure Property25 is not False due to non-existent partitions
-    ((fun N => (k N : ℝ)) =o[atTop] bestLower) →
+    (fun N => (k N : ℝ)) =o[atTop] bestLower →
     ∀ᶠ N in atTop, Property25 (k N) N := by
   sorry
 
@@ -102,8 +102,8 @@ or $N-1$, which produce trivial counter examples with singletons and thus empty 
 theorem green_25.variants.upper_ess89 :
   ∃ k : ℕ → ℕ,
     (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧
-    ((fun N => (k N : ℝ)) =Θ[atTop] bestUpper) ∧
-    ¬ (∀ᶠ N in atTop, Property25 (k N) N) := by
+    (fun N => (k N : ℝ)) =Θ[atTop] bestUpper ∧
+    ¬ ∀ᶠ N in atTop, Property25 (k N) N := by
   sorry
 
 /--
@@ -116,7 +116,7 @@ theorem green_25.variants.upper_ess89_trivial :
   ∃ k : ℕ → ℕ,
     (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧
     ((fun N => (k N : ℝ)) ≫ bestUpper) ∧
-    ¬ (∀ᶠ N in atTop, Property25 (k N) N) := by
+    ¬ ∀ᶠ N in atTop, Property25 (k N) N := by
   sorry
 
 end Green25
