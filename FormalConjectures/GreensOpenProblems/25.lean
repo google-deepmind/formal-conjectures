@@ -38,8 +38,8 @@ $\left|\bigcup^k_{i=1} (A_i \hat{+} A_i)\right| \geq \frac{1}{10} N$?
 -/
 def Property25 (k N : ℕ) : Prop :=
   1 ≤ k ∧ k ≤ N ∧
-  ∀ P : Finpartition (Icc 1 N), P.parts.card = k →
-  10 * (P.parts.biUnion Finset.restrictedSumset).card ≥ N
+  ∀ P : Finpartition (Icc 1 N), #P.parts = k →
+  10 * #(P.parts.biUnion Finset.restrictedSumset) ≥ N
 
 /-- The best-known lower bound [ESS89]. -/
 noncomputable def bestLower (N : ℕ) : ℝ := Real.log (Real.log N)
