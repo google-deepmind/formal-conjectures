@@ -351,7 +351,7 @@ function main() {
   const solvedCount = stats.byCategory['research solved'] || 0;
   const formalCount = conjectures.filter(c => c.hasFormalProof).length;
   writePage('site/index.html', applyBasePath(fill(indexHtml, {
-    totalCount:      openCount + solvedCount + formalCount,
+    totalCount:      openCount + solvedCount,
     openCount,
     solvedCount,
     formalCount,
