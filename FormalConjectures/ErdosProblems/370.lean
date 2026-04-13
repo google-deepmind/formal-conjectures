@@ -88,70 +88,82 @@ theorem erdos_370 : answer(True) ↔
       constructor
       · -- maxPrimeFac(m²-1) < √(m²-1)
         -- m-1, m+1 composite; m²-1 = (m-1)(m+1)
-        have hm3 : m ≥ 9 := by simp [hm_def]; linarith [Nat.self_le_factorial (a + 3)]
+        have hfact : Nat.factorial (a + 3) ≥ 6 :=
+          le_trans (by norm_num : 6 ≤ Nat.factorial 3) (Nat.factorial_le (by omega))
+        have hm_ge : m ≥ 9 := by simp only [hm_def]; omega
+        -- Three consecutive composites
         have hm1_comp : ¬ (m - 1).Prime := by
           intro hp
           have h2f : 2 ∣ Nat.factorial (a + 3) := Nat.dvd_factorial (by norm_num) (by linarith)
-          have h2 : 2 ∣ m - 1 := by simp [hm_def]; omega
-          have := hp.eq_one_or_self_of_dvd 2 h2; omega
+          have : 2 ∣ m - 1 := by simp only [hm_def]; omega
+          have := hp.eq_one_or_self_of_dvd 2 this; omega
         have hm_comp : ¬ m.Prime := by
-          intro hp; have h3 : 3 ∣ m :=
-            Nat.dvd_add (Nat.dvd_factorial (by linarith) (by linarith)) dvd_rfl
-          have := hp.eq_one_or_self_of_dvd 3 h3
-          have := Nat.self_le_factorial (a + 3); omega
+          intro hp
+          have : 3 ∣ m := by
+            simp only [hm_def]
+            exact Nat.dvd_add (Nat.dvd_factorial (by linarith) (by linarith)) dvd_rfl
+          have := hp.eq_one_or_self_of_dvd 3 this; omega
         have hm1p_comp : ¬ (m + 1).Prime := by
-          intro hp; have h2 : 2 ∣ m + 1 := by
-            have h2f : 2 ∣ Nat.factorial (a + 3) :=
-              Nat.dvd_factorial (by norm_num) (by linarith)
-            omega
-          have := hp.eq_one_or_self_of_dvd 2 h2
-          have := Nat.self_le_factorial (a + 3); omega
-        -- All prime factors of m²-1 = (m-1)(m+1) are ≤ (m+1)/2
+          intro hp
+          have h2f : 2 ∣ Nat.factorial (a + 3) := Nat.dvd_factorial (by norm_num) (by linarith)
+          have : 2 ∣ m + 1 := by simp only [hm_def]; omega
+          have := hp.eq_one_or_self_of_dvd 2 this; omega
+        -- m²-1 = (m-1)(m+1)
+        have h_sq : m ^ 2 - 1 = (m - 1) * (m + 1) := by
+          zify [show 1 ≤ m ^ 2 by nlinarith, show 1 ≤ m by omega]; ring
+        -- All prime factors of m²-1 ≤ (m+1)/2
         have h_bound : Nat.maxPrimeFac (m ^ 2 - 1) ≤ (m + 1) / 2 := by
-          apply maxPrimeFac_le_of_all_prime_factors_le (by nlinarith)
-          intro p hp hpd
-          have h_eq : m ^ 2 - 1 = (m - 1) * (m + 1) := by nlinarith
-          rw [h_eq] at hpd
+          have h_pos : 1 < m ^ 2 - 1 := by
+            have : m * m ≥ 81 := by nlinarith
+            simp [Nat.pow_succ]; omega
+          apply maxPrimeFac_le_of_all_prime_factors_le h_pos
+          intro p hp hpd; rw [h_sq] at hpd
           rcases hp.dvd_mul.mp hpd with h | h
           · exact le_trans (prime_factor_le_half (by omega) hm1_comp hp h)
               (Nat.div_le_div_right (by omega))
           · exact prime_factor_le_half (by omega) hm1p_comp hp h
-        -- (m+1)/2 < √(m²-1) for m ≥ 3
+        -- (m+1)/2 < √(m²-1) ↔ ((m+1)/2)² < m²-1
+        have h_sq_bound : ((m + 1) / 2) ^ 2 < m ^ 2 - 1 := by
+          -- (m+1)/2 * 2 ≤ m+1, so ((m+1)/2)^2 * 4 ≤ (m+1)^2
+          have hd := Nat.div_mul_le_self (m + 1) 2
+          -- ((m+1)/2)^2 ≤ (m+1)^2/4, and (m+1)^2/4 < m^2-1 for m ≥ 9
+          -- Since 2*((m+1)/2) ≤ m+1, we get 4*((m+1)/2)^2 ≤ (m+1)^2
+          have h4 : 4 * ((m + 1) / 2) ^ 2 ≤ (m + 1) ^ 2 := by nlinarith
+          -- (m+1)^2 = m^2 + 2m + 1 < 4*(m^2-1) = 4m^2-4 for m ≥ 9
+          -- i.e. 3m^2 - 2m - 5 > 0
+          have h5 : (m + 1) ^ 2 < 4 * (m ^ 2 - 1) := by
+            zify [show 1 ≤ m ^ 2 by nlinarith]; nlinarith
+          omega
         calc (Nat.maxPrimeFac (m ^ 2 - 1) : ℝ)
             ≤ ((m + 1) / 2 : ℕ) := by exact_mod_cast h_bound
-          _ < √(↑(m ^ 2 - 1)) := by
-              rw [show (m ^ 2 - 1 : ℕ) = m ^ 2 - 1 from rfl]
-              rw [Nat.cast_sub (by nlinarith : 1 ≤ m ^ 2)]
-              rw [Nat.cast_pow]
-              apply Real.lt_sqrt (by positivity) |>.mpr
-              constructor
-              · positivity
-              · push_cast [Nat.div_le_iff_le_mul (by norm_num : 0 < 2)]
-                nlinarith
+          _ < √((m ^ 2 - 1 : ℕ) : ℝ) := by
+              have : ((m + 1) / 2 : ℕ) = (((m + 1) / 2 : ℕ) : ℝ) := rfl
+              rw [← Real.sqrt_sq (show (0 : ℝ) ≤ ((m + 1) / 2 : ℕ) by positivity)]
+              exact Real.sqrt_lt_sqrt (by positivity) (by exact_mod_cast h_sq_bound)
       · -- maxPrimeFac(m²) < √(m²) = m
-        have hm3 : m ≥ 9 := by simp [hm_def]; linarith [Nat.self_le_factorial (a + 3)]
+        have hfact2 : Nat.factorial (a + 3) ≥ 6 :=
+          le_trans (by norm_num : 6 ≤ Nat.factorial 3) (Nat.factorial_le (by omega))
+        have hm_ge : m ≥ 9 := by simp only [hm_def]; omega
         have hm_comp : ¬ m.Prime := by
-          intro hp; have h3 : 3 ∣ m :=
-            Nat.dvd_add (Nat.dvd_factorial (by linarith) (by linarith)) dvd_rfl
-          have := hp.eq_one_or_self_of_dvd 3 h3; omega
-        have h_eq : m ^ 2 - 1 + 1 = m ^ 2 := by omega
-        rw [h_eq]
-        -- maxPrimeFac(m²) = maxPrimeFac(m) since they have same prime factors
-        -- maxPrimeFac(m) ≤ m/2 (composite)
-        -- m/2 < m = √(m²)
+          intro hp
+          have : 3 ∣ m := by
+            simp only [hm_def]
+            exact Nat.dvd_add (Nat.dvd_factorial (by linarith) (by linarith)) dvd_rfl
+          have := hp.eq_one_or_self_of_dvd 3 this; omega
+        conv_rhs => rw [show (↑(m ^ 2 - 1) : ℝ) + 1 = ↑(m ^ 2) from by push_cast [Nat.sub_add_cancel (show 1 ≤ m ^ 2 by nlinarith)]]
         have h_bound : Nat.maxPrimeFac (m ^ 2) ≤ m / 2 := by
           apply maxPrimeFac_le_of_all_prime_factors_le (by nlinarith)
           intro p hp hpd
-          have : p ∣ m := by
-            have := hp.dvd_of_dvd_pow hpd
-            exact this
-          exact prime_factor_le_half (by omega) hm_comp hp this
-        calc (Nat.maxPrimeFac (m ^ 2) : ℝ)
-            ≤ ((m / 2 : ℕ) : ℝ) := by exact_mod_cast h_bound
+          exact prime_factor_le_half (by omega) hm_comp hp (hp.dvd_of_dvd_pow hpd)
+        have h_sq_bound : (m / 2) ^ 2 < m ^ 2 := by
+          have : m / 2 < m := Nat.div_lt_self (by omega) (by norm_num)
+          nlinarith
+        calc (↑(Nat.maxPrimeFac (m ^ 2)) : ℝ)
+            ≤ ↑(m / 2) := Nat.cast_le.mpr h_bound
           _ < √(↑(m ^ 2)) := by
-              rw [Nat.cast_pow, Real.sqrt_sq (by positivity : (0 : ℝ) ≤ m)]
-              push_cast [Nat.div_le_iff_le_mul (by norm_num : 0 < 2)]
-              linarith
+              rw [← Real.sqrt_sq (show (0 : ℝ) ≤ ↑(m / 2) by positivity)]
+              apply Real.sqrt_lt_sqrt (by positivity)
+              exact_mod_cast h_sq_bound
     · -- n = m² - 1 > a
       have hm_ge : m ≥ a + 3 := by
         simp [hm_def]; linarith [Nat.self_le_factorial (a + 3)]
