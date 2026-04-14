@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Linters.AnswerLinter
-import FormalConjectures.Util.Answer
+public import FormalConjectures.Util.Linters.AnswerLinter
+public import FormalConjectures.Util.Answer
 
 /-!
 # Tests for the answer linter
@@ -24,6 +25,8 @@ This file contains test cases for the `AnswerLinter`, verifying that it correctl
 theorems with early arguments when `answer(sorry)` is the left-hand side of an iff,
 and does not flag theorems without `answer(sorry)` or without early arguments.
 -/
+
+public section
 
 namespace AnswerLinter
 
