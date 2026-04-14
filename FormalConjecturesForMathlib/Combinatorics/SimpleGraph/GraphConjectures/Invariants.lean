@@ -478,4 +478,123 @@ theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
         (Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
           hD.isDominating⟩)
 
+-- Helper: edist comparison ↔ dist comparison for adjacent endpoints
+omit [Fintype α] [DecidableEq α] in
+private lemma edist_lt_iff_dist_lt (G : SimpleGraph α) {u v : α} (hadj : G.Adj u v) (w : α) :
+    G.edist w u < G.edist w v ↔ G.dist w u < G.dist w v := by
+  by_cases hru : G.Reachable w u
+  · have hrv : G.Reachable w v := hru.trans hadj.reachable
+    rw [← hru.coe_dist_eq_edist, ← hrv.coe_dist_eq_edist, ENat.coe_lt_coe]
+  · have hrv : ¬G.Reachable w v :=
+      fun h => hru (h.trans hadj.symm.reachable)
+    simp [edist_eq_top_of_not_reachable hru, edist_eq_top_of_not_reachable hrv,
+          dist_eq_zero_of_not_reachable hru, dist_eq_zero_of_not_reachable hrv]
+
+private lemma szeged_aux_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj]
+    {u v : α} (hadj : G.Adj u v) :
+    szeged_aux G u v = computable_szeged_aux G u v := by
+  unfold szeged_aux computable_szeged_aux
+  congr 1; ext w
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+  rw [edist_lt_iff_dist_lt G hadj w, dist_eq_computable, dist_eq_computable]
+
+theorem szeged_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    szegedIndex G = computable_szeged_index G := by
+  unfold szegedIndex computable_szeged_index
+  apply Finset.sum_congr rfl
+  intro e he
+  revert he
+  refine Sym2.ind (fun u v => ?_) e
+  intro he
+  simp only [Sym2.lift_mk]
+  have hadj : G.Adj u v := by rwa [mem_edgeFinset, mem_edgeSet] at he
+  congr 1
+  · exact szeged_aux_eq_computable G hadj
+  · exact szeged_aux_eq_computable G hadj.symm
+
+-- Helper: ∑∑ f = 2 * ∑ Sym2 (lift f) when f symmetric with f(a,a) = 0
+private lemma double_sum_eq_two_mul_sym2_sum {f : α → α → ℕ}
+    (hf : ∀ a b, f a b = f b a) (hd : ∀ a, f a a = 0) :
+    ∑ u : α, ∑ v : α, f u v =
+    2 * ∑ x : Sym2 α, Sym2.lift ⟨f, fun a b => hf a b⟩ x := by
+  -- Use fiberwise decomposition over Sym2 quotient map
+  have h_fiber := Fintype.sum_fiberwise
+    (fun (p : α × α) => Sym2.mk p)
+    (fun (p : α × α) => f p.1 p.2)
+  -- h_fiber : ∑ q : Sym2 α, ∑ p : {p // Sym2.mk p = q}, f (↑p).1 (↑p).2
+  --         = ∑ p : α × α, f p.1 p.2
+  -- RHS = ∑ u, ∑ v, f u v (by Finset.sum_product')
+  -- LHS = ∑ q, (fiber sum) = ∑ q, 2 * lift f q = 2 * ∑ q, lift f q
+  -- So: ∑ u, ∑ v, f u v = 2 * ∑ q, lift f q
+  rw [show (∑ u : α, ∑ v : α, f u v) = ∑ p : α × α, f p.1 p.2 from by
+    rw [← Finset.univ_product_univ, Finset.sum_product']]
+  rw [← h_fiber, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro q _
+  -- For each q : Sym2 α, show fiber sum = 2 * lift f q
+  refine Sym2.ind (fun a b => ?_) q
+  simp only [Sym2.lift_mk]
+  -- Need: ∑ (p : {p : α × α // Sym2.mk p = s(a, b)}), f (↑p).1 (↑p).2 = 2 * f a b
+  -- Convert subtype sum to filter sum
+  rw [← Finset.sum_subtype (Finset.univ.filter (fun p : α × α => Sym2.mk p = s(a, b)))
+    (fun x => by simp [Finset.mem_filter]) (fun p => f p.1 p.2)]
+  -- Characterize the filter: Sym2.mk (x,y) = s(a,b) ↔ (x,y) = (a,b) ∨ (x,y) = (b,a)
+  have h_filter : Finset.univ.filter (fun p : α × α => Sym2.mk p = s(a, b)) =
+      {(a, b), (b, a)} := by
+    ext ⟨x, y⟩
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_insert,
+      Finset.mem_singleton, Prod.mk.injEq]
+    constructor
+    · intro h
+      rw [Sym2.eq] at h
+      cases h with
+      | refl => left; exact ⟨rfl, rfl⟩
+      | swap => right; exact ⟨rfl, rfl⟩
+    · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩)
+      · rfl
+      · exact Sym2.sound (.swap _ _)
+  rw [h_filter]
+  by_cases hab : a = b
+  · subst hab; simp [hd]
+  · rw [Finset.sum_pair (show (a, b) ≠ (b, a) by simp [hab])]
+    rw [hf b a]; ring
+
+theorem wiener_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    wienerIndex G = computable_wiener G := by
+  unfold wienerIndex computable_wiener
+  -- Goal: ∑ uv, Sym2.lift ⟨dist, _⟩ uv = (∑ u, ∑ v, computable_dist u v) / 2
+  have hcomm : ∀ a b, computable_dist G a b = computable_dist G b a := by
+    intro a b; rw [← dist_eq_computable, ← dist_eq_computable, dist_comm]
+  have hdiag : ∀ a, computable_dist G a a = 0 := by
+    intro a; rw [← dist_eq_computable]; simp
+  -- Sum over Sym2 using dist = sum over Sym2 using computable_dist
+  have h_sum : (∑ uv : Sym2 α, Sym2.lift ⟨fun u v ↦ G.dist u v,
+      by intro a b; simp [dist_comm]⟩ uv) =
+      ∑ uv : Sym2 α, Sym2.lift ⟨fun u v ↦ computable_dist G u v,
+      fun a b => hcomm a b⟩ uv := by
+    apply Finset.sum_congr rfl; intro x _
+    refine Sym2.ind (fun a b => ?_) x
+    simp only [Sym2.lift_mk, dist_eq_computable]
+  rw [h_sum]
+  have h2 := double_sum_eq_two_mul_sym2_sum hcomm hdiag
+  -- h2 : ∑∑ f = 2 * ∑ Sym2 lift f
+  -- goal: ∑ Sym2 lift f = ∑∑ f / 2
+  rw [h2, Nat.mul_div_cancel_left _ (by omega : 0 < 2)]
+
+theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    averageDistance G = (computable_avg_dist G : ℝ) := by
+  unfold averageDistance computable_avg_dist
+  split_ifs with h
+  · -- numerator equality
+    have hnum : (∑ u ∈ Finset.univ, ∑ v ∈ Finset.univ, (G.dist u v : ℝ)) =
+        ↑(∑ u ∈ Finset.univ, ∑ v ∈ Finset.univ, (computable_dist G u v : ℚ)) := by
+      push_cast
+      apply Finset.sum_congr rfl; intro u _
+      apply Finset.sum_congr rfl; intro v _
+      simp [dist_eq_computable]
+    rw [hnum]
+    push_cast
+    ring
+  · simp
+
 end SimpleGraph
