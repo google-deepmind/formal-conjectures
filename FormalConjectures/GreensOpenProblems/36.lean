@@ -50,7 +50,7 @@ theorem green_36 :
     answer(sorry) ↔
       ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
         ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
-          (n : ℝ) ^ (2 - ε) ≤ (Nat.card H : ℝ) ∧ (Nat.card H : ℝ) ≤ (n : ℝ) ^ (2 + ε) ∧
+          (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
           (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
           SimultaneousDoubleProduct A B := by
   sorry
