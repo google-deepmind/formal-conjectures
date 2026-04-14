@@ -46,6 +46,17 @@ theorem green_33 :
             |((A.card : ℝ) / Real.sqrt q - Real.sqrt 2)| < ε := by
   sorry
 
+/-- Trivial lower bound: if $A + A = \mathbb{Z}/q\mathbb{Z}$, then $|A|^2 \geq q$,
+since the sumset $A + A$ has at most $|A|^2$ elements. -/
+@[category test, AMS 5 11]
+theorem green_33.sanity_sq_bound (q : ℕ+) (A : Finset (ZMod q))
+    (hA : A + A = Finset.univ) : (q : ℕ) ≤ A.card ^ 2 := by
+  calc (q : ℕ) = Fintype.card (ZMod q) := (ZMod.card q).symm
+    _ = (Finset.univ : Finset (ZMod q)).card := Finset.card_univ.symm
+    _ = (A + A).card := by rw [hA]
+    _ ≤ A.card * A.card := Finset.card_add_le ..
+    _ = A.card ^ 2 := (sq A.card).symm
+
 -- TODO(jgd): Add variants from comments in [Gr24]
 
 end Green33
