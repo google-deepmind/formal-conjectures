@@ -19,56 +19,74 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 89
 
-*Reference:* [erdosproblems.com/89](https://www.erdosproblems.com/89)
+*References:*
+- [erdosproblems.com/89](https://www.erdosproblems.com/89)
+- [Er46] P. Erdős, "On sets of distances of n points", Amer. Math. Monthly 53 (1946), 248–250.
+- [GK15] L. Guth, N. H. Katz, "On the Erdős distinct distances problem in the plane",
+  Annals of Mathematics 181 (2015), 155–190.
+
+### AI disclosure
+Lean 4 code in this file was drafted with assistance from Claude (Anthropic).
+The mathematical content and formalization decisions are the author's own work.
 -/
 
-open Filter
-open EuclideanGeometry
+open Finset Real
 
 namespace Erdos89
 
-/--
-The minimum number of distinct distances guaranteed for any set of $n$ points.
--/
-noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
-  sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
+/-- Euclidean distance between two points in ℝ². -/
+noncomputable def euclidDist (p q : EuclideanSpace ℝ (Fin 2)) : ℝ :=
+  dist p q
+
+/-- The set of distinct pairwise distances determined by a finite point set in ℝ². -/
+noncomputable def distinctDistances (pts : Finset (EuclideanSpace ℝ (Fin 2))) : Finset ℝ :=
+  pts.offDiag.image (fun pq => dist pq.1 pq.2)
 
 /--
-Does every set of $n$ distinct points in $\mathbb{R}^2$ determine $\gg \frac{n}{\sqrt{\log n}}$
-many distinct distances?
+Let $x_1, \ldots, x_n$ be $n$ distinct points in $\mathbb{R}^2$. Let $f(n)$ denote the
+minimum number of distinct distances determined by $n$ points. Is it true that
+$f(n) \gg n / \sqrt{\log n}$?
+
+A $\sqrt{n} \times \sqrt{n}$ integer grid shows that $f(n) \ll n / \sqrt{\log n}$
+(via the Landau–Ramanujan theorem on sums of two squares), so this bound, if true,
+would be best possible.
+
+Guth and Katz [GK15] proved $f(n) \gg n / \log n$, which is the best known lower bound.
+The conjectured bound $n / \sqrt{\log n}$ remains open — the gap is a factor of $\sqrt{\log n}$.
 -/
 @[category research open, AMS 52]
 theorem erdos_89 :
-    (fun (n : ℕ) => n/(n : ℝ).log.sqrt) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+    ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ (pts : Finset (EuclideanSpace ℝ (Fin 2))),
+      2 ≤ pts.card →
+        C * (pts.card : ℝ) / (Real.log (pts.card : ℝ)) ^ ((1 : ℝ) / 2 + ε) ≤
+        (distinctDistances pts).card := by
   sorry
 
 /--
-Guth and Katz [GuKa15] proved that there are always $\gg \frac{n}{\log n}$ many distinct distances.
-
-[GuKa15] Guth, Larry and Katz, Nets Hawk, On the Erdős distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190.
+Guth and Katz [GK15] proved that any $n$ points in $\mathbb{R}^2$ determine
+$\gg n / \log n$ distinct distances. This is the best known lower bound toward
+the full Erdős conjecture (which asks for $n / \sqrt{\log n}$).
 -/
 @[category research solved, AMS 52]
-theorem erdos_89.variants.n_dvd_log_n :
-    (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+theorem erdos_89.variants.guth_katz :
+    ∃ C > (0 : ℝ), ∀ (pts : Finset (EuclideanSpace ℝ (Fin 2))),
+      2 ≤ pts.card →
+        C * (pts.card : ℝ) / Real.log (pts.card : ℝ) ≤
+        (distinctDistances pts).card := by
   sorry
 
 /--
-This theorem provides a sanity check, showing that the main conjecture (`erdos_89`) is strictly
-stronger than the solved Guth and Katz result. It proves that, trivially, if the lower bound
-$\frac{n}{\sqrt{\log n}}$ holds, then the weaker lower bound $\frac{n}{\log n}$ must also hold.
+The integer lattice $\{1, \ldots, \lfloor\sqrt{n}\rfloor\}^2$ determines
+$\Theta(n / \sqrt{\log n})$ distinct distances, by the Landau–Ramanujan theorem on
+representations as sums of two squares. This shows the conjectured lower bound
+is best possible up to constants.
 -/
-@[category test, AMS 52]
-theorem erdos_89.variants.implies_n_dvd_log_n (h : type_of% erdos_89) :
-    type_of% erdos_89.variants.n_dvd_log_n := by
-  refine .trans ?_ h
-  have := (Asymptotics.isLittleO_one_left_iff ℝ).mpr <| tendsto_norm_atTop_atTop.comp <|
-    (tendsto_rpow_atTop (show 0 < 1/2 by norm_num)).comp
-    (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
-  convert (Asymptotics.isBigO_refl (fun n : ℕ ↦ n/(n : ℝ).log) _).mul this.isBigO using 1
-  · simp
-  · simp_rw [Function.comp, div_mul, ← Real.sqrt_eq_rpow, Real.div_sqrt]
-
-
--- TODO(firsching): formalize the rest of the remarks
+@[category research solved, AMS 52]
+theorem erdos_89.variants.grid_upper_bound :
+    ∃ C > (0 : ℝ), ∀ᶠ n in Filter.atTop,
+      ∃ (pts : Finset (EuclideanSpace ℝ (Fin 2))),
+        pts.card = n ∧
+        (distinctDistances pts).card ≤ C * (n : ℝ) / Real.sqrt (Real.log (n : ℝ)) := by
+  sorry
 
 end Erdos89
