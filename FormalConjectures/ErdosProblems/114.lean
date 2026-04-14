@@ -60,7 +60,7 @@ def levelCurveUnit (p : Polynomial ℂ) : Set ℂ :=
 /-- The arc length of the lemniscate of `p`, measured as the
 1-dimensional Hausdorff measure of the level curve. -/
 noncomputable def arcLength (p : Polynomial ℂ) : ℝ≥0∞ :=
-  MeasureTheory.Measure.hausdorffMeasure 1 (levelCurveUnit p)
+  MeasureTheory.Measure.hausdorffMeasure (1 : ℝ) (levelCurveUnit p)
 
 /-- **Erdős Problem 114** (open conjecture). Among all monic polynomials of
 degree $n$, $p(z) = z^n - c$ (with $|c| = 1$) maximises the arc length of the
