@@ -61,7 +61,7 @@ In particular, we assume that every even number greater than 6 can be written as
 *distinct* primes, in contrast to the usual Goldbach conjecture that every even number greater than
 2 can be written as the sum of two primes.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at ""]
 theorem erdos_418.variants.conditional
     (goldbach : ∀ (n : ℕ), 6 < n → Even n → ∃ p q, p ≠ q ∧ p.Prime ∧ q.Prime ∧ n = p + q)
     (m : ℕ) (h : Odd m) :
