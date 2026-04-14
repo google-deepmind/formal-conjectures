@@ -311,26 +311,171 @@ noncomputable def cvetkovic (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
 
 theorem indep_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     G.indepNum = computable_indep_num G := by
-  sorry
+  unfold SimpleGraph.indepNum SimpleGraph.computable_indep_num
+  apply le_antisymm
+  · apply csSup_le
+    · refine ⟨0, ∅, ?_, rfl⟩
+      simp [SimpleGraph.IsIndepSet]
+    · intro n hn
+      obtain ⟨s, hs⟩ := hn
+      calc n = s.card := hs.card_eq.symm
+        _ ≤ _ := Finset.le_sup ?_
+      simp only [Finset.mem_filter, Finset.mem_powerset]
+      exact ⟨Finset.subset_univ _, fun u hu v hv huv =>
+        hs.isIndepSet (Finset.mem_coe.mpr hu) (Finset.mem_coe.mpr hv) huv⟩
+  · apply Finset.sup_le
+    intro s hs
+    apply le_csSup
+    · exact ⟨Fintype.card α, fun n ⟨s, hs⟩ => hs.card_eq ▸ s.card_le_univ⟩
+    · simp only [Set.mem_setOf_eq]
+      exact ⟨s, ⟨fun x hx y hy hne =>
+        (Finset.mem_filter.mp hs).2 x (Finset.mem_coe.mp hx) y (Finset.mem_coe.mp hy) hne,
+        rfl⟩⟩
 
-theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
-    dominationNumber G = computable_dom_num G := by
-  sorry
+private lemma mem_iterate_bfs_expand_dist_le (G : SimpleGraph α) [DecidableRel G.Adj]
+    (u w : α) (n : ℕ) (hw : w ∈ (G.bfs_expand)^[n] {u}) : G.dist u w ≤ n := by
+  induction n generalizing w with
+  | zero => simp at hw; subst hw; simp
+  | succ n ih =>
+    rw [Function.iterate_succ', Function.comp] at hw
+    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter] at hw
+    rcases hw with hw | ⟨a, ha_mem, _, hadj⟩
+    · exact Nat.le_succ_of_le (ih w hw)
+    · by_cases ha : a = u
+      · subst ha
+        exact le_trans (dist_le (.cons hadj .nil))
+          (by simp [Walk.length_cons])
+      · by_cases hd : G.dist u a = 0
+        · rw [dist_eq_zero_iff_eq_or_not_reachable] at hd
+          rcases hd with rfl | hd
+          · exact absurd rfl ha
+          · have : ¬G.Reachable u w := fun hr =>
+              hd (hr.elim (fun p => (p.append (.cons hadj.symm .nil)).reachable))
+            rw [dist_eq_zero_of_not_reachable this]; omega
+        · obtain ⟨p, hp⟩ := exists_walk_of_dist_ne_zero hd
+          have ha_dist := ih a ha_mem
+          exact le_trans (dist_le (p.append (.cons hadj .nil)))
+            (by simp [Walk.length_append, Walk.length_cons, Walk.length_nil, hp]; omega)
+
+private lemma reachable_of_mem_iterate_bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj]
+    (u w : α) (n : ℕ) (hw : w ∈ (G.bfs_expand)^[n] {u}) : w = u ∨ G.Reachable u w := by
+  induction n generalizing w with
+  | zero => simp at hw; exact Or.inl hw
+  | succ n ih =>
+    rw [Function.iterate_succ', Function.comp] at hw
+    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter] at hw
+    rcases hw with hw | ⟨a, ha_mem, _, hadj⟩
+    · exact ih w hw
+    · right
+      rcases ih a ha_mem with rfl | hr
+      · exact hadj.reachable
+      · exact hr.elim fun p => (p.append (.cons hadj .nil)).reachable
+
+private lemma dist_le_mem_iterate_bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj]
+    (u w : α) (n : ℕ) (hdist : G.dist u w ≤ n) (hreach : w = u ∨ G.Reachable u w) :
+    w ∈ (G.bfs_expand)^[n] {u} := by
+  induction n generalizing w with
+  | zero =>
+    rcases hreach with rfl | hr
+    · exact Finset.mem_singleton_self _
+    · have h0 := Nat.le_zero.mp hdist
+      rw [dist_eq_zero_iff_eq_or_not_reachable] at h0
+      rcases h0 with h0 | h0
+      · subst h0; exact Finset.mem_singleton_self _
+      · exact absurd hr h0
+  | succ n ih =>
+    rw [Function.iterate_succ', Function.comp]
+    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter]
+    by_cases hle : G.dist u w ≤ n
+    · left; exact ih w hle hreach
+    · right
+      have hdist_eq : G.dist u w = n + 1 := by omega
+      obtain ⟨p, hp⟩ := exists_walk_of_dist_ne_zero (by omega : G.dist u w ≠ 0)
+      have hlen : p.length = n + 1 := by omega
+      refine ⟨p.getVert n, ?_, Finset.mem_univ _, ?_⟩
+      · exact ih _ (le_trans (dist_le (p.take n))
+          (by rw [Walk.take_length]; omega)) (Or.inr (p.take n).reachable)
+      · have := p.adj_getVert_succ (show n < p.length from by omega)
+        rwa [show n + 1 = p.length from by omega, p.getVert_length] at this
 
 theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) :
     G.dist u v = computable_dist G u v := by
-  sorry
+  unfold computable_dist
+  split_ifs with h
+  · subst h; simp [dist_self]
+  · symm
+    suffices hsuff : ∀ (fuel depth : ℕ) (reached : Finset α),
+        (∀ w, w ∈ reached ↔ w ∈ (G.bfs_expand)^[depth] {u}) →
+        (∀ d, d < depth → v ∉ (G.bfs_expand)^[d] {u}) →
+        fuel + depth ≥ Fintype.card α + 1 →
+        G.bfs_dist_aux v fuel depth reached = G.dist u v by
+      exact hsuff (Fintype.card α) 1 (G.bfs_expand {u})
+        (fun w => by simp [Function.iterate_succ, Function.comp])
+        (fun d hd => by
+          have := Nat.lt_of_lt_of_le hd (Nat.le_refl 1)
+          interval_cases d; simp [Finset.mem_singleton]; exact Ne.symm h)
+        (by omega)
+    intro fuel
+    induction fuel with
+    | zero =>
+      intro depth reached h_inv h_not_found h_fuel
+      simp [bfs_dist_aux]
+      symm; rw [dist_eq_zero_iff_eq_or_not_reachable]
+      right; intro hr
+      have hpos := hr.pos_dist_of_ne h
+      obtain ⟨p, hp_path, hp_len⟩ := hr.exists_path_of_dist
+      have : G.dist u v < depth := by
+        calc G.dist u v = p.length := hp_len.symm
+          _ < Fintype.card α := hp_path.length_lt
+          _ < depth := by omega
+      exact h_not_found (G.dist u v) this
+        (dist_le_mem_iterate_bfs_expand G u v _ (le_refl _) (Or.inr hr))
+    | succ fuel ih =>
+      intro depth reached h_inv h_not_found h_fuel
+      simp only [bfs_dist_aux]
+      split_ifs with hv
+      · -- v ∈ reached = iterate^depth {u}. Show depth = dist u v.
+        have hle := mem_iterate_bfs_expand_dist_le G u v depth ((h_inv v).mp hv)
+        -- dist u v ≥ depth: if dist < depth, v ∈ iterate^(dist u v), contradicts h_not_found
+        by_contra hne
+        have hlt : G.dist u v < depth := by omega
+        have hreach : G.Reachable u v := by
+          rcases reachable_of_mem_iterate_bfs_expand G u v depth ((h_inv v).mp hv) with rfl | hr
+          · exact absurd rfl h
+          · exact hr
+        exact h_not_found (G.dist u v) hlt
+          (dist_le_mem_iterate_bfs_expand G u v _ (le_refl _) (Or.inr hreach))
+      · -- v ∉ reached. Recurse.
+        have h_inv' : ∀ w, w ∈ G.bfs_expand reached ↔
+            w ∈ (G.bfs_expand)^[depth + 1] {u} := by
+          intro w
+          have heq : G.bfs_expand reached = G.bfs_expand ((G.bfs_expand)^[depth] {u}) := by
+            ext x; simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion,
+              Finset.mem_filter, h_inv]
+          rw [heq, Function.iterate_succ', Function.comp]
+        exact ih (depth + 1) (G.bfs_expand reached) h_inv'
+          (fun d hd => by
+            rcases Nat.lt_succ_iff_lt_or_eq.mp hd with hd | hd
+            · exact h_not_found d (by omega)
+            · subst hd; rwa [h_inv] at hv)
+          (by omega)
 
-theorem wiener_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
-    wienerIndex G = computable_wiener G := by
-  sorry
-
-theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
-    averageDistance G = (computable_avg_dist G : ℝ) := by
-  sorry
-
-theorem szeged_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
-    szegedIndex G = computable_szeged_index G := by
-  sorry
+theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    dominationNumber G = computable_dom_num G := by
+  unfold SimpleGraph.dominationNumber SimpleGraph.computable_dom_num
+  apply le_antisymm
+  · apply csInf_le ⟨0, fun _ _ => Nat.zero_le _⟩
+    simp only [Set.mem_setOf_eq]
+    obtain ⟨D, hD_mem, hD_card⟩ := Finset.exists_mem_eq_inf' _ Finset.card
+    exact ⟨D, hD_card ▸ ⟨(Finset.mem_filter.mp hD_mem).2, rfl⟩⟩
+  · apply le_csInf
+    · exact ⟨Fintype.card α, Finset.univ,
+        ⟨fun v => Or.inl (Finset.mem_univ v), Finset.card_univ⟩⟩
+    · intro b hb
+      obtain ⟨D, hD⟩ := hb
+      rw [← hD.card_eq]
+      exact Finset.inf'_le _
+        (Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
+          hD.isDominating⟩)
 
 end SimpleGraph

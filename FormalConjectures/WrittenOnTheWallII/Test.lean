@@ -36,6 +36,25 @@ open SimpleGraph
 
 open Classical
 
+-- Bridge theorems for Sym2/edist-based invariants.
+-- dist_eq_computable, indep_num_eq_computable, dom_num_eq_computable are proved in
+-- FormalConjecturesForMathlib. These remaining three need Sym2 sum identities
+-- or edist ↔ dist bridging not yet available in Mathlib.
+variable {α : Type*} [Fintype α] [DecidableEq α] in
+theorem SimpleGraph.wiener_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    wienerIndex G = computable_wiener G := by
+  sorry
+
+variable {α : Type*} [Fintype α] [DecidableEq α] in
+theorem SimpleGraph.avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    averageDistance G = (computable_avg_dist G : ℝ) := by
+  sorry
+
+variable {α : Type*} [Fintype α] [DecidableEq α] in
+theorem SimpleGraph.szeged_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    szegedIndex G = computable_szeged_index G := by
+  sorry
+
 /-  ### Graph Definitions -/
 
 /-- House Graph: Square 0-1-2-3-0 with roof 4 connected to 2,3. -/
