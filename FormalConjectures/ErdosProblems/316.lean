@@ -37,9 +37,7 @@ The minimal counterexample is $\{2,3,4,5,6,7,10,11,13,14,15\}$, found by Tom Sto
 
 This was formalized in Lean by Mehta.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/316.lean",
-AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/316.lean"]
 theorem erdos_316 : answer(False) ↔ ∀ A : Finset ℕ, 0 ∉ A → 1 ∉ A →
     ∑ n ∈ A, (1 / n : ℚ) < 2 → ∃ (A₁ A₂ : Finset ℕ),
       Disjoint A₁ A₂ ∧ A = A₁ ∪ A₂ ∧

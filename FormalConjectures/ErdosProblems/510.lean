@@ -20,6 +20,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/510](https://www.erdosproblems.com/510)
+- [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11)
 - [Ru04] Ruzsa, Imre Z., Negative values of cosine sums. Acta Arith. (2004), 179-186.
 - [Be25c] B. Bedert, Polynomial bounds for the Chowla Cosine Problem. arXiv:2509.05260 (2025).
 -/

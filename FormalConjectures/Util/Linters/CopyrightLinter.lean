@@ -13,7 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Tactic.Linter.Header
+module
+
+public import Mathlib.Tactic.Linter.Header
+
+/-!
+# The copyright linter
+
+This file implements a linter that checks that every file in the project
+has the correct copyright header.
+-/
+
+public meta section
 
 open Lean Elab Meta Command Syntax
 

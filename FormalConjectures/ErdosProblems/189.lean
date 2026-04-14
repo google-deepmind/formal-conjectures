@@ -49,8 +49,7 @@ monochromatic region is Lebesgue measurable and has measure zero).
 
 This was formalized in Lean by Alexeev and Kovac using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos189.lean", AMS 5 51]
+@[category research solved, AMS 5 51, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos189.lean"]
 theorem erdos_189 :
     answer(False) ↔ Erdos189For
       (fun a b c d ↦

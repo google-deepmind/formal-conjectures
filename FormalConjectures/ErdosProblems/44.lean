@@ -55,14 +55,16 @@ theorem erdos_44.variants.empty_start : answer(sorry) ↔ ∀ᵉ (ε > (0 : ℝ)
     ∃ᵉ (A ⊆ Finset.Icc 1 M), IsSidon (A : Set ℕ) ∧ (1 - ε) * Real.sqrt M ≤ A.card := by
   sorry
 
-/-! ## Related results and examples -/
+/-  ## Related results and examples -/
 
 /--
 The set `{1, 2, 4, 8, 13}` is a Sidon set in `{1, ..., 13}`.
 -/
 @[category undergraduate, AMS 5 11]
 theorem example_sidon_set : IsSidon ({1, 2, 4, 8, 13} : Set ℕ) := by
-  sorry
+  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
+  rcases hi₁ with rfl | rfl | rfl | rfl | rfl <;> rcases hj₁ with rfl | rfl | rfl | rfl | rfl <;> rcases hi₂ with rfl | rfl | rfl | rfl | rfl <;> rcases hj₂ with rfl | rfl | rfl | rfl | rfl <;> simp_all <;> omega
 
 /--
 For any `N`, there exists a Sidon set of size at least `√N/2`.

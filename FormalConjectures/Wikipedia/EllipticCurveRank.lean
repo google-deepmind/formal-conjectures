@@ -159,7 +159,7 @@ namespace WeierstrassCurve
 
 open _root_.WeierstrassCurve
 
-/-! See https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve#Largest_known_ranks -/
+/-  See https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve#Largest_known_ranks -/
 
 /-- The elliptic curve over ℚ of rank at least 29 found by Elkies and Klagsbrun in 2024.
 It has rank exactly 29 assuming the generalized Riemann hypothesis. -/

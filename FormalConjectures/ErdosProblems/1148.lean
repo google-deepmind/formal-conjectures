@@ -46,9 +46,22 @@ theorem erdos_1148 : answer(sorry) ↔ ∀ᶠ n in atTop, Erdos1148Prop n := by
 /--
 The largest integer known which cannot be written this way is $6563$.
 -/
+private instance (n : ℕ) : Decidable (Erdos1148Prop n) :=
+  decidable_of_iff
+    (∃ x ∈ Finset.range (Nat.sqrt n + 1), ∃ y ∈ Finset.range (Nat.sqrt n + 1),
+      ∃ z ∈ Finset.range (Nat.sqrt n + 1),
+      n = x ^ 2 + y ^ 2 - z ^ 2 ∧ x ^ 2 ≤ n ∧ y ^ 2 ≤ n ∧ z ^ 2 ≤ n)
+    (by
+      constructor
+      · rintro ⟨x, -, y, -, z, -, h⟩; exact ⟨x, y, z, h⟩
+      · rintro ⟨x, y, z, h1, h2, h3, h4⟩
+        refine ⟨x, Finset.mem_range.mpr ?_, y, Finset.mem_range.mpr ?_,
+                z, Finset.mem_range.mpr ?_, h1, h2, h3, h4⟩
+        all_goals (simp only [Nat.lt_succ_iff]; exact Nat.le_sqrt'.mpr ‹_›))
+
 @[category high_school, AMS 11]
 theorem erdos_1148.variants.lower_bound : ¬ Erdos1148Prop 6563 := by
-  sorry
+  decide +native
 
 /--
 The weaker property: $n = x^2 + y^2 - z^2$ such that $\max(x^2, y^2, z^2) \leq n + 2\sqrt{n}$.
