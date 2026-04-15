@@ -50,17 +50,19 @@ The mathematical content, computational verification, and certificates are the
 author's own work.
 -/
 
+open Polynomial MeasureTheory ENNReal
+
 namespace Erdos114
 
 /-- The level curve (lemniscate) of a polynomial `p` at level 1:
 $\{z \in \mathbb{C} \mid \|p(z)\| = 1\}$. -/
-def levelCurveUnit (p : Polynomial ℂ) : Set ℂ :=
+def levelCurveUnit (p : ℂ[X]) : Set ℂ :=
   {z : ℂ | ‖p.eval z‖ = 1}
 
 /-- The arc length of the lemniscate of `p`, measured as the
 1-dimensional Hausdorff measure of the level curve. -/
-noncomputable def arcLength (p : Polynomial ℂ) : ℝ≥0∞ :=
-  MeasureTheory.Measure.hausdorffMeasure (1 : ℝ) (levelCurveUnit p)
+noncomputable def arcLength (p : ℂ[X]) : ℝ≥0∞ :=
+  μH[1] (levelCurveUnit p)
 
 /-- **Erdős Problem 114** (open conjecture). Among all monic polynomials of
 degree $n$, $p(z) = z^n - c$ (with $|c| = 1$) maximises the arc length of the
@@ -71,8 +73,8 @@ Originally posed by Erdős, Herzog, and Piranian [EHP58]. Solved for $n = 2$
 Open in general. -/
 @[category research open, AMS 30]
 theorem erdos_114 (n : ℕ) (hn : 1 ≤ n)
-    (p : Polynomial ℂ) (hp : p.Monic) (hp_deg : p.natDegree = n) :
-    arcLength p ≤ arcLength (Polynomial.X ^ n - Polynomial.C 1) := by
+    (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n) :
+    arcLength p ≤ arcLength (X ^ n - C 1) := by
   sorry
 
 /-- **Erdős Problem 114, small $n$** (solved, computationally certified).
@@ -88,8 +90,8 @@ to floating-point rigor per IEEE 1788-2015.
 [doi:10.5281/zenodo.19480329](https://doi.org/10.5281/zenodo.19480329) -/
 @[category research solved, AMS 30]
 theorem erdos_114_small_n (n : ℕ) (hn : 3 ≤ n) (hn14 : n ≤ 14)
-    (p : Polynomial ℂ) (hp : p.Monic) (hp_deg : p.natDegree = n) :
-    arcLength p ≤ arcLength (Polynomial.X ^ n - Polynomial.C 1) := by
+    (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n) :
+    arcLength p ≤ arcLength (X ^ n - C 1) := by
   sorry
 
 end Erdos114
