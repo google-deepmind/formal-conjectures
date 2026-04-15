@@ -119,7 +119,7 @@ theorem union_closed.variants.univ_card_two (A : Finset (Finset (Fin 2)))
 We can show the union-closed sets conjecture is true for the case where the set family contains
 some singleton.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at ""]
 theorem union_closed.variants.singleton_mem
     (h_union_closed : IsUnionClosed A)
     (i : n) (hi : {i} ∈ A) :
