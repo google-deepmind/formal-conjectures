@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Tactic.Linter.Term
+public import FormalConjecturesForMathlib.Tactic.Linter.Term
+
+import Lean.Linter.Basic
 
 /-! # The Exists Implication Linter
 
@@ -25,6 +28,8 @@ does not satisfy `P`. This linter flags occurences of this patter to the user an
 corrected syntax.
 
 -/
+
+public section
 
 open Lean Meta
 
