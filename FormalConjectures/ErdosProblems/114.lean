@@ -50,7 +50,7 @@ The mathematical content, computational verification, and certificates are the
 author's own work.
 -/
 
-open Polynomial MeasureTheory ENNReal
+open Polynomial MeasureTheory ENNReal Classical
 
 namespace Erdos114
 
