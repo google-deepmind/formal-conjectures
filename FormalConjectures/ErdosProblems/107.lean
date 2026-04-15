@@ -31,7 +31,7 @@ namespace Erdos107
 
 /-- The set of $N$ such that any $N$ points in the plane, no three on a line,
 contain a convex $n$-gon. -/
-def cardSet (n : ℕ) := { N | ∀ (pts : Finset ℝ²), pts.card = N → NonTrilinear pts.toSet →
+def cardSet (n : ℕ) := { N | ∀ (pts : Finset ℝ²), pts.card = N → NonTrilinear (pts : Set ℝ²) →
   HasConvexNGon n pts }
 
 /-- The function $f(n)$ specified in `erdos_107`. -/

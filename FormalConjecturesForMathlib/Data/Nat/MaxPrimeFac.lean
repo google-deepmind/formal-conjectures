@@ -13,9 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Data.Nat.Lattice
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Data.Nat.Lattice
+
+@[expose] public section
 
 namespace Nat
 

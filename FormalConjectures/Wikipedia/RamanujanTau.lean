@@ -36,7 +36,7 @@ open PowerSeries PowerSeries.WithPiTopology
 
 noncomputable def Δ : PowerSeries ℤ := X * ∏' (n : ℕ+), (1 - X ^ (n : ℕ)) ^ 24
 
-noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff ℤ n Δ
+noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff n Δ
 
 
 @[category API, AMS 11]

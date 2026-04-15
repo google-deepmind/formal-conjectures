@@ -4,23 +4,24 @@ import pandas as pd
 import plotly.express as px
 import re
 import subprocess
-from datetime import datetime, timedelta
+from datetime import datetime
 
 conf = {
-  'line_color': '#4285F4', # Color used in plotting
-  'line_width': 3, # Width of line used in the plot
-  'title': dict(
-    text='Number of Lean files in Formal Conjectures', # Title text
-    font=dict(size=15), # Title font
-    x=0.5, # Center title
-    xanchor='center' # Center title
-  ),
-  'max-width': '1000px', # Width of plot in px
-  'aspect-ratio': 2, # aspect ratio of plot
-  'start_date': '2025-05-28', # Announcement date is '2025-05-28'
-  'xlabel': 'Date', # x-axis label on plot
-  'ylabel': 'Number of Lean files', # y-axis label on plot
-  'out_path': 'docbuild/out/file_counts.html' # This is used as an arg to overwrite_index.lean in .github/workflows/build-and-docs.yml
+    'line_color': '#4285F4',
+    'line_width': 2,
+    'title': dict(
+        text='Number of Lean files in Formal Conjectures',
+        font=dict(size=18),
+        x=0.5,
+        xanchor='center'
+    ),
+    'width_pct': '90%',
+    'height_px': 675,
+    'max_width' : 1200, # 16:9 aspect ratio at max
+    'start_date': '2025-05-28',
+    'xlabel': 'Date',
+    'ylabel': 'File Count',
+    'out_path_prefix': 'docbuild/out/file_counts'
 }
 
 def get_file_counts_over_time(start_date, columns):
@@ -66,7 +67,18 @@ def get_file_counts_over_time(start_date, columns):
 
     return pd.DataFrame(data, columns=columns)
 
-def plot_file_counts(df, xlabel, ylabel, max_width, aspect_ratio, line_color, line_width, title, out_path):
+def plot_file_counts(
+      df,
+      xlabel,
+      ylabel,
+      max_width,
+      width_pct,
+      height,
+      line_color,
+      line_width,
+      title,
+      out_path,
+      theme):
     """
     Plots the number of files over time.
 
@@ -74,21 +86,55 @@ def plot_file_counts(df, xlabel, ylabel, max_width, aspect_ratio, line_color, li
         df (pd.DataFrame): A pandas DataFrame which should contain `xlabel` and `ylabel` as columns
         xlabel (str): The column from `df` to use as the `x`-axis
         ylabel (str): The column from `df` to use as the `y`-axis
+        max_width (int): Maximum width of plot in `px`
+        width_pct (str): % width of plot inside parent div
+        height (int): Height of plot in `px`
         line_color (str): Colour of plotted graph
+        line_width (float): Width of plotted line in `px`
         title (dict): Dictionary specifying graph title and style
         out_path (str): Save location of html
+        theme (str): plotly template suffix to use as plot theme. E.g., use "dark" for "plotly_dark"
     """
+    out_path = f"{out_path}_{theme}.html"
     fig = px.line(df, xlabel, ylabel)
-    fig.update_layout(title=title)
-    fig.update_yaxes(
-       scaleanchor="x",
-       scaleratio=0.5
+
+    fig.update_layout(
+        title=title,
+        template=f"plotly_{theme}",
+        hovermode='x unified',
+        margin=dict(l=40, r=40, t=60, b=40),
+        autosize=True
     )
-    fig.update_traces(line_color=line_color, line_width=line_width)
-    fig_html = f"<div style='max-width: {max_width}; aspect-ratio: {aspect_ratio};'> {
-       fig.to_html(full_html=False, include_plotlyjs='cdn')} </div>"
+
+    fig.update_traces(
+        line=dict(color=line_color, width=line_width, shape='hv'),
+        marker=dict(size=6)
+    )
+
+    fig_html = fig.to_html(
+        full_html=False,
+        include_plotlyjs='cdn',
+        config={'responsive': True}
+    )
+
+    styled_html = f"""
+        <style>
+            .plot-container {{
+                width: {width_pct};
+                max-width: {max_width}px;
+                height: {height}px;
+                margin: 0 auto;
+                padding: 10px;
+            }}
+        </style>
+
+        <div class="plot-container">
+            {fig_html}
+        </div>
+    """
+
     with open(out_path, "w") as f:
-       f.write(fig_html)
+       f.write(styled_html)
 
 if __name__ == "__main__":
     github_url = "https://github.com/google-deepmind/formal-conjectures"
@@ -96,14 +142,17 @@ if __name__ == "__main__":
 
     columns = [conf['xlabel'], conf['ylabel']]
     df = get_file_counts_over_time(conf['start_date'], columns)
-    plot_file_counts(
-      df=df,
-      xlabel=conf['xlabel'],
-      ylabel=conf['ylabel'],
-      max_width=conf['max-width'],
-      aspect_ratio=conf['aspect-ratio'],
-      line_color=conf['line_color'],
-      line_width=conf['line_width'],
-      title=conf['title'],
-      out_path=conf['out_path']
-    )
+    for theme in ["white", "dark"]:
+        plot_file_counts(
+          df=df,
+          xlabel=conf['xlabel'],
+          ylabel=conf['ylabel'],
+          max_width=conf['max_width'],
+          width_pct=conf['width_pct'],
+          height=conf['height_px'],
+          line_color=conf['line_color'],
+          line_width=conf['line_width'],
+          title=conf['title'],
+          out_path=conf['out_path_prefix'],
+          theme=theme
+        )

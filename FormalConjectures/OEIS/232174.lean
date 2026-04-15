@@ -25,7 +25,7 @@ $x^2 + ny^2$ are prime.
 Zhi-Wei Sun has offered a $200 prize for the first proof.
 
 *References:*
-- [OEIS A232174](https://oeis.org/A232174)
+- [A232174](https://oeis.org/A232174)
 - Z.-W. Sun, "Conjectures on representations involving primes," in: M. Nathanson (ed.),
   Combinatorial and Additive Number Theory II: CANT, Springer Proc. in Math. & Stat.,
   Vol. 220, Springer, 2017, pp. 279-310. https://arxiv.org/abs/1211.1588

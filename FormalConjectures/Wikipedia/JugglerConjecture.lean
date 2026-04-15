@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Juggler_sequence)
 -/
 
-namespace JugglerConjecture 
+namespace JugglerConjecture
 
 /--
 Consider the following operation on the natural numbers:
@@ -47,7 +47,5 @@ theorem juggler_conjecture (n : ℕ) (hn : n > 0) : ∃ m, jugglerStep^[m] n = 1
 theorem jugglerStep_36 : jugglerStep 36 = 6 := by
   unfold jugglerStep
   norm_num [←Real.sqrt_eq_rpow]
-  decide
 
-end JugglerConjecture 
-
+end JugglerConjecture

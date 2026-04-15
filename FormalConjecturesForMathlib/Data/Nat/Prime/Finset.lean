@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Batteries.Data.Nat.Gcd
-import Mathlib.Algebra.GCDMonoid.Finset
-import Mathlib.Algebra.GCDMonoid.Nat
+public import Batteries.Data.Nat.Gcd
+public import Mathlib.Algebra.GCDMonoid.Finset
+public import Mathlib.Algebra.GCDMonoid.Nat
+
+@[expose] public section
 
 /-- A Finset of numbers is coprime, or relatively prime, if its `gcd` is 1. -/
 @[reducible] def Finset.Coprime (S : Finset ℕ) : Prop := S.gcd id = 1

@@ -24,7 +24,7 @@ Number of ways to write $n = x+y$, for $x,y > 0$ such that $2^x + y$ is prime.
 Zhi-Wei Sun has offered a $1000 prize for the first proof.
 
 *References:*
-- [OEIS A231201](https://oeis.org/A231201)
+- [A231201](https://oeis.org/A231201)
 - Zhi-Wei Sun, "Table of n, a(n) for n = 1..10000",
   "Write n = k + m with 2^k + m prime", a message to Number Theory List, Nov. 16, 2013,
   "On a^n+ bn modulo m", arXiv:1312.1166 [math.NT], 2013-2014,

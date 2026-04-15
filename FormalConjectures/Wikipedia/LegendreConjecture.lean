@@ -37,10 +37,14 @@ theorem legendre_conjecture :
     answer(sorry) ↔ ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
-/-- If there exists a constant `c > 0` such that
+/--
+If there exists a constant `c > 0` such that
 `(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all large `n`,
-then Legendre's conjecture is asymptotically true. -/
-@[category research solved, AMS 11]
+then Legendre's conjecture is asymptotically true.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/a4568d467b4f42884b6a4bd09c40d65f92113ee7/FormalConjectures/Wikipedia/LegendreConjecture.lean#L48"]
 theorem bounded_gap_legendre
     (H : ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
       (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c)) :

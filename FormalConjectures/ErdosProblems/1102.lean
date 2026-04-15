@@ -74,7 +74,7 @@ Every sequence with property Q has upper density at most `6 / π^2`.
 theorem erdos_1102.upper_density_Q
     (A : ℕ → ℕ) (h_inc : StrictMono A)
     (hQ : HasPropertyQ (range A)) :
-    limsup (fun j : ℕ  ↦ j / A j) atTop ≤ 6 / Real.pi^2 := by
+    limsup (fun j : ℕ  ↦ (j / A j : ℝ)) atTop ≤ 6 / Real.pi^2 := by
   sorry
 
 /--

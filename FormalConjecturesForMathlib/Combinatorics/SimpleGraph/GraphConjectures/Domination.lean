@@ -13,11 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
-/-
+@[expose] public section
+
+/-!
 Dominating sets and domination numbers
 
 This file introduces dominating sets and related invariants.
@@ -102,14 +105,6 @@ noncomputable def indepDominationNumber (G : SimpleGraph α) : ℕ :=
   sInf {n | ∃ D : Finset α, G.IsNIndepDominatingSet n D}
 
 /-! ### Vertex and edge covers -/
-
-/-- A set of vertices is a vertex cover if every edge has an endpoint in it. -/
-def IsVertexCover (G : SimpleGraph α) (C : Set α) : Prop :=
-  ∀ ⦃u v⦄, G.Adj u v → u ∈ C ∨ v ∈ C
-
-/-- The vertex cover number of `G`. -/
-noncomputable def vertexCoverNumber (G : SimpleGraph α) : ℕ :=
-  sInf {n | ∃ C : Finset α, G.IsVertexCover (C : Set α) ∧ C.card = n}
 
 /-- A set of edges is an edge cover if every vertex is incident to some edge in it. -/
 def IsEdgeCover (G : SimpleGraph α) (M : Set (Sym2 α)) : Prop :=

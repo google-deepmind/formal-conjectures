@@ -13,7 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
+
+public import Mathlib.Algebra.GCDMonoid.Finset
+public import Mathlib.Algebra.GCDMonoid.Nat
+public import Mathlib.Data.Nat.Factorization.Defs
 import Mathlib.Tactic
+
+@[expose] public section
 
 namespace Nat
 
@@ -122,10 +129,11 @@ instance IsPerfectPower.decide : ∀ n, Decidable (IsPerfectPower n) := fun n =>
   decidable_of_iff (n > 1 ∧ n.primeFactors.gcd n.factorization > 1)
     (isPerfectPower_iff_factorization_gcd n).symm
 
-example : IsPerfectPower 4 := by native_decide
-example : IsPerfectPower 27 := by native_decide
-example : ¬IsPerfectPower 0 := by native_decide
-example : ¬IsPerfectPower 1 := by native_decide
-example : ¬IsPerfectPower 2 := by native_decide
+example : IsPerfectPower 4 := by decide +native
+example : IsPerfectPower 27 := by decide +native
+example : ¬IsPerfectPower 0 := by decide
+example : ¬IsPerfectPower 1 := by decide
+example : ¬IsPerfectPower 2 := by decide +native
+
 
 end Nat

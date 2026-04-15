@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Algebra.Order.Star.Basic
-import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Algebra.Order.Star.Basic
+public import Mathlib.Data.Nat.PrimeFin
+
+@[expose] public section
 
 namespace Nat
 

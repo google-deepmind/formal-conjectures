@@ -23,7 +23,7 @@ Every positive integer is the sum of at most 5 tetrahedral numbers.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Pollock%27s_conjectures)
-- [OEIS A000797](https://oeis.org/A000797)
+- [A797](https://oeis.org/A797)
 - L. E. Dickson, *History of the Theory of Numbers, Vol. II: Diophantine Analysis*, Dover (2005), pp. 22–23
 - Frederick Pollock, *On the extension of the principle of Fermat's theorem on the polygonal numbers to the higher order of series whose ultimate differences are constant*, Abstracts of the Papers Communicated to the Royal Society of London **5** (1850), 922–924
 - H. E. Salzer and N. Levine, *Table of integers not exceeding 100000 that are not expressible as the sum of four tetrahedral numbers*, Math. Comp. **12** (1958), 141–144
@@ -34,19 +34,19 @@ namespace PollocksConjecture
 
 open scoped BigOperators
 
-/-! ## Definitions -/
+/-  ## Definitions -/
 
 /-- The $n$-th tetrahedral number: $T_n = \frac{n(n+1)(n+2)}{6}$. -/
 def tetrahedral (n : ℕ) : ℕ :=
   n * (n + 1) * (n + 2) / 6
 
-/-! ## Auxiliary definition -/
+/-  ## Auxiliary definition -/
 
 /-- The set of natural numbers that are **not** a sum of $4$ tetrahedral numbers. -/
 def NotSumOfFourTetrahedral : Set ℕ :=
   {N : ℕ | ∀ f : Fin 4 → ℕ, N ≠ ∑ i, tetrahedral (f i)}
 
-/-! ## Statements -/
+/-  ## Statements -/
 
 /--
 Pollock's (tetrahedral numbers) conjecture:
@@ -66,7 +66,7 @@ theorem pollock_tetrahedral.salzer_levine :
     IsGreatest NotSumOfFourTetrahedral 343867 := by
   sorry
 
-/-- As stated on Wikipedia/OEIS (A000797), the set of exceptions has cardinality $241$. -/
+/-- As stated on Wikipedia/OEIS (A797), the set of exceptions has cardinality $241$. -/
 @[category high_school, AMS 11]
 theorem pollock_tetrahedral.ncard_exceptions :
     type_of% pollock_tetrahedral.salzer_levine ↔

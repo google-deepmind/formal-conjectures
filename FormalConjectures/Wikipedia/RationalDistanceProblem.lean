@@ -31,10 +31,10 @@ namespace RationalDistanceProblem
 
 open EuclideanGeometry
 
-def UnitSquareCorners : Fin 4 → ℝ²  :=
-  ![![0, 0], ![1, 0], ![1, 1], ![0, 1]]
+def UnitSquareCorners : Fin 4 → ℝ² :=
+  ![!₂[0, 0], !₂[1, 0], !₂[1, 1], !₂[0, 1]]
 
-/-
+/--
 Does there exist a point in the plane at rational distance from all four vertices of the unit square?
 -/
 @[category research open, AMS 11 51]
