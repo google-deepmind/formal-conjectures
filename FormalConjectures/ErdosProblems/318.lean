@@ -102,7 +102,7 @@ theorem erdos_318.variants.squares : ¬ P₁ ({n | IsSquare n}) := by
 [Sa82] credits this observation to Erdős, who presumably found this after [ErGr80]. -/
 @[category research solved, AMS 11]
 theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even n}.ncard = 1) :
-    ¬ P₁ {n | IsSquare n} := by
+    ¬ P₁ A := by
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
