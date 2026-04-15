@@ -46,7 +46,7 @@ Lean 4 code in this file was drafted with assistance from Claude (Anthropic).
 The mathematical content and references are the author's own work.
 -/
 
-open Metric Set
+open Metric Set Classical
 
 namespace Erdos505
 
