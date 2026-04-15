@@ -24,6 +24,8 @@ The `CategoryDocstringLinter` ensures that declarations tagged as
 `@[category research open]` or `@[category research solved]` have a docstring.
 -/
 
+public meta section
+
 open Lean Elab Meta Linter Command Parser Term ProblemAttributes
 
 register_option linter.style.category_docstring : Bool := {
