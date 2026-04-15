@@ -93,8 +93,13 @@ theorem erdos_1074.variants.mem_pillaiPrimes : 23 ∈ PillaiPrimes := by
   norm_num
   exact ⟨14, by decide⟩
 
-/-- Erdős, Hardy, and Subbarao proved that $S$ is infinite. -/
-@[category research solved, AMS 11]
+/--
+Erdős, Hardy, and Subbarao proved that $S$ is infinite.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mzhorvath1/formal-conjectures/blob/3dec597bd1a73778760b761712a1fc5fb24bc5d7/FormalConjectures/ErdosProblems/1074.lean#L99"]
 theorem erdos_1074.variants.EHSNumbers_infinite : EHSNumbers.Infinite := by
   sorry
 
