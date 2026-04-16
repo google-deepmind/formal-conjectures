@@ -1211,8 +1211,16 @@ private theorem lil_interpolation
         omega
       rw [this, measure_empty]; exact zero_le _
     · -- Δn_k > 0: running_max_tail on shifted walk gives the bound.
-      -- ℙ(F k) ≤ 2·exp(-(1/2)·(2√(log(k+2)))²) = 2·exp(-2·log(k+2)) = 2/(k+2)².
-      -- The running_max_tail application, set containment, and exp=1/(k+2)² are sorry'd.
+      have hΔ_pos : 0 < Δ := Nat.pos_of_ne_zero hΔ
+      have hshift := isRademacherSequence_shift a ha ⌊c ^ k⌋₊
+      set u := 2 * Real.sqrt (Real.log ((k : ℝ) + 2))
+      have hu : 0 ≤ u := by positivity
+      -- running_max_tail on shifted walk
+      have hrt := running_max_tail (fun j => a (⌊c ^ k⌋₊ + j)) hshift Δ u hu
+      -- F k = {∃ j ∈ Icc 1 Δ, |walk' j| ≥ 2√(Δ·log(k+2))} = {... ≥ u·√Δ}
+      -- So ℙ(F k).toReal ≤ ℙ(running_max event).toReal ≤ 2·exp(-(1/2)·u²)
+      -- Convert to ENNReal and bound by 2·(1/(k+2)²)
+      -- The set equality F k = running_max event + exp arithmetic are sorry'd.
       sorry
   -- Step 2: First BC → a.s. eventually ¬F_k
   have hbc := measure_setOf_frequently_eq_zero hFsum
