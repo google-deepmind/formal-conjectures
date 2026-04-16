@@ -1192,15 +1192,8 @@ private theorem lil_interpolation
   -- ∑ 2/(k+2)² converges. The formal proof applies running_max_tail to the shifted walk
   -- (Rademacher by isRademacherSequence_shift) with Δn_k steps and u = 2√(log(k+2)).
   have hFsum : ∑' k, ℙ (F k) ≠ ⊤ := by
-    -- Bound: ℙ(F k) ≤ 2/(k+2)² via running_max_tail on the shifted walk.
-    -- The shifted walk (fun j => a (⌊c^k⌋₊ + j)) is Rademacher by isRademacherSequence_shift.
-    -- running_max_tail with u = 2√(log(k+2)) and Δn_k steps gives the bound.
-    -- ∑ 2/(k+2)² converges (summable_one_div_nat_pow shifted by 2).
-    -- The formal proof applies running_max_tail for each k, converts toReal → ofReal,
-    -- and sums. The running_max_tail application needs u ≥ 0 and Δn_k > 0.
-    -- For k with Δn_k = 0: F k = ∅ (empty Icc), so ℙ(F k) = 0.
-    -- For k with Δn_k > 0: running_max_tail gives the bound.
-    -- The exp(-2·log(k+2)) = 1/(k+2)² identity uses rpow, same as in lil_tail_summable.
+    -- running_max_tail (isRademacherSequence_shift a ha ⌊c^k⌋₊) with u = 2√(log(k+2))
+    -- gives ℙ(F k) ≤ 2·exp(-2·log(k+2)) = 2/(k+2)². Sum converges (p-series p=2).
     sorry
   -- Step 2: First BC → a.s. eventually ¬F_k
   have hbc := measure_setOf_frequently_eq_zero hFsum
