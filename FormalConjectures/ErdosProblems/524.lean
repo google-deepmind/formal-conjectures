@@ -986,18 +986,9 @@ private theorem lil_tail_summable
   have hp : (1 + ε) ^ 2 > 1 := by nlinarith
   have hsummable : Summable (fun k : ℕ =>
       Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) := by
-    -- Use Summable.of_norm_bounded_eventually_nat: bound ‖f k‖ ≤ g k eventually,
-    -- where g is a summable comparison function.
-    -- g k = 1 for all k works as a crude bound (exp is bounded by 1 when exponent ≤ 0),
-    -- but ∑ 1 diverges. Instead use g k = k^{-p} (up to constant) for p > 1.
-    --
-    -- Actually, the simplest approach: the terms are nonneg and eventually ≤ 1/k²
-    -- (much weaker than the sharp k^{-p} bound, but sufficient and easier to prove).
-    -- For k large: ⌊c^k⌋₊ ≥ e^{e^2} so log log ⌊c^k⌋₊ ≥ 2, so
-    -- exp(-p · 2) ≤ exp(-2) < 1/k² for k ≥ 1.
-    -- Even simpler: exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ exp(-(log log ⌊c^k⌋₊))
-    -- = 1/(log ⌊c^k⌋₊) ≤ 1/(k·log c - 1) → 0, so terms → 0.
-    -- For summability we need a quantitative bound. Sorry for now.
+    -- Comparison: eventually ‖f k‖ ≤ g k where g is summable.
+    -- Since (1+ε)² > 1 and log log ⌊c^k⌋₊ → ∞, the terms decay faster than
+    -- any power k^{-p}, hence summable. The detailed floor/log estimate is sorry'd.
     sorry
   exact hsummable.tsum_ofReal_ne_top
 
