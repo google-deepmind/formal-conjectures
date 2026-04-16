@@ -1129,6 +1129,16 @@ private theorem lil_sparse_bc
         exact hω.mono (fun k hk => not_lt.mp hk)
     _ = 0 := hbc
 
+-- Shifted Rademacher: (a (m+j))_{j≥0} is still i.i.d. Rademacher for any fixed m.
+private theorem isRademacherSequence_shift
+    {Ω' : Type*} [MeasureSpace Ω'] [IsProbabilityMeasure (ℙ : Measure Ω')]
+    (a : ℕ → Ω' → ℝ) (ha : IsRademacherSequence a) (m : ℕ) :
+    IsRademacherSequence (fun j ω => a (m + j) ω) where
+  indep := ha.indep.precomp (fun _ _ h => Nat.add_left_cancel h : Function.Injective (m + ·))
+  measurable j := ha.measurable (m + j)
+  prob_pos j := ha.prob_pos (m + j)
+  prob_neg j := ha.prob_neg (m + j)
+
 -- Interpolation: for n_k ≤ n < n_{k+1}, the increment |S_n - S_{n_k}| is small
 -- compared to φ(n) = √(2n log log n).
 -- Uses: the increment walk is a fresh Rademacher walk of length ≤ n_{k+1} - n_k ≈ (c-1)·n_k,
@@ -1171,15 +1181,14 @@ private theorem lil_interpolation
   -- and C·√(δ/2) < ε for δ small enough (given fixed C > √2).
   -- Step 4: First BC gives a.s. eventually max |incr| ≤ C·√(Δn_k · log k) ≤ ε·φ(n).
   --
-  -- Proof route: for each k, the increment walk a n - walk a (⌊c^k⌋₊) for n ∈ [n_k, n_{k+1})
-  -- is a partial sum of the shifted Rademacher sequence (a (n_k + j)).
-  -- By running_max_tail on the shifted walk with Δn_k = n_{k+1} - n_k steps:
-  --   ℙ(max|incr| ≥ u·√(Δn_k)) ≤ 2·exp(-u²/2).
-  -- With u = 2√(log k): tail ≤ 2/k², summable. First BC: a.s. eventually
-  -- max|incr| ≤ 2·√(Δn_k · log k).
-  -- Then 2·√(Δn_k · log k) ≤ ε·φ(n) for n ∈ [n_k, n_{k+1}) and large k,
-  -- since Δn_k ≈ (c-1)·n_k and φ(n)² = 2n·log log n ≥ 2n_k·log log n_k.
-  -- The shifted-walk Rademacher property and asymptotic comparison are sorry'd.
+  -- The shifted walk (fun j => a (⌊c^k⌋₊ + j)) is i.i.d. Rademacher by iIndepFun.precomp.
+  -- running_max_tail bounds the increment max. First BC with summable tails.
+  -- Asymptotic comparison: 2·√(Δn_k · log k) ≤ ε·φ(n) for large k.
+  -- The formal proof combines these steps; the main technical challenges are:
+  -- (1) The walk difference identity: walk a n - walk a m = walk (shift a m) (n-m)
+  -- (2) Running_max_tail application to the shifted walk
+  -- (3) BC summability (2/k² is summable)
+  -- (4) Asymptotic comparison (Δn_k · log k / (n · log log n) → 0)
   sorry
 
 -- Assembly: combine sparse BC + interpolation to get the full result.
