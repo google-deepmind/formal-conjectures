@@ -977,6 +977,15 @@ Almost surely, `lim sup_{n → ∞} S_n / √(2n log log n) ≤ 1`.
 4. Interpolation via running-max bound on increments
 5. Send `ε → 0` via countable intersection.
 -/
+-- For any ε > 0, a.s. eventually S_n / √(2n log log n) ≤ 1 + ε.
+-- Core of the LIL upper bound: sparse subsequence + first BC + interpolation.
+private theorem lil_upper_for_eps
+    (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (ε : ℝ) (hε : 0 < ε) :
+    ∀ᵐ ω, ∀ᶠ n in atTop,
+      walk a n ω / Real.sqrt (2 * n * Real.log (Real.log n)) ≤ 1 + ε := by
+  sorry
+
+-- Assembly: limsup ≤ 1 from "eventually ≤ 1+ε" for all ε > 0.
 private theorem kolmogorov_lil_upper_bound
     (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) :
     ∀ᵐ ω, limsup (fun n : ℕ =>
