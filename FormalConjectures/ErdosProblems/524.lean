@@ -1019,10 +1019,17 @@ private theorem lil_tail_summable
   -- The detailed floor/log estimates are purely real-analytic:
   --   ⌊c^k⌋₊ ≥ c^k/2, log(⌊c^k⌋₊) ≥ k·log(c)/2, etc.
   have hp : (1 + ε) ^ 2 > 1 := by nlinarith
-  -- Use summable comparison with k^{-(1+ε)²}
-  -- This requires showing: ∃ C N, ∀ k ≥ N,
-  --   exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ C · (k : ℝ)^(-(1+ε)²)
-  -- which is a routine real-analysis estimate.
+  have hlogc : 0 < Real.log c := Real.log_pos hc
+  -- Comparison: for large k, exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ k^{-(1+ε)²}
+  -- because log ⌊c^k⌋₊ ≥ k for large k (since c^k → ∞ faster than exp(k)).
+  -- The p-series ∑ k^{-(1+ε)²} converges since (1+ε)² > 1.
+  apply Summable.of_norm_bounded_eventually_nat
+    ((Real.summable_nat_rpow).mpr (by linarith : -(1 + ε) ^ 2 < -1))
+  -- Eventually: ‖exp(-(1+ε)²·log log ⌊c^k⌋₊)‖ ≤ k^{-(1+ε)²}
+  -- ‖exp(x)‖ = exp(x) (since exp > 0), and exp(-p·log(log n)) = (log n)^{-p}.
+  -- For large k: log ⌊c^k⌋₊ ≥ k (since c^k ≥ e^k for c ≥ e, or use c^k ≥ e^{k log c}).
+  -- So (log ⌊c^k⌋₊)^{-p} ≤ k^{-p}.
+  -- Detailed estimate sorry'd (floor asymptotics + log monotonicity).
   sorry
 
 private theorem lil_sparse_bc
