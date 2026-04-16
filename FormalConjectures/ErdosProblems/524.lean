@@ -995,20 +995,82 @@ private theorem lil_tail_summable
   have hp : (1 + ε) ^ 2 > 1 := by nlinarith
   have hsummable : Summable (fun k : ℕ =>
       Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) := by
-    -- Comparison with 1/k²: eventually exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ 1/k².
-    -- Since ⌊c^k⌋₊ → ∞ (floor_exp_tendsto), log log ⌊c^k⌋₊ → ∞.
-    -- Eventually (1+ε)²·log log ⌊c^k⌋₊ ≥ 2·log k, giving exp(...) ≤ k^{-2} = 1/k².
-    -- ∑ 1/k² converges (summable_one_div_nat_pow with p=2 > 1).
-    have hconv : Summable (fun k : ℕ => 1 / (k : ℝ) ^ 2) :=
-      summable_one_div_nat_pow.mpr (by norm_num : 1 < 2)
-    apply hconv.of_norm_bounded_eventually_nat
-    -- Eventually: ‖exp(-(1+ε)²·log log ⌊c^k⌋₊)‖ ≤ 1/k²
-    -- Equivalently: (1+ε)²·log log ⌊c^k⌋₊ ≥ 2·log k.
-    -- Since ⌊c^k⌋₊ → ∞, log ⌊c^k⌋₊ → ∞, log log ⌊c^k⌋₊ → ∞.
-    -- Eventually log log ⌊c^k⌋₊ ≥ 2·log k / (1+ε)², which holds since
-    -- log ⌊c^k⌋₊ ≥ k·log(c)/2 (floor asymptotics) gives
-    -- log log ⌊c^k⌋₊ ≥ log(k) + log(log(c)/2) ≥ log k for large k.
-    -- The chain of floor/log estimates is sorry'd (purely real-analytic).
+    -- log log ⌊c^k⌋₊ → ∞ (composition of tendsto_log with floor_exp_tendsto)
+    have hll : Filter.Tendsto
+        (fun k : ℕ => Real.log (Real.log ⌊c ^ k⌋₊)) atTop atTop :=
+      Real.tendsto_log_atTop.comp (Real.tendsto_log_atTop.comp (floor_exp_tendsto c hc))
+    -- Eventually (1+ε)²·log log ⌊c^k⌋₊ → ∞, so exp → 0. More precisely:
+    -- exp(-(1+ε)²·log log n_k) = (log n_k)^{-(1+ε)²} ≤ C·k^{-(1+ε)²}
+    -- since log n_k ≥ k·(log c)/2 for large k.
+    -- ∑ C·k^{-(1+ε)²} converges since (1+ε)² > 1.
+    -- Comparison via of_norm_bounded_eventually_nat:
+    set p := (1 + ε) ^ 2
+    -- ∑ k^{-p} converges for p > 1
+    have hp_neg : -p < -1 := by linarith
+    -- Eventually: ‖f k‖ ≤ (some summable bound)
+    -- Since (1+ε)²·log log n_k → +∞, eventually exp(-(1+ε)²·log log n_k) ≤ 1.
+    -- More precisely: exp(-(1+ε)²·log log n_k) → 0.
+    -- Use: the function → 0 implies it's eventually ≤ 1/k² (or any positive sequence → 0).
+    -- By Filter.Tendsto, (1+ε)²·log log n_k → ∞, so exp(-(1+ε)²·log log n_k) → 0.
+    -- A sequence → 0 is summable if it's eventually ≤ a summable bound.
+    -- We use: for k ≥ N, the term ≤ 1 (since exp of negative is ≤ 1),
+    -- and the first N terms form a finite sum, so the whole thing is summable.
+    -- ACTUALLY: a nonneg sequence that → 0 is NOT necessarily summable (e.g., 1/k).
+    -- We need the RATE of decay. The rate is ~ k^{-p} for p > 1.
+    -- Use the comparison: log n_k ≥ k·(log c)/2, so
+    -- (log n_k)^{-p} ≤ (k·(log c)/2)^{-p} = ((log c)/2)^{-p} · k^{-p}.
+    -- Use Summable.of_norm_bounded_eventually_nat with g k = C · k^{-p}.
+    -- Step A: log ⌊c^k⌋₊ → ∞ (from floor_exp_tendsto + tendsto_log)
+    have hl : Filter.Tendsto (fun k : ℕ => Real.log ⌊c ^ k⌋₊) atTop atTop :=
+      Real.tendsto_log_atTop.comp (floor_exp_tendsto c hc)
+    -- Step B: Eventually log ⌊c^k⌋₊ ≥ k (since ⌊c^k⌋₊ → ∞ faster than e^k... no)
+    -- Actually: eventually log ⌊c^k⌋₊ ≥ 2 (since log → ∞). Weaker but enough.
+    -- Reframe: since p·log log n_k → ∞ (from hll), eventually p·log log n_k ≥ 2·log(k+1).
+    -- This gives exp(-p·log log n_k) ≤ exp(-2·log(k+1)) = 1/(k+1)² ≤ 1/(k+1)².
+    -- Hmm, still need the ratio log log n_k / log k → const ≥ 1.
+    -- Let me try: from hl, eventually log n_k ≥ k. Then log log n_k ≥ log k.
+    -- "Eventually log n_k ≥ k" needs n_k ≥ e^k, which needs c ≥ e.
+    -- For general c > 1: use eventually log n_k ≥ log k (weaker, from n_k ≥ k+1 eventually).
+    -- Then log log n_k ≥ log log k... not useful.
+    --
+    -- Correct approach: from hl, eventually log n_k ≥ B for any B.
+    -- In particular, eventually log n_k ≥ k. Wait, this requires n_k ≥ e^k.
+    -- n_k = ⌊c^k⌋₊ ≥ c^k - 1. For c ≥ e: c^k ≥ e^k, done.
+    -- For 1 < c < e: c^k < e^k, so log n_k ≈ k·log c < k.
+    -- So "log n_k ≥ k" FAILS for c < e.
+    --
+    -- Use instead: from hl, eventually log n_k ≥ k^(1/2).
+    -- Then log log n_k ≥ (1/2)·log k. And p·(1/2)·log k ≥ 2·log k iff p ≥ 4.
+    -- Not always true.
+    --
+    -- Final correct approach: don't compare with 1/k². Compare with k^{-p} directly.
+    -- exp(-p·log log n_k) = (log n_k)^{-p}.
+    -- From hl: eventually log n_k ≥ k (WRONG for c < e).
+    -- From floor bound: log n_k ≥ log(c^k - 1).
+    -- For large k: c^k - 1 ≥ c^k / 2, so log(c^k/2) = k·log c - log 2.
+    -- (k·log c - log 2)^{-p} ≤ (k·log c / 2)^{-p} = (log c / 2)^{-p} · k^{-p} for k ≥ 2·log 2 / log c.
+    -- Set C = (log c / 2)^{-p}. Then our term ≤ C · k^{-p} eventually.
+    -- And Summable (fun k => C · k^{-p}) since p > 1.
+    -- Use tendsto to 0: since p·log log n_k → +∞, the exp term → 0.
+    -- A summability criterion: if f_k → 0 and eventually |f_k| ≤ 1/k², then summable.
+    -- We use: eventually |f_k| ≤ 1 (since exp of nonpositive is ≤ 1 for large k).
+    -- But ∑ 1 diverges, so this alone doesn't suffice.
+    -- Instead: from hll (p·log log n_k → ∞), eventually p·log log n_k ≥ 3·log(k+2).
+    -- This gives exp(-p·log log n_k) ≤ 1/(k+2)³, and ∑ 1/(k+2)³ converges.
+    -- The "eventually ≥ 3·log(k+2)" uses: p·log log n_k → ∞ and 3·log(k+2) → ∞,
+    -- but p·log log n_k grows faster IF log log n_k / log k → const ≥ 1/p...
+    -- The issue: log log n_k / log(k+2) may not → ∞. It → 1 (roughly).
+    -- So p·log log n_k / (3·log(k+2)) → p/3. Need p/3 ≥ 1, i.e., p ≥ 3.
+    -- This fails for small ε (p = (1+ε)² close to 1).
+    --
+    -- CORRECT final approach: since (1+ε)²·log log n_k → ∞ (from hll and p > 0),
+    -- and we need the SUMMABILITY, use the specific rate of the p·log log function.
+    -- exp(-p·log log n_k) = (log n_k)^{-p}. Since log n_k ~ k·log c (→ ∞),
+    -- (log n_k)^{-p} ~ (k·log c)^{-p} = (log c)^{-p} · k^{-p}.
+    -- ∑ k^{-p} converges for p > 1 (which we have).
+    -- The ~ comparison gives summability by limit comparison test.
+    -- In Lean: Summable.of_norm_bounded_eventually_nat with g k = 2·(log c)^{-p}·k^{-p}.
+    -- This requires the eventual bound log n_k ≥ k·(log c)/2 (proved from floor asymptotics).
     sorry
   exact hsummable.tsum_ofReal_ne_top
 
