@@ -1078,14 +1078,25 @@ private theorem lil_upper_for_eps
     (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (ε : ℝ) (hε : 0 < ε) :
     ∀ᵐ ω, ∀ᶠ n in atTop,
       walk a n ω / Real.sqrt (2 * n * Real.log (Real.log n)) ≤ 1 + ε := by
-  -- Choose c = 1 + ε/2 (any c > 1 with (c-1) small relative to ε).
-  -- Combine lil_sparse_bc and lil_interpolation.
-  -- For n_k ≤ n < n_{k+1}:
-  --   S_n = S_{n_k} + (S_n - S_{n_k})
-  --   ≤ (1+ε/2)·φ(n_k) + (ε/2)·φ(n)  (eventually a.s.)
-  --   ≤ (1+ε/2)·φ(n) + (ε/2)·φ(n)    (since φ(n_k) ≤ φ(n) for n_k ≤ n)
-  --   = (1+ε)·φ(n)
-  -- Hence S_n/φ(n) ≤ 1+ε eventually a.s.
+  -- Use c = 1 + ε/3 and δ = ε/3 for the sparse BC and interpolation.
+  set δ := ε / 3 with hδ_def
+  have hδ : 0 < δ := by positivity
+  set c := 1 + δ with hc_def
+  have hc : 1 < c := by linarith
+  -- Sparse BC: a.s. eventually S_{n_k} < (1+δ)·φ(n_k)
+  have hbc := lil_sparse_bc a ha δ hδ c hc
+  -- Interpolation: a.s. eventually |S_n - S_{n_k}| ≤ δ·φ(n) for n_k ≤ n < n_{k+1}
+  have hinterp := lil_interpolation a ha δ hδ c hc
+  -- Combine: a.s. eventually S_n/φ(n) ≤ 1+ε
+  filter_upwards [hbc, hinterp] with ω hω_bc hω_interp
+  -- Both hold eventually: extract the threshold K
+  rw [Filter.Eventually] at hω_bc hω_interp ⊢
+  -- Every n ≥ some N is in [n_k, n_{k+1}) for some k. Assembly argument:
+  -- S_n = S_{n_k} + (S_n - S_{n_k})
+  --     < (1+δ)·φ(n_k) + δ·φ(n)  [from BC + interpolation]
+  --     ≤ (1+δ)·φ(n) + δ·φ(n)    [φ monotone: n_k ≤ n implies φ(n_k) ≤ φ(n)]
+  --     = (1+2δ)·φ(n) ≤ (1+ε)·φ(n)  [since 2δ = 2ε/3 < ε]
+  -- Then S_n/φ(n) ≤ 1+ε.
   sorry
 
 -- Assembly: limsup ≤ 1 from "eventually ≤ 1+ε" for all ε > 0.
