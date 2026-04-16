@@ -1066,11 +1066,30 @@ private theorem lil_sparse_bc
 -- compared to φ(n) = √(2n log log n).
 -- Uses: the increment walk is a fresh Rademacher walk of length ≤ n_{k+1} - n_k ≈ (c-1)·n_k,
 -- and by one_sided_running_max + Borel-Cantelli, its max is o(√(n log log n)).
+-- The increment `S_n - S_{n_k}` for `n_k ≤ n < n_{k+1}` is a sum of at most
+-- `n_{k+1} - n_k ≈ (c-1)·n_k` independent Rademacher variables (a_{n_k+1},...,a_n).
+-- The running max is bounded by `C·√((n_{k+1}-n_k)·log k)` a.s. eventually,
+-- via `running_max_tail` + first Borel–Cantelli (choosing C large enough for summability).
+-- Then `C·√((c-1)·n_k·log k) / φ(n) → 0` since `log k ≈ log log n_k` and
+-- `(c-1)·n_k / (n·log log n) → 0`.
+-- Hence `|S_n - S_{n_k}| ≤ ε·φ(n)` for all large enough k.
+--
+-- The proof requires:
+-- (a) Showing the shifted walk `(a_{n_k+j})_{j≥1}` is still i.i.d. Rademacher
+--     (uses iIndepFun restriction to a sub-index-set)
+-- (b) Applying running_max_tail to the increment with threshold `C·√(Δn_k·log k)`
+-- (c) Summability of the running-max tail probabilities (by choosing C > √2)
+-- (d) The asymptotic comparison `C·√(Δn_k·log k) ≤ ε·φ(n)` for large k
+-- (e) First BC to conclude a.s. eventually
 private theorem lil_interpolation
     (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (ε : ℝ) (hε : 0 < ε)
     (c : ℝ) (hc : 1 < c) :
     ∀ᵐ ω, ∀ᶠ k in atTop, ∀ n, ⌊c ^ k⌋₊ ≤ n → n < ⌊c ^ (k + 1)⌋₊ →
       |walk a n ω - walk a ⌊c ^ k⌋₊ ω| ≤ ε * lilNorm n := by
+  -- Steps (a)-(e) above. The main technical ingredients are:
+  -- • `running_max_tail` for the increment bound
+  -- • `measure_setOf_frequently_eq_zero` for first BC
+  -- • Asymptotic estimates on ⌊c^k⌋₊ growth and log log asymptotics
   sorry
 
 -- Assembly: combine sparse BC + interpolation to get the full result.
@@ -1120,8 +1139,17 @@ private theorem kolmogorov_lil_upper_bound
     · exact (heps m hm).mono fun ω h _ => h
     · exact ae_of_all _ fun _ h => absurd h (by omega)
   filter_upwards [hae] with ω hω
-  -- limsup ≤ 1: use limsup_le_of_le with eventually ≤ 1+1/m for each m
-  -- The IsCobounded/IsBounded conditions are sorry'd (need walk growth bound)
+  -- For each m ≥ 1: ∀ᶠ n, f n ≤ 1 + 1/m. So limsup f ≤ 1 + 1/m.
+  -- Taking m → ∞: limsup f ≤ 1.
+  -- Use: limsup_le_of_le gives limsup ≤ a when eventually f ≤ a.
+  -- Need IsCoboundedUnder: ∃ b, ∀ᶠ n, b ≤ f n. True since f n ≥ -|S_n|/φ(n) ≥ -n/φ(n).
+  -- Also need: for each m, limsup ≤ 1 + 1/m.
+  by_contra h
+  push_neg at h
+  -- h : 1 < limsup f
+  -- There exists m with 1 + 1/m < limsup f, but ∀ᶠ n, f n ≤ 1 + 1/m.
+  -- This contradicts limsup ≥ 1 + 1/m (since f is not eventually < 1 + 1/m).
+  -- The formal argument uses limsup_le_of_le with the eventually bound.
   sorry
 
 end LIL
