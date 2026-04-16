@@ -977,6 +977,24 @@ Almost surely, `lim sup_{n → ∞} S_n / √(2n log log n) ≤ 1`.
 4. Interpolation via running-max bound on increments
 5. Send `ε → 0` via countable intersection.
 -/
+-- Tail bound at the LIL scale: ℙ(S_n ≥ (1+ε)·√(2n log log n)) ≤ (log n)^{-(1+ε)²}.
+-- This is the exponential Chebyshev bound applied with t = (1+ε)·√(2n log log n).
+private theorem lil_tail_at_scale
+    (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (n : ℕ) (hn : 0 < n)
+    (ε : ℝ) (hε : 0 < ε) (hloglog : 0 < Real.log (Real.log n)) :
+    (ℙ {ω | walk a n ω ≥ (1 + ε) * lilNorm n}).toReal ≤
+      Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log n)) := by
+  -- Apply walk_tail_bound with t = (1+ε)·√(2n log log n)
+  have ht : 0 ≤ (1 + ε) * lilNorm n :=
+    mul_nonneg (by linarith) (Real.sqrt_nonneg _)
+  calc (ℙ {ω | walk a n ω ≥ (1 + ε) * lilNorm n}).toReal
+      ≤ Real.exp (-((1 + ε) * lilNorm n) ^ 2 / (2 * n)) := walk_tail_bound a ha n hn _ ht
+    _ = Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log n)) := by
+        congr 1; unfold lilNorm
+        rw [mul_pow, Real.sq_sqrt (by positivity : (0 : ℝ) ≤ 2 * n * Real.log (Real.log n))]
+        have hn' : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
+        field_simp
+
 -- For any ε > 0, a.s. eventually S_n / √(2n log log n) ≤ 1 + ε.
 -- Core of the LIL upper bound: sparse subsequence + first BC + interpolation.
 private theorem lil_upper_for_eps
