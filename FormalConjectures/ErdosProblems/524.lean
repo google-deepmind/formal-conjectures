@@ -1112,12 +1112,14 @@ private theorem kolmogorov_lil_upper_bound
   -- Use: limsup_le_of_le gives limsup ≤ a when eventually f ≤ a.
   -- Need IsCoboundedUnder: ∃ b, ∀ᶠ n, b ≤ f n. True since f n ≥ -|S_n|/φ(n) ≥ -n/φ(n).
   -- Also need: for each m, limsup ≤ 1 + 1/m.
-  by_contra h
-  push_neg at h
-  -- h : 1 < limsup f
-  -- There exists m with 1 + 1/m < limsup f, but ∀ᶠ n, f n ≤ 1 + 1/m.
-  -- This contradicts limsup ≥ 1 + 1/m (since f is not eventually < 1 + 1/m).
-  -- The formal argument uses limsup_le_of_le with the eventually bound.
+  -- For each m ≥ 1: limsup f ≤ 1 + 1/m.
+  -- Proof: hω m gives eventually f ≤ 1+1/m, and limsup_le_of_le converts this.
+  -- IsCoboundedUnder follows from hω 1: eventually f ≤ 2, so f is eventually bounded below by 0-2.
+  -- Then limsup ≤ 1 + 1/m for all m ≥ 1 implies limsup ≤ 1 (Archimedean).
+  -- For each m ≥ 1: limsup ≤ 1 + 1/m (by limsup_le_of_le + eventually bound).
+  -- Take m → ∞: limsup ≤ 1.
+  -- The IsCoboundedUnder condition and the Archimedean limit argument are
+  -- standard but require careful Lean plumbing with filter coboundedness.
   sorry
 
 end LIL
