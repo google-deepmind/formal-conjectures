@@ -999,16 +999,43 @@ private theorem lil_tail_at_scale
 -- Proof: lil_tail_at_scale gives ℙ(S_{n_k} ≥ (1+ε)·φ(n_k)) ≤ (log n_k)^{-(1+ε)²},
 -- and ∑_k (log n_k)^{-(1+ε)²} < ∞ (comparable to ∑ k^{-p} for p > 1),
 -- so first Borel–Cantelli gives the result.
+-- The tail probabilities ℙ(S_{n_k} ≥ (1+ε)·φ(n_k)) are summable over k.
+-- Key estimate: exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ C·k^{-(1+ε)²} for large k,
+-- and ∑ k^{-p} converges for p = (1+ε)² > 1.
+private theorem lil_tail_summable
+    (ε : ℝ) (hε : 0 < ε) (c : ℝ) (hc : 1 < c) :
+    ∑' k : ℕ, ENNReal.ofReal
+      (Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) ≠ ⊤ := by
+  -- exp(-(1+ε)²·log log ⌊c^k⌋₊) = (log ⌊c^k⌋₊)^{-(1+ε)²}
+  -- For large k: log ⌊c^k⌋₊ ≥ (k-1)·log c, so this ≤ ((k-1)·log c)^{-(1+ε)²}
+  -- Since (1+ε)² > 1, the series ∑ k^{-(1+ε)²} converges (p-series test).
+  sorry
+
 private theorem lil_sparse_bc
     (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (ε : ℝ) (hε : 0 < ε)
     (c : ℝ) (hc : 1 < c) :
     ∀ᵐ ω, ∀ᶠ k in atTop,
       walk a ⌊c ^ k⌋₊ ω < (1 + ε) * lilNorm ⌊c ^ k⌋₊ := by
-  -- The tail probabilities are summable:
-  -- ℙ(S_{n_k} ≥ (1+ε)·φ(n_k)) ≤ exp(-(1+ε)²·log log n_k) ≈ k^{-(1+ε)²}
-  -- Since (1+ε)² > 1, this is summable. By measure_setOf_frequently_eq_zero (first BC),
-  -- a.s. only finitely many k satisfy S_{n_k} ≥ (1+ε)·φ(n_k).
-  sorry
+  -- First Borel–Cantelli: ∑ ℙ(E_k) < ∞ implies a.s. finitely many E_k occur.
+  -- "A.s. finitely many" = "a.s. eventually not" = our goal.
+  -- Use measure_setOf_frequently_eq_zero: if ∑ ℙ(E_k) < ∞ then ℙ(E_k frequently) = 0.
+  set E : ℕ → Set Ω := fun k => {ω | walk a ⌊c ^ k⌋₊ ω ≥ (1 + ε) * lilNorm ⌊c ^ k⌋₊}
+  -- Show ∑ ℙ(E_k) < ∞
+  have hsum : ∑' k, ℙ (E k) ≠ ⊤ := by
+    -- Each ℙ(E_k) ≤ exp(-(1+ε)²·log log n_k), and the sum of those is finite
+    -- by lil_tail_summable. Need comparison + lil_tail_at_scale.
+    sorry
+  -- Apply first BC: ℙ(E_k frequently) = 0
+  have hbc := measure_setOf_frequently_eq_zero hsum
+  -- Convert: "not frequently E_k" = "eventually not E_k" = "eventually S_{n_k} < bound"
+  rw [ae_iff]
+  refine le_antisymm ?_ (zero_le _)
+  calc ℙ {ω | ¬∀ᶠ k in atTop, walk a ⌊c ^ k⌋₊ ω < (1 + ε) * lilNorm ⌊c ^ k⌋₊}
+      ≤ ℙ {ω | ∃ᶠ k in atTop, ω ∈ E k} := by
+        apply measure_mono; intro ω hω
+        simp only [Set.mem_setOf_eq, Filter.not_eventually, E] at hω ⊢
+        exact hω.mono (fun k hk => not_lt.mp hk)
+    _ = 0 := hbc
 
 -- Interpolation: for n_k ≤ n < n_{k+1}, the increment |S_n - S_{n_k}| is small
 -- compared to φ(n) = √(2n log log n).
