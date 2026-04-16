@@ -1181,14 +1181,11 @@ private theorem lil_interpolation
   -- and C·√(δ/2) < ε for δ small enough (given fixed C > √2).
   -- Step 4: First BC gives a.s. eventually max |incr| ≤ C·√(Δn_k · log k) ≤ ε·φ(n).
   --
-  -- All ingredients are available (isRademacherSequence_shift, running_max_tail,
-  -- measure_setOf_frequently_eq_zero, floor_exp_tendsto).
-  -- The assembly requires:
-  -- (a) walk a n - walk a m = walk (shift a m) (n-m) [Finset.sum reindexing]
-  -- (b) running_max_tail on shifted walk with u = 2√(log(k+2))
-  -- (c) ∑ 2/(k+2)² convergent → first BC → a.s. eventually bounded
-  -- (d) 2√(Δn_k·log(k+2)) ≤ ε·φ(n) for large k [asymptotic: Δn_k·log(k+2)/(n·log log n) → 0]
-  -- Each step is 10-15 lines; the total is ~50 lines of Lean plumbing.
+  -- The formal proof requires ~50 lines of assembly connecting:
+  -- isRademacherSequence_shift, running_max_tail, measure_setOf_frequently_eq_zero,
+  -- and floor/log asymptotic comparison. All ingredients are sorry-free.
+  -- The remaining work is Lean API plumbing (Finset sum reindexing, ENNReal conversion,
+  -- asymptotic comparison Δn_k·log(k+2) vs ε²·n·log log n).
   sorry
 
 -- Assembly: combine sparse BC + interpolation to get the full result.
