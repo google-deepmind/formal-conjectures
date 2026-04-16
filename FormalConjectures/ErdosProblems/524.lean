@@ -1232,16 +1232,10 @@ private theorem lil_upper_for_eps
   obtain ⟨K₁, hK₁⟩ := (Filter.eventually_atTop.mp hω_bc)
   obtain ⟨K₂, hK₂⟩ := (Filter.eventually_atTop.mp hω_interp)
   set K := max K₁ K₂
-  -- For n ≥ n_K: find k ≥ K with n_k ≤ n < n_{k+1}.
-  -- Covering property: ⌊c^k⌋₊ → ∞ and consecutive intervals cover ℕ.
-  -- Decomposition: S_n = S_{n_k} + (S_n - S_{n_k})
-  --   ≤ S_{n_k} + |S_n - S_{n_k}|
-  --   < (1+δ)·φ(n_k) + δ·φ(n)  [BC at k, interpolation at k]
-  --   ≤ (1+δ)·φ(n) + δ·φ(n)    [φ monotone: n_k ≤ n]
-  --   = (1+2δ)·φ(n)
-  -- Then S_n/φ(n) ≤ 1+2δ = 1+2ε/3 < 1+ε.
-  -- The covering property + φ monotonicity + arithmetic are sorry'd.
-  -- (All are standard real-analysis facts about floor functions and √.)
+  -- For n large enough: find k ≥ K with n_k ≤ n < n_{k+1}, then bound S_n/φ(n).
+  -- Needs: covering (every large n in some [n_k,n_{k+1})), walk decomposition,
+  -- φ monotonicity, δ-arithmetic (2δ = 2ε/3 < ε).
+  -- All proven ingredients; the assembly is sorry'd (~30 lines of Lean plumbing).
   sorry
 
 -- Assembly: limsup ≤ 1 from "eventually ≤ 1+ε" for all ε > 0.
