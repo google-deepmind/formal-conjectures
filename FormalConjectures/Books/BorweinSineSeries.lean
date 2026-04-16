@@ -34,10 +34,17 @@ $$
 $$
 converge?
 
-After computing approximately $10^7$ terms, the partial sums approximate $2.163$,
-but the convergence status remains unknown.
+After computing approximately $10^7$ terms, the partial sums approximate $2.163$.
+
+See https://arxiv.org/abs/2007.11017 for a proof of the convergence,
+relying on an irrationality measure for pi.
+
+Also see
+https://github.com/AxiomMath/gdm-formal-conjectures/blob/main/docs/BorweinSineSeries.md
+for a partial formalization of the conjecture,
+conditional on such an irrationality measure of pi (cf https://arxiv.org/abs/1912.06345).
 -/
-@[category research open, AMS 26 40]
+@[category research solved, formal_proof using lean4 at "https://github.com/AxiomMath/gdm-formal-conjectures/blob/main/BorweinSineSeries/solution.lean",  AMS 26 40]
 theorem borwein_sine_series :
     answer(sorry) ↔
       Summable fun n : ℕ+ ↦ ((2 / 3 + 1 / 3 * Real.sin (n : ℝ)) ^ (n : ℕ)) / (n : ℝ) := by

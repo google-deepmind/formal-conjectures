@@ -21,9 +21,10 @@ open Filter Finset Real
 /-!
 # Erdős Problem 887
 
-*Reference:* [erdosproblems.com/887](https://www.erdosproblems.com/887)
+*References:*
+* [erdosproblems.com/887](https://www.erdosproblems.com/887)
+* [ErRo97] Erdős, Paul and Rosenfeld, Moshe, The factor-difference set of integers. Acta Arith. (1997), 353--359.
 -/
-
 
 namespace Erdos887
 
@@ -33,7 +34,7 @@ $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{
 -/
 @[category research open, AMS 11]
 theorem erdos_887.parts.i : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
-    #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ answer(sorry) := by
+    #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ answer(sorry) := by
   sorry
 
 /--
@@ -42,27 +43,26 @@ $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{
 -/
 @[category research open, AMS 11]
 theorem erdos_887.parts.ii : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
-    #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ K := by
+    #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ K := by
   sorry
 
 /--
-A question of Erdős and Rosenfeld, who proved that there are infinitely many $n$ with $4$ divisors
-in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
+A question of Erdős and Rosenfeld, who proved that there are infinitely many $n$ with (at least)
+$4$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + cn^{\frac{1}{4}})$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_887.variants.rosenfeld_infinite :
-    Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = 4)} := by
+theorem erdos_887.variants.rosenfeld_infinite : ∃ C > (0 : ℝ),
+    Infinite {n : ℕ | 4 ≤ #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n }} := by
   sorry
 
 /--
 Erdős and Rosenfeld, ask whether $4$ is the best possible $K$ for the infinitude of $n$
-with $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
+with (at least) $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
 -/
 @[category research open, AMS 11]
 theorem erdos_887.variants.rosenfeld_4 :
-    IsGreatest
-      {K | Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = K)}} 4 := by
+    IsGreatest {K | ∃ C > (0 : ℝ),
+      Infinite {n : ℕ | K ≤ #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n }}} 4 := by
   sorry
-
 
 end Erdos887

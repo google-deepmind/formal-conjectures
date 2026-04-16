@@ -80,7 +80,7 @@ This test does not work.
 theorem selfridge_conjecture.variants.exist_pseudo_counterexample :
     ∃ n : ℕ, IsPseudoSelfridge n ∧ ¬ n.Prime := by
   use 6601
-  sorry
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_⟩ <;> decide +native
 
 /--
 Selfridge's test variant:
@@ -92,7 +92,7 @@ The number $6601$ is a conterexample to this test satisfying $6601 ≡ 1 \mod 5$
 @[category high_school, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample :
     IsPseudoSelfridge 6601 ∧ ¬ (6601).Prime ∧ 6601 ≡ 1 [MOD 5] := by
-  sorry
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> decide +native
 
 /--
 Selfridge's test variant:
@@ -104,7 +104,7 @@ The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mo
 @[category high_school, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
     IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 4 [MOD 5] := by
-  sorry
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> decide +native
 
 end PrimalityTesting
 

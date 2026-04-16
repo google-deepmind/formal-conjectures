@@ -47,6 +47,14 @@ theorem bar_symm : answer(sorry) = 1 := by
   guard_target = bar_symm._answer = 1
   sorry
 
+theorem bar_symm_explicit : answer(1) = 1 := by
+  run_tac Tactic.withMainContext do
+    let env ← getEnv
+    let some aux := env.find? `bar._answer | throwError "here"
+  -- TODO(Paul-Lez): This will change when I write a delaborator
+  guard_target = bar_symm_explicit._answer = 1
+  sorry
+
 theorem i_have_some_universes.{u, v} (X : Type u) (Y : Type v) : (X × Y) = answer(sorry) := by
   guard_target = (X × Y : Type (max u v)) = i_have_some_universes._answer.{u, v}
   sorry

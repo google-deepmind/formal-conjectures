@@ -111,10 +111,34 @@ const GITHUB_BASE = 'https://github.com/google-deepmind/formal-conjectures/blob/
 // ---------------------------------------------------------------------------
 
 /** Convert a module name to a GitHub file URL. */
+function moduleToGitHubPath(module) {
+  // Replace periods with slashes outside guillemets
+  const withSlashes = module.replace(/«[^»]*»|\./g, (match) =>
+    match[0] === '«' ? match : '/'
+  );
+  // and then strip Lean «guillemets» used to quote numeric/special segments
+  const clean = withSlashes.replace(/[«»]/g, '');
+  return `${clean}.lean`;
+}
 function moduleToGitHubURL(module) {
-  // Strip Lean «guillemets» used to quote numeric/special segments
-  const clean = module.replace(/[«»]/g, '');
-  return `${GITHUB_BASE}/${clean.replace(/\./g, '/')}.lean`;
+  return `${GITHUB_BASE}/${moduleToGitHubPath(module)}`;
+}
+
+/** Convert a module name to a Verso literate source page URL. */
+function moduleToSourceURL(module) {
+  // Use the same approach as moduleToGitHubPath: replace dots with slashes,
+  // but preserve dots that are inside guillemets.
+  const withSlashes = module.replace(/«[^»]*»|\./g, (match) =>
+    match[0] === '«' ? match : '/'
+  );
+  // Add guillemets «» around path segments starting with a digit,
+  // matching verso-html's output directory naming convention.
+  const segments = withSlashes.split('/');
+  const withGuillemets = segments.map(s =>
+    // If already has guillemets, keep as-is; if starts with digit, wrap
+    s.startsWith('«') ? s : /^\d/.test(s) ? `«${s}»` : s
+  );
+  return `/src/${withGuillemets.join('/')}/`;
 }
 
 /** Extract the source collection from a module name. */
@@ -126,14 +150,13 @@ function getCollection(module) {
 
 /** Category metadata: label and CSS class for styling. */
 const CATEGORY_META = {
-  'research open':             { label: 'Open',             css: 'cat-open' },
-  'research solved':           { label: 'Solved',           css: 'cat-solved' },
-  'research formally solved':  { label: 'Formally Solved',  css: 'cat-formal' },
-  'graduate':                  { label: 'Graduate',         css: 'cat-graduate' },
-  'undergraduate':             { label: 'Undergraduate',    css: 'cat-undergrad' },
-  'high_school':               { label: 'High School',      css: 'cat-highschool' },
-  'test':                      { label: 'Test',             css: 'cat-test' },
-  'API':                       { label: 'API',              css: 'cat-api' },
+  'research open':    { label: 'Open',          css: 'cat-open' },
+  'research solved':  { label: 'Solved',        css: 'cat-solved' },
+  'graduate':         { label: 'Graduate',      css: 'cat-graduate' },
+  'undergraduate':    { label: 'Undergraduate', css: 'cat-undergrad' },
+  'high_school':      { label: 'High School',   css: 'cat-highschool' },
+  'test':             { label: 'Test',          css: 'cat-test' },
+  'API':              { label: 'API',           css: 'cat-api' },
 };
 
 function getCategoryMeta(category) {
@@ -142,25 +165,36 @@ function getCategoryMeta(category) {
 
 /** Enrich a raw theorem entry with derived fields. */
 function processEntry(entry) {
-  // Strip Lean «guillemets» from names for display
-  const theorem = entry.theorem.replace(/[«»]/g, '');
-  const module = entry.module.replace(/[«»]/g, '');
-  const collection = getCollection(module);
+  // Keep guillemets in theorem/module for exact lookups (avoids collisions
+  // between e.g. «A.B».C and A.«B.C» which are distinct Lean names).
+  // Provide display* variants with guillemets stripped for HTML rendering.
+  const collection = getCollection(entry.module);
   const catMeta = getCategoryMeta(entry.category);
   const subjects = entry.subjects.map(code => ({
     code,
     name: AMS_SUBJECTS[parseInt(code, 10)] || `AMS ${code}`,
   }));
+  // Pick only the fields the website actually uses. Avoids leaking large
+  // unused fields (statement, docstring) into the client-side JSON.
+  // Docstrings come from versoFragments instead.
+  const hasFormalProof = !!entry.formalProofKind;
   return {
-    ...entry,
-    theorem,
-    module,
+    theorem: entry.theorem,
+    module: entry.module,
+    category: entry.category,
+    displayTheorem: entry.theorem.replace(/[«»]/g, ''),
+    displayModule: entry.module.replace(/[«»]/g, ''),
+    githubPath: moduleToGitHubPath(entry.module),
     githubUrl: moduleToGitHubURL(entry.module),
+    sourceUrl: moduleToSourceURL(entry.module),
     collection: collection.name,
     collectionUrl: collection.url,
     categoryLabel: catMeta.label,
     categoryCss: catMeta.css,
     subjects,
+    hasFormalProof,
+    formalProofKind: entry.formalProofKind || null,
+    formalProofLink: entry.formalProofLink || null,
   };
 }
 
@@ -233,7 +267,7 @@ function statsCard(value, label) {
 
 function categoryStatsHTML(byCategory) {
   const order = [
-    'research open', 'research solved', 'research formally solved',
+    'research open', 'research solved',
     'graduate', 'undergraduate', 'high_school', 'test', 'API',
   ];
   return order
@@ -283,6 +317,15 @@ function main() {
   const conjectures = rawData.map(processEntry);
   const stats = computeStats(conjectures);
 
+  // Load Verso literate fragments (module docstrings + const links)
+  let versoFragments = { moduleDocs: {}, constLinks: {} };
+  if (fs.existsSync('data/verso-fragments.json')) {
+    versoFragments = JSON.parse(fs.readFileSync('data/verso-fragments.json', 'utf8'));
+    console.log(`  Loaded ${Object.keys(versoFragments.moduleDocs).length} module docstrings, ${Object.keys(versoFragments.constLinks).length} constant links from Verso.`);
+  } else {
+    console.log('  No Verso fragments found (run extract_verso_fragments.py first).');
+  }
+
   console.log(`  Loaded ${conjectures.length} conjectures.`);
 
   // Clean and recreate site directory
@@ -299,16 +342,19 @@ function main() {
   ensureDir('site/data');
   fs.writeFileSync(
     'site/data/conjectures.json',
-    JSON.stringify({ conjectures, stats, amsSubjects: AMS_SUBJECTS }),
+    JSON.stringify({ conjectures, stats, amsSubjects: AMS_SUBJECTS, versoFragments }),
   );
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
+  const openCount   = stats.byCategory['research open'] || 0;
+  const solvedCount = stats.byCategory['research solved'] || 0;
+  const formalCount = conjectures.filter(c => c.hasFormalProof).length;
   writePage('site/index.html', applyBasePath(fill(indexHtml, {
-    totalCount:      stats.total,
-    openCount:       stats.byCategory['research open'] || 0,
-    solvedCount:     stats.byCategory['research solved'] || 0,
-    formalCount:     stats.byCategory['research formally solved'] || 0,
+    totalCount:      openCount + solvedCount,
+    openCount,
+    solvedCount,
+    formalCount,
     categoryStats:   categoryStatsHTML(stats.byCategory),
     collectionList:  collectionListHTML(stats.byCollection),
     subjectList:     subjectListHTML(stats.bySubject),
@@ -345,7 +391,10 @@ function applyBasePath(html) {
   // Set data-base on <html> for client-side JS (main.js uses this for fetch paths)
   html = html.replace('data-base=""', `data-base="${BASE_PATH}"`);
   // Rewrite href="/..." and src="/..." to include the base path
-  return html.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`);
+  html = html.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`);
+  // Rewrite url('/...') in CSS (e.g. @font-face src)
+  html = html.replace(/url\('\/(?!\/)/g, `url('${BASE_PATH}/`);
+  return html;
 }
 
 main();
