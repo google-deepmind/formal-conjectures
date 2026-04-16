@@ -1,5 +1,5 @@
 /-
-Copyright 2026 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -113,9 +113,9 @@ greedy algorithm for this always terminate? Erdős and Graham believe not - inde
 fails to terminate almost always.
 -/
 @[category research open, AMS 5]
-theorem erdos_282.variants.sq {x : ℚ}
-    (hx : (x : ℝ) ∈ Set.Ico 0 (π ^ 2 / 6 - 1) ∪ Set.Ico 1 (π ^ 2 / 6)) :
-    (greedyUnitFractionRem { n | IsSquare n } x =ᶠ[atTop] 0) ↔ answer(sorry) := by
+theorem erdos_282.variants.sq :
+    answer(sorry) ↔ ∀ x : ℚ, (x : ℝ) ∈ Set.Ico 0 (π ^ 2 / 6 - 1) ∪ Set.Ico 1 (π ^ 2 / 6) →
+      greedyUnitFractionRem { n | IsSquare n } x =ᶠ[atTop] 0 := by
   sorry
 
 end Erdos282
