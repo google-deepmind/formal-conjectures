@@ -1204,9 +1204,12 @@ private theorem lil_interpolation
       ≤ ℙ {ω | ∃ᶠ k in atTop, ω ∈ F k} := by
         apply measure_mono; intro ω hω
         simp only [Set.mem_setOf_eq, Filter.not_eventually, F] at hω ⊢
-        -- ¬(eventually all n bounded) → frequently some n exceeds bound
-        -- → frequently F_k (since the max over all n exceeds ε·lilNorm(n))
-        -- This conversion needs: walk diff = shifted walk + lilNorm monotonicity
+        -- hω : frequently ¬(all n bounded). Need: frequently F_k.
+        -- For large k: 2√(Δn_k·log(k+2)) ≤ ε·lilNorm(n) for n in interval.
+        -- So ¬bounded → ∃ n with |incr| > ε·lilNorm n ≥ 2√(...) → ω ∈ F_k.
+        -- The asymptotic bound + walk difference identity give the conversion.
+        -- This uses: walk a n ω - walk a m ω = walk (shift a m) (n-m) ω [Finset reindex]
+        -- and eventually 2√(Δn_k·log(k+2)) ≤ ε·lilNorm(n) [asymptotic comparison].
         sorry
     _ = 0 := hbc
 
