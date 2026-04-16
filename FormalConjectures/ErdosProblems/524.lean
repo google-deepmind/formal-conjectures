@@ -578,32 +578,8 @@ private lemma rademacher_walk_nonneg_prob (a : ℕ → Ω → ℝ) (ha : IsRadem
     rwa [ENNReal.toReal_mul, ENNReal.toReal_ofNat] at h1
   linarith
 
--- **Lévy's maximal inequality for symmetric random walks.**
--- For i.i.d. symmetric (a_k), ℙ(max_{k≤n} S_k ≥ t) ≤ 2 ℙ(S_n ≥ t).
--- Proof: first-crossing-time decomposition + independence of future increments + symmetry.
-set_option linter.style.ams_attribute false in
-set_option linter.style.category_attribute false in
-private theorem levy_maximal_ineq
-    {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
-    (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (n : ℕ) (t : ℝ) :
-    (ℙ {ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t}).toReal ≤
-      2 * (ℙ {ω | walk a n ω ≥ t}).toReal := by
-  -- Rearrangement proof of Lévy's inequality.
-  -- Let A = {∃k ∈ Icc 1 n, S_k ≥ t}, B = {S_n ≥ t}.
-  -- Step 1: ℙ(A) = ℙ(A ∩ B) + ℙ(A ∩ Bᶜ)  (measure decomposition)
-  -- Step 2: ℙ(A ∩ B) ≤ ℙ(B)  (monotonicity)
-  -- Step 3: ℙ(A ∩ Bᶜ) ≤ ℙ(A)/2  (independence + symmetry — the hard step)
-  -- Combine: ℙ(A) ≤ ℙ(B) + ℙ(A)/2, so ℙ(A) ≤ 2ℙ(B).
-  --
-  -- Step 3 proof sketch: decompose A ∩ Bᶜ by first-crossing time τ = min{k : S_k ≥ t}.
-  -- On {τ = k, S_n < t}: S_n - S_k < t - S_k ≤ 0 (since S_k ≥ t on {τ = k}).
-  -- So {τ = k, S_n < t} ⊆ {τ = k, S_n - S_k < 0}.
-  -- By iIndepFun.indepFun_finset (Mathlib): S_n - S_k (depends on a_{k+1},...,a_n)
-  -- is independent of {τ = k} (depends on a_1,...,a_k).
-  -- So ℙ(τ = k, S_n - S_k < 0) = ℙ(τ = k) · ℙ(S_{n-k} < 0) ≤ ℙ(τ = k)/2
-  -- (by symmetry: ℙ(S_m < 0) ≤ 1/2 since -S_m has the same distribution as S_m).
-  -- Summing: ℙ(A ∩ Bᶜ) ≤ ℙ(A)/2.
-  sorry
+-- Note: Lévy's maximal inequality (ℙ(max S_k ≥ t) ≤ 2ℙ(S_n ≥ t)) is not needed here
+-- since one_sided_running_max gives the stronger exp(-t²/(2n)) bound via Doob's inequality.
 
 -- Running-max tail bound: ℙ(max_{k≤n} |S_k| ≥ u√n) ≤ 2 exp(-u²/2).
 -- Proof route: Doob's maximal inequality (MeasureTheory.maximal_ineq) applied to the
