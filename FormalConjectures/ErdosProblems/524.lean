@@ -1171,15 +1171,15 @@ private theorem lil_interpolation
   -- and C·√(δ/2) < ε for δ small enough (given fixed C > √2).
   -- Step 4: First BC gives a.s. eventually max |incr| ≤ C·√(Δn_k · log k) ≤ ε·φ(n).
   --
-  -- The formal proof requires shifted walk independence + running_max_tail +
-  -- summability + asymptotic comparison. Each is ~20 lines.
-  -- The shifted walk (a_{n_k+j})_{j≥1} is i.i.d. Rademacher since (a_j) is i.i.d.
-  -- and subsequences of i.i.d. families are i.i.d. (uses iIndepFun.comp with injective shift).
-  -- running_max_tail on the shifted walk gives ℙ(max increment ≥ t) ≤ 2·exp(-t²/(2·Δn_k)).
-  -- With t chosen to make the tail summable + eventually ≤ ε·φ(n), first BC closes it.
-  -- The full formalization is sorry'd — the main blockers are:
-  -- (1) formalizing the shifted walk Rademacher property (iIndepFun API plumbing)
-  -- (2) the asymptotic comparison between increment bound and ε·φ(n)
+  -- Proof route: for each k, the increment walk a n - walk a (⌊c^k⌋₊) for n ∈ [n_k, n_{k+1})
+  -- is a partial sum of the shifted Rademacher sequence (a (n_k + j)).
+  -- By running_max_tail on the shifted walk with Δn_k = n_{k+1} - n_k steps:
+  --   ℙ(max|incr| ≥ u·√(Δn_k)) ≤ 2·exp(-u²/2).
+  -- With u = 2√(log k): tail ≤ 2/k², summable. First BC: a.s. eventually
+  -- max|incr| ≤ 2·√(Δn_k · log k).
+  -- Then 2·√(Δn_k · log k) ≤ ε·φ(n) for n ∈ [n_k, n_{k+1}) and large k,
+  -- since Δn_k ≈ (c-1)·n_k and φ(n)² = 2n·log log n ≥ 2n_k·log log n_k.
+  -- The shifted-walk Rademacher property and asymptotic comparison are sorry'd.
   sorry
 
 -- Assembly: combine sparse BC + interpolation to get the full result.
