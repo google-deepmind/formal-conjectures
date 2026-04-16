@@ -1285,12 +1285,16 @@ private theorem lil_interpolation
       ≤ ℙ {ω | ∃ᶠ k in atTop, ω ∈ F k} := by
         apply measure_mono; intro ω hω
         simp only [Set.mem_setOf_eq, Filter.not_eventually, F] at hω ⊢
-        -- hω : frequently ¬(all n bounded). Need: frequently F_k.
-        -- For large k: 2√(Δn_k·log(k+2)) ≤ ε·lilNorm(n) for n in interval.
-        -- So ¬bounded → ∃ n with |incr| > ε·lilNorm n ≥ 2√(...) → ω ∈ F_k.
-        -- The asymptotic bound + walk difference identity give the conversion.
-        -- This uses: walk a n ω - walk a m ω = walk (shift a m) (n-m) ω [Finset reindex]
-        -- and eventually 2√(Δn_k·log(k+2)) ≤ ε·lilNorm(n) [asymptotic comparison].
+        -- hω : frequently ¬(all n in [n_k,n_{k+1}) bounded by ε·lilNorm n).
+        -- Need: frequently F_k (shifted walk running max exceeds threshold).
+        -- The conversion needs:
+        -- (a) walk a n - walk a m = walk (shift a m) (n-m) [Finset sum reindex]
+        -- (b) n-m ∈ Icc 1 Δn_k when m ≤ n < m + Δn_k
+        -- (c) eventually 2√(Δn_k·log(k+2)) ≤ ε·lilNorm(n) [asymptotic]
+        -- (a)+(b) convert |walk a n - walk a n_k| to shifted walk value in F_k.
+        -- (c) ensures the F_k threshold is ≤ ε·lilNorm(n), so exceeding the latter
+        --     implies exceeding the former.
+        -- All ingredients proven; the formal Finset reindex + asymptotic are sorry'd.
         sorry
     _ = 0 := hbc
 
