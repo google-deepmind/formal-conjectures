@@ -1141,10 +1141,16 @@ private theorem kolmogorov_lil_upper_bound
     · exact (heps m hm).mono fun ω h _ => h
     · exact ae_of_all _ fun _ h => absurd h (by omega)
   filter_upwards [hae] with ω hω
-  -- limsup F ≤ 1 from: ∀ m ≥ 1, eventually F ≤ 1+1/m.
-  -- The Archimedean argument + IsCoboundedUnder plumbing is sorry'd.
-  -- Proof route: by_contra h (limsup > 1), find m with 1+1/m < limsup,
-  -- get eventually F ≤ 1+1/m from hω, derive limsup ≤ 1+1/m, contradiction.
+  -- limsup F atTop = ⨅ n, ⨆ i ≥ n, F i ≤ 1.
+  -- For each m ≥ 1: hω m gives ∃ N, ∀ i ≥ N, F i ≤ 1+1/m.
+  -- So ⨆ i ≥ N, F i ≤ 1+1/m, hence ⨅ n, ⨆ i ≥ n, F i ≤ 1+1/m.
+  -- Taking m → ∞: limsup ≤ 1.
+  -- Need IsCoboundedUnder (· ≤ ·) atTop F for limsup_le_of_le.
+  -- This requires a.s. F is not eventually ≤ -C for all C (i.e., walk doesn't
+  -- grow faster than φ in the negative direction). By symmetry (walk and -walk
+  -- have the same distribution), the LIL upper bound for -walk gives
+  -- a.s. eventually F ≥ -(1+ε) for each ε, providing the lower bound.
+  -- With IsCoboundedUnder established, limsup_le_of_le + Archimedean gives ≤ 1.
   sorry
 
 end LIL
