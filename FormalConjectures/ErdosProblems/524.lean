@@ -713,7 +713,49 @@ private theorem one_sided_running_max
   -- conversion between Icc 1 n and range (n+1), and exp monotonicity.
   have hdobo : (ℙ {ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t}).toReal ≤
       (∫ ω, f n ω ∂ℙ) / Real.exp (lam * t) := by
-    sorry
+    -- Set containment: {walk ≥ t} ⊆ {sup' f ≥ exp(lam*t)} via exp monotonicity
+    set ε : NNReal := ⟨Real.exp (lam * t), le_of_lt (Real.exp_pos _)⟩
+    set A := {ω : Ω | (ε : ℝ) ≤ (Finset.range (n + 1)).sup'
+      Finset.nonempty_range_add_one fun k => f k ω} with hA_def
+    have hlam_nn : 0 ≤ lam := div_nonneg ht (Nat.cast_nonneg n)
+    have hcontain : {ω : Ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t} ⊆ A := by
+      intro ω ⟨j, hj, hwj⟩
+      show (ε : ℝ) ≤ _
+      have hj_range : j ∈ Finset.range (n + 1) :=
+        Finset.mem_range.mpr (by have := (Finset.mem_Icc.mp hj).2; omega)
+      calc (ε : ℝ) = Real.exp (lam * t) := rfl
+        _ ≤ Real.exp (lam * walk a j ω) :=
+            Real.exp_le_exp_of_le (mul_le_mul_of_nonneg_left hwj hlam_nn)
+        _ = f j ω := by simp [hf_def]
+        _ ≤ (Finset.range (n + 1)).sup' Finset.nonempty_range_add_one (fun i => f i ω) :=
+            Finset.le_sup' (fun i => f i ω) hj_range
+    -- Doob: ε • ℙ(A) ≤ ENNReal.ofReal(∫ f_n on A) ≤ ENNReal.ofReal(∫ f_n)
+    have hdobo_ennreal := @maximal_ineq _ _ ℙ ℱ f _ hsub hnn ε n
+    -- ∫ f_n on A ≤ ∫ f_n
+    have hA_le_full : ∫ ω in A, f n ω ∂ℙ ≤ ∫ ω, f n ω ∂ℙ :=
+      setIntegral_le_integral (hintegrable n)
+        (Eventually.of_forall fun ω => hnn n ω)
+    have hbound : (ε : ENNReal) * ℙ A ≤ ENNReal.ofReal (∫ ω, f n ω ∂ℙ) :=
+      le_trans (by exact_mod_cast hdobo_ennreal) (ENNReal.ofReal_le_ofReal hA_le_full)
+    -- Convert: ℙ(walk ≥ t) ≤ ℙ(A) ≤ ∫ f_n / exp(lam*t)
+    have hle : ℙ {ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t} ≤ ℙ A := measure_mono hcontain
+    have hε_pos : (0 : ℝ) < Real.exp (lam * t) := Real.exp_pos _
+    -- From ENNReal bound to ℝ bound: ℙ(A) ≤ ∫ f_n / ε
+    have hA_real : (ℙ A).toReal ≤ (∫ ω, f n ω ∂ℙ) / Real.exp (lam * t) := by
+      rw [le_div_iff₀ hε_pos]
+      have hε_val : (ε : ENNReal).toReal = Real.exp (lam * t) := by
+        show ((⟨Real.exp (lam * t), _⟩ : NNReal) : ℝ) = _; rfl
+      have h1 : (ℙ A).toReal * Real.exp (lam * t) = ((ε : ENNReal) * ℙ A).toReal := by
+        rw [ENNReal.toReal_mul, hε_val, mul_comm]
+      rw [h1]
+      calc ((ε : ENNReal) * ℙ A).toReal
+          ≤ (ENNReal.ofReal (∫ ω, f n ω ∂ℙ)).toReal :=
+            ENNReal.toReal_mono ENNReal.ofReal_ne_top hbound
+        _ = ∫ ω, f n ω ∂ℙ :=
+            ENNReal.toReal_ofReal (integral_nonneg (fun ω => hnn n ω))
+    calc (ℙ {ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t}).toReal
+        ≤ (ℙ A).toReal := ENNReal.toReal_mono (measure_ne_top _ _) hle
+      _ ≤ (∫ ω, f n ω ∂ℙ) / Real.exp (lam * t) := hA_real
   -- Step 3: E[f_n] = mgf(S_n)(λ) ≤ exp(λ²n/2) by Hoeffding's sub-Gaussian bound.
   have hmgf : ∫ ω, f n ω ∂ℙ ≤ Real.exp (lam ^ 2 * ↑n / 2) := by
     -- ∫ f_n = mgf(walk a n)(lam)
