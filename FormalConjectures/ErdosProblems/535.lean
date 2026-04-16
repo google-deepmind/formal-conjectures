@@ -25,10 +25,13 @@ import FormalConjectures.Util.ProblemImports
   Comp. (1964), 644–646.
 - [AbHa70] H. L. Abbott and D. Hanson, _An extremal problem in number theory_. Bull. London Math.
   Soc. (1970), 324–326.
+- [Er73] P. Erdős, _Problems and results on combinatorial number theory_, in
+  *A Survey of Combinatorial Theory*, North-Holland, 1973.
 -/
 
+open ArithmeticFunction
 open Filter Real
-open scoped ArithmeticFunction
+open scoped omega Omega
 
 namespace Erdos535
 
@@ -38,9 +41,16 @@ def NoConstantPairwiseGcdCoprimeSubsets (r : ℕ) (A : Finset ℕ) : Prop :=
     ¬ (∃ d, 0 < d ∧ (S : Set ℕ).Pairwise (fun a b => Nat.gcd a b = d) ∧
       ∀ a ∈ S, ∃ b, a = d * b ∧ Nat.gcd b d = 1)
 
-/-- All elements of `A` are positive and have exactly `k` distinct prime factors. -/
-def AllOmega (k : ℕ) (A : Finset ℕ) : Prop :=
-  ∀ a ∈ A, 1 ≤ a ∧ ω a = k
+/--
+All elements of `A` are positive and have exactly `k` prime factors,
+counted with multiplicity.
+
+Erdős [Er73] explains that Abbott pointed out the ordinary sunflower conjecture
+does not seem to suffice for Problem 535; the corrected stronger auxiliary
+statement uses `Ω`, not `ω`.
+-/
+def AllBigOmega (k : ℕ) (A : Finset ℕ) : Prop :=
+  ∀ a ∈ A, 1 ≤ a ∧ Ω a = k
 
 /-- `f r N` is the maximum size of a subset `A ⊆ {1,…,N}` such that no `r`-element
 subset of `A` has constant pairwise GCD. -/
@@ -88,25 +98,29 @@ theorem erdos_535.variants.abbott_hanson {r : ℕ} (hr : 3 ≤ r) :
   sorry
 
 /--
-Stronger sunflower-style statement: if all elements of `A` have exactly `k` distinct prime
-factors and no `r`-subset has constant pairwise GCD with coprime quotients, then
-`|A| ≤ c_r^k`. The conjectured upper bound for `f_r(N)` would follow from this.
+Erdős [Er73] records that Abbott pointed out the ordinary sunflower conjecture
+does not seem to suffice here. The stronger auxiliary conjecture uses `Ω(n)=k`,
+i.e. prime factors counted with multiplicity; this stronger statement would imply
+the conjectured upper bound for `f_r(N)`.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_535.variants.sunflower_strong {r : ℕ} (hr : 3 ≤ r) :
     ∃ c_r > (0 : ℝ),
       ∀ k : ℕ, ∀ A : Finset ℕ,
-        AllOmega k A →
+        AllBigOmega k A →
         NoConstantPairwiseGcdCoprimeSubsets r A →
         (A.card : ℝ) ≤ c_r ^ k := by
   sorry
 
-/-- The Erdős–Rado sunflower lemma gives the weaker bound `c_r^k * k!`. -/
+/--
+For the stronger `Ω(n)=k` variant above, the Erdős–Rado method gives the weaker
+bound `c_r^k * k!`; see Erdős [Er73].
+-/
 @[category research solved, AMS 5 11]
 theorem erdos_535.variants.sunflower_erdos_rado {r : ℕ} (hr : 3 ≤ r) :
     ∃ c_r > (0 : ℝ),
       ∀ k : ℕ, ∀ A : Finset ℕ,
-        AllOmega k A →
+        AllBigOmega k A →
         NoConstantPairwiseGcdCoprimeSubsets r A →
         (A.card : ℝ) ≤ c_r ^ k * (Nat.factorial k) := by
   sorry
