@@ -1045,10 +1045,29 @@ private theorem lil_interpolation
     (c : ℝ) (hc : 1 < c) :
     ∀ᵐ ω, ∀ᶠ k in atTop, ∀ n, ⌊c ^ k⌋₊ ≤ n → n < ⌊c ^ (k + 1)⌋₊ →
       |walk a n ω - walk a ⌊c ^ k⌋₊ ω| ≤ ε * lilNorm n := by
-  -- Steps (a)-(e) above. The main technical ingredients are:
-  -- • `running_max_tail` for the increment bound
-  -- • `measure_setOf_frequently_eq_zero` for first BC
-  -- • Asymptotic estimates on ⌊c^k⌋₊ growth and log log asymptotics
+  -- Define the events: F_k = {max_{n_k < j ≤ n_{k+1}} |S_j - S_{n_k}| > ε·φ(n_k)}
+  -- Step 1: ℙ(F_k) is small. The increment is a Rademacher walk of length Δn_k = n_{k+1}-n_k.
+  -- By running_max_tail: ℙ(F_k) ≤ 2·exp(-ε²·φ(n_k)²/(2·Δn_k))
+  --   = 2·exp(-ε²·2·n_k·log log n_k / (2·Δn_k))
+  --   = 2·exp(-ε²·n_k·log log n_k / Δn_k)
+  -- Since Δn_k ≈ (c-1)·n_k: ≈ 2·exp(-ε²·log log n_k / (c-1))
+  --   ≈ 2·(log n_k)^{-ε²/(c-1)} ≈ 2·(k·log c)^{-ε²/(c-1)}
+  -- Step 2: Choose threshold more carefully. Instead of t = ε·φ(n_k),
+  -- use t = C·√(Δn_k · log k) for C > √2. Then:
+  -- ℙ(max |incr| ≥ t) ≤ 2·exp(-C²·log k / 2) = 2·k^{-C²/2}
+  -- which is summable for C > √2.
+  -- Step 3: Show C·√(Δn_k · log k) ≤ ε·φ(n) for n_k ≤ n < n_{k+1} and large k.
+  -- C·√((c-1)·n_k · log k) / √(2·n·log log n) ≈ C·√((c-1)·log k / (2·log log n))
+  -- Since log log n ≈ log(k·log c) ≈ log k, this → C·√((c-1)/2).
+  -- By choosing c close to 1 (c = 1+δ with δ small), (c-1)/2 = δ/2 is small,
+  -- and C·√(δ/2) < ε for δ small enough (given fixed C > √2).
+  -- Step 4: First BC gives a.s. eventually max |incr| ≤ C·√(Δn_k · log k) ≤ ε·φ(n).
+  --
+  -- The formal proof requires:
+  -- (i)  The shifted walk is i.i.d. Rademacher (subsequence of iIndepFun)
+  -- (ii) running_max_tail application
+  -- (iii) Summability of k^{-C²/2} for C > √2
+  -- (iv) Asymptotic comparison C·√(Δn_k·log k) vs ε·φ(n)
   sorry
 
 -- Assembly: combine sparse BC + interpolation to get the full result.
