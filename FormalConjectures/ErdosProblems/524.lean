@@ -1121,19 +1121,10 @@ private theorem kolmogorov_lil_upper_bound
     · exact (heps m hm).mono fun ω h _ => h
     · exact ae_of_all _ fun _ h => absurd h (by omega)
   filter_upwards [hae] with ω hω
-  -- For each m ≥ 1: ∀ᶠ n, f n ≤ 1 + 1/m. So limsup f ≤ 1 + 1/m.
-  -- Taking m → ∞: limsup f ≤ 1.
-  -- Use: limsup_le_of_le gives limsup ≤ a when eventually f ≤ a.
-  -- Need IsCoboundedUnder: ∃ b, ∀ᶠ n, b ≤ f n. True since f n ≥ -|S_n|/φ(n) ≥ -n/φ(n).
-  -- Also need: for each m, limsup ≤ 1 + 1/m.
-  -- For each m ≥ 1: limsup f ≤ 1 + 1/m.
-  -- Proof: hω m gives eventually f ≤ 1+1/m, and limsup_le_of_le converts this.
-  -- IsCoboundedUnder follows from hω 1: eventually f ≤ 2, so f is eventually bounded below by 0-2.
-  -- Then limsup ≤ 1 + 1/m for all m ≥ 1 implies limsup ≤ 1 (Archimedean).
-  -- For each m ≥ 1: limsup ≤ 1 + 1/m (by limsup_le_of_le + eventually bound).
-  -- Take m → ∞: limsup ≤ 1.
-  -- The IsCoboundedUnder condition and the Archimedean limit argument are
-  -- standard but require careful Lean plumbing with filter coboundedness.
+  -- limsup F ≤ 1 from: ∀ m ≥ 1, eventually F ≤ 1+1/m.
+  -- The Archimedean argument + IsCoboundedUnder plumbing is sorry'd.
+  -- Proof route: by_contra h (limsup > 1), find m with 1+1/m < limsup,
+  -- get eventually F ≤ 1+1/m from hω, derive limsup ≤ 1+1/m, contradiction.
   sorry
 
 end LIL
