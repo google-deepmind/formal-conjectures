@@ -928,6 +928,15 @@ set_option linter.style.ams_attribute false
 set_option linter.style.category_attribute false
 set_option linter.unusedSectionVars false
 
+-- Key asymptotic: ⌊c^k⌋₊ → ∞ as k → ∞ (needed for BC summability estimates).
+private theorem floor_exp_tendsto (c : ℝ) (hc : 1 < c) :
+    Filter.Tendsto (fun k : ℕ => (⌊c ^ k⌋₊ : ℝ)) atTop atTop := by
+  apply Filter.tendsto_atTop.mpr
+  intro b
+  have hpow := Filter.tendsto_atTop.mp (tendsto_pow_atTop_atTop_of_one_lt hc) (b + 1)
+  exact hpow.mono fun k hk => le_trans (by linarith : b ≤ c ^ k - 1)
+    (le_of_lt (mod_cast Nat.sub_one_lt_floor (c ^ k)))
+
 /-- The normalizing function for the LIL: `φ(n) = √(2n log log n)`. -/
 private noncomputable def lilNorm (n : ℕ) : ℝ :=
   Real.sqrt (2 * n * Real.log (Real.log n))
@@ -986,9 +995,12 @@ private theorem lil_tail_summable
   have hp : (1 + ε) ^ 2 > 1 := by nlinarith
   have hsummable : Summable (fun k : ℕ =>
       Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) := by
-    -- Comparison: eventually ‖f k‖ ≤ g k where g is summable.
-    -- Since (1+ε)² > 1 and log log ⌊c^k⌋₊ → ∞, the terms decay faster than
-    -- any power k^{-p}, hence summable. The detailed floor/log estimate is sorry'd.
+    -- Eventually bounded by summable series via floor/log asymptotics.
+    -- For large k: log ⌊c^k⌋₊ ≥ k, so exp(-p·log(log ⌊c^k⌋₊)) ≤ exp(-p·log k) = k^{-p}.
+    -- Here p = (1+ε)² > 1, so ∑ k^{-p} converges.
+    -- The floor estimate ⌊c^k⌋₊ ≥ e^k for large k (since c > 1 gives c^k → ∞)
+    -- ensures log ⌊c^k⌋₊ ≥ k eventually. The comparison then follows.
+    -- The formal proof of these asymptotic estimates is sorry'd.
     sorry
   exact hsummable.tsum_ofReal_ne_top
 
