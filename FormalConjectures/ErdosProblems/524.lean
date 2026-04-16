@@ -1041,12 +1041,14 @@ private theorem lil_sparse_bc
     apply ne_top_of_le_ne_top (lil_tail_summable ε hε c hc)
     apply ENNReal.tsum_le_tsum
     intro k
-    -- ℙ(E_k) ≤ ofReal(exp(...)) via walk_tail_bound + toReal→ofReal conversion
-    -- For small n_k, ℙ(E_k) ≤ 1 ≤ ofReal(exp(nonneg)) trivially.
-    -- For large n_k with log log n_k > 0, use lil_tail_at_scale.
-    -- We use: ℙ S ≤ 1, and ofReal(exp(x)) ≥ 1 when x ≥ 0, and also
-    -- toReal(ℙ S) ≤ r implies ℙ S ≤ ofReal(r) when r ≥ 0.
-    -- The detailed case analysis is sorry'd (routine but verbose).
+    -- For any k: ℙ(E_k) ≤ 1, and also ofReal(exp(x)) ≥ 0 always.
+    -- When n_k ≥ 1 and log log n_k > 0: use lil_tail_at_scale for the sharp bound.
+    -- Otherwise: ℙ(E_k) ≤ 1 and exp(...) could be anything, but ofReal clips to 0.
+    -- In all cases: ℙ(E_k) ≤ max(1, ofReal(exp(...))).
+    -- For the tsum comparison, we bound ℙ(E_k) ≤ 1 always, and note that
+    -- lil_tail_summable bounds the sum of the sharper terms.
+    -- A cleaner approach: bound each term by 1, giving ∑ ℙ(E_k) ≤ ∑ 1 ... which diverges!
+    -- So we DO need the sharp bound for large k. Sorry the pointwise comparison.
     sorry
   -- Apply first BC: ℙ(E_k frequently) = 0
   have hbc := measure_setOf_frequently_eq_zero hsum
