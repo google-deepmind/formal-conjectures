@@ -1217,11 +1217,40 @@ private theorem lil_interpolation
       have hu : 0 ≤ u := by positivity
       -- running_max_tail on shifted walk
       have hrt := running_max_tail (fun j => a (⌊c ^ k⌋₊ + j)) hshift Δ u hu
-      -- F k = {∃ j ∈ Icc 1 Δ, |walk' j| ≥ 2√(Δ·log(k+2))} = {... ≥ u·√Δ}
-      -- So ℙ(F k).toReal ≤ ℙ(running_max event).toReal ≤ 2·exp(-(1/2)·u²)
-      -- Convert to ENNReal and bound by 2·(1/(k+2)²)
-      -- The set equality F k = running_max event + exp arithmetic are sorry'd.
-      sorry
+      -- Step A: F k ⊆ {∃ j ∈ Icc 1 Δ, |walk a' j| ≥ u * √Δ}
+      -- because 2√(Δ·log(k+2)) = u·√Δ (algebraically).
+      -- Step B: ℙ of the RHS ≤ 2·exp(-(1/2)·u²) by hrt.
+      -- Step C: Convert toReal bound to ENNReal bound.
+      -- Step D: 2·exp(-(1/2)·u²) = 2·exp(-2·log(k+2)) ≤ 2/(k+2)².
+      have hk2_pos : (0 : ℝ) < (k : ℝ) + 2 := by positivity
+      rw [ENNReal.le_ofReal_iff_toReal_le (measure_ne_top _ _)
+        (by show 0 ≤ 2 * (1 / ((k + 2 : ℕ) : ℝ) ^ 2); positivity)]
+      -- Goal: (ℙ(F k)).toReal ≤ 2 * (1 / ((k+2 : ℕ) : ℝ)^2)
+      calc (ℙ (F k)).toReal
+          ≤ 2 * Real.exp (-(1 / 2) * u ^ 2) := by
+            -- F k ⊆ running_max event, then hrt
+            -- u * √Δ = 2√(log(k+2)) * √Δ = 2√(Δ·log(k+2)) which matches F k's threshold
+            sorry
+        _ ≤ 2 * (1 / ((k + 2 : ℕ) : ℝ) ^ 2) := by
+            -- u² = 4·log(k+2), -(1/2)·u² = -2·log(k+2), exp(-2·log(k+2)) = 1/(k+2)².
+            gcongr
+            -- Goal: exp(-(1/2) * u²) ≤ 1/(k+2)²
+            -- u = 2·√(log(k+2)), u² = 4·log(k+2)
+            have hk2 : (0 : ℝ) < (k : ℝ) + 2 := by positivity
+            have hlog_nn : 0 ≤ Real.log ((k : ℝ) + 2) := Real.log_nonneg (by linarith)
+            have hu2 : -(1/2) * u ^ 2 = -2 * Real.log ((k : ℝ) + 2) := by
+              simp only [u, mul_pow, Real.sq_sqrt hlog_nn]; ring
+            rw [hu2]
+            -- exp(-2·log(k+2)) = (k+2)^{-2} = 1/(k+2)²
+            conv_lhs =>
+              rw [show -2 * Real.log ((k : ℝ) + 2) =
+                Real.log ((k : ℝ) + 2) * (-2) from by ring,
+                ← Real.rpow_def_of_pos hk2]
+            -- exp(log(k+2) * (-2)) = (k+2)^(-2) = 1/(k+2)²
+            rw [Real.rpow_neg hk2.le]
+            -- Goal: ((k+2)^2)⁻¹ ≤ 1/↑(k+2)^2. These are equal mod cast.
+            rw [show (2 : ℝ) = ((2 : ℕ) : ℝ) from by norm_num, Real.rpow_natCast]
+            rw [one_div]; push_cast; exact le_refl _
   -- Step 2: First BC → a.s. eventually ¬F_k
   have hbc := measure_setOf_frequently_eq_zero hFsum
   -- Step 3: Convert ¬F_k to the desired bound
