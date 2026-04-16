@@ -1187,9 +1187,15 @@ private theorem lil_interpolation
       |walk (fun i => a (⌊c ^ k⌋₊ + i)) j ω| ≥ ε * lilNorm ⌊c ^ k⌋₊}
   -- Step 1: ∑ ℙ(F_k) < ∞
   have hFsum : ∑' k, ℙ (F k) ≠ ⊤ := by
-    -- Each ℙ(F_k) ≤ running_max_tail (shift a n_k) (Δn_k) u hu
-    -- for u chosen to make the sum convergent.
-    -- This uses isRademacherSequence_shift + running_max_tail.
+    -- Each ℙ(F k) is bounded by running_max_tail applied to the shifted walk:
+    -- ℙ(F k) ≤ 2·exp(-ε²·lilNorm(n_k)²/(2·Δn_k))
+    --        = 2·exp(-ε²·n_k·log(log n_k)/Δn_k)
+    -- Since Δn_k ≤ c·n_k: ≤ 2·exp(-ε²·log(log n_k)/c) → 0 exponentially.
+    -- In particular, ℙ(F k) ≤ ENNReal.ofReal(exp(-ε²·log(log n_k)/(2c)))
+    -- which is summable by the same argument as lil_tail_summable
+    -- (comparison with k^{-p} for suitable p > 1).
+    -- The formal proof applies running_max_tail (isRademacherSequence_shift a ha n_k)
+    -- for each k, converts to ENNReal, and sums using the lil_tail_summable pattern.
     sorry
   -- Step 2: First BC → a.s. eventually ¬F_k
   have hbc := measure_setOf_frequently_eq_zero hFsum
