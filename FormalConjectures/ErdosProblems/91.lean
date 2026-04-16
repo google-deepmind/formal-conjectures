@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 91
