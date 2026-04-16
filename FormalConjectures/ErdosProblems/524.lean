@@ -1036,8 +1036,17 @@ private theorem lil_sparse_bc
   set E : ℕ → Set Ω := fun k => {ω | walk a ⌊c ^ k⌋₊ ω ≥ (1 + ε) * lilNorm ⌊c ^ k⌋₊}
   -- Show ∑ ℙ(E_k) < ∞
   have hsum : ∑' k, ℙ (E k) ≠ ⊤ := by
-    -- Each ℙ(E_k) ≤ exp(-(1+ε)²·log log n_k), and the sum of those is finite
-    -- by lil_tail_summable. Need comparison + lil_tail_at_scale.
+    -- Comparison: ℙ(E_k) ≤ ENNReal.ofReal(exp(-(1+ε)²·log log n_k))
+    -- and ∑ of those is finite by lil_tail_summable.
+    apply ne_top_of_le_ne_top (lil_tail_summable ε hε c hc)
+    apply ENNReal.tsum_le_tsum
+    intro k
+    -- ℙ(E_k) ≤ ofReal(exp(...)) via walk_tail_bound + toReal→ofReal conversion
+    -- For small n_k, ℙ(E_k) ≤ 1 ≤ ofReal(exp(nonneg)) trivially.
+    -- For large n_k with log log n_k > 0, use lil_tail_at_scale.
+    -- We use: ℙ S ≤ 1, and ofReal(exp(x)) ≥ 1 when x ≥ 0, and also
+    -- toReal(ℙ S) ≤ r implies ℙ S ≤ ofReal(r) when r ≥ 0.
+    -- The detailed case analysis is sorry'd (routine but verbose).
     sorry
   -- Apply first BC: ℙ(E_k frequently) = 0
   have hbc := measure_setOf_frequently_eq_zero hsum
