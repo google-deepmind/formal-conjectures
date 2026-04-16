@@ -1181,21 +1181,17 @@ private theorem lil_interpolation
   -- and C·√(δ/2) < ε for δ small enough (given fixed C > √2).
   -- Step 4: First BC gives a.s. eventually max |incr| ≤ C·√(Δn_k · log k) ≤ ε·φ(n).
   --
-  -- Define bad events: increment running max exceeds ε·lilNorm(n_k).
+  -- Define bad events with threshold 2√(Δn_k·log(k+2)) (independent of ε).
+  -- This gives summable tails (∑ 2/(k+2)²) while being eventually ≤ ε·lilNorm(n).
   set F : ℕ → Set Ω := fun k =>
     {ω | ∃ j ∈ Finset.Icc 1 (⌊c ^ (k + 1)⌋₊ - ⌊c ^ k⌋₊),
-      |walk (fun i => a (⌊c ^ k⌋₊ + i)) j ω| ≥ ε * lilNorm ⌊c ^ k⌋₊}
+      |walk (fun i => a (⌊c ^ k⌋₊ + i)) j ω| ≥
+        2 * Real.sqrt ((⌊c ^ (k + 1)⌋₊ - ⌊c ^ k⌋₊ : ℝ) * Real.log ((k : ℝ) + 2))}
   -- Step 1: ∑ ℙ(F_k) < ∞
+  -- running_max_tail with u = 2√(log(k+2)) gives ℙ(F_k) ≤ 2·exp(-2·log(k+2)) = 2/(k+2)².
+  -- ∑ 2/(k+2)² converges. The formal proof applies running_max_tail to the shifted walk
+  -- (Rademacher by isRademacherSequence_shift) with Δn_k steps and u = 2√(log(k+2)).
   have hFsum : ∑' k, ℙ (F k) ≠ ⊤ := by
-    -- Each ℙ(F k) is bounded by running_max_tail applied to the shifted walk:
-    -- ℙ(F k) ≤ 2·exp(-ε²·lilNorm(n_k)²/(2·Δn_k))
-    --        = 2·exp(-ε²·n_k·log(log n_k)/Δn_k)
-    -- Since Δn_k ≤ c·n_k: ≤ 2·exp(-ε²·log(log n_k)/c) → 0 exponentially.
-    -- In particular, ℙ(F k) ≤ ENNReal.ofReal(exp(-ε²·log(log n_k)/(2c)))
-    -- which is summable by the same argument as lil_tail_summable
-    -- (comparison with k^{-p} for suitable p > 1).
-    -- The formal proof applies running_max_tail (isRademacherSequence_shift a ha n_k)
-    -- for each k, converts to ENNReal, and sums using the lil_tail_summable pattern.
     sorry
   -- Step 2: First BC → a.s. eventually ¬F_k
   have hbc := measure_setOf_frequently_eq_zero hFsum
