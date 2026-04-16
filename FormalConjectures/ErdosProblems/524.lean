@@ -995,12 +995,45 @@ private theorem lil_tail_at_scale
         have hn' : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
         field_simp
 
--- For any ε > 0, a.s. eventually S_n / √(2n log log n) ≤ 1 + ε.
--- Core of the LIL upper bound: sparse subsequence + first BC + interpolation.
+-- A.s. eventually S_{n_k} < (1+ε)·φ(n_k) on the sparse subsequence n_k = ⌊c^k⌋.
+-- Proof: lil_tail_at_scale gives ℙ(S_{n_k} ≥ (1+ε)·φ(n_k)) ≤ (log n_k)^{-(1+ε)²},
+-- and ∑_k (log n_k)^{-(1+ε)²} < ∞ (comparable to ∑ k^{-p} for p > 1),
+-- so first Borel–Cantelli gives the result.
+private theorem lil_sparse_bc
+    (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (ε : ℝ) (hε : 0 < ε)
+    (c : ℝ) (hc : 1 < c) :
+    ∀ᵐ ω, ∀ᶠ k in atTop,
+      walk a ⌊c ^ k⌋₊ ω < (1 + ε) * lilNorm ⌊c ^ k⌋₊ := by
+  -- The tail probabilities are summable:
+  -- ℙ(S_{n_k} ≥ (1+ε)·φ(n_k)) ≤ exp(-(1+ε)²·log log n_k) ≈ k^{-(1+ε)²}
+  -- Since (1+ε)² > 1, this is summable. By measure_setOf_frequently_eq_zero (first BC),
+  -- a.s. only finitely many k satisfy S_{n_k} ≥ (1+ε)·φ(n_k).
+  sorry
+
+-- Interpolation: for n_k ≤ n < n_{k+1}, the increment |S_n - S_{n_k}| is small
+-- compared to φ(n) = √(2n log log n).
+-- Uses: the increment walk is a fresh Rademacher walk of length ≤ n_{k+1} - n_k ≈ (c-1)·n_k,
+-- and by one_sided_running_max + Borel-Cantelli, its max is o(√(n log log n)).
+private theorem lil_interpolation
+    (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (ε : ℝ) (hε : 0 < ε)
+    (c : ℝ) (hc : 1 < c) :
+    ∀ᵐ ω, ∀ᶠ k in atTop, ∀ n, ⌊c ^ k⌋₊ ≤ n → n < ⌊c ^ (k + 1)⌋₊ →
+      |walk a n ω - walk a ⌊c ^ k⌋₊ ω| ≤ ε * lilNorm n := by
+  sorry
+
+-- Assembly: combine sparse BC + interpolation to get the full result.
 private theorem lil_upper_for_eps
     (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (ε : ℝ) (hε : 0 < ε) :
     ∀ᵐ ω, ∀ᶠ n in atTop,
       walk a n ω / Real.sqrt (2 * n * Real.log (Real.log n)) ≤ 1 + ε := by
+  -- Choose c = 1 + ε/2 (any c > 1 with (c-1) small relative to ε).
+  -- Combine lil_sparse_bc and lil_interpolation.
+  -- For n_k ≤ n < n_{k+1}:
+  --   S_n = S_{n_k} + (S_n - S_{n_k})
+  --   ≤ (1+ε/2)·φ(n_k) + (ε/2)·φ(n)  (eventually a.s.)
+  --   ≤ (1+ε/2)·φ(n) + (ε/2)·φ(n)    (since φ(n_k) ≤ φ(n) for n_k ≤ n)
+  --   = (1+ε)·φ(n)
+  -- Hence S_n/φ(n) ≤ 1+ε eventually a.s.
   sorry
 
 -- Assembly: limsup ≤ 1 from "eventually ≤ 1+ε" for all ε > 0.
