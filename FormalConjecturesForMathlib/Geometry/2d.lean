@@ -19,6 +19,7 @@ public import Mathlib.LinearAlgebra.Orientation
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
 public import Mathlib.Geometry.Euclidean.Triangle
+public import Mathlib.Geometry.Euclidean.Sphere.Basic
 
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
@@ -27,7 +28,7 @@ public import FormalConjecturesForMathlib.Data.Set.Triplewise
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
-open scoped EuclideanGeometry
+open scoped EuclideanGeometry Finset
 
 /-- Oriented angles make sense in 2d.
 
@@ -202,6 +203,12 @@ noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
 a given point and all other points -/
 noncomputable def distinctDistancesFrom (points : Finset ℝ²) (pt : ℝ²) : ℕ :=
   (points.image fun x => dist x pt).card
+
+
+/-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
+if no three are collinear and no four lie on a circle. -/
+def InGeneralPosition (X : Finset ℝ²) : Prop :=
+  NonTrilinear (SetLike.coe X) ∧ ∀ T ⊆ X, #T = 4 → ¬Cospherical (SetLike.coe T)
 
 end EuclideanGeometry
 

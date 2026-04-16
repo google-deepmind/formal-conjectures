@@ -31,11 +31,6 @@ no circle whose centre is one of the $x_i$ contains three other points. -/
 def IsValid (X : Finset ℝ²) : Prop :=
   ∀ᵉ (x ∈ X) (r > 0), ¬3 ≤ (Metric.sphere x r ∩ X).ncard
 
-/-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
-if no three are collinear and no four lie on a circle. -/
-def InGeneralPosition (X : Finset ℝ²) : Prop :=
-  NonTrilinear (SetLike.coe X) ∧ ∀ T ⊆ X, #T = 4 → ¬Cospherical (SetLike.coe T)
-
 /-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ be such that no circle whose centre is one
 of the $x_i$ contains three other points. Are there at least
 \[(1+c)\frac{n}{2}\]
