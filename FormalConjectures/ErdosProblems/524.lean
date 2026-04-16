@@ -982,24 +982,16 @@ private theorem lil_tail_summable
     (ε : ℝ) (hε : 0 < ε) (c : ℝ) (hc : 1 < c) :
     ∑' k : ℕ, ENNReal.ofReal
       (Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) ≠ ⊤ := by
-  -- Strategy: show the ℝ-valued series is Summable, then use tsum_ofReal_ne_top.
-  apply Summable.tsum_ofReal_ne_top
-  -- exp(-(1+ε)²·log log ⌊c^k⌋₊) = (log ⌊c^k⌋₊)^{-(1+ε)²} for n_k large enough.
-  -- For large k: log ⌊c^k⌋₊ ≥ (k-1)·log c > 0, so this is ≤ C·k^{-(1+ε)²}.
-  -- The p-series ∑ k^{-p} converges for p = (1+ε)² > 1 (Real.summable_nat_rpow).
-  -- Comparison test gives summability.
-  --
-  -- Eventually comparison: for large k, each term ≤ C · k^{-(1+ε)²}.
-  -- The p-series ∑ k^{-p} converges for p > 1 (Real.summable_nat_rpow).
-  -- Since (1+ε)² > 1, the comparison gives summability.
-  -- The detailed floor/log estimates are purely real-analytic:
-  --   ⌊c^k⌋₊ ≥ c^k/2, log(⌊c^k⌋₊) ≥ k·log(c)/2, etc.
-  -- Summability via comparison with ∑ k^{-(1+ε)²}.
-  -- (1+ε)² > 1, so the p-series converges (Real.summable_nat_rpow).
-  -- Each term exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ C·k^{-(1+ε)²} for large k,
-  -- because log ⌊c^k⌋₊ ≥ k·log(c)/2 (floor/exp asymptotics).
-  -- Summable.of_norm_bounded_eventually_nat gives the result.
-  sorry
+  -- Show Summable f, then apply tsum_ofReal_ne_top.
+  have hp : (1 + ε) ^ 2 > 1 := by nlinarith
+  have hsummable : Summable (fun k : ℕ =>
+      Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) := by
+    -- Comparison with p-series: eventually ‖f k‖ ≤ C·k^{-p} where p = (1+ε)² > 1.
+    -- C·k^{-p} is summable by Real.summable_nat_rpow (since -p < -1).
+    -- The pointwise bound uses floor/log asymptotics: log ⌊c^k⌋₊ ≥ k·log(c)/2 for large k,
+    -- giving exp(-p·log(k·log(c)/2)) = (k·log(c)/2)^{-p} ≤ (log(c)/2)^{-p} · k^{-p}.
+    sorry
+  exact hsummable.tsum_ofReal_ne_top
 
 private theorem lil_sparse_bc
     (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (ε : ℝ) (hε : 0 < ε)
