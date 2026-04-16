@@ -995,12 +995,20 @@ private theorem lil_tail_summable
   have hp : (1 + ε) ^ 2 > 1 := by nlinarith
   have hsummable : Summable (fun k : ℕ =>
       Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) := by
-    -- Eventually bounded by summable series via floor/log asymptotics.
-    -- For large k: log ⌊c^k⌋₊ ≥ k, so exp(-p·log(log ⌊c^k⌋₊)) ≤ exp(-p·log k) = k^{-p}.
-    -- Here p = (1+ε)² > 1, so ∑ k^{-p} converges.
-    -- The floor estimate ⌊c^k⌋₊ ≥ e^k for large k (since c > 1 gives c^k → ∞)
-    -- ensures log ⌊c^k⌋₊ ≥ k eventually. The comparison then follows.
-    -- The formal proof of these asymptotic estimates is sorry'd.
+    -- Comparison with 1/k²: eventually exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ 1/k².
+    -- Since ⌊c^k⌋₊ → ∞ (floor_exp_tendsto), log log ⌊c^k⌋₊ → ∞.
+    -- Eventually (1+ε)²·log log ⌊c^k⌋₊ ≥ 2·log k, giving exp(...) ≤ k^{-2} = 1/k².
+    -- ∑ 1/k² converges (summable_one_div_nat_pow with p=2 > 1).
+    have hconv : Summable (fun k : ℕ => 1 / (k : ℝ) ^ 2) :=
+      summable_one_div_nat_pow.mpr (by norm_num : 1 < 2)
+    apply hconv.of_norm_bounded_eventually_nat
+    -- Eventually: ‖exp(-(1+ε)²·log log ⌊c^k⌋₊)‖ ≤ 1/k²
+    -- Equivalently: (1+ε)²·log log ⌊c^k⌋₊ ≥ 2·log k.
+    -- Since ⌊c^k⌋₊ → ∞, log ⌊c^k⌋₊ → ∞, log log ⌊c^k⌋₊ → ∞.
+    -- Eventually log log ⌊c^k⌋₊ ≥ 2·log k / (1+ε)², which holds since
+    -- log ⌊c^k⌋₊ ≥ k·log(c)/2 (floor asymptotics) gives
+    -- log log ⌊c^k⌋₊ ≥ log(k) + log(log(c)/2) ≥ log k for large k.
+    -- The chain of floor/log estimates is sorry'd (purely real-analytic).
     sorry
   exact hsummable.tsum_ofReal_ne_top
 
