@@ -945,6 +945,46 @@ theorem erdos_524.variants.subgaussian_tails :
         add_le_add hW hA
     _ = 4 * Real.exp (-(1/2) * u ^ 2) := by ring
 
+/- ### Kolmogorov's Law of the Iterated Logarithm — Upper Bound -/
+
+section LIL
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+set_option linter.unusedSectionVars false
+
+/-- The normalizing function for the LIL: `φ(n) = √(2n log log n)`. -/
+private noncomputable def lilNorm (n : ℕ) : ℝ :=
+  Real.sqrt (2 * n * Real.log (Real.log n))
+
+/-- Tail bound for the Rademacher walk at a single time: `ℙ(S_n ≥ t) ≤ exp(-t²/(2n))`. -/
+private theorem walk_tail_bound
+    (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (n : ℕ) (hn : 0 < n)
+    (t : ℝ) (ht : 0 ≤ t) :
+    (ℙ {ω | walk a n ω ≥ t}).toReal ≤ Real.exp (-t ^ 2 / (2 * n)) := by
+  calc (ℙ {ω | walk a n ω ≥ t}).toReal
+      ≤ (ℙ {ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t}).toReal := by
+        apply ENNReal.toReal_mono (measure_ne_top _ _) (measure_mono _)
+        intro ω hω; exact ⟨n, Finset.mem_Icc.mpr ⟨hn, le_refl n⟩, hω⟩
+    _ ≤ Real.exp (-t ^ 2 / (2 * n)) := one_sided_running_max a ha n hn t ht
+
+/-- **Kolmogorov's LIL upper bound for Rademacher walks.**
+Almost surely, `lim sup_{n → ∞} S_n / √(2n log log n) ≤ 1`.
+
+*Proof sketch.* On a sparse exponential subsequence `n_k = ⌊c^k⌋`:
+1. Sub-Gaussian tail: `ℙ(S_{n_k} ≥ (1+ε) φ(n_k)) ≤ (log n_k)^{-(1+ε)²}`
+2. Summability: `∑_k (k log c)^{-(1+ε)²} < ∞` for `(1+ε)² > 1`
+3. First Borel–Cantelli ⟹ a.s. eventually `S_{n_k} < (1+ε) φ(n_k)`
+4. Interpolation via running-max bound on increments
+5. Send `ε → 0` via countable intersection.
+-/
+private theorem kolmogorov_lil_upper_bound
+    (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) :
+    ∀ᵐ ω, limsup (fun n : ℕ =>
+      walk a n ω / Real.sqrt (2 * n * Real.log (Real.log n))) atTop ≤ 1 := by
+  sorry
+
+end LIL
+
 /- ### The two-walk sandwich (Corollary 3, Lemma 2) -/
 
 /--
