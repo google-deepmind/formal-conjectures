@@ -1181,13 +1181,30 @@ private theorem lil_interpolation
   -- and C·√(δ/2) < ε for δ small enough (given fixed C > √2).
   -- Step 4: First BC gives a.s. eventually max |incr| ≤ C·√(Δn_k · log k) ≤ ε·φ(n).
   --
-  -- Step 1: Define the "bad" events using the shifted walk running max.
-  -- F_k = {∃ j ∈ Icc 1 (⌊c^(k+1)⌋₊ - ⌊c^k⌋₊), |walk (shift a ⌊c^k⌋₊) j| ≥ ε * lilNorm ⌊c^k⌋₊}
-  -- Step 2: ∑ ℙ(F_k) < ∞ (via running_max_tail + comparison).
-  -- Step 3: First BC: a.s. eventually ¬F_k.
-  -- Step 4: ¬F_k + walk difference identity → the conclusion.
-  -- All steps use proven ingredients. The assembly is sorry'd.
-  sorry
+  -- Define bad events: increment running max exceeds ε·lilNorm(n_k).
+  set F : ℕ → Set Ω := fun k =>
+    {ω | ∃ j ∈ Finset.Icc 1 (⌊c ^ (k + 1)⌋₊ - ⌊c ^ k⌋₊),
+      |walk (fun i => a (⌊c ^ k⌋₊ + i)) j ω| ≥ ε * lilNorm ⌊c ^ k⌋₊}
+  -- Step 1: ∑ ℙ(F_k) < ∞
+  have hFsum : ∑' k, ℙ (F k) ≠ ⊤ := by
+    -- Each ℙ(F_k) ≤ running_max_tail (shift a n_k) (Δn_k) u hu
+    -- for u chosen to make the sum convergent.
+    -- This uses isRademacherSequence_shift + running_max_tail.
+    sorry
+  -- Step 2: First BC → a.s. eventually ¬F_k
+  have hbc := measure_setOf_frequently_eq_zero hFsum
+  -- Step 3: Convert ¬F_k to the desired bound
+  rw [ae_iff]; refine le_antisymm ?_ (zero_le _)
+  calc ℙ {ω | ¬∀ᶠ k in atTop, ∀ n, ⌊c ^ k⌋₊ ≤ n → n < ⌊c ^ (k + 1)⌋₊ →
+        |walk a n ω - walk a ⌊c ^ k⌋₊ ω| ≤ ε * lilNorm n}
+      ≤ ℙ {ω | ∃ᶠ k in atTop, ω ∈ F k} := by
+        apply measure_mono; intro ω hω
+        simp only [Set.mem_setOf_eq, Filter.not_eventually, F] at hω ⊢
+        -- ¬(eventually all n bounded) → frequently some n exceeds bound
+        -- → frequently F_k (since the max over all n exceeds ε·lilNorm(n))
+        -- This conversion needs: walk diff = shifted walk + lilNorm monotonicity
+        sorry
+    _ = 0 := hbc
 
 -- Assembly: combine sparse BC + interpolation to get the full result.
 private theorem lil_upper_for_eps
