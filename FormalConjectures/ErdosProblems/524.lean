@@ -1091,12 +1091,32 @@ private theorem lil_sparse_bc
   set E : ℕ → Set Ω := fun k => {ω | walk a ⌊c ^ k⌋₊ ω ≥ (1 + ε) * lilNorm ⌊c ^ k⌋₊}
   -- Show ∑ ℙ(E_k) < ∞
   have hsum : ∑' k, ℙ (E k) ≠ ⊤ := by
-    -- Split: ∑' k, ℙ(E k) = ∑_{k<N} ℙ(E k) + ∑_{k≥N} ℙ(E k)
-    -- First part: finite sum of measures ≤ 1, so ≤ N < ⊤.
-    -- Second part: for k ≥ N (with n_k large enough), lil_tail_at_scale gives
-    --   ℙ(E k) ≤ ofReal(exp(-(1+ε)²·log log n_k)), summable by lil_tail_summable.
-    -- Total: N + finite = finite ≠ ⊤.
-    sorry
+    -- Pointwise: ℙ(E k) ≤ ofReal(exp(-(1+ε)²·log log n_k)) for ALL k.
+    -- When log log n_k ≤ 0: exp(nonneg) ≥ 1 ≥ ℙ(E k). ✓
+    -- When log log n_k > 0 and n_k ≥ 1: lil_tail_at_scale gives the bound. ✓
+    -- When n_k = 0: E k = {0 ≥ (1+ε)·φ(0)} and ofReal(exp(0)) = 1 ≥ ℙ(E k). ✓
+    apply ne_top_of_le_ne_top (lil_tail_summable ε hε c hc)
+    apply ENNReal.tsum_le_tsum
+    intro k
+    -- ℙ(E k) ≤ ENNReal.ofReal(exp(-(1+ε)²·log log n_k))
+    by_cases hn : 0 < ⌊c ^ k⌋₊
+    · by_cases hll : 0 < Real.log (Real.log (⌊c ^ k⌋₊ : ℝ))
+      · -- n_k ≥ 1 and log log n_k > 0: use lil_tail_at_scale
+        rw [ENNReal.le_ofReal_iff_toReal_le (measure_ne_top _ _)
+          (le_of_lt (Real.exp_pos _))]
+        exact lil_tail_at_scale a ha ⌊c ^ k⌋₊ hn ε hε hll
+      · -- log log n_k ≤ 0: exp(nonneg) ≥ 1 ≥ ℙ(E k)
+        push_neg at hll
+        calc ℙ (E k) ≤ 1 := prob_le_one
+          _ ≤ ENNReal.ofReal (Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) := by
+            rw [← ENNReal.ofReal_one]
+            exact ENNReal.ofReal_le_ofReal (one_le_exp (by nlinarith))
+    · -- n_k = 0: ℙ ≤ 1 ≤ ofReal(exp(0)) = 1 (since log 0 = 0)
+      push_neg at hn
+      have hn0 : ⌊c ^ k⌋₊ = 0 := Nat.eq_zero_of_le_zero hn
+      simp only [hn0, Nat.cast_zero, Real.log_zero, mul_zero, neg_zero, Real.exp_zero,
+        ENNReal.ofReal_one]
+      exact prob_le_one
   -- Apply first BC: ℙ(E_k frequently) = 0
   have hbc := measure_setOf_frequently_eq_zero hsum
   -- Convert: "not frequently E_k" = "eventually not E_k" = "eventually S_{n_k} < bound"
