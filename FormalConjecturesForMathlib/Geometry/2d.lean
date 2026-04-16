@@ -27,7 +27,7 @@ public import FormalConjecturesForMathlib.Data.Set.Triplewise
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
-open scoped EuclideanGeometry
+open scoped EuclideanGeometry Finset
 
 /-- Oriented angles make sense in 2d.
 
@@ -195,13 +195,20 @@ Given a finite set of points in the plane, we define the number of distinct dist
 of points.
 -/
 noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
+  #(points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2)
 
 
 /-- Given a finite set of points in the, we define the number of distinct distances between
 a given point and all other points -/
 noncomputable def distinctDistancesFrom (points : Finset ℝ²) (pt : ℝ²) : ℕ :=
-  (points.image fun x => dist x pt).card
+  #(points.image fun x => dist x pt)
+
+/-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ and let $R(x_i)=\#\{ \lvert x_j-x_i\rvert : j\neq i\}$,
+where the points are ordered such that
+\[R(x_1)\leq \cdots \leq R(x_n).\]
+Let $g(n)$ be the maximum number of distinct values the $R(x_i)$ can take.-/
+noncomputable def maximalDistinctDistancesFrom (n : ℕ) : ℕ :=
+  sSup {#(X.image (distinctDistancesFrom X)) | (X) (_ : #X = n)}
 
 end EuclideanGeometry
 
