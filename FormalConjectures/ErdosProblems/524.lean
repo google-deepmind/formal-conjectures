@@ -438,6 +438,56 @@ private lemma rademacher_ae_mem_pm_one (a : ℕ → Ω → ℝ) (ha : IsRademach
     simp only [Set.mem_compl_iff, Set.mem_union, Set.mem_setOf_eq, not_or] at hω ⊢; exact hω))
     (le_of_eq hcompl)) (zero_le _)
 
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+set_option linter.unusedSectionVars false in
+/-- Each Rademacher variable `a k` is identically distributed with its negation `-(a k)`. -/
+private theorem identDistrib_neg_rademacher (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (k : ℕ) :
+    IdentDistrib (a k) (fun ω => -(a k ω)) ℙ ℙ := by
+  classical
+  refine ⟨(ha.measurable k).aemeasurable, (measurable_neg.comp (ha.measurable k)).aemeasurable, ?_⟩
+  have hae := rademacher_ae_mem_pm_one a ha k
+  have rp : ∀ T : Set ℝ, MeasurableSet T →
+      ℙ (a k ⁻¹' T) = (if (1 : ℝ) ∈ T then 1 / 2 else 0) +
+        (if (-1 : ℝ) ∈ T then 1 / 2 else 0) := by
+    intro T _
+    rcases em ((1 : ℝ) ∈ T) with h1 | h1 <;> rcases em ((-1 : ℝ) ∈ T) with hm1 | hm1
+    · rw [if_pos h1, if_pos hm1, measure_congr (show a k ⁻¹' T =ᵐ[ℙ] Set.univ from by
+        filter_upwards [hae] with ω hω; show ((a k ω ∈ T) = True)
+        rcases hω with hω | hω <;> simp [hω, h1, hm1]), measure_univ,
+        ENNReal.div_add_div_same, one_add_one_eq_two,
+        ENNReal.div_self (by norm_num) (by norm_num)]
+    · rw [if_pos h1, if_neg hm1, add_zero, measure_congr (show a k ⁻¹' T =ᵐ[ℙ] {ω | a k ω = 1}
+        from by
+        filter_upwards [hae] with ω hω
+        show ((a k ω ∈ T) = (a k ω = 1))
+        rcases hω with hω | hω <;> (simp [hω, h1, hm1]; try norm_num)), ha.prob_pos k]
+    · rw [if_neg h1, if_pos hm1, zero_add, measure_congr (show a k ⁻¹' T =ᵐ[ℙ] {ω | a k ω = -1}
+        from by
+        filter_upwards [hae] with ω hω
+        show ((a k ω ∈ T) = (a k ω = -1))
+        rcases hω with hω | hω <;> (simp [hω, h1, hm1]; try norm_num)), ha.prob_neg k]
+    · rw [if_neg h1, if_neg hm1, measure_congr (show a k ⁻¹' T =ᵐ[ℙ] (∅ : Set Ω) from by
+        filter_upwards [hae] with ω hω; show ((a k ω ∈ T) = False)
+        rcases hω with hω | hω <;> simp [hω, h1, hm1]), measure_empty, add_zero]
+  ext s hs
+  rw [Measure.map_apply (ha.measurable k) hs,
+      show (fun ω => -(a k ω)) = Neg.neg ∘ a k from rfl,
+      ← Measure.map_map measurable_neg (ha.measurable k),
+      Measure.map_apply measurable_neg hs,
+      Measure.map_apply (ha.measurable k) (measurable_neg hs),
+      rp s hs, rp (Neg.neg ⁻¹' s) (measurable_neg hs)]
+  simp only [Set.mem_preimage, neg_neg]; ring
+
+set_option linter.style.ams_attribute false in
+set_option linter.style.category_attribute false in
+set_option linter.unusedSectionVars false in
+/-- The integral of a Rademacher variable is zero. -/
+private theorem integral_rademacher_eq_zero (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) (k : ℕ) :
+    ∫ ω, a k ω ∂ℙ = 0 := by
+  have h := (identDistrib_neg_rademacher a ha k).integral_eq
+  simp only [integral_neg] at h; linarith
+
 -- Symmetry of Rademacher walk: ℙ(S_m ≥ 0) ≥ 1/2.
 -- Proof: -S_m has the same distribution as S_m (since -a_k ~d a_k).
 -- So ℙ(S_m ≥ 0) = ℙ(-S_m ≥ 0) = ℙ(S_m ≤ 0).
@@ -631,11 +681,23 @@ private theorem one_sided_running_max
         (((continuous_exp.comp (continuous_const.mul continuous_id)).measurable.comp
           (comap_measurable (a (i + 1)))).stronglyMeasurable)
         (ha.indep.indep_comap_natural_of_lt hm (Nat.lt_succ_of_le le_rfl))
-    -- E[g] = E[exp(lam * a_{i+1})] = cosh(lam) ≥ 1
-    -- Proof: exp(x) ≥ 1+x (convexity), so ∫ exp(λa) ≥ ∫ (1+λa) = 1+λ·E[a] = 1,
-    -- since E[a] = 0 for Rademacher. Alternatively: ∫ exp(λa) = cosh(λ) ≥ 1.
-    -- Both require computing ∫ a = 0 via the Rademacher support decomposition.
-    have hcosh : 1 ≤ ∫ ω, g ω ∂ℙ := by sorry
+    -- E[g] = E[exp(lam * a_{i+1})] ≥ 1 via exp(x) ≥ 1+x and E[a] = 0
+    have hint_a : Integrable (a (i + 1)) ℙ := (integrable_const (1 : ℝ)).mono'
+      (ha.measurable (i + 1)).aestronglyMeasurable
+      (by filter_upwards [rademacher_ae_mem_pm_one a ha (i + 1)] with ω hω
+          rcases hω with h | h <;> simp [h])
+    have hcosh : 1 ≤ ∫ ω, g ω ∂ℙ := by
+      calc (1 : ℝ) = 1 + lam * 0 := by ring
+        _ = 1 + lam * ∫ ω, a (i + 1) ω ∂ℙ := by
+            rw [integral_rademacher_eq_zero a ha (i + 1)]
+        _ = ∫ ω, (1 + lam * a (i + 1) ω) ∂ℙ := by
+            rw [integral_add (integrable_const 1) (hint_a.const_mul lam), integral_const_mul]
+            simp [integral_const, probReal_univ]
+        _ ≤ ∫ ω, g ω ∂ℙ := by
+            apply integral_mono_ae ((integrable_const 1).add (hint_a.const_mul lam)) hg_int
+            filter_upwards with ω
+            show 1 + lam * a (i + 1) ω ≤ g ω
+            simp only [hg_def]; linarith [add_one_le_exp (lam * a (i + 1) ω)]
     -- Combine: f_i ≤ f_i * E[g] =ᵐ f_i * μ[g|ℱ_i] =ᵐ μ[f_i*g|ℱ_i] = μ[f(i+1)|ℱ_i]
     rw [hfg]
     calc f i ≤ᵐ[ℙ] fun ω => f i ω * ∫ ω', g ω' ∂ℙ := by
