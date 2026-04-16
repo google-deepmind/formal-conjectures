@@ -1265,10 +1265,11 @@ private theorem kolmogorov_lil_upper_bound
   -- Taking m → ∞: limsup ≤ 1.
   -- Need IsCoboundedUnder (· ≤ ·) atTop F for limsup_le_of_le.
   -- This requires a.s. F is not eventually ≤ -C for all C (i.e., walk doesn't
-  -- grow faster than φ in the negative direction). By symmetry (walk and -walk
-  -- have the same distribution), the LIL upper bound for -walk gives
-  -- a.s. eventually F ≥ -(1+ε) for each ε, providing the lower bound.
-  -- With IsCoboundedUnder established, limsup_le_of_le + Archimedean gives ≤ 1.
+  -- IsCoboundedUnder: apply lil_upper_for_eps to neg_a (Rademacher by isRademacherSequence_neg_mul)
+  -- to get ∀ᶠ n, -f n ≤ 1+1/m, i.e., f n ≥ -(1+1/m). Then any a with ∀ᶠ n, f n ≤ a
+  -- must have a ≥ -(1+1/m), giving IsCoboundedUnder with b = -(1+1/1) = -2.
+  -- Then limsup_le_of_le + Archimedean (hω gives limsup ≤ 1+1/m → limsup ≤ 1).
+  -- The assembly uses lil_upper_for_eps + isRademacherSequence_neg_mul + limsup_le_of_le.
   sorry
 
 end LIL
