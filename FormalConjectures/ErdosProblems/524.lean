@@ -708,12 +708,28 @@ private theorem one_sided_running_max
       _ =ᵐ[ℙ] ℙ[f i * g | ℱ i] := hpull.symm
   have hsub : Submartingale f ℱ ℙ := submartingale_nat hadapted hintegrable hsubmg
   have hnn : 0 ≤ f := fun k ω => le_of_lt (Real.exp_pos _)
-  -- Step 2: Apply Doob's maximal inequality (MeasureTheory.maximal_ineq)
-  -- This gives: exp(λt) · P(max_{k≤n} f_k ≥ exp(λt)) ≤ E[f_n · 1_{max ≥ exp(λt)}] ≤ E[f_n]
-  -- Hence: P(max_{k≤n} S_k ≥ t) = P(max_{k≤n} f_k ≥ exp(λt)) ≤ E[f_n] / exp(λt)
-  -- Step 3: E[f_n] = E[exp(λ · S_n)] ≤ exp(λ²n/2) by Hoeffding/sub-Gaussian
-  -- Step 4: With λ = t/n: exp((t/n)²·n/2 - (t/n)·t) = exp(-t²/(2n))
-  sorry
+  -- Step 2: Doob's maximal inequality gives ℙ(∃k, walk k ≥ t) ≤ E[f_n] / exp(λt).
+  -- Uses maximal_ineq with ε = exp(λt) on the nonneg submartingale f, plus set
+  -- conversion between Icc 1 n and range (n+1), and exp monotonicity.
+  have hdobo : (ℙ {ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t}).toReal ≤
+      (∫ ω, f n ω ∂ℙ) / Real.exp (lam * t) := by
+    sorry
+  -- Step 3: E[f_n] = mgf(S_n)(λ) ≤ exp(λ²n/2) by Hoeffding's sub-Gaussian bound.
+  -- Uses iIndepFun.mgf_sum to factor the MGF as a product, then
+  -- hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero for each Rademacher factor.
+  have hmgf : ∫ ω, f n ω ∂ℙ ≤ Real.exp (lam ^ 2 * ↑n / 2) := by
+    sorry
+  -- Step 4: Combine. ≤ exp(λ²n/2) / exp(λt) = exp(λ²n/2 - λt) = exp(-t²/(2n))
+  have hexp_pos : 0 < Real.exp (lam * t) := Real.exp_pos _
+  calc (ℙ {ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t}).toReal
+      ≤ (∫ ω, f n ω ∂ℙ) / Real.exp (lam * t) := hdobo
+    _ ≤ Real.exp (lam ^ 2 * ↑n / 2) / Real.exp (lam * t) :=
+        div_le_div_of_nonneg_right hmgf hexp_pos.le
+    _ = Real.exp (lam ^ 2 * ↑n / 2 - lam * t) := (Real.exp_sub _ _).symm
+    _ = Real.exp (-t ^ 2 / (2 * ↑n)) := by
+        congr 1; rw [hlam_def]
+        have hn' : (↑n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
+        field_simp; ring
 
 set_option linter.style.ams_attribute false in
 set_option linter.style.category_attribute false in
