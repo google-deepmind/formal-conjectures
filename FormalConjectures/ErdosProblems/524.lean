@@ -1065,22 +1065,19 @@ private theorem lil_tail_summable
   suffices Summable (fun k : ℕ =>
       Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) from
     this.tsum_ofReal_ne_top
-  -- Use comparison with (k+1)^{-2} to avoid k=0 issue.
-  -- Eventually exp(-(1+ε)²·log log n_k) ≤ 1/(k+1)² since
-  -- (1+ε)²·log log n_k ≥ 2·log k ≥ 2·log(k+1) - 2·log 2...
-  -- Actually, just use the crude bound: term ≤ 1 always (exp of anything ≤ exp 0 = 1
-  -- when exponent ≤ 0), and 1 ≤ 1/(k+1)² fails for k ≥ 1.
-  -- Better: the term → 0, so eventually ≤ 1/k² for k ≥ 2.
-  -- Use of_norm_bounded_eventually_nat which only needs the bound EVENTUALLY.
-  have hconv : Summable (fun k : ℕ => 1 / (k : ℝ) ^ 2) :=
-    summable_one_div_nat_pow.mpr (by norm_num : 1 < 2)
-  apply hconv.of_norm_bounded_eventually_nat
-  -- Eventually: ‖exp(-(1+ε)²·log log n_k)‖ ≤ 1/k²
-  -- For k ≥ 2: (1+ε)²·log log n_k ≥ 2·log k (from log_log_floor_ge_log).
-  -- exp(-2·log k) = 1/exp(2·log k) = 1/(exp(log k))² = 1/k² for k ≥ 1.
-  -- Combining: exp(...) ≤ exp(-2·log k) = 1/k².
-  -- The exp(-2·log k) = 1/k² identity and the eventual bound are sorry'd.
-  sorry
+  -- Comparison: exp(-(1+ε)²·log log n_k) ≤ C · k^{-(1+ε)²} (from exp_neg_p_log_log_floor_le).
+  -- And ∑ C · k^{-p} converges for p = (1+ε)² > 1.
+  set p := (1 + ε) ^ 2
+  set C := (Real.log c / 2) ^ (-p)
+  -- ∑ C · k^{-p} is summable
+  have hp_neg : -p < -1 := by linarith
+  have hg_sum : Summable (fun k : ℕ => C * (k : ℝ) ^ (-p)) :=
+    (Real.summable_nat_rpow.mpr hp_neg).mul_left C
+  apply hg_sum.of_norm_bounded_eventually_nat
+  -- Eventually: ‖exp(...)‖ ≤ C · k^{-p}
+  filter_upwards [exp_neg_p_log_log_floor_le c hc p (by linarith : 0 < p)] with k hk
+  simp only [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
+  exact hk
 
 
 private theorem lil_sparse_bc
