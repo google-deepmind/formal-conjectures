@@ -1023,14 +1023,39 @@ private lemma log_floor_c_pow_lower (c : ℝ) (hc : 1 < c) :
             _ = 2 * Real.log 2 := by field_simp
         linarith
 
-private lemma log_log_floor_ge_log (c : ℝ) (hc : 1 < c) (p : ℝ) (hp : 1 < p) :
-    ∀ᶠ k : ℕ in atTop, p * Real.log (Real.log (⌊c ^ k⌋₊ : ℝ)) ≥ 2 * Real.log (k : ℝ) := by
+-- Direct comparison: exp(-p·log log n_k) ≤ C·k^{-p} eventually.
+-- From log_floor_c_pow_lower: log n_k ≥ k*(log c)/2.
+-- exp(-p·log(log n_k)) ≤ exp(-p·log(k*(log c)/2)) = (k*(log c)/2)^{-p}
+-- = ((log c)/2)^{-p} · k^{-p}.
+-- This avoids needing "log log n_k ≥ log k" (which fails for c < e with p < 2).
+private lemma exp_neg_p_log_log_floor_le (c : ℝ) (hc : 1 < c) (p : ℝ) (hp : 0 < p) :
+    ∀ᶠ k : ℕ in atTop,
+      Real.exp (-p * Real.log (Real.log (⌊c ^ k⌋₊ : ℝ))) ≤
+        (Real.log c / 2) ^ (-p) * (k : ℝ) ^ (-p) := by
   have hlogc : 0 < Real.log c := Real.log_pos hc
-  -- Eventually log n_k ≥ k * log c / 2 (from log_floor_c_pow_lower).
-  -- Then log log n_k ≥ log(k * log c / 2) = log k + log(log c / 2).
-  -- p * (log k + log(log c / 2)) ≥ 2 * log k for large k since p > 1.
-  -- (p - 2) * log k ≥ -p * log(log c / 2) holds eventually since log k → ∞.
-  sorry
+  -- Eventually log n_k ≥ k * (log c) / 2 and k ≥ 1 (so k*(log c)/2 > 0).
+  filter_upwards [log_floor_c_pow_lower c hc,
+    eventually_atTop.mpr ⟨1, fun k hk => hk⟩] with k hlog hk1
+  have hk_pos : (0 : ℝ) < k := Nat.cast_pos.mpr hk1
+  have hklogc : 0 < (k : ℝ) * Real.log c / 2 := by positivity
+  -- log n_k ≥ k*(log c)/2 > 0
+  have hlog_pos : 0 < Real.log (⌊c ^ k⌋₊ : ℝ) := lt_of_lt_of_le hklogc hlog
+  -- exp(-p·log(log n_k)) ≤ exp(-p·log(k*(log c)/2))
+  -- since log n_k ≥ k*(log c)/2 > 0, log is monotone, and -p < 0.
+  calc Real.exp (-p * Real.log (Real.log (⌊c ^ k⌋₊ : ℝ)))
+      ≤ Real.exp (-p * Real.log ((k : ℝ) * Real.log c / 2)) := by
+        apply Real.exp_le_exp_of_le
+        apply mul_le_mul_of_nonpos_left _ (by linarith : -p ≤ 0)
+        exact Real.log_le_log hklogc hlog
+    _ = ((k : ℝ) * Real.log c / 2) ^ (-p) := by
+        -- exp(-p * log x) = exp(log x * (-p)) = x^{-p} for x > 0
+        conv_lhs => rw [show -p * Real.log ((k : ℝ) * Real.log c / 2) =
+          Real.log ((k : ℝ) * Real.log c / 2) * (-p) from by ring]
+        rw [← Real.rpow_def_of_pos hklogc]
+    _ = (Real.log c / 2) ^ (-p) * (k : ℝ) ^ (-p) := by
+        -- (a * b)^p = a^p * b^p for nonneg a, b
+        rw [show (k : ℝ) * Real.log c / 2 = (Real.log c / 2) * k from by ring]
+        exact mul_rpow (by positivity : (0 : ℝ) ≤ Real.log c / 2) hk_pos.le
 
 private theorem lil_tail_summable
     (ε : ℝ) (hε : 0 < ε) (c : ℝ) (hc : 1 < c) :
