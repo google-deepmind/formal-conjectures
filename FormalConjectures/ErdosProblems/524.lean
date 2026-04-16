@@ -1228,14 +1228,34 @@ private theorem lil_interpolation
       -- Goal: (ℙ(F k)).toReal ≤ 2 * (1 / ((k+2 : ℕ) : ℝ)^2)
       calc (ℙ (F k)).toReal
           ≤ 2 * Real.exp (-(1 / 2) * u ^ 2) := by
-            -- F k's threshold = u * √Δ (algebraically), so F k equals the running_max event.
-            -- hrt gives the bound directly.
-            -- F k ⊆ running_max event (thresholds match after Nat.cast_sub).
-            -- Then measure_mono + hrt give the bound.
-            -- Threshold equality: 2√((↑n_{k+1}-↑n_k)·log(k+2)) = u·√↑Δ.
-            -- Proof: Nat.cast_sub gives ↑n_{k+1}-↑n_k = ↑Δ, then u·√↑Δ = 2√(log(k+2))·√↑Δ = 2√(↑Δ·log(k+2)).
-            -- The Nat.cast_sub + sqrt multiplication identity and measure_mono are sorry'd.
-            sorry
+            -- F k has threshold 2√((↑n_{k+1}-↑n_k)·log(k+2)).
+            -- hrt has threshold u·√↑Δ = 2√(log(k+2))·√↑Δ.
+            -- These are equal: ↑n_{k+1}-↑n_k = ↑Δ (Nat.cast_sub) and √a·√b = √(a·b).
+            -- So F k = hrt's event, and ℙ(F k) ≤ hrt.
+            have hle_floor : ⌊c ^ k⌋₊ ≤ ⌊c ^ (k + 1)⌋₊ := by
+              apply Nat.floor_le_floor
+              exact le_of_lt (pow_lt_pow_right₀ hc (by omega))
+            -- ↑n_{k+1} - ↑n_k = ↑Δ (cast of nat sub = sub of casts when a ≥ b)
+            have hcast_eq : (↑⌊c ^ (k + 1)⌋₊ - ↑⌊c ^ k⌋₊ : ℝ) = (↑Δ : ℝ) := by
+              exact (Nat.cast_sub hle_floor).symm
+            -- Threshold equality: 2√((↑n_{k+1}-↑n_k)·log(k+2)) = u·√↑Δ
+            have hthresh : 2 * Real.sqrt ((↑⌊c ^ (k + 1)⌋₊ - ↑⌊c ^ k⌋₊ : ℝ) *
+                Real.log ((k : ℝ) + 2)) = u * Real.sqrt (↑Δ : ℝ) := by
+              show 2 * Real.sqrt ((↑⌊c ^ (k + 1)⌋₊ - ↑⌊c ^ k⌋₊ : ℝ) *
+                Real.log ((k : ℝ) + 2)) = (2 * Real.sqrt (Real.log ((k : ℝ) + 2))) *
+                Real.sqrt (↑Δ : ℝ)
+              rw [hcast_eq, show (↑Δ : ℝ) * Real.log ((k : ℝ) + 2) =
+                Real.log ((k : ℝ) + 2) * ↑Δ from mul_comm _ _,
+                Real.sqrt_mul (Real.log_nonneg (by linarith : 1 ≤ (k : ℝ) + 2)),
+                mul_assoc]
+            -- F k = hrt's event (same set after threshold rewrite)
+            have hset_eq : F k = {ω | ∃ j ∈ Finset.Icc 1 Δ,
+                |walk (fun i => a (⌊c ^ k⌋₊ + i)) j ω| ≥ u * Real.sqrt ↑Δ} := by
+              ext ω; simp only [F, Set.mem_setOf_eq]
+              constructor
+              · intro ⟨j, hj, hge⟩; exact ⟨j, hj, hthresh ▸ hge⟩
+              · intro ⟨j, hj, hge⟩; exact ⟨j, hj, hthresh ▸ hge⟩
+            rw [hset_eq]; exact hrt
         _ ≤ 2 * (1 / ((k + 2 : ℕ) : ℝ) ^ 2) := by
             -- u² = 4·log(k+2), -(1/2)·u² = -2·log(k+2), exp(-2·log(k+2)) = 1/(k+2)².
             gcongr
