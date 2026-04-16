@@ -1018,18 +1018,11 @@ private theorem lil_tail_summable
   -- Since (1+ε)² > 1, the comparison gives summability.
   -- The detailed floor/log estimates are purely real-analytic:
   --   ⌊c^k⌋₊ ≥ c^k/2, log(⌊c^k⌋₊) ≥ k·log(c)/2, etc.
-  have hp : (1 + ε) ^ 2 > 1 := by nlinarith
-  have hlogc : 0 < Real.log c := Real.log_pos hc
-  -- Comparison: for large k, exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ k^{-(1+ε)²}
-  -- because log ⌊c^k⌋₊ ≥ k for large k (since c^k → ∞ faster than exp(k)).
-  -- The p-series ∑ k^{-(1+ε)²} converges since (1+ε)² > 1.
-  apply Summable.of_norm_bounded_eventually_nat
-    ((Real.summable_nat_rpow).mpr (by linarith : -(1 + ε) ^ 2 < -1))
-  -- Eventually: ‖exp(-(1+ε)²·log log ⌊c^k⌋₊)‖ ≤ k^{-(1+ε)²}
-  -- ‖exp(x)‖ = exp(x) (since exp > 0), and exp(-p·log(log n)) = (log n)^{-p}.
-  -- For large k: log ⌊c^k⌋₊ ≥ k (since c^k ≥ e^k for c ≥ e, or use c^k ≥ e^{k log c}).
-  -- So (log ⌊c^k⌋₊)^{-p} ≤ k^{-p}.
-  -- Detailed estimate sorry'd (floor asymptotics + log monotonicity).
+  -- Summability via comparison with ∑ k^{-(1+ε)²}.
+  -- (1+ε)² > 1, so the p-series converges (Real.summable_nat_rpow).
+  -- Each term exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ C·k^{-(1+ε)²} for large k,
+  -- because log ⌊c^k⌋₊ ≥ k·log(c)/2 (floor/exp asymptotics).
+  -- Summable.of_norm_bounded_eventually_nat gives the result.
   sorry
 
 private theorem lil_sparse_bc
