@@ -1076,14 +1076,18 @@ private theorem lil_upper_for_eps
   have hinterp := lil_interpolation a ha δ hδ c hc
   -- Combine: a.s. eventually S_n/φ(n) ≤ 1+ε
   filter_upwards [hbc, hinterp] with ω hω_bc hω_interp
-  -- Both hold eventually: extract the threshold K
-  rw [Filter.Eventually] at hω_bc hω_interp ⊢
-  -- Every n ≥ some N is in [n_k, n_{k+1}) for some k. Assembly argument:
-  -- S_n = S_{n_k} + (S_n - S_{n_k})
-  --     < (1+δ)·φ(n_k) + δ·φ(n)  [from BC + interpolation]
-  --     ≤ (1+δ)·φ(n) + δ·φ(n)    [φ monotone: n_k ≤ n implies φ(n_k) ≤ φ(n)]
-  --     = (1+2δ)·φ(n) ≤ (1+ε)·φ(n)  [since 2δ = 2ε/3 < ε]
-  -- Then S_n/φ(n) ≤ 1+ε.
+  -- Extract thresholds: both hold for k ≥ K.
+  obtain ⟨K₁, hK₁⟩ := (Filter.eventually_atTop.mp hω_bc)
+  obtain ⟨K₂, hK₂⟩ := (Filter.eventually_atTop.mp hω_interp)
+  set K := max K₁ K₂
+  -- For n ≥ n_K: find k ≥ K with n_k ≤ n < n_{k+1}, then:
+  --   S_n ≤ S_{n_k} + |S_n - S_{n_k}|
+  --       < (1+δ)·φ(n_k) + δ·φ(n)   [BC at k + interpolation at k]
+  --       ≤ (1+δ)·φ(n) + δ·φ(n)     [φ monotone]
+  --       = (1+2δ)·φ(n) ≤ (1+ε)·φ(n) [since 2δ = 2ε/3 < ε]
+  -- Dividing: S_n/φ(n) ≤ 1+ε.
+  -- The combinatorial step (every large n is in some [n_k, n_{k+1})) and
+  -- the arithmetic (φ monotonicity, δ bound) are sorry'd.
   sorry
 
 -- Assembly: limsup ≤ 1 from "eventually ≤ 1+ε" for all ε > 0.
