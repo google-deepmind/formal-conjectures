@@ -1200,10 +1200,20 @@ private theorem lil_interpolation
       ((Summable.mul_left 2 ((summable_one_div_nat_pow.mpr (by norm_num : 1 < 2)).comp_injective
         (fun _ _ h => Nat.add_right_cancel h : Function.Injective (· + 2 : ℕ → ℕ)))).tsum_ofReal_ne_top)
     apply ENNReal.tsum_le_tsum; intro k
-    -- Pointwise bound: ℙ(F k) ≤ ofReal(2 * exp(-2 * log(k+2)))
-    -- Uses running_max_tail on shifted walk + exp↔rpow conversion.
-    -- For Δn_k = 0: ℙ(F k) = 0. For Δn_k > 0: running_max_tail gives the bound.
-    sorry
+    set Δ := ⌊c ^ (k + 1)⌋₊ - ⌊c ^ k⌋₊
+    by_cases hΔ : Δ = 0
+    · -- Δn_k = 0: Icc 1 0 = ∅, so F k = ∅ (no j exists), ℙ = 0
+      have : F k = ∅ := by
+        ext ω; simp only [F, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_exists]
+        intro j ⟨hj, _⟩; exfalso
+        have h1 := (Finset.mem_Icc.mp hj).1
+        have h2 := (Finset.mem_Icc.mp hj).2
+        omega
+      rw [this, measure_empty]; exact zero_le _
+    · -- Δn_k > 0: running_max_tail on shifted walk gives the bound.
+      -- ℙ(F k) ≤ 2·exp(-(1/2)·(2√(log(k+2)))²) = 2·exp(-2·log(k+2)) = 2/(k+2)².
+      -- The running_max_tail application, set containment, and exp=1/(k+2)² are sorry'd.
+      sorry
   -- Step 2: First BC → a.s. eventually ¬F_k
   have hbc := measure_setOf_frequently_eq_zero hFsum
   -- Step 3: Convert ¬F_k to the desired bound
