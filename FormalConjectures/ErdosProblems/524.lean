@@ -1230,12 +1230,11 @@ private theorem lil_interpolation
           ≤ 2 * Real.exp (-(1 / 2) * u ^ 2) := by
             -- F k's threshold = u * √Δ (algebraically), so F k equals the running_max event.
             -- hrt gives the bound directly.
-            -- F k and the running_max_tail event have the same threshold:
-            -- 2√((↑n_{k+1} - ↑n_k)·log(k+2)) vs u·√Δ = 2√(log(k+2))·√Δ.
-            -- These are equal since √(a·b) = √a·√b and Δ = n_{k+1} - n_k (as ℕ).
-            -- The Nat.cast subtraction vs ℝ subtraction is the only wrinkle.
-            -- ℙ(F k) ≤ ℙ(running_max event) = (ℙ(running_max event)).toReal ≤ hrt.
-            -- The set containment + cast issue are sorry'd (~5 lines).
+            -- F k ⊆ running_max event (thresholds match after Nat.cast_sub).
+            -- Then measure_mono + hrt give the bound.
+            -- Threshold equality: 2√((↑n_{k+1}-↑n_k)·log(k+2)) = u·√↑Δ.
+            -- Proof: Nat.cast_sub gives ↑n_{k+1}-↑n_k = ↑Δ, then u·√↑Δ = 2√(log(k+2))·√↑Δ = 2√(↑Δ·log(k+2)).
+            -- The Nat.cast_sub + sqrt multiplication identity and measure_mono are sorry'd.
             sorry
         _ ≤ 2 * (1 / ((k + 2 : ℕ) : ℝ) ^ 2) := by
             -- u² = 4·log(k+2), -(1/2)·u² = -2·log(k+2), exp(-2·log(k+2)) = 1/(k+2)².
