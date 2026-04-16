@@ -715,10 +715,34 @@ private theorem one_sided_running_max
       (∫ ω, f n ω ∂ℙ) / Real.exp (lam * t) := by
     sorry
   -- Step 3: E[f_n] = mgf(S_n)(λ) ≤ exp(λ²n/2) by Hoeffding's sub-Gaussian bound.
-  -- Uses iIndepFun.mgf_sum to factor the MGF as a product, then
-  -- hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero for each Rademacher factor.
   have hmgf : ∫ ω, f n ω ∂ℙ ≤ Real.exp (lam ^ 2 * ↑n / 2) := by
-    sorry
+    -- ∫ f_n = mgf(walk a n)(lam)
+    have hconv : ∫ ω, f n ω ∂ℙ = mgf (walk a n) ℙ lam := by
+      simp only [hf_def, mgf, walk]
+    rw [hconv]
+    -- walk a n = ∑ a_j, so mgf factors as product (by independence)
+    have hsum_eq : walk a n = ∑ j ∈ Finset.Icc 1 n, a j := by ext ω; simp [walk]
+    rw [hsum_eq, ha.indep.mgf_sum (fun j => ha.measurable j)]
+    -- Each a_j is sub-Gaussian with parameter 1 (Hoeffding's lemma on [-1,1], mean 0)
+    have hsgmgf : ∀ j, mgf (a j) ℙ lam ≤ Real.exp (lam ^ 2 / 2) := by
+      intro j
+      have hsg := hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero
+        (ha.measurable j).aemeasurable (hae_icc j) (integral_rademacher_eq_zero a ha j)
+      have := hsg.mgf_le lam
+      -- σ² = (‖1-(-1)‖₊/2)² = 1, so mgf ≤ exp(1 * lam²/2) = exp(lam²/2)
+      convert this using 2; simp [NNReal.coe_pow]; norm_num
+    -- ∏ mgf(a_j) ≤ ∏ exp(lam²/2) = exp(n · lam²/2)
+    calc ∏ j ∈ Finset.Icc 1 n, mgf (a j) ℙ lam
+        ≤ ∏ _j ∈ Finset.Icc 1 n, Real.exp (lam ^ 2 / 2) := by
+          apply Finset.prod_le_prod
+          · intro j _; exact integral_nonneg (fun ω => le_of_lt (Real.exp_pos _))
+          · intro j _; exact hsgmgf j
+      _ = Real.exp (lam ^ 2 / 2) ^ (Finset.Icc 1 n).card := Finset.prod_const _
+      _ = Real.exp (↑(Finset.Icc 1 n).card * (lam ^ 2 / 2)) :=
+          (Real.exp_nat_mul _ _).symm
+      _ = Real.exp (lam ^ 2 * ↑n / 2) := by
+          have hcard : (Finset.Icc 1 n).card = n := by simp [Nat.card_Icc]
+          congr 1; rw [hcard]; ring
   -- Step 4: Combine. ≤ exp(λ²n/2) / exp(λt) = exp(λ²n/2 - λt) = exp(-t²/(2n))
   have hexp_pos : 0 < Real.exp (lam * t) := Real.exp_pos _
   calc (ℙ {ω | ∃ k ∈ Finset.Icc 1 n, walk a k ω ≥ t}).toReal
