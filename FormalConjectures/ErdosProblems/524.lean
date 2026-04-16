@@ -1192,8 +1192,17 @@ private theorem lil_interpolation
   -- ∑ 2/(k+2)² converges. The formal proof applies running_max_tail to the shifted walk
   -- (Rademacher by isRademacherSequence_shift) with Δn_k steps and u = 2√(log(k+2)).
   have hFsum : ∑' k, ℙ (F k) ≠ ⊤ := by
-    -- running_max_tail (isRademacherSequence_shift a ha ⌊c^k⌋₊) with u = 2√(log(k+2))
-    -- gives ℙ(F k) ≤ 2·exp(-2·log(k+2)) = 2/(k+2)². Sum converges (p-series p=2).
+    -- Pointwise: ℙ(F k) ≤ ofReal(2*exp(-2*log(k+2))) for each k.
+    -- When Δn_k = 0: F k = ∅, ℙ = 0.
+    -- When Δn_k > 0: F k ⊆ running-max event, bounded by running_max_tail.
+    -- Sum: Summable (fun k => 2*exp(-2*log(k+2))) → tsum_ofReal_ne_top.
+    apply ne_top_of_le_ne_top
+      ((Summable.mul_left 2 ((summable_one_div_nat_pow.mpr (by norm_num : 1 < 2)).comp_injective
+        (fun _ _ h => Nat.add_right_cancel h : Function.Injective (· + 2 : ℕ → ℕ)))).tsum_ofReal_ne_top)
+    apply ENNReal.tsum_le_tsum; intro k
+    -- Pointwise bound: ℙ(F k) ≤ ofReal(2 * exp(-2 * log(k+2)))
+    -- Uses running_max_tail on shifted walk + exp↔rpow conversion.
+    -- For Δn_k = 0: ℙ(F k) = 0. For Δn_k > 0: running_max_tail gives the bound.
     sorry
   -- Step 2: First BC → a.s. eventually ¬F_k
   have hbc := measure_setOf_frequently_eq_zero hFsum
