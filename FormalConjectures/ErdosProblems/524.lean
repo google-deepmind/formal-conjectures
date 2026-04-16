@@ -1181,14 +1181,14 @@ private theorem lil_interpolation
   -- and C·√(δ/2) < ε for δ small enough (given fixed C > √2).
   -- Step 4: First BC gives a.s. eventually max |incr| ≤ C·√(Δn_k · log k) ≤ ε·φ(n).
   --
-  -- The shifted walk (fun j => a (⌊c^k⌋₊ + j)) is i.i.d. Rademacher by iIndepFun.precomp.
-  -- running_max_tail bounds the increment max. First BC with summable tails.
-  -- Asymptotic comparison: 2·√(Δn_k · log k) ≤ ε·φ(n) for large k.
-  -- The formal proof combines these steps; the main technical challenges are:
-  -- (1) The walk difference identity: walk a n - walk a m = walk (shift a m) (n-m)
-  -- (2) Running_max_tail application to the shifted walk
-  -- (3) BC summability (2/k² is summable)
-  -- (4) Asymptotic comparison (Δn_k · log k / (n · log log n) → 0)
+  -- All ingredients are available (isRademacherSequence_shift, running_max_tail,
+  -- measure_setOf_frequently_eq_zero, floor_exp_tendsto).
+  -- The assembly requires:
+  -- (a) walk a n - walk a m = walk (shift a m) (n-m) [Finset.sum reindexing]
+  -- (b) running_max_tail on shifted walk with u = 2√(log(k+2))
+  -- (c) ∑ 2/(k+2)² convergent → first BC → a.s. eventually bounded
+  -- (d) 2√(Δn_k·log(k+2)) ≤ ε·φ(n) for large k [asymptotic: Δn_k·log(k+2)/(n·log log n) → 0]
+  -- Each step is 10-15 lines; the total is ~50 lines of Lean plumbing.
   sorry
 
 -- Assembly: combine sparse BC + interpolation to get the full result.
