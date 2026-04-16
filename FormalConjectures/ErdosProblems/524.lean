@@ -1181,11 +1181,12 @@ private theorem lil_interpolation
   -- and C·√(δ/2) < ε for δ small enough (given fixed C > √2).
   -- Step 4: First BC gives a.s. eventually max |incr| ≤ C·√(Δn_k · log k) ≤ ε·φ(n).
   --
-  -- The formal proof requires ~50 lines of assembly connecting:
-  -- isRademacherSequence_shift, running_max_tail, measure_setOf_frequently_eq_zero,
-  -- and floor/log asymptotic comparison. All ingredients are sorry-free.
-  -- The remaining work is Lean API plumbing (Finset sum reindexing, ENNReal conversion,
-  -- asymptotic comparison Δn_k·log(k+2) vs ε²·n·log log n).
+  -- Step 1: Define the "bad" events using the shifted walk running max.
+  -- F_k = {∃ j ∈ Icc 1 (⌊c^(k+1)⌋₊ - ⌊c^k⌋₊), |walk (shift a ⌊c^k⌋₊) j| ≥ ε * lilNorm ⌊c^k⌋₊}
+  -- Step 2: ∑ ℙ(F_k) < ∞ (via running_max_tail + comparison).
+  -- Step 3: First BC: a.s. eventually ¬F_k.
+  -- Step 4: ¬F_k + walk difference identity → the conclusion.
+  -- All steps use proven ingredients. The assembly is sorry'd.
   sorry
 
 -- Assembly: combine sparse BC + interpolation to get the full result.
