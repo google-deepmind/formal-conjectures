@@ -1006,9 +1006,23 @@ private theorem lil_tail_summable
     (ε : ℝ) (hε : 0 < ε) (c : ℝ) (hc : 1 < c) :
     ∑' k : ℕ, ENNReal.ofReal
       (Real.exp (-(1 + ε) ^ 2 * Real.log (Real.log ⌊c ^ k⌋₊))) ≠ ⊤ := by
-  -- exp(-(1+ε)²·log log ⌊c^k⌋₊) = (log ⌊c^k⌋₊)^{-(1+ε)²}
-  -- For large k: log ⌊c^k⌋₊ ≥ (k-1)·log c, so this ≤ ((k-1)·log c)^{-(1+ε)²}
-  -- Since (1+ε)² > 1, the series ∑ k^{-(1+ε)²} converges (p-series test).
+  -- Strategy: show the ℝ-valued series is Summable, then use tsum_ofReal_ne_top.
+  apply Summable.tsum_ofReal_ne_top
+  -- exp(-(1+ε)²·log log ⌊c^k⌋₊) = (log ⌊c^k⌋₊)^{-(1+ε)²} for n_k large enough.
+  -- For large k: log ⌊c^k⌋₊ ≥ (k-1)·log c > 0, so this is ≤ C·k^{-(1+ε)²}.
+  -- The p-series ∑ k^{-p} converges for p = (1+ε)² > 1 (Real.summable_nat_rpow).
+  -- Comparison test gives summability.
+  --
+  -- Eventually comparison: for large k, each term ≤ C · k^{-(1+ε)²}.
+  -- The p-series ∑ k^{-p} converges for p > 1 (Real.summable_nat_rpow).
+  -- Since (1+ε)² > 1, the comparison gives summability.
+  -- The detailed floor/log estimates are purely real-analytic:
+  --   ⌊c^k⌋₊ ≥ c^k/2, log(⌊c^k⌋₊) ≥ k·log(c)/2, etc.
+  have hp : (1 + ε) ^ 2 > 1 := by nlinarith
+  -- Use summable comparison with k^{-(1+ε)²}
+  -- This requires showing: ∃ C N, ∀ k ≥ N,
+  --   exp(-(1+ε)²·log log ⌊c^k⌋₊) ≤ C · (k : ℝ)^(-(1+ε)²)
+  -- which is a routine real-analysis estimate.
   sorry
 
 private theorem lil_sparse_bc
@@ -1064,10 +1078,28 @@ private theorem lil_upper_for_eps
   sorry
 
 -- Assembly: limsup ≤ 1 from "eventually ≤ 1+ε" for all ε > 0.
+-- Uses limsup_le_iff': limsup f ≤ 1 ↔ ∀ y > 1, ∀ᶠ n, f n ≤ y.
 private theorem kolmogorov_lil_upper_bound
     (a : ℕ → Ω → ℝ) (ha : IsRademacherSequence a) :
     ∀ᵐ ω, limsup (fun n : ℕ =>
       walk a n ω / Real.sqrt (2 * n * Real.log (Real.log n))) atTop ≤ 1 := by
+  -- For each rational ε > 0, a.s. eventually f(n) ≤ 1+ε.
+  -- Countable intersection: a.s. for ALL ε > 0 simultaneously.
+  -- Then limsup_le_iff' gives limsup ≤ 1.
+  -- Use ae_all_iff over ℕ: for each m ≥ 1, a.s. eventually f(n) ≤ 1 + 1/m.
+  have heps : ∀ m : ℕ, 0 < m → ∀ᵐ ω, ∀ᶠ n in atTop,
+      walk a n ω / Real.sqrt (2 * n * Real.log (Real.log n)) ≤ 1 + 1 / (m : ℝ) :=
+    fun m hm => lil_upper_for_eps a ha (1 / m) (by positivity)
+  -- Countable intersection: a.s. for ALL m ≥ 1 simultaneously
+  have hae : ∀ᵐ ω, ∀ m : ℕ, 0 < m → ∀ᶠ n in atTop,
+      walk a n ω / Real.sqrt (2 * n * Real.log (Real.log n)) ≤ 1 + 1 / (m : ℝ) := by
+    rw [ae_all_iff]; intro m
+    by_cases hm : 0 < m
+    · exact (heps m hm).mono fun ω h _ => h
+    · exact ae_of_all _ fun _ h => absurd h (by omega)
+  filter_upwards [hae] with ω hω
+  -- limsup ≤ 1: use limsup_le_of_le with eventually ≤ 1+1/m for each m
+  -- The IsCobounded/IsBounded conditions are sorry'd (need walk growth bound)
   sorry
 
 end LIL
