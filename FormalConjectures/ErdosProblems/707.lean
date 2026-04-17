@@ -93,8 +93,8 @@ theorem erdos_707.variants.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4
 
 
 /--
-Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture, showing that $\{1, 2, 4, 8, 13\}$ cannot be
-extended to any perfect difference set.
+Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture,
+showing that $\{1, 2, 4, 8, 13\}$ cannot be extended to any perfect difference set.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.counterexample_mian_chowla (A : Set ℕ) (hA : A = {1, 2, 4, 8, 13}) :
@@ -127,18 +127,26 @@ theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : 
   by_cases hfin : B.Finite
   by_cases hn : n = 0
   subst hn; simp
-  by_contra h_abs; push_neg at h_abs; exact ((hfin.offDiag.image _).subset hB.surjOn).not_infinite (by rw [show (0 : ZMod 0) = (0 : ℤ) from rfl]; exact (Set.finite_singleton (0 : ℤ)).infinite_compl)
+  by_contra h_abs; push_neg at h_abs
+  exact ((hfin.offDiag.image _).subset hB.surjOn).not_infinite (by
+    rw [show (0 : ZMod 0) = (0 : ℤ) from rfl]; exact (Set.finite_singleton (0 : ℤ)).infinite_compl)
   haveI : NeZero n := ⟨hn⟩
   suffices h : (B.ncard - 1) ^ 2 ≤ n by have := Nat.le_sqrt'.mpr h; omega
   lift B to Finset ℕ using hfin; simp
-  have h_target : {x : ZMod n | x ≠ 0}.ncard ≤ n := le_trans (Set.ncard_le_ncard (Set.subset_univ _) (Set.toFinite _)) (by simp [Set.ncard_univ, Nat.card_eq_fintype_card, ZMod.card])
+  have h_target : {x : ZMod n | x ≠ 0}.ncard ≤ n :=
+    le_trans (Set.ncard_le_ncard (Set.subset_univ _) (Set.toFinite _))
+    (by simp [Set.ncard_univ, Nat.card_eq_fintype_card, ZMod.card])
   have h_off_ncard_le : (↑B : Set ℕ).offDiag.ncard ≤ n := by
     have := Set.ncard_image_of_injOn hB.injOn
     rw [Set.BijOn.image_eq hB] at this
     linarith [this, h_target]
-  have h_off_le : B.offDiag.card ≤ n := by rwa [← Finset.coe_offDiag, ncard_coe_finset] at h_off_ncard_le
-  have h_mul_eq : B.card * (B.card - 1) = B.offDiag.card := by rw [Finset.offDiag_card]; rcases B.card with _ | k <;> simp [Nat.succ_mul, Nat.mul_succ, Nat.add_sub_cancel]
-  have h_sq_le : (B.card - 1) ^ 2 ≤ B.card * (B.card - 1) := by rw [sq]; exact Nat.mul_le_mul_right _ (Nat.sub_le _ _)
+  have h_off_le : B.offDiag.card ≤ n := by
+    rwa [← Finset.coe_offDiag, ncard_coe_finset] at h_off_ncard_le
+  have h_mul_eq : B.card * (B.card - 1) = B.offDiag.card := by
+    rw [Finset.offDiag_card]; rcases B.card with _ | k <;> simp [Nat.succ_mul,
+      Nat.mul_succ]
+  have h_sq_le : (B.card - 1) ^ 2 ≤ B.card * (B.card - 1) := by
+    rw [sq]; exact Nat.mul_le_mul_right _ (Nat.sub_le _ _)
   linarith [h_sq_le, h_mul_eq, h_off_le]
   have := Set.Infinite.ncard hfin; omega
 
@@ -158,7 +166,13 @@ The set `{1, 2, 4}` is a Sidon set.
 -/
 @[category undergraduate, AMS 5 11]
 theorem erdos_707.variants.example_sidon_set : IsSidon ({1, 2, 4} : Set ℕ) := by
-  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum; simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂; rcases hi₁ with rfl | rfl | rfl <;> rcases hj₁ with rfl | rfl | rfl <;> rcases hi₂ with rfl | rfl | rfl <;> rcases hj₂ with rfl | rfl | rfl <;> simp_all <;> omega
+  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
+  rcases hi₁ with rfl | rfl | rfl <;>
+  rcases hj₁ with rfl | rfl | rfl <;>
+  rcases hi₂ with rfl | rfl | rfl <;>
+  rcases hj₂ with rfl | rfl | rfl <;>
+  simp_all
 
 /--
 The set `{1, 2, 4}` can be embedded in a perfect difference set modulo 7.
@@ -169,9 +183,30 @@ theorem erdos_707.variants.example_embedding : ∃ (B : Set ℕ), {1, 2, 4} ⊆ 
   refine ⟨{1, 2, 4}, Set.Subset.refl _, ?_⟩
   unfold IsPerfectDifferenceSet
   refine ⟨?mapsTo, ?injOn, ?surjOn⟩
-  · intro ⟨a, b⟩ hab; simp only [Set.mem_offDiag, Set.mem_insert_iff, Set.mem_singleton_iff] at hab; obtain ⟨ha, hb, hne⟩ := hab; simp only [Set.mem_setOf]; rcases ha with rfl | rfl | rfl <;> rcases hb with rfl | rfl | rfl <;> simp_all <;> decide
-  · intro ⟨a₁, b₁⟩ h1 ⟨a₂, b₂⟩ h2 heq; simp only [Set.mem_offDiag, Set.mem_insert_iff, Set.mem_singleton_iff] at h1 h2; obtain ⟨ha1, hb1, hne1⟩ := h1; obtain ⟨ha2, hb2, hne2⟩ := h2; rcases ha1 with rfl | rfl | rfl <;> rcases hb1 with rfl | rfl | rfl <;> rcases ha2 with rfl | rfl | rfl <;> rcases hb2 with rfl | rfl | rfl <;> simp_all (config := { decide := true })
-  · intro x hx; simp only [Set.mem_setOf] at hx; fin_cases x; exact absurd rfl hx; exacts [⟨(2, 1), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩, ⟨(4, 2), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩, ⟨(4, 1), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩, ⟨(1, 4), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩, ⟨(2, 4), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩, ⟨(1, 2), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩]
+  · intro ⟨a, b⟩ hab; simp only [Set.mem_offDiag, Set.mem_insert_iff, Set.mem_singleton_iff] at hab
+    obtain ⟨ha, hb, hne⟩ := hab
+    simp only [Set.mem_setOf]
+    rcases ha with rfl | rfl | rfl <;>
+    rcases hb with rfl | rfl | rfl <;>
+    simp_all <;> decide
+  · intro ⟨a₁, b₁⟩ h1 ⟨a₂, b₂⟩ h2 heq
+    simp only [Set.mem_offDiag, Set.mem_insert_iff, Set.mem_singleton_iff] at h1 h2
+    obtain ⟨ha1, hb1, hne1⟩ := h1; obtain ⟨ha2, hb2, hne2⟩ := h2
+    rcases ha1 with rfl | rfl | rfl <;>
+    rcases hb1 with rfl | rfl | rfl <;>
+    rcases ha2 with rfl | rfl | rfl <;>
+    rcases hb2 with rfl | rfl | rfl <;>
+    simp_all (config := { decide := true })
+  · intro x hx
+    simp only [Set.mem_setOf] at hx
+    fin_cases x
+    · exact absurd rfl hx
+    · refine ⟨(2, 1), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
+    · refine ⟨(4, 2), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
+    · refine ⟨(4, 1), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
+    · refine ⟨(1, 4), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
+    · refine ⟨(2, 4), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
+    · refine ⟨(1, 2), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
 
 /--
 For small Sidon sets, we can check the conjecture directly.
