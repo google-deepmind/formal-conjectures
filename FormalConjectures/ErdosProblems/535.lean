@@ -47,7 +47,7 @@ counted with multiplicity.
 
 Erdős [Er73] explains that Abbott pointed out the ordinary sunflower conjecture
 does not seem to suffice for Problem 535; the corrected stronger auxiliary
-statement uses `Ω`, not `ω`.
+statement uses $Ω$, not $ω$.
 -/
 def AllBigOmega (k : ℕ) (A : Finset ℕ) : Prop :=
   ∀ a ∈ A, 1 ≤ a ∧ Ω a = k
@@ -75,6 +75,16 @@ theorem erdos_535 : ∀ r ≥ 3, ∃ c > (0 : ℝ),
       (f r N : ℝ) ≤ (N : ℝ) ^ (c / log (log (N : ℝ))) := by
   sorry
 
+/--
+The first open case of Erdős Problem 535 is $r = 3$: there should exist $c > 0$ such that
+$f_3(N) \leq N^{c/\log\log N}$ for all sufficiently large $N$.
+-/
+@[category research open, AMS 5 11]
+theorem erdos_535.variants.first_open_case : ∃ c > (0 : ℝ),
+    ∀ᶠ (N : ℕ) in atTop,
+      (f 3 N : ℝ) ≤ (N : ℝ) ^ (c / log (log (N : ℝ))) := by
+  sorry
+
 /-- Erdős [Er64] proved that $f_r(N) \leq N^{3/4+o(1)}$ for all $r \geq 3$. -/
 @[category research solved, AMS 5 11]
 theorem erdos_535.variants.erdos_upper_bound {r : ℕ} (hr : 3 ≤ r) :
@@ -99,9 +109,9 @@ theorem erdos_535.variants.abbott_hanson {r : ℕ} (hr : 3 ≤ r) :
 
 /--
 Erdős [Er73] records that Abbott pointed out the ordinary sunflower conjecture
-does not seem to suffice here. The stronger auxiliary conjecture uses `Ω(n)=k`,
+does not seem to suffice here. The stronger auxiliary conjecture uses $Ω(n)=k$,
 i.e. prime factors counted with multiplicity; this stronger statement would imply
-the conjectured upper bound for `f_r(N)`.
+the conjectured upper bound for $f_r(N)$.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_535.variants.sunflower_strong {r : ℕ} (hr : 3 ≤ r) :
@@ -113,8 +123,8 @@ theorem erdos_535.variants.sunflower_strong {r : ℕ} (hr : 3 ≤ r) :
   sorry
 
 /--
-For the stronger `Ω(n)=k` variant above, the Erdős–Rado method gives the weaker
-bound `c_r^k * k!`; see Erdős [Er73].
+For the stronger $Ω(n)=k$ variant above, the Erdős–Rado method gives the weaker
+bound $c_r^k \cdot k!$; see Erdős [Er73].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_535.variants.sunflower_erdos_rado {r : ℕ} (hr : 3 ≤ r) :
