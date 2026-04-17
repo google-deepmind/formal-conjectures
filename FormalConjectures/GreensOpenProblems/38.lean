@@ -43,6 +43,21 @@ def IntersectsOnlyAtZero {n : ℕ} (A : Finset (𝔽₇ n)) : Prop :=
 def ValidCardinalities (n : ℕ) : Set ℕ :=
   { (A.card) | (A : Finset (𝔽₇ n)) (_ : IntersectsOnlyAtZero A) }
 
+/-- {0, 2, 4} is a valid independent set in C_7, giving cardinality 3. -/
+@[category test, AMS 5]
+theorem green_38.test_n1_lower :
+    3 ∈ ValidCardinalities 1 := by
+  refine ⟨{![0], ![2], ![4]}, ?_, by decide⟩
+  intro a ha
+  simp at ha ⊢
+  -- a is a difference of elements from {0, 2, 4}, check all cases
+  cases ha
+  · norm_num [← List.ofFn_injective.eq_iff]
+    decide
+  · revert ‹_›
+    use by decide+revert ∘ List.mem_cons.1
+
+
 /--
 The largest subset $A \subset \mathbb{F}_7^n$ for which $A - A$ intersects $\{-1, 0, 1\}^n$ only
 at $0$.
