@@ -41,7 +41,7 @@ noncomputable def nearestInt (x : ℝ) : ℝ := ‖(x : UnitAddCircle)‖
 /--
 Problem 10.1. Are there a transcendental number $\alpha$ and a positive real
 number $\xi$ such that $\lVert \xi \alpha^n \rVert$ tends to~$0$ as~$n$ tends to infinity? [Har19]
-(Trivial for $|\alpha| < 1).
+(Trivial for $|\alpha| < 1$).
 -/
 @[category research open, AMS 11]
 theorem problem_10_1 : answer(sorry) ↔
@@ -70,7 +70,7 @@ theorem problem_10_3 :
 
 /--
 Waldschmidt [Wal02] conjectured that a stronger result holds, namely
-that there exists a positive real number~$c$ such that $\lVert e^n \rVert > n−c$ for
+that there exists a positive real number~$c$ such that $\lVert e^n \rVert > n^{−c}$ for
 every~$n \ge 1$. This is supported by metrical results [Kok45].
 -/
 @[category research open, AMS 11]
