@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1171](https://www.erdosproblems.com/1171)
 
 *References for known results:*
+- [Va99, 7.84] Vardi, Menachem, *Partition Relations, Problem Collection*, available online.
 - [EH74] Erdős, Paul and Hajnal, András, Unsolved and solved problems in set theory. Proceedings
   of the Tarski symposium (1974), 269-287.
 - [Ba89b] Baumgartner, James E., Partition relations for countable topological spaces. J. Combin.
@@ -104,7 +105,9 @@ The case $k = 1$ (binary, `erdos_1171.variants.k_one`) is the Erdős–Hajnal th
 **Status**: OPEN.
 -/
 @[category research open, AMS 5]
-theorem erdos_1171 : ∀ k : ℕ, OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 k := by
+theorem erdos_1171 :
+    answer(sorry) ↔
+      ∀ k : ℕ, OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 k := by
   sorry
 
 /- ### Variants and known results -/
@@ -134,33 +137,17 @@ holds for all `j ≤ k`. A `j+1`-coloring can be embedded into a `k+1`-coloring 
 with the inclusion `Fin (j+1) ↪ Fin (k+1)`, so a witness for the `k`-color version
 provides a witness for the `j`-color version.
 -/
-@[category research solved, AMS 5]
+@[category API, AMS 5]
 theorem mono_k {j k : ℕ} (hjk : j ≤ k)
     (hk : OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 k) :
     OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 j := by
   sorry
 
-/--
-**Baumgartner under MA**: Assuming a form of Martin's Axiom, the binary partition relation
-$\omega_1 \cdot \omega \to (\omega_1 \cdot \omega, 3)^2$ holds.
-
-Baumgartner [Ba89b] proved that under MA(countable), the order type $\omega_1 \cdot \omega$
-itself has the self-similar Ramsey property with triangles. This is the $k = 1$ case
-with $\alpha = \omega_1 \cdot \omega$ (rather than $\omega_1^2$).
-
-This provides evidence toward `erdos_1171` by establishing a Ramsey-type property at
-the "target" order type.
-
-**Status**: Proved under MA(countable) by Baumgartner [Ba89b].
--/
-@[category research solved, AMS 5]
-theorem baumgartner_under_MA :
-    -- MA(countable) placeholder: in this formalization we take it as a hypothesis.
-    -- The actual statement of MA(countable) involves a forcing axiom for c.c.c. posets.
-    True →
-    OrdinalMultiColorRamsey (ω_ 1 * ω) (ω_ 1 * ω) 3 1 := by
-  intro _hMA
-  sorry
+/- **Baumgartner under MA (currently deferred)**: Assuming a form of Martin's Axiom,
+the binary partition relation `ω₁·ω → (ω₁·ω, 3)²` holds [Ba89b]. We omit the Lean
+statement for now because faithfully encoding the exact form of MA requires more work;
+stating the result as `True → ...` would effectively make it unconditional. To be
+restored once an appropriate MA predicate is available in the formalization. -/
 
 end erdos_1171.variants
 
