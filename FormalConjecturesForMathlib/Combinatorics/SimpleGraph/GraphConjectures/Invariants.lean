@@ -105,6 +105,11 @@ noncomputable def maxEccentricity (G : SimpleGraph α) : ℕ∞ :=
 noncomputable def maxEccentricityVertices (G : SimpleGraph α) : Set α :=
   {v : α | eccentricity G v = maxEccentricity G}
 
+/-- The average eccentricity of a graph `G`: the mean of `eccentricity G v` over all vertices,
+converted to a real number. Returns 0 if the graph has no vertices. -/
+noncomputable def averageEccentricity (G : SimpleGraph α) : ℝ :=
+  (∑ v : α, (G.eccentricity v).toNat) / (Fintype.card α : ℝ)
+
 /-- Distance from a vertex to a finite set. -/
 noncomputable def distToSet (G : SimpleGraph α) (v : α) (S : Set α) : ℕ :=
   if h : S.toFinset.Nonempty then

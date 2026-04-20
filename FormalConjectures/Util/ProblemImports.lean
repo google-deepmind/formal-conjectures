@@ -13,15 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib
-import FormalConjecturesForMathlib
-import FormalConjectures.Util.Answer
-import FormalConjectures.Util.Linters.AMSLinter
-import FormalConjectures.Util.Linters.AnswerLinter
-import FormalConjectures.Util.Linters.CategoryLinter
-import FormalConjectures.Util.Linters.CopyrightLinter
-import FormalConjectures.Util.Linters.ModuleDocstringLinter
+public import Mathlib
+public import FormalConjecturesForMathlib
+public import FormalConjectures.Util.Answer
+public import FormalConjectures.Util.Linters.AMSLinter
+public import FormalConjectures.Util.Linters.AnswerLinter
+public import FormalConjectures.Util.Linters.CategoryLinter
+public import FormalConjectures.Util.Linters.CopyrightLinter
+public import FormalConjectures.Util.Linters.ModuleDocstringLinter
 
 
 /-!
@@ -29,4 +30,3 @@ import FormalConjectures.Util.Linters.ModuleDocstringLinter
 
 This file provides a standard set of imports used by problem files throughout the project.
 -/
-
