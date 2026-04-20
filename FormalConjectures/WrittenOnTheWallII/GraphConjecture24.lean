@@ -42,7 +42,7 @@ For a simple connected graph `G`,
 where `b(G)` is the largest induced bipartite subgraph size and
 `distEven(v)` is the number of vertices at even distance from `v`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem conjecture24 (G : SimpleGraph α) (h : G.Connected) :
     let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
     2 * ⌈(1 + (minDistEven : ℝ)) / 3⌉ ≤ b G := by
