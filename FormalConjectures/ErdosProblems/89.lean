@@ -28,12 +28,6 @@ open EuclideanGeometry
 namespace Erdos89
 
 /--
-The minimum number of distinct distances guaranteed for any set of $n$ points.
--/
-noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
-  sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
-
-/--
 Does every set of $n$ distinct points in $\mathbb{R}^2$ determine $\gg \frac{n}{\sqrt{\log n}}$
 many distinct distances?
 -/

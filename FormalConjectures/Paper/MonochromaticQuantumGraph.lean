@@ -518,6 +518,15 @@ theorem eqSystem16_no_solution_d3 :
       ¬ ∃ W : WeightsN 16 3 ℂ, EqSystemN 16 3 W := by
   sorry
 
+/-- For all even $N \geq 4$ and $D = N$, does there exist no solution to the monochromatic quantum
+graph equation system over $\mathbb{C}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem_no_solution_even_ge4_d_eq_n_explicit :
+    answer(sorry) ↔
+      ∀ N : Nat, N ≥ 4 → Even N →
+        ¬ ∃ W : WeightsN N N ℂ, EqSystemN N N W := by
+  sorry
+
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{C}$? -/
 @[category research open, AMS 5 14 81]
@@ -552,6 +561,14 @@ equation system over $\mathbb{R}$? -/
 theorem eqSystem6_no_solution_d3_real :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W := by
+  sorry
+
+/-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{R}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem6_no_solution_d5_real :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 6 5 ℝ, EqSystemN 6 5 W := by
   sorry
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
@@ -629,6 +646,14 @@ equation system over $\mathbb{Z}$? -/
 theorem eqSystem6_no_solution_d3_int :
     answer(sorry) ↔
       ¬ ∃ W : WeightsN 6 3 ℤ, EqSystemN 6 3 W := by
+  sorry
+
+/-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem6_no_solution_d5_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 6 5 ℤ, EqSystemN 6 5 W := by
   sorry
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
@@ -713,6 +738,16 @@ theorem eqSystem6_no_solution_d3_trinary_int :
       ¬ ∃ W : WeightsN 6 3 ℤ,
           (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
             EqSystemN 6 3 W := by
+  sorry
+
+/-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
+equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
+@[category research open, AMS 5 14 81]
+theorem eqSystem6_no_solution_d5_trinary_int :
+    answer(sorry) ↔
+      ¬ ∃ W : WeightsN 6 5 ℤ,
+          (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
+            EqSystemN 6 5 W := by
   sorry
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph

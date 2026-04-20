@@ -98,7 +98,7 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
     · exact dvd_mul_of_dvd_left ⟨r, by omega⟩ _
     · exact dvd_mul_of_dvd_right ⟨r + 2, by omega⟩ _
   obtain ⟨k, hk⟩ := hparity
-  have h1 : p * (p + 8) = (6 * q + 5) * (6 * q + 13) := by congr 1 <;> omega
+  have h1 : p * (p + 8) = (6 * q + 5) * (6 * q + 13) := by congr 1; omega
   have h2 : (6 * q + 5) * (6 * q + 13) = 36 * (q * (q + 3)) + 65 := by ring
   have h3 : 36 * (q * (q + 3)) = 72 * k := by linarith
   have hprod : p * (p + 8) = 72 * k + 65 := by linarith
@@ -149,7 +149,7 @@ theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFr
     · exact dvd_mul_of_dvd_left ⟨r, by omega⟩ _
     · exact dvd_mul_of_dvd_right ⟨r + 1, by omega⟩ _
   obtain ⟨k, hk⟩ := hparity
-  have h1 : p * (p + 8) = (30 * q + 11) * (30 * q + 19) := by congr 1 <;> omega
+  have h1 : p * (p + 8) = (30 * q + 11) * (30 * q + 19) := by congr 1; omega
   have h2 : (30 * q + 11) * (30 * q + 19) = 900 * (q * (q + 1)) + 209 := by ring
   have h3 : 900 * (q * (q + 1)) = 1800 * k := by linarith
   have hprod : p * (p + 8) = 1800 * k + 209 := by linarith
