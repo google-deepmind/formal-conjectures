@@ -28,6 +28,9 @@ Chapter 10 of the book collects open questions. This file formalizes Problems 10
     J. Indian Math. Soc 11 (1919): 162-166.
   - [Kok45] Koksma, J. F. "Sur la théorie métrique des approximations diophantiques."
     Indag. Math 7 (1945): 54-70.
+  - [Mah53] Mahler, Kurt. "On the approximation of logarithms of algebraic numbers."
+    Philosophical Transactions of the Royal Society of London. Series A,
+    Mathematical and Physical Sciences 245.898 (1953): 371-398.
   - [Wal03](http://webusers.imj-prg.fr/~michel.waldschmidt/articles/pdf/Cetraro.pdf)
     Waldschmidt, Michel. "Linear independence measures for logarithms of algebraic numbers."
     Diophantine Approximation: Lectures given at the CIME Summer School held in Cetraro, Italy,
@@ -60,8 +63,7 @@ theorem problem_10_2 :
 
 /--
 Problem 10.3. To prove that there exists a positive real number~$c$ such
-that $\lVert e^n \rVert > e^{−cn}$, for every~$n \ge 1$. (Attributed to Mahler without
-reference)
+that $\lVert e^n \rVert > e^{−cn}$, for every~$n \ge 1$. Posed by Mahler [Mah53].
 -/
 @[category research open, AMS 11]
 theorem problem_10_3 :
