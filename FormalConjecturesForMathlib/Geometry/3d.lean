@@ -13,9 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Orientation
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Orientation
+
+@[expose] public section
 
 scoped[EuclideanGeometry] notation "ℝ³" => EuclideanSpace ℝ (Fin 3)
 
@@ -27,7 +30,7 @@ Note: when upstreaming this to Mathlib (and generalizing to `Fin n`) one
 must be careful to avoid an instance diamond with `IsEmpty.Orientation`.
 Presumably this can be avoided by assuming `[NeZero n]`. -/
 noncomputable instance Module.orientedEuclideanSpaceFinThree : Module.Oriented ℝ ℝ³ (Fin 3) :=
-  ⟨Basis.orientation <| Pi.basisFun _ _⟩
+  ⟨Basis.orientation <| PiLp.basisFun ..⟩
 
 /-- Three dimensional euclidean space is three-dimensional. -/
 instance fact_finrank_euclideanSpace_fin_three : Fact (Module.finrank ℝ ℝ³ = 3) :=

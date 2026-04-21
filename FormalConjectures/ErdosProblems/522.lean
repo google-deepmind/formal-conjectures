@@ -78,14 +78,15 @@ Formalization note: here the goal seems to mean that
 ` ℙ(| #roots of f in unit disk - n/2 | ≥ o(1)) → 0` as `n → ∞`
 This is quite awkward to formalise!
 -/
-@[category research solved, AMS 12 60]
+@[category research open, AMS 12 60]
 theorem erdos_522 :
-    ∃ p o : ℕ → ℝ, Filter.Tendsto o Filter.atTop (𝓝 0) ∧
-    Filter.Tendsto p Filter.atTop (𝓝 0) ∧
-    ∀ (Ω : Type*) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
-      (n : ℕ) (hn : 1 ≤ n) (f : KacPolynomial n ({-1, 1} : Set ℂ) Ω),
-      (ℙ {ω | |(f.roots ω).countP
-        (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ (o n) * n }).toReal ≤ p n := by
+    answer(sorry) →
+      ∃ p o : ℕ → ℝ, Filter.Tendsto o Filter.atTop (𝓝 0) ∧
+      Filter.Tendsto p Filter.atTop (𝓝 0) ∧
+      ∀ (Ω : Type*) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+        (n : ℕ) (hn : 1 ≤ n) (f : KacPolynomial n ({-1, 1} : Set ℂ) Ω),
+        (ℙ {ω | |(f.roots ω).countP
+          (· ∈ Metric.closedBall 0 1) - (n / 2 : ℝ)| ≥ (o n) * n }).toReal ≤ p n := by
   sorry
 
 /--

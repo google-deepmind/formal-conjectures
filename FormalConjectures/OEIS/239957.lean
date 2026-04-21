@@ -24,7 +24,7 @@ Every prime $p$ has a primitive root $0 < g < p$ of the form $k^2 + 1$, where $k
 Zhi-Wei Sun has offered a prize of RMB 2,000 for the first proof.
 
 *References:*
-- [OEIS A239957](https://oeis.org/A239957)
+- [A239957](https://oeis.org/A239957)
 - Z.-W. Sun, "New observations on primitive roots modulo primes," arXiv:1405.0290 [math.NT], 2014.
 -/
 

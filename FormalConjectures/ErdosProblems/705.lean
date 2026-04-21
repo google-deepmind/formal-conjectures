@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 705
 
-*Reference:* [erdosproblems.com/705](https://www.erdosproblems.com/705)
+*References:*
+- [erdosproblems.com/705](https://www.erdosproblems.com/705)
+- [OD99] P. O'Donnell, High girth unit-distance graphs. PhD Dissertation, Rutgers University (1999).
 -/
 
 namespace Erdos705
@@ -28,12 +30,15 @@ open scoped EuclideanGeometry
 open SimpleGraph
 
 /--
-Let G be a finite unit distance graph in R².
-Is there some k such that if G has girth ≥ k, then χ(G) ≤ 3?
+Let $G$ be a finite unit distance graph in $\mamthbb{R}^2$.
+Is there some $k$ such that if $G$ has girth $≥ k$, then $\chi(G) ≤ 3$?
+
+The general case was solved by O'Donnell [OD99], who constructed finite unit distance graphs with
+chromatic number $4$ and arbitrarily large girth.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_705:
-  answer(sorry) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
+  answer(False) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
     (UnitDistancePlaneGraph V).girth ≥ k → (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by
   sorry
 

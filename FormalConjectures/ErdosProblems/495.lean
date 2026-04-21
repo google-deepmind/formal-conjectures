@@ -27,16 +27,11 @@ open Filter
 namespace Erdos495
 
 /--
-The distance from `x` to the nearest integer, denoted $\|x\|$.
--/
-noncomputable def distNearestInt (x : ℝ) : ℝ := |x - round x|
-
-/--
 Let $\alpha,\beta \in \mathbb{R}$. Is it true that\[\liminf_{n\to \infty} n \| n\alpha \|
   \| n\beta\| =0\]? This is also known as the Littlewood conjecture.
 -/
 @[category research open, AMS 11]
-theorem erdos_495 : answer(sorry) ↔ ∀ α β : ℝ, liminf (fun n : ℕ ↦ (n : ℝ) * distNearestInt (n * α)
-  * distNearestInt (n * β)) atTop = 0 := by sorry
+theorem erdos_495 : answer(sorry) ↔ ∀ α β : ℝ, liminf (fun n : ℕ ↦ (n : ℝ) * distToNearestInt (n * α)
+  * distToNearestInt (n * β)) atTop = 0 := by sorry
 
 end Erdos495
