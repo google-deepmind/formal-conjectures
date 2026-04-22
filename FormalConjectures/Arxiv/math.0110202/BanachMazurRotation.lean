@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 open TopologicalSpace Metric MulAction
 
 /-!
-# A note on Banach--Mazur problem
+# Banach-Mazur Rotation Problem
 
 *References:*
 - [arxiv/math.0110202](https://arxiv.org/abs/math/0110202)
@@ -29,7 +29,7 @@ open TopologicalSpace Metric MulAction
 
 namespace Arxiv.«math.0110202»
 
-/-- The group of linear isometry equivalences acts on the unit sphere by evaluation. -/
+/-- The group of linear isometric equivalences acts on the unit sphere by evaluation. -/
 instance {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] :
     MulAction (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1) where
   smul T x := ⟨T x, mem_sphere_zero_iff_norm.2 <| by simp⟩
@@ -37,15 +37,15 @@ instance {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] :
   mul_smul _ _ _ := rfl
 
 /--
-The Banach--Mazur rotation problem asks whether every separable Banach space whose linear
-isometry group acts transitively on the unit sphere is linearly isometric to a separable Hilbert
+The Banach--Mazur rotation problem asks whether every separable Banach space whose group of linear
+isometric equivalences acts transitively on the unit sphere is linearly isometric to a Hilbert
 space.
 -/
 @[category research open, AMS 46]
 theorem banach_mazur_rotation_problem : answer(sorry) ↔
     ∀ (E : Type*) [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] [SeparableSpace E]
       [IsPretransitive (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1)], ∃ (H : Type*) (_ : NormedAddCommGroup H)
-      (_ : InnerProductSpace ℝ H) (_ : CompleteSpace H) (_ : SeparableSpace H),
+      (_ : InnerProductSpace ℝ H),
       Nonempty (E ≃ₗᵢ[ℝ] H) := by
   sorry
 
