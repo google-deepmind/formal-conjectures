@@ -19,6 +19,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 603
 
+**Verbatim statement (Erdős #603, status O):**
+> Let $(A_i)$ be a family of countably infinite sets such that $\lvert A_i\cap A_j\rvert \neq 2$ for all $i\neq j$. Find the smallest cardinal $C$ such that $\cup A_i$ can always be coloured with at most $C$ colours so that no $A_i$ is monochromatic.
+
+**Source:** https://www.erdosproblems.com/603
+
+**Notes:** OPEN
+
+
 *Reference:* [erdosproblems.com/603](https://www.erdosproblems.com/603)
 
 ## Problem statement (exact wording from the source)
