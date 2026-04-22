@@ -19,6 +19,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 601
 
+**Verbatim statement (Erdős #601, status O):**
+> For which limit ordinals $\alpha$ is it true that if $G$ is a graph with vertex set $\alpha$ then $G$ must have either an infinite path or independent set on a set of vertices with order type $\alpha$?
+
+**Source:** https://www.erdosproblems.com/601
+
+**Notes:** OPEN - $500
+
+
 *References:*
  - [erdosproblems.com/601](https://www.erdosproblems.com/601)
  - [EHM70] Erdős, Paul; Hajnal, András; Milner, Eric C., On sets of almost disjoint subsets
