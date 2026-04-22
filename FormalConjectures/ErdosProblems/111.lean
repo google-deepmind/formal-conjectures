@@ -19,6 +19,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 111
 
+**Verbatim statement (Erdős #111, status O):**
+> If $G$ is a graph let $h_G(n)$ be defined such that any subgraph of $G$ on $n$ vertices can be made bipartite after deleting at most $h_G(n)$ edges. What is the behaviour of $h_G(n)$? Is it true that $h_G(n)/n\to \infty$ for every graph $G$ with chromatic number $\aleph_1$?
+
+**Source:** https://www.erdosproblems.com/111
+
+**Notes:** OPEN
+
+
 *Reference:* [erdosproblems.com/111](https://www.erdosproblems.com/111)
 
 *References:*
