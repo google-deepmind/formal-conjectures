@@ -42,18 +42,41 @@ image of the unit disk under $f$. -/
 noncomputable def blochRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ S ⊆ ball 0 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S}
 
-@[API]
-theorem blochRadius_id_eq_one : blochRadius id = 1 := by
+@[category API, AMS 30]
+theorem zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := by
+  by_cases! hb : BddAbove {r : ℝ | ∃ S ⊆ ball 0 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S}
+  · exact le_csSup hb ⟨∅, by simp⟩
+  · simp_all [blochRadius]
+
+@[category API, AMS 30]
+theorem bddBelow_blochRadius : BddBelow (range blochRadius) :=
+  bddBelow_def.2 ⟨0, fun _ ⟨f, hf⟩ => hf ▸ zero_le_blochRadius f⟩
+
+@[category API, AMS 54]
+theorem radius_le_of_ball_subset_ball {x y : ℂ} {r d : ℝ}
+    (hpos : 0 < r) (hsub : ball x r ⊆ ball y d) : r ≤ d := by
   sorry
+
+@[category API, AMS 30]
+theorem blochRadius_id_eq_one : blochRadius id = 1 := by
+  refine IsGreatest.csSup_eq ⟨⟨ball 0 1, Subset.rfl, 0, by simp⟩, fun r ⟨S, hS, x, hx⟩ => ?_⟩
+  simp only [image_id] at hx
+  by_cases hpos : 0 < r
+  · exact radius_le_of_ball_subset_ball hpos (hx.1.trans hS)
+  · grind
 
 /-- The **Landau radius** $L_f$ of a function $f$ is the radius of the largest disk in the image of
 the unit disk under $f$. -/
 noncomputable def landauRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ x, ball x r ⊆ f '' (ball 0 1)}
 
-@[API]
+@[category API, AMS 30]
 theorem landauRadius_id_eq_one : landauRadius id = 1 := by
-  sorry
+  refine IsGreatest.csSup_eq ⟨⟨0, by simp⟩, fun r ⟨x, hx⟩ => ?_⟩
+  simp only [image_id] at hx
+  by_cases hpos : 0 < r
+  · exact radius_le_of_ball_subset_ball hpos hx
+  · grind
 
 /-- The **Bloch constant** $B$ is the infimum of the Bloch radius over all functions holomorphic
 in the unit disk such that $f'(0) = 1$. -/
@@ -85,7 +108,8 @@ theorem blochConstant_exact_value :
 /-- The **Univalent Bloch constant** $B_u$ is the infimum of the Bloch radius over all univalent
 functions in the unit disk such that $f'(0) = 1$. -/
 noncomputable def univalentBlochConstant : ℝ :=
-  iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => blochRadius f.1)
+  iInf (fun f : {f : ℂ → ℂ // InjOn f (ball 0 1) ∧ DifferentiableOn ℂ f (ball 0 1) ∧
+    deriv f 0 = 1} => blochRadius f.1)
 
 /-- It is proved in [Skin2009] that the Univalent Bloch constant is bounded below by $0.5708858$. -/
 @[category research solved, AMS 30]
@@ -96,7 +120,11 @@ theorem univalentBlochConstant_lower_bound : 0.5708858 ≤ univalentBlochConstan
 function, which is $1$. -/
 @[category research solved, AMS 30]
 theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
-  sorry
+  let I : {f : ℂ → ℂ // InjOn f (ball 0 1) ∧ DifferentiableOn ℂ f (ball 0 1) ∧
+    deriv f 0 = 1} := ⟨id, by simp; fun_prop⟩
+  have : I.1 = id := by grind
+  rw [← blochRadius_id_eq_one, univalentBlochConstant, ← this]
+  exact ciInf_le (bddBelow_blochRadius.mono (range_comp_subset_range _ _)) I
 
 /-- The **Landau constant** $L$ is the infimum of the Landau radius over all functions holomorphic
 in the unit disk such that $f'(0) = 1$. -/
