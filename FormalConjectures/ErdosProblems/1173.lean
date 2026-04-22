@@ -22,6 +22,14 @@ open scoped Cardinal Ordinal
 /-!
 # Erdős Problem 1173
 
+**Verbatim statement (Erdős #1173, status O):**
+> Assume the generalised continuum hypothesis. Let\[f: \omega_{\omega+1}\to [\omega_{\omega+1}]^{\leq \aleph_\omega}\]be a set mapping such that\[\lvert f(\alpha)\cap f(\beta)\rvert <\aleph_\omega\]for all $\alpha\neq \beta$. Does there exist a free set of cardinality $\aleph_{\omega+1}$?
+
+**Source:** https://www.erdosproblems.com/1173
+
+**Notes:** OPEN
+
+
 *Reference:* [erdosproblems.com/1173](https://www.erdosproblems.com/1173)
 
 *References:*
