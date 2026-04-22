@@ -51,7 +51,7 @@ unit sphere is Euclidean. -/
 @[category research solved, AMS 46 52]
 theorem mathoverflow_41211.finite_dimensional {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [FiniteDimensional ℝ E] [IsPretransitive (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1)] :
-    InnerProductSpace ℝ E := by
+    InnerProductSpaceable E := by
   sorry
 
 end Mathoverflow41211
