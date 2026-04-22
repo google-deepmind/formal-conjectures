@@ -166,4 +166,24 @@ theorem dim_mzv_weight_one : Module.finrank ℚ (mzvSpanOfWeight 1) = 0 := by
 theorem multiZeta_empty : multiZeta [] = 1 := by
   simp [multiZeta]
 
+/-- Euler's identity: $\zeta(2) = \pi^2/6$. -/
+@[category test, AMS 11]
+theorem multiZeta_two : multiZeta [2] = Real.pi ^ 2 / 6 := by
+  have h1 : multiZeta [2] = ∑' n : ℕ, 1 / (n + 1 : ℝ) ^ 2 := by
+    unfold multiZeta
+    simp only [multiZeta.aux, mul_one]
+  rw [h1]
+  have h2 := hasSum_zeta_two
+  have h3 : HasSum (fun n : ℕ => 1 / (n + 1 : ℝ) ^ 2) (Real.pi ^ 2 / 6) := by
+    have h4 : (fun n : ℕ => 1 / ((n + 1 : ℕ) : ℝ) ^ 2) = (fun n : ℕ => 1 / (n + 1 : ℝ) ^ 2) := by
+      ext n
+      push_cast
+      rfl
+    rw [← h4]
+    have := (hasSum_nat_add_iff' 1).mpr h2
+    have h_eval : Real.pi ^ 2 / 6 - ∑ i ∈ range 1, 1 / (i : ℝ) ^ 2 = Real.pi ^ 2 / 6 := by
+      simp only [sum_range_one, Nat.cast_zero, zero_pow two_ne_zero, div_zero, sub_zero]
+    rwa [h_eval] at this
+  exact h3.tsum_eq
+
 end ZagierMZV
