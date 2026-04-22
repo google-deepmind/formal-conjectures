@@ -31,6 +31,8 @@ open Metric Set
   65 (1995), 1–17.
 - [Ra43] Rademacher, H. "On the Bloch-Landau Constant."" American Journal of Mathematics 65 (1943),
   387–390.
+- [Skin2009] Skinner, Brian. The univalent Bloch constant problem. Complex Variables and Elliptic
+  Equations 54 (2009), no. 10, 951–955.
 - [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
 - [Bhowmik–Sen](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/improved-bloch-and-landau-constants-for-meromorphic-functions/FD465D1F2CEF7E8C62AFF16C3E89B7B4)
 -/
@@ -40,20 +42,23 @@ image of the unit disk under $f$. -/
 noncomputable def blochRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ S ⊆ ball 0 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S}
 
+@[API]
+theorem blochRadius_id_eq_one : blochRadius id = 1 := by
+  sorry
+
 /-- The **Landau radius** $L_f$ of a function $f$ is the radius of the largest disk in the image of
 the unit disk under $f$. -/
 noncomputable def landauRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ x, ball x r ⊆ f '' (ball 0 1)}
 
+@[API]
+theorem landauRadius_id_eq_one : landauRadius id = 1 := by
+  sorry
+
 /-- The **Bloch constant** $B$ is the infimum of the Bloch radius over all functions holomorphic
 in the unit disk such that $f'(0) = 1$. -/
 noncomputable def blochConstant : ℝ :=
   iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => blochRadius f.1)
-
-/-- The **Landau constant** $L$ is the infimum of the Landau radius over all functions holomorphic
-in the unit disk such that $f'(0) = 1$. -/
-noncomputable def landauConstant : ℝ :=
-  iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => landauRadius f.1)
 
 /-- It is proved in [CP96] that the Bloch constant is bounded below by
 $\sqrt{3}/4 + 2 \times 10^{-4}$ -/
@@ -76,6 +81,27 @@ theorem blochConstant_exact_value :
     blochConstant = Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /
     (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
   sorry
+
+/-- The **Univalent Bloch constant** $B_u$ is the infimum of the Bloch radius over all univalent
+functions in the unit disk such that $f'(0) = 1$. -/
+noncomputable def univalentBlochConstant : ℝ :=
+  iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => blochRadius f.1)
+
+/-- It is proved in [Skin2009] that the Univalent Bloch constant is bounded below by $0.5708858$. -/
+@[category research solved, AMS 30]
+theorem univalentBlochConstant_lower_bound : 0.5708858 ≤ univalentBlochConstant := by
+  sorry
+
+/-- The Univalent Bloch constant is trivially bounded above by the Bloch radius of the identity
+function, which is $1$. -/
+@[category research solved, AMS 30]
+theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
+  sorry
+
+/-- The **Landau constant** $L$ is the infimum of the Landau radius over all functions holomorphic
+in the unit disk such that $f'(0) = 1$. -/
+noncomputable def landauConstant : ℝ :=
+  iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => landauRadius f.1)
 
 /-- It is proved in [Ya95] that the Landau constant is bounded below by $0.5 + 10 ^ {-335}$. -/
 @[category research solved, AMS 30]
