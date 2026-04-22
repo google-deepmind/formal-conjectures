@@ -19,15 +19,16 @@ import FormalConjectures.Util.ProblemImports
 open TopologicalSpace Metric MulAction
 
 /-!
-# Mathoverflow 41211
+# A note on Banach--Mazur problem
 
 *References:*
-- [](https://arxiv.org/pdf/math/0110202)
-- [mathoverflow/41211](https://mathoverflow.net/questions/41211/easy-proof-of-the-fact-that-isotropic-spaces-are-euclidean)
+- [A note on Banach--Mazur problem](https://arxiv.org/abs/math/0110202) by
+  *Beata Randrianantoanina* (2001)
+- [MathOverflow 41211: Easy proof of the fact that isotropic spaces are Euclidean](https://mathoverflow.net/questions/41211/easy-proof-of-the-fact-that-isotropic-spaces-are-euclidean)
 
 -/
 
-namespace Mathoverflow41211
+namespace Arxiv.«math.0110202»
 
 /-- The group of linear isometry equivalences acts on the unit sphere by evaluation. -/
 instance {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] :
@@ -36,10 +37,13 @@ instance {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] :
   one_smul _ := Subtype.ext <| rfl
   mul_smul _ _ _ := Subtype.ext <| rfl
 
-/-- Assume `E` is a separable Banach space whose group of linear isometry equivalences acts
-transitively on the unit sphere. Is `E` linearly isomorphic to a separable Hilbert space? -/
+/--
+The Banach--Mazur rotation problem asks whether every separable Banach space whose linear
+isometry group acts transitively on the unit sphere is linearly isometric to a separable Hilbert
+space.
+-/
 @[category research open, AMS 46]
-theorem mathoverflow_41211 : answer(sorry) ↔
+theorem banach_mazur_rotation_problem : answer(sorry) ↔
     ∀ (E : Type*) [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] [SeparableSpace E]
       [IsPretransitive (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1)], ∃ (H : Type*) (_ : NormedAddCommGroup H)
       (_ : InnerProductSpace ℝ H) (_ : CompleteSpace H) (_ : SeparableSpace H),
@@ -49,9 +53,9 @@ theorem mathoverflow_41211 : answer(sorry) ↔
 /-- Every finite-dimensional real normed space whose isometry group acts transitively on the
 unit sphere is Euclidean. -/
 @[category research solved, AMS 46 52]
-theorem mathoverflow_41211.finite_dimensional {E : Type*} [NormedAddCommGroup E]
+theorem banach_mazur_rotation_problem.finite_dimensional {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [FiniteDimensional ℝ E] [IsPretransitive (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1)] :
     InnerProductSpaceable E := by
   sorry
 
-end Mathoverflow41211
+end Arxiv.«math.0110202»
