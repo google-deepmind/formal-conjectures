@@ -51,7 +51,7 @@ theorem banach_mazur_rotation_problem : answer(sorry) ↔
 
 /-- Every finite-dimensional real normed space whose isometry group acts transitively on the
 unit sphere is Euclidean. -/
-@[category research solved, AMS 46 52]
+@[category research solved, AMS 46]
 theorem banach_mazur_rotation_problem.finite_dimensional {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [FiniteDimensional ℝ E] [IsPretransitive (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1)] :
     InnerProductSpaceable E := by
