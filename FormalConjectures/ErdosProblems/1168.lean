@@ -19,6 +19,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1168
 
+**Verbatim statement (Erdős #1168, status O):**
+> Prove that\[\aleph_{\omega+1}\not\to (\aleph_{\omega+1}, 3,\ldots,3)_{\aleph_0}^2\]without assuming the generalised continuum hypothesis.
+
+**Source:** https://www.erdosproblems.com/1168
+
+**Notes:** OPEN
+
+
 *Reference:* [erdosproblems.com/1168](https://www.erdosproblems.com/1168)
 
 *References for known results:*
