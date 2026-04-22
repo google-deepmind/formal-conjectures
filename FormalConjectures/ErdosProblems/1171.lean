@@ -19,6 +19,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1171
 
+**Verbatim statement (Erdős #1171, status O):**
+> Is it true that, for all finite $k<\omega$,\[\omega_1^2\to (\omega_1\omega, 3,\ldots,3)_{k+1}^2?\]
+
+**Source:** https://www.erdosproblems.com/1171
+
+**Notes:** OPEN
+
+
 *Reference:* [erdosproblems.com/1171](https://www.erdosproblems.com/1171)
 
 *References for known results:*
