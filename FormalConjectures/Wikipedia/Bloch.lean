@@ -22,6 +22,15 @@ open Metric Set
 # Bloch and Landau constants
 
 *References:*
+
+- [CP96] Chen, H., Gauthier, P. M. "On Bloch’s constant." Journal d’Analyse Mathématique 69 (1996),
+  275–291.
+- [AG37] Ahlfors, L. V., Grunsky, H. "Über die Blochsche Konstante." Mathematische Zeitschrift 42
+  (1937), 671–673.
+- [Ya95] Yanagihara, H. "On the locally univalent Bloch constant." Journal d’Analyse Mathématique
+  65 (1995), 1–17.
+- [Ra43] Rademacher, H. "On the Bloch-Landau Constant."" American Journal of Mathematics 65 (1943),
+  387–390.
 - [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
 - [Bhowmik–Sen](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/improved-bloch-and-landau-constants-for-meromorphic-functions/FD465D1F2CEF7E8C62AFF16C3E89B7B4)
 -/
@@ -37,43 +46,51 @@ noncomputable def landauRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ x, ball x r ⊆ f '' (ball 0 1)}
 
 /-- The **Bloch constant** $B$ is the infimum of the Bloch radius over all functions holomorphic
-in the unit disk such that `deriv f 0 = 1`. -/
+in the unit disk such that $f'(0) = 1$. -/
 noncomputable def blochConstant : ℝ :=
   iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => blochRadius f.1)
 
 /-- The **Landau constant** $L$ is the infimum of the Landau radius over all functions holomorphic
-in the unit disk such that `deriv f 0 = 1`. -/
+in the unit disk such that $f'(0) = 1$. -/
 noncomputable def landauConstant : ℝ :=
   iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => landauRadius f.1)
 
+/-- It is proved in [CP96] that the Bloch constant is bounded below by
+$\sqrt{3}/4 + 2 \times 10^{-4}$ -/
 @[category research solved, AMS 30]
 theorem blochConstant_lower_bound : Real.sqrt 3 / 4 + 2 * 10 ^ (-4 : ℤ) ≤ blochConstant := by
   sorry
 
+/-- It is proved in [AG37] that the Bloch constant is bounded above by
+$\frac{1}{\sqrt{1 + \sqrt{3}}}\frac{\Gamma(1/3) \Gamma(11/12)}{\Gamma(1/4)}$$. -/
 @[category research solved, AMS 30]
 theorem blochConstant_upper_bound :
     blochConstant ≤ Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /
     (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
   sorry
 
-/-- Ahlfors and Grunsky conjectured that this upper bound is the precise value of the Bloch
-constant. -/
+/-- Ahlfors and Grunsky also conjectured in [AG37] that this upper bound is the precise value of the
+Bloch constant. -/
 @[category research open, AMS 30]
 theorem blochConstant_exact_value :
     blochConstant = Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /
     (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
   sorry
 
+/-- It is proved in [Ya95] that the Landau constant is bounded below by $0.5 + 10 ^ {-335}$. -/
 @[category research solved, AMS 30]
 theorem landauConstant_lower_bound : 0.5 + 10 ^ (-335 : ℤ) ≤ landauConstant := by
   sorry
 
+/-- It is proved in [Ra43] that the Landau constant is bounded above by
+$\frac{1}{\sqrt{1 + \sqrt{3}}}\frac{\Gamma(1/3) \Gamma(5/6)}{\Gamma(1/6)}$. -/
 @[category research solved, AMS 30]
 theorem landauConstant_upper_bound :
     landauConstant ≤ Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
   sorry
 
-/-- Rademacher conjectured that this upper bound is the precise value of the Landau constant. -/
+/-- In [Ra43], Rademacher says that he strongly believed that this upper bound is the precise value
+of the Landau constant. -/
 @[category research open, AMS 30]
 theorem landauConstant_exact_value :
     landauConstant = Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
