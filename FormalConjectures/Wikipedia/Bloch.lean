@@ -22,7 +22,7 @@ open Metric Set
 # Bloch and Landau constants
 
 *References:*
-
+- [Wikipedia](https://en.wikipedia.org/wiki/Bloch%27s_theorem_(complex_analysis))
 - [CP96] Chen, H., Gauthier, P. M. "On Bloch’s constant." Journal d’Analyse Mathématique 69 (1996),
   275–291.
 - [AG37] Ahlfors, L. V., Grunsky, H. "Über die Blochsche Konstante." Mathematische Zeitschrift 42
