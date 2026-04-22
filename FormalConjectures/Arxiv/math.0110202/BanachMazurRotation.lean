@@ -33,8 +33,8 @@ namespace Arxiv.«math.0110202»
 instance {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] :
     MulAction (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1) where
   smul T x := ⟨T x, mem_sphere_zero_iff_norm.2 <| by simp⟩
-  one_smul _ := Subtype.ext <| rfl
-  mul_smul _ _ _ := Subtype.ext <| rfl
+  one_smul _ := rfl
+  mul_smul _ _ _ := rfl
 
 /--
 The Banach--Mazur rotation problem asks whether every separable Banach space whose linear
