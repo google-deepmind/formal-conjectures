@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos434
 
-open Erdos434
+open Erdos434 Finset
 
 /--
 A natural $n$ is representable as a set $A$ if it can be
@@ -42,7 +42,7 @@ noncomputable abbrev Nat.NcardUnrepresentable (A : Set ℕ) :=
     { n : ℕ | ¬n.IsRepresentableAs A }.ncard
 
 /--
-Let $k \le n$. What choice of $A\subseteq\{1, \dots, n\}$ of size $|A| = k$
+Let $k \le n$. What choice of $A\subseteq\{1, \dots, n\}$ (with $\text{gcd}(A) = 1$) of size $|A| = k$
 maximises the number of integers not representable as the sum of finitely
 many elements from $A$ (with repetitions allowed)?
 Is it $\{n, n - 1, \dots, n - k + 1\}$?
@@ -50,19 +50,21 @@ Is it $\{n, n - 1, \dots, n - k + 1\}$?
 @[category research open, AMS 11]
 theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) (h : k ≤ n) :
     IsGreatest
-      { Nat.NcardUnrepresentable S | (S : Set ℕ) (_ : S ⊆ Set.Icc 1 n) (_ : S.ncard = k) }
+      { Nat.NcardUnrepresentable S | (S : Finset ℕ) (_ : S ⊆ Finset.Icc 1 n)
+        (_ : #S = k) (_ : S.gcd id = 1) }
       (Nat.NcardUnrepresentable <| answer(sorry)) := by
   sorry
 
 /--
-Let $k \le n$. Out of all $A\subseteq\{1, \dots, n\}$ of size $|A| = k$,
+Let $k \le n$. Out of all $A\subseteq\{1, \dots, n\}$ (with $\text{gcd}(A) = 1$) of size $|A| = k$,
 does $A = \{n, n - 1, \dots, n - k + 1\}$ maximise the number of integers
 not representable as the sum of finitely many elements from $A$ (with repetitions allowed)?
 -/
 @[category research open, AMS 11]
 theorem erdos_434.parts.ii : answer(sorry) ↔ ∀ᵉ (n ≥ 1) (k ≥ 1), k ≤ n →
     IsGreatest
-      { Nat.NcardUnrepresentable S | (S : Set ℕ) (_ : S ⊆ Set.Icc 1 n) (_ : S.ncard = k) }
+      { Nat.NcardUnrepresentable S | (S : Finset ℕ) (_ : S ⊆ Finset.Icc 1 n)
+        (_ : #S = k) (_ : S.gcd id = 1)}
       (Nat.NcardUnrepresentable <| Set.Icc (n - k + 1 : ℕ) n) := by
   sorry
 

@@ -46,13 +46,6 @@ theorem erdos_730.variants.explicit_pairs :
   sorry
 
 /--
-Show that for all $n$, the binomial coefficient $\binom{2n}{n}$ is even.
--/
-@[category high_school, AMS 11]
-theorem erdos_730.variants.two_div_forall (n : ℕ) (h : 0 < n) : 2 ∣ n.centralBinom := by
-  sorry
-
-/--
 There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.
 
 (Found by AlphaProof, although it was implicit already in [A129515])

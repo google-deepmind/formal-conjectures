@@ -19,9 +19,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 20
 
-*Reference:* [erdosproblems.com/20](https://www.erdosproblems.com/20)
+*References:*
+* [erdosproblems.com/20](https://www.erdosproblems.com/20)
+* [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
 -/
 universe u
+
+namespace Erdos20
+
 variable {α : Type}
 
 /--
@@ -78,3 +83,4 @@ theorem erdos_20 : answer(sorry) ↔ ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+end Erdos20

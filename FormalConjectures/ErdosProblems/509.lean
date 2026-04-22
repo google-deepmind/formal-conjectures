@@ -33,8 +33,8 @@ universe u v
 
 variable {M : Type u} [MetricSpace M]
 
-/--An $r$-bounded disc cover of a subset of a metric space $M$
-is an indexed family of closed discs whose radii sum to at most $r$.-/
+/-- An $r$-bounded disc cover of a subset of a metric space $M$
+is an indexed family of closed discs whose radii sum to at most $r$. -/
 structure BoundedDiscCover (S : Set M) (r : ℝ) (ι : Type v) where
   (C : ι → M)
   (R : ι → ℝ)

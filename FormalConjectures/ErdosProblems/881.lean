@@ -19,14 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 881
 
-Let `A ⊂ ℕ` be an additive basis of order `k` which is *minimal*, in the sense that
-if `B ⊂ A` is any infinite subset, then `A \ B` is not a basis of order `k`.
-
-> Must there exist an infinite `B ⊂ A` such that `A \ B` is a basis of order `k + 1`?
-
-We interpret "additive basis of order `k`" as an asymptotic additive basis of order `k`,
-using the predicate `Set.IsAsymptoticAddBasisOfOrder` from additive combinatorics.
-
 *Reference:* [erdosproblems.com/881](https://www.erdosproblems.com/881)
 -/
 
@@ -35,6 +27,9 @@ open Set
 namespace Erdos881
 
 /--
+We interpret "additive basis of order `k`" as an asymptotic additive basis of order `k`,
+using the predicate `Set.IsAsymptoticAddBasisOfOrder` from additive combinatorics.
+
 A *minimal* additive basis of order `k` is a set `A` such that
 * `A` is an asymptotic additive basis of order `k`, and
 * for every infinite subset `B ⊆ A`, the complement `A \ B` is *not*
@@ -45,8 +40,6 @@ def IsMinimalAsymptoticAddBasisOfOrder (k : ℕ) (A : Set ℕ) : Prop :=
     ∀ ⦃B : Set ℕ⦄, B ⊆ A → B.Infinite → ¬ (A \ B).IsAsymptoticAddBasisOfOrder k
 
 /--
-**Erdős Problem 881.**
-
 Let `A ⊂ ℕ` be an additive basis of order `k` which is minimal in the sense that
 if `B ⊂ A` is any infinite set, then `A \ B` is not a basis of order `k`.
 

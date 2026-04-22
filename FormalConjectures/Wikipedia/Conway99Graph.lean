@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Conway99Graph
 
---TODO(firsching): Consider using SimpleGraph.IsSRGWith to formulate the conjecture.
+-- TODO(firsching): Consider using SimpleGraph.IsSRGWith to formulate the conjecture.
 
 open SimpleGraph
 

@@ -33,7 +33,7 @@ We have chosen to formalise this using an inductive type.
  - [mathoverflow/75792](https://mathoverflow.net/a/75792) by user [Harry Altman](https://mathoverflow.net/users/5583)
  - http://arxiv.org/abs/1203.6462 by Jānis Iraids, Kaspars Balodis, Juris Čerņenoks, Mārtiņš Opmanis, Rihards Opmanis, Kārlis Podnieks
  - http://arxiv.org/abs/1207.4841 by Harry Altman, Joshua Zelinsky
- - https://oeis.org/A005245 : Mahler-Popken complexity.
+ - https://oeis.org/A5245 : Mahler-Popken complexity.
 -/
 
 namespace Mathoverflow75792
@@ -155,12 +155,19 @@ theorem Reachable.complexity {n : ℕ} (hn : 0 < n) : Reachable n (complexity n)
 theorem complexity_zero : complexity 0 = 0 := rfl
 
 @[category test, AMS 11]
-theorem complexity_one : complexity 1 = 1 := by
-  sorry
+theorem complexity_one : complexity 1 = 1 :=
+  Reachable.one.complexity_eq fun n' hn' ↦ by
+    have : n' = 0 := by omega
+    subst this; exact not_reachable_zero_snd 1
 
 @[category test, AMS 11]
-theorem complexity_two : complexity 2 = 2 := by
-  sorry
+theorem complexity_two : complexity 2 = 2 :=
+  (Reachable.add .one .one).complexity_eq fun n' hn' ↦ by
+    interval_cases n'
+    · exact not_reachable_zero_snd 2
+    · rw [reachable_iff_of_two_le 2 1 (by omega)]
+      rintro ⟨m₁, hm₁, m₂, hm₂, n₁, hn₁, n₂, hn₂, h₁, -⟩
+      omega
 
 @[category test, AMS 11]
 theorem Reachable.pow (m n : ℕ) (hm : 0 < m) (hn : 0 < n) : Reachable (m ^ n) (m * n) := by
@@ -180,7 +187,7 @@ theorem Reachable.five_pow_six : Reachable (5^6) 29 :=
   have h27 : Reachable 27 9 := .pow' 3 3
   .add .one <| .mul h8 <| .mul h9 <| .add .one <| .mul h8 h27
 
-/-- Is `5n` the complexity of `5^n` for `0 < n`? Answer: No.-/
+/-- Is `5n` the complexity of `5^n` for `0 < n`? Answer: No. -/
 @[category research solved, AMS 11]
 theorem complexity_five_pow : answer(False) ↔ ∀ n : ℕ, 0 < n → complexity (5 ^ n) = 5 * n := by
   simp [false_iff, not_forall]

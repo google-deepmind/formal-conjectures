@@ -22,22 +22,22 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1072](https://www.erdosproblems.com/1072)
 -/
 
-open Nat Filter Finset
+open Nat Filter Finset Set
 open scoped Topology
 
 namespace Erdos1072
 
-/-- For any prime $p$, let $f(p)$ be the least integer such that $f(p)! + 1 \equiv 0 \mod p$.-/
+/-- For any prime $p$, let $f(p)$ be the least integer such that $f(p)! + 1 \equiv 0 \mod p$. -/
 noncomputable def f (p : ℕ) : ℕ := sInf {n | (n)! + 1 ≡ 0 [MOD p]}
 
 /-- Is it true that there are infinitely many $p$ for which $f(p) = p − 1$? -/
 @[category research open, AMS 11]
-theorem erdos_1072a : answer(sorry) ↔ Set.Infinite {p | p.Prime ∧ f p = p - 1} := by
+theorem erdos_1072.parts.i : answer(sorry) ↔ Set.Infinite {p | p.Prime ∧ f p = p - 1} := by
   sorry
 
 /-- Is it true that $f(p)/p \to 0$ for $p \to \infty$ in a density 1 subset of the primes? -/
 @[category research open, AMS 11]
-theorem erdos_1072b :
+theorem erdos_1072.parts.ii :
     answer(sorry) ↔ ∃ (P : Set ℕ), P ⊆ {p | p.Prime} ∧ P.HasDensity 1 {p | p.Prime} ∧
       Tendsto (fun p => (f p / p : ℝ)) (atTop ⊓ principal P) (𝓝 0) := by
   sorry
@@ -49,8 +49,8 @@ is $o(x/\log x)$.
 Amer. Math. Monthly (2002), 554--559.
 -/
 @[category research open, AMS 11]
-theorem erdos_1072a.variants.littleo :
-    (fun x ↦ (({p | p.Prime ∧ f p = p - 1}.interIcc 0 x).ncard : ℝ)) =o[atTop]
+theorem erdos_1072.variants.littleo :
+    (fun x ↦ (({p | p.Prime ∧ f p = p - 1} ∩ Icc 0 x).ncard : ℝ)) =o[atTop]
       (fun x ↦ x / Real.log x) := by
   sorry
 
