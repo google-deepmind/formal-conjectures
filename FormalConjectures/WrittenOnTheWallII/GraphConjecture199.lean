@@ -19,6 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 199
 
+**Verbatim statement (WOWII #199, status O):**
+> If G is a simple connected graph with n > 1 such that tree(G) - 2 ≤ κ(G), then G has a Hamiltonian path.
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj199
+
+
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/

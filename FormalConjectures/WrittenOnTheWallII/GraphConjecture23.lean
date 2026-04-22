@@ -19,6 +19,12 @@ import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 23
 
+**Verbatim statement (WOWII #23, status F):**
+> If G is a simple connected graph, then b(G) ≥ FLOOR[α(G) + dist_avg(M)/2]
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj23
+
+
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/

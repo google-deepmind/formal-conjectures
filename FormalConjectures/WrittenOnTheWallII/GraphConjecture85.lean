@@ -19,6 +19,12 @@ import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 85
 
+**Verbatim statement (WOWII #85, status O):**
+> If G is a simple connected graph, then tree(G) ≥ CEIL[sqrt(1 + 2*minimum of dist_even(v))]
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj85
+
+
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

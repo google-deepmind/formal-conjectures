@@ -19,6 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 72
 
+**Verbatim statement (WOWII #72, status O):**
+> If G is a simple connected graph, then tree(G) ≥ CEIL[average of ecc(v) + maximum of λ(v) /3]
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj72
+
+
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/

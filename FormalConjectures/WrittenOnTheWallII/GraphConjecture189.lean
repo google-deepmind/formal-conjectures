@@ -19,6 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 189
 
+**Verbatim statement (WOWII #189, status O):**
+> If G is a simple connected graph with n > 1 such that maximum { dist_even(v) : dist_even(v) is the number of vertices at even distance from v } ≤ 1 + σ(G), then G has a Hamiltonian path.
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj189
+
+
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/

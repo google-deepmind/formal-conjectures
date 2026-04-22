@@ -19,6 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 91
 
+**Verbatim statement (WOWII #91, status O):**
+> If G is a simple connected graph, then b(G) ≤ 1 + f(G) * (CEIL[average of λ(v) ])/2
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj91
+
+
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/

@@ -19,6 +19,12 @@ import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 63
 
+**Verbatim statement (WOWII #63, status O):**
+> If G is a simple connected graph, then f(G) ≥ CEIL[(minimum of dist_even(v) + b(G) + 1)/3]
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj63
+
+
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

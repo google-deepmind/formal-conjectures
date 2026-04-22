@@ -19,6 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 24
 
+**Verbatim statement (WOWII #24, status F):**
+> If G is a simple connected graph, then b(G) ≥ λ(G) + CEIL[minimum of dist_even(v)/3]
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj24
+
+
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
