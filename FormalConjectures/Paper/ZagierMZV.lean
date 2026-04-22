@@ -186,4 +186,25 @@ theorem multiZeta_two : multiZeta [2] = Real.pi ^ 2 / 6 := by
     rwa [h_eval] at this
   exact h3.tsum_eq
 
+/-- Euler's identity for $\zeta(4) = \pi^4/90$. -/
+@[category test, AMS 11]
+theorem multiZeta_four : multiZeta [4] = Real.pi ^ 4 / 90 := by
+  have h1 : multiZeta [4] = ∑' n : ℕ, 1 / (n + 1 : ℝ) ^ 4 := by
+    unfold multiZeta
+    simp only [multiZeta.aux, mul_one]
+  rw [h1]
+  have h2 := hasSum_zeta_four
+  have h3 : HasSum (fun n : ℕ => 1 / (n + 1 : ℝ) ^ 4) (Real.pi ^ 4 / 90) := by
+    have h4 : (fun n : ℕ => 1 / ((n + 1 : ℕ) : ℝ) ^ 4) = (fun n : ℕ => 1 / (n + 1 : ℝ) ^ 4) := by
+      ext n
+      push_cast
+      rfl
+    rw [← h4]
+    have := (hasSum_nat_add_iff' 1).mpr h2
+    have h_four : 4 ≠ 0 := by decide
+    have h_eval : Real.pi ^ 4 / 90 - ∑ i ∈ range 1, 1 / (i : ℝ) ^ 4 = Real.pi ^ 4 / 90 := by
+      simp only [sum_range_one, Nat.cast_zero, zero_pow h_four, div_zero, sub_zero]
+    rwa [h_eval] at this
+  exact h3.tsum_eq
+
 end ZagierMZV
