@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.WrittenOnTheWallII.GraphConjecture199
 
 /-!
 # Graph Circumference Conjecture
@@ -38,7 +37,7 @@ We state it as a conjecture in the Graffiti.pc style.
 
 namespace WrittenOnTheWallII.GraphCircumference
 
-open Classical SimpleGraph WrittenOnTheWallII.GraphConjecture199
+open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -46,6 +45,16 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 It equals 0 for acyclic graphs (forests). -/
 noncomputable def circumference (G : SimpleGraph α) : ℕ :=
   sSup ({0} ∪ {k | ∃ v : α, ∃ w : G.Walk v v, w.IsCycle ∧ w.length = k})
+
+/-- The vertex connectivity `κ(G)`: the minimum number of vertices whose removal
+disconnects the graph (or `n - 1` when the graph is complete).
+Vertex connectivity is not yet in Mathlib; we define it here as the minimum size of
+a vertex separator, where removing `S` leaves the induced subgraph on `Sᶜ` disconnected.
+-- TODO: replace with a Mathlib definition when one becomes available. -/
+noncomputable def vertexConnectivity (G : SimpleGraph α) : ℕ :=
+  if Fintype.card α ≤ 1 then 0
+  else sInf { k | ∃ S : Finset α, S.card = k ∧
+    (¬(G.induce (↑Sᶜ : Set α)).Connected ∨ S.card = Fintype.card α - 1) }
 
 /-- Dirac's theorem (1952): Every 2-connected graph `G` on `n ≥ 3` vertices
 satisfies `circumference(G) ≥ 2 · δ(G)`.
