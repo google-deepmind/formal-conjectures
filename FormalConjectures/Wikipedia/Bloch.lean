@@ -53,8 +53,8 @@ lemma bddBelow_blochRadius : BddBelow (range blochRadius) :=
   bddBelow_def.2 ⟨0, fun _ ⟨f, hf⟩ => hf ▸ zero_le_blochRadius f⟩
 
 @[category API, AMS 54]
-lemma radius_le_of_ball_subset_ball {x y : ℂ} {r d : ℝ}
-    (hpos : 0 < r) (hsub : ball x r ⊆ ball y d) : r ≤ d := by
+lemma radius_le_of_ball_subset_ball {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X] {x y : X}
+    {r d : ℝ} (hpos : 0 < r) (hsub : ball x r ⊆ ball y d) : r ≤ d := by
   sorry
 
 @[category API, AMS 30]
