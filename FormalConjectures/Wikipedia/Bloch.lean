@@ -16,7 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Metric Set
+open scoped Topology
+open Metric Set Filter
 
 /-!
 # Bloch and Landau constants
@@ -53,16 +54,50 @@ lemma bddBelow_blochRadius : BddBelow (range blochRadius) :=
   bddBelow_def.2 ⟨0, fun _ ⟨f, hf⟩ => hf ▸ zero_le_blochRadius f⟩
 
 @[category API, AMS 54]
-lemma radius_le_of_ball_subset_ball {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X] {x y : X}
-    {r d : ℝ} (hpos : 0 < r) (hsub : ball x r ⊆ ball y d) : r ≤ d := by
-  sorry
+lemma dis_add_radius_le_of_ball_subset_ball {X 𝕜 : Type*} [RCLike 𝕜] [NormedAddCommGroup X]
+    [NormedSpace 𝕜 X] [Nontrivial X] {x y : X} {r d : ℝ} (hpos : 0 < r) (hsub : ball x r ⊆ ball y d) :
+    dist x y + r ≤ d := by
+  have : Tendsto (fun s => dist x y + s) (𝓝[<] r) (𝓝 (dist x y + r)) :=
+      (tendsto_nhds_of_tendsto_nhdsWithin tendsto_id).const_add _
+  refine le_of_tendsto this ?_
+  filter_upwards [Ioo_mem_nhdsLT hpos] with t ⟨hl, hr⟩
+  by_cases! hxy : x = y
+  · obtain ⟨v, hv⟩ := exists_ne (0 : X)
+    simp_all only [dist_self, zero_add]
+    let u := (‖v‖⁻¹ : 𝕜) • v
+    have : ‖u‖ = 1 := by apply norm_smul_inv_norm; grind
+    calc
+    _ = ‖y + (t : 𝕜) • u - y‖ := by simp_all [norm_smul, abs_of_nonneg hl.le]
+    _ ≤ d := by
+      refine (mem_ball_iff_norm.1 (hsub (mem_ball_iff_norm.2 ?_))).le
+      simp_all [norm_smul, abs_of_nonneg hl.le]
+  · let u := (‖x - y‖⁻¹ : 𝕜) • (x - y)
+    have : ‖u‖ = 1 := by apply norm_smul_inv_norm; grind
+    calc
+    _ = ‖x - y‖ + t := by simp [NormedAddCommGroup.dist_eq]
+    _ = ‖x + (t : 𝕜) • u - y‖ := by
+      simp [u, add_sub_right_comm, ← smul_assoc]
+      nth_rw 2 [← one_smul 𝕜 (x - y)]
+      rw [← add_smul, norm_smul]
+      norm_cast
+      rw [abs_of_nonneg (by positivity), add_mul, one_mul, mul_assoc, inv_mul_cancel₀ (by aesop),
+        mul_one]
+    _ ≤ d := by
+      refine (mem_ball_iff_norm.1 (hsub (mem_ball_iff_norm.2 ?_))).le
+      simp_all [norm_smul, abs_of_nonneg hl.le]
+
+@[category API, AMS 54]
+lemma radius_le_of_ball_subset_ball {X 𝕜 : Type*} [RCLike 𝕜] [NormedAddCommGroup X]
+    [NormedSpace 𝕜 X] [Nontrivial X] {x y : X} {r d : ℝ} (hpos : 0 < r)
+    (hsub : ball x r ⊆ ball y d) : r ≤ d :=
+  trans (by simp) (dis_add_radius_le_of_ball_subset_ball (𝕜 := 𝕜) hpos hsub)
 
 @[category API, AMS 30]
 lemma blochRadius_id_eq_one : blochRadius id = 1 := by
   refine IsGreatest.csSup_eq ⟨⟨ball 0 1, Subset.rfl, 0, by simp⟩, fun r ⟨S, hS, x, hx⟩ => ?_⟩
   simp only [image_id] at hx
   by_cases hpos : 0 < r
-  · exact radius_le_of_ball_subset_ball hpos (hx.1.trans hS)
+  · exact radius_le_of_ball_subset_ball (𝕜 := ℝ) hpos (hx.1.trans hS)
   · grind
 
 /-- The **Landau radius** $L_f$ of a function $f$ is the radius of the largest disk in the image of
