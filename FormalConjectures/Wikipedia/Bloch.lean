@@ -32,6 +32,7 @@ open Metric Set Filter
   65 (1995), 1–17.
 - [Ra43] Rademacher, H. "On the Bloch-Landau Constant."" American Journal of Mathematics 65 (1943),
   387–390.
+- [OptimizationConstants](https://teorth.github.io/optimizationproblems/constants/57c.html)
 - [Skin2009] Skinner, Brian. The univalent Bloch constant problem. Complex Variables and Elliptic
   Equations 54 (2009), no. 10, 951–955.
 - [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
@@ -144,7 +145,7 @@ theorem univalentBlochConstant_lower_bound : 0.5708858 ≤ univalentBlochConstan
   sorry
 
 /-- The Univalent Bloch constant is trivially bounded above by the Bloch radius of the identity
-function, which is $1$. -/
+function, which is $1$. This is the best upper bound we know according to [OptimizationConstants]. -/
 @[category research solved, AMS 30]
 theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
   let I : {f : ℂ → ℂ // InjOn f (ball 0 1) ∧ DifferentiableOn ℂ f (ball 0 1) ∧
