@@ -43,22 +43,22 @@ noncomputable def blochRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ S ⊆ ball 0 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S}
 
 @[category API, AMS 30]
-theorem zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := by
+lemma zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := by
   by_cases! hb : BddAbove {r : ℝ | ∃ S ⊆ ball 0 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S}
   · exact le_csSup hb ⟨∅, by simp⟩
   · simp_all [blochRadius]
 
 @[category API, AMS 30]
-theorem bddBelow_blochRadius : BddBelow (range blochRadius) :=
+lemma bddBelow_blochRadius : BddBelow (range blochRadius) :=
   bddBelow_def.2 ⟨0, fun _ ⟨f, hf⟩ => hf ▸ zero_le_blochRadius f⟩
 
 @[category API, AMS 54]
-theorem radius_le_of_ball_subset_ball {x y : ℂ} {r d : ℝ}
+lemma radius_le_of_ball_subset_ball {x y : ℂ} {r d : ℝ}
     (hpos : 0 < r) (hsub : ball x r ⊆ ball y d) : r ≤ d := by
   sorry
 
 @[category API, AMS 30]
-theorem blochRadius_id_eq_one : blochRadius id = 1 := by
+lemma blochRadius_id_eq_one : blochRadius id = 1 := by
   refine IsGreatest.csSup_eq ⟨⟨ball 0 1, Subset.rfl, 0, by simp⟩, fun r ⟨S, hS, x, hx⟩ => ?_⟩
   simp only [image_id] at hx
   by_cases hpos : 0 < r
@@ -69,14 +69,6 @@ theorem blochRadius_id_eq_one : blochRadius id = 1 := by
 the unit disk under $f$. -/
 noncomputable def landauRadius (f : ℂ → ℂ) : ℝ :=
   sSup {r : ℝ | ∃ x, ball x r ⊆ f '' (ball 0 1)}
-
-@[category API, AMS 30]
-theorem landauRadius_id_eq_one : landauRadius id = 1 := by
-  refine IsGreatest.csSup_eq ⟨⟨0, by simp⟩, fun r ⟨x, hx⟩ => ?_⟩
-  simp only [image_id] at hx
-  by_cases hpos : 0 < r
-  · exact radius_le_of_ball_subset_ball hpos hx
-  · grind
 
 /-- The **Bloch constant** $B$ is the infimum of the Bloch radius over all functions holomorphic
 in the unit disk such that $f'(0) = 1$. -/
@@ -122,8 +114,7 @@ function, which is $1$. -/
 theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
   let I : {f : ℂ → ℂ // InjOn f (ball 0 1) ∧ DifferentiableOn ℂ f (ball 0 1) ∧
     deriv f 0 = 1} := ⟨id, by simp; fun_prop⟩
-  have : I.1 = id := by grind
-  rw [← blochRadius_id_eq_one, univalentBlochConstant, ← this]
+  rw [← blochRadius_id_eq_one, univalentBlochConstant, ← show I.1 = id from by grind]
   exact ciInf_le (bddBelow_blochRadius.mono (range_comp_subset_range _ _)) I
 
 /-- The **Landau constant** $L$ is the infimum of the Landau radius over all functions holomorphic
