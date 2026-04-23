@@ -67,6 +67,7 @@ theorem green_40.sanity_f_one : f 1 = 1 := by
 -- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 -- Variant with arbitrary subsets
 -- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 def isCoveringFinset (n r : ℕ) (V : Finset (𝔽₂ n)) : Prop :=
   (V : Set (𝔽₂ n)) + hammingBall n r = Set.univ
 
@@ -90,6 +91,22 @@ theorem green_40.variants.arbitrary_subsets_sanity_f_tilde_two : f_tilde 2 = 1 :
 /-- We evidently have $\tilde{f}(r) \le f(r)$ [Gr24]. -/
 @[category research solved, AMS 5 94]
 theorem green_40.f_tilde_le_f (r : ℕ) : f_tilde r ≤ f r := by
+  sorry
+
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+-- Variant for all n
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+def sequence_exists_all (r : ℕ) (c : ℝ) : Prop :=
+  ∀ ε > 0, ∀ᶠ n in atTop, ∃ V : Submodule (ZMod 2) (𝔽₂ n),
+    isCoveringSubspace n r V ∧
+    (Nat.card V : ℝ) * (Nat.card (hammingBall n r) : ℝ) / (2 ^ n : ℝ) ≤ c + ε
+
+noncomputable def f_all (r : ℕ) : ℝ := sInf {c : ℝ | sequence_exists_all r c}
+
+/-- Does $f_{\text{all}}(r) \to \infty$? [Gr24] -/
+@[category research open, AMS 5 94]
+theorem green_40.variants.all_n : answer(sorry) ↔ Tendsto f_all atTop atTop := by
   sorry
 
 end Green40
