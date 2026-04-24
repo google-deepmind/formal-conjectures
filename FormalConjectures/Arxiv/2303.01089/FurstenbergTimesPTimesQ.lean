@@ -20,139 +20,76 @@ import FormalConjectures.Util.ProblemImports
 # Furstenberg's `times p, times q` conjectures
 
 *Reference:* [arxiv/2303.01089](https://arxiv.org/abs/2303.01089)
-**Around Furstenberg's Times p, Times q Conjecture: Times p-Invariant Measures with some Large
-Fourier Coefficients**
-by *Catalin Badea and Sophie Grivaux*
+
 -/
 
 noncomputable section
 
-open Set Filter MeasureTheory AddCircle
+open scoped Topology
+open Filter MeasureTheory UnitAddCircle
 
-namespace Arxiv.«2303.01089»
-
-local notation "𝕋" => UnitAddCircle
-
-local instance : Fact (0 < (1 : ℝ)) := ⟨zero_lt_one⟩
+notation "𝕋" => UnitAddCircle
 
 /--
-Two integers `p, q ≥ 2` are multiplicatively independent if the only relation
-`p ^ m = q ^ n` is the trivial one.
+Two integers $p, q \ge 2$ are multiplicatively independent if
+$\log p / \log q$ is irrational.
 -/
-def MultiplicativelyIndependent (p q : ℕ) : Prop :=
-  ∀ m n : ℕ, p ^ m = q ^ n → m = 0 ∧ n = 0
+def MultiplicativelyIndependent (p q : ℕ) : Prop := Irrational (Real.log p / Real.log q)
 
 /--
-The map `T_n : 𝕋 → 𝕋` given by `x ↦ n x mod 1`.
+The map $T_n$ sends $x$ to $nx \bmod 1$ on the additive circle.
 -/
-def T (n : ℕ) : 𝕋 → 𝕋 := fun x ↦ n • x
+def Tn (n : ℕ) (x : 𝕋) := n • x
 
-lemma continuous_T (n : ℕ) : Continuous (T n) := by
-  fun_prop
-
-/--
-The image of a set under `T_n`.
--/
-def TSet (n : ℕ) (F : Set 𝕋) : Set 𝕋 := T n '' F
+@[category API, AMS 28]
+lemma Tn_continuous (n : ℕ) : Continuous (Tn n) := continuous_nsmul n
 
 /--
-The push-forward of a probability measure under `T_n`.
+A set $F$ is $T_n$-invariant if $T_n(F) \subseteq F$.
 -/
-noncomputable def TMeasure (n : ℕ) (μ : ProbabilityMeasure 𝕋) : ProbabilityMeasure 𝕋 :=
-  μ.map (continuous_T n).measurable.aemeasurable
+def IsTnInvariant (n : ℕ) (F : Set 𝕋) : Prop := Tn n '' F ⊆ F
 
 /--
-A subset of `𝕋` is `T_n`-invariant if `T_n(F) ⊆ F`.
+A set $A$ is an atom if it has positive measure and for all $B \subseteq A$ measurable,
+either $\mu(B) = 0$ or $\mu(B) = \mu(A)$.
 -/
-def IsTInvariantSet (n : ℕ) (F : Set 𝕋) : Prop :=
-  TSet n F ⊆ F
+def MeasureTheory.IsAtom {α : Type*} {m0 : MeasurableSpace α} (μ : Measure α) (A : Set α) : Prop :=
+  0 <  μ A ∧ ∀ B ⊆ A, MeasurableSet B → μ B = 0 ∨ μ B = μ A
 
 /--
-A probability measure on `𝕋` is continuous if it has no atoms.
+A measure is atomless if it has no atoms.
 -/
-def IsContinuousProbabilityMeasure (μ : ProbabilityMeasure 𝕋) : Prop :=
-  NoAtoms (μ : Measure 𝕋)
+class MeasureTheory.IsAtomLess {α : Type*} {m0 : MeasurableSpace α} (μ : Measure α) : Prop where
+  NoAtoms : ∀ A, MeasurableSet A → ¬ IsAtom μ A
+
+def UnitAddCircle.ProbabilityMeasure : ProbabilityMeasure 𝕋 :=
+  ⟨volume, IsProbabilityMeasure.mk UnitAddCircle.measure_univ⟩
+
+namespace Arxiv.id2303_01089
 
 /--
-A probability measure is `T_n`-invariant if its push-forward by `T_n` is itself.
+**Conjecture 1.3** (the $\times p, \times q$ conjecture): the only atomless Borel probability
+measure on $\mathbb{T}$ which is both $T_p$- and $T_q$-invariant is the Lebesgue measure.
 -/
-def IsTInvariantMeasure (n : ℕ) (μ : ProbabilityMeasure 𝕋) : Prop :=
-  TMeasure n μ = μ
-
-/--
-The set `P_p(𝕋)` of `T_p`-invariant Borel probability measures on `𝕋`.
--/
-def Pp (p : ℕ) : Set (ProbabilityMeasure 𝕋) :=
-  {μ | IsTInvariantMeasure p μ}
-
-/--
-The set `P_{p,c}(𝕋)` of continuous `T_p`-invariant Borel probability measures on `𝕋`.
--/
-def Ppc (p : ℕ) : Set (ProbabilityMeasure 𝕋) :=
-  {μ | IsTInvariantMeasure p μ ∧ IsContinuousProbabilityMeasure μ}
-
-/--
-The normalized Lebesgue measure on `𝕋 = ℝ / ℤ`.
--/
-noncomputable def lebesgue : ProbabilityMeasure 𝕋 :=
-  ⟨AddCircle.haarAddCircle, inferInstance⟩
-
-/--
-The Weyl averages used in the paper's formulation of normality in base `q`.
--/
-def normalityAverage (q : ℕ) (a : ℤ) (x : 𝕋) (N : ℕ) : ℂ :=
-  ((N : ℂ)⁻¹) * ∑ n ∈ Finset.range N, fourier (a * (q ^ n : ℤ)) x
-
-/--
-A point of `𝕋` is normal in base `q` if all non-zero Weyl averages along `q^n` vanish.
--/
-def IsNormalInBase (q : ℕ) (x : 𝕋) : Prop :=
-  ∀ a : ℤ, a ≠ 0 → Tendsto (normalityAverage q a x) atTop (𝓝 0)
-
-/--
-**Conjecture 1.2**: if `F` is an infinite closed `T_p`-invariant subset of `𝕋`, then the sets
-`T_{q^n}(F)` converge in Hausdorff distance to `𝕋`.
--/
-@[category research open, AMS 11 37]
-theorem conjecture_1_2
-    (p q : ℕ) (hp : 2 ≤ p) (hq : 2 ≤ q) (hpq : MultiplicativelyIndependent p q)
-    {F : Set 𝕋} (hF_closed : IsClosed F) (hF_infinite : F.Infinite) (hF_tp : IsTInvariantSet p F) :
-    Tendsto (fun n : ℕ ↦ Metric.hausdorffDist (TSet (q ^ n) F) Set.univ) atTop (𝓝 0) := by
+@[category research open, AMS 37]
+theorem conjecture_1_3 {p q : ℕ} (hp : 2 <= p) (hq : 2 <= q) (hpq : MultiplicativelyIndependent p q)
+    {μ : Measure 𝕋} [IsProbabilityMeasure μ] [IsAtomLess μ] (hmup : MeasurePreserving (Tn p) μ μ)
+    (hmup : MeasurePreserving (Tn q) μ μ) :
+    μ = volume := by
   sorry
 
 /--
-**Conjecture 1.3** (`×p, ×q` conjecture): the only continuous Borel probability measure on `𝕋`
-which is both `T_p`- and `T_q`-invariant is Lebesgue measure.
+**Conjecture 1.4**: if $\mu$ is an atomless $T_p$-invariant Borel probability measure on
+$\mathbb{T}$, then $T_{q^n}\mu$ converges weak-star to Lebesgue measure.
+This paper disproves the conjecture.
 -/
-@[category research open, AMS 11 37]
-theorem conjecture_1_3
-    (p q : ℕ) (hp : 2 ≤ p) (hq : 2 ≤ q) (hpq : MultiplicativelyIndependent p q)
-    (μ : ProbabilityMeasure 𝕋) (hμ : μ ∈ Ppc p) (hμ_tq : IsTInvariantMeasure q μ) :
-    μ = lebesgue := by
-  sorry
-
-/--
-**Conjecture 1.4**: if `μ` is a continuous `T_p`-invariant Borel probability measure on `𝕋`,
-then `T_{q^n} μ` converges weak-star to Lebesgue measure.
-
-This paper disproves the conjecture, so the recorded answer is `False`.
--/
-@[category research solved, AMS 11 37]
+@[category research solved, AMS 37]
 theorem conjecture_1_4
-    (p q : ℕ) (hp : 2 ≤ p) (hq : 2 ≤ q) (hpq : MultiplicativelyIndependent p q) :
+    (p q : ℕ) (hp : 2 <= p) (hq : 2 <= q) (hpq : MultiplicativelyIndependent p q) :
     answer(False) ↔
-      ∀ μ : ProbabilityMeasure 𝕋, μ ∈ Ppc p →
-        Tendsto (fun n : ℕ ↦ TMeasure (q ^ n) μ) atTop (𝓝 lebesgue) := by
+      ∀ μ : ProbabilityMeasure 𝕋, IsAtomLess μ.1 →
+        Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
+          (𝓝 ProbabilityMeasure) := by
   sorry
 
-/--
-**Conjecture 5.7**: for any `μ ∈ P_{p,c}(𝕋)`, `μ`-almost every point of `𝕋` is normal in base `q`.
--/
-@[category research open, AMS 11 37]
-theorem conjecture_5_7
-    (p q : ℕ) (hp : 2 ≤ p) (hq : 2 ≤ q) (hpq : MultiplicativelyIndependent p q)
-    (μ : ProbabilityMeasure 𝕋) (hμ : μ ∈ Ppc p) :
-    ∀ᵐ x ∂(μ : Measure 𝕋), IsNormalInBase q x := by
-  sorry
-
-end Arxiv.«2303.01089»
+end Arxiv.id2303_01089
