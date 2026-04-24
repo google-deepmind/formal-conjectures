@@ -41,7 +41,7 @@ namespace Erdos1154
 For every $a \in [0, 1]$, there exists a group in $\mathbb{R}$ with Hausdorff dimension $a$. This is
 proved in [ErVo66].
 -/
-@[category research solved, AMS 12 16 28]
+@[category research solved, AMS 28]
 theorem erdos_1154.group {a : ℝ≥0∞} (ha : a ∈ Icc 0 1) :
     ∃ R : AddSubgroup ℝ, dimH R.carrier = a := by
   sorry
@@ -50,7 +50,7 @@ theorem erdos_1154.group {a : ℝ≥0∞} (ha : a ∈ Icc 0 1) :
 If a subring is analytic, then it is either equal to $\mathbb{R}$ or its Hausdorff dimension is
 equal to $0$. This is proved in [EdMi03].
 -/
-@[category research solved, AMS 12 16 28]
+@[category research solved, AMS 28]
 theorem erdos_1154.analytic_ring {R : Subring ℝ} (hR : AnalyticSet R.carrier) :
     R = ⊤ ∨ dimH R.carrier = 0 := by
   sorry
@@ -58,7 +58,7 @@ theorem erdos_1154.analytic_ring {R : Subring ℝ} (hR : AnalyticSet R.carrier) 
 /--
 Does there exist, for every $a \in [0, 1]$, a ring in $\mathbb{R}$ with Hausdorff dimension $a$?
 -/
-@[category research open, AMS 12 16 28]
+@[category research open, AMS 28]
 theorem erdos_1154.ring :
     answer(sorry) ↔
       ∀ a ∈ Set.Icc (0 : ℝ≥0∞) 1, ∃ R : Subring ℝ, dimH R.carrier = a := by
@@ -77,7 +77,7 @@ class IsRealClosed (R : Type*) [Field R] : Prop extends IsSemireal R where
 If a subfield is real closed and analytic, then it is either equal to $\mathbb{R}$ or its
 Hausdorff dimension is equal to $0$. This is proved in [EdMi01].
 -/
-@[category research solved, AMS 12 16 28]
+@[category research solved, AMS 28]
 theorem erdos_1154.real_closed_analytic_field {R : Subfield ℝ} [IsRealClosed R]
     (hR : AnalyticSet R.carrier) :
     R = ⊤ ∨ dimH R.carrier = 0 := by
@@ -87,7 +87,7 @@ theorem erdos_1154.real_closed_analytic_field {R : Subfield ℝ} [IsRealClosed R
 Assume the continuum hypothesis, then for every $a \in [0, 1]$, there exists a field in $\mathbb{R}$
 with Hausdorff dimension $a$.
 -/
-@[category research solved, AMS 12 16 28]
+@[category research solved, AMS 28]
 theorem erdos_1154.continuumHypothesis_field {a : ℝ≥0∞} (ha : a ∈ Icc 0 1) [Fact (ℵ₁ = 𝔠)] :
     ∃ R : Subfield ℝ, dimH R.carrier = a := by
   sorry
@@ -95,7 +95,7 @@ theorem erdos_1154.continuumHypothesis_field {a : ℝ≥0∞} (ha : a ∈ Icc 0 
 /--
 Does there exist, for every $a \in [0, 1]$, a field in $\mathbb{R}$ with Hausdorff dimension $a$?
 -/
-@[category research open, AMS 12 16 28]
+@[category research open, AMS 28]
 theorem erdos_1154.field :
     answer(sorry) ↔
       ∀ a ∈ Set.Icc (0 : ℝ≥0∞) 1, ∃ R : Subfield ℝ, dimH R.carrier = a := by
