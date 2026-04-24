@@ -31,8 +31,6 @@ open Set
 namespace Erdos741
 
 
-
-
 /-- Let $A\subseteq \mathbb{N}$ be such that $A+A$ has positive density.
 Can one always decompose $A=A_1\sqcup A_2$ such that $A_1+A_1$ and $A_2+A_2$
 both have positive density?
