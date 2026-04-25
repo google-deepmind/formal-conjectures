@@ -25,18 +25,13 @@ import FormalConjectures.Util.ProblemImports
 namespace ZarembaConjecture
 
 /--
-The finite list of partial quotients in the simple continued fraction expansion of `a / d`,
-excluding the initial integer part. This is computed by the Euclidean algorithm:
-for `0 < a < d`, the first quotient is `d / a`, and the process continues with
-`(d % a) / a`.
+The finite list of partial quotients in the simple continued fraction expansion of a positive rational `a / d`.
 -/
 def partialQuotients : ℕ → ℕ → List ℕ
-  | 0, _ => []
-  | a + 1, d => d / (a + 1) :: partialQuotients (d % (a + 1)) (a + 1)
-termination_by a _ => a
+  | _, 0 => []
+  | a, d + 1 => a / (d + 1) :: partialQuotients (d + 1) (a % (d + 1))
+termination_by _ d => d
 decreasing_by exact Nat.mod_lt _ (Nat.succ_pos _)
-
-#eval partialQuotients 333 106
 
 /-- The finset of partial quotients appearing in the continued fraction expansion of `a / d`. -/
 def partialQuotientFinset (a d : ℕ) : Finset ℕ :=
@@ -62,16 +57,22 @@ def candidateNumerators (A d : ℕ) : Finset ℕ :=
   (Finset.range d).filter fun a =>
     decide (0 < a) && decide (Nat.gcd a d = 1) && partialQuotientsBoundedBy A a d
 
-/-- For $5/6 = [0; 1, 5]$, the partial quotients are `1` and `5`. -/
+/-- For $5/6 = [0; 1, 5]$, the partial quotients are `0`, `1`, and `5`. -/
 @[category test, AMS 11]
 theorem partialQuotientFinset_five_six :
-    partialQuotientFinset 5 6 = ({1, 5} : Finset ℕ) := by
+    partialQuotientFinset 5 6 = ({0, 1, 5} : Finset ℕ) := by
   native_decide
 
 /-- The maximum partial quotient of $5/6$ is `5`. -/
 @[category test, AMS 11]
 theorem maxPartialQuotient_five_six :
     maxPartialQuotient 5 6 = (5 : WithBot ℕ) := by
+  native_decide
+
+/-- For $333/106 = [3; 7, 15]$, the partial quotients are `3`, `7`, and `15`. -/
+@[category test, AMS 11]
+theorem partialQuotients_three_three_three_one_zero_six :
+    partialQuotients 333 106 = [3, 7, 15] := by
   native_decide
 
 /-- The bound `A = 4` already fails for denominator `6`. -/
@@ -89,8 +90,7 @@ quotient in the continued fraction of $a/d$ is at most $A$.
 theorem zaremba_conjecture :
     ∃ A : ℕ, 0 < A ∧ ∀ d : ℕ, 1 < d →
       ∃ a : ℕ, 0 < a ∧ a < d ∧ Nat.Coprime a d ∧
-        ∀ n : ℕ, ∀ b : ℝ,
-          (GenContFract.of ((a : ℝ) / (d : ℝ))).partDens.get? n = some b → b ≤ A := by
+        PartialQuotientsBoundedBy A a d := by
   sorry
 
 end ZarembaConjecture
