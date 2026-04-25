@@ -41,16 +41,16 @@ def partialQuotientFinset (a d : ℕ) : Finset ℕ :=
 def maxPartialQuotient (a d : ℕ) : ℕ :=
   (partialQuotients a d).foldl max 0
 
-/-- The numerators `a < d` that are positive and coprime to `d`. -/
+/-- The numerators `a < d` that are coprime to `d`. -/
 def coprimeNumerators (d : ℕ) : Finset ℕ :=
-  (Finset.range d).filter fun a => decide (0 < a) && decide (Nat.gcd a d = 1)
+  {a ∈ Finset.range d | d.Coprime a}
 
 /--
 The least possible value, over positive coprime numerators `a < d`, of the maximum partial
 quotient in the continued fraction of `a / d`.
 -/
-def minmaxPartialQuotient (d : ℕ) : WithTop ℕ :=
-  ((coprimeNumerators d).image fun a => maxPartialQuotient a d).min
+def minmaxPartialQuotient (d : ℕ) : ℕ :=
+  WithTop.untopD 0 (((coprimeNumerators d).image fun a => maxPartialQuotient a d).min)
 
 /-- Boolean check that all partial quotients of `a / d` are at most `A`. -/
 def partialQuotientsBoundedBy (A a d : ℕ) : Bool :=
@@ -88,7 +88,7 @@ theorem coprimeNumerators_six :
 /-- The best possible maximum partial quotient among coprime numerators for denominator `6` is `5`. -/
 @[category test, AMS 11]
 theorem minmaxPartialQuotient_six :
-    minmaxPartialQuotient 6 = (5 : WithTop ℕ) := by
+    minmaxPartialQuotient 6 = 5 := by
   native_decide
 
 /-- For $333/106 = [3; 7, 15]$, the partial quotients are `3`, `7`, and `15`. -/
