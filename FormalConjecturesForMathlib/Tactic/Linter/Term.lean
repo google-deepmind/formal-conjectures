@@ -14,9 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
+module
+
+public import Lean.Meta.Basic
+public import Lean.Elab.Command
+public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
+public import Lean.Server.InfoUtils
 
 open Lean Meta Elab Command
+
+public section
 
 /-- A copy of `ContextInfo.runMetaM` that keeps the messages and passes in the same filename. -/
 def Lean.Elab.ContextInfo.runMetaMInCommandElabM {α} (info : ContextInfo) (lctx : LocalContext)

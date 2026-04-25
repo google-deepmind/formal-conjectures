@@ -75,13 +75,84 @@ theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : ComesFromPrimeQuadrup
 @[category undergraduate, AMS 11]
 theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
     n % 72 = 65 := by
-  sorry
+  obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
+  have hp5 : 5 ≤ p := by
+    by_contra hlt; push_neg at hlt
+    interval_cases p <;> simp_all (config := { decide := true })
+  have h2 : ¬ (2 ∣ p) := by
+    intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega
+  have h3 : ¬ (3 ∣ p) := by
+    intro hdvd; cases hp.eq_one_or_self_of_dvd 3 hdvd with | inl h => omega | inr h => omega
+  have hmod2 : p % 2 = 1 := by omega
+  have hmod3 : p % 3 = 2 := by
+    have hne1 : p % 3 ≠ 1 := by
+      intro heq
+      have h3dvd : 3 ∣ (p + 2) := ⟨p / 3 + 1, by omega⟩
+      cases hp2.eq_one_or_self_of_dvd 3 h3dvd with | inl h => omega | inr h => omega
+    omega
+  have hmod6 : p % 6 = 5 := by omega
+  set q := p / 6
+  have hp_eq : p = 6 * q + 5 := by omega
+  have hparity : 2 ∣ q * (q + 3) := by
+    rcases Nat.even_or_odd q with ⟨r, hr⟩ | ⟨r, hr⟩
+    · exact dvd_mul_of_dvd_left ⟨r, by omega⟩ _
+    · exact dvd_mul_of_dvd_right ⟨r + 2, by omega⟩ _
+  obtain ⟨k, hk⟩ := hparity
+  have h1 : p * (p + 8) = (6 * q + 5) * (6 * q + 13) := by congr 1; omega
+  have h2 : (6 * q + 5) * (6 * q + 13) = 36 * (q * (q + 3)) + 65 := by ring
+  have h3 : 36 * (q * (q + 3)) = 72 * k := by linarith
+  have hprod : p * (p + 8) = 72 * k + 65 := by linarith
+  omega
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 9 \pmod{100}$,
 except the first value "65". -/
 @[category undergraduate, AMS 11]
-theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h : 65 < n) (h : ComesFromPrimeQuadruple n) :
+theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFromPrimeQuadruple n) :
     n % 100 = 9 := by
-  sorry
+  obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
+  have hp5 : 5 ≤ p := by
+    by_contra hlt; push_neg at hlt
+    interval_cases p <;> simp_all (config := { decide := true })
+  have h2 : ¬ (2 ∣ p) := by
+    intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega
+  have h3 : ¬ (3 ∣ p) := by
+    intro hdvd; cases hp.eq_one_or_self_of_dvd 3 hdvd with | inl h => omega | inr h => omega
+  have h5 : ¬ (5 ∣ p) := by
+    intro hdvd; cases hp.eq_one_or_self_of_dvd 5 hdvd with | inl h => omega | inr h =>
+      -- p = 5 → p*(p+8) = 65, but 65 < n = p*(p+8) is impossible
+      subst h; omega
+  have hmod30 : p % 30 = 11 := by
+    have hmod2 : p % 2 = 1 := by omega
+    have hmod3 : p % 3 = 2 := by
+      have : p % 3 ≠ 1 := by
+        intro heq; have : 3 ∣ (p + 2) := ⟨p / 3 + 1, by omega⟩
+        cases hp2.eq_one_or_self_of_dvd 3 this with | inl h => omega | inr h => omega
+      omega
+    have hmod5 : p % 5 = 1 := by
+      have hne2 : p % 5 ≠ 2 := by
+        intro heq; have : 5 ∣ (p + 8) := ⟨p / 5 + 2, by omega⟩
+        cases hp8.eq_one_or_self_of_dvd 5 this with | inl h => omega | inr h => omega
+      have hne3 : p % 5 ≠ 3 := by
+        intro heq; have : 5 ∣ (p + 2) := ⟨p / 5 + 1, by omega⟩
+        cases hp2.eq_one_or_self_of_dvd 5 this with | inl h => omega | inr h => omega
+      have hne4 : p % 5 ≠ 4 := by
+        intro heq; have : 5 ∣ (p + 6) := ⟨p / 5 + 2, by omega⟩
+        cases hp6.eq_one_or_self_of_dvd 5 this with | inl h => omega | inr h => omega
+      omega
+    omega
+  set q := p / 30
+  have hp_eq : p = 30 * q + 11 := by omega
+  -- p*(p+8) = (30q+11)(30q+19) = 900*q*(q+1) + 30*(11+19)*q + 209
+  -- = 900*q*(q+1) + 900*q + 209 ... let me just compute with ring
+  have hparity : 2 ∣ q * (q + 1) := by
+    rcases Nat.even_or_odd q with ⟨r, hr⟩ | ⟨r, hr⟩
+    · exact dvd_mul_of_dvd_left ⟨r, by omega⟩ _
+    · exact dvd_mul_of_dvd_right ⟨r + 1, by omega⟩ _
+  obtain ⟨k, hk⟩ := hparity
+  have h1 : p * (p + 8) = (30 * q + 11) * (30 * q + 19) := by congr 1; omega
+  have h2 : (30 * q + 11) * (30 * q + 19) = 900 * (q * (q + 1)) + 209 := by ring
+  have h3 : 900 * (q * (q + 1)) = 1800 * k := by linarith
+  have hprod : p * (p + 8) = 1800 * k + 209 := by linarith
+  omega
 
 end OeisA56777

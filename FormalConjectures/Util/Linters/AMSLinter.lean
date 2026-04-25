@@ -13,10 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Attributes.Basic
-import Mathlib.Tactic.Lemma
-import Batteries.Data.Array.Merge
+public import FormalConjectures.Util.Attributes.Basic
+public import Mathlib.Tactic.Lemma
+public meta import Batteries.Data.Array.Merge
 
 
 /-! # The AMS Linter
@@ -25,6 +26,8 @@ The `AMSLinter` is a linter to aid with formatting contributions to
 the Formal Conjectures repository by ensuring that results in a file have
 the appropriate subject tags.
 -/
+
+public meta section
 
 open Lean Elab Meta Linter Command Parser Term ProblemAttributes
 

@@ -32,7 +32,7 @@ disjoint as possible'?
 
 That is, for all $d\mid n$ with $d>1$ there is an associated $a_d$ such that every integer is
 congruent to some $a_d\pmod{d}$, and if there is some integer $x$ with
-\[x\equiv a_d\pmod{d}\textrm{ and }x\equiv a_{d'}\pmod{d'}\]then $(d,d')=1$.
+$$x\equiv a_d\pmod{d}\textrm{ and }x\equiv a_{d'}\pmod{d'}$$then $(d,d')=1$.
 
 The density of such $n$ is zero. Erdős and Graham believed that no such $n$ exist.
 

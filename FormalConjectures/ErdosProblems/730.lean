@@ -23,11 +23,11 @@ import FormalConjectures.Util.ProblemImports
   - [erdosproblems.com/730](https://www.erdosproblems.com/730)
   - [A129515](https://oeis.org/A129515)
 -/
+namespace Erdos730
+
 abbrev S :=
   {(n, m) : ℕ × ℕ | n < m ∧ n.centralBinom.primeFactors = m.centralBinom.primeFactors}
 
-
-namespace Erdos730
 
 /--
 Are there infinitely many pairs of integers $n < m$ such that $\binom{2n}{n}$

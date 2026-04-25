@@ -26,10 +26,14 @@ open BigOperators
 open Classical
 open scoped Finset
 
+namespace DegreeSequencesTriangleFree
+
 /-- A sequence of natural numbers is **compact** on a set `S` if consecutive terms at distance
 `2` differ by `1` for all `k ∈ S`. -/
 def IsCompactSequenceOn (d : ℕ → ℕ) (S : Set ℕ) : Prop :=
   ∀ k ∈ S, d (k + 2) = d k + 1
+
+end DegreeSequencesTriangleFree
 
 namespace SimpleGraph
 
@@ -41,7 +45,7 @@ noncomputable def degreeFreq (G : SimpleGraph α) (d : ℕ) : ℕ :=
 
 end SimpleGraph
 
-section lemmas
+namespace DegreeSequencesTriangleFree
 
 variable (d : ℕ → ℕ) (n k r : ℕ)
 
@@ -114,7 +118,7 @@ lemma lemma2_d
         ∑ i ∈ .Icc 1 (2 * n + 1), d i := by
   sorry
 
-end lemmas
+end DegreeSequencesTriangleFree
 
 namespace SimpleGraph
 
@@ -124,7 +128,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /-- The degree sequence of `G` is **compact** if it satisfies
 `IsCompactSequenceOn` for all valid indices `k` such that `k + 2 < Fintype.card α`. -/
 def HasCompactdegreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : Prop :=
-  IsCompactSequenceOn (fun k => (degreeSequence G).getD k 0) {k | k + 2 < Fintype.card α}
+  DegreeSequencesTriangleFree.IsCompactSequenceOn (fun k => (degreeSequence G).getD k 0) {k | k + 2 < Fintype.card α}
 
 /-- **Theorem 1.** If a triangle-free graph has `f = 2`,
 then it is bipartite, has minimum degree `1`, and
@@ -175,10 +179,12 @@ noncomputable def F (n : ℕ) : ℕ :=
   sInf { p | ∃ (G : SimpleGraph (Fin p)) (_ : DecidableRel G.Adj),
     G.CliqueFree 3 ∧ G.chromaticNumber = n ∧ degreeSequenceMultiplicity G = 3 }
 
+/-- The smallest number of vertices of a triangle-free graph with chromatic number 3 and f=3 is 7. -/
 @[category research solved, AMS 5]
 theorem F_three : F 3 = 7 := by
   sorry
 
+/-- The smallest number of vertices of a triangle-free graph with chromatic number 4 and f=3 is at most 19. -/
 @[category research solved, AMS 5]
 theorem F_four_le : F 4 ≤ 19 := by
   sorry
