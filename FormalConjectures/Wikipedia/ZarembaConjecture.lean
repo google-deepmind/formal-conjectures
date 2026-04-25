@@ -25,7 +25,8 @@ import FormalConjectures.Util.ProblemImports
 namespace ZarembaConjecture
 
 /--
-The finite list of partial quotients in the simple continued fraction expansion of a positive rational `a / d`.
+The finite list of partial quotients in the simple continued fraction expansion of a
+positive rational `a / d`.
 -/
 def partialQuotients : ℕ → ℕ → List ℕ
   | _, 0 => []
@@ -33,17 +34,25 @@ def partialQuotients : ℕ → ℕ → List ℕ
 termination_by _ d => d
 decreasing_by exact Nat.mod_lt _ (Nat.succ_pos _)
 
-/-- The finset of partial quotients appearing in the continued fraction expansion of `a / d`. -/
-def partialQuotientFinset (a d : ℕ) : Finset ℕ :=
-  (partialQuotients a d).toFinset
+/-- For `333/106 = [3; 7, 15]`. -/
+@[category test, AMS 11]
+example : partialQuotients 333 106 = [3, 7, 15] := by native_decide
 
 /-- The maximum partial quotient of `a / d`, taking the value `0` when `d = 0`. -/
-def maxPartialQuotient (a d : ℕ) : ℕ :=
-  (partialQuotients a d).foldl max 0
+def maxPartialQuotient (a d : ℕ) : ℕ := (partialQuotients a d).foldl max 0
+
+/-- The maximum partial quotient of `4217/10037` is `2`. -/
+@[category test, AMS 11]
+example : maxPartialQuotient 4217 10037 = 2 := by native_decide
 
 /-- The numerators `a < d` that are coprime to `d`. -/
 def coprimeNumerators (d : ℕ) : Finset ℕ :=
   {a ∈ Finset.range d | d.Coprime a}
+
+/-- The positive numerators less than `12` and coprime to `12` are `1`, `5`, `7`, and `11`. -/
+@[category test, AMS 11]
+example : coprimeNumerators 12 = {1, 5, 7, 11} := by
+  native_decide
 
 /--
 The least possible value, over positive coprime numerators `a < d`, of the maximum partial
@@ -66,24 +75,6 @@ are all at most `A`.
 -/
 def candidateNumerators (A d : ℕ) : Finset ℕ :=
   (coprimeNumerators d).filter fun a => partialQuotientsBoundedBy A a d
-
-/-- For $5/6 = [0; 1, 5]$, the partial quotients are `0`, `1`, and `5`. -/
-@[category test, AMS 11]
-theorem partialQuotientFinset_five_six :
-    partialQuotientFinset 5 6 = ({0, 1, 5} : Finset ℕ) := by
-  native_decide
-
-/-- The maximum partial quotient of $5/6$ is `5`. -/
-@[category test, AMS 11]
-theorem maxPartialQuotient_five_six :
-    maxPartialQuotient 5 6 = 5 := by
-  native_decide
-
-/-- The positive numerators less than `6` and coprime to `6` are `1` and `5`. -/
-@[category test, AMS 11]
-theorem coprimeNumerators_six :
-    coprimeNumerators 6 = ({1, 5} : Finset ℕ) := by
-  native_decide
 
 /-- The best possible maximum partial quotient among coprime numerators for denominator `6` is `5`. -/
 @[category test, AMS 11]
