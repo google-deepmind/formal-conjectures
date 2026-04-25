@@ -67,7 +67,7 @@ denominator `d`, there is a numerator `a` coprime to `d`, for which every partia
 quotient in the continued fraction of `a / d` is at most `A`.
 -/
 @[category research open, AMS 11]
-theorem zaremba_conjecture : ∃ A, ∀ d, minmaxPartialQuotient d ≤ (A : WithTop ℕ) := by
+theorem zaremba_conjecture : ∃ A, ∀ d, minmaxPartialQuotient d ≤ A := by
   sorry
 
 end ZarembaConjecture
