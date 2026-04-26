@@ -415,7 +415,7 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
         fuel + depth ≥ Fintype.card α + 1 →
         G.bfs_dist_aux v fuel depth reached = G.dist u v by
       exact hsuff (Fintype.card α) 1 (G.bfs_expand {u})
-        (fun w => by simp [Function.iterate_succ, Function.comp])
+        (fun w => by simp)
         (fun d hd => by
           have := Nat.lt_of_lt_of_le hd (Nat.le_refl 1)
           interval_cases d; simp [Finset.mem_singleton]; exact Ne.symm h)

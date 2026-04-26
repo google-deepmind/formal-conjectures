@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open EuclideanGeometry MeasureTheory
 
+namespace MoserWorm
+
 /--
 The set of worms is the set of curves of length (at most) 1.
 We formalize this as the set of ranges of 1-Lipschitz functions from `[0,1]` to `ℝ²`.
@@ -115,3 +117,5 @@ International Journal of Computational Geometry & Applications,
 theorem convex_mosers_worm_problem_lower_bound :
     0.232239 ∈ lowerBounds {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} := by
   sorry
+
+end MoserWorm

@@ -109,10 +109,13 @@ theorem erdos_138.variants.quotient :
 
 /--
 In [Er81] Erdős asks whether $W(k+1) - W(k) \to \infty$.
+
+The DeepMind prover agent has found a formal proof of this statement.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/6ac8d0cbe1a85e71747c62c1391a84788015ebc1/FormalConjectures/ErdosProblems/138.lean#L844"]
 theorem erdos_138.variants.difference :
-    answer(sorry) ↔ atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
+    answer(True) ↔ atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
   sorry
 
 /--

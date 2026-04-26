@@ -28,7 +28,7 @@ open Filter
 
 /--
 Is there some constant $c>0$ such that for every $n\geq 1$ there exists some $\delta_k\in \{-1,0,1\}$ for $1\leq k\leq n$ with
-\[0< \left\lvert \sum_{1\leq k\leq n}\frac{\delta_k}{k}\right\rvert < \frac{c}{2^n}?\]
+$$0< \left\lvert \sum_{1\leq k\leq n}\frac{\delta_k}{k}\right\rvert < \frac{c}{2^n}?$$
 -/
 @[category research open, AMS 11]
 theorem erdos_317 : answer(sorry) ↔
@@ -40,7 +40,7 @@ theorem erdos_317 : answer(sorry) ↔
 
 /--
 Is it true that for sufficiently large $n$, for any $\delta_k\in \{-1,0,1\}$,
-\[\left\lvert \sum_{1\leq k\leq n}\frac{\delta_k}{k}\right\rvert > \frac{1}{[1,\ldots,n]}\]
+$$\left\lvert \sum_{1\leq k\leq n}\frac{\delta_k}{k}\right\rvert > \frac{1}{[1,\ldots,n]}$$
 whenever the left-hand side is not zero?
 -/
 @[category research open, AMS 11]
@@ -62,7 +62,7 @@ lemma claim2_inequality : ∀ᶠ n in atTop,
 
 /--
 `erdos_317.variants.claim2` fails for small $n$, for example
-\[\frac{1}{2}-\frac{1}{3}-\frac{1}{4}=-\frac{1}{12}.\]
+$$\frac{1}{2}-\frac{1}{3}-\frac{1}{4}=-\frac{1}{12}.$$
 -/
 @[category graduate, AMS 11]
 theorem erdos_317.variants.counterexample : ¬ (∀  δ : (Fin 4) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
