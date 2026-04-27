@@ -100,7 +100,6 @@ An (independent) informal solution can be found here:
 "https://github.com/google-deepmind/formal-conjectures/blob/34c93bbad127a9a5354b9d53478d338eb65edb88/FormalConjectures/Wikipedia/EulerBrick.lean#L1804"]
 theorem cuboidOne : CuboidOne := by
   sorry
-#print axioms cuboidOne
 
 /-- Pairs of natural numbers for which the second Cuboid polynomial is irreducible. -/
 def CuboidTwoFor (a b : ℤ) : Prop :=
