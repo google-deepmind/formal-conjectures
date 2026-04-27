@@ -112,7 +112,7 @@ relatively prime. An example is the set of all multiples of the first $k$ primes
 Is this the largest such set?  To avoid trivial counterexamples, we must insist that $N$ be at
 least the $k$th prime.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos56.lean"]
 theorem erdos_56 : answer(False) ↔ ∀ᵉ (k > 0) (N ≥ (k-1).nth Nat.Prime),
     (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card) := by
   sorry
