@@ -50,11 +50,24 @@ def coprimeResidues (d : ℕ) : Finset ℕ := {a ∈ Finset.range d | d.Coprime 
 @[category test, AMS 11]
 example : coprimeResidues 12 = {1, 5, 7, 11} := by native_decide
 
+/-- Edge case, `d = 1`. -/
+@[category test, AMS 11]
+example : coprimeResidues 1 = {0} := by native_decide
+
+/-- Edge case, `d = 0`. -/
+@[category test, AMS 11]
+example : coprimeResidues 0 = {} := by native_decide
+
 /--
 The least possible value, over positive coprime numerators `a < d`, of the maximum partial
 quotient in the continued fraction of `a / d`. -/
-def minmaxPartialQuotient (d : ℕ) :=
-  ((coprimeResidues d).image fun a => maxPartialQuotient a d).min
+def minmaxPartialQuotient (d : ℕ) : ℕ :=
+  ((coprimeResidues d).image fun a => maxPartialQuotient a d).min.untopD 0
+
+/-- The best possible maximum partial quotient among coprime numerators for
+denominator `0` is `0`. -/
+@[category test, AMS 11]
+example : minmaxPartialQuotient 0 = 0 := by native_decide
 
 /-- The best possible maximum partial quotient among coprime numerators for
 denominator `121` is `2`. -/
