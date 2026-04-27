@@ -93,7 +93,8 @@ def IsStrongGiuga (n : ℕ) : Prop :=
 A composite number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
 prime divisors $p$ of $n$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/2663234a28260853790aa5752d8d4550ff0ab1ca/FormalConjectures/Wikipedia/AgohGiuga.lean#L97"]
 theorem isWeakGiuga_iff_prime_dvd {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∀ p ∈ n.primeFactors, p ∣ (n / p - 1) := by
   sorry

@@ -82,6 +82,7 @@ theorem BB_3 : BB 3 = 21 := by
 theorem BB_4 : BB 4 = 107 := by
   sorry
 
+/-- The value of the Busy Beaver function for 5 states is 47176870. -/
 @[category research solved, AMS 3]
 theorem BB_5 : BB 5 = 47176870 := by
   sorry

@@ -33,9 +33,9 @@ namespace Erdos38
 Does there exist $B \subset \mathbb{N}$ which is not an additive basis,
 but is such that for every set $A \subseteq \mathbb{N}$ of Schnirelmann density $\alpha$
 and every $N$ there exists $b \in B$ such that
-\[
+$$
   \lvert (A \cup (A+b)) \cap \{1, \ldots, N\} \rvert \geq (\alpha + f(\alpha)) N
-\]
+$$
 where $f(\alpha) > 0$ for $0 < \alpha < 1$?
 
 Note: here Erdős seems to use a slightly weaker notion of an additive basis (see [Er56] at the top

@@ -58,7 +58,8 @@ def isInternal (n : Name) : Bool :=
 
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
-  ["docstring", "statement", "subjects", "formalProofKind", "formalProofLink", "moduleDocstrings"]
+  ["docstring", "statement", "subjects", "formalProofKind", "formalProofLink",
+   "hasSorryFreeProof", "moduleDocstrings"]
 
 structure TheoremInfo where
   «theorem» : String
@@ -69,6 +70,7 @@ structure TheoremInfo where
   docstring : Option String
   formalProofKind : Option String
   formalProofLink : Option String
+  hasSorryFreeProof : Bool
 
 
 /-- Serialize `TheoremInfo` to JSON, omitting fields whose keys are in `exclude`. -/
@@ -84,6 +86,8 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
         [("formalProofKind", toJson info.formalProofKind)])
     ++ (if exclude.contains "formalProofLink" then [] else
         [("formalProofLink", toJson info.formalProofLink)])
+    ++ (if exclude.contains "hasSorryFreeProof" then [] else
+        [("hasSorryFreeProof", toJson info.hasSorryFreeProof)])
   Json.mkObj fields
 
 instance : ToJson TheoremInfo where
@@ -191,6 +195,19 @@ unsafe def main (args : List String) : IO Unit := do
                   (some (formalProofKindToString tag.proofKind), some tag.proofLink)
                 else
                   (none, none)
+              -- Check whether the proof term is sorry-free
+              let hasSorryFreeProof :=
+                info.value? |>.any (!·.hasSorry)
+              -- Warn about suspicious category / sorry combinations
+              if let some catTag := categoryFullMap.get? name then
+                match catTag.category, hasSorryFreeProof with
+                | .research .open, true =>
+                  IO.eprintln s!"WARNING: Theorem {name} is categorised as `research open` but has a sorry-free proof"
+                | .test, false =>
+                  IO.eprintln s!"WARNING: Theorem {name} is categorised as `test` but has no sorry-free proof"
+                | .API, false =>
+                  IO.eprintln s!"WARNING: Theorem {name} is categorised as `API` but has no sorry-free proof"
+                | _, _ => pure ()
               allResults := {
                 «theorem» := name.toString,
                 module := modName.toString,
@@ -199,7 +216,8 @@ unsafe def main (args : List String) : IO Unit := do
                 statement := statement,
                 docstring := docstring,
                 formalProofKind := formalProofKind,
-                formalProofLink := formalProofLink
+                formalProofLink := formalProofLink,
+                hasSorryFreeProof := hasSorryFreeProof
               } :: allResults
         | _ => pure ()
 

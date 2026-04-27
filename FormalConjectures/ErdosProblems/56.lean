@@ -113,9 +113,8 @@ Is this the largest such set?  To avoid trivial counterexamples, we must insist 
 least the $k$th prime.
 -/
 @[category research solved, AMS 11]
-theorem erdos_56 : (∀ᵉ (k > 0) (N ≥ (k-1).nth Nat.Prime),
-    (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card)) ↔
-    answer(False) := by
+theorem erdos_56 : answer(False) ↔ ∀ᵉ (k > 0) (N ≥ (k-1).nth Nat.Prime),
+    (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card) := by
   sorry
 
 end Erdos56

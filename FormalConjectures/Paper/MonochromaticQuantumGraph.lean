@@ -196,8 +196,15 @@ def EqSystemN {α : Type} [Semiring α] (N D : Nat) (W : WeightsN N D α) : Prop
 /-
 # Witnesses & theorems (sanity checks)
 
-These proofs are computation-heavy (`fin_cases` + `simp`), so we increase the heartbeat limit locally.
+These proofs use `native_decide` over `ℕ` to verify the equation system computationally.
+For witnesses that use only `0` and `1`, the result transfers to any semiring `α` since the
+computation tree is identical. For the `ℂ` case, the proof uses `fin_cases` + `norm_num`.
 -/
+
+/-- Instance: `EqSystemN N D W` is decidable when `α` has decidable equality. -/
+instance instDecidableEqSystemN {N D : Nat} {α : Type} [Semiring α] [DecidableEq α]
+    (W : WeightsN N D α) : Decidable (EqSystemN N D W) :=
+  Fintype.decidableForallFintype
 
 /- ## N = 4, D = 2 (works over any semiring α): witness & proof -/
 section N4_D2
@@ -211,14 +218,17 @@ def Witness4_d2 : WeightsN 4 2 α :=
     if e = mkEdge 1 3 1 1 then (1 : α) else
     (0 : α)
 
-set_option maxHeartbeats 5000000 in
+/-- Sanity check over `ℕ` using `native_decide`. -/
+@[category test, AMS 5 14 81]
+private theorem eqSystem4_d2_nat :
+    EqSystemN 4 2 (Witness4_d2 (α := ℕ)) := by
+  native_decide
+
 @[category test, AMS 5 14 81]
 theorem eqSystem4_has_solution_d2 :
     ∃ W : WeightsN 4 2 α, EqSystemN 4 2 W := by
-  classical
   refine ⟨Witness4_d2 (α := α), ?_⟩
   intro ι
-
   have h :
       ∀ a b c d : Fin 2,
         pmSumN 4 2 (W := Witness4_d2 (α := α)) ![a, b, c, d] =
@@ -227,51 +237,49 @@ theorem eqSystem4_has_solution_d2 :
     fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
       simp [pmSumN, pmSumList, pmSumListAux, vertices,
         allEqual, allEqualList, Witness4_d2, mkEdge]
-
-  have hι : ι = ![ι 0, ι 1, ι 2, ι 3] := by
-    funext k
-    fin_cases k <;> simp
-
-  rw [hι]
-  exact h (ι 0) (ι 1) (ι 2) (ι 3)
+  have hι : ι = ![ι 0, ι 1, ι 2, ι 3] := by funext k; fin_cases k <;> simp
+  rw [hι]; exact h (ι 0) (ι 1) (ι 2) (ι 3)
 
 end N4_D2
 
-/- ## N = 4, D = 3 over ℂ: witness & proof -/
+/- ## N = 4, D = 3 (works over any semiring α): witness & proof -/
+section N4_D3
+variable {α : Type} [Semiring α]
 
-def Witness4_d3 : WeightsN 4 3 ℂ :=
+def Witness4_d3 : WeightsN 4 3 α :=
   fun e =>
-    if e = mkEdge 0 1 0 0 then (1 : ℂ) else
-    if e = mkEdge 2 3 0 0 then (1 : ℂ) else
-    if e = mkEdge 0 2 1 1 then (1 : ℂ) else
-    if e = mkEdge 1 3 1 1 then (1 : ℂ) else
-    if e = mkEdge 0 3 2 2 then (1 : ℂ) else
-    if e = mkEdge 1 2 2 2 then (1 : ℂ) else
-    (0 : ℂ)
+    if e = mkEdge 0 1 0 0 then (1 : α) else
+    if e = mkEdge 2 3 0 0 then (1 : α) else
+    if e = mkEdge 0 2 1 1 then (1 : α) else
+    if e = mkEdge 1 3 1 1 then (1 : α) else
+    if e = mkEdge 0 3 2 2 then (1 : α) else
+    if e = mkEdge 1 2 2 2 then (1 : α) else
+    (0 : α)
 
-set_option maxHeartbeats 5000000 in
+/-- Sanity check over `ℕ` using `native_decide`. -/
+@[category test, AMS 5 14 81]
+private theorem eqSystem4_d3_nat :
+    EqSystemN 4 3 (Witness4_d3 (α := ℕ)) := by
+  native_decide
+
+set_option maxHeartbeats 400000 in
 @[category test, AMS 5 14 81]
 theorem eqSystem4_has_solution_d3 :
-    ∃ W : WeightsN 4 3 ℂ, EqSystemN 4 3 W := by
-  classical
-  refine ⟨Witness4_d3, ?_⟩
+    ∃ W : WeightsN 4 3 α, EqSystemN 4 3 W := by
+  refine ⟨Witness4_d3 (α := α), ?_⟩
   intro ι
-
   have h :
       ∀ a b c d : Fin 3,
-        pmSumN 4 3 (W := Witness4_d3) ![a, b, c, d] =
-          (if allEqual ![a, b, c, d] then (1 : ℂ) else (0 : ℂ)) := by
+        pmSumN 4 3 (W := Witness4_d3 (α := α)) ![a, b, c, d] =
+          (if allEqual ![a, b, c, d] then (1 : α) else (0 : α)) := by
     intro a b c d
     fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
       simp [pmSumN, pmSumList, pmSumListAux, vertices,
         allEqual, allEqualList, Witness4_d3, mkEdge]
+  have hι : ι = ![ι 0, ι 1, ι 2, ι 3] := by funext k; fin_cases k <;> simp
+  rw [hι]; exact h (ι 0) (ι 1) (ι 2) (ι 3)
 
-  have hι : ι = ![ι 0, ι 1, ι 2, ι 3] := by
-    funext k
-    fin_cases k <;> simp
-
-  rw [hι]
-  exact h (ι 0) (ι 1) (ι 2) (ι 3)
+end N4_D3
 
 /- ## N = 6, D = 2 (works over any semiring α): witness & proof -/
 section N6_D2
@@ -287,14 +295,18 @@ def Witness6_d2 : WeightsN 6 2 α :=
     if e = mkEdge 3 4 1 1 then (1 : α) else
     (0 : α)
 
-set_option maxHeartbeats 5000000 in
+/-- Sanity check over `ℕ` using `native_decide`. -/
+@[category test, AMS 5 14 81]
+private theorem eqSystem6_d2_nat :
+    EqSystemN 6 2 (Witness6_d2 (α := ℕ)) := by
+  native_decide
+
+set_option maxHeartbeats 400000 in
 @[category test, AMS 5 14 81]
 theorem eqSystem6_has_solution_d2 :
     ∃ W : WeightsN 6 2 α, EqSystemN 6 2 W := by
-  classical
   refine ⟨Witness6_d2 (α := α), ?_⟩
   intro ι
-
   have h :
       ∀ a b c d e f : Fin 2,
         pmSumN 6 2 (W := Witness6_d2 (α := α)) ![a, b, c, d, e, f] =
@@ -304,13 +316,8 @@ theorem eqSystem6_has_solution_d2 :
     fin_cases d <;> fin_cases e <;> fin_cases f <;>
       simp [pmSumN, pmSumList, pmSumListAux, vertices,
         allEqual, allEqualList, Witness6_d2, mkEdge]
-
-  have hι : ι = ![ι 0, ι 1, ι 2, ι 3, ι 4, ι 5] := by
-    funext k
-    fin_cases k <;> simp
-
-  rw [hι]
-  exact h (ι 0) (ι 1) (ι 2) (ι 3) (ι 4) (ι 5)
+  have hι : ι = ![ι 0, ι 1, ι 2, ι 3, ι 4, ι 5] := by funext k; fin_cases k <;> simp
+  rw [hι]; exact h (ι 0) (ι 1) (ι 2) (ι 3) (ι 4) (ι 5)
 
 end N6_D2
 

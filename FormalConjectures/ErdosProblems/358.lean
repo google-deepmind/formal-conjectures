@@ -28,28 +28,28 @@ open Filter Finset
 
 /-
 Let $a$ be an infinite sequence of integers. `intervalRepresentations A n` is the set of solutions
-to \[n=\sum_{u\leq i\leq v}a_i.\] where `u` and `v` are positive integers.
+to $$n=\sum_{u\leq i\leq v}a_i.$$ where `u` and `v` are positive integers.
 -/
 def intervalRepresentations (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
   {(u, v) | 0 < u ∧ 0 < v ∧ n = ∑ i ∈ Icc u v, A i}
 
 /-
 Let $a$ be an infinite sequence of integers. Let $f(n)$ count the number of
-solutions to \[n=\sum_{u\leq i\leq v}a_i.\]
+solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 -/
 noncomputable def f (A : ℕ → ℕ) (n : ℕ) : ℕ :=
   Nat.card (intervalRepresentations A n)
 
 /-
 Let $a$ be an infinite sequence of integers. `intervalRepresentationsNonTrivial A n` is the set of
-solutions to \[n=\sum_{u\leq i\leq v}a_i\] such that the sum has at least two terms.
+solutions to $$n=\sum_{u\leq i\leq v}a_i$$ such that the sum has at least two terms.
 -/
 def intervalRepresentationsNonTrivial (A : ℕ → ℕ) (n : ℕ) : Set (ℕ × ℕ) :=
   {(u, v) | 0 < u ∧ 0 < v ∧ u < v ∧ n = ∑ i ∈ Icc u v, A i}
 
 /-
 Let $a$ be an infinite sequence of integers. Let $g(n)$ count the number of
-solutions to \[n=\sum_{u\leq i\leq v}a_i.\] such that the sum has at least two terms.
+solutions to $$n=\sum_{u\leq i\leq v}a_i.$$ such that the sum has at least two terms.
 -/
 noncomputable def g (A : ℕ → ℕ) (n : ℕ) : ℕ :=
   Nat.card (intervalRepresentationsNonTrivial A n)
@@ -63,7 +63,7 @@ theorem f_id : f id = fun n ↦ #{d ∈ n.divisors | Odd d} := by
 
 /--
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
-solutions to \[n=\sum_{u\leq i\leq v}a_i.\]
+solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 Is there such an $A$ for which $f(n)\to \infty$ as $n\to \infty$?
 -/
 @[category research open, AMS 5 11]
@@ -73,7 +73,7 @@ theorem erdos_358.parts.i :
 
 /--
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
-solutions to \[n=\sum_{u\leq i\leq v}a_i.\]
+solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 Is there an $A$ such that $f(n)\geq 2$ for all large $n$?
 -/
 @[category research open, AMS 5 11]
@@ -83,7 +83,7 @@ theorem erdos_358.parts.ii :
 
 /--
 When $A =\{a_1 < \cdots\}$ corresponds to the set of primes, it is conjectured that the
-$\limsup$ of the number of representations \[n=\sum_{u\leq i\leq v}a_i\] is infinite.
+$\limsup$ of the number of representations $$n=\sum_{u\leq i\leq v}a_i$$ is infinite.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_358.variants.prime_set :
@@ -92,7 +92,7 @@ theorem erdos_358.variants.prime_set :
 
 /--
 When $A =\{a_1 < \cdots\}$ corresponds to the set of primes, it is conjectured that the set of
-numbers $n$ that have representations \[n=\sum_{u\leq i\leq v}a_i\] has positive upper density.
+numbers $n$ that have representations $$n=\sum_{u\leq i\leq v}a_i$$ has positive upper density.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_358.variants.prime_set_density_representation :
@@ -101,7 +101,7 @@ theorem erdos_358.variants.prime_set_density_representation :
 
 /--
 It is conjectured that if $A =\{a_1 < \cdots\}$ and $g$ counts the number of representations
-\[n=\sum_{u\leq i\leq v}a_i\] such that the sum has at least two terms, then for all $n$ we have
+$$n=\sum_{u\leq i\leq v}a_i$$ such that the sum has at least two terms, then for all $n$ we have
 $1 \leq g(n)$ for sufficiently large $n$.
 -/
 @[category research open, AMS 5 11]

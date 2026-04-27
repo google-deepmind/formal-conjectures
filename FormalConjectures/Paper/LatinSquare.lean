@@ -28,6 +28,8 @@ This file formalizes some conjectures and theorems around latin squares.
 * https://en.wikipedia.org/wiki/Problems_in_Latin_squares
 -/
 
+namespace LatinSquare
+
 variable {n : ℕ}
 
 /--
@@ -162,3 +164,5 @@ If $n$ is even, then $f(n, 2) = n$; if $n$ is odd, then $f(n, 2) > n$.
 TODO(rao107): Conjecture 10.10 in [Wa2011]:
 Every latin hypercube of odd dimension or of odd oder has a transversal.
 -/
+
+end LatinSquare
