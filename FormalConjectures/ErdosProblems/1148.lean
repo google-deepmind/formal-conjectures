@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/1148](https://www.erdosproblems.com/1148)
+- [Ch26] P. Chojecki, [Bounded Representations by $x^2 + y^2 - z^2$](https://www.ulam.ai/research/erdos1148-full.pdf) (2026)
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
 -/
@@ -38,9 +39,11 @@ def Erdos1148Prop (n : ℕ) : Prop :=
 
 /--
 Can every large integer $n$ be written as $n=x^2+y^2-z^2$ with $\max(x^2,y^2,z^2)\leq n$?
+
+This was proved affirmatively by Chojecki [Ch26], using a Duke-type equidistribution theorem.
 -/
-@[category research open, AMS 11]
-theorem erdos_1148 : answer(sorry) ↔ ∀ᶠ n in atTop, Erdos1148Prop n := by
+@[category research solved, AMS 11]
+theorem erdos_1148 : answer(True) ↔ ∀ᶠ n in atTop, Erdos1148Prop n := by
   sorry
 
 /--
