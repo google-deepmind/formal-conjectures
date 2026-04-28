@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/997](https://www.erdosproblems.com/997)
+- [APSSV26] B. Alexeev, M. Putterman, M. Sawhney, M. Sellke, and G. Valiant,
+  [Short proofs in combinatorics and number theory](https://arxiv.org/abs/2603.29961).
+  arXiv:2603.29961 (2026).
 - [CLLW24] J. Champagne, T. Le, Y.-R. Liu, and T. D. Wooley, Well-distribution modulo one and the
   primes. arXiv:2406.19491 (2024).
 - [Er64b] Erdős, P., Problems and results on diophantine approximations. Compositio Math. (1964),
@@ -54,7 +57,7 @@ def IsWellDistributed (x : ℕ → ℝ) : Prop :=
 Is it true that, for every $\alpha$, the sequence $\{ \alpha p_n\}$ is not well-distributed,
 if $p_n$ is the sequence of primes?
 
-The answer is yes; a Lean formalisation is available in [Mo26].
+The answer is yes, by [APSSV26, Section 4]; a Lean formalisation is available in [Mo26].
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean"]
