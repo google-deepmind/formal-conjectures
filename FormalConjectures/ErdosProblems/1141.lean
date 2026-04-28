@@ -52,9 +52,10 @@ error, since for example $968-9=7\cdot 137$.
 The list of $n$ satisfying the given property is [A214583] in the OEIS. The largest known such $n$
 is $1722$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/yuta0x89/ErdosProblems/blob/a1319f732cdee5140faf47d984e2c451c1184803/Erdos1141.lean"]
 theorem erdos_1141 :
-    answer(sorry) ↔ Infinite { n | Erdos1141Prop n } := by
+    answer(False) ↔ Infinite { n | Erdos1141Prop n } := by
   sorry
 
 @[category test, AMS 11]
