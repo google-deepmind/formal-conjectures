@@ -51,7 +51,7 @@ namespace DedekindNumber
 open Finset
 
 instance piFinBoolDecidableLE {n : ℕ} :
-DecidableRel (fun (a b : Fin n → Bool) => a ≤ b) :=
+    DecidableRel (fun (a b : Fin n → Bool) => a ≤ b) :=
   fun a b => show Decidable (a ≤ b) from by
     rw [Pi.le_def]
     exact Fintype.decidableForallFintype
@@ -255,7 +255,7 @@ where $b_i^k$ is the $i$-th bit of $k$. However, this formula is not computation
 efficient for large $n$.
 -/
 @[category research solved, AMS 5 6]
-theorem dedekindNumbers_eq_kisielewiczFormula : M = kisielewiczFormula := by
+theorem M_eq_kisielewiczFormula : M = kisielewiczFormula := by
   sorry
 
 /--
@@ -263,7 +263,7 @@ theorem dedekindNumbers_eq_kisielewiczFormula : M = kisielewiczFormula := by
   currently known.
 -/
 @[category research open, AMS 5 6]
-theorem DedekindNumbers : M = answer(sorry) := by
+theorem M_eq : M = answer(sorry) := by
   sorry
 
 /--
