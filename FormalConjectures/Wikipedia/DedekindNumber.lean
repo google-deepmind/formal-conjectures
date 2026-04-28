@@ -228,8 +228,39 @@ theorem M_eq_M' : M  = M' := by
   ext n
   exact Fintype.card_congr (equivMonotoneSperner n)
 
+/-- A closed formula for the Dedekind numbers as found by Kisielewicz (1998):
+$$
+  M(n) = \sum_{k=0}^{2^{2^n}}\prod_{j = 1}^{2 ^ n - 1}\prod_{i = 0}^{j - 1} \left(
+    1 - b_i^kb_j^k \prod_{m = 0}^{\log_2 i} (1 - b_m^i + b_m^ib_m^j)\right),
+$$,
+where $b_i^k$ is the $i$-th bit of $k$. -/
+def kisielewiczFormula (n : ℕ) : ℕ :=
+  ∑ k ∈ Finset.range (2 ^ (2 ^ n)), ∏ j ∈ Finset.Icc 1 (2 ^ n), ∏ i ∈ Finset.range j,
+    (1 - (k.testBit i).toNat * (k.testBit j).toNat * ∏ m ∈ Finset.range (i.log2 + 1),
+      (1 - (i.testBit m).toNat + (i.testBit m).toNat * (j.testBit m).toNat))
+
+@[category test, AMS 5 6] theorem kisielewiczFormula_zero : kisielewiczFormula 0 = 2:= by decide
+@[category test, AMS 5 6] theorem kisielewiczFormula_one : kisielewiczFormula 1 = 3 := by decide
+@[category test, AMS 5 6] theorem kisielewiczFormula_two : kisielewiczFormula 2 = 6 := by decide
+@[category test, AMS 5 6] theorem kisielewiczFormula_three : kisielewiczFormula 3 = 20 := by
+  native_decide
+-- `native_decide` crashes for n = 4
+
+/-- Kisielewicz (1988) proved the following arithmetic formula for the Dedekind numbers:
+$$
+  M(n) = \sum_{k=0}^{2^{2^n}}\prod_{j = 1}^{2 ^ n - 1}\prod_{i = 0}^{j - 1} \left(
+    1 - b_i^kb_j^k \prod_{m = 0}^{\log_2 i} (1 - b_m^i + b_m^ib_m^j)\right),
+$$
+where $b_i^k$ is the $i$-th bit of $k$. However, this formula is not computationally
+efficient for large $n$.
+-/
+@[category research solved, AMS 5 6]
+theorem dedekindNumbers_eq_kisielewiczFormula : M = kisielewiczFormula := by
+  sorry
+
 /--
-  No closed form for the Dedekind numbers are currently unknown.
+  No closed-form expression that allows efficient computation of Dedekind numbers is
+  currently known.
 -/
 @[category research open, AMS 5 6]
 theorem DedekindNumbers : M = answer(sorry) := by
