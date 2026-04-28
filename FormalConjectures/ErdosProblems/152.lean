@@ -38,8 +38,8 @@ noncomputable def f (n : ℕ) : ℕ :=
   {s : ℕ | s - 1 ∉ A.1 + A.1 ∧ s ∈ A.1 + A.1 ∧ s + 1 ∉ A.1 + A.1}.ncard
 
 /-- Must `lim f n = ∞`? -/
-@[category research open, AMS 5]
-theorem erdos_152 : answer(sorry) ↔ Tendsto f atTop atTop := by
+@[category research solved, AMS 5]
+theorem erdos_152 : answer(True) ↔ Tendsto f atTop atTop := by
   sorry
 
 /-- Must `f n ≫ n ^ 2`? -/
