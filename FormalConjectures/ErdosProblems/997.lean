@@ -53,9 +53,10 @@ def IsWellDistributed (x : ℕ → ℝ) : Prop :=
 Is it true that, for every $\alpha$, the sequence $\{ \alpha p_n\}$ is not well-distributed,
 if $p_n$ is the sequence of primes?
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean"]
 theorem erdos_997 :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ α : ℝ, ¬ IsWellDistributed (fun n ↦ Int.fract (α * (n.nth Nat.Prime))) := by
   sorry
 
