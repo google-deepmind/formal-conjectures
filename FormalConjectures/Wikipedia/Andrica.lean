@@ -16,10 +16,14 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+open Filter
+
 /-!
 # Andrica's conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
+- [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
 
 namespace Andrica
@@ -31,6 +35,14 @@ The inequality $\sqrt{p_{n+1}}-\sqrt{p_n} < 1$ holds for all $n$, where $p_n$ is
 @[category research open, AMS 11]
 theorem andrica_conjecture (n : ℕ) :
     Real.sqrt ((n+1).nth Nat.Prime) - Real.sqrt (n.nth Nat.Prime) < 1 := by
+  sorry
+
+/--
+Ferreira proved that Andrica's conjecture is true for sufficiently large n.
+-/
+@[category research solved, AMS 11]
+theorem andrica_conjecture.ferreira_large_n :
+    ∀ᶠ n in atTop, Real.sqrt ((n+1).nth Nat.Prime) - Real.sqrt (n.nth Nat.Prime) < 1 := by
   sorry
 
 end Andrica

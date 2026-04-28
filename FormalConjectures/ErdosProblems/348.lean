@@ -35,8 +35,8 @@ $A = \{a_1 \leq a_2 \leq \cdots\}$ of integers such that
 @[category research open, AMS 11]
 theorem erdos_348 :
     { (m, n) | (m) (n) (_ : m < n) (a : ℕ → ℕ) (_ : Monotone a)
-      (_ : ∀ s, s.card = m → IsAddCompleteNatSeq (Function.updateFinset a s 0))
-        (_ : ∀ t, t.card = n → ¬IsAddCompleteNatSeq (Function.updateFinset a t 0)) } =
+      (_ : ∀ s, s.card = m → IsAddComplete (Set.range (Function.updateFinset a s 0)))
+        (_ : ∀ t, t.card = n → ¬IsAddComplete (Set.range (Function.updateFinset a t 0))) } =
     answer(sorry) := by
   sorry
 

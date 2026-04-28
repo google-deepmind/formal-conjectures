@@ -40,10 +40,10 @@ Can one colour the countable subsets of $m$ using $\kappa$ many colours so that 
 $X \subseteq m$ with $|X| = \kappa$ contains subsets of all possible colours?
 -/
 @[category research open, AMS 03 05]
-theorem erdos_598 :
-    (∃ c : { s : Set m // s.Countable } → κ.out,
+theorem erdos_598 : answer(sorry) ↔
+    ∃ c : { s : Set m // s.Countable } → κ.out,
     ∀ X : Set m, #X = κ →
-    c '' { s : { sub : Set m // sub.Countable } | s.1 ⊆ X } = Set.univ) ↔ answer(sorry) := by
+    c '' { s : { sub : Set m // sub.Countable } | s.1 ⊆ X } = Set.univ := by
   sorry
 
 end Erdos598

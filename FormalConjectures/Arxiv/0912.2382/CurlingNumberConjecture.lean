@@ -33,7 +33,7 @@ to write it as $S = X Y Y . . . Y = X Y^k$, where $X$ and $Y$ are sequences of i
 that maximizes the value of $k$: this $k$ is the curling number of $S$, denoted by $k S$.
 -/
 noncomputable def k (S : List ℤ) : ℕ :=
-  sSup {k : ℕ | ∃ X Y  : List ℤ, Y ≠ [] ∧ S = X  ++ (List.replicate k Y).flatten}
+  sSup {k : ℕ | ∃ X Y : List ℤ, Y ≠ [] ∧ S = X ++ (List.replicate k Y).flatten}
 
 
 /--

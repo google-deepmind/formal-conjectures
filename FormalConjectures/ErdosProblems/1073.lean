@@ -34,7 +34,7 @@ noncomputable def A (x : ℕ) : ℝ := {u | u.Composite ∧ ∃ n, n ! + 1 ≡ 0
 /-- Is it true that $A(x) \le x^{o(1)}$? -/
 @[category research open, AMS 11]
 theorem erdos_1073 :
-    (∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ x, A x ≤ x ^ (o x)) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ x, A x ≤ x ^ (o x) := by
   sorry
 
 end Erdos1073
