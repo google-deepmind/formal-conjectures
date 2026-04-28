@@ -1013,13 +1013,17 @@ theorem eqSystem_no_solution_even_ge4_d_eq_n_explicit :
   · intro _
     trivial
 
-/-- For $N = 4$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+/-- For $N = 4$ and $D = 4$, does there exist no solution to the monochromatic quantum
+graph equation system over $\mathbb{C}$?
+
+This is the $D = N$ case, proved via `no_witness_general`. -/
+@[category research solved, AMS 5 14 81]
 theorem eqSystem4_no_solution_d4 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 4 4 ℂ, EqSystemN 4 4 W := by
-  sorry
+  constructor
+  · intro _; exact no_witness_general 4 (by norm_num) ⟨2, by norm_num⟩
+  · intro _; trivial
 
 
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
@@ -1062,13 +1066,17 @@ theorem eqSystem6_no_solution_d5 :
   sorry
 
 
-/-- For $N = 6$ and $D = 6$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+/-- For $N = 6$ and $D = 6$, does there exist no solution to the monochromatic quantum
+graph equation system over $\mathbb{C}$?
+
+This is the $D = N$ case, proved via `no_witness_general`. -/
+@[category research solved, AMS 5 14 81]
 theorem eqSystem6_no_solution_d6 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 6 ℂ, EqSystemN 6 6 W := by
-  sorry
+  constructor
+  · intro _; exact no_witness_general 6 (by norm_num) ⟨3, by norm_num⟩
+  · intro _; trivial
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
@@ -1151,13 +1159,17 @@ theorem eqSystem10_no_solution_d9 :
       ¬ ∃ W : WeightsN 10 9 ℂ, EqSystemN 10 9 W := by
   sorry
 
-/-- For $N = 10$ and $D = 10$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+/-- For $N = 10$ and $D = 10$, does there exist no solution to the monochromatic quantum
+graph equation system over $\mathbb{C}$?
+
+This is the $D = N$ case, proved via `no_witness_general`. -/
+@[category research solved, AMS 5 14 81]
 theorem eqSystem10_no_solution_d10 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 10 10 ℂ, EqSystemN 10 10 W := by
-  sorry
+  constructor
+  · intro _; exact no_witness_general 10 (by norm_num) ⟨5, by norm_num⟩
+  · intro _; trivial
 
 /-- For $N = 12$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
