@@ -146,10 +146,12 @@ theorem erdos_602.variants.disjoint : answer(True) ↔
 /--
 **Countable index set case.**
 
-If the index set `I` is countable (indexed by `ℕ`), does the family still have Property B?
-This is a (potentially easier) special case of Problem 602 that remains open. -/
-@[category research open, AMS 3 5]
-theorem erdos_602.variants.countable_index : answer(sorry) ↔
+If the index set is countable, the answer is yes, and the intersection
+condition is unnecessary. This is Bernstein's Lemma:
+every countable system of infinite sets has Property B.
+-/
+@[category research solved, AMS 3 5]
+theorem erdos_602.variants.countable_index : answer(True) ↔
     ∀ {α : Type*} (A : ℕ → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
       (∀ i j, i ≠ j → (A i ∩ A j).Finite) →

@@ -368,11 +368,16 @@ theorem eqSystem4_no_solution_d4 :
       ¬ ∃ W : WeightsN 4 4 ℂ, EqSystemN 4 4 W := by
   sorry
 
+
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{C}$?
+
+The DeepMind prover agent has found a formal proof of this statement.
+-/
+@[category research solved, AMS 5 14 81, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/4854c7233c58a7dce45fdd58b1826abf2c9c1a0f/FormalConjectures/Paper/MonochromaticQuantumGraph.lean#L549"]
 theorem eqSystem4_no_solution_ge4 :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ D : Nat, D ≥ 4 →
         ¬ ∃ W : WeightsN 4 D ℂ, EqSystemN 4 D W := by
   sorry
@@ -1197,10 +1202,15 @@ theorem eqSystem4_no_solution_d4_real :
   sorry
 
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{R}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{R}$?
+
+This follows from the solution of the complex version of the problem
+(see `eqSystem4_no_solution_ge4`)
+-/
+@[category research solved, AMS 5 14 81, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/4854c7233c58a7dce45fdd58b1826abf2c9c1a0f/FormalConjectures/Paper/MonochromaticQuantumGraph.lean#L738"]
 theorem eqSystem4_no_solution_ge4_real :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ D : Nat, D ≥ 4 →
         ¬ ∃ W : WeightsN 4 D ℝ, EqSystemN 4 D W := by
   sorry
@@ -1282,10 +1292,15 @@ theorem eqSystem4_no_solution_d4_int :
   sorry
 
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{Z}$?
+
+This follows from the solution of the complex version of the problem
+(see `eqSystem4_no_solution_ge4`).
+-/
+@[category research solved, AMS 5 14 81, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/4854c7233c58a7dce45fdd58b1826abf2c9c1a0f/FormalConjectures/Paper/MonochromaticQuantumGraph.lean#L836"]
 theorem eqSystem4_no_solution_ge4_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ D : Nat, D ≥ 4 →
         ¬ ∃ W : WeightsN 4 D ℤ, EqSystemN 4 D W := by
   sorry
@@ -1371,9 +1386,10 @@ theorem eqSystem4_no_solution_d4_trinary_int :
 
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/4854c7233c58a7dce45fdd58b1826abf2c9c1a0f/FormalConjectures/Paper/MonochromaticQuantumGraph.lean#L936"]
 theorem eqSystem4_no_solution_ge4_trinary_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ D : Nat, D ≥ 4 →
         ¬ ∃ W : WeightsN 4 D ℤ,
             (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧

@@ -87,9 +87,18 @@ def CuboidOneFor (a b : ℤ) : Prop :=
 the polynomial of the first Cuboid polynomial is irreducible. -/
 def CuboidOne : Prop := ∀ ⦃a b : ℤ⦄, gcd a b = 1 → 0 < a → 0 < b → a ≠ b → CuboidOneFor a b
 
-/-- The first Cuboid conjecture -/
-@[category research open, AMS 12]
-theorem cuboidOne : CuboidOne := by 
+
+/--
+The first Cuboid conjecture
+
+The DeepMind prover agent has found a formal disproof of this statement.
+
+An (independent) informal solution can be found here:
+*Reference:* [arxiv/2510.11768](https://arxiv.org/abs/2510.11768) **Irreducibility of the Cuboid Polynomial P_{a,u}(t) via a Rank-Zero Elliptic Curve** by *Valery Asiryan*
+-/
+@[category research solved, AMS 12, formal_proof using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/34c93bbad127a9a5354b9d53478d338eb65edb88/FormalConjectures/Wikipedia/EulerBrick.lean#L1804"]
+theorem cuboidOne : CuboidOne := by
   sorry
 
 /-- Pairs of natural numbers for which the second Cuboid polynomial is irreducible. -/
@@ -107,7 +116,7 @@ def CuboidTwo : Prop := ∀ ⦃a b : ℕ⦄, a.Coprime b → 0 < a → 0 < b →
 
 /-- The second Cuboid conjecture -/
 @[category research open, AMS 12]
-theorem cuboidTwo : CuboidTwo := by 
+theorem cuboidTwo : CuboidTwo := by
   sorry
 
 /-- Triplets of natural numbers for which the third Cuboid polynomial is irreducible. -/
@@ -129,7 +138,7 @@ def CuboidThree : Prop := ∀ ⦃a b c : ℤ⦄, gcd a (gcd b c) = 1 → 0 < a �
 
 /-- The third Cuboid conjecture -/
 @[category research open, AMS 12]
-theorem cuboidThree : CuboidThree := by 
+theorem cuboidThree : CuboidThree := by
   sorry
 
 /-- In [Sh12], Ruslan notes that a perfect Euler brick does not exist
