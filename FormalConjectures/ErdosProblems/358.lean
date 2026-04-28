@@ -66,9 +66,9 @@ Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count t
 solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 Is there such an $A$ for which $f(n)\to \infty$ as $n\to \infty$?
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_358.parts.i :
-    answer(sorry) ↔ ∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop := by
+    answer(True) ↔ ∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop := by
   sorry
 
 /--
@@ -76,9 +76,9 @@ Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count t
 solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 Is there an $A$ such that $f(n)\geq 2$ for all large $n$?
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_358.parts.ii :
-    answer(sorry) ↔ ∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 2 ≤ f A n := by
+    answer(True) ↔ ∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 2 ≤ f A n := by
   sorry
 
 /--
