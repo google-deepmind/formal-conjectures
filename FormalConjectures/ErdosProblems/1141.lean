@@ -22,6 +22,12 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [erdosproblems.com/1141](https://www.erdosproblems.com/1141)
 - [A214583](https://oeis.org/A214583)
+- [APSSV26b] B. Alexeev, M. Putterman, M. Sawhney, M. Sellke, and G. Valiant,
+  [Short proofs in combinatorics, probability and number theory II](https://arxiv.org/abs/2604.06609).
+  arXiv:2604.06609 (2026).
+- [Or26] Y. Oriike, [Lean formalisation of Erdős problem 1141](https://github.com/yuta0x89/ErdosProblems/blob/a1319f732cdee5140faf47d984e2c451c1184803/Erdos1141.lean) (2026)
+- [Po17] P. Pollack, Bounds for the first several prime character nonresidues. Proc. Amer. Math. Soc.
+  (2017), 2815--2826.
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
 -/
@@ -41,7 +47,7 @@ instance (n : ℕ) : Decidable (Erdos1141Prop n) :=
     cases n with
     | zero => simp [Erdos1141Prop]
     | succ n' =>
-      simp [Erdos1141Prop, Nat.lt_succ_iff, le_sqrt, pow_two]
+      simp [Erdos1141Prop, le_sqrt, pow_two]
 
 /--
 Are there infinitely many $n$ such that $n-k^2$ is prime for all $k$ with $(n,k)=1$ and $k^2 < n$?
@@ -51,10 +57,14 @@ error, since for example $968-9=7\cdot 137$.
 
 The list of $n$ satisfying the given property is [A214583] in the OEIS. The largest known such $n$
 is $1722$.
+
+The answer is negative: [APSSV26b] proves a stronger finiteness theorem, deducing it from
+Pollack [Po17]. Oriike [Or26] formalised the deduction in Lean.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/yuta0x89/ErdosProblems/blob/a1319f732cdee5140faf47d984e2c451c1184803/Erdos1141.lean"]
 theorem erdos_1141 :
-    answer(sorry) ↔ Infinite { n | Erdos1141Prop n } := by
+    answer(False) ↔ Infinite { n | Erdos1141Prop n } := by
   sorry
 
 @[category test, AMS 11]

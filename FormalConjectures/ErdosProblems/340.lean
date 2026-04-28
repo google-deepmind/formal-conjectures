@@ -30,26 +30,28 @@ namespace Erdos340
 /-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
 such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
 the lower bound is required to avoid `0` being a contender in some cases. -/
-private def greedySidon.go (A : Finset ℕ) (hA : IsSidon A) (m : ℕ) :
-    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (A ∪ {m'})} :=
+private def greedySidon.go (A : Finset ℕ) (hA : IsSidon (A : Set ℕ)) (m : ℕ) :
+    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ)} :=
   if h : A.Nonempty then
-    ⟨Nat.find (hA.exists_insert_ge h m), Nat.find_spec (hA.exists_insert_ge h m)⟩
+    haveI : ∃ m', m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ) := by
+      simpa [and_assoc] using hA.exists_insert_ge h m
+    ⟨Nat.find this, Nat.find_spec this⟩
   else ⟨m, by simp_all [IsSidon]⟩
 
 @[category test, AMS 5]
 theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
-  decide
+  decide +native
 
 /-- Main search loop for generating the greedy Sidon sequence. The return value for step `n` is the
 finite set of numbers generated so far, a proof that it is Sidon, and the greatest element of
 the finite set at that point. This is initialised at `{1}`, then `greedySidon.go` is
 called iteratively using the lower bound `max + 1` to find the next smallest Sidon preserving
 number. -/
-private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon A} × ℕ) :=
+private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon (A : Set ℕ)} × ℕ) :=
   match n with
   | 0 => (⟨{1}, by simp [IsSidon]⟩, 1)
   | k + 1 =>
@@ -68,22 +70,22 @@ theorem greedySidon_zero : greedySidon 0 = 1 := rfl
 
 @[category test, AMS 5]
 theorem greedySidon_one : greedySidon 1 = 2 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_two : greedySidon 2 = 4 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_three : greedySidon 3 = 8 := by
-  decide
+  decide +native
 @[category test, AMS 5]
 theorem greedySidon_four : greedySidon 4 = 13 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_five : greedySidon 5 = 21 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_ten : greedySidon 10 = 97 := by

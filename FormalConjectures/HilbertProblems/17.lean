@@ -34,6 +34,10 @@ namespace Hilbert17
 
 abbrev MvRatFunc (σ K : Type*) [CommRing K] := FractionRing (MvPolynomial σ K)
 
+/--
+Hilbert's 17th problem: every non-negative multivariate polynomial is a sum of
+squares of rational functions.
+-/
 @[category research solved, AMS 12]
 theorem hilbert_17th_problem {n : ℕ} (hn : 0 < n) (f : MvPolynomial (Fin n) ℝ)
     (h : ∀ x : Fin n → ℝ, 0 ≤ f.eval x) :
@@ -48,12 +52,19 @@ written as a sum of squares of polynomials.
 noncomputable def f : MvPolynomial (Fin 2) ℝ :=
   X 0 ^ 4 * X 1 ^ 2 + X 0 ^ 2 * X 1 ^ 4 - 3 * X 0 ^ 2 * X 1 ^ 2 + 1
 
+-- Proof taken from `motzkin_polynomial_nonneg` in mathlib
 @[category high_school, AMS 12]
 theorem f_nonneg : ∀ x y : ℝ, 0 ≤ f.eval ![x, y] := by
   intro x y
-  unfold f
-  simp
-  exact Real.motzkin_polynomial_nonneg x y
+  simp only [Nat.succ_eq_add_one, Nat.reduceAdd, f, Fin.isValue, map_add, map_sub, map_mul, map_pow,
+    eval_X, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one, eval_ofNat, map_one]
+  by_cases hx : x = 0
+  · simp [hx]
+  have h : 0 < (x ^ 2 + y ^ 2) ^ 2 := by positivity
+  refine nonneg_of_mul_nonneg_left ?_ h
+  have H : 0 ≤ (x ^ 3 * y + x * y ^ 3 - 2 * x * y) ^ 2 * (1 + x ^ 2 + y ^ 2)
+    + (x ^ 2 - y ^ 2) ^ 2 := by positivity
+  linear_combination H
 
 @[category high_school, AMS 12]
 theorem f_not_sum_of_squares :
@@ -92,6 +103,10 @@ theorem Hilbert17thProblemHomogenousPoly_zero_right (n : ℕ) :
   rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by simpa using hf₀ 0]
   simpa using hfd
 
+/--
+Hilbert's 17th problem for homogeneous polynomials: characterization of dimensions and degrees
+where non-negative polynomials are sums of squares of polynomials.
+-/
 @[category research solved, AMS 12]
 theorem hilbert_17th_problem_poly {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
     Hilbert17thProblemHomogenousPoly n d ↔ n = 1 ∨ n = 2 ∨ d = 1 ∨ n = 3 ∧ d = 2 := by

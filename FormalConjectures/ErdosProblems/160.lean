@@ -49,18 +49,6 @@ theorem erdos_160.known_upper :
 open Real
 
 /--
-The observation of Zachary Hunter in [that question](https://mathoverflow.net/q/410808)
-coupled with the bounds of Kelley-Meka [KeMe23](https://arxiv.org/abs/2302.05537) imply that
-$$h(N) \gg \exp(c(\log N)^{\frac 1 {12}})$$
-for some $c > 0$.
--/
-@[category research solved, AMS 5 51]
-theorem erdos_160.known_lower :
-    ∃ c > 0, (fun (n : ℕ) => exp (c * log (n : ℝ) ^ ((1 : ℝ) / 12)))
-    =O[atTop] fun n => (erdos_160.h n : ℝ):= by
-  sorry
-
-/--
 Estimate $h(n)$ by finding a better upper bound.
 -/
 @[category research open, AMS 5 51]
@@ -80,6 +68,18 @@ theorem erdos_160.better_lower:
     ∀ c > 0,
     (fun (n : ℕ) => exp (c * log n ^ ((1 : ℝ) / 12))) =O[atTop] (fun n => (erdos_160.h n : ℝ)) →
     ∀ c > 0, (fun (n : ℕ) => exp (c * log n ^ ((1 : ℝ) / 12))) =o[atTop] lower_bound := by
+  sorry
+
+/--
+The observation of Zachary Hunter in [that question](https://mathoverflow.net/q/410808)
+coupled with the bounds of Kelley-Meka [KeMe23](https://arxiv.org/abs/2302.05537) imply that
+$$h(N) \gg \exp(c(\log N)^{\frac 1 {12}})$$
+for some $c > 0$.
+-/
+@[category research solved, AMS 5 51]
+theorem erdos_160.variants.known_lower :
+    ∃ c > 0, (fun (n : ℕ) => exp (c * log (n : ℝ) ^ ((1 : ℝ) / 12)))
+    =O[atTop] fun n => (erdos_160.h n : ℝ):= by
   sorry
 
 end Erdos160
