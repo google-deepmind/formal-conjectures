@@ -48,13 +48,14 @@ def IsEdgeDisjointCompleteUnion (G : SimpleGraph V) (n : ℕ) : Prop :=
 The Erdős-Faber-Lovász Conjecture: if $G$ is an edge-disjoint union of $n$ copies of $K_n$,
 then $\chi(G) = n$.
 
-This was proved for all sufficiently large $n$ by Kang, Kelly, Kühn, Methuku, and Osthus (2021),
-and verified for small $n$ by computational methods.
+This was proved for all sufficiently large $n$ by Kang, Kelly, Kühn, Methuku, and Osthus (2021).
+The full conjecture is still open, up to a finite check.
 -/
-@[category research solved, AMS 5]
-theorem erdos_19 (n : ℕ) (hn : 0 < n) :
-    ∀ (V : Type u) (G : SimpleGraph V), IsEdgeDisjointCompleteUnion G n →
-      G.chromaticNumber = n := by
+@[category research open, AMS 5]
+theorem erdos_19 :
+    answer(sorry) ↔
+      ∀ n > 0, ∀ (V : Type u) (G : SimpleGraph V), IsEdgeDisjointCompleteUnion G n →
+        G.chromaticNumber = n := by
   sorry
 
 /--
@@ -65,7 +66,7 @@ This is the form proved by Kang, Kelly, Kühn, Methuku, and Osthus (2021).
 -/
 @[category research solved, AMS 5]
 theorem erdos_19.asymptotic :
-    ∃ N : ℕ, ∀ n ≥ N, ∀ (V : Type u) (G : SimpleGraph V),
+    ∀ᶠ n in Filter.atTop, ∀ (V : Type u) (G : SimpleGraph V),
       IsEdgeDisjointCompleteUnion G n → G.chromaticNumber = n := by
   sorry
 
@@ -86,6 +87,14 @@ This follows from the fact that each $K_n$ requires $n$ colors.
 theorem erdos_19.lower_bound (n : ℕ) (hn : 0 < n) :
     ∀ (V : Type u) (G : SimpleGraph V), IsEdgeDisjointCompleteUnion G n →
       n ≤ G.chromaticNumber := by
-  sorry
+  intro V G ⟨cliques, hcard, hclique, _, _⟩
+  set i₀ : Fin n := ⟨0, hn⟩
+  have hfin : (cliques i₀).Finite := Set.finite_of_ncard_ne_zero (by rw [hcard i₀]; omega)
+  have hclique₀ : G.IsClique (↑hfin.toFinset) := by
+    rw [Set.Finite.coe_toFinset]
+    exact hclique i₀
+  convert hclique₀.card_le_chromaticNumber using 1
+  norm_cast
+  exact (hcard i₀).symm.trans (Set.ncard_eq_toFinset_card _ hfin)
 
 end Erdos19
