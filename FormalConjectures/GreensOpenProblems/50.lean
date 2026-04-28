@@ -33,10 +33,6 @@ open scoped Pointwise
 
 namespace Green50
 
-/-- The density of a finite subset `A` of a finite type `α` is `|A| / |α|`. -/
-noncomputable def density {α : Type*} [Fintype α] (A : Finset α) : ℝ :=
-  (A.card : ℝ) / (Fintype.card α : ℝ)
-
 /--
 Let $A \subset \mathbb{F}_2^n$ be a set of density $\alpha > 0$. Does $10A$ contain a coset
 of some subspace of dimension at least $n - O(\log(1/\alpha))$?
@@ -55,19 +51,10 @@ over $\mathbb{F}_2$.
 theorem green_50 : answer(sorry) ↔
     ∃ C > (0 : ℝ), ∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2),
     A.Nonempty →
-    let α := density A
+    let α : ℝ := A.dens
     ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (v : Fin n → ZMod 2),
-      v +ᵥ (W : Set (Fin n → ZMod 2)) ⊆ (10 • A.toSet) ∧
+      v +ᵥ (W : Set (Fin n → ZMod 2)) ⊆ ↑(10 • A) ∧
       (n : ℝ) - C * Real.logb 2 (1 / α) ≤ Module.finrank (ZMod 2) W := by
-  sorry
-
-/--
-A trivial lower bound: any nonempty subset $A$ of $\mathbb{F}_2^n$ satisfies $A \subseteq 10A$,
-so $10A$ is nonempty.
--/
-@[category undergraduate, AMS 5 11]
-theorem green_50.variants.nonempty {n : ℕ} {A : Finset (Fin n → ZMod 2)} (hA : A.Nonempty) :
-    Set.Nonempty (10 • A.toSet) := by
   sorry
 
 end Green50
