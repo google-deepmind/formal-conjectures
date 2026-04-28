@@ -22,6 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [arxiv/1506.05785](https://arxiv.org/pdf/1506.05785)
 _On the Approximation of Quantum Gates using Lattices_
 by *Alec Greene and Steven Damelin*
+
 -/
 
 namespace Arxiv.«1506.05785»
@@ -33,14 +34,17 @@ scoped[EuclideanSpace] notation "ℤ⁴" => Submodule.span ℤ (Set.range (PiLp.
 
 /--
 *Conjecture 3.4*
-There exists $0 < \delta < 1$ such that for any $a \in \mathbb{S}^3$,
+There exists $0 < \delta < 1$ such that for any $\varepsilon > 0$ and $a \in \mathbb{S}^3$,
 there exists $b \in \mathbb{Z}^4$ and $k \in \mathbb{Z}$ such that $\|b\| = 5^k$ and
-$\langle a, \frac{b}{\|b\|} \rangle \geq 1 - 5^{-\frac{k}{2 - \delta}}.$
+$\langle a, \frac{b}{\|b\|} \rangle \geq 1 - \varepsilon * 5^{-\frac{k}{2 - \delta}}.$
 -/
+-- Formalisation note: Source paper is missing the `ε` dependence added in the above
+-- docstring. See also https://github.com/google-deepmind/formal-conjectures/issues/1323
 @[category research open, AMS 11 81]
 theorem conjecture_3_4 : ∃ δ ∈ Set.Ioo (0 : ℝ) 1,
-    ∀ (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1), ∃ (b : ℤ⁴) (k : ℕ), k > 0 ∧ ‖b‖ = 5 ^ k ∧
-      1 - 5 ^ (-k / (2 - δ)) ≤ ⟪a, ‖b‖⁻¹ • b⟫ := by
+    ∀ (ε : ℝ) (hε : 0 < ε) (a : EuclideanSpace ℝ (Fin 4)) (ha : ‖a‖ = 1),
+      ∃ (b : ℤ⁴) (k : ℕ), ‖b‖ = 5 ^ k ∧
+        1 - ε * 5 ^ (-k / (2 - δ)) ≤ ⟪a, ‖b‖⁻¹ • b⟫ := by
   sorry
 
 end Arxiv.«1506.05785»
