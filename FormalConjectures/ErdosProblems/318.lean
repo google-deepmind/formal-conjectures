@@ -117,8 +117,8 @@ theorem erdos_318.variants.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) :
   sorry
 
 /-- Does the set of squares excluding 1 have property `P₁`? -/
-@[category research open, AMS 11]
-theorem erdos_318.parts.ii : answer(sorry) ↔  P₁ ({n | IsSquare n} \ {1}) := by
+@[category research solved, AMS 11]
+theorem erdos_318.parts.ii : answer(True) ↔  P₁ ({n | IsSquare n} \ {1}) := by
   sorry
 
 end Erdos318
