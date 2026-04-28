@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,15 +21,19 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/377](https://www.erdosproblems.com/377)
 -/
+
 open Filter
 
 open scoped Topology
+
+namespace Erdos377
+
 /--
 The sum of the inverses of all primes smaller than $n$, which don't divide the central
 binom coefficient.
 -/
 noncomputable abbrev sumInvPrimesNotDvdCentralBinom (n : ℕ) : ℝ :=
-  ∑ p ∈ Finset.Icc 1 n with p.Prime, if p ∣ (2 * n).choose n then 0 else (1 : ℝ) / p
+  ∑ p ∈ Finset.Icc 1 n with p.Prime, if p ∣ n.centralBinom then 0 else (1 : ℝ) / p
 
 /--
 Is there some absolute constant $C > 0$ such that
@@ -39,8 +43,8 @@ $$
 for all $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_377 : ∃ C > (0 : ℝ),
-    ∀ (n : ℕ), sumInvPrimesNotDvdCentralBinom n ≤ C :=
+theorem erdos_377 : answer(sorry) ↔
+    ∃ C > (0 : ℝ), ∀ (n : ℕ), sumInvPrimesNotDvdCentralBinom n ≤ C := by
   sorry
 
 /--
@@ -57,13 +61,13 @@ $$
   \lim_{x\to\infty} \frac{1}{x}\sum_{n\leq x} f(n) = \gamma_0
 $$
 
-[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $(\sp{2n}\sb{n})$_. Math. Comp. (1975), 83-92.
+[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.limit.i (γ₀ : ℝ)
     (hγ₀ : γ₀ = ∑' (k : ℕ), (k + 2 : ℝ).log / 2 ^ (k + 2)) :
     Tendsto (fun (x : ℕ) => (1 : ℝ) / x * ∑ n ∈ Finset.Icc 1 x, sumInvPrimesNotDvdCentralBinom n)
-      atTop (𝓝 γ₀) :=
+      atTop (𝓝 γ₀) := by
   sorry
 
 /--
@@ -80,7 +84,7 @@ $$
   \lim_{x\to\infty} \frac{1}{x}\sum_{n\leq x} f(n)^2 = \gamma_0^2
 $$
 
-[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $(\sp{2n}\sb{n})$_. Math. Comp. (1975), 83-92.
+[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.limit.ii (γ₀ : ℝ)
@@ -101,12 +105,12 @@ $$
 $$
 then for almost all integers $f(m) = \gamma_0 + o(1)$.
 
-[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $(\sp{2n}\sb{n})$_. Math. Comp. (1975), 83-92.
+[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.ae (γ₀ : ℝ) (hγ₀ : γ₀ = ∑' (k : ℕ), (k + 2 : ℝ).log / 2 ^ (k + 2)) :
     ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
-      ∀ᶠ n in cofinite, sumInvPrimesNotDvdCentralBinom n = γ₀ + o n :=
+      ∀ᶠ n in cofinite, sumInvPrimesNotDvdCentralBinom n = γ₀ + o n := by
   sorry
 
 /--
@@ -119,9 +123,11 @@ $$
   f(n) \leq c \log\log n.
 $$
 
-[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $(\sp{2n}\sb{n})$_. Math. Comp. (1975), 83-92.
+[EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.ub : ∃ c < (1 : ℝ),
-      ∀ᶠ n in atTop, sumInvPrimesNotDvdCentralBinom n ≤ c * (n : ℝ).log.log :=
+      ∀ᶠ n in atTop, sumInvPrimesNotDvdCentralBinom n ≤ c * (n : ℝ).log.log := by
   sorry
+
+end Erdos377

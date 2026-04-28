@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,14 +21,17 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/727](https://www.erdosproblems.com/727)
 -/
+
 open scoped Nat
+
+namespace Erdos727
 
 /--
 Let $k ≥ 2$. Does $((n+k)!)^2∣(2n)!$ hold for infinitely many $n$?
 -/
 @[category research open, AMS 11]
-theorem erdos_727 : (∀ᵉ (k ≥ 2),
-    Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)}) ↔ answer(sorry) :=
+theorem erdos_727 : answer(sorry) ↔ ∀ k ≥ 2,
+    Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)} := by
   sorry
 
 /--
@@ -36,9 +39,9 @@ It is open even for $k = 2$.
 Let $k = 2$. Does $((n+k)!)^2∣(2n)!$ hold for infinitely many n?
 -/
 @[category research open, AMS 11]
-theorem erdos_727_variants.k_2 :
+theorem erdos_727.variants.k_2 :
     letI k := 2
-    Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)} ↔ answer(sorry) :=
+    answer(sorry) ↔ Set.Infinite {n : ℕ | (Nat.factorial (n + k)) ^ 2 ∣ Nat.factorial (2 * n)} := by
   sorry
 
 /--
@@ -47,9 +50,9 @@ Balakran proved this holds for $k = 1$.
 Let $k = 1$. Does $((n+k)!)^2∣(2n)!$ for infinitely many $n$?
 -/
 @[category research solved, AMS 11]
-theorem erdos_727_variants.k_1 :
+theorem erdos_727.variants.k_1 :
     letI k := 1
-    Set.Infinite {n : ℕ | (n + k)! ^ 2 ∣ (2 * n)!} ↔ answer(True) :=
+    answer(True) ↔ Set.Infinite {n : ℕ | (n + k)! ^ 2 ∣ (2 * n)!} := by
   sorry
 
 /--
@@ -57,7 +60,9 @@ Erdős, Graham, Ruzsa, and Straus observe that the method of Balakran can be fur
 that there are infinitely many $n$ such that $(n+k)!(n+1)!∣(2n)!$
 -/
 @[category research solved, AMS 11]
-theorem erdos_727_variants.k_1_2 (k : ℕ) (hk : 2 ≤ k) :
+theorem erdos_727.variants.k_1_2 (k : ℕ) (hk : 2 ≤ k) :
     Set.Infinite {n : ℕ |
-      (Nat.factorial (n + k)) * (Nat.factorial (n + 1)) ∣ Nat.factorial (2 * n)} :=
+      (Nat.factorial (n + k)) * (Nat.factorial (n + 1)) ∣ Nat.factorial (2 * n)} := by
   sorry
+
+end Erdos727

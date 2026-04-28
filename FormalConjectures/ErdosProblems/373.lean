@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,13 +21,17 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/373](https://www.erdosproblems.com/373)
 -/
+
 open scoped Nat
+
+namespace Erdos373
+
 /--
 Let `S` be the set of non-trivial solutions to the equation `n! = a₁! ··· aₖ!`
 such that `a₁ ≥ ... ≥ aₖ` and `n-1 > a₁`.
 -/
-private abbrev S : Set (ℕ × List ℕ) :=
-  {(n, l) | n ! = (l.map Nat.factorial).prod ∧ l.Sorted (· ≥ ·)
+abbrev S : Set (ℕ × List ℕ) :=
+  {(n, l) | n ! = (l.map Nat.factorial).prod ∧ l.Pairwise (· ≥ ·)
     ∧ l.headI < (n - 1 : ℕ) ∧ ∀ a ∈ l, 1 < a }
 
 /--
@@ -84,3 +88,5 @@ theorem erdos_373.variants.suranyi :
     {(n, a, b) : ℕ × ℕ × ℕ | n ! = a ! * b ! ∧ 1 < n ∧ 1 < a ∧ 1 < b ∧ b ≤ a ∧ a + 1 ≠ n}
       = {(10, 7, 6)} := by
   sorry
+
+end Erdos373

@@ -1,0 +1,17 @@
+{
+  "name": "Mathlib4 dev container",
+
+  "image": "leanprovercommunity/gitpod4",
+
+  "onCreateCommand": "lake exe cache get!",
+
+  "hostRequirements": {
+     "cpus": 4
+  },
+
+  "customizations": {
+    "vscode" : {
+      "extensions" : [ "leanprover.lean4" ]
+    }
+  }
+}

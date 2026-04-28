@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,10 +21,13 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/410](https://www.erdosproblems.com/410)
 -/
+
 open ArithmeticFunction Filter
 
+namespace Erdos410
+
 /--
-Let $σ_1(n) = σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k−1}(n))$.
+Let $σ_1(n) = σ(n)$, the sum of divisors function, and $σ_k(n) = σ(σ_{k-1}(n))$.
 
 Is it true that $\lim_{k → ∞} σ_k(n)^{\frac 1 k} = ∞$?
 
@@ -34,6 +37,8 @@ Erdos, Granville, Pomerance, Spiro
 (page 169 of the book "Analytic Number Theory", 1990).
 -/
 @[category research open, AMS 11]
-theorem erdos_410 (n : ℕ) (hn : 1 < n) :
-    Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop :=
+theorem erdos_410 : answer(sorry) ↔ ∀ n > 1,
+    Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop := by
   sorry
+
+end Erdos410

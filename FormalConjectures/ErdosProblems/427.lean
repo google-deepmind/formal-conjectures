@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/427](https://www.erdosproblems.com/427)
 -/
+
+namespace Erdos427
+
 /--
 The predicate that for every $n$ and $d$, there exists $k$ such that
 $$
@@ -28,9 +31,9 @@ $$
 $$
 where $p_r$ denotes the $r$th prime?
 -/
-def Erdos427 : Prop := ∀ (n d : ℕ),
-    --Need to allow `n = 0` since we're counting primes from `0` rather than `1`
-    --`d` needs to be `≠ 0` since the sum is never `0`!
+def erdos427 : Prop := ∀ (n d : ℕ),
+    -- Need to allow `n = 0` since we're counting primes from `0` rather than `1`
+    -- `d` needs to be `≠ 0` since the sum is never `0`!
     d ≠ 0 → ∃ k, k ≠ 0 ∧
     d ∣ ∑ i ∈ Finset.Ico n (n + k), i.nth Nat.Prime
 
@@ -41,14 +44,14 @@ $$
 $$
 where $p_r$ denotes the $r$th prime?
 -/
-@[category research solved, AMS 11]
-theorem erdos_427 : Erdos427 := by
+@[category research solved, AMS 11, formal_proof using lean4 at "https://gist.githubusercontent.com/JohnEdwardJennings/e2c6ef0daab55857b7cc9d340de7af84/raw/8ff97800e38582c71246a238e7541a9d69488cbd/Erdos427.lean"]
+theorem erdos_427 : answer(True) ↔ erdos427 := by
   sorry
 
 /--
 The statement of Shiu's theorem:
 for any $k \geq 1$ and $(a, q) = 1$ there exist infinitely many $k$-tuples of consecutive primes
-$p_m, ..., p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
+$p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
@@ -58,12 +61,12 @@ def ShiuTheorem : Prop := ∀ (k a q : ℕ), 1 ≤ k → 1 ≤ q → a.gcd q = 1
 
 /--
 **Shiu's theorem**: for any $k \geq 1$ and $(a, q) = 1$ there exist infinitely many $k$-tuples of consecutive primes
-$p_m, ..., p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
+$p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
 @[category research solved, AMS 11]
-theorem erdos_427.shiu : ShiuTheorem :=
+theorem erdos_427.variants.shiu : ShiuTheorem := by
   sorry
 
 
@@ -71,5 +74,7 @@ theorem erdos_427.shiu : ShiuTheorem :=
 Cedric Pilatte has observed that a positive solution to Erdős Problem 427 follows from Shiu's theorem.
 -/
 @[category research solved, AMS 11]
-theorem erdos_427.of_shiu (H : ShiuTheorem) : Erdos427 := by
+theorem erdos_427.variants.of_shiu (H : ShiuTheorem) : erdos427 := by
   sorry
+
+end Erdos427

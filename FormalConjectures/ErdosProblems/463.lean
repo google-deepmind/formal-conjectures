@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/463](https://www.erdosproblems.com/463)
 -/
+
 open Filter
+
+namespace Erdos463
 
 /--
 Is there a function $f$ with $f(n)\to\infty$ as $n\to\infty$ such that,
@@ -32,8 +35,10 @@ $$
 Here $p(m)$ is the least prime factor of $m$.
 -/
 @[category research open, AMS 11]
-theorem erdos_463 : ∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
+theorem erdos_463 : answer(sorry) ↔ ∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
     ∀ᶠ n in atTop,
-      ∃ m, ¬m.Prime ∧
-        n + f n < m ∧ m < n + m.minFac :=
+      ∃ m, m.Composite ∧
+        n + f n < m ∧ m < n + m.minFac := by
   sorry
+
+end Erdos463

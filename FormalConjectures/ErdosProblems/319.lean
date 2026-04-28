@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,7 +26,9 @@ open Filter
 
 open scoped Topology Finset Real
 
-/-- What is the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+namespace Erdos319
+
+/-- What is the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -35,7 +37,7 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$.-/
+for all non-empty $A'\subsetneq A$. -/
 @[category research open, AMS 5]
 theorem erdos_319 (N : ℕ) : IsGreatest
     { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
@@ -50,7 +52,7 @@ theorem erdos_319 (N : ℕ) : IsGreatest
 -- the use of an `answer(sorry)` placeholder. Trivial or sub-optimal solutions
 -- will therefore exist to the asymptotic formalisations. A true solution to
 -- the asymptotic variants should have a degree of optimality or non-triviality to it.
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -66,10 +68,10 @@ theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =Θ[atTop] (answer(sorry) : ℕ → ℝ) :=
+    c =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -85,10 +87,10 @@ theorem erdos_319.variants.isBigO (N : ℕ) (c : ℕ → ℝ)
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =O[atTop] (answer(sorry) : ℕ → ℝ) :=
+    c =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -104,22 +106,23 @@ theorem erdos_319.variants.isLittleO (N : ℕ) (c : ℕ → ℝ)
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =o[atTop] (answer(sorry) : ℕ → ℝ) :=
+    c =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
-/-- Adenwalla has observed that a lower bound of
+/-- Adenwalla has observed that a lower bound (on the maximum size of $A$) of
 $$
   |A| \geq (1 - \frac{1}{e} + o(1))N
 $$
-follows from the main result of Croot [Cr01]
+follows from the main result of Croot [Cr01].
 
 [Cr01] Croot, III, Ernest S., _On unit fractions with denominators in short intervals_.
 Acta Arith. (2001), 99-114.
 -/
 @[category research solved, AMS 5]
-theorem erdos_319.variants.lb : ∃ o, (o =o[atTop] fun n => (1 : ℝ)) ∧
-    ∀ {N : ℕ} {A : Finset ℕ} (hA : A ⊆ Finset.Icc 1 N)
-    {δ : ℕ → ℤˣ} (hδ₁ : ∑ n ∈ A, (δ n : ℚ) / n = 0)
-    (hδ₂ : ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0),
-      (1 - 1 / rexp 1 + o N) * N ≤ #A :=
+theorem erdos_319.variants.lb : ∃ (o : ℕ → ℝ), (o =o[atTop] (1 : ℕ → ℝ)) ∧
+    ∀ᶠ N in atTop, (1 - 1 / rexp 1 + o N) * N ≤ sSup { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
+      (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
+        ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } := by
   sorry
+
+end Erdos319

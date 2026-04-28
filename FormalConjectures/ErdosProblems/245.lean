@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,13 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/245](https://www.erdosproblems.com/245)
 -/
-open Filter
+
+namespace Erdos245
+
+open Filter Set Erdos245
 
 open scoped Pointwise Topology
-
-/-- If `A` is a set of natural numbers and `N : ℕ`, then `bdd A N` is the
-set `{ n ∈ A | 1 ≤ n ≤ N }`. -/
-private def Set.bdd (A : Set ℕ) (N : ℕ) := A ∩ Set.Icc 1 N
 
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
@@ -35,27 +34,18 @@ Is it true that
 $$
 \limsup_{N\to\infty}\frac{|(A + A)\cap \{1, ..., N\}|}{|A \cap \{1, ..., N\}|} \geq 3?
 $$
--/
-@[category research solved, AMS 5, AMS 11]
-theorem erdos_245 (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    3 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop :=
-  sorry
 
-/--
-Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
-Determine whether there exists a limit to
-$$
-\frac{|(A + A)\cap \{1, ..., N\}|}{|A \cap \{1, ..., N\}|}
-$$
-as $N\to\infty$.
+The answer is yes, proved by Freiman [Fr73].
+
+[Fr73] Fre\u{\i}man, G. A., _Foundations of a structural theory of set addition_. (1973), vii+108.
 -/
-@[category research solved, AMS 5, AMS 11]
-theorem erdos_245.variants.exists_limit (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    -- Use `EReal` to disinguish infinite limit from other types of non-existence
-    ∃ (α : EReal),
-      Tendsto (fun N => (((A + A).bdd N |>.ncard : EReal) / ((A.bdd N).ncard) : EReal)) atTop (𝓝 α) :=
+@[category research solved, AMS 5 11]
+theorem erdos_245 :
+    answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
+      atTop.Tendsto (fun N ↦ (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
+      3 ≤ atTop.limsup
+        fun N : ℝ ↦ ((A + A) ∩ Icc 1 ⌊N⌋₊ |>.ncard : EReal)
+          / (A ∩ Icc 1 ⌊N⌋₊).ncard := by
   sorry
 
 /--
@@ -65,8 +55,12 @@ $$
 \limsup_{N\to\infty}\frac{|(A + A)\cap \{1, ..., N\}|}{|A \cap \{1, ..., N\}|} \geq 2.
 $$
 -/
-@[category research solved, AMS 5, AMS 11]
+@[category research solved, AMS 5 11]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0)) :
-    2 ≤ limsup (fun N => ((A + A).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop :=
+    (hf : atTop.Tendsto (fun N ↦ (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0)) :
+    2 ≤ atTop.limsup
+      fun N : ℝ ↦ ((A + A) ∩ Icc 1 ⌊N⌋₊ |>.ncard : EReal)
+        / (A ∩ Icc 1 ⌊N⌋₊).ncard := by
   sorry
+
+end Erdos245

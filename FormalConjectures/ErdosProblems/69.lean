@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/69](https://www.erdosproblems.com/69)
 -/
-open scoped ArithmeticFunction
+
+open scoped ArithmeticFunction.omega
+
+namespace Erdos69
 
 /--
 Is
@@ -31,7 +34,7 @@ $$
 irrational? (Here $\omega(n)$ counts the number of distinct prime divisors of $n$.)
 -/
 @[category undergraduate, AMS 11]
-theorem erdos_69 : Irrational <| ∑' n, ω (n + 2) / 2 ^ (n + 2) :=
+theorem erdos_69 : Irrational <| ∑' n, ω (n + 2) / 2 ^ (n + 2) := by
   sorry
 
 /--
@@ -41,7 +44,9 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem erdos_69.specialisation_of_erdos_257 :
+theorem erdos_69.variants.specialisation_of_erdos_257 :
     let A := { n : ℕ | n.Prime }
-    ∑' n, ω (n + 2) / (2 ^ (n + 2) : ℝ) = ∑' p : A, 1 / (2 ^ p.1 - 1) :=
+    ∑' n, ω (n + 2) / (2 ^ (n + 2) : ℝ) = ∑' p : A, 1 / (2 ^ p.1 - 1) := by
   sorry
+
+end Erdos69

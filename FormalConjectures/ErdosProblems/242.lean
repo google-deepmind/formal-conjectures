@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,9 +19,15 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 242
 
-*Reference:* [erdosproblems.com/242](https://www.erdosproblems.com/242)
+*References:*
+- [erdosproblems.com/242](https://www.erdosproblems.com/242)
+- [Si56] Sierpiński, W., Sur les décompositions de nombres rationnels en fractions primaires.
+  Mathesis (1956), 16--32.
 -/
+
 open scoped Topology
+
+namespace Erdos242
 
 /--
 For every $n>2$ there exist distinct integers $1 ≤ x < y < z$
@@ -34,13 +40,15 @@ theorem erdos_242 (n : ℕ) (hn : 2 < n) :
   sorry
 
 /--
-For any fixed $a$, if $n$ is sufficiently large in terms of $a$
-then there exist distinct integers $1 ≤ x < y < z$ such that
-$\frac a n = \frac 1 x + \frac 1 y + \frac 1 z$.
+Schinzel conjectured (see [Si56]) the generalisation that, for any fixed $a$, if $n$ is sufficiently
+large in terms of $a$ then there exist distinct integers $1\leq x < y < z$ such that
+$\frac{a}{n} = \frac{1}{x}+\frac{1}{y}+\frac{1}{z}.$
 -/
 @[category research open, AMS 11]
-theorem erdos_242_schinzel_generalization
+theorem erdos_242.variants.schinzel_generalization
     (a : ℕ) (ha : 0 < a) :
     ∀ᶠ (n : ℕ) in Filter.atTop, ∃ x y z : ℕ, 1 ≤ x ∧ x < y ∧ y < z ∧
       (a / n : ℚ) = 1 / x + 1 / y + 1 / z := by
   sorry
+
+end Erdos242

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,13 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/899](https://www.erdosproblems.com/899)
 -/
-open Filter
+
+open Filter Set
 
 open scoped Pointwise Topology
 
-/-- If `A` is a set of natural numbers and `N : ℕ`, then `bdd A N` is the
-set `{ n ∈ A | 1 ≤ n ≤ N }`. -/
-def Set.bdd (A : Set ℕ) (N : ℕ) := A ∩ Set.Icc 1 N
+namespace Erdos899
+
+open Erdos899
 
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
@@ -41,8 +42,10 @@ The answer is yes, proved by Ruzsa [Ru78].
 [Ru78] Ruzsa, I. Z., _On the cardinality of {$A+A$}\ and {$A-A$}_. (1978), 933--938.
 -/
 @[category research solved, AMS 5]
-theorem erdos_899 : (∀ (A : Set ℕ), A.Infinite →
-    Tendsto (fun N => (A.bdd N |>.ncard : ℝ) / N) atTop (𝓝 0) →
-    Tendsto (fun N => ((A - A : Set ℕ).bdd N |>.ncard : ℝ) / (A.bdd N).ncard) atTop atTop) ↔
-    answer(True) :=
+theorem erdos_899 : answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
+    Tendsto (fun N => (A ∩ Icc 1 N |>.ncard : ℝ) / N) atTop (𝓝 0) →
+    atTop.limsup (fun N => ((A - A : Set ℕ) ∩ Icc 1 N |>.ncard : EReal) /
+      (A ∩ Icc 1 N).ncard) = ⊤ := by
   sorry
+
+end Erdos899

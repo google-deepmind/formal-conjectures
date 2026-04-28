@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,9 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/469](https://www.erdosproblems.com/469)
 -/
+
+namespace Erdos469
+
 /-- The proposition that `n` is a sum of distinct proper divisors. -/
 def Nat.IsSumDivisors (n : ℕ) : Prop :=
   ∃ S ⊆ n.properDivisors, ∑ d ∈ S, d = n
+
+open Erdos469
 
 /--
 Let $A$ be the set of all $n$ such that $n = d_1 + ⋯ + d_k$ with $d_i$ distinct
@@ -36,5 +41,7 @@ converge?
 @[category research open, AMS 11]
 theorem erdos_469 :
     letI A := {n : ℕ | 0 < n ∧ n.IsSumDivisors ∧ ∀ m < n, m ∣ n → ¬ m.IsSumDivisors}
-    Summable fun n : A ↦ 1 / (n : ℝ) :=
+    answer(sorry) ↔ Summable fun n : A ↦ 1 / (n : ℝ) := by
   sorry
+
+end Erdos469

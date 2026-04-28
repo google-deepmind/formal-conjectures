@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Inverse_Galois_problem)
 -/
+
+namespace InverseGalois
+
 structure GaloisRealization (K G : Type*) [Field K] [Group G] where
   L : Type*
   to_field : Field L
@@ -46,7 +49,6 @@ theorem inverse_galois_problem {G : Type*} [Fintype G] [Group G] :
     IsRealizable ℚ G := by
   sorry
 
-
 /--
 Every finite cyclic group is realizable.
 -/
@@ -55,7 +57,6 @@ theorem inverse_galois_problem.variants.cyclic
     {G : Type*} [Fintype G] [Group G] [IsCyclic G] :
     IsRealizable ℚ G := by
   sorry
-
 
 /--
 Every finite abelian group is realizable.
@@ -66,7 +67,6 @@ theorem inverse_galois_problem.variants.abelian
     IsRealizable ℚ G := by
   sorry
 
-
 /--
 Every finite symmetric group is realizable.
 -/
@@ -75,7 +75,6 @@ theorem inverse_galois_problem.variants.symmetric_group
     {S : Type*} [Fintype S] :
     IsRealizable ℚ (S ≃ S) := by
   sorry
-
 
 /--
 Every finite group is realisable over the field of rational functions
@@ -87,7 +86,6 @@ theorem inverse_galois_problem.variants.complex_rational_functions
     IsRealizable (RatFunc ℂ) G := by
   sorry
 
-
 /--
 Every finite group is realisable over the field of rational functions
 with coefficients `K`, where `K` is any field of characteristic 0.
@@ -97,3 +95,5 @@ theorem inverse_galois_problem.variants.complex_function_field
     {G K : Type*} [Field K] [CharZero K] [Fintype G] [Group G] :
     IsRealizable (RatFunc K) G := by
   sorry
+
+end InverseGalois

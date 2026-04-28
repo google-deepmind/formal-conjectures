@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,14 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ForMathlib.Algebra.Order.Group.Pointwise.Interval
-import FormalConjectures.ForMathlib.Analysis.SpecialFunctions.Log.Basic
-import FormalConjectures.ForMathlib.Combinatorics.Basic
-import FormalConjectures.ForMathlib.Data.Nat.MaxPrimeFac
-import FormalConjectures.ForMathlib.Data.Nat.Prime.Defs
-import FormalConjectures.ForMathlib.Data.Set.Density
-import FormalConjectures.ForMathlib.Geometry.«2d»
-import FormalConjectures.ForMathlib.Logic.Equiv.Fin
-import FormalConjectures.ForMathlib.Order.Interval.Finset.Basic
-import FormalConjectures.ForMathlib.Order.Interval.Finset.Nat
+public import FormalConjecturesForMathlib
+
+/-!
+# ForMathlib (deprecated)
+
+This module is deprecated since 2026-01-08. Use `FormalConjecturesForMathlib` directly.
+-/
+
+deprecated_module (since := "2026-01-08")

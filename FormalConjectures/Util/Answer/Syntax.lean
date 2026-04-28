@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,12 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
 /-!
 Syntax definitions used in `Google.Answer`.
 
 We separate them to allow handling the syntax without the full implementation.
 -/
+
+public section
 
 /-- Indicates where the answer is in a problem statement. -/
 syntax (name := Google.answer) "answer(" term ")" : term

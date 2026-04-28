@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/389](https://www.erdosproblems.com/389)
 -/
+
+namespace Erdos389
+
 /--
 Is it true that for every $n \geq 1$ there is a $k$ such that
 $$
@@ -28,9 +31,8 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_389 (n : ℕ) (h : 1 ≤ n) :
-    ∃ k ≥ 1,
-      ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i) :=
+theorem erdos_389 : answer(sorry) ↔
+    ∀ n ≥ 1, ∃ k ≥ 1, ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i) := by
   sorry
 
 /--
@@ -41,5 +43,7 @@ For example, the minimal $k$ for $n = 4$ is $207$.
 theorem erdos_389.variants.mehta_four :
     IsLeast
       { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (4 + i) ∣ ∏ i ∈ Finset.range k, (4 + k + i) }
-      207 :=
+      207 := by
   sorry
+
+end Erdos389

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/931](https://www.erdosproblems.com/931)
 -/
+
+namespace Erdos931
+
 /--
 Let $k_1 \geq k_2 \geq 3$. Are there only finitely many $n_2\geq n_1 + k_1$
 such that
@@ -30,10 +33,10 @@ $$
 have the same prime factors?
 -/
 @[category research open, AMS 11]
-theorem erdos_931 (k₁ k₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂) :
+theorem erdos_931 : answer(sorry) ↔ ∀ᵉ (k₁ : ℕ) (k₂ ≥ 3), k₂ ≤ k₁ →
     { (n₁, n₂) | n₁ + k₁ ≤ n₂ ∧
       (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
-      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite :=
+      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite := by
   sorry
 
 /--
@@ -42,10 +45,10 @@ $n_2 > 2(n_1 + k_1)$.
 It is an open question whether this is true when allowing a finite number of counterexamples.
 -/
 @[category research open, AMS 11]
-theorem erdos_931.variants.additional_condition (k₁ k₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂):
+theorem erdos_931.variants.additional_condition : answer(sorry) ↔ ∀ᵉ (k₁ : ℕ) (k₂ ≥ 3), k₂ ≤ k₁ →
     {(n₁, n₂) | n₁ + k₁ ≤ n₂ ∧ n₂ ≤ 2 * (n₁ + k₁) ∧
       (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
-      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Finite :=
+      (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Finite := by
   sorry
 
 /--
@@ -69,5 +72,7 @@ then there must exist a prime between $n_1$ and $n_2$.
 theorem erdos_931.variants.exists_prime (k₁ k₂ n₁ n₂ : ℕ) (h₁ : k₂ ≤ k₁) (h₂ : 3 ≤ k₂)
     (h₃ : n₁ + k₁ ≤ n₂) (h₄ : (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
       (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors) :
-    ∃ (p : ℕ), p.Prime ∧ n₁ ≤ p ∧ p ≤ n₂ :=
+    ∃ (p : ℕ), p.Prime ∧ n₁ ≤ p ∧ p ≤ n₂ := by
   sorry
+
+end Erdos931

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,12 +21,16 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/243](https://www.erdosproblems.com/243)
 -/
+
 open Filter
 
 open scoped Topology
 
+namespace Erdos243
+
 /--
-Let $a_1 < a_2 < \dots$ be a sequence of integers such that $\lim_{n\to\infty} \frac{a_n}{a_{n-1}^2} = 1$ and $\sum \frac{1}{a_n} \in \mathbb{Q}$.
+Let $a_1 < a_2 < \dots$ be a sequence of integers such that
+$\lim_{n\to\infty} \frac{a_n}{a_{n-1}^2} = 1$ and $\sum \frac{1}{a_n} \in \mathbb{Q}$.
 
 Then, for all sufficiently large $n \ge 1$, $a_n = a_{n-1}^2 - a_{n-1} + 1$.
 -/
@@ -34,4 +38,7 @@ Then, for all sufficiently large $n \ge 1$, $a_n = a_{n-1}^2 - a_{n-1} + 1$.
 theorem erdos_243 (a : ℕ → ℕ) (ha₀ : StrictMono a)
     (ha₁ : Tendsto (fun n ↦ (a n : ℝ) / a (n - 1) ^ 2) atTop (𝓝 1))
     (ha₂ : Summable ((1 : ℚ) / a ·)) :
-      ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := sorry
+      ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := by
+  sorry
+
+end Erdos243

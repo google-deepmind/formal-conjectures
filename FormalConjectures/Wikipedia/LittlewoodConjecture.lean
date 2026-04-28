@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,29 +17,44 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Littlewood conjecture
+# Littlewood conjectures
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Littlewood_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Littlewood_conjecture)
+- [Bernard Mathan and Olivier Touli´e, *Problem`emes diophantiens simultan´es*][mathantoilie2004]
 -/
+
 open Filter
 
 -- TODO(mercuris): This is a norm on ℝ/ℤ, show this?
-/--
-The distance to the nearest integer is the function
-$\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$.
--/
-noncomputable abbrev distToNearestInt (x : ℝ) : ℝ := min |x - ⌊x⌋| |x - ⌈x⌉|
+
+namespace LittlewoodConjecture
+
 
 /--
 For any two real numbers $\alpha$ and $\beta$,
 $$
   \liminf_{n\to\infty} n\||n\alpha\||\||n\beta\|| = 0
 $$
-where $\||nx\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$ is the distance
+where $\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$ is the distance
 to the nearest integer.
 -/
-@[category research solved, AMS 11]
+@[category research open, AMS 11]
 theorem littlewood_conjecture (α β : ℝ) :
-    atTop.liminf (fun (n : ℕ) => n * distToNearestInt (n * α)
-      * distToNearestInt (n * β)) = 0 := by
+    atTop.liminf (fun (n : ℕ) ↦ n * distToNearestInt (n * α) * distToNearestInt (n * β)) = 0 := by
   sorry
+
+/--
+For real number $\alpha$ and prime $p$,
+$$
+  \liminf_{n \to\infty} n |n|_{p}\||n\alpha\|| = 0
+$$
+where $\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$ is the distance
+to the nearest integer, and $|x|_{p}$ is the $p$-adic norm.
+-/
+@[category research open, AMS 11]
+theorem padic_littlewood_conjecture (α : ℝ) (p : ℕ) (hp : p.Prime) :
+    atTop.liminf (fun (n : ℕ) ↦ n * padicNorm p n * distToNearestInt (n * α)) = 0 := by
+  sorry
+
+end LittlewoodConjecture

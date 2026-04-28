@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Rational_variety)
 -/
+
+namespace NoetherProblem
+
 /--
 A rational field extension is a field extension `L/K` isomorphic
 to a field of rational functions (in some arbitrary number of indeterminates.)
@@ -33,7 +36,7 @@ class IsRationalExtension (K L ι : Type*)
 /-- If the index set `ι` is empty, then `IsRationalExtension K L ι` means that
 `K, L` are isomorphic as `K` algebras. -/
 @[category test, AMS 12]
-example (K L ι : Type*) [Field K] [Field L] [Algebra K L] [IsEmpty ι]
+theorem rationalExtension_empty_index (K L ι : Type*) [Field K] [Field L] [Algebra K L] [IsEmpty ι]
     [IsRationalExtension K L ι] :
     Nonempty (L ≃ₐ[K] K) := by
   set a : L ≃ₐ[K] (FractionRing (MvPolynomial ι K)) :=
@@ -42,7 +45,6 @@ example (K L ι : Type*) [Field K] [Field L] [Algebra K L] [IsEmpty ι]
   set c : FractionRing (MvPolynomial ι K) ≃ₐ[K] K :=
     IsFractionRing.fieldEquivOfAlgEquiv K (FractionRing (MvPolynomial ι K)) K b
   apply Nonempty.intro (a.trans c)
-
 
 /--
 We say that a rational extension `L` of `K` has the _Noether Property_
@@ -60,16 +62,16 @@ indeterminates over `K`. Is it true that `L/K` has the Noether property?
 
 Solution: False.
 -/
-@[category research solved, AMS 12, AMS 14]
-theorem noether_problem : ∃ (K L ι G : Type)
-    (_ : Field K) (_ : Field L) (_ : Fintype ι) (_ : Algebra K L) (_ : IsRationalExtension K L ι),
-    ¬ HasNoetherProperty K L ι := by
+@[category research solved, AMS 12 14]
+theorem noether_problem : answer(False) ↔ ∀ (K L ι G : Type)
+    [Field K] [Field L] [Fintype ι] [Algebra K L] [IsRationalExtension K L ι],
+    HasNoetherProperty K L ι := by
   sorry
 
 /--
 The Noether problem has a positive solution in the two indeterminate case.
 -/
-@[category research solved, AMS 12, AMS 14]
+@[category research solved, AMS 12 14]
 theorem noether_problem.variants.two {K L ι G : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 2) :
@@ -79,7 +81,7 @@ theorem noether_problem.variants.two {K L ι G : Type}
 /--
 The Noether problem has a positive solution in the three indeterminate case.
 -/
-@[category research solved, AMS 12, AMS 14]
+@[category research solved, AMS 12 14]
 theorem noether_problem.variants.three {K L ι G : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 3) :
@@ -89,7 +91,7 @@ theorem noether_problem.variants.three {K L ι G : Type}
 /--
 The Noether problem has a positive solution in the four indeterminate case.
 -/
-@[category research solved, AMS 12, AMS 14]
+@[category research solved, AMS 12 14]
 theorem noether_problem.variants.four {K L ι G : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 4) :
@@ -100,10 +102,12 @@ theorem noether_problem.variants.four {K L ι G : Type}
 One can find a counterexample to the Noether Problem's claim by considering a
 rational function field in 47 indeterminates.
 -/
-@[category research solved, AMS 12, AMS 14]
+@[category research solved, AMS 12 14]
 theorem noether_problem.variants.forty_seven :
     ∃ (K L ι G : Type)
     (_ :  Field K) (_ : Field L) (_ : Fintype ι) (_ : Algebra K L)
     (_ : IsRationalExtension K L ι),
     Fintype.card ι = 47 ∧ ¬ HasNoetherProperty K L ι := by
   sorry
+
+end NoetherProblem

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,6 +23,9 @@ import FormalConjectures.Util.ProblemImports
 
 Reviewed by @b-mehta on 2025-05-27
 -/
+
+namespace Erdos913
+
 /--
 Are there infinitely many $n$ such that if
 $$
@@ -31,8 +34,8 @@ $$
 is the factorisation into distinct primes then all exponents $k_i$ are distinct?
 -/
 @[category research open, AMS 11]
-theorem erdos_913 :
-    { n | Set.InjOn (n * (n + 1)).factorization (n * (n + 1)).primeFactors }.Infinite :=
+theorem erdos_913 : answer(sorry) ↔
+    { n | Set.InjOn (n * (n + 1)).factorization (n * (n + 1)).primeFactors }.Infinite := by
   sorry
 
 /--
@@ -40,7 +43,7 @@ It is likely that there are infinitely many primes $p$ such that $8p^2 - 1$ is a
 -/
 @[category research open, AMS 11]
 theorem erdos_913.variants.infinite_many_8p_sq_add_one_primes :
-    { p | p.Prime ∧ (8 * p ^ 2 - 1).Prime }.Infinite :=
+    { p | p.Prime ∧ (8 * p ^ 2 - 1).Prime }.Infinite := by
   sorry
 
 /-- If there are infinitely many primes $p$ such that $8p^2 - 1$ is prime, then this is true. -/
@@ -53,12 +56,12 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
     rintro p hp
     nlinarith [hp.two_le]
   have : S.InjOn f := by
-    simp only [Set.InjOn, Set.mem_setOf_eq, and_imp, f]
+    simp only [Set.InjOn, f]
     rintro a ha b hb h
     rw [tsub_left_inj (hS a ha.1).le (hS b hb.1).le] at h
     simpa using h
   refine ((h.diff (Set.finite_singleton 2)).image (this.mono Set.diff_subset)).mono ?_
-  simp only [Set.image_subset_iff, Set.preimage_setOf_eq, Set.setOf_subset_setOf, and_imp, S]
+  simp only [Set.image_subset_iff, Set.preimage_setOf_eq, S]
   rintro p ⟨⟨hp, hp'⟩, hp''⟩
   simp only [Set.mem_singleton_iff] at hp''
   have fac : (f p * (f p + 1)).factorization =
@@ -90,3 +93,5 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
   simp only [Finsupp.coe_add, Finset.coe_insert, Finset.coe_singleton]
   rw [Set.injOn_insert (by simp [*]), Set.injOn_insert (by simp [hp''])]
   simp [aux₄, hp'', Ne.symm, aux₅]
+
+end Erdos913

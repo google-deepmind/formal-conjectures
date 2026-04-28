@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/189](https://www.erdosproblems.com/189)
 -/
+
 open Affine EuclideanGeometry
+
+namespace Erdos189
 
 /-- Erdős problem 189 asked whether the below holds for all rectangles. -/
 def Erdos189For (P : ℝ² → ℝ² → ℝ² → ℝ² → Prop) (A : ℝ² → ℝ² → ℝ² → ℝ² → ℝ) :=
@@ -32,8 +35,8 @@ def Erdos189For (P : ℝ² → ℝ² → ℝ² → ℝ² → Prop) (A : ℝ² �
       P a b c d
 
 /--
-If `ℝ²` is finitely coloured then must there exist some colour class which contains the vertices
-of a rectangle of every area?
+If $\mathbb{R}^2$ is finitely coloured then must there exist some colour class which contains the
+vertices of a rectangle of every area?
 
 Graham, "On Partitions of 𝔼ⁿ", Journal of Combinatorial Theory, Series A 28, 89-91 (1980).
 (See "Concluding Remarks" on page 96.)
@@ -42,35 +45,42 @@ Solved (with answer `False`, as formalised below) in:
 Vjekoslav Kovač, "Coloring and density theorems for configurations of a given volume", 2023
 https://arxiv.org/abs/2309.09973
 In fact, Kovač's colouring is even Jordan measurable (the topological boundary of each
-monochromatic region is Lebesgue measurable and has measure zero). -/
-@[category research solved, AMS 5, AMS 51]
+monochromatic region is Lebesgue measurable and has measure zero).
+
+This was formalized in Lean by Alexeev and Kovac using Aristotle.
+-/
+@[category research solved, AMS 5 51, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos189.lean"]
 theorem erdos_189 :
-    ¬ Erdos189For
+    answer(False) ↔ Erdos189For
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
-        line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction)
-      (fun a b c d ↦ dist a b * dist b c) :=
-sorry
+        line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧
+        line[ℝ, c, d].direction ⟂ line[ℝ, d, a].direction)
+      (fun a b c d ↦ dist a b * dist b c) := by
+  sorry
 
 /-- Graham claims this is "easy to see". -/
-@[category research solved, AMS 5, AMS 51]
+@[category research solved, AMS 5 51]
 theorem erdos_189.variants.square :
     ¬ Erdos189For
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
         line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧
+        line[ℝ, c, d].direction ⟂ line[ℝ, d, a].direction ∧
         dist a b = dist b c)
-      (fun a b c d ↦ dist a b * dist b c) :=
+      (fun a b c d ↦ dist a b * dist b c) := by
   sorry
 
 /--
 Seems to be open, as of January 2025.
 -/
-@[category research open, AMS 5, AMS 51]
+@[category research open, AMS 5 51]
 theorem erdos_189.variants.parallelogram :
     ¬ Erdos189For
       (fun a b c d ↦
         line[ℝ, a, b] ∥ line[ℝ, c, d] ∧
         line[ℝ, a, d] ∥ line[ℝ, b, c])
-      (fun a b c d ↦ dist a b * dist b c * (∡ a b c).sin) :=
+      (fun a b c d ↦ dist a b * dist b c * (∡ a b c).sin) := by
   sorry
+
+end Erdos189

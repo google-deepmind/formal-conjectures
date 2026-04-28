@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,6 +28,9 @@ are equidistributed modulo 1 or not.
 by *L. Kuipers* and *H. Niederreiter*, 1974
   - [Wikipedia](https://en.wikipedia.org/wiki/Equidistributed_sequence)
 -/
+
+namespace Equidistribution
+
 open scoped Topology
 
 /--
@@ -73,6 +76,14 @@ theorem isEquidistributedModuloOne_three_halves_pow :
     IsEquidistributedModuloOne (fun n => (3 / 2 : ℝ)^n) := by
   sorry
 
+/-- For any transcendental number `x`, the sequence `x * (3 / 2) ^ n` is
+equidistributed modulo 1. -/
+@[category research open, AMS 11]
+theorem isEquidistributedModuloOne_transcendental_three_halves_pow (x : ℝ)
+    (hx : Transcendental ℚ x) :
+    IsEquidistributedModuloOne (fun n ↦ x * (3 / 2 : ℝ) ^ n) := by
+  sorry
+
 /--
 The sequence `(3/2)^n` has infinitely many accumulation points modulo `1`.
 -/
@@ -82,9 +93,19 @@ theorem isAccumulationPoint_three_halves_pow_infinite :
   sorry
 
 /--
-Find an accumulation point of the sequence `(3/2)^n`
+Find an accumulation point of the sequence `(3/2)^n` modulo `1`.
 -/
 @[category research open, AMS 11]
 theorem isAccumulationPoint_three_halves_pow :
-    IsAccumulationPoint answer(sorry) (fun n => (3 / 2 : ℝ)^n) := by
+    IsAccumulationPoint answer(sorry) (fun n => Int.fract <| (3 / 2 : ℝ)^n) := by
   sorry
+
+/--
+There is an accumulation point of the sequence `(3/2)^n` modulo `1`.
+-/
+@[category test, AMS 11]
+theorem isAccumulationPoint_three_halves_pow_exists :
+    ∃ p, (IsAccumulationPoint p (fun n => Int.fract <| (3 / 2 : ℝ)^n)) := by
+  sorry
+
+end Equidistribution

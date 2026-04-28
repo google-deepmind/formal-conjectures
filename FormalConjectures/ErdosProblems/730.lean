@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,20 +19,23 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 730
 
-*Reference:* [erdosproblems.com/730](https://www.erdosproblems.com/730)
+*References:*
+  - [erdosproblems.com/730](https://www.erdosproblems.com/730)
+  - [A129515](https://oeis.org/A129515)
 -/
-private abbrev S :=
-  {(n, m) : ℕ × ℕ | n ≠ m ∧ ((2*n).choose n).primeFactors = ((2*m).choose m).primeFactors}
+namespace Erdos730
+
+abbrev S :=
+  {(n, m) : ℕ × ℕ | n < m ∧ n.centralBinom.primeFactors = m.centralBinom.primeFactors}
 
 
 /--
-Are there infinitely many pairs of integers $n ≠ m$ such that $\binom{2n}{n}$
+Are there infinitely many pairs of integers $n < m$ such that $\binom{2n}{n}$
 and $\binom{2m}{m}$ have the same set of prime divisors?
 -/
 @[category research open, AMS 11]
-theorem erdos_730 : S.Infinite := by
+theorem erdos_730 : answer(sorry) ↔ S.Infinite := by
   sorry
-
 
 /--
 For example, $(87,88)$ and $(607,608)$ are such pairs.
@@ -43,33 +46,21 @@ theorem erdos_730.variants.explicit_pairs :
   sorry
 
 /--
-Show that for all $n$, the binomial coefficient $\binom{2n}{n}$ is even.
--/
-@[category high_school]
-theorem erdos_730.variants.two_div_forall (n : ℕ) (h : 0 < n) : 2 ∣ (2*n).choose n := by
-  sorry
+There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.
 
-/--
-Show that $(n, n+1) ∈ S$ if and only if for all odd primes $p ≤ n$ both the base $p$
-representations of $n$ and $n+1$ either both have all digits less or equal to $(p-1)/2$
-or both don't.
-
-Note: currently there is stronger, but potentially false formulation of this criterion
-on erdosproblems.com.
+(Found by AlphaProof, although it was implicit already in [A129515])
 -/
-@[category undergraduate]
-theorem erdos_730.variants.succ_pair_criterion (n : ℕ) (h : 2 < n) :
-    (n, n+1) ∈ S ↔ ∀ p ∈ Set.Ioc 2 n, ∀ [hp : Fact p.Prime],
-    let kummer_condition: ℕ → Prop := fun n => (p.digits n).Forall (fun m => m ≤ (p - 1) / 2)
-    (kummer_condition n ↔ kummer_condition (n + 1)) := sorry
+@[category research solved, AMS 11]
+theorem erdos_730.variants.delta_ne_one : ∃ (n m : ℕ), (n, m) ∈ S ∧ m ≠ n + 1 := by
+  dsimp [S]
+  use 10003
+  use 10005
+  norm_num [Finset.ext_iff, Nat.choose_eq_zero_iff, Nat.centralBinom]
+  simp_rw [Nat.choose_eq_descFactorial_div_factorial]
+  intro p hp
+  constructor
+  all_goals exact fun h' => or_self_iff.1 (hp.dvd_mul.1 (
+    h'.trans (by refine' of_decide_eq_true (by constructor : _ = ↑_))))
 
-open scoped Topology in
-/--
-Standard heuristics then predict there should be $≫ \frac x {(\log x)^2}$
-many $n ≤ x$ such that $(n, n+1) ∈ S$.
--/
-@[category research open, AMS 11]
-theorem erdos_730.variants.succ_pair_growth :
-    let C (x : ℝ) : ℝ := (Finset.Icc 0 ⌊x⌋₊ |>.filter fun n => (n, n+1) ∈ S).card
-    Filter.Tendsto (fun (x : ℝ) => x / (x.log^2) / C x) Filter.atTop (𝓝 0) := by
-  sorry
+
+end Erdos730

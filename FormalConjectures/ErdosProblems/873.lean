@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,16 +21,22 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/873](https://www.erdosproblems.com/873)
 -/
-/--Let $a$ be some sequence of natural numbers. We set $F(A,X,k)$ to be the count of
-the number of $i$ such that $[a_i,a_{i+1}, … ,a_{i+k−1}] < X$,
-where the left-hand side is the least common multiple.-/
-private noncomputable abbrev F (a : ℕ → ℕ) (X : ℝ) (k : ℕ) : ℕ∞ :=
+
+namespace Erdos873
+
+/-- Let $a$ be some sequence of natural numbers. We set $F(A,X,k)$ to be the count of
+the number of $i$ such that $[a_i,a_{i+1}, \dots ,a_{i+k−1}] < X$,
+where the left-hand side is the least common multiple. -/
+noncomputable abbrev F (a : ℕ → ℕ) (X : ℝ) (k : ℕ) : ℕ∞ :=
   {i : ℕ | (Finset.range k).lcm (fun m => a (i + m)) < X}.encard
 
-/--Let $A = \{a_1 < a_2 <⋯\} ⊆ ℕ$ and let $F(A,X,k)$ count the number of $i$ such that
-$[a_i,a_{i+1}, … ,a_{i+k−1}] < X$, where the left-hand side is the least common multiple.
-Is it true that, for every $ϵ > 0$, there exists some $k$ such that $F(A,X,k) < X^ϵ$?-/
+/-- Let $A = \{a_1 < a_2 < \dots\} \subseteq \mathbb{N}$ and let $F(A,X,k)$ count the number of $i$
+such that $[a_i,a_{i+1}, \dots ,a_{i+k−1}] < X$, where the left-hand side is the least common
+multiple. Is it true that, for every $\epsilon > 0$, there exists some $k$ such that
+$F(A,X,k) < X^\epsilon$?-/
 @[category research open, AMS 11]
-theorem erdos_873 (a : ℕ → ℕ) (hapos : 0 < a 0) (ha : StrictMono a) (ε : ℝ) (hε : 0 < ε):
-    ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal :=
+theorem erdos_873 : answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (ε > (0 : ℝ)), 0 < a 0 → StrictMono a →
+    ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal := by
   sorry
+
+end Erdos873

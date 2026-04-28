@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Jacobian_conjecture)
 -/
+
+namespace JacobianConjecture
+
 open Classical
 
 section Prelims
@@ -29,24 +32,25 @@ variable {k : Type*} [CommRing k]
 variable {σ τ ι : Type*}
 
 variable (k σ τ) in
-/--Implicitly use `σ` as an index set and `k` as coefficient ring. -/
+
+/-- Implicitly use `σ` as an index set and `k` as coefficient ring. -/
 abbrev RegularFunction := τ → MvPolynomial σ k
 
 namespace RegularFunction
 
-/--The Jacobian of a vector valued polynomial function, viewed as a polynomial.-/
+/-- The Jacobian of a vector valued polynomial function, viewed as a polynomial. -/
 noncomputable def Jacobian (F : RegularFunction k σ τ) :
     Matrix σ τ (MvPolynomial σ k) :=
   Matrix.of fun i j => MvPolynomial.pderiv i (F j)
 
-/--The composition of two vector valued polynomial functions.-/
+/-- The composition of two vector valued polynomial functions. -/
 noncomputable def comp
     (F : RegularFunction k σ τ) (G : RegularFunction k τ ι) :
     RegularFunction k σ ι :=
   fun (i : ι) ↦ MvPolynomial.bind₁ F (G i)
 
 variable (k σ) in
-private noncomputable def id : RegularFunction k σ σ := MvPolynomial.X
+noncomputable def id : RegularFunction k σ σ := MvPolynomial.X
 
 end RegularFunction
 
@@ -60,7 +64,7 @@ open RegularFunction
 
 variable {σ : Type*} [Fintype σ]
 
-/--The **Jacobian Conjecture**: any regular function
+/-- The **Jacobian Conjecture**: any regular function
 (i.e. vector valued polynomial function from) `kⁿ → kᵐ`
 whose Jacobian is a non-zero constant has an inverse that
 is given by a regular function, where `k` is a field of characteristic `0`-/
@@ -79,15 +83,15 @@ open RegularFunction
 
 variable {σ τ ι : Type*} [Fintype σ]
 
-/--The evaluation of a regular function `f` over `k` at some point `a` with coordinates
-in some algebra over `k`-/
+/-- The evaluation of a regular function `f` over `k` at some point `a`
+with coordinates in some algebra over `k`-/
 noncomputable def RegularFunction.aeval {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
     (F : RegularFunction k σ τ) : (σ → S₁) → τ → S₁ :=
   fun a t ↦ MvPolynomial.aeval a (F t)
 
 
 omit [CharZero k] [Fintype σ] in
-/--`aeval` is compatible with composition of regular functions-/
+/--`aeval` is compatible with composition of regular functions. -/
 @[category API, AMS 14]
 lemma comp_aeval
     (F : RegularFunction k σ τ) (G : RegularFunction k τ ι)
@@ -108,9 +112,10 @@ lemma sanity_check_condition_1 (F : RegularFunction k σ σ) :
   sorry
 
 
--- Let's apply the conjecture to a trivial case to make sure things are working as expected.
+-- Let's apply the conjecture to a trivial case to make sure things
+-- are working as expected.
 @[category test, AMS 14]
-example :
+theorem jacobian_conjecture_identity :
     ∃ (G : RegularFunction k σ σ), G.comp (id k σ) = id k σ ∧
     (id k σ).comp G = id k σ := by
   apply jacobian_conjecture
@@ -120,3 +125,5 @@ example :
     Matrix.of_apply, Matrix.one_eq_pi_single]
 
 end Tests
+
+end JacobianConjecture
