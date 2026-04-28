@@ -50,7 +50,7 @@ Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really me
 rational points is torsion, not that it is of infinite rank. -/
 @[category research solved, AMS 11 14]
 instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic]
-    [AddCommMonoid  E⟮K⟯] [Module ℤ E⟮K⟯] :
+    [AddCommMonoid E⟮K⟯] [Module ℤ E⟮K⟯] :
       Module.Finite ℤ E⟮K⟯ := by
   sorry
 
@@ -159,7 +159,7 @@ namespace WeierstrassCurve
 
 open _root_.WeierstrassCurve
 
-/-! See https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve#Largest_known_ranks -/
+/-  See https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve#Largest_known_ranks -/
 
 /-- The elliptic curve over ℚ of rank at least 29 found by Elkies and Klagsbrun in 2024.
 It has rank exactly 29 assuming the generalized Riemann hypothesis. -/
@@ -183,10 +183,12 @@ theorem Δ_elkiesKlagsbrun29 : elkiesKlagsbrun29.Δ =
 instance : elkiesKlagsbrun29.IsElliptic where
   isUnit := by rw [Δ_elkiesKlagsbrun29]; norm_num
 
+/-- The rank of the Elkies-Klagsbrun curve is at least 29. -/
 @[category research solved, AMS 11 14]
 theorem twentynine_le_rank_elkiesKlagsbrun29 : 29 ≤ finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ := by
   sorry
 
+/-- The rank of the Elkies-Klagsbrun curve is exactly 29. -/
 @[category research open, AMS 11 14]
 theorem rank_elkiesKlagsbrun29 : finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ = 29 := by
   sorry
@@ -212,10 +214,12 @@ theorem Δ_elkies28 : elkies28.Δ =
 instance : elkies28.IsElliptic where
   isUnit := by rw [Δ_elkies28]; norm_num
 
+/-- The rank of the Elkies curve is at least 28. -/
 @[category research solved, AMS 11 14]
 theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28⟮ℚ⟯ := by
   sorry
 
+/-- The rank of the Elkies curve is exactly 28. -/
 @[category research open, AMS 11 14]
 theorem rank_elkies28 : finrank ℤ elkies28⟮ℚ⟯ = 28 := by
   sorry

@@ -25,7 +25,7 @@ integers and $z \leq w$, such that both $x$ and $x + 24y$ are squares.
 Zhi-Wei Sun has offered a $2,400 prize for the first proof.
 
 *References:*
-- [OEIS A281976](https://oeis.org/A281976)
+- [A281976](https://oeis.org/A281976)
 - Z.-W. Sun, "Refining Lagrange's four-square theorem," *J. Number Theory* **175** (2017), 167-190.
   https://doi.org/10.1016/j.jnt.2016.11.008
 - Z.-W. Sun, "Restricted sums of four squares," *arXiv:1701.05868* [math.NT], 2017.

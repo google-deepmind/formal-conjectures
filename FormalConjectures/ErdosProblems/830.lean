@@ -22,18 +22,10 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/830](https://www.erdosproblems.com/830)
 -/
 
-namespace Erdos830
-
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 open Classical Filter Real
 
-/--
-We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$.
--/
-@[mk_iff]
-structure IsAmicable (a b : ℕ) where
-  left : σ 1 a = a + b
-  right : σ 1 b = a + b
+namespace Erdos830
 
 /--
 Let $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$.
@@ -53,7 +45,7 @@ theorem erdos_830.parts.i : answer(sorry) ↔ {(a, b) | IsAmicable a b}.Infinite
 /-- **Erdos Problem 830, Part 2**
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$.
 If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then is it true that
-\[A(x) > x^{1-o(1)}?\]
+$$A(x) > x^{1-o(1)}?$$
 -/
 @[category research open, AMS 11]
 theorem erdos_830.parts.ii : answer(sorry) ↔ ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → ℝ) ∧ ∀ᶠ x in atTop,

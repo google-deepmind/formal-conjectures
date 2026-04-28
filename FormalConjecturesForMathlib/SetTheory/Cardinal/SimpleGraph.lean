@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.SetTheory.Ordinal.Exponential
+
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.SetTheory.Ordinal.Exponential
+
+@[expose] public section
 
 open Cardinal Ordinal
 
@@ -31,7 +35,7 @@ one of the following must hold:
 -/
 def OrdinalCardinalRamsey (α β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
   -- For any 2-coloring of `α`,
-  ∀ red blue : SimpleGraph α.toType, IsCompl red blue →
+  ∀ red blue : SimpleGraph α.ToType, IsCompl red blue →
     -- either there is a red `K_β`
     (∃ s, red.IsClique s ∧ typeLT s = β) ∨
    -- or there is a blue `K_c`.

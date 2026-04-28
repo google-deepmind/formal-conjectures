@@ -29,13 +29,13 @@ import FormalConjectures.Util.ProblemImports
 open scoped Nat
 open Filter Real Set
 
+namespace Erdos516
+
 /-- An entire function `f` is said to be of finite order if there exist numbers c, a ≥ 0
 such that for all `z`, `‖f z‖ ≤ c * rexp (‖z‖ ^ a)`. -/
 def OfFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     [NormedAddCommGroup F] [NormedSpace ℂ F] (f : E → F) : Prop :=
   Differentiable ℂ f ∧ ∃ c ≥ 0, ∃ a ≥ 0, ∀ z, ‖f z‖ ≤ c * rexp (‖z‖ ^ a)
-
-namespace Erdos516
 
 noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
   (⨅ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log / (⨆ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log
@@ -43,17 +43,17 @@ noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function of finite order such that `nₖ / k → ∞`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
 @[category research solved, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one_of_hasFabryGaps_ofFiniteOrder {f : ℂ → ℂ} {n : ℕ → ℕ}
-    (hn : HasFabryGaps n) {a : ℕ → ℂ} (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z))
-    (hf : OfFiniteOrder f) :
+theorem erdos_516 {f : ℂ → ℂ} {n : ℕ → ℕ}
+    (hn : HasFabryGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
+    (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (hf : OfFiniteOrder f) :
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function such that `nₖ > k (log k) ^ (2 + c)`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65]. -/
 @[category research solved, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
-    (hn : ∃ c > (0 : ℝ), ∀ k, n k > k * log k ^ (2 + c)) {a : ℕ → ℂ}
+theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
+    (hn : ∃ c > (0 : ℝ), ∀ k, n k > k * log k ^ (2 + c)) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) :
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
@@ -61,8 +61,8 @@ theorem erdos_516.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
 /-- Is it true that for all entire functions `f = ∑ aₖzⁿₖ` such that `∑' 1 / nₖ < ∞`,
 `limsup (fun r => ratio r f) atTop = 1`? -/
 @[category research open, AMS 30]
-theorem erdos_516.limsup_ratio_eq_one_of_hasFejerGaps : answer(sorry) ↔
-    ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ}
+theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps : answer(sorry) ↔
+    ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry

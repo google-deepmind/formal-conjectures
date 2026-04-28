@@ -13,12 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
---A standard set of imports for open problems.
-import Mathlib
-import FormalConjecturesForMathlib
-import FormalConjectures.Util.Answer
-import FormalConjectures.Util.Attributes
-import FormalConjectures.Util.Linters.AMSLinter
-import FormalConjectures.Util.Linters.CategoryLinter
-import FormalConjectures.Util.Linters.CopyrightLinter
+public import Mathlib
+public import FormalConjecturesForMathlib
+public import FormalConjectures.Util.Answer
+public import FormalConjectures.Util.Linters.AMSLinter
+public import FormalConjectures.Util.Linters.AnswerLinter
+public import FormalConjectures.Util.Linters.CategoryDocstringLinter
+public import FormalConjectures.Util.Linters.CategoryLinter
+public import FormalConjectures.Util.Linters.CopyrightLinter
+public import FormalConjectures.Util.Linters.ExistsImplicationLinter
+public import FormalConjectures.Util.Linters.ModuleDocstringLinter
+public import FormalConjectures.Util.Linters.NamespaceLinter
+
+/-!
+# Standard imports for open problems
+
+This file provides a standard set of imports used by problem files throughout the project.
+-/

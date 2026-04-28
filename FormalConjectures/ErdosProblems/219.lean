@@ -32,14 +32,19 @@ def primeArithmeticProgressions : Set (Set ℕ) :=
 
 @[category test, AMS 5 11]
 theorem primeArithmeticProgression_3_5_7 : {3, 5, 7} ∈ primeArithmeticProgressions := by
-  simp [primeArithmeticProgressions, Set.IsAPOfLength, Set.IsAPOfLengthWith]
+  simp only [primeArithmeticProgressions, gt_iff_lt, Set.IsAPOfLength, Set.IsAPOfLengthWith,
+    smul_eq_mul, exists_prop, exists_and_left, existsAndEq, true_and, Set.mem_setOf_eq,
+    Set.mem_insert_iff, Set.mem_singleton_iff, forall_eq_or_imp, forall_eq,
+    ENat.card_eq_coe_fintype_card, Fintype.card_ofFinset, Set.toFinset_insert,
+    Set.toFinset_singleton, Finset.mem_insert, Nat.reduceEqDiff, Finset.mem_singleton, or_self,
+    not_false_eq_true, Finset.card_insert_of_notMem, Finset.card_singleton, Nat.reduceAdd,
+    Nat.cast_ofNat, Nat.ofNat_pos, Nat.cast_lt_ofNat]
   refine ⟨by norm_num, ⟨3, 2, Set.ext fun x => ?_⟩⟩
-  refine ⟨fun h => ?_, fun ⟨w, ⟨hl, hr⟩⟩ => by interval_cases w <;> simp_all⟩
-  cases h with
-  | inl hl => simp [hl]
-  | inr hr => cases hr with
-    | inl hrl => simpa [hrl] using ⟨1, by simp⟩
-    | inr hrr => simpa [hrr] using ⟨2, by aesop⟩
+  refine ⟨?_, fun ⟨w, ⟨hl, hr⟩⟩ => by interval_cases w <;> simp_all⟩
+  rintro (rfl | rfl | rfl)
+  · simp
+  · simpa using ⟨1, by simp⟩
+  · simpa using ⟨2, by simp⟩
 
 @[category test, AMS 5 11]
 theorem not_primeArithmeticProgression_1_2 : ¬{1, 2} ∈ primeArithmeticProgressions := by

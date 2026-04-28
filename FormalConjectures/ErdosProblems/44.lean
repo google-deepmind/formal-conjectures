@@ -42,34 +42,40 @@ This problem asks whether any Sidon set can be extended to achieve a density
 arbitrarily close to the optimal density for Sidon sets.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44 : answer(sorry) ↔ ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon A →
+theorem erdos_44 : answer(sorry) ↔ ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) →
     ∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M > N) (B ⊆ Finset.Icc (N + 1) M),
-      IsSidon (A ∪ B) ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card := by
+      IsSidon (A ∪ B : Set ℕ) ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card := by
   sorry
 
 /--
 The case where we start with an empty set (constructing large Sidon sets).
 -/
 @[category research open, AMS 5 11]
-theorem erdos_44.empty_start : answer(sorry) ↔ ∀ᵉ (ε > (0 : ℝ)), ∀ᶠ (M : ℕ) in Filter.atTop,
-    ∃ᵉ (A ⊆ Finset.Icc 1 M), IsSidon A ∧ (1 - ε) * Real.sqrt M ≤ A.card := by
+theorem erdos_44.variants.empty_start : answer(sorry) ↔ ∀ᵉ (ε > (0 : ℝ)), ∀ᶠ (M : ℕ) in Filter.atTop,
+    ∃ᵉ (A ⊆ Finset.Icc 1 M), IsSidon (A : Set ℕ) ∧ (1 - ε) * Real.sqrt M ≤ A.card := by
   sorry
 
-/-! ## Related results and examples -/
+/-  ## Related results and examples -/
 
 /--
 The set `{1, 2, 4, 8, 13}` is a Sidon set in `{1, ..., 13}`.
 -/
 @[category undergraduate, AMS 5 11]
 theorem example_sidon_set : IsSidon ({1, 2, 4, 8, 13} : Set ℕ) := by
-  sorry
+  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
+  rcases hi₁ with rfl | rfl | rfl | rfl | rfl <;>
+  rcases hj₁ with rfl | rfl | rfl | rfl | rfl <;>
+  rcases hi₂ with rfl | rfl | rfl | rfl | rfl <;>
+  rcases hj₂ with rfl | rfl | rfl | rfl | rfl <;>
+  simp_all
 
 /--
 For any `N`, there exists a Sidon set of size at least `√N/2`.
 -/
 @[category undergraduate, AMS 5 11]
 theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
-    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon A ∧ N.sqrt / 2 ≤ A.card := by
+    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ N.sqrt / 2 ≤ A.card := by
   sorry
 
 /--
@@ -77,7 +83,7 @@ The greedy construction gives a Sidon set of size approximately `√N`.
 -/
 @[category undergraduate, AMS 5 11]
 theorem greedy_sidon_construction (N : ℕ) (hN : 1 ≤ N) :
-    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon A ∧ A.card ≥ N.sqrt := by
+    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ A.card ≥ N.sqrt := by
   sorry
 
 end Erdos44

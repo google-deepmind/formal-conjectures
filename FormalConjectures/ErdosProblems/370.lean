@@ -29,8 +29,12 @@ Are there infinitely many $n$ such that the largest prime factor of $n$ is $< n^
 the largest prime factor of $n + 1$ is $< (n + 1)^{\frac{1}{2}}$.
 
 Steinerberger has pointed out this problem has a trivial solution.
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos370.lean",
+formal_proof using formal_conjectures at
+"https://github.com/XC0R/formal-conjectures/blob/f58dea7d2cc5c9da2e050ec80a73e838b54a6dd2/FormalConjectures/ErdosProblems/370.lean#L73"]
 theorem erdos_370 : answer(True) ↔
     { n | Nat.maxPrimeFac n < √n ∧ Nat.maxPrimeFac (n + 1) < √(n + 1) }.Infinite := by
   sorry

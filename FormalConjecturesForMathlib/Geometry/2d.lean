@@ -13,25 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.LinearAlgebra.Orientation
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
-import Mathlib.Geometry.Euclidean.Triangle
+public import Mathlib.LinearAlgebra.Orientation
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
+public import Mathlib.Geometry.Euclidean.Triangle
+public import Mathlib.Data.Set.Card
+public import Mathlib.Geometry.Euclidean.Sphere.Basic
 
-import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
-import FormalConjecturesForMathlib.Data.Set.Triplewise
+public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
+public import FormalConjecturesForMathlib.Data.Set.Triplewise
+
+@[expose] public section
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
-open scoped EuclideanGeometry
+open scoped EuclideanGeometry Finset
 
 /-- Oriented angles make sense in 2d.
 
 Note: this can't blindly be added to mathlib as it creates an "instance diamond"
 with an instance for modules satisfying `is_empty`. -/
 noncomputable instance Module.orientedEuclideanSpaceFinTwo : Module.Oriented ℝ ℝ² (Fin 2) :=
-  ⟨Basis.orientation <| Pi.basisFun _ _⟩
+  ⟨Basis.orientation <| PiLp.basisFun 2 _ _⟩
 
 /-- Two dimensional euclidean space is two-dimensional. -/
 instance fact_finrank_euclideanSpace_fin_two : Fact (Module.finrank ℝ ℝ² = 2) :=
@@ -50,9 +55,20 @@ variable [NormedAddCommGroup V] [InnerProductSpace ℝ V] [MetricSpace P] [Norme
 variable [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] {p : Fin n → P}
 
 /-- We say a subset `A` of points in the plane is non-trilinear
-if it contains no three points that lie on the same line.-/
+if it contains no three points that lie on the same line. -/
 def NonTrilinear (A : Set P) : Prop :=
   A.Triplewise (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
+
+/-- We say a subset `S` of points is non-collinear for $n$ points
+if it contains no $n$ points that lie on the same line. -/
+def NonCollinearFor (n : ℕ) (S : Set P) : Prop :=
+  ∀ (A : Set P), A ⊆ S → A.Finite → A.ncard = n → ¬ Collinear ℝ A
+
+omit [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] in
+lemma NonCollinearFor.subset {n : ℕ} {S T : Set P} (h : S ⊆ T) (hS : NonCollinearFor n T) :
+    NonCollinearFor n S := by
+  intro A hA hFin hCard
+  exact hS A (hA.trans h) hFin hCard
 
 /-- `ConvexIndep S` means that `S` consists of extremal points of its convex hull,
 i.e., the point set encloses a convex shape.
@@ -159,10 +175,12 @@ theorem isConvexPolygon_three_iff_affineIndependent {A B C : P} :
   let p := ![A, B, C]
   change IsConvexPolygon p at h
   change Real.Angle.sign (∡ (p 0) (p 1) (p 2)) ≠ 0
-  cases' h with h h
-  · rw [h.sign_oangle (by simp) (by simp)]
+  cases h with
+  | inl h =>
+    rw [h.sign_oangle (by simp) (by simp)]
     rintro ⟨⟩
-  · suffices Real.Angle.sign (∡ (p 0) (p 2) (p 1)) = 1 by rw [← oangle_swap₂₃_sign, this]; rintro ⟨⟩
+  | inr h =>
+    suffices Real.Angle.sign (∡ (p 0) (p 2) (p 1)) = 1 by rw [← oangle_swap₂₃_sign, this]; rintro ⟨⟩
     exact h.sign_oangle (i := 0) (j := 1) (k := 2) (by simp) (by simp)
 
 theorem isConvexPolygon_triangle (t : Affine.Triangle ℝ P) : IsConvexPolygon t.points := by
@@ -190,10 +208,32 @@ Given a finite set of points in the plane, we define the number of distinct dist
 of points.
 -/
 noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
+  #(points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2)
+
+/--
+The minimum number of distinct distances guaranteed for any set of $n$ points.
+-/
+noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
+  sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
+
+/-- Given a finite set of points in the, we define the number of distinct distances between
+a given point and all other points -/
+noncomputable def distinctDistancesFrom (points : Finset ℝ²) (pt : ℝ²) : ℕ :=
+  #(points.image fun x => dist x pt)
+
+/-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ and let $R(x_i)=\#\{ \lvert x_j-x_i\rvert : j\neq i\}$,
+where the points are ordered such that
+$$R(x_1)\leq \cdots \leq R(x_n).$$
+Let $g(n)$ be the maximum number of distinct values the $R(x_i)$ can take.-/
+noncomputable def maximalDistinctDistancesFrom (n : ℕ) : ℕ :=
+  sSup {#(X.image (distinctDistancesFrom X)) | (X) (_ : #X = n)}
+
+/-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
+if no three are collinear and no four lie on a circle. -/
+def InGeneralPosition (X : Finset ℝ²) : Prop :=
+  NonTrilinear (SetLike.coe X) ∧ ∀ T ⊆ X, #T = 4 → ¬Cospherical (SetLike.coe T)
 
 end EuclideanGeometry
-
 
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
   dist p q = dist q r ∨ dist q r = dist r p ∨ dist r p = dist p q

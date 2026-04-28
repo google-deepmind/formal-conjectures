@@ -80,6 +80,7 @@ theorem new_mersenne_conjecture_of_prime :
     ∀ p, Odd p → NewMersenneConjectureStatement p := by
   sorry
 
+/-- The New Mersenne Conjecture statement holds for odd primes. -/
 @[category research open, AMS 11]
 theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) (h : Odd p) :
     NewMersenneConjectureStatement p := by

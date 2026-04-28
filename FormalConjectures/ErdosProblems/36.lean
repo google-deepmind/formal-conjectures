@@ -143,7 +143,8 @@ shows an upper bound of $\frac 1 2$.
 -/
 @[category research solved, AMS 5 11]
 theorem minimum_overlap.variants.upper.erdos_1955 :
-  atTop.limsup MinOverlapQuotient ≤ (1 : ℝ) / 2 := by sorry
+    atTop.limsup MinOverlapQuotient ≤ (1 : ℝ) / 2 := by
+  sorry
 
 /--
 An upper bound of $\frac 2 5$.
@@ -163,7 +164,7 @@ by *Jan Kristian Haugland*, Journal of Number Theory Volume 58, Issue 1, p 71-78
 -/
 @[category research solved, AMS 5 11]
 theorem minimum_overlap.variants.upper.haugland_1996 :
-    atTop.limsup  MinOverlapQuotient  ≤ 0.38200298812318988 := by
+    atTop.limsup MinOverlapQuotient ≤ 0.38200298812318988 := by
   sorry
 
 /--

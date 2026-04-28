@@ -34,6 +34,6 @@ theorem erdos_3 : answer(sorry) ↔ ∀ A : Set ℕ,
     ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k := by
   sorry
 
---TODO(firsching): add the various known bounds as variants.
+-- TODO(firsching): add the various known bounds as variants.
 
 end Erdos3

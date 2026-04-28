@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.NumberTheory.DirichletCharacter.Basic
+public import Mathlib.NumberTheory.DirichletCharacter.Basic
+
+@[expose] public section
 
 namespace DirichletCharacter
 
 instance {S : Type*} [DecidableEq S] [CommRing S] {m : ℕ} :
-    DecidablePred (Odd  (S := S) (m := m)) :=
+    DecidablePred (Odd (S := S) (m := m)) :=
   fun ψ ↦ decidable_of_iff (ψ (-1) = -1) <| by rfl
 
 instance {S : Type*} [DecidableEq S] [CommRing S] {m : ℕ} :

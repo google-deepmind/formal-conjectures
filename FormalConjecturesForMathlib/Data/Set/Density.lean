@@ -13,12 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
-import FormalConjecturesForMathlib.Data.Set.Bdd
-import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
-import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
-import Batteries.Util.ProofWanted
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
+public import FormalConjecturesForMathlib.Data.Set.Interval
+public import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
+public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
+public import Batteries.Util.ProofWanted
+public import Mathlib.Tactic
+
+@[expose] public section
 
 open Filter
 
@@ -36,7 +41,7 @@ This definition was inspired from https://github.com/b-mehta/unit-fractions
 @[inline]
 noncomputable abbrev partialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : ℝ :=
-  (Set.interIio (S ∩ A) b).ncard / (Set.interIio A b).ncard
+  ((S ∩ A) ∩ Iio b).ncard / (A ∩ Iio b).ncard
 
 theorem partialDensity_le_one {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : S.partialDensity A b ≤ 1 := by
@@ -64,7 +69,7 @@ noncomputable def lowerDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot
 theorem lowerDensity_le_one {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) : S.lowerDensity A ≤ 1 := by
   by_cases h : atTop (α := β) = ⊥
-  · field_simp [h, Set.lowerDensity, Filter.liminf_eq]
+  · simp [h, Set.lowerDensity, Filter.liminf_eq]
   · have : (atTop (α := β)).NeBot := ⟨h⟩
     apply Real.sSup_le (fun x hx ↦ ?_) one_pos.le
     simpa using hx.mono fun y hy ↦ hy.trans (Set.partialDensity_le_one _ _ y)
@@ -106,7 +111,7 @@ elements has density one. -/
 theorem univ {β : Type*} [PartialOrder β] [LocallyFiniteOrder β] [OrderBot β] [Nontrivial β] :
     (@Set.univ β).HasDensity 1 := by
   by_cases h : atTop (α := β) = ⊥
-  · field_simp [h, HasDensity]
+  · simp [h, HasDensity]
   · simp [HasDensity, partialDensity]
     let ⟨b, hb⟩ := Set.Iio_eventually_ncard_ne_zero β
     refine tendsto_const_nhds.congr' ?_
@@ -143,7 +148,7 @@ open Set
 The natural density of the set of even numbers is `1 / 2`.
 -/
 theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
-  simp [HasDensity, partialDensity, Set.interIio]
+  simp [HasDensity, partialDensity]
   have h {n : ℕ} (hn : 1 ≤ n) : (({n : ℕ | Even n} ∩ Iio n).ncard : ℝ) / n =
       if Even n then 2⁻¹ else (n + 1 : ℝ) /  n * 2⁻¹ := by
     split_ifs with h
@@ -158,25 +163,25 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
   refine Tendsto.congr' (eventually_atTop.2 ⟨1, fun n hn => (h hn).symm⟩)
     (Tendsto.if' tendsto_const_nhds ?_)
   replace h : Tendsto (fun (k : ℕ) => 1 + 1 / (k : ℝ)) atTop (𝓝 1) := by
-    simpa using Tendsto.const_add _ tendsto_one_div_atTop_nhds_zero_nat
+    simpa using Tendsto.const_add (M := ℝ) _ tendsto_one_div_atTop_nhds_zero_nat
   simpa using Tendsto.mul_const _ <|
     Tendsto.congr' (eventually_atTop.2 ⟨1, fun k hk => by field_simp⟩) h
 
 /-- A finite set has natural density zero. -/
 theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) : S.HasDensity 0 := by
-  simp [HasDensity, partialDensity, Set.interIio]
+  simp [HasDensity, partialDensity]
   have (n : ℕ) : ((S ∩ Set.Iio n).ncard : ℝ) / n ≤ S.ncard / n := by
     by_cases h₀ : n = 0; simp [h₀]
     exact div_le_div₀ (by simp) (by simpa using Set.ncard_inter_le_ncard_left _ _ h)
       (by simpa using n.pos_of_ne_zero h₀) le_rfl
   exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds
-    (tendsto_const_div_atTop_nhds_zero_nat S.ncard)
+    (tendsto_const_div_atTop_nhds_zero_nat _)
     (fun _ => div_nonneg (cast_nonneg _) (cast_nonneg _)) this
 
 /-- A set of positive natural density is infinite. -/
-theorem infinite_of_hasDensity_pos {S : Set ℕ} {α : ℝ} (h : S.HasDensity α) (hα : 0 < α) :
+theorem infinite_of_hasDensity_pos {S : Set ℕ} {α : ℝ} (h : S.HasDensity α) (hα : α ≠ 0) :
     S.Infinite :=
-  mt hasDensity_zero_of_finite fun h' => (_root_.ne_of_lt hα).symm (tendsto_nhds_unique h h')
+  mt hasDensity_zero_of_finite fun h' => hα (tendsto_nhds_unique h h')
 
 end Nat
 

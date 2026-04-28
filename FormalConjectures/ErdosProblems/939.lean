@@ -79,12 +79,12 @@ theorem erdos_939.variants.examples : (∃ r ≥ 4, (Erdos939Sums r).Nonempty) :
   · norm_num [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]
 
 
-/-- Cambie has also found solutions when $r=7$.-/
+/-- Cambie has also found solutions when $r=7$. -/
 @[category research solved, AMS 11]
 theorem erdos_939.variants.seven : (Erdos939Sums 7).Nonempty := by
   sorry
 
-/-- Cambie has also found solutions when $r=8$.-/
+/-- Cambie has also found solutions when $r=8$. -/
 @[category research solved, AMS 11]
 theorem erdos_939.variants.eight : (Erdos939Sums 8).Nonempty := by
   sorry

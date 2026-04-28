@@ -16,7 +16,7 @@ limitations under the License.
 import MD4Lean
 import Lean
 import Batteries.Data.String.Matcher
-import FormalConjectures.Util.Attributes
+import FormalConjectures.Util.Attributes.Basic
 import Mathlib.Data.String.Defs
 
 
@@ -27,11 +27,13 @@ open ProblemAttributes
 -- https://github.com/google-deepmind/formal-conjectures/issues/5
 def getCategoryStatsMarkdown : CoreM String := do
   let stats ← getCategoryStats
+  let formalProofCount := (← getFormalProofTags).size
   let githubSearchBaseUrl := "https://github.com/search?type=code&q=repo%3Agoogle-deepmind%2Fformal-conjectures+"
-  return  s!"| Count | Category          |
+  return s!"| Count | Category          |
 | ----- | ----------------- |
 | {stats (Category.research ProblemStatus.open)} | [Research (open)]({githubSearchBaseUrl}%22category+research+open%22)|
 | {stats (Category.research ProblemStatus.solved)} | [Research (solved)]({githubSearchBaseUrl}%22category+research+solved%22)|
+| {formalProofCount} | [Formally proved]({githubSearchBaseUrl}%22formal_proof+using%22)|
 | {stats (Category.graduate)} | [Graduate]({githubSearchBaseUrl}%22category+graduate%22)|
 | {stats (Category.undergraduate)} | [Undergraduate]({githubSearchBaseUrl}%22category+undergraduate%22)|
 | {stats (Category.highSchool)} | [High School]({githubSearchBaseUrl}%22category+high_school%22)|
@@ -65,6 +67,8 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
   let openTag := s!"<{tag}>"
   let closeTag := s!"</{tag}>"
 
+  -- TODO(lezeau): reimplement this using String.Slice API
+
   -- Find the position right after "<tag>"
   let .some bodyOpenTagSubstring := inputHtmlContent.findSubstr? openTag
     | throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
@@ -77,9 +81,10 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
     throw <| IO.userError s!"{openTag} content appears invalid (start of content is after start of {closeTag} tag)."
 
   -- Extract the part of the HTML before the original body content (includes "<tag>")
-  let htmlPrefix := inputHtmlContent.extract 0 contentStartIndex
+  let htmlPrefix := inputHtmlContent.toRawSubstring.extract ⟨0⟩ contentStartIndex |>.toString
   -- Extract the part of the HTML from "</tag>" to the end
-  let htmlSuffix := inputHtmlContent.extract bodyCloseTagSubstring.startPos inputHtmlContent.endPos
+  let htmlSuffix := inputHtmlContent.toRawSubstring.extract bodyCloseTagSubstring.startPos
+    inputHtmlContent.toRawSubstring.stopPos |>.toString
 
   -- Construct the new full HTML content
   let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
@@ -110,9 +115,22 @@ unsafe def main (args : List String) : IO Unit := do
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a welcome page including stats."
   let inputHtmlContent ← IO.FS.readFile file
-  let .some (graphFile : String) := args[1]?
+  let .some (graphFileDark : String) := args[1]?
     | IO.println "Repository growth graph not supplied, generating docs without graph."
-  let graphHtml ← IO.FS.readFile graphFile
+  let .some (graphFileLight : String) := args[2]?
+    | IO.println "Repository growth graph not supplied, generating docs without graph."
+  let graphHtmlDark ← IO.FS.readFile graphFileDark
+  let graphHtmlLight ← IO.FS.readFile graphFileLight
+  let graphHtml :=
+    s!"<style>
+        .theme-dark \{ display: none; }
+        @media (prefers-color-scheme: dark) \{
+          .theme-light \{ display: none; }
+          .theme-dark \{ display: block; }
+        }
+      </style>
+      <div class=\"theme-light\">{graphHtmlLight}</div>
+      <div class=\"theme-dark\">{graphHtmlDark}</div>"
 
   runWithImports do
     let categoryStats ← getCategoryStatsMarkdown
@@ -120,8 +138,9 @@ overwrites the contents of the `main` tag of a html `file` with a welcome page i
     let markdownBody :=
       s!"# Welcome to the *Formal Conjectures* Documentation!
 
-Check out the main
-[Formal Conjectures GitHub repository](https://github.com/google-deepmind/formal-conjectures)
+Visit the [Formal Conjectures website](https://google-deepmind.github.io/formal-conjectures/)
+to browse and filter all formalised conjectures, or check out the
+[GitHub repository](https://github.com/google-deepmind/formal-conjectures)
 for more details.
 
 This page provides an overview of the problem categories and subject classifications used
@@ -146,6 +165,7 @@ classifications, please refer to the
 ## Repository growth
 "
     IO.println markdownBody
-    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody | throwError "Parsing failed"
+    let .some newBody := MD4Lean.renderHtml (parserFlags := MD4Lean.MD_FLAG_TABLES ) markdownBody
+      | throwError "Parsing failed"
     let finalHtml ← replaceTag "main" inputHtmlContent (newBody ++ graphHtml)
     IO.FS.writeFile file finalHtml

@@ -19,15 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 566
 
-Let $G$ be such that any subgraph on $k$ vertices has at most $2k-3$ edges.
-Is it true that, if $H$ has $m$ edges and no isolated vertices, then
-$$ \hat{r}(G,H) \ll m? $$
-
-In other words, is $G$ Ramsey size linear?
-
-*Reference:* [erdosproblems.com/566](https://www.erdosproblems.com/566)
-
-[EFRS93] Erdős, Faudree, Rousseau and Schelp, _Ramsey size linear graphs_.
+*References*:
+- [erdosproblems.com/566](https://www.erdosproblems.com/566)
+- [EFRS93] Erdős, Faudree, Rousseau and Schelp, _Ramsey size linear graphs_.
 Combin. Probab. Comput. (1993), 389-399.
 -/
 
@@ -36,8 +30,6 @@ namespace Erdos566
 open SimpleGraph
 
 /--
-**Erdős Problem 566**
-
 Let $G$ be such that any subgraph on $k$ vertices has at most $2k-3$ edges.
 Is it true that, if $H$ has $m$ edges and no isolated vertices, then $\hat{r}(G,H) \ll m$?
 

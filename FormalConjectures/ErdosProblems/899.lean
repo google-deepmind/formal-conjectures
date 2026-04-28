@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/899](https://www.erdosproblems.com/899)
 -/
 
-open Filter
+open Filter Set
 
 open scoped Pointwise Topology
 
@@ -43,9 +43,9 @@ The answer is yes, proved by Ruzsa [Ru78].
 -/
 @[category research solved, AMS 5]
 theorem erdos_899 : answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
-    Tendsto (fun N => (A.interIcc 1 N |>.ncard : ℝ) / N) atTop (𝓝 0) →
-    Tendsto (fun N => ((A - A : Set ℕ).interIcc 1 N |>.ncard : ℝ) /
-      (A.interIcc 1 N).ncard) atTop atTop := by
+    Tendsto (fun N => (A ∩ Icc 1 N |>.ncard : ℝ) / N) atTop (𝓝 0) →
+    atTop.limsup (fun N => ((A - A : Set ℕ) ∩ Icc 1 N |>.ncard : EReal) /
+      (A ∩ Icc 1 N).ncard) = ⊤ := by
   sorry
 
 end Erdos899

@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Algebra.Order.Star.Basic
-import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Algebra.Order.Star.Basic
+public import Mathlib.Data.Nat.PrimeFin
+
+@[expose] public section
 
 namespace Nat
 
@@ -62,13 +65,13 @@ instance Powerful.decide : ∀ n, Decidable (Powerful n) := by
 theorem full_of_le_full (k : ℕ) (n : ℕ) {m : ℕ} (hk : k ≤ m) (h : m.Full n) : k.Full n :=
   fun p a ↦ pow_dvd_of_le_of_pow_dvd hk (h p a)
 
-/-- If $n \equiv p \pmod{p ^ (k + 1)}$, for a prime $p$ then $n$ is not $(k + 1)$-full.-/
+/-- If $n \equiv p \pmod{p ^ (k + 1)}$, for a prime $p$ then $n$ is not $(k + 1)$-full. -/
 theorem not_full_of_prime_mod_prime_sq (n : ℕ) (k : ℕ) {p : ℕ} (hp : p.Prime)
     (h : n % p ^ (k + 1) = p) : ¬ (k + 1).Full n := by
   rw [Full]
   push_neg
   use p
-  simp  [mem_primeFactors, hp, ne_eq, true_and]
+  simp [mem_primeFactors, hp, ne_eq, true_and]
   constructor
   · rw [←Nat.div_add_mod n (p ^ (k + 1)), h]
     have : p ∣ p ^ (k + 1) := by exact Dvd.intro_left (p.pow k) rfl

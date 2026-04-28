@@ -19,12 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Sum of two numbers with prime conditions
 
-Number of ways to write $n = x+y$, for $x,y > 0$ such that  $2^x + y$ is prime.
+Number of ways to write $n = x+y$, for $x,y > 0$ such that $2^x + y$ is prime.
 
 Zhi-Wei Sun has offered a $1000 prize for the first proof.
 
 *References:*
-- [OEIS A231201](https://oeis.org/A231201)
+- [A231201](https://oeis.org/A231201)
 - Zhi-Wei Sun, "Table of n, a(n) for n = 1..10000",
   "Write n = k + m with 2^k + m prime", a message to Number Theory List, Nov. 16, 2013,
   "On a^n+ bn modulo m", arXiv:1312.1166 [math.NT], 2013-2014,
@@ -46,6 +46,7 @@ theorem primeCondition_8 : PrimeCondition 8 :=
 theorem primeCondition_53 : PrimeCondition 53 :=
   ⟨20, 33, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
+/-- The conjecture for sequence A231201: for any $n > 1$, there exist $x, y > 0$ such that $n = x + y$ and $2^x + y$ is prime. -/
 @[category research open, AMS 11]
 theorem conjecture (n : ℕ) (hn : 1 < n) : PrimeCondition n := by
   sorry

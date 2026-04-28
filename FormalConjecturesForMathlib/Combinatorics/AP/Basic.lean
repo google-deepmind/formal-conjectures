@@ -13,11 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Module.NatInt
-import Mathlib.Data.ENat.Lattice
-import Mathlib.Data.Set.Card
+public import Mathlib.Algebra.Module.NatInt
+public import Mathlib.Data.ENat.Lattice
+public import Mathlib.Data.Set.Card
 import Mathlib.Tactic.IntervalCases
+
+@[expose] public section
+
+open scoped Classical
 
 /-! # Arithmetic Progressions
 
@@ -46,7 +51,7 @@ A list version of `Set.IsAPOfLengthWith`. Useful when order preservation is requ
 when considering images under arbitrary functions.
 -/
 def List.IsAPOfLengthWith (s : List α) (l : ℕ) (a d : α) : Prop :=
-  s = (List.range l).map fun n ↦ a + n • d
+  s = (List.range l).map (fun n ↦ a + n • d) ∨ s = (List.range l).reverse.map (fun n ↦ a + n • d)
 
 namespace Set.IsAPOfLengthWith
 
@@ -58,14 +63,12 @@ theorem eq (h : s.IsAPOfLengthWith l a d) : s = {a + n • d | (n : ℕ) (_ : n 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
 if `s` is empty. -/
 @[simp]
-theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by
-  simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
+theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by simp [IsAPOfLengthWith]
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length one if and only
 if `s` is a singleton. -/
 @[simp]
-theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by
-  simpa [Set.IsAPOfLengthWith] using fun _ => by aesop
+theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by simp +contextual [IsAPOfLengthWith]
 
 end Set.IsAPOfLengthWith
 
@@ -74,8 +77,7 @@ namespace List.IsAPOfLengthWith
 variable {s : List α} {l : ℕ} {a d : α}
 
 theorem length (h : s.IsAPOfLengthWith l a d) : s.length = l := by
-  rw [IsAPOfLengthWith] at h
-  simp [h]
+  cases h <;> simp_all
 
 /-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
 if `s` is empty. -/
@@ -216,7 +218,7 @@ Define the largest possible size of a subset of $\{1, \dots, N\}$ that does not 
 any non-trivial $k$-term arithmetic progression.
 -/
 noncomputable def Set.IsAPOfLengthFree.maxCard (k : ℕ) (N : ℕ) : ℕ :=
-  sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : S.toSet.IsAPOfLengthFree k)}
+  sSup {Finset.card S | (S) (_ : S ⊆ Finset.Icc 1 N) (_ : (S : Set ℕ).IsAPOfLengthFree k)}
 
 theorem Set.IsAPOfLengthFree.maxCard_zero (N : ℕ) : maxCard 0 N = N := by
   simp only [maxCard, Nat.cast_zero, isAPOfLengthFree_zero, exists_const, exists_prop]
@@ -229,7 +231,26 @@ theorem Set.IsAPOfLengthFree.maxCard_one (N : ℕ) : maxCard 1 N = N := by
   nth_rw 2 [← maxCard_zero N]
   simp [maxCard, isAPOfLengthFree_one, isAPOfLengthFree_zero]
 
+/-- A set `A` contains an arithmetic progression of length `k` with difference `d`. -/
+def Set.ContainsAP (A : Set α) (k : ℕ) (d : α) : Prop :=
+  ∃ a, ∃ s, s ⊆ A ∧ s.IsAPOfLengthWith (k : ℕ∞) a d
+
 def ContainsMonoAPofLength {κ : Type} [Finite κ] {M : Set α}
     (coloring : M → κ) (k : ℕ) : Prop :=
   ∃ c : κ, ∃ ap : Set M, ((·.1) '' ap).IsAPOfLength k ∧
     ∀ m ∈ ap, coloring m = c
+
+/--
+A function `f : β → α` has a monotone `k`-term arithmetic progression if there exists a choice
+of indices `b 1 < b 2 < ... < b k` such that the subsequence `f (b i)` forms an increasing or
+decreasing arithmetic progression of length `k`.
+-/
+def HasMonotoneAP {β : Type*} [Preorder β] (f : β → α) (k : ℕ) : Prop :=
+  ∃ l : List β, (l.map f).IsAPOfLength k ∧ l.Pairwise (· < ·)
+
+/--
+Define the largest possible size of a subset of a finset `s` that does not contain
+any non-trivial `k`-term arithmetic progression.
+-/
+noncomputable def Finset.maxAPFreeCard (k : ℕ) (s : Finset α) : ℕ :=
+  (s.powerset.filter fun t : Finset α ↦ (t : Set α).IsAPOfLengthFree k).sup Finset.card
