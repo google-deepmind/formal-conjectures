@@ -29,6 +29,7 @@ import FormalConjectures.Util.ProblemImports
   Japan 1984 (Tokyo, Okayama and Kyoto, 1984) (1985), 65-87.
 - [Hl55] Hlawka, Edmund, Zur formalen {T}heorie der {G}leichverteilung in kompakten {G}ruppen. Rend.
   Circ. Mat. Palermo (2) (1955), 33--47.
+- [Mo26] P. Monticone, [Lean formalisation of Erdős problem 997](https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean) (2026)
 -/
 
 open Set
@@ -52,6 +53,8 @@ def IsWellDistributed (x : ℕ → ℝ) : Prop :=
 /--
 Is it true that, for every $\alpha$, the sequence $\{ \alpha p_n\}$ is not well-distributed,
 if $p_n$ is the sequence of primes?
+
+The answer is yes; a Lean formalisation is available in [Mo26].
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean"]
