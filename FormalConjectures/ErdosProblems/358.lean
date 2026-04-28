@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 358
 
-*Reference:* [erdosproblems.com/358](https://www.erdosproblems.com/358)
+*References:*
+- [erdosproblems.com/358](https://www.erdosproblems.com/358)
+- [Ta26] T. Tao, [Erdős problem 358](https://terrytao.wordpress.com/wp-content/uploads/2026/02/erdos-358-2.pdf) (2026)
 -/
 
 namespace Erdos358
@@ -65,6 +67,8 @@ theorem f_id : f id = fun n ↦ #{d ∈ n.divisors | Odd d} := by
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
 solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 Is there such an $A$ for which $f(n)\to \infty$ as $n\to \infty$?
+
+Tao [Ta26] constructed such a sequence with $f(n) \gg \log n$ for all sufficiently large $n$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_358.parts.i :
@@ -75,6 +79,8 @@ theorem erdos_358.parts.i :
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
 solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 Is there an $A$ such that $f(n)\geq 2$ for all large $n$?
+
+This also follows from Tao's construction with $f(n) \gg \log n$ [Ta26].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_358.parts.ii :
