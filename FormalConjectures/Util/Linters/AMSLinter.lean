@@ -13,10 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Attributes
-import Mathlib.Tactic.Lemma
-import Batteries.Data.Array.Merge
+public import FormalConjectures.Util.Attributes.Basic
+public import Mathlib.Tactic.Lemma
+public meta import Batteries.Data.Array.Merge
 
 
 /-! # The AMS Linter
@@ -26,7 +27,17 @@ the Formal Conjectures repository by ensuring that results in a file have
 the appropriate subject tags.
 -/
 
+public meta section
+
 open Lean Elab Meta Linter Command Parser Term ProblemAttributes
+
+register_option linter.style.ams_attribute : Bool := {
+  defValue := true
+  descr := "enable the `AMS` attribute style linter"
+}
+
+-- FIXME: False positive
+set_option linter.style.docString.empty false
 
 namespace AMSLinter
 
@@ -48,7 +59,7 @@ set_option linter.dupNamespace false in
 /-- The problem category linter checks that every theorem/lemma/example
 has been given an `AMS` attribute. -/
 def AMSLinter : Linter where
-  run := fun stx => do
+  run := withSetOptionIn fun stx => do
     match stx with
       | `(command| $a:declModifiers theorem $_ $_:bracketedBinder* : $_ := $_)
       | `(command| $a:declModifiers lemma $_ $_:bracketedBinder* : $_ := $_)
@@ -61,25 +72,29 @@ def AMSLinter : Linter where
           let numerals := ams.flatten
           let outCorrect := m!"{← mkAMSSyntax numerals}"
           let currentOut := m!", ".joinSep (← ams.mapM fun nums ↦ do return m!"{← mkAMSSyntax nums}").toList
-          logWarningAt outStx m!"The AMS tag should be formatted as {outCorrect} rather than {currentOut}"
+          logLintIf linter.style.ams_attribute outStx
+            m!"The AMS tag should be formatted as {outCorrect} rather than {currentOut}"
           return
         if ams.size == 0 then
-          logWarningAt outStx "Missing AMS attribute."
+          logLintIf linter.style.ams_attribute outStx
+            "Missing AMS attribute."
           return
         if ams.flatten.isEmpty then
           -- If we're here then there is at least one AMS tag, but it doesn't have any number.
-          logWarningAt outStx "The AMS tag should have at least one subject number."
+          logLintIf linter.style.ams_attribute outStx
+            "The AMS tag should have at least one subject number."
         -- Check there the AMS tags are sorted and do not contain duplicates
         let ams_sorted := ams.flatten.qsort (fun n m => n.getNat < m.getNat)
         if ams_sorted != ams.flatten then
-          logWarningAt outStx m!"The AMS tags should be ordered as {← mkAMSSyntax ams_sorted}"
+          logLintIf linter.style.ams_attribute outStx
+            m!"The AMS tags should be ordered as {← mkAMSSyntax ams_sorted}"
           return
         if ams_sorted.dedupSorted != ams_sorted then
-          logWarningAt outStx m!"AMS tags contain duplicates. This should be {← mkAMSSyntax ams_sorted.dedupSorted}"
+          logLintIf linter.style.ams_attribute outStx
+            m!"AMS tags contain duplicates. This should be {← mkAMSSyntax ams_sorted.dedupSorted}"
       | _ => return
 
 initialize do
   addLinter AMSLinter
-
 
 end AMSLinter

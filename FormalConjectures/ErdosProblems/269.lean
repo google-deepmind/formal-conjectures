@@ -57,8 +57,9 @@ $$ \sum_{n=1}^\infty \frac{1}{[a_1,\ldots,a_n]} $$
 rational?
 -/
 @[category research open, AMS 11]
-theorem erdos_269.variants.rational : (∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
-    ∃ (q : ℚ), q = (series (P : Set ℕ))) ↔ answer(sorry) := by
+theorem erdos_269.variants.rational : answer(sorry) ↔
+    ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
+    ∃ (q : ℚ), q = (series (P : Set ℕ)) := by
   sorry
 
 /--
@@ -69,8 +70,9 @@ $$ \sum_{n=1}^\infty \frac{1}{[a_1,\ldots,a_n]} $$
 irrational?
 -/
 @[category research open, AMS 11]
-theorem erdos_269.variants.irrational : (∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
-    Irrational (series (P : Set ℕ))) ↔ answer(sorry) := by
+theorem erdos_269.variants.irrational : answer(sorry) ↔
+    ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
+    Irrational (series (P : Set ℕ)) := by
   sorry
 
 /--
@@ -78,7 +80,7 @@ This theorem addresses the case where the set of primes $P$ is infinite. In this
 irrational.
 -/
 @[category research solved, AMS 11]
-theorem erdos_269.variant.infinite (P : Set ℕ) (h : ∀ p ∈ P, p.Prime) (h_inf : P.Infinite) :
+theorem erdos_269.variants.infinite (P : Set ℕ) (h : ∀ p ∈ P, p.Prime) (h_inf : P.Infinite) :
   Irrational (series P) := by
   sorry
 

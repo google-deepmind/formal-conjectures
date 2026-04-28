@@ -76,6 +76,14 @@ theorem isEquidistributedModuloOne_three_halves_pow :
     IsEquidistributedModuloOne (fun n => (3 / 2 : ℝ)^n) := by
   sorry
 
+/-- For any transcendental number `x`, the sequence `x * (3 / 2) ^ n` is
+equidistributed modulo 1. -/
+@[category research open, AMS 11]
+theorem isEquidistributedModuloOne_transcendental_three_halves_pow (x : ℝ)
+    (hx : Transcendental ℚ x) :
+    IsEquidistributedModuloOne (fun n ↦ x * (3 / 2 : ℝ) ^ n) := by
+  sorry
+
 /--
 The sequence `(3/2)^n` has infinitely many accumulation points modulo `1`.
 -/
@@ -85,11 +93,19 @@ theorem isAccumulationPoint_three_halves_pow_infinite :
   sorry
 
 /--
-Find an accumulation point of the sequence `(3/2)^n`
+Find an accumulation point of the sequence `(3/2)^n` modulo `1`.
 -/
 @[category research open, AMS 11]
 theorem isAccumulationPoint_three_halves_pow :
-    IsAccumulationPoint answer(sorry) (fun n => (3 / 2 : ℝ)^n) := by
+    IsAccumulationPoint answer(sorry) (fun n => Int.fract <| (3 / 2 : ℝ)^n) := by
+  sorry
+
+/--
+There is an accumulation point of the sequence `(3/2)^n` modulo `1`.
+-/
+@[category test, AMS 11]
+theorem isAccumulationPoint_three_halves_pow_exists :
+    ∃ p, (IsAccumulationPoint p (fun n => Int.fract <| (3 / 2 : ℝ)^n)) := by
   sorry
 
 end Equidistribution

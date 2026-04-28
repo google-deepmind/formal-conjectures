@@ -37,6 +37,8 @@ The conjecture has been proven for:
   by *David Tischler*
 -/
 
+namespace MeanValueProblem
+
 /--
 Given a complex polynomial $p$ of degree $d ≥ 2$ and a complex number $z$
 there is a critical point $c$ of $p$, such that $|p(z)-p(c)|/|z-c| ≤ |p'(z)|$.
@@ -79,7 +81,9 @@ $|p(z) - p(c)|/|z-c| \le (d-1)/d \cdot |p'(z)|$.
 
 @[category research solved, AMS 12]
 lemma mean_value_problem_of_roots_same_norm (p : Polynomial ℂ) (hp : 2 ≤ p.natDegree)
-    (h : ∀ x  y : ℂ, p.IsRoot x ∧ p.IsRoot y → ‖x‖=‖y‖) (z : ℂ) (K : ℝ) :
+    (h : ∀ x y : ℂ, p.IsRoot x ∧ p.IsRoot y → ‖x‖=‖y‖) (z : ℂ) (K : ℝ) :
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
       ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ (p.natDegree - 1)/ p.natDegree * ‖p.derivative.eval z‖ := by
   sorry
+
+end MeanValueProblem

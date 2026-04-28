@@ -66,11 +66,13 @@ must contain a monochromatic arithmetic progression of length `k`.
 -/
 noncomputable abbrev W : ℕ → ℕ := monoAPNumber 2
 
-@[category test, AMS 11]
+@[category test, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/6c7a16e8998d1c597fa2a5c6329bc9301fcc56e2/FormalConjectures/ErdosProblems/138.lean#L79"]
 theorem monoAPNumber_two_one : W 1 = 1 := by
   sorry
 
-@[category test, AMS 11]
+@[category test, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/6c7a16e8998d1c597fa2a5c6329bc9301fcc56e2/FormalConjectures/ErdosProblems/138.lean#L142"]
 theorem monoAPNumber_two_two : W 2 = 3 := by
   sorry
 
@@ -79,7 +81,7 @@ In [Er80] Erdős asks whether
 $$ \lim_{k \to \infty} (W(k))^{1/k} = \infty $$
 -/
 @[category research open, AMS 11]
-theorem erdos_138 : atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop ↔ answer(sorry) := by
+theorem erdos_138 : answer(sorry) ↔ atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
   sorry
 
 
@@ -102,15 +104,18 @@ In [Er81] Erdős asks whether $\frac{W(k+1)}{W(k)} \to \infty$.
 -/
 @[category research open, AMS 11]
 theorem erdos_138.variants.quotient :
-    atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop ↔ answer(sorry) := by
+    answer(sorry) ↔ atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
   sorry
 
 /--
 In [Er81] Erdős asks whether $W(k+1) - W(k) \to \infty$.
+
+The DeepMind prover agent has found a formal proof of this statement.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/6ac8d0cbe1a85e71747c62c1391a84788015ebc1/FormalConjectures/ErdosProblems/138.lean#L844"]
 theorem erdos_138.variants.difference :
-    atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop ↔ answer(sorry) := by
+    answer(True) ↔ atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
   sorry
 
 /--
@@ -118,5 +123,5 @@ In [Er80] Erdős asks whether $W(k)/2^k\to \infty$.
 -/
 @[category research open, AMS 11]
 theorem erdos_138.variants.dvd_two_pow :
-    atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop ↔ answer(sorry) := by
+    answer(sorry) ↔ atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
   sorry

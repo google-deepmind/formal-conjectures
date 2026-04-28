@@ -28,7 +28,7 @@ open Real
 
 namespace Erdos61
 
-/-!
+/-
 For a graph $H$, consider all graphs $G$ that do not contain $H$ as an induced subgraph.
 We would like to find a lower bound $f(n)$ such that every such $G$ on $n$ vertices
 has a clique or independent set of size $\ge f(n)$ for sufficiently large $n$.
@@ -44,8 +44,8 @@ $H$ such that we can take $f(n) = n^{c(H)}$ in the above formulation.
 -/
 @[category research open, AMS 05]
 theorem erdos_61 :
-    (∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
-      ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c)) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
+      ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c) := by
   sorry
 
 /--

@@ -75,20 +75,20 @@ The below parametrization is brought from the MSE answer [MSE].
 theorem isSumOfThreeCubesRat_any (r : ℚ) : IsSumOfThreeCubes r := by
   by_cases h : r = 0
   · exact ⟨0, 0, 0, by norm_num; exact h⟩
-  · push_neg at h
-    let x := (r ^ 6 + 45 * r ^ 4 - 81 * r ^ 2 + 27) / (6 * r * (r ^ 2 + 3) ^ 2)
+  · let x := (r ^ 6 + 45 * r ^ 4 - 81 * r ^ 2 + 27) / (6 * r * (r ^ 2 + 3) ^ 2)
     let y := (3 - r ^ 2) * (6 * r) / (r ^ 2 + 3) ^ 2
     let z := (r ^ 2 + 6 * r + 3) * (- r ^ 2 + 6 * r - 3) / (6 * r * (r ^ 2 + 3))
     use x, y, z
-    field_simp [x, y, z]
-    ring_nf
+    simp only [x, y, z]
+    field_simp
+    ring
 
 
 /-- An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and only if
 `n` is not `4` or `5` mod `9`. -/
 @[category research open, AMS 11]
 theorem isSumOfThreeCubes_iff_mod_9 :
-    (∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9])) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9]) := by
   sorry
 
 end SumOfThreeCubes

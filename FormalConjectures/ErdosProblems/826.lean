@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/826](https://www.erdosproblems.com/826)
 -/
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos826
 
@@ -33,8 +33,8 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_826 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, σ 0 (n + k) ≤ C * k }.Infinite) ↔
-    answer(sorry) := by
+theorem erdos_826 : answer(sorry) ↔
+    ∃ C > (0 : ℝ), { n | ∀ k ≥ 1, σ 0 (n + k) ≤ C * k }.Infinite := by
   sorry
 
 end Erdos826

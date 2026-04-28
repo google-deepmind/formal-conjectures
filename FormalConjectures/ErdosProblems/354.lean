@@ -29,24 +29,24 @@ noncomputable def FloorMultiples (a γ : ℝ) (n : ℕ) : ℤ := ⌊γ ^ n * a�
 /-- The sequence `⌊a⌋, ⌊b⌋, ⌊γ * a⌋, ⌊γ * b⌋, ... ⌊γ ^ i * a⌋, ⌊γ ^ i * b⌋, ...` -/
 noncomputable def FloorMultiples.interleave (a b γ : ℝ) (n : ℕ) : ℤ :=
   if n % 2 = 0 then
-    FloorMultiples a γ n
+    FloorMultiples a γ (n / 2)
   else
-    FloorMultiples b γ n
+    FloorMultiples b γ (n / 2)
 
 /-- Let $\alpha,\beta\in \mathbb{R}_{>0}$ such that $\alpha/\beta$ is irrational. Is
-\[\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
-\{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}\] complete?-/
+$$\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
+\{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}$$ complete?-/
 @[category research open, AMS 11]
-theorem erdos_354.parts.i : (∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
-    IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2)) ↔ answer(sorry) := by
+theorem erdos_354.parts.i : answer(sorry) ↔ ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
+    IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2) := by
   sorry
 
 /-- Let $\alpha,\beta\in \mathbb{R}_{>0}$ such that $\alpha/\beta$ is irrational. Is
-\[\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
-\{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}\] complete? -/
+$$\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
+\{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}$$ complete? -/
 @[category research open, AMS 11]
-theorem erdos_354.parts.ii : (∃ γ ∈ Set.Ioo 1 2, ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
-    IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2)) ↔ answer(sorry) := by
+theorem erdos_354.parts.ii : answer(sorry) ↔ ∃ γ ∈ Set.Ioo (1 : ℝ) 2, ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
+    IsAddCompleteNatSeq' (FloorMultiples.interleave α β 2) := by
   sorry
 
 end Erdos354
