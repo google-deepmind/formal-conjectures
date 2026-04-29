@@ -81,7 +81,7 @@ def generate_lean_file(
 def main():
     # Locate extracted_names.json relative to repo root.
     repo_root = os.path.dirname(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        os.path.dirname(os.path.abspath(__file__))
     )
     json_path = os.path.join(repo_root, "extracted_names.json")
 
@@ -152,7 +152,7 @@ open Lean Meta ProblemAttributes in
 ]
 """
 
-    out_dir = os.path.dirname(os.path.abspath(__file__))
+    out_dir = os.path.join(repo_root, "FormalConjectures", "Subsets")
     open_path = os.path.join(out_dir, "FC100Open.lean")
     solved_path = os.path.join(out_dir, "FC100Solved.lean")
 
