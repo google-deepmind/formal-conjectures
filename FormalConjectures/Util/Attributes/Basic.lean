@@ -411,4 +411,40 @@ def getFormalProofTag (declName : Name) : m (Option FormalProofTag) := do
 
 end Helper
 
+/-- Verify that the list of problems contains the expected number of problems
+for each category. Throws an error if counts do not match. -/
+def verifyCategoryCounts (problems : List Name) (expected : List (String × Nat)) : MetaM Unit := do
+  let env ← getEnv
+  let catTags := categoryExt.getState env
+  let mut counts : List (String × Nat) := []
+  
+  let incrementCount (counts : List (String × Nat)) (cat : String) : List (String × Nat) :=
+    match counts.find? (·.1 == cat) with
+    | some (_, n) => (cat, n + 1) :: counts.filter (·.1 != cat)
+    | none => (cat, 1) :: counts
+
+  for name in problems do
+    let catStr :=
+      match catTags.toArray.find? (·.declName == name) with
+      | some tag => match tag.category with
+        | .research .solved => "research solved"
+        | .research .open => "research open"
+        | .test => "test"
+        | .API => "API"
+        | .undergraduate => "undergraduate"
+        | .graduate => "graduate"
+        | .highSchool => "high_school"
+      | none => "uncategorised"
+    counts := incrementCount counts catStr
+
+  for (cat, exp) in expected do
+    let actual := (counts.find? (·.1 == cat)).map (·.2) |>.getD 0
+    if actual != exp then
+      throwError s!"Category '{cat}': expected {exp}, got {actual}"
+
+  let total := problems.length
+  let expectedTotal := expected.foldl (fun acc (_, n) => acc + n) 0
+  if total != expectedTotal then
+    throwError s!"Expected total {expectedTotal} problems, got {total}"
+
 end ProblemAttributes
