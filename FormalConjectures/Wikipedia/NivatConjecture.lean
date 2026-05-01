@@ -40,9 +40,6 @@ def IsPeriodic (x : ℤ × ℤ → A) : Prop :=
 
 /-- The **Nivat conjecture**: if there exist integers `n, m ≥ 1` such that the block complexity
 satisfies `P_x(n, m) ≤ n * m`, then the configuration `x` is periodic.
-
-This is a two-dimensional analogue of the Morse–Hedlund theorem: a bi-infinite word over a
-finite alphabet is periodic if and only if its factor complexity is bounded above by some `n`.
 -/
 @[category research open, AMS 37 68]
 theorem nivat_conjecture answer(sorry) ↔ (x : ℤ × ℤ → A) :
