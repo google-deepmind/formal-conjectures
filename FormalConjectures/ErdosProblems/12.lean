@@ -37,7 +37,7 @@ abbrev IsGood (A : Set ℕ) : Prop := A.Infinite ∧
 /-- The set of $p ^ 2$ where $p \cong 3 \mod 4$ is prime is an example of a good set.
 Formal proof provided by AlphaProof
 -/
-@[category undergraduate, AMS 11, formal_proof using formal_conjectures at
+@[category textbook, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/2663234a28260853790aa5752d8d4550ff0ab1ca/FormalConjectures/ErdosProblems/12.lean#L39"]
 theorem isGood_example :
     IsGood {p ^ 2 | (p : ℕ) (_ : p ≡ 3 [MOD 4]) (_ : p.Prime)} := by

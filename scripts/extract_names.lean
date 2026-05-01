@@ -33,9 +33,7 @@ def getModuleNameFromFile (file : System.FilePath) : IO Name := do
 
 -- Helper to format Category as string
 def categoryToString : Category → String
-  | .highSchool => "high_school"
-  | .undergraduate => "undergraduate"
-  | .graduate => "graduate"
+  | .textbook => "textbook"
   | .research .open => "research open"
   | .research .solved => "research solved"
   | .test => "test"

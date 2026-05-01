@@ -81,7 +81,7 @@ open Filter (atTop)
 
 /-- Formula (5.1.1) of [PPVW2016]: The number of elliptic curves over ℚ with naïve height at most
 `H` is asymptotically `2^(4/3)*3^(-3/2)/ζ(10) * H^(5/6)`. -/
-@[category graduate, AMS 11 14]
+@[category textbook, AMS 11 14]
 theorem card_heightLE_div_pow_five_div_six_tensto :
     atTop.Tendsto (fun H ↦ (heightLE H).ncard / (H : ℝ) ^ (5 / 6 : ℝ))
       (𝓝 (2 ^ (4 / 3 : ℝ) * 3 ^ (-3 / 2 : ℝ) / (riemannZeta 10).re)) := by

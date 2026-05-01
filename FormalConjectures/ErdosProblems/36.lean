@@ -91,7 +91,7 @@ A lower bound of $\frac 1 4$.
 See [Some remarks on number theory (in Hebrew)](https://users.renyi.hu/~p_erdos/1955-13.pdf)
 by *Paul Erdős*, Riveon Lematematika 9, p.45-48,1955
 -/
-@[category graduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem minimum_overlap.variants.lower.erdos_1955 :
     (1 : ℝ) / 4 < atTop.liminf MinOverlapQuotient := by
   sorry

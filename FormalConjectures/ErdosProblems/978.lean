@@ -58,12 +58,30 @@ theorem erdos_978.variants.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : 9 ≤
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
-/-- If $k > 3$ (and $k \neq 2^l$), then are there infinitely many $n$ for which $f(n)$ is
-$(k-2)$-power-free? -/
-@[category research open, AMS 11]
-theorem erdos_978.parts.ii : answer(sorry) ↔ ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
+/--
+If $k > 3$ (and $k \neq 2^l$), then are there infinitely many $n$ for which $f(n)$ is
+$(k-2)$-power-free?
+
+This was disproved by the DeepMind prover agent.
+-/
+@[category research solved, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/3b5d6ac2555cd63b83d418c29ff040876be9dee0/FormalConjectures/ErdosProblems/978.lean#L64"]
+theorem erdos_978.variants.allow_fixed_divisors : answer(False) ↔
+    ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
     (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
     (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) →
+    {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
+  sorry
+
+/--
+If $k>3$ (and $k \neq 2^l$), and for all primes $p$ there exists $n$ such that $p^{k-2}\nmid f(n)$,
+then are there infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
+-/
+@[category research open, AMS 11]
+theorem erdos_978.parts.ii : answer(sorry) ↔
+    ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
+    (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
+    (∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) →
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 

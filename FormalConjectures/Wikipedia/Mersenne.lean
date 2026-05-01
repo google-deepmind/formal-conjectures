@@ -74,7 +74,7 @@ theorem new_mersenne_conjecture (p : ℕ) (hp : Odd p) :
   sorry
 
 /-- It suffices to check this conjecture for primes -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem new_mersenne_conjecture_of_prime :
     (∀ p, p.Prime → NewMersenneConjectureStatement p) →
     ∀ p, Odd p → NewMersenneConjectureStatement p := by

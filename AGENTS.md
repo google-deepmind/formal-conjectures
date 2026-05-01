@@ -55,9 +55,7 @@ theorem main_conjecture.variants.special_case : ... := by
 Every theorem/lemma should have exactly one `category` attribute indicating its type:
 
 **Values:**
-- `@[category high_school]` - High school level math problem
-- `@[category undergraduate]` - Undergraduate level math problem
-- `@[category graduate]` - Graduate level math problem
+- `@[category textbook]` - Textbook level math problem (high school, undergraduate, or graduate)
 - `@[category research open]` - Open research problem (no accepted solution exists)
 - `@[category research solved]` - Solved research problem (informal proof widely accepted)
 - `@[category test]` - Sanity check or unit test for definitions
@@ -94,8 +92,8 @@ It is independent of the `category` attribute and can be used with any category.
 theorem some_solved_problem : ... := by
   sorry
 
-@[category graduate, AMS 11, formal_proof using formal_conjectures at "https://..."]
-theorem a_graduate_problem_with_proof : ... := by
+@[category textbook, AMS 11, formal_proof using formal_conjectures at "https://..."]
+theorem a_textbook_problem_with_proof : ... := by
   sorry
 ```
 
