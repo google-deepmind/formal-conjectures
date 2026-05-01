@@ -61,7 +61,7 @@ noncomputable def a' (n : ℕ) : ℕ :=
 /--
 The log2 of the smallest prime factor of $F_n$ is at most $2^n$.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 private lemma log2_minFac_le (n : ℕ) : log2 (fermatNumber n).minFac ≤ 2^n := by
   rw [log2_eq_log_two]
   refine (log_mono_right (minFac_le (by rw [fermatNumber]; norm_num))).trans_eq ?_
@@ -118,8 +118,7 @@ theorem five : a 5 = 23 := by
 
 @[category test, AMS 11]
 theorem six : a 6 = 46 := by
-  -- AlphaProof failed to close this goal
-  sorry
+  decide +native
 
 @[category test, AMS 11]
 theorem seven : a 7 = 73 := by

@@ -18,25 +18,34 @@ let currentPage    = 1;
 
 // Active filter state (driven by URL ↔ UI)
 const state = {
-  query:       '',
-  categories:  new Set(),
-  collections: new Set(),
-  subjects:    new Set(),
-  sort:        'name',
+  query:           '',
+  categories:      new Set(),
+  collections:     new Set(),
+  subjects:        new Set(),
+  formalProofKinds: new Set(),
+  sort:            'name',
+};
+
+// Human-readable labels for formal proof kinds
+const FORMAL_PROOF_LABELS = {
+  'formal_conjectures': 'Formal Conjectures',
+  'lean4':              'Lean 4 (external)',
+  'other_system':       'Other system',
 };
 
 // ---------------------------------------------------------------------------
 // DOM references
 // ---------------------------------------------------------------------------
-const searchInput       = document.getElementById('search-input');
-const categoryFilters   = document.getElementById('category-filters');
-const collectionFilters = document.getElementById('collection-filters');
-const subjectFilters    = document.getElementById('subject-filters');
-const resetBtn          = document.getElementById('reset-filters');
-const resultCount       = document.getElementById('result-count');
-const sortSelect        = document.getElementById('sort-select');
-const listEl            = document.getElementById('theorem-list');
-const paginationEl      = document.getElementById('pagination');
+const searchInput         = document.getElementById('search-input');
+const categoryFilters     = document.getElementById('category-filters');
+const formalProofFilters  = document.getElementById('formal-proof-filters');
+const collectionFilters   = document.getElementById('collection-filters');
+const subjectFilters      = document.getElementById('subject-filters');
+const resetBtn            = document.getElementById('reset-filters');
+const resultCount         = document.getElementById('result-count');
+const sortSelect          = document.getElementById('sort-select');
+const listEl              = document.getElementById('theorem-list');
+const paginationEl        = document.getElementById('pagination');
 
 // ---------------------------------------------------------------------------
 // URL state helpers
@@ -51,6 +60,13 @@ function readURL() {
   for (const v of params.getAll('collection')) state.collections.add(v);
   state.subjects.clear();
   for (const v of params.getAll('subject')) state.subjects.add(v);
+  state.formalProofKinds.clear();
+  if (params.get('formal_proof') === 'true') {
+    // Landing page shortcut: select all proof kinds
+    for (const k of Object.keys(FORMAL_PROOF_LABELS)) state.formalProofKinds.add(k);
+  } else {
+    for (const v of params.getAll('formal_proof_kind')) state.formalProofKinds.add(v);
+  }
   state.sort        = params.get('sort') || 'name';
   currentPage       = parseInt(params.get('page') || '1', 10) || 1;
 }
@@ -61,6 +77,7 @@ function writeURL() {
   for (const c of state.categories)  params.append('category',   c);
   for (const c of state.collections) params.append('collection', c);
   for (const s of state.subjects)    params.append('subject',    s);
+  for (const k of state.formalProofKinds) params.append('formal_proof_kind', k);
   if (state.sort !== 'name') params.set('sort', state.sort);
   if (currentPage > 1)       params.set('page', currentPage);
   const url = params.toString() ? `?${params}` : window.location.pathname;
@@ -80,6 +97,7 @@ function applyFilters() {
       const cSubjects = new Set(c.subjects.map(s => s.name));
       if (![...state.subjects].some(s => cSubjects.has(s))) return false;
     }
+    if (state.formalProofKinds.size && !state.formalProofKinds.has(c.formalProofKind)) return false;
     return true;
   });
 
@@ -208,7 +226,7 @@ function renderPagination() {
 // ---------------------------------------------------------------------------
 // Build filter checkboxes
 // ---------------------------------------------------------------------------
-function buildCheckboxes(container, values, stateSet, onChange) {
+function buildCheckboxes(container, values, stateSet, onChange, labelMap) {
   container.innerHTML = '';
   [...values].sort().forEach(value => {
     const id = `chk-${container.id}-${value.replace(/\s+/g, '_')}`;
@@ -226,7 +244,7 @@ function buildCheckboxes(container, values, stateSet, onChange) {
       onChange();
     });
     label.appendChild(chk);
-    label.appendChild(document.createTextNode(' ' + value));
+    label.appendChild(document.createTextNode(' ' + (labelMap && labelMap[value] || value)));
     container.appendChild(label);
   });
 }
@@ -234,6 +252,9 @@ function buildCheckboxes(container, values, stateSet, onChange) {
 function syncCheckboxes() {
   document.querySelectorAll('#category-filters input').forEach(chk => {
     chk.checked = state.categories.has(chk.value);
+  });
+  document.querySelectorAll('#formal-proof-filters input').forEach(chk => {
+    chk.checked = state.formalProofKinds.has(chk.value);
   });
   document.querySelectorAll('#collection-filters input').forEach(chk => {
     chk.checked = state.collections.has(chk.value);
@@ -263,9 +284,10 @@ async function init() {
   // await FC.voting.fetchAllVotes();
 
   // Collect unique values for filters
-  const categories  = new Set(allConjectures.map(c => c.category));
-  const collections = new Set(allConjectures.map(c => c.collection));
-  const subjects    = new Set(allConjectures.flatMap(c => c.subjects.map(s => s.name)));
+  const categories      = new Set(allConjectures.map(c => c.category));
+  const formalProofKinds = new Set(allConjectures.map(c => c.formalProofKind).filter(Boolean));
+  const collections     = new Set(allConjectures.map(c => c.collection));
+  const subjects        = new Set(allConjectures.flatMap(c => c.subjects.map(s => s.name)));
 
   const update = () => {
     applyFilters();
@@ -278,9 +300,10 @@ async function init() {
   readURL();
 
   // Build filter UI
-  buildCheckboxes(categoryFilters,   categories,  state.categories,  update);
-  buildCheckboxes(collectionFilters, collections, state.collections, update);
-  buildCheckboxes(subjectFilters,    subjects,    state.subjects,    update);
+  buildCheckboxes(categoryFilters,    categories,      state.categories,      update);
+  buildCheckboxes(formalProofFilters, formalProofKinds, state.formalProofKinds, update, FORMAL_PROOF_LABELS);
+  buildCheckboxes(collectionFilters,  collections,     state.collections,     update);
+  buildCheckboxes(subjectFilters,     subjects,        state.subjects,        update);
 
   searchInput.value  = state.query;
   sortSelect.value = state.sort;
@@ -299,14 +322,15 @@ async function init() {
   });
 
   resetBtn.addEventListener('click', () => {
-    state.query       = '';
+    state.query        = '';
     state.categories.clear();
     state.collections.clear();
     state.subjects.clear();
-    state.sort        = 'name';
-    currentPage       = 1;
-    searchInput.value = '';
-    sortSelect.value  = 'name';
+    state.formalProofKinds.clear();
+    state.sort         = 'name';
+    currentPage        = 1;
+    searchInput.value  = '';
+    sortSelect.value   = 'name';
     syncCheckboxes();
     update();
   });

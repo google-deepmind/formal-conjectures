@@ -46,6 +46,7 @@ theorem primeCondition_8 : PrimeCondition 8 :=
 theorem primeCondition_53 : PrimeCondition 53 :=
   ⟨20, 33, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
+/-- The conjecture for sequence A231201: for any $n > 1$, there exist $x, y > 0$ such that $n = x + y$ and $2^x + y$ is prime. -/
 @[category research open, AMS 11]
 theorem conjecture (n : ℕ) (hn : 1 < n) : PrimeCondition n := by
   sorry

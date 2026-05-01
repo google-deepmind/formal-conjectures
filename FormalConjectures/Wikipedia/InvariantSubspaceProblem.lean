@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 [Chalendar-Partington](https://arxiv.org/abs/2507.21834)
 -/
 
+namespace InvariantSubspaceProblem
+
 variable {H : Type*} [NormedAddCommGroup H]
 
 /-- `ClosedInvariantSubspace T` is the type of non-trivial (different from `H` and `{0}`) closed
@@ -66,7 +68,7 @@ lemma TopologicalSpace.nontrivial_of_not_separableSpace {H : Type*} [Topological
 Every bounded linear operator `T : H → H` on a non-separable Hilbert space `H` has a
 non-trivial closed `T`-invariant subspace. Such an invariant space is given by considering the
 closure of the linear span of the orbit of any single non-zero vector. -/
-@[category research formally solved using formal_conjectures at "", AMS 47]
+@[category research solved, AMS 47, formal_proof using formal_conjectures at ""]
 theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [CompleteSpace H]
     (h : ¬TopologicalSpace.SeparableSpace H) (T : H →L[ℂ] H) :
     Nonempty (ClosedInvariantSubspace T) := by
@@ -115,3 +117,5 @@ theorem Invariant_subspace_problem_l1 :
     ∃ (T : (lp (fun (_ : ℕ) => ℂ) 1) →L[ℂ] (lp (fun (_ : ℕ) => ℂ) 1)),
     IsEmpty (ClosedInvariantSubspace T) := by
   sorry
+
+end InvariantSubspaceProblem

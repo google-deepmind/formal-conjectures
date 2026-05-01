@@ -150,14 +150,11 @@ function getCollection(module) {
 
 /** Category metadata: label and CSS class for styling. */
 const CATEGORY_META = {
-  'research open':             { label: 'Open',             css: 'cat-open' },
-  'research solved':           { label: 'Solved',           css: 'cat-solved' },
-  'research formally solved':  { label: 'Formally Solved',  css: 'cat-formal' },
-  'graduate':                  { label: 'Graduate',         css: 'cat-graduate' },
-  'undergraduate':             { label: 'Undergraduate',    css: 'cat-undergrad' },
-  'high_school':               { label: 'High School',      css: 'cat-highschool' },
-  'test':                      { label: 'Test',             css: 'cat-test' },
-  'API':                       { label: 'API',              css: 'cat-api' },
+  'research open':    { label: 'Open',          css: 'cat-open' },
+  'research solved':  { label: 'Solved',        css: 'cat-solved' },
+  'textbook':         { label: 'Textbook',      css: 'cat-textbook' },
+  'test':             { label: 'Test',          css: 'cat-test' },
+  'API':              { label: 'API',           css: 'cat-api' },
 };
 
 function getCategoryMeta(category) {
@@ -176,8 +173,9 @@ function processEntry(entry) {
     name: AMS_SUBJECTS[parseInt(code, 10)] || `AMS ${code}`,
   }));
   // Pick only the fields the website actually uses. Avoids leaking large
-  // unused fields (statement, docstring, formalProofKind, formalProofLink)
-  // into the client-side JSON. Docstrings come from versoFragments instead.
+  // unused fields (statement, docstring) into the client-side JSON.
+  // Docstrings come from versoFragments instead.
+  const hasFormalProof = !!entry.formalProofKind;
   return {
     theorem: entry.theorem,
     module: entry.module,
@@ -192,6 +190,9 @@ function processEntry(entry) {
     categoryLabel: catMeta.label,
     categoryCss: catMeta.css,
     subjects,
+    hasFormalProof,
+    formalProofKind: entry.formalProofKind || null,
+    formalProofLink: entry.formalProofLink || null,
   };
 }
 
@@ -264,8 +265,8 @@ function statsCard(value, label) {
 
 function categoryStatsHTML(byCategory) {
   const order = [
-    'research open', 'research solved', 'research formally solved',
-    'graduate', 'undergraduate', 'high_school', 'test', 'API',
+    'research open', 'research solved',
+    'textbook', 'test', 'API',
   ];
   return order
     .filter(k => byCategory[k])
@@ -344,11 +345,14 @@ function main() {
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
+  const openCount   = stats.byCategory['research open'] || 0;
+  const solvedCount = stats.byCategory['research solved'] || 0;
+  const formalCount = conjectures.filter(c => c.hasFormalProof).length;
   writePage('site/index.html', applyBasePath(fill(indexHtml, {
-    totalCount:      stats.total,
-    openCount:       stats.byCategory['research open'] || 0,
-    solvedCount:     stats.byCategory['research solved'] || 0,
-    formalCount:     stats.byCategory['research formally solved'] || 0,
+    totalCount:      openCount + solvedCount,
+    openCount,
+    solvedCount,
+    formalCount,
     categoryStats:   categoryStatsHTML(stats.byCategory),
     collectionList:  collectionListHTML(stats.byCollection),
     subjectList:     subjectListHTML(stats.bySubject),

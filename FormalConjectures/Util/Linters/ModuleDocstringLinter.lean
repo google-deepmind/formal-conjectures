@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Lean
+public import Lean
 
 /-!
 # The Module Docstring Linter
@@ -24,6 +25,8 @@ module docstring (a `/-! ... -/` block). If more than one is present, the
 extra ones are flagged with a warning suggesting they be converted to regular
 multiline comments (`/- ... -/`).
 -/
+
+public section
 
 open Lean Elab Meta Command Linter
 

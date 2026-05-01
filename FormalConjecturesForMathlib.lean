@@ -33,6 +33,7 @@ public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
+public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
@@ -45,6 +46,8 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Invariants
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.LargestInducedTree
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.WellTotallyDominated
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Johnson
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
@@ -73,6 +76,7 @@ public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
+public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 public import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
 public import FormalConjecturesForMathlib.LinearAlgebra.SpecialLinearGroup
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
@@ -86,6 +90,7 @@ public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
+public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes
 public import FormalConjecturesForMathlib.Order.Filter.Cofinite
 public import FormalConjecturesForMathlib.Order.Filter.atTopBot.Finset

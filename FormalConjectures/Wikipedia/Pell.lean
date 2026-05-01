@@ -51,13 +51,13 @@ theorem pellNumber_five : pellNumber 5 = 29 := rfl
 
 /-- Similar to Fibonacci numbers, there exist numerous identites around Pell numbers, i.e.
 P_{2n+1} = P_n ^ 2 + P_{n+1} ^ 2 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem pellNumber_sq_add_pellNumber_succ_sq (n : ℕ) :
     pellNumber (2 * n + 1) = pellNumber n ^ 2 + pellNumber (n + 1) ^ 2 := by
   sorry
 
 /-- An explicit formula for Pell numbers, similar to Binet's formula -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem coe_pellNumber_eq : ∀ n, (pellNumber n : ℝ) = ((1 + √2) ^ n - (1 - √2) ^ n) / (2 * √2) := by
   sorry
 

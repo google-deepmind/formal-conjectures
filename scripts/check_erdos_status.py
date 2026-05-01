@@ -29,11 +29,18 @@ ERDOS_DIR = os.path.join(
 )
 
 # Matches the category annotation line immediately before any erdos theorem.
-# Captures the category, the problem number, and the full theorem name suffix.
-# Used to find all theorems for a given problem number.
+# Captures the category and the problem number.
+# Note: 'formally solved' is no longer a valid category value.
 CATEGORY_THEN_THEOREM = re.compile(
-    r"@\[category research (open|solved|formally solved[^]]*),.*\]\s*\n"
+    r"@\[category research (open|solved).*\]\s*\n"
     r"theorem erdos_(\d+)([\w.]*)\s",
+    re.MULTILINE,
+)
+
+# Matches the formal_proof attribute (may appear on the same line as category or separate).
+# Captures the proof kind.
+FORMAL_PROOF_ATTR = re.compile(
+    r"formal_proof using (formal_conjectures|lean4|other_system) at",
     re.MULTILINE,
 )
 
@@ -75,11 +82,9 @@ def yaml_status_to_category(state):
 
 
 def lean_category(cat):
-    """Normalize a captured category string to 'open', 'solved', or 'formally solved'."""
+    """Normalize a captured category string to 'open' or 'solved'."""
     if cat == "open":
         return "open"
-    if cat.startswith("formally solved"):
-        return "formally solved"
     return "solved"
 
 
@@ -94,6 +99,9 @@ def scan_lean_files():
     For multi-part problems (no single `erdos_{N}` theorem), collects all
     non-variant theorems. The problem is 'open' if any part is open,
     'formally solved' if all parts are formally solved, and 'solved' otherwise.
+
+    A problem is 'formally solved' if its category is 'solved' and it has a
+    @[formal_proof ...] attribute.
     """
     result = {}
     for fname in os.listdir(ERDOS_DIR):
@@ -106,6 +114,9 @@ def scan_lean_files():
         with open(filepath) as f:
             content = f.read()
 
+        # Check if file has any formal_proof attribute
+        has_formal_proof = bool(FORMAL_PROOF_ATTR.search(content))
+
         # Collect all non-variant theorem categories for this problem number
         main_categories = []
         has_exact_main = False
@@ -115,6 +126,9 @@ def scan_lean_files():
                 continue
             suffix = m.group(3)  # e.g. "", "_cycles", ".parts.i", ".variants.foo"
             cat = lean_category(m.group(1))
+            # Upgrade to 'formally solved' if formal_proof attribute is present
+            if cat == "solved" and has_formal_proof:
+                cat = "formally solved"
             if suffix == "" or suffix == ":":
                 # Exact match: `erdos_{N}` with no suffix
                 has_exact_main = True

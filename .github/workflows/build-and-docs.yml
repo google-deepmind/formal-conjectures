@@ -155,7 +155,7 @@ jobs:
       - name: Generate conjectures data for website
         run: |
           mkdir -p site/data
-          lake exe extract_names --exclude=statement,docstring,formalProofKind,formalProofLink,moduleDocstrings > site/data/conjectures.json || true
+          lake exe extract_names --exclude=statement,docstring,moduleDocstrings > site/data/conjectures.json || true
 
       - name: Extract Verso fragments for website
         run: |
