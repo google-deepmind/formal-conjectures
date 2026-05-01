@@ -33,8 +33,8 @@ namespace CongruentNumber
 def congruentNumber (n : ℕ) : Prop :=
   ∃ (a b c : ℚ), a ^ 2 + b ^ 2 = c ^ 2 ∧ n = (2⁻¹ : ℚ) * a * b
 
-/- 1 is not a congruent number. -/
-@[category test, AMS 11]
+/-- 1 is not a congruent number, as proved by Fermat via infinite descent. -/
+@[category textbook, AMS 11]
 theorem not_congruentNumber_1 : ¬ congruentNumber 1 := by
   sorry
 

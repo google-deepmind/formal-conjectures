@@ -16,6 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Erdős Problem 1196
+
+*Reference:* [erdosproblems.com/1196](https://www.erdosproblems.com/1196)
+-/
+
 namespace Erdos1196
 
 open scoped Asymptotics
