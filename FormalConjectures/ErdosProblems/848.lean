@@ -70,8 +70,8 @@ More precisely, Sawhney proves: there exist absolute constants $η > 0$ and $N�
 such that for all $N ≥ N₀$, if $|A| ≥ (1/25 - η)N$ then $A ⊆ \{n : n ≡ 7 \pmod{25}\}$ or
 $A ⊆ \{n : n ≡ 18 \pmod{25}\}$.
 
-A complete formal Lean 4 proof is available at:
-https://github.com/The-Obstacle-Is-The-Way/erdos-banger -/
+A Lean 4 formalisation of this asymptotic version is available at:
+https://github.com/The-Obstacle-Is-The-Way/erdos-banger/blob/48e9c1aeb13a6e075d78ecf42dc1f2839d5ff071/formal/lean/Erdos/848.lean -/
 @[category research solved, AMS 11]
 theorem erdos_848.variants.asymptotic : ∀ᶠ N in Filter.atTop, Erdos848For N := by
   sorry
