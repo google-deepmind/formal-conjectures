@@ -111,14 +111,10 @@ Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $n$, then
 $$\frac{1}{\Phi_n(p\boxplus_n q)} \ge \frac{1}{\Phi_n(p)}+\frac{1}{\Phi_n(q)}?$$
 
-Note: while no proof of this is published yet, the authors of
-[arxiv/2602.05192](https://arxiv.org/abs/2602.05192) announced that a proof will be released
-on 2026-02-13
-
-TODO(firsching): update category and remove Note when proof is published.
 -/
-@[category research open, AMS 26]
-theorem four : answer(sorry) ↔ ∀ (p q : ℝ[X]) (n : ℕ), FourProp p q n := by
+@[category research solved, AMS 26,
+  formal_proof using lean4 at "https://github.com/frenzymath/Archon-FirstProof-Results/blob/main/FirstProof/FirstProof4/Problem4.lean"]
+theorem four : answer(True) ↔ ∀ (p q : ℝ[X]) (n : ℕ), FourProp p q n := by
   sorry
 
 /--
@@ -126,8 +122,8 @@ Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $2$, then
 $$\frac{1}{\Phi_2(p\boxplus_n q)} \ge \frac{1}{\Phi_2(p)}+\frac{1}{\Phi_2(q)}?$$
 -/
-@[category research open, AMS 26]
-theorem four_2 : answer(sorry) ↔ ∀ (p q : ℝ[X]), FourProp p q 2 := by
+@[category research solved, AMS 26]
+theorem four_2 : answer(True) ↔ ∀ (p q : ℝ[X]), FourProp p q 2 := by
   sorry
 
 /--
@@ -135,8 +131,8 @@ Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $3$, then
 $$\frac{1}{\Phi_3(p\boxplus_n q)} \ge \frac{1}{\Phi_3(p)}+\frac{1}{\Phi_3(q)}?$$
 -/
-@[category research open, AMS 26]
-theorem four_3 : answer(sorry) ↔ ∀ (p q : ℝ[X]), FourProp p q 3 := by
+@[category research solved, AMS 26]
+theorem four_3 : answer(True) ↔ ∀ (p q : ℝ[X]), FourProp p q 3 := by
   sorry
 
 end Arxiv.«2602.05192»
