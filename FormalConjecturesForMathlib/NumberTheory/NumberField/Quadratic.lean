@@ -13,40 +13,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib
+module
+
+public import Mathlib.NumberTheory.NumberField.Basic
+public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Basic
+public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
+
+public section
 
 open Algebra (IsQuadraticExtension)
 open Module NumberField
 
-namespace QuadraticAlgebra
-variable {d : ℕ}
+/-- Any `QuadraticAlgebra ℚ a b` that is a field is automatically a quadratic extension
+of `ℚ`, i.e., a degree-2 extension. Combined with `IsQuadraticField.instNumberField`,
+this gives `NumberField (QuadraticAlgebra ℚ a b)` for free. -/
+instance QuadraticAlgebra.instIsQuadraticExtension (a b : ℚ) [Fact (∀ r : ℚ, r ^ 2 ≠ a + b * r)] :
+    IsQuadraticExtension ℚ (QuadraticAlgebra ℚ a b) where
+  finrank_eq_two' := QuadraticAlgebra.finrank_eq_two a b
 
-lemma discr_rat_of_modEq_one (hd₁ : d ≠ 1) (hd : Squarefree d) (hd₄ : d ≡ 1 [ZMOD 4]) :
-    discr (QuadraticAlgebra ℚ d 0) = d := sorry
-
-lemma discr_rat_of_not_modEq_one (hd : Squarefree d) (hd₄ : ¬ d ≡ 1 [ZMOD 4]) :
-    discr (QuadraticAlgebra ℚ d 0) = 4 * d := sorry
-
-end QuadraticAlgebra
-
-lemma isQuadraticExtension_iff_exists_quadraticAlgebra :
-    IsQuadart
-
-/-- Fundamental discriminants are those integers `D` that appear as discriminants of quadratic
-fields.
-
-`D` is a fundamental discriminant if it is either of the form `4m` for `m` congruent to `2` or `3`
-mod `4` squarefree, or if it congruent to `1` mod `4` and squarefree. -/
-def IsFundamentalDiscr (D : ℤ) : Prop :=
-  4 ∣ D ∧ (D / 4 ≡ 2 [ZMOD 4] ∨ D / 4 ≡ 3 [ZMOD 4]) ∧ Squarefree (D / 4) ∨
-    D ≡ 1 [ZMOD 4] ∧ Squarefree D
-
-lemma isFundamentalDiscr_iff_exists_isQuadraticExtension {D : ℤ} :
-    IsFundamentalDiscr D ↔ ∃ d ≠ 1, Squarefree d ∧ discr ℚ (QuadraticAlgebra ℚ d 0) = d := by
-  constructor
-  · rintro (⟨\d, rfl⟩)
-
-lemma isFundamentalDiscr_iff_exists_discr_eq {D : ℤ} :
-    IsFundamentalDiscr D ↔ ∃ d ≠ 1, Squarefree d ∧ discr ℚ (QuadraticAlgebra ℚ d 0) = d := by
-  constructor
-  · rintro (⟨\d, rfl⟩)
+/-- A quadratic field is a number field: it has characteristic zero
+and is finite-dimensional over `ℚ`. -/
+instance Algebra.IsQuadraticExtension.to_numberField (K : Type*) [Field K] [CharZero K]
+    [IsQuadraticExtension ℚ K] : NumberField K where
+  to_finiteDimensional := .of_finrank_pos <| by grind [IsQuadraticExtension.finrank_eq_two]
