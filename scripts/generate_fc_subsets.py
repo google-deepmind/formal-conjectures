@@ -14,7 +14,7 @@ typeclass instances, and universe polymorphism.
 
 Usage:
     cd <repo-root>
-    python3 FormalConjectures/Subsets/generate_fc100.py
+    python3 scripts/generate_fc_subsets.py
 """
 
 import json
