@@ -43,7 +43,7 @@ Note: in Mathlib, `NumberField.dedekindZeta` is currently defined as the naive D
 - D. A. Marcus, *Number Fields*, Springer (GTM 81), 1977, Chapter VII.
 -/
 
-section RiemannHypothesis
+namespace RiemannHypothesis
 
 /-- The **Riemann Hypothesis**: all non-trivial zeros of the Riemann zeta function have real
 part $\frac{1}{2}$. That is, if $\zeta(s) = 0$, $s \neq 1$, and $s$ is not a trivial zero
