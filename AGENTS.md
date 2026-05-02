@@ -348,6 +348,7 @@ Some rare exceptions exist for consistency:
   def left_factorial (n : ℕ) := ...
   ```
 - **`research open` and `research solved` docstrings MUST include** a concise description of the
+- **`research open`, `research solved` and `textbook` docstrings MUST include** a concise description of the
   problem and a reference to a source:
   ```lean
   /--
