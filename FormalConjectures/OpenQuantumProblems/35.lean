@@ -810,10 +810,14 @@ theorem ame_11_4_open :
     answer(sorry) ↔ ExistsAME 11 4 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(11,5)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- Open benchmark statement: does an $\mathrm{AME}(11,5)$ state exist?
+
+The DeepMind prover agent has shown that such a state exists.
+ -/
+@[category research solved, AMS 5 15 81 94, formal_proof using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/47383bf7fbe86effc9ac184446e320f26ddbee3a/FormalConjectures/OpenQuantumProblems/35.lean#L2138"]
 theorem ame_11_5_open :
-    answer(sorry) ↔ ExistsAME 11 5 := by
+    answer(True) ↔ ExistsAME 11 5 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(11,6)$ state exist? -/

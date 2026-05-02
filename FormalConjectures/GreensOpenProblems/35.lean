@@ -84,7 +84,7 @@ theorem c_inf_upper : c ∞ ≤ 0.7505 := by
   sorry
 
 /-- A comparison bound from Young's inequality. -/
-@[category undergraduate, AMS 26 28 42]
+@[category textbook, AMS 26 28 42]
 theorem c_inf_lower_young : (c 2) ^ 2 ≤ c ∞ := by
   sorry
 

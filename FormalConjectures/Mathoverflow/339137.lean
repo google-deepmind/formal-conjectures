@@ -64,7 +64,7 @@ distributed on their ranges?
 Mathematically, this equivalence is established via Probability Generating Functions (PGFs),
 shifting the support to $\mathbb{N}$, and appropriately scaling the coefficients.
 -/
-@[category undergraduate, AMS 60]
+@[category textbook, AMS 60]
 theorem mathoverflow_339137_probabilistic :
     type_of% Mathoverflow339137.mathoverflow_339137 ↔ type_of% Green28.green_28 := by
   sorry

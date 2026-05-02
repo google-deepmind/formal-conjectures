@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 358
 
-*Reference:* [erdosproblems.com/358](https://www.erdosproblems.com/358)
+*References:*
+- [erdosproblems.com/358](https://www.erdosproblems.com/358)
+- [Ta26] T. Tao, [Erdős problem 358](https://terrytao.wordpress.com/wp-content/uploads/2026/02/erdos-358-2.pdf) (2026)
 -/
 
 namespace Erdos358
@@ -57,7 +59,7 @@ noncomputable def g (A : ℕ → ℕ) (n : ℕ) : ℕ :=
 /--
 When $A_n = n$, the function $f$ defined above counts the number of odd divisors of $n$.
 -/
-@[category high_school, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem f_id : f id = fun n ↦ #{d ∈ n.divisors | Odd d} := by
   sorry
 
@@ -65,20 +67,24 @@ theorem f_id : f id = fun n ↦ #{d ∈ n.divisors | Odd d} := by
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
 solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 Is there such an $A$ for which $f(n)\to \infty$ as $n\to \infty$?
+
+Tao [Ta26] constructed such a sequence with $f(n) \gg \log n$ for all sufficiently large $n$.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_358.parts.i :
-    answer(sorry) ↔ ∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop := by
+    answer(True) ↔ ∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop := by
   sorry
 
 /--
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
 solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
 Is there an $A$ such that $f(n)\geq 2$ for all large $n$?
+
+This also follows from Tao's construction with $f(n) \gg \log n$ [Ta26].
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_358.parts.ii :
-    answer(sorry) ↔ ∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 2 ≤ f A n := by
+    answer(True) ↔ ∃ A, StrictMono A ∧ ∀ᶠ n in atTop, 2 ≤ f A n := by
   sorry
 
 /--

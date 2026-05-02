@@ -133,16 +133,15 @@ for the following categories:
     This includes problems that have a formal proof within this repository,
     a formal proof of an equivalent statement found elsewhere, or an informal
     solution widely accepted by experts in the field.
--   Graduate level problem.
--   Undergraduate level problem.
--   High school level problem.
+-   Textbook level problem: a math problem at the high school, undergraduate,
+    or graduate level.
 -   API statement: a statement that constructs basic theory around a new
     definition.
 -   Test statement: a statement that serves as a "unit test". These are useful
     to check e.g new definitions or theorem statements.
 
-This repository targets research level problems. As such, graduate/
-undergraduate/high school level problems should only be contributed if they
+This repository targets research level problems. As such, textbook level
+problems should only be contributed if they
 are directly related to a research level problem (e.g. as a special case,
 etc.).
 

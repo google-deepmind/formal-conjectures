@@ -119,7 +119,7 @@ def IsCarmichael (n : ℕ) : Prop :=
   ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
 
 /-- A composite Carmichael number is squarefree. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCarmichael a) :
     Squarefree a := by
   simp_all [Nat.Composite, a.squarefree_iff_prime_squarefree, IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
@@ -134,7 +134,7 @@ theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCa
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /-- A composite number `a` is Carmichael if and only if it is squarefree
 and, for all prime `p` dividing `a`, we have `p - 1 ∣ a - 1`. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     IsCarmichael a ↔ Squarefree a ∧
       ∀ p, p.Prime → p ∣ a → (p - 1 : ℕ) ∣ (a - 1 : ℕ) := by
