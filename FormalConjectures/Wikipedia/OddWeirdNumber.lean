@@ -25,15 +25,3 @@ import FormalConjectures.ErdosProblems.«470»
 - [A006037] (https://oeis.org/A006037)
 -/
 
-namespace OddWeirdNumber
-
-/-
-The Existence of Odd Weird Number Conjecture asks if there exists
-an odd number that is weird.
--/
-@[category research open, AMS 11]
-theorem existence_odd_weird :
-    answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
-  sorry
-
-end OddWeirdNumber
