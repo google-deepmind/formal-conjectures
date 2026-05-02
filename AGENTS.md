@@ -352,7 +352,6 @@ Some rare exceptions exist for consistency:
   ```lean
   /--
   Can every even integer greater than 2 be written as the sum of two primes?
-  See [Goldbach's conjecture](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture).
   -/
   @[category research open, AMS 11]
   theorem goldbach :
