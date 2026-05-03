@@ -24,6 +24,9 @@ import FormalConjectures.Util.ProblemImports
   First European Congress of Mathematics Paris, July 6–10, 1992: Vol. II: Invited Lectures (Part 2). Basel: Birkhäuser Basel, 1994.
 - [Co18] Combariza, Germán AG. "A few conjectures about the multiple zeta values."
   ACM Communications in Computer Algebra 52.1 (2018): 11-20.
+- [Te02] T. Terasoma. Mixed Tate motives and multiple zeta values. Invent. Math., 149(2):339–369, 2002.
+- [DG05] P. Deligne and A. Goncharov. Groupes fondamentaux motiviques de Tate mixte. Ann. Sci.
+  Ecole Norm. Sup. (4), 38(1):1–56, 2005.
 - [OEIS A000931](https://oeis.org/A000931)
 -/
 
@@ -93,7 +96,7 @@ theorem zagier_conjecture :
   sorry
 
 /--
-**Upper bound** (Terasoma, Deligne–Goncharov).
+**Upper bound** [Te02, DG05]
 
 The dimension of the $\mathbb{Q}$-vector space of MZVs of weight $n$ is at most $d_n$.
 -/
