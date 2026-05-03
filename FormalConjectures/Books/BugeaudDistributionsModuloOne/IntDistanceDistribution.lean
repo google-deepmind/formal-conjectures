@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Data.Real.NearestInt
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Fractional Parts of Powers
 
@@ -39,17 +40,15 @@ Chapter 10 of the book collects open questions. This file formalizes Problems 10
 
 namespace Bugeaud
 
-noncomputable def nearestInt (x : ℝ) : ℝ := ‖(x : UnitAddCircle)‖
-
 /--
 Problem 10.1. Are there a transcendental number $\alpha$ and a positive real
 number $\xi$ such that $\lVert \xi \alpha^n \rVert$ tends to~$0$ as~$n$ tends to infinity? [Har19]
-(Trivial for $|\alpha| < 1$).
+(Trivial for $|\alpha| < 1$)
 -/
 @[category research open, AMS 11]
 theorem problem_10_1 : answer(sorry) ↔
-    ∃ (α ξ : ℝ), 1 < α ∧ Transcendental ℚ α ∧ 0 < ξ ∧
-      Filter.Tendsto (fun n : ℕ ↦ nearestInt (ξ * α ^ n)) Filter.atTop (nhds 0) := by
+    ∃ (α ξ : ℝ), 1 < |α| ∧ Transcendental ℚ α ∧ 0 < ξ ∧
+      Filter.Tendsto (fun n : ℕ ↦ distToNearestInt (ξ * α ^ n)) Filter.atTop (nhds 0) := by
   sorry
 
 /--
@@ -58,7 +57,7 @@ infinity.
 -/
 @[category research open, AMS 11]
 theorem problem_10_2 :
-    ¬ Filter.Tendsto (fun n : ℕ ↦ nearestInt (Real.exp n)) Filter.atTop (nhds 0) := by
+    ¬ Filter.Tendsto (fun n : ℕ ↦ distToNearestInt (Real.exp n)) Filter.atTop (nhds 0) := by
   sorry
 
 /--
@@ -67,7 +66,7 @@ that $\lVert e^n \rVert > e^{−cn}$, for every~$n \ge 1$. Posed by Mahler [Mah5
 -/
 @[category research open, AMS 11]
 theorem problem_10_3 :
-    ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 1 ≤ n → Real.exp (-c * n) < nearestInt (Real.exp n) := by
+    ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 1 ≤ n → Real.exp (-c * n) < distToNearestInt (Real.exp n) := by
   sorry
 
 /--
@@ -77,7 +76,20 @@ every~$n \ge 1$. This is supported by metrical results [Kok45].
 -/
 @[category research open, AMS 11]
 theorem waldschmidt :
-    ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 1 ≤ n → (n : ℝ) ^ (-c) < nearestInt (Real.exp n) := by
+    ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 1 ≤ n → (n : ℝ) ^ (-c) < distToNearestInt (Real.exp n) := by
   sorry
+
+/--
+Waldschmidt's conjecture is stronger than Mahler's: since $\log n \le n$ for $n \ge 1$,
+the polynomial lower bound $n^{-c}$ dominates the exponential lower bound $e^{-cn}$.
+-/
+@[category test, AMS 11]
+theorem problem_10_3_of_waldschmidt (h : type_of% waldschmidt) : type_of% problem_10_3 := by
+  obtain ⟨c, hc, hyp⟩ := h
+  refine ⟨c, hc, fun n hn => ?_⟩
+  have hn_pos : (0 : ℝ) < n := by exact_mod_cast hn
+  refine lt_of_le_of_lt ?_ (hyp n hn)
+  rw [Real.rpow_def_of_pos hn_pos]
+  exact Real.exp_le_exp.mpr (by nlinarith [Real.log_le_self hn_pos.le])
 
 end Bugeaud
