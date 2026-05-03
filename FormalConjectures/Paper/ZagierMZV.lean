@@ -89,7 +89,7 @@ satisfying $d_0 = 1$, $d_1 = 0$, $d_2 = 1$, and $d_n = d_{n-2} + d_{n-3}$ for $n
 -/
 @[category research open, AMS 11]
 theorem zagier_conjecture :
-    answer(sorry) ↔ ∀ n : ℕ, Module.rank ℚ (mzvSpanOfWeight n) = zagierDim n := by
+    answer(sorry) ↔ ∀ n : ℕ, Module.finrank ℚ (mzvSpanOfWeight n) = zagierDim n := by
   sorry
 
 /--
@@ -99,7 +99,7 @@ The dimension of the $\mathbb{Q}$-vector space of MZVs of weight $n$ is at most 
 -/
 @[category research solved, AMS 11]
 theorem zagier_upper_bound :
-    ∀ n : ℕ, Module.rank ℚ (mzvSpanOfWeight n) ≤ zagierDim n := by
+    ∀ n : ℕ, Module.finrank ℚ (mzvSpanOfWeight n) ≤ zagierDim n := by
   sorry
 
 -- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
