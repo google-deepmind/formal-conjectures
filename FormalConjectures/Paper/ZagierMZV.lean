@@ -24,6 +24,7 @@ import FormalConjectures.Util.ProblemImports
   First European Congress of Mathematics Paris, July 6–10, 1992: Vol. II: Invited Lectures (Part 2). Basel: Birkhäuser Basel, 1994.
 - [Co18] Combariza, Germán AG. "A few conjectures about the multiple zeta values."
   ACM Communications in Computer Algebra 52.1 (2018): 11-20.
+- [OEIS A000931](https://oeis.org/A000931)
 -/
 
 -- TODO(jgd) There are additional conjectures in Co18 which would be nice to formalize.
@@ -54,8 +55,8 @@ where
 def weight (s : List ℕ) : ℕ := s.sum
 
 /--
-An MZV index is *admissible* if it is nonempty and the first entry is at least 2
-(ensuring convergence), and all entries are positive.
+An MZV index is *admissible* if it is either empty or if the first entry is at least 2
+and all entries are positive. The empty list convention ensures $\mathcal{Z}_0 = \mathbb{Q}$.
 -/
 def AdmissibleIndex : List ℕ → Prop
   | [] => True
@@ -111,7 +112,7 @@ theorem zagierDim_first_values :
     [zagierDim 0, zagierDim 1, zagierDim 2, zagierDim 3, zagierDim 4,
      zagierDim 5, zagierDim 6, zagierDim 7, zagierDim 8, zagierDim 9] =
     [1, 0, 1, 1, 1, 2, 2, 3, 4, 5] := by
-  native_decide
+  decide
 
 /-- There is no admissible index of weight 1 (since $s_1 \geq 2$ is required). -/
 @[category test, AMS 11]
