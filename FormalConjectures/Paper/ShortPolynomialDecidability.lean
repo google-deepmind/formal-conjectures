@@ -206,8 +206,7 @@ theorem short_poly_decidability.variants.trinomial :
 The Fibonacci family of ideals $I_n = \langle y - F_n x - F_{n-1},\, x^2 - x - 1 \rangle
 \subseteq \mathbb{Q}[x, y]$, where $F_n = \mathtt{Nat.fib}\, n$ ($F_0 = 0$, $F_1 = 1$).
 
-This family shows that a computable degree bound for the shortest polynomial in an ideal
-must depend on the *coefficients* of the generators: the ideal $I_n$ contains the binomial
+The ideal $I_n$ contains the binomial
 $x^n - y$, and this is the lowest-degree binomial in $I_n$. Since the degree grows with $n$
 while the generators always have degrees 1 and 2, no classical invariant (generating degree,
 Castelnuovo–Mumford regularity, primary decomposition) can yield a uniform degree bound.
@@ -218,20 +217,145 @@ def fibIdeal (n : ℕ) : Ideal (MvPolynomial (Fin 2) ℚ) :=
     X 0 ^ 2 - X 0 - 1
   }
 
-/-- The binomial $x^n - y$ belongs to $I_n$. This follows from the Fibonacci recurrence:
-modulo $x^2 - x - 1$, one has $x^n \equiv F_n x + F_{n-1}$, so $x^n - y \equiv 0$ in $I_n$. -/
+/-- The binomial $x^n - y$ belongs to $I_n$. A direct induction from $x^2 \equiv x + 1$
+gives the polynomial-division identity $x^n \equiv F_n x + F_{n-1} \pmod{x^2 - x - 1}$;
+combined with the generator $y - F_n x - F_{n-1}$, this yields $x^n - y \in I_n$. -/
 @[category test, AMS 13]
 theorem fib_ideal_contains_binomial (n : ℕ) (hn : 1 ≤ n) :
     X 0 ^ n - X 1 ∈ fibIdeal n := by
-  sorry
+  suffices h : ∃ Q : MvPolynomial (Fin 2) ℚ,
+      X 0 ^ n - C (Nat.fib n : ℚ) * X 0 - C (Nat.fib (n - 1) : ℚ) =
+        Q * (X 0 ^ 2 - X 0 - 1) by
+    obtain ⟨Q, hQ⟩ := h
+    rw [fibIdeal, Ideal.mem_span_pair]
+    exact ⟨-1, Q, by linear_combination -hQ⟩
+  induction n, hn using Nat.le_induction with
+  | base => exact ⟨0, by simp⟩
+  | succ k hk ih =>
+    obtain ⟨Q, hQ⟩ := ih
+    refine ⟨X 0 * Q + C (Nat.fib k : ℚ), ?_⟩
+    rw [show (k + 1) - 1 = k from rfl,
+        show (C (Nat.fib (k + 1) : ℚ) : MvPolynomial (Fin 2) ℚ) =
+          C (Nat.fib (k - 1) : ℚ) + C (Nat.fib k : ℚ) from by
+          rw [← map_add]; congr 1; exact_mod_cast Nat.fib_add_one (by omega : k ≠ 0)]
+    linear_combination X 0 * hQ
 
-/-- The binomial $x^n - y$ is a binomial of minimum total degree in $I_n$: any binomial
-in $I_n$ has total degree at least $n$. This is the key property showing that coefficients
-govern the degree of the shortest polynomial in an ideal. -/
+/-!
+### Minimum-degree binomial in $I_n$
+
+Every binomial in $I_n$ has total degree at least $n$.
+
+Let $\varphi = (1 + \sqrt 5)/2$ be the golden ratio, a root of $x^2 - x - 1$. Evaluate
+a binomial $a x^r y^s + b x^u y^v \in I_n$ at $(\varphi, \varphi^n)$ to get
+$a \varphi^{r + ns} + b \varphi^{u + nv} = 0$. If the two exponents differed, factoring
+out the smaller power would force a positive integer power of $\varphi$ to be rational,
+but $\varphi^d = F_d \varphi + F_{d-1}$ is irrational for $d \geq 1$. Hence the exponents
+agree, and combined with $(r,s) \neq (u,v)$ this forces $|r - u| \geq n$.
+-/
+
+namespace FibMinDeg
+
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
+open Real
+
+/-- Evaluation $\mathbb{Q}[x, y] \to \mathbb{R}$ at $(x, y) = (\varphi, \varphi^n)$. -/
+private def evalGold (n : ℕ) : MvPolynomial (Fin 2) ℚ →ₐ[ℚ] ℝ :=
+  MvPolynomial.aeval ![goldenRatio, goldenRatio ^ n]
+
+private lemma evalGold_mem_fibIdeal (n : ℕ) (hn : 1 ≤ n) {p : MvPolynomial (Fin 2) ℚ}
+    (hp : p ∈ fibIdeal n) : evalGold n p = 0 := by
+  refine Submodule.span_induction (p := fun p _ => evalGold n p = 0) ?_ ?_ ?_ ?_ hp
+  · rintro p (rfl | rfl)
+    · simp [evalGold]
+      obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+      simp; linear_combination -(goldenRatio_mul_fib_succ_add_fib m)
+    · simp [evalGold]
+  · simp
+  · intros _ _ _ _ h₁ h₂; simp [h₁, h₂]
+  · intros r _ _ h; simp [h]
+
+private lemma evalGold_monomial (n : ℕ) (e : Fin 2 →₀ ℕ) (c : ℚ) :
+    evalGold n (monomial e c) = (c : ℝ) * goldenRatio ^ (e 0 + n * e 1) := by
+  rw [evalGold, MvPolynomial.aeval_monomial,
+      Finsupp.prod_fintype _ _ (fun i => by simp)]
+  simp [Fin.prod_univ_two, pow_mul, pow_add]
+
+/-- Positive integer powers of the golden ratio are irrational, since
+$\varphi^{m+1} = F_{m+1} \cdot \varphi + F_m$ with $F_{m+1} \neq 0$. -/
+private lemma goldenRatio_pow_irrational {d : ℕ} (hd : d ≠ 0) :
+    Irrational (goldenRatio ^ d) := by
+  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hd
+  rw [← goldenRatio_mul_fib_succ_add_fib m, mul_comm]
+  exact (goldenRatio_irrational.natCast_mul (by simp)).add_natCast _
+
+/-- If $a \varphi^p + b \varphi^q = 0$ with rational $b \neq 0$ and $p < q$, contradiction:
+factoring $\varphi^p$ would force $\varphi^{q-p}$ to equal $-a/b \in \mathbb{Q}$. -/
+private lemma not_two_term_zero_of_lt (a : ℚ) {b : ℚ} (hb : b ≠ 0)
+    {p q : ℕ} (hpq : p < q)
+    (h : (a : ℝ) * goldenRatio ^ p + (b : ℝ) * goldenRatio ^ q = 0) : False := by
+  obtain ⟨d, rfl⟩ : ∃ d, q = p + d := ⟨q - p, by omega⟩
+  have hd : d ≠ 0 := by omega
+  have hp0 : (goldenRatio : ℝ) ^ p ≠ 0 := pow_ne_zero _ goldenRatio_ne_zero
+  have hbR : (b : ℝ) ≠ 0 := mod_cast hb
+  have hkey : (a : ℝ) + b * goldenRatio ^ d = 0 := by
+    have hfac : (goldenRatio : ℝ) ^ p * ((a : ℝ) + b * goldenRatio ^ d) = 0 := by
+      rw [pow_add] at h; linear_combination h
+    exact (mul_eq_zero.mp hfac).resolve_left hp0
+  exact (goldenRatio_pow_irrational hd).ne_rat (-a / b)
+    (by push_cast; field_simp; linarith)
+
+/-- A vanishing two-term combination $a \varphi^p + b \varphi^q = 0$ with nonzero rational
+coefficients forces $p = q$. -/
+private lemma exponents_eq_of_two_term_zero {a b : ℚ} (ha : a ≠ 0) (hb : b ≠ 0)
+    {p q : ℕ} (h : (a : ℝ) * goldenRatio ^ p + (b : ℝ) * goldenRatio ^ q = 0) :
+    p = q := by
+  rcases lt_trichotomy p q with hpq | hpq | hpq
+  · exact (not_two_term_zero_of_lt a hb hpq h).elim
+  · exact hpq
+  · exact (not_two_term_zero_of_lt b ha hpq (by simpa [add_comm] using h)).elim
+
+end FibMinDeg
+
+/-- Every binomial in $I_n$ has total degree at least $n$, so $x^n - y$ is a minimum-degree
+binomial. The bound depends on $n$, showing that the degree of the shortest binomial in an
+ideal is controlled by the coefficients of the generators rather than by any classical
+degree invariant. -/
 @[category research solved, AMS 13 68]
 theorem fib_ideal_min_degree_binomial (n : ℕ) (hn : 1 ≤ n) :
     ∀ p ∈ fibIdeal n, p.support.card = 2 → n ≤ p.totalDegree := by
-  sorry
+  open FibMinDeg Real in
+  intro p hp hcard
+  rw [Finset.card_eq_two] at hcard
+  obtain ⟨e₁, e₂, hne, hsupp⟩ := hcard
+  set a := p.coeff e₁
+  set b := p.coeff e₂
+  have ha_ne : a ≠ 0 := MvPolynomial.mem_support_iff.mp (by rw [hsupp]; simp)
+  have hb_ne : b ≠ 0 := MvPolynomial.mem_support_iff.mp (by rw [hsupp]; simp [Ne.symm hne])
+  have hp_eq : p = monomial e₁ a + monomial e₂ b := by
+    conv_lhs => rw [MvPolynomial.as_sum p]
+    rw [hsupp, Finset.sum_pair hne]
+  set p₁ := e₁ 0 + n * e₁ 1 with hp₁_def
+  set p₂ := e₂ 0 + n * e₂ 1 with hp₂_def
+  have hG : (a : ℝ) * goldenRatio ^ p₁ + (b : ℝ) * goldenRatio ^ p₂ = 0 := by
+    have := evalGold_mem_fibIdeal n hn hp
+    rwa [hp_eq, map_add, evalGold_monomial, evalGold_monomial] at this
+  have hp₁p₂ : p₁ = p₂ := exponents_eq_of_two_term_zero ha_ne hb_ne hG
+  -- Combined with e₁ ≠ e₂, this forces e₁ 1 ≠ e₂ 1.
+  have he1_ne : e₁ 1 ≠ e₂ 1 := fun he => hne <| by
+    ext i; fin_cases i
+    · show e₁ 0 = e₂ 0; simp [hp₁_def, hp₂_def, he] at hp₁p₂; omega
+    · exact he
+  have hsum : ∀ e : Fin 2 →₀ ℕ, e.sum (fun _ e => e) = e 0 + e 1 := fun e => by
+    rw [Finsupp.sum_fintype _ _ (fun _ => rfl)]; simp [Fin.sum_univ_two]
+  -- WLOG by symmetry: the larger e_i 1 forces the corresponding e_i 0 ≥ n.
+  simp only [hp₁_def, hp₂_def] at hp₁p₂
+  rcases lt_or_gt_of_ne he1_ne with hlt | hgt
+  · have hd := MvPolynomial.le_totalDegree (s := e₁) (by rw [hsupp]; simp)
+    rw [hsum] at hd; nlinarith
+  · have hd := MvPolynomial.le_totalDegree (s := e₂) (by rw [hsupp]; simp)
+    rw [hsum] at hd; nlinarith
 
 end
 
