@@ -19,10 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Brennan's Conjecture
 
-*Reference:* 
- - [Wikipedia](https://en.wikipedia.org/wiki/Brennan_conjecture)
- - [arXiv:2409.15074](https://arxiv.org/abs/2409.15074)
- - [arXiv:2512.09330](https://arxiv.org/abs/2512.09330)
+*Reference:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Brennan_conjecture)
+- [arXiv:2409.15074](https://arxiv.org/abs/2409.15074)
+- [arXiv:2512.09330](https://arxiv.org/abs/2512.09330)
 -/
 
 namespace BrennanConjecture
@@ -66,10 +66,28 @@ theorem universalSpectrumBounded_le (τ : ℝ) :
 theorem integralMeansSpectrum_id (τ : ℝ) : integralMeansSpectrum id τ = 0 := by
   sorry
 
-/-- Brennan's conjecture: $B(-2) = B_b(-2) = 1$. -/
+/-- Brennan's conjecture, part 1: $B(-2) = 1$. -/
 @[category research open, AMS 30]
-theorem brennan :
-    universalSpectrum (-2) = 1 ∧ universalSpectrumBounded (-2) = 1 := by
+theorem brennan_universalSpectrum :
+    universalSpectrum (-2) = 1 := by
   sorry
+
+/-- Brennan's conjecture, part 2: $B_b(-2) = 1$. -/
+@[category research open, AMS 30]
+theorem brennan_universalSpectrumBounded :
+    universalSpectrumBounded (-2) = 1 := by
+  sorry
+
+/-- Brennan's conjecture, part 3: $B(-2) = B_b(-2)$. -/
+@[category API, AMS 30]
+theorem brennan_spectra_eq :
+    universalSpectrum (-2) = universalSpectrumBounded (-2) := by
+  rw [brennan_universalSpectrum, brennan_universalSpectrumBounded]
+
+/-- Brennan's conjecture: $B(-2) = B_b(-2) = 1$. -/
+@[category API, AMS 30]
+theorem brennan :
+    universalSpectrum (-2) = 1 ∧ universalSpectrumBounded (-2) = 1 :=
+  ⟨brennan_universalSpectrum, brennan_universalSpectrumBounded⟩
 
 end BrennanConjecture
