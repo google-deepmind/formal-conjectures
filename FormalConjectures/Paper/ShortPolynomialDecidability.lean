@@ -19,29 +19,26 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Decidability of short polynomials in polynomial ideals
 
-*Reference:* [No short polynomials vanish on bounded rank matrices](
-https://doi.org/10.1112/blms.12819)
-by *Jan Draisma, Thomas Kahle, Finn Wiersig*, Bull. Lond. Math. Soc. (2023)
-
-*Reference:* [Finding binomials in polynomial ideals](
-https://doi.org/10.1186/s40687-017-0106-0)
-by *Anders Jensen, Thomas Kahle, Lukas Katthän*, Res. Math. Sci. (2017)
-
-*Reference:* [Computing the binomial part of a polynomial ideal](
-https://doi.org/10.1016/j.jsc.2023.102298)
-by *Martin Kreuzer, Florian Walsh*, J. Symbolic Comput. (2024)
-
-*Reference:* [Computing sparse multiples of polynomials](
-https://doi.org/10.1007/s00453-012-9652-4)
-by *Mark Giesbrecht, Daniel S. Roche, Hrushikesh Tilak*, Algorithmica (2012)
-
-*Reference:* [What is the shortest polynomial divisible by (x-1)(y-1)(x²y-1)?](
-https://mathoverflow.net/questions/273132) — MathOverflow question by Thomas Kahle (2017).
-YCor's comment poses the decidability question: "A general question is whether it's decidable
-(given an oracle to compute in K), and also whether it's decidable for principal ideals."
+*References:*
+- [No short polynomials vanish on bounded rank matrices](
+  https://doi.org/10.1112/blms.12819)
+  by *Jan Draisma, Thomas Kahle, Finn Wiersig*, Bull. Lond. Math. Soc. (2023)
+- [Finding binomials in polynomial ideals](
+  https://doi.org/10.1186/s40687-017-0106-0)
+  by *Anders Jensen, Thomas Kahle, Lukas Katthän*, Res. Math. Sci. (2017)
+- [Computing the binomial part of a polynomial ideal](
+  https://doi.org/10.1016/j.jsc.2023.102298)
+  by *Martin Kreuzer, Florian Walsh*, J. Symbolic Comput. (2024)
+- [Computing sparse multiples of polynomials](
+  https://doi.org/10.1007/s00453-012-9652-4)
+  by *Mark Giesbrecht, Daniel S. Roche, Hrushikesh Tilak*, Algorithmica (2012)
+- [What is the shortest polynomial divisible by (x-1)(y-1)(x²y-1)?](
+  https://mathoverflow.net/questions/273132) — MathOverflow question by Thomas Kahle (2017).
+  YCor's comment poses the decidability question: "A general question is whether it's decidable
+  (given an oracle to compute in K), and also whether it's decidable for principal ideals."
 
 A polynomial is *$t$-short* if it is nonzero and has at most $t$ terms. Given generators
-of an ideal $I \subseteq \mathbb{Q}[x_1, x_2, \ldots]$, can one algorithmically decide
+of an ideal $I \subseteq \mathbb{Q}[x_0, x_1, \ldots]$, can one algorithmically decide
 whether $I$ contains a $t$-short polynomial?
 
 The problem is solved for $t \leq 2$: monomials ($t = 1$) can be detected via colon ideals,
@@ -56,10 +53,10 @@ noncomputable section
 open MvPolynomial
 
 /--
-An ideal $I \subseteq \mathbb{Q}[x_1, x_2, \ldots]$ *has a $t$-short polynomial* if there
+An ideal $I \subseteq \mathbb{Q}[x_0, x_1, \ldots]$ *has a $t$-short polynomial* if there
 exists a nonzero $p \in I$ with $|\operatorname{supp}(p)| \leq t$.
 
-The original problem is stated for polynomial rings $\mathbb{Q}[x_1, \ldots, x_n]$ in
+The original problem is stated for polynomial rings $\mathbb{Q}[x_0, \ldots, x_{n-1}]$ in
 finitely many variables, with $n$ part of the input. Here we use `MvPolynomial ℕ ℚ`
 (countably many variables) as the ambient ring. This is equivalent because the generators
 are finite and each mentions only finitely many variables, so every element of the ideal
@@ -68,6 +65,24 @@ for the appropriate $n$.
 -/
 def HasShortPoly (t : ℕ) (I : Ideal (MvPolynomial ℕ ℚ)) : Prop :=
   ∃ p ∈ I, p ≠ 0 ∧ p.support.card ≤ t
+
+/-- No nonzero polynomial has zero terms, so `HasShortPoly 0` is always false. -/
+@[category API, AMS 13]
+theorem not_hasShortPoly_zero (I : Ideal (MvPolynomial ℕ ℚ)) : ¬ HasShortPoly 0 I := by
+  intro ⟨p, _, hp_ne, hp_card⟩
+  exact hp_ne (MvPolynomial.support_eq_empty.mp (Finset.card_eq_zero.mp (Nat.le_zero.mp hp_card)))
+
+/-- The zero ideal contains no nonzero elements, so it has no short polynomials. -/
+@[category API, AMS 13]
+theorem not_hasShortPoly_bot (t : ℕ) : ¬ HasShortPoly t (⊥ : Ideal (MvPolynomial ℕ ℚ)) := by
+  intro ⟨p, hp_mem, hp_ne, _⟩
+  exact hp_ne (Ideal.mem_bot.mp hp_mem)
+
+/-- The whole ring contains the monomial $1$, which has one term. -/
+@[category API, AMS 13]
+theorem hasShortPoly_one_top : HasShortPoly 1 (⊤ : Ideal (MvPolynomial ℕ ℚ)) := by
+  refine ⟨X 0, Submodule.mem_top, by simp, ?_⟩
+  simp [MvPolynomial.support_X]
 
 /--
 A multivariate polynomial represented as a list of (exponent vector, coefficient) pairs.
@@ -93,8 +108,13 @@ Interpret an exponent vector as a monomial in `ℕ →₀ ℕ`.
 def monomialOfList (l : List ℕ) : ℕ →₀ ℕ :=
   (l.mapIdx (fun i e => Finsupp.single i e)).sum
 
+/-- The empty exponent vector gives the zero `Finsupp`, representing $x^0 = 1$. -/
+@[category API, AMS 13]
+theorem monomialOfList_nil : monomialOfList [] = 0 := by
+  simp [monomialOfList]
+
 /--
-Interpret a `PolyRep` as a polynomial in $\mathbb{Q}[x_1, x_2, \ldots]$.
+Interpret a `PolyRep` as a polynomial in $\mathbb{Q}[x_0, x_1, \ldots]$.
 Each entry `(exps, num, den)` represents the term $\frac{\mathtt{num}}{\mathtt{den}} \cdot
 x_0^{e_0} x_1^{e_1} \cdots$, where the coefficient is given as a fraction `num / den`
 with `num : ℤ` and `den : ℕ`.
@@ -103,11 +123,21 @@ def polyOfRep (p : PolyRep) : MvPolynomial ℕ ℚ :=
   (p.map (fun (exps, num, den) =>
     MvPolynomial.monomial (monomialOfList exps) (↑num / ↑den))).sum
 
+/-- The empty list represents the zero polynomial. -/
+@[category API, AMS 13]
+theorem polyOfRep_nil : polyOfRep [] = 0 := by
+  simp [polyOfRep]
+
 /--
 Build an ideal from a list of polynomial representations.
 -/
 def idealOfInput (L : List PolyRep) : Ideal (MvPolynomial ℕ ℚ) :=
   Ideal.span (Set.range (fun i : Fin L.length => polyOfRep (L.get i)))
+
+/-- Empty generators produce the zero ideal. -/
+@[category API, AMS 13]
+theorem idealOfInput_nil : idealOfInput [] = ⊥ := by
+  simp [idealOfInput]
 
 /--
 The short polynomial decision problem for a fixed $t$: given a list of generators
@@ -117,9 +147,16 @@ polynomial?
 def decisionProblem (t : ℕ) : List PolyRep → Prop :=
   fun L => HasShortPoly t (idealOfInput L)
 
+/-- The zero ideal has no $t$-short polynomial. -/
+@[category API, AMS 13]
+theorem not_decisionProblem_nil (t : ℕ) : ¬ decisionProblem t [] := by
+  simp only [decisionProblem]
+  rw [idealOfInput_nil]
+  exact not_hasShortPoly_bot t
+
 /--
 It is decidable whether a finitely generated ideal in
-$R = \mathbb{Q}[x_1, x_2, \ldots]$
+$R = \mathbb{Q}[x_0, x_1, \ldots]$
 contains a monomial ($1$-short polynomial).
 This follows from the characterization via iterated colon ideals:
 $I$ contains a monomial if and only if $I : (\prod x_i)^\infty = R$.
@@ -130,7 +167,7 @@ theorem monomial_decidability : ComputablePred (decisionProblem 1) := by
 
 /--
 It is decidable whether a finitely generated ideal in
-$R = \mathbb{Q}[x_1, x_2, \ldots]$
+$R = \mathbb{Q}[x_0, x_1, \ldots]$
 contains a binomial ($2$-short polynomial).
 This was proved by Jensen–Kahle–Katthän (2017) using Artinian reduction via tropical
 geometry and algorithms from algebraic number theory. Kreuzer–Walsh (2024) later gave
@@ -144,7 +181,7 @@ theorem binomial_decidability : ComputablePred (decisionProblem 2) := by
 
 /--
 **Main conjecture.** Is it decidable whether a finitely generated ideal in
-$\mathbb{Q}[x_1, x_2, \ldots]$ contains a $t$-short polynomial, for $t \geq 3$?
+$\mathbb{Q}[x_0, x_1, \ldots]$ contains a $t$-short polynomial, for $t \geq 3$?
 
 Both decidability and undecidability are considered plausible. No degree bound is known
 that would reduce the problem to a finite-dimensional linear algebra computation.
