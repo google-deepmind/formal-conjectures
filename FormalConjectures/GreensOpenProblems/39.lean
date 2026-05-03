@@ -31,8 +31,8 @@ open scoped Pointwise
 namespace Green39
 
 /--
-The proportion of subsets of $\mathbb{Z}/p\mathbb{Z}$ of size $a$ that can cover
-$\mathbb{Z}/p\mathbb{Z}$ using at most $t$ translates.
+The proportion of subsets of $\mathbb{Z}/p\mathbb{Z}$ of size $k$ that can cover
+$\mathbb{Z}/p\mathbb{Z}$ using at most $c$ translates.
 
 If p = 0 or k > p, return 0 by convention.
 -/
@@ -70,7 +70,7 @@ theorem proportionCoverable_11_3_4 :
     proportionCoverable 11 3 4 = (1 : ℚ) / 3 := by
   native_decide
 
-@[category test, AMS 05 60]
+@[category test, AMS 5 60]
 theorem proportionCoverable_11_4_3 :
     proportionCoverable 11 4 3 = (1 : ℚ) / 6 := by
   native_decide
@@ -107,7 +107,7 @@ Similar questions are interesting with $\sqrt{p}$ replaced by $p^\theta$ for any
 -/
 @[category research open, AMS 5 60]
 theorem green_39.variant_theta : answer(sorry) ↔
-    ∀ (θ : ℝ), 0 < θ ∧ θ ≤ 1/2 →
+    ∀ (θ : ℝ), 0 < θ → θ ≤ 1/2 →
     ∃ C > 1, Tendsto
       (fun p : {q : ℕ // q.Prime} ↦
         let k := ⌊(p : ℝ) ^ θ⌋₊
