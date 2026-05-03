@@ -71,7 +71,7 @@ theorem problem_10_3 :
   sorry
 
 /--
-Waldschmidt [Wal02] conjectured that a stronger result holds, namely
+Waldschmidt [Wal03] conjectured that a stronger result holds, namely
 that there exists a positive real number~$c$ such that $\lVert e^n \rVert > n^{−c}$ for
 every~$n \ge 1$. This is supported by metrical results [Kok45].
 -/
