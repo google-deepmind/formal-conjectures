@@ -78,7 +78,7 @@ theorem erdos_400.variants.g_pos (k n : ℕ) (h: k ≥ 2) : 0 < g k n := by
     if (i : ℕ) = 0 then n else if (i : ℕ) = 1 then 1 else 0 with ha_def
   have h_prod : ∏ i : Fin (k' + 2), (a i)! = n ! := by
     rw [Fin.prod_univ_succ]; simp [ha_def]
-    rw [Fin.prod_univ_succ]; simp [ha_def]
+    rw [Fin.prod_univ_succ]; simp
   have h_sum : ∑ i : Fin (k' + 2), a i = n + 1 := by
     rw [Fin.sum_univ_succ]; simp [ha_def]
   -- 1 is in the set
@@ -97,7 +97,7 @@ theorem erdos_400.variants.g_pos (k n : ℕ) (h: k ≥ 2) : 0 < g k n := by
           exact le_trans (Finset.single_le_prod' (fun j _ =>
             Nat.one_le_iff_ne_zero.mpr (Nat.factorial_ne_zero _))
             (Finset.mem_univ i)) (Nat.le_of_dvd (Nat.factorial_pos n) hb)
-      _ = (k' + 2) * n ! := by simp [Finset.card_fin, smul_eq_mul]
+      _ = (k' + 2) * n ! := by simp [smul_eq_mul]
   exact Nat.lt_of_lt_of_le Nat.one_pos (le_csSup hbdd hmem)
 
 end Erdos400

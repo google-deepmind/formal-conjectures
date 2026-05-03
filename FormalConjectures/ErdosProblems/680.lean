@@ -29,9 +29,9 @@ open Real
 
 /--
 Is it true that, for all sufficiently large $n$, there exists some $k$ such that
-\[
+$$
 p(n+k)>k^2+1,
-\]
+$$
 where $p(m)$ denotes the least prime factor of $m$?
 -/
 @[category research open, AMS 11]
