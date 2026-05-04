@@ -39,24 +39,25 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
   (Finset.univ.filter (fun w => Even (G.dist v w))).card
 
-/-- The 2-domination number of `G`: the minimum size of a set `S` such that every
-vertex outside `S` has at least 2 neighbours in `S`.
-This is the interpretation of `σ(G)` appearing in Conjecture 189.
--- TODO: verify this matches DeLaVina's original notation for σ(G). -/
+/-- The **2-domination number** of `G` (Fink–Jacobson 1985): the minimum size
+of a set `S` such that every vertex outside `S` has at least 2 neighbours in `S`.
+
+This is DeLaVina's `σ(G)`, used consistently across WOWII conjectures
+188, 189, 190, and 201 (all Hamiltonian-path implications). -/
 noncomputable def twoDominationNumber (G : SimpleGraph α) : ℕ :=
   sInf { n | ∃ S : Finset α, S.card = n ∧
     ∀ v ∉ S, 2 ≤ (S.filter (fun w => G.Adj v w)).card }
 
 /--
-WOWII [Conjecture 189](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 189](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj189)
+(status O):
 
 For a simple connected graph `G`, if `max_v distEven(v) ≤ 1 + σ(G)`,
 then `G` has a Hamiltonian path.
-Here `distEven(v)` is the number of vertices at even distance from `v` and
-`σ(G) = twoDominationNumber G` is the 2-domination number of `G`.
 
-Note: The precise meaning of σ(G) in DeLaVina's original is uncertain; we use the
-2-domination number as the most natural interpretation.
+Here `distEven(v)` is the number of vertices at even distance from `v`, and
+`σ(G) = twoDominationNumber G` is the 2-domination number of `G`
+(Fink–Jacobson 1985).
 -/
 @[category research open, AMS 5]
 theorem conjecture189 (G : SimpleGraph α) (h : G.Connected)
