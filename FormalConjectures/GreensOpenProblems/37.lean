@@ -44,7 +44,7 @@ noncomputable def m (N k : ℕ) : ℕ :=
 Given a natural number `N`, what is the smallest size of a subset of `ℕ` that contains, for each `d = 1, …, N`,
 an arithmetic progression of length `k` with common difference `d`.
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_37 (N k : ℕ) :
     IsLeast { m | ∃ A : Finset ℕ, A.card = m ∧ IsAPCover (A : Set ℕ) N k } (answer(sorry)) := by
   sorry
@@ -53,25 +53,25 @@ theorem green_37 (N k : ℕ) :
 Asymptotic version: determine the asymptotic behavior of `m(N, k)` as `N` grows.
 The solver should determine what function `f : ℕ → ℝ` eventually equals `(fun N ↦ (m N k : ℝ))`.
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_37_asymptotic (k : ℕ) :
     ∀ᶠ N in atTop, (m N k : ℝ) = (answer(sorry) : ℕ → ℝ) N := by
   sorry
 
 /-- Determine the asymptotic equivalence class (theta) of `m(N, k)`. -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_37_theta (k : ℕ) :
     (fun N ↦ (m N k : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /-- Determine an upper bound (big O) for `m(N, k)`. -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_37_bigO (k : ℕ) :
     (fun N ↦ (m N k : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /-- Determine a strict upper bound (little o) for `m(N, k)`. -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_37_littleO (k : ℕ) :
     (fun N ↦ (m N k : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry

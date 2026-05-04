@@ -83,6 +83,14 @@ def AMSLinter : Linter where
           -- If we're here then there is at least one AMS tag, but it doesn't have any number.
           logLintIf linter.style.ams_attribute outStx
             "The AMS tag should have at least one subject number."
+          return
+        -- Avoid AMS tags with leading zeros (e.g. AMS 05 -> AMS 5)
+        for n in ams.flatten do
+          if let some str := n.raw.reprint then
+            let trimmed := str.trimAscii.toString
+            if trimmed.length > 1 && trimmed.startsWith "0" then
+              logLintIf linter.style.ams_attribute outStx
+                m!"AMS subject {trimmed} should not have a leading zero."
         -- Check there the AMS tags are sorted and do not contain duplicates
         let ams_sorted := ams.flatten.qsort (fun n m => n.getNat < m.getNat)
         if ams_sorted != ams.flatten then

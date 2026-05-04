@@ -45,7 +45,7 @@ noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
 
 /-- By the pigeon hole principle, the size of a subset of an $N \times N$ grid such that no $k$
 points lie on a line is bounded by $\leq (k - 1) * N$ for $N \geq k$. -/
-@[category textbook, AMS 05 52]
+@[category textbook, AMS 5 52]
 theorem allowedSetSize_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
     AllowedSetSize k N ≤ (k - 1) * N := by
   sorry
@@ -58,31 +58,31 @@ def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
 For $N \geq k$ and $k > 1$, the AllowedSetSize in $(k - 1) * N$, i. e. on an $N \times N$ subset,
 there is a set of $k * N$ points for which no $k$ lie on a line (and not such a set of bigger size).
 -/
-@[category research open, AMS 05 52]
+@[category research open, AMS 5 52]
 theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 1 < k) (h : k ≤ N) : NoKInLineFor k N := by
   sorry
 
 /-- **Green's Open Problem 72 / No-three-in-line problem**:
 The no-k-in-line conjecture holds for $k = 3$. -/
-@[category research open, AMS 05 52]
+@[category research open, AMS 5 52]
 theorem green_72 {N : ℕ} (hN : 3 ≤ N) : NoKInLineFor 3 N := by
   sorry
 
 alias no_three_in_line := green_72
 
 /-- Does the no-three-in-line problem hold when $N$ is big enough? -/
-@[category research open, AMS 05 52]
+@[category research open, AMS 5 52]
 theorem green_72.variants.eventually : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
   sorry
 
 /-- For $N \leq 60$, this has been verfied with computers. -/
-@[category research solved, AMS 05 52]
+@[category research solved, AMS 5 52]
 theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
     NoKInLineFor 3 N := by
   sorry
 
 /-- In [GK2025] Grebennikov and Kwan prove the no-k-in-line conjecture for $k > 10 ^ 37$. -/
-@[category research solved, AMS 05 52]
+@[category research solved, AMS 5 52]
 theorem no_k_in_line_big {k : ℕ} (N : ℕ) (h : 10 ^ 37 < k) :
     NoKInLineFor k N := by
   sorry
