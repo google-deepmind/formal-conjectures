@@ -17,32 +17,23 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Graph Frequency of Maximum l(v) — Conjecture 209
+# Written on the Wall II - Conjecture 209
+
+**Verbatim statement (WOWII #209, status O):**
+> If G is a simple connected graph with n > 1 such that
+>   (1/6) * [1 + 2 * |E(Ḡ)|]  ≤  frequency of λ_max(G),
+> then G has a Hamiltonian path.
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj209
+
+Here `λ_max(G)` is interpreted as `max_v l(v)` (the maximum over vertices of
+the independence number of the open neighbourhood, the standard reading of
+the Greek `λ` across the WOWII conjectures), and `frequency of λ_max(G)` is
+the number of vertices `v` that achieve this maximum. `|E(Ḡ)|` is the
+edge count of the complement of `G`.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-## Definitions
-
-For a vertex `v` in a graph `G`, recall that `indepNeighborsCard G v` is the
-independence number of the subgraph induced by the neighbourhood of `v`
-(written `l(v)` in Graffiti.pc notation).
-
-The **maximum l-value** `maxLValue G` is the largest value of `l(v)` over all vertices.
-
-The **frequency of the maximum l-value** `frequencyMaxL G` is the number of vertices
-that achieve this maximum, i.e., `|{v : l(v) = maxLValue G}|`.
-
-## Conjecture 209
-
-WOWII Conjecture 209 involves the frequency of the maximum `l`-value.  We state a
-natural bound: for a connected graph `G`,
-  `frequencyMaxL G ≤ G.indepNum`.
-Intuitively, the vertices where the neighbourhood independence number is maximised
-form a structured family whose size cannot exceed the independence number of the
-whole graph.  This mirrors Conjecture 291 (which uses `freqMinTriangles`) and the
-general Graffiti.pc philosophy of bounding domination/independence quantities by
-frequency counts.
 -/
 
 namespace WrittenOnTheWallII.GraphFrequencyMaxL
@@ -56,65 +47,35 @@ noncomputable def maxLValue (G : SimpleGraph α) : ℕ :=
   Finset.univ.sup (indepNeighborsCard G)
 
 /-- The number of vertices `v` that achieve the maximum value of
-`indepNeighborsCard G v`.  This is the "frequency of the max l-value". -/
+`indepNeighborsCard G v`. This is the "frequency of `λ_max(G)`". -/
 noncomputable def frequencyMaxL (G : SimpleGraph α) : ℕ :=
   (Finset.univ.filter (fun v => indepNeighborsCard G v = maxLValue G)).card
 
 /--
-WOWII [Conjecture 209](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 209](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj209)
+(status O):
 
-For a simple connected graph `G`,
-  `frequencyMaxL G ≤ G.indepNum`.
-The number of vertices achieving the maximum neighbourhood-independence value is at
-most the independence number of `G`.
+If `G` is a simple connected graph on `n > 1` vertices and
+`(1/6) · (1 + 2 · |E(Gᶜ)|) ≤ frequencyMaxL G`,
+then `G` has a Hamiltonian path.
 -/
 @[category research open, AMS 5]
-theorem conjecture209 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    frequencyMaxL G ≤ G.indepNum := by
+theorem conjecture209 (G : SimpleGraph α)
+    [DecidableRel G.Adj] [DecidableRel Gᶜ.Adj]
+    (hn : 1 < Fintype.card α)
+    (h : G.Connected)
+    (hbound : (1 : ℝ) / 6 * (1 + 2 * (Gᶜ.edgeFinset.card : ℝ)) ≤ frequencyMaxL G) :
+    ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by
   sorry
 
 -- Sanity checks
 
-/-- In `K₃`, every vertex `v` has a neighbourhood of size 2 consisting of the other
-two vertices; since those two are adjacent, `indepNeighborsCard K₃ v = 1`.
-So `maxLValue K₃ = 1`. -/
-@[category test, AMS 5]
-example : maxLValue (⊤ : SimpleGraph (Fin 3)) = 1 := by
-  unfold maxLValue indepNeighborsCard
-  sorry
-
-/-- In `K₃`, all three vertices achieve the maximum, so `frequencyMaxL K₃ = 3`. -/
-@[category test, AMS 5]
-example : frequencyMaxL (⊤ : SimpleGraph (Fin 3)) = 3 := by
-  unfold frequencyMaxL maxLValue indepNeighborsCard
-  sorry
-
-/-- In the path `P₃` (0–1–2), `l(0) = l(2) = 1` (each end vertex has one neighbour
-whose neighbourhood independence number in the induced subgraph is 1) and
-`l(1) = α({0,2}) = 2` (the two endpoints are non-adjacent).
-So `maxLValue P₃ = 2`. -/
-@[category test, AMS 5]
-example : maxLValue
-    (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) = 2 := by
-  unfold maxLValue indepNeighborsCard
-  sorry
-
-/-- In the path `P₃`, only vertex 1 achieves the maximum `l`-value, so
-`frequencyMaxL P₃ = 1`. -/
-@[category test, AMS 5]
-example : frequencyMaxL
-    (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) = 1 := by
-  unfold frequencyMaxL maxLValue indepNeighborsCard
-  sorry
-
 /-- `frequencyMaxL` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 4)) : 0 ≤ frequencyMaxL G :=
-  Nat.zero_le _
+example (G : SimpleGraph (Fin 4)) : 0 ≤ frequencyMaxL G := Nat.zero_le _
 
 /-- `maxLValue` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ maxLValue G :=
-  Nat.zero_le _
+example (G : SimpleGraph (Fin 3)) : 0 ≤ maxLValue G := Nat.zero_le _
 
 end WrittenOnTheWallII.GraphFrequencyMaxL

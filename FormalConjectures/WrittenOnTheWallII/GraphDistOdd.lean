@@ -33,12 +33,17 @@ These two quantities partition the vertex set: `distEven G v + distOdd G v = n`.
 
 ## Conjecture
 
-Mirror of WOWII Conjecture 96 (which uses `distEven`).  A Graffiti.pc-style
-upper bound using the minimum of `distOdd`:
+This file states a Graffiti.pc-style upper bound using the minimum of
+`distOdd`:
 
 `α(G) ≤ 1 + min_v distOdd(v) · (max_v l(v) - 1)`
 
 where `α(G) = G.indepNum` is the independence number and `l(v) = indepNeighborsCard G v`.
+
+**Not a verbatim WOWII transcription.** This is the `distOdd`-analogue of
+WOWII Conjecture 96 (which uses `distEven`); we file it as a new
+Graffiti.pc-style observation rather than a formalisation of any specific
+numbered WOWII conjecture.
 
 For bipartite graphs, one of the two parts has all vertices at even (resp. odd) distance
 from any fixed vertex in one part; so `distOdd` tracks the "opposite part" size.
