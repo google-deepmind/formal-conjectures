@@ -22,17 +22,6 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Zaremba%27s_conjecture)
 -/
 
--- Move to MATHLIB
-def Finset.max! {α : Type*} [LinearOrder α] [Inhabited α] (s : Finset α) : α :=
-  s.max.unbotD default
-
-def Finset.maxD {α : Type*} [LinearOrder α] (s : Finset α) (d : α) : α :=
-  s.max.unbotD d
-
--- move to MATHLIB
-def Function.sup {α : Type*} {β : Type*} [SupSet (WithTop β)] (f : α → β) : WithTop β :=
-  ⨆ a, (f a : WithTop β)
-
 namespace ZarembaConjecture
 
 /-- The finite list of partial quotients in the simple continued fraction expansion of a
@@ -48,7 +37,7 @@ decreasing_by exact Nat.mod_lt _ (Nat.succ_pos _)
 example : partialQuotients 333 106 = [3, 7, 15] := by native_decide
 
 /-- The maximum partial quotient of `a / d`, taking the value `0` when `d = 0`. -/
-def maxPartialQuotient (a d : ℕ) : ℕ := (partialQuotients a d).toFinset.max!
+def maxPartialQuotient (a d : ℕ) : ℕ := (partialQuotients a d).toFinset.sup id
 
 /-- The maximum partial quotient of `4217/10037` is `2`. -/
 @[category test, AMS 11]
@@ -87,7 +76,7 @@ example : minmaxPartialQuotient 121 = 2 := by native_decide
 /-- The least possible value, over positive coprime numerators `a < d`, of the maximum partial
 quotient in the continued fraction of `a / d`. -/
 noncomputable def maxminmaxPartialQuotient : WithTop ℕ :=
-  minmaxPartialQuotient.sup
+  ⨆ d, (minmaxPartialQuotient d : WithTop ℕ)
 
 /--
 Zaremba's conjecture: there is an absolute constant `A` such that for every
