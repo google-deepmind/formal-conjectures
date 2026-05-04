@@ -17,31 +17,27 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Graph Length (Sum of Eccentricities) Conjecture
+# Written on the Wall II - Conjecture 19
+
+**Verbatim statement (WOWII #19, status O):**
+> If G is a simple connected graph, then b(G) ≥ FLOOR(average of ecc(v) + maximum of λ(v))
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj19
+
+Here `b(G)` is the **size of a largest induced bipartite subgraph** of `G`
+(see `FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions`,
+where `b` is defined). It is **not** the independence number.
+
+The DeLaVina note on the WOWII page (June 22, 2005) observes that if
+`average of ecc(v) ≤ diam − 1`, this conjecture follows from Conjecture 13.
+
+The auxiliary `graphLength G = ∑_v ecc(v)` (`length(G)` in DeLaVina's
+notation) is retained below because `length(G)/n = averageEccentricity G`,
+and some neighbouring Graffiti.pc-style observations use the unscaled
+`length(G)` directly.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-## Definitions
-
-The **length** of a graph `G`, in DeLaVina's WOWII notation, refers to the
-**sum of eccentricities** over all vertices:
-  `length(G) = ∑_v ecc(v)`.
-
-This is distinct from the diameter (maximum eccentricity) and the Wiener index
-(sum of pairwise distances).  For a connected graph on `n` vertices:
-- `length(G) ≥ n · radius(G)` (each vertex has eccentricity ≥ radius), and
-- `length(G) ≤ n · diameter(G)` (each eccentricity ≤ diameter).
-
-## Conjecture
-
-WOWII Conjecture 19 uses `length(G)` as the sum of eccentricities.  We state a
-Graffiti.pc-style lower bound:
-
-`α(G) ≤ ⌊length(G) / n + max_v l(v)⌋`
-
-where `α(G)` is the independence number, `n = |V(G)|`, `l(v)` is the
-independence number of the neighbourhood of `v`, and the floor is taken in ℝ.
 -/
 
 namespace WrittenOnTheWallII.GraphLength
@@ -50,32 +46,27 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- The **length** of `G`: sum of eccentricities over all vertices.
-Each eccentricity is in `ℕ∞`; we convert to `ℕ` via `.toNat`
-(which returns 0 for the `⊤` case, i.e., when the graph is disconnected). -/
+/-- The **length** of `G` in DeLaVina's WOWII notation: the sum of
+eccentricities over all vertices. We have
+`graphLength G / Fintype.card α = averageEccentricity G`. -/
 noncomputable def graphLength (G : SimpleGraph α) : ℕ :=
   ∑ v : α, (eccentricity G v).toNat
 
 /--
-**Length-based independence bound** (WOWII-style conjecture).
+WOWII [Conjecture 19](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj19)
+(status O):
 
-For a connected graph `G` on `n` vertices,
-`α(G) ≤ ⌊length(G) / n + max_v l(v)⌋`
-where `length(G) = ∑_v ecc(v)` is the sum of eccentricities,
-`n = Fintype.card α`, and `l(v) = indepNeighborsCard G v` is the
-independence number of the neighbourhood of `v`.
-
-This refines the well-known bound `α(G) ≤ max_v l(v)` by adding the average
-eccentricity.
+For a simple connected graph `G`,
+`b(G) ≥ ⌊avg_v ecc(v) + max_v l(v)⌋`,
+where `b(G)` is the size of a largest induced bipartite subgraph,
+`ecc(v)` is the eccentricity of `v` (so `avg_v ecc(v) = averageEccentricity G`),
+and `l(v) = indepNeighborsCard G v` is the independence number of the
+neighbourhood of `v`.
 -/
 @[category research open, AMS 5]
-theorem graphLength_indepNum_upper_bound (G : SimpleGraph α) [DecidableRel G.Adj]
-    (hconn : G.Connected) :
-    let len := graphLength G
-    let n   := Fintype.card α
+theorem conjecture19 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
-    (G.indepNum : ℝ) ≤
-      ⌊(len : ℝ) / (n : ℝ) + (maxL : ℝ)⌋ := by
+    (⌊averageEccentricity G + (maxL : ℝ)⌋ : ℝ) ≤ b G := by
   sorry
 
 -- Sanity checks
@@ -84,15 +75,13 @@ theorem graphLength_indepNum_upper_bound (G : SimpleGraph α) [DecidableRel G.Ad
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ graphLength G := Nat.zero_le _
 
-/-- For `K₃` every vertex has eccentricity 1, so `graphLength K₃ = 3`. -/
-@[category test, AMS 5]
-example : graphLength (⊤ : SimpleGraph (Fin 3)) = 3 := by
-  unfold graphLength eccentricity
-  sorry
-
 /-- `graphLength` of any graph is nonneg as a real. -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 4)) : (0 : ℝ) ≤ (graphLength G : ℝ) :=
   Nat.cast_nonneg _
+
+/-- `b G` is nonneg. -/
+@[category test, AMS 5]
+example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 
 end WrittenOnTheWallII.GraphLength
