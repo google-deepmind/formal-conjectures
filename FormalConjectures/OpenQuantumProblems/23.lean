@@ -149,33 +149,44 @@ def HasSICPOVM (d : ℕ) : Prop :=
 /-- Any singleton family has constant pairwise squared overlap, vacuously. -/
 @[category test, AMS 15 47 81]
 lemma hasConstantOverlapSq_singleton {d : ℕ} (c : ℝ) (ψ : StateVector d) :
-    HasConstantOverlapSq c (fun _ : Fin 1 => ψ) := by sorry
+    HasConstantOverlapSq c (fun _ : Fin 1 => ψ) := by
+  intro i j hij
+  exact absurd (Subsingleton.elim i j) hij
 
 /-- The SIC overlap value in dimension $1$ is $1/2$. -/
 @[category test, AMS 15 47 81]
-lemma sicOverlapSq_one : sicOverlapSq 1 = (1 / 2 : ℝ) := by sorry
+lemma sicOverlapSq_one : sicOverlapSq 1 = (1 / 2 : ℝ) := by
+  simp [sicOverlapSq]; norm_num
 
 /-- The SIC overlap value is positive in every dimension. -/
 @[category test, AMS 15 47 81]
-lemma sicOverlapSq_pos (d : ℕ) : 0 < sicOverlapSq d := by sorry
+lemma sicOverlapSq_pos (d : ℕ) : 0 < sicOverlapSq d := by
+  simp [sicOverlapSq]; positivity
 
 /-- In dimension $1$, a singleton family is SIC exactly when its vector is normalized. -/
 @[category test, AMS 15 47 81]
 lemma isSICFamily_singleton_iff {ψ : StateVector 1} :
-    IsSICFamily 1 (fun _ : Fin 1 => ψ) ↔ IsNormalized ψ := by sorry
+    IsSICFamily 1 (fun _ : Fin 1 => ψ) ↔ IsNormalized ψ := by
+  constructor
+  · intro ⟨h, _⟩; exact h 0
+  · intro h; exact ⟨fun _ => h, hasConstantOverlapSq_singleton _ _⟩
 
 /-- The empty family witnesses the degenerate dimension-$0$ case. -/
 @[category test, AMS 15 47 81]
-theorem hasSICPOVM_zero : HasSICPOVM 0 := by sorry
+theorem hasSICPOVM_zero : HasSICPOVM 0 := by
+  exact ⟨Fin.elim0, fun i => Fin.elim0 i, fun i j _ => Fin.elim0 i⟩
 
 /-- Any normalized state in dimension $1$ yields a SIC family. -/
 @[category test, AMS 15 47 81]
 lemma isSICFamily_one_of_normalized {ψ : StateVector 1} (hψ : IsNormalized ψ) :
-    IsSICFamily 1 (fun _ : Fin 1 => ψ) := by sorry
+    IsSICFamily 1 (fun _ : Fin 1 => ψ) :=
+  isSICFamily_singleton_iff.mpr hψ
 
 /-- Dimension $1$ admits a SIC-POVM. -/
 @[category test, AMS 15 47 81]
-theorem hasSICPOVM_one : HasSICPOVM 1 := by sorry
+theorem hasSICPOVM_one : HasSICPOVM 1 := by
+  refine ⟨fun _ => EuclideanSpace.single 0 1, isSICFamily_one_of_normalized ?_⟩
+  simp [IsNormalized, EuclideanSpace.norm_single]
 
 /- ## Explicit low-dimensional witnesses -/
 
@@ -226,11 +237,13 @@ def bb84Family : Fin 4 → StateVector 2
 
 /-- The SIC overlap value in dimension $2$ is $1/3$. -/
 @[category test, AMS 15 47 81]
-lemma sicOverlapSq_two : sicOverlapSq 2 = (1 / 3 : ℝ) := by sorry
+lemma sicOverlapSq_two : sicOverlapSq 2 = (1 / 3 : ℝ) := by
+  simp [sicOverlapSq]; norm_num
 
 /-- The SIC overlap value in dimension $3$ is $1/4$. -/
 @[category test, AMS 15 47 81]
-lemma sicOverlapSq_three : sicOverlapSq 3 = (1 / 4 : ℝ) := by sorry
+lemma sicOverlapSq_three : sicOverlapSq 3 = (1 / 4 : ℝ) := by
+  simp [sicOverlapSq]; norm_num
 
 /-- Every vector in the tetrahedral qubit SIC family is normalized. -/
 @[category test, AMS 15 47 81]
@@ -267,7 +280,16 @@ lemma bb84Family_normalized (i : Fin 4) :
 
 /-- The BB84 family has the right cardinality for a qubit SIC but fails the constant-overlap condition. -/
 @[category test, AMS 15 47 81]
-theorem bb84Family_not_isSICFamily : ¬ IsSICFamily 2 bb84Family := by sorry
+theorem bb84Family_not_isSICFamily : ¬ IsSICFamily 2 bb84Family := by
+  intro h
+  have h_const := h.2
+  unfold HasConstantOverlapSq at h_const
+  change ∀ i j, i ≠ j → overlapSq (bb84Family i) (bb84Family j) = sicOverlapSq 2 at h_const
+  have h_overlap := h_const (0 : Fin 4) (1 : Fin 4) (by decide)
+  rw [sicOverlapSq_two] at h_overlap
+  unfold overlapSq at h_overlap
+  rw [Fin.sum_univ_two] at h_overlap
+  simp [bb84Family, vec2] at h_overlap
 
 /- ## Smallest open special cases (all d<=75) -/
 
