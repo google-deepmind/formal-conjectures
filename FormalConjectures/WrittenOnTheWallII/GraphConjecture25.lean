@@ -17,19 +17,22 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Written on the Wall II - Conjecture 23
+# Written on the Wall II - Conjecture 25
 
-**Verbatim statement (WOWII #23, status F):**
-> If G is a simple connected graph, then b(G) ≥ FLOOR[α(G) + dist_avg(M)/2]
+**Verbatim statement (WOWII #25, status F):**
+> If G is a simple connected graph, then b(G) ≥ 2 CEIL[(1 + minimum of dist_even(v))/3]
 
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj23
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj25
 
+This conjecture is **disproved** on the WOWII page (status F; "same
+counterexample as in #24"). Following the upstream pattern established in
+#3823 for Conjecture 23, we record the disproof using `answer(False) ↔ ...`.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
-namespace WrittenOnTheWallII.GraphConjecture23
+namespace WrittenOnTheWallII.GraphConjecture25
 
 open Classical SimpleGraph
 
@@ -41,27 +44,26 @@ noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
   (Finset.univ.filter (fun w => Even (G.dist v w))).card
 
 /--
-WOWII [Conjecture 23](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 25](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj25)
+(status F, disproved):
 
 For a simple connected graph `G`,
-`b(G) ≥ λ(G) + ⌈(min_v distEven(v)) / 3⌉`
-where `b(G)` is the largest induced bipartite subgraph size,
-`λ(G) = max_v l(v)` is the maximum over all vertices of the independence number
-of the neighbourhood of `v`, and `distEven(v)` is the number of vertices at even
-distance from `v`.
+`b(G) ≥ 2 · ⌈(1 + min_v dist_even(v)) / 3⌉`
+where `b(G)` is the size of a largest induced bipartite subgraph and
+`dist_even(v)` is the number of vertices at even distance from `v`.
 -/
 @[category research solved, AMS 5]
-theorem conjecture23 (G : SimpleGraph α) (h : G.Connected) :
-    let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)
-    let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
-    (maxL : ℝ) + ⌈(minDistEven : ℝ) / 3⌉ ≤ b G := by
+theorem conjecture25 : answer(False) ↔
+    ∀ (G : SimpleGraph α) (_ : G.Connected),
+      let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
+      2 * ⌈(1 + (minDistEven : ℝ)) / 3⌉ ≤ b G := by
   sorry
 
 -- Sanity checks
 
-/-- `distEven G v` is always positive, since `v` itself is at distance 0 (even) from itself. -/
+/-- `distEven G v` is always at least 1, since `v` itself is at distance 0 (even) from itself. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) (v : Fin 3) : 0 < distEven G v := by
+example (G : SimpleGraph (Fin 4)) (v : Fin 4) : 1 ≤ distEven G v := by
   unfold distEven
   apply Finset.card_pos.mpr
   exact ⟨v, Finset.mem_filter.mpr ⟨Finset.mem_univ _, ⟨0, by simp [SimpleGraph.dist_self]⟩⟩⟩
@@ -70,4 +72,4 @@ example (G : SimpleGraph (Fin 3)) (v : Fin 3) : 0 < distEven G v := by
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 
-end WrittenOnTheWallII.GraphConjecture23
+end WrittenOnTheWallII.GraphConjecture25

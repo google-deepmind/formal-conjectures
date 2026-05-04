@@ -24,6 +24,9 @@ import FormalConjectures.Util.ProblemImports
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj24
 
+This conjecture is **disproved** on the WOWII page (status F). Following the
+upstream pattern established in #3823 for the closely related Conjecture 23,
+we record the disproof using `answer(False) ↔ ...`.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
@@ -41,24 +44,29 @@ noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
   (Finset.univ.filter (fun w => Even (G.dist v w))).card
 
 /--
-WOWII [Conjecture 24](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 24](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj24)
+(status F, disproved):
 
 For a simple connected graph `G`,
-`b(G) ≥ 2 · ⌈(1 + min_v distEven(v)) / 3⌉`
-where `b(G)` is the largest induced bipartite subgraph size and
-`distEven(v)` is the number of vertices at even distance from `v`.
+`b(G) ≥ λ(G) + ⌈(min_v dist_even(v)) / 3⌉`
+where `b(G)` is the size of a largest induced bipartite subgraph,
+`λ(G) := max_v l(v)` is the maximum over all vertices of the independence
+number of the open neighbourhood of `v`, and `dist_even(v)` is the number of
+vertices at even distance from `v`.
 -/
 @[category research solved, AMS 5]
-theorem conjecture24 (G : SimpleGraph α) (h : G.Connected) :
-    let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
-    2 * ⌈(1 + (minDistEven : ℝ)) / 3⌉ ≤ b G := by
+theorem conjecture24 : answer(False) ↔
+    ∀ (G : SimpleGraph α) (_ : G.Connected),
+      let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)
+      let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
+      (maxL : ℝ) + ⌈(minDistEven : ℝ) / 3⌉ ≤ b G := by
   sorry
 
 -- Sanity checks
 
-/-- `distEven G v` is always at least 1, since `v` itself is at distance 0 (even) from itself. -/
+/-- `distEven G v` is always positive, since `v` itself is at distance 0 (even) from itself. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 4)) (v : Fin 4) : 1 ≤ distEven G v := by
+example (G : SimpleGraph (Fin 3)) (v : Fin 3) : 0 < distEven G v := by
   unfold distEven
   apply Finset.card_pos.mpr
   exact ⟨v, Finset.mem_filter.mpr ⟨Finset.mem_univ _, ⟨0, by simp [SimpleGraph.dist_self]⟩⟩⟩
