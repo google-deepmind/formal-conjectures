@@ -34,7 +34,7 @@ abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 
 /-- The Hamming ball of radius $r$ in $\mathbb{F}_2^n$. -/
 def hammingBall (n r : ℕ) : Set (𝔽₂ n) :=
-  {x | (Finset.univ.filter (fun i => x i ≠ 0)).card ≤ r}
+  {x | Nat.card {i // x i ≠ 0} ≤ r}
 
 /-- $V$ is a covering subspace of $\mathbb{F}_2^n$ by $H(r)$ if $V + H(r) = \mathbb{F}_2^n$. -/
 def isCoveringSubspace (n r : ℕ) (V : Submodule (ZMod 2) (𝔽₂ n)) : Prop :=
