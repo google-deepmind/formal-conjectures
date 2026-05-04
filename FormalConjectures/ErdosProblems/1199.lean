@@ -19,10 +19,11 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1199
 
-*Reference:*
+*References:*
 - [erdosproblems.com/1199](https://www.erdosproblems.com/1199)
 - [Hi79] Hindman, Neil, Partitions and sums of integers with repetition.
   J. Combin. Theory Ser. A (1979), 19--32.
+- [Ow74] J. Owings, E2494. Amer. Math. Monthly (1974), 902. 
 -/
 
 open Pointwise
@@ -30,14 +31,17 @@ open Pointwise
 namespace Erdos1199
 
 /--
-Is it true that in any 2-colouring of ℕ there exists an infinite set $A$
+Is it true that in any 2-colouring of $\mathbb{N}$ there exists an infinite set $A$
 such that all elements of $A+A$ are the same colour?
+
+A conjecture of Owings [Ow74].
 -/
 @[category research open, AMS 5]
 theorem erdos_1199 :
     answer(sorry) ↔
     ∀ (color : ℕ → Fin 2), ∃ (A : Set ℕ),
-    A.Infinite ∧ ∀ n ∈ (A+A), ∀ m ∈ (A+A), color n = color m := by sorry
+    A.Infinite ∧ ∀ n ∈ (A+A), ∀ m ∈ (A+A), color n = color m := by 
+  sorry
 
 /--
 Hindman [Hi79] has shown that this is false for 3-colourings.
@@ -45,6 +49,7 @@ Hindman [Hi79] has shown that this is false for 3-colourings.
 @[category research solved, AMS 5]
 theorem erdos_1199.variants.three :
     ∃ (color : ℕ → Fin 3), ∀ (A : Set ℕ),
-    A.Infinite → ∃ n ∈ (A+A), ∃ m ∈ (A+A), color n ≠ color m := by sorry
+    A.Infinite → ∃ n ∈ (A+A), ∃ m ∈ (A+A), color n ≠ color m := by 
+  sorry
 
 end Erdos1199
