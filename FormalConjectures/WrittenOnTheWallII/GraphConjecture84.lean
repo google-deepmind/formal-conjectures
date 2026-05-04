@@ -20,10 +20,12 @@ import FormalConjectures.Util.ProblemImports
 # Written on the Wall II - Conjecture 84
 
 **Verbatim statement (WOWII #84, status O):**
-> If G is a simple connected graph, then tree(G) ≥ 2rad(G)/δ(G)
+> If G is a simple connected graph, then tree(G) ≥ 2 rad(G) / δ(G)
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj84
 
+Here `δ(G)` is the **minimum degree** of `G` (lowercase delta in the WOWII
+HTML, rendered as `<font face="Symbol">d</font>`), not the average distance.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
@@ -40,17 +42,22 @@ noncomputable def largestInducedTreeSize (G : SimpleGraph α) : ℕ :=
   sSup { n | ∃ s : Finset α, s.card = n ∧ (G.induce (s : Set α)).IsTree }
 
 /--
-WOWII [Conjecture 84](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 84](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj84)
+(status O):
 
-For a simple connected graph `G`,
-`tree(G) ≥ 2 · rad(G) / d(G)`
-where `tree(G)` is the number of vertices in a largest induced tree,
-`rad(G) = G.radius` is the radius (minimum eccentricity) of `G`, and
-`d(G) = averageDistance G` is the average distance between pairs of vertices.
+For a simple connected graph `G` with positive minimum degree,
+`tree(G) ≥ 2 · rad(G) / δ(G)`,
+where `tree(G)` is the number of vertices in a largest induced subtree,
+`rad(G)` is the radius, and `δ(G) = G.minDegree` is the minimum degree.
+
+The hypothesis `0 < G.minDegree` follows from connectedness on a nontrivial
+vertex set, but is stated explicitly so the theorem reads as a real-valued
+inequality without `x / 0` corner cases.
 -/
 @[category research open, AMS 5]
-theorem conjecture84 (G : SimpleGraph α) (h : G.Connected) (hd : 0 < averageDistance G) :
-    2 * G.radius.toNat / averageDistance G ≤ (largestInducedTreeSize G : ℝ) := by
+theorem conjecture84 (G : SimpleGraph α) [DecidableRel G.Adj]
+    (h : G.Connected) (hδ : 0 < G.minDegree) :
+    2 * (G.radius.toNat : ℝ) / (G.minDegree : ℝ) ≤ (largestInducedTreeSize G : ℝ) := by
   sorry
 
 -- Sanity checks
