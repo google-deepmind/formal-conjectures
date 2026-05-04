@@ -50,13 +50,22 @@ open Metric Set Classical
 
 namespace Erdos505
 
+@[category test, AMS 52]
+theorem erdos_505.test_dim_one
+    (S : Set (EuclideanSpace ℝ (Fin 1)))
+    (hS : Bornology.IsBounded S) (hd : 0 < diam S) :
+    ∃ (F : Fin 2 → Set (EuclideanSpace ℝ (Fin 1))),
+      S ⊆ ⋃ i, F i ∧ ∀ i, diam (F i) < diam S := by
+  sorry
+
 /-- **Erdős Problem 505** (disproved). Borsuk's conjecture is false for
 sufficiently large $n$: there exists a dimension $n$ and a bounded set
 $S \subseteq \mathbb{R}^n$ with positive diameter such that $S$ cannot be
 covered by $n + 1$ subsets each of diameter strictly less than $\operatorname{diam}(S)$.
 
 Erdős [Er44] suspected this. Disproved by Kahn–Kalai [KK93] for
-$n \geq 2015$. Currently known to be false for $n \geq 64$. -/
+$n \geq 2015$. Currently known to be false for $n \geq 64$.
+A formal proof was formalised by Boris Alexeev using Aristotle. -/
 @[category research solved, AMS 52]
 theorem erdos_505 : ∃ (n : ℕ),
     ∃ (S : Set (EuclideanSpace ℝ (Fin n))),
