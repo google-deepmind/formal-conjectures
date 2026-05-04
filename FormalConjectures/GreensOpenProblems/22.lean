@@ -100,10 +100,11 @@ theorem green_22.variants.moreira_infinite :
   sorry
 
 /--
-Since $x, y \geq 3$, we must have $xy \geq 9$, so $N_0(r) \geq 9$.
+Since $x, y \geq 3$, we must have $xy \geq 9$, so $N_0(r) \geq 9$
+(assuming $N_0(r)$ is well-defined, which follows from [Mo17]).
 -/
 @[category research solved, AMS 5 11]
-theorem green_22.variants.lower_trivial : ∀ r : ℕ, r ≠ 0 → 9 ≤ N₀ r := by
+theorem green_22.variants.lower_nine : ∀ r : ℕ, r ≠ 0 → 9 ≤ N₀ r := by
   sorry
 
 -- TODO(jeangud) Add Hindman's problem versions mentioned in [Gr26].
