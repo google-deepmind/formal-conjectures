@@ -20,9 +20,13 @@ import FormalConjectures.Util.ProblemImports
 # Written on the Wall II - Conjecture 145
 
 **Verbatim statement (WOWII #145, status O):**
-> If G is a simple connected graph, then tree(G) ≥ 2*ecc(B)/λ_min(G)
+> If G is a simple connected graph, then tree(G) ≥ 2*ecc(B)/λ_min(Ḡ)
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj145
+
+The WOWII HTML uses `λ_min(Ḡ)` (the bar denotes graph complement); the
+extracted JSON in our private repo previously dropped the overline. The
+formal statement below uses the local-independence minimum of `Gᶜ`.
 
 
 *Reference:*

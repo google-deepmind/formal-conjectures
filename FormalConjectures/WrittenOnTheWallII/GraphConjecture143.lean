@@ -39,9 +39,11 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 noncomputable def largestInducedTreeSize (G : SimpleGraph α) : ℕ :=
   sSup { n | ∃ s : Finset α, s.card = n ∧ (G.induce (s : Set α)).IsTree }
 
-/-- The 2-domination number of `G`: the minimum size of a set `S` such that every
-vertex outside `S` has at least 2 neighbours in `S`.  This is the interpretation
-of `σ(G)` used in DeLaVina's conjectures (see also Conjecture 189). -/
+/-- The **2-domination number** of `G` (Fink–Jacobson 1985): the minimum size
+of a set `S` such that every vertex outside `S` has at least 2 neighbours in `S`.
+
+This is DeLaVina's `σ(G)`, used consistently across WOWII conjectures
+143, 188, 189, 190, and 201. -/
 noncomputable def twoDominationNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   sInf { n | ∃ S : Finset α, S.card = n ∧
     ∀ v ∉ S, 2 ≤ (S.filter (fun w => G.Adj v w)).card }

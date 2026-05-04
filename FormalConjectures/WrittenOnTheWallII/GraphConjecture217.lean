@@ -43,19 +43,16 @@ Here:
 
 ## Definitions
 
-Vertex connectivity is unavailable in Mathlib, and the iterative peeling needed
-to define the residue-2 core uses well-founded recursion.  To keep the file
-self-contained and focused on the statement of the conjecture, we use a
-classical placeholder for `residue2ComponentCount G` and define
-`leafNumber G` as the minimum leaf count of a spanning tree (or `0` if no
-spanning tree exists).
+The residue-2 core can be characterised non-iteratively as the **union of all
+2-core subsets** of `V(G)`. This union is itself a 2-core (a vertex with ≥ 2
+neighbours in some `Sᵢ` has ≥ 2 neighbours in their union), so it is the
+unique maximal 2-core. We use this union-based definition to avoid the
+well-founded recursion that the iterative peeling description would require,
+and define `residue2ComponentCount G` as the connected-component count of
+the subgraph `G` induces on the residue-2 core.
 
-## TODO
-
-- Replace `residue2Core` with the constructive fixpoint of iterative vertex
-  peeling.
-- Replace `residue2ComponentCount` with the component count of the induced
-  subgraph on that core.
+`leafNumber G` is the minimum leaf count of a spanning subtree of `G` (or `0`
+by `sInf`-convention if no spanning subtree exists).
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture217
@@ -71,22 +68,19 @@ neighbours within `S`. -/
 def Is2Core (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Prop :=
   ∀ v ∈ S, 2 ≤ (S.filter (fun w => G.Adj v w)).card
 
-/- ### Residue-2 core and component count (classical placeholders) -/
+/- ### Residue-2 core and component count -/
 
-/-- The residue-2 core of `G`.
-
-TODO: Implement as the largest `S ⊆ V(G)` satisfying `Is2Core G S`, i.e. the
-fixpoint of iteratively removing vertices of degree less than 2.
-This is a placeholder returning the empty set. -/
+/-- The **residue-2 core** of `G`: the union of all subsets `S ⊆ V(G)` on
+which every vertex has at least 2 neighbours in `S`. This is the unique
+maximal 2-core of `G` and equals the fixpoint of iteratively removing
+vertices of degree less than 2 (proof of equivalence deferred). -/
 noncomputable def residue2Core (G : SimpleGraph α) [DecidableRel G.Adj] : Finset α :=
-  Classical.choice ⟨∅⟩
+  (Finset.univ.powerset.filter (Is2Core G)).sup id
 
-/-- The number of connected components of the residue-2 core of `G`.
-
-TODO: Replace with `Fintype.card (G.induce (residue2Core G : Set α)).ConnectedComponent`
-once `residue2Core` is correctly defined. -/
+/-- The number of connected components of the subgraph `G` induces on the
+residue-2 core. -/
 noncomputable def residue2ComponentCount (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  Classical.choice ⟨0⟩
+  Nat.card (G.induce (residue2Core G : Set α)).ConnectedComponent
 
 /- ### Leaf number
 

@@ -20,22 +20,25 @@ import FormalConjectures.Util.ProblemImports
 # Written on the Wall II - Conjecture 100
 
 **Verbatim statement (WOWII #100, status O):**
-> If G is a simple connected graph, then α(G) ≤ CEIL[(maximum of λ(v) + 0.5*length(G))/2]
+> If G is a simple connected graph, then α(G) ≤ CEIL[(maximum of λ(v) + 0.5*length(Ḡ))/2]
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj100
 
+The WOWII HTML uses `length(Ḡ)` (the bar denotes graph complement); the
+extracted JSON in our private repo previously dropped the overline. The
+formal statement below uses the diameter of `Gᶜ`.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 ## Definitional choice
 
-The original conjecture uses `length(G)`, which is ambiguous in DeLaVina's
-notation.  We interpret `length(G)` as the **diameter** of `G` (the maximum
-eccentricity, i.e. `maxEccentricity G`), which is the most natural graph-
-theoretic notion of "length".  The inequality then reads:
-  `α(G) ≤ ⌈(max_v l(v) + 0.5 · diam(G)) / 2⌉`
-where `l(v) = indepNeighbors G v` and `diam(G) = (maxEccentricity G).toNat`.
+DeLaVina does not give a stand-alone definition for `length(H)` on the WOWII
+page. We interpret it as the **diameter** of `H` (the maximum eccentricity,
+i.e. `maxEccentricity H`), which is the most natural graph-theoretic notion
+of "length" of a graph. Combined with the overline above, the inequality reads:
+  `α(G) ≤ ⌈(max_v l(v) + 0.5 · diam(Gᶜ)) / 2⌉`
+where `l(v) = indepNeighbors G v` and `diam(Gᶜ) = (maxEccentricity Gᶜ).toNat`.
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture100
@@ -45,21 +48,24 @@ open Classical SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-WOWII [Conjecture 100](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 100](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj100)
+(status O):
 
 For a simple connected graph `G`,
-`α(G) ≤ ⌈(max_v l(v) + 0.5 · diam(G)) / 2⌉`
+`α(G) ≤ ⌈(max_v l(v) + 0.5 · diam(Gᶜ)) / 2⌉`
 where `α(G) = G.indepNum` is the independence number,
 `max_v l(v)` is the maximum over all vertices of the independence number of
-the neighbourhood, and `diam(G)` is the diameter of `G`.
+the neighbourhood (in `G`), and `diam(Gᶜ)` is the diameter of the
+complement `Gᶜ`.
 
-**Note:** `length(G)` in DeLaVina's original is interpreted here as the diameter.
+**Note:** `length(Ḡ)` in DeLaVina's original is interpreted here as the
+diameter of the complement.
 -/
 @[category research open, AMS 5]
 theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
-    let diam := (maxEccentricity G).toNat
-    (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (diam : ℝ)) / 2⌉ := by
+    let diamCompl := (maxEccentricity Gᶜ).toNat
+    (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (diamCompl : ℝ)) / 2⌉ := by
   sorry
 
 -- Sanity checks
