@@ -45,7 +45,7 @@ theorem mahler_conjecture (x : ℝ) (h : x ≠ 0) (hx : IsZNumber x) : False := 
   sorry
 
 /-- If Mahler's conjecture is true, i.e. there are no Z-numbers, then `Ω(3/2)` exceeds `1/2`. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem mahler_conjecture.variants.consequence (H : type_of% mahler_conjecture) :
     1 / 2 < Ω (3 / 2) := by
   sorry

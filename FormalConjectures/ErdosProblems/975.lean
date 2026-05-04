@@ -65,6 +65,7 @@ theorem erdos_975.variants.upper_bound (f : ℤ[X]) (hf : Irreducible f)
     (hf_pos : ∀ᶠ n in atTop, 1 ≤ f.eval n) : Erdos975Sum f =O[atTop] (fun x ↦ x * log x) := by
   sorry
 
+/-- Lower bound for the growth rate of `Erdos975Sum`, shown in [Va39]. -/
 @[category research solved, AMS 11]
 theorem erdos_975.variants.lower_bound (f : ℤ[X]) (hf : Irreducible f) (hfdeg : f.natDegree ≠ 0)
     (hf_pos : ∀ᶠ n in atTop, 1 ≤ f.eval n) :
@@ -93,6 +94,7 @@ theorem erdos_975.variants.n2_plus_1_strong :
     (fun x ↦ Erdos975Sum (X ^ 2 + 1) x - (3 / π) * x * log x) =O[atTop] id := by
   sorry
 
+/-- Asymptotics for `Erdos975Sum` with $f(X) = X^2 + 1$. -/
 @[category research solved, AMS 11]
 theorem erdos_975.variants.n2_plus_1 :
     ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum (X ^ 2 + 1) x / (x * log x)) atTop (𝓝 c) := by

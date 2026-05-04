@@ -51,6 +51,7 @@ theorem erdos_961.variants.sylvester_schur_1_1 : Erdos961Prop 1 1 := by
     obtain ⟨p, hp, hpm⟩ := Nat.exists_prime_and_dvd (by omega : m ≠ 1)
     exact ⟨p, (Nat.mem_primeFactorsList hm0).mpr ⟨hp, hpm⟩, hp.two_le⟩
 
+/-- There exists $n$ such that `Erdos961Prop k n` holds. -/
 @[category research solved, AMS 11]
 theorem erdos_961.variants.well_defined (k : ℕ) (hk : 0 < k): ∃ n, Erdos961Prop k n := by
   use k
