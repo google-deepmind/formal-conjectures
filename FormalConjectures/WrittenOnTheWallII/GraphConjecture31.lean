@@ -20,10 +20,19 @@ import FormalConjectures.Util.ProblemImports
 # Written on the Wall II - Conjecture 31
 
 **Verbatim statement (WOWII #31, status R):**
-> If G is a simple connected graph, then path(G) ≥ 2rad(G) - 1
+> If G is a simple connected graph, then path(G) ≥ 2 rad(G) - 1
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj31
 
+The WOWII page records this as **Chung's theorem** (status R, "Reference"):
+proved in F. R. K. Chung, *The average distance and the independence
+number*, J. Graph Theory **12** (1988), 229-235. We state it here as a
+theorem; the formal proof is left as `sorry` pending a Lean port of
+Chung's argument.
+
+Here `path(G)` is the floor of the average distance over ordered pairs
+of distinct vertices (definition `path` in
+`FormalConjecturesForMathlib`), and `rad(G)` is the graph radius.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
@@ -35,31 +44,18 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- The average eccentricity over a set of vertices `S`, i.e. the average of
-`eccentricity G v` (as a natural number) for `v ∈ S`.  Returns 0 if `S` is
-empty.  Here we interpret `ℕ∞`-eccentricity by taking the value 0 when the
-eccentricity is `⊤` (disconnected component). -/
-noncomputable def eccavg (G : SimpleGraph α) (S : Set α) : ℝ :=
-  let Sf := S.toFinset
-  if h : Sf.Nonempty then
-    (∑ v ∈ Sf, ((eccentricity G v).toNat : ℝ)) / (Sf.card : ℝ)
-  else 0
-
 /--
-WOWII [Conjecture 31](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 31](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj31)
+(status R, Chung 1988):
 
-For a simple connected graph `G`,
-`path(G) ≥ ⌈distavg(G, A) + 0.5 · eccavg(M)⌉`
-where `path(G)` is the floor of the average distance, `A` is the set of
-minimum-degree vertices, `M` is the set of maximum-degree vertices,
-`distavg(G, A)` is the average distance from all vertices to `A`, and
-`eccavg(M)` is the average eccentricity of the vertices in `M`.
+For every simple connected graph `G`,
+`path(G) ≥ 2 rad(G) - 1`,
+where `path(G)` is the floor of the average distance and `rad(G)` is the
+graph radius.
 -/
 @[category research solved, AMS 5]
 theorem conjecture31 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    let A : Set α := {v | G.degree v = G.minDegree}
-    let M : Set α := {v | G.degree v = G.maxDegree}
-    Int.ceil (distavg G A + (1 / 2) * eccavg G M) ≤ (path G : ℤ) := by
+    2 * (G.radius.toNat : ℤ) - 1 ≤ (path G : ℤ) := by
   sorry
 
 -- Sanity checks
@@ -68,10 +64,8 @@ theorem conjecture31 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ (path G : ℤ) := Int.natCast_nonneg _
 
-/-- `eccavg` over an empty set is 0. -/
+/-- The radius cast to ℤ is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : eccavg G ∅ = 0 := by
-  unfold eccavg
-  simp
+example (G : SimpleGraph (Fin 3)) : 0 ≤ (G.radius.toNat : ℤ) := Int.natCast_nonneg _
 
 end WrittenOnTheWallII.GraphConjecture31
