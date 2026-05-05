@@ -46,7 +46,7 @@ with $V_n + H(r) = \mathbb{F}_2^n$ and $|V_n| = \left(f(r) + o(1)\right) \frac{2
 def sequence_exists (r : ℕ) (c : ℝ) : Prop :=
   ∀ ε > 0, ∃ᶠ n in atTop, ∃ V : Submodule (ZMod 2) (𝔽₂ n),
     isCoveringSubspace n r V ∧
-    |(Nat.card V : ℝ) * (Nat.card (hammingBall n r) : ℝ) / (2 ^ n : ℝ) - c| < ε
+    |(Nat.card V : ℝ) * (Nat.card (hammingBall n r) : ℝ) / (Nat.card (𝔽₂ n) : ℝ) - c| < ε
 
 /--
 Let $f(r)$ be the smallest constant such that there exists an infinite sequence of $n$'s together
@@ -78,7 +78,7 @@ def isCoveringFinset (n r : ℕ) (V : Finset (𝔽₂ n)) : Prop :=
 def subset_sequence_exists (r : ℕ) (c : ℝ) : Prop :=
   ∀ ε > 0, ∃ᶠ n in atTop, ∃ V : Finset (𝔽₂ n),
     isCoveringFinset n r V ∧
-    |(V.card : ℝ) * (Nat.card (hammingBall n r) : ℝ) / (2 ^ n : ℝ) - c| < ε
+    |(V.card : ℝ) * (Nat.card (hammingBall n r) : ℝ) / (Nat.card (𝔽₂ n) : ℝ) - c| < ε
 
 noncomputable def f_tilde (r : ℕ) : ℝ := sInf {c : ℝ | subset_sequence_exists r c}
 
