@@ -62,7 +62,7 @@ There are various ways of contributing to this repository:
    especially if they are illuminating and testing the definitions.
    **Longer proofs (i.e. more than 25-50 lines) are not to be included in this repository.**
    Instead, we welcome you to host your proof in your own repository and link to it using
-   the `formally solved` mechanism described below. This does not apply to
+   the `formal proof` mechanism described below. This does not apply to
    `FormalConjecturesForMathlib`, where we want all statements to have proofs.
 
 2. **Opening issues with problems that you would like to see formalised.** Such
