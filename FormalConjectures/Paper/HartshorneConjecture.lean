@@ -96,7 +96,7 @@ open AlgebraicGeometry.Scheme
 
 /--
 There are no indecomposable vector bundles of rank 2 on $\mathbb{P}^n$ for $n \ge 7$.
-This is Conjecture 6.3.
+This is Conjecture 6.3 in [Har1974].
 -/
 @[category research open, AMS 14]
 theorem harthshorne_conjecture (n : ℕ) (hn : 7 ≤ n)
