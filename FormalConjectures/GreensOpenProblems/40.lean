@@ -69,8 +69,11 @@ theorem green_40.sanity_f_one : f 1 = 1 := by
 -- Variant with arbitrary subsets
 -- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+def hammingBallFinset (n r : ℕ) : Finset (𝔽₂ n) :=
+  Finset.univ.filter (fun x => hammingNorm x ≤ r)
+
 def isCoveringFinset (n r : ℕ) (V : Finset (𝔽₂ n)) : Prop :=
-  (V : Set (𝔽₂ n)) + hammingBall n r = Set.univ
+  V + hammingBallFinset n r = Finset.univ
 
 def subset_sequence_exists (r : ℕ) (c : ℝ) : Prop :=
   ∀ ε > 0, ∃ᶠ n in atTop, ∃ V : Finset (𝔽₂ n),
