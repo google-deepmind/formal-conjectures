@@ -20,13 +20,13 @@ import Mathlib.InformationTheory.Hamming
 /-!
 # Ben Green's Open Problem 40
 
-*Reference:* [Gr24] [Ben Green's Open Problem 40](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.40)
+*References:*
+- [Gr24] [Ben Green's Open Problem 40](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.40)
 
-Let $r$ be a fixed positive integer, and let $H(r)$ be the Hamming ball of radius $r$ in $\mathbb{F}_2^n$. Let $f(r)$ be the smallest constant such that there exists an infinite sequence of $n$'s together with subspaces $V_n \leq \mathbb{F}_2^n$ with $V_n + H(r) = \mathbb{F}_2^n$ and $|V_n| = (f(r) + o(1))\frac{2^n}{|H(r)|}$. Does $f(r) \to \infty$?
 -/
 
 open Filter Topology Fintype
-open scoped Pointwise
+open scoped ENNReal Pointwise
 
 namespace Green40
 
@@ -41,19 +41,19 @@ def hammingBall (n r : ℕ) : Set (𝔽₂ n) :=
 def isCoveringSubspace (n r : ℕ) (V : Submodule (ZMod 2) (𝔽₂ n)) : Prop :=
   (V : Set (𝔽₂ n)) + hammingBall n r = Set.univ
 
-/-- There exists an infinite sequence of $n$'s together with subspaces $V_n \leq \mathbb{F}_2^n$
-with $V_n + H(r) = \mathbb{F}_2^n$ and $|V_n| = \left(f(r) + o(1)\right) \frac{2^n}{|H(r)|}$. -/
-def sequence_exists (r : ℕ) (c : ℝ) : Prop :=
-  ∀ ε > 0, ∃ᶠ n in atTop, ∃ V : Submodule (ZMod 2) (𝔽₂ n),
-    isCoveringSubspace n r V ∧
-    |(Nat.card V : ℝ) * (Nat.card (hammingBall n r) : ℝ) / (Nat.card (𝔽₂ n) : ℝ) - c| < ε
+/-- The minimal covering density over all covering subspaces for a given n and r.
+    We compute in `ℝ≥0∞` (ENNReal) to gracefully handle any potential divergence. -/
+noncomputable def minDensity (n r : ℕ) : ℝ≥0∞ :=
+  ⨅ (V : Submodule (ZMod 2) (𝔽₂ n)) (_ : isCoveringSubspace n r V),
+    (Nat.card V : ℝ≥0∞) * (Nat.card (hammingBall n r) : ℝ≥0∞) / (2 ^ n : ℝ≥0∞)
 
 /--
 Let $f(r)$ be the smallest constant such that there exists an infinite sequence of $n$'s together
 with subspaces $V_n \leq \mathbb{F}_2^n$ with $V_n + H(r) = \mathbb{F}_2^n$ and
 $|V_n| = \left(f(r) + o(1)\right) \frac{2^n}{|H(r)|}$.
 -/
-noncomputable def f (r : ℕ) : ℝ := sInf {c : ℝ | sequence_exists r c}
+noncomputable def f (r : ℕ) : ℝ≥0∞ :=
+  liminf (fun n ↦ minDensity n r) atTop
 
 /-- Does $f(r) \to \infty$? [Gr24]-/
 @[category research open, AMS 5 94]
@@ -63,6 +63,11 @@ theorem green_40 : answer(sorry) ↔ Tendsto f atTop atTop := by
 /-- The only value known is $f(1) = 1$, which follows from the existence of the Hamming code [Gr24]. -/
 @[category research solved, AMS 5 94]
 theorem green_40.sanity_f_one : f 1 = 1 := by
+  sorry
+
+/-- $f(r) \le r^r / r! \sim e^r$ [Gr24]. -/
+@[category research solved, AMS 5 94]
+theorem green_40.upper_bound (r : ℕ) : f r ≤ (r ^ r : ℝ≥0∞) / (r.factorial : ℝ≥0∞) := by
   sorry
 
 -- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -75,12 +80,12 @@ def hammingBallFinset (n r : ℕ) : Finset (𝔽₂ n) :=
 def isCoveringFinset (n r : ℕ) (V : Finset (𝔽₂ n)) : Prop :=
   V + hammingBallFinset n r = Finset.univ
 
-def subset_sequence_exists (r : ℕ) (c : ℝ) : Prop :=
-  ∀ ε > 0, ∃ᶠ n in atTop, ∃ V : Finset (𝔽₂ n),
-    isCoveringFinset n r V ∧
-    |(V.card : ℝ) * (Nat.card (hammingBall n r) : ℝ) / (Nat.card (𝔽₂ n) : ℝ) - c| < ε
+noncomputable def minDensityFinset (n r : ℕ) : ℝ≥0∞ :=
+  ⨅ (V : Finset (𝔽₂ n)) (_ : isCoveringFinset n r V),
+    (V.card : ℝ≥0∞) * (Nat.card (hammingBall n r) : ℝ≥0∞) / (2 ^ n : ℝ≥0∞)
 
-noncomputable def f_tilde (r : ℕ) : ℝ := sInf {c : ℝ | subset_sequence_exists r c}
+noncomputable def f_tilde (r : ℕ) : ℝ≥0∞ :=
+  liminf (fun n ↦ minDensityFinset n r) atTop
 
 /-- Does $\tilde{f}(r) \to \infty$? [Gr24] -/
 @[category research open, AMS 5 94]
@@ -101,12 +106,8 @@ theorem green_40.f_tilde_le_f (r : ℕ) : f_tilde r ≤ f r := by
 -- Variant for all n
 -- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-def sequence_exists_all (r : ℕ) (c : ℝ) : Prop :=
-  ∀ ε > 0, ∀ᶠ n in atTop, ∃ V : Submodule (ZMod 2) (𝔽₂ n),
-    isCoveringSubspace n r V ∧
-    (Nat.card V : ℝ) * (Nat.card (hammingBall n r) : ℝ) / (2 ^ n : ℝ) ≤ c + ε
-
-noncomputable def f_all (r : ℕ) : ℝ := sInf {c : ℝ | sequence_exists_all r c}
+noncomputable def f_all (r : ℕ) : ℝ≥0∞ :=
+  limsup (fun n ↦ minDensity n r) atTop
 
 /-- Does $f_{\text{all}}(r) \to \infty$? [Gr24] -/
 @[category research open, AMS 5 94]
