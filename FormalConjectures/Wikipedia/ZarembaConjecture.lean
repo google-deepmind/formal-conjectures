@@ -75,8 +75,8 @@ example : minmaxPartialQuotient 121 = 2 := by native_decide
 
 /-- The least possible value, over positive coprime numerators `a < d`, of the maximum partial
 quotient in the continued fraction of `a / d`. -/
-noncomputable def maxminmaxPartialQuotient : WithTop ℕ :=
-  ⨆ d, (minmaxPartialQuotient d : WithTop ℕ)
+noncomputable def maxminmaxPartialQuotient : ℕ∞ :=
+  ⨆ d, (minmaxPartialQuotient d : ℕ∞)
 
 /--
 Zaremba's conjecture: there is an absolute constant `A` such that for every
