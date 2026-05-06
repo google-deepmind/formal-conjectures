@@ -42,12 +42,16 @@ noncomputable def minCopies (ε : ℝ) : ℕ :=
   sInf { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
     (⋃ θ ∈ Θ, exp (θ * I) • pyjamaSet ε) = univ }
 
-/-- How many rotated (about the origin) copies of the 'pyjama set' are needed to cover the plane? -/
+/--
+How many rotated (about the origin) copies of the 'pyjama set'
+$\\{(x, y) \in \mathbb{R}^2 : \text{dist}(x, \mathbb{Z}) \leq \varepsilon\\}$ are needed to cover
+$\mathbb{R}^2$?
+-/
 @[category research open, AMS 51 52]
 theorem green_41 :
-    ∀ ε > 0,
-      let ans := (answer(sorry) : ℕ)
-      minCopies ε = ans := by
+    ∃ C : ℝ, C > 0 ∧ ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
+      let ans := (answer(sorry) : ℝ)
+      (minCopies ε : ℝ) ≤ ans ∧ ans < Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
   sorry
 
 /-- Is $\varepsilon^{-C}$ rotations enough? -/
