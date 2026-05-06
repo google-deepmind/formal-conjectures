@@ -37,13 +37,32 @@ an integer.
 def pyjamaSet (ε : ℝ) : Set ℂ :=
   { z | ∃ k : ℤ, |z.re - (k : ℝ)| ≤ ε }
 
+/-- The minimal number of rotated copies of the pyjama set of width ε needed to cover the plane. -/
+noncomputable def minCopies (ε : ℝ) : ℕ :=
+  sInf { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
+    (⋃ θ ∈ Θ, (fun z => exp (θ * I) * z) '' pyjamaSet ε) = univ }
+
 /-- How many rotated (about the origin) copies of the 'pyjama set' are needed to cover the plane? -/
 @[category research open, AMS 51 52]
 theorem green_41 :
     ∀ ε > 0,
       let ans := (answer(sorry) : ℕ)
-      IsLeast { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
-        (⋃ θ ∈ Θ, (fun z => exp (θ * I) * z) '' pyjamaSet ε) = univ } ans := by
+      minCopies ε = ans := by
+  sorry
+
+/-- Is $\varepsilon^{-C}$ rotations enough? -/
+@[category research open, AMS 51 52]
+theorem green_41.variants.polynomial_bound : answer(sorry) ↔
+    ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ ε ^ (-C) := by
+  sorry
+
+/--
+[KrLe25] have established the first quantitative bound, showing via an analysis of [Ma15]'s method
+that $\exp\exp\exp(\varepsilon^{-C})$ rotations suffice.
+-/
+@[category research solved, AMS 51 52]
+theorem green_41.variants.kravitz_leng :
+    ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
   sorry
 
 end Green41
