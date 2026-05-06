@@ -42,6 +42,7 @@ end Erdos10
 ```
 
 For variants of a problem, use dotted notation within the same namespace:
+
 ```lean
 theorem main_conjecture : ... := by
   sorry
@@ -55,6 +56,7 @@ theorem main_conjecture.variants.special_case : ... := by
 Every theorem/lemma should have exactly one `category` attribute indicating its type:
 
 **Values:**
+
 - `@[category textbook]` - Textbook level math problem (high school, undergraduate, or graduate)
 - `@[category research open]` - Open research problem (no accepted solution exists)
 - `@[category research solved]` - Solved research problem (informal proof widely accepted)
@@ -62,6 +64,7 @@ Every theorem/lemma should have exactly one `category` attribute indicating its 
 - `@[category API]` - Basic theory around a new definition
 
 **Examples:**
+
 ```lean
 @[category research open, AMS 11]
 theorem riemann_hypothesis : ... := by
@@ -81,12 +84,14 @@ The `formal_proof` attribute records the existence and location of a formal proo
 It is independent of the `category` attribute and can be used with any category.
 
 **Values:**
+
 - `@[formal_proof using formal_conjectures at "link"]` - Formally proved in this repository
 - `@[formal_proof using lean4 at "link"]` - Formally proved in Lean 4 elsewhere
 - `@[formal_proof using other_system at "link"]` - Formally proved in another system
   (Roqc, Isabelle, Lean 3, HOL, etc.)
 
 **Examples:**
+
 ```lean
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/example"]
 theorem some_solved_problem : ... := by
@@ -105,6 +110,7 @@ since open problems should not have proofs.
 Every problem should have at least one AMS subject classification number from the [AMS MSC2020](https://mathscinet.ams.org/mathscinet/msc/pdfs/classifications2020.pdf).
 
 **Common subjects:**
+
 - `3` - Mathematical logic and foundations
 - `5` - Combinatorics
 - `11` - Number theory
@@ -113,6 +119,7 @@ Every problem should have at least one AMS subject classification number from th
 - `60` - Probability theory
 
 Multiple subjects can be specified:
+
 ```lean
 @[AMS 5 11]  -- Both combinatorics and number theory
 theorem erdos_problem : ... := by
@@ -122,6 +129,7 @@ theorem erdos_problem : ... := by
 **In VS Code:** Use `#AMS` command to list all available subjects and their numbers. Hover over a number to see its description.
 
 Full list of AMS subjects
+
 | Code | Name | Keywords |
 |------|------|----------|
 | 00 | General and overarching topics | general |
@@ -199,14 +207,17 @@ theorem problem_name : answer(sorry) ↔ SomeProperty := by
 ```
 
 Note that if the statement of the theorem depends on some variables, then the quantification should
-happen *after* the `answer(sorry)`, i.e.
+happen _after_ the `answer(sorry)`, i.e.
+
 ```lean
 /-- Does $P(n)$ hold for all $n$? -/
 @[category research open]
 theorem problem_name : answer(sorry) ↔ ∀ n, P n := by
   sorry
 ```
+
 rather than
+
 ```lean
 /-- Does $P(n)$ hold for all $n$? -/
 @[category research open]
@@ -214,8 +225,8 @@ theorem problem_name (n) : answer(sorry) ↔ P n := by
   sorry
 ```
 
-
 When the problem is solved:
+
 - Replace `answer(sorry)` with `answer(True)` or `answer(False)` as appropriate
 - Update the category to `research solved`
 - If a formal proof exists, add `formal_proof using <kind> at "<link>"`
@@ -227,6 +238,7 @@ When the problem is solved:
 1. **One problem per file** (with flexibility for closely related variants)
 2. **Copyright header required** (see template in README.md, use year 2026)
 3. **Module docstring** with references:
+
    ```lean
    /-!
    # Problem Name
@@ -238,18 +250,22 @@ When the problem is solved:
    Brief description if needed.
    -/
    ```
+
    For a single reference, `*Reference:*` (singular) is also acceptable.
+
 4. **Import structure**:
    - Problem files: Import `FormalConjectures.Util.ProblemImports`
    - ForMathlib files: Import only necessary Mathlib modules
 5. If a problem fits in several directories then it should stated in one directory rather than copied
    accross several. In other directories, one can simply add a file with a declaration pointing
    to the original, e.g.
+
    ```lean
    @[category research open, AMS 11]
    theorem pointer_to_original : type_of% my_original_theorem := by
      sorry
    ```
+
    See for example `FormalConjectures/GreensOpenProblems/81.lean`.
 
 ### Variants and Related Results
@@ -279,12 +295,14 @@ Follow [Mathlib's naming conventions](https://leanprover-community.github.io/con
 #### Capitalization Rules
 
 1. **Terms of Props** (proofs, theorem names) use `snake_case`:
+
    ```lean
    theorem fermat_last_theorem : FermatLastTheorem := by sorry
    lemma add_comm (a b : ℕ) : a + b = b + a := by sorry
    ```
 
 2. **Props and Types** (inductive types, structures, classes) use `UpperCamelCase`:
+
    ```lean
    class HasGδSingletons (X : Type*) [TopologicalSpace X] : Prop
    structure MyStructure where
@@ -300,12 +318,14 @@ Follow [Mathlib's naming conventions](https://leanprover-community.github.io/con
    - If `C` is a `Type`, use `lowerCamelCase`
 
 4. **All other terms of Types** use `lowerCamelCase`:
+
    ```lean
    def leftFactorial (n : ℕ) : ℕ := ∑ i in Finset.range n, i!
    def myFunction (x : ℕ) : ℕ := x + 1
    ```
 
 5. **UpperCamelCase in snake_case contexts**: When something named with `UpperCamelCase` is part of something named with `snake_case`, it is referenced in `lowerCamelCase`:
+
    ```lean
    theorem fermat_last_theorem : FermatLastTheorem := by sorry
    theorem nat_factorial_pos (n : ℕ) : 0 < n! := by sorry
@@ -328,6 +348,7 @@ Follow [Mathlib's naming conventions](https://leanprover-community.github.io/con
 #### Exceptions
 
 Some rare exceptions exist for consistency:
+
 - `Ne` (not `NE`) follows `Eq`
 - Intervals: `Set.Icc`, `Set.Iic` (capital `I` despite convention)
 - Some legacy structure fields may be lowercase
@@ -339,12 +360,27 @@ Some rare exceptions exist for consistency:
 - **Use Unicode math symbols** where appropriate: `∀`, `∃`, `∈`, `⊆`, `∧`, `∨`, `¬`, etc.
 - **Format code properly**: Use consistent indentation (2 spaces)
 - **Add docstrings** with the math written in Latex for definitions and main theorems:
+
   ```lean
   /--
   The left factorial of $n$, defined as $0! + 1! + 2! + ... + (n-1)!$
   -/
   def left_factorial (n : ℕ) := ...
   ```
+
+- **`research open`, `research solved` and `textbook` docstrings MUST include** a concise description of the
+  problem:
+
+  ```lean
+  /--
+  Can every even integer greater than 2 be written as the sum of two primes?
+  -/
+  @[category research open, AMS 11]
+  theorem goldbach :
+      answer(sorry) ↔ ∀ n : ℕ, 2 < n → Even n → ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+    sorry
+  ```
+
 - **Use `local notation`** for problem-specific notation within namespaces
 - **Avoid unnecessary type annotations** when Lean can infer them
 - **Use `by` tactic mode** for sorries: `by sorry` (not just `sorry`)
@@ -358,7 +394,7 @@ Some rare exceptions exist for consistency:
 - Be specific with imports - don't import more than needed
 - In FormalConjecturesForMathlib, import only from Mathlib
 - In problem files, import only `FormalConjectures.Util.ProblemImports`, unless you are adding a
-   pointer to another problem or need to state an implication.
+  pointer to another problem or need to state an implication.
 
 ## Agent-Specific Requirements
 
@@ -373,16 +409,20 @@ Some rare exceptions exist for consistency:
 
 2. **`sorry` usage restrictions**:
    - ✅ **ALLOWED**: In `FormalConjectures/` for benchmark problem statements
+
      ```lean
      @[category research open]
      theorem open_conjecture : Statement := by sorry
      ```
+
    - ❌ **NOT ALLOWED**: In `FormalConjecturesForMathlib/`
+
      ```lean
      -- WRONG - will be rejected
      def helper_function : Type := sorry
      lemma helper_lemma : P := by sorry
      ```
+
    - Exception: `answer(sorry)` is allowed as a placeholder for unknown answers
 
 3. **Completeness**:
@@ -410,6 +450,7 @@ Before considering your work complete, verify:
 - [ ] `lake build` succeeds
 - [ ] No `sorry` in FormalConjecturesForMathlib/
 - [ ] Docstrings present for main definitions
+- [ ] `research open`, `textbook` and `research solved` docstrings include a concise description
 - [ ] Code properly formatted and readable
 
 ### Testing Definitions
@@ -432,6 +473,7 @@ theorem myNewClass_sanity_check :
 ### Common Pitfalls to Avoid
 
 ❌ **DON'T:**
+
 - Use `sorry` outside of problem statement proofs
 - Create files without copyright headers
 - Forget to add `category` and `AMS` attributes
@@ -441,10 +483,12 @@ theorem myNewClass_sanity_check :
 - Create placeholder definitions in FormalConjecturesForMathlib/
 
 ✅ **DO:**
+
 - Follow existing file patterns in the repository
 - Keep formalisations clean and minimal
 - Add references to sources. These should all appear in the module docstring reference list, and
-  ideally each conjecture statement docstring should have a reference.
+  each `textbook`, `research open` and `research solved` theorem docstring MUST have a reference and a
+  concise description of the problem.
 - Use namespaces appropriately
 - Test that `lake build` works
 - Add variants in the same file as the main problem
