@@ -105,13 +105,13 @@ import FormalConjectures.WrittenOnTheWallII.GraphConjecture316
 import FormalConjectures.WrittenOnTheWallII.GraphConjecture327
 
 /-!
-# FC100Open
+# FC100OpenSet1
 
 A random subset of 100 open research problems, drawn uniformly at random
 from all problems with the `category research open` tag.
 -/
 
-namespace Subsets.FC100Open
+namespace Subsets.FC100OpenSet1
 
 open Lean in
 def problems : List Name := [
@@ -217,9 +217,9 @@ def problems : List Name := [
   decl_name% Green61.green_61
 ]
 
-end Subsets.FC100Open
+end Subsets.FC100OpenSet1
 
 open Lean Meta ProblemAttributes in
-#eval verifyCategoryCounts Subsets.FC100Open.problems [
+#eval verifyCategoryCounts Subsets.FC100OpenSet1.problems [
   ("research open", 100)
 ]

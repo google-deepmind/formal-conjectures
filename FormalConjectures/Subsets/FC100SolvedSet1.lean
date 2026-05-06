@@ -98,14 +98,14 @@ import FormalConjectures.WrittenOnTheWallII.GraphConjecture33
 import FormalConjectures.WrittenOnTheWallII.Test
 
 /-!
-# FC100Solved
+# FC100SolvedSet1
 
 A random subset of 100 non-open problems, drawn uniformly at random
 from all problems without the `category research open` tag
 (solved, test, API, etc.).
 -/
 
-namespace Subsets.FC100Solved
+namespace Subsets.FC100SolvedSet1
 
 open Lean in
 def problems : List Name := [
@@ -211,10 +211,10 @@ def problems : List Name := [
   decl_name% OeisA67720.a_1
 ]
 
-end Subsets.FC100Solved
+end Subsets.FC100SolvedSet1
 
 open Lean Meta ProblemAttributes in
-#eval verifyCategoryCounts Subsets.FC100Solved.problems [
+#eval verifyCategoryCounts Subsets.FC100SolvedSet1.problems [
   ("test", 34),
   ("research solved", 50),
   ("API", 9),
