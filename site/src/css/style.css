@@ -458,6 +458,9 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   align-items: start;
   padding: 2rem 0;
 }
+.browse-layout > * {
+  min-width: 0;
+}
 @media (max-width: 800px) {
   .browse-layout { grid-template-columns: 1fr; }
 }
@@ -579,9 +582,9 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   font-weight: 600;
   font-size: 0.95rem;
   margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .theorem-card__name a { color: var(--color-text); }
 .theorem-card__name a:hover { color: var(--color-link); text-decoration: none; }
@@ -590,6 +593,8 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   font-size: 0.8rem;
   color: var(--color-text-muted);
   margin-bottom: 0.5rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .theorem-card__tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
