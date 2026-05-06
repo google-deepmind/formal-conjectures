@@ -65,10 +65,17 @@ If a sequence `d` is nondecreasing and no three terms are equal, then terms at d
 @[category API, AMS 5]
 lemma lemma1_b
     (h_mono : Monotone d)
-    (h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ i, d (i + 2) ≠ d i) :
     r ≤ d (k + 2 * r) - d k := by
-  sorry
+  induction r with
+  | zero => simp
+  | succ r ih =>
+    have hrw : k + 2 * (r + 1) = (k + 2 * r) + 2 := by ring
+    rw [hrw]
+    have h1 := lemma1_a d (k + 2 * r) h_mono h_no_three
+    have h2 : d k ≤ d (k + 2 * r) := h_mono (by omega)
+    have h3 : d (k + 2 * r) ≤ d (k + 2 * r + 2) := h_mono (by omega)
+    omega
 
 /-- **Lemma 2 (a)**
 Inequality involving sums of terms of a nondecreasing sequence with no three terms equal. -/
