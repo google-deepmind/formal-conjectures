@@ -43,7 +43,8 @@ def IsEngel : Prop :=
   ∀ x y : G, ∃ n : ℕ, commutator_n (G := G) x y n = 1
 
 /-- A locally nilpotent group: every finitely generated subgroup is nilpotent. -/
-def IsLocallyNilpotent (H : Type) [Group H] : Prop := True
+def IsLocallyNilpotent (H : Type) [Group H] : Prop :=
+  ∀ K : Subgroup H, K.FG → Group.IsNilpotent K
 
 /-- A group is orderable if it admits a strict total order that is monotone under left and right multiplication. -/
 def IsOrderable : Prop :=
