@@ -21,7 +21,8 @@ open scoped Group
 /-!
 # Kourovka Problem 2.24
 
-*Reference:* Kourovka Notebook, Problem 2.24.
+*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40), Problem 2.24,
+by A. I. Kokorin.
 
 Does every torsion-free Engel group admit a bi-invariant linear order? The question is intertwined
 with Plotkin's conjecture on the local nilpotence of Engel groups: a positive answer to Plotkin's
@@ -33,7 +34,10 @@ namespace KourovkaProblem2_24
 
 variable (G : Type) [Group G]
 
-/-- The $n$-fold iterated commutator $[x,_n y]$, using the element commutator notation `⁅·, ·⁆`. -/
+/--
+The $n$-fold iterated commutator $[x,_n y]$, using the element commutator
+notation `⁅·, ·⁆`.
+-/
 def commutator_n (x y : G) : ℕ → G
   | 0 => x
   | n + 1 => ⁅commutator_n x y n, y⁆
@@ -46,7 +50,10 @@ def IsEngel : Prop :=
 def IsLocallyNilpotent (H : Type) [Group H] : Prop :=
   ∀ K : Subgroup H, K.FG → Group.IsNilpotent K
 
-/-- A group is orderable if it admits a strict total order that is monotone under left and right multiplication. -/
+/--
+A group is orderable if it admits a strict total order that is monotone under
+left and right multiplication.
+-/
 def IsOrderable : Prop :=
   ∃ r : G → G → Prop,
     IsStrictTotalOrder G r ∧
@@ -63,6 +70,11 @@ def PlotkinConjecture : Prop :=
 def MalcevTheorem : Prop :=
   ∀ (H : Type) [Group H], IsLocallyNilpotent H → IsMulTorsionFree H → IsOrderable H
 
+/-- Mal'cev's theorem: torsion-free locally nilpotent groups are orderable. -/
+@[category research solved, AMS 20]
+theorem malcev_theorem : MalcevTheorem := by
+  sorry
+
 /--
 *Kourovka Problem 2.24.*
 
@@ -74,12 +86,15 @@ theorem kourovka_problem_2_24 :
       ∀ (H : Type) [Group H], IsEngel H → IsMulTorsionFree H → IsOrderable H := by
   sorry
 
-/-- Plotkin's conjecture implies a positive answer to Kourovka Problem 2.24 via Mal'cev's theorem. -/
+/--
+Plotkin's conjecture implies a positive answer to Kourovka Problem 2.24 via
+Mal'cev's theorem.
+-/
 @[category research solved, AMS 20]
 theorem kourovka_problem_2_24_of_plotkin
-    (hPlotkin : PlotkinConjecture) (hMalcev : MalcevTheorem) :
+    (hPlotkin : PlotkinConjecture) :
   ∀ (H : Type) [Group H], IsEngel H → IsMulTorsionFree H → IsOrderable H := by
   intro H _ hEngel hTorsion
-  exact hMalcev H (hPlotkin H hEngel) hTorsion
+  exact malcev_theorem H (hPlotkin H hEngel) hTorsion
 
 end KourovkaProblem2_24
