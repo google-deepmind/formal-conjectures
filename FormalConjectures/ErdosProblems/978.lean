@@ -30,43 +30,64 @@ open Polynomial Set
 
 namespace Erdos978
 
-/-- Let `f ∈ ℤ[X]` be an irreducible polynomial. Suppose that the degree `k` of `f` is larger than
-`2` and is not equal to a power of `2`. Then the set of `n` such that `f n` is `(k - 1)`-th power
-free is infinite, and this is proved in [Er53]. -/
+/-- Let `f ∈ ℤ[X]` be an irreducible polynomial with positive leading coefficient. Suppose that the
+degree `k` of `f` is larger than `2` and is not equal to a power of `2`. Then the set of `n` such
+that `f n` is `(k - 1)`-th power free is infinite, and this is proved in [Er53]. -/
 @[category research solved, AMS 11]
-theorem erdos_978.sub_one {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree > 2)
-    (hp : ¬ ∃ l : ℕ, f.natDegree = 2 ^ l) :
+theorem erdos_978.variants.sub_one {f : ℤ[X]} (hi : Irreducible f) (hd : 2 < f.natDegree)
+    (hp : ∀ (x : ℕ), f.natDegree ≠ 2 ^ x) (hlc : 0 < f.leadingCoeff) :
     {n : ℕ | Powerfree (f.natDegree - 1) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
-/-- Let `f ∈ ℤ[X]` be an irreducible polynomial. Suppose that the degree `k` of `f` is larger than
-`2`, and `f n` have no fixed `(k - 1)`-th power divisors other than `1`. Then the set of `n` such
-that `f n` is `(k - 1)`-th power free has positive density, and this is proved in [Ho67]. -/
+/-- Let `f ∈ ℤ[X]` be an irreducible polynomial with positive leading coefficient. Suppose that the
+degree `k` of `f` is larger than `2`, is not equal to a power of `2`, and `f n` has no fixed
+`(k - 1)`-th power divisors other than `1`. Then the set of `n` such that `f n` is `(k - 1)`-th
+power free has positive density, and this is proved in [Ho67]. -/
 @[category research solved, AMS 11]
-theorem erdos_978.sub_one_density {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree > 2)
-    (hp : ¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
+theorem erdos_978.parts.i {f : ℤ[X]} (hi : Irreducible f) (hd : 2 < f.natDegree)
+    (hp2 : ∀ (x : ℕ), f.natDegree ≠ 2 ^ x) (hlc : 0 < f.leadingCoeff)
+    (hp : ∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
     HasPosDensity {n : ℕ | Powerfree (f.natDegree - 1) (f.eval (n : ℤ))} := by
   sorry
 
 /-- If the degree `k` of `f` is larger than or equal to `9`, then the set of `n` such that `f n` is
 `(k - 2)`-th power free has infinitely many elements. This result is proved in [Br11]. -/
 @[category research solved, AMS 11]
-theorem erdos_978.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : f.natDegree ≥ 9)
-    (hp : ¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
+theorem erdos_978.variants.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : 9 ≤ f.natDegree)
+    (hp : ∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
-/-- Is it true that the set of `n` such that `f n` is `(k - 2)`-th power free has infinitely many
-elements? -/
-@[category research open, AMS 11]
-theorem erdos_978.sub_two' : answer(sorry) ↔ ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 2 →
+/--
+If $k > 3$ (and $k \neq 2^l$), then are there infinitely many $n$ for which $f(n)$ is
+$(k-2)$-power-free?
+
+This was disproved by the DeepMind prover agent.
+-/
+@[category research solved, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/3b5d6ac2555cd63b83d418c29ff040876be9dee0/FormalConjectures/ErdosProblems/978.lean#L64"]
+theorem erdos_978.variants.allow_fixed_divisors : answer(False) ↔
+    ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
+    (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
     (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) →
+    {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
+  sorry
+
+/--
+If $k>3$ (and $k \neq 2^l$), and for all primes $p$ there exists $n$ such that $p^{k-2}\nmid f(n)$,
+then are there infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
+-/
+@[category research open, AMS 11]
+theorem erdos_978.parts.ii : answer(sorry) ↔
+    ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
+    (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
+    (∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) →
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
 /-- Does `n ^ 4 + 2` represent infinitely many squarefree numbers? -/
 @[category research open, AMS 11]
-theorem erdos_978.squarefree : answer(sorry) ↔ {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
+theorem erdos_978.parts.iii : answer(sorry) ↔ {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
   sorry
 
 end Erdos978

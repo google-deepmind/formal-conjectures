@@ -34,19 +34,19 @@ namespace PollocksConjecture
 
 open scoped BigOperators
 
-/-! ## Definitions -/
+/-  ## Definitions -/
 
 /-- The $n$-th tetrahedral number: $T_n = \frac{n(n+1)(n+2)}{6}$. -/
 def tetrahedral (n : ℕ) : ℕ :=
   n * (n + 1) * (n + 2) / 6
 
-/-! ## Auxiliary definition -/
+/-  ## Auxiliary definition -/
 
 /-- The set of natural numbers that are **not** a sum of $4$ tetrahedral numbers. -/
 def NotSumOfFourTetrahedral : Set ℕ :=
   {N : ℕ | ∀ f : Fin 4 → ℕ, N ≠ ∑ i, tetrahedral (f i)}
 
-/-! ## Statements -/
+/-  ## Statements -/
 
 /--
 Pollock's (tetrahedral numbers) conjecture:
@@ -67,7 +67,7 @@ theorem pollock_tetrahedral.salzer_levine :
   sorry
 
 /-- As stated on Wikipedia/OEIS (A797), the set of exceptions has cardinality $241$. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem pollock_tetrahedral.ncard_exceptions :
     type_of% pollock_tetrahedral.salzer_levine ↔
     NotSumOfFourTetrahedral.ncard = 241 := by

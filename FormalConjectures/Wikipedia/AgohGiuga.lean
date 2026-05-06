@@ -23,7 +23,7 @@ open scoped Nat
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Agoh-Giuga_conjecture)
 -/
-/-!
+/-
 
 The **Agoh-Giuga Conjecture**.
 
@@ -93,7 +93,8 @@ def IsStrongGiuga (n : ℕ) : Prop :=
 A composite number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
 prime divisors $p$ of $n$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/2663234a28260853790aa5752d8d4550ff0ab1ca/FormalConjectures/Wikipedia/AgohGiuga.lean#L97"]
 theorem isWeakGiuga_iff_prime_dvd {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∀ p ∈ n.primeFactors, p ∣ (n / p - 1) := by
   sorry
@@ -118,7 +119,7 @@ def IsCarmichael (n : ℕ) : Prop :=
   ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
 
 /-- A composite Carmichael number is squarefree. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCarmichael a) :
     Squarefree a := by
   simp_all [Nat.Composite, a.squarefree_iff_prime_squarefree, IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
@@ -133,7 +134,7 @@ theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCa
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /-- A composite number `a` is Carmichael if and only if it is squarefree
 and, for all prime `p` dividing `a`, we have `p - 1 ∣ a - 1`. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     IsCarmichael a ↔ Squarefree a ∧
       ∀ p, p.Prime → p ∣ a → (p - 1 : ℕ) ∣ (a - 1 : ℕ) := by
@@ -160,13 +161,17 @@ theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     refine if hb : _ = 0 then ⟨0, hb⟩ else (a.factorization_le_iff_dvd ha₁.1.ne_bot hb).1 fun p => ?_
     by_cases hp : p.Prime
     · by_cases hpa : p ∣ a
-      · obtain ⟨_, h⟩ := h_dvd p hp hpa
+      · obtain ⟨w, h⟩ := h_dvd p hp hpa
         obtain ⟨ha₁, ha₂⟩ := ha₁
         apply Nat.Prime.pow_dvd_iff_le_factorization hp hb |>.1
         have : a.factorization p ≤ 1 := not_lt.1 fun h =>
           h_sqfr p hp <| (sq p ▸ (pow_dvd_pow p h).trans (a.ordProj_dvd p))
-        field_simp [h, pow_mul, le_antisymm this (hp.dvd_iff_one_le_factorization _ |>.1 _),
-          ← CharP.cast_eq_zero_iff (ZMod p)]
+        replace : a.factorization p = 1 :=
+          this.antisymm (hp.dvd_iff_one_le_factorization (by grind) |>.1 hpa)
+        simp_rw [this, pow_one, ← CharP.cast_eq_zero_iff (ZMod p)]
+        have one_le_b_pow : 1 ≤ b ^ (a - 1) := by omega
+        push_cast [one_le_b_pow]
+        simp_rw [h, pow_mul]
         simp_all +decide [CharP.cast_eq_zero_iff _ p,
           hp.coprime_iff_not_dvd.1 (hab.of_dvd_left (by aesop)), ZMod.pow_card_sub_one_eq_one]
       · simp [a.factorization_eq_zero_of_not_dvd hpa]

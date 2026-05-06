@@ -13,10 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Complex.ExponentialBounds
+
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic
+
+@[expose] public section
 
 -- TODO(mercuris): define a recursive version of this for better usability?
 -- TODO(mercuris): add `Real.iteratedLogb` for general bases

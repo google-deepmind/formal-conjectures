@@ -28,8 +28,8 @@ open scoped Asymptotics Classical
 namespace Erdos331
 
 /--
-Let $A,B\subseteq \mathbb{N}$ such that for all large $N$\[\lvert A\cap \{1,\ldots,N\}\rvert \gg
-N^{1/2}\]and\[\lvert B\cap \{1,\ldots,N\}\rvert \gg N^{1/2}.\]
+Let $A,B\subseteq \mathbb{N}$ such that for all large $N$$$\lvert A\cap \{1,\ldots,N\}\rvert \gg
+N^{1/2}$$and$$\lvert B\cap \{1,\ldots,N\}\rvert \gg N^{1/2}.$$
 Is it true that there are infinitely many solutions to $a_1-a_2=b_1-b_2\neq 0$ with $a_1,a_2\in A$
 and $b_1,b_2\in B$?
 
@@ -37,8 +37,10 @@ Ruzsa has observed that there is a simple counterexample: take $A$ to be the set
 binary representation has only non-zero digits in even places, and $B$ similarly but with non-zero
 digits only in odd places. It is easy to see $A$ and $B$ both grow like $\gg N^{1/2}$ and yet for
 any $n\geq 1$ there is exactly one solution to $n=a+b$ with $a\in A$ and $b\in B$.
+
+This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem%23331.lean"]
 theorem erdos_331 :
     answer(False) ↔
       ∀ A B : Set ℕ,
@@ -55,7 +57,7 @@ condition that $|A \cap \{1,\dots,N\}| \sim c_A N^{1/2}$ for some constant $c_A>
 for $B$.
 -/
 @[category research open, AMS 11]
-theorem erdos_331.variant.ruzsa :
+theorem erdos_331.variants.ruzsa :
     answer(sorry) ↔
       ∀ A B : Set ℕ,
       (∃ c_A > 0, (fun (n : ℕ) ↦ (count A n : ℝ)) ~[atTop] (fun (n : ℕ) ↦ c_A * (n : ℝ) ^ (1 / 2 : ℝ))) →
