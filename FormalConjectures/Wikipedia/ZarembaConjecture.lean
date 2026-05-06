@@ -87,4 +87,23 @@ quotient in the continued fraction of `a / d` is at most `A`.
 theorem zaremba_conjecture : maxminmaxPartialQuotient < ⊤ := by
   sorry
 
+/--
+Zaremba's conjecture in "strong" form: for every
+denominator `d`, there is a numerator `a` coprime to `d`, for which every partial
+quotient in the continued fraction of `a / d` is at most `5`.
+-/
+@[category research open, AMS 11]
+theorem zaremba_conjecture.variants.constant_five : maxminmaxPartialQuotient ≤ 5 := by
+  sorry
+
+
+/--
+Hensley's conjecture in "strong" form: for every sufficiently large
+denominator `d`, there is a numerator `a` coprime to `d`, for which every partial
+quotient in the continued fraction of `a / d` is at most `2`.
+-/
+@[category research open, AMS 11]
+theorem hensley_conjecture : ∃ D : ℕ, ⨆ d ≥ D, minmaxPartialQuotient d ≤ 2 := by
+  sorry
+
 end ZarembaConjecture
