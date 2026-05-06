@@ -92,7 +92,7 @@ $z(1) = 1, z(3) = 3, z(5) = 15, z(7) = 133$. -/
 theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by native_decide
 
 /-- The Cayley table of $\mathbb{Z}_n$ for positive even $n$ has no transversals. -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem z_even (n : ℕ) : z (2 * (n + 1)) = 0 := by
   sorry
 

@@ -20,14 +20,14 @@ import FormalConjectures.Util.Linters.CategoryDocstringLinter
 # Tests for the category docstring linter
 
 This file contains test cases for the `CategoryDocstringLinter`, verifying that
-research-open and research-solved declarations without docstrings are flagged,
+research-open, research-solved, and textbook declarations without docstrings are flagged,
 while declarations with docstrings or other categories are accepted.
 -/
 
 namespace CategoryDocstringLinter
 
 /--
-warning: Declarations tagged `@[category research open]` or `@[category research solved]` must have a docstring.
+warning: Declarations tagged `@[category research open]`, `@[category research solved]`, or `@[category textbook]` must have a docstring.
 
 Note: This linter can be disabled with `set_option linter.style.category_docstring false`
 -/
@@ -37,7 +37,7 @@ theorem flagged_open_missing_docstring : True := by
   sorry
 
 /--
-warning: Declarations tagged `@[category research open]` or `@[category research solved]` must have a docstring.
+warning: Declarations tagged `@[category research open]`, `@[category research solved]`, or `@[category textbook]` must have a docstring.
 
 Note: This linter can be disabled with `set_option linter.style.category_docstring false`
 -/
@@ -55,6 +55,16 @@ theorem not_flagged_with_docstring : True := by
 #guard_msgs in
 @[category test]
 theorem not_flagged_test_without_docstring : True := by
+  trivial
+
+/--
+warning: Declarations tagged `@[category research open]`, `@[category research solved]`, or `@[category textbook]` must have a docstring.
+
+Note: This linter can be disabled with `set_option linter.style.category_docstring false`
+-/
+#guard_msgs in
+@[category textbook]
+theorem flagged_textbook_missing_docstring : True := by
   trivial
 
 end CategoryDocstringLinter
