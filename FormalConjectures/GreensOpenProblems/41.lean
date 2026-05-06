@@ -28,7 +28,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Green41
 
-open Complex Set
+open Complex Set Pointwise
 
 /--
 The pyjama set is the set of points in the complex plane whose real part is within $\varepsilon$ of
@@ -40,7 +40,7 @@ def pyjamaSet (ε : ℝ) : Set ℂ :=
 /-- The minimal number of rotated copies of the pyjama set of width ε needed to cover the plane. -/
 noncomputable def minCopies (ε : ℝ) : ℕ :=
   sInf { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
-    (⋃ θ ∈ Θ, (fun z => exp (θ * I) * z) '' pyjamaSet ε) = univ }
+    (⋃ θ ∈ Θ, exp (θ * I) • pyjamaSet ε) = univ }
 
 /-- How many rotated (about the origin) copies of the 'pyjama set' are needed to cover the plane? -/
 @[category research open, AMS 51 52]
