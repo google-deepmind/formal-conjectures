@@ -28,24 +28,22 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Green41
 
-open Set
-
-/-- The pyjama set is the set of points in the plane whose x-coordinate is within ε of an integer. -/
-def pyjamaSet (ε : ℝ) : Set (ℝ × ℝ) :=
-  { p | ∃ z : ℤ, |p.1 - (z : ℝ)| ≤ ε }
-
-/-- A rotation about the origin by angle θ. -/
-noncomputable def rotate (θ : ℝ) (p : ℝ × ℝ) : ℝ × ℝ :=
-  (p.1 * Real.cos θ - p.2 * Real.sin θ, p.1 * Real.sin θ + p.2 * Real.cos θ)
+open Complex Set
 
 /--
-How many rotated (about the origin) copies of the 'pyjama set' $\\{(x, y) \in \mathbb{R}^2 : \text{dist}(x, \mathbb{Z}) \leq \varepsilon\\}$ are needed to cover $\mathbb{R}^2$?
+The pyjama set is the set of points in the complex plane whose real part is within $\varepsilon$ of
+an integer.
 -/
+def pyjamaSet (ε : ℝ) : Set ℂ :=
+  { z | ∃ k : ℤ, |z.re - (k : ℝ)| ≤ ε }
+
+/-- How many rotated (about the origin) copies of the 'pyjama set' are needed to cover the plane? -/
 @[category research open, AMS 51 52]
 theorem green_41 :
     ∀ ε > 0,
       let ans := (answer(sorry) : ℕ)
-      IsLeast { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧ ∀ p : ℝ × ℝ, ∃ θ ∈ Θ, p ∈ rotate θ '' pyjamaSet ε } ans := by
+      IsLeast { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
+        (⋃ θ ∈ Θ, (fun z => exp (θ * I) * z) '' pyjamaSet ε) = univ } ans := by
   sorry
 
 end Green41
