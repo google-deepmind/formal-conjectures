@@ -85,10 +85,9 @@ This paper disproves the conjecture.
 -/
 @[category research solved, AMS 37]
 theorem conjecture_1_4
-    (p q : ℕ) (hp : 2 <= p) (hq : 2 <= q) (hpq : MultiplicativelyIndependent p q) 
-    (hmup : MeasurePreserving (Tn p) μ μ) :
+    (p q : ℕ) (hp : 2 <= p) (hq : 2 <= q) (hpq : MultiplicativelyIndependent p q) :
     answer(False) ↔
-      ∀ μ : ProbabilityMeasure 𝕋, IsAtomLess μ.1 →
+      ∀ μ : ProbabilityMeasure 𝕋, IsAtomLess μ.1 → MeasurePreserving (Tn p) μ μ → 
         Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
           (𝓝 ProbabilityMeasure) := by
   sorry
