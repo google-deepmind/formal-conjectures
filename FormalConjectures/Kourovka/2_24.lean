@@ -55,12 +55,7 @@ A group is orderable if it admits a strict total order that is monotone under
 left and right multiplication.
 -/
 def IsOrderable : Prop :=
-  ∃ r : G → G → Prop,
-    IsStrictTotalOrder G r ∧
-    (by
-      classical
-      let _ : LT G := ⟨r⟩
-      exact MulLeftStrictMono G ∧ MulRightStrictMono G)
+  ∃ _ : LinearOrder G, MulLeftStrictMono G ∧ MulRightStrictMono G
 
 /-- Plotkin's conjecture: every Engel group is locally nilpotent. -/
 def PlotkinConjecture : Prop :=
