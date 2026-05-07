@@ -16,7 +16,8 @@ limitations under the License.
 module
 
 public import Mathlib.Data.Real.Basic
-public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Algebra.Order.Floor
+public import Mathlib.Topology.Algebra.Ring.Real
 public import Mathlib.Order.Filter.Basic
 public import Mathlib.Data.Finset.Card
 
