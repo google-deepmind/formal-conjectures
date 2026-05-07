@@ -25,14 +25,20 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 - [Tao25](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf)
 -/
 
-
-
 namespace Erdos884
 
+/--
+The sum $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i}$ over all pairs of
+divisors $d_i < d_j$ of $n$.
+-/
 noncomputable abbrev sumDivisorInvPairwiseDifference (n : ℕ) : ℝ :=
     ∑ j : Fin n.divisors.card, ∑ i : Fin  j,
     (1 : ℚ) / (Nat.nth (· ∣ n) j - Nat.nth (· ∣ n) i )
 
+/--
+The sum $\sum_{1 \le i < \tau(n)} \frac{1}{d_{i + 1} - d_i}$ over consecutive
+divisors of $n$.
+-/
 noncomputable abbrev sumDivisorInvConsecutiveDifference (n : ℕ) : ℝ :=
     ∑ i : Fin (n.divisors.card - 1),
     (1 : ℚ) / (Nat.nth (· ∣ n) (i + 1) - Nat.nth (· ∣ n) i)
@@ -51,7 +57,7 @@ In September 2025, Terence Tao gave a conditional _negative_ answer to this conj
 see `erdos_884_false_of_hardy_littlewood` for this implication.
 However, the conjecture itself remains open.
 -/
-def Erdos884 : Prop :=
+def Erdos884Prop : Prop :=
     sumDivisorInvPairwiseDifference ≪ 1 + sumDivisorInvConsecutiveDifference
 
 /--
@@ -70,7 +76,7 @@ However, the conjecture itself remains open.
 -/
 @[category research open, AMS 11]
 theorem erdos_884 :
-    answer(sorry) ↔ Erdos884 := by
+    answer(sorry) ↔ Erdos884Prop := by
   sorry
 
 /--
@@ -86,8 +92,7 @@ already formalized.
 @[category research solved, AMS 11]
 theorem erdos_884_false_of_hardy_littlewood :
     ∀ (k : ℕ) (m : Fin k.succ → ℕ), HardyLittlewood.FirstHardyLittlewoodConjectureFor m
-    → ¬ Erdos884 := by
+    → ¬Erdos884Prop := by
   sorry
-
 
 end Erdos884
