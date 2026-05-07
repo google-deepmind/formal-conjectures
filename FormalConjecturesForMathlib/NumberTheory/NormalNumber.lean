@@ -15,10 +15,8 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Real.Basic
-public import Mathlib.Topology.Algebra.InfiniteSum.Basic
-public import Mathlib.Order.Filter.Basic
-public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
 
 @[expose] public section
 /-!
