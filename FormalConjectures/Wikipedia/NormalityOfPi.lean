@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.NumberTheory.NormalNumber
 
 /-!
 # Normality of mathematical constants
