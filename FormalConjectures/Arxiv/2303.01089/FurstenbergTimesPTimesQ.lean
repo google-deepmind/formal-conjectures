@@ -28,6 +28,8 @@ noncomputable section
 open scoped Topology
 open Filter MeasureTheory UnitAddCircle
 
+namespace Arxiv.id2303_01089
+
 notation "𝕋" => UnitAddCircle
 
 /--
@@ -54,18 +56,16 @@ A set $A$ is an atom if it has positive measure and for all $B \subseteq A$ meas
 either $\mu(B) = 0$ or $\mu(B) = \mu(A)$.
 -/
 def MeasureTheory.IsAtom {α : Type*} {m0 : MeasurableSpace α} (μ : Measure α) (A : Set α) : Prop :=
-  0 <  μ A ∧ ∀ B ⊆ A, MeasurableSet B → μ B = 0 ∨ μ B = μ A
+  0 < μ A ∧ ∀ B ⊆ A, MeasurableSet B → μ B = 0 ∨ μ B = μ A
 
 /--
 A measure is atomless if it has no atoms.
 -/
 class MeasureTheory.IsAtomLess {α : Type*} {m0 : MeasurableSpace α} (μ : Measure α) : Prop where
-  NoAtoms : ∀ A, MeasurableSet A → ¬ IsAtom μ A
+  NoAtoms : ∀ A, MeasurableSet A → ¬ MeasureTheory.IsAtom μ A
 
 def UnitAddCircle.ProbabilityMeasure : ProbabilityMeasure 𝕋 :=
   ⟨volume, IsProbabilityMeasure.mk UnitAddCircle.measure_univ⟩
-
-namespace Arxiv.id2303_01089
 
 /--
 **Conjecture 1.3** (the $\times p, \times q$ conjecture): the only atomless Borel probability
@@ -73,8 +73,9 @@ measure on $\mathbb{T}$ which is both $T_p$- and $T_q$-invariant is the Lebesgue
 -/
 @[category research open, AMS 37]
 theorem conjecture_1_3 {p q : ℕ} (hp : 2 <= p) (hq : 2 <= q) (hpq : MultiplicativelyIndependent p q)
-    {μ : Measure 𝕋} [IsProbabilityMeasure μ] [IsAtomLess μ] (hmup : MeasurePreserving (Tn p) μ μ)
-    (hmup : MeasurePreserving (Tn q) μ μ) :
+    {μ : Measure 𝕋} [IsProbabilityMeasure μ] [MeasureTheory.IsAtomLess μ]
+    (hmup : MeasurePreserving (Tn p) μ μ)
+    (hmuq : MeasurePreserving (Tn q) μ μ) :
     μ = volume := by
   sorry
 
@@ -84,12 +85,13 @@ $\mathbb{T}$, then $T_{q^n}\mu$ converges weak-star to Lebesgue measure.
 This paper disproves the conjecture.
 -/
 @[category research solved, AMS 37]
-theorem conjecture_1_4
-    (p q : ℕ) (hp : 2 <= p) (hq : 2 <= q) (hpq : MultiplicativelyIndependent p q) :
+theorem conjecture_1_4 :
     answer(False) ↔
-      ∀ μ : ProbabilityMeasure 𝕋, IsAtomLess μ.1 → MeasurePreserving (Tn p) μ μ → 
-        Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
-          (𝓝 ProbabilityMeasure) := by
+      ∀ p q : ℕ, 2 <= p → 2 <= q → MultiplicativelyIndependent p q →
+        ∀ μ : ProbabilityMeasure 𝕋,
+          MeasureTheory.IsAtomLess μ.1 → MeasurePreserving (Tn p) μ μ →
+          Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
+            (𝓝 UnitAddCircle.ProbabilityMeasure) := by
   sorry
 
 end Arxiv.id2303_01089
