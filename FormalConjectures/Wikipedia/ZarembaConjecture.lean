@@ -82,8 +82,10 @@ noncomputable def maxminmaxPartialQuotient : ℕ∞ :=
 Zaremba's conjecture: there is an absolute constant `A` such that for every
 denominator `d`, there is a numerator `a` coprime to `d`, for which every partial
 quotient in the continued fraction of `a / d` is at most `A`.
+Solution announced by Zhang https://arxiv.org/abs/2605.02518 based on work of
+Shkredov https://arxiv.org/abs/2603.14116.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem zaremba_conjecture : maxminmaxPartialQuotient < ⊤ := by
   sorry
 
@@ -93,7 +95,7 @@ denominator `d`, there is a numerator `a` coprime to `d`, for which every partia
 quotient in the continued fraction of `a / d` is at most `5`.
 -/
 @[category research open, AMS 11]
-theorem zaremba_conjecture.variants.constant_five : maxminmaxPartialQuotient ≤ 5 := by
+theorem zaremba_conjecture.variants.exact : maxminmaxPartialQuotient = 5 := by
   sorry
 
 
@@ -103,7 +105,7 @@ denominator `d`, there is a numerator `a` coprime to `d`, for which every partia
 quotient in the continued fraction of `a / d` is at most `2`.
 -/
 @[category research open, AMS 11]
-theorem hensley_conjecture : ∃ D : ℕ, ⨆ d ≥ D, minmaxPartialQuotient d ≤ 2 := by
+theorem hensley_conjecture : ∃ D : ℕ, ⨆ d ≥ D, minmaxPartialQuotient d = 2 := by
   sorry
 
 end ZarembaConjecture
