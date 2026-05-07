@@ -52,7 +52,7 @@ theorem erdos_316 : answer(False) ↔ ∀ A : Finset ℕ, 0 ∉ A → 1 ∉ A �
   decide +kernel
 
 /-- This is not true if $A$ is a multiset, for example $2,3,3,5,5,5,5$. -/
-@[category high_school, AMS 5 11]
+@[category textbook, AMS 5 11]
 lemma erdos_316.variants.multiset : ∃ A : Multiset ℕ, 0 ∉ A ∧ 1 ∉ A ∧
     (A.map ((1 : ℚ) / ·)).sum < 2 ∧ ∀ (A₁ A₂ : Multiset ℕ),
       A = A₁ + A₂ →
