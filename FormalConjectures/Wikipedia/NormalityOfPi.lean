@@ -29,6 +29,8 @@ normal in any base.
 * [Wikipedia (Pi)](https://en.wikipedia.org/wiki/Pi)
 -/
 
+open Real
+
 namespace NormalNumber
 
 /--
