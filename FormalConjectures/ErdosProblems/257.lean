@@ -43,7 +43,7 @@ $$
 $$
 where $d(n)$ is the number of divisors of $n$.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_257.variants.tsum_top_eq :
     ∑' n, 1 / (2 ^ n - 1 : ℝ) = ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry

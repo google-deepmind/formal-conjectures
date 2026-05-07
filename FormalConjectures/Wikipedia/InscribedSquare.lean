@@ -33,6 +33,8 @@ There are several open and solved variants of this conjecture.
 open Topology ContDiff Manifold
 open scoped EuclideanGeometry
 
+namespace InscribedSquare
+
 /-- Four points `a b c d` in the plane form a rectangle with `a` opposite to `c` iff the line
 segments from `a` to `c` and from `b` to `d` have both the same length and the same midpoint, acting
 as the diagonals of the rectangle. We also require the rectangle to be nondegenerate and have a
@@ -89,3 +91,5 @@ theorem exists_inscribed_square_of_C2 (γ : Circle → ℝ²)
     (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) 2 γ) :
     ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 := by
   sorry
+
+end InscribedSquare
