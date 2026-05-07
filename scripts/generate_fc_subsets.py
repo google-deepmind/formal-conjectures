@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Generate FC100Open.lean and FC100Solved.lean subset files.
+"""Generate FC100OpenSet{N}.lean and FC100SolvedSet{N}.lean subset files.
 
 Randomly samples 100 problems each from extracted_names.json:
-  - FC100Open:   drawn uniformly at random from `category research open` problems
-  - FC100Solved: drawn uniformly at random from all other categories
+  - FC100OpenSet{N}:   drawn uniformly at random from `category research open` problems
+  - FC100SolvedSet{N}: drawn uniformly at random from all other categories
     (research solved, test, API, textbook)
 
 All problems are eligible for sampling (no filtering). A custom `decl_name%`
@@ -25,6 +25,7 @@ from collections import Counter
 
 SEED = 42
 SAMPLE_SIZE = 100
+SET_NUMBER = 1
 
 COPYRIGHT = """/-
 Copyright 2026 The Formal Conjectures Authors.
@@ -119,24 +120,27 @@ def main():
     open_sample = random.sample(open_problems, SAMPLE_SIZE)
     other_sample = random.sample(other_problems, SAMPLE_SIZE)
 
+    open_name = f"FC100OpenSet{SET_NUMBER}"
+    solved_name = f"FC100SolvedSet{SET_NUMBER}"
+
     # Generate files.
     open_content = generate_lean_file(
         open_sample,
-        "FC100Open",
-        "FC100Open\n\nA random subset of 100 open research problems, drawn uniformly "
+        open_name,
+        f"{open_name}\n\nA random subset of 100 open research problems, drawn uniformly "
         "at random\nfrom all problems with the `category research open` tag.",
     )
 
-    open_content += """
+    open_content += f"""
 open Lean Meta ProblemAttributes in
-#eval verifyCategoryCounts Subsets.FC100Open.problems [
+#eval verifyCategoryCounts Subsets.{open_name}.problems [
   ("research open", 100)
 ]
 """
     solved_content = generate_lean_file(
         other_sample,
-        "FC100Solved",
-        "FC100Solved\n\nA random subset of 100 non-open problems, drawn uniformly at "
+        solved_name,
+        f"{solved_name}\n\nA random subset of 100 non-open problems, drawn uniformly at "
         "random\nfrom all problems without the `category research open` tag\n"
         "(solved, test, API, etc.).",
     )
@@ -147,14 +151,14 @@ open Lean Meta ProblemAttributes in
 
     solved_content += f"""
 open Lean Meta ProblemAttributes in
-#eval verifyCategoryCounts Subsets.FC100Solved.problems [
+#eval verifyCategoryCounts Subsets.{solved_name}.problems [
 {pairs_str}
 ]
 """
 
     out_dir = os.path.join(repo_root, "FormalConjectures", "Subsets")
-    open_path = os.path.join(out_dir, "FC100Open.lean")
-    solved_path = os.path.join(out_dir, "FC100Solved.lean")
+    open_path = os.path.join(out_dir, f"{open_name}.lean")
+    solved_path = os.path.join(out_dir, f"{solved_name}.lean")
 
     with open(open_path, "w") as f:
         f.write(open_content)
