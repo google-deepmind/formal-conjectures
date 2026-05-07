@@ -27,6 +27,8 @@ public section
 
 variable {α σ m} [Monad m]
 
+variable (σ)
+
 /-- Visit nodes in an infotree, where state is set only within a single branch. -/
 partial def Lean.Elab.InfoTree.visitStateOf [MonadStateOf σ m]
     (visit : ContextInfo → Info → (children : PersistentArray InfoTree) → m Unit) :

@@ -56,10 +56,12 @@ lemma τ_two : τ 2 = -24 := by
   sorry
 
 
+/-- The Ramanujan-Petersson conjecture: $|\tau(p)| \le 2 p^{11/2}$ for primes $p$. -/
 @[category research solved, AMS 11]
 theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : ℝ) ^ ((11 : ℝ) / 2) := by
   sorry
 
+/-- Lehmer's conjecture: $\tau(n) \ne 0$ for all $n > 0$. -/
 @[category research open, AMS 11]
 theorem lehmer_ramanujan_tau : ∀ n > 0, τ n ≠ 0 := by
   sorry
