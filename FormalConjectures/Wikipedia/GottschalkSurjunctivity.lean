@@ -85,9 +85,10 @@ theorem gottschalk_surjunctivity_conjecture (G : Type) [Group G] :
 
 /-- Every finite group is surjunctive. This is a classical result: an injective
 endomorphism of a finite set is surjective. -/
-@[category research solved, AMS 20 37]
+@[category undergraduate, AMS 20 37]
 theorem isSurjunctive_of_finite (G : Type) [Group G] [Finite G] :
     IsSurjunctive G := by
-  sorry
+  intro A _ _ _ _ τ _ _ hInj
+  exact Finite.surjective_of_injective hInj
 
 end GottschalkSurjunctivity
