@@ -37,8 +37,6 @@ normal in any base.
 
 open Real Filter
 
-open scoped goldenRatio
-
 namespace NormalNumber
 
 /-- The `n`-th digit (0-indexed) after the radix point in the base-`b` expansion of `x`.
