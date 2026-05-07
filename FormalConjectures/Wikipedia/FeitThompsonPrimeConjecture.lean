@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Feit%E2%80%93Thompson_conjecture)
 -/
 
+namespace FeitThompsonPrimeConjecture
+
 /--
 There are no distinct primes $p$ and $q$ such that $\frac{q^p - 1}{q - 1}$ divides $\frac{p^q - 1}{p - 1}$
 -/
@@ -29,3 +31,5 @@ There are no distinct primes $p$ and $q$ such that $\frac{q^p - 1}{q - 1}$ divid
 theorem feit_thompson_primes (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (h : p < q) :
     ¬ (q ^ p - 1) / (q - 1) ∣ (p ^ q - 1) / (p - 1) := by
   sorry
+
+end FeitThompsonPrimeConjecture

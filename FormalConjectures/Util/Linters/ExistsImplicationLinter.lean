@@ -62,6 +62,11 @@ partial def checkExistsArrow (stx : Syntax) (e : Expr) : MetaM Unit := do
         -- If the inside of the lambda expression is not a forall then we're fine.
         unless target.isForall do return
         lambdaTelescope lam fun vars target => do
+          if let .forallE _ domain codomain _ := target then
+            if codomain.hasLooseBVars then return
+            unless ← isProp domain do return
+          else
+            return
           let correctCore ← forallToAnd target
           let correctLam ← Lean.Meta.mkLambdaFVars vars correctCore
           let suggestedExpr ← mkAppM ``Exists #[correctLam]
