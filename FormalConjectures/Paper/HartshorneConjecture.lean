@@ -17,8 +17,9 @@ import FormalConjectures.Util.ProblemImports
 
 /-! # Hartshorne's conjecture on Vector Bundles
 
-*Reference*: [Varieties of small codimension in projective space](https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society-new-series/volume-80/issue-6/Varieties-of-small-codimension-in-projective-space/bams/1183535999.full)
-by *R. Hartshorne*
+*References:*
+* [Har1974] R. Hartshorne, [Varieties of small codimension in projective space](https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society-new-series/volume-80/issue-6/Varieties-of-small-codimension-in-projective-space/bams/1183535999.full).
+* [MO2010] [Evidences on Hartshorne's conjecture? References?](https://mathoverflow.net/questions/13990/evidences-on-hartshornes-conjecture-references)
 -/
 
 namespace HartshorneConjecture
@@ -95,7 +96,7 @@ open AlgebraicGeometry.Scheme
 
 /--
 There are no indecomposable vector bundles of rank 2 on $\mathbb{P}^n$ for $n \ge 7$.
-This is conjecture 6.3 in _VARIETIES OF SMALL CODIMENSION IN PROJECTIVE SPACE_, R. Hartshorne
+This is Conjecture 6.3 in [Har1974].
 -/
 @[category research open, AMS 14]
 theorem harthshorne_conjecture (n : ℕ) (hn : 7 ≤ n)

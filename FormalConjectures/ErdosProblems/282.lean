@@ -78,7 +78,7 @@ theorem erdos_282.variants.general (x : ℚ) (A : Set ℕ) :
   sorry
 
 /-- In 1202 Fibonacci observed that this process terminates for any $x$ when $A=\mathbb{N}$. -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_282.variants.fibonacci {x : ℚ} (hx : x ∈ Set.Ioo 0 1) :
     greedyUnitFractionRem .univ x =ᶠ[atTop] 0 := by
   sorry
@@ -86,7 +86,7 @@ theorem erdos_282.variants.fibonacci {x : ℚ} (hx : x ∈ Set.Ioo 0 1) :
 /--
 Graham has shown that $\frac{m}{n}$ is the sum of distinct unit fractions
 with denominators $\equiv a\pmod{d}$ if and only if
-\[\left(\frac{n}{(n,a,d)},\frac{d}{(a,d)}\right)=1.\]
+$$\left(\frac{n}{(n,a,d)},\frac{d}{(a,d)}\right)=1.$$
 Does the greedy algorithm always
 terminate in such cases?
 -/
