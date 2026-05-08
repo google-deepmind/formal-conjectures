@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 868
 
-*Reference:* [erdosproblems.com/868](https://www.erdosproblems.com/868)
+*References:*
+- [erdosproblems.com/868](https://www.erdosproblems.com/868)
+- [LaLa26] Larsen and Larsen, [Erdős problem 868](https://github.com/Larsen-Daniel/Erdos-868/blob/main/868.pdf) (2026)
 -/
 
 open Filter
@@ -36,10 +38,13 @@ def ncard_add_repr (A : Set ℕ) (o : ℕ) (n : ℕ) : ℕ :=
 
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
 $n$ can be written as the sum of two elements from $A$. If $f(n) \to \infty$ as $n \to \infty$, then
-must $A$ contain a minimal additive basis of order $2$? -/
-@[category research open, AMS 5 11]
+must $A$ contain a minimal additive basis of order $2$?
+
+Larsen and Larsen [LaLa26] answered this in the negative.
+-/
+@[category research solved, AMS 5 11]
 theorem erdos_868.parts.i :
-    answer(sorry) ↔ ∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
+    answer(False) ↔ ∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
       atTop.Tendsto (fun n => ncard_add_repr A 2 n) atTop → ∃ B ⊆ A,
       B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
@@ -47,10 +52,13 @@ theorem erdos_868.parts.i :
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
 $n$ can be written as the sum of two elements from $A$. If $f(n) > \epsilon \log n$ for large $n$
 and an arbitrary fixed $\epsilon > 0$, then must $A$ contain a minimal additive
-basis of order $2$? -/
-@[category research open, AMS 5 11]
+basis of order $2$?
+
+Larsen and Larsen [LaLa26] constructed a counterexample with $f(n) > c \log n$ for all large $n$.
+-/
+@[category research solved, AMS 5 11]
 theorem erdos_868.parts.ii :
-    answer(sorry) ↔ ∀ᵉ (A : Set ℕ) (ε > 0), A.IsAsymptoticAddBasisOfOrder 2 →
+    answer(False) ↔ ∀ᵉ (A : Set ℕ) (ε > 0), A.IsAsymptoticAddBasisOfOrder 2 →
       (∀ᶠ (n : ℕ) in atTop, ε * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
       B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
