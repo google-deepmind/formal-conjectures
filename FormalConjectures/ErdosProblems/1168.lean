@@ -110,16 +110,17 @@ def CardinalCountableColorRamsey (κ : Cardinal.{u}) : Prop :=
 -/
 
 /--
-**OPEN**: Prove that $\aleph_{\omega+1} \to (\aleph_{\omega+1}, 3, 3, \ldots)^2_{\aleph_0}$
+**OPEN**: Prove that $\aleph_{\omega+1} \not\to (\aleph_{\omega+1}, 3, 3, \ldots)^2_{\aleph_0}$
 without assuming the generalized continuum hypothesis.
 
-In any $\aleph_0$-coloring of the pairs of the complete graph on the initial ordinal
-of $\aleph_{\omega+1}$, either:
-* there is a monochromatic subset of cardinality $\aleph_{\omega+1}$ in color 0, or
-* there is a monochromatic triangle $K_3$ in some positive color.
+The source specifies the NOT-arrow (negative partition relation): there exists an
+$\aleph_0$-coloring of pairs from the initial ordinal of $\aleph_{\omega+1}$ such that
+neither
+* a color-0 monochromatic subset of cardinality $\aleph_{\omega+1}$ exists, nor
+* a positively-colored monochromatic triangle exists.
 
-The result is known under GCH (Erdős–Hajnal–Rado [EHR65]).
-The open problem (a problem of Erdős, Hajnal, and Rado) asks for a ZFC proof.
+The negative arrow is known under GCH (Erdős–Hajnal–Rado [EHR65]); the open problem (a
+problem of Erdős, Hajnal, and Rado) asks for a ZFC proof of the NOT-arrow.
 
 Here `ω` is `Ordinal.omega0` (the first infinite ordinal), so `ℵ_ (ω + 1)` is
 the successor cardinal of `ℵ_ω` (i.e., $\aleph_{\omega+1}$).
@@ -127,7 +128,7 @@ the successor cardinal of `ℵ_ω` (i.e., $\aleph_{\omega+1}$).
 **Status**: OPEN.
 -/
 @[category research open, AMS 5]
-theorem erdos_1168 : CardinalCountableColorRamsey (ℵ_ (ω + 1)) := by
+theorem erdos_1168 : ¬ CardinalCountableColorRamsey (ℵ_ (ω + 1)) := by
   sorry
 
 /-
@@ -150,7 +151,7 @@ def GCH : Prop := ∀ o : Ordinal.{0}, ℶ_ o = ℵ_ o
 
 /--
 **Erdős–Hajnal–Rado theorem under GCH** [EHR65]:
-$$\aleph_{\omega+1} \to (\aleph_{\omega+1}, \underbrace{3, 3, \ldots}_{\aleph_0})^2_{\aleph_0}$$
+$$\aleph_{\omega+1} \not\to (\aleph_{\omega+1}, \underbrace{3, 3, \ldots}_{\aleph_0})^2_{\aleph_0}$$
 assuming the generalized continuum hypothesis.
 
 Under GCH, the successor cardinal $\aleph_{\omega+1} = 2^{\aleph_\omega}$, which enables the
@@ -162,7 +163,7 @@ applicable.
 **Status**: Proved under GCH by Erdős–Hajnal–Rado [EHR65].
 -/
 @[category research solved, AMS 5]
-theorem under_GCH (hGCH : GCH) : CardinalCountableColorRamsey (ℵ_ (ω + 1)) := by
+theorem under_GCH (hGCH : GCH) : ¬ CardinalCountableColorRamsey (ℵ_ (ω + 1)) := by
   sorry
 
 /--
