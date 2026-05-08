@@ -36,27 +36,27 @@ namespace WrittenOnTheWallII.GraphConjecture25
 
 open Classical SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
 /-- `distEven G v` counts the number of vertices at even distance from `v` in `G`.
 Distance 0 (the vertex itself) is even, so `distEven G v ≥ 1`. -/
-noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
+noncomputable def distEven {α : Type*} [Fintype α]
+    (G : SimpleGraph α) (v : α) : ℕ :=
   (Finset.univ.filter (fun w => Even (G.dist v w))).card
 
 /--
 WOWII [Conjecture 25](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj25)
 (status F, disproved):
 
-For a simple connected graph `G`,
+For every finite simple connected graph `G`,
 `b(G) ≥ 2 · ⌈(1 + min_v dist_even(v)) / 3⌉`
 where `b(G)` is the size of a largest induced bipartite subgraph and
 `dist_even(v)` is the number of vertices at even distance from `v`.
 -/
 @[category research solved, AMS 5]
 theorem conjecture25 : answer(False) ↔
-    ∀ (G : SimpleGraph α) (_ : G.Connected),
-      let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
-      2 * ⌈(1 + (minDistEven : ℝ)) / 3⌉ ≤ b G := by
+    ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+      ∀ (G : SimpleGraph α) (_ : G.Connected),
+        let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
+        2 * ⌈(1 + (minDistEven : ℝ)) / 3⌉ ≤ b G := by
   sorry
 
 -- Sanity checks
