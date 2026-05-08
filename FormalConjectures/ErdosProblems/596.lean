@@ -137,15 +137,33 @@ Erdős and Hajnal established the second. The problem is to characterize **all**
 
 See Problem [595] for the specific question of whether $(K_4, K_3)$ is such a pair.
 
-**Formalization:** We formalize the problem as asking for a complete characterization of all
-Erdős–Hajnal exceptional pairs. The `answer(sorry)` reflects that such a characterization is
-open: we do not know which pairs $(G_1, G_2)$ have both properties simultaneously.
+**Formalization:** The Erdős/Hajnal question is to *characterize* the class of exceptional
+pairs, not merely to prove the class is nonempty (which is already settled by `(C_4, C_6)`).
+We therefore put the conjectural characterizing predicate behind `answer(sorry)` and assert
+that it agrees with `IsErdosHajnalExceptional` for every pair `(G₁, G₂)`. The mere
+existence of one exceptional pair is recorded separately as
+`erdos_596.variants.exists_exceptional`.
 
 **Status:** OPEN.
 -/
 @[category research open, AMS 5]
-theorem erdos_596 : answer(sorry) ↔
-    ∃ (U₁ U₂ : Type*) (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
+theorem erdos_596 :
+    ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
+      IsErdosHajnalExceptional G₁ G₂ ↔
+      (answer(sorry) : ∀ {U₁ U₂ : Type}, SimpleGraph U₁ → SimpleGraph U₂ → Prop) G₁ G₂ := by
+  sorry
+
+/--
+**Existence of an Erdős–Hajnal exceptional pair**: there is at least one pair $(G_1, G_2)$
+that is exceptional. This was the original Erdős–Hajnal conjecture's negation; it is
+witnessed by $(C_4, C_6)$ via [NeRo75] and [Er87]. The full open question (`erdos_596`)
+asks to characterize *all* such pairs.
+
+**Status:** SOLVED.
+-/
+@[category research solved, AMS 5]
+theorem erdos_596.variants.exists_exceptional :
+    ∃ (U₁ U₂ : Type) (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
       IsErdosHajnalExceptional G₁ G₂ := by
   sorry
 
