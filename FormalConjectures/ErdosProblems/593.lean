@@ -71,42 +71,56 @@ namespace Erdos593
 /- ## Main open problem -/
 
 /--
-**Erdős Problem 593 ($500)**: Every obligatory finite 3-uniform hypergraph is 2-colorable.
+**Erdős Problem 593 ($500)**: A finite 3-uniform hypergraph is obligatory iff it is
+2-colorable.
 
 *Original statement (erdosproblems.com/593)*: "Characterize those finite 3-uniform hypergraphs
 which appear in every 3-uniform hypergraph of chromatic number $> \aleph_0$."
 
 **Background:** In the graph case ($r = 2$), Erdős, Galvin, and Hajnal [EGH75] proved that
 the obligatory finite graphs are exactly the finite bipartite graphs (= 2-colorable graphs).
-For the 3-uniform case, 2-colorability (Property B) is a natural necessary condition: if a
-finite 3-uniform hypergraph $F$ is not 2-colorable, one can construct a hypergraph with large
-chromatic number that contains no copy of $F$. Whether the converse holds (i.e., whether every
-2-colorable finite 3-uniform hypergraph is obligatory) is the main open question.
+The natural conjectured 3-uniform analogue — and the conjectural characterization recorded
+here — is that obligatory finite 3-uniform hypergraphs are exactly the 2-colorable ones
+(Property B). The forward direction (`IsObligatory → IsTwoColorable`) and converse
+(`IsTwoColorable → IsObligatory`) are both open and stated as separate variants below.
 
-This theorem states the known necessary direction (every obligatory hypergraph is 2-colorable),
-which is the analogue of the graph case result. The full characterization remains open.
-
-**Status:** OPEN (the necessary condition stated here is part of the open problem).
+**Status:** OPEN.
 
 **Prize:** \$500 (see erdosproblems.com/593).
 -/
 @[category research open, AMS 5]
 theorem erdos_593 : answer(sorry) ↔
     ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
+      IsObligatory F ↔ F.IsTwoColorable := by
+  sorry
+
+/--
+**Erdős Problem 593 — Necessary direction (open)**: Every obligatory finite 3-uniform
+hypergraph is 2-colorable.
+
+This is the natural necessary condition for the conjectural characterization in `erdos_593`:
+if a finite 3-uniform hypergraph `F` is not 2-colorable, one expects to construct a
+hypergraph with large chromatic number that contains no copy of `F`.
+
+**Status:** OPEN.
+-/
+@[category research open, AMS 5]
+theorem erdos_593.variants.obligatory_implies_two_colorable : answer(sorry) ↔
+    ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
       IsObligatory F → F.IsTwoColorable := by
   sorry
 
 /--
-**Erdős Problem 593 — Converse direction (also open)**: Every finite 2-colorable 3-uniform
+**Erdős Problem 593 — Sufficient direction (open)**: Every finite 2-colorable 3-uniform
 hypergraph is obligatory.
 
-This is the converse of `erdos_593`: if the characterization of obligatory 3-uniform
-hypergraphs is exactly 2-colorability (as in the graph case), then every 2-colorable finite
-3-uniform hypergraph must appear in every 3-uniform hypergraph of chromatic number $> \aleph_0$.
+This is the converse direction of the `erdos_593` characterization: if 2-colorability
+matches the graph-case characterization (bipartite ⇔ obligatory), then every 2-colorable
+finite 3-uniform hypergraph must appear in every 3-uniform hypergraph of chromatic number
+$> \aleph_0$.
 
-**Status:** OPEN. The full Erdős Problem 593 is to determine whether `erdos_593` and
-`erdos_593.variants.two_colorable_implies_obligatory` both hold (i.e., whether
-`IsObligatory F ↔ F.IsTwoColorable`).
+**Status:** OPEN. Together with `erdos_593.variants.obligatory_implies_two_colorable`,
+this implies `erdos_593`.
 -/
 @[category research open, AMS 5]
 theorem erdos_593.variants.two_colorable_implies_obligatory : answer(sorry) ↔
