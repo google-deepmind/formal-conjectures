@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -171,7 +171,7 @@ theorem erdos_1173.sanity.singleton_is_free
 **Monotonicity of `IsFreeSet`**: If $Y$ is a free set and $Z \subseteq Y$, then $Z$ is also free.
 
 Free sets are downward-closed under inclusion. -/
-@[category undergraduate, AMS 3]
+@[category textbook, AMS 3]
 theorem erdos_1173.variants.free_set_mono
     (f : (ω_ (ω + 1)).ToType → Set (ω_ (ω + 1)).ToType)
     {Y Z : Set (ω_ (ω + 1)).ToType}
@@ -185,7 +185,7 @@ has cardinality strictly less than $\aleph_{\omega+1}$.
 
 Since $|f(\alpha)| \leq \aleph_\omega < \aleph_{\omega+1}$, each image is strictly smaller
 than the full domain. -/
-@[category undergraduate, AMS 3]
+@[category textbook, AMS 3]
 theorem erdos_1173.variants.image_lt_aleph_succ
     (f : (ω_ (ω + 1)).ToType → Set (ω_ (ω + 1)).ToType)
     (hf : IsSetMapping f)
