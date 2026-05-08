@@ -39,7 +39,7 @@ For instance, `theorem foo` would trigger a warning, while `Nat.foo` would not.
 This helps maintain organization and avoid polluting the global namespace.
 -/
 register_option linter.style.namespace : Bool := {
-  defValue := true
+  defValue := false
   descr := "enable the namespace linter"
 }
 

@@ -32,7 +32,7 @@ public meta section
 open Lean Elab Meta Linter Command Parser Term
 
 register_option linter.style.category_attribute : Bool := {
-  defValue := true
+  defValue := false
   descr := "enable the `category` attribute style linter"
 }
 

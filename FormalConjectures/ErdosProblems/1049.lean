@@ -48,9 +48,10 @@ theorem erdos_1049.variants.geq_2_integer :
   sorry
 
 /--
-The Lambert series identity where $x = 1/t$ for the divisor function.
+The classical Lambert series identity: $\sum_{n=1}^\infty \frac{1}{t^n - 1} =
+\sum_{n=1}^\infty \frac{\tau(n)}{t^n}$, where $\tau(n)$ counts the divisors of $n$.
 -/
-@[category test, AMS 11]
+@[category textbook, AMS 11]
 theorem lambert_series_eq_num_divisor_sum : ∀ t : ℚ,
      ∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1) =
      ∑' n : ℕ+, (n : ℕ).divisors.card / ((t : ℝ) ^ (n : ℕ)) := by

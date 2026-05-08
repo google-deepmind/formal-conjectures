@@ -82,7 +82,7 @@ theorem erdos_918.variants.erdos_hajnal (k : ℕ) (hk : 0 < k) : ∃ (V : Type u
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the first question with induced subgraphs. -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_918.variants.eq_aleph_0.parts.i :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
       ∀ (W : Set V) (_ : #W = ℵ₁), (G.induce W).chromaticCardinal = ℵ₀ := by
@@ -92,7 +92,7 @@ theorem erdos_918.variants.eq_aleph_0.parts.i :
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the first question with all subgraphs. -/
-@[category high_school, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.i :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ₁), H.coe.chromaticCardinal = ℵ₀ := by
@@ -102,7 +102,7 @@ theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.i :
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with induced subgraphs. -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_918.variants.eq_aleph_0.parts.ii (ω : Ordinal) :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal = ℵ₀ := by
@@ -112,7 +112,7 @@ theorem erdos_918.variants.eq_aleph_0.parts.ii (ω : Ordinal) :
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with all subgraphs. -/
-@[category high_school, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.ii (ω : Ordinal) :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal = ℵ₀ := by
