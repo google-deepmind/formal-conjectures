@@ -160,26 +160,35 @@ theorem erdos_1172.part3 (hGCH : GCH) :
   sorry
 
 /--
-**Erdős–Hajnal Problem 1172, Part 4**: Under CH,
-$$\omega_2 \to (\omega_1 + \omega)^2_2.$$
+**Erdős–Hajnal Problem 1172, Part 4**: It is asked whether
+$$\omega_2 \to (\omega_1 + \omega)^2_2$$
+is **consistent with the Generalized Continuum Hypothesis** (GCH).
 
-Every 2-coloring of the complete graph on $\omega_2$ contains a monochromatic set of order
-type $\omega_1 + \omega$ in some color. The subscript $2$ denotes 2 colors; since `OrdinalRamsey`
-uses a 2-coloring, this is the symmetric relation
-`OrdinalRamsey (ω_ 2) (ω_ 1 + ω) (ω_ 1 + ω)`.
+The source's exact wording: "Establish whether the following is *consistent* with the
+generalised continuum hypothesis: $\omega_2\to (\omega_1+\omega)_2^2$".
 
-**Status**: OPEN.
+Concretely, one asks whether GCH ∧ `OrdinalRamsey (ω_ 2) (ω_ 1 + ω) (ω_ 1 + ω)` is
+itself consistent with ZFC.
+
+**Formalization caveat (consistency placeholder).** Lean operates inside a fixed model of
+its set theory, so we cannot directly express "consistent with ZFC + GCH" without leaving
+ZFC. We therefore record this as an `answer(sorry)` consistency placeholder. A faithful
+encoding requires either an explicit forcing-extension axiom or a meta-theoretic
+consistency wrapper not currently in `FormalConjectures`.
+
+**Status**: OPEN (a consistency-with-GCH question, not a ZFC theorem candidate).
 -/
 @[category research open, AMS 5]
-theorem erdos_1172.part4 (hCH : CH) :
-    OrdinalRamsey (ω_ 2) (ω_ 1 + ω) (ω_ 1 + ω) := by
+theorem erdos_1172.part4 : answer(sorry) ↔
+    (GCH ∧ OrdinalRamsey (ω_ 2) (ω_ 1 + ω) (ω_ 1 + ω)) := by
   sorry
 
 /--
-**Erdős–Hajnal Problem 1172** (combined statement): All four open partition relations hold
-under the appropriate hypotheses (GCH for parts 1–3, CH for part 4).
+**Erdős–Hajnal Problem 1172** (combined statement): all three GCH-only partition relations
+(parts 1–3) hold; the fourth part is a separate **consistency-with-GCH** question and is
+captured by `erdos_1172.part4`.
 
-A positive answer would significantly extend the Erdős–Rado theorem
+A positive answer to parts 1–3 would significantly extend the Erdős–Rado theorem
 $(2^\kappa)^+ \to (\kappa^+ + 1)^2_\kappa$ in the direction of uncountable ordinal partition
 calculus under GCH.
 
@@ -189,8 +198,7 @@ calculus under GCH.
 theorem erdos_1172 (hGCH : GCH) :
     OrdinalRamsey (ω_ 3) (ω_ 2) (ω_ 1 + 2) ∧
     OrdinalRamsey (ω_ 3) (ω_ 2 + ω_ 1) (ω_ 2 + ω) ∧
-    OrdinalRamsey (ω_ 2) (ω_ 1 ^ (ω + 2) + 2) (ω_ 1 + 2) ∧
-    OrdinalRamsey (ω_ 2) (ω_ 1 + ω) (ω_ 1 + ω) := by
+    OrdinalRamsey (ω_ 2) (ω_ 1 ^ (ω + 2) + 2) (ω_ 1 + 2) := by
   sorry
 
 /- ### Related known result: Erdős–Rado theorem -/
