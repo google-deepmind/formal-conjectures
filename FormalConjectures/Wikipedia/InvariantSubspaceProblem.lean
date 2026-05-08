@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 [Chalendar-Partington](https://arxiv.org/abs/2507.21834)
 -/
 
+namespace InvariantSubspaceProblem
+
 variable {H : Type*} [NormedAddCommGroup H]
 
 /-- `ClosedInvariantSubspace T` is the type of non-trivial (different from `H` and `{0}`) closed
@@ -115,3 +117,5 @@ theorem Invariant_subspace_problem_l1 :
     ∃ (T : (lp (fun (_ : ℕ) => ℂ) 1) →L[ℂ] (lp (fun (_ : ℕ) => ℂ) 1)),
     IsEmpty (ClosedInvariantSubspace T) := by
   sorry
+
+end InvariantSubspaceProblem
