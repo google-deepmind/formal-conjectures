@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -197,7 +197,7 @@ theorem erdos_603.variants.disjoint : answer(True) ↔
 
 If the index set `I` is empty, then `HasChromaticPropertyB` holds vacuously for any colouring
 type (in particular for `ℕ`-colourings). -/
-@[category undergraduate, AMS 3]
+@[category textbook, AMS 3]
 theorem erdos_603.variants.empty_index {α : Type*} :
     ∀ (A : PEmpty → Set α),
       (∀ i, (A i).Infinite) →
@@ -211,7 +211,7 @@ theorem erdos_603.variants.empty_index {α : Type*} :
 If the index set has exactly one element, then `HasChromaticPropertyB ℕ I A` holds:
 the single infinite set `A default` has two distinct elements, so we can colour one with 1
 and the other with 0. -/
-@[category undergraduate, AMS 3]
+@[category textbook, AMS 3]
 theorem erdos_603.variants.unique_index {α : Type*} (I : Type*) [Unique I]
     (A : I → Set α) (hInfinite : ∀ i, (A i).Infinite) :
     HasChromaticPropertyB ℕ I A := by
