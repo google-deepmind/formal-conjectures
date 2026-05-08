@@ -117,10 +117,31 @@ Since every countably infinite set bijects with `ℕ`, this is equivalent to the
 formulation over `ℕ`.
 
 **Formalization note on "smallest cardinal":** The problem asks for the *minimum* `C`. We
-formalize this as: `C` is the smallest cardinal with `HasChromaticPropertyB (C.out) I A`.
-The `answer(sorry)` placeholder represents the (currently unknown) cardinal answer. -/
+formalize this as: `C` is the least cardinal `κ` (i.e., `IsLeast` over the set of cardinals
+that work) such that whenever a representative type of cardinality `κ` is used as the
+colour set, every admissible family admits a non-monochromatic colouring.
+
+Concretely, the answer is the least element of the set
+`{ κ : Cardinal | ∀ {α I : Type*} (A : I → Set α), … → HasChromaticPropertyB κ.out I A }`.
+The `answer(sorry)` placeholder represents the (currently unknown) cardinal value. -/
 @[category research open, AMS 3 5]
-theorem erdos_603 : answer(sorry) ↔
+theorem erdos_603 :
+    IsLeast { κ : Cardinal.{0} |
+      ∀ {α : Type*} {I : Type*} (A : I → Set α),
+        (∀ i, (A i).Countable ∧ (A i).Infinite) →
+        (∀ i j, i ≠ j → Set.ncard (A i ∩ A j) ≠ 2) →
+        HasChromaticPropertyB κ.out I A }
+    answer(sorry) := by
+  sorry
+
+/--
+**ℕ-valued variant of Erdős Problem 603.**
+
+Demoted from the original headline statement: this fixes the colour type to `ℕ` and asks
+only whether countably-many colours suffice. The full open problem (`erdos_603`) asks for
+the *least* cardinal that works, which is captured via `IsLeast` over `Cardinal` above. -/
+@[category research open, AMS 3 5]
+theorem erdos_603.variants.nat_colours : answer(sorry) ↔
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
       (∀ i j, i ≠ j → Set.ncard (A i ∩ A j) ≠ 2) →
