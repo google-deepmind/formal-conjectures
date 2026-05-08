@@ -248,7 +248,7 @@ example : ℵ₀ < ℵ_ 1 ∧ ℵ₀ < ℵ_ 2 := by
 `G₁` appears in `H`. This is the key composition property underlying Problem 593's
 `obligatory_monotone` result.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_1177.variants.appears_trans
     {W₁ W₂ V : Type}
     {G₁ : ThreeUniformHypergraph W₁} {G₂ : ThreeUniformHypergraph W₂}
@@ -271,7 +271,7 @@ Intuition: if `X` avoids `G₂` (a pattern that contains `G₁` via `G₂.Appear
 contradicting the assumption. Hence avoiding the sub-pattern `G₂` is harder: fewer hypergraphs
 are in `FamilyAvoids G₂`, and every such hypergraph also avoids the larger `G₁`.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_1177.variants.family_avoids_mono
     {W₁ W₂ : Type}
     {G₁ : ThreeUniformHypergraph W₁} {G₂ : ThreeUniformHypergraph W₂}
