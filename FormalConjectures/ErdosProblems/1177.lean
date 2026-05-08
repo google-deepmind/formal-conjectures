@@ -133,7 +133,7 @@ of cardinality at most $2^{2^{\aleph_0}}$."
 @[category research open, AMS 5]
 theorem erdos_1177.conjectures.one :
     answer(sorry) ↔
-    ∀ {W : Type} (G : ThreeUniformHypergraph W),
+    ∀ {W : Type} [Fintype W] (G : ThreeUniformHypergraph W),
       (FamilyAvoids G (ℵ_ 1)).Nonempty →
       ∃ p ∈ FamilyAvoids G (ℵ_ 1), #p.1 ≤ (2 : Cardinal) ^ ((2 : Cardinal) ^ ℵ₀) := by
   sorry
@@ -155,8 +155,8 @@ $\mathcal{F}_G(\aleph_1) \cap \mathcal{F}_H(\aleph_1)$ is non-empty."
 @[category research open, AMS 5]
 theorem erdos_1177.conjectures.two :
     answer(sorry) ↔
-    ∀ {W₁ : Type} (G : ThreeUniformHypergraph W₁)
-      {W₂ : Type} (H : ThreeUniformHypergraph W₂),
+    ∀ {W₁ : Type} [Fintype W₁] (G : ThreeUniformHypergraph W₁)
+      {W₂ : Type} [Fintype W₂] (H : ThreeUniformHypergraph W₂),
       (FamilyAvoids G (ℵ_ 1)).Nonempty →
       (FamilyAvoids H (ℵ_ 1)).Nonempty →
       ∃ V : Type, ∃ X : ThreeUniformHypergraph V,
@@ -181,7 +181,7 @@ $\mathcal{F}_G(\lambda)$ is non-empty."
 @[category research open, AMS 5]
 theorem erdos_1177.conjectures.three :
     answer(sorry) ↔
-    ∀ {W : Type} (G : ThreeUniformHypergraph W)
+    ∀ {W : Type} [Fintype W] (G : ThreeUniformHypergraph W)
       (κ μ : Cardinal.{0}),
       ℵ₀ < κ → ℵ₀ < μ →
       (FamilyAvoids G κ).Nonempty →
@@ -199,16 +199,16 @@ This bundles the three individual open conjectures into a single statement.
 -/
 @[category research open, AMS 5]
 theorem erdos_1177 : answer(sorry) ↔
-    (∀ {W : Type} (G : ThreeUniformHypergraph W),
+    (∀ {W : Type} [Fintype W] (G : ThreeUniformHypergraph W),
       (FamilyAvoids G (ℵ_ 1)).Nonempty →
       ∃ p ∈ FamilyAvoids G (ℵ_ 1), #p.1 ≤ (2 : Cardinal) ^ ((2 : Cardinal) ^ ℵ₀)) ∧
-    (∀ {W₁ : Type} (G : ThreeUniformHypergraph W₁)
-       {W₂ : Type} (H : ThreeUniformHypergraph W₂),
+    (∀ {W₁ : Type} [Fintype W₁] (G : ThreeUniformHypergraph W₁)
+       {W₂ : Type} [Fintype W₂] (H : ThreeUniformHypergraph W₂),
       (FamilyAvoids G (ℵ_ 1)).Nonempty →
       (FamilyAvoids H (ℵ_ 1)).Nonempty →
       ∃ V : Type, ∃ X : ThreeUniformHypergraph V,
         X.chromaticCardinal = ℵ_ 1 ∧ ¬ G.Appears X ∧ ¬ H.Appears X) ∧
-    (∀ {W : Type} (G : ThreeUniformHypergraph W)
+    (∀ {W : Type} [Fintype W] (G : ThreeUniformHypergraph W)
        (κ μ : Cardinal.{0}),
       ℵ₀ < κ → ℵ₀ < μ →
       (FamilyAvoids G κ).Nonempty →
