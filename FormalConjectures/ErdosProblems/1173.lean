@@ -76,13 +76,18 @@ def GCH : Prop := ∀ o : Ordinal.{0}, (2 : Cardinal.{0}) ^ ℵ_ o = ℵ_ (Order
 $f : \omega_{\omega+1} \to \mathcal{P}(\omega_{\omega+1})$.
 
 We require:
-1. Each image $f(\alpha)$ has cardinality at most $\aleph_\omega$.
-2. For any two distinct elements $\alpha \neq \beta$, the intersection
+1. **Self-avoidance**: $\alpha \notin f(\alpha)$ for every $\alpha$.
+2. Each image $f(\alpha)$ has cardinality at most $\aleph_\omega$.
+3. For any two distinct elements $\alpha \neq \beta$, the intersection
    $f(\alpha) \cap f(\beta)$ has cardinality strictly less than $\aleph_\omega$.
+
+The self-avoidance condition is the standard requirement on a set mapping in the
+Erdős–Hajnal sense (see the PR description for Problem 1173).
 
 Here the domain is the type `(ω_ (ω + 1)).ToType` corresponding to the initial ordinal
 $\omega_{\omega+1}$, and `Set (ω_ (ω + 1)).ToType` is the powerset. -/
 def IsSetMapping (f : (ω_ (ω + 1)).ToType → Set (ω_ (ω + 1)).ToType) : Prop :=
+  (∀ α : (ω_ (ω + 1)).ToType, α ∉ f α) ∧
   (∀ α : (ω_ (ω + 1)).ToType, #(f α) ≤ ℵ_ ω) ∧
   (∀ α β : (ω_ (ω + 1)).ToType, α ≠ β → #(f α ∩ f β : Set (ω_ (ω + 1)).ToType) < ℵ_ ω)
 
@@ -191,6 +196,6 @@ theorem erdos_1173.variants.image_lt_aleph_succ
     (hf : IsSetMapping f)
     (α : (ω_ (ω + 1)).ToType) :
     #(f α) < ℵ_ (ω + 1) := by
-  exact (hf.1 α).trans_lt (Cardinal.aleph_lt_aleph.mpr (Order.lt_succ ω))
+  exact (hf.2.1 α).trans_lt (Cardinal.aleph_lt_aleph.mpr (Order.lt_succ ω))
 
 end Erdos1173
