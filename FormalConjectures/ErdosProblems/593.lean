@@ -176,7 +176,7 @@ $> \aleph_0$ must have an uncountable vertex set.
 numbers as colors gives a proper coloring, so $\chi(H) \leq \#\mathbb{N} = \aleph_0$,
 contradicting $\chi(H) > \aleph_0$.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_593.variants.uncountable_vertices_if_large_chromatic
     {V : Type} (H : ThreeUniformHypergraph V) (hχ : ℵ₀ < H.chromaticCardinal) :
     ¬ Countable V := by
@@ -206,7 +206,7 @@ theorem erdos_593.variants.uncountable_vertices_if_large_chromatic
 be properly colored with a single color, so its chromatic cardinal is at most 1. In
 particular, $\chi(H) > \aleph_0$ implies `H` has at least one hyperedge.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_593.variants.nonempty_edges_if_large_chromatic
     {V : Type} (H : ThreeUniformHypergraph V) (hχ : ℵ₀ < H.chromaticCardinal) :
     H.edges.Nonempty := by
@@ -234,7 +234,7 @@ then `F₁` is also obligatory.
 in `H` via some injection `φ₂`. Since `F₁` appears in `F₂` via `φ₁`, the composition
 `φ₂ ∘ φ₁` witnesses that `F₁` appears in `H`.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_593.variants.obligatory_monotone
     {W₁ W₂ : Type} [Fintype W₁] [Fintype W₂] [DecidableEq W₂]
     {F₁ : ThreeUniformHypergraph W₁} {F₂ : ThreeUniformHypergraph W₂}
@@ -256,7 +256,7 @@ vertices, no edges) appears in every hypergraph via the empty injection.
 
 This degenerate case confirms the definition is well-formed.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_593.variants.empty_hypergraph_obligatory :
     IsObligatory (W := PEmpty) ⟨∅, fun _ h => (Set.mem_empty_iff_false _).mp h |>.elim⟩ := by
   intro V _hV H _hχ
