@@ -119,6 +119,18 @@ Erdős offered $250 for the case `α = ω₁ ^ (ω + 2)` and **$500 for the gene
 -/
 @[category research open, AMS 5]
 theorem erdos_601 :
+    ∀ α : Ordinal.{0}, Order.IsSuccLimit α →
+      (HasPathOrIndepSetOfType α ↔
+        (answer(sorry) : Ordinal.{0} → Prop) α) := by
+  sorry
+
+/--
+**Universal variant** (named conjectural form): the strong statement that
+`HasPathOrIndepSetOfType α` holds for *every* limit ordinal `α`. The headline open problem
+(`erdos_601`) is the weaker characterization question; this variant asks whether the
+universal answer is "yes". -/
+@[category research open, AMS 5]
+theorem erdos_601.variants.universal :
     answer(sorry) ↔
     ∀ α : Ordinal.{0}, Order.IsSuccLimit α → HasPathOrIndepSetOfType α := by
   sorry
