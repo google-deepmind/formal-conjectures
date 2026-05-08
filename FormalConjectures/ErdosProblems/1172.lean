@@ -105,7 +105,7 @@ This is the special case `o = 0` of GCH, since `ℵ_ (Order.succ 0) = ℵ_ 1`.
 def CH : Prop := (2 : Cardinal.{0}) ^ ℵ₀ = ℵ_ 1
 
 /-- GCH implies CH: apply GCH at `o = 0` and use `ℵ_ (Order.succ 0) = ℵ_ 1`. -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem gch_implies_ch (h : GCH) : CH := by
   unfold GCH at h
   unfold CH
