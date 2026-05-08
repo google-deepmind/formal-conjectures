@@ -136,7 +136,7 @@ a subgraph of `G`), then `H` is also a countable union of triangle-free graphs.
 **Proof**: If `G = ⨆ i, G_i` with each `G_i` triangle-free, then `H = ⨆ i, H ⊓ G_i`.
 Each `H ⊓ G_i` is triangle-free because it is a subgraph of `G_i`.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_595.variants.subgraph_of_countable_union
     {V : Type*} {G H : SimpleGraph V}
     (hH : H ≤ G) (hG : IsCountableUnionOfTriangleFree G) :
@@ -158,7 +158,7 @@ theorem erdos_595.variants.subgraph_of_countable_union
 **Triangle-free graphs are trivially countable unions of triangle-free graphs**: if `G` is
 already triangle-free, then `G = ⨆ i : ℕ, G_i` where `G_0 = G` and `G_i = ⊥` for `i ≥ 1`.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_595.variants.triangle_free_is_union
     {V : Type*} (G : SimpleGraph V) (hG : G.CliqueFree 3) :
     IsCountableUnionOfTriangleFree G := by
@@ -187,7 +187,7 @@ the three edges `{a, b}`, `{a, c}`, `{b, c}` would pass through `m`. In particul
 `{a, b}` we get `a = m` or `b = m`; from `{b, c}` we get `b = m` or `c = m`. Case analysis
 shows that two vertices must equal `m`, contradicting the triangle having three distinct vertices.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_595.variants.complete_nat_is_union :
     IsCountableUnionOfTriangleFree (⊤ : SimpleGraph ℕ) := by
   -- Star at m: edges are all {a, b} where a = m or b = m (and a ≠ b, by SimpleGraph.fromRel).
@@ -241,7 +241,7 @@ graph $K_4$, so it contains $K_4$ as a subgraph and is not $K_4$-free.
 
 This sanity check confirms the $K_4$-free hypothesis of Problem 595 is non-trivial.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_595.variants.K4_not_cliqueFree :
     ¬ (⊤ : SimpleGraph (Fin 4)).CliqueFree 4 := by
   rw [not_cliqueFree_iff]
