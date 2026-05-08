@@ -77,13 +77,17 @@ one of the following must hold:
 * There is a blue-monochromatic subset of cardinality `c`: a set `s ⊆ α.ToType` with `#s = c`
   such that every three distinct elements of `s` are colored blue.
 
-The coloring is given as a function `col : α.ToType → α.ToType → α.ToType → Bool`
-(or equivalently, a predicate `isRed : α.ToType → α.ToType → α.ToType → Prop`) on
-unordered triples; we represent it symmetrically via `Set.Triplewise`.
+The coloring is given as a predicate `isRed : α.ToType → α.ToType → α.ToType → Prop` on
+ordered triples of distinct elements; to faithfully encode a coloring of *unordered*
+3-element subsets we additionally require `isRed` to be invariant under permutation of
+its three (distinct) arguments.
 -/
 def OrdinalCardinalRamsey3 (α β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
   -- For any partition of 3-element subsets into red and blue:
   ∀ (isRed : α.ToType → α.ToType → α.ToType → Prop),
+    -- The colouring is well-defined on *unordered* triples of distinct elements:
+    (∀ x y z, x ≠ y → y ≠ z → x ≠ z →
+      (isRed x y z ↔ isRed y x z) ∧ (isRed x y z ↔ isRed x z y)) →
     -- either there is a red-monochromatic subset of order type β
     (∃ s : Set α.ToType, typeLT s = β ∧ s.Triplewise isRed) ∨
     -- or there is a blue-monochromatic subset of cardinality c
@@ -115,7 +119,7 @@ Here:
 -/
 @[category research open, AMS 3]
 theorem erdos_70 :
-    answer(True) ↔
+    answer(sorry) ↔
     ∀ᵉ (β : Ordinal.{0}) (n : ℕ) (_ : β.card ≤ ℵ₀) (_ : 2 ≤ n),
       OrdinalCardinalRamsey3 continuumOrd β n := by
   sorry
@@ -184,8 +188,8 @@ This allows us to deduce weaker partition results from stronger ones.
 theorem ordinalCardinalRamsey3_mono {α β β' : Ordinal.{u}} {c c' : Cardinal.{u}}
     (h : OrdinalCardinalRamsey3 α β c) (hβ : β' ≤ β) (hc : c' ≤ c) :
     OrdinalCardinalRamsey3 α β' c' := by
-  intro isRed
-  obtain (⟨s, hs_type, hs_clique⟩ | ⟨s, hs_card, hs_clique⟩) := h isRed
+  intro isRed hSym
+  obtain (⟨s, hs_type, hs_clique⟩ | ⟨s, hs_card, hs_clique⟩) := h isRed hSym
   · -- Red case: s has type β; find a sub-set of type β' ≤ β
     rw [← Ordinal.type_toType β'] at hβ
     obtain ⟨g⟩ := Ordinal.type_le_iff'.mp (hs_type ▸ hβ)
