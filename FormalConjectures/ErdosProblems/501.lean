@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -174,7 +174,7 @@ theorem erdos_501.variants.gladysz_size2 : answer(True) ↔
 
 For any family `A`, any singleton `{x}` is vacuously independent: there are no two
 distinct elements. -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_501.variants.singleton_independent (A : ℝ → Set ℝ) (x : ℝ) :
     IsIndependent A {x} := by
   intro a ha b hb hab
@@ -186,7 +186,7 @@ theorem erdos_501.variants.singleton_independent (A : ℝ → Set ℝ) (x : ℝ)
 
 A two-element set `{x, y}` (with `x ≠ y`) is independent for `A` if and only if
 `x ∉ A y` and `y ∉ A x`. -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_501.variants.pair_independent_iff (A : ℝ → Set ℝ) {x y : ℝ} (hxy : x ≠ y) :
     IsIndependent A {x, y} ↔ x ∉ A y ∧ y ∉ A x := by
   constructor
