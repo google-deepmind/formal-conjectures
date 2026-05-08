@@ -55,13 +55,13 @@ theorem erdos_1054.parts.iii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=2$, i.e. we get the junk value $0$. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem f_undefined_at_2 : f 2 = 0 := by
   sorry
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=5$, i.e. we get the junk value $0$. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem f_undefined_at_3 : f 5 = 0 := by
   sorry
 

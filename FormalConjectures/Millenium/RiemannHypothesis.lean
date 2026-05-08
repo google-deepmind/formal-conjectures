@@ -27,23 +27,23 @@ posed by the Clay Mathematics Institute.
 The Generalized Riemann Hypothesis extends this to Dirichlet $L$-functions of primitive
 Dirichlet characters.
 
-The Extended Riemann Hypothesis is a closely related conjecture for Dedekind zeta functions of
-number fields.
-
-Note: in Mathlib, `NumberField.dedekindZeta` is currently defined as the naive Dirichlet series
-(`LSeries`), not as a meromorphic continuation. The statements here follow Mathlib's naming.
+Note: the **Extended Riemann Hypothesis** (ERH) for Dedekind zeta functions is intentionally
+**not** stated here. Mathlib's `NumberField.dedekindZeta` is the naive Dirichlet series
+(`LSeries`), not a meromorphic continuation; outside the region of absolute convergence
+`tsum` returns junk `0`, producing spurious zeros that make the naive foramlisation of the
+conjecture provably false. The ERH should be added once Mathlib provides a meromorphic
+continuation of the Dedekind zeta function.
 
 *References:*
 - [The Clay Institute](https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf)
 - [Wikipedia: Riemann hypothesis](https://en.wikipedia.org/wiki/Riemann_hypothesis)
 - [Wikipedia: Generalized Riemann hypothesis](https://en.wikipedia.org/wiki/Generalized_Riemann_hypothesis)
-- [Wikipedia: Generalized Riemann hypothesis (Extended Riemann hypothesis)](https://en.wikipedia.org/wiki/Generalized_Riemann_hypothesis#Extended_Riemann_hypothesis)
 - [Wikipedia: Dedekind zeta function](https://en.wikipedia.org/wiki/Dedekind_zeta_function)
 - J. Neukirch, *Algebraic Number Theory*, Springer (Grundlehren 322), 1999, Chapter VII, §5.
 - D. A. Marcus, *Number Fields*, Springer (GTM 81), 1977, Chapter VII.
 -/
 
-section RiemannHypothesis
+namespace RiemannHypothesis
 
 /-- The **Riemann Hypothesis**: all non-trivial zeros of the Riemann zeta function have real
 part $\frac{1}{2}$. That is, if $\zeta(s) = 0$, $s \neq 1$, and $s$ is not a trivial zero
@@ -92,70 +92,16 @@ theorem implies_riemannHypothesis :
 
 end GRH
 
-namespace ExtendedRiemannHypothesis
+/- NOTE: Extended Riemann Hypothesis
+## Extended Riemann Hypothesis
 
-/-- The (open) critical strip $\{ s \in \mathbb{C} \mid 0 < \Re(s) < 1 \}$. -/
-def IsInCriticalStrip (s : ℂ) : Prop :=
-  0 < s.re ∧ s.re < 1
+The ERH for Dedekind zeta functions **cannot** currently be stated correctly because
+`NumberField.dedekindZeta` in Mathlib is the naive `LSeries`, not the meromorphic
+continuation.  Outside the region of absolute convergence (`re s > 1`), `tsum` returns
+junk `0` for non-summable series.  A statement using the raw `dedekindZeta` therefore has
+spurious "zeros" that make the conjecture provably **false**.
 
-/--
-A convenient (over-)approximation to the set of *trivial* zeros of a Dedekind zeta function.
-
-When $K$ is totally real, the only poles in the completed zeta function come from $\Gamma(s/2)$,
-so the trivial zeros occur at non-positive even integers; otherwise $\Gamma(s)$ also appears,
-giving trivial zeros at all non-positive integers.
-
-Informally, the trivial zeros come from the poles of the $\Gamma$-factors in the functional
-equation for the completed zeta function. In particular, they occur at non-positive integers, with
-the exact pattern depending on the signature of $K$.
+A correct formalisation requires a meromorphic continuation of the Dedekind zeta function
+(analogous to how `ZMod.LFunction` extends the Dirichlet L-series).  Once Mathlib provides
+this, the ERH should be added back here.
 -/
-def trivialZeros (K : Type*) [Field K] [NumberField K] : Set ℤ :=
-  by
-    classical
-    exact if NumberField.IsTotallyReal K then { -2 * n | (n : ℕ) } else Set.Iic 0
-
-/--
-The **Extended Riemann Hypothesis** (ERH) for Dedekind zeta functions asserts that if
-$K$ is a number field and $\zeta_K(s)$ is its Dedekind zeta function, then every zero of
-$\zeta_K(s)$ is either a *trivial* zero (at a non-positive integer) or lies on the critical line
-$\Re(s) = \tfrac12$.
-
-In the formal statement below, `hs_nontrivial` excludes the chosen set of trivial zeros, and
-`hs_ne_one` excludes the (simple) pole at $s = 1$.
--/
-@[category research open, AMS 11 12 30]
-theorem extended_riemann_hypothesis_dedekindZeta (K : Type*) [Field K] [NumberField K] (s : ℂ)
-    (hs : NumberField.dedekindZeta K s = 0)
-    (hs_nontrivial : s ∉ Int.cast '' trivialZeros K)
-    (hs_ne_one : s ≠ 1) :
-    s.re = 1 / 2 := by
-  sorry
-
-/--
-A common formulation of ERH: every zero of $\zeta_K$ in the critical strip lies on the critical
-line.
--/
-@[category test, AMS 11 12 30]
-theorem extended_riemann_hypothesis_dedekindZeta_of_isInCriticalStrip (K : Type*) [Field K]
-    [NumberField K] (s : ℂ) (hs_strip : IsInCriticalStrip s)
-    (hs : NumberField.dedekindZeta K s = 0) :
-    s.re = 1 / 2 := by
-  apply extended_riemann_hypothesis_dedekindZeta (K := K) (s := s) (hs := hs)
-  · intro hs_trivial
-    rcases hs_trivial with ⟨z, hz, rfl⟩
-    rcases hs_strip with ⟨hs_re_pos, _⟩
-    have hz_le : (z : ℝ) ≤ 0 := by
-      have hz_le_int : z ≤ 0 := by
-        by_cases h : NumberField.IsTotallyReal K
-        · simp [trivialZeros, h] at hz
-          rcases hz with ⟨n, rfl⟩
-          have hn : (0 : ℤ) ≤ (n : ℤ) := by exact_mod_cast (Nat.zero_le n)
-          exact mul_nonpos_of_nonpos_of_nonneg (by norm_num : (-2 : ℤ) ≤ 0) hn
-        · simpa [trivialZeros, h] using hz
-      exact_mod_cast hz_le_int
-    exact (not_lt_of_ge hz_le) (by simpa [Complex.intCast_re] using hs_re_pos)
-  · intro hs_one
-    rcases hs_strip with ⟨_, hs_re_lt⟩
-    simp [hs_one] at hs_re_lt
-
-end ExtendedRiemannHypothesis

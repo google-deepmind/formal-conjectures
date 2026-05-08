@@ -31,7 +31,7 @@ open scoped Topology
 namespace Erdos417
 
 /--
-Let\[V'(x)=\#\{\phi(m) : 1\leq m\leq x\}\]and\[V(x)=\#\{\phi(m) \leq x : 1\leq m\}.\]
+Let$$V'(x)=\#\{\phi(m) : 1\leq m\leq x\}$$and$$V(x)=\#\{\phi(m) \leq x : 1\leq m\}.$$
 Does $\lim V(x)/V'(x)$ exist?
 
 Formalization note: We formalize the limit of the inverse fraction V'(x)/V(x)
