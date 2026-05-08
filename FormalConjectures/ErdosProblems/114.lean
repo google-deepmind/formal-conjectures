@@ -42,7 +42,7 @@ The Lean statements here do not formalize those external certificates.
 - [Ta25] Tao, T. (2025). *The Erdős--Herzog--Piranian conjecture for large n*.
 - [Me26] Mendoza, K. A. (2026). *Finite-degree verification for the
   Erdős--Herzog--Piranian lemniscate-length conjecture*.
-  doi:10.5281/zenodo.19184467.
+  Version doi:10.5281/zenodo.20087919; concept doi:10.5281/zenodo.19184467.
   Source release: https://github.com/MendozaLab/erdos-experiments/releases/tag/v3.1.0.
 
 ### AI disclosure
