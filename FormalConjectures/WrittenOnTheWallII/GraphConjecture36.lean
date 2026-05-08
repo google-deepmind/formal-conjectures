@@ -33,11 +33,9 @@ namespace WrittenOnTheWallII.GraphConjecture36
 
 open Classical SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
 /-- `dp G` is the number of diametrical pairs of `G`: the number of unordered
 pairs `{u, v}` of vertices at distance `diam(G)`.  -/
-noncomputable def dp (G : SimpleGraph α) : ℕ :=
+noncomputable def dp {α : Type*} [Fintype α] (G : SimpleGraph α) : ℕ :=
   (Finset.univ.filter
     (fun p : Sym2 α => p.lift ⟨fun u v => G.dist u v = G.diam ∧ u ≠ v,
       fun u v => by simp [SimpleGraph.dist_comm, ne_comm]⟩)).card
@@ -46,7 +44,7 @@ noncomputable def dp (G : SimpleGraph α) : ℕ :=
 WOWII [Conjecture 36](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj36)
 (status F, disproved):
 
-For a simple connected graph `G`,
+For every finite simple connected graph `G`,
 `path(G) ≥ 2 · rad(G) / dp(G)`,
 where `path(G)` is the floor of the average distance of `G`,
 `rad(G)` is the radius of `G`, and `dp(G)` is the number of *diametrical pairs*
@@ -59,8 +57,9 @@ The hypothesis `0 < dp G` is the well-definedness guard for the division.
 -/
 @[category research solved, AMS 5]
 theorem conjecture36 : answer(False) ↔
-    ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected) (_ : 0 < dp G),
-      (2 * G.radius.toNat : ℝ) / (dp G : ℝ) ≤ (path G : ℝ) := by
+    ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+      ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected) (_ : 0 < dp G),
+        (2 * G.radius.toNat : ℝ) / (dp G : ℝ) ≤ (path G : ℝ) := by
   sorry
 
 -- Sanity checks

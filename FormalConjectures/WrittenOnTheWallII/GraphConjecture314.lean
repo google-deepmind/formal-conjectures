@@ -56,15 +56,22 @@ def isWellTotallyDominated (G : SimpleGraph α) [DecidableRel G.Adj] : Prop :=
     S.card = T.card
 
 /--
-WOWII [Conjecture 314](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 314](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj314)
+(status O):
 
-If `G` is triangle-free and has path cover number at most 4, then `G` is
-well totally dominated.
+For every finite simple connected graph `G` with `n > 1` vertices,
+if `G` is triangle-free and `path(G) ≤ 4`, then `G` is well totally dominated.
+
+Here `path(G)` is the **size of a largest induced path** in `G` (the WOWII
+`path` invariant from
+`FormalConjecturesForMathlib/Combinatorics/SimpleGraph/GraphConjectures/Invariants.lean`),
+not the path cover number `p(G)`.
 -/
 @[category research open, AMS 5]
-theorem conjecture314 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
+theorem conjecture314 [Nontrivial α] (G : SimpleGraph α) [DecidableRel G.Adj]
+    (hG : G.Connected)
     (hTriFree : ∀ a b c : α, G.Adj a b → G.Adj b c → G.Adj c a → False)
-    (hPath : pathCoverNumber G ≤ 4) :
+    (hPath : path G ≤ 4) :
     isWellTotallyDominated G := by
   sorry
 
@@ -76,8 +83,8 @@ example : ∃ a b c : Fin 3, (⊤ : SimpleGraph (Fin 3)).Adj a b ∧
     (⊤ : SimpleGraph (Fin 3)).Adj b c ∧ (⊤ : SimpleGraph (Fin 3)).Adj c a := by
   exact ⟨0, 1, 2, by decide, by decide, by decide⟩
 
-/-- The path cover number is nonneg. -/
+/-- The largest-induced-path size `path G` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ pathCoverNumber G := Nat.zero_le _
+example (G : SimpleGraph (Fin 3)) : 0 ≤ path G := Nat.zero_le _
 
 end WrittenOnTheWallII.GraphConjecture314

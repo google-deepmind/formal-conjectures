@@ -20,39 +20,19 @@ import FormalConjectures.Util.ProblemImports
 # Written on the Wall II - Conjecture 217
 
 **Verbatim statement (WOWII #217, status O):**
-> If G is a simple connected graph with n > 1 such that L(G) ≤ 4*χ_residue=2(G) + 2, then G has a Hamiltonian path.
+> If G is a simple connected graph with n > 1 such that L(G) ≤ 4·χ_{residue=2}(G) + 2, then G has a Hamiltonian path.
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj217
 
+Per the WOWII definitions popup linked from this conjecture:
+- `L(G)` is the **maximum number of leaves of a spanning tree** of `G`
+  — i.e. `Ls G` in our `FormalConjecturesForMathlib` invariant library.
+- `χ_{residue=2}(G)` is the **characteristic function** for the predicate
+  `residue G = 2`, i.e. `1` when `residue G = 2` and `0` otherwise. It is
+  not a connected-component count of any 2-core.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-## Statement
-
-WOWII Conjecture 217:
-  *If `G` is a simple connected graph with `n > 1` such that
-   `L(G) ≤ 4 · c_{residue=2}(G) + 2`, then `G` has a Hamiltonian path.*
-
-Here:
-- `L(G)` is the **leaf number** of `G`: the minimum number of leaves over all
-  spanning trees of `G`.
-- `c_{residue=2}(G)` is the number of connected components of the
-  **residue-2 core** of `G` (the maximal induced subgraph of minimum degree
-  at least 2, obtained by iteratively peeling off vertices of degree `< 2`).
-
-## Definitions
-
-The residue-2 core can be characterised non-iteratively as the **union of all
-2-core subsets** of `V(G)`. This union is itself a 2-core (a vertex with ≥ 2
-neighbours in some `Sᵢ` has ≥ 2 neighbours in their union), so it is the
-unique maximal 2-core. We use this union-based definition to avoid the
-well-founded recursion that the iterative peeling description would require,
-and define `residue2ComponentCount G` as the connected-component count of
-the subgraph `G` induces on the residue-2 core.
-
-`leafNumber G` is the minimum leaf count of a spanning subtree of `G` (or `0`
-by `sInf`-convention if no spanning subtree exists).
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture217
@@ -61,75 +41,44 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/- ### 2-core predicate -/
-
-/-- A set `S ⊆ V(G)` is a **2-core** of `G` if every vertex in `S` has at least 2
-neighbours within `S`. -/
-def Is2Core (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Prop :=
-  ∀ v ∈ S, 2 ≤ (S.filter (fun w => G.Adj v w)).card
-
-/- ### Residue-2 core and component count -/
-
-/-- The **residue-2 core** of `G`: the union of all subsets `S ⊆ V(G)` on
-which every vertex has at least 2 neighbours in `S`. This is the unique
-maximal 2-core of `G` and equals the fixpoint of iteratively removing
-vertices of degree less than 2 (proof of equivalence deferred). -/
-noncomputable def residue2Core (G : SimpleGraph α) [DecidableRel G.Adj] : Finset α :=
-  (Finset.univ.powerset.filter (Is2Core G)).sup id
-
-/-- The number of connected components of the subgraph `G` induces on the
-residue-2 core. -/
-noncomputable def residue2ComponentCount (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  Nat.card (G.induce (residue2Core G : Set α)).ConnectedComponent
-
-/- ### Leaf number
-
-The **leaf number** `L(G)` is the minimum number of leaves (degree-1 vertices)
-over all spanning trees of `G`.  A spanning tree here is an induced subtree on
-the full vertex set of `G` under the restriction of `G.Adj`. -/
-
-/-- The number of leaves of the graph `T` (vertices of degree `1`). -/
-noncomputable def numLeaves (T : SimpleGraph α) [DecidableRel T.Adj] : ℕ :=
-  (Finset.univ.filter (fun v => T.degree v = 1)).card
-
-/-- The **leaf number** of `G`: the minimum number of leaves over all spanning
-subtrees of `G`, i.e. subgraphs `T ⊆ G` that are trees and have the same vertex
-set as `G`.  If no such tree exists we take the infimum over the empty set,
-which is `0` (by convention of `sInf` on `ℕ`). -/
-noncomputable def leafNumber (G : SimpleGraph α) : ℕ :=
-  sInf { k | ∃ T : SimpleGraph α, T ≤ G ∧ T.IsTree ∧
-    ∃ _ : DecidableRel T.Adj, numLeaves T = k }
+/-- The **characteristic function** for the predicate `residue G = 2`:
+returns `1` when `G.residue = 2` and `0` otherwise. This is the WOWII
+`χ_{residue=2}(G)` indicator appearing in Conjecture 217. -/
+noncomputable def residueEqTwoIndicator (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  if residue G = 2 then 1 else 0
 
 /--
-WOWII [Conjecture 217](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 217](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj217)
+(status O):
 
-If `G` is a simple connected graph with `n > 1` and
-`L(G) ≤ 4 · c_{residue=2}(G) + 2`,
-then `G` has a Hamiltonian path, where `L(G)` is the leaf number of `G`
-(minimum leaves over all spanning trees) and `c_{residue=2}(G)` is the
-connected-component count of the residue-2 core of `G`.
+If `G` is a finite simple connected graph on `n > 1` vertices and
+`Ls(G) ≤ 4·χ_{residue=2}(G) + 2`,
+then `G` has a Hamiltonian path. Here `Ls(G)` is the maximum number of
+leaves over all spanning trees and `χ_{residue=2}(G)` is the indicator
+of `residue(G) = 2`.
 -/
 @[category research open, AMS 5]
 theorem conjecture217 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
-    (hL : leafNumber G ≤ 4 * residue2ComponentCount G + 2) :
+    (hL : Ls G ≤ 4 * (residueEqTwoIndicator G : ℝ) + 2) :
     ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by
   sorry
 
 -- Sanity checks
 
-/-- `residue2ComponentCount` is nonneg. -/
+/-- `residueEqTwoIndicator` is always `0` or `1`. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 5)) [DecidableRel G.Adj] :
-    0 ≤ residue2ComponentCount G :=
-  Nat.zero_le _
+example (G : SimpleGraph (Fin 4)) [DecidableRel G.Adj] :
+    residueEqTwoIndicator G ≤ 1 := by
+  unfold residueEqTwoIndicator; split <;> simp
 
-/-- `leafNumber` is nonneg. -/
+/-- `residueEqTwoIndicator` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 5)) : 0 ≤ leafNumber G := Nat.zero_le _
+example (G : SimpleGraph (Fin 4)) [DecidableRel G.Adj] :
+    0 ≤ residueEqTwoIndicator G := Nat.zero_le _
 
-/-- The empty set is always a 2-core: the condition is vacuous. -/
-@[category test, AMS 5]
-example (G : SimpleGraph (Fin 4)) [DecidableRel G.Adj] : Is2Core G ∅ :=
-  fun _ hv => by simp at hv
+-- The `Ls G` invariant is nonneg by construction (sSup of nonneg leaf counts);
+-- proving it requires the sSup-nonempty / above-bound machinery from
+-- `FormalConjecturesForMathlib`. We omit a sanity check here to avoid
+-- pulling in that infrastructure for a single test.
 
 end WrittenOnTheWallII.GraphConjecture217
