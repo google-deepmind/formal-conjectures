@@ -110,27 +110,30 @@ that $h_G(n) > C \cdot n$.
 @[category research open, AMS 5]
 theorem erdos_111 : answer(sorry) ↔
     ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
-      ∀ C : ℝ, ∃ n : ℕ, 0 < n ∧ C * n < hG G n := by
+      Filter.Tendsto (fun n : ℕ => (hG G n : ℝ) / n) Filter.atTop Filter.atTop := by
   sorry
 
 /- ## Variants and known partial results -/
 
 /--
-**Lower bound (ZFC)**: Every graph $G$ with chromatic number $\geq \aleph_1$ satisfies
-$h_G(n) > 0$ for all sufficiently large $n$, and moreover $h_G(n)$ grows without bound.
-
-The stronger form: $h_G(n)/n$ is not bounded above by any constant — there exist arbitrarily
-large $n$ with $h_G(n) > n / 2$.
+**Linear lower bound (ZFC, [EHS82])**: Every graph $G$ with chromatic number $\aleph_1$ has
+$h_G(n) \gg n$, i.e. there exists a positive constant $c > 0$ such that for all sufficiently
+large $n$, $h_G(n) \geq c \cdot n$.
 
 This follows from the fact that every graph with uncountable chromatic number contains
 $\aleph_1$ vertex-disjoint odd cycles of some fixed odd length $\ell$: any induced subgraph
 on $n$ vertices containing $\gg n / \ell$ such cycles requires removing $\gg n$ edges to
 become bipartite.
+
+This is a *strictly weaker* statement than the headline `erdos_111`, which asks for
+$h_G(n)/n \to \infty$ (i.e., the constant `c` may be made arbitrarily large). The headline
+remains open.
 -/
 @[category research solved, AMS 5]
 theorem erdos_111.variants.lower_bound :
     ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
-      ∀ C : ℝ, ∃ n : ℕ, 0 < n ∧ C * n < hG G n := by
+      ∃ c : ℝ, 0 < c ∧
+        ∀ᶠ n : ℕ in Filter.atTop, c * n ≤ hG G n := by
   sorry
 
 /--
