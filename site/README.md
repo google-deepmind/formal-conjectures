@@ -116,7 +116,7 @@ If you don't have the formal-conjectures repo built locally, you can populate `d
 ]
 ```
 
-Valid values for `category`: `"research open"`, `"research solved"`, `"research formally solved"`, `"graduate"`, `"undergraduate"`, `"high_school"`, `"test"`, `"API"`.
+Valid values for `category`: `"research open"`, `"research solved"`, `"research formally solved"`, `"textbook"`, `"test"`, `"API"`.
 
 ## CI / deployment
 
