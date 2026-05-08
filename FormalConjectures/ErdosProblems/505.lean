@@ -66,7 +66,9 @@ covered by $n + 1$ subsets each of diameter strictly less than $\operatorname{di
 Erdős [Er44] suspected this. Disproved by Kahn–Kalai [KK93] for
 $n \geq 2015$. Currently known to be false for $n \geq 64$.
 A formal proof was formalised by Boris Alexeev using Aristotle. -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52,
+  formal_proof using lean4 at
+    "https://github.com/plby/lean-proofs/blob/96cd54930d844e3655e6bb89b96b65516397dae9/src/v4.24.0/ErdosProblems/Erdos505.lean#L1153"]
 theorem erdos_505 : ∃ (n : ℕ),
     ∃ (S : Set (EuclideanSpace ℝ (Fin n))),
       Bornology.IsBounded S ∧ 0 < diam S ∧
