@@ -51,7 +51,7 @@ There are various ways of contributing to this repository:
       * **Literature:** Textbooks, problem books and research papers (including [arXiv](https://arxiv.org/archive/math)).
       * **Community Resources:** [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics), [MathOverflow](https://mathoverflow.net/) and the [OEIS](https://oeis.org/).
       * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), [Kourovka notebook](https://arxiv.org/pdf/1401.0300) or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
-    
+
    Just pick one and comment on the issue (e.g., "I plan to work on this") to
    have it assigned to you.
 
@@ -62,7 +62,7 @@ There are various ways of contributing to this repository:
    especially if they are illuminating and testing the definitions.
    **Longer proofs (i.e. more than 25-50 lines) are not to be included in this repository.**
    Instead, we welcome you to host your proof in your own repository and link to it using
-   the `formally solved` mechanism described below. This does not apply to
+   the `formal proof` mechanism described below. This does not apply to
    `FormalConjecturesForMathlib`, where we want all statements to have proofs.
 
 2. **Opening issues with problems that you would like to see formalised.** Such
@@ -292,6 +292,22 @@ To minimize friction when adding problem statements that need definitions that
 are not yet in mathlib, such definitions can be added to the `FormalConjecturesForMathlib`
 directory. This ensures that the addition of these problems to
 formal-conjectures is not locked to the mathlib release cadence.
+
+When `lean-toolchain` is updated on `main`, a GitHub Actions workflow
+automatically adds a git tag of the form `v4.{X}.{Y}`, following mathlib's
+tagging convention.
+
+Stable benchmark snapshots are tagged using the format
+`bench-v{N}-lean4.{X}.{Y}`, where:
+
+-   **`v{N}` (Benchmark version):** Identifies the set of problems included in
+    the benchmark. The benchmark version is bumped whenever problems are added,
+    removed, or when misformalizations are corrected.
+-   **`lean4.{X}.{Y}` (Lean version):** Identifies the Lean 4 toolchain
+    version used for that snapshot.
+
+Tags are immutable: fixes to misformalizations are never patched into an existing
+benchmark version but instead go into `v{N+1}`.
 
 ## Licensing
 

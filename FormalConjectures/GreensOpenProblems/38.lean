@@ -72,7 +72,7 @@ noncomputable def C₁ : ℝ := (367 : ℝ) ^ (5⁻¹ : ℝ)
 noncomputable def C₂ : ℝ := (7 * Real.cos (Real.pi / 7)) / (1 + Real.cos (Real.pi / 7))
 
 /-- Can we improve the lower bound? -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_38.lower :
     let ans := (answer(sorry) : ℕ → ℝ)
     ans ≤ᶠ[atTop] LargestAdmissibleCardinality ∧
@@ -80,7 +80,7 @@ theorem green_38.lower :
   sorry
 
 /-- Can we improve the best upper bound? -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_38.upper :
     let ans := (answer(sorry) : ℕ → ℝ)
     LargestAdmissibleCardinality ≤ᶠ[atTop] ans ∧
@@ -90,27 +90,27 @@ theorem green_38.upper :
 /--
 The current best lower bound is $(C_1 - o(1))^n \leqslant |A|$ where
 $C_1 = 367^{1/5} \approx 3.2578$ [Po20, Section 9.1]. -/
-@[category research solved, AMS 05 11]
+@[category research solved, AMS 5 11]
 theorem green_38.variants.best_lower :
     ∀ ε > 0, ∀ᶠ n in atTop, (C₁ - ε) ^ n ≤ LargestAdmissibleCardinality n := by
   sorry
 
 /-- The current best upper bound is $|A| \leqslant (C_2 + o(1))^n$ where
 $C_2 = \frac{7 \cos(\pi/7)}{1 + \cos(\pi/7)} \approx 3.3177$ [La79, Corollary 5]. -/
-@[category research solved, AMS 05 11]
+@[category research solved, AMS 5 11]
 theorem green_38.variants.best_upper :
     ∀ ε > 0, ∀ᶠ n in atTop, LargestAdmissibleCardinality n ≤ (C₂ + ε) ^ n := by
   sorry
 
 /-- 0 is a valid cardinality, since the empty set vacuously satisfies the condition. -/
-@[category test, AMS 05 11]
+@[category test, AMS 5 11]
 theorem green_38.test_zero_mem_validCardinalities {n : ℕ} :
     0 ∈ ValidCardinalities n := by
   use ∅
   simp [IntersectsOnlyAtZero]
 
 /-- The set of valid cardinalities we take the supremum over is bounded above. -/
-@[category test, AMS 05 11]
+@[category test, AMS 5 11]
 theorem green_38.test_bound_above {n : ℕ} :
     BddAbove (ValidCardinalities n) := by
   use 7 ^ n
