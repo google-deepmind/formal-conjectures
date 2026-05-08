@@ -23,11 +23,11 @@ import FormalConjectures.Util.ProblemImports
   - [erdosproblems.com/730](https://www.erdosproblems.com/730)
   - [A129515](https://oeis.org/A129515)
 -/
+namespace Erdos730
+
 abbrev S :=
   {(n, m) : ℕ × ℕ | n < m ∧ n.centralBinom.primeFactors = m.centralBinom.primeFactors}
 
-
-namespace Erdos730
 
 /--
 Are there infinitely many pairs of integers $n < m$ such that $\binom{2n}{n}$
@@ -40,7 +40,7 @@ theorem erdos_730 : answer(sorry) ↔ S.Infinite := by
 /--
 For example, $(87,88)$ and $(607,608)$ are such pairs.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_730.variants.explicit_pairs :
     {(87, 88), (607, 608)} ⊆ S := by
   sorry
