@@ -75,7 +75,7 @@ theorem erdos_1175 : answer(sorry) ↔
     ∀ (κ : Cardinal), ℵ₀ < κ →
       ∃ (μ : Cardinal),
         ∀ (V : Type*) (G : SimpleGraph V), G.chromaticCardinal = μ →
-          ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ κ ≤ H.coe.chromaticCardinal := by
+          ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = κ := by
   sorry
 
 /--
@@ -86,19 +86,20 @@ strictly less than $\aleph_1$.
 This shows that a negative answer to Problem 1175 (with $\kappa = \lambda = \aleph_1$) is
 consistent, so the main statement `erdos_1175` is not provable in ZFC.
 
-Formally we state this as the consistency of the negation of the $\kappa = \aleph_1$ instance of
-the main question: the property "every graph with chromatic number $\aleph_1$ has a triangle-free
-subgraph with chromatic number $\aleph_1$" is not a theorem of ZFC.
-
-We formalize Shelah's result as: the instance with $\kappa = \lambda = \aleph_1$ admits a
-counterexample in some model. Since Lean operates in a fixed universe, we state this as the
-existence of a graph that *would* serve as a counterexample, leaving the model-theoretic
-wrapping as a `sorry`.
+**Formalization caveat (consistency placeholder).** Shelah's result is a *consistency*
+statement — it asserts the existence of a model of ZFC, not a ZFC theorem. Lean operates
+inside a single (fixed) model of its set theory, so we cannot directly express "consistent
+with ZFC" without leaving ZFC. Rather than pretend that Shelah's theorem is a bare ZFC
+negation, we record it here as an explicit `answer(sorry)` consistency placeholder: the
+intended conjecture is the model-theoretic statement, and any concrete formalisation must
+either appeal to an explicit extra axiom (such as Shelah's specific forcing extension)
+or to a meta-theoretic consistency proof. Until such a wrapper exists in `FormalConjectures`,
+we leave the body as `sorry`.
 -/
 @[category research solved, AMS 5]
-theorem erdos_1175.variants.shelah_consistency :
+theorem erdos_1175.variants.shelah_consistency : answer(sorry) ↔
     ¬ (∀ (V : Type*) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
-         ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ ℵ_ 1 ≤ H.coe.chromaticCardinal) := by
+         ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = ℵ_ 1) := by
   sorry
 
 /--
@@ -116,7 +117,7 @@ theorem erdos_1175.variants.threshold_formulation : answer(sorry) ↔
     ∀ (κ : Cardinal), ℵ₀ < κ →
       ∃ (μ : Cardinal),
         ∀ (V : Type*) (G : SimpleGraph V), μ ≤ G.chromaticCardinal →
-          ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ κ ≤ H.coe.chromaticCardinal := by
+          ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = κ := by
   sorry
 
 /- ## Sanity checks and examples
@@ -156,11 +157,11 @@ theorem erdos_1175.threshold_implies_exact :
     (∀ (κ : Cardinal.{0}), ℵ₀ < κ →
       ∃ (μ : Cardinal.{0}),
         ∀ (V : Type) (G : SimpleGraph V), μ ≤ G.chromaticCardinal →
-          ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ κ ≤ H.coe.chromaticCardinal) →
+          ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = κ) →
     (∀ (κ : Cardinal.{0}), ℵ₀ < κ →
       ∃ (μ : Cardinal.{0}),
         ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = μ →
-          ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ κ ≤ H.coe.chromaticCardinal) := by
+          ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = κ) := by
   intro h κ hκ
   obtain ⟨μ, hμ⟩ := h κ hκ
   exact ⟨μ, fun V G hG => hμ V G hG.ge⟩
