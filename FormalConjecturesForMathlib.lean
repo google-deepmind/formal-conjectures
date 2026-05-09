@@ -31,6 +31,7 @@ public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
+public import FormalConjecturesForMathlib.Analysis.HarmonicAnalysis.SpectralPairs
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
