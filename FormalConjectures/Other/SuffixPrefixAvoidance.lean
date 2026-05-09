@@ -22,8 +22,13 @@ Let $A$ and $B$ be sets of words of length $n$ over an alphabet with $q$ letters
 (nonempty) suffix of any word in $A$ coincides with a prefix of any word in $B$, then
 $$|A| \cdot |B| \leq \frac{q^{2n}}{en}.$$
 
-*Reference:*
+*References:*
 - [X post by Dmitry Rybin](https://x.com/DmitryRybin1/status/2027278135847428577)
+- [Maximal sets of strings with no prefix-suffix overlap]
+  (https://mathoverflow.net/questions/508648/maximal-sets-of-strings-with-no-prefix-suffix-overlap)
+  by *Dmitry Rybin*, MathOverflow (2026)
+- [An isoperimetric inequality for word overlap](https://arxiv.org/abs/2602.20143)
+  by *Dmitrii Zakharov* (2026)
 -/
 
 open Finset Real
@@ -58,10 +63,9 @@ theorem words_naive_bound
 /--
 $A$ and $B$ are sets of words of length $n$ over alphabet with $q \geq 1$ letters.
 No suffix of a word in $A$ coincides with a prefix of a word in $B$.
-Prove that then $|A| \cdot |B|$ is at most $\frac{q^{2n}}{en}$.
+Then $|A| \cdot |B|$ is at most $\frac{q^{2n}}{en}$.
 -/
--- TODO(firsching): update problem status when solution becomes public
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem suffix_prefix_avoidance_bound
     (A B : Finset (Fin n → Fin q))
     (hq : 0 < q) (hn : 0 < n)
@@ -74,7 +78,8 @@ $A$ and $B$ are sets of words of length $n$ over alphabet with $q \geq 1$ letter
 No suffix of a word in $A$ coincides with a prefix of a word in $B$.
 Then $|A| \cdot |B|$ is at most $\frac{q^{2n}}{n}$.
 -/
-@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/102e47fee802d461946e3a4e0b47fdbe7db4c1ed/FormalConjectures/Other/SuffixPrefixAvoidance.lean#L157", AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/102e47fee802d461946e3a4e0b47fdbe7db4c1ed/FormalConjectures/Other/SuffixPrefixAvoidance.lean#L157"]
 theorem suffix_prefix_avoidance_weaker_bound
     (A B : Finset (Fin n → Fin q))
     (_hq : 0 < q) (hn : 0 < n)
