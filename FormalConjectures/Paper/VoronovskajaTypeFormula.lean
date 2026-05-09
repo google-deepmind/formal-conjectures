@@ -37,7 +37,7 @@ p_{n,j}(x) = \binom{n}{j} x^j(1-x)^{n-j},
 and $J_{n,n+1}(x) = 0$.
 
 In the classical case $\alpha = 1$, these operators reduce to the usual Bernstein operators.
-For bounded $f$ which are sufficiently smooth at $x$, one has the classical Voronovskaja
+For $f$ which are $C^2$ on $[0,1]$, one has the classical Voronovskaja
 asymptotic formula
 \[
 \lim_{n \to \infty} n\bigl( B_{n,1} f(x) - f(x) \bigr)
@@ -96,9 +96,9 @@ noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ → ℝ) (x : �
     f (k / n) * ((bernsteinTail n k).eval x ^ α - (bernsteinTail n (k + 1)).eval x ^ α)
 
 /--
-Classical Voronovskaja theorem (α = 1)
+Classical Voronovskaja theorem (α = 1).
 
-For bounded $C^2$ functions $f$, the limit:
+For functions $f$ that are $C^2$ on $[0,1]$, the limit:
 \[
 n\bigl( B_n f(x) - f(x) \bigr)
 \;\longrightarrow\;
@@ -108,7 +108,7 @@ n\bigl( B_n f(x) - f(x) \bigr)
 @[category research solved, AMS 26 40 47]
 theorem voronovskaja_theorem.bernstein_operators
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
-    (hf_bdd : Bornology.IsBounded (f '' I)) (hf : ContDiffWithinAt ℝ 2 f I x) :
+    (hf : ContDiffOn ℝ 2 f I) :
     let f'' : ℝ := iteratedDerivWithin 2 f I x
     Tendsto (fun (n : ℕ) => (n : ℝ) * (bezierBernstein n 1 f x - f x))
     atTop
@@ -123,7 +123,7 @@ with shape parameter $\alpha > 0$, $\alpha \neq 1$.
 theorem voronovskaja_theorem.bezier_bernstein_operators
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1)
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
-    (hf_bdd : Bornology.IsBounded (f '' I)) (hf : ContDiffWithinAt ℝ 2 f I x) :
+    (hf : ContDiffOn ℝ 2 f I) :
     Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
       (𝓝 answer(sorry)) := by
   sorry
