@@ -118,6 +118,12 @@ theorem voronovskaja_theorem.bernstein_operators
 /--
 Conjecture: Voronovskaja-type formula for Bézier-Bernstein operators
 with shape parameter $\alpha > 0$, $\alpha \neq 1$.
+
+The source asks for sufficiently smooth functions. This concrete version uses
+`ContDiffOn ℝ 2 f I` as a readable baseline regularity assumption; since the
+domain is the compact interval $[0,1]$, this also explains why no separate
+boundedness assumption is included here. The variants below record the unknown
+smoothness threshold more explicitly.
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators
@@ -126,6 +132,36 @@ theorem voronovskaja_theorem.bezier_bernstein_operators
     (hf : ContDiffOn ℝ 2 f I) :
     Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
       (𝓝 answer(sorry)) := by
+  sorry
+
+/--
+Variant of the Bézier-Bernstein Voronovskaja problem which treats "sufficiently smooth" as an
+eventual condition in the smoothness order $m$: for all sufficiently large finite $m$, every
+$C^m$ function on $[0,1]$ should have the asserted asymptotic formula.
+-/
+@[category research open, AMS 26 40 47]
+theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth
+    (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
+    let limitFormula : (ℝ → ℝ) → ℝ → ℝ := answer(sorry)
+    ∀ᶠ m : ℕ in atTop,
+      ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
+        Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
+          (𝓝 (limitFormula f x)) := by
+  sorry
+
+/--
+Variant of the Bézier-Bernstein Voronovskaja problem with the required smoothness order itself
+left as an answer. Replacing `(answer(sorry) : ℕ)` by a concrete value lets one state the
+conjecture for a chosen regularity threshold.
+-/
+@[category research open, AMS 26 40 47]
+theorem voronovskaja_theorem.bezier_bernstein_operators.variants.answer_smoothness
+    (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
+    let m : ℕ := answer(sorry)
+    let limitFormula : (ℝ → ℝ) → ℝ → ℝ := answer(sorry)
+    ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
+      Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
+        (𝓝 (limitFormula f x)) := by
   sorry
 
 end VoronovskajaTypeFormula
