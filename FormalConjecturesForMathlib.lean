@@ -27,6 +27,7 @@ public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 public import FormalConjecturesForMathlib.AlgebraicGeometry.Varieties
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
+public import FormalConjecturesForMathlib.Analysis.HarmonicAnalysis.SpectralPairs
 public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
