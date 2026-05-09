@@ -15,54 +15,103 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Algebra.Algebra.Rat
-public import Mathlib.Data.Real.Basic
-public import Mathlib.RingTheory.MvPolynomial.Tower
-public import Mathlib.Topology.Algebra.MvPolynomial
-public import Mathlib.Topology.Instances.Real.Lemmas
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.AlgebraicGeometry.Over
+public import Mathlib.AlgebraicGeometry.Spec
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.AlgebraicGeometry.Restrict
+public import Mathlib.Algebra.Category.Ring.Topology
 
 @[expose] public section
 
-variable {n : ℕ} {ι : Type*}
+universe u
 
-/-- The set of real points of the affine variety cut out by a family
-`S : ι → MvPolynomial (Fin n) ℚ`, viewed inside `ℝⁿ` via base change along `ℚ → ℝ`. -/
-def realLocus (S : ι → MvPolynomial (Fin n) ℚ) : Set (Fin n → ℝ) :=
-  {x | ∀ i, MvPolynomial.aeval x (S i) = (0 : ℝ)}
+open AlgebraicGeometry CategoryTheory
 
-/-- The image inside `ℝⁿ` of the set of rational solutions of `S`: the points of `ℝⁿ` whose
-coordinates are rational and which satisfy each polynomial in `S`. -/
-def rationalImage (S : ι → MvPolynomial (Fin n) ℚ) : Set (Fin n → ℝ) :=
-  (fun q : Fin n → ℚ ↦ fun k ↦ ((q k : ℝ))) ''
-    {q | ∀ i, MvPolynomial.eval q (S i) = 0}
+namespace AlgebraicGeometry
 
-/-- The image of the rational locus is contained in the real locus: zero loci are compatible
-with the base change `ℚ → ℝ`. -/
-theorem rationalImage_subset_realLocus (S : ι → MvPolynomial (Fin n) ℚ) :
-    rationalImage S ⊆ realLocus S := by
-  rintro x ⟨q, hq, rfl⟩
-  intro i
-  show (MvPolynomial.aeval (fun k ↦ ((q k : ℝ)))) (S i) = 0
-  have hcomp : (fun k ↦ ((q k : ℝ))) = (algebraMap ℚ ℝ) ∘ q := by
-    funext k; simp
-  rw [hcomp, MvPolynomial.aeval_algebraMap_apply, MvPolynomial.aeval_eq_eval, hq i,
-    map_zero]
+/--
+An algebraic variety over a field `K` is a reduced scheme of finite type over `Spec K`.
+"Of finite type" is encoded as `LocallyOfFiniteType` for the structure morphism together
+with `CompactSpace X`. Since `Spec K` is affine, the latter is equivalent to the
+structure morphism `X ↘ Spec K` being quasi-compact, so the two conditions together
+are equivalent to the morphism being of finite type. -/
+class IsAlgebraicVariety (K : Type u) [Field K] (X : Scheme.{u})
+    [X.Over (Spec (CommRingCat.of K))] : Prop where
+  isReduced : IsReduced X
+  locallyOfFiniteType : LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))
 
-/-- The real locus is closed in `ℝⁿ`: it is a finite intersection of preimages of `{0}` under
-continuous polynomial maps. -/
-theorem isClosed_realLocus (S : ι → MvPolynomial (Fin n) ℚ) [Finite ι] :
-    IsClosed (realLocus S) := by
-  have hreal : realLocus S = ⋂ i, {x | MvPolynomial.aeval x (S i) = (0 : ℝ)} := by
-    ext x; simp [realLocus]
-  rw [hreal]
-  cases nonempty_fintype ι
-  refine isClosed_iInter (fun i => ?_)
-  have hcont : Continuous (fun x : Fin n → ℝ ↦ MvPolynomial.aeval x (S i)) := by
-    have : (fun x : Fin n → ℝ ↦ MvPolynomial.aeval x (S i)) =
-        (fun x : Fin n → ℝ ↦ MvPolynomial.eval x (MvPolynomial.map (algebraMap ℚ ℝ) (S i))) := by
-      funext x
-      rw [MvPolynomial.aeval_eq_eval₂Hom, MvPolynomial.eval_map]
-      rfl
-    rw [this]
-    exact MvPolynomial.continuous_eval _
-  exact isClosed_eq hcont continuous_const
+namespace IsAlgebraicVariety
+
+attribute [instance] isReduced
+attribute [instance] locallyOfFiniteType
+
+end IsAlgebraicVariety
+
+/-- The set of `K`-rational points of a `K`-scheme `X`, defined as sections of the
+structure morphism (equivalently, morphisms `Spec K ⟶ X` over `Spec K`). -/
+def RatPoints (K : Type u) [Field K] (X : Scheme.{u})
+    [X.Over (Spec (CommRingCat.of K))] : Type u :=
+  { f : Spec (CommRingCat.of K) ⟶ X // f ≫ X ↘ Spec (CommRingCat.of K) = 𝟙 _ }
+
+/-- The set of `L`-points of a `K`-scheme `X` for a `K`-algebra `L`, defined as
+morphisms `Spec L ⟶ X` over `Spec K`. -/
+def Points (K L : Type u) [Field K] [CommRing L] [Algebra K L] (X : Scheme.{u})
+    [X.Over (Spec (CommRingCat.of K))] : Type u :=
+  { f : Spec (CommRingCat.of L) ⟶ X //
+    f ≫ X ↘ Spec (CommRingCat.of K) =
+      Spec.map (CommRingCat.ofHom (algebraMap K L)) }
+
+/-- Base change of a `K`-rational point to an `L`-point along the algebra map `K → L`. -/
+noncomputable def Points.ofRat (K L : Type u) [Field K] [CommRing L] [Algebra K L]
+    (X : Scheme.{u}) [X.Over (Spec (CommRingCat.of K))]
+    (p : RatPoints K X) : Points K L X :=
+  ⟨Spec.map (CommRingCat.ofHom (algebraMap K L)) ≫ p.1, by
+    rw [Category.assoc, p.2, Category.comp_id]⟩
+
+namespace Points
+
+variable (K L : Type u) [Field K] [CommRing L] [Algebra K L]
+variable [TopologicalSpace L] [IsTopologicalRing L]
+
+open scoped CommRingCat.HomTopology
+
+/-- The natural map sending an `L`-point of `X` to the induced ring hom on global sections,
+`Γ(X, ⊤) ⟶ L`. This is the affine functor of points evaluated at `Spec L`. -/
+noncomputable def toΓHom {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K))]
+    (p : Points K L X) : Γ(X, ⊤) ⟶ CommRingCat.of L :=
+  p.1.appTop ≫ (Scheme.ΓSpecIso (CommRingCat.of L)).hom
+
+/-- For an open subscheme `U ⊆ X`, the natural map `Points K L U.toScheme → Points K L X`
+given by post-composition with the inclusion `U.ι : U.toScheme ⟶ X`. The `K`-structure on
+`U.toScheme` is inherited via `U.toScheme.CanonicallyOver X` and `X.Over (Spec K)`. -/
+noncomputable def ofOpen {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K))]
+    (U : X.Opens) (p : Points K L U.toScheme) : Points K L X :=
+  ⟨p.1 ≫ U.ι, by
+    have h : U.toScheme ↘ Spec (CommRingCat.of K) =
+        U.ι ≫ X ↘ Spec (CommRingCat.of K) := rfl
+    rw [Category.assoc, ← h]
+    exact p.2⟩
+
+/-- The real-analytic topology on `Points K L X`.
+
+A subset is open iff for every affine open `U` of `X`, its preimage in
+`Points K L U.toScheme` is open with respect to the topology induced by the global-sections
+map `p ↦ p^♯ : Points K L U.toScheme → (Γ(U.toScheme, ⊤) ⟶ CommRingCat.of L)`, where the
+codomain carries Mathlib's pointwise-convergence topology (see
+`CommRingCat.HomTopology`). Equivalently, this is the *final* topology over the family of
+inclusions `Points K L U.toScheme ↪ Points K L X` for affine opens `U ⊆ X`.
+
+This is canonical (independent of any choice of cover) because the supremum is taken over
+*all* affine opens. -/
+noncomputable instance instTopologicalSpace
+    {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K))] :
+    TopologicalSpace (Points K L X) :=
+  ⨆ (U : X.affineOpens),
+    TopologicalSpace.coinduced (ofOpen K L U.val)
+      (TopologicalSpace.induced (toΓHom (K := K) (L := L) (X := U.val.toScheme)) inferInstance)
+
+end Points
+
+end AlgebraicGeometry

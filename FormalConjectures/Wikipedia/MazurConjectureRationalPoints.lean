@@ -20,9 +20,9 @@ import FormalConjectures.Util.ProblemImports
 # Mazur's conjecture on the topology of rational points
 
 In *The topology of rational points* (1992), Barry Mazur proposed that for any algebraic
-variety `X` defined over `ℚ`, the topological closure of the rational points `X(ℚ)` inside
-the real locus `X(ℝ)` (with its natural real-analytic topology) has only finitely many
-connected components.
+variety `X` defined over `ℚ` — that is, any reduced scheme of finite type over `Spec ℚ` —
+the topological closure of the rational points `X(ℚ)` inside the real points `X(ℝ)`
+(with its natural real-analytic topology) has only finitely many connected components.
 
 *References:*
  - [Mazur, *The topology of rational points*, Experimental Mathematics 1 (1992), no. 1,
@@ -32,20 +32,25 @@ connected components.
 
 namespace MazurRationalPoints
 
-variable {n : ℕ} {ι : Type*}
+universe u
+
+open AlgebraicGeometry CategoryTheory
 
 /--
 **Mazur's conjecture.**
-For any finite family of rational polynomials `S : ι → MvPolynomial (Fin n) ℚ`, the closure
-inside `ℝⁿ` of the set of rational solutions has only finitely many connected components.
+For any reduced scheme `X` of finite type over `Spec ℚ`, the closure of the image of the
+rational points `X(ℚ)` inside the real points `X(ℝ)` (with its natural real-analytic
+topology) has only finitely many connected components.
 
-Since `realLocus S` is closed in `ℝⁿ`, the closure is contained in the real locus, and
-its components are intrinsic to `X(ℝ)`.
--/
+The topology on `X(ℝ) = Points ℚ ℝ X` is the canonical real-analytic topology supplied by
+`Points.instTopologicalSpace`: the final topology induced by the inclusions
+`Points ℚ ℝ U.toScheme ↪ Points ℚ ℝ X` for every affine open `U ⊆ X`, where each
+`Points ℚ ℝ U.toScheme` carries the topology of pointwise convergence on
+`Γ(U.toScheme, ⊤) ⟶ ℝ`. -/
 @[category research open, AMS 11 14]
 theorem mazur_conjecture
-    (S : ι → MvPolynomial (Fin n) ℚ) [Finite ι] :
-    Finite (ConnectedComponents (closure (rationalImage S))) := by
+    (X : Scheme.{0}) [X.Over (Spec (CommRingCat.of ℚ))] [IsAlgebraicVariety ℚ X] :
+    Finite (ConnectedComponents (closure (Set.range (Points.ofRat (X := X) ℚ ℝ)))) := by
   sorry
 
 end MazurRationalPoints
