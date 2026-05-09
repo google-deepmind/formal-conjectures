@@ -72,14 +72,16 @@ theorem multibrotSet_eq {n : ℕ} (hn : 2 ≤ n) :
         refine .trans ?_ <| norm_sub_le_norm_add _ _
         replace hm :
             r ^ n + a * n ^ m * r ^ (n - 1) * ↑n ≤ ‖(fun z ↦ z ^ n + c)^[k + m] 0‖ ^ n := by
-          refine .trans ?_ (pow_le_pow_left₀ (by positivity) hm n); cases n; simp
+          grw [← hm]
+          cases n
+          · simp
           rw [add_comm r _, add_pow]
           refine .trans ?_ <| Finset.add_le_sum (by intros; positivity) ?_ ?_ zero_ne_one <;> simp
         rw [norm_pow, pow_succ]
-        refine .trans ?_ (sub_le_sub hm h')
+        grw [← hm, h']
         rw [hr', hr'', show ‖(fun z ↦ z ^ n + c)^[k] 0‖ = a + r by simp [a]]
         suffices a ≤ a * (n * n ^ m) by linarith
-        refine (mul_one a).symm.trans_le <| (mul_le_mul_left ha).2 ?_
+        rw [le_mul_iff_one_le_right ha]
         have hn : 1 ≤ (n : ℝ) := Nat.one_le_cast.2 hn.le
         simpa using mul_le_mul hn (one_le_pow₀ hn)
     rw [← tendsto_norm_atTop_iff_cobounded]
@@ -114,15 +116,15 @@ theorem MLC_general_exponent (n : ℕ) : LocallyConnectedSpace (multibrotSet n) 
   sorry
 
 /-- We say that `z : ℂ` is part of an attracting cycle of period `n` of `f : ℂ → ℂ` if it is an
-`n`-periodic point (i.e. `f^[n] z = z`), `f^[n]` is differentiable at `z` and `‖deriv f^[n] z‖` is
-strictly less than one.-/
+`n`-periodic point (i.e. `f^[n] z = z`), `f^[n]` is differentiable at `z`, `‖deriv f^[n] z‖` is
+strictly less than one, and `n > 0`. -/
 def IsAttractingCycle (f : ℂ → ℂ) (n : ℕ) (z : ℂ) : Prop :=
-  f.IsPeriodicPt n z ∧ DifferentiableAt ℂ f^[n] z ∧ ‖deriv f^[n] z‖ < 1
+  (0 < n) ∧ f.IsPeriodicPt n z ∧ DifferentiableAt ℂ f^[n] z ∧ ‖deriv f^[n] z‖ < 1
 
 /-- For example, `0` is part of an attracting `2`-cycle of `z ↦ z ^ 2 - 1`. -/
 @[category test, AMS 37]
 theorem isAttractingCycle_z_squared_minus_one : IsAttractingCycle (fun z ↦ z ^ 2 - 1) 2 0 :=
-  ⟨by simp [IsPeriodicPt, IsFixedPt], by fun_prop, by simp [deriv_comp]⟩
+  ⟨by decide, by simp [IsPeriodicPt, IsFixedPt], by fun_prop, by simp [deriv_comp]⟩
 
 /-- On the other hand, while `2` is part of a `1`-cycle of `z ↦ z ^ 2 - 2`, that cycle is not
 attracting. -/
@@ -140,7 +142,7 @@ theorem no_attractingCycle_period_zero (f : ℂ → ℂ) (z : ℂ) : ¬ IsAttrac
 `fun z ↦ z ^ 2 + c` has an attracting cycle is dense in the Mandelbrot set. -/
 @[category research open, AMS 37]
 theorem density_of_hyperbolicity :
-    mandelbrotSet ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ 2 + c) n z} := by
+    mandelbrotSet ⊆ closure {c | ∃ m z, IsAttractingCycle (fun z ↦ z ^ 2 + c) m z} := by
   sorry
 
 /-- The density of hyperbolicity conjecture for Multibrot sets, stating that the set of all
@@ -148,7 +150,7 @@ parameters `c` for which `fun z ↦ z ^ n + c` has an attracting cycle is dense 
 Note that we need to require `2 ≤ n` because the conjecture is trivially false for `n = 1`. -/
 @[category research open, AMS 37]
 theorem density_of_hyperbolicity_general_exponent {n : ℕ} (hn : 2 ≤ n) :
-    multibrotSet n ⊆ closure {c | ∃ n z, IsAttractingCycle (fun z ↦ z ^ n + c) n z} := by
+    multibrotSet n ⊆ closure {c | ∃ m z, IsAttractingCycle (fun z ↦ z ^ n + c) m z} := by
   sorry
 
 /-- The boundary of any Multibrot set is measurable because it is closed, so it makes sense to

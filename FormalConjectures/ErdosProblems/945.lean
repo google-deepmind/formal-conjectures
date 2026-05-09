@@ -31,7 +31,7 @@ abbrev τ  := fun (n : ℕ) => n.divisors.card
 
 /--
 Let $F(x)$ be the maximal $k$ such that there exist $n+1, \dots, n+k \le x$
-with $τ(n+1), \dots, τ(n+k)$ all distinct, where $τ(m)$ counts the divisors of $m$.-/
+with $τ(n+1), \dots, τ(n+k)$ all distinct, where $τ(m)$ counts the divisors of $m$. -/
 noncomputable def F (x : ℝ) : ℕ :=
   sSup {k | ∃ (n : ℕ), n + k ≤ x ∧ (Set.Ioc n (n + k)).InjOn τ}
 
@@ -44,7 +44,7 @@ def Erdos945Prop : Prop := ∃ O : ℝ → ℝ, O =O[atTop] (1 : ℝ → ℝ) �
 Is it true that $F(x) \leq (\log x)^{O(1)}$?
 -/
 @[category research open, AMS 11]
-theorem erdos_945 : Erdos945Prop ↔ answer(sorry) := by
+theorem erdos_945 : answer(sorry) ↔ Erdos945Prop := by
   sorry
 
 def Erdos945Constant : Prop :=
@@ -59,15 +59,15 @@ Is there a constant $C > 0$ such that, for all large $x$, every interval $[x, x+
 contains two integers with the same number of divisors?
 -/
 @[category research open, AMS 11]
-theorem erdos_945.variants.constant : Erdos945Constant ↔ answer(sorry) := by
+theorem erdos_945.variants.constant : answer(sorry) ↔ Erdos945Constant := by
   sorry
 
 -- TODO(firsching): show equivalence
 /--
 The two ways of phrasing the conjecture are equivalent.
 -/
-@[category undergraduate, AMS 11]
-theorem erdos_945.equivalence : Erdos945Prop ↔ Erdos945Constant := by
+@[category textbook, AMS 11]
+theorem erdos_945.variants.equivalence : Erdos945Prop ↔ Erdos945Constant := by
   sorry
 
 /--
@@ -79,7 +79,7 @@ theorem erdos_945.variants.lower_bound :
   sorry
 
 /--
-Erdős and Mirsky [ErMi52] proved that $\log F(x) \ll  \frac{(\log x)^{1/2}}$.
+Erdős and Mirsky [ErMi52] proved that $\log F(x) \ll \frac{(\log x)^{1/2}}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_945.variants.upper_bound :

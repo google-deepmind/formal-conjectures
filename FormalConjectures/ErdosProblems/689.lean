@@ -18,7 +18,9 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 689
-*Reference:* [erdosproblems.com/689](https://www.erdosproblems.com/689)
+*References:*
+* [erdosproblems.com/689](https://www.erdosproblems.com/689)
+* [Ben Green's Open Problem 45](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.45)
 -/
 
 namespace Erdos689
@@ -30,9 +32,8 @@ Let `n` be sufficiently large. Is there some choice of congruence class `a_p` fo
 -/
 @[category research open, AMS 11]
 theorem erdos_689 :
-    (∀ᶠ n in Filter.atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
-      2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card)
-    ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ᶠ n in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
+      2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
   sorry
 
 end Erdos689

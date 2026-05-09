@@ -78,7 +78,7 @@ the required property.
 -/
 @[category research solved, AMS 51]
 theorem erdos_503.variants.lower_bound (n : ℕ) :
-    ∀ m ∈ {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)}, (n + 1).choose 2 ≤ m := by
+    (n + 1).choose 2 ≤ sSup {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} := by
   sorry
 
 end Erdos503

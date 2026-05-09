@@ -38,9 +38,9 @@ $$
 transcendental?
 -/
 @[category research open, AMS 11]
-theorem erdos_247 : (∀ (n : ℕ → ℕ), (StrictMono n) →
+theorem erdos_247 : answer(sorry) ↔ ∀ (n : ℕ → ℕ), (StrictMono n) →
     atTop.limsup (fun k => (n k / k.succ : EReal)) = ⊤ →
-    Transcendental ℚ (∑' k, (1 : ℝ) / 2 ^ n k)) ↔ answer(sorry) := by
+    Transcendental ℚ (∑' k, (1 : ℝ) / 2 ^ n k) := by
   sorry
 
 /--

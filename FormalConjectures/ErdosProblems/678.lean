@@ -18,7 +18,13 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 678
-*Reference:* [erdosproblems.com/678](https://www.erdosproblems.com/678)
+*References:*
+- [erdosproblems.com/678](https://www.erdosproblems.com/678)
+- [Ca24] S. Cambie, Resolution of an Erdős' problem on least common multiples. arXiv:2410.09138
+  (2024).
+- [Er79] Erdős, Paul, Some unconventional problems in number theory. Math. Mag. (1979), 67-70.
+- [Er92e] Erdős, Pál, Some Unsolved problems in Geometry, Number Theory and Combinatorics. Eureka
+  (1992), 44-48.
 -/
 
 open Asymptotics Filter Finset
@@ -63,11 +69,14 @@ M(n, k) > M(m, k + 1)
 $$?
 The answer is yes, as proved in a strong form by Cambie [Ca24].
 [Ca24] S. Cambie, Resolution of an Erdős' problem on least common multiples. arXiv:2410.09138 (2024).
+
+This was formalized in Lean by Alexeev using Aristotle, conditional on asymptotic estimates for the
+prime counting function (specifically `pi_alt` from the PNT+ project).
+See the [formal proof](https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos678.lean).
 -/
 @[category research solved, AMS 11]
-theorem erdos_678 :
-    (∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite) ↔
-      answer(True) := by
+theorem erdos_678 : answer(True) ↔
+    ∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite := by
   sorry
 
 end Erdos678

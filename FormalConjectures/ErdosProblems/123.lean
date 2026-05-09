@@ -38,9 +38,12 @@ Reference: [ErLe96] Erdős, P. and Lewin, M., _$d$-complete sequences of integer
 -/
 def IsDComplete (A : Set ℕ) : Prop :=
   ∀ᶠ n in atTop, ∃ s : Finset ℕ,
-    (s : Set ℕ) ⊆ A ∧                  -- The summands come from A
-    IsAntichain (· ∣ ·) (s : Set ℕ) ∧   -- No summand divides another
-    s.sum id = n                        -- They sum to n
+    -- The summands come from A
+    (s : Set ℕ) ⊆ A ∧
+    -- No summand divides another
+    IsAntichain (· ∣ ·) (s : Set ℕ) ∧
+    -- They sum to n
+    s.sum id = n
 
 /--
 Characterizes a "snug" finite set of natural numbers:
@@ -69,8 +72,8 @@ Note: For this not to reduce to the two-integer case, we need the integers
 to be greater than one and distinct.
 -/
 @[category research open, AMS 11]
-theorem erdos_123 : (∀ a > 1, ∀ b > 1, ∀ c > 1, PairwiseCoprime a b c →
-    IsDComplete (↑(powers a) * ↑(powers b) * ↑(powers c))) ↔ answer(sorry) := by sorry
+theorem erdos_123 : answer(sorry) ↔ ∀ a > 1, ∀ b > 1, ∀ c > 1, PairwiseCoprime a b c →
+    IsDComplete (↑(powers a) * ↑(powers b) * ↑(powers c)) := by sorry
 
 /--
 Erdős and Lewin proved this conjecture when $a = 3$, $b = 5$, and $c = 7$.
@@ -105,8 +108,8 @@ $b_1 < ... < b_t$ of the form $2^k 3^l 5^j$ where $b_t < (1 + ϵ) b_1$.
 -/
 @[category research open, AMS 11]
 theorem erdos_123.variants.powers_2_3_5_snug :
-    (∀ ε > 0, ∀ᶠ n in atTop,
+    answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
       ∃ A : Finset ℕ, (A : Set ℕ) ⊆ ↑(powers 2) * ↑(powers 3) * ↑(powers 5) ∧ IsSnug ε A ∧
-        ∑ x ∈ A, x = n) ↔ answer(sorry) := by sorry
+        ∑ x ∈ A, x = n := by sorry
 
 end Erdos123

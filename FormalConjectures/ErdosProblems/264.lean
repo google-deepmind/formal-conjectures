@@ -35,7 +35,9 @@ $$
   \sum \frac{1}{a_n + b_n}
 $$
 is irrational.
-Note: there are other possible definitions of this concept.
+
+Note: there are other possible definitions of this concept. See
+FormalConjectures/ErdosProblems/263.lean for another possible definition.
 -/
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop := ∀ b : ℕ → ℕ, BddAbove (Set.range b) →
   0 ∉ Set.range (a + b) → 0 ∉ Set.range b → Irrational (∑' n, (1 : ℝ) / (a n + b n))
@@ -52,7 +54,7 @@ theorem erdos_264.parts.i : ¬IsIrrationalitySequence (2 ^ ·) := by sorry
 Is $n!$ an example of an irrationality sequence?
 -/
 @[category research open, AMS 11]
-theorem erdos_264.parts.ii : IsIrrationalitySequence Nat.factorial ↔ answer(sorry) := by sorry
+theorem erdos_264.parts.ii : answer(sorry) ↔ IsIrrationalitySequence Nat.factorial := by sorry
 
 /--
 One example is $2^{2^n}$.

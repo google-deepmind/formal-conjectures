@@ -23,33 +23,26 @@ import FormalConjectures.Util.ProblemImports
   - [erdosproblems.com/730](https://www.erdosproblems.com/730)
   - [A129515](https://oeis.org/A129515)
 -/
+namespace Erdos730
+
 abbrev S :=
   {(n, m) : ℕ × ℕ | n < m ∧ n.centralBinom.primeFactors = m.centralBinom.primeFactors}
 
-
-namespace Erdos730
 
 /--
 Are there infinitely many pairs of integers $n < m$ such that $\binom{2n}{n}$
 and $\binom{2m}{m}$ have the same set of prime divisors?
 -/
 @[category research open, AMS 11]
-theorem erdos_730 : S.Infinite ↔ answer(sorry) := by
+theorem erdos_730 : answer(sorry) ↔ S.Infinite := by
   sorry
 
 /--
 For example, $(87,88)$ and $(607,608)$ are such pairs.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_730.variants.explicit_pairs :
     {(87, 88), (607, 608)} ⊆ S := by
-  sorry
-
-/--
-Show that for all $n$, the binomial coefficient $\binom{2n}{n}$ is even.
--/
-@[category high_school, AMS 11]
-theorem erdos_730.variants.two_div_forall (n : ℕ) (h : 0 < n) : 2 ∣ n.centralBinom := by
   sorry
 
 /--
