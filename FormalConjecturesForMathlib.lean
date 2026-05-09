@@ -104,8 +104,10 @@ public import FormalConjecturesForMathlib.Probability.FiniteMethod
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
+public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
 public import FormalConjecturesForMathlib.Topology.Discrete
 public import FormalConjecturesForMathlib.Topology.GDelta
+public import FormalConjecturesForMathlib.Topology.LebesgueCoveringDimension
 public import FormalConjecturesForMathlib.Topology.MetricSpace.MetricSeparated
