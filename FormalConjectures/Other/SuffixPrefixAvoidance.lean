@@ -64,6 +64,9 @@ theorem words_naive_bound
 $A$ and $B$ are sets of words of length $n$ over alphabet with $q \geq 1$ letters.
 No suffix of a word in $A$ coincides with a prefix of a word in $B$.
 Then $|A| \cdot |B|$ is at most $\frac{q^{2n}}{en}$.
+
+This problem is from *Maximal sets of strings with no prefix-suffix overlap* and was proved in
+*An isoperimetric inequality for word overlap*.
 -/
 @[category research solved, AMS 5]
 theorem suffix_prefix_avoidance_bound
