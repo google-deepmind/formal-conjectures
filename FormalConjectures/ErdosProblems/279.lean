@@ -26,12 +26,10 @@ namespace Erdos279
 /--
 Let $k\geq 3$. Is there a choice of congruence classes $a_p\pmod{p}$ for every prime $p$ such that all except finitely many integers can be written as $a_p+tp$ for some prime $p$ and integer $t\geq k$?
 -/
-
 @[category research open, AMS 11]
-theorem erdos_279 : ∀ (k : Nat), (hk : k ≥ 3) →
-    ∃ a : Π (p : Nat.Primes), Fin p,
-    ∃ N : Nat, ∀ n ≥ N, ∃ p : Nat.Primes, ∃ t ≥ k, n = a p + t * p
-    := by
+theorem erdos_279 : ∀ k : Nat, k ≥ 3 →
+    ∃ a : Nat → Nat, ∃ N : Nat, (∀ p : Nat, Nat.Prime p → a p < p) ∧
+    ∀ n ≥ N, ∃ p : Nat, ∃ t ≥ k, Nat.Prime p ∧ n = a p + t * p := by
   sorry
 
 end Erdos279
