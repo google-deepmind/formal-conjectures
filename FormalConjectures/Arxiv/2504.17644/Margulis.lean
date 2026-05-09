@@ -70,7 +70,7 @@ variable (F : Type u) [Field F] [Fintype F]
 noncomputable def polyToLaurent : F[X] →+* F⸨X⸩ :=
   (HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom
 
-/-- **Huang–Shi, Theorem 1.2 (Lean statement).**
+/-- **Huang–Shi, Theorem 1.2**
 
 Let `F` be a finite field of characteristic `p ∈ {3, 5, 7, 11}`, and set
 `K = F((t⁻¹))`, `A = F[t]`. Let
