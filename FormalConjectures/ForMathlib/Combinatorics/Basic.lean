@@ -41,7 +41,7 @@ noncomputable def SidonSubsets (n : ℕ) : Finset (Finset ℕ) :=
 noncomputable def SidonSubsetsSizes (n : ℕ) : Finset ℕ :=
   (SidonSubsets n).image Finset.card
 
-lemma SidonSubsetsSizesNonempty (n : ℕ) : (SidonSubsetsSizes n).Nonempty := by
+lemma SidonSubsetsSizes_nonempty (n : ℕ) : (SidonSubsetsSizes n).Nonempty := by
   use 0
   simp only [SidonSubsetsSizes, Finset.mem_image]
   use ∅

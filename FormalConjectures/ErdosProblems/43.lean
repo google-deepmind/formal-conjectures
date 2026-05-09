@@ -26,32 +26,38 @@ open scoped Pointwise
 
 
 /--
-If `A` and `B` are Sidon sets in `{1, ..., N}` with disjoint difference sets,
-is the sum of unordered pair counts bounded by that of an optimal Sidon set up to `O(1)`?
+If `A` and `B` are Sidon sets in `{1, ..., N}` with disjoint difference sets such that
+$(A-A)\cap(B-B)=\{0\}$ then is it true that
+$$\binom{\lvert A\rvert}{2}+\binom{\lvert B\rvert}{2}\leq\binom{f(N)}{2}+O(1),$$
+where $f(N)$ is the maximum possible size of a Sidon set in \{1,\ldots,N\}?
 -/
-@[category research open, AMS 11 05]
+@[category research open, AMS 05 11]
 theorem erdos_43 :
-    ∃ C : ℝ, ∀ (N : ℕ) (A B : Finset ℕ),
+    (∃ C : ℝ, ∀ (N : ℕ) (A B : Finset ℕ),
       A ⊆ Finset.Icc 1 N →
       B ⊆ Finset.Icc 1 N →
       IsSidon A.toSet →
       IsSidon B.toSet →
-      (A - A) ∩ (B - B) = ∅ →
-      A.card.choose 2 + B.card.choose 2 ≤ (maxSidonSetSize N).choose 2 + C := by
+      (A - A) ∩ (B - B) = {0} →
+      A.card.choose 2 + B.card.choose 2 ≤ (maxSidonSetSize N).choose 2 + C) ↔
+      answer(sorry) := by
   sorry
 
 /--
-If `A` and `B` are equal-sized Sidon sets with disjoint difference sets,
-can the sum of pair counts be bounded by a strict fraction of the optimum?
+If `A` and `B` are equal-sized Sidon sets in `{1, ..., N}` with disjoint difference sets such
+that $(A-A)\cap(B-B)=\{0\}$, then is it true that
+$$\binom{\lvert A\rvert}{2}+\binom{\lvert B\rvert}{2}\leq(1-c)\binom{f(N)}{2}$$
+for some constant $c>0$?
 -/
-@[category research open, AMS 11 05]
+@[category research open, AMS 05 11]
 theorem erdos_43_equal_size :
-    ∃ᵉ (c > 0), ∀ (N : ℕ) (A B : Finset ℕ),
+    (∃ᵉ (c > 0), ∀ (N : ℕ) (A B : Finset ℕ),
       A ⊆ Finset.Icc 1 N →
       B ⊆ Finset.Icc 1 N →
       IsSidon A.toSet →
       IsSidon B.toSet →
       A.card = B.card →
-      (A - A) ∩ (B - B) = ∅ →
-      A.card.choose 2 + B.card.choose 2 ≤ (1 - c) *(maxSidonSetSize N).choose 2 := by
+      (A - A) ∩ (B - B) = {0} →
+      A.card.choose 2 + B.card.choose 2 ≤ (1 - c) * (maxSidonSetSize N).choose 2) ↔
+      answer(sorry) := by
   sorry
