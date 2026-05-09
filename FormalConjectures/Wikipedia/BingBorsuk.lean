@@ -37,10 +37,6 @@ namespace BingBorsuk
 
 open scoped Manifold
 
-/-- A space is homogeneous if its homeomorphism group acts transitively. -/
-class HomogeneousSpace (X : Type*) [TopologicalSpace X] : Prop where
-  is_transitive : ∀ x y : X, ∃ f : Homeomorph X X, f x = y
-
 /--
 The Bing-Borsuk Conjecture: every $n$-dimensional homogeneous absolute neighborhood retract
 is a topological $n$-manifold.
