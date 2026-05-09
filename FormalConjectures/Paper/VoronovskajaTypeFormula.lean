@@ -37,7 +37,8 @@ p_{n,j}(x) = \binom{n}{j} x^j(1-x)^{n-j},
 and $J_{n,n+1}(x) = 0$.
 
 In the classical case $\alpha = 1$, these operators reduce to the usual Bernstein operators.
-For sufficiently smooth $f$, one has the classical Voronovskaja asymptotic formula
+For bounded $f$ which are sufficiently smooth at $x$, one has the classical Voronovskaja
+asymptotic formula
 \[
 \lim_{n \to \infty} n\bigl( B_{n,1} f(x) - f(x) \bigr)
     = \tfrac{1}{2} x(1-x) f''(x).
@@ -52,24 +53,28 @@ For sufficiently smooth $f$, one has the classical Voronovskaja asymptotic formu
     may converge to a non-zero limit.
 
 ## The Problem
-Determine the asymptotic behaviour of the Bézier-type Bernstein operators for $\alpha \neq 1$:
+Determine the asymptotic behaviour of the Bézier-type Bernstein operators for $\alpha > 0$,
+$\alpha \neq 1$:
 \textbf{Existence of the limit:}
     Prove (or disprove) the existence of the limit
     \[
         \lim_{n \to \infty}
         \sqrt{n}\,\bigl( B_{n,\alpha} f(x) - f(x) \bigr),
     \]
-    at least for functions $f$ that are twice differentiable at $x \in (0,1)$.
-    \item \textbf{Explicit form of the limit:}
+    at least for sufficiently smooth functions $f$.
+    \textbf{Explicit form of the limit:}
     If the limit exists, determine an explicit expression for it in terms of $f$, $x$, and $\alpha$.
 
 *References:*
 
-* [A problem in Constructive theory of functions, Szopol 2010](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf?utm_source=perplexity)
+* [Voronovskaja-type Formula for the Bézier Variant of the Bernstein Operators](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf),
+  by *Ulrich Abel*, in *Constructive Theory of Functions, Sozopol 2010*.
 -/
 
+namespace VoronovskajaTypeFormula
+
 /--
-Cumulative sum `J_{n,k}(x) = ∑_{j=k}^n p_{n,j}(x)`
+Cumulative sum $J_{n,k}(x) = \sum_{j=k}^n p_{n,j}(x)$.
 -/
 noncomputable def bernsteinTail (n k : ℕ) : Polynomial ℝ :=
   ∑ j ∈ Finset.Icc k n, bernsteinPolynomial ℝ n j
@@ -86,14 +91,14 @@ J_{n,k}(x)^{\alpha}
 \right)
 \]
 -/
-noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ  → ℝ) (x : ℝ) : ℝ :=
-∑ k ∈  Finset.range (n+1),
-    f (k/n) * (((bernsteinTail n k).eval x) ^ α - ((bernsteinTail n k + 1).eval x) ^ α)
+noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ → ℝ) (x : ℝ) : ℝ :=
+  ∑ k ∈ Finset.range (n + 1),
+    f (k / n) * ((bernsteinTail n k).eval x ^ α - (bernsteinTail n (k + 1)).eval x ^ α)
 
 /--
 Classical Voronovskaja theorem (α = 1)
 
-For smooth `f`, the limit:
+For bounded $C^2$ functions $f$, the limit:
 \[
 n\bigl( B_n f(x) - f(x) \bigr)
 \;\longrightarrow\;
@@ -102,22 +107,25 @@ n\bigl( B_n f(x) - f(x) \bigr)
 -/
 @[category research solved, AMS 26 40 47]
 theorem voronovskaja_theorem.bernstein_operators
-    (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I) :
+    (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
+    (hf_bdd : Bornology.IsBounded (f '' I)) (hf : ContDiffWithinAt ℝ 2 f I x) :
     let f'' : ℝ := iteratedDerivWithin 2 f I x
-    Tendsto (fun (n : ℕ) => n • (bezierBernstein n 1 f x - f x))
+    Tendsto (fun (n : ℕ) => (n : ℝ) * (bezierBernstein n 1 f x - f x))
     atTop
-    (𝓝 ((1/2) * x * (1-x) * f'')) := by
+    (𝓝 ((1 / 2) * x * (1 - x) * f'')) := by
   sorry
 
 /--
 Conjecture: Voronovskaja-type formula for Bézier-Bernstein operators
-with shape parameter α ≠ 1.
+with shape parameter $\alpha > 0$, $\alpha \neq 1$.
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators
-    (α : ℝ) (hα : α ≠ 1)
+    (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1)
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
-    (x : ℝ)(hf : ContDiffAt ℝ 2 f x) : let f'' : ℝ := iteratedDerivWithin 2 f I x
-    ∃ L : ℝ,
-    Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop (𝓝 L) := by
+    (hf_bdd : Bornology.IsBounded (f '' I)) (hf : ContDiffWithinAt ℝ 2 f I x) :
+    Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
+      (𝓝 answer(sorry)) := by
   sorry
+
+end VoronovskajaTypeFormula
