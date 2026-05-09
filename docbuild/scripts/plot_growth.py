@@ -106,6 +106,8 @@ def plot_file_counts(
         autosize=True
     )
 
+    fig.update_yaxes(rangemode='tozero')
+
     fig.update_traces(
         line=dict(color=line_color, width=line_width, shape='hv'),
         marker=dict(size=6)

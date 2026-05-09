@@ -68,7 +68,7 @@ jobs:
 
       - name: Build project
         run: |
-          lake build
+          lake --wfail build
 
       - name: Build literate source pages
         run: |

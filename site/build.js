@@ -152,9 +152,7 @@ function getCollection(module) {
 const CATEGORY_META = {
   'research open':    { label: 'Open',          css: 'cat-open' },
   'research solved':  { label: 'Solved',        css: 'cat-solved' },
-  'graduate':         { label: 'Graduate',      css: 'cat-graduate' },
-  'undergraduate':    { label: 'Undergraduate', css: 'cat-undergrad' },
-  'high_school':      { label: 'High School',   css: 'cat-highschool' },
+  'textbook':         { label: 'Textbook',      css: 'cat-textbook' },
   'test':             { label: 'Test',          css: 'cat-test' },
   'API':              { label: 'API',           css: 'cat-api' },
 };
@@ -268,7 +266,7 @@ function statsCard(value, label) {
 function categoryStatsHTML(byCategory) {
   const order = [
     'research open', 'research solved',
-    'graduate', 'undergraduate', 'high_school', 'test', 'API',
+    'textbook', 'test', 'API',
   ];
   return order
     .filter(k => byCategory[k])
@@ -347,11 +345,14 @@ function main() {
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
+  const openCount   = stats.byCategory['research open'] || 0;
+  const solvedCount = stats.byCategory['research solved'] || 0;
+  const formalCount = conjectures.filter(c => c.hasFormalProof).length;
   writePage('site/index.html', applyBasePath(fill(indexHtml, {
-    totalCount:      stats.total,
-    openCount:       stats.byCategory['research open'] || 0,
-    solvedCount:     stats.byCategory['research solved'] || 0,
-    formalCount:     conjectures.filter(c => c.hasFormalProof).length,
+    totalCount:      openCount + solvedCount,
+    openCount,
+    solvedCount,
+    formalCount,
     categoryStats:   categoryStatsHTML(stats.byCategory),
     collectionList:  collectionListHTML(stats.byCollection),
     subjectList:     subjectListHTML(stats.bySubject),

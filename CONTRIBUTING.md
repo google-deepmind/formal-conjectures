@@ -31,3 +31,17 @@ All submissions, including submissions by project members, require review. We
 use GitHub pull requests for this purpose. Consult
 [GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
 information on using pull requests.
+
+### Managing Labels
+
+Any user can add or remove certain labels on pull requests and issues by leaving a comment.
+The supported labels are: `awaiting-author`, `WIP`, `Easy`, and `documentation`.
+
+- **To add a label**: Leave a comment with the exact label name on a line by itself. For example:
+  ```text
+  awaiting-author
+  ```
+- **To remove a label**: Leave a comment with `-` followed by the exact label name on a line by itself. For example:
+  ```text
+  -awaiting-author
+  ```

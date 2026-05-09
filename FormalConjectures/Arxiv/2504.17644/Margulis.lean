@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 by *Qianlin Huang, Ronggang Shi*
 -/
 
-section MatrixGroupConjecture
+namespace Margulis
 
 open Matrix SpecialLinearGroup
 open scoped MatrixGroups Polynomial LaurentSeries
@@ -94,4 +94,4 @@ theorem huang_shi_theorem_1_2
 
 end FunctionFieldDiagonalOrbit
 
-end MatrixGroupConjecture
+end Margulis

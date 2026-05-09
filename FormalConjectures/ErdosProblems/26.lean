@@ -109,7 +109,7 @@ Tenenbaum asked the weaker variant where for every $\epsilon>0$ there is
 some $k=k(\epsilon)$ such that at least $1-\epsilon$ density of all integers have a
 divisor of the form $a+k$ for some $a\in A$.
 
-The DeepMind prover agent has found a formal disprove of this statement.
+The DeepMind prover agent has found a formal disproof of this statement.
 -/
 @[category research solved, AMS 11,
 formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/09c54540aa51cb40dff73660c94a82e2631386f8/FormalConjectures/ErdosProblems/26.lean#L625"]
