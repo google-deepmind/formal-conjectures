@@ -36,7 +36,7 @@ Is it true that, if $H$ has $m$ edges and no isolated vertices, then $\hat{r}(G,
 In other words: if $G$ is sparse (every induced subgraph on $k$ vertices has $≤ 2k-3$ edges),
 is $G$ Ramsey size linear?
 -/
-@[category research open, AMS 05]
+@[category research open, AMS 5]
 theorem erdos_566 : answer(sorry) ↔
     ∀ (p : ℕ) (G : SimpleGraph (Fin p)),
       -- G is sparse: every induced subgraph on k ≥ 2 vertices has ≤ 2k - 3 edges
