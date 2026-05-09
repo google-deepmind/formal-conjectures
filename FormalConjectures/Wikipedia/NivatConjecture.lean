@@ -42,8 +42,7 @@ def IsPeriodic (x : ℤ × ℤ → A) : Prop :=
 satisfies `P_x(n, m) ≤ n * m`, then the configuration `x` is periodic.
 -/
 @[category research open, AMS 37 68]
-theorem nivat_conjecture answer(sorry) ↔ (x : ℤ × ℤ → A) :
-    (∃ n m : ℕ, 1 ≤ n ∧ 1 ≤ m ∧ blockComplexity x n m ≤ n * m) → IsPeriodic x := by
+theorem nivat_conjecture : answer(sorry) ↔ ∀ (x : ℤ × ℤ → A), (∃ n m : ℕ, 1 ≤ n ∧ 1 ≤ m ∧ blockComplexity x n m ≤ n * m) → IsPeriodic x := by
   sorry
 
 end NivatConjecture
