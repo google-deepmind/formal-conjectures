@@ -13,11 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Algebra.BigOperators.Expect
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Algebra.Pi
+module
 
+public import Mathlib.Algebra.BigOperators.Expect
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Algebra.Algebra.Pi
 /-!
 # Analysis of Boolean Functions: Basic Definitions
 
@@ -28,6 +29,8 @@ following the conventions of Ryan O'Donnell's book "Analysis of Boolean Function
 It includes the definition of the Hamming cube, Fourier expansion basics, and
 linear threshold functions (LTFs).
 -/
+
+@[expose] public section
 
 open Finset BigOperators
 
