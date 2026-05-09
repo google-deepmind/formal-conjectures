@@ -22,7 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Ben Green's Open Problem 43](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.43)
 -/
 
-open Filter
+
+open Filter Topology Classical
 
 namespace Green43
 
@@ -33,8 +34,8 @@ $$\#\{n \in [N] : n \equiv a(p) \pmod{p} \text{ for some } p\} \gg N^{1-o(1)}?$$
 -/
 @[category research open, AMS 11]
 theorem green_43 : answer(sorry) ↔
-    ∃ o : ℕ → ℝ, Tendsto o atTop (𝓝 0) ∧ (∀ n ∈ ℕ, 0 ≤ o n) ∧ ∀ᶠ N : ℕ in atTop, ∀ (a : ℕ → ℤ), (N : ℝ) ^ (1 - o N) ≤
-    ((Finset.Icc 1 N).filter fun n => ∃ p, Nat.Prime p ∧ (N : ℝ) ^ (0.51 : ℝ) ≤ (p : ℝ) ∧ (p : ℝ) < 2 * (N : ℝ) ^ (0.51 : ℝ) ∧
+    ∃ o : ℕ → ℝ, Tendsto o atTop (𝓝 0) ∧ (∀ n : ℕ, 0 ≤ o n) ∧ ∀ᶠ N : ℕ in atTop, ∀ (a : ℕ → ℤ), (N : ℝ) ^ (1 - o N) ≤
+    (((Finset.Icc (1 : ℤ) (N : ℤ))).filter fun n => ∃ p, Nat.Prime p ∧ (N : ℝ) ^ (0.51 : ℝ) ≤ (p : ℝ) ∧ (p : ℝ) < 2 * (N : ℝ) ^ (0.51 : ℝ) ∧
     (p : ℤ) ∣ ((n : ℤ) - a p)).card := by
   sorry
 
