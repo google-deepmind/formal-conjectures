@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Topology.Basic
-public import Mathlib.Topology.Homeomorph
+public import Mathlib.Topology.Homeomorph.Defs
 
 @[expose] public section
 
