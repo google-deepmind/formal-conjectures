@@ -62,8 +62,7 @@ $1\leq a_1<\cdots$ such that $\lim a_n^{1/\phi^{n}}=C$ where this infinite sum i
 
 This was formalized in Lean by Baretto.
 -/
-@[category research formally solved using lean4 at
-"https://www.erdosproblems.com/forum/thread/1051", AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/1051"]
 theorem erdos_1051 :
     answer(True) ↔ ∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
       Irrational (ErdosSeries a) := by
@@ -74,7 +73,7 @@ Erdős [Er88c] notes that if the sequence grows rapidly to infinity (specificall
 $a_{n+1} \geq C \cdot a_n^2$ for some constant $C > 0$), then the series is irrational.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1051.rapid_growth (a : ℕ → ℤ) (h_mono : StrictMono a)
+theorem erdos_1051.variants.rapid_growth (a : ℕ → ℤ) (h_mono : StrictMono a)
     (h_rapid : ∃ C > 0, ∀ n, (a (n + 1) : ℝ) ≥ C * (a n : ℝ) ^ 2) :
     Irrational (ErdosSeries a) := by
   sorry

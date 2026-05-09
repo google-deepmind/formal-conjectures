@@ -39,8 +39,19 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
   sorry
 
 #guard_msgs in
-@[category research formally solved using lean4 at "https://github.com/example/formal-proof"]
+@[category research solved, formal_proof using lean4 at "https://github.com/example/formal-proof"]
 theorem a_formally_solved_problem : 2 + 2 = 4 := by
+  rfl
+
+-- formal_proof on non-research categories
+#guard_msgs in
+@[category graduate, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem a_graduate_problem_with_formal_proof : 1 + 1 = 2 := by
+  rfl
+
+#guard_msgs in
+@[category test, formal_proof using formal_conjectures at ""]
+theorem a_test_with_formal_proof : 3 + 3 = 6 := by
   rfl
 
 -- The `#AMS` command

@@ -42,37 +42,39 @@ describing) your favourite conjecture.
 
 There are various ways of contributing to this repository:
 
-1.  **Adding new problem formalisations**
+1. **Formalise a Problem**. You can find problem lists ready
+   to be worked on in our [list of Milestones](https://github.com/google-deepmind/formal-conjectures/milestones), you can also filter by the AMS 2020 Classification (e.g. [Group Theory Issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22ams-20%20Group%20theory%20and%20generalizations%22)) or
+   take a look at [good first issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22) if you are new to Lean.
 
-    We encourage adding formalisations of open conjectures from all sorts of sources, including:
+   More generally, we encourage adding formalisations of open conjectures from all sorts of sources, including:
 
-    * **Literature:** Textbooks, problem books and research papers (including [arXiv](https://arxiv.org/archive/math)).
-    * **Community Resources:** [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics), [MathOverflow](https://mathoverflow.net/) and the [OEIS](https://oeis.org/).
-    * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), [Kourovka notebook](https://arxiv.org/pdf/1401.0300) or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
+      * **Literature:** Textbooks, problem books and research papers (including [arXiv](https://arxiv.org/archive/math)).
+      * **Community Resources:** [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics), [MathOverflow](https://mathoverflow.net/) and the [OEIS](https://oeis.org/).
+      * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), [Kourovka notebook](https://arxiv.org/pdf/1401.0300) or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
 
-    We are also interested in the formalised statements of solved variants of
-    open conjectures and solved statements from dedicated problem lists.
-    While the main goal is to collect conjecture statements, we appreciate the
-    inclusion of very short proofs for solved items or counterexamples,
-    especially if they are illuminating and testing the definitions.
-    Lengthy proofs are outside the scope of this repository.
-
-2.  **Opening issues with problems that you would like to see formalised.** Such
-    an issue should contain links to suitable references, and ideally a precise
-    informal statement of the conjecture.
-
-3.  **Formalise a problem already proposed**. You can find a list of problems ready
-   to be worked on in our [list of unassigned new conjectures](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee+label%3A%22new+conjecture%22) or
-   [good first issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22).
    Just pick one and comment on the issue (e.g., "I plan to work on this") to
    have it assigned to you.
 
-4.  **Improving the referencing and tagging of problems.** For example, adding
-    pointers to references in already existing files, or adding additional
-    relevant `AMS` subject attributes to statements.
+   We are also interested in the formalised statements of solved variants of
+   open conjectures and solved statements from dedicated problem lists.
+   While the main goal is to collect conjecture statements, we appreciate the
+   inclusion of very short proofs for solved items or counterexamples,
+   especially if they are illuminating and testing the definitions.
+   **Longer proofs (i.e. more than 25-50 lines) are not to be included in this repository.**
+   Instead, we welcome you to host your proof in your own repository and link to it using
+   the `formal proof` mechanism described below. This does not apply to
+   `FormalConjecturesForMathlib`, where we want all statements to have proofs.
 
-5.  **Fixing misformalisations.** PRs fixing incorrect formalisations and issues
-    flagging problems are encouraged.
+2. **Opening issues with problems that you would like to see formalised.** Such
+   an issue should contain links to suitable references, and ideally a precise
+   informal statement of the conjecture.
+
+3. **Improving the referencing and tagging of problems.** For example, adding
+   pointers to references in already existing files, or adding additional
+   relevant `AMS` subject attributes to statements.
+
+4. **Fixing misformalisations.** PRs fixing incorrect formalisations and issues
+   flagging problems are encouraged.
 
 ### How to Contribute
 
@@ -131,22 +133,15 @@ for the following categories:
     This includes problems that have a formal proof within this repository,
     a formal proof of an equivalent statement found elsewhere, or an informal
     solution widely accepted by experts in the field.
--   Formally solved research problem: a research problem with a formal proof.
-    Use `@[category research formally solved using <kind> at "link"]` where
-    `<kind>` is one of:
-    - `formal_conjectures`: solved in this repository (link to commit)
-    - `lean4`: solved in Lean 4 (e.g., Mathlib or another repository)
-    - `other_system`: solved in another formal system (Coq, Isabelle, etc.)
--   Graduate level problem.
--   Undergraduate level problem.
--   High school level problem.
+-   Textbook level problem: a math problem at the high school, undergraduate,
+    or graduate level.
 -   API statement: a statement that constructs basic theory around a new
     definition.
 -   Test statement: a statement that serves as a "unit test". These are useful
     to check e.g new definitions or theorem statements.
 
-This repository targets research level problems. As such, graduate/
-undergraduate/high school level problems should only be contributed if they
+This repository targets research level problems. As such, textbook level
+problems should only be contributed if they
 are directly related to a research level problem (e.g. as a special case,
 etc.).
 
@@ -161,6 +156,22 @@ theorem foo : Transcendental ℚ (rexp 1 + π) := by
 theorem bar : FermatLastTheorem := by
   sorry
 
+```
+
+#### The `formal_proof` attribute
+
+The `formal_proof` attribute records the existence and location of a formal proof.
+This is independent of the `category` attribute and can be used with any category.
+
+Use `@[formal_proof using <kind> at "link"]` where `<kind>` is one of:
+- `formal_conjectures`: formally proved in this repository (link to commit)
+- `lean4`: formally proved in Lean 4 elsewhere (e.g., Mathlib or another repository)
+- `other_system`: formally proved in another formal system (Roqc, Isabelle, etc.)
+
+```lean
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/example"]
+theorem some_problem : ... := by
+  sorry
 ```
 
 #### The `AMS` attribute
@@ -281,6 +292,22 @@ To minimize friction when adding problem statements that need definitions that
 are not yet in mathlib, such definitions can be added to the `FormalConjecturesForMathlib`
 directory. This ensures that the addition of these problems to
 formal-conjectures is not locked to the mathlib release cadence.
+
+When `lean-toolchain` is updated on `main`, a GitHub Actions workflow
+automatically adds a git tag of the form `v4.{X}.{Y}`, following mathlib's
+tagging convention.
+
+Stable benchmark snapshots are tagged using the format
+`bench-v{N}-lean4.{X}.{Y}`, where:
+
+-   **`v{N}` (Benchmark version):** Identifies the set of problems included in
+    the benchmark. The benchmark version is bumped whenever problems are added,
+    removed, or when misformalizations are corrected.
+-   **`lean4.{X}.{Y}` (Lean version):** Identifies the Lean 4 toolchain
+    version used for that snapshot.
+
+Tags are immutable: fixes to misformalizations are never patched into an existing
+benchmark version but instead go into `v{N+1}`.
 
 ## Licensing
 

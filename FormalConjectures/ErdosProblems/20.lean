@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 20
 
-*Reference:* [erdosproblems.com/20](https://www.erdosproblems.com/20)
+*References:*
+* [erdosproblems.com/20](https://www.erdosproblems.com/20)
+* [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
 -/
 universe u
 

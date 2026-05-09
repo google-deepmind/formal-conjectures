@@ -66,7 +66,7 @@ theorem erdos_1145 : answer(sorry) ↔ Erdos1145Prop := by
 A stronger form of [erdosproblems.com/28].
 -/
 @[category test, AMS 11]
-theorem erdos_1145_implies_erdos_28 : Erdos1145Prop → type_of% Erdos28.erdos_28 := by
+theorem erdos_1145.test_implies_erdos_28 : Erdos1145Prop → type_of% Erdos28.erdos_28 := by
   delta sumRep
   intro h1145 s hs
   rcases hs.exists_le with ⟨m, hm⟩

@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Combinatorics.AP.Basic
-import Mathlib.Analysis.Normed.Field.Lemmas
-import Mathlib.Order.CompletePartialOrder
+public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
+public import Mathlib.Analysis.Normed.Field.Lemmas
+public import Mathlib.Order.CompletePartialOrder
+
+@[expose] public section
 
 open Function Set
 open scoped Pointwise
@@ -28,6 +31,22 @@ A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e
 if the equation $a + b = c$ has no solution with $a, b, c \in A$.
 -/
 def IsSumFree (A : Set α) : Prop := Disjoint (A + A) A
+
+/--
+`allUniqueSums A` is the set of elements in `α` that can be written as the sum of exactly one
+unordered pair of elements from `A`.
+-/
+def allUniqueSums (A : Set α) : Set α :=
+  { n | ∃ p : α × α, p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n ∧
+      ∀ a₁ ∈ A, ∀ a₂ ∈ A, a₁ + a₂ = n → (a₁ = p.1 ∧ a₂ = p.2) ∨ (a₁ = p.2 ∧ a₂ = p.1) }
+
+/--
+A set `A` has no unique representation in its sumset `A + A` if for every pair of elements
+`a₁, a₂ ∈ A`, there exist another pair of elements `b₁, b₂ ∈ A` such that `a₁ + a₂ = b₁ + b₂`
+and `{a₁, a₂} ≠ {b₁, b₂}`.
+-/
+def HasNoUniqueRepresentation {α : Type*} [AddCommMonoid α] (A : Finset α) : Prop :=
+  allUniqueSums (A : Set α) = ∅
 
 /-- A set $A$ of natural numbers is said to have bounded gaps if there exists an integer $p$ such
 that $A ∩ [n, n + 1, ..., n + p]$ is nonempty for all $n$. -/
@@ -124,8 +143,11 @@ end Set
 
 namespace Finset
 
-instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) :=
-  decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
+instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := by
+  refine decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
+    i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)) ?_
+  rfl
+
 
 /-- The maximum size of a Sidon set in the supplied `Finset`. -/
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=

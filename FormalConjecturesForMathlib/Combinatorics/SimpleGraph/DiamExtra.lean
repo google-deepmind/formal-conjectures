@@ -13,29 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
--- Authors: Rida Hamadani
+public import Mathlib.Combinatorics.SimpleGraph.Diam
+public import Mathlib.Combinatorics.SimpleGraph.Metric
 
-import Mathlib.Combinatorics.SimpleGraph.Diam
-import Mathlib.Combinatorics.SimpleGraph.Metric
-
-/-!
-
-# Diameter of a simple graph
-
-This module defines the eccentricity of vertices, the diameter, and the radius of a simple graph.
-
-## Main definitions
-
-    * `SimpleGraph.eccent`: the eccentricity of a vertex in a simple graph, which is the maximum
-      distances between it and the other vertices.
-    * `SimpleGraph.ediam`: the graph extended diameter, which is the maximum eccentricity.
-      It is `ℕ∞`-valued.
-    * `SimpleGraph.diam`: the graph diameter, an `ℕ`-valued version of `SimpleGraph.ediam`.
-    * `SimpleGraph.radius`: the graph radius, which is the minimum eccentricity. It is `ℕ∞`-valued.
-    * `SimpleGraph.center`: the set of vertices with eccentricity equal to the graph's radius.
-
--/
+@[expose] public section
 
 assert_not_exists Field
 
