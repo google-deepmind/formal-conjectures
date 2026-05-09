@@ -27,17 +27,6 @@ namespace NivatConjecture
 
 variable {A : Type*} [Finite A]
 
-/-- The **block complexity** of a configuration `x : ℤ × ℤ → A` at scale `n × m` is the number
-of distinct `n × m` rectangular patterns appearing in `x`. -/
-noncomputable def blockComplexity (x : ℤ × ℤ → A) (n m : ℕ) : ℕ :=
-  (Set.range fun (p : ℤ × ℤ) => fun (q : Fin n × Fin m) =>
-    x (p.1 + (q.1 : ℤ), p.2 + (q.2 : ℤ))).ncard
-
-/-- A configuration `x : ℤ × ℤ → A` is **periodic** if there exists a nonzero vector
-`v : ℤ × ℤ` such that translating by `v` leaves `x` invariant. -/
-def IsPeriodic (x : ℤ × ℤ → A) : Prop :=
-  ∃ v : ℤ × ℤ, v ≠ 0 ∧ Function.Periodic x v
-
 /-- The **Nivat conjecture**: if there exist integers `n, m ≥ 1` such that the block complexity
 satisfies `P_x(n, m) ≤ n * m`, then the configuration `x` is periodic.
 -/
