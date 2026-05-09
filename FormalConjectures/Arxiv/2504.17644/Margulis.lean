@@ -39,7 +39,7 @@ Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
 theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     (g : SL(n, ℝ) ⧸ Subgroup.map (map (Int.castRingHom ℝ)) ⊤)
     (hg : IsCompact <| closure (MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g)) :
-    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g :=
+    IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g := by
   sorry
 
 end
