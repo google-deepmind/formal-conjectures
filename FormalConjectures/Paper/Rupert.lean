@@ -109,6 +109,6 @@ not hold.
 -/
 @[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/jcreedcmu/Noperthedron"]
 theorem is_every_convex_polyhedron_rupert :
-    ∃ vertices : Finset ℝ³,
-       (interior (convexHull ℝ vertices : Set ℝ³)).Nonempty ∧ ¬ IsRupert vertices := by
+    answer(False) ↔ ∀ (vertices : Finset ℝ³),
+       (interior (convexHull ℝ vertices : Set ℝ³)).Nonempty → IsRupert vertices := by
  sorry
