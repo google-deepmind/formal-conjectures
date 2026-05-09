@@ -150,6 +150,21 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
   sorry
 
 /--
+Existence-only version of the eventual-smoothness variant. This separates the first part of the
+source problem, proving that the scaled sequence has some limit, from the stronger task of finding
+an explicit expression for that limit.
+-/
+@[category research open, AMS 26 40 47]
+theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth.limit_exists
+    (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
+    ∀ᶠ m : ℕ in atTop,
+      ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
+        ∃ L : ℝ,
+          Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
+            (𝓝 L) := by
+  sorry
+
+/--
 Variant of the Bézier-Bernstein Voronovskaja problem with the required smoothness order itself
 left as an answer. Replacing `(answer(sorry) : ℕ)` by a concrete value lets one state the
 conjecture for a chosen regularity threshold.
