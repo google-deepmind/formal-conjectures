@@ -1105,8 +1105,9 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
 .stats-table-wrap {
   overflow-x: auto;
-  border: 1px solid var(--color-border);
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
+  box-shadow: var(--shadow-sm);
 }
 
 .stats-table {
@@ -1118,12 +1119,12 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 .stats-table thead th {
   position: sticky;
   top: 0;
-  background: var(--color-bg-alt);
+  background: #eef2f7;
   text-align: right;
   padding: 0.6rem 0.45rem;
   font-size: 0.85rem;
   font-weight: 600;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 2px solid #cbd5e1;
   white-space: nowrap;
 }
 .stats-table thead th:first-child {
@@ -1152,18 +1153,22 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 .stats-table tbody td {
   text-align: right;
   padding: 0.5rem 0.45rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid #e2e8f0;
   white-space: nowrap;
 }
 .stats-table tbody td:last-child {
   padding-right: 0.75rem;
 }
 .stats-table tbody th[scope="row"] {
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid #e2e8f0;
 }
 .stats-table tbody tr:nth-child(odd) td,
 .stats-table tbody tr:nth-child(odd) th[scope="row"] {
-  background: var(--color-bg-alt);
+  background: #f1f5f9;
+}
+.stats-table tbody tr:hover td,
+.stats-table tbody tr:hover th[scope="row"] {
+  background: #e2e8f0;
 }
 
 .stats-table td.empty {
