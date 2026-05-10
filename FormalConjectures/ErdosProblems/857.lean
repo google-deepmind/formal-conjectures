@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«20»
 
 /-!
 # Erdős Problem 857
@@ -36,7 +35,7 @@ namespace Erdos857
 -/
 noncomputable def m (n k : ℕ) : ℕ :=
   sInf {t : ℕ | ∀ (F : Set (Set (Fin n))), t ≤ F.ncard →
-    ∃ S ⊆ F, S.ncard = k ∧ Erdos20.IsSunflower S}
+    ∃ S ⊆ F, S.ncard = k ∧ IsSunflower S}
 
 /--
 Estimate `m(n,k)`, or better give an asymptotic formula.

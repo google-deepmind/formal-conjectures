@@ -23,41 +23,7 @@ import FormalConjectures.Util.ProblemImports
 * [erdosproblems.com/20](https://www.erdosproblems.com/20)
 * [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
 -/
-universe u
-
 namespace Erdos20
-
-variable {α : Type}
-
-/--
-A sunflower $F$ with kernel $S$ is a collection of sets in which all possible distinct pairs of sets
-share the same intersection $S$.
--/
-def IsSunflowerWithKernel (F : Set (Set α)) (S : Set α) : Prop :=
-  F.Pairwise (fun A B => A ∩ B = S)
-
-@[category test, AMS 5]
-theorem isSunflowerWithKernel_empty (S : Set α) : IsSunflowerWithKernel {} S := by
-  simp [IsSunflowerWithKernel]
-
-@[category test, AMS 5]
-theorem isSunflowerWithKernel_singleton (S : Set α) (A : Set α) :
-    IsSunflowerWithKernel {A} S := by
-  simp [IsSunflowerWithKernel]
-
-/--
-A sunflower $F$ is a collection of sets in which all possible distinct pairs of sets share the
-same intersection.
--/
-def IsSunflower (F : Set (Set α)) : Prop := ∃ S, IsSunflowerWithKernel F S
-
-@[category test, AMS 5]
-theorem isSunflower_empty : IsSunflower (∅ : Set (Set α)) := by
-  simp [IsSunflower, isSunflowerWithKernel_empty]
-
-@[category test, AMS 5]
-theorem isSunflower_singleton (A : Set α) : IsSunflower {A} := by
-  simp [IsSunflower, isSunflowerWithKernel_singleton]
 
 /--
 Let $f(n,k)$ be minimal such that every $F$ family of $n$-uniform sets with $|F| \ge f(n,k)$
