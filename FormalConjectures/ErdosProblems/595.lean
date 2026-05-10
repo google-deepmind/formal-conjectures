@@ -19,17 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 595
 
-**Verbatim statement (Erdős #595, status O):**
-> Is there an infinite graph $G$ which contains no $K_4$ and is not the union of countably many triangle-free graphs?
-
-**Source:** https://www.erdosproblems.com/595
-
-**Notes:** OPEN - $250
-
-
-*Reference:* [erdosproblems.com/595](https://www.erdosproblems.com/595)
-
-*References for known results:*
+*References:*
+- [erdosproblems.com/595](https://www.erdosproblems.com/595)
 - [Er87] Erdős, Paul, Problems and results on set systems and hypergraphs. Extremal problems
   for finite sets (Visegrád, 1991), Bolyai Soc. Math. Stud. (1994), 217-227.
 - [Fo70] Folkman, Jon, Graphs with monochromatic complete subgraphs in every edge coloring.
@@ -37,33 +28,6 @@ import FormalConjectures.Util.ProblemImports
 - [NeRo75] Nešetřil, Jaroslav and Rödl, Vojtěch, Type theory of partition problems of graphs.
   Recent advances in graph theory (Proc. Second Czechoslovak Sympos., Prague, 1974),
   Academia, Prague (1975), 405-412.
-
-## Overview
-
-**Problem (Erdős–Hajnal, $250)**: Is there an infinite graph $G$ which contains no $K_4$
-and is not the union of countably many triangle-free graphs?
-
-The "union of countably many triangle-free graphs" condition means that the edge set of $G$
-can be covered by countably many subgraphs, each of which is triangle-free (i.e., $K_3$-free).
-
-**Known (finite case):** Folkman [Fo70] and Nešetřil–Rödl [NeRo75] proved independently that
-for every $n \geq 1$ there exists a graph $G$ (which may be taken finite) that contains no $K_4$
-and whose edges cannot be coloured with $n$ colours such that each colour class is triangle-free.
-This means the *finite* version of the problem (with $n$ colours instead of countably many) has
-a positive answer.
-
-**Open question:** Whether the *infinite* version holds — i.e., whether a single graph can
-simultaneously be $K_4$-free and not expressible as a countable union of triangle-free graphs.
-
-See also [596] for the more general problem of which pairs $(G_1, G_2)$ exhibit this phenomenon.
-
-## Formalization note
-
-In `SimpleGraph V`, the complete lattice structure allows forming countable suprema
-`⨆ i : ℕ, H i`. The key lemma `SimpleGraph.iSup_adj` states:
-`(⨆ i, H i).Adj a b ↔ ∃ i, (H i).Adj a b`.
-We use this to define `IsCountableUnionOfTriangleFree G` as the existence of a family
-`H : ℕ → SimpleGraph V` of triangle-free graphs with `G = ⨆ i, H i`.
 -/
 
 open SimpleGraph Set
@@ -82,19 +46,6 @@ def IsCountableUnionOfTriangleFree {V : Type*} (G : SimpleGraph V) : Prop :=
 not the union of countably many triangle-free graphs?
 
 A problem of Erdős and Hajnal [Er87].
-
-**Formalization:** We ask for the existence of an infinite type `V` (witnessed by `[Infinite V]`)
-and a `SimpleGraph V` that is $K_4$-free (`G.CliqueFree 4`) but not a countable union of
-triangle-free graphs.
-
-**Prize:** \$250 (see erdosproblems.com/595).
-
-**Status:** OPEN.
-
-**Known (Folkman [Fo70], Nešetřil–Rödl [NeRo75]):** For every finite `n ≥ 1`, there exists a
-graph (even a finite one) that is $K_4$-free but not a union of `n` triangle-free graphs. This
-is the variant `erdos_595.variants.folkman_finite`. However, whether `n` can be replaced by
-`ℵ₀` (countably infinite) is the content of this open problem.
 -/
 @[category research open, AMS 5]
 theorem erdos_595 : answer(sorry) ↔
