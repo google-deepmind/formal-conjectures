@@ -38,7 +38,10 @@ i.e., the number of pairs of neighbors of `v` that are themselves adjacent.
 The invariant `maxTrianglesAtVertex G` is the maximum of T(v) over all vertices.
 
 **Conjecture 160** uses both `max T(v)` and `c_C4(G)` (the number of induced 4-cycles,
-already defined in GraphConjecture133) to bound the largest induced forest size `Ls(G)`.
+already defined in GraphConjecture133) to lower bound the WOWII invariant `L_s(G)`,
+which is the **maximum number of leaves over all spanning trees of `G`** (exposed
+in our library as `SimpleGraph.Ls G : ℝ` in
+`FormalConjecturesForMathlib/Combinatorics/SimpleGraph/GraphConjectures/Definitions.lean`).
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture160
@@ -60,9 +63,10 @@ noncomputable def maxTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj]
 WOWII [Conjecture 160](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 For a simple connected graph `G`,
-`Ls(G) ≥ max_v l(v) + max_v T(v) * c_C4(G)`
+`L_s(G) ≥ max_v l(v) + max_v T(v) * c_C4(G)`
 where:
-- `Ls(G)` is the size of a largest induced forest,
+- `L_s(G) = SimpleGraph.Ls G` is the maximum number of leaves over all spanning
+  trees of `G`,
 - `max_v l(v)` is the maximum local independence number over vertices,
 - `max_v T(v)` is the maximum number of triangles incident to any vertex,
 - `c_C4(G)` is the number of induced 4-cycles in `G`.
@@ -72,7 +76,7 @@ theorem conjecture160 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
     let maxT := maxTrianglesAtVertex G
     let cC4 := countInducedC4 G
-    (maxL : ℝ) + (maxT : ℝ) * (cC4 : ℝ) ≤ largestInducedForestSize G := by
+    (maxL : ℝ) + (maxT : ℝ) * (cC4 : ℝ) ≤ Ls G := by
   sorry
 
 -- Sanity checks
