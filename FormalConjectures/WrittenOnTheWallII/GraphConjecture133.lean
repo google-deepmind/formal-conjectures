@@ -56,13 +56,19 @@ noncomputable def isInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj]
   check a b c d || check a b d c || check a c b d
 
 /-- Count of induced C₄ subgraphs of `G`. We count ordered 4-tuples `(a,b,c,d)`
-of distinct vertices such that `a-b-c-d-a` is an induced 4-cycle, then divide
-by 8 (each unordered cycle gives 8 oriented tuples: 4 rotations × 2 reflections).
-For simplicity we use the ordered-tuple count directly as the invariant. -/
+of distinct vertices for which `isInducedC4 G a b c d = true`, then divide by
+`24 = 4!`.
+
+**Why 24 (and not 8)?** `isInducedC4` tests *all three* perfect-matching
+pairings of the four vertices, so any of the `4! = 24` orderings of a fixed
+unordered induced 4-cycle satisfies the predicate. Dividing by `8` (the size
+of the dihedral group `D₄`) would overcount each induced 4-cycle by a factor
+of `3` — once for each of the three cyclic structures `isInducedC4` accepts.
+-/
 noncomputable def countInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (∑ a : α, ∑ b : α, ∑ c : α, ∑ d : α,
     if a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d ∧
-       isInducedC4 G a b c d = true then 1 else 0) / 8
+       isInducedC4 G a b c d = true then 1 else 0) / 24
 
 /--
 WOWII [Conjecture 133](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
