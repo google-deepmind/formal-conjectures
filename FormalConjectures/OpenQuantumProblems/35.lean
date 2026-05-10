@@ -733,7 +733,8 @@ theorem ame_7_2_not_exists : ¬ ExistsAME 7 2 := by
   sorry
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(4,3)$ state exists; see Helwig et al. (2012) and Goyeneche et al. (2015). -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/AllenGrahamHart/FormalConjectures-Bench/blob/8fb9479e9cbfde68d6990ed008b24c883cbd2750/formalizations/openquantum35_ame43/OpenQuantum35AME43Formalization.lean#L333"]
 theorem ame_4_3_exists : ExistsAME 4 3 := by
   sorry
 
