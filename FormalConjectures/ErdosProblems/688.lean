@@ -32,50 +32,45 @@ Define $\epsilon_n$ to be maximal such that there exists some choice of congruen
 for all primes $n^{\epsilon_n} < p \leq n$ such that every integer in $[1,n]$ satisfies at least
 one of the congruences $\equiv a_p \pmod p$.
 -/
-
-def prop_of_erdos_688 (n : ℕ) (ε : ℝ) : Prop :=
+def Erdos688Prop (n : ℕ) (ε : ℝ) : Prop :=
   ∃ (a : ℕ → ℕ), ∀ (m : ℕ), (1 ≤ m) ∧ (m ≤ n) →
     ∃ (p : ℕ), (Nat.Prime p) ∧ ((n : ℝ)^ε < p) ∧ (p ≤ n) ∧
-    (a p ≡ m [MOD p])
+      (a p ≡ m [MOD p])
 
-noncomputable def epsilon_function (n : ℕ) : ℝ := sSup {ε : ℝ | prop_of_erdos_688 n ε}
+noncomputable def epsilonFunction (n : ℕ) : ℝ := sSup {ε : ℝ | Erdos688Prop n ε}
 
 /--
 Estimate $\epsilon_n$ - lower bound.
 -/
-
 @[category research open, AMS 11]
 theorem erdos_688.parts.i.lower_bound :
-  (answer(sorry) : ℕ → ℝ) =O[Filter.atTop] epsilon_function
-  := by sorry
+    (answer(sorry) : ℕ → ℝ) =O[Filter.atTop] epsilonFunction := by
+  sorry
 
 /--
 Estimate $\epsilon_n$ - upper bound.
 -/
-
 @[category research open, AMS 11]
 theorem erdos_688.parts.i.upper_bound :
-  epsilon_function =O[Filter.atTop] (answer(sorry) : ℕ → ℝ)
-  := by sorry
+    epsilonFunction =O[Filter.atTop] (answer(sorry) : ℕ → ℝ) := by
+  sorry
 
 /--
 In particular, is it true that $\epsilon_n = o(1)$?
 -/
-
 @[category research open, AMS 11]
 theorem erdos_688.parts.ii : answer(sorry) ↔
-  epsilon_function =o[Filter.atTop] (fun (n : ℕ) ↦ (1 : ℝ))
-  := by sorry
+    epsilonFunction =o[Filter.atTop] (fun (n : ℕ) ↦ (1 : ℝ)) := by
+  sorry
 
 /--
 Erdős claims in [Er80] (p. 106) that it is not difficult to prove
 $\epsilon_n \gg \frac{\log\log\log n}{\log\log n}$.
 -/
-
 @[category research solved, AMS 11]
-theorem erdos_688.variants.lglglg_over_lglg_isBigO :
-  (fun (n : ℕ) ↦ (Real.log (Real.log (Real.log (n : ℝ)))) / (Real.log (Real.log (n : ℝ))))
-  =O[Filter.atTop] epsilon_function
-  := by sorry
+theorem erdos_688.variants.lglglg_over_lglg_is_big_o :
+    (fun (n : ℕ) ↦ (Real.log (Real.log (Real.log (n : ℝ)))) / (Real.log (Real.log (n : ℝ))))
+      =O[Filter.atTop] epsilonFunction := by
+  sorry
 
 end Erdos688
