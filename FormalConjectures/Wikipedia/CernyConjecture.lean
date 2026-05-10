@@ -33,18 +33,11 @@ automata `Cₙ` witnesses it, requiring exactly `(n - 1)²` steps.
 (Shitov, 2019). The bound `(n − 1)²` has been verified for small `n` and for special classes of
 automata (e.g., Eulerian, aperiodic, cyclic automata).
 
-We use Mathlib's `DFA α σ` (from `Mathlib.Computability.DFA`), which consists of:
-- a state type `σ`,
-- an alphabet type `α`,
-- a transition function `step : σ → α → σ`,
-- a starting state `start : σ`,
-- a set of accepting states `accept : Set σ`.
-
-The key function is `M.evalFrom s w : σ`, which evaluates the word `w : List α` starting from
-state `s`, using `List.foldl`.
+We use Mathlib's `DFA α σ` (from `Mathlib.Computability.DFA`), together with the auxiliary
+`DFA.IsSynchronizingWord` and `DFA.IsSynchronizing` predicates defined in
+`FormalConjecturesForMathlib.Computability.DFA`.
 
 *References:*
-- [Wikipedia: Černý conjecture](https://en.wikipedia.org/wiki/Černý_conjecture)
 - [Wikipedia: Synchronizing word](https://en.wikipedia.org/wiki/Synchronizing_word)
 - J. Černý, *Poznámka k homogénnym experimentom s konečnými automatmi*, 1964.
 -/
@@ -53,25 +46,13 @@ namespace CernyConjecture
 
 variable {α : Type*} {σ : Type*}
 
-/-! ## Core definitions -/
-
-/-- A word `w` is a **synchronizing word** (or reset word) for a DFA `M` if reading `w` from
-any state leads to the same single state. -/
-def IsSynchronizingWord (M : DFA α σ) (w : List α) : Prop :=
-  ∃ p : σ, ∀ q : σ, M.evalFrom q w = p
-
-/-- A DFA `M` is **synchronizing** if it has at least one synchronizing word. -/
-def IsSynchronizing (M : DFA α σ) : Prop :=
-  ∃ w : List α, IsSynchronizingWord M w
-
-/-! ## The conjecture -/
-
-/-- **Černý Conjecture**: Every synchronizing DFA with `n` states admits a synchronizing word of
-length at most `(n - 1)²`.
+/-- **Černý Conjecture**: Every synchronizing DFA with `n` states admits a
+synchronizing word of length at most `(n - 1)²`.
 -/
 @[category research open, AMS 68]
-theorem cerny_conjecture [Fintype σ] (M : DFA α σ) (hM : IsSynchronizing M) :
-    answer(sorry) ↔ ∃ w : List α, IsSynchronizingWord M w ∧ w.length ≤ (Fintype.card σ - 1)^2 := by
+theorem cerny_conjecture :
+    answer(sorry) ↔ ∀ [Fintype σ] (M : DFA α σ) (hM : M.IsSynchronizing) ,
+    ∃ w : List α, M.IsSynchronizingWord w ∧ w.length ≤ (Fintype.card σ - 1)^2 := by
   sorry
 
 end CernyConjecture
