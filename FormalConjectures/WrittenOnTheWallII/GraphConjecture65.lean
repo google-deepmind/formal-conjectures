@@ -36,20 +36,30 @@ open Classical SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-`distMin G S` is the minimum over all vertices `v` of the distance from `v` to the set `S`,
-i.e. `min_{v ∈ V} dist(v, S)`. This is the minimum eccentricity of `S` within `G`.
+`distMin G S` is the minimum, over all vertices `v ∉ S`, of the distance from
+`v` to the set `S`, i.e. `min_{v ∉ S} dist(v, S)`.
+
+**Why exclude `v ∈ S`?** Without the `v ∉ S` restriction, every nonempty `S`
+trivially gives `distMin G S = 0`, since for any `v ∈ S` we have
+`distToSet G v S ≤ G.dist v v = 0`. That makes the conjecture vacuous.
+
+We define `distMin G S = 0` in the degenerate case where `S = univ` (no vertex
+outside `S`); this corresponds to a vacuous minimum.
 -/
 noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
-  let dists := Finset.univ.image (fun v => distToSet G v S)
-  if h : dists.Nonempty then dists.min' h else 0
+  let outside := Finset.univ.filter (fun v : α => v ∉ S)
+  if h : outside.Nonempty then
+    (outside.image (fun v => distToSet G v S)).min'
+      (Finset.Nonempty.image h _)
+  else 0
 
 /--
 WOWII [Conjecture 65](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 For a simple connected graph `G`, the size `f(G)` of a largest induced forest satisfies
 `f(G) ≥ dist_min(A) + ⌈dist_min(M) / 3⌉`, where `A` is the set of minimum-degree vertices,
-`M` is the set of maximum-degree vertices, and `dist_min(S)` is the minimum over all
-vertices `v` of the minimum distance from `v` to `S`.
+`M` is the set of maximum-degree vertices, and `dist_min(S)` is the minimum over
+all vertices `v ∉ S` of the distance from `v` to `S` (see `distMin`).
 -/
 @[category research open, AMS 5]
 theorem conjecture65 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
@@ -78,9 +88,8 @@ example (G : SimpleGraph (Fin 3)) (S : Set (Fin 3)) : 0 ≤ distMin G S := Nat.z
 example (G : SimpleGraph (Fin 3)) (v : Fin 3) (S : Set (Fin 3)) : 0 ≤ distToSet G v S :=
   Nat.zero_le _
 
-/-- In `K₃`, `distMin` of the min-degree vertex set is 0:
-since all vertices have the same degree, the min-degree set is `Set.univ`,
-and every vertex is distance 0 from itself. -/
+/-- In `K₃`, `distMin G Set.univ = 0` because there is no vertex outside `Set.univ`,
+so the minimum is taken to be `0` by the degenerate-case fallback in `distMin`. -/
 @[category test, AMS 5]
 example : distMin (⊤ : SimpleGraph (Fin 3)) Set.univ ≤
     distMin (⊤ : SimpleGraph (Fin 3)) Set.univ := le_refl _
