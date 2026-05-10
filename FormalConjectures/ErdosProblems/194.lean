@@ -32,8 +32,9 @@ that is, some $x_1 <\cdots < x_k$ which forms an increasing or decreasing $k$-te
 progression?
 
 The answer is no, even for $k=3$, as shown by Ardal, Brown, and Jungić [ABJ11].
--/
-@[category research solved, AMS 5]
+--/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://gist.githubusercontent.com/ster-oc/ffe9e4fa1b813111f40c0e417bbe8be0/raw/6f748a76e55d47e24ca319a9c00fd20ab79422bb/Erdos194.lean"]
 theorem erdos_194 :
   answer(False) ↔ ∀ k ≥ 3, ∀ r : ℝ → ℝ → Prop, IsStrictTotalOrder ℝ r →
     ∃ s : List ℝ, s.IsAPOfLength k ∧ (s.Pairwise r ∨ s.Pairwise (flip r)) := by

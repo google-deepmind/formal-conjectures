@@ -62,7 +62,7 @@ theorem a_209 : a 209 := by
   · decide
 
 /-- Numbers coming from prime quadruples are in the sequence A56777. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) : a n := by
   sorry
 
@@ -72,7 +72,7 @@ theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : ComesFromPrimeQuadrup
   sorry
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 65 \pmod{72}$. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
     n % 72 = 65 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
@@ -98,7 +98,7 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
     · exact dvd_mul_of_dvd_left ⟨r, by omega⟩ _
     · exact dvd_mul_of_dvd_right ⟨r + 2, by omega⟩ _
   obtain ⟨k, hk⟩ := hparity
-  have h1 : p * (p + 8) = (6 * q + 5) * (6 * q + 13) := by congr 1 <;> omega
+  have h1 : p * (p + 8) = (6 * q + 5) * (6 * q + 13) := by congr 1; omega
   have h2 : (6 * q + 5) * (6 * q + 13) = 36 * (q * (q + 3)) + 65 := by ring
   have h3 : 36 * (q * (q + 3)) = 72 * k := by linarith
   have hprod : p * (p + 8) = 72 * k + 65 := by linarith
@@ -106,7 +106,7 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 9 \pmod{100}$,
 except the first value "65". -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFromPrimeQuadruple n) :
     n % 100 = 9 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
@@ -149,7 +149,7 @@ theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFr
     · exact dvd_mul_of_dvd_left ⟨r, by omega⟩ _
     · exact dvd_mul_of_dvd_right ⟨r + 1, by omega⟩ _
   obtain ⟨k, hk⟩ := hparity
-  have h1 : p * (p + 8) = (30 * q + 11) * (30 * q + 19) := by congr 1 <;> omega
+  have h1 : p * (p + 8) = (30 * q + 11) * (30 * q + 19) := by congr 1; omega
   have h2 : (30 * q + 11) * (30 * q + 19) = 900 * (q * (q + 1)) + 209 := by ring
   have h3 : 900 * (q * (q + 1)) = 1800 * k := by linarith
   have hprod : p * (p + 8) = 1800 * k + 209 := by linarith

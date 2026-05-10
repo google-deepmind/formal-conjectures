@@ -80,7 +80,7 @@ theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
   exact fun m ⟨_, hm⟩ => Nat.sInf_le ⟨n.divisors, Finset.Subset.refl _, rfl, hn m hm⟩
 
 /-- $h(n!)$ is well-defined since $n!$ is practical for $n ≥ 1$. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
     induction n with
   | zero =>
