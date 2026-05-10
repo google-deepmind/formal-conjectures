@@ -19,51 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 603
 
-**Verbatim statement (Erdős #603, status O):**
-> Let $(A_i)$ be a family of countably infinite sets such that $\lvert A_i\cap A_j\rvert \neq 2$ for all $i\neq j$. Find the smallest cardinal $C$ such that $\cup A_i$ can always be coloured with at most $C$ colours so that no $A_i$ is monochromatic.
-
-**Source:** https://www.erdosproblems.com/603
-
-**Notes:** OPEN
-
-
-*Reference:* [erdosproblems.com/603](https://www.erdosproblems.com/603)
-
-## Problem statement (exact wording from the source)
-
-> Let $(A_i)$ be a family of countably infinite sets such that $|A_i \cap A_j| \neq 2$ for all
-> $i \neq j$. Find the smallest cardinal $C$ such that $\cup A_i$ can always be coloured with
-> at most $C$ colours so that no $A_i$ is monochromatic.
-
-This is **[Er87]**, a problem of Komjáth. It is currently open.
-
-## Relationship to Problem 602
-
-Problem 603 is the "sister" of [Problem 602](https://www.erdosproblems.com/602):
-- **Problem 602** asks the same question but with the forbidden intersection size being 1
-  (i.e., $|A_i \cap A_j| \neq 1$ for all $i \neq j$) and whether 2 colours always suffice.
-- **Problem 603** asks for the **minimum** number of colours $C$ when the forbidden
-  intersection size is 2 (i.e., $|A_i \cap A_j| \neq 2$ for all $i \neq j$).
-
-## Komjáth's known result
-
-Komjáth proved that for families satisfying $|A_i \cap A_j| \neq 1$ for all $i \neq j$,
-$\aleph_0$ colours always suffice (and in fact 2 suffice — related to Problem 602).
-For Problem 603 (forbidden size 2), the analogous minimum cardinal $C$ is open.
-
-## Formalization choices
-
-- We work over an **arbitrary ground type** `α : Type*`, which generalises the original
-  formulation (typically over `ℕ`). Since every countably infinite set bijects with `ℕ`,
-  the two formulations are equivalent.
-- **Countably infinite** sets are represented as `Set.Countable ∧ Set.Infinite`.
-- A **$C$-colouring** of `α` using colours from a type `C` is a function `f : α → C`.
-- A set `A` is **monochromatic** under `f` if `f` is constant on `A`.
-- **$C$-chromatic Property B** asserts: there exists a colouring `f : α → C` (with `C` many
-  colours) such that no `A_i` is monochromatic.
-- The open problem asks for the **smallest cardinal** `C` satisfying this for all such families.
-  We formalize this as: the smallest `C` such that `C`-chromatic Property B holds for every
-  family satisfying the intersection condition.
+*References:*
+- [erdosproblems.com/603](https://www.erdosproblems.com/603)
+- [Er87] Erdős, Paul, Problems and results on set systems and hypergraphs.
 -/
 
 open Set Cardinal
@@ -71,6 +29,11 @@ open Set Cardinal
 namespace Erdos603
 
 /- ## Setup -/
+
+-- TODO(mo271 review): `IsMonochromatic` and `HasChromaticPropertyB` are also defined in
+-- `FormalConjectures/ErdosProblems/602.lean` (with `C = Fin 2`). Once one of these PRs lands,
+-- factor the shared definitions into `FormalConjecturesForMathlib/Combinatorics/...` and
+-- import from there.
 
 /-- A set `A ⊆ α` is **monochromatic** under a colouring `f : α → C`
 if all elements of `A` receive the same colour. -/
@@ -83,12 +46,6 @@ a colouring `f : α → C` (using at most `#C` colours) such that no `A_i` is mo
 When `C = Fin 2`, this reduces to the classical Property B (2-colouring). -/
 def HasChromaticPropertyB {α : Type*} (C : Type*) (I : Type*) (A : I → Set α) : Prop :=
   ∃ f : α → C, ∀ i, ¬IsMonochromatic f (A i)
-
-/-- A family `(A_i)_{i ∈ I}` of subsets of `α` has **Property B** (the classical 2-colour
-version) if there exists a 2-colouring `f : α → Fin 2` such that no `A_i` is monochromatic.
-This specialises `HasChromaticPropertyB` to `C = Fin 2`. -/
-def HasPropertyB {α : Type*} (I : Type*) (A : I → Set α) : Prop :=
-  HasChromaticPropertyB (Fin 2) I A
 
 /- ## Main open problem -/
 
@@ -275,7 +232,7 @@ set monochromatic.
   Colour `y` with 1, all else with 0. Both `A₀` and `A₁` contain `x` (colour 0) and `y` (colour 1).
 
 (The case `|A₀ ∩ A₁| = 2` is excluded by hypothesis.) -/
-@[category research solved, AMS 3 5]
+@[category textbook, AMS 3 5]
 theorem erdos_603.variants.two_sets : answer(True) ↔
     ∀ {α : Type*} (A : Fin 2 → Set α),
       (∀ i, (A i).Infinite) →
@@ -506,7 +463,7 @@ def chromatic_without_infinite_claim : Prop :=
 The intersection `A 0 ∩ A 1 = ∅` has size 0 ≠ 2. But `A 0 = {0}` is a singleton,
 and any singleton set is monochromatic under any colouring (vacuously, since the only
 pair `(x, y) ∈ {0} × {0}` gives `f 0 = f 0`). Hence `HasChromaticPropertyB` fails. -/
-@[category research solved, AMS 3]
+@[category textbook, AMS 3]
 theorem chromatic_without_infinite_claim.disproof :
     ¬ chromatic_without_infinite_claim := by
   intro h
