@@ -13,9 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Data.Nat.Squarefree
-import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.Squarefree
+public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.Factorization.Basic
+import Mathlib.Tactic
+
+@[expose] public section
 
 namespace Nat
 
@@ -81,14 +86,14 @@ theorem squarefree_squarefreePart (n : ℕ) : Squarefree n.squarefreePart := by
   refine Nat.squarefree_iff_factorization_le_one n.squarefreePart_ne_zero |>.2 fun p ↦ ?_
   by_cases hp : p.Prime
   · linarith [n.squarefreePart_factorization hp, Nat.mod_lt (n.factorization p) two_pos]
-  · linarith [factorization_eq_zero_of_non_prime n.squarefreePart hp]
+  · linarith [factorization_eq_zero_of_not_prime n.squarefreePart hp]
 
 theorem squarefreePart_dvd (n : ℕ) : squarefreePart n ∣ n := by
   rcases eq_or_ne n 0 with (rfl | h₀); simp
   exact Nat.factorization_prime_le_iff_dvd n.squarefreePart_ne_zero h₀ |>.1 fun p hp ↦
     squarefreePart_factorization _ hp ▸ Nat.mod_le _ _
 
-/-- The square part is the value of `b ^ 2` in the squarefree decomposition of `n = a₀ * b ^ 2`.-/
+/-- The square part is the value of `b ^ 2` in the squarefree decomposition of `n = a₀ * b ^ 2`. -/
 def squarePart (n : ℕ) : ℕ := n / n.squarefreePart
 
 theorem squarePart_zero : squarePart 0 = 0 := by simp [squarePart]

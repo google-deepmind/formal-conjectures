@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 [erdosproblems.com/276](https://www.erdosproblems.com/276)
 -/
 
+namespace Erdos276
+
 /--
 We define a Lucas sequence to be a Fibonacci sequence with arbitrary starting points
 `L 0` and `L 1`.
@@ -34,8 +36,6 @@ However before moving this into `ForMathlib` one should make a concious decision
 which definition to choose.
 -/
 def IsLucasSequence (L : ℕ → ℕ) : Prop := ∀ n, L (n + 2) = L (n + 1) + L n
-
-namespace Erdos276
 
 /--
 Is there an infinite Lucas sequence $a_0, a_1, \ldots$ where $a_{n+2} = a_{n+1} + a_n$ for

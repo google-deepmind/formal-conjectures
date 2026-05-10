@@ -20,8 +20,12 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 274
 
 *References:*
-[erdosproblems.com/274](https://www.erdosproblems.com/274)
-[Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [erdosproblems.com/274](https://www.erdosproblems.com/274)
+* [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [arXiv:1803.08301](https://arxiv.org/abs/1803.08301)
+* [arXiv:1803.03569](https://arxiv.org/abs/1803.03569)
+* [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
+* [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
 
 open scoped Pointwise Cardinal
@@ -46,13 +50,13 @@ structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] wh
   covers : ⋃ i, reps i • (parts i : Set G) = Set.univ
 
 /--
-If `G` is a group then can there exist an exact covering of `G` by more than one cosets of
+Does there exist a group `G` with an exact covering by more than one cosets of
 different sizes? (i.e. each element is contained in exactly one of the cosets.)
 -/
 @[category research open, AMS 20]
-theorem erdos_274 : answer(sorry) ↔ ∀ᵉ (G : Type*) (h : Group G) (hG : 1 < ENat.card G),
-    (∃ (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
-      1 < Fintype.card ι ∧ (Set.range P.parts).Pairwise fun A B ↦ #A ≠ #B) := by
+theorem erdos_274 : answer(sorry) ↔ ∃ (G : Type*) (h : Group G) (hG : 1 < ENat.card G)
+    (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
+      1 < Fintype.card ι ∧ (Set.range P.parts).Pairwise fun A B ↦ #A ≠ #B := by
   sorry
 
 /--

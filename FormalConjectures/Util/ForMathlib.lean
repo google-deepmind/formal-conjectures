@@ -13,6 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib
+module
 
-deprecated_module (since := "2025-01-08")
+public import FormalConjecturesForMathlib
+
+/-!
+# ForMathlib (deprecated)
+
+This module is deprecated since 2026-01-08. Use `FormalConjecturesForMathlib` directly.
+-/
+
+deprecated_module (since := "2026-01-08")

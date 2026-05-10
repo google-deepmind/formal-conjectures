@@ -41,7 +41,7 @@ A subgraph `G'` is a 'snake' of length `k` in graph `G` if it is an induced path
 -/
 def IsSnakeInGraphOfLength {V : Type u} [DecidableEq V] (G : SimpleGraph V) (G' : Subgraph G)
     (k : ℕ) : Prop :=
-  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = P.support.toFinset.toSet ∧
+  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = {v | v ∈ P.support} ∧
   P.length = k
 
 /--
@@ -64,7 +64,7 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
   convert csSup_singleton 0
   ext n
-  refine ⟨fun  ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
+  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
@@ -75,26 +75,26 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
 
 open List
 
-/-
+/--
 The maximum length for the snake-in-the-box problem is known for dimensions zero through eight;
 it is $0, 1, 2, 4, 7, 13, 26, 50, 98$.
---/
+-/
 @[category research solved, AMS 5]
 theorem snake_small_dimensions :
     map LongestSnakeInTheBox (range 9) = [0, 1, 2, 4, 7, 13, 26, 50, 98] := by
   sorry
 
-/-
+/--
 For dimension $9$, the length of the longest snake in the box is not known.
 This is currently the smallest dimension where this question is open.
---/
+-/
 @[category research open, AMS 5]
 theorem snake_dim_nine : LongestSnakeInTheBox 9 = answer(sorry) := by
   sorry
 
-/-
+/--
 The best length found so far for dimension nine is 190.
---/
+-/
 @[category research solved, AMS 5]
 theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
   sorry
