@@ -19,47 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1128
 
-**Verbatim statement (Erdős #1128, status R):**
-> Let $A,B,C$ be three sets of cardinality $\aleph_1$. Is it true that, in any $2$-colouring of $A\times B\times C$, there must exist $A_1\subset A$, $B_1\subset B$, $C_1\subset C$, all of cardinality $\aleph_0$, such that $A_1\times B_1\times C_1$ is monochromatic?
-
-**Source:** https://www.erdosproblems.com/1128
-
-**Notes:** SOLVED - $50
-
-
 *Reference:* [erdosproblems.com/1128](https://www.erdosproblems.com/1128)
-
-Erdős offered a \$50 prize for the resolution of this problem. It was disproved by
-Prikry and Mills (1978, unpublished).
-
-## Problem statement
-
-Let $A$, $B$, $C$ be three sets each of cardinality $\aleph_1$. Is it true that in
-any 2-colouring of $A \times B \times C$, there must exist $A_1 \subseteq A$,
-$B_1 \subseteq B$, $C_1 \subseteq C$, all of cardinality $\aleph_0$, such that
-$A_1 \times B_1 \times C_1$ is monochromatic?
-
-**Answer: NO.** Prikry and Mills (1978) constructed a 2-colouring of $\omega_1^3$
-with no monochromatic countable combinatorial box.
-
-## Prikry–Mills construction (sketch)
-
-One fixes a well-ordering of $\omega_1$ and defines the colouring using the
-ordinal arithmetic of the three coordinates. In ZFC, such a colouring can be
-built by transfinite induction along $\omega_1$, ensuring at each stage that
-every potential countable box $A_1 \times B_1 \times C_1$ is "killed" (receives
-both colours). The key counting argument is that $\omega_1$ has uncountable
-cofinality: at each stage of the induction only countably many boxes need to be
-handled, and the construction can proceed without contradiction.
-
-## Note on the 2D analogue
-
-The file also contains a variant `two_dimensional` which claims that in 2D,
-any 2-colouring of $\omega_1 \times \omega_1$ has an uncountable monochromatic
-rectangle $A_1 \times B_1$. This statement appears to be **false** in ZFC:
-the ordering coloring $f(\alpha, \beta) = 0 \text{ iff } \alpha < \beta$
-provides a counterexample, since any uncountable subset of $\omega_1$ is cofinal
-and hence cannot be bounded away from any other uncountable set.
 -/
 
 open Cardinal Set Ordinal Order
@@ -77,6 +37,14 @@ def IsMonochromaticBox {A B C : Type*} (f : A → B → C → Fin 2)
 Auxiliary lemmas for the Prikry–Mills construction.
 These establish key countability and boundedness properties of ω₁.
 -/
+
+-- TODO(mo271 review): replace this private `Omega1` abbreviation with a direct use of
+-- Mathlib's `ω₁` (e.g. `(ω₁ : Ordinal).toType`), and inline the wrapper lemmas below
+-- (`card_le_aleph0_of_lt_omega1`, `countable_toType_of_lt_omega1`,
+-- `countable_Iio_of_lt_omega1`, `countable_Iio_omega1`, `countable_subset_bdd`) at the
+-- use sites. The current wrappers are thin shims around existing Mathlib API; making
+-- the switch is non-trivial because mixing `ω₁` and `(ℵ_ 1).ord` triggers definitional
+-- equality issues even though `ord_aleph 1 : (ℵ_ 1).ord = ω_ 1`. Left as a follow-up.
 
 private abbrev Omega1 := {o : Ordinal.{0} // o < (aleph 1).ord}
 
