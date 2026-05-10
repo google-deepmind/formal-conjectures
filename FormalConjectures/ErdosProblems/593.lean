@@ -20,48 +20,14 @@ import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 /-!
 # Erdős Problem 593
 
-**Verbatim statement (Erdős #593, status O):**
-> Characterize those finite 3-uniform hypergraphs which appear in every 3-uniform hypergraph of chromatic number $>\aleph_0$.
-
-**Source:** https://www.erdosproblems.com/593
-
-**Notes:** OPEN - $500
-
-
-*Reference:* [erdosproblems.com/593](https://www.erdosproblems.com/593)
-
-*References for known results:*
+*References:*
+- [erdosproblems.com/593](https://www.erdosproblems.com/593)
 - [EGH75] Erdős, Paul and Galvin, Fred and Hajnal, András, On set-systems having large
   chromatic number and not containing prescribed subsystems.
   Infinite and finite sets (Colloq., Keszthely, 1973; dedicated to P. Erdős on his 60th
   birthday), Vol. I. Colloq. Math. Soc. János Bolyai 10, North-Holland (1975), 425–513.
 - [Er95d] Erdős, Paul, Some of my favourite problems in various branches of combinatorics.
   Matematiche (Catania) 47 (1992), no. 2, 231–240 (1995).
-
-**Problem (Erdős, $500)**: Characterize those finite 3-uniform hypergraphs which appear in
-every 3-uniform hypergraph of chromatic number $> \aleph_0$.
-
-**Background:** A hypergraph $H = (V, E)$ is **$r$-uniform** if every hyperedge $e \in E$
-has exactly $r$ vertices. The **chromatic number** $\chi(H)$ of a hypergraph is the minimum
-number of colors needed to color its vertices so that no hyperedge is monochromatic. A finite
-$r$-uniform hypergraph $F$ is **obligatory** (for the class of $r$-uniform hypergraphs with
-chromatic number $> \aleph_0$) if every $r$-uniform hypergraph with chromatic number
-$> \aleph_0$ contains a copy of $F$ as a sub-hypergraph.
-
-**Known (graph case, $r = 2$, Erdős–Galvin–Hajnal [EGH75]):** For graphs (2-uniform
-hypergraphs), the problem is completely solved:
-- A graph of chromatic number $\geq \aleph_1$ must contain all finite bipartite graphs.
-- No fixed odd cycle is obligatory: for every odd $k$, there exists a graph with chromatic
-  number $\aleph_1$ that contains no cycle of length $k$.
-
-The 3-uniform case remains **open**.
-
-**Formalization notes:** See `FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform`
-for the definitions of `ThreeUniformHypergraph`, `IsProperColoring`, `chromaticCardinal`,
-`Appears`, and `IsObligatory` used throughout this file.
-
-Note: Mathlib does not yet have a general hypergraph API; the infrastructure in
-`FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform` fills that gap.
 -/
 
 open Cardinal Set SimpleGraph
@@ -71,22 +37,14 @@ namespace Erdos593
 /- ## Main open problem -/
 
 /--
-**Erdős Problem 593 ($500)**: A finite 3-uniform hypergraph is obligatory iff it is
-2-colorable.
+**Erdős Problem 593 ($500)**: Characterize those finite 3-uniform hypergraphs which appear
+in every 3-uniform hypergraph of chromatic number $> \aleph_0$.
 
-*Original statement (erdosproblems.com/593)*: "Characterize those finite 3-uniform hypergraphs
-which appear in every 3-uniform hypergraph of chromatic number $> \aleph_0$."
-
-**Background:** In the graph case ($r = 2$), Erdős, Galvin, and Hajnal [EGH75] proved that
-the obligatory finite graphs are exactly the finite bipartite graphs (= 2-colorable graphs).
-The natural conjectured 3-uniform analogue — and the conjectural characterization recorded
-here — is that obligatory finite 3-uniform hypergraphs are exactly the 2-colorable ones
-(Property B). The forward direction (`IsObligatory → IsTwoColorable`) and converse
-(`IsTwoColorable → IsObligatory`) are both open and stated as separate variants below.
-
-**Status:** OPEN.
-
-**Prize:** \$500 (see erdosproblems.com/593).
+A natural conjectural characterization, recorded here, is that the obligatory finite 3-uniform
+hypergraphs are exactly the 2-colorable ones (Property B). The forward direction
+(`IsObligatory → IsTwoColorable`) and converse (`IsTwoColorable → IsObligatory`) are stated as
+separate variants below; in the graph case ($r = 2$), Erdős–Galvin–Hajnal [EGH75] proved the
+analogous result (obligatory ⇔ bipartite).
 -/
 @[category research open, AMS 5]
 theorem erdos_593 : answer(sorry) ↔
@@ -101,8 +59,6 @@ hypergraph is 2-colorable.
 This is the natural necessary condition for the conjectural characterization in `erdos_593`:
 if a finite 3-uniform hypergraph `F` is not 2-colorable, one expects to construct a
 hypergraph with large chromatic number that contains no copy of `F`.
-
-**Status:** OPEN.
 -/
 @[category research open, AMS 5]
 theorem erdos_593.variants.obligatory_implies_two_colorable : answer(sorry) ↔
@@ -119,14 +75,30 @@ matches the graph-case characterization (bipartite ⇔ obligatory), then every 2
 finite 3-uniform hypergraph must appear in every 3-uniform hypergraph of chromatic number
 $> \aleph_0$.
 
-**Status:** OPEN. Together with `erdos_593.variants.obligatory_implies_two_colorable`,
-this implies `erdos_593`.
+Together with `erdos_593.variants.obligatory_implies_two_colorable`, this implies `erdos_593`.
 -/
 @[category research open, AMS 5]
 theorem erdos_593.variants.two_colorable_implies_obligatory : answer(sorry) ↔
     ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
       F.IsTwoColorable → IsObligatory F := by
   sorry
+
+/--
+**Conjunction of the two open implications gives the conjectured characterization**: if both
+`obligatory_implies_two_colorable` and `two_colorable_implies_obligatory` hold, then the
+characterization conjectured in `erdos_593` (`IsObligatory F ↔ F.IsTwoColorable`) follows by
+elementary `Iff` manipulation.
+-/
+@[category test, AMS 5]
+theorem erdos_593.variants.implications_combine
+    (h₁ : ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
+            IsObligatory F → F.IsTwoColorable)
+    (h₂ : ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
+            F.IsTwoColorable → IsObligatory F) :
+    ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
+      IsObligatory F ↔ F.IsTwoColorable := by
+  intro W _ F
+  exact ⟨h₁ W F, h₂ W F⟩
 
 /- ## Variants and partial results -/
 
@@ -136,7 +108,9 @@ For the 2-uniform (graph) case, a graph of chromatic cardinal $> \aleph_0$ must 
 finite bipartite graphs. Specifically, for every finite bipartite graph `F` and every graph
 `G` with chromatic cardinal $> \aleph_0$, there is a graph homomorphism from `F` to `G`.
 
-**Status:** SOLVED [EGH75].
+Note: this statement uses `Nonempty (F →g G)` (graph homomorphism), which is weaker than the
+injective vertex map used in the hypergraph `Appears` definition. A future revision may switch
+to `Nonempty (F ↪g G)` (graph embedding) to align with the hypergraph notion.
 -/
 @[category research solved, AMS 5]
 theorem erdos_593.variants.graph_case_bipartite_obligatory :
@@ -154,8 +128,6 @@ theorem erdos_593.variants.graph_case_bipartite_obligatory :
 For every odd $k \geq 3$, there exists a graph with chromatic cardinal $\aleph_1$ that
 contains no cycle of length $k$. This shows the class of obligatory graphs is strictly
 smaller than all finite graphs.
-
-**Status:** SOLVED [EGH75].
 -/
 @[category research solved, AMS 5]
 theorem erdos_593.variants.graph_case_no_odd_cycle :
