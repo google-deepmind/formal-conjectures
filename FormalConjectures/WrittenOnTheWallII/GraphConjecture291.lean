@@ -37,8 +37,17 @@ to `v`, i.e., the number of 3-element cliques in `G` that contain `v`.
 The **triangle-frequency of the minimum** is the number of vertices that achieve the
 minimum value of T(v).
 
-**k** (the first zero step in the Havel-Hakimi process) is defined here as
-`n - residue(G)` using the existing `residue` function.
+**k** is the **first step in the Havel–Hakimi process at which a zero appears**.
+Concretely, starting from the descending degree sequence `s₀` of `G`, we set
+`s_{i+1} = havelHakimiStep s_i` and let `k` be the least `i ≥ 0` such that
+`s_i` contains a zero entry (or, vacuously, has been emptied entirely). Since
+each step is sorted descending and never increases entries, this is equivalent
+to the last (smallest) entry of `s_i` being `0`, or `s_i` being `[]`.
+
+This is **strictly weaker** than `n - residue(G)` (the previous, incorrect,
+formalisation): `n - residue(G)` is the *total* number of reduction steps until
+*every* entry is zero, whereas `k` only requires that *some* entry has hit
+zero — and a 0 typically appears well before the all-zero state is reached.
 
 **Conjecture 291:** For a simple connected graph `G` with `n > 2`,
 `γ_t(G) ≤ k + frequency(t_min(v))`
@@ -65,10 +74,31 @@ noncomputable def minTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj]
 noncomputable def freqMinTriangles (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.filter (fun v => numTrianglesAtVertex G v = minTrianglesAtVertex G)).card
 
-/-- The first step in the Havel-Hakimi process at which a zero appears.
-Defined as `n - residue(G)` using the existing `residue` function. -/
+/-- The descending degree sequence of `G`, used as the starting point of the
+Havel-Hakimi reduction. -/
+noncomputable def descDegreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : List ℕ :=
+  (Finset.univ.image (fun v : α => G.degree v)).sort (· ≥ ·)
+
+/-- The Havel-Hakimi sequence of iterates: `s i` is the result of applying
+`havelHakimiStep` `i` times to the descending degree sequence of `G`. -/
+noncomputable def havelHakimiIterate (G : SimpleGraph α) [DecidableRel G.Adj] (i : ℕ) :
+    List ℕ :=
+  (havelHakimiStep)^[i] (descDegreeSequence G)
+
+/-- The first step `i` (counting from `0`) at which a zero appears in the
+Havel-Hakimi reduction of the descending degree sequence of `G`, or in which
+the sequence has been emptied. We use `sInf` over the set of such `i` so the
+definition is well-defined for every graph: in particular, when `G` is a
+connected graph with `n ≥ 2` the minimum degree at iteration `0` is at least
+`1`, so the first zero only appears at some `i ≥ 1`; and since each step
+strictly shortens the list (or empties it), at the latest by `i = n` the
+sequence is empty and the predicate holds vacuously.
+
+This is the WOWII `k` of Conjecture 291, which is the **first** step at which a
+zero appears — typically strictly less than `n - residue(G)` (which is the
+*total* number of reduction steps to reach the all-zero state). -/
 noncomputable def havelHakimiZeroStep (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  Fintype.card α - residue G
+  sInf {i | 0 ∈ havelHakimiIterate G i ∨ havelHakimiIterate G i = []}
 
 /--
 WOWII [Conjecture 291](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
