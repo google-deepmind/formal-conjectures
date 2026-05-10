@@ -218,6 +218,27 @@ function computeStats(conjectures) {
   };
 }
 
+/**
+ * Cross-tabulations and derived ratios for the /stats/ page.
+ *
+ * Note on multi-AMS theorems: a theorem with `@[AMS 5 11]` contributes to
+ * both subject rows, so row totals can exceed `conjectures.length`. This is
+ * consistent with `bySubject` in computeStats and is documented on the page.
+ */
+function computeAdvancedStats(conjectures) {
+  const subjectByCategory = {};   // subjectName -> { category -> count, _formal: n, _total: n }
+  for (const c of conjectures) {
+    for (const s of c.subjects) {
+      const row = subjectByCategory[s.name] ||
+        (subjectByCategory[s.name] = { _formal: 0, _total: 0 });
+      row[c.category] = (row[c.category] || 0) + 1;
+      row._total += 1;
+      if (c.hasFormalProof) row._formal += 1;
+    }
+  }
+  return { subjectByCategory };
+}
+
 // ---------------------------------------------------------------------------
 // File-system helpers
 // ---------------------------------------------------------------------------
@@ -292,6 +313,44 @@ function subjectListHTML(bySubject) {
     .join('\n');
 }
 
+/** Render the subject × category cross-tab as an HTML table. */
+function subjectStatusTableHTML(subjectByCategory) {
+  const columns = [
+    'research open', 'research solved', 'textbook', 'test', 'API',
+  ];
+  const rows = Object.entries(subjectByCategory)
+    .filter(([, row]) => row._total > 0)
+    .sort((a, b) => b[1]._total - a[1]._total);
+
+  const head =
+    `<tr>` +
+    `<th scope="col">Subject</th>` +
+    columns.map(cat => {
+      const meta = getCategoryMeta(cat);
+      return `<th scope="col"><span class="badge ${meta.css}">${meta.label}</span></th>`;
+    }).join('') +
+    `<th scope="col" title="Has a formal proof linked">Formal</th>` +
+    `<th scope="col">Total</th>` +
+    `</tr>`;
+
+  const body = rows.map(([subject, row]) => {
+    const cells = columns.map(cat => {
+      const n = row[cat] || 0;
+      if (n === 0) return `<td class="empty">0</td>`;
+      const href = `/browse/?subject=${encodeURIComponent(subject)}&category=${encodeURIComponent(cat)}`;
+      return `<td><a href="${href}">${n}</a></td>`;
+    }).join('');
+    const formalCell = row._formal === 0
+      ? `<td class="empty">0</td>`
+      : `<td><a href="/browse/?subject=${encodeURIComponent(subject)}&formal_proof=true">${row._formal}</a></td>`;
+    const totalCell =
+      `<td><a href="/browse/?subject=${encodeURIComponent(subject)}"><strong>${row._total}</strong></a></td>`;
+    return `<tr><th scope="row"><a href="/browse/?subject=${encodeURIComponent(subject)}">${subject}</a></th>${cells}${formalCell}${totalCell}</tr>`;
+  }).join('\n');
+
+  return `<table class="stats-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+}
+
 // ---------------------------------------------------------------------------
 // Main build
 // ---------------------------------------------------------------------------
@@ -314,6 +373,7 @@ function main() {
 
   const conjectures = rawData.map(processEntry);
   const stats = computeStats(conjectures);
+  const advancedStats = computeAdvancedStats(conjectures);
 
   // Load Verso literate fragments (module docstrings + const links)
   let versoFragments = { moduleDocs: {}, constLinks: {} };
@@ -340,7 +400,7 @@ function main() {
   ensureDir('site/data');
   fs.writeFileSync(
     'site/data/conjectures.json',
-    JSON.stringify({ conjectures, stats, amsSubjects: AMS_SUBJECTS, versoFragments }),
+    JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments }),
   );
 
   // ---- Landing page ----
@@ -369,6 +429,13 @@ function main() {
 
   // ---- About page ----
   copyStaticTemplate('about.html', 'site/about/index.html');
+
+  // ---- Stats page ----
+  const statsHtml = readTemplate('stats.html');
+  writePage('site/stats/index.html', applyBasePath(fill(statsHtml, {
+    totalCount:           stats.total,
+    subjectStatusTable:   subjectStatusTableHTML(advancedStats.subjectByCategory),
+  })));
 
   console.log('Done. Output in site/');
 }
