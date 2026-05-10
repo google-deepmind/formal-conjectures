@@ -34,7 +34,7 @@ namespace Irrational
 /-- Are $e$ and $\pi$ algebraically independent? -/
 @[category research open, AMS 33]
 theorem algebraicIndependent_e_pi :
-    AlgebraicIndependent ℚ ![e, π] ↔ answer(sorry) := by
+    answer(sorry) ↔ AlgebraicIndependent ℚ ![e, π] := by
   sorry
 
 /--
@@ -42,7 +42,7 @@ Is $e + \pi$ irrational?
 -/
 @[category research open, AMS 33]
 theorem irrational_e_plus_pi :
-    Irrational (e + π) ↔ answer(sorry) := by
+    answer(sorry) ↔ Irrational (e + π) := by
   sorry
 
 /--
@@ -50,7 +50,7 @@ Is $e \pi$ irrational?
 -/
 @[category research open, AMS 33]
 theorem irrational_e_times_pi :
-    Irrational (e * π) ↔ answer(sorry) := by
+    answer(sorry) ↔ Irrational (e * π) := by
   sorry
 
 /--
@@ -58,7 +58,7 @@ Is $e ^ e$ irrational?
 -/
 @[category research open, AMS 33]
 theorem irrational_e_to_e :
-    Irrational (e ^ e) ↔ answer(sorry) := by
+    answer(sorry) ↔ Irrational (e ^ e) := by
   sorry
 
 /--
@@ -66,7 +66,7 @@ Is $\pi ^ e$ irrational?
 -/
 @[category research open, AMS 33]
 theorem irrational_pi_to_e :
-    Irrational (π ^ e) ↔ answer(sorry) := by
+    answer(sorry) ↔ Irrational (π ^ e) := by
   sorry
 
 /--
@@ -74,7 +74,7 @@ Is $\pi ^ \pi$ irrational?
 -/
 @[category research open, AMS 33]
 theorem irrational_pi_to_pi :
-    Irrational (π ^ π) ↔ answer(sorry) := by
+    answer(sorry) ↔ Irrational (π ^ π) := by
   sorry
 
 /--
@@ -82,7 +82,7 @@ Is $\ln(\pi)$ irrational?
 -/
 @[category research open, AMS 33]
 theorem irrational_ln_pi :
-    Irrational (log π) ↔ answer(sorry) := by
+    answer(sorry) ↔ Irrational (log π) := by
   sorry
 
 /--
@@ -90,7 +90,7 @@ Is the Euler-Mascheroni constant $\gamma$ irrational?
 -/
 @[category research open, AMS 33]
 theorem irrational_eulerMascheroniConstant :
-    Irrational eulerMascheroniConstant ↔ answer(sorry) := by
+    answer(sorry) ↔ Irrational eulerMascheroniConstant := by
   sorry
 
 /--
@@ -98,7 +98,7 @@ Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596
 -/
 @[category research open, AMS 11 33]
 theorem irrational_catalanConstant :
-    Irrational catalanConstant ↔ answer(sorry) := by
+    answer(sorry) ↔ Irrational catalanConstant := by
   sorry
 
 end Irrational

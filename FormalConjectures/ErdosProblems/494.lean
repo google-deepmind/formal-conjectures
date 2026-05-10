@@ -49,12 +49,16 @@ $|A| \ne 2^l$ for $l \ge 0$.
 They also gave counterexamples when $k = 2$ and $|A| = 2^l$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.k_eq_2_card_not_pow_two :
+theorem erdos_494.variants.k_eq_2_card_not_pow_two :
     ∀ card : ℕ, (∀ l : ℕ, card ≠ 2 ^ l) → Erdos494Unique 2 card := by
   sorry
 
+/--
+Selfridge and Straus [SeSt58] gave counterexamples to the conjecture
+when $k = 2$ and $|A| = 2^l$.
+-/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.k_eq_2_card_pow_two :
+theorem erdos_494.variants.k_eq_2_card_pow_two :
     ∀ card : ℕ, (∃ l : ℕ, card = 2 ^ l) → ¬Erdos494Unique 2 card := by
   sorry
 
@@ -66,25 +70,33 @@ More generally, they proved that $A$ is determined by $A_k$ (and $|A|$) if $|A|$
 a prime greater than $k$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.k_eq_3_card_gt_6 :
+theorem erdos_494.variants.k_eq_3_card_gt_6 :
     ∀ card > 6, Erdos494Unique 3 card := by
   sorry
 
+/--
+Selfridge and Straus [SeSt58] showed that the conjecture is true
+when $k = 4$ and $|A| > 12$.
+-/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.k_eq_4_card_gt_12 :
+theorem erdos_494.variants.k_eq_4_card_gt_12 :
     ∀ card > 12, Erdos494Unique 4 card := by
   sorry
 
+/--
+Selfridge and Straus [SeSt58] proved that $A$ is determined by $A_k$
+if $|A|$ is divisible by a prime greater than $k$.
+-/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.card_divisible_by_prime_gt_k :
-    ∀ (k card p : ℕ), p.Prime ∧ k < p ∧ p ∣ card → Erdos494Unique k card := by
+theorem erdos_494.variants.card_divisible_by_prime_gt_k :
+    ∀ (k card p : ℕ), p.Prime → k ∈ Set.Ioo 0 p → p ∣ card → Erdos494Unique k card := by
   sorry
 
 /--
 Kruyt noted that the conjecture fails when $|A| = k$, by rotating $A$ around an appropriate point.
 -/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.k_eq_card :
+theorem erdos_494.variants.k_eq_card :
     ∀ k > 2, ¬Erdos494Unique k k := by
   sorry
 
@@ -93,7 +105,7 @@ Similarly, Tao noted that the conjecture fails when $|A| = 2k$, by taking $A$ to
 the total sum 0 and considering $-A$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.card_eq_2k :
+theorem erdos_494.variants.card_eq_2k :
     ∀ k > 2, ¬Erdos494Unique k (2 * k) := by
   sorry
 
@@ -102,7 +114,7 @@ Gordon, Fraenkel, and Straus [GRS62] proved that the claim is true for all $k > 
 $|A|$ is sufficiently large.
 -/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.gordon_fraenkel_straus :
+theorem erdos_494.variants.gordon_fraenkel_straus :
     ∀ k > 2, ∀ᶠ card in atTop, Erdos494Unique k card := by
   sorry
 
@@ -114,8 +126,9 @@ $A = \{1, \zeta_6, \zeta_6^2, \zeta_6^4\}$ and $B = \{1, \zeta_6^2, \zeta_6^3, \
 noncomputable def prodMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
   ((A.powersetCard k).val.map (fun s => s.prod id))
 
+/-- A counterexample to the product version of the conjecture (by Steinerberger). -/
 @[category research solved, AMS 5]
-theorem erdos_494.variant.product :
+theorem erdos_494.variants.product :
     ∃ (A B : Finset ℂ), A.card = B.card ∧ prodMultiset A 3 = prodMultiset B 3 ∧
       A ≠ B := by
   sorry

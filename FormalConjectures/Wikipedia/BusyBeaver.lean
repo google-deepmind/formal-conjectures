@@ -16,6 +16,17 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Busy Beaver
+
+The Busy Beaver problem asks for the maximum number of steps that an n-state, 2-symbol Turing
+machine can take before halting, when started on an empty tape.
+
+*References:*
+
+- [The Busy Beaver Challenge](https://wiki.bbchallenge.org/wiki/Main_Page)
+-/
+
 universe u v
 
 open Turing BusyBeaver
@@ -55,24 +66,36 @@ theorem sanity_check (n : ℕ) [NeZero n] :
       M.haltingNumber = N} := by
   sorry
 
+/-- The value of the Busy Beaver function for 1 state is 1. -/
 @[category test, AMS 3]
 theorem BB_1 : BB 1 = 1 := by
   sorry
 
-@[category undergraduate, AMS 3]
+/-- The value of the Busy Beaver function for 2 states is 6. -/
+@[category textbook, AMS 3]
 theorem BB_2 : BB 2 = 6 := by
   sorry
 
-@[category undergraduate, AMS 3]
+/-- The value of the Busy Beaver function for 3 states is 21. -/
+@[category textbook, AMS 3]
 theorem BB_3 : BB 3 = 21 := by
   sorry
 
-@[category undergraduate, AMS 3]
+/-- The value of the Busy Beaver function for 4 states is 107. -/
+@[category textbook, AMS 3]
 theorem BB_4 : BB 4 = 107 := by
   sorry
 
+/-- The value of the Busy Beaver function for 5 states is 47176870. -/
 @[category research solved, AMS 3]
 theorem BB_5 : BB 5 = 47176870 := by
+  sorry
+
+/--
+Determine the value of the Busy Beaver function at n = 6.
+-/
+@[category research open, AMS 3]
+theorem BB_6 : BB 6 = answer(sorry) := by
   sorry
 
 end BusyBeaver

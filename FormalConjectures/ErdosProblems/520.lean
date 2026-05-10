@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 open MeasureTheory ProbabilityTheory Nat Real Filter
 
-section Erdos520
+namespace Erdos520
 
 variable {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
 
@@ -46,15 +46,14 @@ structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
 /--
 Let $f$ be a Rademacher multiplicative function.
 Does there exist some constant $c > 0$ such that, almost surely,
-\[
+$$
   \limsup_{N \to \infty} \frac{\sum_{m \leq N} f(m)}{\sqrt{N \log \log N}} = c?
-\]
+$$
 -/
 @[category research open, AMS 11 60]
 theorem erdos_520 :
-    (∃ c > 0, ∀ (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
-      ∀ᵐ ω, limsup (fun N ↦ ∑ m ≤ N, f m ω / sqrt (N * log (log N))) atTop = c)
-    ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ c > 0, ∀ (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
+      ∀ᵐ ω, limsup (fun N ↦ ∑ m ≤ N, f m ω / sqrt (N * log (log N))) atTop = c := by
   sorry
 
 end Erdos520

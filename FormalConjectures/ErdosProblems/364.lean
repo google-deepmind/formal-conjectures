@@ -48,7 +48,7 @@ theorem erdos_364.variants.strong :
 There is no quadruple of powerful numbers, since at least one of the four numbers must be
 $2 \pmod{4}$, which cannot be powerful (since $2$ divides it, but $2^2$ does not).
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_364.variants.weak :
     ¬ ∃ (n : ℕ), Powerful n ∧ Powerful (n + 1) ∧ Powerful (n + 2) ∧ Powerful (n + 3) := by
   intro h

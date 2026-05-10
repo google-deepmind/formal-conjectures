@@ -34,8 +34,21 @@ Does there always exist at least one prime between consecutive perfect squares?
 -/
 @[category research open, AMS 11]
 theorem legendre_conjecture :
-    (∀ᵉ (n ≥ 1), ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p)
-      ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
+  sorry
+
+/--
+If there exists a constant `c > 0` such that
+`(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all large `n`,
+then Legendre's conjecture is asymptotically true.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/a4568d467b4f42884b6a4bd09c40d65f92113ee7/FormalConjectures/Wikipedia/LegendreConjecture.lean#L48"]
+theorem bounded_gap_legendre
+    (H : ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime <
+      (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c)) :
+    ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
 /--
@@ -43,7 +56,7 @@ Ferreira proved that the conjecture is true for sufficiently large n.
 -/
 @[category research solved, AMS 11]
 theorem legendre_conjecture.ferreira_large_n :
-    ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n^2) ((n+1)^2), Prime p := by
+    ∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
 end LegendreConjecture

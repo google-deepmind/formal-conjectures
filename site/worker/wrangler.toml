@@ -1,0 +1,11 @@
+name = "fc-oauth-proxy"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+ALLOWED_ORIGIN = "https://formal-conjectures.github.io"
+
+[[kv_namespaces]]
+binding = "VOTES"
+id = "PLACEHOLDER_KV_ID"
+preview_id = "PLACEHOLDER_PREVIEW_KV_ID"

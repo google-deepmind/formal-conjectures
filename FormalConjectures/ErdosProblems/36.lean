@@ -91,7 +91,7 @@ A lower bound of $\frac 1 4$.
 See [Some remarks on number theory (in Hebrew)](https://users.renyi.hu/~p_erdos/1955-13.pdf)
 by *Paul Erdős*, Riveon Lematematika 9, p.45-48,1955
 -/
-@[category graduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem minimum_overlap.variants.lower.erdos_1955 :
     (1 : ℝ) / 4 < atTop.liminf MinOverlapQuotient := by
   sorry
@@ -143,7 +143,8 @@ shows an upper bound of $\frac 1 2$.
 -/
 @[category research solved, AMS 5 11]
 theorem minimum_overlap.variants.upper.erdos_1955 :
-  atTop.limsup MinOverlapQuotient ≤ (1 : ℝ) / 2 := by sorry
+    atTop.limsup MinOverlapQuotient ≤ (1 : ℝ) / 2 := by
+  sorry
 
 /--
 An upper bound of $\frac 2 5$.
@@ -163,7 +164,7 @@ by *Jan Kristian Haugland*, Journal of Number Theory Volume 58, Issue 1, p 71-78
 -/
 @[category research solved, AMS 5 11]
 theorem minimum_overlap.variants.upper.haugland_1996 :
-    atTop.limsup  MinOverlapQuotient  ≤ 0.38200298812318988 := by
+    atTop.limsup MinOverlapQuotient ≤ 0.38200298812318988 := by
   sorry
 
 /--

@@ -45,7 +45,8 @@ theorem not_isThick_of_geom_one_lt (r : ℕ) (hr : r > 1) : ¬IsThick fun n : �
 
 @[category test, AMS 11]
 theorem isThick_const {ι : Type*} [Infinite ι] (r : ℕ) (h : r > 0) : IsThick fun _ : ι ↦ r := by
-  field_simp [IsThick, h, summable_const_iff]
+  simp only [IsThick, one_div, summable_const_iff, inv_eq_zero, Nat.cast_eq_zero]
+  exact Nat.ne_zero_of_lt h
 
 /-- The set of multiples of a sequence $(a_i)$ is $\{na_i | n \in \mathbb{N}, i\}$. -/
 def MultiplesOf {ι : Type*} (A : ι → ℕ) : Set ℕ := Set.range fun (n, i) ↦ n * A i
@@ -69,7 +70,8 @@ theorem isBehrend_of_contains_one {ι : Type*} (A : ι → ℕ) (h : 1 ∈ Set.r
     IsBehrend A := by
   rw [IsBehrend, Set.HasDensity]
   exact tendsto_atTop_of_eventually_const (i₀ := 1) fun n hn ↦ by
-    field_simp [multiplesOf_eq_univ A h, Set.partialDensity]
+    simp [multiplesOf_eq_univ A h, Set.partialDensity]
+    lia
 
 @[category test, AMS 11]
 theorem isWeaklyBehrend_of_ge_one {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε : 1 ≤ ε) :
@@ -86,10 +88,12 @@ theorem not_isWeaklyBehrend_of_neg {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε
 Let $A\subset\mathbb{N}$ be infinite such that $\sum_{a \in A} \frac{1}{a} = \infty$. Must
 there exist some $k\geq 1$ such that almost all integers have a divisor of the form $a+k$
 for some $a\in A$?
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research open, AMS 11]
-theorem erdos_26 : (∀ A : ℕ → ℕ, StrictMono A → IsThick A →
-    ∃ k, IsBehrend (A · + k)) ↔ answer(sorry) := by
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos26.lean"]
+theorem erdos_26 : answer(False) ↔ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
+    ∃ k, IsBehrend (A · + k) := by
   sorry
 
 /--
@@ -104,10 +108,13 @@ theorem erdos_26.variants.rusza : ∃ A : ℕ → ℕ,
 Tenenbaum asked the weaker variant where for every $\epsilon>0$ there is
 some $k=k(\epsilon)$ such that at least $1-\epsilon$ density of all integers have a
 divisor of the form $a+k$ for some $a\in A$.
+
+The DeepMind prover agent has found a formal disproof of this statement.
 -/
-@[category research open, AMS 11]
-theorem erdos_26.variants.tenenbaum : (∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A → 
-    (∀ ε > (0 : ℝ), ∃ k, IsWeaklyBehrend (A · + k) ε)) ↔ answer(sorry) := by
+@[category research solved, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/09c54540aa51cb40dff73660c94a82e2631386f8/FormalConjectures/ErdosProblems/26.lean#L625"]
+theorem erdos_26.variants.tenenbaum : answer(False) ↔ ∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A →
+    (∀ ε > (0 : ℝ), ∃ k, IsWeaklyBehrend (A · + k) ε) := by
   sorry
 
 end Erdos26
