@@ -39,14 +39,13 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
   (Finset.univ.filter (fun w => Even (G.dist v w))).card
 
-/-- The **2-domination number** of `G` (Fink–Jacobson 1985): the minimum size
-of a set `S` such that every vertex outside `S` has at least 2 neighbours in `S`.
-
-This is DeLaVina's `σ(G)`, used consistently across WOWII conjectures
-188, 189, 190, and 201 (all Hamiltonian-path implications). -/
-noncomputable def twoDominationNumber (G : SimpleGraph α) : ℕ :=
-  sInf { n | ∃ S : Finset α, S.card = n ∧
-    ∀ v ∉ S, 2 ≤ (S.filter (fun w => G.Adj v w)).card }
+/-- The **second-smallest degree** of `G`'s degree sequence — DeLaVina's
+`σ(G)` per the WOWII definitions popup (defEntry 65): "order the degree
+sequence in nondecreasing order `d_1 ≤ d_2 ≤ … ≤ d_n`, the second smallest
+degree of the sequence is the 2nd entry". For graphs with `n ≤ 1` we
+conventionally return `0`. -/
+noncomputable def secondSmallestDegree (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  (degreeSequence G).getD 1 0
 
 /--
 WOWII [Conjecture 189](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj189)
@@ -56,20 +55,21 @@ For a simple connected graph `G`, if `max_v distEven(v) ≤ 1 + σ(G)`,
 then `G` has a Hamiltonian path.
 
 Here `distEven(v)` is the number of vertices at even distance from `v`, and
-`σ(G) = twoDominationNumber G` is the 2-domination number of `G`
-(Fink–Jacobson 1985).
+`σ(G)` is the **second-smallest degree** of `G`'s degree sequence (per
+WOWII defEntry 65).
 -/
 @[category research open, AMS 5]
-theorem conjecture189 (G : SimpleGraph α) (h : G.Connected)
-    (hσ : (Finset.univ.image (distEven G)).max' (by simp) ≤ 1 + twoDominationNumber G) :
+theorem conjecture189 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
+    (hσ : (Finset.univ.image (distEven G)).max' (by simp) ≤ 1 + secondSmallestDegree G) :
     ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by
   sorry
 
 -- Sanity checks
 
-/-- The 2-domination number is nonneg. -/
+/-- The second-smallest degree is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ twoDominationNumber G := Nat.zero_le _
+example (G : SimpleGraph (Fin 3)) [DecidableRel G.Adj] :
+    0 ≤ secondSmallestDegree G := Nat.zero_le _
 
 /-- `distEven G v` is positive for any vertex `v`. -/
 @[category test, AMS 5]
