@@ -8722,9 +8722,7 @@ equal to `f ω'` for `μ.trim hm`-a.e. `ω'`.
 
 The boundedness assumption simplifies the proof by giving uniform integrability
 of `f`, `f²`, `(f-c)²` under any probability measure; integrability of `f²`
-under each fiber `κ(ω')` then follows automatically.
-
-TODO: Mathlib upstream candidate. -/
+under each fiber `κ(ω')` then follows automatically. -/
 @[category API, AMS 11]
 lemma condExpKernel_ae_eq_const_of_stronglyMeasurable_bounded
     {Ω : Type*} {m mΩ : MeasurableSpace Ω} [StandardBorelSpace Ω]
@@ -8837,9 +8835,7 @@ unconditional integral `∫ f ∂μ` for `μ.trim hm`-almost every `ω'`.
 - `condExp_indep_eq`: `μ[f|m] =ᵐ[μ] (fun _ ↦ ∫ f ∂μ)`.
 - Lift to trim via `ae_eq_trim_of_stronglyMeasurable` (both sides are `m`-meas).
 - Combine with `condExp_ae_eq_trim_integral_condExpKernel`:
-  `μ[f|m] =ᵐ[μ.trim hm] (fun ω' ↦ ∫ f d(condExpKernel μ m ω'))`.
-
-TODO: Mathlib upstream candidate. -/
+  `μ[f|m] =ᵐ[μ.trim hm] (fun ω' ↦ ∫ f d(condExpKernel μ m ω'))`. -/
 @[category API, AMS 11]
 lemma integral_condExpKernel_of_indep
     {Ω : Type*} {m m' mΩ : MeasurableSpace Ω} [StandardBorelSpace Ω]
@@ -8876,9 +8872,7 @@ equals the unconditional measure of `s`, for `μ.trim hm`-a.e. `ω'`.
 function `1_s : Ω → ℝ`, which is `m'`-strongly-measurable and bounded (hence
 integrable on the finite measure `μ`). The two integrals are
 `(κ ω').real s` and `μ.real s` respectively. Since both measures are finite,
-the toReal equality lifts back to ENNReal equality.
-
-TODO: Mathlib upstream candidate. -/
+the toReal equality lifts back to ENNReal equality. -/
 @[category API, AMS 11]
 lemma condExpKernel_apply_eq_of_indep
     {Ω : Type*} {m m' mΩ : MeasurableSpace Ω} [StandardBorelSpace Ω]
@@ -8936,9 +8930,7 @@ Each `f' i` is an `m'`-measurable set (since `comap (X i) ⊆ m'`). Apply
 `condExpKernel_apply_eq_of_indep` to each of `⋂ f' i, f' i_1, ..., f' i_n`,
 take finite intersection of the resulting a.e. sets. Inside the intersection,
 `κ(ω')` agrees with `μ` on each set, and `μ` satisfies the product formula
-by `iIndepFun.meas_biInter`.
-
-TODO: Mathlib upstream candidate. -/
+by `iIndepFun.meas_biInter`. -/
 @[category API, AMS 11]
 lemma iIndepFun_condExpKernel_of_indep_of_indep
     {ι : Type*} [Fintype ι] {β : ι → Type*} [∀ i, MeasurableSpace (β i)]
@@ -8994,9 +8986,8 @@ sets is countable.
 `T (n+1) := T n ∪ image2 (· ∩ ·) (T n) (T n)`. Each `T n` is countable (by induction
 + `Set.Countable.image2`); the union `⋃ n, T n` is countable. Show
 `generatePiSystem s ⊆ ⋃ n, T n` by induction on the `generatePiSystem` structure
-(base: `s ⊆ T 0`; inductive step: if `u ∈ T m`, `v ∈ T n`, then `u ∩ v ∈ T (max m n + 1)`).
-
-TODO: Mathlib upstream candidate. -/
+(base: `s ⊆ T 0`; inductive step: if `u ∈ T m`, `v ∈ T n`, then
+`u ∩ v ∈ T (max m n + 1)`). -/
 @[category API, AMS 11]
 lemma generatePiSystem_countable {α : Type*} {s : Set (Set α)} (h : s.Countable) :
     (generatePiSystem s).Countable := by
@@ -9038,16 +9029,12 @@ lemma generatePiSystem_countable {α : Type*} {s : Set (Set α)} (h : s.Countabl
     Set.countable_iUnion (fun n => hT_countable n)
   exact h_union_countable.mono h_subset
 
-/-- **Mathlib upstream candidate scaffold (Path X — Kernel→Measure iIndepFun extraction)**:
+/-- **Mathlib upstream candidate (seed-level Kernel→Measure independence extraction)**:
 For a `Kernel.iIndepFun` family of measurable functions valued in countably-generated
-measurable spaces with finite index, the family is `iIndepFun` under each fiber `κ(ω')`
-for `ν`-almost every `ω'`. This intermediate result extracts the **seed-level**
-`iIndepSets` for `ν`-a.e. `ω'`, which is the structural core; the full extension
-to `iIndepFun X (κ ω')` requires extending iIndepSets from the countable seed to
-its π-system closure (Dynkin-system / π-system extension argument), which is a
-focused Mathlib upstream candidate (the proof of `Kernel.iIndepSets.iIndep`
-already implements this internally for the kernel-level statement; the per-fiber
-Measure-level version is symmetric).
+measurable spaces with finite index, this intermediate result extracts the
+seed-level `iIndepSets` statement under each fiber `κ(ω')` for `ν`-almost every
+`ω'`. The next theorem combines this seed statement with a π-system closure
+argument to obtain the full per-fiber `iIndepFun X (κ ω')` statement.
 
 **Proof outline**:
 1. For each `i`, take a countable generating set `g_i` for `m_β i` (via
@@ -9057,15 +9044,11 @@ Measure-level version is symmetric).
    via `comap_generateFrom`.
 3. For each fixed `(S : Finset ι, f : ι → Set Ω)` with `f i ∈ s'_i` for `i ∈ S`,
    `Kernel.iIndepFun X κ ν` gives `∀ᵐ ω' ∂ν, κ(ω')(⋂_i f i) = ∏_i κ(ω')(f i)`.
-4. The set of such `(S, f)` is COUNTABLE (finite ι, countable s'_i). Take
+4. The set of such `(S, f)` is countable (finite ι, countable `s'_i`). Take
    countable intersection of a.e. sets ⇒ uniform a.e. set `A`.
 5. Inside `A`: get `iIndepSets s' (κ ω')` at the seed level.
 
-The full statement `∀ᵐ ω' ∂ν, iIndepFun X (κ ω')` (the per-fiber Measure-level
-`iIndepFun`) requires the π-system extension step (Mathlib upstream candidate).
-
-**Output**: `∀ᵐ ω' ∂ν, iIndepSets s' (κ ω')` — the seed-level form, which is
-provable cleanly. -/
+**Output**: `∀ᵐ ω' ∂ν, iIndepSets s' (κ ω')`, the seed-level form used below. -/
 @[category API, AMS 11]
 theorem Kernel.iIndepFun.iIndepSets_apply_ae_seed
     {ι : Type*} [Fintype ι] {β : ι → Type*} [m_β : ∀ i, MeasurableSpace (β i)]
@@ -9160,9 +9143,7 @@ for `ν`-almost every `ω'`.
    countable + each `π i` countable) to get a uniform a.e. set: `iIndepSets π (κ ω')`.
 5. Apply `iIndepSets.iIndep` (Measure-level) to extend to
    `iIndep (fun i => (m_β i).comap (X i)) (κ ω')`.
-6. Conclude `iIndepFun X (κ ω')` via `iIndepFun_iff_iIndep`.
-
-TODO: Mathlib upstream candidate. -/
+6. Conclude `iIndepFun X (κ ω')` via `iIndepFun_iff_iIndep`. -/
 @[category API, AMS 11]
 theorem Kernel.iIndepFun.iIndepFun_apply_ae
     {ι : Type*} [Fintype ι] {β : ι → Type*} [m_β : ∀ i, MeasurableSpace (β i)]
@@ -10940,7 +10921,7 @@ lemma apssvBlockSum_centered_summand_HasCondSubgaussianMGF_sum_linear (P r k : �
               ∫ η', e ((k : ℝ) * apssvT η' w P / (2 : ℝ) ^ r) ∂apssvEtaMeasure)).re)
       (Real.toNNReal (16 * Real.pi^2 * (k : ℝ)^2 / (2 : ℝ)^r)) apssvEtaMeasure := by
   refine ⟨fun t => ?_, ?_⟩
-  · -- integrability: same scaffolding as M=2 (norm-le-2 bound is still valid).
+  · -- Integrability follows as in the M=2 case; the norm-le-2 bound is still valid.
     rw [ProbabilityTheory.condExpKernel_comp_trim]
     have h_meas_T : ∀ w : Fin r → Bool,
         Measurable (fun η : List Bool → Bool => apssvT η w P) :=
@@ -12088,7 +12069,7 @@ lemma apssvBlockSum_subGaussian_tail_M2 (P r k : ℕ) (hk : 1 ≤ k) (t : ℝ) (
     Real.exp_le_exp.mpr h_arg_le
   linarith
 
-/-- **MGF bound for `Re B` (linear parameter)** [STUB]: for any `t : ℝ`,
+/-- **MGF bound for `Re B` (linear parameter)**: for any `t : ℝ`,
 $$ \int \exp(t \cdot \text{Re B}(\eta)) \,d\eta \le
    \exp\!\left(16 \pi^2 k^2 / 2^r \cdot t^2 / 2\right). $$
 
@@ -12961,18 +12942,16 @@ lemma apssv_threshold_pos (C : ℝ) (hC : 0 < C) (k r : ℕ) (_hk : 1 ≤ k) :
     lt_min h_2pow_r_pos h_2pow_b_pos
   positivity
 
-/- ## Superseded: existential-`h` per-`(k, r)` helpers (kept for documentation)
+/- ## Auxiliary existential-`h` per-`(k, r)` helpers
 
-The three lemmas below predate `apssv_exists_h_residue_shift_strong` (which
-gives an explicit `2^h ≤ 8π·k/τ + 4` upper bound). They expose the cleaner
+The three lemmas below are weaker than `apssv_exists_h_residue_shift_strong`,
+which gives an explicit `2^h ≤ 8π·k/τ + 4` upper bound. They expose the cleaner
 `(τ/2)²` exp form but with `h` as an existential, leaving the prefactor `2^h`
-as a *symbolic* witness rather than a polynomial-in-`(k, 1/τ)` quantity. The
-`_explicit` and `_regime_split` variants supersede them in every callable
-position, so these are unused inside this file but preserved here as
-documented reference for the structural step `existential h ⟶ explicit
-prefactor`. -/
+as a symbolic witness rather than a polynomial-in-`(k, 1/τ)` quantity. They
+document the intermediate structural step from an existential residue depth to
+the explicit prefactor used in the regime-split bounds. -/
 
-/-- **(Superseded by `apssv_exists_h_residue_shift_strong`.)**
+/-- Existential residue-depth version of `apssv_exists_h_residue_shift_strong`.
 For `(k, τ)` with `τ > 0`, there exists `h : ℕ` such that `2π·k/2^h ≤ τ/2`,
 hence `τ - 2π·k/2^h ≥ τ/2 > 0`. Strengthening of `apssv_exists_h_residue_shift`
 without the explicit `2^h` bound — `_strong` provides both. -/
@@ -12984,7 +12963,7 @@ lemma apssv_exists_h_residue_shift_half (k : ℕ) (τ : ℝ) (hτ : 0 < τ) :
   -- h_lt : 0 < τ/2 - 2π·k/2^h, i.e., 2π·k/2^h < τ/2.
   exact ⟨h, by linarith⟩
 
-/-- **(Superseded by `apssv_per_kr_measure_le_M2_explicit`.)**
+/-- Existential-residue-depth version of `apssv_per_kr_measure_le_M2_explicit`.
 Per-`(k, r)` sub-Gaussian bound (M=2) with `τ/2` exp form, exposing the
 existential `h`. The `_explicit` variant additionally bounds the prefactor by
 `8π·k/τ + 4`, eliminating the existential. -/
@@ -13021,7 +13000,7 @@ lemma apssv_per_kr_measure_le_M2_half (k r : ℕ) (hk : 1 ≤ k)
     mul_le_mul_of_nonneg_left h_exp_le (by norm_num)
   exact mul_le_mul_of_nonneg_left h_4_exp_le h_2pow_pos.le
 
-/-- **(Superseded by `apssv_per_kr_measure_le_linear_explicit`.)**
+/-- Existential-residue-depth version of `apssv_per_kr_measure_le_linear_explicit`.
 Linear analog of `apssv_per_kr_measure_le_M2_half`. -/
 @[category API, AMS 11]
 lemma apssv_per_kr_measure_le_linear_half (k r : ℕ) (hk : 1 ≤ k)
