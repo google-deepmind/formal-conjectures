@@ -43,6 +43,17 @@ noncomputable def minCopies (ε : ℝ) : ℕ :=
     (⋃ θ ∈ Θ, exp (θ * I) • pyjamaSet ε) = univ }
 
 /--
+[Ma15] proved that for any $\varepsilon > 0$, finitely many rotations of the pyjama set of width
+$\varepsilon$ cover the plane. This implies that the set we are taking the infimum over in `minCopies`
+is non-empty.
+-/
+@[category test, AMS 51 52]
+theorem minCopies_set_nonempty (ε : ℝ) (hε : 0 < ε) :
+    { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
+      (⋃ θ ∈ Θ, exp (θ * I) • pyjamaSet ε) = univ }.Nonempty := by
+  sorry
+
+/--
 How many rotated (about the origin) copies of the 'pyjama set'
 $\\{(x, y) \in \mathbb{R}^2 : \text{dist}(x, \mathbb{Z}) \leq \varepsilon\\}$ are needed to cover
 $\mathbb{R}^2$?
