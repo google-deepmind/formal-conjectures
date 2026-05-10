@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/formal-conjectures">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistics — Formal Conjectures</title>
+  <meta name="description" content="Cross-tabulations and derived metrics for the Formal Conjectures repository.">
+  <link rel="stylesheet" href="/formal-conjectures/assets/css/style.css">
+  <link rel="icon" href="/formal-conjectures/assets/img/formal_conjectures_logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="container site-nav__inner">
+    <a href="/formal-conjectures/" class="site-nav__brand"><img src="/formal-conjectures/assets/img/formal_conjectures_logo.svg" alt=""
+        class="site-nav__logo">Formal Conjectures</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    <ul class="site-nav__links" id="nav-links" role="list">
+      <li><a href="/formal-conjectures/browse/">Browse</a></li>
+      <li><a href="/formal-conjectures/stats/">Stats</a></li>
+      <li><a href="/formal-conjectures/about/">About</a></li>
+      <li><a href="/formal-conjectures/contribute/">Contribute</a></li>
+      <li><a href="/formal-conjectures/doc/">Docs</a></li>
+      <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Statistics</h1>
+    <p class="page-header__subtitle">Cross-tabulations and derived metrics across the 30 indexed entries.</p>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">Subject &times; status</h2>
+      <p class="section__lede">
+        Each row is an AMS MSC2020 subject; each column is a problem
+        category. Cells link into the browse page filtered by both
+        subject and category. A theorem tagged with multiple AMS subjects
+        contributes to every relevant row, so row totals can exceed the
+        repository total.
+      </p>
+      <div class="stats-table-wrap">
+        <table class="stats-table"><thead><tr><th scope="col">Subject</th><th scope="col"><span class="badge cat-open">Open</span></th><th scope="col"><span class="badge cat-solved">Solved</span></th><th scope="col"><span class="badge cat-textbook">Textbook</span></th><th scope="col"><span class="badge cat-test">Test</span></th><th scope="col"><span class="badge cat-api">API</span></th><th scope="col" title="Has a formal proof linked">Formal</th><th scope="col">Total</th></tr></thead><tbody><tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Number%20theory">Number theory</a></th><td><a href="/formal-conjectures/browse/?subject=Number%20theory&category=research%20open">10</a></td><td><a href="/formal-conjectures/browse/?subject=Number%20theory&category=research%20solved">2</a></td><td><a href="/formal-conjectures/browse/?subject=Number%20theory&category=textbook">1</a></td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Number%20theory&category=API">1</a></td><td><a href="/formal-conjectures/browse/?subject=Number%20theory&formal_proof=true">2</a></td><td><a href="/formal-conjectures/browse/?subject=Number%20theory"><strong>14</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Combinatorics">Combinatorics</a></th><td><a href="/formal-conjectures/browse/?subject=Combinatorics&category=research%20open">3</a></td><td><a href="/formal-conjectures/browse/?subject=Combinatorics&category=research%20solved">2</a></td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Combinatorics&category=API">1</a></td><td><a href="/formal-conjectures/browse/?subject=Combinatorics&formal_proof=true">1</a></td><td><a href="/formal-conjectures/browse/?subject=Combinatorics"><strong>6</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Computer%20science">Computer science</a></th><td><a href="/formal-conjectures/browse/?subject=Computer%20science&category=research%20open">2</a></td><td><a href="/formal-conjectures/browse/?subject=Computer%20science&category=research%20solved">1</a></td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Computer%20science&category=test">1</a></td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Computer%20science&formal_proof=true">1</a></td><td><a href="/formal-conjectures/browse/?subject=Computer%20science"><strong>4</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Dynamical%20systems%20and%20ergodic%20theory">Dynamical systems and ergodic theory</a></th><td><a href="/formal-conjectures/browse/?subject=Dynamical%20systems%20and%20ergodic%20theory&category=research%20open">3</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Dynamical%20systems%20and%20ergodic%20theory"><strong>3</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Functions%20of%20a%20complex%20variable">Functions of a complex variable</a></th><td><a href="/formal-conjectures/browse/?subject=Functions%20of%20a%20complex%20variable&category=research%20open">2</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Functions%20of%20a%20complex%20variable"><strong>2</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Group%20theory%20and%20generalizations">Group theory and generalizations</a></th><td><a href="/formal-conjectures/browse/?subject=Group%20theory%20and%20generalizations&category=research%20open">2</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Group%20theory%20and%20generalizations"><strong>2</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Functional%20analysis">Functional analysis</a></th><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Functional%20analysis&category=research%20solved">1</a></td><td><a href="/formal-conjectures/browse/?subject=Functional%20analysis&category=textbook">1</a></td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Functional%20analysis&formal_proof=true">1</a></td><td><a href="/formal-conjectures/browse/?subject=Functional%20analysis"><strong>2</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Convex%20and%20discrete%20geometry">Convex and discrete geometry</a></th><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Convex%20and%20discrete%20geometry&category=research%20solved">1</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Convex%20and%20discrete%20geometry&formal_proof=true">1</a></td><td><a href="/formal-conjectures/browse/?subject=Convex%20and%20discrete%20geometry"><strong>1</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Mathematical%20logic%20and%20foundations">Mathematical logic and foundations</a></th><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Mathematical%20logic%20and%20foundations&category=research%20solved">1</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Mathematical%20logic%20and%20foundations"><strong>1</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Algebraic%20geometry">Algebraic geometry</a></th><td><a href="/formal-conjectures/browse/?subject=Algebraic%20geometry&category=research%20open">1</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Algebraic%20geometry"><strong>1</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Differential%20geometry">Differential geometry</a></th><td><a href="/formal-conjectures/browse/?subject=Differential%20geometry&category=research%20open">1</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Differential%20geometry"><strong>1</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Category%20theory%3B%20homological%20algebra">Category theory; homological algebra</a></th><td><a href="/formal-conjectures/browse/?subject=Category%20theory%3B%20homological%20algebra&category=research%20open">1</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Category%20theory%3B%20homological%20algebra"><strong>1</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Partial%20differential%20equations">Partial differential equations</a></th><td><a href="/formal-conjectures/browse/?subject=Partial%20differential%20equations&category=research%20open">1</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Partial%20differential%20equations"><strong>1</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Harmonic%20analysis%20on%20Euclidean%20spaces">Harmonic analysis on Euclidean spaces</a></th><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Harmonic%20analysis%20on%20Euclidean%20spaces&category=textbook">1</a></td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Harmonic%20analysis%20on%20Euclidean%20spaces&formal_proof=true">1</a></td><td><a href="/formal-conjectures/browse/?subject=Harmonic%20analysis%20on%20Euclidean%20spaces"><strong>1</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Real%20functions">Real functions</a></th><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Real%20functions&category=textbook">1</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Real%20functions"><strong>1</strong></a></td></tr>
+<tr><th scope="row"><a href="/formal-conjectures/browse/?subject=Game%20theory%2C%20economics%2C%20social%20and%20behavioral%20sciences">Game theory, economics, social and behavioral sciences</a></th><td><a href="/formal-conjectures/browse/?subject=Game%20theory%2C%20economics%2C%20social%20and%20behavioral%20sciences&category=research%20open">1</a></td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td class="empty">0</td><td><a href="/formal-conjectures/browse/?subject=Game%20theory%2C%20economics%2C%20social%20and%20behavioral%20sciences"><strong>1</strong></a></td></tr></tbody></table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>Formal Conjectures &mdash; Apache 2.0 / CC-BY 4.0</span>
+    <span>
+      <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a>
+      &middot;
+      <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Zulip</a>
+      &middot;
+      <a href="/formal-conjectures/contribute/">Contribute</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/formal-conjectures/assets/js/main.js"></script>
+</body>
+</html>

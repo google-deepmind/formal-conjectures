@@ -17,9 +17,10 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
     <ul class="site-nav__links" id="nav-links" role="list">
       <li><a href="/formal-conjectures/browse/">Browse</a></li>
+      <li><a href="/formal-conjectures/stats/">Stats</a></li>
       <li><a href="/formal-conjectures/about/">About</a></li>
       <li><a href="/formal-conjectures/contribute/">Contribute</a></li>
-      <li><a href="/formal-conjectures/doc/" target="_blank" rel="noopener">Docs</a></li>
+      <li><a href="/formal-conjectures/doc/">Docs</a></li>
       <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
   </div>
@@ -28,104 +29,66 @@
 <header class="page-header">
   <div class="container">
     <h1 class="page-header__title">How to Contribute</h1>
-    <p class="page-header__subtitle">Contributions of all kinds are welcome, from adding new formalisations to fixing inaccuracies.</p>
+    <p class="page-header__subtitle">Contributions of all kinds are welcome — from adding new formalisations to fixing inaccuracies.</p>
   </div>
 </header>
 
 <main>
   <div class="container section">
     <div class="prose">
-      <p>We'd love to accept your patches and contributions to this project. Contributions of all kinds are welcome, from adding new formalisations to fixing inaccuracies.</p>
-<h2 id="before-you-begin">Before you begin</h2>
-<h3 id="sign-our-contributor-license-agreement">Sign our Contributor License Agreement</h3>
-<p>Contributions to this project must be accompanied by a <a href="https://cla.developers.google.com/about" target="_blank" rel="noopener">Contributor License Agreement</a> (CLA). You (or your employer) retain the copyright to your contribution; this simply gives us permission to use and redistribute your contributions as part of the project.</p>
-<p>If you or your current employer have already signed the Google CLA (even if it was for a different project), you probably don't need to do it again.</p>
-<p>Visit <a href="https://cla.developers.google.com/" target="_blank" rel="noopener">https://cla.developers.google.com/</a> to see your current agreements or to sign a new one.</p>
-<h3 id="review-our-community-guidelines">Review our community guidelines</h3>
-<p>This project follows <a href="https://opensource.google/conduct/" target="_blank" rel="noopener">Google's Open Source Community Guidelines</a>.</p>
-<h2 id="ways-to-contribute">Ways to contribute</h2>
-<ol>
-<li>
-<p><strong>Formalise a problem.</strong> You can find problem lists ready to be worked on in our <a href="https://github.com/google-deepmind/formal-conjectures/milestones" target="_blank" rel="noopener">list of Milestones</a>. You can also filter by the AMS 2020 Classification (e.g. <a href="https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22ams-20%20Group%20theory%20and%20generalizations%22" target="_blank" rel="noopener">Group Theory Issues</a>) or take a look at <a href="https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22" target="_blank" rel="noopener">good first issues</a> if you are new to Lean. Browse <a href="https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee+label%3A%22new+conjecture%22" target="_blank" rel="noopener">unassigned new conjectures</a> and comment on the issue (e.g., "I plan to work on this") to have it assigned to you.</p>
-<p>More generally, we encourage adding formalisations of open conjectures from all sorts of sources, including:</p>
-<ul>
-<li><strong>Literature:</strong> textbooks, problem books and research papers (including <a href="https://arxiv.org/archive/math" target="_blank" rel="noopener">arXiv</a>).</li>
-<li><strong>Community resources:</strong> <a href="https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics" target="_blank" rel="noopener">Wikipedia</a>, <a href="https://mathoverflow.net/" target="_blank" rel="noopener">MathOverflow</a> and the <a href="https://oeis.org/" target="_blank" rel="noopener">OEIS</a>.</li>
-<li><strong>Problem lists:</strong> Famous collections (<a href="https://www.claymath.org/millennium-problems/" target="_blank" rel="noopener">Millennium</a>, <a href="https://en.wikipedia.org/wiki/Smale%27s_problems" target="_blank" rel="noopener">Smale</a>, Yau), <a href="https://www.erdosproblems.com/" target="_blank" rel="noopener">Erdős Problems</a>, <a href="https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf" target="_blank" rel="noopener">Ben Green's list</a>, <a href="https://arxiv.org/pdf/1401.0300" target="_blank" rel="noopener">Kourovka notebook</a> or <a href="https://en.wikipedia.org/wiki/Scottish_Book" target="_blank" rel="noopener">The Scottish Book</a>.</li>
-</ul>
-<p>We are also interested in the formalised statements of solved variants of open conjectures and solved statements from dedicated problem lists. While the main goal is to collect conjecture statements, we appreciate the inclusion of very short proofs for solved items or counterexamples, especially if they are illuminating and testing the definitions. <strong>Longer proofs (i.e. more than 25-50 lines) are not to be included in this repository.</strong> Instead, we welcome you to host your proof in your own repository and link to it using the <code>formal_proof</code> mechanism described below. This does not apply to <code>FormalConjecturesForMathlib</code>, where we want all statements to have proofs.</p>
-</li>
-<li><strong>Open issues</strong> describing problems you'd like to see formalised. Such an issue should contain links to suitable references, and ideally a precise informal statement of the conjecture.</li>
-<li><strong>Improve referencing and tagging</strong> of existing problems — for example, adding pointers to references in already existing files, or adding additional relevant <code>AMS</code> subject attributes to statements.</li>
-<li><strong>Mark a problem as solved.</strong> If you become aware that a problem currently tagged <code>@[category research open]</code> has been solved, update its tag to <code>@[category research solved]</code> and add a <code>@[formal_proof using &lt;kind&gt; at "&lt;url&gt;"]</code> attribute pointing to the proof (formal or informal). See <a href="#the-formal_proof-attribute">The <code>@[formal_proof]</code> attribute</a> for the accepted <code>&lt;kind&gt;</code> values.</li>
-<li><strong>Fix misformalisations.</strong> PRs fixing incorrect formal statements and issues flagging problems are especially appreciated.</li>
-</ol>
-<h2 id="contribution-process">Contribution process</h2>
-<ol>
-<li><strong>Sign the <a href="https://cla.developers.google.com/" target="_blank" rel="noopener">Google CLA</a></strong> (required once per contributor).</li>
-<li>Open a GitHub issue describing your planned contribution (if the issue does not already exist).</li>
-<li>Fork the <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">repository</a> and create a branch.</li>
-<li>Add your formalised conjecture(s) in <code>FormalConjectures</code> in the appropriate subdirectory.</li>
-<li>Definitions and results which are needed to formulate the conjecture should be added in a separate file in <code>FormalConjecturesForMathlib</code> in the appropriate subdirectory.</li>
-<li>Add this file to the index in <code>FormalConjecturesForMathlib.lean</code>.</li>
-<li>Verify that the embedded links are not broken.</li>
-<li>Ensure the project builds: <code>lake build</code>.</li>
-<li>Submit a Pull Request and link it to the issue you created.</li>
-</ol>
-<h2 id="getting-started-with-lean-4">Getting started with Lean 4</h2>
-<p>If you're new to Lean 4, install <a href="https://leanprover-community.github.io/get_started.html" target="_blank" rel="noopener">elan, lake, and Lean</a>, then:</p>
-<pre><code class="language-bash">git clone https://github.com/google-deepmind/formal-conjectures
-cd formal-conjectures
-lake exe cache get   # download prebuilt Mathlib oleans
-lake build</code></pre>
-<p>Join the <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Formal Conjectures Zulip channel</a> for help and discussion.</p>
-<h2 id="choosing-a-folder-and-category">Choosing a folder and category</h2>
-<h3 id="folder">Folder</h3>
-<p>Each top-level directory under <code>FormalConjectures/</code> corresponds to where the conjecture was sourced from. Place your file in the directory that matches the source you cite:</p>
-<ul>
-<li><code>Arxiv</code> — arXiv preprints.</li>
-<li><code>Books</code> — books and textbooks.</li>
-<li><code>ErdosProblems</code> — <a href="https://www.erdosproblems.com/" target="_blank" rel="noopener">erdosproblems.com</a>.</li>
-<li><code>GreensOpenProblems</code> — <a href="https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf" target="_blank" rel="noopener">Ben Green's open-problems list</a>.</li>
-<li><code>HilbertProblems</code> — <a href="https://en.wikipedia.org/wiki/Hilbert%27s_problems" target="_blank" rel="noopener">Hilbert's problems</a>.</li>
-<li><code>Kourovka</code> — <a href="https://arxiv.org/pdf/1401.0300" target="_blank" rel="noopener">Kourovka Notebook</a> (group theory).</li>
-<li><code>Mathoverflow</code> — <a href="https://mathoverflow.net/" target="_blank" rel="noopener">MathOverflow</a>.</li>
-<li><code>Millenium</code> — <a href="https://www.claymath.org/millennium-problems/" target="_blank" rel="noopener">Millennium Prize Problems</a>.</li>
-<li><code>OEIS</code> — <a href="https://oeis.org/" target="_blank" rel="noopener">OEIS</a>.</li>
-<li><code>OpenQuantumProblems</code> — open problems in quantum theory.</li>
-<li><code>OptimizationConstants</code> — open problems about optimization constants.</li>
-<li><code>Paper</code> — research papers not on arXiv.</li>
-<li><code>Wikipedia</code> — <a href="https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics" target="_blank" rel="noopener">Wikipedia's list of unsolved problems</a>.</li>
-<li><code>WrittenOnTheWallII</code> — the "Written on the Wall II" problem list.</li>
-<li><code>Other</code> — anything that doesn't fit above.</li>
-</ul>
-<p>If your source genuinely doesn't fit any of these, use <code>Other</code> or open an issue to discuss adding a new top-level directory before doing so.</p>
-<h3 id="category">Category</h3>
-<p>Pick a category tag based on the statement's current status and purpose:</p>
-<ul>
-<li>The conjecture is <strong>open</strong> (no accepted proof) → <code>@[category research open]</code>.</li>
-<li>The conjecture has been <strong>solved</strong> (informally accepted, or formally proved here or elsewhere) → <code>@[category research solved]</code>.</li>
-<li>It's a <strong>textbook-level</strong> problem included as a special case or building block of a research problem → <code>@[category textbook]</code>.</li>
-<li>The statement defines basic theory around a definition you introduced → <code>@[category API]</code>.</li>
-<li>The statement is a unit test for a definition or theorem statement → <code>@[category test]</code>.</li>
-</ul>
-<p>See <a href="#the-category-attribute">The <code>@[category]</code> attribute</a> below for the detailed semantics of each tag.</p>
-<h2 id="file-structure-conventions">File structure conventions</h2>
-<p>Every <code>.lean</code> file should follow this structure:</p>
-<pre><code class="language-lean">/-
+
+      <h2>Ways to contribute</h2>
+      <ol>
+        <li>
+          <strong>Add new problem formalisations.</strong>
+          We encourage adding formalisations of open conjectures from:
+          <ul>
+            <li><em>Literature:</em> textbooks, problem books, research papers (including <a href="https://arxiv.org/archive/math" target="_blank" rel="noopener">arXiv</a>)</li>
+            <li><em>Community resources:</em> <a href="https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics" target="_blank" rel="noopener">Wikipedia</a>, <a href="https://mathoverflow.net" target="_blank" rel="noopener">MathOverflow</a>, <a href="https://oeis.org" target="_blank" rel="noopener">OEIS</a></li>
+            <li><em>Problem lists:</em> <a href="https://www.claymath.org/millennium-problems/" target="_blank" rel="noopener">Millennium Problems</a>, <a href="https://www.erdosproblems.com" target="_blank" rel="noopener">Erdős Problems</a>, <a href="https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf" target="_blank" rel="noopener">Ben Green's list</a>, <a href="https://arxiv.org/pdf/1401.0300" target="_blank" rel="noopener">Kourovka notebook</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Open issues</strong> describing problems you'd like to see formalised. Include
+          links to references and a precise informal statement.
+        </li>
+        <li>
+          <strong>Formalise a proposed problem.</strong>
+          Browse <a href="https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee+label%3A%22new+conjecture%22" target="_blank" rel="noopener">unassigned new conjectures</a>
+          or <a href="https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22" target="_blank" rel="noopener">good first issues</a>
+          and comment to claim one.
+        </li>
+        <li>
+          <strong>Improve tagging and referencing</strong> — add missing
+          <code>@[AMS]</code> tags or source links to existing files.
+        </li>
+        <li>
+          <strong>Fix misformalisations.</strong> PRs fixing incorrect formal
+          statements are especially appreciated.
+        </li>
+      </ol>
+
+      <h2>Contribution process</h2>
+      <ol>
+        <li>
+          <strong>Sign the <a href="https://cla.developers.google.com/" target="_blank" rel="noopener">Google CLA</a></strong>
+          (required once per contributor).
+        </li>
+        <li>Open a GitHub issue describing your planned contribution.</li>
+        <li>Fork the <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">repository</a> and create a branch.</li>
+        <li>Add your formalised conjecture(s) in the appropriate directory.</li>
+        <li>Ensure the project builds: <code>lake build</code>.</li>
+        <li>Submit a Pull Request.</li>
+      </ol>
+
+      <h2>File structure conventions</h2>
+      <p>
+        Every <code>.lean</code> file should follow this structure:
+      </p>
+      <pre><code>/-
 Copyright YYYY The Formal Conjectures Authors.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    https://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Licensed under the Apache License, Version 2.0 …
 -/
 
 import FormalConjectures.Util.ProblemImports
@@ -142,87 +105,60 @@ theorem my_conjecture : Statement := by
   sorry
 
 end MyProblem</code></pre>
-<p>Replace <code>YYYY</code> with the current year, and consider adding yourself to the list of authors in the <code>AUTHORS</code> file.</p>
-<h2 id="the-category-attribute">The <code>@[category]</code> attribute</h2>
-<p>A tag to mark the category of a problem statement. Every statement must have exactly one category tag. The allowed categories are:</p>
-<ul>
-<li><code>@[category research open]</code> — an unsolved open mathematical problem or conjecture for which no solution or proof is currently accepted by the mathematical community.</li>
-<li><code>@[category research solved]</code> — a problem with an established solution. This includes problems that have a formal proof within this repository, a formal proof of an equivalent statement found elsewhere, or an informal solution widely accepted by experts in the field.</li>
-<li><code>@[category textbook]</code> — a math problem at the high school, undergraduate, or graduate level. This repository targets research level problems; textbook problems should only be contributed if they are directly related to a research level problem (e.g. as a special case).</li>
-<li><code>@[category API]</code> — a statement that constructs basic theory around a new definition.</li>
-<li><code>@[category test]</code> — a "unit test" statement, useful to check e.g. new definitions or theorem statements.</li>
-</ul>
-<p>Example:</p>
-<pre><code class="language-lean">@[category research open]
-theorem foo : Transcendental ℚ (rexp 1 + π) := by
-  sorry
 
-@[category research solved]
-theorem bar : FermatLastTheorem := by
-  sorry</code></pre>
-<h2 id="the-formal_proof-attribute">The <code>@[formal_proof]</code> attribute</h2>
-<p>The <code>formal_proof</code> attribute records the existence and location of a formal proof. This is independent of the <code>category</code> attribute and can be used with any category.</p>
-<p>Use <code>@[formal_proof using &lt;kind&gt; at "link"]</code> where <code>&lt;kind&gt;</code> is one of:</p>
-<ul>
-<li><code>formal_conjectures</code> — formally proved in this repository (link to commit).</li>
-<li><code>lean4</code> — formally proved in Lean 4 elsewhere (e.g. Mathlib or another repository).</li>
-<li><code>other_system</code> — formally proved in another formal system (Rocq, Isabelle, etc.).</li>
-</ul>
-<pre><code class="language-lean">@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/example"]
-theorem some_problem : ... := by
-  sorry</code></pre>
-<h2 id="the-ams-attribute">The <code>@[AMS]</code> attribute</h2>
-<p>The <code>AMS</code> tag provides information about the mathematical subjects a given statement is related to. We use the main subjects listed in the <a href="https://mathscinet.ams.org/mathscinet/msc/pdfs/classifications2020.pdf" target="_blank" rel="noopener">AMS MSC2020</a>. Every statement must have at least one <code>AMS</code> subject tag.</p>
-<pre><code class="language-lean">@[AMS 11]      -- Number theory
-@[AMS 5 11]    -- Combinatorics + Number theory</code></pre>
-<p>Within a Lean file, you can use the <code>#AMS</code> command to list all the possible values. To determine the subject associated to a tag in VS Code, you can hover over the number.</p>
-<h2 id="the-answer-elaborator">The <code>answer( )</code> elaborator</h2>
-<p>Some open questions are formulated in a way that requires a user-provided answer, for instance the <a href="https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem" target="_blank" rel="noopener">Hadwiger–Nelson problem</a> asks for the minimum number of colours needed to colour the plane such that no two points exactly one unit distance apart have the same colour. The <code>answer( )</code> elaborator allows us to formulate the problem without deciding for an answer.</p>
-<pre><code class="language-lean">@[category research open]
-theorem HadwigerNelsonProblem :
-    UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
-  sorry</code></pre>
-<h3 id="problems-that-require-answers">Problems that require answers</h3>
-<p>Note that providing a term inside the <code>answer( )</code> elaborator together with a proof that the statement is true <em>does not</em> by itself mean that the problem has been solved. For example, a question of the form "Which natural numbers satisfy the predicate $P$?" might be formalised as</p>
-<pre><code class="language-lean">theorem myOpenProblem : {n : ℕ | P n} = answer(sorry) := by
-  sorry</code></pre>
-<p>and one can provide trivial answers that aren't mathematically interesting, e.g. the set <code>{n : ℕ | P n}</code> itself. The question of whether the answer provided corresponds to a mathematically meaningful solution of the problem is outside of the scope of this repository.</p>
-<h2 id="style-guidelines">Style guidelines</h2>
-<ul>
-<li>One problem per file (variants and special cases may share a file).</li>
-<li>Include a reference comment linking to the source of the conjecture.</li>
-<li>Use <code>theorem</code> or <code>lemma</code> for problem statements.</li>
-<li>Bespoke definitions are allowed when they help clarify problem statements; add basic API tests for them.</li>
-<li>Every statement should have at least one <code>AMS</code> subject tag.</li>
-<li>Every file should be put in the corresponding directory of the repository, e.g. a problem sourced from Wikipedia should live in <code>FormalConjectures/Wikipedia</code>.</li>
-<li>
-<p>When a problem is stated as a question in English, the preferred style is to use <code>answer(sorry)</code>:</p>
-<pre><code class="language-lean">/-- English version: "Does P hold?" -/
-theorem myConjecture : answer(sorry) ↔ P := by
-  sorry</code></pre>
-<p>This way the informal "Does ...", "Are there ..." or "Is it true that ..." corresponds to the <code>answer(sorry)</code> in the formalised statement. If the problem has been solved, <code>answer(sorry)</code> should be replaced by <code>answer(True)</code> or <code>answer(False)</code> accordingly.</p>
-<p>If the problem is not stated as a question, the following style is preferred:</p>
-<pre><code class="language-lean">/-- English version: "P holds" -/
-theorem myConjecture : P := by
-  sorry</code></pre>
-<p>If the problem has been solved to the negative, then <code>P</code> should be replaced with <code>¬ P</code>.</p>
-</li>
-<li>Follow the same AI usage conventions as <a href="https://leanprover-community.github.io/contribute/index.html" target="_blank" rel="noopener">Mathlib</a>.</li>
-</ul>
-<h2 id="code-reviews">Code reviews</h2>
-<p>All submissions, including submissions by project members, require review. We use GitHub pull requests for this purpose. Consult <a href="https://help.github.com/articles/about-pull-requests/" target="_blank" rel="noopener">GitHub Help</a> for more information on using pull requests.</p>
-<h2 id="managing-labels">Managing labels</h2>
-<p>Any user can add or remove certain labels on pull requests and issues by leaving a comment. The supported labels are: <code>awaiting-author</code>, <code>WIP</code>, <code>Easy</code>, and <code>documentation</code>.</p>
-<ul>
-<li>
-<p><strong>To add a label</strong>: Leave a comment with the exact label name on a line by itself. For example:</p>
-<pre><code class="language-text">awaiting-author</code></pre>
-</li>
-<li>
-<p><strong>To remove a label</strong>: Leave a comment with <code>-</code> followed by the exact label name on a line by itself. For example:</p>
-<pre><code class="language-text">-awaiting-author</code></pre>
-</li>
-</ul>
+      <h2>The <code>@[category]</code> attribute</h2>
+      <p>Every statement must have exactly one category tag:</p>
+      <ul>
+        <li><code>@[category research open]</code> — unsolved open problem</li>
+        <li><code>@[category research solved]</code> — informally or formally solved</li>
+        <li><code>@[category textbook]</code></li>
+        <li><code>@[category test]</code> / <code>API]</code> — internal use</li>
+      </ul>
+
+      <h2>The <code>@[formal_proof]</code> attribute</h2>
+      <p>If a formal proof exists, add a <code>formal_proof</code> attribute (independent of category):</p>
+      <ul>
+        <li><code>@[formal_proof using formal_conjectures at "url"]</code> — proved in this repository</li>
+        <li><code>@[formal_proof using lean4 at "url"]</code> — proved in Lean 4 elsewhere</li>
+        <li><code>@[formal_proof using other_system at "url"]</code> — proved in another system</li>
+      </ul>
+
+      <h2>The <code>@[AMS]</code> attribute</h2>
+      <p>
+        Every statement must have at least one
+        <a href="https://mathscinet.ams.org/mathscinet/msc/pdfs/classifications2020.pdf" target="_blank" rel="noopener">AMS MSC2020</a>
+        subject tag. Use <code>#AMS</code> in VS Code to list all valid values.
+      </p>
+      <pre><code>@[AMS 11]       -- Number Theory
+@[AMS 5 11]     -- Combinatorics + Number Theory</code></pre>
+
+      <h2>Style guidelines</h2>
+      <ul>
+        <li>One problem per file (variants and special cases may share a file).</li>
+        <li>Include a reference comment linking to the source of the conjecture.</li>
+        <li>Use <code>theorem</code> or <code>lemma</code> for problem statements.</li>
+        <li>For questions ("Does P hold?"), use the <code>answer(sorry)</code> elaborator.</li>
+        <li>Bespoke definitions are fine; add basic API tests for them.</li>
+        <li>Follow the same AI usage conventions as <a href="https://leanprover-community.github.io/contribute/index.html" target="_blank" rel="noopener">Mathlib</a>.</li>
+      </ul>
+
+      <h2>Getting started with Lean 4</h2>
+      <p>
+        If you're new to Lean 4, install
+        <a href="https://leanprover-community.github.io/get_started.html" target="_blank" rel="noopener">elan, lake, and Lean</a>,
+        then:
+      </p>
+      <pre><code>git clone https://github.com/google-deepmind/formal-conjectures
+cd formal-conjectures
+lake exe cache get   # download prebuilt Mathlib oleans
+lake build</code></pre>
+
+      <p>
+        Join the
+        <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Formal Conjectures Zulip channel</a>
+        for help and discussion.
+      </p>
+
     </div>
   </div>
 </main>
