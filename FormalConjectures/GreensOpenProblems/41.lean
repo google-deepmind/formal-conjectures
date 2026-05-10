@@ -37,10 +37,14 @@ an integer.
 def pyjamaSet (ε : ℝ) : Set ℂ :=
   { z | ∃ k : ℤ, |z.re - (k : ℝ)| ≤ ε }
 
+/-- The set of valid numbers of rotated copies of the pyjama set of width ε that cover the plane. -/
+def coveringCopies (ε : ℝ) : Set ℕ :=
+  { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
+    (⋃ θ ∈ Θ, exp (θ * I) • pyjamaSet ε) = univ }
+
 /-- The minimal number of rotated copies of the pyjama set of width ε needed to cover the plane. -/
 noncomputable def minCopies (ε : ℝ) : ℕ :=
-  sInf { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
-    (⋃ θ ∈ Θ, exp (θ * I) • pyjamaSet ε) = univ }
+  sInf (coveringCopies ε)
 
 /--
 [Ma15] proved that for any $\varepsilon > 0$, finitely many rotations of the pyjama set of width
@@ -49,8 +53,7 @@ is non-empty.
 -/
 @[category test, AMS 51 52]
 theorem minCopies_set_nonempty (ε : ℝ) (hε : 0 < ε) :
-    { n : ℕ | ∃ (Θ : Finset ℝ), Θ.card = n ∧
-      (⋃ θ ∈ Θ, exp (θ * I) • pyjamaSet ε) = univ }.Nonempty := by
+    (coveringCopies ε).Nonempty := by
   sorry
 
 /--
