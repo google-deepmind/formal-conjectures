@@ -46,12 +46,24 @@ noncomputable def minCopies (ε : ℝ) : ℕ :=
 How many rotated (about the origin) copies of the 'pyjama set'
 $\\{(x, y) \in \mathbb{R}^2 : \text{dist}(x, \mathbb{Z}) \leq \varepsilon\\}$ are needed to cover
 $\mathbb{R}^2$?
+
+In particular, can one find a better bound than the best-known bound from [KrLe25]?
 -/
 @[category research open, AMS 51 52]
 theorem green_41 :
     ∃ C : ℝ, C > 0 ∧ ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
       let ans := (answer(sorry) : ℝ)
       (minCopies ε : ℝ) ≤ ans ∧ ans < Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
+  sorry
+
+/--
+Is there a better bound than the best-known bound from [KrLe25]?
+This is an existential version of the main problem that does not require providing the bound explicitly.
+-/
+@[category research open, AMS 51 52]
+theorem green_41.variants.exists_better_bound : answer(sorry) ↔
+    ∃ C : ℝ, C > 0 ∧ ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
+      ∃ ans : ℝ, (minCopies ε : ℝ) ≤ ans ∧ ans < Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
   sorry
 
 /-- Is $\varepsilon^{-C}$ rotations enough? -/
