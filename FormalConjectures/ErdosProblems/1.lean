@@ -147,16 +147,42 @@ theorem erdos_1.variants.least_N_3 :
       rw [(Finset.subset_iff_eq_of_card_le (Nat.le_of_eq (by rw [hcard3]; decide))).mp h]
       decide
 
+set_option maxRecDepth 4000 in
+set_option maxHeartbeats 4000000 in
 /--
 The minimal value of $N$ such that there exists a sum-distinct set with five
-elements is $13$.
+elements is $13$. A witness is `{3, 6, 11, 12, 13}` (one of two such 5-subsets of `[1, 13]`,
+the other being `{6, 9, 11, 12, 13}`).
 
 https://oeis.org/A276661
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_1.variants.least_N_5 :
     IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 5 } 13 := by
-  sorry
+  refine ⟨⟨{3, 6, 11, 12, 13}, ?_⟩, ?_⟩
+  · -- 13 is in the set: {3, 6, 11, 12, 13} ⊆ [1, 13], card 5, all 32 subset sums distinct.
+    refine ⟨⟨by decide, ?_⟩, by decide⟩
+    -- Sum-distinctness via powerset enumeration: image of powerset under sum is the
+    -- explicit 32-element set below; equality of cards forces injectivity.
+    let P := Finset.powerset {3, 6, 11, 12, 13}
+    have h_image : (Finset.univ : Finset P).image (fun p : P => p.1.sum id) =
+        {0, 3, 6, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+         30, 31, 32, 33, 34, 36, 39, 42, 45} := by decide
+    rw [← Set.injOn_univ, ← Finset.coe_univ]
+    have h_card : ((Finset.univ : Finset P).image (fun p : P => p.1.sum id)).card =
+        (Finset.univ (α := P)).card := by rw [h_image]; decide
+    exact Finset.injOn_of_card_image_eq h_card
+  · -- 13 is a lower bound: any 5-element sum-distinct subset of [1, n] forces n ≥ 13.
+    intro n hn
+    obtain ⟨A, ⟨hA_subset, hA_inj⟩, hA_card⟩ := hn
+    by_contra h_lt
+    push_neg at h_lt
+    -- Per-n exhaustive check: no 5-element subset of [1, n] is sum-distinct, for any n ≤ 12.
+    -- This is a finite computation (≤ C(12, 5) = 792 candidates), closed by `decide +kernel`.
+    have h_no : ∀ B ∈ (Finset.Icc 1 n).powerset, B.card = 5 →
+        ¬ (fun (⟨S, _⟩ : B.powerset) => S.sum id).Injective := by
+      interval_cases n <;> decide +kernel
+    exact h_no A (Finset.mem_powerset.mpr hA_subset) hA_card hA_inj
 
 /--
 The minimal value of $N$ such that there exists a sum-distinct set with nine
