@@ -35,8 +35,8 @@ namespace Erdos42
 maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}` of size M such that
 `(A - A) ∩ (B - B) = {0}`?
 -/
-@[category research open, AMS 5 11]
-theorem erdos_42 : answer(sorry) ↔
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P42/CompactCayley/Proof.lean"]
+theorem erdos_42 : answer(True) ↔
     ∀ M ≥ 1, ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N),
     ∃ᵉ (B : Set ℕ), B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
     ((A - A) ∩ (B - B)) = {0} := by
