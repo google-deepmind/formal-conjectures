@@ -15,13 +15,8 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.Geometry.Euclidean
-public import Mathlib.MeasureTheory.Function.LpSpace.Basic
 public import Mathlib.MeasureTheory.Function.L2Space
-public import Mathlib.MeasureTheory.Integral.Bochner.Set
 public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-public import Mathlib.Analysis.SpecialFunctions.Exp
-public import Mathlib.Tactic.Continuity
 
 @[expose] public section
 
@@ -45,6 +40,36 @@ def translateSet {d : ℕ} (Ω: Set (Fin d → ℝ)) (t : Fin d → ℝ) :
 noncomputable def exponentialCharacter {d : ℕ} (ξ x : Fin d → ℝ) : ℂ :=
   Complex.exp (2 * π * Complex.I * (∑ i, ξ i * x i))
 
+/-- The exponential character is continuous. -/
+theorem continuous_exponentialCharacter {d : ℕ} (ξ : Fin d → ℝ) :
+    Continuous (exponentialCharacter ξ) := by
+  unfold exponentialCharacter
+  continuity
+
+/-- The exponential character has norm one. -/
+theorem norm_exponentialCharacter {d : ℕ} (ξ x : Fin d → ℝ) :
+    ‖exponentialCharacter ξ x‖ = 1 := by
+  unfold exponentialCharacter
+  have h_simp :
+      2 * π * Complex.I * (∑ i, ξ i * x i) =
+        Complex.I * ((2 * π * ∑ i, ξ i * x i) : ℝ) := by
+    simp
+    ring
+  rw [h_simp, Complex.norm_exp_I_mul_ofReal]
+
+/-- On a finite-measure set, every exponential character belongs to `L^2`. -/
+theorem exponentialCharacter_memLp {d : ℕ} {Ω : Set (Fin d → ℝ)}
+    (hΩ_finite : volume Ω ≠ ⊤) (ξ : Fin d → ℝ) :
+    MemLp (exponentialCharacter ξ) 2 (volume.restrict Ω) := by
+  have h_meas :
+      AEStronglyMeasurable (exponentialCharacter ξ) (volume.restrict Ω) := by
+    exact (continuous_exponentialCharacter ξ).aestronglyMeasurable
+  rw [MeasureTheory.memLp_two_iff_integrable_sq_norm h_meas]
+  simp_rw [norm_exponentialCharacter]
+  change IntegrableOn (fun _ ↦ (1 : ℝ) ^ 2) Ω volume
+  simpa using
+    (MeasureTheory.integrableOn_const (μ := volume) (s := Ω) (C := (1 : ℝ)) hΩ_finite)
+
 /--
 (Ω, Λ) is called a spectral pair if Λ is a spectrum for Ω, i.e.
 a set Λ of frequencies such that the associated exponential characters
@@ -52,28 +77,8 @@ a set Λ of frequencies such that the associated exponential characters
 -/
 def spectralPair {d : ℕ} (Ω Λ : Set (Fin d → ℝ)) : Prop :=
   ∃ hΩ_finite : volume Ω ≠ ⊤,
-    let hL2 : ∀ ξ : Fin d → ℝ, MemLp (exponentialCharacter ξ) 2 (volume.restrict Ω) := fun ξ => by
-      have h_cont : Continuous (exponentialCharacter ξ) := by
-        unfold exponentialCharacter
-        continuity
-      have h_meas :
-          AEStronglyMeasurable (exponentialCharacter ξ) (volume.restrict Ω) := by
-        exact h_cont.aestronglyMeasurable
-      have h_norm (x : Fin d → ℝ) : ‖exponentialCharacter ξ x‖ ^ 2 = 1 := by
-        unfold exponentialCharacter
-        have h_simp :
-            2 * π * Complex.I * (∑ i, ξ i * x i) =
-              Complex.I * ((2 * π * ∑ i, ξ i * x i) : ℝ) := by
-          simp
-          ring
-        rw [h_simp, Complex.norm_exp_I_mul_ofReal]
-        norm_num
-      rw [MeasureTheory.memLp_two_iff_integrable_sq_norm h_meas]
-      simp_rw [h_norm]
-      change IntegrableOn (fun _ ↦ (1 : ℝ)) Ω volume
-      exact MeasureTheory.integrableOn_const hΩ_finite
     let e : (Fin d → ℝ) → MeasureTheory.Lp ℂ 2 (volume.restrict Ω) := fun ξ ↦
-      MeasureTheory.MemLp.toLp (exponentialCharacter ξ) (hL2 ξ)
+      MeasureTheory.MemLp.toLp (exponentialCharacter ξ) (exponentialCharacter_memLp hΩ_finite ξ)
     (∀ ξ₁ ∈ Λ, ∀ ξ₂ ∈ Λ, ξ₁ ≠ ξ₂ → ⟪e ξ₁, e ξ₂⟫_ℂ = 0) ∧
     Submodule.topologicalClosure (Submodule.span ℂ (Set.range fun (ξ : Λ) ↦ e ξ.1)) = ⊤
 

@@ -29,14 +29,19 @@ namespace Fuglede
 open MeasureTheory
 
 /--
+**Fuglede's conjecture** in dimension `n`: A bounded subset of ℝ^n with positive Lebesgue measure is spectral iff it tiles ℝ^n by translation.
+-/
+def FugledeConjectureFor (n : ℕ) : Prop :=
+  ∀ Ω : Set (Fin n → ℝ),
+    Bornology.IsBounded Ω → MeasurableSet Ω → 0 < volume Ω →
+      (isSpectral Ω ↔ tilesByTranslation Ω)
+
+/--
 **Fuglede's conjecture** in one dimension: A bounded subset of ℝ with positive Lebesgue measure is spectral iff it tiles ℝ by translation.
 -/
 @[category research open, AMS 42 46 47]
 theorem FugledeConjecture.variants.dim_1 :
-    answer(sorry) ↔
-      ∀ Ω : Set (Fin 1 → ℝ),
-        Bornology.IsBounded Ω → MeasurableSet Ω → 0 < volume Ω →
-          (isSpectral Ω ↔ tilesByTranslation Ω) := by
+    answer(sorry) ↔ FugledeConjectureFor 1 := by
   sorry
 
 /--
@@ -44,10 +49,7 @@ theorem FugledeConjecture.variants.dim_1 :
 -/
 @[category research open, AMS 42 46 47]
 theorem FugledeConjecture.variants.dim_2 :
-    answer(sorry) ↔
-      ∀ Ω : Set (Fin 2 → ℝ),
-        Bornology.IsBounded Ω → MeasurableSet Ω → 0 < volume Ω →
-          (isSpectral Ω ↔ tilesByTranslation Ω) := by
+    answer(sorry) ↔ FugledeConjectureFor 2 := by
   sorry
 
 /--
@@ -56,10 +58,7 @@ theorem FugledeConjecture.variants.dim_2 :
 -/
 @[category research solved, AMS 42 46 47]
 theorem FugledeConjecture.variants.dim_3_or_higher :
-    answer(False) ↔
-      ∀ Ω : Set (Fin 3 → ℝ),
-        Bornology.IsBounded Ω → MeasurableSet Ω → 0 < volume Ω →
-          (isSpectral Ω ↔ tilesByTranslation Ω) := by
+    answer(False) ↔ ∀ n : ℕ, 3 ≤ n → FugledeConjectureFor n := by
   sorry
 
 end Fuglede
