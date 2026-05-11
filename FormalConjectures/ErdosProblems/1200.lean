@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.ErdosProblems.«688»
 
 /-!
 # Erdős Problem 1200
@@ -24,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 - [ErRu80] Erdős, P. and Ruzsa, I. Z., _On the small sieve. I. Sifting by primes_. J. Number Theory (1980), 385--394.
 -/
 
-open Classical
+open Classical Filter
 
 namespace Erdos1200
 
@@ -33,32 +34,30 @@ There exists a constant $C$ such that for all large $x$ there is a collection of
 $p_1 < \dots < p_k < x$ with $\sum \frac{1}{p_i} < C$ together with a system of congruences
 $a_i \pmod{p_i}$ such that every integer $n < x$ satisfies at least one of these congruences.
 -/
-
 @[category research open, AMS 11]
 theorem erdos_1200 :
-  ∃ (C : ℝ), (C > 0) ∧ ∀ᶠ (x : ℝ) in Filter.atTop,
-      ∃ (S : Finset ℕ), ∃ (a : ℕ → ℕ),
-        (∀ p ∈ S, Nat.Prime p) ∧
-        (∀ p ∈ S, p < x) ∧
-        (∑ p ∈ S, (1 : ℝ) / p < C) ∧
-        (∀ (n : ℕ), (1 ≤ n) ∧ (n < x) → ∃ p ∈ S, a p ≡ n [MOD p])
-  := by sorry
+    ∃ (C : ℝ), (C > 0) ∧ ∀ᶠ (x : ℝ) in atTop,
+        ∃ (S : Finset ℕ), ∃ (a : ℕ → ℕ),
+          (∀ p ∈ S, p.Prime) ∧
+          (∀ p ∈ S, p < x) ∧
+          (∑ p ∈ S, (1 : ℝ) / p < C) ∧
+          (∀ (n : ℕ), (1 ≤ n) ∧ (n < x) → ∃ p ∈ S, a p ≡ n [MOD p]) := by
+  sorry
 
 /--
 A variant of [erdosproblems.com/688] which implies [erdosproblems.com/1200].
 -/
-
-def prop_of_erdos_688 (n : ℕ) (ε : ℝ) : Prop :=
-  ∃ (a : ℕ → ℕ), ∀ (m : ℕ), (1 ≤ m) ∧ (m ≤ n) →
-    ∃ (p : ℕ), (Nat.Prime p) ∧ ((n : ℝ)^ε < p) ∧ (p ≤ n) ∧
-    (a p ≡ m [MOD p])
-
-noncomputable def epsilon_function (n : ℕ) : ℝ := sSup {ε : ℝ | prop_of_erdos_688 n ε}
-
 @[category research open, AMS 11]
 theorem erdos_1200.variants.modified_erdos_688 :
-  (fun (n : ℕ) ↦ (1 : ℝ)) =O[Filter.atTop] epsilon_function
-  := by sorry
+    (fun (n : ℕ) ↦ (1 : ℝ)) =O[atTop] Erdos688.epsilonFunction := by
+  sorry
+
+/--
+A predicate which decides whether (n : ℕ) avoids the congruences prescribed by
+(a : ℕ → ℕ) and (S : Finset ℕ), which will be used in erdos_rusza_question below.
+-/
+def AvoidsCongruences (S : Finset ℕ) (a : ℕ → ℕ) (n : ℕ) : Prop :=
+  ∀ p ∈ S, ¬(a p ≡ n [MOD p])
 
 /--
 In [ErRu80] this is asked as a question: if $p_1 < \dots < p_k < x$ are primes with
@@ -67,38 +66,33 @@ must there always be $\gg_C x$ many integers $n < x$ avoiding all of them?
 
 Of course if the answer is yes then this disproves [erdosproblems.com/1200].
 -/
-
-def avoids_congruences (S : Finset ℕ) (a : ℕ → ℕ) (n : ℕ) : Prop :=
-  ∀ p ∈ S, ¬(a p ≡ n [MOD p])
-
 @[category research open, AMS 11]
-theorem erdos_1200.variants.ErRu80_question : answer(sorry) ↔
-  ∀ (C : ℝ), (C > 0) → ∃ (c : ℝ), (c > 0) ∧
-    ∀ (x : ℝ), (x > 0) → ∀ (S : Finset ℕ), ∀ (a : ℕ → ℕ),
-      (∀ p ∈ S, Nat.Prime p) ∧
-      (∀ p ∈ S, p < x) ∧
-      (∑ p ∈ S, (1 : ℝ) / p ≤ C) → Finset.card (Finset.filter
-        (fun (m : ℕ) ↦ avoids_congruences S a m)
-        (Finset.Icc (1 : ℕ) (Int.floor x).toNat))
-      ≥ c * x
-  := by sorry
+theorem erdos_1200.variants.erdos_ruzsa_question : answer(sorry) ↔
+    ∀ (C : ℝ), (C > 0) → ∃ (c : ℝ), (c > 0) ∧
+      ∀ᶠ (x : ℝ) in atTop, ∀ (S : Finset ℕ), ∀ (a : ℕ → ℕ),
+        (∀ p ∈ S, p.Prime) ∧
+        (∀ p ∈ S, p < x) ∧
+        (∑ p ∈ S, (1 : ℝ) / p ≤ C) ∧ Finset.card (Finset.filter
+          (fun (m : ℕ) ↦ AvoidsCongruences S a m)
+          (Finset.Icc (1 : ℕ) (Int.floor x).toNat))
+        ≥ c * x := by
+  sorry
 
 /--
 Erdős and Ruzsa [ErRu80] proved that for any $C > 0$ there exists a set of primes $P$
 such that $\sum_{p ∈ P} \frac{1}{p} \leq C$ and the number of integers $n \leq x$ divisible
 by at least one $p \in P$ is $\gg_C x$.
 -/
-
 @[category research solved, AMS 11]
-theorem erdos_1200.variants.ErRu80_theorem :
-  ∀ (C : ℝ), (C > 0) → ∃ (c : ℝ), (c > 0) ∧ ∃ (P : Set ℕ),
-    (∀ p ∈ P, Nat.Prime p) ∧
-    (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ) / k) p > 0) ∧
-    (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ) / k) p ≤ C) ∧
-    ∀ (x : ℝ), (x > 0) → Finset.card (Finset.filter
-      (fun (m : ℕ) ↦ ∃ p ∈ P, p ∣ m)
-      (Finset.Icc (1 : ℕ) (Int.floor x).toNat))
-    ≥ c * x
-  := by sorry
+theorem erdos_1200.variants.erdos_ruzsa_theorem :
+    ∀ (C : ℝ), (C > 0) → ∃ (c : ℝ), ∃ (P : Set ℕ), (c > 0) ∧
+      (∀ p ∈ P, p.Prime) ∧
+      (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ) / k) p > 0) ∧
+      (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ) / k) p ≤ C) ∧
+      ∀ᶠ (x : ℝ) in atTop, Finset.card (Finset.filter
+        (fun (m : ℕ) ↦ ∃ p ∈ P, p ∣ m)
+        (Finset.Icc (1 : ℕ) (Int.floor x).toNat))
+      ≥ c * x := by
+  sorry
 
 end Erdos1200
