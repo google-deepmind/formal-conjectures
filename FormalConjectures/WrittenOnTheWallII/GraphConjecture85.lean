@@ -65,6 +65,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ largestInducedTreeSize G := Nat.zero_l
 
 /-- `Real.sqrt` is nonneg. -/
 @[category test, AMS 5]
-example (x : ℝ) (hx : 0 ≤ x) : 0 ≤ Real.sqrt x := Real.sqrt_nonneg x
+example (x : ℝ) : 0 ≤ Real.sqrt x := Real.sqrt_nonneg x
 
 end WrittenOnTheWallII.GraphConjecture85
