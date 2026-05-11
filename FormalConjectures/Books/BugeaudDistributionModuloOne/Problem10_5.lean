@@ -38,15 +38,12 @@ $\varepsilon > 0$, there exists a lacunary sequence $(t_n)_{n \ge 1}$ of positiv
 in $\mathbb{K}$ such that
 $$\limsup_{n \to \infty} \{\xi t_n\} \ge 1 - \varepsilon,$$
 for any real number $\xi$ not in $\mathbb{K}$.
-
-Lacunarity here is the real-valued analogue of `IsLacunary`: there is some $c > 1$ with
-$c \cdot t_k < t_{k+1}$ for all sufficiently large $k$.
 -/
 @[category research open, AMS 11]
 theorem problem_10_5 (K : IntermediateField ℚ ℝ) [FiniteDimensional ℚ K]
     {ε : ℝ} (hε : 0 < ε) :
     ∃ t : ℕ → K, (∀ n, 0 < (t n : ℝ)) ∧
-      (∃ c > (1 : ℝ), ∀ᶠ k in atTop, c * (t k : ℝ) < (t (k + 1) : ℝ)) ∧
+      IsLacunaryReal (fun k => (t k : ℝ)) ∧
       ∀ ξ : ℝ, ξ ∉ K →
         (1 - ε) ≤ limsup (fun n => Int.fract (ξ * (t n : ℝ))) atTop := by
   sorry
@@ -62,7 +59,7 @@ bound is the special case at the subinterval $[1 - \varepsilon, 1]$.
 theorem problem_10_5_moreover (K : IntermediateField ℚ ℝ) [FiniteDimensional ℚ K]
     {ε : ℝ} (hε : 0 < ε) :
     ∃ t : ℕ → K, (∀ n, 0 < (t n : ℝ)) ∧
-      (∃ c > (1 : ℝ), ∀ᶠ k in atTop, c * (t k : ℝ) < (t (k + 1) : ℝ)) ∧
+      IsLacunaryReal (fun k => (t k : ℝ)) ∧
       ∀ ξ : ℝ, ξ ∉ K → ∀ a, a ∈ Set.Icc (0 : ℝ) (1 - ε) →
         ∃ y ∈ Set.Icc a (a + ε),
           MapClusterPt y atTop (fun n => Int.fract (ξ * (t n : ℝ))) := by
