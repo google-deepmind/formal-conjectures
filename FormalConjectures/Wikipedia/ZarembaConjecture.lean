@@ -105,7 +105,7 @@ denominator `d`, there is a numerator `a` coprime to `d`, for which every partia
 quotient in the continued fraction of `a / d` is at most `2`.
 -/
 @[category research open, AMS 11]
-theorem hensley_conjecture : ∃ D : ℕ, ⨆ d ≥ D, minmaxPartialQuotient d = 2 := by
+theorem hensley_conjecture : ∃ D : ℕ, (⨆ d ≥ D, minmaxPartialQuotient d) = 2 := by
   sorry
 
 end ZarembaConjecture
