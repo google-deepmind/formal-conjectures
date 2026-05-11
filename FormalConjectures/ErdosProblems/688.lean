@@ -33,9 +33,9 @@ for all primes $n^{\epsilon_n} < p \leq n$ such that every integer in $[1,n]$ sa
 one of the congruences $\equiv a_p \pmod p$.
 -/
 def Erdos688Prop (n : ℕ) (ε : ℝ) : Prop :=
-  ∃ (a : ℕ → ℕ), ∀ (m : ℕ), (1 ≤ m) ∧ (m ≤ n) →
-    ∃ (p : ℕ), (Nat.Prime p) ∧ ((n : ℝ)^ε < p) ∧ (p ≤ n) ∧
-      (a p ≡ m [MOD p])
+  ∃ (a : ℕ → ℕ), ∀ (m : ℕ), 1 ≤ m → m ≤ n →
+    ∃ (p : ℕ), p.Prime ∧ (n : ℝ)^ε < p ∧ p ≤ n ∧
+      a p ≡ m [MOD p]
 
 noncomputable def epsilonFunction (n : ℕ) : ℝ := sSup {ε : ℝ | Erdos688Prop n ε}
 
