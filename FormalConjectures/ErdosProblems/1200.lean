@@ -25,7 +25,7 @@ import FormalConjectures.ErdosProblems.«688»
 - [ErRu80] Erdős, P. and Ruzsa, I. Z., _On the small sieve. I. Sifting by primes_. J. Number Theory (1980), 385--394.
 -/
 
-open Classical Filter
+open Classical Filter Finset
 
 namespace Erdos1200
 
@@ -36,19 +36,19 @@ $a_i \pmod{p_i}$ such that every integer $n < x$ satisfies at least one of these
 -/
 @[category research open, AMS 11]
 theorem erdos_1200 :
-    ∃ (C : ℝ), (C > 0) ∧ ∀ᶠ (x : ℝ) in atTop,
-        ∃ (S : Finset ℕ), ∃ (a : ℕ → ℕ),
+    ∃ C : ℝ, C > 0 ∧ ∀ᶠ (x : ℝ) in atTop,
+        ∃ S : Finset ℕ, ∃ a : ℕ → ℕ,
           (∀ p ∈ S, p.Prime) ∧
           (∀ p ∈ S, p < x) ∧
           (∑ p ∈ S, (1 : ℝ) / p < C) ∧
-          (∀ (n : ℕ), (1 ≤ n) ∧ (n < x) → ∃ p ∈ S, a p ≡ n [MOD p]) := by
+          (∀ n : ℕ, 1 ≤ n ∧ n < x → ∃ p ∈ S, a p ≡ n [MOD p]) := by
   sorry
 
 /--
 A variant of [erdosproblems.com/688] which implies [erdosproblems.com/1200].
 -/
 @[category research open, AMS 11]
-theorem erdos_1200.variants.modified_erdos_688 :
+theorem erdos_1200.variants.implied_by_erdos_688_variant :
     (fun (n : ℕ) ↦ (1 : ℝ)) =O[atTop] Erdos688.epsilonFunction := by
   sorry
 
@@ -68,14 +68,13 @@ Of course if the answer is yes then this disproves [erdosproblems.com/1200].
 -/
 @[category research open, AMS 11]
 theorem erdos_1200.variants.erdos_ruzsa_question : answer(sorry) ↔
-    ∀ (C : ℝ), (C > 0) → ∃ (c : ℝ), (c > 0) ∧
-      ∀ᶠ (x : ℝ) in atTop, ∀ (S : Finset ℕ), ∀ (a : ℕ → ℕ),
+    ∀ C : ℝ, C > 0 → ∃ c : ℝ, c > 0 ∧
+      ∀ᶠ (x : ℝ) in atTop, ∀ S : Finset ℕ, ∀ a : ℕ → ℕ,
         (∀ p ∈ S, p.Prime) ∧
         (∀ p ∈ S, p < x) ∧
-        (∑ p ∈ S, (1 : ℝ) / p ≤ C) ∧ Finset.card (Finset.filter
-          (fun (m : ℕ) ↦ AvoidsCongruences S a m)
-          (Finset.Icc (1 : ℕ) (Int.floor x).toNat))
-        ≥ c * x := by
+        (∑ p ∈ S, (1 : ℝ) / p ≤ C) ∧
+        (filter (fun (m : ℕ) ↦ AvoidsCongruences S a m) <|
+          Icc (1 : ℕ) (Int.toNat <| Int.floor x)).card ≥ c * x := by
   sorry
 
 /--
@@ -85,14 +84,13 @@ by at least one $p \in P$ is $\gg_C x$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1200.variants.erdos_ruzsa_theorem :
-    ∀ (C : ℝ), (C > 0) → ∃ (c : ℝ), ∃ (P : Set ℕ), (c > 0) ∧
+    ∀ C : ℝ, C > 0 → ∃ c : ℝ, ∃ P : Set ℕ, c > 0 ∧
       (∀ p ∈ P, p.Prime) ∧
       (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ) / k) p > 0) ∧
       (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ) / k) p ≤ C) ∧
-      ∀ᶠ (x : ℝ) in atTop, Finset.card (Finset.filter
-        (fun (m : ℕ) ↦ ∃ p ∈ P, p ∣ m)
-        (Finset.Icc (1 : ℕ) (Int.floor x).toNat))
-      ≥ c * x := by
+      ∀ᶠ (x : ℝ) in atTop,
+        (filter (fun (m : ℕ) ↦ ∃ p ∈ P, p ∣ m) <|
+          Icc (1 : ℕ) (Int.toNat <| Int.floor x)).card ≥ c * x := by
   sorry
 
 end Erdos1200
