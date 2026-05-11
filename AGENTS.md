@@ -402,9 +402,10 @@ Some rare exceptions exist for consistency:
 
 **CRITICAL REQUIREMENTS:**
 
-1. **`lake build` MUST pass** without errors before submitting for review
-   - Run `lake build` in the repository root
+1. **`lake --wfail build` MUST pass** without errors before submitting for review
+   - Run `lake --wfail build` in the repository root
    - Fix all compilation errors
+   - Fix all linter warnings (fail for warning option is set by `--wfail`)
    - Ensure all dependencies are properly imported
 
 2. **`sorry` usage restrictions**:
