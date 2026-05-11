@@ -19,7 +19,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 897
 
-*Reference:* [erdosproblems.com/897](https://www.erdosproblems.com/897)
+*References:*
+- [erdosproblems.com/897](https://www.erdosproblems.com/897)
+- [Ar25] Archivara Math Research Agent, [An Additive Counterexample: Erdős Problem 897](https://archivara.org/paper/df04f023-6ef0-4c52-bd12-18cdaa8f0741) (2025)
+- [ArWu25] Aristotle, operated mostly by L. Wu, [Lean formalisation of Erdős problem 897](https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos897.lean) (2025)
+- [Wi70] E. Wirsing, A characterization of $\log n$ as an additive arithmetic function.
+  Symposia Math. (1970), 45-57.
+- [Wi81] E. Wirsing, Additive and completely additive functions with restricted growth.
+  Recent progress in analytic number theory, Vol. 2 (Durham, 1979), 231--280 (1981).
 -/
 -- TODO(lezeau): add `ArithmeticFunction.IsAdditive` to `ForMathlib`
 
@@ -27,11 +34,15 @@ namespace Erdos897
 
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
-if $(a,b)=1$ such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$.
+if $(a,b)=1$ such that $\limsup_{p,k} f(p^k) / \log(p^k) = ∞$.
 Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
+
+The answer is no; this follows from a construction of Wirsing [Wi81], rediscovered by
+Archivara [Ar25] and formalised in Lean by Aristotle [ArWu25].
 -/
-@[category research open, AMS 11]
-theorem erdos_897.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos897.lean"]
+theorem erdos_897.parts.i : answer(False) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
@@ -40,11 +51,14 @@ theorem erdos_897.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
 
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
-if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$.
+if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) / \log(p^k) = ∞$.
 Is it true that $\limsup_n f(n+1)/ f(n) = ∞$?
+
+The answer is no; the same counterexample is formalised in Lean by Aristotle [ArWu25].
 -/
-@[category research open, AMS 11]
-theorem erdos_897.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos897.lean"]
+theorem erdos_897.parts.ii : answer(False) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
@@ -54,9 +68,6 @@ theorem erdos_897.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
 /--
 Wirsing [Wi70] proved that if $|f(n+1)−f(n)| ≤ C$ then $f(n) = c \log n + O(1)$ for some constant
 $c$.
-
-[Wi70] Wirsing, E., _A characterization of $\log n$ as an additive arithmetic function_.
-Symposia Math. (1970), 45-47.
 -/
 @[category research solved, AMS 11]
 theorem erdos_897.variants.log_growth
@@ -70,9 +81,12 @@ theorem erdos_897.variants.log_growth
 
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
-if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$ and $f(p^k) = f(p)$
+if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) / \log(p^k) = ∞$ and $f(p^k) = f(p)$
 or $f(p^k) = kf(p)$.
 Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
+
+The known counterexample does not satisfy either of these extra hypotheses, so this variant remains
+open.
 -/
 @[category research open, AMS 11]
 theorem erdos_897.variants.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
@@ -85,9 +99,12 @@ theorem erdos_897.variants.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
 
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
-if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) \log(p^k) = ∞$ and $f(p^k) = f(p)$
+if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) / \log(p^k) = ∞$ and $f(p^k) = f(p)$
 or $f(p^k) = kf(p)$.
 Is it true that $\limsup_n f(n+1)/f(n) = ∞$?
+
+The known counterexample does not satisfy either of these extra hypotheses, so this variant remains
+open.
 -/
 @[category research open, AMS 11]
 theorem erdos_897.variants.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),

@@ -66,7 +66,7 @@ theorem erdos_786.parts.ii : answer(sorry) ↔
 /--
 An example of such a set with density $\frac 1 4$ is given by the integers $\equiv 2\pmod{4}$
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
     A.HasDensity (1 / 4) ∧ A.IsMulCardSet := by
   sorry

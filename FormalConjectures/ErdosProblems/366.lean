@@ -35,7 +35,7 @@ theorem erdos_366 : answer(sorry) ↔ ∃ n > 0, (2).Full n ∧ (3).Full (n + 1)
 Note that $8$ is $3$-full and $9$ is 2-full.
 -/
 @[category test, AMS 11]
-theorem exists_three_full_then_two_full : (∃ n > 0, (3).Full n ∧ (2).Full (n + 1)) := by
+theorem exists_three_full_then_two_full : ∃ n > 0, (3).Full n ∧ (2).Full (n + 1) := by
   use 8
   norm_num +contextual [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]
 
@@ -50,8 +50,10 @@ theorem erdos_366.variants.three_two :
 /--
 Are there any consecutive pairs of $3$-full integers?
 -/
-@[category undergraduate, AMS 11]
-theorem erdos_366.variants.weaker : answer(sorry) ↔ ∃ n > 0, (3).Full n ∧ (3).Full (n + 1) := by
+@[category research open, AMS 11]
+theorem erdos_366.variants.weaker : answer(sorry) ↔
+    ∃ n > 0, (3).Full n ∧ (3).Full (n + 1) := by
   sorry
+
 
 end Erdos366

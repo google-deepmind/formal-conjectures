@@ -63,7 +63,7 @@ theorem erdos_42.variants.constructive : answer(sorry) ↔
 /--
 The set `{1, 2, 4}` is a maximal Sidon set in `{1, ..., 4}`.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem example_maximal_sidon : IsMaximalSidonSetIn {1, 2, 4} 4 := by
   refine ⟨?_, ?_, ?_⟩
   · intro x hx
@@ -88,7 +88,7 @@ theorem example_maximal_sidon : IsMaximalSidonSetIn {1, 2, 4} 4 := by
 /--
 The difference set of `{1, 2, 4}` is `{0, 1, 2, 3}`.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem example_difference_set : ({1, 2, 4} : Set ℕ) - {1, 2, 4} = {0, 1, 2, 3} := by
   ext x
   simp only [Set.mem_sub, Set.mem_insert_iff, Set.mem_singleton_iff]
@@ -106,7 +106,7 @@ theorem example_difference_set : ({1, 2, 4} : Set ℕ) - {1, 2, 4} = {0, 1, 2, 3
 /--
 For any maximal Sidon set, the difference set contains 0.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem maximal_sidon_contains_zero (A : Set ℕ) (N : ℕ) (hN : 1 ≤ N)
     (hA : IsMaximalSidonSetIn A N) : 0 ∈ A - A := by
   obtain ⟨hAsub, hAsidon, hAmax⟩ := hA
