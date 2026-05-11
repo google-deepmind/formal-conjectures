@@ -62,7 +62,7 @@ theorem a_209 : a 209 := by
   · decide
 
 /-- Numbers coming from prime quadruples are in the sequence A56777. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) : a n := by
   sorry
 
@@ -72,7 +72,7 @@ theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : ComesFromPrimeQuadrup
   sorry
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 65 \pmod{72}$. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
     n % 72 = 65 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
@@ -106,7 +106,7 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 9 \pmod{100}$,
 except the first value "65". -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFromPrimeQuadruple n) :
     n % 100 = 9 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
