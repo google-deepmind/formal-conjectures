@@ -51,7 +51,7 @@ noncomputable def minCopies (ε : ℝ) : ℕ :=
 $\varepsilon$ cover the plane. This implies that the set we are taking the infimum over in `minCopies`
 is non-empty.
 -/
-@[category test, AMS 51 52]
+@[category research solved, AMS 51 52]
 theorem minCopies_set_nonempty (ε : ℝ) (hε : 0 < ε) :
     (coveringCopies ε).Nonempty := by
   sorry
