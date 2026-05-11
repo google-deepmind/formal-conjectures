@@ -23,6 +23,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter
+open scoped Topology
 
 namespace Erdos1096
 
