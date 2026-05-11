@@ -38,7 +38,7 @@ Is it true that, provided $\epsilon>0$ is sufficiently small, $x_{k+1}-x_k \to 0
 @[category research open, AMS 11]
 theorem erdos_1096 :
     answer(sorry) ↔ ∃ ε > 0, ∀ q, 1 < q → q < 1 + ε →
-    ∀ x : ℕ → ℝ, StrictMono x → Set.range x = Sums q →
+    ∀ x : ℕ → ℝ, StrictMono x → Set.range x = { ∑ i ∈ S, q ^ i | S : Finset ℕ } →
     Tendsto (fun k => x (k + 1) - x k) atTop (𝓝 0) :=
   sorry
 
