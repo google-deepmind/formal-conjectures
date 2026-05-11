@@ -95,7 +95,7 @@ denominator `d`, there is a numerator `a` coprime to `d`, for which every partia
 quotient in the continued fraction of `a / d` is at most `A`.
 -/
 @[category research open, AMS 11]
-theorem zaremba_conjecture.variants.exact : maxminmaxPartialQuotient = 5 := by
+theorem zaremba_conjecture.variants.exact : maxminmaxPartialQuotient = answer(5) := by
   sorry
 
 
