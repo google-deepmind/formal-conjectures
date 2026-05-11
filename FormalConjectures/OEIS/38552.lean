@@ -29,7 +29,10 @@ The conjectures state that:
    class number $n$. For even $n$, if $k$ is the largest odd number with $h(-k) = n$ and
    $k'$ is the largest even number with $h(-k') = n$, then $k > k'$.
 
-*References:* [oeis.org/A038552](https://oeis.org/A038552)
+*References:*
+- [Sta67] Stark, Harold M. "A complete determination of the complex quadratic fields of
+  class-number one." Michigan Mathematical Journal 14.1 (1967): 1-27.
+- [oeis.org/A038552](https://oeis.org/A038552)
 -/
 
 namespace OeisA38552
@@ -67,7 +70,7 @@ def IsLargestNegFundDiscForClassNumber {n : ℕ} (absD : ℕ) : Prop :=
   classNumberOfDiscriminant (-(absD : ℤ)) = n ∧
   ∀ d : ℤ, IsNegFundamentalDiscriminant d → classNumberOfDiscriminant d = n → d.natAbs ≤ absD
 
-/-- The Stark-Heegner theorem implies that the squarefree $k > 0$ such that
+/-- The Stark-Heegner theorem [Sta67] implies that the squarefree $k > 0$ such that
 $\mathbb{Q}(\sqrt{-k})$ has class number $1$ are exactly $\{1, 2, 3, 7, 11, 19, 43, 67, 163\}$. -/
 @[category research solved, AMS 11]
 theorem starkHeegner_classNumberOne :
