@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 
 /-!
 # Fuglede's conjecture in dimensions 1 and 2

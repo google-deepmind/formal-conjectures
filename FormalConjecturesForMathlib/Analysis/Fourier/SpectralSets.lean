@@ -33,7 +33,7 @@ open scoped InnerProductSpace
 
 /-- The translate of a set `Ω` by a vector `t`.-/
 def translateSet {d : ℕ} (Ω: Set (Fin d → ℝ)) (t : Fin d → ℝ) :
-  Set (Fin d → ℝ) :=
+    Set (Fin d → ℝ) :=
   {x | x - t ∈ Ω}
 
 /-- The exponential character `x ↦ exp(2π i ⟪ξ, x⟫)`. -/
@@ -61,10 +61,7 @@ theorem norm_exponentialCharacter {d : ℕ} (ξ x : Fin d → ℝ) :
 theorem exponentialCharacter_memLp {d : ℕ} {Ω : Set (Fin d → ℝ)}
     (hΩ_finite : volume Ω ≠ ⊤) (ξ : Fin d → ℝ) :
     MemLp (exponentialCharacter ξ) 2 (volume.restrict Ω) := by
-  have h_meas :
-      AEStronglyMeasurable (exponentialCharacter ξ) (volume.restrict Ω) := by
-    exact (continuous_exponentialCharacter ξ).aestronglyMeasurable
-  rw [MeasureTheory.memLp_two_iff_integrable_sq_norm h_meas]
+  rw [MeasureTheory.memLp_two_iff_integrable_sq_norm (continuous_exponentialCharacter ξ).aestronglyMeasurable]
   simp_rw [norm_exponentialCharacter]
   change IntegrableOn (fun _ ↦ (1 : ℝ) ^ 2) Ω volume
   simpa using
