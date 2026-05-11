@@ -69,7 +69,7 @@ $\epsilon_n \gg \frac{\log\log\log n}{\log\log n}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_688.variants.lglglg_over_lglg_is_big_o :
-    (fun (n : ℕ) ↦ (Real.log (Real.log (Real.log (n : ℝ)))) / (Real.log (Real.log (n : ℝ))))
+    (fun (n : ℕ) ↦ (log (log (log (n : ℝ)))) / (log (log (n : ℝ))))
       =O[Filter.atTop] epsilonFunction := by
   sorry
 
