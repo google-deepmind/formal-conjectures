@@ -327,10 +327,11 @@ function subjectStatusTableHTML(subjectByCategory) {
     `<th scope="col">Subject</th>` +
     columns.map(cat => {
       const meta = getCategoryMeta(cat);
-      return `<th scope="col"><span class="badge ${meta.css}">${meta.label}</span></th>`;
+      const href = `/browse/?category=${encodeURIComponent(cat)}`;
+      return `<th scope="col"><a href="${href}"><span class="badge ${meta.css}">${meta.label}</span></a></th>`;
     }).join('') +
-    `<th scope="col" title="Has a formal proof linked">Formal</th>` +
-    `<th scope="col">Total</th>` +
+    `<th scope="col" title="Has a formal proof linked"><a href="/browse/?formal_proof=true">Formal</a></th>` +
+    `<th scope="col"><a href="/browse/">Total</a></th>` +
     `</tr>`;
 
   const body = rows.map(([subject, row]) => {
