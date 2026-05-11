@@ -40,8 +40,9 @@ async function init() {
   document.title = `${theorem.displayTheorem} — Formal Conjectures`;
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
   const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
+  const contributors = data.contributors?.[theorem.githubPath] || [];
 
-  renderDetail(theorem, siblings, verso);
+  renderDetail(theorem, siblings, verso, contributors);
 }
 
 /**
@@ -378,7 +379,44 @@ function renderError(msg) {
     </div>`;
 }
 
-function renderDetail(theorem, siblings, verso) {
+function contributorTitle(contributor) {
+  const parts = [];
+  const name = contributor.login ? `@${contributor.login}` : contributor.name;
+  if (name) parts.push(name);
+  if (contributor.originalAuthor) parts.push('original file author');
+  if (contributor.commitCount) {
+    parts.push(`${contributor.commitCount} commit${contributor.commitCount === 1 ? '' : 's'} to this file`);
+  }
+  if (contributor.firstCommitDate && contributor.lastCommitDate) {
+    parts.push(`${contributor.firstCommitDate} to ${contributor.lastCommitDate}`);
+  }
+  return parts.join(' · ');
+}
+
+function contributorChipHTML(contributor) {
+  const label = contributor.login ? `@${contributor.login}` : contributor.name || 'Unknown contributor';
+  const title = contributorTitle(contributor);
+  const avatar = contributor.avatarUrl
+    ? `<img class="contributor-chip__avatar" src="${FC.escapeHTML(contributor.avatarUrl)}" alt="" width="28" height="28" loading="lazy">`
+    : '<span class="contributor-chip__avatar contributor-chip__avatar--fallback" aria-hidden="true">?</span>';
+  const added = contributor.originalAuthor
+    ? '<span class="contributor-chip__tag">Added</span>'
+    : '';
+  const content = `
+    ${avatar}
+    <span class="contributor-chip__name">${FC.escapeHTML(label)}</span>
+    ${added}
+  `;
+
+  if (contributor.profileUrl) {
+    return `<a class="contributor-chip" href="${FC.escapeHTML(contributor.profileUrl)}" target="_blank" rel="noopener"
+      title="${FC.escapeHTML(title)}" aria-label="${FC.escapeHTML(title || label)}">${content}</a>`;
+  }
+
+  return `<span class="contributor-chip contributor-chip--static" title="${FC.escapeHTML(title)}">${content}</span>`;
+}
+
+function renderDetail(theorem, siblings, verso, contributors) {
   const catMeta = FC.getCategoryMeta(theorem.category);
 
   // Subject pills
@@ -450,6 +488,14 @@ function renderDetail(theorem, siblings, verso) {
       </div>
     </div>` : '';
 
+  const contributorsSection = contributors.length ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">File contributors</div>
+      <div class="contributor-list">
+        ${contributors.map(contributorChipHTML).join('\n')}
+      </div>
+    </div>` : '';
+
   detailEl.innerHTML = `
     <div class="theorem-detail__breadcrumb">
       <a href="${_base}/browse/">&larr; Browse</a>
@@ -468,7 +514,7 @@ function renderDetail(theorem, siblings, verso) {
 
     ${codeSection}
 
-
+    ${contributorsSection}
 
     <div class="theorem-detail__section">
       <div class="detail-label">Source collection</div>
