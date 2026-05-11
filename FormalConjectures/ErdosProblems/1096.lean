@@ -31,10 +31,9 @@ namespace Erdos1096
 def Sums (q : ℝ) : Set ℝ := { ∑ i ∈ S, q ^ i | S : Finset ℕ }
 
 /--
-Let 1 < q < 1 + ε and consider the set of numbers of the shape ∑_{i ∈ S} q^i
-(for all finite S), ordered by size as 0 = x_1 < x_2 < ...
-The sequence x is strictly increasing such that its range is Sums q.
-If ε > 0 is sufficiently small, then x_{k+1} - x_k → 0.
+Let $1<q<1+\epsilon$ and consider the set of numbers of the shape $\sum_{i\in S}q^i$ (for all finite $S$), ordered by size as $0=x_1<x_2<\cdots$.
+
+Is it true that, provided $\epsilon>0$ is sufficiently small, $x_{k+1}-x_k \to 0$?
 -/
 @[category research open, AMS 11]
 theorem erdos_1096 :
