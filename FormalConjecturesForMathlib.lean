@@ -24,6 +24,7 @@ import FormalConjecturesForMathlib.Algebra.Powerfree
 import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
+import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 import FormalConjecturesForMathlib.Analysis.HasGaps
 import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
