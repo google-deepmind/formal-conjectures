@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 - [Er80] Erdős, Paul, _A survey of problems in combinatorial number theory_. Ann. Discrete Math. (1980), 89-115.
 -/
 
-open Classical Real
+open Classical Real Filter
 
 namespace Erdos688
 
@@ -44,7 +44,7 @@ Estimate $\epsilon_n$ - lower bound.
 -/
 @[category research open, AMS 11]
 theorem erdos_688.parts.i.lower_bound :
-    (answer(sorry) : ℕ → ℝ) =O[Filter.atTop] epsilonFunction := by
+    (answer(sorry) : ℕ → ℝ) =O[atTop] epsilonFunction := by
   sorry
 
 /--
@@ -52,7 +52,7 @@ Estimate $\epsilon_n$ - upper bound.
 -/
 @[category research open, AMS 11]
 theorem erdos_688.parts.i.upper_bound :
-    epsilonFunction =O[Filter.atTop] (answer(sorry) : ℕ → ℝ) := by
+    epsilonFunction =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /--
@@ -60,7 +60,7 @@ In particular, is it true that $\epsilon_n = o(1)$?
 -/
 @[category research open, AMS 11]
 theorem erdos_688.parts.ii : answer(sorry) ↔
-    epsilonFunction =o[Filter.atTop] (fun (n : ℕ) ↦ (1 : ℝ)) := by
+    epsilonFunction =o[atTop] (fun (n : ℕ) ↦ (1 : ℝ)) := by
   sorry
 
 /--
@@ -70,7 +70,7 @@ $\epsilon_n \gg \frac{\log\log\log n}{\log\log n}$.
 @[category research solved, AMS 11]
 theorem erdos_688.variants.lglglg_over_lglg_is_big_o :
     (fun (n : ℕ) ↦ (log (log (log (n : ℝ)))) / (log (log (n : ℝ))))
-      =O[Filter.atTop] epsilonFunction := by
+      =O[atTop] epsilonFunction := by
   sorry
 
 end Erdos688
