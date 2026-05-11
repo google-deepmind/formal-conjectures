@@ -27,9 +27,6 @@ open scoped Topology
 
 namespace Erdos1096
 
-/-- The set of numbers of the shape $\sum_{i ∈ S} q^i$ (for all finite $S$). -/
-def Sums (q : ℝ) : Set ℝ := { ∑ i ∈ S, q ^ i | S : Finset ℕ }
-
 /--
 Let $1<q<1+\epsilon$ and consider the set of numbers of the shape $\sum_{i\in S}q^i$ (for all finite $S$), ordered by size as $0=x_1<x_2<\cdots$.
 
