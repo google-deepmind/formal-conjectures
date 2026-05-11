@@ -90,9 +90,9 @@ theorem zaremba_conjecture : maxminmaxPartialQuotient < ⊤ := by
   sorry
 
 /--
-Zaremba's conjecture in "strong" form: for every
+Zaremba's conjecture in "strong" form: _what_ is the absolute constant `A` such that for every
 denominator `d`, there is a numerator `a` coprime to `d`, for which every partial
-quotient in the continued fraction of `a / d` is at most `5`.
+quotient in the continued fraction of `a / d` is at most `A`.
 -/
 @[category research open, AMS 11]
 theorem zaremba_conjecture.variants.exact : maxminmaxPartialQuotient = 5 := by
