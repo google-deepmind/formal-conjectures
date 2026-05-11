@@ -263,6 +263,200 @@ function statsCard(value, label) {
   return `<div class="stat-card"><span class="stat-value">${value}</span><span class="stat-label">${label}</span></div>`;
 }
 
+// ---------------------------------------------------------------------------
+// Minimal Markdown -> HTML renderer
+//
+// Supports the subset of Markdown used in CONTRIBUTING.md:
+//  - ATX headings (#, ##, ...)
+//  - Fenced code blocks (```lang)
+//  - Ordered and unordered lists (incl. nested + multi-paragraph items)
+//  - Inline code, **bold**, *italic*, [text](url), <https://autolink>
+//  - Plain paragraphs
+//
+// No external dependencies.
+// ---------------------------------------------------------------------------
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderInline(text) {
+  text = escapeHtml(text);
+
+  // Protect inline code spans from further substitution.
+  const codes = [];
+  text = text.replace(/`([^`]+)`/g, (_, c) => {
+    codes.push(c);
+    return ` C${codes.length - 1} `;
+  });
+
+  // Markdown links: [text](url)
+  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) => {
+    const ext = /^https?:/.test(u) ? ' target="_blank" rel="noopener"' : '';
+    return `<a href="${u}"${ext}>${t}</a>`;
+  });
+
+  // Auto-links written as <https://...> (escaped to &lt;...&gt; above).
+  text = text.replace(/&lt;(https?:\/\/[^\s&]+)&gt;/g, (_, u) =>
+    `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+
+  // Bold and italic. Bold first so its **'s aren't seen as italic markers.
+  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
+
+  // Restore inline code spans.
+  text = text.replace(/ C(\d+) /g, (_, i) => `<code>${codes[+i]}</code>`);
+  return text;
+}
+
+/** GitHub-compatible heading id slug from raw markdown text. */
+function slugifyHeading(text) {
+  return text
+    .toLowerCase()
+    .replace(/`/g, '')                          // strip inline code ticks
+    .replace(/\*/g, '')                         // strip emphasis markers
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')    // unwrap [text](url) -> text
+    .replace(/[^\w\s-]/g, '')                   // drop other punctuation
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+/** Match a list-item line; return { indent, marker, ordered, content, contentStart } or null. */
+function parseListItem(line) {
+  const m = /^(\s*)([-*]|\d+\.)\s+(.*)$/.exec(line);
+  if (!m) return null;
+  return {
+    indent: m[1].length,
+    marker: m[2],
+    ordered: /\d/.test(m[2]),
+    content: m[3],
+    contentStart: m[1].length + m[2].length + 1, // indent + marker + 1 space
+  };
+}
+
+/** Strip up to n leading space characters from a line. */
+function stripIndent(line, n) {
+  let i = 0;
+  while (i < n && i < line.length && line[i] === ' ') i++;
+  return line.slice(i);
+}
+
+function renderMarkdown(md) {
+  const lines = md.replace(/\r\n/g, '\n').split('\n');
+  return renderBlocks(lines);
+}
+
+function renderBlocks(lines) {
+  const out = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    if (/^\s*$/.test(line)) { i++; continue; }
+
+    // ATX heading: '#' to '######' followed by space and text.
+    const h = /^(#{1,6})\s+(.*?)\s*#*\s*$/.exec(line);
+    if (h) {
+      const level = h[1].length;
+      const id = slugifyHeading(h[2]);
+      out.push(`<h${level} id="${id}">${renderInline(h[2])}</h${level}>`);
+      i++;
+      continue;
+    }
+
+    // Fenced code block.
+    if (/^```/.test(line)) {
+      const lang = (/^```(\S*)/.exec(line) || [, ''])[1];
+      i++;
+      const codeLines = [];
+      while (i < lines.length && !/^```\s*$/.test(lines[i])) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      i++; // skip closing fence
+      const cls = lang ? ` class="language-${lang}"` : '';
+      out.push(`<pre><code${cls}>${escapeHtml(codeLines.join('\n'))}</code></pre>`);
+      continue;
+    }
+
+    // List.
+    const li = parseListItem(line);
+    if (li) {
+      const [html, end] = renderList(lines, i);
+      out.push(html);
+      i = end;
+      continue;
+    }
+
+    // Paragraph.
+    const para = [];
+    while (i < lines.length && !/^\s*$/.test(lines[i]) &&
+           !/^#{1,6}\s/.test(lines[i]) &&
+           !/^```/.test(lines[i]) &&
+           !parseListItem(lines[i])) {
+      para.push(lines[i]);
+      i++;
+    }
+    out.push(`<p>${renderInline(para.join(' '))}</p>`);
+  }
+
+  return out.join('\n');
+}
+
+function renderList(lines, start) {
+  const first = parseListItem(lines[start]);
+  const indent = first.indent;
+  const ordered = first.ordered;
+  const tag = ordered ? 'ol' : 'ul';
+  const items = [];
+  let i = start;
+
+  while (i < lines.length) {
+    // Skip blank lines between items.
+    while (i < lines.length && /^\s*$/.test(lines[i])) i++;
+    if (i >= lines.length) break;
+
+    const item = parseListItem(lines[i]);
+    if (!item || item.indent !== indent || item.ordered !== ordered) break;
+
+    // Collect every line that belongs to this item: the marker line itself,
+    // plus any subsequent blank or-more-indented lines (continuation paragraphs,
+    // nested lists, fenced code), strip the leading indent, then recurse.
+    const itemLines = [item.content];
+    i++;
+    while (i < lines.length) {
+      const sub = lines[i];
+      if (/^\s*$/.test(sub)) { itemLines.push(''); i++; continue; }
+      const subItem = parseListItem(sub);
+      if (subItem && subItem.indent <= indent) break; // sibling or out
+      const subIndent = sub.length - sub.replace(/^\s*/, '').length;
+      if (!subItem && subIndent <= indent) break; // dedented non-list line
+      itemLines.push(stripIndent(sub, item.contentStart));
+      i++;
+    }
+    while (itemLines.length && /^\s*$/.test(itemLines[itemLines.length - 1])) {
+      itemLines.pop();
+    }
+
+    items.push(`<li>${renderItemContent(itemLines)}</li>`);
+  }
+
+  return [`<${tag}>\n${items.join('\n')}\n</${tag}>`, i];
+}
+
+function renderItemContent(lines) {
+  // Tight item: single line, no nested blocks — render inline without <p>.
+  if (lines.length === 1) return renderInline(lines[0]);
+  // No blank lines and no block markers — also tight.
+  const hasBlank = lines.some(l => /^\s*$/.test(l));
+  const hasBlock = lines.some(l =>
+    /^#{1,6}\s/.test(l) || /^```/.test(l) || parseListItem(l));
+  if (!hasBlank && !hasBlock) return renderInline(lines.join(' '));
+  // Otherwise treat the item as a sub-document.
+  return '\n' + renderBlocks(lines) + '\n';
+}
+
 function categoryStatsHTML(byCategory) {
   const order = [
     'research open', 'research solved',
@@ -365,7 +559,24 @@ function main() {
   copyStaticTemplate('theorem.html', 'site/theorem/index.html');
 
   // ---- Contribute page ----
-  copyStaticTemplate('contribute.html', 'site/contribute/index.html');
+  // Render CONTRIBUTING.md (the canonical contribution guide) into the
+  // contribute page template. Look one level up first (when site/ lives inside
+  // the formal-conjectures repo), then fall back to a copy alongside build.js.
+  const contributingPath = ['../CONTRIBUTING.md', 'CONTRIBUTING.md']
+    .find(p => fs.existsSync(p));
+  if (!contributingPath) {
+    console.error('Error: CONTRIBUTING.md not found at ../CONTRIBUTING.md or CONTRIBUTING.md.');
+    process.exit(1);
+  }
+  let contributingMd = fs.readFileSync(contributingPath, 'utf8');
+  // Drop the leading H1 — the page-header in contribute.html already
+  // provides the title, so rendering the H1 too would duplicate it.
+  contributingMd = contributingMd.replace(/^#\s+[^\n]*\n+/, '');
+  const contributeBody = renderMarkdown(contributingMd);
+  const contributeHtml = applyBasePath(
+    fill(readTemplate('contribute.html'), { content: contributeBody })
+  );
+  writePage('site/contribute/index.html', contributeHtml);
 
   // ---- About page ----
   copyStaticTemplate('about.html', 'site/about/index.html');
