@@ -40,12 +40,16 @@ small-case witnesses for the lower bound:
 * **Erdős–Turán counting** of distinct pairwise sums: a Sidon set of size $k$
   contributes $k(k+1)/2$ distinct sums in $\{2,\dots,2N\}$.
 * **Balogh–Füredi–Roy 2023 upper bound** (current best): for $N \ge 10^{12}$,
-  $h(N) \le \sqrt N + 0.998\,N^{1/4} + 1$, derived here from the BFR core
-  axiom (an explicit numerical inequality whose full proof requires the
-  combination of Sections 2–4 of the BFR paper).
+  $h(N) \le \sqrt N + 0.998\,N^{1/4} + 1$, derived here from a named
+  `Prop`-valued hypothesis `BFRCoreBound` (an explicit numerical inequality
+  whose full proof requires the combination of Sections 2–4 of the BFR paper).
+  The hypothesis is threaded into dependent theorems rather than declared
+  as an `axiom`, so consumers must explicitly supply it.
 * **Singer 1938 lower bound:** for every prime $q$, $h(q^2+q) \ge q+1$.
-  Concretely verified by `native_decide` for $q \in \{2,3,5,7,11,13\}$ and
-  axiomatized for general prime $q$ with full reference.
+  Concretely verified by `native_decide` for $q \in \{2,3,5,7,11,13\}$, with
+  the general prime case captured as a named `Prop`-valued hypothesis
+  `SingerSidonExists` (full reference below) and threaded into the dependent
+  lower-bound theorem rather than declared as an `axiom`.
 
 All variant theorems are stated against the canonical
 `FormalConjecturesForMathlib.Combinatorics.IsSidon` predicate. A private
@@ -456,21 +460,23 @@ theorem bfr_cauchy_schwarz {v : ℕ} (y : Fin v → ℝ) (d : ℝ) (X : Finset (
       ↑X.card * d ^ 2 - 2 * d * (d_X * ↑X.card) + ∑ x ∈ X, (y x) ^ 2 := by ring
   rw [h_rhs, hd_X]
 
-/-- **AXIOM (BFR core, 2023; numerical specialisation).** Specialised
-numerical form of the Balogh–Füredi–Roy bound: for a Sidon set
+/-- **Named hypothesis (BFR core, 2023; numerical specialisation).**
+Specialised numerical form of the Balogh–Füredi–Roy bound, captured as a
+`Prop`-valued definition so consumers must thread it explicitly rather than
+inheriting it from an `axiom`. The statement: for every Sidon set
 $A \subseteq \{0,\dots,N\}$ with $N \ge 10^{12}$,
 $1000 \cdot (|A| - 1) \le 1000 \cdot \lfloor\sqrt N\rfloor +
 998 \cdot \lfloor\sqrt[4] N\rfloor$.
 
 **Note on scope.** Balogh–Füredi–Roy (2023) prove their headline bound
 $|A| \le \sqrt N + 0.998\,N^{1/4} + 1$ for *sufficiently large* $N$ without
-giving an explicit threshold in the paper. The axiom recorded here is a
-formal numerical specialisation in $\mathbb{N}$-arithmetic — extracted from
-the paper's coefficient analysis — using $N \ge 10^{12}$ as a conservative
-threshold under which the `Nat.sqrt` rounding losses are absorbed by the
-slack between the paper's coefficient $63/64 \approx 0.984$ and the Monthly
-form $0.998$. This is not a literal restatement of any single inequality in
-the paper.
+giving an explicit threshold in the paper. The hypothesis recorded here is
+a formal numerical specialisation in $\mathbb{N}$-arithmetic — extracted
+from the paper's coefficient analysis — using $N \ge 10^{12}$ as a
+conservative threshold under which the `Nat.sqrt` rounding losses are
+absorbed by the slack between the paper's coefficient $63/64 \approx 0.984$
+and the Monthly form $0.998$. This is not a literal restatement of any
+single inequality in the paper.
 
 The full proof requires the combination of:
 - Section 2: Erdős–Turán discrepancy with slack term $C$ (interval decomposition,
@@ -480,18 +486,20 @@ The full proof requires the combination of:
 
 **Reference:** Balogh, J., Füredi, Z., Roy, S. (2023). *An upper bound on the
 size of Sidon sets.* Amer. Math. Monthly **130**(5), 437–445. arXiv:2103.15850. -/
-axiom bfr_core_bound (A : Finset ℕ) (N : ℕ) (hS : IsSidon ((A : Set ℕ)))
-    (hA : A ⊆ Finset.range (N + 1)) (hN : N ≥ 10^12) :
+def BFRCoreBound : Prop :=
+  ∀ (A : Finset ℕ) (N : ℕ), IsSidon ((A : Set ℕ)) →
+    A ⊆ Finset.range (N + 1) → N ≥ 10^12 →
     1000 * (A.card - 1) ≤ 1000 * Nat.sqrt N + 998 * Nat.sqrt (Nat.sqrt N)
 
-/-- **Balogh–Füredi–Roy 2023 upper bound.** For a Sidon set
-$A \subseteq \{0,\dots,N\}$ with $N \ge 10^{12}$,
-$|A| \le \sqrt N + 0.998\,N^{1/4} + 1$ (integer form). -/
+/-- **Balogh–Füredi–Roy 2023 upper bound.** Conditional on the named
+`BFRCoreBound` hypothesis: for a Sidon set $A \subseteq \{0,\dots,N\}$ with
+$N \ge 10^{12}$, $|A| \le \sqrt N + 0.998\,N^{1/4} + 1$ (integer form). -/
 @[category research solved, AMS 11]
-theorem bfr_bound (A : Finset ℕ) (N : ℕ) (hS : IsSidon ((A : Set ℕ)))
+theorem bfr_bound (h_bfr : BFRCoreBound)
+    (A : Finset ℕ) (N : ℕ) (hS : IsSidon ((A : Set ℕ)))
     (hA : A ⊆ Finset.range (N + 1)) (hN : N ≥ 10^12) :
     1000 * A.card ≤ 1000 * Nat.sqrt N + 998 * Nat.sqrt (Nat.sqrt N) + 1000 := by
-  have h := bfr_core_bound A N hS hA hN
+  have h := h_bfr A N hS hA hN
   omega
 
 /- ## Variant 4: Lindström 1969 weak corollary (proved)
@@ -578,16 +586,18 @@ theorem singer_q13_sidon :
       (({0, 1, 3, 16, 23, 28, 42, 76, 82, 86, 119, 137, 154, 175} : Finset ℕ) : Set ℕ) := by
   native_decide
 
-/-- **AXIOM (prime case of Singer's 1938 construction).** For every prime $q$,
-there exists a Sidon set of size $q+1$ with all elements $\le q^2+q$.
+/-- **Named hypothesis (prime case of Singer's 1938 construction).** For
+every prime $q$, there exists a Sidon set of size $q+1$ with all elements
+$\le q^2+q$. Captured as a `Prop`-valued definition so consumers must thread
+it explicitly rather than inheriting it from an `axiom`.
 
-Singer's original theorem covers every prime *power* $q$. The axiom recorded
-here is the conservative restriction to the prime case (which suffices for
-the lower-bound consequence below; the prime-power case extends in the same
-form). The full proof uses projective geometry: the points of a line in
-$\mathrm{PG}(2,q)$, indexed by powers of a Singer cycle of order $q^2+q+1$,
-form a perfect difference set in $\mathbb{Z}_{q^2+q+1}$. Perfect difference
-sets are Sidon sets via the difference-injectivity property.
+Singer's original theorem covers every prime *power* $q$. The hypothesis
+recorded here is the conservative restriction to the prime case (which
+suffices for the lower-bound consequence below; the prime-power case extends
+in the same form). The full proof uses projective geometry: the points of a
+line in $\mathrm{PG}(2,q)$, indexed by powers of a Singer cycle of order
+$q^2+q+1$, form a perfect difference set in $\mathbb{Z}_{q^2+q+1}$. Perfect
+difference sets are Sidon sets via the difference-injectivity property.
 
 The general formalization requires `GaloisField` machinery (cyclic structure
 of $\mathrm{GF}(q^3)^\times$), trace/norm maps from $\mathrm{GF}(q^3)$ to
@@ -598,16 +608,18 @@ Concrete cases $q \in \{2,3,5,7,11,13\}$ above are fully decidable via
 **Reference:** Singer, J. (1938). *A theorem in finite projective geometry
 and some applications to number theory.* Trans. Amer. Math. Soc. **43**(3),
 377–385. -/
-axiom singer_sidon_exists (q : ℕ) (hq : Nat.Prime q) :
+def SingerSidonExists : Prop :=
+  ∀ (q : ℕ), Nat.Prime q →
     ∃ A : Finset ℕ, IsSidon ((A : Set ℕ)) ∧ A.card = q + 1 ∧ ∀ a ∈ A, a ≤ q * q + q
 
-/-- **Singer lower bound.** For prime $q$, $h(q^2+q) \ge q+1$ via Singer's
-construction. -/
+/-- **Singer lower bound.** Conditional on the named `SingerSidonExists`
+hypothesis: for prime $q$, $h(q^2+q) \ge q+1$ via Singer's construction. -/
 @[category research solved, AMS 11]
-theorem singer_lower_bound (q : ℕ) (hq : Nat.Prime q) :
+theorem singer_lower_bound (h_singer : SingerSidonExists)
+    (q : ℕ) (hq : Nat.Prime q) :
     ∃ A : Finset ℕ, IsSidon ((A : Set ℕ)) ∧ A.card = q + 1 ∧
       A ⊆ Finset.range (q * q + q + 1) := by
-  obtain ⟨A, hSidon, hCard, hRange⟩ := singer_sidon_exists q hq
+  obtain ⟨A, hSidon, hCard, hRange⟩ := h_singer q hq
   exact ⟨A, hSidon, hCard,
     fun a ha => Finset.mem_range.mpr (by linarith [hRange a ha])⟩
 
