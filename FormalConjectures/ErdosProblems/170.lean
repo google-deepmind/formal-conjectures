@@ -43,7 +43,7 @@ def PerfectRulersLengthN (N : ℕ) :
 abbrev TrivialRuler (N : ℕ) : Finset ℕ := Finset.range (N+1)
 
 /-- Sanity Check: the trivial ruler is actually a perfect ruler if $K \geq N$ -/
-@[category API, AMS 05]
+@[category API, AMS 5]
 lemma trivial_ruler_is_perfect (N : ℕ) : TrivialRuler N ∈ PerfectRulersLengthN N := by
     simp only [PerfectRulersLengthN, Finset.mem_filter, Finset.mem_powerset, Finset.range_subset]
     exact ⟨by simp, fun k hk => ⟨0, by simp, k, hk, rfl⟩⟩
@@ -54,7 +54,7 @@ def F (N : ℕ) : ℕ :=
                 (Finset.image_nonempty.mpr ⟨TrivialRuler N, trivial_ruler_is_perfect N⟩)
 
 /-- The problem is to determine the limit of the sequence $\frac{F(N)}{\sqrt{N}}$ as $N \to \infty$. -/
-@[category research open, AMS 05]
+@[category research open, AMS 5]
 lemma erdos170 : Filter.Tendsto (fun N => F N / √N) Filter.atTop (𝓝 answer(sorry)) := by sorry
 
 /-- A known lower bound to the limit by Leech [Le56], which is $1.56\dots$. -/
@@ -65,7 +65,7 @@ noncomputable abbrev upper_bound := √3
 /-- The existence of the limit has been proved by Erdős and Gál [ErGa48].
 The lower bound has been proven by Leech [Le56], who refined an argument of Rédei and Rényi.
 The upper bound is due to Wichmann [Wi63]. -/
-@[category research solved, AMS 05]
+@[category research solved, AMS 5]
 lemma erdos170.existing_bounds :
   ∃ x ∈ Set.Icc lower_bound upper_bound,
     Filter.Tendsto (fun N => F N / √N) Filter.atTop (𝓝 x) := by sorry
