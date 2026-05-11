@@ -26,7 +26,7 @@ open Filter
 
 namespace Erdos1096
 
-/-- The set of numbers of the shape ∑_{i ∈ S} q^i (for all finite S). -/
+/-- The set of numbers of the shape $\sum_{i ∈ S} q^i$ (for all finite $S$). -/
 def Sums (q : ℝ) : Set ℝ := { ∑ i ∈ S, q ^ i | S : Finset ℕ }
 
 /--
