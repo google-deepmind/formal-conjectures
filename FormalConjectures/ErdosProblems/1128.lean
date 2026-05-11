@@ -49,6 +49,7 @@ These establish key countability and boundedness properties of ω₁.
 private abbrev Omega1 := {o : Ordinal.{0} // o < (aleph 1).ord}
 
 /-- Any ordinal below ω₁ has countable cardinality. -/
+@[category API, AMS 5]
 private lemma card_le_aleph0_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).ord) :
     γ.card ≤ ℵ₀ := by
   have h : γ.card < aleph 1 := by
@@ -59,12 +60,14 @@ private lemma card_le_aleph0_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).o
   exact absurd ((step2.trans step1).trans_lt h) (lt_irrefl _)
 
 /-- The ToType of any ordinal below ω₁ is countable. -/
+@[category API, AMS 5]
 private lemma countable_toType_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).ord) :
     Countable γ.ToType := by
   rw [← mk_le_aleph0_iff, mk_toType]
   exact card_le_aleph0_of_lt_omega1 hγ
 
 /-- The set of ordinals strictly below any γ < ω₁ is countable. -/
+@[category API, AMS 5]
 private lemma countable_Iio_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).ord) :
     Countable (Set.Iio γ) := by
   haveI := countable_toType_of_lt_omega1 hγ
@@ -72,6 +75,7 @@ private lemma countable_Iio_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).or
 
 /-- Initial segments of ω₁ (as sets of `Omega1` elements) are countable.
 This is the subtype-order version of `countable_Iio_of_lt_omega1`. -/
+@[category API, AMS 5]
 private lemma countable_Iio_omega1 (γ : Omega1) : (Set.Iio γ : Set Omega1).Countable := by
   -- The injection a ↦ ⟨a.1.val, a.2⟩ sends ↑(Iio γ : Set Omega1) into ↑(Iio γ.val : Set Ord)
   -- and the codomain is countable by countable_Iio_of_lt_omega1.
@@ -88,6 +92,7 @@ private lemma countable_Iio_omega1 (γ : Omega1) : (Set.Iio γ : Set Omega1).Cou
 
 /-- Any countable subset of ω₁ is bounded strictly below some element of ω₁.
 This uses the key property that ω₁ has uncountable cofinality (it is regular). -/
+@[category API, AMS 5]
 private lemma countable_subset_bdd (S : Set Omega1) (hS : S.Countable) :
     ∃ γ : Omega1, ∀ s ∈ S, s < γ := by
   by_cases hemp : S.Nonempty
