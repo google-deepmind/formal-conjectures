@@ -47,4 +47,16 @@ theorem green_44 :
       10 * remaining.card ≤ N := by
   sorry
 
+/-- The answer is affirmative if the primes are all less than $N^{1/2}$, by the large sieve. [Gr24] -/
+@[category research solved, AMS 11]
+theorem green_44.variants.less_than_sqrt :
+    ∀ (N : ℕ) (p : Fin 1000 → ℕ) (A : (i : Fin 1000) → Finset (ZMod (p i))),
+      let remaining := (Finset.Icc 1 N).filter (fun x => ∀ i, (x : ZMod (p i)) ∉ A i)
+      (∀ i, (p i).Prime) →
+      StrictMono p →
+      (p 999) ^ 2 < N →
+      (∀ i, (A i).card = (p i - 1) / 2) →
+      10 * remaining.card ≤ N := by
+  sorry
+
 end Green44
