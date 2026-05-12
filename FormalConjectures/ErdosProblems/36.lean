@@ -59,9 +59,51 @@ The `Overlap` for $k=-1$ is 1 (if $A=\{1\}, B=\{2\}$) and for $k=1$ also 1 (if $
 The `MaxOverlap` is $1$, since the `Overlap` is $0$ for other $k$.
 Thus, $M 1 = 1$.
 -/
+private lemma overlap_singleton (a b k : ℤ) :
+    Overlap {a} {b} k = if a - b = k then 1 else 0 := by
+  unfold Overlap
+  simp [Finset.product_singleton, Finset.filter_singleton]
+  split_ifs <;> rfl
+
+private lemma overlap_singleton_le_one (a b k : ℤ) : Overlap {a} {b} k ≤ 1 := by
+  rw [overlap_singleton]; split_ifs <;> simp
+
+private lemma overlap_singleton_self (a b : ℤ) : Overlap {a} {b} (a - b) = 1 := by
+  rw [overlap_singleton]; simp
+
+private lemma maxOverlap_singleton (a b : ℤ) : MaxOverlap {a} {b} = 1 := by
+  unfold MaxOverlap
+  apply le_antisymm
+  · exact ciSup_le (overlap_singleton_le_one a b)
+  · have hbdd : BddAbove (Set.range (Overlap {a} {b})) :=
+      ⟨1, by rintro _ ⟨k, rfl⟩; exact overlap_singleton_le_one a b k⟩
+    calc 1 = Overlap {a} {b} (a - b) := (overlap_singleton_self a b).symm
+      _ ≤ ⨆ k, Overlap {a} {b} k    := le_ciSup hbdd (a - b)
+
 @[category test, AMS 5 11]
 theorem M_one : M 1 = 1 := by
-  sorry
+  unfold M
+  have hset :
+      {MaxOverlap A B | (A : Finset ℤ) (B : Finset ℤ)
+        (_disjoint : Disjoint A B)
+        (_union : A ∪ B = Finset.Icc (1 : ℤ) (2 * 1))
+        (_same_card : A.card = B.card)} = {1} := by
+    ext x
+    constructor
+    · rintro ⟨A, B, hdis, huni, hcard, rfl⟩
+      have huni' : A ∪ B = {1, 2} := by
+        rw [huni]; decide
+      have hcard2 : A.card + B.card = 2 := by
+        have := (Finset.card_union_of_disjoint hdis).symm
+        rw [huni'] at this; simp at this; linarith
+      have hcardA : A.card = 1 := by omega
+      have hcardB : B.card = 1 := by omega
+      obtain ⟨a, rfl⟩ := Finset.card_eq_one.mp hcardA
+      obtain ⟨b, rfl⟩ := Finset.card_eq_one.mp hcardB
+      simp [maxOverlap_singleton]
+    · rintro (rfl : x = 1)
+      exact ⟨{1}, {2}, by decide, by decide, by rfl, maxOverlap_singleton 1 2⟩
+  rw [hset, csInf_singleton]
 
 @[category test, AMS 5 11]
 theorem M_two : M 2 = 1 := by
