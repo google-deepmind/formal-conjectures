@@ -19,81 +19,30 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 596
 
-**Verbatim statement (Erdős #596, status O):**
-> For which graphs $G_1,G_2$ is it true that for every $n\geq 1$ there is a graph $H$ without a $G_1$ but if the edges of $H$ are $n$-coloured then there is a monochromatic copy of $G_2$, and yet for every graph $H$ without a $G_1$ there is an $\aleph_0$-colouring of the edges of $H$ without a monochromatic $G_2$.
-
-**Source:** https://www.erdosproblems.com/596
-
-**Notes:** OPEN
-
-
-*Reference:* [erdosproblems.com/596](https://www.erdosproblems.com/596)
-
-*References for known results:*
+*References:*
+- [erdosproblems.com/596](https://www.erdosproblems.com/596)
 - [Er87] Erdős, Paul, Problems and results on set systems and hypergraphs. Extremal problems
   for finite sets (Visegrád, 1991), Bolyai Soc. Math. Stud. (1994), 217-227.
 - [NeRo75] Nešetřil, Jaroslav and Rödl, Vojtěch, Type theory of partition problems of graphs.
   Recent advances in graph theory (Proc. Second Czechoslovak Sympos., Prague, 1974),
   Academia, Prague (1975), 405-412.
-
-## Overview
-
-**Problem (Erdős–Hajnal, [Er87])**: For which graphs $G_1, G_2$ is it true that
-1. for every $n \geq 1$ there is a graph $H$ without a $G_1$ but if the edges of $H$ are
-   $n$-coloured then there is a monochromatic copy of $G_2$ (the **finite Ramsey property**),
-   and yet
-2. for every graph $H$ without a $G_1$ there is an $\aleph_0$-colouring of the edges of $H$
-   without a monochromatic $G_2$ (the **countable Ramsey escape property**)?
-
-Erdős and Hajnal originally conjectured that no such pair $(G_1, G_2)$ exists. However,
-$G_1 = C_4$ and $G_2 = C_6$ is an example: Nešetřil and Rödl [NeRo75] established the first
-property, and Erdős and Hajnal established the second (in fact every $C_4$-free graph is a
-countable union of trees, and trees are $C_6$-free).
-
-Whether this is true for $G_1 = K_4$ and $G_2 = K_3$ is the content of Problem [595].
-
-## Formalization note
-
-We formalize the two key properties for a pair of graphs $(G_1, G_2)$ (with `Type`-valued
-vertex types to avoid universe metavariable issues):
-
-- **Finite Ramsey property** (`HasFiniteRamseyProperty`): For every `n : ℕ` with `1 ≤ n`,
-  there exists a $G_1$-free graph `H` such that every `n`-edge-colouring of `H` contains a
-  monochromatic copy of $G_2$. We encode "$G_1$-free" via `SimpleGraph.Copy` (absence of an
-  injective graph homomorphism from $G_1$) and an `n`-edge-colouring as a family
-  `c : Fin n → SimpleGraph V` of colour-class subgraphs whose union is `H`.
-
-- **Countable Ramsey escape** (`HasCountableRamseyEscape`): Every $G_1$-free graph `H` has a
-  countable edge-colouring (a family `d : ℕ → SimpleGraph W` with union `H`) in which every
-  colour class is $G_2$-free.
-
-A pair $(G_1, G_2)$ is called **Erdős–Hajnal exceptional** (`IsErdosHajnalExceptional`) if it
-has both properties simultaneously.
 -/
 
 open SimpleGraph Set
 
 namespace Erdos596
 
-/-- A graph `H` on `V` **contains a copy** of `F` on `U` if there is an injective graph
-homomorphism from `F` to `H`, i.e., `F.Copy H` is nonempty. -/
-def ContainsCopy {U V : Type*} (F : SimpleGraph U) (H : SimpleGraph V) : Prop :=
-  Nonempty (F.Copy H)
-
-/-- A graph `H` on `V` is **`F`-free** if it contains no copy of `F`. -/
-def IsFree {U V : Type*} (F : SimpleGraph U) (H : SimpleGraph V) : Prop :=
-  ¬ContainsCopy F H
-
 /-- An **`n`-edge-colouring** of `H` on `V` is a family `c : Fin n → SimpleGraph V` of
-subgraphs whose union equals `H`. -/
+pairwise disjoint subgraphs whose union equals `H`. The disjointness condition guarantees
+that each edge of `H` is assigned to exactly one colour class. -/
 def IsNEdgeColouring {V : Type*} (H : SimpleGraph V) (n : ℕ) (c : Fin n → SimpleGraph V) :
     Prop :=
-  H = ⨆ i, c i
+  H = ⨆ i, c i ∧ ∀ i j, i ≠ j → Disjoint (c i) (c j)
 
 /-- A **countable edge-colouring** of `H` on `V` is a family `c : ℕ → SimpleGraph V` of
-subgraphs whose union equals `H`. -/
+pairwise disjoint subgraphs whose union equals `H`. -/
 def IsCountableEdgeColouring {V : Type*} (H : SimpleGraph V) (c : ℕ → SimpleGraph V) : Prop :=
-  H = ⨆ i, c i
+  H = ⨆ i, c i ∧ ∀ i j, i ≠ j → Disjoint (c i) (c j)
 
 /-- The **finite Ramsey property** for the pair $(G_1, G_2)$: for every $n \geq 1$, there
 exists a $G_1$-free graph `H` on some vertex type in `Type` (universe 0) such that every
@@ -102,9 +51,9 @@ def HasFiniteRamseyProperty {U₁ U₂ : Type*}
     (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂) : Prop :=
   ∀ n : ℕ, 1 ≤ n →
   ∃ (V : Type) (H : SimpleGraph V),
-    IsFree G₁ H ∧
+    G₁.Free H ∧
     ∀ (c : Fin n → SimpleGraph V), IsNEdgeColouring H n c →
-      ∃ i, ContainsCopy G₂ (c i)
+      ∃ i, G₂ ⊑ c i
 
 /-- The **countable Ramsey escape property** for the pair $(G_1, G_2)$: every $G_1$-free
 graph `H` on a `Type`-valued vertex type has a countable edge-colouring in which every
@@ -112,9 +61,9 @@ colour class is $G_2$-free. -/
 def HasCountableRamseyEscape {U₁ U₂ : Type*}
     (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂) : Prop :=
   ∀ (W : Type) (H : SimpleGraph W),
-    IsFree G₁ H →
+    G₁.Free H →
     ∃ (d : ℕ → SimpleGraph W),
-      IsCountableEdgeColouring H d ∧ ∀ j, IsFree G₂ (d j)
+      IsCountableEdgeColouring H d ∧ ∀ j, G₂.Free (d j)
 
 /-- A pair $(G_1, G_2)$ is **Erdős–Hajnal exceptional** if it has both the finite Ramsey
 property and the countable Ramsey escape property. -/
@@ -213,7 +162,7 @@ $(G_1, G_2)$ is Erdős–Hajnal exceptional. This is refuted by the pair $(C_4, 
 -/
 @[category research solved, AMS 5]
 theorem erdos_596.variants.original_conjecture_is_false : answer(False) ↔
-    ∀ {U₁ U₂ : Type*} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
+    ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
       ¬IsErdosHajnalExceptional G₁ G₂ := by
   -- The pair (C₄, C₆) witnesses the falsity of the conjecture (Nešetřil–Rödl + Erdős–Hajnal).
   sorry
