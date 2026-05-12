@@ -17,24 +17,27 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Schanuel's Conjecture
+# Normality of mathematical constants
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schanuel%27s_conjecture)
+Despite extensive empirical evidence—billions of digits have been computed for $\pi$,
+$e$, and $\sqrt{2}$, all showing near-uniform digit distribution—it is an open problem
+whether any of the classical constants $\pi$, $e$, $\sqrt{2}$, $\ln 2$, or $\varphi$ is
+normal in any base.
+
+*References:*
+* [Wikipedia (Normal number)](https://en.wikipedia.org/wiki/Normal_number)
+* [Wikipedia (Pi)](https://en.wikipedia.org/wiki/Pi)
 -/
 
-open scoped Real Complex
-open IntermediateField
+open Real
 
-namespace Schanuel
+namespace NormalNumber
 
 /--
-Given any set of $n$ complex numbers $\{z_1, ..., z_n\}$ that are linearly independent over
-$\mathbb{Q}$, the field extension $\mathbb{Q}(z_1, ..., z_n, e^{z_1}, ..., e^{z_n})$
-has transcendence degree at least $n$ over $\mathbb{Q}$.
+$\pi$ is normal in base 10.
 -/
-@[category research open, AMS 11 33]
-theorem schanuel_conjecture (n : ℕ) (z : Fin n → ℂ) (h : LinearIndependent ℚ z) :
-    n ≤ Algebra.trdeg ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) := by
+@[category research open, AMS 11]
+theorem pi_normal_base_ten : IsNormalInBase 10 π := by
   sorry
 
-end Schanuel
+end NormalNumber
