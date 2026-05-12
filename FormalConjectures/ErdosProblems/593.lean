@@ -53,7 +53,7 @@ theorem erdos_593 : answer(sorry) ↔
   sorry
 
 /--
-**Erdős Problem 593 — Necessary direction (open)**: Every obligatory finite 3-uniform
+**Erdős Problem 593 — Necessary direction**: Every obligatory finite 3-uniform
 hypergraph is 2-colorable.
 
 This is the natural necessary condition for the conjectural characterization in `erdos_593`:
@@ -67,7 +67,7 @@ theorem erdos_593.variants.obligatory_implies_two_colorable : answer(sorry) ↔
   sorry
 
 /--
-**Erdős Problem 593 — Sufficient direction (open)**: Every finite 2-colorable 3-uniform
+**Erdős Problem 593 — Sufficient direction**: Every finite 2-colorable 3-uniform
 hypergraph is obligatory.
 
 This is the converse direction of the `erdos_593` characterization: if 2-colorability
@@ -103,14 +103,13 @@ theorem erdos_593.variants.implications_combine
 /- ## Variants and partial results -/
 
 /--
-**Graph analogue — bipartite graphs are obligatory (solved, Erdős–Galvin–Hajnal [EGH75])**:
+**Graph analogue — bipartite graphs are obligatory (Erdős–Galvin–Hajnal [EGH75])**:
 For the 2-uniform (graph) case, a graph of chromatic cardinal $> \aleph_0$ must contain all
 finite bipartite graphs. Specifically, for every finite bipartite graph `F` and every graph
-`G` with chromatic cardinal $> \aleph_0$, there is a graph homomorphism from `F` to `G`.
+`G` with chromatic cardinal $> \aleph_0$, there is a graph embedding from `F` into `G`.
 
-Note: this statement uses `Nonempty (F →g G)` (graph homomorphism), which is weaker than the
-injective vertex map used in the hypergraph `Appears` definition. A future revision may switch
-to `Nonempty (F ↪g G)` (graph embedding) to align with the hypergraph notion.
+This uses `Nonempty (F ↪g G)` (graph embedding), aligned with the injective vertex map
+used in the hypergraph `Appears` definition.
 -/
 @[category research solved, AMS 5]
 theorem erdos_593.variants.graph_case_bipartite_obligatory :
@@ -118,13 +117,13 @@ theorem erdos_593.variants.graph_case_bipartite_obligatory :
     ∀ (V : Type*) (G : SimpleGraph V),
       ℵ₀ < G.chromaticCardinal →
       ∀ (W : Type*) [Fintype W] (F : SimpleGraph W), F.IsBipartite →
-        Nonempty (F →g G) := by
+        Nonempty (F ↪g G) := by
   simp only [true_iff]
   -- This is the Erdős–Galvin–Hajnal theorem [EGH75].
   sorry
 
 /--
-**Graph analogue — no odd cycle is obligatory (solved, Erdős–Galvin–Hajnal [EGH75])**:
+**Graph analogue — no odd cycle is obligatory (Erdős–Galvin–Hajnal [EGH75])**:
 For every odd $k \geq 3$, there exists a graph with chromatic cardinal $\aleph_1$ that
 contains no cycle of length $k$. This shows the class of obligatory graphs is strictly
 smaller than all finite graphs.
