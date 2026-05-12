@@ -38,22 +38,19 @@ Auxiliary lemmas for the Prikry–Mills construction.
 These establish key countability and boundedness properties of ω₁.
 -/
 
--- TODO(mo271 review): replace this private `Omega1` abbreviation with a direct use of
--- Mathlib's `ω₁` (e.g. `(ω₁ : Ordinal).toType`), and inline the wrapper lemmas below
--- (`card_le_aleph0_of_lt_omega1`, `countable_toType_of_lt_omega1`,
--- `countable_Iio_of_lt_omega1`, `countable_Iio_omega1`, `countable_subset_bdd`) at the
--- use sites. The current wrappers are thin shims around existing Mathlib API; making
--- the switch is non-trivial because mixing `ω₁` and `(ℵ_ 1).ord` triggers definitional
--- equality issues even though `ord_aleph 1 : (ℵ_ 1).ord = ω_ 1`. Left as a follow-up.
-
-private abbrev Omega1 := {o : Ordinal.{0} // o < (aleph 1).ord}
+/-- The set of countable ordinals, expressed using Mathlib's `ω_ 1`.
+The wrapper lemmas below `(card_le_aleph0_of_lt_omega1`, etc.) bridge the
+small definitional gap between `ω_ 1` and `(ℵ_ 1).ord` (related by
+`ord_aleph 1 : (ℵ_ 1).ord = ω_ 1`, propositionally but not definitionally). -/
+private abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
 
 /-- Any ordinal below ω₁ has countable cardinality. -/
 @[category API, AMS 5]
-private lemma card_le_aleph0_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).ord) :
+private lemma card_le_aleph0_of_lt_omega1 {γ : Ordinal} (hγ : γ < ω_ 1) :
     γ.card ≤ ℵ₀ := by
   have h : γ.card < aleph 1 := by
-    have := (isInitial_ord (aleph 1)).card_lt_card.mpr hγ; simp at this; exact this
+    have hγ' : γ < (ℵ_ 1).ord := lt_of_lt_of_eq hγ (ord_aleph 1).symm
+    have := (isInitial_ord (aleph 1)).card_lt_card.mpr hγ'; simp at this; exact this
   apply not_lt.mp; intro hlt
   have step1 : succ ℵ₀ ≤ γ.card := Order.succ_le_of_lt hlt
   have step2 : aleph 1 ≤ succ ℵ₀ := by rw [succ_aleph0]
@@ -61,14 +58,14 @@ private lemma card_le_aleph0_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).o
 
 /-- The ToType of any ordinal below ω₁ is countable. -/
 @[category API, AMS 5]
-private lemma countable_toType_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).ord) :
+private lemma countable_toType_of_lt_omega1 {γ : Ordinal} (hγ : γ < ω_ 1) :
     Countable γ.ToType := by
   rw [← mk_le_aleph0_iff, mk_toType]
   exact card_le_aleph0_of_lt_omega1 hγ
 
 /-- The set of ordinals strictly below any γ < ω₁ is countable. -/
 @[category API, AMS 5]
-private lemma countable_Iio_of_lt_omega1 {γ : Ordinal} (hγ : γ < (aleph 1).ord) :
+private lemma countable_Iio_of_lt_omega1 {γ : Ordinal} (hγ : γ < ω_ 1) :
     Countable (Set.Iio γ) := by
   haveI := countable_toType_of_lt_omega1 hγ
   exact Countable.of_equiv _ ToType.mk.toEquiv.symm
@@ -97,23 +94,28 @@ private lemma countable_subset_bdd (S : Set Omega1) (hS : S.Countable) :
     ∃ γ : Omega1, ∀ s ∈ S, s < γ := by
   by_cases hemp : S.Nonempty
   · obtain ⟨f, hf⟩ := hS.exists_eq_range hemp
-    have hf_lt : ∀ n, (f n).1 < (aleph 1).ord := fun n => (f n).2
+    have hf_lt' : ∀ n, (f n).1 < (ℵ_ 1).ord :=
+      fun n => lt_of_lt_of_eq (f n).2 (ord_aleph 1).symm
     have hbdd : BddAbove (Set.range (fun n => (f n).1)) :=
-      ⟨(aleph 1).ord, fun o ⟨m, hm⟩ => hm ▸ (f m).2.le⟩
+      ⟨ω_ 1, fun o ⟨m, hm⟩ => hm ▸ (f m).2.le⟩
     -- The supremum of a countable sequence of ordinals below ω₁ is still below ω₁
     -- (by iSup_sequence_lt_omega_one, using that ω₁ has uncountable cofinality)
-    have hlt : ⨆ n, (f n).1 < (aleph 1).ord :=
-      iSup_sequence_lt_omega_one _ hf_lt
-    have hsucc_lt : (⨆ n, (f n).1) + 1 < (aleph 1).ord := by
+    have hlt : ⨆ n, (f n).1 < ω_ 1 :=
+      lt_of_lt_of_eq (iSup_sequence_lt_omega_one _ hf_lt') (ord_aleph 1)
+    have hsucc_lt : (⨆ n, (f n).1) + 1 < ω_ 1 := by
       rw [← succ_eq_add_one]
-      exact (isSuccLimit_ord (aleph0_le_aleph 1)).succ_lt hlt
+      exact lt_of_lt_of_eq
+        ((isSuccLimit_ord (aleph0_le_aleph 1)).succ_lt
+          (lt_of_lt_of_eq hlt (ord_aleph 1).symm))
+        (ord_aleph 1)
     refine ⟨⟨(⨆ n, (f n).1) + 1, hsucc_lt⟩, ?_⟩
     intro s hs; rw [hf] at hs; obtain ⟨n, rfl⟩ := hs
     show (f n).1 < (⨆ n, (f n).1) + 1
     rw [← succ_eq_add_one]
     exact lt_succ_of_le (le_ciSup hbdd n)
   · rw [Set.not_nonempty_iff_eq_empty] at hemp; rw [hemp]
-    exact ⟨⟨0, isRegular_aleph_one.ord_pos⟩, fun s hs => absurd hs (Set.notMem_empty _)⟩
+    exact ⟨⟨0, lt_of_lt_of_eq isRegular_aleph_one.ord_pos (ord_aleph 1)⟩,
+      fun s hs => absurd hs (Set.notMem_empty _)⟩
 
 /--
 **Prikry–Mills counterexample** (key lemma):
@@ -132,7 +134,7 @@ theorem erdos_1128.prikryMills :
         #A₁ = aleph 0 → #B₁ = aleph 0 → #C₁ = aleph 0 →
         ¬ IsMonochromaticBox f A₁ B₁ C₁ := by
   -- The Prikry–Mills construction (1978, unpublished):
-  -- Take X = (aleph 1).ord.ToType, which has cardinality ℵ₁ (by mk_ord_toType).
+  -- Take X = ω_ 1.ToType, which has cardinality ℵ₁ (by mk_ord_toType).
   --
   -- Construction by transfinite induction on γ < ω₁:
   -- * For each γ, since Iio γ is countable (card_le_aleph0_of_lt_omega1), choose an
@@ -203,19 +205,19 @@ for every countably infinite $A_1, B_1, C_1 \subseteq \omega_1$, the box
 $A_1 \times B_1 \times C_1$ is not monochromatic.
 
 This is the content of the Prikry–Mills theorem (1978, unpublished), stated
-using Lean's ordinal type `{o : Ordinal // o < (aleph 1).ord}` as the
+using Lean's ordinal type `{o : Ordinal // o < ω_ 1}` as the
 representation of $\omega_1$.
 -/
 @[category research solved, AMS 3 5]
 theorem erdos_1128.variants.prikryMills_explicit :
-    ∃ (f : {o : Ordinal // o < (aleph 1).ord} →
-           {o : Ordinal // o < (aleph 1).ord} →
-           {o : Ordinal // o < (aleph 1).ord} → Fin 2),
-      ∀ (A₁ B₁ C₁ : Set {o : Ordinal // o < (aleph 1).ord}),
+    ∃ (f : {o : Ordinal // o < ω_ 1} →
+           {o : Ordinal // o < ω_ 1} →
+           {o : Ordinal // o < ω_ 1} → Fin 2),
+      ∀ (A₁ B₁ C₁ : Set {o : Ordinal // o < ω_ 1}),
         #A₁ = aleph 0 → #B₁ = aleph 0 → #C₁ = aleph 0 →
         ¬ IsMonochromaticBox f A₁ B₁ C₁ := by
   -- This is the explicit form of the Prikry–Mills theorem on
-  -- ω₁ = {o : Ordinal // o < (aleph 1).ord}.
+  -- ω₁ = {o : Ordinal // o < ω_ 1}.
   --
   -- Key ingredients (all proved in the auxiliary lemmas above):
   -- 1. countable_Iio_of_lt_omega1: For each γ < ω₁, the set Iio γ is countable.
@@ -234,7 +236,7 @@ theorem erdos_1128.variants.prikryMills_explicit :
   -- Two infinite subsets of ℕ cannot have all elements of one strictly less than
   -- all elements of the other, giving a contradiction with monochromaticity.
   --
-  -- Universe note: {o : Ordinal // o < (aleph 1).ord} lives in Type 1 while the
+  -- Universe note: {o : Ordinal // o < ω_ 1} lives in Type 1 while the
   -- abstract prikryMills uses X : Type 0. The construction here is self-contained
   -- and does not need to be reduced to prikryMills.
   sorry
@@ -308,9 +310,12 @@ theorem erdos_1128.variants.two_dimensional_false :
     -- B₁ is unbounded. Use B₁_unbdd with the successor of some a₀ ∈ A₁.
     obtain ⟨a₀, ha₀⟩ := hA_ne
     -- The successor a₀.val + 1 is still below ω₁ (since ω₁ is a limit ordinal).
-    have ha₀_succ_lt : a₀.val + 1 < (aleph 1).ord := by
+    have ha₀_succ_lt : a₀.val + 1 < ω_ 1 := by
       rw [← succ_eq_add_one]
-      exact (isSuccLimit_ord (aleph0_le_aleph 1)).succ_lt a₀.2
+      exact lt_of_lt_of_eq
+        ((isSuccLimit_ord (aleph0_le_aleph 1)).succ_lt
+          (lt_of_lt_of_eq a₀.2 (ord_aleph 1).symm))
+        (ord_aleph 1)
     obtain ⟨b', hb'B, hb'_ge⟩ := B₁_unbdd ⟨a₀.val + 1, ha₀_succ_lt⟩
     -- hb'_ge : ⟨a₀.val + 1, _⟩ ≤ b', so a₀.val + 1 ≤ b'.val, so a₀.val < b'.val.
     have hlt : a₀.val < b'.val := by
