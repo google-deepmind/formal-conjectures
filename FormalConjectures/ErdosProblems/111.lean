@@ -19,17 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 111
 
-**Verbatim statement (Erdős #111, status O):**
-> If $G$ is a graph let $h_G(n)$ be defined such that any subgraph of $G$ on $n$ vertices can be made bipartite after deleting at most $h_G(n)$ edges. What is the behaviour of $h_G(n)$? Is it true that $h_G(n)/n\to \infty$ for every graph $G$ with chromatic number $\aleph_1$?
-
-**Source:** https://www.erdosproblems.com/111
-
-**Notes:** OPEN
-
-
-*Reference:* [erdosproblems.com/111](https://www.erdosproblems.com/111)
-
 *References:*
+- [erdosproblems.com/111](https://www.erdosproblems.com/111)
 - [Er81] Erdős, P., Some combinatorial problems in graph theory. (1981)
 - [EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., On almost bipartite large chromatic graphs.
   Annals of Discrete Math. (1982), 117–123.
@@ -38,26 +29,7 @@ import FormalConjectures.Util.ProblemImports
 - [Er97d] Erdős, P., Some problems on elementary geometry. (1997)
 - [Er97f] Erdős, P., Some of my favourite unsolved problems. (1997)
 
-## Problem statement
-
-If $G$ is a graph, let $h_G(n)$ be defined such that any subgraph of $G$ on $n$ vertices can be
-made bipartite after deleting at most $h_G(n)$ edges.
-
-What is the behaviour of $h_G(n)$? Is it true that $h_G(n)/n \to \infty$ for every graph $G$
-with chromatic number $\aleph_1$?
-
-This is a problem of Erdős, Hajnal, and Szemerédi [EHS82].
-
-## Known results
-
-- **Lower bound**: $h_G(n) \gg n$ — this holds (with $h_G(n)/n \to \infty$) since every graph
-  with chromatic number $\geq \aleph_1$ contains $\aleph_1$ many vertex-disjoint odd cycles of
-  some fixed length. (Verified in ZFC.)
-- **Upper bound**: Erdős, Hajnal, and Szemerédi [EHS82] constructed a graph $G$ with chromatic
-  number $\aleph_1$ for which $h_G(n) \ll n^{3/2}$.
-- **Erdős conjecture**: For every $\varepsilon > 0$, there exists $C(\varepsilon) > 0$ such that
-  $h_G(n) \leq C(\varepsilon) \cdot n^{1+\varepsilon}$ for every graph $G$ with chromatic number
-  $\geq \aleph_1$ and every $n$.
+See also Erdős Problem [74].
 
 ## Formalization notes
 
@@ -69,10 +41,6 @@ This is a problem of Erdős, Hajnal, and Szemerédi [EHS82].
   vertices of cardinality $n$ of `bipartiteDistance (G.induce S)`. This matches the problem's
   formulation: "any subgraph of $G$ on $n$ vertices can be made bipartite after deleting at most
   $h_G(n)$ edges."
-
-- The main question asks whether `hG G n / n → ∞` for every $G$ with `G.chromaticCardinal = ℵ₁`.
-  We formalize this as: the ratio `hG G n / n` is not bounded, i.e., for every $C$, there exists
-  $n$ with `hG G n > C * n`.
 -/
 
 open Filter Asymptotics Cardinal SimpleGraph Set
@@ -117,8 +85,8 @@ theorem erdos_111 : answer(sorry) ↔
 
 /--
 **Linear lower bound (ZFC, [EHS82])**: Every graph $G$ with chromatic number $\aleph_1$ has
-$h_G(n) \gg n$, i.e. there exists a positive constant $c > 0$ such that for all sufficiently
-large $n$, $h_G(n) \geq c \cdot n$.
+$h_G(n) \geq c \cdot n$ for some positive constant $c > 0$ and all sufficiently large $n$
+(i.e., the *linear* lower bound $h_G(n) \gg n$ is known).
 
 This follows from the fact that every graph with uncountable chromatic number contains
 $\aleph_1$ vertex-disjoint odd cycles of some fixed odd length $\ell$: any induced subgraph
@@ -126,8 +94,9 @@ on $n$ vertices containing $\gg n / \ell$ such cycles requires removing $\gg n$ 
 become bipartite.
 
 This is a *strictly weaker* statement than the headline `erdos_111`, which asks for
-$h_G(n)/n \to \infty$ (i.e., the constant `c` may be made arbitrarily large). The headline
-remains open.
+$h_G(n)/n \to \infty$ (i.e., $h_G(n)$ grows *super-linearly* — the constant `c` could be
+taken arbitrarily large for a fixed graph $G$). Whether the linear lower bound can be
+improved to super-linear remains the open question.
 -/
 @[category research solved, AMS 5]
 theorem erdos_111.variants.lower_bound :
@@ -151,20 +120,24 @@ theorem erdos_111.variants.upper_bound_existence :
   sorry
 
 /--
-**Erdős conjecture (stronger upper bound)**: For every graph $G$ with chromatic number $\aleph_1$
-and every $\varepsilon > 0$, the function $h_G(n)$ satisfies $h_G(n) \ll_\varepsilon n^{1+\varepsilon}$.
+**Erdős conjecture (stronger upper bound)**: For every graph $G$ with chromatic number
+$\geq \aleph_1$ and every $\varepsilon > 0$, the function $h_G(n)$ satisfies
+$h_G(n) \ll_\varepsilon n^{1+\varepsilon}$.
 
 That is, for every $\varepsilon > 0$ there exists $C(\varepsilon) > 0$ such that for every graph
-$G$ with $\chi(G) = \aleph_1$, we have $h_G(n) \leq C(\varepsilon) \cdot n^{1 + \varepsilon}$
+$G$ with $\chi(G) \geq \aleph_1$, we have $h_G(n) \leq C(\varepsilon) \cdot n^{1 + \varepsilon}$
 for all $n$.
 
-This conjecture (if true) would mean that $h_G(n)$ grows only barely super-linearly.
+This conjecture (if true) would mean that $h_G(n)$ grows only barely super-linearly. The
+quantification is over graphs with $\chi(G) \geq \aleph_1$ (matching the source); using
+$\chi(G) \geq \aleph_1$ is strictly stronger than $\chi(G) = \aleph_1$ as a hypothesis on the
+class of graphs since the bound must hold uniformly for any larger chromatic cardinal too.
 -/
 @[category research open, AMS 5]
 theorem erdos_111.variants.erdos_conjecture : answer(sorry) ↔
     ∀ (ε : ℝ), 0 < ε →
       ∃ C : ℝ, 0 < C ∧
-        ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
+        ∀ (V : Type) (G : SimpleGraph V), ℵ_ 1 ≤ G.chromaticCardinal →
           ∀ n : ℕ, (hG G n : ℝ) ≤ C * (n : ℝ) ^ (1 + ε) := by
   sorry
 
