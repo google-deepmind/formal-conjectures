@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 Problems 4.1, 4.2, and 4.3 from [arxiv/2506.23631](https://arxiv.org/abs/2506.23631).
 
 *Reference:*
-* [Weak tiling, spectral sets and Fourier analysis](https://arxiv.org/abs/2506.23631)
+* [Geometric implications of weak tiling](https://arxiv.org/abs/2506.23631)
 
 -/
 
