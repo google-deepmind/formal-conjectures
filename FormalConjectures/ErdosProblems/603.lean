@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Hypergraph.PropertyB
 
 /-!
 # Erdős Problem 603
@@ -24,33 +25,20 @@ import FormalConjectures.Util.ProblemImports
 - [Er87] Erdős, Paul, Problems and results on set systems and hypergraphs.
 -/
 
-open Set Cardinal
+open Set Cardinal Combinatorics
 
 namespace Erdos603
 
-/- ## Setup -/
+/- ## Setup
 
--- TODO(mo271 review): `IsMonochromatic` and `HasChromaticPropertyB` are also defined in
--- `FormalConjectures/ErdosProblems/602.lean` (with `C = Fin 2`). Once one of these PRs lands,
--- factor the shared definitions into `FormalConjecturesForMathlib/Combinatorics/...` and
--- import from there.
-
-/-- A set `A ⊆ α` is **monochromatic** under a colouring `f : α → C`
-if all elements of `A` receive the same colour. -/
-def IsMonochromatic {α C : Type*} (f : α → C) (A : Set α) : Prop :=
-  ∀ x ∈ A, ∀ y ∈ A, f x = f y
-
-/-- A family `(A_i)_{i ∈ I}` of subsets of `α` has **`C`-chromatic Property B** if there exists
-a colouring `f : α → C` (using at most `#C` colours) such that no `A_i` is monochromatic.
-
-When `C = Fin 2`, this reduces to the classical Property B (2-colouring). -/
-def HasChromaticPropertyB {α : Type*} (C : Type*) (I : Type*) (A : I → Set α) : Prop :=
-  ∃ f : α → C, ∀ i, ¬IsMonochromatic f (A i)
+The colouring infrastructure (`IsMonochromatic`, `HasChromaticPropertyB`) used throughout
+this file is shared with Erdős Problem 602 and lives in
+`FormalConjecturesForMathlib.Combinatorics.Hypergraph.PropertyB`. -/
 
 /- ## Main open problem -/
 
 /--
-**Erdős Problem 603 (open).**
+**Erdős Problem 603.**
 
 Let $(A_i)$ be a family of countably infinite sets such that $|A_i \cap A_j| \neq 2$ for all
 $i \neq j$. Find the smallest cardinal $C$ such that $\cup A_i$ can always be coloured with at
