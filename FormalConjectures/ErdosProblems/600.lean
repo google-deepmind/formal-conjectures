@@ -46,7 +46,7 @@ Let $r \geq 2$. Is it true that $e(n,r+1) - e(n,r) \to \infty$ as $n \to \infty$
 @[category research open, AMS 11]
 theorem erdos_600.parts.i :
     answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r →
-      Tendsto (fun (n : ℕ) ↦ eFunction n (r + 1) - eFunction n r) atTop atTop := by
+      Tendsto (fun (n : ℕ) ↦ (eFunction n (r + 1) : ℝ) - (eFunction n r : ℝ)) atTop atTop := by
   sorry
 
 /--
@@ -63,7 +63,7 @@ Ruzsa and Szemerédi [RuSz78] proved that $e(n,r)=o(n^2)$ for any fixed $r$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_600.variants.ruzsa_szemeredi_upper_bound :
-    ∀ r : ℕ, (fun (n : ℕ) ↦ (eFunction n r : ℝ)) =o[atTop] (fun (n : ℕ) ↦ (n^2 : ℝ)) := by
+    ∀ r : ℕ, (fun (n : ℕ) ↦ (eFunction n r : ℝ)) =o[atTop] (fun (n : ℕ) ↦ (n : ℝ)^2) := by
   sorry
 
 end Erdos600
