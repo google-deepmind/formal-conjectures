@@ -34,7 +34,6 @@ has transcendence degree at least $n$ over $\mathbb{Q}$.
 -/
 @[category research open, AMS 11 33]
 theorem schanuel_conjecture (n : ℕ) (z : Fin n → ℂ) (h : LinearIndependent ℚ z) :
-    let hinj := algebraMap ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) |>.injective
     n ≤ Algebra.trdeg ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) := by
   sorry
 
