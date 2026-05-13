@@ -177,3 +177,6 @@ of the Landau constant. -/
 theorem landauConstant_exact_value :
     landauConstant = Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
   sorry
+  
+end Bloch
+
