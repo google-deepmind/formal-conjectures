@@ -19,8 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Invariant Subspace Problem
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Invariant_subspace_problem),
-[Chalendar-Partington](https://arxiv.org/abs/2507.21834)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Invariant_subspace_problem)
+- [Chalendar-Partington](https://arxiv.org/abs/2507.21834)
 -/
 
 namespace InvariantSubspaceProblem

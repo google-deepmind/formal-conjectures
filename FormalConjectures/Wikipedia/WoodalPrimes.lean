@@ -16,11 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-! # Woodall Primes
+/-!
+# Woodall Primes
 
-References:
-* [Wikipedia/Woodall Number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
-* [A2234](https://oeis.org/A2234)
+*References:*
+- [Wikipedia: Woodall number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
+- [OEIS A002234](https://oeis.org/A002234)
 
 -/
 

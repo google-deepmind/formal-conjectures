@@ -28,10 +28,10 @@ One commonly stated conjectural direction is that there are no Lychrel numbers i
 The smallest widely studied open case is `196`.
 
 *References:*
-* [Wikipedia: Lychrel number](https://en.wikipedia.org/wiki/Lychrel_number)
-* [MathWorld: Lychrel Number](https://mathworld.wolfram.com/LychrelNumber.html)
-* [OEIS A023108](https://oeis.org/A023108)
-* [OEIS A023109](https://oeis.org/A023109)
+- [Wikipedia: Lychrel number](https://en.wikipedia.org/wiki/Lychrel_number)
+- [MathWorld: Lychrel Number](https://mathworld.wolfram.com/LychrelNumber.html)
+- [OEIS A023108](https://oeis.org/A023108)
+- [OEIS A023109](https://oeis.org/A023109)
 -/
 
 namespace LychrelNumbers

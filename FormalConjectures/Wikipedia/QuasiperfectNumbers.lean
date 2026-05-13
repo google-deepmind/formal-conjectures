@@ -19,8 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Quasiperfect Numbers
 
-*Reference:* 
-- [Wikipedia](https://en.wikipedia.org/wiki/Quasiperfect_number)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Quasiperfect_number)
 -/
 
 namespace QuasiperfectNumbers

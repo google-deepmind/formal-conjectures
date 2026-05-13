@@ -19,10 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Mean value problem
 
-*Reference:*
+*References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Mean_value_problem)
-- [The fundamental theorem of algebra and complexity theory](https://www.ams.org/journals/bull/1981-04-01/S0273-0979-1981-14858-8/)
-by Steve Smale
+- [The fundamental theorem of algebra and complexity theory](https://www.ams.org/journals/bull/1981-04-01/S0273-0979-1981-14858-8/) by *Steve Smale*
 
 Given a complex polynomial $p$ of degree $d ≥ 2$ and a complex number $z$
 there is a critical point $c$ of $p$, such that $|p(z)-p(c)|/|z-c| ≤ K* |p'(z)|$ for $K=1$.
