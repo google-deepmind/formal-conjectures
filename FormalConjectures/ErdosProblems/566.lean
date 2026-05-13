@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 566
 
-*References*:
+*References:*
 - [erdosproblems.com/566](https://www.erdosproblems.com/566)
 - [EFRS93] Erdős, Faudree, Rousseau and Schelp, _Ramsey size linear graphs_.
 Combin. Probab. Comput. (1993), 389-399.

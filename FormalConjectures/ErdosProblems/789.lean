@@ -30,7 +30,7 @@ $O((n\log(n))^{1/3})$ respectively for each, so further variants are provided fo
 
 *References:*
 - [erdosproblems.com/789](https://www.erdosproblems.com/789)
-- [Str66] Straus, E. G., _On a problem in combinatorial number theory_. J. Math. Sci. (1966), 77--80.
+- [St66] Straus, E. G., _On a problem in combinatorial number theory_. J. Math. Sci. (1966), 77--80.
 - [Er62c] Erdős, Pál, _Some remarks on number theory_. {III}. Mat. Lapok (1962), 28--38.
 - [Ch74b] Choi, S. L. G., _On an extremal problem in number theory_. J. Number Theory (1974), 105--111.
 -/
@@ -78,7 +78,7 @@ theorem erdos_789.variants.sq :
     (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop] fun n ↦ √n := by
   sorry
 
-/-- Straus [Str66] proved that $h(n) \ll \sqrt{n}$. -/
+/-- Straus [St66] proved that $h(n) \ll \sqrt{n}$. -/
 @[category research solved, AMS 5]
 theorem erdos_789.variants.isBigO_sq :
     (fun n ↦ (subsetSumThreshold n : ℝ)) =O[atTop] fun n ↦ √n := by

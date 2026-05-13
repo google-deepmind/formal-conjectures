@@ -23,7 +23,7 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 *References:*
 - [erdosproblems.com/884](https://www.erdosproblems.com/884)
 - [Tao25](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf)
-- [Larsen](https://github.com/Larsen-Daniel/Erdos-884/blob/main/884.pdf)
+- [La26b] D. Larsen, [Erdős problem 884](https://github.com/Larsen-Daniel/Erdos-884/blob/main/884.pdf) (2026).
 -/
 
 namespace Erdos884

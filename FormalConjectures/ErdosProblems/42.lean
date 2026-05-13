@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 42: Maximal Sidon Sets and Disjoint Difference Sets
+# Erdős Problem 42
+
+Maximal Sidon sets and disjoint difference sets.
 
 *Reference:* [erdosproblems.com/42](https://www.erdosproblems.com/42)
 

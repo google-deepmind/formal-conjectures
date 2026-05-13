@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 15: Convergence of Series with Primes
+# Erdős Problem 15
+
+Convergence of series with primes.
 
 *Reference:* [erdosproblems.com/15](https://www.erdosproblems.com/15)
 -/

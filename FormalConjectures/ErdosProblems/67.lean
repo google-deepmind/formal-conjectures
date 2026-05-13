@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 67
 
 *References:*
-- [erdosproblems.com/67](https://www.erdosproblems.com/66)
+- [erdosproblems.com/67](https://www.erdosproblems.com/67)
 - [Ta16] Tao, Terence, The Erdős discrepancy problem. Discrete Anal. (2016), Paper No. 1, 29.
 -/
 open Filter

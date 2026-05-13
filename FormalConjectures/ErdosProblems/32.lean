@@ -21,9 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 * [erdosproblems.com/32](https://www.erdosproblems.com/32)
-* [Erd54] Erdős, Paul, Some results on additive number theory. Proc. Amer. Math. Soc. (1954),
- 847-853.
-* [Guy04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437
+* [Er54] Erdős, Paul, Some results on additive number theory. Proc. Amer. Math. Soc. (1954),
+  847-853.
+* [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437
 * [Ru98c] Ruzsa, Imre Z., On the additive completion of primes. Acta Arith. (1998), 269-275.
 -/
 
@@ -40,7 +40,7 @@ def IsAdditiveComplementToPrimes (A : Set ℕ) : Prop :=
   ∀ᶠ n in atTop, ∃ p, p.Prime ∧ ∃ a ∈ A, n = p + a
 
 /--
-Erdős proved in [Erd54] that there exists an additive complement $A$ to the primes with
+Erdős proved in [Er54] that there exists an additive complement $A$ to the primes with
 $|A \cap \{1, \ldots, N\}| = O((\log N)^2)$.
 -/
 @[category research solved, AMS 11]
@@ -73,7 +73,7 @@ theorem erdos_32 : answer(sorry) ↔ ∃ A : Set ℕ,
   sorry
 
 /--
-Can the bound $O(\log N)$ be achieved for an additive complement to the primes? [Guy04] writes
+Can the bound $O(\log N)$ be achieved for an additive complement to the primes? [Gu04] writes
 that Erdős offered \$50 for the solution.
 -/
 @[category research open, AMS 11]

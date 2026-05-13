@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 486: Logarithmic density for sets avoiding modular subsets
+# Erdős Problem 486
+
+Logarithmic density for sets avoiding modular subsets.
 
 *Reference:* [erdosproblems.com/486](https://www.erdosproblems.com/486)
 -/

@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 137
 
-*References:*
+*Reference:*
 - [erdosproblems.com/137](https://www.erdosproblems.com/137)
 -/
 

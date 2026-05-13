@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [erdosproblems.com/891](https://www.erdosproblems.com/891)
 - [Po18] Pólya, Georg, Zur arithmetischen {U}ntersuchung der {P}olynome. Math. Z. (1918), 143--148.
-- [Wikipedia] https://en.wikipedia.org/wiki/Dickson%27s_conjecture
+- [Wikipedia](https://en.wikipedia.org/wiki/Dickson%27s_conjecture)
 -/
 
 open Nat Filter Finset

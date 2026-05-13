@@ -22,8 +22,8 @@ open Filter
 # Erdős Problem 36
 
 *References:*
- - [erdosproblems.com/36](https://www.erdosproblems.com/36)
- - [Wikipedial: Minimum overlap problem](https://en.wikipedia.org/wiki/Minimum_overlap_problem)
+- [erdosproblems.com/36](https://www.erdosproblems.com/36)
+- [Wikipedia: Minimum overlap problem](https://en.wikipedia.org/wiki/Minimum_overlap_problem)
 -/
 
 namespace Erdos36

@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/397](https://www.erdosproblems.com/397)
-- [MathOverflow] (https://mathoverflow.net/questions/138209/product-of-central-binomial-coefficients)
+- [MathOverflow](https://mathoverflow.net/questions/138209/product-of-central-binomial-coefficients)
 -/
 
 open Nat

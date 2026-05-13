@@ -19,8 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 75
 
-*Reference:*
-* [erdosproblems.com/75] (https://www.erdosproblems.com/75)
+*Reference:* [erdosproblems.com/75](https://www.erdosproblems.com/75)
 -/
 
 open Cardinal

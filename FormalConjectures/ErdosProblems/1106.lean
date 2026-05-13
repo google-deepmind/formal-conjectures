@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1106
 
-*Reference:* [erdosproblems.com/1064](https://www.erdosproblems.com/1106)
+*Reference:* [erdosproblems.com/1106](https://www.erdosproblems.com/1106)
 -/
 
 open Nat Finset Filter Topology

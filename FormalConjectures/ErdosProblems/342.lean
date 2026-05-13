@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [erdosproblems.com/342](https://www.erdosproblems.com/342)
 - [Ben Green's Open Problem 7](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.7)
-- [OEIS A002858](https://oeis.org/A002858)
+- [A002858](https://oeis.org/A002858)
 - [Gu04] Guy, Richard K., *Unsolved problems in number theory* (2004), xviii+437.
 -/
 

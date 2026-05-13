@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 44: Extending Sidon Sets
+# Erdős Problem 44
+
+Extending Sidon sets.
 
 *Reference:* [erdosproblems.com/44](https://www.erdosproblems.com/44)
 -/
