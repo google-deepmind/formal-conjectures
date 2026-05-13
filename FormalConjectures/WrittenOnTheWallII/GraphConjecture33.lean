@@ -32,26 +32,25 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 33](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, `path(G) ≥ ⌈dist_avg(C, V) + dist_avg(M, V)⌉`,
-where `path(G)` is the floor of the average distance of `G`, `C` is the set of center
-vertices (those with minimum eccentricity), `M` is the set of maximum-degree vertices,
-and `dist_avg(S, V)` is the average distance from all vertices to the set `S`.
+For a simple connected graph `G`, `path(G) ≥ ⌈2 · dist_avg(M, V)⌉`, where `path(G)`
+is the floor of the average distance of `G`, `M` is the set of maximum-degree vertices,
+and `dist_avg(M, V)` is the average distance from all vertices to `M`.
 -/
 @[category research solved, AMS 5]
-theorem conjecture33 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    let C : Set α := graphCenter G
-    let M : Set α := {v | G.degree v = G.maxDegree}
-    Int.ceil (distavg G C + distavg G M) ≤ (path G : ℤ) := by
+theorem conjecture33 : answer(False) ↔
+    ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
+      let M : Set α := {v | G.degree v = G.maxDegree}
+      Int.ceil (2 * distavg G M) ≤ (path G : ℤ) := by
   sorry
 
 -- Sanity checks
 
-/-- The `path G` invariant is nonneg when cast to ℤ. -/
+/-- The `path G` invariant cast to ℤ is nonneg. -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ (path G : ℤ) := Int.natCast_nonneg _
 
-/-- The edgeless graph on 3 vertices has no edges. -/
+/-- In `K₃`, the max degree is 2. -/
 @[category test, AMS 5]
-example : (⊥ : SimpleGraph (Fin 3)).edgeFinset.card = 0 := by decide +native
+example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide +native
 
 end WrittenOnTheWallII.GraphConjecture33
