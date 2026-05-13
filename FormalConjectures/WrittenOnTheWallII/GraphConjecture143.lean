@@ -35,10 +35,6 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- `largestInducedTreeSize G` is the number of vertices in a largest induced subtree of `G`. -/
-noncomputable def largestInducedTreeSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, s.card = n ∧ (G.induce (s : Set α)).IsTree }
-
 /-- The **second-smallest degree** of `G`'s degree sequence — DeLaVina's `σ(G)`
 per the WOWII definitions popup (defEntry 65): "order the degree sequence in
 nondecreasing order `d₁ ≤ d₂ ≤ … ≤ dₙ`, the second smallest degree of the

@@ -35,11 +35,6 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- `largestInducedTreeSize G` is the number of vertices in a largest induced subtree of `G`.
-A tree is a connected acyclic graph; an induced tree is an induced subgraph that is a tree. -/
-noncomputable def largestInducedTreeSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, s.card = n ∧ (G.induce (s : Set α)).IsTree }
-
 /--
 WOWII [Conjecture 142](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
