@@ -28,7 +28,7 @@ namespace Erdos44
 
 -- Reference: https://arxiv.org/pdf/2103.15850
 /-- The maximum size of a Sidon set in `{1, ..., N}` is less than or equal to `2 * √N`. -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem maxSidonSubsetCard_icc_bound (N : ℕ) (hN : 1 ≤ N) :
     maxSidonSubsetCard (Icc 1 N) ≤ 2 * Real.sqrt N := by
   sorry
@@ -60,7 +60,7 @@ theorem erdos_44.variants.empty_start : answer(sorry) ↔ ∀ᵉ (ε > (0 : ℝ)
 /--
 The set `{1, 2, 4, 8, 13}` is a Sidon set in `{1, ..., 13}`.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem example_sidon_set : IsSidon ({1, 2, 4, 8, 13} : Set ℕ) := by
   intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
@@ -73,7 +73,7 @@ theorem example_sidon_set : IsSidon ({1, 2, 4, 8, 13} : Set ℕ) := by
 /--
 For any `N`, there exists a Sidon set of size at least `√N/2`.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
     ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ N.sqrt / 2 ≤ A.card := by
   sorry
@@ -81,7 +81,7 @@ theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
 /--
 The greedy construction gives a Sidon set of size approximately `√N`.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem greedy_sidon_construction (N : ℕ) (hN : 1 ≤ N) :
     ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ A.card ≥ N.sqrt := by
   sorry

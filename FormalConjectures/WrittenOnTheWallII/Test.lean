@@ -34,6 +34,8 @@ average_degree, matching_number, residue, annihilation_number, cvetkovic.
 
 open SimpleGraph
 
+namespace WrittenOnTheWallII.Test
+
 open Classical
 
 -- Bridge theorems for Sym2/edist-based invariants:
@@ -424,3 +426,5 @@ theorem Star5_annihilation : annihilationNumber Star5 = 5 := by
 @[category test, AMS 5]
 theorem Star5_cvetkovic : cvetkovic Star5 = 5 := by
   sorry
+
+end WrittenOnTheWallII.Test

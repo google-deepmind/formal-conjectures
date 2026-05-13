@@ -44,7 +44,7 @@ $$
 $$
 where $p_r$ denotes the $r$th prime?
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://gist.githubusercontent.com/JohnEdwardJennings/e2c6ef0daab55857b7cc9d340de7af84/raw/8ff97800e38582c71246a238e7541a9d69488cbd/Erdos427.lean"]
 theorem erdos_427 : answer(True) ↔ erdos427 := by
   sorry
 

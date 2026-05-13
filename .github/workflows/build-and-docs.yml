@@ -68,7 +68,7 @@ jobs:
 
       - name: Build project
         run: |
-          lake build
+          lake --wfail build
 
       - name: Build literate source pages
         run: |
@@ -167,6 +167,7 @@ jobs:
           node build.js
         env:
           BASE_PATH: /formal-conjectures
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Assemble deploy artifact
         run: |

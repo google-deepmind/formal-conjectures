@@ -27,6 +27,12 @@ formal-conjectures repo (Lean 4)
 
 3. **Site build.** A push to `data/conjectures.json` triggers this repo's GitHub Actions workflow (`.github/workflows/deploy.yml`), which runs `node build.js` and deploys the output to GitHub Pages.
 
+During the site build, `build.js` also reads the repository's git history to
+attach file-level contributor metadata to each theorem page. If `GITHUB_TOKEN`
+or `GH_TOKEN` is available, the build enriches matching contributors with their
+GitHub username, profile URL, and avatar URL; otherwise it falls back to the
+display names available in git history.
+
 ## Repository layout
 
 ```
@@ -116,7 +122,7 @@ If you don't have the formal-conjectures repo built locally, you can populate `d
 ]
 ```
 
-Valid values for `category`: `"research open"`, `"research solved"`, `"research formally solved"`, `"graduate"`, `"undergraduate"`, `"high_school"`, `"test"`, `"API"`.
+Valid values for `category`: `"research open"`, `"research solved"`, `"research formally solved"`, `"textbook"`, `"test"`, `"API"`.
 
 ## CI / deployment
 

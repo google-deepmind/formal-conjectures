@@ -20,10 +20,12 @@ public import FormalConjecturesForMathlib
 public import FormalConjectures.Util.Answer
 public import FormalConjectures.Util.Linters.AMSLinter
 public import FormalConjectures.Util.Linters.AnswerLinter
+public import FormalConjectures.Util.Linters.CategoryDocstringLinter
 public import FormalConjectures.Util.Linters.CategoryLinter
 public import FormalConjectures.Util.Linters.CopyrightLinter
+public import FormalConjectures.Util.Linters.ExistsImplicationLinter
 public import FormalConjectures.Util.Linters.ModuleDocstringLinter
-
+public import FormalConjectures.Util.Linters.NamespaceLinter
 
 /-!
 # Standard imports for open problems

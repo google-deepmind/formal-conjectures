@@ -35,3 +35,17 @@ lemma IsLacunary.eventually_lt {n : ℕ → ℕ} (hn : IsLacunary n) : ∀ᶠ k 
   refine eventually_atTop.2 ⟨N, fun b hb ↦ ?_⟩
   grw [hc] at h
   simpa using h _ hb
+
+/-- The real-valued analogue of `IsLacunary`. -/
+def IsLacunaryReal (a : ℕ → ℝ) : Prop :=
+  ∃ c > (1 : ℝ), ∀ᶠ k in atTop, c * a k < a (k + 1)
+
+/-- An ℕ-valued sequence is lacunary iff its real cast is lacunary as a real sequence. -/
+lemma isLacunary_iff_isLacunaryReal {n : ℕ → ℕ} :
+    IsLacunary n ↔ IsLacunaryReal (fun k => (n k : ℝ)) := Iff.rfl
+
+/-- A positive lacunary real-valued sequence is eventually strictly increasing. -/
+lemma IsLacunaryReal.eventually_lt {a : ℕ → ℝ} (ha : IsLacunaryReal a)
+    (hpos : ∀ᶠ k in atTop, 0 < a k) : ∀ᶠ k in atTop, a k < a (k + 1) := by
+  obtain ⟨c, hc, hlac⟩ := ha
+  filter_upwards [hlac, hpos] with k hk hp using by nlinarith

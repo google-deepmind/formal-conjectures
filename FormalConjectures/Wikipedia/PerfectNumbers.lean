@@ -97,9 +97,11 @@ A known result: If an odd perfect number exists, it must be of the form
 $p^α * m^2$ where $p$ is prime, $p \equiv 1 \pmod{4}$, $\alpha \equiv 1 \pmod{4}$,
 and $p \nmid m$.
 
-*Reference:* Euler's theorem on odd perfect numbers
+*Reference:* Euler's theorem on odd perfect numbers.
+
+Formal proof linked here provided by AlphaProof.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/7deed78f7babe2ae9ea13969a8dfa26854982407/FormalConjectures/Wikipedia/PerfectNumbers.lean#L110"]
 theorem odd_perfect_number.euler_form (n : ℕ) (hn : Odd n) (hp : Perfect n) :
     ∃ (p m α : ℕ),
       p.Prime ∧
