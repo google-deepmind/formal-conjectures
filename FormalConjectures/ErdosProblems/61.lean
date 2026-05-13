@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 61
 
-Erdős–Hajnal conjecture.
+## Erdős–Hajnal conjecture
 
 *Reference:* [erdosproblems.com/61](https://www.erdosproblems.com/61)
 -/

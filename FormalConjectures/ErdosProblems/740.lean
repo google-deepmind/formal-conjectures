@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 740
 
-Infinitary version of chromatic number and odd cycles.
+## Infinitary version of chromatic number and odd cycles
 
 *Reference:* [erdosproblems.com/740](https://www.erdosproblems.com/740)
 -/

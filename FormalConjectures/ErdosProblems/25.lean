@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 25
 
-Logarithmic density of size-dependent congruences.
+## Logarithmic density of size-dependent congruences
 
 *Reference:* [erdosproblems.com/25](https://www.erdosproblems.com/25)
 -/

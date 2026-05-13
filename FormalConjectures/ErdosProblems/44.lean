@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 44
 
-Extending Sidon sets.
+## Extending Sidon sets
 
 *Reference:* [erdosproblems.com/44](https://www.erdosproblems.com/44)
 -/

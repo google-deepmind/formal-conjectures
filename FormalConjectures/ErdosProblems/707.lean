@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 707
 
-Embedding Sidon sets in perfect difference sets.
+## Embedding Sidon sets in perfect difference sets
 
 *References:*
 - [erdosproblems.com/707](https://www.erdosproblems.com/707)

@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 723
 
-The prime power conjecture.
+## The prime power conjecture
 
 *Reference:* [erdosproblems.com/723](https://www.erdosproblems.com/723)
 -/
