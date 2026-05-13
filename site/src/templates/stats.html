@@ -3,15 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Theorem — Formal Conjectures</title>
-  <meta name="description" content="Theorem detail page for the Formal Conjectures repository.">
+  <title>Statistics — Formal Conjectures</title>
+  <meta name="description" content="Cross-tabulations and derived metrics for the Formal Conjectures repository.">
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" href="/assets/img/formal_conjectures_logo.svg" type="image/svg+xml">
-  <!-- KaTeX for rendering LaTeX in docstrings -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js" crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
-    crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -31,12 +26,29 @@
   </div>
 </nav>
 
-<main>
-  <div class="container theorem-detail" id="theorem-detail">
-    <div class="empty-state">
-      <div class="loading-spinner"></div>
-    </div>
+<header class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Statistics</h1>
+    <p class="page-header__subtitle">Cross-tabulations and derived metrics across the {{totalCount}} indexed entries.</p>
   </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">Subject &times; status</h2>
+      <p class="section__lede">
+        Each row is an AMS MSC2020 subject; each column is a problem
+        category. Cells link into the browse page filtered by both
+        subject and category. A theorem tagged with multiple AMS subjects
+        contributes to every relevant row, so row totals can exceed the
+        repository total.
+      </p>
+      <div class="stats-table-wrap">
+        {{subjectStatusTable}}
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer">
@@ -45,13 +57,13 @@
     <span>
       <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a>
       &middot;
+      <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Zulip</a>
+      &middot;
       <a href="/contribute/">Contribute</a>
     </span>
   </div>
 </footer>
 
 <script src="/assets/js/main.js"></script>
-<!-- <script src="/assets/js/voting.js"></script> -->
-<script src="/assets/js/theorem.js"></script>
 </body>
 </html>
