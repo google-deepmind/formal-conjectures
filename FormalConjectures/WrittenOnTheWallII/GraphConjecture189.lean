@@ -35,10 +35,6 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- `distEven G v` counts the number of vertices at even distance from `v` in `G`. -/
-noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
-  (Finset.univ.filter (fun w => Even (G.dist v w))).card
-
 /-- The **second-smallest degree** of `G`'s degree sequence — DeLaVina's
 `σ(G)` per the WOWII definitions popup (defEntry 65): "order the degree
 sequence in nondecreasing order `d_1 ≤ d_2 ≤ … ≤ d_n`, the second smallest
