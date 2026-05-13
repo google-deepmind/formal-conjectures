@@ -38,6 +38,7 @@ open Metric Set Filter
 - [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
 - [Bhowmik–Sen](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/improved-bloch-and-landau-constants-for-meromorphic-functions/FD465D1F2CEF7E8C62AFF16C3E89B7B4)
 -/
+namespace Bloch
 
 /-- The **Bloch radius** $B_f$ of a function $f$ is the radius of the largest univalent disk in the
 image of the unit disk under $f$. -/
