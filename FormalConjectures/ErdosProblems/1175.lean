@@ -19,27 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1175
 
-**Verbatim statement (Erdős #1175, status O):**
-> Let $\kappa$ be an uncountable cardinal. Must there exist a cardinal $\lambda$ such that every graph with chromatic number $\lambda$ contains a triangle-free subgraph with chromatic number $\kappa$?
-
-**Source:** https://www.erdosproblems.com/1175
-
-**Notes:** OPEN
-
-
 *Reference:* [erdosproblems.com/1175](https://www.erdosproblems.com/1175)
-
-## Problem statement
-
-Let $\kappa$ be an uncountable cardinal. Must there exist a cardinal $\lambda$ such that every
-graph with chromatic number $\lambda$ contains a triangle-free subgraph with chromatic number
-$\kappa$?
-
-## Status
-
-Open in ZFC. Shelah proved that a negative answer is consistent when $\kappa = \lambda = \aleph_1$:
-there is a model of ZFC containing a graph with chromatic number $\aleph_1$ which has no
-triangle-free subgraph with chromatic number $\aleph_1$.
 
 ## Formalization notes
 
@@ -62,13 +42,8 @@ Let $\kappa$ be an uncountable cardinal. Must there exist a cardinal $\lambda$ s
 graph with chromatic number $\lambda$ contains a triangle-free subgraph with chromatic number
 $\kappa$?
 
-This is an open problem of Erdős. Shelah proved that the answer can be **no** when
-$\kappa = \lambda = \aleph_1$ (the consistency of a negative answer; see
-`erdos_1175.variants.shelah_consistency`).
-
-**Note on the answer**: The problem is open in ZFC. Shelah's result shows that a positive answer
-is not provable from ZFC alone (since it fails in some model). Whether a negative answer is
-consistent for all uncountable $\kappa$ is not known.
+Open in ZFC. Shelah proved that a negative answer is consistent when
+$\kappa = \lambda = \aleph_1$ (see `erdos_1175.variants.shelah_consistency`).
 -/
 @[category research open, AMS 5]
 theorem erdos_1175 : answer(sorry) ↔
@@ -103,14 +78,10 @@ theorem erdos_1175.variants.shelah_consistency : answer(sorry) ↔
   sorry
 
 /--
-**Equivalent reformulation**: the question can be phrased symmetrically as asking whether
-uncountable chromatic number is "witnessed" by triangle-free subgraphs. Specifically,
-for an uncountable $\kappa$, is there a universal threshold $\lambda$ such that any graph
-of chromatic number $\geq \lambda$ has a triangle-free subgraph of chromatic number $\geq \kappa$?
-
-This is equivalent to the original formulation when "chromatic number $= \lambda$" is
-replaced by "chromatic number $\geq \lambda$", since we may always take $\lambda$ as the
-minimum. We state it here as a variant for reference.
+**Threshold reformulation variant.** Replaces `chromaticCardinal = λ` in the hypothesis
+of `erdos_1175` with `λ ≤ chromaticCardinal` (a graph of chromatic number ≥ λ has a
+triangle-free subgraph of chromatic number κ). Equivalent to `erdos_1175` (take λ as
+the minimum), but more natural as a "threshold" statement.
 -/
 @[category research open, AMS 5]
 theorem erdos_1175.variants.threshold_formulation : answer(sorry) ↔
@@ -120,40 +91,22 @@ theorem erdos_1175.variants.threshold_formulation : answer(sorry) ↔
           ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = κ := by
   sorry
 
-/- ## Sanity checks and examples
+/- ## Sanity checks -/
 
-The following `example` declarations demonstrate that the hypotheses and conclusions of the main
-theorem are non-vacuous. All goals are fully closed: no `sorry`. -/
-
-/-- The uncountability hypothesis `ℵ₀ < κ` is non-vacuous: `ℵ₁` is an uncountable cardinal.
-This shows the main theorem has a concrete non-trivial instance. -/
+/-- Every graph has a triangle-free subgraph: the bottom subgraph (with no edges)
+witnesses triangle-freeness, so the existential
+`∃ H : G.Subgraph, H.coe.CliqueFree 3` in `erdos_1175` is non-vacuous. -/
 @[category test, AMS 5]
-example : ℵ₀ < ℵ_ 1 := by
-  rw [← Cardinal.aleph_zero, Cardinal.aleph_lt_aleph]
-  exact zero_lt_one
-
-/-- Every graph has a triangle-free subgraph: the bottom subgraph (with no edges and
-empty vertex set) is always triangle-free (`CliqueFree 3`).
-
-This shows the existential `∃ H : G.Subgraph, H.coe.CliqueFree 3 ∧ ...` is non-vacuous:
-the ⊥ subgraph witnesses triangle-freeness (though the chromatic number condition is
-what makes the main problem hard). -/
-@[category test, AMS 5]
-example (V : Type*) (G : SimpleGraph V) : ∃ H : G.Subgraph, H.coe.CliqueFree 3 :=
+theorem erdos_1175.test.exists_triangle_free_subgraph
+    (V : Type*) (G : SimpleGraph V) : ∃ H : G.Subgraph, H.coe.CliqueFree 3 :=
   ⟨⊥, by simp [SimpleGraph.cliqueFree_bot (by norm_num : 2 ≤ 3)]⟩
 
-/-- The edgeless graph on any type is triangle-free. This confirms `CliqueFree 3`
-is a meaningful property: a graph with no edges has no triangles. -/
+/-- The threshold variant `threshold_formulation` is stronger than the exact-equality
+form `erdos_1175`: if every graph with `chromaticCardinal ≥ μ` has the desired
+triangle-free subgraph, then in particular every graph with `chromaticCardinal = μ`
+does too. -/
 @[category test, AMS 5]
-example (V : Type*) : (⊥ : SimpleGraph V).CliqueFree 3 :=
-  SimpleGraph.cliqueFree_bot (by norm_num)
-
-/-- The threshold formulation variant is stronger than the exact formulation:
-if every graph with `chromaticCardinal ≥ μ` has the desired triangle-free subgraph,
-then in particular every graph with `chromaticCardinal = μ` does too.
-We verify this implication directly (at a fixed universe level, using `Type`). -/
-@[category test, AMS 5]
-theorem erdos_1175.threshold_implies_exact :
+theorem erdos_1175.test.threshold_implies_exact :
     (∀ (κ : Cardinal.{0}), ℵ₀ < κ →
       ∃ (μ : Cardinal.{0}),
         ∀ (V : Type) (G : SimpleGraph V), μ ≤ G.chromaticCardinal →
