@@ -18,6 +18,7 @@ module
 
 public import Mathlib.Data.Nat.Choose.Sum
 public import Mathlib.Data.Nat.Lattice
+public import FormalConjecturesForMathlib.Combinatorics.Ramsey
 
 @[expose] public section
 
@@ -382,6 +383,68 @@ lemma diagonal_ramsey_upper_bound (k : ℕ) :
     Nat.sInf_le hR
   have h2kk : Nat.choose (k + k) k = Nat.choose (2 * k) k := by
     rw [two_mul]
+  rw [h2kk] at hle
+  exact hle.trans (Diagonal.central_binomial_le_four_pow k)
+
+/-! ## Bridge to `Combinatorics.hypergraphRamsey 2`
+
+The Mathlib-style "binary diagonal Ramsey number" is `Combinatorics.hypergraphRamsey 2 k`
+in `FormalConjecturesForMathlib/Combinatorics/Ramsey.lean`, defined via a `Bool`-valued
+coloring of `r`-element subsets of `Fin m`. Every `Diagonal.IsRamsey n k` witness can be
+turned into membership of `n` in the `hypergraphRamsey 2 k` infimum set; chaining with
+`hasRamseyProperty_choose` and `central_binomial_le_four_pow` we expose the headline bound
+in the standard form.
+-/
+
+/-- Bridge: any `Diagonal.IsRamsey n k` witness yields membership of `n` in the
+defining set of `Combinatorics.hypergraphRamsey 2 k`. -/
+lemma _root_.Combinatorics.hypergraphRamsey_two_set_mem_of_isRamsey
+    {n k : ℕ} (hR : Diagonal.IsRamsey n k) :
+    n ∈ { m | ∀ (c : Finset (Fin m) → Bool), ∃ (S : Finset (Fin m)), S.card = k ∧
+      ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = 2 → c e = color } := by
+  intro c
+  -- Convert `c : Finset (Fin n) → Bool` to a `Diagonal.EdgeColouring n` (symmetric `Fin 2`).
+  let χ : Diagonal.EdgeColouring n :=
+    { toFun := fun i j => if c {i, j} then 0 else 1
+      symm := fun i j => by simp [Finset.pair_comm] }
+  obtain ⟨S, c', hScard, hSmono⟩ := hR χ
+  refine ⟨S, hScard, decide (c' = 0), ?_⟩
+  intro e heS hecard
+  obtain ⟨u, v, huv, rfl⟩ := Finset.card_eq_two.mp hecard
+  have hu : u ∈ S := heS (Finset.mem_insert.mpr (Or.inl rfl))
+  have hv : v ∈ S := heS (Finset.mem_insert_of_mem (Finset.mem_singleton.mpr rfl))
+  have hχuv : χ u v = c' := hSmono u hu v hv huv
+  show c {u, v} = decide (c' = 0)
+  by_cases hcuv : c {u, v}
+  · have : χ u v = 0 := by simp [χ, hcuv]
+    have hc'0 : c' = 0 := by rw [← hχuv, this]
+    simp [hcuv, hc'0]
+  · have : χ u v = 1 := by simp [χ, hcuv]
+    have hc'1 : c' = 1 := by rw [← hχuv, this]
+    simp [hcuv, hc'1]
+
+/-- **Erdős–Szekeres 1935 in `hypergraphRamsey` form**:
+`Combinatorics.hypergraphRamsey 2 k ≤ 4 ^ k`.
+
+Composes the bridge `hypergraphRamsey_two_set_mem_of_isRamsey` (applied to the
+`IsRamsey (C(2k,k)) k` witness extracted from `Diagonal.hasRamseyProperty_choose`) with
+`Diagonal.central_binomial_le_four_pow`. This is the "Mathlib-shaped" version of the result. -/
+lemma _root_.Combinatorics.hypergraphRamsey_two_le_four_pow (k : ℕ) :
+    Combinatorics.hypergraphRamsey 2 k ≤ 4 ^ k := by
+  -- Build IsRamsey (C(2k,k)) k from hasRamseyProperty_choose, mirroring diagonal_ramsey_upper_bound.
+  have hprop : Diagonal.HasRamseyProperty (Nat.choose (k + k) k) k k :=
+    Diagonal.hasRamseyProperty_choose k k
+  have hR : Diagonal.IsRamsey (Nat.choose (k + k) k) k := by
+    intro χ
+    have hV : Nat.choose (k + k) k ≤ (Finset.univ : Finset (Fin (Nat.choose (k + k) k))).card := by
+      rw [Finset.card_univ, Fintype.card_fin]
+    rcases hprop χ Finset.univ hV with ⟨S, _hSsub, hScard, hSmono⟩ | ⟨S, _hSsub, hScard, hSmono⟩
+    · exact ⟨S, 0, hScard, hSmono⟩
+    · exact ⟨S, 1, hScard, hSmono⟩
+  -- Bridge to hypergraphRamsey set membership and apply Nat.sInf_le.
+  have hmem := Combinatorics.hypergraphRamsey_two_set_mem_of_isRamsey hR
+  have hle : Combinatorics.hypergraphRamsey 2 k ≤ Nat.choose (k + k) k := Nat.sInf_le hmem
+  have h2kk : Nat.choose (k + k) k = Nat.choose (2 * k) k := by rw [two_mul]
   rw [h2kk] at hle
   exact hle.trans (Diagonal.central_binomial_le_four_pow k)
 
