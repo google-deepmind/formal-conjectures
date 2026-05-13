@@ -43,7 +43,7 @@ noncomputable def eFunction (n : ℕ) (r : ℕ) : ℕ := sInf {e : ℕ | Erdos60
 /--
 Let $r \geq 2$. Is it true that $e(n,r+1) - e(n,r) \to \infty$ as $n \to \infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 5]
 theorem erdos_600.parts.i :
     answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r →
       Tendsto (fun (n : ℕ) ↦ (eFunction n (r + 1) : ℝ) - (eFunction n r : ℝ)) atTop atTop := by
@@ -52,7 +52,7 @@ theorem erdos_600.parts.i :
 /--
 Let $r \geq 2$. Is it true that $\frac{e(n,r+1)}{e(n,r)} \to 1$ as $n \to \infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 5]
 theorem erdos_600.parts.ii :
     answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r →
       Tendsto (fun (n : ℕ) ↦ (eFunction n (r + 1) : ℝ) / (eFunction n r : ℝ)) atTop (𝓝 1) := by
@@ -61,7 +61,7 @@ theorem erdos_600.parts.ii :
 /--
 Ruzsa and Szemerédi [RuSz78] proved that $e(n,r)=o(n^2)$ for any fixed $r$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 5]
 theorem erdos_600.variants.ruzsa_szemeredi_upper_bound :
     ∀ r : ℕ, (fun (n : ℕ) ↦ (eFunction n r : ℝ)) =o[atTop] (fun (n : ℕ) ↦ (n : ℝ)^2) := by
   sorry
