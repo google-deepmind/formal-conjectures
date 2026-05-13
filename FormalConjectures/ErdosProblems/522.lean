@@ -117,8 +117,8 @@ theorem erdos_522.variants.zero_one :
   sorry
 
 /--
-Erdős and Offord showed that the number of real roots of a random degree `n` polynomial with `±1`
-coefficients is `(2/π+o(1))log n`.
+Erdős and Offord showed that the number of real roots of a random degree $n$ polynomial with $±1$
+coefficients is $(2/π+o(1))log n$.
 -/
 @[category research solved, AMS 12 60]
 theorem erdos_522.variants.number_real_roots : ∃ p o : ℕ → ℝ,
@@ -129,7 +129,7 @@ theorem erdos_522.variants.number_real_roots : ∃ p o : ℕ → ℝ,
   sorry
 
 /--
-Yakir proved that almost all Kac polynomials have `n/2+O(n^(9/10))` many roots in `{z∈C:|z|≤1}`.
+Yakir proved that almost all Kac polynomials have $n/2+O(n^(9/10))$ many roots in ${z∈C:|z|≤1}$.
 -/
 @[category research solved, AMS 12 60]
 theorem erdos_522.variants.yakir_solution :

@@ -50,7 +50,7 @@ in increasing order.
 Does it hold that
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \ll 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}$
-for $n \to \infty`, i.e.
+for $n \to \infty$, i.e.
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}) \right)$?
 
@@ -68,7 +68,7 @@ in increasing order.
 Does it hold that
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \ll 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}$
-for $n \to \infty`, i.e.
+for $n \to \infty$, i.e.
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}) \right)$?
 

@@ -29,7 +29,7 @@ existence of a symmetric informationally complete POVM in every finite dimension
 
 A SIC-POVM in dimension $d$ can be represented by a family of $d^2$ normalized
 vectors in $\mathbb{C}^d$ whose pairwise squared overlaps are all equal to
-$(d + 1)^{-1}$. We encode such a family as a map `Fin (d ^ 2) → StateVector d`.
+$(d + 1)^{-1}$. We encode such a family as a map $Fin (d ^ 2) → StateVector d$.
 
 ## Background
 SIC-POVMs are a basic structure in finite-dimensional quantum information.
@@ -45,15 +45,15 @@ More precisely, it contains the following layers.
 
 ### Core API
 The main definitions formalized in this file are:
-- `StateVector d`: a state vector in `ℂ^d`;
+- `StateVector d`: a state vector in $ℂ^d$;
 - `mkStateVector`: constructor from coordinates in the computational basis;
 - `IsNormalized ψ`: normalization predicate for a state vector;
-- `overlapSq φ ψ`: squared magnitude of the inner-product overlap;
+- $overlapSq φ ψ$: squared magnitude of the inner-product overlap;
 - `HasConstantOverlapSq c Φ`: constant pairwise squared-overlap condition;
-- `sicOverlapSq d`: the SIC overlap value `(d + 1)⁻¹`;
-- `IsSICFamily d Φ`: the predicate that a family of `d^2` vectors in `ℂ^d`
+- `sicOverlapSq d`: the SIC overlap value $(d + 1)⁻¹$;
+- `IsSICFamily d Φ`: the predicate that a family of $d^2$ vectors in $ℂ^d$
   is a SIC family;
-- `HasSICPOVM d`: existence of a SIC family in dimension `d`.
+- `HasSICPOVM d`: existence of a SIC family in dimension $d$.
 
 In addition, the file includes explicit witness families and convenient
 constructors used in the low-dimensional benchmark cases:
@@ -64,15 +64,15 @@ constructors used in the low-dimensional benchmark cases:
 
 ### Complete open conjecture
 The main open theorem is:
-- `sicPOVMs`, expressing the conjecture that for every `d ≥ 1`, there exists a
-  SIC-POVM in dimension `d`.
+- `sicPOVMs`, expressing the conjecture that for every $d ≥ 1$, there exists a
+  SIC-POVM in dimension $d$.
 
 ### Special cases
 The file also isolates several special cases:
 - solved low-dimensional benchmark cases:
   `hasSICPOVM_zero`, `hasSICPOVM_one`, `hasSICPOVM_two`, `hasSICPOVM_three`;
 - a negative benchmark result:
-  `bb84Family_not_isSICFamily`, showing that the BB84 family in dimension `2`
+  `bb84Family_not_isSICFamily`, showing that the BB84 family in dimension $2$
   does not form a SIC family;
 - selected open benchmark dimensions:
   `hasSICPOVM_56`, `hasSICPOVM_58`, `hasSICPOVM_59`, `hasSICPOVM_60`,

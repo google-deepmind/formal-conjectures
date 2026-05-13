@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos312
 
 /--
-Does there exist a constant `c > 0` such that, for any `K > 1`, whenever `A` is a sufficiently large
+Does there exist a constant $c > 0$ such that, for any $K > 1$, whenever $A$ is a sufficiently large
 finite multiset of integers with $\sum_{n \in A} 1/n > K$ there exists some $S \subseteq A$ such that
 $1 - \exp(-(c*K)) < \sum_{n \in S} 1/n \le 1$?
 -/

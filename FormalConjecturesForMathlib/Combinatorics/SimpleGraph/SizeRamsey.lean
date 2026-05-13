@@ -29,8 +29,8 @@ This file defines the size Ramsey number for simple graphs.
 
 ## Definition
 
-The size Ramsey number `r̂(G, H)` is the minimum number of edges in a graph `F`
-such that any 2-coloring of `F`'s edges contains a copy of `G` in one color or `H` in the other.
+The size Ramsey number $r̂(G, H)$ is the minimum number of edges in a graph $F$
+such that any 2-coloring of $F$'s edges contains a copy of $G$ in one color or $H$ in the other.
 -/
 
 namespace SimpleGraph

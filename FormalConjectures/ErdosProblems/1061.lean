@@ -39,8 +39,8 @@ noncomputable abbrev S (x : ℝ) : ℝ :=
       a + b ≤ x ∧ σ 1 a + σ 1 b = σ 1 (a + b)).card
 
 /--
-How many (ordered) solutions are there to `σ(a) + σ(b) = σ(a + b)` with `a + b ≤ x`?
-Is it true that this number is asymptotic to `c * x` for some constant `c > 0`?
+How many (ordered) solutions are there to $σ(a) + σ(b) = σ(a + b)$ with $a + b ≤ x$?
+Is it true that this number is asymptotic to $c * x$ for some constant $c > 0$?
 -/
 @[category research open, AMS 11]
 theorem erdos_1061 : answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧ S ~[atTop] (fun x : ℝ ↦ c * x) := by

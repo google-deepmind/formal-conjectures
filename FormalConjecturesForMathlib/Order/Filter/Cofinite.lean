@@ -44,7 +44,7 @@ lemma cofinite_hasBasis_Ioi {α : Type*} [LinearOrder α] [LocallyFiniteOrder α
 
 /--
 Note(csonne): According to a TODO in `Mathlib.Order.Interval.Finset.Defs`, Assuming `SuccOrder α`
-should not be necessary as an instance should follow from `[LocallyFiniteOrder α] [OrderBot α]`.
+should not be necessary as an instance should follow from $[LocallyFiniteOrder α] [OrderBot α]$.
 This has not been implemented in mathlib however.
 -/
 lemma cofinite_hasBasis_Ici {α : Type*} [LinearOrder α] [LocallyFiniteOrder α] [OrderBot α]

@@ -37,7 +37,7 @@ lemma completeGraphIsClique (s : Finset V) : (⊤ : SimpleGraph V).IsClique s :=
 
 variable [Fintype V]
 
-/-- The only clique of size `n` in a complete graph on `n` vertices is the entire set of vertices. -/
+/-- The only clique of size $n$ in a complete graph on $n$ vertices is the entire set of vertices. -/
 @[category textbook, AMS 5]
 lemma completeGraph_cliqueSet :
     (⊤ : SimpleGraph V).cliqueSet (Fintype.card V) = {Set.univ.toFinset} := by

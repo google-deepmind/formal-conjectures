@@ -24,26 +24,26 @@ public meta section
 
 This module provides a parser for defining a Turing machine from a simple string description.
 The main entry point is the `turing_machine%` elaborator, which takes a string representing the
-machine's transitions and constructs a term of type `Machine (Fin m) StateType` where `StateType`
+machine's transitions and constructs a term of type $Machine (Fin m) StateType$ where `StateType`
 is an inductive type generated on the fly.
 
 ## Encoding format
 
 The machine's transitions are encoded as a single string, with each state's transitions
 separated by an underscore (`_`).
-For each state, a `3m`-character substring defines the behavior:
-- The first 3 characters `"ABC"` describe the action when the head reads `0`:
-  - `A`: The symbol to write (`0, 1, ..., m-1`).
-  - `B`: The direction to move the head (`L` or `R`).
-  - `C`: The new state (`A` through `Z`).
-- The next 3 characters `"DEF"` describe the action when the head reads `1` using the same format.
-- The next 3 characters `"GHI"` describe the action when the head reads `2` using the same format.
+For each state, a $3m$-character substring defines the behavior:
+- The first 3 characters `"ABC"` describe the action when the head reads $0$:
+  - $A$: The symbol to write ($0, 1, ..., m-1$).
+  - $B$: The direction to move the head ($L$ or $R$).
+  - $C$: The new state ($A$ through $Z$).
+- The next 3 characters `"DEF"` describe the action when the head reads $1$ using the same format.
+- The next 3 characters `"GHI"` describe the action when the head reads $2$ using the same format.
 - So on...
 
-The character `Z` is reserved for the halting state. The string `"---"` can be used to represent
+The character $Z$ is reserved for the halting state. The string `"---"` can be used to represent
 a transition to the halting state without writing or moving.
 
-Example of a tape: `1RA0LB_0LA---`
+Example of a tape: $1RA0LB_0LA---$
 
 There are more examples in `ForMathlib/Test/Computability`.
 -/

@@ -23,8 +23,8 @@ vertices is the union of a graph with chromatic number $r$ and a graph with $\le
 then $G$ has chromatic number $\leq r+1$.
 
 Erdős asked whether:
-* `f 2 n ≫ n`
-* more generally, `f r n ≫ r * n`
+* $f 2 n ≫ n$
+* more generally, $f r n ≫ r * n$
 
 This problem is currently open.
 

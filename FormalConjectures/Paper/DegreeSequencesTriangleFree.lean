@@ -50,7 +50,7 @@ namespace DegreeSequencesTriangleFree
 variable (d : ℕ → ℕ) (n k r : ℕ)
 
 /-- **Lemma 1 (a)**
-If a sequence `d` is nondecreasing and no three terms are equal, then terms at distance 2 differ by at least 1. -/
+If a sequence $d$ is nondecreasing and no three terms are equal, then terms at distance 2 differ by at least 1. -/
 @[category API, AMS 5]
 lemma lemma1_a
     (h_mono : Monotone d)
@@ -61,7 +61,7 @@ lemma lemma1_a
   omega
 
 /-- **Lemma 1 (b)**
-If a sequence `d` is nondecreasing and no three terms are equal, then terms at distance `2 * r` differ by at least `r`. -/
+If a sequence $d$ is nondecreasing and no three terms are equal, then terms at distance $2 * r$ differ by at least $r$. -/
 @[category API, AMS 5]
 lemma lemma1_b
     (h_mono : Monotone d)
@@ -137,8 +137,8 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 def HasCompactdegreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : Prop :=
   DegreeSequencesTriangleFree.IsCompactSequenceOn (fun k => (degreeSequence G).getD k 0) {k | k + 2 < Fintype.card α}
 
-/-- **Theorem 1.** If a triangle-free graph has `f = 2`,
-then it is bipartite, has minimum degree `1`, and
+/-- **Theorem 1.** If a triangle-free graph has $f = 2$,
+then it is bipartite, has minimum degree $1$, and
 its degree sequence is compact. -/
 @[category research solved, AMS 5]
 theorem theorem1 (G : SimpleGraph α) (h_conn: G.Connected) [DecidableRel G.Adj]
@@ -146,19 +146,19 @@ theorem theorem1 (G : SimpleGraph α) (h_conn: G.Connected) [DecidableRel G.Adj]
     G.IsBipartite ∧ G.minDegree = 1 ∧ HasCompactdegreeSequence G := by
   sorry
 
-/-- **Lemma 3.** For every `n` there exists a bipartite graph with
-`8 n` vertices, minimum degree `n + 1`, and `f = 3`. -/
+/-- **Lemma 3.** For every $n$ there exists a bipartite graph with
+$8 n$ vertices, minimum degree $n + 1$, and $f = 3$. -/
 @[category API, AMS 5]
 lemma lemma3 (n : ℕ) (hn : 0 < n) :
     ∃ (G : SimpleGraph (Fin (8 * n))) (_ : DecidableRel G.Adj),
       G.IsBipartite ∧ G.minDegree = n + 1 ∧ degreeSequenceMultiplicity G = 3 := by
   sorry
 
-/-- **Lemma 4.** Let `G` be a triangle-free graph with `n` vertices and let `v` be a vertex of `G`.
-There exists a triangle-free graph `H` containing `G` as an induced subgraph such that:
-(i) the degree of `v` in `H` is one more than its degree in `G`;
-(ii) for every vertex `w` of `G` other than `v` the degree of `w` in `H` is the same as its degree in `G`;
-(iii) if `J` is the subgraph of `H` induced by the vertices not in `G`, then `f(J)=3` and `δ(J) ≥ 2n`. -/
+/-- **Lemma 4.** Let $G$ be a triangle-free graph with $n$ vertices and let $v$ be a vertex of $G$.
+There exists a triangle-free graph $H$ containing $G$ as an induced subgraph such that:
+(i) the degree of $v$ in $H$ is one more than its degree in $G$;
+(ii) for every vertex $w$ of $G$ other than $v$ the degree of $w$ in $H$ is the same as its degree in $G$;
+(iii) if $J$ is the subgraph of $H$ induced by the vertices not in $G$, then $f(J)=3$ and $δ(J) ≥ 2n$. -/
 @[category API, AMS 5]
 lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn: G.Connected)
     (h₁ : G.CliqueFree 3) (v : α) :
@@ -171,7 +171,7 @@ lemma lemma4 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn: G.Connected)
   sorry
 
 /-- **Theorem 2.** Every triangle-free graph is an induced subgraph of one
-with `f = 3`. -/
+with $f = 3$. -/
 @[category research solved, AMS 5]
 theorem theorem2 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn: G.Connected)
     (h : G.CliqueFree 3) :

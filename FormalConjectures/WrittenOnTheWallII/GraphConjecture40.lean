@@ -33,9 +33,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (G : SimpleG
 /--
 WOWII [Conjecture 40](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a nontrivial connected graph `G` the size `f(G)` of a largest induced forest
-satisfies `f(G) ≥ ceil((p(G) + b(G) + 1)/2)` where `p(G)` is the path cover
-number and `b(G)` is the largest induced bipartite subgraph size.
+For a nontrivial connected graph $G$ the size $f(G)$ of a largest induced forest
+satisfies $f(G) ≥ ceil((p(G) + b(G) + 1)/2)$ where $p(G)$ is the path cover
+number and $b(G)$ is the largest induced bipartite subgraph size.
 -/
 @[category research open, AMS 5]
 theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :

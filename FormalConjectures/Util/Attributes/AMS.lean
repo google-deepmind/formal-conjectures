@@ -25,12 +25,12 @@ import Qq
 This file defines some tools used by the `ProblemSubject` attribute in order classify
 problems by their corresponding AMS Subject.
 
-The `AMSDescription` has one term for each number `n ∈ {1, ..., 96}` that has a corresponding
-AMS subject, namely `AMSDescription.«n»`. Note that not all values of `n` in this interval
+The `AMSDescription` has one term for each number $n ∈ {1, ..., 96}$ that has a corresponding
+AMS subject, namely `AMSDescription.«n»`. Note that not all values of $n$ in this interval
 are assigned a subject.
 
-To extract the value corresponding to `n`, one can use `numToAMSDescriptions n`. This is useful
-for getting the doctring that corresponds to the subject `n` when parsing the attribute.
+To extract the value corresponding to $n$, one can use `numToAMSDescriptions n`. This is useful
+for getting the doctring that corresponds to the subject $n$ when parsing the attribute.
 
 Finally, to access the list of subjects and their corresponding number when editing Lean files,
 we implement a `#AMS` command that prints this list.

@@ -43,17 +43,17 @@ def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
   Set.range f ⊆ {1, -1} →
   ∃ S : Finset ℕ, S.Nonempty ∧ ↑S ⊆ A \ {0} ∧ ∑ n ∈ S, f n / n = 0
 
-/-- `ℕ` has property `P₁`. This is proved in [ErSt75]. -/
+/-- $ℕ$ has property $P₁$. This is proved in [ErSt75]. -/
 @[category research solved, AMS 11]
 theorem erdos_318.variants.univ : P₁ univ := by
   sorry
 
-/-- Sattler proved in [Sa75] that the set of odd numbers has property `P₁`. -/
+/-- Sattler proved in [Sa75] that the set of odd numbers has property $P₁$. -/
 @[category research solved, AMS 11]
 theorem erdos_318.variants.odd : P₁ {n | Odd n} := by
   sorry
 
-/-- The set of squares does not have property `P₁`. -/
+/-- The set of squares does not have property $P₁$. -/
 @[category test, AMS 11]
 theorem erdos_318.variants.squares : ¬ P₁ ({n | IsSquare n}) := by
   simp only [P₁, not_forall, not_exists, not_and]
@@ -99,28 +99,28 @@ theorem erdos_318.variants.squares : ¬ P₁ ({n | IsSquare n}) := by
     have : p ≠ 1 := by grind
     simp_all [neg_div, zero_lt_iff, (not_iff_not.2 mem_singleton_iff).1 (hs hp).2]
 
-/-- For any set `A` containing exactly one even number, `A` does not have property `P₁`. Sattler
+/-- For any set $A$ containing exactly one even number, $A$ does not have property $P₁$. Sattler
 [Sa82] credits this observation to Erdős, who presumably found this after [ErGr80]. -/
 @[category research solved, AMS 11]
 theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even n}.ncard = 1) :
     ¬ P₁ A := by
   sorry
 
-/-- There exists a set `A` with positive density that does not have property `P₁`.
+/-- There exists a set $A$ with positive density that does not have property $P₁$.
 #TODO: prove this lemma by assuming `erdos_318.contain_single_even`. -/
 @[category research solved, AMS 11]
 theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
 
-/-- Every infinite arithmetic progression has property `P₁`. This is proved in [Sa82b]. -/
+/-- Every infinite arithmetic progression has property $P₁$. This is proved in [Sa82b]. -/
 @[category research solved, AMS 11]
 theorem erdos_318.variants.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
 /--
-Does the set of squares excluding 1 have property `P₁`?
+Does the set of squares excluding 1 have property $P₁$?
 
-Larsen [La26] proved that this set does have property `P₁`.
+Larsen [La26] proved that this set does have property $P₁$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_318.parts.ii : answer(True) ↔  P₁ ({n | IsSquare n} \ {1}) := by

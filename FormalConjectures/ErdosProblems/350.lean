@@ -57,7 +57,7 @@ theorem DistinctSubsetSums_iff_DecidableDistinctSubsetSums
   rw [DistinctSubsetSums, DecidableDistinctSubsetSums, Set.Pairwise] ; simp_all
 
 /--
-If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n < 2`.
+If $A ⊂ ℕ$ is a finite set of integers all of whose subset sums are distinct then $∑ n ∈ A, 1/n < 2$.
 Proved by Ryavec.
 
 This was proved by Ryavec, who did not appear to ever publish the proof. Ryavec's proof is
@@ -75,10 +75,10 @@ theorem erdos_350 (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A) :
   sorry
 
 /--
-If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n^s < 1/(1 - 2^(-s))`, for any `s > 0`.
+If $A ⊂ ℕ$ is a finite set of integers all of whose subset sums are distinct then $∑ n ∈ A, 1/n^s < 1/(1 - 2^(-s))$, for any $s > 0$.
 Proved by Hanson, Steele, and Stenger [HSS77].
 
-We exlude here the case `s = 0`, because in the informal formulation then the right hand side is to be interpreted as `∞`, while the left hand side counts the elements in `A`.
+We exlude here the case $s = 0$, because in the informal formulation then the right hand side is to be interpreted as $∞$, while the left hand side counts the elements in $A$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_350.variants.strengthening (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A)

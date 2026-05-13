@@ -57,7 +57,7 @@ lemma isMulBasisOfOrder_iff :
   have := Set.mem_finset_prod (t := .univ) (f := fun _ : Fin n ↦ A)
   simp_all [IsMulBasisOfOrder]
 
-/-- No set is a multiplicative basis of order `0`. -/
+/-- No set is a multiplicative basis of order $0$. -/
 @[to_additive (attr := simp) /-- No set is an additive basis of order `0`. -/]
 lemma not_isMulBasisOfOrder_zero [Nontrivial M] : ¬A.IsMulBasisOfOrder 0 := by
   simp [isMulBasisOfOrder_iff, eq_comm, exists_ne]
@@ -66,7 +66,7 @@ lemma not_isMulBasisOfOrder_zero [Nontrivial M] : ¬A.IsMulBasisOfOrder 0 := by
 lemma isMulBasisOfOrder_one_iff : A.IsMulBasisOfOrder 1 ↔ A = univ := by
   simp [IsMulBasisOfOrder, eq_univ_iff_forall]
 
-/-- A set `A : Set M` is a multiplicative basis of order `2` if every `a : M` belongs to `A * A`. -/
+/-- A set `A : Set M` is a multiplicative basis of order $2$ if every `a : M` belongs to $A * A$. -/
 @[to_additive
 /-- A set `A : Set M` is an additive basis of order `2` if every `a : M` belongs to `A + A`. -/]
 lemma isMulBasisOfOrder_two_iff : A.IsMulBasisOfOrder 2 ↔ ∀ a, a ∈ A * A := by
@@ -95,8 +95,8 @@ lemma IsMulBasisOfOrder.isAsymptoticMulBasisOfOrder (hA : IsMulBasisOfOrder A n)
 lemma IsMulBasis.isAsymptoticMulBasis (hA : IsMulBasis A) : A.IsAsymptoticMulBasis := by
   obtain ⟨n, hn⟩ := hA; exact ⟨n, hn.isAsymptoticMulBasisOfOrder⟩
 
-/-- A set `A : Set M` is an asymptotic multiplicative basis of order `n` if a cofinite set of
-`a : M` can be written as `a = a₁ * ... * aₙ`, where each `aᵢ ∈ A`. -/
+/-- A set `A : Set M` is an asymptotic multiplicative basis of order $n$ if a cofinite set of
+`a : M` can be written as $a = a₁ * ... * aₙ$, where each $aᵢ ∈ A$. -/
 @[to_additive
 /-- A set `A : Set M` is an asymptotic additive basis of order `n` if a cofinite set of
 `a : M` can be written as `a = a₁ + ... + aₙ`, where each `aᵢ ∈ A`. -/]
@@ -106,8 +106,8 @@ lemma isAsymptoticMulBasisOfOrder_iff_prod :
   have := Set.mem_finset_prod (t := .univ) (f := fun _ : Fin n ↦ A)
   simp_all [IsAsymptoticMulBasisOfOrder]
 
-/-- A set `A : Set M` is an asymptotic multiplicative basis of order `2` if a cofinite set of
-`a : M` belongs to `A * A`. -/
+/-- A set `A : Set M` is an asymptotic multiplicative basis of order $2$ if a cofinite set of
+`a : M` belongs to $A * A$. -/
 @[to_additive
 /-- A set `A : Set M` is an asymptotic additive basis of order `2` if a cofinite set of
 `a : M` belongs to `A + A`. -/]
@@ -119,7 +119,7 @@ lemma isAsymptoticMulBasisOfOrder_two_iff :
 protected lemma IsAsymptoticMulBasisOfOrder.of_finite [Finite M] :
     IsAsymptoticMulBasisOfOrder A n := by simp [IsAsymptoticMulBasisOfOrder]
 
-/-- If `M` is infinite, then no set `A` is an asymptotic multiplicative basis of order `0`. -/
+/-- If $M$ is infinite, then no set $A$ is an asymptotic multiplicative basis of order $0$. -/
 @[to_additive (attr := simp)
 /-- If `M` is infinite, then no set `A` is an asymptotic additive basis of order `0`. -/]
 lemma not_isAsymptoticMulBasisOfOrder_zero [Infinite M] : ¬IsAsymptoticMulBasisOfOrder A 0 := by
@@ -167,7 +167,7 @@ lemma IsAsymptoticMulBasisOfOrder.mono [CanonicallyOrderedMul M] [IsCancelMul M]
   contrapose! hb
   exact smul_set_subset_mul (pow_mem_pow ha) hb.1
 
-/-- For `M` equipped with a directed order, a set is an asymptotic multiplicative basis of order `1`
+/-- For $M$ equipped with a directed order, a set is an asymptotic multiplicative basis of order $1$
 if it contains an infinite tail of elements. -/
 @[to_additive
 /-- For `M` equipped with a directed order, a set is an asymptotic additive basis of order `1`
@@ -178,7 +178,7 @@ lemma isAsymptoticMulBasisOfOrder_one_iff_Ioi :
 
 variable [SuccOrder M] [NoMaxOrder M]
 
-/-- For `M` equipped with a directed order, a set is an asymptotic multiplicative basis of order `1`
+/-- For $M$ equipped with a directed order, a set is an asymptotic multiplicative basis of order $1$
 if it contains an infinite tail of elements. -/
 @[to_additive
 /-- For `M` equipped with a directed order, a set is an asymptotic additive basis of order `1`

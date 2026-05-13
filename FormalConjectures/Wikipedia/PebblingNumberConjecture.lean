@@ -91,7 +91,7 @@ noncomputable def PebblingNumber [Fintype V] (G : SimpleGraph V) : ℕ :=
   sInf { n | ∀ D, NumberOfPebbles D = n → ∀ v, ∃ D', IsReachable G D D' ∧ 1 ≤ D' v }
 
 /--
-The pebbling number of the complete graph on `n` vertices is `n`.
+The pebbling number of the complete graph on $n$ vertices is $n$.
 -/
 @[category API, AMS 5]
 theorem PebblingNumber_completeGraph [Fintype V] :

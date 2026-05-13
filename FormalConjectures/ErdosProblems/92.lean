@@ -52,8 +52,8 @@ noncomputable def possible_f_values (n : ℕ) : Set ℕ :=
   {k | ∃ (points : Finset ℝ²) (_ : points.card = n), hasMinEquidistantProperty k points}
 
 /--
-A sanity check to ensure the set of possible `f(n)` values is bounded above. A trivial bound is
-`n-1`, since any point can have at most `n-1` other points equidistant from it.
+A sanity check to ensure the set of possible $f(n)$ values is bounded above. A trivial bound is
+$n-1$, since any point can have at most $n-1$ other points equidistant from it.
 This ensures `sSup` is well-defined.
 -/
 @[category test, AMS 52]

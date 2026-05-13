@@ -22,8 +22,8 @@ import FormalConjectures.Util.ProblemImports
 This file studies the existence of *monochromatic quantum graphs*: edge-coloured, edge-weighted
 complete graphs whose perfect matchings induce vertex colourings, with the property that
 
-- every **non-monochromatic** inherited vertex colouring has total weight `0`, while
-- each of the `D` **monochromatic** colourings has total weight `1`.
+- every **non-monochromatic** inherited vertex colouring has total weight $0$, while
+- each of the $D$ **monochromatic** colourings has total weight $1$.
 
 In the quantum-optics motivation, such a construction corresponds to generating high-dimensional
 multipartite GHZ-type states using probabilistic pair sources and linear optics (without additional
@@ -31,22 +31,22 @@ resources), where interference patterns can be expressed as weighted sums over p
 
 ## Main questions (informal)
 
-- For `N = 4` and `D ≥ 4`, does there exist such a graph/weighting?
-- For even `N ≥ 6` and `D ≥ 3`, does there exist such a graph/weighting?
+- For $N = 4$ and $D ≥ 4$, does there exist such a graph/weighting?
+- For even $N ≥ 6$ and $D ≥ 3$, does there exist such a graph/weighting?
 
 ## Formalisation sketch
 
-A quantum graph with `N` vertices and `D` colours can be encoded by a weight function
-`W : EdgeN N D α → α` (for a coefficient domain `α`).
+A quantum graph with $N$ vertices and $D$ colours can be encoded by a weight function
+$W : EdgeN N D α → α$ (for a coefficient domain $α$).
 
-For each assignment of vertex indices `ι : V N → Fin D`, we define a perfect-matching sum
-`pmSumN N D W ι` (a sum over perfect matchings, where each matching contributes the product of the
-corresponding edge weights determined by `ι`). The equation system `EqSystemN N D W` requires
+For each assignment of vertex indices $ι : V N → Fin D$, we define a perfect-matching sum
+$pmSumN N D W ι$ (a sum over perfect matchings, where each matching contributes the product of the
+corresponding edge weights determined by $ι$). The equation system `EqSystemN N D W` requires
 
-`pmSumN N D W ι = 1` iff `ι` is constant (all entries equal), and `0` otherwise.
+$pmSumN N D W ι = 1$ iff $ι$ is constant (all entries equal), and $0$ otherwise.
 
-The open conjectures in this file ask for non-existence/existence of such `W` over various
-coefficient domains (e.g. `ℂ`, `ℝ`, `ℤ`, and restricted integer weights).
+The open conjectures in this file ask for non-existence/existence of such $W$ over various
+coefficient domains (e.g. $ℂ$, $ℝ$, $ℤ$, and restricted integer weights).
 
 ## References
 
@@ -218,7 +218,7 @@ def Witness4_d2 : WeightsN 4 2 α :=
     if e = mkEdge 1 3 1 1 then (1 : α) else
     (0 : α)
 
-/-- Sanity check over `ℕ` using `native_decide`. -/
+/-- Sanity check over $ℕ$ using `native_decide`. -/
 @[category test, AMS 5 14 81]
 private theorem eqSystem4_d2_nat :
     EqSystemN 4 2 (Witness4_d2 (α := ℕ)) := by
@@ -256,7 +256,7 @@ def Witness4_d3 : WeightsN 4 3 α :=
     if e = mkEdge 1 2 2 2 then (1 : α) else
     (0 : α)
 
-/-- Sanity check over `ℕ` using `native_decide`. -/
+/-- Sanity check over $ℕ$ using `native_decide`. -/
 @[category test, AMS 5 14 81]
 private theorem eqSystem4_d3_nat :
     EqSystemN 4 3 (Witness4_d3 (α := ℕ)) := by
@@ -295,7 +295,7 @@ def Witness6_d2 : WeightsN 6 2 α :=
     if e = mkEdge 3 4 1 1 then (1 : α) else
     (0 : α)
 
-/-- Sanity check over `ℕ` using `native_decide`. -/
+/-- Sanity check over $ℕ$ using `native_decide`. -/
 @[category test, AMS 5 14 81]
 private theorem eqSystem6_d2_nat :
     EqSystemN 6 2 (Witness6_d2 (α := ℕ)) := by

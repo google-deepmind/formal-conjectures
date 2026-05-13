@@ -35,8 +35,8 @@ def erdos313Solutions : Set (ℕ × Finset ℕ) :=
   {(m, P) | 2 ≤ m ∧ P.Nonempty ∧ (∀ p ∈ P, p.Prime) ∧ ∑ p ∈ P, (1 : ℚ) / p = 1 - 1 / m}
 
 /--
-Are there infinitely many pairs `(m, P)` where `m ≥ 2` is an integer
-and `P` is a set of distinct primes such that the following equation holds:
+Are there infinitely many pairs $(m, P)$ where $m ≥ 2$ is an integer
+and $P$ is a set of distinct primes such that the following equation holds:
 $\sum_{p \in P} \frac{1}{p} = 1 - \frac{1}{m}$?
 -/
 @[category research open, AMS 11]

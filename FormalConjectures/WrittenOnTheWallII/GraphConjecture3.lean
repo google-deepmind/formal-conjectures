@@ -35,9 +35,9 @@ variable {α : Type u} [Fintype α] [DecidableEq α]
 /--
 WOWII [Conjecture 3](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a connected simple graph `G`, the number of leaves in a maximum spanning
-tree satisfies `Ls(G) ≥ gi(G) * MaxTemp(G)`, where `gi(G)` is the independent
-domination number and `MaxTemp(G)` is `max_v deg(v)/(n(G) - deg(v))`.
+For a connected simple graph $G$, the number of leaves in a maximum spanning
+tree satisfies $Ls(G) ≥ gi(G) * MaxTemp(G)$, where $gi(G)$ is the independent
+domination number and $MaxTemp(G)$ is $max_v deg(v)/(n(G) - deg(v))$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture3 {G : SimpleGraph α} [DecidableEq α] [DecidableRel G.Adj] [Nontrivial α]

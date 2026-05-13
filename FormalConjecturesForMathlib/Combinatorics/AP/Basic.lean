@@ -27,19 +27,19 @@ open scoped Classical
 /-! # Arithmetic Progressions
 
 Main definitions:
-- `Set.IsAPOfLengthWith (s : Set α) (l : ℕ∞) (a d : α)` : predicate asserting that `s` is the
-  set consisting of an arithmetic progression of length `l` (possibly infinite) with first term
-  `a` and difference `d`. Useful for cases in which additional conditions need to be applied to
+- $Set.IsAPOfLengthWith (s : Set α) (l : ℕ∞) (a d : α)$ : predicate asserting that $s$ is the
+  set consisting of an arithmetic progression of length $l$ (possibly infinite) with first term
+  $a$ and difference $d$. Useful for cases in which additional conditions need to be applied to
   the individual terms and/or difference.
-- `Set.IsAPOfLength (s : Set α) (l : ℕ∞)` : predicate asserting that `s` is the set consisting
-  of an arithmetic progression of length `l`, for some some first term and difference.
+- $Set.IsAPOfLength (s : Set α) (l : ℕ∞)$ : predicate asserting that $s$ is the set consisting
+  of an arithmetic progression of length $l$, for some some first term and difference.
 -/
 
 variable {α : Type*} [AddCommMonoid α]
 
 /--
 A set $S$ is an arithmetic progression of length $l$ with first term $a$ and difference $d$
-if $S = \{a, a + d, ..., a + (l - 1)d\}$, if $l$ if finite, else $S = \{a, a + d, a + 2d, ...\}.
+if $S = \{a, a + d, ..., a + (l - 1)d\}$, if $l$ if finite, else $S = \{a, a + d, a + 2d, ...\}$.
 This can be written as `s.IsAPOfLengthWith l a d`, where `l : ℕ∞` may take the infinite
 value `⊤`.
 -/
@@ -60,13 +60,13 @@ variable {s : Set α} {l : ℕ∞} {a d : α}
 theorem card (h : s.IsAPOfLengthWith l a d) : ENat.card s = l := h.1
 theorem eq (h : s.IsAPOfLengthWith l a d) : s = {a + n • d | (n : ℕ) (_ : n < l)} := h.2
 
-/-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
-if `s` is empty. -/
+/-- An arithmetic progression with first term $a$ and difference $d$ is of length zero if and only
+if $s$ is empty. -/
 @[simp]
 theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = ∅ := by simp [IsAPOfLengthWith]
 
-/-- An arithmetic progression with first term `a` and difference `d` is of length one if and only
-if `s` is a singleton. -/
+/-- An arithmetic progression with first term $a$ and difference $d$ is of length one if and only
+if $s$ is a singleton. -/
 @[simp]
 theorem one : s.IsAPOfLengthWith 1 a d ↔ s = {a} := by simp +contextual [IsAPOfLengthWith]
 
@@ -79,22 +79,22 @@ variable {s : List α} {l : ℕ} {a d : α}
 theorem length (h : s.IsAPOfLengthWith l a d) : s.length = l := by
   cases h <;> simp_all
 
-/-- An arithmetic progression with first term `a` and difference `d` is of length zero if and only
-if `s` is empty. -/
+/-- An arithmetic progression with first term $a$ and difference $d$ is of length zero if and only
+if $s$ is empty. -/
 @[simp]
 theorem zero : s.IsAPOfLengthWith 0 a d ↔ s = [] := by
   simp [IsAPOfLengthWith]
 
-/-- An arithmetic progression with first term `a` and difference `d` is of length one if and only
-if `s` is a singleton. -/
+/-- An arithmetic progression with first term $a$ and difference $d$ is of length one if and only
+if $s$ is a singleton. -/
 @[simp]
 theorem one : s.IsAPOfLengthWith 1 a d ↔ s = [a] := by
   simp [IsAPOfLengthWith]
 
 end List.IsAPOfLengthWith
 
-/-- In an abelian additive group `α`, the set `{a, b}` with `a ≠ b` is an arithmetic progression of
-length `2` with first term `a` and difference `b - a`. -/
+/-- In an abelian additive group $α$, the set ${a, b}$ with $a ≠ b$ is an arithmetic progression of
+length $2$ with first term $a$ and difference $b - a$. -/
 theorem Set.isAPOfLengthWith_pair {α : Type*} [DecidableEq α] [AddCommGroup α]
     {a b : α} (hab : a ≠ b) :
     Set.IsAPOfLengthWith {a, b} 2 a (b - a) := by
@@ -108,8 +108,8 @@ theorem Set.isAPOfLengthWith_pair {α : Type*} [DecidableEq α] [AddCommGroup α
 
 -- Formalisation note: separate result needed for `ℕ` since this is not covered by
 -- the `AddCommGroup` result above.
-/-- The set `{a, b} : Set ℕ` with `a < b` is an arithmetic progression of length `2` with
-first term `a` and difference `b - a`. -/
+/-- The set ${a, b} : Set ℕ$ with $a < b$ is an arithmetic progression of length $2$ with
+first term $a$ and difference $b - a$. -/
 theorem Nat.isAPOfLengthWith_pair {a b : ℕ} (hab : a < b) :
     Set.IsAPOfLengthWith {a, b} 2 a (b - a) := by
   let ⟨n, h⟩ := Nat.exists_eq_add_of_lt hab
@@ -148,7 +148,7 @@ theorem eq (h : s.IsAPOfLength l) : ∃ a d : α, s = {a + n • d | (n : ℕ) (
 /-- Only singletons are finite arithmetic progressions of length $1$. -/
 @[simp] theorem one : s.IsAPOfLength 1 ↔ ∃ a, s = {a} := by simp [IsAPOfLength]
 
-/-- If a set is an arithmetic progression of lengths `l₁` and `l₂`, then the lengths are
+/-- If a set is an arithmetic progression of lengths $l₁$ and $l₂$, then the lengths are
 equal. -/
 theorem congr {s : Set α} {l₁ l₂ : ℕ∞}
     (h₁ : s.IsAPOfLength l₁) (h₂ : s.IsAPOfLength l₂) :
@@ -173,7 +173,7 @@ theorem length (h : s.IsAPOfLength l) : s.length = l := by
 /-- Only singletons are finite arithmetic progressions of length $1$. -/
 @[simp] theorem one : s.IsAPOfLength 1 ↔ ∃ a, s = [a] := by simp [IsAPOfLength]
 
-/-- If a list is an arithmetic progression of lengths `l₁` and `l₂`, then the lengths are
+/-- If a list is an arithmetic progression of lengths $l₁$ and $l₂$, then the lengths are
 equal. -/
 theorem congr {s : List α} {l₁ l₂ : ℕ}
     (h₁ : s.IsAPOfLength l₁) (h₂ : s.IsAPOfLength l₂) :
@@ -200,11 +200,11 @@ non-trivial arithmetic progressions of length `l`. Written as `Set.IsAPOfLengthF
 def Set.IsAPOfLengthFree (s : Set α) (l : ℕ∞) : Prop :=
   ∀ t ⊆ s, t.IsAPOfLength l → l ≤ 1
 
-/-- Any set is free of arithmetic progressions of length `1`, because such APs are all trivial. -/
+/-- Any set is free of arithmetic progressions of length $1$, because such APs are all trivial. -/
 theorem Set.isAPOfLengthFree_one (s : Set α) : s.IsAPOfLengthFree 1 := by
   simp [Set.IsAPOfLengthFree]
 
-/-- Any set is free of arithmetic progressions of length `0`, because such APs are all trivial. -/
+/-- Any set is free of arithmetic progressions of length $0$, because such APs are all trivial. -/
 theorem Set.isAPOfLengthFree_zero (s : Set α) : s.IsAPOfLengthFree 0 := by
   simp [Set.IsAPOfLengthFree]
 

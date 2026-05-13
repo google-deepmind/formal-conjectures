@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 The **Hilbert–Smith conjecture** states that a locally compact topological group acting
 continuously and faithfully on a connected finite-dimensional topological manifold must be a
 Lie group. It remains open in general; Pardon proved it for 3-manifolds in 2013.
-An equivalent formulation: no p-adic integer group `ℤ_[p]` can act faithfully on any
+An equivalent formulation: no p-adic integer group $ℤ_[p]$ can act faithfully on any
 connected finite-dimensional topological manifold.
 
 *References:*
@@ -72,7 +72,7 @@ theorem hilbert_smith_conjecture
     AdmitsLieGroupStructure G := by
   sorry
 
-/-- The conjecture holds when `G` acts by isometries on a Riemannian manifold, since `G`
+/-- The conjecture holds when $G$ acts by isometries on a Riemannian manifold, since $G$
 embeds as a closed subgroup of the isometry group, which is a Lie group by Myers–Steenrod. -/
 @[category research solved, AMS 22 53 57 58]
 theorem hilbert_smith_conjecture.variants.riemannian
@@ -94,7 +94,7 @@ theorem hilbert_smith_conjecture.variants.dimension_three {X : Type*}
     AdmitsLieGroupStructure G := by
   sorry
 
-/-- Equivalent p-adic formulation: the p-adic integers `ℤ_[p]` cannot act continuously and
+/-- Equivalent p-adic formulation: the p-adic integers $ℤ_[p]$ cannot act continuously and
 faithfully on any connected finite-dimensional topological manifold. By the Gleason–Yamabe
 theorem, this is equivalent to `hilbert_smith_conjecture`. -/
 @[category research open, AMS 22 57 58]

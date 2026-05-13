@@ -22,7 +22,7 @@ public import Mathlib.Combinatorics.SimpleGraph.Finite
 namespace SimpleGraph
 
 /--
-The number of edges of the complete graph on a finite vertex type `V` is `#V choose 2`.
+The number of edges of the complete graph on a finite vertex type $V$ is $\binom{|V|}{2}$.
 
 This is a thin `completeGraph`-flavoured restatement of Mathlib's
 `SimpleGraph.card_edgeFinset_top_eq_card_choose_two`, useful when a downstream definition

@@ -32,8 +32,8 @@ namespace Erdos42
 
 /--
 **Erdős Problem 42**: Let M ≥ 1 and N be sufficiently large in terms of M. Is it true that for every
-maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}` of size M such that
-`(A - A) ∩ (B - B) = {0}`?
+maximal Sidon set $A ⊆ {1,…,N}$ there is another Sidon set $B ⊆ {1,…,N}$ of size M such that
+$(A - A) ∩ (B - B) = {0}$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_42 : answer(sorry) ↔
@@ -61,7 +61,7 @@ theorem erdos_42.variants.constructive : answer(sorry) ↔
 /-  ## Related results and examples -/
 
 /--
-The set `{1, 2, 4}` is a maximal Sidon set in `{1, ..., 4}`.
+The set ${1, 2, 4}$ is a maximal Sidon set in ${1, ..., 4}$.
 -/
 @[category textbook, AMS 5 11]
 theorem example_maximal_sidon : IsMaximalSidonSetIn {1, 2, 4} 4 := by
@@ -86,7 +86,7 @@ theorem example_maximal_sidon : IsMaximalSidonSetIn {1, 2, 4} 4 := by
     rcases this with ⟨h1, h2⟩ | ⟨h1, h2⟩ <;> omega
 
 /--
-The difference set of `{1, 2, 4}` is `{0, 1, 2, 3}`.
+The difference set of ${1, 2, 4}$ is ${0, 1, 2, 3}$.
 -/
 @[category textbook, AMS 5 11]
 theorem example_difference_set : ({1, 2, 4} : Set ℕ) - {1, 2, 4} = {0, 1, 2, 3} := by

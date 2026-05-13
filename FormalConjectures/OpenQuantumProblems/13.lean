@@ -40,7 +40,7 @@ $\mu(d) := \max \{ k : \text{there exist } k \text{ pairwise mutually unbiased
 orthonormal bases in } \mathbb{C}^d \}$.
 
 In this file, an orthonormal basis is represented by a unitary matrix whose columns are the
-basis vectors. For two such bases `U` and `V`, the matrix `relativeUnitary U V`, which is
+basis vectors. For two such bases $U$ and $V$, the matrix `relativeUnitary U V`, which is
 $U^\dagger V$, contains all cross-basis overlaps as its entries. Since Lean works more
 smoothly with squared norms, we formalize mutual unbiasedness by requiring
 $\| (relativeUnitary\ U\ V)_{ij} \|^2 = 1 / d$
@@ -188,7 +188,7 @@ def phaseMatrix (ζ : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![1, 1;
     ζ, -ζ]
 
-/-- The squared norm of `ω` is $1/2$. -/
+/-- The squared norm of $ω$ is $1/2$. -/
 @[category API, AMS 5 15 81 94]
 lemma omega_norm_sq : ‖ω‖ ^ (2 : ℕ) = (2 : ℝ)⁻¹ := by
   rw [RCLike.norm_sq_eq_def]
@@ -398,7 +398,7 @@ lemma firstCol_normSq (U : UMat 2) :
   exact_mod_cast h00'
 
 /-- The real part of $z \overline{w}$ is the Euclidean dot product of the coordinate pairs of
-`z` and `w`. -/
+$z$ and $w$. -/
 @[category API, AMS 5 15 81 94]
 lemma re_mul_conj (z w : ℂ) :
     Complex.re (z * star w) = Complex.re z * Complex.re w + Complex.im z * Complex.im w := by

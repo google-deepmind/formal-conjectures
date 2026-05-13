@@ -145,7 +145,7 @@ namespace Nat
 open Set
 
 /--
-The natural density of the set of even numbers is `1 / 2`.
+The natural density of the set of even numbers is $1 / 2$.
 -/
 theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
   simp [HasDensity, partialDensity]

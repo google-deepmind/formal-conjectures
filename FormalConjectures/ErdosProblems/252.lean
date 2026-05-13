@@ -49,39 +49,39 @@ theorem erdos_252 :
     answer(sorry) ↔ ∀ k ≥ 1, Irrational (erdos_252_sum k) := by
   sorry
 
-/-- `∑ σ 0 n / n!` is irrational. This is proved in [ErSt71]. -/
+/-- $∑ σ 0 n / n!$ is irrational. This is proved in [ErSt71]. -/
 @[category research solved, AMS 11]
 theorem erdos_252.variants.k_eq_zero : Irrational (erdos_252_sum 0) := by
   sorry
 
-/-- `∑ σ 1 n / n!` is irrational. This is proved in [ErSt74]. -/
+/-- $∑ σ 1 n / n!$ is irrational. This is proved in [ErSt74]. -/
 @[category research solved, AMS 11]
 theorem erdos_252.variants.k_eq_one : Irrational (erdos_252_sum 1) := by
   sorry
 
 
-/-- `∑ σ 2 n / n!` is irrational. This is proved in [ErKa54]. -/
+/-- $∑ σ 2 n / n!$ is irrational. This is proved in [ErKa54]. -/
 @[category research solved, AMS 11]
 theorem erdos_252.variants.k_eq_two : Irrational (erdos_252_sum 2) := by
   sorry
 
-/-- `∑ σ 3 n / n!` is irrational. This is proved in [ScPu06] and [FLC07]. -/
+/-- $∑ σ 3 n / n!$ is irrational. This is proved in [ScPu06] and [FLC07]. -/
 @[category research solved, AMS 11]
 theorem erdos_252.variants.k_eq_three : Irrational (erdos_252_sum 3) := by
   sorry
 
-/-- `∑ σ 4 n / n!` is irrational. This is proved in [Pr22]. -/
+/-- $∑ σ 4 n / n!$ is irrational. This is proved in [Pr22]. -/
 @[category research solved, AMS 11]
 theorem erdos_252.variants.k_eq_four : Irrational (erdos_252_sum 4) := by
   sorry
 
-/-- For a fixed `k ≥ 5`, is `∑ σ k n / n!` irrational?. -/
+/-- For a fixed $k ≥ 5$, is $∑ σ k n / n!$ irrational?. -/
 @[category research open, AMS 11]
 theorem erdos_252.variants.k_ge_five :
     answer(sorry) ↔ ∀ k ≥ 5, Irrational (erdos_252_sum k) := by
   sorry
 
-/-- If Schinzel's conjecture is true, then `∑ σ k n / n!` is irrational for all `k`. This is proved
+/-- If Schinzel's conjecture is true, then $∑ σ k n / n!$ is irrational for all $k$. This is proved
 in [ScPu06]. -/
 @[category research solved, AMS 11]
 theorem erdos_252.variants.schinzel (hs : ∀ (fs : Finset (Polynomial ℤ)),
@@ -90,7 +90,7 @@ theorem erdos_252.variants.schinzel (hs : ∀ (fs : Finset (Polynomial ℤ)),
     ∀ k, Irrational (erdos_252_sum k) := by
   sorry
 
-/-- If the prime `k`-tuples conjecture is true, then `∑ σ k n / n!` is irrational. This is proved
+/-- If the prime $k$-tuples conjecture is true, then $∑ σ k n / n!$ is irrational. This is proved
 in [FLC07]. -/
 @[category research solved, AMS 11]
 theorem erdos_252.variants.prime_tuples {k : ℕ} (hk : 4 ≤ k) (hp : ∀ (a : Fin k → ℕ+)

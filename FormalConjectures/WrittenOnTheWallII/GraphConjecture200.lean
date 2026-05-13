@@ -32,9 +32,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 200](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, if `tree(G) = ⌈1 + l_avg(G)⌉`, then `G` has a Hamiltonian path.
-Here `tree(G)` is the number of vertices of a largest induced tree subgraph, and
-`l_avg(G) = averageIndepNeighbors G` is the average over all vertices of the independence number
+For a simple connected graph $G$, if $tree(G) = ⌈1 + l_avg(G)⌉$, then $G$ has a Hamiltonian path.
+Here $tree(G)$ is the number of vertices of a largest induced tree subgraph, and
+$l_avg(G) = averageIndepNeighbors G$ is the average over all vertices of the independence number
 of the neighbourhood.
 A Hamiltonian path is a walk visiting every vertex exactly once.
 -/

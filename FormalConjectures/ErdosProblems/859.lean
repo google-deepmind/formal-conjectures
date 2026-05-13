@@ -33,8 +33,8 @@ def DivisorSumSet (t : ℕ) := { n : ℕ | ∃ s ⊆ Nat.divisors n, t = ∑ i �
 open Asymptotics Filter
 
 /-- A weaker version of the problem proved by Erdos:
-The density `dₜ` of `DivisorSumSet (t : ℕ)` is bounded from below by `1 / log (t) ^ c₃` and
-from above by `1 / log (t) ^ c₄` for some positive constants `c₃` and `c₄`.
+The density $dₜ$ of $DivisorSumSet (t : ℕ)$ is bounded from below by $1 / log (t) ^ c₃$ and
+from above by $1 / log (t) ^ c₄$ for some positive constants $c₃$ and $c₄$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_859.variants.erdos_upper_lower_bounds : ∃ᵉ (c₃ > (0 : ℝ)) (c₄ > (0 : ℝ)) (t₀ : ℕ),
@@ -56,14 +56,14 @@ theorem erdos_859 :
   sorry
 
 /--
-A case where we can easily calculate the density of `DivisorSumSet t` is that of `t=0`.
+A case where we can easily calculate the density of `DivisorSumSet t` is that of $t=0$.
 -/
 @[category textbook, AMS 11]
 lemma erdos_859.variants.trivial_case : DivisorSumSet 0 = Set.univ := by
   simp [DivisorSumSet, Exists.intro ∅]
 
 /--
-An easy sanity check is to prove that for every natural number `t` the density `dₜ` is
+An easy sanity check is to prove that for every natural number $t$ the density $dₜ$ is
 a positive number.
 Hint: investigate some multiplicative structure of `DivisorSumSet t`.
 -/

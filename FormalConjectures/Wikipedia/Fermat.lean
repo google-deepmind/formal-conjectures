@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Fermat
 
 /--
-Are Fermat numbers composite for all `n > 4`?
+Are Fermat numbers composite for all $n > 4$?
 -/
 @[category research open, AMS 11]
 theorem fermat_number_are_composite : answer(sorry) ↔ ∀ n > 4, ¬Prime n.fermatNumber := by

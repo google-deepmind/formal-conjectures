@@ -33,9 +33,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 17](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, the size `b(G)` of a largest induced bipartite subgraph
-satisfies `b(G) ≥ α(G) + ⌈diam(G) / 3⌉`, where `α(G)` is the independence number of `G`
-and `diam(G)` is the diameter of `G`.
+For a simple connected graph $G$, the size $b(G)$ of a largest induced bipartite subgraph
+satisfies $b(G) ≥ α(G) + ⌈diam(G) / 3⌉$, where $α(G)$ is the independence number of $G$
+and $diam(G)$ is the diameter of $G$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture17 (G : SimpleGraph α) (h : G.Connected) :

@@ -19,12 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 968
 
-Let `uₙ = pₙ / n`, where `pₙ` is the `n`th prime. Does the set of `n` such that `uₙ < uₙ₊₁`
+Let $uₙ = pₙ / n$, where $pₙ$ is the $n$th prime. Does the set of $n$ such that $uₙ < uₙ₊₁$
 have positive density?
 
-Erdős and Prachar also proved that `∑_{pₙ < x} |uₙ₊₁ - uₙ| ≍ (log x)^2`, and that the set of `n`
-such that `uₙ > uₙ₊₁` has positive density. Erdős also asked whether there are infinitely many
-increasing triples `uₙ < uₙ₊₁ < uₙ₊₂` or decreasing triples `uₙ > uₙ₊₁ > uₙ₊₂`.
+Erdős and Prachar also proved that $∑_{pₙ < x} |uₙ₊₁ - uₙ| ≍ (log x)^2$, and that the set of $n$
+such that $uₙ > uₙ₊₁$ has positive density. Erdős also asked whether there are infinitely many
+increasing triples $uₙ < uₙ₊₁ < uₙ₊₂$ or decreasing triples $uₙ > uₙ₊₁ > uₙ₊₂$.
 
 *Reference:* [erdosproblems.com/968](https://www.erdosproblems.com/968)
 
@@ -48,16 +48,16 @@ noncomputable def u (n : ℕ) : ℝ :=
   (n.nth Nat.Prime : ℝ) / (n + 1)
 
 /--
-Does the set `{n | u n < u (n+1)}` have positive natural density?
+Does the set ${n | u n < u (n+1)}$ have positive natural density?
 -/
 @[category research open, AMS 11]
 theorem erdos_968 : answer(sorry) ↔ {n : ℕ | u n < u (n + 1)}.HasPosDensity := by
   sorry
 
 /--
-Erdős and Prachar proved `∑_{pₙ < x} |u (n+1) - u n| ≍ (log x)^2` (see [ErPr61]).
+Erdős and Prachar proved $∑_{pₙ < x} |u (n+1) - u n| ≍ (log x)^2$ (see [ErPr61]).
 
-We encode `∑_{pₙ < x}` as a sum over `n < Nat.primeCounting' x` (the number of primes `< x`).
+We encode $∑_{pₙ < x}$ as a sum over $n < Nat.primeCounting' x$ (the number of primes $< x$).
 -/
 @[category research solved, AMS 11]
 theorem erdos_968.variants.sum_abs_diff_isTheta_log_sq :
@@ -67,7 +67,7 @@ theorem erdos_968.variants.sum_abs_diff_isTheta_log_sq :
   sorry
 
 /--
-Erdős and Prachar proved that the set `{n | u n > u (n+1)}` has positive natural density
+Erdős and Prachar proved that the set ${n | u n > u (n+1)}$ has positive natural density
 (see [ErPr61]).
 -/
 @[category research solved, AMS 11]
@@ -76,7 +76,7 @@ theorem erdos_968.variants.decreasingSteps_hasPosDensity :
   sorry
 
 /--
-Erdős asked whether there are infinitely many solutions to `uₙ < uₙ₊₁ < uₙ₊₂`.
+Erdős asked whether there are infinitely many solutions to $uₙ < uₙ₊₁ < uₙ₊₂$.
 -/
 @[category research open, AMS 11]
 theorem erdos_968.variants.infinite_increasingTriples :
@@ -84,7 +84,7 @@ theorem erdos_968.variants.infinite_increasingTriples :
   sorry
 
 /--
-Erdős asked whether there are infinitely many solutions to `uₙ > uₙ₊₁ > uₙ₊₂`.
+Erdős asked whether there are infinitely many solutions to $uₙ > uₙ₊₁ > uₙ₊₂$.
 -/
 @[category research open, AMS 11]
 theorem erdos_968.variants.infinite_decreasingTriples :

@@ -40,7 +40,7 @@ noncomputable def f (n : ℕ) : ℕ :=
   {s : ℕ | s - 1 ∉ A.1 + A.1 ∧ s ∈ A.1 + A.1 ∧ s + 1 ∉ A.1 + A.1}.ncard
 
 /--
-Must `lim f n = ∞`?
+Must $lim f n = ∞$?
 
 This was proved formally by the DeepMind prover agent [DM26a].
 -/
@@ -50,7 +50,7 @@ theorem erdos_152 : answer(True) ↔ Tendsto f atTop atTop := by
   sorry
 
 /--
-Must `f n ≫ n ^ 2`?
+Must $f n ≫ n ^ 2$?
 
 This stronger quadratic variant was also proved formally by the DeepMind prover agent [DM26b].
 -/

@@ -32,13 +32,13 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 23](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, `b(G) ≥ ⌊α(G) + dist_avg(M, V) / 2⌋`, where `b(G)` is
-the size of a largest induced bipartite subgraph, `α(G)` is the independence number,
-and `M` is the set of maximum-degree vertices, and `dist_avg(M, V)` is the average
-distance from all vertices to `M`.
+For a simple connected graph $G$, $b(G) ≥ ⌊α(G) + dist_avg(M, V) / 2⌋$, where $b(G)$ is
+the size of a largest induced bipartite subgraph, $α(G)$ is the independence number,
+and $M$ is the set of maximum-degree vertices, and $dist_avg(M, V)$ is the average
+distance from all vertices to $M$.
 
-This conjecture is false; there is a counterexample with `b(G) = 19`, `α(G) = 15`,
-and `dist_avg(M, V) = 10`.
+This conjecture is false; there is a counterexample with $b(G) = 19$, $α(G) = 15$,
+and $dist_avg(M, V) = 10$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture23 : answer(False) ↔

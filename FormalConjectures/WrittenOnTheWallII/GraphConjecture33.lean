@@ -32,10 +32,10 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 33](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, `path(G) ≥ ⌈dist_avg(C, V) + dist_avg(M, V)⌉`,
-where `path(G)` is the floor of the average distance of `G`, `C` is the set of center
-vertices (those with minimum eccentricity), `M` is the set of maximum-degree vertices,
-and `dist_avg(S, V)` is the average distance from all vertices to the set `S`.
+For a simple connected graph $G$, $path(G) ≥ ⌈dist_avg(C, V) + dist_avg(M, V)⌉$,
+where $path(G)$ is the floor of the average distance of $G$, $C$ is the set of center
+vertices (those with minimum eccentricity), $M$ is the set of maximum-degree vertices,
+and $dist_avg(S, V)$ is the average distance from all vertices to the set $S$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture33 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :

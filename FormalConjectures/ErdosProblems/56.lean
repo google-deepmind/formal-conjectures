@@ -37,12 +37,12 @@ def WeaklyDivisible (k : ℕ) (A : Finset ℕ) : Prop :=
 lemma weaklyDivisible_empty (k : ℕ): WeaklyDivisible k {} := by
   simp [WeaklyDivisible]
 
-/-- A singleton is `k`-weakly divisble if `k ≠ 0`. -/
+/-- A singleton is $k$-weakly divisble if $k ≠ 0$. -/
 @[category API, AMS 11]
 lemma weaklyDivisible_singleton {k : ℕ} (hk : k ≠ 0) (l : ℕ) : WeaklyDivisible k {l} := by
   simp [WeaklyDivisible, hk]
 
-/-- No non-empty set is `1`-weakly divisible. -/
+/-- No non-empty set is $1$-weakly divisible. -/
 @[category API, AMS 11]
 lemma not_weaklyDivisible_zero {A : _} (h : A.Nonempty) : ¬WeaklyDivisible 0 A := by
   simpa [WeaklyDivisible] using ⟨{_}, by simpa using h.choose_spec⟩
@@ -98,8 +98,8 @@ theorem firstPrimesMultiples_zero_k_card_zero (N : ℕ) : (FirstPrimesMultiples 
   simp [FirstPrimesMultiples]
 
 /--
-An example of a `k`-weakly divisible set is the subset of `{1, ..., N}`
-containing the multiples of the first `k` primes.
+An example of a $k$-weakly divisible set is the subset of ${1, ..., N}$
+containing the multiples of the first $k$ primes.
 -/
 @[category API, AMS 11]
 lemma weaklyDivisible_firstPrimesMultiples (N k : ℕ) :

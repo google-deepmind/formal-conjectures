@@ -41,7 +41,7 @@ theorem erdos_326 : answer(sorry) ↔ ∀ (A : Set ℕ), A.IsAddBasisOfOrder 2 �
   sorry
 
 /--
-Erdős originally asked whether this was true with `A = B`, but this was disproved by Cassels.
+Erdős originally asked whether this was true with $A = B$, but this was disproved by Cassels.
 -/
 -- Formalisation note: This is trivially true for `x = 0` by taking `a = id`. Cassels' proof
 -- shows it for `0 < x` which is more interesting.

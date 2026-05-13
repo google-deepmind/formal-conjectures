@@ -33,10 +33,10 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 16](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, the size `b(G)` of a largest induced bipartite subgraph
-satisfies `b(G) ≥ 2 * (rad(G) - 1) + max_{v ∈ V} l(v)`, where `rad(G)` is the radius
-of `G` (the minimum eccentricity) and `l(v) = indepNeighborsCard G v` is the independence
-number of the neighbourhood of `v`.
+For a simple connected graph $G$, the size $b(G)$ of a largest induced bipartite subgraph
+satisfies $b(G) ≥ 2 * (rad(G) - 1) + max_{v ∈ V} l(v)$, where $rad(G)$ is the radius
+of $G$ (the minimum eccentricity) and $l(v) = indepNeighborsCard G v$ is the independence
+number of the neighbourhood of $v$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture16 (G : SimpleGraph α) (h : G.Connected) :

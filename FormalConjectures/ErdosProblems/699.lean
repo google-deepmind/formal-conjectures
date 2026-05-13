@@ -43,8 +43,8 @@ theorem erdos_699 : answer(sorry) ↔
       ∃ p : ℕ, p.Prime ∧ i ≤ p ∧ p ∣ Nat.gcd (Nat.choose n i) (Nat.choose n j) := by
   sorry
 
-/-- Erdős and Szekeres conjectured that, apart from a finite exceptional set of triples `(n, i, j)`,
-one can always take `p > i` in the prime divisor statement. -/
+/-- Erdős and Szekeres conjectured that, apart from a finite exceptional set of triples $(n, i, j)$,
+one can always take $p > i$ in the prime divisor statement. -/
 @[category research open, AMS 11]
 theorem erdos_szekeres_strengthening : answer(sorry) ↔
     ∃ E : Finset (ℕ × ℕ × ℕ), ∀ n i j : ℕ,

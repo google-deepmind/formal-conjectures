@@ -27,16 +27,16 @@ open Function Set Finset
 namespace Erdos44
 
 -- Reference: https://arxiv.org/pdf/2103.15850
-/-- The maximum size of a Sidon set in `{1, ..., N}` is less than or equal to `2 * √N`. -/
+/-- The maximum size of a Sidon set in ${1, ..., N}$ is less than or equal to $2 * √N$. -/
 @[category textbook, AMS 5 11]
 theorem maxSidonSubsetCard_icc_bound (N : ℕ) (hN : 1 ≤ N) :
     maxSidonSubsetCard (Icc 1 N) ≤ 2 * Real.sqrt N := by
   sorry
 
 /--
-**Erdős Problem 44:** Let N ≥ 1 and `A ⊆ {1,…,N}` be a Sidon set. Is it true that, for any ε > 0,
-there exist M = M(ε) and `B ⊆ {N+1,…,M}` such that `A ∪ B ⊆ {1,…,M}` is a Sidon set
-of size at least `(1−ε)M^{1/2}`?
+**Erdős Problem 44:** Let N ≥ 1 and $A ⊆ {1,…,N}$ be a Sidon set. Is it true that, for any ε > 0,
+there exist M = M(ε) and $B ⊆ {N+1,…,M}$ such that $A ∪ B ⊆ {1,…,M}$ is a Sidon set
+of size at least $(1−ε)M^{1/2}$?
 
 This problem asks whether any Sidon set can be extended to achieve a density
 arbitrarily close to the optimal density for Sidon sets.
@@ -58,7 +58,7 @@ theorem erdos_44.variants.empty_start : answer(sorry) ↔ ∀ᵉ (ε > (0 : ℝ)
 /-  ## Related results and examples -/
 
 /--
-The set `{1, 2, 4, 8, 13}` is a Sidon set in `{1, ..., 13}`.
+The set ${1, 2, 4, 8, 13}$ is a Sidon set in ${1, ..., 13}$.
 -/
 @[category textbook, AMS 5 11]
 theorem example_sidon_set : IsSidon ({1, 2, 4, 8, 13} : Set ℕ) := by
@@ -71,7 +71,7 @@ theorem example_sidon_set : IsSidon ({1, 2, 4, 8, 13} : Set ℕ) := by
   simp_all
 
 /--
-For any `N`, there exists a Sidon set of size at least `√N/2`.
+For any $N$, there exists a Sidon set of size at least $√N/2$.
 -/
 @[category textbook, AMS 5 11]
 theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
@@ -79,7 +79,7 @@ theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
   sorry
 
 /--
-The greedy construction gives a Sidon set of size approximately `√N`.
+The greedy construction gives a Sidon set of size approximately $√N$.
 -/
 @[category textbook, AMS 5 11]
 theorem greedy_sidon_construction (N : ℕ) (hN : 1 ≤ N) :

@@ -27,9 +27,9 @@ open Nat
 
 namespace PrimeTuplesConjecture
 
-/-- For any `k ≥ 2`, let `a₁,...,aₖ` and `b₁,...,bₖ` be integers with `aᵢ > 0`. Suppose that for
-every prime `p` there exists an integer `n` such that `p ∤ ∏ i, (aᵢ n + bᵢ)`. Then there exist
-infinitely many `n` such that `aᵢ n + bᵢ` is prime for all `i`. -/
+/-- For any $k ≥ 2$, let $a₁,...,aₖ$ and $b₁,...,bₖ$ be integers with $aᵢ > 0$. Suppose that for
+every prime $p$ there exists an integer $n$ such that $p ∤ ∏ i, (aᵢ n + bᵢ)$. Then there exist
+infinitely many $n$ such that $aᵢ n + bᵢ$ is prime for all $i$. -/
 @[category research open, AMS 11]
 theorem prime_tuples_conjecture {k : ℕ} (hk : 2 ≤ k) (a : Fin k → ℕ+) (b : Fin k → ℕ)
     (hab : ∀ p, p.Prime → ∃ n, ¬ p ∣ ∏ i, (a i * n + b i)) :

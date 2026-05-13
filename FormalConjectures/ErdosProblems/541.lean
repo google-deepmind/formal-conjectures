@@ -47,7 +47,7 @@ theorem erdos_541 : answer(True) ↔ (∀ p, Fact p.Prime → ∀ (a : Fin p →
       (Set.range a).ncard ≤ 2) := by
   sorry
 
-/-- Gao, Hamidoune, and Wang [GHW10] solved this for all moduli `p` (not necessarily prime). -/
+/-- Gao, Hamidoune, and Wang [GHW10] solved this for all moduli $p$ (not necessarily prime). -/
 @[category research solved, AMS 11]
 theorem erdos_541.variants.general_moduli (p : ℕ) (a : Fin p → ZMod p)
     (ha₀ : ∃ r, ∀ (S : Finset (Fin p)), S ≠ ∅ → ∑ i ∈ S, a i = 0 → S.card = r) :

@@ -38,9 +38,9 @@ classical constants such as $\pi$, $e$, or $\sqrt{2}$ are normal in any base.
 
 ## Main definitions
 
-* `digitSeq`: the sequence of digits in the base-`b` fractional expansion of a real number.
-* `IsNormalInBase`: a real number is normal in base `b`.
-* `IsAbsolutelyNormal`: a real number is normal in every base `b ≥ 2`.
+* `digitSeq`: the sequence of digits in the base-$b$ fractional expansion of a real number.
+* `IsNormalInBase`: a real number is normal in base $b$.
+* `IsAbsolutelyNormal`: a real number is normal in every base $b ≥ 2$.
 -/
 
 open Real Filter

@@ -40,7 +40,7 @@ theorem erdos_298 : answer(True) ↔ (∀ (A : Set ℕ), 0 ∉ A → A.HasPosDen
   sorry
 
 /--
-In [Bl21] it is proved under the weaker assumption that `A` only has positive upper density.
+In [Bl21] it is proved under the weaker assumption that $A$ only has positive upper density.
 -/
 @[category research solved, AMS 11]
 theorem erdos_298.variants.upper_density : answer(True) ↔ (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →

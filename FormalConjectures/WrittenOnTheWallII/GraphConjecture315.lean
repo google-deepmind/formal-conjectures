@@ -34,8 +34,8 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /--
 WOWII [Conjecture 315](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-Let `G` be a simple connected graph and let `P` denote the set of pendant vertices
-(vertices of degree 1). If `α(G) = |P|`, then `G` is well totally dominated.
+Let $G$ be a simple connected graph and let $P$ denote the set of pendant vertices
+(vertices of degree 1). If $α(G) = |P|$, then $G$ is well totally dominated.
 -/
 @[category research open, AMS 5]
 theorem conjecture315 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)

@@ -26,9 +26,9 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos268
 
-/-- Let `X` be the set of points in `Fin d → ℝ` of the shape
-`fun i : Fin d => ∑' n : A, (1 : ℝ) / (n + i)` for some infinite subset `A ⊆ ℕ` such that
-`1 / n` is summable over `A`. `X` has nonempty interior. This is proved in [KoTa24].
+/-- Let $X$ be the set of points in $Fin d → ℝ$ of the shape
+$fun i : Fin d => ∑' n : A, (1 : ℝ) / (n + i)$ for some infinite subset $A ⊆ ℕ$ such that
+$1 / n$ is summable over $A$. $X$ has nonempty interior. This is proved in [KoTa24].
 --/
 @[category research solved, AMS 40 54, formal_proof using lean4 at
   "https://gist.githubusercontent.com/madeve-unipi/62a8f68cdb4864b85b81a6752dcb0aa4/raw/5793aaa51089c25c37d8d63f60540367f6abe506/Erdos268.lean"]

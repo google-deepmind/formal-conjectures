@@ -21,10 +21,10 @@ import Lean.Linter.Basic
 
 /-! # The Exists Implication Linter
 
-Many misformalisations stem from using a pattern of the form `∃ x, P x → Q` instead of
-`∃ x, P x ∧ Q` (e.g. when formalising something of the form "there is positive `x` such that ...").
-This is almost always incorrect (and trivial to prove) since it then suffices to pick an `x` that
-does not satisfy `P`. This linter flags occurences of this patter to the user and proposes a
+Many misformalisations stem from using a pattern of the form $∃ x, P x → Q$ instead of
+$∃ x, P x ∧ Q$ (e.g. when formalising something of the form "there is positive $x$ such that ...").
+This is almost always incorrect (and trivial to prove) since it then suffices to pick an $x$ that
+does not satisfy $P$. This linter flags occurences of this patter to the user and proposes a
 corrected syntax.
 
 -/

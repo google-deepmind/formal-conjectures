@@ -41,7 +41,7 @@ namespace Erdos946
 
 /--
 There are infinitely many $n$ such that $τ(n) = τ(n+1)$. Proved in [He84].
-Here τ is the divisor counting function, which is `σ 0` in mathlib.
+Here τ is the divisor counting function, which is $σ 0$ in mathlib.
 -/
 @[category research solved, AMS 11]
 theorem erdos_946 : {n : ℕ | σ 0 n = σ 0 (n + 1)}.Infinite := by

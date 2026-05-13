@@ -25,7 +25,7 @@ Can the unit square be covered by $1/k$-by-$1/(k+1)$ rectangles (across $1 \le k
 
 I am deliberately not requiring that the rotations can only be $0^\circ, 90^\circ, 180^\circ, \text{ or } 270^\circ$.
 
-Because of indexing, since `n : ℕ` starts at 0, we change the side lengths to $1 / (n + 1)$ and
+Because of indexing, since $n : ℕ$ starts at 0, we change the side lengths to $1 / (n + 1)$ and
 $1 / (n + 2)$, so that the first rectangle is $1/1$ by $1/2$, the second is $1/2$ by $1/3$, etc.
 
 *Reference:* [mathoverflow/34145](https://mathoverflow.net/q/34145)
@@ -72,7 +72,7 @@ def Rectangle.toSet (r : Rectangle) : Set (ℝ × ℝ) :=
 noncomputable abbrev lbMeasure : Measure (ℝ × ℝ) :=
   (Basis.finTwoProd ℝ).addHaar
 
-/-- `lbMeasure` is invariant under `rigidMotion start θ`. -/
+/-- `lbMeasure` is invariant under $rigidMotion start θ$. -/
 @[category test, AMS 51]
 lemma lbMeasure_rigidMotion (start : ℝ × ℝ) (θ : Angle) (s : Set (ℝ × ℝ)) :
     lbMeasure (rigidMotion start θ '' s) = lbMeasure s := by
@@ -99,7 +99,7 @@ lemma lbMeasure_scale (x y : ℝ) (s : Set (ℝ × ℝ)) :
     ext i j; unfold scaleLinear; fin_cases i <;> fin_cases j <;> simp [LinearMap.toMatrix_apply]
   simp [h₁, ← LinearMap.det_toMatrix (Basis.finTwoProd ℝ), h₂]
 
-/-- The Lebesgue measure of the unit square is `1`. -/
+/-- The Lebesgue measure of the unit square is $1$. -/
 @[category test, AMS 51]
 lemma lbMeasure_unitSquare : lbMeasure unitSquare = 1 := by
   convert (Basis.addHaar_eq_iff (Basis.finTwoProd ℝ) _).1 rfl
@@ -110,7 +110,7 @@ lemma lbMeasure_unitSquare : lbMeasure unitSquare = 1 := by
   exact ⟨fun h ↦ ⟨![p.1, p.2], by simp [Fin.forall_fin_succ, h]⟩,
     fun ⟨t, ht⟩ ↦ ht.2 ▸ ⟨ht.1.1 0, ht.1.2 0, ht.1.1 1, ht.1.2 1⟩⟩
 
-/-- The Lebesgue measure of the a rectangle `r` is `r.width * r.height` -/
+/-- The Lebesgue measure of the a rectangle $r$ is $r.width * r.height$ -/
 @[category test, AMS 51]
 lemma lbMeasure_rectangle_toSet (r : Rectangle) :
     lbMeasure r.toSet = .ofReal |r.width * r.height| := by
@@ -139,20 +139,20 @@ structure Configuration : Type where
 def Configuration.IsPacking (c : Configuration) : Prop :=
   Pairwise fun m n ↦ interior (c.rect m).toSet ∩ interior (c.rect n).toSet = ∅
 
-/-- Can a unit square be covered by rectangles of width `1 / (n + 1)` and height `1 / (n + 2)`? -/
+/-- Can a unit square be covered by rectangles of width $1 / (n + 1)$ and height $1 / (n + 2)$? -/
 @[category research open, AMS 51]
 theorem rectangles_cover_unit_square :
     answer(sorry) ↔ ∃ c : Configuration, ∀ p ∈ unitSquare, ∃ n, p ∈ (c.rect n).toSet := by
   sorry
 
-/-- Equivalently, can a unit square be packed with rectangles of width `1 / (n + 1)` and height
-`1 / (n + 2)`? -/
+/-- Equivalently, can a unit square be packed with rectangles of width $1 / (n + 1)$ and height
+$1 / (n + 2)$? -/
 @[category research open, AMS 51]
 theorem rectangles_pack_unit_square :
     answer(sorry) ↔ ∃ c : Configuration, (∀ n, (c.rect n).toSet ⊆ unitSquare) ∧ c.IsPacking := by
   sorry
 
-/-- It is known that packing the rectangles into a square of side length `133/132` is possible.
+/-- It is known that packing the rectangles into a square of side length $133/132$ is possible.
 
 Reference: https://www.sciencedirect.com/science/article/pii/0097316594901163
 -/
@@ -163,7 +163,7 @@ theorem rectangles_pack_square_133_div_132 :
       c.IsPacking) := by
   sorry
 
-/-- It is known that packing the rectangles into a square of side length `501/500` is possible.
+/-- It is known that packing the rectangles into a square of side length $501/500$ is possible.
 
 Reference: https://www.sciencedirect.com/science/article/pii/S0167506008706009
 -/

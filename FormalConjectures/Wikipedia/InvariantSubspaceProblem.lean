@@ -37,10 +37,10 @@ structure ClosedInvariantSubspace [Module ℂ H] (T : H →L[ℂ] H) where
   is_fixed : toSubspace.map T.toLinearMap ≤ toSubspace
 
 /--
-Show that every bounded linear operator `T : H → H` on a separable Hilbert space `H` of dimension
-at least 2 has a non-trivial closed `T`-invariant subspace: a closed linear subspace `W` of `H`,
-which is different from `H` and from `{0}`, such that `T ( W ) ⊂ W`. One needs the assumption that
-the dimension of `H` is at least 2 because otherwise any subspace would be either `H` or `{0}`. -/
+Show that every bounded linear operator $T : H → H$ on a separable Hilbert space $H$ of dimension
+at least 2 has a non-trivial closed $T$-invariant subspace: a closed linear subspace $W$ of $H$,
+which is different from $H$ and from ${0}$, such that $T ( W ) ⊂ W$. One needs the assumption that
+the dimension of $H$ is at least 2 because otherwise any subspace would be either $H$ or ${0}$. -/
 @[category research open, AMS 47]
 theorem Invariant_subspace_problem [InnerProductSpace ℂ H] [TopologicalSpace.SeparableSpace H]
     [CompleteSpace H] (hdim : 2 ≤ Module.rank ℂ H) (T : H →L[ℂ] H) :
@@ -48,8 +48,8 @@ theorem Invariant_subspace_problem [InnerProductSpace ℂ H] [TopologicalSpace.S
   sorry
 
 /--
-Every (bounded) linear operator `T : H → H` on a finite-dimensional linear space `H` of dimension
-at least 2 has a non-trivial (closed) `T`-invariant subspace. This can be solved using the Jordan
+Every (bounded) linear operator $T : H → H$ on a finite-dimensional linear space $H$ of dimension
+at least 2 has a non-trivial (closed) $T$-invariant subspace. This can be solved using the Jordan
 normal form, which is
 [not yet in mathlib](https://leanprover-community.github.io/undergrad_todo.html). -/
 @[category research solved, AMS 47]
@@ -65,8 +65,8 @@ lemma TopologicalSpace.nontrivial_of_not_separableSpace {H : Type*} [Topological
   infer_instance
 
 /--
-Every bounded linear operator `T : H → H` on a non-separable Hilbert space `H` has a
-non-trivial closed `T`-invariant subspace. Such an invariant space is given by considering the
+Every bounded linear operator $T : H → H$ on a non-separable Hilbert space $H$ has a
+non-trivial closed $T$-invariant subspace. Such an invariant space is given by considering the
 closure of the linear span of the orbit of any single non-zero vector. -/
 @[category research solved, AMS 47, formal_proof using formal_conjectures at ""]
 theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [CompleteSpace H]
@@ -98,9 +98,9 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
             exact ⟨n + 1, by simp [pow_succ']⟩
 
 /--
-Every normal linear operator `T : H → H` on a Hilbert space `H` of dimension at least 2 has a
-non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can take any
-non-trivial subspace . If not, one can take any nontrivial spectral subspace of `T`. -/
+Every normal linear operator $T : H → H$ on a Hilbert space $H$ of dimension at least 2 has a
+non-trivial closed $T$-invariant subspace. If $T$ is a multiple of the identity, one can take any
+non-trivial subspace . If not, one can take any nontrivial spectral subspace of $T$. -/
 @[category research solved, AMS 47]
 theorem Invariant_subspace_problem_normal_operator [InnerProductSpace ℂ H] [CompleteSpace H]
     (hdim : 2 ≤ Module.rank ℂ H) (T : H →L[ℂ] H) [IsStarNormal T]:
@@ -108,8 +108,8 @@ theorem Invariant_subspace_problem_normal_operator [InnerProductSpace ℂ H] [Co
   sorry
 
 /--
-There exists a bounded linear operator `T` on the l1 space `(lp (fun (_ : ℕ) => ℂ) 1))` without
-non-trivial closed `T`-invariant subspace [Read 1985](https://doi.org/10.1112/blms/17.4.305), see
+There exists a bounded linear operator $T$ on the l1 space $(lp (fun (_ : ℕ) => ℂ) 1))$ without
+non-trivial closed $T$-invariant subspace [Read 1985](https://doi.org/10.1112/blms/17.4.305), see
 also the first counterexample by Enflo [Enflo 1987](https://doi.org/10.1007%2FBF02392260), submitted
 in 1981. -/
 @[category research solved, AMS 47]

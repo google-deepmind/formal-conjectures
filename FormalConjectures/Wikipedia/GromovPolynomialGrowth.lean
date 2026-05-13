@@ -98,7 +98,7 @@ lemma cayleyBall_mul (S : Set G) {g h : G} {m n : ℕ}
     | inl h => simp [lgSubS s h]
     | inr h => simp [lhSubS s h]
 
-/-- If `g ∈ CayleyBall S n`, then `g⁻¹ ∈ CayleyBall S n`. -/
+/-- If $g ∈ CayleyBall S n$, then $g⁻¹ ∈ CayleyBall S n$. -/
 @[category API, AMS 20]
 lemma cayleyBall_inv (S : Set G) {g : G} {n : ℕ}
     (hg : g ∈ CayleyBall S n) :
@@ -152,10 +152,10 @@ theorem tendsto_atTop_growthFunction_of_infinite [Infinite G] {S : Set G} (hS : 
     refine ⟨N, fun a ha ↦ ?_⟩
     simpa using cayleyBall_monotone S (Finset.le_max' _ _ (by aesop)) (hn ⟨a, ha⟩)
 
-/-- Infinite groups do not satisfy polynomial growth over `ℕ` for any degree `d` because when
-`d = 0` this reduces to the unbounded nature of `growthFunction` while `n = 0` works when `d ≠ 0`.
+/-- Infinite groups do not satisfy polynomial growth over $ℕ$ for any degree $d$ because when
+$d = 0$ this reduces to the unbounded nature of `growthFunction` while $n = 0$ works when $d ≠ 0$.
 Thus a finitely-generated infinite nilpotent group would be a counter-example to
-Gromov's theorem when quantifying over all of `ℕ`, and so `n = 0` should be excluded. -/
+Gromov's theorem when quantifying over all of $ℕ$, and so $n = 0$ should be excluded. -/
 @[category test, AMS 20]
 theorem growthFunction_not_polynomial_of_infinite [Infinite G] {S : Set G} (hS : S.Finite)
     (h : Subgroup.closure S = ⊤) {C : ℝ} (d : ℕ) :

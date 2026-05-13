@@ -23,7 +23,7 @@ This file defines the syntax and proof systems for modal logic, along with the
 Boxdot translation and the Boxdot Conjecture. We introduce:
 
   * `Formula`: the inductive type for propositional modal formulas.
-  * `t`: the recursive Boxdot translation function.
+  * $t$: the recursive Boxdot translation function.
   * `KProof` and `KTProof`: axiomatizations of the basic K system and K plus T.
   * `NormalModalLogic`: a structure capturing any normal modal logic.
   * `KT`: the specific normal modal logic corresponding to K plus T.

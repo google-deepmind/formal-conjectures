@@ -53,7 +53,7 @@ lemma F_3 : F 3 = 2 := rfl
 
 /--
 Sanity check: elements of `IntervalNonTernarySets N` are precisely non ternary subsets of
-`{1,...,N}`
+${1,...,N}$
 -/
 @[category API, AMS 5 11]
 lemma mem_IntervalNonTernarySets_iff (N : ℕ) (S : Finset ℕ) :
@@ -64,8 +64,8 @@ lemma mem_IntervalNonTernarySets_iff (N : ℕ) (S : Finset ℕ) :
   exact fun n hn₁ hn₂ hn₃ => h.2 n (h.1 hn₁).1 (h.1 hn₃).2 hn₁ hn₂ hn₃
 
 /--
-Sanity check: if `S` is a maximal non ternary subset of `{1,..., N}` then `F N` is given by the
-cardinality of `S`
+Sanity check: if $S$ is a maximal non ternary subset of ${1,..., N}$ then `F N` is given by the
+cardinality of $S$
 -/
 @[category API, AMS 5 11]
 lemma F_eq_card (N : ℕ) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 N) (hS' : NonTernary S)

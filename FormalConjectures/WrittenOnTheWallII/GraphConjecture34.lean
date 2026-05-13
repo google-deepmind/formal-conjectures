@@ -37,9 +37,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /--
 WOWII [Conjecture 34](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-Let `path(G)` be the floor of the average distance of a connected graph `G`.
+Let $path(G)$ be the floor of the average distance of a connected graph $G$.
 Then
-`path(G) ≥ ceil( distavg(G, center) + distavg(G, maxEccentricityVertices G) )`.
+$path(G) ≥ ceil( distavg(G, center) + distavg(G, maxEccentricityVertices G) )$.
 -/
 @[category research open, AMS 5]
 theorem conjecture34 [Nontrivial α] (G : SimpleGraph α) (h_conn : G.Connected) :

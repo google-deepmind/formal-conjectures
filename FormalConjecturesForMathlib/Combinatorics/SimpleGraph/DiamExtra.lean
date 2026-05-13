@@ -27,7 +27,7 @@ variable {α : Type*} {G G' : SimpleGraph α}
 
 /--
 The diameter is the greatest distance between any two vertices. If the graph is disconnected,
-this will be `0`.
+this will be $0$.
 -/
 lemma diam_eq_zero_of_subsingleton [Subsingleton α] : G.diam = 0 := by
   simp [diam, ediam_eq_zero_iff_subsingleton.mpr (by assumption)]

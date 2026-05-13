@@ -40,11 +40,11 @@ def IsMinimalAsymptoticAddBasisOfOrder (k : ℕ) (A : Set ℕ) : Prop :=
     ∀ ⦃B : Set ℕ⦄, B ⊆ A → B.Infinite → ¬ (A \ B).IsAsymptoticAddBasisOfOrder k
 
 /--
-Let `A ⊂ ℕ` be an additive basis of order `k` which is minimal in the sense that
-if `B ⊂ A` is any infinite set, then `A \ B` is not a basis of order `k`.
+Let $A ⊂ ℕ$ be an additive basis of order $k$ which is minimal in the sense that
+if $B ⊂ A$ is any infinite set, then `A \ B` is not a basis of order $k$.
 
-Must there exist an infinite `B ⊂ A` such that `A \ B`
-is an additive basis of order `k + 1`?
+Must there exist an infinite $B ⊂ A$ such that `A \ B`
+is an additive basis of order $k + 1$?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_881 :

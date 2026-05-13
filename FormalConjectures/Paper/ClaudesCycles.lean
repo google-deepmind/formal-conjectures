@@ -22,14 +22,14 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Claude's Cycles](https://www-cs-faculty.stanford.edu/~knuth/papers/claude-cycles.pdf)
 by *Donald E. Knuth* (2026)
 
-Fix `m ≥ 2`. Consider the directed graph with vertex set `(ZMod m)³`, where from each vertex
-`(i, j, k)` there are directed arcs to `(i+1, j, k)`, `(i, j+1, k)`, and `(i, j, k+1)`
-(arithmetic mod `m`). The goal is to partition all `3m³` directed arcs into three
-edge-disjoint directed Hamiltonian cycles (each of length `m³`).
+Fix $m ≥ 2$. Consider the directed graph with vertex set $(ZMod m)³$, where from each vertex
+$(i, j, k)$ there are directed arcs to $(i+1, j, k)$, $(i, j+1, k)$, and $(i, j, k+1)$
+(arithmetic mod $m$). The goal is to partition all $3m³$ directed arcs into three
+edge-disjoint directed Hamiltonian cycles (each of length $m³$).
 
 Knuth describes an explicit construction, found by Claude (Anthropic), that achieves this
-decomposition for all odd `m ≥ 3`. The case `m = 2` is known to be impossible [Aub82].
-The even case `m > 2` remains open.
+decomposition for all odd $m ≥ 3$. The case $m = 2$ is known to be impossible [Aub82].
+The even case $m > 2$ remains open.
 
 ## References
 
@@ -66,21 +66,21 @@ def HasHamiltonianArcDecomposition (m : ℕ) [NeZero m] : Prop :=
     (∀ c, IsDirectedHamiltonianCycle (cubeAdj (m := m)) (σ c)) ∧
     (∀ v : Vertex m, ∀ b : Fin 3, ∃! c : Fin 3, σ c v = bumpAt b v)
 
-/-- For odd `m > 1`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition
+/-- For odd $m > 1$, the cube digraph on $(ZMod m)³$ has a Hamiltonian arc decomposition
 into three directed cycles [Knu26]. -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean"]
 theorem cube_hamiltonian_arc_decomposition {m : ℕ} [NeZero m] (hm : Odd m) (hm' : 1 < m) :
     HasHamiltonianArcDecomposition m := by
   sorry
 
-/-- The case `m = 2` is impossible: the cube digraph on `(ZMod 2)³` does not have a
+/-- The case $m = 2$ is impossible: the cube digraph on $(ZMod 2)³$ does not have a
 Hamiltonian arc decomposition [Aub82]. -/
 @[category research solved, AMS 5]
 theorem cube_hamiltonian_arc_decomposition_impossible_m2 :
     ¬ HasHamiltonianArcDecomposition 2 := by
   sorry
 
-/-- For even `m > 2`, it is open whether the cube digraph on `(ZMod m)³` has a Hamiltonian
+/-- For even $m > 2$, it is open whether the cube digraph on $(ZMod m)³$ has a Hamiltonian
 arc decomposition. -/
 @[category research open, AMS 5]
 theorem cube_hamiltonian_arc_decomposition_even :

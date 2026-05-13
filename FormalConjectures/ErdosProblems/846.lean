@@ -43,11 +43,11 @@ end Prelims
 
 /--
 **Erdős Problem 846**
-Let `A ⊂ ℝ²` be an infinite set for which there exists some `ϵ>0` such that in any subset of `A`
-of size `n` there are always at least `ϵn` with no three on a line.
-Is it true that `A` is the union of a finite number of sets where no three are on a line?
+Let $A ⊂ ℝ²$ be an infinite set for which there exists some $ϵ>0$ such that in any subset of $A$
+of size $n$ there are always at least `ϵn` with no three on a line.
+Is it true that $A$ is the union of a finite number of sets where no three are on a line?
 
-In other words, prove or disprove the following statement: every infinite `ε`-non-trilinear subset of the
+In other words, prove or disprove the following statement: every infinite $ε$-non-trilinear subset of the
 plane is weakly non-trilinar.
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/2404258180688283e5141021c75464dc2acfb798/FormalConjectures/ErdosProblems/846.lean"]

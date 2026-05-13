@@ -23,7 +23,7 @@ public import Mathlib.RingTheory.PowerSeries.Basic
 /-!
 # Convolution of Functions on ℕ
 
-This file defines the sum (`∗`) convolution of functions `ℕ → R`.
+This file defines the sum (`∗`) convolution of functions $ℕ → R$.
 
 ## Main Definitions
 * `AdditiveCombinatorics.sumConv`: The sum convolution `f ∗ g`.

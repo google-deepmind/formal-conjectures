@@ -88,7 +88,7 @@ theorem inverse_galois_problem.variants.complex_rational_functions
 
 /--
 Every finite group is realisable over the field of rational functions
-with coefficients `K`, where `K` is any field of characteristic 0.
+with coefficients $K$, where $K$ is any field of characteristic 0.
 -/
 @[category research solved, AMS 12]
 theorem inverse_galois_problem.variants.complex_function_field

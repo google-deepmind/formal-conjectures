@@ -104,7 +104,7 @@ lemma consecutivePrimesFrom_two_one : consecutivePrimesFrom 2 1 = {2, 3} := by
 -- Reworded slightly using https://users.renyi.hu/~p_erdos/1969-14.pdf p. 81
 -- See https://users.renyi.hu/~p_erdos/1965-02.pdf p. 182 for the multiplicity one condition
 /--
-Let $\epsilon > 0$ be given. Then, for a sufficiently large prime `p`, take the sequence of
+Let $\epsilon > 0$ be given. Then, for a sufficiently large prime $p$, take the sequence of
 consecutive primes $p_1 < \cdots < p_k$ such that
 $$
 \sum_{i=1}^k \frac{1}{p_i} < 1 < \sum_{i=1}^{k + 1} \frac{1}{p_i},

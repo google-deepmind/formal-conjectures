@@ -28,8 +28,8 @@ open scoped NNReal
 namespace Erdos234
 
 /--
-Is it true that for all `c ≥ 0`, the density `f c` of integers for which
-`(p (n + 1) - p n) / log n < c` exists and is a continuous function of `c`?
+Is it true that for all $c ≥ 0$, the density `f c` of integers for which
+$(p (n + 1) - p n) / log n < c$ exists and is a continuous function of $c$?
 -/
 @[category research open, AMS 11]
 theorem erdos_234 : answer(sorry) ↔ ∃ f : ℝ≥0 → ℝ, Continuous f ∧

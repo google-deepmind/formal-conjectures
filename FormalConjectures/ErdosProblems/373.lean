@@ -35,7 +35,7 @@ abbrev S : Set (ℕ × List ℕ) :=
     ∧ l.headI < (n - 1 : ℕ) ∧ ∀ a ∈ l, 1 < a }
 
 /--
-Show that the equation `n!=a_1!a_2!···a_k!`, with `n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k`, has
+Show that the equation $n!=a_1!a_2!···a_k!$, with $n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k$, has
 only finitely many solutions.
 -/
 @[category research open, AMS 11]
@@ -43,8 +43,8 @@ theorem erdos_373 : S.Finite := by
   sorry
 
 /--
-Show that if `P(n(n+1)) / log n → ∞` where `P(m)` denotes the largest prime factor of `m`, then
-the equation `n!=a_1!a_2!···a_k!`, with `n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k`, has only
+Show that if $P(n(n+1)) / log n → ∞$ where $P(m)$ denotes the largest prime factor of $m$, then
+the equation $n!=a_1!a_2!···a_k!$, with $n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k$, has only
 finitely many solutions.
 -/
 @[category research solved, AMS 11]
@@ -60,9 +60,9 @@ theorem erdos_373.variants.of_limit
 -- that no non-trivial solutions hold for any `n` with `n > n_0` and `P(n(n - 1)) > 4 log n`.
 -- So for finiteness, it is enough to assume the inequality holds for sufficiently large `n`.
 /--
-Show that if `P(n(n−1)) > 4 log n` for large enough `n`, where `P(m)` denotes the
-largest prime factor of `m`, then the equation `n!=a_1!a_2!···a_k!`, with
-`n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k`, has only finitely many solutions.
+Show that if $P(n(n−1)) > 4 log n$ for large enough $n$, where $P(m)$ denotes the
+largest prime factor of $m$, then the equation $n!=a_1!a_2!···a_k!$, with
+$n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k$, has only finitely many solutions.
 -/
 @[category research solved, AMS 11]
 theorem erdos_373.variants.of_lower_bound
@@ -71,8 +71,8 @@ theorem erdos_373.variants.of_lower_bound
   sorry
 
 /--
-Hickerson conjectured the largest solution the equation `n!=a_1!a_2!···a_k!`, with
-`n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k`, is `16!=14!5!2!`.
+Hickerson conjectured the largest solution the equation $n!=a_1!a_2!···a_k!$, with
+$n−1 > a_1 ≥ a_2 ≥ ··· ≥ a_k$, is $16!=14!5!2!$.
 -/
 @[category research open, AMS 11]
 theorem erdos_373.variants.maximal_solution :
@@ -80,8 +80,8 @@ theorem erdos_373.variants.maximal_solution :
   sorry
 
 /--
-Surányi was the first to conjecture that the only non-trivial solution to `a!b!=n!`
-is `6!7!=10!`.
+Surányi was the first to conjecture that the only non-trivial solution to $a!b!=n!$
+is $6!7!=10!$.
 -/
 @[category research open, AMS 11]
 theorem erdos_373.variants.suranyi :

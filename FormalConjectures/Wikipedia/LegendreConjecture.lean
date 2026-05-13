@@ -38,8 +38,8 @@ theorem legendre_conjecture :
   sorry
 
 /--
-If there exists a constant `c > 0` such that
-`(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all large `n`,
+If there exists a constant $c > 0$ such that
+$(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)$ for all large $n$,
 then Legendre's conjecture is asymptotically true.
 
 Formal proof linked here provided by AlphaProof.

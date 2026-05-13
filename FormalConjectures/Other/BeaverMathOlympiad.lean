@@ -56,10 +56,10 @@ The first 10 values of $(a_n, b_n)$ are $(1, 2), (3, 1), (2, 6), (5, 4), (1, 18)
 (7, 14), (15, 7), (8, 30), (17, 22)$.
 
 [BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch)) is equivalent to asking whether the 6-state Turing machine
-[`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
+[$1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE$](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `answer(sorry) ↔`.
+using $answer(sorry) ↔$.
 
 The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor Jason Yuen on
 June 25th 2024.
@@ -85,7 +85,7 @@ with, so it might be solvable, although seems quite hard because of its Collatz-
 The underlying Collatz-like map has been studied independently in the past,
 see doi:[10.1017/S0017089508004655](https://doi.org/10.1017/S0017089508004655) (Corollary 4).
 
-It is equivalent to non-termination of the [`1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA`](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state Turing machine (from all-0 tape). Note that the conjecture
+It is equivalent to non-termination of the [$1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA$](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state Turing machine (from all-0 tape). Note that the conjecture
 that the machine does not halt is based on [a probabilistic argument](https://wiki.bbchallenge.org/wiki/Antihydra#Trajectory).
 
 This machine and its mathematical reformulations were found by [bbchallenge.org](bbchallenge.org)
@@ -129,7 +129,7 @@ a_{n-1}+2^{v_2(a_{n-1})+2}-1 & \text{if } n \ge 1
 for all non-negative integers $n$. Is there an integer $n$ such that $a_n=4^k$ for
 some positive integer $k$?
 
-[BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)] is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
+[BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)] is equivalent to the non-termination of 2-state 5-symbol Turing machine [$1RB0RB3LA4LA2RA_2LB3RA---3RA4RB$](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
 
 The machine was found and informally proven not to halt by [bbchallenge.org](bbchallenge.org)
 contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
@@ -158,7 +158,7 @@ becomes $1\text{ (mod 3)}$. If Bonnie sticks to her plan, will she ever finish?
 
 [BMO#4](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#4._1RB3RB---1LB0LA_2LA4RA3LA4RB1LB_(bbch))
 is equivalent to the non-termination of 2-state 5-symbol Turing machine
-[`1RB3RB---1LB0LA_2LA4RA3LA4RB1LB`](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) (from all-0 tape).
+[$1RB3RB---1LB0LA_2LA4RA3LA4RB1LB$](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) (from all-0 tape).
 
 The machine was informally proven not to halt [bbchallenge.org](bbchallenge.org)
 contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) and [Discord discussion](https://discord.com/channels/960643023006490684/960643023530762343/1263666591900631210).
@@ -187,10 +187,10 @@ where $f(x)=10\cdot 2^x-1$ for all non-negative integers $x$.
 Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
 
 [BMO#5](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#5._1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE_(bbch)) is equivalent to asking whether the 6-state Turing machine
-[`1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE`](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
+[$1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE$](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `answer(sorry) ↔`.
+using $answer(sorry) ↔$.
 
 The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor mxdys
 on August 7th 2024.

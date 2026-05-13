@@ -33,10 +33,10 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 13](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, the size `b(G)` of a largest induced bipartite subgraph
-satisfies `b(G) ≥ diam(G) + max_{v ∈ V} l(v) - 1`, where `diam(G)` is the diameter
-of `G` and `l(v) = indepNeighborsCard G v` is the independence number of the
-neighbourhood of `v`.
+For a simple connected graph $G$, the size $b(G)$ of a largest induced bipartite subgraph
+satisfies $b(G) ≥ diam(G) + max_{v ∈ V} l(v) - 1$, where $diam(G)$ is the diameter
+of $G$ and $l(v) = indepNeighborsCard G v$ is the independence number of the
+neighbourhood of $v$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture13 (G : SimpleGraph α) (h : G.Connected) :

@@ -32,9 +32,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 198a](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, if `b(G) ≤ 2 + ecc_avg(G)`, then `G` has a Hamiltonian path.
-Here `b(G)` is the number of vertices in a largest induced bipartite subgraph, and
-`ecc_avg(G)` is the average eccentricity of `G`.
+For a simple connected graph $G$, if $b(G) ≤ 2 + ecc_avg(G)$, then $G$ has a Hamiltonian path.
+Here $b(G)$ is the number of vertices in a largest induced bipartite subgraph, and
+$ecc_avg(G)$ is the average eccentricity of $G$.
 A Hamiltonian path is a walk visiting every vertex exactly once.
 -/
 @[category research open, AMS 5]

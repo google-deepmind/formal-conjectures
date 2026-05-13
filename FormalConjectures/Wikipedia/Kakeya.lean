@@ -38,7 +38,7 @@ def IsKakeya {n : ℕ} (S : Set (ℝ^n)) : Prop :=
   ∀ v, ‖v‖ = 1 → ∃ a, affineSegment ℝ a (a + v) ⊆ S
 
 /--
-A trivial example: the closed ball of radius 1 in `ℝⁿ` is a Kakeya set.
+A trivial example: the closed ball of radius 1 in $ℝⁿ$ is a Kakeya set.
 -/
 @[category test, AMS 42]
 theorem isKakeya_closedBall (n : ℕ) : IsKakeya (closedBall (0 : ℝ^n) 1) := by
@@ -90,10 +90,10 @@ def IsKakeyaFinite {F : Type*} [Field F] [Fintype F] {n : ℕ} (S : Finset (Fin 
 
 open Fintype in
 /--
-The finite field Kakeya conjecture asserts that any Kakeya set in `𝔽_qⁿ` has size at
-least `c_n · qⁿ` for some constant `c_n` depending only on `n`.
+The finite field Kakeya conjecture asserts that any Kakeya set in $𝔽_qⁿ$ has size at
+least $c_n · qⁿ$ for some constant `c_n` depending only on $n$.
 This was first proved by Dvir [Dv08]. The best known bound to date, due to Bukh and Chao [BuCh21],
-establishes that any Kakeya set in `𝔽_qⁿ` has size at least `qⁿ / (2 - 1/q)^(n - 1)`.
+establishes that any Kakeya set in $𝔽_qⁿ$ has size at least $qⁿ / (2 - 1/q)^(n - 1)$.
 
 [Dv08] Dvir, Z., _On the size of Kakeya sets in finite fields_. Journal of the American Mathematical Society 22 (2009), no. 4, 1093–1097.
 [BuCh21] Bukh, B. and Chao, T.-W., _Sharp density bounds on the finite field Kakeya problem_. Discrete Analysis 26 (2021), 9 pp.

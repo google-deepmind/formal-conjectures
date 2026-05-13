@@ -132,8 +132,8 @@ theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCa
     ((ZMod.natCast_eq_zero_iff _ _).not.mp (by simp [le_of_lt ha₁.1]))
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
-/-- A composite number `a` is Carmichael if and only if it is squarefree
-and, for all prime `p` dividing `a`, we have `p - 1 ∣ a - 1`. -/
+/-- A composite number $a$ is Carmichael if and only if it is squarefree
+and, for all prime $p$ dividing $a$, we have $p - 1 ∣ a - 1$. -/
 @[category textbook, AMS 11]
 theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     IsCarmichael a ↔ Squarefree a ∧
@@ -178,8 +178,8 @@ theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     · simp_all
 
 /--
-Giuga showed that a number `n` is strong Giuga if and only if it is
-Carmichael and `∑_{p|n} 1/p - 1/n ∈ ℕ` (i.e., if and only if it is Carmichael
+Giuga showed that a number $n$ is strong Giuga if and only if it is
+Carmichael and $∑_{p|n} 1/p - 1/n ∈ ℕ$ (i.e., if and only if it is Carmichael
 and weak Giuga).
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
@@ -236,9 +236,9 @@ theorem agoh_giuga.variants._13000_le_digits_length_of_isStrongGiuga
 
 open Classical in
 /--
-Let `G(X)` denote the number of exceptions `n ≤ X` to Giuga’s conjecture.
-Then for `X` larger than an absolute constant which can be made
-explicit, `G(X) ≪ X^{1/2} log X`.
+Let $G(X)$ denote the number of exceptions $n ≤ X$ to Giuga’s conjecture.
+Then for $X$ larger than an absolute constant which can be made
+explicit, $G(X) ≪ X^{1/2} log X$.
 Ref: Vicentiu Tipu, _A Note on Giuga’s Conjecture_
 -/
 @[category research solved, AMS 11]

@@ -25,8 +25,8 @@ import FormalConjectures.Util.ProblemImports
   Sidon subsets of perfect difference sets, featuring a human-assisted proof (2025)
 - [Ha47] Marshall Hall, Jr., Cyclic projective planes, Duke Math. J. 14 (1947), 1079–1090.
 
-Let `A ⊆ ℕ` be a finite Sidon set. Is there some set `B` with `A ⊆ B` which is a perfect
-difference set modulo `p^2 + p + 1` for some prime power `p`?
+Let $A ⊆ ℕ$ be a finite Sidon set. Is there some set $B$ with $A ⊆ B$ which is a perfect
+difference set modulo $p^2 + p + 1$ for some prime power $p$?
 
 This problem is related to Erdős Problem 329 about the maximum density of Sidon sets.
 If this conjecture is true, it would imply that the maximum density of Sidon sets is 1.
@@ -54,7 +54,7 @@ theorem erdos_707 : (∀ (A : Set ℕ) (h : A.Finite), IsSidon A →
 
 /--
 It is false that any finite Sidon set can be embedded in a perfect
-difference set modulo `p^2 + p + 1` for some prime power `p`.
+difference set modulo $p^2 + p + 1$ for some prime power $p$.
 
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
 The proof of this has been formalized.
@@ -68,7 +68,7 @@ theorem erdos_707.variants.prime_power : (∀ (A : Set ℕ) (h : A.Finite), IsSi
 
 /--
 It is false that any finite Sidon set can be embedded in a perfect
-difference set modulo `p^2 + p + 1` for some prime `p`.
+difference set modulo $p^2 + p + 1$ for some prime $p$.
 
 As described in [arxiv/2510.19804], a counterexample is provided in [Ha47], see below.
 The proof of this has been formalized.
@@ -119,7 +119,7 @@ theorem erdos_707.variants.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9,
 /-  ## Perfect difference sets and their properties -/
 
 /--
-A perfect difference set modulo `n` must have size `≤ √n + 1`.
+A perfect difference set modulo $n$ must have size $≤ √n + 1$.
 -/
 @[category textbook, AMS 5 11]
 theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : ℕ)
@@ -151,7 +151,7 @@ theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : 
   have := Set.Infinite.ncard hfin; omega
 
 /--
-The Singer construction gives perfect difference sets for `n = p^2 + p + 1` where `p` is a
+The Singer construction gives perfect difference sets for $n = p^2 + p + 1$ where $p$ is a
 prime power.
 -/
 @[category textbook, AMS 5 11]
@@ -162,7 +162,7 @@ theorem erdos_707.variants.singer_construction (p : ℕ) (hp : IsPrimePow p) :
 /-  ## Examples and special cases -/
 
 /--
-The set `{1, 2, 4}` is a Sidon set.
+The set ${1, 2, 4}$ is a Sidon set.
 -/
 @[category textbook, AMS 5 11]
 theorem erdos_707.variants.example_sidon_set : IsSidon ({1, 2, 4} : Set ℕ) := by
@@ -175,7 +175,7 @@ theorem erdos_707.variants.example_sidon_set : IsSidon ({1, 2, 4} : Set ℕ) := 
   simp_all
 
 /--
-The set `{1, 2, 4}` can be embedded in a perfect difference set modulo 7.
+The set ${1, 2, 4}$ can be embedded in a perfect difference set modulo 7.
 -/
 @[category textbook, AMS 5 11]
 theorem erdos_707.variants.example_embedding : ∃ (B : Set ℕ), {1, 2, 4} ⊆ B ∧

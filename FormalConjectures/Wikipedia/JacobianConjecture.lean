@@ -65,9 +65,9 @@ open RegularFunction
 variable {σ : Type*} [Fintype σ]
 
 /-- The **Jacobian Conjecture**: any regular function
-(i.e. vector valued polynomial function from) `kⁿ → kᵐ`
+(i.e. vector valued polynomial function from) $kⁿ → kᵐ$
 whose Jacobian is a non-zero constant has an inverse that
-is given by a regular function, where `k` is a field of characteristic `0`-/
+is given by a regular function, where $k$ is a field of characteristic $0$-/
 @[category research open, AMS 14]
 theorem jacobian_conjecture (F : RegularFunction k σ σ)
     (H : IsUnit F.Jacobian.det) :

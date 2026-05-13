@@ -51,14 +51,14 @@ def isAccumulationPoint_iff_exists_subsequence_tendsto
   sorry
 
 /--
-The sequence `(3/2)^n` is equidistributed modulo `1`.
+The sequence $(3/2)^n$ is equidistributed modulo $1$.
 -/
 @[category research open, AMS 11]
 theorem isEquidistributedModuloOne_three_halves_pow :
     IsEquidistributedModuloOne (fun n => (3 / 2 : ℝ)^n) := by
   sorry
 
-/-- For any transcendental number `x`, the sequence `x * (3 / 2) ^ n` is
+/-- For any transcendental number $x$, the sequence $x * (3 / 2) ^ n$ is
 equidistributed modulo 1. -/
 @[category research open, AMS 11]
 theorem isEquidistributedModuloOne_transcendental_three_halves_pow (x : ℝ)
@@ -67,7 +67,7 @@ theorem isEquidistributedModuloOne_transcendental_three_halves_pow (x : ℝ)
   sorry
 
 /--
-The sequence `(3/2)^n` has infinitely many accumulation points modulo `1`.
+The sequence $(3/2)^n$ has infinitely many accumulation points modulo $1$.
 -/
 @[category research solved, AMS 11]
 theorem isAccumulationPoint_three_halves_pow_infinite :
@@ -75,7 +75,7 @@ theorem isAccumulationPoint_three_halves_pow_infinite :
   sorry
 
 /--
-Find an accumulation point of the sequence `(3/2)^n` modulo `1`.
+Find an accumulation point of the sequence $(3/2)^n$ modulo $1$.
 -/
 @[category research open, AMS 11]
 theorem isAccumulationPoint_three_halves_pow :
@@ -83,7 +83,7 @@ theorem isAccumulationPoint_three_halves_pow :
   sorry
 
 /--
-There is an accumulation point of the sequence `(3/2)^n` modulo `1`.
+There is an accumulation point of the sequence $(3/2)^n$ modulo $1$.
 -/
 @[category test, AMS 11]
 theorem isAccumulationPoint_three_halves_pow_exists :

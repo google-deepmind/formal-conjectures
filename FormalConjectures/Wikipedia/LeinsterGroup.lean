@@ -88,7 +88,7 @@ theorem abelian_is_leinster_iff_cyclic_perfect (G : Type*) [CommGroup G] [Fintyp
 /--
 Non-abelian Leinster groups exist.
 
-For example, `S₃ × C₅` (order 30) and `A₅ × C₁₅₁₂₈` are Leinster groups.
+For example, $S₃ × C₅$ (order 30) and $A₅ × C₁₅₁₂₈$ are Leinster groups.
 
 Reference: Leinster, Tom (2001). "Perfect numbers and groups".
 -/
@@ -99,7 +99,7 @@ theorem exists_nonabelian_leinster_group :
   sorry
 
 /--
-The dihedral group `DihedralGroup n` (of order `2n`) is a Leinster group if and only if `n` is
+The dihedral group `DihedralGroup n` (of order $2n$) is a Leinster group if and only if $n$ is
 an odd perfect number. This gives a one-to-one correspondence between dihedral Leinster groups
 and odd perfect numbers.
 

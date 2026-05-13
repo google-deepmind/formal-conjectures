@@ -41,9 +41,9 @@ def HasPropertyQ (A : Set ℕ) : Prop :=
   {n : ℕ | ∀ a ∈ A, a < n → Squarefree (n + a)}.Infinite
 
 /--
-If `A = {a₁ < a₂ < …}` has property P,
-then `A` has natural density `0`.
-Equivalently, `(a_j / j) → ∞` as `j → ∞`.
+If $A = {a₁ < a₂ < …}$ has property P,
+then $A$ has natural density $0$.
+Equivalently, $(a_j / j) → ∞$ as $j → ∞$.
 --/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/Woett/Lean-files/blob/1e075c4f6e8a907b924647fa88238f978e941742/ErdosProblem1102PropertyP.lean"]
@@ -55,9 +55,9 @@ theorem erdos_1102.density_zero_of_P
   sorry
 
 /--
-Conversely, for any function `f : ℕ → ℕ` that goes to infinity,
-there exists a strictly increasing sequence `A = {a₁ < a₂ < …}`
-with property P such that `(a_j / j) ≤ f(j)` for all `j`.
+Conversely, for any function $f : ℕ → ℕ$ that goes to infinity,
+there exists a strictly increasing sequence $A = {a₁ < a₂ < …}$
+with property P such that $(a_j / j) ≤ f(j)$ for all $j$.
 --/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/Woett/Lean-files/blob/1e075c4f6e8a907b924647fa88238f978e941742/ErdosProblem1102PropertyP.lean"]
@@ -70,7 +70,7 @@ theorem erdos_1102.exists_sequence_with_P
   sorry
 
 /--
-Every sequence with property Q has upper density at most `6 / π^2`.
+Every sequence with property Q has upper density at most $6 / π^2$.
 --/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/Woett/Lean-files/blob/1e075c4f6e8a907b924647fa88238f978e941742/ErdosProblem1102PropertyQDensity.lean"]
@@ -83,8 +83,8 @@ theorem erdos_1102.upper_density_Q
 /--
 There exists an infinite sequence $A = {a₁ < a₂ < …} ⊂ \mathsf{SF}$ where
 $\mathsf{SF} := \mathbb{N} \setminus \bigcup_{p} p^{2}\mathbb{N}$, i.e. the set of
-squarefree numbers. The set `A` has property `Q` and natural density `6 / π^2`.
-Equivalently, `(j / a_j) → 6/π^2` as `j → ∞`.
+squarefree numbers. The set $A$ has property $Q$ and natural density $6 / π^2$.
+Equivalently, $(j / a_j) → 6/π^2$ as $j → ∞$.
 --/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/Woett/Lean-files/blob/1e075c4f6e8a907b924647fa88238f978e941742/ErdosProblem1102PropertyQDensity.lean"]

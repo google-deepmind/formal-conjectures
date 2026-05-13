@@ -67,8 +67,8 @@ def SimpleGraph.subgraphEdgeDistsToBipartite (G : SimpleGraph V) (n : ℕ) : Set
     (A : Subgraph G) (_ : A.verts.ncard = n) (_ : A.verts.Finite) }
 
 /--
-The set of minimum edge distances to bipartite for subgraphs of size `n` is bounded above.
-A graph on `n` vertices has at most `n choose 2` edges, and deleting all of them
+The set of minimum edge distances to bipartite for subgraphs of size $n$ is bounded above.
+A graph on $n$ vertices has at most $n choose 2$ edges, and deleting all of them
 makes the graph bipartite, providing a straightforward upper bound.
 -/
 @[category test, AMS 5]

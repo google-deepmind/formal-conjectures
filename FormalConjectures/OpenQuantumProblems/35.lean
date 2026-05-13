@@ -62,13 +62,13 @@ This file formalizes the problem of determining for which pairs $(n,d)$ there ex
 absolutely maximally entangled pure state $\mathrm{AME}(n,d)$.
 
 We represent an $n$-partite state of local dimension $d$ by the finite-dimensional Hilbert space
-`EuclideanSpace ℂ (Config n d)`, whose coordinates in the computational basis are amplitudes.
+$EuclideanSpace ℂ (Config n d)$, whose coordinates in the computational basis are amplitudes.
 The helper `mkStateVector` turns an amplitude function into such a state, and normalization is
 imposed explicitly via `IsNormalized`, i.e. via the ambient $L^2$ norm.
 
 The main reusable lemma is `reducedDensityFirst_of_completion`: if a state is a
 uniform superposition over the graph of an injective completion function
-`completion : Config m d → Config (n - m) d`,
+$completion : Config m d → Config (n - m) d$,
 then the reduced state on the first $m$ parties is maximally mixed.
 
 As demonstration, we show that the Bell states with $n=2$ and GHZ states with $n=3$ are
@@ -304,7 +304,7 @@ theorem not_isConstantConfig_example :
 noncomputable def diagonalState (n d : ℕ) : StateVector n d :=
   mkStateVector fun x => if IsConstantConfig x then uniformCoeff d else 0
 
-/-- Evaluating the diagonal state returns the uniform coefficient on constant strings and `0` otherwise. -/
+/-- Evaluating the diagonal state returns the uniform coefficient on constant strings and $0$ otherwise. -/
 @[simp, category API, AMS 5 15 81 94]
 lemma diagonalState_apply {n d : ℕ} (x : Config n d) :
     diagonalState n d x = if IsConstantConfig x then uniformCoeff d else 0 := by

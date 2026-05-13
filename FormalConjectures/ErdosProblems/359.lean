@@ -48,16 +48,16 @@ theorem erdos_359.parts.ii (A : ℕ → ℕ) (hA : IsGoodFor A 1) (c : ℝ) (hc 
     atTop.Tendsto (fun k ↦ A k / (k : ℝ) ^ (1 + c)) (nhds 0) := by
   sorry
 
-/-- Suppose monotone sequence $A$ satisfies the following: `A 0 = 1` and for all `j`, `A (j + 1)` is the
-smallest natural number that cannot be written as a sum of consecutive terms of `A 0, ..., A j`.
+/-- Suppose monotone sequence $A$ satisfies the following: $A 0 = 1$ and for all $j$, $A (j + 1)$ is the
+smallest natural number that cannot be written as a sum of consecutive terms of $A 0, ..., A j$.
 Then the first few terms of $A$ are $1,2,4,5,8,10,14,15,...$. -/
 @[category test, AMS 11]
 theorem erdos_359.variants.isGoodFor_1_low_values (A : ℕ → ℕ) (hA : IsGoodFor A 1) :
     A '' (Set.Iic 7) = {1, 2, 4, 5, 8, 10, 14, 15} := by
   sorry
 
-/-- Suppose monotone sequence $A$ satisfies the following: `A 0 = 1` and for all `j`, `A (j + 1)` is the
-smallest natural number that cannot be written as a sum of consecutive terms of `A 0, ..., A j`.
+/-- Suppose monotone sequence $A$ satisfies the following: $A 0 = 1$ and for all $j$, $A (j + 1)$ is the
+smallest natural number that cannot be written as a sum of consecutive terms of $A 0, ..., A j$.
 Then it is conjectured that $$a_k ~ \frac{k \log k}{\log \log k}$$. -/
 @[category research open, AMS 11]
 theorem erdos_359.variants.isGoodFor_1_asymptotic (A : ℕ → ℕ) (hA : IsGoodFor A 1) :

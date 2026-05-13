@@ -27,7 +27,7 @@ We formalize the classical open problem of determining $R(5,5)$, together with t
 known bounds $43 \le R(5,5) \le 46$.
 
 Note: the diagonal Ramsey number $R(n,n)$ can also be formulated in terms of 2-colorings of
-$2$-subsets, as `Combinatorics.hypergraphRamsey 2 n` (see `FormalConjecturesForMathlib/Combinatorics/Ramsey.lean`).
+$2$-subsets, as $Combinatorics.hypergraphRamsey 2 n$ (see `FormalConjecturesForMathlib/Combinatorics/Ramsey.lean`).
 
 *References:*
 - [Wikipedia: Ramsey number](https://en.wikipedia.org/wiki/Ramsey_number)

@@ -23,15 +23,15 @@ public import Mathlib.Combinatorics.SimpleGraph.Finite
 /-!
 # Well totally dominated graphs
 
-A *total dominating set* of `G` is a set `S` of vertices such that every vertex of `G`
-(including vertices in `S`) has a neighbor in `S`. A total dominating set `S` is
-*minimal* if no proper subset of `S` is also a total dominating set.
+A *total dominating set* of $G$ is a set $S$ of vertices such that every vertex of $G$
+(including vertices in $S$) has a neighbor in $S$. A total dominating set $S$ is
+*minimal* if no proper subset of $S$ is also a total dominating set.
 
-A graph `G` is *well totally dominated* if every minimal total dominating set has the
+A graph $G$ is *well totally dominated* if every minimal total dominating set has the
 same cardinality; equivalently, the total domination number equals the maximum
 cardinality of a minimal total dominating set.
 
-The *pendant vertices* (also called *leaves*) of `G` are the vertices of degree 1.
+The *pendant vertices* (also called *leaves*) of $G$ are the vertices of degree 1.
 -/
 
 namespace SimpleGraph

@@ -37,37 +37,37 @@ are collectively coprime. -/
 noncomputable def h (n : ℕ) : ℕ∞ := sInf {m | 2 < m ∧
   ((Finset.Icc 2 m.toNat).image fun i => (i ^ n - 1)).gcd id = 1}
 
-/-- `n + 1` is prime iff `h n = n + 1`. This is described as 'easy to see' in [Er74b]. -/
+/-- $n + 1$ is prime iff $h n = n + 1$. This is described as 'easy to see' in [Er74b]. -/
 @[category textbook, AMS 11]
 theorem Nat.Prime.h_eq_add_one {n : ℕ} (hn : 2 < n) : h n = n + 1 ↔ (n + 1).Prime := by
   sorry
 
-/-- For odd `n`, the values of `h n` form an unbounded set.
+/-- For odd $n$, the values of `h n` form an unbounded set.
 This is described as 'easy to see' in [Er74b]. -/
 @[category textbook, AMS 11]
 theorem erdos_770.variants.odd_h_unbounded : Unbounded (· ≤ ·) (ENat.toNat '' (h '' Odd)):= by
   sorry
 
 
-/-- For every prime `p`, does the density of integers with `h n = p` exist? -/
+/-- For every prime $p$, does the density of integers with $h n = p$ exist? -/
 @[category research open, AMS 11]
 theorem erdos_770.parts.i : answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∃ a, HasDensity {n | h n = p} a := by
   sorry
 
-/-- Does `liminf h n = ∞`? -/
+/-- Does $liminf h n = ∞$? -/
 @[category research open, AMS 11]
 theorem erdos_770.parts.ii : answer(sorry) ↔ liminf h atTop = ⊤ := by
   sorry
 
-/-- Is it true that if `p` is the greatest prime such that `p - 1 ∣ n` and `p > n ^ ε`, then
-`h n = p`? -/
+/-- Is it true that if $p$ is the greatest prime such that $p - 1 ∣ n$ and $p > n ^ ε$, then
+$h n = p$? -/
 @[category research open, AMS 11]
 theorem erdos_770.parts.iii : answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
     let p := sSup {m : ℕ | m.Prime ∧ m - 1 ∣ n}
     p > (n : ℝ) ^ (ε : ℝ) → h n = p := by
   sorry
 
-/-- It is probably true that `h n = 3` for infinitely many `n`. -/
+/-- It is probably true that $h n = 3$ for infinitely many $n$. -/
 @[category research open, AMS 11]
 theorem erdos_770.variants.three : {n | h n = 3}.Infinite := by
   sorry

@@ -120,7 +120,7 @@ Conjecture: Voronovskaja-type formula for Bézier-Bernstein operators
 with shape parameter $\alpha > 0$, $\alpha \neq 1$.
 
 The source asks for sufficiently smooth functions. This concrete version uses
-`ContDiffOn ℝ 2 f I` as a readable baseline regularity assumption; since the
+$ContDiffOn ℝ 2 f I$ as a readable baseline regularity assumption; since the
 domain is the compact interval $[0,1]$, this also explains why no separate
 boundedness assumption is included here. The variants below record the unknown
 smoothness threshold more explicitly.
@@ -166,7 +166,7 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
 
 /--
 Variant of the Bézier-Bernstein Voronovskaja problem with the required smoothness order itself
-left as an answer. Replacing `(answer(sorry) : ℕ)` by a concrete value lets one state the
+left as an answer. Replacing $(answer(sorry) : ℕ)$ by a concrete value lets one state the
 conjecture for a chosen regularity threshold.
 -/
 @[category research open, AMS 26 40 47]

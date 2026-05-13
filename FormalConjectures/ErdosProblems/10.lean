@@ -66,7 +66,7 @@ theorem erdos_10.variants.granville_soundararajan_odd :
   sorry
 
 /--
-Bogdan Grechuk has observed that `1117175146` is not the sum of a prime
+Bogdan Grechuk has observed that $1117175146$ is not the sum of a prime
 and at most $3$ powers of $2$.
 -/
 @[category research solved, AMS 5 11]

@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Furstenberg's `times p, times q` conjectures
+# Furstenberg's $times p, times q$ conjectures
 
 *Reference:* [arxiv/2303.01089](https://arxiv.org/abs/2303.01089)
 

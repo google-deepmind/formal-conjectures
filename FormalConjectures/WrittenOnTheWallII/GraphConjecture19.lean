@@ -35,10 +35,10 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /--
 WOWII [Conjecture 19](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-If `G` is connected then the size `b(G)` of a largest induced bipartite subgraph
+If $G$ is connected then the size $b(G)$ of a largest induced bipartite subgraph
 satisfies
-`b(G) ≥ FLOOR((∑ ecc(v))/(|V|) + sSup (range (l G)))`, where `ecc(v)` denotes
-eccentricity and `l(G)` is the independence number of neighbourhoods.
+$b(G) ≥ FLOOR((∑ ecc(v))/(|V|) + sSup (range (l G)))$, where $ecc(v)$ denotes
+eccentricity and $l(G)$ is the independence number of neighbourhoods.
 -/
 @[category research open, AMS 5]
 theorem conjecture19 (G : SimpleGraph α) [Nontrivial α] (h_conn : G.Connected) :

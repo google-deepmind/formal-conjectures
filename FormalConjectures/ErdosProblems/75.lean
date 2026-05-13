@@ -28,9 +28,9 @@ open Cardinal
 namespace Erdos75
 
 /--
-Is there a graph of chromatic number `ℵ_ 1` with `ℵ_ 1` vertices such that for all
-`ε > 0`, if `n` is sufficiently large and `H` is a subgraph on `n` vertices,
-then `H` contains an independent set of size `> n ^ (1 - ε)`?
+Is there a graph of chromatic number $ℵ_ 1$ with $ℵ_ 1$ vertices such that for all
+$ε > 0$, if $n$ is sufficiently large and $H$ is a subgraph on $n$ vertices,
+then $H$ contains an independent set of size $> n ^ (1 - ε)$?
 -/
 @[category research open, AMS 5]
 theorem erdos_75 :

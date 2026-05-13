@@ -29,10 +29,10 @@ there is a critical point $c$ of $p$, such that $|p(z)-p(c)|/|z-c| ≤ K* |p'(z)
 
 
 The conjecture has been proven for:
-* `K = 4`
+* $K = 4$
   [The fundamental theorem of algebra and complexity theory](https://www.ams.org/journals/bull/1981-04-01/S0273-0979-1981-14858-8/)
   by *Steve Smale*
-* `K = (d-1)/d` if $p$ has real roots or all the roots of $p$ have the same norm.
+* $K = (d-1)/d$ if $p$ has real roots or all the roots of $p$ have the same norm.
   [Critical points and values of complex polynomials](https://doi.org/10.1016/0885-064X(89)90019-8)
   by *David Tischler*
 -/

@@ -33,8 +33,8 @@ class IsRationalExtension (K L ι : Type*)
   pure_transcendental :
     Nonempty (L ≃ₐ[K] ((FractionRing (MvPolynomial ι K))))
 
-/-- If the index set `ι` is empty, then `IsRationalExtension K L ι` means that
-`K, L` are isomorphic as `K` algebras. -/
+/-- If the index set $ι$ is empty, then `IsRationalExtension K L ι` means that
+$K, L$ are isomorphic as $K$ algebras. -/
 @[category test, AMS 12]
 theorem rationalExtension_empty_index (K L ι : Type*) [Field K] [Field L] [Algebra K L] [IsEmpty ι]
     [IsRationalExtension K L ι] :
@@ -57,8 +57,8 @@ def HasNoetherProperty (K L ι : Type) [Field K] [Field L] [Fintype ι]
     IsRationalExtension K (IntermediateField.fixedField H) ι'
 
 /--
-The **Noether Problem**: let `L` be the field of rational functions in `n`
-indeterminates over `K`. Is it true that `L/K` has the Noether property?
+The **Noether Problem**: let $L$ be the field of rational functions in $n$
+indeterminates over $K$. Is it true that $L/K$ has the Noether property?
 
 Solution: False.
 -/

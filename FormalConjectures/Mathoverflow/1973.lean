@@ -34,7 +34,7 @@ abbrev unitSphere (n : ℕ) : Set (EuclideanSpace ℝ (Fin (n + 1))) := Metric.s
 
 /--
 Does the 6-sphere admit a complex structure, i.e. an atlas of holomorphically compatible charts
-relating it to `EuclideanSpace ℂ (Fin 3)`?
+relating it to $EuclideanSpace ℂ (Fin 3)$?
 -/
 @[category research open, AMS 32]
 theorem mathoverflow_1973 :

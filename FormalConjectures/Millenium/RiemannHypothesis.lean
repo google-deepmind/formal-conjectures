@@ -30,7 +30,7 @@ Dirichlet characters.
 Note: the **Extended Riemann Hypothesis** (ERH) for Dedekind zeta functions is intentionally
 **not** stated here. Mathlib's `NumberField.dedekindZeta` is the naive Dirichlet series
 (`LSeries`), not a meromorphic continuation; outside the region of absolute convergence
-`tsum` returns junk `0`, producing spurious zeros that make the naive foramlisation of the
+`tsum` returns junk $0$, producing spurious zeros that make the naive foramlisation of the
 conjecture provably false. The ERH should be added once Mathlib provides a meromorphic
 continuation of the Dedekind zeta function.
 
@@ -53,7 +53,7 @@ This is the official Millennium Prize Problem as posed by the
 [Clay Mathematics Institute](https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf).
 
 This uses the `RiemannHypothesis` type from Mathlib, which is defined as
-`∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n : ℕ, s = -2 * (n + 1)) → s ≠ 1 → s.re = 1 / 2`. -/
+$∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n : ℕ, s = -2 * (n + 1)) → s ≠ 1 → s.re = 1 / 2$. -/
 @[category research open, AMS 11]
 theorem riemannHypothesis : RiemannHypothesis := by
   sorry

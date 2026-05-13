@@ -23,7 +23,7 @@ Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. Does $10A$
 of some subspace of dimension at least $n - O(\log(1/\alpha))$?
 
 Here $kA$ denotes the $k$-fold iterated sumset, i.e., the set of all sums of $k$ elements from $A$
-(with repetition allowed). In `Mathlib`, this is denoted `k • A` using pointwise scalar
+(with repetition allowed). In `Mathlib`, this is denoted $k • A$ using pointwise scalar
 multiplication on sets.
 
 *Reference:* [Ben Green's Open Problem 50](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.6 Problem 50)
@@ -42,9 +42,9 @@ nonempty $A \subseteq \mathbb{F}_2^n$ with density $\alpha > 0$, the sumset $10A
 of some subspace of dimension at least $n - C \log_2(1/\alpha)$?
 
 The sumset $10A$ is defined as $\{a_1 + a_2 + \cdots + a_{10} : a_i \in A\}$, using the pointwise
-scalar multiplication notation `10 • A` where `•` denotes the iterated addition of a set.
+scalar multiplication notation $10 • A$ where $•$ denotes the iterated addition of a set.
 
-Note: We model $\mathbb{F}_2^n$ as `Fin n → ZMod 2`, which is an $n$-dimensional vector space
+Note: We model $\mathbb{F}_2^n$ as $Fin n → ZMod 2$, which is an $n$-dimensional vector space
 over $\mathbb{F}_2$.
 -/
 @[category research open, AMS 5 11]

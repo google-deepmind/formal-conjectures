@@ -29,7 +29,7 @@ open scoped List
 def subsetSums (A : Set M) : Set M :=
   {n | ∃ B : Finset M, ↑B ⊆ A ∧ n = ∑ i ∈ B, i}
 
-/-- If `A ⊆ B`, then `subsetSums A ⊆ subsetSums B`. -/
+/-- If $A ⊆ B$, then $subsetSums A ⊆ subsetSums B$. -/
 @[gcongr]
 theorem subsetSums_mono {A B : Set M} (h : A ⊆ B) : subsetSums A ⊆ subsetSums B :=
   fun _ ⟨C, hC⟩ => ⟨C, hC.1.trans h, hC.2⟩
@@ -44,7 +44,7 @@ variable [Preorder M]
 def IsAddComplete (A : Set M) : Prop :=
   ∀ᶠ k in Filter.atTop, k ∈ subsetSums A
 
-/-- If `A ⊆ B` and `A` is complete, then `B` is also complete. -/
+/-- If $A ⊆ B$ and $A$ is complete, then $B$ is also complete. -/
 @[gcongr]
 theorem IsAddComplete.mono {A B : Set M} (h : A ⊆ B) (ha : IsAddComplete A) : IsAddComplete B := by
   filter_upwards [ha] with x hx
@@ -58,7 +58,7 @@ def IsAddStronglyComplete (A : Set M) : Prop :=
 theorem IsAddStronglyComplete.isAddComplete {A : Set M} (hA : IsAddStronglyComplete A) :
     IsAddComplete A := by simpa using hA Set.finite_empty
 
-/-- If `A ⊆ B` and `A` is strongly complete, then `B` is also strongly complete. -/
+/-- If $A ⊆ B$ and $A$ is strongly complete, then $B$ is also strongly complete. -/
 theorem IsAddStronglyComplete.mono {A B : Set M} (h : A ⊆ B) (ha : IsAddStronglyComplete A) :
     IsAddStronglyComplete B := fun C hC => (ha hC).mono (by grind)
 
@@ -72,13 +72,13 @@ theorem IsAddStronglyCompleteNatSeq.isAddComplete {A : ℕ → M}
     IsAddComplete (Set.range A) := by simpa using hA 0
 
 open Classical in
-/-- If the range of a sequence `A` is strongly complete, then `A` is strongly complete. -/
+/-- If the range of a sequence $A$ is strongly complete, then $A$ is strongly complete. -/
 theorem IsAddStronglyCompleteNatSeq.of_isAddStronglyComplete {A : ℕ → M}
     (h : IsAddStronglyComplete (.range A)) : IsAddStronglyCompleteNatSeq A :=
   fun n => (h (Finset.finite_toSet _)).mono (A := .range A \ ((Finset.range n).image A))
     (fun _ ⟨⟨y, hy⟩, q⟩ => ⟨y - n, by grind⟩)
 
-/-- If `A` is strongly complete and the preimage of each element is finite, then the range of `A`
+/-- If $A$ is strongly complete and the preimage of each element is finite, then the range of $A$
 is strongly complete. -/
 theorem IsAddStronglyCompleteNatSeq.isAddStronglyComplete {A : ℕ → M}
     (h : IsAddStronglyCompleteNatSeq A) (hA : ∀ m, (A ⁻¹' {m}).Finite) :

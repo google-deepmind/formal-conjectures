@@ -32,11 +32,11 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 141](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`tree(G) ≥ ⌊girth(G) / 2⌋ - 1 + max_v l(v)`
-where `tree(G)` is the number of vertices of a largest induced tree subgraph,
-`girth(G)` is the length of the shortest cycle (0 if acyclic), and
-`l(v) = indepNeighbors G v` is the independence number of the neighbourhood of `v`.
+For a simple connected graph $G$,
+$tree(G) ≥ ⌊girth(G) / 2⌋ - 1 + max_v l(v)$
+where $tree(G)$ is the number of vertices of a largest induced tree subgraph,
+$girth(G)$ is the length of the shortest cycle (0 if acyclic), and
+$l(v) = indepNeighbors G v$ is the independence number of the neighbourhood of $v$.
 -/
 @[category research open, AMS 5]
 theorem conjecture141 (G : SimpleGraph α) (h : G.Connected) :

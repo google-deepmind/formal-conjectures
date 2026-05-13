@@ -26,9 +26,9 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos689
 
 /--
-Let `n` be sufficiently large. Is there some choice of congruence class `a_p` for all primes
-`2 ≤ p ≤ n` such that every integer in `[1,n]` satisfies at least two of the congruences
-`≡ a_p (mod p)`?
+Let $n$ be sufficiently large. Is there some choice of congruence class `a_p` for all primes
+$2 ≤ p ≤ n$ such that every integer in $[1,n]$ satisfies at least two of the congruences
+$≡ a_p (mod p)$?
 -/
 @[category research open, AMS 11]
 theorem erdos_689 :

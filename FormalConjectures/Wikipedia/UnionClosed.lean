@@ -90,7 +90,8 @@ theorem union_closed.variants.univ_card
 /--
 Roberts and Simpson [Ro10] showed that the union-closed sets conjecture holds for set families of
 size at most 46.
-Their method, however, combined with the result of [Vu17], further shows that it holds for `#A ≤ 50`
+Their method, however, combined with the result of [Vu17], further shows that it holds for
+$|A| \le 50$
 as well.
 [Ro10] Roberts, Ian; Simpson, Jamie (2010). "A note on the union-closed sets conjecture" (PDF). Australas. J. Combin. 47: 265–267.
 [Vu17] Vuckovic, Bojan; Zivkovic, Miodrag (2017). "The 12-Element Case of Frankl's Conjecture" (PDF). IPSI BGD Transactions on Internet Research. 13 (1): 65.
@@ -145,7 +146,7 @@ theorem union_closed.variants.singleton_mem
   norm_cast
 
 /--
-The union-closed sets conjecture is sharp in the sense that if we replace the constant `1/2` with
+The union-closed sets conjecture is sharp in the sense that if we replace the constant $1/2$ with
 any larger constant, then the conjecture fails.
 -/
 @[category research solved, AMS 5]
@@ -199,7 +200,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   simp at this
 
 /--
-If the UC conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
+If the UC conjecture is tight for some family $A$ then $|A| = 2^k$ for some $k$.
 
 Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
 -/

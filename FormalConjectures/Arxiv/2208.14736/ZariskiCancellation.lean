@@ -38,8 +38,8 @@ def IsCancellative (k A : Type*) [Field k]
     Nonempty (A ≃ₐ[k] B)
 
 /--
-The **Zariski Cancellation Problem**: every polynomial ring over a field `k` of characteristic
-`0` is cancellative.
+The **Zariski Cancellation Problem**: every polynomial ring over a field $k$ of characteristic
+$0$ is cancellative.
 -/
 @[category research open, AMS 13 14]
 theorem zariski_cancellation_problem {k : Type*} [Field k]
@@ -47,7 +47,7 @@ theorem zariski_cancellation_problem {k : Type*} [Field k]
   sorry
 
 /--
-The single variable polynomial ring `k[X]` is cancellative in any characteristic
+The single variable polynomial ring $k[X]$ is cancellative in any characteristic
 -/
 @[category research solved, AMS 13 14]
 theorem zariski_cancellation_problem.variants.dim_one
@@ -55,7 +55,7 @@ theorem zariski_cancellation_problem.variants.dim_one
   sorry
 
 /--
-The two variable polynomial ring `k[X]` is cancellative in any characteristic
+The two variable polynomial ring $k[X]$ is cancellative in any characteristic
 -/
 @[category research solved, AMS 13 14]
 theorem zariski_cancellation_problem.variants.dim_two {k : Type*} [Field k] :
@@ -63,7 +63,7 @@ theorem zariski_cancellation_problem.variants.dim_two {k : Type*} [Field k] :
   sorry
 
 /--
-The positive characteristic case of the Zariski Cancellation Problem is false in dimension `3`
+The positive characteristic case of the Zariski Cancellation Problem is false in dimension $3$
 -/
 @[category research solved, AMS 13 14]
 theorem zariski_cancellation_problem.variants.false_pos_card

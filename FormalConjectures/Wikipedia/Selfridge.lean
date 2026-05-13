@@ -122,7 +122,7 @@ Known terms: 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 4, 5
 def fermatFactors (n : ℕ) : ℕ := n.fermatNumber.primeFactors.card
 
 /--
-Selfridge conjectured that the number of prime factors of the `n`-th Fermat number does not grow
+Selfridge conjectured that the number of prime factors of the $n$-th Fermat number does not grow
 monotonically in $n$.
 -/
 @[category research open, AMS 11]
@@ -130,7 +130,7 @@ theorem selfridge_seq_conjecture : ¬ Monotone fermatFactors := by
   sorry
 
 /--
-Selfridge conjectured that the number of prime factors of the `n`-th Fermat number does not grow
+Selfridge conjectured that the number of prime factors of the $n$-th Fermat number does not grow
 monotonically in $n$.
 
 A sufficient condition for this conjecture to hold is that there exists a Fermat prime larger than

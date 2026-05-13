@@ -24,7 +24,7 @@ public import Mathlib.Data.Nat.Lattice
 /-!
 # Hypergraph Ramsey Numbers
 
-This file defines the `r`-uniform hypergraph Ramsey number `R_r(n)`.
+This file defines the $r$-uniform hypergraph Ramsey number $R_r(n)$.
 -/
 
 namespace Combinatorics
@@ -39,7 +39,7 @@ noncomputable def hypergraphRamsey (r n : ℕ) : ℕ :=
     ∃ (S : Finset (Fin m)), S.card = n ∧
       ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color }
 
-/-- `n ≤ hypergraphRamsey r n` when the set is nonempty. -/
+/-- $n ≤ hypergraphRamsey r n$ when the set is nonempty. -/
 theorem le_hypergraphRamsey (r n : ℕ) (hne : { m | ∀ (c : Finset (Fin m) → Bool),
     ∃ (S : Finset (Fin m)), S.card = n ∧
       ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color }.Nonempty) :
@@ -52,7 +52,7 @@ theorem le_hypergraphRamsey (r n : ℕ) (hne : { m | ∀ (c : Finset (Fin m) →
     _ ≤ Fintype.card (Fin m) := Finset.card_le_univ S
     _ = m := Fintype.card_fin m
 
-/-- `hypergraphRamsey r r = r` for any `r`. -/
+/-- $hypergraphRamsey r r = r$ for any $r$. -/
 theorem hypergraphRamsey_self (r : ℕ) : hypergraphRamsey r r = r := by
   have h_mem : r ∈ { m | ∀ (c : Finset (Fin m) → Bool),
       ∃ (S : Finset (Fin m)), S.card = m ∧

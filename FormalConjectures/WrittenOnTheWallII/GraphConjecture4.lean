@@ -33,9 +33,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /--
 WOWII [Conjecture 4](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-If `G` is a connected graph then the maximum number of leaves over all spanning
-trees satisfies `Ls(G) ≥ NG(G) - 1` where `NG(G)` is the minimal neighbourhood
-size of a non-edge of `G`.
+If $G$ is a connected graph then the maximum number of leaves over all spanning
+trees satisfies $Ls(G) ≥ NG(G) - 1$ where $NG(G)$ is the minimal neighbourhood
+size of a non-edge of $G$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture4 (G : SimpleGraph α) [DecidableRel G.Adj] [Nontrivial α] (h_conn : G.Connected) :

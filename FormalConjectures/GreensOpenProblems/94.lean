@@ -29,7 +29,7 @@ open Set MeasureTheory
 namespace Green94
 
 /--
-Let `A ⊂ R` be a set of positive outer measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
+Let $A ⊂ R$ be a set of positive outer measure. Does $A$ contain an affine copy of ${1, 1/2, 1/4, . . . }$?
 
 The answer is "no".
 -/
@@ -41,7 +41,7 @@ theorem green_94_outer_measure :
   sorry
 
 /--
-Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
+Let $A ⊂ R$ be a set of positive measure. Does $A$ contain an affine copy of ${1, 1/2, 1/4, . . . }$?
 -/
 @[category research open, AMS 28]
 theorem green_94 :

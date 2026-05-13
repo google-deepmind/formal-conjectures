@@ -28,8 +28,8 @@ open Set Filter Real
 namespace Erdos238
 
 /--
-Let `c₁, c₂ > 0`. Is it true that for any sufficiently large `x`, there exists more than
-`c₁ * log x` many consecutive primes `≤ x` such that the difference between any two is `> c₂`?
+Let $c₁, c₂ > 0$. Is it true that for any sufficiently large $x$, there exists more than
+$c₁ * log x$ many consecutive primes $≤ x$ such that the difference between any two is $> c₂$?
 -/
 @[category research open, AMS 11]
 theorem erdos_238 : answer(sorry) ↔ ∀ᵉ (c₁ > 0) (c₂ > 0), ∀ᶠ (x : ℝ) in atTop, ∃ (k : ℕ),
@@ -38,7 +38,7 @@ theorem erdos_238 : answer(sorry) ↔ ∀ᵉ (c₁ > 0) (c₂ > 0), ∀ᶠ (x : 
   sorry
 
 /--
-It is well-known that the conjecture above is true when `c₁` is sufficiently small.
+It is well-known that the conjecture above is true when $c₁$ is sufficiently small.
 -/
 @[category research solved, AMS 11]
 theorem erdos_238.variants.small_c1 : ∀ c₂ > 0, ∀ᶠ c₁ in 𝓝[>] 0, ∀ᶠ (x : ℝ) in atTop, ∃ (k : ℕ),

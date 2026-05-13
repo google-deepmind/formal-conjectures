@@ -38,11 +38,11 @@ open Nat
 namespace Erdos399
 
 /--
-Is it true that there are no solutions to `n! = x^k ± y^k` with `x,y,n ∈ ℕ`, `x*y > 1`, and
-`k > 2`?
+Is it true that there are no solutions to $n! = x^k ± y^k$ with $x,y,n ∈ ℕ$, $x*y > 1$, and
+$k > 2$?
 
-The answer is no: Jonas Barfield found the counterexample `10! = 48^4 - 36^4` (equivalently,
-`10! + 36^4 = 48^4`).
+The answer is no: Jonas Barfield found the counterexample $10! = 48^4 - 36^4$ (equivalently,
+$10! + 36^4 = 48^4$).
 
 This is discussed in problem D2 of Guy's collection [Gu04].
 

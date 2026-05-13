@@ -30,7 +30,7 @@ variable {X : Type*} [PseudoEMetricSpace X]
 /-!
 ### Metric-separated sets
 
-In this section we define the predicate `Metric.IsSeparated'` for `ε`-separated sets.
+In this section we define the predicate `Metric.IsSeparated'` for $ε$-separated sets.
 -/
 
 /-- A set `s` is `≥ ε`-separated if its elements are pairwise at distance greater or equal to

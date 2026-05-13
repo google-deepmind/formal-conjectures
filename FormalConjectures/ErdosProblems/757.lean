@@ -41,12 +41,12 @@ theorem erdos_757 {A : Set ℝ} :
     answer(sorry) = sSup {c | IsAdmissible c} := by
   sorry
 
-/-- The supremum is strictly larger than `1 / 2`, which is proved in [GyLe95]. -/
+/-- The supremum is strictly larger than $1 / 2$, which is proved in [GyLe95]. -/
 @[category research solved, AMS 5]
 theorem erdos_757.variants.lowerBound {A : Set ℝ} : 1 / (2 : ℝ) < sSup {c | IsAdmissible c} := by
   sorry
 
-/-- In [GyLe95], the authors also prove that the supremum is smaller than `3 / 5`. -/
+/-- In [GyLe95], the authors also prove that the supremum is smaller than $3 / 5$. -/
 @[category research solved, AMS 5]
 theorem erdos_757.variants.upperBound {A : Set ℝ} : sSup {c | IsAdmissible c} < 3 / (5 : ℝ) := by
   sorry

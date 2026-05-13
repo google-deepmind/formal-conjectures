@@ -24,9 +24,9 @@ every rational elliptic curve is modular, meaning that it can be
 associated with a modular form. We state the `a_p` version of the conjecture, which relates the
 coefficients of the modular form to the number of points on the elliptic curve over finite fields.
 
-Since we don't have the conductor of the elliptic curve, our definition of `a_p(E)` differs from
+Since we don't have the conductor of the elliptic curve, our definition of $a_p(E)$ differs from
 that in the literature at primes of bad reduction. For this reason, we state the conjecture with the
-assumption that `p ∤ N`, in order to give an equivalent statement.
+assumption that $p ∤ N$, in order to give an equivalent statement.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)

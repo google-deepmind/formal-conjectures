@@ -25,7 +25,7 @@ iteration
 $$a_{0} = n, \qquad a_{k+1} = a_k + \operatorname{rev}_{10}(a_k).$$
 
 One commonly stated conjectural direction is that there are no Lychrel numbers in base 10.
-The smallest widely studied open case is `196`.
+The smallest widely studied open case is $196$.
 
 *References:*
 * [Wikipedia: Lychrel number](https://en.wikipedia.org/wiki/Lychrel_number)
@@ -72,7 +72,7 @@ theorem no_lychrel_numbers_base10 :
   sorry
 
 /--
-The first widely studied open case: whether `196` is a base-10 Lychrel number.
+The first widely studied open case: whether $196$ is a base-10 Lychrel number.
 -/
 @[category research open, AMS 11]
 theorem isLychrel10_196 : answer(sorry) ↔ IsLychrel10 196 := by
@@ -95,23 +95,23 @@ theorem eventually_palindrome_base10 :
     exact h n hn this
 
 
-/-- Sanity check: digit reversal of `120` is `21`. -/
+/-- Sanity check: digit reversal of $120$ is $21$. -/
 @[category test, AMS 11]
 theorem rev10_120 : rev10 120 = 21 := by
   native_decide
 
-/-- Sanity check: `121` is a base-10 palindrome. -/
+/-- Sanity check: $121$ is a base-10 palindrome. -/
 @[category test, AMS 11]
 theorem palindrome_121 : IsPalindrome10 121 := by
   dsimp [IsPalindrome10]
   native_decide
 
-/-- Sanity check: `56 → 121` in one Lychrel step. -/
+/-- Sanity check: $56 → 121$ in one Lychrel step. -/
 @[category test, AMS 11]
 theorem lychrelIter_56_one : lychrelStep^[1] 56 = 121 := by
   native_decide
 
-/-- Sanity check: the Lychrel iteration at `56` reaches a palindrome. -/
+/-- Sanity check: the Lychrel iteration at $56$ reaches a palindrome. -/
 @[category test, AMS 11]
 theorem eventually_palindrome_56 : ∃ k : ℕ, IsPalindrome10 (lychrelStep^[k] 56) := by
   refine ⟨1, ?_⟩

@@ -19,8 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Dedekind Numbers
 
-A Dedekind number `M(n)` counts the number of monotone Boolean functions on `n` variables,
-or equivalently, the number of antichains (Sperner families) in the Boolean lattice `2^[n]`.
+A Dedekind number $M(n)$ counts the number of monotone Boolean functions on $n$ variables,
+or equivalently, the number of antichains (Sperner families) in the Boolean lattice $2^[n]$.
 
 For example,
 $$M ( 0 ) = 2 , M ( 1 ) = 3 , M ( 2 ) = 6 , and M ( 3 ) = 20 .$$
@@ -32,10 +32,10 @@ $$M ( 9 ) = 286386577668298411128469151667598498812366$$
 (computed in 2023).
 
 We formalize two definitions:
-- `M n`: the number of monotone Boolean functions `(Fin n → Bool) → Bool`
-- `M' n`: the number of antichains (Sperner families) of `Finset (Fin n)`
+- `M n`: the number of monotone Boolean functions $(Fin n → Bool) → Bool$
+- `M' n`: the number of antichains (Sperner families) of $Finset (Fin n)$
 
-We prove their values for small `n` and show that the two definitions agree for all `n`.
+We prove their values for small $n$ and show that the two definitions agree for all $n$.
 
 The problem is to determine the exact values of $M(n)$ for $n ≥ 10$.
 In particular, the value of $M(10)$ is currently unknown.
@@ -270,7 +270,7 @@ theorem M_eq : M = answer(sorry) := by
   sorry
 
 /--
-  In particular, the Dedekind number for `n = 10` is currently unknown.
+  In particular, the Dedekind number for $n = 10$ is currently unknown.
 -/
 @[category research open, AMS 5 6]
 theorem Dedekind_10 : M 10 = answer(sorry) := by sorry

@@ -26,7 +26,7 @@ as a maximum of finite minima of finite collections of polynomials. It was first
 by Garrett Birkhoff and Richard S. Pierce, though the modern rigorous formulation is due to
 Melvin Henriksen and John R. Isbell.
 
-The conjecture has been proved for `n = 1` and `n = 2` by Louis Mahé.
+The conjecture has been proved for $n = 1$ and $n = 2$ by Louis Mahé.
 -/
 
 namespace PierceBirkhoff
@@ -80,8 +80,8 @@ def IsPiecewisePolynomial (f : ℝ → ℝ) : Prop :=
 
 /--
 The Pierce-Birkhoff conjecture states that for every real piecewise-polynomial function
-`f : ℝⁿ → ℝ`, there exists a finite set of polynomials `gᵢⱼ ∈ ℝ[x₁, ..., xₙ]` such that
-`f = supᵢ infⱼ(gᵢⱼ)`.
+$f : ℝⁿ → ℝ$, there exists a finite set of polynomials $gᵢⱼ ∈ ℝ[x₁, ..., xₙ]$ such that
+$f = supᵢ infⱼ(gᵢⱼ)$.
 -/
 @[category research open, AMS 13]
 theorem pierce_birkhoff_conjecture {n : ℕ} (f : (Fin n → ℝ) → ℝ)
@@ -91,7 +91,7 @@ theorem pierce_birkhoff_conjecture {n : ℕ} (f : (Fin n → ℝ) → ℝ)
   sorry
 
 /--
-The Pierce-Birkhoff conjecture holds for `n = 1`.
+The Pierce-Birkhoff conjecture holds for $n = 1$.
 This was proved by Louis Mahé.
 -/
 @[category research solved, AMS 13]
@@ -102,7 +102,7 @@ theorem pierce_birkhoff_conjecture_dim_one (f : ℝ → ℝ)
   sorry
 
 /--
-The Pierce-Birkhoff conjecture holds for `n = 2`.
+The Pierce-Birkhoff conjecture holds for $n = 2$.
 This was proved by Louis Mahé.
 -/
 @[category research solved, AMS 13]

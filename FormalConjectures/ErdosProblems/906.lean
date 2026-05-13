@@ -24,8 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos906
 
-/-- Does there exists an entire non-zero transcendental function `f : ℂ → ℂ` such that for any
-sequence `n₀ < n₁ < ...`, `{ z | ∃ k, iteratedDeriv (n k) f z = 0 }` is dense. -/
+/-- Does there exists an entire non-zero transcendental function $f : ℂ → ℂ$ such that for any
+sequence $n₀ < n₁ < ...$, ${ z | ∃ k, iteratedDeriv (n k) f z = 0 }$ is dense. -/
 @[category research open, AMS 30]
 theorem erdos_906 : answer(sorry) ↔ ∃ f : ℂ → ℂ, Transcendental (Polynomial ℂ) f ∧
     Differentiable ℂ f ∧ ∀ n : ℕ → ℕ, StrictMono n →

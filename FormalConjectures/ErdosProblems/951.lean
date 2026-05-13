@@ -36,7 +36,7 @@ at least one apart. -/
 def Erdos951Prop (a : ℕ → ℝ) : Prop :=
   ∀ (k ℓ : ℕ →₀ ℕ), k ≠ ℓ → |beurlingInteger a k - beurlingInteger a ℓ| ≥ 1
 
-/-- If `a` has property `Erdos951Prop` and `1 < a 0`, then `a` is a set of Beurling
+/-- If $a$ has property `Erdos951Prop` and $1 < a 0$, then $a$ is a set of Beurling
 prime numbers. -/
 @[category API, AMS 11]
 theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
@@ -54,15 +54,16 @@ theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     simpa using he (.single (N + 1) 1) (.single N 1) (by simpa [Finsupp.ext_iff] using ⟨N, by simp⟩)
   linarith [abs_lt.1 (hN N le_rfl), abs_lt.1 (hN (N + 1) (by grind))]
 
-/-- If `1 < a 0 < ...` has property `Erdos951Prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
+/-- If $1 < a_0 < \cdots$ has property `Erdos951Prop`, is it true that
+$\#\{i : a_i \le x\} \le \pi x$? -/
 @[category research open, AMS 11]
 theorem erdos_951 : answer(sorry) ↔
     ∀ a : ℕ → ℝ, 1 < a 0 → StrictMono a → Erdos951Prop a →
       ∀ᶠ (x : ℝ) in Filter.atTop, {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry
 
-/-- Beurling conjectured that if the number of Beurling integer in `[1, x]`
-is `x + o(log x)`, then `a` must be the sequence of primes. -/
+/-- Beurling conjectured that if the number of Beurling integer in $[1, x]$
+is $x + o(log x)$, then $a$ must be the sequence of primes. -/
 @[category research solved, AMS 11]
 theorem erdos_951.variants.beurling :
     ∀ a : ℕ → ℝ, IsBeurlingPrimes a →

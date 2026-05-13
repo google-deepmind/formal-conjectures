@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # (m,k)-perfect numbers
 
-An integer `n : ℤ` is `(m,k)-perfect` if `σᵐ(n) = kn` where `σᵐ` is the mᵗʰ iterate of the
+An integer $n : ℤ$ is $(m,k)-perfect$ if $σᵐ(n) = kn$ where $σᵐ$ is the mᵗʰ iterate of the
 sum of divisors function.
 
 *References:*

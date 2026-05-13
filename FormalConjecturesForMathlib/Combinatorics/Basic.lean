@@ -114,8 +114,8 @@ theorem IsSidon.insert {A : Set α} {m : α} [IsRightCancelAdd α] [IsLeftCancel
 /-!
 Maximal Sidon sets in an interval.
 
-We follow the convention that `IsMaximalSidonSetIn A N` means `A ⊆ {1, …, N}` is Sidon and
-is inclusion-maximal among subsets of `Set.Icc 1 N` with the Sidon property.
+We follow the convention that `IsMaximalSidonSetIn A N` means $A ⊆ {1, …, N}$ is Sidon and
+is inclusion-maximal among subsets of $Set.Icc 1 N$ with the Sidon property.
 -/
 
 /-- `IsMaximalSidonSetIn A N` means `A ⊆ {1, …, N}` is Sidon and cannot be extended within
@@ -126,11 +126,11 @@ def IsMaximalSidonSetIn (A : Set ℕ) (N : ℕ) : Prop :=
 
 namespace IsMaximalSidonSetIn
 
-/-- If `A` is a maximal Sidon set in `{1, …, N}`, then `A ⊆ {1, …, N}`. -/
+/-- If $A$ is a maximal Sidon set in ${1, …, N}$, then $A ⊆ {1, …, N}$. -/
 theorem subset {A : Set ℕ} {N : ℕ} (hA : IsMaximalSidonSetIn A N) :
     A ⊆ Set.Icc 1 N := hA.1
 
-/-- If `A` is a maximal Sidon set in `{1, …, N}`, then `A` is Sidon. -/
+/-- If $A$ is a maximal Sidon set in ${1, …, N}$, then $A$ is Sidon. -/
 theorem isSidon {A : Set ℕ} {N : ℕ} (hA : IsMaximalSidonSetIn A N) : IsSidon A := hA.2.1
 
 /-- Maximality condition unpacked. -/
@@ -153,7 +153,7 @@ instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := 
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
   (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).sup Finset.card
 
-/-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
+/-- If $A$ is finite Sidon, then $A ∪ {s}$ is also Sidon provided $s ≥ A.max + 1$. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
     IsSidon (A ∪ {s}) := by

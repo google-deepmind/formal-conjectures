@@ -33,7 +33,7 @@ namespace Erdos158
 def B2 (g : ℕ) (A : Set ℕ) : Prop :=
   ∀ n, {x : ℕ × ℕ | x.1 + x.2 = n ∧ x.1 ≤ x.2 ∧ x.1 ∈ A ∧ x.2 ∈ A}.encard ≤ g
 
-/-- A set is `B₂[1]` iff it is Sidon. -/
+/-- A set is $B₂[1]$ iff it is Sidon. -/
 @[category API, AMS 5, simp]
 lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A where
   mp hA a₁ ha₁ a₂ ha₂ b₁ hb₁ b₂ hb₂ h := by
@@ -51,14 +51,14 @@ lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A where
     have := hA x.1 q.1 y.1 t.1 x.2 q.2 y.2 t.2 (h.trans r.symm)
     grind
 
-/-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0`? -/
+/-- Let $A$ be an infinite $B₂[2]$ set. Must $liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0$? -/
 @[category research open, AMS 5]
 theorem erdos_158 : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → B2 2 A →
     liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
   sorry
 
-/-- Let `A` be an infinite Sidon set. Then
-`liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) * (log N) ^ (1 / 2) < ∞`. This is proved in [ESS94]. -/
+/-- Let $A$ be an infinite Sidon set. Then
+$liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) * (log N) ^ (1 / 2) < ∞$. This is proved in [ESS94]. -/
 @[category research solved, AMS 5]
 theorem erdos_158.variants.isSidon' {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
     liminf (fun N ↦ ENNReal.ofReal ((A ∩ .Iio N).ncard * N ^ (- 1 / 2 : ℝ) * log N ^ (1 / 2 : ℝ)))
@@ -66,7 +66,7 @@ theorem erdos_158.variants.isSidon' {A : Set ℕ} (hAinf : A.Infinite) (hAsid : 
   sorry
 
 /-- As a corollary of `erdos_158.isSidon'`, we can prove that
-`liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0` for any infinite Sidon set `A`. -/
+$liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0$ for any infinite Sidon set $A$. -/
 @[category research solved, AMS 5]
 theorem erdos_158.variants.isSidon {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
     liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by

@@ -27,19 +27,19 @@ public import Mathlib.Data.Real.Basic
 This file provides the core averaging lemma underlying the elementary form of Erdős's
 **probabilistic method**:
 
-> If the sum of a `ℕ`-valued function `f` over a finite set `s` is strictly less than the
-> cardinality of `s`, then `f` vanishes somewhere on `s`.
+> If the sum of a $ℕ$-valued function $f$ over a finite set $s$ is strictly less than the
+> cardinality of $s$, then $f$ vanishes somewhere on $s$.
 
-Interpreting `f a` as "the number of bad configurations caused by choice `a`", and sampling
-`a` uniformly from `s`, the expected number of bad configurations is `(∑ f) / |s| < 1`,
-so there must exist at least one `a ∈ s` with `f a = 0`.
+Interpreting `f a` as "the number of bad configurations caused by choice $a$", and sampling
+$a$ uniformly from $s$, the expected number of bad configurations is $(∑ f) / |s| < 1$,
+so there must exist at least one $a ∈ s$ with $f a = 0$.
 
 This is used by:
 - `FormalConjectures/Probabilistic/RamseyDiagonalLowerBound.lean`
-  to close the `R(k,k) > 2^{k/2}` lower bound (Erdős 1947).
+  to close the $R(k,k) > 2^{k/2}$ lower bound (Erdős 1947).
 - downstream deletion-method / alteration-method arguments.
 
-Both the `ℕ`-form and a convenience `ℝ`-form are provided; the latter is useful when the
+Both the $ℕ$-form and a convenience $ℝ$-form are provided; the latter is useful when the
 expectation bound is derived via `rpow`/`log` manipulations on the reals and only later
 cast back to counting.
 
@@ -56,10 +56,10 @@ open Finset
 
 /-- **Finite probabilistic method (integer form).**
 
-If `∑ x ∈ s, f x < s.card`, then there exists `a ∈ s` with `f a = 0`.
+If $∑ x ∈ s, f x < s.card$, then there exists $a ∈ s$ with $f a = 0$.
 
-**Proof idea.** Contrapositive: if every value is at least `1`, the sum is at least
-`s.card · 1 = s.card`, contradicting the hypothesis. -/
+**Proof idea.** Contrapositive: if every value is at least $1$, the sum is at least
+$s.card · 1 = s.card$, contradicting the hypothesis. -/
 theorem Finset.exists_eq_zero_of_sum_lt_card
     {α : Type*} {s : Finset α} {f : α → ℕ} (h : ∑ x ∈ s, f x < s.card) :
     ∃ a ∈ s, f a = 0 := by
@@ -75,10 +75,10 @@ theorem Finset.exists_eq_zero_of_sum_lt_card
 
 /-- **Finite probabilistic method (real form).**
 
-If `(∑ x ∈ s, (f x : ℝ)) < s.card`, then there exists `a ∈ s` with `f a = 0`.
+If $(∑ x ∈ s, (f x : ℝ)) < s.card$, then there exists $a ∈ s$ with $f a = 0$.
 
 This is the same statement as `Finset.exists_eq_zero_of_sum_lt_card` after casting the
-counting inequality to `ℝ`; it is the convenient entry point when `f` arises as an expectation
+counting inequality to $ℝ$; it is the convenient entry point when $f$ arises as an expectation
 whose bound was computed in the reals (e.g. via `Real.rpow` / `Real.log`). -/
 theorem Finset.exists_eq_zero_of_real_sum_lt_card
     {α : Type*} {s : Finset α} {f : α → ℕ}

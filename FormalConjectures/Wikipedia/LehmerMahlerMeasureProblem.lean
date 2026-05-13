@@ -37,8 +37,8 @@ noncomputable def mahlerMeasureZ (f : ℤ[X]) : ℝ :=
   mahlerMeasure (f.map (algebraMap ℤ ℂ))
 
 /--
-Let `M(f)` denote the Mahler measure of `f`.
-There exists a constant `μ>1` such that for any `f(x)∈ℤ[x], M(f)>1 → M(f)≥μ`.
+Let $M(f)$ denote the Mahler measure of $f$.
+There exists a constant $μ>1$ such that for any $f(x)∈ℤ[x], M(f)>1 → M(f)≥μ$.
 -/
 @[category research open, AMS 11]
 theorem lehmer_mahler_measure_problem :
@@ -49,7 +49,7 @@ theorem lehmer_mahler_measure_problem :
 noncomputable def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1
 
 /--
-`μ=M(X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1)` is the best value for `lehmer_mahler_measure_problem`.
+$μ=M(X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1)$ is the best value for `lehmer_mahler_measure_problem`.
 -/
 @[category research open, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.best (f : ℤ[X])

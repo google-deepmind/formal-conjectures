@@ -43,8 +43,8 @@ def monoAP_guarantee_set (r k : ℕ) : Set ℕ :=
   { N | ∀ coloring : Finset.Icc 1 N → Fin r, ContainsMonoAPofLength coloring k}
 
 /--
-Asserts that for any number of colors `r` and any progression length `k`, there
-always exists some number `N` large enough to guarantee a monochromatic arithmetic progression.
+Asserts that for any number of colors $r$ and any progression length $k$, there
+always exists some number $N$ large enough to guarantee a monochromatic arithmetic progression.
 In other words, the set `monoAP_guarantee_set` is non-empty. This is the fundamental existence
 result that allows for the definition of the van der Waerden numbers.
 -/

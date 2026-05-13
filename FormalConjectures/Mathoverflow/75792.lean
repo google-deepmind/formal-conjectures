@@ -19,13 +19,13 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Mathoverflow 75792
 
-Various questions about integer complexity, which is the minimum number of `1`s needed to express a natural number using addition, multiplication, and parentheses.
+Various questions about integer complexity, which is the minimum number of $1$s needed to express a natural number using addition, multiplication, and parentheses.
 
-Let `‖n‖` denote the integer complexity of `n > 0`.
-* It is known that `‖3^n‖ = 3n` for `n > 0`.
-* Is it true that `‖2^n‖ = 2n` for `n > 0`?
-* The corresponding conjecture for `5` is false, because
-  `5^6 = 15625 = 1 + 2^3 * 3^2 * (1 + 2^3 * 3^3)`!
+Let $‖n‖$ denote the integer complexity of $n > 0$.
+* It is known that $‖3^n‖ = 3n$ for $n > 0$.
+* Is it true that $‖2^n‖ = 2n$ for $n > 0$?
+* The corresponding conjecture for $5$ is false, because
+  $5^6 = 15625 = 1 + 2^3 * 3^2 * (1 + 2^3 * 3^3)$!
 
 We have chosen to formalise this using an inductive type.
 
@@ -179,7 +179,7 @@ theorem Reachable.pow (m n : ℕ) (hm : 0 < m) (hn : 0 < n) : Reachable (m ^ n) 
 theorem Reachable.pow' (m n : ℕ+) : Reachable (m ^ (n : ℕ) : ℕ) (m * n) :=
   .pow _ _ m.pos n.pos
 
-/-- `5^6 = 15625 = 1 + 2^3 * 3^2 * (1 + 2^3 * 3^3)`! -/
+/-- $5^6 = 15625 = 1 + 2^3 * 3^2 * (1 + 2^3 * 3^3)$! -/
 @[category test, AMS 11]
 theorem Reachable.five_pow_six : Reachable (5^6) 29 :=
   have h8 : Reachable 8 6 := .pow' 2 3
@@ -187,13 +187,13 @@ theorem Reachable.five_pow_six : Reachable (5^6) 29 :=
   have h27 : Reachable 27 9 := .pow' 3 3
   .add .one <| .mul h8 <| .mul h9 <| .add .one <| .mul h8 h27
 
-/-- Is `5n` the complexity of `5^n` for `0 < n`? Answer: No. -/
+/-- Is $5n$ the complexity of $5^n$ for $0 < n$? Answer: No. -/
 @[category research solved, AMS 11]
 theorem complexity_five_pow : answer(False) ↔ ∀ n : ℕ, 0 < n → complexity (5 ^ n) = 5 * n := by
   simp [false_iff, not_forall]
   exact ⟨6, by decide, fun h ↦ absurd (h ▸ Reachable.five_pow_six.complexity_le) (by decide)⟩
 
-/-- Is `3n` the complexity of `3^n` for `0 < n`? Answer: Yes, by John Selfridge.
+/-- Is $3n$ the complexity of $3^n$ for $0 < n$? Answer: Yes, by John Selfridge.
 
 Reference: https://arxiv.org/abs/1207.4841
 -/
@@ -201,7 +201,7 @@ Reference: https://arxiv.org/abs/1207.4841
 theorem complexity_three_pow : answer(True) ↔ ∀ n : ℕ, 0 < n → complexity (3 ^ n) = 3 * n := by
   sorry
 
-/-- Is `2n` the complexity of `2^n` for `0 < n`? -/
+/-- Is $2n$ the complexity of $2^n$ for $0 < n$? -/
 @[category research open, AMS 11]
 theorem complexity_two_pow : answer(sorry) ↔ ∀ n : ℕ, 0 < n → complexity (2 ^ n) = 2 * n := by
   sorry

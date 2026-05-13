@@ -54,7 +54,7 @@ theorem squarefreePart_ne_zero (n : ℕ) : n.squarefreePart ≠ 0 := by
 theorem squarefreePart_zero : squarefreePart 0 = 1 := by
   simp [squarefreePart]
 
-/-- If `n` is squarefree, then its squarefree part is itself. -/
+/-- If $n$ is squarefree, then its squarefree part is itself. -/
 theorem squarefreePart_of_squarefree {n : ℕ} (hn : Squarefree n) :
     squarefreePart n = n := by
   nth_rw 2 [← n.factorization_prod_pow_eq_self fun _ ↦ by simp_all]
@@ -62,7 +62,7 @@ theorem squarefreePart_of_squarefree {n : ℕ} (hn : Squarefree n) :
   exact Finset.prod_congr rfl fun p hp ↦ by
     rw [factorization_eq_one_of_squarefree hn (mem_primeFactors.1 hp).1 (mem_primeFactors.1 hp).2.1]
 
-/-- The squarefree part of any square is `1`. -/
+/-- The squarefree part of any square is $1$. -/
 theorem squarefreePart_of_isSquare {n : ℕ} (hn : IsSquare n) :
     squarefreePart n = 1 := by
   rcases eq_or_ne n 0 with (rfl | h₀); exact squarefreePart_zero

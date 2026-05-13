@@ -17,15 +17,15 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Strong Sensitivity Conjecture (`bs(f) ≤ s(f)^2`)
+# Strong Sensitivity Conjecture ($bs(f) ≤ s(f)^2$)
 
 This file formalizes the *strong* sensitivity conjecture, asserting:
 
-For every Boolean function `f : {0,1}^n → {0,1}`,
-`bs(f) ≤ s(f)^2`,
+For every Boolean function $f : {0,1}^n → {0,1}$,
+$bs(f) ≤ s(f)^2$,
 where bs(f) denotes block sensitivity and s(f) denotes sensitivity.
 
-Huang's theorem proves a *quartic* upper bound, `bs(f) ≤ s(f)^4`, thereby
+Huang's theorem proves a *quartic* upper bound, $bs(f) ≤ s(f)^4$, thereby
 resolving the most widely known form of the sensitivity conjecture.
 
 We now ask whether a stronger upper bound holds. Interestingly, the original
@@ -35,7 +35,7 @@ relation. On the lower bound side, Rubinstein
 (https://link.springer.com/article/10.1007/BF01200762) constructed Boolean functions
 exhibiting the first quadratic separation. The best currently
 known gap, due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), is
-`bs(f) ≥ (2/3)⋅s(f)^2`.
+$bs(f) ≥ (2/3)⋅s(f)^2$.
 
 *References:*
 * [Induced Subgraphs of Hypercubes and a Proof of the Sensitivity Conjecture](https://arxiv.org/abs/1907.00847)
@@ -88,13 +88,13 @@ noncomputable def blockSensitivity (f : (Fin n → Bool) → Bool) : ℕ :=
   univ.sup (blockSensitivityAt f)
 
 /-- Strong Sensitivity Conjecture,
-for every Boolean function `f : {0,1}^n → {0,1}`,
-`bs(f) ≤ s(f)^2`.
+for every Boolean function $f : {0,1}^n → {0,1}$,
+$bs(f) ≤ s(f)^2$.
 
 We call this the *strong* sensitivity conjecture because the original sensitivity
-conjecture only asked for a polynomial bound in terms of `s(f)`. Huang's
+conjecture only asked for a polynomial bound in terms of $s(f)$. Huang's
 celebrated result (often called the sensitivity theorem) gives a quartic bound,
-`bs(f) ≤ s(f)^4`, thereby settling the original conjecture. -/
+$bs(f) ≤ s(f)^4$, thereby settling the original conjecture. -/
 @[category research open, AMS 68]
 theorem strong_sensitivity_conjecture {n : ℕ} (f : (Fin n → Bool) → Bool) :
     blockSensitivity f ≤ sensitivity f ^ 2 := by
@@ -114,17 +114,17 @@ def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
   let w := #{i | x i}
   decide ((w : ℚ) ∈ ({(n / 2 : ℚ), (n / 2 : ℚ) + 1} : Finset ℚ))
 
-/-- Assuming `n` is a multiple of 4, the sensitivity of `nisanExample`
-is `n/2`, achieved by any `x` with Hamming weight `n/2`. -/
+/-- Assuming $n$ is a multiple of 4, the sensitivity of `nisanExample`
+is $n/2$, achieved by any $x$ with Hamming weight $n/2$. -/
 @[category test, AMS 68]
 lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
     sensitivity (nisanExample n) = n / 2 := by
   sorry
 
-/-- Assuming `n` is a multiple of 4, the block sensitivity of `nisanExample`
-is `3n/4`, achieved by any `x` with Hamming weight `n/2`.
-An optimal block configuration uses all `n/2` 1-bits as singleton blocks
-and forms `n/4` disjoint size-2 blocks from the 0-bits. -/
+/-- Assuming $n$ is a multiple of 4, the block sensitivity of `nisanExample`
+is $3n/4$, achieved by any $x$ with Hamming weight $n/2$.
+An optimal block configuration uses all $n/2$ 1-bits as singleton blocks
+and forms $n/4$ disjoint size-2 blocks from the 0-bits. -/
 @[category test, AMS 68]
 lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) :
     blockSensitivity (nisanExample n) = 3 * n / 4 := by

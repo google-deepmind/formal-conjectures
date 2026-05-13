@@ -31,9 +31,9 @@ noncomputable def leastCongruentPrime (a d : ℕ) : ℕ :=
   sInf {p : ℕ | p.Prime ∧ p ≡ a [MOD d]}
 
 /--
-Let `p(a, d)` be the least prime congruent to `a (mod d)`.
-Does there exist a constant `c > 0` such that for all large `d`,
-`p(a, d) > (1 + c) * φ(d) * log d` for `≫ φ(d)` many values of `a`?
+Let $p(a, d)$ be the least prime congruent to $a (mod d)$.
+Does there exist a constant $c > 0$ such that for all large $d$,
+$p(a, d) > (1 + c) * φ(d) * log d$ for $≫ φ(d)$ many values of $a$?
 -/
 @[category research open, AMS 11]
 theorem erdos_971 : answer(sorry) ↔
@@ -43,7 +43,7 @@ theorem erdos_971 : answer(sorry) ↔
   sorry
 
 /--
-Erdős [Er49c] proved that the statement in `erdos_971` holds for infinitely many values of `d`.
+Erdős [Er49c] proved that the statement in `erdos_971` holds for infinitely many values of $d$.
 
 [Er49c] Erdős, P., _On some applications of Brun's method_. Acta Univ. Szeged. Sect. Sci. Math.
 (1949), 57--63.
@@ -57,8 +57,8 @@ theorem erdos_971.variants.infinite_sequence :
   sorry
 
 /--
-Erdős [Er49c] proved that for any `ε > 0` we have `p(a, d) < ε * φ(d) * log d` for `≫_ε φ(d)` many
-values of `a` (for all large `d`).
+Erdős [Er49c] proved that for any $ε > 0$ we have $p(a, d) < ε * φ(d) * log d$ for $≫_ε φ(d)$ many
+values of $a$ (for all large $d$).
 
 [Er49c] Erdős, P., _On some applications of Brun's method_. Acta Univ. Szeged. Sect. Sci. Math.
 (1949), 57--63.

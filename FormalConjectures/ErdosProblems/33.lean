@@ -36,9 +36,9 @@ and `n ≥ 0`. -/
 def AdditiveBasisCondition (A : Set ℕ) : Prop :=
   ∀ (k : ℕ), ∃ (n : ℕ) (a : ℕ), a ∈ A ∧ k = a + n^2
 
-/-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a`
-for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of
-`lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)`?
+/-- Let $A ⊆ ℕ$ be a set such that every integer can be written as $n^2 + a$
+for some $a$ in $A$ and $n ≥ 0$. What is the smallest possible value of
+$lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)$?
 -/
 @[category research open, AMS 11]
 theorem erdos_33 : ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
@@ -54,8 +54,8 @@ theorem erdos_33.variants.one_mem_lowerBounds : ∃ A, AdditiveBasisCondition A 
   sorry
 
 /--
-The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)`
-is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by
+The smallest possible value of $lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)$
+is at most $2φ^(5/2) ≈ 6.66$, with $φ$ equal to the golden ratio. Proven by
 Wouter van Doorn.
 -/
 @[category research solved, AMS 11]

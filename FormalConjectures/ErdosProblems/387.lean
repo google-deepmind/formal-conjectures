@@ -31,8 +31,8 @@ open Filter
 
 namespace Erdos387
 
-/-- Is there an absolute constant `c > 0` such that, for all `1 ≤ k < n`, the binomial coefficient
-`n.choose k` has a divisor in `(cn, n]`? -/
+/-- Is there an absolute constant $c > 0$ such that, for all $1 ≤ k < n$, the binomial coefficient
+`n.choose k` has a divisor in $(cn, n]$? -/
 @[category research open, AMS 11]
 theorem erdos_387 : answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧ ∀ n k : ℕ, 1 ≤ k → k < n →
     ∃ d : ℕ, (d : ℝ) ∈ Set.Ioc (c * n) n ∧ d ∣ n.choose k := by
@@ -48,7 +48,7 @@ theorem erdos_387.variants.schinzel : answer(sorry) ↔
     ∀ᶠ k in atTop, ¬ IsPrimePow k → ∃ n : ℕ, ∀ i < k, ¬ n - i ∣ n.choose k := by
   sorry
 
-/-- It is easy to see that `n.choose k` has a divisor in `[n / k, n]`. -/
+/-- It is easy to see that `n.choose k` has a divisor in $[n / k, n]$. -/
 @[category research solved, AMS 11]
 theorem erdos_387.variants.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n) : ∃ d : ℕ,
     (d : ℝ) ∈ Set.Icc (n / k : ℝ) n ∧ d ∣ n.choose k := by
@@ -62,8 +62,8 @@ theorem erdos_387.variants.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n
     · cases n <;> cases k <;> simp_all [Nat.add_one_mul_choose_eq]
   · exact Nat.le_of_dvd (by linarith) (gcd_dvd_right _ _)
 
-/-- Is it true for any `c < 1` and all `n` sufficiently large, for all `1 ≤ k < n`, `n.choose k`
-has a divisor in `(cn, n]`? This is a variant of `erdos_387` and appears in [Gu04]. -/
+/-- Is it true for any $c < 1$ and all $n$ sufficiently large, for all $1 ≤ k < n$, `n.choose k`
+has a divisor in $(cn, n]$? This is a variant of `erdos_387` and appears in [Gu04]. -/
 @[category research open, AMS 11]
 theorem erdos_387.variants.guy : answer(sorry) ↔ ∀ c : ℝ, c < 1 → ∀ᶠ n : ℕ in atTop, ∀ k : ℕ, 1 ≤ k →
     k < n → ∃ d : ℕ, (d : ℝ) ∈ Set.Ioc (c * n) n ∧ d ∣ n.choose k := by

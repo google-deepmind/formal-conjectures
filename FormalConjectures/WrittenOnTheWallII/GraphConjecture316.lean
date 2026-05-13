@@ -31,9 +31,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /--
 WOWII [Conjecture 316](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-Let `G` be a simple connected graph and let `P` denote the set of pendant vertices
-(vertices of degree 1). If `|P| ≥ deg_avg(G)`, then `G` is well totally dominated,
-where `deg_avg(G)` is the average degree of `G`.
+Let $G$ be a simple connected graph and let $P$ denote the set of pendant vertices
+(vertices of degree 1). If $|P| ≥ deg_avg(G)$, then $G$ is well totally dominated,
+where $deg_avg(G)$ is the average degree of $G$.
 -/
 @[category research open, AMS 5]
 theorem conjecture316 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)

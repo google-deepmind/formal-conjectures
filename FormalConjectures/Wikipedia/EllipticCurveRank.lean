@@ -80,7 +80,7 @@ open scoped Topology
 open Filter (atTop)
 
 /-- Formula (5.1.1) of [PPVW2016]: The number of elliptic curves over ℚ with naïve height at most
-`H` is asymptotically `2^(4/3)*3^(-3/2)/ζ(10) * H^(5/6)`. -/
+$H$ is asymptotically $2^(4/3)*3^(-3/2)/ζ(10) * H^(5/6)$. -/
 @[category textbook, AMS 11 14]
 theorem card_heightLE_div_pow_five_div_six_tensto :
     atTop.Tendsto (fun H ↦ (heightLE H).ncard / (H : ℝ) ^ (5 / 6 : ℝ))
@@ -133,10 +133,10 @@ Notice that this contradicts the previous conjecture. -/
 theorem finite_twentyone_lt_finrank : {E : RatEllipticCurve | 21 < E.rank}.Finite := by
   sorry
 
-/-- [PPVW2016] 8.2(b): for 1 ≤ r ≤ 20, the number of elliptic curves over ℚ with rank `r` and
-naïve height at most `H` is asymptotically `H ^ ((21 - r) / 24 + o(1))`.
+/-- [PPVW2016] 8.2(b): for 1 ≤ r ≤ 20, the number of elliptic curves over ℚ with rank $r$ and
+naïve height at most $H$ is asymptotically $H ^ ((21 - r) / 24 + o(1))$.
 Note: ℰ_H in 8.2(b) should be ℰ_{≤H}, see the statement of Theorem 7.3.3.
-When `r = 1`, the exponent is `20 / 24 = 5 / 6`, which agrees with the exponent in
+When $r = 1$, the exponent is $20 / 24 = 5 / 6$, which agrees with the exponent in
 `card_heightLE_div_pow_five_div_six_tensto` and is consistent with
 `half_rank_zero_and_half_rank_one`. -/
 @[category research open, AMS 11 14]
@@ -146,7 +146,7 @@ theorem rank_height_count_asymptotic (r : ℕ) (h₁ : 1 ≤ r) (h₂ : r ≤ 20
   sorry
 
 /-- [PPVW2016] 8.2(c): the number of elliptic curves over ℚ with rank ≥ 21 and naïve height
-at most `H` is asymptotically at most `H ^ o(1)`. -/
+at most $H$ is asymptotically at most $H ^ o(1)$. -/
 @[category research open, AMS 11 14]
 theorem twentyone_le_rank_height_count_asymptotic :
     ∃ f : ℕ → ℝ, atTop.Tendsto f (𝓝 0) ∧

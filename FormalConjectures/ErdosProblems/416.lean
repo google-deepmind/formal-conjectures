@@ -32,7 +32,7 @@ noncomputable abbrev V (x : ℝ) : ℝ :=
   (Finset.Icc 1 ⌊x⌋₊ |>.filter (fun n => ∃ (m : ℕ), m.totient = n)).card
 
 /--
-Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. Does `V(2x)/V(x)→2` ?
+Let $V(x)$ count the number of $n≤x$ such that $ϕ(m)=n$ is solvable. Does $V(2x)/V(x)→2$ ?
 -/
 @[category research open, AMS 11]
 theorem erdos_416.parts.i :
@@ -40,8 +40,8 @@ theorem erdos_416.parts.i :
   sorry
 
 /--
-Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
-Is there an asymptotic formula for `V(x)`?
+Let $V(x)$ count the number of $n≤x$ such that $ϕ(m)=n$ is solvable.
+Is there an asymptotic formula for $V(x)$?
 -/
 @[category research open, AMS 11]
 theorem erdos_416.parts.ii :
@@ -50,8 +50,8 @@ theorem erdos_416.parts.ii :
   sorry
 
 /--
-Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
-Pillai proved `V(x)=o(x)`.
+Let $V(x)$ count the number of $n≤x$ such that $ϕ(m)=n$ is solvable.
+Pillai proved $V(x)=o(x)$.
 Ref: S. Sivasankaranarayana Pillai, _On some functions connected with $\phi(n)$_
 -/
 @[category research solved, AMS 11]
@@ -59,7 +59,7 @@ theorem erdos_416.variants.Pillai : V =o[atTop] id := by
   sorry
 
 /--
-Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
+Let $V(x)$ count the number of $n≤x$ such that $ϕ(m)=n$ is solvable.
 Erdős proved V(x)=x(logx)^(−1+o(1)).
 Ref: Erdős, P., _On the normal number of prime factors of $p-1$ and some related problems concerning Euler's $\varphi$-function._
 -/
@@ -69,8 +69,8 @@ theorem erdos_416.variants.Erdos : ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ →
   sorry
 
 /--
-Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
-`V(x)=x/logx * e^((C+o(1))(log log log x)^2)`, for some explicit constant `C>0`.
+Let $V(x)$ count the number of $n≤x$ such that $ϕ(m)=n$ is solvable.
+$V(x)=x/logx * e^((C+o(1))(log log log x)^2)$, for some explicit constant $C>0$.
 Ref:Maier, Helmut and Pomerance, Carl, _On the number of distinct values of Euler's $\phi$-function_.
 -/
 @[category research solved, AMS 11]
@@ -81,8 +81,8 @@ theorem erdos_416.variants.Maier_Pomerance :
   sorry
 
 /--
-Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
-`V(x) ≍ x/log x*e^(C_1*(log log log x − log log log log x)^2+C_2 log log log x − C_3 log log log log x)`
+Let $V(x)$ count the number of $n≤x$ such that $ϕ(m)=n$ is solvable.
+$V(x) ≍ x/log x*e^(C_1*(log log log x − log log log log x)^2+C_2 log log log x − C_3 log log log log x)$
 Ref: Ford, Kevin, _The distribution of totients_.
 -/
 @[category research solved, AMS 11]

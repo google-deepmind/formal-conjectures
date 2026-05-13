@@ -190,7 +190,7 @@ theorem transcendental_gamma_one_div_six : Transcendental ℚ (1 / 6 : ℝ).Gamm
   sorry
 
 /--
-$\Gamma(1/n)$ for `n ≥ 2` is transcendental.
+$\Gamma(1/n)$ for $n ≥ 2$ is transcendental.
 -/
 @[category research open, AMS 33]
 theorem transcendental_gamma_one_div (n : ℕ) (hn : 2 ≤ n) : Transcendental ℚ (1 / n : ℝ).Gamma := by

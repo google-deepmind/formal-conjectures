@@ -155,7 +155,7 @@ theorem johnsonGraph_chromaticNumber_odd_of_johnson_chromaticNumber_composite :
   · exact even_iff_two_dvd.mp (Odd.add_one h_odd)
   · omega
 
-/-- Is the chromatic number of `J(2 * k, k)` always at least `k + 2`? -/
+/-- Is the chromatic number of $J(2 * k, k)$ always at least $k + 2$? -/
 @[category research open, AMS 5]
 theorem johnson_chromaticNumber : answer(sorry) ↔
     ∀ k ≥ 3, k + 2 ≤ J(2 * k, k).chromaticNumber :=

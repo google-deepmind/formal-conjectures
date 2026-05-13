@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # Infinite Regular Primes
 
 We define the notion of regular primes, which are prime numbers that are coprime with the
-cardinality of the class group of the `p`-th cyclotomic field. We also state that there are
+cardinality of the class group of the $p$-th cyclotomic field. We also state that there are
 infinitely many regular primes.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Regular_prime)
@@ -59,8 +59,8 @@ lemma small_regular_primes :
 theorem not_isRegularPrime_37_second : ¬ @IsRegularPrime 37 (by decide) := by
   sorry
 
-/-- An equivanlent definitions of regualr prime `p` is that it does not divide the numerator of the
-first `p-3` Bernoulli numbers. Not in Mathlib. -/
+/-- An equivanlent definitions of regualr prime $p$ is that it does not divide the numerator of the
+first $p-3$ Bernoulli numbers. Not in Mathlib. -/
 @[category textbook, AMS 11]
 theorem isRegularPrime_iff_Bernoulli (p : ℕ) [Fact p.Prime] :
     IsRegularPrime p ↔ ∀ k ∈ Finset.Icc 2 (p - 3), ¬ (p : ℤ) ∣ (bernoulli' k).num := by

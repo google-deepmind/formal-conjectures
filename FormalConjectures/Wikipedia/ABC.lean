@@ -54,7 +54,7 @@ Quality `q(a, b, c)` of the triple `(a, b, c)` is defined as `q(a,b,c) = log (c)
 noncomputable def quality (a b c : ℕ) : ℝ := (c : ℝ).log / (radical <| a * b * c : ℝ).log
 
 /--
-For every positive real number `ε`, there exist only finitely many triples `(a, b, c)` of coprime positive integers, with `a + b = c`, such that `c > rad(abc)^(1+ε)`
+For every positive real number $ε$, there exist only finitely many triples $(a, b, c)$ of coprime positive integers, with $a + b = c$, such that $c > rad(abc)^(1+ε)$
 -/
 @[category research open, AMS 11]
 theorem abc (ε : ℝ) (hε : 0 < ε) :
@@ -63,7 +63,7 @@ theorem abc (ε : ℝ) (hε : 0 < ε) :
   sorry
 
 /--
-For every positive real number ε, there exists a constant `K_ε` such that for all triples (a, b, c) of coprime positive integers, with a + b = c we have `c < K_ε rad(abc)^(1+ε)`.
+For every positive real number ε, there exists a constant $K_ε$ such that for all triples (a, b, c) of coprime positive integers, with a + b = c we have $c < K_ε rad(abc)^(1+ε)$.
 -/
 @[category research open, AMS 11]
 theorem abc.variants.lt_constant_mul (ε : ℝ) (hε : 0 < ε) : ∃ K,
@@ -72,7 +72,7 @@ theorem abc.variants.lt_constant_mul (ε : ℝ) (hε : 0 < ε) : ∃ K,
   sorry
 
 /--
-For every positive real number ε, there exist only finitely many triples `(a, b, c)` of coprime positive integers with `a + b = c` such that `q(a, b, c) > 1 + ε`.
+For every positive real number ε, there exist only finitely many triples $(a, b, c)$ of coprime positive integers with $a + b = c$ such that $q(a, b, c) > 1 + ε$.
 -/
 @[category research open, AMS 11]
 theorem abc.variants.quality (ε : ℝ) (hε : 0 < ε) :

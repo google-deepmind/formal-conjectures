@@ -27,10 +27,10 @@ namespace Erdos939
 
 /--
 A set `S` belongs to `Erdos939Sums r` if it meets the following criteria:
-- The size of the set is `$|S| = r - 2$`.
+- The size of the set is $|S| = r - 2$.
 - The elements of the set are coprime (their greatest common divisor is 1).
-- Every element in `S` is an `$r$-powerful` number.
-- The sum of the elements in `S`, i.e., `$\sum_{s \in S} s$`, is also an `$r$-powerful` number.
+- Every element in $S$ is an $r$-powerful number.
+- The sum of the elements in $S$, i.e., $\sum_{s \in S} s$, is also an $r$-powerful number.
 -/
 def Erdos939Sums (r : ℕ) :=
     {S : Finset ℕ | S.card = r - 2 ∧ S.Coprime ∧ r.Full (∑ s ∈ S, s) ∧ ∀ s ∈ S, r.Full s}

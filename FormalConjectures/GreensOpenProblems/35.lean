@@ -22,8 +22,8 @@ import FormalConjectures.Util.ProblemImports
 Estimate the infimum of the $L^p$ norm of the self-convolution of a nonnegative integrable
 function supported on $[0,1]$ with total integral $1$.
 
-We model a function `f : [0,1] → ℝ≥0` as a function `f : ℝ → ℝ` that is nonnegative, integrable,
-supported on `[0,1]`, and has total integral `1`.
+We model a function $f : [0,1] → ℝ≥0$ as a function $f : ℝ → ℝ$ that is nonnegative, integrable,
+supported on $[0,1]$, and has total integral $1$.
 
 *References:*
 - [Ben Green's Open Problem 35](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.35)
@@ -68,7 +68,7 @@ theorem green_35.upper :
 /-  Known bounds and comparisons. -/
 namespace variants
 
-/-- Lower bound for $c(2)$ from Green's first paper ([Gr01]); the constant is `sqrt(4/7)` (about 0.7559). -/
+/-- Lower bound for $c(2)$ from Green's first paper ([Gr01]); the constant is $sqrt(4/7)$ (about 0.7559). -/
 @[category research solved, AMS 26 28 42]
 theorem c_2_lower : ENNReal.ofReal (Real.sqrt (4 / 7)) ≤ c 2 := by
   sorry

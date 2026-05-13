@@ -21,11 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/1084](https://www.erdosproblems.com/1084)
 
-Let `f_2(n)` be the maximum number of pairs of points at distance exactly `1`
-among any set of `n` points in `ℝ²`, under the condition that all pairwise
-distances are at least `1`.
+Let $f_2(n)$ be the maximum number of pairs of points at distance exactly $1$
+among any set of $n$ points in $ℝ²$, under the condition that all pairwise
+distances are at least $1$.
 
-Estimate the growth of `f_2(n)`.
+Estimate the growth of $f_2(n)$.
 
 Status: open.
 -/

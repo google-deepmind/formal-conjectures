@@ -23,9 +23,9 @@ public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 /-!
 # nth root operations
 
-This file provides `Real.nthRoot n` to compute `ⁿ√`,
-which operates as expected on negative values when `n` is odd.
-The trap this avoids is that using `rpow`, `(-8 : ℝ) ^ (1/3 : ℝ) = 1`.
+This file provides `Real.nthRoot n` to compute $ⁿ√$,
+which operates as expected on negative values when $n$ is odd.
+The trap this avoids is that using `rpow`, $(-8 : ℝ) ^ (1/3 : ℝ) = 1$.
 
 This is being upstreamed to Mathlib in leanprover-community/mathlib4#26935.
 -/

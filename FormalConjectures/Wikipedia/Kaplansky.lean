@@ -31,7 +31,7 @@ namespace Kaplansky
 /--
 **The zero-divisor conjecture**
 
-If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero divisors.
+If $G$ is torsion-free, then the group algebra $K[G]$ has no non-trivial zero divisors.
 -/
 @[category research open, AMS 16 20]
 theorem zero_divisor_conjecture : NoZeroDivisors (MonoidAlgebra K G) := by
@@ -40,7 +40,7 @@ theorem zero_divisor_conjecture : NoZeroDivisors (MonoidAlgebra K G) := by
 /--
 **The idempotent conjecture**
 
-If `G` is torsion-free, then `K[G]` has no non-trivial idempotents.
+If $G$ is torsion-free, then $K[G]$ has no non-trivial idempotents.
 -/
 @[category research open, AMS 16 20]
 theorem idempotent_conjecture (a : MonoidAlgebra K G) (h : IsIdempotentElem a) :

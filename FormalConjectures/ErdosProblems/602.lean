@@ -59,16 +59,16 @@ def HasPropertyB {α : Type*} (I : Type*) (A : I → Set α) : Prop :=
 Does every almost-disjoint family of countably infinite sets whose pairwise
 intersections all have size ≠ 1 have Property B?
 
-Formally: let `α` be any type, let `(A_i)_{i ∈ I}` be a family of countably infinite subsets
-of `α` such that for all `i ≠ j`, the intersection `A_i ∩ A_j` is finite and
-`|A_i ∩ A_j| ≠ 1`. Does there exist a 2-colouring `f : α → Fin 2` such that no `A_i` is
+Formally: let $α$ be any type, let $(A_i)_{i ∈ I}$ be a family of countably infinite subsets
+of $α$ such that for all $i ≠ j$, the intersection $A_i ∩ A_j$ is finite and
+$|A_i ∩ A_j| ≠ 1$. Does there exist a 2-colouring $f : α → Fin 2$ such that no `A_i` is
 monochromatic?
 
 This is an open question about Property B for almost-disjoint families with a
 forbidden intersection size of 1.
 
-**Note:** This generalises the formulation in which the ground set is `ℕ`. Since every
-countably infinite set is in bijection with `ℕ`, the two formulations are equivalent, but
+**Note:** This generalises the formulation in which the ground set is $ℕ$. Since every
+countably infinite set is in bijection with $ℕ$, the two formulations are equivalent, but
 working over an arbitrary ground type makes the statement apply immediately to, e.g.,
 almost-disjoint families of countable subsets of an uncountable space. -/
 @[category research open, AMS 3 5]
@@ -86,11 +86,11 @@ theorem erdos_602 : answer(sorry) ↔
 **Trivial case: pairwise disjoint families.**
 
 If the `A_i` are pairwise disjoint (all intersections are empty, which in
-particular satisfies `|A_i ∩ A_j| ≠ 1`), then Property B holds trivially.
+particular satisfies $|A_i ∩ A_j| ≠ 1$), then Property B holds trivially.
 
 **Proof sketch:** Since each `A_i` is infinite, it has (at least) two distinct elements
 `a_i` and `b_i`. We can define a colouring that assigns colour 0 to `a_i` and colour 1
-to `b_i` for each `i` (using disjointness, these choices don't conflict), and extend
+to `b_i` for each $i$ (using disjointness, these choices don't conflict), and extend
 arbitrarily elsewhere. Then no `A_i` is monochromatic. -/
 @[category research solved, AMS 3 5]
 theorem erdos_602.variants.disjoint : answer(True) ↔
@@ -162,8 +162,8 @@ theorem erdos_602.variants.countable_index : answer(True) ↔
 /--
 **Intersections of size ≥ 2 suffice.**
 
-For a single countably infinite set `A ⊆ α`, there trivially exists a 2-colouring
-of `α` that makes `A` non-monochromatic: since `A` is infinite, it has two distinct
+For a single countably infinite set $A ⊆ α$, there trivially exists a 2-colouring
+of $α$ that makes $A$ non-monochromatic: since $A$ is infinite, it has two distinct
 elements, so any colouring that assigns them different colours works. -/
 @[category textbook, AMS 3]
 theorem erdos_602.variants.single_set {α : Type*} (A : Set α) (hA : A.Infinite) :
@@ -196,7 +196,7 @@ theorem erdos_602.variants.single_set {α : Type*} (A : Set α) (hA : A.Infinite
 /--
 **Empty index set.**
 
-If the index set `I` is empty (has no elements), then Property B holds vacuously:
+If the index set $I$ is empty (has no elements), then Property B holds vacuously:
 any 2-colouring works, since there are no sets to be made non-monochromatic. -/
 @[category textbook, AMS 3]
 theorem erdos_602.variants.empty_index {α : Type*} :
@@ -209,8 +209,8 @@ theorem erdos_602.variants.empty_index {α : Type*} :
 /--
 **Unique index set.**
 
-If the index set has exactly one element (i.e., `[Unique I]`), then Property B holds:
-any 2-colouring that makes the single set `A (default : I)` non-monochromatic works.
+If the index set has exactly one element (i.e., $[Unique I]$), then Property B holds:
+any 2-colouring that makes the single set $A (default : I)$ non-monochromatic works.
 This follows from the single-set case. -/
 @[category textbook, AMS 3]
 theorem erdos_602.variants.unique_index {α : Type*} (I : Type*) [Unique I]
@@ -226,16 +226,16 @@ theorem erdos_602.variants.unique_index {α : Type*} (I : Type*) [Unique I]
 /--
 **Two infinite sets with pairwise intersection of size ≠ 1.**
 
-If the family consists of exactly two countably infinite sets `A₀` and `A₁` with
-`|A₀ ∩ A₁| ≠ 1` (and finite), then Property B holds.
+If the family consists of exactly two countably infinite sets $A₀$ and $A₁$ with
+$|A₀ ∩ A₁| ≠ 1$ (and finite), then Property B holds.
 
 **Proof sketch:**
-- If `A₀ ∩ A₁ = ∅`: the sets are disjoint. Pick distinct `a, b ∈ A₀` and distinct
-  `c, d ∈ A₁`. Colour `b` and `c` with 1, everything else with 0. Then `A₀` has
-  `a` (colour 0) and `b` (colour 1), and `A₁` has `c` (colour 1) and `d` (colour 0),
+- If $A₀ ∩ A₁ = ∅$: the sets are disjoint. Pick distinct $a, b ∈ A₀$ and distinct
+  $c, d ∈ A₁$. Colour $b$ and $c$ with 1, everything else with 0. Then $A₀$ has
+  $a$ (colour 0) and $b$ (colour 1), and $A₁$ has $c$ (colour 1) and $d$ (colour 0),
   so neither is monochromatic.
-- If `|A₀ ∩ A₁| ≥ 2`: the intersection contains two distinct points `x` and `y`.
-  Assign `x` colour 0 and `y` colour 1. Both `A₀` and `A₁` contain `x` and `y`,
+- If $|A₀ ∩ A₁| ≥ 2$: the intersection contains two distinct points $x$ and $y$.
+  Assign $x$ colour 0 and $y$ colour 1. Both $A₀$ and $A₁$ contain $x$ and $y$,
   so neither is monochromatic. -/
 @[category research solved, AMS 3 5]
 theorem erdos_602.variants.two_sets : answer(True) ↔
@@ -439,10 +439,10 @@ def disjoint_without_infinite_claim : Prop :=
 
 /-- Formal disproof of `disjoint_without_infinite_claim`.
 
-**Counterexample:** Take `α = ℕ`, `I = Fin 2`, with `A 0 = {0}` and `A 1 = {1}`.
+**Counterexample:** Take $α = ℕ$, $I = Fin 2$, with $A 0 = {0}$ and $A 1 = {1}$.
 These are pairwise disjoint, satisfying the only hypothesis. But singleton sets
-are vacuously monochromatic under any colouring: the only pair `(x, y) ∈ {0} × {0}`
-is `(0, 0)`, and `f 0 = f 0` trivially. So any colouring makes `A 0` monochromatic,
+are vacuously monochromatic under any colouring: the only pair $(x, y) ∈ {0} × {0}$
+is $(0, 0)$, and $f 0 = f 0$ trivially. So any colouring makes $A 0$ monochromatic,
 meaning `HasPropertyB` fails. -/
 @[category research solved, AMS 3]
 theorem disjoint_without_infinite_claim.disproof :

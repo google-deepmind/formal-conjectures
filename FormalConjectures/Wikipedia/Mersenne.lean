@@ -62,11 +62,11 @@ def NewMersenneConjectureStatement (p : ℕ) : Prop :=
   (p.GivesWagstaffPrime ∧ p.IsSpecialForm → p.GivesMersennePrime)
 
 /--
-For any odd natural number `p` if two of the following conditions hold,
+For any odd natural number $p$ if two of the following conditions hold,
 then all three must hold:
 1. $2^p-1$ is prime
 2. $(2^p+1)/3$ is prime
-3. Exists a number `k` such that $p = 2^k \\pm 1$ or $p = 4^k \\pm 3$
+3. Exists a number $k$ such that $p = 2^k \\pm 1$ or $p = 4^k \\pm 3$
 -/
 @[category research open, AMS 11]
 theorem new_mersenne_conjecture (p : ℕ) (hp : Odd p) :

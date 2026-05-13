@@ -22,16 +22,16 @@ import FormalConjectures.Util.ProblemImports
 * [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)
 * [MathOverflow](https://mathoverflow.net/questions/27851)
 
-The Casas-Alvero conjecture states that if a univariate polynomial `P` of degree `d` over a field
-of characteristic zero shares a non-trivial factor with its Hasse derivatives up to order `d-1`,
-then `P` must be of the form `(X - α)ᵈ` for some `α` in the field.
+The Casas-Alvero conjecture states that if a univariate polynomial $P$ of degree $d$ over a field
+of characteristic zero shares a non-trivial factor with its Hasse derivatives up to order $d-1$,
+then $P$ must be of the form $(X - α)ᵈ$ for some $α$ in the field.
 
 The conjecture has been proven for:
-* Degrees `d ≤ 8`
-* Degrees of the form `p^k` where `p` is prime
-* Degrees of the form `2p^k` where `p` is prime
+* Degrees $d ≤ 8$
+* Degrees of the form $p^k$ where $p$ is prime
+* Degrees of the form $2p^k$ where $p$ is prime
 
-The conjecture is false in positive characteristic `p` for polynomials of degree `p+1`.
+The conjecture is false in positive characteristic $p$ for polynomials of degree $p+1$.
 
 The conjecture is now claimed to be proven in this paper:
 * [Proof of the Casas-Alvero conjecture: Soham Ghosh)](https://arxiv.org/pdf/2501.09272)
@@ -116,8 +116,8 @@ variable [CharZero K] (P : K[X]) (hP : Monic P)
 include hP
 
 /--
-The Casas-Alvero conjecture states that in characteristic zero, if a monic polynomial `P`
-has the Casas-Alvero property, then `P = (X - α)ᵈ` for some `α`.
+The Casas-Alvero conjecture states that in characteristic zero, if a monic polynomial $P$
+has the Casas-Alvero property, then $P = (X - α)ᵈ$ for some $α$.
 -/
 @[category research open, AMS 12]
 theorem casas_alvero_conjecture (hP' : HasCasasAlveroProp P) :
@@ -136,7 +136,7 @@ theorem casas_alvero.prime_power (p k : ℕ) (hp : p.Prime) (hd : P.natDegree = 
   sorry
 
 /--
-The Casas-Alvero conjecture holds for polynomials of degree `2p^k` where `p` is prime.
+The Casas-Alvero conjecture holds for polynomials of degree $2p^k$ where $p$ is prime.
 This was proved by Graf von Bothmer, Labs, Schicho, and van de Woestijne.
 
 Reference: [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)
@@ -149,7 +149,7 @@ theorem casas_alvero.double_prime_power (p k : ℕ) (hp : p.Prime) (hd : P.natDe
 end conjecture
 
 /--
-The Casas-Alvero conjecture fails in positive characteristic `p` for polynomials of degree `p + 1`.
+The Casas-Alvero conjecture fails in positive characteristic $p$ for polynomials of degree $p + 1$.
 This was shown by Graf von Bothmer, Labs, Schicho, and van de Woestijne.
 
 Reference: [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)

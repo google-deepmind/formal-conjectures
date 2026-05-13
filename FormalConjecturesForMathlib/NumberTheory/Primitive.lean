@@ -23,25 +23,25 @@ public import Mathlib.Data.Nat.Squarefree
 /-!
 # Primitive elements of a set with respect to divisibility
 
-An element `n` is *primitive* in a set `S ⊆ ℕ` if `n ∈ S` and no proper divisor of `n` is in `S`.
+An element $n$ is *primitive* in a set $S ⊆ ℕ$ if $n ∈ S$ and no proper divisor of $n$ is in $S$.
 
 This concept appears naturally when studying sequences closed under "divisor inheritance" -
-if every member `n` of a sequence has the property that `m * n` is also in the sequence
-for coprime `m`, then the primitive elements generate the entire sequence.
+if every member $n$ of a sequence has the property that $m * n$ is also in the sequence
+for coprime $m$, then the primitive elements generate the entire sequence.
 
 ## Main definitions
 
-* `Set.IsPrimitive`: A natural number `n` is primitive in `S` if `n ∈ S` and
-  `n.properDivisors` is disjoint from `S`.
-* `Set.primitives`: The set of primitive elements of `S`.
+* `Set.IsPrimitive`: A natural number $n$ is primitive in $S$ if $n ∈ S$ and
+  `n.properDivisors` is disjoint from $S$.
+* `Set.primitives`: The set of primitive elements of $S$.
 
 ## Main results
 
 * `Set.IsPrimitive.mem`: A primitive element is in the set.
 * `Set.IsPrimitive.not_mem_of_properDivisor`: Proper divisors of a primitive element are not
   in the set.
-* `Set.one_isPrimitive_iff`: `1` is primitive in `S` iff `1 ∈ S`.
-* `Set.prime_isPrimitive_iff`: A prime `p` is primitive in `S` iff `p ∈ S` and `1 ∉ S`.
+* `Set.one_isPrimitive_iff`: $1$ is primitive in $S$ iff $1 ∈ S$.
+* `Set.prime_isPrimitive_iff`: A prime $p$ is primitive in $S$ iff $p ∈ S$ and $1 ∉ S$.
 -/
 
 namespace Set

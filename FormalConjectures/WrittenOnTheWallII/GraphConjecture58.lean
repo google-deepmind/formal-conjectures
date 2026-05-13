@@ -33,9 +33,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (G : SimpleG
 /--
 WOWII [Conjecture 58](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a connected graph `G`, the size `f(G)` of a largest induced forest satisfies
-`f(G) ≥ ceil( b(G) / average l(v) )` where `b(G)` is the largest induced
-bipartite subgraph and `l(v)` is the independence number of `G.neighborSet v`.
+For a connected graph $G$, the size $f(G)$ of a largest induced forest satisfies
+$f(G) ≥ ceil( b(G) / average l(v) )$ where $b(G)$ is the largest induced
+bipartite subgraph and $l(v)$ is the independence number of `G.neighborSet v`.
 -/
 @[category research open, AMS 5]
 theorem conjecture58 (hG : G.Connected) :

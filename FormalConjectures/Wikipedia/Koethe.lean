@@ -56,21 +56,21 @@ theorem KotherConjecture.variants.le_KotherRadical {I : Ideal R} (hI : IsNil I) 
     (I : Set R) ⊆ KotheRadical R := by
   sorry
 
-/-- The **Köthe conjecture**: for any nil ideal `I` of `R`, the matrix ideal `M_n(I)` is a nil ideal
-of the matrix ring `M_n(R)`. -/
+/-- The **Köthe conjecture**: for any nil ideal $I$ of $R$, the matrix ideal $M_n(I)$ is a nil ideal
+of the matrix ring $M_n(R)$. -/
 @[category research open, AMS 16]
 theorem KotherConjecture.variants.general_matrix {I : TwoSidedIdeal R} (hI : IsNil I)
     (n : Type*) [Fintype n] : IsNil (matrix n I) := by
   sorry
 
-/-- The **Köthe conjecture**: for any nil ideal `I` of `R`, the matrix ideal `M_2(I)` is a nil ideal
-of the matrix ring `M_2(R)`. -/
+/-- The **Köthe conjecture**: for any nil ideal $I$ of $R$, the matrix ideal $M_2(I)$ is a nil ideal
+of the matrix ring $M_2(R)$. -/
 @[category research open, AMS 16]
 theorem KotherConjecture.variants.two_by_two_matrix {I : TwoSidedIdeal R} (hI : IsNil I) :
     IsNil (matrix (Fin 2) I) := by
   sorry
 
-/-- The **Köthe conjecture**: for any positive integer `n`, the Köthe radical of `R` is the matrix ideal `M_2(Nil*(R))`. -/
+/-- The **Köthe conjecture**: for any positive integer $n$, the Köthe radical of $R$ is the matrix ideal $M_2(Nil*(R))$. -/
 @[category research open, AMS 16]
 theorem KotherConjecture.variants.matrixOver_KotherRadical
     {I : TwoSidedIdeal R} (hI : IsNil I) (n : Type*) [Fintype n] :
@@ -83,7 +83,7 @@ Sanity check that the current mathlib definition is what I want.
 -/
 
 /--
-The **Amitsur Conjecture**: If `J` is a nil ideal in `R`, then `J[x]` is a nil ideal of the polynomial ring `R[x]`.
+The **Amitsur Conjecture**: If $J$ is a nil ideal in $R$, then $J[x]$ is a nil ideal of the polynomial ring $R[x]$.
 This is known to be false, see Agata Smoktunowicz, _Polynomial rings over nil rings need not be nil_.
 -/
 @[category research solved, AMS 16]

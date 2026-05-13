@@ -30,7 +30,7 @@ namespace Brocard
 
 /--
 **Brocard's Conjecture**
-For every `n ≥ 2`, between the squares of the `n`-th and `(n+1)`-th primes,
+For every $n ≥ 2$, between the squares of the $n$-th and $(n+1)$-th primes,
 there are at least four prime numbers.
 -/
 @[category research open, AMS 11]

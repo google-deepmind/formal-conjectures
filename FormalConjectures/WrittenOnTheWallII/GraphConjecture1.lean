@@ -30,9 +30,9 @@ open SimpleGraph
 /--
 WOWII [Conjecture 1](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G` the maximum number of leaves of a spanning
-tree satisfies `Ls(G) ≥ n(G) + 1 - 2·m(G)` where `n(G)` counts vertices and
-`m(G)` is the size of a maximum matching.
+For a simple connected graph $G$ the maximum number of leaves of a spanning
+tree satisfies $Ls(G) ≥ n(G) + 1 - 2·m(G)$ where $n(G)$ counts vertices and
+$m(G)$ is the size of a maximum matching.
 -/
 
 @[category research solved, AMS 5]

@@ -44,8 +44,8 @@ def Erdos375Prop : Prop := ∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime)
 theorem erdos_375 : answer(sorry) ↔ Erdos375Prop := by
   sorry
 
-/-- If `Erdos375Prop` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
-for some `c > 0`. -/
+/-- If `Erdos375Prop` is true, then $(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)$
+for some $c > 0$. -/
 @[category research solved, AMS 11]
 theorem erdos_375.variants.bounded_gap : Erdos375Prop →
     ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime
@@ -58,8 +58,8 @@ theorem erdos_375.variants.legendre : Erdos375Prop →
     (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p) :=
   fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.variants.bounded_gap hp)
 
-/-- It is easy to see that for any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite,
-then there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
+/-- It is easy to see that for any $n ≥ 1$ and $k ≤ 2$, if $n + 1, ..., n + k$ are all composite,
+then there are distinct primes $p₁, ... pₖ$ such that $pᵢ ∣ n + i$ for all $1 ≤ i ≤ k$. -/
 @[category research solved, AMS 11]
 theorem erdos_375.variants.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
@@ -78,11 +78,11 @@ theorem erdos_375.variants.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n 
       have := (hp 1).1
       simp_all [Nat.not_prime_one]
 
-/-- There exists a constant `c > 0` such that for all `n`, if
-`k < c * (log n / (log (log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime)`, then
-there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. This is proved
-in [RST75]. There is no need to only consider sufficiently large `n` because one can always take
-`c` small enough so that `k < c * (log n / (log (log n))) ^ 3` implies that `k = 0` until `n` is
+/-- There exists a constant $c > 0$ such that for all $n$, if
+$k < c * (log n / (log (log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime)$, then
+there are distinct primes $p₁, ... pₖ$ such that $pᵢ ∣ n + i$ for all $1 ≤ i ≤ k$. This is proved
+in [RST75]. There is no need to only consider sufficiently large $n$ because one can always take
+$c$ small enough so that $k < c * (log n / (log (log n))) ^ 3$ implies that $k = 0$ until $n$ is
 large. -/
 @[category research solved, AMS 11]
 theorem erdos_375.variants.log : ∃ c > 0, ∀ n k : ℕ,

@@ -33,9 +33,9 @@ prime divisors.
 def TwoPowAddSet (r : ℕ) := {(2 ^ k + n) | (k : ℕ) (n : ℕ) (_ : n.primeFactors.card ≤ r)}
 
 /--
-The set of integers of the form `2^k+p` (where `p` is prime) has positive lower density.
+The set of integers of the form $2^k+p$ (where $p$ is prime) has positive lower density.
 
-Formalisation note: here we also allow `p = 1` since this simplifies the code and is equivalent
+Formalisation note: here we also allow $p = 1$ since this simplifies the code and is equivalent
 to the original statement.
 -/
 @[category research solved, AMS 11]

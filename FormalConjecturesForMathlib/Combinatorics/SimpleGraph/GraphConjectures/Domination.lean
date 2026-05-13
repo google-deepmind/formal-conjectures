@@ -28,10 +28,10 @@ This file introduces dominating sets and related invariants.
 Main definitions
 
 * `SimpleGraph.IsDominating`   : A set of vertices that dominates all vertices.
-* `SimpleGraph.IsNDominatingSet` : A dominating set with `n` vertices.
+* `SimpleGraph.IsNDominatingSet` : A dominating set with $n$ vertices.
 * `SimpleGraph.dominationNumber` : The domination number of a graph.
 * `SimpleGraph.IsTotalDominating` : A total dominating set.
-* `SimpleGraph.IsTotalNDominatingSet` : A total dominating set with `n` vertices.
+* `SimpleGraph.IsTotalNDominatingSet` : A total dominating set with $n$ vertices.
 * `SimpleGraph.totalDominationNumber` : The total domination number.
 
 Future work should extend this file with connected, independent, and power

@@ -25,8 +25,8 @@ public import Mathlib.Combinatorics.SimpleGraph.Maps
 # Homomorphism density for finite simple graphs
 
 Mathlib does not (as of 2026-04) provide `SimpleGraph.homDensity`. We define a lightweight
-version here, specialised to finite vertex types on the host `G`, and prove the basic
-`homDensity H G ≤ 1` upper bound used as a sanity check in Sidorenko-style arguments.
+version here, specialised to finite vertex types on the host $G$, and prove the basic
+$homDensity H G ≤ 1$ upper bound used as a sanity check in Sidorenko-style arguments.
 
 The extension to infinite hosts uses the same formula with `Fintype.card` replaced by
 measure-theoretic integrals; we do not need that generality here.
@@ -48,10 +48,10 @@ noncomputable def homDensity [Fintype V] [Fintype W] [DecidableEq V] [DecidableE
     (H : SimpleGraph V) (G : SimpleGraph W) [DecidableRel H.Adj] [DecidableRel G.Adj] : ℝ :=
   (homCount H G : ℝ) / (Fintype.card W : ℝ) ^ (Fintype.card V)
 
-/-- The homomorphism density `t(H, G)` is at most `1`.
+/-- The homomorphism density $t(H, G)$ is at most $1$.
 
-Proof outline: the underlying function of a `H →g G`-homomorphism is an element of
-`V → W`, which has `|W|^|V|` elements, so `homCount H G ≤ |W|^|V|`. Divide. -/
+Proof outline: the underlying function of a $H →g G$-homomorphism is an element of
+$V → W$, which has $|W|^|V|$ elements, so $homCount H G ≤ |W|^|V|$. Divide. -/
 lemma homDensity_le_one {V W : Type*} [Fintype V] [Fintype W] [Nonempty W]
     [DecidableEq V] [DecidableEq W]
     (H : SimpleGraph V) (G : SimpleGraph W)

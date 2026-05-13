@@ -33,9 +33,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 2](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`Ls(G) ≥ 2 · (l(G) - 1)` where `l(G)` is the average independence number of
-the neighbourhoods of the vertices of `G`.
+For a simple connected graph $G$,
+$Ls(G) ≥ 2 · (l(G) - 1)$ where $l(G)$ is the average independence number of
+the neighbourhoods of the vertices of $G$.
 -/
 @[category research open, AMS 5]
 theorem conjecture2 (G : SimpleGraph α) (h : G.Connected) :

@@ -49,7 +49,7 @@ def BeurlingIntegers (a : ℕ → ℝ) : Set ℝ := .range (beurlingInteger a)
 theorem beurlingInteger_mem (a k) : beurlingInteger a k ∈ BeurlingIntegers a := by
   simpa using ⟨k, rfl⟩
 
-/-- Every element of the sequence `a` is a Beurling integer. -/
+/-- Every element of the sequence $a$ is a Beurling integer. -/
 lemma generator_mem_beurling (a : ℕ → ℝ) (i : ℕ) : a i ∈ BeurlingIntegers a :=
   ⟨Finsupp.single i 1, by aesop⟩
 

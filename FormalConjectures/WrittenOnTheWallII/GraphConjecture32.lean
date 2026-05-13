@@ -32,9 +32,9 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 32](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, `path(G) ≥ ⌈2 · dist_avg(M, V)⌉`, where `path(G)`
-is the floor of the average distance of `G`, `M` is the set of maximum-degree vertices,
-and `dist_avg(M, V)` is the average distance from all vertices to `M`.
+For a simple connected graph $G$, $path(G) ≥ ⌈2 · dist_avg(M, V)⌉$, where $path(G)$
+is the floor of the average distance of $G$, $M$ is the set of maximum-degree vertices,
+and $dist_avg(M, V)$ is the average distance from all vertices to $M$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture32 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
