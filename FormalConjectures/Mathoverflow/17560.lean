@@ -48,5 +48,5 @@ If $2^x$, $3^x$ and $5^x$ are integers, then $x$ must be an integer.
 theorem mathoverflow_17560.variants.with_5 {x : ℝ} (hx : ∃ m : ℕ, (2 : ℝ) ^ x = m)
     (hx' : ∃ m : ℕ, (3 : ℝ) ^ x = m) (hx'' : ∃ m : ℕ, (5 : ℝ) ^ x = m) : ∃ m : ℕ, x = m := by
   sorry
-  
+end Mathoverflow17560
 -- TODO(Paul-Lez): add the implications
