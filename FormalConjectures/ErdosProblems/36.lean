@@ -92,7 +92,7 @@ theorem M_one : M 1 = 1 := by
     constructor
     · rintro ⟨A, B, hdis, huni, hcard, rfl⟩
       have huni' : A ∪ B = {1, 2} := by
-        rw [huni]; decide
+        rw [huni]; ext x; simp [Finset.mem_Icc]; omega
       have hcard2 : A.card + B.card = 2 := by
         have := (Finset.card_union_of_disjoint hdis).symm
         rw [huni'] at this; simp at this; linarith
@@ -103,6 +103,7 @@ theorem M_one : M 1 = 1 := by
       simp [maxOverlap_singleton]
     · rintro (rfl : x = 1)
       exact ⟨{1}, {2}, by decide, by decide, by rfl, maxOverlap_singleton 1 2⟩
+  push_cast at hset
   rw [hset, csInf_singleton]
 
 @[category test, AMS 5 11]
