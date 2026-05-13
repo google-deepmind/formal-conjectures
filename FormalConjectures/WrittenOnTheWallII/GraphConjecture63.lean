@@ -35,10 +35,6 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- `distEven G v` counts the number of vertices at even distance from `v` in `G`. -/
-noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
-  (Finset.univ.filter (fun w => Even (G.dist v w))).card
-
 /--
 WOWII [Conjecture 63](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

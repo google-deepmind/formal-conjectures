@@ -36,12 +36,6 @@ namespace WrittenOnTheWallII.GraphConjecture24
 
 open Classical SimpleGraph
 
-/-- `distEven G v` counts the number of vertices at even distance from `v` in `G`.
-Distance 0 (the vertex itself) is even, so `distEven G v ≥ 1`. -/
-noncomputable def distEven {α : Type*} [Fintype α]
-    (G : SimpleGraph α) (v : α) : ℕ :=
-  (Finset.univ.filter (fun w => Even (G.dist v w))).card
-
 /--
 WOWII [Conjecture 24](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj24)
 (status F, disproved):
