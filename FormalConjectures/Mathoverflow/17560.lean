@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 asked by user [Alon-Amit](https://mathoverflow.net/users/25/alon-amit)
 -/
 
+namespace Mathoverflow17560
+
 /--
 If $2^x$ and $3^x$ are integers, then $x$ must be an integer.
 -/
