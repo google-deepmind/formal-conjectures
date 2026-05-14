@@ -41,6 +41,6 @@ least $e^{\sqrt{n}}$.
 theorem gap_conjecture :
   ∀ (G : Type) [Group G] [Group.FG G],
     SuperPolynomial (growthRate G) → growthRate G ≥ expSqrt := by
-      sorry
+  sorry
 
 end GapConjecture
