@@ -41,14 +41,14 @@ Let $A \subseteq \mathbb{R}$ be an infinite set. Must there be a set $E \subsete
 of positive measure which does not contain any set of the shape $a * A + b$
 for some $a,b \in \mathbb{R}$ and $a \neq 0$?
 -/
-@[category research open, AMS 05 28]
+@[category research open, AMS 5 28]
 theorem erdos_120 : answer(sorry) ↔ ∀ A : Set ℝ, A.Infinite → Erdos120For A := by
   sorry
 
 /--
 Steinhaus [St20] has proved Erdős 120 to be false whenever $A$ is a finite set.
 -/
-@[category research solved, AMS 05 28]
+@[category research solved, AMS 5 28]
 theorem erdos_120.variants.finite_set {A : Set ℝ} (h : A.Finite) : ¬ Erdos120For A := by
   sorry
 

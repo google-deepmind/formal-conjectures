@@ -35,65 +35,11 @@ AlphaProof to help identify potential misformalisations.
 
 ## Contributing
 
-Contributions are most welcome, consider adding (or even just opening an issue
-describing) your favourite conjecture.
-
-### I'd like to contribute - what can I do?
-
-There are various ways of contributing to this repository:
-
-1. **Formalise a Problem**. You can find problem lists ready
-   to be worked on in our [list of Milestones](https://github.com/google-deepmind/formal-conjectures/milestones), you can also filter by the AMS 2020 Classification (e.g. [Group Theory Issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22ams-20%20Group%20theory%20and%20generalizations%22)) or
-   take a look at [good first issues](https://github.com/google-deepmind/formal-conjectures/issues?q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20label%3A%22good%20first%20issue%22) if you are new to Lean.
-
-   More generally, we encourage adding formalisations of open conjectures from all sorts of sources, including:
-
-      * **Literature:** Textbooks, problem books and research papers (including [arXiv](https://arxiv.org/archive/math)).
-      * **Community Resources:** [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics), [MathOverflow](https://mathoverflow.net/) and the [OEIS](https://oeis.org/).
-      * **Problem Lists:** Famous collections ([Millennium](https://www.claymath.org/millennium-problems/), [Smale](https://en.wikipedia.org/wiki/Smale%27s_problems), Yau), [Erdős Problems](https://www.erdosproblems.com/), [Ben Green's list](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf), [Kourovka notebook](https://arxiv.org/pdf/1401.0300) or [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book)
-    
-   Just pick one and comment on the issue (e.g., "I plan to work on this") to
-   have it assigned to you.
-
-   We are also interested in the formalised statements of solved variants of
-   open conjectures and solved statements from dedicated problem lists.
-   While the main goal is to collect conjecture statements, we appreciate the
-   inclusion of very short proofs for solved items or counterexamples,
-   especially if they are illuminating and testing the definitions.
-   **Longer proofs (i.e. more than 25-50 lines) are not to be included in this repository.**
-   Instead, we welcome you to host your proof in your own repository and link to it using
-   the `formally solved` mechanism described below. This does not apply to
-   `FormalConjecturesForMathlib`, where we want all statements to have proofs.
-
-2. **Opening issues with problems that you would like to see formalised.** Such
-   an issue should contain links to suitable references, and ideally a precise
-   informal statement of the conjecture.
-
-3. **Improving the referencing and tagging of problems.** For example, adding
-   pointers to references in already existing files, or adding additional
-   relevant `AMS` subject attributes to statements.
-
-4. **Fixing misformalisations.** PRs fixing incorrect formalisations and issues
-   flagging problems are encouraged.
-
-### How to Contribute
-
-Please see [CONTRIBUTING](./CONTRIBUTING.md) first.
-
-1.  Open an issue on GitHub specifying what you plan to contribute.
-2.  Fork the repository on GitHub.
-3.  Add your formalised conjecture(s) in the appropriate file/directory
-    structure to a branch in your fork.
-    *   Include comments linking to the source of the conjecture (paper,
-        website, book).
-    *   Use the `category` attribute to specify what category each of the
-        statements falls into (see below for more details on this.)
-    *   Use the `AMS` attribute to specify what mathematical areas each of the
-        statements are related to.
-4.  Ensure the code builds (`lake build`).
-5.  Submit a Pull Request to the main repository.
-
-For the use of AI, the [same conventions and precautions as in mathlib](https://github.com/leanprover-community/leanprover-community.github.io/blob/478f0f4b8be577d6d3f913053918551dcf68b1c6/templates/contribute/index.md?plain=1#L68-L70) apply.
+Contributions are most welcome — consider adding (or even just opening an issue
+describing) your favourite conjecture. See [CONTRIBUTING.md](./CONTRIBUTING.md)
+for the full contribution guide, including ways to contribute, the
+step-by-step process, file structure conventions, attribute usage, and style
+guidelines.
 
 ## Usage, Structure & Features
 
@@ -120,168 +66,9 @@ There are two special directories:
     [mathlib](https://github.com/leanprover-community/mathlib4). Here we follow
     mathlib's directory structure.
 
-### Some features
-
-#### The `category` attribute
-
-A tag to mark the category of a problem statement. In this repository, we allow
-for the following categories:
-
--   Open research problem: a mathematical problem or conjecture for which no
-    solution or proof is currently accepted by the mathematical community.
--   Solved research problem: a problem with an established solution.
-    This includes problems that have a formal proof within this repository,
-    a formal proof of an equivalent statement found elsewhere, or an informal
-    solution widely accepted by experts in the field.
--   Textbook level problem: a math problem at the high school, undergraduate,
-    or graduate level.
--   API statement: a statement that constructs basic theory around a new
-    definition.
--   Test statement: a statement that serves as a "unit test". These are useful
-    to check e.g new definitions or theorem statements.
-
-This repository targets research level problems. As such, textbook level
-problems should only be contributed if they
-are directly related to a research level problem (e.g. as a special case,
-etc.).
-
-The tags should be used as follows:
-
-```lean
-@[category research open]
-theorem foo : Transcendental ℚ (rexp 1 + π) := by
-  sorry
-
-@[category research solved]
-theorem bar : FermatLastTheorem := by
-  sorry
-
-```
-
-#### The `formal_proof` attribute
-
-The `formal_proof` attribute records the existence and location of a formal proof.
-This is independent of the `category` attribute and can be used with any category.
-
-Use `@[formal_proof using <kind> at "link"]` where `<kind>` is one of:
-- `formal_conjectures`: formally proved in this repository (link to commit)
-- `lean4`: formally proved in Lean 4 elsewhere (e.g., Mathlib or another repository)
-- `other_system`: formally proved in another formal system (Roqc, Isabelle, etc.)
-
-```lean
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/example"]
-theorem some_problem : ... := by
-  sorry
-```
-
-#### The `AMS` attribute
-
-The `AMS` tag is intended to provide some information about the mathematical
-subjects a given statement is related to. For simplicity, we use the main
-subjects listed in the
-[AMS MSC2020](https://mathscinet.ams.org/mathscinet/msc/pdfs/classifications2020.pdf).
-
-The tag can be used as follows:
-
-```lean
-@[AMS 11] -- `11` means "Number Theory"
-theorem flt : FermatLastTheorem := by
-  sorry
-```
-
-Within a Lean file, you can use the `#AMS` command to list all the possible
-values.
-
-To determine the subject associated to the tag `AMS foo` in VS Code, you can hover
-over `foo`.
-
-The attribute allows multiple parameters, e.g. `@[AMS foo bar]` is valid.
-
-#### The `answer( )` elaborator
-
-Some open questions are formulated in a way that require a user provided answer,
-for instance the
-[Hadwiger–Nelson problem](https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem)
-asks for the minimum number of colours needed to colour the plane such that no two
-points exactly one unit distance apart have the same colour. The `answer( )`
-elaborator allows us to formulate the problem without deciding for an answer.
-
-```lean
-@[category research open]
-theorem HadwigerNelsonProblem :
-    UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
-  sorry
-```
-
-## Problems that require answers
-
-Note that providing a term inside the `answer( )` elaborator together with a proof that
-the statement is true *does not* by itself mean that the problem has been solved. For example, a question
-of the form "Which natural numbers satisfy the predicate $P$?" might be formalised as
-```lean
-theorem myOpenProblem : {n : ℕ | P n} = answer(sorry) := by
-  sorry
-```
-and one can provide trivial answers that aren't mathemetically interesting, e.g. the set
-`{n : ℕ | P n}` itself.
-
-In particular, the question of whether the answer provided corresponds to a mathematically
-meaningful solution of the problem is outside of the scope of this repository.
-
-## Style Guidelines
-
-1.  Generally speaking, every problem should have its own file, though there is
-    some flexibility here (e.g. variants and special cases should go in the same
-    file).
-2.  Bespoke definitions are allowed, as long as they help clarify problem
-    statements. We also encourage contributors to provide some very basic API
-    for such definitions as a way to test whether these behave as expected.
-3.  Benchmark problems should be stated with the `theorem` or `lemma` keywords.
-4.  Every statement should have at least one `AMS` subject tag.
-5.  Every file should come with a reference to where the problem was sourced
-    from, and be put in the corresponding directory of the repository, e.g. a
-    problem sourced from wikipedia should live in `FormalConjectures/Wikipedia`.
-6.  When a problem is stated as a question in English, the preferred style is to
-    use `answer(sorry)` in the following way:
-    ```lean
-    /-- English version: "Does P hold ?" -/
-    theorem myConjecture : answer(sorry) ↔ P := by
-      sorry
-    ```.
-    This way the informal "Does ...", "Are there ..." or "Is it true that ..." corresponds
-    to the `answer(sorry)` in the formalised statement.
-
-    If the problem has been solved, `answer(sorry)` should be replaced by
-    `answer(True)` or `answer(False)` accordingly.
-    If the problem is not stated as a question, the following style is preferred:
-    ```lean
-    /-- English version: "P holds" -/
-    theorem myConjecture : P := by
-      sorry
-    ```
-    If the problem has been solved to the negative, then `P` should be replaced with
-    `¬ P`.
-7.  Every file should start with the following copyright header (replace YYYY with
-    the current year):
-    ```lean
-    /-
-    Copyright YYYY The Formal Conjectures Authors.
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-    -/
-    ```
-    Also consider adding yourself to the list of authors in the AUTHORS file.
-
+For details on the `@[category]`, `@[formal_proof]`, `@[AMS]` attributes and
+the `answer( )` elaborator that statements in this repository use, see
+[CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Versioning
 
@@ -292,6 +79,22 @@ To minimize friction when adding problem statements that need definitions that
 are not yet in mathlib, such definitions can be added to the `FormalConjecturesForMathlib`
 directory. This ensures that the addition of these problems to
 formal-conjectures is not locked to the mathlib release cadence.
+
+When `lean-toolchain` is updated on `main`, a GitHub Actions workflow
+automatically adds a git tag of the form `v4.{X}.{Y}`, following mathlib's
+tagging convention.
+
+Stable benchmark snapshots are tagged using the format
+`bench-v{N}-lean4.{X}.{Y}`, where:
+
+-   **`v{N}` (Benchmark version):** Identifies the set of problems included in
+    the benchmark. The benchmark version is bumped whenever problems are added,
+    removed, or when misformalizations are corrected.
+-   **`lean4.{X}.{Y}` (Lean version):** Identifies the Lean 4 toolchain
+    version used for that snapshot.
+
+Tags are immutable: fixes to misformalizations are never patched into an existing
+benchmark version but instead go into `v{N+1}`.
 
 ## Licensing
 

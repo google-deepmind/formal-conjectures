@@ -70,9 +70,11 @@ $$?
 The answer is yes, as proved in a strong form by Cambie [Ca24].
 [Ca24] S. Cambie, Resolution of an Erdős' problem on least common multiples. arXiv:2410.09138 (2024).
 
-This was formalized in Lean by Alexeev using Aristotle.
+This was formalized in Lean by Alexeev using Aristotle, conditional on asymptotic estimates for the
+prime counting function (specifically `pi_alt` from the PNT+ project).
+See the [formal proof](https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos678.lean).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos678.lean"]
+@[category research solved, AMS 11]
 theorem erdos_678 : answer(True) ↔
     ∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite := by
   sorry
