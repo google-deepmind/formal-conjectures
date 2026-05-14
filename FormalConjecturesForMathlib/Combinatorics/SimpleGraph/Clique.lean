@@ -13,7 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Combinatorics.SimpleGraph.Clique
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+
+@[expose] public section
 
 namespace SimpleGraph
 variable {V : Type*} {G : SimpleGraph V}

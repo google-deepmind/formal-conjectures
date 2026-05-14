@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Algebra.Polynomial.Degree.Definitions
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Data.Nat.Prime.Defs
+module
+
+public import Mathlib.Algebra.Polynomial.Degree.Definitions
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Data.Nat.Prime.Defs
+
+@[expose] public section
 
 open Polynomial
 

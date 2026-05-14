@@ -65,7 +65,7 @@ theorem green_35.upper :
     (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7505 := by
   sorry
 
-/-! Known bounds and comparisons. -/
+/-  Known bounds and comparisons. -/
 namespace variants
 
 /-- Lower bound for $c(2)$ from Green's first paper ([Gr01]); the constant is `sqrt(4/7)` (about 0.7559). -/
@@ -84,7 +84,7 @@ theorem c_inf_upper : c ∞ ≤ 0.7505 := by
   sorry
 
 /-- A comparison bound from Young's inequality. -/
-@[category undergraduate, AMS 26 28 42]
+@[category textbook, AMS 26 28 42]
 theorem c_inf_lower_young : (c 2) ^ 2 ≤ c ∞ := by
   sorry
 

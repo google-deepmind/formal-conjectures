@@ -20,6 +20,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/510](https://www.erdosproblems.com/510)
+- [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11)
 - [Ru04] Ruzsa, Imre Z., Negative values of cosine sums. Acta Arith. (2004), 179-186.
 - [Be25c] B. Bedert, Polynomial bounds for the Chowla Cosine Problem. arXiv:2509.05260 (2025).
 -/
@@ -47,7 +48,7 @@ theorem erdos_510 :
 Ruzsa [Ru04] proved an upper bound of $-\exp(O(\sqrt{\log N})$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_510.variant.ruzsa :
+theorem erdos_510.variants.ruzsa :
     ∃ (c : ℝ) (hc : 0 < c),
       ∀ᶠ N in atTop, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
       ∃ θ, ∑ n ∈ A, cos (n * θ) < - exp (c * sqrt (log N)) := by
@@ -57,7 +58,7 @@ theorem erdos_510.variant.ruzsa :
 Bedert [Be25c] proved an upper bound of $-c N^{1/7}$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_510.variant.bedert :
+theorem erdos_510.variants.bedert :
     ∃ (c : ℝ) (hc : 0 < c),
       ∀ᶠ N in atTop, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
       ∃ θ, ∑ n ∈ A, cos (n * θ) < - c * N ^ (1 / 7 : ℝ) := by

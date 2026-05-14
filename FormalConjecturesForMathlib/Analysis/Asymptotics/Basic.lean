@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Order.Filter.AtTopBot.Defs
+
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Order.Filter.AtTopBot.Defs
+
+@[expose] public section
 
 notation f " ≫ " g => Asymptotics.IsBigO Filter.atTop (g : ℕ → ℝ) (f : ℕ → ℝ)
 notation g " ≪ " f => Asymptotics.IsBigO Filter.atTop (g : ℕ → ℝ) (f : ℕ → ℝ)

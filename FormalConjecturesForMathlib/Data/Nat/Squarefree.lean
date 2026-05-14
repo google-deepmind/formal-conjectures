@@ -13,9 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Data.Nat.Squarefree
-import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.Squarefree
+public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.Factorization.Basic
+import Mathlib.Tactic
+
+@[expose] public section
 
 namespace Nat
 

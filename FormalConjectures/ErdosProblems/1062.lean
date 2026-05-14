@@ -39,9 +39,18 @@ open scoped Classical in
 noncomputable def f (n : ℕ) : ℕ :=
   Nat.findGreatest (fun k => ∃ A ⊆ Set.Icc 1 n, ForkFree A ∧ A.ncard = k) n
 
+-- TODO: Add erdos_1062.parts.i: How large can $f(n)$ be?
+
+/-- Erdős asked whether the limiting density `f n / n` exists and, if so, whether it is
+irrational. -/
+@[category research open, AMS 11]
+theorem erdos_1062.parts.ii :
+    (∃ l, Tendsto (fun n => (f n : ℝ) / n) atTop (𝓝 l) ∧ Irrational l) ↔ answer(sorry) := by
+  sorry
+
 /-- The interval `[⌊n/3⌋, n]` is fork-free, and therefore `f n` is at least `⌈2n / 3⌉`. -/
 @[category research solved, AMS 11]
-theorem erdos_1062.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ ≤ f n := by
+theorem erdos_1062.variants.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ ≤ f n := by
   classical
   set b : ℕ := n / 3 with hb
   let A : Finset ℕ := .Icc (b + 1) n
@@ -68,15 +77,8 @@ theorem erdos_1062.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ ≤ f n :=
 /-- Lebensold proved that for large `n`, the function `f n` lies between `0.6725 n` and
 `0.6736 n`. -/
 @[category research solved, AMS 11]
-theorem erdos_1062.lebensold_bounds :
+theorem erdos_1062.variants.lebensold_bounds :
     ∀ᶠ n in atTop, (0.6725 : ℝ) * n ≤ f n ∧ f n ≤ (0.6736 : ℝ) * n := by
-  sorry
-
-/-- Erdős asked whether the limiting density `f n / n` exists and, if so, whether it is
-irrational. -/
-@[category research open, AMS 11]
-theorem erdos_1062.limit_density :
-    (∃ l, Tendsto (fun n => (f n : ℝ) / n) atTop (𝓝 l) ∧ Irrational l) ↔ answer(sorry) := by
   sorry
 
 end Erdos1062

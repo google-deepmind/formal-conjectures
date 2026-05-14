@@ -53,8 +53,7 @@ simpler elementary example was given by Bowler and Pitz [BoPi24].
 
 This was formalized in Lean by Alexeev using Aristotle and Aleph Prover.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1067.lean", AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1067.lean"]
 theorem erdos_1067 :
     answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyConnected H.coe := by
@@ -65,7 +64,7 @@ Thomassen [Th17] constructed a counterexample to the version which asks for infi
 edge-connectivity (that is, to disconnect the graph requires deleting infinitely many edges).
 -/
 @[category research solved, AMS 5]
-theorem erdos_1067.variant.infinite_edge_connectivity :
+theorem erdos_1067.variants.infinite_edge_connectivity :
     answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyEdgeConnected H.coe := by
   sorry

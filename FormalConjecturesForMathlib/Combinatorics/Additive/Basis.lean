@@ -13,11 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib.Order.Filter.Cofinite
-import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
-import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
-import Mathlib.Algebra.Group.Pointwise.Set.Finite
-import Mathlib.Algebra.Order.Monoid.Canonical.Defs
+module
+
+public import FormalConjecturesForMathlib.Order.Filter.Cofinite
+public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
+public import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
+public import Mathlib.Algebra.Group.Pointwise.Set.Finite
+public import Mathlib.Algebra.Order.Monoid.Canonical.Defs
+
+@[expose] public section
+
+/-! # Bases
+
+References:
+- [Er56](Erdős, P., Problems and results in additive number theory.
+  Colloque sur la Théorie des Nombres, Bruxelles, 1955 (1956), 127-137.)
+
+-/
 
 open Filter
 open scoped Pointwise
@@ -185,5 +197,18 @@ lemma isAsymptoticMulBasisOfOrder_iff_prod_atTop :
     IsAsymptoticMulBasisOfOrder A n ↔
       ∀ᶠ a in atTop, ∃ f : Fin n → M, (∀ i, f i ∈ A) ∧ ∏ i, f i = a := by
   simp [isAsymptoticMulBasisOfOrder_iff_prod, cofinite_eq_atTop]
+
+-- Note: the terminology _weak basis_ is non-standard. This notion is used in [Er56] p135.
+
+/-- A set `A : Set M` is a weak multiplicative basis of order `n` if any element `a : M`
+can be expressed as a product of at most `n` elements lying in `A`. -/
+@[to_additive
+/-- A set `A : Set M` is a weak additive basis of order `n` if for any element
+`a : M`, it can be expressed as a sum of at most `n` elements lying in `A`. -/]
+def IsWeakMulBasisOfOrder (A : Set M) (n : ℕ) : Prop := ∀ a, ∃ m ≤ n, a ∈ A ^ m
+
+/-- A weak multiplicative basis of some order. -/
+@[to_additive /-- A weak additive basis of some order. -/]
+def IsWeakMulBasis (A : Set M) : Prop := ∃ n, A.IsWeakMulBasisOfOrder n
 
 end Set

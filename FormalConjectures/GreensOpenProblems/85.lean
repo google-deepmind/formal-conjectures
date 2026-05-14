@@ -30,7 +30,7 @@ References:
 - [CPZ20] Conlon, David, Cosmin Pohoata, and Dmitriy Zakharov. "Random multilinear maps and the Erd\H {o} s box problem." arXiv preprint arXiv:2011.09024 (2020).
 -/
 
-open Filter MeasureTheory Set
+open Filter MeasureTheory Set Topology
 
 namespace Green85
 
@@ -56,14 +56,15 @@ area $\gg \alpha^2 (\log 1/\alpha)^{-1}$."
 -/
 @[category research solved, AMS 28 52]
 theorem green_85_loose :
-    ∃ c > 0, ∀ A : Set (ℝ × ℝ),
+    ∃ c > 0, ∀ᶠ α in 𝓝[>] 0,
+    ∀ A : Set (ℝ × ℝ),
     IsOpen A →
     A ⊆ Icc 0 1 ×ˢ Icc 0 1 →
     A.Nonempty →
-    let α := (volume A).toReal
+    α = (volume A).toReal →
     ∃ x₁ x₂ y₁ y₂,
       {(x₁, y₁), (x₂, y₁), (x₂, y₂), (x₁, y₂)} ⊆ A ∧
-      α ^ 2 * (Real.log (1/α))⁻¹ ≤ |x₁ - x₂| * |y₁ - y₂| := by
+      c * α ^ 2 * (Real.log (1/α))⁻¹ ≤ |x₁ - x₂| * |y₁ - y₂| := by
   sorry
 
 end Green85

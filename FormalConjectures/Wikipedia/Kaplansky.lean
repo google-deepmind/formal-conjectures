@@ -63,7 +63,7 @@ lemma IsTrivialUnit.isUnit {u : MonoidAlgebra K G} (h : IsTrivialUnit u) : IsUni
   obtain ⟨k, g, rfl⟩ := h
   exact (Prod.isUnit_iff (x := (k.1, g)).mpr ⟨k.isUnit, Group.isUnit g⟩).map MonoidAlgebra.singleHom
 
-/-! ## Counterexamples -/
+/-  ## Counterexamples -/
 
 /--
 **The Promislow group** `⟨ a, b | b⁻¹a²ba², a⁻¹b²ab² ⟩`

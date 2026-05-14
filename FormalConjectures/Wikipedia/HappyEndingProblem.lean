@@ -14,5 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
 import FormalConjectures.ErdosProblems.«107»
+
+/-!
+# Happy Ending Problem
+
+The happy ending problem asks whether $f(n) = 2^{n-2} + 1$, where $f(n)$ is the
+smallest number such that any $f(n)$ points in general position in the plane
+contain $n$ that form a convex polygon.
+
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Happy_ending_problem)
+
+This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«107»`.
+-/

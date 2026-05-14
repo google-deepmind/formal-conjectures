@@ -13,7 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+module
+
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+
+@[expose] public section
 
 
 /-!
@@ -70,7 +74,7 @@ See first paragraph of
 https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime#Wall%E2%80%93Sun%E2%80%93Sun_primes_with_discriminant_D
 for the condition that $p$ is odd and coprime to the discriminant
 -/
-structure IsLucasWieferichPrime (a b p : ℕ) : Prop where
+structure IsLucasWieferichPrime (a b : ℤ) (p : ℕ) : Prop where
   prime : p.Prime
   odd : Odd p
   not_dvd : ¬(p : ℤ) ∣ a ^ 2 - 4 * b

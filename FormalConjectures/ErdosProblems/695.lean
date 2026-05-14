@@ -48,7 +48,7 @@ q(k) \leq \exp(k (\log k)^{1 + o(1)})?
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_695.variant.upperBound : answer(sorry) ↔
+theorem erdos_695.variants.upperBound : answer(sorry) ↔
     ∃ q : ℕ → ℕ,
       StrictMono q ∧
       (∀ i, (q i).Prime) ∧

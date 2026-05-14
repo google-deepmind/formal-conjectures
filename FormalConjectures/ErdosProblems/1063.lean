@@ -40,6 +40,17 @@ noncomputable def n (k : ℕ) : ℕ :=
     ∀ i < k, i ≠ i0 → (m - i) ∣ m.choose k}
 
 /--
+Estimate $n_k$ by finding a better upper bound.
+-/
+@[category research open, AMS 11]
+theorem erdos_1063.better_upper :
+    let upper_bound : ℕ → ℝ := answer(sorry)
+    (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
+    upper_bound =o[atTop] fun k =>
+      (k : ℝ) * ((Finset.Icc 1 (k - 1)).lcm (fun n : ℕ => n) : ℝ) := by
+  sorry
+
+/--
 Erdős and Selfridge noted that, for $n \ge 2k$ with $k \ge 2$, at least one of the numbers
 $n - i$ for $0 \le i < k$ fails to divide $\binom{n}{k}$ ([ErSe83]).
 -/
@@ -74,17 +85,6 @@ theorem erdos_1063.variants.cambie_upper_bound {k : ℕ} (hk : 3 ≤ k) :
 theorem erdos_1063.variants.exp_upper_bound :
     ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
       ∀ k, (n k : ℝ) ≤ exp ((1 + f k) * k) := by
-  sorry
-
-/--
-Estimate $n_k$ by finding a better upper bound.
--/
-@[category research open, AMS 11]
-theorem erdos_1063.better_upper :
-    let upper_bound : ℕ → ℝ := answer(sorry)
-    (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
-    upper_bound =o[atTop] fun k =>
-      (k : ℝ) * ((Finset.Icc 1 (k - 1)).lcm (fun n : ℕ => n) : ℝ) := by
   sorry
 
 end Erdos1063

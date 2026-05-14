@@ -40,8 +40,12 @@ theorem erdos_1052 :
     answer(sorry) ↔ {n | IsUnitaryPerfect n}.Finite := by
   sorry
 
-/-- All unitary perfect numbers are even. -/
-@[category research solved, AMS 11]
+/--
+All unitary perfect numbers are even.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/b70a2ddf5e55f743aac9d4f4a907786b39bc9807/FormalConjectures/ErdosProblems/1052.lean#L46"]
 theorem even_of_isUnitaryPerfect (n : ℕ) (hn : IsUnitaryPerfect n) : Even n := by
   sorry
 

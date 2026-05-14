@@ -51,11 +51,14 @@ theorem kurepa_conjecture (n : ℕ) (h_n : 2 < n) : (!n : ℕ) % n ≠ 0 := by
 This statement can be reduced to the prime case only.
 -/
 @[category research open, AMS 11]
-theorem kurepa_conjecture.variant.prime (p : ℕ) (h_p : 2 < p) :
+theorem kurepa_conjecture.variants.prime (p : ℕ) (h_p : 2 < p) :
     p.Prime → (!p : ℕ) % p ≠ 0 := by
   sorry
 
-@[category undergraduate, AMS 11]
+/--
+Kurepa's conjecture for all integers greater than 2 is equivalent to the conjecture restricted to primes greater than 2.
+-/
+@[category textbook, AMS 11]
 theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
     ↔ (∀ p, 2 < p → p.Prime → (!p : ℕ) % p ≠ 0) := by
   refine ⟨fun h p hp hp_prime ↦ h p hp, fun h n hn h_mod ↦ ?_⟩
@@ -87,10 +90,13 @@ theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠
 An equivalent formulation in terms of the gcd of $n!$ and $!n$.
 -/
 @[category research open, AMS 11]
-theorem kurepa_conjecture.variant.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 := by
+theorem kurepa_conjecture.variants.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 := by
   sorry
 
-@[category undergraduate, AMS 11]
+/--
+Kurepa's conjecture for all integers greater than 2 is equivalent to the statement that $\gcd(n!, !n) = 2$ for all integers greater than 2.
+-/
+@[category textbook, AMS 11]
 theorem kurepa_conjecture.gcd_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
     ↔ (∀ n, 2 < n → (n)!.gcd (!n) = 2) := by
   refine ⟨fun h n hn ↦ match n with | S + 1 => gcd_eq_iff.2 ?_,
@@ -121,7 +127,7 @@ theorem kurepa_conjecture.gcd_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0
 Sanity check: for small values we can just compute that the conjecture is true
 -/
 @[category test, AMS 11]
-theorem kurepa_conjecture.variant.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
+theorem kurepa_conjecture.variants.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
     (!n : ℕ) % n ≠ 0 := by
   interval_cases n <;> decide
 
@@ -129,7 +135,7 @@ theorem kurepa_conjecture.variant.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper
 Sanity check: for small values we can just compute that the conjecture is true.
 -/
 @[category test, AMS 11]
-theorem kurepa_conjecture.variant.gcd.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
+theorem kurepa_conjecture.variants.gcd.first_cases (n : ℕ) (h_n : 2 < n) (h_n_upper : n < 50) :
     (n !).gcd (! n) = 2 := by
   interval_cases n <;> decide
 
