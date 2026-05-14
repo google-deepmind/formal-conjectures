@@ -40,7 +40,7 @@ def countNotExceeding (n m : ℕ) : ℕ :=
   (Finset.Icc 1 m).filter (fun k => k ≤ k.minFac ^ n) |>.card
 
 /-- There exists m such that countExceeding n m > countNotExceeding n m. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem a_exists (n : ℕ) : ∃ m, countExceeding n m > countNotExceeding n m := by
     sorry
 
@@ -73,7 +73,7 @@ theorem a_three : a 3 = 57 := by
   interval_cases m <;> decide +native
 
 /-- Conjecture: a(n) = 3^n + 3 * 2^n + 6 for n ≥ 1. -/
-@[category research formally solved using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/1894/commits/7a286754f623759d69a3dd18f482c53c1d70959b", AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/1894/commits/7a286754f623759d69a3dd18f482c53c1d70959b"]
 theorem a_formula {n : ℕ} (hn : n ≥ 1) : a n = 3 ^ n + 3 * 2 ^ n + 6 := by
   sorry
 

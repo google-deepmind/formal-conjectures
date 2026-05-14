@@ -48,8 +48,7 @@ determines $3$ distances.
 
 This counterexample has originally been found by Heiko Harborth.
 -/
-@[category research formally solved using formal_conjectures at
-"https://github.com/google-deepmind/formal-conjectures/blob/0aca4d71095301c0fd2dca32611b7addb2ea735c/FormalConjectures/ErdosProblems/1082.lean", AMS 51]
+@[category research solved, AMS 51, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/0aca4d71095301c0fd2dca32611b7addb2ea735c/FormalConjectures/ErdosProblems/1082.lean"]
 theorem erdos_1082.parts.ii : answer(False) ↔
     ∀ (A : Finset ℝ²) (hA : A.Nonempty) (hA_n3c : NonTrilinear (A : Set ℝ²)),
     ∃ (a : ℝ²) (ha : a ∈ A), A.card / 2 ≤ distinctDistancesFrom A a - 1 := by

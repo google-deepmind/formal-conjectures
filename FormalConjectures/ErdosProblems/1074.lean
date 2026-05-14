@@ -22,31 +22,30 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1074](https://www.erdosproblems.com/1074)
 -/
 
+namespace Erdos1074
+
 open scoped Nat
+open Nat
 
 /-- The EHS numbers (after Erdős, Hardy, and Subbarao) are those $m\geq 1$ such that there
 exists a prime $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$. -/
-abbrev Nat.EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, p.Prime ∧ ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
+abbrev EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, p.Prime ∧ ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
 /-- The Pillai primes are those primes $p$ such that there exists an $m \ge 1$ with
 $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$-/
-abbrev Nat.PillaiPrimes : Set ℕ := {p | p.Prime ∧ ∃ m ≥ 1, ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
+abbrev PillaiPrimes : Set ℕ := {p | p.Prime ∧ ∃ m ≥ 1, ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
 @[category test, AMS 11]
-theorem test : ¬ 2 ∈ Nat.PillaiPrimes := by
+theorem two_not_mem_pillaiPrimes : ¬ 2 ∈ PillaiPrimes := by
   norm_num
   intro m hm h
   exact (Nat.dvd_factorial (by decide) (hm.lt_of_ne (by bound))).modEq_zero_nat.add_right 1
 
 @[category test, AMS 11]
-theorem test' : 23 ∈ Nat.PillaiPrimes := by
+theorem twentyThree_mem_pillaiPrimes : 23 ∈ PillaiPrimes := by
   norm_num
   use 14
   decide
-
-namespace Erdos1074
-
-open Nat
 
 /-- Let $S$ be the set of all $m\geq 1$ such that there exists a prime $p\not\equiv 1\pmod{m}$ such
 that $m! + 1 \equiv 0\pmod{p}$. Does
@@ -94,8 +93,13 @@ theorem erdos_1074.variants.mem_pillaiPrimes : 23 ∈ PillaiPrimes := by
   norm_num
   exact ⟨14, by decide⟩
 
-/-- Erdős, Hardy, and Subbarao proved that $S$ is infinite. -/
-@[category research solved, AMS 11]
+/--
+Erdős, Hardy, and Subbarao proved that $S$ is infinite.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mzhorvath1/formal-conjectures/blob/3dec597bd1a73778760b761712a1fc5fb24bc5d7/FormalConjectures/ErdosProblems/1074.lean#L99"]
 theorem erdos_1074.variants.EHSNumbers_infinite : EHSNumbers.Infinite := by
   sorry
 

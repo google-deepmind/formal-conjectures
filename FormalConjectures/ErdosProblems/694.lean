@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos694
 
+open Filter Topology Real
+
 /--
 Let $f_\max(n)$ be the largest $m$ such that $\phi(m) = n$, and
 $f_\min(n)$ be the smallest such $m$, where $\phi$ is Euler's
@@ -31,15 +33,23 @@ totient function. Investigate
 $$
   \max_{n\leq x}\frac{f_\max(n)}{f_\min(n)}.
 $$
+
+GPT-5.5 Pro (prompted by Price) has proved (see also the comments for a summary) that
+$$
+\max_{n\leq x}\frac{f_{\max}(n)}{f_{\min}(n)}=(e^\gamma+o(1))\log\log x.
+$$
+
+A Lean formalisation of the reduction exists, conditional on Mertens' product theorem and
+Linnik's theorem; see the
+[formal proof](https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P694/Proof.lean).
 -/
-@[category research open, AMS 11]
-theorem erdos_694 (max min : ℕ → ℕ)
-    (hmax : ∀ n, IsGreatest (Nat.totient ⁻¹' {n}) (max n))
-    (hmin : ∀ n, IsLeast (Nat.totient ⁻¹' {n}) (min n))
-    (x : ℕ) :
-    IsGreatest
-      { (max n : ℚ) / min n | (n : ℕ) (_ : n ≤ x) }
-      answer(sorry) := by
+@[category research solved, AMS 11]
+theorem erdos_694 : ∀ᵉ (fmax : ℕ → ℕ) (fmin : ℕ → ℕ),
+      (∀ n, IsGreatest (Nat.totient ⁻¹' {n}) (fmax n)) →
+      (∀ n, IsLeast (Nat.totient ⁻¹' {n}) (fmin n)) →
+      ∃ o : ℕ → ℝ, Tendsto o atTop (𝓝 0) ∧
+        ∀ x : ℕ, sSup { (fmax n : ℝ) / fmin n | (n : ℕ) (_ : n ≤ x) (_ : ∃ m, Nat.totient m = n) } =
+          (exp eulerMascheroniConstant + o x) * log (log (x : ℝ)) := by
   sorry
 
 /--

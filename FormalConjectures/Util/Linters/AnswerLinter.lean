@@ -13,16 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Attributes.Basic
-import Mathlib.Tactic.Lemma
-import Batteries.Data.Array.Merge
+public import FormalConjectures.Util.Attributes.Basic
+public import Mathlib.Tactic.Lemma
+public import Batteries.Data.Array.Merge
 
 
 /-! # The AnswerLinter
 
 The `AnswerLinter` is a linter to aid with using `answer(sorry)` correctly.
 -/
+
+public meta section
 
 open Lean Elab Meta Linter Command Parser Term
 

@@ -120,7 +120,7 @@ theorem erdos_340.variants.isTheta (ε : ℝ) (hε : ε > 0) :
 /--
 It is trivial that this sequence grows at least like $\gg N^{1/3}$.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_340.variants.third (ε : ℝ) (hε : ε > 0) :
     (fun n : ℕ ↦ (n : ℝ) ^ ((1 : ℝ) / 3)) =O[atTop]
       fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ) := by

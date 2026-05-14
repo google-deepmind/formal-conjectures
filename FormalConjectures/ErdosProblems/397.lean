@@ -42,8 +42,12 @@ Further families of solutions are given in the comments by SharkyKesa.
 This was earlier asked about in a [MathOverflow] question, in response to which Elkies also gave an
 alternative construction which produces solutions - at the moment it is not clear whether Elkies'
 argument gives infinitely many solutions (although Bloom believes that it can).
+
+This was formalized in Lean by Wu using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+formal_proof using lean4 at "https://gist.github.com/llllvvuu/40d68cfa9de9f43eece07ff4fdc3b0ef",
+formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/3c356a50a21bcbf3543f960b0c92d7fb26228cb6/FormalConjectures/ErdosProblems/397.lean#L147"]
 theorem erdos_397 :
     answer(False) ↔
       {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧

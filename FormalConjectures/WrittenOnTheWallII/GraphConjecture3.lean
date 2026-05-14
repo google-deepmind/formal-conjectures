@@ -16,6 +16,14 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Written on the Wall II - Conjecture 3
+
+*Reference:*
+[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+-/
+
+
 universe u
 
 namespace WrittenOnTheWallII.GraphConjecture3
@@ -36,5 +44,19 @@ theorem conjecture3 {G : SimpleGraph α} [DecidableEq α] [DecidableRel G.Adj] [
     (h_conn : G.Connected) :
     gi G * MaxTemp G ≤ Ls G := by
   sorry
+
+-- Sanity checks
+
+/-- The number of vertices of the two-vertex graph `K₂` is 2. -/
+@[category test, AMS 5]
+example : n (⊤ : SimpleGraph (Fin 2)) = 2 := by simp [n]
+
+/-- In `K₂`, the temperature of vertex 0 is `deg(0) / (n - deg(0)) = 1 / 1 = 1`. -/
+@[category test, AMS 5]
+example : temp_v (⊤ : SimpleGraph (Fin 2)) ⟨0, by omega⟩ = 1 := by
+  unfold temp_v
+  have hdeg : (⊤ : SimpleGraph (Fin 2)).degree ⟨0, by omega⟩ = 1 := by decide +native
+  rw [show Fintype.card (Fin 2) = 2 from by simp, hdeg]
+  norm_num
 
 end WrittenOnTheWallII.GraphConjecture3

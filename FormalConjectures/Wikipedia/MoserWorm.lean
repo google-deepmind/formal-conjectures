@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open EuclideanGeometry MeasureTheory
 
+namespace MoserWorm
+
 /--
 The set of worms is the set of curves of length (at most) 1.
 We formalize this as the set of ranges of 1-Lipschitz functions from `[0,1]` to `ℝ²`.
@@ -44,7 +46,7 @@ A disc of radius 1 / 2 is a worm cover.
 
 This follows by translating the center of the disc to the midpoint of the worm.
 -/
-@[category high_school, AMS 52]
+@[category textbook, AMS 52]
 theorem disc_mem_worm_covers : Metric.closedBall 0 0.5 ∈ WormCovers := by
   sorry
 
@@ -115,3 +117,5 @@ International Journal of Computational Geometry & Applications,
 theorem convex_mosers_worm_problem_lower_bound :
     0.232239 ∈ lowerBounds {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} := by
   sorry
+
+end MoserWorm
