@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-
 import FormalConjectures.Util.ProblemImports
 
 /-!
@@ -24,26 +23,37 @@ import FormalConjectures.Util.ProblemImports
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
-
-open Finset
-open scoped Classical
-
 namespace WrittenOnTheWallII.GraphConjecture34
 
-open SimpleGraph
+open Classical SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α]
+variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
 WOWII [Conjecture 34](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-Let `path(G)` be the floor of the average distance of a connected graph `G`.
-Then
-`path(G) ≥ ceil( distavg(G, center) + distavg(G, maxEccentricityVertices G) )`.
+For a simple connected graph `G`, `path(G) ≥ ⌈dist_avg(C, V) + dist_avg(M, V)⌉`,
+where `path(G)` is the floor of the average distance of `G`, `C` is the set of center
+vertices (those with minimum eccentricity), `M` is the set of maximum-degree vertices,
+and `dist_avg(S, V)` is the average distance from all vertices to the set `S`.
 -/
-@[category research open, AMS 5]
-theorem conjecture34 [Nontrivial α] (G : SimpleGraph α) (h_conn : G.Connected) :
-    Int.ceil (distavg G (graphCenter G) + distavg G (maxEccentricityVertices G)) ≤ (path G : ℤ) := by
+@[category research solved, AMS 5]
+theorem conjecture34 :
+  answer(sorry) ↔
+    ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
+      let C : Set α := graphCenter G
+      let M : Set α := {v | G.degree v = G.maxDegree}
+      Int.ceil (distavg G C + distavg G M) ≤ (path G : ℤ) := by
   sorry
+
+-- Sanity checks
+
+/-- The `path G` invariant is nonneg when cast to ℤ. -/
+@[category test, AMS 5]
+example (G : SimpleGraph (Fin 3)) : 0 ≤ (path G : ℤ) := Int.natCast_nonneg _
+
+/-- The edgeless graph on 3 vertices has no edges. -/
+@[category test, AMS 5]
+example : (⊥ : SimpleGraph (Fin 3)).edgeFinset.card = 0 := by decide +native
 
 end WrittenOnTheWallII.GraphConjecture34

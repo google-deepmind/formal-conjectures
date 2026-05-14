@@ -33,8 +33,8 @@ namespace CongruentNumber
 def congruentNumber (n : ℕ) : Prop :=
   ∃ (a b c : ℚ), a ^ 2 + b ^ 2 = c ^ 2 ∧ n = (2⁻¹ : ℚ) * a * b
 
-/- 1 is not a congruent number. -/
-@[category test, AMS 11]
+/-- 1 is not a congruent number, as proved by Fermat via infinite descent. -/
+@[category textbook, AMS 11]
 theorem not_congruentNumber_1 : ¬ congruentNumber 1 := by
   sorry
 
@@ -84,11 +84,13 @@ def D (n : ℕ) : Set (ℤ × ℤ × ℤ) := {(x, y, z) | n = 8 * x ^ 2 + 2 * y 
 
 /-  Tunnell's theorem. -/
 
+/-- Tunnell's theorem (necessary condition) for odd squarefree congruent numbers. -/
 @[category research solved, AMS 11]
 theorem Tunnell_odd (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
     congruentNumber n → 2 * (A n).ncard = (B n).ncard := by
   sorry
 
+/-- Tunnell's theorem (necessary condition) for even squarefree congruent numbers. -/
 @[category research solved, AMS 11]
 theorem Tunnell_even (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     congruentNumber n → 2 * (C n).ncard = (D n).ncard := by
@@ -96,11 +98,13 @@ theorem Tunnell_even (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
 
 /-  Converse of Tunnell's theorem. -/
 
+/-- Tunnell's theorem (sufficient condition assuming BSD) for odd squarefree congruent numbers. -/
 @[category research open, AMS 11]
 theorem Tunnell_odd_converse (n : ℕ) (hsqf : Squarefree n) (hodd : Odd n) :
     2 * (A n).ncard = (B n).ncard → congruentNumber n := by
   sorry
 
+/-- Tunnell's theorem (sufficient condition assuming BSD) for even squarefree congruent numbers. -/
 @[category research open, AMS 11]
 theorem Tunnell_even_converse (n : ℕ) (hsqf : Squarefree n) (heven : Even n) :
     2 * (C n).ncard = (D n).ncard → congruentNumber n := by

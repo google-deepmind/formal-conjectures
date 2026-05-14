@@ -11,6 +11,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 // Base path for deployment (e.g. '/formal-conjectures' for GitHub Pages project sites).
 // Set via BASE_PATH env var. Must NOT have a trailing slash.
@@ -105,6 +106,7 @@ const SOURCE_COLLECTIONS = {
 };
 
 const GITHUB_BASE = 'https://github.com/google-deepmind/formal-conjectures/blob/main';
+const GITHUB_API_BASE = 'https://api.github.com/repos/google-deepmind/formal-conjectures';
 
 // ---------------------------------------------------------------------------
 // Data processing helpers
@@ -152,9 +154,7 @@ function getCollection(module) {
 const CATEGORY_META = {
   'research open':    { label: 'Open',          css: 'cat-open' },
   'research solved':  { label: 'Solved',        css: 'cat-solved' },
-  'graduate':         { label: 'Graduate',      css: 'cat-graduate' },
-  'undergraduate':    { label: 'Undergraduate', css: 'cat-undergrad' },
-  'high_school':      { label: 'High School',   css: 'cat-highschool' },
+  'textbook':         { label: 'Textbook',      css: 'cat-textbook' },
   'test':             { label: 'Test',          css: 'cat-test' },
   'API':              { label: 'API',           css: 'cat-api' },
 };
@@ -220,6 +220,27 @@ function computeStats(conjectures) {
   };
 }
 
+/**
+ * Cross-tabulations and derived ratios for the /stats/ page.
+ *
+ * Note on multi-AMS theorems: a theorem with `@[AMS 5 11]` contributes to
+ * both subject rows, so row totals can exceed `conjectures.length`. This is
+ * consistent with `bySubject` in computeStats and is documented on the page.
+ */
+function computeAdvancedStats(conjectures) {
+  const subjectByCategory = {};   // subjectName -> { category -> count, _formal: n, _total: n }
+  for (const c of conjectures) {
+    for (const s of c.subjects) {
+      const row = subjectByCategory[s.name] ||
+        (subjectByCategory[s.name] = { _formal: 0, _total: 0 });
+      row[c.category] = (row[c.category] || 0) + 1;
+      row._total += 1;
+      if (c.hasFormalProof) row._formal += 1;
+    }
+  }
+  return { subjectByCategory };
+}
+
 // ---------------------------------------------------------------------------
 // File-system helpers
 // ---------------------------------------------------------------------------
@@ -258,6 +279,270 @@ function writePage(destPath, html) {
 }
 
 // ---------------------------------------------------------------------------
+// Contributor metadata
+// ---------------------------------------------------------------------------
+
+function getGitRoot() {
+  if (process.env.FORMAL_CONJECTURES_ROOT) {
+    return process.env.FORMAL_CONJECTURES_ROOT;
+  }
+  try {
+    return execFileSync('git', ['rev-parse', '--show-toplevel'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+  } catch (_) {
+    return null;
+  }
+}
+
+function parseContributorLine(line) {
+  const [sha, name, email, rawEmail, date] = line.split('\x1f');
+  if (!sha || !name || !date) return null;
+  return { sha, name, email: email || '', rawEmail: rawEmail || '', date };
+}
+
+function contributorKey(name, email) {
+  return (email || name || 'unknown').trim().toLowerCase();
+}
+
+function dateOnly(isoDate) {
+  return isoDate ? isoDate.slice(0, 10) : null;
+}
+
+function getContributorHistory(repoRoot, githubPath) {
+  let output = '';
+  try {
+    output = execFileSync('git', [
+      '-C', repoRoot,
+      'log',
+      '--follow',
+      '--no-merges',
+      '--format=%H%x1f%aN%x1f%aE%x1f%ae%x1f%aI',
+      '--',
+      githubPath,
+    ], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+      maxBuffer: 10 * 1024 * 1024,
+    });
+  } catch (_) {
+    return [];
+  }
+
+  const commits = output
+    .split('\n')
+    .map(line => parseContributorLine(line.trim()))
+    .filter(Boolean);
+  if (commits.length === 0) return [];
+
+  const originalKey = contributorKey(commits[commits.length - 1].name, commits[commits.length - 1].email);
+  const byAuthor = new Map();
+
+  for (const commit of commits) {
+    const key = contributorKey(commit.name, commit.email);
+    let contributor = byAuthor.get(key);
+    if (!contributor) {
+      contributor = {
+        _key: key,
+        name: commit.name,
+        email: commit.email,
+        rawEmail: commit.rawEmail,
+        emails: new Set([commit.email, commit.rawEmail].filter(Boolean)),
+        latestCommit: commit.sha,
+        commitCount: 0,
+        firstCommitDate: dateOnly(commit.date),
+        lastCommitDate: dateOnly(commit.date),
+        originalAuthor: key === originalKey,
+      };
+      byAuthor.set(key, contributor);
+    }
+
+    contributor.commitCount += 1;
+    if (commit.email) contributor.emails.add(commit.email);
+    if (commit.rawEmail) contributor.emails.add(commit.rawEmail);
+    contributor.firstCommitDate = dateOnly(commit.date);
+  }
+
+  return Array.from(byAuthor.values()).sort((a, b) => {
+    if (a.originalAuthor !== b.originalAuthor) return a.originalAuthor ? -1 : 1;
+    return b.commitCount - a.commitCount || a.name.localeCompare(b.name);
+  });
+}
+
+function githubUserFromNoreply(email) {
+  const numbered = email.match(/^(\d+)\+([A-Za-z0-9-]+)@users\.noreply\.github\.com$/);
+  if (numbered) {
+    const [, id, login] = numbered;
+    return {
+      login,
+      profileUrl: `https://github.com/${login}`,
+      avatarUrl: `https://avatars.githubusercontent.com/u/${id}?v=4`,
+    };
+  }
+
+  const legacy = email.match(/^([A-Za-z0-9-]+)@users\.noreply\.github\.com$/);
+  if (legacy) {
+    const [, login] = legacy;
+    return {
+      login,
+      profileUrl: `https://github.com/${login}`,
+      avatarUrl: null,
+    };
+  }
+
+  return null;
+}
+
+async function lookupCommitAuthor(sha, token) {
+  if (!token || typeof fetch !== 'function') return null;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const headers = {
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'formal-conjectures-site-build',
+    };
+    headers.Authorization = `Bearer ${token}`;
+
+    const resp = await fetch(`${GITHUB_API_BASE}/commits/${encodeURIComponent(sha)}`, {
+      headers,
+      signal: controller.signal,
+    });
+    if (!resp.ok) return null;
+
+    const data = await resp.json();
+    if (!data.author || !data.author.login) return null;
+
+    return {
+      login: data.author.login,
+      profileUrl: data.author.html_url || `https://github.com/${data.author.login}`,
+      avatarUrl: data.author.avatar_url || null,
+    };
+  } catch (_) {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function enrichContributorsWithGitHub(contributors) {
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '';
+  let resolved = 0;
+
+  for (const contributor of contributors) {
+    const fromEmail = Array.from(contributor.emails || [contributor.email])
+      .map(githubUserFromNoreply)
+      .find(Boolean);
+    if (fromEmail) {
+      Object.assign(contributor, fromEmail);
+      resolved += 1;
+    }
+  }
+
+  if (!token) {
+    console.log('  Skipping GitHub contributor profile lookup (no GITHUB_TOKEN or GH_TOKEN).');
+    return resolved;
+  }
+
+  for (const contributor of contributors) {
+    if (contributor.login || !contributor.latestCommit) continue;
+    const fromCommit = await lookupCommitAuthor(contributor.latestCommit, token);
+    if (fromCommit) {
+      Object.assign(contributor, fromCommit);
+      resolved += 1;
+    }
+  }
+
+  return resolved;
+}
+
+function publicContributor(contributor) {
+  const login = contributor.login || null;
+  return {
+    name: contributor.name,
+    login,
+    profileUrl: contributor.profileUrl || (login ? `https://github.com/${login}` : null),
+    avatarUrl: contributor.avatarUrl || null,
+    commitCount: contributor.commitCount,
+    firstCommitDate: contributor.firstCommitDate,
+    lastCommitDate: contributor.lastCommitDate,
+    originalAuthor: contributor.originalAuthor,
+  };
+}
+
+function rememberContributorIdentity(identities, contributor) {
+  let identity = identities.get(contributor._key);
+  if (!identity) {
+    identity = {
+      _key: contributor._key,
+      name: contributor.name,
+      email: contributor.email,
+      rawEmail: contributor.rawEmail,
+      emails: new Set(contributor.emails || []),
+      latestCommit: contributor.latestCommit,
+      lastCommitDate: contributor.lastCommitDate,
+    };
+    identities.set(contributor._key, identity);
+    return;
+  }
+
+  for (const email of contributor.emails || []) identity.emails.add(email);
+  if (!identity.lastCommitDate || contributor.lastCommitDate > identity.lastCommitDate) {
+    identity.name = contributor.name;
+    identity.email = contributor.email;
+    identity.rawEmail = contributor.rawEmail;
+    identity.latestCommit = contributor.latestCommit;
+    identity.lastCommitDate = contributor.lastCommitDate;
+  }
+}
+
+function applyContributorProfile(contributor, identity) {
+  return {
+    ...contributor,
+    login: identity?.login || contributor.login,
+    profileUrl: identity?.profileUrl || contributor.profileUrl,
+    avatarUrl: identity?.avatarUrl || contributor.avatarUrl,
+  };
+}
+
+async function buildContributorMetadata(conjectures) {
+  const repoRoot = getGitRoot();
+  if (!repoRoot) {
+    console.log('  No git repository found; skipping contributor metadata.');
+    return {};
+  }
+
+  const paths = Array.from(new Set(conjectures.map(c => c.githubPath).filter(Boolean)));
+  const contributorsByPath = {};
+  const contributorsByIdentity = new Map();
+
+  for (const githubPath of paths) {
+    const contributors = getContributorHistory(repoRoot, githubPath);
+    if (contributors.length === 0) continue;
+
+    contributorsByPath[githubPath] = contributors;
+    for (const contributor of contributors) {
+      rememberContributorIdentity(contributorsByIdentity, contributor);
+    }
+  }
+
+  const uniqueContributors = Array.from(contributorsByIdentity.values());
+  const resolvedCount = await enrichContributorsWithGitHub(uniqueContributors);
+
+  for (const [githubPath, contributors] of Object.entries(contributorsByPath)) {
+    contributorsByPath[githubPath] = contributors.map(contributor =>
+      publicContributor(applyContributorProfile(contributor, contributorsByIdentity.get(contributor._key)))
+    );
+  }
+
+  console.log(`  Loaded contributor history for ${Object.keys(contributorsByPath).length} files (${resolvedCount}/${uniqueContributors.length} GitHub profiles resolved).`);
+  return contributorsByPath;
+}
+
+// ---------------------------------------------------------------------------
 // HTML snippet generators
 // ---------------------------------------------------------------------------
 
@@ -268,7 +553,7 @@ function statsCard(value, label) {
 function categoryStatsHTML(byCategory) {
   const order = [
     'research open', 'research solved',
-    'graduate', 'undergraduate', 'high_school', 'test', 'API',
+    'textbook', 'test', 'API',
   ];
   return order
     .filter(k => byCategory[k])
@@ -294,11 +579,50 @@ function subjectListHTML(bySubject) {
     .join('\n');
 }
 
+/** Render the subject × category cross-tab as an HTML table. */
+function subjectStatusTableHTML(subjectByCategory) {
+  const columns = [
+    'research open', 'research solved', 'textbook', 'test', 'API',
+  ];
+  const rows = Object.entries(subjectByCategory)
+    .filter(([, row]) => row._total > 0)
+    .sort((a, b) => b[1]._total - a[1]._total);
+
+  const head =
+    `<tr>` +
+    `<th scope="col">Subject</th>` +
+    columns.map(cat => {
+      const meta = getCategoryMeta(cat);
+      const href = `/browse/?category=${encodeURIComponent(cat)}`;
+      return `<th scope="col"><a href="${href}"><span class="badge ${meta.css}">${meta.label}</span></a></th>`;
+    }).join('') +
+    `<th scope="col" title="Has a formal proof linked"><a href="/browse/?formal_proof=true">Formal</a></th>` +
+    `<th scope="col"><a href="/browse/">Total</a></th>` +
+    `</tr>`;
+
+  const body = rows.map(([subject, row]) => {
+    const cells = columns.map(cat => {
+      const n = row[cat] || 0;
+      if (n === 0) return `<td class="empty">0</td>`;
+      const href = `/browse/?subject=${encodeURIComponent(subject)}&category=${encodeURIComponent(cat)}`;
+      return `<td><a href="${href}">${n}</a></td>`;
+    }).join('');
+    const formalCell = row._formal === 0
+      ? `<td class="empty">0</td>`
+      : `<td><a href="/browse/?subject=${encodeURIComponent(subject)}&formal_proof=true">${row._formal}</a></td>`;
+    const totalCell =
+      `<td><a href="/browse/?subject=${encodeURIComponent(subject)}"><strong>${row._total}</strong></a></td>`;
+    return `<tr><th scope="row"><a href="/browse/?subject=${encodeURIComponent(subject)}">${subject}</a></th>${cells}${formalCell}${totalCell}</tr>`;
+  }).join('\n');
+
+  return `<table class="stats-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+}
+
 // ---------------------------------------------------------------------------
 // Main build
 // ---------------------------------------------------------------------------
 
-function main() {
+async function main() {
   console.log('Building Formal Conjectures website...');
 
   // Read raw data
@@ -316,6 +640,8 @@ function main() {
 
   const conjectures = rawData.map(processEntry);
   const stats = computeStats(conjectures);
+  const advancedStats = computeAdvancedStats(conjectures);
+  const contributors = await buildContributorMetadata(conjectures);
 
   // Load Verso literate fragments (module docstrings + const links)
   let versoFragments = { moduleDocs: {}, constLinks: {} };
@@ -342,16 +668,19 @@ function main() {
   ensureDir('site/data');
   fs.writeFileSync(
     'site/data/conjectures.json',
-    JSON.stringify({ conjectures, stats, amsSubjects: AMS_SUBJECTS, versoFragments }),
+    JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
   );
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
+  const openCount   = stats.byCategory['research open'] || 0;
+  const solvedCount = stats.byCategory['research solved'] || 0;
+  const formalCount = conjectures.filter(c => c.hasFormalProof).length;
   writePage('site/index.html', applyBasePath(fill(indexHtml, {
-    totalCount:      stats.total,
-    openCount:       stats.byCategory['research open'] || 0,
-    solvedCount:     stats.byCategory['research solved'] || 0,
-    formalCount:     conjectures.filter(c => c.hasFormalProof).length,
+    totalCount:      openCount + solvedCount,
+    openCount,
+    solvedCount,
+    formalCount,
     categoryStats:   categoryStatsHTML(stats.byCategory),
     collectionList:  collectionListHTML(stats.byCollection),
     subjectList:     subjectListHTML(stats.bySubject),
@@ -368,6 +697,13 @@ function main() {
 
   // ---- About page ----
   copyStaticTemplate('about.html', 'site/about/index.html');
+
+  // ---- Stats page ----
+  const statsHtml = readTemplate('stats.html');
+  writePage('site/stats/index.html', applyBasePath(fill(statsHtml, {
+    totalCount:           stats.total,
+    subjectStatusTable:   subjectStatusTableHTML(advancedStats.subjectByCategory),
+  })));
 
   console.log('Done. Output in site/');
 }
@@ -394,4 +730,7 @@ function applyBasePath(html) {
   return html;
 }
 
-main();
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

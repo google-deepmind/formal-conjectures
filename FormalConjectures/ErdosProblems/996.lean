@@ -29,11 +29,11 @@ import FormalConjectures.Util.ProblemImports
 
 open MeasureTheory AddCircle Filter Topology Asymptotics Finset Real
 
+namespace Erdos996
+
 noncomputable def fourierPartial {T : ℝ} [hT : Fact (0 < T)] (f : Lp ℂ 2 (@haarAddCircle T hT))
     (k : ℕ) : AddCircle T → ℂ :=
   fun x => ∑ i ∈ Icc (-k : ℤ) k, fourierCoeff f k • fourier i x
-
-namespace Erdos996
 
 /-- Does there exists a positive constant `C` such that for all `f ∈ L²[0,1]` and all lacunary
 sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k ^ C)`, then for almost every `x`,

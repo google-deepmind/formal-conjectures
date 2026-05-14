@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Tactic.Linter.Header
+module
+
+public import Mathlib.Tactic.Linter.Header
 
 /-!
 # The copyright linter
@@ -21,6 +23,8 @@ import Mathlib.Tactic.Linter.Header
 This file implements a linter that checks that every file in the project
 has the correct copyright header.
 -/
+
+public meta section
 
 open Lean Elab Meta Command Syntax
 
@@ -60,8 +64,8 @@ def correctCopyrightHeader : String := correctCopyrightPrefix ++ "2026" ++ corre
 #guard_msgs in
 #eval hasCorrectCopyright correctCopyrightHeader
 
-register_option linter.style.copyright : Bool := {
-  defValue := true
+register_option linter.style.copyright.formalConjectures : Bool := {
+  defValue := false
   descr := "enable the copyright header style linter"
 }
 
@@ -78,7 +82,7 @@ def copyrightLinter : Linter where run := withSetOptionIn fun stx ↦ do
   let startingStx : Syntax := .atom (.synthetic ⟨0⟩ ⟨1⟩) <| String.Pos.Raw.extract source ⟨0⟩ ⟨1⟩
   -- We don't want to output an error message when building `FormalConjectures.All`
   unless (← getFileName) == "FormalConjectures.All" || hasCorrectCopyright source do
-    Lean.Linter.logLintIf linter.style.copyright startingStx <|
+    Lean.Linter.logLintIf linter.style.copyright.formalConjectures startingStx <|
     "The copyright header is incorrect. Please copy and paste the following one:\n"
       ++ correctCopyrightHeader
 

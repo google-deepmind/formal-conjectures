@@ -55,7 +55,7 @@ $$
 1=\left(1+\frac{1}{41}\right)\left(\frac{1}{2}+\frac{1}{3}+\frac{1}{7}\right).
 $$
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_307.variants.coprime : answer(True) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
     Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by

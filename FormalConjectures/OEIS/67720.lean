@@ -65,7 +65,7 @@ theorem a_10 : a 10 := by
   simp +decide only [a]
 
 /-- If $k + 1$ and $k^2 + 1$ are both prime, then $k$ is in the sequence. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem a_of_primes {k : ℕ} (hk : (k + 1).Prime) (hk' : (k ^ 2 + 1).Prime) : a k := by
   rw [a, totient_prime hk', totient_prime hk, Nat.add_sub_cancel, Nat.add_sub_cancel, sq]
 
