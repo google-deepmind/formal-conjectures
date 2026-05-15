@@ -23,8 +23,9 @@ open TopologicalSpace Metric MulAction
 
 *References:*
 - [arxiv/math.0110202](https://arxiv.org/abs/math/0110202)
+  **A note on Banach--Mazur problem** by *Beata Randrianantoanina*
 - [mathoverflow/41211](https://mathoverflow.net/questions/41211/easy-proof-of-the-fact-that-isotropic-spaces-are-euclidean)
-
+  **Easy proof of the fact that isotropic spaces are Euclidean**
 -/
 
 namespace Arxiv.«math.0110202»
