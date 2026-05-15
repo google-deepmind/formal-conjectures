@@ -72,60 +72,114 @@ Individual theorem pages are rendered client-side from `data/conjectures.json` �
 
 ## Building locally
 
-**Requirements:** Node.js 18 or later (no npm packages needed).
+The quickest way to develop the website locally is using `dev.sh`, which downloads
+the conjectures data from the live production site (no Lean build needed):
+
+**Requirements:** Node.js 18+ and Python 3.
 
 ```bash
-# 1. Clone this repo
-git clone https://github.com/<org>/formal-conjectures-website
-cd formal-conjectures-website
+# Install Node.js if needed (e.g. via conda)
+conda install -c conda-forge nodejs
 
-# 2. (Optional) generate conjectures data from the formal-conjectures repo or create a placeholder dataset.
-cd path/to/formal-conjectures
+# Build and serve
+cd site
+./dev.sh              # build + serve on http://localhost:8080
+./dev.sh --build-only # just build, no server
+./dev.sh --port 3000  # serve on a custom port
+```
+
+To iterate on templates or styles, re-run `./dev.sh --build-only` after each change
+and refresh the browser.
+
+### Building with fresh data from a local Lean build
+
+If you need the site to reflect local Lean changes (new conjectures, etc.):
+
+```bash
+# In the formal-conjectures repo root
 lake exe cache get   # download prebuilt Mathlib oleans (first time only)
 lake build
-lake exe extract_names > path/to/formal-conjectures-website/data/conjectures.json
-cd path/to/formal-conjectures-website
+mkdir -p site/data
+lake exe extract_names --exclude=statement,docstring,moduleDocstrings > site/data/conjectures.json
 
-# 3. Build the site
+# (Optional) Generate Verso literate fragments for rendered docstrings.
+# Without this, theorem detail pages will lack formatted docstrings and source links.
+# Warning: the literate build step can take a long time (30+ minutes).
+cd docbuild
+lake build FormalConjectures:literate || true
+find .lake/build/literate -name "*.json" -empty -delete 2>/dev/null || true
+lake exe verso-html .lake/build/literate ../_literate_html || true
+cd ..
+python3 site/fix_literate_html.py _literate_html
+python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
+
+# Build the site
+cd site
 node build.js        # output goes to site/
 
-# 4. Serve locally
+# Serve locally
 python3 -m http.server 8080 --directory site
-# then open http://localhost:8080
-
-# Alternative: serve with uv (no Python installation required)
-uv run --no-project python -m http.server 8080 --directory site
 ```
 
-To iterate on templates or styles, re-run `node build.js` after each change and refresh the browser. There is no watch mode, but Node's built-in `--watch` flag works:
+## Developing on a fork (sharing a live preview)
+
+To share a live preview of your website changes with others, you can deploy from
+a **`*-webtest`** branch on your GitHub fork. The CI workflow detects this naming
+convention and **skips the slow Lean build**, downloading data from the live
+production site instead.
+
+### One-time fork setup
+
+1. **Fork** the repository on GitHub.
+
+2. **Enable GitHub Pages:**
+   - Go to your fork's **Settings → Pages**
+   - Set **Source** to **GitHub Actions**
+
+3. **Allow webtest branches to deploy:**
+   - Go to **Settings → Environments → `github-pages`**
+   - Under **Deployment branches and tags**, click **Add deployment branch or tag rule**
+   - Add the pattern **`*-webtest`**
+   - Save
+
+### Development workflow
 
 ```bash
-node --watch build.js
+# Create a webtest branch from main
+git checkout -b my-feature-webtest origin/main
+
+# Make your website changes (CSS, JS, templates, etc.)
+# ...
+
+# Push to your fork — CI builds and deploys automatically
+git push <your-fork> my-feature-webtest
 ```
 
-## Using a placeholder dataset for UI development
+Your site will be live at `https://<username>.github.io/formal-conjectures/`
+once the Action completes (typically ~2 minutes for a website-only build).
 
-If you don't have the formal-conjectures repo built locally, you can populate `data/conjectures.json` with a small synthetic dataset for UI testing. The expected JSON format is an array of objects:
+> **Note:** The naming convention `*-webtest` is what triggers the fast
+> website-only build. Branches without this suffix run the full Lean build.
 
-```json
-[
-  {
-    "theorem": "FormalConjectures.ErdosProblems.1.erdos_1",
-    "module": "FormalConjectures.ErdosProblems.1",
-    "category": "research open",
-    "subjects": ["5", "11"],
-    "statement": "∃ C > (0 : ℝ), ∀ (N : ℕ) ...",
-    "docstring": "Erdős Problem 1: ...",
-    "formalProofKind": null,
-    "formalProofLink": null
-  }
-]
-```
+> **Note:** GitHub Pages serves one deployment at a time per repo. Deploying
+> from a webtest branch replaces what was deployed from `main`. This is fine
+> for a fork used for previewing.
 
-Valid values for `category`: `"research open"`, `"research solved"`, `"research formally solved"`, `"textbook"`, `"test"`, `"API"`.
+
 
 ## CI / deployment
 
-The GitHub Actions workflow in `.github/workflows/deploy.yml` triggers on any push to `main` that touches `data/conjectures.json`, `src/`, `build.js`, or `package.json`. It runs `node build.js` and deploys the `site/` directory to GitHub Pages using the standard `actions/upload-pages-artifact` + `actions/deploy-pages` actions.
+The GitHub Actions workflow in `.github/workflows/build-and-docs.yml` triggers on pushes to `main` and `*-webtest` branches, as well as on pull requests.
 
-To enable GitHub Pages for this repo, go to **Settings → Pages** and set the source to **GitHub Actions**.
+**Build modes:**
+
+| Condition | Build mode | What happens |
+|-----------|-----------|--------------|
+| Push to `main` on upstream | Full build | Lean compilation + docs + website |
+| Push to `*-webtest` branch | Website-only | Downloads live data, builds website only (~2 min) |
+| Manual `workflow_dispatch` with `website_only=true` | Website-only | Same as above |
+| Pull request | Full build | Lean compilation + docs + website (no deploy) |
+
+**Deployment** happens on pushes to `main`, and on `*-webtest` branches when on a fork.
+
+For GitHub Pages setup (including the environment rule needed for `*-webtest` branches), see [One-time fork setup](#one-time-fork-setup) above.

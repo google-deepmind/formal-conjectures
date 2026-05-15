@@ -18,7 +18,14 @@ on:
   push:
     branches:
       - main
+      - '*-webtest'
   pull_request:
+  workflow_dispatch:
+    inputs:
+      website_only:
+        description: 'Skip Lean build and use live site data (for website development)'
+        type: boolean
+        default: false
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -37,7 +44,23 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Detect whether this is a website-only build (skip slow Lean compilation).
+      # Triggers:
+      #   - Branches ending in -webtest
+      #   - Manual workflow_dispatch with website_only=true
+      - name: Detect build mode
+        id: mode
+        run: |
+          if [[ "${{ inputs.website_only }}" == "true" ]] || \
+             [[ "${{ github.ref_name }}" == *-webtest ]]; then
+            echo "website_only=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Website-only build: skipping Lean compilation, downloading data from live site."
+          else
+            echo "website_only=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install elan
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           set -o pipefail
           curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
@@ -45,6 +68,7 @@ jobs:
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
       - name: Generate All.lean
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           lake exe mk_all --lib FormalConjectures || true
           # Avoid including Test files from `Util/` to avoid inflating the
@@ -53,6 +77,7 @@ jobs:
           grep -v "FormalConjectures\.Util\." FormalConjectures.lean > FormalConjectures/All.lean
 
       - name: Restore ~/.cache/mathlib
+        if: steps.mode.outputs.website_only != 'true'
         uses: actions/cache/restore@v3
         with:
           path: ~/.cache/mathlib
@@ -62,15 +87,18 @@ jobs:
             oleans-
 
       - name: Get olean cache
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           lake exe cache unpack
           lake exe cache get
 
       - name: Build project
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           lake --wfail build
 
       - name: Build literate source pages
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           cd docbuild
           # Some modules crash verso-literate (e.g. metaprogramming-heavy util files),
@@ -82,27 +110,32 @@ jobs:
           lake exe verso-html .lake/build/literate ../_literate_html || true
 
       - name: Post-process literate HTML
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           python3 site/fix_literate_html.py _literate_html
 
       - name: Pack olean cache
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           lake exe cache pack
           ls ~/.cache/mathlib
 
       - name: Save ~/.cache/mathlib
+        if: steps.mode.outputs.website_only != 'true'
         uses: actions/cache/save@v3
         with:
           path: ~/.cache
           key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
       - name: Prepare documentation
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           cd docbuild
           export MATHLIB_NO_CACHE_ON_UPDATE=1  # avoids "Failed to prune ProofWidgets cloud release: no such file or directory"
           lake update formal_conjectures
 
       - name: Cache documentation
+        if: steps.mode.outputs.website_only != 'true'
         uses: actions/cache@v5
         with:
           path: docbuild/.lake/build/doc
@@ -112,11 +145,13 @@ jobs:
             MathlibDoc-
 
       - name: Build documentation
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           cd docbuild
           lake build FormalConjectures:docs
 
       - name: Extract documentation
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           cd docbuild
           mkdir out
@@ -128,20 +163,24 @@ jobs:
           rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
 
       - name: Set up Python
+        if: steps.mode.outputs.website_only != 'true'
         uses: actions/setup-python@v6
         with:
           python-version: '3.12.9'
 
       - name: Install Python dependencies
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           python -m pip install --upgrade pip
           pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0 beautifulsoup4 lxml
 
       - name: Run plotting script
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           python docbuild/scripts/plot_growth.py
 
       - name: Inject stats into index.html
+        if: steps.mode.outputs.website_only != 'true'
         shell: bash
         run: |
           cd docbuild
@@ -153,13 +192,57 @@ jobs:
           node-version: '18'
 
       - name: Generate conjectures data for website
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           mkdir -p site/data
           lake exe extract_names --exclude=statement,docstring,moduleDocstrings > site/data/conjectures.json || true
 
       - name: Extract Verso fragments for website
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
+
+      # In website-only mode, download data from the live production site
+      # instead of building it from scratch. The live site serves the processed
+      # format ({ conjectures, versoFragments, ... }), so we convert it back to
+      # the raw extract_names format ({ problems }) that build.js expects.
+      - name: Download live site data
+        if: steps.mode.outputs.website_only == 'true'
+        run: |
+          LIVE_URL="https://google-deepmind.github.io/formal-conjectures"
+          mkdir -p site/data _literate_html docbuild/out
+          echo "Downloading conjectures data from $LIVE_URL ..."
+          curl -sfL "$LIVE_URL/data/conjectures.json" -o /tmp/live_conjectures.json
+          node -e "
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync('/tmp/live_conjectures.json', 'utf8'));
+
+            // Convert processed conjectures back to raw extract_names format
+            const problems = (data.conjectures || []).map(c => ({
+              theorem: c.theorem,
+              module: c.module,
+              category: c.category,
+              subjects: (c.subjects || []).map(s =>
+                typeof s === 'object' ? s.code : s
+              ),
+              formalProofKind: c.formalProofKind || null,
+              formalProofLink: c.formalProofLink || null,
+              hasSorryFreeProof: false,
+            }));
+            fs.writeFileSync(
+              'site/data/conjectures.json',
+              JSON.stringify({ problems })
+            );
+
+            // Extract Verso fragments if present
+            if (data.versoFragments) {
+              fs.writeFileSync(
+                'site/data/verso-fragments.json',
+                JSON.stringify(data.versoFragments)
+              );
+            }
+            console.log('Converted ' + problems.length + ' conjectures to raw format.');
+          "
 
       - name: Build website
         run: |
@@ -174,10 +257,14 @@ jobs:
           mkdir -p _deploy
           # Website goes at root
           cp -r site/site/* _deploy/
-          # Lean docs go under /doc
-          cp -r docbuild/out _deploy/doc
-          # Literate source pages go under /src
-          cp -r _literate_html _deploy/src
+          # Lean docs go under /doc (may not exist in website-only mode)
+          if [[ -d docbuild/out ]]; then
+            cp -r docbuild/out _deploy/doc
+          fi
+          # Literate source pages go under /src (may not exist in website-only mode)
+          if [[ -d _literate_html ]] && [[ -n "$(ls -A _literate_html 2>/dev/null)" ]]; then
+            cp -r _literate_html _deploy/src
+          fi
 
       - name: Upload deploy artifact
         id: deployment
@@ -187,7 +274,10 @@ jobs:
 
   # Deployment job
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      github.ref == 'refs/heads/main' ||
+      (github.repository != 'google-deepmind/formal-conjectures' &&
+       endsWith(github.ref_name, '-webtest'))
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
