@@ -180,8 +180,7 @@ structure ForceConditionDecay (f : ℝ^n → ℝ → ℝ^n) : Prop extends Force
   $\lVert \partial^m_{x,t} f(x,t) \rVert \le C/(1+\lVert x \rVert+t)^K$ for
   $t \ge 0$. -/
   decay : ∀ m : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ∀ t ≥ 0,
-    ‖iteratedFDerivWithin ℝ m (↿f) (Set.univ ×ˢ Set.Ici 0) (x, t)‖ ≤
-      C / (1 + ‖x‖ + t) ^ K
+    ‖iteratedFDerivWithin ℝ m (↿f) (Set.univ ×ˢ Set.Ici 0) (x, t)‖ ≤ C / (1 + ‖x‖ + t) ^ K
 
 /--
 Force conditions for the periodic Navier-Stokes problem on
@@ -195,8 +194,7 @@ structure ForceConditionPeriodic (f : ℝ^n → ℝ → ℝ^n) : Prop extends Fo
   isOnePeriodic : ∀ t ≥ 0, IsOnePeriodic (f · t)
   /-- All derivatives of f decay faster than any polynomial in time (condition 9). -/
   decay : ∀ m : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ∀ t ≥ 0,
-    ‖iteratedFDerivWithin ℝ m (↿f) (Set.univ ×ˢ Set.Ici 0) (x, t)‖ ≤
-      C / (1 + t) ^ K
+    ‖iteratedFDerivWithin ℝ m (↿f) (Set.univ ×ˢ Set.Ici 0) (x, t)‖ ≤ C / (1 + t) ^ K
 
 /--
 A solution (v, p) to the Navier-Stokes equations in n-dimensional space
@@ -209,13 +207,13 @@ This structure captures the core requirements for a solution:
 4. The solution is smooth ($C^\infty$) for all time $t \ge 0$ (equations 6, 11)
 -/
 structure NavierStokesExistenceAndSmoothness
-    (ν : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
+    (nu : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
     (v : ℝ^n → ℝ → ℝ^n) (p : ℝ^n → ℝ → ℝ) : Prop where
   /-- The Navier-Stokes equation (equation 1):
   $\partial v/\partial t + (v \cdot \nabla)v = \nu\Delta v - \nabla p + f$. -/
   navier_stokes : ∀ x, ∀ t ≥ 0,
     derivWithin (v x ·) (Set.Ici 0) t + fderiv ℝ (v · t) x (v x t) =
-      ν • Δ (v · t) x - gradient (p · t) x + f x t
+      nu • Δ (v · t) x - gradient (p · t) x + f x t
   /-- Incompressibility constraint (equation 2): $\nabla \cdot v = 0$ for all
   $x$ and $t \ge 0$. -/
   div_free : ∀ x, ∀ t ≥ 0, ∇⬝ (v · t) x = 0
@@ -237,9 +235,9 @@ In addition to the basic solution properties, we require:
 - The total energy remains bounded for all time (condition 7)
 -/
 structure NavierStokesExistenceAndSmoothnessRn
-    (ν : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
+    (nu : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
     (v : ℝ^n → ℝ → ℝ^n) (p : ℝ^n → ℝ → ℝ) : Prop
-  extends NavierStokesExistenceAndSmoothness ν u₀ f v p where
+  extends NavierStokesExistenceAndSmoothness nu u₀ f v p where
   /-- The velocity is square-integrable at each time $t \ge 0$ (condition 7). -/
   integrable : ∀ t ≥ 0, MemLp (‖v · t‖) 2
   /-- The kinetic energy $\int \lVert v(x,t) \rVert^2\,dx$ remains uniformly bounded
@@ -254,9 +252,9 @@ The pressure is also required to be 1-periodic, following the errata appended to
 Clay problem statement.
 -/
 structure NavierStokesExistenceAndSmoothnessPeriodic
-    (ν : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
+    (nu : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
     (v : ℝ^n → ℝ → ℝ^n) (p : ℝ^n → ℝ → ℝ) : Prop
-  extends NavierStokesExistenceAndSmoothness ν u₀ f v p where
+  extends NavierStokesExistenceAndSmoothness nu u₀ f v p where
   /-- The velocity is 1-periodic in space for all times $t \ge 0$ (condition 10). -/
   isOnePeriodic_velocity : ∀ t ≥ 0, IsOnePeriodic (v · t)
   /-- The pressure is 1-periodic in space for all times $t \ge 0$ (Clay errata). -/
@@ -265,32 +263,32 @@ structure NavierStokesExistenceAndSmoothnessPeriodic
 
 /-- (A) Existence and smoothness of Navier–Stokes solutions on ℝ³. -/
 @[category research open, AMS 35]
-theorem navier_stokes_existence_and_smoothness_R3 (ν : ℝ) (hν : ν > 0)
+theorem navier_stokes_existence_and_smoothness_R3 (nu : ℝ) (hnu : nu > 0)
     (u₀ : ℝ³ → ℝ³) (hu₀ : InitialVelocityConditionDecay u₀) :
-    ∃ v p, NavierStokesExistenceAndSmoothnessRn ν u₀ (f := 0) v p := by
+    ∃ v p, NavierStokesExistenceAndSmoothnessRn nu u₀ (f := 0) v p := by
   sorry
 
 /-- (B) Existence and smoothness of Navier–Stokes solutions in ℝ³/ℤ³. -/
 @[category research open, AMS 35]
-theorem navier_stokes_existence_and_smoothness_periodic (ν : ℝ) (hν : ν > 0)
+theorem navier_stokes_existence_and_smoothness_periodic (nu : ℝ) (hnu : nu > 0)
     (u₀ : ℝ³ → ℝ³) (hu₀ : InitialVelocityConditionPeriodic u₀) :
-    ∃ v p, NavierStokesExistenceAndSmoothnessPeriodic ν u₀ (f := 0) v p := by
+    ∃ v p, NavierStokesExistenceAndSmoothnessPeriodic nu u₀ (f := 0) v p := by
   sorry
 
 /-- (C) Breakdown of Navier–Stokes solutions on ℝ³. -/
 @[category research open, AMS 35]
-theorem navier_stokes_breakdown_R3 (ν : ℝ) (hν : ν > 0) :
+theorem navier_stokes_breakdown_R3 (nu : ℝ) (hnu : nu > 0) :
     ∃ (u₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
     InitialVelocityConditionDecay u₀ ∧ ForceConditionDecay f ∧
-    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessRn ν u₀ f v p) := by
+    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessRn nu u₀ f v p) := by
   sorry
 
 /-- (D) Breakdown of Navier–Stokes Solutions on ℝ³/ℤ³. -/
 @[category research open, AMS 35]
-theorem navier_stokes_breakdown_periodic (ν : ℝ) (hν : ν > 0) :
+theorem navier_stokes_breakdown_periodic (nu : ℝ) (hnu : nu > 0) :
     ∃ (u₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
     InitialVelocityConditionPeriodic u₀ ∧ ForceConditionPeriodic f ∧
-    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessPeriodic ν u₀ f v p) := by
+    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessPeriodic nu u₀ f v p) := by
   sorry
 
 end NavierStokes
