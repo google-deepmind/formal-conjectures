@@ -71,7 +71,7 @@ domain `t ≥ 0`).
   Equation"*, 2001 (corrections to Eqs. (8) and (12)).
 - Charlton, J. P., Jr. *Enabling Cross-Silo Innovation for the CPNS: A Public
   Specification Resolving Ambiguity.* Zenodo, 2026.
-  DOI: [10.5281/zenodo.18517686](https://doi.org/10.5281/zenodo.18517686)
+  DOI: [10.17605/OSF.IO/AHPG6](https://osf.io/ahpg6/files/u7xvw)
 -/
 
 /-
