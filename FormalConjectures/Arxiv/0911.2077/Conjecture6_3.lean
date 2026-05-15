@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Arxiv.«0911.2077»
 
 /-!
-# Conjecture 6.3
+# Central Binomial Tail Bounds, Conjecture 6.3
 
 *Reference:* [arxiv/0911.2077](https://arxiv.org/abs/0911.2077)
 **Central Binomial Tail Bounds**
