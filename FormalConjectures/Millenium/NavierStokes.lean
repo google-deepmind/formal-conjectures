@@ -36,6 +36,21 @@ The Clay Millennium Problem asks for a proof of one of the following four statem
 - `navier_stokes_existence_and_smoothness_periodic`: (B) Global existence on ℝ³/ℤ³
 - `navier_stokes_breakdown_R3`: (C) Existence of breakdown scenario on ℝ³
 - `navier_stokes_breakdown_periodic`: (D) Existence of breakdown scenario on ℝ³/ℤ³
+
+## Variable conventions
+
+Fefferman writes the velocity as $u(x,t)$, the initial velocity as $u^\circ(x)$, the
+pressure as $p(x,t)$, the force as $f(x,t)$, and the viscosity as $\nu$. In Lean,
+`u₀ : ℝ^n → ℝ^n` denotes the initial velocity, while `v : ℝ^n → ℝ → ℝ^n`
+denotes the solution velocity. The curried order `v x t`, `p x t`, and `f x t`
+keeps the source convention that position comes before time.
+
+Since the Clay statement gives equation (1) on the closed time half-line $t \ge 0$,
+the time derivative is encoded with `derivWithin` relative to `Set.Ici 0`. The Clay
+PDF also includes errata; in particular, we include spatial 1-periodicity of the
+pressure in the periodic case. The sign correction to the weak-solution identity in
+the errata is not represented here, since this file formalizes the four prize
+alternatives rather than the later weak-solution discussion.
 -/
 
 open ContDiff Set InnerProductSpace MeasureTheory EuclideanGeometry
@@ -103,17 +118,17 @@ Basic conditions on initial velocity field for the Navier-Stokes equations
 in $n$-dimensional space.
 
 The initial velocity must be:
-- Divergence-free (incompressibility condition: $\nabla \cdot v_0 = 0$)
+- Divergence-free (incompressibility condition: $\nabla \cdot u_0 = 0$)
 - Smooth ($C^\infty$)
 
 These conditions apply regardless of spatial dimension.
 -/
-structure InitialVelocityCondition (v₀ : ℝ^n → ℝ^n) : Prop where
+structure InitialVelocityCondition (u₀ : ℝ^n → ℝ^n) : Prop where
   /-- The initial velocity field is divergence-free (equation 2).
       This is the incompressibility constraint for the fluid. -/
-  div_free : ∀ x, ∇⬝ v₀ x = 0
+  div_free : ∀ x, ∇⬝ u₀ x = 0
   /-- The initial velocity field is smooth ($C^\infty$ in all variables). -/
-  smooth : ContDiff ℝ ∞ v₀
+  smooth : ContDiff ℝ ∞ u₀
 
 /--
 Initial velocity conditions for the Navier-Stokes problem on all of $\mathbb{R}^n$.
@@ -124,13 +139,12 @@ faster than any polynomial at spatial infinity (condition 4 in Fefferman's paper
 This condition ensures the velocity field has finite energy and reasonable
 behavior as $\lVert x \rVert \to \infty$.
 -/
-structure InitialVelocityConditionRn (v₀ : ℝ^n → ℝ^n) : Prop extends
-    InitialVelocityCondition v₀ where
-  /-- All derivatives of v₀ decay faster than any polynomial (condition 4).
+structure InitialVelocityConditionDecay (u₀ : ℝ^n → ℝ^n) : Prop extends
+    InitialVelocityCondition u₀ where
+  /-- All derivatives of u₀ decay faster than any polynomial (condition 4).
   For any derivative order $m$ and any decay rate $K$, there exists a constant $C$
-  such that $\lVert \partial^m v_0(x) \rVert \le C/(1+\lVert x \rVert)^K$. -/
-  decay : ∀ m : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x,
-    ‖iteratedFDeriv ℝ m v₀ x‖ ≤ C / (1 + ‖x‖) ^ K
+  such that $\lVert \partial^m u_0(x) \rVert \le C/(1+\lVert x \rVert)^K$. -/
+  decay : ∀ m : ℕ, ∀ K : ℝ, ∃ C : ℝ, ∀ x, ‖iteratedFDeriv ℝ m u₀ x‖ ≤ C / (1 + ‖x‖) ^ K
 
 /--
 Initial velocity conditions for the periodic Navier-Stokes problem on
@@ -139,10 +153,10 @@ $\mathbb{R}^n/\mathbb{Z}^n$.
 The velocity must be smooth, divergence-free, and 1-periodic in each coordinate
 (condition 8, part 1 in Fefferman's paper).
 -/
-structure InitialVelocityConditionPeriodic (v₀ : ℝ^n → ℝ^n) : Prop extends
-    InitialVelocityCondition v₀ where
+structure InitialVelocityConditionPeriodic (u₀ : ℝ^n → ℝ^n) : Prop extends
+    InitialVelocityCondition u₀ where
   /-- The initial velocity is 1-periodic in each direction (condition 8, part 1). -/
-  isOnePeriodic : IsOnePeriodic v₀
+  isOnePeriodic : IsOnePeriodic u₀
 
 /--
 The basic smoothness condition on the external forcing term.
@@ -160,7 +174,7 @@ Force conditions for the Navier-Stokes problem on all of $\mathbb{R}^n$.
 The force must be smooth and decay faster than any polynomial
 in both space and time (condition 5 in Fefferman's paper).
 -/
-structure ForceConditionRn (f : ℝ^n → ℝ → ℝ^n) : Prop extends ForceCondition f where
+structure ForceConditionDecay (f : ℝ^n → ℝ → ℝ^n) : Prop extends ForceCondition f where
   /-- All derivatives of f decay faster than any polynomial in space and time (condition 5).
   For any derivative order $m$ and any decay rate $K$, there exists $C$ such that
   $\lVert \partial^m_{x,t} f(x,t) \rVert \le C/(1+\lVert x \rVert+t)^K$ for
@@ -186,7 +200,7 @@ structure ForceConditionPeriodic (f : ℝ^n → ℝ → ℝ^n) : Prop extends Fo
 
 /--
 A solution (v, p) to the Navier-Stokes equations in n-dimensional space
-with viscosity nu, initial velocity $v_0$, and external force $f$.
+with viscosity $\nu$, initial velocity $u_0$, and external force $f$.
 
 This structure captures the core requirements for a solution:
 1. The velocity and pressure satisfy the Navier-Stokes PDE (equation 1)
@@ -195,18 +209,18 @@ This structure captures the core requirements for a solution:
 4. The solution is smooth ($C^\infty$) for all time $t \ge 0$ (equations 6, 11)
 -/
 structure NavierStokesExistenceAndSmoothness
-    (nu : ℝ) (v₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
+    (ν : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
     (v : ℝ^n → ℝ → ℝ^n) (p : ℝ^n → ℝ → ℝ) : Prop where
   /-- The Navier-Stokes equation (equation 1):
   $\partial v/\partial t + (v \cdot \nabla)v = \nu\Delta v - \nabla p + f$. -/
-  navier_stokes : ∀ x, ∀ t > 0,
-    deriv (v x ·) t + fderiv ℝ (v · t) x (v x t) =
-      nu • Δ (v · t) x - gradient (p · t) x + f x t
+  navier_stokes : ∀ x, ∀ t ≥ 0,
+    derivWithin (v x ·) (Set.Ici 0) t + fderiv ℝ (v · t) x (v x t) =
+      ν • Δ (v · t) x - gradient (p · t) x + f x t
   /-- Incompressibility constraint (equation 2): $\nabla \cdot v = 0$ for all
   $x$ and $t \ge 0$. -/
   div_free : ∀ x, ∀ t ≥ 0, ∇⬝ (v · t) x = 0
-  /-- Initial condition (equation 3): $v(x,0) = v_0(x)$ for all $x$. -/
-  initial_condition : ∀ x, v x 0 = v₀ x
+  /-- Initial condition (equation 3): $v(x,0) = u_0(x)$ for all $x$. -/
+  initial_condition : ∀ x, v x 0 = u₀ x
   /-- The velocity field is smooth ($C^\infty$) on $\mathbb{R}^n \times [0,\infty)$
   (conditions 6, 11). -/
   velocity_smooth : ContDiffOn ℝ ∞ (↿v) (Set.univ ×ˢ Set.Ici 0)
@@ -223,56 +237,60 @@ In addition to the basic solution properties, we require:
 - The total energy remains bounded for all time (condition 7)
 -/
 structure NavierStokesExistenceAndSmoothnessRn
-    (nu : ℝ) (v₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
+    (ν : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
     (v : ℝ^n → ℝ → ℝ^n) (p : ℝ^n → ℝ → ℝ) : Prop
-  extends NavierStokesExistenceAndSmoothness nu v₀ f v p where
+  extends NavierStokesExistenceAndSmoothness ν u₀ f v p where
   /-- The velocity is square-integrable at each time $t \ge 0$ (condition 7). -/
   integrable : ∀ t ≥ 0, MemLp (‖v · t‖) 2
   /-- The kinetic energy $\int \lVert v(x,t) \rVert^2\,dx$ remains uniformly bounded
   for all time (condition 7), where the integral is the Lebesgue integral. -/
   globally_bounded_energy : ∃ E, ∀ t ≥ 0, (∫ x : ℝ^n, ‖v x t‖ ^ 2) < E
 
-
 /--
 A solution to the Navier-Stokes equations on the $n$-torus $\mathbb{R}^n/\mathbb{Z}^n$.
 
-The velocity and pressure must be 1-periodic in each spatial direction for all times
-(condition 10).
+The velocity must be 1-periodic in each spatial direction for all times (condition 10).
+The pressure is also required to be 1-periodic, following the errata appended to the
+Clay problem statement.
 -/
 structure NavierStokesExistenceAndSmoothnessPeriodic
-    (nu : ℝ) (v₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
+    (ν : ℝ) (u₀ : ℝ^n → ℝ^n) (f : ℝ^n → ℝ → ℝ^n)
     (v : ℝ^n → ℝ → ℝ^n) (p : ℝ^n → ℝ → ℝ) : Prop
-  extends NavierStokesExistenceAndSmoothness nu v₀ f v p where
+  extends NavierStokesExistenceAndSmoothness ν u₀ f v p where
   /-- The velocity is 1-periodic in space for all times $t \ge 0$ (condition 10). -/
   isOnePeriodic_velocity : ∀ t ≥ 0, IsOnePeriodic (v · t)
-  /-- The pressure is 1-periodic in space for all times $t \ge 0$ (condition 10). -/
+  /-- The pressure is 1-periodic in space for all times $t \ge 0$ (Clay errata). -/
   isOnePeriodic_pressure : ∀ t ≥ 0, IsOnePeriodic (p · t)
 
 
 /-- (A) Existence and smoothness of Navier–Stokes solutions on ℝ³. -/
 @[category research open, AMS 35]
-theorem navier_stokes_existence_and_smoothness_R3 (nu : ℝ) (hnu : nu > 0)
-  (v₀ : ℝ³ → ℝ³) (hv₀ : InitialVelocityConditionRn v₀) :
-  ∃ v p, NavierStokesExistenceAndSmoothnessRn nu v₀ (f := 0) v p := sorry
+theorem navier_stokes_existence_and_smoothness_R3 (ν : ℝ) (hν : ν > 0)
+    (u₀ : ℝ³ → ℝ³) (hu₀ : InitialVelocityConditionDecay u₀) :
+    ∃ v p, NavierStokesExistenceAndSmoothnessRn ν u₀ (f := 0) v p := by
+  sorry
 
 /-- (B) Existence and smoothness of Navier–Stokes solutions in ℝ³/ℤ³. -/
 @[category research open, AMS 35]
-theorem navier_stokes_existence_and_smoothness_periodic (nu : ℝ) (hnu : nu > 0)
-  (v₀ : ℝ³ → ℝ³) (hv₀ : InitialVelocityConditionPeriodic v₀) :
-  ∃ v p, NavierStokesExistenceAndSmoothnessPeriodic nu v₀ (f := 0) v p := sorry
+theorem navier_stokes_existence_and_smoothness_periodic (ν : ℝ) (hν : ν > 0)
+    (u₀ : ℝ³ → ℝ³) (hu₀ : InitialVelocityConditionPeriodic u₀) :
+    ∃ v p, NavierStokesExistenceAndSmoothnessPeriodic ν u₀ (f := 0) v p := by
+  sorry
 
 /-- (C) Breakdown of Navier–Stokes solutions on ℝ³. -/
 @[category research open, AMS 35]
-theorem navier_stokes_breakdown_R3 (nu : ℝ) (hnu : nu > 0) :
-  ∃ (v₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
-    InitialVelocityConditionRn v₀ ∧ ForceConditionRn f ∧
-    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessRn nu v₀ f v p) := sorry
+theorem navier_stokes_breakdown_R3 (ν : ℝ) (hν : ν > 0) :
+    ∃ (u₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
+    InitialVelocityConditionDecay u₀ ∧ ForceConditionDecay f ∧
+    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessRn ν u₀ f v p) := by
+  sorry
 
 /-- (D) Breakdown of Navier–Stokes Solutions on ℝ³/ℤ³. -/
 @[category research open, AMS 35]
-theorem navier_stokes_breakdown_periodic (nu : ℝ) (hnu : nu > 0) :
-  ∃ (v₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
-    InitialVelocityConditionPeriodic v₀ ∧ ForceConditionPeriodic f ∧
-    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessPeriodic nu v₀ f v p) := sorry
+theorem navier_stokes_breakdown_periodic (ν : ℝ) (hν : ν > 0) :
+    ∃ (u₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
+    InitialVelocityConditionPeriodic u₀ ∧ ForceConditionPeriodic f ∧
+    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessPeriodic ν u₀ f v p) := by
+  sorry
 
 end NavierStokes
