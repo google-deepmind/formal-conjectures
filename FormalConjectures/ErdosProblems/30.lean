@@ -438,8 +438,8 @@ The current best upper bound is h(N) ≤ √N + 0.998·N^{1/4} + 1 for N ≥ 10^
 proof combines Erdős–Turán counting (Variant 2) with Lindström's residue-class
 inequality (archived externally) via Cauchy–Schwarz.
 
-We axiomatize the numerical core of the BFR theorem and derive the headline
-|A| bound from it. -/
+We record the numerical core of the BFR theorem as a named `Prop`-valued
+hypothesis and derive the headline |A| bound from it. -/
 
 /-- Cauchy–Schwarz variance decomposition (BFR Lemma 4.1, real-valued form). -/
 @[category research solved, AMS 11]
@@ -542,8 +542,9 @@ in $\mathrm{PG}(2,q)$, indexed by a Singer cycle, form a perfect difference
 set in $\mathbb{Z}_{q^2+q+1}$, and perfect difference sets are Sidon.
 
 We record concrete witnesses for $q \in \{2,3,5,7,11,13\}$ verified by
-`native_decide` (each is fully decidable, axiom-free), and axiomatize the
-prime case of the general construction with full reference.
+`native_decide` (each is fully decidable, axiom-free), and record the prime
+case of the general construction as a named `Prop`-valued hypothesis with full
+reference.
 
 The cyclic notation $\mathbb{Z}_{q^2+q+1}$ in the per-witness docstrings
 below names the construction's *origin* in projective geometry. The
