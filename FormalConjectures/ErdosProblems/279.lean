@@ -29,7 +29,7 @@ such that all except finitely many integers can be written as $a_p+tp$ for some 
 and integer $t\geq k$?
 -/
 @[category research open, AMS 11]
-theorem erdos_279 : ∀ k : Nat, k ≥ 3 →
+theorem erdos_279 :  answer(sorry) ↔ ∀ k : Nat, k ≥ 3 →
     ∃ a : Nat → Nat, ∃ N : Nat, (∀ p : Nat, p.Prime → a p < p) ∧
     ∀ n ≥ N, ∃ p : Nat, ∃ t ≥ k, p.Prime ∧ n = a p + t * p := by
   sorry
