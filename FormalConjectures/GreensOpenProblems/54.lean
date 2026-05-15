@@ -39,8 +39,8 @@ Does $10K$ contain a compact convex set $C$ with $\gamma_n(C) \geq 0.01$?
 -/
 @[category research open, AMS 46 52 60]
 theorem green_54 :
-    answer(sorry) ↔ ∀ n : ℕ, ∀ K : Set (Fin n → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ) ≤ gaussianMeasure n K → ∃ C : Set (Fin n → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (10 : ℝ) • K ∧
-    (0.01 : ℝ) ≤ gaussianMeasure n C := by
+    answer(sorry) ↔ ∀ n : ℕ, ∀ K : Set (Fin n → ℝ), IsCompact K → Balanced ℝ K → ENNReal.ofReal 0.99 ≤ gaussianMeasure n K → ∃ C : Set (Fin n → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (10 : ℝ) • K ∧
+    ENNReal.ofReal 0.01 ≤ gaussianMeasure n C := by
   sorry
 
 end Green54
