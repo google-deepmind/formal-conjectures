@@ -42,4 +42,27 @@ def IsSynchronizingWord (M : DFA α σ) (w : List α) : Prop :=
 def IsSynchronizing (M : DFA α σ) : Prop :=
   ∃ w : List α, M.IsSynchronizingWord w
 
+/-- The empty word is a synchronizing word for `M` exactly when all states of `M` collapse to a
+single one (equivalently, `σ` is a nonempty subsingleton). -/
+@[simp]
+theorem isSynchronizingWord_nil (M : DFA α σ) :
+    M.IsSynchronizingWord [] ↔ ∃ p : σ, ∀ q : σ, q = p := by
+  simp only [IsSynchronizingWord, evalFrom_nil]
+
+/-- Appending any word `v` to a synchronizing word `w` yields a synchronizing word: reading `w`
+already drives every state to a single state `p`, and reading `v` afterwards sends `p` to
+`M.evalFrom p v` regardless of the starting state. -/
+theorem IsSynchronizingWord.append {M : DFA α σ} {w : List α}
+    (hw : M.IsSynchronizingWord w) (v : List α) : M.IsSynchronizingWord (w ++ v) := by
+  obtain ⟨p, hp⟩ := hw
+  refine ⟨M.evalFrom p v, fun q => ?_⟩
+  rw [M.evalFrom_of_append, hp q]
+
+/-- A DFA whose state type is a nonempty subsingleton (i.e. a single-state DFA) is trivially
+synchronizing: the empty word already synchronizes it. -/
+theorem isSynchronizing_of_subsingleton [Nonempty σ] [Subsingleton σ] (M : DFA α σ) :
+    M.IsSynchronizing := by
+  obtain ⟨p⟩ := ‹Nonempty σ›
+  exact ⟨[], (isSynchronizingWord_nil M).2 ⟨p, fun q => Subsingleton.elim q p⟩⟩
+
 end DFA

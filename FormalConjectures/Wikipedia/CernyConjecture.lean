@@ -20,17 +20,18 @@ import FormalConjectures.Util.ProblemImports
 # Černý Conjecture
 
 A **synchronizing word** (also called a reset word) for a deterministic finite automaton (DFA)
-`M = (Q, Σ, δ)` is a word `w ∈ Σ*` such that reading `w` from any state always leads to the
-same single state — formally, `∃ p ∈ Q, ∀ q ∈ Q, δ*(q, w) = p`.
+$M = (Q, \Sigma, \delta)$ is a word $w \in \Sigma^*$ such that reading $w$ from any state always
+leads to the same single state — formally, $\exists p \in Q, \forall q \in Q, \delta^*(q, w) = p$.
 
 A DFA is called **synchronizing** if it admits at least one synchronizing word.
 
-The **Černý conjecture** asserts that every synchronizing DFA with `n` states has a
-synchronizing word of length at most `(n - 1)²`. This bound is sharp: the family of Černý
-automata `Cₙ` witnesses it, requiring exactly `(n - 1)²` steps.
+The **Černý conjecture** asserts that every synchronizing DFA with $n$ states has a
+synchronizing word of length at most $(n - 1)^2$. This bound is sharp: the family of Černý
+automata $C_n$ witnesses it, requiring exactly $(n - 1)^2$ steps.
 
-**Status:** Open. The best known upper bound is approximately `n(7n² + 6n − 16)/48`
-(Shitov, 2019). The bound `(n − 1)²` has been verified for small `n` and for special classes of
+**Status:** Open. The best known upper bound is
+$\left(\frac{7}{48} + \frac{2 \cdot 15625}{1597536}\right) n^3 + o(n^3) \approx 0.1654\,n^3$
+(Shitov, 2019). The bound $(n - 1)^2$ has been verified for small $n$ and for special classes of
 automata (e.g., Eulerian, aperiodic, cyclic automata).
 
 We use Mathlib's `DFA α σ` (from `Mathlib.Computability.DFA`), together with the auxiliary
@@ -39,20 +40,39 @@ We use Mathlib's `DFA α σ` (from `Mathlib.Computability.DFA`), together with t
 
 *References:*
 - [Wikipedia: Synchronizing word](https://en.wikipedia.org/wiki/Synchronizing_word)
-- J. Černý, *Poznámka k homogénnym experimentom s konečnými automatmi*, 1964.
+- J. Černý, [*Poznámka k homogénnym experimentom s konečnými automatmi*](https://dml.cz/bitstream/handle/10338.dmlcz/126647/MathSlov_14-1964-3_2.pdf),
+  Matematicko-fyzikálny časopis, Vol. 14 (1964), No. 3, 208--216.
+- Y. Shitov, *An improvement to a recent upper bound for synchronizing words of finite automata*,
+  J. Autom. Lang. Comb. Vol. 24 (2019), 367--373}.
 -/
+
+open Filter
 
 namespace CernyConjecture
 
 variable {α : Type*} {σ : Type*}
 
-/-- **Černý Conjecture**: Every synchronizing DFA with `n` states admits a
-synchronizing word of length at most `(n - 1)²`.
+/-- **Černý Conjecture**: Every synchronizing DFA with $n$ states admits a
+synchronizing word of length at most $(n - 1)^2$.
 -/
 @[category research open, AMS 68]
 theorem cerny_conjecture :
     answer(sorry) ↔ ∀ {α : Type*} {σ : Type*} [Fintype σ] (M : DFA α σ) (hM : M.IsSynchronizing) ,
     ∃ w : List α, M.IsSynchronizingWord w ∧ w.length ≤ (Fintype.card σ - 1)^2 := by
+  sorry
+
+/-- **Shitov's bound (2019)**: Every synchronizing DFA with $n$ states admits a synchronizing
+word of length at most $\left(\frac{7}{48} + \frac{2 \cdot 15625}{1597536}\right) n^3 + o(n^3)$,
+where the $o(n^3)$ term is uniform over all alphabets. This is the best known upper bound
+towards the Černý conjecture.
+-/
+@[category research solved, AMS 68]
+theorem shitov_upper_bound :
+    ∃ f : ℝ → ℝ, f =o[atTop] (fun n : ℝ => n ^ 3) ∧
+    ∀ {α : Type*} {σ : Type*} [Fintype σ] (M : DFA α σ) (hM : M.IsSynchronizing) ,
+    ∃ w : List α, M.IsSynchronizingWord w ∧
+    (w.length : ℝ) ≤ (7 / 48 + 2 * 15625 / 1597536) * (Fintype.card σ : ℝ) ^ 3
+      + f (Fintype.card σ : ℝ) := by
   sorry
 
 end CernyConjecture
