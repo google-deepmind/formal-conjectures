@@ -51,7 +51,7 @@ synchronizing word of length at most `(n - 1)²`.
 -/
 @[category research open, AMS 68]
 theorem cerny_conjecture :
-    answer(sorry) ↔ ∀ [Fintype σ] (M : DFA α σ) (hM : M.IsSynchronizing) ,
+    answer(sorry) ↔ ∀ {α : Type*} {σ : Type*} [Fintype σ] (M : DFA α σ) (hM : M.IsSynchronizing) ,
     ∃ w : List α, M.IsSynchronizingWord w ∧ w.length ≤ (Fintype.card σ - 1)^2 := by
   sorry
 
