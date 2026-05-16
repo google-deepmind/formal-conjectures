@@ -1,58 +1,51 @@
 /-
-Copyright 2026 Saar Shai. All rights reserved.
-Released under Apache 2.0 license as described in the LICENSE file.
-Authors: Saar Shai
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.NumberTheory.ArithmeticFunction
-import Mathlib.NumberTheory.ZetaFunction
+import FormalConjectures.Util.ProblemImports
 
 /-!
-# Dirichlet Polynomial Avoidance Conjecture
+# Dirichlet polynomial avoidance conjecture
 
-## Source
-Saar Shai, "Prime Spectroscopy of Riemann Zeros" (2026), Section 3.
-GitHub: https://github.com/SaarShai/Primes-Equispaced
-AI Disclosure: Conjecture formulated with assistance from Claude (Anthropic).
+*Reference:* S. Shai, *Prime spectroscopy of Riemann zeros* (2026),
+https://github.com/SaarShai/Primes-Equispaced .
+AI disclosure: conjecture formulated with assistance from Claude (Anthropic).
 
-## Statement
-For fixed K ≥ 2, the truncated Möbius Dirichlet polynomial
-  c_K(s) = Σ_{k=2}^{K} μ(k) · k^{-s}
-is nonzero at every nontrivial zero of the Riemann zeta function.
-
-## Evidence
-- Verified via interval arithmetic (100-digit precision) for K ∈ {10, 20, 50}
-  at the first 100 nontrivial zeta zeros: all 300 cases certified nonzero.
-- The polynomial c_K has infinitely many zeros in the critical strip
-  (Langer 1931, ~0.51T zeros up to height T for K=10), but these zeros
-  appear to systematically avoid zeta zero ordinates.
-- Statistical anomaly: min|c_K(ρ)| at zeta zeros exceeds min|c_K| at generic
-  points on Re(s)=1/2 by a factor of 9x (K=10) to 52x (K=20).
-- Under RH, |c_K(ρ)| → ∞ as K → ∞ for each fixed zero ρ, consistent with
-  the pole of 1/ζ(s) at zeros.
-
-## Partial results
-- Unconditional: c_K(ρ) ≠ 0 for all but a density-zero subset of nontrivial
-  zeros (follows from Langer's zero count O(T) vs N(T) ~ (T/2π) log T).
-- GRH-conditional: The Mertens spectroscope F(γ_k)/F_avg → ∞ for all zeros.
-
-## Difficulty
-Comparable to the Linear Independence hypothesis (LI) for zeta zeros.
-The zeros of c_K are determined by small-prime arithmetic; the zeros of ζ
-by all primes. Proving they never coincide requires understanding the
-arithmetic independence between these structures.
+For a fixed integer `K ≥ 2`, the truncated Möbius Dirichlet polynomial
+`c_K(s) = ∑_{k=2}^{K} μ(k) · k^{-s}` is conjectured to be nonzero at every
+nontrivial zero of the Riemann zeta function. The polynomial `c_K` itself has
+infinitely many zeros in the critical strip (Langer, 1931), so the content of
+the conjecture is that none of these coincide with a zeta zero. Numerically,
+`c_K(ρ) ≠ 0` has been checked (interval arithmetic) for `K ∈ {10, 20, 50}` at
+the first `100` nontrivial zeros `ρ`. The problem is open.
 -/
 
-@[category research_open]
-@[AMS 11M26, 30D15]
-/-- For fixed K ≥ 2 and any nontrivial zero ρ of the Riemann zeta function,
-the truncated Möbius Dirichlet polynomial c_K(ρ) = Σ_{k=2}^{K} μ(k) · k^{-ρ}
-is nonzero. -/
-theorem dirichlet_polynomial_avoidance_conjecture
-    (K : ℕ) (hK : K ≥ 2)
+open scoped BigOperators
+
+namespace DirichletPolynomialAvoidance
+
+/-- For every fixed `K ≥ 2` and every nontrivial zero `ρ` of the Riemann
+zeta function (`riemannZeta ρ = 0` with `0 < ρ.re < 1`), the truncated
+Möbius Dirichlet polynomial `∑_{k=2}^{K} μ(k) · k^{-ρ}` is nonzero. -/
+@[category research open, AMS 11]
+theorem dirichlet_polynomial_avoidance
+    (K : ℕ) (hK : 2 ≤ K)
     (ρ : ℂ) (hρ : riemannZeta ρ = 0)
     (hρ_nontrivial : 0 < ρ.re ∧ ρ.re < 1) :
-    (∑ k in Finset.range (K - 1), (ArithmeticFunction.moebius (k + 2) : ℂ) *
-      ((k + 2 : ℂ) ^ (-ρ))) ≠ 0 := by
+    (∑ k ∈ Finset.range (K - 1),
+      (ArithmeticFunction.moebius (k + 2) : ℂ) * ((k + 2 : ℂ) ^ (-ρ))) ≠ 0 := by
   sorry
+
+end DirichletPolynomialAvoidance
