@@ -19,31 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős 1959: graphs of large chromatic number and large girth
 
-**Verbatim statement (Erdős 1959):**
-> For every integers `k ≥ 2` and `g ≥ 3`, there exists a finite simple graph `G` with
-> chromatic number at least `k` and girth at least `g`.
-
-That is, graphs can be simultaneously "locally tree-like" (no short cycles) and "globally
-hard to colour" (high chromatic number). This is a landmark early application of the
-**probabilistic method**: Erdős shows existence via a random-graph construction followed by
-edge-deletion to destroy short cycles, rather than giving an explicit combinatorial
-construction.
-
-**Proof sketch (Erdős 1959).** Fix `k, g`. Let `n` be large, `p = n^{θ-1}` for small `θ > 0`,
-and consider `G(n, p)`. A first-moment calculation shows the expected number of cycles of
-length `< g` is `o(n)` as `n → ∞`, so with positive probability there is a "mostly girth-≥g"
-`G` with at most `n/2` short cycles. On the other side, an independence-number calculation
-shows that `α(G(n, p)) ≤ n / (2k)` with high probability, hence the chromatic number `≥ 2k`.
-Deleting one vertex per short cycle (≤ `n/2` vertices) yields a graph on ≥ `n/2` vertices
-with girth ≥ `g` and `α ≤ n/(2k)`, so `χ ≥ n/2 · 2k/n = k`.
-
-**Status:** PROVED (Erdős 1959). The probabilistic-method proof is nontrivial (> 2 pages of
-careful expectation bounds) and we leave it as `sorry`.
-
-## References
-
-- [Er59] Erdős, P. (1959). "Graph theory and probability." *Canad. J. Math.* 11, pp. 34--38.
-- [AlSp16] Alon, N. and Spencer, J. (2016). *The Probabilistic Method* (4th ed.), §3.3.
+*References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Probabilistic_method)
+* [Er59] Erdős, P. (1959). "Graph theory and probability." *Canad. J. Math.* 11, pp. 34--38.
+* [AlSp16] Alon, N. and Spencer, J. (2016). *The Probabilistic Method* (4th ed.), §3.3.
 -/
 
 open Classical SimpleGraph
