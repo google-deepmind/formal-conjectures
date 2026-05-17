@@ -33,10 +33,18 @@ Let $e(n,r)$ be minimal such that every graph on $n$ vertices with at least $e(n
 each edge contained in at least one triangle, must have an edge contained in at least
 $r$ triangles.
 -/
+private noncomputable def trianglesContaining
+  {α : Type*}
+  (G : SimpleGraph α)
+  (uv : Sym2 α)
+  [Fintype α] :
+  Finset (Finset α) :=
+  (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
+
 def Erdos600Prop (n : ℕ) (e : ℕ) (r : ℕ) : Prop :=
-  ∀ G : SimpleGraph (Fin n), G.edgeFinset.card ≥ e ∧
-  (∀ e ∈ G.edgeFinset, ∃ t ∈ G.cliqueFinset 3, e.toFinset ⊆ t) →
-  (∃ e ∈ G.edgeFinset, ∃ S ⊆ G.cliqueFinset 3, ∀ t ∈ S, e.toFinset ⊆ t ∧ S.card ≥ r)
+  ∀ G : SimpleGraph (Fin n), G.edgeFinset.card ≥ e →
+  (∀ uv ∈ G.edgeFinset, (trianglesContaining G uv).Nonempty) →
+  ∃ uv ∈ G.edgeFinset, r ≤ (trianglesContaining G uv).card
 
 noncomputable def eFunction (n : ℕ) (r : ℕ) : ℕ := sInf {e : ℕ | Erdos600Prop n e r}
 
