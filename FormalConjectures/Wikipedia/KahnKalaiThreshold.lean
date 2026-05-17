@@ -19,30 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # The Kahn–Kalai threshold conjecture (Kahn–Kalai 2007, proved Park–Pham 2022)
 
-**Verbatim statement (Kahn–Kalai 2007):**
-> For every non-empty, monotone, increasing family `F` of subsets of a finite ground set `X`,
-> the *probability threshold* `p_c(F)` (the smallest `p` at which a `p`-random subset of `X`
-> lies in `F` with probability at least `½`) is at most a logarithmic factor times the
-> *expectation threshold* `q_c(F)` (the smallest `q` at which the expected number of minimal
-> elements of `F` contained in a `q`-random subset is at least `½`).
-
-Formally: there exists a universal constant `C > 0` such that for every finite `X` and every
-non-empty monotone-increasing `F ⊆ 2^X`,
-  `p_c(F) ≤ C · q_c(F) · log(|X| + 2)`.
-
-**Status:** PROVED (Park–Pham 2022; published 2024). The conjecture had stood since 2007 and
-was a central open problem in probabilistic combinatorics. Park and Pham gave a remarkably
-short proof (≈ 6 pages); a "fractional" strengthening was proved earlier by Frankston–Kahn–
-Narayanan–Park (2021).
-
-## References
-
-- [KK07] Kahn, J. and Kalai, G. (2007). "Thresholds and expectation thresholds."
+*References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Kahn%E2%80%93Kalai_conjecture)
+* [KK07] Kahn, J. and Kalai, G. (2007). "Thresholds and expectation thresholds."
   *Combin. Probab. Comput.* 16, pp. 495--502.
-- [PP24] Park, J. and Pham, H.T. (2024). "A proof of the Kahn–Kalai conjecture." *J. Amer.
-  Math. Soc.* 37, pp. 235--243. (Original preprint: arXiv:2203.17207, 2022.)
-- [FKNP21] Frankston, K., Kahn, J., Narayanan, B., Park, J. (2021). "Thresholds versus
-  fractional expectation-thresholds." *Ann. of Math.* 194, pp. 475--495.
+* [PP24] Park, J. and Pham, H.T. (2024). "A proof of the Kahn–Kalai conjecture." *J. Amer.
+  Math. Soc.* 37, pp. 235--243.
 -/
 
 open Classical Finset
