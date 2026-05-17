@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:*
 - [erdosproblems.com/600](https://www.erdosproblems.com/600)
 - [erdosproblems.com/80](https://www.erdosproblems.com/80)
+- [Er87] Erdős, P., _Some problems on finite and infinite graphs_. Logic and combinatorics (Arcata, Calif., 1985) (1987), 223-228.
 - [RuSz78] Ruzsa, I. Z. and Szemerédi, E., _Triple systems with no six points carrying three triangles_. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 -/
 
