@@ -20,30 +20,13 @@ import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 /-!
 # Sidorenko's conjecture (1993)
 
-**Verbatim statement (Sidorenko 1993):**
-> For every bipartite graph $H$ and every graph $G$,
-> $t(H, G) \geq t(K_2, G)^{e(H)}$,
-> where $t(H, G) = \#\mathrm{Hom}(H, G) / |V(G)|^{|V(H)|}$ is the homomorphism density of
-> $H$ in $G$ and $e(H)$ is the number of edges of $H$.
-
-Equivalently, if we write the edge density of `G` as `d := t(K_2, G)`, Sidorenko's conjecture
-asserts that the "random-like" lower bound `t(H, G) ≥ d^{e(H)}` holds for every bipartite
-host graph `H`.
-
-**Status:** OPEN. Proved for many classes of bipartite `H` including:
-- trees and forests (Sidorenko 1993, the original paper);
-- complete bipartite graphs $K_{m,n}$ (Sidorenko 1993, Cauchy–Schwarz);
-- hypercubes $Q_d$ (Hatami 2010);
-- "tree-like" or "reflection" classes treated by Conlon–Fox (2010), Kim–Lee–Lee (2018),
-  Conlon–Kim–Lee–Lee (2018), Szegedy (2014, entropy approach).
-
-## References
-
-- [Si93] Sidorenko, A. (1993). "A correlation inequality for bipartite graphs."
+*References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Sidorenko%27s_conjecture)
+* [Si93] Sidorenko, A. (1993). "A correlation inequality for bipartite graphs."
   *Graphs Combin.* 9, pp. 201--204.
-- [CoFo10] Conlon, D. and Fox, J. (2010). "Bounds for graph regularity and removal lemmas."
+* [CoFo10] Conlon, D. and Fox, J. (2010). "Bounds for graph regularity and removal lemmas."
   *Geom. Funct. Anal.* 22, pp. 1191--1256.
-- [KLL18] Kim, J.H., Lee, C., Lee, J. (2018). "Two approaches to Sidorenko's conjecture."
+* [KLL18] Kim, J.H., Lee, C., Lee, J. (2018). "Two approaches to Sidorenko's conjecture."
   *Trans. Amer. Math. Soc.* 370, pp. 8515--8552.
 -/
 
