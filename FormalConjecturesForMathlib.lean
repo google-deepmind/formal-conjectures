@@ -149,7 +149,6 @@ public import FormalConjecturesForMathlib.NumberTheory.Harmonic
 public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
-public import FormalConjecturesForMathlib.Probability.LovaszLocalLemma
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.Quadratic
 public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
