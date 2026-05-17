@@ -20,7 +20,8 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 600
 *Reference:*
 - [erdosproblems.com/600](https://www.erdosproblems.com/600)
-- [RuSz78] Ruzsa, I. Z. and Szemerédi, E., Triple systems with no six points carrying three triangles. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
+- [erdosproblems.com/80](https://www.erdosproblems.com/80)
+- [RuSz78] Ruzsa, I. Z. and Szemerédi, E., _Triple systems with no six points carrying three triangles_. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 -/
 
 open Classical Filter
