@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Arxiv.«2107.00295»
 
 /-!
-# Conjecture 1.6
+# Independent Domination of Regular Graphs, Conjecture 1.6
 
 *Reference:* [arxiv/2107.00295](https://arxiv.org/abs/2107.00295)
 **On independent domination of regular graphs**

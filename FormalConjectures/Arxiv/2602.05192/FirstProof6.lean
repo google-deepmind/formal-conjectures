@@ -17,9 +17,9 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Theorem 6
+# First Proof, Theorem 6
 
-*Reference:* [arxiv/2602.05192](https://arxiv.org/abs/2602.05192)
+*Reference:* [arxiv/2602.05192v2](https://arxiv.org/abs/2602.05192v2)
 **First Proof**
 by *Mohammed Abouzaid, Andrew J. Blumberg, Martin Hairer, Joe Kileel, Tamara G. Kolda, Paul D. Nelson, Daniel Spielman, Nikhil Srivastava, Rachel Ward, Shmuel Weinberger, Lauren Williams*
 -/
