@@ -33,23 +33,11 @@ cases `R(0, t) = R(s, 0) = 1`. Induction on `s + t` then gives `R(s, t) ≤ C(s+
 `s = t = k` this is `R(k, k) ≤ C(2k, k) ≤ 4 ^ k` (the Catalan-like central binomial
 coefficient bound).
 
-## Notes on definitions
-
-Our Phase 2 development already introduces a finite diagonal Ramsey number
-`ramseyNumber : ℕ → ℕ` locally inside the probabilistic module
-`FormalConjectures/Probabilistic/RamseyDiagonalLowerBound.lean`, namespaced under
-`RamseyDiagonalLowerBound`. Because that file resides in `FormalConjectures/` rather than
-in `FormalConjecturesForMathlib/`, and cross-importing from Mathlib-adjacent helpers into
-an `FormalConjectures/` file would be an inverse layering, we re-introduce a small
-self-contained mirror of the `IsRamsey` predicate and `ramseyNumber` here. It is defeq to
-the one in the probabilistic module when the cases line up; the two can later be unified
-once either side is promoted.
-
 **Reference:** [ES35] Erdős, P. and Szekeres, G. (1935). "A combinatorial problem in
 geometry." *Compositio Math.* **2**, pp. 463–470.
 -/
 
-namespace SimpleGraph
+namespace Combinatorics
 namespace Diagonal
 
 /-- A **2-edge-colouring of K_n** — symmetric function `Fin n → Fin n → Fin 2`. -/
@@ -207,12 +195,6 @@ lemma IsMonochromaticClique.insert {n : ℕ} {χ : EdgeColouring n}
     · rw [hw_eq, χ.symm u v₀]; exact hvS u hu'
     · exact h u hu' w hw' huw
 
-/-- A `Fin 2` value is either `0` or `1`. -/
-lemma fin_two_eq_zero_or_one (x : Fin 2) : x = 0 ∨ x = 1 := by
-  match x with
-  | ⟨0, _⟩ => exact Or.inl rfl
-  | ⟨1, _⟩ => exact Or.inr rfl
-
 /-- **Pigeonhole step: splitting `V \ {v}` by colour.** For any vertex `v ∈ V`, the set
 `V.erase v` partitions into red-neighbours of `v` and blue-neighbours of `v`, and the
 cardinalities sum to `V.card - 1`. -/
@@ -226,8 +208,7 @@ lemma card_red_blue_split {n : ℕ} (χ : EdgeColouring n) (V : Finset (Fin n))
         + ((V.erase v).filter (fun u => ¬ χ v u = 0)).card = (V.erase v).card :=
     Finset.card_filter_add_card_filter_not (s := V.erase v) (fun u => χ v u = 0)
   have hne_one : ∀ u, ¬ (χ v u = 0) ↔ χ v u = 1 := by
-    intro u
-    rcases fin_two_eq_zero_or_one (χ v u) with h | h <;> simp [h]
+    intro u; omega
   have hrw : ((V.erase v).filter (fun u => ¬ χ v u = 0)).card
       = ((V.erase v).filter (fun u => χ v u = 1)).card := by
     congr 1
@@ -448,4 +429,4 @@ lemma _root_.Combinatorics.hypergraphRamsey_two_le_four_pow (k : ℕ) :
   rw [h2kk] at hle
   exact hle.trans (Diagonal.central_binomial_le_four_pow k)
 
-end SimpleGraph
+end Combinatorics
