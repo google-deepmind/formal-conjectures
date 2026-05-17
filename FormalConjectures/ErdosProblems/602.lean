@@ -146,10 +146,12 @@ theorem erdos_602.variants.disjoint : answer(True) ↔
 /--
 **Countable index set case.**
 
-If the index set `I` is countable (indexed by `ℕ`), does the family still have Property B?
-This is a (potentially easier) special case of Problem 602 that remains open. -/
-@[category research open, AMS 3 5]
-theorem erdos_602.variants.countable_index : answer(sorry) ↔
+If the index set is countable, the answer is yes, and the intersection
+condition is unnecessary. This is Bernstein's Lemma:
+every countable system of infinite sets has Property B.
+-/
+@[category research solved, AMS 3 5]
+theorem erdos_602.variants.countable_index : answer(True) ↔
     ∀ {α : Type*} (A : ℕ → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
       (∀ i j, i ≠ j → (A i ∩ A j).Finite) →
@@ -163,7 +165,7 @@ theorem erdos_602.variants.countable_index : answer(sorry) ↔
 For a single countably infinite set `A ⊆ α`, there trivially exists a 2-colouring
 of `α` that makes `A` non-monochromatic: since `A` is infinite, it has two distinct
 elements, so any colouring that assigns them different colours works. -/
-@[category undergraduate, AMS 3]
+@[category textbook, AMS 3]
 theorem erdos_602.variants.single_set {α : Type*} (A : Set α) (hA : A.Infinite) :
     ∃ f : α → Fin 2, ¬IsMonochromatic f A := by
   classical
@@ -196,7 +198,7 @@ theorem erdos_602.variants.single_set {α : Type*} (A : Set α) (hA : A.Infinite
 
 If the index set `I` is empty (has no elements), then Property B holds vacuously:
 any 2-colouring works, since there are no sets to be made non-monochromatic. -/
-@[category undergraduate, AMS 3]
+@[category textbook, AMS 3]
 theorem erdos_602.variants.empty_index {α : Type*} :
     ∀ (A : PEmpty → Set α),
       (∀ i, (A i).Infinite) →
@@ -210,7 +212,7 @@ theorem erdos_602.variants.empty_index {α : Type*} :
 If the index set has exactly one element (i.e., `[Unique I]`), then Property B holds:
 any 2-colouring that makes the single set `A (default : I)` non-monochromatic works.
 This follows from the single-set case. -/
-@[category undergraduate, AMS 3]
+@[category textbook, AMS 3]
 theorem erdos_602.variants.unique_index {α : Type*} (I : Type*) [Unique I]
     (A : I → Set α) (hInfinite : ∀ i, (A i).Infinite) :
     HasPropertyB I A := by

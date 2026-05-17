@@ -20,18 +20,6 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 1167
 
 *Reference:* [erdosproblems.com/1167](https://www.erdosproblems.com/1167)
-
-## Formalization notes
-
-- The partition arrow `μ → (ν_α)_{α<γ}^r` is `Combinatorics.cardinalPartitionRel`
-  in `FormalConjecturesForMathlib/Combinatorics/SetTheory/PartitionRelation.lean`.
-- We use `Ordinal.ToType` to turn the index ordinal `γ` into a type for the
-  coloring function.
-- We avoid the identifier `λ` (reserved in Lean 4) and write `lam` for the
-  cardinal $\lambda$.
-- Cardinal successor: for an infinite cardinal $\kappa$, $\kappa + 1 = \kappa$
-  in cardinal arithmetic; the $+1$ is thus only nontrivial when $\kappa_\alpha$
-  is finite.
 -/
 
 open Cardinal Ordinal Combinatorics

@@ -48,25 +48,26 @@ theorem erdos_859.variants.erdos_upper_lower_bounds : ∃ᵉ (c₃ > (0 : ℝ)) 
 The density `dₜ` of `DivisorSumSet (t : ℕ)` is assymptotically equivalent to ` c₁ / log (t) ^ c₂`
 for some positive constants `c₁` and `c₂`.
 -/
+/-- The density of the divisor sum set is asymptotically equivalent to $c_1 / \log(t)^{c_2}$. -/
 @[category research open, AMS 11]
 theorem erdos_859 :
     ∃ c₁ > 0, ∃ c₂ > (0 : ℝ), ∃ d : ℕ → ℝ, (∀ t > 0, (DivisorSumSet t).HasDensity (d t)) ∧
       (fun (t : ℕ) ↦ d t) ~[atTop] (fun t ↦ c₁ / Real.log t ^ c₂) := by
   sorry
 
-/-
+/--
 A case where we can easily calculate the density of `DivisorSumSet t` is that of `t=0`.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 lemma erdos_859.variants.trivial_case : DivisorSumSet 0 = Set.univ := by
   simp [DivisorSumSet, Exists.intro ∅]
 
-/-
+/--
 An easy sanity check is to prove that for every natural number `t` the density `dₜ` is
 a positive number.
 Hint: investigate some multiplicative structure of `DivisorSumSet t`.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 lemma erdos_859.variants.positive_density (t : ℕ) :
     (DivisorSumSet t).HasPosDensity := by
   sorry
