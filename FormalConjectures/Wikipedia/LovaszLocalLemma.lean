@@ -13,33 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-module
-
-public import Mathlib.Probability.Independence.Basic
-public import Mathlib.MeasureTheory.Measure.MeasureSpace
-public import Mathlib.Analysis.SpecialFunctions.Exp
-
-@[expose] public section
+import FormalConjectures.Util.ProblemImports
 
 /-!
 # The Lovász Local Lemma
 
-**Verbatim statement (symmetric form, Erdős–Lovász 1975):**
-> Let $A_1, \ldots, A_n$ be events, each of probability at most $p$, and suppose each $A_i$
-> is independent of all but at most $d$ of the others. If $e \cdot p \cdot (d + 1) \leq 1$,
-> then $\Pr\!\left(\bigcap_i A_i^{\mathsf c}\right) > 0$.
-
-That is: under the hypothesis, with positive probability none of the "bad" events occur,
-so a configuration avoiding all of them exists.
-
-The **general (asymmetric) form** replaces the "at most $d$" bound by a *dependency graph*
-$G$ on $\{1,\ldots,n\}$ — each $A_i$ is jointly independent of $\{A_j : j \notin \Gamma(i)\}$ —
-and the hypothesis by the existence of reals $0 \leq x_i < 1$ with
-$\Pr(A_i) \leq x_i \prod_{j \in \Gamma(i)} (1 - x_j)$.
-
-## Reference
-
-- [EL75] Erdős, P. and Lovász, L. (1975). "Problems and results on 3-chromatic hypergraphs and
+*References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Lov%C3%A1sz_local_lemma)
+* [EL75] Erdős, P. and Lovász, L. (1975). "Problems and results on 3-chromatic hypergraphs and
   some related questions." In *Infinite and Finite Sets* (A. Hajnal, ed.), North-Holland,
   pp. 609--627.
 -/
@@ -64,6 +45,7 @@ from above, so finite terms all lie above the limit.
 Mathlib's `Real.add_one_le_exp (1/d)`: rearranging gives `(d+1)/d ≤ exp(1/d)`, hence
 `d/(d+1) ≥ exp(-1/d)`, and raising to the `d`-th power yields
 `(d/(d+1))^d ≥ exp(-1) = 1/e`. -/
+@[category API, AMS 60]
 lemma Real.one_sub_one_div_succ_pow_ge_inv_exp (d : ℕ) :
     1 / Real.exp 1 ≤ (1 - 1 / (d + 1 : ℝ)) ^ d := by
   rcases Nat.eq_zero_or_pos d with hd | hd
@@ -116,14 +98,17 @@ lemma Real.one_sub_one_div_succ_pow_ge_inv_exp (d : ℕ) :
 the event `A j` lies in the dependency set of `A i`. We encode dependency by an arbitrary
 symmetric relation; the canonical choice in the statement below is mutual independence of
 `A i` from the family `{A j | ¬ dep i j}`. -/
+@[category API, AMS 60]
 def DependencySet (n : ℕ) := Fin n → Fin n → Prop
 
 /-- The "bad" event intersection property: we seek to show `μ (⋂ i, (A i)ᶜ) > 0`. -/
+@[category API, AMS 60]
 def avoidsAll {n : ℕ} (A : Fin n → Set Ω) : Set Ω :=
   ⋂ i, (A i)ᶜ
 
 /-- **API lemma**: `avoidsAll A = (⋃ i, A i)ᶜ`. Rewriting the intersection of complements as
 the complement of the union makes many measure-theoretic manipulations easier. -/
+@[category API, AMS 60]
 lemma avoidsAll_eq_compl_iUnion {n : ℕ} (A : Fin n → Set Ω) :
     avoidsAll A = (⋃ i, A i)ᶜ := by
   unfold avoidsAll
@@ -139,6 +124,7 @@ This is the key arithmetic step linking the two forms of the LLL: it says that c
 
 **Proof.** From `e · p · (d+1) ≤ 1` and `e, d+1 > 0`, `p ≤ 1 / (e · (d+1))`. Combine with
 `1/e ≤ (1 - 1/(d+1))^d` (the core bound `one_sub_one_div_succ_pow_ge_inv_exp`) to conclude. -/
+@[category API, AMS 60]
 lemma sym_bound_le_asym_bound {p : ℝ} {d : ℕ}
     (_hp : 0 ≤ p) (hBound : Real.exp 1 * p * (d + 1 : ℝ) ≤ 1) :
     p ≤ (1 / ((d : ℝ) + 1)) * (1 - 1 / ((d : ℝ) + 1)) ^ d := by
@@ -191,6 +177,7 @@ independence directly):
 The remaining gap is the full formalisation of (2)–(4) and the underlying asymmetric form
 itself (`asymmetric_LLL`). We leave this as `sorry` pending further probability-theory
 infrastructure work on `ProbabilityTheory.cond`. -/
+@[category API, AMS 60]
 theorem symmetric_LLL {n : ℕ} [IsProbabilityMeasure μ]
     (A : Fin n → Set Ω) (hMeas : ∀ i, MeasurableSet (A i))
     (p : ℝ) (d : ℕ)
@@ -243,6 +230,7 @@ Final step: `μ(⋂ A_iᶜ) = ∏_i μ(A_iᶜ | ⋂_{j<i} A_jᶜ) ≥ ∏_i (1 -
 
 The statement is recorded here so that downstream consumers (probabilistic Ramsey /
 hypergraph colouring) can depend on its type. -/
+@[category API, AMS 60]
 theorem asymmetric_LLL {n : ℕ} [IsProbabilityMeasure μ]
     (A : Fin n → Set Ω) (_hMeas : ∀ i, MeasurableSet (A i))
     (Γ : Fin n → Finset (Fin n))
@@ -257,6 +245,7 @@ theorem asymmetric_LLL {n : ℕ} [IsProbabilityMeasure μ]
   sorry
 
 /-- **Helper** (API): in any probability space, `μ (avoidsAll A) = 1 - μ (⋃ i, A i)`. -/
+@[category API, AMS 60]
 lemma measure_avoidsAll_eq_one_sub {n : ℕ} [IsProbabilityMeasure μ]
     (A : Fin n → Set Ω) (hMeas : ∀ i, MeasurableSet (A i)) :
     (μ (avoidsAll A)).toReal = 1 - (μ (⋃ i, A i)).toReal := by
