@@ -52,9 +52,9 @@ theorem green_54 :
 The same statement is known to be false for 2K instead of 10K.
 -/
 @[category research solved, AMS 46 52 60]
-theorem green_54_known_case : ∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
+theorem green_54_known_case : ¬ (∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
     gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (2 : ℝ) • K ∧
-    (0.01 : ℝ≥0∞) ≤ gaussianMeasureInf C := by
+    (0.01 : ℝ≥0∞) ≤ gaussianMeasureInf C) := by
   sorry
 
 end Green54
