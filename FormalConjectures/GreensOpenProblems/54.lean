@@ -16,21 +16,25 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-!
+/-
 # Ben Green's Open Problem 54
 
-*Reference:* [Ben Green's Open Problem 54](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.54)
+*References:*
+
+- [Ben Green's Open Problem 54](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.54)
+- Original formulation: M. Talagrand, *Are All Sets of Positive Measure Essentially Convex?*, in Operator Theory:
+Advances and Applications, 77, 1995 Birkhäuser Verlag Basel/Switzerland.
 -/
 
 open MeasureTheory ProbabilityTheory
-open scoped Pointwise
+open scoped Pointwise ENNReal
 
 namespace Green54
 
-/-- The standard $n$-dimensional Gaussian measure $\gamma_n$ on $\mathbb{R}^n$, defined as the
-product of $n$ independent copies of the standard Gaussian measure on $\mathbb{R}$. -/
-noncomputable def gaussianMeasure (n : ℕ) : Measure (Fin n → ℝ) :=
-  Measure.pi (fun _ => gaussianReal 0 1)
+/-- The infinite-dimensional Gaussian measure γ∞ on ℝ^ℕ,
+defined as the countable product of standard Gaussian measures. -/
+noncomputable def gaussianMeasureInf : Measure (ℕ → ℝ) :=
+  Measure.infinitePi (fun _ : ℕ => gaussianReal 0 1)
 
 /--
 Let $K \subset \mathbb{R}^n$ be a balanced compact set (that is, $\lambda K \subseteq K$ whenever
@@ -39,8 +43,18 @@ Does $10K$ contain a compact convex set $C$ with $\gamma_n(C) \geq 0.01$?
 -/
 @[category research open, AMS 46 52 60]
 theorem green_54 :
-    answer(sorry) ↔ ∀ n : ℕ, ∀ K : Set (Fin n → ℝ), IsCompact K → Balanced ℝ K → ENNReal.ofReal 0.99 ≤ gaussianMeasure n K → ∃ C : Set (Fin n → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (10 : ℝ) • K ∧
-    ENNReal.ofReal 0.01 ≤ gaussianMeasure n C := by
+    answer(sorry) ↔ ∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
+    gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (10 : ℝ) • K ∧
+    (0.01 : ℝ≥0∞) ≤ gaussianMeasureInf C := by
+  sorry
+
+/--
+The same statement is known to be false for 2K instead of 10K.
+-/
+@[category research solved, AMS 46 52 60]
+theorem green_54_known_case : ∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
+    gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (2 : ℝ) • K ∧
+    (0.01 : ℝ≥0∞) ≤ gaussianMeasureInf C := by
   sorry
 
 end Green54
