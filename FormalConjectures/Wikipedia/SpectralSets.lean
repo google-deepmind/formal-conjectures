@@ -30,7 +30,7 @@ This file states the conjecture: for a bounded spectral set `E ⊂ ℝ`, every s
 set in `ℝᵈ` admits a spectrum contained in `ℚᵈ`.
 
 *References:*
-- [Wikipedia: Spectral set theory](https://en.wikipedia.org/wiki/Spectral_set_theory)
+- [Wikipedia: Spectral sets and spectral pairs](https://en.wikipedia.org/wiki/Fuglede%27s_conjecture)
 - [Lev, Matolcsi, *The Fuglede conjecture for convex domains is true in all
   dimensions*, Acta Math. 228 (2022), 385-420.](https://arxiv.org/abs/1904.12262)
 -/
@@ -40,14 +40,21 @@ open MeasureTheory Complex Real
 namespace SpectralSets
 
 /--
+A subset `Λ ⊂ ℝᵈ` is *rational* if every coordinate of every element of `Λ` is a
+rational number.
+-/
+def IsRational {d : ℕ} (Λ : Set (Fin d → ℝ)) : Prop :=
+  ∀ lam ∈ Λ, ∀ i : Fin d, ∃ q : ℚ, (q : ℝ) = lam i
+
+/--
 **Spectral set conjecture (rationality of the spectrum).**
 For every bounded spectral subset `E ⊂ ℝ`, every spectrum `Λ` of `E` is rational,
 i.e. contained in `ℚ`.
 -/
 @[category research open, AMS 28 42 43]
 theorem spectrum_is_rational :
-    answer(sorry) ↔ ∀ E : Set (EuclideanSpace ℝ (Fin 1)), Bornology.IsBounded E →
-      ∀ Λ : Set (EuclideanSpace ℝ (Fin 1)), IsSpectralPair E Λ → IsRational Λ := by
+    answer(sorry) ↔ ∀ E : Set (Fin 1 → ℝ), Bornology.IsBounded E → ∀ Λ : Set (Fin 1 → ℝ),
+    spectralPair E Λ → IsRational Λ := by
   sorry
 
 end SpectralSets
