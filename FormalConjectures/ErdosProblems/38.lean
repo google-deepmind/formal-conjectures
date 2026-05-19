@@ -42,9 +42,14 @@ Note: here Erdős seems to use a slightly weaker notion of an additive basis (se
 of page 135). In particular, for this problem, a set is an additive basis of order $k$ if every
 natural number can be written as a sum of _at most_ $k$ elements of the set, rather than as a sum of
 _precisely_ $k$ elements.
+
+A positive [solution](https://github.com/spicylemonade/erdos-38) was given by GPT 5.5 Pro
+(prompted by gebyjaff, cleanup by Liam Price); in fact a sparse random set $B$ has this property,
+with $f(\alpha)\gg \alpha (1-\alpha)^2$.
 -/
-@[category research open, AMS 11]
-theorem erdos_38 : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at
+"https://www.erdosproblems.com/forum/thread/38#post-6131"]
+theorem erdos_38 : answer(True) ↔
     ∃ B : Set ℕ, ¬ B.IsWeakAddBasis ∧ ∃ f : ℝ → ℝ, (∀ α, 0 < α → α < 1 → f α > 0) ∧
       ∀ (A : Set ℕ) (N : ℕ),
         let α := schnirelmannDensity A

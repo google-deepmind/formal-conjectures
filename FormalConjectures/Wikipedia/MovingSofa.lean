@@ -113,7 +113,8 @@ def ABφθSpec (A B φ θ : ℝ) : Prop :=
   A * φ.cos - (φ.sin + 1 / 2 - φ.cos / 2 + B * φ.sin) = 0 ∧
   (A + π / 2 - φ - θ) - (B - (θ - φ) * (1 + A) / 2 - (θ - φ)^2 / 4) = 0
 
-@[category undergraduate, AMS 49]
+/-- There exist unique constants $A$, $B$, $\varphi$, and $\theta$ satisfying the spec. -/
+@[category textbook, AMS 49]
 theorem ABφθSpec.existsUnique : ∃! ABφθ : ℝ × ℝ × ℝ × ℝ,
     ABφθSpec ABφθ.1 ABφθ.2.1 ABφθ.2.2.1 ABφθ.2.2.2 :=
   sorry

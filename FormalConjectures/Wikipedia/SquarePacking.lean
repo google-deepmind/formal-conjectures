@@ -83,7 +83,7 @@ Eleven unit squares can be packed into a square of side length < 3.877084.
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
-@[category undergraduate, AMS 51]
+@[category textbook, AMS 51]
 theorem eleven_square_packing_in_square_bound :
     Nonempty (Packing 11 UnitSquare (Square 3.877084)) := by
   sorry
@@ -103,7 +103,7 @@ Seventeen unit squares can be packed into a square of side length < 4.6756.
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
-@[category undergraduate, AMS 51]
+@[category textbook, AMS 51]
 theorem seventeen_square_packing_in_square_bound :
     Nonempty (Packing 17 UnitSquare (Square 4.6756)) := by
   sorry
@@ -123,7 +123,7 @@ Three unit squares can be packed into a circle of radius $(5 \sqrt{17}) / 16 \ap
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle)
 -/
-@[category undergraduate, AMS 51]
+@[category textbook, AMS 51]
 theorem three_square_packing_in_circle_bound :
     Nonempty (Packing 3 UnitSquare (Circle ((5 * √ 17) / 16))) := by
   sorry
@@ -143,7 +143,7 @@ Twenty-one unit circles can be packed into a square of side length < 9.359.
 
 Reference: [Visualizations](https://erich-friedman.github.io/packing/cirinsqu/)
 -/
-@[category undergraduate, AMS 51]
+@[category textbook, AMS 51]
 theorem twenty_one_circle_packing_in_square_bound :
     Nonempty (Packing 21 UnitCircle (Square 9.359)) := by
   sorry
@@ -164,7 +164,7 @@ Reference:
 Graham RL, Lubachevsky BD, Nurmela KJ, Ostergard PRJ.
 Dense packings of congruent circles in a circle. Discrete Math 1998;181:139–154.
 -/
-@[category undergraduate, AMS 51]
+@[category textbook, AMS 51]
 theorem fifteen_circle_packing_in_circle_bound :
     Nonempty (Packing 15 UnitCircle (Circle (1 + √ (6 + 2 / √ 5 + 4 * √ (1 + 2 / √ 5)))) ) := by
   sorry

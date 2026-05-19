@@ -121,7 +121,7 @@ theorem erdos_707.variants.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9,
 /--
 A perfect difference set modulo `n` must have size `≤ √n + 1`.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : ℕ)
     (hB : IsPerfectDifferenceSet B n) : B.ncard ≤ n.sqrt + 1 := by
   by_cases hfin : B.Finite
@@ -154,7 +154,7 @@ theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : 
 The Singer construction gives perfect difference sets for `n = p^2 + p + 1` where `p` is a
 prime power.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_707.variants.singer_construction (p : ℕ) (hp : IsPrimePow p) :
     ∃ (B : Set ℕ), IsPerfectDifferenceSet B (p^2 + p + 1) ∧ B.ncard = p + 1 := by
   sorry
@@ -164,7 +164,7 @@ theorem erdos_707.variants.singer_construction (p : ℕ) (hp : IsPrimePow p) :
 /--
 The set `{1, 2, 4}` is a Sidon set.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_707.variants.example_sidon_set : IsSidon ({1, 2, 4} : Set ℕ) := by
   intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
@@ -177,7 +177,7 @@ theorem erdos_707.variants.example_sidon_set : IsSidon ({1, 2, 4} : Set ℕ) := 
 /--
 The set `{1, 2, 4}` can be embedded in a perfect difference set modulo 7.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_707.variants.example_embedding : ∃ (B : Set ℕ), {1, 2, 4} ⊆ B ∧
     IsPerfectDifferenceSet B 7 := by
   refine ⟨{1, 2, 4}, Set.Subset.refl _, ?_⟩
@@ -211,7 +211,7 @@ theorem erdos_707.variants.example_embedding : ∃ (B : Set ℕ), {1, 2, 4} ⊆ 
 /--
 For small Sidon sets, we can check the conjecture directly.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_707.variants.small_sidon_sets (A : Set ℕ) (hA : A.Finite) (h : A.ncard ≤ 3)
     (hSidon : IsSidon A) : ∃ (B : Set ℕ) (p : ℕ), IsPrimePow p ∧ A ⊆ B ∧
     IsPerfectDifferenceSet B (p^2 + p + 1) := by
