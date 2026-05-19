@@ -36,6 +36,7 @@ conjecture.
 namespace BingBorsuk
 
 open scoped Manifold
+open TopologicalSpace
 
 /--
 The Bing-Borsuk Conjecture: every $n$-dimensional homogeneous absolute neighborhood retract
