@@ -89,6 +89,12 @@ pigeonhole + sorted-enumeration + telescoping argument) and additional
 supporting infrastructure are archived at
 `github.com/MendozaLab/erdos-experiments/tree/main/Erdos30`,
 DOI [`10.5281/zenodo.19444428`](https://doi.org/10.5281/zenodo.19444428).
+
+### AI disclosure
+
+Lean 4 code in this file was drafted with AI assistance.  The mathematical
+content, Singer/Lindström/Balogh–Füredi–Roy formalizations, and external
+archive references are the contributor's responsibility.
 -/
 
 namespace Erdos30
