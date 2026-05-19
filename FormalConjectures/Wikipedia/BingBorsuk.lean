@@ -39,12 +39,13 @@ open scoped Manifold
 
 /--
 The Bing-Borsuk Conjecture: every $n$-dimensional homogeneous absolute neighborhood retract
-is a topological $n$-manifold.
+is a topological $n$-manifold. A topological space $X$ is an $n$-dimensional manifold
+when `T2Space X ∧ Nonempty (ChartedSpace (Fin n → ℝ) X)`. The hypothesis `[MetrizableSpace X]`
+implies `T2Space X` so this does not appear in the conclusion.
 -/
 @[category research open, AMS 54 57]
-theorem bing_borsuk_conjecture : ∀ n : ℕ, ∀ (X : Type) [TopologicalSpace X] [HomogeneousSpace X] [IsAbsoluteNeighborhoodRetract X],
-    HasLebesgueCoveringDimensionEq X n →
-    T2Space X ∧ Nonempty (ChartedSpace (Fin n → ℝ) X) := by
+theorem bing_borsuk_conjecture : ∀ n : ℕ, ∀ (X : Type) [TopologicalSpace X] [MetrizableSpace X] [HomogeneousSpace X] [IsAbsoluteNeighborhoodRetract X],
+    HasLebesgueCoveringDimensionEq X n → Nonempty (ChartedSpace (Fin n → ℝ) X) := by
   sorry
 
 end BingBorsuk
