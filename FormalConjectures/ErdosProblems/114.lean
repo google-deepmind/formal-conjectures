@@ -74,9 +74,9 @@ of degree `n`, `X ^ n - C 1` maximizes the length of the level-1 lemniscate.
 
 This is the all-degree conjecture and remains open. -/
 @[category research open, AMS 30]
-theorem erdos_114 (n : ℕ) (hn : 1 ≤ n)
-    (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n) :
-    lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
+theorem erdos_114 : answer(sorry) ↔
+    ∀ (n : ℕ) (hn : 1 ≤ n) (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n),
+      lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
   sorry
 
 /-- **Finite-degree EHP certificate range.**  For `1 ≤ n ≤ 14`, the polynomial
@@ -89,9 +89,10 @@ is elementary, `n = 2` follows from the Eremenko--Hayman treatment, and
 packet.  The external certificate pipeline is not formalized in this Lean file,
 so the proof remains a `sorry` rather than an imported axiom. -/
 @[category research solved, AMS 30]
-theorem erdos_114_finite_le_14 (n : ℕ) (hn : 1 ≤ n) (hn14 : n ≤ 14)
-    (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n) :
-    lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
+theorem erdos_114_finite_le_14 : answer(sorry) ↔
+    ∀ (n : ℕ) (hn : 1 ≤ n) (hn14 : n ≤ 14)
+      (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n),
+      lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
   sorry
 
 end Erdos114
