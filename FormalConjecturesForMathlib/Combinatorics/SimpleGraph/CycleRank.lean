@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 module
-public import Mathlib
+
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
 
 @[expose] public section
 
@@ -29,4 +30,3 @@ noncomputable def cycleRank (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   G.edgeFinset.card + Fintype.card G.ConnectedComponent - Fintype.card α
 
 end SimpleGraph
-#min_imports

@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 module
-public import Mathlib
+
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Data.Nat.Lattice
 
 @[expose] public section
 
@@ -29,4 +31,3 @@ noncomputable def circumference (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ 
   sSup { n : ℕ | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = n }
 
 end SimpleGraph
-#min_imports
