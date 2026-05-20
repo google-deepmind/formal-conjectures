@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 module
-public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
+public import Mathlib
 
 @[expose] public section
 
@@ -22,9 +22,11 @@ namespace SimpleGraph
 open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
+
 /-- The cycle rank of `G` (or cyclomatic number) is the minimum number of edges
     that must be removed to eliminate all cycles. -/
-noncomputable def cycle_rank (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+noncomputable def cycleRank (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   G.edgeFinset.card + Fintype.card G.ConnectedComponent - Fintype.card α
 
-  end SimpleGraph
+end SimpleGraph
+#min_imports

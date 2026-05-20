@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 module
-public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
+public import Mathlib
 
 @[expose] public section
 
@@ -22,9 +22,11 @@ namespace SimpleGraph
 open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
--- Longest cycle length in `G`, or `0` if `G` is acyclic. -/
-noncomputable def circumference (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = n }
 
+/-- `circumference G` is the length of the longest cycle in `G`.
+    It is `0` when `G` is acyclic. -/
+noncomputable def circumference (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  sSup { n : ℕ | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = n }
 
-  end SimpleGraph
+end SimpleGraph
+#min_imports
