@@ -21,6 +21,7 @@ public import Mathlib.Analysis.Matrix.Spectrum
 public import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 public import Mathlib.Combinatorics.SimpleGraph.Metric
 public import Mathlib.Data.Multiset.Interval
+public import Mathlib.Combinatorics.SimpleGraph.Clique
 
 @[expose] public section
 
@@ -601,5 +602,18 @@ theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     push_cast
     ring
   · simp
+
+/-- Longest cycle length in `G`, or `0` if `G` is acyclic. -/
+noncomputable def circumference (G : SimpleGraph α) : ℕ :=
+  sSup { n | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = n }
+
+/-- The cycle rank of `G` (or cyclomatic number) is the minimum number of edges
+    that must be removed to eliminate all cycles. -/
+noncomputable def cycle_rank (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  G.edgeFinset.card + Fintype.card G.ConnectedComponent - Fintype.card α
+
+/-- The clique number of `G` is the number of vertices in the largest complete subgraph. -/
+noncomputable def clique_number (G : SimpleGraph α) : ℕ :=
+  G.cliqueNum
 
 end SimpleGraph
