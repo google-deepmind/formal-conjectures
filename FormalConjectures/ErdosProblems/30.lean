@@ -52,10 +52,11 @@ small-case witnesses for the lower bound:
   lower-bound theorem rather than declared as an `axiom`.
 
 All variant theorems are stated against the canonical
-`FormalConjecturesForMathlib.Combinatorics.IsSidon` predicate. A private
-helper `IsSidonSet` (the ordered-pair form) is bridged to `IsSidon` via
-`isSidon_iff_isSidonSet` and used internally to reuse counting arguments
-that are simpler in the ordered formulation.
+`FormalConjecturesForMathlib.Combinatorics.IsSidon` predicate. The
+ordered-pair form `Finset.IsSidonOrdered` (now in
+`FormalConjecturesForMathlib.Combinatorics.Basic`) bridges to `IsSidon` via
+`Finset.isSidon_iff_isSidonOrdered` and is used internally to reuse counting
+arguments that are simpler in the ordered formulation.
 
 ### Indexing convention
 
@@ -115,66 +116,6 @@ theorem erdos_30 : answer(sorry) ↔
     ∀ᵉ (ε > 0), (fun N => h N - (N : Real).sqrt) =O[atTop] fun N => (N : ℝ)^(ε : ℝ) := by
   sorry
 
-/- ### Internal helper predicate
-
-`IsSidonSet` is an ordered-pair specialisation of `IsSidon` (over `Finset ℕ`),
-used internally because several counting arguments below are cleaner stated
-with the ordering hypothesis `a_1 ≤ b_1`, `a_2 ≤ b_2` rather than the
-up-to-commutativity disjunction. The bridge `isSidon_iff_isSidonSet` shows
-the two forms are equivalent. -/
-
-/-- Ordered-pair form of the Sidon predicate, used internally. -/
-private abbrev IsSidonSet (A : Finset ℕ) : Prop :=
-  ∀ a₁ ∈ A, ∀ b₁ ∈ A, ∀ a₂ ∈ A, ∀ b₂ ∈ A,
-    a₁ ≤ b₁ → a₂ ≤ b₂ → a₁ + b₁ = a₂ + b₂ → (a₁ = a₂ ∧ b₁ = b₂)
-
-/-- Equivalence of the canonical up-to-commutativity Sidon predicate
-(`IsSidon`) and the ordered-pair form (`IsSidonSet`). -/
-@[category test, AMS 11]
-private lemma isSidon_iff_isSidonSet (A : Finset ℕ) :
-    IsSidon ((A : Set ℕ)) ↔ IsSidonSet A := by
-  constructor
-  · -- IsSidon → IsSidonSet. IsSidon's signature is (i₁, j₁, i₂, j₂) with sum
-    -- i₁ + i₂ = j₁ + j₂. We have IsSidonSet's hsum : a₁ + b₁ = a₂ + b₂, so we
-    -- map i₁=a₁, j₁=a₂, i₂=b₁, j₂=b₂ to align the sums.
-    intro hS a₁ ha₁ b₁ hb₁ a₂ ha₂ b₂ hb₂ hab₁ hab₂ hsum
-    have h_mem_a₁ : a₁ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr ha₁
-    have h_mem_b₁ : b₁ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr hb₁
-    have h_mem_a₂ : a₂ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr ha₂
-    have h_mem_b₂ : b₂ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr hb₂
-    have h_disj := hS a₁ h_mem_a₁ a₂ h_mem_a₂ b₁ h_mem_b₁ b₂ h_mem_b₂ hsum
-    -- h_disj : (a₁ = a₂ ∧ b₁ = b₂) ∨ (a₁ = b₂ ∧ b₁ = a₂)
-    cases h_disj with
-    | inl h => exact h
-    | inr h =>
-      -- Case: a₁ = b₂, b₁ = a₂. With a₁ ≤ b₁ and a₂ ≤ b₂ this forces all four
-      -- values equal, so the conclusion still holds.
-      obtain ⟨ha, hb⟩ := h
-      refine ⟨?_, ?_⟩ <;> omega
-  · -- IsSidonSet → IsSidon. Sort each pair to invoke the ordered hypothesis.
-    intro hS i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
-    rw [Finset.mem_coe] at hi₁ hj₁ hi₂ hj₂
-    by_cases h₁ : i₁ ≤ i₂
-    · by_cases h₂ : j₁ ≤ j₂
-      · have := hS i₁ hi₁ i₂ hi₂ j₁ hj₁ j₂ hj₂ h₁ h₂ hsum
-        exact Or.inl ⟨this.1, this.2⟩
-      · push_neg at h₂
-        have h₂' : j₂ ≤ j₁ := Nat.le_of_lt h₂
-        have hsum' : i₁ + i₂ = j₂ + j₁ := by omega
-        have := hS i₁ hi₁ i₂ hi₂ j₂ hj₂ j₁ hj₁ h₁ h₂' hsum'
-        exact Or.inr ⟨this.1, this.2⟩
-    · push_neg at h₁
-      have h₁' : i₂ ≤ i₁ := Nat.le_of_lt h₁
-      by_cases h₂ : j₁ ≤ j₂
-      · have hsum' : i₂ + i₁ = j₁ + j₂ := by omega
-        have := hS i₂ hi₂ i₁ hi₁ j₁ hj₁ j₂ hj₂ h₁' h₂ hsum'
-        exact Or.inr ⟨this.2, this.1⟩
-      · push_neg at h₂
-        have h₂' : j₂ ≤ j₁ := Nat.le_of_lt h₂
-        have hsum' : i₂ + i₁ = j₂ + j₁ := by omega
-        have := hS i₂ hi₂ i₁ hi₁ j₂ hj₂ j₁ hj₁ h₁' h₂' hsum'
-        exact Or.inl ⟨this.2, this.1⟩
-
 /- ## Variant 1: Elementary upper bound k(k-1) ≤ 2N
 
 For a Sidon set A ⊆ {0,...,N}, the |A|(|A|-1) ordered pairs (a,b) with a ≠ b
@@ -183,7 +124,7 @@ yield distinct positive differences in {1,...,N}, giving |A|(|A|-1)/2 ≤ N. -/
 /-- In a Sidon set, distinct pairwise differences identify their endpoints. -/
 @[category test, AMS 11]
 private lemma sidon_diff_injective (A : Finset ℕ)
-    (hS : IsSidonSet A)
+    (hS : Finset.IsSidonOrdered A)
     (a₁ b₁ a₂ b₂ : ℕ)
     (ha₁ : a₁ ∈ A) (hb₁ : b₁ ∈ A) (ha₂ : a₂ ∈ A) (hb₂ : b₂ ∈ A)
     (hlt₁ : b₁ < a₁) (hlt₂ : b₂ < a₂)
@@ -213,7 +154,7 @@ theorem sidon_difference_count (A : Finset ℕ) (N : ℕ)
     (hS : IsSidon ((A : Set ℕ)))
     (hA : A ⊆ Finset.range (N + 1)) :
     A.card * (A.card - 1) ≤ 2 * N := by
-  rw [isSidon_iff_isSidonSet] at hS
+  rw [Finset.isSidon_iff_isSidonOrdered] at hS
   set pairs := Finset.filter (fun p : ℕ × ℕ => p.2 < p.1) (A ×ˢ A)
   set diff_map := fun (p : ℕ × ℕ) => p.1 - p.2
   have h_inj : Set.InjOn diff_map (↑pairs) := by
@@ -320,7 +261,7 @@ def distinctSums (A : Finset ℕ) : Finset ℕ :=
 theorem card_distinctSums_sidon (A : Finset ℕ)
     (hS : IsSidon ((A : Set ℕ))) :
     (distinctSums A).card = A.card * (A.card + 1) / 2 := by
-  rw [isSidon_iff_isSidonSet] at hS
+  rw [Finset.isSidon_iff_isSidonOrdered] at hS
   have h_inj : Set.InjOn (fun p : ℕ × ℕ => p.1 + p.2)
       ↑((A ×ˢ A).filter (fun p => p.1 ≤ p.2)) := by
     intro ⟨a₁, b₁⟩ h₁ ⟨a₂, b₂⟩ h₂ heq

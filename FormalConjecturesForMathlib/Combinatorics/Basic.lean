@@ -148,6 +148,62 @@ instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := 
     i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)) ?_
   rfl
 
+/-- Ordered-pair form of the Sidon predicate over `Finset ℕ`, where the
+quantification ranges over pairs $(a_1, b_1), (a_2, b_2)$ with $a_1 \le b_1$
+and $a_2 \le b_2$ rather than the up-to-commutativity disjunction in
+`IsSidon`. Useful for counting arguments that are cleaner stated with the
+ordering hypothesis. Equivalence with `IsSidon` over the coerced set is
+`Finset.isSidon_iff_isSidonOrdered`. -/
+def IsSidonOrdered (A : Finset ℕ) : Prop :=
+  ∀ a₁ ∈ A, ∀ b₁ ∈ A, ∀ a₂ ∈ A, ∀ b₂ ∈ A,
+    a₁ ≤ b₁ → a₂ ≤ b₂ → a₁ + b₁ = a₂ + b₂ → (a₁ = a₂ ∧ b₁ = b₂)
+
+/-- Equivalence of the canonical up-to-commutativity Sidon predicate
+(`IsSidon`, over the coerced set) and the ordered-pair form
+(`Finset.IsSidonOrdered`, over `Finset ℕ`). -/
+theorem isSidon_iff_isSidonOrdered (A : Finset ℕ) :
+    IsSidon ((A : Set ℕ)) ↔ IsSidonOrdered A := by
+  constructor
+  · -- IsSidon → IsSidonOrdered. IsSidon's signature is (i₁, j₁, i₂, j₂) with sum
+    -- i₁ + i₂ = j₁ + j₂. We have IsSidonOrdered's hsum : a₁ + b₁ = a₂ + b₂, so we
+    -- map i₁=a₁, j₁=a₂, i₂=b₁, j₂=b₂ to align the sums.
+    intro hS a₁ ha₁ b₁ hb₁ a₂ ha₂ b₂ hb₂ hab₁ hab₂ hsum
+    have h_mem_a₁ : a₁ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr ha₁
+    have h_mem_b₁ : b₁ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr hb₁
+    have h_mem_a₂ : a₂ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr ha₂
+    have h_mem_b₂ : b₂ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr hb₂
+    have h_disj := hS a₁ h_mem_a₁ a₂ h_mem_a₂ b₁ h_mem_b₁ b₂ h_mem_b₂ hsum
+    -- h_disj : (a₁ = a₂ ∧ b₁ = b₂) ∨ (a₁ = b₂ ∧ b₁ = a₂)
+    cases h_disj with
+    | inl h => exact h
+    | inr h =>
+      -- Case: a₁ = b₂, b₁ = a₂. With a₁ ≤ b₁ and a₂ ≤ b₂ this forces all four
+      -- values equal, so the conclusion still holds.
+      obtain ⟨ha, hb⟩ := h
+      refine ⟨?_, ?_⟩ <;> omega
+  · -- IsSidonOrdered → IsSidon. Sort each pair to invoke the ordered hypothesis.
+    intro hS i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
+    rw [Finset.mem_coe] at hi₁ hj₁ hi₂ hj₂
+    by_cases h₁ : i₁ ≤ i₂
+    · by_cases h₂ : j₁ ≤ j₂
+      · have := hS i₁ hi₁ i₂ hi₂ j₁ hj₁ j₂ hj₂ h₁ h₂ hsum
+        exact Or.inl ⟨this.1, this.2⟩
+      · push_neg at h₂
+        have h₂' : j₂ ≤ j₁ := Nat.le_of_lt h₂
+        have hsum' : i₁ + i₂ = j₂ + j₁ := by omega
+        have := hS i₁ hi₁ i₂ hi₂ j₂ hj₂ j₁ hj₁ h₁ h₂' hsum'
+        exact Or.inr ⟨this.1, this.2⟩
+    · push_neg at h₁
+      have h₁' : i₂ ≤ i₁ := Nat.le_of_lt h₁
+      by_cases h₂ : j₁ ≤ j₂
+      · have hsum' : i₂ + i₁ = j₁ + j₂ := by omega
+        have := hS i₂ hi₂ i₁ hi₁ j₁ hj₁ j₂ hj₂ h₁' h₂ hsum'
+        exact Or.inr ⟨this.2, this.1⟩
+      · push_neg at h₂
+        have h₂' : j₂ ≤ j₁ := Nat.le_of_lt h₂
+        have hsum' : i₂ + i₁ = j₂ + j₁ := by omega
+        have := hS i₂ hi₂ i₁ hi₁ j₂ hj₂ j₁ hj₁ h₁' h₂' hsum'
+        exact Or.inl ⟨this.2, this.1⟩
 
 /-- The maximum size of a Sidon set in the supplied `Finset`. -/
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
