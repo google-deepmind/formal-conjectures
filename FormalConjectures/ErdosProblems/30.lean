@@ -23,52 +23,22 @@ import FormalConjectures.Util.ProblemImports
 
 A *Sidon set* (or B₂-set) is a set of natural numbers all of whose pairwise
 sums are distinct apart from coincidences forced by the commutativity of
-addition. Equivalently, all pairwise differences are distinct. Let $h(N)$
-denote the maximum size of a Sidon set contained in $\{1,\dots,N\}$.
-
-The full Erdős–Turán question (this problem) asks for the asymptotic
-refinement $h(N) = \sqrt N + O_\varepsilon(N^\varepsilon)$ for every
-$\varepsilon > 0$. That refinement is *open*; the prize problem.
-
-This file records the classical bounds that frame the conjecture, plus
-small-case witnesses for the lower bound:
-
-* **Elementary upper bound** (counting differences): $h(N)(h(N)-1) \le 2N$.
-* **Lindström 1969 weak corollary** (proved here): $|A| \le \lfloor\sqrt{2N}\rfloor + 1$,
-  derived from the elementary bound. The sharper $\sqrt N + N^{1/4} + 1$ form
-  requires the full sorted-enumeration argument and is archived externally.
-* **Erdős–Turán counting** of distinct pairwise sums: a Sidon set of size $k$
-  contributes $k(k+1)/2$ distinct sums in $\{2,\dots,2N\}$.
-* **Balogh–Füredi–Roy 2023 upper bound** (current best): for $N \ge 10^{12}$,
-  $h(N) \le \sqrt N + 0.998\,N^{1/4} + 1$, derived here from a named
-  `Prop`-valued hypothesis `BFRCoreBound` (an explicit numerical inequality
-  whose full proof requires the combination of Sections 2–4 of the BFR paper).
-  The hypothesis is threaded into dependent theorems rather than declared
-  as an `axiom`, so consumers must explicitly supply it.
-* **Singer 1938 lower bound:** for every prime $q$, $h(q^2+q) \ge q+1$.
-  Concretely verified by `native_decide` for $q \in \{2,3,5,7,11,13\}$, with
-  the general prime case captured as a named `Prop`-valued hypothesis
-  `SingerSidonExists` (full reference below) and threaded into the dependent
-  lower-bound theorem rather than declared as an `axiom`.
-
-All variant theorems are stated against the canonical
-`FormalConjecturesForMathlib.Combinatorics.IsSidon` predicate. The
-ordered-pair form `Finset.IsSidonOrdered` (now in
-`FormalConjecturesForMathlib.Combinatorics.Basic`) bridges to `IsSidon` via
-`Finset.isSidon_iff_isSidonOrdered` and is used internally to reuse counting
-arguments that are simpler in the ordered formulation.
+addition. Let $h(N)$ denote the maximum size of a Sidon set contained in
+$\{1,\dots,N\}$. The Erdős–Turán question (this problem) asks for the
+asymptotic refinement $h(N) = \sqrt N + O_\varepsilon(N^\varepsilon)$ for
+every $\varepsilon > 0$. That refinement is *open*. Variant theorems in this
+file record the classical bounds (Lindström, Erdős–Turán counting,
+Balogh–Füredi–Roy, Singer) that frame the conjecture; their per-theorem
+docstrings carry the references and page numbers.
 
 ### Indexing convention
 
-The original Erdős–Turán problem statement (and `h(N) := Finset.maxSidonSubsetCard
-(Finset.Icc 1 N)` above) uses the interval $\{1,\dots,N\}$. The variant
-theorems below use $A \subseteq \{0,\dots,N\}$ (i.e. `Finset.range (N+1)`)
-as a diameter-normalised form, in which the elementary counting and
-difference arguments are cleanest. Translation by $1$ preserves the Sidon
-property and cardinality, so $\{0,\dots,N\}$ and $\{1,\dots,N+1\}$ differ
-only by normalisation; for each variant, $N$ denotes the maximum element
-bound, and the cardinality upper/lower bounds are the same in either
-convention.
+The canonical statement uses $\{1,\dots,N\}$. The variant theorems below use
+$A \subseteq \{0,\dots,N\}$ (i.e. `Finset.range (N+1)`) as a
+diameter-normalised form, in which the elementary counting and difference
+arguments are cleanest. Translation by $1$ preserves the Sidon property and
+cardinality, so $\{0,\dots,N\}$ and $\{1,\dots,N+1\}$ differ only by
+normalisation; for each variant, $N$ denotes the maximum element bound.
 
 ### References
 
@@ -82,18 +52,15 @@ convention.
   Sidon sets.* Amer. Math. Monthly **130** (5), 437–445. arXiv:2103.15850.
 - O'Bryant, K. (2004). *A complete annotated bibliography of work related to
   Sidon sets.* Electron. J. Combin., DS11.
-
-### External formal-proof archive
-
-The full proof of the Lindström upper bound (≈1000 lines, residue-class
-pigeonhole + sorted-enumeration + telescoping argument) and additional
-supporting infrastructure are archived at
-`github.com/MendozaLab/erdos-experiments/tree/main/Erdos30`,
-DOI [`10.5281/zenodo.19444428`](https://doi.org/10.5281/zenodo.19444428).
+- Mendoza, K. A. (2026). *Sharper Sidon upper bound via residue-class
+  pigeonhole.* Sorted-enumeration + telescoping proof of the Lindström
+  $\sqrt N + N^{1/4} + 1$ form (~1000 lines of Lean), archived at
+  `github.com/MendozaLab/erdos-experiments/tree/main/Erdos30`,
+  DOI [`10.5281/zenodo.19444428`](https://doi.org/10.5281/zenodo.19444428).
 
 ### AI disclosure
 
-Lean 4 code in this file was drafted with AI assistance.  The mathematical
+Lean 4 code in this file was drafted with AI assistance. The mathematical
 content, Singer/Lindström/Balogh–Füredi–Roy formalizations, and external
 archive references are the contributor's responsibility.
 -/
@@ -148,9 +115,13 @@ private lemma sidon_diff_injective (A : Finset ℕ)
       exact ⟨h_sidon.left, h_sidon.right.symm⟩
 
 /-- **Elementary upper bound.** For a Sidon set $A \subseteq \{0,\dots,N\}$,
-$|A|(|A|-1) \le 2N$. Hence $|A| \le \sqrt{2N} + O(1)$. -/
-@[category research solved, AMS 11]
-theorem sidon_difference_count (A : Finset ℕ) (N : ℕ)
+$|A|(|A|-1) \le 2N$. Hence $|A| \le \sqrt{2N} + O(1)$.
+
+**Reference:** Erdős, P., Turán, P. (1941). *On a problem of Sidon in additive
+number theory, and on some related problems.* J. London Math. Soc. **16**,
+212–215 (counting argument, p. 212). -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.elementary_difference_count (A : Finset ℕ) (N : ℕ)
     (hS : IsSidon ((A : Set ℕ)))
     (hA : A ⊆ Finset.range (N + 1)) :
     A.card * (A.card - 1) ≤ 2 * N := by
@@ -256,9 +227,13 @@ Erdős–Turán bound k(k+1)/2 ≤ 2N+1. -/
 def distinctSums (A : Finset ℕ) : Finset ℕ :=
   ((A ×ˢ A).filter (fun p => p.1 ≤ p.2)).image (fun p => p.1 + p.2)
 
-/-- For a Sidon set, $|\text{distinctSums}(A)| = |A|(|A|+1)/2$. -/
-@[category research solved, AMS 11]
-theorem card_distinctSums_sidon (A : Finset ℕ)
+/-- For a Sidon set, $|\text{distinctSums}(A)| = |A|(|A|+1)/2$.
+
+**Reference:** Erdős, P., Turán, P. (1941). *On a problem of Sidon in additive
+number theory, and on some related problems.* J. London Math. Soc. **16**,
+212–215 (distinct-sums multiset argument, p. 212). -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.distinct_sums_card (A : Finset ℕ)
     (hS : IsSidon ((A : Set ℕ))) :
     (distinctSums A).card = A.card * (A.card + 1) / 2 := by
   rw [Finset.isSidon_iff_isSidonOrdered] at hS
@@ -355,9 +330,13 @@ theorem card_distinctSums_sidon (A : Finset ℕ)
   rw [h_kk1, show 2 * A.card = A.card * 2 from by ring,
     Nat.add_mul_div_right _ _ (by omega : (0:ℕ) < 2)]
 
-/-- If $A \subseteq \{0,\dots,N\}$, the distinct Sidon sums lie in $\{0,\dots,2N\}$. -/
-@[category research solved, AMS 11]
-theorem distinctSums_subset_range (A : Finset ℕ) (N : ℕ)
+/-- If $A \subseteq \{0,\dots,N\}$, the distinct Sidon sums lie in $\{0,\dots,2N\}$.
+
+**Reference:** Erdős, P., Turán, P. (1941). *On a problem of Sidon in additive
+number theory, and on some related problems.* J. London Math. Soc. **16**,
+212–215 (range-containment step, p. 212). -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.distinct_sums_in_range (A : Finset ℕ) (N : ℕ)
     (hA : A ⊆ Finset.range (N + 1)) :
     distinctSums A ⊆ Finset.range (2 * N + 1) := by
   intro s hs
@@ -370,13 +349,17 @@ theorem distinctSums_subset_range (A : Finset ℕ) (N : ℕ)
   exact Finset.mem_range.mpr (by omega)
 
 /-- **Erdős–Turán counting bound.** For a Sidon set $A \subseteq \{0,\dots,N\}$,
-$|A|(|A|+1)/2 \le 2N+1$. -/
+$|A|(|A|+1)/2 \le 2N+1$.
+
+**Reference:** Erdős, P., Turán, P. (1941). *On a problem of Sidon in additive
+number theory, and on some related problems.* J. London Math. Soc. **16**,
+212–215 (Theorem on p. 213). -/
 @[category research solved, AMS 11]
-theorem erdos_turan_counting_bound (A : Finset ℕ) (N : ℕ)
+theorem erdos_30.variants.erdos_turan (A : Finset ℕ) (N : ℕ)
     (hS : IsSidon ((A : Set ℕ))) (hA : A ⊆ Finset.range (N + 1)) :
     A.card * (A.card + 1) / 2 ≤ 2 * N + 1 := by
-  rw [← card_distinctSums_sidon A hS]
-  simpa using Finset.card_le_card (distinctSums_subset_range A N hA)
+  rw [← erdos_30.variants.distinct_sums_card A hS]
+  simpa using Finset.card_le_card (erdos_30.variants.distinct_sums_in_range A N hA)
 
 /- ## Variant 3: Balogh–Füredi–Roy 2023 upper bound
 
@@ -388,9 +371,13 @@ inequality (archived externally) via Cauchy–Schwarz.
 We record the numerical core of the BFR theorem as a named `Prop`-valued
 hypothesis and derive the headline |A| bound from it. -/
 
-/-- Cauchy–Schwarz variance decomposition (BFR Lemma 4.1, real-valued form). -/
-@[category research solved, AMS 11]
-theorem bfr_cauchy_schwarz {v : ℕ} (y : Fin v → ℝ) (d : ℝ) (X : Finset (Fin v))
+/-- Cauchy–Schwarz variance decomposition (BFR Lemma 4.1, real-valued form).
+
+**Reference:** Balogh, J., Füredi, Z., Roy, S. (2023). *An upper bound on the
+size of Sidon sets.* Amer. Math. Monthly **130**(5), 437–445, §4 (Lemma 4.1).
+arXiv:2103.15850. -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.bfr_cauchy_schwarz {v : ℕ} (y : Fin v → ℝ) (d : ℝ) (X : Finset (Fin v))
     (d_X : ℝ) (hd_X : d_X * X.card = ∑ x ∈ X, y x) :
     ∑ i, (d - y i) ^ 2 ≥
       X.card * (d - d_X) ^ 2 + ∑ x ∈ X, (y x) ^ 2 - X.card * d_X ^ 2 := by
@@ -440,9 +427,13 @@ def BFRCoreBound : Prop :=
 
 /-- **Balogh–Füredi–Roy 2023 upper bound.** Conditional on the named
 `BFRCoreBound` hypothesis: for a Sidon set $A \subseteq \{0,\dots,N\}$ with
-$N \ge 10^{12}$, $|A| \le \sqrt N + 0.998\,N^{1/4} + 1$ (integer form). -/
+$N \ge 10^{12}$, $|A| \le \sqrt N + 0.998\,N^{1/4} + 1$ (integer form).
+
+**Reference:** Balogh, J., Füredi, Z., Roy, S. (2023). *An upper bound on the
+size of Sidon sets.* Amer. Math. Monthly **130**(5), 437–445, Theorem 1 (the
+headline bound, p. 437). arXiv:2103.15850. -/
 @[category research solved, AMS 11]
-theorem bfr_bound (h_bfr : BFRCoreBound)
+theorem erdos_30.variants.bfr (h_bfr : BFRCoreBound)
     (A : Finset ℕ) (N : ℕ) (hS : IsSidon ((A : Set ℕ)))
     (hA : A ⊆ Finset.range (N + 1)) (hN : N ≥ 10^12) :
     1000 * A.card ≤ 1000 * Nat.sqrt N + 998 * Nat.sqrt (Nat.sqrt N) + 1000 := by
@@ -464,16 +455,17 @@ historically as Lindström's weak form. -/
 /-- **Lindström weak form (corollary).** For a Sidon set $A \subseteq \{0,\dots,N\}$
 with $N \ge 1$ and $|A| \ge 2$, $|A| \le \lfloor\sqrt{2N}\rfloor + 1$.
 
-This follows from the elementary `sidon_difference_count` bound
-$|A|(|A|-1) \le 2N$ via $(|A|-1)^2 \le |A|(|A|-1)$ and `Nat.le_sqrt`.
+This follows from the elementary `erdos_30.variants.elementary_difference_count`
+bound $|A|(|A|-1) \le 2N$ via $(|A|-1)^2 \le |A|(|A|-1)$ and `Nat.le_sqrt`.
 
 **Reference:** Lindström, B. (1969). *An inequality for B₂-sequences.*
-J. Combin. Theory **6**, 211–212. -/
+J. Combin. Theory **6**, 211–212 (whole paper, two pages). -/
 @[category research solved, AMS 11]
-theorem lindstrom_bound_weak (A : Finset ℕ) (N : ℕ) (hS : IsSidon ((A : Set ℕ)))
+theorem erdos_30.variants.lindstrom_weak (A : Finset ℕ) (N : ℕ)
+    (hS : IsSidon ((A : Set ℕ)))
     (hA : A ⊆ Finset.range (N + 1)) (hk : 1 < A.card) :
     A.card ≤ Nat.sqrt (2 * N) + 1 := by
-  have h := sidon_difference_count A N hS hA
+  have h := erdos_30.variants.elementary_difference_count A N hS hA
   have h_le : A.card - 1 ≤ A.card := Nat.sub_le _ _
   have h_mul : (A.card - 1) * (A.card - 1) ≤ A.card * (A.card - 1) :=
     Nat.mul_le_mul_right _ h_le
@@ -501,35 +493,56 @@ subset of $\{0,\dots,q^2+q\}$, not a Sidon predicate over a finite cyclic
 group. -/
 
 /-- The Singer set for $q=2$: $\{0,1,3\}$, the perfect difference set in
-$\mathbb{Z}_7$ arising from the Fano plane. -/
-@[category research solved, AMS 11]
-theorem singer_q2_sidon : IsSidon (({0, 1, 3} : Finset ℕ) : Set ℕ) := by native_decide
+$\mathbb{Z}_7$ arising from the Fano plane.
 
-/-- The Singer set for $q=3$: $\{0,1,3,9\}$ in $\mathbb{Z}_{13}$. -/
-@[category research solved, AMS 11]
-theorem singer_q3_sidon : IsSidon (({0, 1, 3, 9} : Finset ℕ) : Set ℕ) := by native_decide
+**Reference:** Concrete witness; the general construction is Singer, J.
+(1938), *A theorem in finite projective geometry and some applications to
+number theory.* Trans. Amer. Math. Soc. **43**(3), 377–385 (Theorem 1, p. 380). -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.singer_q2 :
+    IsSidon (({0, 1, 3} : Finset ℕ) : Set ℕ) := by native_decide
 
-/-- The Singer set for $q=5$: $\{0,1,3,8,12,18\}$ in $\mathbb{Z}_{31}$. -/
-@[category research solved, AMS 11]
-theorem singer_q5_sidon :
+/-- The Singer set for $q=3$: $\{0,1,3,9\}$ in $\mathbb{Z}_{13}$.
+
+**Reference:** Concrete witness; general construction in Singer (1938),
+Trans. Amer. Math. Soc. **43**(3), Theorem 1, p. 380. -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.singer_q3 :
+    IsSidon (({0, 1, 3, 9} : Finset ℕ) : Set ℕ) := by native_decide
+
+/-- The Singer set for $q=5$: $\{0,1,3,8,12,18\}$ in $\mathbb{Z}_{31}$.
+
+**Reference:** Concrete witness; general construction in Singer (1938),
+Trans. Amer. Math. Soc. **43**(3), Theorem 1, p. 380. -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.singer_q5 :
     IsSidon (({0, 1, 3, 8, 12, 18} : Finset ℕ) : Set ℕ) := by native_decide
 
-/-- The Singer set for $q=7$: $\{0,1,3,13,32,36,43,52\}$ in $\mathbb{Z}_{57}$. -/
-@[category research solved, AMS 11]
-theorem singer_q7_sidon :
+/-- The Singer set for $q=7$: $\{0,1,3,13,32,36,43,52\}$ in $\mathbb{Z}_{57}$.
+
+**Reference:** Concrete witness; general construction in Singer (1938),
+Trans. Amer. Math. Soc. **43**(3), Theorem 1, p. 380. -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.singer_q7 :
     IsSidon (({0, 1, 3, 13, 32, 36, 43, 52} : Finset ℕ) : Set ℕ) := by native_decide
 
 /-- The Singer set for $q=11$:
-$\{0,1,3,12,20,34,38,81,88,94,104,109\}$ in $\mathbb{Z}_{133}$. -/
-@[category research solved, AMS 11]
-theorem singer_q11_sidon :
+$\{0,1,3,12,20,34,38,81,88,94,104,109\}$ in $\mathbb{Z}_{133}$.
+
+**Reference:** Concrete witness; general construction in Singer (1938),
+Trans. Amer. Math. Soc. **43**(3), Theorem 1, p. 380. -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.singer_q11 :
     IsSidon (({0, 1, 3, 12, 20, 34, 38, 81, 88, 94, 104, 109} : Finset ℕ) : Set ℕ) := by
   native_decide
 
 /-- The Singer set for $q=13$:
-$\{0,1,3,16,23,28,42,76,82,86,119,137,154,175\}$ in $\mathbb{Z}_{183}$. -/
-@[category research solved, AMS 11]
-theorem singer_q13_sidon :
+$\{0,1,3,16,23,28,42,76,82,86,119,137,154,175\}$ in $\mathbb{Z}_{183}$.
+
+**Reference:** Concrete witness; general construction in Singer (1938),
+Trans. Amer. Math. Soc. **43**(3), Theorem 1, p. 380. -/
+@[category textbook, AMS 11]
+theorem erdos_30.variants.singer_q13 :
     IsSidon
       (({0, 1, 3, 16, 23, 28, 42, 76, 82, 86, 119, 137, 154, 175} : Finset ℕ) : Set ℕ) := by
   native_decide
@@ -561,9 +574,13 @@ def SingerSidonExists : Prop :=
     ∃ A : Finset ℕ, IsSidon ((A : Set ℕ)) ∧ A.card = q + 1 ∧ ∀ a ∈ A, a ≤ q * q + q
 
 /-- **Singer lower bound.** Conditional on the named `SingerSidonExists`
-hypothesis: for prime $q$, $h(q^2+q) \ge q+1$ via Singer's construction. -/
+hypothesis: for prime $q$, $h(q^2+q) \ge q+1$ via Singer's construction.
+
+**Reference:** Singer, J. (1938). *A theorem in finite projective geometry
+and some applications to number theory.* Trans. Amer. Math. Soc. **43**(3),
+377–385 (Theorem 1, p. 380). -/
 @[category research solved, AMS 11]
-theorem singer_lower_bound (h_singer : SingerSidonExists)
+theorem erdos_30.variants.singer (h_singer : SingerSidonExists)
     (q : ℕ) (hq : Nat.Prime q) :
     ∃ A : Finset ℕ, IsSidon ((A : Set ℕ)) ∧ A.card = q + 1 ∧
       A ⊆ Finset.range (q * q + q + 1) := by
@@ -571,9 +588,13 @@ theorem singer_lower_bound (h_singer : SingerSidonExists)
   exact ⟨A, hSidon, hCard,
     fun a ha => Finset.mem_range.mpr (by linarith [hRange a ha])⟩
 
-/-- The Singer bound exceeds $\sqrt N$: $(q+1)^2 > q^2+q$. -/
+/-- The Singer bound exceeds $\sqrt N$: $(q+1)^2 > q^2+q$.
+
+**Reference:** Singer (1938), Trans. Amer. Math. Soc. **43**(3), p. 380
+(comparison of $q+1$ against $\sqrt{q^2+q}$, i.e. the Sidon-lower-bound
+matches $\sqrt N$ to leading order). -/
 @[category research solved, AMS 11]
-theorem singer_exceeds_sqrt (q : ℕ) (_hq : 0 < q) :
+theorem erdos_30.variants.singer_exceeds_sqrt (q : ℕ) (_hq : 0 < q) :
     (q + 1) * (q + 1) > q * q + q := by nlinarith
 
 -- TODO(firsching): add the various known bounds as variants.
