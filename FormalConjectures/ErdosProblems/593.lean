@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 
 /-!
 # Erdős Problem 593
