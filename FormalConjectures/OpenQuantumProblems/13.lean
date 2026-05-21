@@ -274,14 +274,7 @@ lemma phase_norm_sq_eq_one {ζ : ℂ} (hζ : star ζ * ζ = 1) :
 @[category API, AMS 5 15 81 94]
 lemma omega_mul_phase_norm_sq {ζ : ℂ} (hζ : star ζ * ζ = 1) :
     ‖ω * ζ‖ ^ (2 : ℕ) = (2 : ℝ)⁻¹ := by
-  calc
-    ‖ω * ζ‖ ^ (2 : ℕ) = ‖ω‖ ^ (2 : ℕ) * ‖ζ‖ ^ (2 : ℕ) := by
-      rw [norm_mul, pow_two, pow_two]
-      ring
-    _ = (2 : ℝ)⁻¹ * 1 := by
-      rw [omega_norm_sq, phase_norm_sq_eq_one hζ]
-    _ = (2 : ℝ)⁻¹ := by
-      ring
+  rw [norm_mul, mul_pow, omega_norm_sq, phase_norm_sq_eq_one hζ]; norm_num
 
 /-- The standard qubit basis. -/
 def ZU : UMat 2 := 1
@@ -300,10 +293,8 @@ lemma isUnbiased_Z_phaseU (ζ : ℂ) (hζ : star ζ * ζ = 1) :
   fin_cases i <;> fin_cases j
   · simp [relativeUnitary, ZU, phaseU, phaseMatrix, omega_norm_sq]
   · simp [relativeUnitary, ZU, phaseU, phaseMatrix, omega_norm_sq]
-  · simpa [relativeUnitary, ZU, phaseU, phaseMatrix, norm_mul] using
-      omega_mul_phase_norm_sq (ζ := ζ) hζ
-  · simpa [relativeUnitary, ZU, phaseU, phaseMatrix, norm_mul] using
-      omega_mul_phase_norm_sq (ζ := ζ) hζ
+  all_goals simpa [relativeUnitary, ZU, phaseU, phaseMatrix, norm_mul] using
+    omega_mul_phase_norm_sq (ζ := ζ) hζ
 
 /-- If $\overline{\zeta}\,\eta = i$, then the relative unitary between the corresponding phase
 bases is the qubit mutually unbiased overlap matrix. -/
@@ -523,7 +514,8 @@ theorem mutuallyUnbiasedBases_dim2 : IsMaxMUBCount 2 3 := by
 
 /-- Known general bounds in dimension $6$: the maximal number of mutually unbiased bases
 satisfies $3 \le \mu(6) \le 7$. -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94,
+formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/c8733543568e8011288a9fa7ef33375f5e5907d3/FormalConjectures/OpenQuantumProblems/13.lean#L1168"]
 theorem mutuallyUnbiasedBases_dim6_bounds :
     HasMUBs 6 3 ∧ ∀ m : ℕ, HasMUBs 6 m → m ≤ 7 := by
   sorry

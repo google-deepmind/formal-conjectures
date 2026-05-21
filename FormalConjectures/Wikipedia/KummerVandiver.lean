@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 open NumberField CyclotomicField IsCyclotomicExtension
 
+namespace KummerVandiver
+
 -- TODO(Paul-Lez): change `PNat` to `Nat` once the version of Mathlib we're on allows it.
 
 /--
@@ -34,3 +36,5 @@ real subfield of $\mathbb{Q}(\zeta_p)$ is not divisible by $p$.
 theorem kummer_vandiver (p : ℕ+) (hp : p.Prime) :
     ¬ ↑p ∣ (classNumber (maximalRealSubfield (CyclotomicField p ℚ))) := by
   sorry
+
+end KummerVandiver

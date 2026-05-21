@@ -75,26 +75,26 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
 
 open List
 
-/-
+/--
 The maximum length for the snake-in-the-box problem is known for dimensions zero through eight;
 it is $0, 1, 2, 4, 7, 13, 26, 50, 98$.
---/
+-/
 @[category research solved, AMS 5]
 theorem snake_small_dimensions :
     map LongestSnakeInTheBox (range 9) = [0, 1, 2, 4, 7, 13, 26, 50, 98] := by
   sorry
 
-/-
+/--
 For dimension $9$, the length of the longest snake in the box is not known.
 This is currently the smallest dimension where this question is open.
---/
+-/
 @[category research open, AMS 5]
 theorem snake_dim_nine : LongestSnakeInTheBox 9 = answer(sorry) := by
   sorry
 
-/-
+/--
 The best length found so far for dimension nine is 190.
---/
+-/
 @[category research solved, AMS 5]
 theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
   sorry

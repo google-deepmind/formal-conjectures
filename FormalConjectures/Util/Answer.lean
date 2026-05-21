@@ -13,11 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Lean.Elab
-import Lean.Meta.Basic
-import FormalConjectures.Util.Answer.Syntax
+public meta import Lean.Elab.SyntheticMVars
+public import FormalConjectures.Util.Answer.Syntax
+
 import Batteries.Lean.Expr
+
 
 /-!
 # The `answer( )` elaborator
@@ -30,6 +32,9 @@ finding any way to replace `:= sorry`, providing an answer is not just finding
 any way to replace `answer(sorry)`: it requires evaluation of mathematical meaning,
 which is a job for human mathematicians, not Lean alone.
 -/
+
+public meta section
+
 namespace Google
 
 open Lean Elab Meta Term

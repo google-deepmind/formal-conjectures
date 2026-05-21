@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About — Formal Conjectures</title>
   <meta name="description" content="About the Formal Conjectures project — formalised mathematical conjectures in Lean 4.">
+  <link rel="preload" href="/assets/fonts/LibertinusSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" href="/assets/img/formal_conjectures_logo.svg" type="image/svg+xml">
 </head>
@@ -17,9 +18,10 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
     <ul class="site-nav__links" id="nav-links" role="list">
       <li><a href="/browse/">Browse</a></li>
+      <li><a href="/stats/">Stats</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contribute/">Contribute</a></li>
-      <li><a href="/doc/">Docs</a></li>
+      <li><a href="/doc/" target="_blank" rel="noopener">Docs</a></li>
       <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
   </div>
@@ -86,7 +88,7 @@
       <ul>
         <li><span class="badge cat-open">Open</span> &mdash; no solution currently accepted by the mathematical community.</li>
         <li><span class="badge cat-solved">Solved</span> &mdash; an established solution exists (informal or formal).</li>
-        <li><span class="badge cat-graduate">Graduate</span> / <span class="badge cat-undergrad">Undergraduate</span> / <span class="badge cat-highschool">High School</span> &mdash; difficulty level, only included when directly related to a research-level problem.</li>
+        <li><span class="badge cat-textbook">Textbook</span> &mdash; difficulty level (high school through graduate), only included when directly related to a research-level problem.</li>
       </ul>
       <p>
         Independently, statements may carry a <code>@[formal_proof]</code> annotation indicating

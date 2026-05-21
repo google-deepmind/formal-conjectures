@@ -203,6 +203,14 @@ def create_issues(mismatches):
             capture_output=True,
             text=True,
         )
+        if result.returncode != 0:
+            print(
+                f"Failed to check existing issues for Erdős Problem {num} "
+                f"(gh exit code {result.returncode}), skipping to avoid "
+                f"duplicates",
+                file=sys.stderr,
+            )
+            continue
         existing = json.loads(result.stdout) if result.stdout.strip() else []
         if existing:
             print(f"Issue already exists for Erdős Problem {num}, skipping")
@@ -210,6 +218,7 @@ def create_issues(mismatches):
 
         body = (
             f"The status of [Erdős problem {num}]"
+            f"(https://www.erdosproblems.com/{num}) "
             f"appears to have changed.\n\n"
             f"- **[This repo](http://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/{num}.lean)**: `{m['lean_status']}` "
             f"(in `FormalConjectures/ErdosProblems/{num}.lean`)\n"

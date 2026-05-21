@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 namespace Arxiv.«0911.2077»
 
 /-!
-# Conjecture 6.3
+# Central Binomial Tail Bounds, Conjecture 6.3
 
 *Reference:* [arxiv/0911.2077](https://arxiv.org/abs/0911.2077)
 **Central Binomial Tail Bounds**
@@ -44,7 +44,7 @@ $$
 
 A solution of this statement has been put out by Logical Intelligence
 https://github.com/logical-intelligence/proofs, see
-[here[(https://github.com/logical-intelligence/proofs/blob/main/LI/Conj63_informal_proof.md) for
+[here](https://github.com/logical-intelligence/proofs/blob/main/LI/Conj63_informal_proof.md) for
 and informal sketch of the proof.
 -/
 @[category research solved, AMS 60, formal_proof using lean4 at "https://github.com/logical-intelligence/proofs/blob/0dbb9215f472c532ca8af1376ed58a7ebca6dec2/LI/Conj63.lean#L8845"]

@@ -68,7 +68,7 @@ theorem erdos_313.variants.primary_pseudoperfect_are_infinite :
 /--
 There are at least 8 primary pseudoperfect numbers.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_313.variants.exists_at_least_eight_primary_pseudoperfect :
     8 ≤ (Set.encard {n | IsPrimaryPseudoperfect n}) := by
   sorry

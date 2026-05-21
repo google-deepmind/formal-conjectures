@@ -108,9 +108,12 @@ theorem erdos_26.variants.rusza : ∃ A : ℕ → ℕ,
 Tenenbaum asked the weaker variant where for every $\epsilon>0$ there is
 some $k=k(\epsilon)$ such that at least $1-\epsilon$ density of all integers have a
 divisor of the form $a+k$ for some $a\in A$.
+
+The DeepMind prover agent has found a formal disproof of this statement.
 -/
-@[category research open, AMS 11]
-theorem erdos_26.variants.tenenbaum : answer(sorry) ↔ ∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A →
+@[category research solved, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/09c54540aa51cb40dff73660c94a82e2631386f8/FormalConjectures/ErdosProblems/26.lean#L625"]
+theorem erdos_26.variants.tenenbaum : answer(False) ↔ ∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A →
     (∀ ε > (0 : ℝ), ∃ k, IsWeaklyBehrend (A · + k) ε) := by
   sorry
 

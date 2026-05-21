@@ -38,19 +38,14 @@ open scoped Topology
 
 namespace Green2
 
-/--
-The restricted sumset of a set $S$, denoted $S \hat{+} S$, is the set
-$\lbrace s_1 + s_2 : s_1, s_2 \in S, s_1 \neq s_2 \rbrace$.
--/
-def restrictedSumset (S : Finset ℤ) : Finset ℤ :=
-  S.offDiag.image (fun p => p.1 + p.2)
+
 
 /--
 We define the construction from [Sa21, p1] as
 $M(A) := \max \{|S| : S \subseteq A \text{ and } (S \hat{+} S) \cap A = \varnothing \}$.
 -/
 def maxRestrictedSumAvoidingSubsetSize (A : Finset ℤ) : ℕ :=
-  (A.powerset.filter fun S => Disjoint (restrictedSumset S) A).sup Finset.card
+  (A.powerset.filter fun S => Disjoint S.restrictedSumset A).sup Finset.card
 
 /--
 Let $A \subset \mathbf{Z}$ be a set of $n$ integers. Is there a set $S \subset A$ of size
@@ -76,7 +71,7 @@ From [Er65] it is known that $M(A) \le \frac{1}{3}|A| + O(1)$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_erdos :
-    ∃ C : ℝ, ∀ A : Finset ℤ,
+    ∃ C : ℝ, ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ A.card / 3 + C := by
   sorry
 
@@ -90,7 +85,7 @@ From [Ch71] it is known that $M(A) \le |A|^{2/5 + o(1)}$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_choi :
-    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)), ∀ A : Finset ℤ,
+    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)), ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≤ A.card ^ (2 / 5 + o A.card) := by
   sorry
 
@@ -99,7 +94,7 @@ From [Ru05] the best-known upper bound is $|S| \lt e^{C \sqrt{\log |A|}}$.
 -/
 @[category research solved, AMS 11]
 theorem green_2_upper_bound_ruzsa :
-    ∃ C > (0 : ℝ), ∀ A : Finset ℤ,
+    ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∃ A : Finset ℤ, A.card = n ∧
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) < Real.exp (C * Real.sqrt (Real.log A.card)) := by
   sorry
 

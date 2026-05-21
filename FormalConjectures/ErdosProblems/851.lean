@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 851
 
-*Reference:* [erdosproblems.com/851](https://www.erdosproblems.com/851)
+*References:*
+- [erdosproblems.com/851](https://www.erdosproblems.com/851)
+- [Pr26] D. Price and GPT-5.2 Pro, [Erdős problem 851](https://www.overleaf.com/read/svgbjzpxxppv#4eea7e) (2026)
 -/
 
 namespace Erdos851
@@ -43,8 +45,10 @@ theorem erdos_851.variants.romanoff : 0 < Set.lowerDensity (TwoPowAddSet 1) := b
 /--
 Let $\epsilon > 0$. Is there some $r \ll_\epsilon 1$ such that the density of integers of the
 form $2^k+n$, where $k \geq 0$ and $n$ has at most $r$ prime divisors, is at least $1-\epsilon$?
+
+This was proved affirmatively by Price and GPT-5.2 Pro [Pr26].
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_851 (ε : ℝ) (hε : ε ∈ Set.Ioo 0 1) : ∃ r d,
     (TwoPowAddSet r).HasDensity d ∧ 1 - ε ≤ d := by
   sorry

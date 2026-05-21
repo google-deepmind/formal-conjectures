@@ -33,8 +33,8 @@ Can $\mathbb{N}$ be partitioned into two sets, each of which can be permuted to 
 @[category research open, AMS 5]
 theorem erdos_197 :
     answer(sorry) ↔ ∃ A B : Set ℕ, IsCompl A B ∧
-      (∃ f : ℕ ≃ A, ¬ HasMonotoneAP f 3) ∧
-      (∃ g : ℕ ≃ B, ¬ HasMonotoneAP g 3) := by
+      (∃ f : ℕ ≃ A, ¬HasMonotoneAP (Subtype.val ∘ f) 3) ∧
+      (∃ g : ℕ ≃ B, ¬HasMonotoneAP (Subtype.val ∘ g) 3) := by
   sorry
 
 end Erdos197
