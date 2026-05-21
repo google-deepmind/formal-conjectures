@@ -19,7 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 90: The unit distance problem
 
-*Reference:* [erdosproblems.com/90](https://www.erdosproblems.com/90)
+*References:*
+- [erdosproblems.com/90](https://www.erdosproblems.com/90)
+- [OpenAI article](https://openai.com/index/model-disproves-discrete-geometry-conjecture/)
 -/
 
 open Filter
@@ -70,10 +72,14 @@ noncomputable def maxUnitDistances (n : ℕ) : ℕ :=
 /--
 Does every set of $n$ distinct points in $\mathbb{R}^2$ contain at most
 $n^{1+O(\frac{1}{\log\log n})}$ many pairs which are distance $1$ apart?
+
+This was disproved by an internal model at OpenAI, as recorded on erdosproblems.com/90.
 -/
-@[category research open, AMS 52]
-theorem erdos_90 : answer(sorry) ↔ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log)),
-    (fun n => (maxUnitDistances n : ℝ)) =ᶠ[atTop] fun (n : ℕ) => (n : ℝ) ^ (1 + O n) := by
+@[category research solved, AMS 52]
+theorem erdos_90 :
+    answer(False) ↔ ∃ (O : ℕ → ℝ)
+      (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log)),
+    (fun n => (maxUnitDistances n : ℝ)) =ᶠ[atTop] fun n : ℕ => (n : ℝ) ^ (1 + O n) := by
   sorry
 
 -- TODO(firsching): add the statements from the rest of the page.
