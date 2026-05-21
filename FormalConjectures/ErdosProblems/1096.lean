@@ -21,9 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/1096](https://www.erdosproblems.com/1096)
-- [ErJoKo98] Erdős, P., Joó, I., and Komornik, V., On the sequence of numbers of the
-  form $\epsilon_0+\epsilon_1q+\cdots+\epsilon_nq^n$, $\epsilon_i\in\{0,1\}$.
-  Acta Arithmetica (1998), 201--210.
+- [ErKo98] Erdős, P. and Komornik, V., Developments in non-integer bases.
+  Acta Math. Hungar. (1998), 57--83.
 - [Fe16] Feng, D.-J., On the topology of polynomials with bounded integer coefficients.
   J. Eur. Math. Soc. (2016), 181--193.
 -/
@@ -40,9 +39,8 @@ $0=x_1<x_2<\cdots$.
 
 Is it true that, provided $\epsilon>0$ is sufficiently small, $x_{k+1}-x_k \to 0$?
 
-This was solved affirmatively by Erdős, Joó, and Komornik [ErJoKo98], who proved the
-conclusion whenever $1<q<\sqrt{q_1}$, where $q_1$ is the second Pisot-Vijayaraghavan
-number.
+This was solved affirmatively by Erdős and Komornik [ErKo98], who proved the conclusion
+whenever $1<q<\sqrt{q_1}$, where $q_1$ is the second Pisot-Vijayaraghavan number.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1096 :
