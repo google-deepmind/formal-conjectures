@@ -21,20 +21,16 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/829](https://www.erdosproblems.com/829)
-- [Er83] Erdős, P. (1983), conjecture on the convolution of indicator functions of cubes.
+- [Er83] Erdős, P. and Dudley, U., _Some remarks and problems in number theory related to the
+  work of Euler_. Math. Mag. (1983), 292-298.
 -/
 
-open Asymptotics Filter
+open AdditiveCombinatorics Asymptotics Filter
 
 namespace Erdos829
 
-/--
-The additive convolution of the indicator of the set of cubes with itself, evaluated at $n$.
-This counts ordered pairs $(x, y) \in \mathbb{N} \times \mathbb{N}$ with $x^3 + y^3 = n$,
-equivalently the number of representations of $n$ as a sum of two perfect cubes.
--/
-noncomputable def r (n : ℕ) : ℕ :=
-  Set.ncard {p : ℕ × ℕ | p.1 ^ 3 + p.2 ^ 3 = n}
+/-- The set of perfect cubes in $\mathbb{N}$. -/
+def cubes : Set ℕ := {n | ∃ k, k ^ 3 = n}
 
 /--
 **Erdős Problem 829 (open).**  Let $A \subseteq \mathbb{N}$ be the set of perfect cubes.  Is
@@ -45,7 +41,66 @@ $O((\log n)^C)$ as $n \to \infty$?
 @[category research open, AMS 11]
 theorem erdos_829 :
     answer(sorry) ↔
-      ∃ C : ℕ, (fun n : ℕ => (r n : ℝ)) =O[atTop] (fun n : ℕ => (Real.log n) ^ C) := by
+      ∃ C : ℕ, (fun n : ℕ => (sumRep cubes n : ℝ)) =O[atTop]
+        (fun n : ℕ => (Real.log n) ^ C) := by
   sorry
+
+/-- There is exactly one ordered pair of cubes summing to $0$, namely $(0, 0)$. -/
+@[category test, AMS 11]
+theorem sumRep_cubes_zero : sumRep cubes 0 = 1 := by
+  sorry
+
+/-- The only ordered pair of cubes summing to $2$ is $(1, 1)$. -/
+@[category test, AMS 11]
+theorem sumRep_cubes_two : sumRep cubes 2 = 1 := by
+  sorry
+
+/-- The integer $3$ is not the sum of two cubes. -/
+@[category test, AMS 11]
+theorem sumRep_cubes_three : sumRep cubes 3 = 0 := by
+  sorry
+
+/-- The Hardy-Ramanujan taxicab number satisfies $1729 = 1^3 + 12^3 = 9^3 + 10^3$, giving
+the four ordered representations $(1, 1728), (1728, 1), (729, 1000), (1000, 729)$. -/
+@[category test, AMS 11]
+theorem sumRep_cubes_taxicab : sumRep cubes 1729 = 4 := by
+  sorry
+
+namespace variants
+
+/--
+Mordell proved $\limsup_{n \to \infty} (1_A \ast 1_A)(n) = \infty$, where $A$ is the set of
+perfect cubes.  Equivalently, the number of representations of $n$ as a sum of two cubes is
+unbounded.
+-/
+@[category research solved, AMS 11]
+theorem mordell : limsup (fun n : ℕ => (sumRep cubes n : ℕ∞)) atTop = (⊤ : ℕ∞) := by
+  sorry
+
+/--
+Mahler proved $(1_A \ast 1_A)(n) \gg (\log n)^{1/4}$ for infinitely many $n$, where $A$ is
+the set of perfect cubes.
+
+[Ma35b] Mahler, K., _On the lattice points on curves of genus 1_. Proc. London Math. Soc.
+  (2) (1935), 431-466.
+-/
+@[category research solved, AMS 11]
+theorem mahler : ∃ C > (0 : ℝ),
+    ∃ᶠ (n : ℕ) in atTop, C * (Real.log n) ^ ((1 : ℝ) / 4) ≤ (sumRep cubes n : ℝ) := by
+  sorry
+
+/--
+Stewart improved Mahler's lower bound to $(1_A \ast 1_A)(n) \gg (\log n)^{11/13}$ for
+infinitely many $n$, where $A$ is the set of perfect cubes.
+
+[St08] Stewart, C. L., _Cubic Thue equations with many solutions_. Int. Math. Res. Not.
+  IMRN (2008), Art. ID rnn040, 11.
+-/
+@[category research solved, AMS 11]
+theorem stewart : ∃ C > (0 : ℝ),
+    ∃ᶠ (n : ℕ) in atTop, C * (Real.log n) ^ ((11 : ℝ) / 13) ≤ (sumRep cubes n : ℝ) := by
+  sorry
+
+end variants
 
 end Erdos829
