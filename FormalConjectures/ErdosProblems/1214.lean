@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/1214](https://www.erdosproblems.com/1214)
-- [CoSc97] [CoSc97] Corrales-Rodrigáñez, Capi and Schoof, Ren\'e, The support problem and its
+- [CoSc97] [CoSc97] Corrales-Rodrigáñez, Capi and Schoof, René, The support problem and its
   elliptic analogue. J. Number Theory (1997), 276--290.
 -/
 
