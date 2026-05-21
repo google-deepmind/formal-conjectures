@@ -26,8 +26,9 @@ import FormalConjectures.Util.ProblemImports
   Computing (1978), 29–40.
 - [Er81] Erdős, P., *On the combinatorial problems which I would most like to see solved*,
   Combinatorica 1 (1981), 25–42.
-- [Er84d] Erdős, P., *On some problems in graph theory, combinatorial analysis and
-  combinatorial number theory*.
+- [Er84d] Erdős, P., *Extremal problems in number theory, combinatorics and geometry*.
+  Proceedings of the International Congress of Mathematicians, Vol. 1, 2 (Warsaw, 1983)
+  (1984), 51–70.
 - [EFRS78] Erdős, P., Faudree, R. J., Rousseau, C. C., and Schelp, R. H.,
   *On cycle-complete graph Ramsey numbers*, J. Graph Theory 2 (1978), 53–64.
 - [Sp77] Spencer, J., *Asymptotic lower bounds for Ramsey functions*, Discrete Math.

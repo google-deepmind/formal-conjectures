@@ -24,21 +24,24 @@ See also OEIS sequence [A059442](https://oeis.org/A059442) and related problems
 
 *References:*
 - [erdosproblems.com/78](https://www.erdosproblems.com/78)
-- [Er69b] Erdős, P., _Some applications of Ramsey's theorem to additive number theory_.
-  European J. Combin. (1969).
-- [Er71] Erdős, P., _On some extremal problems on r-graphs_. Discrete Math. **1** (1971), 1–6.
-- [Er88] Erdős, P., _Problems and results on chromatic numbers in finite and infinite graphs_.
-  Graph Theory with Applications to Algorithms and Computer Science (1988).
-- [Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is Eighty,
-  Vol. 2 (1993), p. 337.
-- [Er95] Erdős, P., _Some of my favourite problems in various branches of combinatorics_.
-  Congressus Numerantium **107** (1995).
-- [Er97c] Erdős, P., _Some recent problems and results in graph theory_. Discrete Math.
-  **164** (1997), 81–85.
-- [Va99] Vaughan, R. C., _On the number of monochromatic complete subgraphs_. (1999), 3.49.
-- [Co15] Cohen, D., _Two-source dispersers for polylogarithmic entropy and improved Ramsey
-  graphs_. (2015).
-- [Li23b] Li, Z., _Explicit Ramsey graphs and two-source extractors_. (2023).
+- [Er69b] Erdős, P., _Problems and results in chromatic graph theory_.
+  Proof Techniques in Graph Theory (Proc. Second Ann Arbor Graph Theory Conf., 1968) (1969), 27–35.
+- [Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+  Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97–109.
+- [Er88] Erdős, P., _Problems and results in combinatorial analysis and graph theory_.
+  Discrete Math. (1988), 81–92.
+- [Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+  Quaestiones Math. (1993), 333–350.
+- [Er95] Erdős, P., _Some of my favourite problems in number theory, combinatorics, and
+  geometry_. Resenhas (1995), 165–186.
+- [Er97c] Erdős, P., _Some of my favorite problems and results_.
+  The mathematics of Paul Erdős, I (1997), 47–67.
+- [Va99] Various authors, _Some of Paul's favorite problems_. Booklet produced for the
+  conference "Paul Erdős and his mathematics", Budapest (1999).
+- [Co15] Cohen, G., _Two-source dispersers for polylogarithmic entropy and improved Ramsey
+  graphs_. Electronic Colloquium on Computational Complexity (2015).
+- [Li23b] Li, X., _Two source extractors for asymptotically optimal entropy, and (many) more_.
+  arXiv:2303.06802 (2023).
 -/
 
 open SimpleGraph

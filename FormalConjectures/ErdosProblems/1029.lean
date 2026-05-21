@@ -25,7 +25,8 @@ import FormalConjectures.Util.ProblemImports
   Math. 2 (1935), 463–470.
 - [Sp75] Spencer, J., *Ramsey's theorem — a new lower bound*, J. Combin. Theory Ser. A 18
   (1975), 108–115.
-- [Er93] Erdős, P., *On some of my favourite theorems* (1993).
+- [Er93] Erdős, P., *Some of my favorite solved and unsolved problems in graph theory*.
+  Quaestiones Math. (1993), 333–350.
 -/
 
 open Filter Finset SimpleGraph

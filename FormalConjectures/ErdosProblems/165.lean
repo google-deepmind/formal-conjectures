@@ -39,8 +39,18 @@ OEIS: [A000791](https://oeis.org/A000791).
   _A new lower bound for the Ramsey numbers R(3,k)_. arXiv:2505.13371 (2025).
 - [HHKP25] Hefty, L., Horn, P., King, R. and Pfender, F., _Improving R(3,k) in
   just two bites_. arXiv:2510.19718 (2025).
-- [Er61] Erdős, P. (1961). [Er71] Erdős, P. (1971). [Er78] Erdős, P. (1978).
-  [Er90b] Erdős, P. (1990). [Er93] Erdős, P. (1993). [Er97c] Erdős, P. (1997).
+- [Er61] Erdős, P., _Some unsolved problems_.
+  Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961), 221–254.
+- [Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+  Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97–109.
+- [Er78] Erdős, P., _Problems and results in combinatorial analysis and combinatorial number
+  theory_. Proc. Ninth SE Conf. on Combinatorics, Graph Theory, and Computing (1978), 29–40.
+- [Er90b] Erdős, P., _Problems and results on graphs and hypergraphs: similarities and
+  differences_. Mathematics of Ramsey theory (1990), 12–28.
+- [Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+  Quaestiones Math. (1993), 333–350.
+- [Er97c] Erdős, P., _Some of my favorite problems and results_.
+  The mathematics of Paul Erdős, I (1997), 47–67.
 -/
 
 open Filter SimpleGraph Real

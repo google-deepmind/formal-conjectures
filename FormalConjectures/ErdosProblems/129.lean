@@ -21,8 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/129](https://www.erdosproblems.com/129)
-- [Er97b] Erdős, P. and Gyárfás, A., *A variant of the classical Ramsey problem*,
-  Combinatorica **17** (1997), 459–467.
+- [Er97b] Erdős, P., *Some old and new problems in various branches of combinatorics*.
+  Discrete Math. (1997), 227–231.
 -/
 
 open Filter

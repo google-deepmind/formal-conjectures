@@ -21,7 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/87](https://www.erdosproblems.com/87)
-- [Er95] Erdős, P., _Problems and results in combinatorial analysis and graph theory_, 1995, p. 14.
+- [Er95] Erdős, P., _Some of my favourite problems in number theory, combinatorics, and
+  geometry_. Resenhas (1995), 165–186.
 - [FaMc93] Faudree, R. J. and McKay, B., _A conjecture of Erdős and the Ramsey number r(W)_,
   J. Combin. Math. Combin. Comput. **13** (1993), 23–31.
 -/

@@ -24,8 +24,8 @@ See also problems [544](https://www.erdosproblems.com/544) and
 
 *References:*
 - [erdosproblems.com/1014](https://www.erdosproblems.com/1014)
-- [Er71] Erdős, P., _Topics in combinatorial analysis_, Proc. Second Louisiana Conference on
-  Combinatorics (1971), 95–99.
+- [Er71] Erdős, P., _Some unsolved problems in graph theory and combinatorial analysis_.
+  Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97–109.
 -/
 
 open Filter SimpleGraph

@@ -26,13 +26,15 @@ OEIS: [A000791](https://oeis.org/A000791), [A059442](https://oeis.org/A059442).
 
 *References:*
 - [erdosproblems.com/1030](https://www.erdosproblems.com/1030)
-- [Er93] Erdős, P., _On some of my favourite theorems_. Combinatorics, Paul Erdős is eighty,
-  Vol. 2 (Keszthely, 1993), 97–132, p. 339.
+- [Er93] Erdős, P., _Some of my favorite solved and unsolved problems in graph theory_.
+  Quaestiones Math. (1993), 333–350.
 - [BEFS89] Burr, S.A., Erdős, P., Faudree, R.J., and Schelp, R.H.,
   _On the difference between consecutive Ramsey numbers_. Utilitas Math. (1989), 115–118.
 -/
 
 open Filter SimpleGraph
+
+open scoped Topology
 
 namespace Erdos1030
 
@@ -43,12 +45,24 @@ There exists $c > 0$ such that
 $$
   \lim_{k \to \infty} \frac{R(k+1, k)}{R(k, k)} > 1 + c.
 $$
-
-Formulated as: there exists $c > 0$ such that eventually (for all sufficiently large $k$),
-$R(k+1, k) / R(k, k) \geq 1 + c$.
 -/
 @[category research open, AMS 5]
 theorem erdos_1030 :
+    ∃ c L : ℝ, c > 0 ∧ L > 1 + c ∧
+      Tendsto (fun k : ℕ =>
+        (graphRamseyNumber (k + 1) k : ℝ) / (graphRamseyNumber k k : ℝ))
+        atTop (nhds L) := by
+  sorry
+
+/--
+Erdős Problem 1030 — eventually-larger variant [Er93, p. 339]:
+
+There exists $c > 0$ such that eventually (for all sufficiently large $k$),
+$R(k+1, k) / R(k, k) \geq 1 + c$. This is implied by the limit formulation, but
+is itself open since the limit need not exist.
+-/
+@[category research open, AMS 5]
+theorem erdos_1030.variants.eventually :
     ∃ c : ℝ, c > 0 ∧
     ∀ᶠ k : ℕ in atTop,
       (graphRamseyNumber (k + 1) k : ℝ) / (graphRamseyNumber k k : ℝ) ≥ 1 + c := by
@@ -68,6 +82,23 @@ theorem erdos_1030.variants.weak :
       (graphRamseyNumber (k + 1) k : ℝ) - (graphRamseyNumber k k : ℝ) > (k : ℝ) ^ c := by
   sorry
 
--- TODO: Formalize the Burr–Erdős–Faudree–Schelp bound R(k+1,k) - R(k,k) ≥ 2k - 5 [BEFS89].
+/--
+Trivial bound: $R(k+1, k) - R(k, k) \geq k - 2$ for all $k \geq 2$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_1030.variants.trivial_bound :
+    ∀ k : ℕ, 2 ≤ k →
+      (k : ℤ) - 2 ≤ (graphRamseyNumber (k + 1) k : ℤ) - (graphRamseyNumber k k : ℤ) := by
+  sorry
+
+/--
+Burr–Erdős–Faudree–Schelp bound [BEFS89]: $R(k+1, k) - R(k, k) \geq 2k - 5$ for
+all sufficiently large $k$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_1030.variants.burr_erdos_faudree_schelp :
+    ∀ᶠ k : ℕ in atTop,
+      (2 * (k : ℤ) - 5) ≤ (graphRamseyNumber (k + 1) k : ℤ) - (graphRamseyNumber k k : ℤ) := by
+  sorry
 
 end Erdos1030
