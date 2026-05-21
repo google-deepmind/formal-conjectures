@@ -32,7 +32,7 @@ Is there a graph of chromatic number `ℵ_ 1` with `ℵ_ 1` vertices such that f
 `ε > 0`, if `n` is sufficiently large and `H` is a subgraph on `n` vertices,
 then `H` contains an independent set of size `> n ^ (1 - ε)`?
 -/
-@[category research open, AMS 05]
+@[category research open, AMS 5]
 theorem erdos_75 :
     answer(sorry) ↔
     ∃ (V : Type) (G : SimpleGraph V),

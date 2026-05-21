@@ -27,6 +27,7 @@ import FormalConjectures.Util.ProblemImports
     Indag. Math. (1982), 347--352.
   - [ErGr80] Erdős, P. and Graham, R., Old and new problems and results in combinatorial number
     theory. Monographies de L'Enseignement Mathematique (1980).
+  - [La26] D. Larsen, [Erdős problem 318](https://github.com/Larsen-Daniel/Erdos-318/blob/main/318.pdf) (2026)
 -/
 
 open Set Real
@@ -116,9 +117,13 @@ theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
 theorem erdos_318.variants.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
-/-- Does the set of squares excluding 1 have property `P₁`? -/
-@[category research open, AMS 11]
-theorem erdos_318.parts.ii : answer(sorry) ↔  P₁ ({n | IsSquare n} \ {1}) := by
+/--
+Does the set of squares excluding 1 have property `P₁`?
+
+Larsen [La26] proved that this set does have property `P₁`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_318.parts.ii : answer(True) ↔  P₁ ({n | IsSquare n} \ {1}) := by
   sorry
 
 end Erdos318

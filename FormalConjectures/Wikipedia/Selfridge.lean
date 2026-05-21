@@ -76,7 +76,7 @@ and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
 
 This test does not work.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.exist_pseudo_counterexample :
     ∃ n : ℕ, IsPseudoSelfridge n ∧ ¬ n.Prime := by
   use 6601
@@ -89,7 +89,7 @@ and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
 
 The number $6601$ is a conterexample to this test satisfying $6601 ≡ 1 \mod 5$
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample :
     IsPseudoSelfridge 6601 ∧ ¬ (6601).Prime ∧ 6601 ≡ 1 [MOD 5] := by
   refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> decide +native
@@ -101,7 +101,7 @@ and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
 
 The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mod 5$
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
     IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 4 [MOD 5] := by
   refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> decide +native

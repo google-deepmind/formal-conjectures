@@ -55,19 +55,19 @@ theorem erdos_859 :
       (fun (t : ℕ) ↦ d t) ~[atTop] (fun t ↦ c₁ / Real.log t ^ c₂) := by
   sorry
 
-/-
+/--
 A case where we can easily calculate the density of `DivisorSumSet t` is that of `t=0`.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 lemma erdos_859.variants.trivial_case : DivisorSumSet 0 = Set.univ := by
   simp [DivisorSumSet, Exists.intro ∅]
 
-/-
+/--
 An easy sanity check is to prove that for every natural number `t` the density `dₜ` is
 a positive number.
 Hint: investigate some multiplicative structure of `DivisorSumSet t`.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 lemma erdos_859.variants.positive_density (t : ℕ) :
     (DivisorSumSet t).HasPosDensity := by
   sorry
