@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Algebra.Group.GrowthRate
+import FormalConjectures.Wikipedia.GromovPolynomialGrowth
 
 /-!
 # Gap conjecture
@@ -26,21 +24,21 @@ open Algebra.Group.GrowthRate
 
 namespace GapConjecture
 
-def SuperPolynomial (F : GrowthClass) : Prop :=
-  ∀ n : ℕ, ⟦fun m => ↑(m ^ n)⟧ ≤ F
+open Filter GromovPolynomialGrowth
 
-noncomputable
-def expSqrt : GrowthClass :=
-  ⟦fun n => Real.exp (Real.sqrt n)⟧
-
-/-
-If the growth rate of a finitely generated group $G$ is superpolynomial, then the growth rate is at
-least $e^{\sqrt{n}}$.
+/--
+If the growth function of a finitely generated group is superpolynomial, then it is at
+least $e^{\sqrt n}$, in the usual group-growth sense where the input may be rescaled by a
+positive constant.
 -/
 @[category research open, AMS 20]
 theorem gap_conjecture :
-  ∀ (G : Type) [Group G] [Group.FG G],
-    SuperPolynomial (growthRate G) → growthRate G ≥ expSqrt := by
+    ∀ (G : Type) [Group G] (S : Set G), S.Finite → Subgroup.closure S = ⊤ →
+      (∀ d : ℕ, ∃ C : ℕ, 0 < C ∧
+        ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ d ≤ (GrowthFunction S (C * n) : ℝ)) →
+      ∃ C : ℕ, 0 < C ∧
+        ∀ᶠ n : ℕ in atTop, Real.exp (Real.sqrt (n : ℝ)) ≤
+          (GrowthFunction S (C * n) : ℝ) := by
   sorry
 
 end GapConjecture
