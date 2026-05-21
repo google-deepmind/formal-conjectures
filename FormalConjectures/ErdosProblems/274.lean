@@ -20,8 +20,12 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 274
 
 *References:*
-[erdosproblems.com/274](https://www.erdosproblems.com/274)
-[Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [erdosproblems.com/274](https://www.erdosproblems.com/274)
+* [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [arXiv:1803.08301](https://arxiv.org/abs/1803.08301)
+* [arXiv:1803.03569](https://arxiv.org/abs/1803.03569)
+* [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
+* [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
 
 open scoped Pointwise Cardinal

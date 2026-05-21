@@ -33,7 +33,7 @@ $$
 $$
 irrational? (Here $\omega(n)$ counts the number of distinct prime divisors of $n$.)
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_69 : Irrational <| ∑' n, ω (n + 2) / 2 ^ (n + 2) := by
   sorry
 
@@ -44,7 +44,7 @@ $$
 $$
 -/
 @[category research solved, AMS 11]
-theorem erdos_69.specialisation_of_erdos_257 :
+theorem erdos_69.variants.specialisation_of_erdos_257 :
     let A := { n : ℕ | n.Prime }
     ∑' n, ω (n + 2) / (2 ^ (n + 2) : ℝ) = ∑' p : A, 1 / (2 ^ p.1 - 1) := by
   sorry

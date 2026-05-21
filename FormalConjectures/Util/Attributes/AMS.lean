@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Lean
+public import Lean
+public meta import Qq.Typ
+
 import Qq
 
 /-! # AMS Subject classification
@@ -33,6 +36,8 @@ Finally, to access the list of subjects and their corresponding number when edit
 we implement a `#AMS` command that prints this list.
 
 -/
+
+public section
 
 open Lean Elab Meta Qq Command
 
@@ -165,7 +170,7 @@ inductive AMS
   | «97»
   deriving Inhabited, BEq, Hashable, ToExpr
 
-def numToAMSName (n : Nat) : MetaM Name := do
+meta def numToAMSName (n : Nat) : MetaM Name := do
   let nm : Name := Name.str ``AMS (ToString.toString n)
   unless !(← Lean.hasConst nm) do return nm
   throwError "Out of bounds"
@@ -179,7 +184,7 @@ def AMS.toNat? (a : AMS) : Option Nat := do
   let .const (.str _ m) [] := Lean.toExpr a | none
   m.toNat?
 
-unsafe def numToAMSSubjects (n : Nat) : MetaM AMS := do
+meta unsafe def numToAMSSubjects (n : Nat) : MetaM AMS := do
   let nm ← numToAMSName n
   Meta.evalExpr AMS q(AMS) (.const nm [])
 

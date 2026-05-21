@@ -49,8 +49,10 @@ theorem erdos_233.variants.upper_bound (h : RiemannHypothesis) :
 /--
 The prime number theorem immediately implies a lower bound of $\gg N(\log N)^2$ for the sum of
 squares of gaps between consecutive primes.
+
+Formal proof linked here provided by AlphaProof.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/032848c62fdf4c422bb0ee6663dc8d009d456c2c/FormalConjectures/ErdosProblems/233.lean#L57"]
 theorem erdos_233.variants.lower_bound :
     (fun (N : ℕ) => N * (log N)^2) =O[atTop]
     (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) := by

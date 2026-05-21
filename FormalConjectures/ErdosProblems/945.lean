@@ -66,8 +66,8 @@ theorem erdos_945.variants.constant : answer(sorry) ↔ Erdos945Constant := by
 /--
 The two ways of phrasing the conjecture are equivalent.
 -/
-@[category undergraduate, AMS 11]
-theorem erdos_945.equivalence : Erdos945Prop ↔ Erdos945Constant := by
+@[category textbook, AMS 11]
+theorem erdos_945.variants.equivalence : Erdos945Prop ↔ Erdos945Constant := by
   sorry
 
 /--

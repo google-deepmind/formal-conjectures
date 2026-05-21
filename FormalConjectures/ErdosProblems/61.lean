@@ -28,7 +28,7 @@ open Real
 
 namespace Erdos61
 
-/-!
+/-
 For a graph $H$, consider all graphs $G$ that do not contain $H$ as an induced subgraph.
 We would like to find a lower bound $f(n)$ such that every such $G$ on $n$ vertices
 has a clique or independent set of size $\ge f(n)$ for sufficiently large $n$.
@@ -42,7 +42,7 @@ def IsErdosHajnalLowerBound {α : Type*} [Fintype α] [DecidableEq α]
 The Erdős–Hajnal Conjecture states that there is a constant $c(H) > 0$ for each
 $H$ such that we can take $f(n) = n^{c(H)}$ in the above formulation.
 -/
-@[category research open, AMS 05]
+@[category research open, AMS 5]
 theorem erdos_61 :
     answer(sorry) ↔ ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
       ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c) := by
@@ -54,7 +54,7 @@ for some constant $c_H > 0$ dependending on $H$.
 
 [ErHa89] Erdős, P. and Hajnal, A., Ramsey-type theorems. Discrete Appl. Math. (1989), 37-52.
 -/
-@[category research solved, AMS 05]
+@[category research solved, AMS 5]
 theorem erdos_61.variants.erha89 :
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
       ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n))) := by
@@ -66,7 +66,7 @@ $f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H > 0$ depende
 
 [BNSS23] Bucić, M. and Nguyen, T. and Scott, A. and Seymour, P., A loglog step towards Erdos-Hajnal
 -/
-@[category research solved, AMS 05]
+@[category research solved, AMS 5]
 theorem erdos_61.variants.bnss23 :
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
       ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by

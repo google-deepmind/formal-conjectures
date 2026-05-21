@@ -19,7 +19,15 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Collatz conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Collatz_conjecture)
+*References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Collatz_conjecture)
+* [erdosproblems.com/1135](https://www.erdosproblems.com/1135)
+* [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
+* [La10] Lagarias, Jeffrey C., The {$3x+1$} problem: an overview. (2010), 3--29.
+* [La16] Lagarias, Jeffrey C., Erdős, Klarner, and the {$3x+1$} problem. Amer. Math. Monthly
+  (2016), 753--776.
+* [La85] Lagarias, Jeffrey C., The {$3x+1$} problem and its generalizations. Amer. Math. Monthly
+  (1985), 3--23.
 -/
 
 namespace CollatzConjecture

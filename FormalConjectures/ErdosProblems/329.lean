@@ -99,12 +99,12 @@ theorem erdos_329.variants.converse_implication :
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) := by
   sorry
 
-/-! ## Related results and examples -/
+/-  ## Related results and examples -/
 
 /--
 It is possible to construct a Sidon set with positive density.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem exists_sidon_pos_density : ∃ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
   sorry
 

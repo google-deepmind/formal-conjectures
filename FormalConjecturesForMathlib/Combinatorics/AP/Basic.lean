@@ -40,7 +40,7 @@ variable {α : Type*} [AddCommMonoid α]
 /--
 A set $S$ is an arithmetic progression of length $l$ with first term $a$ and difference $d$
 if $S = \{a, a + d, ..., a + (l - 1)d\}$, if $l$ if finite, else $S = \{a, a + d, a + 2d, ...\}.
-This can be written as `Set.IsAPOfLengthWith a l a d`, where `l : ℕ∞` may take the infinite
+This can be written as `s.IsAPOfLengthWith l a d`, where `l : ℕ∞` may take the infinite
 value `⊤`.
 -/
 def Set.IsAPOfLengthWith (s : Set α) (l : ℕ∞) (a d : α) : Prop :=
@@ -241,11 +241,12 @@ def ContainsMonoAPofLength {κ : Type} [Finite κ] {M : Set α}
     ∀ m ∈ ap, coloring m = c
 
 /--
-A function `f : α → β` has a monotone `k`-term arithmetic progression if there exists an
-arithmetic progression `l` of length `k` in `α` such that its image under `f` is sorted.
+A function `f : β → α` has a monotone `k`-term arithmetic progression if there exists a choice
+of indices `b 1 < b 2 < ... < b k` such that the subsequence `f (b i)` forms an increasing or
+decreasing arithmetic progression of length `k`.
 -/
-def HasMonotoneAP {β : Type*} [Preorder β] (f : α → β) (k : ℕ) : Prop :=
-  ∃ l : List α, l.IsAPOfLength k ∧ (l.map f).Pairwise (· < ·)
+def HasMonotoneAP {β : Type*} [Preorder β] (f : β → α) (k : ℕ) : Prop :=
+  ∃ l : List β, (l.map f).IsAPOfLength k ∧ l.Pairwise (· < ·)
 
 /--
 Define the largest possible size of a subset of a finset `s` that does not contain

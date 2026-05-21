@@ -19,6 +19,8 @@ public import Mathlib.LinearAlgebra.Orientation
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
 public import Mathlib.Geometry.Euclidean.Triangle
+public import Mathlib.Data.Set.Card
+public import Mathlib.Geometry.Euclidean.Sphere.Basic
 
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
@@ -27,7 +29,7 @@ public import FormalConjecturesForMathlib.Data.Set.Triplewise
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
-open scoped EuclideanGeometry
+open scoped EuclideanGeometry Finset
 
 /-- Oriented angles make sense in 2d.
 
@@ -56,6 +58,17 @@ variable [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] {p : 
 if it contains no three points that lie on the same line. -/
 def NonTrilinear (A : Set P) : Prop :=
   A.Triplewise (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
+
+/-- We say a subset `S` of points is non-collinear for $n$ points
+if it contains no $n$ points that lie on the same line. -/
+def NonCollinearFor (n : ℕ) (S : Set P) : Prop :=
+  ∀ (A : Set P), A ⊆ S → A.Finite → A.ncard = n → ¬ Collinear ℝ A
+
+omit [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] in
+lemma NonCollinearFor.subset {n : ℕ} {S T : Set P} (h : S ⊆ T) (hS : NonCollinearFor n T) :
+    NonCollinearFor n S := by
+  intro A hA hFin hCard
+  exact hS A (hA.trans h) hFin hCard
 
 /-- `ConvexIndep S` means that `S` consists of extremal points of its convex hull,
 i.e., the point set encloses a convex shape.
@@ -195,16 +208,32 @@ Given a finite set of points in the plane, we define the number of distinct dist
 of points.
 -/
 noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
+  #(points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2)
 
+/--
+The minimum number of distinct distances guaranteed for any set of $n$ points.
+-/
+noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
+  sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
 
 /-- Given a finite set of points in the, we define the number of distinct distances between
 a given point and all other points -/
 noncomputable def distinctDistancesFrom (points : Finset ℝ²) (pt : ℝ²) : ℕ :=
-  (points.image fun x => dist x pt).card
+  #(points.image fun x => dist x pt)
+
+/-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ and let $R(x_i)=\#\{ \lvert x_j-x_i\rvert : j\neq i\}$,
+where the points are ordered such that
+$$R(x_1)\leq \cdots \leq R(x_n).$$
+Let $g(n)$ be the maximum number of distinct values the $R(x_i)$ can take.-/
+noncomputable def maximalDistinctDistancesFrom (n : ℕ) : ℕ :=
+  sSup {#(X.image (distinctDistancesFrom X)) | (X) (_ : #X = n)}
+
+/-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
+if no three are collinear and no four lie on a circle. -/
+def InGeneralPosition (X : Finset ℝ²) : Prop :=
+  NonTrilinear (SetLike.coe X) ∧ ∀ T ⊆ X, #T = 4 → ¬Cospherical (SetLike.coe T)
 
 end EuclideanGeometry
-
 
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
   dist p q = dist q r ∨ dist q r = dist r p ∨ dist r p = dist p q

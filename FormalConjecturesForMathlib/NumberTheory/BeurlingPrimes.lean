@@ -36,26 +36,33 @@ it tends to infinity. -/
 noncomputable def IsBeurlingPrimes (a : ℕ → ℝ) : Prop :=
   1 < a 0 ∧ StrictMono a ∧ Tendsto a atTop atTop
 
+/-- A Beurling integer is a number of the form `∏ i, (a i) ^ (k i)` for a given sequence `a` and a
+finitely-supported sequence of naturals `k`. -/
+def beurlingInteger (a : ℕ → ℝ) (k : ℕ →₀ ℕ) : ℝ := k.prod fun x y ↦ (a x) ^ y
+
+@[simp] theorem beurlingInteger_def (a k) : beurlingInteger a k =  k.prod fun x y ↦ (a x) ^ y := rfl
+
 /-- The set of Beurling integers are numbers of the form `∏ i, (a i) ^ (k i)`, where `k` has
 finite support. -/
-def BeurlingInteger (a : ℕ → ℝ) : Set ℝ :=
-  letI g : (ℕ →₀ ℕ) → ℝ := fun k => k.prod (fun x y => (a x) ^ y)
-  .range g
+def BeurlingIntegers (a : ℕ → ℝ) : Set ℝ := .range (beurlingInteger a)
+
+theorem beurlingInteger_mem (a k) : beurlingInteger a k ∈ BeurlingIntegers a := by
+  simpa using ⟨k, rfl⟩
 
 /-- Every element of the sequence `a` is a Beurling integer. -/
-lemma generator_mem_beurling (a : ℕ → ℝ) (i : ℕ) : a i ∈ BeurlingInteger a :=
+lemma generator_mem_beurling (a : ℕ → ℝ) (i : ℕ) : a i ∈ BeurlingIntegers a :=
   ⟨Finsupp.single i 1, by aesop⟩
 
 /-- The set of Beurling integers is closed under multiplication. -/
-lemma mul_mem_beurling {a : ℕ → ℝ} {x y : ℝ} (hx : x ∈ BeurlingInteger a) (hy : y ∈ BeurlingInteger a) :
-    x * y ∈ BeurlingInteger a := by
+lemma mul_mem_beurling {a : ℕ → ℝ} {x y : ℝ} (hx : x ∈ BeurlingIntegers a)
+    (hy : y ∈ BeurlingIntegers a) : x * y ∈ BeurlingIntegers a := by
   obtain ⟨k, rfl⟩ := hx
   obtain ⟨l, rfl⟩ := hy
   exact ⟨k + l, by simp [Finsupp.prod_add_index', pow_add]⟩
 
 /-- The set of Beurling integers is closed under taking powers. -/
-lemma pow_mem_beurling {a : ℕ → ℝ} {x : ℝ} (k : ℕ) (hx : x ∈ BeurlingInteger a) :
-    x ^ k ∈ BeurlingInteger a := by
+lemma pow_mem_beurling {a : ℕ → ℝ} {x : ℝ} (k : ℕ) (hx : x ∈ BeurlingIntegers a) :
+    x ^ k ∈ BeurlingIntegers a := by
   induction k with
   | zero => exact ⟨0, by norm_num⟩
   | succ k ih => simpa [pow_succ'] using mul_mem_beurling hx ih

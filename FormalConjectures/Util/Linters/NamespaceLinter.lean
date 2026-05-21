@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Tactic.DeclarationNames
+public import Mathlib.Tactic.DeclarationNames
 
 /-! # The Namespace Linter
 
@@ -22,6 +23,8 @@ The `namespaceLinter` is a linter to aid with formatting contributions to
 the Formal Conjectures repository by ensuring that all declarations are
 placed within a namespace.
 -/
+
+public meta section
 
 namespace NamespaceLinter
 
@@ -36,7 +39,7 @@ For instance, `theorem foo` would trigger a warning, while `Nat.foo` would not.
 This helps maintain organization and avoid polluting the global namespace.
 -/
 register_option linter.style.namespace : Bool := {
-  defValue := true
+  defValue := false
   descr := "enable the namespace linter"
 }
 

@@ -89,7 +89,7 @@ def Outcome.best (os : List Outcome) : Outcome :=
     | _,     _     => .loss) .loss
 
 
-/-!
+/-
 Define the recursive game value functions.
 -/
 

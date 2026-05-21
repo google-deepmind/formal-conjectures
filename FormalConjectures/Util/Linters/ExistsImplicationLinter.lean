@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Tactic.Linter.Term
+public import FormalConjecturesForMathlib.Tactic.Linter.Term
+
+import Lean.Linter.Basic
 
 /-! # The Exists Implication Linter
 
@@ -25,6 +28,8 @@ does not satisfy `P`. This linter flags occurences of this patter to the user an
 corrected syntax.
 
 -/
+
+public section
 
 open Lean Meta
 
@@ -57,6 +62,11 @@ partial def checkExistsArrow (stx : Syntax) (e : Expr) : MetaM Unit := do
         -- If the inside of the lambda expression is not a forall then we're fine.
         unless target.isForall do return
         lambdaTelescope lam fun vars target => do
+          if let .forallE _ domain codomain _ := target then
+            if codomain.hasLooseBVars then return
+            unless ← isProp domain do return
+          else
+            return
           let correctCore ← forallToAnd target
           let correctLam ← Lean.Meta.mkLambdaFVars vars correctCore
           let suggestedExpr ← mkAppM ``Exists #[correctLam]

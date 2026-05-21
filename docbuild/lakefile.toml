@@ -12,6 +12,11 @@ scope = "leanprover"
 name = "doc-gen4"
 rev = "v4.27.0"
 
+[[require]]
+name = "verso"
+git = "https://github.com/leanprover/verso.git"
+rev = "v4.27.0"
+
 [[lean_exe]]
 name = "overwrite_index"
 srcDir = "scripts"

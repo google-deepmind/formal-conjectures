@@ -46,9 +46,9 @@ structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
 /--
 Let $f$ be a Rademacher multiplicative function.
 Does there exist some constant $c > 0$ such that, almost surely,
-\[
+$$
   \limsup_{N \to \infty} \frac{\sum_{m \leq N} f(m)}{\sqrt{N \log \log N}} = c?
-\]
+$$
 -/
 @[category research open, AMS 11 60]
 theorem erdos_520 :
