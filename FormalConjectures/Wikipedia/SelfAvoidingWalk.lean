@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ walks of length $n$ on $G$ starting at a fixed origin.
 **Open Problem.**  Does there exist a closed-form formula or a general computable algorithm
 that yields $c_n(L)$ for arbitrary lattices $L$ and arbitrary path lengths $n$?  No such
 formula is currently known.  Computational enumeration has extended explicit values to large
-$n$ on specific lattices (e.g. length 71 on the square lattice $\mathbb{Z}^2$).
+$n$ on specific lattices (e.g. length 79 on the square lattice $\mathbb{Z}^2$, due to
+Iwan Jensen).
 
 The *connective constant* $\mu(L) = \lim_{n \to \infty} c_n(L)^{1/n}$ controls the exponential
 growth rate of $c_n(L)$.  It is explicitly known only for the hexagonal lattice, where
@@ -38,6 +39,9 @@ Duminil-Copin and Smirnov (2012) proved $\mu = \sqrt{2 + \sqrt{2}}$.
 - [Self-avoiding walk (Wikipedia)](https://en.wikipedia.org/wiki/Self-avoiding_walk)
 - [Self-Avoiding Walk (MathWorld)](https://mathworld.wolfram.com/Self-AvoidingWalk.html)
 - [Lectures on Self-Avoiding Walks, Bauerschmidt-Duminil-Copin-Goodman-Slade](https://www.ihes.fr/~duminil/publi/saw_lecture_notes.pdf)
+- [OEIS A001411](https://oeis.org/A001411) — SAWs on the square lattice $\mathbb{Z}^2$
+- [OEIS A001412](https://oeis.org/A001412) — SAWs on the simple cubic lattice $\mathbb{Z}^3$
+- [OEIS A001413](https://oeis.org/A001413) — SAWs on the four-dimensional hypercubic lattice $\mathbb{Z}^4$
 -/
 
 namespace SelfAvoidingWalk
@@ -81,17 +85,27 @@ asking for the value of the function $c_n$ itself.
 theorem self_avoiding_walk_closed_form : cN = answer(sorry) := by
   sorry
 
+/-- In $\mathbb{Z}^d$ (with $d \ge 1$), there are exactly $2d$ SAWs of length $1$ from the
+origin: each of the $d$ coordinates contributes a $\pm 1$ step. -/
+@[category test, AMS 5]
+theorem cN_one (d : ℕ) (hd : 0 < d) : cN d 1 = 2 * d := by
+  sorry
+
+/-- $c_2(\mathbb{Z}^2) = 12$: on the square lattice there are exactly twelve SAWs of length
+two (four first steps, each followed by three second steps that avoid the backtrack).
+See [OEIS A001411](https://oeis.org/A001411). -/
+@[category test, AMS 5]
+theorem cN_two_dim_two : cN 2 2 = 12 := by
+  sorry
+
 /--
-**Existence of a polynomial-time enumeration algorithm (open).**  We ask whether there
-exists a computable function $f : \mathbb{N} \to \mathbb{N} \to \mathbb{N}$ that agrees with
-$c_n(\mathbb{Z}^d)$ on every input, abstracting "general computable algorithm" in the
-fundamental open problem above.  Note: $c_n$ itself is in principle computable by exhaustive
-enumeration, so the substantive content of the conjecture concerns the existence of
-asymptotically efficient (e.g. polynomial-time) algorithms.
+**Smallest unknown value on the square lattice (open).**  The number of self-avoiding
+walks of length $80$ on $\mathbb{Z}^2$ is the smallest value of $c_n(\mathbb{Z}^2)$ that is
+not yet known: as of the most recent enumerations of Iwan Jensen, the sequence
+[OEIS A001411](https://oeis.org/A001411) is known up to $n = 79$.
 -/
 @[category research open, AMS 5 68]
-theorem self_avoiding_walk_computable :
-    answer(sorry) ↔ ∃ f : ℕ → ℕ → ℕ, ∀ d n, f d n = cN d n := by
+theorem cN_two_eighty : cN 2 80 = answer(sorry) := by
   sorry
 
 end SelfAvoidingWalk
