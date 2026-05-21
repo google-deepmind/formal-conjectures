@@ -51,6 +51,6 @@ theorem erdos_1096 :
     Tendsto (fun k => x (k + 1) - x k) atTop (𝓝 0) := by
   sorry
 
--- TODO(firsching): add variants and additional material from the Erdős Problems page.
+-- TODO: add variants and additional material from the Erdős Problems page.
 
 end Erdos1096
