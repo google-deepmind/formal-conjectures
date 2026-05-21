@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,13 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1096
 
-*Reference:* [erdosproblems.com/1096](https://www.erdosproblems.com/1096)
+*References:*
+- [erdosproblems.com/1096](https://www.erdosproblems.com/1096)
+- [ErJoKo98] Erdős, P., Joó, I., and Komornik, V., On the sequence of numbers of the
+  form $\epsilon_0+\epsilon_1q+\cdots+\epsilon_nq^n$, $\epsilon_i\in\{0,1\}$.
+  Acta Arithmetica (1998), 201--210.
+- [Fe16] Feng, D.-J., On the topology of polynomials with bounded integer coefficients.
+  J. Eur. Math. Soc. (2016), 181--193.
 -/
 
 open Filter
@@ -28,15 +34,23 @@ open scoped Topology
 namespace Erdos1096
 
 /--
-Let $1<q<1+\epsilon$ and consider the set of numbers of the shape $\sum_{i\in S}q^i$ (for all finite $S$), ordered by size as $0=x_1<x_2<\cdots$.
+Let $1<q<1+\epsilon$ and consider the set of numbers of the shape
+$\sum_{i\in S}q^i$ (for all finite $S$), ordered by size as
+$0=x_1<x_2<\cdots$.
 
 Is it true that, provided $\epsilon>0$ is sufficiently small, $x_{k+1}-x_k \to 0$?
+
+This was solved affirmatively by Erdős, Joó, and Komornik [ErJoKo98], who proved the
+conclusion whenever $1<q<\sqrt{q_1}$, where $q_1$ is the second Pisot-Vijayaraghavan
+number.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_1096 :
-    answer(sorry) ↔ ∃ ε > 0, ∀ q, 1 < q → q < 1 + ε →
+    answer(True) ↔ ∃ ε > 0, ∀ q, 1 < q → q < 1 + ε →
     ∀ x : ℕ → ℝ, StrictMono x → Set.range x = { ∑ i ∈ S, q ^ i | S : Finset ℕ } →
-    Tendsto (fun k => x (k + 1) - x k) atTop (𝓝 0) :=
+    Tendsto (fun k => x (k + 1) - x k) atTop (𝓝 0) := by
   sorry
+
+-- TODO(firsching): add variants and additional material from the Erdős Problems page.
 
 end Erdos1096
