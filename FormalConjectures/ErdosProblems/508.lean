@@ -85,7 +85,7 @@ Soifer, Alexander (2008), The Mathematical Coloring Book: Mathematics of Colorin
 
 An alternative approach that uses square tiling was highlighted by László Székely.
 -/
-@[category high_school, AMS 52]
+@[category textbook, AMS 52]
 theorem HadwigerNelsonAtMostSeven :
     χ(ℝ²) ≤ 7 := by
   sorry
@@ -93,7 +93,7 @@ theorem HadwigerNelsonAtMostSeven :
 /-- The chromatic number of the plane is at least 3.
 
 This is proven by considering an equilateral triangle in the plane. -/
-@[category high_school, AMS 5]
+@[category textbook, AMS 5]
 theorem HadwigerNelsonAtLeastThree : 3 ≤ χ(ℝ²) :=
   le_chromaticNumber_of_pairwise_adj (by simp) ![!₂[0, 0], !₂[1, 0], !₂[0.5, Real.sqrt 3 / 2]] <| by
     simp [pairwise_fin_succ_iff_of_isSymm, Fin.forall_fin_succ]

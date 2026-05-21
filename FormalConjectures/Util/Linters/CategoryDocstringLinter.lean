@@ -21,7 +21,7 @@ public import Mathlib.Tactic.Lemma
 /-! # The Category Docstring Linter
 
 The `CategoryDocstringLinter` ensures that declarations tagged as
-`@[category research open]` or `@[category research solved]` have a docstring.
+`@[category research open]`, `@[category research solved]`, or `@[category textbook]` have a docstring.
 -/
 
 public meta section
@@ -61,7 +61,7 @@ def toCategories
 
 /-- Whether the given category requires a docstring. -/
 def categoryNeedsDocstring : ProblemAttributes.Category → Bool
-  | .research .open | .research .solved => true
+  | .research .open | .research .solved | .textbook => true
   | _ => false
 
 /-- Whether the declaration modifiers contain a docstring. -/
@@ -78,7 +78,7 @@ def categoryDocstringLinter : Linter where
       let cats ← toCategories mods
       if cats.any categoryNeedsDocstring && !hasDocstring mods then
         logLintIf linter.style.category_docstring name
-          "Declarations tagged `@[category research open]` or `@[category research solved]` must have a docstring."
+          "Declarations tagged `@[category research open]`, `@[category research solved]`, or `@[category textbook]` must have a docstring."
     | _ => return
 
 initialize do
