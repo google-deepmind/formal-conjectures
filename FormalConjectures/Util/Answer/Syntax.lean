@@ -13,12 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
 /-!
 Syntax definitions used in `Google.Answer`.
 
 We separate them to allow handling the syntax without the full implementation.
 -/
+
+public section
 
 /-- Indicates where the answer is in a problem statement. -/
 syntax (name := Google.answer) "answer(" term ")" : term

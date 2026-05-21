@@ -27,34 +27,6 @@ open IntermediateField
 
 namespace Schanuel
 
--- TODO : remove and use `Algebra.trdeg` when the version is bumped
--- https://leanprover-community.github.io/mathlib4_docs/Mathlib/RingTheory/AlgebraicIndependent/Basic.html#Algebra.trdeg
-/--
-The transcendence degree of an $A$-algebra is the common cardinality of transcendence bases.
--/
-noncomputable abbrev transcendenceDegree (R : Type*) {A : Type*} [CommRing R] [CommRing A]
-    [Algebra R A] (h : Function.Injective (algebraMap R A)) : ℕ :=
-    let ι := (exists_isTranscendenceBasis' R h).choose
-    (Set.univ : Set ι).ncard
-
-/--
-The transcendence degree is independent of the choice of a transcendence basis.
--/
-@[category graduate, AMS 12 13 14]
-theorem isTranscendenceBasis_ncard_eq_transcendenceDegree (R : Type*) {A ι : Type*}
-    [CommRing R] [CommRing A] [Algebra R A] (h : Function.Injective (algebraMap R A))
-    (𝒷 : ι → A) (hS : IsTranscendenceBasis R 𝒷) :
-    (Set.univ : Set ι).ncard = transcendenceDegree R h := by
-  sorry
-
-/--
-The transcendence degree of $A$ adjoined $\{x_1, ..., x_n\}$ is $\leq n$.
--/
-@[category graduate, AMS 12 13 14]
-theorem adjoin_transcendenceDegree_le_of_finite {A ι : Type*} [Field A] {S : Set A} (hS : S.Finite) :
-    transcendenceDegree A (algebraMap A (adjoin A S)).injective ≤ S.ncard := by
-  sorry
-
 /--
 Given any set of $n$ complex numbers $\{z_1, ..., z_n\}$ that are linearly independent over
 $\mathbb{Q}$, the field extension $\mathbb{Q}(z_1, ..., z_n, e^{z_1}, ..., e^{z_n})$
@@ -62,8 +34,7 @@ has transcendence degree at least $n$ over $\mathbb{Q}$.
 -/
 @[category research open, AMS 11 33]
 theorem schanuel_conjecture (n : ℕ) (z : Fin n → ℂ) (h : LinearIndependent ℚ z) :
-    let hinj := algebraMap ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) |>.injective
-    n ≤ transcendenceDegree ℚ hinj := by
+    n ≤ Algebra.trdeg ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) := by
   sorry
 
 end Schanuel

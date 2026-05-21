@@ -127,19 +127,19 @@ theorem union_closed.variants.singleton_mem
   use i
   set B : Finset (Finset n) := {x ∈ A | i ∉ x}
   set C : Finset (Finset n) := {x ∈ A | i ∈ x}
-  have h₁ : Set.InjOn (insert i) B.toSet := by
+  have h₁ : (B : Set <| Finset n).InjOn (insert i) := by
     simp only [Set.InjOn, coe_filter, Set.mem_setOf_eq, and_imp, B]
     rintro x - hx y - hy hxy
     have := congr(($hxy).erase i)
     rwa [erase_insert hx, erase_insert hy] at this
-  have h₂ : Set.MapsTo (insert i) B.toSet C.toSet := by
+  have h₂ : (B : Set <| Finset n).MapsTo (insert i) C := by
     simp only [Set.MapsTo, coe_filter, Set.mem_setOf_eq, mem_insert, true_or, and_true,
       and_imp, B, C]
     intro x hx hix
     rw [Finset.insert_eq]
     exact h_union_closed _ hi _ hx
   have h₃ : #B ≤ #C := Finset.card_le_card_of_injOn _ h₂ h₁
-  have h₄ : #C + #B = #A := by rw [filter_card_add_filter_neg_card_eq_card]
+  have h₄ : #C + #B = #A := by rw [card_filter_add_card_filter_not]
   have : #A ≤ 2 * #C := by omega
   cancel_denoms
   norm_cast
@@ -157,8 +157,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   obtain hn | hn := isEmpty_or_nonempty n
   · specialize h ∅
     simp only [ne_eq, card_empty, CharP.cast_eq_zero, mul_zero, filter_empty, le_refl,
-      IsEmpty.exists_iff, imp_false, not_forall, not_mem_empty, imp_self, implies_true,
-      not_true_eq_false, exists_const, Decidable.not_not] at h
+      IsEmpty.exists_iff, imp_false, not_forall, notMem_empty, exists_const, Decidable.not_not] at h
     have : ∅ ∈ (∅ : Finset (Finset n)) := by simp [h]
     simp at this
   -- Use A as the set of all subsets of `n`, which is not singleton empty and is union-closed.
@@ -187,10 +186,10 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     · simp
     intro a ha b hb h
     simp only [coe_powerset, coe_erase, coe_univ, Set.mem_preimage, Set.mem_powerset_iff,
-      Set.subset_diff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and, A] at ha hb
+      Set.subset_diff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and] at ha hb
     have := congr(($h).erase i)
     rwa [erase_insert ha, erase_insert hb] at this
-  simp only [one_div, card_univ, Fintype.card_finset, Nat.cast_pow, Nat.cast_ofNat, this] at hi
+  simp only [card_univ, Fintype.card_finset, Nat.cast_pow, Nat.cast_ofNat, this] at hi
   rw [pow_sub₀ _ (by simp) hn] at hi
   -- which is a contradiction.
   have : (1 / 2 : ℚ) * 2 ^ (Fintype.card n) < c * 2 ^ (Fintype.card n) := by
@@ -198,5 +197,17 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     simpa using hc
   have : (0 : ℝ) < 0 := by linear_combination this + hi
   simp at this
+
+/--
+If the UC conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
+
+Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
+-/
+@[category research open, AMS 5]
+theorem union_closed.variants.cardinality_even_of_union_closed_tight
+    [Nonempty n] (hA : A ≠ {∅} ∧ A ≠ ∅) (hA : IsUnionClosed A)
+    (UCC_tight : ∀ i, #{x ∈ A | i ∈ x} = (1 / 2 : ℝ) * #A) :
+    ∃ k, #A = 2 ^ k := by
+  sorry
 
 end UnionClosed

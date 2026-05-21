@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 Singmaster's conjecture says that for any integer $t>1$, the number of solutions to the equation:
 
-`$\binom{n}{k} = t,\quad 1 \le k < n,$`
+$\binom{n}{k} = t,\quad 1 \le k < n,$
 
 with $\binom{n}{k}$ being the numbers that appear in Pascal's triangle, is bounded by a global
 constant $O(1)$.
@@ -38,6 +38,10 @@ The set of pairs (n, k) representing the solutions to the equation
 def solutions (t : ℕ) : Set (ℕ × ℕ) :=
   {(n, k) | 1 ≤ k ∧ k < n ∧ Nat.choose n k = t}
 
+/--
+Singmaster's conjecture: the number of times any number $t > 1$ appears in
+Pascal's triangle is bounded.
+-/
 @[category research open, AMS 11]
 theorem singmaster: ∃ (C : ℕ), ∀ (t : ℕ), t > 1 →
     (Singmaster.solutions t).Finite ∧ (Singmaster.solutions t).ncard ≤ C := by

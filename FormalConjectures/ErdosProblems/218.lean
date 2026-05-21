@@ -25,11 +25,6 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos218
 
 /--
-The prime gap: the difference between the $n+1$-th and $n$-th prime.
--/
-noncomputable def primeGap (n : ℕ) : ℕ := (n + 1).nth Nat.Prime - n.nth Nat.Prime
-
-/--
 The set of indices $n$ for which a prime gap is followed by a larger or equal prime gap has a
 natural density of $\frac 1 2$.
 -/
@@ -48,7 +43,7 @@ theorem erdos_218.variants.ge : {n | primeGap (n + 1) ≤ primeGap n}.HasDensity
 /--
 There are infintely many indices $n$ such that the prime gap at $n$ is equal to the prime gap
 at $n+1$. This is equivalent to the existence of infinitely many arithmetic progressions of
-length $3$, see `erdos_141.variant.infinite_three`.
+length $3$, see `erdos_141.variants.infinite_three`.
 -/
 @[category research open, AMS 11]
 theorem erdos_218.variants.infinite_equal_prime_gap : {n | primeGap n = primeGap (n + 1)}.Infinite := by

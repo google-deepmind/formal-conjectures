@@ -31,12 +31,15 @@ There are several open and solved variants of this conjecture.
 -/
 
 open Topology ContDiff Manifold
+open scoped EuclideanGeometry
 
-/-- Four points `a b c d` in the plane form a rectangle  with `a` opposite to `c` iff the line
+namespace InscribedSquare
+
+/-- Four points `a b c d` in the plane form a rectangle with `a` opposite to `c` iff the line
 segments from `a` to `c` and from `b` to `d` have both the same length and the same midpoint, acting
 as the diagonals of the rectangle. We also require the rectangle to be nondegenerate and have a
 given aspect ratio `ratio : ℝ`. -/
-structure IsRectangle (a b c d : EuclideanSpace ℝ (Fin 2)) (ratio : ℝ) : Prop where
+structure IsRectangle (a b c d : ℝ²) (ratio : ℝ) : Prop where
   diagonal_midpoints_eq : a + c = b + d
   diagonal_lengths_eq : dist a c = dist b d
   a_ne_b : a ≠ b
@@ -49,8 +52,8 @@ Does every Jordan curve admit an inscribed square?
 -/
 @[category research open, AMS 51]
 theorem inscribed_square_problem :
-    (∀ (γ : Circle → EuclideanSpace ℝ (Fin 2)) (hγ : IsEmbedding γ),
-      ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1) ↔ answer(sorry) :=
+    answer(sorry) ↔ ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ),
+      ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 := by
   sorry
 
 /--
@@ -59,32 +62,34 @@ Does every Jordan curve admit inscribed rectangles of any given aspect ratio?
 -/
 @[category research open, AMS 51]
 theorem inscribed_rectangle_problem :
-    (∀ (γ : Circle → EuclideanSpace ℝ (Fin 2)) (hγ : IsEmbedding γ) (r : ℝ) (hr : r > 0),
-      ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r) ↔ answer(sorry) :=
+    answer(sorry) ↔ ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ) (r : ℝ) (hr : r > 0),
+      ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r := by
   sorry
 
 /--
 It is known that every Jordan curve admits at least one inscribed rectangle.
 -/
 @[category research solved, AMS 51]
-theorem exists_inscribed_rectangle (γ : Circle → EuclideanSpace ℝ (Fin 2)) (hγ : IsEmbedding γ) :
-    ∃ t₁ t₂ t₃ t₄ r, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r :=
+theorem exists_inscribed_rectangle (γ : Circle → ℝ²) (hγ : IsEmbedding γ) :
+    ∃ t₁ t₂ t₃ t₄ r, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r := by
   sorry
 
 /--
 It is known that every *smooth* Jordan curve admits inscribed rectangles of all aspect ratios.
 -/
 @[category research solved, AMS 51]
-theorem exists_inscribed_rectangle_of_smooth (γ : Circle → EuclideanSpace ℝ (Fin 2))
+theorem exists_inscribed_rectangle_of_smooth (γ : Circle → ℝ²)
     (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) ∞ γ) (r : ℝ) (hr : r > 0) :
-    ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r :=
+    ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r := by
   sorry
 
 /--
-It is also known that every C² Jordan curve admits an inscribed square.
+It is also known that every $C^2$ Jordan curve admits an inscribed square.
 -/
 @[category research solved, AMS 51]
-theorem exists_inscribed_square_of_C2 (γ : Circle → EuclideanSpace ℝ (Fin 2))
+theorem exists_inscribed_square_of_C2 (γ : Circle → ℝ²)
     (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) 2 γ) :
-    ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 :=
+    ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 := by
   sorry
+
+end InscribedSquare

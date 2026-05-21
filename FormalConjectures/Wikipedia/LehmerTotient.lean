@@ -30,7 +30,7 @@ $\varphi(n)$ divides $n - 1$?
 -/
 @[category research open, AMS 11]
 theorem lehmer_totient :
-    (∃ n > 1, ¬Prime n ∧ Nat.totient n ∣ n - 1) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ n > 1, ¬Prime n ∧ Nat.totient n ∣ n - 1 := by
   sorry
 
 end LehmerTotient

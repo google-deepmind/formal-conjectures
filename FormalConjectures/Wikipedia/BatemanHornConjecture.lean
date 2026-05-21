@@ -66,8 +66,8 @@ where $C$ is the Bateman-Horn constant given by the convergent infinite product:
 $$C = \frac{1}{D}\prod_{p\in\mathbb{P}} (1 - 1/p)^(-k) · (1 - \omega_p/p)$$
 Here $\omega_p/p$ is the number of residue classes modulo $p$ for which at least one polynomial vanishes.
 
-The Schinzel condition ensures that for each prime $p$, there exists some integer $n$ 
-such that $p$ does not divide the product $f_(n) f_2(n) \dotsb f_(n)$, which guarantees the 
+The Schinzel condition ensures that for each prime $p$, there exists some integer $n$
+such that $p$ does not divide the product $f_(n) f_2(n) \dotsb f_(n)$, which guarantees the
 infinite product converges to a positive value.
 -/
 @[category research open, AMS 11 12]

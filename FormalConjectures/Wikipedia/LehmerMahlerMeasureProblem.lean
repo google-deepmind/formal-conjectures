@@ -26,16 +26,14 @@ namespace LehmerMahlerMeasureProblem
 
 open Polynomial LehmerMahlerMeasureProblem
 
-noncomputable section
-
 /--
 The Mahler measure of `f(X)` is defined as `‖a‖ ∏ᵢ max(1,‖αᵢ‖)`,
 where `f(X)=a(X-α₁)(X-α₂)...(X-αₙ)`.
 -/
-def mahlerMeasure (f : ℂ[X]) : ℝ :=
+noncomputable def mahlerMeasure (f : ℂ[X]) : ℝ :=
   ‖f.leadingCoeff‖ * (f.roots.map (max 1 ‖·‖)).prod
 
-def mahlerMeasureZ (f : ℤ[X]) : ℝ :=
+noncomputable def mahlerMeasureZ (f : ℤ[X]) : ℝ :=
   mahlerMeasure (f.map (algebraMap ℤ ℂ))
 
 /--
@@ -48,7 +46,7 @@ theorem lehmer_mahler_measure_problem :
       μ > 1 ∧ (mahlerMeasureZ f > 1 → mahlerMeasureZ f ≥ μ) := by
   sorry
 
-def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1
+noncomputable def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1
 
 /--
 `μ=M(X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1)` is the best value for `lehmer_mahler_measure_problem`.
@@ -59,7 +57,7 @@ theorem lehmer_mahler_measure_problem.variants.best (f : ℤ[X])
   sorry
 
 /--
-If `f` is not reciprocal and `M(f)>1` then `M(f) ≥ M(X^3 - X - 1)`.
+If $f$ is not reciprocal and $M(f) > 1$ then $M(f) \ge M(X^3 - X - 1)$.
 -/
 @[category research solved, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.not_reciprocal (f : ℤ[X])
@@ -69,17 +67,15 @@ theorem lehmer_mahler_measure_problem.variants.not_reciprocal (f : ℤ[X])
 
 /-- `Polynomial.HasOddCoeffs f` means that all coefficients of `f : Polynomial ℤ` are odd. -/
 def Polynomial.HasOddCoeffs (f : Polynomial ℤ) : Prop :=
-  ∀ i ∈ f.support, Odd (f.coeff i)
+  ∀ i ≤ f.natDegree, Odd (f.coeff i)
 
 /--
-If all the coefficients of `f` are odd and `M(f)>1`, `M(f) ≥ M(X^2 - X - 1)`.
+If all the coefficients of $f$ are odd and $M(f) > 1$, then $M(f) \ge M(X^2 - X - 1)$.
 -/
 @[category research solved, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])
     (hf : mahlerMeasureZ f > 1) (hf' : f.HasOddCoeffs) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^2 - X - 1) := by
   sorry
-
-end
 
 end LehmerMahlerMeasureProblem

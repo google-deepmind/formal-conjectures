@@ -16,11 +16,19 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Written on the Wall II - Conjecture 40
+
+*Reference:*
+[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+-/
+
+
 namespace WrittenOnTheWallII.GraphConjecture40
 
 open SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
+variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (G : SimpleGraph α)
 
 /--
 WOWII [Conjecture 40](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
@@ -31,7 +39,7 @@ number and `b(G)` is the largest induced bipartite subgraph size.
 -/
 @[category research open, AMS 5]
 theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :
-    ⌈((p G + b G + 1) / 2)⌉ ≤ f G := by
+    ⌈((p G + b G + 1) / 2)⌉ ≤  G.largestInducedForestSize := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture40

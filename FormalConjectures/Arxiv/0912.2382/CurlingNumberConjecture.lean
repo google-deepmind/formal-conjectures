@@ -17,9 +17,11 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# The curling Number Conjecture
+# The Curling Number Conjecture
 
-*Reference:* [arxiv/0912.2382](https://arxiv.org/abs/0912.2382) **The Curling Number Conjecture** by *Benjamin Chaffin and N. J. A. Sloane*
+*Reference:* [arxiv/0912.2382](https://arxiv.org/abs/0912.2382)
+**The Curling Number Conjecture**
+by *Benjamin Chaffin and N. J. A. Sloane*
 -/
 
 namespace Arxiv.«0912.2382»
@@ -33,7 +35,7 @@ to write it as $S = X Y Y . . . Y = X Y^k$, where $X$ and $Y$ are sequences of i
 that maximizes the value of $k$: this $k$ is the curling number of $S$, denoted by $k S$.
 -/
 noncomputable def k (S : List ℤ) : ℕ :=
-  sSup {k : ℕ | ∃ X Y  : List ℤ, Y ≠ [] ∧ S = X  ++ (List.replicate k Y).flatten}
+  sSup {k : ℕ | ∃ X Y : List ℤ, Y ≠ [] ∧ S = X ++ (List.replicate k Y).flatten}
 
 
 /--

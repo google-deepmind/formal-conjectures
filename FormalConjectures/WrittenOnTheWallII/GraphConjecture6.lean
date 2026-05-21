@@ -13,17 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
-
 import FormalConjectures.Util.ProblemImports
 
-open Classical
+/-!
+# Written on the Wall II - Conjecture 6
 
-namespace WrittenOnTheWallII.GraphConjecture6
+*Reference:*
+[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+-/
+
 
 open SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α]
+namespace WrittenOnTheWallII.GraphConjecture6
+variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
 WOWII [Conjecture 6](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
@@ -33,7 +36,7 @@ For a connected graph `G` we have
 -/
 @[category research solved, AMS 5]
 theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-    1 + n G - m G - a G ≤ Ls G := by
+    1 + n G - m G - α(G) ≤ Ls G := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture6

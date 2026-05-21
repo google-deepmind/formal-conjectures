@@ -16,6 +16,13 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Written on the Wall II - Conjecture 1
+
+*Reference:*
+[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+-/
+
 namespace WrittenOnTheWallII.GraphConjecture1
 
 open SimpleGraph
@@ -29,7 +36,7 @@ tree satisfies `Ls(G) ≥ n(G) + 1 - 2·m(G)` where `n(G)` counts vertices and
 -/
 
 @[category research solved, AMS 5]
-theorem conjecture1 {α : Type*} [Fintype α] [DecidableEq α]
+theorem conjecture1 {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
     n G + 1 - 2 * m G ≤ Ls G := by
   sorry

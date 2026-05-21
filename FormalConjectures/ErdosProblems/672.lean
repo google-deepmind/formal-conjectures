@@ -26,7 +26,7 @@ namespace Erdos672
 
 /-- Erdős problem 672 conjectures that the below holds for any $k ≥ 4$ and $l > 1$. -/
 def Erdos672With (k l : ℕ) : Prop :=
-  ∀ (s : Finset ℕ), s.card = k → ∃ᵉ (n > 0) (d > 0), n.gcd d = 1 →
+  ∀ (s : Finset ℕ), s.card = k → ∀ᵉ (n > 0) (d > 0), n.gcd d = 1 →
     Set.IsAPOfLengthWith s k n d → ∀ q, ∏ i ∈ s, i ≠ q ^ l
 
 /--
@@ -35,7 +35,7 @@ of length ≥ 4, with $(n, d) = 1$, be a perfect power?
 -/
 @[category research open, AMS 11]
 theorem erdos_672 :
-    (∀ᵉ (k) (l > 1), k ≥ 4 → Erdos672With k l) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ᵉ (k) (l > 1), k ≥ 4 → Erdos672With k l := by
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/

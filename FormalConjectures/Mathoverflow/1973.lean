@@ -38,8 +38,8 @@ relating it to `EuclideanSpace ℂ (Fin 3)`?
 -/
 @[category research open, AMS 32]
 theorem mathoverflow_1973 :
-    (∃ atlas : ChartedSpace (EuclideanSpace ℂ (Fin 3)) (unitSphere 6),
-      IsManifold 𝓘(ℂ, EuclideanSpace ℂ (Fin 3)) 1 (unitSphere 6)) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ atlas : ChartedSpace (EuclideanSpace ℂ (Fin 3)) (unitSphere 6),
+      IsManifold 𝓘(ℂ, EuclideanSpace ℂ (Fin 3)) 1 (unitSphere 6) := by
   sorry
 
 end Mathoverflow1973

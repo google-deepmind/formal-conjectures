@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,40 +24,53 @@ import FormalConjectures.Util.ProblemImports
 
 open scoped Pointwise
 
+namespace Erdos43
 
 /--
-If `A` and `B` are Sidon sets in `{1, ..., N}` with disjoint difference sets such that
-$(A-A)\cap(B-B)=\{0\}$ then is it true that
-$$\binom{\lvert A\rvert}{2}+\binom{\lvert B\rvert}{2}\leq\binom{f(N)}{2}+O(1),$$
-where $f(N)$ is the maximum possible size of a Sidon set in \{1,\ldots,N\}?
+Let $f(N)$ be the maximum possible size of a Sidon set in $\{1,\ldots,N\}$.
 -/
-@[category research open, AMS 05 11]
-theorem erdos_43 :
-    (∃ C : ℝ, ∀ (N : ℕ) (A B : Finset ℕ),
+noncomputable abbrev f (N : ℕ) : ℕ := Finset.maxSidonSubsetCard (Finset.Icc 1 N)
+
+/--
+If $A$ and $B$ are Sidon sets in $\{1,\ldots,N\}$ with
+$(A-A)\cap(B-B)=\{0\}$, is it true that
+$$\binom{\lvert A\rvert}{2}+\binom{\lvert B\rvert}{2}\leq\binom{f(N)}{2}+O(1)?$$
+
+The answer is no; the Erdős Problems page notes that this follows from the solution to
+Erdős Problem 42.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_43.parts.i : answer(False) ↔
+    ∃ C : ℝ, ∀ᶠ N in Filter.atTop, ∀ (A B : Finset ℕ),
       A ⊆ Finset.Icc 1 N →
       B ⊆ Finset.Icc 1 N →
-      IsSidon A.toSet →
-      IsSidon B.toSet →
+      IsSidon (A : Set ℕ) →
+      IsSidon (B : Set ℕ) →
       (A - A) ∩ (B - B) = {0} →
-      A.card.choose 2 + B.card.choose 2 ≤ (maxSidonSetSize N).choose 2 + C) ↔
-      answer(sorry) := by
+      ((A.card.choose 2 + B.card.choose 2 : ℕ) : ℝ) ≤ ((f N).choose 2 : ℝ) + C := by
   sorry
 
 /--
-If `A` and `B` are equal-sized Sidon sets in `{1, ..., N}` with disjoint difference sets such
-that $(A-A)\cap(B-B)=\{0\}$, then is it true that
-$$\binom{\lvert A\rvert}{2}+\binom{\lvert B\rvert}{2}\leq(1-c)\binom{f(N)}{2}$$
+If $A$ and $B$ are equal-sized Sidon sets in $\{1,\ldots,N\}$ with
+$(A-A)\cap(B-B)=\{0\}$, can the bound be improved to
+$$\binom{\lvert A\rvert}{2}+\binom{\lvert B\rvert}{2}
+    \leq (1-c+o(1))\binom{f(N)}{2}$$
 for some constant $c>0$?
+
+The answer is no; the Erdős Problems page records a negative answer due to Barreto.
 -/
-@[category research open, AMS 05 11]
-theorem erdos_43_equal_size :
-    (∃ᵉ (c > 0), ∀ (N : ℕ) (A B : Finset ℕ),
+@[category research solved, AMS 5 11]
+theorem erdos_43.parts.ii : answer(False) ↔
+    ∃ᵉ (c > 0), ∃ o : ℕ → ℝ, o =o[Filter.atTop] (1 : ℕ → ℝ) ∧
+    ∀ᶠ N in Filter.atTop, ∀ (A B : Finset ℕ),
       A ⊆ Finset.Icc 1 N →
       B ⊆ Finset.Icc 1 N →
-      IsSidon A.toSet →
-      IsSidon B.toSet →
+      IsSidon (A : Set ℕ) →
+      IsSidon (B : Set ℕ) →
       A.card = B.card →
       (A - A) ∩ (B - B) = {0} →
-      A.card.choose 2 + B.card.choose 2 ≤ (1 - c) * (maxSidonSetSize N).choose 2) ↔
-      answer(sorry) := by
+      ((A.card.choose 2 + B.card.choose 2 : ℕ) : ℝ) ≤
+        (1 - c + o N) * ((f N).choose 2 : ℝ) := by
   sorry
+
+end Erdos43

@@ -63,12 +63,12 @@ theorem isHadamard_equiv_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) 
     have : √(↑n ^ (n : ℝ)) = (↑n ^ (n : ℝ)) ^ ((1 : ℝ)/2) := by
       rw [Real.rpow_div_two_eq_sqrt]
       · simp only [Real.rpow_natCast, Real.rpow_one]
-      · simp only [Real.rpow_natCast, Nat.cast_nonneg, pow_nonneg, N]
+      · simp only [Real.rpow_natCast, Nat.cast_nonneg, pow_nonneg]
     rw [this]
     simp
     refine ((fun {x y z} hx hy hz ↦ (Real.eq_rpow_inv hx hy hz).mpr) ?_ ?_ ?_ ?_).symm
     · exact Real.rpow_nonneg (Nat.cast_nonneg' n) _
-    · simp only [Real.rpow_natCast, one_div, Nat.cast_nonneg, pow_nonneg, N]
+    · simp only [Nat.cast_nonneg, pow_nonneg]
     · norm_num
     · rw [← Real.rpow_mul <| Nat.cast_nonneg' n]
       norm_num

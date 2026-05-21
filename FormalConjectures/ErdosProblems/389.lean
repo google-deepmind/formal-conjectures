@@ -31,16 +31,15 @@ $$
 $$
 -/
 @[category research open, AMS 11]
-theorem erdos_389 :
-    (∀ n ≥ 1, ∃ k ≥ 1, ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i)) ↔
-    answer(sorry) := by
+theorem erdos_389 : answer(sorry) ↔
+    ∀ n ≥ 1, ∃ k ≥ 1, ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i) := by
   sorry
 
 /--
 Bhavik Mehta has computed the minimal such $k$ for $1 \leq n \leq 18$.
 For example, the minimal $k$ for $n = 4$ is $207$.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_389.variants.mehta_four :
     IsLeast
       { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (4 + i) ∣ ∏ i ∈ Finset.range k, (4 + k + i) }

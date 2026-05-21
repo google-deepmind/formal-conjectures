@@ -22,14 +22,14 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/250](https://www.erdosproblems.com/250)
 -/
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos250
 
 /--
 Is
 $$
-  \sum\frac{\sigma(n)}{2^n}
+  \sum_{n=1}^\infty \frac{\sigma(n)}{2^n}
 $$
 irrational? Here $\sigma(n)$ is the sum of divisors function.
 

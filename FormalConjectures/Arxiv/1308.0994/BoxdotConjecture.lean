@@ -19,29 +19,15 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Boxdot Conjecture
 
-This file defines the syntax and proof systems for modal logic, along with the
-Boxdot translation and the Boxdot Conjecture. We introduce:
-
-  * `Formula`: the inductive type for propositional modal formulas.
-  * `t`: the recursive Boxdot translation function.
-  * `KProof` and `KTProof`: axiomatizations of the basic K system and K plus T.
-  * `NormalModalLogic`: a structure capturing any normal modal logic.
-  * `KT`: the specific normal modal logic corresponding to K plus T.
-  * `BoxdotConjecture`: states that if a logic agrees with KT on all
-    boxdot-translations, then it cannot be strictly larger than KT.
-
 The Boxdot Conjecture was originally formulated by French and Humberstone and
 has been studied in several works. In particular, see:
 
 *References:*
-  - *Cluster Expansion and the Boxdot Conjecture*, Emil Jeřábek, arXiv:1308.0994.
-  - *The Boxdot Conjecture and the Generalized McKinsey Axiom*, Christopher Steinsvold,
-    Australasian Journal of Logic (AJL).
+- [arxiv/1308.0994](https://arxiv.org/abs/1308.0994)
+  **Cluster Expansion and the Boxdot Conjecture** by *Emil Jeřábek*
+- [The Boxdot Conjecture and the Generalized McKinsey Axiom](https://ojs.victoria.ac.nz/ajl/article/view/4891)
+  by *Christopher Steinsvold*, Australasian Journal of Logic
 
-
-Jeřábek's proof of the Boxdot Conjecture has been formalised in Lean:
-https://github.com/FormalizedFormalLogic/Foundation. Note however that the statement's formalisation
-in that repository is different to the one presented in the current file.
 -/
 
 namespace Arxiv.«1308.0994»
@@ -142,7 +128,7 @@ open KProof KTProof
 
 
 /--
-If `KProof Γ φ`, then `KTProof Γ φ`.  In other words, KT extends K.
+If `KProof Γ φ`, then `KTProof Γ φ`. In other words, KT extends K.
 -/
 @[category API, AMS 3]
 lemma KTExtendsK {Γ φ} (h : KProof Γ φ) : KTProof Γ φ :=
@@ -160,7 +146,7 @@ structure NormalModalLogic : Type where
   /-- `extK` means that if `K ⊢ φ`, then `φ ∈ thms`. That is, the logic extends system K. -/
   extK : ∀ {φ}, KProof ∅ φ → φ ∈ thms
   /-- `mp` means that if `φ ∈ thms` and `(φ ~> ψ) ∈ thms`, then `ψ ∈ thms`. That is, thms is closed
-  under modus ponens.-/
+  under modus ponens. -/
   mp : ∀ {φ ψ}, φ ∈ thms → (φ ~> ψ) ∈ thms → ψ ∈ thms
   /-- `nec` means that if `φ ∈ thms`, then `□φ ∈ thms`. Equivalently, `thms` is closed under
   necessitation -/
@@ -202,7 +188,9 @@ def KT : NormalModalLogic := by
 Boxdot Conjecture: every normal modal logic that faithfully interprets KT
 by the boxdot translation is included in KT.
 -/
-@[category research solved, AMS 3]
+@[category research solved, AMS 3, formal_proof using lean4 at "https://github.com/FormalizedFormalLogic/Foundation"]
+-- The formal proof was done by Mashu Noguchi et al.
+-- see linked repo for the full list of contributors
 theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L ⊆ KT := by
   sorry
 

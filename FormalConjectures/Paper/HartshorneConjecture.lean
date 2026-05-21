@@ -17,24 +17,38 @@ import FormalConjectures.Util.ProblemImports
 
 /-! # Hartshorne's conjecture on Vector Bundles
 
-*Reference*: [Varieties of small codimension in projective space](https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society-new-series/volume-80/issue-6/Varieties-of-small-codimension-in-projective-space/bams/1183535999.full)
-by *R. Hartshorne*
+*References:*
+* [Har1974] R. Hartshorne, [Varieties of small codimension in projective space](https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society-new-series/volume-80/issue-6/Varieties-of-small-codimension-in-projective-space/bams/1183535999.full).
+* [MO2010] [Evidences on Hartshorne's conjecture? References?](https://mathoverflow.net/questions/13990/evidences-on-hartshornes-conjecture-references)
 -/
 
 namespace HartshorneConjecture
 
 open HartshorneConjecture
 
+universe u
+
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
-variable (S : Scheme)
+variable (S : Scheme.{u})
 
 namespace AlgebraicGeometry.Scheme
 
-attribute [local instance] CategoryTheory.Types.instConcreteCategory
+attribute [local instance] CategoryTheory.Types.instConcreteCategory Types.instFunLike
+
+-- TODO(lezeau): explain/investigate why the following two instances are needed.
+
+local instance (X : TopologicalSpace.Opens S) :
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (Type u) :=
+  CategoryTheory.GrothendieckTopology.instWEqualsLocallyBijectiveTypeHomObjForget
+    ((Opens.grothendieckTopology S).over X)
+
+local instance (X : TopologicalSpace.Opens S) :
+    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrpCat.{u}) :=
+  inferInstance
 
 /--
-A vector bundle over a scheme `S` is a locally free `𝓞_S`-module of finite rank.
+A vector bundle over a scheme `S` is a locally free $\mathcal{O}_S$-module of finite rank.
 -/
 structure VectorBundles where
   carrier : S.Modules
@@ -49,11 +63,11 @@ instance (S : Scheme) : Coe S.VectorBundles S.Modules where
 Vector bundles form a category.
 -/
 instance : Category S.VectorBundles :=
-  InducedCategory.category VectorBundles.carrier
+  inferInstanceAs <| Category <| InducedCategory _ VectorBundles.carrier
 
 def VectorBundles.toModule : S.VectorBundles ⥤ S.Modules where
   obj 𝓕 := 𝓕.carrier
-  map f := f
+  map f := f.hom
 
 @[category API, AMS 14]
 theorem hasFiniteCoproductsVectorBundles : HasFiniteCoproducts S.VectorBundles := by
@@ -76,19 +90,19 @@ instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempt
   coe s := s.components
 
 end AlgebraicGeometry.Scheme
---TODO(lezeau): here we would really need some sanity checks and easier results.
+-- TODO(lezeau): here we would really need some sanity checks and easier results.
 
 open AlgebraicGeometry.Scheme
 
 /--
-There are no indecomposable vector bundles of rank 2 on `ℙⁿ` for `n ≥ 7`.
-This is conjecture 6.3 in _VARIETIES OF SMALL CODIMENSION IN PROJECTIVE SPACE_, R. Hartshorne
+There are no indecomposable vector bundles of rank 2 on $\mathbb{P}^n$ for $n \ge 7$.
+This is Conjecture 6.3 in [Har1974].
 -/
 @[category research open, AMS 14]
 theorem harthshorne_conjecture (n : ℕ) (hn : 7 ≤ n)
     (𝓕 : VectorBundles ℙ(Fin (n + 1); Spec (.of ℂ)))
     (h𝓕 : 𝓕.rank = 2) :
-    Nonempty (𝓕.Splitting (Fin 2)) :=
+    Nonempty (𝓕.Splitting (Fin 2)) := by
   sorry
 
 end HartshorneConjecture

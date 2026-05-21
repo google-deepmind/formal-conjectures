@@ -1,0 +1,35 @@
+arxiv:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Arxiv/**'
+
+erdos-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/ErdosProblems/**'
+
+kourovka:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Kourovka/**'
+
+green-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/GreensOpenProblems/**'
+
+linter:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Util/Linters/**'
+
+mathoverflow:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Mathoverflow/**'
+
+millenium-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Millenium/**'
+
+oeis:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/OEIS/**'
+
+wikipedia:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Wikipedia/**'

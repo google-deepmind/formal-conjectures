@@ -19,7 +19,15 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Collatz conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Collatz_conjecture)
+*References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Collatz_conjecture)
+* [erdosproblems.com/1135](https://www.erdosproblems.com/1135)
+* [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
+* [La10] Lagarias, Jeffrey C., The {$3x+1$} problem: an overview. (2010), 3--29.
+* [La16] Lagarias, Jeffrey C., Erdős, Klarner, and the {$3x+1$} problem. Amer. Math. Monthly
+  (2016), 753--776.
+* [La85] Lagarias, Jeffrey C., The {$3x+1$} problem and its generalizations. Amer. Math. Monthly
+  (1985), 3--23.
 -/
 
 namespace CollatzConjecture
@@ -39,7 +47,7 @@ The **Collatz conjecture** states that for any positive integer $n$, there exist
 $m$ such that the $m$-th term of the sequence is 1.
 -/
 @[category research open, AMS 11 37]
-theorem collatzConjecture (n : ℕ) (hn : n > 0) : ∃ m : ℕ, collatzStep^[m] n = 1 := by
+theorem collatz_conjecture (n : ℕ) (hn : n > 0) : ∃ m, collatzStep^[m] n = 1 := by
   sorry
 
 end CollatzConjecture
