@@ -143,4 +143,12 @@ def HasPolynomialGrowth (G : Type*) [Group G] : Prop :=
     ∃ (C : ℝ) (d : ℕ), C > 0 ∧
     ∀ n > 0, (GrowthFunction S n : ℝ) ≤ C * (n : ℝ) ^ d
 
+/-- A group has superpolynomial growth if there exists a finite generating set whose growth
+function eventually dominates every polynomial in the growth-function preorder, up to linearly
+rescaling the radius. -/
+def HasSuperPolynomialGrowth (G : Type*) [Group G] : Prop :=
+  ∃ (S : Set G), Set.Finite S ∧ Subgroup.closure S = ⊤ ∧
+    ∀ d : ℕ, ∃ C : ℕ, 0 < C ∧
+      ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ d ≤ (GrowthFunction S (C * n) : ℝ)
+
 end GromovPolynomialGrowth

@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Gap conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gromov%27s_theorem_on_groups_of_polynomial_growth#The_gap_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Gromov%27s_theorem_on_groups_of_polynomial_growth#The_gap_conjecture)
+- [On the Gap Conjecture concerning group growth](https://arxiv.org/pdf/1202.6044) by
+  *Rostislav Grigorchuk*
 -/
 
 namespace GapConjecture
@@ -27,15 +30,14 @@ namespace GapConjecture
 open Filter GromovPolynomialGrowth
 
 /--
-If the growth function of a finitely generated group is superpolynomial, then it is at
-least $e^{\sqrt n}$, in the usual group-growth sense where the input may be rescaled by a
-positive constant.
+If a finitely generated group has superpolynomial growth, then with respect to any finite
+generating set its growth function is at least $e^{\sqrt n}$ in Grigorchuk's preorder on
+growth functions, where the comparison is witnessed by linearly rescaling the radius.
 -/
 @[category research open, AMS 20]
 theorem gap_conjecture :
     ∀ (G : Type) [Group G] (S : Set G), S.Finite → Subgroup.closure S = ⊤ →
-      (∀ d : ℕ, ∃ C : ℕ, 0 < C ∧
-        ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ d ≤ (GrowthFunction S (C * n) : ℝ)) →
+      HasSuperPolynomialGrowth G →
       ∃ C : ℕ, 0 < C ∧
         ∀ᶠ n : ℕ in atTop, Real.exp (Real.sqrt (n : ℝ)) ≤
           (GrowthFunction S (C * n) : ℝ) := by
