@@ -54,6 +54,7 @@ Hausdorff dimension `n`.
 def KakeyaSetConjectureDim (n : ℕ) : Prop :=
   ∀ S : Set (ℝ^n), IsKakeya S → dimH S = n
 
+/-- The Kakeya set conjecture: Kakeya sets in $\mathbb{R}^n$ have Hausdorff dimension $n$. -/
 @[category research open, AMS 42]
 theorem kakeya_set_conjecture (n : ℕ) (hn : n > 0) :
     KakeyaSetConjectureDim n := by

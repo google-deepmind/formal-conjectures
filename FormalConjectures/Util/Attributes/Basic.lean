@@ -13,8 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Attributes.AMS
+public meta import FormalConjectures.Util.Attributes.AMS
+
+import Qq
+
+public meta section
 
 open Lean Elab Meta Qq
 
@@ -24,7 +29,7 @@ open Lean Elab Meta Qq
 
 ### Overview
 Provides information of the type of a statement. This can be:
-- A mathematical problem (high school/undergraduate/graduate/research level).
+- A mathematical problem (textbook/research level).
   If this is a research problem then the user is also required to specify
   whether the problem has already been solved.
 - An API statement
@@ -32,9 +37,7 @@ Provides information of the type of a statement. This can be:
 
 ### Values
 The values of this attribute are
-- `@[category high_school]` : a high school level math problem.
-- `@[category undergraduate]` : an undergraduate level math problem.
-- `@[category graduate]` : a graduate level math problem.
+- `@[category textbook]` : a textbook level math problem.
 - `@[category research open]` : an open reseach level math problem.
 - `@[category research solved]` : a solved reseach level math problem.
   The criterion for being solved is that there exists an informal solution
@@ -58,7 +61,7 @@ This is independent of the category attribute and can be used with any category.
 ### Usage examples
 The tag should be used as follows:
 ```
-@[category high_school]
+@[category textbook]
 theorem imo_2024_p6
     (IsAquaesulian : (ℚ → ℚ) → Prop)
     (IsAquaesulian_def : ∀ f, IsAquaesulian f ↔
@@ -149,12 +152,8 @@ def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
 
 /-- A type to capture the various types of statements that appear in our Lean files. -/
 inductive Category
-  /-- A high school level math problem. -/
-  | highSchool
-  /-- An undegraduate level math problem. -/
-  | undergraduate
-  /-- A graduate level math problem. -/
-  | graduate
+  /-- A textbook level math problem (high school, undergraduate, or graduate). -/
+  | textbook
   /-- A reseach level math problem. This can be open, or already solved -/
   | research : ProblemStatus → Category
   /-- A test statement that serves as a sanity check (e.g. for a new definition)-/
@@ -163,7 +162,7 @@ inductive Category
   | API
   deriving Inhabited, BEq, Hashable, ToExpr
 
-syntax CategorySyntax := &"high_school" <|> &"undergraduate" <|> &"graduate"
+syntax CategorySyntax := &"textbook"
     <|> (&"research" problemStatus) <|> &"test" <|> &"API"
 
 -- TODO(lezeau): do we eventually want to account for the problem's source?
@@ -238,15 +237,9 @@ def addSubjectEntry {m : Type → Type} [MonadEnv m] (name : Name)
 with the corresponding name's docstring. -/
 def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
   match stx with
-  | `(CategorySyntax| high_school) =>
-    Elab.addConstInfo stx ``Category.highSchool
-    return Category.highSchool
-  | `(CategorySyntax| undergraduate) =>
-    Elab.addConstInfo stx ``Category.undergraduate
-    return Category.undergraduate
-  | `(CategorySyntax| graduate) =>
-    Elab.addConstInfo stx ``Category.graduate
-    return Category.graduate
+  | `(CategorySyntax| textbook) =>
+    Elab.addConstInfo stx ``Category.textbook
+    return Category.textbook
   | `(CategorySyntax| research $status) =>
     let problemStatus ← do
       let some n := problemStatus.toName status | throwUnsupportedSyntax
@@ -268,9 +261,7 @@ syntax (name := Category_attr) "category" CategorySyntax : attr
 /-- Specifies the type of a statement.
 
 This is used as follows: `@[category my_cat]` where `my_cat` is one of:
-- `high_school` : a high school level math problem.
-- `undergraduate` : an undergraduate level math problem.
-- `graduate` : a graduate level math problem.
+- `textbook` : a textbook level math problem.
 - `research open` : an open reseach level math problem.
 - `research solved` : a solved reseach level math problem.
 - `test` : a statement that serves as a sanity check (e.g. for a new definition).
@@ -405,5 +396,39 @@ def getFormalProofTag (declName : Name) : m (Option FormalProofTag) := do
   return tags.find? (·.declName == declName)
 
 end Helper
+
+/-- Verify that the list of problems contains the expected number of problems
+for each category. Throws an error if counts do not match. -/
+def verifyCategoryCounts (problems : List Name) (expected : List (String × Nat)) : MetaM Unit := do
+  let env ← getEnv
+  let catTags := categoryExt.getState env
+  let mut counts : List (String × Nat) := []
+  
+  let incrementCount (counts : List (String × Nat)) (cat : String) : List (String × Nat) :=
+    match counts.find? (·.1 == cat) with
+    | some (_, n) => (cat, n + 1) :: counts.filter (·.1 != cat)
+    | none => (cat, 1) :: counts
+
+  for name in problems do
+    let catStr :=
+      match catTags.toArray.find? (·.declName == name) with
+      | some tag => match tag.category with
+        | .research .solved => "research solved"
+        | .research .open => "research open"
+        | .test => "test"
+        | .API => "API"
+        | .textbook => "textbook"
+      | none => "uncategorised"
+    counts := incrementCount counts catStr
+
+  for (cat, exp) in expected do
+    let actual := (counts.find? (·.1 == cat)).map (·.2) |>.getD 0
+    if actual != exp then
+      throwError s!"Category '{cat}': expected {exp}, got {actual}"
+
+  let total := problems.length
+  let expectedTotal := expected.foldl (fun acc (_, n) => acc + n) 0
+  if total != expectedTotal then
+    throwError s!"Expected total {expectedTotal} problems, got {total}"
 
 end ProblemAttributes

@@ -23,18 +23,11 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter
+open EuclideanGeometry
 open scoped EuclideanGeometry
 
 namespace Erdos90
 open Finset
-
-/--
-Given a finite set of points, this function counts the number of **unordered pairs** of distinct
-points that are at a distance of exactly 1 from each other.
--/
-noncomputable def unitDistancePairsCount (points : Finset ℝ²) : ℕ :=
-  (points.offDiag.filter (fun p => dist p.1 p.2 = 1)).card / 2
-
 
 /--
 The set of all possible numbers of unit distances for a configuration of $n$ points.
@@ -50,7 +43,7 @@ the total number of pairs of points, $\binom{n}{2}$.
 @[category test, AMS 52]
 theorem unitDistanceCounts_BddAbove (n : ℕ) : BddAbove <| unitDistanceCounts n := by
   unfold Erdos90.unitDistanceCounts
-  unfold Erdos90.unitDistancePairsCount
+  unfold unitDistancePairsCount
   use n.choose 2
   rintro _ ⟨points, rfl, rfl⟩
   rw [points.card.choose_two_right]

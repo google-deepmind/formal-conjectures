@@ -48,21 +48,21 @@ theorem poincare_conjecture : ConjectureFor 3 := by
 /--
 The Generalized Poincaré Conjecture holds for surfaces.
 -/
-@[category undergraduate, AMS 54 57]
+@[category textbook, AMS 54 57]
 theorem poincare_conjecture.variants.dimension_two : ConjectureFor 2 := by
   sorry
 
 /--
 The Generalized Poincaré Conjecture holds for dimensions at least 5.
 -/
-@[category undergraduate, AMS 54 57]
+@[category textbook, AMS 54 57]
 theorem poincare_conjecture.variants.dimension_ge_five (n : ℕ) (hn : 5 ≤ n) : ConjectureFor n := by
   sorry
 
 /--
 The Generalized Poincaré Conjecture holds in dimension 4.
 -/
-@[category undergraduate, AMS 54 57]
+@[category textbook, AMS 54 57]
 theorem poincare_conjecture.variants.dimension_four : ConjectureFor 4 := by
   sorry
 
@@ -72,13 +72,13 @@ def SmoothConjectureFor (n : ℕ) : Prop :=
     M ≃ₕ 𝕊ⁿ → Nonempty (M ≃ₘ⟮𝓡 n, 𝓡 n⟯ 𝕊ⁿ)
 
 /-- A reformulation of the Millenium Problem in terms of smooth 3-folds. -/
-@[category undergraduate, AMS 54 57]
+@[category textbook, AMS 54 57]
 theorem poincare_conjecture.variants.smooth_for_three : SmoothConjectureFor 3 := by
   sorry
 
 /-- The smooth formulation of the Millenium Problem implies the general case. This follows from
 the fact that every topological 3-fold admits a smooth structure [mo296171]. -/
-@[category graduate, AMS 54 57]
+@[category textbook, AMS 54 57]
 theorem poincare_conjecture.variants.smooth_implication (H : SmoothConjectureFor 3) :
     ConjectureFor 3 := by
   sorry
