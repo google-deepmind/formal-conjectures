@@ -84,7 +84,9 @@ theorem erdos_755.test_dim_one :
 `ℝ^6` spans at most `(1 / 27 + o(1)) n^3` unit equilateral triangles.
 
 Clemen, Dumitrescu, and Liu [CDL25b] proved the stronger any-size statement
-`T_6(n) = (1 / 27 + o(1)) n^3`.
+`T_6(n) = (1 / 27 + o(1)) n^3`. The unit-triangle upper bound follows as a
+corollary, since unit equilateral triangles are a subset of equilateral
+triangles of any positive side length: `T_unit ≤ T_anysize`.
 -/
 @[category research solved, AMS 52]
 theorem erdos_755 :
