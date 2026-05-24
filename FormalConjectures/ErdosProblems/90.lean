@@ -75,6 +75,33 @@ theorem erdos_90 : answer(False) ↔ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fu
     (fun n => (maxUnitDistances n : ℝ)) =ᶠ[atTop] fun (n : ℕ) => (n : ℝ) ^ (1 + O n) := by
   sorry
 
+/--
+**Constructive form of the disproof.** There is an absolute constant `c > 0` such that
+infinitely many `n` admit a configuration realising at least `n^(1+c)` unit distances.
+
+This is the qualitative content of Theorem 1.1 of Alon–Bloom–Gowers–Litt–Sawin–Shankar–
+Tsimerman–Wang–Matchett Wood, [*Remarks on the disproof of the unit distance conjecture*](https://arxiv.org/abs/2605.20695)
+(2026). An explicit bound `c ≥ 0.014114…` is given by Sawin, [*An explicit lower bound for the unit
+distance problem*](https://arxiv.org/abs/2605.20579) (2026); see
+`erdos_90.variants.sawin_explicit` below.
+-/
+@[category research solved, AMS 52]
+theorem erdos_90.variants.polynomial_lower_bound :
+    ∃ c > (0 : ℝ),
+      {n : ℕ | (n : ℝ) ^ (1 + c) ≤ (maxUnitDistances n : ℝ)}.Infinite := by
+  sorry
+
+/--
+**Sawin's explicit exponent.** The constructive disproof can be realised with `c ≥ 0.014114`
+(absorbing the implicit constant `C` of Sawin's Theorem 1 into a slightly smaller exponent for
+all large enough `n`). Reference: Theorem 1 of Sawin, [arXiv:2605.20579](https://arxiv.org/abs/2605.20579)
+(2026).
+-/
+@[category research solved, AMS 52]
+theorem erdos_90.variants.sawin_explicit :
+    {n : ℕ | (n : ℝ) ^ (1 + (14114 : ℝ) / 1000000) ≤ (maxUnitDistances n : ℝ)}.Infinite := by
+  sorry
+
 -- TODO(firsching): add the statements from the rest of the page.
 
 end Erdos90
