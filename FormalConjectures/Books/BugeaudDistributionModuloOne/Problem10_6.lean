@@ -32,7 +32,7 @@ import FormalConjectures.Util.ProblemImports
     Illinois Journal of Mathematics 23.4 (1979): 511-515.
 -/
 
-namespace Bugeaud05
+namespace Bugeaud06
 
 open Filter
 
@@ -148,4 +148,4 @@ theorem problem_10_6_variant_2 :
       Dense (Set.range fun n => (↑(ξ * m n) : AddCircle (1 : ℝ))) := by
   sorry
 
-end Bugeaud05
+end Bugeaud06
