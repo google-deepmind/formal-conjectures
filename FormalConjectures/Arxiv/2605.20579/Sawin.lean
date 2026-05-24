@@ -52,9 +52,9 @@ vectors satisfying `‖v‖ ≤ 1` and `‖π v‖ = 1` for every `v ∈ S`, wit
 
   `(unitDistancePairsCount U : ℝ) / (U.card : ℝ) ≥ (1 - 1/R)^(2*d) * S.card`.
 
-Phrased here as a benchmark conjecture: such a `U` always exists.
+Proved as Lemma 2 of [arXiv:2605.20579](https://arxiv.org/abs/2605.20579).
 -/
-@[category research open, AMS 52]
+@[category research solved, AMS 52]
 theorem lemma_2_lattice_to_unit_distances
     (d : ℕ) (hd : 1 ≤ d) (R : ℝ) (hR : 2 ≤ R)
     (Λ : Submodule ℤ (EuclideanSpace ℝ (Fin (2*d))))
@@ -77,11 +77,12 @@ each `n` a totally real number field `F_n` of degree `d_n` over `ℚ` and a CM q
 * the relative root discriminant `rd(K_n / F_n)` is at most `rdBound`;
 * infinitely many rational primes split completely in `K_n / ℚ`.
 
-The proof in Sawin uses the Golod–Shafarevich inequality for pro-2 groups together with the
-Hajir–Maire–Ramakrishna (2003) tower construction. Both ingredients are currently absent from
-Mathlib, so this conjecture stands as a serious sub-challenge.
+Proved as Lemmas 11–12 of [arXiv:2605.20579](https://arxiv.org/abs/2605.20579), via the
+Golod–Shafarevich inequality for pro-2 groups together with the Hajir–Maire–Ramakrishna
+(2003) tower construction. Both ingredients are currently absent from Mathlib, so the *formal*
+verification of this statement remains a substantial sub-challenge.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem lemmas_11_12_tower :
     ∃ (rdBound : ℝ) (_ : 1 ≤ rdBound),
       ∀ N : ℕ, ∃ (F : Type) (_ : Field F) (_ : NumberField F) (_ : Algebra ℚ F)
@@ -97,10 +98,11 @@ theorem lemmas_11_12_tower :
 There is an absolute constant `C > 0` such that for arbitrarily large `n` there exists a finite
 set `U ⊂ ℝ²` with `U.card = n` realising at least `n^{1.014114} / C` unit-distance pairs.
 
-Together with the constructive form recorded in
-`Erdos90.erdos_90.variants.sawin_explicit`, this is the headline disproof of Erdős Problem 90.
+Proved as Theorem 1 of [arXiv:2605.20579](https://arxiv.org/abs/2605.20579). Together with
+the constructive form recorded in `Erdos90.erdos_90.variants.sawin_explicit`, this is the
+headline disproof of Erdős Problem 90.
 -/
-@[category research open, AMS 52]
+@[category research solved, AMS 52]
 theorem theorem_1_explicit_lower_bound :
     ∃ C > (0 : ℝ),
       {n : ℕ | ∃ U : Finset ℝ², U.card = n ∧
