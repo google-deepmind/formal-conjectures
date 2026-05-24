@@ -34,7 +34,7 @@ Sieve $[N]$ by removing half the residue classes mod $p_i$, for primes
 $2 \leqslant p_1 < p_2 < \dots < p_{1000} < N^{9/10}$. Does the remaining set have size at most
 $\frac{1}{10} N$?
 
-Following [Er80], we interpret "half the residue classes" as $(p_i - 1) / 2$.
+We interpret "half the residue classes" as $\lfloor p_i / 2 \rfloor$.
 -/
 @[category research open, AMS 11]
 theorem green_44 :
@@ -43,7 +43,7 @@ theorem green_44 :
       (∀ i, (p i).Prime) →
       StrictMono p →
       (p 999) ^ 10 < N ^ 9 →
-      (∀ i, (A i).card = (p i - 1) / 2) →
+      (∀ i, (A i).card = (p i) / 2) →
       10 * remaining.card ≤ N := by
   sorry
 
@@ -55,7 +55,7 @@ theorem green_44.variants.less_than_sqrt :
       (∀ i, (p i).Prime) →
       StrictMono p →
       (p 999) ^ 2 < N →
-      (∀ i, (A i).card = (p i - 1) / 2) →
+      (∀ i, (A i).card = (p i) / 2) →
       10 * remaining.card ≤ N := by
   sorry
 
