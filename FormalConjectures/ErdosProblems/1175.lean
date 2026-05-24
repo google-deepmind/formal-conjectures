@@ -42,7 +42,7 @@ Let $\kappa$ be an uncountable cardinal. Must there exist a cardinal $\lambda$ s
 graph with chromatic number $\lambda$ contains a triangle-free subgraph with chromatic number
 $\kappa$?
 
-Open in ZFC. Shelah proved that a negative answer is consistent when
+Shelah proved that a negative answer is consistent when
 $\kappa = \lambda = \aleph_1$ (see `erdos_1175.variants.shelah_consistency`).
 -/
 @[category research open, AMS 5]
@@ -80,8 +80,8 @@ theorem erdos_1175.variants.shelah_consistency : answer(sorry) ↔
 /--
 **Threshold reformulation variant.** Replaces `chromaticCardinal = λ` in the hypothesis
 of `erdos_1175` with `λ ≤ chromaticCardinal` (a graph of chromatic number ≥ λ has a
-triangle-free subgraph of chromatic number κ). Equivalent to `erdos_1175` (take λ as
-the minimum), but more natural as a "threshold" statement.
+triangle-free subgraph of chromatic number κ). This is a strengthening of `erdos_1175`
+(see `erdos_1175.test.threshold_implies_exact`).
 -/
 @[category research open, AMS 5]
 theorem erdos_1175.variants.threshold_formulation : answer(sorry) ↔
