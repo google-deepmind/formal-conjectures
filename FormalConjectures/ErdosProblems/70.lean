@@ -19,43 +19,11 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 70
 
-**Verbatim statement (Erdős #70, status O):**
-> Let $\mathfrak{c}$ be the ordinal of the real numbers, $\beta$ be any countable ordinal, and $2\leq n<\omega$. Is it true that $\mathfrak{c}\to (\beta, n)_2^3$?
-
-**Source:** https://www.erdosproblems.com/70
-
-**Notes:** OPEN
-
-
 *Reference:* [erdosproblems.com/70](https://www.erdosproblems.com/70)
 
-## Problem Statement
-
-Let 𝔠 be the cardinality of the continuum (i.e. `2 ^ ℵ₀`), let β be any countable ordinal,
-and let `2 ≤ n < ω`. Is it true that 𝔠 → (β, n)³₂?
-
-Here the notation 𝔠 → (β, n)³₂ means: for any 2-coloring (red/blue) of all 3-element subsets
-of a well-ordered set of order type 𝔠.ord (the smallest ordinal of cardinality 𝔠), either:
-- there exists a *red-monochromatic* subset of order type β (every 3-element subset is red), or
-- there exists a *blue-monochromatic* subset of cardinality n (every 3-element subset is blue).
-
-This is the 3-uniform (triple) partition relation, as opposed to the 2-uniform (pair/graph)
-partition relation `𝔠 → (β, n)²₂` studied in Problems 590–592.
-
-## Known Results
-
-- **Erdős–Rado**: 𝔠 → (ω + n, 4)³₂ for any `2 ≤ n < ω`. In particular, the relation
-  𝔠 → (ω + n, 4)³₂ holds for all finite n ≥ 2 (proved; see `erdos_70.variants.erdos_rado`).
-
-## Status
-
-**OPEN**: The general question (arbitrary countable β, finite n ≥ 2) is open.
-
-## Definitions
-
-We introduce `OrdinalCardinalRamsey3 α β c` for the 3-uniform analogue of
-`OrdinalCardinalRamsey α β c`: a 2-coloring of 3-element subsets of the ordinal type α
-yields either a red set of order type β or a blue set of cardinality c.
+The 3-uniform (triple) partition relation $\mathfrak{c} \to (\beta, n)^3_2$
+on the continuum — the triple analogue of `OrdinalCardinalRamsey` used in
+Problems 590–592.
 -/
 
 open Cardinal Ordinal
@@ -105,17 +73,8 @@ noncomputable abbrev continuumOrd : Ordinal.{0} := Cardinal.continuum.ord
 /- ### The main open problem -/
 
 /--
-**Erdős Problem 70** (Open): Let 𝔠 be the cardinality of the continuum, let β be a countable
+**Erdős Problem 70**: Let 𝔠 be the cardinality of the continuum, let β be a countable
 ordinal, and let `2 ≤ n < ω`. Is it true that 𝔠 → (β, n)³₂?
-
-Formally: for any countable ordinal β and any natural number n ≥ 2, does
-`OrdinalCardinalRamsey3 𝔠.ord β n` hold?
-
-Here:
-- `𝔠.ord = Cardinal.continuum.ord` is the least ordinal of cardinality the continuum.
-- `β` ranges over countable ordinals (i.e. `β.card ≤ ℵ₀`).
-- `n : ℕ` satisfies `2 ≤ n`.
-- `OrdinalCardinalRamsey3 α β c` is the 3-uniform partition relation `α → (β, c)³₂`.
 -/
 @[category research open, AMS 3]
 theorem erdos_70 :
@@ -129,15 +88,8 @@ theorem erdos_70 :
 namespace erdos_70.variants
 
 /--
-**Erdős–Rado partial result**: 𝔠 → (ω + n, 4)³₂ for any `2 ≤ n < ω`.
-
-Erdős and Rado proved that any 2-coloring of 3-element subsets of a set of cardinality 𝔠
-contains either a red-monochromatic subset of order type ω + n (for any fixed finite n ≥ 2),
-or a blue-monochromatic set of cardinality 4.
-
-This gives a positive partial answer to Problem 70 with β = ω + n and the blue side fixed at 4.
-
-**Status**: TRUE (Erdős–Rado).
+**Erdős–Rado partial result**: 𝔠 → (ω + n, 4)³₂ for any `2 ≤ n < ω`. Positive partial
+answer to Problem 70 with β = ω + n and the blue side fixed at 4.
 -/
 @[category research solved, AMS 3]
 theorem erdos_rado (n : ℕ) (hn : 2 ≤ n) :
@@ -152,7 +104,7 @@ ordinal) and n = 3. Does every 2-coloring of 3-element subsets of the continuum 
 either a red-monochromatic set of order type ω (an infinite red-monochromatic subset) or a
 blue-monochromatic set of 3 elements (a blue triple)?
 
-**Status**: OPEN (follows from the main conjecture with β = ω, n = 3).
+Follows from the main conjecture with β = ω, n = 3.
 -/
 @[category research open, AMS 3]
 theorem omega_three :
@@ -164,11 +116,8 @@ theorem omega_three :
 uncountable ordinal.
 
 Note that ω₁ is *not* a countable ordinal, so this is not directly an instance of the
-main Erdős problem (which asks for *countable* β). However, it is a closely related question.
-Under the Continuum Hypothesis (CH), ω₁ = 𝔠.ord, making this a self-referential question
-about 𝔠.ord → (𝔠.ord, n)³₂.
-
-**Status**: OPEN.
+main Erdős problem (which asks for *countable* β). Under CH, ω₁ = 𝔠.ord, making this a
+self-referential question about 𝔠.ord → (𝔠.ord, n)³₂.
 -/
 @[category research open, AMS 3]
 theorem omega_one :
