@@ -39,14 +39,17 @@ namespace Arxiv.«2605.20695»
 /--
 **Proposition 2.3 (Remarks on the disproof of the unit distance conjecture, 2026).**
 
-There exists an infinite tower of totally real number fields `F / ℚ` with *uniformly* bounded
-root discriminant `|disc F|^{1/[F:ℚ]} ≤ rdBound`, such that for each field in the tower the
-set of rational primes `q ≡ 1 (mod 4)` that split completely in `F` is infinite.
+There exist `rdBound : ℝ` and a *single* infinite set `Q` of rational primes `q ≡ 1 (mod 4)`
+such that for every `N : ℕ` one can find a totally real number field `F / ℚ` of degree `≥ N`
+with uniformly bounded root discriminant `|disc F|^{1/[F:ℚ]} ≤ rdBound` in which every prime
+`q ∈ Q` splits completely.
 
-The existence of this tower is the key arithmetic input to the disproof of Erdős's unit
-distance conjecture (Erdős problem #90). It is proved in the Remarks paper via the
-Hajir–Maire–Ramakrishna (2003) construction, which in turn applies the Golod–Shafarevich
-inequality to a controlled pro-`2` Galois group.
+As in `Arxiv.«2605.20579».lemmas_11_12_tower`, the load-bearing feature is that `Q` is fixed
+*before* `F`: the same primes split completely in fields of *unbounded* degree. (For a single
+fixed `F`, Chebotarev already supplies infinitely many completely split primes `≡ 1 (mod 4)`,
+so a per-field statement would be vacuous.) This is the key arithmetic input to the disproof
+of Erdős's unit distance conjecture (problem #90), proved in the Remarks paper via the
+Hajir–Maire–Ramakrishna (2003) construction applied to a controlled pro-`2` Galois group.
 
 A "completely split" rational prime `q` in `F` is one for which `(q : 𝓞 F)` is the product of
 exactly `[F:ℚ]` distinct maximal ideals (equivalently, both the ramification index and the
@@ -54,15 +57,14 @@ residue degree of every prime above `q` are `1`).
 -/
 @[category research solved, AMS 11]
 theorem prop_2_3_totally_real_tower :
-    ∃ (rdBound : ℝ),
+    ∃ (rdBound : ℝ) (Q : Set ℕ), Q.Infinite ∧ (∀ q ∈ Q, q.Prime ∧ q % 4 = 1) ∧
       ∀ N : ℕ, ∃ (F : Type) (_ : Field F) (_ : CharZero F) (_ : NumberField F)
         (_ : IsTotallyReal F),
         N ≤ Module.finrank ℚ F ∧
         (|(NumberField.discr F : ℝ)|) ^ ((1 : ℝ) / Module.finrank ℚ F) ≤ rdBound ∧
-        {q : ℕ | q.Prime ∧ q % 4 = 1 ∧
-          ∃ (factors : Finset (Ideal (𝓞 F))),
-            factors.card = Module.finrank ℚ F ∧
-            ∀ p ∈ factors, p.IsMaximal ∧ (q : 𝓞 F) ∈ p}.Infinite := by
+        ∀ q ∈ Q, ∃ (factors : Finset (Ideal (𝓞 F))),
+          factors.card = Module.finrank ℚ F ∧
+          ∀ p ∈ factors, p.IsMaximal ∧ (q : 𝓞 F) ∈ p := by
   sorry
 
 end Arxiv.«2605.20695»
