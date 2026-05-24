@@ -36,7 +36,7 @@ namespace Bugeaud06
 
 open Filter
 
-/-- The **Pollington–de Mathan theorem** [Pol79][Nat80]. For every lacunary sequence
+/-- The **Pollington–de Mathan theorem** [Pol79][Mat80]. For every lacunary sequence
 $(m_n)_{n \ge 1}$ of positive integers, the set of real numbers $\xi$ for which
 $(\{\xi m_n\})_{n \ge 1}$ is *not* dense modulo one has full Hausdorff dimension. -/
 @[category research solved, AMS 11]
