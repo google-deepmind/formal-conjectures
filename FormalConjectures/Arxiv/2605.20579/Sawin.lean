@@ -37,7 +37,7 @@ self-contained reductions, each posed below as its own benchmark challenge:
 * `Sawin.theorem_1_explicit_lower_bound` — the main theorem assembled from the above.
 -/
 
-open Filter EuclideanGeometry
+open Filter EuclideanGeometry NumberField
 open scoped EuclideanGeometry
 
 namespace Arxiv.«2605.20579»
@@ -68,28 +68,31 @@ theorem lemma_2_lattice_to_unit_distances
   sorry
 
 /--
-**Lemmas 11 & 12 (Sawin, 2026).** *Existence of a CM tower with prescribed split primes.*
+**Lemmas 11 & 12 (Sawin, 2026).** *Existence of a totally real tower with bounded root
+discriminant and many split primes.*
 
-There exist an infinite increasing sequence of degrees `(d_n)_{n}`, a constant `rdBound ≥ 1`, and for
-each `n` a totally real number field `F_n` of degree `d_n` over `ℚ` and a CM quadratic extension
-`K_n / F_n` such that:
-
-* the relative root discriminant `rd(K_n / F_n)` is at most `rdBound`;
-* infinitely many rational primes split completely in `K_n / ℚ`.
+There exists `rdBound : ℝ` such that for every `N : ℕ` one can find a totally real number field
+`F / ℚ` of degree `≥ N` with absolute root discriminant `|disc F|^{1/[F:ℚ]} ≤ rdBound` and with
+infinitely many rational primes splitting completely in `F`.
 
 Proved as Lemmas 11–12 of [arXiv:2605.20579](https://arxiv.org/abs/2605.20579), via the
 Golod–Shafarevich inequality for pro-2 groups together with the Hajir–Maire–Ramakrishna
 (2003) tower construction. Both ingredients are currently absent from Mathlib, so the *formal*
 verification of this statement remains a substantial sub-challenge.
+
+Compare `Arxiv.«2605.20695».prop_2_3_totally_real_tower`, which refines this by requiring
+that infinitely many of the split primes lie in the residue class `q ≡ 1 (mod 4)`.
 -/
 @[category research solved, AMS 11]
 theorem lemmas_11_12_tower :
-    ∃ (rdBound : ℝ) (_ : 1 ≤ rdBound),
-      ∀ N : ℕ, ∃ (F : Type) (_ : Field F) (_ : NumberField F) (_ : Algebra ℚ F)
-        (_ : NumberField.IsTotallyReal F)
-        (K : Type) (_ : Field K) (_ : NumberField K) (_ : Algebra F K)
-        (_ : NumberField.IsCMField K),
-        N ≤ Module.finrank ℚ F := by
+    ∃ (rdBound : ℝ),
+      ∀ N : ℕ, ∃ (F : Type) (_ : Field F) (_ : CharZero F) (_ : NumberField F)
+        (_ : NumberField.IsTotallyReal F),
+        N ≤ Module.finrank ℚ F ∧
+        (|(NumberField.discr F : ℝ)|) ^ ((1 : ℝ) / Module.finrank ℚ F) ≤ rdBound ∧
+        {q : ℕ | q.Prime ∧ ∃ (factors : Finset (Ideal (𝓞 F))),
+          factors.card = Module.finrank ℚ F ∧
+          ∀ p ∈ factors, p.IsMaximal ∧ (q : 𝓞 F) ∈ p}.Infinite := by
   sorry
 
 /--
