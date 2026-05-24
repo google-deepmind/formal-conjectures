@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Green's Open Problem 44
 
-*Reference:*
+*References:*
 - [Gr24] [Ben Green's 100 Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.44)
 - [Er80] Erdős, Paul. "A survey of problems in combinatorial number theory."
   Annals of Discrete Mathematics 6 (1980): 89-115.
