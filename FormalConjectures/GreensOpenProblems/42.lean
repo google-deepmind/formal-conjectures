@@ -94,13 +94,13 @@ theorem green_42.variants.dimension_one :
   sorry
 
 /-- [Vi17] established the case $d = 8$. -/
-@[category research solved, AMS 51 52]
+@[category research solved, AMS 51 52, formal_proof using lean4 at "https://github.com/math-inc/Sphere-Packing-Lean/blob/main/SpherePacking/Dim8/MainTheorem.lean"]
 theorem green_42.variants.dimension_eight :
     CohnElkiesOptimal 8 (1 / 16) := by
   sorry
 
 /-- In [CKM17], [Vi17] was adapted to $d = 24$. -/
-@[category research solved, AMS 51 52]
+@[category research solved, AMS 51 52, formal_proof using lean4 at "https://github.com/math-inc/Sphere-Packing-Lean/blob/main/SpherePacking/Dim24/MainTheorem.lean"]
 theorem green_42.variants.dimension_twenty_four :
     CohnElkiesOptimal 24 1 := by
   sorry
