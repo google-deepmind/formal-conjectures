@@ -41,7 +41,11 @@ variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V] [MeasureSp
 
 /-- The real-valued Fourier transform used in the Cohn--Elkies conditions.
 For real radial admissible functions, the complex Fourier transform is expected
-to be real-valued; we take `.re` to expose the real scalar used in the inequality. -/
+to be real-valued; we take `.re` to expose the real scalar used in the inequality.
+
+**Convention:** Mathlib's `𝓕 f w` expands to $\int e^{-2\pi i \langle v, w \rangle} f(v) dv$, which
+matches [CoEl03]'s $\hat{f}(t) = \int f(x) e^{-2\pi i \langle x, t \rangle} dx$.
+-/
 noncomputable def fHat (f : V → ℝ) (t : V) : ℝ :=
   (𝓕 (fun x ↦ (f x : ℂ)) t).re
 
