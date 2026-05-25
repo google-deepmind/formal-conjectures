@@ -33,14 +33,9 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Real Complex MeasureTheory
-open scoped FourierTransform
+open scoped EuclideanGeometry FourierTransform
 
 namespace Green42
-
-abbrev R1 := EuclideanSpace ℝ (Fin 1)
-abbrev R2 := EuclideanSpace ℝ (Fin 2)
-abbrev R8 := EuclideanSpace ℝ (Fin 8)
-abbrev R24 := EuclideanSpace ℝ (Fin 24)
 
 variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V] [MeasureSpace V] [BorelSpace V] [FiniteDimensional ℝ V]
 
@@ -75,7 +70,7 @@ Can the Cohn-Elkies scheme be used to prove the optimal bound for circle-packing
 -/
 @[category research open, AMS 51 52]
 theorem green_42 :
-    answer(sorry) ↔ ∃ f : R2 → ℝ,
+    answer(sorry) ↔ ∃ f : ℝ^2  → ℝ,
       SatisfiesCohnElkiesScheme f ∧
       -- Achieves optimal center density for the 2D hexagonal lattice
       f 0 / fHat f 0 = Real.sqrt 3 / 6 := by
@@ -84,7 +79,7 @@ theorem green_42 :
 /-- [CoEl03] proved this when $d = 1$. -/
 @[category research solved, AMS 51 52]
 theorem green_42.variants.dimension_one :
-    ∃ f : R1 → ℝ,
+    ∃ f : ℝ^1 → ℝ,
       SatisfiesCohnElkiesScheme f ∧
       -- Achieves optimal center density for the 1D lattice
       f 0 / fHat f 0 = 1 / 2 := by
@@ -93,7 +88,7 @@ theorem green_42.variants.dimension_one :
 /-- [Vi17] established the case $d = 8$. -/
 @[category research solved, AMS 51 52]
 theorem green_42.variants.dimension_eight :
-    ∃ f : R8 → ℝ,
+    ∃ f : ℝ^8 → ℝ,
       SatisfiesCohnElkiesScheme f ∧
       -- Achieves optimal center density for the E8 lattice
       f 0 / fHat f 0 = 1 / 16 := by
@@ -102,7 +97,7 @@ theorem green_42.variants.dimension_eight :
 /-- In [CKM17], [Vi17] was adapted to $d = 24$. -/
 @[category research solved, AMS 51 52]
 theorem green_42.variants.dimension_twenty_four :
-    ∃ f : R24 → ℝ,
+    ∃ f : ℝ^24 → ℝ,
       SatisfiesCohnElkiesScheme f ∧
       -- Achieves optimal center density for the Leech lattice
       f 0 / fHat f 0 = 1 := by
