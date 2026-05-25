@@ -34,8 +34,8 @@ The set of numbers $k$ such that $\mathbb{R}^2$ can be red/blue coloured with no
 points unit distance apart, and no $k$-term arithmetic progression of blue points with distance 1.
 -/
 def s := { k : ℕ | ∃ blue : Set ℂ,
-    (Set.univ \ blue).Pairwise (fun c₁ c₂ => dist c₁ c₂ ≠ 1) ∧
-    ¬ (∃ bs ⊆ blue, (∃ s, bs.IsAPOfLengthWith k s 1)) }
+  (Set.univ \ blue).Pairwise (fun c₁ c₂ => dist c₁ c₂ ≠ 1) ∧
+    ¬ (∃ᵉ (bs ⊆ blue) (z) (d), ‖d‖ = 1 ∧ bs.IsAPOfLengthWith k z d) }
 
 /--
 What is the smallest $k$ such that $\mathbb{R}^2$ can be red/blue coloured with no pair of red

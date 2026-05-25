@@ -37,13 +37,14 @@ are collectively coprime. -/
 noncomputable def h (n : ℕ) : ℕ∞ := sInf {m | 2 < m ∧
   ((Finset.Icc 2 m.toNat).image fun i => (i ^ n - 1)).gcd id = 1}
 
-/-- `n + 1` is prime iff `h n = n + 1`. -/
-@[category test, AMS 11]
+/-- `n + 1` is prime iff `h n = n + 1`. This is described as 'easy to see' in [Er74b]. -/
+@[category textbook, AMS 11]
 theorem Nat.Prime.h_eq_add_one {n : ℕ} (hn : 2 < n) : h n = n + 1 ↔ (n + 1).Prime := by
   sorry
 
-/-- For odd `n`, the values of `h n` form an unbounded set. -/
-@[category test, AMS 11]
+/-- For odd `n`, the values of `h n` form an unbounded set.
+This is described as 'easy to see' in [Er74b]. -/
+@[category textbook, AMS 11]
 theorem erdos_770.variants.odd_h_unbounded : Unbounded (· ≤ ·) (ENat.toNat '' (h '' Odd)):= by
   sorry
 

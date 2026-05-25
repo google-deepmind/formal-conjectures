@@ -82,9 +82,6 @@ noncomputable def S (G : SimpleGraph α) : ℝ :=
 noncomputable def local_eccentricity (G : SimpleGraph α) (v : α) : ENat :=
   sSup (Set.range (G.edist v))
 
-/-- The largest integer less than or equal to `x`. -/
-noncomputable def FLOOR (x : ℝ) : ℝ := ⌊x⌋
-
 /-- Eccentricity of a vertex. -/
 noncomputable def eccentricity (G : SimpleGraph α) (v : α) : ℕ∞ :=
   sSup (Set.range (G.edist v))
@@ -601,5 +598,6 @@ theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     push_cast
     ring
   · simp
+
 
 end SimpleGraph

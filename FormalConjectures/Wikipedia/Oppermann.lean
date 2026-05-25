@@ -57,7 +57,7 @@ theorem oppermann_conjecture (x : ℕ) (hx : 2 ≤ x) :
   sorry
 
 /-- Oppermann's conjecture implies Brocard's conjecture. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem oppermann_implies_brocard (n : ℕ) (hn : 1 ≤ n) (P : type_of% oppermann_conjecture) :
     letI prev := n.nth Nat.Prime
     letI next := (n+1).nth Nat.Prime
@@ -65,7 +65,7 @@ theorem oppermann_implies_brocard (n : ℕ) (hn : 1 ≤ n) (P : type_of% opperma
   sorry
 
 /-- Oppermann's conjecture implies Legendre's conjecture. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem oppermann_implies_legendre (n : ℕ) (hn : 1 ≤ n) (P : type_of% oppermann_conjecture) :
     ∃ p ∈ Ioo (n ^ 2) ((n + 1) ^ 2), p.Prime := by
   obtain ⟨⟨p, ph⟩, _⟩ := P (n + 1) (by simpa)

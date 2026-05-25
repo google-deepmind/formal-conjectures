@@ -48,13 +48,13 @@ theorem erdos_346.variants.f_isLacunary : IsLacunary f := by
   sorry
 
 /-- The sequence `f` is strongly complete, and this is proved in [Gr64d]. -/
-@[category test, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_346.variants.f_isAddStronglyCompleteNatSeq : IsAddStronglyCompleteNatSeq f := by
   sorry
 
 /-- The sequence `f` is not complete whenever infinitely many terms are removed from it, and this
 is proved in [Gr64d]. -/
-@[category test, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_346.variants.f_not_isAddComplete {B : Set ℕ} (h : B ⊆ range f) (hB : B.Infinite) :
     ¬ IsAddComplete (range f \ B) := by
   sorry

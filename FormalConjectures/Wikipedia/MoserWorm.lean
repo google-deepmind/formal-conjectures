@@ -46,7 +46,7 @@ A disc of radius 1 / 2 is a worm cover.
 
 This follows by translating the center of the disc to the midpoint of the worm.
 -/
-@[category high_school, AMS 52]
+@[category textbook, AMS 52]
 theorem disc_mem_worm_covers : Metric.closedBall 0 0.5 ∈ WormCovers := by
   sorry
 

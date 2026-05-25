@@ -38,10 +38,10 @@ distinct distances determined between the $x_i$, for some constant $c>0$ and
 all $n$ sufficiently large?
 
 Zach Hunter has observed that taking $n$ points equally spaced on a circle
-disproves this conjecture. -/
-@[category research solved, AMS 5 52]
+disproves one natural interpretation of this conjecture. -/
+@[category research open, AMS 5 52]
 theorem erdos_655 :
-    answer(False) ↔ ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ (X : Finset ℝ²), #X = n → IsValid X →
+    answer(sorry) ↔ ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ (X : Finset ℝ²), #X = n → IsValid X →
       (1 + c) * n / 2 ≤ distinctDistances X := by
   sorry
 

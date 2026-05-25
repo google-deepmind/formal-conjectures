@@ -46,7 +46,7 @@ This follows from Parseval's identity:
 $$\frac{1}{2\pi} \int_0^{2\pi} |P(e^{i\theta})|^2 d\theta = \sum_{k=0}^{n} |a_k|^2 = n+1$$
 since each $|a_k|^2 = 1$.
 -/
-@[category graduate, AMS 12 30]
+@[category textbook, AMS 12 30]
 theorem erdos_1150.variants.parseval_lower_bound (P : ℂ[X]) (n : ℕ)
     (hcoeff : ∀ i ≤ P.natDegree, P.coeff i = -1 ∨ P.coeff i = 1)
     (hdeg : P.natDegree = n) :
