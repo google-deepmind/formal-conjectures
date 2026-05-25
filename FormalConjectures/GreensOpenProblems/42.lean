@@ -64,10 +64,11 @@ the Cohn-Elkies scheme and generate *some* valid upper bound.
 -/
 def SatisfiesCohnElkiesScheme (f : V → ℝ) : Prop :=
   CohnElkiesAdmissible f ∧
+  (0 < f 0) ∧                          -- Positive value at the origin
+  (0 < fHat f 0) ∧                     -- Positive frequency at the origin
   (∀ x y : V, ‖x‖ = ‖y‖ → f x = f y) ∧ -- Radial symmetry
   (∀ x : V, 2 ≤ ‖x‖ → f x ≤ 0) ∧       -- Spatial constraint (minimum distance 2)
-  (∀ t : V, 0 ≤ fHat f t) ∧            -- Frequency positivity
-  (0 < fHat f 0)                       -- Non-zero frequency at the origin
+  (∀ t : V, 0 ≤ fHat f t)              -- Frequency positivity
 
 /--
 The statement that there exists a function in dimension `d` satisfying the Cohn-Elkies
