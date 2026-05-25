@@ -66,41 +66,38 @@ def SatisfiesCohnElkiesScheme (f : V → ℝ) : Prop :=
   (0 < fHat f 0)                       -- Non-zero frequency at the origin
 
 /--
+The statement that there exists a function in dimension `d` satisfying the Cohn-Elkies
+scheme which achieves the center density bound `bound`.
+-/
+def CohnElkiesOptimal (d : ℕ) (bound : ℝ) : Prop :=
+  ∃ f : ℝ^d → ℝ,
+    SatisfiesCohnElkiesScheme f ∧
+    f 0 / fHat f 0 = bound
+
+/--
 Can the Cohn-Elkies scheme be used to prove the optimal bound for circle-packings in 2 dimensions?
 -/
 @[category research open, AMS 51 52]
 theorem green_42 :
-    answer(sorry) ↔ ∃ f : ℝ^2  → ℝ,
-      SatisfiesCohnElkiesScheme f ∧
-      -- Achieves optimal center density for the 2D hexagonal lattice
-      f 0 / fHat f 0 = Real.sqrt 3 / 6 := by
+    answer(sorry) ↔ CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
   sorry
 
 /-- [CoEl03] proved this when $d = 1$. -/
 @[category research solved, AMS 51 52]
 theorem green_42.variants.dimension_one :
-    ∃ f : ℝ^1 → ℝ,
-      SatisfiesCohnElkiesScheme f ∧
-      -- Achieves optimal center density for the 1D lattice
-      f 0 / fHat f 0 = 1 / 2 := by
+    CohnElkiesOptimal 1 (1 / 2) := by
   sorry
 
 /-- [Vi17] established the case $d = 8$. -/
 @[category research solved, AMS 51 52]
 theorem green_42.variants.dimension_eight :
-    ∃ f : ℝ^8 → ℝ,
-      SatisfiesCohnElkiesScheme f ∧
-      -- Achieves optimal center density for the E8 lattice
-      f 0 / fHat f 0 = 1 / 16 := by
+    CohnElkiesOptimal 8 (1 / 16) := by
   sorry
 
 /-- In [CKM17], [Vi17] was adapted to $d = 24$. -/
 @[category research solved, AMS 51 52]
 theorem green_42.variants.dimension_twenty_four :
-    ∃ f : ℝ^24 → ℝ,
-      SatisfiesCohnElkiesScheme f ∧
-      -- Achieves optimal center density for the Leech lattice
-      f 0 / fHat f 0 = 1 := by
+    CohnElkiesOptimal 24 1 := by
   sorry
 
 end Green42
