@@ -24,6 +24,10 @@ A conjecture of Lam and Litt on algebraic solutions of algebraic ODEs.
 *Reference:* [arxiv/2501.13175](https://arxiv.org/abs/2501.13175)
 **Algebraicity and integrality of solutions to differential equations**
 by *Yeuk Hay Joshua Lam, Daniel Litt*
+
+TODO:
+- Lam-Litt conjecture implies Grothendieck p-curvature conjecture.
+- Examples in Remark 1.1.3 and 1.1.5 on the conditions of the conjecture.
 -/
 
 open Real MvPolynomial
