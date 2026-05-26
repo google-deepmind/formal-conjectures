@@ -42,7 +42,7 @@ jobs:
             '',
             `- Please take a look at the [style guidelines](${styleGuideUrl}), especially the conventions for references, categories, AMS tags, and \`answer(sorry)\`.`,
             '- You can manage some PR labels by leaving a comment with `+label-name` or `-label-name`; for example, `+awaiting-author` or `-awaiting-author`.',
-            '- This repository is mainly for formalised statements. Proofs longer than about 25-50 lines are usually out of scope; longer proofs can be hosted elsewhere and linked using the `formal_proof` mechanism.',
+            '- This repository is mainly for formalised _statements_. Proofs longer than about 25-50 lines are usually out of scope; longer proofs are welcome to be included/linked via the `formal_proof` mechanism.',
             '',
             'Thanks again for helping improve Formal Conjectures.'
           ].join('\n')
