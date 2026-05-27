@@ -16,9 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open scoped Topology
-open Metric Set Filter
-
 /-!
 # Bloch and Landau constants
 
@@ -38,6 +35,8 @@ open Metric Set Filter
 - [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
 - [Bhowmik–Sen](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/improved-bloch-and-landau-constants-for-meromorphic-functions/FD465D1F2CEF7E8C62AFF16C3E89B7B4)
 -/
+open scoped Topology
+open Metric Set Filter
 namespace Bloch
 
 /-- The **Bloch radius** $B_f$ of a function $f$ is the radius of the largest univalent disk in the
