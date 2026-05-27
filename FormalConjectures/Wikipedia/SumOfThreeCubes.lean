@@ -23,9 +23,9 @@ An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and
 `n` is not `4` or `5` mod `9`.
 
 *References:*
- - [Wikipedia](https://en.wikipedia.org/wiki/Sums_of_three_cubes)
- - [mathoverflow/100324](https://mathoverflow.net/a/100324)
-asked by user [*David Feldman*](https://mathoverflow.net/users/10909/david-feldman)
+- [Wikipedia](https://en.wikipedia.org/wiki/Sums_of_three_cubes)
+- [mathoverflow/100324](https://mathoverflow.net/a/100324) asked by user
+  [*David Feldman*](https://mathoverflow.net/users/10909/david-feldman)
 -/
 
 namespace SumOfThreeCubes

@@ -26,9 +26,9 @@ This file adds three conjectures about the Mandelbrot and Multibrot sets:
 The first two conjectures are related in that the former implies the latter.
 
 *References:*
- - [Wikipedia](https://en.wikipedia.org/wiki/Mandelbrot_set#Local_connectivity)
- - [arxiv/math/9902155](https://arxiv.org/abs/math/9902155)
- - [mathoverflow/37229](https://mathoverflow.net/questions/37229/)
+- [Wikipedia](https://en.wikipedia.org/wiki/Mandelbrot_set#Local_connectivity)
+- [arxiv/math/9902155](https://arxiv.org/abs/math/9902155)
+- [mathoverflow/37229](https://mathoverflow.net/questions/37229/)
 -/
 
 open Topology Set Function Filter Bornology Metric MeasureTheory

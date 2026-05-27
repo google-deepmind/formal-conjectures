@@ -23,11 +23,11 @@ A finite group is a Leinster group if the sum of the orders of all its normal su
 equals twice the group's order.
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/Leinster_group)
-* Leinster, Tom (2001). "Perfect numbers and groups".
+- [Wikipedia](https://en.wikipedia.org/wiki/Leinster_group)
+- Leinster, Tom (2001). "Perfect numbers and groups".
   [arXiv:math/0104012](https://arxiv.org/abs/math/0104012)
 
-TODO: The following properties from the Wikipedia article can also be formalized:
+Further properties from the Wikipedia article that could also be formalized:
 - There are no Leinster groups that are symmetric or alternating.
 - There is no Leinster group of order p²q² where p, q are primes.
 - No finite semi-simple group is Leinster.

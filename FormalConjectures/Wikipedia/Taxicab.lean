@@ -35,11 +35,11 @@ In particular, it is not known whether there exists a
 taxicab number for $k=5$, $m=2$, and $n=2$.
 
 *References:*
- - [Wikipedia](https://en.wikipedia.org/wiki/Taxicab_number)
- - [Generalized taxicab number](https://en.wikipedia.org/wiki/Generalized_taxicab_number)
- - [OEIS taxicab cubes](https://oeis.org/A001235)
- - [OEIS taxicab 4th powers](https://oeis.org/A018786)
- - [OEIS taxicab conjecture](https://oeis.org/A088703)
+- [Wikipedia](https://en.wikipedia.org/wiki/Taxicab_number)
+- [Generalized taxicab number](https://en.wikipedia.org/wiki/Generalized_taxicab_number)
+- [OEIS taxicab cubes](https://oeis.org/A001235)
+- [OEIS taxicab 4th powers](https://oeis.org/A018786)
+- [OEIS taxicab conjecture](https://oeis.org/A088703)
 -/
 
 namespace Taxicab

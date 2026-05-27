@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Lander, Parkin, and Selfridge Conjecture
 
-**Reference:** https://en.wikipedia.org/wiki/Lander,_Parkin,_and_Selfridge_conjecture
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lander,_Parkin,_and_Selfridge_conjecture)
 -/
 
 namespace LanderParkinSelfridge
