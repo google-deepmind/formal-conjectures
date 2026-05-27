@@ -144,6 +144,7 @@ In particular, is it true that `ell(N) ~ N^(1/2)`?
 -/
 @[category research open, AMS 11]
 theorem erdos_530.parts.ii : answer(sorry) ↔ SidonSubsetRootAsymptotic := by
+
   sorry
 
 /--
