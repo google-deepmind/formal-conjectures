@@ -157,3 +157,4 @@ theorem erdos_530.variants.alon_erdos :
   sorry
 
 end Erdos530
+-- CI: trivial change to trigger lake build
