@@ -155,6 +155,7 @@ sets.
 @[category research open, AMS 11]
 theorem erdos_530.variants.alon_erdos :
     answer(sorry) ↔ AlonErdosStrongSidonCoverConjecture := by
+
   sorry
 
 end Erdos530
