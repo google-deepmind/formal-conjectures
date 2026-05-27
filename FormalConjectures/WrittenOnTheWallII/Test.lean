@@ -94,7 +94,7 @@ theorem house_diameter : ediam HouseGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem house_radius : eradius HouseGraph = 2 := by
+theorem house_radius : radius HouseGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
@@ -165,7 +165,7 @@ theorem K4_diameter : ediam K4 = 1 := by
   sorry
 
 @[category test, AMS 5]
-theorem K4_radius : eradius K4 = 1 := by
+theorem K4_radius : radius K4 = 1 := by
   sorry
 
 @[category test, AMS 5]
@@ -236,7 +236,7 @@ theorem petersen_diameter : ediam PetersenGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem petersen_radius : eradius PetersenGraph = 2 := by
+theorem petersen_radius : radius PetersenGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
@@ -307,7 +307,7 @@ theorem C6_diameter : ediam C6 = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem C6_radius : eradius C6 = 3 := by
+theorem C6_radius : radius C6 = 3 := by
   sorry
 
 @[category test, AMS 5]
@@ -377,7 +377,7 @@ theorem Star5_diameter : ediam Star5 = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem Star5_radius : eradius Star5 = 1 := by
+theorem Star5_radius : radius Star5 = 1 := by
   sorry
 
 @[category test, AMS 5]

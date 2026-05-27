@@ -45,20 +45,6 @@ noncomputable def m (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 
-/-- `largestInducedForestSize G` is the size of a largest induced forest of `G`. -/
-noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, (G.induce s).IsAcyclic ∧ s.card = n }
-
-/-- `largestInducedBipartiteSubgraphSize G` is the size of a largest induced
-bipartite subgraph of `G`. -/
-noncomputable def largestInducedBipartiteSubgraphSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, (G.induce s).IsBipartite ∧ s.card = n }
-
-/-- `b G` is the number of vertices of a largest induced bipartite subgraph of `G`.
-Returned as a real number. -/
-noncomputable def b (G : SimpleGraph α) : ℝ :=
-  (largestInducedBipartiteSubgraphSize G : ℝ)
-
 /-- A unit distance graph in ℝ²:
 A graph where the vertices V are a collection of points in ℝ² and there is
 an edge between two points if and only if the distance between them is 1. -/
