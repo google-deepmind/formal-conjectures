@@ -40,7 +40,7 @@ def IsOfClass : ℕ+ → ℕ → Prop := fun r ↦
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
 Show that for each $r$ there exists a prime $p$ of class $r$. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem exists_p (r : ℕ+) : ∃ p, p.Prime ∧ IsOfClass r p := by
   sorry
 

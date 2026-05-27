@@ -50,8 +50,7 @@ This is discussed in problem B36 of Guy's collection [Gu04].
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos418.lean", AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos418.lean"]
 theorem erdos_418 : answer(True) ↔ { (n - n.totient : ℕ) | n }ᶜ.Infinite := by
   sorry
 

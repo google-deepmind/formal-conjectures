@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Polynomial.Bivariate
-import Mathlib.RingTheory.Algebraic.Pi
+
+public import Mathlib.Algebra.Polynomial.Bivariate
+public import Mathlib.RingTheory.Algebraic.Pi
+
+@[expose] public section
 
 /-!
 # Algebra over the Ring of Polynomials

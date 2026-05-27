@@ -61,8 +61,8 @@ Erdős-Turán conjecture, see Erdõs Problem 28,
 (since establishing this for any function $g(N) → \infty$ would imply a positive solution to Erdős
 Problem 28).
 -/
-@[category undergraduate, AMS 11]
-theorem erdos_28_of_erdos_40 (h_erdos_40 : Erdos40ForSet .univ) : type_of% Erdos28.erdos_28 := by
+@[category textbook, AMS 11]
+theorem erdos_40.variants.implies_erdos_28 (h_erdos_40 : Erdos40ForSet .univ) : type_of% Erdos28.erdos_28 := by
   simp only [Erdos40ForSet, Erdos40For, sumRep, sumConv, indicatorOne, mem_univ, forall_const]
     at h_erdos_40
   intro A hA

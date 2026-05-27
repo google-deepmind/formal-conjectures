@@ -153,8 +153,10 @@ The Casas-Alvero conjecture fails in positive characteristic `p` for polynomials
 This was shown by Graf von Bothmer, Labs, Schicho, and van de Woestijne.
 
 Reference: [The Casas-Alvero conjecture for infinitely many degrees](https://arxiv.org/pdf/math/0605090)
+
+Formal proof linked here provided by AlphaProof.
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/4f2343508f2c157f35abb7be4814bd550280ce81/FormalConjectures/Paper/CasasAlvero.lean#163"]
 theorem casas_alvero.positive_char_counterexample {p : ℕ} (hp : p.Prime) :
     ∃ (K : Type*) (_ : Field K) (_ : CharP K p),
       let P := X ^ (p + 1) - X ^ p

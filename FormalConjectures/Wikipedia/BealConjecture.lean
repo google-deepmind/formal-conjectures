@@ -39,7 +39,7 @@ theorem beal_conjecture : bealConjecture := by
 /--
 The Beal Conjecture implies Fermat's last theorem
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem flt_of_beal_conjecture (H : bealConjecture) :
     FermatLastTheorem := by
   intro n hn x y z hx hy hz

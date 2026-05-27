@@ -20,8 +20,12 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 274
 
 *References:*
-[erdosproblems.com/274](https://www.erdosproblems.com/274)
-[Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [erdosproblems.com/274](https://www.erdosproblems.com/274)
+* [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [arXiv:1803.08301](https://arxiv.org/abs/1803.08301)
+* [arXiv:1803.03569](https://arxiv.org/abs/1803.03569)
+* [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
+* [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
 
 open scoped Pointwise Cardinal
@@ -52,7 +56,7 @@ different sizes? (i.e. each element is contained in exactly one of the cosets.)
 @[category research open, AMS 20]
 theorem erdos_274 : answer(sorry) ↔ ∃ (G : Type*) (h : Group G) (hG : 1 < ENat.card G)
     (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
-      1 < Fintype.card ι ∧ (Set.range P.parts).Pairwise fun A B ↦ #A ≠ #B := by
+      1 < Fintype.card ι ∧ ∃ i j, i ≠ j ∧ #(P.parts i) ≠ #(P.parts j) := by
   sorry
 
 /--

@@ -19,7 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 188
 
-*Reference:* [erdosproblems.com/188](https://www.erdosproblems.com/188)
+*References:*
+- [erdosproblems.com/188](https://www.erdosproblems.com/188)
+- [EGMRSS75] Erdős, P. and Graham, R. L. and Montgomery, P. and Rothschild, B. L. and Spencer, J.
+  and Straus, E. G., Euclidean {R}amsey theorems. {II}. (1975), 529--557.
+- [Ts17] Tsaturian, Sergei, A {E}uclidean {R}amsey result in the plane. Electron. J. Combin. (2017),
+  Paper No. 4.35, 9.
 -/
 
 namespace Erdos188
@@ -29,8 +34,16 @@ The set of numbers $k$ such that $\mathbb{R}^2$ can be red/blue coloured with no
 points unit distance apart, and no $k$-term arithmetic progression of blue points with distance 1.
 -/
 def s := { k : ℕ | ∃ blue : Set ℂ,
-    (Set.univ \ blue).Pairwise (fun c₁ c₂ => dist c₁ c₂ ≠ 1) ∧
-    ¬ (∃ bs ⊆ blue, (∃ s, bs.IsAPOfLengthWith k s 1)) }
+  (Set.univ \ blue).Pairwise (fun c₁ c₂ => dist c₁ c₂ ≠ 1) ∧
+    ¬ (∃ᵉ (bs ⊆ blue) (z) (d), ‖d‖ = 1 ∧ bs.IsAPOfLengthWith k z d) }
+
+/--
+What is the smallest $k$ such that $\mathbb{R}^2$ can be red/blue coloured with no pair of red
+points unit distance apart, and no $k$-term arithmetic progression of blue points with distance 1?
+-/
+@[category research open, AMS 5]
+theorem erdos_188 : IsLeast s answer(sorry) := by
+  sorry
 
 /--
 Old and new problems and results in combinatorial number theory by Erdős & Graham (Page 14, 15):
@@ -40,7 +53,7 @@ two sets $A$ and $B$ so that $A$ contains no pair of points with distance 1 and 
 of length $M$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_188.nonempty : s.Nonempty := by
+theorem erdos_188.variants.nonempty : s.Nonempty := by
   sorry
 
 /--
@@ -50,15 +63,7 @@ How small can $M$ be made? The only estimate currently known is that $M \le 1000
 In the other direction, it has just been shown by R. Juhász [Ju (79)] that we must have $M \ge 5$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_188.estimate : (∀ k, k ∈ s → 5 ≤ k) ∧ (∃ k ∈ s, k ≤ 10000000) := by
-  sorry
-
-/--
-What is the smallest $k$ such that $\mathbb{R}^2$ can be red/blue coloured with no pair of red
-points unit distance apart, and no $k$-term arithmetic progression of blue points with distance 1?
--/
-@[category research open, AMS 5]
-theorem erdos_188 : IsLeast s answer(sorry) := by
+theorem erdos_188.variants.estimate : (∀ k, k ∈ s → 5 ≤ k) ∧ (∃ k ∈ s, k ≤ 10000000) := by
   sorry
 
 end Erdos188

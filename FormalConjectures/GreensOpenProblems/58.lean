@@ -16,14 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open scoped Pointwise
-
 /-!
 # Ben Green's Open Problem 58
 
 *Reference:* [Ben Green's Open Problem 58](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 58)
 -/
-
+open scoped Pointwise
 namespace Green58
 
 /--
@@ -33,7 +31,7 @@ contain a composite number?
 @[category research open, AMS 5 11]
 theorem green_58 :
     answer(sorry) ↔
-      ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N) (B ⊆ Finset.Icc 1 N),
+      ∀ᶠ (N : ℕ) in Filter.atTop, ∀ᵉ (A ⊆ Finset.Icc 1 N) (B ⊆ Finset.Icc 1 N),
         (N : ℝ) ^ (0.49 : ℝ) ≤ (A.card : ℝ) →
         (N : ℝ) ^ (0.49 : ℝ) ≤ (B.card : ℝ) →
         ∃ m ∈ (A + B), m.Composite := by

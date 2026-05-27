@@ -16,15 +16,13 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-variable {α : Type} [AddCommMonoid α]
-
 /-!
 # Erdős Problem 33
 
 *Reference:* [erdosproblems.com/33](https://www.erdosproblems.com/33)
 -/
-
-open Classical
+variable {α : Type} [AddCommMonoid α]
+open Classical Set
 open scoped goldenRatio
 
 namespace Erdos33
@@ -42,7 +40,7 @@ for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of
 -/
 @[category research open, AMS 11]
 theorem erdos_33 : ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
-    (A.1.interIcc 1 N).ncard / (√N : EReal)) = answer(sorry) := by
+    (A.1 ∩ Icc 1 N).ncard / (√N : EReal)) = answer(sorry) := by
   sorry
 
 /--
@@ -50,7 +48,7 @@ Erdos observed that this value is finite and > 1.
 -/
 @[category research solved, AMS 11]
 theorem erdos_33.variants.one_mem_lowerBounds : ∃ A, AdditiveBasisCondition A ∧
-    1 < Filter.atTop.limsup (fun N => (A.interIcc 1 N).ncard / √N) := by
+    1 < Filter.atTop.limsup (fun N => (A ∩ Icc 1 N).ncard / √N) := by
   sorry
 
 /--
@@ -61,7 +59,7 @@ Wouter van Doorn.
 @[category research solved, AMS 11]
 theorem erdos_33.variants.vanDoorn :
     ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
-    (A.1.interIcc 1 N).ncard / (√N : EReal)) ≤ ↑(2 * (φ ^ ((5 : ℝ) / 2))) := by
+    (A.1 ∩ Icc 1 N).ncard / (√N : EReal)) ≤ ↑(2 * (φ ^ ((5 : ℝ) / 2))) := by
   sorry
 
 end Erdos33

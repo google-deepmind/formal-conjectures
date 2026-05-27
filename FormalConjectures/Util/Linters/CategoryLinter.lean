@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Attributes.Basic
-import Mathlib.Tactic.Lemma
+public import FormalConjectures.Util.Attributes.Basic
+public import Mathlib.Tactic.Lemma
 
 
 /-! # The Category Linter
@@ -26,10 +27,12 @@ the appropriate tags in order to distinguish between open/already solved
 problems and background results/sanity checks.
 -/
 
+public meta section
+
 open Lean Elab Meta Linter Command Parser Term
 
 register_option linter.style.category_attribute : Bool := {
-  defValue := true
+  defValue := false
   descr := "enable the `category` attribute style linter"
 }
 

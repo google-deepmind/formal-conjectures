@@ -38,14 +38,14 @@ def AbundancyIndex (n : ℕ) : ℚ := (∑ d ∈ n.divisors, d) / n
 Are there any odd weird numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_470.part1 : answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
+theorem erdos_470.parts.i : answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
   sorry
 
 /--
 Are there infinitely many primitive weird numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_470.part2 : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
+theorem erdos_470.parts.ii : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
   sorry
 
 /--
@@ -59,7 +59,7 @@ theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity
 /--
 The smallest weird number is 70.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_470.variants.smallest_weird_eq_70 : (∀ n < 70, ¬n.Weird) ∧ (70).Weird := by
   sorry
 

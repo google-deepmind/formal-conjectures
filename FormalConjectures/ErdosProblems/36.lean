@@ -15,8 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open scoped Topology
-open Filter
 
 /-!
 # Erdős Problem 36
@@ -25,7 +23,8 @@ open Filter
  - [erdosproblems.com/36](https://www.erdosproblems.com/36)
  - [Wikipedial: Minimum overlap problem](https://en.wikipedia.org/wiki/Minimum_overlap_problem)
 -/
-
+open scoped Topology
+open Filter
 namespace Erdos36
 
 /--
@@ -85,13 +84,12 @@ minimum overlap problem is to determine the asymptotic behavior of this quotient
 -/
 noncomputable def MinOverlapQuotient (N : ℕ) := (M N : ℝ) / N
 
-
 /--
 A lower bound of $\frac 1 4$.
 See [Some remarks on number theory (in Hebrew)](https://users.renyi.hu/~p_erdos/1955-13.pdf)
 by *Paul Erdős*, Riveon Lematematika 9, p.45-48,1955
 -/
-@[category graduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem minimum_overlap.variants.lower.erdos_1955 :
     (1 : ℝ) / 4 < atTop.liminf MinOverlapQuotient := by
   sorry
@@ -135,15 +133,14 @@ by *Ethan Patrick White*, 2022
 theorem minimum_overlap.variants.lower.white_2022 : 0.379005 < atTop.liminf MinOverlapQuotient := by
   sorry
 
-
-
 /--
 The example (with $N$ even), $A = \{\frac N 2 + 1, \dots, \frac{3N}{2}\}$
 shows an upper bound of $\frac 1 2$.
 -/
 @[category research solved, AMS 5 11]
 theorem minimum_overlap.variants.upper.erdos_1955 :
-  atTop.limsup MinOverlapQuotient ≤ (1 : ℝ) / 2 := by sorry
+    atTop.limsup MinOverlapQuotient ≤ (1 : ℝ) / 2 := by
+  sorry
 
 /--
 An upper bound of $\frac 2 5$.
@@ -175,8 +172,6 @@ by *Jan Kristian Haugland*
 theorem minimum_overlap.variants.upper.haugland_2022 :
     atTop.limsup MinOverlapQuotient ≤ 0.3809268534330870 := by sorry
 
-
-
 /--
 Find a better lower bound!
 -/
@@ -192,7 +187,6 @@ Find a better upper bound!
 theorem erdos_36.variants.upper :
     ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c = answer(sorry) := by
   sorry
-
 
 /--
 The limit of `MinOverlapQuotient` exists and it is less than $0.385694$.

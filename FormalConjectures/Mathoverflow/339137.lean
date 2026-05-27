@@ -15,8 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-
-open scoped Polynomial
+import FormalConjectures.GreensOpenProblems.«28»
 
 /-!
 # Mathoverflow 339137
@@ -28,7 +27,7 @@ Why do polynomials with coefficients 0,1
 *Reference:* [mathoverflow/339137](https://mathoverflow.net/questions/339137)
 asked by user [*Sil*](https://mathoverflow.net/users/136794/sil)
 -/
-
+open scoped Polynomial
 namespace Mathoverflow339137
 
 /--
@@ -39,8 +38,8 @@ Note that zero coefficients are not included in `P.coeffs`.
 -/
 def IsZeroOne (P : ℝ[X]) := P.coeffs ⊆ {1}
 
--- TODO(lezeau): add probabilistic reformulation and statement
--- that coefficients must at least lie in `[0, 1]`
+-- TODO(lezeau): add statement that coefficients must at least lie in `[0, 1]`
+
 /--
 Let $P(x), Q(x) ∈ ℝ[x]$ be two monic polynomials with non-negative coefficients.
 If $R(x) = P(x)Q(x)$ is a $0,1$ polynomial (coefficients only from $\{0,1\}$), then $P(x)$ and $Q(x)$
@@ -51,6 +50,21 @@ theorem mathoverflow_339137 (P Q R : ℝ[X]) (hP: P.Monic) (hQ : Q.Monic)
     (hp : ∀ c ∈ P.coeffs, 0 ≤ c) (hq : ∀ c ∈ Q.coeffs, 0 ≤ c)
     (h : R = P * Q) (hR : IsZeroOne R) :
     IsZeroOne P ∧ IsZeroOne Q := by
+  sorry
+
+/--
+Green's Open Problem 28 is the probabilistic reformulation of Mathoverflow 339137.
+
+Suppose that $X, Y$ are two finitely-supported independent random variables taking integer values,
+and such that $X + Y$ is uniformly distributed on its range. Are $X$ and $Y$ themselves uniformly
+distributed on their ranges?
+
+Mathematically, this equivalence is established via Probability Generating Functions (PGFs),
+shifting the support to $\mathbb{N}$, and appropriately scaling the coefficients.
+-/
+@[category textbook, AMS 60]
+theorem mathoverflow_339137_probabilistic :
+    type_of% Mathoverflow339137.mathoverflow_339137 ↔ type_of% Green28.green_28 := by
   sorry
 
 end Mathoverflow339137

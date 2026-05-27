@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Order.Interval.Finset.Basic
-import Mathlib.Data.Set.Card
+
+public import Mathlib.Order.Interval.Finset.Basic
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
 
 theorem Finset.Iio_eventually_nonempty (β : Type*) [PartialOrder β] [LocallyFiniteOrder β]
     [OrderBot β] [Nontrivial β] : ∃ (b : β), ∀ n ≥ b, (Finset.Iio n).Nonempty :=

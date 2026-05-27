@@ -15,21 +15,24 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open Polynomial
 
 /-!
 # Dickson's conjecture
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Dickson%27s_conjecture)
+- [PrimePages glossary](https://t5k.org/glossary/xpage/DicksonsConjecture.html)
+- [OEIS Wiki](https://oeis.org/wiki/Dickson%27s_conjecture)
+- [MathWorld](https://mathworld.wolfram.com/DicksonsConjecture.html)
+- [Leonard Eugene Dickson, *History of the Theory of Numbers, Vol. I: Divisibility and Primality*](https://archive.org/details/historyoftheoryo01dickuoft)
 - [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
-
+open Polynomial
 namespace Dickson
 
 /--
 **Dickson's conjecture**
-If a finite set of in linear integer forms $f_i(n) = a_i n+b_i$ satisfies Schinzel condition,
+If a finite set of linear integer forms $f_i(n) = a_i n+b_i$ satisfies Schinzel condition,
 there exist infinitely many natural numbers $m$ such that $f_i(m)$ are primes for all $i$.
 -/
 @[category research open, AMS 11]
@@ -37,7 +40,7 @@ theorem dickson_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, f.degree = 
     (hfs' : SchinzelCondition fs) : Infinite {n : ℕ | ∀ f ∈ fs, (f.eval (n : ℤ)).natAbs.Prime} := by
   sorry
 
-/-! ## Special cases -/
+/-  ## Special cases -/
 
 /--
 **Polignac's conjecture**

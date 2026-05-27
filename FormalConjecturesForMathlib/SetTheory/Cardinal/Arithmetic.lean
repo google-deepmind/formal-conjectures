@@ -13,7 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.SetTheory.Cardinal.Arithmetic
+module
+
+public import Mathlib.SetTheory.Cardinal.Arithmetic
+
+@[expose] public section
 
 namespace Cardinal
 variable {α : Type*} {s t : Set α}

@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Data.ZMod.Defs
+public import Mathlib.Data.ZMod.Defs
+
+@[expose] public section
 
 /--
 A perfect difference set modulo `n` is a set `D` such that the map `(a, b) ↦ a - b` from

@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.GCDMonoid.Finset
-import Mathlib.Order.Interval.Finset.Defs
+
+public import Mathlib.Algebra.GCDMonoid.Finset
+public import Mathlib.Order.Interval.Finset.Defs
+
+@[expose] public section
 
 namespace Finset
 

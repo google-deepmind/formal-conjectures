@@ -44,13 +44,13 @@ example : ∀ i < 15, ¬ 99215 - i ∣ Nat.choose 99215 15 :=
 
 /-- The following is Schinzel's conjecture, which appears in [Gu04]. -/
 @[category research open, AMS 11]
-theorem erdos_387.schinzel : answer(sorry) ↔
+theorem erdos_387.variants.schinzel : answer(sorry) ↔
     ∀ᶠ k in atTop, ¬ IsPrimePow k → ∃ n : ℕ, ∀ i < k, ¬ n - i ∣ n.choose k := by
   sorry
 
 /-- It is easy to see that `n.choose k` has a divisor in `[n / k, n]`. -/
 @[category research solved, AMS 11]
-theorem erdos_387.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n) : ∃ d : ℕ,
+theorem erdos_387.variants.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n) : ∃ d : ℕ,
     (d : ℝ) ∈ Set.Icc (n / k : ℝ) n ∧ d ∣ n.choose k := by
   by_cases k = 0 <;> simp_all
   refine ⟨(n.choose k).gcd n, ⟨?_, ?_⟩, gcd_dvd_left _ _⟩
@@ -65,7 +65,7 @@ theorem erdos_387.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n) : ∃ d
 /-- Is it true for any `c < 1` and all `n` sufficiently large, for all `1 ≤ k < n`, `n.choose k`
 has a divisor in `(cn, n]`? This is a variant of `erdos_387` and appears in [Gu04]. -/
 @[category research open, AMS 11]
-theorem erdos_387.variant : answer(sorry) ↔ ∀ c : ℝ, c < 1 → ∀ᶠ n : ℕ in atTop, ∀ k : ℕ, 1 ≤ k →
+theorem erdos_387.variants.guy : answer(sorry) ↔ ∀ c : ℝ, c < 1 → ∀ᶠ n : ℕ in atTop, ∀ k : ℕ, 1 ≤ k →
     k < n → ∃ d : ℕ, (d : ℝ) ∈ Set.Ioc (c * n) n ∧ d ∣ n.choose k := by
   sorry
 

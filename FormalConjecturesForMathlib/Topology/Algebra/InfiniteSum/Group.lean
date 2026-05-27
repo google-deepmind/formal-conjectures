@@ -13,7 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Topology.Algebra.InfiniteSum.Group
+module
+
+public import Mathlib.Topology.Algebra.InfiniteSum.Group
+
+@[expose] public section
 
 open Filter
 open scoped Topology
