@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.WrittenOnTheWallII.GraphConjecture315
 
 /-!
 # Written on the Wall II - Conjecture 291
@@ -57,14 +56,9 @@ and `frequency(t_min(v))` is the number of vertices achieving the minimum triang
 
 namespace WrittenOnTheWallII.GraphConjecture291
 
-open Classical SimpleGraph WrittenOnTheWallII.GraphConjecture315
+open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The number of triangles (3-cliques) in `G` that are incident to vertex `v`.
-This is the number of 3-element cliques containing `v`. -/
-noncomputable def numTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] (v : α) : ℕ :=
-  ((G.cliqueFinset 3).filter (fun s => v ∈ s)).card
 
 /-- The minimum number of triangles incident to any vertex, over all vertices of `G`. -/
 noncomputable def minTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -63,26 +63,14 @@ number `indepNeighborsCard G v`. This equals `lMin` from DeLaVina's notation. -/
 noncomputable def localIndependenceMin (G : SimpleGraph α) : ℕ :=
   Finset.univ.inf' Finset.univ_nonempty (indepNeighborsCard G)
 
-/-- The set of boundary vertices: vertices whose eccentricity equals the diameter. -/
-noncomputable def boundaryVertices (G : SimpleGraph α) : Finset α :=
-  Finset.univ.filter (fun v => eccentricity G v = maxEccentricity G)
-
-/-- The eccentricity of a set `S` relative to `G`: the maximum over all vertices `u`
-of the minimum distance from `u` to any vertex in `S`.
-If `S` is empty, defined to be 0. -/
-noncomputable def eccSet (G : SimpleGraph α) (S : Finset α) : ℕ :=
-  if h : S.Nonempty then
-    (Finset.univ.image (fun u => (S.image (G.dist u)).min' (Finset.Nonempty.image h _))).max'
-      (Finset.image_nonempty.mpr Finset.univ_nonempty)
-  else 0
-
 /--
 WOWII [Conjecture 145](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 For a simple connected graph `G`,
 `tree(G) ≥ 2 * ecc(B) / λ_min(Ḡ)`
 where `tree(G)` is the number of vertices in a largest induced subtree,
-`ecc(B)` is the eccentricity of the boundary vertices, and
+`ecc(B)` is the eccentricity of the boundary vertices (`eccSet` and `boundaryVertices`
+from `FormalConjecturesForMathlib`), and
 `λ_min(Ḡ)` is the minimum local independence number of the complement graph.
 
 We state the inequality in the form `tree(G) * lMin(Ḡ) ≥ 2 * ecc(B)` to avoid division.
@@ -90,7 +78,7 @@ We state the inequality in the form `tree(G) * lMin(Ḡ) ≥ 2 * ecc(B)` to avoi
 @[category research open, AMS 5]
 theorem conjecture145 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hlMin : 0 < localIndependenceMin Gᶜ) :
-    2 * eccSet G (boundaryVertices G) ≤
+    2 * eccSet G (boundaryVertices G : Set α) ≤
     largestInducedTreeSize G * localIndependenceMin Gᶜ := by
   sorry
 
@@ -106,7 +94,8 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ localIndependenceMin G := Nat.zero_le 
 
 /-- For any graph on `Fin 3`, `eccSet` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ eccSet G (boundaryVertices G) := Nat.zero_le _
+example (G : SimpleGraph (Fin 3)) : 0 ≤ eccSet G (boundaryVertices G : Set (Fin 3)) :=
+  Nat.zero_le _
 
 /-- `boundaryVertices` is a subset of all vertices. -/
 @[category test, AMS 5]

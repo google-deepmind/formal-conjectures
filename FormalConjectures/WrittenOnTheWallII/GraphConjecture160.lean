@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.WrittenOnTheWallII.GraphConjecture133
 
 /-!
 # Written on the Wall II - Conjecture 160
@@ -38,22 +37,17 @@ i.e., the number of pairs of neighbors of `v` that are themselves adjacent.
 The invariant `maxTrianglesAtVertex G` is the maximum of T(v) over all vertices.
 
 **Conjecture 160** uses both `max T(v)` and `c_C4(G)` (the number of induced 4-cycles,
-already defined in GraphConjecture133) to lower bound the WOWII invariant `L_s(G)`,
-which is the **maximum number of leaves over all spanning trees of `G`** (exposed
-in our library as `SimpleGraph.Ls G : ℝ` in
+defined upstream in `FormalConjecturesForMathlib/.../Invariants.lean`) to lower bound
+the WOWII invariant `L_s(G)`, which is the **maximum number of leaves over all
+spanning trees of `G`** (exposed in our library as `SimpleGraph.Ls G : ℝ` in
 `FormalConjecturesForMathlib/Combinatorics/SimpleGraph/GraphConjectures/Definitions.lean`).
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture160
 
-open Classical SimpleGraph WrittenOnTheWallII.GraphConjecture133
+open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The number of triangles incident to vertex `v`: the number of 3-cliques containing `v`.
-A 3-clique containing `v` corresponds to a pair of neighbors of `v` that are adjacent. -/
-noncomputable def numTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] (v : α) : ℕ :=
-  ((G.cliqueFinset 3).filter (fun s => v ∈ s)).card
 
 /-- The maximum number of triangles incident to any vertex in `G`. -/
 noncomputable def maxTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=

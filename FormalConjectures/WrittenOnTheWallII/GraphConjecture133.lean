@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,12 +30,10 @@ import FormalConjectures.Util.ProblemImports
 
 ## Definitions
 
-`cC4 G` counts the number of **induced** 4-cycles in `G`.  We define this by
-counting unordered 4-tuples `{a, b, c, d}` of distinct vertices (with a fixed
-ordering to avoid overcounting) such that the induced subgraph on them is
-isomorphic to the cycle `C₄`, i.e. the induced graph has exactly 4 edges
-arranged as a 4-cycle.  Concretely, we check that the edge set of
-`G.induce {a, b, c, d}` has exactly the 4 edges of some cyclic ordering.
+`cC4 G` counts the number of **induced** 4-cycles in `G`.  We use the
+upstream `SimpleGraph.countInducedC4` (and the auxiliary `isInducedC4`)
+from `FormalConjecturesForMathlib/.../Invariants.lean`, which counts ordered
+4-tuples of distinct vertices forming an induced 4-cycle and divides by `4!`.
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture133
@@ -43,32 +41,6 @@ namespace WrittenOnTheWallII.GraphConjecture133
 open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- Check whether four distinct vertices form an induced 4-cycle in `G`.
-We test all three perfect-matching pairings of the four vertices to find
-a cyclic ordering and verify that the induced subgraph has exactly those 4 edges. -/
-noncomputable def isInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj]
-    (a b c d : α) : Bool :=
-  -- Cyclic orderings up to symmetry: (a-b-c-d), (a-b-d-c), (a-c-b-d)
-  let check (p q r s : α) : Bool :=
-    G.Adj p q && G.Adj q r && G.Adj r s && G.Adj s p &&
-    !G.Adj p r && !G.Adj q s
-  check a b c d || check a b d c || check a c b d
-
-/-- Count of induced C₄ subgraphs of `G`. We count ordered 4-tuples `(a,b,c,d)`
-of distinct vertices for which `isInducedC4 G a b c d = true`, then divide by
-`24 = 4!`.
-
-**Why 24 (and not 8)?** `isInducedC4` tests *all three* perfect-matching
-pairings of the four vertices, so any of the `4! = 24` orderings of a fixed
-unordered induced 4-cycle satisfies the predicate. Dividing by `8` (the size
-of the dihedral group `D₄`) would overcount each induced 4-cycle by a factor
-of `3` — once for each of the three cyclic structures `isInducedC4` accepts.
--/
-noncomputable def countInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  (∑ a : α, ∑ b : α, ∑ c : α, ∑ d : α,
-    if a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d ∧
-       isInducedC4 G a b c d = true then 1 else 0) / 24
 
 /--
 WOWII [Conjecture 133](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)

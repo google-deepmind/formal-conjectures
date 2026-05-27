@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,25 +36,19 @@ open Classical SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-`distMax G S` is the maximum over all vertices `v` of the minimum distance from `v` to
-the set `S`. This is sometimes called the eccentricity of `S` or `ecc(S)`.
--/
-noncomputable def distMax (G : SimpleGraph α) (S : Set α) : ℕ :=
-  let dists := Finset.univ.image (fun v => distToSet G v S)
-  if h : dists.Nonempty then dists.max' h else 0
-
-/--
 WOWII [Conjecture 18](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 For a simple connected graph `G`, the size `b(G)` of a largest induced bipartite subgraph
-satisfies `b(G) ≥ α(G) + ⌈√(dist_max(M))⌉`, where `α(G)` is the independence number,
-and `M` is the set of maximum-degree vertices, and `dist_max(M)` is the maximum over
-all vertices of the minimum distance from that vertex to `M`.
+satisfies `b(G) ≥ α(G) + ⌈√(eccSet(G, M))⌉`, where `α(G)` is the independence number,
+`M` is the set of maximum-degree vertices, and `eccSet(G, M)` is the set eccentricity
+of `M` — the maximum over all vertices of the minimum distance from that vertex to `M`.
+We use the upstream `SimpleGraph.eccSet` invariant from
+`FormalConjecturesForMathlib/.../Invariants.lean`.
 -/
 @[category research solved, AMS 5]
 theorem conjecture18 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let M : Set α := {v | G.degree v = G.maxDegree}
-    (G.indepNum : ℝ) + ⌈Real.sqrt (distMax G M : ℝ)⌉ ≤ b G := by
+    (G.indepNum : ℝ) + ⌈Real.sqrt (eccSet G M : ℝ)⌉ ≤ b G := by
   sorry
 
 -- Sanity checks
@@ -67,19 +61,13 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 @[category test, AMS 5]
 example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide +native
 
-/-- `distMax G S` is always nonneg. -/
+/-- `eccSet G S` is always nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) (S : Set (Fin 3)) : 0 ≤ distMax G S := Nat.zero_le _
+example (G : SimpleGraph (Fin 3)) (S : Set (Fin 3)) : 0 ≤ eccSet G S := Nat.zero_le _
 
 /-- `distToSet G v S` is always nonneg (it is a natural number). -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) (v : Fin 3) (S : Set (Fin 3)) : 0 ≤ distToSet G v S :=
   Nat.zero_le _
-
-/-- In `K₃`, `distMax` of the max-degree vertex set equals `distMax` of `Set.univ`:
-since all vertices have the same degree, `M = Set.univ`. -/
-@[category test, AMS 5]
-example : distMax (⊤ : SimpleGraph (Fin 3)) Set.univ ≤
-    distMax (⊤ : SimpleGraph (Fin 3)) Set.univ := le_refl _
 
 end WrittenOnTheWallII.GraphConjecture18

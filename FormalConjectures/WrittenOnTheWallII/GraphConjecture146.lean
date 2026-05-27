@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.WrittenOnTheWallII.GraphConjecture145
 
 /-!
 # Written on the Wall II - Conjecture 146
@@ -40,19 +39,13 @@ The **radius of G²** is the minimum eccentricity of any vertex in `G²`, i.e.,
 
 namespace WrittenOnTheWallII.GraphConjecture146
 
-open Classical SimpleGraph WrittenOnTheWallII.GraphConjecture145
+open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- The square of a graph `G`: two distinct vertices are adjacent iff their distance
-in `G` is at most 2. -/
-def graphSquare (G : SimpleGraph α) : SimpleGraph α where
-  Adj u v := u ≠ v ∧ G.dist u v ≤ 2
-  symm u v := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [dist_comm]⟩
-  loopless v := by simp
-
-/-- The radius of a graph: the minimum eccentricity over all vertices.
-For G², we use `(graphSquare G)` and take its radius. -/
+/-- The radius of `G²` (the graph square): the minimum eccentricity over all vertices
+of `graphSquare G`. The base graph operation `graphSquare` is from
+`FormalConjecturesForMathlib`. -/
 noncomputable def graphSquareRadius (G : SimpleGraph α) : ℕ :=
   (minEccentricity (graphSquare G)).toNat
 
@@ -62,7 +55,8 @@ WOWII [Conjecture 146](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 For a simple connected graph `G`,
 `tree(G) ≥ 2 * ecc(B) / rad(G²)`
 where `tree(G)` is the number of vertices in a largest induced subtree,
-`ecc(B)` is the eccentricity of the boundary vertices of `G`, and
+`ecc(B)` is the eccentricity of the boundary vertices of `G` (`eccSet` and
+`boundaryVertices` from `FormalConjecturesForMathlib`), and
 `rad(G²)` is the radius of the square graph of `G`.
 
 We state the inequality in the form `tree(G) * rad(G²) ≥ 2 * ecc(B)` to avoid division.
@@ -70,7 +64,7 @@ We state the inequality in the form `tree(G) * rad(G²) ≥ 2 * ecc(B)` to avoid
 @[category research open, AMS 5]
 theorem conjecture146 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hrad : 0 < graphSquareRadius G) :
-    2 * eccSet G (boundaryVertices G) ≤
+    2 * eccSet G (boundaryVertices G : Set α) ≤
     largestInducedTreeSize G * graphSquareRadius G := by
   sorry
 

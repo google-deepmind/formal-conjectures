@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,10 +35,6 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- The average eccentricity of `G` (treating `⊤` as 0 via `.toNat`). -/
-noncomputable def avgEccentricity (G : SimpleGraph α) : ℝ :=
-  (∑ v ∈ Finset.univ, ((eccentricity G v).toNat : ℝ)) / (Fintype.card α : ℝ)
-
 /--
 WOWII [Conjecture 103](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
@@ -46,12 +42,13 @@ For a simple connected graph `G`,
 `α(G) ≤ ⌊b(G) − ln(ecc_avg(G))⌋`
 where `α(G) = G.indepNum` is the independence number,
 `b(G)` is the largest induced bipartite subgraph size, and
-`ecc_avg(G)` is the average eccentricity of `G`.
+`ecc_avg(G) = G.averageEccentricity` is the average eccentricity of `G`
+(from `FormalConjecturesForMathlib`).
 Uses `Real.log` (natural logarithm).
 -/
 @[category research open, AMS 5]
 theorem conjecture103 (G : SimpleGraph α) (h : G.Connected) :
-    (G.indepNum : ℝ) ≤ ⌊b G - Real.log (avgEccentricity G)⌋ := by
+    (G.indepNum : ℝ) ≤ ⌊b G - Real.log (averageEccentricity G)⌋ := by
   sorry
 
 -- Sanity checks
