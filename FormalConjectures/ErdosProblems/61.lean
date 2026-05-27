@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 61 -- Erdős–Hajnal Conjecture
+# Erdős Problem 61
+
+## Erdős–Hajnal conjecture
 
 *Reference:* [erdosproblems.com/61](https://www.erdosproblems.com/61)
 -/

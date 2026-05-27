@@ -18,7 +18,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1104
 
-*Reference:* https://www.erdosproblems.com/1104
+*Reference:* [erdosproblems.com/1104](https://www.erdosproblems.com/1104)
 -/
 
 namespace Erdos1104

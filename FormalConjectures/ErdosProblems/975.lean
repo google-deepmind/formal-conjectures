@@ -28,7 +28,7 @@ import FormalConjectures.Util.ProblemImports
  - [Mc95] McKee, James, On the average number of divisors of quadratic polynomials. Math. Proc. Cambridge Philos. Soc. (1995), 389--392.
  - [Mc97] McKee, James, A note on the number of divisors of quadratic polynomials. (1997), 275--281.
  - [Mc99] McKee, James, The average number of divisors of an irreducible quadratic polynomial. Math. Proc. Cambridge Philos. Soc. (1999), 17--22.
- - [T] T. Tao, Erdos' divisor bound, https://terrytao.wordpress.com/2011/07/23/erdos-divisor-bound/
+ - [Ta11] T. Tao, [Erdos' divisor bound](https://terrytao.wordpress.com/2011/07/23/erdos-divisor-bound/).
 -/
 
 open Filter Real Polynomial

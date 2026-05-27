@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 90: The unit distance problem
+# Erdős Problem 90
+
+## The unit distance problem
 
 *Reference:* [erdosproblems.com/90](https://www.erdosproblems.com/90)
 -/

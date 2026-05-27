@@ -28,7 +28,7 @@ Erdős asked whether:
 
 This problem is currently open.
 
-*Reference:* https://www.erdosproblems.com/1092
+*Reference:* [erdosproblems.com/1092](https://www.erdosproblems.com/1092)
 -/
 
 namespace Erdos1092

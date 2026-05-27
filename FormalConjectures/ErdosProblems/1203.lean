@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1203
 
-*References:*
+*Reference:*
 - [erdosproblems.com/1203](https://www.erdosproblems.com/1203)
 -/
 

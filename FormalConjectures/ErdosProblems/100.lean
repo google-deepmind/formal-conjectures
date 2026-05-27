@@ -18,11 +18,11 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 100
+
 *References:*
 * [erdosproblems.com/100](https://www.erdosproblems.com/100)
-* [Kanold](No references found)
-* [GuKa15](Guth, Larry and Katz, Nets Hawk, On the Erd\H{o}s distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190.)
-* [Piepmeyer](No references found)
+* [GuKa15] Guth, Larry and Katz, Nets Hawk, On the Erd\H{o}s distinct distances problem in the plane.
+  Ann. of Math. (2) (2015), 155-190.
 -/
 
 open Set Metric Filter Real

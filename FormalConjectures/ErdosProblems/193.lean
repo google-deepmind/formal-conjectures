@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 193
 
-References:
+*References:*
 - [erdosproblems.com/193](https://www.erdosproblems.com/193)
 - [ErGr80] Erdős, P. and Graham, R., Old and new problems and results in combinatorial number
   theory. Monographies de L'Enseignement Mathematique (1980).

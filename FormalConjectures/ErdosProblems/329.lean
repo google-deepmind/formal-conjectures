@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 329: Maximum Density of Sidon Sets
+# Erdős Problem 329
+
+## Maximum density of Sidon sets
 
 *Reference:* [erdosproblems.com/329](https://www.erdosproblems.com/329)
 -/

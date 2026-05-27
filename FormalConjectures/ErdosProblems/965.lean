@@ -27,7 +27,7 @@ all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour?
 - [Er75b] Erdős, Paul, Problems and results in combinatorial number theory. Journées Arithmétiques de Bordeaux (Conf., Univ. Bordeaux, Bordeaux, 1974) (1975), 295-310.
 - [HLS17] Hindman, Neil and Leader, Imre and Strauss, Dona, Pairwise sums in colourings of the reals. Abh. Math. Semin. Univ. Hambg. (2017), 275--287.
 - [Ko16] Komjáth, Péter, A certain 2-coloring of the reals. Real Anal. Exchange (2016), 227--231.
-- [SWCol] Sokoup Dániel and Weiss, William, Sums and Anti-Ramsey Colourings of ℝ. https://danieltsoukup.github.io/academic/finset_colouring.pdf
+- [SoWe15] Soukup, Dániel and Weiss, William, [Sums and Anti-Ramsey Colourings of ℝ](https://danieltsoukup.github.io/academic/finset_colouring.pdf).
 -/
 
 namespace Erdos965

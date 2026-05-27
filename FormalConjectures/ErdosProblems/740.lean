@@ -17,9 +17,11 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Erdős Problem 740: Infinitary version of chromatic number and odd cycles
+# Erdős Problem 740
 
-*Reference:* [erdosproblems.com/740](https://erdosproblems.com/740)
+## Infinitary version of chromatic number and odd cycles
+
+*Reference:* [erdosproblems.com/740](https://www.erdosproblems.com/740)
 -/
 
 open scoped Cardinal

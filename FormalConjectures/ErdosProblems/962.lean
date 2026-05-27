@@ -22,8 +22,8 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/962](https://www.erdosproblems.com/962)
 - [Er65] Erdős, P., Extremal problems in number theory. Proc. Sympos. Pure Math., Vol. VIII (1965), 181-189.
 - [Er76e] Erdős, P., Problems and results on consecutive integers. Publ. Math. Debrecen (1976), 271-282.
-- [Tang](https://github.com/QuanyuTang/erdos-problem-962/blob/main/On_Erd%C5%91s_Problem_962.pdf)
-- [Tao](https://www.erdosproblems.com/forum/thread/962)
+- [Tan26] Q. Tang, [On Erdős Problem 962](https://github.com/QuanyuTang/erdos-problem-962/blob/main/On_Erd%C5%91s_Problem_962.pdf) (2026).
+- [Ta26b] T. Tao, [Discussion on Erdős Problem 962](https://www.erdosproblems.com/forum/thread/962) (2026).
 -/
 
 open Classical Filter Real
@@ -61,7 +61,7 @@ theorem erdos_962 :
   sorry
 
 /--
-Tang's lower bound [Tang]:
+Tang's lower bound [Tan26]:
 
 $\log k(n) \ge (1/\sqrt{2} - o(1)) * \sqrt{\log n * \log \log n}$
 -/
@@ -76,7 +76,7 @@ theorem erdos_962.variants.tang_lower_bound :
   sorry
 
 /--
-Tao's upper bound [Tao]:
+Tao's upper bound [Ta26b]:
 
 $k(n) \le (1 + o(1)) * n^{1/2}$
 -/
