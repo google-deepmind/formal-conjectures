@@ -36,7 +36,7 @@ jobs:
             `https://github.com/${context.repo.owner}/${context.repo.repo}/blob/${defaultBranch}/CONTRIBUTING.md#style-guidelines`
 
           const body = [
-            '👋 *This is an automated welcome message.* 🤖'
+            '👋 *This is an automated welcome message.* 🤖',
             'Thanks for the contributions!',
             '',
             'A few friendly reminders while the review gets started:',
