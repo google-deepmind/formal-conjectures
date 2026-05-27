@@ -16,9 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-noncomputable section
-
-
 /-!
 # Open Quantum Problem 23: SIC-POVMs
 
@@ -107,7 +104,7 @@ placeholder proofs `by sorry`; they are intended to be proved in the next PR.
   *Quantum Designs: Foundations of a Noncommutative Design Theory*,
   PhD thesis, University of Vienna (1999).
 -/
-
+noncomputable section
 namespace OpenQuantumProblem23
 
 /- ## Basic structures -/

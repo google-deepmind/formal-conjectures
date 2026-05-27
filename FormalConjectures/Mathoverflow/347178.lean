@@ -16,16 +16,14 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Real Set
-open scoped EuclideanGeometry
-
 /-!
 # Mathoverflow 347178
 
 *Reference:* [mathoverflow/347178](https://mathoverflow.net/questions/347178)
 asked by user [*Biagio Ricceri*](https://mathoverflow.net/users/149235/biagio-ricceri)
 -/
-
+open Real Set
+open scoped EuclideanGeometry
 namespace Mathoverflow347178
 
 /--
