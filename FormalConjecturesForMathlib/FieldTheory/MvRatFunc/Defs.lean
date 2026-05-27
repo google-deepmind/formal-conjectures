@@ -23,3 +23,10 @@ public import Mathlib.RingTheory.Localization.FractionRing
 /-- The field of multivariate rational functions in variables indexed by `σ` over a commutative
 ring `K`, defined as the fraction field of the multivariate polynomial ring `MvPolynomial σ K`. -/
 abbrev MvRatFunc (σ K : Type*) [CommRing K] := FractionRing (MvPolynomial σ K)
+
+/--
+A rational function $g$ is defined at a point $x_0$ if $g$ can be written as $p / q$
+where $p, q$ are polynomials and $q(x_0) \neq 0$.
+-/
+def IsDefined (σ K : Type*) [CommRing K] [IsDomain K] (g : MvRatFunc σ K) (x₀ : σ → K) : Prop :=
+  ∃ p q : MvPolynomial σ K, g = (algebraMap _ _ p) / (algebraMap _ _ q) ∧ q.eval x₀ ≠ 0
