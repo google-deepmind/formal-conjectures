@@ -40,7 +40,7 @@ A Hamiltonian path is a walk visiting every vertex exactly once.
 -/
 @[category research open, AMS 5]
 theorem conjecture194 (G : SimpleGraph α) (h : G.Connected)
-    (hα : (G.indepNum : ℝ) ≤ 1 + l G) :
+    (hα : (G.indepNum : ℝ) ≤ 1 + averageIndepNeighbors G) :
     ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by
   sorry
 
