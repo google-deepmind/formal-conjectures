@@ -215,7 +215,7 @@ def greedySidon (n : ℕ) : ℕ := greedySidon.aux n |>.2
 /-- The greedy Sidon set in `{1, …, N}`: starting from `∅`, iterate through `1, …, N` and
 include `x` if and only if `A ∪ {x}` remains Sidon.
 Alternatively, this is precisely the set of elements in the greedy Sidon sequence that are `≤ N`. -/
-def greedySidonSet (N : ℕ) : Finset ℕ :=
+def greedySidonBelow (N : ℕ) : Finset ℕ :=
   (greedySidon.aux N).1.1.filter (· ≤ N)
 
 end Finset

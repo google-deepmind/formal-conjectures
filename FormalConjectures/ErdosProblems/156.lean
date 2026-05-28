@@ -49,7 +49,7 @@ theorem erdos_156 :
   sorry
 
 @[category test, AMS 5]
-theorem greedySidonSet_isSidon (n : ℕ) : IsSidon (Finset.greedySidonSet n : Set ℕ) := by
+theorem greedySidonSet_isSidon (n : ℕ) : IsSidon (Finset.greedySidonBelow n : Set ℕ) := by
   sorry
 
 /--
@@ -58,7 +58,7 @@ $\gg N^{1/3}$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_156.variants.greedy_lower_bound :
-    (fun N ↦ ((Finset.greedySidonSet N).card : ℝ)) ≫ (fun N ↦ (N : ℝ) ^ (1 / 3 : ℝ)) := by
+    (fun N ↦ ((Finset.greedySidonBelow N).card : ℝ)) ≫ (fun N ↦ (N : ℝ) ^ (1 / 3 : ℝ)) := by
   sorry
 
 /--
