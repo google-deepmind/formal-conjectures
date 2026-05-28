@@ -113,7 +113,7 @@ theorem lam_litt.variants.integrality_implies_omega_integrality
 3) implies 2): if the coefficients of $f$ satisfy the $\omega$-integrality condition for some superlinear $\omega$,
 then there exists $N$ such that for all $n$, the $n$-th coefficient of $f$ is in $\mathbb{Z}[1/N]$.
 -/
-@[category research solved, AMS 11 14]
+@[category research open, AMS 11 14]
 theorem lam_litt.variants.omega_integrality_implies_algebraicity {n : ℕ} (f : PowerSeries ℚ)
     (g : MvRatFunc (Fin (n + 1)) ℚ) (hODE : IsSolutionOfAlgebraicODE n f g)
     (ω : Nat.Primes → ℕ) (hω : omegaSuperlinear ω ∧ omegaIntegral ω (PowerSeries.coeff · f)) :
