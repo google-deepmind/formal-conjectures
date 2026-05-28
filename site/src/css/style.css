@@ -110,7 +110,7 @@ img { max-width: 100%; }
 ul, ol { list-style: none; }
 
 /* ---- Utility ---- */
-.container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+.container { width: 100%; max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 
 /* ============================================================

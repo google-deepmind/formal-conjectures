@@ -38,11 +38,19 @@ async function init() {
   }
 
   document.title = `${theorem.displayTheorem} — Formal Conjectures`;
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.content = theorem.theorem;
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
   const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
   const contributors = data.contributors?.[theorem.githubPath] || [];
 
   renderDetail(theorem, siblings, verso, contributors);
+
+  // Voting integration
+  const widget = document.getElementById('vote-widget');
+  const truthWidget = document.getElementById('truth-widget');
+  if (widget) FC.giscus_voting.renderVoteButton(theorem.theorem, widget);
+  if (truthWidget) FC.giscus_voting.renderTruthWidget(theorem.theorem, truthWidget);
 }
 
 /**
@@ -507,6 +515,11 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <h1 class="theorem-detail__title">${FC.escapeHTML(theorem.displayTheorem)}</h1>
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
     </header>
+
+    <div class="theorem-widgets-row">
+      <div id="vote-widget"></div>
+      <div id="truth-widget"></div>
+    </div>
 
     ${moduleDocSection}
 
