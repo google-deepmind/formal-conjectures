@@ -73,13 +73,13 @@ def IsCoeffIntegralAdjointInvNat (f : PowerSeries ℚ) (N : ℕ) : Prop :=
   ∀ n : ℕ, coeff n f ∈ ℤAdjoinInvNat N
 
 /--
-For a function $\omega$ on the set of primes and a sequence $a_n$ of rational numbers,
-the condition $\omega$-integrality means that for each prime $p$, the rational numbers
-$a_0, a_1, \dots, a_{\omega(p)}$ are in $\mathbb{Z}_{(p)}$, i.e. their denominators
-are not divisible by $p$.
+For an integer-valued function $\omega$ on the set of primes and a sequence $a_n$ of rational
+numbers, the condition $\omega$-integrality means that for each prime $p$, the rational numbers
+$a_0, a_1, \dots, a_{\omega(p)}$ are in $\mathbb{Z}_{(p)}$, i.e. their denominators are not
+divisible by $p$. When $\omega(p) < 0$ the constraint at $p$ is vacuous.
 -/
-def omegaIntegral (ω : Nat.Primes → ℕ) (a : ℕ → ℚ) : Prop :=
-  ∀ p : Nat.Primes, ∀ j ∈ Set.Icc 0 (ω p), Nat.Coprime (a j).den p
+def omegaIntegral (ω : Nat.Primes → ℤ) (a : ℕ → ℚ) : Prop :=
+  ∀ p : Nat.Primes, ∀ j : ℕ, (j : ℤ) ≤ ω p → Nat.Coprime (a j).den p
 
 /--
 The growth condition on $\omega$: the ratio $\omega(p) / p$ tends to infinity as the prime $p$
@@ -87,7 +87,7 @@ tends to infinity, i.e. $\lim_{p \to \infty} \omega(p) / p = \infty$. Here the s
 `Filter.atTop` on the primes, obtained by pulling back `Filter.atTop` on $\mathbb{N}$ along the
 coercion `Nat.Primes → ℕ`.
 -/
-def omegaSuperlinear (ω : Nat.Primes → ℕ) : Prop :=
+def omegaSuperlinear (ω : Nat.Primes → ℤ) : Prop :=
   Filter.Tendsto (fun p : Nat.Primes ↦ (ω p : ℝ) / p)
     (Filter.comap (fun p : Nat.Primes ↦ (p : ℕ)) Filter.atTop) Filter.atTop
 
@@ -100,14 +100,40 @@ theorem lam_litt.variants.eisenstein (f : PowerSeries ℚ) (hAlg : IsAlgebraic (
     ∃ N : ℕ, IsCoeffIntegralAdjointInvNat f N := by
   sorry
 
+/-- Every element of $\mathbb{Z}[1/N]$ has denominator coprime to any prime $p$ not in the
+prime factor set of $N$ (vacuously, the case $N = 0$ gives $\mathbb{Z}[1/N] = \mathbb{Z}$). -/
+@[category API, AMS 11]
+private lemma den_coprime_of_mem_adjoinInvNat {N p : ℕ} (hp : p.Prime)
+    (hpN : p ∉ N.primeFactors) {q : ℚ} (hq : q ∈ ℤAdjoinInvNat N) :
+    Nat.Coprime q.den p := by
+  induction hq using Algebra.adjoin_induction with
+  | mem x hx =>
+    rw [Set.mem_singleton_iff] at hx; subst hx
+    rcases eq_or_ne N 0 with rfl | hN
+    · simp
+    · rw [one_div, Rat.inv_natCast_den_of_pos (Nat.pos_of_ne_zero hN)]
+      exact (hp.coprime_iff_not_dvd.mpr fun h => hpN <| Nat.mem_primeFactors.mpr ⟨hp, h, hN⟩).symm
+  | algebraMap _ => simp
+  | add _ _ _ _ ihx ihy => exact (ihx.mul_left ihy).coprime_dvd_left (Rat.add_den_dvd _ _)
+  | mul _ _ _ _ ihx ihy => exact (ihx.mul_left ihy).coprime_dvd_left (Rat.mul_den_dvd _ _)
+
 /--
 Textbook implication: integrality (2) trivially implies ω(p)-integrality (3).
 -/
 @[category textbook, AMS 12]
 theorem lam_litt.variants.integrality_implies_omega_integrality
     (f : PowerSeries ℚ) (N : ℕ) (hN : IsCoeffIntegralAdjointInvNat f N) :
-    ∃ ω : Nat.Primes → ℕ, omegaSuperlinear ω ∧ omegaIntegral ω (PowerSeries.coeff · f) := by
-  sorry
+    ∃ ω : Nat.Primes → ℤ, omegaSuperlinear ω ∧ omegaIntegral ω (PowerSeries.coeff · f) := by
+  -- Take ω(p) = -1 if p divides N, else p^2.
+  refine ⟨fun p => if (p : ℕ) ∈ N.primeFactors then (-1 : ℤ) else (p : ℤ)^2, ?_, ?_⟩
+  · refine ((tendsto_natCast_atTop_atTop (R := ℝ)).comp Filter.tendsto_comap).congr' ?_
+    filter_upwards [(Filter.eventually_gt_atTop N).comap ((↑) : Nat.Primes → ℕ)] with p hpN_lt
+    have hpN : (p : ℕ) ∉ N.primeFactors := fun hmem => Nat.not_lt.mpr (Nat.le_of_mem_primeFactors hmem) hpN_lt
+    simp [hpN, sq, p.2.ne_zero]
+  · intro p j hj
+    by_cases hpmem : (p : ℕ) ∈ N.primeFactors
+    · simp only [hpmem, if_true] at hj; omega
+    · exact den_coprime_of_mem_adjoinInvNat p.2 hpmem (hN j)
 
 /--
 3) implies 2): if the coefficients of $f$ satisfy the $\omega$-integrality condition for some superlinear $\omega$,
@@ -116,7 +142,7 @@ then there exists $N$ such that for all $n$, the $n$-th coefficient of $f$ is in
 @[category research open, AMS 11 14]
 theorem lam_litt.variants.omega_integrality_implies_algebraicity {n : ℕ} (f : PowerSeries ℚ)
     (g : MvRatFunc (Fin (n + 1)) ℚ) (hODE : IsSolutionOfAlgebraicODE n f g)
-    (ω : Nat.Primes → ℕ) (hω : omegaSuperlinear ω ∧ omegaIntegral ω (PowerSeries.coeff · f)) :
+    (ω : Nat.Primes → ℤ) (hω : omegaSuperlinear ω ∧ omegaIntegral ω (PowerSeries.coeff · f)) :
     ∃ N : ℕ, IsCoeffIntegralAdjointInvNat f N := by
   sorry
 
