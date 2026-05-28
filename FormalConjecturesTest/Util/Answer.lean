@@ -69,3 +69,72 @@ theorem this_works : (answer(sorry) : Prop) := by
   trivial
 
 end AlwaysTrue
+
+section FindAnswerExprTests
+
+open Google Lean
+
+private abbrev c (n : Name) : Expr := .const n []
+
+#eval do
+  -- No annotation → none
+  assert! (findAnswerExpr (c `Nat)).isNone
+  -- Direct annotation
+  assert! findAnswerExpr (mkAnswerAnnotation (c `True))
+    == some (c `True)
+  -- Nested inside forallE body
+  assert! findAnswerExpr
+      (.forallE `x (c `Nat)
+        (mkAnswerAnnotation (c `True)) .default)
+    == some (c `True)
+  -- Nested inside app
+  assert! findAnswerExpr
+      (.app (c `id) (mkAnswerAnnotation (c `False)))
+    == some (c `False)
+  -- Nested inside lam
+  assert! findAnswerExpr
+      (.lam `x (c `Nat)
+        (mkAnswerAnnotation (c `True)) .default)
+    == some (c `True)
+  -- Nested inside letE
+  assert! findAnswerExpr
+      (.letE `x (c `Nat) (c `Nat.zero)
+        (mkAnswerAnnotation (c `True)) false)
+    == some (c `True)
+  -- Annotation in binder type (not body)
+  assert! findAnswerExpr
+      (.forallE `x (mkAnswerAnnotation (c `Bool))
+        (c `True) .default)
+    == some (c `Bool)
+  -- Two annotations: find? only returns the first one found
+  let twoAnswers := Expr.app
+    (mkAnswerAnnotation (c `True))
+    (mkAnswerAnnotation (c `False))
+  assert! findAnswerExpr twoAnswers
+    == some (c `True)
+
+#eval do
+  -- findAnswerExprs: no annotation → empty
+  assert! (findAnswerExprs (c `Nat)).isEmpty
+  -- Single annotation
+  assert! findAnswerExprs (mkAnswerAnnotation (c `True))
+    == #[c `True]
+  -- Nested inside forallE body
+  assert! findAnswerExprs
+      (.forallE `x (c `Nat)
+        (mkAnswerAnnotation (c `True)) .default)
+    == #[c `True]
+  -- Two annotations: both found
+  let twoAnswers := Expr.app
+    (mkAnswerAnnotation (c `True))
+    (mkAnswerAnnotation (c `False))
+  assert! findAnswerExprs twoAnswers
+    == #[c `True, c `False]
+  -- Annotation in both binder type and body
+  let bothPositions := Expr.forallE `x
+    (mkAnswerAnnotation (c `Bool))
+    (mkAnswerAnnotation (c `Nat)) .default
+  assert! findAnswerExprs bothPositions
+    == #[c `Bool, c `Nat]
+
+end FindAnswerExprTests

@@ -79,22 +79,23 @@
   --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.04);
 
   /* Typography — Libertinus Sans throughout (Biolinum lineage) */
-    --font-body: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
-    --font-display: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'Libertinus Mono', 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
-    --font-serif: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-heading: 'Libertinus Sans', 'Segoe UI', system-ui, sans-serif;
 }
 
 /* ---- Reset / base ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  font-size: 17px;
+  font-size: 18px;
   scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-body);
+  font-size-adjust: 0.52;
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
@@ -668,7 +669,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
 .detail-mono {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
@@ -799,7 +800,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 }
 
 .prose h2 {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 1.4rem;
   font-weight: normal;
   margin: 2rem 0 0.75rem;
@@ -841,7 +842,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   background: none;
   border: none;
   padding: 0;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: inherit;
 }
 
@@ -1140,7 +1141,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 .verso-code-container code.hl {
   display: block;
   padding: 1rem 1.25rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   line-height: 1.6;
 }
 

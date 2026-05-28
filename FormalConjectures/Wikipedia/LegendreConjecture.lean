@@ -16,8 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Filter
-
 /-!
 # Legendre's conjecture
 
@@ -26,7 +24,7 @@ open Filter
 - [Legendre Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Legendre%27s_conjecture)
 - [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
-
+open Filter
 namespace LegendreConjecture
 
 /--
