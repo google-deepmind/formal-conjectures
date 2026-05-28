@@ -13,9 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
 
-open Nat
+import FormalConjectures.Util.ProblemImports
 
 /-!
 # Conjectures associated with A087719
@@ -28,7 +27,7 @@ The conjecture states that $a_n = 3^n + 3 \cdot 2^n + 6$ for $n \ge 1$.
 
 *References:* [A087719](https://oeis.org/A087719)
 -/
-
+open Nat
 namespace OeisA87719
 
 /-- Count of numbers k in {1, ..., m} where k > (minFac k)^n. -/

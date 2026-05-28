@@ -1,0 +1,45 @@
+# Copyright 2026 The Formal Conjectures Authors.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     https://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Welcome Pull Requests
+
+on:
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  welcome:
+    name: Post welcome comment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Post polite guidance comment
+      uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # v3.0.4
+      with:
+        header: Welcome Pull Request
+        message: |
+          👋 *This is an automated welcome message.* 🤖
+          Thanks for the contributions!
+
+          A few friendly reminders while the review gets started:
+
+          - Please take a look at the [style guidelines](https://github.com/${{ github.repository }}/blob/${{ github.event.repository.default_branch }}/CONTRIBUTING.md#style-guidelines),
+            especially the conventions for references, categories, AMS tags, and `answer(sorry)`.
+          - You can manage some PR labels by leaving a comment with `+label-name` or `-label-name`; for example, `+awaiting-author` or `-awaiting-author`.
+          - This repository is mainly for formalised _statements_. Proofs longer than about 25-50 lines are usually out of scope; longer proofs are welcome to be included/linked via the `formal_proof` mechanism.
+
+          Thanks again for helping improve Formal Conjectures.

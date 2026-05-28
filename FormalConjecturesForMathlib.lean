@@ -17,16 +17,20 @@ module
 
 public import FormalConjecturesForMathlib.Algebra.GCDMonoid.Finset
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
+public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
 public import FormalConjecturesForMathlib.Algebra.Group.Indicator
 public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
+public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Basic
+public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
 public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
+public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
@@ -37,13 +41,18 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
+public import FormalConjecturesForMathlib.Combinatorics.SetFamily.Sunflower
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
+public import FormalConjecturesForMathlib.Combinatorics.SetTheory.PartitionRelation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CycleRank
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Domination
@@ -91,6 +100,7 @@ public import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
+public import FormalConjecturesForMathlib.NumberTheory.NumberField.Quadratic
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
