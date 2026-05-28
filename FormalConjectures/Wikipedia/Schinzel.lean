@@ -15,14 +15,13 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-open Polynomial
 
 /-!
 # Hypothesis H
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schinzel%27s_hypothesis_H)
 -/
-
+open Polynomial
 namespace Schinzel
 
 /--
