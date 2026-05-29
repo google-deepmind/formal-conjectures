@@ -16,14 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-namespace Kourovka.«20.76»
-
 /-!
 # Conjecture 20.76
 by L. Pyber
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 !-/
-
+namespace Kourovka.«20.76»
 /--
 Let $G$ be a finite $p$-group and assume that all abelian normal subgroups of $G$
 have order at most $p^k$. Is it true that every abelian subgroup of $G$ has order at most

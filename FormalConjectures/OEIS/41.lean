@@ -13,10 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
 
-open Nat
-namespace OeisA41
+import FormalConjectures.Util.ProblemImports
 
 /-!
 Name: "No powers as partition numbers"
@@ -25,7 +23,8 @@ There are no partition numbers $p(k)$ of the form $x^m$, with $x,m$ integers $>1
 
 *Reference*: [A41](https://oeis.org/A41)
 -/
-
+open Nat
+namespace OeisA41
 /-- The `n`-th partition number. -/
 def p (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
 
