@@ -54,7 +54,7 @@ theorem complex_sum_pow_mul_conj_pow
   have hω_ne_zero : ω ≠ 0 := fun h => by simp [h] at hω_norm
   have hω_pow_N : ω ^ N = 1 := hω.pow_eq_one
   have hstar_ω : (starRingEnd ℂ) ω = ω⁻¹ := (RCLike.inv_eq_conj hω_norm).symm
-  -- Rewrite each summand as a power of `ζ = ω^a · (ω⁻¹)^b`.
+  -- Rewrite each summand as a power of $\zeta = \omega^a \cdot (\omega^{-1})^b$.
   have hstar_pow : ∀ k, (starRingEnd ℂ) (ω ^ (k * b)) = (ω⁻¹) ^ (k * b) := by
     intro k; rw [map_pow, hstar_ω]
   set ζ : ℂ := ω ^ a * (ω⁻¹) ^ b with hζ_def
@@ -99,11 +99,11 @@ theorem sum_norm_sq_eval_primitiveRoot
     (hω_norm : ‖ω‖ = 1) (hdeg : P.natDegree < N) :
     ∑ k ∈ Finset.range N, ‖P.eval (ω ^ k)‖ ^ 2 =
     (N : ℝ) * ∑ i ∈ Finset.range N, ‖P.coeff i‖ ^ 2 := by
-  -- ‖z‖² = z · conj(z) as a complex number.
+  -- $\|z\|^2 = z \cdot \overline{z}$ as a complex number.
   have hnorm_sq_cast : ∀ z : ℂ, ((‖z‖ ^ 2 : ℝ) : ℂ) = z * (starRingEnd ℂ) z := by
     intro z
     rw [RCLike.mul_conj (K := ℂ)]; push_cast; rfl
-  -- Expand P.eval(ω^k) = ∑ᵢ P.coeff i · ω^(k·i) and its conjugate.
+  -- Expand $P(\omega^k) = \sum_i P_i \cdot \omega^{ki}$ and its conjugate.
   have hexpand : ∀ k, P.eval (ω ^ k) =
       ∑ i ∈ Finset.range N, P.coeff i * ω ^ (k * i) := by
     intro k
@@ -117,7 +117,7 @@ theorem sum_norm_sq_eval_primitiveRoot
     rw [hexpand k, map_sum]
     refine Finset.sum_congr rfl ?_
     intro j _; rw [map_mul]
-  -- Cast both sides to ℂ via Complex.ofReal_injective.
+  -- Cast both sides to $\mathbb{C}$ via `Complex.ofReal_injective`.
   apply_fun ((↑) : ℝ → ℂ) using Complex.ofReal_injective
   push_cast
   -- Convert each squared norm to a product with the conjugate.

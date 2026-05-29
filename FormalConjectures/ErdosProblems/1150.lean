@@ -51,8 +51,9 @@ theorem erdos_1150.variants.parseval_lower_bound (P : ℂ[X]) (n : ℕ)
     (hcoeff : ∀ i ≤ P.natDegree, P.coeff i = -1 ∨ P.coeff i = 1)
     (hdeg : P.natDegree = n) :
     ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ ≥ Real.sqrt (n + 1) := by
-  -- Evaluate P at the (n+1)-th roots of unity ω^k. Discrete Parseval gives
-  -- ∑_k ‖P(ω^k)‖² = (n+1) · ∑_i ‖aᵢ‖² = (n+1)². Pigeonhole + sphere lift.
+  -- Evaluate $P$ at the $(n+1)$-th roots of unity $\omega^k$. Discrete Parseval gives
+  -- $\sum_k \|P(\omega^k)\|^2 = (n+1) \cdot \sum_i \|a_i\|^2 = (n+1)^2$.
+  -- Pigeonhole + sphere lift.
   set N : ℕ := n + 1 with hN
   have hNpos : 0 < N := Nat.succ_pos n
   set ω : ℂ := Complex.exp (2 * Real.pi * Complex.I / N) with hω_def
@@ -62,7 +63,7 @@ theorem erdos_1150.variants.parseval_lower_bound (P : ℂ[X]) (n : ℕ)
     simp [Complex.div_re, Complex.mul_re, Complex.mul_im,
           Complex.I_re, Complex.I_im]
   have hdeg' : P.natDegree < N := by rw [hN, hdeg]; exact Nat.lt_succ_self n
-  -- Each |aᵢ|² = 1 for i in range N.
+  -- Each $\|a_i\|^2 = 1$ for $i$ in $\{0, \dots, N-1\}$.
   have hcoeff_sq : ∀ i ∈ Finset.range N, ‖P.coeff i‖ ^ 2 = (1 : ℝ) := by
     intro i hi
     have hi' : i ≤ n := by have := Finset.mem_range.mp hi; omega
@@ -70,10 +71,10 @@ theorem erdos_1150.variants.parseval_lower_bound (P : ℂ[X]) (n : ℕ)
   have hsum_coeff_sq : ∑ i ∈ Finset.range N, ‖P.coeff i‖ ^ 2 = (N : ℝ) := by
     rw [Finset.sum_congr rfl hcoeff_sq, Finset.sum_const, Finset.card_range,
         nsmul_eq_mul, mul_one]
-  -- Apply discrete Parseval: ∑ ‖P(ω^k)‖² = N · N = N².
+  -- Apply discrete Parseval: $\sum_k \|P(\omega^k)\|^2 = N \cdot N = N^2$.
   have hsum_eval_sq : ∑ k ∈ Finset.range N, ‖P.eval (ω ^ k)‖ ^ 2 = (N : ℝ) ^ 2 := by
     rw [P.sum_norm_sq_eval_primitiveRoot hω hω_norm hdeg', hsum_coeff_sq]; ring
-  -- Pigeonhole: some k₀ has ‖P(ω^{k₀})‖² ≥ N.
+  -- Pigeonhole: some $k_0$ has $\|P(\omega^{k_0})\|^2 \ge N$.
   have hexists : ∃ k₀ ∈ Finset.range N, ‖P.eval (ω ^ k₀)‖ ^ 2 ≥ (N : ℝ) := by
     by_contra hlt
     push_neg at hlt
@@ -89,14 +90,14 @@ theorem erdos_1150.variants.parseval_lower_bound (P : ℂ[X]) (n : ℕ)
   obtain ⟨k₀, _, hk₀_bound⟩ := hexists
   have hω_pow_sphere : ω ^ k₀ ∈ Metric.sphere (0 : ℂ) 1 := by
     rw [Metric.mem_sphere, dist_zero_right, norm_pow, hω_norm, one_pow]
-  -- Conclude: √N ≤ ‖P(ω^{k₀})‖ ≤ ⨆ ‖P(z)‖.
+  -- Conclude: $\sqrt{N} \le \|P(\omega^{k_0})\| \le \sup_{|z|=1} \|P(z)\|$.
   have hsqrt_le : Real.sqrt (N : ℝ) ≤ ‖P.eval (ω ^ k₀)‖ := by
     rw [show ‖P.eval (ω ^ k₀)‖ = Real.sqrt (‖P.eval (ω ^ k₀)‖ ^ 2) from
         (Real.sqrt_sq (norm_nonneg _)).symm]
     exact Real.sqrt_le_sqrt hk₀_bound
   have hle_sup :
       ‖P.eval (ω ^ k₀)‖ ≤ ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ := by
-    -- The sup is bounded: for ‖z‖ = 1, ‖P.eval z‖ ≤ ∑ ‖aᵢ‖ ≤ N.
+    -- The sup is bounded: for $\|z\| = 1$, $\|P(z)\| \le \sum_i \|a_i\| \le N$.
     have hbdd : BddAbove
         (Set.range fun z : Metric.sphere (0 : ℂ) 1 => ‖P.eval (z : ℂ)‖) := by
       refine ⟨(N : ℝ), ?_⟩
