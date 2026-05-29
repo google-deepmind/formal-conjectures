@@ -68,12 +68,12 @@ theorem complex_sum_pow_mul_conj_pow
         pow_mul, pow_mul, hω_pow_N, inv_pow, hω_pow_N, inv_one, one_pow, one_pow,
         mul_one]
   split_ifs with hab
-  · -- a = b: ζ = 1, sum = N.
+  · -- Case $a = b$: $\zeta = 1$, sum equals $N$.
     subst hab
     have hζ_one : ζ = 1 := by
       rw [hζ_def, ← mul_pow, mul_inv_cancel₀ hω_ne_zero, one_pow]
     simp [hζ_one]
-  · -- a ≠ b: ζ ≠ 1, geom sum vanishes.
+  · -- Case $a \ne b$: $\zeta \ne 1$, geometric sum vanishes.
     have hζ_ne_one : ζ ≠ 1 := by
       intro h
       apply hab
