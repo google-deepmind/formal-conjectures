@@ -26,23 +26,26 @@ public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 /-!
 # Discrete Parseval identity for complex polynomials at roots of unity
 
-For a polynomial `P : ℂ[X]` of degree `< N` and `ω` a primitive `N`-th root of
-unity in `ℂ`, the sum of the squared norms `‖P(ω^k)‖²` over `k ∈ Finset.range N`
-equals `N · ∑ᵢ ‖P.coeff i‖²`.
+For a polynomial $P \in \mathbb{C}[X]$ of degree less than $N$ and $\omega$ a
+primitive $N$-th root of unity in $\mathbb{C}$, the sum of the squared norms
+$\|P(\omega^k)\|^2$ over $k \in \{0, \dots, N-1\}$ equals
+$N \cdot \sum_i \|P_i\|^2$ where $P_i$ are the coefficients of $P$.
 
 The core ingredient is the pair-form orthogonality of root-of-unity powers:
-`∑_{k<N} ω^(ka) · conj(ω^(kb))` equals `N` when `a = b` and `0` otherwise
-(for `a, b < N`). The proof uses the geometric-series formula applied to
-`ζ = ω^a · ω⁻ᵇ`, which satisfies `ζ^N = 1` and (in the `a ≠ b` case) `ζ ≠ 1`.
+$\sum_{k < N} \omega^{ka} \cdot \overline{\omega^{kb}}$ equals $N$ when $a = b$
+and $0$ otherwise (for $a, b < N$). The proof uses the geometric-series formula
+applied to $\zeta = \omega^a \cdot \omega^{-b}$, which satisfies
+$\zeta^N = 1$ and (in the $a \ne b$ case) $\zeta \ne 1$.
 -/
 
 namespace IsPrimitiveRoot
 
 open Finset
 
-/-- Pair-form orthogonality of root-of-unity powers: for `ω` a primitive `N`-th
-root of unity in `ℂ` and `a, b ∈ [0, N)`, the sum
-`∑_{k<N} ω^(k·a) · conj(ω^(k·b))` equals `N` if `a = b` and `0` otherwise. -/
+/-- Pair-form orthogonality of root-of-unity powers: for $\omega$ a primitive
+$N$-th root of unity in $\mathbb{C}$ and $a, b \in \{0, \dots, N-1\}$,
+$\sum_{k < N} \omega^{ka} \cdot \overline{\omega^{kb}}$ equals $N$ if $a = b$
+and $0$ otherwise. -/
 theorem complex_sum_pow_mul_conj_pow
     {N : ℕ} {ω : ℂ} (hω : IsPrimitiveRoot ω N)
     (hω_norm : ‖ω‖ = 1) {a b : ℕ} (ha : a < N) (hb : b < N) :
@@ -88,8 +91,9 @@ namespace Polynomial
 open Finset
 
 /-- Discrete Parseval identity for complex polynomials at primitive roots of
-unity: for `P : ℂ[X]` of degree `< N` and `ω` a primitive `N`-th root of unity,
-`∑_{k<N} ‖P(ω^k)‖² = N · ∑_{i<N} ‖P.coeff i‖²`. -/
+unity: for $P \in \mathbb{C}[X]$ of degree less than $N$ and $\omega$ a primitive
+$N$-th root of unity, $\sum_{k < N} \|P(\omega^k)\|^2 = N \cdot \sum_{i < N} \|P_i\|^2$
+where $P_i$ are the coefficients of $P$. -/
 theorem sum_norm_sq_eval_primitiveRoot
     (P : ℂ[X]) {N : ℕ} {ω : ℂ} (hω : IsPrimitiveRoot ω N)
     (hω_norm : ‖ω‖ = 1) (hdeg : P.natDegree < N) :
