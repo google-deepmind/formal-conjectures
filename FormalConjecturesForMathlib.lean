@@ -41,6 +41,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Combinatorics.Digraph.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
@@ -61,6 +62,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConject
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.WellTotallyDominated
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Johnson
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.Encoding

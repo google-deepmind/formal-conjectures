@@ -1,0 +1,104 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Erdős Problem 129
+
+*References:*
+- [erdosproblems.com/129](https://www.erdosproblems.com/129)
+- [Er97b] Erdős, P., *Some old and new problems in various branches of combinatorics*.
+  Discrete Math. (1997), 227–231.
+-/
+
+open Filter
+
+namespace Erdos129
+
+/-- An $r$-edge-coloring of the complete graph $K_N$: a function that assigns a
+color in $\operatorname{Fin} r$ to each ordered pair of vertices.
+Note: this allows coloring of self-loops ($\chi\, x\, x$), which is semantically
+meaningless for $K_N$ but harmless since `IsMonoKkFree` only examines pairs
+with $x \ne y$. -/
+def EdgeColoring (N r : ℕ) : Type := Fin N → Fin N → Fin r
+
+/-- A vertex set $S$ is monochromatic-$K_k$-free in color $c$ under coloring $\chi$ if
+there is no $k$-element subset of $S$ in which every pair of distinct vertices
+receives color $c$. -/
+def IsMonoKkFree {N r : ℕ} (χ : EdgeColoring N r) (c : Fin r)
+    (k : ℕ) (S : Finset (Fin N)) : Prop :=
+  ∀ T : Finset (Fin N), T ⊆ S → T.card = k →
+    ∃ x ∈ T, ∃ y ∈ T, x ≠ y ∧ χ x y ≠ c
+
+/-- The generalized Ramsey number $R(n; k, r)$: the smallest $N$ such that for
+every symmetric $r$-coloring of the edges of $K_N$ (i.e., $\chi\, x\, y = \chi\, y\, x$),
+there exists a set of $n$ vertices and a color $c$ such that the set is
+$K_k$-free in color $c$. -/
+noncomputable def multicolorRamseyNum (n k r : ℕ) : ℕ :=
+  sInf {N : ℕ | ∀ (χ : EdgeColoring N r), (∀ x y, χ x y = χ y x) →
+    ∃ (S : Finset (Fin N)) (c : Fin r),
+      S.card = n ∧ IsMonoKkFree χ c k S}
+
+/--
+Erdős–Gyárfás Conjecture (Problem 129) [Er97b]:
+For every $r \geq 1$, does there exist a constant $C = C(r) > 1$ such that
+$R(n; 3, r) < C^{\sqrt{n}}$ for all positive integers $n$?
+
+The conjecture is **disproved** (`answer(False)`): as observed by Antonio Girao,
+a probabilistic coloring of $K_N$ (each edge independently uniformly at random
+in $r$ colors) shows $R(n; 3, 2) \geq C^n$ for some $C > 1$, which grows faster
+than $C^{\sqrt{n}}$, contradicting the conjectured upper bound.
+-/
+@[category research solved, AMS 5]
+theorem erdos_129 : answer(False) ↔
+    ∀ r : ℕ, 1 ≤ r →
+      ∃ C : ℝ, 1 < C ∧
+        ∀ n : ℕ, (multicolorRamseyNum n 3 r : ℝ) < C ^ Real.sqrt (n : ℝ) := by
+  sorry
+
+/--
+Lower bound proved by Erdős and Gyárfás [Er97b]: for every $r \geq 1$,
+there exists a constant $C = C(r) > 1$ such that $R(n; 3, r) > C^{\sqrt{n}}$
+for all positive integers $n$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_129_lower_bound :
+    ∀ r : ℕ, 1 ≤ r →
+      ∃ C : ℝ, 1 < C ∧
+        ∀ n : ℕ, 1 ≤ n →
+          C ^ Real.sqrt (n : ℝ) < (multicolorRamseyNum n 3 r : ℝ) := by
+  sorry
+
+/--
+Generalized Erdős–Gyárfás conjecture [Er97b]: for all $r, k \geq 2$,
+there exist constants $C_1, C_2 > 1$ (depending only on $r$) such that
+$C_1^{n^{1/(k-1)}} < R(n; k, r) < C_2^{n^{1/(k-1)}}$ for all sufficiently large $n$.
+The status of this generalized conjecture is unclear given the issues with
+the $k = 3$ upper bound.
+-/
+@[category research open, AMS 5]
+theorem erdos_129_general_bounds :
+    ∀ r : ℕ, 2 ≤ r → ∀ k : ℕ, 2 ≤ k →
+      ∃ C₁ C₂ : ℝ, 1 < C₁ ∧ 1 < C₂ ∧
+        ∀ᶠ n : ℕ in Filter.atTop,
+          C₁ ^ (n : ℝ) ^ ((1 : ℝ) / ((k : ℝ) - 1))
+            < (multicolorRamseyNum n k r : ℝ)
+          ∧ (multicolorRamseyNum n k r : ℝ)
+            < C₂ ^ (n : ℝ) ^ ((1 : ℝ) / ((k : ℝ) - 1)) := by
+  sorry
+
+end Erdos129

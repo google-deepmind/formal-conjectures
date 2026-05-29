@@ -1,0 +1,126 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Erdős Problem 986
+
+See also Problem [165](https://www.erdosproblems.com/165) (k=3 case),
+Problem [166](https://www.erdosproblems.com/166) (k=4 case),
+Problem [920](https://www.erdosproblems.com/920) (chromatic number connection).
+
+OEIS sequences: [A000791](https://oeis.org/A000791), [A059442](https://oeis.org/A059442).
+
+*References:*
+- [erdosproblems.com/986](https://www.erdosproblems.com/986)
+- [Sp77] Spencer, J., _Asymptotic lower bounds for Ramsey functions_. Discrete Math. 20 (1977),
+  69–76.
+- [MaVe23] Mattheus, S. and Verstraëte, J., _The asymptotics of $r(4,t)$_. Ann. of Math. 199
+  (2024), 919–941.
+- [BoKe10] Bohman, T. and Keevash, P., _The early evolution of the $H$-free process_. Invent.
+  Math. 181 (2010), 291–336.
+- [AKS80] Ajtai, M., Komlós, J. and Szemerédi, E., _A note on Ramsey numbers_. J. Combin.
+  Theory Ser. A 29 (1980), 354–360.
+- [LRZ01] Li, Y., Rousseau, C. C. and Zang, W., _Asymptotic upper bounds for Ramsey functions_.
+  Graphs Combin. 17 (2001), 123–128.
+- [Er90b] Erdős, P., _Problems and results on graphs and hypergraphs: similarities and
+  differences_. Mathematics of Ramsey theory (1990), 12–28.
+-/
+
+open Filter SimpleGraph Real
+
+namespace Erdos986
+
+/--
+Erdős Conjecture (Problem #986) [Er90b]:
+
+For any fixed $k \geq 3$, there exist constants $C > 0$ and $c \in \mathbb{N}$ with $c > 0$
+such that for all sufficiently large $n$:
+$$
+R(k,n) \geq C \cdot n^{k-1} / (\log n)^c.
+$$
+In asymptotic notation: $R(k,n) \gg n^{k-1}/(\log n)^c$ for some $c > 0$.
+-/
+@[category research open, AMS 5]
+theorem erdos_986 (k : ℕ) (hk : 3 ≤ k) :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ c : ℕ, 0 < c ∧
+    ∀ᶠ n : ℕ in atTop,
+      C * ((n : ℝ) ^ (k - 1) / (Real.log (n : ℝ)) ^ c) ≤ (graphRamseyNumber k n : ℝ) := by
+  sorry
+
+/--
+Spencer's theorem (1977) [Sp77]: the $k = 3$ case of Erdős Problem 986.
+
+There exist constants $C > 0$ and $c \in \mathbb{N}$ with $c > 0$ such that for all
+sufficiently large $n$, $R(3,n) \geq C \cdot n^2 / (\log n)^c$.
+
+See also Problem 165.
+-/
+@[category research solved, AMS 5]
+theorem erdos_986_k_eq_3 :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ c : ℕ, 0 < c ∧
+    ∀ᶠ n : ℕ in atTop,
+      C * ((n : ℝ) ^ 2 / (Real.log (n : ℝ)) ^ c) ≤ (graphRamseyNumber 3 n : ℝ) := by
+  sorry
+
+/--
+Mattheus–Verstraëte theorem (2023) [MaVe23]: the $k = 4$ case of Erdős Problem 986.
+
+There exist constants $C > 0$ and $c \in \mathbb{N}$ with $c > 0$ such that for all
+sufficiently large $n$, $R(4,n) \geq C \cdot n^3 / (\log n)^c$.
+
+See also Problem 166.
+-/
+@[category research solved, AMS 5]
+theorem erdos_986_k_eq_4 :
+    ∃ C : ℝ, 0 < C ∧
+    ∃ c : ℕ, 0 < c ∧
+    ∀ᶠ n : ℕ in atTop,
+      C * ((n : ℝ) ^ 3 / (Real.log (n : ℝ)) ^ c) ≤ (graphRamseyNumber 4 n : ℝ) := by
+  sorry
+
+/--
+Ajtai–Komlós–Szemerédi upper bound (1980) [AKS80]:
+
+For any fixed $k \geq 3$, there exists a constant $C > 0$ such that for all sufficiently
+large $n$, $R(k,n) \leq C \cdot n^{k-1} / (\log n)^{k-2}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_986_upper (k : ℕ) (hk : 3 ≤ k) :
+    ∃ C : ℝ, 0 < C ∧
+    ∀ᶠ n : ℕ in atTop,
+      (graphRamseyNumber k n : ℝ) ≤ C * ((n : ℝ) ^ (k - 1) / (Real.log (n : ℝ)) ^ (k - 2)) := by
+  sorry
+
+/--
+Bohman–Keevash lower bound (2010) [BoKe10]:
+
+For any fixed $k \geq 3$, there exists a constant $C > 0$ such that for all sufficiently
+large $n$, $R(k,n) \geq C \cdot n^{(k+1)/2} / (\log n)^{(k+1)/2 - 1/(k-2)}$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_986_lower (k : ℕ) (hk : 3 ≤ k) :
+    ∃ C : ℝ, 0 < C ∧
+    ∀ᶠ n : ℕ in atTop,
+      C * (((n : ℝ) ^ (((k : ℝ) + 1) / 2)) /
+        ((Real.log (n : ℝ)) ^ (((k : ℝ) + 1) / 2 - 1 / ((k : ℝ) - 2)))) ≤
+        (graphRamseyNumber k n : ℝ) := by
+  sorry
+
+end Erdos986
