@@ -25,14 +25,14 @@
 .gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(6):hover) p.overflow-hidden::after,
 .gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(6):focus) p.overflow-hidden::after { content: "Votes"; }
 
-/* inserts "True"/"False"/"Votes" before the reaction count */
-.gsc-reactions .gsc-direct-reaction-button[aria-label="Add +1 reaction"] .gsc-social-reaction-summary-item-count::before {
+/* inserts "True"/"False"/"Votes" before the reaction count (nth-child works for both signed-in and signed-out) */
+.gsc-reactions .gsc-direct-reaction-button:nth-child(1) .gsc-social-reaction-summary-item-count::before {
   content: "True ";
 }
-.gsc-reactions .gsc-direct-reaction-button[aria-label="Add -1 reaction"] .gsc-social-reaction-summary-item-count::before {
+.gsc-reactions .gsc-direct-reaction-button:nth-child(2) .gsc-social-reaction-summary-item-count::before {
   content: "False ";
 }
-.gsc-reactions .gsc-direct-reaction-button[aria-label="Add Love reaction"] .gsc-social-reaction-summary-item-count::before {
+.gsc-reactions .gsc-direct-reaction-button:nth-child(3) .gsc-social-reaction-summary-item-count::before {
   content: "Votes ";
 }
 
