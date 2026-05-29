@@ -12,8 +12,9 @@
   // Apply giscus theme (filter emojis + reaction labels)
   // ---------------------------------------------------------------------------
   function applyGiscusTheme() {
-    fetch('/assets/css/giscus-custom.css')
-      .then(function(r) { return r.text(); })
+    var base = document.documentElement.dataset.base || '';
+    fetch(base + '/assets/css/giscus-custom.css')
+      .then(function(r) { if (!r.ok) return Promise.reject(); return r.text(); })
       .then(function(customCss) {
         window.addEventListener('message', function onFirstGiscusMessage(event) {
           if (typeof event.data !== 'object' || !event.data.giscus || !event.data.giscus.resizeHeight) return;
