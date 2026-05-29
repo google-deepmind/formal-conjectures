@@ -22,30 +22,12 @@ import FormalConjectures.Util.ProblemImports
 * [MO2010] [Evidences on Hartshorne's conjecture? References?](https://mathoverflow.net/questions/13990/evidences-on-hartshornes-conjecture-references)
 -/
 
-namespace HartshorneConjecture
-
-open HartshorneConjecture
-
-universe u
-
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry
 
+universe u
 variable (S : Scheme.{u})
 
 namespace AlgebraicGeometry.Scheme
-
-attribute [local instance] CategoryTheory.Types.instConcreteCategory Types.instFunLike
-
--- TODO(lezeau): explain/investigate why the following two instances are needed.
-
-local instance (X : TopologicalSpace.Opens S) :
-    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (Type u) :=
-  CategoryTheory.GrothendieckTopology.instWEqualsLocallyBijectiveTypeHomObjForget
-    ((Opens.grothendieckTopology S).over X)
-
-local instance (X : TopologicalSpace.Opens S) :
-    ((Opens.grothendieckTopology S).over X).WEqualsLocallyBijective (AddCommGrpCat.{u}) :=
-  inferInstance
 
 /--
 A vector bundle over a scheme `S` is a locally free $\mathcal{O}_S$-module of finite rank.
@@ -93,6 +75,8 @@ end AlgebraicGeometry.Scheme
 -- TODO(lezeau): here we would really need some sanity checks and easier results.
 
 open AlgebraicGeometry.Scheme
+
+namespace HartshorneConjecture
 
 /--
 There are no indecomposable vector bundles of rank 2 on $\mathbb{P}^n$ for $n \ge 7$.

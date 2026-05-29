@@ -127,7 +127,7 @@ theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : 
   by_cases hfin : B.Finite
   by_cases hn : n = 0
   subst hn; simp
-  by_contra h_abs; push_neg at h_abs
+  by_contra h_abs; push Not at h_abs
   exact ((hfin.offDiag.image _).subset hB.surjOn).not_infinite (by
     rw [show (0 : ZMod 0) = (0 : ℤ) from rfl]; exact (Set.finite_singleton (0 : ℤ)).infinite_compl)
   haveI : NeZero n := ⟨hn⟩
@@ -137,7 +137,7 @@ theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : 
     le_trans (Set.ncard_le_ncard (Set.subset_univ _) (Set.toFinite _))
     (by simp [Set.ncard_univ, Nat.card_eq_fintype_card, ZMod.card])
   have h_off_ncard_le : (↑B : Set ℕ).offDiag.ncard ≤ n := by
-    have := Set.ncard_image_of_injOn hB.injOn
+    have := Set.InjOn.ncard_image hB.injOn
     rw [Set.BijOn.image_eq hB] at this
     linarith [this, h_target]
   have h_off_le : B.offDiag.card ≤ n := by
