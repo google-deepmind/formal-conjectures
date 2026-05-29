@@ -97,16 +97,15 @@ theorem radiusOfPower_one_le (G : SimpleGraph α) [DecidableRel G.Adj]
 example (G : SimpleGraph (Fin 4)) (k : ℕ) : 0 ≤ radiusOfPower G k :=
   Nat.zero_le _
 
-/-- The `graphPower` of any graph at index 0 gives no adjacencies between distinct
-vertices, since `G.dist u v ≤ 0` requires `dist = 0` which means `u = v`. -/
+/-- For a connected graph `G`, the 0-th `graphPower` is the empty graph: any
+`u ≠ v` with `dist u v ≤ 0` would force `dist u v = 0`, which by
+`Connected.dist_eq_zero_iff` contradicts `u ≠ v`. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : graphPower G 0 = ⊥ := by
+example (G : SimpleGraph (Fin 3)) (hconn : G.Connected) : graphPower G 0 = ⊥ := by
   ext u v
   simp only [graphPower, SimpleGraph.bot_adj, iff_false, not_and]
-  intro _
-  -- G.dist u v ≤ 0 means G.dist u v = 0, which by dist_eq_zero_iff_eq means u = v.
-  -- But we assumed u ≠ v. We use sorry as the dist API may vary.
-  sorry
+  intro hne hdist
+  exact hne (hconn.dist_eq_zero_iff.mp (Nat.le_zero.mp hdist))
 
 /-- In `K₃`, every pair of vertices has `dist = 1`, so `graphPower K₃ 1 = ⊤`. -/
 @[category test, AMS 5]
