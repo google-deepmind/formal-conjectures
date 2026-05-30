@@ -27,25 +27,14 @@ by *Qianlin Huang, Ronggang Shi*
 namespace Margulis
 
 open Matrix SpecialLinearGroup
-open scoped MatrixGroups Polynomial
+open scoped MatrixGroups Polynomial LaurentSeries
 
 section
 
 variable (n : Type*) [DecidableEq n] [Fintype n] (R : Type*) [CommRing R]
 
--- This instance can be made more general (this is being done in
--- https://github.com/leanprover-community/mathlib4/pull/27596)
-instance : TopologicalSpace (SpecialLinearGroup n ℝ) :=
-  inferInstanceAs (TopologicalSpace { A : Matrix n n ℝ // A.det = 1 })
-
-end
-
-
-/--
-Let $D$ be the diagonal group of $\mathrm{SL}_n(\mathbb{R})$ where $n \ge 3$.
-Then any relatively compact $D$-orbit in
-$\mathrm{SL}_n(\mathbb{R})/ \mathrm{SL}_n(\mathbb{Z})$ is closed.
--/
+/-- Let `D` be the diagonal group of `SL_n(ℝ)` where n ≥ 3.
+Then any relatively compact `D`-orbit in `SL_n(ℝ) / SL_n(ℤ)` is closed. -/
 @[category research open, AMS 11 15 22]
 theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     (g : SL(n, ℝ) ⧸ Subgroup.map (map (Int.castRingHom ℝ)) ⊤)
@@ -53,6 +42,56 @@ theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
     IsClosed <| MulAction.orbit (diagonalSubgroup (Fin n) ℝ) g := by
   sorry
 
--- TODO(Paul-Lez): add main theorem from the paper.
+end
+
+ /-
+## Diagonal orbits over function fields (Huang–Shi, Theorem 1.2)
+
+We now formulate a Lean version of the main theorem of Huang–Shi.
+Let `F` be a finite field of characteristic `p ∈ {3, 5, 7, 11}`. Set
+
+* `A = F[t]`,
+* `K = F((t⁻¹))`.
+
+Denote by `D` the diagonal subgroup of `SL₄(K)` and by `Γ` the lattice
+subgroup `SL₄(A)` embedded into `SL₄(K)` via the natural map `A →+* K`.
+
+Then there exists a point `z : SL₄(K)/Γ` such that the `D`-orbit of `z` has
+compact closure but is not closed.
+-/
+
+universe u
+
+section FunctionFieldDiagonalOrbit
+
+variable (F : Type u) [Field F] [Fintype F]
+
+/-- The natural inclusion `F[t] →+* F((t⁻¹))`. -/
+noncomputable def polyToLaurent : F[X] →+* F⸨X⸩ :=
+  (HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom
+
+/-- **Huang–Shi, Theorem 1.2**
+
+Let `F` be a finite field of characteristic `p ∈ {3, 5, 7, 11}`, and set
+`K = F((t⁻¹))`, `A = F[t]`. Let
+
+* `D` be the diagonal subgroup of `SL₄(K)`,
+* `Γ = SL₄(A)` the lattice subgroup embedded into `SL₄(K)` via the natural inclusion `A →+* K`.
+
+Then there exists `z : SL₄(K)/Γ` such that the `D`-orbit of `z` has compact
+closure but is not closed.
+-/
+@[category research solved, AMS 11 15 22]
+theorem huang_shi_theorem_1_2
+    (hchar : ringChar F ∈ ({3, 5, 7, 11} : Finset ℕ)) :
+    ∃ z : SL(4, F⸨X⸩) ⧸ (  Matrix.SpecialLinearGroup.map
+    (polyToLaurent F)).range,
+      IsCompact (closure (MulAction.orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z)) ∧
+      ¬ IsClosed (MulAction.orbit (diagonalSubgroup (Fin 4) (F⸨X⸩)) z) := by
+  -- Placeholder: a Lean formalization would require a full development
+  -- of the Huang–Shi paper in mathlib.
+  sorry
+
+end FunctionFieldDiagonalOrbit
 
 end Margulis
