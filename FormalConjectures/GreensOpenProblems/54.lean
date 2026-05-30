@@ -16,7 +16,7 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-/-
+/-!
 # Ben Green's Open Problem 54
 
 *References:*
