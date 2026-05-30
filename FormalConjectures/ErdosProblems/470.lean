@@ -56,12 +56,30 @@ that the set of weird numbers has positive density.
 theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity := by
   sorry
 
+/-- Local decidability scaffolding for `Nat.Pseudoperfect`/`Nat.Weird`.
+  `Nat.Pseudoperfect n` is `0 < n ∧ ∃ s ⊆ properDivisors n, ∑ i ∈ s, i = n`. The
+  inner existential ranges over arbitrary `Finset ℕ`, so type-class search does
+  not find a `Decidable` instance automatically; we rewrite the bounded
+  existential into one over `(properDivisors n).powerset`, which is a finite set
+  and decidable.
+-/
+instance (n : ℕ) : Decidable n.Abundant := by
+  unfold Nat.Abundant; infer_instance
+
+instance (n : ℕ) : Decidable n.Pseudoperfect :=
+  decidable_of_iff (0 < n ∧ ∃ s ∈ (n.properDivisors).powerset, ∑ i ∈ s, i = n)
+    (by unfold Nat.Pseudoperfect; simp [Finset.mem_powerset])
+
+instance (n : ℕ) : Decidable n.Weird := by
+  unfold Nat.Weird; infer_instance
+
 /--
 The smallest weird number is 70.
 -/
 @[category textbook, AMS 11]
 theorem erdos_470.variants.smallest_weird_eq_70 : (∀ n < 70, ¬n.Weird) ∧ (70).Weird := by
-  sorry
+  refine ⟨fun n hn => ?_, by native_decide⟩
+  interval_cases n <;> native_decide
 
 /--
 Melfi [Me15](https://mathscinet.ams.org/mathscinet/relay-station?mr=3276337) has proved that there
