@@ -54,7 +54,37 @@ P_{2n+1} = P_n ^ 2 + P_{n+1} ^ 2 -/
 @[category textbook, AMS 11]
 theorem pellNumber_sq_add_pellNumber_succ_sq (n : ℕ) :
     pellNumber (2 * n + 1) = pellNumber n ^ 2 + pellNumber (n + 1) ^ 2 := by
-  sorry
+  -- Prove jointly with the even-index companion
+  --   P(2n+2) = 2 · P(n+1) · (P(n) + P(n+1)),
+  -- since each successive case needs both formulas at the previous index.
+  suffices h : ∀ n,
+      pellNumber (2 * n + 1) = pellNumber n ^ 2 + pellNumber (n + 1) ^ 2 ∧
+      pellNumber (2 * n + 2) =
+        2 * pellNumber (n + 1) * (pellNumber n + pellNumber (n + 1)) by
+    exact (h n).1
+  intro n
+  induction n with
+  | zero => refine ⟨?_, ?_⟩ <;> rfl
+  | succ k ih =>
+    obtain ⟨hA, hB⟩ := ih
+    -- The Pell recursion at the next pair of indices.
+    have hstep1 : pellNumber (2 * (k + 1) + 1) =
+        2 * pellNumber (2 * k + 2) + pellNumber (2 * k + 1) := by
+      show pellNumber (2 * k + 1 + 1 + 1) =
+        2 * pellNumber (2 * k + 1 + 1) + pellNumber (2 * k + 1)
+      rfl
+    have hstep2 : pellNumber (2 * (k + 1) + 2) =
+        2 * pellNumber (2 * (k + 1) + 1) + pellNumber (2 * k + 2) := by
+      show pellNumber (2 * k + 2 + 1 + 1) =
+        2 * pellNumber (2 * k + 2 + 1) + pellNumber (2 * k + 2)
+      rfl
+    have hk2 : pellNumber (k + 2) = 2 * pellNumber (k + 1) + pellNumber k := rfl
+    -- A(k+1): prove once, use as first conjunct and inside the B(k+1) step.
+    have hA' : pellNumber (2 * (k + 1) + 1) =
+        pellNumber (k + 1) ^ 2 + pellNumber (k + 2) ^ 2 := by
+      rw [hstep1, hA, hB, hk2]; ring
+    refine ⟨hA', ?_⟩
+    rw [hstep2, hA', hB, hk2]; ring
 
 /-- An explicit formula for Pell numbers, similar to Binet's formula -/
 @[category textbook, AMS 11]

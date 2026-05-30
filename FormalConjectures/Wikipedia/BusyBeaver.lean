@@ -66,18 +66,22 @@ theorem sanity_check (n : ℕ) [NeZero n] :
       M.haltingNumber = N} := by
   sorry
 
+/-- The value of the Busy Beaver function for 1 state is 1. -/
 @[category test, AMS 3]
 theorem BB_1 : BB 1 = 1 := by
   sorry
 
+/-- The value of the Busy Beaver function for 2 states is 6. -/
 @[category textbook, AMS 3]
 theorem BB_2 : BB 2 = 6 := by
   sorry
 
+/-- The value of the Busy Beaver function for 3 states is 21. -/
 @[category textbook, AMS 3]
 theorem BB_3 : BB 3 = 21 := by
   sorry
 
+/-- The value of the Busy Beaver function for 4 states is 107. -/
 @[category textbook, AMS 3]
 theorem BB_4 : BB 4 = 107 := by
   sorry

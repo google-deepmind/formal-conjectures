@@ -30,12 +30,14 @@ open SimpleGraph
 
 variable {V : Type} {G : SimpleGraph V}
 
+/-- A finset of vertices in a complete graph is always a clique. -/
 @[category textbook, AMS 5]
 lemma completeGraphIsClique (s : Finset V) : (⊤ : SimpleGraph V).IsClique s :=
   Pairwise.set_pairwise (fun _ _ a ↦ a) _
 
 variable [Fintype V]
 
+/-- The only clique of size `n` in a complete graph on `n` vertices is the entire set of vertices. -/
 @[category textbook, AMS 5]
 lemma completeGraph_cliqueSet :
     (⊤ : SimpleGraph V).cliqueSet (Fintype.card V) = {Set.univ.toFinset} := by

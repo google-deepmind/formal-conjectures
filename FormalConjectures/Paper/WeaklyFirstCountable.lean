@@ -88,9 +88,9 @@ def ExistsWeaklyFirstCountableCompactNotFirstCountable : Prop :=
     ∃ (X : Type) (_ : TopologicalSpace X), WeaklyFirstCountableTopology X ∧ CompactSpace X ∧
       ¬ FirstCountableTopology X
 
-/-- Problem 4 in [Ar2013]: Give an example in ZFC of a weakly first-
-countable compact space X which is not first countable. -/
-@[category test, AMS 54]
+/-- Problem 3 in [Ar2013]: Give an example in ZFC of a weakly first-
+countable compact space which is not first countable. -/
+@[category research open, AMS 54]
 theorem existsWeaklyFirstCountableCompactNotFirstCountable :
     ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
 

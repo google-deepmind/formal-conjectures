@@ -18,7 +18,6 @@ import FormalConjectures.Util.DeclName
 import FormalConjectures.Arxiv.«0912.2382».CurlingNumberConjecture
 import FormalConjectures.Arxiv.«1601.03081».UniqueCrystalComponents
 import FormalConjectures.Arxiv.«2501.03234».ArithmeticSumS
-import FormalConjectures.Arxiv.«2602.05192».FirstProof4
 import FormalConjectures.Books.UniformDistributionOfSequences.Equidistribution
 import FormalConjectures.ErdosProblems.«1002»
 import FormalConjectures.ErdosProblems.«1074»
@@ -72,6 +71,7 @@ import FormalConjectures.GreensOpenProblems.«31»
 import FormalConjectures.GreensOpenProblems.«58»
 import FormalConjectures.GreensOpenProblems.«61»
 import FormalConjectures.GreensOpenProblems.«9»
+import FormalConjectures.Mathoverflow.«1973»
 import FormalConjectures.Millenium.Poincare
 import FormalConjectures.OEIS.«303656»
 import FormalConjectures.OEIS.«308734»
@@ -105,13 +105,13 @@ import FormalConjectures.WrittenOnTheWallII.GraphConjecture316
 import FormalConjectures.WrittenOnTheWallII.GraphConjecture327
 
 /-!
-# FC100Open
+# FC100OpenSet1
 
 A random subset of 100 open research problems, drawn uniformly at random
 from all problems with the `category research open` tag.
 -/
 
-namespace Subsets.FC100Open
+namespace Subsets.FC100OpenSet1
 
 open Lean in
 def problems : List Name := [
@@ -143,7 +143,7 @@ def problems : List Name := [
   decl_name% Erdos887.erdos_887.parts.i,
   decl_name% Erdos340.erdos_340.variants.co_density_zero_sub,
   decl_name% Erdos694.erdos_694.variants.carmichael,
-  decl_name% Arxiv.«2602.05192».four_3,
+  decl_name% Mathoverflow1973.mathoverflow_1973,
   decl_name% Erdos479.erdos_479,
   decl_name% OeisA67720.prime_add_one_of_a,
   decl_name% Erdos1092.f_asymptotic_general,
@@ -217,9 +217,10 @@ def problems : List Name := [
   decl_name% Green61.green_61
 ]
 
-end Subsets.FC100Open
+end Subsets.FC100OpenSet1
 
 open Lean Meta ProblemAttributes in
-#eval verifyCategoryCounts Subsets.FC100Open.problems [
-  ("research open", 100)
+#eval verifyCategoryCounts Subsets.FC100OpenSet1.problems [
+  ("research open", 96),
+  ("research solved", 4)
 ]

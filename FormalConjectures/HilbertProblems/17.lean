@@ -32,8 +32,6 @@ open Real MvPolynomial
 
 namespace Hilbert17
 
-abbrev MvRatFunc (σ K : Type*) [CommRing K] := FractionRing (MvPolynomial σ K)
-
 /--
 Hilbert's 17th problem: every non-negative multivariate polynomial is a sum of
 squares of rational functions.
@@ -53,6 +51,7 @@ noncomputable def f : MvPolynomial (Fin 2) ℝ :=
   X 0 ^ 4 * X 1 ^ 2 + X 0 ^ 2 * X 1 ^ 4 - 3 * X 0 ^ 2 * X 1 ^ 2 + 1
 
 -- Proof taken from `motzkin_polynomial_nonneg` in mathlib
+/-- The Motzkin polynomial is non-negative everywhere. -/
 @[category textbook, AMS 12]
 theorem f_nonneg : ∀ x y : ℝ, 0 ≤ f.eval ![x, y] := by
   intro x y
@@ -66,6 +65,7 @@ theorem f_nonneg : ∀ x y : ℝ, 0 ≤ f.eval ![x, y] := by
     + (x ^ 2 - y ^ 2) ^ 2 := by positivity
   linear_combination H
 
+/-- The Motzkin polynomial cannot be written as a sum of squares of polynomials. -/
 @[category textbook, AMS 12]
 theorem f_not_sum_of_squares :
     ¬∃ (n : ℕ) (hn : 0 < n) (S : Fin n → MvPolynomial (Fin 2) ℝ), f = ∑ i, S i ^ 2 := by

@@ -16,6 +16,14 @@ limitations under the License.
 
 import Lean
 
+/-!
+# Declaration Name Elaborator
+
+Provides the `decl_name%` term elaborator, which resolves an identifier to its fully qualified
+`Lean.Name` at compile time. This ensures that references to declarations are checked by the
+compiler and will cause build failures if the target declaration is renamed or removed.
+-/
+
 open Lean Elab Term in
 /-- `decl_name% Foo.bar` resolves the identifier to verify the declaration
 exists, then returns the corresponding `Lean.Name`. Build fails if the

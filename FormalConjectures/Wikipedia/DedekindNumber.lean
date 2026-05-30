@@ -165,6 +165,7 @@ lemma fromSperner_monotone {n : ℕ} (A : Finset (Finset (Fin n))) (_ : IsSperne
       exact decide_eq_true
         ( ⟨ s, hsA, fun i hi => by simpa using Finset.mem_filter.mp ( hs_w hi ) |>.2 ⟩ )
 
+/-- Every true set of a monotone Boolean function contains a minimal true set. -/
 @[category textbook, AMS 5 6]
 lemma exists_minimal_true_subset {n : ℕ} {f : (Fin n → Bool) → Bool} (_ : Monotone f)
     {s : Finset (Fin n)} (hs : f (χ s) = true) :
@@ -180,6 +181,7 @@ lemma exists_minimal_true_subset {n : ℕ} {f : (Fin n → Bool) → Bool} (_ : 
         not_lt_of_ge ( ht₂ u ⟨ hu.trans ht₁.1, hu' ⟩ )
         ( Finset.card_lt_card <| Finset.ssubset_iff_subset_ne.2 ⟨ hu, by aesop ⟩ )
 
+/-- Converting a monotone function to a Sperner family and back yields the same function. -/
 @[category textbook, AMS 5 6]
 lemma fromSperner_toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) (hf : Monotone f) :
     fromSperner (toSperner f) = f := by
@@ -198,6 +200,7 @@ lemma fromSperner_toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) (hf : Mono
     refine' hf _ hs.1
     intro i; by_cases hi : i ∈ s <;> simp_all +decide [ χ ]
 
+/-- Converting a Sperner family to a monotone function and back yields the same family. -/
 @[category textbook, AMS 5 6]
 lemma toSperner_fromSperner {n : ℕ} (A : Finset (Finset (Fin n))) (hA : IsSperner A) :
     toSperner (fromSperner A) = A := by
