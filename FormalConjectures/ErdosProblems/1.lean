@@ -153,7 +153,7 @@ elements is $24$.
 
 https://oeis.org/A276661
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/4118"]
 theorem erdos_1.variants.least_N_6 :
     IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 6 } 24 := by
   refine ⟨⟨{11, 17, 20, 22, 23, 24}, ?_⟩, ?_⟩
