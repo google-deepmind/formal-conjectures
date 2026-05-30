@@ -33,6 +33,26 @@ noncomputable def f (n : ℕ) : ℕ :=
     Nat.find h
   else 0
 
+/-- The smallest divisor of a positive number is `1` (`nth` index `0`). -/
+@[category API, AMS 11]
+lemma nth_divisors_zero {m : ℕ} (hm : m ≠ 0) : Nat.nth (· ∈ m.divisors) 0 = 1 := by
+  rw [Nat.nth_zero]
+  exact IsLeast.csInf_eq ⟨Nat.one_mem_divisors.mpr hm, fun y hy => Nat.pos_of_mem_divisors hy⟩
+
+/-- Every divisor enumerated after index `0` is at least `2`. -/
+@[category API, AMS 11]
+lemma two_le_nth_divisors {m : ℕ} (hm : m ≠ 0) {i : ℕ} (hi : i ≠ 0)
+    (h : Nat.nth (· ∈ m.divisors) i ≠ 0) : 2 ≤ Nat.nth (· ∈ m.divisors) i := by
+  have hfin : (setOf (· ∈ m.divisors)).Finite := Set.toFinite _
+  have hpos : 1 ≤ Nat.nth (· ∈ m.divisors) i := Nat.pos_of_mem_divisors (Nat.nth_mem_of_ne_zero h)
+  rcases hpos.lt_or_eq with h2 | h1
+  · omega
+  · exact absurd (Nat.nth_injOn hfin
+      (Set.mem_Iio.mpr (Nat.lt_card_toFinset_of_nth_ne_zero h hfin))
+      (Set.mem_Iio.mpr (Nat.lt_card_toFinset_of_nth_ne_zero
+        (show Nat.nth (· ∈ m.divisors) 0 ≠ 0 by rw [nth_divisors_zero hm]; norm_num) hfin))
+      (by rw [nth_divisors_zero hm]; omega)) hi
+
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$?-/
 @[category research open, AMS 11]
@@ -57,7 +77,20 @@ theorem erdos_1054.parts.iii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=2$, i.e. we get the junk value $0$. -/
 @[category textbook, AMS 11]
 theorem f_undefined_at_2 : f 2 = 0 := by
-  sorry
+  rw [f, dif_neg]
+  rintro ⟨m, k, hk, hsum⟩
+  rcases eq_or_ne m 0 with rfl | hm
+  · simp at hsum
+  · -- For `m ≠ 0` the smallest divisor is `1` and every later term is `≥ 2`, so the sum of the
+    -- `k` smallest divisors is `1` or `≥ 3`, never `2`.
+    have hk0 : (0 : ℕ) ∈ Finset.Iio k := Finset.mem_Iio.mpr (by omega)
+    rw [← Finset.add_sum_erase _ _ hk0, nth_divisors_zero hm] at hsum
+    obtain ⟨i, hi_mem, hi_ne⟩ :=
+      Finset.exists_ne_zero_of_sum_ne_zero (s := (Finset.Iio k).erase 0)
+        (f := Nat.nth (· ∈ m.divisors)) (by omega)
+    have h2 := two_le_nth_divisors hm (Finset.ne_of_mem_erase hi_mem) hi_ne
+    have := h2.trans (Finset.single_le_sum (fun j _ => Nat.zero_le _) hi_mem)
+    omega
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=5$, i.e. we get the junk value $0$. -/
