@@ -148,6 +148,29 @@ theorem erdos_1.variants.least_N_3 :
       decide
 
 /--
+The minimal value of $N$ such that there exists a sum-distinct set with six
+elements is $24$.
+
+https://oeis.org/A276661
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_1.variants.least_N_6 :
+    IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 6 } 24 := by
+  refine ⟨⟨{11, 17, 20, 22, 23, 24}, ?_⟩, ?_⟩
+  · -- upper bound: {11, 17, 20, 22, 23, 24} is sum-distinct and ⊆ {1..24}
+    refine ⟨by decide, ?_⟩
+    native_decide
+  · -- lower bound: no 6-element sum-distinct set for N < 24
+    simp [mem_lowerBounds]
+    intro n S h_sub h_inj h_card
+    by_contra! h_lt
+    have h_no : ¬ ∃ (A : Finset ℕ),
+      A ⊆ Finset.Icc 1 n ∧ A.card = 6 ∧ IsSumDistinctSet A n := by
+      interval_cases n <;> native_decide
+    apply h_no
+    exact ⟨S, h_sub, h_card, ⟨h_sub, h_inj⟩⟩
+
+/--
 The minimal value of $N$ such that there exists a sum-distinct set with five
 elements is $13$.
 
