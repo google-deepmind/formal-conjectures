@@ -274,25 +274,14 @@ theorem hasSICPOVM_three : HasSICPOVM 3 := by sorry
 @[category test, AMS 15 47 81]
 lemma bb84Family_normalized (i : Fin 4) :
     IsNormalized (bb84Family i) := by
-  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  have sqrt2_pos : (0:ℝ) < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
-  fin_cases i <;>
-    simp [IsNormalized, bb84Family, vec2, mkStateVector,
-      EuclideanSpace.norm_eq, Fin.sum_univ_two, hesseS, abs_of_pos sqrt2_pos]
-  all_goals (try (field_simp; linarith [h2]))
+  fin_cases i <;> simp [IsNormalized, bb84Family, vec2, EuclideanSpace.norm_eq, hesseS] <;> grind
 
 /-- The BB84 family has the right cardinality for a qubit SIC but fails the constant-overlap condition. -/
 @[category test, AMS 15 47 81]
 theorem bb84Family_not_isSICFamily : ¬ IsSICFamily 2 bb84Family := by
   intro h
-  have h_const := h.2
-  unfold HasConstantOverlapSq at h_const
-  change ∀ i j, i ≠ j → overlapSq (bb84Family i) (bb84Family j) = sicOverlapSq 2 at h_const
-  have h_overlap := h_const (0 : Fin 4) (1 : Fin 4) (by decide)
-  rw [sicOverlapSq_two] at h_overlap
-  unfold overlapSq at h_overlap
-  rw [Fin.sum_univ_two] at h_overlap
-  simp [bb84Family, vec2] at h_overlap
+  have h_overlap := h.2 (show 0 ≠ 1 by decide)
+  simp [Fin.sum_univ_two, bb84Family, vec2, overlapSq, sicOverlapSq_two] at h_overlap
 
 /- ## Smallest open special cases (all d<=75) -/
 
