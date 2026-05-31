@@ -21,6 +21,13 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [Gr24] [Ben Green's 100 Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.47)
+- [GH14] Green, Ben, and Adam J. Harper. "Inverse questions for the large sieve."
+  Geometric and Functional Analysis 24.4 (2014): 1167-1203.
+- [HV09] Helfgott, Harald Andrés, and Akshay Venkatesh. "How small must ill-distributed sets be."
+  Analytic number theory 2 (2009): 224-234.
+- [Wa12] Walsh, Miguel N. "The inverse sieve problem in high dimensions." (2012): 2001-2022.
+- [Wa14] Walsh, Miguel N. "The algebraicity of ill-distributed sets."
+  Geometric and Functional Analysis 24.3 (2014): 959-967.
 -/
 
 open Filter
