@@ -48,9 +48,9 @@ is covered by $K^{O(1)}$ translates of a subspace of size $\leq |A|$?
 -/
 @[category research solved, AMS 5 11]
 theorem green_49 : answer(True) ↔
-    ∃ C > (0 : ℝ),
-      ∀ n : ℕ, ∀ A : Finset (𝔽₂ n), A.Nonempty →
-      ∀ K : ℝ, 1 ≤ K → ((#(A + A)) : ℝ) ≤ K * (#A : ℝ) →
+    ∃ C > 0,
+      ∀ n (A : Finset (𝔽₂ n)), A.Nonempty →
+      ∀ K ≥ (1 : ℝ), (#(A + A) : ℝ) ≤ K * #A →
         ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (T : Finset (𝔽₂ n)),
           Nat.card W ≤ #A ∧
           (#T : ℝ) ≤ K ^ C ∧
