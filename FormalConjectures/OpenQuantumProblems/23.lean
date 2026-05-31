@@ -273,7 +273,13 @@ theorem hasSICPOVM_three : HasSICPOVM 3 := by sorry
 /-- Every vector in the BB84 family is normalized. -/
 @[category test, AMS 15 47 81]
 lemma bb84Family_normalized (i : Fin 4) :
-    IsNormalized (bb84Family i) := by sorry
+    IsNormalized (bb84Family i) := by
+  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have sqrt2_pos : (0:ℝ) < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  fin_cases i <;>
+    simp [IsNormalized, bb84Family, vec2, mkStateVector,
+      EuclideanSpace.norm_eq, Fin.sum_univ_two, hesseS, abs_of_pos sqrt2_pos]
+  all_goals (try (field_simp; linarith [h2]))
 
 /-- The BB84 family has the right cardinality for a qubit SIC but fails the constant-overlap condition. -/
 @[category test, AMS 15 47 81]
