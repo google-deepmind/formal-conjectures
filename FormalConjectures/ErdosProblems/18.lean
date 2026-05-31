@@ -92,7 +92,7 @@ theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
     by_cases hle : m ≤ n.factorial
     · exact subsetSums_mono (by exact_mod_cast (Nat.divisors_subset_of_dvd
         (Nat.factorial_ne_zero _) (Nat.factorial_dvd_factorial n.le_succ))) (ih m hle)
-    · push_neg at hle; rw [Nat.factorial_succ] at hm
+    · push Not at hle; rw [Nat.factorial_succ] at hm
       set q := m / (n + 1); set r := m % (n + 1)
       have h_div : m = (n + 1) * q + r := (Nat.div_add_mod m (n + 1)).symm
       have h_r_lt : r < n + 1 := Nat.mod_lt m (Nat.succ_pos n)
