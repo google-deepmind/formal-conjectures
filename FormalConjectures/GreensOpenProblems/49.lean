@@ -54,7 +54,7 @@ theorem green_49 : answer(True) ↔
         ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (T : Finset (𝔽₂ n)),
           Nat.card W ≤ #A ∧
           (#T : ℝ) ≤ K ^ C ∧
-          (A : Set (𝔽₂ n)) ⊆ (T : Set (𝔽₂ n)) + (W : Set (𝔽₂ n)) := by
+          (A : Set (𝔽₂ n)) ⊆ T + W := by
   sorry
 
 end Green49
