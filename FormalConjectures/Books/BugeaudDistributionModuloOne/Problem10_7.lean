@@ -32,7 +32,7 @@ namespace Bugeaud
 Problem 10.7. Let $\varepsilon$ be a positive real number. Are there arbitrarily
 large real numbers $\alpha$ such that $\alpha$ is not a Pisot number and all the
 fractional parts $\{\alpha^n\}$, $n \ge 1$, are lying in an interval of length
-$\varepsilon / \alpha$?
+$\varepsilon / \alpha$? [Bug12b]
 -/
 @[category research open, AMS 11]
 theorem problem_10_7 : answer(sorry) ↔
