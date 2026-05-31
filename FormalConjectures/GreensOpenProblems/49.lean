@@ -29,18 +29,22 @@ open scoped Pointwise Finset
 
 namespace Green49
 
+/-- The vector space $\mathbb{F}_2^n$. -/
+abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
+
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set with $|A + A| \leq K|A|$. Is it true that $A$
 is covered by $K^{O(1)}$ translates of a subspace of size $\leq |A|$?
 -/
 @[category research solved, AMS 5 11]
 theorem green_49 : answer(True) ↔
-    ∃ C > (0 : ℝ), ∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2), A.Nonempty →
-    ∀ K : ℝ, 1 ≤ K → ((#(A + A)) : ℝ) ≤ K * (#A : ℝ) →
-    ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (T : Finset (Fin n → ZMod 2)),
-      Nat.card W ≤ #A ∧
-      (#T : ℝ) ≤ K ^ C ∧
-      (A : Set (Fin n → ZMod 2)) ⊆ (T : Set (Fin n → ZMod 2)) + (W : Set (Fin n → ZMod 2)) := by
+    ∃ C > (0 : ℝ),
+      ∀ n : ℕ, ∀ A : Finset (𝔽₂ n), A.Nonempty →
+      ∀ K : ℝ, 1 ≤ K → ((#(A + A)) : ℝ) ≤ K * (#A : ℝ) →
+        ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (T : Finset (𝔽₂ n)),
+          Nat.card W ≤ #A ∧
+          (#T : ℝ) ≤ K ^ C ∧
+          (A : Set (𝔽₂ n)) ⊆ (T : Set (𝔽₂ n)) + (W : Set (𝔽₂ n)) := by
   sorry
 
 end Green49
