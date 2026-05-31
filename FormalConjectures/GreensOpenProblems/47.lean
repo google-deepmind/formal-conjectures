@@ -27,10 +27,6 @@ open Filter
 
 namespace Green47
 
-/-- A map $\phi : \mathbb{Q} \to \mathbb{Q}$ is quadratic if it is of the form $\phi(x) = ax^2 + bx + c$. -/
-def IsQuadratic (f : ℚ → ℚ) : Prop :=
-  ∃ a b c : ℚ, a ≠ 0 ∧ ∀ x, f x = a * x^2 + b * x + c
-
 /--
 Suppose that a large sieve process leaves a set of quadratic size. Is that set quadratic?
 
@@ -45,7 +41,7 @@ theorem green_47 :
     answer(sorry) ↔ ∀ A : Set ℕ,
       (∀ᶠ p in atTop, Nat.Prime p → Set.ncard (Set.image (fun a : ℕ => (a : ZMod p)) A) ≤ (p + 1) / 2) →
       (fun X : ℕ => ((A ∩ Set.Iic X).ncard : ℝ)) =O[atTop] (fun X : ℕ => Real.sqrt (X : ℝ) / (Real.log (X : ℝ)) ^ 100)
-      ∨ (∃ ϕ : ℚ → ℚ, IsQuadratic ϕ ∧ ∀ a ∈ A, ∃ z : ℤ, (a : ℚ) = ϕ z) := by
+      ∨ (∃ P : Polynomial ℚ, P.degree = 2 ∧ ∀ a ∈ A, ∃ z : ℤ, (a : ℚ) = P.eval (z : ℚ)) := by
   sorry
 
 end Green47
