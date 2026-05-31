@@ -70,8 +70,8 @@ private lemma maxOverlap_singleton_one_two :
     intro p hp
     obtain ⟨hp1, _⟩ := Finset.mem_filter.mp hp
     obtain ⟨ha, hb⟩ := Finset.mem_product.mp hp1
-    simp at ha hb ⊢
-    exact Prod.ext ha hb
+    simp only [Finset.mem_singleton] at ha hb
+    exact Finset.mem_singleton.mpr (Prod.ext ha hb)
   · refine le_ciSup_of_le ?_ (-1) ?_
     · refine ⟨1, ?_⟩
       rintro x ⟨k, rfl⟩
@@ -89,11 +89,9 @@ Thus, $M 1 = 1$.
 theorem M_one : M 1 = 1 := by
   apply le_antisymm
   · apply Nat.sInf_le
-    refine ⟨{1}, {2}, ?_, ?_, by decide, maxOverlap_singleton_one_two⟩
-    · simp
-    · decide
+    refine ⟨{1}, {2}, by decide, by decide, by decide, maxOverlap_singleton_one_two⟩
   · apply le_csInf
-    · exact ⟨_, {1}, {2}, by simp, by decide, by decide,
+    · exact ⟨_, {1}, {2}, by decide, by decide, by decide,
         maxOverlap_singleton_one_two⟩
     rintro x ⟨A, B, hd, hu, hsc, rfl⟩
     -- |A ∪ B| = 2 ∧ |A| = |B| ⇒ each is a singleton.
@@ -107,7 +105,9 @@ theorem M_one : M 1 = 1 := by
     refine le_ciSup_of_le ?_ (a - b) ?_
     · refine ⟨1, ?_⟩
       rintro x ⟨k, rfl⟩
-      exact (Finset.card_filter_le _ _).trans (by simp)
+      refine (Finset.card_filter_le _ _).trans ?_
+      rw [Finset.product_eq_sprod, Finset.card_product,
+        Finset.card_singleton, Finset.card_singleton]
     · exact one_le_overlap (Finset.mem_singleton.mpr rfl)
         (Finset.mem_singleton.mpr rfl)
 
