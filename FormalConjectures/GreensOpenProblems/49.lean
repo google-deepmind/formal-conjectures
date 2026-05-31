@@ -45,6 +45,8 @@ abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set with $|A + A| \leq K|A|$. Is it true that $A$
 is covered by $K^{O(1)}$ translates of a subspace of size $\leq |A|$?
+
+Solved by [GGM25].
 -/
 @[category research solved, AMS 5 11]
 theorem green_49 : answer(True) ↔
@@ -57,4 +59,5 @@ theorem green_49 : answer(True) ↔
           (A : Set (𝔽₂ n)) ⊆ T + W := by
   sorry
 
+-- TODO(jgd) Formulate the analogue (still open) conjecture for subsets of $\mathbb{Z}$ [Gr24, Problem 49, p.25]
 end Green49
