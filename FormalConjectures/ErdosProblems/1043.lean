@@ -40,7 +40,7 @@ def levelSet (f : Polynomial ℂ) : Set ℂ :=
 **Erdős Problem 1043**:
 Let $f\in \mathbb{C}[x]$ be a monic polynomial.
 Must there exist a straight line $\ell$ such that the projection of
-\[\{ z: \lvert f(z)\rvert\leq 1\}\]
+$$\{ z: \lvert f(z)\rvert\leq 1\}$$
 onto $\ell$ has measure at most $2$?
 
 Pommerenke [Po61] proved that the answer is no.

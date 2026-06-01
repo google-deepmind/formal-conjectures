@@ -34,7 +34,7 @@ namespace Erdos239
 
 /--
 Let $f:\mathbb{N}\to \{-1,1\}$ be a multiplicative function. Is it true that
-\[ \lim_{N\to \infty}\frac{1}{N}\sum_{n\leq N}f(n)\] always exists?
+$$ \lim_{N\to \infty}\frac{1}{N}\sum_{n\leq N}f(n)$$ always exists?
 
 The answer is yes, as proved by Wirsing [Wi67], and generalised by Halász [Ha68].
 -/

@@ -66,7 +66,7 @@ theorem erdos_342.test.a2 : ∀ a : ℕ → ℕ, IsUlamSequence a → a 2 = 3 :=
 /-- $a(3) = 4$: among sums $> 3$ with a unique representation from $\{1,2,3\}$,
 the smallest is $4 = 1 + 3$. The candidate $5 = 2 + 3$ is ruled out by minimality since
 $4$ has a unique representation. -/
-@[category test, AMS 05 11 40]
+@[category test, AMS 5 11 40]
 theorem erdos_342.test.a3 : ∀ a : ℕ → ℕ, IsUlamSequence a → a 3 = 4 := by
   intro a ⟨ha0, ha1, ha⟩
   have ha2 := erdos_342.test.a2 a ⟨ha0, ha1, ha⟩
@@ -107,7 +107,7 @@ theorem erdos_342.test.a3 : ∀ a : ℕ → ℕ, IsUlamSequence a → a 3 = 4 :=
 
 /--
 Do infinitely many pairs $(a, a+2)$ occur in Ulam's sequence? -/
-@[category research open, AMS 05 11 40]
+@[category research open, AMS 5 11 40]
 theorem erdos_342.parts.i :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →
@@ -117,7 +117,7 @@ theorem erdos_342.parts.i :
 /--
 Does Ulam's sequence eventually have periodic differences? That is, is $a(n+1) - a(n)$ eventually periodic?
 -/
-@[category research open, AMS 05 11 40]
+@[category research open, AMS 5 11 40]
 theorem erdos_342.parts.ii :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →
@@ -128,7 +128,7 @@ theorem erdos_342.parts.ii :
 /--
 Part (iii), is the density of the sequence 0?
 -/
-@[category research open, AMS 05 11 40]
+@[category research open, AMS 5 11 40]
 theorem erdos_342.parts.iii :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →
