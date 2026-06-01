@@ -53,8 +53,13 @@
     var ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle && name) ogTitle.content = name;
 
+    var url = new URL(location.href);
+    url.searchParams.delete('giscus');
+    url.hash = '';
+    var cleanHref = url.toString();
+
     var desc = document.querySelector('meta[name="description"]');
-    if (desc) desc.content = 'Discussion page for ' + location.href + '.\n' + desc.content;
+    if (desc) desc.content = 'Discussion page for ' + cleanHref + '.\n' + desc.content;
   })();
 </script>
 <script src="https://giscus.app/client.js"
