@@ -74,7 +74,9 @@ jobs:
           # Avoid including Test files from `Util/` to avoid inflating the
           # stats. This stop-gap should be removed after doing the TODO at
           # `fetchStatsMarkdown` in `docbuild/overwrite-index.lean`.
-          grep -v "FormalConjectures\.Util\." FormalConjectures.lean > FormalConjectures/All.lean
+          grep -v -E "FormalConjectures\.Util\.|FormalConjectures\.All" FormalConjectures.lean > FormalConjectures/All.lean
+          echo "" >> FormalConjectures/All.lean
+          echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
 
       - name: Restore ~/.cache/mathlib
         if: steps.mode.outputs.website_only != 'true'

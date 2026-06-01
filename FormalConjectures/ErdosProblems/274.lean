@@ -56,7 +56,7 @@ different sizes? (i.e. each element is contained in exactly one of the cosets.)
 @[category research open, AMS 20]
 theorem erdos_274 : answer(sorry) ↔ ∃ (G : Type*) (h : Group G) (hG : 1 < ENat.card G)
     (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
-      1 < Fintype.card ι ∧ (Set.range P.parts).Pairwise fun A B ↦ #A ≠ #B := by
+      1 < Fintype.card ι ∧ ∃ i j, i ≠ j ∧ #(P.parts i) ≠ #(P.parts j) := by
   sorry
 
 /--
