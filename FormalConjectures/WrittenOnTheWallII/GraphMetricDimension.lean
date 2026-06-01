@@ -72,7 +72,7 @@ theorem metricDimension_pos (G : SimpleGraph α) [DecidableRel G.Adj]
 
 For any connected graph `G` on `n ≥ 2` vertices,
   `metricDimension(G) ≤ n − diam(G)`
-where `diam(G) = (maxEccentricity G).toNat`.
+where `diam(G) = G.ediam.toNat`.
 
 Proof sketch: a diametral path `v₀–v₁–⋯–v_d` of length `d = diam(G)` provides
 a resolving set of size `n − d` by taking all vertices not on the path plus
@@ -80,7 +80,7 @@ suitable additional vertices; the bound follows from counting. -/
 @[category research solved, AMS 5]
 theorem metricDimension_le_card_sub_diam (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) (hn : 2 ≤ Fintype.card α) :
-    metricDimension G ≤ Fintype.card α - (maxEccentricity G).toNat := by
+    metricDimension G ≤ Fintype.card α - G.ediam.toNat := by
   sorry
 
 -- Sanity checks

@@ -61,7 +61,7 @@ noncomputable def graphPower (G : SimpleGraph α) (k : ℕ) : SimpleGraph α whe
 /-- The radius of the k-th power of `G`, i.e., the minimum eccentricity of
 `graphPower G k`. -/
 noncomputable def radiusOfPower (G : SimpleGraph α) (k : ℕ) : ℕ :=
-  (minEccentricity (graphPower G k)).toNat
+  (graphPower G k).radius.toNat
 
 /--
 WOWII-style conjecture: for a connected graph `G` and any `k ≥ 1`,
@@ -79,7 +79,7 @@ theorem radiusOfPower_antitone (G : SimpleGraph α) [DecidableRel G.Adj]
 
 /--
 For a connected graph `G`, the radius of the 1st power is at most the radius
-of `G` itself (i.e., `radiusOfPower G 1 ≤ (minEccentricity G).toNat`).
+of `G` itself (i.e., `radiusOfPower G 1 ≤ G.radius.toNat`).
 This holds because in a connected graph `graphPower G 1` agrees with `G` on
 adjacency (distance 1 = adjacent), but distances in the power graph may differ
 for non-adjacent pairs.
@@ -87,7 +87,7 @@ for non-adjacent pairs.
 @[category research open, AMS 5]
 theorem radiusOfPower_one_le (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) :
-    radiusOfPower G 1 ≤ (minEccentricity G).toNat := by
+    radiusOfPower G 1 ≤ G.radius.toNat := by
   sorry
 
 -- Sanity checks

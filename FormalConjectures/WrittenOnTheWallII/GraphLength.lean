@@ -50,7 +50,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 eccentricities over all vertices. We have
 `graphLength G / Fintype.card α = averageEccentricity G`. -/
 noncomputable def graphLength (G : SimpleGraph α) : ℕ :=
-  ∑ v : α, (eccentricity G v).toNat
+  ∑ v : α, (G.eccent v).toNat
 
 /--
 WOWII [Conjecture 19](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj19)
