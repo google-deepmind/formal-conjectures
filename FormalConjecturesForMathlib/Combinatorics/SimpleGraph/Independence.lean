@@ -15,7 +15,8 @@ limitations under the License.
 -/
 module
 
-public import Mathlib
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Real.Basic
 
 @[expose] public section
 
@@ -60,8 +61,7 @@ theorem indep_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
   · apply csSup_le
     · refine ⟨0, ∅, ?_, rfl⟩
       simp [SimpleGraph.IsIndepSet]
-    · intro n hn
-      obtain ⟨s, hs⟩ := hn
+    · rintro n ⟨s, hs⟩
       calc n = s.card := hs.card_eq.symm
         _ ≤ _ := Finset.le_sup ?_
       simp only [Finset.mem_filter, Finset.mem_powerset]
@@ -77,4 +77,3 @@ theorem indep_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
         rfl⟩⟩
 
 end SimpleGraph
-#min_imports

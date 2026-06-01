@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Clique
-public import Mathlib
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 @[expose] public section
 
