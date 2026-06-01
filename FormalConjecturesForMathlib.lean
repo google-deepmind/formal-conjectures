@@ -68,14 +68,17 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Temperature
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.PathCover
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LargestInducedTree
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Johnson
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
+public import FormalConjecturesForMathlib.Computability.DFA
 public import FormalConjecturesForMathlib.Computability.Encoding
 public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
@@ -97,6 +100,7 @@ public import FormalConjecturesForMathlib.Data.Set.Density
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
+public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.«2d»
@@ -114,6 +118,7 @@ public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.Quadratic
+public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 public import FormalConjecturesForMathlib.NumberTheory.Primitive

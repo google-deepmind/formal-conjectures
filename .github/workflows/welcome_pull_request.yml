@@ -20,7 +20,7 @@ on:
 
 permissions:
   contents: read
-  issues: write
+  pull-requests: write
 
 jobs:
   welcome:
@@ -28,29 +28,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Post polite guidance comment
-      uses: actions/github-script@v8
+      uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # v3.0.4
       with:
-        script: |
-          const defaultBranch = context.payload.repository.default_branch
-          const styleGuideUrl =
-            `https://github.com/${context.repo.owner}/${context.repo.repo}/blob/${defaultBranch}/CONTRIBUTING.md#style-guidelines`
+        header: Welcome Pull Request
+        message: |
+          👋 *This is an automated welcome message.* 🤖
+          Thanks for the contributions!
 
-          const body = [
-            '👋 *This is an automated welcome message.* 🤖'
-            'Thanks for the contributions!',
-            '',
-            'A few friendly reminders while the review gets started:',
-            '',
-            `- Please take a look at the [style guidelines](${styleGuideUrl}), especially the conventions for references, categories, AMS tags, and \`answer(sorry)\`.`,
-            '- You can manage some PR labels by leaving a comment with `+label-name` or `-label-name`; for example, `+awaiting-author` or `-awaiting-author`.',
-            '- This repository is mainly for formalised _statements_. Proofs longer than about 25-50 lines are usually out of scope; longer proofs are welcome to be included/linked via the `formal_proof` mechanism.',
-            '',
-            'Thanks again for helping improve Formal Conjectures.'
-          ].join('\n')
+          A few friendly reminders while the review gets started:
 
-          await github.rest.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.payload.pull_request.number,
-            body,
-          })
+          - Please take a look at the [style guidelines](https://github.com/${{ github.repository }}/blob/${{ github.event.repository.default_branch }}/CONTRIBUTING.md#style-guidelines),
+            especially the conventions for references, categories, AMS tags, and `answer(sorry)`.
+          - You can manage some PR labels by leaving a comment with `+label-name` or `-label-name`; for example, `+awaiting-author` or `-awaiting-author`.
+          - This repository is mainly for formalised _statements_. Proofs longer than about 25-50 lines are usually out of scope; longer proofs are welcome to be included/linked via the `formal_proof` mechanism.
+
+          Thanks again for helping improve Formal Conjectures.
