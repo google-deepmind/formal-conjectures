@@ -14,7 +14,7 @@
   function applyGiscusTheme() {
     // Reaction key order from giscus's Reactions object (matches GitHub API order)
     var REACTION_ORDER = ['THUMBS_UP', 'THUMBS_DOWN', 'LAUGH', 'HOORAY', 'CONFUSED', 'HEART', 'ROCKET', 'EYES'];
-    var REACTION_LABELS = { THUMBS_UP: 'True', THUMBS_DOWN: 'False', HEART: 'Votes' };
+    var REACTION_LABELS = { THUMBS_UP: 'True', THUMBS_DOWN: 'False', HEART: 'Likes' };
 
     var base = document.documentElement.dataset.base || '';
     fetch(base + '/assets/css/giscus-custom.css')
@@ -34,6 +34,8 @@
               var label = REACTION_LABELS[key];
               if (label) {
                 labelCss += '.gsc-reactions .gsc-direct-reaction-button:nth-child(' + pos + ') .gsc-social-reaction-summary-item-count::before{content:"' + label + ' ";}';
+              } else {
+                labelCss += '.gsc-reactions .gsc-direct-reaction-button:nth-child(' + pos + '){display:none;}';
               }
             }
           }

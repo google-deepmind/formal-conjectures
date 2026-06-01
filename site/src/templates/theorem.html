@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Theorem — Formal Conjectures</title>
-  <meta name="description" content="Theorem detail page for the Formal Conjectures repository.">
+  <meta name="description" content="The emoji reactions on this post carry special meaning:
+ * 👍: I believe the corresponding conjecture is True
+ * 👎: I believe the corresponding conjecture is False
+ * ❤️: I like the conjecture">
   <meta property="og:title" content="">
+  <meta name="giscus:backlink" content="#">
   <link rel="preload" href="/assets/fonts/LibertinusSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" href="/assets/img/formal_conjectures_logo.svg" type="image/svg+xml">
@@ -43,11 +47,14 @@
 
 <div class="container">
 <script>
-  /*Set og:title using the ?name= parameter before loading giscus. */
+  /* Set og:title and description first line using the page URL, before loading giscus. */
   (function() {
     var name = new URLSearchParams(location.search).get('name') || '';
-    var meta = document.querySelector('meta[property="og:title"]');
-    if (meta && name) meta.content = name;
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle && name) ogTitle.content = name;
+
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.content = 'Discussion page for ' + location.href + '.\n' + desc.content;
   })();
 </script>
 <script src="https://giscus.app/client.js"

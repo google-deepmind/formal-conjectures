@@ -23,7 +23,7 @@
 .gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(2):hover) p.overflow-hidden::after,
 .gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(2):focus) p.overflow-hidden::after { content: "False"; }
 .gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(6):hover) p.overflow-hidden::after,
-.gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(6):focus) p.overflow-hidden::after { content: "Votes"; }
+.gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(6):focus) p.overflow-hidden::after { content: "Like"; }
 
 
 /* renames the reaction box from "x Reactions" to "Votes and predictions" */
