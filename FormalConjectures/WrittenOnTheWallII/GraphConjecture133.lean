@@ -45,7 +45,7 @@ floor (a standard Graffiti.pc convention), hence `⌊l G⌋` in Lean.
 -/
 @[category research open, AMS 5]
 theorem conjecture133 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    let rad := (minEccentricity G).toNat
+    let rad := G.radius.toNat
     let cC4 := countInducedC4 G
     (rad : ℝ) + (⌊l G⌋ : ℝ) ^ cC4 ≤ (path G : ℝ) := by
   sorry
@@ -56,8 +56,8 @@ theorem conjecture133 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ (path G : ℝ) := Nat.cast_nonneg _
 
-/-- `minEccentricity` toNat is nonneg. -/
+/-- `radius` toNat is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ (minEccentricity G).toNat := Nat.zero_le _
+example (G : SimpleGraph (Fin 3)) : 0 ≤ G.radius.toNat := Nat.zero_le _
 
 end WrittenOnTheWallII.GraphConjecture133

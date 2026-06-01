@@ -41,7 +41,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /-- The radius of $G^2$ (the graph square): the minimum eccentricity over all vertices
 of `graphSquare G`. -/
 noncomputable def graphSquareRadius (G : SimpleGraph α) : ℕ :=
-  (minEccentricity (graphSquare G)).toNat
+  (graphSquare G).radius.toNat
 
 /--
 WOWII [Conjecture 146](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)

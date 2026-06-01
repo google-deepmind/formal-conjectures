@@ -36,14 +36,14 @@ For a simple connected graph $G$,
 $\mathrm{tree}(G) \ge \mathrm{girth}(G) - 1 + \mathrm{ecc}(\mathrm{Centers})$
 where $\mathrm{tree}(G)$ is the largest induced tree size, $\mathrm{girth}(G)$ is
 the length of the shortest cycle ($0$ if acyclic),
-$\mathrm{Centers} = \mathrm{graphCenter}\, G$ is the set of vertices with minimum
+$\mathrm{Centers} = G.\mathrm{center}$ is the set of vertices with minimum
 eccentricity (the center of $G$), and $\mathrm{ecc}(\mathrm{Centers})$ is the
 eccentricity of the center set — the maximum distance from any non-center
 vertex to the nearest center vertex.
 -/
 @[category research open, AMS 5]
 theorem conjecture144 (G : SimpleGraph α) (h : G.Connected) :
-    (G.girth : ℝ) - 1 + (ecc G (graphCenter G) : ℝ) ≤ (largestInducedTreeSize G : ℝ) := by
+    (G.girth : ℝ) - 1 + (ecc G G.center : ℝ) ≤ (largestInducedTreeSize G : ℝ) := by
   sorry
 
 -- Sanity checks

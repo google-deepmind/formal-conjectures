@@ -35,15 +35,15 @@ formal statement below uses the diameter of `Gᶜ`.
 
 DeLaVina does not give a stand-alone definition for `length(H)` on the WOWII
 page. We interpret it as the **diameter** of `H` (the maximum eccentricity,
-i.e. `maxEccentricity H`), which is the most natural graph-theoretic notion
+i.e. `H.ediam`), which is the most natural graph-theoretic notion
 of "length" of a graph. Combined with the overline above, the inequality reads:
   `α(G) ≤ ⌈(max_v l(v) + 0.5 · diam(Gᶜ)) / 2⌉`
-where `l(v) = indepNeighbors G v` and `diam(Gᶜ) = (maxEccentricity Gᶜ).toNat`.
+where `l(v) = indepNeighbors G v` and `diam(Gᶜ) = Gᶜ.ediam.toNat`.
 
 ## Connectedness of the complement
 
-When `Gᶜ` is **disconnected**, `maxEccentricity Gᶜ = ⊤` and
-`(maxEccentricity Gᶜ).toNat = 0`, so the right-hand side silently degenerates
+When `Gᶜ` is **disconnected**, `Gᶜ.ediam = ⊤` and
+`Gᶜ.ediam.toNat = 0`, so the right-hand side silently degenerates
 to `⌈max_v l(v) / 2⌉` — a much weaker (and often vacuously false) statement
 than the conjecture intends. We therefore add the hypothesis `hGc : Gᶜ.Connected`
 so the inequality is genuinely about a finite `length(Ḡ) = diam(Gᶜ)`.
@@ -68,15 +68,15 @@ complement `Gᶜ`.
 
 **Note:** `length(Ḡ)` in DeLaVina's original is interpreted here as the
 diameter of the complement. The hypothesis `hGc : Gᶜ.Connected` is added so
-that `diam(Gᶜ)` is finite (otherwise `maxEccentricity Gᶜ = ⊤` and
-`(maxEccentricity Gᶜ).toNat` collapses silently to `0`); see the module
+that `diam(Gᶜ)` is finite (otherwise `Gᶜ.ediam = ⊤` and
+`Gᶜ.ediam.toNat` collapses silently to `0`); see the module
 docstring above.
 -/
 @[category research open, AMS 5]
 theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hGc : Gᶜ.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
-    let diamCompl := (maxEccentricity Gᶜ).toNat
+    let diamCompl := Gᶜ.ediam.toNat
     (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (diamCompl : ℝ)) / 2⌉ := by
   sorry
 
@@ -86,9 +86,9 @@ theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ G.indepNum := Nat.zero_le _
 
-/-- `maxEccentricity` on a two-vertex complete graph is `⊤` since all eccentricities
+/-- `ediam` on a two-vertex complete graph is `⊤` since all eccentricities
 are computed via `sSup` and the distance between the two vertices is 1. -/
 @[category test, AMS 5]
-example : 0 ≤ (maxEccentricity (⊤ : SimpleGraph (Fin 2))).toNat := Nat.zero_le _
+example : 0 ≤ (⊤ : SimpleGraph (Fin 2)).ediam.toNat := Nat.zero_le _
 
 end WrittenOnTheWallII.GraphConjecture100
