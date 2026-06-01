@@ -50,8 +50,6 @@ open Filter
 
 namespace CernyConjecture
 
-variable {α : Type*} {σ : Type*}
-
 /-- **Černý Conjecture**: Every synchronizing DFA with $n$ states admits a
 synchronizing word of length at most $(n - 1)^2$.
 -/
