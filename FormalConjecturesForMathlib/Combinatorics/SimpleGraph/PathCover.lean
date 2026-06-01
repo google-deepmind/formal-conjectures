@@ -36,7 +36,4 @@ def IsPathCover (G : SimpleGraph α) (P : Finset (Finset α)) : Prop :=
 noncomputable def pathCoverNumber (G : SimpleGraph α) : ℕ :=
   sInf { k | ∃ P : Finset (Finset α), P.card = k ∧ IsPathCover G P }
 
-/-- The same quantity as a real number. -/
-noncomputable def p (G : SimpleGraph α) : ℝ := (pathCoverNumber G : ℝ)
-
 end SimpleGraph

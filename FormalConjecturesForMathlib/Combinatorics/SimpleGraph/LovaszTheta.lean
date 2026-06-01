@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Analysis.Matrix.Spectrum
 public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
 
 @[expose] public section
 
@@ -24,11 +25,6 @@ namespace SimpleGraph
 open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
-
-noncomputable def Matrix.IsHermitian.maxEigenvalue {𝕜 : Type*} [Field 𝕜] [RCLike 𝕜]
-    {n : Type*} [Fintype n] [DecidableEq n] {A : Matrix n n 𝕜} (hA : A.IsHermitian) : ℝ :=
-  iSup hA.eigenvalues
-
 /--
 Lovász Theta Function (ϑ(G))
 The Lovász theta function is defined as:
