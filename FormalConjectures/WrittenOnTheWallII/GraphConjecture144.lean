@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 144
 
-**Verbatim statement (WOWII #144, status O):**
-> If G is a simple connected graph, then tree(G) ≥ girth -1 + ecc(Centers)
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj144
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
@@ -38,12 +32,13 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 144](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`tree(G) ≥ girth(G) − 1 + ecc(Centers)`
-where `tree(G)` is the largest induced tree size, `girth(G)` is the length of
-the shortest cycle (0 if acyclic), `Centers = graphCenter G` is the set of
-vertices with minimum eccentricity (the center of `G`), and `ecc(Centers)` is
-the eccentricity of the center set — the maximum distance from any non-center
+For a simple connected graph $G$,
+$\mathrm{tree}(G) \ge \mathrm{girth}(G) - 1 + \mathrm{ecc}(\mathrm{Centers})$
+where $\mathrm{tree}(G)$ is the largest induced tree size, $\mathrm{girth}(G)$ is
+the length of the shortest cycle ($0$ if acyclic),
+$\mathrm{Centers} = \mathrm{graphCenter}\, G$ is the set of vertices with minimum
+eccentricity (the center of $G$), and $\mathrm{ecc}(\mathrm{Centers})$ is the
+eccentricity of the center set — the maximum distance from any non-center
 vertex to the nearest center vertex.
 -/
 @[category research open, AMS 5]

@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 103
 
-**Verbatim statement (WOWII #103, status O):**
-> If G is a simple connected graph, then α(G) ≤ FLOOR[b(G) - LN[average of ecc(v)]
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj103
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
@@ -38,13 +32,12 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 103](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`α(G) ≤ ⌊b(G) − ln(ecc_avg(G))⌋`
-where `α(G) = G.indepNum` is the independence number,
-`b(G)` is the largest induced bipartite subgraph size, and
-`ecc_avg(G) = G.averageEccentricity` is the average eccentricity of `G`
-(from `FormalConjecturesForMathlib`).
-Uses `Real.log` (natural logarithm).
+For a simple connected graph $G$,
+$\alpha(G) \le \lfloor b(G) - \ln(\mathrm{ecc\_avg}(G)) \rfloor$
+where $\alpha(G) = G.\mathrm{indepNum}$ is the independence number,
+$b(G)$ is the largest induced bipartite subgraph size, and
+$\mathrm{ecc\_avg}(G) = G.\mathrm{averageEccentricity}$ is the average
+eccentricity of $G$. Uses `Real.log` (natural logarithm).
 -/
 @[category research open, AMS 5]
 theorem conjecture103 (G : SimpleGraph α) (h : G.Connected) :

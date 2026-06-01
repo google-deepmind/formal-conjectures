@@ -19,22 +19,17 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 146
 
-**Verbatim statement (WOWII #146, status O):**
-> If G is a simple connected graph, then tree(G) ≥ 2*ecc(B)/rad(G^2)
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj146
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 ## Definitions
 
-The **square** of a graph `G`, denoted `G²`, is the graph on the same vertex set where
-two distinct vertices are adjacent if and only if their distance in `G` is at most 2.
+The **square** of a graph $G$, denoted $G^2$, is the graph on the same vertex set
+where two distinct vertices are adjacent if and only if their distance in $G$ is at
+most $2$.
 
-The **radius of G²** is the minimum eccentricity of any vertex in `G²`, i.e.,
-  `rad(G²) = min_{v ∈ V} max_{u ∈ V} dist_{G²}(u, v)`.
+The **radius of $G^2$** is the minimum eccentricity of any vertex in $G^2$, i.e.,
+$$\mathrm{rad}(G^2) = \min_{v \in V} \max_{u \in V} \mathrm{dist}_{G^2}(u, v).$$
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture146
@@ -43,23 +38,23 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- The radius of `G²` (the graph square): the minimum eccentricity over all vertices
-of `graphSquare G`. The base graph operation `graphSquare` is from
-`FormalConjecturesForMathlib`. -/
+/-- The radius of $G^2$ (the graph square): the minimum eccentricity over all vertices
+of `graphSquare G`. -/
 noncomputable def graphSquareRadius (G : SimpleGraph α) : ℕ :=
   (minEccentricity (graphSquare G)).toNat
 
 /--
 WOWII [Conjecture 146](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`tree(G) ≥ 2 * ecc(B) / rad(G²)`
-where `tree(G)` is the number of vertices in a largest induced subtree,
-`ecc(B)` is the eccentricity of the boundary vertices of `G` (`eccSet` and
-`boundaryVertices` from `FormalConjecturesForMathlib`), and
-`rad(G²)` is the radius of the square graph of `G`.
+For a simple connected graph $G$,
+$\mathrm{tree}(G) \ge 2 \cdot \mathrm{ecc}(B) / \mathrm{rad}(G^2)$
+where $\mathrm{tree}(G)$ is the number of vertices in a largest induced subtree,
+$\mathrm{ecc}(B)$ is the eccentricity of the boundary vertices of $G$ (`eccSet`
+and `boundaryVertices`), and $\mathrm{rad}(G^2)$ is the radius of the square
+graph of $G$.
 
-We state the inequality in the form `tree(G) * rad(G²) ≥ 2 * ecc(B)` to avoid division.
+We state the inequality in the form
+$\mathrm{tree}(G) \cdot \mathrm{rad}(G^2) \ge 2 \cdot \mathrm{ecc}(B)$ to avoid division.
 -/
 @[category research open, AMS 5]
 theorem conjecture146 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
@@ -70,7 +65,8 @@ theorem conjecture146 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 
 -- Sanity checks
 
-/-- In `graphSquare G`, adjacent vertices in `G` are also adjacent (dist ≤ 1 ≤ 2). -/
+/-- In `graphSquare G`, adjacent vertices in $G$ are also adjacent
+($\mathrm{dist} \le 1 \le 2$). -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 4)) (u v : Fin 4) (h : G.Adj u v) :
     (graphSquare G).Adj u v := by

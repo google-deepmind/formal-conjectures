@@ -19,19 +19,13 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 315
 
-**Verbatim statement (WOWII #315, status O):**
-> Let G is a simple connected graph with n > 1. Let P be the pendant vertices of G. If α(G) = |P|, then G is well total dominated.
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj315
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 ## Definitions
 
 The notions `IsTotalDominatingSet`, `IsMinimalTotalDominatingSet`,
-`IsWellTotallyDominated`, and `pendantVertices` live upstream in
+`IsWellTotallyDominated`, and `pendantVertices` live in
 `FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.WellTotallyDominated`.
 -/
 
@@ -46,8 +40,8 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /--
 WOWII [Conjecture 315](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-Let `G` be a simple connected graph and let `P` denote the set of pendant vertices
-(vertices of degree 1). If `α(G) = |P|`, then `G` is well totally dominated.
+Let $G$ be a simple connected graph and let $P$ denote the set of pendant vertices
+(vertices of degree $1$). If $\alpha(G) = |P|$, then $G$ is well totally dominated.
 -/
 @[category research open, AMS 5]
 theorem conjecture315 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
@@ -57,45 +51,45 @@ theorem conjecture315 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connecte
 
 -- Sanity checks
 
-/-- In the path graph `P₃` (0-1-2), vertices 0 and 2 have degree 1,
-so there are exactly 2 pendant vertices. -/
+/-- In the path graph $P_3$ ($0$-$1$-$2$), vertices $0$ and $2$ have degree $1$,
+so there are exactly $2$ pendant vertices. -/
 @[category test, AMS 5]
 example : (pendantVertices (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3))).card = 2 := by
   unfold pendantVertices
   decide +native
 
-/-- In `K₃`, all vertices have degree 2, so there are no pendant vertices. -/
+/-- In $K_3$, all vertices have degree $2$, so there are no pendant vertices. -/
 @[category test, AMS 5]
 example : (pendantVertices (⊤ : SimpleGraph (Fin 3))).card = 0 := by
   unfold pendantVertices
   decide +native
 
-/-- In `K₂`, both vertices have degree 1, so both are pendant vertices. -/
+/-- In $K_2$, both vertices have degree $1$, so both are pendant vertices. -/
 @[category test, AMS 5]
 example : (pendantVertices (⊤ : SimpleGraph (Fin 2))).card = 2 := by
   unfold pendantVertices
   decide +native
 
-/-- In `K₂`, the pendant set is exactly `{0, 1}`. -/
+/-- In $K_2$, the pendant set is exactly $\{0, 1\}$. -/
 @[category test, AMS 5]
 example : pendantVertices (⊤ : SimpleGraph (Fin 2)) = Finset.univ := by
   unfold pendantVertices
   decide +native
 
-/-- In the edgeless graph on 3 vertices, no vertex has degree 1, so there are 0 pendant vertices. -/
+/-- In the edgeless graph on $3$ vertices, no vertex has degree $1$, so there are $0$ pendant vertices. -/
 @[category test, AMS 5]
 example : (pendantVertices (⊥ : SimpleGraph (Fin 3))).card = 0 := by
   unfold pendantVertices
   decide +native
 
-/-- `{0, 1}` is a total dominating set of `K₂`: every vertex has a neighbor in `{0, 1}`. -/
+/-- $\{0, 1\}$ is a total dominating set of $K_2$: every vertex has a neighbor in $\{0, 1\}$. -/
 @[category test, AMS 5]
 example : IsTotalDominatingSet (⊤ : SimpleGraph (Fin 2)) Finset.univ := by
   unfold IsTotalDominatingSet
   intro v
   fin_cases v <;> simp
 
-/-- `{0, 1}` is NOT a total dominating set of the edgeless graph on 2 vertices,
+/-- $\{0, 1\}$ is NOT a total dominating set of the edgeless graph on $2$ vertices,
 since no vertex has a neighbor in the empty edge set. -/
 @[category test, AMS 5]
 example : ¬IsTotalDominatingSet (⊥ : SimpleGraph (Fin 2)) Finset.univ := by

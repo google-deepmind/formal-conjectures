@@ -47,7 +47,6 @@ When `Gᶜ` is **disconnected**, `maxEccentricity Gᶜ = ⊤` and
 to `⌈max_v l(v) / 2⌉` — a much weaker (and often vacuously false) statement
 than the conjecture intends. We therefore add the hypothesis `hGc : Gᶜ.Connected`
 so the inequality is genuinely about a finite `length(Ḡ) = diam(Gᶜ)`.
-(Cf. Paul-Lez review on PR #3820.)
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture100

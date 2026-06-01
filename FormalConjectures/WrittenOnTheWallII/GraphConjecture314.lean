@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 314
 
-**Verbatim statement (WOWII #314, status O):**
-> Let G is a simple connected graph with n > 1. If G is triangle-free and path number ≤ 4, then G is well total dominated.
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj314
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
@@ -37,21 +31,19 @@ open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-/-- The size of a largest induced path of `G`, as a natural number.
+/-- The size of a largest induced path of $G$, as a natural number.
 
-A subset `s ⊆ V(G)` is an *induced path* when the induced subgraph
-`G.induce s` is a tree in which every vertex has degree at most `2`
+A subset $s \subseteq V(G)$ is an *induced path* when the induced subgraph
+`G.induce s` is a tree in which every vertex has degree at most $2$
 (equivalently: a tree that is itself a path graph). We define
 `largestInducedPathSize G` as the supremum of `s.card` over all such subsets.
 
-**Disambiguation.** This is *not* the upstream `SimpleGraph.path` invariant
-from `FormalConjecturesForMathlib/.../Invariants.lean`, which is the floor of
-the average distance — that one is the wrong tool for WOWII Conjecture 314,
-where `path(G)` denotes the **size of a largest induced path**.
+**Disambiguation.** This is *not* the `SimpleGraph.path` invariant, which is the
+floor of the average distance — that one is the wrong tool for WOWII Conjecture
+314, where $\mathrm{path}(G)$ denotes the **size of a largest induced path**.
 
-TODO: it would probably be clearer to rename the upstream `SimpleGraph.path`
-invariant to something like `pathBound` / `floorAvgDist` to avoid this naming
-collision; that rename lives outside the scope of this PR. -/
+TODO: it would probably be clearer to rename the `SimpleGraph.path` invariant to
+something like `pathBound` / `floorAvgDist` to avoid this naming collision. -/
 noncomputable def largestInducedPathSize (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   sSup { n | ∃ s : Finset α,
               s.card = n ∧
@@ -59,21 +51,19 @@ noncomputable def largestInducedPathSize (G : SimpleGraph α) [DecidableRel G.Ad
               ∀ v : (s : Set α), (G.induce (s : Set α)).degree v ≤ 2 }
 
 /--
-WOWII [Conjecture 314](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj314)
-(status O):
+WOWII [Conjecture 314](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj314):
 
-For every finite simple connected graph `G` with `n > 1` vertices,
-if `G` is triangle-free and `path(G) ≤ 4`, then `G` is well totally dominated.
+For every finite simple connected graph $G$ with $n > 1$ vertices,
+if $G$ is triangle-free and $\mathrm{path}(G) \le 4$, then $G$ is well totally
+dominated.
 
-Here `path(G) = largestInducedPathSize G` is the **size of a largest induced
-path** in `G`, defined locally above.
+Here $\mathrm{path}(G) = \mathrm{largestInducedPathSize}\, G$ is the **size of a
+largest induced path** in $G$, defined locally above.
 
-**Disambiguation.** Earlier revisions of this file used the upstream
-`SimpleGraph.path` invariant
-(`FormalConjecturesForMathlib/Combinatorics/SimpleGraph/GraphConjectures/Invariants.lean`),
-but that is the *floor of the average distance*, not the size of a largest
-induced path — a different quantity that makes Conjecture 314 vacuous in many
-cases. (Cf. Paul-Lez review on PR #3820.)
+**Disambiguation.** Earlier revisions of this file used the `SimpleGraph.path`
+invariant, but that is the *floor of the average distance*, not the size of a
+largest induced path — a different quantity that makes Conjecture 314 vacuous
+in many cases.
 -/
 @[category research open, AMS 5]
 theorem conjecture314 [Nontrivial α] (G : SimpleGraph α) [DecidableRel G.Adj]
@@ -85,7 +75,7 @@ theorem conjecture314 [Nontrivial α] (G : SimpleGraph α) [DecidableRel G.Adj]
 
 -- Sanity checks
 
-/-- The complete graph `K₃` has a triangle. -/
+/-- The complete graph $K_3$ has a triangle. -/
 @[category test, AMS 5]
 example : ∃ a b c : Fin 3, (⊤ : SimpleGraph (Fin 3)).Adj a b ∧
     (⊤ : SimpleGraph (Fin 3)).Adj b c ∧ (⊤ : SimpleGraph (Fin 3)).Adj c a := by

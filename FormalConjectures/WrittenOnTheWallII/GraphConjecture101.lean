@@ -19,21 +19,15 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 101
 
-**Verbatim statement (WOWII #101, status T):**
-> If G is a simple connected graph, then α(G) ≤ FLOOR[(n + alphacore(G))/2]
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj101
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 ## Definitions
 
-The **α-core** of a graph `G`, written `alphaCore G`, is the set of vertices `v` such that
-removing `v` strictly decreases the independence number:
-  `alphaCore G = {v | α(G - v) < α(G)}`
-where `G - v` is the subgraph of `G` induced on `V(G) \ {v}`.
+The **$\alpha$-core** of a graph $G$, written `alphaCore G`, is the set of vertices
+$v$ such that removing $v$ strictly decreases the independence number:
+$$\mathrm{alphaCore}(G) = \{v \mid \alpha(G - v) < \alpha(G)\}$$
+where $G - v$ is the subgraph of $G$ induced on $V(G) \setminus \{v\}$.
 
 These vertices are also called "critical vertices for independence."
 -/
@@ -44,25 +38,26 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- The independence number of the subgraph induced on `V \ {v}` (i.e., the graph `G - v`). -/
+/-- The independence number of the subgraph induced on $V \setminus \{v\}$
+(i.e., the graph $G - v$). -/
 noncomputable def indepNumDeleteVertex (G : SimpleGraph α) (v : α) : ℕ :=
   (G.induce (Set.univ \ {v})).indepNum
 
-/-- The α-core of `G`: the set of vertices whose removal strictly decreases the
-independence number. A vertex `v` is in the α-core if `α(G - v) < α(G)`. -/
+/-- The $\alpha$-core of $G$: the set of vertices whose removal strictly decreases the
+independence number. A vertex $v$ is in the $\alpha$-core if $\alpha(G - v) < \alpha(G)$. -/
 noncomputable def alphaCore (G : SimpleGraph α) : Finset α :=
   Finset.univ.filter (fun v => indepNumDeleteVertex G v < G.indepNum)
 
 /--
 WOWII [Conjecture 101](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`α(G) ≤ ⌊(n + |alphaCore(G)|) / 2⌋`
-where `α(G) = G.indepNum` is the independence number, `n` is the number of vertices,
-and `alphaCore(G)` is the set of vertices whose removal decreases the independence number.
+For a simple connected graph $G$,
+$\alpha(G) \le \lfloor (n + |\mathrm{alphaCore}(G)|) / 2 \rfloor$
+where $\alpha(G) = G.\mathrm{indepNum}$ is the independence number, $n$ is the
+number of vertices, and $\mathrm{alphaCore}(G)$ is the set of vertices whose
+removal decreases the independence number.
 
-This is a theorem known to follow from inclusion-exclusion principles; it is listed as
-open (status O) in DeLaVina's list.
+This is a theorem known to follow from inclusion-exclusion principles.
 -/
 @[category research solved, AMS 5]
 theorem conjecture101 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
@@ -71,17 +66,17 @@ theorem conjecture101 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 
 -- Sanity checks
 
-/-- The α-core has cardinality at most `n` (the number of vertices). -/
+/-- The $\alpha$-core has cardinality at most $n$ (the number of vertices). -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : (alphaCore G).card ≤ 3 := by
   apply Finset.card_le_univ
 
-/-- The α-core is always a subset of all vertices. -/
+/-- The $\alpha$-core is always a subset of all vertices. -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 5)) : alphaCore G ⊆ Finset.univ :=
   Finset.filter_subset _ _
 
-/-- If a vertex `v` is NOT in the α-core, then removing `v` does not decrease α. -/
+/-- If a vertex $v$ is NOT in the $\alpha$-core, then removing $v$ does not decrease $\alpha$. -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) (v : Fin 3)
     (hv : v ∉ alphaCore G) :
@@ -90,7 +85,7 @@ example (G : SimpleGraph (Fin 3)) (v : Fin 3)
   simp [Finset.mem_filter] at hv
   exact hv
 
-/-- If a vertex `v` IS in the α-core, then removing `v` strictly decreases α. -/
+/-- If a vertex $v$ IS in the $\alpha$-core, then removing $v$ strictly decreases $\alpha$. -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) (v : Fin 3)
     (hv : v ∈ alphaCore G) :

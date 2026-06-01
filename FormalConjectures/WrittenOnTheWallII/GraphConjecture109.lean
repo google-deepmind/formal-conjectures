@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 109
 
-**Verbatim statement (WOWII #109, status O):**
-> If G is a simple connected graph, then α(G) ≤ FLOOR[(residue(G)+2b(G))/3]
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj109
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
@@ -38,9 +32,10 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 109](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, the independence number `α(G)` satisfies
-`α(G) ≤ ⌊(residue(G) + 2 · b(G)) / 3⌋`, where `residue(G)` is the Havel-Hakimi residue
-and `b(G)` is the size of a largest induced bipartite subgraph.
+For a simple connected graph $G$, the independence number $\alpha(G)$ satisfies
+$\alpha(G) \le \lfloor (\mathrm{residue}(G) + 2 \cdot b(G)) / 3 \rfloor$, where
+$\mathrm{residue}(G)$ is the Havel-Hakimi residue and $b(G)$ is the size of a
+largest induced bipartite subgraph.
 
 See: Favaron, Mahéo, Saclé (1991) for the residue; DeLaVina's Graffiti.pc for the conjecture.
 -/
@@ -55,9 +50,10 @@ theorem conjecture109 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 
-/-- The residue of `K₂` equals 0. -/
+/-- The residue of $K_2$ equals $1$: degree sequence is $[1, 1]$; one Havel-Hakimi
+step gives $[0]$, leaving a single zero. -/
 @[category test, AMS 5]
-example : residue (⊤ : SimpleGraph (Fin 2)) = 0 := by
+example : residue (⊤ : SimpleGraph (Fin 2)) = 1 := by
   unfold residue; decide +native
 
 end WrittenOnTheWallII.GraphConjecture109

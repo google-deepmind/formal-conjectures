@@ -19,20 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 7
 
-**Verbatim statement (WOWII #7, status T):**
-> If G is a simple connected graph, then L_s(G) ≥ maximum of λ(v) -1 + n - 2α(G)
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj7
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-**Conjecture 7:** For a connected graph `G`,
-`Ls(G) ≥ max_v λ(v) - 1 + n - 2 α(G)`,
-where `Ls(G)` is the maximum number of leaves over all spanning trees,
-`n = |V(G)|`, `α(G) = G.indepNum`, and `λ(v) = indepNeighborsCard G v` is the
-independence number of the neighbourhood of `v`.
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture7
@@ -44,14 +32,14 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 7](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`L_s(G) ≥ max_v λ(v) - 1 + n - 2 α(G)`,
-where `L_s(G)` is the maximum number of leaves over all spanning trees of `G`,
-`n = |V(G)|`, `α(G) = G.indepNum` is the independence number, and
-`λ(v) = indepNeighborsCard G v` is the independence number of the neighbourhood
-of `v`.
+For a simple connected graph $G$,
+$L_s(G) \ge \max_v \lambda(v) - 1 + n - 2 \alpha(G)$,
+where $L_s(G)$ is the maximum number of leaves over all spanning trees of $G$,
+$n = |V(G)|$, $\alpha(G) = G.\mathrm{indepNum}$ is the independence number, and
+$\lambda(v) = \mathrm{indepNeighborsCard}\, G\, v$ is the independence number of the
+neighbourhood of $v$.
 
-WOWII status: proved (DeLaVina, Fajtlowicz, Waller (2002)).
+Proved by DeLaVina, Fajtlowicz, Waller (2002).
 -/
 @[category research solved, AMS 5]
 theorem conjecture7 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :

@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 143
 
-**Verbatim statement (WOWII #143, status O):**
-> If G is a simple connected graph, then tree(G) ≥ (girth + 1)/σ(G)
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj143
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
@@ -36,16 +30,15 @@ open Classical SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-WOWII [Conjecture 143](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj143)
-(status O):
+WOWII [Conjecture 143](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj143):
 
-For a simple connected graph `G`,
-`tree(G) ≥ (girth(G) + 1) / σ(G)`,
-where `tree(G)` is the largest induced tree size, `girth(G)` is the length
-of the shortest cycle, and `σ(G) = G.secondSmallestDegree` is the
-**second-smallest degree** of `G`'s degree sequence (per WOWII defEntry 65;
-from `FormalConjecturesForMathlib`). We state the inequality in
-denominator-free form to avoid the `σ = 0` corner case (n ≤ 1).
+For a simple connected graph $G$,
+$\mathrm{tree}(G) \ge (\mathrm{girth}(G) + 1) / \sigma(G)$,
+where $\mathrm{tree}(G)$ is the largest induced tree size, $\mathrm{girth}(G)$
+is the length of the shortest cycle, and
+$\sigma(G) = G.\mathrm{secondSmallestDegree}$ is the **second-smallest degree**
+of $G$'s degree sequence (per WOWII defEntry 65). We state the inequality in
+denominator-free form to avoid the $\sigma = 0$ corner case ($n \le 1$).
 -/
 @[category research open, AMS 5]
 theorem conjecture143 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)

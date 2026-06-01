@@ -19,37 +19,32 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 145
 
-**Verbatim statement (WOWII #145, status O):**
-> If G is a simple connected graph, then tree(G) ≥ 2*ecc(B)/λ_min(Ḡ)
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj145
-
-The WOWII HTML uses `λ_min(Ḡ)` (the bar denotes graph complement); the
-extracted JSON in our private repo previously dropped the overline. The
-formal statement below uses the local-independence minimum of `Gᶜ`.
-
+The WOWII HTML uses $\lambda_{\min}(\overline{G})$ (the bar denotes graph complement).
+The formal statement below uses the local-independence minimum of $G^c$.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 ## Definitions
 
-The **local independence minimum** `lMin(G)` is:
-  `lMin(G) = min_{v ∈ V(G)} l(v)`
-where `l(v) = indepNeighborsCard(G, v)` is the independence number of the neighbourhood of `v`.
-This is the minimum over all vertices of the local independence number.
+The **local independence minimum** $\mathrm{lMin}(G)$ is:
+$$\mathrm{lMin}(G) = \min_{v \in V(G)} l(v)$$
+where $l(v) = \mathrm{indepNeighborsCard}(G, v)$ is the independence number of the
+neighbourhood of $v$. This is the minimum over all vertices of the local
+independence number.
 
-The **boundary vertices** `B(G)` of a connected graph are the vertices `v` such that
-the eccentricity of `v` equals the diameter of `G`.
+The **boundary vertices** $B(G)$ of a connected graph are the vertices $v$ such
+that the eccentricity of $v$ equals the diameter of $G$.
 
-The **eccentricity of a set** `ecc(S)` = max over all vertices `u ∉ S` of the minimum
-distance from `u` to any vertex in `S`.  In the conjecture below, `ecc(B)` is the
+The **eccentricity of a set** $\mathrm{ecc}(S) = \max_{u \notin S} \min_{w \in S}
+\mathrm{dist}(u, w)$. In the conjecture below, $\mathrm{ecc}(B)$ is the
 eccentricity of the boundary set.
 
-**Note on Conjecture 145:** The statement is
-  `tree(G) ≥ 2 * ecc(B) / λ_min(Ḡ)`
-where `tree(G)` is `largestInducedTreeSize G`, `ecc(B)` is the eccentricity of the
-boundary vertices, and `λ_min(Ḡ)` is the local independence minimum of the complement `Ḡ`.
+**Conjecture 145:** $\mathrm{tree}(G) \ge 2 \cdot \mathrm{ecc}(B) /
+\lambda_{\min}(\overline{G})$ where $\mathrm{tree}(G)$ is `largestInducedTreeSize G`,
+$\mathrm{ecc}(B)$ is the eccentricity of the boundary vertices, and
+$\lambda_{\min}(\overline{G})$ is the local independence minimum of the complement
+$\overline{G}$.
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture145
@@ -59,21 +54,23 @@ open Classical SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /-- `localIndependenceMin G` is the minimum over all vertices of the local independence
-number `indepNeighborsCard G v`. This equals `lMin` from DeLaVina's notation. -/
+number `indepNeighborsCard G v`. This equals $\mathrm{lMin}$ from DeLaVina's notation. -/
 noncomputable def localIndependenceMin (G : SimpleGraph α) : ℕ :=
   Finset.univ.inf' Finset.univ_nonempty (indepNeighborsCard G)
 
 /--
 WOWII [Conjecture 145](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`tree(G) ≥ 2 * ecc(B) / λ_min(Ḡ)`
-where `tree(G)` is the number of vertices in a largest induced subtree,
-`ecc(B)` is the eccentricity of the boundary vertices (`eccSet` and `boundaryVertices`
-from `FormalConjecturesForMathlib`), and
-`λ_min(Ḡ)` is the minimum local independence number of the complement graph.
+For a simple connected graph $G$,
+$\mathrm{tree}(G) \ge 2 \cdot \mathrm{ecc}(B) / \lambda_{\min}(\overline{G})$
+where $\mathrm{tree}(G)$ is the number of vertices in a largest induced subtree,
+$\mathrm{ecc}(B)$ is the eccentricity of the boundary vertices (`eccSet` and
+`boundaryVertices`), and $\lambda_{\min}(\overline{G})$ is the minimum local
+independence number of the complement graph.
 
-We state the inequality in the form `tree(G) * lMin(Ḡ) ≥ 2 * ecc(B)` to avoid division.
+We state the inequality in the form
+$\mathrm{tree}(G) \cdot \mathrm{lMin}(\overline{G}) \ge 2 \cdot \mathrm{ecc}(B)$
+to avoid division.
 -/
 @[category research open, AMS 5]
 theorem conjecture145 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)

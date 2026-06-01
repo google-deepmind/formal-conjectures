@@ -19,20 +19,14 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 31
 
-**Verbatim statement (WOWII #31, status R):**
-> If G is a simple connected graph, then path(G) ≥ 2 rad(G) - 1
+The WOWII page records this as **Chung's theorem**: proved in F. R. K. Chung,
+*The average distance and the independence number*, J. Graph Theory **12** (1988),
+229-235. We state it here as a theorem; the formal proof is left as `sorry`
+pending a Lean port of Chung's argument.
 
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj31
-
-The WOWII page records this as **Chung's theorem** (status R, "Reference"):
-proved in F. R. K. Chung, *The average distance and the independence
-number*, J. Graph Theory **12** (1988), 229-235. We state it here as a
-theorem; the formal proof is left as `sorry` pending a Lean port of
-Chung's argument.
-
-Here `path(G)` is the floor of the average distance over ordered pairs
-of distinct vertices (definition `path` in
-`FormalConjecturesForMathlib`), and `rad(G)` is the graph radius.
+Here $\mathrm{path}(G)$ is the floor of the average distance over ordered pairs
+of distinct vertices (definition `path` in `FormalConjecturesForMathlib`), and
+$\mathrm{rad}(G)$ is the graph radius.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
@@ -46,12 +40,12 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
 WOWII [Conjecture 31](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj31)
-(status R, Chung 1988):
+(Chung 1988):
 
-For every simple connected graph `G`,
-`path(G) ≥ 2 rad(G) - 1`,
-where `path(G)` is the floor of the average distance and `rad(G)` is the
-graph radius.
+For every simple connected graph $G$,
+$\mathrm{path}(G) \ge 2 \cdot \mathrm{rad}(G) - 1$,
+where $\mathrm{path}(G)$ is the floor of the average distance and
+$\mathrm{rad}(G)$ is the graph radius.
 -/
 @[category research solved, AMS 5]
 theorem conjecture31 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :

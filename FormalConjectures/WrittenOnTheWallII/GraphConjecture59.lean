@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 59
 
-**Verbatim statement (WOWII #59, status O):**
-> If G is a simple connected graph, then f(G) ≥ CEIL[sqrt[res(G)*b(G)]]
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj59
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
@@ -38,10 +32,11 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 59](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, the size `f(G)` of a largest induced forest satisfies
-`f(G) ≥ ⌈√(residue(G) · b(G))⌉`, where `residue(G)` is the Havel-Hakimi residue
-(the number of zeros remaining after applying the Havel-Hakimi algorithm to the degree
-sequence until termination) and `b(G)` is the size of a largest induced bipartite subgraph.
+For a simple connected graph $G$, the size $f(G)$ of a largest induced forest
+satisfies $f(G) \ge \lceil \sqrt{\mathrm{residue}(G) \cdot b(G)} \rceil$, where
+$\mathrm{residue}(G)$ is the Havel-Hakimi residue (the number of zeros remaining
+after applying the Havel-Hakimi algorithm to the degree sequence until termination)
+and $b(G)$ is the size of a largest induced bipartite subgraph.
 
 See: Favaron, Mahéo, Saclé (1991) for the residue; DeLaVina's Graffiti.pc for the conjecture.
 -/
@@ -56,9 +51,10 @@ theorem conjecture59 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ G.largestInducedForestSize := Nat.zero_le _
 
-/-- The residue of `K₂` equals 0 (after one Havel-Hakimi step: [1,1] → [], no zeros remain). -/
+/-- The residue of $K_2$ equals $1$: degree sequence is $[1, 1]$; one Havel-Hakimi
+step gives $[0]$, leaving a single zero. -/
 @[category test, AMS 5]
-example : residue (⊤ : SimpleGraph (Fin 2)) = 0 := by
+example : residue (⊤ : SimpleGraph (Fin 2)) = 1 := by
   unfold residue; decide +native
 
 end WrittenOnTheWallII.GraphConjecture59

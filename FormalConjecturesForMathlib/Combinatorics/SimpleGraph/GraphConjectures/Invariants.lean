@@ -136,6 +136,18 @@ noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
   else 0
 
+/-- The minimum, over all vertices $v \notin S$, of the distance from $v$ to the set $S$:
+$\min_{v \notin S} \operatorname{dist}(v, S)$. Returns `0` when $S = \mathrm{univ}$ (no
+vertex outside $S$).
+
+Counterpart to `ecc`: the outer minimum (instead of maximum) of the
+distance-to-set function, restricted to vertices outside $S$. -/
+noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
+  let outside := Finset.univ.filter (fun v : α => v ∉ S)
+  if h : outside.Nonempty then
+    (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
+  else 0
+
 /-- The **eccentricity of a set** `S`: the maximum, over all vertices `v` of `G`, of the
 minimum distance from `v` to any vertex in `S`. (This includes vertices in `S` itself,
 which contribute distance `0`.) Returns `0` when `S` is empty.
@@ -264,9 +276,8 @@ It calculates the degree sequence, sorts it ascendingly, and finds the largest p
 (where `0 ≤ k ≤ |V(G)|`) such that the sum of the prefix is less than or equal to the sum of the corresponding suffix.
 -/
 noncomputable def annihilationNumber' (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  -- 1. Get the degree sequence sorted in ascending order.
-  -- G.degree_list returns the list of degrees.
-  letI degrees := (Finset.univ.image fun v => G.degree v).sort (· ≤ ·)
+  -- 1. Get the degree sequence (with multiplicity) sorted in ascending order.
+  letI degrees := (Finset.univ.val.map fun v => G.degree v).sort (· ≤ ·)
 
   -- 2. Define the condition for the annihilation number.
   -- k represents the number of smallest degrees considered (the length of the prefix).
@@ -282,7 +293,7 @@ noncomputable def annihilationNumber' (G : SimpleGraph α) [DecidableRel G.Adj] 
   candidates.getLast!
 
 set_option linter.unusedSectionVars false in
--- TODO(Paul-Lez): debug the issue with the unused variable linter...
+-- TODO: debug the issue with the unused variable linter...
 proof_wanted annihilationNumberEq (G : SimpleGraph α) [DecidableRel G.Adj] :
     annihilationNumber G = annihilationNumber' G
 
@@ -326,8 +337,9 @@ algorithm to the degree sequence until all remaining degrees are zero.
 Starts with the descending degree sequence and applies the Havel-Hakimi process.
 -/
 noncomputable def residue (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  -- Get the degree sequence sorted in descending order and apply `residueAux`.
-  residueAux ((Finset.univ.image fun v => G.degree v).sort (· ≥ ·))
+  -- Get the degree sequence (with multiplicity) sorted in descending order
+  -- and apply `residueAux`.
+  residueAux ((Finset.univ.val.map fun v => G.degree v).sort (· ≥ ·))
 
 /--
 Fractional alpha. This is defined as

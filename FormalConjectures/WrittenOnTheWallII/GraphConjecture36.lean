@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 36
 
-**Verbatim statement (WOWII #36, status F):**
-> If G is a simple connected graph, then path(G) ≥ 2rad(G)/dp(G)
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj36
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
@@ -41,26 +35,31 @@ noncomputable def dp {α : Type*} [Fintype α] (G : SimpleGraph α) : ℕ :=
       fun u v => by simp [SimpleGraph.dist_comm, ne_comm]⟩)).card
 
 /--
-WOWII [Conjecture 36](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj36)
-(status F, disproved):
+WOWII [Conjecture 36](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj36):
 
-For every finite simple connected graph `G`,
-`path(G) ≥ 2 · rad(G) / dp(G)`,
-where `path(G)` is the floor of the average distance of `G`,
-`rad(G)` is the radius of `G`, and `dp(G)` is the number of *diametrical pairs*
-of `G` — that is, the number of pairs of vertices at distance `diam(G)`.
+For every finite simple connected graph $G$,
+$\operatorname{path}(G) \ge 2 \cdot \operatorname{rad}(G) / \operatorname{dp}(G)$,
+where $\operatorname{path}(G)$ is the floor of the average distance of $G$,
+$\operatorname{rad}(G)$ is the radius of $G$, and $\operatorname{dp}(G)$ is the number
+of *diametrical pairs* of $G$ — that is, the number of pairs of vertices at distance
+$\operatorname{diam}(G)$.
 
-This conjecture was **disproved** by Waller in Oct 2003 (counterexample:
-path number 5, radius 3, dp 1). Following the upstream pattern established
-in #3823 for Conjecture 23, we record the disproof using `answer(False) ↔ ...`.
-The hypothesis `0 < dp G` is the well-definedness guard for the division.
+Disproved by Waller in Oct 2003 (counterexample: path number 5, radius 3, dp 1).
 -/
 @[category research solved, AMS 5]
 theorem conjecture36 : answer(False) ↔
     ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
       ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected) (_ : 0 < dp G),
         (2 * G.radius.toNat : ℝ) / (dp G : ℝ) ≤ (path G : ℝ) := by
-  sorry
+  use default, mt (@· (ULift (Fin 2)) inferInstance inferInstance inferInstance ⊤
+    inferInstance (by decide)) ?_
+  norm_num
+  show 0 < (star _) ∧ _ < 2 / Nat.cast (star _)
+  norm_num [SimpleGraph.path, true, SimpleGraph.diam]
+  norm_num +decide [SimpleGraph.averageDistance, List.finRange]
+  norm_num +decide [List.sym2, SimpleGraph.dist_self,
+    SimpleGraph.dist_eq_one_iff_adj.2,
+    show Finset.univ = ({0, ⟨1⟩} : Finset <| ULift.{u_1, 0} <| Fin 2) by rfl]
 
 -- Sanity checks
 

@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Written on the Wall II - Conjecture 142
 
-**Verbatim statement (WOWII #142, status O):**
-> If G is a simple connected graph, then tree(G) ≥ (2/3)*girth + ecc(B)
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj142
-
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
@@ -38,13 +32,13 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 142](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`tree(G) ≥ (2/3) · girth(G) + ecc(B)`
-where `tree(G)` is the largest induced tree size, `girth(G)` is the length of
-the shortest cycle (0 if acyclic), `B = maxEccentricityVertices G` is the set
-of vertices with maximum eccentricity (the "boundary"), and `ecc(B)` is the
-eccentricity of the set `B` — defined as the maximum distance from any vertex
-outside `B` to `B`.
+For a simple connected graph $G$,
+$\mathrm{tree}(G) \ge (2/3) \cdot \mathrm{girth}(G) + \mathrm{ecc}(B)$
+where $\mathrm{tree}(G)$ is the largest induced tree size, $\mathrm{girth}(G)$
+is the length of the shortest cycle ($0$ if acyclic),
+$B = \mathrm{maxEccentricityVertices}\, G$ is the set of vertices with maximum
+eccentricity (the "boundary"), and $\mathrm{ecc}(B)$ is the eccentricity of the
+set $B$ — defined as the maximum distance from any vertex outside $B$ to $B$.
 -/
 @[category research open, AMS 5]
 theorem conjecture142 (G : SimpleGraph α) (h : G.Connected) :
