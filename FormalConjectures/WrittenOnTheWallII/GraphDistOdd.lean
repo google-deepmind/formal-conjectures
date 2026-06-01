@@ -53,7 +53,7 @@ namespace WrittenOnTheWallII.GraphDistOdd
 
 open Classical SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- `distOdd G v` counts the number of vertices at odd distance from `v` in `G`.
 Note: since `G.dist v v = 0` is even, `v` itself is never counted here. -/
@@ -92,7 +92,7 @@ where `α(G) = G.indepNum` is the independence number,
 This is the odd-distance analogue of WOWII Conjecture 96.
 -/
 @[category research open, AMS 5]
-theorem distOdd_indepNum_upper_bound (G : SimpleGraph α) [DecidableRel G.Adj]
+theorem distOdd_indepNum_upper_bound [Nontrivial α] (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) :
     let minDistOdd := (Finset.univ.image (distOdd G)).min' (by simp)
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
