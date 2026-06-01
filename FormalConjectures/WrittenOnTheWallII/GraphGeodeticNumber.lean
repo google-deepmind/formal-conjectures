@@ -82,14 +82,14 @@ theorem geodeticNumber_ge_two (G : SimpleGraph α) [DecidableRel G.Adj]
 
 For any connected graph `G` on `n` vertices,
   `geodeticNumber(G) ≤ n − diam(G) + 1`
-where `diam(G) = (maxEccentricity G).toNat`.
+where `diam(G) = G.ediam.toNat`.
 
 Proof sketch: take a diametral path `v₀–v₁–⋯–v_d`; the set `{v₀} ∪ (V \ {v₁,…,v_{d-1}})`
 is a geodetic set of size `n − d + 1`. -/
 @[category research solved, AMS 5]
 theorem geodeticNumber_le_card_sub_diam_add_one (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) (hn : 2 ≤ Fintype.card α) :
-    geodeticNumber G ≤ Fintype.card α - (maxEccentricity G).toNat + 1 := by
+    geodeticNumber G ≤ Fintype.card α - G.ediam.toNat + 1 := by
   sorry
 
 -- Sanity checks

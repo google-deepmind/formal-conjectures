@@ -68,7 +68,7 @@ For any connected graph `G` on `n ≥ 2` vertices,
   `bandwidth(G) ≥ ⌈(n − 1) / diam(G)⌉`.
 
 We state the equivalent form: `bandwidth(G) * diam(G) ≥ n − 1`, where
-`diam(G) = (maxEccentricity G).toNat`.
+`diam(G) = G.ediam.toNat`.
 
 Proof sketch: fix any arrangement `f`. The two endpoints of a diametral
 path `v₀, v_d` satisfy `|f(v₀) - f(v_d)| ≤ bandwidth(G) * d`, while
@@ -78,7 +78,7 @@ contributes at most `bandwidth(G)` to the separation, so
 @[category research solved, AMS 5]
 theorem bandwidth_mul_diam_ge_card_sub_one (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) (hn : 2 ≤ Fintype.card α) :
-    Fintype.card α - 1 ≤ bandwidth G * (maxEccentricity G).toNat := by
+    Fintype.card α - 1 ≤ bandwidth G * G.ediam.toNat := by
   sorry
 
 /-- **Bandwidth is at least 1** for any connected graph on ≥ 2 vertices — resolved.
