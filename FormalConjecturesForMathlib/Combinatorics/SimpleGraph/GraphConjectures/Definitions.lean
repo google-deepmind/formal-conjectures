@@ -156,6 +156,7 @@ def computable_indep_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.powerset.filter (fun s : Finset α =>
     ∀ u ∈ s, ∀ v ∈ s, u ≠ v → ¬G.Adj u v)).sup Finset.card
 
+
 /-- Computable domination number via powerset enumeration. -/
 def computable_dom_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.powerset.filter (fun D : Finset α =>
@@ -185,5 +186,6 @@ def computable_szeged_index (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   ∑ e ∈ G.edgeFinset,
     Sym2.lift ⟨fun u v => computable_szeged_aux G u v * computable_szeged_aux G v u,
       fun a b => by ring⟩ e
+
 
 end SimpleGraph

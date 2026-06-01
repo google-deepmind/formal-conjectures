@@ -42,6 +42,7 @@ noncomputable abbrev l (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
 -/
 noncomputable abbrev l_avg (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
 
+
 /-- Independent domination number of `G`. -/
 noncomputable def gi (G : SimpleGraph α) : ℕ := G.indepDominationNumber
 
@@ -310,6 +311,7 @@ noncomputable def cvetkovic (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
 -- ================================================================
 -- Equivalence between noncomputable and computable graph invariants
 -- ================================================================
+
 
 theorem indep_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     G.indepNum = computable_indep_num G := by
