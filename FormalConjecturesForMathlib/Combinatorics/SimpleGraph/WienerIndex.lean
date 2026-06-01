@@ -15,7 +15,6 @@ limitations under the License.
 -/
 module
 
-public import Mathlib
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
 
 @[expose] public section
