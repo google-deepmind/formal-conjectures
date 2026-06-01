@@ -43,7 +43,7 @@ We use Mathlib's `DFA α σ` (from `Mathlib.Computability.DFA`), together with t
 - J. Černý, [*Poznámka k homogénnym experimentom s konečnými automatmi*](https://dml.cz/bitstream/handle/10338.dmlcz/126647/MathSlov_14-1964-3_2.pdf),
   Matematicko-fyzikálny časopis, Vol. 14 (1964), No. 3, 208--216.
 - Y. Shitov, *An improvement to a recent upper bound for synchronizing words of finite automata*,
-  J. Autom. Lang. Comb. Vol. 24 (2019), 367--373}.
+  J. Autom. Lang. Comb. Vol. 24 (2019), 367--373.
 -/
 
 open Filter
