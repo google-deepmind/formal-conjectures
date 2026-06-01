@@ -27,6 +27,7 @@ Problems 590–592.
 -/
 
 open Cardinal Ordinal
+open scoped Cardinal
 
 namespace Erdos70
 
@@ -35,15 +36,16 @@ universe u
 /- ### The 3-uniform partition relation -/
 
 /--
-`OrdinalCardinalRamsey3 α β c` asserts the 3-uniform ordinal Ramsey property `α → (β, c)³₂`.
+`OrdinalCardinalRamsey3 α β c` asserts the 3-uniform ordinal Ramsey property
+$\alpha \to (\beta, c)^3_2$.
 
-It states that for any 2-coloring of all 3-element subsets of (the ordinal type) `α`,
+It states that for any 2-coloring of all 3-element subsets of (the ordinal type) $\alpha$,
 one of the following must hold:
-* There is a red-monochromatic subset of order type β: every 3-element sub-subset is colored
-  red. (Formally: a set `s ⊆ α.ToType` with `typeLT s = β` such that any three distinct
-  elements of `s` are colored red.)
-* There is a blue-monochromatic subset of cardinality `c`: a set `s ⊆ α.ToType` with `#s = c`
-  such that every three distinct elements of `s` are colored blue.
+* There is a red-monochromatic subset of order type $\beta$: every 3-element sub-subset is
+  colored red. (Formally: a set $s \subseteq \alpha$ with $\operatorname{typeLT} s = \beta$
+  such that any three distinct elements of $s$ are colored red.)
+* There is a blue-monochromatic subset of cardinality $c$: a set $s \subseteq \alpha$ with
+  $\#s = c$ such that every three distinct elements of $s$ are colored blue.
 
 The coloring is given as a predicate `isRed : α.ToType → α.ToType → α.ToType → Prop` on
 ordered triples of distinct elements; to faithfully encode a coloring of *unordered*
@@ -61,26 +63,18 @@ def OrdinalCardinalRamsey3 (α β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
     -- or there is a blue-monochromatic subset of cardinality c
     (∃ s : Set α.ToType, #s = c ∧ s.Triplewise (fun x y z ↦ ¬ isRed x y z))
 
-/--
-The ordinal of the continuum: the smallest ordinal whose cardinality equals the continuum `𝔠`.
-This is `Cardinal.continuum.ord` in Mathlib notation.
-
-Erdős writes "𝔠" for the *ordinal type* of the reals; formally (under AC) this is any ordinal
-whose underlying set has cardinality `2 ^ ℵ₀`. The canonical choice is `𝔠.ord`.
--/
-noncomputable abbrev continuumOrd : Ordinal.{0} := Cardinal.continuum.ord
-
 /- ### The main open problem -/
 
 /--
-**Erdős Problem 70**: Let 𝔠 be the cardinality of the continuum, let β be a countable
-ordinal, and let `2 ≤ n < ω`. Is it true that 𝔠 → (β, n)³₂?
+**Erdős Problem 70**: Let $\mathfrak{c}$ be the cardinality of the continuum,
+let $\beta$ be a countable ordinal, and let $2 \le n < \omega$.
+Is it true that $\mathfrak{c} \to (\beta, n)^3_2$?
 -/
 @[category research open, AMS 3]
 theorem erdos_70 :
     answer(sorry) ↔
     ∀ᵉ (β : Ordinal.{0}) (n : ℕ) (_ : β.card ≤ ℵ₀) (_ : 2 ≤ n),
-      OrdinalCardinalRamsey3 continuumOrd β n := by
+      OrdinalCardinalRamsey3 (𝔠).ord β n := by
   sorry
 
 /- ### Variants -/
@@ -88,47 +82,49 @@ theorem erdos_70 :
 namespace erdos_70.variants
 
 /--
-**Erdős–Rado partial result**: 𝔠 → (ω + n, 4)³₂ for any `2 ≤ n < ω`. Positive partial
-answer to Problem 70 with β = ω + n and the blue side fixed at 4.
+**Erdős–Rado partial result**: $\mathfrak{c} \to (\omega + n, 4)^3_2$ for any
+$2 \le n < \omega$. Positive partial answer to Problem 70 with $\beta = \omega + n$
+and the blue side fixed at $4$.
 -/
 @[category research solved, AMS 3]
 theorem erdos_rado (n : ℕ) (hn : 2 ≤ n) :
-    OrdinalCardinalRamsey3 continuumOrd (ω + n) 4 := by
+    OrdinalCardinalRamsey3 (𝔠).ord (ω + n) 4 := by
   sorry
 
 /--
-**Special case**: 𝔠 → (ω, 3)³₂.
+**Special case**: $\mathfrak{c} \to (\omega, 3)^3_2$.
 
-The simplest non-trivial instance of Erdős Problem 70: β = ω (the first infinite countable
-ordinal) and n = 3. Does every 2-coloring of 3-element subsets of the continuum contain
-either a red-monochromatic set of order type ω (an infinite red-monochromatic subset) or a
-blue-monochromatic set of 3 elements (a blue triple)?
+The simplest non-trivial instance of Erdős Problem 70: $\beta = \omega$ (the first infinite
+countable ordinal) and $n = 3$. Does every 2-coloring of 3-element subsets of the continuum
+contain either a red-monochromatic set of order type $\omega$ (an infinite red-monochromatic
+subset) or a blue-monochromatic set of $3$ elements (a blue triple)?
 
-Follows from the main conjecture with β = ω, n = 3.
+Follows from the main conjecture with $\beta = \omega$, $n = 3$.
 -/
 @[category research open, AMS 3]
 theorem omega_three :
-    answer(True) ↔ OrdinalCardinalRamsey3 continuumOrd ω 3 := by
+    answer(True) ↔ OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
   sorry
 
 /--
-**The relation at ω₁**: 𝔠 → (ω₁, n)³₂ for finite n ≥ 2, where ω₁ = ℵ₁ is the first
-uncountable ordinal.
+**The relation at $\omega_1$**: $\mathfrak{c} \to (\omega_1, n)^3_2$ for finite $n \ge 2$,
+where $\omega_1 = \aleph_1$ is the first uncountable ordinal.
 
-Note that ω₁ is *not* a countable ordinal, so this is not directly an instance of the
-main Erdős problem (which asks for *countable* β). Under CH, ω₁ = 𝔠.ord, making this a
-self-referential question about 𝔠.ord → (𝔠.ord, n)³₂.
+Note that $\omega_1$ is *not* a countable ordinal, so this is not directly an instance of the
+main Erdős problem (which asks for *countable* $\beta$). Under CH, $\omega_1 = \mathfrak{c}.\mathrm{ord}$,
+making this a self-referential question about $\mathfrak{c}.\mathrm{ord} \to
+(\mathfrak{c}.\mathrm{ord}, n)^3_2$.
 -/
 @[category research open, AMS 3]
 theorem omega_one :
     answer(True) ↔
     ∀ᵉ (n : ℕ) (_ : 2 ≤ n),
-      OrdinalCardinalRamsey3 continuumOrd (Cardinal.aleph 1).ord n := by
+      OrdinalCardinalRamsey3 (𝔠).ord (Cardinal.aleph 1).ord n := by
   sorry
 
 /--
-**Monotonicity of `OrdinalCardinalRamsey3`** (proved):
-If `OrdinalCardinalRamsey3 α β c` holds and `β' ≤ β`, `c' ≤ c`, then
+**Monotonicity of `OrdinalCardinalRamsey3`**:
+If `OrdinalCardinalRamsey3 α β c` holds and $\beta' \le \beta$, $c' \le c$, then
 `OrdinalCardinalRamsey3 α β' c'` also holds.
 
 This allows us to deduce weaker partition results from stronger ones.
