@@ -50,15 +50,16 @@ structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] wh
   covers : ⋃ i, reps i • (parts i : Set G) = Set.univ
 
 /--
-If `G` is a group, can there exist an exact covering of `G` by more than one coset
+If $G$ is a group, can there exist an exact covering of $G$ by more than one coset
 of different sizes? (i.e. each element is contained in exactly one of the cosets.)
 
 The conjectured answer is no: in every such exact covering, two of the subgroups have
 the same cardinality.
 -/
 @[category research open, AMS 20]
-theorem erdos_274 {G : Type*} [Group G] (hG : 1 < ENat.card G) {ι : Type*} [Fintype ι]
-    (hι : 1 < Fintype.card ι) (P : Group.ExactCovering G ι) :
+theorem erdos_274 : answer(sorry) ↔ ∀ (G : Type*) [Group G],
+    1 < ENat.card G → ∀ (ι : Type*) [Fintype ι],
+    ∀ (P : Group.ExactCovering G ι), 1 < Fintype.card ι →
     ∃ i j, i ≠ j ∧ #(P.parts i) = #(P.parts j) := by
   sorry
 
