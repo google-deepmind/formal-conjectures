@@ -72,6 +72,348 @@ m=11, requiring 3 divisors: 11=1+4+6. -/
 theorem practicalH_twelve : practicalH 12 = 3 := by
   sorry
 
+private def hasFinsetSubsetSum (D : Finset ℕ) (m : ℕ) : Prop :=
+  ∃ B ∈ D.powerset, B.sum id = m
+
+private instance (D : Finset ℕ) (m : ℕ) : Decidable (hasFinsetSubsetSum D m) := by
+  unfold hasFinsetSubsetSum
+  infer_instance
+
+private lemma hasFinsetSubsetSum_iff_mem_subsetSums {D : Finset ℕ} {m : ℕ} :
+    hasFinsetSubsetSum D m ↔ m ∈ subsetSums (D : Set ℕ) := by
+  unfold hasFinsetSubsetSum
+  constructor
+  · rintro ⟨B, hBpow, hsum⟩
+    rw [Finset.mem_powerset] at hBpow
+    exact ⟨B, by exact_mod_cast hBpow, hsum.symm⟩
+  · rintro ⟨B, hBsub, hsum⟩
+    refine ⟨B, ?_, hsum.symm⟩
+    rw [Finset.mem_powerset]
+    exact_mod_cast hBsub
+
+private def canSumAtMost : List ℕ → ℕ → ℕ → Bool
+  | _, _, 0 => true
+  | [], _, _ => false
+  | _ :: _, 0, _ => false
+  | x :: xs, k + 1, t =>
+      canSumAtMost xs (k + 1) t || (x ≤ t && canSumAtMost xs k (t - x))
+
+private lemma canSumAtMost_of_sublist {ys xs : List ℕ} (hsub : ys.Sublist xs) :
+    ∀ {k t : ℕ}, ys.length ≤ k → ys.sum = t → canSumAtMost xs k t = true := by
+  induction hsub with
+  | slnil =>
+      intro k t hlen hsum
+      subst t
+      simp [canSumAtMost]
+  | @cons l₁ l₂ x hsub ih =>
+      intro k t hlen hsum
+      cases t with
+      | zero => simp [canSumAtMost]
+      | succ t' =>
+          cases k with
+          | zero =>
+              have : l₁ = [] := by
+                exact List.eq_nil_of_length_eq_zero (Nat.eq_zero_of_le_zero hlen)
+              simp [this] at hsum
+          | succ k =>
+              simp [canSumAtMost]
+              exact Or.inl (ih hlen hsum)
+  | @cons₂ l₁ l₂ x hsub ih =>
+      intro k t hlen hsum
+      cases t with
+      | zero =>
+          simp [canSumAtMost]
+      | succ t' =>
+          cases k with
+          | zero =>
+              simp at hlen
+          | succ k =>
+              simp at hsum
+              simp [canSumAtMost]
+              right
+              constructor
+              · omega
+              · apply ih
+                · simpa using Nat.succ_le_succ_iff.mp hlen
+                · omega
+
+private lemma filter_toFinset_eq_of_subset {xs : List ℕ} {D : Finset ℕ}
+    (hD : D ⊆ xs.toFinset) :
+    (xs.filter (fun x => x ∈ D)).toFinset = D := by
+  ext x
+  simp only [List.mem_toFinset, List.mem_filter]
+  constructor
+  · exact fun hx => of_decide_eq_true hx.2
+  · intro hx
+    exact ⟨by simpa using hD hx, by simpa using hx⟩
+
+private lemma filter_length_eq_card_of_subset {xs : List ℕ} (hxs : xs.Nodup)
+    {D : Finset ℕ} (hD : D ⊆ xs.toFinset) :
+    (xs.filter (fun x => x ∈ D)).length = D.card := by
+  have hEq := filter_toFinset_eq_of_subset (xs := xs) (D := D) hD
+  have hnodup : (xs.filter (fun x => x ∈ D)).Nodup := hxs.filter _
+  have hcard := congrArg Finset.card hEq
+  rw [← hcard]
+  exact (List.toFinset_card_of_nodup hnodup).symm
+
+private lemma filter_sum_eq_sum_of_subset {xs : List ℕ} (hxs : xs.Nodup)
+    {D : Finset ℕ} (hD : D ⊆ xs.toFinset) :
+    (xs.filter (fun x => x ∈ D)).sum = D.sum id := by
+  have hEq := filter_toFinset_eq_of_subset (xs := xs) (D := D) hD
+  have hnodup : (xs.filter (fun x => x ∈ D)).Nodup := hxs.filter _
+  have hsum := List.sum_toFinset id hnodup
+  simp at hsum
+  have hEq' : {x ∈ xs.toFinset | x ∈ D} = D := by
+    simpa using hEq
+  rw [hEq'] at hsum
+  exact hsum.symm
+
+private lemma canSumAtMost_of_finset_subset {xs : List ℕ} (hxs : xs.Nodup)
+    {D : Finset ℕ} (hD : D ⊆ xs.toFinset) {k t : ℕ}
+    (hcard : D.card ≤ k) (hsum : D.sum id = t) :
+    canSumAtMost xs k t = true := by
+  let ys := xs.filter (fun x => x ∈ D)
+  apply canSumAtMost_of_sublist (List.filter_sublist (p := fun x => x ∈ D))
+  · dsimp [ys]
+    rw [filter_length_eq_card_of_subset hxs hD]
+    exact hcard
+  · dsimp [ys]
+    rw [filter_sum_eq_sum_of_subset hxs hD]
+    exact hsum
+
+private lemma canSumAtMost_sound {xs : List ℕ} (hxs : xs.Nodup) :
+    ∀ {k t : ℕ}, canSumAtMost xs k t = true →
+      ∃ D : Finset ℕ, D ⊆ xs.toFinset ∧ D.card ≤ k ∧ D.sum id = t := by
+  induction xs with
+  | nil =>
+      intro k t h
+      cases t with
+      | zero =>
+          exact ⟨∅, by simp, by simp, by simp⟩
+      | succ t' =>
+          simp [canSumAtMost] at h
+  | cons x xs ih =>
+      intro k t h
+      cases t with
+      | zero =>
+          exact ⟨∅, by simp, by simp, by simp⟩
+      | succ t' =>
+          cases k with
+          | zero =>
+              simp [canSumAtMost] at h
+          | succ k =>
+              simp at hxs
+              simp [canSumAtMost] at h
+              rcases h with h | h
+              · obtain ⟨D, hD, hcard, hsum⟩ := ih hxs.2 h
+                refine ⟨D, ?_, hcard, hsum⟩
+                intro y hy
+                simp [hD hy]
+              · obtain ⟨hxle, hcan⟩ := h
+                obtain ⟨D, hD, hcard, hsum⟩ := ih hxs.2 hcan
+                have hxnotD : x ∉ D := by
+                  intro hxD
+                  exact hxs.1 (by simpa using hD hxD)
+                refine ⟨insert x D, ?_, ?_, ?_⟩
+                · intro y hy
+                  simp at hy ⊢
+                  rcases hy with rfl | hy
+                  · simp
+                  · exact Or.inr (by simpa using hD hy)
+                · rw [Finset.card_insert_of_notMem hxnotD]
+                  omega
+                · rw [Finset.sum_insert hxnotD, hsum]
+                  simp only [id_eq]
+                  omega
+
+private lemma practicalH_eq_of_subset_sum_certificate (n K hard : ℕ)
+    (hhard : hard ∈ Finset.Icc 1 n)
+    (hupper : ∀ m ∈ Finset.Icc 1 n,
+      ∃ D ∈ n.divisors.powerset, D.card ≤ K ∧ hasFinsetSubsetSum D m)
+    (hlower : ∀ D ∈ n.divisors.powerset, D.card ≤ K - 1 →
+      ¬ hasFinsetSubsetSum D hard) :
+    practicalH n = K := by
+  unfold practicalH
+  apply le_antisymm
+  · rw [Finset.sup_le_iff]
+    intro m hm
+    rcases hupper m hm with ⟨D, hDpow, hDcard, hsum⟩
+    have hDsub : D ⊆ n.divisors := by
+      simpa [Finset.mem_powerset] using hDpow
+    have hmem : D.card ∈ ({k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
+        m ∈ subsetSums (D : Set ℕ)} : Set ℕ) := by
+      exact ⟨D, hDsub, rfl, hasFinsetSubsetSum_iff_mem_subsetSums.mp hsum⟩
+    exact (Nat.sInf_le hmem).trans hDcard
+  · have hhard_nonempty : ({k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
+        hard ∈ subsetSums (D : Set ℕ)} : Set ℕ).Nonempty := by
+      rcases hupper hard hhard with ⟨D, hDpow, _hDcard, hsum⟩
+      have hDsub : D ⊆ n.divisors := by
+        simpa [Finset.mem_powerset] using hDpow
+      exact ⟨D.card, D, hDsub, rfl, hasFinsetSubsetSum_iff_mem_subsetSums.mp hsum⟩
+    have hlower_sInf : K ≤ sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
+        hard ∈ subsetSums (D : Set ℕ)} := by
+      apply le_csInf hhard_nonempty
+      intro k hk
+      rcases hk with ⟨D, hDsub, hDcard, hsum⟩
+      by_contra hnot
+      have hDpow : D ∈ n.divisors.powerset := by
+        simpa [Finset.mem_powerset] using hDsub
+      have hDcard_le : D.card ≤ K - 1 := by omega
+      exact hlower D hDpow hDcard_le (hasFinsetSubsetSum_iff_mem_subsetSums.mpr hsum)
+    exact hlower_sInf.trans (Finset.le_sup (s := Finset.Icc 1 n)
+      (f := fun m => sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
+          m ∈ subsetSums (D : Set ℕ)}) hhard)
+
+private lemma practicalH_eq_of_subset_sum_bounds (n K hard : ℕ)
+    (hhard : hard ∈ Finset.Icc 1 n)
+    (hupper : ∀ m ∈ Finset.Icc 1 n,
+      ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card ≤ K ∧ hasFinsetSubsetSum D m)
+    (hlower : ∀ D : Finset ℕ, D ⊆ n.divisors → D.card ≤ K - 1 →
+      ¬ hasFinsetSubsetSum D hard) :
+    practicalH n = K := by
+  unfold practicalH
+  apply le_antisymm
+  · rw [Finset.sup_le_iff]
+    intro m hm
+    rcases hupper m hm with ⟨D, hDsub, hDcard, hsum⟩
+    have hmem : D.card ∈ ({k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
+        m ∈ subsetSums (D : Set ℕ)} : Set ℕ) := by
+      exact ⟨D, hDsub, rfl, hasFinsetSubsetSum_iff_mem_subsetSums.mp hsum⟩
+    exact (Nat.sInf_le hmem).trans hDcard
+  · have hhard_nonempty : ({k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
+        hard ∈ subsetSums (D : Set ℕ)} : Set ℕ).Nonempty := by
+      rcases hupper hard hhard with ⟨D, hDsub, _hDcard, hsum⟩
+      exact ⟨D.card, D, hDsub, rfl, hasFinsetSubsetSum_iff_mem_subsetSums.mp hsum⟩
+    have hlower_sInf : K ≤ sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
+        hard ∈ subsetSums (D : Set ℕ)} := by
+      apply le_csInf hhard_nonempty
+      intro k hk
+      rcases hk with ⟨D, hDsub, hDcard, hsum⟩
+      by_contra hnot
+      have hDcard_le : D.card ≤ K - 1 := by omega
+      exact hlower D hDsub hDcard_le (hasFinsetSubsetSum_iff_mem_subsetSums.mpr hsum)
+    exact hlower_sInf.trans (Finset.le_sup (s := Finset.Icc 1 n)
+      (f := fun m => sInf {k | ∃ D : Finset ℕ, D ⊆ n.divisors ∧ D.card = k ∧
+          m ∈ subsetSums (D : Set ℕ)}) hhard)
+
+/-- $h(56) = 5$: the hard value is `55`, which needs five divisors of `56`. -/
+@[category test, AMS 11]
+theorem practicalH_fiftysix : practicalH 56 = 5 := by
+  apply practicalH_eq_of_subset_sum_certificate 56 5 55
+  · decide
+  · native_decide
+  · native_decide
+
+private def divisors7200 : List ℕ :=
+  [7200, 3600, 2400, 1800, 1440, 1200, 900, 800, 720, 600, 480, 450, 400, 360, 300, 288,
+   240, 225, 200, 180, 160, 150, 144, 120, 100, 96, 90, 80, 75, 72, 60, 50, 48, 45, 40,
+   36, 32, 30, 25, 24, 20, 18, 16, 15, 12, 10, 9, 8, 6, 5, 4, 3, 2, 1]
+
+private def divisors120 : List ℕ :=
+  [120, 60, 40, 30, 24, 20, 15, 12, 10, 8, 6, 5, 4, 3, 2, 1]
+
+private def smallDivisors7200 : List ℕ :=
+  [50, 48, 45, 40, 36, 32, 30, 25, 24, 20, 18, 16, 15, 12, 10, 9, 8, 6, 5, 4, 3, 2, 1]
+
+private lemma hasFinsetSubsetSum_self {D : Finset ℕ} {m : ℕ} (hsum : D.sum id = m) :
+    hasFinsetSubsetSum D m :=
+  ⟨D, by simp, hsum⟩
+
+private lemma subset_sum_7200_upper (m : ℕ) (hm : m ∈ Finset.Icc 1 7200) :
+    ∃ D : Finset ℕ, D ⊆ Nat.divisors 7200 ∧ D.card ≤ 6 ∧ hasFinsetSubsetSum D m := by
+  let q := m / 60
+  let r := m % 60
+  have hmle : m ≤ 7200 := (Finset.mem_Icc.mp hm).2
+  have hqmem : q ∈ Finset.Icc 0 120 := by
+    simp [q]
+    omega
+  have hrmem : r ∈ Finset.Icc 0 59 := by
+    simp [r]
+    have := Nat.mod_lt m (by norm_num : 0 < 60)
+    omega
+  have hqcan : canSumAtMost divisors120 4 q = true :=
+    (by native_decide : ∀ q ∈ Finset.Icc 0 120, canSumAtMost divisors120 4 q = true) q hqmem
+  have hrcan : canSumAtMost smallDivisors7200 2 r = true :=
+    (by native_decide : ∀ r ∈ Finset.Icc 0 59, canSumAtMost smallDivisors7200 2 r = true) r hrmem
+  obtain ⟨Q, hQsub, hQcard, hQsum⟩ :=
+    canSumAtMost_sound (by native_decide : divisors120.Nodup) hqcan
+  obtain ⟨R, hRsub, hRcard, hRsum⟩ :=
+    canSumAtMost_sound (by native_decide : smallDivisors7200.Nodup) hrcan
+  let scaled := Q.image (fun d => 60 * d)
+  let D := scaled ∪ R
+  have hscaled_sub_univ : scaled ⊆ (divisors120.toFinset.image fun d => 60 * d) := by
+    intro x hx
+    rcases Finset.mem_image.mp hx with ⟨d, hd, rfl⟩
+    exact Finset.mem_image.mpr ⟨d, hQsub hd, rfl⟩
+  have hscaled_sub : scaled ⊆ Nat.divisors 7200 := by
+    intro x hx
+    have hx' : x ∈ (divisors120.toFinset.image fun d => 60 * d) := hscaled_sub_univ hx
+    have hcert :
+        (divisors120.toFinset.image fun d => 60 * d) ⊆ Nat.divisors 7200 := by native_decide
+    exact hcert hx'
+  have hR_sub : R ⊆ Nat.divisors 7200 := by
+    intro x hx
+    have hx' : x ∈ smallDivisors7200.toFinset := hRsub hx
+    have hcert : smallDivisors7200.toFinset ⊆ Nat.divisors 7200 := by native_decide
+    exact hcert hx'
+  have hdisj_univ :
+      Disjoint (divisors120.toFinset.image fun d => 60 * d) smallDivisors7200.toFinset := by
+    native_decide
+  have hdisj : Disjoint scaled R := hdisj_univ.mono hscaled_sub_univ hRsub
+  have hscaled_sum : scaled.sum id = 60 * q := by
+    dsimp [scaled]
+    rw [Finset.sum_image]
+    · simp only [id_eq]
+      rw [← Finset.mul_sum]
+      have hQsum' : (∑ i ∈ Q, i) = q := by
+        simpa [id_eq] using hQsum
+      rw [hQsum']
+    · intro a _ b _ hab
+      change 60 * a = 60 * b at hab
+      omega
+  refine ⟨D, ?_, ?_, ?_⟩
+  · intro x hx
+    dsimp [D] at hx
+    rcases Finset.mem_union.mp hx with hx | hx
+    · exact hscaled_sub hx
+    · exact hR_sub hx
+  · dsimp [D]
+    have hcard_union := Finset.card_union_le scaled R
+    have hscaled_card : scaled.card ≤ Q.card := by
+      dsimp [scaled]
+      exact Finset.card_image_le
+    omega
+  · apply hasFinsetSubsetSum_self
+    dsimp [D]
+    rw [Finset.sum_union hdisj, hscaled_sum, hRsum]
+    have hdiv := Nat.div_add_mod m 60
+    dsimp [q, r]
+    omega
+
+/-- $h(7200) = 6$.  The upper bound uses `7200 = 60 * 120`;
+the hard value is `6667`. -/
+@[category test, AMS 11]
+theorem practicalH_7200 : practicalH 7200 = 6 := by
+  apply practicalH_eq_of_subset_sum_bounds 7200 6 6667
+  · exact Finset.mem_Icc.mpr ⟨by norm_num, by norm_num⟩
+  · exact subset_sum_7200_upper
+  · intro D hDsub hDcard hsum
+    rcases hsum with ⟨B, hBpow, hBsum⟩
+    rw [Finset.mem_powerset] at hBpow
+    have hBsub_divs : B ⊆ divisors7200.toFinset := by
+      have hdivs : Nat.divisors 7200 = divisors7200.toFinset := by native_decide
+      intro x hx
+      rw [← hdivs]
+      exact hDsub (hBpow hx)
+    have hBcard : B.card ≤ 5 := by
+      have hBcard_le : B.card ≤ D.card := Finset.card_le_card hBpow
+      omega
+    have hcan := canSumAtMost_of_finset_subset
+      (by native_decide : divisors7200.Nodup) hBsub_divs hBcard hBsum
+    have hfalse : canSumAtMost divisors7200 5 6667 = false := by native_decide
+    rw [hfalse] at hcan
+    contradiction
+
 /-- For any practical number $n$, $h(n) ≤ number of divisors of $n$. -/
 @[category test, AMS 11]
 theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
