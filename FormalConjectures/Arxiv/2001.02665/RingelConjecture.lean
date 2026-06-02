@@ -1,0 +1,51 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Ringel's Conjecture
+
+*Reference:* [arxiv/2001.02665](https://arxiv.org/abs/2001.02665)
+**A proof of Ringel's Conjecture**
+by *Richard Montgomery, Alexey Pokrovskiy, Benny Sudakov*
+
+Ringel's Conjecture (1963) asserts that for any tree `T` with `n` edges, the complete graph
+`K_{2n+1}` on `2 * n + 1` vertices decomposes into `2 * n + 1` edge-disjoint copies of `T`.
+It was proved for all sufficiently large `n` in the referenced paper.
+-/
+namespace Arxiv.«2001.02665»
+
+open SimpleGraph
+
+/--
+**Ringel's Conjecture.** For any tree `T` with `n` edges, the complete graph on `2 * n + 1`
+vertices decomposes into `2 * n + 1` edge-disjoint copies of `T`.
+
+A "copy" of `T` is the image `T.map (f i)` of `T` under a vertex embedding
+`f i : V ↪ Fin (2 * n + 1)`; the copies are pairwise edge-disjoint (`Pairwise ... Disjoint`)
+and together cover every edge of `K_{2n+1}` (`⨆ i, T.map (f i) = ⊤`).
+-/
+@[category research solved, AMS 5]
+theorem ringel_conjecture {V : Type*} [Fintype V]
+    (T : SimpleGraph V) (hT : T.IsTree)
+    (n : ℕ) (hn : T.edgeSet.ncard = n) :
+    ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),
+      Pairwise (fun i j => Disjoint (T.map (f i)).edgeSet (T.map (f j)).edgeSet) ∧
+      ⨆ i, T.map (f i) = (⊤ : SimpleGraph (Fin (2 * n + 1))) := by
+  sorry
+
+end Arxiv.«2001.02665»
