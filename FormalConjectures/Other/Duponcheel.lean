@@ -18,58 +18,33 @@ This generalizes the traditional n-queens problem
 -/
 
 /--
-A configuration of coins on an `n × n` board, represented as a boolean matrix.
-`true` indicates a coin is present; `false` indicates an empty cell.
+Coins on an `n × n` board, represented as a boolean matrix.
+  `true`  indicates a  coin being present
+  `false` indicates no coin being present
 -/
-def BoardConfiguration (n : ℕ) := Matrix (Fin n) (Fin n) Bool
+
+def Board (n : ℕ) := Matrix (Fin n) (Fin n) Bool
 
 namespace DuponcheelConjecture
 
 variable {n : ℕ} (hn : n ≥ 4) {c : ℕ} (hc : c ≤ n)
 
-/-- Helper to count a coin as 1 and an empty cell as 0. -/
-def coinValue (b : Bool) : ℕ := if b then 1 else 0
-
-/-- The total number of coins placed on the board is exactly `n * c`. -/
-def HasTotalCoins (B : BoardConfiguration n) (c : ℕ) : Prop :=
-  ∑ i : Fin n, ∑ j : Fin n, coinValue (B i j) = n * c
-
-/-- Every row contains at most `c` coins. -/
-def RowCondition (B : BoardConfiguration n) (c : ℕ) : Prop :=
-  ∀ i : Fin n, ∑ j : Fin n, coinValue (B i j) ≤ c
-
-/-- Every column contains at most `c` coins. -/
-def ColCondition (B : BoardConfiguration n) (c : ℕ) : Prop :=
-  ∀ j : Fin n, ∑ i : Fin n, coinValue (B i j) ≤ c
-
-/-- Every 45-degree upward diagonal contains at most `c` coins.
-    Upward diagonals are characterized by lines where `i + j = k`. -/
-def UpDiagCondition (B : BoardConfiguration n) (c : ℕ) : Prop :=
-  ∀ k : ℕ, ∑ i : Fin n, ∑ j : Fin n,
-    (if (i : ℕ) + (j : ℕ) = k
-     then coinValue (B i j)
-     else 0) ≤ c
-
-/-- Every 45-degree downward diagonal contains at most `c` coins.
-    Downward diagonals are characterized by lines where `i - j = k`
-    (using integers to avoid underflow). -/
-def DownDiagCondition (B : BoardConfiguration n) (c : ℕ) : Prop :=
-  ∀ k : ℤ, ∑ i : Fin n, ∑ j : Fin n,
-    (if (i : ℤ) - (j : ℤ) = k
-     then coinValue (B i j)
-     else 0) ≤ c
-
-/--
-The main conjecture statement:
-For any valid `n` and `c`, there exists a valid board configuration.
+/-- Transforms
+a coin being present to 1
+no coin being present to 0.
 -/
-theorem generalized_n_queens_conjecture (hn : n ≥ 4) (hc : c ≤ n) :
-    ∃ (B : BoardConfiguration n),
-      HasTotalCoins B c ∧
-      RowCondition B c ∧
-      ColCondition B c ∧
-      UpDiagCondition B c ∧
-      DownDiagCondition B c := by
-  sorry
+def b2n (b : Bool) : ℕ := if b then 1 else 0
+
+theorem n_m_coins_placement_conjecture (hn : n ≥ 4) (hc : c ≤ n) :
+    ∃ (B : Board n),
+      -- Each row, column, upward diagonal, and downward diagonal contains at most `c` coins.
+      ∀ i : Fin n, ∑ j : Fin n, b2n (B i j) ≤ c ∧
+      ∀ j : Fin n, ∑ i : Fin n, b2n (B i j) ≤ c ∧
+      ∀ k : ℕ, ∑ i : Fin n, ∑ j : Fin n, (if (i : ℕ) + (j : ℕ) = k then b2n (B i j) else 0) ≤ c ∧
+      ∀ k : ℤ, ∑ i : Fin n, ∑ j : Fin n, (if (i : ℤ) - (j : ℤ) = k then b2n (B i j) else 0) ≤ c ∧
+      -- The total number of coins placed is `n * c`.
+      ∑ i : Fin n, ∑ j : Fin n, b2n (B i j) = n * c
+
+  := by sorry
 
 end DuponcheelConjecture
