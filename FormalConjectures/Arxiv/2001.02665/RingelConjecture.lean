@@ -17,35 +17,34 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Ringel's Conjecture
+# Ringel's Conjecture for large `n`
 
 *Reference:* [arxiv/2001.02665](https://arxiv.org/abs/2001.02665)
 **A proof of Ringel's Conjecture**
 by *Richard Montgomery, Alexey Pokrovskiy, Benny Sudakov*
 
-Ringel's Conjecture (1963) asserts that for any tree `T` with `n` edges, the complete graph
-`K_{2n+1}` on `2 * n + 1` vertices decomposes into `2 * n + 1` edge-disjoint copies of `T`.
-It was proved for all sufficiently large `n` in the referenced paper.
+The original conjecture of Ringel (1963), which remains open, is stated in
+`Books/RingelConjecture.lean`. The referenced paper proves it for all sufficiently large `n`.
 -/
 namespace Arxiv.«2001.02665»
 
 open SimpleGraph
 
 /--
-**Ringel's Conjecture.** For any tree `T` with `n` edges, the complete graph on `2 * n + 1`
-vertices decomposes into `2 * n + 1` edge-disjoint copies of `T`.
+For all sufficiently large `n`, the complete graph on `2 * n + 1` vertices decomposes into
+`2 * n + 1` edge-disjoint copies of any tree `T` with `n` edges.
 
 A "copy" of `T` is the image `T.map (f i)` of `T` under a vertex embedding
 `f i : V ↪ Fin (2 * n + 1)`; the copies are pairwise edge-disjoint (`Pairwise ... Disjoint`)
 and together cover every edge of `K_{2n+1}` (`⨆ i, T.map (f i) = ⊤`).
 -/
 @[category research solved, AMS 5]
-theorem ringel_conjecture {V : Type*} [Fintype V]
-    (T : SimpleGraph V) (hT : T.IsTree)
-    (n : ℕ) (hn : T.edgeSet.ncard = n) :
-    ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),
-      Pairwise (fun i j => Disjoint (T.map (f i)).edgeSet (T.map (f j)).edgeSet) ∧
-      ⨆ i, T.map (f i) = (⊤ : SimpleGraph (Fin (2 * n + 1))) := by
+theorem ringel_conjecture :
+    ∀ᶠ (n : ℕ) in Filter.atTop, ∀ {V : Type*} [Fintype V] (T : SimpleGraph V),
+      T.IsTree → T.edgeSet.ncard = n →
+      ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),
+        Pairwise (fun i j => Disjoint (T.map (f i)).edgeSet (T.map (f j)).edgeSet) ∧
+        ⨆ i, T.map (f i) = (⊤ : SimpleGraph (Fin (2 * n + 1))) := by
   sorry
 
 end Arxiv.«2001.02665»
