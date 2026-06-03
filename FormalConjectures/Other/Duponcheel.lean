@@ -64,7 +64,7 @@ The main conjecture statement:
 For any valid `n` and `c`, there exists a valid board configuration.
 -/
 theorem generalized_n_queens_conjecture (hn : n ≥ 4) (hc : c ≤ n) :
-    answer(sorry) ↔ ∃ (B : BoardConfiguration n),
+    ∃ (B : BoardConfiguration n),
       HasTotalCoins B c ∧
       RowCondition B c ∧
       ColCondition B c ∧
