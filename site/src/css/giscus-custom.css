@@ -26,6 +26,17 @@
 .gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(6):focus) p.overflow-hidden::after { content: "Like"; }
 
 
-/* renames the reaction box from "x Reactions" to "Votes and predictions" */
+/* Rename the reactions box as "Cast your vote" + emoji meaning */
 .gsc-reactions .gsc-reactions-count { font-size: 0; }
-.gsc-reactions .gsc-reactions-count::after { content: "Votes and predictions"; font-size: 1rem; }
+.gsc-reactions .gsc-reactions-count::before {
+  content: "Cast Your Vote";
+  display: block;
+  font-size: 1rem;
+}
+.gsc-reactions .gsc-reactions-count::after {
+  content: "👍 = True\2002👎 = False\2002❤️ = I like this conjecture";
+  display: block;
+  font-size: 0.8rem;
+  font-weight: normal;
+  padding-left: 2rem;
+}
