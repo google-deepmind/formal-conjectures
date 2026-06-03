@@ -48,7 +48,7 @@ src/
     index.html            # Landing page template (stats injected by build.js)
     browse.html           # Browse page (client-side filtering)
     theorem.html          # Theorem detail page (client-side, reads ?name= param)
-    contribute.html       # How-to-contribute page (static)
+    contribute.html       # How-to-contribute page (wrapper; body rendered from ../CONTRIBUTING.md at build time)
     about.html            # About page (static)
 build.js                  # Build script — reads data/, writes site/
 package.json
