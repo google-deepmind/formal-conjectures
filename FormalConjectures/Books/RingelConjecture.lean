@@ -39,7 +39,7 @@ A "copy" of `T` is the image `T.map (f i)` of `T` under a vertex embedding
 and together cover every edge of `K_{2n+1}` (`⨆ i, T.map (f i) = ⊤`).
 -/
 @[category research open, AMS 5]
-theorem ringel_conjecture {V : Type*} [Fintype V]
+theorem ringel_conjecture {V : Type*} [Finite V]
     (T : SimpleGraph V) (hT : T.IsTree)
     (n : ℕ) (hn : T.edgeSet.ncard = n) :
     ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),

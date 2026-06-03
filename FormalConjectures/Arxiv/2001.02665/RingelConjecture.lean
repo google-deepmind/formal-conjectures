@@ -40,7 +40,7 @@ and together cover every edge of `K_{2n+1}` (`⨆ i, T.map (f i) = ⊤`).
 -/
 @[category research solved, AMS 5]
 theorem ringel_conjecture :
-    ∀ᶠ (n : ℕ) in Filter.atTop, ∀ {V : Type*} [Fintype V] (T : SimpleGraph V),
+    ∀ᶠ (n : ℕ) in Filter.atTop, ∀ {V : Type*} [Finite V] (T : SimpleGraph V),
       T.IsTree → T.edgeSet.ncard = n →
       ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),
         Pairwise (fun i j => Disjoint (T.map (f i)).edgeSet (T.map (f j)).edgeSet) ∧
