@@ -47,7 +47,7 @@ TODO:
 - Examples in Remark 1.1.3 and 1.1.5 on the conditions of the conjecture.
 -/
 
-open Real MvPolynomial PowerSeries Polynomial MvPolynomial Cardinal Classical
+open Real MvPolynomial PowerSeries
 
 namespace LamLitt
 
@@ -60,6 +60,7 @@ The variable indexed by `0 : Fin (n + 1)` corresponds to $z$, and the variable i
 def IsSolutionOfAlgebraicODE (n : ℕ) (f : PowerSeries ℚ) (g : MvRatFunc (Fin (n + 1)) ℚ) : Prop :=
   let pt : Fin (n + 1) → PowerSeries ℚ := Fin.cases X (fun i : Fin n ↦ derivativeFun^[i.val] f)
   ∃ p q : MvPolynomial (Fin (n + 1)) ℚ,
+    q ≠ 0 ∧
     g = (algebraMap _ _ p) / (algebraMap _ _ q) ∧
     IsDefined (Fin (n + 1)) ℚ g (PowerSeries.constantCoeff ∘ pt) ∧
     derivativeFun^[n] f * MvPolynomial.aeval pt q = MvPolynomial.aeval pt p
@@ -145,73 +146,6 @@ theorem lam_litt.variants.omega_integrality_implies_algebraicity {n : ℕ} (f : 
     (ω : Nat.Primes → ℤ) (hω : omegaSuperlinear ω ∧ omegaIntegral ω (PowerSeries.coeff · f)) :
     ∃ N : ℕ, IsCoeffIntegralAdjointInvNat f N := by
   sorry
-
-
-
-
-noncomputable def F (s : Set ℕ) : PowerSeries ℚ := PowerSeries.mk (fun n => if n ∈ s then (1 : ℚ) else 0)
-
-lemma F_injective : Function.Injective F := by
-  intro s t h
-  ext n
-  have h1 := congr_arg (PowerSeries.coeff n) h
-  simp only [F, coeff_mk] at h1
-  revert h1
-
-lemma not_countable_range_F : ¬ Set.Countable (Set.range F) := by
-  intro h
-  haveI : Countable (Set.range F) := h.to_subtype
-  have h2 : Countable (Set ℕ) := by
-    have : Set ℕ ≃ Set.range F := Equiv.ofInjective F F_injective
-    exact Countable.of_equiv _ this.symm
-  have h3 : mk (Set ℕ) ≤ aleph0 := mk_le_aleph0
-  have h4 : aleph0 < mk (Set ℕ) := by
-    rw [mk_set_nat]
-    exact aleph0_lt_continuum
-  exact lt_irrefl _ (h4.trans_le h3)
-instance : Countable (AddMonoidAlgebra ℚ ℕ) := by
-  change Countable (ℕ →₀ ℚ)
-  infer_instance
-instance : Countable (Polynomial ℚ) := Countable.of_equiv _ (Polynomial.toFinsuppIso ℚ).toEquiv.symm
-instance : Module.IsTorsionFree (Polynomial ℚ) (PowerSeries ℚ) := NoZeroSMulDivisors.iff_algebraMap_injective.mpr (by
-  change Function.Injective (Polynomial.toPowerSeries)
-  exact Polynomial.coe_injective ℚ
-)
-
-lemma exists_non_algebraic : ∃ f : PowerSeries ℚ, ¬ IsAlgebraic (Polynomial ℚ) f ∧ ∀ n, PowerSeries.coeff n f ∈ LamLitt.ℤAdjoinInvNat 0 := by
-  have h2 : Set.Countable { x : PowerSeries ℚ | IsAlgebraic (Polynomial ℚ) x } := Algebraic.countable (Polynomial ℚ) (PowerSeries ℚ)
-  have h3 : ∃ f ∈ Set.range F, ¬ IsAlgebraic (Polynomial ℚ) f := by
-    by_contra h
-    push_neg at h
-    have h4 : Set.range F ⊆ { x : PowerSeries ℚ | IsAlgebraic (Polynomial ℚ) x } := h
-    have h5 : Set.Countable (Set.range F) := Set.Countable.mono h4 h2
-    exact not_countable_range_F h5
-  rcases h3 with ⟨f, ⟨s, rfl⟩, hf⟩
-  use F s
-  refine ⟨hf, ?_⟩
-  intro n
-  have : PowerSeries.coeff n (F s) = if n ∈ s then (1 : ℚ) else 0 := coeff_mk _ _
-  rw [this]
-  by_cases hn : n ∈ s
-  · rw [if_pos hn]
-    exact Subalgebra.one_mem _
-  · rw [if_neg hn]
-    exact Subalgebra.zero_mem _
-theorem any_f_is_solution (n : ℕ) (f : PowerSeries ℚ) :
-    LamLitt.IsSolutionOfAlgebraicODE n f 0 := by
-  dsimp [LamLitt.IsSolutionOfAlgebraicODE]
-  use 0, 0
-  refine ⟨by simp, ?_, by simp⟩
-  dsimp [IsDefined]
-  use 0, 1
-  simp
-theorem LamLitt.lam_litt.variants.integrality_implies_algebraicity.disproof
-  (h : ∀ {n : ℕ} (f : PowerSeries ℚ) (g : MvRatFunc (Fin (n + 1)) ℚ),
-    LamLitt.IsSolutionOfAlgebraicODE n f g → ∀ N : ℕ, LamLitt.IsCoeffIntegralAdjointInvNat f N →
-    IsAlgebraic (Polynomial ℚ) f) : False := by
-  rcases exists_non_algebraic with ⟨f, hf1, hf2⟩
-  have h1 := h f 0 (any_f_is_solution 0 f) 0 hf2
-  exact hf1 h1
 
 /--
 2) implies 1): if the coefficients of $f$ are in $\mathbb{Z}[1/N]$ for some $N$, then $f$ is algebraic over $\mathbb{Q}[z]$.
