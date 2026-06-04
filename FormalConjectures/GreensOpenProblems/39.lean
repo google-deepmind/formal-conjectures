@@ -111,15 +111,16 @@ strictly less than $p$ for $\theta < 1/2$. We interpret the question as asking w
 $O(p^{1-\theta})$ translates suffice. This generalizes the main conjecture where
 $\sqrt{p} = p^{1-1/2}$.
 -/
-@[category research solved, AMS 5 60]
-theorem green_39.variant_theta : answer(False) ↔
+@[category research open, AMS 5 60]
+theorem green_39.variant_theta : answer(sorry) ↔
     ∀ (θ : ℝ), 0 < θ → θ ≤ 1/2 →
     ∃ C > 1, Tendsto
       (fun p : {q : ℕ // q.Prime} ↦
         let k := ⌊(p : ℝ) ^ θ⌋₊
-        let c := ⌊C * (p : ℝ) ^ θ⌋₊
+        let c := ⌊C * (p : ℝ) ^ (1 - θ)⌋₊
         (proportionCoverable p k c : ℝ))
       atTop (𝓝 1) := by
+  sorry
   constructor
   · exact False.elim
   · intro h_forall
