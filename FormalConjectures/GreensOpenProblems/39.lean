@@ -201,6 +201,12 @@ lemma eventually_k_c_lt_p (C : ℝ) : ∀ᶠ (p : ℕ) in atTop, ⌊(p : ℝ) ^ 
     exact_mod_cast hp_pos
 /--
 Similar questions are interesting with $\sqrt{p}$ replaced by $p^\theta$ for any $\theta \le 1/2$. [Gr24]
+
+NOTE: using $C p^\theta$ translates as stated makes the conjecture trivially false by the pigeonhole
+principle. Indeed for a set of size $p^\theta$, we cover at most $C p^{2\theta}$ elements, which is
+strictly less than $p$ for $\theta < 1/2$. We interpret the question as asking whether
+$O(p^{1-\theta})$ translates suffice. This generalizes the main conjecture where
+$\sqrt{p} = p^{1-1/2}$.
 -/
 @[category research solved, AMS 5 60]
 theorem green_39.variant_theta : answer(False) ↔
