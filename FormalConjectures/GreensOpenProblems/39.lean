@@ -121,38 +121,5 @@ theorem green_39.variant_theta : answer(sorry) ↔
         (proportionCoverable p k c : ℝ))
       atTop (𝓝 1) := by
   sorry
-  constructor
-  · exact False.elim
-  · intro h_forall
-    have h1 : 0 < (1/4 : ℝ) := by norm_num
-    have h2 : (1/4 : ℝ) ≤ 1/2 := by norm_num
-    rcases h_forall (1/4) h1 h2 with ⟨C, hC, hTendsto⟩
-    have h_ev_nat := eventually_k_c_lt_p C
-    haveI : Nonempty {q : ℕ // q.Prime} := ⟨⟨2, Nat.prime_two⟩⟩
-    have h_ev : ∀ᶠ (p : {q : ℕ // q.Prime}) in atTop,
-        let k := ⌊(p.val : ℝ) ^ (1/4 : ℝ)⌋₊
-        let c := ⌊C * (p.val : ℝ) ^ (1/4 : ℝ)⌋₊
-        (proportionCoverable p.val k c : ℝ) = 0 := by
-      rw [eventually_atTop] at h_ev_nat ⊢
-      rcases h_ev_nat with ⟨N, hN⟩
-      have h_prime := Nat.exists_infinite_primes N
-      rcases h_prime with ⟨p, hp1, hp2⟩
-      use ⟨p, hp2⟩
-      intro p' hp'
-      have : N ≤ p := by omega
-      have hp2_le : p ≤ p'.val := hp'
-      have h_lt := hN p'.val (le_trans this hp2_le)
-      have h_prop := proportionCoverable_eq_zero h_lt
-      exact_mod_cast h_prop
-    have h_tendsto_0 : Tendsto
-        (fun p : {q : ℕ // q.Prime} ↦
-          let k := ⌊(p.val : ℝ) ^ (1/4 : ℝ)⌋₊
-          let c := ⌊C * (p.val : ℝ) ^ (1/4 : ℝ)⌋₊
-          (proportionCoverable p.val k c : ℝ))
-        atTop (𝓝 0) := by
-      apply tendsto_const_nhds.congr'
-      exact h_ev.mono (fun x hx => hx.symm)
-    have h_eq : (0 : ℝ) = 1 := tendsto_nhds_unique h_tendsto_0 hTendsto
-    linarith
 
 end Green39
