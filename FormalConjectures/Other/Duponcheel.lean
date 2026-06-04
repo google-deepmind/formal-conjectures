@@ -42,11 +42,13 @@ import Mathlib.Data.Fin.Basic
 
 namespace DuponcheelConjecture
 
+variable {n : ℕ} (hn : n ≥ 4) {c : ℕ} (hc : c ≤ n)
+
 abbrev BoolBoard (n : ℕ) := Matrix (Fin n) (Fin n) Bool
 
 abbrev NatBoard (n : ℕ) := Matrix (Fin n) (Fin n) ℕ
 
-theorem n_c_coins_placement_conjecture {n c : ℕ} (hn : n ≥ 4) (hc : c ≤ n) :
+theorem n_c_coins_placement_conjecture :
     ∃ (B : BoolBoard n),
       let N := B.map (fun b ↦ if b then 1 else 0) ;
       -- Each row, column, upward diagonal, and downward diagonal
