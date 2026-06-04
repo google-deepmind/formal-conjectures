@@ -1,7 +1,21 @@
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Fin.Basic
-
-open BigOperators
 
 /-!
 # Duponcheel's Generalized n-Queens Conjecture
@@ -23,28 +37,29 @@ Coins on an `n × n` board, represented as a boolean matrix.
   `false` indicates no coin being present
 -/
 
-def Board (n : ℕ) := Matrix (Fin n) (Fin n) Bool
+import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Fin.Basic
 
 namespace DuponcheelConjecture
 
-variable {n : ℕ} (hn : n ≥ 4) {c : ℕ} (hc : c ≤ n)
+abbrev BoolBoard (n : ℕ) := Matrix (Fin n) (Fin n) Bool
 
-/-- Transforms
-a coin being present to 1
-no coin being present to 0.
--/
-def b2n (b : Bool) : ℕ := if b then 1 else 0
+abbrev NatBoard (n : ℕ) := Matrix (Fin n) (Fin n) ℕ
 
-theorem n_m_coins_placement_conjecture (hn : n ≥ 4) (hc : c ≤ n) :
-    ∃ (B : Board n),
-      -- Each row, column, upward diagonal, and downward diagonal contains at most `c` coins.
-      ∀ i : Fin n, ∑ j : Fin n, b2n (B i j) ≤ c ∧
-      ∀ j : Fin n, ∑ i : Fin n, b2n (B i j) ≤ c ∧
-      ∀ k : ℕ, ∑ i : Fin n, ∑ j : Fin n, (if (i : ℕ) + (j : ℕ) = k then b2n (B i j) else 0) ≤ c ∧
-      ∀ k : ℤ, ∑ i : Fin n, ∑ j : Fin n, (if (i : ℤ) - (j : ℤ) = k then b2n (B i j) else 0) ≤ c ∧
-      -- The total number of coins placed is `n * c`.
-      ∑ i : Fin n, ∑ j : Fin n, b2n (B i j) = n * c
+theorem n_c_coins_placement_conjecture {n c : ℕ} (hn : n ≥ 4) (hc : c ≤ n) :
+    ∃ (B : BoolBoard n),
+      let N := B.map (fun b ↦ if b then 1 else 0) ;
+      -- Each row, column, upward diagonal, and downward diagonal
+      -- contains at most `c` coins.
+      ∀ i : Fin n, ∑ j : Fin n, N i j ≤ c ∧
+      ∀ j : Fin n, ∑ i : Fin n, N i j ≤ c ∧
+      ∀ k : ℕ, ∑ i : Fin n, ∑ j : Fin n, (if i + j = k then N i j else 0) ≤ c ∧
+      ∀ k : ℤ, ∑ i : Fin n, ∑ j : Fin n, (if i - j = k then N i j else 0) ≤ c ∧
+      -- Total number of coins placed is `n * c`.
+      ∑ i : Fin n, ∑ j : Fin n, N i j = n * c
 
   := by sorry
 
+
 end DuponcheelConjecture
+
