@@ -51,7 +51,7 @@ theorem erdos_993 : ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
     G.IsTree → UnimodalSeq (indepSeq G) := by
   sorry
 
-/-!
+/-
 ## A proven lemma toward the `d_leaf ≤ 1` case: local tie-balance for the equal-arm spider
 
 The remainder of this file establishes a *genuinely new, fully proven* lemma that is a step
@@ -160,7 +160,7 @@ lemma geomC (k : ℕ) (x : ℚ) :
   rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (by omega)]
   push_cast
   rw [add_comm (1:ℚ) x, add_pow]
-  simp only [mul_zero, zero_mul, add_zero]
+  simp only [zero_mul, add_zero]
   apply Finset.sum_congr rfl
   intro t _
   rw [one_pow, mul_one]
@@ -251,7 +251,7 @@ lemma R_r (k r : ℕ) (hr : r ≤ k) :
     rw [hiseq, add_mul, habs]; ring
 
 -- Ratio lemma R_r1 :  iseq_{r+1}·(r+1) = C(k,r)·(2^{r+1}(k-r)+(r+1))
-lemma R_r1 (k r : ℕ) (hr : r < k) :
+lemma R_r1 (k r : ℕ) (_hr : r < k) :
     iseq k (r+1) * (r + 1) = k.choose r * (2^(r+1) * (k-r) + (r+1)) := by
   have hiseq : iseq k (r+1) = k.choose r + 2^(r+1) * k.choose (r+1) := by
     simp only [iseq]; rw [if_neg (by omega), show r+1-1 = r by omega]
@@ -424,7 +424,7 @@ lemma F_eq (r S : ℕ) (x : ℚ) :
   have e : ∀ t ∈ Finset.range ((r+S+1)+2),
       (((t:ℚ) - r) * iseq (r+S+1) t) * x^t
       = ((t:ℚ) * iseq (r+S+1) t)*x^t - (r:ℚ)*((iseq (r+S+1) t : ℚ)*x^t) := by
-    intro t _; push_cast; ring
+    intro t _; ring
   rw [Finset.sum_congr rfl e, Finset.sum_sub_distrib, ← Finset.mul_sum]
   rw [wgenfn (r+S) x, genfn_iseq (r+S+1) x]
   push_cast; ring
@@ -487,7 +487,7 @@ theorem equal_spider_local_tie_balance (k r : ℕ) (hr : r < k)
     rw [show r+(S+1) = r+S+1 from rfl] at hAq
     rw [sub_nonneg, ← mul_div_assoc, le_div_iff₀ hcr1pos]
     push_cast at hAq ⊢
-    rw [hcr, hcr1]; push_cast; nlinarith [hAq]
+    rw [hcr, hcr1]; nlinarith [hAq]
   have hcrpos : 0 < cr := by rw [hcr]; exact_mod_cast iseq_pos (r+S+1) r (by omega)
   have hlampos : 0 < cr/cr1 := div_pos hcrpos hcr1pos
   rw [hlamLM]
