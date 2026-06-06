@@ -21,49 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/30](https://www.erdosproblems.com/30)
 
-A *Sidon set* (or B₂-set) is a set of natural numbers all of whose pairwise
-sums are distinct apart from coincidences forced by the commutativity of
-addition. Let $h(N)$ denote the maximum size of a Sidon set contained in
-$\{1,\dots,N\}$. The Erdős–Turán question (this problem) asks for the
-asymptotic refinement $h(N) = \sqrt N + O_\varepsilon(N^\varepsilon)$ for
-every $\varepsilon > 0$. That refinement is *open*. Variant theorems in this
-file record the classical bounds (Lindström, Erdős–Turán counting,
-Balogh–Füredi–Roy, Singer) that frame the conjecture; their per-theorem
-docstrings carry the references and page numbers.
-
-### Indexing convention
-
-The canonical statement uses $\{1,\dots,N\}$. The variant theorems below use
-$A \subseteq \{0,\dots,N\}$ (i.e. `Finset.range (N+1)`) as a
-diameter-normalised form, in which the elementary counting and difference
-arguments are cleanest. Translation by $1$ preserves the Sidon property and
-cardinality, so $\{0,\dots,N\}$ and $\{1,\dots,N+1\}$ differ only by
-normalisation; for each variant, $N$ denotes the maximum element bound.
-
-### References
-
-- Erdős, P., Turán, P. (1941). *On a problem of Sidon in additive number
-  theory, and on some related problems.* J. London Math. Soc. **16**, 212–215.
-- Lindström, B. (1969). *An inequality for B₂-sequences.*
-  J. Combin. Theory **6**, 211–212.
-- Singer, J. (1938). *A theorem in finite projective geometry and some
-  applications to number theory.* Trans. Amer. Math. Soc. **43** (3), 377–385.
-- Balogh, J., Füredi, Z., Roy, S. (2023). *An upper bound on the size of
-  Sidon sets.* Amer. Math. Monthly **130** (5), 437–445. arXiv:2103.15850.
-- O'Bryant, K. (2004). *A complete annotated bibliography of work related to
-  Sidon sets.* Electron. J. Combin., DS11.
-- Mendoza, K. A. (2026). *Sharper Sidon upper bound via residue-class
-  pigeonhole.* Sorted-enumeration + telescoping proof of the Lindström
-  $\sqrt N + N^{1/4} + 1$ form (~1000 lines of Lean), archived at
-  `github.com/MendozaLab/erdos-experiments/tree/main/Erdos30`,
-  DOI [`10.5281/zenodo.19444428`](https://doi.org/10.5281/zenodo.19444428).
-
-### AI disclosure
-
-Lean 4 code in this file was drafted with AI assistance. The mathematical
-content, Singer/Lindström/Balogh–Füredi–Roy formalizations, and external
-archive references are the contributor's responsibility.
--/
+This file supplements the Erdős–Turán Sidon-set problem with the classical bounds that
+frame it (elementary counting, Erdős–Turán, Lindström, Balogh–Füredi–Roy, Singer), stated
+as variants. Each variant's docstring carries its own reference. -/
 
 namespace Erdos30
 
@@ -88,32 +48,6 @@ theorem erdos_30 : answer(sorry) ↔
 For a Sidon set A ⊆ {0,...,N}, the |A|(|A|-1) ordered pairs (a,b) with a ≠ b
 yield distinct positive differences in {1,...,N}, giving |A|(|A|-1)/2 ≤ N. -/
 
-/-- In a Sidon set, distinct pairwise differences identify their endpoints. -/
-@[category test, AMS 11]
-private lemma sidon_diff_injective (A : Finset ℕ)
-    (hS : Finset.IsSidonOrdered A)
-    (a₁ b₁ a₂ b₂ : ℕ)
-    (ha₁ : a₁ ∈ A) (hb₁ : b₁ ∈ A) (ha₂ : a₂ ∈ A) (hb₂ : b₂ ∈ A)
-    (hlt₁ : b₁ < a₁) (hlt₂ : b₂ < a₂)
-    (heq : a₁ - b₁ = a₂ - b₂) :
-    a₁ = a₂ ∧ b₁ = b₂ := by
-  have h_sum : a₁ + b₂ = a₂ + b₁ := by omega
-  by_cases h1 : b₂ ≤ a₁
-  · by_cases h2 : b₁ ≤ a₂
-    · have h_sidon := hS b₂ hb₂ a₁ ha₁ b₁ hb₁ a₂ ha₂ h1 h2 (by omega)
-      exact ⟨h_sidon.right, h_sidon.left.symm⟩
-    · push_neg at h2
-      have h_sidon := hS b₂ hb₂ a₁ ha₁ a₂ ha₂ b₁ hb₁ h1 (Nat.le_of_lt h2) (by omega)
-      exact absurd h_sidon.right.symm (Nat.ne_of_lt hlt₁)
-  · push_neg at h1
-    by_cases h2 : b₁ ≤ a₂
-    · have h_sidon := hS a₁ ha₁ b₂ hb₂ b₁ hb₁ a₂ ha₂ (Nat.le_of_lt h1) h2 (by omega)
-      exact absurd h_sidon.left.symm (Nat.ne_of_lt hlt₁)
-    · push_neg at h2
-      have h_sidon := hS a₁ ha₁ b₂ hb₂ a₂ ha₂ b₁ hb₁ (Nat.le_of_lt h1)
-        (Nat.le_of_lt h2) (by omega)
-      exact ⟨h_sidon.left, h_sidon.right.symm⟩
-
 /-- **Elementary upper bound.** For a Sidon set $A \subseteq \{0,\dots,N\}$,
 $|A|(|A|-1) \le 2N$. Hence $|A| \le \sqrt{2N} + O(1)$.
 
@@ -125,96 +59,27 @@ theorem erdos_30.variants.elementary_difference_count (A : Finset ℕ) (N : ℕ)
     (hS : IsSidon ((A : Set ℕ)))
     (hA : A ⊆ Finset.range (N + 1)) :
     A.card * (A.card - 1) ≤ 2 * N := by
-  rw [Finset.isSidon_iff_isSidonOrdered] at hS
-  set pairs := Finset.filter (fun p : ℕ × ℕ => p.2 < p.1) (A ×ˢ A)
-  set diff_map := fun (p : ℕ × ℕ) => p.1 - p.2
-  have h_inj : Set.InjOn diff_map (↑pairs) := by
-    intro ⟨a₁, b₁⟩ h₁ ⟨a₂, b₂⟩ h₂ heq
-    rw [Finset.mem_coe, Finset.mem_filter, Finset.mem_product] at h₁ h₂
-    have := sidon_diff_injective A hS a₁ b₁ a₂ b₂ h₁.1.1 h₁.1.2 h₂.1.1 h₂.1.2
-      h₁.2 h₂.2 heq
-    exact Prod.ext this.1 this.2
-  have h_range : Finset.image diff_map pairs ⊆ Finset.Icc 1 N := by
-    intro d hd
-    rw [Finset.mem_image] at hd
-    obtain ⟨⟨a, b⟩, hp, rfl⟩ := hd
-    rw [Finset.mem_filter, Finset.mem_product] at hp
-    obtain ⟨⟨ha, _hb⟩, hlt⟩ := hp
-    rw [Finset.mem_Icc]
-    show 1 ≤ a - b ∧ a - b ≤ N
-    refine ⟨by omega, ?_⟩
-    have : a ≤ N := by
-      have := Finset.mem_range.mp (hA ha); omega
+  -- The difference map `(a, b) ↦ a - b` is injective on the strictly-decreasing pairs of `A`
+  -- (Sidon) and lands in `{1, …, N}`, so there are at most `N` such pairs; each unordered
+  -- pair of distinct elements gives one, so `|A|(|A|-1) = 2 · (#pairs) ≤ 2N`.
+  have h_count := Finset.two_mul_card_product_filter_gt A
+  have h_le : ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.2 < p.1)).card ≤ N := by
+    have h_inj : Set.InjOn (fun p : ℕ × ℕ => p.1 - p.2)
+        ↑((A ×ˢ A).filter (fun p : ℕ × ℕ => p.2 < p.1)) := by
+      intro ⟨a₁, b₁⟩ h₁ ⟨a₂, b₂⟩ h₂ heq
+      simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_product] at h₁ h₂
+      have := Finset.sidon_diff_injective hS h₁.1.1 h₁.1.2 h₂.1.1 h₂.1.2 h₁.2 h₂.2 heq
+      exact Prod.ext this.1 this.2
+    have h_sub : ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.2 < p.1)).image
+        (fun p : ℕ × ℕ => p.1 - p.2) ⊆ Finset.Icc 1 N := by
+      intro d hd
+      simp only [Finset.mem_image, Finset.mem_filter, Finset.mem_product] at hd
+      obtain ⟨⟨a, b⟩, ⟨⟨ha, _⟩, hlt⟩, rfl⟩ := hd
+      have := Finset.mem_range.mp (hA ha)
+      simp only [Finset.mem_Icc]; omega
+    have hbound := Finset.card_le_card h_sub
+    rw [Finset.card_image_of_injOn h_inj, Nat.card_Icc] at hbound
     omega
-  have h_card_img : (Finset.image diff_map pairs).card ≤ N := by
-    have := Finset.card_le_card h_range
-    simp at this
-    exact this
-  have h_eq_inj : (Finset.image diff_map pairs).card = pairs.card :=
-    Finset.card_image_of_injOn h_inj
-  have h_pairs : pairs.card = A.card * (A.card - 1) / 2 := by
-    have : pairs.card = (Finset.powersetCard 2 A).card := by
-      refine Finset.card_bij (fun p _ => {p.1, p.2}) ?_ ?_ ?_
-      · intro ⟨a, b⟩ hp
-        rw [Finset.mem_filter, Finset.mem_product] at hp
-        rw [Finset.mem_powersetCard]
-        refine ⟨?_, ?_⟩
-        · intro x hx
-          simp only [Finset.mem_insert, Finset.mem_singleton] at hx
-          rcases hx with rfl | rfl
-          · exact hp.1.1
-          · exact hp.1.2
-        · exact Finset.card_pair (Nat.ne_of_gt hp.2)
-      · intro ⟨a₁, b₁⟩ h₁ ⟨a₂, b₂⟩ h₂ heq
-        rw [Finset.mem_filter, Finset.mem_product] at h₁ h₂
-        have h₁lt := h₁.2
-        have _h₂lt := h₂.2
-        change ({a₁, b₁} : Finset ℕ) = ({a₂, b₂} : Finset ℕ) at heq
-        suffices h : a₁ = a₂ ∧ b₁ = b₂ from Prod.ext h.1 h.2
-        have h_a₁_in : a₁ ∈ ({a₂, b₂} : Finset ℕ) := by
-          rw [← heq]; exact Finset.mem_insert_self _ _
-        have h_b₁_in : b₁ ∈ ({a₂, b₂} : Finset ℕ) := by
-          rw [← heq]; exact Finset.mem_insert_of_mem (Finset.mem_singleton.mpr rfl)
-        simp only [Finset.mem_insert, Finset.mem_singleton] at h_a₁_in h_b₁_in
-        rcases h_a₁_in with h_a1_a2 | h_a1_b2
-        · rcases h_b₁_in with h_b1_a2 | h_b1_b2
-          · omega
-          · exact ⟨h_a1_a2, h_b1_b2⟩
-        · rcases h_b₁_in with _h_b1_a2 | _h_b1_b2
-          · omega
-          · omega
-      · intro s hs
-        rw [Finset.mem_powersetCard] at hs
-        obtain ⟨hsub, hcard⟩ := hs
-        rw [Finset.card_eq_two] at hcard
-        obtain ⟨x, y, hxy, rfl⟩ := hcard
-        cases Nat.lt_or_gt_of_ne hxy with
-        | inl hlt =>
-          refine ⟨(y, x), ?_, ?_⟩
-          · rw [Finset.mem_filter, Finset.mem_product]
-            refine ⟨⟨?_, ?_⟩, hlt⟩
-            · exact hsub (by simp)
-            · exact hsub (by simp)
-          · change ({y, x} : Finset ℕ) = ({x, y} : Finset ℕ)
-            exact Finset.pair_comm y x
-        | inr hgt =>
-          refine ⟨(x, y), ?_, rfl⟩
-          rw [Finset.mem_filter, Finset.mem_product]
-          refine ⟨⟨?_, ?_⟩, hgt⟩
-          · exact hsub (by simp)
-          · exact hsub (by simp)
-    rw [this, Finset.card_powersetCard, Nat.choose_two_right]
-  have h_div : A.card * (A.card - 1) / 2 ≤ N := by
-    rw [← h_pairs, ← h_eq_inj]; exact h_card_img
-  have h_even : Even (A.card * (A.card - 1)) := by
-    rcases Nat.even_or_odd A.card with ⟨m, hm⟩ | ⟨m, hm⟩
-    · exact ⟨m * (A.card - 1), by rw [hm]; ring⟩
-    · refine ⟨A.card * m, ?_⟩
-      have : A.card - 1 = 2 * m := by omega
-      rw [this, hm]; ring
-  obtain ⟨k, hk⟩ := h_even
-  rw [hk] at h_div
-  rw [hk]
   omega
 
 /- ## Variant 2: Distinct pairwise sums (Erdős–Turán counting)
@@ -236,99 +101,42 @@ number theory, and on some related problems.* J. London Math. Soc. **16**,
 theorem erdos_30.variants.distinct_sums_card (A : Finset ℕ)
     (hS : IsSidon ((A : Set ℕ))) :
     (distinctSums A).card = A.card * (A.card + 1) / 2 := by
-  rw [Finset.isSidon_iff_isSidonOrdered] at hS
+  rw [Finset.isSidon_coe_iff] at hS
+  -- the sum map is injective on the weakly-increasing pairs, so it suffices to count them
   have h_inj : Set.InjOn (fun p : ℕ × ℕ => p.1 + p.2)
       ↑((A ×ˢ A).filter (fun p => p.1 ≤ p.2)) := by
     intro ⟨a₁, b₁⟩ h₁ ⟨a₂, b₂⟩ h₂ heq
     simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_product] at h₁ h₂
     have := hS a₁ h₁.1.1 b₁ h₁.1.2 a₂ h₂.1.1 b₂ h₂.1.2 h₁.2 h₂.2 heq
     exact Prod.ext this.1 this.2
-  unfold distinctSums
-  rw [Finset.card_image_of_injOn h_inj]
-  have h_le_eq : (A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 ≤ p.2) =
-      ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2)) ∪
-      ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 = p.2)) := by
+  rw [distinctSums, Finset.card_image_of_injOn h_inj]
+  -- the weak triangle splits into the strict upper triangle and the diagonal
+  have h_split : (A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 ≤ p.2) =
+      (A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2) ∪
+      (A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 = p.2) := by
     ext ⟨a, b⟩
     simp only [Finset.mem_filter, Finset.mem_product, Finset.mem_union]
     constructor
     · intro ⟨⟨ha, hb⟩, hab⟩
       rcases Nat.eq_or_lt_of_le hab with rfl | h
-      · right; exact ⟨⟨ha, hb⟩, rfl⟩
-      · left; exact ⟨⟨ha, hb⟩, h⟩
+      · exact Or.inr ⟨⟨ha, hb⟩, rfl⟩
+      · exact Or.inl ⟨⟨ha, hb⟩, h⟩
     · rintro (⟨⟨ha, hb⟩, h⟩ | ⟨⟨ha, hb⟩, rfl⟩)
       · exact ⟨⟨ha, hb⟩, le_of_lt h⟩
       · exact ⟨⟨ha, hb⟩, le_refl _⟩
-  have h_le_disj : Disjoint
-      ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2))
+  have h_disj : Disjoint ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2))
       ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 = p.2)) :=
     Finset.disjoint_filter.mpr (fun ⟨_a, _b⟩ _ h1 h2 => absurd h2 (Nat.ne_of_lt h1))
-  rw [h_le_eq, Finset.card_union_of_disjoint h_le_disj]
   have h_diag : ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 = p.2)).card = A.card := by
     rw [← Finset.diag_eq_filter]; exact A.diag_card
-  rw [h_diag]
-  have h_filter_eq : (A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2) =
-      A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2) := by
-    ext ⟨a, b⟩
-    simp only [Finset.mem_filter, Finset.mem_product, Finset.mem_offDiag]
-    constructor
-    · intro ⟨⟨ha, hb⟩, hab⟩; exact ⟨⟨ha, hb, Nat.ne_of_lt hab⟩, hab⟩
-    · intro ⟨⟨ha, hb, _⟩, hab⟩; exact ⟨⟨ha, hb⟩, hab⟩
-  rw [h_filter_eq]
-  have h_union : A.offDiag =
-      A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2) ∪
-      A.offDiag.filter (fun p : ℕ × ℕ => p.2 < p.1) := by
-    ext ⟨a, b⟩
-    simp only [Finset.mem_offDiag, Finset.mem_union, Finset.mem_filter]
-    constructor
-    · intro ⟨ha, hb, hab⟩
-      rcases lt_or_gt_of_ne hab with h | h
-      · left; exact ⟨⟨ha, hb, hab⟩, h⟩
-      · right; exact ⟨⟨ha, hb, hab⟩, h⟩
-    · rintro (⟨h, _⟩ | ⟨h, _⟩) <;> exact h
-  have h_disj : Disjoint
-      (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2))
-      (A.offDiag.filter (fun p : ℕ × ℕ => p.2 < p.1)) :=
-    Finset.disjoint_filter.mpr
-      (fun ⟨_a, _b⟩ _ h1 h2 => absurd h1 (not_lt.mpr (le_of_lt h2)))
-  have h_swap : (A.offDiag.filter (fun p : ℕ × ℕ => p.2 < p.1)).card =
-      (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2)).card :=
-    Finset.card_bij' (fun p _ => (p.2, p.1)) (fun p _ => (p.2, p.1))
-      (fun ⟨_a, _b⟩ h => by
-        simp only [Finset.mem_filter, Finset.mem_offDiag] at h ⊢
-        exact ⟨⟨h.1.2.1, h.1.1, Ne.symm h.1.2.2⟩, h.2⟩)
-      (fun ⟨_a, _b⟩ h => by
-        simp only [Finset.mem_filter, Finset.mem_offDiag] at h ⊢
-        exact ⟨⟨h.1.2.1, h.1.1, Ne.symm h.1.2.2⟩, h.2⟩)
-      (fun _ _ => rfl) (fun _ _ => rfl)
-  have h_card : A.offDiag.card =
-      (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2)).card +
-      (A.offDiag.filter (fun p : ℕ × ℕ => p.2 < p.1)).card := by
-    rw [← Finset.card_union_of_disjoint h_disj, ← h_union]
-  rw [h_swap] at h_card
-  have h_mul_sub : A.card * (A.card - 1) = A.card * A.card - A.card := by
-    cases A.card with
-    | zero => simp
-    | succ n =>
-      simp only [Nat.succ_sub_one]
-      rw [show (n + 1) * (n + 1) = (n + 1) * n + (n + 1) from by ring,
-        Nat.add_sub_cancel]
-  have h_offDiag_eq : A.offDiag.card = A.card * (A.card - 1) :=
-    A.offDiag_card.trans h_mul_sub.symm
-  have h_2c : 2 * (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2)).card =
-      A.card * (A.card - 1) := by linarith
-  have h_lt_card : (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2)).card =
-      A.card * (A.card - 1) / 2 := by
-    have : A.card * (A.card - 1) / 2 =
-        (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2)).card := by
-      rw [← h_2c]; exact Nat.mul_div_cancel_left _ (by omega)
-    exact this.symm
-  rw [h_lt_card]
+  have h_tri := Finset.two_mul_card_product_filter_lt A
+  -- relate `|A|(|A|+1)` to the strict-triangle count `|A|(|A|-1)`
   have h_kk1 : A.card * (A.card + 1) = A.card * (A.card - 1) + 2 * A.card := by
     cases A.card with
     | zero => simp
     | succ n => simp only [Nat.succ_sub_one]; ring
-  rw [h_kk1, show 2 * A.card = A.card * 2 from by ring,
-    Nat.add_mul_div_right _ _ (by omega : (0:ℕ) < 2)]
+  rw [h_split, Finset.card_union_of_disjoint h_disj, h_diag]
+  omega
 
 /-- If $A \subseteq \{0,\dots,N\}$, the distinct Sidon sums lie in $\{0,\dots,2N\}$.
 
