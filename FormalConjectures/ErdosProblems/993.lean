@@ -495,4 +495,483 @@ theorem equal_spider_local_tie_balance (k r : ℕ) (hr : r < k)
     (hW_Q r S (2^r-1) hLMrise)
 end SpiderLTB
 
+
+/-
+## A second proven lemma: the one-leaf mixed spider `S(2^a,1)`
+
+The same mode-free local tie-balance, now for the spider with `a` length-2 arms plus one
+direct leaf, `c_t = 2^t C(a,t) + (2^{t-1}+1) C(a,t-1)`.  Together with the equal-arm case
+above this covers both single-hub extremals of the `d_leaf ≤ 1` regime; here the inequality
+is even *unconditional* (no rising-tie hypothesis).  See `mixed_spider_one_leaf_local_tie_balance`.
+-/
+
+namespace MixedOneLeaf
+
+/-- One-leaf mixed spider S(2^a,1) coefficient c_t = 2^t C(a,t) + (2^{t-1}+1) C(a,t-1)
+(with C(a,-1)=0).  This is [x^t] of  (1+2x)^a(1+x) + x(1+x)^a. -/
+def mc (a t : ℕ) : ℕ := 2^t * (a.choose t) + (if t = 0 then 0 else (2^(t-1) + 1) * (a.choose (t-1)))
+
+-- Part 1:  Σ 2^t C(a,t) x^t = (1+2x)^a
+lemma geom1 (a : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (a+2), (2^t * (a.choose t : ℚ)) * x^t = (1 + 2*x)^a := by
+  rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (by omega)]
+  push_cast
+  rw [add_comm (1:ℚ) (2*x), add_pow]
+  simp only [mul_zero, zero_mul, add_zero]
+  apply Finset.sum_congr rfl
+  intro t _
+  rw [one_pow, mul_one, mul_pow]
+  ring
+
+-- mirror with base (1+x):  Σ C(a,t) x^t = (1+x)^a
+lemma geomC (a : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (a+2), ((a.choose t : ℚ)) * x^t = (1 + x)^a := by
+  rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (by omega)]
+  push_cast
+  rw [add_comm (1:ℚ) x, add_pow]
+  simp only [zero_mul, add_zero]
+  apply Finset.sum_congr rfl
+  intro t _
+  rw [one_pow, mul_one]
+  ring
+
+-- Part 2:  Σ (if t=0 then 0 else (2^{t-1}+1) C(a,t-1)) x^t = x(1+2x)^a + x(1+x)^a
+lemma geom2m (a : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (a+2),
+        ((if t = 0 then (0:ℚ) else (((2^(t-1) + 1) * a.choose (t-1) : ℕ) : ℚ))) * x^t
+      = x*(1+2*x)^a + x*(1+x)^a := by
+  rw [Finset.sum_range_succ']
+  have h0 : (if (0:ℕ) = 0 then (0:ℚ) else (((2^(0-1) + 1) * a.choose (0-1) : ℕ):ℚ)) * x^0 = 0 := by
+    simp
+  rw [h0, add_zero]
+  -- now Σ_{u<a+1} (2^u+1)·C(a,u)·x^{u+1}
+  have step : ∀ u ∈ Finset.range (a+1),
+      ((if u+1 = 0 then (0:ℚ) else (((2^((u+1)-1) + 1) * a.choose ((u+1)-1) : ℕ):ℚ))) * x^(u+1)
+      = (2^u * (a.choose u : ℚ)) * x^u * x + ((a.choose u : ℚ)) * x^u * x := by
+    intro u _
+    rw [if_neg (Nat.succ_ne_zero u), Nat.add_sub_cancel, pow_succ]
+    push_cast; ring
+  rw [Finset.sum_congr rfl step, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul]
+  -- the two sums over range (a+1) equal (1+2x)^a and (1+x)^a
+  have e1 : ∑ u ∈ Finset.range (a+1), (2^u * (a.choose u : ℚ)) * x^u = (1+2*x)^a := by
+    have h := geom1 a x
+    rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (show a < a+1 by omega)] at h
+    simp only [Nat.cast_zero, mul_zero, zero_mul, add_zero] at h
+    exact h
+  have e2 : ∑ u ∈ Finset.range (a+1), ((a.choose u : ℚ)) * x^u = (1+x)^a := by
+    have h := geomC a x
+    rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (show a < a+1 by omega)] at h
+    simp only [Nat.cast_zero, zero_mul, add_zero] at h
+    exact h
+  rw [e1, e2]; ring
+
+/-- plain generating function  Σ mc(a,t) x^t = (1+2x)^a(1+x) + x(1+x)^a. -/
+lemma genfn_mc (a : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (a+2), (mc a t : ℚ) * x^t = (1+2*x)^a*(1+x) + x*(1+x)^a := by
+  have split : ∀ t ∈ Finset.range (a+2),
+      (mc a t : ℚ) * x^t
+      = (2^t * (a.choose t : ℚ)) * x^t
+        + ((if t = 0 then (0:ℚ) else (((2^(t-1) + 1) * a.choose (t-1) : ℕ):ℚ))) * x^t := by
+    intro t _
+    simp only [mc]
+    split_ifs with h
+    · push_cast; ring
+    · push_cast; ring
+  rw [Finset.sum_congr rfl split, Finset.sum_add_distrib, geom1, geom2m]
+  ring
+
+-- weighted: Σ t·2^t C(a,t) x^t = 2a x (1+2x)^{a-1}  (a = K+1)
+lemma wA (K : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (K+1+2), ((t:ℚ) * 2^t * (Nat.choose (K+1) t)) * x^t
+      = 2 * (K+1) * x * (1 + 2*x)^K := by
+  rw [Finset.sum_range_succ']
+  simp only [Nat.cast_zero, zero_mul, add_zero]
+  rw [add_comm (1:ℚ) (2*x), add_pow, Finset.mul_sum]
+  rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (show K+1 < K+1+1 by omega)]
+  simp only [Nat.cast_zero, mul_zero, zero_mul, add_zero]
+  apply Finset.sum_congr rfl
+  intro u _
+  have hq : ((K+1 : ℕ):ℚ) * (Nat.choose K u : ℚ)
+          = (Nat.choose (K+1) (u+1) : ℚ) * ((u+1 : ℕ):ℚ) := by
+    exact_mod_cast Nat.add_one_mul_choose_eq K u
+  have habs : ((u+1 : ℕ) : ℚ) * (Nat.choose (K+1) (u+1) : ℚ)
+            = ((K+1 : ℕ):ℚ) * (Nat.choose K u : ℚ) := by
+    linear_combination -hq
+  push_cast at habs ⊢
+  linear_combination ((2:ℚ)^(u+1) * x^(u+1)) * habs
+
+-- weighted: Σ t·C(a,t) x^t = a x (1+x)^{a-1}  (a = K+1)
+lemma wC (K : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (K+1+2), ((t:ℚ) * (Nat.choose (K+1) t)) * x^t
+      = (K+1) * x * (1 + x)^K := by
+  rw [Finset.sum_range_succ']
+  simp only [Nat.cast_zero, zero_mul, add_zero]
+  rw [add_comm (1:ℚ) x, add_pow, Finset.mul_sum]
+  rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (show K+1 < K+1+1 by omega)]
+  simp only [Nat.cast_zero, mul_zero, zero_mul, add_zero]
+  apply Finset.sum_congr rfl
+  intro u _
+  have hq : ((K+1 : ℕ):ℚ) * (Nat.choose K u : ℚ)
+          = (Nat.choose (K+1) (u+1) : ℚ) * ((u+1 : ℕ):ℚ) := by
+    exact_mod_cast Nat.add_one_mul_choose_eq K u
+  have habs : ((u+1 : ℕ) : ℚ) * (Nat.choose (K+1) (u+1) : ℚ)
+            = ((K+1 : ℕ):ℚ) * (Nat.choose K u : ℚ) := by
+    linear_combination -hq
+  push_cast at habs ⊢
+  linear_combination (x^(u+1)) * habs
+
+-- weighted part with 2^{t-1}:  Σ t·(if t=0 then 0 else 2^{t-1} C(a,t-1)) x^t
+--   = 2a x^2 (1+2x)^{a-1} + x (1+2x)^a   (a = K+1)
+lemma w2C (K : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (K+1+2),
+        ((t:ℚ) * (if t = 0 then (0:ℚ) else (2^(t-1) * Nat.choose (K+1) (t-1):ℚ))) * x^t
+      = 2*((K:ℚ)+1)*x^2*(1+2*x)^K + x*(1+2*x)^(K+1) := by
+  rw [Finset.sum_range_succ']
+  simp only [Nat.cast_zero, zero_mul, add_zero]
+  have step : ∀ u ∈ Finset.range (K+1+1),
+      ((↑(u+1):ℚ) * (if u+1 = 0 then (0:ℚ) else (2^((u+1)-1)*Nat.choose (K+1) ((u+1)-1):ℚ))) * x^(u+1)
+      = ((u:ℚ) * 2^u * Nat.choose (K+1) u) * x^u * x + (2^u * Nat.choose (K+1) u : ℚ) * x^u * x := by
+    intro u _
+    rw [if_neg (Nat.succ_ne_zero u), Nat.add_sub_cancel, pow_succ]
+    push_cast; ring
+  rw [Finset.sum_congr rfl step, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul]
+  have e1 : ∑ u ∈ Finset.range (K+1+1), ((u:ℚ) * 2^u * Nat.choose (K+1) u) * x^u
+          = 2*((K:ℚ)+1)*x*(1+2*x)^K := by
+    have h := wA K x
+    rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (show K+1 < K+1+1 by omega)] at h
+    simp only [Nat.cast_zero, mul_zero, zero_mul, add_zero] at h
+    linarith [h]
+  have e2 : ∑ u ∈ Finset.range (K+1+1), (2^u * Nat.choose (K+1) u : ℚ) * x^u
+          = (1+2*x)^(K+1) := by
+    have h := geom1 (K+1) x
+    rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (show K+1 < K+1+1 by omega)] at h
+    simp only [Nat.cast_zero, mul_zero, zero_mul, add_zero] at h
+    exact_mod_cast h
+  rw [e1, e2]; ring
+
+-- weighted part with plain C:  Σ t·(if t=0 then 0 else C(a,t-1)) x^t
+--   = x (1+x)^a + a x^2 (1+x)^{a-1}   (a = K+1)
+lemma wCm (K : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (K+1+2),
+        ((t:ℚ) * (if t = 0 then (0:ℚ) else (Nat.choose (K+1) (t-1):ℚ))) * x^t
+      = x*(1+x)^(K+1) + ((K:ℚ)+1)*x^2*(1+x)^K := by
+  rw [Finset.sum_range_succ']
+  simp only [Nat.cast_zero, zero_mul, add_zero]
+  have step : ∀ u ∈ Finset.range (K+1+1),
+      ((↑(u+1):ℚ) * (if u+1 = 0 then (0:ℚ) else (Nat.choose (K+1) ((u+1)-1):ℚ))) * x^(u+1)
+      = ((u:ℚ) * Nat.choose (K+1) u) * x^u * x + (Nat.choose (K+1) u : ℚ) * x^u * x := by
+    intro u _
+    rw [if_neg (Nat.succ_ne_zero u), Nat.add_sub_cancel, pow_succ]
+    push_cast; ring
+  rw [Finset.sum_congr rfl step, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul]
+  have e1 : ∑ u ∈ Finset.range (K+1+1), ((u:ℚ) * Nat.choose (K+1) u) * x^u
+          = ((K:ℚ)+1)*x*(1+x)^K := by
+    have h := wC K x
+    rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (show K+1 < K+1+1 by omega)] at h
+    simp only [Nat.cast_zero, mul_zero, zero_mul, add_zero] at h
+    linarith [h]
+  have e2 : ∑ u ∈ Finset.range (K+1+1), (Nat.choose (K+1) u : ℚ) * x^u
+          = (1+x)^(K+1) := by
+    have h := geomC (K+1) x
+    rw [Finset.sum_range_succ, Nat.choose_eq_zero_of_lt (show K+1 < K+1+1 by omega)] at h
+    simp only [Nat.cast_zero, zero_mul, add_zero] at h
+    exact_mod_cast h
+  rw [e1, e2]; ring
+
+/-- weighted generating function  Σ t·mc(K+1,t)·x^t = x·Z'(x). -/
+lemma wgenfn_mc (K : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range (K+1+2), ((t:ℚ) * mc (K+1) t) * x^t
+    = 2*((K:ℚ)+1)*x*(1+2*x)^K
+      + (2*((K:ℚ)+1)*x^2*(1+2*x)^K + x*(1+2*x)^(K+1))
+      + (x*(1+x)^(K+1) + ((K:ℚ)+1)*x^2*(1+x)^K) := by
+  have split : ∀ t ∈ Finset.range (K+1+2),
+      ((t:ℚ) * mc (K+1) t) * x^t
+      = ((t:ℚ) * 2^t * (Nat.choose (K+1) t)) * x^t
+        + ((t:ℚ) * (if t = 0 then (0:ℚ) else (2^(t-1) * Nat.choose (K+1) (t-1):ℚ))) * x^t
+        + ((t:ℚ) * (if t = 0 then (0:ℚ) else (Nat.choose (K+1) (t-1):ℚ))) * x^t := by
+    intro t _
+    simp only [mc]
+    split_ifs with h
+    · push_cast; ring
+    · push_cast; ring
+  rw [Finset.sum_congr rfl split, Finset.sum_add_distrib, Finset.sum_add_distrib, wA, w2C, wCm]
+
+/-- F = x·Z'(x) − r·Z(x) = (1+2x)^{a-1}·A + x(1+x)^{a-1}·B, with a = r+S+1, s = S+1,
+A = 2(s+1)x²+(2s+1−r)x−r, B = (1−r)+(s+1)x.  (Step-1, verified `derive_oneleaf.py` S1.) -/
+lemma F_eq (r S : ℕ) (x : ℚ) :
+    ∑ t ∈ Finset.range ((r+S+1)+2), (((t:ℚ) - r) * mc (r+S+1) t) * x^t
+    = (1+2*x)^(r+S) * (2*((S:ℚ)+2)*x^2 + (2*(S:ℚ)+3-r)*x - r)
+      + x*(1+x)^(r+S) * (1 - r + ((S:ℚ)+2)*x) := by
+  have e : ∀ t ∈ Finset.range ((r+S+1)+2),
+      (((t:ℚ) - r) * mc (r+S+1) t) * x^t
+      = ((t:ℚ) * mc (r+S+1) t)*x^t - (r:ℚ)*((mc (r+S+1) t : ℚ)*x^t) := by
+    intro t _; ring
+  rw [Finset.sum_congr rfl e, Finset.sum_sub_distrib, ← Finset.mul_sum]
+  rw [wgenfn_mc (r+S) x, genfn_mc (r+S+1) x]
+  rw [pow_succ (1+2*x) (r+S), pow_succ (1+x) (r+S)]
+  push_cast; ring
+
+-- mc positive (t ≤ a)
+lemma mc_pos (a t : ℕ) (ht : t ≤ a) : 0 < mc a t := by
+  simp only [mc]
+  have h1 : 0 < 2^t * a.choose t := Nat.mul_pos (by positivity) (Nat.choose_pos ht)
+  split_ifs with h
+  · omega
+  · have : 0 ≤ (2^(t-1)+1) * a.choose (t-1) := Nat.zero_le _
+    omega
+
+-- absorption (ℚ), r=R+1, a=R+1+s:  (s+1)·C(a,R) = (R+1)·C(a,R+1)
+lemma absR (R s : ℕ) :
+    ((s+1 : ℕ):ℚ) * ((R+1+s).choose R : ℚ) = ((R+1 : ℕ):ℚ) * ((R+1+s).choose (R+1) : ℚ) := by
+  have h := Nat.choose_succ_right_eq (R+1+s) R
+  -- C(a,R+1)·(R+1) = C(a,R)·(a-R) = C(a,R)·(s+1)
+  rw [show (R+1+s) - R = s+1 by omega] at h
+  have : ((R+1+s).choose (R+1) * (R+1) : ℕ) = ((R+1+s).choose R * (s+1) : ℕ) := h
+  have hq : (((R+1+s).choose (R+1) * (R+1) : ℕ):ℚ) = (((R+1+s).choose R * (s+1) : ℕ):ℚ) := by
+    exact_mod_cast this
+  push_cast at hq ⊢; linear_combination -hq
+
+-- absorption (ℚ):  s·C(a,R+1) = (R+2)·C(a,R+2)
+lemma absR1 (R s : ℕ) :
+    ((s : ℕ):ℚ) * ((R+1+s).choose (R+1) : ℚ) = ((R+2 : ℕ):ℚ) * ((R+1+s).choose (R+2) : ℚ) := by
+  have h := Nat.choose_succ_right_eq (R+1+s) (R+1)
+  rw [show (R+1+s) - (R+1) = s by omega, show (R+1)+1 = R+2 by omega] at h
+  have : ((R+1+s).choose (R+2) * (R+2) : ℕ) = ((R+1+s).choose (R+1) * s : ℕ) := h
+  have hq : (((R+1+s).choose (R+2) * (R+2) : ℕ):ℚ) = (((R+1+s).choose (R+1) * s : ℕ):ℚ) := by
+    exact_mod_cast this
+  push_cast at hq ⊢; linear_combination -hq
+
+-- mc expansion (ℚ) at r=R+1
+lemma mc_r_eq (R s : ℕ) :
+    (mc (R+1+s) (R+1) : ℚ)
+      = 2^(R+1) * ((R+1+s).choose (R+1) : ℚ) + (2^R+1) * ((R+1+s).choose R : ℚ) := by
+  simp only [mc]; rw [if_neg (by omega), show (R+1)-1 = R by omega]; push_cast; ring
+
+lemma mc_r1_eq (R s : ℕ) :
+    (mc (R+1+s) (R+2) : ℚ)
+      = 2^(R+2) * ((R+1+s).choose (R+2) : ℚ) + (2^(R+1)+1) * ((R+1+s).choose (R+1) : ℚ) := by
+  simp only [mc]
+  rw [if_neg (by omega), show (R+2)-1 = R+1 by omega]
+  push_cast; ring
+
+-- tie half-identities (q = 2^(R+1) = 2^r):
+-- 2·mc_r·(s+1) = C(a,R+1)·BR,  BR = 2q(s+1)+(q+2)(R+1)
+lemma tieL (R s : ℕ) :
+    2 * (mc (R+1+s) (R+1) : ℚ) * ((s:ℚ)+1)
+      = ((R+1+s).choose (R+1) : ℚ) * (2*2^(R+1)*((s:ℚ)+1)+(2^(R+1)+2)*((R:ℚ)+1)) := by
+  rw [mc_r_eq]
+  have hA := absR R s
+  have hp : (2:ℚ)^(R+1) = 2*2^R := by rw [pow_succ]; ring
+  rw [hp]
+  push_cast at hA ⊢
+  linear_combination (2*(2:ℚ)^R+2) * hA
+
+-- mc_{r+1}·(R+2) = C(a,R+1)·BR1,  BR1 = 2q·s+(q+1)(R+2)
+lemma tieR (R s : ℕ) :
+    (mc (R+1+s) (R+2) : ℚ) * ((R:ℚ)+2)
+      = ((R+1+s).choose (R+1) : ℚ) * (2*2^(R+1)*(s:ℚ)+(2^(R+1)+1)*((R:ℚ)+2)) := by
+  rw [mc_r1_eq]
+  have hA := absR1 R s
+  have hp2 : (2:ℚ)^(R+2) = 2*2^(R+1) := by rw [pow_succ]; ring
+  rw [hp2]
+  push_cast at hA ⊢
+  linear_combination (-(2*(2:ℚ)^(R+1))) * hA
+
+-- tie:  mc_r · M = mc_{r+1} · L,  L=(R+2)·BR, M=2(s+1)·BR1
+lemma lam_eq (R s : ℕ) :
+    (mc (R+1+s) (R+1):ℚ) * (2*((s:ℚ)+1)*(2*2^(R+1)*(s:ℚ)+(2^(R+1)+1)*((R:ℚ)+2)))
+      = (mc (R+1+s) (R+2):ℚ) * (((R:ℚ)+2)*(2*2^(R+1)*((s:ℚ)+1)+(2^(R+1)+2)*((R:ℚ)+1))) := by
+  have hL := tieL R s
+  have hR := tieR R s
+  linear_combination (2*2^(R+1)*(s:ℚ)+(2^(R+1)+1)*((R:ℚ)+2)) * hL
+    - (2*2^(R+1)*((s:ℚ)+1)+(2^(R+1)+2)*((R:ℚ)+1)) * hR
+
+-- Core inequality: F = X·A + Y·B ≥ 0 given A ≥ 0 and W ≥ 0 (the Bernoulli-reduced C),
+-- with A = 2(S+2)λ²+(2S+3−r)λ−r (quadratic), B = 1−r+(S+2)λ.
+lemma core_F_nonneg (r S : ℕ) (lam : ℚ) (hlam : 0 < lam)
+    (hA : 0 ≤ 2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r)
+    (hW : 0 ≤ (1 + ((r+S:ℕ):ℚ)*(lam/(1+lam)))
+                * (2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r)
+              + lam*(1 - r + ((S:ℚ)+2)*lam)) :
+    0 ≤ (1+2*lam)^(r+S) * (2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r)
+        + lam*(1+lam)^(r+S) * (1 - r + ((S:ℚ)+2)*lam) := by
+  have h1l : (0:ℚ) < 1 + lam := by linarith
+  rcases le_total (0:ℚ) (1 - (r:ℚ) + ((S:ℚ)+2)*lam) with hB | hB
+  · have hXA : 0 ≤ (1+2*lam)^(r+S) * (2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r) :=
+      mul_nonneg (by positivity) hA
+    have hYB : 0 ≤ lam*(1+lam)^(r+S) * (1 - r + ((S:ℚ)+2)*lam) :=
+      mul_nonneg (by positivity) hB
+    linarith [hXA, hYB]
+  · have hber : 1 + ((r+S:ℕ):ℚ)*(lam/(1+lam)) ≤ (1 + lam/(1+lam))^(r+S) :=
+      one_add_mul_le_pow (by have := div_nonneg hlam.le h1l.le; linarith) (r+S)
+    have hXeq : (1+2*lam)^(r+S) = (1+lam)^(r+S) * (1+lam/(1+lam))^(r+S) := by
+      rw [← mul_pow]; congr 1; field_simp; ring
+    have hXlb : (1+lam)^(r+S) * (1+((r+S:ℕ):ℚ)*(lam/(1+lam))) ≤ (1+2*lam)^(r+S) := by
+      rw [hXeq]; exact mul_le_mul_of_nonneg_left hber (by positivity)
+    have hXA : (1+lam)^(r+S) * (1+((r+S:ℕ):ℚ)*(lam/(1+lam)))
+                 * (2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r)
+             ≤ (1+2*lam)^(r+S) * (2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r) :=
+      mul_le_mul_of_nonneg_right hXlb hA
+    have hWid : (1+lam)^(r+S) * (1+((r+S:ℕ):ℚ)*(lam/(1+lam)))
+                  * (2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r)
+                + lam*(1+lam)^(r+S) * (1 - r + ((S:ℚ)+2)*lam)
+              = (1+lam)^(r+S) * ((1 + ((r+S:ℕ):ℚ)*(lam/(1+lam)))
+                    * (2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r)
+                  + lam*(1 - r + ((S:ℚ)+2)*lam)) := by ring
+    have hfin : 0 ≤ (1+lam)^(r+S) * ((1 + ((r+S:ℕ):ℚ)*(lam/(1+lam)))
+                    * (2*((S:ℚ)+2)*lam^2 + (2*(S:ℚ)+3-r)*lam - r)
+                  + lam*(1 - r + ((S:ℚ)+2)*lam)) :=
+      mul_nonneg (by positivity) hW
+    linarith [hXA, hWid, hfin]
+
+-- Cnum positivity certificate (machine-generated, gen_cnum_mixed.py).  sg = S+1, q ≥ 0.
+def Mval (r S q : ℚ) : ℚ := 2*(S+2)*((r+1)*(q+1)+2*q*(S+1))
+def Lval (r S q : ℚ) : ℚ := (r+1)*(2*q*(S+2)+r*(q+2))
+def Araw (r S q : ℚ) : ℚ :=
+  2*(S+2)*(Lval r S q)^2 + (2*S+3-r)*(Lval r S q)*(Mval r S q) - r*(Mval r S q)^2
+def Braw (r S q : ℚ) : ℚ := (1-r)*(Mval r S q) + (S+2)*(Lval r S q)
+set_option maxHeartbeats 4000000 in
+def Ppoly (r S q : ℚ) : ℚ := 2*r^7*q^2 + 8*r^7*q + 8*r^7 + 14*r^6*S*q^2 + 36*r^6*S*q + 16*r^6*S + 1*r^6*q^3 + 34*r^6*q^2 + 84*r^6*q + 40*r^6 + 36*r^5*S^2*q^2 + 52*r^5*S^2*q + 8*r^5*S^2 + 10*r^5*S*q^3 + 186*r^5*S*q^2 + 272*r^5*S*q + 72*r^5*S + 27*r^5*q^3 + 254*r^5*q^2 + 356*r^5*q + 104*r^5 + 40*r^4*S^3*q^2 + 24*r^4*S^3*q + 40*r^4*S^2*q^3 + 372*r^4*S^2*q^2 + 292*r^4*S^2*q + 32*r^4*S^2 + 202*r^4*S*q^3 + 1114*r^4*S*q^2 + 936*r^4*S*q + 152*r^4*S + 251*r^4*q^3 + 1090*r^4*q^2 + 932*r^4*q + 184*r^4 + 16*r^3*S^4*q^2 + 80*r^3*S^3*q^3 + 328*r^3*S^3*q^2 + 104*r^3*S^3*q + 596*r^3*S^2*q^3 + 1780*r^3*S^2*q^2 + 756*r^3*S^2*q + 48*r^3*S^2 + 1462*r^3*S*q^3 + 3822*r^3*S*q^2 + 1872*r^3*S*q + 184*r^3*S + 1177*r^3*q^3 + 2888*r^3*q^2 + 1572*r^3*q + 208*r^3 + 80*r^2*S^4*q^3 + 112*r^2*S^4*q^2 + 840*r^2*S^3*q^3 + 1144*r^2*S^3*q^2 + 152*r^2*S^3*q + 3168*r^2*S^2*q^3 + 4332*r^2*S^2*q^2 + 940*r^2*S^2*q + 32*r^2*S^2 + 5142*r^2*S*q^3 + 7216*r^2*S*q^2 + 2036*r^2*S*q + 120*r^2*S + 3048*r^2*q^3 + 4452*r^2*q^2 + 1528*r^2*q + 128*r^2 + 32*r*S^5*q^3 + 528*r*S^4*q^3 + 176*r*S^4*q^2 + 2912*r*S^3*q^3 + 1464*r*S^3*q^2 + 88*r*S^3*q + 7380*r*S^2*q^3 + 4632*r*S^2*q^2 + 520*r*S^2*q + 8*r*S^2 + 8896*r*S*q^3 + 6576*r*S*q^2 + 1056*r*S*q + 32*r*S + 4144*r*q^3 + 3520*r*q^2 + 736*r*q + 32*r + 96*S^5*q^3 + 896*S^4*q^3 + 80*S^4*q^2 + 3368*S^3*q^3 + 608*S^3*q^2 + 16*S^3*q + 6368*S^2*q^3 + 1744*S^2*q^2 + 96*S^2*q + 6048*S*q^3 + 2240*S*q^2 + 192*S*q + 2304*q^3 + 1088*q^2 + 128*q
+noncomputable def Cnum (r S q : ℚ) : ℚ :=
+  (Araw r S q)*(Mval r S q+Lval r S q) + (Araw r S q)*(r+S)*(Lval r S q)
+  + (Braw r S q)*(Lval r S q)*(Mval r S q+Lval r S q)
+
+lemma P_nonneg (a b c : ℕ) : 0 ≤ Ppoly a b c := by unfold Ppoly; positivity
+
+set_option maxHeartbeats 4000000 in
+lemma cnum_cert (r S q : ℚ) : Cnum r S q = (S+2) * Ppoly r S q := by
+  unfold Cnum Araw Braw Mval Lval Ppoly; ring
+
+lemma cnum_nonneg (a b c : ℕ) : 0 ≤ Cnum a b c := by
+  rw [cnum_cert]
+  have hP := P_nonneg a b c
+  have : (0:ℚ) ≤ (b:ℚ)+2 := by positivity
+  exact mul_nonneg this hP
+
+-- A_pos:  Araw = 2(S+2)·A_pos,  A_pos all-nonneg coeffs.
+set_option maxHeartbeats 4000000 in
+def Apos (r S q : ℚ) : ℚ := 1*r^4*q + 2*r^4 + 4*r^3*S*q + 2*r^3*S + 1*r^3*q^2 + 11*r^3*q + 6*r^3 + 4*r^2*S^2*q + 6*r^2*S*q^2 + 22*r^2*S*q + 4*r^2*S + 14*r^2*q^2 + 31*r^2*q + 6*r^2 + 12*r*S^2*q^2 + 8*r*S^2*q + 48*r*S*q^2 + 32*r*S*q + 2*r*S + 49*r*q^2 + 33*r*q + 2*r + 8*S^3*q^2 + 44*S^2*q^2 + 4*S^2*q + 82*S*q^2 + 14*S*q + 52*q^2 + 12*q
+
+lemma Apos_nonneg (a b c : ℕ) : 0 ≤ Apos a b c := by unfold Apos; positivity
+
+set_option maxHeartbeats 4000000 in
+lemma araw_cert (r S q : ℚ) : Araw r S q = 2*(S+2) * Apos r S q := by
+  unfold Araw Apos Mval Lval; ring
+
+lemma araw_nonneg (a b c : ℕ) : 0 ≤ Araw (a:ℚ) (b:ℚ) (c:ℚ) := by
+  rw [araw_cert]
+  have := Apos_nonneg a b c
+  have h2 : (0:ℚ) ≤ 2*((b:ℚ)+2) := by positivity
+  exact mul_nonneg h2 this
+
+-- A(λ) ≥ 0 at λ = Lval/Mval
+lemma hA_Q (a b c : ℕ) :
+    0 ≤ 2*((b:ℚ)+2)*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))^2
+        + (2*(b:ℚ)+3-(a:ℚ))*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ)) - (a:ℚ) := by
+  have hMpos : 0 < Mval (a:ℚ) (b:ℚ) (c:ℚ) := by unfold Mval; positivity
+  have hAraw := araw_nonneg a b c
+  have hkey : (2*((b:ℚ)+2)*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))^2
+        + (2*(b:ℚ)+3-(a:ℚ))*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ)) - (a:ℚ))
+        * (Mval (a:ℚ) (b:ℚ) (c:ℚ))^2 = Araw (a:ℚ) (b:ℚ) (c:ℚ) := by
+    unfold Araw; field_simp
+  have hA_eq : (2*((b:ℚ)+2)*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))^2
+        + (2*(b:ℚ)+3-(a:ℚ))*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ)) - (a:ℚ))
+        = Araw (a:ℚ) (b:ℚ) (c:ℚ) / (Mval (a:ℚ) (b:ℚ) (c:ℚ))^2 := by
+    rw [eq_div_iff (by positivity)]; exact hkey
+  rw [hA_eq]; exact div_nonneg hAraw (by positivity)
+
+-- W ≥ 0 at λ = Lval/Mval  (W·Mval²(Mval+Lval) = Cnum)
+set_option maxHeartbeats 4000000 in
+lemma hW_Q (a b c : ℕ) :
+    0 ≤ (1 + ((a+b:ℕ):ℚ)*((Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))
+              /(1+Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))))
+          * (2*((b:ℚ)+2)*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))^2
+             + (2*(b:ℚ)+3-(a:ℚ))*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ)) - (a:ℚ))
+        + (Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))
+          * (1 - (a:ℚ) + ((b:ℚ)+2)*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))) := by
+  have hMpos : 0 < Mval (a:ℚ) (b:ℚ) (c:ℚ) := by unfold Mval; positivity
+  have hLnn : 0 ≤ Lval (a:ℚ) (b:ℚ) (c:ℚ) := by unfold Lval; positivity
+  have hMne : Mval (a:ℚ) (b:ℚ) (c:ℚ) ≠ 0 := hMpos.ne'
+  have h1Lne : (1 + Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ)) ≠ 0 := by
+    have : (1:ℚ) + Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ)
+         = (Mval (a:ℚ) (b:ℚ) (c:ℚ) + Lval (a:ℚ) (b:ℚ) (c:ℚ))/Mval (a:ℚ) (b:ℚ) (c:ℚ) := by
+      field_simp
+    rw [this]; positivity
+  have hCnum := cnum_nonneg a b c
+  have hden : 0 < (Mval (a:ℚ) (b:ℚ) (c:ℚ))^2*(Mval (a:ℚ) (b:ℚ) (c:ℚ)+Lval (a:ℚ) (b:ℚ) (c:ℚ)) := by
+    positivity
+  have key : ((1 + ((a+b:ℕ):ℚ)*((Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))
+              /(1+Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))))
+          * (2*((b:ℚ)+2)*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))^2
+             + (2*(b:ℚ)+3-(a:ℚ))*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ)) - (a:ℚ))
+        + (Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))
+          * (1 - (a:ℚ) + ((b:ℚ)+2)*(Lval (a:ℚ) (b:ℚ) (c:ℚ)/Mval (a:ℚ) (b:ℚ) (c:ℚ))))
+        * ((Mval (a:ℚ) (b:ℚ) (c:ℚ))^2*(Mval (a:ℚ) (b:ℚ) (c:ℚ)+Lval (a:ℚ) (b:ℚ) (c:ℚ)))
+        = Cnum (a:ℚ) (b:ℚ) (c:ℚ) := by
+    push_cast
+    field_simp
+    unfold Cnum Araw Braw Mval Lval
+    ring
+  nlinarith [key, hCnum, hden]
+
+set_option maxHeartbeats 4000000 in
+/-- **Local tie-balance for the one-leaf mixed spider `S(2^a,1)`** (toward Erdős #993).
+For every `r < a`, with `c_t = mc a t = 2^t C(a,t) + (2^{t-1}+1) C(a,t-1)`,
+`N_r = ∑_t (t-r) c_t c_r^t c_{r+1}^{a+1-t} ≥ 0` — *unconditionally* (no rising-tie hypothesis). -/
+theorem mixed_spider_one_leaf_local_tie_balance (a r : ℕ) (hr : r < a) :
+    0 ≤ ∑ t ∈ Finset.range (a+2),
+        (((t:ℚ) - r) * (mc a t) * ((mc a r : ℚ))^t * ((mc a (r+1) : ℚ))^(a+1-t)) := by
+  rcases Nat.eq_zero_or_pos r with hr0 | hrpos
+  · -- r = 0 : every summand is ≥ 0
+    subst hr0
+    apply Finset.sum_nonneg
+    intro t _
+    have e : ((t:ℚ) - ((0:ℕ):ℚ)) = (t:ℚ) := by push_cast; ring
+    rw [e]
+    positivity
+  · obtain ⟨R, rfl⟩ : ∃ R, r = R+1 := ⟨r-1, by omega⟩
+    obtain ⟨S, rfl⟩ : ∃ S, a = R+1+S+1 := ⟨a-(R+1)-1, by omega⟩
+    set cr : ℚ := (mc (R+1+S+1) (R+1) : ℚ) with hcr
+    set cr1 : ℚ := (mc (R+1+S+1) (R+1+1) : ℚ) with hcr1
+    have hcr1pos : 0 < cr1 := by rw [hcr1]; exact_mod_cast mc_pos (R+1+S+1) (R+1+1) (by omega)
+    have hcr1ne : cr1 ≠ 0 := hcr1pos.ne'
+    have hcrpos : 0 < cr := by rw [hcr]; exact_mod_cast mc_pos (R+1+S+1) (R+1) (by omega)
+    -- factor: sum = cr1^(a+1) * Σ (t-r)·mc_t·(cr/cr1)^t
+    have hfact : ∑ t ∈ Finset.range ((R+1+S+1)+2),
+          (((t:ℚ) - ((R+1:ℕ):ℚ)) * (mc (R+1+S+1) t) * cr^t * cr1^((R+1+S+1)+1-t))
+        = cr1^((R+1+S+1)+1) * ∑ t ∈ Finset.range ((R+1+S+1)+2),
+            (((t:ℚ) - ((R+1:ℕ):ℚ)) * (mc (R+1+S+1) t)) * (cr/cr1)^t := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro t ht
+      have htle : t ≤ (R+1+S+1)+1 := by simp only [Finset.mem_range] at ht; omega
+      have hpow : cr^t * cr1^((R+1+S+1)+1-t) = cr1^((R+1+S+1)+1) * (cr/cr1)^t := by
+        rw [pow_sub₀ _ hcr1ne htle, div_pow]; field_simp
+      calc ((t:ℚ) - ((R+1:ℕ):ℚ)) * (mc (R+1+S+1) t) * cr^t * cr1^((R+1+S+1)+1-t)
+          = ((t:ℚ) - ((R+1:ℕ):ℚ)) * (mc (R+1+S+1) t) * (cr^t * cr1^((R+1+S+1)+1-t)) := by ring
+        _ = ((t:ℚ) - ((R+1:ℕ):ℚ)) * (mc (R+1+S+1) t) * (cr1^((R+1+S+1)+1) * (cr/cr1)^t) := by rw [hpow]
+        _ = cr1^((R+1+S+1)+1) * (((t:ℚ) - ((R+1:ℕ):ℚ)) * (mc (R+1+S+1) t) * (cr/cr1)^t) := by ring
+    rw [hfact, F_eq (R+1) S (cr/cr1)]
+    apply mul_nonneg (by positivity)
+    -- tie:  cr/cr1 = Lval/Mval  with q = 2^(R+1)
+    have hqcast : ((2^(R+1):ℕ):ℚ) = (2:ℚ)^(R+1) := by push_cast; ring
+    have hMpos : 0 < Mval ((R+1:ℕ):ℚ) (S:ℚ) ((2^(R+1):ℕ):ℚ) := by unfold Mval; positivity
+    have heq : cr * Mval ((R+1:ℕ):ℚ) (S:ℚ) ((2^(R+1):ℕ):ℚ)
+             = cr1 * Lval ((R+1:ℕ):ℚ) (S:ℚ) ((2^(R+1):ℕ):ℚ) := by
+      have h := lam_eq R (S+1)
+      simp only [show R+1+(S+1) = R+1+S+1 from rfl, show R+2 = R+1+1 from rfl] at h
+      rw [hcr, hcr1]
+      unfold Mval Lval
+      rw [hqcast]
+      push_cast at h ⊢
+      linear_combination h
+    have hlamLM : cr/cr1 = Lval ((R+1:ℕ):ℚ) (S:ℚ) ((2^(R+1):ℕ):ℚ) / Mval ((R+1:ℕ):ℚ) (S:ℚ) ((2^(R+1):ℕ):ℚ) := by
+      rw [div_eq_div_iff hcr1ne hMpos.ne']; linear_combination heq
+    rw [hlamLM]
+    have hlampos : 0 < Lval ((R+1:ℕ):ℚ) (S:ℚ) ((2^(R+1):ℕ):ℚ) / Mval ((R+1:ℕ):ℚ) (S:ℚ) ((2^(R+1):ℕ):ℚ) := by
+      apply div_pos _ hMpos; unfold Lval; positivity
+    exact core_F_nonneg (R+1) S _ hlampos (hA_Q (R+1) S (2^(R+1))) (hW_Q (R+1) S (2^(R+1)))
+
+end MixedOneLeaf
+
 end Erdos993
