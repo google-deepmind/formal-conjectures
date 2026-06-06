@@ -32,8 +32,6 @@ open Real MvPolynomial
 
 namespace Hilbert17
 
-abbrev MvRatFunc (σ K : Type*) [CommRing K] := FractionRing (MvPolynomial σ K)
-
 /--
 Hilbert's 17th problem: every non-negative multivariate polynomial is a sum of
 squares of rational functions.
