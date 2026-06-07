@@ -27,11 +27,6 @@ import FormalConjectures.Util.ProblemImports
   combinatorial geometry. Math. Pannon. (1994), 261--269.
 - [CDL25b] Clemen, Felix Christian, Dumitrescu, Adrian, and Liu, Dingyuan,
   The number of regular simplices in higher dimensions. arXiv:2507.19841 (2025).
-
-### AI disclosure
-
-Lean 4 code in this file was drafted with assistance from OpenAI Codex.
-The mathematical content and references are the author's own work.
 -/
 
 open Filter Metric Classical
@@ -64,12 +59,12 @@ noncomputable def anySizeEquilateralTriangleCount (d : ℕ)
     (P : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
   ((P.powersetCard 3).filter fun T => IsAnySizeEquilateralTriangle T).card
 
-/-- Maximum number of unit equilateral triangles spanned by `n` points in `ℝ^d`. -/
+/-- Maximum number of unit equilateral triangles spanned by $n$ points in $\mathbb{R}^d$. -/
 noncomputable def TUnit (d n : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ P : Finset (EuclideanSpace ℝ (Fin d)),
     P.card = n ∧ unitEquilateralTriangleCount d P = m}
 
-/-- Maximum number of equilateral triangles of any size spanned by `n` points in `ℝ^d`. -/
+/-- Maximum number of equilateral triangles of any size spanned by $n$ points in $\mathbb{R}^d$. -/
 noncomputable def TAnySize (d n : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ P : Finset (EuclideanSpace ℝ (Fin d)),
     P.card = n ∧ anySizeEquilateralTriangleCount d P = m}
@@ -80,13 +75,13 @@ theorem erdos_755.test_dim_one :
   simp [unitEquilateralTriangleCount]
 
 /--
-**Erdős Problem 755** (solved). Erdős asked whether every `n`-point set in
-`ℝ^6` spans at most `(1 / 27 + o(1)) n^3` unit equilateral triangles.
+**Erdős Problem 755** (solved). Erdős asked whether every $n$-point set in
+$\mathbb{R}^6$ spans at most $(1/27 + o(1)) n^3$ unit equilateral triangles.
 
 Clemen, Dumitrescu, and Liu [CDL25b] proved the stronger any-size statement
-`T_6(n) = (1 / 27 + o(1)) n^3`. The unit-triangle upper bound follows as a
+$T_6(n) = (1/27 + o(1)) n^3$. The unit-triangle upper bound follows as a
 corollary, since unit equilateral triangles are a subset of equilateral
-triangles of any positive side length: `T_unit ≤ T_anysize`.
+triangles of any positive side length: $T_\mathrm{unit} \leq T_\mathrm{anysize}$.
 -/
 @[category research solved, AMS 52]
 theorem erdos_755 :
