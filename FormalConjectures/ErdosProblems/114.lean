@@ -21,16 +21,6 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/114](https://www.erdosproblems.com/114)
 
-The **Erdős--Herzog--Piranian lemniscate-length conjecture** asks whether,
-among monic complex polynomials of degree `n`, the lemniscate
-`{z : ℂ | ‖p.eval z‖ = 1}` has maximal length for `p = X ^ n - C 1`.
-
-The all-degree conjecture remains open.  The finite statement below records
-the current certificate-backed range `1 ≤ n ≤ 14`: degree `1` is elementary,
-degree `2` follows from the Eremenko--Hayman treatment, and degrees `3`
-through `14` are supported by the Mendoza finite-degree certificate packet.
-The Lean statements here do not formalize those external certificates.
-
 ### References
 
 - [EHP58] Erdős, P., Herzog, F., Piranian, G. (1958). *Metric properties of
@@ -69,8 +59,8 @@ noncomputable def length (s : Set ℂ) : ℝ≥0∞ :=
 noncomputable def lemniscateLength (p : ℂ[X]) : ℝ≥0∞ :=
   length (levelCurveUnit p)
 
-/-- **Erdős Problem 114** (open conjecture).  Among monic complex polynomials
-of degree `n`, `X ^ n - C 1` maximizes the length of the level-1 lemniscate.
+/--  Among monic complex polynomials
+of degree $n$, $X^n - 1$ maximizes the length of the level-1 lemniscate.
 
 This is the all-degree conjecture and remains open. -/
 @[category research open, AMS 30]
@@ -79,17 +69,17 @@ theorem erdos_114 : answer(sorry) ↔
       lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
   sorry
 
-/-- **Finite-degree EHP certificate range.**  For `1 ≤ n ≤ 14`, the polynomial
-`X ^ n - C 1` maximizes the length of the level-1 lemniscate among monic
-complex polynomials of exact degree `n`.
+/-- **Finite-degree EHP certificate range.**  For $1 \leq n \leq 14$, the polynomial
+$X^n - 1$ maximizes the length of the level-1 lemniscate among monic
+complex polynomials of exact degree $n$.
 
-This statement records a finite, externally certificate-backed result: `n = 1`
-is elementary, `n = 2` follows from the Eremenko--Hayman treatment, and
-`3 ≤ n ≤ 14` is supported by the Mendoza 2026 IEEE-1788 interval certificate
+This statement records a finite, externally certificate-backed result: $n = 1$
+is elementary, $n = 2$ follows from the Eremenko--Hayman treatment, and
+$3 \leq n \leq 14$ is supported by the Mendoza 2026 IEEE-1788 interval certificate
 packet.  The external certificate pipeline is not formalized in this Lean file,
-so the proof remains a `sorry` rather than an imported axiom. -/
+so the proof body remains `sorry`. -/
 @[category research solved, AMS 30]
-theorem erdos_114_finite_le_14 : answer(sorry) ↔
+theorem erdos_114_finite_le_14 : answer(True) ↔
     ∀ (n : ℕ) (hn : 1 ≤ n) (hn14 : n ≤ 14)
       (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n),
       lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
