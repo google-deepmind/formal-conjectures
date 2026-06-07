@@ -70,6 +70,28 @@ register_option google.answer : AnswerSetting := {
 
 def mkAnswerAnnotation (e : Expr) : Expr := mkAnnotation `answer e
 
+/-- Find the first subexpression carrying the `answer` annotation,
+returning the inner (unwrapped) expression if found. -/
+def findAnswerExpr (e : Expr) : Option Expr :=
+  (e.find? fun
+    | .mdata m _ => m.contains `answer
+    | _ => false).map Expr.mdataExpr!
+
+/-- Collect *all* subexpressions carrying the `answer` annotation,
+returning the inner (unwrapped) expressions. -/
+partial def findAnswerExprs (e : Expr) : Array Expr :=
+  go e #[]
+where
+  go (e : Expr) (acc : Array Expr) : Array Expr :=
+    match e with
+    | .mdata m inner =>
+      go inner (if m.contains `answer then acc.push inner else acc)
+    | .app f a => go a (go f acc)
+    | .lam _ t b _ => go b (go t acc)
+    | .forallE _ t b _ => go b (go t acc)
+    | .letE _ t v b _ => go b (go v (go t acc))
+    | _ => acc
+
 def elabTermAndAnnotate (stx : TSyntax `term) (expectedType? : Option Expr)
     (postpone : Bool := false) :=
   mkAnswerAnnotation <$> do
