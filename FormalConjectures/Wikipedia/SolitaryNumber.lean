@@ -19,14 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Solitary Numbers
 
-Two positive integers $m$ and $n$ are *friendly* if they have the same abundancy index, where
-the abundancy index of $n$ is $\sigma(n) / n$ and $\sigma(n)$ is the sum of all positive
-divisors of $n$.  A positive integer is *solitary* if it is friendly with no other positive
-integer, i.e. its abundancy class is a singleton.
-
-It is unknown whether $10$ is solitary, even though $\sigma(10) / 10 = 18/10 = 9/5$ is the
-smallest abundancy index whose status as a singleton class is open.  More generally, it is
-unknown whether any abundancy class (called a "club") is infinite.
 
 *References:*
 - [Solitary number (Wikipedia)](https://en.wikipedia.org/wiki/Solitary_number)
