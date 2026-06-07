@@ -15,25 +15,11 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 696
 
-Define $h(n)$ as the largest $\ell$ such that there exists a sequence of primes
-$p_1 < \cdots < p_\ell$ all dividing $n$ where $p_{i+1} \equiv 1 \pmod{p_i}$ for each $i$.
-Define $H(n)$ as the largest $u$ such that there exists a sequence of integers
-$d_1 < \cdots < d_u$ all dividing $n$ where $d_{i+1} \equiv 1 \pmod{d_i}$ for each $i$.
-
-**Open problem.**  Is it the case that $H(n)/h(n) \to \infty$ for almost all $n$ (i.e., on a
-subset of $\mathbb{N}$ of density $1$)?
-
-Erdős also conjectured that the typical order of $h(n)$ is the iterated logarithm
-$\log^*(n)$, but this PR formalises only the headline ratio question; pinning down a clean
-formalisation of $\log^*$ is left to a follow-up.
-
-*References:*
-- [erdosproblems.com/696](https://www.erdosproblems.com/696)
+*Reference:* [erdosproblems.com/696](https://www.erdosproblems.com/696)
 -/
 
 open scoped Classical
@@ -46,25 +32,27 @@ elements satisfy $d_{i+1} \equiv 1 \pmod{d_i}$, and every element divides $n$ an
 the auxiliary predicate $P$.
 -/
 def ValidChain (n : ℕ) (P : ℕ → Prop) (s : List ℕ) : Prop :=
-  s.IsChain (fun a b => a < b ∧ b % a = 1) ∧ ∀ d ∈ s, d ∣ n ∧ P d
+  s.IsChain (fun a b => a < b ∧ b ≡ 1 [MOD a]) ∧ ∀ d ∈ s, d ∣ n ∧ P d
 
 /--
-$h(n)$: the largest length of a `ValidChain` of $n$ all of whose elements are prime.
+$h(n)$ is the largest $\ell$ such that there is a sequence of primes $p_1<\cdots < p_\ell$
+all dividing $n$ with $p_{i+1}\equiv 1\pmod{p_i}$.
 -/
 noncomputable def h (n : ℕ) : ℕ :=
   Nat.findGreatest (fun k => ∃ s : List ℕ, s.length = k ∧ ValidChain n Nat.Prime s) n
 
 /--
-$H(n)$: the largest length of a `ValidChain` of $n$ with no primality restriction.
+$H(n)$ is the largest $u$ such that there is a sequence of integers $d_1<\cdots < d_u$
+all dividing $n$ with $d_{i+1}\equiv 1\pmod{d_i}$.
 -/
 noncomputable def H (n : ℕ) : ℕ :=
   Nat.findGreatest (fun k => ∃ s : List ℕ, s.length = k ∧ ValidChain n (fun _ => True) s) n
 
 /--
-**Erdős Problem 696 (open).**  Does $H(n)/h(n) \to \infty$ for almost all $n$?
+Is it true that $H(n)/h(n)\to \infty$ for almost all $n$?
 
-Formalised as: for every threshold $M : \mathbb{R}$, the set of $n$ for which $h(n) > 0$ and
-$H(n)/h(n) > M$ has natural density $1$.
+Formalised as: for every threshold $M$, the set of $n$ with $h(n) > 0$ and $H(n)/h(n) > M$
+has natural density $1$.
 -/
 @[category research open, AMS 11]
 theorem ratio_to_infinity :
