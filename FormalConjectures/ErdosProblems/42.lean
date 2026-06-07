@@ -34,9 +34,11 @@ namespace Erdos42
 **Erdős Problem 42**: Let M ≥ 1 and N be sufficiently large in terms of M. Is it true that for every
 maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}` of size M such that
 `(A - A) ∩ (B - B) = {0}`?
+
+This was proved for all $M$ by GPT 5.5 Pro (prompted by Sandhu), see discussion thread for more details.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_42 : answer(sorry) ↔
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P42/CompactCayley/Proof.lean"]
+theorem erdos_42 : answer(True) ↔
     ∀ M ≥ 1, ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N),
     ∃ᵉ (B : Set ℕ), B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
     ((A - A) ∩ (B - B)) = {0} := by

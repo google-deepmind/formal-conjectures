@@ -98,6 +98,7 @@ theorem erdos_602.variants.disjoint : answer(True) ↔
       (∀ i, (A i).Infinite) →
       (∀ i j, i ≠ j → Disjoint (A i) (A j)) →
       HasPropertyB I A := by
+  show True ↔ _
   simp only [true_iff]
   intro α I A hInfinite hDisjoint
   -- For each i, pick two distinct elements a_fn i, b_fn i ∈ A i.
@@ -244,6 +245,7 @@ theorem erdos_602.variants.two_sets : answer(True) ↔
       (A 0 ∩ A 1).Finite →
       Set.ncard (A 0 ∩ A 1) ≠ 1 →
       HasPropertyB (Fin 2) A := by
+  show True ↔ _
   simp only [true_iff]
   intro α A hInfinite hFin hNcard
   classical
