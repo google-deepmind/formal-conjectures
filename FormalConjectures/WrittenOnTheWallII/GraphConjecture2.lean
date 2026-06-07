@@ -39,6 +39,6 @@ the neighbourhoods of the vertices of `G`.
 -/
 @[category research open, AMS 5]
 theorem conjecture2 (G : SimpleGraph α) (h : G.Connected) :
-  2 * (l G - 1) ≤ Ls G := by sorry
+  2 * (averageIndepNeighbors G - 1) ≤ Ls G := by sorry
 
 end WrittenOnTheWallII.GraphConjecture2

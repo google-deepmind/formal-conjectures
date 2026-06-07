@@ -41,7 +41,7 @@ and `dist_avg(S, V)` is the average distance from all vertices to the set `S`.
 theorem conjecture34 :
   answer(sorry) ↔
     ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
-      let C : Set α := graphCenter G
+      let C : Set α := center G
       let M : Set α := {v | G.degree v = G.maxDegree}
       Int.ceil (distavg G C + distavg G M) ≤ (path G : ℤ) := by
   sorry
