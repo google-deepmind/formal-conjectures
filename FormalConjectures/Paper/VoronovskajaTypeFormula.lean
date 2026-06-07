@@ -164,14 +164,15 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
 
 /--
 Variant of the Bézier-Bernstein Voronovskaja problem with the required smoothness order itself
-left as an answer. Replacing `(answer(sorry) : ℕ)` by a concrete value lets one state the
-conjecture for a chosen regularity threshold.
+left as an answer. Replacing `(answer(sorry) : ℕ × ((ℝ → ℝ) → ℝ → ℝ))` by a concrete value lets one
+state the conjecture for a chosen regularity threshold.
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.answer_smoothness
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
-    let m : ℕ := answer(sorry)
-    let limitFormula : (ℝ → ℝ) → ℝ → ℝ := answer(sorry)
+    let p : ℕ × ((ℝ → ℝ) → ℝ → ℝ) := answer(sorry)
+    let m := p.1
+    let limitFormula := p.2
     ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
       Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
         (𝓝 (limitFormula f x)) := by
