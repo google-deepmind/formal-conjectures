@@ -83,7 +83,28 @@ It is trivial that $m_n \leq p_n$ always.
 @[category textbook, AMS 11]
 theorem erdos_456.variants.mn_leq_pn (n : ℕ) :
     m n ≤ p n := by
-  sorry
+  rcases eq_or_ne n 0 with rfl | hn
+  · -- When `n = 0` the set defining `m 0` is empty (no `k > 0` has `φ k = 0`), so `m 0 = 0`.
+    have hm0 : m 0 = 0 := by
+      simp only [m, Nat.sInf_eq_zero]
+      right
+      rw [Set.eq_empty_iff_forall_notMem]
+      rintro k ⟨hk, hdvd⟩
+      rw [zero_dvd_iff, Nat.totient_eq_zero] at hdvd
+      omega
+    simp [hm0]
+  · -- For `n ≠ 0` Dirichlet gives a prime `≡ 1 [MOD n]`, so `p n` realises the infimum and is
+    -- itself a prime `≡ 1 [MOD n]`.  Then `n ∣ φ(p n) = p n - 1`, so `p n` lies in the set
+    -- defining `m n`, whence `m n ≤ p n`.
+    have hne : {k | k.Prime ∧ k ≡ 1 [MOD n]}.Nonempty := by
+      obtain ⟨q, hq, _, hmod⟩ := Nat.exists_prime_gt_modEq_one 0 hn
+      exact ⟨q, hq, hmod⟩
+    obtain ⟨hprime, hmod⟩ := Nat.sInf_mem hne
+    simp only [m, p]
+    apply Nat.sInf_le
+    refine ⟨hprime.pos, ?_⟩
+    rw [Nat.totient_prime hprime]
+    exact (Nat.modEq_iff_dvd' hprime.one_lt.le).mp hmod.symm
 
 /--
 Erdős [Er79e] writes it is 'easy to show' that for infinitely many $n$ we have $m_n < p_n$.

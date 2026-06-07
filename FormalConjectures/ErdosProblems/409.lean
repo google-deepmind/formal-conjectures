@@ -43,7 +43,22 @@ reaches a prime. -/
 @[category test, AMS 11]
 theorem erdos_409.variants.termination (n : ℕ) (hn : 0 < n) :
     ∃ i, (φ · + 1)^[i] n |>.Prime := by
-  sorry
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+    by_cases hp : n.Prime
+    · -- already prime: zero iterations suffice
+      exact ⟨0, by simpa using hp⟩
+    · rcases Nat.lt_or_ge n 2 with h2 | hn2
+      · -- `n = 1`: one step gives `φ 1 + 1 = 2`, which is prime
+        obtain rfl : n = 1 := by omega
+        exact ⟨1, by simp [Nat.totient_one, Nat.prime_two]⟩
+      · -- `n ≥ 2` and composite, so `φ n + 1 < n`; recurse on it
+        have hlt : φ n + 1 < n := by
+          have hφ : φ n < n := Nat.totient_lt n hn2
+          have : φ n ≠ n - 1 := fun he => hp ((Nat.totient_eq_iff_prime hn).mp he)
+          omega
+        obtain ⟨j, hj⟩ := ih (φ n + 1) hlt (by omega)
+        exact ⟨j + 1, by rwa [Function.iterate_succ_apply]⟩
 
 -- Formalisation note: it's possible that solution to `erdos_409.parts.i` needs to be
 -- expressed asymptotically. To handle this we include `IsTheta`, `IsBigO`

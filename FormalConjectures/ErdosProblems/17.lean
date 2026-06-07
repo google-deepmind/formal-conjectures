@@ -69,9 +69,46 @@ theorem erdos_17.variants.upper_Elsholtz :
         (fun x ↦ x * exp (-c * (log (log x)) ^ 2)) := by
   sorry
 
+/-- `IsClusterPrime` is decidable: both the universally quantified even `n` (which is bounded by
+`n ≤ p - 3`) and the witnessing primes `q₁, q₂ ≤ p` range over finite sets, so the whole predicate
+reduces to a bounded search. -/
+instance (p : ℕ) : Decidable (IsClusterPrime p) :=
+  haveI : Decidable (p.Prime ∧ ∀ n ∈ (Finset.range (p - 2)).filter (2 ∣ ·),
+      ∃ q₁ ∈ Finset.range (p + 1), ∃ q₂ ∈ Finset.range (p + 1),
+        q₁.Prime ∧ q₂.Prime ∧ (n : ℤ) = (q₁ : ℤ) - q₂) := inferInstance
+  decidable_of_iff
+    (p.Prime ∧ ∀ n ∈ (Finset.range (p - 2)).filter (2 ∣ ·),
+      ∃ q₁ ∈ Finset.range (p + 1), ∃ q₂ ∈ Finset.range (p + 1),
+        q₁.Prime ∧ q₂.Prime ∧ (n : ℤ) = (q₁ : ℤ) - q₂) <|
+    (by
+      constructor
+      · rintro ⟨hp, h⟩
+        refine ⟨hp, ?_⟩
+        intro n hev hle
+        have hn : n ∈ (Finset.range (p - 2)).filter (2 ∣ ·) :=
+          Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), hev.two_dvd⟩
+        obtain ⟨q₁, hq₁, q₂, hq₂, hq₁p, hq₂p, heq⟩ := h n hn
+        simp only [Finset.mem_range] at hq₁ hq₂
+        exact ⟨q₁, q₂, hq₁p, hq₂p, by omega, by omega, heq⟩
+      · rintro ⟨hp, h⟩
+        refine ⟨hp, ?_⟩
+        intro n hn
+        obtain ⟨hnr, hdvd⟩ := Finset.mem_filter.mp hn
+        simp only [Finset.mem_range] at hnr
+        have hle : (n : ℤ) ≤ (p : ℤ) - 3 := by omega
+        obtain ⟨q₁, q₂, hq₁, hq₂, hq₁p, hq₂p, heq⟩ := h (even_iff_two_dvd.mpr hdvd) hle
+        exact ⟨q₁, Finset.mem_range.mpr (by omega), q₂, Finset.mem_range.mpr (by omega),
+          hq₁, hq₂, heq⟩)
+
 /-- $97$ is the smallest prime that is not a cluster prime. -/
 @[category test, AMS 11]
 theorem isClusterPrime_97_isLeast_non_cluster : IsLeast {p : ℕ | p.Prime ∧ ¬ IsClusterPrime p} 97 := by
-  sorry
+  constructor
+  · exact ⟨by norm_num, by native_decide⟩
+  · have key : ∀ p < 97, p.Prime → IsClusterPrime p := by native_decide
+    rintro p ⟨hpp, hnc⟩
+    by_contra hlt
+    push_neg at hlt
+    exact hnc (key p hlt hpp)
 
 end Erdos17
