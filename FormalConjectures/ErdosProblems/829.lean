@@ -45,26 +45,41 @@ theorem erdos_829 :
         (fun n : ℕ => (Real.log n) ^ C) := by
   sorry
 
+/-- Membership in `cubes` is decidable via a bounded search: since `k ≤ k ^ 3`, any cube root
+of `n` is at most `n`. -/
+@[category API, AMS 11]
+theorem mem_cubes_iff (n : ℕ) : n ∈ cubes ↔ ∃ k ∈ Finset.range (n + 1), k ^ 3 = n := by
+  simp only [cubes, Set.mem_setOf_eq, Finset.mem_range]
+  constructor
+  · rintro ⟨k, rfl⟩
+    exact ⟨k, Nat.lt_succ_of_le (Nat.le_self_pow (by norm_num) k), rfl⟩
+  · rintro ⟨k, _, hk⟩
+    exact ⟨k, hk⟩
+
 /-- There is exactly one ordered pair of cubes summing to $0$, namely $(0, 0)$. -/
 @[category test, AMS 11]
 theorem sumRep_cubes_zero : sumRep cubes 0 = 1 := by
-  sorry
+  simp only [sumRep_def, mem_cubes_iff]
+  decide
 
 /-- The only ordered pair of cubes summing to $2$ is $(1, 1)$. -/
 @[category test, AMS 11]
 theorem sumRep_cubes_two : sumRep cubes 2 = 1 := by
-  sorry
+  simp only [sumRep_def, mem_cubes_iff]
+  decide
 
 /-- The integer $3$ is not the sum of two cubes. -/
 @[category test, AMS 11]
 theorem sumRep_cubes_three : sumRep cubes 3 = 0 := by
-  sorry
+  simp only [sumRep_def, mem_cubes_iff]
+  decide
 
 /-- The Hardy-Ramanujan taxicab number satisfies $1729 = 1^3 + 12^3 = 9^3 + 10^3$, giving
 the four ordered representations $(1, 1728), (1728, 1), (729, 1000), (1000, 729)$. -/
 @[category test, AMS 11]
 theorem sumRep_cubes_taxicab : sumRep cubes 1729 = 4 := by
-  sorry
+  simp only [sumRep_def, mem_cubes_iff]
+  native_decide
 
 namespace variants
 
