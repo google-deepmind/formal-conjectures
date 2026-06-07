@@ -92,6 +92,7 @@ noncomputable def mSeq : ℕ → ℕ
   | 0 => 2
   | (n + 1) => ⌈(mSeq n : ℝ) * (1 + 1 / Real.log n)⌉₊
 
+/-- The sequence $m$ eventually grows at least geometrically with a logarithmic correction. -/
 def IsGenuinelySublacunary (m : ℕ → ℕ) : Prop :=
   ∃ c > 0, ∀ᶠ (n : ℕ) in atTop, (1 + c / Real.log n) ≤ (m (n+1) : ℝ) / m n
 
@@ -115,6 +116,8 @@ lemma example_isGenuineSublacunary : IsGenuinelySublacunary mSeq := by
   rw [mul_comm]
   exact Nat.le_ceil _
 
+/-- The sequence $m$ eventually grows at least as fast as $\exp(n^{\alpha})$, i.e., super-exponential
+growth when $\alpha > 1$, and stretched-exponential when $0 < \alpha < 1$. -/
 def HasIntermediateGrowth (α : ℝ) (m : ℕ → ℕ) : Prop :=
   ∀ᶠ (n : ℕ) in atTop, Real.exp ((n : ℝ) ^ α) ≤ m n
 
