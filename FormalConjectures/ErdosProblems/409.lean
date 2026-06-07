@@ -352,4 +352,175 @@ theorem erdos_409.variants.isBigO_sqrt (c : ℕ → ℕ)
       abs_of_nonneg (by positivity), abs_of_nonneg (Real.sqrt_nonneg _)]
   linarith
 
+-- ## Partial result toward `erdos_409.parts.ii`: basins are unbounded
+--
+-- We show that for every `k` there is a prime reached by at least `k` distinct
+-- starting values. This is a strictly weaker (but fully proven) statement than the
+-- open `erdos_409.parts.ii`, which asks for a single prime with an *infinite* basin.
+
+open Finset in
+/-- For `n ≥ 2`, every iterate of `g = φ · + 1` stays in `[2, n]`. -/
+@[category API, AMS 11]
+theorem erdos_409.aux.iterate_mem_Icc (n : ℕ) (hn : 2 ≤ n) (i : ℕ) :
+    2 ≤ (φ · + 1)^[i] n ∧ (φ · + 1)^[i] n ≤ n := by
+  induction i with
+  | zero => exact ⟨by simpa using hn, by simp⟩
+  | succ j ih =>
+    obtain ⟨hlo, hhi⟩ := ih
+    set m := (φ · + 1)^[j] n with hm
+    rw [Function.iterate_succ_apply', ← hm]
+    have hφpos : 0 < φ m := Nat.totient_pos.mpr (by omega)
+    have hφlt : φ m < m := Nat.totient_lt m hlo
+    exact ⟨by omega, by omega⟩
+
+open Finset in
+/-- Density input: for every `k`, there is `N ≥ 2` with `k * π N < N - 1`,
+i.e. there are far fewer primes up to `N` than there are integers in `[2,N]`. -/
+@[category API, AMS 11]
+theorem erdos_409.aux.exists_primeCounting_mul_lt (k : ℕ) :
+    ∃ N, 2 ≤ N ∧ k * Nat.primeCounting N < N - 1 := by
+  -- `log 4 < 3/2`, so the Chebyshev constant `log 4 + log 4 < 3`.
+  have hlog4 : Real.log 4 < 3 / 2 := by
+    have h4 : Real.log 4 = 2 * Real.log 2 := by
+      rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]; push_cast; ring
+    rw [h4]; nlinarith [Real.log_two_lt_d9]
+  -- `3 * (k+1) / log x → 0`, so eventually `< 1/2`.
+  have htend : Tendsto (fun x : ℝ => (3 * (k + 1) : ℝ) / Real.log x) atTop (𝓝 0) :=
+    Real.tendsto_log_atTop.const_div_atTop _
+  have hev_half : ∀ᶠ x : ℝ in atTop, (3 * (k + 1) : ℝ) / Real.log x < 1 / 2 := by
+    have := htend.eventually (eventually_lt_nhds (show (0 : ℝ) < 1 / 2 by norm_num))
+    filter_upwards [this] with x hx using hx
+  have hcheb := Chebyshev.eventually_primeCounting_le (ε := Real.log 4)
+    (by have := Real.log_pos (by norm_num : (1 : ℝ) < 4); linarith)
+  have hcomb : ∀ᶠ x : ℝ in atTop,
+      2 ≤ x ∧ (Nat.primeCounting ⌊x⌋₊ : ℝ) ≤ (Real.log 4 + Real.log 4) * x / Real.log x ∧
+        (3 * (k + 1) : ℝ) / Real.log x < 1 / 2 := by
+    filter_upwards [eventually_ge_atTop (2 : ℝ), hcheb, hev_half] with x h2 hc hh
+    exact ⟨h2, hc, hh⟩
+  obtain ⟨x, h2x, hcx, hhx⟩ := hcomb.exists
+  set N := ⌊x⌋₊ with hN
+  have hxpos : 0 < x := by linarith
+  have hlogx_pos : 0 < Real.log x := Real.log_pos (by linarith)
+  have hNge : 2 ≤ N := Nat.le_floor (by exact_mod_cast h2x)
+  refine ⟨N, hNge, ?_⟩
+  -- Goal (ℕ): k * π N < N - 1. Derive from a real inequality `(k+1) * π N + 1 ≤ N`.
+  -- π N ≤ 3 x / log x  (since log 4 + log 4 ≤ 3).
+  have hπle : (Nat.primeCounting N : ℝ) ≤ 3 * x / Real.log x := by
+    refine hcx.trans ?_
+    gcongr
+    nlinarith [hxpos, hlog4]
+  -- (k+1) * π N ≤ (k+1) * 3 x / log x = (3(k+1)/log x) * x < (1/2) x.
+  have hkπ : ((k + 1 : ℕ) : ℝ) * (Nat.primeCounting N : ℝ) < (1 / 2) * x := by
+    have hk1 : (0 : ℝ) ≤ ((k + 1 : ℕ) : ℝ) := by positivity
+    calc ((k + 1 : ℕ) : ℝ) * (Nat.primeCounting N : ℝ)
+        ≤ ((k + 1 : ℕ) : ℝ) * (3 * x / Real.log x) := by
+          apply mul_le_mul_of_nonneg_left hπle hk1
+      _ = (3 * (k + 1) / Real.log x) * x := by push_cast; ring
+      _ < (1 / 2) * x := by
+          have hh : (3 * ((k : ℝ) + 1) / Real.log x) < 1 / 2 := by
+            have := hhx; push_cast at this; linarith [this]
+          nlinarith [hh, hxpos]
+  -- x < N + 1, and N ≥ 2 so (1/2) x < N - 1 ... actually use x/2 < N and N ≥ 2.
+  have hxlt : x < (N : ℝ) + 1 := by rw [hN]; exact Nat.lt_floor_add_one x
+  -- We want (k+1) * π N ≤ N - 1 in ℝ, i.e. (k+1) π N + 1 ≤ N.
+  -- (k+1) π N < x/2 < (N+1)/2 ≤ N - 1 when N ≥ 3; handle N = 2 separately.
+  by_cases hNeq2 : N = 2
+  · -- π 2 = 1, k * 1 < 2 - 1 = 1 fails for k ≥ 1. So we must have used large x.
+    -- Avoid: if N = 2, redo is impossible; but (1/2)x < N could force this. Instead
+    -- note hkπ gives (k+1) * π 2 < (1/2)*x < (1/2)(N+1) = 3/2, so (k+1)*π2 ≤ 1,
+    -- meaning k = 0. Then goal 0 < 1 holds.
+    have hπ2 : Nat.primeCounting 2 = 1 := by decide
+    rw [hNeq2, hπ2]
+    -- (k+1)*1 < (1/2)*x < (1/2)*3 = 3/2  ⟹ k+1 ≤ 1 ⟹ k = 0
+    rw [hNeq2, hπ2] at hkπ
+    rw [hNeq2] at hxlt
+    have hk32 : ((k + 1 : ℕ) : ℝ) < 3 / 2 := by push_cast at hkπ hxlt ⊢; nlinarith [hkπ, hxlt]
+    have hk2 : k + 1 < 2 := by exact_mod_cast (by linarith : ((k + 1 : ℕ) : ℝ) < (2 : ℝ))
+    omega
+  · have hN3 : 3 ≤ N := by omega
+    -- (k+1) π N < x/2 < (N+1)/2. And N - 1 ≥ (N+1)/2 ⟺ N ≥ 3. So (k+1)πN < N-1 in ℝ.
+    have hreal : ((k + 1 : ℕ) : ℝ) * (Nat.primeCounting N : ℝ) < (N : ℝ) - 1 := by
+      have hN3r : (3 : ℝ) ≤ (N : ℝ) := by exact_mod_cast hN3
+      nlinarith [hkπ, hxlt, hN3r]
+    -- Convert to ℕ: k * π N < N - 1 since (k+1)πN ≥ kπN + 0 and ... use k*πN < (k+1)*πN.
+    have hkπnat : ((k * Nat.primeCounting N : ℕ) : ℝ) < ((N - 1 : ℕ) : ℝ) := by
+      have hcast : ((N - 1 : ℕ) : ℝ) = (N : ℝ) - 1 := by
+        rw [Nat.cast_sub (by omega)]; push_cast; ring
+      rw [hcast]
+      calc ((k * Nat.primeCounting N : ℕ) : ℝ)
+          ≤ ((k + 1 : ℕ) : ℝ) * (Nat.primeCounting N : ℝ) := by
+            have hpc : (0 : ℝ) ≤ (Nat.primeCounting N : ℝ) := Nat.cast_nonneg _
+            push_cast
+            nlinarith [hpc]
+        _ < (N : ℝ) - 1 := hreal
+    exact_mod_cast hkπnat
+
+open Finset in
+/-- **Partial result toward `erdos_409.parts.ii`.** For every `k`, some prime is reached
+by at least `k` distinct starting values under the iteration `n ↦ φ n + 1`. I.e. the
+"basins" of the iteration are unbounded. This does NOT prove any single prime has an
+*infinite* basin (the open question `erdos_409.parts.ii`); it is a strictly weaker,
+fully-proven statement. -/
+@[category research solved, AMS 11]
+theorem erdos_409.variants.basins_unbounded (k : ℕ) :
+    ∃ p : ℕ, p.Prime ∧ ∃ S : Finset ℕ, k ≤ S.card ∧
+      ∀ n ∈ S, ∃ i, ((φ · + 1)^[i] n = p) := by
+  classical
+  -- Pick `N` with `k * π N < N - 1`.
+  obtain ⟨N, hN2, hNlt⟩ := erdos_409.aux.exists_primeCounting_mul_lt k
+  -- Terminal-prime map: `t n = g^[i₀] n` where `i₀` is the first prime-reaching index.
+  -- Define it totally; only its values on `Icc 2 N` matter.
+  let idx : ℕ → ℕ := fun n =>
+    if h : 0 < n then Nat.find (erdos_409.variants.termination n h) else 0
+  let t : ℕ → ℕ := fun n => (φ · + 1)^[idx n] n
+  -- Properties of `t` on `n` with `2 ≤ n ≤ N`.
+  have ht_prime : ∀ n, 2 ≤ n → (t n).Prime := by
+    intro n hn
+    have hpos : 0 < n := by omega
+    simp only [t, idx, dif_pos hpos]
+    exact Nat.find_spec (erdos_409.variants.termination n hpos)
+  have ht_reach : ∀ n, 2 ≤ n → ∃ i, (φ · + 1)^[i] n = t n := by
+    intro n hn; exact ⟨idx n, rfl⟩
+  have ht_mem : ∀ n, 2 ≤ n → n ≤ N → 2 ≤ t n ∧ t n ≤ N := by
+    intro n hn hnN
+    obtain ⟨hlo, hhi⟩ := erdos_409.aux.iterate_mem_Icc n hn (idx n)
+    exact ⟨hlo, le_trans hhi hnN⟩
+  -- Domain and codomain finsets.
+  set s : Finset ℕ := Icc 2 N with hs
+  set tcod : Finset ℕ := (Icc 2 N).filter Nat.Prime with htcod
+  -- maps_to.
+  have hmaps : ∀ n ∈ s, t n ∈ tcod := by
+    intro n hns
+    rw [hs, mem_Icc] at hns
+    rw [htcod, mem_filter, mem_Icc]
+    exact ⟨ht_mem n hns.1 hns.2, ht_prime n hns.1⟩
+  -- card bounds: #s = N - 1; #tcod ≤ π N.
+  have hcard_s : s.card = N - 1 := by rw [hs, Nat.card_Icc]; omega
+  have hcard_cod : tcod.card ≤ Nat.primeCounting N := by
+    have hsub : tcod ⊆ (N + 1).primesBelow := by
+      intro p hp
+      rw [htcod, mem_filter, mem_Icc] at hp
+      rw [Nat.mem_primesBelow]
+      exact ⟨by omega, hp.2⟩
+    calc tcod.card ≤ ((N + 1).primesBelow).card := card_le_card hsub
+      _ = Nat.primeCounting' (N + 1) := Nat.primesBelow_card_eq_primeCounting' (N + 1)
+      _ = Nat.primeCounting N := rfl
+  -- pigeonhole: #tcod * k < #s.
+  have hpig : tcod.card * k < s.card := by
+    rw [hcard_s]
+    calc tcod.card * k ≤ Nat.primeCounting N * k :=
+          Nat.mul_le_mul_right k hcard_cod
+      _ = k * Nat.primeCounting N := by ring
+      _ < N - 1 := hNlt
+  obtain ⟨p, hp_cod, hp_card⟩ :=
+    Finset.exists_lt_card_fiber_of_mul_lt_card_of_maps_to hmaps hpig
+  refine ⟨p, ?_, {x ∈ s | t x = p}, le_of_lt hp_card, ?_⟩
+  · rw [htcod, mem_filter] at hp_cod; exact hp_cod.2
+  · intro n hn
+    rw [mem_filter] at hn
+    obtain ⟨hns, htn⟩ := hn
+    rw [hs, mem_Icc] at hns
+    obtain ⟨i, hi⟩ := ht_reach n hns.1
+    exact ⟨i, by rw [hi, htn]⟩
+
 end Erdos409
