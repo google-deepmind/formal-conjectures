@@ -21,11 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Bloch%27s_theorem_(complex_analysis))
-- [CP96] Chen, H., Gauthier, P. M. "On Bloch’s constant." Journal d’Analyse Mathématique 69 (1996),
+- [CP96] Chen, H., Gauthier, P. M. "On Bloch's constant." Journal d'Analyse Mathématique 69 (1996),
   275–291.
 - [AG37] Ahlfors, L. V., Grunsky, H. "Über die Blochsche Konstante." Mathematische Zeitschrift 42
   (1937), 671–673.
-- [Ya95] Yanagihara, H. "On the locally univalent Bloch constant." Journal d’Analyse Mathématique
+- [Ya95] Yanagihara, H. "On the locally univalent Bloch constant." Journal d'Analyse Mathématique
   65 (1995), 1–17.
 - [Ra43] Rademacher, H. "On the Bloch-Landau Constant."" American Journal of Mathematics 65 (1943),
   387–390.
@@ -35,24 +35,18 @@ import FormalConjectures.Util.ProblemImports
 - [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
 - [Bhowmik–Sen](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/improved-bloch-and-landau-constants-for-meromorphic-functions/FD465D1F2CEF7E8C62AFF16C3E89B7B4)
 -/
-open scoped Topology
+open scoped Topology ENNReal
 open Metric Set Filter
 namespace Bloch
 
-/-- The **Bloch radius** $B_f$ of a function $f$ is the radius of the largest univalent disk in the
-image of the unit disk under $f$. -/
-noncomputable def blochRadius (f : ℂ → ℂ) : ℝ :=
-  sSup {r : ℝ | ∃ S ⊆ ball 0 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S}
+/-- The **Bloch radius** $B_f$ of a function $f$ is the supremum of radii of univalent disks in the
+image of the unit disk under $f$. Takes values in `ℝ≥0∞` so that functions whose image contains
+arbitrarily large univalent disks correctly get radius `⊤` rather than `0`. -/
+noncomputable def blochRadius (f : ℂ → ℂ) : ℝ≥0∞ :=
+  sSup (ENNReal.ofReal '' {r : ℝ | ∃ S ⊆ ball (0 : ℂ) 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S})
 
 @[category API, AMS 30]
-lemma zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := by
-  by_cases! hb : BddAbove {r : ℝ | ∃ S ⊆ ball 0 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S}
-  · exact le_csSup hb ⟨∅, by simp⟩
-  · simp_all [blochRadius]
-
-@[category API, AMS 30]
-lemma bddBelow_blochRadius : BddBelow (range blochRadius) :=
-  bddBelow_def.2 ⟨0, fun _ ⟨f, hf⟩ => hf ▸ zero_le_blochRadius f⟩
+lemma zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := zero_le _
 
 @[category API, AMS 54]
 lemma dis_add_radius_le_of_ball_subset_ball {X 𝕜 : Type*} [RCLike 𝕜] [NormedAddCommGroup X]
@@ -95,21 +89,31 @@ lemma radius_le_of_ball_subset_ball {X 𝕜 : Type*} [RCLike 𝕜] [NormedAddCom
 
 @[category API, AMS 30]
 lemma blochRadius_id_eq_one : blochRadius id = 1 := by
-  refine IsGreatest.csSup_eq ⟨⟨ball 0 1, Subset.rfl, 0, by simp⟩, fun r ⟨S, hS, x, hx⟩ => ?_⟩
-  simp only [image_id] at hx
-  by_cases hpos : 0 < r
-  · exact radius_le_of_ball_subset_ball (𝕜 := ℝ) hpos (hx.1.trans hS)
-  · grind
+  apply le_antisymm
+  · -- blochRadius id ≤ 1: every valid radius r satisfies r ≤ 1
+    apply sSup_le
+    rintro _ ⟨r, ⟨S, hS, x, hball, -⟩, rfl⟩
+    simp only [image_id] at hball
+    by_cases hpos : 0 < r
+    · exact (ENNReal.ofReal_le_ofReal
+        (radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball.trans hS))).trans
+        (by simp [ENNReal.ofReal_one])
+    · exact (ENNReal.ofReal_of_nonpos (by linarith)).le.trans (zero_le _)
+  · -- 1 ≤ blochRadius id: ball 0 1 ⊆ id '' ball 0 1
+    rw [show (1 : ℝ≥0∞) = ENNReal.ofReal 1 from by simp]
+    exact le_sSup ⟨1, ⟨ball (0 : ℂ) 1, Subset.rfl, 0, by simp⟩, rfl⟩
 
-/-- The **Landau radius** $L_f$ of a function $f$ is the radius of the largest disk in the image of
-the unit disk under $f$. -/
-noncomputable def landauRadius (f : ℂ → ℂ) : ℝ :=
-  sSup {r : ℝ | ∃ x, ball x r ⊆ f '' (ball 0 1)}
+/-- The **Landau radius** $L_f$ of a function $f$ is the supremum of radii of disks contained in
+the image of the unit disk under $f$. Takes values in `ℝ≥0∞` so that functions with unbounded
+image correctly get radius `⊤`. -/
+noncomputable def landauRadius (f : ℂ → ℂ) : ℝ≥0∞ :=
+  sSup (ENNReal.ofReal '' {r : ℝ | ∃ x, ball x r ⊆ f '' (ball (0 : ℂ) 1)})
 
-/-- The **Bloch constant** $B$ is the infimum of the Bloch radius over all functions holomorphic
-in the unit disk such that $f'(0) = 1$. -/
+/-- The **Bloch constant** $B$ is the largest radius such that every holomorphic function on the
+unit disk with $f'(0) = 1$ has a schlicht (univalent) disk of that radius in its image. -/
 noncomputable def blochConstant : ℝ :=
-  iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => blochRadius f.1)
+  sSup {B : ℝ | ∀ f : ℂ → ℂ, DifferentiableOn ℂ f (ball 0 1) → deriv f 0 = 1 →
+    ∃ S ⊆ ball 0 1, ∃ x, ball x B ⊆ f '' S ∧ InjOn f S}
 
 /-- It is proved in [CP96] that the Bloch constant is bounded below by
 $\sqrt{3}/4 + 2 \times 10^{-4}$ -/
@@ -133,11 +137,12 @@ theorem blochConstant_exact_value :
     (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
   sorry
 
-/-- The **Univalent Bloch constant** $B_u$ is the infimum of the Bloch radius over all univalent
-functions in the unit disk such that $f'(0) = 1$. -/
+/-- The **Univalent Bloch constant** $B_u$ is the largest radius such that every univalent
+holomorphic function on the unit disk with $f'(0) = 1$ has a schlicht disk of that radius in its
+image. -/
 noncomputable def univalentBlochConstant : ℝ :=
-  iInf (fun f : {f : ℂ → ℂ // InjOn f (ball 0 1) ∧ DifferentiableOn ℂ f (ball 0 1) ∧
-    deriv f 0 = 1} => blochRadius f.1)
+  sSup {B : ℝ | ∀ f : ℂ → ℂ, InjOn f (ball 0 1) → DifferentiableOn ℂ f (ball 0 1) →
+    deriv f 0 = 1 → ∃ S ⊆ ball 0 1, ∃ x, ball x B ⊆ f '' S ∧ InjOn f S}
 
 /-- It is proved in [Skin2009] that the Univalent Bloch constant is bounded below by $0.5708858$. -/
 @[category research solved, AMS 30]
@@ -148,15 +153,23 @@ theorem univalentBlochConstant_lower_bound : 0.5708858 ≤ univalentBlochConstan
 function, which is $1$. This is the best upper bound we know according to [OptimizationConstants]. -/
 @[category research solved, AMS 30]
 theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
-  let I : {f : ℂ → ℂ // InjOn f (ball 0 1) ∧ DifferentiableOn ℂ f (ball 0 1) ∧
-    deriv f 0 = 1} := ⟨id, by simp; fun_prop⟩
-  rw [← blochRadius_id_eq_one, univalentBlochConstant, ← show I.1 = id from by grind]
-  exact ciInf_le (bddBelow_blochRadius.mono (range_comp_subset_range _ _)) I
+  apply csSup_le
+  · -- the set is nonempty: 0 is in it (ball x 0 = ∅ ⊆ anything)
+    exact ⟨0, fun f _ _ _ => ⟨∅, empty_subset _, 0, by simp⟩⟩
+  · -- every B in the set is ≤ 1
+    intro B hB
+    have h := hB id (injOn_id _) differentiableOn_id (by simp)
+    rcases h with ⟨S, hS, x, hball, -⟩
+    simp only [image_id] at hball
+    by_cases hpos : (0 : ℝ) < B
+    · exact radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball.trans hS)
+    · linarith
 
-/-- The **Landau constant** $L$ is the infimum of the Landau radius over all functions holomorphic
-in the unit disk such that $f'(0) = 1$. -/
+/-- The **Landau constant** $L$ is the largest radius such that every holomorphic function on the
+unit disk with $f'(0) = 1$ has a disk of that radius contained in its image. -/
 noncomputable def landauConstant : ℝ :=
-  iInf (fun f : {f : ℂ → ℂ // DifferentiableOn ℂ f (ball 0 1) ∧ deriv f 0 = 1} => landauRadius f.1)
+  sSup {B : ℝ | ∀ f : ℂ → ℂ, DifferentiableOn ℂ f (ball 0 1) → deriv f 0 = 1 →
+    ∃ x, ball x B ⊆ f '' (ball 0 1)}
 
 /-- It is proved in [Ya95] that the Landau constant is bounded below by $0.5 + 10 ^ {-335}$. -/
 @[category research solved, AMS 30]
@@ -176,6 +189,5 @@ of the Landau constant. -/
 theorem landauConstant_exact_value :
     landauConstant = Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
   sorry
-  
-end Bloch
 
+end Bloch
