@@ -166,6 +166,7 @@ theorem erdos_1.variants.least_N_6 :
     by_contra! h_lt
     have h_no : ¬ ∃ (A : Finset ℕ),
       A ⊆ Finset.Icc 1 n ∧ A.card = 6 ∧ IsSumDistinctSet A n := by
+      set_option maxHeartbeats 0 in
       interval_cases n <;> native_decide
     apply h_no
     exact ⟨S, h_sub, h_card, ⟨h_sub, h_inj⟩⟩
