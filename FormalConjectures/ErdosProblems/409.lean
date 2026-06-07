@@ -523,4 +523,139 @@ theorem erdos_409.variants.basins_unbounded (k : ℕ) :
     obtain ⟨i, hi⟩ := ht_reach n hns.1
     exact ⟨i, by rw [hi, htn]⟩
 
+-- ## Quantitative partial result toward `erdos_409.parts.ii`: basins grow `≥ c·log N`
+--
+-- We strengthen `basins_unbounded` quantitatively: within the window `[2,N]`, some
+-- prime is reached by at least `c·log N` distinct starting values, for all large `N`.
+-- This is still a partial result (it does NOT exhibit a single prime with an infinite
+-- basin, the open question `erdos_409.parts.ii`); it merely shows the maximal basin
+-- size in `[2,N]` grows at least logarithmically.
+
+open Finset in
+/-- Chebyshev upper bound on the prime-counting function, specialised to natural
+arguments and the explicit constant `3`: eventually `π N ≤ 3 N / log N`. Derived from
+`Chebyshev.eventually_primeCounting_le` with `ε = log 4` (using `log 4 < 3/2`). -/
+@[category API, AMS 11]
+theorem erdos_409.aux.primeCounting_le_three_mul :
+    ∀ᶠ N : ℕ in atTop, (Nat.primeCounting N : ℝ) ≤ 3 * N / Real.log N := by
+  have hlog4 : Real.log 4 < 3 / 2 := by
+    have h4 : Real.log 4 = 2 * Real.log 2 := by
+      rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]; push_cast; ring
+    rw [h4]; nlinarith [Real.log_two_lt_d9]
+  have hcheb := Chebyshev.eventually_primeCounting_le (ε := Real.log 4)
+    (by have := Real.log_pos (by norm_num : (1 : ℝ) < 4); linarith)
+  -- Transport the eventual real bound to natural arguments via the cast `ℕ → ℝ`.
+  have hcheb' := (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hcheb
+  -- Also need `N ≥ 2` so that `log N > 0` and `3 N / log N ≥ 0`.
+  filter_upwards [hcheb', eventually_ge_atTop 2] with N hN hN2
+  -- `hN : π ⌊(N:ℝ)⌋₊ ≤ (log 4 + log 4) * N / log N`
+  simp only [Nat.floor_natCast] at hN
+  have hN2r : (2 : ℝ) ≤ (N : ℝ) := by exact_mod_cast hN2
+  have hlogpos : 0 < Real.log N := Real.log_pos (by linarith)
+  refine hN.trans ?_
+  gcongr
+  nlinarith [hlog4]
+
+open Finset in
+/-- **Quantitative partial result toward `erdos_409.parts.ii`.** There is an absolute
+constant `c > 0` such that, for all sufficiently large `N`, some prime is reached (under
+the iteration `n ↦ φ n + 1`) by at least `c·log N` distinct starting values drawn from
+`[2,N]`. This strengthens `basins_unbounded` (which only gives unboundedness) to a
+logarithmic lower bound on the maximal basin size within `[2,N]`. It is still NOT a
+solution to the open `erdos_409.parts.ii`, which asks for a single prime with an
+*infinite* basin. -/
+@[category research solved, AMS 11]
+theorem erdos_409.variants.basin_card_ge_log :
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ N : ℕ in Filter.atTop, ∃ (p : ℕ) (S : Finset ℕ),
+      p.Prime ∧ c * Real.log N ≤ (S.card : ℝ) ∧ (∀ n ∈ S, ∃ i, ((φ · + 1)^[i] n = p)) := by
+  classical
+  refine ⟨1 / 6, by norm_num, ?_⟩
+  -- For all large `N`: Chebyshev bound `π N ≤ 3 N / log N` holds, and `N ≥ 3`
+  -- (so `log N > 0` and `3 N / 5 < N - 1`).
+  filter_upwards [erdos_409.aux.primeCounting_le_three_mul,
+    eventually_ge_atTop 3] with N hπ hN3
+  have hN2 : 2 ≤ N := by omega
+  have hN3r : (3 : ℝ) ≤ (N : ℝ) := by exact_mod_cast hN3
+  have hlogpos : 0 < Real.log N := Real.log_pos (by linarith)
+  have hlognn : 0 ≤ Real.log N := le_of_lt hlogpos
+  -- The pigeonhole multiplier `k = ⌊log N / 5⌋`.
+  set k : ℕ := ⌊Real.log N / 5⌋₊ with hk
+  -- `k ≤ log N / 5`.
+  have hk_le : (k : ℝ) ≤ Real.log N / 5 := Nat.floor_le (by positivity)
+  -- `log N / 5 < k + 1`, hence `log N / 6 < k + 1`.
+  have hk_lt : Real.log N / 5 < (k : ℝ) + 1 := Nat.lt_floor_add_one _
+  -- Pigeonhole input: `π N * k < N - 1`.
+  have hπk : Nat.primeCounting N * k < N - 1 := by
+    -- Real chain: `π N * k ≤ (3 N / log N) * (log N / 5) = 3 N / 5 < N - 1`.
+    have hreal : (Nat.primeCounting N : ℝ) * (k : ℝ) < ((N - 1 : ℕ) : ℝ) := by
+      have hcast : ((N - 1 : ℕ) : ℝ) = (N : ℝ) - 1 := by
+        rw [Nat.cast_sub (by omega)]; push_cast; ring
+      rw [hcast]
+      have hπnn : (0 : ℝ) ≤ (Nat.primeCounting N : ℝ) := Nat.cast_nonneg _
+      have hknn : (0 : ℝ) ≤ (k : ℝ) := Nat.cast_nonneg _
+      have hprod : (3 * N / Real.log N) * (Real.log N / 5) = 3 * N / 5 := by
+        field_simp
+      calc (Nat.primeCounting N : ℝ) * (k : ℝ)
+          ≤ (3 * N / Real.log N) * (Real.log N / 5) := by
+            apply mul_le_mul hπ hk_le hknn
+            positivity
+        _ = 3 * N / 5 := hprod
+        _ < (N : ℝ) - 1 := by nlinarith [hN3r]
+    have : ((Nat.primeCounting N * k : ℕ) : ℝ) < ((N - 1 : ℕ) : ℝ) := by
+      push_cast; push_cast at hreal; linarith
+    exact_mod_cast this
+  -- Reproduce the basin construction from `basins_unbounded` for this `N` and `k`.
+  let idx : ℕ → ℕ := fun n =>
+    if h : 0 < n then Nat.find (erdos_409.variants.termination n h) else 0
+  let t : ℕ → ℕ := fun n => (φ · + 1)^[idx n] n
+  have ht_prime : ∀ n, 2 ≤ n → (t n).Prime := by
+    intro n hn
+    have hpos : 0 < n := by omega
+    simp only [t, idx, dif_pos hpos]
+    exact Nat.find_spec (erdos_409.variants.termination n hpos)
+  have ht_reach : ∀ n, 2 ≤ n → ∃ i, (φ · + 1)^[i] n = t n := fun n _ => ⟨idx n, rfl⟩
+  have ht_mem : ∀ n, 2 ≤ n → n ≤ N → 2 ≤ t n ∧ t n ≤ N := by
+    intro n hn hnN
+    obtain ⟨hlo, hhi⟩ := erdos_409.aux.iterate_mem_Icc n hn (idx n)
+    exact ⟨hlo, le_trans hhi hnN⟩
+  set s : Finset ℕ := Icc 2 N with hs
+  set tcod : Finset ℕ := (Icc 2 N).filter Nat.Prime with htcod
+  have hmaps : ∀ n ∈ s, t n ∈ tcod := by
+    intro n hns
+    rw [hs, mem_Icc] at hns
+    rw [htcod, mem_filter, mem_Icc]
+    exact ⟨ht_mem n hns.1 hns.2, ht_prime n hns.1⟩
+  have hcard_s : s.card = N - 1 := by rw [hs, Nat.card_Icc]; omega
+  have hcard_cod : tcod.card ≤ Nat.primeCounting N := by
+    have hsub : tcod ⊆ (N + 1).primesBelow := by
+      intro p hp
+      rw [htcod, mem_filter, mem_Icc] at hp
+      rw [Nat.mem_primesBelow]
+      exact ⟨by omega, hp.2⟩
+    calc tcod.card ≤ ((N + 1).primesBelow).card := card_le_card hsub
+      _ = Nat.primeCounting' (N + 1) := Nat.primesBelow_card_eq_primeCounting' (N + 1)
+      _ = Nat.primeCounting N := rfl
+  have hpig : tcod.card * k < s.card := by
+    rw [hcard_s]
+    calc tcod.card * k ≤ Nat.primeCounting N * k := Nat.mul_le_mul_right k hcard_cod
+      _ < N - 1 := hπk
+  obtain ⟨p, hp_cod, hp_card⟩ :=
+    Finset.exists_lt_card_fiber_of_mul_lt_card_of_maps_to hmaps hpig
+  refine ⟨p, {x ∈ s | t x = p}, ?_, ?_, ?_⟩
+  · rw [htcod, mem_filter] at hp_cod; exact hp_cod.2
+  · -- `c log N = log N / 6 < log N / 5 < k + 1 ≤ card`.
+    have hcard_lt : (k : ℝ) + 1 ≤ (({x ∈ s | t x = p} : Finset ℕ).card : ℝ) := by
+      have : k + 1 ≤ ({x ∈ s | t x = p} : Finset ℕ).card := hp_card
+      exact_mod_cast this
+    have : Real.log N / 6 < (k : ℝ) + 1 := by linarith [hk_lt]
+    calc 1 / 6 * Real.log N = Real.log N / 6 := by ring
+      _ ≤ (k : ℝ) + 1 := le_of_lt this
+      _ ≤ _ := hcard_lt
+  · intro n hn
+    rw [mem_filter] at hn
+    obtain ⟨hns, htn⟩ := hn
+    rw [hs, mem_Icc] at hns
+    obtain ⟨i, hi⟩ := ht_reach n hns.1
+    exact ⟨i, by rw [hi, htn]⟩
+
 end Erdos409
