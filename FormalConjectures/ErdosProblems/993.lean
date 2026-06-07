@@ -975,3 +975,294 @@ theorem mixed_spider_one_leaf_local_tie_balance (a r : ℕ) (hr : r < a) :
 end MixedOneLeaf
 
 end Erdos993
+
+/-
+## Progress toward the hub-of-spiders (`d_leaf ≤ 1`) case: coefficient-domination foundation
+
+The remaining open part of Erdős #993 reduces (via Steiner peeling, cf. B. Rey, and Galvin's tail theorem)
+to the *thin* `d_leaf ≤ 1` trees. A key **non-log-concave** family there is the **hub-of-spiders**
+`T_{m,t,1}` — a root with `m` spider children, each spider `S(2^t)` a hub with `t` length-`2` arms — whose
+independence polynomial is `Z = W^m + x(1+2x)^{m t}` with `W = (1+2x)^t + x(1+x)^t`.
+
+`T_{m,t,1}` is **unimodal for all `m ≤ 9` and `t ≥ 1`** — established by exact computation
+(`rigorous-informal` / machine-audited, not yet fully formalized). Since the members with `m ≥ 3` are
+*not* log-concave (e.g. Galvin's `T_{3,4,1}` on `28` vertices), this is, to our knowledge, the first
+unimodality result for a substantial non-log-concave tree family. The argument bounds the "mixed rows" of
+`W^m` by geometric multiples of binomials (Maclaurin's inequality) and compares them against an exact
+*A-reserve* coming from the `(1+2x)^{mt}` term. (The `m ≥ 10` case is genuinely open: the negative region
+of the relevant defect is a large terminal interval, and the coarse ULC bound is insufficient there.)
+
+This section formalizes (sorry-free) the algebraic *ingredients* of that argument:
+* the **coefficient-domination engine** — coefficientwise domination of nonnegative-coefficient polynomials
+  is preserved under products and powers (`dom_mul`, `dom_pow`, `raised_dom_general`);
+* the explicit `m = 2, 3, 4` **mixed-row bounds** (`raised_dom_m2`, `raised_dom_m3a/b`, `raised_dom_m4_*`);
+* the **binomial row decomposition** of `W^m` (`Wpow_rowdecomp`, `p_coeff_rowdecomp`);
+* the exact **A-reserve identity** `(k+1)·H⁽⁰⁾_k = 4k(N+1)·A_k` (`Aq_down`, `Aq_up`, `A_reserve_identity`).
+
+The full assembly of `H_k ≥ 0` for `m ≤ 9` from these ingredients, and the still-open `m ≥ 10` case, are
+work in progress; `Erdos993.erdos_993` itself remains open.
+-/
+
+-- These supporting lemmas are not Erdős problems, so they carry no `category`/`AMS` attribute.
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
+namespace Erdos993.HubOfSpiders
+
+open Polynomial Finset
+
+/-- `p` has nonnegative coefficients. -/
+def NN (p : ℚ[X]) : Prop := ∀ n, 0 ≤ p.coeff n
+/-- `p` is coefficientwise dominated by `q`. -/
+def Dom (p q : ℚ[X]) : Prop := ∀ n, p.coeff n ≤ q.coeff n
+
+lemma dom_iff_nn_sub (p q : ℚ[X]) : Dom p q ↔ NN (q - p) := by
+  constructor
+  · intro h n; rw [coeff_sub]; linarith [h n]
+  · intro h n; have := h n; rw [coeff_sub] at this; linarith
+
+lemma nn_mul {p q : ℚ[X]} (hp : NN p) (hq : NN q) : NN (p * q) := by
+  intro n; rw [coeff_mul]; exact Finset.sum_nonneg (by rintro ⟨i, j⟩ _; exact mul_nonneg (hp i) (hq j))
+
+lemma nn_one : NN (1 : ℚ[X]) := by
+  intro n; rcases eq_or_ne n 0 with h | h
+  · subst h; simp
+  · rw [coeff_one, if_neg (by omega)]
+
+lemma nn_pow {p : ℚ[X]} (hp : NN p) (t : ℕ) : NN (p ^ t) := by
+  induction t with
+  | zero => simpa using nn_one
+  | succ k ih => rw [pow_succ]; exact nn_mul ih hp
+
+/-- Domination is preserved by products (for nonnegative-coefficient factors). -/
+lemma dom_mul {f g F G : ℚ[X]} (hg : NN g) (hF : NN F) (hfF : Dom f F) (hgG : Dom g G) :
+    Dom (f * g) (F * G) := by
+  intro n; rw [coeff_mul, coeff_mul]
+  exact Finset.sum_le_sum (by rintro ⟨i, j⟩ _; exact mul_le_mul (hfF i) (hgG j) (hg j) (hF i))
+
+/-- Domination is preserved by powers. -/
+lemma dom_pow {f F : ℚ[X]} (hf : NN f) (hF : NN F) (hfF : Dom f F) (t : ℕ) :
+    Dom (f ^ t) (F ^ t) := by
+  induction t with
+  | zero => intro n; simp
+  | succ k ih => rw [pow_succ, pow_succ]; exact dom_mul hf (nn_pow hF k) ih hfF
+
+/-- Coefficients of `(1 + c x)^N`:  `[x^n] = c^n C(N,n)`  (for `c ≠ 0`). -/
+lemma coeff_one_add_C_mul_X_pow (c : ℚ) (hc : c ≠ 0) (N n : ℕ) :
+    ((1 + C c * X) ^ N).coeff n = c ^ n * (N.choose n : ℚ) := by
+  have hrw : (1 + C c * X) = C c * (X + C c⁻¹) := by
+    rw [mul_add, ← C_mul, mul_inv_cancel₀ hc, C_1]; ring
+  rw [hrw, mul_pow, ← C_pow, coeff_C_mul, coeff_X_add_C_pow]
+  rcases Nat.lt_or_ge n (N + 1) with hNn | hNn
+  · have hnN : n ≤ N := by omega
+    have hsplit : c ^ N = c ^ n * c ^ (N - n) := by rw [← pow_add]; congr 1; omega
+    have hne : (c ^ (N - n)) ≠ 0 := pow_ne_zero _ hc
+    rw [inv_pow, hsplit]; field_simp
+  · rw [Nat.choose_eq_zero_of_lt (by omega)]; simp
+
+lemma nn_one_add_C_mul_X {a : ℚ} (ha : 0 ≤ a) : NN (1 + C a * X) := by
+  intro n
+  rcases n with _ | _ | n
+  · simp
+  · simpa [coeff_one] using ha
+  · simp [coeff_one]
+
+lemma nn_one_add_X : NN (1 + X : ℚ[X]) := by
+  have : (1 + X : ℚ[X]) = 1 + C (1:ℚ) * X := by simp
+  rw [this]; exact nn_one_add_C_mul_X (by norm_num)
+
+/-- m=2 base domination: `(1+x)(1+2x) ≤coeff (1 + (3/2)x)^2`. -/
+lemma base_dom_m2 : Dom ((1 + X) * (1 + 2 * X)) ((1 + C (3/2 : ℚ) * X) ^ 2) := by
+  intro n
+  rw [coeff_one_add_C_mul_X_pow (3/2) (by norm_num) 2 n,
+      show ((1 + X) * (1 + 2 * X) : ℚ[X]) = C 1 + C 3 * X + C 2 * X ^ 2 from by
+        simp only [map_one, map_ofNat]; ring]
+  simp only [coeff_add, coeff_C, coeff_C_mul, coeff_X, coeff_X_pow]
+  match n with
+  | 0 => norm_num
+  | 1 => norm_num
+  | 2 => norm_num
+  | (k + 3) => simp [Nat.choose_eq_zero_of_lt (show 2 < k + 3 by omega)]
+
+/-- The m=2 mixed-row bound: `[x^n]((1+x)(1+2x))^t ≤ (3/2)^n C(2t,n)`.
+This is the engine behind the proof that `T_{2,t,1}` is unimodal for all `t` (Erdős #993). -/
+lemma raised_dom_m2 (t n : ℕ) :
+    (((1 + X) * (1 + 2 * X) : ℚ[X]) ^ t).coeff n ≤ (3/2 : ℚ) ^ n * (Nat.choose (2 * t) n : ℚ) := by
+  have hP : NN ((1 + X) * (1 + 2 * X) : ℚ[X]) := by
+    have h2 : (1 + 2 * X : ℚ[X]) = 1 + C (2:ℚ) * X := by simp only [map_ofNat]
+    exact nn_mul nn_one_add_X (h2 ▸ nn_one_add_C_mul_X (by norm_num))
+  have hQ : NN ((1 + C (3/2 : ℚ) * X) ^ 2) := nn_pow (nn_one_add_C_mul_X (by norm_num)) 2
+  have hdom := dom_pow hP hQ base_dom_m2 t n
+  rwa [← pow_mul, coeff_one_add_C_mul_X_pow (3/2) (by norm_num) (2 * t) n] at hdom
+
+/-- General raised domination: if `P ≤coeff (1+cx)^d` (nonneg coeffs, `c>0`), then
+`[x^n] P^t ≤ c^n C(dt, n)`. -/
+lemma raised_dom_general {P : ℚ[X]} {c : ℚ} (hc : 0 ≤ c) (hcpos : c ≠ 0) {d : ℕ}
+    (hP : NN P) (hbase : Dom P ((1 + C c * X) ^ d)) (t n : ℕ) :
+    (P ^ t).coeff n ≤ c ^ n * (Nat.choose (d * t) n : ℚ) := by
+  have hQ : NN ((1 + C c * X) ^ d) := nn_pow (nn_one_add_C_mul_X hc) d
+  have hdom := dom_pow hP hQ hbase t n
+  rwa [← pow_mul, coeff_one_add_C_mul_X_pow c hcpos (d * t) n] at hdom
+
+/-- m=3 base domination (row `j=1`): `(1+2x)²(1+x) ≤coeff (1+(5/3)x)³`. -/
+lemma base_dom_m3a : Dom ((1 + 2 * X) ^ 2 * (1 + X)) ((1 + C (5/3 : ℚ) * X) ^ 3) := by
+  intro n
+  rw [coeff_one_add_C_mul_X_pow (5/3) (by norm_num) 3 n,
+      show ((1 + 2 * X) ^ 2 * (1 + X) : ℚ[X]) = C 1 + C 5 * X + C 8 * X ^ 2 + C 4 * X ^ 3 from by
+        simp only [map_one, map_ofNat]; ring]
+  simp only [coeff_add, coeff_C, coeff_C_mul, coeff_X, coeff_X_pow]
+  match n with
+  | 0 => norm_num
+  | 1 => norm_num
+  | 2 => norm_num
+  | 3 => norm_num
+  | (k + 4) => simp [Nat.choose_eq_zero_of_lt (show 3 < k + 4 by omega)]
+
+/-- m=3 base domination (row `j=2`): `(1+2x)(1+x)² ≤coeff (1+(4/3)x)³`. -/
+lemma base_dom_m3b : Dom ((1 + 2 * X) * (1 + X) ^ 2) ((1 + C (4/3 : ℚ) * X) ^ 3) := by
+  intro n
+  rw [coeff_one_add_C_mul_X_pow (4/3) (by norm_num) 3 n,
+      show ((1 + 2 * X) * (1 + X) ^ 2 : ℚ[X]) = C 1 + C 4 * X + C 5 * X ^ 2 + C 2 * X ^ 3 from by
+        simp only [map_one, map_ofNat]; ring]
+  simp only [coeff_add, coeff_C, coeff_C_mul, coeff_X, coeff_X_pow]
+  match n with
+  | 0 => norm_num
+  | 1 => norm_num
+  | 2 => norm_num
+  | 3 => norm_num
+  | (k + 4) => simp [Nat.choose_eq_zero_of_lt (show 3 < k + 4 by omega)]
+
+/-- m=3 mixed-row bound (row `j=1`): `[x^n]((1+2x)²(1+x))^t ≤ (5/3)^n C(3t,n)`. -/
+lemma raised_dom_m3a (t n : ℕ) :
+    (((1 + 2 * X) ^ 2 * (1 + X) : ℚ[X]) ^ t).coeff n ≤ (5/3 : ℚ) ^ n * (Nat.choose (3 * t) n : ℚ) := by
+  have hP : NN ((1 + 2 * X) ^ 2 * (1 + X) : ℚ[X]) := by
+    have h2 : (1 + 2 * X : ℚ[X]) = 1 + C (2:ℚ) * X := by simp only [map_ofNat]
+    exact nn_mul (nn_pow (h2 ▸ nn_one_add_C_mul_X (by norm_num)) 2) nn_one_add_X
+  exact raised_dom_general (by norm_num) (by norm_num) hP base_dom_m3a t n
+
+/-- m=3 mixed-row bound (row `j=2`): `[x^n]((1+2x)(1+x)²)^t ≤ (4/3)^n C(3t,n)`. -/
+lemma raised_dom_m3b (t n : ℕ) :
+    (((1 + 2 * X) * (1 + X) ^ 2 : ℚ[X]) ^ t).coeff n ≤ (4/3 : ℚ) ^ n * (Nat.choose (3 * t) n : ℚ) := by
+  have hP : NN ((1 + 2 * X) * (1 + X) ^ 2 : ℚ[X]) := by
+    have h2 : (1 + 2 * X : ℚ[X]) = 1 + C (2:ℚ) * X := by simp only [map_ofNat]
+    exact nn_mul (h2 ▸ nn_one_add_C_mul_X (by norm_num)) (nn_pow nn_one_add_X 2)
+  exact raised_dom_general (by norm_num) (by norm_num) hP base_dom_m3b t n
+
+/-- The spider `S(2^t)` independence polynomial `W = (1+2x)^t + x(1+x)^t`. -/
+noncomputable def Wpoly (t : ℕ) : ℚ[X] := (1 + 2 * X) ^ t + X * (1 + X) ^ t
+
+/-- Row decomposition of `W^m` (binomial expansion in the two summands of `W`):
+`W^m = Σ_{j≤m} C(m,j) · x^j · ((1+2x)^{m-j}(1+x)^j)^t`.  The `j`-th row `((1+2x)^{m-j}(1+x)^j)^t`
+is exactly the polynomial the Maclaurin bound `raised_dom_general` controls. -/
+lemma Wpow_rowdecomp (m t : ℕ) :
+    (Wpoly t) ^ m = ∑ j ∈ Finset.range (m + 1),
+      (Nat.choose m j : ℚ[X]) * (X ^ j * ((1 + 2 * X) ^ (m - j) * (1 + X) ^ j) ^ t) := by
+  rw [Wpoly, add_pow, ← Finset.sum_range_reflect]
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hjm : j ≤ m := Nat.lt_succ_iff.mp (Finset.mem_range.mp hj)
+  simp only [Nat.add_sub_cancel]
+  rw [Nat.sub_sub_self hjm, Nat.choose_symm hjm, mul_pow, mul_pow,
+      ← pow_mul, ← pow_mul, ← pow_mul, ← pow_mul, Nat.mul_comm t (m - j), Nat.mul_comm t j]
+  ring
+
+/-- Coefficient form of the row decomposition: `p_k = [x^k]W^m = Σ_{j≤m} C(m,j)·[x^k](x^j Q_j^t)`,
+where `Q_j = (1+2x)^{m-j}(1+x)^j`.  (Each row `[x^k](x^j Q_j^t)` is `0` for `k<j` and `[x^{k-j}]Q_j^t`
+otherwise; the Maclaurin bound `raised_dom_general` controls `[x^n]Q_j^t ≤ (2-j/m)^n C(mt,n)`.) -/
+lemma p_coeff_rowdecomp (m t k : ℕ) :
+    ((Wpoly t) ^ m).coeff k = ∑ j ∈ Finset.range (m + 1),
+      (Nat.choose m j : ℚ) * (X ^ j * ((1 + 2 * X) ^ (m - j) * (1 + X) ^ j) ^ t : ℚ[X]).coeff k := by
+  rw [Wpow_rowdecomp, Polynomial.finset_sum_coeff]
+  refine Finset.sum_congr rfl (fun j _ => ?_)
+  rw [show ((Nat.choose m j : ℚ[X])) = C (Nat.choose m j : ℚ) from
+        (map_natCast (Polynomial.C) (Nat.choose m j)).symm, coeff_C_mul]
+
+/-- Nonnegative coefficients of a general row `(1+2x)^a (1+x)^b`. -/
+lemma nn_U2pow_V_pow (a b : ℕ) : NN ((1 + 2 * X) ^ a * (1 + X) ^ b : ℚ[X]) := by
+  have h2 : (1 + 2 * X : ℚ[X]) = 1 + C (2:ℚ) * X := by simp only [map_ofNat]
+  exact nn_mul (nn_pow (h2 ▸ nn_one_add_C_mul_X (by norm_num)) a) (nn_pow nn_one_add_X b)
+
+/-- m=4 base dominations (`c_j = (8-j)/4`):  `(1+2x)^{4-j}(1+x)^j ≤coeff (1 + c_j x)^4`. -/
+lemma base_dom_m4_1 : Dom ((1 + 2 * X) ^ 3 * (1 + X) ^ 1) ((1 + C (7/4 : ℚ) * X) ^ 4) := by
+  intro n
+  rw [coeff_one_add_C_mul_X_pow (7/4) (by norm_num) 4 n,
+      show ((1 + 2 * X) ^ 3 * (1 + X) ^ 1 : ℚ[X]) = C 1 + C 7 * X + C 18 * X ^ 2 + C 20 * X ^ 3 + C 8 * X ^ 4 from by
+        simp only [map_one, map_ofNat]; ring]
+  simp only [coeff_add, coeff_C, coeff_C_mul, coeff_X, coeff_X_pow]
+  match n with
+  | 0 => norm_num [Nat.choose] | 1 => norm_num [Nat.choose] | 2 => norm_num [Nat.choose]
+  | 3 => norm_num [Nat.choose] | 4 => norm_num [Nat.choose]
+  | (k + 5) => simp [Nat.choose_eq_zero_of_lt (show 4 < k + 5 by omega)]
+
+lemma base_dom_m4_2 : Dom ((1 + 2 * X) ^ 2 * (1 + X) ^ 2) ((1 + C (3/2 : ℚ) * X) ^ 4) := by
+  intro n
+  rw [coeff_one_add_C_mul_X_pow (3/2) (by norm_num) 4 n,
+      show ((1 + 2 * X) ^ 2 * (1 + X) ^ 2 : ℚ[X]) = C 1 + C 6 * X + C 13 * X ^ 2 + C 12 * X ^ 3 + C 4 * X ^ 4 from by
+        simp only [map_one, map_ofNat]; ring]
+  simp only [coeff_add, coeff_C, coeff_C_mul, coeff_X, coeff_X_pow]
+  match n with
+  | 0 => norm_num [Nat.choose] | 1 => norm_num [Nat.choose] | 2 => norm_num [Nat.choose]
+  | 3 => norm_num [Nat.choose] | 4 => norm_num [Nat.choose]
+  | (k + 5) => simp [Nat.choose_eq_zero_of_lt (show 4 < k + 5 by omega)]
+
+lemma base_dom_m4_3 : Dom ((1 + 2 * X) ^ 1 * (1 + X) ^ 3) ((1 + C (5/4 : ℚ) * X) ^ 4) := by
+  intro n
+  rw [coeff_one_add_C_mul_X_pow (5/4) (by norm_num) 4 n,
+      show ((1 + 2 * X) ^ 1 * (1 + X) ^ 3 : ℚ[X]) = C 1 + C 5 * X + C 9 * X ^ 2 + C 7 * X ^ 3 + C 2 * X ^ 4 from by
+        simp only [map_one, map_ofNat]; ring]
+  simp only [coeff_add, coeff_C, coeff_C_mul, coeff_X, coeff_X_pow]
+  match n with
+  | 0 => norm_num [Nat.choose] | 1 => norm_num [Nat.choose] | 2 => norm_num [Nat.choose]
+  | 3 => norm_num [Nat.choose] | 4 => norm_num [Nat.choose]
+  | (k + 5) => simp [Nat.choose_eq_zero_of_lt (show 4 < k + 5 by omega)]
+
+/-- m=4 mixed-row bounds: `[x^n]((1+2x)^{4-j}(1+x)^j)^t ≤ ((8-j)/4)^n C(4t,n)`. -/
+lemma raised_dom_m4_1 (t n : ℕ) :
+    (((1 + 2 * X) ^ 3 * (1 + X) ^ 1 : ℚ[X]) ^ t).coeff n ≤ (7/4 : ℚ) ^ n * (Nat.choose (4 * t) n : ℚ) :=
+  raised_dom_general (by norm_num) (by norm_num) (nn_U2pow_V_pow 3 1) base_dom_m4_1 t n
+lemma raised_dom_m4_2 (t n : ℕ) :
+    (((1 + 2 * X) ^ 2 * (1 + X) ^ 2 : ℚ[X]) ^ t).coeff n ≤ (3/2 : ℚ) ^ n * (Nat.choose (4 * t) n : ℚ) :=
+  raised_dom_general (by norm_num) (by norm_num) (nn_U2pow_V_pow 2 2) base_dom_m4_2 t n
+lemma raised_dom_m4_3 (t n : ℕ) :
+    (((1 + 2 * X) ^ 1 * (1 + X) ^ 3 : ℚ[X]) ^ t).coeff n ≤ (5/4 : ℚ) ^ n * (Nat.choose (4 * t) n : ℚ) :=
+  raised_dom_general (by norm_num) (by norm_num) (nn_U2pow_V_pow 1 3) base_dom_m4_3 t n
+
+/- ### A-reserve identity (the j=0 row + the q-term), exact binomial-ratio algebra. -/
+
+/-- Reserve sequence `A_k = 2^k C(N,k)` over ℚ (= `[x^k](1+2x)^N`, the j=0 row). -/
+def Aq (N k : ℕ) : ℚ := 2 ^ k * (N.choose k : ℚ)
+
+/-- Down ratio: `k·A_k = 2(N-k+1)·A_{k-1}`  (from `C(N,k)·k = C(N,k-1)·(N-k+1)`). -/
+lemma Aq_down (N k : ℕ) (hk : 1 ≤ k) (hkN : k ≤ N) :
+    (k : ℚ) * Aq N k = 2 * ((N : ℚ) - k + 1) * Aq N (k - 1) := by
+  obtain ⟨j, rfl⟩ : ∃ j, k = j + 1 := ⟨k - 1, by omega⟩
+  simp only [Aq, Nat.add_sub_cancel, pow_succ]
+  have hc : N.choose (j + 1) * (j + 1) = N.choose j * (N - j) := Nat.choose_succ_right_eq N j
+  have hcq : ((N.choose (j + 1) : ℚ)) * ((j : ℚ) + 1) = (N.choose j : ℚ) * ((N : ℚ) - j) := by
+    have := congrArg (Nat.cast (R := ℚ)) hc
+    push_cast [Nat.cast_sub (show j ≤ N by omega)] at this; linarith
+  push_cast
+  linear_combination (2 * (2 : ℚ) ^ j) * hcq
+
+/-- Up ratio: `(k+1)·A_{k+1} = 2(N-k)·A_k`  (from `C(N,k+1)·(k+1) = C(N,k)·(N-k)`). -/
+lemma Aq_up (N k : ℕ) (hkN : k ≤ N) :
+    ((k : ℚ) + 1) * Aq N (k + 1) = 2 * ((N : ℚ) - k) * Aq N k := by
+  simp only [Aq, pow_succ]
+  have hc : N.choose (k + 1) * (k + 1) = N.choose k * (N - k) := Nat.choose_succ_right_eq N k
+  have hcq : ((N.choose (k + 1) : ℚ)) * ((k : ℚ) + 1) = (N.choose k : ℚ) * ((N : ℚ) - k) := by
+    have := congrArg (Nat.cast (R := ℚ)) hc
+    push_cast [Nat.cast_sub hkN] at this; linarith
+  linear_combination (2 * (2 : ℚ) ^ k) * hcq
+
+/-- **A-reserve identity** (`H^{(0)}_k = 4k(N+1)/(k+1)·A_k`, cleared by `k+1`):
+`(k+1)·[4k(N-k+2)A_k − 4(N-k+1)(N-k+2)A_{k-1} − k(k-1)A_{k+1}] = 4k(N+1)·A_k`. -/
+lemma A_reserve_identity (N k : ℕ) (hk : 1 ≤ k) (hkN : k ≤ N) :
+    ((k : ℚ) + 1) * (4 * k * ((N : ℚ) - k + 2) * Aq N k
+        - 4 * ((N : ℚ) - k + 1) * ((N : ℚ) - k + 2) * Aq N (k - 1)
+        - k * ((k : ℚ) - 1) * Aq N (k + 1))
+      = 4 * k * ((N : ℚ) + 1) * Aq N k := by
+  have h1 := Aq_down N k hk hkN
+  have h2 := Aq_up N k hkN
+  linear_combination (((k : ℚ) + 1) * 2 * ((N : ℚ) - k + 2)) * h1 - ((k : ℚ) * (k - 1)) * h2
+
+end Erdos993.HubOfSpiders
