@@ -50,7 +50,7 @@ abundancy class is the singleton $\{n\}$.
 def IsSolitary (n : ℕ) : Prop := 0 < n ∧ ∀ m, Friendly m n → m = n
 
 /--
-**Is 10 a solitary number? (open).**  The smallest positive integer whose solitary status is
+**Is 10 a solitary number?**  The smallest positive integer whose solitary status is
 currently unresolved is $10$, with abundancy index $\sigma(10) / 10 = 9/5$.
 -/
 @[category research open, AMS 11]
