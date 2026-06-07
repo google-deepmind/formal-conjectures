@@ -50,7 +50,7 @@ theorem is_ten_solitary : answer(sorry) ↔ IsSolitary 10 := by
   sorry
 
 /--
-**Existence of an infinite club (open).**  A *club* is an abundancy equivalence class, i.e.
+**Existence of an infinite club.**  A *club* is an abundancy equivalence class, i.e.
 the set of all positive integers friendly with a given $n$.  It is unknown whether any club
 is infinite.
 -/
