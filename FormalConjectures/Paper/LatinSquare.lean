@@ -94,7 +94,46 @@ theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by native_decid
 /-- The Cayley table of $\mathbb{Z}_n$ for positive even $n$ has no transversals. -/
 @[category textbook, AMS 5]
 theorem z_even (n : ℕ) : z (2 * (n + 1)) = 0 := by
-  sorry
+  set N := 2 * (n + 1) with hN_def
+  have hNpos : 0 < N := by positivity
+  haveI : NeZero N := ⟨hNpos.ne'⟩
+  rw [z, numTransversals, Fintype.card_eq_zero_iff]
+  refine ⟨fun ⟨σ, hσ, himg⟩ => ?_⟩
+  simp only [Matrix.of_apply] at himg
+  let σE : Fin N ≃ Fin N := Equiv.ofBijective σ
+    ((Fintype.bijective_iff_injective_and_card _).mpr ⟨hσ, rfl⟩)
+  let fE : Fin N ≃ Fin N := Equiv.ofBijective (fun i => i + σ i)
+    ((Fintype.bijective_iff_injective_and_card _).mpr ⟨himg, rfl⟩)
+  -- Sum the cell labels in `ZMod N` via `Nat.cast ∘ Fin.val`.
+  let g : Fin N → ZMod N := fun i => ((i : ℕ) : ZMod N)
+  set S : ZMod N := ∑ i : Fin N, g i with hS_def
+  have hcast : ∀ i : Fin N, g (i + σ i) = g i + g (σ i) := by
+    intro i; simp only [g, Fin.val_add, ZMod.natCast_mod, Nat.cast_add]
+  have h1 : (∑ i : Fin N, g (i + σ i)) = S := Equiv.sum_comp fE g
+  have h2 : (∑ i : Fin N, g (σ i)) = S := Equiv.sum_comp σE g
+  have hSS : S + S = S := by
+    calc S + S = (∑ i, g i) + ∑ i, g (σ i) := by rw [h2]
+      _ = ∑ i, (g i + g (σ i)) := (Finset.sum_add_distrib).symm
+      _ = ∑ i, g (i + σ i) := by simp_rw [← hcast]
+      _ = S := h1
+  have hS0 : S = 0 := by linear_combination hSS
+  -- `S = ∑_{i < N} i = N(N-1)/2 = (n+1)(2n+1)` in `ZMod N`.
+  have hval : S = (((Finset.range N).sum id : ℕ) : ZMod N) := by
+    rw [hS_def]
+    push_cast [g, Fin.sum_univ_eq_sum_range fun k => ((k : ℕ) : ZMod N), id]
+    rfl
+  rw [hval, show (Finset.range N).sum id = ∑ i ∈ Finset.range N, i from rfl,
+    Finset.sum_range_id] at hS0
+  have hdiv : N * (N - 1) / 2 = (n + 1) * (2 * n + 1) := by
+    rw [hN_def, show 2 * (n + 1) - 1 = 2 * n + 1 from by omega,
+      show 2 * (n + 1) * (2 * n + 1) = 2 * ((n + 1) * (2 * n + 1)) from by ring,
+      Nat.mul_div_cancel_left _ (by norm_num : 0 < 2)]
+  rw [hdiv] at hS0
+  have hdvd : N ∣ (n + 1) * (2 * n + 1) := (ZMod.natCast_eq_zero_iff _ _).mp hS0
+  -- `N = (n+1) * 2`; cancelling `(n+1)` forces `2 ∣ 2n+1`, impossible.
+  rw [hN_def, show 2 * (n + 1) = (n + 1) * 2 from by ring,
+    mul_dvd_mul_iff_left (Nat.succ_ne_zero n)] at hdvd
+  omega
 
 /--
 Conjecture 6.7 in [Wa2011]:
