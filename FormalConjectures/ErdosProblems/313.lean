@@ -66,11 +66,36 @@ theorem erdos_313.variants.primary_pseudoperfect_are_infinite :
   sorry
 
 /--
-There are at least 8 primary pseudoperfect numbers.
+There are at least 8 primary pseudoperfect numbers. The first eight terms of
+[A54377](https://oeis.org/A54377) are exhibited together with their explicit
+prime decompositions.
 -/
 @[category textbook, AMS 11]
 theorem erdos_313.variants.exists_at_least_eight_primary_pseudoperfect :
     8 ≤ (Set.encard {n | IsPrimaryPseudoperfect n}) := by
-  sorry
+  let S : Finset ℕ :=
+    {2, 6, 42, 1806, 47058, 2214502422, 52495396602,
+      8490421583559688410706771261086}
+  have hS : (↑S : Set ℕ) ⊆ {n | IsPrimaryPseudoperfect n} := by
+    intro x hx
+    simp only [S, Finset.coe_insert, Finset.coe_singleton, Set.mem_insert_iff,
+      Set.mem_singleton_iff] at hx
+    rcases hx with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+    · exact ⟨{2}, by norm_num [erdos313Solutions]⟩
+    · exact ⟨{2, 3}, by norm_num [erdos313Solutions]⟩
+    · exact ⟨{2, 3, 7}, by norm_num [erdos313Solutions]⟩
+    · exact ⟨{2, 3, 7, 43}, by norm_num [erdos313Solutions]⟩
+    · exact ⟨{2, 3, 11, 23, 31}, by norm_num [erdos313Solutions]⟩
+    · exact ⟨{2, 3, 11, 23, 31, 47059}, by norm_num [erdos313Solutions]⟩
+    · exact ⟨{2, 3, 11, 17, 101, 149, 3109}, by norm_num [erdos313Solutions]⟩
+    · exact ⟨{2, 3, 11, 23, 31, 47059, 2217342227, 1729101023519}, by
+        refine ⟨by decide, by decide, ?_, ?_⟩
+        · intro p hp
+          fin_cases hp <;> native_decide
+        · native_decide⟩
+  calc (8 : ℕ∞)
+      = ((S.card : ℕ) : ℕ∞) := by decide
+    _ = (↑S : Set ℕ).encard := (Set.encard_coe_eq_coe_finsetCard S).symm
+    _ ≤ Set.encard {n | IsPrimaryPseudoperfect n} := Set.encard_le_encard hS
 
 end Erdos313
