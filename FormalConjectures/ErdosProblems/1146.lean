@@ -35,8 +35,8 @@ $B\subset \mathbb{N}$ with $0<d_s(B)<1$ where $d_s$ is the Schnirelmann density.
 -/
 def IsEssentialComponent (A : Set ℕ) : Prop :=
   ∀ B : Set ℕ,
-    let b := schnirelmannDensity B
-    schnirelmannDensity (A + B) > b → 0 < b → b < 1
+    let b := schnirelmannDensity B;
+    0 < b → b < 1 → schnirelmannDensity (A + B) > b
 
 /--
 Is $B=\{2^m3^n : m,n\geq 0\}$ an essential component?
