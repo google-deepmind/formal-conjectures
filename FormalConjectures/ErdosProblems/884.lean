@@ -23,6 +23,7 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 *References:*
 - [erdosproblems.com/884](https://www.erdosproblems.com/884)
 - [Tao25](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf)
+- [Larsen](https://github.com/Larsen-Daniel/Erdos-884/blob/main/884.pdf)
 -/
 
 namespace Erdos884
@@ -53,9 +54,10 @@ for $n \to \infty`, i.e.
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}) \right)$?
 
-In September 2025, Terence Tao gave a conditional _negative_ answer to this conjecture,
-see `erdos_884_false_of_hardy_littlewood` for this implication.
-However, the conjecture itself remains open.
+This conjecture has been **disproved**:
+- In September 2025, Terence Tao gave a conditional _negative_ answer assuming the prime tuples
+  conjecture, see `erdos_884_false_of_hardy_littlewood` for this implication.
+- Daniel Larsen subsequently gave an unconditional disproof.
 -/
 def Erdos884Prop : Prop :=
     sumDivisorInvPairwiseDifference ≪ 1 + sumDivisorInvConsecutiveDifference
@@ -70,13 +72,17 @@ for $n \to \infty`, i.e.
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}) \right)$?
 
-In September 2025, Terence Tao gave a conditional _negative_ answer to this conjecture,
-see `erdos_884_false_of_hardy_littlewood` for this implication.
-However, the conjecture itself remains open.
+This conjecture has been **disproved**:
+- In September 2025, Terence Tao gave a conditional _negative_ answer assuming the prime tuples
+  conjecture, see `erdos_884_false_of_hardy_littlewood` for this implication.
+- Daniel Larsen subsequently gave an
+  [unconditional disproof](https://github.com/Larsen-Daniel/Erdos-884/blob/main/884.pdf).
+
+*Reference:* [erdosproblems.com/884](https://www.erdosproblems.com/884)
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_884 :
-    answer(sorry) ↔ Erdos884Prop := by
+    answer(False) ↔ Erdos884Prop := by
   sorry
 
 /--

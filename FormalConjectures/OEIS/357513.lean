@@ -16,16 +16,13 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Nat
-
 /-!
 Numerator of $sum_{k = 1}^n \frac{1}{k^3} * \binom{n}{k}^2 * \binom{n+k}{k}^2 for $n \ge 1$
 with $a(0) = 0$.
 
-
 *Reference:* [A357513](https://oeis.org/A357513)
 -/
-
+open Nat
 namespace OeisA357513
 
 /--
@@ -35,7 +32,6 @@ A357513: $a(n) = \text{numerator of }
 -/
 def a (n : ℕ) : ℕ :=
  ∑ k ∈ (Finset.Icc 1 n), ((n.choose k : ℚ) ^ 2 * ((n + k).choose k : ℚ) ^ 2) / k ^ 3 |>.num.natAbs
-
 
 @[category test, AMS 11]
 theorem zero : a 0 = 0 := rfl

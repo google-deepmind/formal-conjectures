@@ -16,8 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Filter
-
 /-!
 # Andrica's conjecture
 
@@ -25,7 +23,7 @@ open Filter
 - [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
 - [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
-
+open Filter
 namespace Andrica
 
 /--
