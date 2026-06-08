@@ -29,6 +29,8 @@ and conjectures that every convex set in ℝⁿ⁺¹ has finite VCₙ dimension.
 
 open scoped EuclideanGeometry Pointwise
 
+namespace VCDimConvex
+
 /-  ### What's known in the literature -/
 
 /-- Every convex set in $\mathbb R^2$ has VC dimension at most 3. -/
@@ -66,3 +68,5 @@ lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) :
 @[category research open, AMS 5 52]
 lemma hasAddVCNDimAtMost_n_one_of_convex_rn_add_one {n : ℕ} (hn : 2 ≤ n) {C : Set (Fin (n + 1) → ℝ)}
     (hC : Convex ℝ C) : HasAddVCNDimAtMost C n 1 := sorry
+
+end VCDimConvex

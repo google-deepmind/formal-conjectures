@@ -34,9 +34,11 @@ namespace Erdos42
 **Erdős Problem 42**: Let M ≥ 1 and N be sufficiently large in terms of M. Is it true that for every
 maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}` of size M such that
 `(A - A) ∩ (B - B) = {0}`?
+
+This was proved for all $M$ by GPT 5.5 Pro (prompted by Sandhu), see discussion thread for more details.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_42 : answer(sorry) ↔
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P42/CompactCayley/Proof.lean"]
+theorem erdos_42 : answer(True) ↔
     ∀ M ≥ 1, ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N),
     ∃ᵉ (B : Set ℕ), B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
     ((A - A) ∩ (B - B)) = {0} := by
@@ -63,7 +65,7 @@ theorem erdos_42.variants.constructive : answer(sorry) ↔
 /--
 The set `{1, 2, 4}` is a maximal Sidon set in `{1, ..., 4}`.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem example_maximal_sidon : IsMaximalSidonSetIn {1, 2, 4} 4 := by
   refine ⟨?_, ?_, ?_⟩
   · intro x hx
@@ -88,7 +90,7 @@ theorem example_maximal_sidon : IsMaximalSidonSetIn {1, 2, 4} 4 := by
 /--
 The difference set of `{1, 2, 4}` is `{0, 1, 2, 3}`.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem example_difference_set : ({1, 2, 4} : Set ℕ) - {1, 2, 4} = {0, 1, 2, 3} := by
   ext x
   simp only [Set.mem_sub, Set.mem_insert_iff, Set.mem_singleton_iff]
@@ -106,7 +108,7 @@ theorem example_difference_set : ({1, 2, 4} : Set ℕ) - {1, 2, 4} = {0, 1, 2, 3
 /--
 For any maximal Sidon set, the difference set contains 0.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem maximal_sidon_contains_zero (A : Set ℕ) (N : ℕ) (hN : 1 ≤ N)
     (hA : IsMaximalSidonSetIn A N) : 0 ∈ A - A := by
   obtain ⟨hAsub, hAsidon, hAmax⟩ := hA

@@ -48,15 +48,17 @@ theorem erdos_267.variants.generalisation_ratio_limit_to_infinity : answer(sorry
 /--
 Good [Go74] and Bicknell and Hoggatt [BiHo76] have shown that $\sum_n \frac 1 {F_{2^n}}$ is irrational.
 
+
+Formal proof provided by AlphaProof
 Ref:
 * [Go74] Good, I. J., _A reciprocal series of Fibonacci numbers_
 * [BiHo76] Hoggatt, Jr., V. E. and Bicknell, Marjorie, _A reciprocal series of Fibonacci numbers with subscripts $2\sp{n}k$_
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/2663234a28260853790aa5752d8d4550ff0ab1ca/FormalConjectures/ErdosProblems/267.lean#L56"]
 theorem erdos_267.variants.specialization_pow_two :
     Irrational <| ∑' k, 1 / (Nat.fib <| 2^k) := by
   sorry
-
 
 /--
 The sum $\sum_n \frac 1 {F_{n}}$ itself was proved to be irrational by André-Jeannin.

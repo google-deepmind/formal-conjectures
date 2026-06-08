@@ -29,13 +29,13 @@ import FormalConjectures.Util.ProblemImports
 open scoped Nat
 open Filter Real Set
 
+namespace Erdos516
+
 /-- An entire function `f` is said to be of finite order if there exist numbers c, a ≥ 0
 such that for all `z`, `‖f z‖ ≤ c * rexp (‖z‖ ^ a)`. -/
 def OfFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     [NormedAddCommGroup F] [NormedSpace ℂ F] (f : E → F) : Prop :=
   Differentiable ℂ f ∧ ∃ c ≥ 0, ∃ a ≥ 0, ∀ z, ‖f z‖ ≤ c * rexp (‖z‖ ^ a)
-
-namespace Erdos516
 
 noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
   (⨅ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log / (⨆ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log

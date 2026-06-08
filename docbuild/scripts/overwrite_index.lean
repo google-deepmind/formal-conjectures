@@ -34,9 +34,7 @@ def getCategoryStatsMarkdown : CoreM String := do
 | {stats (Category.research ProblemStatus.open)} | [Research (open)]({githubSearchBaseUrl}%22category+research+open%22)|
 | {stats (Category.research ProblemStatus.solved)} | [Research (solved)]({githubSearchBaseUrl}%22category+research+solved%22)|
 | {formalProofCount} | [Formally proved]({githubSearchBaseUrl}%22formal_proof+using%22)|
-| {stats (Category.graduate)} | [Graduate]({githubSearchBaseUrl}%22category+graduate%22)|
-| {stats (Category.undergraduate)} | [Undergraduate]({githubSearchBaseUrl}%22category+undergraduate%22)|
-| {stats (Category.highSchool)} | [High School]({githubSearchBaseUrl}%22category+high_school%22)|
+| {stats (Category.textbook)} | [Textbook]({githubSearchBaseUrl}%22category+textbook%22)|
 | {stats (Category.API)} | [API]({githubSearchBaseUrl}%22category+API%22)|
 | {stats (Category.test)} | [Tests]({githubSearchBaseUrl}%22category+tests%22)|"
 
@@ -67,28 +65,31 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
   let openTag := s!"<{tag}>"
   let closeTag := s!"</{tag}>"
 
-  -- TODO(lezeau): reimplement this using String.Slice API
+  let prefixParts := (inputHtmlContent.toSlice.split openTag).toArray
+  if prefixParts.size < 2 then
+    throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
+  
+  -- Split string by closeTag
+  let suffixParts := (inputHtmlContent.toSlice.split closeTag).toArray
+  if suffixParts.size < 2 then
+    throw <| IO.userError s!"Closing {closeTag} tag not found in inputHtmlContent."
 
-  -- Find the position right after "<tag>"
-  let .some bodyOpenTagSubstring := inputHtmlContent.findSubstr? openTag
-    | throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
-  let contentStartIndex := bodyOpenTagSubstring.stopPos
-  -- Find the position of "</tag>"
-  let .some bodyCloseTagSubstring := inputHtmlContent.findSubstr? closeTag
-    | throw <| IO.userError s!"Closing {closeTag} tag not found in inputHtmlContent."
-    -- Ensure the tags are in the correct order
-  if contentStartIndex > bodyCloseTagSubstring.startPos then
+  let openTagStart := prefixParts[0]!.toString.length
+  let closeTagStart := suffixParts[0]!.toString.length
+
+  -- Ensure the tags are in the correct order
+  if openTagStart + openTag.length > closeTagStart then
     throw <| IO.userError s!"{openTag} content appears invalid (start of content is after start of {closeTag} tag)."
 
-  -- Extract the part of the HTML before the original body content (includes "<tag>")
-  let htmlPrefix := inputHtmlContent.toRawSubstring.extract ⟨0⟩ contentStartIndex |>.toString
-  -- Extract the part of the HTML from "</tag>" to the end
-  let htmlSuffix := inputHtmlContent.toRawSubstring.extract bodyCloseTagSubstring.startPos
-    inputHtmlContent.toRawSubstring.stopPos |>.toString
+  -- Construct the prefix: everything up to and including `<tag>`
+  let htmlPrefix := prefixParts[0]!.toString ++ openTag
+
+  -- Construct the suffix: the first `</tag>` and everything after it
+  let suffixStrings := suffixParts.toList.tail!.map (·.toString)
+  let htmlSuffix := closeTag ++ closeTag.intercalate suffixStrings
 
   -- Construct the new full HTML content
-  let finalHtml := htmlPrefix ++ newContent ++ htmlSuffix
-  return finalHtml
+  return htmlPrefix ++ newContent ++ htmlSuffix
 
 /--
 Runs a `CoreM α` action in an environment where all FormalConjectures modules are imported.

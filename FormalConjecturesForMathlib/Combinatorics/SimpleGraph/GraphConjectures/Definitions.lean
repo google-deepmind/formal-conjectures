@@ -45,54 +45,6 @@ noncomputable def m (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 
-/-- The maximum cardinality among all independent sets `s`
-    that maximize the quantity `|s| - |N(s)|`, where `N(s)`
-    is the neighborhood of the set `s`. -/
-noncomputable def aprime (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
-  letI indep_sets : Finset (Finset α) := univ.powerset.filter (fun s => G.IsIndepSet (s : Set α))
-  letI diff (s : Finset α) : ℤ := (s.card : ℤ) - (⋃ v ∈ (s : Set α), G.neighborSet v).toFinset.card
-  letI max_diff := (indep_sets.image diff).max
-  letI critical_sets := indep_sets.filter (fun s ↦ diff s = max_diff.getD 0)
-  letI max_card := (critical_sets.image Finset.card).max
-  (max_card.getD 0 : ℝ)
-
-/-- `largestInducedForestSize G` is the size of a largest induced forest of `G`. -/
-noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, (G.induce s).IsAcyclic ∧ s.card = n }
-
-/-- The degree sequence of a graph, sorted in nondecreasing order. -/
-noncomputable def degreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : List ℕ :=
-  (Finset.univ.val.map fun v : α => G.degree v).sort (· ≤ ·)
-
-/--
-The maximum number of occurrences of any term of the degree sequence of `G`.
--/
-noncomputable def degreeSequenceMultiplicity (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  letI degs := degreeSequence G
-  (List.max? (degs.map (fun d => degs.count d))).getD 0
-
-/-- `largestInducedBipartiteSubgraphSize G` is the size of a largest induced
-bipartite subgraph of `G`. -/
-noncomputable def largestInducedBipartiteSubgraphSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, (G.induce s).IsBipartite ∧ s.card = n }
-
-/-- `b G` is the number of vertices of a largest induced bipartite subgraph of `G`.
-Returned as a real number. -/
-noncomputable def b (G : SimpleGraph α) : ℝ :=
-  (largestInducedBipartiteSubgraphSize G : ℝ)
-
-/-- Independence number of the neighbourhood of `v`. -/
-noncomputable def indepNeighborsCard (G : SimpleGraph α) (v : α) : ℕ :=
-  (G.induce (G.neighborSet v)).indepNum
-
-/-- The same quantity as a real number. -/
-noncomputable def indepNeighbors (G : SimpleGraph α) (v : α) : ℝ :=
-  (indepNeighborsCard G v : ℝ)
-
-/-- Average of `indepNeighbors` over all vertices. -/
-noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
-  (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
-
 /-- A unit distance graph in ℝ²:
 A graph where the vertices V are a collection of points in ℝ² and there is
 an edge between two points if and only if the distance between them is 1. -/
@@ -116,16 +68,9 @@ def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop := Nontrivial V �
   Pairwise fun u v ↦ ∃ P : Set (G.Walk u v),
     P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
 
-/-- Infinite graphs: definitions for max degree and clique number so that the maximum
-degree (resp. clique number) of a graph with unbounded degree (resp. clique size) is
-`∞` rather than 0.
+/-- Infinite graphs: definitions for clique number so that the clique number of a graph
+with unbounded clique size is `∞` rather than 0.
 -/
-noncomputable
-def edegree {V : Type*} (G : SimpleGraph V) (v : V) : ℕ∞ := (G.neighborSet v).encard
-
-noncomputable
-def emaxDegree {V : Type*} (G : SimpleGraph V) : ℕ∞ := ⨆ v, G.edegree v
-
 noncomputable
 def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ : G.IsClique s), #s
 

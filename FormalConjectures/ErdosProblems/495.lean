@@ -27,8 +27,8 @@ open Filter
 namespace Erdos495
 
 /--
-Let $\alpha,\beta \in \mathbb{R}$. Is it true that\[\liminf_{n\to \infty} n \| n\alpha \|
-  \| n\beta\| =0\]? This is also known as the Littlewood conjecture.
+Let $\alpha,\beta \in \mathbb{R}$. Is it true that$$\liminf_{n\to \infty} n \| n\alpha \|
+  \| n\beta\| =0$$? This is also known as the Littlewood conjecture.
 -/
 @[category research open, AMS 11]
 theorem erdos_495 : answer(sorry) ↔ ∀ α β : ℝ, liminf (fun n : ℕ ↦ (n : ℝ) * distToNearestInt (n * α)
