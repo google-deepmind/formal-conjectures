@@ -47,7 +47,7 @@ It calculates the degree sequence, sorts it ascendingly, and finds the largest p
 noncomputable def annihilationNumber' (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   -- 1. Get the degree sequence sorted in ascending order.
   -- G.degree_list returns the list of degrees.
-  letI degrees := (Finset.univ.image fun v => G.degree v).sort (· ≤ ·)
+  letI degrees := (Finset.univ.val.map fun v => G.degree v).sort (· ≤ ·)
 
   -- 2. Define the condition for the annihilation number.
   -- k represents the number of smallest degrees considered (the length of the prefix).
