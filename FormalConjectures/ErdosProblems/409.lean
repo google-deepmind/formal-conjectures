@@ -658,4 +658,294 @@ theorem erdos_409.variants.basin_card_ge_log :
     obtain ⟨i, hi⟩ := ht_reach n hns.1
     exact ⟨i, by rw [hi, htn]⟩
 
+-- ## König-lemma reduction for `erdos_409.parts.ii`
+--
+-- We reformulate the open question "does some prime have an infinite basin under
+-- `g = φ · + 1`?" as the existence of an infinite strictly increasing backward chain.
+-- The crux is that totient fibers `{x | φ x = v}` are finite (König's lemma needs
+-- finite branching).
+
+/-- Combined totient lower bound: for `n ≥ 1`, `n ≤ 2 * φ(n)^2`, and moreover if `n`
+is odd then `n ≤ φ(n)^2`. (The odd refinement is what powers the `n ≡ 2 mod 4` case
+of the induction.) -/
+@[category API, AMS 11]
+theorem erdos_409.aux.le_two_mul_totient_sq_aux (n : ℕ) (hn : 1 ≤ n) :
+    (Odd n → n ≤ (φ n) ^ 2) ∧ n ≤ 2 * (φ n) ^ 2 := by
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+    rcases eq_or_lt_of_le hn with h1 | h2
+    · -- n = 1
+      subst h1
+      simp
+    · -- n ≥ 2
+      have hn2 : 2 ≤ n := h2
+      set p := n.minFac with hp
+      have hpp : p.Prime := Nat.minFac_prime (by omega)
+      have hp2 : 2 ≤ p := hpp.two_le
+      have hpdvd : p ∣ n := Nat.minFac_dvd n
+      obtain ⟨m, hm⟩ := hpdvd
+      have hppos : 0 < p := by omega
+      have hmpos : 1 ≤ m := by
+        rcases Nat.eq_zero_or_pos m with h0 | h0
+        · simp [h0] at hm; omega
+        · omega
+      have hmlt : m < n := by
+        have : n = p * m := hm
+        nlinarith [hp2, hmpos]
+      obtain ⟨ihm_odd, ihm⟩ := ih m hmlt hmpos
+      have hφm_pos : 1 ≤ φ m := Nat.totient_pos.mpr hmpos
+      by_cases hpm : p ∣ m
+      · -- p ∣ m : φ n = p * φ m, and m, n share parity-ish; handle odd & general.
+        have hφn : φ n = p * φ m := by
+          rw [hm, Nat.totient_mul_of_prime_of_dvd hpp hpm]
+        constructor
+        · intro hodd
+          -- n odd ⟹ m odd
+          have hmodd : Odd m := by
+            rcases hodd with ⟨k, hk⟩
+            rw [hm] at hk
+            exact (Nat.Odd.of_mul_right ⟨k, by omega⟩)
+          have hmle : m ≤ (φ m) ^ 2 := ihm_odd hmodd
+          rw [hφn, hm]
+          have h1 : p * m ≤ p * (φ m) ^ 2 := Nat.mul_le_mul_left p hmle
+          nlinarith [h1, hp2, hφm_pos, hmpos]
+        · rw [hφn, hm]
+          have h1 : p * m ≤ p * (2 * (φ m) ^ 2) := Nat.mul_le_mul_left p ihm
+          nlinarith [h1, hp2, hφm_pos, hmpos]
+      · -- ¬ p ∣ m : φ n = (p-1) * φ m
+        have hφn : φ n = (p - 1) * φ m := by
+          rw [hm, Nat.totient_mul_of_prime_of_not_dvd hpp hpm]
+        constructor
+        · intro hodd
+          have hmodd : Odd m := by
+            rcases hodd with ⟨k, hk⟩
+            rw [hm] at hk
+            exact (Nat.Odd.of_mul_right ⟨k, by omega⟩)
+          -- n odd ⟹ p ≥ 3 (p = 2 would make n even)
+          have hp3 : 3 ≤ p := by
+            rcases hodd with ⟨k, hk⟩
+            rcases Nat.lt_or_ge p 3 with h | h
+            · interval_cases p
+              · -- p = 2 contradicts n odd
+                rw [hm] at hk; omega
+            · exact h
+          have hmle : m ≤ (φ m) ^ 2 := ihm_odd hmodd
+          rw [hφn, hm]
+          -- p ≥ 3 : write p = q + 1 with q ≥ 2, goal p*m ≤ (q*φm)^2
+          obtain ⟨q, hpq⟩ : ∃ q, p = q + 1 := ⟨p - 1, by omega⟩
+          rw [hpq, Nat.add_sub_cancel]
+          have hq2 : 2 ≤ q := by omega
+          have h1 : (q + 1) * m ≤ (q + 1) * (φ m) ^ 2 := Nat.mul_le_mul_left _ hmle
+          nlinarith [h1, hq2, hφm_pos, hmpos]
+        · -- general 2φ² bound
+          rcases Nat.lt_or_ge p 3 with hp23 | hp3
+          · -- p = 2, m odd (¬2∣m)
+            interval_cases p
+            · have hmodd : Odd m := by
+                rcases Nat.even_or_odd m with he | ho
+                · exact absurd he.two_dvd hpm
+                · exact ho
+              have hmle : m ≤ (φ m) ^ 2 := ihm_odd hmodd
+              rw [hφn, hm]
+              norm_num
+              nlinarith [hmle, hφm_pos, hmpos]
+          · -- p ≥ 3
+            rw [hφn, hm]
+            obtain ⟨q, hpq⟩ : ∃ q, p = q + 1 := ⟨p - 1, by omega⟩
+            rw [hpq, Nat.add_sub_cancel]
+            have hq2 : 2 ≤ q := by omega
+            have h1 : (q + 1) * m ≤ (q + 1) * (2 * (φ m) ^ 2) := Nat.mul_le_mul_left _ ihm
+            nlinarith [h1, hq2, hφm_pos, hmpos]
+
+/-- For `n ≥ 1`, `n ≤ 2 * φ(n)^2`. This makes totient fibers finite. -/
+@[category API, AMS 11]
+theorem erdos_409.aux.le_two_mul_totient_sq (n : ℕ) (hn : 1 ≤ n) :
+    n ≤ 2 * (φ n) ^ 2 :=
+  (erdos_409.aux.le_two_mul_totient_sq_aux n hn).2
+
+/-- **CRUX.** Each totient fiber `{x | φ x = v}` is finite. -/
+@[category API, AMS 11]
+theorem erdos_409.aux.finite_totient_fiber (v : ℕ) :
+    {x : ℕ | φ x = v}.Finite := by
+  apply Set.Finite.subset (Set.finite_Iic (2 * v ^ 2))
+  intro x hx
+  simp only [Set.mem_setOf_eq] at hx
+  rcases Nat.eq_zero_or_pos x with hx0 | hxpos
+  · subst hx0; simp
+  · have := erdos_409.aux.le_two_mul_totient_sq x hxpos
+    rw [hx] at this
+    exact Set.mem_Iic.mpr this
+
+/-- The set of descendants of `m` under `g = φ · + 1`. -/
+private def desc (m : ℕ) : Set ℕ := {n | ∃ i, (φ · + 1)^[i] n = m}
+
+/-- The set of *proper* preimages of `m` under `g`. -/
+private def pre (m : ℕ) : Set ℕ := {x | (φ x + 1) = m ∧ x ≠ m}
+
+/-- Proper preimages of `m` form a finite set (subset of a totient fiber). -/
+@[category API, AMS 11]
+private theorem finite_pre (m : ℕ) : (pre m).Finite := by
+  rcases Nat.eq_zero_or_pos m with hm0 | hmpos
+  · -- m = 0: no x has φ x + 1 = 0
+    apply Set.Finite.subset (Set.finite_empty)
+    intro x hx
+    simp only [pre, Set.mem_setOf_eq] at hx
+    omega
+  · apply Set.Finite.subset (erdos_409.aux.finite_totient_fiber (m - 1))
+    intro x hx
+    simp only [pre, Set.mem_setOf_eq] at hx
+    simp only [Set.mem_setOf_eq]
+    omega
+
+/-- Decomposition: a descendant of `m` other than `m` is a descendant of some proper
+preimage of `m`. -/
+@[category API, AMS 11]
+private theorem desc_sub (m : ℕ) :
+    desc m \ {m} ⊆ ⋃ x ∈ pre m, desc x := by
+  intro n hn
+  obtain ⟨⟨i, hi⟩, hne⟩ := hn
+  simp only [Set.mem_singleton_iff] at hne
+  -- least index reaching m
+  have hex : ∃ i, (φ · + 1)^[i] n = m := ⟨i, hi⟩
+  classical
+  set j := Nat.find hex with hj
+  have hjspec : (φ · + 1)^[j] n = m := Nat.find_spec hex
+  have hjpos : 1 ≤ j := by
+    rcases Nat.eq_zero_or_pos j with h0 | h0
+    · rw [h0] at hjspec; simp only [Function.iterate_zero, id] at hjspec
+      exact absurd hjspec hne
+    · exact h0
+  obtain ⟨k, hk⟩ : ∃ k, j = k + 1 := ⟨j - 1, by omega⟩
+  set x := (φ · + 1)^[k] n with hx
+  have hgx : (φ x + 1) = m := by
+    have : (φ · + 1)^[k + 1] n = m := by rw [← hk]; exact hjspec
+    rw [Function.iterate_succ_apply'] at this
+    simpa [hx] using this
+  have hxne : x ≠ m := by
+    intro hxm
+    have hkfind : ¬ (φ · + 1)^[k] n = m := Nat.find_min hex (by omega)
+    exact hkfind (by rw [← hx]; exact hxm)
+  exact Set.mem_biUnion (s := pre m) (show x ∈ pre m from ⟨hgx, hxne⟩) ⟨k, rfl⟩
+
+/-- König step: if `desc m` is infinite, some proper preimage has infinite `desc`. -/
+@[category API, AMS 11]
+private theorem konig_step (m : ℕ) (h : (desc m).Infinite) :
+    ∃ x ∈ pre m, (desc x).Infinite := by
+  by_contra hcon
+  push_neg at hcon
+  -- every proper preimage has finite desc
+  have hfin : ∀ x ∈ pre m, (desc x).Finite := hcon
+  have hbu : (⋃ x ∈ pre m, desc x).Finite := Set.Finite.biUnion (finite_pre m) hfin
+  have hsub : desc m ⊆ {m} ∪ (⋃ x ∈ pre m, desc x) := by
+    intro n hn
+    by_cases hnm : n = m
+    · left; exact hnm
+    · right; exact desc_sub m ⟨hn, by simpa using hnm⟩
+  have : (desc m).Finite :=
+    Set.Finite.subset ((Set.finite_singleton m).union hbu) hsub
+  exact h this
+
+/-- A proper preimage with infinite descendants is strictly larger than `m`. -/
+@[category API, AMS 11]
+private theorem lt_of_pre_infinite (m x : ℕ) (hx : x ∈ pre m) (hinf : (desc x).Infinite) :
+    m < x := by
+  obtain ⟨hgx, hxne⟩ := hx
+  -- rule out x = 0 and x = 1 (their desc is finite)
+  have hx2 : 2 ≤ x := by
+    by_contra h
+    push_neg at h
+    interval_cases x
+    · -- x = 0: desc 0 ⊆ {0}
+      apply hinf
+      apply Set.Finite.subset (Set.finite_singleton 0)
+      intro n hn
+      obtain ⟨i, hi⟩ := hn
+      -- g^[i] n = 0 forces n = 0 since g y ≥ 1 always
+      rcases Nat.eq_zero_or_pos i with hi0 | hipos
+      · rw [hi0] at hi; simpa using hi
+      · exfalso
+        obtain ⟨k, hk⟩ : ∃ k, i = k + 1 := ⟨i - 1, by omega⟩
+        rw [hk, Function.iterate_succ_apply'] at hi
+        omega
+    · -- x = 1: desc 1 ⊆ {0, 1}
+      apply hinf
+      apply Set.Finite.subset ((Set.finite_singleton 1).insert 0)
+      intro n hn
+      obtain ⟨i, hi⟩ := hn
+      -- if n ≥ 2 then g^[i] n ≥ 2 ≠ 1; so n ≤ 1
+      simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
+      by_contra hcon
+      push_neg at hcon
+      obtain ⟨hn0, hn1⟩ := hcon
+      have hn2 : 2 ≤ n := by omega
+      have := erdos_409.aux.iterate_mem_Icc n hn2 i
+      omega
+  have hφlt : φ x < x := Nat.totient_lt x (by omega)
+  -- m = φ x + 1 ≤ x, and m ≠ x ⟹ m < x
+  omega
+
+/--
+**Reformulation of `erdos_409.parts.ii` (König's lemma).** The basin `B(p)` is infinite
+iff there is an infinite strictly increasing backward chain `p = m 0 < m 1 < ⋯` with
+`φ (m (j+1)) = m j - 1`. This is a fully-proven equivalence (hence `research solved`); it
+*restates* the open problem `erdos_409.parts.ii` but does **not** resolve it.
+-/
+@[category research solved, AMS 11]
+theorem erdos_409.variants.ii_reduction (p : ℕ) (hp : p.Prime) :
+    {n | ∃ i, (φ · + 1)^[i] n = p}.Infinite ↔
+      ∃ m : ℕ → ℕ, StrictMono m ∧ m 0 = p ∧ ∀ j, φ (m (j + 1)) = m j - 1 := by
+  have hp1 : 1 ≤ p := hp.one_lt.le
+  constructor
+  · -- (⟹) build the chain by recursion + choice
+    intro hinf
+    classical
+    -- carry the infinitude proof in a subtype-valued recursion
+    let step : {x : ℕ // (desc x).Infinite} → {x : ℕ // (desc x).Infinite} := fun y =>
+      ⟨Classical.choose (konig_step y.1 y.2),
+        (Classical.choose_spec (konig_step y.1 y.2)).2⟩
+    have hinf_p : (desc p).Infinite := hinf
+    let seq : ℕ → {x : ℕ // (desc x).Infinite} := fun j =>
+      Nat.rec (⟨p, hinf_p⟩) (fun _ y => step y) j
+    set m : ℕ → ℕ := fun j => (seq j).1 with hm
+    -- key relation: g (m (j+1)) = m j, i.e. φ (m (j+1)) + 1 = m j
+    have hrel : ∀ j, (φ (m (j + 1)) + 1) = m j ∧ m (j + 1) ≠ m j := by
+      intro j
+      have hspec := Classical.choose_spec (konig_step (seq j).1 (seq j).2)
+      exact hspec.1
+    have hmono : ∀ j, m j < m (j + 1) := by
+      intro j
+      have hspec := Classical.choose_spec (konig_step (seq j).1 (seq j).2)
+      have hxinf : (desc (m (j + 1))).Infinite := (seq (j + 1)).2
+      exact lt_of_pre_infinite (m j) (m (j + 1)) hspec.1 hxinf
+    refine ⟨m, strictMono_nat_of_lt_succ hmono, rfl, ?_⟩
+    intro j
+    have := (hrel j).1
+    omega
+  · -- (⟸) the chain injects into the basin
+    rintro ⟨m, hmono, hm0, hrel⟩
+    classical
+    -- m j ≥ p for all j (monotone, m 0 = p)
+    have hmge : ∀ j, p ≤ m j := by
+      intro j
+      have : m 0 ≤ m j := hmono.monotone (Nat.zero_le j)
+      rw [hm0] at this; exact this
+    -- g^[j] (m j) = p
+    have hiter : ∀ j, (φ · + 1)^[j] (m j) = p := by
+      intro j
+      induction j with
+      | zero => simpa using hm0
+      | succ k ih =>
+        have hstep : (φ (m (k + 1)) + 1) = m k := by
+          have := hrel k
+          have hmk1 : 1 ≤ m k := le_trans hp1 (hmge k)
+          omega
+        rw [Function.iterate_succ_apply]
+        show (φ · + 1)^[k] (φ (m (k + 1)) + 1) = p
+        rw [hstep]
+        exact ih
+    -- the map j ↦ m j is injective and lands in the basin ⟹ infinite
+    apply Set.infinite_of_injective_forall_mem (f := m) hmono.injective
+    intro j
+    exact ⟨j, hiter j⟩
+
 end Erdos409
