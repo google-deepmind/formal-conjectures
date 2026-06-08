@@ -30,20 +30,19 @@ open Classical SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-WOWII [Conjecture 142](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 142](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/):
 
 For a simple connected graph $G$,
 $\mathrm{tree}(G) \ge (2/3) \cdot \mathrm{girth}(G) + \mathrm{ecc}(B)$
 where $\mathrm{tree}(G)$ is the largest induced tree size, $\mathrm{girth}(G)$
-is the length of the shortest cycle ($0$ if acyclic),
-$B = \mathrm{maxEccentricityVertices}\, G$ is the set of vertices with maximum
-eccentricity (the "boundary"), and $\mathrm{ecc}(B)$ is the eccentricity of the
-set $B$ — defined as the maximum distance from any vertex outside $B$ to $B$.
+is the length of the shortest cycle ($0$ if acyclic), $B$ is the set of
+boundary vertices (those of maximum eccentricity), and $\mathrm{ecc}(B)$ is
+the eccentricity of the set $B$.
 -/
 @[category research open, AMS 5]
-theorem conjecture142 (G : SimpleGraph α) (h : G.Connected) :
-    let B : Set α := maxEccentricityVertices G
-    (2 : ℝ) / 3 * (G.girth : ℝ) + (ecc G B : ℝ) ≤ (largestInducedTreeSize G : ℝ) := by
+theorem conjecture142 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
+    let B : Set α := (boundaryVertices G : Set α)
+    (2 : ℝ) / 3 * (G.girth : ℝ) + (eccSet G B : ℝ) ≤ (largestInducedTreeSize G : ℝ) := by
   sorry
 
 -- Sanity checks
@@ -52,9 +51,10 @@ theorem conjecture142 (G : SimpleGraph α) (h : G.Connected) :
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ largestInducedTreeSize G := Nat.zero_le _
 
-/-- `ecc G` returns a natural number (nonneg). -/
+/-- `eccSet G` returns a natural number (nonneg). -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ ecc G (maxEccentricityVertices G) :=
+example (G : SimpleGraph (Fin 3)) [DecidableRel G.Adj] :
+    0 ≤ eccSet G ((boundaryVertices G : Finset _) : Set _) :=
   Nat.zero_le _
 
 end WrittenOnTheWallII.GraphConjecture142
