@@ -65,6 +65,16 @@ structure IsMovingSofa (s : Set ℝ²) (m : I → E(2)) : Prop where
 /-- The unit square. -/
 def unitSquare : Set ℝ² := parallelepiped (EuclideanSpace.basisFun (Fin 2) ℝ)
 
+/-- Coordinates of points in the unit square lie in `[0,1]`. -/
+@[category API, AMS 49]
+private lemma mem_Icc_of_mem_unitSquare {p : ℝ²} (hp : p ∈ unitSquare) (i : Fin 2) :
+    p i ∈ Set.Icc (0:ℝ) 1 := by
+  have h := parallelepiped_basis_eq (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis
+  rw [unitSquare, show parallelepiped ⇑(EuclideanSpace.basisFun (Fin 2) ℝ) =
+    parallelepiped (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis by
+      rw [OrthonormalBasis.coe_toBasis], h] at hp
+  simpa using hp i
+
 /--
 The unit square $[0,1]^2$ is a valid moving sofa (with the identity motion).
 It sits in the corner where both hallways overlap, so the stationary motion works.
@@ -72,7 +82,33 @@ This is a sanity check that the `IsMovingSofa` definition is not vacuous.
 -/
 @[category test, AMS 49]
 theorem isMovingSofa_unitSquare : ∃ m, IsMovingSofa unitSquare m := by
-  sorry
+  refine ⟨fun _ => .refl ℝ ℝ², ?_, ?_, continuous_const, rfl, ?_, ?_, ?_⟩
+  · unfold unitSquare parallelepiped
+    refine ⟨⟨0, 0, by simp, by simp⟩, (convex_Icc _ _).isPreconnected.image _ ?_⟩
+    exact (continuous_finset_sum _ fun i _ =>
+      (continuous_apply i).smul continuous_const).continuousOn
+  · unfold unitSquare parallelepiped
+    exact (isCompact_Icc.image
+      (continuous_finset_sum _ fun i _ =>
+        (continuous_apply i).smul continuous_const)).isClosed
+  · intro p hp
+    have h0 := mem_Icc_of_mem_unitSquare hp 0
+    have h1 := mem_Icc_of_mem_unitSquare hp 1
+    exact ⟨p 0, p 1, ⟨h0.2.trans (by norm_num), h1.1, h1.2⟩,
+      by ext i; fin_cases i <;> rfl⟩
+  · rintro t q ⟨p, hp, rfl⟩
+    rw [show (AffineIsometryEquiv.refl ℝ ℝ²) p = p from rfl]
+    refine .inl ?_
+    have h0 := mem_Icc_of_mem_unitSquare hp 0
+    have h1 := mem_Icc_of_mem_unitSquare hp 1
+    exact ⟨p 0, p 1, ⟨h0.2.trans (by norm_num), h1.1, h1.2⟩,
+      by ext i; fin_cases i <;> rfl⟩
+  · rintro q ⟨p, hp, rfl⟩
+    rw [show (AffineIsometryEquiv.refl ℝ ℝ²) p = p from rfl]
+    have h0 := mem_Icc_of_mem_unitSquare hp 0
+    have h1 := mem_Icc_of_mem_unitSquare hp 1
+    exact ⟨p 0, p 1, ⟨h0.1, h0.2, h1.2.trans (by norm_num)⟩,
+      by ext i; fin_cases i <;> rfl⟩
 
 /--
 The rigid motion that translates by $p$ and then rotates counterclockwise by $\alpha$.

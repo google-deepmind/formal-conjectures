@@ -59,6 +59,10 @@ Question: are all convex polyhedra with nonempty interior Rupert?
 * This problem's name comes from the fact that it is a generalization
   of [Prince Rupert's Cube](https://en.wikipedia.org/wiki/Prince_Rupert%27s_cube).
 
+* [A convex polyhedron without Rupert's property](https://arxiv.org/abs/2508.18475),
+  Jakob Steininger and Sergey Yurkevich, 2025. Constructs a convex polyhedron and
+  a proof that it is not Rupert, resolving the open question.
+
 -/
 
 namespace Rupert
@@ -73,7 +77,7 @@ scoped notation "ℝ³" => Fin 3 → ℝ
 /--
 The result of transforming a subset of ℝ³ by a chosen rotation and offset,
 and then projected to ℝ².
---/
+-/
 def transformed_shadow (X : Set ℝ³) (offset : ℝ²) (rotation : SO3) : Set ℝ² :=
   (fun p ↦ offset + (rotation *ᵥ p) ∘ Fin.castSucc) '' X
 
@@ -100,10 +104,11 @@ def IsRupert (vertices : Finset ℝ³) : Prop :=
    inner_shadow ⊆ interior outer_shadow
 
 /--
-Does the Rupert property hold for every convex polyhedron with nonempty interior?
+There exists a convex polyhedron with nonempty interior for which the Rupert property does
+not hold.
 -/
-@[category research open, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/jcreedcmu/Noperthedron"]
 theorem is_every_convex_polyhedron_rupert :
-    answer(sorry) ↔ ∀ (vertices : Finset ℝ³),
+    answer(False) ↔ ∀ (vertices : Finset ℝ³),
        (interior (convexHull ℝ vertices : Set ℝ³)).Nonempty → IsRupert vertices := by
  sorry
