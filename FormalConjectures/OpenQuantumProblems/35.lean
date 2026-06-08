@@ -1287,6 +1287,7 @@ The rank condition guarantees ∃ j, c_j ≠ 0.
 Therefore ρ(x,y) = 0.
 -/
 
+set_option maxHeartbeats 0 in
 @[category API, AMS 5 15 81 94]
 lemma Gamma_rank_cross_terms (perm : Equiv.Perm (Fin 11)) (x y : Config 5 4) (hxy : x ≠ y) :
     ∃ j, (∑ i : Fin 5, GF4_mul (fin4_to_GF4 (x i) + fin4_to_GF4 (y i))
