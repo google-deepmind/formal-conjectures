@@ -43,23 +43,14 @@ integrals; we do not need that generality for Sidorenko. -/
 
 variable {V W : Type*}
 
-/-- The **number of edges** of a finite simple graph, as a natural number. -/
-noncomputable def edgeCount [Fintype V] (H : SimpleGraph V) [DecidableRel H.Adj] : ℕ :=
-  H.edgeFinset.card
-
 /- ## The conjecture -/
 
 /--
 **Sidorenko's conjecture (1993).**
 
-For every finite bipartite simple graph `H` and every finite simple graph `G`:
-`t(H, G) ≥ t(K_2, G)^{e(H)}`, where `K_2` denotes the single-edge graph on 2 vertices (i.e.
-`completeGraph (Fin 2)`).
-
-**Status:** OPEN (as of 2026-04).
-
-The `answer(sorry)` reflects that no unconditional proof is known; the conjectured answer is
-"yes for all bipartite `H`."
+For every finite bipartite simple graph $H$ and every finite simple graph $G$:
+$t(H, G) \ge t(K_2, G)^{e(H)}$, where $K_2$ denotes the single-edge graph on 2 vertices
+(i.e. `completeGraph (Fin 2)`).
 -/
 @[category research open, AMS 5]
 theorem sidorenko_conjecture : answer(sorry) ↔
@@ -67,7 +58,7 @@ theorem sidorenko_conjecture : answer(sorry) ↔
       (H : SimpleGraph V) (G : SimpleGraph W)
       [DecidableRel H.Adj] [DecidableRel G.Adj],
       H.IsBipartite →
-      homDensity (completeGraph (Fin 2)) G ^ (edgeCount H) ≤ homDensity H G := by
+      homDensity (completeGraph (Fin 2)) G ^ H.edgeFinset.card ≤ homDensity H G := by
   sorry
 
 /- ## Proved special cases -/
@@ -79,18 +70,17 @@ When `H` is `K_2` (the single-edge graph on 2 vertices), `e(H) = 1`, so the RHS 
 inequality is just `t(K_2, G)^1 = t(K_2, G) = t(H, G)`, which equals the LHS. Hence the
 inequality holds as equality.
 
-The proof records that `edgeCount (completeGraph (Fin 2)) = 1` and then reduces the claim
+The proof records that `(completeGraph (Fin 2)).edgeFinset.card = 1` and then reduces the claim
 to `t(K_2, G) ≤ t(K_2, G)`, which is `le_refl`.
 -/
 @[category research solved, AMS 5]
 theorem sidorenko_K2 {W : Type} [Fintype W] [DecidableEq W]
     (G : SimpleGraph W) [DecidableRel G.Adj] :
     homDensity (completeGraph (Fin 2)) G ^
-      (edgeCount (completeGraph (Fin 2))) ≤
+      ((completeGraph (Fin 2)).edgeFinset.card) ≤
       homDensity (completeGraph (Fin 2)) G := by
-  -- `edgeCount (completeGraph (Fin 2)) = 1`, so the inequality is `x^1 ≤ x`, i.e. `x ≤ x`.
-  have hK2 : edgeCount (completeGraph (Fin 2)) = 1 := by
-    unfold edgeCount
+  -- `(completeGraph (Fin 2)).edgeFinset.card = 1`, so the inequality is `x^1 ≤ x`, i.e. `x ≤ x`.
+  have hK2 : (completeGraph (Fin 2)).edgeFinset.card = 1 := by
     rw [SimpleGraph.card_edgeFinset_completeGraph_fin, Nat.choose_self]
   rw [hK2, pow_one]
 
@@ -101,10 +91,9 @@ theorem sidorenko_K2 {W : Type} [Fintype W] [DecidableEq W]
 The four edges are `{inl 0, inr 0}`, `{inl 0, inr 1}`, `{inl 1, inr 0}`, `{inl 1, inr 1}`. -/
 @[category API, AMS 5]
 lemma edgeCount_completeBipartiteGraph_fin_two :
-    edgeCount (completeBipartiteGraph (Fin 2) (Fin 2)) = 4 := by
+    (completeBipartiteGraph (Fin 2) (Fin 2)).edgeFinset.card = 4 := by
   -- Every vertex of `K_{2,2}` has degree 2, and there are 4 vertices; so by the
   -- handshake formula `2 * #E = ∑ deg = 4 * 2 = 8`, hence `#E = 4`.
-  unfold edgeCount
   have hdeg : ∀ v : Fin 2 ⊕ Fin 2, (completeBipartiteGraph (Fin 2) (Fin 2)).degree v = 2 := by
     intro v
     rw [show (completeBipartiteGraph (Fin 2) (Fin 2)).degree v =
@@ -371,7 +360,7 @@ The proof uses `Finset.sum_mul_sq_le_sq_mul_sq` (discrete Cauchy–Schwarz) from
 theorem sidorenko_K22 {W : Type} [Fintype W] [DecidableEq W]
     (G : SimpleGraph W) [DecidableRel G.Adj] :
     homDensity (completeGraph (Fin 2)) G ^
-      (edgeCount (completeBipartiteGraph (Fin 2) (Fin 2))) ≤
+      ((completeBipartiteGraph (Fin 2) (Fin 2)).edgeFinset.card) ≤
       homDensity (completeBipartiteGraph (Fin 2) (Fin 2)) G := by
   -- Unfold `edgeCount` to `4`.
   rw [edgeCount_completeBipartiteGraph_fin_two]
@@ -497,8 +486,7 @@ theorem sidorenko_K22_both_sides_bounded {W : Type*} [Fintype W] [Nonempty W]
 `u ≠ v`; on a subsingleton that's impossible, so no edges exist. -/
 @[category API, AMS 5]
 lemma edgeCount_eq_zero_of_subsingleton {V : Type*} [Fintype V] [Subsingleton V]
-    (H : SimpleGraph V) [DecidableRel H.Adj] : edgeCount H = 0 := by
-  unfold edgeCount
+    (H : SimpleGraph V) [DecidableRel H.Adj] : H.edgeFinset.card = 0 := by
   rw [Finset.card_eq_zero]
   rw [Finset.eq_empty_iff_forall_notMem]
   intro e he
@@ -541,8 +529,8 @@ theorem sidorenko_tree_subsingleton {V W : Type} [Fintype V] [Fintype W]
     [Subsingleton V] [DecidableEq V] [DecidableEq W] [Nonempty W]
     (H : SimpleGraph V) (G : SimpleGraph W)
     [DecidableRel H.Adj] [DecidableRel G.Adj] :
-    homDensity (completeGraph (Fin 2)) G ^ (edgeCount H) ≤ homDensity H G := by
-  -- `edgeCount H = 0`, so LHS = `_ ^ 0 = 1`.
+    homDensity (completeGraph (Fin 2)) G ^ (H.edgeFinset.card) ≤ homDensity H G := by
+  -- `H.edgeFinset.card = 0`, so LHS = `_ ^ 0 = 1`.
   rw [edgeCount_eq_zero_of_subsingleton H, pow_zero]
   -- `homDensity H G = |W|^|V| / |W|^|V| = 1`.
   have hWpos : 0 < Fintype.card W := Fintype.card_pos
@@ -575,7 +563,7 @@ theorem sidorenko_tree {V W : Type} [Fintype V] [Fintype W]
     (H : SimpleGraph V) (G : SimpleGraph W)
     [DecidableRel H.Adj] [DecidableRel G.Adj]
     (hTree : H.IsTree) :
-    homDensity (completeGraph (Fin 2)) G ^ (edgeCount H) ≤ homDensity H G := by
+    homDensity (completeGraph (Fin 2)) G ^ (H.edgeFinset.card) ≤ homDensity H G := by
   -- A tree's vertex set is nonempty.
   haveI : Nonempty V := hTree.isConnected.nonempty
   -- Split on whether `V` is a subsingleton.
@@ -592,7 +580,7 @@ theorem sidorenko_tree {V W : Type} [Fintype V] [Fintype W]
     -- 1. A `homCount_of_leaf_decomposition` lemma (sum over `φ : H' →g G` of `G.degree (φ u)`).
     -- 2. A discrete Jensen inequality (`∑ x_i · w_i ≥ (∑ w_i) · ((∑ x_i w_i) / ∑ w_i)` with
     --    appropriate convexity).
-    -- 3. Induction on `edgeCount H` (equivalently `|V| - 1`).
+    -- 3. Induction on `H.edgeFinset.card` (equivalently `|V| - 1`).
     --
     -- Deferred to a future commit; see `docs/PHASE2_PROOF_ROADMAP.md` §6.
     sorry
