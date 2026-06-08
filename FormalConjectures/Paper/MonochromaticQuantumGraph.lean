@@ -707,16 +707,6 @@ theorem eqSystem_no_solution_ge6_ge3_int :
 /- ## Open conjectures over {-1,0,1} ⊆ ℤ
    (implemented as ℤ-valued weights with a pointwise restriction) -/
 
-/-- For $N = 4$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
-theorem eqSystem4_no_solution_d4_trinary_int :
-    answer(sorry) ↔
-      ¬ ∃ W : WeightsN 4 4 ℤ,
-          (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
-            EqSystemN 4 4 W := by
-  sorry
-
 /-- For $N = 4$ and all $D \geq 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$?
 

@@ -45,54 +45,6 @@ noncomputable def m (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 
-/-- The maximum cardinality among all independent sets `s`
-    that maximize the quantity `|s| - |N(s)|`, where `N(s)`
-    is the neighborhood of the set `s`. -/
-noncomputable def aprime (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
-  letI indep_sets : Finset (Finset α) := univ.powerset.filter (fun s => G.IsIndepSet (s : Set α))
-  letI diff (s : Finset α) : ℤ := (s.card : ℤ) - (⋃ v ∈ (s : Set α), G.neighborSet v).toFinset.card
-  letI max_diff := (indep_sets.image diff).max
-  letI critical_sets := indep_sets.filter (fun s ↦ diff s = max_diff.getD 0)
-  letI max_card := (critical_sets.image Finset.card).max
-  (max_card.getD 0 : ℝ)
-
-/-- `largestInducedForestSize G` is the size of a largest induced forest of `G`. -/
-noncomputable def largestInducedForestSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, (G.induce s).IsAcyclic ∧ s.card = n }
-
-/-- The degree sequence of a graph, sorted in nondecreasing order. -/
-noncomputable def degreeSequence (G : SimpleGraph α) [DecidableRel G.Adj] : List ℕ :=
-  (Finset.univ.val.map fun v : α => G.degree v).sort (· ≤ ·)
-
-/--
-The maximum number of occurrences of any term of the degree sequence of `G`.
--/
-noncomputable def degreeSequenceMultiplicity (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  letI degs := degreeSequence G
-  (List.max? (degs.map (fun d => degs.count d))).getD 0
-
-/-- `largestInducedBipartiteSubgraphSize G` is the size of a largest induced
-bipartite subgraph of `G`. -/
-noncomputable def largestInducedBipartiteSubgraphSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, (G.induce s).IsBipartite ∧ s.card = n }
-
-/-- `b G` is the number of vertices of a largest induced bipartite subgraph of `G`.
-Returned as a real number. -/
-noncomputable def b (G : SimpleGraph α) : ℝ :=
-  (largestInducedBipartiteSubgraphSize G : ℝ)
-
-/-- Independence number of the neighbourhood of `v`. -/
-noncomputable def indepNeighborsCard (G : SimpleGraph α) (v : α) : ℕ :=
-  (G.induce (G.neighborSet v)).indepNum
-
-/-- The same quantity as a real number. -/
-noncomputable def indepNeighbors (G : SimpleGraph α) (v : α) : ℝ :=
-  (indepNeighborsCard G v : ℝ)
-
-/-- Average of `indepNeighbors` over all vertices. -/
-noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
-  (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
-
 /-- A unit distance graph in ℝ²:
 A graph where the vertices V are a collection of points in ℝ² and there is
 an edge between two points if and only if the distance between them is 1. -/
@@ -116,74 +68,10 @@ def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop := Nontrivial V �
   Pairwise fun u v ↦ ∃ P : Set (G.Walk u v),
     P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
 
-/-- Infinite graphs: definitions for max degree and clique number so that the maximum
-degree (resp. clique number) of a graph with unbounded degree (resp. clique size) is
-`∞` rather than 0.
+/-- Infinite graphs: definitions for clique number so that the clique number of a graph
+with unbounded clique size is `∞` rather than 0.
 -/
 noncomputable
-def edegree {V : Type*} (G : SimpleGraph V) (v : V) : ℕ∞ := (G.neighborSet v).encard
-
-noncomputable
-def emaxDegree {V : Type*} (G : SimpleGraph V) : ℕ∞ := ⨆ v, G.edegree v
-
-noncomputable
 def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ : G.IsClique s), #s
-
--- ================================================================
--- Computable graph invariants for testing
--- ================================================================
-
-/-- BFS expansion: add all neighbors of S to S. -/
-def bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Finset α :=
-  S ∪ S.biUnion (fun v => Finset.univ.filter (G.Adj v))
-
-def bfs_dist_aux [DecidableEq α] [Fintype α]
-    (G : SimpleGraph α) [DecidableRel G.Adj] (target : α) :
-    ℕ → ℕ → Finset α → ℕ
-  | 0, _, _ => 0
-  | fuel + 1, depth, reached =>
-    if target ∈ reached then depth
-    else bfs_dist_aux G target fuel (depth + 1) (bfs_expand G reached)
-
-/-- Computable graph distance via BFS.
-Returns 0 if u = v or if v is unreachable from u. -/
-def computable_dist (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) : ℕ :=
-  if u = v then 0
-  else bfs_dist_aux G v (Fintype.card α) 1 (bfs_expand G {u})
-
-/-- Computable independence number via powerset enumeration. -/
-def computable_indep_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  (Finset.univ.powerset.filter (fun s : Finset α =>
-    ∀ u ∈ s, ∀ v ∈ s, u ≠ v → ¬G.Adj u v)).sup Finset.card
-
-/-- Computable domination number via powerset enumeration. -/
-def computable_dom_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  (Finset.univ.powerset.filter (fun D : Finset α =>
-    ∀ v : α, v ∈ D ∨ ∃ w ∈ D, G.Adj v w)).inf'
-    ⟨Finset.univ, Finset.mem_filter.mpr
-      ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
-       fun v => Or.inl (Finset.mem_univ v)⟩⟩
-    Finset.card
-
-/-- Computable Wiener index: half the sum of all ordered pairwise distances. -/
-def computable_wiener (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  (∑ u ∈ Finset.univ, ∑ v ∈ Finset.univ, computable_dist G u v) / 2
-
-/-- Computable average distance as a rational. -/
-def computable_avg_dist (G : SimpleGraph α) [DecidableRel G.Adj] : ℚ :=
-  if Fintype.card α > 1 then
-    (∑ u ∈ Finset.univ, ∑ v ∈ Finset.univ, (computable_dist G u v : ℚ)) /
-      ((Fintype.card α : ℚ) * ((Fintype.card α : ℚ) - 1))
-  else 0
-
-/-- Computable Szeged auxiliary: count vertices closer to u than v. -/
-def computable_szeged_aux (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) : ℕ :=
-  (Finset.univ.filter (fun w => computable_dist G w u < computable_dist G w v)).card
-
-/-- Computable Szeged index. -/
-def computable_szeged_index (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  ∑ e ∈ G.edgeFinset,
-    Sym2.lift ⟨fun u v => computable_szeged_aux G u v * computable_szeged_aux G v u,
-      fun a b => by ring⟩ e
 
 end SimpleGraph
