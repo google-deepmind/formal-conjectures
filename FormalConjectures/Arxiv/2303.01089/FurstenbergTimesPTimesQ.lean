@@ -20,7 +20,9 @@ import FormalConjectures.Util.ProblemImports
 # Furstenberg's `times p, times q` conjectures
 
 *Reference:* [arxiv/2303.01089](https://arxiv.org/abs/2303.01089)
-
+**Around Furstenberg's times $p$, times $q$ conjecture: times $p$-invariant measures
+with some large Fourier coefficients**
+by *Catalin Badea, Sophie Grivaux*
 -/
 
 noncomputable section
