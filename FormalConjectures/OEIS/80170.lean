@@ -61,7 +61,7 @@ Conjecture: The gcd condition is equivalent to the prime power condition.
 -/
 @[category research open, AMS 11]
 theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
-    GCDCondition k ↔ PrimePowerCondition (k - 1) := by
+    GCDCondition k ↔ PrimePowerCondition (k + 1) := by
   sorry
 
 end OeisA80170
