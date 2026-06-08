@@ -35,14 +35,8 @@ variable {X : Type*} [Fintype X] [DecidableEq X]
 
 /- ## Monotone families
 
-A family `F ⊆ 2^X` is **monotone (increasing)** if it is upward-closed: whenever `A ∈ F` and
-`A ⊆ B ⊆ X` then `B ∈ F`. We work with `F : Set (Finset X)` so that `F` is a subset of the
-powerset `2^X` represented as `Finset X`. -/
-
-/-- A family of finite subsets of `X` is **monotone increasing** if it is closed under taking
-supersets (equivalently, upward-closed in the inclusion order on `Finset X`). -/
-def IsMonotoneFamily (F : Set (Finset X)) : Prop :=
-  ∀ ⦃A B : Finset X⦄, A ∈ F → A ⊆ B → B ∈ F
+A family $F \subseteq 2^X$ is **monotone (increasing)** if it is upward-closed in the
+inclusion order on `Finset X`. We use Mathlib's generic `IsUpperSet` for this. -/
 
 /- ## p-random subsets
 
@@ -75,20 +69,21 @@ The **expectation threshold** `q_c(F)` is the infimum of `q ∈ [0, 1]` such tha
 number of *minimal* elements of `F` contained in a `q`-random subset is at least `1/2`. We
 formalise minimality inside `F` and the expected-minimal-count sum explicitly. -/
 
-/-- A set `A ∈ F` is a **minimal element of `F`** if no proper subset of `A` lies in `F`. For
-monotone-increasing `F`, the minimal elements generate `F` by upward closure. -/
-def IsMinimalIn (F : Set (Finset X)) (A : Finset X) : Prop :=
-  A ∈ F ∧ ∀ B ∈ F, B ⊆ A → B = A
-
 /-- Under the `q`-random model on `X`, the **expected number of minimal `F`-elements** that
 happen to lie inside the random subset equals
-  `∑_{A minimal in F} q^|A|`.
-(Each minimal `A` is contained in a `q`-random subset with probability exactly `q^|A|`,
-independently over the `|A|` mandatory vertices; sum of indicator expectations over a finite
+  $\sum_{A \text{ minimal in } F} q^{|A|}$.
+(Each minimal $A$ is contained in a $q$-random subset with probability exactly $q^{|A|}$,
+independently over the $|A|$ mandatory vertices; sum of indicator expectations over a finite
 set is the finite sum.) -/
 noncomputable def expectedMinimalCount (F : Set (Finset X)) (q : ℝ) : ℝ :=
-  ∑ A ∈ (Finset.univ : Finset X).powerset.filter (fun A => IsMinimalIn F A),
+  ∑ A ∈ (Finset.univ : Finset X).powerset.filter (fun A => Minimal (· ∈ F) A),
     q ^ A.card
+
+/-- The **size of a largest minimal element** $\ell(F)$ of a family $F$ — the
+$\ell(F)$ appearing in the sharp Kahn–Kalai bound $p_c \le K \cdot q_c \cdot \log \ell(F)$.
+Returns `0` if $F$ has no minimal elements (e.g. $F$ is empty). -/
+noncomputable def largestMinimalSize (F : Set (Finset X)) : ℕ :=
+  ((Finset.univ : Finset X).powerset.filter (fun A => Minimal (· ∈ F) A)).sup Finset.card
 
 /-- The **expectation threshold** `q_c(F)`: the infimum of `q ∈ [0,1]` such that the expected
 number of minimal `F`-elements fitting inside a `q`-random subset is at least `1/2`. -/
@@ -100,29 +95,28 @@ noncomputable def expectationThreshold (F : Set (Finset X)) : ℝ :=
 /--
 **Kahn–Kalai threshold inequality** (Kahn–Kalai 2007 conjecture; Park–Pham 2022 proof).
 
-There exists a universal constant `C > 0` such that for every finite ground set `X` and every
-non-empty monotone increasing family `F ⊆ 2^X`,
-  `p_c(F) ≤ C · q_c(F) · log(|X| + 2)`.
-
-**Status:** PROVED (Park–Pham 2022; published in *J. Amer. Math. Soc.* 2024).
+There exists a universal constant $K > 0$ such that for every finite ground set $X$ and every
+non-empty monotone increasing family $F \subseteq 2^X$,
+$$p_c(F) \le K \cdot q_c(F) \cdot \log \ell(F),$$
+where $\ell(F)$ is the size of a largest minimal element of $F$ (i.e. `largestMinimalSize F`).
 
 **Proof sketch.** The Park–Pham argument is a short (≈ 6 pages) covering argument: given a
-cover of `F` by "small" sets in a sense measured by `q_c`, one constructs a bounded-size
-sunflower-free system witnessing the probability-threshold bound up to a `log |X|` factor.
-Formalising this requires a careful account of covers, minimum-weight sunflower covers, and
-several discrete entropy / `union-bound` estimates that are not yet in Mathlib. We leave the
-proof as `sorry`.
+cover of $F$ by "small" sets in a sense measured by $q_c$, one constructs a bounded-size
+sunflower-free system witnessing the probability-threshold bound up to a $\log \ell(F)$
+factor. Formalising this requires a careful account of covers, minimum-weight sunflower
+covers, and several discrete entropy / union-bound estimates that are not yet in Mathlib.
+We leave the proof as `sorry`.
 
-The informal conjecture `p_c ≤ C · q_c · log(|X|+2)` is sharp up to the constant `C`
-(matching the "shifted coupon collector" lower bound on `p_c / q_c`); see [KK07, §3].
+The bound is sharp up to the constant $K$ (matching the "shifted coupon collector" lower
+bound on $p_c / q_c$); see [KK07, §3].
 -/
 @[category research solved, AMS 5]
 theorem kahn_kalai :
-    ∃ C : ℝ, 0 < C ∧ ∀ {X : Type} [Fintype X] [DecidableEq X]
+    ∃ K : ℝ, 0 < K ∧ ∀ {X : Type} [Fintype X] [DecidableEq X]
       (F : Set (Finset X)),
-      F.Nonempty → IsMonotoneFamily F →
+      F.Nonempty → IsUpperSet F →
       probabilityThreshold F ≤
-        C * expectationThreshold F * Real.log ((Fintype.card X : ℝ) + 2) := by
+        K * expectationThreshold F * Real.log (largestMinimalSize F : ℝ) := by
   -- Park–Pham 2022 [PP24]. Deferred pending Mathlib sunflower / covering helpers.
   sorry
 
@@ -137,7 +131,7 @@ deferred; the fact is standard but the elementary proof (FKG inequality / direct
 requires writing out a product-measure coupling which we skip here.
 -/
 @[category research solved, AMS 5]
-theorem familyMeasure_mono (F : Set (Finset X)) (_hMono : IsMonotoneFamily F)
+theorem familyMeasure_mono (F : Set (Finset X)) (_hMono : IsUpperSet F)
     {p q : ℝ} (_hp : 0 ≤ p) (_hpq : p ≤ q) (_hq : q ≤ 1) :
     familyMeasure F p ≤ familyMeasure F q := by
   -- Standard FKG/coupling. Deferred.
@@ -157,7 +151,7 @@ to `familyMeasure`.
 -/
 @[category research solved, AMS 5]
 theorem expectationThreshold_le_probabilityThreshold
-    (F : Set (Finset X)) (_hne : F.Nonempty) (_hMono : IsMonotoneFamily F) :
+    (F : Set (Finset X)) (_hne : F.Nonempty) (_hMono : IsUpperSet F) :
     expectationThreshold F ≤ probabilityThreshold F := by
   -- Markov inequality; deferred.
   sorry
