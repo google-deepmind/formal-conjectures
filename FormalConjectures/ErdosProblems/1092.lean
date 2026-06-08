@@ -19,16 +19,22 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1092
 Let $f_r(n)$ be maximal such that, if a graph $G$ has the property that every subgraph $H$ on $m$
-vertices is the union of a graph with chromatic number $r$ and a graph with $\leq f_r(m)$ edges,
-then $G$ has chromatic number $\leq r+1$.
+vertices is the union of a graph with chromatic number $\leq r$ and a graph with $\leq f_r(m)$
+edges, then $G$ has chromatic number $\leq r+1$.
 
 Erdős asked whether:
 * `f 2 n ≫ n`
 * more generally, `f r n ≫ r * n`
 
-This problem is currently open.
+This was disproved by Rödl, who constructed, for any $\epsilon > 0$ and $k$, a graph with
+chromatic number $\geq k$ such that every subgraph on $m$ vertices is bipartite after deleting at
+most $\epsilon m$ edges. This proves (in a strong sense) that $f_r(n) = o(n)$ for all fixed
+$r \geq 2$.
 
-*Reference:* https://www.erdosproblems.com/1092
+*References:*
+- [Erdős Problem 1092](https://www.erdosproblems.com/1092)
+- V. Rödl, *On the chromatic number of subgraphs of a given graph*,
+  Proc. Amer. Math. Soc. **85** (1982), 382–386
 -/
 
 namespace Erdos1092
@@ -41,8 +47,8 @@ open Filter
 
 /--
 $f_r(n)$ is maximal such that, if a graph $G$ on $n$ vertices has the property that every
-subgraph $H$ on $m$ vertices has chromatic number $\leq r+1$ once we remove $f_r(m)$ edges
-from it.
+subgraph $H$ on $m$ vertices has chromatic number $\leq r$ once we remove $f_r(m)$ edges
+from it, then $G$ has chromatic number $\leq r+1$.
 -/
 noncomputable def f (r n : ℕ) : ℕ :=
   sSup {k : ℕ |
@@ -50,19 +56,20 @@ noncomputable def f (r n : ℕ) : ℕ :=
       (∀ H : Subgraph G,
         ∃ E : Finset (Sym2 H.verts),
           E.card ≤ k ∧
-          chromaticNumber (H.coe.deleteEdges E) ≤ (r + 1 : ℕ∞)) →
+          chromaticNumber (H.coe.deleteEdges E) ≤ (r : ℕ∞)) →
       chromaticNumber G ≤ (r + 1 : ℕ∞)}
 
-/-- Asymptotic behavior of $f(2, n)$. -/
-@[category research open, AMS 5]
-theorem f_asymptotic_2 : answer(sorry) ↔
+/-- Is $f_2(n) \gg n$? Disproved by Rödl, who showed $f_r(n) = o(n)$ for all fixed $r \geq 2$. -/
+@[category research solved, AMS 5]
+theorem f_asymptotic_2 : answer(False) ↔
     (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
   sorry
 
-/-- Asymptotic behavior of $f(r, n)$ for general $r$. -/
-@[category research open, AMS 5]
+/-- Is $f_r(n) \gg_r n$ for all $r$? Disproved by Rödl, who showed $f_r(n) = o(n)$ for all fixed
+$r \geq 2$. -/
+@[category research solved, AMS 5]
 theorem f_asymptotic_general :
-    answer(sorry) ↔ ∀ r : ℕ, (fun n : ℕ => ((r : ℝ) * n)) =o[atTop] (fun n : ℕ => (f r n : ℝ)) := by
+    answer(False) ↔ ∀ r : ℕ, (fun n : ℕ => ((r : ℝ) * n)) =o[atTop] (fun n : ℕ => (f r n : ℝ)) := by
   sorry
 
 end Erdos1092
