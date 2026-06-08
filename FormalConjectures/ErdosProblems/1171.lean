@@ -19,98 +19,21 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1171
 
-**Verbatim statement (Erdős #1171, status O):**
-> Is it true that, for all finite $k<\omega$,\[\omega_1^2\to (\omega_1\omega, 3,\ldots,3)_{k+1}^2?\]
-
-**Source:** https://www.erdosproblems.com/1171
-
-**Notes:** OPEN
-
-
 *Reference:* [erdosproblems.com/1171](https://www.erdosproblems.com/1171)
-
-*References for known results:*
-- [Va99, 7.84] Vardi, Menachem, *Partition Relations, Problem Collection*, available online.
-- [EH74] Erdős, Paul and Hajnal, András, Unsolved and solved problems in set theory. Proceedings
-  of the Tarski symposium (1974), 269-287.
-- [Ba89b] Baumgartner, James E., Partition relations for countable topological spaces. J. Combin.
-  Theory Ser. A (1986), 38-54.
-
-## Problem Statement
-
-Is it true that, for all finite $k$ (with $k < \omega$),
-$$\omega_1^2 \to (\omega_1 \cdot \omega, \underbrace{3, \ldots, 3}_{k})^2_{k+1}?$$
-
-This is a multicolor generalization of the Erdős–Hajnal theorem. It asks whether every
-$(k+1)$-coloring of the pairs (edges) of the complete graph on $\omega_1^2$ either:
-- produces a monochromatic set of order type $\omega_1 \cdot \omega$ in color 0, or
-- produces a monochromatic triangle $K_3$ in some non-zero color $i \in \{1, \ldots, k\}$.
-
-## Known Results
-
-- **Erdős–Hajnal** [EH74]: $\omega_1^2 \to (\omega_1 \cdot \omega, 3)^2$ (the $k = 1$ case).
-  This is the binary partition relation with one "large" color and one "triangle" color.
-- **Baumgartner** [Ba89b]: Under a form of Martin's axiom (MA), the binary relation
-  $\omega_1 \cdot \omega \to (\omega_1 \cdot \omega, 3)^2$ holds.
-
-## Overview
-
-The key novelty here is `OrdinalMultiColorRamsey`: a $(k+1)$-color generalization of the
-binary ordinal Ramsey relation. In `OrdinalMultiColorRamsey α β γ k`:
-- `α` is the ordinal whose pairs are colored (the vertex set),
-- `β` is the ordinal type required for a color-0 clique,
-- `γ` is the clique size (as a cardinal) required for each non-zero color,
-- `k` is the number of non-zero colors (so there are `k+1` colors total).
-
-The open question `erdos_1171` asks whether this holds for all finite `k` with
-`α = ω₁²`, `β = ω₁ · ω`, `γ = 3`.
 -/
 
 open Cardinal Ordinal SimpleGraph
 
 namespace Erdos1171
 
-universe u
-
-/- ### The multicolor ordinal partition relation -/
-
 /--
-`OrdinalMultiColorRamsey α β γ k` asserts the multicolor partition relation
-`α → (β, γ, γ, …, γ)²_{k+1}` (with `k` copies of `γ`).
-
-It states: for any function `col : Sym2 α.ToType → Fin (k + 1)` assigning one of `k+1` colors
-to each pair from `α`, one of the following holds:
-* Color 0: there is a set `s ⊆ α.ToType` of order type `β` that is monochromatic in color 0
-  (i.e. every pair in `s` gets color 0), or
-* Color i (for some `i : Fin k`): there is a set `s ⊆ α.ToType` with `#s = γ` that is
-  monochromatic in color `i.succ` (i.e. every pair in `s` gets color `i.succ`).
-
-When `k = 1` this reduces to the binary partition relation `α → (β, γ)²`.
--/
-def OrdinalMultiColorRamsey (α β : Ordinal.{u}) (γ : Cardinal.{u}) (k : ℕ) : Prop :=
-  ∀ col : Sym2 α.ToType → Fin (k + 1),
-    -- Either color-0 clique of order type β ...
-    (∃ s : Set α.ToType,
-      (∀ x ∈ s, ∀ y ∈ s, x ≠ y → col s(x, y) = 0) ∧
-      typeLT s = β) ∨
-    -- ... or for some non-zero color i, a clique of cardinality γ.
-    (∃ (i : Fin k) (s : Set α.ToType),
-      (∀ x ∈ s, ∀ y ∈ s, x ≠ y → col s(x, y) = i.succ) ∧
-      #s = γ)
-
-/- ### The main open problem -/
-
-/--
-**OPEN**: Is it true that for all finite $k < \omega$,
+**Erdős Problem 1171.** Is it true that for all finite $k < \omega$,
 $$\omega_1^2 \to (\omega_1 \cdot \omega, \underbrace{3, \ldots, 3}_{k})^2_{k+1}?$$
 
-In any $(k+1)$-coloring of the pairs of the complete graph on $\omega_1^2$, either:
-* there is a color-0 set of order type $\omega_1 \cdot \omega$, or
-* there is a monochromatic triangle $K_3$ in some non-zero color.
-
-The case $k = 1$ (binary, `erdos_1171.variants.k_one`) is the Erdős–Hajnal theorem.
-
-**Status**: OPEN.
+In any $(k+1)$-coloring of the pairs of the complete graph on $\omega_1^2$, either
+there is a color-0 set of order type $\omega_1 \cdot \omega$, or there is a
+monochromatic triangle $K_3$ in some non-zero color. The case $k = 1$
+(`erdos_1171.variants.k_one`) is the Erdős–Hajnal theorem [EH74].
 -/
 @[category research open, AMS 5]
 theorem erdos_1171 :
@@ -118,32 +41,19 @@ theorem erdos_1171 :
       ∀ k : ℕ, OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 k := by
   sorry
 
-/- ### Variants and known results -/
-
 namespace erdos_1171.variants
 
 /--
-**Erdős–Hajnal theorem**: The case $k = 1$.
-
-$\omega_1^2 \to (\omega_1 \cdot \omega, 3)^2$: in any 2-coloring of the pairs of $K_{\omega_1^2}$,
-there is either a color-0 set of order type $\omega_1 \cdot \omega$, or a color-1 triangle.
-
-This is the binary Ramsey relation `OrdinalRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3`, which can be
-seen as the $k = 1$ instance of `OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 1`.
-
-**Status**: Proved (Erdős–Hajnal [EH74]).
+**Erdős–Hajnal theorem** [EH74]: the case $k = 1$,
+$\omega_1^2 \to (\omega_1 \cdot \omega, 3)^2$.
 -/
 @[category research solved, AMS 5]
 theorem k_one : OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 1 := by
   sorry
 
 /--
-**Reduction**: `OrdinalMultiColorRamsey` is monotone in the number of non-zero colors.
-
-If the `k`-color version `OrdinalMultiColorRamsey α β γ k` holds, then the `j`-color version
-holds for all `j ≤ k`. A `j+1`-coloring can be embedded into a `k+1`-coloring by composing
-with the inclusion `Fin (j+1) ↪ Fin (k+1)`, so a witness for the `k`-color version
-provides a witness for the `j`-color version.
+`OrdinalMultiColorRamsey` is monotone in the number of non-zero colors:
+a witness for the `k`-color version yields one for any `j ≤ k`.
 -/
 @[category API, AMS 5]
 theorem mono_k {j k : ℕ} (hjk : j ≤ k)
@@ -151,8 +61,8 @@ theorem mono_k {j k : ℕ} (hjk : j ≤ k)
     OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 j := by
   sorry
 
-/- **Baumgartner under MA (currently deferred)**: Assuming a form of Martin's Axiom,
-the binary partition relation `ω₁·ω → (ω₁·ω, 3)²` holds [Ba89b]. We omit the Lean
+/- **Baumgartner under MA (currently deferred)** [Ba89b]: assuming a form of Martin's
+Axiom, the binary partition relation `ω₁·ω → (ω₁·ω, 3)²` holds. We omit the Lean
 statement for now because faithfully encoding the exact form of MA requires more work;
 stating the result as `True → ...` would effectively make it unconditional. To be
 restored once an appropriate MA predicate is available in the formalization. -/
