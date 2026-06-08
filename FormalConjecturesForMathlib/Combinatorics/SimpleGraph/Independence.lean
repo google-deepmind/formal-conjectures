@@ -48,6 +48,14 @@ noncomputable def indepNeighbors (G : SimpleGraph α) (v : α) : ℝ :=
 noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
   (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
 
+/-- Abbreviation for the average independence number of the neighborhoods.
+-/
+noncomputable abbrev l (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
+
+/-- The same quantity under a different name, used in some conjectures.
+-/
+noncomputable abbrev l_avg (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
+
 /-- Computable independence number via powerset enumeration. -/
 def computable_indep_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.powerset.filter (fun s : Finset α =>
