@@ -46,9 +46,13 @@ of the parties, the corresponding reduced density matrix is maximally mixed.
 - F. Huber, O. Gühne, and J. Siewert,
   *Absolutely maximally entangled states of seven qubits do not exist*,
   Phys. Rev. Lett. 118, 200502 (2017), arXiv:1608.06228.
+- F. Huber, C. Eltschka, J. Siewert, O. Gühne,
+  *Bounds on absolutely maximally entangled states from shadow inequalities, and the quantum MacWilliams identity*,
+  J. Phys. A: Math. Theor. 51 175301 (2018), arXiv:1708.06298.
 - F. Huber and M. Grassl,
   *Quantum Codes of Maximal Distance and Highly Entangled Subspaces*,
   Quantum 4, 284 (2020), arXiv:1907.07733.
+- F. Huber and N. Wyderka,  Table of AME states,  Online available at http://www.tp.nt.uni-siegen.de/+fhuber/ame.html.
 - S. A. Rather, A. Burchardt, W. Bruzda, G. Rajchel-Mieldzioć,
   A. Lakshminarayan, and K. Życzkowski,
   *Thirty-six entangled officers of Euler: Quantum solution to a classically impossible problem*,
