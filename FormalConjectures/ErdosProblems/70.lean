@@ -22,8 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/70](https://www.erdosproblems.com/70)
 
 The 3-uniform (triple) partition relation $\mathfrak{c} \to (\beta, n)^3_2$
-on the continuum — the triple analogue of `OrdinalCardinalRamsey` used in
-Problems 590–592.
+on the ordinal of the real numbers — the triple analogue of `OrdinalCardinalRamsey`
+used in Problems 590–592.
 -/
 
 open Cardinal Ordinal
@@ -103,7 +103,7 @@ Follows from the main conjecture with $\beta = \omega$, $n = 3$.
 -/
 @[category research open, AMS 3]
 theorem omega_three :
-    answer(True) ↔ OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
+    answer(sorry) ↔ OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
   sorry
 
 /--
@@ -117,7 +117,7 @@ making this a self-referential question about $\mathfrak{c}.\mathrm{ord} \to
 -/
 @[category research open, AMS 3]
 theorem omega_one :
-    answer(True) ↔
+    answer(sorry) ↔
     ∀ᵉ (n : ℕ) (_ : 2 ≤ n),
       OrdinalCardinalRamsey3 (𝔠).ord (Cardinal.aleph 1).ord n := by
   sorry
