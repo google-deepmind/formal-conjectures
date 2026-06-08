@@ -42,6 +42,7 @@ Coins on an `n × n` board, represented as a boolean matrix.
   `true`  indicates a  coin being present
   `false` indicates no coin being present
 -/
+
 @[category research open, AMS 5]
 theorem n_c_coins_placement_conjecture : answer(sorry) ↔
     ∃ (BoolBoard : Matrix (Fin n) (Fin n) Bool),
@@ -57,17 +58,17 @@ theorem n_c_coins_placement_conjecture : answer(sorry) ↔
         ∑ i : Fin n, ∑ j : Fin n, (if i - j = k then NatBoard i j else 0)
       let bc :=
         ∑ i : Fin n, ∑ j : Fin n, NatBoard i j
-      -- Each row count and column count
-      -- is less than or equal to `c`
-      ∀ i : Fin n, rc i ≤ c ∧ cc i ≤ c ∧
-      -- Each downward diagonal count and upward diagonal count
-      -- is less than or equal to `c`
-      ∀ k : ℕ, ddc k ≤ c ∧ ∀ k : ℤ, udc k ≤ c ∧
-      -- The board count
-      -- is equal to `n * c`.
+      -- Each row count is less than or equal to `c`
+      ∀ i : Fin n, rc i ≤ c ∧
+      -- Each column count is less than or equal to `c`
+      ∀ i : Fin n, cc i ≤ c ∧
+      -- Each downward diagonal count is less than or equal to `c`
+      ∀ k : ℕ, ddc k ≤ c ∧
+      -- Each upward diagonal count is less than or equal to `c`
+      ∀ k : ℤ, udc k ≤ c ∧
+      -- The board count is equal to `n * c`.
       bc = n * c
   := by sorry
-
 
 end DuponcheelConjecture
 
