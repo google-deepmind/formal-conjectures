@@ -75,7 +75,7 @@ theorem erdos_755.test_dim_one :
   simp [unitEquilateralTriangleCount]
 
 /--
-**Erdős Problem 755** (solved). Erdős asked whether every $n$-point set in
+Erdős asked whether every $n$-point set in
 $\mathbb{R}^6$ spans at most $(1/27 + o(1)) n^3$ unit equilateral triangles.
 
 Clemen, Dumitrescu, and Liu [CDL25b] proved the stronger any-size statement
