@@ -65,8 +65,8 @@ theorem n_c_coins_placement_conjecture : answer(sorry) ↔
       -- Each upward diagonal count is less than or equal to `c`
       ∀ k : ℤ, udc k ≤ c ∧
       -- The board count is equal to `n * c`.
-      bc = n * c
-  := by sorry
+      bc = n * c := by
+  sorry
 
 end DuponcheelConjecture
 
