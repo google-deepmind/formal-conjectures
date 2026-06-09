@@ -39,7 +39,6 @@ Coins on an `n × n` board, represented as a boolean matrix.
   `true`  indicates a  coin being present
   `false` indicates no coin being present
 -/
-
 @[category research open, AMS 5]
 theorem n_c_coins_placement_conjecture : answer(sorry) ↔
     ∃ (BoolBoard : Matrix (Fin n) (Fin n) Bool),
