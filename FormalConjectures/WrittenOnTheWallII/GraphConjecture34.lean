@@ -40,7 +40,7 @@ and `dist_avg(S, V)` is the average distance from all vertices to the set `S`.
 @[category research solved, AMS 5]
 theorem conjecture34 :
   answer(sorry) ↔
-    ∀ (α : Type*) [Fintype α] [DecidableEq α] [Nontrivial α]
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let C : Set α := graphCenter G
       let M : Set α := {v | G.degree v = G.maxDegree}

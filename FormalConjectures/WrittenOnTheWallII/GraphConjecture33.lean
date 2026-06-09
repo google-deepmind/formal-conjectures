@@ -38,7 +38,7 @@ and `dist_avg(M, V)` is the average distance from all vertices to `M`.
 -/
 @[category research solved, AMS 5]
 theorem conjecture33 : answer(False) ↔
-    ∀ (α : Type*) [Fintype α] [DecidableEq α] [Nontrivial α]
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let M : Set α := {v | G.degree v = G.maxDegree}
       Int.ceil (2 * distavg G M) ≤ (path G : ℤ) := by

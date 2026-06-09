@@ -46,7 +46,7 @@ degree vertices is 8/3."
 -/
 @[category research solved, AMS 5]
 theorem conjecture32 : answer(False) ↔
-    ∀ (α : Type*) [Fintype α] [DecidableEq α] [Nontrivial α]
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let A : Finset α := Finset.univ.filter (fun v => G.degree v = G.minDegree)
       let M : Finset α := Finset.univ.filter (fun v => G.degree v = G.maxDegree)
