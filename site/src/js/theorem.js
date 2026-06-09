@@ -530,7 +530,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
     ${siblings.length > 1 ? `
     <div class="theorem-detail__section">
-      <div class="detail-label">Other results in this file</div>
+      <div class="detail-label">Other statements in this file</div>
       <div class="siblings-list">
         ${siblingsHTML}
       </div>

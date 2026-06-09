@@ -168,9 +168,9 @@ function renderList() {
     listEl.innerHTML = `
       <div class="empty-state">
         <div class="empty-state__icon">&#x1F50D;</div>
-        <div class="empty-state__text">No results match your filters.</div>
+        <div class="empty-state__text">No statements match your filters.</div>
       </div>`;
-    resultCount.textContent = '0 results';
+    resultCount.textContent = '0 statements';
     paginationEl.innerHTML = '';
     return;
   }
@@ -181,7 +181,8 @@ function renderList() {
 
   for (const c of page) listEl.appendChild(renderCard(c));
 
-  resultCount.textContent = `${filtered.length.toLocaleString()} result${filtered.length !== 1 ? 's' : ''}`;
+  const fileCount = new Set(filtered.map(c => c.module)).size;
+  resultCount.textContent = `${filtered.length.toLocaleString()} statement${filtered.length !== 1 ? 's' : ''} in ${fileCount.toLocaleString()} file${fileCount !== 1 ? 's' : ''}`;
 
   renderPagination();
 }
