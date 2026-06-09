@@ -89,7 +89,52 @@ theorem pellNumber_sq_add_pellNumber_succ_sq (n : ℕ) :
 /-- An explicit formula for Pell numbers, similar to Binet's formula -/
 @[category textbook, AMS 11]
 theorem coe_pellNumber_eq : ∀ n, (pellNumber n : ℝ) = ((1 + √2) ^ n - (1 - √2) ^ n) / (2 * √2) := by
-  sorry
+  -- The characteristic polynomial of the Pell recursion is $x^2 = 2x + 1$, with
+  -- roots $\alpha = 1 + \sqrt{2}$ and $\beta = 1 - \sqrt{2}$. The function
+  -- $f(n) = (\alpha^n - \beta^n) / (2\sqrt{2})$ satisfies the same recursion
+  -- and the same base cases, so it agrees with the cast of `pellNumber`.
+  set α : ℝ := 1 + √2 with hα_def
+  set β : ℝ := 1 - √2 with hβ_def
+  -- Basic facts about α and β.
+  have hsq2 : (√2 : ℝ) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hα_sq : α ^ 2 = 2 * α + 1 := by rw [hα_def]; ring_nf; linarith [hsq2]
+  have hβ_sq : β ^ 2 = 2 * β + 1 := by rw [hβ_def]; ring_nf; linarith [hsq2]
+  have h2sq2_ne : (2 * √2 : ℝ) ≠ 0 :=
+    mul_ne_zero two_ne_zero (Real.sqrt_ne_zero'.mpr (by norm_num))
+  -- The characteristic-poly identity lifts to $x^{n+2} = 2 x^{n+1} + x^n$.
+  have hα_rec : ∀ n, α ^ (n + 2) = 2 * α ^ (n + 1) + α ^ n := by
+    intro n
+    have : α ^ (n + 2) = α ^ n * α ^ 2 := by ring
+    rw [this, hα_sq]; ring
+  have hβ_rec : ∀ n, β ^ (n + 2) = 2 * β ^ (n + 1) + β ^ n := by
+    intro n
+    have : β ^ (n + 2) = β ^ n * β ^ 2 := by ring
+    rw [this, hβ_sq]; ring
+  -- Joint induction on consecutive indices.
+  suffices h : ∀ n,
+      (pellNumber n : ℝ) = (α ^ n - β ^ n) / (2 * √2) ∧
+      (pellNumber (n + 1) : ℝ) = (α ^ (n + 1) - β ^ (n + 1)) / (2 * √2) from
+    fun n => (h n).1
+  intro n
+  induction n with
+  | zero =>
+    refine ⟨?_, ?_⟩
+    · simp [pellNumber]
+    · -- pellNumber 1 = 1 and (α - β) / (2√2) = (2√2) / (2√2) = 1.
+      simp only [pellNumber, pow_one, Nat.cast_one, zero_add]
+      rw [hα_def, hβ_def]
+      field_simp; ring
+  | succ k ih =>
+    obtain ⟨hk, hk1⟩ := ih
+    refine ⟨hk1, ?_⟩
+    -- pellNumber (k+2) = 2 * pellNumber (k+1) + pellNumber k, both sides cast to ℝ.
+    have hrec : pellNumber (k + 1 + 1) = 2 * pellNumber (k + 1) + pellNumber k := rfl
+    show (pellNumber (k + 1 + 1) : ℝ) = (α ^ (k + 1 + 1) - β ^ (k + 1 + 1)) / (2 * √2)
+    rw [hrec]
+    push_cast
+    rw [hk1, hk, hα_rec k, hβ_rec k]
+    field_simp
+    ring
 
 /-- There are infinitely many prime Pell numbers -/
 @[category research open, AMS 11]
