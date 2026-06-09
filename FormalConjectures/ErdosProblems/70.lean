@@ -69,6 +69,9 @@ def OrdinalCardinalRamsey3 (α β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
 **Erdős Problem 70**: Let $\mathfrak{c}$ be the cardinality of the continuum,
 let $\beta$ be a countable ordinal, and let $2 \le n < \omega$.
 Is it true that $\mathfrak{c} \to (\beta, n)^3_2$?
+
+Note: The cases $n \le 3$ are trivially true (see `omega_three`), so the
+genuine content of the conjecture begins at $n = 4$.
 -/
 @[category research open, AMS 3]
 theorem erdos_70 :
@@ -91,104 +94,37 @@ theorem erdos_rado (n : ℕ) (hn : 2 ≤ n) :
     OrdinalCardinalRamsey3 (𝔠).ord (ω + n) 4 := by
   sorry
 
-private lemma symm_all {α : Type u} (isRed : α → α → α → Prop)
-    (hSym : ∀ x y z, x ≠ y → y ≠ z → x ≠ z → (isRed x y z ↔ isRed y x z) ∧ (isRed x y z ↔ isRed x z y))
-    {x y z : α} (hxy : x ≠ y) (hyz : y ≠ z) (hxz : x ≠ z) :
-    (isRed x y z ↔ isRed y x z) ∧
-    (isRed x y z ↔ isRed x z y) ∧
-    (isRed x y z ↔ isRed y z x) ∧
-    (isRed x y z ↔ isRed z x y) ∧
-    (isRed x y z ↔ isRed z y x) := by
-  have h1 := (hSym x y z hxy hyz hxz).1
-  have h2 := (hSym x y z hxy hyz hxz).2
-  have h3 := (hSym y x z hxy.symm hxz hyz).2
-  have h4 := (hSym x z y hxz hyz.symm hxy).1
-  have h5 := (hSym z x y hxz.symm hxy hyz.symm).2
-  refine ⟨h1, h2, ?_, ?_, ?_⟩
-  · rw [h1, h3]
-  · rw [h2, h4]
-  · rw [h2, h4, h5]
+/--
+**First open case beyond Erdős–Rado**: $\mathfrak{c} \to (\omega \cdot 2, 4)^3_2$.
+
+Erdős and Rado proved $\mathfrak{c} \to (\omega + n, 4)^3_2$ for every finite $n \ge 2$
+(see `erdos_rado`), which covers all red ordinals below $\omega \cdot 2 = \omega + \omega$.
+This variant asks whether the result extends to $\beta = \omega \cdot 2$, the simplest
+countable ordinal not covered by their theorem.
+-/
+@[category research open, AMS 3]
+theorem omega_times_two_four :
+    answer(sorry) ↔ OrdinalCardinalRamsey3 (𝔠).ord (ω * 2) 4 := by
+  sorry
 
 /--
-**Special case**: $\mathfrak{c} \to (\omega, 3)^3_2$.
+**Trivial boundary case**: $\mathfrak{c} \to (\omega, 3)^3_2$.
 
-The simplest non-trivial instance of Erdős Problem 70: $\beta = \omega$ (the first infinite
-countable ordinal) and $n = 3$. Does every 2-coloring of 3-element subsets of the continuum
-contain either a red-monochromatic set of order type $\omega$ (an infinite red-monochromatic
-subset) or a blue-monochromatic set of $3$ elements (a blue triple)?
+This is trivially true because in a 3-uniform hypergraph, a \"blue clique of size 3\"
+consists of a single 3-element subset ($\binom{3}{3} = 1$), so the blue alternative
+merely asks for one blue triple to exist. The proof splits into two cases:
+- If any blue triple exists, it is itself a blue-monochromatic set of cardinality 3.
+- If no blue triple exists, all triples are red, and since $\omega \le \mathfrak{c}$,
+  any subset of order type $\omega$ is red-monochromatic.
 
-Follows from the main conjecture with $\beta = \omega$, $n = 3$.
-Proof outline:
-We argue by contradiction or rather by cases. If there is any blue triple, then we immediately have a blue-monochromatic subset of cardinality 3.
-If there are no blue triples, then all triples are red. Since $\omega \le \mathfrak{c}$, we can just pick any subset of order type $\omega$, and it will be completely red.
+The problem becomes non-trivial only for $n \ge 4$; see `omega_times_two_four` for
+the simplest genuinely open case.
 -/
-@[category research solved, AMS 3]
+@[category research solved, AMS 3, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/c024db0fa3ac32c6dddcd6c28d7b0cd994dad580/FormalConjectures/ErdosProblems/70.lean#L126"]
 theorem omega_three :
     answer(True) ↔ OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
-  constructor
-  · intro _ isRed hSym
-    by_cases h : ∃ (x y z : (𝔠).ord.ToType), x ≠ y ∧ y ≠ z ∧ x ≠ z ∧ ¬ isRed x y z
-    · rcases h with ⟨x, y, z, hxy, hyz, hxz, hBlue⟩
-      right
-      use {x, y, z}
-      constructor
-      · rw [mk_insert (by simp [hxy, hxz]), mk_insert (by simp [hyz]), mk_singleton]
-        norm_num
-      · intro a ha b hb c hc hab hbc hac
-        simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb hc
-        have hS := symm_all isRed hSym hxy hyz hxz
-        rcases ha with rfl | rfl | rfl
-        · rcases hb with rfl | rfl | rfl
-          · contradiction
-          · rcases hc with rfl | rfl | rfl
-            · contradiction
-            · contradiction
-            · exact hBlue
-          · rcases hc with rfl | rfl | rfl
-            · contradiction
-            · exact mt hS.2.1.mpr hBlue
-            · contradiction
-        · rcases hb with rfl | rfl | rfl
-          · rcases hc with rfl | rfl | rfl
-            · contradiction
-            · contradiction
-            · exact mt hS.1.mpr hBlue
-          · contradiction
-          · rcases hc with rfl | rfl | rfl
-            · exact mt hS.2.2.1.mpr hBlue
-            · contradiction
-            · contradiction
-        · rcases hb with rfl | rfl | rfl
-          · rcases hc with rfl | rfl | rfl
-            · contradiction
-            · exact mt hS.2.2.2.1.mpr hBlue
-            · contradiction
-          · rcases hc with rfl | rfl | rfl
-            · exact mt hS.2.2.2.2.mpr hBlue
-            · contradiction
-            · contradiction
-          · contradiction
-    · left
-      push_neg at h
-      have h_le : ω ≤ (𝔠).ord := by
-        rw [← Cardinal.ord_aleph0]
-        apply Cardinal.ord_le_ord.mpr
-        exact Cardinal.aleph0_le_continuum
-      rw [← Ordinal.type_toType ω, ← Ordinal.type_toType (𝔠).ord] at h_le
-      obtain ⟨g⟩ := Ordinal.type_le_iff'.mp h_le
-      let t : Set (𝔠).ord.ToType := Set.range g
-      use t
-      constructor
-      · let emb : (· < · : Ordinal.ToType ω → Ordinal.ToType ω → Prop) ↪r (· < · : ↑t → ↑t → Prop) :=
-          { toFun := fun a => ⟨g a, Set.mem_range_self a⟩
-            inj' := fun a b heq => g.injective (Subtype.ext_iff.mp heq)
-            map_rel_iff' := g.map_rel_iff }
-        have hsurj : Function.Surjective emb := fun ⟨_, hy⟩ => ⟨hy.choose, Subtype.ext hy.choose_spec⟩
-        exact (Ordinal.type_eq.mpr ⟨RelIso.ofSurjective emb hsurj |>.symm⟩).trans (Ordinal.type_toType ω)
-      · intro a ha b hb c hc hab hbc hac
-        exact h a b c hab hbc hac
-  · intro _
-    trivial
+  sorry
 
 
 /--
