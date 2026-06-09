@@ -28,6 +28,10 @@ Each cell can hold at most 1 coin.
 
 This generalizes the traditional n-queens problem
 (which corresponds to `c = 1`).
+
+Coins on an `n × n` board, represented as a boolean matrix.
+  `true`  indicates a  coin being present
+  `false` indicates no coin being present
 -/
 
 namespace DuponcheelConjecture
@@ -35,9 +39,7 @@ namespace DuponcheelConjecture
 variable {n : ℕ} (hn : n ≥ 4) {c : ℕ} (hc : c ≤ n)
 
 /--
-Coins on an `n × n` board, represented as a boolean matrix.
-  `true`  indicates a  coin being present
-  `false` indicates no coin being present
+Below is the theorem
 -/
 @[category research open, AMS 5]
 theorem n_c_coins_placement_conjecture : answer(sorry) ↔
