@@ -147,6 +147,7 @@ theorem erdos_1.variants.least_N_3 :
       rw [(Finset.subset_iff_eq_of_card_le (Nat.le_of_eq (by rw [hcard3]; decide))).mp h]
       decide
 
+set_option maxHeartbeats 0 in
 /--
 The minimal value of $N$ such that there exists a sum-distinct set with six
 elements is $24$.
@@ -166,7 +167,6 @@ theorem erdos_1.variants.least_N_6 :
     by_contra! h_lt
     have h_no : ¬ ∃ (A : Finset ℕ),
       A ⊆ Finset.Icc 1 n ∧ A.card = 6 ∧ IsSumDistinctSet A n := by
-      set_option maxHeartbeats 0 in
       interval_cases n <;> native_decide
     apply h_no
     exact ⟨S, h_sub, h_card, ⟨h_sub, h_inj⟩⟩
