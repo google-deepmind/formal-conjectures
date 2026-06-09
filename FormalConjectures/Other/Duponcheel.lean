@@ -39,23 +39,23 @@ namespace DuponcheelConjecture
 variable {n : ℕ} (hn : n ≥ 4) {c : ℕ} (hc : c ≤ n)
 
 /--
-Below is the theorem
+Below is the theorem, encoding the board as `Matrix (Fin n) (Fin n) ℕ`
 -/
 @[category research open, AMS 5]
 theorem n_c_coins_placement_conjecture : answer(sorry) ↔
-    ∃ (BoolBoard : Matrix (Fin n) (Fin n) Bool),
-      let NatBoard : Matrix (Fin n) (Fin n) ℕ :=
-        BoolBoard.map (fun b ↦ if b then 1 else 0)
+    ∃ (board : Matrix (Fin n) (Fin n) ℕ),
       let rc (i : Fin n) :=
-        ∑ j : Fin n, NatBoard i j
+        ∑ j : Fin n, board i j
       let cc (i : Fin n) :=
-        ∑ j : Fin n, NatBoard j i
+        ∑ j : Fin n, board j i
       let ddc (k : ℕ) :=
-        ∑ i : Fin n, ∑ j : Fin n, (if i + j = k then NatBoard i j else 0)
+        ∑ i : Fin n, ∑ j : Fin n, (if i + j = k then board i j else 0)
       let udc (k : ℤ) :=
-        ∑ i : Fin n, ∑ j : Fin n, (if i - j = k then NatBoard i j else 0)
+        ∑ i : Fin n, ∑ j : Fin n, (if i - j = k then board i j else 0)
       let bc :=
-        ∑ i : Fin n, ∑ j : Fin n, NatBoard i j
+        ∑ i : Fin n, ∑ j : Fin n, board i j
+      -- Only zero or one coins at a position are allowed
+      ∀ i : Fin n, ∀ j : Fin n, 0 ≤ board i j ∧ board i j ≤ 1 ∧
       -- Each row count is less than or equal to `c`
       ∀ i : Fin n, rc i ≤ c ∧
       -- Each column count is less than or equal to `c`
@@ -65,8 +65,8 @@ theorem n_c_coins_placement_conjecture : answer(sorry) ↔
       -- Each upward diagonal count is less than or equal to `c`
       ∀ k : ℤ, udc k ≤ c ∧
       -- The board count is equal to `n * c`.
-      bc = n * c := by
-  sorry
+      bc = n * c
+  := by sorry
 
 end DuponcheelConjecture
 
