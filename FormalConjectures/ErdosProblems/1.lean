@@ -147,7 +147,6 @@ theorem erdos_1.variants.least_N_3 :
       rw [(Finset.subset_iff_eq_of_card_le (Nat.le_of_eq (by rw [hcard3]; decide))).mp h]
       decide
 
-set_option maxHeartbeats 0 in
 /--
 The minimal value of $N$ such that there exists a sum-distinct set with six
 elements is $24$.
@@ -156,7 +155,9 @@ https://oeis.org/A276661
 -/
 @[category research solved, AMS 5 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/4118"]
 theorem erdos_1.variants.least_N_6 :
-    IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 6 } 24 := by
+    IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 6 } 24 :=
+  set_option maxHeartbeats 0 in
+  by
   refine ⟨⟨{11, 17, 20, 22, 23, 24}, ?_⟩, ?_⟩
   · -- upper bound: {11, 17, 20, 22, 23, 24} is sum-distinct and ⊆ {1..24}
     refine ⟨by decide, ?_⟩
