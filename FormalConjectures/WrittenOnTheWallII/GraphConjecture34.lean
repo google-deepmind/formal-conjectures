@@ -42,7 +42,7 @@ theorem conjecture34 :
   answer(sorry) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
-      let C : Set α := graphCenter G
+      let C : Set α := center G
       let M : Set α := {v | G.degree v = G.maxDegree}
       Int.ceil (distavg G C + distavg G M) ≤ (path G : ℤ) := by
   sorry
