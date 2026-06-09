@@ -81,21 +81,6 @@ theorem erdos_329.variants.turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUp
   sorry
 
 /--
-If any finite Sidon set can be embedded in a perfect difference set modulo $n > 0$,
-then the maximum density would be 1.
-
-This implication is vacuously true because the antecedent is false:
-not all finite Sidon sets can be embedded in a perfect difference set modulo $n > 0$
-(as shown in [Ha47] and [AlMi25]).
--/
-@[category research solved, AMS 5 11]
-theorem erdos_329.variants.of_sub_perfectDifferenceSet :
-    (∀ (A : Finset ℕ), IsSidon (A : Set ℕ) → ∃ (D : Set ℕ) (n : ℕ) (_ : n > 0),
-      ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) →
-    sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1 := by
-  sorry
-
-/--
 The converse: if the maximum density is 1, then any finite Sidon set
 can be embedded in a perfect difference set modulo $n > 0$.
 
