@@ -106,6 +106,7 @@ structure TheoremInfo where
   formalProofKind : Option String
   formalProofLink : Option String
   hasSorryFreeProof : Bool
+  subsets : List String
   answerKinds : List String
 
 
@@ -124,6 +125,7 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
         [("formalProofLink", toJson info.formalProofLink)])
     ++ (if exclude.contains "hasSorryFreeProof" then [] else
         [("hasSorryFreeProof", toJson info.hasSorryFreeProof)])
+    ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
     ++ (if exclude.contains "answerKinds" then [] else
         [("answerKinds", toJson info.answerKinds)])
   Json.mkObj fields
@@ -213,6 +215,22 @@ unsafe def main (args : List String) : IO Unit := do
       let subjects := tag.subjects.map (fun (s : AMS) => s!"{s.toNat?.get!}")
       subjectMap := subjectMap.insert tag.declName (subjects ++ subjectMap.getD tag.declName [])
 
+    let mut theoremToSubsets : Std.HashMap Name (List String) := {}
+
+    for (declName, _) in env.constants do
+      if let .str (.str grandparent subsetName) "problems" := declName then
+        if grandparent.toString == "Subsets" then
+          let info ← getConstInfo declName
+          if let some val := info.value? then
+            try
+              let problemsList ← Lean.Meta.MetaM.run' <|
+                unsafe Lean.Meta.evalExpr (List Name) (mkApp (mkConst ``List [levelZero]) (mkConst ``Name)) val
+              for p in problemsList do
+                theoremToSubsets := theoremToSubsets.insert p (subsetName :: theoremToSubsets.getD p [])
+            catch e =>
+              let msg ← e.toMessageData.toString
+              IO.eprintln s!"WARNING: Failed to evaluate problems list for {declName}: {msg}"
+
     let mut allResults : List TheoremInfo := []
     for modName in moduleNames do
       let some modIdx := env.header.moduleNames.findIdx? (· == modName)
@@ -251,6 +269,7 @@ unsafe def main (args : List String) : IO Unit := do
                 | .API, false =>
                   IO.eprintln s!"WARNING: Theorem {name} is categorised as `API` but has no sorry-free proof"
                 | _, _ => pure ()
+              let subsets := (theoremToSubsets.getD name []).toArray.qsort (· < ·) |>.toList
               -- Determine answerKinds from the elaborated type
               let answerKinds ← Meta.MetaM.run'
                 (getAnswerKinds info.type)
@@ -264,6 +283,7 @@ unsafe def main (args : List String) : IO Unit := do
                 formalProofKind := formalProofKind,
                 formalProofLink := formalProofLink,
                 hasSorryFreeProof := hasSorryFreeProof,
+                subsets := subsets
                 answerKinds := answerKinds
               } :: allResults
         | _ => pure ()

@@ -40,7 +40,7 @@ variants as well as domination-related lemmas.
 
 namespace SimpleGraph
 
-variable {α : Type*} {G : SimpleGraph α}
+variable {α : Type*} {G : SimpleGraph α} [Fintype α] [DecidableEq α]
 
 /-! ### Dominating sets -/
 
@@ -61,6 +61,15 @@ structure IsNDominatingSet (n : ℕ) (D : Finset α) : Prop where
 set. It is `0` if there are no vertices. -/
 noncomputable def dominationNumber (G : SimpleGraph α) : ℕ :=
   sInf {n | ∃ D : Finset α, G.IsNDominatingSet n D}
+
+/-- Computable domination number via powerset enumeration. -/
+def computable_dom_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  (Finset.univ.powerset.filter (fun D : Finset α =>
+    ∀ v : α, v ∈ D ∨ ∃ w ∈ D, G.Adj v w)).inf'
+    ⟨Finset.univ, Finset.mem_filter.mpr
+      ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
+       fun v => Or.inl (Finset.mem_univ v)⟩⟩
+    Finset.card
 
 /-! ### Total domination -/
 
@@ -128,5 +137,25 @@ structure IsNEdgeDominatingSet (n : ℕ) (M : Finset (Sym2 α)) : Prop where
 
 noncomputable def edgeDominationNumber (G : SimpleGraph α) : ℕ :=
   sInf {n | ∃ M : Finset (Sym2 α), G.IsNEdgeDominatingSet n M}
+
+/-! ### Domination equivalence -/
+
+theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    dominationNumber G = computable_dom_num G := by
+  unfold SimpleGraph.dominationNumber SimpleGraph.computable_dom_num
+  apply le_antisymm
+  · apply csInf_le ⟨0, fun _ _ => Nat.zero_le _⟩
+    simp only [Set.mem_setOf_eq]
+    obtain ⟨D, hD_mem, hD_card⟩ := Finset.exists_mem_eq_inf' _ Finset.card
+    exact ⟨D, hD_card ▸ ⟨(Finset.mem_filter.mp hD_mem).2, rfl⟩⟩
+  · apply le_csInf
+    · exact ⟨Fintype.card α, Finset.univ,
+        ⟨fun v => Or.inl (Finset.mem_univ v), Finset.card_univ⟩⟩
+    · intro b hb
+      obtain ⟨D, hD⟩ := hb
+      rw [← hD.card_eq]
+      exact Finset.inf'_le _
+        (Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
+          hD.isDominating⟩)
 
 end SimpleGraph
