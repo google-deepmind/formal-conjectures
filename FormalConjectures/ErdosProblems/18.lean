@@ -72,6 +72,19 @@ m=11, requiring 3 divisors: 11=1+4+6. -/
 theorem practicalH_twelve : practicalH 12 = 3 := by
   sorry
 
+/-- $h(56) = 5$: the hard value is `55`, which needs five divisors of `56`. -/
+@[category test, AMS 11, formal_proof using formal_conjectures at
+  "https://github.com/AlperTheKing/formal-conjectures/blob/fae83fbe5662aa759b8570ca7d04bb118da64f1d/FormalConjectures/ErdosProblems/18.lean#L301"]
+theorem practicalH_fiftysix : practicalH 56 = 5 := by
+  sorry
+
+/-- $h(7200) = 6$. The upper bound uses `7200 = 60 * 120`;
+the hard value is `6667`. -/
+@[category test, AMS 11, formal_proof using formal_conjectures at
+  "https://github.com/AlperTheKing/formal-conjectures/blob/fae83fbe5662aa759b8570ca7d04bb118da64f1d/FormalConjectures/ErdosProblems/18.lean#L396"]
+theorem practicalH_7200 : practicalH 7200 = 6 := by
+  sorry
+
 /-- For any practical number $n$, $h(n) ≤ number of divisors of $n$. -/
 @[category test, AMS 11]
 theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
