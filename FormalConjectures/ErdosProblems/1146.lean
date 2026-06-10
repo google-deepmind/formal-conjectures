@@ -30,13 +30,15 @@ open scoped Pointwise
 namespace Erdos1146
 
 /--
-We say that $A\subset \mathbb{N}$ is an essential component if $d_s(A+B)>d_s(B)$ for every
+We say that $A\subset \mathbb{N}$ is an essential component if $d_s(A \oplus B)>d_s(B)$ for every
 $B\subset \mathbb{N}$ with $0<d_s(B)<1$ where $d_s$ is the Schnirelmann density.
+Here, the sumset is the appropriate one for Schnirelmann density, $A \oplus B = \{a+b \mid a \in A \cup \{0\}, b \in B \cup \{0\}\}$ (i.e. $(A \cup \{0\}) + (B \cup \{0\})$).
+This avoids the trivial case where the sumset misses $1$ simply because neither $A$ nor $B$ contains $0$.
 -/
 def IsEssentialComponent (A : Set ℕ) : Prop :=
   ∀ B : Set ℕ,
     let b := schnirelmannDensity B;
-    0 < b → b < 1 → schnirelmannDensity (A + B) > b
+    0 < b → b < 1 → schnirelmannDensity ((A ∪ {0}) + (B ∪ {0})) > b
 
 /--
 Is $B=\{2^m3^n : m,n\geq 0\}$ an essential component?
