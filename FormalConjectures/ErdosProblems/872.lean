@@ -23,6 +23,11 @@ This file states Erdős Problem 872 for the primitive-set saturation game on `{2
 The game value `L n` is defined by a finite minimax recursion: Prolonger moves first and maximizes
 the final size of the claimed primitive set, while Shortener minimizes it.
 
+The problem statement does not fix the turn order. This file fixes Prolonger to move first,
+following the convention used in the forum discussion of the problem. The choice is not cosmetic:
+computational data suggests the Shortener-first value tracks `π(n)` while the Prolonger-first
+value grows linearly, and the questions below concern the Prolonger-first quantity.
+
 *References:*
 - [erdosproblems.com/872](https://www.erdosproblems.com/872)
 - [erdosproblems.com/forum/thread/872](https://www.erdosproblems.com/forum/thread/872)
@@ -55,15 +60,24 @@ structure GamePos (n : ℕ) where
   claimed : Finset ℕ
   pool : Finset ℕ
 
+open scoped Classical in
 /-- The legal moves from a position: unclaimed elements whose insertion preserves primitiveness. -/
-def legalMoves {n : ℕ} (p : GamePos n) : Finset ℕ := by
+def legalMoves {n : ℕ} (p : GamePos n) : Finset ℕ :=
+  p.pool.filter fun x => IsPrimitive n (insert x p.claimed)
+
+/-- Membership in `legalMoves`: a legal move is a pool element whose insertion preserves
+primitiveness. -/
+@[category API, AMS 5]
+lemma mem_legalMoves {n : ℕ} {p : GamePos n} {x : ℕ} :
+    x ∈ legalMoves p ↔ x ∈ p.pool ∧ IsPrimitive n (insert x p.claimed) := by
   classical
-  exact p.pool.filter fun x => IsPrimitive n (insert x p.claimed)
+  simp [legalMoves]
 
 /-- Apply a move by claiming `x` and removing it from the unclaimed pool.
 
-This function is intentionally total: if `x` is not legal, it still returns the formal position obtained
-by inserting and erasing `x`. The minimax recursion below only calls it for `x ∈ legalMoves p`. -/
+This function is intentionally total: if `x` is not legal, it still returns the formal position
+obtained by inserting and erasing `x`. The minimax recursion below only calls it for
+`x ∈ legalMoves p`. -/
 def applyMove {n : ℕ} (p : GamePos n) (x : ℕ) : GamePos n where
   claimed := insert x p.claimed
   pool := p.pool.erase x
@@ -91,6 +105,38 @@ def gameValueAux {n : ℕ} : ℕ → Bool → GamePos n → ℕ
       else
         p.claimed.card
 
+/-- Each move claims exactly one pool element, so the minimax value never exceeds the number of
+already claimed elements plus the number of still unclaimed elements. -/
+@[category API, AMS 5]
+lemma gameValueAux_le {n : ℕ} (fuel : ℕ) (turn : Bool) (p : GamePos n) :
+    gameValueAux fuel turn p ≤ p.claimed.card + p.pool.card := by
+  induction fuel generalizing turn p with
+  | zero =>
+    simp only [gameValueAux]
+    exact Nat.le_add_right _ _
+  | succ fuel ih =>
+    have key : ∀ x ∈ legalMoves p,
+        gameValueAux fuel (!turn) (applyMove p x) ≤ p.claimed.card + p.pool.card := by
+      intro x hx
+      have hxpool : x ∈ p.pool := (mem_legalMoves.mp hx).1
+      have h1 : (insert x p.claimed).card ≤ p.claimed.card + 1 := Finset.card_insert_le _ _
+      have h2 : (p.pool.erase x).card = p.pool.card - 1 := Finset.card_erase_of_mem hxpool
+      have h3 : 0 < p.pool.card := Finset.card_pos.mpr ⟨x, hxpool⟩
+      have h4 : gameValueAux fuel (!turn) (applyMove p x) ≤
+          (insert x p.claimed).card + (p.pool.erase x).card := ih (!turn) (applyMove p x)
+      omega
+    have key' : ∀ v ∈ (legalMoves p).image
+        (fun x => gameValueAux fuel (!turn) (applyMove p x)),
+        v ≤ p.claimed.card + p.pool.card := by
+      intro v hv
+      obtain ⟨x, hx, rfl⟩ := Finset.mem_image.mp hv
+      exact key x hx
+    simp only [gameValueAux]
+    split_ifs with h ht
+    · exact Finset.max'_le _ _ _ key'
+    · exact key' _ (Finset.min'_mem _ _)
+    · exact Nat.le_add_right _ _
+
 /-- The minimax value of the primitive-set saturation game from `p`, with Prolonger to move.
 
 This is a genuine game-value definition rather than an uninterpreted placeholder. It unfolds the
@@ -99,51 +145,53 @@ minimizes the eventual terminal cardinality. -/
 def gameLength {n : ℕ} : GamePos n → ℕ := fun p =>
   gameValueAux p.pool.card true p
 
-/-- The Erdős-Cameron primitive-set game length on `{2, ..., n}`. -/
+/-- The Erdős primitive-set game length on `{2, ..., n}`. -/
 def L (n : ℕ) : ℕ := gameLength (startPos n)
 
 /- ## Erdős Problem 872
 
 The problem asks for asymptotic lower bounds on `L(n)`. Two specific targets are stated. -/
 
-/-- Erdős Problem 872, weak form: there exists a constant `ε > 0` such that the game length is at
-least `ε * n` for all sufficiently large `n`. -/
+/-- Erdős Problem 872, part (i) (weak form): there exists a constant `ε > 0` such that the game
+length is at least `ε * n` for all sufficiently large `n`. -/
 @[category research open, AMS 5 11 91]
-theorem erdos_872.parts.weak : answer(sorry) ↔
+theorem erdos_872.parts.i : answer(sorry) ↔
     ∃ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ ε * n := by
   sorry
 
-/-- Erdős Problem 872, strong form: for every `ε > 0`, the game length is at least
-`(1 - ε) * n / 2` for all sufficiently large `n`. -/
+/-- Erdős Problem 872, part (ii) (strong form): for every `ε > 0`, the game length is at least
+`(1 - ε) * n / 2` for all sufficiently large `n`.
+
+Status note: the forum thread (April-May 2026) records Shortener strategies giving
+`L(n) ≤ (23/48 + o(1)) * n` (described in the thread as accepted as correct, with a Lean
+formalization in progress) and a claimed `L(n) ≤ 0.19 * n`, either of which would answer this
+question negatively under the Prolonger-first convention. Neither is published, so the statement
+is recorded here as the original Erdős question. -/
 @[category research open, AMS 5 11 91]
-theorem erdos_872.parts.strong : answer(sorry) ↔
+theorem erdos_872.parts.ii : answer(sorry) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
   sorry
 
-/-- A trivial upper bound: a play can claim at most the elements of `{2, ..., n}`, so
+/-- A trivial upper bound: a play can claim at most the `n - 1` elements of `{2, ..., n}`, so
 `L(n) ≤ n - 1`. -/
-@[category research solved, AMS 5 11 91]
+@[category textbook, AMS 5 11 91]
 theorem erdos_872.trivial_upper_bound (n : ℕ) (hn : 2 ≤ n) :
     L n ≤ n - 1 := by
-  sorry
+  calc L n ≤ (startPos n).claimed.card + (startPos n).pool.card :=
+        gameValueAux_le (startPos n).pool.card true (startPos n)
+    _ = n - 1 := by
+        simp only [startPos, Finset.card_empty, Nat.card_Icc]
+        omega
 
-/-- Forum-related variant (Angelo): is the game length always at least `π(n)`? The forum thread
-notes that the set of primes is a maximal primitive subset of `{2, ..., n}` and asks whether this
-is the smallest possible size of a maximal primitive subset. -/
+/-- Forum-related variant: how small can a maximal primitive subset of `{2, ..., n}` be?
+The set of primes in `{2, ..., n}` is a maximal primitive subset of size `π(n)`, and the forum
+thread asks whether this is the smallest possible for all `n ≥ 2`. Equivalently: must every
+completed play of the saturation game, by both players and regardless of strategy, claim at least
+`π(n)` elements? (Terminal positions of the game are exactly the maximal primitive subsets.) -/
 @[category research open, AMS 5 11 91]
 theorem erdos_872.variants.prime_question : answer(sorry) ↔
-    ∀ n ≥ 2, L n ≥ ((Finset.Icc 2 n).filter Nat.Prime).card := by
-  sorry
-
-/-- Buddhdev conditional variant: a private manuscript shared with the contributor; statement
-records the conditional implication as stated by the author, pending publication. Under the
-restricted safe-edge hypothesis for T2-strategy-generated finite graph and residual slot-hypergraph
-states, the manuscript states a lower bound of order
-`n * (log log n)^2 / log n`. -/
-@[category research open, AMS 5 11 91]
-theorem erdos_872.variants.buddhdev_conditional : answer(sorry) ↔
-    ∃ c > (0 : ℝ), ∀ᶠ n in atTop,
-      (L n : ℝ) ≥ c * n * (Real.log (Real.log n))^2 / Real.log n := by
+    ∀ n ≥ 2, ∀ A : Finset ℕ, Maximal (IsPrimitive n) A →
+      ((Finset.Icc 2 n).filter Nat.Prime).card ≤ A.card := by
   sorry
 
 end
