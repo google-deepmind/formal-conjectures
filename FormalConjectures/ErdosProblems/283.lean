@@ -21,7 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/283](https://www.erdosproblems.com/283)
+- [Al19] Alekseyev, Max A., On partitions into squares of distinct integers whose
+reciprocals sum to 1. (2019), 213--221.
+- [Ca60] Cassels, J. W. S., On the representation of integers as the sums of distinct summands taken from a fixed set. Acta Sci. Math. (Szeged) (1960), 111-124.
 - [Gr63] Graham, R. L., A theorem on partitions. J. Austral. Math. Soc. (1963), 435-441.
+- [vD25] W. van Doorn, Partitions with prescribed sum of rationals: asymptotic bounds. arXiv:2502.02200 (2025).
 -/
 
 open Filter Polynomial Finset
@@ -47,9 +51,11 @@ for all sufficiently large $m$, there exist integers $1≤n_1<\dots < n_k$ such 
 $$1=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$$
 and
 $$m=p(n_1)+\cdots+p(n_k)$$?
+
+GPT 5.5 Pro (prompted by Price) has given a proof that the answer is yes, for the stronger version with $1$ replaced by any rational $\alpha>0$.
 -/
-@[category research open, AMS 11]
-theorem erdos_283 : answer(sorry) ↔ ∀ p : ℤ[X], Condition p := by
+@[category research solved, AMS 11]
+theorem erdos_283 : answer(True) ↔ ∀ p : ℤ[X], Condition p := by
   sorry
 
 
@@ -60,7 +66,56 @@ Graham [Gr63] has proved this when $p(x)=x$.
 theorem erdos_283.variants.graham : Condition X := by
   sorry
 
+/--
+Graham also conjectures that this remains true with $1$ replaced by an arbitrary rational $\alpha>0$
+(provided $m$ is taken sufficiently large depending on $\alpha$).
+-/
+@[category research solved, AMS 11]
+theorem erdos_283.variant.graham_alpha :
+  ∀ (p : ℤ[X]) (α : ℚ),
+    0 < p.leadingCoeff →
+    (¬ ∃ (d : ℤ), d ≥ 2 ∧ ∀ (n : ℤ), n ≥ 1 → d ∣ p.eval n) →
+    α > 0 →
+    ∀ᶠ (m : ℕ) in atTop,
+      ∃ S : Finset ℕ, (∀ n ∈ S, 1 ≤ n) ∧
+        (∑ n ∈ S, (1 / (n : ℚ))) = α ∧
+        (∑ n ∈ S, p.eval (n : ℤ)) = (m : ℤ) := by
+  sorry
 
--- TODO(firsching): formalize the rest of the additional material
+/--
+Cassels [Ca60] has proved that these conditions on the polynomial imply every sufficiently large
+integer is the sum of $p(n_i)$ with distinct $n_i$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_283.variant.cassels :
+  ∀ (p : ℤ[X]),
+    0 < p.leadingCoeff →
+    (¬ ∃ (d : ℤ), d ≥ 2 ∧ ∀ (n : ℤ), n ≥ 1 → d ∣ p.eval n) →
+    ∀ᶠ (m : ℕ) in atTop,
+      ∃ S : Finset ℕ, (∀ n ∈ S, 1 ≤ n) ∧
+        (∑ n ∈ S, p.eval (n : ℤ)) = (m : ℤ) := by
+  sorry
+
+/--
+Burr has proved this if $p(x)=x^k$ with $k\geq 1$ and if we allow $n_i=n_j$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_283.variant.burr :
+  ∀ (k : ℕ), k ≥ 1 →
+    ∀ᶠ (m : ℕ) in atTop,
+      ∃ M : Multiset ℕ, (∀ n ∈ M, 1 ≤ n) ∧
+        (M.map (fun n ↦ (n : ℤ)^k)).sum = (m : ℤ) := by
+  sorry
+
+/--
+Alekseyev [Al19] has proved this when $p(x)=x^2$, for all $m>8542$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_283.variant.alekseyev :
+  ∀ (m : ℕ), m > 8542 →
+    ∃ S : Finset ℕ, (∀ n ∈ S, 1 ≤ n) ∧
+      (∑ n ∈ S, (1 / (n : ℚ))) = 1 ∧
+      (∑ n ∈ S, (n : ℤ)^2) = (m : ℤ) := by
+  sorry
 
 end Erdos283
