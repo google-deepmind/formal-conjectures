@@ -45,7 +45,7 @@ noncomputable def f (r m : ℕ) : ℕ :=
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
       (∀ H : Subgraph G, Fintype.card H.verts = m →
         ∃ E : Finset (Sym2 H.verts),
-          E.card ≤ k ∧
+          E ⊆ H.coe.edgeFinset ∧ E.card ≤ k ∧
           chromaticNumber (H.coe.deleteEdges E) ≤ (r : ℕ∞)) →
       chromaticNumber G ≤ (r + 1 : ℕ∞)}
 
