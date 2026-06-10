@@ -33,7 +33,7 @@ open Asymptotics
 open Filter
 
 /--
-Let $f_r(m)$ is maximal such that, if any graph $G$ has the property that every subgraph $H$ on $m$
+Let $f_r(m)$ be maximal such that, if any graph $G$ has the property that every subgraph $H$ on $m$
 vertices is the union of a graph with chromatic number $\leq r$ and a graph with $\leq f_r(m)$
 edges, then $G$ has chromatic number $\leq r+1$.
 
