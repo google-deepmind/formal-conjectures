@@ -263,4 +263,217 @@ theorem alpha_gt_two_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα : 2 < α) : �
       rw [← hBsum] at hBsum_le
       omega
 
+/-- For `0 < α ≤ 1` and any `t > 0`, `(t, α)` is not a good pair: every term `⌊t·αⁿ⌋`
+    lies in the finite interval `[0, ⌊t⌋]` (since `αⁿ ≤ 1`), so every subset sum is bounded
+    by the constant `∑ i ∈ Icc 0 ⌊t⌋, i`, and no large integer can be a subset sum. A partial
+    result on the open Erdős 349, complementing the `2 < α` and integer-coefficient cases. -/
+@[category research solved, AMS 11]
+theorem alpha_le_one_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα0 : 0 < α) (hα1 : α ≤ 1) :
+    ¬ IsGoodPair t α := by
+  unfold IsGoodPair
+  -- (1) every term is in [0, ⌊t⌋].
+  have hpow_le : ∀ n : ℕ, α ^ n ≤ 1 := fun n => pow_le_one₀ hα0.le hα1
+  have hnonneg : ∀ n, 0 ≤ ⌊t * α ^ n⌋ := by
+    intro n
+    rw [Int.floor_nonneg]
+    positivity
+  have hle_top : ∀ n, ⌊t * α ^ n⌋ ≤ ⌊t⌋ := by
+    intro n
+    apply Int.floor_le_floor
+    have : t * α ^ n ≤ t * 1 := mul_le_mul_of_nonneg_left (hpow_le n) ht.le
+    simpa using this
+  -- the constant bound on subset sums.
+  set C : ℤ := ∑ i ∈ Finset.Icc (0 : ℤ) ⌊t⌋, i with hC
+  have hmem : ∀ n, ⌊t * α ^ n⌋ ∈ Finset.Icc (0 : ℤ) ⌊t⌋ := by
+    intro n
+    rw [Finset.mem_Icc]
+    exact ⟨hnonneg n, hle_top n⟩
+  have hsum_le : ∀ B : Finset ℤ, ↑B ⊆ Set.range (fun n => ⌊t * α ^ n⌋) →
+      (∑ i ∈ B, i) ≤ C := by
+    intro B hBsub
+    have hBsubF : B ⊆ Finset.Icc (0 : ℤ) ⌊t⌋ := by
+      intro b hb
+      have : b ∈ Set.range (fun n => ⌊t * α ^ n⌋) := hBsub hb
+      obtain ⟨m, rfl⟩ := this
+      exact hmem m
+    rw [hC]
+    apply Finset.sum_le_sum_of_subset_of_nonneg hBsubF
+    intro i hi _
+    rw [Finset.mem_Icc] at hi
+    exact hi.1
+  -- additive completeness forces every large k to be a subset sum, ≤ C — contradiction.
+  rw [IsAddComplete, Filter.eventually_atTop]
+  rintro ⟨N, hN⟩
+  set k : ℤ := max N (C + 1) with hk
+  have hkN : N ≤ k := le_max_left _ _
+  have hkC : C + 1 ≤ k := le_max_right _ _
+  have hkmem : k ∈ subsetSums (Set.range (fun n => ⌊t * α ^ n⌋)) := hN k hkN
+  obtain ⟨B, hBsub, hBsum⟩ := hkmem
+  have : k ≤ C := by rw [hBsum]; exact hsum_le B hBsub
+  omega
+
+/-- **Binary expansion.** Every natural number `k` is a sum of distinct powers of two:
+    there is a finite set `E` of exponents with `k = ∑ i ∈ E, 2^i`. Proved by strong
+    induction: subtract the largest power `2^m ≤ k`, recurse on the remainder. -/
+@[category research solved, AMS 11]
+theorem exists_finset_sum_two_pow (k : ℕ) :
+    ∃ E : Finset ℕ, k = ∑ i ∈ E, 2 ^ i := by
+  induction k using Nat.strong_induction_on with
+  | _ k ih =>
+    rcases Nat.eq_zero_or_pos k with hk0 | hkpos
+    · exact ⟨∅, by simp [hk0]⟩
+    · set m := Nat.log 2 k with hm
+      have hmle : 2 ^ m ≤ k := Nat.pow_log_le_self 2 hkpos.ne'
+      have hltsucc : k < 2 ^ (m + 1) := Nat.lt_pow_succ_log_self (by norm_num) k
+      set r := k - 2 ^ m with hr
+      have hr_lt_pow : r < 2 ^ m := by
+        have : k < 2 ^ m + 2 ^ m := by
+          have : (2 : ℕ) ^ (m + 1) = 2 ^ m + 2 ^ m := by ring
+          omega
+        omega
+      have hr_lt_k : r < k := by omega
+      obtain ⟨E, hE⟩ := ih r hr_lt_k
+      have hElt : ∀ i ∈ E, i < m := by
+        intro i hi
+        by_contra hge
+        rw [not_lt] at hge
+        have hpow_le : 2 ^ m ≤ 2 ^ i := Nat.pow_le_pow_right (by norm_num) hge
+        have hle : 2 ^ i ≤ r := by
+          calc 2 ^ i = ∑ j ∈ ({i} : Finset ℕ), 2 ^ j := by simp
+            _ ≤ ∑ j ∈ E, 2 ^ j := by
+                apply Finset.sum_le_sum_of_subset_of_nonneg
+                · simpa using hi
+                · intro j _ _; positivity
+            _ = r := hE.symm
+        omega
+      have hmnotin : m ∉ E := fun hmem => (lt_irrefl m (hElt m hmem))
+      refine ⟨insert m E, ?_⟩
+      rw [Finset.sum_insert hmnotin]
+      omega
+
+/-- **The pair `(1, 2)` is good.** The powers of two `⌊1·2ⁿ⌋ = 2ⁿ` form an additively
+    complete set: every `k ≥ 1` is a finite sum of distinct powers of two. -/
+@[category research solved, AMS 11]
+theorem one_two_isGoodPair : IsGoodPair 1 2 := by
+  unfold IsGoodPair
+  have hfloor : ∀ n : ℕ, ⌊(1 : ℝ) * (2 : ℝ) ^ n⌋ = 2 ^ n := by
+    intro n
+    have : (1 : ℝ) * (2 : ℝ) ^ n = ((2 ^ n : ℤ) : ℝ) := by push_cast; ring
+    rw [this, Int.floor_intCast]
+  rw [IsAddComplete, Filter.eventually_atTop]
+  refine ⟨1, ?_⟩
+  intro k hk
+  set n : ℕ := k.toNat with hn
+  have hkn : (n : ℤ) = k := Int.toNat_of_nonneg (by omega)
+  obtain ⟨E, hE⟩ := exists_finset_sum_two_pow n
+  set B : Finset ℤ := E.image (fun i => (2 : ℤ) ^ i) with hB
+  have hinj : Set.InjOn (fun i => (2 : ℤ) ^ i) (E : Set ℕ) := by
+    intro a _ b _ hab
+    exact (pow_right_strictMono₀ (by norm_num : (1 : ℤ) < 2)).injective hab
+  refine ⟨B, ?_, ?_⟩
+  · intro x hx
+    rw [hB, Finset.coe_image, Set.mem_image] at hx
+    obtain ⟨i, _, rfl⟩ := hx
+    exact ⟨i, hfloor i⟩
+  · rw [hB, Finset.sum_image (by
+      intro a ha b hb hab
+      exact hinj (by simpa using ha) (by simpa using hb) hab)]
+    have : (∑ i ∈ E, (2 : ℤ) ^ i) = ((∑ i ∈ E, 2 ^ i : ℕ) : ℤ) := by push_cast; ring
+    rw [this, ← hE, hkn]
+
+/-- **The dyadic fiber at `α = 2`.** For every `k`, the pair `(1/2ᵏ, 2)` is good: the
+    sequence `⌊2ⁿ / 2ᵏ⌋` is additively complete because at index `n = m + k` it equals the
+    exact power `2^m`, so its range contains all powers of two, which already form an
+    additively complete set. Uses monotonicity `IsAddComplete.mono`. -/
+@[category research solved, AMS 11]
+theorem dyadic_two_isGoodPair (k : ℕ) : IsGoodPair (1 / 2 ^ k) 2 := by
+  unfold IsGoodPair
+  -- every power of two is hit: ⌊2^(m+k)/2^k⌋ = 2^m.
+  have hsub : Set.range (fun n => ⌊(1 : ℝ) * (2 : ℝ) ^ n⌋) ⊆
+      Set.range (fun n => ⌊(1 / 2 ^ k : ℝ) * (2 : ℝ) ^ n⌋) := by
+    rintro x ⟨m, rfl⟩
+    refine ⟨m + k, ?_⟩
+    have hone : ⌊(1 : ℝ) * (2 : ℝ) ^ m⌋ = 2 ^ m := by
+      have : (1 : ℝ) * (2 : ℝ) ^ m = ((2 ^ m : ℤ) : ℝ) := by push_cast; ring
+      rw [this, Int.floor_intCast]
+    have hdy : ⌊(1 / 2 ^ k : ℝ) * (2 : ℝ) ^ (m + k)⌋ = 2 ^ m := by
+      have h2 : (2 : ℝ) ^ k ≠ 0 := by positivity
+      have : (1 / 2 ^ k : ℝ) * (2 : ℝ) ^ (m + k) = ((2 ^ m : ℤ) : ℝ) := by
+        rw [pow_add]; field_simp; push_cast; ring
+      rw [this, Int.floor_intCast]
+    simp only
+    rw [hone, hdy]
+  have hcomplete : IsAddComplete (Set.range (fun n => ⌊(1 : ℝ) * (2 : ℝ) ^ n⌋)) := by
+    have := one_two_isGoodPair
+    unfold IsGoodPair at this
+    exact this
+  exact hcomplete.mono hsub
+
+/-- **Integer leading coefficient `t ≥ 2` blocks completeness.** For every integer base `α`,
+    the pair `(t, α)` with integer `t ≥ 2` is not good: `⌊t·αⁿ⌋ = t·αⁿ` is a multiple of `t`,
+    so every subset sum is too, but two consecutive large integers cannot both be multiples
+    of `t`. Generalizes the parity obstruction (`t = 2`). A partial result on Erdős 349. -/
+@[category research solved, AMS 11]
+theorem int_coeff_ge_two_not_isGoodPair (t : ℤ) (ht : 2 ≤ t) (α : ℤ) :
+    ¬ IsGoodPair (t : ℝ) (α : ℝ) := by
+  unfold IsGoodPair
+  have hfloor : ∀ n : ℕ, ⌊(t : ℝ) * (α : ℝ) ^ n⌋ = t * α ^ n := by
+    intro n
+    have : (t : ℝ) * (α : ℝ) ^ n = ((t * α ^ n : ℤ) : ℝ) := by push_cast; ring
+    rw [this, Int.floor_intCast]
+  have hdvd : ∀ k ∈ subsetSums (Set.range (fun n => ⌊(t : ℝ) * (α : ℝ) ^ n⌋)), t ∣ k := by
+    rintro k ⟨B, hBsub, rfl⟩
+    apply Finset.dvd_sum
+    intro b hb
+    have : b ∈ Set.range (fun n => ⌊(t : ℝ) * (α : ℝ) ^ n⌋) := hBsub hb
+    obtain ⟨n, rfl⟩ := this
+    simp only
+    rw [hfloor n]
+    exact Dvd.intro _ rfl
+  intro hcomplete
+  rw [IsAddComplete, Filter.eventually_atTop] at hcomplete
+  obtain ⟨N, hN⟩ := hcomplete
+  have hdN : t ∣ N := hdvd N (hN N (le_refl N))
+  have hdN1 : t ∣ (N + 1) := hdvd (N + 1) (hN (N + 1) (by omega))
+  have hd1 : t ∣ (1 : ℤ) := by
+    have : t ∣ ((N + 1) - N) := dvd_sub hdN1 hdN
+    simpa using this
+  have : t ≤ 1 := Int.le_of_dvd (by norm_num) hd1
+  omega
+
+/-- **Erdős 349, complete characterization on positive integer pairs.** For integers
+    `t ≥ 1`, `α ≥ 1`, the pair `(t, α)` is good (i.e. `⌊t·αⁿ⌋` is additively complete) iff
+    `(t, α) = (1, 2)`. Assembles the four partial results: `(1,2)` is good, `α ≤ 1` fails,
+    `2 < α` fails (`alpha_gt_two_not_isGoodPair`), and integer `t ≥ 2` fails. -/
+@[category research solved, AMS 11]
+theorem integer_isGoodPair_iff (t α : ℤ) (ht : 1 ≤ t) (hα : 1 ≤ α) :
+    IsGoodPair (t : ℝ) (α : ℝ) ↔ t = 1 ∧ α = 2 := by
+  constructor
+  · intro h
+    have htR : (0 : ℝ) < (t : ℝ) := by exact_mod_cast (by omega : 0 < t)
+    rcases (by omega : α = 1 ∨ α = 2 ∨ 3 ≤ α) with hα1 | hα2 | hα3
+    · subst hα1
+      exfalso
+      have hcast : ((1 : ℤ) : ℝ) = 1 := by norm_num
+      apply alpha_le_one_not_isGoodPair (t : ℝ) ((1 : ℤ) : ℝ) htR
+        (by rw [hcast]; norm_num) (by rw [hcast])
+      exact h
+    · subst hα2
+      rcases (by omega : t = 1 ∨ 2 ≤ t) with ht1 | ht2
+      · exact ⟨ht1, rfl⟩
+      · exfalso
+        have hcast : ((2 : ℤ) : ℝ) = 2 := by norm_num
+        rw [hcast] at h
+        exact int_coeff_ge_two_not_isGoodPair t ht2 2 (by rw [hcast]; exact h)
+    · exfalso
+      have hαR : (2 : ℝ) < (α : ℝ) := by
+        have : (3 : ℝ) ≤ (α : ℝ) := by exact_mod_cast hα3
+        linarith
+      exact alpha_gt_two_not_isGoodPair (t : ℝ) (α : ℝ) htR hαR h
+  · rintro ⟨rfl, rfl⟩
+    have hcast : IsGoodPair ((1 : ℤ) : ℝ) ((2 : ℤ) : ℝ) = IsGoodPair 1 2 := by
+      norm_num
+    rw [hcast]
+    exact one_two_isGoodPair
+
 end Erdos349
