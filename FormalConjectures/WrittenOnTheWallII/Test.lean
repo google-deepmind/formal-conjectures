@@ -133,7 +133,7 @@ theorem house_matching : m HouseGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem house_residue : residue HouseGraph = 0 := by
+theorem house_residue : residue HouseGraph = 2 := by
   unfold residue; decide +native
 
 @[category test, AMS 5]
@@ -204,7 +204,7 @@ theorem K4_matching : m K4 = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem K4_residue : residue K4 = 0 := by
+theorem K4_residue : residue K4 = 1 := by
   unfold residue; decide +native
 
 @[category test, AMS 5]
@@ -275,7 +275,7 @@ theorem petersen_matching : m PetersenGraph = 5 := by
   sorry
 
 @[category test, AMS 5]
-theorem petersen_residue : residue PetersenGraph = 0 := by
+theorem petersen_residue : residue PetersenGraph = 3 := by
   unfold residue; decide +native
 
 @[category test, AMS 5]
@@ -346,7 +346,7 @@ theorem C6_matching : m C6 = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem C6_residue : residue C6 = 0 := by
+theorem C6_residue : residue C6 = 2 := by
   unfold residue; decide +native
 
 @[category test, AMS 5]
