@@ -537,4 +537,155 @@ theorem three_halves_two_not_isGoodPair : ¬ IsGoodPair (3 / 2) 2 := by
   have := hemod _ hmem
   omega
 
+/- ### Entire completeness and the single-gap criterion
+
+The results below isolate, once and cleanly, the gap case-split that already powers
+`alpha_gt_two_not_isGoodPair`, and retarget it at a strictly stronger predicate:
+*entire* additive completeness (van Doorn's "entirely complete": every positive
+integer is a finite subset sum, not merely all sufficiently large ones). Against this
+stronger predicate a single gap suffices — no `Tendsto`, no geometric majorant, no
+asymptotics — which lets us cover the otherwise hard band `5/3 ≤ α < 2`. -/
+
+/-- A set `A ⊆ ℤ` is *entirely additively complete* if **every** positive integer is a
+    finite subset sum of `A` (van Doorn's "entirely complete": `P(A) = ℕ≥1`). Strictly
+    stronger than `IsAddComplete`, which only requires all *sufficiently large* integers.
+
+    This is a problem-local definition; it could be promoted to
+    `FormalConjecturesForMathlib/NumberTheory/AdditivelyComplete.lean` (next to
+    `IsAddComplete`) if the maintainers prefer it to live there. -/
+def IsEntirelyAddComplete (A : Set ℤ) : Prop :=
+  ∀ k : ℤ, 1 ≤ k → k ∈ subsetSums A
+
+/-- **Glue.** Entire completeness implies (eventual) completeness: if every `k ≥ 1` is a
+    subset sum, then in particular all sufficiently large `k` are. -/
+@[category research solved, AMS 11]
+theorem isEntirelyAddComplete_imp_isAddComplete {A : Set ℤ}
+    (h : IsEntirelyAddComplete A) : IsAddComplete A :=
+  Filter.eventually_atTop.mpr ⟨1, fun k hk => h k hk⟩
+
+/-- **Abstract single-gap criterion.** For a monotone, nonnegative integer sequence `a`,
+    a single gap `(∑_{k<r+1} a k) < m < a (r+1)` with `m ≥ 1` already shows that `m` is not
+    a subset sum, hence the range of `a` is not entirely additively complete.
+
+    This is the pure-`ℤ` core of `alpha_gt_two_not_isGoodPair`'s
+    `by_cases ∃ b ∈ B, a (r+1) ≤ b` case-split, with `m` *given* rather than constructed via
+    `Tendsto` (strictly easier, and enough for the band `5/3 ≤ α < 2` below). -/
+@[category research solved, AMS 11]
+theorem entire_gap_not_complete (a : ℕ → ℤ) (hmono : Monotone a) (hnn : ∀ n, 0 ≤ a n)
+    (r : ℕ) (m : ℤ) (hm : 1 ≤ m)
+    (hlo : (∑ k ∈ Finset.range (r + 1), a k) < m) (hhi : m < a (r + 1)) :
+    ¬ IsEntirelyAddComplete (Set.range a) := by
+  intro hcomplete
+  apply absurd (hcomplete m hm)
+  rintro ⟨B, hBsub, hBsum⟩
+  have hBnonneg : ∀ b ∈ B, (0 : ℤ) ≤ b := by
+    intro b hb
+    have : b ∈ Set.range a := hBsub hb
+    obtain ⟨j, rfl⟩ := this
+    exact hnn j
+  set P : ℤ := a (r + 1) with hP
+  by_cases hcase : ∃ b ∈ B, P ≤ b
+  · obtain ⟨b, hbB, hPb⟩ := hcase
+    have hge : P ≤ ∑ i ∈ B, i := by
+      calc P ≤ b := hPb
+        _ ≤ ∑ i ∈ B, i := Finset.single_le_sum (fun i hi => hBnonneg i hi) hbB
+    rw [← hBsum] at hge
+    omega
+  · have hlt : ∀ b ∈ B, b < P := by
+      intro b hb
+      by_contra hc
+      exact hcase ⟨b, hb, not_lt.mp hc⟩
+    have hBsubimg : B ⊆ (Finset.range (r + 1)).image a := by
+      intro b hb
+      have hbP : b < P := hlt b hb
+      have : b ∈ Set.range a := hBsub hb
+      obtain ⟨j, rfl⟩ := this
+      have hjle : j ≤ r := by
+        by_contra hjn
+        have : a (r + 1) ≤ a j := hmono (by omega)
+        rw [← hP] at this
+        omega
+      rw [Finset.mem_image]
+      exact ⟨j, Finset.mem_range.mpr (by omega), rfl⟩
+    have himg_le : ∑ u ∈ (Finset.range (r + 1)).image a, u
+        ≤ ∑ k ∈ Finset.range (r + 1), a k := by
+      have h := Finset.sum_image_le_of_nonneg (s := Finset.range (r + 1))
+        (g := a) (f := fun x : ℤ => x)
+        (fun u hu => by
+          rw [Finset.mem_image] at hu; obtain ⟨j, _, rfl⟩ := hu; exact hnn j)
+      simpa using h
+    have hBsum_le : ∑ i ∈ B, i ≤ ∑ k ∈ Finset.range (r + 1), a k := by
+      calc ∑ i ∈ B, i
+          ≤ ∑ u ∈ (Finset.range (r + 1)).image a, u :=
+            Finset.sum_le_sum_of_subset_of_nonneg hBsubimg
+              (fun i hi _ => by
+                rw [Finset.mem_image] at hi; obtain ⟨j, _, rfl⟩ := hi; exact hnn j)
+        _ ≤ ∑ k ∈ Finset.range (r + 1), a k := himg_le
+    rw [← hBsum] at hBsum_le
+    omega
+
+/-- The 0-th term of `⌊t·αⁿ⌋` is `⌊t⌋` (since `α⁰ = 1`). -/
+@[category research solved, AMS 11]
+theorem floorSeq_zero (t α : ℝ) : ⌊t * α ^ (0 : ℕ)⌋ = ⌊t⌋ := by
+  simp [pow_zero, mul_one]
+
+/-- The 1-st term of `⌊t·αⁿ⌋` is `⌊t·α⌋`. -/
+@[category research solved, AMS 11]
+theorem floorSeq_one (t α : ℝ) : ⌊t * α ^ (1 : ℕ)⌋ = ⌊t * α⌋ := by
+  simp [pow_one]
+
+/-- `n ↦ ⌊t·αⁿ⌋` is monotone when `0 ≤ t` and `1 ≤ α`. -/
+@[category research solved, AMS 11]
+theorem floorSeq_monotone (t α : ℝ) (ht : 0 ≤ t) (hα : 1 ≤ α) :
+    Monotone (fun n => ⌊t * α ^ n⌋) := by
+  intro n m hnm
+  simp only
+  apply Int.floor_le_floor
+  apply mul_le_mul_of_nonneg_left _ ht
+  exact pow_le_pow_right₀ hα hnm
+
+/-- `n ↦ ⌊t·αⁿ⌋` is nonnegative when `0 ≤ t` and `0 ≤ α`. -/
+@[category research solved, AMS 11]
+theorem floorSeq_nonneg (t α : ℝ) (ht : 0 ≤ t) (hα : 0 ≤ α) (n : ℕ) :
+    0 ≤ (fun n => ⌊t * α ^ n⌋) n := by
+  simp only
+  rw [Int.floor_nonneg]
+  positivity
+
+/-- **Application inside the band `5/3 ≤ α < 2`.** For `t ≥ 3` and `5/3 ≤ α < 2`, the
+    sequence `⌊t·αⁿ⌋` is NOT entirely additively complete: the very first gap
+    `⌊t⌋ < ⌊t⌋+1 < ⌊t·α⌋` already misses the positive integer `⌊t⌋+1`.
+
+    This is the `r = 0`, `m = ⌊t⌋ + 1` instance of `entire_gap_not_complete`. The gap
+    inequality comes from `t·α ≥ t·(5/3) = t + 2t/3 ≥ t + 2 ≥ ⌊t⌋ + 2`. The constant `5/3`
+    (not `φ`) is the sharp clean threshold uniform in `t ≥ 3`: at `α = φ`, `t = 3` gives
+    `⌊3φ⌋ = 4 = ⌊t⌋+1`, so the first gap closes. This is *entire* (not eventual)
+    incompleteness; the gap need not recur for `φ ≤ α < 2`, where Erdős 349 stays open. -/
+@[category research solved, AMS 11]
+theorem floorSeq_not_entirelyComplete_of_le_two
+    (t α : ℝ) (ht : 3 ≤ t) (hα : 5 / 3 ≤ α) (hα2 : α < 2) :
+    ¬ IsEntirelyAddComplete (Set.range (fun n => ⌊t * α ^ n⌋)) := by
+  have ht0 : 0 ≤ t := by linarith
+  have hα1 : 1 ≤ α := by linarith
+  have hα0 : 0 ≤ α := by linarith
+  have hmono := floorSeq_monotone t α ht0 hα1
+  have hnn := fun n => floorSeq_nonneg t α ht0 hα0 n
+  have hft : 0 ≤ ⌊t⌋ := Int.floor_nonneg.mpr (by linarith)
+  have hm : (1 : ℤ) ≤ ⌊t⌋ + 1 := by omega
+  have hlo : (∑ k ∈ Finset.range (0 + 1), (fun n => ⌊t * α ^ n⌋) k) < ⌊t⌋ + 1 := by
+    rw [Finset.range_one, Finset.sum_singleton, floorSeq_zero]
+    omega
+  have hhi : (⌊t⌋ : ℤ) + 1 < (fun n => ⌊t * α ^ n⌋) (0 + 1) := by
+    simp only
+    rw [show (0 + 1) = 1 from rfl, floorSeq_one]
+    have hkey : ((⌊t⌋ : ℤ) + 2 : ℝ) ≤ t * α := by
+      have h1 : (⌊t⌋ : ℝ) ≤ t := Int.floor_le t
+      nlinarith [mul_nonneg ht0 (by linarith : (0 : ℝ) ≤ α - 5 / 3)]
+    have : (⌊t⌋ : ℤ) + 2 ≤ ⌊t * α⌋ := by
+      apply Int.le_floor.mpr
+      push_cast
+      linarith
+    omega
+  exact entire_gap_not_complete (fun n => ⌊t * α ^ n⌋) hmono hnn 0 (⌊t⌋ + 1) hm hlo hhi
+
 end Erdos349
