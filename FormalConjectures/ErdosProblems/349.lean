@@ -476,4 +476,65 @@ theorem integer_isGoodPair_iff (t α : ℤ) (ht : 1 ≤ t) (hα : 1 ≤ α) :
     rw [hcast]
     exact one_two_isGoodPair
 
+/-- **The pair `(3/2, 2)` is NOT good.** The negative companion of `dyadic_two_isGoodPair`:
+    while every dyadic coefficient `1/2ᵏ` gives a good pair at `α = 2`, the non-dyadic rational
+    `t = 3/2` does not. The sequence `⌊(3/2)·2ⁿ⌋ = 1, 3, 6, 12, 24, …` is not additively
+    complete because every term but the first `⌊3/2⌋ = 1` is a multiple of `3` (namely
+    `⌊(3/2)·2^(n+1)⌋ = 3·2ⁿ`), so every subset sum is `≡ 0` or `1 (mod 3)`; the infinitely
+    many integers `≡ 2 (mod 3)` are never reached. A partial result on Erdős 349 in the same
+    divisibility family as `int_coeff_ge_two_not_isGoodPair` (here the modulus is `3`). -/
+@[category research solved, AMS 11]
+theorem three_halves_two_not_isGoodPair : ¬ IsGoodPair (3 / 2) 2 := by
+  unfold IsGoodPair
+  -- The zeroth term: ⌊(3/2)·2⁰⌋ = ⌊3/2⌋ = 1.
+  have hzero : ⌊(3 / 2 : ℝ) * (2 : ℝ) ^ (0 : ℕ)⌋ = 1 := by norm_num
+  -- The (n+1)-th term: ⌊(3/2)·2^(n+1)⌋ = 3·2ⁿ (exact integer).
+  have hsucc : ∀ n : ℕ, ⌊(3 / 2 : ℝ) * (2 : ℝ) ^ (n + 1)⌋ = 3 * 2 ^ n := by
+    intro n
+    have : (3 / 2 : ℝ) * (2 : ℝ) ^ (n + 1) = ((3 * 2 ^ n : ℤ) : ℝ) := by
+      push_cast; ring
+    rw [this, Int.floor_intCast]
+  -- Every element of the range is either 1 or divisible by 3.
+  have hresidue : ∀ x ∈ Set.range (fun n => ⌊(3 / 2 : ℝ) * (2 : ℝ) ^ n⌋),
+      x = 1 ∨ (3 : ℤ) ∣ x := by
+    rintro x ⟨n, rfl⟩
+    simp only
+    cases n with
+    | zero => left; exact hzero
+    | succ n => right; rw [hsucc n]; exact dvd_mul_right 3 _
+  -- Every subset sum has residue 0 or 1 modulo 3.
+  have hemod : ∀ s ∈ subsetSums (Set.range (fun n => ⌊(3 / 2 : ℝ) * (2 : ℝ) ^ n⌋)),
+      s % 3 = 0 ∨ s % 3 = 1 := by
+    rintro s ⟨B, hBsub, rfl⟩
+    have hB_residue : ∀ b ∈ B, b = 1 ∨ (3 : ℤ) ∣ b := fun b hb =>
+      hresidue b (hBsub (Finset.mem_coe.mpr hb))
+    by_cases h1 : (1 : ℤ) ∈ B
+    · have hB3 : ∀ b ∈ B.erase 1, (3 : ℤ) ∣ b := by
+        intro b hb
+        have hb' := Finset.mem_erase.mp hb
+        rcases hB_residue b hb'.2 with rfl | hdvd
+        · exact absurd rfl hb'.1
+        · exact hdvd
+      have hdvd_sum : (3 : ℤ) ∣ ∑ i ∈ B.erase 1, i := Finset.dvd_sum hB3
+      rw [← Finset.add_sum_erase _ _ h1]
+      obtain ⟨k, hk⟩ := hdvd_sum
+      right
+      omega
+    · have hB3 : ∀ b ∈ B, (3 : ℤ) ∣ b := by
+        intro b hb
+        rcases hB_residue b hb with rfl | hdvd
+        · exact absurd hb h1
+        · exact hdvd
+      have hdvd_sum : (3 : ℤ) ∣ ∑ i ∈ B, i := Finset.dvd_sum hB3
+      obtain ⟨k, hk⟩ := hdvd_sum
+      left
+      omega
+  -- Negate completeness: produce arbitrarily large k ≡ 2 (mod 3) not hit.
+  rw [IsAddComplete, Filter.not_eventually, Filter.frequently_atTop]
+  intro N
+  refine ⟨3 * (max N 0) + 2, by omega, ?_⟩
+  intro hmem
+  have := hemod _ hmem
+  omega
+
 end Erdos349
