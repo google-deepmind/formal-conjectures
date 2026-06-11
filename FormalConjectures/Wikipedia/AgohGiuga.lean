@@ -151,7 +151,7 @@ theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
       orderOf_eq_card_of_forall_mem_zpowers]
   · obtain ⟨h_sqfr, h_dvd⟩ := h
     simp_all [a.squarefree_iff_prime_squarefree, Nat.FermatPsp, Nat.ProbablePrime, Nat.Composite]
-    refine if hb : b ^ (a - 1) - 1 = 0 then ⟨0, hb⟩ else (a.factorization_le_iff_dvd ha₁.1.ne_bot hb).1 fun p => ?_
+    refine if hb : _ = 0 then ⟨0, hb⟩ else (a.factorization_le_iff_dvd ha₁.1.ne_bot hb).1 fun p => ?_
     by_cases hp : p.Prime
     · by_cases hpa : p ∣ a
       · obtain ⟨w, h⟩ := h_dvd p hp hpa
