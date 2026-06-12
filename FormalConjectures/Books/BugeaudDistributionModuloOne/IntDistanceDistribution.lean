@@ -38,7 +38,7 @@ Chapter 10 of the book collects open questions. This file formalizes Problems 10
     June 28–July 6, 2000. Berlin, Heidelberg: Springer Berlin Heidelberg, 2003. 249-344.
 -/
 
-namespace Bugeaud
+namespace Bugeaud01
 
 /--
 Problem 10.1. Are there a transcendental number $\alpha$ and a positive real
@@ -92,4 +92,4 @@ theorem problem_10_3_of_waldschmidt (h : type_of% waldschmidt) : type_of% proble
   rw [Real.rpow_def_of_pos hn_pos]
   exact Real.exp_le_exp.mpr (by nlinarith [Real.log_le_self hn_pos.le])
 
-end Bugeaud
+end Bugeaud01
