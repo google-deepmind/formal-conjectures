@@ -24,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos287
 
+/-- The maximum gap between consecutive terms of a finite sequence `s : Fin k → ℕ`,
+i.e., $\max_{0 \le i < k-1} (s(i+1) - s(i))$. -/
 def max_gap (k : ℕ) (s : Fin k → ℕ ) : ℕ  :=
    Finset.sup Finset.univ (fun i : Fin (k - 1) =>
       s  ⟨i.val + 1, by omega⟩ - s ⟨i.val, by omega⟩)
