@@ -261,4 +261,276 @@ theorem turan_count_shore : ∀ a : ℕ, 2 ≤ a → a ≤ 7 → a ^ 2 / 3 < 3 *
   interval_cases a <;> norm_num
 
 
+/-
+## Zero-budget identities for the deficiency-6 shore analysis
+
+In the structural analysis of $6$-edge-cut shores of a $6$-regular $(4,1)$-graph, the
+shore graph $H$ has $\Delta(H) \le 6$ and total deficiency $\sum_x (6 - \deg x) = 6$.
+For a full vertex $v$ ($\deg v = 6$) whose deletion admits a proper $3$-colouring with
+colour counts $(2,2,2)$ on $N(v)$ (a *deletion-unfrozen* vertex), exact double counting
+constrains the colour classes. With $p = |IJ|$ (union of the two non-$k$ classes off
+$v$), $q = |K|$ (the $k$-class off $v$), $B_k$ the deficiency mass on $K$, and $s_{IJ}$
+twice the number of edges internal to $IJ$:
+
+* `zero_budget_edge_formula` (L1): $s_{IJ} = 6p - 6q + 2B_k - 8$.
+* `charge_identity` (L2): $6p - s_{IJ} = 6q + 8 - 2B_k$; the left side equals
+  $\sum_C \kappa(C)$ over the components $C$ of $H[IJ]$, where
+  $\kappa(C) = 6|C| - 2e(C)$, so L2 is the component charge identity.
+* `double_sum_even`: every internal indicator double sum is even ($\kappa$-parity).
+
+These are the arithmetic core of the zero-budget accounting step in the verified
+computational programme on [SkSt25] Problem 5.2 (2026).
+-/
+
+namespace ZeroBudget
+
+open Finset
+
+variable [Fintype V] [DecidableEq V]
+variable (G : SimpleGraph V) [DecidableRel G.Adj]
+variable (c : V → Fin 3) (v : V) (k : Fin 3)
+
+/-- The union of the two non-`k` colour classes, excluding `v`. -/
+def IJ : Finset V := univ.filter fun x => x ≠ v ∧ c x ≠ k
+
+/-- The `k`-colour class, excluding `v`. -/
+def Kcl : Finset V := univ.filter fun x => x ≠ v ∧ c x = k
+
+/-- Twice the number of edges of `G` with both endpoints in `IJ`,
+as an adjacency-indicator double sum (over ℤ). -/
+def sIJ : ℤ := ∑ x ∈ IJ c v k, ∑ y ∈ IJ c v k, (if G.Adj x y then (1 : ℤ) else 0)
+
+lemma mem_IJ {x : V} : x ∈ IJ c v k ↔ x ≠ v ∧ c x ≠ k := by
+  simp [IJ]
+
+lemma mem_Kcl {x : V} : x ∈ Kcl c v k ↔ x ≠ v ∧ c x = k := by
+  simp [Kcl]
+
+/-- `{v}`, `IJ`, `Kcl` partition the vertex set: sums over `univ` split accordingly. -/
+lemma sum_univ_split (f : V → ℤ) :
+    ∑ y, f y = f v + (∑ y ∈ IJ c v k, f y) + ∑ y ∈ Kcl c v k, f y := by
+  have hdisj : Disjoint (IJ c v k) (Kcl c v k) := by
+    rw [Finset.disjoint_left]
+    intro a ha hb
+    rw [mem_IJ] at ha
+    rw [mem_Kcl] at hb
+    exact ha.2 hb.2
+  have hv : v ∉ IJ c v k ∪ Kcl c v k := by
+    simp [mem_IJ, mem_Kcl]
+  have hall : ∀ x : V, x ∈ insert v (IJ c v k ∪ Kcl c v k) := by
+    intro x
+    simp only [Finset.mem_insert, Finset.mem_union, mem_IJ, mem_Kcl]
+    by_cases hx : x = v
+    · exact Or.inl hx
+    · by_cases hc : c x = k
+      · exact Or.inr (Or.inr ⟨hx, hc⟩)
+      · exact Or.inr (Or.inl ⟨hx, hc⟩)
+  have huniv : (univ : Finset V) = insert v (IJ c v k ∪ Kcl c v k) :=
+    (Finset.eq_univ_iff_forall.mpr hall).symm
+  rw [huniv, Finset.sum_insert hv, Finset.sum_union hdisj]
+  ring
+
+omit [DecidableEq V] in
+/-- Degree as an adjacency-indicator sum over all vertices (in ℤ). -/
+lemma degree_eq_sum (x : V) :
+    (G.degree x : ℤ) = ∑ y, (if G.Adj x y then (1 : ℤ) else 0) := by
+  have h : G.neighborFinset x = univ.filter fun y => G.Adj x y := by
+    ext y
+    simp [SimpleGraph.mem_neighborFinset]
+  rw [Finset.sum_boole, ← h]
+  rfl
+
+omit [Fintype V] [DecidableEq V] in
+/-- Indicator symmetry from adjacency symmetry. -/
+lemma ite_adj_comm (x y : V) :
+    (if G.Adj x y then (1 : ℤ) else 0) = if G.Adj y x then (1 : ℤ) else 0 := by
+  by_cases h : G.Adj x y
+  · rw [if_pos h, if_pos h.symm]
+  · rw [if_neg h, if_neg fun h' => h h'.symm]
+
+/-- `Kcl` is independent in `G` (properness of `c` off `v`). -/
+lemma sum_Kcl_Kcl_eq_zero
+    (hproper : ∀ x y, G.Adj x y → x ≠ v → y ≠ v → c x ≠ c y) :
+    ∑ x ∈ Kcl c v k, ∑ y ∈ Kcl c v k, (if G.Adj x y then (1 : ℤ) else 0) = 0 := by
+  refine Finset.sum_eq_zero fun x hx => Finset.sum_eq_zero fun y hy => ?_
+  rw [mem_Kcl] at hx hy
+  have hnadj : ¬ G.Adj x y := fun hadj =>
+    hproper x y hadj hx.1 hy.1 (hx.2.trans hy.2.symm)
+  rw [if_neg hnadj]
+
+/-- Cross-edge double count: `Kcl→IJ` indicator sum equals `IJ→Kcl` indicator sum. -/
+lemma cross_symm :
+    ∑ x ∈ Kcl c v k, ∑ y ∈ IJ c v k, (if G.Adj x y then (1 : ℤ) else 0)
+      = ∑ x ∈ IJ c v k, ∑ y ∈ Kcl c v k, (if G.Adj x y then (1 : ℤ) else 0) := by
+  rw [Finset.sum_comm]
+  exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ite_adj_comm G y x
+
+/-- `C = 2`: the vertex `v` has exactly `2` neighbours in `Kcl`. -/
+lemma sum_C
+    (hcnt : ∀ t : Fin 3, ((G.neighborFinset v).filter (fun u => c u = t)).card = 2) :
+    ∑ x ∈ Kcl c v k, (if G.Adj x v then (1 : ℤ) else 0) = 2 := by
+  have h1 : ∑ x ∈ Kcl c v k, (if G.Adj x v then (1 : ℤ) else 0)
+      = ∑ x ∈ Kcl c v k, (if G.Adj v x then (1 : ℤ) else 0) :=
+    Finset.sum_congr rfl fun x _ => ite_adj_comm G x v
+  have h2 : (Kcl c v k).filter (fun x => G.Adj v x)
+      = (G.neighborFinset v).filter (fun u => c u = k) := by
+    ext x
+    simp only [Finset.mem_filter, mem_Kcl, SimpleGraph.mem_neighborFinset]
+    constructor
+    · rintro ⟨⟨_, hck⟩, hadj⟩
+      exact ⟨hadj, hck⟩
+    · rintro ⟨hadj, hck⟩
+      exact ⟨⟨hadj.ne', hck⟩, hadj⟩
+  rw [h1, Finset.sum_boole, h2, hcnt k]
+  norm_num
+
+/-- `A = 4`: the vertex `v` has exactly `4` neighbours in `IJ`
+(its `6` neighbours minus the `2` in the `k`-class). -/
+lemma sum_A (b : V → ℕ)
+    (hdeg : ∀ x, G.degree x + b x = 6) (hbv : b v = 0)
+    (hcnt : ∀ t : Fin 3, ((G.neighborFinset v).filter (fun u => c u = t)).card = 2) :
+    ∑ x ∈ IJ c v k, (if G.Adj x v then (1 : ℤ) else 0) = 4 := by
+  have h1 : ∑ x ∈ IJ c v k, (if G.Adj x v then (1 : ℤ) else 0)
+      = ∑ x ∈ IJ c v k, (if G.Adj v x then (1 : ℤ) else 0) :=
+    Finset.sum_congr rfl fun x _ => ite_adj_comm G x v
+  have h2 : (IJ c v k).filter (fun x => G.Adj v x)
+      = (G.neighborFinset v).filter (fun u => ¬ c u = k) := by
+    ext x
+    simp only [Finset.mem_filter, mem_IJ, SimpleGraph.mem_neighborFinset]
+    constructor
+    · rintro ⟨⟨_, hck⟩, hadj⟩
+      exact ⟨hadj, hck⟩
+    · rintro ⟨hadj, hck⟩
+      exact ⟨⟨hadj.ne', hck⟩, hadj⟩
+  have hdv : (G.neighborFinset v).card = 6 := by
+    have h := hdeg v
+    rw [hbv, add_zero] at h
+    exact h
+  have h3 : ((G.neighborFinset v).filter (fun u => ¬ c u = k)).card = 4 := by
+    have h4 : ((G.neighborFinset v).filter (fun u => c u = k)).card
+        + ((G.neighborFinset v).filter (fun u => ¬ c u = k)).card
+        = (G.neighborFinset v).card :=
+      Finset.card_filter_add_card_filter_not (fun u => c u = k)
+    rw [hcnt k, hdv] at h4
+    omega
+  rw [h1, Finset.sum_boole, h2, h3]
+  norm_num
+
+/-- **L1, the zero-budget edge formula.**
+`sIJ = 6·|IJ| − 6·|Kcl| + 2·(∑_{x ∈ Kcl} b x) − 8`,
+where `sIJ` is twice the number of `G`-edges internal to `IJ`. -/
+@[category API, AMS 5]
+theorem zero_budget_edge_formula (b : V → ℕ)
+    (hdeg : ∀ x, G.degree x + b x = 6)
+    (hb6 : ∑ x, b x = 6)
+    (hbv : b v = 0)
+    (hproper : ∀ x y, G.Adj x y → x ≠ v → y ≠ v → c x ≠ c y)
+    (hcnt : ∀ t : Fin 3, ((G.neighborFinset v).filter (fun u => c u = t)).card = 2) :
+    sIJ G c v k
+      = 6 * ((IJ c v k).card : ℤ) - 6 * ((Kcl c v k).card : ℤ)
+        + 2 * ((∑ x ∈ Kcl c v k, b x : ℕ) : ℤ) - 8 := by
+  -- (1) Sum of degrees over IJ = sIJ + E + A, with A = 4.
+  have hIJdeg : ∑ x ∈ IJ c v k, (G.degree x : ℤ)
+      = (∑ x ∈ IJ c v k, ∑ y ∈ IJ c v k, (if G.Adj x y then (1 : ℤ) else 0))
+        + (∑ x ∈ IJ c v k, ∑ y ∈ Kcl c v k, (if G.Adj x y then (1 : ℤ) else 0)) + 4 := by
+    have hsplit : ∀ x ∈ IJ c v k, (G.degree x : ℤ)
+        = (if G.Adj x v then (1 : ℤ) else 0)
+          + (∑ y ∈ IJ c v k, (if G.Adj x y then (1 : ℤ) else 0))
+          + (∑ y ∈ Kcl c v k, (if G.Adj x y then (1 : ℤ) else 0)) := by
+      intro x _
+      rw [degree_eq_sum G x]
+      exact sum_univ_split c v k _
+    rw [Finset.sum_congr rfl hsplit]
+    simp only [Finset.sum_add_distrib]
+    rw [sum_A G c v k b hdeg hbv hcnt]
+    ring
+  -- (2) Sum of degrees over Kcl = E + C, with C = 2 (Kcl independent).
+  have hKdeg : ∑ x ∈ Kcl c v k, (G.degree x : ℤ)
+      = (∑ x ∈ IJ c v k, ∑ y ∈ Kcl c v k, (if G.Adj x y then (1 : ℤ) else 0)) + 2 := by
+    have hsplit : ∀ x ∈ Kcl c v k, (G.degree x : ℤ)
+        = (if G.Adj x v then (1 : ℤ) else 0)
+          + (∑ y ∈ IJ c v k, (if G.Adj x y then (1 : ℤ) else 0))
+          + (∑ y ∈ Kcl c v k, (if G.Adj x y then (1 : ℤ) else 0)) := by
+      intro x _
+      rw [degree_eq_sum G x]
+      exact sum_univ_split c v k _
+    rw [Finset.sum_congr rfl hsplit]
+    simp only [Finset.sum_add_distrib]
+    rw [sum_C G c v k hcnt, sum_Kcl_Kcl_eq_zero G c v k hproper, cross_symm G c v k]
+    ring
+  -- (5) Degree sums via the deficiency hypothesis.
+  have hdegIJ : ∑ x ∈ IJ c v k, (G.degree x : ℤ)
+      = 6 * ((IJ c v k).card : ℤ) - ∑ x ∈ IJ c v k, (b x : ℤ) := by
+    have hstep : ∀ x ∈ IJ c v k, (G.degree x : ℤ) = 6 - (b x : ℤ) := by
+      intro x _
+      have h := hdeg x
+      omega
+    rw [Finset.sum_congr rfl hstep, Finset.sum_sub_distrib, Finset.sum_const, nsmul_eq_mul]
+    ring
+  have hdegK : ∑ x ∈ Kcl c v k, (G.degree x : ℤ)
+      = 6 * ((Kcl c v k).card : ℤ) - ∑ x ∈ Kcl c v k, (b x : ℤ) := by
+    have hstep : ∀ x ∈ Kcl c v k, (G.degree x : ℤ) = 6 - (b x : ℤ) := by
+      intro x _
+      have h := hdeg x
+      omega
+    rw [Finset.sum_congr rfl hstep, Finset.sum_sub_distrib, Finset.sum_const, nsmul_eq_mul]
+    ring
+  -- (5') Budget split: B_IJ + B_K = 6 (using b v = 0).
+  have hbsum : (∑ x ∈ IJ c v k, (b x : ℤ)) + (∑ x ∈ Kcl c v k, (b x : ℤ)) = 6 := by
+    have h := sum_univ_split c v k (fun x => (b x : ℤ))
+    simp only [hbv, Nat.cast_zero, zero_add] at h
+    have h6 : (∑ x : V, (b x : ℤ)) = 6 := by exact_mod_cast hb6
+    rw [h6] at h
+    linarith [h]
+  -- (6) Combine.
+  have hcast : ((∑ x ∈ Kcl c v k, b x : ℕ) : ℤ) = ∑ x ∈ Kcl c v k, (b x : ℤ) :=
+    Nat.cast_sum _ _
+  have hsIJ : sIJ G c v k
+      = ∑ x ∈ IJ c v k, ∑ y ∈ IJ c v k, (if G.Adj x y then (1 : ℤ) else 0) := rfl
+  rw [hsIJ, hcast]
+  linarith [hIJdeg, hKdeg, hdegIJ, hdegK, hbsum]
+
+/-- **L2, the charge identity** (arithmetic form): follows from L1.
+`6·|IJ| − sIJ = 6·|Kcl| + 8 − 2·(∑_{x ∈ Kcl} b x)`. The left side equals
+`∑_C κ(C)` over the components `C` of the graph induced on `IJ`. -/
+@[category API, AMS 5]
+theorem charge_identity (b : V → ℕ)
+    (hdeg : ∀ x, G.degree x + b x = 6)
+    (hb6 : ∑ x, b x = 6)
+    (hbv : b v = 0)
+    (hproper : ∀ x y, G.Adj x y → x ≠ v → y ≠ v → c x ≠ c y)
+    (hcnt : ∀ t : Fin 3, ((G.neighborFinset v).filter (fun u => c u = t)).card = 2) :
+    6 * ((IJ c v k).card : ℤ) - sIJ G c v k
+      = 6 * ((Kcl c v k).card : ℤ) + 8 - 2 * ((∑ x ∈ Kcl c v k, b x : ℕ) : ℤ) := by
+  have h := zero_budget_edge_formula G c v k b hdeg hb6 hbv hproper hcnt
+  linarith
+
+omit [Fintype V] in
+/-- κ-parity: any internal indicator double sum is even,
+i.e. `s_W = 2·e_W` for some `e_W` — by symmetry and irreflexivity of `Adj`. -/
+@[category API, AMS 5]
+theorem double_sum_even (W : Finset V) :
+    ∃ e : ℤ, ∑ x ∈ W, ∑ y ∈ W, (if G.Adj x y then (1 : ℤ) else 0) = 2 * e := by
+  induction W using Finset.induction_on with
+  | empty => exact ⟨0, by simp⟩
+  | insert a W ha ih =>
+    obtain ⟨e, he⟩ := ih
+    refine ⟨e + ∑ y ∈ W, (if G.Adj a y then (1 : ℤ) else 0), ?_⟩
+    have h1 : ∑ y ∈ insert a W, (if G.Adj a y then (1 : ℤ) else 0)
+        = ∑ y ∈ W, (if G.Adj a y then (1 : ℤ) else 0) := by
+      rw [Finset.sum_insert ha, if_neg (G.irrefl), zero_add]
+    have h2 : ∀ x ∈ W, (∑ y ∈ insert a W, (if G.Adj x y then (1 : ℤ) else 0))
+        = (if G.Adj x a then (1 : ℤ) else 0)
+          + ∑ y ∈ W, (if G.Adj x y then (1 : ℤ) else 0) :=
+      fun x _ => Finset.sum_insert ha
+    have h3 : ∑ x ∈ W, (if G.Adj x a then (1 : ℤ) else 0)
+        = ∑ y ∈ W, (if G.Adj a y then (1 : ℤ) else 0) :=
+      Finset.sum_congr rfl fun x _ => ite_adj_comm G x a
+    rw [Finset.sum_insert ha, h1, Finset.sum_congr rfl h2]
+    simp only [Finset.sum_add_distrib]
+    rw [h3, he]
+    ring
+
+end ZeroBudget
+
 end Erdos944
