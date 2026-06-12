@@ -90,11 +90,11 @@ theorem house_avg_dist : averageDistance HouseGraph = 7/5 := by
   norm_num
 
 @[category test, AMS 5]
-theorem house_diameter : maxEccentricity HouseGraph = 2 := by
+theorem house_diameter : ediam HouseGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem house_radius : minEccentricity HouseGraph = 2 := by
+theorem house_radius : radius HouseGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
@@ -133,7 +133,7 @@ theorem house_matching : m HouseGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem house_residue : residue HouseGraph = 0 := by
+theorem house_residue : residue HouseGraph = 2 := by
   unfold residue; decide +native
 
 @[category test, AMS 5]
@@ -161,11 +161,11 @@ theorem K4_avg_dist : averageDistance K4 = 1 := by
   norm_num
 
 @[category test, AMS 5]
-theorem K4_diameter : maxEccentricity K4 = 1 := by
+theorem K4_diameter : ediam K4 = 1 := by
   sorry
 
 @[category test, AMS 5]
-theorem K4_radius : minEccentricity K4 = 1 := by
+theorem K4_radius : radius K4 = 1 := by
   sorry
 
 @[category test, AMS 5]
@@ -204,7 +204,7 @@ theorem K4_matching : m K4 = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem K4_residue : residue K4 = 0 := by
+theorem K4_residue : residue K4 = 1 := by
   unfold residue; decide +native
 
 @[category test, AMS 5]
@@ -232,11 +232,11 @@ theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
   norm_num
 
 @[category test, AMS 5]
-theorem petersen_diameter : maxEccentricity PetersenGraph = 2 := by
+theorem petersen_diameter : ediam PetersenGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem petersen_radius : minEccentricity PetersenGraph = 2 := by
+theorem petersen_radius : radius PetersenGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
@@ -275,7 +275,7 @@ theorem petersen_matching : m PetersenGraph = 5 := by
   sorry
 
 @[category test, AMS 5]
-theorem petersen_residue : residue PetersenGraph = 0 := by
+theorem petersen_residue : residue PetersenGraph = 3 := by
   unfold residue; decide +native
 
 @[category test, AMS 5]
@@ -303,11 +303,11 @@ theorem C6_avg_dist : averageDistance C6 = 9/5 := by
   norm_num
 
 @[category test, AMS 5]
-theorem C6_diameter : maxEccentricity C6 = 3 := by
+theorem C6_diameter : ediam C6 = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem C6_radius : minEccentricity C6 = 3 := by
+theorem C6_radius : radius C6 = 3 := by
   sorry
 
 @[category test, AMS 5]
@@ -346,7 +346,7 @@ theorem C6_matching : m C6 = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem C6_residue : residue C6 = 0 := by
+theorem C6_residue : residue C6 = 2 := by
   unfold residue; decide +native
 
 @[category test, AMS 5]
@@ -373,11 +373,11 @@ theorem Star5_avg_dist : averageDistance Star5 = 5/3 := by
   norm_num
 
 @[category test, AMS 5]
-theorem Star5_diameter : maxEccentricity Star5 = 2 := by
+theorem Star5_diameter : ediam Star5 = 2 := by
   sorry
 
 @[category test, AMS 5]
-theorem Star5_radius : minEccentricity Star5 = 1 := by
+theorem Star5_radius : radius Star5 = 1 := by
   sorry
 
 @[category test, AMS 5]
