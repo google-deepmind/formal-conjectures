@@ -300,13 +300,16 @@ def Kcl : Finset V := univ.filter fun x => x ≠ v ∧ c x = k
 as an adjacency-indicator double sum (over ℤ). -/
 def sIJ : ℤ := ∑ x ∈ IJ c v k, ∑ y ∈ IJ c v k, (if G.Adj x y then (1 : ℤ) else 0)
 
+@[category API, AMS 5]
 lemma mem_IJ {x : V} : x ∈ IJ c v k ↔ x ≠ v ∧ c x ≠ k := by
   simp [IJ]
 
+@[category API, AMS 5]
 lemma mem_Kcl {x : V} : x ∈ Kcl c v k ↔ x ≠ v ∧ c x = k := by
   simp [Kcl]
 
 /-- `{v}`, `IJ`, `Kcl` partition the vertex set: sums over `univ` split accordingly. -/
+@[category API, AMS 5]
 lemma sum_univ_split (f : V → ℤ) :
     ∑ y, f y = f v + (∑ y ∈ IJ c v k, f y) + ∑ y ∈ Kcl c v k, f y := by
   have hdisj : Disjoint (IJ c v k) (Kcl c v k) := by
@@ -349,6 +352,7 @@ lemma ite_adj_comm (x y : V) :
   · rw [if_neg h, if_neg fun h' => h h'.symm]
 
 /-- `Kcl` is independent in `G` (properness of `c` off `v`). -/
+@[category API, AMS 5]
 lemma sum_Kcl_Kcl_eq_zero
     (hproper : ∀ x y, G.Adj x y → x ≠ v → y ≠ v → c x ≠ c y) :
     ∑ x ∈ Kcl c v k, ∑ y ∈ Kcl c v k, (if G.Adj x y then (1 : ℤ) else 0) = 0 := by
@@ -359,6 +363,7 @@ lemma sum_Kcl_Kcl_eq_zero
   rw [if_neg hnadj]
 
 /-- Cross-edge double count: `Kcl→IJ` indicator sum equals `IJ→Kcl` indicator sum. -/
+@[category API, AMS 5]
 lemma cross_symm :
     ∑ x ∈ Kcl c v k, ∑ y ∈ IJ c v k, (if G.Adj x y then (1 : ℤ) else 0)
       = ∑ x ∈ IJ c v k, ∑ y ∈ Kcl c v k, (if G.Adj x y then (1 : ℤ) else 0) := by
@@ -366,6 +371,7 @@ lemma cross_symm :
   exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ite_adj_comm G y x
 
 /-- `C = 2`: the vertex `v` has exactly `2` neighbours in `Kcl`. -/
+@[category API, AMS 5]
 lemma sum_C
     (hcnt : ∀ t : Fin 3, ((G.neighborFinset v).filter (fun u => c u = t)).card = 2) :
     ∑ x ∈ Kcl c v k, (if G.Adj x v then (1 : ℤ) else 0) = 2 := by
@@ -386,6 +392,7 @@ lemma sum_C
 
 /-- `A = 4`: the vertex `v` has exactly `4` neighbours in `IJ`
 (its `6` neighbours minus the `2` in the `k`-class). -/
+@[category API, AMS 5]
 lemma sum_A (b : V → ℕ)
     (hdeg : ∀ x, G.degree x + b x = 6) (hbv : b v = 0)
     (hcnt : ∀ t : Fin 3, ((G.neighborFinset v).filter (fun u => c u = t)).card = 2) :
