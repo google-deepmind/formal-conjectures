@@ -52,12 +52,14 @@ $$1=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$$
 and
 $$m=p(n_1)+\cdots+p(n_k)$$?
 
-GPT 5.5 Pro (prompted by Price) has given a proof that the answer is yes, for the stronger version with $1$ replaced by any rational $\alpha>0$.
+GPT 5.5 Pro (prompted by Price) has given a proof that the answer is yes, for the stronger version
+with $1$ replaced by any rational $\alpha>0$.
+
+This was formalized in Lean by Ammanamanchi using Opus 4.6 and GPT 5.5 Pro.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P283/Proof_flat.lean"]
 theorem erdos_283 : answer(True) ↔ ∀ p : ℤ[X], Condition p := by
   sorry
-
 
 /--
 Graham [Gr63] has proved this when $p(x)=x$.
@@ -71,7 +73,7 @@ Graham also conjectures that this remains true with $1$ replaced by an arbitrary
 (provided $m$ is taken sufficiently large depending on $\alpha$).
 -/
 @[category research solved, AMS 11]
-theorem erdos_283.variant.graham_alpha :
+theorem erdos_283.variants.graham_alpha :
   ∀ (p : ℤ[X]) (α : ℚ),
     0 < p.leadingCoeff →
     (¬ ∃ (d : ℤ), d ≥ 2 ∧ ∀ (n : ℤ), n ≥ 1 → d ∣ p.eval n) →
@@ -87,7 +89,7 @@ Cassels [Ca60] has proved that these conditions on the polynomial imply every su
 integer is the sum of $p(n_i)$ with distinct $n_i$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_283.variant.cassels :
+theorem erdos_283.variants.cassels :
   ∀ (p : ℤ[X]),
     0 < p.leadingCoeff →
     (¬ ∃ (d : ℤ), d ≥ 2 ∧ ∀ (n : ℤ), n ≥ 1 → d ∣ p.eval n) →
@@ -100,10 +102,11 @@ theorem erdos_283.variant.cassels :
 Burr has proved this if $p(x)=x^k$ with $k\geq 1$ and if we allow $n_i=n_j$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_283.variant.burr :
+theorem erdos_283.variants.burr :
   ∀ (k : ℕ), k ≥ 1 →
     ∀ᶠ (m : ℕ) in atTop,
       ∃ M : Multiset ℕ, (∀ n ∈ M, 1 ≤ n) ∧
+        (M.map (fun n ↦ 1 / (n : ℚ))).sum = 1 ∧
         (M.map (fun n ↦ (n : ℤ)^k)).sum = (m : ℤ) := by
   sorry
 
@@ -111,11 +114,30 @@ theorem erdos_283.variant.burr :
 Alekseyev [Al19] has proved this when $p(x)=x^2$, for all $m>8542$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_283.variant.alekseyev :
+theorem erdos_283.variants.alekseyev :
   ∀ (m : ℕ), m > 8542 →
     ∃ S : Finset ℕ, (∀ n ∈ S, 1 ≤ n) ∧
       (∑ n ∈ S, (1 / (n : ℚ))) = 1 ∧
       (∑ n ∈ S, (n : ℤ)^2) = (m : ℤ) := by
+  sorry
+
+/--
+van Doorn [vD25] has investigated the question of what 'sufficiently large' means for $p(x)=x$.
+van Doorn has also proved the original conjecture for many linear and quadratic polynomials.
+For example, if $p(x) = x + b$ with $1 \leq b \leq 5000$, then the conjecture is true.
+-/
+@[category research solved, AMS 11]
+theorem erdos_283.variants.van_doorn_linear :
+  ∀ b : ℤ, 1 ≤ b → b ≤ 5000 → Condition (X + C b) := by
+  sorry
+
+/--
+van Doorn [vD25] has proved the original conjecture for many linear and quadratic polynomials.
+For example, if $p(x) = x^2 + b$ with $1 \leq b \leq 800$, then the conjecture is true.
+-/
+@[category research solved, AMS 11]
+theorem erdos_283.variants.van_doorn_quadratic :
+  ∀ b : ℤ, 1 ≤ b → b ≤ 800 → Condition (X^2 + C b) := by
   sorry
 
 end Erdos283
