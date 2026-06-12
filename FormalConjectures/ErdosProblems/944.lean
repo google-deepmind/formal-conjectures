@@ -118,10 +118,11 @@ Skottová and Steiner [SkSt25] proved that every $(4,1)$-graph (a $4$-vertex-cri
 graph with no critical edge) has minimum degree and edge-connectivity at least $6$, and
 asked (their Problem 5.2) whether a $6$-regular $(4,1)$-graph exists. The following are
 machine-checked cores of verified computational results on that subproblem
-(2026): there is no $6$-regular $4$-vertex-critical graph on $n \le 12$ or $n = 14$
-vertices (and the unique one on $n = 13$ has critical edges), and in any $6$-regular
-$(4,1)$-graph every $6$-edge-cut is either a vertex star or has both shores of size at
-least $14$.
+(2026): there is no $6$-regular $4$-vertex-critical graph on $n \le 15$ except a unique
+one on $n = 13$ (which has critical edges), so any $6$-regular $(4,1)$-graph has at
+least $16$ vertices; and in any $6$-regular $(4,1)$-graph every $6$-edge-cut is either
+a vertex star or has both shores of size at least $15$ (hence such a graph on
+$n \le 29$ vertices is super-$6$-edge-connected).
 
 * `singleton_edge_critical`: the recolouring core of the singleton lemma — if a
   $3$-colouring of $G - v$ gives colour $c$ to exactly one neighbour $u$ of $v$, the
