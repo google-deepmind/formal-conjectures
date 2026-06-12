@@ -42,7 +42,7 @@ namespace Erdos1057
 /--
 Let $C(x)$ count the number of Carmichael numbers in the interval $[1,x]$.
 -/
-noncomputable def C (x : ℝ) : ℝ :=
+noncomputable def carmichaelCounting (x : ℝ) : ℝ :=
   ({n : ℕ | IsCarmichael n ∧ (n : ℝ) ≤ x}.ncard : ℝ)
 
 /--
@@ -52,7 +52,7 @@ This is discussed in problem A13 of Guy's collection [Gu04].
 -/
 @[category research open, AMS 11]
 theorem erdos_1057 :
-    answer(sorry) ↔ Tendsto (fun x ↦ Real.log (C x) / Real.log x) atTop (𝓝 1) := by
+    answer(sorry) ↔ Tendsto (fun x ↦ Real.log (carmichaelCounting x) / Real.log x) atTop (𝓝 1) := by
   sorry
 
 /--
@@ -62,7 +62,7 @@ for some constant $c>0$.
 @[category research solved, AMS 11]
 theorem erdos_1057.variants.upper_bound :
     ∃ c > 0, ∀ᶠ x in atTop,
-      C x < x * Real.exp (-c * (Real.log x * Real.log (Real.log (Real.log x))) /
+      carmichaelCounting x < x * Real.exp (-c * (Real.log x * Real.log (Real.log (Real.log x))) /
         Real.log (Real.log x)) := by
   sorry
 
@@ -73,7 +73,7 @@ $C(x)= x \exp\left(-(1+o(1))\frac{\log x\log\log\log x}{\log\log x}\right)$.
 @[category research open, AMS 11]
 theorem erdos_1057.variants.pomerance :
     answer(sorry) ↔ Tendsto (fun x ↦
-      -(Real.log (C x / x) * Real.log (Real.log x)) /
+      -(Real.log (carmichaelCounting x / x) * Real.log (Real.log x)) /
       (Real.log x * Real.log (Real.log (Real.log x)))) atTop (𝓝 1) := by
   sorry
 
@@ -82,7 +82,7 @@ Alford, Granville, and Pomerance [AGP94] proved that $C(x)\to \infty$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1057.variants.agp_infinite :
-    Tendsto C atTop atTop := by
+    Tendsto carmichaelCounting atTop atTop := by
   sorry
 
 /--
@@ -90,7 +90,7 @@ Alford, Granville, and Pomerance [AGP94] proved that $C(x)>x^{2/7}$ for large $x
 -/
 @[category research solved, AMS 11]
 theorem erdos_1057.variants.agp_lower_bound :
-    ∀ᶠ x in atTop, C x > x ^ (2 / 7 : ℝ) := by
+    ∀ᶠ x in atTop, carmichaelCounting x > x ^ (2 / 7 : ℝ) := by
   sorry
 
 /--
@@ -98,7 +98,7 @@ The lower bound $C(x)> x^{0.33336704}$ was proved by Harman [Ha08].
 -/
 @[category research solved, AMS 11]
 theorem erdos_1057.variants.harman_lower_bound :
-    ∀ᶠ x in atTop, C x > x ^ (0.33336704 : ℝ) := by
+    ∀ᶠ x in atTop, carmichaelCounting x > x ^ (0.33336704 : ℝ) := by
   sorry
 
 /--
@@ -106,7 +106,7 @@ This exponent was improved to $0.3389$ by Lichtman [Li22].
 -/
 @[category research solved, AMS 11]
 theorem erdos_1057.variants.lichtman_lower_bound :
-    ∀ᶠ x in atTop, C x > x ^ (0.3389 : ℝ) := by
+    ∀ᶠ x in atTop, carmichaelCounting x > x ^ (0.3389 : ℝ) := by
   sorry
 
 end Erdos1057
