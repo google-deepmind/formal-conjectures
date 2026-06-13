@@ -55,12 +55,69 @@ noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
   else 0
 
+/-- The minimum, over all vertices $v \notin S$, of the distance from $v$ to the set $S$:
+$\min_{v \notin S} \operatorname{dist}(v, S)$. Returns `0` when $S = \mathrm{univ}$ (no
+vertex outside $S$).
+
+Counterpart to `ecc`: the outer minimum (instead of maximum) of the
+distance-to-set function, restricted to vertices outside $S$. -/
+noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
+  let outside := Finset.univ.filter (fun v : α => v ∉ S)
+  if h : outside.Nonempty then
+    (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
+  else 0
+
+/-- The **eccentricity of a set** `S`: the maximum, over all vertices `v` of `G`, of the
+minimum distance from `v` to any vertex in `S`. (This includes vertices in `S` itself,
+which contribute distance `0`.) Returns `0` when `S` is empty.
+
+Unlike `ecc`, which restricts the outer maximum to vertices `v ∉ S`, `eccSet` does
+not exclude any vertex; it is the conventional definition of "set eccentricity"
+used in DeLaVina's WOWII conjectures 18, 145 and 146.
+-/
+noncomputable def eccSet (G : SimpleGraph α) (S : Set α) : ℕ :=
+  let dists := Finset.univ.image (fun v => distToSet G v S)
+  if h : dists.Nonempty then dists.max' h else 0
+
 /-- Average distance from all vertices to a given set. -/
 noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
   if Fintype.card α > 0 then
     (∑ v ∈ Finset.univ, (distToSet G v S : ℝ)) / (Fintype.card α : ℝ)
   else
     0
+
+/-- The **square** of a graph `G`, denoted `G²`: two distinct vertices are adjacent
+iff their distance in `G` is at most 2. -/
+def graphSquare (G : SimpleGraph α) : SimpleGraph α where
+  Adj u v := u ≠ v ∧ G.dist u v ≤ 2
+  symm _ _ := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [dist_comm]⟩
+  loopless v := by simp
+
+/-- Check whether four distinct vertices form an induced 4-cycle in `G`.
+We test all three perfect-matching pairings of the four vertices to find
+a cyclic ordering and verify that the induced subgraph has exactly those 4 edges. -/
+noncomputable def isInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj]
+    (a b c d : α) : Bool :=
+  -- Cyclic orderings up to symmetry: (a-b-c-d), (a-b-d-c), (a-c-b-d)
+  let check (p q r s : α) : Bool :=
+    G.Adj p q && G.Adj q r && G.Adj r s && G.Adj s p &&
+    !G.Adj p r && !G.Adj q s
+  check a b c d || check a b d c || check a c b d
+
+/-- Count of induced C₄ subgraphs of `G`. We count ordered 4-tuples `(a,b,c,d)`
+of distinct vertices for which `isInducedC4 G a b c d = true`, then divide by
+`24 = 4!`.
+
+**Why 24 (and not 8)?** `isInducedC4` tests *all three* perfect-matching
+pairings of the four vertices, so any of the `4! = 24` orderings of a fixed
+unordered induced 4-cycle satisfies the predicate. Dividing by `8` (the size
+of the dihedral group `D₄`) would overcount each induced 4-cycle by a factor
+of `3` — once for each of the three cyclic structures `isInducedC4` accepts.
+-/
+noncomputable def countInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  (∑ a : α, ∑ b : α, ∑ c : α, ∑ d : α,
+    if a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d ∧
+       isInducedC4 G a b c d = true then 1 else 0) / 24
 
 /-- BFS expansion: add all neighbors of S to S. -/
 def bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Finset α :=
