@@ -126,7 +126,6 @@ theorem omega_three :
     answer(True) ↔ OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
   sorry
 
-
 /--
 **The relation at $\omega_1$**: $\mathfrak{c} \to (\omega_1, n)^3_2$ for finite $n \ge 2$,
 where $\omega_1 = \aleph_1$ is the first uncountable ordinal.
