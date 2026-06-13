@@ -32,9 +32,9 @@ namespace CoxeterGroupIsomorphismProblem
 
 open CoxeterMatrix CoxeterSystem
 
-/-! ### Decidability of the Isomorphism Problem -/
+/-- Decidability of the Isomorphism Problem 
 
-/-- **The Isomorphism Problem for Coxeter Groups (Decidability).**
+**The Isomorphism Problem for Coxeter Groups (Decidability).**
 Given two Coxeter matrices $M_1$ and $M_2$ over finite index types, it is decidable whether
 the Coxeter groups $W(M_1)$ and $W(M_2)$ are isomorphic as abstract groups.
 
@@ -50,25 +50,9 @@ def coxeterGroup_isomorphism_decidable (n m : ℕ)
     Decidable (Nonempty (M₁.Group ≃* M₂.Group)) := by
   sorry
 
-/-! ### Finding All Isomorphisms -/
+/-- Finding All Isomorphisms 
 
-/-- **The Isomorphism Problem for Coxeter Groups (Finding All Isomorphisms).**
-Given two Coxeter matrices $M_1$ and $M_2$ over finite index types, the set of all group
-isomorphisms from $W(M_1)$ onto $W(M_2)$ is countable.
-
-This is Problem 2 from Mühlherr's paper:
-> *"Given two Coxeter matrices $M$ and $M'$, find all isomorphisms from $W(M)$ onto $W(M')$."*
-
-This formulation is *non-constructive*: `Countable` only asserts existence of an enumeration.
-For a constructive version, see `coxeterGroup_isomorphisms_encodable`. -/
-@[category research open, AMS 20]
-theorem coxeterGroup_find_all_isomorphisms (n m : ℕ)
-    (M₁ : CoxeterMatrix (Fin n))
-    (M₂ : CoxeterMatrix (Fin m)) :
-    Countable (M₁.Group ≃* M₂.Group) := by
-  sorry
-
-/-- **The Isomorphism Problem for Coxeter Groups (Finding All Isomorphisms, Constructive).**
+**The Isomorphism Problem for Coxeter Groups (Finding All Isomorphisms, Constructive).**
 Given two Coxeter matrices $M_1$ and $M_2$ over finite index types, there is a computable
 encoding of all group isomorphisms from $W(M_1)$ onto $W(M_2)$.
 
@@ -82,14 +66,5 @@ def coxeterGroup_isomorphisms_encodable (n m : ℕ)
     (M₂ : CoxeterMatrix (Fin m)) :
     Encodable (M₁.Group ≃* M₂.Group) := by
   sorry
-
-/-- The constructive formulation (`Encodable`) implies the non-constructive one (`Countable`). -/
-@[category test, AMS 20]
-theorem coxeterGroup_find_all_isomorphisms_of_encodable (n m : ℕ)
-    (M₁ : CoxeterMatrix (Fin n))
-    (M₂ : CoxeterMatrix (Fin m))
-    (h : Encodable (M₁.Group ≃* M₂.Group)) :
-    Countable (M₁.Group ≃* M₂.Group) :=
-  @Encodable.countable _ h
 
 end CoxeterGroupIsomorphismProblem
