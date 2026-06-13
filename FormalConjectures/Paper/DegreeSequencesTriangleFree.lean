@@ -82,12 +82,33 @@ Inequality involving sums of terms of a nondecreasing sequence with no three ter
 @[category API, AMS 5]
 lemma lemma2_a
     (h_mono : Monotone d)
-    (h_pos : ∀ k, 0 < d k)
+    (_h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ i, d (i + 2) ≠ d i) :
     2 * n * n ≤
       ∑ i ∈ .Icc (2 * n + 1) (4 * n), d i -
         ∑ i ∈ .Icc 1 (2 * n), d i := by
-  sorry
+  -- Reindex the upper sum via `i ↦ i + 2 * n`.
+  have hreindex : ∑ i ∈ Finset.Icc (2 * n + 1) (4 * n), d i =
+      ∑ i ∈ Finset.Icc 1 (2 * n), d (i + 2 * n) := by
+    rw [show Finset.Icc (2 * n + 1) (4 * n) =
+        (Finset.Icc 1 (2 * n)).image (· + 2 * n) by
+      ext x; simp [Finset.mem_Icc]; omega]
+    rw [Finset.sum_image]; intro a _ b _ hab; exact Nat.add_right_cancel hab
+  -- Pointwise from Lemma 1(b): `d i + n ≤ d (i + 2 * n)`.
+  have hpt : ∀ i, d i + n ≤ d (i + 2 * n) := fun i => by
+    have h1 := lemma1_b d i n h_mono h_no_three
+    have h2 := h_mono (show i ≤ i + 2 * n by omega)
+    omega
+  rw [hreindex]
+  -- Switch from truncated `Nat`-subtraction to additive form, then sum pointwise.
+  have hcard : (Finset.Icc 1 (2 * n)).card = 2 * n := by simp [Nat.card_Icc]
+  have hsum_n : ∑ _ ∈ Finset.Icc 1 (2 * n), n = 2 * n * n := by
+    rw [Finset.sum_const, hcard, smul_eq_mul]
+  have hle : ∑ i ∈ Finset.Icc 1 (2 * n), d i + 2 * n * n ≤
+      ∑ i ∈ Finset.Icc 1 (2 * n), d (i + 2 * n) := by
+    rw [← hsum_n, ← Finset.sum_add_distrib]
+    exact Finset.sum_le_sum fun i _ => hpt i
+  omega
 
 /-- **Lemma 2 (b)**
 Inequality involving sums of terms of a nondecreasing sequence with no three terms equal. -/
