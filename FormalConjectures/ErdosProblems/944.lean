@@ -133,6 +133,12 @@ $n \le 29$ vertices is super-$6$-edge-connected).
   permutation-diagonal sums at least $2$ — the exact equality case of the
   Skottová–Steiner cut bound. `matrix_mem_classification` is the bridge from the
   genuine matrix form.
+* `cut_row_forcing`: among those $21$ matrices, row sums $(3,3,0)$ force both nonzero
+  rows to be $(1,1,1)$ and row sums $(6,0,0)$ force the nonzero row to be $(2,2,2)$.
+  These two equality cases drive a stronger structural result: no shore of a
+  nontrivial $6$-edge-cut in a $6$-regular $(4,1)$-graph induces a bipartite graph,
+  and a shore whose deficiency is concentrated on two vertices forces those two
+  vertices to receive equal colours in every $3$-colouring.
 * `turan_count_shore`: the numeric core excluding $6$-cut shores of size $2,\dots,7$.
 
 [SkSt25] Skottová, Ema and Steiner, Raphael, Critical edge sets in vertex-critical
@@ -252,6 +258,35 @@ theorem matrix_mem_classification (m : Fin 3 → Fin 3 → ℕ)
     omega
   · simp only [diagOK, Bool.and_eq_true, decide_eq_true_eq]
     omega
+
+/-- Row-forcing predicate on a row-major 3×3 matrix `[a,b,c; d,e,f; g,h,i]`: in the `(3,3,0)`
+row-sum case both nonzero rows must equal `(1,1,1)`; in the `(6,0,0)` row-sum case the nonzero
+row must equal `(2,2,2)`. -/
+def rowForcing : List ℕ → Bool
+  | [a, b, c, d, e, f, g, h, i] =>
+      let r0 := [a, b, c]; let r1 := [d, e, f]; let r2 := [g, h, i]
+      let s0 := a + b + c; let s1 := d + e + f; let s2 := g + h + i
+      let is330 := (s0 == 0 && s1 == 3 && s2 == 3) || (s0 == 3 && s1 == 0 && s2 == 3) ||
+                   (s0 == 3 && s1 == 3 && s2 == 0)
+      let is600 := (s0 == 6 && s1 == 0 && s2 == 0) || (s0 == 0 && s1 == 6 && s2 == 0) ||
+                   (s0 == 0 && s1 == 0 && s2 == 6)
+      let ok330 := !is330 ||
+        ((s0 == 0 || r0 == [1, 1, 1]) && (s1 == 0 || r1 == [1, 1, 1]) &&
+         (s2 == 0 || r2 == [1, 1, 1]))
+      let ok600 := !is600 ||
+        ((!(s0 == 6) || r0 == [2, 2, 2]) && (!(s1 == 6) || r1 == [2, 2, 2]) &&
+         (!(s2 == 6) || r2 == [2, 2, 2]))
+      ok330 && ok600
+  | _ => true
+
+set_option maxRecDepth 100000 in
+/-- Every valid 6-edge-cut matrix obeys the row-forcing law: if the deficiency-weighted row-sum
+vector is a permutation of `(3,3,0)` then both nonzero rows are `(1,1,1)` (each cut triple is
+rainbow under every partner colouring), and if it is `(6,0,0)` then the nonzero row is `(2,2,2)`
+(the six cut endpoints split `2+2+2`). These are the two equality cases driving the exclusion of
+bipartite and concentrated shores. -/
+@[category API, AMS 5]
+theorem cut_row_forcing : ((comps 9 6).filter diagOK).all rowForcing = true := by decide
 
 /-- For `2 ≤ a ≤ 7`, `⌊a²/3⌋ < 3a - 3`: a 3-colourable graph on `a` vertices has fewer than
 `3a - 3` edges, which excludes 6-edge-cut shores of sizes `2..7` in 6-regular `(4,1)`-graphs. -/
