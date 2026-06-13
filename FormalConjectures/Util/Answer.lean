@@ -100,6 +100,14 @@ def elabTermAndAnnotate (stx : TSyntax `term) (expectedType? : Option Expr)
     else
       elabTerm stx expectedType?
 
+/-- Construct a canonical `sorryAx` application with a stable, module-independent
+tag. Unlike Lean's built-in `sorry` macro, this does not embed the current module
+name via hygiene, so the resulting expression is identical regardless of whether
+the file is compiled as `Challenge` or `Solution`. -/
+def mkCanonicalSorryAnnotation (expectedType : Expr) : TermElabM Expr := do
+  let sorryExpr ← Meta.mkSorry expectedType (synthetic := false)
+  return mkAnswerAnnotation sorryExpr
+
 /-- Indicates where the answer is in a problem statement. -/
 @[term_elab answer]
 def answerElab : TermElab := fun stx expectedType? => do
@@ -129,6 +137,14 @@ def answerElab : TermElab := fun stx expectedType? => do
       -- If the answer is a `sorry` of type `Prop` then default to `True` in this setting
       if expectedType? == some (Expr.sort .zero) && a == (← `(term| sorry)) then
         return .const `True []
+      else if a == (← `(term| sorry)) then
+        -- For `answer(sorry)` with a non-Prop expected type, construct a canonical
+        -- `sorryAx` call directly. This avoids embedding the current module name
+        -- (e.g. `Challenge` vs `Solution`) into the expression via Lean's hygiene
+        -- system, which would cause the theorem type to differ between builds.
+        match expectedType? with
+        | some ty => mkCanonicalSorryAnnotation ty
+        | none    => elabTermAndAnnotate a expectedType? true
       else
         elabTermAndAnnotate a expectedType? true
   | _ => Elab.throwUnsupportedSyntax

@@ -54,7 +54,7 @@ $t(H, G) \ge t(K_2, G)^{e(H)}$, where $K_2$ denotes the single-edge graph on 2 v
 -/
 @[category research open, AMS 5]
 theorem sidorenko_conjecture : answer(sorry) ↔
-    ∀ {V W : Type} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W]
+    ∀ {V W : Type} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W] [Nonempty W]
       (H : SimpleGraph V) (G : SimpleGraph W)
       [DecidableRel H.Adj] [DecidableRel G.Adj],
       H.IsBipartite →
