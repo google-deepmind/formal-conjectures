@@ -50,7 +50,7 @@ theorem erdos_1 : ∃ C > (0 : ℝ), ∀ (N : ℕ) (A : Finset ℕ) (_ : IsSumDi
 /--
 The trivial lower bound is $N \gg 2^n / n$.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_1.variants.weaker : ∃ C > (0 : ℝ), ∀ (N : ℕ) (A : Finset ℕ)
     (_ : IsSumDistinctSet A N), N ≠ 0 → C * 2 ^ A.card / A.card < N := by
   refine ⟨1/3, by norm_num, fun N A ⟨hA1, hA2⟩ hN => ?_⟩
@@ -122,7 +122,7 @@ elements is $4$.
 
 https://oeis.org/A276661
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_1.variants.least_N_3 :
     IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 3 } 4 := by
   refine ⟨⟨{1, 2, 4}, ?_⟩, ?_⟩

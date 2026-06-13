@@ -108,8 +108,10 @@ theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1) :
     IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } answer(sorry) := by
   sorry
 
-/-- If $n > 1$ then the iteration $n\mapsto\sigma(n) - 1$ necessarily reaches a prime. -/
-@[category test, AMS 11]
+/-- If $n > 1$ then the iteration $n\mapsto\sigma(n) - 1$ necessarily reaches a prime.
+Note: this is open — it is not clear that the σ iteration always terminates,
+since it is non-decreasing (unlike the φ iteration which is strictly decreasing). -/
+@[category research open, AMS 11]
 theorem erdos_409.variants.sigma_termination (n : ℕ) (hn : n > 1) :
     ∃ i, (σ 1 · - 1)^[i] n |>.Prime := by
   sorry

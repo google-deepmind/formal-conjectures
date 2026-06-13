@@ -45,16 +45,43 @@ def f (n : ℕ) : ℕ := if Even n then n.fib - 1 else n.fib + 1
 /-- The sequence `f` is lacunary. -/
 @[category test, AMS 11]
 theorem erdos_346.variants.f_isLacunary : IsLacunary f := by
-  sorry
+  refine ⟨3/2, by norm_num, Filter.eventually_atTop.mpr ⟨9, fun k hk => ?_⟩⟩
+  -- Key: `2·fib(k+1) > 3·fib(k) + 5` for `k ≥ 9`, since
+  -- `2·fib(k+1) - 3·fib(k) = fib(k-3) ≥ fib(6) = 8 > 5`.
+  have hfib_strict : 3 * Nat.fib k + 5 < 2 * Nat.fib (k + 1) := by
+    obtain ⟨m, rfl⟩ : ∃ m, k = m + 9 := ⟨k - 9, by omega⟩
+    have h1 : Nat.fib (m + 9 + 1) = Nat.fib (m + 8) + Nat.fib (m + 9) := by
+      rw [show m + 9 + 1 = m + 8 + 2 from by ring, Nat.fib_add_two]
+    have h2 : Nat.fib (m + 9) = Nat.fib (m + 7) + Nat.fib (m + 8) := by
+      rw [show m + 9 = m + 7 + 2 from by ring, Nat.fib_add_two]
+    have h3 : Nat.fib (m + 8) = Nat.fib (m + 6) + Nat.fib (m + 7) := by
+      rw [show m + 8 = m + 6 + 2 from by ring, Nat.fib_add_two]
+    have h4 : 8 ≤ Nat.fib (m + 6) :=
+      le_trans (by decide : 8 ≤ Nat.fib 6) (Nat.fib_mono (by omega))
+    omega
+  have hfib_R : 3 * (Nat.fib k : ℝ) + 5 < 2 * Nat.fib (k + 1) := by
+    exact_mod_cast hfib_strict
+  have hpos : 1 ≤ Nat.fib k := Nat.fib_pos.mpr (by omega)
+  have hpos1 : 1 ≤ Nat.fib (k + 1) := Nat.fib_pos.mpr (by omega)
+  unfold f
+  by_cases heven : Even k
+  · have hodd : ¬ Even (k + 1) := by simp [Nat.even_add_one, heven]
+    rw [if_pos heven, if_neg hodd]
+    push_cast [Nat.cast_sub hpos]
+    linarith
+  · have hodd_plus : Even (k + 1) := by simp [Nat.even_add_one, heven]
+    rw [if_neg heven, if_pos hodd_plus]
+    push_cast [Nat.cast_sub hpos1]
+    linarith
 
 /-- The sequence `f` is strongly complete, and this is proved in [Gr64d]. -/
-@[category test, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_346.variants.f_isAddStronglyCompleteNatSeq : IsAddStronglyCompleteNatSeq f := by
   sorry
 
 /-- The sequence `f` is not complete whenever infinitely many terms are removed from it, and this
 is proved in [Gr64d]. -/
-@[category test, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_346.variants.f_not_isAddComplete {B : Set ℕ} (h : B ⊆ range f) (hB : B.Infinite) :
     ¬ IsAddComplete (range f \ B) := by
   sorry

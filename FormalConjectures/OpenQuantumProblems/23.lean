@@ -16,9 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-noncomputable section
-
-
 /-!
 # Open Quantum Problem 23: SIC-POVMs
 
@@ -107,7 +104,7 @@ placeholder proofs `by sorry`; they are intended to be proved in the next PR.
   *Quantum Designs: Foundations of a Noncommutative Design Theory*,
   PhD thesis, University of Vienna (1999).
 -/
-
+noncomputable section
 namespace OpenQuantumProblem23
 
 /- ## Basic structures -/
@@ -149,33 +146,44 @@ def HasSICPOVM (d : ℕ) : Prop :=
 /-- Any singleton family has constant pairwise squared overlap, vacuously. -/
 @[category test, AMS 15 47 81]
 lemma hasConstantOverlapSq_singleton {d : ℕ} (c : ℝ) (ψ : StateVector d) :
-    HasConstantOverlapSq c (fun _ : Fin 1 => ψ) := by sorry
+    HasConstantOverlapSq c (fun _ : Fin 1 => ψ) := by
+  intro i j hij
+  exact absurd (Subsingleton.elim i j) hij
 
 /-- The SIC overlap value in dimension $1$ is $1/2$. -/
 @[category test, AMS 15 47 81]
-lemma sicOverlapSq_one : sicOverlapSq 1 = (1 / 2 : ℝ) := by sorry
+lemma sicOverlapSq_one : sicOverlapSq 1 = (1 / 2 : ℝ) := by
+  simp [sicOverlapSq]; norm_num
 
 /-- The SIC overlap value is positive in every dimension. -/
 @[category test, AMS 15 47 81]
-lemma sicOverlapSq_pos (d : ℕ) : 0 < sicOverlapSq d := by sorry
+lemma sicOverlapSq_pos (d : ℕ) : 0 < sicOverlapSq d := by
+  simp [sicOverlapSq]; positivity
 
 /-- In dimension $1$, a singleton family is SIC exactly when its vector is normalized. -/
 @[category test, AMS 15 47 81]
 lemma isSICFamily_singleton_iff {ψ : StateVector 1} :
-    IsSICFamily 1 (fun _ : Fin 1 => ψ) ↔ IsNormalized ψ := by sorry
+    IsSICFamily 1 (fun _ : Fin 1 => ψ) ↔ IsNormalized ψ := by
+  constructor
+  · intro ⟨h, _⟩; exact h 0
+  · intro h; exact ⟨fun _ => h, hasConstantOverlapSq_singleton _ _⟩
 
 /-- The empty family witnesses the degenerate dimension-$0$ case. -/
 @[category test, AMS 15 47 81]
-theorem hasSICPOVM_zero : HasSICPOVM 0 := by sorry
+theorem hasSICPOVM_zero : HasSICPOVM 0 := by
+  exact ⟨Fin.elim0, fun i => Fin.elim0 i, fun i j _ => Fin.elim0 i⟩
 
 /-- Any normalized state in dimension $1$ yields a SIC family. -/
 @[category test, AMS 15 47 81]
 lemma isSICFamily_one_of_normalized {ψ : StateVector 1} (hψ : IsNormalized ψ) :
-    IsSICFamily 1 (fun _ : Fin 1 => ψ) := by sorry
+    IsSICFamily 1 (fun _ : Fin 1 => ψ) :=
+  isSICFamily_singleton_iff.mpr hψ
 
 /-- Dimension $1$ admits a SIC-POVM. -/
 @[category test, AMS 15 47 81]
-theorem hasSICPOVM_one : HasSICPOVM 1 := by sorry
+theorem hasSICPOVM_one : HasSICPOVM 1 := by
+  refine ⟨fun _ => EuclideanSpace.single 0 1, isSICFamily_one_of_normalized ?_⟩
+  simp [IsNormalized, EuclideanSpace.norm_single]
 
 /- ## Explicit low-dimensional witnesses -/
 
@@ -226,16 +234,37 @@ def bb84Family : Fin 4 → StateVector 2
 
 /-- The SIC overlap value in dimension $2$ is $1/3$. -/
 @[category test, AMS 15 47 81]
-lemma sicOverlapSq_two : sicOverlapSq 2 = (1 / 3 : ℝ) := by sorry
+lemma sicOverlapSq_two : sicOverlapSq 2 = (1 / 3 : ℝ) := by
+  simp [sicOverlapSq]; norm_num
 
 /-- The SIC overlap value in dimension $3$ is $1/4$. -/
 @[category test, AMS 15 47 81]
-lemma sicOverlapSq_three : sicOverlapSq 3 = (1 / 4 : ℝ) := by sorry
+lemma sicOverlapSq_three : sicOverlapSq 3 = (1 / 4 : ℝ) := by
+  simp [sicOverlapSq]; norm_num
+
+/-- The unit complex number `ω` (primitive cube root) has norm `1`. -/
+@[category API, AMS 15 47 81]
+private lemma omega_norm : ‖ω‖ = 1 := by
+  rw [Complex.norm_def, ω]
+  simp [Complex.normSq_apply]
+  have : Real.sqrt 3 * Real.sqrt 3 = 3 := Real.mul_self_sqrt (by norm_num)
+  rw [show (-1 / 2 : ℝ) * (-1 / 2) + Real.sqrt 3 / 2 * (Real.sqrt 3 / 2) = 1
+    from by nlinarith]
 
 /-- Every vector in the tetrahedral qubit SIC family is normalized. -/
 @[category test, AMS 15 47 81]
 lemma qubitSICFamily_normalized (i : Fin 4) :
-    IsNormalized (qubitSICFamily i) := by sorry
+    IsNormalized (qubitSICFamily i) := by
+  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have sqrt2_pos : (0:ℝ) < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have sqrt3_pos : (0:ℝ) < Real.sqrt 3 := Real.sqrt_pos.mpr (by norm_num)
+  have omega2_norm : ‖ω ^ 2‖ = 1 := by rw [norm_pow, omega_norm]; ring
+  fin_cases i <;>
+    simp [IsNormalized, qubitSICFamily, vec2, mkStateVector,
+      EuclideanSpace.norm_eq, Fin.sum_univ_two, tetraA, tetraB,
+      omega_norm, omega2_norm, abs_of_pos sqrt2_pos, abs_of_pos sqrt3_pos]
+  all_goals (try (field_simp; linarith [h2, h3]))
 
 /-- The tetrahedral qubit SIC family has the correct constant pairwise overlap. -/
 @[category test, AMS 15 47 81]
@@ -249,7 +278,15 @@ theorem hasSICPOVM_two : HasSICPOVM 2 := by sorry
 /-- Every vector in the Hesse qutrit SIC family is normalized. -/
 @[category test, AMS 15 47 81]
 lemma hesseFamily_normalized (i : Fin 9) :
-    IsNormalized (hesseFamily i) := by sorry
+    IsNormalized (hesseFamily i) := by
+  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have sqrt2_pos : (0:ℝ) < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have omega2_norm : ‖ω ^ 2‖ = 1 := by rw [norm_pow, omega_norm]; ring
+  fin_cases i <;>
+    simp [IsNormalized, hesseFamily, vec3, mkStateVector,
+      EuclideanSpace.norm_eq, Fin.sum_univ_three, hesseS,
+      omega_norm, omega2_norm, abs_of_pos sqrt2_pos]
+  all_goals (try (field_simp; linarith [h2]))
 
 /-- The Hesse qutrit SIC family has the correct constant pairwise overlap. -/
 @[category test, AMS 15 47 81]
@@ -263,11 +300,15 @@ theorem hasSICPOVM_three : HasSICPOVM 3 := by sorry
 /-- Every vector in the BB84 family is normalized. -/
 @[category test, AMS 15 47 81]
 lemma bb84Family_normalized (i : Fin 4) :
-    IsNormalized (bb84Family i) := by sorry
+    IsNormalized (bb84Family i) := by
+  fin_cases i <;> simp [IsNormalized, bb84Family, vec2, EuclideanSpace.norm_eq, hesseS] <;> grind
 
 /-- The BB84 family has the right cardinality for a qubit SIC but fails the constant-overlap condition. -/
 @[category test, AMS 15 47 81]
-theorem bb84Family_not_isSICFamily : ¬ IsSICFamily 2 bb84Family := by sorry
+theorem bb84Family_not_isSICFamily : ¬ IsSICFamily 2 bb84Family := by
+  intro h
+  have h_overlap := h.2 (show 0 ≠ 1 by decide)
+  simp [Fin.sum_univ_two, bb84Family, vec2, overlapSq, sicOverlapSq_two] at h_overlap
 
 /- ## Smallest open special cases (all d<=75) -/
 

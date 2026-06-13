@@ -53,7 +53,7 @@ theorem erdos_317.variants.claim2 : answer(sorry) ↔
 /--
 Inequality in `erdos_317.variants.claim2` is obvious, the problem is strict inequality.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 lemma claim2_inequality : ∀ᶠ n in atTop,
     ∀ δ : (Fin n) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
     letI lhs := |∑ k, ((δ k : ℚ) / (k + 1))|
@@ -64,7 +64,7 @@ lemma claim2_inequality : ∀ᶠ n in atTop,
 `erdos_317.variants.claim2` fails for small $n$, for example
 $$\frac{1}{2}-\frac{1}{3}-\frac{1}{4}=-\frac{1}{12}.$$
 -/
-@[category graduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_317.variants.counterexample : ¬ (∀  δ : (Fin 4) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
     letI lhs := |∑ k, ((δ k : ℚ) / (k + 1))|
     lhs ≠ 0 → lhs > (1 : ℚ) / ((Icc 1 4).lcm id : ℕ)) := by

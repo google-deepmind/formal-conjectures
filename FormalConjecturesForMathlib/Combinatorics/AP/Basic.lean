@@ -40,7 +40,7 @@ variable {α : Type*} [AddCommMonoid α]
 /--
 A set $S$ is an arithmetic progression of length $l$ with first term $a$ and difference $d$
 if $S = \{a, a + d, ..., a + (l - 1)d\}$, if $l$ if finite, else $S = \{a, a + d, a + 2d, ...\}.
-This can be written as `Set.IsAPOfLengthWith a l a d`, where `l : ℕ∞` may take the infinite
+This can be written as `s.IsAPOfLengthWith l a d`, where `l : ℕ∞` may take the infinite
 value `⊤`.
 -/
 def Set.IsAPOfLengthWith (s : Set α) (l : ℕ∞) (a d : α) : Prop :=

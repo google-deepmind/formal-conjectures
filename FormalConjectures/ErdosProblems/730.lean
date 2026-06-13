@@ -40,10 +40,10 @@ theorem erdos_730 : answer(sorry) ↔ S.Infinite := by
 /--
 For example, $(87,88)$ and $(607,608)$ are such pairs.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_730.variants.explicit_pairs :
     {(87, 88), (607, 608)} ⊆ S := by
-  sorry
+  rintro _ (rfl | rfl) <;> exact ⟨by decide, by native_decide⟩
 
 /--
 There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.

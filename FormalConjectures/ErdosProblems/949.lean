@@ -43,6 +43,7 @@ continuum such that $A + A \sub \mathbb{R}∖S$? -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at ""]
 theorem erdos_949.variants.sidon : answer(True) ↔
     ∀ S : Set ℝ, IsSidon S → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by
+  show True ↔ _
   simp only [true_iff, Set.add_subset_iff]
   rintro S hS
   -- We case on whether `S` has cardinality the continuum or strictly less.

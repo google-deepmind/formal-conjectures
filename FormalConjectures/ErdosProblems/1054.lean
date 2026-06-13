@@ -55,13 +55,26 @@ theorem erdos_1054.parts.iii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=2$, i.e. we get the junk value $0$. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem f_undefined_at_2 : f 2 = 0 := by
-  sorry
+  rw [f, dif_neg]
+  rintro ⟨m, k, hk, hsum⟩
+  rcases eq_or_ne m 0 with rfl | hm
+  · simp at hsum
+  · -- For `m ≠ 0` the smallest divisor is `1` and every later term is `≥ 2`, so the sum of the
+    -- `k` smallest divisors is `1` or `≥ 3`, never `2`.
+    have hk0 : (0 : ℕ) ∈ Finset.Iio k := Finset.mem_Iio.mpr (by omega)
+    rw [← Finset.add_sum_erase _ _ hk0, Nat.nth_divisors_zero hm] at hsum
+    obtain ⟨i, hi_mem, hi_ne⟩ :=
+      Finset.exists_ne_zero_of_sum_ne_zero (s := (Finset.Iio k).erase 0)
+        (f := Nat.nth (· ∈ m.divisors)) (by omega)
+    have h2 := Nat.two_le_nth_divisors hm (Finset.ne_of_mem_erase hi_mem) hi_ne
+    have := h2.trans (Finset.single_le_sum (fun j _ => Nat.zero_le _) hi_mem)
+    omega
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=5$, i.e. we get the junk value $0$. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem f_undefined_at_3 : f 5 = 0 := by
   sorry
 

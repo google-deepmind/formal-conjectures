@@ -17,8 +17,6 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 import FormalConjectures.GreensOpenProblems.«28»
 
-open scoped Polynomial
-
 /-!
 # Mathoverflow 339137
 
@@ -29,7 +27,7 @@ Why do polynomials with coefficients 0,1
 *Reference:* [mathoverflow/339137](https://mathoverflow.net/questions/339137)
 asked by user [*Sil*](https://mathoverflow.net/users/136794/sil)
 -/
-
+open scoped Polynomial
 namespace Mathoverflow339137
 
 /--
@@ -64,7 +62,7 @@ distributed on their ranges?
 Mathematically, this equivalence is established via Probability Generating Functions (PGFs),
 shifting the support to $\mathbb{N}$, and appropriately scaling the coefficients.
 -/
-@[category undergraduate, AMS 60]
+@[category textbook, AMS 60]
 theorem mathoverflow_339137_probabilistic :
     type_of% Mathoverflow339137.mathoverflow_339137 ↔ type_of% Green28.green_28 := by
   sorry

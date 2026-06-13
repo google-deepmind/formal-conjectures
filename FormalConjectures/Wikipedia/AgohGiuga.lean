@@ -16,13 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open scoped Nat
-
 /-!
 # Agoh-Giuga conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Agoh-Giuga_conjecture)
 -/
+open scoped Nat
 /-
 
 The **Agoh-Giuga Conjecture**.
@@ -116,15 +115,16 @@ A Carmichael number is a composite number `n` such that for all `b ≥ 1`,
 we have `b^n ≡ b (mod n)`.
 -/
 def IsCarmichael (n : ℕ) : Prop :=
-  ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
+  1 < n ∧ ¬ n.Prime ∧ ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
 
 /-- A composite Carmichael number is squarefree. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCarmichael a) :
     Squarefree a := by
-  simp_all [Nat.Composite, a.squarefree_iff_prime_squarefree, IsCarmichael, Nat.FermatPsp, Nat.ProbablePrime]
+  have ha₂_forall := ha₂.2.2
+  simp_all [Nat.Composite, a.squarefree_iff_prime_squarefree, Nat.FermatPsp, Nat.ProbablePrime]
   rintro p hp ⟨N, rfl⟩
-  apply absurd (ha₂ (p * N + 1) ((1).le_add_left _))
+  apply absurd (ha₂_forall (p * N + 1) ((1).le_add_left _))
   have : Fact p.Prime := ⟨hp⟩
   rw [mul_assoc] at ha₁
   rw [mul_assoc, ← geom_sum_mul_of_one_le ((1).le_add_left (p * N)), p.coprime_mul_iff_left]
@@ -134,12 +134,13 @@ theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCa
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
 /-- A composite number `a` is Carmichael if and only if it is squarefree
 and, for all prime `p` dividing `a`, we have `p - 1 ∣ a - 1`. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     IsCarmichael a ↔ Squarefree a ∧
       ∀ p, p.Prime → p ∣ a → (p - 1 : ℕ) ∣ (a - 1 : ℕ) := by
-  refine ⟨fun h ↦ ⟨squarefree_of_isCarmichael ha₁ h, fun p hp hpa ↦ ?_⟩, fun h b hb hab ↦ ?_⟩
-  · have : Fact p.Prime := ⟨hp⟩
+  refine ⟨fun h ↦ ⟨squarefree_of_isCarmichael ha₁ h, fun p hp hpa ↦ ?_⟩, fun h ↦ ⟨ha₁.1, ha₁.2, fun b hb hab ↦ ?_⟩⟩
+  · have h_forall := h.2.2
+    have : Fact p.Prime := ⟨hp⟩
     let ⟨g, h⟩ := IsCyclic.exists_generator (α := (ZMod p)ˣ)
     obtain ⟨k, rfl⟩ := hpa
     have hk : k.Coprime p := by
@@ -151,7 +152,7 @@ theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     let e : ZMod (p * k) ≃+* ZMod p × ZMod k := ZMod.chineseRemainder hk.symm
     let s : ZMod (p * k) := e.symm (g, 1)
     have : NeZero k := ⟨fun _ => by simp_all⟩
-    have : p * k ∣ (e.symm (g, 1)).val ^ (p * k - 1) - 1 := h _ (ZMod.val_pos.2 (by aesop))
+    have : p * k ∣ (e.symm (g, 1)).val ^ (p * k - 1) - 1 := h_forall _ (ZMod.val_pos.2 (by aesop))
       ((ZMod.isUnit_iff_coprime _ _).1 (by simp [Prod.isUnit_iff])).symm
     simp_all [p.totient_prime, sub_eq_zero, ZMod.val_pos, ← ZMod.natCast_eq_zero_iff,
       ← map_pow, ← Units.val_pow_eq_pow_val, ← orderOf_dvd_iff_pow_eq_one,
