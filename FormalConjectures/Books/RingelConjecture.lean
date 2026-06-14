@@ -22,8 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* G. Ringel, *Problem 25*, in *Theory of Graphs and its Applications*
 (Proc. Sympos. Smolenice, 1963), Academia, Prague, 1964.
 
-Ringel's conjecture (1963): the complete graph `K_{2n+1}` decomposes into copies of any tree
-with `n` edges. It remains open; the case of all sufficiently large `n` is proved by
+Ringel's conjecture (1963): the complete graph $K_{2n+1}$ decomposes into copies of any tree
+with $n$ edges. It remains open; the case of all sufficiently large $n$ is proved by
 Montgomery–Pokrovskiy–Sudakov, see `Arxiv/2001.02665/RingelConjecture.lean`.
 -/
 namespace RingelConjecture
@@ -31,15 +31,15 @@ namespace RingelConjecture
 open SimpleGraph
 
 /--
-For any tree `T` with `n` edges, the complete graph on `2 * n + 1` vertices decomposes into
-`2 * n + 1` edge-disjoint copies of `T`.
+For any tree $T$ with $n$ edges, the complete graph $K_{2n+1}$ decomposes into
+$2n+1$ edge-disjoint copies of $T$.
 
-A "copy" of `T` is the image `T.map (f i)` of `T` under a vertex embedding
+A "copy" of $T$ is the image `T.map (f i)` of $T$ under a vertex embedding
 `f i : V ↪ Fin (2 * n + 1)`; the copies are pairwise edge-disjoint (`Pairwise ... Disjoint`)
-and together cover every edge of `K_{2n+1}` (`⨆ i, T.map (f i) = ⊤`).
+and together cover every edge of $K_{2n+1}$ (`⨆ i, T.map (f i) = ⊤`).
 -/
 @[category research open, AMS 5]
-theorem ringel_conjecture {V : Type*} [Finite V]
+theorem ringel_conjecture {V : Type} [Finite V]
     (T : SimpleGraph V) (hT : T.IsTree)
     (n : ℕ) (hn : T.edgeSet.ncard = n) :
     ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),

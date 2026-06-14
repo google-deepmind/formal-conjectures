@@ -17,36 +17,36 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Ringel's Conjecture and Kotzig's Conjecture for large `n`
+# Ringel's Conjecture and Kotzig's Conjecture for large $n$
 
 *Reference:* [arxiv/2001.02665](https://arxiv.org/abs/2001.02665)
 **A proof of Ringel's Conjecture**
 by *Richard Montgomery, Alexey Pokrovskiy, Benny Sudakov*
 
 The original conjecture of Ringel (1963), which remains open, is stated in
-`Books/RingelConjecture.lean`. The referenced paper proves it for all sufficiently large `n`.
+`Books/RingelConjecture.lean`. The referenced paper proves it for all sufficiently large $n$.
 
 Montgomery–Pokrovskiy–Sudakov actually prove the strictly stronger statement conjectured by
-Kotzig: the decomposition can always be realized by cyclic shifts of a single copy of `T`.
-Kotzig's conjecture (all `n`) remains open; see `Books/KotzigConjecture.lean`.
+Kotzig: the decomposition can always be realized by cyclic shifts of a single copy of $T$.
+Kotzig's conjecture (all $n$) remains open; see `Books/KotzigConjecture.lean`.
 -/
 namespace Arxiv.«2001.02665»
 
 open SimpleGraph
 
 /--
-For all sufficiently large `n`, the complete graph on `2 * n + 1` vertices decomposes into
-`2 * n + 1` edge-disjoint copies of any tree `T` with `n` edges.
+For all sufficiently large $n$, the complete graph $K_{2n+1}$ decomposes into
+$2n+1$ edge-disjoint copies of any tree $T$ with $n$ edges.
 
-A "copy" of `T` is the image `T.map (f i)` of `T` under a vertex embedding
+A "copy" of $T$ is the image `T.map (f i)` of $T$ under a vertex embedding
 `f i : V ↪ Fin (2 * n + 1)`; the copies are pairwise edge-disjoint (`Pairwise ... Disjoint`)
-and together cover every edge of `K_{2n+1}` (`⨆ i, T.map (f i) = ⊤`).
+and together cover every edge of $K_{2n+1}$ (`⨆ i, T.map (f i) = ⊤`).
 
 This follows from `kotzig_conjecture_large`; see `Books/RingelConjecture.lean` for the open form.
 -/
 @[category research solved, AMS 5]
-theorem ringel_conjecture :
-    ∀ᶠ (n : ℕ) in Filter.atTop, ∀ {V : Type*} [Finite V] (T : SimpleGraph V),
+theorem ringel_conjecture_large :
+    ∀ᶠ (n : ℕ) in Filter.atTop, ∀ {V : Type} [Finite V] (T : SimpleGraph V),
       T.IsTree → T.edgeSet.ncard = n →
       ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),
         Pairwise (fun i j => Disjoint (T.map (f i)).edgeSet (T.map (f j)).edgeSet) ∧
@@ -54,20 +54,20 @@ theorem ringel_conjecture :
   sorry
 
 /--
-For all sufficiently large `n`, the complete graph on `2 * n + 1` vertices decomposes into
-`2 * n + 1` edge-disjoint copies of any tree `T` with `n` edges via cyclic shifts of a single
+For all sufficiently large $n$, the complete graph $K_{2n+1}$ decomposes into
+$2n+1$ edge-disjoint copies of any tree $T$ with $n$ edges via cyclic shifts of a single
 embedding.
 
-The `2 * n + 1` copies are `f 0, f 1, …, f (2n)` where `f i v = f 0 v + i` for all vertices
-`v` — that is, each copy is obtained by adding `i` (mod `2 * n + 1`) to every vertex of the
-base copy. This is strictly stronger than `ringel_conjecture`.
+The $2n+1$ copies are `f 0, f 1, …, f (2n)` where `f i v = f 0 v + i` for all vertices
+$v$ — that is, each copy is obtained by adding $i$ (mod $2n+1$) to every vertex of the
+base copy. This is strictly stronger than `ringel_conjecture_large`.
 
-Kotzig conjectured this holds for all `n`; see `Books/KotzigConjecture.lean`. Montgomery,
-Pokrovskiy, and Sudakov prove it for all sufficiently large `n`.
+Kotzig conjectured this holds for all $n$; see `Books/KotzigConjecture.lean`. Montgomery,
+Pokrovskiy, and Sudakov prove it for all sufficiently large $n$.
 -/
 @[category research solved, AMS 5]
 theorem kotzig_conjecture_large :
-    ∀ᶠ (n : ℕ) in Filter.atTop, ∀ {V : Type*} [Finite V] (T : SimpleGraph V),
+    ∀ᶠ (n : ℕ) in Filter.atTop, ∀ {V : Type} [Finite V] (T : SimpleGraph V),
       T.IsTree → T.edgeSet.ncard = n →
       ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),
         (∀ i v, f i v = f 0 v + i) ∧
