@@ -64,7 +64,45 @@ theorem a_209 : a 209 := by
 /-- Numbers coming from prime quadruples are in the sequence A56777. -/
 @[category textbook, AMS 11]
 theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) : a n := by
-  sorry
+  obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
+  -- n + 12 = p * (p+8) + 12 = (p+2) * (p+6)
+  have hsum : p * (p + 8) + 12 = (p + 2) * (p + 6) := by ring
+  -- coprimality facts between the four primes
+  have hne_p_p8 : p ≠ p + 8 := by omega
+  have hne_p2_p6 : p + 2 ≠ p + 6 := by omega
+  have hcop1 : Nat.Coprime p (p + 8) := (Nat.coprime_primes hp hp8).mpr hne_p_p8
+  have hcop2 : Nat.Coprime (p + 2) (p + 6) := (Nat.coprime_primes hp2 hp6).mpr hne_p2_p6
+  refine ⟨?_, ?_, ?_, ?_⟩
+  -- ¬ Prime (p * (p+8))
+  · exact Nat.not_prime_mul hp.one_lt.ne' (by have := hp8.one_lt; omega)
+  -- 1 < p * (p+8)
+  · have h1 : 2 ≤ p := hp.two_le
+    have h2 : 10 ≤ p + 8 := by omega
+    nlinarith
+  -- totient: φ((p+2)(p+6)) = φ(p(p+8)) + 12
+  · rw [hsum, Nat.totient_mul hcop2, Nat.totient_mul hcop1,
+        Nat.totient_prime hp, Nat.totient_prime hp2,
+        Nat.totient_prime hp6, Nat.totient_prime hp8]
+    zify [show 1 ≤ p from hp.one_lt.le, show 1 ≤ p + 2 by omega,
+          show 1 ≤ p + 6 by omega, show 1 ≤ p + 8 by omega]
+    ring
+  -- sigma: σ₁((p+2)(p+6)) = σ₁(p(p+8)) + 12
+  · rw [hsum, ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime hcop2,
+        ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime hcop1]
+    have e1 : ArithmeticFunction.sigma 1 p = p + 1 := by
+      have := ArithmeticFunction.sigma_one_apply_prime_pow (p := p) (i := 1) hp
+      simpa using this
+    have e2 : ArithmeticFunction.sigma 1 (p + 2) = (p + 2) + 1 := by
+      have := ArithmeticFunction.sigma_one_apply_prime_pow (p := p + 2) (i := 1) hp2
+      simpa using this
+    have e6 : ArithmeticFunction.sigma 1 (p + 6) = (p + 6) + 1 := by
+      have := ArithmeticFunction.sigma_one_apply_prime_pow (p := p + 6) (i := 1) hp6
+      simpa using this
+    have e8 : ArithmeticFunction.sigma 1 (p + 8) = (p + 8) + 1 := by
+      have := ArithmeticFunction.sigma_one_apply_prime_pow (p := p + 8) (i := 1) hp8
+      simpa using this
+    rw [e1, e2, e6, e8]
+    ring
 
 /-- All members of the sequence A56777 come from prime quadruples. -/
 @[category research open, AMS 11]
