@@ -109,14 +109,6 @@ theorem isWeakGiuga_iff_sum_primeFactors {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∃ m : ℕ, ∑ p ∈ n.primeFactors, (1 / p : ℚ) - 1 / n = m := by
   sorry
 
--- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
-/--
-A Carmichael number is a composite number `n` such that for all `b ≥ 1`,
-we have `b^n ≡ b (mod n)`.
--/
-def IsCarmichael (n : ℕ) : Prop :=
-  1 < n ∧ ¬ n.Prime ∧ ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
-
 /-- A composite Carmichael number is squarefree. -/
 @[category textbook, AMS 11]
 theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCarmichael a) :
