@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [erdosproblems.com/1192](https://www.erdosproblems.com/1192)
 - [Ru90] Ruzsa, Imre Z., A just basis. Monatsh. Math. (1990), 145--151.
+- [Er80] Erdős, Paul, A survey of problems in combinatorial number theory.
+  Ann. Discrete Math. 6 (1980), 89--115.
 -/
 
 open Nat Filter Finset Set
@@ -35,6 +37,54 @@ with $a_i\in A$.
 -/
 noncomputable def f_r (A : Set ℕ) (r n : ℕ) : ℕ :=
   { v : Fin r → ℕ | (∀ i, v i ∈ A) ∧ ∑ i, v i = n }.ncard
+
+/-- The empty sum ($r = 0$) gives exactly one representation of $0$: the empty tuple. -/
+@[category test, AMS 5 11]
+theorem erdos_1192.f_r_zero_zero (A : Set ℕ) : f_r A 0 0 = 1 := by
+  dsimp [f_r]
+  have h : { v : Fin 0 → ℕ | (∀ i, v i ∈ A) ∧ ∑ i, v i = 0 } = { default } := by
+    ext v
+    simp [eq_iff_true_of_subsingleton]
+  rw [h, Set.ncard_singleton]
+
+/-- With an empty set, there are no valid $r$-tuples for $r \geq 1$. -/
+@[category test, AMS 5 11]
+theorem erdos_1192.f_r_empty (r n : ℕ) : f_r ∅ (r + 1) n = 0 := by
+  dsimp [f_r]
+  have h : { v : Fin (r + 1) → ℕ | (∀ i, v i ∈ (∅ : Set ℕ)) ∧ ∑ i, v i = n } = ∅ := by
+    ext v
+    simp
+  rw [h, Set.ncard_empty]
+
+/-- For $r = 1$, $f_1(\{n\}, n) = 1$: the only $1$-tuple from $\{n\}$ summing to $n$ is $(n)$. -/
+@[category test, AMS 5 11]
+theorem erdos_1192.f_r_singleton_self (n : ℕ) : f_r {n} 1 n = 1 := by
+  dsimp [f_r]
+  have h : { v : Fin 1 → ℕ | (∀ i, v i ∈ ({n} : Set ℕ)) ∧ ∑ i, v i = n } = { fun _ ↦ n } := by
+    ext v
+    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+    constructor
+    · rintro ⟨h1, _⟩
+      ext i
+      exact h1 i
+    · rintro rfl
+      refine ⟨fun _ ↦ rfl, ?_⟩
+      simp
+  rw [h, Set.ncard_singleton]
+
+/-- $f_1(\{0\}, 1) = 0$: can't represent $1$ with a single element from $\{0\}$. -/
+@[category test, AMS 5 11]
+theorem erdos_1192.f_r_no_rep : f_r {0} 1 1 = 0 := by
+  dsimp [f_r]
+  have h : { v : Fin 1 → ℕ | (∀ i, v i ∈ ({0} : Set ℕ)) ∧ ∑ i, v i = 1 } = ∅ := by
+    ext v
+    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff, Set.mem_empty_iff_false, iff_false]
+    rintro ⟨h1, h2⟩
+    have h3 : v = fun _ ↦ 0 := by ext i; exact h1 i
+    rw [h3] at h2
+    revert h2
+    simp
+  rw [h, Set.ncard_empty]
 
 /--
 Does there exist, for all $r\geq 2$, a basis $A$ of order $r$ (so that $f_r(n)>0$ for all
