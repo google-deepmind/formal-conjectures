@@ -34,5 +34,4 @@ A Carmichael number is a composite number `n` such that for all `b ≥ 1`,
 we have `b^n ≡ b (mod n)`.
 -/
 def IsCarmichael (n : ℕ) : Prop :=
-  1 < n ∧ ¬ n.Prime ∧ ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
-
+  ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
