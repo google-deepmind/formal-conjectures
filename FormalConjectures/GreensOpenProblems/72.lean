@@ -55,8 +55,8 @@ def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
   AllowedSetSize k N = (k - 1) * N
 
 /-- The **no-k-in-line problem**:
-For $N \geq k$ and $k > 2$, the AllowedSetSize is $(k - 1) * N$, i. e. on an $N \times N$ subset,
-there is a set of $(k - 1) * N$ points for which no $k$ lie on a line (and not such a set of bigger size).
+For $N \geq k$ and $k > 2$, the AllowedSetSize is $(k - 1) N$, i. e. on an $N \times N$ subset,
+there is a set of $(k - 1) N$ points for which no $k$ lie on a line (and not such a set of bigger size).
 -/
 @[category research open, AMS 5 52]
 theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 2 < k) (h : k ≤ N) : NoKInLineFor k N := by
