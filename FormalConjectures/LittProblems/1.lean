@@ -60,6 +60,7 @@ The variable indexed by `0 : Fin (n + 1)` corresponds to $z$, and the variable i
 def IsSolutionOfAlgebraicODE (n : ℕ) (f : PowerSeries ℚ) (g : MvRatFunc (Fin (n + 1)) ℚ) : Prop :=
   let pt : Fin (n + 1) → PowerSeries ℚ := Fin.cases X (fun i : Fin n ↦ derivativeFun^[i.val] f)
   ∃ p q : MvPolynomial (Fin (n + 1)) ℚ,
+    q ≠ 0 ∧
     g = (algebraMap _ _ p) / (algebraMap _ _ q) ∧
     IsDefined (Fin (n + 1)) ℚ g (PowerSeries.constantCoeff ∘ pt) ∧
     derivativeFun^[n] f * MvPolynomial.aeval pt q = MvPolynomial.aeval pt p
