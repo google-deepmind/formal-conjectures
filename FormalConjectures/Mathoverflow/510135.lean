@@ -56,15 +56,15 @@ theorem n_c_coins_placement_conjecture : answer(sorry) ↔
       let bc :=
         ∑ i : Fin n, ∑ j : Fin n, board i j
       -- Only zero or one coins at a position are allowed
-      ∀ i : Fin n, ∀ j : Fin n, 0 ≤ board i j ∧ board i j ≤ 1 ∧
+      (∀ i j : Fin n, 0 ≤ board i j ∧ board i j ≤ 1) ∧
       -- Each row count is less than or equal to `c`
-      ∀ i : Fin n, rc i ≤ c ∧
+      (∀ i : Fin n, rc i ≤ c) ∧
       -- Each column count is less than or equal to `c`
-      ∀ i : Fin n, cc i ≤ c ∧
+      (∀ i : Fin n, cc i ≤ c) ∧
       -- Each downward diagonal count is less than or equal to `c`
-      ∀ k : ℕ, ddc k ≤ c ∧
+      (∀ k : ℕ, ddc k ≤ c) ∧
       -- Each upward diagonal count is less than or equal to `c`
-      ∀ k : ℤ, udc k ≤ c ∧
+      (∀ k : ℤ, udc k ≤ c) ∧
       -- The board count is equal to `n * c`.
       bc = n * c
   := by sorry
