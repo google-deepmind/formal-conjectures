@@ -290,4 +290,34 @@ theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
   · simp
 
 
+/-- The set of pairs of distinct vertices with even distance > 0. -/
+noncomputable def evenDistancePairs (G : SimpleGraph α) : Finset (α × α) :=
+  Finset.univ.filter (fun p => G.dist p.1 p.2 % 2 = 0 ∧ G.dist p.1 p.2 > 0)
+
+/-- Minimum even distance between distinct vertices in `G`.
+    Only positive even distances are considered. Returns 0 if no such distance exists. -/
+noncomputable def minEvenDistance (G : SimpleGraph α) : ℕ :=
+  letI pairs := G.evenDistancePairs
+  if h : pairs.Nonempty then
+    letI dists := pairs.image (fun p => G.dist p.1 p.2)
+    (dists.min' (Finset.Nonempty.image h _))
+  else 0
+
+/-- Maximum even distance between distinct vertices in `G`.
+    Only positive even distances are considered. Returns 0 if no such distance exists. -/
+noncomputable def maxEvenDistance (G : SimpleGraph α) : ℕ :=
+  letI pairs := G.evenDistancePairs
+  if h : pairs.Nonempty then
+    letI dists := pairs.image (fun p => G.dist p.1 p.2)
+    (dists.max' (Finset.Nonempty.image h _))
+  else 0
+
+/-- Average even distance between distinct vertices in `G`.
+    Only positive even distances are considered. Returns 0 if no such distance exists. -/
+noncomputable def averageEvenDistance (G : SimpleGraph α) : ℚ :=
+  letI pairs := G.evenDistancePairs
+  if pairs.card > 0 then
+    (∑ p ∈ pairs, (G.dist p.1 p.2 : ℚ)) / (pairs.card : ℚ)
+  else 0
+
 end SimpleGraph

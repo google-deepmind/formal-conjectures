@@ -98,4 +98,8 @@ noncomputable def numTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj]
 noncomputable def length (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   Real.sqrt (∑ v, (G.degree v : ℝ) ^ 2)
 
+/-- The number of vertices of degree 2 in `G`. -/
+def countDegreeTwo (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  (Finset.univ.filter (fun v => G.degree v = 2)).card
+
 end SimpleGraph
