@@ -15,6 +15,7 @@ const PAGE_SIZE = 50;
 let allConjectures = [];
 let filtered       = [];
 let currentPage    = 1;
+let versoFragments = { moduleDocs: {}, constLinks: {} };
 
 // Active filter state (driven by URL ↔ UI)
 const state = {
@@ -128,34 +129,48 @@ function applyFilters() {
 // ---------------------------------------------------------------------------
 // Render helpers
 // ---------------------------------------------------------------------------
-function renderCard(c) {
+function renderCard(c, index) {
   const catMeta = FC.getCategoryMeta(c.category);
   const subjectPills = c.subjects.slice(0, 3)
     .map(s => `<span class="subject-pill">${FC.escapeHTML(s.name)}</span>`)
     .join('');
+  const previewId = `problem-preview-${index}`;
+  const docHTML = FC.problemDocHTML(c, versoFragments) ||
+    '<p class="problem-preview__empty">No informal statement available.</p>';
 
   const article = document.createElement('article');
   article.className = 'theorem-card';
   article.setAttribute('role', 'listitem');
   article.innerHTML = `
-    <div class="theorem-card__body">
-      <div class="theorem-card__name">
-        <a href="${FC.escapeHTML(FC.theoremURL(c.displayTheorem))}">
-          ${FC.escapeHTML(c.displayTheorem)}
-        </a>
+    <div class="theorem-card__summary">
+      <div class="theorem-card__body">
+        <div class="theorem-card__name">
+          <a href="${FC.escapeHTML(FC.theoremURL(c.displayTheorem))}">
+            ${FC.escapeHTML(c.displayTheorem)}
+          </a>
+        </div>
+        <div class="theorem-card__meta">
+          ${FC.escapeHTML(c.collection)} &mdash;
+          <code style="font-size:.78rem;color:var(--color-text-muted)">${FC.escapeHTML(c.displayModule)}</code>
+        </div>
+        <div class="theorem-card__tags">
+          ${subjectPills}
+        </div>
       </div>
-      <div class="theorem-card__meta">
-        ${FC.escapeHTML(c.collection)} &mdash;
-        <code style="font-size:.78rem;color:var(--color-text-muted)">${FC.escapeHTML(c.displayModule)}</code>
-      </div>
-      <div class="theorem-card__tags">
-        ${subjectPills}
+      <div class="theorem-card__badge">
+        ${FC.voting ? FC.voting.renderCardVoteCount(c.theorem) : ''}
+        ${FC.voting ? FC.voting.renderCardDifficulty(c.theorem) : ''}
+        <span class="badge ${catMeta.css}">${FC.escapeHTML(catMeta.label)}</span>
+        <button class="statement-toggle" type="button" aria-expanded="true" aria-controls="${previewId}">
+          <span class="statement-toggle__text">Hide statement</span>
+          <span class="statement-toggle__icon" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
-    <div class="theorem-card__badge">
-      ${FC.voting ? FC.voting.renderCardVoteCount(c.theorem) : ''}
-      ${FC.voting ? FC.voting.renderCardDifficulty(c.theorem) : ''}
-      <span class="badge ${catMeta.css}">${FC.escapeHTML(catMeta.label)}</span>
+    <div class="problem-preview" id="${previewId}">
+      <div class="problem-preview__content problem-doc-content">
+        ${docHTML}
+      </div>
     </div>
   `;
   return article;
@@ -179,7 +194,9 @@ function renderList() {
   const end   = Math.min(start + PAGE_SIZE, filtered.length);
   const page  = filtered.slice(start, end);
 
-  for (const c of page) listEl.appendChild(renderCard(c));
+  page.forEach((c, i) => listEl.appendChild(renderCard(c, start + i)));
+  FC.setupStatementToggles(listEl);
+  FC.renderLatex('.problem-doc-content');
 
   const fileCount = new Set(filtered.map(c => c.module)).size;
   resultCount.textContent = `${filtered.length.toLocaleString()} statement${filtered.length !== 1 ? 's' : ''} in ${fileCount.toLocaleString()} file${fileCount !== 1 ? 's' : ''}`;
@@ -279,6 +296,7 @@ async function init() {
   }
 
   allConjectures = data.conjectures;
+  versoFragments = data.versoFragments || { moduleDocs: {}, constLinks: {} };
 
   // Handle OAuth callback and prefetch votes (disabled)
   // await FC.voting.handleOAuthCallback();
