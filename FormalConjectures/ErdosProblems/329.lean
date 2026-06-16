@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 329: Maximum Density of Sidon Sets
 
-*Reference:* [erdosproblems.com/329](https://www.erdosproblems.com/329)
+*References:*
+- [erdosproblems.com/329](https://www.erdosproblems.com/329)
+- [AlMi25] B. Alexeev and D. G. Mixon, Forbidden Sidon subsets of perfect difference sets, featuring a human-assisted proof. [arXiv:2510.19804](https://arxiv.org/abs/2510.19804) (2025).
+- [Ha47] Hall, Jr., Marshall, Cyclic projective planes. Duke Math. J. (1947), 1079--1090.
 -/
 
 open Function Set Filter
@@ -78,24 +81,19 @@ theorem erdos_329.variants.turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUp
   sorry
 
 /--
-If any finite Sidon set can be embedded in a perfect difference set,
-then the maximum density would be 1.
--/
-@[category research open, AMS 5 11]
-theorem erdos_329.variants.of_sub_perfectDifferenceSet :
-    (∀ (A : Finset ℕ), IsSidon (A : Set ℕ) → ∃ (D : Set ℕ) (n : ℕ),
-      ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) →
-    sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1 := by
-  sorry
-
-/--
 The converse: if the maximum density is 1, then any finite Sidon set
-can be embedded in a perfect difference set.
+can be embedded in a perfect difference set modulo $n > 0$.
+
+Since the consequent is false (due to the counterexamples in [Ha47] and [AlMi25]),
+this implication is logically equivalent to the statement that the maximum upper
+density of Sidon sets is NOT 1.
+Because the maximum upper density problem is still open, the truth value of this
+implication is also an open research problem.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_329.variants.converse_implication :
     (sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1) →
-    (∀ (A : Finset ℕ), IsSidon (A : Set ℕ) → ∃ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon (A : Set ℕ) → ∃ (D : Set ℕ) (n : ℕ) (_ : n > 0),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) := by
   sorry
 
