@@ -40,4 +40,12 @@ converted to a real number. Returns 0 if the graph has no vertices. -/
 noncomputable def averageEccentricity (G : SimpleGraph α) : ℝ :=
   (∑ v : α, (G.eccent v).toNat) / (Fintype.card α : ℝ)
 
+/-- The periphery of a graph: the set of vertices of maximum eccentricity (equal to diameter). -/
+noncomputable def periphery (G : SimpleGraph α) : Finset α :=
+  Finset.univ.filter (fun v => G.eccent v = G.ediam)
+
+/-- The size of the periphery (number of vertices of maximum eccentricity). -/
+noncomputable def peripherySize (G : SimpleGraph α) : ℕ :=
+  G.periphery.card
+
 end SimpleGraph
