@@ -32,16 +32,17 @@ Each cell can hold at most 1 coin.
 
 This generalizes the traditional n-queens problem
 (which corresponds to `c = 1`).
-
-Coins on an `n × n` board, represented as a boolean matrix.
-  `true`  indicates a  coin being present
-  `false` indicates no coin being present
 -/
 
 namespace Mathoverflow513435
 
 variable {n : ℕ} (hn : n ≥ 4) {c : ℕ} (hc : c ≤ n)
 
+/--
+A board is encoded as a `Matrix (Fin n) (Fin n) ℕ`
+  `1`  indicates a  coin being present
+  `0` indicates no coin being present
+-/
 @[category research open, AMS 5]
 theorem n_c_coins_placement_conjecture : answer(sorry) ↔
     ∃ (board : Matrix (Fin n) (Fin n) ℕ),
