@@ -40,8 +40,4 @@ converted to a real number. Returns 0 if the graph has no vertices. -/
 noncomputable def averageEccentricity (G : SimpleGraph α) : ℝ :=
   (∑ v : α, (G.eccent v).toNat) / (Fintype.card α : ℝ)
 
-/-- The size of the periphery (number of vertices of maximum eccentricity). -/
-noncomputable def peripherySize (G : SimpleGraph α) : ℕ :=
-  G.boundaryVertices.card
-
 end SimpleGraph
