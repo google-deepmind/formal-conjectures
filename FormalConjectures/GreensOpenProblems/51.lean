@@ -19,38 +19,33 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Green's Open Problem 51
 
-Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. What is the largest size of coset guaranteed to be contained in $2A$?
-
-*Reference:* [Green's Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.51)
+*References:*
+- [Gr24] [Green's Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.51)
 -/
 
 open scoped Pointwise
 
 namespace Green51
 
-/-- `A` contains a coset of a subspace of dimension `d`. -/
-def ContainsCosetOfDim (n : ℕ) (A : Set (Fin n → ZMod 2)) (d : ℕ) : Prop :=
-  ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (v : Fin n → ZMod 2),
+/-- The maximum dimension of a coset contained in the set `A`. -/
+noncomputable def maxCosetDim (n : ℕ) (A : Set (Fin n → ZMod 2)) : ℕ :=
+  sSup { d | ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (v : Fin n → ZMod 2),
     v +ᵥ (W : Set (Fin n → ZMod 2)) ⊆ A ∧
-    d ≤ Module.finrank (ZMod 2) W
+    Module.finrank (ZMod 2) W = d }
+
+/-- The largest dimension of a coset guaranteed to be contained in $2A$ for $A \subseteq \mathbb{F}_2^n$ with density $\alpha$. -/
+noncomputable def guaranteedMaxCosetDim (n : ℕ) (α : ℝ) : ℕ :=
+  sInf { maxCosetDim n ↑(2 • A) | (A : Finset (Fin n → ZMod 2)) (_h : A.dens = α) }
 
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. What is the largest size of coset
 guaranteed to be contained in $2A$?
 
-We phrase this by asking for the optimal lower bound $F(\alpha, n)$ on the dimension
-of a subspace $W$ such that a coset of $W$ is contained in $2A$.
+We phrase this by asking for the exact function $F(\alpha, n)$ giving the maximum dimension
+of a guaranteed coset.
 -/
 @[category research open, AMS 5 11]
-theorem green_51 :
-    let F := (answer(sorry) : ℝ → ℕ → ℕ)
-    (∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2),
-      A.Nonempty → ContainsCosetOfDim n (2 • A) (F A.dens n)) ∧
-    (∀ F' : ℝ → ℕ → ℕ,
-      (∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2),
-        A.Nonempty → ContainsCosetOfDim n (2 • A) (F' A.dens n)) →
-      ∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2), A.Nonempty →
-        F' A.dens n ≤ F A.dens n) := by
+theorem green_51 : answer(sorry) = guaranteedMaxCosetDim:= by
   sorry
 
 end Green51
