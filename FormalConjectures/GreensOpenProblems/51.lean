@@ -27,15 +27,18 @@ open scoped Pointwise
 
 namespace Green51
 
+/-- The group $G = \mathbb{F}_2^n = (Z/2Z)^n$. -/
+abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
+
 /-- The maximum dimension of a coset contained in the set `A`. -/
-noncomputable def maxCosetDim (n : ℕ) (A : Set (Fin n → ZMod 2)) : ℕ :=
-  sSup { d | ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (v : Fin n → ZMod 2),
-    v +ᵥ (W : Set (Fin n → ZMod 2)) ⊆ A ∧
+noncomputable def maxCosetDim (n : ℕ) (A : Set (𝔽₂ n)) : ℕ :=
+  sSup { d | ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (v : 𝔽₂ n),
+    v +ᵥ (W : Set (𝔽₂ n)) ⊆ A ∧
     Module.finrank (ZMod 2) W = d }
 
 /-- The largest dimension of a coset guaranteed to be contained in $2A$ for $A \subseteq \mathbb{F}_2^n$ with density $\alpha$. -/
 noncomputable def guaranteedMaxCosetDim (n : ℕ) (α : ℝ) : ℕ :=
-  sInf { maxCosetDim n ↑(2 • A) | (A : Finset (Fin n → ZMod 2)) (_h : A.dens = α) }
+  sInf { maxCosetDim n ↑(2 • A) | (A : Finset (𝔽₂ n)) (_h : A.dens = α) }
 
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. What is the largest size of coset
