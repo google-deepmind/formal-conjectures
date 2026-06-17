@@ -89,11 +89,11 @@ He notes that if $\pi(x)< \pi(y)+O\left(\frac{x-y}{\log x}\right)$ for all $y<x-
 some constant $C>0$ then $f(n)\ll \log\log\log n$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_950.variants.weaker_pi_implies_f :
-      (∃ C > (0 : ℝ), ∃ K > (0 : ℝ), ∀ᶠ x : ℕ in atTop, ∀ y : ℕ,
-        (y : ℝ) < x - (Real.log x) ^ C →
-        (π x : ℝ) < (π y : ℝ) + K * ((x - y : ℝ) / Real.log x)) →
-      f =O[atTop] fun n : ℕ ↦ Real.log (Real.log (Real.log n)) := by
+theorem erdos_950.variants.weaker_pi_implies_f
+    (h : ∃ C > (0 : ℝ), ∃ K > (0 : ℝ), ∀ᶠ x : ℕ in atTop, ∀ y : ℕ,
+      (y : ℝ) < x - (Real.log x) ^ C →
+      (π x : ℝ) < (π y : ℝ) + K * ((x - y : ℝ) / Real.log x)) :
+    f =O[atTop] fun n : ℕ ↦ Real.log (Real.log (Real.log n)) := by
   sorry
 
 /--
