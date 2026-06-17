@@ -26,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 - [HaTe88] Hall, Richard R. and Tenenbaum, Gérald, Divisors. (1988), xvi+167. 
 - [ErTe81] Erdős, P., Tenenbaum, G., *Sur la structure de la suite des diviseurs d'un entier.*
   Ann. Inst. Fourier (Grenoble) **31** (1981), 17–37.
+- [Fo08] Ford, Kevin, *The distribution of integers with a divisor in a given interval.*
+  Ann. of Math. (2) **168** (2008), 367–433.
 -/
 
 namespace Erdos448
@@ -68,6 +70,55 @@ Tenenbaum [HaTe88, §4.6].
 theorem erdos_448 : answer(False) ↔
     ∀ ε : ℝ, 0 < ε →
       {n : ℕ | (tauPlus n : ℝ) < ε * (n.divisors.card : ℝ)}.HasDensity 1 := by
+  sorry
+
+open Filter Asymptotics Topology
+
+/--
+Quantitative form of the (negative) answer to `erdos_448`. Erdős and Tenenbaum [ErTe81] showed that
+the upper density of `{n | τ⁺(n) < ε·τ(n)}` is in fact `≍ ε^{1-o(1)}`, where the `o(1)` in the
+exponent tends to `0` as `ε → 0`. Equivalently, `log (upperDensity …) / log ε → 1` as `ε → 0⁺`. -/
+@[category research solved, AMS 11]
+theorem erdos_448.variants.erdos_tenenbaum :
+    Tendsto
+      (fun ε : ℝ =>
+        Real.log ({n : ℕ | (tauPlus n : ℝ) < ε * (n.divisors.card : ℝ)}.upperDensity) / Real.log ε)
+      (𝓝[>] (0 : ℝ)) (𝓝 (1 : ℝ)) := by
+  sorry
+
+/--
+A more precise result of Hall and Tenenbaum [HaTe88, §4.6]: the upper density of
+`{n | τ⁺(n) < ε·τ(n)}` is `≪ ε·log(2/ε)` as `ε → 0⁺`. -/
+@[category research solved, AMS 11]
+theorem erdos_448.variants.hall_tenenbaum_upper_bound :
+    (fun ε : ℝ => ({n : ℕ | (tauPlus n : ℝ) < ε * (n.divisors.card : ℝ)}).upperDensity)
+      =O[𝓝[>] (0 : ℝ)] (fun ε : ℝ => ε * Real.log (2 / ε)) := by
+  sorry
+
+/--
+Hall and Tenenbaum [HaTe88, §4.6] further prove that `τ⁺(n)/τ(n)` has a distribution function:
+there is a function `F` such that, for every `z`, the set `{n | τ⁺(n)/τ(n) ≤ z}` has density `F z`. -/
+@[category research solved, AMS 11]
+theorem erdos_448.variants.hall_tenenbaum_distribution :
+    ∃ F : ℝ → ℝ, ∀ z : ℝ,
+      {n : ℕ | (tauPlus n : ℝ) / (n.divisors.card : ℝ) ≤ z}.HasDensity (F z) := by
+  sorry
+
+/-- The exponent in Ford's estimate below: `α = 1 - (1 + log log 2)/log 2 = 0.08607…`. -/
+noncomputable def fordExponent : ℝ := 1 - (1 + Real.log (Real.log 2)) / Real.log 2
+
+/--
+Erdős and Graham asked whether there is a good inequality for `∑_{n ≤ x} τ⁺(n)`. This was answered
+by Ford [Fo08], who proved
+`∑_{n ≤ x} τ⁺(n) ≍ x·(log x)^{1-α}/(log log x)^{3/2}`,
+where `α = 1 - (1 + log log 2)/log 2 = 0.08607…` (see `fordExponent`). -/
+@[category research solved, AMS 11]
+theorem erdos_448.variants.ford :
+    (fun x : ℕ => ∑ n ∈ Finset.Icc 1 x, (tauPlus n : ℝ))
+      =Θ[atTop]
+      (fun x : ℕ =>
+        (x : ℝ) * Real.log (x : ℝ) ^ (1 - fordExponent)
+          / Real.log (Real.log (x : ℝ)) ^ ((3 : ℝ) / 2)) := by
   sorry
 
 end Erdos448
