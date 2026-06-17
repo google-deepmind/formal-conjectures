@@ -5,7 +5,7 @@
 Features to add:
 
 - form to allow contribution suggestions
-- conjecture upvoting system?
+- giscus-backed conjecture difficulty voting
 
 Website for the [Formal Conjectures](https://github.com/google-deepmind/formal-conjectures) Lean 4 repository.
 
@@ -44,6 +44,7 @@ src/
     main.js               # Shared utilities loaded on every page
     browse.js             # Filter/search/paginate logic for /browse/
     theorem.js            # Theorem detail rendering for /theorem/
+    voting.js             # giscus-backed difficulty voting widget
   templates/
     index.html            # Landing page template (stats injected by build.js)
     browse.html           # Browse page (client-side filtering)

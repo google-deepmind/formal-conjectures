@@ -472,6 +472,12 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <div class="verso-doc-content">${docHtml}</div>
     </div>` : '';
 
+  const difficultySection = FC.voting ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">Difficulty vote</div>
+      <div id="difficulty-vote"></div>
+    </div>` : '';
+
   // Code placeholder (async-filled) with GitHub + Verso links
   const codeSection = versoLink ? `
     <div class="theorem-detail__section">
@@ -511,6 +517,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
     ${docSection}
 
+    ${difficultySection}
+
     ${codeSection}
 
     ${contributorsSection}
@@ -547,6 +555,10 @@ function renderDetail(theorem, siblings, verso, contributors) {
   // Render LaTeX in docstrings and wire statement dropdowns
   FC.setupStatementToggles(detailEl);
   FC.renderLatex();
+
+  if (FC.voting) {
+    FC.voting.renderDifficultyVote(theorem, document.getElementById('difficulty-vote'));
+  }
 
   // Async: load Verso assets, fetch code block, and initialize hovers
   if (versoLink) {
