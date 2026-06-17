@@ -37,7 +37,7 @@ which lie on a common line. -/
 structure AllowedSet (k : ℕ) (N : ℕ) (s : Finset (ℕ × ℕ)) : Prop where
   is_bounded : ∀ i ∈ s, i.1 < N ∧ i.2 < N
   not_collinear : ∀ ⦃t : Finset (ℕ × ℕ)⦄, t ⊆ s → t.card = k →
-    Collinear ℝ ({r | ∃ i ∈ s, r = ((↑i.1 : ℝ), (↑i.2 : ℝ))} : Set (ℝ × ℝ))
+    ¬ Collinear ℝ ({r | ∃ i ∈ t, r = ((↑i.1 : ℝ), (↑i.2 : ℝ))} : Set (ℝ × ℝ))
 
 /-- The maximal size of an allowed set -/
 noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=

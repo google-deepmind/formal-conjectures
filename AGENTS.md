@@ -359,7 +359,7 @@ Some rare exceptions exist for consistency:
 
 - **Use Unicode math symbols** where appropriate: `∀`, `∃`, `∈`, `⊆`, `∧`, `∨`, `¬`, etc.
 - **Format code properly**: Use consistent indentation (2 spaces)
-- **Add docstrings** with the math written in Latex for definitions and main theorems:
+- **Add docstrings** with the math written in LaTeX for definitions and main theorems. Note that docstrings should generally use LaTeX markdown (e.g., `$P$` instead of `` `P` ``) to represent mathematical expressions, except for the `FormalConjecturesForMathlib` parts and for definitions that are very much on the Lean/Mathlib API side, where backticks are preferred:
 
   ```lean
   /--
