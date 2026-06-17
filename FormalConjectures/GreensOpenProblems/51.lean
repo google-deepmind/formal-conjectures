@@ -68,4 +68,16 @@ theorem green_51.upper :
     ∃ α > 0, α ≤ 1 ∧ ∀ᶠ (n : ℕ) in atTop, (guaranteedMaxCosetDim n α : ℝ) < (n : ℝ) - Real.sqrt n := by
   sorry
 
+/--
+Suppose that $A \subset \mathbb{F}_2^n$ has density $\alpha > 1/2 - C/\sqrt{n}$.
+Does $A + A$ contain a subspace of co-dimension $O_C(1)$? [Sa10, Question 5.1]
+-/
+@[category research open, AMS 5 11]
+theorem green_51.one_half :
+    answer(sorry) ↔ ∀ (k : ℝ), 0 < k →
+      ∃ (c : ℕ), ∀ᶠ (n : ℕ) in atTop,
+        ∀ (α : ℝ), α > (1/2 : ℝ) - k / Real.sqrt (n : ℝ) → α ≤ 1 →
+          n ≤ guaranteedMaxCosetDim n α + c := by
+  sorry
+
 end Green51
