@@ -28,6 +28,12 @@ open scoped Pointwise
 
 namespace Green51
 
+/-- `A` contains a coset of a subspace of dimension `d`. -/
+def ContainsCosetOfDim (n : ℕ) (A : Set (Fin n → ZMod 2)) (d : ℕ) : Prop :=
+  ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (v : Fin n → ZMod 2),
+    v +ᵥ (W : Set (Fin n → ZMod 2)) ⊆ A ∧
+    d ≤ Module.finrank (ZMod 2) W
+
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. What is the largest size of coset
 guaranteed to be contained in $2A$?
@@ -39,18 +45,10 @@ of a subspace $W$ such that a coset of $W$ is contained in $2A$.
 theorem green_51 :
     let F := (answer(sorry) : ℝ → ℕ → ℕ)
     (∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2),
-      A.Nonempty →
-      let α : ℝ := A.dens
-      ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (v : Fin n → ZMod 2),
-        v +ᵥ (W : Set (Fin n → ZMod 2)) ⊆ ↑(2 • A) ∧
-        F α n ≤ Module.finrank (ZMod 2) W) ∧
+      A.Nonempty → ContainsCosetOfDim n (2 • A) (F A.dens n)) ∧
     (∀ F' : ℝ → ℕ → ℕ,
       (∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2),
-        A.Nonempty →
-        let α : ℝ := A.dens
-        ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (v : Fin n → ZMod 2),
-          v +ᵥ (W : Set (Fin n → ZMod 2)) ⊆ ↑(2 • A) ∧
-          F' α n ≤ Module.finrank (ZMod 2) W) →
+        A.Nonempty → ContainsCosetOfDim n (2 • A) (F' A.dens n)) →
       ∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2), A.Nonempty →
         F' A.dens n ≤ F A.dens n) := by
   sorry
