@@ -116,14 +116,15 @@ noncomputable def cHex (n : ℕ) : ℕ :=
   numSAWFrom hexagonalLattice (0, 0) n
 
 /--
-`IsConnectiveConstant G v μ` states that the real number `μ` is the *connective constant* of the
-graph `G` based at the vertex `v`: writing $c_n$ for the number of self-avoiding walks of length
-$n$ from `v`, the normalised counts $c_n^{1/n}$ converge to `μ`, i.e. $\mu = \lim_{n \to \infty}
-c_n^{1/n}$.  This limit exists for every vertex-transitive graph by the submultiplicativity
-$c_{m+n} \le c_m c_n$ (Hammersley and Morton), and is independent of the base vertex.
+The *connective constant* $\mu(G) = \lim_{n \to \infty} c_n^{1/n}$ of a graph `G` based at a vertex
+`v`, where $c_n$ is the number of self-avoiding walks of length $n$ from `v`.  For every
+vertex-transitive graph this limit exists, by the submultiplicativity $c_{m+n} \le c_m c_n$
+(Hammersley and Morton, 1954, via Fekete's subadditive lemma), and is independent of the base
+vertex `v`; on graphs where the normalised counts do not converge, the value is the junk default
+of `limUnder`.
 -/
-def IsConnectiveConstant {V : Type*} (G : SimpleGraph V) (v : V) (μ : ℝ) : Prop :=
-  Tendsto (fun n => (numSAWFrom G v n : ℝ) ^ (1 / (n : ℝ))) atTop (𝓝 μ)
+noncomputable def connectiveConstant {V : Type*} (G : SimpleGraph V) (v : V) : ℝ :=
+  limUnder atTop (fun n => (numSAWFrom G v n : ℝ) ^ (1 / (n : ℝ)))
 
 /--
 **Enumeration of self-avoiding walks (open).**  No closed-form formula is currently known
@@ -135,14 +136,26 @@ theorem self_avoiding_walk_closed_form : cN = answer(sorry) := by
   sorry
 
 /--
-The connective constant of the integer lattice $\mathbb{Z}^d$ exists: there is a real number to
-which the normalised self-avoiding-walk counts $c_n(\mathbb{Z}^d)^{1/n}$ converge.  This is the
+The connective constant of the integer lattice $\mathbb{Z}^d$ exists: the normalised
+self-avoiding-walk counts $c_n(\mathbb{Z}^d)^{1/n}$ converge to `connectiveConstant`.  This is the
 classical consequence of the submultiplicativity $c_{m+n} \le c_m c_n$ via Fekete's subadditive
 lemma (Hammersley and Morton, 1954).
 -/
 @[category research solved, AMS 5 82]
-theorem exists_isConnectiveConstant_integerLattice (d : ℕ) :
-    ∃ μ : ℝ, IsConnectiveConstant (integerLattice d) (0 : Fin d → ℤ) μ := by
+theorem tendsto_connectiveConstant_integerLattice (d : ℕ) :
+    Tendsto (fun n => (cN d n : ℝ) ^ (1 / (n : ℝ))) atTop
+      (𝓝 (connectiveConstant (integerLattice d) (0 : Fin d → ℤ))) := by
+  sorry
+
+/--
+**Connective constant of the integer lattice (open).**  The exact value of the connective constant
+$\mu(\mathbb{Z}^d)$ is not known in closed form in any dimension $d \ge 1$; on the square lattice
+$\mathbb{Z}^2$ it is known only numerically, $\mu \approx 2.638$.  (Choosing the dimension `d` picks
+out a different open problem for each lattice $\mathbb{Z}^d$.)
+-/
+@[category research open, AMS 5 82]
+theorem connectiveConstant_integerLattice (d : ℕ) :
+    connectiveConstant (integerLattice d) (0 : Fin d → ℤ) = answer(sorry) := by
   sorry
 
 /--
@@ -152,25 +165,49 @@ prediction of Nienhuis (1982).  This is the only lattice whose connective consta
 closed form.
 -/
 @[category research solved, AMS 5 82]
-theorem isConnectiveConstant_hexagonalLattice :
-    IsConnectiveConstant hexagonalLattice (0, 0) (Real.sqrt (2 + Real.sqrt 2)) := by
+theorem connectiveConstant_hexagonalLattice :
+    connectiveConstant hexagonalLattice (0, 0) = Real.sqrt (2 + Real.sqrt 2) := by
   sorry
 
 /--
-**Universality of the self-avoiding-walk critical exponent (open).**  The number of self-avoiding
-walks of length $n$ is expected to grow as $c_n \sim A \mu^n n^{\gamma - 1}$, where the *critical
-exponent* $\gamma$ is conjectured to be *universal*: it depends only on the dimension of the
-lattice and not on its local structure.  In particular the square lattice $\mathbb{Z}^2$ and the
-hexagonal lattice, both two-dimensional, should share a single exponent $\gamma$, predicted by
-Nienhuis (1982) to equal $43/32$.
+**Self-avoiding-walk critical exponent (open).**  In each dimension $d \ge 1$ the number of
+self-avoiding walks on $\mathbb{Z}^d$ is expected to grow as $c_n \sim A \mu^n n^{\gamma - 1}$,
+where $\mu$ is the connective constant and $\gamma$ is the *critical exponent*.  The exponent is
+believed to exist for every $d$, but its value is *dimension-dependent*: $\gamma = 43/32$ in
+$d = 2$ (Nienhuis, 1982), $\gamma \approx 1.16$ in $d = 3$, and the mean-field value $\gamma = 1$
+for $d \ge 5$ (with a logarithmic correction at the upper critical dimension $d = 4$).
+-/
+@[category research open, AMS 5 82]
+theorem saw_critical_exponent :
+    answer(sorry) ↔ ∀ d : ℕ, 0 < d → ∃ γ A : ℝ, 0 < A ∧
+      Tendsto (fun n => (cN d n : ℝ) /
+          (A * connectiveConstant (integerLattice d) (0 : Fin d → ℤ) ^ n * (n : ℝ) ^ (γ - 1)))
+        atTop (𝓝 1) := by
+  sorry
+
+/--
+**Universality of the critical exponent in two dimensions (open).**  Universality asserts that the
+critical exponent $\gamma$ is the *same* for every two-dimensional lattice, depending only on the
+dimension and not on the local structure: the square lattice $\mathbb{Z}^2$ and the hexagonal
+lattice should share one exponent $\gamma$, predicted by Nienhuis (1982) to equal $43/32$.  Note
+that $\gamma$ is universal whereas the connective constant $\mu$ is *not* ($\sqrt{2 + \sqrt 2}$ for
+the honeycomb but $\approx 2.638$ for $\mathbb{Z}^2$).  The comparison here is intrinsically
+two-dimensional, since the honeycomb lattice is two-dimensional; the dimension-general statement is
+`saw_critical_exponent`.
 -/
 @[category research open, AMS 5 82]
 theorem saw_universality :
     answer(sorry) ↔ ∃ γ : ℝ,
-      (∃ A μ : ℝ, 0 < A ∧ 0 < μ ∧
-        Tendsto (fun n => (cN 2 n : ℝ) / (A * μ ^ n * (n : ℝ) ^ (γ - 1))) atTop (𝓝 1)) ∧
-      (∃ A μ : ℝ, 0 < A ∧ 0 < μ ∧
-        Tendsto (fun n => (cHex n : ℝ) / (A * μ ^ n * (n : ℝ) ^ (γ - 1))) atTop (𝓝 1)) := by
+      (∃ A : ℝ, 0 < A ∧
+        Tendsto (fun n => (cN 2 n : ℝ) /
+            (A * connectiveConstant (integerLattice 2) (0 : Fin 2 → ℤ) ^ n * (n : ℝ) ^ (γ - 1)))
+          atTop (𝓝 1)) ∧
+      -- the honeycomb lattice realises the *same* exponent `γ` (this is the universality claim);
+      -- its connective constant differs, `√(2 + √2)`, since `μ` is lattice-specific but `γ` is not.
+      (∃ A : ℝ, 0 < A ∧
+        Tendsto (fun n => (cHex n : ℝ) /
+            (A * connectiveConstant hexagonalLattice (0, 0) ^ n * (n : ℝ) ^ (γ - 1)))
+          atTop (𝓝 1)) := by
   sorry
 
 /-- In $\mathbb{Z}^d$ (with $d \ge 1$), there are exactly $2d$ SAWs of length $1$ from the
