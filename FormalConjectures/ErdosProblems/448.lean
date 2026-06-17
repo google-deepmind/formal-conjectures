@@ -21,7 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/448](https://www.erdosproblems.com/448)
-- [Er79], [Er79e], [ErGr80, p.89], [Er81h, p.173]
+- [Er79] Erdős, Paul, Some unconventional problems in number theory. Math. Mag. (1979), 67-70.
+- [Er79e] Erdős, Paul, Some unconventional problems in number theory. Astérisque (1979), 73-82. 
+- [HaTe88] Hall, Richard R. and Tenenbaum, Gérald, Divisors. (1988), xvi+167. 
 - [ErTe81] Erdős, P., Tenenbaum, G., *Sur la structure de la suite des diviseurs d'un entier.*
   Ann. Inst. Fourier (Grenoble) **31** (1981), 17–37.
 -/
