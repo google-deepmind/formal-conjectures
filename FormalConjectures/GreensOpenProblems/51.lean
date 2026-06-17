@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [Gr24] [Green's Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.51)
+- [Gr13] B. J. Green, Restriction and Kakeya phenomena, notes from a 2003 course.
+  Available at http://people.maths.ox.ac.uk/greenbj/papers/rkp.pdf
+
 -/
 
 open Filter
@@ -52,16 +55,17 @@ of a guaranteed coset.
 theorem green_51 : answer(sorry) = guaranteedMaxCosetDim := by
   sorry
 
-/-- It is known that $2A$ must contain a coset of dimension $\gg_\alpha n$ [Gr24]. -/
+/-- It is known that A + A must contain a coset of dimension ≫_α n [Gr13]. -/
 @[category research solved, AMS 5 11]
 theorem green_51.lower :
-    ∀ (α : ℝ), 0 < α → ∃ c > 0, ∀ᶠ (n : ℕ) in atTop, c * (n : ℝ) ≤ guaranteedMaxCosetDim n α := by
+    ∀ (α : ℝ), 0 < α → α ≤ 1 →
+    ∃ c > 0, ∀ᶠ (n : ℕ) in atTop, c * (n : ℝ) ≤ guaranteedMaxCosetDim n α := by
   sorry
 
-/-- It is known that $2A$ need not contain a coset of dimension $n - \sqrt{n}$ [Gr24]. -/
+/-- It is known that A + A need not contain a coset of dimension n - √n [Gr13]. -/
 @[category research solved, AMS 5 11]
 theorem green_51.upper :
-    ∃ α > 0, ∀ᶠ (n : ℕ) in atTop, (guaranteedMaxCosetDim n α : ℝ) < (n : ℝ) - Real.sqrt n := by
+    ∃ α > 0, α ≤ 1 ∧ ∀ᶠ (n : ℕ) in atTop, (guaranteedMaxCosetDim n α : ℝ) < (n : ℝ) - Real.sqrt n := by
   sorry
 
 end Green51
