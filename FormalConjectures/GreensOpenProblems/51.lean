@@ -38,7 +38,7 @@ noncomputable def maxCosetDim (n : ℕ) (A : Set (𝔽₂ n)) : ℕ :=
 
 /-- The largest dimension of a coset guaranteed to be contained in $2A$ for $A \subseteq \mathbb{F}_2^n$ with density $\alpha$. -/
 noncomputable def guaranteedMaxCosetDim (n : ℕ) (α : ℝ) : ℕ :=
-  sInf { maxCosetDim n ↑(2 • A) | (A : Finset (𝔽₂ n)) (_h : A.dens = α) }
+  sInf { maxCosetDim n ↑(A + A) | (A : Finset (𝔽₂ n)) (_h : A.dens ≥ α) }
 
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. What is the largest size of coset
