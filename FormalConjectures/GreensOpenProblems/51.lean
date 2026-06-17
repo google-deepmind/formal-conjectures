@@ -23,6 +23,7 @@ import FormalConjectures.Util.ProblemImports
 - [Gr24] [Green's Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.51)
 -/
 
+open Filter
 open scoped Pointwise
 
 namespace Green51
@@ -48,7 +49,19 @@ We phrase this by asking for the exact function $F(\alpha, n)$ giving the maximu
 of a guaranteed coset.
 -/
 @[category research open, AMS 5 11]
-theorem green_51 : answer(sorry) = guaranteedMaxCosetDim:= by
+theorem green_51 : answer(sorry) = guaranteedMaxCosetDim := by
+  sorry
+
+/-- It is known that $2A$ must contain a coset of dimension $\gg_\alpha n$ [Gr24]. -/
+@[category research solved, AMS 5 11]
+theorem green_51.lower :
+    ∀ (α : ℝ), 0 < α → ∃ c > 0, ∀ᶠ (n : ℕ) in atTop, c * (n : ℝ) ≤ guaranteedMaxCosetDim n α := by
+  sorry
+
+/-- It is known that $2A$ need not contain a coset of dimension $n - \sqrt{n}$ [Gr24]. -/
+@[category research solved, AMS 5 11]
+theorem green_51.upper :
+    ∃ α > 0, ∀ᶠ (n : ℕ) in atTop, (guaranteedMaxCosetDim n α : ℝ) < (n : ℝ) - Real.sqrt n := by
   sorry
 
 end Green51
