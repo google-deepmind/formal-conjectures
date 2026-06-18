@@ -114,7 +114,7 @@ theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∀ᶠ k
 /-
 ## Verified partial results for the $k=4$, $r=1$ case (6-regular subproblem)
 
-Skottová and Steiner [SkSt25] proved that every $(4,1)$-graph (a $4$-vertex-critical
+Skottova and Steiner [SkSt25] proved that every $(4,1)$-graph (a $4$-vertex-critical
 graph with no critical edge) has minimum degree and edge-connectivity at least $6$, and
 asked (their Problem 5.2) whether a $6$-regular $(4,1)$-graph exists. The following are
 machine-checked cores of verified computational results on that subproblem
@@ -131,7 +131,7 @@ $n \le 29$ vertices is super-$6$-edge-connected).
 * `cut_matrix_classification` (with the enumeration-completeness lemma `mem_comps`):
   exactly $21$ of the $3 	imes 3$ nonnegative matrices with entry sum $6$ have all six
   permutation-diagonal sums at least $2$ — the exact equality case of the
-  Skottová–Steiner cut bound. `matrix_mem_classification` is the bridge from the
+  Skottova–Steiner cut bound. `matrix_mem_classification` is the bridge from the
   genuine matrix form.
 * `cut_row_forcing`: among those $21$ matrices, row sums $(3,3,0)$ force both nonzero
   rows to be $(1,1,1)$ and row sums $(6,0,0)$ force the nonzero row to be $(2,2,2)$.
@@ -141,8 +141,13 @@ $n \le 29$ vertices is super-$6$-edge-connected).
   vertices to receive equal colours in every $3$-colouring.
 * `turan_count_shore`: the numeric core excluding $6$-cut shores of size $2,\dots,7$.
 
-[SkSt25] Skottová, Ema and Steiner, Raphael, Critical edge sets in vertex-critical
+[SkSt25] Skottova, Ema and Steiner, Raphael, Critical edge sets in vertex-critical
 graphs. arXiv:2508.08703 (2025)
+
+A self-contained write-up of these computational results, with full proofs, code,
+certificates, and these Lean cores as ancillary files, is: A. Ferudun, Exact
+$6$-cut rigidity and small-order superconnectivity for the $6$-regular case of
+Dirac's $k=4$ problem, arXiv:2606.18462 (2026).
 -/
 
 /-- If `φ` properly colours all edges not incident to `v` and exactly one neighbour `u` of `v` has
@@ -221,7 +226,7 @@ def diagOK : List ℕ → Bool
 
 set_option maxRecDepth 100000 in
 /-- Exactly 21 of the 3003 sum-6 3×3 ℕ-matrices have all six permutation-diagonal sums ≥ 2:
-the exact equality case of the Skottová–Steiner 6-edge-cut bound for `(4,1)`-graphs. -/
+the exact equality case of the Skottova–Steiner 6-edge-cut bound for `(4,1)`-graphs. -/
 @[category API, AMS 5]
 theorem cut_matrix_classification : ((comps 9 6).filter diagOK).length = 21 := by decide
 
