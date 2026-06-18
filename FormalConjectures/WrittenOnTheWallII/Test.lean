@@ -102,7 +102,9 @@ theorem house_girth : HouseGraph.girth = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem house_order : n HouseGraph = 5 := by simp [n]
+theorem house_order : Fintype.card ↥(⊤ : Subgraph HouseGraph).verts = 5 := by
+  rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
+  rfl
 
 @[category test, AMS 5]
 theorem house_size : HouseGraph.edgeFinset.card = 6 := by
@@ -173,7 +175,9 @@ theorem K4_girth : K4.girth = 3 := by
   sorry
 
 @[category test, AMS 5]
-theorem K4_order : n K4 = 4 := by simp [n]
+theorem K4_order : Fintype.card ↥(⊤ : Subgraph K4).verts = 4 := by
+  rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
+  rfl
 
 @[category test, AMS 5]
 theorem K4_size : K4.edgeFinset.card = 6 := by
@@ -244,7 +248,9 @@ theorem petersen_girth : PetersenGraph.girth = 5 := by
   sorry
 
 @[category test, AMS 5]
-theorem petersen_order : n PetersenGraph = 10 := by simp [n]
+theorem petersen_order : Fintype.card ↥(⊤ : Subgraph PetersenGraph).verts = 10 := by
+  rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
+  rfl
 
 @[category test, AMS 5]
 theorem petersen_size : PetersenGraph.edgeFinset.card = 15 := by
@@ -315,7 +321,9 @@ theorem C6_girth : C6.girth = 6 := by
   sorry
 
 @[category test, AMS 5]
-theorem C6_order : n C6 = 6 := by simp [n]
+theorem C6_order : Fintype.card ↥(⊤ : Subgraph C6).verts = 6 := by
+  rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
+  rfl
 
 @[category test, AMS 5]
 theorem C6_size : C6.edgeFinset.card = 6 := by
@@ -385,7 +393,9 @@ theorem Star5_girth : Star5.egirth = ⊤ := by
   sorry
 
 @[category test, AMS 5]
-theorem Star5_order : n Star5 = 6 := by simp [n, Fintype.card_sum]
+theorem Star5_order : Fintype.card ↥(⊤ : Subgraph Star5).verts = 6 := by
+  rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
+  rfl
 
 @[category test, AMS 5]
 theorem Star5_size : Star5.edgeFinset.card = 5 := by
