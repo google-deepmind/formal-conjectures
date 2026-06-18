@@ -52,17 +52,18 @@ to solve.
 
 ## Client Configuration
 
-The giscus configuration lives at the top of `src/js/voting.js`:
+The giscus configuration lives at the top of `src/js/voting.js`. It chooses the
+discussion repository from the current hostname, so a forked GitHub Pages test
+site does not write votes to the upstream repository.
 
-| Field | Value |
-|---|---|
-| `repo` | `google-deepmind/formal-conjectures` |
-| `repoId` | `R_kgDOOogmBw` |
-| `category` | `Polls` |
-| `categoryId` | `DIC_kwDOOogmB84C3u0D` |
+| Host | Repository | Repo ID | Category | Category ID |
+|---|---|---|---|---|
+| `google-deepmind.github.io` | `google-deepmind/formal-conjectures` | `R_kgDOOogmBw` | `Polls` | `DIC_kwDOOogmB84C3u0D` |
+| `paul-lez.github.io` | `Paul-Lez/formal-conjectures` | `R_kgDORiWUfA` | `Polls` | `DIC_kwDORiWUfM4C_btZ` |
 
-If the voting repository or discussion category changes, update these values
-using the giscus setup page or GitHub GraphQL API.
+Unknown hosts fall back to the upstream repository. If a new test deployment
+host or discussion category is added, update this table using the giscus setup
+page or GitHub GraphQL API.
 
 ## Local Development
 

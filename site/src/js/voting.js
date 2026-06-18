@@ -14,13 +14,26 @@
   const MIN_DIFFICULTY = 1;
   const MAX_DIFFICULTY = 10;
 
-  const GISCUS_CONFIG = {
-    repo: 'google-deepmind/formal-conjectures',
-    repoId: 'R_kgDOOogmBw',
-    category: 'Polls',
-    categoryId: 'DIC_kwDOOogmB84C3u0D',
-    theme: 'noborder_light',
-    lang: 'en',
+  const DEFAULT_GISCUS_SITE = 'upstream';
+  const GISCUS_CONFIGS = {
+    upstream: {
+      repo: 'google-deepmind/formal-conjectures',
+      repoId: 'R_kgDOOogmBw',
+      category: 'Polls',
+      categoryId: 'DIC_kwDOOogmB84C3u0D',
+      hosts: ['google-deepmind.github.io'],
+      theme: 'noborder_light',
+      lang: 'en',
+    },
+    paulLezFork: {
+      repo: 'Paul-Lez/formal-conjectures',
+      repoId: 'R_kgDORiWUfA',
+      category: 'Polls',
+      categoryId: 'DIC_kwDORiWUfM4C_btZ',
+      hosts: ['paul-lez.github.io'],
+      theme: 'noborder_light',
+      lang: 'en',
+    },
   };
 
   const DIFFICULTY_SCALE = {
@@ -155,15 +168,22 @@
     return `${count.toLocaleString()} ${count === 1 ? singular : plural}`;
   }
 
+  function currentGiscusConfig() {
+    const hostname = window.location.hostname.toLowerCase().replace(/^www\./, '');
+    return Object.values(GISCUS_CONFIGS).find((config) => config.hosts.includes(hostname)) ||
+      GISCUS_CONFIGS[DEFAULT_GISCUS_SITE];
+  }
+
   function makeScript(theorem, value) {
+    const config = currentGiscusConfig();
     const script = document.createElement('script');
     script.src = `${GISCUS_ORIGIN}/client.js`;
     script.async = true;
     script.crossOrigin = 'anonymous';
-    script.setAttribute('data-repo', GISCUS_CONFIG.repo);
-    script.setAttribute('data-repo-id', GISCUS_CONFIG.repoId);
-    script.setAttribute('data-category', GISCUS_CONFIG.category);
-    script.setAttribute('data-category-id', GISCUS_CONFIG.categoryId);
+    script.setAttribute('data-repo', config.repo);
+    script.setAttribute('data-repo-id', config.repoId);
+    script.setAttribute('data-category', config.category);
+    script.setAttribute('data-category-id', config.categoryId);
     script.setAttribute('data-mapping', 'specific');
     script.setAttribute('data-term', difficultyTerm(theorem, value));
     script.setAttribute('data-description', difficultyDescription(theorem, value));
@@ -171,8 +191,8 @@
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '1');
     script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', GISCUS_CONFIG.theme);
-    script.setAttribute('data-lang', GISCUS_CONFIG.lang);
+    script.setAttribute('data-theme', config.theme);
+    script.setAttribute('data-lang', config.lang);
     return script;
   }
 
