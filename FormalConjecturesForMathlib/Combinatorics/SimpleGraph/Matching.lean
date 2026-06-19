@@ -25,8 +25,8 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 
 open Classical Finset List
 
-/-- `m G` is the size of a maximum matching of `G`. -/
-noncomputable def m (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
+/-- `matchingNumber G` is the size of a maximum matching of `G`. -/
+noncomputable def matchingNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 

@@ -131,7 +131,7 @@ theorem house_avg_deg : averageDegree HouseGraph = 12/5 := by
   unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
 @[category test, AMS 5]
-theorem house_matching : m HouseGraph = 2 := by
+theorem house_matching : matchingNumber HouseGraph = 2 := by
   sorry
 
 @[category test, AMS 5]
@@ -204,7 +204,7 @@ theorem K4_avg_deg : averageDegree K4 = 3 := by
   unfold averageDegree; simp [Fintype.card_fin]
 
 @[category test, AMS 5]
-theorem K4_matching : m K4 = 2 := by
+theorem K4_matching : matchingNumber K4 = 2 := by
   sorry
 
 @[category test, AMS 5]
@@ -277,7 +277,7 @@ theorem petersen_avg_deg : averageDegree PetersenGraph = 3 := by
   unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
 @[category test, AMS 5]
-theorem petersen_matching : m PetersenGraph = 5 := by
+theorem petersen_matching : matchingNumber PetersenGraph = 5 := by
   sorry
 
 @[category test, AMS 5]
@@ -350,7 +350,7 @@ theorem C6_avg_deg : averageDegree C6 = 2 := by
   unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
 @[category test, AMS 5]
-theorem C6_matching : m C6 = 3 := by
+theorem C6_matching : matchingNumber C6 = 3 := by
   sorry
 
 @[category test, AMS 5]
@@ -422,7 +422,7 @@ theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
   sorry
 
 @[category test, AMS 5]
-theorem Star5_matching : m Star5 = 1 := by
+theorem Star5_matching : matchingNumber Star5 = 1 := by
   sorry
 
 @[category test, AMS 5]

@@ -36,7 +36,7 @@ For a connected graph `G` we have
 -/
 @[category research solved, AMS 5]
 theorem conjecture6 (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
-    1 + (Fintype.card α : ℝ) - m G - α(G) ≤ Ls G := by
+    1 + (Fintype.card α : ℝ) - matchingNumber G - α(G) ≤ Ls G := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture6
