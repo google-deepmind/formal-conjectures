@@ -973,6 +973,59 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
 /* ============================================================
    Voting system
    ============================================================ */
+.theorem-reactions {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: white;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.theorem-reactions__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.theorem-reactions__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: white;
+  color: var(--color-text);
+  font-size: 0.86rem;
+}
+
+.theorem-reactions__emoji {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.theorem-reactions__label {
+  font-weight: 600;
+}
+
+.theorem-reactions__count {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.theorem-reactions__giscus {
+  padding: 0.85rem 1rem 0.2rem;
+}
+
+.theorem-reactions .giscus,
+.theorem-reactions .giscus-frame {
+  width: 100%;
+}
+
 .difficulty-vote {
   border: 1px solid var(--color-border);
   border-radius: var(--radius);

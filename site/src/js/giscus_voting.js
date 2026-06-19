@@ -7,11 +7,15 @@
 'use strict';
 
 (function () {
+  const THEME_BOUND_ATTR = 'data-giscus-reaction-theme-bound';
 
   // ---------------------------------------------------------------------------
   // Apply giscus theme (filter emojis + reaction labels)
   // ---------------------------------------------------------------------------
-  function applyGiscusTheme() {
+  function applyReactionTheme(root) {
+    if (!root || root.getAttribute(THEME_BOUND_ATTR) === 'true') return;
+    root.setAttribute(THEME_BOUND_ATTR, 'true');
+
     // Reaction key order from giscus's Reactions object (matches GitHub API order)
     var REACTION_ORDER = ['THUMBS_UP', 'THUMBS_DOWN', 'LAUGH', 'HOORAY', 'CONFUSED', 'HEART', 'ROCKET', 'EYES'];
     var REACTION_LABELS = { THUMBS_UP: 'True', THUMBS_DOWN: 'False', HEART: 'Likes' };
@@ -22,6 +26,11 @@
       .then(function(baseCss) {
         var currentIframe = null;
         var lastReactions = {};  // { THUMBS_UP: {count, viewerHasReacted}, ... }
+
+        function findFrame() {
+          currentIframe = root.querySelector('iframe.giscus-frame');
+          return currentIframe;
+        }
 
         function buildCss() {
           var labelCss = '';
@@ -43,7 +52,7 @@
         }
 
         function sendTheme() {
-          if (!currentIframe) return;
+          if (!findFrame()) return;
           var giscusOrigin = new URL(currentIframe.src).origin;
           var css = '@import url("' + giscusOrigin + '/themes/light.css");' + buildCss();
           currentIframe.contentWindow.postMessage(
@@ -55,6 +64,7 @@
         // Re-apply with correct labels whenever reaction counts change
         window.addEventListener('message', function(event) {
           if (typeof event.data !== 'object' || !event.data.giscus) return;
+          if (!findFrame() || event.source !== currentIframe.contentWindow) return;
           var discussion = event.data.giscus.discussion;
           if (!discussion || !discussion.reactions) return;
           lastReactions = discussion.reactions;
@@ -64,9 +74,8 @@
         function waitAndApply() {
           window.addEventListener('message', function onReady(event) {
             if (typeof event.data !== 'object' || !event.data.giscus || !event.data.giscus.resizeHeight) return;
+            if (!findFrame() || event.source !== currentIframe.contentWindow) return;
             window.removeEventListener('message', onReady);
-            currentIframe = document.querySelector('iframe.giscus-frame');
-            if (!currentIframe) return;
             sendTheme();
             // Re-apply if the iframe reloads (e.g. after sign-out)
             currentIframe.addEventListener('load', waitAndApply, { once: true });
@@ -77,5 +86,7 @@
       });
   }
 
-  applyGiscusTheme();
+  window.FC.giscusVoting = {
+    applyReactionTheme,
+  };
 })();

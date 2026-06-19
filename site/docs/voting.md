@@ -1,23 +1,43 @@
-# Difficulty Voting
+# Giscus Voting
 
-The Formal Conjectures theorem page includes a giscus-backed difficulty voting
-widget. A 1-10 range control selects a difficulty bucket for the current
-theorem, and the embedded giscus panel stores reactions and optional comments in
-GitHub Discussions.
+The Formal Conjectures theorem page includes two giscus-backed voting surfaces:
+
+- a theorem-level reaction discussion where emoji reactions mean `True`,
+  `False`, and `Like`;
+- a 1-10 difficulty widget where the range control selects a difficulty bucket
+  for the current theorem.
+
+Both surfaces store their public state in GitHub Discussions. The site remains
+static: GitHub authentication, reaction state, comments, and discussion creation
+are handled by giscus.
 
 ## Architecture
 
 ```
 Theorem page (voting.js)
-  |-- Range input selects a difficulty bucket
-  |-- giscus embeds the matching GitHub Discussion
+  |-- Theorem reaction panel embeds one per-theorem Discussion
+  |-- Difficulty range selects one per-theorem/per-score Discussion
+  |-- giscus_voting.js relabels theorem reaction emojis in the iframe
   `-- GitHub Discussions stores reactions/comments
 ```
 
-The site does not run a voting backend. GitHub authentication, reaction state,
-and discussion creation are handled by giscus.
+There is no voting backend.
 
 ## Discussion Mapping
+
+The theorem-level reaction panel maps each theorem to a stable discussion term:
+
+```
+Conjecture discussion: <theorem display name> [<stable hash>]
+```
+
+Within that discussion, giscus reactions carry the following meanings:
+
+| Emoji | Meaning |
+|---|---|
+| 👍 | I believe the conjecture is true. |
+| 👎 | I believe the conjecture is false. |
+| ❤️ | I like this conjecture. |
 
 Each theorem/difficulty pair maps to a stable giscus discussion term:
 
@@ -74,8 +94,9 @@ page or GitHub GraphQL API.
    ./dev.sh
    ```
 
-2. Open a theorem page, adjust the difficulty slider, and confirm that the
-   giscus panel switches buckets.
+2. Open a theorem page. Confirm that the theorem reaction panel loads one
+   discussion, while adjusting the difficulty slider switches the difficulty
+   panel between bucket discussions.
 
 3. A real vote requires the giscus GitHub App to be installed on the configured
    repository and a signed-in GitHub user to react or comment in the embedded
@@ -86,6 +107,9 @@ page or GitHub GraphQL API.
 - The slider value is stored in `localStorage` only as a convenience for the
   current visitor. The public vote data lives in GitHub Discussions.
 - The giscus iframe emits metadata so the page can show the reaction count for
-  the selected bucket when a discussion exists.
+  the selected theorem reaction panel or difficulty bucket when a discussion
+  exists.
+- `giscus_voting.js` applies the custom reaction labels only to the theorem
+  reaction panel, not to the difficulty panel.
 - The legacy Cloudflare Worker under `worker/` is not used by the current
   theorem-page difficulty widget.

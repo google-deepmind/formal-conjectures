@@ -1,8 +1,8 @@
 /**
- * voting.js - giscus-backed difficulty voting for theorem pages.
+ * voting.js - giscus-backed theorem reactions and difficulty voting.
  *
- * The site stays static: the range control selects a stable GitHub Discussion
- * bucket, while giscus handles GitHub sign-in, reactions, and comments.
+ * The site stays static: giscus handles GitHub sign-in, reactions, and
+ * comments, while this file maps each theorem/vote kind to stable discussions.
  */
 
 'use strict';
@@ -35,6 +35,27 @@
       lang: 'en',
     },
   };
+
+  const THEOREM_REACTIONS = [
+    {
+      key: 'THUMBS_UP',
+      emoji: '👍',
+      label: 'True',
+      description: 'I believe the conjecture is true.',
+    },
+    {
+      key: 'THUMBS_DOWN',
+      emoji: '👎',
+      label: 'False',
+      description: 'I believe the conjecture is false.',
+    },
+    {
+      key: 'HEART',
+      emoji: '❤️',
+      label: 'Like',
+      description: 'I like this conjecture.',
+    },
+  ];
 
   const DIFFICULTY_SCALE = {
     1: {
@@ -143,11 +164,6 @@
     ].join(' ');
   }
 
-  function syncPageDescription(theorem, value) {
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', difficultyDescription(theorem, value));
-  }
-
   function difficultyInfo(value) {
     return DIFFICULTY_SCALE[value] || DIFFICULTY_SCALE[DEFAULT_DIFFICULTY];
   }
@@ -174,7 +190,7 @@
       GISCUS_CONFIGS[DEFAULT_GISCUS_SITE];
   }
 
-  function makeScript(theorem, value) {
+  function makeGiscusScript(options) {
     const config = currentGiscusConfig();
     const script = document.createElement('script');
     script.src = `${GISCUS_ORIGIN}/client.js`;
@@ -184,16 +200,64 @@
     script.setAttribute('data-repo-id', config.repoId);
     script.setAttribute('data-category', config.category);
     script.setAttribute('data-category-id', config.categoryId);
-    script.setAttribute('data-mapping', 'specific');
-    script.setAttribute('data-term', difficultyTerm(theorem, value));
-    script.setAttribute('data-description', difficultyDescription(theorem, value));
-    script.setAttribute('data-strict', '1');
+    script.setAttribute('data-mapping', options.mapping || 'specific');
+    if (options.term) script.setAttribute('data-term', options.term);
+    if (options.description) script.setAttribute('data-description', options.description);
+    script.setAttribute('data-strict', options.strict || '1');
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '1');
-    script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', config.theme);
+    script.setAttribute('data-input-position', options.inputPosition || 'top');
+    script.setAttribute('data-theme', options.theme || config.theme);
     script.setAttribute('data-lang', config.lang);
     return script;
+  }
+
+  function makeDifficultyScript(theorem, value) {
+    return makeGiscusScript({
+      term: difficultyTerm(theorem, value),
+      description: difficultyDescription(theorem, value),
+      inputPosition: 'top',
+    });
+  }
+
+  function theoremReactionTerm(theorem) {
+    const name = truncate(displayName(theorem), 150);
+    return `Conjecture discussion: ${name} [${hashString(theoremKey(theorem))}]`;
+  }
+
+  function theoremReactionDescription(theorem) {
+    return [
+      `Discussion page for ${displayName(theorem)}.`,
+      ...THEOREM_REACTIONS.map((reaction) => `${reaction.emoji} ${reaction.label}: ${reaction.description}`),
+      `Stable theorem id: ${theoremKey(theorem)}.`,
+    ].join('\n');
+  }
+
+  function makeTheoremReactionScript(theorem) {
+    return makeGiscusScript({
+      term: theoremReactionTerm(theorem),
+      description: theoremReactionDescription(theorem),
+      inputPosition: 'bottom',
+      theme: 'light',
+    });
+  }
+
+  function eventCameFromRoot(root, event) {
+    return Array.from(root.querySelectorAll('iframe.giscus-frame'))
+      .some((frame) => frame.contentWindow === event.source);
+  }
+
+  function reactionGroup(reactions, key) {
+    if (!reactions) return null;
+    if (Array.isArray(reactions)) {
+      return reactions.find((group) => group.content === key || group.key === key || group.type === key);
+    }
+    return reactions[key] || reactions[key.toLowerCase()] || null;
+  }
+
+  function reactionCount(reactions, key) {
+    const group = reactionGroup(reactions, key);
+    return Number(group?.count || 0);
   }
 
   function updateStatus(root, value, discussion) {
@@ -223,9 +287,52 @@
   function loadGiscus(root, theorem, value) {
     const mount = root.querySelector('.giscus');
     if (!mount) return;
-    syncPageDescription(theorem, value);
     mount.innerHTML = '';
-    mount.appendChild(makeScript(theorem, value));
+    mount.appendChild(makeDifficultyScript(theorem, value));
+  }
+
+  function updateReactionSummary(root, discussion) {
+    const reactions = discussion?.reactions || {};
+    for (const reaction of THEOREM_REACTIONS) {
+      const pill = root.querySelector(`[data-reaction-key="${reaction.key}"]`);
+      const count = pill?.querySelector('.theorem-reactions__count');
+      if (count) count.textContent = String(reactionCount(reactions, reaction.key));
+    }
+  }
+
+  function renderTheoremReactions(theorem, container) {
+    if (!container) return;
+
+    container.innerHTML = `
+      <div class="theorem-reactions">
+        <div class="theorem-reactions__summary" aria-label="Reaction meanings">
+          ${THEOREM_REACTIONS.map((reaction) => `
+            <span class="theorem-reactions__pill" data-reaction-key="${reaction.key}"
+              title="${FC.escapeHTML(reaction.description)}">
+              <span class="theorem-reactions__emoji" aria-hidden="true">${reaction.emoji}</span>
+              <span class="theorem-reactions__label">${FC.escapeHTML(reaction.label)}</span>
+              <span class="theorem-reactions__count">0</span>
+            </span>
+          `).join('')}
+        </div>
+        <div class="theorem-reactions__giscus">
+          <div class="giscus"></div>
+        </div>
+      </div>
+    `;
+
+    const mount = container.querySelector('.giscus');
+    mount.appendChild(makeTheoremReactionScript(theorem));
+    if (FC.giscusVoting?.applyReactionTheme) {
+      FC.giscusVoting.applyReactionTheme(container);
+    }
+
+    window.addEventListener('message', (event) => {
+      if (event.origin !== GISCUS_ORIGIN || !eventCameFromRoot(container, event)) return;
+      const data = event.data?.giscus;
+      if (!data || !('discussion' in data)) return;
+      updateReactionSummary(container, data.discussion);
+    });
   }
 
   function renderDifficultyVote(theorem, container) {
@@ -280,7 +387,7 @@
     range.addEventListener('change', commitValue);
 
     window.addEventListener('message', (event) => {
-      if (event.origin !== GISCUS_ORIGIN) return;
+      if (event.origin !== GISCUS_ORIGIN || !eventCameFromRoot(container, event)) return;
       const data = event.data?.giscus;
       if (!data || !('discussion' in data)) return;
       updateStatus(container, selectedValue, data.discussion);
@@ -291,6 +398,9 @@
 
   window.FC.voting = {
     renderDifficultyVote,
+    renderTheoremReactions,
+    currentGiscusConfig,
     difficultyTerm,
+    theoremReactionTerm,
   };
 })();

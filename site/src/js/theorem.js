@@ -474,6 +474,12 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <div class="verso-doc-content">${docHtml}</div>
     </div>` : '';
 
+  const reactionSection = FC.voting ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">Community reactions</div>
+      <div id="theorem-reactions"></div>
+    </div>` : '';
+
   const difficultySection = FC.voting ? `
     <div class="theorem-detail__section">
       <div class="detail-label">Difficulty vote</div>
@@ -519,6 +525,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
     ${docSection}
 
+    ${reactionSection}
+
     ${difficultySection}
 
     ${codeSection}
@@ -559,6 +567,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
   FC.renderLatex();
 
   if (FC.voting) {
+    FC.voting.renderTheoremReactions(theorem, document.getElementById('theorem-reactions'));
     FC.voting.renderDifficultyVote(theorem, document.getElementById('difficulty-vote'));
   }
 
