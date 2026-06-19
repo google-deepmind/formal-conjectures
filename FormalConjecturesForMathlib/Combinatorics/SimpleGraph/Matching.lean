@@ -1,5 +1,5 @@
 /-
-Copyright 2026 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,23 +15,20 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Combinatorics.SimpleGraph.Diam
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Matching
+public import Mathlib.Data.Real.Archimedean
 
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
-
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-/-- The set of vertices of maximum eccentricity. -/
-noncomputable def maxEccentricityVertices (G : SimpleGraph α) : Set α :=
-  {v : α | G.eccent v = G.ediam}
+open Classical Finset List
 
-/-- The average eccentricity of a graph `G`: the mean of `G.eccent v` over all vertices,
-converted to a real number. Returns 0 if the graph has no vertices. -/
-noncomputable def averageEccentricity (G : SimpleGraph α) : ℝ :=
-  (∑ v : α, (G.eccent v).toNat) / (Fintype.card α : ℝ)
+/-- `matchingNumber G` is the size of a maximum matching of `G`. -/
+noncomputable def matchingNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
+  let matchings := { M : Subgraph G | M.IsMatching }
+  sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
+
 
 end SimpleGraph
