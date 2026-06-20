@@ -54,7 +54,7 @@ theorem exists' : ∃ A > 1, IsMills A := by
   sorry
 
 /--
-For a real $A$, `IsMinMills A` is the smallest value satisying `IsMills A`.
+For a real $A$, `IsMinMills A` is the smallest value satisfying `IsMills A`.
 -/
 abbrev IsMinMills (A : ℝ) : Prop := IsLeast {x | x > 1 ∧ IsMills x} A
 
