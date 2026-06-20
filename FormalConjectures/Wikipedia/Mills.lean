@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Mills' Theorem
 
-There is a real constant $A > 1$ such that
+There exists a real $A > 1$ such that
 $\lfloor A^{3^n}\rfloor$ is prime for every positive integer $n$, where $\lfloor\cdot\rfloor$
 denotes the floor function.
 
@@ -71,7 +71,7 @@ theorem irrational {A} (hA : IsMinMills A) :
 
 /--
 **Mills' constant** (Caldwell–Cheng, 2005): assuming the Riemann hypothesis, the least
-Mills number begins $1.3063778838\ldots$.
+Mills number begins at $1.3063778838\ldots$.
 -/
 @[category research solved, AMS 11]
 theorem mills.variants.approx (hRH : RiemannHypothesis) {A} (hA : IsMinMills A) :
