@@ -24,8 +24,7 @@ $\lfloor A^{3^n}\rfloor$ is prime for every positive integer $n$, where $\lfloor
 denotes the floor function.
 
 The least such $A$ is known as *Mills' constant*. It is irrational, and assuming the
-Riemann hypothesis it is approximately $1.3063778838\ldots$, and it has recently been shown
-to be irrational.
+Riemann hypothesis it is approximately $1.3063778838\ldots$.
 
 *References:*
 - [Wikipedia, Mills' constant](https://en.wikipedia.org/wiki/Mills%27_constant)
