@@ -37,9 +37,8 @@ Pippenger–Spencer and Kahn. Much later Keevash, and subsequently Glock–Kühn
 proved the existence of exact Steiner systems $S(r, k, n)$ for all sufficiently large $n$
 satisfying the necessary divisibility conditions.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/R%C3%B6dl_nibble)
-
 *References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/R%C3%B6dl_nibble)
 - [ErHa63] P. Erdős and H. Hanani, *On a limit theorem in combinatorial analysis*,
   Publ. Math. Debrecen **10** (1963), 10–13
 - [Ro85] V. Rödl, *On a packing and covering problem*,
