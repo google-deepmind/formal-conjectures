@@ -29,9 +29,8 @@ $O(\sqrt{\log n})$. The Beck–Fiala theorem on the discrepancy of sparse set sy
 is a special case (up to scaling), and the conjecture would imply the Beck–Fiala
 conjecture that set systems of degree $t$ have discrepancy $O(\sqrt{t})$.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Discrepancy_theory#Major_open_problems)
-
 *References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Discrepancy_theory#Major_open_problems)
 - [W. Banaszczyk, *Balancing vectors and Gaussian measures of n-dimensional convex bodies*,
   Random Structures & Algorithms **12** (1998), 351–360](https://doi.org/10.1002/(SICI)1098-2418(199807)12:4%3C351::AID-RSA3%3E3.0.CO;2-S)
 - [J. Spencer, *Six standard deviations suffice*,
