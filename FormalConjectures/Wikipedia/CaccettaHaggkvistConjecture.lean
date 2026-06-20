@@ -28,9 +28,8 @@ out-degree at least $n/3$ should contain a directed cycle of length at most $3$.
 is open; the best known partial results replace $n/3$ by $cn$ for constants $c > 1/3$,
 e.g. $c = 3 - \sqrt{7} \approx 0.3542$ (Shen).
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Caccetta%E2%80%93H%C3%A4ggkvist_conjecture)
-
 *References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Caccetta%E2%80%93H%C3%A4ggkvist_conjecture)
 * [CaHa78] Caccetta, L. and Häggkvist, R. (1978). "On minimal digraphs with given girth."
   *Congressus Numerantium* XXI, pp. 181--187.
 * [ChSz83] Chvátal, V. and Szemerédi, E. (1983). "Short cycles in directed graphs."
