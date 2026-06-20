@@ -315,6 +315,26 @@ def transform_imports(lines: List[str]) -> List[str]:
             continue
         result.append(line)
 
+    if not added_mathlib:
+        # Find first non-comment line to insert import Mathlib
+        insert_idx = 0
+        in_comment = False
+        for i, line in enumerate(result):
+            s = line.strip()
+            if s.startswith('/-') and not s.startswith('/-!'):
+                in_comment = True
+            if in_comment:
+                if s.endswith('-/'):
+                    in_comment = False
+                continue
+            if s.startswith('/-!') or s.startswith('--'):
+                continue
+            if not s:
+                continue
+            insert_idx = i
+            break
+        result.insert(insert_idx, 'import Mathlib\n')
+
     return result
 
 
@@ -541,6 +561,44 @@ def transform_file(
         success=True,
         needs_fcm=False,
     )
+
+    NATIVE_FAILURES = {
+        'FormalConjectures/ErdosProblems/100.lean', 'FormalConjectures/ErdosProblems/1059.lean',
+        'FormalConjectures/ErdosProblems/1071.lean', 'FormalConjectures/ErdosProblems/1073.lean',
+        'FormalConjectures/ErdosProblems/1135.lean', 'FormalConjectures/ErdosProblems/1137.lean',
+        'FormalConjectures/ErdosProblems/1145.lean', 'FormalConjectures/ErdosProblems/137.lean',
+        'FormalConjectures/ErdosProblems/228.lean', 'FormalConjectures/ErdosProblems/233.lean',
+        'FormalConjectures/ErdosProblems/238.lean', 'FormalConjectures/ErdosProblems/276.lean',
+        'FormalConjectures/ErdosProblems/28.lean', 'FormalConjectures/ErdosProblems/326.lean',
+        'FormalConjectures/ErdosProblems/354.lean', 'FormalConjectures/ErdosProblems/375.lean',
+        'FormalConjectures/ErdosProblems/385.lean', 'FormalConjectures/ErdosProblems/38.lean',
+        'FormalConjectures/ErdosProblems/394.lean', 'FormalConjectures/ErdosProblems/400.lean',
+        'FormalConjectures/ErdosProblems/463.lean', 'FormalConjectures/ErdosProblems/509.lean',
+        'FormalConjectures/ErdosProblems/513.lean', 'FormalConjectures/ErdosProblems/66.lean',
+        'FormalConjectures/ErdosProblems/681.lean', 'FormalConjectures/ErdosProblems/683.lean',
+        'FormalConjectures/ErdosProblems/6.lean', 'FormalConjectures/ErdosProblems/829.lean',
+        'FormalConjectures/ErdosProblems/853.lean', 'FormalConjectures/ErdosProblems/855.lean',
+        'FormalConjectures/ErdosProblems/868.lean', 'FormalConjectures/ErdosProblems/881.lean',
+        'FormalConjectures/ErdosProblems/884.lean', 'FormalConjectures/ErdosProblems/888.lean',
+        'FormalConjectures/ErdosProblems/906.lean', 'FormalConjectures/ErdosProblems/920.lean',
+        'FormalConjectures/ErdosProblems/92.lean', 'FormalConjectures/ErdosProblems/936.lean',
+        'FormalConjectures/ErdosProblems/943.lean', 'FormalConjectures/ErdosProblems/99.lean',
+        'FormalConjectures/GreensOpenProblems/16.lean', 'FormalConjectures/GreensOpenProblems/1.lean',
+        'FormalConjectures/GreensOpenProblems/42.lean', 'FormalConjectures/GreensOpenProblems/47.lean',
+        'FormalConjectures/GreensOpenProblems/58.lean', 'FormalConjectures/GreensOpenProblems/77.lean',
+        'FormalConjectures/HilbertProblems/17.lean', 'FormalConjectures/LittProblems/1.lean',
+        'FormalConjectures/Mathoverflow/235893.lean', 'FormalConjectures/Mathoverflow/339137.lean',
+        'FormalConjectures/Mathoverflow/347178.lean', 'FormalConjectures/Millenium/NavierStokes.lean',
+        'FormalConjectures/Millenium/Poincare.lean', 'FormalConjectures/Other/VCDimConvex.lean',
+        'FormalConjectures/Wikipedia/GaussCircleProblem.lean', 'FormalConjectures/Wikipedia/Grimm.lean',
+        'FormalConjectures/Wikipedia/InscribedSquare.lean', 'FormalConjectures/Wikipedia/Kakeya.lean',
+        'FormalConjectures/Wikipedia/MoserWorm.lean', 'FormalConjectures/Wikipedia/RationalDistanceProblem.lean',
+        'FormalConjectures/Wikipedia/SquarePacking.lean'
+    }
+
+    if rel_path.as_posix() in NATIVE_FAILURES:
+        result.skipped = True
+        return result
 
     try:
         content = input_path.read_text()
