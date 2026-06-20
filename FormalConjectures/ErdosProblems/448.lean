@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -62,11 +62,16 @@ divisor in $[2^k, 2^{k+1})$. Is it true that, for all $\epsilon > 0$,
 $$ \tau^+(n) < \epsilon \cdot \tau(n) $$
 for almost all $n$?
 
-The answer is **no**. This was disproved by Erdős and Tenenbaum [ErTe81], who showed that the upper
-density of the set of such $n$ is $\asymp \epsilon^{1 - o(1)}$ (the exponent $o(1) \to 0$ as
-$\epsilon \to 0$); in particular this set does not have density $1$ for small $\epsilon$. A sharper
-bound $\ll \epsilon \log(2/\epsilon)$ and the existence of a distribution function for
-$\tau^+(n)/\tau(n)$ were later established by Hall and Tenenbaum [HaTe88, §4.6].
+This is false, and was disproved by Erdős and Tenenbaum [ErTe81], who showed that in fact the upper
+density of the set of such $n$ is $\asymp \epsilon^{1-o(1)}$ (where the $o(1)$ in the exponent
+$\to 0$ as $\epsilon \to 0$). A more precise result was proved by Hall and Tenenbaum [HaTe88]
+(see Section 4.6), who showed that the upper density is $\ll \epsilon \log(2/\epsilon)$. Hall and
+Tenenbaum further prove that $\tau^+(n)/\tau(n)$ has a distribution function. Erdős and Graham also
+asked whether there is a good inequality known for $\sum_{n \leq x} \tau^+(n)$. This was provided by
+Ford [Fo08] who proved
+$$ \sum_{n \leq x} \tau^+(n) \asymp x\frac{(\log x)^{1-\alpha}}{(\log\log x)^{3/2}} $$
+where
+$$ \alpha = 1-\frac{1+\log\log 2}{\log 2} = 0.08607\cdots. $$
 -/
 @[category research solved, AMS 11]
 theorem erdos_448 : answer(False) ↔
