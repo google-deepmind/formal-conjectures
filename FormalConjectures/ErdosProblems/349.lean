@@ -80,4 +80,16 @@ theorem erdos_349.variants.floor_3_halves_even :
     answer(sorry) ↔ {n | Even ⌊(3/2 : ℝ) ^ n⌋}.Infinite := by
   sorry
 
+/-- For $\alpha > 2$ and any $t > 0$, the sequence $\lfloor t\alpha^n\rfloor$ is not additively
+complete; equivalently $(t, \alpha)$ is not a "good pair". A partial result on the open Erdős
+Problem 349: it complements `complete_for_alpha_in_Ioo_one_to_goldenRatio`.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/23c629bc2347864782ce88f957a64d6567b978a1/FormalConjectures/ErdosProblems/349.lean#L87"]
+theorem alpha_gt_two_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα : 2 < α) : ¬ IsGoodPair t α := by
+  sorry
+
 end Erdos349
