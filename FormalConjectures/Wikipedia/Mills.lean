@@ -62,7 +62,7 @@ theorem exists_least : ∃ A, IsMinMills A := by
   sorry
 
 /--
-**Mills' constant is irrational** (Saito, 2024): the least Mills number is irrational.
+**Mills' constant is irrational** (Saito, 2024).
 -/
 @[category research solved, AMS 11]
 theorem irrational {A} (hA : IsMinMills A) :
@@ -70,8 +70,8 @@ theorem irrational {A} (hA : IsMinMills A) :
   sorry
 
 /--
-**Mills' constant** (Caldwell–Cheng, 2005): assuming the Riemann hypothesis, the least
-Mills number begins at $1.3063778838\ldots$.
+**Mills' constant lower bound** (Caldwell–Cheng, 2005): assuming the Riemann hypothesis, the least
+**Mills' constant** begins at $1.3063778838\ldots$.
 -/
 @[category research solved, AMS 11]
 theorem mills.variants.approx (hRH : RiemannHypothesis) {A} (hA : IsMinMills A) :
