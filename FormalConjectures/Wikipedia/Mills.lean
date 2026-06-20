@@ -73,7 +73,7 @@ theorem irrational {A} (hA : IsMinMills A) :
 Mills' constant begins at $1.3063778838\ldots$.
 -/
 @[category research solved, AMS 11]
-theorem mills.variants.approx (hRH : RiemannHypothesis) {A} (hA : IsMinMills A) :
+theorem lower_bound_of_RH (hRH : RiemannHypothesis) {A} (hA : IsMinMills A) :
     A ∈ Set.Ioo (1.3063778838 : ℝ) 1.3063778839 := by
   sorry
 
