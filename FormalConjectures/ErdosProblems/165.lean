@@ -37,9 +37,8 @@ $k \mapsto R(3,k) \log k / k^2$. Note that the set defining `graphRamseyNumber` 
 by Ramsey's theorem, so the `sInf` is a genuine minimum, and the junk values of the quotient
 at $k = 0, 1$ (where $\log k \leq 0$) do not affect any of the limit statements below.
 
-*Reference:* [erdosproblems.com/165](https://www.erdosproblems.com/165)
-
 *References:*
+- [erdosproblems.com/165](https://www.erdosproblems.com/165)
 - [Sh83] J. Shearer, *A note on the independence number of triangle-free graphs*,
   Discrete Math. 46 (1983), 83–87.
 - [AKS80] M. Ajtai, J. Komlós and E. Szemerédi, *A note on Ramsey numbers*,
