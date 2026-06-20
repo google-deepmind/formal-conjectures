@@ -1,0 +1,181 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import Mathlib
+
+/-!
+# Bloch and Landau constants
+
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Bloch%27s_theorem_(complex_analysis))
+- [CP96] Chen, H., Gauthier, P. M. "On Bloch's constant." Journal d'Analyse Mathématique 69 (1996),
+  275–291.
+- [AG37] Ahlfors, L. V., Grunsky, H. "Über die Blochsche Konstante." Mathematische Zeitschrift 42
+  (1937), 671–673.
+- [Ya95] Yanagihara, H. "On the locally univalent Bloch constant." Journal d'Analyse Mathématique
+  65 (1995), 1–17.
+- [Ra43] Rademacher, H. "On the Bloch-Landau Constant."" American Journal of Mathematics 65 (1943),
+  387–390.
+- [OptimizationConstants](https://teorth.github.io/optimizationproblems/constants/57c.html)
+- [Skin2009] Skinner, Brian. The univalent Bloch constant problem. Complex Variables and Elliptic
+  Equations 54 (2009), no. 10, 951–955.
+- [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
+- [Bhowmik–Sen](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/improved-bloch-and-landau-constants-for-meromorphic-functions/FD465D1F2CEF7E8C62AFF16C3E89B7B4)
+-/
+open scoped Topology ENNReal
+open Metric Set Filter
+namespace Bloch
+
+/-- The **Bloch radius** $B_f$ of a function $f$ is the supremum of radii of univalent disks in the
+image of the unit disk under $f$. Takes values in `ℝ≥0∞` so that functions whose image contains
+arbitrarily large univalent disks correctly get radius `⊤` rather than `0`. -/
+noncomputable def blochRadius (f : ℂ → ℂ) : ℝ≥0∞ :=
+  sSup (ENNReal.ofReal '' {r : ℝ | ∃ S ⊆ ball (0 : ℂ) 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S})
+
+lemma zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := zero_le _
+
+lemma dis_add_radius_le_of_ball_subset_ball {X 𝕜 : Type*} [RCLike 𝕜] [NormedAddCommGroup X]
+    [NormedSpace 𝕜 X] [Nontrivial X] {x y : X} {r d : ℝ} (hpos : 0 < r) (hsub : ball x r ⊆ ball y d) :
+    dist x y + r ≤ d := by
+  have : Tendsto (fun s => dist x y + s) (𝓝[<] r) (𝓝 (dist x y + r)) :=
+      (tendsto_nhds_of_tendsto_nhdsWithin tendsto_id).const_add _
+  refine le_of_tendsto this ?_
+  filter_upwards [Ioo_mem_nhdsLT hpos] with t ⟨hl, hr⟩
+  by_cases! hxy : x = y
+  · obtain ⟨v, hv⟩ := exists_ne (0 : X)
+    simp_all only [dist_self, zero_add]
+    let u := (‖v‖⁻¹ : 𝕜) • v
+    have : ‖u‖ = 1 := by apply norm_smul_inv_norm; grind
+    calc
+    _ = ‖y + (t : 𝕜) • u - y‖ := by simp_all [norm_smul, abs_of_nonneg hl.le]
+    _ ≤ d := by
+      refine (mem_ball_iff_norm.1 (hsub (mem_ball_iff_norm.2 ?_))).le
+      simp_all [norm_smul, abs_of_nonneg hl.le]
+  · let u := (‖x - y‖⁻¹ : 𝕜) • (x - y)
+    have : ‖u‖ = 1 := by apply norm_smul_inv_norm; grind
+    calc
+    _ = ‖x - y‖ + t := by simp [NormedAddCommGroup.dist_eq]
+    _ = ‖x + (t : 𝕜) • u - y‖ := by
+      simp [u, add_sub_right_comm, ← smul_assoc]
+      nth_rw 2 [← one_smul 𝕜 (x - y)]
+      rw [← add_smul, norm_smul]
+      norm_cast
+      rw [abs_of_nonneg (by positivity), add_mul, one_mul, mul_assoc, inv_mul_cancel₀ (by aesop),
+        mul_one]
+    _ ≤ d := by
+      refine (mem_ball_iff_norm.1 (hsub (mem_ball_iff_norm.2 ?_))).le
+      simp_all [norm_smul, abs_of_nonneg hl.le]
+
+lemma radius_le_of_ball_subset_ball {X 𝕜 : Type*} [RCLike 𝕜] [NormedAddCommGroup X]
+    [NormedSpace 𝕜 X] [Nontrivial X] {x y : X} {r d : ℝ} (hpos : 0 < r)
+    (hsub : ball x r ⊆ ball y d) : r ≤ d :=
+  trans (by simp) (dis_add_radius_le_of_ball_subset_ball (𝕜 := 𝕜) hpos hsub)
+
+lemma blochRadius_id_eq_one : blochRadius id = 1 := by
+  apply le_antisymm
+  · -- blochRadius id ≤ 1: every valid radius r satisfies r ≤ 1
+    apply sSup_le
+    rintro _ ⟨r, ⟨S, hS, x, hball, -⟩, rfl⟩
+    simp only [image_id] at hball
+    by_cases hpos : 0 < r
+    · exact (ENNReal.ofReal_le_ofReal
+        (radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball.trans hS))).trans
+        (by simp [ENNReal.ofReal_one])
+    · exact (ENNReal.ofReal_of_nonpos (by linarith)).le.trans (zero_le _)
+  · -- 1 ≤ blochRadius id: ball 0 1 ⊆ id '' ball 0 1
+    rw [show (1 : ℝ≥0∞) = ENNReal.ofReal 1 from by simp]
+    exact le_sSup ⟨1, ⟨ball (0 : ℂ) 1, Subset.rfl, 0, by simp⟩, rfl⟩
+
+/-- The **Landau radius** $L_f$ of a function $f$ is the supremum of radii of disks contained in
+the image of the unit disk under $f$. Takes values in `ℝ≥0∞` so that functions with unbounded
+image correctly get radius `⊤`. -/
+noncomputable def landauRadius (f : ℂ → ℂ) : ℝ≥0∞ :=
+  sSup (ENNReal.ofReal '' {r : ℝ | ∃ x, ball x r ⊆ f '' (ball (0 : ℂ) 1)})
+
+/-- The **Bloch constant** $B$ is the largest radius such that every holomorphic function on the
+unit disk with $f'(0) = 1$ has a schlicht (univalent) disk of that radius in its image. -/
+noncomputable def blochConstant : ℝ :=
+  sSup {B : ℝ | ∀ f : ℂ → ℂ, DifferentiableOn ℂ f (ball 0 1) → deriv f 0 = 1 →
+    ∃ S ⊆ ball 0 1, ∃ x, ball x B ⊆ f '' S ∧ InjOn f S}
+
+/-- It is proved in [CP96] that the Bloch constant is bounded below by
+$\sqrt{3}/4 + 2 \times 10^{-4}$ -/
+theorem blochConstant_lower_bound : Real.sqrt 3 / 4 + 2 * 10 ^ (-4 : ℤ) ≤ blochConstant := by
+  sorry
+
+/-- It is proved in [AG37] that the Bloch constant is bounded above by
+$\frac{1}{\sqrt{1 + \sqrt{3}}}\frac{\Gamma(1/3) \Gamma(11/12)}{\Gamma(1/4)}$$. -/
+theorem blochConstant_upper_bound :
+    blochConstant ≤ Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /
+    (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
+  sorry
+
+/-- Ahlfors and Grunsky also conjectured in [AG37] that this upper bound is the precise value of the
+Bloch constant. -/
+theorem blochConstant_exact_value :
+    blochConstant = Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /
+    (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
+  sorry
+
+/-- The **Univalent Bloch constant** $B_u$ is the largest radius such that every univalent
+holomorphic function on the unit disk with $f'(0) = 1$ has a schlicht disk of that radius in its
+image. -/
+noncomputable def univalentBlochConstant : ℝ :=
+  sSup {B : ℝ | ∀ f : ℂ → ℂ, InjOn f (ball 0 1) → DifferentiableOn ℂ f (ball 0 1) →
+    deriv f 0 = 1 → ∃ S ⊆ ball 0 1, ∃ x, ball x B ⊆ f '' S ∧ InjOn f S}
+
+/-- It is proved in [Skin2009] that the Univalent Bloch constant is bounded below by $0.5708858$. -/
+theorem univalentBlochConstant_lower_bound : 0.5708858 ≤ univalentBlochConstant := by
+  sorry
+
+/-- The Univalent Bloch constant is trivially bounded above by the Bloch radius of the identity
+function, which is $1$. This is the best upper bound we know according to [OptimizationConstants]. -/
+theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
+  apply csSup_le
+  · -- the set is nonempty: 0 is in it (ball x 0 = ∅ ⊆ anything)
+    exact ⟨0, fun f _ _ _ => ⟨∅, empty_subset _, 0, by simp⟩⟩
+  · -- every B in the set is ≤ 1
+    intro B hB
+    have h := hB id (injOn_id _) differentiableOn_id (by simp)
+    rcases h with ⟨S, hS, x, hball, -⟩
+    simp only [image_id] at hball
+    by_cases hpos : (0 : ℝ) < B
+    · exact radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball.trans hS)
+    · linarith
+
+/-- The **Landau constant** $L$ is the largest radius such that every holomorphic function on the
+unit disk with $f'(0) = 1$ has a disk of that radius contained in its image. -/
+noncomputable def landauConstant : ℝ :=
+  sSup {B : ℝ | ∀ f : ℂ → ℂ, DifferentiableOn ℂ f (ball 0 1) → deriv f 0 = 1 →
+    ∃ x, ball x B ⊆ f '' (ball 0 1)}
+
+/-- It is proved in [Ya95] that the Landau constant is bounded below by $0.5 + 10 ^ {-335}$. -/
+theorem landauConstant_lower_bound : 0.5 + 10 ^ (-335 : ℤ) ≤ landauConstant := by
+  sorry
+
+/-- It is proved in [Ra43] that the Landau constant is bounded above by
+$\frac{1}{\sqrt{1 + \sqrt{3}}}\frac{\Gamma(1/3) \Gamma(5/6)}{\Gamma(1/6)}$. -/
+theorem landauConstant_upper_bound :
+    landauConstant ≤ Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
+  sorry
+
+/-- In [Ra43], Rademacher says that he strongly believed that this upper bound is the precise value
+of the Landau constant. -/
+theorem landauConstant_exact_value :
+    landauConstant = Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
+  sorry
+
+end Bloch
