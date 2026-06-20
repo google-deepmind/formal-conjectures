@@ -28,7 +28,7 @@ Riemann hypothesis it is approximately $1.3063778838\ldots$.
 
 *References:*
 - [Wikipedia, Mills' constant](https://en.wikipedia.org/wiki/Mills%27_constant)
-- [Prime-represntations](https://www.ams.org/journals/bull/1947-53-06/S0002-9904-1947-08849-2/)
+- [A prime-representing function](https://www.ams.org/journals/bull/1947-53-06/S0002-9904-1947-08849-2/)
   by *W. H. Mills*, Bull. Amer. Math. Soc. **53** (1947), 604.
 - [Mills' constant](https://mathworld.wolfram.com/MillsConstant.html) on Wolfram MathWorld.
 - [Mills' constant is irrational](https://doi.org/10.1112/mtk.70027) by *Kota Saito*,
@@ -40,6 +40,9 @@ Riemann hypothesis it is approximately $1.3063778838\ldots$.
 
 namespace Mills
 
+/--
+Given any real $A$, `IsMills A` encodes the statement that $\lfloor A^{3^n}\rfloor,n > 0$ is prime.
+-/
 abbrev IsMills (A : ℝ) : Prop := ∀ (n : ℕ+), Prime ⌊A ^ (3 ^ (n : ℕ))⌋₊
 
 /--
@@ -50,6 +53,9 @@ There is a real number $A > 1$ such that $\lfloor A^{3^n}\rfloor$ is prime.
 theorem exists' : ∃ A > 1, IsMills A := by
   sorry
 
+/--
+For a real $A$, `IsMinMills A` is the smallest value satisying `IsMills A`.
+-/
 abbrev IsMinMills (A : ℝ) : Prop := IsLeast {x | x > 1 ∧ IsMills x} A
 
 /--
