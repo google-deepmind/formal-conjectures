@@ -76,7 +76,7 @@ docstring above.
 theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hGc : Gᶜ.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
-    (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (length Gᶜ : ℝ)) / 2⌉ := by
+    (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (degreeL2Norm Gᶜ : ℝ)) / 2⌉ := by
   sorry
 
 -- Sanity checks
