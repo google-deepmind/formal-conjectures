@@ -37,9 +37,8 @@ strengthen this theorem: applied to the incidence vectors of the sets, scaled by
 $1/\sqrt{n}$, it would give a discrepancy bound $O(\sqrt{n})$ for any number of sets,
 not just $n$ of them.
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Discrepancy_of_hypergraphs#General_hypergraphs)
-
 *References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Discrepancy_of_hypergraphs#General_hypergraphs)
 - [J. Spencer, *Six standard deviations suffice*,
   Trans. Amer. Math. Soc. **289** (1985), 679–706](https://doi.org/10.1090/S0002-9947-1985-0784009-0)
 - [N. Bansal, *Constructive algorithms for discrepancy minimization*,
