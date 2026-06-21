@@ -37,7 +37,7 @@ where $\log_{r-1}$ denotes the $(r-1)$-fold iterated logarithm.
 -/
 @[category research open, AMS 5]
 theorem erdos_562 : answer(sorry) ↔
-    ∀ r ≥ 3, (fun n ↦ log^[r - 1] (hypergraphRamsey r n)) ~[atTop] (fun n ↦ (n : ℝ)) := by
+    ∀ r ≥ 3, (fun n ↦ log^[r - 1] (hypergraphRamsey r n)) =Θ[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
 end Erdos562
