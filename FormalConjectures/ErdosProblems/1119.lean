@@ -19,9 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1119
 
-*Reference:* [erdosproblems.com/1119](https://www.erdosproblems.com/1119)
-
-*References:*
+*References:* 
+- [erdosproblems.com/1119](https://www.erdosproblems.com/1119)
 - [Ha74] Hayman, W. K., Research problems in function theory: new problems. (1974), 155--180.
 - [Er64g] Erdős, P., An interpolation problem associated with the continuum hypothesis.
   Michigan Math. J. (1964), 9--10.
