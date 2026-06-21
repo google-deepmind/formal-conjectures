@@ -50,7 +50,9 @@ theorem erdos_156 :
 
 @[category test, AMS 5]
 theorem greedySidonSet_isSidon (n : ℕ) : IsSidon (Finset.greedySidonBelow n : Set ℕ) := by
-  sorry
+  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ eq
+  have subset : Finset.greedySidonBelow n ⊆ (Finset.greedySidon.aux n).1 := Finset.filter_subset _ _
+  exact (Finset.greedySidon.aux n).1.2 i₁ (subset hi₁) j₁ (subset hj₁) i₂ (subset hi₂) j₂ (subset hj₂) eq
 
 /--
 It is easy to prove that the greedy construction of a maximal Sidon set in $\{1,\ldots,N\}$ has size
