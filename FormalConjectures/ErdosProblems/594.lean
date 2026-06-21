@@ -19,9 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 594
 
-*Reference:* [erdosproblems.com/594](https://www.erdosproblems.com/594)
-
-*References:*
+*References:* 
+- [erdosproblems.com/594](https://www.erdosproblems.com/594)
 - [ErHa66] Erdős, P. and Hajnal, A., On chromatic number of graphs and set-systems.
   Acta Math. Acad. Sci. Hungar. (1966), 61-99.
 - [Er69b] Erdős, P., Problems and results in chromatic graph theory. Proof Techniques in
