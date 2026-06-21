@@ -92,4 +92,162 @@ the repository's proof-length guideline. -/
 theorem alpha_gt_two_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα : 2 < α) : ¬ IsGoodPair t α := by
   sorry
 
+/-- For $0 < \alpha \le 1$ and any $t > 0$, $(t, \alpha)$ is not a good pair: every term
+$\lfloor t\alpha^n\rfloor$ lies in the finite interval $[0, \lfloor t\rfloor]$ (since
+$\alpha^n \le 1$), so every subset sum is bounded by the constant $\sum_{i \in [0,\lfloor t\rfloor]} i$,
+and no large integer can be a subset sum. A partial result on the open Erdős Problem 349,
+complementing the $2 < \alpha$ and integer-coefficient cases. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem alpha_le_one_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα0 : 0 < α) (hα1 : α ≤ 1) :
+    ¬ IsGoodPair t α := by
+  sorry
+
+/-- **Binary expansion.** Every natural number $k$ is a sum of distinct powers of two: there is
+a finite set $E$ of exponents with $k = \sum_{i \in E} 2^i$. Proved by strong induction:
+subtract the largest power $2^m \le k$, recurse on the remainder. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem exists_finset_sum_two_pow (k : ℕ) :
+    ∃ E : Finset ℕ, k = ∑ i ∈ E, 2 ^ i := by
+  sorry
+
+/-- **The pair $(1, 2)$ is good.** The powers of two $\lfloor 1\cdot 2^n\rfloor = 2^n$ form an
+additively complete set: every $k \ge 1$ is a finite sum of distinct powers of two. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem one_two_isGoodPair : IsGoodPair 1 2 := by
+  sorry
+
+/-- **The dyadic fiber at $\alpha = 2$.** For every $k$, the pair $(1/2^k, 2)$ is good: the
+sequence $\lfloor 2^n / 2^k\rfloor$ is additively complete because at index $n = m + k$ it equals
+the exact power $2^m$, so its range contains all powers of two, which already form an additively
+complete set. Uses monotonicity `IsAddComplete.mono`. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem dyadic_two_isGoodPair (k : ℕ) : IsGoodPair (1 / 2 ^ k) 2 := by
+  sorry
+
+/-- **Integer leading coefficient $t \ge 2$ blocks completeness.** For every integer base
+$\alpha$, the pair $(t, \alpha)$ with integer $t \ge 2$ is not good: $\lfloor t\alpha^n\rfloor =
+t\alpha^n$ is a multiple of $t$, so every subset sum is too, but two consecutive large integers
+cannot both be multiples of $t$. Generalizes the parity obstruction ($t = 2$). A partial result
+on Erdős Problem 349. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem int_coeff_ge_two_not_isGoodPair (t : ℤ) (ht : 2 ≤ t) (α : ℤ) :
+    ¬ IsGoodPair (t : ℝ) (α : ℝ) := by
+  sorry
+
+/-- **Erdős Problem 349, complete characterization on positive integer pairs.** For integers
+$t \ge 1$, $\alpha \ge 1$, the pair $(t, \alpha)$ is good (i.e. $\lfloor t\alpha^n\rfloor$ is
+additively complete) iff $(t, \alpha) = (1, 2)$. Assembles the four partial results: $(1,2)$ is
+good, $\alpha \le 1$ fails, $2 < \alpha$ fails (`alpha_gt_two_not_isGoodPair`), and integer
+$t \ge 2$ fails. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem integer_isGoodPair_iff (t α : ℤ) (ht : 1 ≤ t) (hα : 1 ≤ α) :
+    IsGoodPair (t : ℝ) (α : ℝ) ↔ t = 1 ∧ α = 2 := by
+  sorry
+
+/-- **The pair $(3/2, 2)$ is NOT good.** The negative companion of `dyadic_two_isGoodPair`:
+while every dyadic coefficient $1/2^k$ gives a good pair at $\alpha = 2$, the non-dyadic rational
+$t = 3/2$ does not. The sequence $\lfloor (3/2)\cdot 2^n\rfloor = 1, 3, 6, 12, 24, \ldots$ is not
+additively complete because every term but the first $\lfloor 3/2\rfloor = 1$ is a multiple of
+$3$ (namely $\lfloor (3/2)\cdot 2^{n+1}\rfloor = 3\cdot 2^n$), so every subset sum is
+$\equiv 0$ or $1 \pmod 3$; the infinitely many integers $\equiv 2 \pmod 3$ are never reached.
+A partial result on Erdős Problem 349 in the same divisibility family as
+`int_coeff_ge_two_not_isGoodPair` (here the modulus is $3$). -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-three-halves-fiber-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem three_halves_two_not_isGoodPair : ¬ IsGoodPair (3 / 2) 2 := by
+  sorry
+
+/-- A set $A \subseteq \mathbb{Z}$ is *entirely additively complete* if **every** positive integer
+is a finite subset sum of $A$ (van Doorn's "entirely complete": $P(A) = \mathbb{N}_{\ge 1}$).
+Strictly stronger than `IsAddComplete`, which only requires all *sufficiently large* integers.
+
+This is a problem-local definition; it could be promoted to
+`FormalConjecturesForMathlib/NumberTheory/AdditivelyComplete.lean` (next to `IsAddComplete`) if
+the maintainers prefer it to live there. -/
+def IsEntirelyAddComplete (A : Set ℤ) : Prop :=
+  ∀ k : ℤ, 1 ≤ k → k ∈ subsetSums A
+
+/-- **Glue.** Entire completeness implies (eventual) completeness: if every $k \ge 1$ is a subset
+sum, then in particular all sufficiently large $k$ are. -/
+@[category research solved, AMS 11]
+theorem isEntirelyAddComplete_imp_isAddComplete {A : Set ℤ}
+    (h : IsEntirelyAddComplete A) : IsAddComplete A :=
+  Filter.eventually_atTop.mpr ⟨1, fun k hk => h k hk⟩
+
+/-- **Abstract single-gap criterion.** For a monotone, nonnegative integer sequence $a$, a single
+gap $\sum_{k < r+1} a_k < m < a_{r+1}$ with $m \ge 1$ already shows that $m$ is not a subset sum,
+hence the range of $a$ is not entirely additively complete.
+
+This is the pure-$\mathbb{Z}$ core of `alpha_gt_two_not_isGoodPair`'s
+`by_cases ∃ b ∈ B, a (r+1) ≤ b` case-split, with $m$ *given* rather than constructed via
+`Tendsto` (strictly easier, and enough for the band $5/3 \le \alpha < 2$ below). -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-entire-gap-criterion-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem entire_gap_not_complete (a : ℕ → ℤ) (hmono : Monotone a) (hnn : ∀ n, 0 ≤ a n)
+    (r : ℕ) (m : ℤ) (hm : 1 ≤ m)
+    (hlo : (∑ k ∈ Finset.range (r + 1), a k) < m) (hhi : m < a (r + 1)) :
+    ¬ IsEntirelyAddComplete (Set.range a) := by
+  sorry
+
+/-- The $0$-th term of $\lfloor t\alpha^n\rfloor$ is $\lfloor t\rfloor$ (since $\alpha^0 = 1$). -/
+@[category research solved, AMS 11]
+theorem floorSeq_zero (t α : ℝ) : ⌊t * α ^ (0 : ℕ)⌋ = ⌊t⌋ := by
+  simp [pow_zero, mul_one]
+
+/-- The $1$-st term of $\lfloor t\alpha^n\rfloor$ is $\lfloor t\alpha\rfloor$. -/
+@[category research solved, AMS 11]
+theorem floorSeq_one (t α : ℝ) : ⌊t * α ^ (1 : ℕ)⌋ = ⌊t * α⌋ := by
+  simp [pow_one]
+
+/-- $n \mapsto \lfloor t\alpha^n\rfloor$ is monotone when $0 \le t$ and $1 \le \alpha$. -/
+@[category research solved, AMS 11]
+theorem floorSeq_monotone (t α : ℝ) (ht : 0 ≤ t) (hα : 1 ≤ α) :
+    Monotone (fun n => ⌊t * α ^ n⌋) := by
+  intro n m hnm
+  simp only
+  apply Int.floor_le_floor
+  apply mul_le_mul_of_nonneg_left _ ht
+  exact pow_le_pow_right₀ hα hnm
+
+/-- $n \mapsto \lfloor t\alpha^n\rfloor$ is nonnegative when $0 \le t$ and $0 \le \alpha$. -/
+@[category research solved, AMS 11]
+theorem floorSeq_nonneg (t α : ℝ) (ht : 0 ≤ t) (hα : 0 ≤ α) (n : ℕ) :
+    0 ≤ (fun n => ⌊t * α ^ n⌋) n := by
+  simp only
+  rw [Int.floor_nonneg]
+  positivity
+
+/-- **Application inside the band $5/3 \le \alpha < 2$.** For $t \ge 3$ and $5/3 \le \alpha < 2$,
+the sequence $\lfloor t\alpha^n\rfloor$ is NOT entirely additively complete: the very first gap
+$\lfloor t\rfloor < \lfloor t\rfloor+1 < \lfloor t\alpha\rfloor$ already misses the positive
+integer $\lfloor t\rfloor+1$.
+
+This is the $r = 0$, $m = \lfloor t\rfloor + 1$ instance of `entire_gap_not_complete`. The gap
+inequality comes from $t\alpha \ge t\cdot(5/3) = t + 2t/3 \ge t + 2 \ge \lfloor t\rfloor + 2$.
+The constant $5/3$ (not $\varphi$) is the sharp clean threshold uniform in $t \ge 3$: at
+$\alpha = \varphi$, $t = 3$ gives $\lfloor 3\varphi\rfloor = 4 = \lfloor t\rfloor+1$, so the first
+gap closes. This is *entire* (not eventual) incompleteness; the gap need not recur for
+$\varphi \le \alpha < 2$, where Erdős Problem 349 stays open. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-entire-gap-criterion-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem floorSeq_not_entirelyComplete_of_le_two
+    (t α : ℝ) (ht : 3 ≤ t) (hα : 5 / 3 ≤ α) (hα2 : α < 2) :
+    ¬ IsEntirelyAddComplete (Set.range (fun n => ⌊t * α ^ n⌋)) := by
+  sorry
+
 end Erdos349
