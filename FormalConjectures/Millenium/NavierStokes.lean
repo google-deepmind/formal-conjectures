@@ -97,13 +97,13 @@ theorem divergence_const (c : ℝ^n) (x : ℝ^n) :
 theorem divergence_add {v w : ℝ^n → ℝ^n} {x : ℝ^n}
     (hv : DifferentiableAt ℝ v x) (hw : DifferentiableAt ℝ w x) :
     ∇⬝ (fun y => v y + w y) x = ∇⬝ v x + ∇⬝ w x := by
-  sorry
+  simp [divergence, fderiv_fun_add hv hw]
 
 /-- Divergence commutes with scalar multiplication at differentiability points. -/
 @[category API, AMS 35]
 theorem divergence_smul (c : ℝ) {v : ℝ^n → ℝ^n} {x : ℝ^n}
     (hv : DifferentiableAt ℝ v x) : ∇⬝ (fun y => c • v y) x = c * ∇⬝ v x := by
-  sorry
+  simp [divergence, fderiv_fun_const_smul hv c]
 
 /--
 A function $f : \mathbb{R}^n \to \alpha$ is 1-periodic if it is periodic in each
