@@ -15,6 +15,12 @@ This document provides guidelines for AI agents working on the Formal Conjecture
   - `OptimizationConstants/` - Problems from [Tao's Optimization Constants](https://teorth.github.io/optimizationproblems/)
   - Other sources as appropriate
 
+  **IMPORTANT**: Some subdirectories contain their own `README.md` with more specific conventions
+  (e.g. naming, docstring, and reference rules). Always check for and follow a subdirectory's
+  `README.md` before applying the general guidelines below. For example,
+  `FormalConjectures/ErdosProblems/README.md` defines naming patterns for multi-part questions,
+  estimate questions, and variants that supplement the general conventions in this file.
+
 - **`FormalConjectures/Util/`**: Repository infrastructure and utilities:
   - `Attributes/` - Defines the `category` and `AMS` attributes
   - `Answer.lean` - Implements the `answer()` elaborator for problems requiring answers
