@@ -37,7 +37,7 @@ The filter on $\mathbb{R} \times \mathbb{R}$ corresponding to sending $x \to \in
 -/
 abbrev snd_gt_half_fst : Filter (ℝ × ℝ) := atTop.comap Prod.fst ⊓ 𝓟 {p | p.2 ∈ Ioo (p.1 / 2) p.1}
 
-/-- Given a pair $(x,y)$, this is the amount of primes in the interval above  $y$, of length
+/-- Given a pair $(x,y)$, this is the amount of primes in the interval above $y$, of length
 equalling the largest prime gap before $x$, scaled by a constant $C$.
 -/
 noncomputable def primeCount_Ioc_mul_const (C : ℝ) : (ℝ × ℝ) → ℝ :=
