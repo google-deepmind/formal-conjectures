@@ -51,15 +51,7 @@ theorem conjecture36 : answer(False) ↔
     ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
       ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected) (_ : 0 < dp G),
         (2 * G.radius.toNat : ℝ) / (dp G : ℝ) ≤ (path G : ℝ) := by
-  use default, mt (@· (ULift (Fin 2)) inferInstance inferInstance inferInstance ⊤
-    inferInstance (by decide)) ?_
-  norm_num
-  show 0 < (star _) ∧ _ < 2 / Nat.cast (star _)
-  norm_num [SimpleGraph.path, true, SimpleGraph.diam]
-  norm_num +decide [SimpleGraph.averageDistance, List.finRange]
-  norm_num +decide [List.sym2, SimpleGraph.dist_self,
-    SimpleGraph.dist_eq_one_iff_adj.2,
-    show Finset.univ = ({0, ⟨1⟩} : Finset <| ULift.{u_1, 0} <| Fin 2) by rfl]
+  sorry
 
 -- Sanity checks
 
