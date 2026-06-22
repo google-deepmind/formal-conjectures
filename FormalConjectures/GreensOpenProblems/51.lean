@@ -31,7 +31,7 @@ import FormalConjectures.Util.ProblemImports
   Acta Arithmetica 60.2 (1991): 191-202.
 -/
 
-open Filter
+open Filter Real
 open scoped Pointwise
 
 namespace Green51
@@ -39,7 +39,7 @@ namespace Green51
 /-- The group $G = \mathbb{F}_2^n = (Z/2Z)^n$. -/
 abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 
-/-- The maximum dimension of a coset contained in the set `A`. -/
+/-- The maximum dimension of a coset contained in the set $A$. -/
 noncomputable def maxCosetDim (n : ℕ) (A : Set (𝔽₂ n)) : ℕ :=
   sSup { d | ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (v : 𝔽₂ n),
     v +ᵥ (W : Set (𝔽₂ n)) ⊆ A ∧
@@ -60,17 +60,17 @@ of a guaranteed coset.
 theorem green_51 : answer(sorry) = guaranteedMaxCosetDim := by
   sorry
 
-/-- It is known that A + A must contain a coset of dimension ≫_α n [Gr13]. -/
+/-- It is known that $A + A$ must contain a coset of dimension $\gg_\alpha n$ [Gr13]. -/
 @[category research solved, AMS 5 11]
 theorem green_51.lower :
     ∀ (α : ℝ), 0 < α → α ≤ 1 →
     ∃ c > 0, ∀ᶠ (n : ℕ) in atTop, c * (n : ℝ) ≤ guaranteedMaxCosetDim n α := by
   sorry
 
-/-- It is known that A + A need not contain a coset of dimension n - √n [Gr13]. -/
+/-- It is known that $A + A$ need not contain a coset of dimension $n - \sqrt{n}$ [Gr13]. -/
 @[category research solved, AMS 5 11]
 theorem green_51.upper :
-    ∃ α > 0, α ≤ 1 ∧ ∀ᶠ (n : ℕ) in atTop, (guaranteedMaxCosetDim n α : ℝ) < (n : ℝ) - Real.sqrt n := by
+    ∃ α > 0, α ≤ 1 ∧ ∀ᶠ (n : ℕ) in atTop, (guaranteedMaxCosetDim n α : ℝ) < (n : ℝ) - sqrt n := by
   sorry
 
 /--
@@ -81,7 +81,7 @@ Does $A + A$ contain a subspace of co-dimension $O_C(1)$? [Sa11, Question 5.1]
 theorem green_51.one_half :
     answer(sorry) ↔ ∀ (k : ℝ), 0 < k →
       ∃ (c : ℕ), ∀ᶠ (n : ℕ) in atTop,
-        ∀ (α : ℝ), α > (1/2 : ℝ) - k / Real.sqrt (n : ℝ) → α ≤ 1 →
+        ∀ (α : ℝ), α > (1/2 : ℝ) - k / sqrt (n : ℝ) → α ≤ 1 →
           n ≤ guaranteedMaxCosetDim n α + c := by
   sorry
 
@@ -93,20 +93,20 @@ noncomputable def guaranteedMaxAPLength (N : ℕ) (α : ℝ) : ℕ :=
   sInf { sSup {l : ℕ | ∃ s ⊆ (A + A : Set ℕ), s.IsAPOfLength (l : ℕ∞)}
        | (A : Finset ℕ) (_hA : A ⊆ Finset.Icc 1 N) (_h : α * (N : ℝ) ≤ A.card) }
 
-/-- It is known that A + A must contain an arithmetic progression of length ~ exp(c (log N)^{1/2}) [Gr02]. -/
+/-- It is known that $A + A$ must contain an arithmetic progression of length $\sim \exp(c (\log N)^{1/2})$ [Gr02]. -/
 @[category research solved, AMS 5 11]
 theorem green_51.lower_ap :
     ∀ (α : ℝ), 0 < α → α ≤ 1 →
       ∃ c > 0, ∀ᶠ (N : ℕ) in atTop,
-        Real.exp (c * Real.log (N : ℝ) ^ (1/2 : ℝ)) ≤ guaranteedMaxAPLength N α := by
+        exp (c * log (N : ℝ) ^ (1/2 : ℝ)) ≤ guaranteedMaxAPLength N α := by
   sorry
 
-/-- It is known that A + A need not contain an arithmetic progression of length ~ exp(c (log N)^{2/3}) [Ruz91]. -/
+/-- It is known that $A + A$ need not contain an arithmetic progression of length $\sim \exp(c (\log N)^{2/3})$ [Ruz91]. -/
 @[category research solved, AMS 5 11]
 theorem green_51.upper_ap :
     ∀ (α : ℝ), 0 < α → α < 1/2 →
       ∃ c > 0, ∀ᶠ (N : ℕ) in atTop,
-        guaranteedMaxAPLength N α ≤ Real.exp (c * Real.log (N : ℝ) ^ (2/3 : ℝ)) := by
+        guaranteedMaxAPLength N α ≤ exp (c * log (N : ℝ) ^ (2/3 : ℝ)) := by
   sorry
 
 end Green51
