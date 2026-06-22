@@ -45,8 +45,8 @@ noncomputable def primeCount_Ioc_mul_const (C : ℝ) : (ℝ × ℝ) → ℝ :=
 
 /--
 **Erdős Problem 1138.**
-Let $d = d(x) = \max_{p_n < x}(p_{n+1} - p_n)$ be the maximal gap between consecutive primes
-below $x$. Is it true that for every $C > 1$ and $x/2 < y < x$ we have
+Let $x/2 < y < x$ and $C > 1$. If $d = \max_{p_n < x}(p_{n+1} - p_n)$,
+where $p_n$ denotes the $n$-th prime, then is it true that
 $$\pi(y + Cd) - \pi(y) \sim \frac{Cd}{\log y}$$?
 -/
 @[category research open, AMS 11]
