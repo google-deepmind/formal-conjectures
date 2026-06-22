@@ -45,21 +45,6 @@ async function init() {
   renderDetail(theorem, siblings, verso, contributors);
 }
 
-/**
- * Find the Verso constant link for a theorem.
- * extract_names uses "FormalConjectures.ErdosProblems.830.erdos_830.parts.i"
- * Verso uses "Erdos830.erdos_830.parts.i".
- * We try progressively shorter suffixes.
- */
-function findVersoLink(theoremName, constLinks) {
-  const parts = theoremName.split('.');
-  for (let i = 0; i < parts.length; i++) {
-    const suffix = parts.slice(i).join('.');
-    if (constLinks[suffix]) return constLinks[suffix];
-  }
-  return null;
-}
-
 // ─── Verso asset and script loading ────────────────────────────────
 
 /** Helper to load an external script and return a Promise. */
@@ -433,15 +418,29 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
   // Siblings
   const siblingsHTML = siblings.length > 1
-    ? siblings.map(s => {
+    ? siblings.map((s, index) => {
         const isCurrent = s.theorem === theorem.theorem;
         const sCatMeta = FC.getCategoryMeta(s.category);
+        const previewId = `sibling-preview-${index}`;
+        const docHTML = FC.problemDocHTML(s, verso) ||
+          '<p class="problem-preview__empty">No informal statement available.</p>';
         return `
           <div class="sibling-item ${isCurrent ? 'current' : ''}">
-            <span class="badge ${sCatMeta.css}">${FC.escapeHTML(sCatMeta.label)}</span>
-            ${isCurrent
-          ? `<span style="font-weight:500;color:var(--color-text)">${FC.escapeHTML(s.displayTheorem)}</span>`
-          : `<a href="${FC.escapeHTML(FC.theoremURL(s.displayTheorem))}">${FC.escapeHTML(s.displayTheorem)}</a>`}
+            <div class="sibling-item__top">
+              <span class="badge ${sCatMeta.css}">${FC.escapeHTML(sCatMeta.label)}</span>
+              ${isCurrent
+            ? `<span class="sibling-item__name">${FC.escapeHTML(s.displayTheorem)}</span>`
+            : `<a class="sibling-item__name" href="${FC.escapeHTML(FC.theoremURL(s.displayTheorem))}">${FC.escapeHTML(s.displayTheorem)}</a>`}
+              <button class="statement-toggle sibling-item__toggle" type="button" aria-expanded="false" aria-controls="${previewId}">
+                <span class="statement-toggle__text">Show statement</span>
+                <span class="statement-toggle__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="problem-preview sibling-item__preview" id="${previewId}" hidden>
+              <div class="problem-preview__content problem-doc-content">
+                ${docHTML}
+              </div>
+            </div>
           </div>`;
       }).join('\n')
     : '';
@@ -449,8 +448,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
   // --- Verso data ---
   const moduleDocKey = (theorem.sourceUrl || '').replace(/^\/src/, '');
   const moduleDocHTML = verso.moduleDocs[moduleDocKey] || '';
-  const versoLink = findVersoLink(theorem.theorem, verso.constLinks);
-  const docHtml = versoLink && versoLink.docHtml ? versoLink.docHtml : '';
+  const versoLink = FC.findVersoLink(theorem.theorem, verso.constLinks);
+  const docHtml = FC.problemDocHTML(theorem, verso);
   const versoSourceUrl = versoLink
     ? `${_base}/src${versoLink.url}`
     : theorem.sourceUrl
@@ -530,7 +529,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
     ${siblings.length > 1 ? `
     <div class="theorem-detail__section">
-      <div class="detail-label">Other results in this file</div>
+      <div class="detail-label">Other statements in this file</div>
       <div class="siblings-list">
         ${siblingsHTML}
       </div>
@@ -545,8 +544,9 @@ function renderDetail(theorem, siblings, verso, contributors) {
     </nav>
   `;
 
-  // Render LaTeX in docstrings
-  renderLatex();
+  // Render LaTeX in docstrings and wire statement dropdowns
+  FC.setupStatementToggles(detailEl);
+  FC.renderLatex();
 
   // Async: load Verso assets, fetch code block, and initialize hovers
   if (versoLink) {
@@ -575,30 +575,6 @@ function renderDetail(theorem, siblings, verso, contributors) {
       }
     });
   }
-}
-
-// ─── KaTeX rendering ───────────────────────────────────────────────
-
-/**
- * Render LaTeX in docstring elements using KaTeX auto-render.
- */
-function renderLatex() {
-  function doRender() {
-    if (typeof renderMathInElement !== 'function') {
-      setTimeout(doRender, 100);
-      return;
-    }
-    for (const el of document.querySelectorAll('.verso-doc-content')) {
-      renderMathInElement(el, {
-        delimiters: [
-          { left: '$$', right: '$$', display: true },
-          { left: '$', right: '$', display: false },
-        ],
-        throwOnError: false,
-      });
-    }
-  }
-  doRender();
 }
 
 init();
