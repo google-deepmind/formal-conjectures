@@ -19,8 +19,9 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1212
 
-*Reference:* [erdosproblems.com/1212](https://www.erdosproblems.com/1212)
-[Er80] Erdős, P., _Some notes on problems and results in number theory_ (1980), p. 114.
+*References:*
+- [erdosproblems.com/1212](https://www.erdosproblems.com/1212)
+- [Er80] Erdős, P., _Some notes on problems and results in number theory_ (1980), p. 114.
 
 Let $G$ be the graph on the visible lattice points $\{(x,y) \in \mathbb{Z}_{>0}^2 :
 \gcd(x,y) = 1\}$, where two points are joined if they differ by exactly $1$ in exactly one
@@ -45,6 +46,12 @@ exceeding 1 and at least one coordinate composite. -/
 def Valid (p : ℕ × ℕ) : Prop :=
   1 < p.1 ∧ 1 < p.2 ∧ Nat.gcd p.1 p.2 = 1 ∧ (¬ p.1.Prime ∨ ¬ p.2.Prime)
 
+/-- Sanity check for `Valid`: the vertex `(4, 3)` is valid — both coordinates exceed `1`,
+they are coprime, and `4` is composite. -/
+@[category test, AMS 11]
+theorem valid_four_three : Valid (4, 3) := by
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> decide
+
 /-- Two lattice points are adjacent iff they differ by exactly 1 in exactly one coordinate. -/
 def Adj (p q : ℕ × ℕ) : Prop :=
   (p.1 = q.1 ∧ (p.2 = q.2 + 1 ∨ q.2 = p.2 + 1)) ∨
@@ -57,21 +64,18 @@ one coordinate composite?
 -/
 @[category research open, AMS 11]
 theorem erdos_1212 :
-    (∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧
+    answer(sorry) ↔ ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧
       (∀ n, Valid (f n)) ∧
-      Tendsto (fun n => (f n).1 + (f n).2) atTop atTop) ↔ answer(sorry) := by
+      Tendsto (fun n => (f n).1 + (f n).2) atTop atTop := by
   sorry
 
 /- ### Verified partial results (2026): machine-checked cores -/
-
-/-- A natural number is composite. -/
-def Composite (n : ℕ) : Prop := 2 ≤ n ∧ ¬ n.Prime
 
 /-- Core of the composite-anchor reduction: vertical-leg vertices `(a, s)` for
 `b ≤ s ≤ c` are valid vertices of the strengthened problem, given the anchor `a` is
 composite and coprime to the whole leg. -/
 @[category API, AMS 11]
-theorem vertical_leg_valid {a b c : ℕ} (ha : Composite a) (hb : 2 ≤ b)
+theorem vertical_leg_valid {a b c : ℕ} (ha : a.Composite) (hb : 2 ≤ b)
     (hV : ∀ s, b ≤ s → s ≤ c → Nat.gcd a s = 1) :
     ∀ s, b ≤ s → s ≤ c → Valid (a, s) := by
   intro s hs1 hs2
@@ -81,7 +85,7 @@ theorem vertical_leg_valid {a b c : ℕ} (ha : Composite a) (hb : 2 ≤ b)
 /-- Core of the composite-anchor reduction: horizontal-leg vertices `(s, c)` for
 `a ≤ s ≤ b` are valid, given the anchor `c` is composite and coprime to the whole leg. -/
 @[category API, AMS 11]
-theorem horizontal_leg_valid {a b c : ℕ} (hc : Composite c) (ha2 : 2 ≤ a)
+theorem horizontal_leg_valid {a b c : ℕ} (hc : c.Composite) (ha2 : 2 ≤ a)
     (hH : ∀ s, a ≤ s → s ≤ b → Nat.gcd s c = 1) :
     ∀ s, a ≤ s → s ≤ b → Valid (s, c) := by
   intro s hs1 hs2
@@ -151,37 +155,5 @@ theorem left_neighbor_witness_free {P : Finset ℕ} {x y : ℕ} (hP : ∀ p ∈ 
 theorem vertical_neighbor_both_even {x y : ℕ} (h2x : 2 ∣ x) (h2y : ¬ 2 ∣ y) :
     (2 ∣ x ∧ 2 ∣ (y + 1)) ∧ (1 ≤ y → 2 ∣ x ∧ 2 ∣ (y - 1)) := by
   refine ⟨⟨h2x, by omega⟩, fun hy1 => ⟨h2x, by omega⟩⟩
-
-/-- Winding step: a `±1`-step walk attains every value between its first and last entries. -/
-@[category API, AMS 11]
-theorem walk_intermediate_value :
-    ∀ (l : List ℤ), (l.IsChain fun u v => (u - v).natAbs ≤ 1) →
-      ∀ x0 xe : ℤ, l.head? = some x0 → l.getLast? = some xe →
-      ∀ t : ℤ, x0 ≤ t → t ≤ xe → t ∈ l := by
-  intro l
-  induction l with
-  | nil => intro _ x0 xe h0 _ _ _ _; simp at h0
-  | cons u rest ih =>
-    intro hw x0 xe h0 he t ht0 hte
-    simp only [List.head?_cons, Option.some.injEq] at h0
-    subst h0
-    cases rest with
-    | nil =>
-      simp only [List.getLast?_singleton, Option.some.injEq] at he
-      subst he
-      have : t = u := le_antisymm hte ht0
-      simp [this]
-    | cons v rest' =>
-      rw [List.isChain_cons_cons] at hw
-      obtain ⟨hstep, hw'⟩ := hw
-      by_cases hcase : t ≤ u
-      · have : t = u := le_antisymm hcase ht0
-        simp [this]
-      · push_neg at hcase
-        have he' : (v :: rest').getLast? = some xe := by
-          simpa [List.getLast?_cons_cons] using he
-        have hv : v ≤ t := by omega
-        have hmem : t ∈ (v :: rest') := ih hw' v xe (by simp) he' t hv hte
-        exact List.mem_cons_of_mem u hmem
 
 end Erdos1212
