@@ -20,6 +20,10 @@ import FormalConjectures.Util.ProblemImports
 # Erdős Problem 1138
 
 *Reference:* [erdosproblems.com/1138](https://www.erdosproblems.com/1138)
+
+Note that the conjecture has a claimed disproof found at:
+https://sourish-kumrawat.github.io/papers/Erdos_1138.pdf,
+see the discussion section on the Erdos problems website for more information.
 -/
 
 open Nat Filter Asymptotics Real Set
