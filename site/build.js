@@ -714,9 +714,32 @@ async function main() {
   copyStaticTemplate('about.html', 'site/about/index.html');
 
   // ---- Stats page ----
+  let growthPlot = '';
+  const whitePlotPath = path.join('..', 'docbuild', 'out', 'file_counts_white.html');
+  const darkPlotPath = path.join('..', 'docbuild', 'out', 'file_counts_dark.html');
+  if (fs.existsSync(whitePlotPath) && fs.existsSync(darkPlotPath)) {
+    const graphHtmlLight = fs.readFileSync(whitePlotPath, 'utf8');
+    const graphHtmlDark = fs.readFileSync(darkPlotPath, 'utf8');
+    growthPlot = `
+      <style>
+        .theme-dark { display: none; }
+        @media (prefers-color-scheme: dark) {
+          .theme-light { display: none; }
+          .theme-dark { display: block; }
+        }
+      </style>
+      <div class="theme-light">${graphHtmlLight}</div>
+      <div class="theme-dark">${graphHtmlDark}</div>
+    `;
+    console.log('  Loaded repository growth plots.');
+  } else {
+    console.log('  Repository growth plots not found (skipping growth plot).');
+  }
+
   const statsHtml = readTemplate('stats.html');
   writePage('site/stats/index.html', applyBasePath(fill(statsHtml, {
     totalCount:           stats.total,
+    growthPlot:           growthPlot,
     subjectStatusTable:   subjectStatusTableHTML(advancedStats.subjectByCategory),
   })));
 
