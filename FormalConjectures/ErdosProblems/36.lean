@@ -111,7 +111,13 @@ theorem M_one : M 1 = 1 := by
     · exact one_le_overlap (Finset.mem_singleton.mpr rfl)
         (Finset.mem_singleton.mpr rfl)
 
-@[category test, AMS 5 11]
+/--
+For $n = 2$, the set is $\{1, 2, 3, 4\}$. The balanced partition $A = \{1, 4\}, B = \{2, 3\}$
+has all four pairwise differences ($\pm 1, \pm 2$) distinct, so `MaxOverlap = 1`.
+Any balanced partition has both pieces nonempty, so `MaxOverlap \geq 1`.
+-/
+@[category test, AMS 5 11, formal_proof using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/pull/4153/commits/2ce2d6345d0fcf3b023fe35fde9a9a490b131a86"]
 theorem M_two : M 2 = 1 := by
   sorry
 
