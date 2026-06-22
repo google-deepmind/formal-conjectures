@@ -19,9 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 599
 
-*Reference:* [erdosproblems.com/599](https://www.erdosproblems.com/599)
-
-*References:*
+*References:* 
+- [erdosproblems.com/599](https://www.erdosproblems.com/599)
 - [AhBe09] Aharoni, Ron and Berger, Eli, *Menger's theorem for infinite graphs*,
   *Invent. Math.* **176** (2009), 1--62.
 -/
