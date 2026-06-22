@@ -27,7 +27,7 @@ open Nat Filter Asymptotics Real Set
 namespace Erdos1138
 
 /--
-The maximal prime gap below `x`, i.e. $d(x) = \max_{p_n < x}(p_{n+1} - p_n)$, where $p_n$
+The maximal prime gap below $x$, i.e. $d(x) = \max_{p_n < x}(p_{n+1} - p_n)$, where $p_n$
 denotes the $n$-th prime.
 -/
 noncomputable def sup_primeGap (x : ℝ) : ℕ := (Finset.range (primeCounting' ⌈x⌉₊)).sup primeGap
