@@ -30,7 +30,7 @@ def max_gap (k : ℕ) (s : Fin k → ℕ ) : ℕ  :=
    Finset.sup Finset.univ (fun i : Fin (k - 1) =>
       s  ⟨i.val + 1, by omega⟩ - s ⟨i.val, by omega⟩)
 
-/-
+/--
 Let $k\geq2$. Is it true that, for any distinct integers
 $1 < n_1 < \cdots < n_k$ such that $\sum_{i=1}^k \frac{1}{n_i} = 1$,
 we must have $\max(n_{i+1} - n_i) \geq 3$?
