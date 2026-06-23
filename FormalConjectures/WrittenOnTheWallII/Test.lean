@@ -143,7 +143,25 @@ theorem house_avg_deg : averageDegree HouseGraph = 12/5 := by
 
 @[category test, AMS 5]
 theorem house_matching : matchingNumber HouseGraph = 2 := by
-  sorry
+  have hbdd : BddAbove (Set.image (fun M : Subgraph HouseGraph => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
+    refine ⟨(Fintype.card (Fin 5) : ℝ), ?_⟩
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ Fintype.card (Fin 5)
+    have hb := matching_card_bound HouseGraph M hM
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ Fintype.card (Fin 5))
+  unfold matchingNumber
+  apply le_antisymm
+  · apply csSup_le (Set.Nonempty.image _ ⟨⊥, by simp [Subgraph.IsMatching]⟩)
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ 2
+    have hb := matching_card_bound HouseGraph M hM
+    simp only [Fintype.card_fin] at hb
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ 2)
+  · apply le_csSup hbdd
+    refine ⟨HouseGraph.subgraphOfAdj (show HouseGraph.Adj 0 1 by decide) ⊔ HouseGraph.subgraphOfAdj (show HouseGraph.Adj 2 3 by decide), ?_, ?_⟩
+    · exact (Subgraph.IsMatching.subgraphOfAdj _).sup (Subgraph.IsMatching.subgraphOfAdj _)
+        (by rw [support_subgraphOfAdj, support_subgraphOfAdj]; simp [Set.disjoint_left])
+    · simp
 
 @[category test, AMS 5]
 theorem house_residue : residue HouseGraph = 2 := by
@@ -227,7 +245,25 @@ theorem K4_avg_deg : averageDegree K4 = 3 := by
 
 @[category test, AMS 5]
 theorem K4_matching : matchingNumber K4 = 2 := by
-  sorry
+  have hbdd : BddAbove (Set.image (fun M : Subgraph K4 => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
+    refine ⟨(Fintype.card (Fin 4) : ℝ), ?_⟩
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ Fintype.card (Fin 4)
+    have hb := matching_card_bound K4 M hM
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ Fintype.card (Fin 4))
+  unfold matchingNumber
+  apply le_antisymm
+  · apply csSup_le (Set.Nonempty.image _ ⟨⊥, by simp [Subgraph.IsMatching]⟩)
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ 2
+    have hb := matching_card_bound K4 M hM
+    simp only [Fintype.card_fin] at hb
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ 2)
+  · apply le_csSup hbdd
+    refine ⟨K4.subgraphOfAdj (show K4.Adj 0 1 by decide) ⊔ K4.subgraphOfAdj (show K4.Adj 2 3 by decide), ?_, ?_⟩
+    · exact (Subgraph.IsMatching.subgraphOfAdj _).sup (Subgraph.IsMatching.subgraphOfAdj _)
+        (by rw [support_subgraphOfAdj, support_subgraphOfAdj]; simp [Set.disjoint_left])
+    · simp
 
 @[category test, AMS 5]
 theorem K4_residue : residue K4 = 1 := by
@@ -302,7 +338,37 @@ theorem petersen_avg_deg : averageDegree PetersenGraph = 3 := by
 
 @[category test, AMS 5]
 theorem petersen_matching : matchingNumber PetersenGraph = 5 := by
-  sorry
+  have hbdd : BddAbove (Set.image (fun M : Subgraph PetersenGraph => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
+    refine ⟨(Fintype.card (Fin 10) : ℝ), ?_⟩
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ Fintype.card (Fin 10)
+    have hb := matching_card_bound PetersenGraph M hM
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ Fintype.card (Fin 10))
+  unfold matchingNumber
+  apply le_antisymm
+  · apply csSup_le (Set.Nonempty.image _ ⟨⊥, by simp [Subgraph.IsMatching]⟩)
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ 5
+    have hb := matching_card_bound PetersenGraph M hM
+    simp only [Fintype.card_fin] at hb
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ 5)
+  · apply le_csSup hbdd
+    refine ⟨PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 0 5 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 1 6 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 2 7 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 3 8 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 4 9 by decide), ?_, ?_⟩
+    · apply Subgraph.IsMatching.sup
+      · apply Subgraph.IsMatching.sup
+        · apply Subgraph.IsMatching.sup
+          · exact (Subgraph.IsMatching.subgraphOfAdj _).sup (Subgraph.IsMatching.subgraphOfAdj _)
+              (by rw [support_subgraphOfAdj, support_subgraphOfAdj]; simp [Set.disjoint_left])
+          · exact Subgraph.IsMatching.subgraphOfAdj _
+          · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
+            simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
+        · exact Subgraph.IsMatching.subgraphOfAdj _
+        · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
+          simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
+      · exact Subgraph.IsMatching.subgraphOfAdj _
+      · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
+        simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
+    · simp
 
 @[category test, AMS 5]
 theorem petersen_residue : residue PetersenGraph = 3 := by
@@ -377,7 +443,29 @@ theorem C6_avg_deg : averageDegree C6 = 2 := by
 
 @[category test, AMS 5]
 theorem C6_matching : matchingNumber C6 = 3 := by
-  sorry
+  have hbdd : BddAbove (Set.image (fun M : Subgraph C6 => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
+    refine ⟨(Fintype.card (Fin 6) : ℝ), ?_⟩
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ Fintype.card (Fin 6)
+    have hb := matching_card_bound C6 M hM
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ Fintype.card (Fin 6))
+  unfold matchingNumber
+  apply le_antisymm
+  · apply csSup_le (Set.Nonempty.image _ ⟨⊥, by simp [Subgraph.IsMatching]⟩)
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ 3
+    have hb := matching_card_bound C6 M hM
+    simp only [Fintype.card_fin] at hb
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ 3)
+  · apply le_csSup hbdd
+    refine ⟨C6.subgraphOfAdj (show C6.Adj 0 1 by decide) ⊔ C6.subgraphOfAdj (show C6.Adj 2 3 by decide) ⊔ C6.subgraphOfAdj (show C6.Adj 4 5 by decide), ?_, ?_⟩
+    · apply Subgraph.IsMatching.sup
+      · exact (Subgraph.IsMatching.subgraphOfAdj _).sup (Subgraph.IsMatching.subgraphOfAdj _)
+          (by rw [support_subgraphOfAdj, support_subgraphOfAdj]; simp [Set.disjoint_left])
+      · exact Subgraph.IsMatching.subgraphOfAdj _
+      · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
+        simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
+    · simp
 
 @[category test, AMS 5]
 theorem C6_residue : residue C6 = 2 := by
@@ -476,7 +564,40 @@ theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
 
 @[category test, AMS 5]
 theorem Star5_matching : matchingNumber Star5 = 1 := by
-  sorry
+  have hle : ∀ M : Subgraph Star5, M.IsMatching → M.edgeSet.toFinset.card ≤ 1 := by
+    intro M hM
+    have hcenter : ∀ e ∈ M.edgeSet, (Sum.inl 0 : Fin 1 ⊕ Fin 5) ∈ e := by
+      intro e he
+      induction e using Sym2.inductionOn with | _ a b =>
+      rw [Subgraph.mem_edgeSet] at he
+      have hadj := he.adj_sub
+      simp only [Star5, completeBipartiteGraph] at hadj
+      rw [Sym2.mem_iff]
+      rcases hadj with ⟨ha, _⟩ | ⟨_, hb⟩
+      · left; obtain ⟨a', rfl⟩ := Sum.isLeft_iff.mp ha; exact congrArg Sum.inl (Subsingleton.elim 0 a')
+      · right; obtain ⟨b', rfl⟩ := Sum.isLeft_iff.mp hb; exact congrArg Sum.inl (Subsingleton.elim 0 b')
+    rw [Finset.card_le_one]
+    intro e he f hf
+    rw [Set.mem_toFinset] at he hf
+    obtain ⟨y, rfl⟩ := Sym2.mem_iff_exists.mp (hcenter e he)
+    obtain ⟨z, rfl⟩ := Sym2.mem_iff_exists.mp (hcenter f hf)
+    rw [Subgraph.mem_edgeSet] at he hf
+    rw [hM.eq_of_adj_left he hf]
+  have hbdd : BddAbove (Set.image (fun M : Subgraph Star5 => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
+    refine ⟨1, ?_⟩
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ 1
+    exact_mod_cast hle M hM
+  unfold matchingNumber
+  apply le_antisymm
+  · apply csSup_le (Set.Nonempty.image _ ⟨⊥, by simp [Subgraph.IsMatching]⟩)
+    rintro x ⟨M, hM, rfl⟩
+    show (M.edgeSet.toFinset.card : ℝ) ≤ 1
+    exact_mod_cast hle M hM
+  · apply le_csSup hbdd
+    refine ⟨Star5.subgraphOfAdj (show Star5.Adj (Sum.inl 0) (Sum.inr 0) by simp [Star5, completeBipartiteGraph]), ?_, ?_⟩
+    · exact Subgraph.IsMatching.subgraphOfAdj _
+    · simp
 
 @[category test, AMS 5]
 theorem Star5_residue : residue Star5 = 5 := by
