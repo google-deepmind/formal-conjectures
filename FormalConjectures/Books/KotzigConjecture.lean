@@ -35,7 +35,7 @@ open SimpleGraph
 For any tree $T$ with $n$ edges, the complete graph $K_{2n+1}$ decomposes into
 $2n+1$ edge-disjoint copies of $T$ via cyclic shifts of a single embedding.
 
-The $2n+1$ copies are `f 0, f 1, …, f (2n)` where `f i v = f 0 v + i` for all vertices
+The $2n+1$ copies are $f_0, f_1, \dots, f_{2n}$ where $f_i(v) = f_0(v) + i$ for all vertices
 $v$ — each copy is obtained by adding $i$ (mod $2n+1$) to every vertex of the base copy.
 This is strictly stronger than `RingelConjecture.ringel_conjecture`.
 -/
