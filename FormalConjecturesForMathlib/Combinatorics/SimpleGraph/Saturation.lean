@@ -15,53 +15,28 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.Finset.Powerset
 public import Mathlib.Data.Nat.Lattice
 public import Mathlib.Order.ConditionallyCompleteLattice.Finset
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
 
 @[expose] public section
 
 /-!
-Maximal matchings and the saturation number
-
-This file introduces maximal matchings (described as finite sets of edges) and
-the saturation number of a graph.
+The saturation number of a graph.
 
 Main definitions
 
-* `SimpleGraph.IsEdgeMatching`        : a finite set of edges forming a matching.
-* `SimpleGraph.IsMaximalEdgeMatching` : a matching to which no edge can be added.
-* `SimpleGraph.saturationNumber`      : the saturation number `μ*(G)`, the
-  minimum size of a maximal matching.
+* `SimpleGraph.saturationNumber`   : the saturation number `μ*(G)`, the minimum
+  size of a maximal matching.
+* `SimpleGraph.computable_sat_num` : a computable companion definition.
+* `SimpleGraph.sat_num_eq_computable` : bridge equation
+  `saturationNumber G = computable_sat_num G`.
 -/
 
 namespace SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
-
-/-! ### Matchings as edge sets -/
-
-/-- A finite set of edges `M` is a *matching* of `G` if every element of `M` is
-an edge of `G` and any two edges of `M` are equal or share no vertex (no vertex
-is covered twice). -/
-def IsEdgeMatching (G : SimpleGraph α) (M : Finset (Sym2 α)) : Prop :=
-  (∀ e ∈ M, e ∈ G.edgeSet) ∧
-    ∀ e₁ ∈ M, ∀ e₂ ∈ M, e₁ = e₂ ∨ ∀ v : α, ¬ (v ∈ e₁ ∧ v ∈ e₂)
-
-instance (G : SimpleGraph α) [DecidableRel G.Adj] (M : Finset (Sym2 α)) :
-    Decidable (G.IsEdgeMatching M) := by
-  unfold IsEdgeMatching; infer_instance
-
-/-- A matching `M` of `G` is *maximal* if no further edge of `G` can be added to
-`M` while keeping the matching property. -/
-def IsMaximalEdgeMatching (G : SimpleGraph α) (M : Finset (Sym2 α)) : Prop :=
-  G.IsEdgeMatching M ∧
-    ∀ e ∈ G.edgeSet, e ∉ M → ¬ G.IsEdgeMatching (insert e M)
-
-instance (G : SimpleGraph α) [DecidableRel G.Adj] (M : Finset (Sym2 α)) :
-    Decidable (G.IsMaximalEdgeMatching M) := by
-  unfold IsMaximalEdgeMatching; infer_instance
 
 /-! ### Saturation number -/
 

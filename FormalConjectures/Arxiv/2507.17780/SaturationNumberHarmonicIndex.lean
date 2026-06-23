@@ -27,16 +27,16 @@ TxGraffiti is an automated conjecturing program, a successor of Fajtlowicz's
 *Graffiti* and DeLaViña's *Graffiti.pc*. Conjecture 4 in the cited collection
 asserts a bound between two graph invariants:
 
-* the *saturation number* `μ*(G)` (`SimpleGraph.saturationNumber`), the minimum
-  number of edges in a maximal matching of `G`;
-* the *harmonic index* `H(G)` (`SimpleGraph.harmonicIndex`),
-  `∑_{uv ∈ E(G)} 2 / (deg u + deg v)`.
+* the *saturation number* $\mu^*(G)$ (`SimpleGraph.saturationNumber`), the
+  minimum number of edges in a maximal matching of $G$;
+* the *harmonic index* $H(G)$ (`SimpleGraph.harmonicIndex`),
+  $\sum_{uv \in E(G)} 2 / (\deg u + \deg v)$.
 
 The conjecture is **false**. It was first refuted by Bıyıkoğlu, who exhibited a
 family of counterexamples — a disjoint union of edges joined to an independent
-set — with unbounded ratio `μ*/H`. That the smallest counterexample has order
-`9`, namely the friendship graph `F₄` formalised below, and that the windmill
-family has an exact limiting ratio, are established in Gupta.
+set — with unbounded ratio $\mu^*/H$. That the smallest counterexample has
+order $9$, namely the friendship graph $F_4$ formalised below, and that the
+windmill family has an exact limiting ratio, are established in Gupta.
 
 *References:*
 - [A Note on the TxGraffiti Conjecture about Harmonic Index and Minimum Maximal
@@ -44,17 +44,17 @@ family has an exact limiting ratio, are established in Gupta.
   *MATCH Commun. Math. Comput. Chem.* **96** (2026), no. 3, 1097–1099 — the
   first refutation.
 - [The saturation number is not bounded by the harmonic
-  index](https://arxiv.org/abs/2606.15761), C. Gupta — the order-`9` minimality
-  of `F₄` (formalised below) and the exact windmill limit.
+  index](https://arxiv.org/abs/2606.15761), C. Gupta — the order-$9$
+  minimality of $F_4$ (formalised below) and the exact windmill limit.
 -/
 
 open SimpleGraph
 
 namespace Arxiv.«2507.17780»
 
-/-- The friendship graph `F₄`: a hub vertex `0` joined to four triangles, whose
-rims are the pairs `(1, 2)`, `(3, 4)`, `(5, 6)`, `(7, 8)`. It has `12` edges on
-`9` vertices (`8` spokes and `4` rim edges). -/
+/-- The friendship graph $F_4$: a hub vertex $0$ joined to four triangles, whose
+rims are the pairs $\{1,2\}, \{3,4\}, \{5,6\}, \{7,8\}$. It has $12$ edges on
+$9$ vertices ($8$ spokes and $4$ rim edges). -/
 def friendshipF4 : SimpleGraph (Fin 9) := fromEdgeSet {
   s(0, 1), s(0, 2), s(0, 3), s(0, 4), s(0, 5), s(0, 6), s(0, 7), s(0, 8),
   s(1, 2), s(3, 4), s(5, 6), s(7, 8) }
@@ -63,25 +63,26 @@ instance : DecidableRel friendshipF4.Adj := by unfold friendshipF4; infer_instan
 
 /--
 TxGraffiti [Conjecture 4](https://arxiv.org/abs/2507.17780):
-for every nontrivial connected graph `G`, the saturation number is at most the
-harmonic index, `μ*(G) ≤ H(G)`.
+for every nontrivial connected graph $G$, the saturation number is at most
+the harmonic index, $\mu^*(G) \le H(G)$.
 
 This conjecture is **FALSE**.
 
 **Counterexample.**
-The friendship graph `F₄` (`friendshipF4`) is connected and nontrivial, with
-`μ*(F₄) = 4` and `H(F₄) = 18/5`. Indeed the four rim edges
-`{1,2}, {3,4}, {5,6}, {7,8}` form a maximal matching of size `4`, and no maximal
-matching is smaller, so `μ*(F₄) = 4`; the eight spokes contribute
-`2/(8 + 2) = 1/5` each and the four rim edges contribute `2/(2 + 2) = 1/2` each,
-giving `H(F₄) = 8 · 1/5 + 4 · 1/2 = 18/5`. Since `4 > 18/5`, the bound fails.
+The friendship graph $F_4$ (`friendshipF4`) is connected and nontrivial, with
+$\mu^*(F_4) = 4$ and $H(F_4) = 18/5$. Indeed the four rim edges
+$\{1,2\}, \{3,4\}, \{5,6\}, \{7,8\}$ form a maximal matching of size $4$, and
+no maximal matching is smaller, so $\mu^*(F_4) = 4$; the eight spokes
+contribute $2/(8+2) = 1/5$ each and the four rim edges contribute
+$2/(2+2) = 1/2$ each, giving $H(F_4) = 8 \cdot 1/5 + 4 \cdot 1/2 = 18/5$.
+Since $4 > 18/5$, the bound fails.
 
-More generally the friendship graphs `F_k` satisfy `μ*(F_k) = k` and
-`H(F_k) = 2k/(k + 1) + k/2`, so the conjecture fails for every `k ≥ 4`. An
-exhaustive search confirms that `F₄` is the smallest counterexample (order `9`).
-The unbounded separation was first shown by Bıyıkoğlu, whose family of edges
-joined to an independent set makes `μ*/H` arbitrarily large; the windmill
-generalisation and its exact limit appear in
+More generally the friendship graphs $F_k$ satisfy $\mu^*(F_k) = k$ and
+$H(F_k) = 2k/(k+1) + k/2$, so the conjecture fails for every $k \ge 4$. An
+exhaustive search confirms that $F_4$ is the smallest counterexample
+(order $9$). The unbounded separation was first shown by Bıyıkoğlu, whose
+family of edges joined to an independent set makes $\mu^*/H$ arbitrarily
+large; the windmill generalisation and its exact limit appear in
 [arXiv:2606.15761](https://arxiv.org/abs/2606.15761).
 -/
 @[category research solved, AMS 5]
