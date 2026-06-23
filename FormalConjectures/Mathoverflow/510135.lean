@@ -21,30 +21,29 @@ import FormalConjectures.Util.ProblemImports
 # (replacing the traditional n-queens problem with a coin placement problem)
 
 *References:*
-- [mathoverflow/513435](https://mathoverflow.net/questions/510135)
+- [mathoverflow/510135](https://mathoverflow.net/questions/510135)
   asked by user [*Luc Duponcheel*](https://mathoverflow.net/users/513435/lucdupatstackexchange)
-
-Given `n ≥ 4` and `0 ≤ c ≤ n`,
-it is always possible to place `n * c` coins on an `n × n` board such that
-no row, column, upward diagonal, or downward diagonal
-contains more than `c` coins.
-Each cell can hold at most 1 coin.
-
-This generalizes the traditional n-queens problem
-(which corresponds to `c = 1`).
 -/
 
-namespace Mathoverflow513435
-
-variable {n : ℕ} (hn : n ≥ 4) {c : ℕ} (hc : c ≤ n)
+namespace Mathoverflow510135
 
 /--
+Given $n \geq 4$ and $0 \leq c \leq n$,
+it is always possible to place $n \cdot c$ coins on an $n \times n$ board such that
+no row, column, upward diagonal, or downward diagonal
+contains more than $c$ coins.
+Each cell can hold at most $1$ coin.
+
+This generalizes the traditional $n$-queens problem
+(which corresponds to $c = 1$).
+
 A board is encoded as a `Matrix (Fin n) (Fin n) ℕ`
   `1`  indicates a  coin being present
   `0` indicates no coin being present
 -/
 @[category research open, AMS 5]
 theorem n_c_coins_placement_conjecture : answer(sorry) ↔
+  ∀ᵉ (n : ℕ) (hn : n ≥ 4) (c : ℕ) (hc : c ≤ n),
     ∃ (board : Matrix (Fin n) (Fin n) ℕ),
       let rc (i : Fin n) :=
         ∑ j : Fin n, board i j
@@ -68,6 +67,8 @@ theorem n_c_coins_placement_conjecture : answer(sorry) ↔
       (∀ k : ℤ, udc k ≤ c) ∧
       -- The board count is equal to `n * c`.
       bc = n * c
-  := by sorry
+  := by
+       sorry
 
-end Mathoverflow513435
+end Mathoverflow510135
+
