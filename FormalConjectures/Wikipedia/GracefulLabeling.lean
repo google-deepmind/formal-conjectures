@@ -28,7 +28,8 @@ namespace GracefulLabeling
 
 open SimpleGraph
 
-example :
+@[category test, AMS 5]
+lemma graceful_tree_one_vertex :
     let T : SimpleGraph Unit := ⊥
     let m := T.edgeFinset.card
     ∃ f : Unit → ℕ,
@@ -44,7 +45,8 @@ example :
   refine ⟨fun _ _ _ => rfl, fun _ => Nat.zero_le _, ?_⟩
   simp [m, T]
 
-example :
+@[category test, AMS 5]
+lemma graceful_tree_two_vertex :
     let T : SimpleGraph (Fin 2) := ⊤
     let m := T.edgeFinset.card
     ∃ f : Fin 2 → ℕ,
