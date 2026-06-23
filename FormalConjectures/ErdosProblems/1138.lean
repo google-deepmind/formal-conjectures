@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1138
 
-*References:* 
+*References:*
 - [erdosproblems.com/1138](https://www.erdosproblems.com/1138)
 - [Va99] Vardi, I., Prime census. (1999).
 - [Kum26] Kumrawat, S., [Disproof of Erdős Problem 1138](https://sourish-kumrawat.github.io/papers/Erdos_1138.pdf).
@@ -56,8 +56,9 @@ Let $x/2 < y < x$ and $C > 1$. If $d = \max_{p_n < x}(p_{n+1} - p_n)$,
 where $p_n$ denotes the $n$-th prime, then is it true that
 $$\pi(y + Cd) - \pi(y) \sim \frac{Cd}{\log y}$$?
 -/
-@[category research open, AMS 11]
-theorem erdos_1138 : answer(sorry) ↔ ∀C > 1,
+@[category research solved, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/YanYablonovskiy/formal-conjectures/blob/7c134317104d3b98ecc751afbb79ec0adddf8e7c/FormalConjectures/ErdosProblems/1138a.lean#L496"]
+theorem erdos_1138 : answer(False) ↔ ∀C > 1,
     primeCount_Ioc_mul_const C ~[snd_gt_half_fst] fun (x, y) ↦
       C * (sup_primeGap x) / Real.log y := by
   sorry
