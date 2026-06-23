@@ -91,15 +91,26 @@ theorem house_avg_dist : averageDistance HouseGraph = 7/5 := by
 
 @[category test, AMS 5]
 theorem house_diameter : ediam HouseGraph = 2 := by
-  sorry
+  rw [ediam_eq_computable HouseGraph (by decide)]
+  exact_mod_cast (by decide +native : computable_ediam HouseGraph = 2)
 
 @[category test, AMS 5]
 theorem house_radius : radius HouseGraph = 2 := by
-  sorry
+  rw [radius_eq_computable HouseGraph (by decide)]
+  exact_mod_cast (by decide +native : computable_radius HouseGraph = 2)
 
 @[category test, AMS 5]
 theorem house_girth : HouseGraph.girth = 3 := by
-  sorry
+  have hcyc : (Walk.cons (show HouseGraph.Adj 2 3 by decide)
+      (Walk.cons (show HouseGraph.Adj 3 4 by decide)
+      (Walk.cons (show HouseGraph.Adj 4 2 by decide) Walk.nil))).IsCycle := by
+    rw [Walk.isCycle_def]
+    refine ⟨?_, ?_, ?_⟩
+    · rw [Walk.isTrail_def]; decide
+    · simp
+    · decide
+  refine le_antisymm ?_ (three_le_girth (fun hac => hac _ hcyc))
+  simpa using girth_le_length hcyc
 
 @[category test, AMS 5]
 theorem house_order : Fintype.card ↥(⊤ : Subgraph HouseGraph).verts = 5 := by
@@ -164,15 +175,26 @@ theorem K4_avg_dist : averageDistance K4 = 1 := by
 
 @[category test, AMS 5]
 theorem K4_diameter : ediam K4 = 1 := by
-  sorry
+  rw [ediam_eq_computable K4 (by decide)]
+  exact_mod_cast (by decide +native : computable_ediam K4 = 1)
 
 @[category test, AMS 5]
 theorem K4_radius : radius K4 = 1 := by
-  sorry
+  rw [radius_eq_computable K4 (by decide)]
+  exact_mod_cast (by decide +native : computable_radius K4 = 1)
 
 @[category test, AMS 5]
 theorem K4_girth : K4.girth = 3 := by
-  sorry
+  have hcyc : (Walk.cons (show K4.Adj 0 1 by decide)
+      (Walk.cons (show K4.Adj 1 2 by decide)
+      (Walk.cons (show K4.Adj 2 0 by decide) Walk.nil))).IsCycle := by
+    rw [Walk.isCycle_def]
+    refine ⟨?_, ?_, ?_⟩
+    · rw [Walk.isTrail_def]; decide
+    · simp
+    · decide
+  refine le_antisymm ?_ (three_le_girth (fun hac => hac _ hcyc))
+  simpa using girth_le_length hcyc
 
 @[category test, AMS 5]
 theorem K4_order : Fintype.card ↥(⊤ : Subgraph K4).verts = 4 := by
@@ -237,11 +259,13 @@ theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
 
 @[category test, AMS 5]
 theorem petersen_diameter : ediam PetersenGraph = 2 := by
-  sorry
+  rw [ediam_eq_computable PetersenGraph (by decide)]
+  exact_mod_cast (by decide +native : computable_ediam PetersenGraph = 2)
 
 @[category test, AMS 5]
 theorem petersen_radius : radius PetersenGraph = 2 := by
-  sorry
+  rw [radius_eq_computable PetersenGraph (by decide)]
+  exact_mod_cast (by decide +native : computable_radius PetersenGraph = 2)
 
 @[category test, AMS 5]
 theorem petersen_girth : PetersenGraph.girth = 5 := by
@@ -310,11 +334,13 @@ theorem C6_avg_dist : averageDistance C6 = 9/5 := by
 
 @[category test, AMS 5]
 theorem C6_diameter : ediam C6 = 3 := by
-  sorry
+  rw [ediam_eq_computable C6 (by decide)]
+  exact_mod_cast (by decide +native : computable_ediam C6 = 3)
 
 @[category test, AMS 5]
 theorem C6_radius : radius C6 = 3 := by
-  sorry
+  rw [radius_eq_computable C6 (by decide)]
+  exact_mod_cast (by decide +native : computable_radius C6 = 3)
 
 @[category test, AMS 5]
 theorem C6_girth : C6.girth = 6 := by
@@ -382,15 +408,42 @@ theorem Star5_avg_dist : averageDistance Star5 = 5/3 := by
 
 @[category test, AMS 5]
 theorem Star5_diameter : ediam Star5 = 2 := by
-  sorry
+  rw [ediam_eq_computable Star5 (by decide)]
+  exact_mod_cast (by decide +native : computable_ediam Star5 = 2)
 
 @[category test, AMS 5]
 theorem Star5_radius : radius Star5 = 1 := by
-  sorry
+  rw [radius_eq_computable Star5 (by decide)]
+  exact_mod_cast (by decide +native : computable_radius Star5 = 1)
 
 @[category test, AMS 5]
 theorem Star5_girth : Star5.egirth = ⊤ := by
-  sorry
+  rw [egirth_eq_top]
+  have key : ∀ (b : Fin 5) (c : Star5.Walk (Sum.inr b) (Sum.inr b)), ¬ c.IsCycle := by
+    intro b c hc
+    have h1 := c.adj_snd hc.not_nil
+    have h2 := c.adj_penultimate hc.not_nil
+    have hs : c.snd.isLeft := by
+      simp only [Star5, completeBipartiteGraph, Sum.isRight_inr, Sum.isLeft_inr] at h1
+      tauto
+    have hp : c.penultimate.isLeft := by
+      simp only [Star5, completeBipartiteGraph, Sum.isRight_inr, Sum.isLeft_inr] at h2
+      tauto
+    apply hc.snd_ne_penultimate
+    obtain ⟨x, hx⟩ := Sum.isLeft_iff.mp hs
+    obtain ⟨y, hy⟩ := Sum.isLeft_iff.mp hp
+    rw [hx, hy, Subsingleton.elim x y]
+  intro v c hc
+  cases v with
+  | inr b => exact key b c hc
+  | inl a =>
+    have h1 := c.adj_snd hc.not_nil
+    obtain ⟨b, hb⟩ : ∃ b, c.snd = Sum.inr b := by
+      rcases hsnd : c.snd with x | y
+      · rw [hsnd] at h1; simp [Star5, completeBipartiteGraph] at h1
+      · exact ⟨y, rfl⟩
+    have hmem : Sum.inr b ∈ c.support := hb ▸ List.mem_of_mem_tail (c.snd_mem_tail_support hc.not_nil)
+    exact key b (c.rotate hmem) (hc.rotate hmem)
 
 @[category test, AMS 5]
 theorem Star5_order : Fintype.card ↥(⊤ : Subgraph Star5).verts = 6 := by
