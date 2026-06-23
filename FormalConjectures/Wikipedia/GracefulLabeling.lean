@@ -21,21 +21,52 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [Wikipedia/Graceful_labeling](https://en.wikipedia.org/wiki/Graceful_labeling)
 
-A graceful labeling of a graph `G` with `m` edges is an injective vertex labeling
-`f : V → {0, …, m}` such that the induced edge labels `{|f(u) - f(v)| : {u,v} ∈ E(G)}`
-are exactly `{1, …, m}`. Conjectured by Ringel (1963) and Kotzig; formalized by Rosa (1967).
+Conjectured by Ringel (1963) and Kotzig; formalized by Rosa (1967).
 -/
 
 namespace GracefulLabeling
 
 open SimpleGraph
 
+lemma graceful_tree_one_vertex :
+    let T : SimpleGraph Unit := ⊥
+    let m := T.edgeFinset.card
+    ∃ f : Unit → ℕ,
+      Function.Injective f ∧
+      (∀ v, f v ≤ m) ∧
+      T.edgeFinset.image (fun e =>
+        e.lift ⟨fun u v => Int.natAbs ((f u : ℤ) - (f v : ℤ)),
+                fun u v => by
+                  show ((f u : ℤ) - f v).natAbs = ((f v : ℤ) - f u).natAbs
+                  rw [← Int.natAbs_neg, neg_sub]⟩) = Finset.Icc 1 m := by
+  intro T m
+  use fun _ => 0
+  refine ⟨fun _ _ _ => rfl, fun _ => le_refl _, ?_⟩
+  simp [m, T]
+
+lemma graceful_tree_two_vertex :
+    let T : SimpleGraph (Fin 2) := ⊤
+    let m := T.edgeFinset.card
+    ∃ f : Fin 2 → ℕ,
+      Function.Injective f ∧
+      (∀ v, f v ≤ m) ∧
+      T.edgeFinset.image (fun e =>
+        e.lift ⟨fun u v => Int.natAbs ((f u : ℤ) - (f v : ℤ)),
+                fun u v => by
+                  show ((f u : ℤ) - f v).natAbs = ((f v : ℤ) - f u).natAbs
+                  rw [← Int.natAbs_neg, neg_sub]⟩) = Finset.Icc 1 m := by
+  intro T m
+  use Fin.val
+  refine ⟨Fin.val_injective, by decide, ?_⟩
+  revert m T
+  decide
+
 /--
 Every tree admits a graceful labeling.
 
-A graceful labeling of a tree `T` with `m` edges is an injective map `f : V → {0, …, m}`
-such that the multiset of absolute differences `|f(u) - f(v)|` over edges `{u,v}` of `T`
-equals `{1, …, m}`.
+A graceful labeling of a tree $T$ with $m$ edges is an injective map $f : V \to \{0, \dots, m\}$
+such that the multiset of absolute differences $|f(u) - f(v)|$ over edges $\{u,v\}$ of $T$
+equals $\{1, \dots, m\}$.
 -/
 @[category research open, AMS 5]
 theorem graceful_tree_conjecture {V : Type*} [Fintype V] [DecidableEq V]
