@@ -95,7 +95,11 @@ noncomputable def numTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj]
   ((G.cliqueFinset 3).filter (fun s => v ∈ s)).card
 
 /-- The length of a graph: the square root of the sum of the squares of degrees. -/
-noncomputable def length (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
+noncomputable def degreeL2Norm (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   Real.sqrt (∑ v, (G.degree v : ℝ) ^ 2)
+
+/-- The number of vertices of degree k in `G`. -/
+def countDegreeK (G : SimpleGraph α) [DecidableRel G.Adj] (k : ℕ) : ℕ :=
+  (Finset.univ.filter (fun v => G.degree v = k)).card
 
 end SimpleGraph
