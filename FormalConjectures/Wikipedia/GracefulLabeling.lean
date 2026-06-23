@@ -28,7 +28,7 @@ namespace GracefulLabeling
 
 open SimpleGraph
 
-lemma graceful_tree_one_vertex :
+example :
     let T : SimpleGraph Unit := ⊥
     let m := T.edgeFinset.card
     ∃ f : Unit → ℕ,
@@ -41,10 +41,10 @@ lemma graceful_tree_one_vertex :
                   rw [← Int.natAbs_neg, neg_sub]⟩) = Finset.Icc 1 m := by
   intro T m
   use fun _ => 0
-  refine ⟨fun _ _ _ => rfl, fun _ => le_refl _, ?_⟩
+  refine ⟨fun _ _ _ => rfl, fun _ => Nat.zero_le _, ?_⟩
   simp [m, T]
 
-lemma graceful_tree_two_vertex :
+example :
     let T : SimpleGraph (Fin 2) := ⊤
     let m := T.edgeFinset.card
     ∃ f : Fin 2 → ℕ,
