@@ -21,24 +21,13 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/700](https://www.erdosproblems.com/700)
 
-Let
-$$f(n) = \min_{1 < k \le n/2} \gcd\left(n, \binom{n}{k}\right).$$
+A problem of Erdős and Szekeres [ErSz78].
 
-* **(a)** Characterise those composite $n$ such that $f(n) = n / P(n)$, where $P(n)$ is the
-  largest prime dividing $n$.
-* **(b)** Are there infinitely many composite $n$ such that $f(n) > n^{1/2}$?
-* **(c)** Is it true that, for every composite $n$, $f(n) \ll_A n / (\log n)^A$ for every $A > 0$?
-
-This is a problem of Erdős and Szekeres [ErSz78], who introduce `f`, record the facts
-`f(p^a) = p` and `f(pq) = p` (formalised below as `erdos_700.variants.prime_pow` and
-`erdos_700.variants.prime_mul`), compute e.g. `f(30) = 6`, note strict examples such as
-`30, 70, 154`, remark that they cannot prove there are infinitely many composite `n` with
-`f(n) > n^{1/2}` (part (b)), and prove the bound `f(n) ≤ (1 + o(1)) n / \log n`. The sequence
-`f` is [OEIS A091963](https://oeis.org/A091963) (see also Guy, *Unsolved Problems in Number
-Theory*, B31, B33). All three parts are recorded as open on erdosproblems.com.
-
-[ErSz78] Erdős, P. and Szekeres, G., _Some number theoretic problems on binomial coefficients_.
-Austral. Math. Soc. Gaz. (1978), 97-99.
+*References:*
+ * [ErSz78] Erdős, P. and Szekeres, G., _Some number theoretic problems on binomial coefficients_,
+   Austral. Math. Soc. Gaz. (1978), 97-99.
+ * [OEIS A091963](https://oeis.org/A091963)
+ * Guy, R. K., _Unsolved Problems in Number Theory_, B31, B33.
 -/
 
 namespace Erdos700
@@ -70,25 +59,42 @@ lemma f_mem (n k : ℕ) (h1 : 1 < k) (h2 : k ≤ n / 2) :
 lemma f_le (n k : ℕ) (h1 : 1 < k) (h2 : k ≤ n / 2) :
     f n ≤ Nat.gcd n (n.choose k) := Nat.sInf_le (f_mem n k h1 h2)
 
-/-- **(a)** Characterise those composite `n` with `f(n) = n / P(n)`. The characterisation itself
-is open; we state it as the (unknown) predicate that is equivalent to being such an `n`. -/
+/-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$ and let $P(n)$ be the largest prime
+dividing $n$.
+
+**(a)** Characterise those composite $n$ such that $f(n) = n/P(n)$.
+
+Erdős–Szekeres [ErSz78] note that $f(n) = n/P(n)$ when $n$ is a product of two primes
+(`erdos_700.variants.prime_mul`), with $n = 30$ a further example. The characterisation itself is
+open; we state it as the (unknown) predicate that is equivalent to being such an `n`. -/
 @[category research open, AMS 11]
 theorem erdos_700.parts.i (n : ℕ) (hn : ¬ n.Prime) (hn1 : 1 < n) :
     f n = n / P n ↔ answer(sorry) := by
   sorry
 
-/-- **(b)** There are infinitely many composite `n` such that `f(n) > n^{1/2}`, equivalently
-`f(n)^2 > n`. -/
+/-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$.
+
+**(b)** Are there infinitely many composite $n$ such that $f(n) > n^{1/2}$?
+
+Erdős–Szekeres [ErSz78] could not prove this. (Since $f(n) \ge p(n)$, the least prime factor of
+$n$, there are infinitely many $n$ — those of the form $p^2$ — with $f(n) \ge n^{1/2}$; the
+question asks for the strict inequality.) Here $f(n) > n^{1/2}$ is written as `(f n) ^ 2 > n`. -/
 @[category research open, AMS 11]
-theorem erdos_700.parts.ii : {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ (f n) ^ 2 > n}.Infinite := by
+theorem erdos_700.parts.ii :
+    answer(sorry) ↔ {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ (f n) ^ 2 > n}.Infinite := by
   sorry
 
-/-- **(c)** For every `A > 0`, `f(n) ≪_A n / (log n)^A` over all composite `n`: there is a constant
-`C` (depending on `A`) with `f(n) ≤ C · n / (log n)^A` for every composite `n`. -/
+/-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$.
+
+**(c)** Is it true that, for every composite $n$, $f(n) \ll_A n/(\log n)^A$ for every $A > 0$?
+
+Erdős–Szekeres [ErSz78] prove the weaker bound $f(n) \le (1 + o(1)) n/\log n$ (the case $A = 1$).
+Here $f(n) \ll_A n/(\log n)^A$ is spelled out as: for every `A > 0` there is a constant `C`
+(depending on `A`) with `f(n) ≤ C · n/(log n)^A` for every composite `n`. -/
 @[category research open, AMS 11]
 theorem erdos_700.parts.iii :
-    (∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, ¬ n.Prime → 1 < n →
-      (f n : ℝ) ≤ C * (n : ℝ) / (Real.log n) ^ A) ↔ answer(sorry) := by
+    answer(sorry) ↔ (∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, ¬ n.Prime → 1 < n →
+      (f n : ℝ) ≤ C * (n : ℝ) / (Real.log n) ^ A) := by
   sorry
 
 /- ## Proven partial results toward (a) -/
