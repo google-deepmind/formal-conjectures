@@ -58,9 +58,14 @@ def PrimePowerCondition (k : ℕ) : Prop :=
 
 /--
 Conjecture: The gcd condition is equivalent to the prime power condition.
+This has been conjectured by Ralf Stephan.
 
-A formal proof of this statement has been found; see the `formal_proof`
-attribute.
+Both the natural-language proof and its Lean 4 formalization were carried out
+by the KLMM MechMath Agent Team; see the `formal_proof` attribute.
+
+*References:*
+- [Ralf Stephan, *Prove or Disprove. 100 Conjectures from the OEIS*, 2004, Conjecture 17 (arXiv:math/0409509)](https://arxiv.org/abs/math/0409509)
+- [Dakai Guo et al., *A Greatest Common Divisor Criterion of Certain Binomial Coefficients*, 2026 (arXiv:2606.22997)](https://arxiv.org/abs/2606.22997)
 -/
 @[category research solved, AMS 11,
 formal_proof using formal_conjectures at
