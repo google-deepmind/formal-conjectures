@@ -46,8 +46,8 @@ exceeding 1 and at least one coordinate composite. -/
 def Valid (p : ℕ × ℕ) : Prop :=
   1 < p.1 ∧ 1 < p.2 ∧ Nat.gcd p.1 p.2 = 1 ∧ (¬ p.1.Prime ∨ ¬ p.2.Prime)
 
-/-- Sanity check for `Valid`: the vertex `(4, 3)` is valid — both coordinates exceed `1`,
-they are coprime, and `4` is composite. -/
+/-- Sanity check for `Valid`: the vertex $(4, 3)$ is valid — both coordinates exceed $1$,
+they are coprime, and $4$ is composite. -/
 @[category test, AMS 11]
 theorem valid_four_three : Valid (4, 3) := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;> decide
@@ -59,7 +59,7 @@ def Adj (p q : ℕ × ℕ) : Prop :=
 
 /--
 **Erdős Problem 1212** [Er80, p.114]: is there an infinite path through visible lattice
-points, going to infinity, all of whose vertices have both coordinates `> 1` and at least
+points, going to infinity, all of whose vertices have both coordinates $> 1$ and at least
 one coordinate composite?
 -/
 @[category research open, AMS 11]
@@ -71,8 +71,8 @@ theorem erdos_1212 :
 
 /- ### Verified partial results (2026): machine-checked cores -/
 
-/-- Core of the composite-anchor reduction: vertical-leg vertices `(a, s)` for
-`b ≤ s ≤ c` are valid vertices of the strengthened problem, given the anchor `a` is
+/-- Core of the composite-anchor reduction: vertical-leg vertices $(a, s)$ for
+$b \le s \le c$ are valid vertices of the strengthened problem, given the anchor $a$ is
 composite and coprime to the whole leg. -/
 @[category API, AMS 11]
 theorem vertical_leg_valid {a b c : ℕ} (ha : a.Composite) (hb : 2 ≤ b)
@@ -82,8 +82,8 @@ theorem vertical_leg_valid {a b c : ℕ} (ha : a.Composite) (hb : 2 ≤ b)
   have ha2 := ha.1
   exact ⟨by omega, by omega, hV s hs1 hs2, Or.inl ha.2⟩
 
-/-- Core of the composite-anchor reduction: horizontal-leg vertices `(s, c)` for
-`a ≤ s ≤ b` are valid, given the anchor `c` is composite and coprime to the whole leg. -/
+/-- Core of the composite-anchor reduction: horizontal-leg vertices $(s, c)$ for
+$a \le s \le b$ are valid, given the anchor $c$ is composite and coprime to the whole leg. -/
 @[category API, AMS 11]
 theorem horizontal_leg_valid {a b c : ℕ} (hc : c.Composite) (ha2 : 2 ≤ a)
     (hH : ∀ s, a ≤ s → s ≤ b → Nat.gcd s c = 1) :
@@ -92,10 +92,10 @@ theorem horizontal_leg_valid {a b c : ℕ} (hc : c.Composite) (ha2 : 2 ≤ a)
   have hc2 := hc.1
   exact ⟨by omega, by omega, hH s hs1 hs2, Or.inr hc.2⟩
 
-/-- Roughness criterion (sufficiency for the anchor conditions): if `a < s` for all `s` in
-the leg and the leg stays below `a + P⁻(a)`, then `a` is coprime to the whole leg. Stated
-via divisibility: no prime factor of `a` divides any `s` with `a < s < a + p` for all
-prime factors `p` of `a`. -/
+/-- Roughness criterion (sufficiency for the anchor conditions): if $a < s$ for all $s$ in
+the leg and the leg stays below $a + P^-(a)$, then $a$ is coprime to the whole leg. Stated
+via divisibility: no prime factor of $a$ divides any $s$ with $a < s < a + p$ for all
+prime factors $p$ of $a$. -/
 @[category API, AMS 11]
 theorem anchor_coprime_of_short_leg {a s : ℕ} (hs : a < s)
     (h : ∀ p, p.Prime → p ∣ a → s < a + p) : Nat.gcd a s = 1 := by
@@ -120,8 +120,8 @@ theorem anchor_coprime_of_short_leg {a s : ℕ} (hs : a < s)
   omega
 
 /-- Isolation lemma, right neighbour (core of the no-periodic-certificate theorem): if every
-prime in `P` divides `x` and none divides `y`, then no prime of `P` divides either
-coordinate of `(x+1, y)`. -/
+prime in $P$ divides $x$ and none divides $y$, then no prime of $P$ divides either
+coordinate of $(x+1, y)$. -/
 @[category API, AMS 11]
 theorem right_neighbor_witness_free {P : Finset ℕ} {x y : ℕ} (hP : ∀ p ∈ P, p.Prime)
     (hx : ∀ p ∈ P, p ∣ x) (hy : ∀ p ∈ P, ¬ p ∣ y) :
