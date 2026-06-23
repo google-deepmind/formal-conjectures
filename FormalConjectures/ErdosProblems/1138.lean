@@ -19,7 +19,10 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1138
 
-*Reference:* [erdosproblems.com/1138](https://www.erdosproblems.com/1138)
+*References:* 
+- [erdosproblems.com/1138](https://www.erdosproblems.com/1138)
+- [Va99] Vardi, I., Prime census. (1999).
+- [Kum26] Kumrawat, S., [Disproof of Erdős Problem 1138](https://sourish-kumrawat.github.io/papers/Erdos_1138.pdf).
 
 Note that the conjecture has a claimed disproof found at:
 https://sourish-kumrawat.github.io/papers/Erdos_1138.pdf,
