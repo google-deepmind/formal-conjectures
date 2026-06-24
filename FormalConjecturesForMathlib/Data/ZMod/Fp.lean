@@ -36,5 +36,8 @@ abbrev 𝔽₂ (n : ℕ) := 𝔽 2 n
 /-- `𝔽₃ n` is the vector space $\mathbb{F}_3^n$. -/
 abbrev 𝔽₃ (n : ℕ) := 𝔽 3 n
 
+/-- `𝔽₅ n` is the vector space $\mathbb{F}_5^n$. -/
+abbrev 𝔽₅ (n : ℕ) := 𝔽 5 n
+
 /-- `𝔽₇ n` is the vector space $\mathbb{F}_7^n$. -/
 abbrev 𝔽₇ (n : ℕ) := 𝔽 7 n
