@@ -20,6 +20,8 @@ import FormalConjectures.Util.ProblemImports
 # The $S_3$-conjecture (conjugacy classes of distinct sizes)
 
 *References:*
+* W. Zhou, I. Gorshkov, *On $\{2,3,5\}$-groups with conjugacy classes of distinct sizes*,
+  [arXiv:2606.22244](https://arxiv.org/abs/2606.22244) (2026).
 * F. M. Markel, *Groups with many conjugate elements*, J. Algebra **26** (1973), 69–74.
   (Origin of the $S_3$-conjecture.)
 * R. Knörr, W. Lempken, B. Thielcke, *The $S_3$-conjecture for solvable groups*,
