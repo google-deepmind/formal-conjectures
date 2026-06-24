@@ -52,7 +52,8 @@ $$
 -/
 @[category research open, AMS 11 60]
 theorem erdos_520 :
-    answer(sorry) ↔ ∃ c > 0, ∀ (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
+    answer(sorry) ↔ ∃ c > 0, ∀ (Ω : Type) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+      (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
       ∀ᵐ ω, limsup (fun N ↦ ∑ m ≤ N, f m ω / sqrt (N * log (log N))) atTop = c := by
   sorry
 

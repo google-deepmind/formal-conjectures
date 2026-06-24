@@ -42,8 +42,12 @@ WOWII [Conjecture 315](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 Let $G$ be a simple connected graph and let $P$ denote the set of pendant vertices
 (vertices of degree $1$). If $\alpha(G) = |P|$, then $G$ is well totally dominated.
+
+A formal proof of this conjectures has been obtained by Goran Žužić and Moritz Firsching using an
+experimental pipeline.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/9ef80e1a3709ed3eda43d9ed6ff1087681621041/FormalConjectures/WrittenOnTheWallII/GraphConjecture315.lean#L43"]
 theorem conjecture315 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
     (h : G.indepNum = (pendantVertices G).card) :
     IsWellTotallyDominated G := by
