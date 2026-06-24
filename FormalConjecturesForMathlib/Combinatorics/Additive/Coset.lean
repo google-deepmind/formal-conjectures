@@ -13,9 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib
+public import Mathlib
 
+@[expose] public section
 noncomputable def maxCosetDim (K V : Type*) [DivisionRing K] [AddCommGroup V] [Module K V]
     [FiniteDimensional K V] (A : Set V) : ℕ :=
   sSup { Module.finrank K S.direction | (S : AffineSubspace K V) (_h : (S : Set V) ⊆ A) }
