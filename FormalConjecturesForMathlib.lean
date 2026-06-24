@@ -89,6 +89,7 @@ public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
 public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
+public import FormalConjecturesForMathlib.Data.Int.IntermediateValue
 public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Full
 public import FormalConjecturesForMathlib.Data.Nat.Init
