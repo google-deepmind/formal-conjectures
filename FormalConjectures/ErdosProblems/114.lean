@@ -21,25 +21,14 @@ import FormalConjectures.Util.ProblemImports
 
 *Reference:* [erdosproblems.com/114](https://www.erdosproblems.com/114)
 
-### References
+If $p(z) \in \mathbb{C}[z]$ is a monic polynomial of degree $n$, is the length
+of the curve $\{z \in \mathbb{C} : |p(z)| = 1\}$ maximised when
+$p(z)=z^n-1$?
 
-- [EHP58] Erdős, P., Herzog, F., Piranian, G. (1958). *Metric properties of
-  polynomials*. J. Analyse Math. 6, 125--148.
-- [EH99] Eremenko, A., Hayman, W. (1999). *On the length of lemniscates*.
-  Michigan Math. J. 46, 409--415.
-- [Po61] Pommerenke, Ch. (1961). *Uber die Kapazitat ebener Kontinuen*.
-  Math. Ann. 144, 115--120.
-- [Ta25] Tao, T. (2025). *The Erdős--Herzog--Piranian conjecture for large n*.
-- [Me26] Mendoza, K. A. (2026). *Finite-degree verification for the
-  Erdős--Herzog--Piranian lemniscate-length conjecture*.
-  Version doi:10.5281/zenodo.20087919; concept doi:10.5281/zenodo.19184467.
-  Source release: https://github.com/MendozaLab/erdos-experiments/releases/tag/v3.1.0.
-
-### AI disclosure
-
-Lean 4 code in this file was drafted with AI assistance.  The mathematical
-content, external certificate packet, and references are the contributor's
-responsibility.
+Erdős, Herzog, and Piranian [EHP58] asked this problem.  Eremenko and Hayman
+[ErHa99] proved the conjecture for $n=2$.  Tao [Ta25] proved that
+$p(z)=z^n-1$ is the unique maximiser, up to rotation and translation, for all
+sufficiently large $n$.
 -/
 
 open Polynomial MeasureTheory ENNReal Classical
@@ -59,30 +48,14 @@ noncomputable def length (s : Set ℂ) : ℝ≥0∞ :=
 noncomputable def lemniscateLength (p : ℂ[X]) : ℝ≥0∞ :=
   length (levelCurveUnit p)
 
-/--  Among monic complex polynomials
-of degree $n$, $X^n - 1$ maximizes the length of the level-1 lemniscate.
+/-- **Erdős Problem 114** (open conjecture).  Among monic complex polynomials
+of degree $n$, $z^n - 1$ maximizes the length of the level-$1$ lemniscate.
 
 This is the all-degree conjecture and remains open. -/
 @[category research open, AMS 30]
-theorem erdos_114 : answer(sorry) ↔
-    ∀ (n : ℕ) (hn : 1 ≤ n) (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n),
-      lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
-  sorry
-
-/-- **Finite-degree EHP certificate range.**  For $1 \leq n \leq 14$, the polynomial
-$X^n - 1$ maximizes the length of the level-1 lemniscate among monic
-complex polynomials of exact degree $n$.
-
-This statement records a finite, externally certificate-backed result: $n = 1$
-is elementary, $n = 2$ follows from the Eremenko--Hayman treatment, and
-$3 \leq n \leq 14$ is supported by the Mendoza 2026 IEEE-1788 interval certificate
-packet.  The external certificate pipeline is not formalized in this Lean file,
-so the proof body remains `sorry`. -/
-@[category research solved, AMS 30]
-theorem erdos_114_finite_le_14 : answer(True) ↔
-    ∀ (n : ℕ) (hn : 1 ≤ n) (hn14 : n ≤ 14)
-      (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n),
-      lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
+theorem erdos_114 (n : ℕ) (hn : 1 ≤ n)
+    (p : ℂ[X]) (hp : p.Monic) (hp_deg : p.natDegree = n) :
+    lemniscateLength p ≤ lemniscateLength (X ^ n - C (1 : ℂ)) := by
   sorry
 
 end Erdos114
