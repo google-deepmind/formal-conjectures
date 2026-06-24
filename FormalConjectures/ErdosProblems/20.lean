@@ -25,11 +25,6 @@ import FormalConjectures.Util.ProblemImports
 * [ErRa60] Erdős, Paul and Rado, Richard. Intersection theorems for systems of sets.
   J. London Math. Soc. 35 (1960), 85--90.
 
-### AI disclosure
-
-Lean 4 code in this file was drafted with assistance from OpenAI Codex and
-Claude (Anthropic). The mathematical content and references are the author's
-own work.
 -/
 namespace Erdos20
 
