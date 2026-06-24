@@ -68,7 +68,7 @@ theorem n_c_coins_placement_conjecture : answer(sorry) ↔
       -- The board count is equal to `n * c`.
       bc = n * c
   := by
-       sorry
+  sorry
 
 end Mathoverflow510135
 
