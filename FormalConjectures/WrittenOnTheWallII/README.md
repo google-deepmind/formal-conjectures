@@ -26,8 +26,8 @@ the database (either `open` or `resolved`).
    subgraph. Then
    `b(G) ≥ FLOOR( average ecc(v) + maximum l(v) )`, where `ecc(v)` is the
    eccentricity and `l(v)` the independence number of the neighbourhood of `v`.
-8. **Conjecture 34 (open).** For a connected graph `G`, let `path(G)` be the floor of
-   the average distance. Then
+8. **Conjecture 34 (open).** For a connected graph `G`, let `path(G)` be the path number
+   (the number of vertices of a largest induced path). Then
    `path(G) ≥ ceil( distavg(G, center) + distavg(G, periphery) )`.
 9. **Conjecture 40 (open).** If `G` is a nontrivial connected graph then the size of a
    largest induced forest `f(G)` satisfies

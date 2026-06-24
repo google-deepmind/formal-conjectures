@@ -204,12 +204,23 @@ function computeStats(conjectures) {
   const byCollection = {};
   const bySubject = {};
 
+  // Track distinct files (modules) per collection for the "Browse by source" list
+  const filesByCollection = {};
+
   for (const c of conjectures) {
     byCategory[c.category] = (byCategory[c.category] || 0) + 1;
     byCollection[c.collection] = (byCollection[c.collection] || 0) + 1;
     for (const s of c.subjects) {
       bySubject[s.name] = (bySubject[s.name] || 0) + 1;
     }
+    if (!filesByCollection[c.collection]) filesByCollection[c.collection] = new Set();
+    filesByCollection[c.collection].add(c.module);
+  }
+
+  // Convert Sets to counts
+  const fileCountByCollection = {};
+  for (const [col, modules] of Object.entries(filesByCollection)) {
+    fileCountByCollection[col] = modules.size;
   }
 
   return {
@@ -217,6 +228,7 @@ function computeStats(conjectures) {
     byCategory,
     byCollection,
     bySubject,
+    fileCountByCollection,
   };
 }
 
@@ -564,10 +576,13 @@ function categoryStatsHTML(byCategory) {
     .join('\n');
 }
 
-function collectionListHTML(byCollection) {
+function collectionListHTML(byCollection, fileCountByCollection) {
   return Object.entries(byCollection)
     .sort((a, b) => b[1] - a[1])
-    .map(([name, count]) => `<li><a href="/browse/?collection=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
+    .map(([name, count]) => {
+      const files = fileCountByCollection?.[name] || 0;
+      return `<li><a href="/browse/?collection=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${files} files with ${count} statements</span></li>`;
+    })
     .join('\n');
 }
 
@@ -575,7 +590,7 @@ function subjectListHTML(bySubject) {
   return Object.entries(bySubject)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 20) // top 20 subjects on landing page
-    .map(([name, count]) => `<li><a href="/browse/?subject=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
+    .map(([name, count]) => `<li><a href="/browse/?subject=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count} statements</span></li>`)
     .join('\n');
 }
 
@@ -682,7 +697,7 @@ async function main() {
     solvedCount,
     formalCount,
     categoryStats:   categoryStatsHTML(stats.byCategory),
-    collectionList:  collectionListHTML(stats.byCollection),
+    collectionList:  collectionListHTML(stats.byCollection, stats.fileCountByCollection),
     subjectList:     subjectListHTML(stats.bySubject),
   })));
 
@@ -699,9 +714,32 @@ async function main() {
   copyStaticTemplate('about.html', 'site/about/index.html');
 
   // ---- Stats page ----
+  let growthPlot = '';
+  const whitePlotPath = path.join('..', 'docbuild', 'out', 'file_counts_white.html');
+  const darkPlotPath = path.join('..', 'docbuild', 'out', 'file_counts_dark.html');
+  if (fs.existsSync(whitePlotPath) && fs.existsSync(darkPlotPath)) {
+    const graphHtmlLight = fs.readFileSync(whitePlotPath, 'utf8');
+    const graphHtmlDark = fs.readFileSync(darkPlotPath, 'utf8');
+    growthPlot = `
+      <style>
+        .theme-dark { display: none; }
+        @media (prefers-color-scheme: dark) {
+          .theme-light { display: none; }
+          .theme-dark { display: block; }
+        }
+      </style>
+      <div class="theme-light">${graphHtmlLight}</div>
+      <div class="theme-dark">${graphHtmlDark}</div>
+    `;
+    console.log('  Loaded repository growth plots.');
+  } else {
+    console.log('  Repository growth plots not found (skipping growth plot).');
+  }
+
   const statsHtml = readTemplate('stats.html');
   writePage('site/stats/index.html', applyBasePath(fill(statsHtml, {
     totalCount:           stats.total,
+    growthPlot:           growthPlot,
     subjectStatusTable:   subjectStatusTableHTML(advancedStats.subjectByCategory),
   })));
 

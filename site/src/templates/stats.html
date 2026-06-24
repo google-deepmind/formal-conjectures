@@ -30,11 +30,21 @@
 <header class="page-header">
   <div class="container">
     <h1 class="page-header__title">Statistics</h1>
-    <p class="page-header__subtitle">Cross-tabulations and derived metrics across the {{totalCount}} indexed entries.</p>
+    <p class="page-header__subtitle">Cross-tabulations and derived metrics across the {{totalCount}} indexed statements.</p>
   </div>
 </header>
 
 <main>
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">Repository growth</h2>
+      <p class="section__lede">
+        The number of Lean files in Formal Conjectures over time.
+      </p>
+      {{growthPlot}}
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
       <h2 class="section__title">Subject &times; status</h2>
