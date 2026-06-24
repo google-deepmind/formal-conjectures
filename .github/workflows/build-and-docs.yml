@@ -215,6 +215,9 @@ jobs:
           mkdir -p site/data _literate_html docbuild/out
           echo "Downloading conjectures data from $LIVE_URL ..."
           curl -sfL "$LIVE_URL/data/conjectures.json" -o /tmp/live_conjectures.json
+          echo "Downloading growth plots from $LIVE_URL ..."
+          curl -sfL "$LIVE_URL/doc/file_counts_white.html" -o docbuild/out/file_counts_white.html || true
+          curl -sfL "$LIVE_URL/doc/file_counts_dark.html" -o docbuild/out/file_counts_dark.html || true
           node -e "
             const fs = require('fs');
             const data = JSON.parse(fs.readFileSync('/tmp/live_conjectures.json', 'utf8'));

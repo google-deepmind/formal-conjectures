@@ -29,12 +29,6 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 noncomputable def maxEccentricityVertices (G : SimpleGraph α) : Set α :=
   {v : α | G.eccent v = G.ediam}
 
-/-- The set of **boundary vertices** of `G`: vertices whose eccentricity equals the
-maximum eccentricity (the diameter of `G`). This is the `Finset` counterpart of
-`maxEccentricityVertices`. -/
-noncomputable def boundaryVertices (G : SimpleGraph α) : Finset α :=
-  Finset.univ.filter (fun v => G.eccent v = G.ediam)
-
 /-- The average eccentricity of a graph `G`: the mean of `G.eccent v` over all vertices,
 converted to a real number. Returns 0 if the graph has no vertices. -/
 noncomputable def averageEccentricity (G : SimpleGraph α) : ℝ :=

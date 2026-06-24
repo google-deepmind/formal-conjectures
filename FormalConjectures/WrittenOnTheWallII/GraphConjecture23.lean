@@ -42,7 +42,8 @@ and `dist_avg(M, V) = 10`.
 -/
 @[category research solved, AMS 5]
 theorem conjecture23 : answer(False) ↔
-  ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
+  ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+    (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
     let M : Set α := {v | G.degree v = G.maxDegree}
     ⌊(G.indepNum : ℝ) + distavg G M / 2⌋ ≤ (b G : ℝ) := by
   sorry
