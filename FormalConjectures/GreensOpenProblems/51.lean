@@ -36,8 +36,6 @@ open scoped Pointwise
 
 namespace Green51
 
-/-- The group $G = \mathbb{F}_2^n = (Z/2Z)^n$. -/
-abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 
 /-- The maximum dimension of a coset contained in the set $A$. -/
 noncomputable def maxCosetDim (n : ℕ) (A : Set (𝔽₂ n)) : ℕ :=

@@ -104,6 +104,7 @@ public import FormalConjecturesForMathlib.Data.Real.NearestInt
 public import FormalConjecturesForMathlib.Data.Set.Density
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
+public import FormalConjecturesForMathlib.Data.ZMod.Fp
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
