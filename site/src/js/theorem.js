@@ -544,6 +544,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <a href="${FC.escapeHTML(theorem.githubUrl)}" class="btn btn-outline" target="_blank" rel="noopener">
         View on GitHub ↗
       </a>
+      <a href="${_base}/about/#comments" class="btn btn-outline">About comments and votes</a>
     </nav>
   `;
 
