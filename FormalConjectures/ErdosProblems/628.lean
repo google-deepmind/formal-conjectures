@@ -19,10 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 628
 
-Let $G$ be a graph with chromatic number $k$ containing no $K_k$. If $a,b\geq 2$ and $a+b=k+1$
-then must there exist two disjoint subgraphs of $G$ with chromatic numbers $\geq a$ and $\geq b$
-respectively?
-
 *References:*
 - [erdosproblems.com/628](https://www.erdosproblems.com/628)
 - [BKPS09] Balogh, József and Kostochka, Alexandr V. and Prince, Noah and Stiebitz, Michael,
@@ -38,6 +34,11 @@ namespace Erdos628
 
 open SimpleGraph
 
+/--
+Let $G$ be a graph with chromatic number $k$ containing no $K_k$. If $a,b\geq 2$ and $a+b=k+1$
+then must there exist two disjoint subgraphs of $G$ with chromatic numbers $\geq a$ and $\geq b$
+respectively?
+-/
 @[category research open, AMS 5]
 theorem erdos_628 (V : Type*) [Fintype V] (G : SimpleGraph V) (k : ℕ)
     (hG_chrom : G.chromaticNumber = (k : ℕ∞))

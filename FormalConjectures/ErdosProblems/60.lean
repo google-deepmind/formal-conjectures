@@ -19,9 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 60
 
-Does every graph on $n$ vertices with $>\mathrm{ex}(n;C_4)$ edges contain $\gg n^{1/2}$ many
-copies of $C_4$?
-
 *References:*
 - [erdosproblems.com/60](https://www.erdosproblems.com/60)
 - [HeMaYa21] He, J. and Ma, J. and Yang, T., *Some extremal results on 4-cycles*. Journal of
@@ -33,6 +30,10 @@ namespace Erdos60
 open SimpleGraph Filter
 open scoped Real
 
+/--
+Does every graph on $n$ vertices with $>\mathrm{ex}(n;C_4)$ edges contain $\gg n^{1/2}$ many
+copies of $C_4$?
+-/
 @[category research open, AMS 5]
 theorem erdos_60 :
     ∃ c : ℝ, c > 0 ∧
