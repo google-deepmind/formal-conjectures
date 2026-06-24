@@ -36,7 +36,7 @@ open SimpleGraph
 
 namespace WrittenOnTheWallII.Test
 
-open Classical
+open Classical Polynomial
 
 -- Bridge theorems for Sym2/edist-based invariants:
 -- All 6 (indep_num, dom_num, dist, wiener, avg_dist, szeged) are proved in
@@ -171,9 +171,127 @@ theorem house_residue : residue HouseGraph = 2 := by
 theorem house_annihilation : annihilationNumber HouseGraph = 3 := by
   decide +native
 
+/-- The cubic factor `X³ - 2X² - 2X + 2` of the house graph's characteristic polynomial.
+Its three real roots (one negative, two positive) are irrational. -/
+noncomputable def houseCub : ℝ[X] := X ^ 3 - 2 * X ^ 2 - 2 * X + 2
+
+@[category API, AMS 5]
+theorem houseCub_ne_zero : houseCub ≠ 0 := by
+  intro h
+  have : houseCub.eval 0 = 0 := by rw [h]; simp
+  simp [houseCub] at this
+
+@[category API, AMS 5]
+theorem houseCub_natDegree : houseCub.natDegree = 3 := by
+  unfold houseCub; compute_degree!
+
+/-- A sign change from `-` to `+` over `[a, b]` yields a root of `houseCub` in `(a, b)`. -/
+@[category API, AMS 5]
+theorem houseCub_root_in (a b : ℝ) (hab : a ≤ b) (ha : houseCub.eval a < 0)
+    (hb : 0 < houseCub.eval b) : ∃ r, a < r ∧ r < b ∧ houseCub.IsRoot r := by
+  have hcont : ContinuousOn (fun x => houseCub.eval x) (Set.Icc a b) := houseCub.continuousOn
+  have hmem : (0 : ℝ) ∈ Set.Icc ((fun x => houseCub.eval x) a) ((fun x => houseCub.eval x) b) :=
+    ⟨le_of_lt ha, le_of_lt hb⟩
+  obtain ⟨r, hr, hr0⟩ := intermediate_value_Icc hab hcont hmem
+  simp only at hr0
+  refine ⟨r, ?_, ?_, hr0⟩
+  · rcases eq_or_lt_of_le hr.1 with rfl | hlt
+    · exact absurd hr0 ha.ne
+    · exact hlt
+  · rcases eq_or_lt_of_le hr.2 with rfl | hlt2
+    · exact absurd hr0 hb.ne'
+    · exact hlt2
+
+/-- A sign change from `+` to `-` over `[a, b]` yields a root of `houseCub` in `(a, b)`. -/
+@[category API, AMS 5]
+theorem houseCub_root_in' (a b : ℝ) (hab : a ≤ b) (ha : 0 < houseCub.eval a)
+    (hb : houseCub.eval b < 0) : ∃ r, a < r ∧ r < b ∧ houseCub.IsRoot r := by
+  have hcont : ContinuousOn (fun x => houseCub.eval x) (Set.Icc a b) := houseCub.continuousOn
+  have hmem : (0 : ℝ) ∈ Set.Icc ((fun x => houseCub.eval x) b) ((fun x => houseCub.eval x) a) :=
+    ⟨le_of_lt hb, le_of_lt ha⟩
+  obtain ⟨r, hr, hr0⟩ := intermediate_value_Icc' hab hcont hmem
+  simp only at hr0
+  refine ⟨r, ?_, ?_, hr0⟩
+  · rcases eq_or_lt_of_le hr.1 with rfl | hlt
+    · exact absurd hr0 ha.ne'
+    · exact hlt
+  · rcases eq_or_lt_of_le hr.2 with rfl | hlt2
+    · exact absurd hr0 hb.ne
+    · exact hlt2
+
+/-- The spectrum of the cubic factor: three simple real roots, one negative and two positive
+(located in `(-2,-1)`, `(0,1)` and `(2,3)`). -/
+@[category API, AMS 5]
+theorem houseCub_spectrum : ∃ r1 r2 r3 : ℝ, r1 < 0 ∧ 0 < r2 ∧ 0 < r3 ∧
+    houseCub.roots = {r1, r2, r3} := by
+  obtain ⟨r1, h1a, h1b, h1r⟩ := houseCub_root_in (-2) (-1) (by norm_num)
+    (by simp only [houseCub]; norm_num) (by simp only [houseCub]; norm_num)
+  obtain ⟨r2, h2a, h2b, h2r⟩ := houseCub_root_in' 0 1 (by norm_num)
+    (by simp only [houseCub]; norm_num) (by simp only [houseCub]; norm_num)
+  obtain ⟨r3, h3a, h3b, h3r⟩ := houseCub_root_in 2 3 (by norm_num)
+    (by simp only [houseCub]; norm_num) (by simp only [houseCub]; norm_num)
+  refine ⟨r1, r2, r3, by linarith, by linarith, by linarith, ?_⟩
+  have hdistinct : ({r1, r2, r3} : Multiset ℝ).Nodup := by
+    simp only [Multiset.insert_eq_cons, Multiset.nodup_cons, Multiset.mem_cons,
+      Multiset.mem_singleton, Multiset.nodup_singleton, and_true, not_or]
+    exact ⟨⟨by linarith, by linarith⟩, by linarith⟩
+  have hsub : ({r1, r2, r3} : Multiset ℝ) ⊆ houseCub.roots := by
+    intro x hx
+    simp only [Multiset.insert_eq_cons, Multiset.mem_cons, Multiset.mem_singleton] at hx
+    rw [Polynomial.mem_roots houseCub_ne_zero]
+    rcases hx with rfl | rfl | rfl
+    · exact h1r
+    · exact h2r
+    · exact h3r
+  have hle : ({r1, r2, r3} : Multiset ℝ) ≤ houseCub.roots :=
+    (Multiset.le_iff_subset hdistinct).mpr hsub
+  have hcard : Multiset.card houseCub.roots ≤ Multiset.card ({r1, r2, r3} : Multiset ℝ) := by
+    have hd := houseCub.card_roots'
+    rw [houseCub_natDegree] at hd
+    simp only [Multiset.insert_eq_cons, Multiset.card_cons, Multiset.card_singleton]
+    omega
+  exact (Multiset.eq_of_le_of_card_le hle hcard).symm
+
+set_option maxHeartbeats 1600000 in
+/-- The characteristic polynomial of the house graph's adjacency matrix factors as
+`X · (X + 2) · (X³ - 2X² - 2X + 2)`. -/
+@[category API, AMS 5]
+theorem house_charpoly :
+    Matrix.charpoly (HouseGraph.adjMatrix ℝ) = X * (X + C 2) * houseCub := by
+  have hmat : (HouseGraph.adjMatrix ℝ) =
+      !![(0 : ℝ), 1, 0, 1, 0; 1, 0, 1, 0, 0; 0, 1, 0, 1, 1; 1, 0, 1, 0, 1; 0, 0, 1, 1, 0] := by
+    ext i j; fin_cases i <;> fin_cases j <;> simp [SimpleGraph.adjMatrix_apply]
+  rw [hmat, Matrix.charpoly, Matrix.charmatrix, Matrix.det_succ_row_zero]
+  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.det_succ_row_zero,
+    Matrix.submatrix_apply, Matrix.sub_apply, RingHom.mapMatrix_apply, Matrix.map_apply,
+    Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.of_apply, Fin.succAbove, Fin.lt_def,
+    Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val', Matrix.empty_val',
+    Fin.val_zero, Fin.castSucc, Fin.castAdd, Fin.castLE, Fin.succ, Fin.zero_eta]
+  norm_num [Fin.ext_iff]
+  simp only [houseCub, map_ofNat]
+  ring
+
+/-- The spectrum of the house graph: `{-2, 0}` together with the three roots of the cubic. -/
+@[category API, AMS 5]
+theorem house_roots :
+    (Matrix.charpoly (HouseGraph.adjMatrix ℝ)).roots
+      = {(0 : ℝ)} + {(-2 : ℝ)} + houseCub.roots := by
+  rw [house_charpoly]
+  have h1 : (X * (X + C 2) : ℝ[X]) ≠ 0 := mul_ne_zero X_ne_zero (by
+    rw [show (X + C 2 : ℝ[X]) = X - C (-2) by rw [map_neg]; ring]; exact X_sub_C_ne_zero _)
+  rw [roots_mul (mul_ne_zero h1 houseCub_ne_zero), roots_mul h1, roots_X, roots_X_add_C]
+
+set_option maxHeartbeats 1600000 in
 @[category test, AMS 5]
 theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
-  sorry
+  unfold cvetkovic
+  obtain ⟨r1, r2, r3, hr1, hr2, hr3, hcub⟩ := houseCub_spectrum
+  rw [house_roots, hcub]
+  rw [show ({(0 : ℝ)} : Multiset ℝ) = (0 : ℝ) ::ₘ 0 from rfl,
+    show ({(-2 : ℝ)} : Multiset ℝ) = (-2 : ℝ) ::ₘ 0 from rfl,
+    show ({r1, r2, r3} : Multiset ℝ) = r1 ::ₘ r2 ::ₘ r3 ::ₘ 0 from rfl]
+  simp only [Multiset.countP_add, Multiset.countP_cons, Multiset.countP_zero]
+  split_ifs <;> first | (exfalso; linarith) | omega
 
 
 /-  ### K4 Tests -/
@@ -273,9 +391,43 @@ theorem K4_residue : residue K4 = 1 := by
 theorem K4_annihilation : annihilationNumber K4 = 2 := by
   decide +native
 
+/-- The characteristic polynomial of `K₄`'s adjacency matrix is `(X - 3)(X + 1)³`,
+so its spectrum is `{3, -1, -1, -1}`. -/
+@[category API, AMS 5]
+theorem K4_charpoly : Matrix.charpoly (K4.adjMatrix ℝ) = (X - C 3) * (X + C 1) ^ 3 := by
+  have hmat : (K4.adjMatrix ℝ) = !![(0 : ℝ), 1, 1, 1; 1, 0, 1, 1; 1, 1, 0, 1; 1, 1, 1, 0] := by
+    ext i j; fin_cases i <;> fin_cases j <;> simp [SimpleGraph.adjMatrix_apply]
+  rw [hmat, Matrix.charpoly, Matrix.charmatrix, Matrix.det_succ_row_zero]
+  simp only [Fin.sum_univ_four, Matrix.submatrix_apply, Matrix.det_fin_three,
+    Matrix.sub_apply, RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.scalar_apply,
+    Matrix.diagonal_apply, Matrix.of_apply, Fin.succAbove, Fin.lt_def, Fin.isValue]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail, Function.comp,
+    Matrix.cons_val_fin_one, Matrix.cons_val', Matrix.empty_val', Fin.val_zero, Fin.val_one,
+    Fin.val_two, Fin.castSucc, Fin.castAdd, Fin.castLE, Fin.succ, Fin.zero_eta, Fin.mk_one]
+  norm_num [Fin.ext_iff]
+  simp only [map_ofNat]
+  ring
+
+/-- The spectrum (multiset of eigenvalues) of `K₄` is `{3, -1, -1, -1}`. -/
+@[category API, AMS 5]
+theorem K4_roots :
+    (Matrix.charpoly (K4.adjMatrix ℝ)).roots = {(3 : ℝ)} + 3 • {(-1 : ℝ)} := by
+  have hne : (X + C 1 : ℝ[X]) ≠ 0 := by
+    rw [show (X + C 1 : ℝ[X]) = X - C (-1) by rw [map_neg, map_one, sub_neg_eq_add]]
+    exact X_sub_C_ne_zero _
+  rw [K4_charpoly, roots_mul (mul_ne_zero (X_sub_C_ne_zero 3) (pow_ne_zero _ hne)),
+    roots_pow, roots_X_sub_C, roots_X_add_C]
+
 @[category test, AMS 5]
 theorem K4_cvetkovic : cvetkovic K4 = 1 := by
-  sorry
+  unfold cvetkovic
+  rw [K4_roots]
+  rw [show ({(3 : ℝ)} : Multiset ℝ) = (3 : ℝ) ::ₘ 0 from rfl,
+    show ({(-1 : ℝ)} : Multiset ℝ) = (-1 : ℝ) ::ₘ 0 from rfl]
+  simp only [Multiset.countP_add, Multiset.countP_nsmul, Multiset.countP_cons,
+    Multiset.countP_zero]
+  norm_num
 
 
 /-  ### Petersen Graph Tests -/
@@ -475,9 +627,55 @@ theorem C6_residue : residue C6 = 2 := by
 theorem C6_annihilation : annihilationNumber C6 = 3 := by
   decide +native
 
+set_option maxHeartbeats 100000000 in
+set_option maxRecDepth 8000 in
+/-- The characteristic polynomial of `C₆`'s adjacency matrix is
+`(X - 2)(X - 1)²(X + 1)²(X + 2)`, so its spectrum is `{2, 1, 1, -1, -1, -2}`. -/
+@[category API, AMS 5]
+theorem C6_charpoly : Matrix.charpoly (C6.adjMatrix ℝ)
+    = (X - C 2) * (X - C 1) ^ 2 * (X + C 1) ^ 2 * (X + C 2) := by
+  have hmat : (C6.adjMatrix ℝ) =
+      !![(0 : ℝ), 1, 0, 0, 0, 1; 1, 0, 1, 0, 0, 0; 0, 1, 0, 1, 0, 0;
+         0, 0, 1, 0, 1, 0; 0, 0, 0, 1, 0, 1; 1, 0, 0, 0, 1, 0] := by
+    ext i j; fin_cases i <;> fin_cases j <;>
+      simp [SimpleGraph.adjMatrix_apply, cycleGraph_adj] <;> decide
+  rw [hmat, Matrix.charpoly, Matrix.charmatrix, Matrix.det_succ_row_zero]
+  simp (maxSteps := 8000000) only [Fin.sum_univ_succ, Fin.sum_univ_zero,
+    Matrix.det_succ_row_zero, Matrix.submatrix_apply, Matrix.sub_apply, RingHom.mapMatrix_apply,
+    Matrix.map_apply, Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.of_apply, Fin.succAbove,
+    Fin.lt_def, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val',
+    Matrix.empty_val', Fin.val_zero, Fin.castSucc, Fin.castAdd, Fin.castLE, Fin.succ, Fin.zero_eta]
+  norm_num [Fin.ext_iff]
+  simp only [map_ofNat]
+  ring
+
+/-- The spectrum of `C₆` is `{2, 1, 1, -1, -1, -2}`. -/
+@[category API, AMS 5]
+theorem C6_roots : (Matrix.charpoly (C6.adjMatrix ℝ)).roots
+    = {(2 : ℝ)} + 2 • {(1 : ℝ)} + 2 • {(-1 : ℝ)} + {(-2 : ℝ)} := by
+  rw [C6_charpoly]
+  have e1 : (X - C 2 : ℝ[X]) ≠ 0 := X_sub_C_ne_zero 2
+  have e2 : ((X - C 1) ^ 2 : ℝ[X]) ≠ 0 := pow_ne_zero _ (X_sub_C_ne_zero 1)
+  have e3 : ((X + C 1) ^ 2 : ℝ[X]) ≠ 0 := pow_ne_zero _ (by
+    rw [show (X + C 1 : ℝ[X]) = X - C (-1) by rw [map_neg, map_one, sub_neg_eq_add]]
+    exact X_sub_C_ne_zero _)
+  have e4 : (X + C 2 : ℝ[X]) ≠ 0 := by
+    rw [show (X + C 2 : ℝ[X]) = X - C (-2) by rw [map_neg]; ring]; exact X_sub_C_ne_zero _
+  rw [roots_mul (mul_ne_zero (mul_ne_zero (mul_ne_zero e1 e2) e3) e4),
+    roots_mul (mul_ne_zero (mul_ne_zero e1 e2) e3), roots_mul (mul_ne_zero e1 e2),
+    roots_X_sub_C, roots_pow, roots_X_sub_C, roots_pow, roots_X_add_C, roots_X_add_C]
+
 @[category test, AMS 5]
 theorem C6_cvetkovic : cvetkovic C6 = 3 := by
-  sorry
+  unfold cvetkovic
+  rw [C6_roots]
+  rw [show ({(2 : ℝ)} : Multiset ℝ) = (2 : ℝ) ::ₘ 0 from rfl,
+    show ({(1 : ℝ)} : Multiset ℝ) = (1 : ℝ) ::ₘ 0 from rfl,
+    show ({(-1 : ℝ)} : Multiset ℝ) = (-1 : ℝ) ::ₘ 0 from rfl,
+    show ({(-2 : ℝ)} : Multiset ℝ) = (-2 : ℝ) ::ₘ 0 from rfl]
+  simp only [Multiset.countP_add, Multiset.countP_nsmul, Multiset.countP_cons,
+    Multiset.countP_zero]
+  norm_num
 
 /-  ### Star5 Tests -/
 
@@ -560,7 +758,7 @@ theorem Star5_max_deg : Star5.maxDegree = 5 := by
 
 @[category test, AMS 5]
 theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_sum]; decide +native
 
 @[category test, AMS 5]
 theorem Star5_matching : matchingNumber Star5 = 1 := by
@@ -601,14 +799,67 @@ theorem Star5_matching : matchingNumber Star5 = 1 := by
 
 @[category test, AMS 5]
 theorem Star5_residue : residue Star5 = 5 := by
-  sorry
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem Star5_annihilation : annihilationNumber Star5 = 5 := by
   decide +native
 
+set_option maxHeartbeats 16000000 in
+set_option maxRecDepth 8000 in
+/-- The characteristic polynomial of `Star5 = K_{1,5}` is `X⁴ · (X² - 5)`, so its spectrum is
+`{0, 0, 0, 0, √5, -√5}` (computed after reindexing to `Fin 6`). -/
+@[category API, AMS 5]
+theorem star5_charpoly : Matrix.charpoly (Star5.adjMatrix ℝ) = X ^ 4 * (X ^ 2 - C 5) := by
+  rw [← Matrix.charpoly_reindex finSumFinEquiv (Star5.adjMatrix ℝ)]
+  have hmat : Matrix.reindex finSumFinEquiv finSumFinEquiv (Star5.adjMatrix ℝ) =
+      !![(0 : ℝ), 1, 1, 1, 1, 1; 1, 0, 0, 0, 0, 0; 1, 0, 0, 0, 0, 0;
+         1, 0, 0, 0, 0, 0; 1, 0, 0, 0, 0, 0; 1, 0, 0, 0, 0, 0] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv,
+        SimpleGraph.adjMatrix_apply, completeBipartiteGraph] <;> decide
+  rw [hmat, Matrix.charpoly, Matrix.charmatrix, Matrix.det_succ_row_zero]
+  simp (maxSteps := 8000000) only [Fin.sum_univ_succ, Fin.sum_univ_zero,
+    Matrix.det_succ_row_zero, Matrix.submatrix_apply, Matrix.sub_apply, RingHom.mapMatrix_apply,
+    Matrix.map_apply, Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.of_apply, Fin.succAbove,
+    Fin.lt_def, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val',
+    Matrix.empty_val', Fin.val_zero, Fin.castSucc, Fin.castAdd, Fin.castLE, Fin.succ, Fin.zero_eta]
+  norm_num [Fin.ext_iff]
+  simp only [map_ofNat]
+  ring
+
+/-- The spectrum of `Star5`: the eigenvalue `0` with multiplicity `4`, together with `±√5`. -/
+@[category API, AMS 5]
+theorem star5_roots : (Matrix.charpoly (Star5.adjMatrix ℝ)).roots
+    = 4 • {(0 : ℝ)} + {Real.sqrt 5, -Real.sqrt 5} := by
+  rw [star5_charpoly]
+  have hsqrt : (Real.sqrt 5) ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+  have hfac : (X ^ 2 - C 5 : ℝ[X]) = (X - C (Real.sqrt 5)) * (X + C (Real.sqrt 5)) := by
+    have h5 : C (5 : ℝ) = C (Real.sqrt 5) * C (Real.sqrt 5) := by
+      rw [← map_mul]; norm_num [← hsqrt, sq]
+    rw [h5]; ring
+  rw [hfac]
+  have hx4 : (X ^ 4 : ℝ[X]) ≠ 0 := pow_ne_zero _ X_ne_zero
+  have ea : (X - C (Real.sqrt 5) : ℝ[X]) ≠ 0 := X_sub_C_ne_zero _
+  have eb : (X + C (Real.sqrt 5) : ℝ[X]) ≠ 0 := by
+    rw [show (X + C (Real.sqrt 5) : ℝ[X]) = X - C (-Real.sqrt 5) by rw [map_neg]; ring]
+    exact X_sub_C_ne_zero _
+  rw [roots_mul (mul_ne_zero hx4 (mul_ne_zero ea eb)), roots_mul (mul_ne_zero ea eb),
+    show (X : ℝ[X]) ^ 4 = (X - C 0) ^ 4 by simp, roots_pow, roots_X_sub_C, roots_X_sub_C,
+    roots_X_add_C]
+  simp [Multiset.insert_eq_cons]
+
 @[category test, AMS 5]
 theorem Star5_cvetkovic : cvetkovic Star5 = 5 := by
-  sorry
+  unfold cvetkovic
+  rw [star5_roots]
+  have h5 : (0 : ℝ) < Real.sqrt 5 := Real.sqrt_pos.mpr (by norm_num)
+  rw [show ({(0 : ℝ)} : Multiset ℝ) = (0 : ℝ) ::ₘ 0 from rfl,
+    show ({Real.sqrt 5, -Real.sqrt 5} : Multiset ℝ)
+      = Real.sqrt 5 ::ₘ (-Real.sqrt 5) ::ₘ 0 from rfl]
+  simp only [Multiset.countP_add, Multiset.countP_nsmul, Multiset.countP_cons,
+    Multiset.countP_zero]
+  split_ifs <;> first | (exfalso; linarith) | omega
 
 end WrittenOnTheWallII.Test
