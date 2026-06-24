@@ -23,15 +23,6 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/1212](https://www.erdosproblems.com/1212)
 - [Er80] Erdős, P., _Some notes on problems and results in number theory_ (1980), p. 114.
 
-Let $G$ be the graph on the visible lattice points $\{(x,y) \in \mathbb{Z}_{>0}^2 :
-\gcd(x,y) = 1\}$, where two points are joined if they differ by exactly $1$ in exactly one
-coordinate. Erdős asked: is there a path going to infinity in $G$ all of whose vertices
-$(x,y)$ satisfy $\min(x,y) > 1$ and at least one of $x, y$ composite?
-
-The weaker version (only $\min(x,y) > 1$) was solved by C. Stewart via the prime-pair path
-$(p_k, p_{k+1}) \to (p_{k+1}, p_{k+2})$, as recounted in [Er80]; the compositeness condition
-forbids those anchors and the question is open.
-
 This file also records machine-checked cores of verified partial results (2026):
 a composite-anchor sufficient reduction and an impossibility theorem for periodic
 certificates; see the corresponding lemmas below.
@@ -58,9 +49,16 @@ def Adj (p q : ℕ × ℕ) : Prop :=
   (p.2 = q.2 ∧ (p.1 = q.1 + 1 ∨ q.1 = p.1 + 1))
 
 /--
-**Erdős Problem 1212** [Er80, p.114]: is there an infinite path through visible lattice
-points, going to infinity, all of whose vertices have both coordinates $> 1$ and at least
-one coordinate composite?
+Let $G$ be the graph with vertex set those pairs $(x,y)\in \mathbb{N}^2$ with
+$\mathrm{gcd}(x,y)=1$, in which we join two vertices if the differ in only one coordinate, and
+there by $\pm 1$.
+
+Is there a path going to infinity on $G$, say $P$, such that for all $(x,y)\in P$ both
+$\min(x,y)>1$ and at least one of $x$ or $y$ is composite?
+
+The weaker version (only $\min(x,y) > 1$) was solved by C. Stewart via the prime-pair path
+$(p_k, p_{k+1}) \to (p_{k+1}, p_{k+2})$, as recounted in [Er80]; the compositeness condition
+forbids those anchors and the question is open.
 -/
 @[category research open, AMS 11]
 theorem erdos_1212 :
