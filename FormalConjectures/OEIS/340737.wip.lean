@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA340737
+
 open Nat
 
 /--
@@ -121,14 +123,14 @@ noncomputable def u (k : ℕ) (x : ℝ) : ℝ := (x * (1 - x)) ^ k
 noncomputable def du (k : ℕ) (x : ℝ) : ℝ := k * (x * (1 - x)) ^ (k - 1) * (1 - 2 * x)
 
 lemma hasDerivAt_u (k : ℕ) (x : ℝ) : HasDerivAt (u k) (du k x) x := by
-  delta u Rat _root_.du
+  delta u Rat OeisA340737.du
   apply(((hasDerivAt_id' @x).mul ((hasDerivAt_id' x).const_sub (1))).congr_deriv (by·ring)).pow
 
 noncomputable def ddu (k : ℕ) (x : ℝ) : ℝ :=
   k * (k - 1) * (x * (1 - x)) ^ (k - 2) * (1 - 2 * x) ^ 2 - 2 * k * (x * (1 - x)) ^ (k - 1)
 
 lemma hasDerivAt_du (k : ℕ) (x : ℝ) : HasDerivAt (du k) (ddu k x) x := by
-  delta and ddu _root_.du
+  delta and ddu OeisA340737.du
   apply((( ((hasDerivAt_id' x).mul ((hasDerivAt_id' x).const_sub (1))).pow @_).const_mul _).mul @(((hasDerivAt_id' x).const_mul 2).const_sub (1))).congr_deriv
   use k.eq_zero_or_pos.elim (by bound) fun and=>.trans (by rw [Nat.cast_pred and,Pi.pow_apply,Pi.mul_apply]) (by ring!)
 
@@ -445,3 +447,5 @@ theorem target_theorem_0
     exact tendsto_shift tendsto_seqU_div_seqV
   exact tendsto_even_odd_pos h_odd tendsto_A_even_div_B_even
   -- EVOLVE-BLOCK-END
+
+end OeisA340737

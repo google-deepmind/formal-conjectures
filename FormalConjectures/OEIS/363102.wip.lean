@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA363102
+
 open Nat Finset
 
 /--
@@ -291,3 +293,5 @@ theorem target_theorem_0
     rw [a_simplified n h5]
     exact R_n_not_composite n h30
   -- EVOLVE-BLOCK-END
+
+end OeisA363102

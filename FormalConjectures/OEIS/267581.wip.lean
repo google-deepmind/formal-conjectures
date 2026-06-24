@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA267581
+
 open Nat Int
 
 /-- The rule function for Rule 167. Inputs must be 0 or 1. -/
@@ -206,3 +208,5 @@ theorem target_theorem_0
       · exact Nat.zero_le 1
   omega
   -- EVOLVE-BLOCK-END
+
+end OeisA267581

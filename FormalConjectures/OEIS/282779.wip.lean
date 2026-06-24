@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA282779
+
 open Nat Set Classical
 
 /--
@@ -128,3 +130,5 @@ theorem target_theorem_0
   delta period_of_power_mod abs
   exact (if_neg ↑hn.ne')▸IsLeast.csInf_eq ⟨ (by(trivial)), fun and=>And.elim (@h_le_T _)⟩
   -- EVOLVE-BLOCK-END
+
+end OeisA282779

@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA256012
+
 open Nat Finset
 
 /--
@@ -197,3 +199,5 @@ theorem target_theorem_0
         · apply not_squarefree_of_mod_4_eq_0
           omega
   -- EVOLVE-BLOCK-END
+
+end OeisA256012

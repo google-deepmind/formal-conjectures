@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA227582
+
 open BigOperators LinearRecurrence
 
 /--
@@ -314,3 +316,5 @@ theorem target_theorem_0
     rw [h_rewrite, h_floor, h_one]
     exact rfl
   -- EVOLVE-BLOCK-END
+
+end OeisA227582

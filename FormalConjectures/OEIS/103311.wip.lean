@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA103311
+
 /--
 A103311: A transform of the Fibonacci numbers.
 The sequence $a(n)$ satisfies the linear recurrence relation:
@@ -245,3 +247,5 @@ theorem target_theorem_0
     use 5 * (n / 5) + 3
     rw [h4, natAbs_mul_m1_pow]
   -- EVOLVE-BLOCK-END
+
+end OeisA103311

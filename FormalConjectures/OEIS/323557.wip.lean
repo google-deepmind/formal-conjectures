@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA323557
+
 open Nat
 
 /--
@@ -214,3 +216,5 @@ theorem target_theorem_0
   rw [h5] at h3
   contradiction
   -- EVOLVE-BLOCK-END
+
+end OeisA323557

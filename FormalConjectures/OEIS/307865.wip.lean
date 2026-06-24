@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA307865
+
 open Nat Finset ZMod
 
 /--
@@ -201,3 +203,5 @@ theorem target_theorem_0
   intro b_val _
   exact this b_val
   -- EVOLVE-BLOCK-END
+
+end OeisA307865

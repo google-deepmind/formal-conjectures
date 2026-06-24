@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA175386
+
 open scoped BigOperators
 
 /--
@@ -314,3 +316,5 @@ theorem target_theorem_0
   have h_not := lucas_not_eq n hn k
   exact h_not h_eq2
   -- EVOLVE-BLOCK-END
+
+end OeisA175386

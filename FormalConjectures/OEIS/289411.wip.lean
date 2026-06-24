@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA289411
+
 open Nat
 
 open scoped BigOperators
@@ -187,3 +189,5 @@ theorem target_theorem_0
   have h_eq2 : m_k + 1 + i = m_k + i + 1 := by abel
   simp_all-contextual only[add_zero]
   -- EVOLVE-BLOCK-END
+
+end OeisA289411

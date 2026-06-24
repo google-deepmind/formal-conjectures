@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA211417
+
 /--
 Integral factorial ratio sequence:
 $$a(n) = \frac{(30n)! n!}{(15n)! (10n)! (6n)!}$$
@@ -253,3 +255,5 @@ theorem target_theorem_0
     have h_nat := target_nat (n' + 1) hn
     simp_all only [push_cast, mul_pos, (by decide :30>0), ←Int.ofNat_dvd]
   -- EVOLVE-BLOCK-END
+
+end OeisA211417

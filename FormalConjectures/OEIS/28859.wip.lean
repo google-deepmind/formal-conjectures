@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA28859
+
 /--
 A028859 (OEIS): $a(n+2) = 2 \cdot a(n+1) + 2 \cdot a(n)$; $a(0) = 1$, $a(1) = 3$.
 -/
@@ -435,3 +437,5 @@ theorem target_theorem_0
     exact F_set_card n
   exact ⟨h_set, h_card⟩
   -- EVOLVE-BLOCK-END
+
+end OeisA28859

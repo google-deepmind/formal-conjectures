@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA368692
+
 open Nat
 
 /--
@@ -177,3 +179,5 @@ theorem target_theorem_0
     exact (Nat.mul_right_cancel h4) @h3
   exact ⟨k, h5⟩
   -- EVOLVE-BLOCK-END
+
+end OeisA368692

@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA258667
+
 open BigOperators Nat Int Real Asymptotics Filter
 
 /--
@@ -429,3 +431,5 @@ theorem target_theorem_0
   have h2 := asymp_term_equiv
   exact Asymptotics.IsEquivalent.trans h1 (Asymptotics.IsEquivalent.symm h2)
   -- EVOLVE-BLOCK-END
+
+end OeisA258667

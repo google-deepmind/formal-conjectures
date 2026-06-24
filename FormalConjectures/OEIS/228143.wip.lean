@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA228143
+
 open BigOperators Matrix Nat
 
 /--
@@ -714,3 +716,5 @@ theorem target_theorem_0
   rw [hC]
   exact map_B_series
   -- EVOLVE-BLOCK-END
+
+end OeisA228143

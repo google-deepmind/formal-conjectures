@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA243106
+
 open Finset
 
 /--
@@ -168,3 +170,5 @@ theorem target_theorem_0
     have h_good := digits_good b hb (∑ i ∈ Finset.range n, σ (i + 1) * (b : ℤ) ^ i).natAbs h_isGood
     exact h_good d hd_in
   -- EVOLVE-BLOCK-END
+
+end OeisA243106

@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA224515
+
 open Nat Set
 
 /--
@@ -269,3 +271,5 @@ theorem target_theorem_0
   use k
   exact k_eq_M_implies_xor_eq_S k M S hS hk
   -- EVOLVE-BLOCK-END
+
+end OeisA224515

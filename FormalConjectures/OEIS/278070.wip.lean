@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA278070
+
 open Nat Finset
 
 /--
@@ -82,3 +84,5 @@ theorem target_theorem_0
     hint
   · exact (.trans ⟨ _,(S.succ_mul_choose_eq _).symm⟩ ((mul_dvd_mul_left _) ((Nat.dvd_factorial (by bound) (List.mem_range.1 s)))))
   -- EVOLVE-BLOCK-END
+
+end OeisA278070

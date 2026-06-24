@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA271591
+
 open Nat
 
 /--
@@ -512,3 +514,5 @@ theorem target_theorem_0
     · exact run_1_main n L (by omega) h
   exact ⟨h0, h1⟩
   -- EVOLVE-BLOCK-END
+
+end OeisA271591

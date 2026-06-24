@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA91669
+
 open Nat BigOperators
 
 /--
@@ -259,3 +261,5 @@ theorem target_theorem_0
   have hprim := prim_root_of_prime n hn hprime hdiv
   exact ⟨hprime, hprim⟩
   -- EVOLVE-BLOCK-END
+
+end OeisA91669

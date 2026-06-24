@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA325046
+
 open Nat
 
 open Finset
@@ -207,3 +209,5 @@ theorem target_theorem_0
   use p.1
   exact fixed_point_imp N p hp_V hI hk
   -- EVOLVE-BLOCK-END
+
+end OeisA325046

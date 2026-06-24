@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA108
+
 open Nat Real Finset
 
 /--
@@ -305,3 +307,5 @@ theorem target_theorem_0
         · exact h_inj.2
       exact h_neq heq
   -- EVOLVE-BLOCK-END
+
+end OeisA108

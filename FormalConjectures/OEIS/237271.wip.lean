@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA237271
+
 open Nat Finset List
 
 /--
@@ -113,3 +115,5 @@ theorem target_theorem_0
   · use (by cases.▸and.pos)
   · exact (fun R M=>B.not_lt (lt_of_le_of_lt (and'.rel_get_of_le ((monotone_iff_forall_lt.2 (List.pairwise_iff_get.1 and')).reflect_lt (M▸Nat.lt_of_mul_lt_mul_left (B▸S)))) (by linarith)))
   -- EVOLVE-BLOCK-END
+
+end OeisA237271

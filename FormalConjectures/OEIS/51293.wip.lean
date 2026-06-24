@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA51293
+
 /-
 Copyright 2025 Google LLC
 
@@ -509,3 +511,5 @@ theorem target_theorem_0
   rw [h4] at h3
   exact h3
   -- EVOLVE-BLOCK-END
+
+end OeisA51293

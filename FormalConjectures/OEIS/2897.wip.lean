@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA2897
+
 open Nat MvPolynomial
 
 /--
@@ -412,3 +414,5 @@ theorem target_theorem_0
   simp_all-contextual only[pow_three, two_mul,sq,n.add_choose_eq,Nat.cast_sum,Nat.cast_mul]
   norm_num[Finset.Nat.antidiagonal_eq_map,Finset.sum_congr rfl fun a s=>congr_arg _ (Nat.cast_inj.2 (n.choose_symm _))]
   -- EVOLVE-BLOCK-END
+
+end OeisA2897

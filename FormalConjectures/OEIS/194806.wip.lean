@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA194806
+
 open Finset Nat
 
 /-- The set of all products of elements from a Finset S. -/
@@ -485,3 +487,5 @@ theorem target_theorem_0
   have h_M_le : (M n : ℝ) ≤ CM * Nat.primeCounting n := hCM n hn
   exact (div_le_iff₀ h_pi_pos).mpr ((Nat.cast_le.mpr (h_a_le.trans h_card_le)).trans (.trans (by rw [Nat.cast_add]) (by linear_combination h_M_le)))
   -- EVOLVE-BLOCK-END
+
+end OeisA194806

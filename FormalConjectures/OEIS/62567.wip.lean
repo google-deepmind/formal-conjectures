@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA62567
+
 open Nat Classical
 
 /-- The number whose digits in base 10 are $n$'s digits reversed. -/
@@ -322,3 +324,5 @@ theorem target_theorem_0
     · exact a_27
     · exact a_81
   -- EVOLVE-BLOCK-END
+
+end OeisA62567

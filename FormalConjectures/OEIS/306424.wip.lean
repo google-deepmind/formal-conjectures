@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA306424
+
 open List Finset Nat
 
 /--
@@ -291,3 +293,5 @@ theorem target_theorem_0
     · have h_big : 289 ≤ k := by omega
       exact big_fail k h_big
   -- EVOLVE-BLOCK-END
+
+end OeisA306424

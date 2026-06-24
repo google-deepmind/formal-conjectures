@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA341254
+
 open Real
 
 /-- The constant $r = (2 + \sqrt{5})/2$. -/
@@ -141,3 +143,5 @@ theorem target_theorem_0
     have h_floor : (Int.floor (((3 : ℕ) : ℝ) / 4 + (2 - r_const) * eps n) : ℝ) = 0 := by rwa [Int.floor_eq_zero_iff.mpr, Int.cast_zero]
     repeat use eq1▸hnsq▸h3.symm▸h_floor▸by linarith only[he]
   -- EVOLVE-BLOCK-END
+
+end OeisA341254

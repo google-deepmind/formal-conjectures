@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA300997
+
 open List Nat Function Set
 
 /--
@@ -1095,3 +1097,5 @@ theorem target_theorem_0
   have hd : a (n + 1) = a n + (n - P n (a n)) := coupling_diff n hn (by omega)
   omega
   -- EVOLVE-BLOCK-END
+
+end OeisA300997

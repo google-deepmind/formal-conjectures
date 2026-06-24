@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA382590
+
 open Int
 
 /--
@@ -298,3 +300,5 @@ theorem target_theorem_0
     exact kth_prime_factor_eq_2 k (A382590 n) hk ha_nz ha_div
   rw [h1, h2]
   -- EVOLVE-BLOCK-END
+
+end OeisA382590

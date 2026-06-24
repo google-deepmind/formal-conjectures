@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA363347
+
 open Rat Nat
 
 /--
@@ -830,3 +832,5 @@ theorem target_theorem_0
   intro p hp
   exact A363347_achieves_prime p hp.1 hp.2
   -- EVOLVE-BLOCK-END
+
+end OeisA363347

@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA248802
+
 /--
 A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
 -/
@@ -1036,3 +1038,5 @@ theorem target_theorem_4
   unfold a
   linarith
   -- EVOLVE-BLOCK-END
+
+end OeisA248802

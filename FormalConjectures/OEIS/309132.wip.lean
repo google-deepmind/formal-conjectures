@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA309132
+
 open Rat Nat
 
 /--
@@ -414,3 +416,5 @@ theorem target_theorem_0
       rwa[ha_eq]
     exact ⟨hcomp, ha⟩
   -- EVOLVE-BLOCK-END
+
+end OeisA309132

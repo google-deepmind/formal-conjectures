@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA372761
+
 open Rat
 
 /--
@@ -743,3 +745,5 @@ theorem target_theorem_0
   rintro n2 ⟨hn2_3, hn2_p⟩
   exact uniqueness_part p hp hp2 hp3 hp5 n2 n hn2_3 hn3 hn2_p hnp
   -- EVOLVE-BLOCK-END
+
+end OeisA372761

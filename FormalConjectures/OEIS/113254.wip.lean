@@ -16,6 +16,8 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+namespace OeisA113254
+
 open Nat Int
 
 /--
@@ -137,3 +139,5 @@ theorem target_theorem_0
   rw [h]
   exact ⟨Y n, by ring⟩
   -- EVOLVE-BLOCK-END
+
+end OeisA113254
