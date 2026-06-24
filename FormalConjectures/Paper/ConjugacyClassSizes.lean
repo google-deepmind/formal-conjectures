@@ -69,7 +69,7 @@ theorem hasDistinctConjClassSizes_iff {G : Type*} [Group G] [Fintype G] :
 The trivial group is anti-homogeneous, since it has a single conjugacy class.
 -/
 @[category test, AMS 20]
-theorem distinctConjClassSizes_of_subsingleton {G : Type*} [Group G] [Fintype G]
+theorem hasDistinctConjClassSizes_of_subsingleton {G : Type*} [Group G] [Fintype G]
     [Subsingleton G] : HasDistinctConjClassSizes (G := G) := by
   have hsub : Subsingleton (ConjClasses G) :=
     inferInstanceAs (Subsingleton (Quotient (IsConj.setoid G)))
@@ -82,16 +82,44 @@ An anti-homogeneous group has trivial center, since each central element is in i
 -/
 @[category test, AMS 20]
 theorem trivial_center_of_hasDistinctConjClassSizes {G : Type*} [Group G] [Fintype G]
-    [Subsingleton G] : Subgroup.center G = ⊥  := by
-  sorry
+    (h : HasDistinctConjClassSizes G) : Subgroup.center G = ⊥ := by
+  -- A central element `w` is conjugate only to itself, so its conjugacy class is `{w}`.
+  have hcard : ∀ w : G, w ∈ Subgroup.center G → conjClassCard (ConjClasses.mk w) = 1 := by
+    intro w hw
+    have hset : ConjClasses.carrier (ConjClasses.mk w) = {w} := by
+      ext a
+      rw [ConjClasses.mem_carrier_iff_mk_eq, ConjClasses.mk_eq_mk_iff_isConj,
+        Set.mem_singleton_iff]
+      constructor
+      · rintro ⟨c, hc⟩
+        rw [SemiconjBy] at hc
+        have : c * a = c * w := by rw [hc]; exact (Subgroup.mem_center_iff.mp hw c).symm
+        exact mul_left_cancel this
+      · rintro rfl
+        exact IsConj.refl a
+    simp [conjClassCard, hset]
+  -- Hence the class of any central `z` has the same size as the class of `1`, forcing `z = 1`.
+  rw [Subgroup.eq_bot_iff_forall]
+  intro z hz
+  have hz1 : ConjClasses.mk z = ConjClasses.mk 1 := by
+    apply h
+    rw [hcard z hz, hcard 1 (Subgroup.one_mem _)]
+  rw [ConjClasses.mk_eq_mk_iff_isConj] at hz1
+  exact isConj_one_right.mp hz1.symm
 
 /--
 The symmetric group $S_3$ is anti-homogeneous, since its three conjugacy classes have sizes $1$, $2$ and $3$.
 -/
 @[category test, AMS 20]
-theorem distinctConjClassSizes_perm_fin_three :
+theorem hasDistinctConjClassSizes_perm_fin_three :
     HasDistinctConjClassSizes (Equiv.Perm (Fin 3)) := by
-  sorry
+  have key : (conjClassCard (G := Equiv.Perm (Fin 3))) =
+      fun c => c.carrier.toFinset.card := by
+    funext c
+    rw [conjClassCard, Nat.card_eq_fintype_card, ← Set.toFinset_card]
+  unfold HasDistinctConjClassSizes
+  rw [key]
+  decide
 
 /--
 **Markel's $S_3$-conjecture** (1973): any nontrivial finite ah-group is isomorphic to $S_3$.
