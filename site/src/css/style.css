@@ -565,16 +565,21 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   background: white;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
+  display: block;
+  overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.15s, border-color 0.15s;
 }
 .theorem-card:hover {
   box-shadow: var(--shadow-md);
   border-color: #cbd5e1;
+}
+
+.theorem-card__summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
 }
 
 .theorem-card__body { flex: 1; min-width: 0; }
@@ -600,7 +605,80 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
 .theorem-card__tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 
-.theorem-card__badge { flex-shrink: 0; }
+.theorem-card__badge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.statement-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 1.6rem;
+  padding: 0.22rem 0.55rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.statement-toggle:hover {
+  border-color: var(--color-link);
+  color: var(--color-link);
+  background: #eff6ff;
+}
+.statement-toggle__icon {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+  transition: transform 0.15s;
+}
+.statement-toggle[aria-expanded="true"] .statement-toggle__icon {
+  transform: rotate(225deg) translateY(-1px);
+}
+
+.problem-preview {
+  border-top: 1px solid var(--color-border);
+  background: white;
+}
+.problem-preview[hidden] { display: none; }
+
+.problem-preview__content {
+  padding: 0.9rem 1.25rem 1rem;
+  color: var(--color-text);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.problem-doc-content p {
+  margin: 0.45rem 0;
+}
+.problem-doc-content p:first-child {
+  margin-top: 0;
+}
+.problem-doc-content p:last-child {
+  margin-bottom: 0;
+}
+.problem-doc-content a {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+.problem-preview__empty {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
 
 /* Pagination */
 .pagination {
@@ -761,18 +839,34 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 /* Module siblings list */
 .siblings-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
 .sibling-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
   font-size: 0.875rem;
-  padding: 0.5rem 0.75rem;
   border-radius: var(--radius);
   border: 1px solid var(--color-border);
   background: var(--color-bg-alt);
+  overflow: hidden;
 }
 .sibling-item.current { border-color: var(--color-link); background: #eff6ff; }
-.sibling-item a { color: var(--color-text); font-weight: 500; }
-.sibling-item a:hover { color: var(--color-link); text-decoration: none; }
+.sibling-item__top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+.sibling-item__name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-weight: 500;
+  color: var(--color-text);
+}
+a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
+.sibling-item__toggle {
+  flex-shrink: 0;
+}
+.sibling-item__preview {
+  border-color: #dbe3ef;
+}
 
 /* ============================================================
    Info pages (contribute, about)
@@ -1065,7 +1159,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   }
 
   /* Theorem card: stack body and badge vertically */
-  .theorem-card {
+  .theorem-card__summary {
     flex-direction: column;
     gap: 0.5rem;
   }
@@ -1074,6 +1168,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem;
+    justify-content: flex-start;
   }
 
   /* Theorem card: allow name wrapping */
@@ -1102,6 +1197,20 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
   .page-btn {
     padding: 0.5rem 0.85rem;
+  }
+
+  .sibling-item__top {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .sibling-item__name {
+    flex-basis: 100%;
+    order: 2;
+  }
+
+  .sibling-item__toggle {
+    margin-left: auto;
   }
 }
 

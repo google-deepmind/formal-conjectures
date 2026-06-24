@@ -69,6 +69,9 @@ def OrdinalCardinalRamsey3 (α β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
 **Erdős Problem 70**: Let $\mathfrak{c}$ be the cardinality of the continuum,
 let $\beta$ be a countable ordinal, and let $2 \le n < \omega$.
 Is it true that $\mathfrak{c} \to (\beta, n)^3_2$?
+
+Note: The cases $n \le 3$ are trivially true (see `omega_three`), so the
+genuine content of the conjecture begins at $n = 4$.
 -/
 @[category research open, AMS 3]
 theorem erdos_70 :
@@ -92,18 +95,35 @@ theorem erdos_rado (n : ℕ) (hn : 2 ≤ n) :
   sorry
 
 /--
-**Special case**: $\mathfrak{c} \to (\omega, 3)^3_2$.
+**First open case beyond Erdős–Rado**: $\mathfrak{c} \to (\omega \cdot 2, 4)^3_2$.
 
-The simplest non-trivial instance of Erdős Problem 70: $\beta = \omega$ (the first infinite
-countable ordinal) and $n = 3$. Does every 2-coloring of 3-element subsets of the continuum
-contain either a red-monochromatic set of order type $\omega$ (an infinite red-monochromatic
-subset) or a blue-monochromatic set of $3$ elements (a blue triple)?
-
-Follows from the main conjecture with $\beta = \omega$, $n = 3$.
+Erdős and Rado proved $\mathfrak{c} \to (\omega + n, 4)^3_2$ for every finite $n \ge 2$
+(see `erdos_rado`), which covers all red ordinals below $\omega \cdot 2 = \omega + \omega$.
+This variant asks whether the result extends to $\beta = \omega \cdot 2$, the simplest
+countable ordinal not covered by their theorem.
 -/
 @[category research open, AMS 3]
+theorem omega_times_two_four :
+    answer(sorry) ↔ OrdinalCardinalRamsey3 (𝔠).ord (ω * 2) 4 := by
+  sorry
+
+/--
+**Trivial boundary case**: $\mathfrak{c} \to (\omega, 3)^3_2$.
+
+This is trivially true because in a 3-uniform hypergraph, a \"blue clique of size 3\"
+consists of a single 3-element subset ($\binom{3}{3} = 1$), so the blue alternative
+merely asks for one blue triple to exist. The proof splits into two cases:
+- If any blue triple exists, it is itself a blue-monochromatic set of cardinality 3.
+- If no blue triple exists, all triples are red, and since $\omega \le \mathfrak{c}$,
+  any subset of order type $\omega$ is red-monochromatic.
+
+The problem becomes non-trivial only for $n \ge 4$; see `omega_times_two_four` for
+the simplest genuinely open case.
+-/
+@[category research solved, AMS 3, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/c024db0fa3ac32c6dddcd6c28d7b0cd994dad580/FormalConjectures/ErdosProblems/70.lean#L126"]
 theorem omega_three :
-    answer(sorry) ↔ OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
+    answer(True) ↔ OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
   sorry
 
 /--
