@@ -15,6 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Additive.Coset
+
 
 /-!
 # Green's Open Problem 51
@@ -36,16 +38,9 @@ open scoped Pointwise
 
 namespace Green51
 
-
-/-- The maximum dimension of a coset contained in the set $A$. -/
-noncomputable def maxCosetDim (n : ℕ) (A : Set (𝔽₂ n)) : ℕ :=
-  sSup { d | ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (v : 𝔽₂ n),
-    v +ᵥ (W : Set (𝔽₂ n)) ⊆ A ∧
-    Module.finrank (ZMod 2) W = d }
-
 /-- The largest dimension of a coset guaranteed to be contained in $2A$ for $A \subseteq \mathbb{F}_2^n$ with density $\alpha$. -/
 noncomputable def guaranteedMaxCosetDim (n : ℕ) (α : ℝ) : ℕ :=
-  sInf { maxCosetDim n ↑(A + A) | (A : Finset (𝔽₂ n)) (_h : A.dens ≥ α) }
+  sInf { maxCosetDim (ZMod 2) (𝔽₂ n) ↑(A + A) | (A : Finset (𝔽₂ n)) (_h : A.dens ≥ α) }
 
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. What is the largest size of coset
