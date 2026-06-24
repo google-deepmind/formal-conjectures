@@ -29,9 +29,9 @@ Main definitions
 
 * `SimpleGraph.saturationNumber`   : the saturation number `μ*(G)`, the minimum
   size of a maximal matching.
-* `SimpleGraph.computable_sat_num` : a computable companion definition.
-* `SimpleGraph.sat_num_eq_computable` : bridge equation
-  `saturationNumber G = computable_sat_num G`.
+* `SimpleGraph.computableSaturationNumber` : a computable companion definition.
+* `SimpleGraph.saturationNumber_eq_computable` : bridge equation
+  `saturationNumber G = computableSaturationNumber G`.
 -/
 
 namespace SimpleGraph
@@ -49,15 +49,15 @@ noncomputable def saturationNumber (G : SimpleGraph α) : ℕ :=
   sInf {n | ∃ M : Finset (Sym2 α), G.IsMaximalEdgeMatching M ∧ M.card = n}
 
 /-- Computable saturation number via powerset enumeration over the edge set. -/
-def computable_sat_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+def computableSaturationNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   ((G.edgeFinset.powerset.filter fun M => G.IsMaximalEdgeMatching M).image
     Finset.card).min.getD 0
 
 /-! ### Saturation number equivalence -/
 
-theorem sat_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
-    saturationNumber G = computable_sat_num G := by
-  unfold saturationNumber computable_sat_num
+theorem saturationNumber_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    saturationNumber G = computableSaturationNumber G := by
+  unfold saturationNumber computableSaturationNumber
   have hset : {n | ∃ M : Finset (Sym2 α), G.IsMaximalEdgeMatching M ∧ M.card = n}
       = ↑((G.edgeFinset.powerset.filter fun M => G.IsMaximalEdgeMatching M).image
           Finset.card) := by

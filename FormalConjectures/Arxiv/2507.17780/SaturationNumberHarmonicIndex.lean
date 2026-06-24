@@ -86,13 +86,13 @@ large; the windmill generalisation and its exact limit appear in
 [arXiv:2606.15761](https://arxiv.org/abs/2606.15761).
 -/
 @[category research solved, AMS 5]
-theorem txGraffitiConjecture4 : answer(False) ↔
+theorem tx_graffiti_conjecture_4 : answer(False) ↔
     ∀ (V : Type) [Fintype V] [DecidableEq V] [Nontrivial V] (G : SimpleGraph V)
       [DecidableRel G.Adj] (_hConn : G.Connected),
       (G.saturationNumber : ℚ) ≤ G.harmonicIndex := by
   refine iff_of_false (by simp) (fun h => ?_)
   have key := h (Fin 9) friendshipF4 (by native_decide)
-  rw [friendshipF4.sat_num_eq_computable] at key
+  rw [friendshipF4.saturationNumber_eq_computable] at key
   revert key
   native_decide
 
