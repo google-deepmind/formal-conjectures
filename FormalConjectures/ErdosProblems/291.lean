@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/291](https://www.erdosproblems.com/291)
+- [ErGr80, p.34] Erdős, P. and Graham, R., Old and new problems and results in combinatorial number
+  theory. Monographies de L'Enseignement Mathematique (1980).
 - [Sh16] P. Shiu, The denominators of harmonic numbers. arXiv:1607.02863 (2016).
 - [WuYa22] Wu, Bing-Ling and Yan, Xiao-Hui, On the denominators of harmonic numbers. {IV}. C. R.
   Math. Acad. Sci. Paris (2022), 53--57.
@@ -68,7 +70,8 @@ $n$ which begins with a $2$ in base $3$ has $3\mid (a_n,L_n)$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_291.parts.ii :
-    { n : ℕ | Nat.gcd (a n) (L n) > 1 }.Infinite := by
+    answer(True) ↔
+      { n : ℕ | Nat.gcd (a n) (L n) > 1 }.Infinite := by
   sorry
 
 /--
