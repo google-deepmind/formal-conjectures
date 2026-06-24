@@ -33,10 +33,6 @@ namespace Erdos60
 open SimpleGraph Filter
 open scoped Real
 
-/--
-Does every graph on $n$ vertices with $>\mathrm{ex}(n;C_4)$ edges contain $\gg n^{1/2}$ many
-copies of $C_4$?
--/
 @[category research open, AMS 5]
 theorem erdos_60 :
     ∃ c : ℝ, c > 0 ∧
