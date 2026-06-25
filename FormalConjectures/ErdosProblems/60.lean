@@ -43,4 +43,29 @@ theorem erdos_60 :
           (c * Real.sqrt (n : ℝ) ≤ ({ H' : G.Subgraph | Nonempty (H'.coe ≃g cycleGraph 4) }.ncard : ℝ)) := by
   sorry
 
+/- ## Variants and partial results -/
+
+/--
+He, Ma, and Yang proved the conjecture when $n = q^2 + q + 1$ for some even integer $q$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_60.variants.he_ma_yang :
+    ∃ c : ℝ, c > 0 ∧
+      ∀ (q : ℕ) (_hq : Even q),
+        ∀ (G : SimpleGraph (Fin (q^2 + q + 1))) [DecidableRel G.Adj],
+          (extremalNumber (q^2 + q + 1) (cycleGraph 4) < G.edgeFinset.card) →
+          (c * Real.sqrt ((q^2 + q + 1) : ℝ) ≤ ({ H' : G.Subgraph | Nonempty (H'.coe ≃g cycleGraph 4) }.ncard : ℝ)) := by
+  sorry
+
+/--
+Erdős and Simonovits conjectured that at least 2 copies of $C_4$ are guaranteed.
+-/
+@[category research solved, AMS 5]
+theorem erdos_60.variants.two_copies :
+    ∀ᶠ n : ℕ in atTop,
+      ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
+        (extremalNumber n (cycleGraph 4) < G.edgeFinset.card) →
+        (2 ≤ { H' : G.Subgraph | Nonempty (H'.coe ≃g cycleGraph 4) }.ncard) := by
+  sorry
+
 end Erdos60
