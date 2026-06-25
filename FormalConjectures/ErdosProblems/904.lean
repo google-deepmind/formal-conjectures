@@ -26,8 +26,6 @@ namespace Erdos904
 
 open Finset
 
-variable {V : Type*} [Fintype V]
-
 /-- An abbreviation for the fixed number of vertices $n$ in the graph. -/
 abbrev n (V : Type*) [Fintype V] : ℕ := Fintype.card V
 
