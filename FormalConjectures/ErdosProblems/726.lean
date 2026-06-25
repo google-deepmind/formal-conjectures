@@ -42,8 +42,8 @@ By $n\in (p/2,p)\pmod{p}$ we mean $n\equiv r\pmod{p}$ for some integer $r$ with 
 theorem erdos_726 :
     answer(sorry) ↔
       (fun n : ℕ ↦ ∑ p ∈ (range (n + 1)).filter
-          (fun p ↦ p.Prime ∧ ((p : ℕ) : ℝ) / 2 < ((n % p : ℕ) : ℝ)),
-        (1 : ℝ) / ((p : ℕ) : ℝ))
+          (fun p : ℕ ↦ p.Prime ∧ (p : ℝ) / 2 < (n % p : ℝ)),
+        (1 : ℝ) / (p : ℝ))
       ~[atTop] (fun n : ℕ ↦ Real.log (Real.log (n : ℝ)) / 2) := by
   sorry
 
