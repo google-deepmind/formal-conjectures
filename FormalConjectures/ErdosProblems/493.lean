@@ -25,13 +25,12 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos493
 
 /--
-Is there some $k$ such that every sufficiently large integer $n$ can be written as
-$\prod a_i - \sum a_i$ for integers $a_1, \ldots, a_k$ all at least $2$?
-
-The answer is yes: already $k = 2$ suffices, since $n = (n + 2) \cdot 2 - ((n + 2) + 2)$.
+Does there exist a $k$ such that every sufficiently large integer can be written in the form
+\[\prod_{i=1}^k a_i - \sum_{i=1}^k a_i\]
+for some integers $a_i\geq 2$?
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos493.lean"]
-theorem erdos_493 :
+theorem erdos_493 : answer(True) ↔
     ∃ k : ℕ, ∃ N : ℤ, ∀ n : ℤ, N ≤ n →
       ∃ a : Fin k → ℤ,
         (∀ i : Fin k, (2 : ℤ) ≤ a i) ∧

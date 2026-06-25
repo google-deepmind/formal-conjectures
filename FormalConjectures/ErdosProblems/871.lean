@@ -25,23 +25,21 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos871
 
 /--
-A set $A \subseteq \mathbb{N}$ is an (asymptotic) additive basis of order $2$ if every sufficiently
-large $n$ can be written as $a + b$ with $a, b \in A$. There exists an additive basis of order $2$
-(in fact with unboundedly many such representations as $n$ grows) that cannot be written as the
-disjoint union of two additive bases of order $2$. This answers Erdős' question in the negative.
+Let $A$ be an additive basis of order $2$, and suppose $1_A\ast 1_A(n)\to \infty$ as $n\to \infty$. Can $A$ be partitioned into two disjoint additive bases of order $2$?
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos871.lean"]
 theorem erdos_871 :
-    ∃ (A : Set ℕ),
-      (∀ᶠ n in Filter.atTop, ∃ a ∈ A, ∃ b ∈ A, a + b = n) ∧
-      (∀ t, ∀ᶠ n in Filter.atTop, ∃ pairs : Finset (ℕ × ℕ),
-        pairs.card ≥ t ∧
-          ∀ p ∈ pairs, p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n ∧ p.1 ≤ p.2) ∧
-      ¬∃ (B C : Set ℕ),
-        (∀ x, x ∈ A ↔ x ∈ B ∨ x ∈ C) ∧
-        Disjoint B C ∧
-        (∀ᶠ n in Filter.atTop, ∃ a ∈ B, ∃ b ∈ B, a + b = n) ∧
-        (∀ᶠ n in Filter.atTop, ∃ a ∈ C, ∃ b ∈ C, a + b = n) := by
+    answer(False) ↔
+      ∀ (A : Set ℕ),
+        (∀ᶠ n in Filter.atTop, ∃ a ∈ A, ∃ b ∈ A, a + b = n) ∧
+        (∀ t, ∀ᶠ n in Filter.atTop, ∃ pairs : Finset (ℕ × ℕ),
+          pairs.card ≥ t ∧
+            ∀ p ∈ pairs, p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n ∧ p.1 ≤ p.2) →
+        ∃ (B C : Set ℕ),
+          (∀ x, x ∈ A ↔ x ∈ B ∨ x ∈ C) ∧
+          Disjoint B C ∧
+          (∀ᶠ n in Filter.atTop, ∃ a ∈ B, ∃ b ∈ B, a + b = n) ∧
+          (∀ᶠ n in Filter.atTop, ∃ a ∈ C, ∃ b ∈ C, a + b = n) := by
   sorry
 
 end Erdos871

@@ -25,12 +25,13 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos1125
 
 /--
-If $f : \mathbb{R} \to \mathbb{R}$ satisfies $2f(x) \le f(x+h) + f(x+2h)$ for all $x$ and all
-$h > 0$, then $f$ is monotone. The answer is yes (Laczkovich).
+Let $f:\mathbb{R}\to \mathbb{R}$ be such that
+\[2f(x) \leq f(x+h)+f(x+2h)\]
+for every $x\in \mathbb{R}$ and $h>0$. Must $f$ be monotonic?
 -/
 @[category research solved, AMS 26, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1125.lean"]
-theorem erdos_1125 {f : ℝ → ℝ}
-    (hf : ∀ x : ℝ, ∀ h : ℝ, h > 0 → 2 * f x ≤ f (x + h) + f (x + 2 * h)) :
+theorem erdos_1125 : answer(True) ↔ ∀ (f : ℝ → ℝ)
+    (hf : ∀ x : ℝ, ∀ h : ℝ, h > 0 → 2 * f x ≤ f (x + h) + f (x + 2 * h)),
     Monotone f := by
   sorry
 

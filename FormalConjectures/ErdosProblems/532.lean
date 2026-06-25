@@ -25,16 +25,17 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos532
 
 /--
-If the natural numbers are $2$-coloured, then there is an infinite set $A \subseteq \mathbb{N}$
-whose nonempty finite subset sums are all the same colour. The answer is yes, a consequence of
-Hindman's theorem.
+If $\mathbb{N}$ is 2-coloured then is there some infinite set $A\subseteq \mathbb{N}$ such that
+all finite subset sums\[ \sum_{n\in S}n\](as $S$ ranges over all non-empty finite subsets of $A$)
+are monochromatic?
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos532.lean"]
-theorem erdos_532 (c : ℕ → Fin 2) :
-    ∃ A : Set ℕ, A.Infinite ∧
-      ∃ color : Fin 2,
-        ∀ S : Finset ℕ, S.Nonempty → ↑S ⊆ A →
-          c (∑ n ∈ S, n) = color := by
+theorem erdos_532 :
+    answer(True) ↔ ∀ (c : ℕ → Fin 2),
+      ∃ A : Set ℕ, A.Infinite ∧
+        ∃ color : Fin 2,
+          ∀ S : Finset ℕ, S.Nonempty → ↑S ⊆ A →
+            c (∑ n ∈ S, n) = color := by
   sorry
 
 end Erdos532

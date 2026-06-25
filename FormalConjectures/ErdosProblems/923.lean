@@ -27,11 +27,11 @@ namespace Erdos923
 open SimpleGraph
 
 /--
-For every $n$ there exists $f(n)$ such that any graph $G$ with $\chi(G) \ge f(n)$ has a
-triangle-free subgraph $H$ with $\chi(H) \ge n$. This is a theorem of Rödl.
+Is it true that, for every $k$, there is some $f(k)$ such that if $G$ has chromatic number
+$\geq f(k)$ then $G$ contains a triangle-free subgraph with chromatic number $\geq k$?
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos923.lean"]
-theorem erdos_923 {V : Type*} (n : ℕ) :
+theorem erdos_923 : answer(True) ↔ ∀ (V : Type*) (n : ℕ),
     ∃ k : ℕ, ∀ G : SimpleGraph V, k ≤ G.chromaticNumber →
     ∃ H ≤ G, n ≤ H.chromaticNumber ∧ H.CliqueFree 3 := by
   sorry

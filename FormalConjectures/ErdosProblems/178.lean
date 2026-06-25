@@ -27,17 +27,14 @@ namespace Erdos178
 open Finset BigOperators
 
 /--
-Given any infinite collection of infinite strictly increasing sequences of natural
-numbers $a_i : \mathbb{N} \to \mathbb{N}$, is there a colouring $f : \mathbb{N} \to \{-1, 1\}$
-such that for each $d$ the partial sums $\left|\sum_{j < m} f(a_i\,j)\right|$ are uniformly
-bounded over all $m$ and all $i < d$?
-
-The answer is yes (J. Beck, "Balancing Families of Integer Sequences",
-Combinatorica, 1981).
+Let $A_1,A_2,\ldots$ be an infinite collection of infinite sets of integers, say
+$A_i=\{a_{i1}<a_{i2}<\cdots\}$. Does there exist some $f:\mathbb{N}\to\{-1,1\}$ such that
+\[\max_{m, 1\leq i\leq d} \left\lvert \sum_{1\leq j\leq m} f(a_{ij})\right\rvert \ll_d 1\]
+for all $d\geq 1$?
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos178.lean"]
-theorem erdos_178 (a : ℕ → ℕ → ℕ)
-    (ha : ∀ i, StrictMono (a i)) :
+theorem erdos_178 : answer(True) ↔
+    ∀ (a : ℕ → ℕ → ℕ) (ha : ∀ i, StrictMono (a i)),
     ∃ f : ℕ → ℤ, (∀ n, f n = 1 ∨ f n = -1) ∧
       ∀ d : ℕ, ∃ C : ℕ, ∀ m i : ℕ, i < d →
         |∑ j ∈ range m, f (a i j)| ≤ ↑C := by

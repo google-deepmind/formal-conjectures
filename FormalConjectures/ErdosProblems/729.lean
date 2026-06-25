@@ -25,18 +25,18 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos729
 
 /--
-For any $C > 0$, there exists a constant $K \geq 3$ such that there are infinitely many triples
-$(a, b, n)$ with $a + b > n + C \log n$ and the denominator of $n!/(a!\, b!)$ being $K$-smooth (no
-prime factor exceeding $K$). This answers the Erdős–Graham–Ruzsa–Straus problem affirmatively.
+Let $C>0$ be a constant. Are there infinitely many integers $a,b,n$ with $a+b> n+C\log n$ such
+that the denominator of\[\frac{n!}{a!b!}\]contains only primes $\ll_C 1$?
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos729.lean"]
-theorem erdos_729 (C : ℝ) (hC : C > 0) :
-    ∃ K ≥ 3, Set.Infinite { T : ℕ × ℕ × ℕ |
-      let (a, b, n) := T
-      a > 0 ∧ b > 0 ∧ n > 0 ∧
-      (a : ℝ) + b > n + C * Real.log n ∧
-      ∀ p, p.Prime → p > K →
-        padicValNat p ((n.factorial / (a.factorial * b.factorial) : ℚ).den) = 0 } := by
+theorem erdos_729 :
+    answer(True) ↔ ∀ (C : ℝ) (hC : C > 0),
+      ∃ K ≥ 3, Set.Infinite { T : ℕ × ℕ × ℕ |
+        let (a, b, n) := T
+        a > 0 ∧ b > 0 ∧ n > 0 ∧
+        (a : ℝ) + b > n + C * Real.log n ∧
+        ∀ p, p.Prime → p > K →
+          padicValNat p ((n.factorial / (a.factorial * b.factorial) : ℚ).den) = 0 } := by
   sorry
 
 end Erdos729

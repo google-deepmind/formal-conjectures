@@ -35,15 +35,17 @@ abbrev n (V : Type*) [Fintype V] : ℕ := Fintype.card V
 abbrev turanNumber (n r : ℕ) : ℕ := #(SimpleGraph.turanGraph n r).edgeFinset
 
 /--
-A conjecture of Bollobás and Nikiforov on cliques and degrees: every graph $G$ with at least
-$\mathrm{turanNumber}(n, r)$ edges (the Turán bound forcing a $K_r$, for $1 \le r \le n$) contains
-an $r$-clique $s$ whose vertices have large total degree, namely
-$2r \cdot e(G) \le n \cdot \sum_{v \in s} \deg(v)$. This is true: such a clique always exists.
+Let $r\geq 2$ and let $t_r(n)$ be the Turán number (the maximal number of edges in a graph on $n$
+vertices with no $K_{r+1}$).
+
+If $G$ is a graph with $n$ vertices and $m\geq t_r(n)$ edges there exists a clique on $r$ vertices,
+say $x_1,\ldots,x_r$, such that\[d(x_1)+\cdots+d(x_r)\geq \frac{2rm}{n}.\]
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos904.lean"]
-theorem erdos_904 (G : SimpleGraph V) [DecidableRel G.Adj]
-    {r : ℕ} (hr : r ∈ Set.Icc 1 (n V)) (hm : turanNumber (n V) r ≤ #G.edgeFinset) :
-    ∃ s, G.IsNClique r s ∧ 2 * r * #G.edgeFinset ≤ n V * ∑ v ∈ s, G.degree v := by
+theorem erdos_904 :
+    answer(True) ↔ ∀ (V : Type*) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+      (r : ℕ) (hr : r ∈ Set.Icc 1 (n V)) (hm : turanNumber (n V) r ≤ #G.edgeFinset),
+      ∃ s, G.IsNClique r s ∧ 2 * r * #G.edgeFinset ≤ n V * ∑ v ∈ s, G.degree v := by
   sorry
 
 end Erdos904

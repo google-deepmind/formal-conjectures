@@ -25,15 +25,13 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos134
 
 /--
-For every triangle-free graph $G$ on $n$ vertices with maximum degree $o(\sqrt{n})$
-(degree below $n^{1/2 - \varepsilon}$), one can add edges to obtain a triangle-free graph $H$
-of diameter $2$ (every two distinct vertices are adjacent or share a common neighbour) while
-adding at most $\delta \cdot n^2$ edges, for every $\delta > 0$ and all sufficiently large $n$.
-This is Theorem 1.2 of Alon's "Triangle-free graphs of diameter 2".
+Let $\epsilon,\delta>0$ and $n$ be sufficiently large in terms of $\epsilon$ and $\delta$.
+Let $G$ be a triangle-free graph on $n$ vertices with maximum degree $<n^{1/2-\epsilon}$.
+Can $G$ be made into a triangle-free graph with diameter $2$ by adding at most $\delta n^2$ edges?
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos134.lean"]
-theorem erdos_134
-    {ε δ : ℝ} (hε : 0 < ε) (hδ : 0 < δ) :
+theorem erdos_134 : answer(True) ↔
+    ∀ (ε δ : ℝ) (hε : 0 < ε) (hδ : 0 < δ),
     ∃ N : ℕ, ∀ n ≥ N, ∀ G : SimpleGraph (Fin n),
       G.CliqueFree 3 →
       (∀ v : Fin n, (G.degree v : ℝ) < Real.rpow (n : ℝ) ((1 : ℝ) / 2 - ε)) →

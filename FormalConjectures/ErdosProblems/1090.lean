@@ -25,13 +25,10 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos1090
 
 /--
-For every $k \ge 3$ there is a finite set $A \subseteq \mathbb{R}^2$ such that in every
-2-colouring of $A$ there is a line $S$ containing at least $k$ points of $A$, such that
-every point of $A$ on that line lies in $S$ and all of them have the same colour.
-The answer is yes (Hunter), via the Hales–Jewett theorem.
+Let $k\geq 3$. Does there exist a finite set $A\subset \mathbb{R}^2$ such that, in any $2$-colouring of $A$, there exists a line which contains at least $k$ points from $A$, and all the points of $A$ on the line have the same colour?
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1090.lean"]
-theorem erdos_1090 (k : ℕ) (hk : 3 ≤ k) :
+theorem erdos_1090 : answer(True) ↔ ∀ (k : ℕ), ∀ (hk : 3 ≤ k),
     ∃ (A : Finset (Fin 2 → ℝ)), ∀ (C : A → Fin 2),
       ∃ (S : Finset (Fin 2 → ℝ)), ∃ (hSA : S ⊆ A),
         Collinear ℝ (S : Set (Fin 2 → ℝ)) ∧ S.card ≥ k ∧
