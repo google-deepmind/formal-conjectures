@@ -28,9 +28,6 @@ open scoped Pointwise
 
 namespace Green52
 
-/-- The group $G = \mathbb{F}_2^n = (Z/2Z)^n$. -/
-abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
-
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set with an additive complement of size $K$.
 Does $2A$ contain a coset of codimension $O_K(1)$?
