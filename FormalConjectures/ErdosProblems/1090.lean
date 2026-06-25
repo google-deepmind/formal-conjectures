@@ -19,13 +19,17 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1090
 
-*Reference:* [erdosproblems.com/1090](https://www.erdosproblems.com/1090)
+*References:*
+- [erdosproblems.com/1090](https://www.erdosproblems.com/1090)
+- [Er75f] Erdős, Paul, *On some problems of elementary and combinatorial geometry*. Ann. Mat. Pura Appl. (4) (1975), 99-108.
 -/
 
 namespace Erdos1090
 
 /--
 Let $k\geq 3$. Does there exist a finite set $A\subset \mathbb{R}^2$ such that, in any $2$-colouring of $A$, there exists a line which contains at least $k$ points from $A$, and all the points of $A$ on the line have the same colour?
+
+Erdős [Er75f] says Graham and Selfridge proved the answer is yes when $k=3$. Hunter has observed that, for sufficiently large $n$, a generic projection of $[k]^n$ into $\mathbb{R}^2$ has this property, by the Hales-Jewett theorem.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1090.lean"]
 theorem erdos_1090 : answer(True) ↔ ∀ (k : ℕ), ∀ (hk : 3 ≤ k),

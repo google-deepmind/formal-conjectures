@@ -19,7 +19,12 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 532
 
-*Reference:* [erdosproblems.com/532](https://www.erdosproblems.com/532)
+*References:*
+- [erdosproblems.com/532](https://www.erdosproblems.com/532)
+- [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of combinatorial theory (1973), 117-138.
+- [Er75b] Erdős, Paul, *Problems and results in combinatorial number theory*. Journées Arithmétiques de Bordeaux (1975), 295-310.
+- [Er77c] Erdős, Paul, *Problems and results on combinatorial number theory. III*. Number theory day (1977), 43-72.
+- [Hi74] Hindman, Neil, *Finite sums from sequences within cells of a partition of $\mathbb{N}$*. J. Combinatorial Theory Ser. A (1974), 1-11.
 -/
 
 namespace Erdos532
@@ -28,6 +33,8 @@ namespace Erdos532
 If $\mathbb{N}$ is 2-coloured then is there some infinite set $A\subseteq \mathbb{N}$ such that
 all finite subset sums\[ \sum_{n\in S}n\](as $S$ ranges over all non-empty finite subsets of $A$)
 are monochromatic?
+
+Asked by Graham and Rothschild. Proved by Hindman [Hi74] (for any number of colours).
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos532.lean"]
 theorem erdos_532 :

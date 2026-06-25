@@ -19,13 +19,18 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 871
 
-*Reference:* [erdosproblems.com/871](https://www.erdosproblems.com/871)
+*References:*
+- [erdosproblems.com/871](https://www.erdosproblems.com/871)
+- [ErNa88] Erdős, Paul and Nathanson, Melvyn B., *Partitions of bases into disjoint unions of bases*. J. Number Theory (1988), 1-9.
+- [ErNa89] Erdős, Paul and Nathanson, Melvyn B., *Additive bases with many representations*. Acta Arith. (1989), 399-406.
 -/
 
 namespace Erdos871
 
 /--
 Let $A$ be an additive basis of order $2$, and suppose $1_A\ast 1_A(n)\to \infty$ as $n\to \infty$. Can $A$ be partitioned into two disjoint additive bases of order $2$?
+
+A question of Erdős and Nathanson [ErNa88], who proved this is true if $1_A\ast 1_A(n) > c\log n$ (for all large $n$) for some constant $c>(\log\frac{4}{3})^{-1}$. Erdős and Nathanson [ErNa89] also proved that for every $t$ there exists a basis $A$ of order $2$ such that $1_A\ast 1_A(n)\geq t$ for all large $n$ and yet $A$ cannot be partitioned into two disjoint additive bases. This has been disproved by Larsen using Claude Opus 4.5 - in fact only a small modification of the argument of [ErNa89] is required.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos871.lean"]
 theorem erdos_871 :

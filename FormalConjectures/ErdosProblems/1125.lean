@@ -19,7 +19,11 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1125
 
-*Reference:* [erdosproblems.com/1125](https://www.erdosproblems.com/1125)
+*References:*
+- [erdosproblems.com/1125](https://www.erdosproblems.com/1125)
+- [Er81b] Erdős, P., *My Scottish Book 'Problems'*. The Scottish Book (1981), 27-35.
+- [Ke69] Kemperman, J. H. B., *On the regularity of generalized convex functions*. Trans. Amer. Math. Soc. (1969), 69-93.
+- [La84] Laczkovich, M., *On Kemperman's inequality $2f(x)\leq f(x+h)+f(x+2h)$*. Colloq. Math. (1984), 109-115.
 -/
 
 namespace Erdos1125
@@ -28,6 +32,8 @@ namespace Erdos1125
 Let $f:\mathbb{R}\to \mathbb{R}$ be such that
 \[2f(x) \leq f(x+h)+f(x+2h)\]
 for every $x\in \mathbb{R}$ and $h>0$. Must $f$ be monotonic?
+
+A problem of Kemperman [Ke69], who proved it is true if $f$ is measurable. Erdős [Er81b] wrote 'if it were my problem I would offer \$500 for it'. This was solved by Laczkovich [La84].
 -/
 @[category research solved, AMS 26, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1125.lean"]
 theorem erdos_1125 : answer(True) ↔ ∀ (f : ℝ → ℝ)

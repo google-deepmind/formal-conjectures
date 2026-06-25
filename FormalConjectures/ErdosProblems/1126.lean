@@ -19,7 +19,11 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1126
 
-*Reference:* [erdosproblems.com/1126](https://www.erdosproblems.com/1126)
+*References:*
+- [erdosproblems.com/1126](https://www.erdosproblems.com/1126)
+- [Er60c] Erdős, P., *Problem 310*. Colloq. Math., 311.
+- [dB66] de Bruijn, N. G., *On almost additive functions*. Colloq. Math. (1966), 59-63.
+- [Ju65] Jurkat, Wolfgang B., *On Cauchy's functional equation*. Proc. Amer. Math. Soc. (1965), 683-686.
 -/
 
 open MeasureTheory
@@ -32,6 +36,8 @@ If
 for almost all $x,y\in \mathbb{R}$ then there exists a function $g$ such that
 \[g(x+y)=g(x)+g(y)\]
 for all $x,y\in\mathbb{R}$ such that $f(x)=g(x)$ for almost all $x$.
+
+Proved independently by de Bruijn [dB66] and Jurkat [Ju65].
 -/
 @[category research solved, AMS 26 28, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1126.lean"]
 theorem erdos_1126 : answer(True) ↔ ∀
