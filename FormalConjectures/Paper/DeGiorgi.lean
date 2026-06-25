@@ -19,15 +19,16 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # De Giorgi's conjecture
 
-This file formalizes a conjecture of De Giorgi about entire solutions to $Δ u + u - u^3 = 0$.
-The conjecture is a rigidity statement: in spatial dimension $n ≤ 8$, the level sets of bounded solutions
-which satisfy $∂₁u > 0$ everywhere are hyperplanes. The condition $n ≤ 8$ is sharp.
+This file states a conjecture of De Giorgi about entire solutions to $Δ u + u - u^3 = 0$.
+The conjecture is a rigidity theorem: in spatial dimension $n ≤ 8$, the level sets of bounded solutions
+which satisfy $∂₁u > 0$ everywhere are hyperplanes. It has been shown that the condition $n ≤ 8$ is sharp.
 
 The main theorems are:
 - `DeGiorgi_le_eight`: the conjecture holds in dimension $n ≤ 8$.
 - `DeGiorgi_ge_nine`: the conclusion of the conjecture does not hold if $n ≥ 9$.
 
 ## Existing results
+- The case $n = 1$ is elementary.
 - The case $n = 2$ was proven by Ghoussoub and Gui.
 - The case $n = 3$ was proven by Ambrosio and Cabré.
 - The case $4 ≤ n ≤ 8$ was proven under an extra assumption by Savin.
@@ -52,10 +53,9 @@ namespace DeGiorgi
 variable {n : ℕ} [NeZero n]
 
 /--
-The function $u : ℝⁿ → ℝ$ is a bounded classical solution to $Δ u + u - u^3 = 0$
+The function $u : ℝⁿ → ℝ$ is a bounded classical solution to $Δ u + u - u^3 = 0$.
 -/
-structure IsBoundedSolution
-    (u : ℝ^n → ℝ) : Prop where
+structure IsBoundedSolution (u : ℝ^n → ℝ) : Prop where
   regular : ContDiff ℝ 2 u
   bounded : ∃ C, ∀ x, |u x| ≤ C
   solution : ∀ x, (Δ u x) + u x - (u x) ^ 3 = 0
@@ -67,21 +67,22 @@ def HasPositiveDeriv (u : ℝ^n → ℝ) : Prop :=
   ∀ x, lineDeriv ℝ u x (EuclideanSpace.single 0 1) > 0
 
 /--
-The level sets of $u : ℝⁿ → ℝ$ are hyperplanes. This is expressed by stating that the
-rank of the affine span of the level set (viewed as a submodule of ℝ^n) is n - 1.
+The level sets of $u : ℝⁿ → ℝ$ are hyperplanes. This is expressed by stating that there exists
+some affine subspace with rank $n - 1$ which coincides with the level set.
 -/
 def HasHyperplaneLevelSets (u : ℝ^n → ℝ) : Prop :=
-  ∀ y, Module.finrank ℝ (affineSpan ℝ (u⁻¹' {y})).direction = (n - 1)
+  ∀ y ∈ range u, ∃ S : AffineSubspace ℝ (ℝ^n),
+    u⁻¹' {y} = S ∧ Module.finrank ℝ S.direction = n - 1
 
 /--
 The conclusion to De Giorgi's conjecture: if $u : ℝⁿ → ℝ$ is a bounded classical solution to
 $Δ u + u - u^3 = 0$ satisfying $∂₁u > 0$ everywhere, then the level sets of $u$ are hyperplanes.
 -/
 def DeGiorgi_conclusion (n : ℕ) [NeZero n] : Prop :=
-  ∀ u : ℝ^n → ℝ, IsBoundedSolution u → HasPositiveDeriv u → HasHyperplaneLevelSets u
+  ∀ u : ℝ^n → ℝ, (IsBoundedSolution u ∧ HasPositiveDeriv u) → HasHyperplaneLevelSets u
 
 /--
-De Giorgi's conjecture holds in dimension n ≤ 8.
+De Giorgi's conjecture holds in dimension $n ≤ 8$.
 -/
 @[category research open, AMS 35]
 theorem DeGiorgi_le_eight (hn : n ≤ 8) : (DeGiorgi_conclusion n) := sorry
