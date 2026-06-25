@@ -560,7 +560,7 @@ theorem Star5_max_deg : Star5.maxDegree = 5 := by
 
 @[category test, AMS 5]
 theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_sum, Fintype.card_fin]; decide +native
 
 @[category test, AMS 5]
 theorem Star5_matching : matchingNumber Star5 = 1 := by
@@ -601,7 +601,7 @@ theorem Star5_matching : matchingNumber Star5 = 1 := by
 
 @[category test, AMS 5]
 theorem Star5_residue : residue Star5 = 5 := by
-  sorry
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem Star5_annihilation : annihilationNumber Star5 = 5 := by
