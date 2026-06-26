@@ -119,7 +119,46 @@ Any balanced partition has both pieces nonempty, so `MaxOverlap \geq 1`.
 @[category test, AMS 5 11, formal_proof using formal_conjectures at
 "https://github.com/google-deepmind/formal-conjectures/pull/4153/commits/2ce2d6345d0fcf3b023fe35fde9a9a490b131a86"]
 theorem M_two : M 2 = 1 := by
-  sorry
+  have hle : ∀ k : ℤ, Overlap ({1, 4} : Finset ℤ) ({2, 3} : Finset ℤ) k ≤ 1 := by
+    intro k
+    apply Finset.card_le_one.mpr
+    intro p hp q hq
+    obtain ⟨hp1, hp2⟩ := Finset.mem_filter.mp hp
+    obtain ⟨hq1, hq2⟩ := Finset.mem_filter.mp hq
+    obtain ⟨hpa, hpb⟩ := Finset.mem_product.mp hp1
+    obtain ⟨hqa, hqb⟩ := Finset.mem_product.mp hq1
+    obtain ⟨pa, pb⟩ := p
+    obtain ⟨qa, qb⟩ := q
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hpa hpb hqa hqb
+    simp only at hp2 hq2
+    rcases hpa with h | h <;> rcases hpb with h' | h' <;>
+      rcases hqa with h'' | h'' <;> rcases hqb with h''' | h''' <;>
+      subst_vars <;> first | rfl | (exfalso; omega)
+  have hbdd : BddAbove (Set.range (Overlap ({1, 4} : Finset ℤ) ({2, 3} : Finset ℤ))) :=
+    ⟨1, by rintro x ⟨k, rfl⟩; exact hle k⟩
+  have hmax : MaxOverlap ({1, 4} : Finset ℤ) ({2, 3} : Finset ℤ) = 1 := by
+    apply le_antisymm
+    · exact ciSup_le hle
+    · refine le_ciSup_of_le hbdd (-1) ?_
+      have h := one_le_overlap (show (1 : ℤ) ∈ ({1, 4} : Finset ℤ) by decide)
+        (show (2 : ℤ) ∈ ({2, 3} : Finset ℤ) by decide)
+      simpa using h
+  apply le_antisymm
+  · apply Nat.sInf_le
+    exact ⟨{1, 4}, {2, 3}, by decide, by decide, by decide, hmax⟩
+  · apply le_csInf
+    · exact ⟨_, {1, 4}, {2, 3}, by decide, by decide, by decide, hmax⟩
+    rintro x ⟨A, B, hd, hu, hsc, rfl⟩
+    have hcardsum : A.card + B.card = 4 := by
+      rw [← Finset.card_union_of_disjoint hd, hu]; decide
+    have hane : A.Nonempty := Finset.card_pos.mp (by omega)
+    have hbne : B.Nonempty := Finset.card_pos.mp (by omega)
+    obtain ⟨a, haa⟩ := hane
+    obtain ⟨b, hbb⟩ := hbne
+    refine le_ciSup_of_le ?_ (a - b) (one_le_overlap haa hbb)
+    refine ⟨(A.product B).card, ?_⟩
+    rintro y ⟨k, rfl⟩
+    exact Finset.card_filter_le _ _
 
 @[category test, AMS 5 11]
 theorem M_three : M 3 = 2 := by
