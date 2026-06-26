@@ -70,6 +70,28 @@ register_option google.answer : AnswerSetting := {
 
 def mkAnswerAnnotation (e : Expr) : Expr := mkAnnotation `answer e
 
+/-- Find the first subexpression carrying the `answer` annotation,
+returning the inner (unwrapped) expression if found. -/
+def findAnswerExpr (e : Expr) : Option Expr :=
+  (e.find? fun
+    | .mdata m _ => m.contains `answer
+    | _ => false).map Expr.mdataExpr!
+
+/-- Collect *all* subexpressions carrying the `answer` annotation,
+returning the inner (unwrapped) expressions. -/
+partial def findAnswerExprs (e : Expr) : Array Expr :=
+  go e #[]
+where
+  go (e : Expr) (acc : Array Expr) : Array Expr :=
+    match e with
+    | .mdata m inner =>
+      go inner (if m.contains `answer then acc.push inner else acc)
+    | .app f a => go a (go f acc)
+    | .lam _ t b _ => go b (go t acc)
+    | .forallE _ t b _ => go b (go t acc)
+    | .letE _ t v b _ => go b (go v (go t acc))
+    | _ => acc
+
 def elabTermAndAnnotate (stx : TSyntax `term) (expectedType? : Option Expr)
     (postpone : Bool := false) :=
   mkAnswerAnnotation <$> do
@@ -77,6 +99,14 @@ def elabTermAndAnnotate (stx : TSyntax `term) (expectedType? : Option Expr)
       postponeElabTerm (← `(by exact $stx)) expectedType?
     else
       elabTerm stx expectedType?
+
+/-- Construct a canonical `sorryAx` application with a stable, module-independent
+tag. Unlike Lean's built-in `sorry` macro, this does not embed the current module
+name via hygiene, so the resulting expression is identical regardless of whether
+the file is compiled as `Challenge` or `Solution`. -/
+def mkCanonicalSorryAnnotation (expectedType : Expr) : TermElabM Expr := do
+  let sorryExpr ← Meta.mkSorry expectedType (synthetic := false)
+  return mkAnswerAnnotation sorryExpr
 
 /-- Indicates where the answer is in a problem statement. -/
 @[term_elab answer]
@@ -107,6 +137,14 @@ def answerElab : TermElab := fun stx expectedType? => do
       -- If the answer is a `sorry` of type `Prop` then default to `True` in this setting
       if expectedType? == some (Expr.sort .zero) && a == (← `(term| sorry)) then
         return .const `True []
+      else if a == (← `(term| sorry)) then
+        -- For `answer(sorry)` with a non-Prop expected type, construct a canonical
+        -- `sorryAx` call directly. This avoids embedding the current module name
+        -- (e.g. `Challenge` vs `Solution`) into the expression via Lean's hygiene
+        -- system, which would cause the theorem type to differ between builds.
+        match expectedType? with
+        | some ty => mkCanonicalSorryAnnotation ty
+        | none    => elabTermAndAnnotate a expectedType? true
       else
         elabTermAndAnnotate a expectedType? true
   | _ => Elab.throwUnsupportedSyntax

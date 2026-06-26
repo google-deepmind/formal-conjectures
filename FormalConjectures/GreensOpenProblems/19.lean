@@ -51,8 +51,6 @@ noncomputable def S (d : G) (A : Finset (G × G)) : Finset (G × G) :=
 
 end GroupDefs
 
-/-- The group $G = \mathbb{F}_2^n = (Z/2Z)^n$. -/
-abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 
 /--
 True if the given exponent satisfies Green's conditions [Gr26].
