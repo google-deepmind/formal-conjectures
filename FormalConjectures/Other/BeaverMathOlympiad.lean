@@ -207,4 +207,35 @@ theorem beaver_math_olympiad_problem_5 : answer(sorry) ↔
     ∃ i, b i = f (a i) - 1 := by
   sorry
 
+/--
+[BMO#8](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#8._1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA_(bbch))
+
+Let $(a_n)_{n \ge 1}$ and $(b_n)_{n \ge 1}$ be two sequences such that $(a_1, b_1) = (10, 12)$ and
+
+$$(a_{n+1}, b_{n+1}) = \begin{cases}
+(a_n - \lfloor b_n/2 \rfloor - 3, 3 \lfloor (b_n+1)/2 \rfloor + 6) & \text{if } a_n > \lfloor b_n/2 \rfloor \\
+(3 a_n + 5, b_n - 2 a_n) & \text{if } a_n \le \lfloor b_n/2 \rfloor
+\end{cases}$$
+
+for all positive integers $n$.  Does there exist a positive integer $i$ such that
+$a_i = \lfloor b_i/2 \rfloor + 1$?
+
+[BMO#8](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#8._1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA_(bbch)) is equivalent to asking whether the 6-state Turing machine
+[`1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA`](https://wiki.bbchallenge.org/wiki/1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA) halts or not.
+
+There is presently no consensus on whether the machine halts or not, hence the problem is formulated
+using `answer(sorry) ↔`.
+-/
+@[category research open, AMS 5 11 68]
+theorem beaver_math_olympiad_problem_8 : answer(sorry) ↔
+    ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
+    (a_ini : a 0 = 10)
+    (a_rec : ∀ n, a (n + 1) =
+      if b n / 2 < a n then a n - b n / 2 - 3 else 3 * a n + 5)
+    (b_ini : b 0 = 12)
+    (b_rec : ∀ n, b (n + 1) =
+      if b n / 2 < a n then 3 * ((b n + 1) / 2) + 6 else b n - 2 * a n),
+    ∃ i, a i = b i / 2 + 1 := by
+  sorry
+
 end BeaverMathOlympiad
