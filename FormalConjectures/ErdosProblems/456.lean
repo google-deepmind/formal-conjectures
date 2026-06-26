@@ -83,7 +83,27 @@ It is trivial that $m_n \leq p_n$ always.
 @[category textbook, AMS 11]
 theorem erdos_456.variants.mn_leq_pn (n : ℕ) :
     m n ≤ p n := by
-  sorry
+  unfold m p
+  rcases eq_or_ne n 0 with hn | hn
+  · subst hn
+    have hempty : {k | 0 < k ∧ (0 : ℕ) ∣ totient k} = (∅ : Set ℕ) := by
+      ext k
+      simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+      intro hk
+      rw [zero_dvd_iff]
+      have := Nat.totient_pos.mpr hk
+      omega
+    rw [hempty, Nat.sInf_empty]
+    exact Nat.zero_le _
+  · have hne : {k | k.Prime ∧ k ≡ 1 [MOD n]}.Nonempty := by
+      obtain ⟨q, _, hq, hmod⟩ :=
+        Nat.forall_exists_prime_gt_and_modEq 0 hn (Nat.coprime_one_left n)
+      exact ⟨q, hq, hmod⟩
+    obtain ⟨hp, hmod⟩ := Nat.sInf_mem hne
+    apply Nat.sInf_le
+    refine ⟨hp.pos, ?_⟩
+    rw [Nat.totient_prime hp]
+    exact (Nat.modEq_iff_dvd' hp.pos).mp hmod.symm
 
 /--
 Erdős [Er79e] writes it is 'easy to show' that for infinitely many $n$ we have $m_n < p_n$.
