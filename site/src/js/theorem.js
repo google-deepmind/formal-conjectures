@@ -38,6 +38,8 @@ async function init() {
   }
 
   document.title = `${theorem.displayTheorem} — Formal Conjectures`;
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.content = theorem.theorem;
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
   const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
   const contributors = data.contributors?.[theorem.githubPath] || [];
@@ -472,6 +474,18 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <div class="verso-doc-content">${docHtml}</div>
     </div>` : '';
 
+  const reactionSection = FC.voting ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">Community reactions</div>
+      <div id="theorem-reactions"></div>
+    </div>` : '';
+
+  const difficultySection = FC.voting ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">Difficulty vote</div>
+      <div id="difficulty-vote"></div>
+    </div>` : '';
+
   // Code placeholder (async-filled) with GitHub + Verso links
   const codeSection = versoLink ? `
     <div class="theorem-detail__section">
@@ -511,6 +525,10 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
     ${docSection}
 
+    ${reactionSection}
+
+    ${difficultySection}
+
     ${codeSection}
 
     ${contributorsSection}
@@ -547,6 +565,11 @@ function renderDetail(theorem, siblings, verso, contributors) {
   // Render LaTeX in docstrings and wire statement dropdowns
   FC.setupStatementToggles(detailEl);
   FC.renderLatex();
+
+  if (FC.voting) {
+    FC.voting.renderTheoremReactions(theorem, document.getElementById('theorem-reactions'));
+    FC.voting.renderDifficultyVote(theorem, document.getElementById('difficulty-vote'));
+  }
 
   // Async: load Verso assets, fetch code block, and initialize hovers
   if (versoLink) {

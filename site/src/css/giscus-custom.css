@@ -1,0 +1,42 @@
+/* hides not used reactions */
+.gsc-reactions .gsc-emoji-button:nth-child(3),
+.gsc-reactions .gsc-emoji-button:nth-child(4),
+.gsc-reactions .gsc-emoji-button:nth-child(5),
+.gsc-reactions .gsc-emoji-button:nth-child(7),
+.gsc-reactions .gsc-emoji-button:nth-child(8) { display: none; }
+
+/* paints over giscus reaction name (+1/-1/Love) with a same-colored rectangle */
+.gsc-reactions .gsc-reactions-popover p.overflow-hidden {
+  position: relative;          /* establishes a positioning context */
+}
+.gsc-reactions .gsc-reactions-popover p.overflow-hidden::after {
+  content: "Pick your reaction";
+  position: absolute;
+  inset: 0;                    /* stretches to cover the entire <p> */
+  background: var(--color-canvas-overlay, #fff);  /* same color as popup background */
+  color: var(--color-fg-muted, #656d76);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* overwrites the reaction name in the reaction box using ::after */
+.gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(1):hover) p.overflow-hidden::after,
+.gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(1):focus) p.overflow-hidden::after { content: "True"; }
+.gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(2):hover) p.overflow-hidden::after,
+.gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(2):focus) p.overflow-hidden::after { content: "False"; }
+.gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(6):hover) p.overflow-hidden::after,
+.gsc-reactions .gsc-reactions-popover:has(.gsc-emoji-button:nth-child(6):focus) p.overflow-hidden::after { content: "Like"; }
+
+
+/* Rename the reactions box as "Cast your vote" + emoji meaning */
+.gsc-reactions .gsc-reactions-count { font-size: 0; }
+.gsc-reactions .gsc-reactions-count::before {
+  content: "Cast Your Vote";
+  display: block;
+  font-size: 1rem;
+}
+.gsc-reactions .gsc-reactions-count::after {
+  content: "👍 = True\2002👎 = False\2002❤️ = I like this conjecture";
+  display: block;
+  font-size: 0.8rem;
+  font-weight: normal;
+  padding-left: 2rem;
+}

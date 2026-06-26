@@ -1,0 +1,92 @@
+/**
+ * giscus_voting.js — giscus-backed voting system.
+ *
+ * Votes are stored as reactions (emojis) on the theorem page.
+ */
+
+'use strict';
+
+(function () {
+  const THEME_BOUND_ATTR = 'data-giscus-reaction-theme-bound';
+
+  // ---------------------------------------------------------------------------
+  // Apply giscus theme (filter emojis + reaction labels)
+  // ---------------------------------------------------------------------------
+  function applyReactionTheme(root) {
+    if (!root || root.getAttribute(THEME_BOUND_ATTR) === 'true') return;
+    root.setAttribute(THEME_BOUND_ATTR, 'true');
+
+    // Reaction key order from giscus's Reactions object (matches GitHub API order)
+    var REACTION_ORDER = ['THUMBS_UP', 'THUMBS_DOWN', 'LAUGH', 'HOORAY', 'CONFUSED', 'HEART', 'ROCKET', 'EYES'];
+    var REACTION_LABELS = { THUMBS_UP: 'True', THUMBS_DOWN: 'False', HEART: 'Likes' };
+
+    var base = document.documentElement.dataset.base || '';
+    fetch(base + '/assets/css/giscus-custom.css')
+      .then(function(r) { if (!r.ok) return Promise.reject(); return r.text(); })
+      .then(function(baseCss) {
+        var currentIframe = null;
+        var lastReactions = {};  // { THUMBS_UP: {count, viewerHasReacted}, ... }
+
+        function findFrame() {
+          currentIframe = root.querySelector('iframe.giscus-frame');
+          return currentIframe;
+        }
+
+        function buildCss() {
+          var labelCss = '';
+          var pos = 0;
+          for (var i = 0; i < REACTION_ORDER.length; i++) {
+            var key = REACTION_ORDER[i];
+            var group = lastReactions[key];
+            if (group && group.count > 0) {
+              pos++;
+              var label = REACTION_LABELS[key];
+              if (label) {
+                labelCss += '.gsc-reactions .gsc-direct-reaction-button:nth-child(' + pos + ') .gsc-social-reaction-summary-item-count::before{content:"' + label + ' ";}';
+              } else {
+                labelCss += '.gsc-reactions .gsc-direct-reaction-button:nth-child(' + pos + '){display:none;}';
+              }
+            }
+          }
+          return baseCss + labelCss;
+        }
+
+        function sendTheme() {
+          if (!findFrame()) return;
+          var giscusOrigin = new URL(currentIframe.src).origin;
+          var css = '@import url("' + giscusOrigin + '/themes/light.css");' + buildCss();
+          currentIframe.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: 'data:text/css,' + encodeURIComponent(css) } } },
+            '*'
+          );
+        }
+
+        // Re-apply with correct labels whenever reaction counts change
+        window.addEventListener('message', function(event) {
+          if (typeof event.data !== 'object' || !event.data.giscus) return;
+          if (!findFrame() || event.source !== currentIframe.contentWindow) return;
+          var discussion = event.data.giscus.discussion;
+          if (!discussion || !discussion.reactions) return;
+          lastReactions = discussion.reactions;
+          sendTheme();
+        });
+
+        function waitAndApply() {
+          window.addEventListener('message', function onReady(event) {
+            if (typeof event.data !== 'object' || !event.data.giscus || !event.data.giscus.resizeHeight) return;
+            if (!findFrame() || event.source !== currentIframe.contentWindow) return;
+            window.removeEventListener('message', onReady);
+            sendTheme();
+            // Re-apply if the iframe reloads (e.g. after sign-out)
+            currentIframe.addEventListener('load', waitAndApply, { once: true });
+          });
+        }
+
+        waitAndApply();
+      });
+  }
+
+  window.FC.giscusVoting = {
+    applyReactionTheme,
+  };
+})();
