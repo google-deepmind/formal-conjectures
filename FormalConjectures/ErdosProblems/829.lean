@@ -34,6 +34,7 @@ def cubes : Set ℕ := {n | ∃ k, k ^ 3 = n}
 
 /-- Membership in `cubes` can be witnessed by a bounded cube root, which makes it
 decidable for concrete values. -/
+@[category API, AMS 11]
 lemma mem_cubes_iff (m : ℕ) : m ∈ cubes ↔ ∃ k, k < m + 1 ∧ k ^ 3 = m := by
   constructor
   · rintro ⟨k, rfl⟩
