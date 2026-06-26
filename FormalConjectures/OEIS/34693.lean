@@ -70,21 +70,21 @@ theorem exists_k_stronger {n : ℕ} (hn : 0 < n) : ∃ k : ℕ,
 theorem exists_k_best_possible : ∃ n > (0 : ℕ), ∀ (k : ℕ),
     k < 1 + (Real.nthRoot 100 n) ^ 74 → ¬(n * k + 1).Prime := by
   refine ⟨19, by norm_num, ?_⟩
-  have hy : Real.nthRoot 100 ((19:ℕ):ℝ) = (19:ℝ) ^ (((100:ℕ):ℝ))⁻¹ := by
+  have hy : Real.nthRoot 100 ((19 : ℕ) : ℝ) = (19 : ℝ) ^ (((100 : ℕ) : ℝ))⁻¹ := by
     simp only [Real.nthRoot]
     rw [if_pos (by decide : Even 100)]
     norm_num
-  have h100 : (Real.nthRoot 100 ((19:ℕ):ℝ)) ^ (100:ℕ) = 19 := by
+  have h100 : (Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ (100 : ℕ) = 19 := by
     rw [hy]; exact Real.rpow_inv_natCast_pow (by norm_num) (by norm_num)
-  have hb : (Real.nthRoot 100 ((19:ℕ):ℝ)) ^ 74 ≤ 9 := by
+  have hb : (Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ 74 ≤ 9 := by
     apply le_of_pow_le_pow_left₀ (n := 100) (by norm_num) (by norm_num)
-    have e : ((Real.nthRoot 100 ((19:ℕ):ℝ)) ^ (74:ℕ)) ^ (100:ℕ)
-        = ((Real.nthRoot 100 ((19:ℕ):ℝ)) ^ (100:ℕ)) ^ (74:ℕ) := by
+    have e : ((Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ (74 : ℕ)) ^ (100 : ℕ)
+        = ((Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ (100 : ℕ)) ^ (74 : ℕ) := by
       rw [← pow_mul, ← pow_mul, Nat.mul_comm]
     rw [e, h100]
     norm_num
   intro k hk
-  have hk10 : (k:ℝ) < 10 := by linarith
+  have hk10 : (k : ℝ) < 10 := by linarith
   have hk10' : k < 10 := by exact_mod_cast hk10
   interval_cases k <;> norm_num
 
