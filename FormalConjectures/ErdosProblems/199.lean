@@ -27,10 +27,6 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos199
 
-/-- Three real numbers form a nontrivial three-term arithmetic progression. -/
-def IsThreeTermAP (a b c : ℝ) : Prop :=
-  a + c = 2 * b ∧ a ≠ c
-
 /-- A set of reals is an infinite arithmetic progression. -/
 def IsInfiniteAP (S : Set ℝ) : Prop :=
   ∃ a b : ℝ, b ≠ 0 ∧ S = {x | ∃ n : ℕ, x = a + n * b}
@@ -43,7 +39,7 @@ Baumgartner [Ba75] answered this in the negative.
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos199.lean"]
 theorem erdos_199 : answer(False) ↔
-    ∀ A : Set ℝ, (∀ a ∈ A, ∀ b ∈ A, ∀ c ∈ A, ¬ IsThreeTermAP a b c) →
+    ∀ A : Set ℝ, ThreeAPFree A →
       ∃ S : Set ℝ, IsInfiniteAP S ∧ S ⊆ Aᶜ := by
   sorry
 
