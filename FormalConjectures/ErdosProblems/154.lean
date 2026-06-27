@@ -49,7 +49,8 @@ $A_k\subseteq\{0,\ldots,N_k\}$ with $N_k\to\infty$ and $\lvert A_k\rvert\sim N_k
 modulus $m\geq 2$, the proportion of elements of $A_k+A_k$ congruent to $i\pmod m$ (i.e. the count
 divided by $\lvert A_k+A_k\rvert$) tends to $1/m$ for every residue $i<m$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/willblair0708/formal-conjectures/blob/f650ef01dc263a5628df936f2df4322f11aa5119/Proofs/Erdos154/ErdosProblems/Erdos154Sumset.lean"]
 theorem erdos_154 : answer(True) ↔
     ∀ (m : ℕ) (hm : 2 ≤ m) (N : ℕ → ℕ) (A : ℕ → Finset ℕ),
       Tendsto (fun k => (N k : ℝ)) atTop atTop →
