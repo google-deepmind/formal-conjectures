@@ -46,8 +46,8 @@ $A+A$ then follows using the Sidon property.
 
 We state the question for the sumset: for any sequence of Sidon sets
 $A_k\subseteq\{0,\ldots,N_k\}$ with $N_k\to\infty$ and $\lvert A_k\rvert\sim N_k^{1/2}$, and any
-modulus $m\geq 2$, the number of elements of $A_k+A_k$ congruent to $i\pmod m$, divided by $N_k$,
-tends to $1/m$ for every residue $i<m$.
+modulus $m\geq 2$, the proportion of elements of $A_k+A_k$ congruent to $i\pmod m$ (i.e. the count
+divided by $\lvert A_k+A_k\rvert$) tends to $1/m$ for every residue $i<m$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_154 : answer(True) ↔
@@ -57,7 +57,7 @@ theorem erdos_154 : answer(True) ↔
       (∀ k, IsSidon (A k : Set ℕ)) →
       Tendsto (fun k => ((A k).card : ℝ) / Real.sqrt (N k)) atTop (nhds 1) →
       ∀ i < m, Tendsto
-        (fun k => (((A k + A k).filter (fun s => s % m = i)).card : ℝ) / (N k : ℝ))
+        (fun k => (((A k + A k).filter (fun s => s % m = i)).card : ℝ) / ((A k + A k).card : ℝ))
         atTop (nhds (1 / m)) := by
   sorry
 
