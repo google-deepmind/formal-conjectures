@@ -31,6 +31,8 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter Finset
 
+open scoped Pointwise
+
 namespace Erdos154
 
 /--
@@ -38,23 +40,45 @@ Let $A\subset \{1,\ldots,N\}$ be a Sidon set with $\lvert A\rvert\sim N^{1/2}$. 
 well-distributed over all small moduli? In particular, must about half the elements of $A+A$ be
 even and half odd?
 
-Lindström [Li98] has shown this is true for $A$ itself, subsequently strengthened by
-Kolountzakis [Ko99]. It follows immediately using the Sidon property that $A+A$ is similarly
-well-distributed.
+The answer is yes. Lindström [Li98] proved the analogous statement for $A$ itself (see
+`erdos_154.variants.lindstrom`), later strengthened by Kolountzakis [Ko99]; well-distribution of
+$A+A$ then follows using the Sidon property.
 
-We formalise Lindström's result for $A$ itself: for any sequence of Sidon sets
+We state the question for the sumset: for any sequence of Sidon sets
 $A_k\subseteq\{0,\ldots,N_k\}$ with $N_k\to\infty$ and $\lvert A_k\rvert\sim N_k^{1/2}$, and any
-modulus $m\geq 2$, the number of elements of $A_k$ congruent to $i\pmod m$, divided by
-$N_k^{1/2}$, tends to $1/m$ for every residue $i<m$.
+modulus $m\geq 2$, the number of elements of $A_k+A_k$ congruent to $i\pmod m$, divided by $N_k$,
+tends to $1/m$ for every residue $i<m$.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem154.lean"]
+@[category research solved, AMS 5 11]
 theorem erdos_154 : answer(True) ↔
     ∀ (m : ℕ) (hm : 2 ≤ m) (N : ℕ → ℕ) (A : ℕ → Finset ℕ),
       Tendsto (fun k => (N k : ℝ)) atTop atTop →
       (∀ k, ∀ x ∈ A k, x ≤ N k) →
       (∀ k, IsSidon (A k : Set ℕ)) →
       Tendsto (fun k => ((A k).card : ℝ) / Real.sqrt (N k)) atTop (nhds 1) →
-      ∀ i < m, Tendsto (fun k => (((A k).filter (fun a => a % m = i)).card : ℝ) / Real.sqrt (N k))
+      ∀ i < m, Tendsto
+        (fun k => (((A k + A k).filter (fun s => s % m = i)).card : ℝ) / (N k : ℝ))
+        atTop (nhds (1 / m)) := by
+  sorry
+
+/--
+Lindström's result for $A$ itself [Li98], later strengthened by Kolountzakis [Ko99]: for any
+sequence of Sidon sets $A_k\subseteq\{0,\ldots,N_k\}$ with $N_k\to\infty$ and
+$\lvert A_k\rvert\sim N_k^{1/2}$, and any modulus $m\geq 2$, the number of elements of $A_k$
+congruent to $i\pmod m$, divided by $N_k^{1/2}$, tends to $1/m$ for every residue $i<m$.
+
+Well-distribution of $A+A$ (the actual question, `erdos_154`) follows from this using the Sidon
+property.
+-/
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem154.lean"]
+theorem erdos_154.variants.lindstrom :
+    ∀ (m : ℕ) (hm : 2 ≤ m) (N : ℕ → ℕ) (A : ℕ → Finset ℕ),
+      Tendsto (fun k => (N k : ℝ)) atTop atTop →
+      (∀ k, ∀ x ∈ A k, x ≤ N k) →
+      (∀ k, IsSidon (A k : Set ℕ)) →
+      Tendsto (fun k => ((A k).card : ℝ) / Real.sqrt (N k)) atTop (nhds 1) →
+      ∀ i < m, Tendsto
+        (fun k => (((A k).filter (fun a => a % m = i)).card : ℝ) / Real.sqrt (N k))
         atTop (nhds (1 / m)) := by
   sorry
 
