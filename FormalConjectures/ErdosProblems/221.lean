@@ -42,7 +42,7 @@ The answer is yes, proved by Ruzsa [Ru72].
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem221.lean"]
 theorem erdos_221 :
     answer(True) ↔ ∃ A : Set ℕ,
-      (fun N => ({a ∈ A | a ≤ N}.ncard : ℝ)) =O[atTop] (fun N => (N : ℝ) / Real.log N) ∧
+      ((fun N => ({a ∈ A | a ≤ N}.ncard : ℝ)) ≪ (fun N => (N : ℝ) / Real.log N)) ∧
       ∀ᶠ N in atTop, ∃ k a, 0 ≤ k ∧ a ∈ A ∧ N = 2 ^ k + a := by
   sorry
 
