@@ -42,18 +42,16 @@ $uv$. Estimate $f(u)$.
 The estimate $u + 2 \le f(u) \le u^2$ holds for every $u \ge 2$. The upper bound is attained
 when $u$ is prime, and the lower bound when $u = 2^k - 2$ with $k \ge 2$; Cambie further showed
 that $f(n) = (1 + o(1))n$ for almost all $n$.
-
-This was formalized in Lean by Boris Alexeev and Aristotle (Harmonic).
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem459.lean"]
 theorem erdos_459 {u : ℕ} (hu : 2 ≤ u) : u + 2 ≤ f u ∧ f u ≤ u ^ 2 := by
   sorry
 
 /--
-The upper bound `f u ≤ u ^ 2` is attained exactly when `u` is prime: `f p = p ^ 2`.
+The upper bound $f u ≤ u ^ 2$ is attained exactly when `u` is prime: $f p = p ^ 2$.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem459.lean"]
-theorem erdos_459_upper_tight {p : ℕ} (hp : p.Prime) : f p = p ^ 2 := by
+theorem erdos_459.variants.upper_tight {p : ℕ} (hp : p.Prime) : f p = p ^ 2 := by
   sorry
 
 end Erdos459
