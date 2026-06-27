@@ -39,8 +39,6 @@ open scoped Pointwise Finset
 
 namespace Green49
 
-/-- The vector space $\mathbb{F}_2^n$. -/
-abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set with $|A + A| \leq K|A|$. Is it true that $A$
