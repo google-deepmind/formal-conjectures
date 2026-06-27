@@ -17,34 +17,36 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Ringel's Conjecture
+# Kotzig's Conjecture
 
-*Reference:* G. Ringel, *Problem 25*, in *Theory of Graphs and its Applications*
-(Proc. Sympos. Smolenice, 1963), Academia, Prague, 1964.
+*Reference:* A. Kotzig, cited in A. Rosa, *On certain valuations of the vertices of a graph*,
+Theory of Graphs (Internat. Sympos., Rome, 1966), Gordon and Breach, 1967, pp. 349–355.
 
-Ringel's conjecture (1963): the complete graph $K_{2n+1}$ decomposes into copies of any tree
-with $n$ edges. It remains open; the case of all sufficiently large $n$ is proved by
-Montgomery–Pokrovskiy–Sudakov, see `Arxiv/2001.02665/RingelConjecture.lean`.
+Kotzig conjectured that for every $n$, the complete graph $K_{2n+1}$ decomposes into copies of
+any $n$-edge tree via cyclic shifts of a single embedding. This is strictly stronger than
+Ringel's conjecture; see `Paper/RingelConjecture.lean`. The large-$n$ case is proved by
+Montgomery–Pokrovskiy–Sudakov; see `Arxiv/2001.02665/RingelConjecture.lean`.
 -/
-namespace RingelConjecture
+namespace KotzigConjecture
 
 open SimpleGraph
 
 /--
 For any tree $T$ with $n$ edges, the complete graph $K_{2n+1}$ decomposes into
-$2n+1$ edge-disjoint copies of $T$.
+$2n+1$ edge-disjoint copies of $T$ via cyclic shifts of a single embedding.
 
-A "copy" of $T$ is the image `T.map (f i)` of $T$ under a vertex embedding
-`f i : V ↪ Fin (2 * n + 1)`; the copies are pairwise edge-disjoint (`Pairwise ... Disjoint`)
-and together cover every edge of $K_{2n+1}$ (`⨆ i, T.map (f i) = ⊤`).
+The $2n+1$ copies are $f_0, f_1, \dots, f_{2n}$ where $f_i(v) = f_0(v) + i$ for all vertices
+$v$ — each copy is obtained by adding $i \pmod{2n+1}$ to every vertex of the base copy.
+This is strictly stronger than `RingelConjecture.ringel_conjecture`.
 -/
 @[category research open, AMS 5]
-theorem ringel_conjecture {V : Type} [Finite V]
+theorem kotzig_conjecture {V : Type} [Finite V]
     (T : SimpleGraph V) (hT : T.IsTree)
     (n : ℕ) (hn : T.edgeSet.ncard = n) :
     ∃ f : Fin (2 * n + 1) → (V ↪ Fin (2 * n + 1)),
+      (∀ i v, f i v = f 0 v + i) ∧
       Pairwise (fun i j => Disjoint (T.map (f i)).edgeSet (T.map (f j)).edgeSet) ∧
       ⨆ i, T.map (f i) = (⊤ : SimpleGraph (Fin (2 * n + 1))) := by
   sorry
 
-end RingelConjecture
+end KotzigConjecture
