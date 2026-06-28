@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # This file defines the number of non-isomorphic finite groups of order `n` (OEIS A000001)
 -/
 
-namespace GrpOfOrder
+namespace GroupNumberFunction
 
 /--
 Objects of the category `Grp` that have (extended) cardinality equal to `n`.
@@ -52,4 +52,4 @@ Equivalently, the OEIS sequence A000001, with gnu 0 = 0, gnu 1 = gnu 2 = gnu 3 =
 -/
 noncomputable def gnu (n : ℕ) : ℕ := Nat.card (NonIsoFiniteGrp n)
 
-end GrpOfOrder
+end GroupNumberFunction

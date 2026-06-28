@@ -23,7 +23,7 @@ import FormalConjectures.Paper.gnu
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 -/
 
-open GrpOfOrder
+open GroupNumberFunction
 
 namespace Kourovka.«12.55»
 

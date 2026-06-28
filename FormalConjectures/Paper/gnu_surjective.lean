@@ -23,7 +23,7 @@ import FormalConjectures.Paper.gnu
 *Reference:*
 - Conway, J. H., Dietrich, H., & O'Brien, E. A. (2008). Counting groups: Gnus, moas, and other exotica. The Mathematical Intelligencer, 30(2), 6–15. https://doi.org/10.1007/BF02985731 (https://www.math.auckland.ac.nz/~obrien/research/gnu.pdf)
 -/
-namespace GrpOfOrder
+namespace GroupNumberFunction
 
 /--
 The function `gnu` is surjective.
@@ -49,4 +49,4 @@ example (h : ∀ y, ∃ x : ℕ, Squarefree x ∧ gnu x = y) : Function.Surjecti
   grind [h y]
 
 
-end GrpOfOrder
+end GroupNumberFunction
