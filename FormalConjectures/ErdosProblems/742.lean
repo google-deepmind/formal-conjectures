@@ -66,7 +66,6 @@ case $K_{\lceil n/2 \rceil, \lfloor n/2 \rfloor}$.
 @[category test, AMS 5]
 theorem complete_bipartite_edge_count (a b : ℕ) :
     (completeBipartiteGraph (Fin a) (Fin b)).edgeSet.ncard = a * b := by
-  (completeBipartiteGraph (Fin a) (Fin b)).edgeSet.ncard = a * b := by
   -- The edge set equals the image of `Fin a × Fin b` under the map
   -- `(i, j) ↦ s(Sum.inl i, Sum.inr j)`.
   let φ : Fin a × Fin b → Sym2 (Fin a ⊕ Fin b) :=
