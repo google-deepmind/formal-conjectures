@@ -25,6 +25,11 @@ import FormalConjectures.Paper.gnu
 -/
 namespace GrpOfOrder
 
+/-
+The function `gnu` is surjective, or in the paper's language, "every positive integer is a group number".
+
+(The case of `gnu 0` is not considered in the paper, but the OEIS convention is gnu 0 = 0.)
+-/
 @[category research open, AMS 20]
 theorem gnu_surjective : Function.Surjective gnu := by
   sorry
