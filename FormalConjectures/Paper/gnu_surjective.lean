@@ -25,14 +25,28 @@ import FormalConjectures.Paper.gnu
 -/
 namespace GrpOfOrder
 
-/-
-The function `gnu` is surjective, or in the paper's language, "every positive integer is a group number".
+/--
+The function `gnu` is surjective.
+
+This is equivalent to the statement ∀ y, ∃ x : ℕ, gnu x = y.
 
 (The case of `gnu 0` is not considered in the paper, but the OEIS convention is gnu 0 = 0.)
 -/
 @[category research open, AMS 20]
 theorem gnu_surjective : Function.Surjective gnu := by
   sorry
+
+/--
+A stronger conjecture, credited to R. Keith Dennis, that every number is the value of gnu n for some square-free n.
+-/
+@[category research open, AMS 20]
+theorem gnu_exists_squarefree : ∀ y, ∃ x : ℕ, Squarefree x ∧ gnu x = y := by
+  sorry
+
+@[category API, AMS 20]
+example (h : ∀ y, ∃ x : ℕ, Squarefree x ∧ gnu x = y) : Function.Surjective gnu := by
+  intro y
+  grind [h y]
 
 
 end GrpOfOrder
