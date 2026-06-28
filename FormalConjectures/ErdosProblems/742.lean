@@ -66,7 +66,30 @@ case $K_{\lceil n/2 \rceil, \lfloor n/2 \rfloor}$.
 @[category test, AMS 5]
 theorem complete_bipartite_edge_count (a b : ℕ) :
     (completeBipartiteGraph (Fin a) (Fin b)).edgeSet.ncard = a * b := by
-  sorry
+  (completeBipartiteGraph (Fin a) (Fin b)).edgeSet.ncard = a * b := by
+  -- The edge set equals the image of `Fin a × Fin b` under the map
+  -- `(i, j) ↦ s(Sum.inl i, Sum.inr j)`.
+  let φ : Fin a × Fin b → Sym2 (Fin a ⊕ Fin b) :=
+    fun p => s(Sum.inl p.1, Sum.inr p.2)
+  have hedge : (completeBipartiteGraph (Fin a) (Fin b)).edgeSet = φ '' Set.univ := by
+    ext e
+    simp only [φ, Set.mem_image, Set.mem_univ, true_and]
+    constructor
+    · intro hadj
+      induction e using Quot.ind
+      rename_i p
+      cases p with | mk a b =>
+      cases a <;> cases b <;> simp_all [completeBipartiteGraph]
+    · rintro ⟨⟨i, j⟩, rfl⟩
+      simp [completeBipartiteGraph]
+  have hinj : Function.Injective φ := by
+    intro ⟨i₁, j₁⟩ ⟨i₂, j₂⟩ h
+    simp only [φ, Sym2.eq_iff] at h
+    rcases h with ⟨h1, h2⟩ | ⟨h1, _⟩
+    · exact Prod.ext (Sum.inl.inj h1) (Sum.inr.inj h2)
+    · exact absurd h1 (by simp)
+  rw [hedge, Set.ncard_image_of_injective _ hinj, Set.ncard_univ,
+    Nat.card_prod, Nat.card_fin, Nat.card_fin]
 
 namespace variants
 
