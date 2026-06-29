@@ -31,7 +31,6 @@ lemma dom_of_apply_eq_none {σ : Type*} {f : σ → Option σ} {s : σ} (hf : f 
   apply PFun.fix_stop
   simp [hf]
 
-@[simp]
 theorem apply_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (eval f s).Dom) :
     f ((eval f s).get H) = none := by
   have := Part.get_mem H
@@ -43,7 +42,7 @@ theorem eval_get_eval {σ : Type*} {f : σ → Option σ} {s : σ} (H : (eval f 
     eval f ((eval f s).get H) = eval f s := by
   symm
   apply Part.get_eq_get H (dom_of_apply_eq_none ?_)
-  simp
+  simp [apply_get_eval]
 
 -- TODO(Paul-Lez): also prove this for `PFun.fix`/golf using the `PFun.fix` API
 theorem eval_eq_eval {σ : Type*} {f : σ → Option σ} {a a' : σ} (H : f a = some a'):

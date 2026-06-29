@@ -15,8 +15,8 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Nat.Lattice
 public import Mathlib.Data.List.Sort
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 
