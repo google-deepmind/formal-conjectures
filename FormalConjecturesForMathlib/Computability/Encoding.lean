@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import Mathlib.Computability.Encoding
-public import Mathlib.Data.List.SplitOn
 
 @[expose] public section
 
@@ -43,20 +42,16 @@ def finEncodingListBool : Computability.FinEncoding (List Bool) where
 lemma splitOnP_isNone_map_some {α : Type} (l : List α) :
     List.splitOnP Option.isNone (l.map some) = [l.map some] := by
   induction l with
-  | nil => rfl
+  | nil => simp
   | cons hd tl ih =>
-    simp [ih]
+    simp [List.splitOnP_cons_eq_if_modifyHead, ih]
 
 @[simp]
-lemma splitOnP_append_cons {α : Type} (l1 l2 : List α)
+lemma splitOnP_append_cons' {α : Type} (l1 l2 : List α)
     (a : α) (P : α → Bool) (hPa : P a = true) :
     List.splitOnP P (l1 ++ a :: l2)
-    = List.splitOnP P l1 ++ List.splitOnP P l2 := by
-  induction l1 with
-  | nil => simp [hPa]
-  | cons hd tl ih =>
-    obtain ⟨hd1, tl1, h1'⟩ := List.exists_cons_of_ne_nil (List.splitOnP_ne_nil P tl)
-    by_cases hPh : P hd <;> simp [*]
+    = List.splitOnP P l1 ++ List.splitOnP P l2 :=
+  List.splitOnP_append_cons l1 l2 hPa
 
 def finEncodingListBoolProdListBool : Computability.FinEncoding (List Bool × List Bool) where
   Γ := Option Bool

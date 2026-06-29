@@ -24,7 +24,6 @@ public import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
-public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Basic
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle

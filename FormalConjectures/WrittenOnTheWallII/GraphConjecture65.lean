@@ -40,6 +40,12 @@ namespace WrittenOnTheWallII.GraphConjecture65
 
 open SimpleGraph Finset
 
+/- Synthesizing `∀ v, Fintype ↥(graph.neighborSet v)` on our 18-edges graph uses more than the
+default `synthInstance.maxSize` of 128 instances. That option bounds how many instances a solution
+may use, not how long the search may take. Raising it is free -- synthesis costs ~13ms either way
+about 1% of this file's elaboration time; the rest is `decide` and kernel type-checking. -/
+set_option synthInstance.maxSize 400
+
 namespace Counterexample
 
 /-- The counterexample: a path on vertices $0,\ldots,12$, with triangles attached at
