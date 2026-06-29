@@ -100,8 +100,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
       intro h
       have hne : Nat.nth p 1 ≠ 0 := by rw [h]; norm_num
       have hcard1 : 1 < hfin.toFinset.card := by
-        by_contra hcon
-        push_neg at hcon
+        by_contra! hcon
         exact hne (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
       have hmem : p (Nat.nth p 1) := Nat.nth_mem_of_lt_card hfin hcard1
       rw [h] at hmem
@@ -138,7 +137,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
       · -- Three distinct divisors `1 < d₁ < d₂` force the sum to be at least `6`.
         have hc3 : 2 < hfin.toFinset.card := by
           by_contra hcon
-          push_neg at hcon
+          push Not at hcon
           exact hg2 (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
         have hg1 := hlb 1 (by omega)
         have hg2' := hlb 2 (by omega)

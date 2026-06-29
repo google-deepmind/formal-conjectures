@@ -41,7 +41,7 @@ private lemma double_sum_eq_two_mul_sym2_sum {f : α → α → ℕ}
     2 * ∑ x : Sym2 α, Sym2.lift ⟨f, fun a b => hf a b⟩ x := by
   -- Use fiberwise decomposition over Sym2 quotient map
   have h_fiber := Fintype.sum_fiberwise
-    (fun (p : α × α) => Sym2.mk p)
+    (fun (p : α × α) => s(p.1, p.2))
     (fun (p : α × α) => f p.1 p.2)
   -- h_fiber : ∑ q : Sym2 α, ∑ p : {p // Sym2.mk p = q}, f (↑p).1 (↑p).2
   --         = ∑ p : α × α, f p.1 p.2
@@ -58,10 +58,10 @@ private lemma double_sum_eq_two_mul_sym2_sum {f : α → α → ℕ}
   simp only [Sym2.lift_mk]
   -- Need: ∑ (p : {p : α × α // Sym2.mk p = s(a, b)}), f (↑p).1 (↑p).2 = 2 * f a b
   -- Convert subtype sum to filter sum
-  rw [← Finset.sum_subtype (Finset.univ.filter (fun p : α × α => Sym2.mk p = s(a, b)))
+  rw [← Finset.sum_subtype (Finset.univ.filter (fun p : α × α => s(p.1, p.2) = s(a, b)))
     (fun x => by simp [Finset.mem_filter]) (fun p => f p.1 p.2)]
   -- Characterize the filter: Sym2.mk (x,y) = s(a,b) ↔ (x,y) = (a,b) ∨ (x,y) = (b,a)
-  have h_filter : Finset.univ.filter (fun p : α × α => Sym2.mk p = s(a, b)) =
+  have h_filter : Finset.univ.filter (fun p : α × α => s(p.1, p.2) = s(a, b)) =
       {(a, b), (b, a)} := by
     ext ⟨x, y⟩
     simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_insert,
