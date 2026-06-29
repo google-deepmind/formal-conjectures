@@ -16,6 +16,18 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A278070
+
+A278070: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
+This is equivalent to the combinatorial sum:
+$$a(n) = \sum_{k=0}^n \binom{n}{k} \binom{n+k-1}{k} k!$$
+The expression uses $\mathbb{N}$ arithmetic throughout, safely handling the subtraction via `Nat.pred`.
+
+*References:*
+- [A278070](https://oeis.org/A278070)
+-/
+
 namespace OeisA278070
 
 open Nat Finset

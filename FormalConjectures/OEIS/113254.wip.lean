@@ -16,6 +16,18 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A113254
+
+A113254: Corresponds to $m = 8$ in a family of 4th-order linear recurrence sequences.
+
+The sequence $a(n)$ is defined by the initial conditions $a(0)=-1, a(1)=4, a(2)=176, a(3)=3136$,
+and the linear recurrence relation $a(n) = -4 * a (n-1) + 256 * a (n-3) + 4096 * a (n-4)$ for $n \ge 4$.
+
+*References:*
+- [A113254](https://oeis.org/A113254)
+-/
+
 namespace OeisA113254
 
 open Nat Int

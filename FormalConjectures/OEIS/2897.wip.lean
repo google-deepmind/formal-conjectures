@@ -16,6 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A2897
+
+The sequence $a(n)$ is defined by $a(n) = \binom{2n}{n}^3$.
+We use `Nat.choose (2 * n) n` for the central binomial coefficient.
+
+The finsupp corresponding to the monomial $x^n y^n z^n$.
+This is the map $\lambda i. n$. Since `Fin 3` is finite, this function is finitely supported.
+We mark it noncomputable as it builds a mathematical object defined in terms of finite support.
+
+*References:*
+- [A2897](https://oeis.org/A2897)
+-/
+
 namespace OeisA2897
 
 open MeasureTheory

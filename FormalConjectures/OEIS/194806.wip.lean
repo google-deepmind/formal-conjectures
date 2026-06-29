@@ -16,6 +16,18 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A194806
+
+The set of all products of elements from a Finset S.
+
+A194806: Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$ such that $S \cdot S$ contains $T$,
+where $S \cdot S$ is the set of all products of elements of $S$.
+
+*References:*
+- [A194806](https://oeis.org/A194806)
+-/
+
 namespace OeisA194806
 
 open Finset Nat

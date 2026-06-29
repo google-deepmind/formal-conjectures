@@ -16,6 +16,17 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A243106
+
+A243106: The sequence
+$$a(n) = \sum_{k=1}^n (-1)^{\operatorname{isprime}(k)} 10^k$$
+where the sign is $-1$ if $k$ is prime, and $1$ if $k$ is not prime.
+
+*References:*
+- [A243106](https://oeis.org/A243106)
+-/
+
 namespace OeisA243106
 
 open Finset

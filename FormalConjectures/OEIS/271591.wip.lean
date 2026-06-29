@@ -16,6 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A271591
+
+The Tribonacci numbers $T_n$ (A000073).
+$T_0=0, T_1=0, T_2=1$, and $T_n = T_{n-1} + T_{n-2} + T_{n-3}$ for $n \ge 3$.
+
+A271591: Second most significant bit of the tribonacci number A000073(n).
+This is formalized by extracting the bit at position $\lfloor \log_2 T_n \rfloor - 1$.
+
+*References:*
+- [A271591](https://oeis.org/A271591)
+- [A000073](https://oeis.org/A000073)
+-/
+
 namespace OeisA271591
 
 open Nat

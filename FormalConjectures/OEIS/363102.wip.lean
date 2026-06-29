@@ -16,6 +16,22 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A363102
+
+Auxiliary sequence A051403, defined as
+$$\frac{(n+2) \sum_{k=0}^n k!}{2}$$
+
+A363102: Denominator of the continued fraction $1/(2-3/(3-4/(4-5/(...(n-1)-n/(-2)))))$.
+The sequence is defined by the formula:
+$$a(n) = \frac{n^2 - 2}{\gcd(n^2 - 2, 2 \cdot A051403(n-3) + n \cdot A051403(n-4))}$$
+The formula is valid for $n \ge 3$.
+
+*References:*
+- [A363102](https://oeis.org/A363102)
+- [A051403](https://oeis.org/A051403)
+-/
+
 namespace OeisA363102
 
 open Nat Finset

@@ -16,6 +16,19 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A309132
+
+A309132: a(n) is the denominator of F(n) = A027641(n-1)/n + A027642(n-1)/n^2.
+
+Definition of a Carmichael number $n$: a composite number s.t. $b^{n-1} \equiv 1 \pmod n$ for all $b$ coprime to $n$.
+
+*References:*
+- [A309132](https://oeis.org/A309132)
+- [A027641](https://oeis.org/A027641)
+- [A027642](https://oeis.org/A027642)
+-/
+
 namespace OeisA309132
 
 open Rat Nat

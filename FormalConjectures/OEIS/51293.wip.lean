@@ -16,6 +16,23 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A51293
+
+A051293: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
+
+`S_real n k` is the number of $k$-element subsets of $\{1, 2, \dots, n\}$ whose sum is divisible by $k$.
+By the roots of unity filter, this exact count can be written as:
+$S_{n,k} = \frac{1}{k} \sum_{j=0}^{k-1} \sum_{A \in \binom{n}{k}} \omega^{j \sum A}$.
+The main term $j=0$ yields exactly $\frac{1}{k} \binom{n}{k}$.
+For $j > 0$, the roots of unity evaluated over the subsets yield bounded periodic sums.
+The maximal magnitude of these periodic products is achieved when the order of the root is 2,
+which bounds the error term magnitude strictly by $2 \cdot 2^{n/2}$.
+
+*References:*
+- [A51293](https://oeis.org/A51293)
+-/
+
 namespace OeisA51293
 
 open MeasureTheory

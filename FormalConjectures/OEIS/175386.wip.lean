@@ -16,6 +16,18 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A175386
+
+A175386: $a(n)$ is the denominator of the sum
+$$\sum_{i=1}^n \frac{1}{i} \binom{2n-i-1}{i-1}$$
+
+The sum which A175386 $a(n)$ is the denominator of.
+
+*References:*
+- [A175386](https://oeis.org/A175386)
+-/
+
 namespace OeisA175386
 
 open scoped BigOperators

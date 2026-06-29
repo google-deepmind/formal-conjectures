@@ -16,6 +16,17 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A368692
+
+A368692:
+$$a(n) = \frac{(12n + 6)! \cdot (6n + 9)!}{108 \cdot (4n + 2)! \cdot (2n + 3)! \cdot ((6n + 5)!)^2}$$
+It is conjectured that $a(n)$ are integers.
+
+*References:*
+- [A368692](https://oeis.org/A368692)
+-/
+
 namespace OeisA368692
 
 open Nat

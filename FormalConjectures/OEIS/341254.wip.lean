@@ -16,6 +16,17 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A341254
+
+The constant $r = (2 + \sqrt{5})/2$.
+
+The constant $r^2$.
+
+*References:*
+- [A341254](https://oeis.org/A341254)
+-/
+
 namespace OeisA341254
 
 open Real

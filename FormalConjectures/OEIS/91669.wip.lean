@@ -16,6 +16,16 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A91669
+
+A091669: $a(n) = \frac{2^{n-1}}{n!} \prod_{k=1}^{n-1} (2^k-1)$.
+The sequence $a(n)$ is composed of natural numbers, thus we define it as a function $\mathbb{N} \to \mathbb{N}$.
+
+*References:*
+- [A91669](https://oeis.org/A91669)
+-/
+
 namespace OeisA91669
 
 open Nat BigOperators

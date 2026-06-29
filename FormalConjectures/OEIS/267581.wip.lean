@@ -16,6 +16,19 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A267581
+
+The rule function for Rule 167. Inputs must be 0 or 1.
+
+The state of the Rule 167 elementary cellular automaton at time $t$ and position $x$.
+The initial condition is a single ON cell at $x=0$.
+$C(t, x)$ is structurally recursive on $t$.
+
+*References:*
+- [A267581](https://oeis.org/A267581)
+-/
+
 namespace OeisA267581
 
 open Nat Int

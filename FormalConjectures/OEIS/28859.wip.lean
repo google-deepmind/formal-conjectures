@@ -16,6 +16,15 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A28859
+
+A028859 (OEIS): $a(n+2) = 2 \cdot a(n+1) + 2 \cdot a(n)$; $a(0) = 1$, $a(1) = 3$.
+
+*References:*
+- [A28859](https://oeis.org/A28859)
+-/
+
 namespace OeisA28859
 
 /--

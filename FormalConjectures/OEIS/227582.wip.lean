@@ -16,6 +16,19 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A227582
+
+The sequence $b_n$ such that $A227582(n) = b_{n-1}$ for $n \ge 1$.
+This is the 0-indexed solution to the linear recurrence in $\mathbb{Z}$.
+
+A227582: Expansion of $(2+3*x+2*x^2+2*x^3+3*x^4+x^5-x^6)/(1-2x+x^2-x^5+2*x^6-x^7)$.
+The sequence is 1-indexed in OEIS, so $a(n)$ is the $(n-1)$-th term of the 0-indexed solution.
+
+*References:*
+- [A227582](https://oeis.org/A227582)
+-/
+
 namespace OeisA227582
 
 open BigOperators LinearRecurrence

@@ -16,6 +16,19 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A237271
+
+A237271: Number of parts in the symmetric representation of $\sigma(n)$.
+a(n) is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
+such that $d_{k+1}$ is odd and $d_{k+1} \ge 2 d_k$.
+
+The formula used is $1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of divisors of } n \mid d_{k+1} \text{ is odd and } d_{k+1} \ge 2 d_k\}|$, which is a known characterization of the sequence.
+
+*References:*
+- [A237271](https://oeis.org/A237271)
+-/
+
 namespace OeisA237271
 
 open Nat Finset List

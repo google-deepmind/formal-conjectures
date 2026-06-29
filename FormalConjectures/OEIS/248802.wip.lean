@@ -16,6 +16,17 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A248802
+
+A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
+
+An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting a(k)=67.
+
+*References:*
+- [A248802](https://oeis.org/A248802)
+-/
+
 namespace OeisA248802
 
 /--

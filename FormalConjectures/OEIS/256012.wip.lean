@@ -16,6 +16,16 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A256012
+
+A256012: Number of partitions of $n$ into distinct parts that are not squarefree.
+This is the number of finite subsets of positive integers $P$ such that $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
+
+*References:*
+- [A256012](https://oeis.org/A256012)
+-/
+
 namespace OeisA256012
 
 open Nat Finset

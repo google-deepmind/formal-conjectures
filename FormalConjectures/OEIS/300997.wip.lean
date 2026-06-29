@@ -16,6 +16,16 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A300997
+
+A300997: $a(n)$ is the number of steps needed to reach a stable configuration in the 1D cellular automaton initialized with one cell with mass $n$ and based on the rule "each cell gives half of its mass, rounded down, to its right neighbor".
+The stable configuration is $n$ cells with mass 1.
+
+*References:*
+- [A300997](https://oeis.org/A300997)
+-/
+
 namespace OeisA300997
 
 open List Nat Function Set

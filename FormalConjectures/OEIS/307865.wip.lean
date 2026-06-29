@@ -16,6 +16,19 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A307865
+
+A307865: $a(n)$ is the number of natural bases $b < 2n+1$ such that $b^n \equiv -1 \pmod{2n+1}$.
+The bases $b$ are interpreted as $b \in \{1, 2, \dots, 2n\}$. We check the condition in the ring $\mathbb{Z}/(2n+1)\mathbb{Z}$.
+
+A natural number $m > 1$ is an absolute Euler pseudoprime if it is composite and
+for all $b$ coprime to $m$, $b^{(m-1)/2} \equiv \pm 1 \pmod m$.
+
+*References:*
+- [A307865](https://oeis.org/A307865)
+-/
+
 namespace OeisA307865
 
 open Nat Finset ZMod

@@ -16,6 +16,18 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A289411
+
+A289411: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
+$\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.
+The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mathbb{N}$.
+
+*References:*
+- [A289411](https://oeis.org/A289411)
+- [A007953](https://oeis.org/A007953)
+-/
+
 namespace OeisA289411
 
 open Nat

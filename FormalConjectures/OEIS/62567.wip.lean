@@ -16,6 +16,17 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A62567
+
+The number whose digits in base 10 are $n$'s digits reversed.
+
+A062567: First multiple of $n$ whose reverse is also divisible by $n$, or 0 if no such multiple exists.
+
+*References:*
+- [A62567](https://oeis.org/A62567)
+-/
+
 namespace OeisA62567
 
 open Nat Classical

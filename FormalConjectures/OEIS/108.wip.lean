@@ -16,6 +16,17 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A108
+
+A000108 Catalan numbers: C(n) = binomial(2n,n)/(n+1).
+
+The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers.
+
+*References:*
+- [A108](https://oeis.org/A108)
+-/
+
 namespace OeisA108
 
 open Nat Real Finset

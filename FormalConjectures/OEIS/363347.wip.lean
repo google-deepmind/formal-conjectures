@@ -16,6 +16,18 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A363347
+
+Helper function for A363347, which computes the denominator $R_k(n)$ of the continued fraction expression.
+For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:
+$$R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$$
+The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
+
+*References:*
+- [A363347](https://oeis.org/A363347)
+-/
+
 namespace OeisA363347
 
 open Rat Nat

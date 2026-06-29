@@ -16,6 +16,18 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A372761
+
+Recursive function to compute $A_k(n)$, the denominator tail $k - \frac{k+1}{A_{k+1}(n)}$.
+The base case is at $k = n - 1$, where $A_{n-1} = (n-1) - \frac{n}{n+4}$.
+
+The total value of the continued fraction $C_n$.
+
+*References:*
+- [A372761](https://oeis.org/A372761)
+-/
+
 namespace OeisA372761
 
 open MeasureTheory

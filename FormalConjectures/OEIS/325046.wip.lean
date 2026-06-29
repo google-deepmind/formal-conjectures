@@ -16,6 +16,20 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A325046
+
+A325046: G.f.: $\sum_{n \ge 0} x^n \cdot \frac{(1 + x^n)^n}{(1 - x^{n+1})^{n+1}}$.
+
+The term $a(N)$ is the coefficient of $x^N$ in the generating function.
+Expanding the terms, we get a formula for $a(N)$:
+$$a(N) = \sum_{n=0}^N \sum_{k=0}^n \mathbf{1}_{n + nk + (n+1)j = N} \binom{n}{k} \binom{n+j}{j}$$
+where $j = \frac{N - n(k+1)}{n+1}$.
+
+*References:*
+- [A325046](https://oeis.org/A325046)
+-/
+
 namespace OeisA325046
 
 open Nat

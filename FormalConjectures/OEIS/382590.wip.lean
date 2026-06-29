@@ -16,6 +16,17 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A382590
+
+Helper function for A382590, computing the pair $(a(n), b(n))$ such that:
+$a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
+$b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
+
+*References:*
+- [A382590](https://oeis.org/A382590)
+-/
+
 namespace OeisA382590
 
 open MeasureTheory

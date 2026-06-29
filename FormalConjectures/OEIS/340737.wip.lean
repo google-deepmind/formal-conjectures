@@ -16,6 +16,19 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A340737
+
+A340737: Numerators of a sequence of fractions converging to $e$.
+$$a(1) = 3, a(2) = 5$$
+For $n > 2$:
+$$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) - \left(\frac{n-2}{2}\right) a(n-3) & \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
+
+*References:*
+- [A340737](https://oeis.org/A340737)
+- [A340738](https://oeis.org/A340738)
+-/
+
 namespace OeisA340737
 
 open MeasureTheory

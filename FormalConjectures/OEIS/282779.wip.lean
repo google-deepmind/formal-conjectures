@@ -16,6 +16,19 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
+/-!
+# Conjectures associated with A282779
+
+A282779: Period of cubes mod $n$.
+The $n$-th term $a(n)$ is the smallest positive integer $T$ such that $\forall k \in \mathbb{N}$, $(k+T)^3 \equiv k^3 \pmod n$.
+
+The length of the minimal positive period of the sequence $k^p \pmod n$.
+$a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equiv k^p \pmod n \}$.
+
+*References:*
+- [A282779](https://oeis.org/A282779)
+-/
+
 namespace OeisA282779
 
 open Nat Set Classical
