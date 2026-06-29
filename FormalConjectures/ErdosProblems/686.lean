@@ -67,7 +67,7 @@ theorem erdos_686.variants.four_two :
       (4 : ℚ) = (∏ i ∈ Finset.Icc 1 2, (m + i)) / (∏ i ∈ Finset.Icc 1 2, (n + i)) := by
   simp only [Finset.prod_Icc_succ_top (by decide : 1 ≤ 2), Finset.Icc_self,
     Finset.prod_singleton]
-  push_neg
+  push Not
   intro n m hm
   rw [ne_eq, eq_div_iff (by positivity : (↑((n + 1) * (n + (1 + 1))) : ℚ) ≠ 0)]
   push_cast

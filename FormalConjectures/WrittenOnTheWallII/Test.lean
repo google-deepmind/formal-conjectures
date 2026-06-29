@@ -531,7 +531,7 @@ theorem Star5_girth : Star5.egirth = ⊤ := by
       · rw [hsnd] at h1; simp [Star5, completeBipartiteGraph] at h1
       · exact ⟨y, rfl⟩
     have hmem : Sum.inr b ∈ c.support := hb ▸ List.mem_of_mem_tail (c.snd_mem_tail_support hc.not_nil)
-    exact key b (c.rotate hmem) (hc.rotate hmem)
+    exact key b (c.rotate _ hmem) (hc.rotate hmem)
 
 @[category test, AMS 5]
 theorem Star5_order : Fintype.card ↥(⊤ : Subgraph Star5).verts = 6 := by

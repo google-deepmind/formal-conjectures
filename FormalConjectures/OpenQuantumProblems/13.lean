@@ -402,6 +402,7 @@ lemma re_mul_conj (z w : ℂ) :
     Complex.re (z * star w) = Complex.re z * Complex.re w + Complex.im z * Complex.im w := by
   simp [Complex.mul_re]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The Bloch inner product is determined by the $(0,0)$ entry of the relative unitary. -/
 @[category API, AMS 5 15 81 94]
 lemma bloch_inner_eq_two_normSq_sub_one (U V : UMat 2) :
