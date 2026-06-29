@@ -127,7 +127,7 @@ theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : 
   by_cases hfin : B.Finite
   by_cases hn : n = 0
   subst hn; simp
-  by_contra h_abs; push_neg at h_abs
+  by_contra h_abs; push Not at h_abs
   exact ((hfin.offDiag.image _).subset hB.surjOn).not_infinite (by
     rw [show (0 : ZMod 0) = (0 : ℤ) from rfl]; exact (Set.finite_singleton (0 : ℤ)).infinite_compl)
   haveI : NeZero n := ⟨hn⟩

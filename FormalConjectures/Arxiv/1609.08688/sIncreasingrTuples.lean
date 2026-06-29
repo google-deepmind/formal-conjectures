@@ -109,7 +109,7 @@ theorem isIncreasing₂_const_length {α : Type*} [LinearOrder α] {val : α} {s
   have h₀ : s[0] = fun _ => val := funext fun i => by simp [h_const s[0] (by simp)]
   have h₁ : s[1] = fun _ => val := funext fun i => by simp [h_const s[1] (by simp)]
   have := List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
-  simp [h₀, h₁] at this
+  erw [h₀, h₁] at this
   exact not_lt₂_self _ this
 
 /--
