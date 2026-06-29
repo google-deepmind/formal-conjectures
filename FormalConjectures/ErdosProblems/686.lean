@@ -58,8 +58,8 @@ theorem erdos_686.variants.four :
 
 /--
 The number $4$ cannot be written as
-$$4=\frac{\prod_{1\leq i\leq 2}(m+i)}{\prod_{1\leq i\leq 2}(n+i)}$$
-for $m≥n+2$!
+$$4=\frac{\prod_{1\leq i\leq 3}(m+i)}{\prod_{1\leq i\leq 3}(n+i)}$$
+for $m≥n+3$!
 -/
 @[category research solved, AMS 11]
 theorem erdos_686.variants.four_two :
@@ -75,6 +75,192 @@ theorem erdos_686.variants.four_two :
   have h' : 4 * ((n + 1) * (n + 2)) = (m + 1) * (m + 2) := by exact_mod_cast h
   by_cases hc : m < 2 * (n + 1) <;> nlinarith
 
+namespace Erdos686Variant
+
+/--
+External Bennett/continued-fraction input: for coprime $u,v$ with
+$u<v<2u$ and $0<4u^3-v^3\leq 60$, Bennett's irrationality estimate
+for $\sqrt[3]{2}$ gives $u\leq 40846$.
+-/
+axiom approx_bound_for_cuberoot4
+    (u v : ℕ) (hu : 0 < u) (hv : 0 < v)
+    (hcop : Nat.Coprime u v)
+    (huv : u < v) (hv2u : v < 2 * u)
+    (hs : 0 < 4 * u ^ 3 - v ^ 3)
+    (hs60 : 4 * u ^ 3 - v ^ 3 ≤ 60) :
+    u ≤ 40846
+
+/--
+External continued-fraction certificate for $\sqrt[3]{4}$: no coprime
+pair with $26\leq u\leq 40846$, $u<v<2u$, and positive
+$4u^3-v^3\leq 60$ can survive the certified convergent table.
+-/
+axiom cf_certificate_cuberoot4
+    (u v s : ℕ)
+    (hu : 26 ≤ u) (huB : u ≤ 40846)
+    (hcop : Nat.Coprime u v)
+    (huv : u < v) (hv2u : v < 2 * u)
+    (happrox : 0 < 4 * u ^ 3 - v ^ 3 ∧ 4 * u ^ 3 - v ^ 3 ≤ 60)
+    (hsdef : s = 4 * u ^ 3 - v ^ 3) :
+    False
+
+@[category API, AMS 11]
+lemma small_u_check_aux :
+    ∀ (u : Fin 26) (v : Fin 52),
+      0 < (u : ℕ) →
+      (u : ℕ) < (v : ℕ) →
+      (v : ℕ) < 2 * (u : ℕ) →
+      0 < 4 * (u : ℕ) ^ 3 - (v : ℕ) ^ 3 →
+      4 * (u : ℕ) ^ 3 - (v : ℕ) ^ 3 ≤ 60 →
+      4 * (u : ℕ) ^ 3 - (v : ℕ) ^ 3 ∣ 60 →
+      (u : ℕ) = 2 ∧ (v : ℕ) = 3 ∧ 4 * (u : ℕ) ^ 3 - (v : ℕ) ^ 3 = 5 := by
+  decide
+
+/--
+The modular divisibility step in Lemma T. From
+$D^2s=4u-v$, $s=4u^3-v^3$, and $\gcd(s,u)=1$, one gets $s\mid 60$.
+-/
+@[category API, AMS 11]
+lemma s_dvd_sixty_of_coprime_s_u
+    (u v D s : ℕ)
+    (hDpos : 0 < D) (hspos : 0 < s)
+    (hsu : Nat.Coprime s u)
+    (hsdef : s = 4 * u ^ 3 - v ^ 3)
+    (hD : D ^ 2 * s = 4 * u - v) :
+    s ∣ 60 := by
+  have hprod_pos : 0 < D ^ 2 * s := by positivity
+  have hsub_pos : 0 < 4 * u - v := by simpa [hD] using hprod_pos
+  have hv_le_4u : v ≤ 4 * u := by omega
+  have hsdvd_sub : s ∣ 4 * u - v := by
+    refine ⟨D ^ 2, ?_⟩
+    rw [← hD, mul_comm]
+  have hv_mod : v ≡ 4 * u [MOD s] := by
+    rw [Nat.modEq_iff_dvd' hv_le_4u]
+    exact hsdvd_sub
+  have hspos_expr : 0 < 4 * u ^ 3 - v ^ 3 := by
+    simpa [hsdef] using hspos
+  have hv3_le : v ^ 3 ≤ 4 * u ^ 3 := by omega
+  have hv3_mod : v ^ 3 ≡ 4 * u ^ 3 [MOD s] := by
+    rw [Nat.modEq_iff_dvd' hv3_le]
+    rw [← hsdef]
+  have hcube_mod : (4 * u) ^ 3 ≡ 4 * u ^ 3 [MOD s] :=
+    (hv_mod.pow 3).symm.trans hv3_mod
+  have hle_cube : 4 * u ^ 3 ≤ (4 * u) ^ 3 := by
+    nlinarith [show 0 ≤ u ^ 3 by omega]
+  have hs_dvd_cube_diff : s ∣ (4 * u) ^ 3 - 4 * u ^ 3 := by
+    rw [← Nat.modEq_iff_dvd' hle_cube]
+    exact hcube_mod.symm
+  have hdiff : (4 * u) ^ 3 - 4 * u ^ 3 = 60 * u ^ 3 := by
+    ring_nf
+    omega
+  have hs_dvd_60u3 : s ∣ 60 * u ^ 3 := by
+    rwa [hdiff] at hs_dvd_cube_diff
+  exact (hsu.pow_right 3).dvd_of_dvd_mul_right hs_dvd_60u3
+
+/--
+The finite check below the continued-fraction range. If $1\leq u<26$,
+$u<v<2u$, $0<4u^3-v^3\leq 60$, and $4u^3-v^3$ divides $60$, then
+the only possible pair is $(u,v)=(2,3)$ and the defect is $5$.
+-/
+@[category API, AMS 11]
+lemma small_u_check
+    (u v s : ℕ)
+    (hu : 0 < u) (hu26 : u < 26)
+    (huv : u < v) (hv2u : v < 2 * u)
+    (hspos : 0 < 4 * u ^ 3 - v ^ 3)
+    (hs60 : 4 * u ^ 3 - v ^ 3 ≤ 60)
+    (hsdef : s = 4 * u ^ 3 - v ^ 3)
+    (hsdvd : s ∣ 60) :
+    u = 2 ∧ v = 3 ∧ s = 5 := by
+  subst s
+  have hv52 : v < 52 := by nlinarith
+  exact small_u_check_aux ⟨u, hu26⟩ ⟨v, hv52⟩ hu huv hv2u hspos hs60 hsdvd
+
+/--
+Conditional Lemma T. The only non-elementary inputs are the two external
+certificates above; the low range is checked exactly in `small_u_check`.
+-/
+@[category research solved, AMS 11]
+theorem lemmaT_conditional
+    (u v D s : ℕ)
+    (hu : 0 < u) (hv : 0 < v) (hDpos : 0 < D) (hspos : 0 < s)
+    (hcop : Nat.Coprime u v)
+    (huv : u < v) (hv2u : v < 2 * u)
+    (hsdef : s = 4 * u ^ 3 - v ^ 3)
+    (hD : D ^ 2 * s = 4 * u - v)
+    (hs60 : s ∣ 60) :
+    (u, v, D, s) = (2, 3, 1, 5) := by
+  have hspos_expr : 0 < 4 * u ^ 3 - v ^ 3 := by
+    simpa [hsdef] using hspos
+  have hsle60_expr : 4 * u ^ 3 - v ^ 3 ≤ 60 := by
+    rw [← hsdef]
+    exact Nat.le_of_dvd (by norm_num) hs60
+  have huB : u ≤ 40846 :=
+    approx_bound_for_cuberoot4 u v hu hv hcop huv hv2u hspos_expr hsle60_expr
+  by_cases hu26 : 26 ≤ u
+  · exact (cf_certificate_cuberoot4 u v s hu26 huB hcop huv hv2u
+      ⟨hspos_expr, hsle60_expr⟩ hsdef).elim
+  · have hu_lt26 : u < 26 := by omega
+    obtain ⟨hu2, hv3, hs5⟩ :=
+      small_u_check u v s hu hu_lt26 huv hv2u hspos_expr hsle60_expr hsdef hs60
+    subst u
+    subst v
+    subst s
+    norm_num at hD
+    have hDsq : D ^ 2 = 1 := by nlinarith
+    have hDle : D ≤ 1 := by nlinarith
+    have hD1 : D = 1 := by omega
+    subst D
+    rfl
+
+/--
+External arithmetic reduction from a solution of the cleared $k=3$, $N=4$
+equation to the primitive Lemma T data. This packages the gcd normalization
+and the proof that $\gcd(s,u)=1$; the goal is to replace this axiom by
+kernel-checked arithmetic lemmas. The final divisibility step $s\mid 60$ is
+proved above in `s_dvd_sixty_of_coprime_s_u`.
+-/
+axiom primitive_reduction_to_LemmaT
+    (n m : ℕ)
+    (hm : m ≥ n + 3)
+    (heq : (m + 1) * (m + 2) * (m + 3) = 4 * ((n + 1) * (n + 2) * (n + 3))) :
+    ∃ u v D s : ℕ,
+      0 < u ∧ 0 < v ∧ 0 < D ∧ 0 < s ∧
+      Nat.Coprime u v ∧
+      u < v ∧ v < 2 * u ∧
+      s = 4 * u ^ 3 - v ^ 3 ∧
+      D ^ 2 * s = 4 * u - v ∧
+      Nat.Coprime s u ∧
+      D * u = n + 2 ∧
+      D * v = m + 2
+
+/--
+Cleared integer form of the $k=3$, $N=4$ variant:
+there are no natural numbers $n,m$ with $m\geq n+3$ and
+$(m+1)(m+2)(m+3)=4(n+1)(n+2)(n+3)$.
+-/
+@[category research solved, AMS 11]
+theorem no_solution_cleared :
+    ¬ ∃ n m : ℕ,
+      m ≥ n + 3 ∧
+      (m + 1) * (m + 2) * (m + 3) = 4 * ((n + 1) * (n + 2) * (n + 3)) := by
+  rintro ⟨n, m, hm, heq⟩
+  obtain ⟨u, v, D, s, hu, hv, hDpos, hspos, hcop, huv, hv2u, hsdef, hD, hsu,
+    hDu, hDv⟩ := primitive_reduction_to_LemmaT n m hm heq
+  have hs60 := s_dvd_sixty_of_coprime_s_u u v D s hDpos hspos hsu hsdef hD
+  have htuple := lemmaT_conditional u v D s hu hv hDpos hspos hcop huv hv2u hsdef hD hs60
+  have htuple_components : u = 2 ∧ v = 3 ∧ D = 1 ∧ s = 5 := by
+    simpa using htuple
+  obtain ⟨hu2, hv3, hD1, hs5⟩ := htuple_components
+  subst u
+  subst v
+  subst D
+  subst s
+  norm_num at hDu hDv
+  omega
+
+end Erdos686Variant
+
 /--
 The number $4$ cannot be written as
 $$4=\frac{\prod_{1\leq i\leq 2}(m+i)}{\prod_{1\leq i\leq 2}(n+i)}$$
@@ -86,7 +272,13 @@ See [comment section on erdosproblems.com](https://www.erdosproblems.com/forum/t
 theorem erdos_686.variants.four_three :
     ¬ ∃ᵉ (n : ℕ) (m ≥ n + 3),
       (4 : ℚ) = (∏ i ∈ Finset.Icc 1 3, (m + i)) / (∏ i ∈ Finset.Icc 1 3, (n + i)) := by
-  sorry
+  simp [Finset.prod_Icc_succ_top, Finset.Icc_self, Finset.prod_singleton]
+  intro n m hm h
+  rw [eq_div_iff (by positivity :
+    ((n : ℚ) + 1) * ((n : ℚ) + 2) * ((n : ℚ) + 3) ≠ 0)] at h
+  have hnat : 4 * ((n + 1) * (n + 2) * (n + 3)) = (m + 1) * (m + 2) * (m + 3) := by
+    exact_mod_cast h
+  exact Erdos686Variant.no_solution_cleared ⟨n, m, hm, hnat.symm⟩
 
 /--
 Can $9$ be written as
