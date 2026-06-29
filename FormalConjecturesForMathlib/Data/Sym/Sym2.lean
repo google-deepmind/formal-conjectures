@@ -1,5 +1,5 @@
 /-
-Copyright 2026 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,17 +15,14 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+public import Mathlib.Data.Sym.Sym2
 
-@[expose] public section
+public section
 
-namespace SimpleGraph
+namespace Sym2
+variable {α : Type*} {a : α}
 
-variable {α : Type*} [Fintype α] [DecidableEq α]
+@[simp] lemma fst_out_mk_self : (Quot.out s(a, a)).1 = a := by simpa using out_fst_mem s(a, a)
+@[simp] lemma snd_out_mk_self : (Quot.out s(a, a)).2 = a := by simpa using out_snd_mem s(a, a)
 
-/-- The cycle rank of `G` (or cyclomatic number) is the minimum number of edges
-    that must be removed to eliminate all cycles. -/
-noncomputable def cycleRank (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  G.edgeFinset.card + Fintype.card G.ConnectedComponent - Fintype.card α
-
-end SimpleGraph
+end Sym2

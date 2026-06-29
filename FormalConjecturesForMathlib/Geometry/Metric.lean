@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public import FormalConjecturesForMathlib.Data.Sym.Sym2
 public import Mathlib.Data.Finset.Sym
 public import Mathlib.Data.Sym.Card
 public import Mathlib.Topology.MetricSpace.Defs
@@ -59,11 +60,7 @@ theorem unitDistNum_le_choose_two (s : Finset X) : unitDistNum s ≤ (#s).choose
   obtain ⟨hps, hpd⟩ := Finset.mem_filter.mp hp
   rw [← Finset.image_diag_union_image_offDiag (s := s), Finset.mem_union] at hps
   rcases hps with h | h
-  · obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp h
-    obtain ⟨-, ha2⟩ := Finset.mem_diag.mp ha
-    have h1 := Sym2.out_fst_mem (Sym2.mk a)
-    have h2 := Sym2.out_snd_mem (Sym2.mk a)
-    rw [Sym2.mem_iff] at h1 h2
-    rcases h1 with h1 | h1 <;> rcases h2 with h2 | h2 <;>
-      rw [h1, h2] at hpd <;> simp [ha2] at hpd
+  · obtain ⟨⟨x, y⟩, hxy, rfl⟩ := Finset.mem_image.mp h
+    obtain ⟨-, rfl⟩ : _ ∧ x = y := Finset.mem_diag.mp hxy
+    simp at hpd
   · exact h

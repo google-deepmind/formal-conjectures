@@ -46,7 +46,7 @@ theorem t_eq_of {n k v : ℕ} (hv : 0 < v)
     t k n = v := by
   refine le_antisymm (Nat.sInf_le ⟨hv, hdvd⟩) ?_
   by_contra hc
-  push_neg at hc
+  push Not at hc
   have hne : { m : ℕ | 0 < m ∧ n ∣ ∏ i ∈ range k, (m + i) }.Nonempty := ⟨v, hv, hdvd⟩
   obtain ⟨hpos, hd⟩ := Nat.sInf_mem hne
   exact hlt _ (mem_range.mpr hc) hpos hd

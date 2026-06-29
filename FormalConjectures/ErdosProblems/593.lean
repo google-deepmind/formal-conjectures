@@ -180,8 +180,7 @@ particular, $\chi(H) > \aleph_0$ implies `H` has at least one hyperedge.
 theorem erdos_593.variants.nonempty_edges_if_large_chromatic
     {V : Type} (H : ThreeUniformHypergraph V) (hχ : ℵ₀ < H.chromaticCardinal) :
     H.edges.Nonempty := by
-  by_contra hempty
-  push_neg at hempty
+  by_contra! hempty
   -- H has no edges (hempty : H.edges = ∅), so any coloring is proper.
   have hprop : H.IsProperColoring (fun _ : V => (0 : Fin 1)) := by
     intro e he

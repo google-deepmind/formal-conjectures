@@ -63,7 +63,7 @@ lemma maxPrimeFac_eq_of_dvd_of_le
     use n
     simp only [hs, mem_upperBounds, Set.mem_setOf_eq, and_imp]
     exact fun p _ hp ↦ Nat.le_of_dvd (zero_lt_of_lt hn) hp
-  exact ConditionallyCompleteLattice.le_csSup s p hs₁ ⟨hp, h_dvd⟩
+  exact le_csSup hs₁ ⟨hp, h_dvd⟩
 
 @[simp]
 lemma one_lt_maxPrimeFac_iff (n : ℕ) :

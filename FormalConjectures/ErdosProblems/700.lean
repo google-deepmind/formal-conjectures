@@ -151,7 +151,7 @@ theorem erdos_700.variants.prime_pow (p a : ℕ) (hp : p.Prime) (ha : 2 ≤ a) :
       · rw [pow_zero, Nat.dvd_one] at hpg; omega
       · exact hj0
     have hj2 : j ≤ 1 := by
-      by_contra h; push_neg at h
+      by_contra! h
       exact hp2g ((Nat.pow_dvd_pow_iff_le_right hp.one_lt).2 h)
     rw [hjeq, show j = 1 from by omega, pow_one]
   have hle : f (p ^ a) ≤ p := by
