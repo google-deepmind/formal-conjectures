@@ -24,7 +24,6 @@ import FormalConjectures.Util.ProblemImports
 - [Er76d] Erdős, P, Problems and results on number theoretic properties of consecutive integers and
   related questions. Proceedings of the Fifth Manitoba Conference on Numerical Mathematics (Univ.
   Manitoba, Winnipeg, Man., 1975) (1976), 25-44.
-
 -/
 
 open Filter
