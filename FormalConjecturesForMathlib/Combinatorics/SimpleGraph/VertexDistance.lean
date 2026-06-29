@@ -94,7 +94,7 @@ iff their distance in `G` is at most 2. -/
 def graphSquare (G : SimpleGraph α) : SimpleGraph α where
   Adj u v := u ≠ v ∧ G.dist u v ≤ 2
   symm _ _ := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [dist_comm]⟩
-  loopless v := by simp
+  loopless.irrefl v := by simp
 
 /-- Check whether four distinct vertices form an induced 4-cycle in `G`.
 We test all three perfect-matching pairings of the four vertices to find
