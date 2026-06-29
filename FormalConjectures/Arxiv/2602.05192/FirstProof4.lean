@@ -96,7 +96,7 @@ theorem finiteAdditiveConvolution_monic' (n : ℕ) (p q : ℝ[X]) (hn : 0 < n)
   · -- coeff n of (∑ k ∈ range (n+1), c(k) • X^(n-k)) = c(0) = 1
     change (finiteAdditiveConvolution n p q).coeff n = 1
     simp only [finiteAdditiveConvolution]
-    rw [Polynomial.finset_sum_coeff]
+    rw [Polynomial.finsetSum_coeff]
     conv_lhs =>
       arg 2; ext k
       rw [Polynomial.coeff_smul, Polynomial.coeff_X_pow]

@@ -44,7 +44,7 @@ theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
 
 end
 
- /-
+/-
 ## Diagonal orbits over function fields (Huang–Shi, Theorem 1.2)
 
 We now formulate a Lean version of the main theorem of Huang–Shi.

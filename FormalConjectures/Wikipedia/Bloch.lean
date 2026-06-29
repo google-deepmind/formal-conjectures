@@ -46,7 +46,7 @@ noncomputable def blochRadius (f : ℂ → ℂ) : ℝ≥0∞ :=
   sSup (ENNReal.ofReal '' {r : ℝ | ∃ S ⊆ ball (0 : ℂ) 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S})
 
 @[category API, AMS 30]
-lemma zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := zero_le _
+lemma zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := zero_le
 
 @[category API, AMS 54]
 lemma dis_add_radius_le_of_ball_subset_ball {X 𝕜 : Type*} [RCLike 𝕜] [NormedAddCommGroup X]
@@ -101,7 +101,7 @@ lemma blochRadius_id_eq_one : blochRadius id = 1 := by
     · exact (ENNReal.ofReal_le_ofReal
         (radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball.trans hS))).trans
         (by simp [ENNReal.ofReal_one])
-    · exact (ENNReal.ofReal_of_nonpos (by linarith)).le.trans (zero_le _)
+    · exact (ENNReal.ofReal_of_nonpos (by linarith)).le.trans zero_le
   · -- 1 ≤ blochRadius id: ball 0 1 ⊆ id '' ball 0 1
     rw [show (1 : ℝ≥0∞) = ENNReal.ofReal 1 from by simp]
     exact le_sSup ⟨1, ⟨ball (0 : ℂ) 1, Subset.rfl, 0, by simp⟩, rfl⟩

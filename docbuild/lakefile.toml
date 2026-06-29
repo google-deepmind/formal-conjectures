@@ -10,12 +10,12 @@ path = "../"
 [[require]]
 scope = "leanprover"
 name = "doc-gen4"
-rev = "v4.27.0"
+rev = "v4.30.0"
 
 [[require]]
 name = "verso"
 git = "https://github.com/leanprover/verso.git"
-rev = "v4.27.0"
+rev = "v4.30.0"
 
 [[lean_lib]]
 name = "OverwriteIndexLib"
