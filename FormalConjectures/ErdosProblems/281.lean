@@ -41,16 +41,6 @@ def avoidAll (n : ℕ → ℕ) (a : ResidueChoice n) : Set ℤ :=
 def avoidPrefix (n : ℕ → ℕ) (a : ResidueChoice n) (k : ℕ) : Set ℤ :=
   {m | ∀ i : ℕ, i < k → (m : ZMod (n i)) ≠ a i}
 
-open Classical in
-/-- Two-sided natural density sequence for subsets of $\mathbb{Z}$. -/
-noncomputable def integerDensitySeq (S : Set ℤ) (N : ℕ) : ℝ :=
-  (((Finset.Icc (-(N : ℤ)) (N : ℤ)).filter (fun m => m ∈ S)).card : ℝ) /
-    (2 * (N : ℝ) + 1)
-
-/-- A subset of $\mathbb{Z}$ has two-sided natural density $d$. -/
-def HasIntegerDensity (S : Set ℤ) (d : ℝ) : Prop :=
-  Tendsto (integerDensitySeq S) atTop (nhds d)
-
 /--
 Let $n_1<n_2<\cdots$ be an infinite sequence such that, for any choice of congruence classes
 $a_i\pmod{n_i}$, the set of integers not satisfying any of the congruences $a_i\pmod{n_i}$ has
@@ -63,10 +53,10 @@ The answer is yes; the linked Lean proof formalizes Somani's argument.
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos281.lean"]
 theorem erdos_281 : answer(True) ↔
     ∀ (n : ℕ → ℕ), StrictMono n → (∀ i, 0 < n i) →
-      (∀ a : ResidueChoice n, HasIntegerDensity (avoidAll n a) 0) →
+      (∀ a : ResidueChoice n, Set.HasIntDensity (avoidAll n a) 0) →
         ∀ ε : ℝ, 0 < ε →
           ∃ k : ℕ, ∀ a : ResidueChoice n,
-            ∃ d : ℝ, HasIntegerDensity (avoidPrefix n a k) d ∧ d < ε := by
+            ∃ d : ℝ, Set.HasIntDensity (avoidPrefix n a k) d ∧ d < ε := by
   sorry
 
 end Erdos281

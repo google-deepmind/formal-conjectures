@@ -26,15 +26,13 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos419
 
-/-- The divisor-counting function $\tau(n)$. -/
-noncomputable def tau (n : ℕ) : ℕ := n.divisors.card
-
-/-- The ratio $\tau((n+1)!)/\tau(n!)$. -/
+/-- The ratio $\sigma_0((n+1)!)/\sigma_0(n!)$, where $\sigma_0$ is the divisor-counting function. -/
 noncomputable def factorialDivisorRatio (n : ℕ) : ℝ :=
-  (tau (n + 1).factorial : ℝ) / (tau n.factorial : ℝ)
+  (σ 0 (n + 1).factorial : ℝ) / (σ 0 n.factorial : ℝ)
 
 /-- The set $\{1\} \cup \{1+1/k : k \geq 1\}$. -/
 def limitPointSet : Set ℝ :=
