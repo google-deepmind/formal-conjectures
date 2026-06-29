@@ -49,8 +49,7 @@ theorem erdos_933 :
   sorry
 
 /--
-Mahler proved (a more general result that implies in particular) that
-$$2^k3^l<n^{1+o(1)}.$$
+Mahler proved (a more general result that implies in particular) that $2^k3^l<n^{1+o(1)}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_933.variants.mahler :
