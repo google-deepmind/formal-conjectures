@@ -31,6 +31,9 @@ The sequence takes values in $\mathbb{Z}$.
 
 namespace OeisA103311
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 /--
 A103311: A transform of the Fibonacci numbers.
 The sequence $a(n)$ satisfies the linear recurrence relation:
@@ -196,6 +199,7 @@ lemma natAbs_mul_m1_pow (k m : ℕ) : Int.natAbs ((-1 : ℤ)^k * f m) = Nat.fib 
   omega
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : ∃ m : ℕ, Int.natAbs (a n) = Nat.fib m := by
   -- EVOLVE-BLOCK-START

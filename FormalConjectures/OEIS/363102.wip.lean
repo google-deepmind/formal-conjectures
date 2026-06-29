@@ -34,6 +34,9 @@ The formula is valid for $n \ge 3$.
 
 namespace OeisA363102
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Finset
 
 /--
@@ -261,6 +264,7 @@ lemma R_n_not_composite (n : ℕ) (hn : 30 ≤ n) :
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ n : ℕ, 3 ≤ n → a n = 1 ∨ Nat.Prime (a n) := by
   -- EVOLVE-BLOCK-START

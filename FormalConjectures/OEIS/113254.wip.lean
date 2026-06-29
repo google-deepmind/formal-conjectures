@@ -30,6 +30,9 @@ and the linear recurrence relation $a(n) = -4 * a (n-1) + 256 * a (n-3) + 4096 *
 
 namespace OeisA113254
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Int
 
 /--
@@ -108,6 +111,7 @@ lemma a_eq_Y_sq (n : ℕ) :
     exact hy.symm
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ n : ℕ, IsSquare (a (2 * n + 1)) := by
   -- EVOLVE-BLOCK-START

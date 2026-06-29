@@ -29,6 +29,9 @@ The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers.
 
 namespace OeisA108
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Real Finset
 
 /--
@@ -235,6 +238,7 @@ lemma oeis_108_cases (j k : ℕ) (h : oeis_108_index_cond j k) :
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄, oeis_108_index_cond j₁ k₁ → oeis_108_index_cond j₂ k₂ → (j₁, k₁) ≠ (j₂, k₂) → frac_part (catalan_reciprocal_sum j₁ k₁) ≠ frac_part (catalan_reciprocal_sum j₂ k₂) := by
   -- EVOLVE-BLOCK-START

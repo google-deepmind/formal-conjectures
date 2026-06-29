@@ -35,6 +35,9 @@ which bounds the error term magnitude strictly by $2 \cdot 2^{n/2}$.
 
 namespace OeisA51293
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open MeasureTheory
 
 open Polynomial
@@ -511,6 +514,7 @@ lemma a_real_diff : Tendsto (fun n : ℕ => (a_real n - I_sum n) / (((2 : ℝ) ^
   exact h_iff.mpr h_abs_lim
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : Tendsto (fun n : ℕ => (a_real n - ((2 : ℝ) ^ (n + 1) / (n : ℝ)) * ((1 : ℝ) + 1 / (n : ℝ) + 3 / ((n : ℝ) ^ 2) + 13 / ((n : ℝ) ^ 3) + 75 / ((n : ℝ) ^ 4) + 541 / ((n : ℝ) ^ 5))) / (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))) atTop (nhds 0) := by
   -- EVOLVE-BLOCK-START

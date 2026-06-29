@@ -31,6 +31,9 @@ for all $b$ coprime to $m$, $b^{(m-1)/2} \equiv \pm 1 \pmod m$.
 
 namespace OeisA307865
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Finset ZMod
 
 /--
@@ -168,6 +171,7 @@ lemma no_such_base {n m : ℕ} (hm : m = 2 * n + 1)
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (h : IsAbsoluteEulerPseudoprime (2 * n + 1)) : a n = 0 := by
   -- EVOLVE-BLOCK-START

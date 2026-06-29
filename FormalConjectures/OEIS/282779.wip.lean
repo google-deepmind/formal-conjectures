@@ -31,6 +31,9 @@ $a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equ
 
 namespace OeisA282779
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Set Classical
 
 /--
@@ -97,6 +100,7 @@ lemma T0_pos (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
   refine if a :_ then (if_pos a▸ (p.div_pos (p.le_of_dvd @hn ↑(dvd_of_mul_left_dvd a)) hp.pos))else (if_neg a▸hn)
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) : period_of_power_mod p n = if p ^ 2 ∣ n then n / p else n := by
   -- EVOLVE-BLOCK-START

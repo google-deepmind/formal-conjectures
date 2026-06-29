@@ -29,6 +29,9 @@ where the sign is $-1$ if $k$ is prime, and $1$ if $k$ is not prime.
 
 namespace OeisA243106
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Finset
 
 /--
@@ -118,6 +121,7 @@ lemma digits_good (b : ℕ) (hb : b ≥ 5) (N : ℕ) (hGood : IsGood b N) :
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (b n : ℕ) (hb : b ≥ 5) :
     ∀ (σ : ℕ → Int) (hσ : ∀ k ∈ Icc 1 n, σ k = 1 ∨ σ k = -1),

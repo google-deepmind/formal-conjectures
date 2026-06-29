@@ -31,6 +31,9 @@ The OEIS definition implies that the set of k's is non-empty for all n.
 
 namespace OeisA224515
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Set
 
 /--
@@ -225,6 +228,7 @@ lemma exists_k_from_x (M S x : ℕ) (hS : S = 2 * M + 1) (hx_le : x ≤ S)
     omega
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : ∃ k : ℕ, Nat.xor (k ^ 2) ((k + 1) ^ 2) = (2 * n + 1) ^ 2 := by
   -- EVOLVE-BLOCK-START

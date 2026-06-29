@@ -30,6 +30,9 @@ The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mat
 
 namespace OeisA289411
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat
 
 open scoped BigOperators
@@ -179,6 +182,7 @@ lemma sum_symm_zero (H k : ℕ) (hk : 0 < k) (hH : H = 10^k / 2) (i : ℕ) (hi :
 -- EVOLVE-BLOCK-END
 
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (k : ℕ) (hk : 0 < k) :
     let m_k : ℕ := (10 ^ k) / 2 - 1

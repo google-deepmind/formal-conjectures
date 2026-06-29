@@ -29,6 +29,9 @@ The constant $r^2$.
 
 namespace OeisA341254
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Real
 
 /-- The constant $r = (2 + \sqrt{5})/2$. -/
@@ -90,6 +93,7 @@ lemma int_add_floor (z : ℤ) (x : ℝ) : (Int.floor ((z : ℝ) + x) : ℝ) = (z
   simp_all
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : 1 ≤ n) : (1 / 4 : ℝ) < (n : ℝ) * r_sq - (a n : ℝ) ∧ (n : ℝ) * r_sq - (a n : ℝ) < 3 := by
   -- EVOLVE-BLOCK-START

@@ -27,6 +27,9 @@ A028859 (OEIS): $a(n+2) = 2 \cdot a(n+1) + 2 \cdot a(n)$; $a(0) = 1$, $a(1) = 3$
 
 namespace OeisA28859
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 /--
 A028859 (OEIS): $a(n+2) = 2 \cdot a(n+1) + 2 \cdot a(n)$; $a(0) = 1$, $a(1) = 3$.
 -/
@@ -384,6 +387,7 @@ lemma S_subset_F (n : ℕ) (σ : Fin (n + 1) → ℕ) : S_pred_seq n σ → σ �
   exact List.mem_toFinset.mpr h_in_F_list
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) :
     let L := n + 1

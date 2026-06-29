@@ -29,6 +29,9 @@ An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting
 
 namespace OeisA248802
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 /--
 A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
 -/
@@ -186,6 +189,7 @@ lemma dvd_67 (n : ℕ) : 67 ∣ (2 ^ (2 ^ (10 * n + 2) + 2) + 3) := by
   exact (zmod_eq_zero_iff_dvd _ 67).mp H3
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : a (10 * n + 2) = 67 := by
   -- EVOLVE-BLOCK-START
@@ -959,6 +963,7 @@ lemma p_not_div_other (p : ℕ) (hp : p.Prime) (hp1 : p < 1399) (hp67 : p ≠ 67
   exact Bool.noConfusion h_bad
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_4
   (n : ℕ) : (¬covered_by_C1 (58 * n + 26) ∧ ¬covered_by_C2 (58 * n + 26) ∧ ¬covered_by_C3 (58 * n + 26)) → a (58 * n + 26) = 1399 := by
   -- EVOLVE-BLOCK-START

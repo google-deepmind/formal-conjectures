@@ -30,6 +30,9 @@ The expression uses $\mathbb{N}$ arithmetic throughout, safely handling the subt
 
 namespace OeisA278070
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Finset
 
 /--
@@ -46,6 +49,7 @@ def A278070 (n : ℕ) : ℕ :=
 -- You can put your definitions and lemmas here.
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ (n k : ℕ), Nat.ModEq k (A278070 (n + k)) (A278070 n) := by
   -- EVOLVE-BLOCK-START

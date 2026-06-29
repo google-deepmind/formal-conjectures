@@ -32,6 +32,9 @@ We define this in ℤ to handle the $n=0$ case where $30n-i$ in the product migh
 
 namespace OeisA211417
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 /--
 Integral factorial ratio sequence:
 $$a(n) = \frac{(30n)! n!}{(15n)! (10n)! (6n)!}$$
@@ -221,6 +224,7 @@ lemma target_nat (n : ℕ) (hn : n > 0) : (30 * n - 1) ∣ a n := by
   exact (Nat.dvd_div_of_mul_dvd (by rwa [mul_comm]))
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : (30 * (n : ℤ) - 1) ∣ (a n : ℤ) := by
   -- EVOLVE-BLOCK-START

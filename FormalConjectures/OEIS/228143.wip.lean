@@ -32,6 +32,9 @@ The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+
 
 namespace OeisA228143
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open MeasureTheory
 
 open Polynomial
@@ -702,6 +705,7 @@ lemma exists_eighth_root_B :
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∃ C : PowerSeries ℤ, (PowerSeries.map (Int.castRingHom ℚ)) (C ^ 8) = OGF_A_scaled := by
   -- EVOLVE-BLOCK-START

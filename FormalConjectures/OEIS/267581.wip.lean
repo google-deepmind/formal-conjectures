@@ -31,6 +31,9 @@ $C(t, x)$ is structurally recursive on $t$.
 
 namespace OeisA267581
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Int
 
 /-- The rule function for Rule 167. Inputs must be 0 or 1. -/
@@ -168,6 +171,7 @@ lemma a_rec (n : ℕ) (hn : 1 ≤ n) :
   exact ( Finset.sum_range_succ _ _).trans (match n with | S+1 =>by push_cast+contextual[eq_self, ← Finset.mem_range_succ_iff,mul_left_comm, S.succ_sub, S.sub_self, mul_one, false,pow_succ', Finset.mul_sum, true,pow_zero])
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : 2 ≤ n) : a n = 2 * a (n - 1) + 1 - oeis_floor_term n := by
   -- EVOLVE-BLOCK-START

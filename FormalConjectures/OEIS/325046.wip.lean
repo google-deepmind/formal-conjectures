@@ -32,6 +32,9 @@ where $j = \frac{N - n(k+1)}{n+1}$.
 
 namespace OeisA325046
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat
 
 open Finset
@@ -144,6 +147,7 @@ lemma fixed_point_imp (N : ℕ) (p : ℕ × ℕ) (hp : p ∈ V N) (hI : I_map N 
   match hp.2.2▸Nat.mod_eq_of_lt with | S=>omega
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (N : ℕ) : a N % 2 = 1 → ∃ k : ℕ, N = k * (k + 1) := by
   -- EVOLVE-BLOCK-START

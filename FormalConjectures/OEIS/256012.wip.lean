@@ -28,6 +28,9 @@ This is the number of finite subsets of positive integers $P$ such that $\sum_{k
 
 namespace OeisA256012
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Finset
 
 /--
@@ -69,6 +72,7 @@ lemma not_sq_27 : ¬ Squarefree 27 := by
   norm_num
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : n > 23) : A256012 n > 0 := by
   -- EVOLVE-BLOCK-START

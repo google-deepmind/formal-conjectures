@@ -28,6 +28,9 @@ The stable configuration is $n$ cells with mass 1.
 
 namespace OeisA300997
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open List Nat Function Set
 
 /--
@@ -1060,6 +1063,7 @@ lemma chip_pos (n : ℕ) (hn : 1 ≤ n) : n - P n (a n) = 1 ∨ n - P n (a n) = 
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ n : ℕ, 1 ≤ n → a (n + 1) = a n + 1 ∨ a (n + 1) = a n + 2 := by
   -- EVOLVE-BLOCK-START

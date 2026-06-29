@@ -30,6 +30,9 @@ The sum which A175386 $a(n)$ is the denominator of.
 
 namespace OeisA175386
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open scoped BigOperators
 
 /--
@@ -316,6 +319,7 @@ lemma lucas_not_eq (n : ℕ) (hn : 1 < n) (k : ℤ) : (2 * (n : ℤ)) * k ≠ lu
 -- EVOLVE-BLOCK-END
 
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : 1 < n) : a n ≠ 1 := by
   -- EVOLVE-BLOCK-START

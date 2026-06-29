@@ -29,6 +29,9 @@ $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 
 namespace OeisA382590
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open MeasureTheory
 
 open Polynomial
@@ -291,6 +294,7 @@ lemma kth_prime_factor_eq_2 (k : ℕ) (n : ℤ) (hk : k ≥ 2) (hn : n ≠ 0) (h
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧ ∀ n : ℕ, n ≥ N₀ → kth_prime_factor k (A382590 (n + p)) = kth_prime_factor k (A382590 n) := by
   -- EVOLVE-BLOCK-START

@@ -30,6 +30,9 @@ where $S \cdot S$ is the set of all products of elements of $S$.
 
 namespace OeisA194806
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Finset Nat
 
 /-- The set of all products of elements from a Finset S. -/
@@ -450,6 +453,7 @@ lemma M_bound : ∃ C : ℝ, ∀ n : ℕ, 2 ≤ n → (M n : ℝ) ≤ C * Nat.pr
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∃ C : ℝ, ∀ n : ℕ, 2 ≤ n → (a n : ℝ) / (Nat.primeCounting n : ℝ) ≤ C := by
   -- EVOLVE-BLOCK-START

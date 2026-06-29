@@ -30,6 +30,9 @@ The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
 
 namespace OeisA363347
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Rat Nat
 
 /--
@@ -803,6 +806,7 @@ lemma A363347_achieves_prime (p : ℕ) (hp : p.Prime) (hmod : p ≡ 1 [MOD 10] �
   exact A363347_eval (x - 1) p k hp hn_ge_3 hn_lt hk_eq hk_pos h_k_dvd h_p_not_dvd
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ p : ℕ, (p.Prime ∧ (p ≡ 1 [MOD 10] ∨ p ≡ 9 [MOD 10])) → ∃ n : ℕ, A363347 n = p := by
   -- EVOLVE-BLOCK-START

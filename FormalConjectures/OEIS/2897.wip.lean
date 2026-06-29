@@ -32,6 +32,9 @@ We mark it noncomputable as it builds a mathematical object defined in terms of 
 
 namespace OeisA2897
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open MeasureTheory
 
 open Polynomial
@@ -418,6 +421,7 @@ lemma coeff_P_n_eq_step5 (n : ℕ) :
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : (a n : ℤ) = MvPolynomial.coeff (xyz_pow_n n) (P_n n) := by
   -- EVOLVE-BLOCK-START

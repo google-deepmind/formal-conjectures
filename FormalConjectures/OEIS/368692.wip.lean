@@ -29,6 +29,9 @@ It is conjectured that $a(n)$ are integers.
 
 namespace OeisA368692
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat
 
 /--
@@ -136,6 +139,7 @@ lemma lem_div (n : ℕ) : 6 * (6 * n + 5) * (6 * n + 4) ∣ M n * (6 * n + 7) * 
     _ = 6 * (6 * n + 5) * (6 * n + 4) * m := by ring
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : 108 * ((4 * n + 2)! * (2 * n + 3)! * ((6 * n + 5)!) ^ 2) ∣ (12 * n + 6)! * (6 * n + 9)! := by
   -- EVOLVE-BLOCK-START

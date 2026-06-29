@@ -31,6 +31,9 @@ The formula used is $1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of diviso
 
 namespace OeisA237271
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Finset List
 
 /--
@@ -80,6 +83,7 @@ def num_2_dense_sublists (n : ℕ) : ℕ :=
 -- You can put your definitions and lemmas here.
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : a n = num_2_dense_sublists n := by
   -- EVOLVE-BLOCK-START

@@ -31,6 +31,9 @@ The sequence is 1-indexed in OEIS, so $a(n)$ is the $(n-1)$-th term of the 0-ind
 
 namespace OeisA227582
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open BigOperators LinearRecurrence
 
 /--
@@ -262,6 +265,7 @@ lemma x_seq_one_bounds : 1 / 3 < x_seq 1 ∧ x_seq 1 ≤ 1 / 2 := by simp_rw [x_
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : 0 < n) : a n = (Int.floor (1 / (2 * (↑(harmonic n) : ℝ) - (↑(harmonic (n * n + n - 1)) : ℝ) - Real.eulerMascheroniConstant))).toNat := by
   -- EVOLVE-BLOCK-START

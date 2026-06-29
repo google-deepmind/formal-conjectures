@@ -30,6 +30,9 @@ The total value of the continued fraction $C_n$.
 
 namespace OeisA372761
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open MeasureTheory
 
 open Polynomial
@@ -745,6 +748,7 @@ lemma existence_part (p : ℕ) (hp : Nat.Prime p) (hp2 : p % 2 = 1) (hp3 : p ≠
     exact a_n_p_eq_p_of_ne_11 p hp hp2 hp3 hp5 hp11
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ p : ℕ, Nat.Prime p ∧ p % 2 = 1 ∧ p ≠ 3 ∧ p ≠ 5 → ∃! n, n ≥ 3 ∧ a n = p := by
   -- EVOLVE-BLOCK-START

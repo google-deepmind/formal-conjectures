@@ -29,6 +29,9 @@ A062567: First multiple of $n$ whose reverse is also divisible by $n$, or 0 if n
 
 namespace OeisA62567
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat Classical
 
 /-- The number whose digits in base 10 are $n$'s digits reversed. -/
@@ -283,6 +286,7 @@ lemma a_gt_4 (n : ℕ) (hn : 5 ≤ n) : a (3 ^ n) < 10 ^ 3 ^ (n - 2) - 1 := by
   exact (h3).trans_lt (h4)
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : 2 ≤ n → (a (3 ^ n) = 10 ^ (3 ^ (n - 2)) - 1 ↔ n = 2 ∨ n = 3 ∨ n = 4) := by
   -- EVOLVE-BLOCK-START

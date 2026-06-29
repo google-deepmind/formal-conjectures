@@ -29,6 +29,9 @@ The sequence A306424: Numbers $k$ such that the base $b$ expansion of $k$ for ea
 
 namespace OeisA306424
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open List Finset Nat
 
 /--
@@ -254,6 +257,7 @@ lemma big_fail (k : ℕ) (hk : 289 ≤ k) : ¬ A306424_condition k := by
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : A306424_condition 43 ∧ ∀ k : ℕ, 43 < k → ¬A306424_condition k := by
   -- EVOLVE-BLOCK-START

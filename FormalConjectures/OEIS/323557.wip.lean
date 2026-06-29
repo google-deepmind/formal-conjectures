@@ -30,6 +30,9 @@ where $j = \frac{m - n(k+1)}{n+1}$, and the term is zero unless $j$ is a natural
 
 namespace OeisA323557
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open MeasureTheory
 
 open Polynomial
@@ -203,6 +206,7 @@ lemma sum_even_of_all_even {α : Type} (s : Finset α) (f : α → ℕ) (h : ∀
   push_cast[s.sum_nat_mod, false, (s.sum_eq_zero h)]
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (m : ℕ) : Odd (a m) → ∃ n : ℕ, m = n * (n + 1) := by
   -- EVOLVE-BLOCK-START

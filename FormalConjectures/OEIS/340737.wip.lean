@@ -31,6 +31,9 @@ $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) - \left(\frac{
 
 namespace OeisA340737
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open MeasureTheory
 
 open Polynomial
@@ -446,6 +449,7 @@ lemma tendsto_even_odd_pos {α : Type*} [TopologicalSpace α] {f : ℕ → α} {
 
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : Filter.Tendsto (fun n : ℕ => (A340737 n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
   -- EVOLVE-BLOCK-START

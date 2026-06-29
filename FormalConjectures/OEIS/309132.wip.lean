@@ -31,6 +31,9 @@ Definition of a Carmichael number $n$: a composite number s.t. $b^{n-1} \equiv 1
 
 namespace OeisA309132
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Rat Nat
 
 /--
@@ -331,6 +334,7 @@ lemma squarefree_prod_primes (m : ℕ) :
   norm_num [ite_le_one _ _ |>.trans_lt, Finset.sum_ite]
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ (n : ℕ), (is_composite n ∧ Squarefree (a n)) ↔ is_carmichael_number n := by
   -- EVOLVE-BLOCK-START

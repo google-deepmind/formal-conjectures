@@ -28,6 +28,9 @@ The sequence $a(n)$ is composed of natural numbers, thus we define it as a funct
 
 namespace OeisA91669
 
+set_option linter.style.ams_attribute false
+set_option linter.style.category_attribute false
+
 open Nat BigOperators
 
 /--
@@ -228,6 +231,7 @@ lemma prim_root_of_prime (n : ℕ) (hn : n > 2) (hprime : Nat.Prime n) (hdiv : n
   · use (by valid ∘hprime.dvd_factorial.1.comp (CharP.cast_eq_zero_iff _ _ _).1)
 -- EVOLVE-BLOCK-END
 
+@[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : n > 2) : n ∣ (a (n - 1) + 2 ^ (n - 2)) → Nat.Prime n ∧ IsPrimitiveRoot (2 : ZMod n) (Nat.totient n) := by
   -- EVOLVE-BLOCK-START
