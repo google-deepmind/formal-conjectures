@@ -228,20 +228,41 @@ lemma exists_k_from_x (M S x : ℕ) (hS : S = 2 * M + 1) (hx_le : x ≤ S)
     omega
 -- EVOLVE-BLOCK-END
 
-@[category test, AMS 11]
-lemma test_a_0 : A224515 0 = 0 := by sorry
+lemma A224515_eq (n val : ℕ) (h_in : Nat.xor (val ^ 2) ((val + 1) ^ 2) = (2 * n + 1) ^ 2)
+  (h_min : ∀ k < val, Nat.xor (k ^ 2) ((k + 1) ^ 2) ≠ (2 * n + 1) ^ 2) : A224515 n = val := by
+  unfold A224515
+  dsimp only
+  refine csInf_eq_of_forall_ge_of_forall_gt_exists_lt ⟨val, h_in⟩ ?_ ?_
+  · intro a ha
+    by_contra h
+    exact h_min a (by omega) ha
+  · intro w hw
+    exact ⟨val, h_in, hw⟩
 
 @[category test, AMS 11]
-lemma test_a_1 : A224515 1 = 4 := by sorry
+lemma test_a_0 : A224515 0 = 0 := by
+  apply A224515_eq 0 0 (by decide)
+  intro k hk; omega
 
 @[category test, AMS 11]
-lemma test_a_2 : A224515 2 = 3 := by sorry
+lemma test_a_1 : A224515 1 = 4 := by
+  apply A224515_eq 1 4 (by decide)
+  intro k hk; interval_cases k <;> decide
 
 @[category test, AMS 11]
-lemma test_a_3 : A224515 3 = 24 := by sorry
+lemma test_a_2 : A224515 2 = 3 := by
+  apply A224515_eq 2 3 (by decide)
+  intro k hk; interval_cases k <;> decide
 
 @[category test, AMS 11]
-lemma test_a_4 : A224515 4 = 23 := by sorry
+lemma test_a_3 : A224515 3 = 24 := by
+  apply A224515_eq 3 24 (by decide)
+  intro k hk; interval_cases k <;> decide
+
+@[category test, AMS 11]
+lemma test_a_4 : A224515 4 = 23 := by
+  apply A224515_eq 4 23 (by decide)
+  intro k hk; interval_cases k <;> decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

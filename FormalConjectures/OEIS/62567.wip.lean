@@ -286,20 +286,39 @@ lemma a_gt_4 (n : ℕ) (hn : 5 ≤ n) : a (3 ^ n) < 10 ^ 3 ^ (n - 2) - 1 := by
   exact (h3).trans_lt (h4)
 -- EVOLVE-BLOCK-END
 
-@[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by sorry
+lemma a_eq_self (n : ℕ) (hn : n > 0) (h_rev : n ∣ reverse_nat n) : a n = n := by
+  unfold a
+  rw [if_neg (by omega)]
+  have h_ex : ∃ k, k > 0 ∧ n ∣ reverse_nat (k * n) := ⟨1, ⟨by omega, by rw [one_mul]; exact h_rev⟩⟩
+  rw [dif_pos h_ex]
+  change Nat.find h_ex * n = n
+  have hf : Nat.find h_ex = 1 := by
+    rw [Nat.find_eq_iff]
+    refine ⟨⟨by omega, by rw [one_mul]; exact h_rev⟩, ?_⟩
+    intro k hk
+    interval_cases k
+    simp
+  rw [hf, one_mul]
+
+lemma reverse_nat_of_lt (k : ℕ) (hk0 : k ≠ 0) (hk10 : k < 10) : reverse_nat k = k := by
+  unfold reverse_nat
+  rw [Nat.digits_of_lt 10 k hk0 hk10]
+  rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by sorry
+lemma test_a_1 : a 1 = 1 := by apply a_eq_self 1 (by omega) (by rw [reverse_nat_of_lt 1 (by decide) (by decide)])
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3 := by sorry
+lemma test_a_2 : a 2 = 2 := by apply a_eq_self 2 (by omega) (by rw [reverse_nat_of_lt 2 (by decide) (by decide)])
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 4 := by sorry
+lemma test_a_3 : a 3 = 3 := by apply a_eq_self 3 (by omega) (by rw [reverse_nat_of_lt 3 (by decide) (by decide)])
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 5 := by sorry
+lemma test_a_4 : a 4 = 4 := by apply a_eq_self 4 (by omega) (by rw [reverse_nat_of_lt 4 (by decide) (by decide)])
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 5 := by apply a_eq_self 5 (by omega) (by rw [reverse_nat_of_lt 5 (by decide) (by decide)])
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
