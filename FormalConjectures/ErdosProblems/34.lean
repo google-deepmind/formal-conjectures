@@ -30,14 +30,11 @@ namespace Erdos34
 
 open scoped BigOperators
 
-/-- The values of a permutation of $\{1,\ldots,n\}$, represented on `Fin n`. -/
-def IsPermutationOfIcc (n : ℕ) (π : Fin n → ℕ) : Prop :=
-  Set.BijOn π Set.univ (Set.Icc 1 n)
-
-/-- The set of consecutive sums of a permutation of $\{1,\ldots,n\}$. -/
-def consecutiveSums (n : ℕ) (π : Fin n → ℕ) : Finset ℕ :=
-  ((Finset.univ.product Finset.univ).filter (fun p : Fin n × Fin n => p.1 ≤ p.2)).image
-    (fun p => ∑ i ∈ Finset.Icc p.1 p.2, π i)
+/-- The set of consecutive sums of a permutation `p` of `{1,…,n}`, where position `k` holds the
+value `p k + 1`: the sums `∑_{u ≤ k ≤ v} (p k + 1)`. -/
+def consecutiveSums (n : ℕ) (p : Equiv.Perm (Fin n)) : Finset ℕ :=
+  (Finset.univ.filter (fun x : Fin n × Fin n => x.1 ≤ x.2)).image
+    (fun x => ∑ k ∈ Finset.Icc x.1 x.2, ((p k : ℕ) + 1))
 
 /--
 For any permutation $\pi\in S_n$ of $\{1,\ldots,n\}$ let $S(\pi)$ count the number of distinct consecutive sums, that is, sums of the shape $\sum_{u\leq i\leq v}\pi(i)$. Is it true that
@@ -51,8 +48,8 @@ Hegyvári [He86] gave a counterexample.
 @[category research solved, AMS 5 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos34.lean"]
 theorem erdos_34 : answer(False) ↔
-    ∀ c : ℝ, 0 < c → ∃ N : ℕ, ∀ n ≥ N, ∀ π : Fin n → ℕ,
-      IsPermutationOfIcc n π → ((consecutiveSums n π).card : ℝ) < c * (n : ℝ) ^ 2 := by
+    ∀ c : ℝ, 0 < c → ∃ N : ℕ, ∀ n ≥ N, ∀ p : Equiv.Perm (Fin n),
+      ((consecutiveSums n p).card : ℝ) < c * (n : ℝ) ^ 2 := by
   sorry
 
 end Erdos34
