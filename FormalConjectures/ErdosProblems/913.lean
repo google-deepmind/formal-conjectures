@@ -60,7 +60,7 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
     rintro a ha b hb h
     rw [tsub_left_inj (hS a ha.1).le (hS b hb.1).le] at h
     simpa using h
-  refine ((h.diff (Set.finite_singleton 2)).image (this.mono Set.diff_subset)).mono ?_
+  refine ((h.sdiff (Set.finite_singleton 2)).image (this.mono Set.sdiff_subset)).mono ?_
   simp only [Set.image_subset_iff, Set.preimage_setOf_eq, S]
   rintro p ⟨⟨hp, hp'⟩, hp''⟩
   simp only [Set.mem_singleton_iff] at hp''
@@ -72,9 +72,9 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
       Nat.factorization_mul (by positivity) (by positivity), hp'.factorization,
       hp.factorization_pow, (show 8 = 2 ^ 3 from rfl), Nat.prime_two.factorization_pow,
       add_comm (Finsupp.single 2 3)]
-  have aux₂ : (fun₀ | 2 => 3).support = {2} := by simp [Finsupp.support_eq_singleton]
+  have aux₂ : (fun₀ | 2 => 3).support = {2} := by simp
   have aux₁ : ((fun₀ | p => 2) + fun₀ | 2 => 3).support = {p, 2} := by
-    rw [Finsupp.support_single_add (by simp [aux₂, hp'']) (by simp), Finset.cons_eq_insert, aux₂]
+    rw [Finsupp.support_single_add (by simp [hp'']) (by simp), Finset.cons_eq_insert, aux₂]
   have aux₃ : p + 1 < 8 * p ^ 2 := by
     replace hp := hp.two_le
     zify at hp ⊢

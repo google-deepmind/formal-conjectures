@@ -32,6 +32,8 @@ namespace Erdos1043
 
 open MeasureTheory Polynomial
 
+attribute [local instance] Measure.Subtype.measureSpace
+
 /-- The set $\{ z \in \mathbb{C} : \lvert f(z)\rvert\leq 1\}$ -/
 def levelSet (f : Polynomial ℂ) : Set ℂ :=
   {z : ℂ | ‖f.eval z‖ ≤ 1}
@@ -53,7 +55,7 @@ formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conject
 theorem erdos_1043 :
     answer(False) ↔ ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
-      volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) ≤ 2 := by
+      volume ((ℝ ∙ u).orthogonalProjectionOnto '' levelSet f) ≤ 2 := by
   sorry
 
 /--
@@ -64,7 +66,7 @@ measure at most 3.3.
 theorem erdos_1043.variants.weak :
     ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
-      volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) ≤ 3.3 := by
+      volume ((ℝ ∙ u).orthogonalProjectionOnto '' levelSet f) ≤ 3.3 := by
   sorry
 
 end Erdos1043

@@ -54,7 +54,7 @@ theorem iteratedLog_four : Real.iteratedLog 4 = 2 := by
       have := mul_eq_of_eq_mul_inv₀ h_ne_zero <| div_eq_mul_inv _ (2 : ℝ) ▸ (Real.log_sqrt (show 0 ≤ 4 by linarith))
       rw [← this]
       norm_num
-      convert Real.log_le_sub_one_of_pos (show 0 < 2 by norm_num)
+      convert! Real.log_le_sub_one_of_pos (show 0 < 2 by norm_num)
       norm_num
     have : Real.log 4 - 1 ≤ 1 := by convert sub_le_sub_right this 1; norm_num
     exact le_trans (Real.log_le_sub_one_of_pos (Real.log_pos <| by norm_num)) this

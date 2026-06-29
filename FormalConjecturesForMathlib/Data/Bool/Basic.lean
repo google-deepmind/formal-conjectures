@@ -13,13 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 module
 
-public import Mathlib.Algebra.Order.Archimedean.Real.Basic
-public import Mathlib.Algebra.Order.Round
+public import Mathlib.Data.Bool.Basic
 
-@[expose] public section
-
-/-- The distance from a real number to the nearest integer. -/
-noncomputable def distToNearestInt (x : ℝ) : ℝ := |x - round x|
+@[simp] lemma decide_le_decide {p q : Prop} [Decidable p] [Decidable q] :
+    decide p ≤ decide q ↔ (p → q) := by by_cases p <;> by_cases q <;> simp [*]

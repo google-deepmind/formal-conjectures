@@ -85,7 +85,8 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
   · --W is separable (orbit countable → span separable → closure separable) but H isn't
     have hsep : TopologicalSpace.IsSeparable (W : Set H) :=
       ((Set.countable_range _).isSeparable).span.closure
-    grind [Submodule.top_coe, TopologicalSpace.isSeparable_univ_iff]
+    contrapose h
+    simpa [h, TopologicalSpace.isSeparable_univ_iff] using hsep
   · -- T maps orbit into orbit, hence span into span, hence closure into closure
     calc Submodule.map T.toLinearMap (Submodule.span ℂ S).topologicalClosure
         ≤ (Submodule.map T.toLinearMap (Submodule.span ℂ S)).topologicalClosure :=
@@ -99,7 +100,7 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
 
 /--
 Every normal linear operator `T : H → H` on a Hilbert space `H` of dimension at least 2 has a
-non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can take any
+non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can tafrake any
 non-trivial subspace . If not, one can take any nontrivial spectral subspace of `T`. -/
 @[category research solved, AMS 47]
 theorem Invariant_subspace_problem_normal_operator [InnerProductSpace ℂ H] [CompleteSpace H]

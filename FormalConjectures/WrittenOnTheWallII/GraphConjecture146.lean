@@ -86,7 +86,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ graphSquareRadius G := Nat.zero_le _
 /-- `graphSquare G` adjacency is symmetric. -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 4)) (u v : Fin 4) (h : (graphSquare G).Adj u v) :
-    (graphSquare G).Adj v u :=
-  (graphSquare G).symm h
+    (graphSquare G).Adj v u := h.symm
 
 end WrittenOnTheWallII.GraphConjecture146

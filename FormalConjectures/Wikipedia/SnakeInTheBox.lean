@@ -62,15 +62,15 @@ since there only is one induced path and it is of length zero.
 @[category test, AMS 5]
 theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
-  convert csSup_singleton 0
+  convert! csSup_singleton 0
   ext n
-  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
+  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, ?_⟩
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
-    simp_all
-  · rw [h]
-    use (⊤ : Subgraph _), by simp, ∅, ∅
+    simp_all [Walk.Nil.length_eq_zero]
+  · rintro rfl
+    use ⊤, by simp, ∅, ∅, .nil
     simp
 
 open List
