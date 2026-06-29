@@ -107,7 +107,7 @@ theorem erdos_602.variants.disjoint : answer(True) ↔
     obtain ⟨a, ha⟩ := (hInfinite i).nonempty
     have hA2 : (A i \ {a}).Nonempty := by
       apply Set.Infinite.nonempty
-      exact (hInfinite i).diff (Set.finite_singleton a)
+      exact (hInfinite i).sdiff (Set.finite_singleton a)
     obtain ⟨b, hbA, hba⟩ := hA2
     simp only [Set.mem_singleton_iff] at hba
     exact ⟨a, b, ha, hbA, fun h => hba h.symm⟩
@@ -175,9 +175,9 @@ theorem erdos_602.variants.single_set {α : Type*} (A : Set α) (hA : A.Infinite
   -- Pick a second element different from a.
   have hA2 : (A \ {a}).Nonempty := by
     apply Set.Infinite.nonempty
-    exact hA.diff (Set.finite_singleton a)
+    exact hA.sdiff (Set.finite_singleton a)
   obtain ⟨b, hbA⟩ := hA2
-  simp only [Set.mem_diff, Set.mem_singleton_iff] at hbA
+  simp only [Set.mem_sdiff, Set.mem_singleton_iff] at hbA
   obtain ⟨hbA, hba⟩ := hbA
   -- Colour a with 0, b with 1, everything else with 0.
   refine ⟨fun n => if n = b then 1 else 0, ?_⟩
@@ -255,13 +255,13 @@ theorem erdos_602.variants.two_sets : answer(True) ↔
     -- Pick distinct a, b from A 0.
     obtain ⟨a, ha0⟩ := (hInfinite 0).nonempty
     have hA0' : (A 0 \ {a}).Nonempty :=
-      Set.Infinite.nonempty ((hInfinite 0).diff (Set.finite_singleton a))
+      Set.Infinite.nonempty ((hInfinite 0).sdiff (Set.finite_singleton a))
     obtain ⟨b, hbA0, hba⟩ := hA0'
     simp only [Set.mem_singleton_iff] at hba
     -- Pick distinct c, d from A 1.
     obtain ⟨c, hc1⟩ := (hInfinite 1).nonempty
     have hA1' : (A 1 \ {c}).Nonempty :=
-      Set.Infinite.nonempty ((hInfinite 1).diff (Set.finite_singleton c))
+      Set.Infinite.nonempty ((hInfinite 1).sdiff (Set.finite_singleton c))
     obtain ⟨d, hd1, hdc⟩ := hA1'
     simp only [Set.mem_singleton_iff] at hdc
     -- Disjointness facts: A 0 and A 1 are disjoint.

@@ -93,7 +93,7 @@ noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
 iff their distance in `G` is at most 2. -/
 def graphSquare (G : SimpleGraph α) : SimpleGraph α where
   Adj u v := u ≠ v ∧ G.dist u v ≤ 2
-  symm _ _ := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [dist_comm]⟩
+  symm.symm _ _ := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [dist_comm]⟩
   loopless.irrefl v := by simp
 
 /-- Check whether four distinct vertices form an induced 4-cycle in `G`.
@@ -126,9 +126,7 @@ noncomputable def countInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ
 def bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Finset α :=
   S ∪ S.biUnion (fun v => Finset.univ.filter (G.Adj v))
 
-def bfs_dist_aux [DecidableEq α] [Fintype α]
-    (G : SimpleGraph α) [DecidableRel G.Adj] (target : α) :
-    ℕ → ℕ → Finset α → ℕ
+def bfs_dist_aux (G : SimpleGraph α) [DecidableRel G.Adj] (target : α) : ℕ → ℕ → Finset α → ℕ
   | 0, _, _ => 0
   | fuel + 1, depth, reached =>
     if target ∈ reached then depth
