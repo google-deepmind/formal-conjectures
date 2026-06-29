@@ -27,10 +27,6 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos199
 
-/-- A set of reals is an infinite arithmetic progression. -/
-def IsInfiniteAP (S : Set ℝ) : Prop :=
-  ∃ a b : ℝ, b ≠ 0 ∧ S = {x | ∃ n : ℕ, x = a + n * b}
-
 /--
 If $A\subset \mathbb{R}$ does not contain a 3-term arithmetic progression then must $\mathbb{R}\backslash A$ contain an infinite arithmetic progression?
 
@@ -40,7 +36,7 @@ Baumgartner [Ba75] answered this in the negative.
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos199.lean"]
 theorem erdos_199 : answer(False) ↔
     ∀ A : Set ℝ, ThreeAPFree A →
-      ∃ S : Set ℝ, IsInfiniteAP S ∧ S ⊆ Aᶜ := by
+      ∃ S : Set ℝ, S.IsAPOfLength ⊤ ∧ S ⊆ Aᶜ := by
   sorry
 
 end Erdos199

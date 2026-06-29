@@ -33,10 +33,6 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos226
 
-/-- A real function is affine. -/
-def IsAffine (f : ℝ → ℝ) : Prop :=
-  ∃ a b : ℝ, ∀ x, f x = a * x + b
-
 /-- A real function preserves rationality. -/
 def PreservesRationality (f : ℝ → ℝ) : Prop :=
   ∀ x : ℝ, x ∈ Set.range ((↑) : ℚ → ℝ) ↔ f x ∈ Set.range ((↑) : ℚ → ℝ)
@@ -51,7 +47,7 @@ $\mathbb{R}$.
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos226.lean"]
 theorem erdos_226 : answer(True) ↔
     ∃ F : ℂ → ℂ, Differentiable ℂ F ∧ (∀ x : ℝ, (F x).im = 0) ∧
-      ¬ IsAffine (fun x : ℝ => (F x).re) ∧
+      (∀ g : AffineMap ℝ ℝ ℝ, (fun x : ℝ => (F x).re) ≠ g) ∧
       PreservesRationality (fun x : ℝ => (F x).re) := by
   sorry
 

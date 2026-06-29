@@ -28,10 +28,10 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos224
 
-abbrev E (d : ℕ) := EuclideanSpace ℝ (Fin d)
+open scoped EuclideanGeometry
 
 /-- The angle $yxz$ is obtuse. -/
-def ObtuseAt {d : ℕ} (x y z : E d) : Prop :=
+def ObtuseAt {d : ℕ} (x y z : ℝ^d) : Prop :=
   inner ℝ (y - x) (z - x) < 0
 
 /--
@@ -41,8 +41,8 @@ The general case was proved by Danzer and Gr\"{u}nbaum [DaGr62].
 -/
 @[category research solved, AMS 52,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos224.lean"]
-theorem erdos_224 {d : ℕ} (A : Finset (E d)) (hcard : A.card = 2 ^ d + 1) :
-    ∃ x y z : E d, x ∈ A ∧ y ∈ A ∧ z ∈ A ∧
+theorem erdos_224 {d : ℕ} (A : Finset (ℝ^d)) (hcard : A.card = 2 ^ d + 1) :
+    ∃ x y z : ℝ^d, x ∈ A ∧ y ∈ A ∧ z ∈ A ∧
       x ≠ y ∧ x ≠ z ∧ y ≠ z ∧ ObtuseAt x y z := by
   sorry
 
