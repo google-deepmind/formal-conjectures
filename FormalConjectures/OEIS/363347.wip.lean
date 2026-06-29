@@ -55,40 +55,6 @@ noncomputable def A363347 (n : ℕ) : ℕ :=
     let R2 := continued_fraction_denominator n 2
     R2.num.natAbs
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def Z_seq : ℕ → ℤ
 | 0 => 0
@@ -824,7 +790,6 @@ lemma A363347_achieves_prime (p : ℕ) (hp : p.Prime) (hmod : p ≡ 1 [MOD 10] �
   have h_p_not_dvd := p_not_dvd_A3 (x - 1) p k hp hn_ge_3 hn_lt hk_eq
   exact A363347_eval (x - 1) p k hp hn_ge_3 hn_lt hk_eq hk_pos h_k_dvd h_p_not_dvd
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ p : ℕ, (p.Prime ∧ (p ≡ 1 [MOD 10] ∨ p ≡ 9 [MOD 10])) → ∃ n : ℕ, A363347 n = p := by

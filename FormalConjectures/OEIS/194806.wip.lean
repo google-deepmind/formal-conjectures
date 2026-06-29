@@ -69,40 +69,6 @@ noncomputable def a (n : ℕ) : ℕ :=
     -- We return the minimum card of all valid subsets.
     sizes.min' h_sizes_nonempty
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma choose_lower_bound (m : ℕ) : 2^m ≤ Nat.choose (2 * m) m := by
   exact (m.rec (by decide) (fun A B=>pow_succ (2) A▸ (2 * A+1).choose_succ_succ A▸ (2 * A).choose_succ_succ A▸by linarith [ (2 * A).choose_le_succ A]))
@@ -471,7 +437,6 @@ lemma M_bound : ∃ C : ℝ, ∀ n : ℕ, 2 ≤ n → (M n : ℝ) ≤ C * Nat.pr
   exact_mod_cast hCn
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∃ C : ℝ, ∀ n : ℕ, 2 ≤ n → (a n : ℝ) / (Nat.primeCounting n : ℝ) ≤ C := by

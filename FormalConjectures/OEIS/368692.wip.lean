@@ -30,40 +30,6 @@ def a (n : ℕ) : ℕ :=
   let den_base : ℕ := (4 * n + 2)! * (2 * n + 3)! * ((6 * n + 5)!)^2
   num / (108 * den_base)
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def M (n : ℕ) : ℕ := Nat.choose (12 * n + 6) (6 * n + 3) * Nat.choose (6 * n + 3) (4 * n + 2)
 
@@ -158,7 +124,6 @@ lemma lem_div (n : ℕ) : 6 * (6 * n + 5) * (6 * n + 4) ∣ M n * (6 * n + 7) * 
     _ = 3 * (6 * n + 5) * (6 * n + 4) * (2 * m) := by rw [hm]
     _ = 6 * (6 * n + 5) * (6 * n + 4) * m := by ring
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) : 108 * ((4 * n + 2)! * (2 * n + 3)! * ((6 * n + 5)!) ^ 2) ∣ (12 * n + 6)! * (6 * n + 9)! := by

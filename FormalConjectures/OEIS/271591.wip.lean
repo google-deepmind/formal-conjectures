@@ -53,40 +53,6 @@ def is_maximal_run (v : ℕ) (n L : ℕ) : Prop :=
   -- The run is not preceded by $v$
   (a (n - 1) ≠ v)
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def valid_bounds (n : ℕ) : Prop :=
   183 * tribonacci n ≤ 100 * tribonacci (n + 1) ∧
@@ -494,7 +460,6 @@ lemma run_1_main (n L : ℕ) (hn : n ≥ 9) (h : is_maximal_run 1 n L) : L = 3 �
       omega
     exact Or.inr hL_eq_4
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : (∀ n L, is_maximal_run 0 n L → (L = 4 ∨ L = 5)) ∧ (∀ n L, is_maximal_run 1 n L → (L = 3 ∨ L = 4)) := by

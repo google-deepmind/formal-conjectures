@@ -35,40 +35,6 @@ noncomputable def a (n : ℕ) : ℕ :=
   let inner_floor : ℤ := Int.floor (r * n)
   (Int.floor (r * inner_floor.cast)).toNat
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 noncomputable def m_val (n : ℕ) : ℤ := Int.floor ((n : ℝ) * r_const)
 noncomputable def eps (n : ℕ) : ℝ := (n : ℝ) * r_const - m_val n
@@ -112,7 +78,6 @@ lemma floor_case_1 (x : ℝ) (hx1 : 0 ≤ x) (hx2 : x < 1) : (Int.floor x : ℝ)
 lemma int_add_floor (z : ℤ) (x : ℝ) : (Int.floor ((z : ℝ) + x) : ℝ) = (z : ℝ) + (Int.floor x : ℝ) := by
   simp_all
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) (hn : 1 ≤ n) : (1 / 4 : ℝ) < (n : ℝ) * r_sq - (a n : ℝ) ∧ (n : ℝ) * r_sq - (a n : ℝ) < 3 := by

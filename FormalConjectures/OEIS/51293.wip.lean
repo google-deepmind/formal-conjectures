@@ -18,36 +18,6 @@ import FormalConjectures.Util.ProblemImports
 
 namespace OeisA51293
 
-/-
-Copyright 2025 Google LLC
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    https://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--/
-
-
-open Finset Nat Real Filter Asymptotics
-
-/--
-A051293: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
--/
-def A051293 (n : ℕ) : ℕ :=
-  Finset.card (
-    (Finset.Icc 1 n).powerset.filter fun S : Finset ℕ =>
-      S.Nonempty ∧ S.card ∣ S.sum id
-  )
-
-noncomputable def a_real (n : ℕ) : ℝ := A051293 n
-
 open MeasureTheory
 
 open Polynomial
@@ -81,6 +51,35 @@ open scoped Real
 open scoped symmDiff
 
 open scoped Topology
+
+/-
+Copyright 2025 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+open Finset Nat Real Filter Asymptotics
+
+/--
+A051293: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
+-/
+def A051293 (n : ℕ) : ℕ :=
+  Finset.card (
+    (Finset.Icc 1 n).powerset.filter fun S : Finset ℕ =>
+      S.Nonempty ∧ S.card ∣ S.sum id
+  )
+
+noncomputable def a_real (n : ℕ) : ℝ := A051293 n
 
 -- EVOLVE-BLOCK-START
 noncomputable def I_sum (n : ℕ) : ℝ := ∑ k ∈ Finset.Icc 1 n, (1 : ℝ) / k * (Nat.choose n k : ℝ)
@@ -471,8 +470,6 @@ lemma a_real_diff_bound (n : ℕ) : |a_real n - I_sum n| ≤ (n : ℝ) * (2 : �
     _ = (n : ℝ) * (2 : ℝ) ^ (n / 2 + 1) := h5
     _ ≤ (n : ℝ) * (2 : ℝ) ^ ((3 : ℝ) * n / 4 + 1) := h6
 
-
-
 lemma a_real_diff : Tendsto (fun n : ℕ => (a_real n - I_sum n) / (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))) atTop (nhds 0) := by
   have h_bound : ∀ᶠ n : ℕ in atTop, |(a_real n - I_sum n) / (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))| ≤ ((n : ℝ)^7 * (2 : ℝ) ^ ((3:ℝ) * n / 4 + 1)) / (2 : ℝ) ^ (n + 1) := by
     filter_upwards [Filter.eventually_gt_atTop 0] with n hn
@@ -496,7 +493,6 @@ lemma a_real_diff : Tendsto (fun n : ℕ => (a_real n - I_sum n) / (((2 : ℝ) ^
     tendsto_zero_iff_abs_tendsto_zero (f := (fun n : ℕ => (a_real n - I_sum n) / (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))))
   exact h_iff.mpr h_abs_lim
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : Tendsto (fun n : ℕ => (a_real n - ((2 : ℝ) ^ (n + 1) / (n : ℝ)) * ((1 : ℝ) + 1 / (n : ℝ) + 3 / ((n : ℝ) ^ 2) + 13 / ((n : ℝ) ^ 3) + 75 / ((n : ℝ) ^ 4) + 541 / ((n : ℝ) ^ 5))) / (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))) atTop (nhds 0) := by

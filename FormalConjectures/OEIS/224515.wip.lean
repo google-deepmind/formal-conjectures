@@ -33,40 +33,6 @@ noncomputable def A224515 (n : ℕ) : ℕ :=
   -- Define the set of candidate k's.
   sInf { k : ℕ | Nat.xor (k ^ 2) ((k + 1) ^ 2) = target_sq }
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma xor_eq_add_sub (a b : ℕ) : Nat.xor a b + 2 * Nat.land a b = a + b := by
   refine a.binaryRec (by simp_all[Nat.xor, true,Nat.land]) ?_ b
@@ -245,7 +211,6 @@ lemma exists_k_from_x (M S x : ℕ) (hS : S = 2 * M + 1) (hx_le : x ≤ S)
     have h6 : z + (S - x) = M := by omega
     omega
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) : ∃ k : ℕ, Nat.xor (k ^ 2) ((k + 1) ^ 2) = (2 * n + 1) ^ 2 := by

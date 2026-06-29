@@ -63,44 +63,9 @@ def num_2_dense_sublists (n : ℕ) : ℕ :=
 
   1 + num_jumps
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 -- You can put your definitions and lemmas here.
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) : a n = num_2_dense_sublists n := by

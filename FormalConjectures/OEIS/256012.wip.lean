@@ -35,40 +35,6 @@ def A256012 (n : ℕ) : ℕ :=
     (∀ k ∈ P, ¬ Squarefree k)
   ) (powerset potential_parts)
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma not_squarefree_of_dvd_sq (k x : ℕ) (hx : x > 1) (h : x * x ∣ k) : ¬ Squarefree k := by
   intro hsq
@@ -92,7 +58,6 @@ lemma not_sq_27 : ¬ Squarefree 27 := by
   apply not_squarefree_of_dvd_sq 27 3 (by omega)
   norm_num
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) (hn : n > 23) : A256012 n > 0 := by

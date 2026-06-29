@@ -18,34 +18,6 @@ import FormalConjectures.Util.ProblemImports
 
 namespace OeisA228143
 
-open BigOperators Matrix Nat
-
-/--
-A005259: The auxiliary sequence used for the Hankel matrix, defined as
-$$\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$$
--/
-def A005259' (n : ℕ) : ℕ :=
-  Finset.sum (Finset.range (n + 1)) fun k =>
-    (n.choose k)^2 * ((Nat.choose (n + k) k))^2
-
-/--
-A228143: Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with $(i,j)$-entry equal to A005259$(i+j)$ for all $i,j = 0,\dots,n$.
-The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$.
--/
-noncomputable def a (n : ℕ) : ℕ :=
-  let dim : Type := Fin (n + 1)
-  -- Matrix entries are lifted to ℤ for determinant calculation
-  let M : Matrix dim dim ℤ :=
-    Matrix.of fun i j => (A005259' (i.val + j.val) : ℤ)
-  -- The sequence is known to be non-negative integers (nonn).
-  M.det.natAbs
-
-open PowerSeries
-
-/-- The power series $A(x/3) = \sum_{n=0}^\infty \frac{a(n)}{3^n} x^n$ over ℚ. -/
-noncomputable def OGF_A_scaled : PowerSeries ℚ :=
-  PowerSeries.mk fun n => (a n : ℚ) / (3 ^ n : ℚ)
-
 open MeasureTheory
 
 open Polynomial
@@ -80,6 +52,34 @@ open scoped symmDiff
 
 open scoped Topology
 
+open BigOperators Matrix Nat
+
+/--
+A005259: The auxiliary sequence used for the Hankel matrix, defined as
+$$\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$$
+-/
+def A005259' (n : ℕ) : ℕ :=
+  Finset.sum (Finset.range (n + 1)) fun k =>
+    (n.choose k)^2 * ((Nat.choose (n + k) k))^2
+
+/--
+A228143: Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with $(i,j)$-entry equal to A005259$(i+j)$ for all $i,j = 0,\dots,n$.
+The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$.
+-/
+noncomputable def a (n : ℕ) : ℕ :=
+  let dim : Type := Fin (n + 1)
+  -- Matrix entries are lifted to ℤ for determinant calculation
+  let M : Matrix dim dim ℤ :=
+    Matrix.of fun i j => (A005259' (i.val + j.val) : ℤ)
+  -- The sequence is known to be non-negative integers (nonn).
+  M.det.natAbs
+
+open PowerSeries
+
+/-- The power series $A(x/3) = \sum_{n=0}^\infty \frac{a(n)}{3^n} x^n$ over ℚ. -/
+noncomputable def OGF_A_scaled : PowerSeries ℚ :=
+  PowerSeries.mk fun n => (a n : ℚ) / (3 ^ n : ℚ)
+
 -- EVOLVE-BLOCK-START
 
 lemma alt_sum_choose (n : ℕ) :
@@ -92,16 +92,6 @@ lemma alt_sum_choose (n : ℕ) :
     simp_all only[←mul_assoc, zero_pow (and.sub_ne_zero_of_lt (M.lt_of_le (Finset.mem_range_succ_iff.1 R))), Finset.sum_Ico_eq_sum_range, mul_comm, one_pow, mul_one,pow_add,Ne,neg_add_cancel, zero_add,Nat.choose_eq_zero_of_lt ∘ Finset.mem_range.1]
     exact and' ∘mod_cast (by(norm_num[ ← Finset.mul_sum _,n.succ_sub, and.add_sub_cancel_left, mul_assoc, mul_left_comm (@(n -and).choose @_ : ℤ),n.choose_mul, ←and.le_sub_iff_add_le', Finset.mem_range_succ_iff.1 R,.]))
   · exact Finset.sum_congr ↑rfl fun and x =>( Finset.sum_subset ↑(List.range_subset.mpr ↑(List.mem_range.1 ↑x ) ) fun and I I=>Nat.choose_eq_zero_of_lt (not_lt.mp (I.comp (List.mem_range.mpr)))▸by·ring).symm.trans ( Finset.sum_congr ↑rfl ↑(by simp_all [Nat]))
-
-
-
-
-
-
-
-
-
-
 
 lemma choose_mul_choose_eq (n k : ℕ) : (n.choose k) * ((n + k).choose k) = ((n + k).choose (2 * k)) * ((2 * k).choose k) := by
   simp_all only[le_add_self,Nat.add_le_add_right, two_mul,Nat.choose_mul,Nat.add_sub_cancel, false,Nat.mul_comm]
@@ -275,7 +265,6 @@ lemma a_div_3_pow (n : ℕ) : 3^n ∣ a n := by
     rw [h_a]
     exact Int.dvd_natAbs.mpr H3
   exact Int.ofNat_dvd.mp hdvd
-
 
 lemma choose_square_mod_4 (n k : ℕ) (hk : k ≥ 1) :
   ((n.choose k : ℤ) * ((n + k).choose k : ℤ))^2 ≡ 0 [ZMOD 4] := by
@@ -484,12 +473,6 @@ lemma Y_series_zero : PowerSeries.coeff 0 Y_series = 0 := by
   rw [PowerSeries.coeff_mk]
   simp [Y_seq]
 
-
-
-
-
-
-
 def ValuationGe (m : ℕ) (S : PowerSeries ℤ) : Prop :=
   ∀ k < m, PowerSeries.coeff k S = 0
 
@@ -694,8 +677,6 @@ lemma exists_seq_P (Y : PowerSeries ℤ) (hY0 : PowerSeries.coeff 0 Y = 0) :
   use X_series Y
   exact ⟨X_series_coeff_zero Y, X_series_pow_8 Y hY0⟩
 
-
-
 lemma exists_eighth_root_B :
   ∃ C : PowerSeries ℤ, C ^ 8 = B_series := by
   have hY0 := Y_series_zero
@@ -706,7 +687,6 @@ lemma exists_eighth_root_B :
   exact B_series_eq_1_plus_16_Y.symm
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∃ C : PowerSeries ℤ, (PowerSeries.map (Int.castRingHom ℚ)) (C ^ 8) = OGF_A_scaled := by

@@ -39,40 +39,6 @@ noncomputable def period_of_power_mod (p n : ℕ) : ℕ :=
   else
     sInf { T : ℕ | 0 < T ∧ ∀ k : ℕ, (k + T) ^ p % n = k ^ p % n }
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma period_of_power_mod_T0_is_period (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
   let T0 := if p ^ 2 ∣ n then n / p else n;
@@ -117,7 +83,6 @@ lemma T0_pos (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
   (if p ^ 2 ∣ n then n / p else n) > 0 := by
   refine if a :_ then (if_pos a▸ (p.div_pos (p.le_of_dvd @hn ↑(dvd_of_mul_left_dvd a)) hp.pos))else (if_neg a▸hn)
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) : period_of_power_mod p n = if p ^ 2 ∣ n then n / p else n := by

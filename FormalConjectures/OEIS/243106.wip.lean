@@ -29,40 +29,6 @@ def a (n : ℕ) : Int :=
   (Icc 1 n).sum fun k : ℕ =>
     (if Nat.Prime k then (-1 : Int) else 1) * (10 : Int) ^ k
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def GoodDigit (b d : ℕ) : Prop := d = 0 ∨ d = 1 ∨ d = b - 2 ∨ d = b - 1
 
@@ -140,7 +106,6 @@ lemma digits_good (b : ℕ) (hb : b ≥ 5) (N : ℕ) (hGood : IsGood b N) :
         · exact h_in
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (b n : ℕ) (hb : b ≥ 5) :

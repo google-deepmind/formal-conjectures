@@ -42,40 +42,6 @@ open Int (fract)
 due to dependence on the real floor function. -/
 noncomputable def frac_part (q : ℚ) : ℝ := fract (q : ℝ)
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 
 lemma choose_ge (n : ℕ) : n + 1 ≤ Nat.choose (2 * n) n := by
@@ -257,7 +223,6 @@ lemma oeis_108_cases (j k : ℕ) (h : oeis_108_index_cond j k) :
   classical valid
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄, oeis_108_index_cond j₁ k₁ → oeis_108_index_cond j₂ k₂ → (j₁, k₁) ≠ (j₂, k₂) → frac_part (catalan_reciprocal_sum j₁ k₁) ≠ frac_part (catalan_reciprocal_sum j₂ k₂) := by

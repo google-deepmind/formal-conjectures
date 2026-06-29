@@ -32,40 +32,6 @@ def a : ℕ → ℤ
 | 3 => 0
 | n + 4 => 3 * a (n + 3) - 4 * a (n + 2) + 2 * a (n + 1) - a n
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def f (n : ℕ) : ℤ := Nat.fib n
 
@@ -216,7 +182,6 @@ lemma natAbs_mul_m1_pow (k m : ℕ) : Int.natAbs ((-1 : ℤ)^k * f m) = Nat.fib 
   rw [h]
   omega
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) : ∃ m : ℕ, Int.natAbs (a n) = Nat.fib m := by

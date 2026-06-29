@@ -38,40 +38,6 @@ noncomputable def a (n : ℕ) : ℕ :=
     -- The division is exact, since the result is an integer sequence.
     numerator / denominator
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def P_prod (n : ℕ) : ℕ := (Finset.Ico 1 (n - 1)).prod (fun k => 2 ^ k - 1)
 
@@ -251,7 +217,6 @@ lemma prim_root_of_prime (n : ℕ) (hn : n > 2) (hprime : Nat.Prime n) (hdiv : n
     · simp_all[Nat.factorization_prod,Finset.prod_eq_zero_iff]
   · use (by valid ∘hprime.dvd_factorial.1.comp (CharP.cast_eq_zero_iff _ _ _).1)
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) (hn : n > 2) : n ∣ (a (n - 1) + 2 ^ (n - 2)) → Nat.Prime n ∧ IsPrimitiveRoot (2 : ZMod n) (Nat.totient n) := by

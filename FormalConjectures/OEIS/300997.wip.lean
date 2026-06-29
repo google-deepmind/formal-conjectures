@@ -54,40 +54,6 @@ noncomputable def a (n : ℕ) : ℕ :=
     -- a(n) is the smallest k in this set, defined by the set infimum (sInf).
     sInf stable_steps
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def half_ceil (m : ℕ) : ℕ := (m + 1) / 2
 def half_floor (m : ℕ) : ℕ := m / 2
@@ -519,8 +485,6 @@ lemma tail_preserved (f : ℕ → ℕ) (n : ℕ) (hn : 2 ≤ n)
   · rw [h2, if_neg eq2, eq1, h1]
   · rw [h3, if_neg eq3, h2]
 
-
-
 lemma F_no_internal_zeros (n t i : ℕ) (h : F n t i = 0) : F n t (i + 1) = 0 := by
   induction t generalizing i with
   | zero => rfl
@@ -848,8 +812,6 @@ lemma F_a_minus_1_val (n : ℕ) (hn : 2 ≤ n) (i : ℕ) (hi : i < n - 2) : F n 
   rw [h_sum_tot] at h_sum_n_gt
   omega
 
-
-
 def ContiguousGT1 (f : ℕ → ℕ) : Prop :=
   ∀ i j k, i < j → j < k → f i ≥ 2 → f k ≥ 2 → f j ≥ 2
 
@@ -1087,7 +1049,6 @@ lemma chip_pos (n : ℕ) (hn : 1 ≤ n) : n - P n (a n) = 1 ∨ n - P n (a n) = 
     · exact chip_pos_ge_4 n (by omega)
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ n : ℕ, 1 ≤ n → a (n + 1) = a n + 1 ∨ a (n + 1) = a n + 2 := by

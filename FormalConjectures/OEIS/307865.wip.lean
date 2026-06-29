@@ -39,40 +39,6 @@ def IsAbsoluteEulerPseudoprime (m : ℕ) : Prop :=
   m > 1 ∧ ¬ Nat.Prime m ∧
   (∀ b : ℕ, Nat.Coprime b m → (b : ZMod m) ^ ((m - 1) / 2) = 1 ∨ (b : ZMod m) ^ ((m - 1) / 2) = -1)
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma pow_add_nilpotent {R : Type*} [CommRing R] (y : R) (hy : y^2 = 0) (N : ℕ) :
     (1 + y)^N = 1 + N * y := by
@@ -188,7 +154,6 @@ lemma no_such_base {n m : ℕ} (hm : m = 2 * n + 1)
     exact no_such_base_case_2 hm h_pseudoprime b hbn hA hB hAB
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (h : IsAbsoluteEulerPseudoprime (2 * n + 1)) : a n = 0 := by

@@ -18,6 +18,40 @@ import FormalConjectures.Util.ProblemImports
 
 namespace OeisA372761
 
+open MeasureTheory
+
+open Polynomial
+
+open scoped BigOperators
+
+open scoped Classical
+
+open scoped ENNReal
+
+open scoped EuclideanGeometry
+
+open scoped InnerProductSpace
+
+open scoped intervalIntegral
+
+open scoped List
+
+open scoped Matrix
+
+open scoped Nat
+
+open scoped NNReal
+
+open scoped Pointwise
+
+open scoped ProbabilityTheory
+
+open scoped Real
+
+open scoped symmDiff
+
+open scoped Topology
+
 open Rat
 
 /--
@@ -64,40 +98,6 @@ $$ \frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \f
 noncomputable def a (n : ℕ) : ℕ :=
   if n < 3 then 0 -- Sequence starts at n=3.
   else (continued_fraction_val n).den
-
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
 
 -- EVOLVE-BLOCK-START
 def sum_fact : ℕ → ℕ
@@ -732,7 +732,6 @@ lemma existence_part (p : ℕ) (hp : Nat.Prime p) (hp2 : p % 2 = 1) (hp3 : p ≠
     refine ⟨h_np.2, ?_⟩
     exact a_n_p_eq_p_of_ne_11 p hp hp2 hp3 hp5 hp11
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ p : ℕ, Nat.Prime p ∧ p % 2 = 1 ∧ p ≠ 3 ∧ p ≠ 5 → ∃! n, n ≥ 3 ∧ a n = p := by

@@ -43,40 +43,6 @@ noncomputable def a (n : ℕ) : ℕ :=
     else
       0
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def sum_digits : List ℕ → ℕ
 | [] => 0
@@ -305,7 +271,6 @@ lemma a_gt_4 (n : ℕ) (hn : 5 ≤ n) : a (3 ^ n) < 10 ^ 3 ^ (n - 2) - 1 := by
   have h4 : V (n - 5) < 10 ^ 3 ^ (n - 2) - 1 := by rwa[h_n2]
   exact (h3).trans_lt (h4)
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) : 2 ≤ n → (a (3 ^ n) = 10 ^ (3 ^ (n - 2)) - 1 ↔ n = 2 ∨ n = 3 ∨ n = 4) := by

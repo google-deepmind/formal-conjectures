@@ -18,6 +18,40 @@ import FormalConjectures.Util.ProblemImports
 
 namespace OeisA258667
 
+open MeasureTheory
+
+open Polynomial
+
+open scoped BigOperators
+
+open scoped Classical
+
+open scoped ENNReal
+
+open scoped EuclideanGeometry
+
+open scoped InnerProductSpace
+
+open scoped intervalIntegral
+
+open scoped List
+
+open scoped Matrix
+
+open scoped Nat
+
+open scoped NNReal
+
+open scoped Pointwise
+
+open scoped ProbabilityTheory
+
+open scoped Real
+
+open scoped symmDiff
+
+open scoped Topology
+
 open BigOperators Nat Int Real Asymptotics Filter
 
 /--
@@ -76,40 +110,6 @@ noncomputable def A258667_asymptotic_term (n : ℕ) : ℝ :=
     let n_fac_R := nat_fac_to_real n
     let prefactor : ℝ := exp (-2) * (n_fac_R / (n_R - 2))
     prefactor * (1 + A258667_asymptotic_sum_part n)
-
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
 
 -- EVOLVE-BLOCK-START
 -- You can put your definitions and lemmas here.
@@ -422,7 +422,6 @@ lemma seq_equiv :
   apply h2.imp fun and =>.imp fun and =>h1.mp.comp ( ·.mono fun and R M=>M.trans R)
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : IsEquivalent atTop (fun n : ℕ => (A258667 n : ℝ)) A258667_asymptotic_term := by

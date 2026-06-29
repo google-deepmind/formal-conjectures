@@ -18,6 +18,40 @@ import FormalConjectures.Util.ProblemImports
 
 namespace OeisA340737
 
+open MeasureTheory
+
+open Polynomial
+
+open scoped BigOperators
+
+open scoped Classical
+
+open scoped ENNReal
+
+open scoped EuclideanGeometry
+
+open scoped InnerProductSpace
+
+open scoped intervalIntegral
+
+open scoped List
+
+open scoped Matrix
+
+open scoped Nat
+
+open scoped NNReal
+
+open scoped Pointwise
+
+open scoped ProbabilityTheory
+
+open scoped Real
+
+open scoped symmDiff
+
+open scoped Topology
+
 open Nat
 
 /--
@@ -82,40 +116,6 @@ noncomputable def A340738 (n : ℕ) : ℕ :=
       -- n is odd, n $\ge$ 3
       2 * b_nm1 + n * b_nm2
 termination_by n
-
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
 
 -- EVOLVE-BLOCK-START
 noncomputable def u (k : ℕ) (x : ℝ) : ℝ := (x * (1 - x)) ^ k
@@ -432,7 +432,6 @@ lemma tendsto_even_odd_pos {α : Type*} [TopologicalSpace α] {f : ℕ → α} {
   exact (fun A B=>(hodd A B).elim ((heven A B).elim fun and h a s=>by use (2 * (and+ a))+3,fun A B=>match A with | S+1=> S.even_or_odd'.elim fun and true => true.elim (.▸s and (by valid)) (.▸h and (by valid))))
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : Filter.Tendsto (fun n : ℕ => (A340737 n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by

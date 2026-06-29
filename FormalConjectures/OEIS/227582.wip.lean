@@ -44,40 +44,6 @@ noncomputable def a (n : ℕ) : ℕ :=
   else
     0
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma a_val (n : ℕ) (hn : 0 < n) : a n = (6 * n^2 + 6 * n - 1) / 5 := by
   delta a
@@ -282,7 +248,6 @@ lemma x_seq_one_bounds : 1 / 3 < x_seq 1 ∧ x_seq 1 ≤ 1 / 2 := by simp_rw [x_
                                                                    use and' ∘ (by·linear_combination(norm:=conv=>ring).+div_self_le_one (↑‹ℕ›+1 :ℝ)+M)
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) (hn : 0 < n) : a n = (Int.floor (1 / (2 * (↑(harmonic n) : ℝ) - (↑(harmonic (n * n + n - 1)) : ℝ) - Real.eulerMascheroniConstant))).toNat := by

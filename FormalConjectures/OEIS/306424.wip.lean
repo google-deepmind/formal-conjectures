@@ -32,40 +32,6 @@ The sequence A306424: Numbers $k$ such that the base $b$ expansion of $k$ for ea
 -/
 noncomputable def a (n : ℕ) : ℕ := n.nth A306424_condition
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def my_digits (fuel b k : ℕ) : List ℕ :=
   match fuel with
@@ -276,7 +242,6 @@ lemma big_fail (k : ℕ) (hk : 289 ≤ k) : ¬ A306424_condition k := by
   exact base_fail hc hx hxc hyc hzc h_eq hxy hyz hxz h
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : A306424_condition 43 ∧ ∀ k : ℕ, 43 < k → ¬A306424_condition k := by

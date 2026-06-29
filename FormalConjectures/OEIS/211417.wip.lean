@@ -39,40 +39,6 @@ We define this in ℤ to handle the $n=0$ case where $30n-i$ in the product migh
 def divisor_product (n r : ℕ) : ℤ :=
   (coprime_indices r).prod (fun i : ℕ => 30 * (n : ℤ) - (i : ℤ))
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma helper_div (c n M : ℕ) : c * n / M = c * (n / M) + c * (n % M) / M := by
   exact M.eq_zero_or_pos.elim (by simp_all) (by rw [← M.mul_add_div ·,mul_left_comm,←mul_add,Nat.div_add_mod])
@@ -240,7 +206,6 @@ lemma target_nat (n : ℕ) (hn : n > 0) : (30 * n - 1) ∣ a n := by
   delta a and R_def and L_def at *
   exact (Nat.dvd_div_of_mul_dvd (by rwa [mul_comm]))
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) : (30 * (n : ℤ) - 1) ∣ (a n : ℤ) := by

@@ -48,40 +48,6 @@ def a (N : ℕ) : ℕ :=
     )
   )
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma sum_involution_zmod2 {α : Type} [DecidableEq α] (S : Finset α) (I : α → α) (f : α → ZMod 2)
     (hI_mem : ∀ x ∈ S, I x ∈ S)
@@ -163,7 +129,6 @@ lemma fixed_point_imp (N : ℕ) (p : ℕ × ℕ) (hp : p ∈ V N) (hI : I_map N 
   norm_num[I_map, V, mul_add,←hk,Prod.ext_iff]at *
   match hp.2.2▸Nat.mod_eq_of_lt with | S=>omega
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (N : ℕ) : a N % 2 = 1 → ∃ k : ℕ, N = k * (k + 1) := by

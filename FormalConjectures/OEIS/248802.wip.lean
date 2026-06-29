@@ -32,40 +32,6 @@ def covered_by_C2 (k : ℕ) : Prop := ∃ m : ℕ, k = 36 * m + 16 ∧ m % 5 ≠
 /-- An index k is covered by Conjecture 3 if k = 84m + 22 for some m >= 0, and m is not 0 mod 5, predicting a(k)=523. -/
 def covered_by_C3 (k : ℕ) : Prop := ∃ m : ℕ, k = 84 * m + 22 ∧ m % 5 ≠ 0
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 set_option maxRecDepth 200000
 set_option maxHeartbeats 2000000
@@ -209,7 +175,6 @@ lemma dvd_67 (n : ℕ) : 67 ∣ (2 ^ (2 ^ (10 * n + 2) + 2) + 3) := by
   exact (zmod_eq_zero_iff_dvd _ 67).mp H3
 -- EVOLVE-BLOCK-END
 
-
 theorem target_theorem_0
   (n : ℕ) : a (10 * n + 2) = 67 := by
   -- EVOLVE-BLOCK-START
@@ -236,7 +201,6 @@ theorem target_theorem_0
     exact h_not h_div
   exact le_antisymm hX_minFac_le hX_minFac_ge
   -- EVOLVE-BLOCK-END
-
 
 -- EVOLVE-BLOCK-START
 lemma mod_1399_step1 : 2^58 ≡ 1 [MOD 233] := by decide
@@ -325,8 +289,6 @@ def bad_for_even_k (p : ℕ) : Bool := Id.run do
   return false
 
 #eval! (List.range 1399).filter is_prime |>.filter bad_for_even_k
-
-
 
 lemma zmod_pow_mod (p : ℕ) [Fact (Nat.Prime p)] (hp2 : p > 2) (k : ℕ) :
   (2 : ZMod p) ^ k = (2 : ZMod p) ^ (k % (p - 1)) := by
@@ -430,7 +392,6 @@ lemma p_mod_all_generic (P mod k0 : ℕ) (hP : P ≥ k0) (hP_pos : P > 0) (h_per
     rw [ht]
     exact period_mod_ind P mod k0 hP h_per (k % P) (k / P - 1)
 
-
 lemma p_271_mod_all (k : ℕ) (hk : k ≥ 26) : 2^k ≡ 2^(k % 36 + 36) [MOD 270] := by
   apply p_mod_all_generic 36 270 2 (by decide) (by decide) p_271_mod k (by omega)
 
@@ -443,7 +404,6 @@ lemma p_not_div_67 (k : ℕ) (hk1 : k ≥ 26) (hk2 : k % 10 ≠ 2) (h_even : k %
   norm_num[Nat.sub_add_cancel (by valid: 1 ≤k/10)▸pow_succ' 34 _,Nat.mul_mod]
   norm_num[ (by induction. with omega : ∀x,34*34^x%66=34)]
   match R:k%10 with|0|1|2|3|4|5|6|7|8|9=>simp_all|n+10=>omega
-
 
 def sq_mod (p x : ℕ) : ℕ → ℕ
 | 0 => x % p
@@ -917,8 +877,6 @@ lemma p_mod_offset (m P k0 n : ℕ) (h_per : ∀ k ≥ k0, 2^(k+P) ≡ 2^k [MOD 
   rw [h1]
   exact period_mod_ind_offset m P k0 (n % P) (n / P) h_per
 
-
-
 lemma is_prime_loop_of_prime (p i fuel : ℕ) (hp : p.Prime) (hi : i ≥ 2) (h_fuel : fuel ≥ p) : is_prime_loop p i fuel = true := by
   norm_num[is_prime_loop] at *
   push_cast[is_prime_loop,p.prime_def]at *
@@ -989,7 +947,6 @@ lemma p_not_div_other (p : ℕ) (hp : p.Prime) (hp1 : p < 1399) (hp67 : p ≠ 67
   rw [h_good] at h_bad
   exact Bool.noConfusion h_bad
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_4
   (n : ℕ) : (¬covered_by_C1 (58 * n + 26) ∧ ¬covered_by_C2 (58 * n + 26) ∧ ¬covered_by_C3 (58 * n + 26)) → a (58 * n + 26) = 1399 := by

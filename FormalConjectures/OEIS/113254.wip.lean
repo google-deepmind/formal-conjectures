@@ -34,40 +34,6 @@ def a (n : ℕ) : ℤ :=
   | 3 => 3136
   | n' + 4 => -4 * a (n' + 3) + 256 * a (n' + 1) + 4096 * a n'
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def Y : ℕ → ℤ
   | 0 => -2
@@ -129,7 +95,6 @@ lemma a_eq_Y_sq (n : ℕ) :
     rw [ha]
     exact hy.symm
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ n : ℕ, IsSquare (a (2 * n + 1)) := by

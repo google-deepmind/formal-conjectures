@@ -18,6 +18,40 @@ import FormalConjectures.Util.ProblemImports
 
 namespace OeisA382590
 
+open MeasureTheory
+
+open Polynomial
+
+open scoped BigOperators
+
+open scoped Classical
+
+open scoped ENNReal
+
+open scoped EuclideanGeometry
+
+open scoped InnerProductSpace
+
+open scoped intervalIntegral
+
+open scoped List
+
+open scoped Matrix
+
+open scoped Nat
+
+open scoped NNReal
+
+open scoped Pointwise
+
+open scoped ProbabilityTheory
+
+open scoped Real
+
+open scoped symmDiff
+
+open scoped Topology
+
 open Int
 
 /--
@@ -55,40 +89,6 @@ def kth_prime_factor (k : ℕ) (n : ℤ) : ℕ :=
   -- prime factors list length is L.length. We look for k-th element, index k-1.
   if h_len : k - 1 ≥ L.length then 1 else
   L[k - 1]
-
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
 
 -- EVOLVE-BLOCK-START
 
@@ -279,7 +279,6 @@ lemma kth_prime_factor_eq_2 (k : ℕ) (n : ℤ) (hk : k ≥ 2) (hn : n ≠ 0) (h
   exact get_eq_two_of_count_ge n.natAbs h_min (k - 1) (by omega) (by omega)
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧ ∀ n : ℕ, n ≥ N₀ → kth_prime_factor k (A382590 (n + p)) = kth_prime_factor k (A382590 n) := by

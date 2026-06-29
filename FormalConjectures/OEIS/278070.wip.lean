@@ -30,44 +30,9 @@ def A278070 (n : ℕ) : ℕ :=
   (Finset.range (n + 1)).sum fun k =>
     (n.choose k) * ((n + k).pred.choose k) * (k.factorial)
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 -- You can put your definitions and lemmas here.
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ (n k : ℕ), Nat.ModEq k (A278070 (n + k)) (A278070 n) := by

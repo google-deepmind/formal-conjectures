@@ -42,40 +42,6 @@ def a (n : ℕ) : ℕ :=
   -- The subtraction n^2 - 2 is safe for n >= 3.
   num / Nat.gcd num denom_arg
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 -- You can put your definitions and lemmas here.
 lemma D_n_eq (n : ℕ) (h : 4 ≤ n) :
@@ -278,7 +244,6 @@ lemma R_n_not_composite (n : ℕ) (hn : 30 ≤ n) :
       exact hPrime (hR_eq_p.symm ▸ hp_prime)
 
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ n : ℕ, 3 ≤ n → a n = 1 ∨ Nat.Prime (a n) := by

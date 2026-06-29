@@ -60,40 +60,6 @@ def oeis_floor_term (n : ℕ) : ℕ :=
   if n = 0 then 0
   else if (2 ^ (n + 1)) % n = 0 then 1 else 0
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 def int_choose (n : ℕ) (k : ℤ) : ℕ :=
   if 0 ≤ k ∧ k ≤ n then Nat.choose n k.toNat else 0
@@ -188,7 +154,6 @@ lemma a_rec (n : ℕ) (hn : 1 ≤ n) :
   delta a
   exact ( Finset.sum_range_succ _ _).trans (match n with | S+1 =>by push_cast+contextual[eq_self, ← Finset.mem_range_succ_iff,mul_left_comm, S.succ_sub, S.sub_self, mul_one, false,pow_succ', Finset.mul_sum, true,pow_zero])
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   (n : ℕ) (hn : 2 ≤ n) : a n = 2 * a (n - 1) + 1 - oeis_floor_term n := by

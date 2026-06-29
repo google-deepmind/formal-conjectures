@@ -38,40 +38,6 @@ def is_carmichael_number (n : ℕ) : Prop :=
 /-- Helper definition for "composite number" -/
 def is_composite (n : ℕ) : Prop := ¬ Nat.Prime n ∧ n > 1
 
-open MeasureTheory
-
-open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
-
 -- EVOLVE-BLOCK-START
 lemma vsc_sum_range_pow (q m : ℕ) :
   ∑ k ∈ Finset.range q, (k : ℚ) ^ m =
@@ -351,7 +317,6 @@ lemma squarefree_prod_primes (m : ℕ) :
   simp_all[ Finsupp.single_apply,ite_le_one _ _|>.trans_lt, Finset.sum_filter]
   norm_num [ite_le_one _ _ |>.trans_lt, Finset.sum_ite]
 -- EVOLVE-BLOCK-END
-
 
 theorem target_theorem_0
   : ∀ (n : ℕ), (is_composite n ∧ Squarefree (a n)) ↔ is_carmichael_number n := by
