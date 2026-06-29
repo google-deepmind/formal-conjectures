@@ -29,6 +29,11 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.27.0"
 
+[[require]]
+name = "repl"
+scope = "leanprover-community"
+rev = "v4.27.0"
+
 # We make this a separate library so that we can apply different lean options.
 [[lean_lib]]
 name = "FormalConjecturesForMathlib"

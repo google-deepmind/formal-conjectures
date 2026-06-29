@@ -171,6 +171,21 @@ lemma a_rec (n : ℕ) (hn : 1 ≤ n) :
   exact ( Finset.sum_range_succ _ _).trans (match n with | S+1 =>by push_cast+contextual[eq_self, ← Finset.mem_range_succ_iff,mul_left_comm, S.succ_sub, S.sub_self, mul_one, false,pow_succ', Finset.mul_sum, true,pow_zero])
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_0 : a 0 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 3 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 6 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 13 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 26 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : 2 ≤ n) : a n = 2 * a (n - 1) + 1 - oeis_floor_term n := by

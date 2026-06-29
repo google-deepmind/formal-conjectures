@@ -514,6 +514,21 @@ lemma a_real_diff : Tendsto (fun n : ℕ => (a_real n - I_sum n) / (((2 : ℝ) ^
   exact h_iff.mpr h_abs_lim
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : A051293 1 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : A051293 2 = 2 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : A051293 3 = 5 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : A051293 4 = 8 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_5 : A051293 5 = 15 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : Tendsto (fun n : ℕ => (a_real n - ((2 : ℝ) ^ (n + 1) / (n : ℝ)) * ((1 : ℝ) + 1 / (n : ℝ) + 3 / ((n : ℝ) ^ 2) + 13 / ((n : ℝ) ^ 3) + 75 / ((n : ℝ) ^ 4) + 541 / ((n : ℝ) ^ 5))) / (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))) atTop (nhds 0) := by

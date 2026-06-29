@@ -257,6 +257,21 @@ lemma big_fail (k : ℕ) (hk : 289 ≤ k) : ¬ A306424_condition k := by
 
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 1 := by delta a; apply nth_of_forall; intro n' hn'; apply (check_cond_eq n').mpr; interval_cases n' <;> decide
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 2 := by delta a; apply nth_of_forall; intro n' hn'; apply (check_cond_eq n').mpr; interval_cases n' <;> decide
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 3 := by delta a; apply nth_of_forall; intro n' hn'; apply (check_cond_eq n').mpr; interval_cases n' <;> decide
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 4 := by delta a; apply nth_of_forall; intro n' hn'; apply (check_cond_eq n').mpr; interval_cases n' <;> decide
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 5 := by delta a; apply nth_of_forall; intro n' hn'; apply (check_cond_eq n').mpr; interval_cases n' <;> decide
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : A306424_condition 43 ∧ ∀ k : ℕ, 43 < k → ¬A306424_condition k := by

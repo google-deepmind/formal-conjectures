@@ -453,6 +453,21 @@ lemma M_bound : ∃ C : ℝ, ∀ n : ℕ, 2 ≤ n → (M n : ℝ) ≤ C * Nat.pr
 
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 2 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 3 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 3 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 4 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : ∃ C : ℝ, ∀ n : ℕ, 2 ≤ n → (a n : ℝ) / (Nat.primeCounting n : ℝ) ≤ C := by

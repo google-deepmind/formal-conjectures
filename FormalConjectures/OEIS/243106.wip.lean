@@ -121,6 +121,21 @@ lemma digits_good (b : ℕ) (hb : b ≥ 5) (N : ℕ) (hGood : IsGood b N) :
 
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 10 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = -90 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = -1090 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 8910 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = -91090 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (b n : ℕ) (hb : b ≥ 5) :

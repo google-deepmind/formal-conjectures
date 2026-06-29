@@ -248,6 +248,7 @@ lemma bound2 (n : ℕ) (hn : 2 ≤ n) :
   have h_K_bound := bound2_step n hn
   linarith
 
+@[category test, AMS 11]
 lemma a_one : a 1 = 2 := by norm_num[a]
                             delta A227582_base
                             push_cast+decide[LinearRecurrence.mkSol]
@@ -264,6 +265,18 @@ lemma x_seq_one_bounds : 1 / 3 < x_seq 1 ∧ x_seq 1 ≤ 1 / 2 := by simp_rw [x_
                                                                    use and' ∘ (by·linear_combination(norm:=conv=>ring).+div_self_le_one (↑‹ℕ›+1 :ℝ)+M)
 
 -- EVOLVE-BLOCK-END
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 7 := by dsimp [a]; native_decide
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 14 := by dsimp [a]; native_decide
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 23 := by dsimp [a]; native_decide
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 35 := by dsimp [a]; native_decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

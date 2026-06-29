@@ -147,6 +147,21 @@ lemma fixed_point_imp (N : ℕ) (p : ℕ × ℕ) (hp : p ∈ V N) (hI : I_map N 
   match hp.2.2▸Nat.mod_eq_of_lt with | S=>omega
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_0 : a 0 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 2 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 3 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 4 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 6 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (N : ℕ) : a N % 2 = 1 → ∃ k : ℕ, N = k * (k + 1) := by

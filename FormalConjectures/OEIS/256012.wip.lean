@@ -72,6 +72,21 @@ lemma not_sq_27 : ¬ Squarefree 27 := by
   norm_num
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_0 : A256012 0 = 1 := by decide
+
+@[category test, AMS 11]
+lemma test_a_1 : A256012 1 = 0 := by native_decide
+
+@[category test, AMS 11]
+lemma test_a_2 : A256012 2 = 0 := by native_decide
+
+@[category test, AMS 11]
+lemma test_a_3 : A256012 3 = 0 := by native_decide
+
+@[category test, AMS 11]
+lemma test_a_4 : A256012 4 = 1 := by native_decide
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : n > 23) : A256012 n > 0 := by

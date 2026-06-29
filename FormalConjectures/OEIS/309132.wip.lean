@@ -334,6 +334,21 @@ lemma squarefree_prod_primes (m : ℕ) :
   norm_num [ite_le_one _ _ |>.trans_lt, Finset.sum_ite]
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 1 := by delta a; norm_num [bernoulli]
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 1 := by delta a; norm_num [bernoulli]
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 1 := by delta a; norm_num [bernoulli]
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 16 := by delta a; norm_num [bernoulli]
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 1 := by delta a; norm_num [bernoulli]
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ (n : ℕ), (is_composite n ∧ Squarefree (a n)) ↔ is_carmichael_number n := by

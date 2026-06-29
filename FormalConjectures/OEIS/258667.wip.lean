@@ -440,6 +440,21 @@ lemma seq_equiv :
 
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : A258667 1 = 0 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : A258667 2 = 0 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : A258667 3 = 0 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : A258667 4 = 0 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_5 : A258667 5 = 0 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : IsEquivalent atTop (fun n : ℕ => (A258667 n : ℝ)) A258667_asymptotic_term := by

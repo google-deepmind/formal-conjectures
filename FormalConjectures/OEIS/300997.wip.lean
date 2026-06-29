@@ -1063,6 +1063,92 @@ lemma chip_pos (n : ℕ) (hn : 1 ≤ n) : n - P n (a n) = 1 ∨ n - P n (a n) = 
 
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 0 := by
+  have h1 : F 1 0 = TargetF 1 := by
+    funext i
+    dsimp [F, TargetF]
+    split_ifs <;> omega
+  have h_le := a_min 1 (by omega) 0 h1
+  omega
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 1 := by
+  have h1 : F 2 1 = TargetF 2 := by
+    funext i
+    have h_cases : i = 0 ∨ i = 1 ∨ i ≥ 2 := by omega
+    rcases h_cases with rfl | rfl | hi
+    · rfl
+    · rfl
+    · have hf : F 2 1 i = 0 := F_zero_of_ge 2 1 i hi
+      have ht : TargetF 2 i = 0 := by
+        dsimp [TargetF]
+        rw [if_neg (by omega)]
+      rw [hf, ht]
+  have h2 : F 2 0 ≠ TargetF 2 := by
+    intro h
+    have h0 := congrFun h 0
+    dsimp [F, TargetF] at h0
+    omega
+  have h_le := a_min 2 (by omega) 1 h1
+  have h_not_0 : a 2 ≠ 0 := by
+    intro h
+    have h_stable := a_is_stable 2 (by omega)
+    rw [h] at h_stable
+    exact h2 h_stable
+  omega
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 3 := by
+  have h1 : F 3 3 = TargetF 3 := by
+    funext i
+    have h_cases : i = 0 ∨ i = 1 ∨ i = 2 ∨ i ≥ 3 := by omega
+    rcases h_cases with rfl | rfl | rfl | hi
+    · rfl
+    · rfl
+    · rfl
+    · have hf : F 3 3 i = 0 := F_zero_of_ge 3 3 i hi
+      have ht : TargetF 3 i = 0 := by
+        dsimp [TargetF]
+        rw [if_neg (by omega)]
+      rw [hf, ht]
+  have h0 : F 3 0 ≠ TargetF 3 := by
+    intro h
+    have h0 := congrFun h 0
+    dsimp [F, TargetF] at h0
+    omega
+  have h1_not : F 3 1 ≠ TargetF 3 := by
+    intro h
+    have h0 := congrFun h 0
+    dsimp [F, ca_step_fun, half_ceil, half_floor, TargetF] at h0
+    omega
+  have h2_not : F 3 2 ≠ TargetF 3 := by
+    intro h
+    have h1_val := congrFun h 1
+    dsimp [F, ca_step_fun, half_ceil, half_floor, TargetF] at h1_val
+    omega
+  have h_le := a_min 3 (by omega) 3 h1
+  have h_not_0 : a 3 ≠ 0 := by intro h; have h_s := a_is_stable 3 (by omega); rw [h] at h_s; exact h0 h_s
+  have h_not_1 : a 3 ≠ 1 := by intro h; have h_s := a_is_stable 3 (by omega); rw [h] at h_s; exact h1_not h_s
+  have h_not_2 : a 3 ≠ 2 := by intro h; have h_s := a_is_stable 3 (by omega); rw [h] at h_s; exact h2_not h_s
+  omega
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 4 := by
+  have h := coupling_diff 3 (by omega) (by rw [test_a_3]; decide)
+  rw [test_a_3] at h
+  have hp : P 3 3 = 2 := by decide
+  rw [hp] at h
+  omega
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 6 := by
+  have h := coupling_diff 4 (by omega) (by rw [test_a_4]; decide)
+  rw [test_a_4] at h
+  have hp : P 4 4 = 2 := by decide
+  rw [hp] at h
+  omega
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ n : ℕ, 1 ≤ n → a (n + 1) = a n + 1 ∨ a (n + 1) = a n + 2 := by

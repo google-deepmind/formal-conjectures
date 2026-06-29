@@ -264,6 +264,21 @@ lemma R_n_not_composite (n : ℕ) (hn : 30 ≤ n) :
 
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 7 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 7 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 23 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_6 : a 6 = 17 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_7 : a 7 = 47 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ n : ℕ, 3 ≤ n → a n = 1 ∨ Nat.Prime (a n) := by

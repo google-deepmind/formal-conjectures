@@ -93,6 +93,21 @@ lemma int_add_floor (z : ℤ) (x : ℝ) : (Int.floor ((z : ℝ) + x) : ℝ) = (z
   simp_all
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 4 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 8 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 12 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 16 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 21 := by sorry
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) (hn : 1 ≤ n) : (1 / 4 : ℝ) < (n : ℝ) * r_sq - (a n : ℝ) ∧ (n : ℝ) * r_sq - (a n : ℝ) < 3 := by

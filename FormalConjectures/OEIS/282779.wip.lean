@@ -113,4 +113,20 @@ theorem target_theorem_0
   exact (if_neg ↑hn.ne')▸IsLeast.csInf_eq ⟨ (by(trivial)), fun and=>And.elim (@h_le_T _)⟩
   -- EVOLVE-BLOCK-END
 
+
+@[category test, AMS 11]
+lemma test_a_1 : A282779 1 = 1 := by exact target_theorem_0 3 1 (by decide) (by decide)
+
+@[category test, AMS 11]
+lemma test_a_2 : A282779 2 = 2 := by exact target_theorem_0 3 2 (by decide) (by decide)
+
+@[category test, AMS 11]
+lemma test_a_3 : A282779 3 = 3 := by exact target_theorem_0 3 3 (by decide) (by decide)
+
+@[category test, AMS 11]
+lemma test_a_4 : A282779 4 = 4 := by exact target_theorem_0 3 4 (by decide) (by decide)
+
+@[category test, AMS 11]
+lemma test_a_5 : A282779 5 = 5 := by exact target_theorem_0 3 5 (by decide) (by decide)
+
 end OeisA282779

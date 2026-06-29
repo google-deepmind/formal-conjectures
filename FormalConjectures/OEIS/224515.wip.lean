@@ -228,6 +228,21 @@ lemma exists_k_from_x (M S x : ℕ) (hS : S = 2 * M + 1) (hx_le : x ≤ S)
     omega
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_0 : A224515 0 = 0 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_1 : A224515 1 = 4 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_2 : A224515 2 = 3 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_3 : A224515 3 = 24 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_4 : A224515 4 = 23 := by sorry
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : ∃ k : ℕ, Nat.xor (k ^ 2) ((k + 1) ^ 2) = (2 * n + 1) ^ 2 := by

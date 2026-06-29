@@ -182,6 +182,21 @@ lemma sum_symm_zero (H k : ℕ) (hk : 0 < k) (hH : H = 10^k / 2) (i : ℕ) (hi :
 -- EVOLVE-BLOCK-END
 
 
+@[category test, AMS 11]
+lemma test_a_0 : A289411 0 = 0 := by native_decide
+
+@[category test, AMS 11]
+lemma test_a_1 : A289411 1 = 1 := by native_decide
+
+@[category test, AMS 11]
+lemma test_a_2 : A289411 2 = 0 := by native_decide
+
+@[category test, AMS 11]
+lemma test_a_3 : A289411 3 = 1 := by native_decide
+
+@[category test, AMS 11]
+lemma test_a_4 : A289411 4 = 0 := by native_decide
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (k : ℕ) (hk : 0 < k) :

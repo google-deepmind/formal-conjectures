@@ -294,6 +294,21 @@ lemma kth_prime_factor_eq_2 (k : ℕ) (n : ℤ) (hk : k ≥ 2) (hn : n ≠ 0) (h
 
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_0 : A382590 0 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_1 : A382590 1 = 2 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : A382590 2 = 3 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : A382590 3 = 5 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : A382590 4 = 8 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧ ∀ n : ℕ, n ≥ N₀ → kth_prime_factor k (A382590 (n + p)) = kth_prime_factor k (A382590 n) := by

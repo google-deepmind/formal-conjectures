@@ -608,6 +608,7 @@ lemma existence_intQ2_not_dvd (p : ℕ) (hp : Nat.Prime p) (hp2 : p % 2 = 1) (hp
     · exact (CharP.cast_eq_zero_iff _ _ _).not.2 (·.elim (by match. with|0|1=>use fun and=> (by match p with | S+15=>omega) | n+2=>use p.mul_add _ _▸by valid))
   · use absurd (hp.eq_one_or_self_of_dvd 5) (by valid)
 
+@[category test, AMS 11]
 lemma a_3_eq_11 : a 3 = 11 := by
   rw [←eq_comm, a]
   norm_num[continued_fraction_val]
@@ -747,6 +748,18 @@ lemma existence_part (p : ℕ) (hp : Nat.Prime p) (hp2 : p % 2 = 1) (hp3 : p ≠
     refine ⟨h_np.2, ?_⟩
     exact a_n_p_eq_p_of_ne_11 p hp hp2 hp3 hp5 hp11
 -- EVOLVE-BLOCK-END
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 4 := by delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 7 := by delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+
+@[category test, AMS 11]
+lemma test_a_6 : a 6 = 13 := by delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+
+@[category test, AMS 11]
+lemma test_a_7 : a 7 = 31 := by delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

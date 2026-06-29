@@ -49,6 +49,21 @@ def A278070 (n : ℕ) : ℕ :=
 -- You can put your definitions and lemmas here.
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_0 : A278070 0 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_1 : A278070 1 = 2 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : A278070 2 = 11 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : A278070 3 = 106 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : A278070 4 = 1457 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ (n k : ℕ), Nat.ModEq k (A278070 (n + k)) (A278070 n) := by

@@ -286,6 +286,21 @@ lemma a_gt_4 (n : ℕ) (hn : 5 ≤ n) : a (3 ^ n) < 10 ^ 3 ^ (n - 2) - 1 := by
   exact (h3).trans_lt (h4)
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 1 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 2 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 3 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 4 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_5 : a 5 = 5 := by sorry
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : 2 ≤ n → (a (3 ^ n) = 10 ^ (3 ^ (n - 2)) - 1 ↔ n = 2 ∨ n = 3 ∨ n = 4) := by

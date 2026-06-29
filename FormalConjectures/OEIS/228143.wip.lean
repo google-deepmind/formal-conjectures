@@ -374,6 +374,7 @@ def a_comp (n : ℕ) : ℕ :=
 
 lemma a_comp_val_1 : a_comp 1 = 48 := by decide
 
+@[category test, AMS 11]
 lemma a_val_1 : a 1 = 48 := by
   have h : a = a_comp := by
     unfold a a_comp A005259' A005259_comp
@@ -704,6 +705,26 @@ lemma exists_eighth_root_B :
   exact B_series_eq_1_plus_16_Y.symm
 
 -- EVOLVE-BLOCK-END
+
+@[category test, AMS 11]
+lemma test_a_0 : a 0 = 1 := by
+  have h : a = a_comp := by unfold a a_comp A005259' A005259_comp; rfl
+  rw [h]; native_decide
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 161856 := by
+  have h : a = a_comp := by unfold a a_comp A005259' A005259_comp; rfl
+  rw [h]; native_decide
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 39002646528 := by
+  have h : a = a_comp := by unfold a a_comp A005259' A005259_comp; rfl
+  rw [h]; native_decide
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 674708032182398976 := by
+  have h : a = a_comp := by unfold a a_comp A005259' A005259_comp; rfl
+  rw [h]; native_decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

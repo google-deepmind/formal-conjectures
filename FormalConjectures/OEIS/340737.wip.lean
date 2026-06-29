@@ -449,6 +449,21 @@ lemma tendsto_even_odd_pos {α : Type*} [TopologicalSpace α] {f : ℕ → α} {
 
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_1 : A340737 1 = 3 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_2 : A340737 2 = 5 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_3 : A340737 3 = 19 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_4 : A340737 4 = 49 := by sorry
+
+@[category test, AMS 11]
+lemma test_a_5 : A340737 5 = 193 := by sorry
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : Filter.Tendsto (fun n : ℕ => (A340737 n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by

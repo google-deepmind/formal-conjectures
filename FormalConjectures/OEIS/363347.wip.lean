@@ -806,6 +806,21 @@ lemma A363347_achieves_prime (p : ℕ) (hp : p.Prime) (hmod : p ≡ 1 [MOD 10] �
   exact A363347_eval (x - 1) p k hp hn_ge_3 hn_lt hk_eq hk_pos h_k_dvd h_p_not_dvd
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_3 : A363347 3 = 11 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+
+@[category test, AMS 11]
+lemma test_a_4 : A363347 4 = 5 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+
+@[category test, AMS 11]
+lemma test_a_5 : A363347 5 = 31 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+
+@[category test, AMS 11]
+lemma test_a_6 : A363347 6 = 11 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+
+@[category test, AMS 11]
+lemma test_a_7 : A363347 7 = 59 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   : ∀ p : ℕ, (p.Prime ∧ (p ≡ 1 [MOD 10] ∨ p ≡ 9 [MOD 10])) → ∃ n : ℕ, A363347 n = p := by

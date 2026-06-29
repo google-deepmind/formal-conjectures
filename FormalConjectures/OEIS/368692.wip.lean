@@ -139,6 +139,21 @@ lemma lem_div (n : ℕ) : 6 * (6 * n + 5) * (6 * n + 4) ∣ M n * (6 * n + 7) * 
     _ = 6 * (6 * n + 5) * (6 * n + 4) * m := by ring
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_0 : a 0 = 14 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 563108 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 54231252075 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 6700034035890000 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 928978310614152999200 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : 108 * ((4 * n + 2)! * (2 * n + 3)! * ((6 * n + 5)!) ^ 2) ∣ (12 * n + 6)! * (6 * n + 9)! := by

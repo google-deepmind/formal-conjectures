@@ -224,6 +224,21 @@ lemma target_nat (n : ℕ) (hn : n > 0) : (30 * n - 1) ∣ a n := by
   exact (Nat.dvd_div_of_mul_dvd (by rwa [mul_comm]))
 -- EVOLVE-BLOCK-END
 
+@[category test, AMS 11]
+lemma test_a_0 : a 0 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 77636318760 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 53837289804317953893960 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 43880754270176401422739454033276880 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 38113558705192522309151157825210540422513019720 := by rfl
+
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (n : ℕ) : (30 * (n : ℤ) - 1) ∣ (a n : ℤ) := by

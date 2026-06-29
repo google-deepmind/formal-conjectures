@@ -104,6 +104,7 @@ lemma a_rat_sum_bound (j k : ℕ) (hj : 2 ≤ j) (hjk : j ≤ k) :
   · exact (and.comp (Nat.Coprime.dvd_mul_right (by norm_num[two_mul,k.add_sub_cancel])).1 ∘dvd_of_mul_left_eq _)
   · rcases and.comp (Nat.Coprime.dvd_mul_right (by·norm_num [j.add_sub_cancel, two_mul])).1 (and'▸dvd_mul_left _ _)
 
+@[category test, AMS 11]
 lemma a_two : a 2 = 2 := by rfl
 
 lemma a_rat_two : a_rat 2 = 1 / 2 := by
@@ -237,6 +238,18 @@ lemma oeis_108_cases (j k : ℕ) (h : oeis_108_index_cond j k) :
   classical valid
 
 -- EVOLVE-BLOCK-END
+
+@[category test, AMS 11]
+lemma test_a_0 : a 0 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 1 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 5 := by rfl
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 14 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
