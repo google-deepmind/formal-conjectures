@@ -18,7 +18,7 @@ module
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.NNRat.Floor
 public import Mathlib.Combinatorics.Enumerative.DoubleCounting
-public import Mathlib.Combinatorics.SimpleGraph.Coloring
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.VertexColoring
 public import Mathlib.Data.Set.Card
 
 @[expose] public section

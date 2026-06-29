@@ -18,6 +18,7 @@ module
 public import Mathlib.Algebra.Order.Ring.Nat
 public import Mathlib.Algebra.Order.Star.Basic
 public import Mathlib.Data.Nat.PrimeFin
+public meta import Mathlib.Data.Nat.PrimeFin
 
 @[expose] public section
 

@@ -147,7 +147,6 @@ theorem f_undefined_at_3 : f 5 = 0 := by
           · intros; positivity
         rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_succ,
           Finset.sum_range_one, hg0] at hsub
-        rw [Nat.Iio_eq_range] at hsum
-        omega
+        lia
 
 end Erdos1054
