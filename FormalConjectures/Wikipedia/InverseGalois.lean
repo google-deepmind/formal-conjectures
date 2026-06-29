@@ -24,8 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 namespace InverseGalois
 
-structure GaloisRealization (K G : Type*) [Field K] [Group G] where
-  L : Type*
+structure GaloisRealization.{u, v} (K : Type u) (G : Type v) [Field K] [Group G] where
+  L : Type (max u v)
   to_field : Field L
   to_algebra : Algebra K L
   to_isGalois : IsGalois K L

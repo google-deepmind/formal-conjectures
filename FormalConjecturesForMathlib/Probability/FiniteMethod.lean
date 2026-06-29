@@ -64,7 +64,7 @@ theorem Finset.exists_eq_zero_of_sum_lt_card
     {α : Type*} {s : Finset α} {f : α → ℕ} (h : ∑ x ∈ s, f x < s.card) :
     ∃ a ∈ s, f a = 0 := by
   by_contra hne
-  push_neg at hne
+  push Not at hne
   have hge : ∀ a ∈ s, 1 ≤ f a :=
     fun a ha => Nat.one_le_iff_ne_zero.mpr (hne a ha)
   have hbound : s.card ≤ ∑ x ∈ s, f x := by
