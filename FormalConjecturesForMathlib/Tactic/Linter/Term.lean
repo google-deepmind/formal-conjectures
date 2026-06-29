@@ -16,9 +16,10 @@ limitations under the License.
 
 module
 
-public import Lean.Meta.Basic
-public import Lean.Elab.Command
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
+public import Lean.Elab.Command
+public import Lean.Linter.Basic
+public import Lean.Meta.Basic
 public import Lean.Server.InfoUtils
 
 open Lean Meta Elab Command

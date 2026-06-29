@@ -60,7 +60,7 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
     rintro a ha b hb h
     rw [tsub_left_inj (hS a ha.1).le (hS b hb.1).le] at h
     simpa using h
-  refine ((h.diff (Set.finite_singleton 2)).image (this.mono Set.diff_subset)).mono ?_
+  refine ((h.sdiff (Set.finite_singleton 2)).image (this.mono Set.sdiff_subset)).mono ?_
   simp only [Set.image_subset_iff, Set.preimage_setOf_eq, S]
   rintro p ⟨⟨hp, hp'⟩, hp''⟩
   simp only [Set.mem_singleton_iff] at hp''

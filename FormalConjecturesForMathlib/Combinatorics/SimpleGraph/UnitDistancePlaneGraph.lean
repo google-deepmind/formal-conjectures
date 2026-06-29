@@ -29,9 +29,7 @@ open Classical Finset List
 A graph where the vertices V are a collection of points in ℝ² and there is
 an edge between two points if and only if the distance between them is 1. -/
 def UnitDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph V where
-  Adj x y := Dist.dist x y = 1
-  symm x y := by simp [PseudoMetricSpace.dist_comm]
-
-
+  Adj x y := dist x y = 1
+  symm.symm x y := by simp [dist_comm]
 
 end SimpleGraph
