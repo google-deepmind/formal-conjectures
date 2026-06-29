@@ -34,7 +34,7 @@ def Erdos9A : Set ℕ := { n | Odd n ∧ ¬ ∃ (p k l : ℕ), (Nat.Prime p) ∧
 theorem erdos9A_contains_one : 1 ∈ Erdos9A := by
   constructor
   · decide
-  · push_neg
+  · push Not
     intro p k l hp
     linarith [Nat.Prime.two_le hp, @Nat.one_le_two_pow k, @Nat.one_le_two_pow l]
 
@@ -42,7 +42,7 @@ theorem erdos9A_contains_one : 1 ∈ Erdos9A := by
 theorem erdos9A_contains_three : 3 ∈ Erdos9A := by
   constructor
   · decide
-  · push_neg
+  · push Not
     intro p k l hp
     linarith [Nat.Prime.two_le hp, @Nat.one_le_two_pow k, @Nat.one_le_two_pow l]
 
