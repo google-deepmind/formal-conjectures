@@ -18,7 +18,7 @@ module
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.NNRat.Floor
 public import Mathlib.Combinatorics.Enumerative.DoubleCounting
-public import Mathlib.Combinatorics.SimpleGraph.Coloring.VertexColoring
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import Mathlib.Data.Set.Card
 
 @[expose] public section
@@ -47,7 +47,8 @@ lemma card_div_indepNum_le_chromaticNumber : ⌈(Nat.card V / α(G) : ℚ≥0)�
   refine Finset.card_mul_le_card_mul (c · = ·)
     (by simp [Finset.bipartiteAbove, Finset.filter_nonempty_iff])
     fun b _ ↦ IsIndepSet.card_le_indepNum ?_
-  simpa [IsIndepSet, Set.Pairwise] using fun x hx y hy _ ↦ c.not_adj_of_mem_colorClass hx hy
+  simpa [IsIndepSet, Set.Pairwise, Coloring.colorClass] using
+    fun x hx y hy _ ↦ c.not_adj_of_mem_colorClass hx hy
 
 instance (f : ι → V) : Std.Symm fun i j ↦ G.Adj (f i) (f j) where symm _ _ := .symm
 

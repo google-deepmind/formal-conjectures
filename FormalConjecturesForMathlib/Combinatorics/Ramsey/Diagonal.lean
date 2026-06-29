@@ -15,12 +15,9 @@ limitations under the License.
 -/
 module
 
-
-public import Mathlib.Data.Nat.Choose.Sum
-public import Mathlib.Data.Nat.Lattice
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
-
-@[expose] public section
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Order.Lattice.Nat
 
 /-!
 # Erdős–Szekeres 1935 upper bound for the diagonal Ramsey number
@@ -40,6 +37,8 @@ is introduced.
 **Reference:** [ES35] Erdős, P. and Szekeres, G. (1935). "A combinatorial problem in
 geometry." *Compositio Math.* **2**, pp. 463–470.
 -/
+
+@[expose] public section
 
 namespace Combinatorics
 namespace Diagonal
