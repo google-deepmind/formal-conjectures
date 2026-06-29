@@ -41,9 +41,6 @@ register_option linter.style.conditional_formal_proof : Bool := {
   descr := "enable the `conditional formal_proof` style linter"
 }
 
--- FIXME: False positive
-set_option linter.style.docString.empty false
-
 namespace FormalProofLinter
 
 /-- Whether `declName` has a proof term with no `sorry` in it, waiting on the
