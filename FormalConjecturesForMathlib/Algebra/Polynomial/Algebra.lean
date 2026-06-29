@@ -31,7 +31,7 @@ variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
 namespace Polynomial
 
 instance instAlgebraPi : Algebra R[X] (S → S) :=
-  (Pi.ringHom fun s ↦ (Polynomial.aeval s).toRingHom).toAlgebra
+  (RingHom.pi fun s ↦ (Polynomial.aeval s).toRingHom).toAlgebra
 
 @[simp]
 lemma algebraMap_algebraPi (p : R[X]) (s : S) : algebraMap R[X] (S → S) p s = aeval s p := rfl

@@ -49,7 +49,7 @@ open WeierstrassCurve
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank. -/
 @[category research solved, AMS 11 14]
-instance mordell_weil {K} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) [E.IsElliptic] :
+theorem mordell_weil {K} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) [E.IsElliptic] :
     Module.Finite ℤ E.Point := by
   sorry
 
