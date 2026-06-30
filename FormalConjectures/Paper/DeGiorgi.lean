@@ -27,6 +27,9 @@ The main theorems are:
 - `DeGiorgi_le_eight`: the conjecture holds in dimension $n ≤ 8$.
 - `DeGiorgi_ge_nine`: the conclusion of the conjecture does not hold if $n ≥ 9$.
 
+The cases $1 ≤ n ≤ 8$ are also listed individually to enable partial solutions.
+The cases $1 ≤ n ≤ 3$ are solved, while $4 ≤ n ≤ 8$ remains open.
+
 ## Existing results
 - The case $n = 1$ is elementary.
 - The case $n = 2$ was proven by Ghoussoub and Gui.
@@ -93,6 +96,62 @@ In dimension $n ≥ 9$, the conclusion of De Giorgi's conjecture does not hold.
 -/
 @[category research solved, AMS 35]
 theorem DeGiorgi_ge_nine (hn : n ≥ 9) : ¬(DeGiorgi_conclusion n) := by
+  sorry
+
+/--
+De Giorgi's conjecture trivially holds in dimension $n = 1$.
+-/
+@[category research solved, AMS 35]
+theorem DeGiorgi_one : (DeGiorgi_conclusion 1) := by
+  sorry
+
+/--
+De Giorgi's conjecture holds in dimension $n = 2$.
+-/
+@[category research solved, AMS 35]
+theorem DeGiorgi_two : (DeGiorgi_conclusion 2) := by
+  sorry
+
+/--
+De Giorgi's conjecture holds in dimension $n = 3$.
+-/
+@[category research solved, AMS 35]
+theorem DeGiorgi_three : (DeGiorgi_conclusion 3) := by
+  sorry
+
+/--
+De Giorgi's conjecture holds in dimension $n = 4$.
+-/
+@[category research open, AMS 35]
+theorem DeGiorgi_four : (DeGiorgi_conclusion 4) := by
+  sorry
+
+/--
+De Giorgi's conjecture holds in dimension $n = 5$.
+-/
+@[category research open, AMS 35]
+theorem DeGiorgi_five : (DeGiorgi_conclusion 5) := by
+  sorry
+
+/--
+De Giorgi's conjecture holds in dimension $n = 6$.
+-/
+@[category research open, AMS 35]
+theorem DeGiorgi_six : (DeGiorgi_conclusion 6) := by
+  sorry
+
+/--
+De Giorgi's conjecture holds in dimension $n = 7$.
+-/
+@[category research open, AMS 35]
+theorem DeGiorgi_seven : (DeGiorgi_conclusion 7) := by
+  sorry
+
+/--
+De Giorgi's conjecture holds in dimension $n = 8$.
+-/
+@[category research open, AMS 35]
+theorem DeGiorgi_eight : (DeGiorgi_conclusion 8) := by
   sorry
 
 end DeGiorgi
