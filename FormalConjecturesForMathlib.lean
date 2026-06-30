@@ -38,6 +38,7 @@ public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
+public import FormalConjecturesForMathlib.Combinatorics.Additive.Coset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.DifferenceBasis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
@@ -45,6 +46,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
+public import FormalConjecturesForMathlib.Combinatorics.Ramsey.Diagonal
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.Sunflower
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.SetTheory.PartitionRelation
@@ -70,7 +72,6 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.PathCover
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
-public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.Definitions
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LargestInducedTree
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
@@ -78,6 +79,10 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Johnson
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.UnitDistancePlaneGraph
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.DFA
 public import FormalConjecturesForMathlib.Computability.Encoding
@@ -86,6 +91,7 @@ public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
 public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
+public import FormalConjecturesForMathlib.Data.Int.IntermediateValue
 public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Full
 public import FormalConjecturesForMathlib.Data.Nat.Init
@@ -100,6 +106,7 @@ public import FormalConjecturesForMathlib.Data.Real.NearestInt
 public import FormalConjecturesForMathlib.Data.Set.Density
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
+public import FormalConjecturesForMathlib.Data.ZMod.Fp
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
@@ -113,6 +120,7 @@ public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 public import FormalConjecturesForMathlib.NumberTheory.Amicable
 public import FormalConjecturesForMathlib.NumberTheory.BeurlingPrimes
+public import FormalConjecturesForMathlib.NumberTheory.Carmichael
 public import FormalConjecturesForMathlib.NumberTheory.CoveringSystem
 public import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 public import FormalConjecturesForMathlib.NumberTheory.Divisors

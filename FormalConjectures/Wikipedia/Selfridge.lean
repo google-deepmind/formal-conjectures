@@ -139,7 +139,15 @@ A sufficient condition for this conjecture to hold is that there exists a Fermat
 @[category research solved, AMS 11]
 theorem selfridge_seq_conjecture.variants.sufficient_condition (n : ℕ) (hn : Prime n.fermatNumber)
     (hn' : n ≥ 5) : type_of% selfridge_seq_conjecture := by
-  sorry
+  intro hmono
+  have hp : (n.fermatNumber).Prime := hn.nat_prime
+  have h1 : fermatFactors n = 1 := by
+    unfold fermatFactors
+    rw [hp.primeFactors, Finset.card_singleton]
+  have h5 : fermatFactors 5 = 2 := by native_decide
+  have hle := hmono hn'
+  rw [h1, h5] at hle
+  omega
 
 end FermatNumbers
 

@@ -76,6 +76,79 @@ theorem f_undefined_at_2 : f 2 = 0 := by
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=5$, i.e. we get the junk value $0$. -/
 @[category textbook, AMS 11]
 theorem f_undefined_at_3 : f 5 = 0 := by
-  sorry
+  rw [f, dif_neg]
+  rintro ⟨m, k, hk, hsum⟩
+  rcases eq_or_ne m 0 with rfl | hm
+  · simp at hsum
+  · set p : ℕ → Prop := fun x => x ∈ m.divisors with hpdef
+    have hfin : (setOf p).Finite := Set.finite_mem_finset m.divisors
+    have hg0 : Nat.nth p 0 = 1 := Nat.nth_divisors_zero hm
+    -- The `j`-th smallest divisor is at least `j + 1` (for `j` below the number of divisors).
+    have hlb : ∀ j, j < hfin.toFinset.card → j + 1 ≤ Nat.nth p j := by
+      intro j
+      induction j with
+      | zero => intro _; omega
+      | succ n ih =>
+        intro hj
+        have h1 := Nat.nth_lt_nth_of_lt_card hfin (show n < n + 1 by omega)
+          (show n + 1 < hfin.toFinset.card by omega)
+        have h2 := ih (by omega)
+        omega
+    -- The second smallest divisor of `m` is never `4`: if `4 ∣ m` then `2 ∣ m`, so `2` would be
+    -- the second smallest divisor.
+    have refute4 : Nat.nth p 1 ≠ 4 := by
+      intro h
+      have hne : Nat.nth p 1 ≠ 0 := by rw [h]; norm_num
+      have hcard1 : 1 < hfin.toFinset.card := by
+        by_contra hcon
+        push_neg at hcon
+        exact hne (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
+      have hmem : p (Nat.nth p 1) := Nat.nth_mem_of_lt_card hfin hcard1
+      rw [h] at hmem
+      have h4 : (4 : ℕ) ∣ m := (Nat.mem_divisors.mp hmem).1
+      have h2d : (2 : ℕ) ∣ m := dvd_trans (by norm_num) h4
+      have h2mem : p 2 := by simp [hpdef, Nat.mem_divisors, h2d, hm]
+      have hcount : Nat.count p 2 = 1 := by
+        simp [hpdef, Nat.count_succ, Nat.count_zero, Nat.mem_divisors, hm]
+      have hnc := Nat.nth_count (p := p) h2mem
+      rw [hcount, h] at hnc
+      norm_num at hnc
+    rcases lt_or_ge k 3 with hk3 | hk3
+    · -- `k = 1` or `k = 2`.
+      interval_cases k
+      · rw [Nat.Iio_eq_range, Finset.sum_range_one, hg0] at hsum
+        omega
+      · rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_one, hg0] at hsum
+        exact refute4 (by omega)
+    · -- `k ≥ 3`.
+      rcases eq_or_ne (Nat.nth p 2) 0 with hg2 | hg2
+      · -- At most two divisors are involved, so the sum equals `1 + Nat.nth p 1`.
+        have hz : ∀ i, 2 ≤ i → Nat.nth p i = 0 := by
+          rcases Nat.nth_eq_zero.mp hg2 with ⟨hp0', _⟩ | ⟨hf, hcle⟩
+          · exact absurd hp0' (by simp [hpdef, Nat.mem_divisors])
+          · intro i hi
+            refine Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, ?_⟩)
+            have heq : hf.toFinset.card = hfin.toFinset.card := by congr 1
+            omega
+        rw [← Finset.sum_subset (s₁ := Finset.Iio 2) (s₂ := Finset.Iio k)] at hsum
+        · rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_one, hg0] at hsum
+          exact refute4 (by omega)
+        · intro x hx; simp only [Finset.mem_Iio] at *; omega
+        · intro x hx hx2; simp only [Finset.mem_Iio] at *; exact hz x (by omega)
+      · -- Three distinct divisors `1 < d₁ < d₂` force the sum to be at least `6`.
+        have hc3 : 2 < hfin.toFinset.card := by
+          by_contra hcon
+          push_neg at hcon
+          exact hg2 (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
+        have hg1 := hlb 1 (by omega)
+        have hg2' := hlb 2 (by omega)
+        have hsub : ∑ i ∈ Finset.Iio 3, Nat.nth p i ≤ ∑ i ∈ Finset.Iio k, Nat.nth p i := by
+          apply Finset.sum_le_sum_of_subset_of_nonneg
+          · intro x hx; simp only [Finset.mem_Iio] at *; omega
+          · intros; positivity
+        rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_succ,
+          Finset.sum_range_one, hg0] at hsub
+        rw [Nat.Iio_eq_range] at hsum
+        omega
 
 end Erdos1054
