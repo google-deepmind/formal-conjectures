@@ -53,7 +53,7 @@ namespace DeGiorgi
 variable {n : ℕ} [NeZero n]
 
 /--
-The function $u : ℝⁿ → ℝ$ is a bounded classical solution to $Δ u + u - u^3 = 0$.
+The function $u : ℝ^n → ℝ$ is a bounded classical solution to $Δ u + u - u^3 = 0$.
 -/
 structure IsBoundedSolution (u : ℝ^n → ℝ) : Prop where
   regular : ContDiff ℝ 2 u
@@ -61,13 +61,13 @@ structure IsBoundedSolution (u : ℝ^n → ℝ) : Prop where
   solution : ∀ x, (Δ u x) + u x - (u x) ^ 3 = 0
 
 /--
-The first partial derivative of $u : ℝⁿ → ℝ$ is strictly positive.
+The first partial derivative of $u : ℝ^n → ℝ$ is strictly positive.
 -/
 def HasPositiveDeriv (u : ℝ^n → ℝ) : Prop :=
   ∀ x, lineDeriv ℝ u x (EuclideanSpace.single 0 1) > 0
 
 /--
-The level sets of $u : ℝⁿ → ℝ$ are hyperplanes. This is expressed by stating that there exists
+The level sets of $u : ℝ^n → ℝ$ are hyperplanes. This is expressed by stating that there exists
 some affine subspace with rank $n - 1$ which coincides with the level set.
 -/
 def HasHyperplaneLevelSets (u : ℝ^n → ℝ) : Prop :=
@@ -75,7 +75,7 @@ def HasHyperplaneLevelSets (u : ℝ^n → ℝ) : Prop :=
     u⁻¹' {y} = S ∧ Module.finrank ℝ S.direction = n - 1
 
 /--
-The conclusion to De Giorgi's conjecture: if $u : ℝⁿ → ℝ$ is a bounded classical solution to
+The conclusion to De Giorgi's conjecture: if $u : ℝ^n → ℝ$ is a bounded classical solution to
 $Δ u + u - u^3 = 0$ satisfying $∂₁u > 0$ everywhere, then the level sets of $u$ are hyperplanes.
 -/
 def DeGiorgi_conclusion (n : ℕ) [NeZero n] : Prop :=
