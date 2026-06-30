@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
     of real numbers close to 1." Mathematische Zeitschrift 271.3 (2012): 627-637.
 -/
 
-namespace Bugeaud
+namespace Bugeaud07
 
 /--
 Problem 10.7. Let $\varepsilon$ be a positive real number. Are there arbitrarily
