@@ -48,9 +48,8 @@ namespace Diagonal
 
 This specialises `Nat.choose_middle_le_pow : (2n+1).choose n ≤ 4^n` by observing that
 `(2n).choose n ≤ (2n+1).choose n` via the monotonicity lemma `Nat.choose_le_succ`. -/
-lemma central_binomial_le_four_pow (n : ℕ) : (2 * n).choose n ≤ 4 ^ n := by
-  have h₁ : (2 * n).choose n ≤ (2 * n + 1).choose n := Nat.choose_le_succ (2 * n) n
-  exact h₁.trans (Nat.choose_middle_le_pow n)
+lemma central_binomial_le_four_pow (n : ℕ) : (2 * n).choose n ≤ 4 ^ n :=
+  (Nat.choose_le_succ (2 * n) n).trans (Nat.choose_middle_le_pow n)
 
 /-! ## Off-diagonal Ramsey via a subset-indexed predicate
 
@@ -146,12 +145,13 @@ lemma card_false_true_split {m : ℕ} (c : Finset (Fin m) → Bool) (V : Finset 
   rw [hrw] at hsplit
   rw [hsplit, Finset.card_erase_of_mem hv]
 
-/-- Extending a `false`-monochromatic clique `S` by a vertex `v` that is `false`-adjacent
-to every element of `S`. -/
-private lemma mono_false_insert {m : ℕ} {c : Finset (Fin m) → Bool}
-    {S : Finset (Fin m)} (hSmono : ∀ e ⊆ S, e.card = 2 → c e = false)
-    {v : Fin m} (hvAdj : ∀ u ∈ S, c {v, u} = false) :
-    ∀ e ⊆ insert v S, e.card = 2 → c e = false := by
+/-- Extending a `b`-monochromatic clique `S` by a vertex `v` that is `b`-adjacent to every
+element of `S`. Parameterised over the colour `b : Bool`, this covers both the `false` and
+`true` extension steps used in `HasRamseyProperty.step`. -/
+private lemma mono_insert {m : ℕ} {c : Finset (Fin m) → Bool} {b : Bool}
+    {S : Finset (Fin m)} (hSmono : ∀ e ⊆ S, e.card = 2 → c e = b)
+    {v : Fin m} (hvAdj : ∀ u ∈ S, c {v, u} = b) :
+    ∀ e ⊆ insert v S, e.card = 2 → c e = b := by
   classical
   intro e he hecard
   obtain ⟨x, y, hxy, rfl⟩ := Finset.card_eq_two.mp hecard
@@ -169,33 +169,6 @@ private lemma mono_false_insert {m : ℕ} {c : Finset (Fin m) → Bool}
       rw [hy_eq, Finset.pair_comm]; exact hvAdj x hxS
     · -- {x, y} ⊆ S.
       have hsub : ({x, y} : Finset (Fin m)) ⊆ S := by
-        intro z hz
-        rcases Finset.mem_insert.mp hz with hz_eq | hz'
-        · rw [hz_eq]; exact hxS
-        · rw [Finset.mem_singleton.mp hz']; exact hyS
-      have hcard2 : ({x, y} : Finset (Fin m)).card = 2 := by
-        rw [Finset.card_insert_of_notMem (by simpa using hxy), Finset.card_singleton]
-      exact hSmono _ hsub hcard2
-
-/-- Extending a `true`-monochromatic clique `S` by a vertex `v` that is `true`-adjacent
-to every element of `S`. -/
-private lemma mono_true_insert {m : ℕ} {c : Finset (Fin m) → Bool}
-    {S : Finset (Fin m)} (hSmono : ∀ e ⊆ S, e.card = 2 → c e = true)
-    {v : Fin m} (hvAdj : ∀ u ∈ S, c {v, u} = true) :
-    ∀ e ⊆ insert v S, e.card = 2 → c e = true := by
-  classical
-  intro e he hecard
-  obtain ⟨x, y, hxy, rfl⟩ := Finset.card_eq_two.mp hecard
-  have hx : x ∈ insert v S := he (Finset.mem_insert_self _ _)
-  have hy : y ∈ insert v S :=
-    he (Finset.mem_insert_of_mem (Finset.mem_singleton.mpr rfl))
-  rcases Finset.mem_insert.mp hx with hx_eq | hxS
-  · rcases Finset.mem_insert.mp hy with hy_eq | hyS
-    · exact (hxy (hx_eq.trans hy_eq.symm)).elim
-    · rw [hx_eq]; exact hvAdj y hyS
-  · rcases Finset.mem_insert.mp hy with hy_eq | hyS
-    · rw [hy_eq, Finset.pair_comm]; exact hvAdj x hxS
-    · have hsub : ({x, y} : Finset (Fin m)) ⊆ S := by
         intro z hz
         rcases Finset.mem_insert.mp hz with hz_eq | hz'
         · rw [hz_eq]; exact hxS
@@ -245,7 +218,7 @@ lemma HasRamseyProperty.step {Ns Nt s t : ℕ}
         · exact hv
         · exact hRsubV (hSsub hu')
       · rw [Finset.card_insert_of_notMem hvS, hScard]
-      · apply mono_false_insert hSmono
+      · apply mono_insert hSmono
         intro u hu
         have hu' : u ∈ R := hSsub hu
         exact (Finset.mem_filter.mp hu').2
@@ -267,7 +240,7 @@ lemma HasRamseyProperty.step {Ns Nt s t : ℕ}
         · exact hv
         · exact hBsubV (hSsub hu')
       · rw [Finset.card_insert_of_notMem hvS, hScard]
-      · apply mono_true_insert hSmono
+      · apply mono_insert hSmono
         intro u hu
         have hu' : u ∈ B := hSsub hu
         exact (Finset.mem_filter.mp hu').2
