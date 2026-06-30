@@ -40,4 +40,4 @@ theorem problem_10_7 : answer(sorry) ↔
       ∃ c : ℝ, ∀ n : ℕ, 1 ≤ n → Int.fract (α ^ n) ∈ Set.Icc c (c + ε / α) := by
   sorry
 
-end Bugeaud
+end Bugeaud07
