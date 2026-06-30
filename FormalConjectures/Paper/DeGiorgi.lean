@@ -85,12 +85,14 @@ def DeGiorgi_conclusion (n : ℕ) [NeZero n] : Prop :=
 De Giorgi's conjecture holds in dimension $n ≤ 8$.
 -/
 @[category research open, AMS 35]
-theorem DeGiorgi_le_eight (hn : n ≤ 8) : (DeGiorgi_conclusion n) := sorry
+theorem DeGiorgi_le_eight (hn : n ≤ 8) : (DeGiorgi_conclusion n) := by
+  sorry
 
 /--
 In dimension $n ≥ 9$, the conclusion of De Giorgi's conjecture does not hold.
 -/
 @[category research solved, AMS 35]
-theorem DeGiorgi_ge_nine (hn : n ≥ 9) : ¬(DeGiorgi_conclusion n) := sorry
+theorem DeGiorgi_ge_nine (hn : n ≥ 9) : ¬(DeGiorgi_conclusion n) := by
+  sorry
 
 end DeGiorgi
