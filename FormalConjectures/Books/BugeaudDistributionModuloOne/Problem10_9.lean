@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjectures.Wikipedia.Mahler32
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Mahler's Z-numbers
 
@@ -33,20 +34,26 @@ See also FormalConjectures/Wikipedia/Mahler32.lean.
 namespace Bugeaud09
 
 /--
-A *Z-number* is a positive real number $\xi$ such that the fractional part of
-$\xi (3/2)^n$ lies in $[0, 1/2)$ for every positive integer $n$.
--/
-def IsZNumber (ξ : ℝ) : Prop :=
-  0 < ξ ∧ ∀ n : ℕ, 1 ≤ n → Int.fract (ξ * (3 / 2 : ℝ) ^ n) < 1 / 2
-
-/--
 Problem 10.9. There are no real numbers $\xi$ such that
 $0 \le \{\xi (3/2)^n\} < 1/2$ for every positive integer $n$,
 i.e. no Z-number exists. Posed by Mahler [Mah68].
 -/
 @[category research open, AMS 11]
-theorem problem_10_9 : ¬ ∃ ξ : ℝ, IsZNumber ξ := by
+theorem problem_10_9 : type_of% Mahler32.mahler_conjecture := by
   sorry
+
+/--
+Sanity check: `1` is not a Z-number, since for `n = 1` we have
+$\{1 \cdot (3/2)^1\} = \{3/2\} = 1/2 \not< 1/2$.
+-/
+@[category test, AMS 11]
+theorem not_isZNumber_one : ¬ IsZNumber 1 := by
+  rintro ⟨-, h⟩
+  have h1 := h 1 le_rfl
+  rw [pow_one, one_mul] at h1
+  have hfr : Int.fract (3 / 2 : ℝ) = 1 / 2 := by rw [Int.fract]; norm_num [Int.floor_eq_iff]
+  rw [hfr] at h1
+  exact lt_irrefl _ h1
 
 /--
 Mahler [Mah68] proved that the set of Z-numbers has Lebesgue measure zero.
