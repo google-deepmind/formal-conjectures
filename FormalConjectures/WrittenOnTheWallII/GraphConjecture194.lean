@@ -40,7 +40,7 @@ A Hamiltonian path is a walk visiting every vertex exactly once.
 -/
 @[category research open, AMS 5]
 theorem conjecture194 (G : SimpleGraph α) (h : G.Connected)
-    (hα : (G.indepNum : ℝ) ≤ 1 + l G) :
+    (hα : (G.indepNum : ℝ) ≤ 1 + averageIndepNeighbors G) :
     ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by
   sorry
 
@@ -48,8 +48,7 @@ theorem conjecture194 (G : SimpleGraph α) (h : G.Connected)
 
 /-- The average indep-neighbors invariant `l G` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ l G := by
-  unfold l averageIndepNeighbors
+example (G : SimpleGraph (Fin 3)) : 0 ≤ averageIndepNeighbors G := by
   apply div_nonneg
   · apply Finset.sum_nonneg
     intro v _
@@ -58,6 +57,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ l G := by
 
 /-- The edgeless graph on 2 vertices has 2 vertices. -/
 @[category test, AMS 5]
-example : n (⊥ : SimpleGraph (Fin 2)) = 2 := by simp [n]
+example : Fintype.card (Fin 2) = 2 := by decide
 
 end WrittenOnTheWallII.GraphConjecture194

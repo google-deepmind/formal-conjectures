@@ -16,8 +16,6 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open TopologicalSpace Metric MulAction
-
 /-!
 # Banach-Mazur Rotation Problem
 
@@ -27,7 +25,7 @@ open TopologicalSpace Metric MulAction
 - [mathoverflow/41211](https://mathoverflow.net/questions/41211/easy-proof-of-the-fact-that-isotropic-spaces-are-euclidean)
   **Easy proof of the fact that isotropic spaces are Euclidean**
 -/
-
+open TopologicalSpace Metric MulAction
 namespace Arxiv.«math.0110202»
 
 /-- The group of linear isometric equivalences acts on the unit sphere by evaluation. -/

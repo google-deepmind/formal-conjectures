@@ -44,7 +44,7 @@ noncomputable def f (d n : ℕ) : ℕ :=
 -- TODO: Add erdos_1084.
 
 /-- It is easy to check that $f_1(n) = n - 1$. -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using formal_conjectures at "https://github.com/Sanexxxx777/formal-conjectures/blob/9e4f3845be122a8fa3190d38543ebdd0a6f25605/FormalConjectures/ErdosProblems/1084.lean#L232"]
 theorem erdos_1084.variants.upper_d1 : f 1 n = n - 1 := by
   sorry
 

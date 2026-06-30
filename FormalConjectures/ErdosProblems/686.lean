@@ -97,7 +97,10 @@ for some $k≥2$ and $m≥n+k$?
 theorem erdos_686.variants.nine :
     answer(True) ↔ ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (9 : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
-  sorry
+  -- Witness: k = 3, n = 11, m = 25, since (26·27·28)/(12·13·14) = 19656/2184 = 9.
+  simp only [true_iff]
+  refine ⟨3, by norm_num, 11, 25, by norm_num, ?_⟩
+  norm_num [Finset.prod_Icc_succ_top, Finset.Icc_self, Finset.prod_singleton]
 
 /--
 Can $25$ be written as

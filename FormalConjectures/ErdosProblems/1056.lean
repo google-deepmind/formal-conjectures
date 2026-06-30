@@ -16,14 +16,12 @@ limitations under the License.
 
 import FormalConjectures.Util.ProblemImports
 
-open Nat
-
 /-!
 # Erdős Problem 1056
 
 *Reference:* [erdosproblems.com/1056](https://www.erdosproblems.com/1056)
 -/
-
+open Nat
 namespace Erdos1056
 
 /--

@@ -2,10 +2,11 @@
 # by commenting on the PR or issue.
 #
 # To remove a label: comment with "-labelname" (e.g., "-awaiting-author")
-# To add a label: comment with "labelname" (e.g., "awaiting-author")
+# To add a label: comment with "+labelname" (e.g., "+awaiting-author")
+# For compatibility, adding with "labelname" also works.
 #
 # The script reacts to lines in the comment whose entire content is, up to whitespace,
-# the label name, optionally preceded by `-`.
+# the label name, optionally preceded by `+` or `-`.
 # For each label, the bot follows the instruction of the *last* line that matches the label.
 
 name: Manage Labels from Comments
@@ -46,7 +47,7 @@ jobs:
           label="${labelArray[$i]}"
           printf $'\nProcessing label \'%s\'\n' "${label}"
           # extract the last line that, up to leading/trailing whitespace, matches the current label
-          inComment="$(printf '%s' "${COMMENT}" | grep "[-]\?${label}$" | tail -1)"
+          inComment="$(printf '%s' "${COMMENT}" | grep -E "^[+-]?${label}$" | tail -1)"
           if [ -n "${inComment}" ]
           then
             printf $'Found \'%s\'\n' "${inComment}"

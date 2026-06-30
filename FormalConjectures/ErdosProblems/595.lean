@@ -76,7 +76,6 @@ theorem erdos_595.variants.folkman_finite : answer(True) ↔
     ∃ (V : Type*) (_ : Fintype V) (G : SimpleGraph V),
       G.CliqueFree 4 ∧
       ∀ (H : Fin n → SimpleGraph V), (∀ i, (H i).CliqueFree 3) → G ≠ ⨆ i, H i := by
-  simp only [true_iff]
   -- Folkman [Fo70] and Nešetřil–Rödl [NeRo75]: explicit construction exists.
   sorry
 

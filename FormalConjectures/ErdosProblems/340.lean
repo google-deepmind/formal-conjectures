@@ -27,17 +27,6 @@ open scoped Real Pointwise
 
 namespace Erdos340
 
-/-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
-such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
-the lower bound is required to avoid `0` being a contender in some cases. -/
-private def greedySidon.go (A : Finset ℕ) (hA : IsSidon (A : Set ℕ)) (m : ℕ) :
-    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ)} :=
-  if h : A.Nonempty then
-    haveI : ∃ m', m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ) := by
-      simpa [and_assoc] using hA.exists_insert_ge h m
-    ⟨Nat.find this, Nat.find_spec this⟩
-  else ⟨m, by simp_all [IsSidon]⟩
-
 @[category test, AMS 5]
 theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
   decide +native
@@ -45,25 +34,6 @@ theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2
 @[category test, AMS 5]
 theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
   decide +native
-
-/-- Main search loop for generating the greedy Sidon sequence. The return value for step `n` is the
-finite set of numbers generated so far, a proof that it is Sidon, and the greatest element of
-the finite set at that point. This is initialised at `{1}`, then `greedySidon.go` is
-called iteratively using the lower bound `max + 1` to find the next smallest Sidon preserving
-number. -/
-private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon (A : Set ℕ)} × ℕ) :=
-  match n with
-  | 0 => (⟨{1}, by simp [IsSidon]⟩, 1)
-  | k + 1 =>
-    let (A, s) := greedySidon.aux k
-    let s := if h : A.1.Nonempty then A.1.max' h + 1 else s
-    let s' := greedySidon.go A.1 A.2 s
-    (⟨A ∪ {s'.1}, s'.2.2.2⟩, s')
-
-/-- `greedySidon` is the sequence obtained by the initial set $\{1\}$ and iteratively obtaining
-then next smallest integer that preserves the Sidon property of the set. This gives the
-sequence `1, 2, 4, 8, 13, 21, 31, ...`. -/
-def greedySidon (n : ℕ) : ℕ := greedySidon.aux n |>.2
 
 @[category test, AMS 5]
 theorem greedySidon_zero : greedySidon 0 = 1 := rfl
@@ -148,7 +118,9 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 @[category research solved, AMS 5]
 theorem erdos_340.variants._22_mem_sub :
     22 ∈ Set.range greedySidon - Set.range greedySidon := by
-  sorry
+  have h : (22 : ℕ) = greedySidon 14 - greedySidon 13 := by decide +native
+  rw [h]
+  exact Set.sub_mem_sub (Set.mem_range_self 14) (Set.mem_range_self 13)
 
 /--
 The smallest integer which is unknown to be in $A - A$ is $33$.
