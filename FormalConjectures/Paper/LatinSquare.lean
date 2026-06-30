@@ -153,13 +153,15 @@ theorem numTransversalsZn : answer(sorry) ↔
 /--
 Conjecture 6.9 in [Wa2011]:
 $$
-\lim_{n \to \infty} \frac{1}{n} \log(z_n / n!) = -1
+\lim_{\substack{n \to \infty \\ n \text{ odd}}} \frac{1}{n} \log(z_n / n!) = -1
 $$
-It is not even known if this limit exists.
+It is not even known if this limit exists. Note that $z_n = 0$ for even $n$ (see `z_even`), so the
+limit must be restricted to odd $n$; here we parametrise odd $n$ as $2k + 1$.
 -/
 @[category research open, AMS 5]
 theorem growthRateZn : answer(sorry) ↔
-    Filter.Tendsto (fun n => (1 : ℝ) / n * Real.log (z n / n.factorial)) Filter.atTop
+    Filter.Tendsto (fun k => (1 : ℝ) / (2 * k + 1) *
+      Real.log (z (2 * k + 1) / (2 * k + 1).factorial)) Filter.atTop
       (nhds (-1)) := by
   sorry
 

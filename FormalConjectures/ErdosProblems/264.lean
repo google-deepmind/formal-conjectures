@@ -39,8 +39,10 @@ is irrational.
 Note: there are other possible definitions of this concept. See
 FormalConjectures/ErdosProblems/263.lean for another possible definition.
 -/
-def IsIrrationalitySequence (a : ℕ → ℕ) : Prop := ∀ b : ℕ → ℕ, BddAbove (Set.range b) →
-  0 ∉ Set.range (a + b) → 0 ∉ Set.range b → Irrational (∑' n, (1 : ℝ) / (a n + b n))
+def IsIrrationalitySequence (a : ℕ → ℕ) : Prop := ∀ b : ℕ → ℤ,
+  BddAbove (Set.range b) → BddBelow (Set.range b) →
+  0 ∉ Set.range (fun n ↦ (a n : ℤ) + b n) → 0 ∉ Set.range b →
+  Irrational (∑' n, (1 : ℝ) / ((a n : ℤ) + b n))
 
 /--
 Is $2^n$ an example of an irrationality sequence? Kovač and Tao proved that it is not [KoTa24]

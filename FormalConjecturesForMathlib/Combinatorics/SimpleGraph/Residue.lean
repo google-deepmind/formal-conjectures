@@ -66,6 +66,6 @@ Starts with the descending degree sequence and applies the Havel-Hakimi process.
 -/
 noncomputable def residue (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   -- Get the degree sequence sorted in descending order and apply `residueAux`.
-  residueAux ((Finset.univ.image fun v => G.degree v).sort (· ≥ ·))
+  residueAux ((Finset.univ.val.map fun v => G.degree v).sort (· ≥ ·))
 
 end SimpleGraph
