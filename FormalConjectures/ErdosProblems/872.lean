@@ -19,13 +19,13 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 872
 
-This file states Erdős Problem 872 for the primitive-set saturation game on `{2, ..., n}`.
+This file states Erdős Problem 872 for the primitive-set saturation game on $\{2, \dots, n\}$.
 The game value `L n` is defined by a finite minimax recursion: Prolonger moves first and maximizes
 the final size of the claimed primitive set, while Shortener minimizes it.
 
 The problem statement does not fix the turn order. This file fixes Prolonger to move first,
 following the convention used in the forum discussion of the problem. The choice is not cosmetic:
-computational data suggests the Shortener-first value tracks `π(n)` while the Prolonger-first
+computational data suggests the Shortener-first value tracks $\pi(n)$ while the Prolonger-first
 value grows linearly, and the questions below concern the Prolonger-first quantity.
 
 *References:*
@@ -39,7 +39,7 @@ namespace Erdos872
 
 noncomputable section
 
-/-- A primitive subset of `{2, ..., n}` is a set in which no element divides another.
+/-- A primitive subset of $\{2, \dots, n\}$ is a set in which no element divides another.
 The quantified divisibility condition is one-sided because the variables range over all ordered
 pairs of distinct elements. -/
 def IsPrimitive (n : ℕ) (A : Finset ℕ) : Prop :=
@@ -82,7 +82,7 @@ def applyMove {n : ℕ} (p : GamePos n) (x : ℕ) : GamePos n where
   claimed := insert x p.claimed
   pool := p.pool.erase x
 
-/-- The empty starting position on `{2, ..., n}`. -/
+/-- The empty starting position on $\{2, \dots, n\}$. -/
 def startPos (n : ℕ) : GamePos n where
   claimed := ∅
   pool := Finset.Icc 2 n
@@ -145,26 +145,26 @@ minimizes the eventual terminal cardinality. -/
 def gameLength {n : ℕ} : GamePos n → ℕ := fun p =>
   gameValueAux p.pool.card true p
 
-/-- The Erdős primitive-set game length on `{2, ..., n}`. -/
+/-- The Erdős primitive-set game length on $\{2, \dots, n\}$. -/
 def L (n : ℕ) : ℕ := gameLength (startPos n)
 
 /- ## Erdős Problem 872
 
 The problem asks for asymptotic lower bounds on `L(n)`. Two specific targets are stated. -/
 
-/-- Erdős Problem 872, part (i) (weak form): there exists a constant `ε > 0` such that the game
-length is at least `ε * n` for all sufficiently large `n`. -/
+/-- Erdős Problem 872, part (i) (weak form): there exists a constant $\epsilon > 0$ such that the
+game length is at least $\epsilon \cdot n$ for all sufficiently large $n$. -/
 @[category research open, AMS 5 11 91]
 theorem erdos_872.parts.i : answer(sorry) ↔
     ∃ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ ε * n := by
   sorry
 
-/-- Erdős Problem 872, part (ii) (strong form): for every `ε > 0`, the game length is at least
-`(1 - ε) * n / 2` for all sufficiently large `n`.
+/-- Erdős Problem 872, part (ii) (strong form): for every $\epsilon > 0$, the game length is at
+least $(1-\epsilon) \cdot n / 2$ for all sufficiently large $n$.
 
 Status note: the forum thread (April-May 2026) records Shortener strategies giving
-`L(n) ≤ (23/48 + o(1)) * n` (described in the thread as accepted as correct, with a Lean
-formalization in progress) and a claimed `L(n) ≤ 0.19 * n`, either of which would answer this
+$L(n) \leq (23/48 + o(1)) \cdot n$ (described in the thread as accepted as correct, with a Lean
+formalization in progress) and a claimed $L(n) \leq 0.19 \cdot n$, either of which would answer this
 question negatively under the Prolonger-first convention. Neither is published, so the statement
 is recorded here as the original Erdős question. -/
 @[category research open, AMS 5 11 91]
@@ -172,8 +172,8 @@ theorem erdos_872.parts.ii : answer(sorry) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
   sorry
 
-/-- A trivial upper bound: a play can claim at most the `n - 1` elements of `{2, ..., n}`, so
-`L(n) ≤ n - 1`. -/
+/-- A trivial upper bound: a play can claim at most the $n - 1$ elements of $\{2, \dots, n\}$, so
+$L(n) \leq n - 1$. -/
 @[category textbook, AMS 5 11 91]
 theorem erdos_872.trivial_upper_bound (n : ℕ) (hn : 2 ≤ n) :
     L n ≤ n - 1 := by
@@ -183,11 +183,11 @@ theorem erdos_872.trivial_upper_bound (n : ℕ) (hn : 2 ≤ n) :
         simp only [startPos, Finset.card_empty, Nat.card_Icc]
         omega
 
-/-- Forum-related variant: how small can a maximal primitive subset of `{2, ..., n}` be?
-The set of primes in `{2, ..., n}` is a maximal primitive subset of size `π(n)`, and the forum
-thread asks whether this is the smallest possible for all `n ≥ 2`. Equivalently: must every
+/-- Forum-related variant: how small can a maximal primitive subset of $\{2, \dots, n\}$ be?
+The set of primes in $\{2, \dots, n\}$ is a maximal primitive subset of size $\pi(n)$, and the forum
+thread asks whether this is the smallest possible for all $n \geq 2$. Equivalently: must every
 completed play of the saturation game, by both players and regardless of strategy, claim at least
-`π(n)` elements? (Terminal positions of the game are exactly the maximal primitive subsets.) -/
+$\pi(n)$ elements? (Terminal positions of the game are exactly the maximal primitive subsets.) -/
 @[category research open, AMS 5 11 91]
 theorem erdos_872.variants.prime_question : answer(sorry) ↔
     ∀ n ≥ 2, ∀ A : Finset ℕ, Maximal (IsPrimitive n) A →
