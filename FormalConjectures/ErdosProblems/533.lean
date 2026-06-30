@@ -19,24 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 533
 
-Let $\delta > 0$. If $n$ is sufficiently large and $G$ is a graph on $n$ vertices with no
-$K_5$ and at least $\delta n^2$ edges, must $G$ contain a set of $\gg_\delta n$ vertices
-spanning no triangle?
-
-Equivalently, writing $\mathrm{RT}_3(n, K_5, m)$ for the maximum number of edges of a
-$K_5$-free graph on $n$ vertices in which every triangle-free vertex set has fewer than $m$
-vertices (the *triangle Ramsey–Turán number*), is
-$$\delta_3(5) = \lim_{\epsilon \to 0} \lim_{n \to \infty}
-  \frac{\mathrm{RT}_3(n, K_5, \epsilon n)}{n^2} = 0?$$
-
-This is a problem of Erdős, Hajnal, Simonovits, Sós, and Szemerédi [EHSSS94], who proved the
-upper bound $\delta_3(5) \leq 1/12$ and the analogous statement $\delta_3(4) = 0$. They
-further observed $\delta_3(7) \geq 1/4$, using a construction of Erdős and Rogers [ErRo62].
-
-The answer is **no**: the statement is false. Balogh and Lenz [BaLe13] disproved it by showing
-$\delta_3(5) > 0$, and the exact value $\delta_3(5) = 1/12$ was determined by the matching
-lower-bound construction of Liu, Reiher, Sharifzadeh, and Staden [LRSS21].
-
 *References:*
 - [erdosproblems.com/533](https://www.erdosproblems.com/533)
 - [EHSSS94] P. Erdős, A. Hajnal, M. Simonovits, V. T. Sós and E. Szemerédi,
@@ -58,11 +40,21 @@ namespace Erdos533
 /--
 Let $\delta > 0$. If $n$ is sufficiently large and $G$ is a graph on $n$ vertices with no
 $K_5$ and at least $\delta n^2$ edges, must $G$ contain a set of $\gg_\delta n$ vertices
-spanning no triangle (i.e. is the triangle Ramsey–Turán density $\delta_3(5)$ equal to $0$)?
+spanning no triangle?
 
-The answer is **no**: this was disproved by Balogh and Lenz [BaLe13], with the exact value
-$\delta_3(5) = 1/12$ determined by Liu, Reiher, Sharifzadeh, and Staden [LRSS21] (see
-`erdos_533.variants.lrss_lower`).
+Equivalently, writing $\mathrm{RT}_3(n, K_5, m)$ for the maximum number of edges of a
+$K_5$-free graph on $n$ vertices in which every triangle-free vertex set has fewer than $m$
+vertices (the *triangle Ramsey–Turán number*), is
+$$\delta_3(5) = \lim_{\epsilon \to 0} \lim_{n \to \infty}
+  \frac{\mathrm{RT}_3(n, K_5, \epsilon n)}{n^2} = 0?$$
+
+This is a problem of Erdős, Hajnal, Simonovits, Sós, and Szemerédi [EHSSS94], who proved
+$\delta_3(5) \leq 1/12$ and the analogous $\delta_3(4) = 0$, and observed $\delta_3(7) \geq 1/4$
+via a construction of Erdős and Rogers [ErRo62].
+
+The answer is **no**: Balogh and Lenz [BaLe13] disproved it by showing $\delta_3(5) > 0$, and
+the exact value $\delta_3(5) = 1/12$ was determined by the matching lower-bound construction of
+Liu, Reiher, Sharifzadeh, and Staden [LRSS21] (see `erdos_533.variants.lrss_lower`).
 -/
 @[category research solved, AMS 5]
 theorem erdos_533 : answer(False) ↔

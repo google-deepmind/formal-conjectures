@@ -19,18 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 579
 
-Let $\delta > 0$. If $n$ is sufficiently large and $G$ is a graph on $n$ vertices with no
-$K_{2,2,2}$ (the octahedron) and at least $\delta n^2$ edges, must $G$ contain an independent
-set of size $\gg_\delta n$?
-
-This is a problem of Erdős, Hajnal, Sós, and Szemerédi [EHSS83]. It is **open**. They could
-prove the statement for $\delta > 1/8$; the difficulty is to push the edge-density threshold
-all the way down to an arbitrary $\delta > 0$.
-
-Here $K_{2,2,2}$ is the complete tripartite graph with all parts of size $2$, i.e. the
-octahedron, encoded as `completeMultipartiteGraph (fun _ : Fin 3 => Fin 2)`. "Contains no
-$K_{2,2,2}$" is expressed via `SimpleGraph.Free`: $G$ contains no copy of the octahedron.
-
 *References:*
 - [erdosproblems.com/579](https://www.erdosproblems.com/579)
 - [EHSS83] P. Erdős, A. Hajnal, V. T. Sós and E. Szemerédi, *More results on Ramsey–Turán
@@ -48,11 +36,16 @@ abbrev octahedron : SimpleGraph (Σ _ : Fin 3, Fin 2) :=
 
 /--
 Let $\delta > 0$. If $n$ is sufficiently large and $G$ is a graph on $n$ vertices with no
-$K_{2,2,2}$ and at least $\delta n^2$ edges, must $G$ contain an independent set of size
-$\gg_\delta n$?
+$K_{2,2,2}$ (the octahedron) and at least $\delta n^2$ edges, must $G$ contain an independent
+set of size $\gg_\delta n$?
 
-This is **open** [EHSS83]; the case $\delta > 1/8$ is known (see
-`erdos_579.variants.ehss_large_delta`).
+This is a problem of Erdős, Hajnal, Sós, and Szemerédi [EHSS83]. It is **open**; they proved
+the statement for $\delta > 1/8$ (see `erdos_579.variants.ehss_large_delta`), and the
+difficulty is to push the edge-density threshold down to an arbitrary $\delta > 0$.
+
+Here $K_{2,2,2}$ is the complete tripartite graph with all parts of size $2$, encoded as
+`completeMultipartiteGraph (fun _ : Fin 3 => Fin 2)`; "contains no $K_{2,2,2}$" is expressed
+via `SimpleGraph.Free`.
 -/
 @[category research open, AMS 5]
 theorem erdos_579 : answer(sorry) ↔
