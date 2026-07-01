@@ -489,6 +489,15 @@ function renderDetail(theorem, siblings, verso, contributors) {
       </div>
     </div>` : '';
 
+  // Proof conditions: unproven assumptions the formal proof depends on.
+  const proofConditions = theorem.proofConditions || [];
+  const proofConditionsSection = proofConditions.length ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">Proof conditions</div>
+      <div class="detail-value">The formal proof holds under
+        ${proofConditions.map(c => `<code>${FC.escapeHTML(c)}</code>`).join(', ')}.</div>
+    </div>` : '';
+
   const contributorsSection = contributors.length ? `
     <div class="theorem-detail__section">
       <div class="detail-label">File contributors</div>
@@ -507,6 +516,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
     <header class="theorem-detail__header">
       <h1 class="theorem-detail__title">${FC.escapeHTML(theorem.displayTheorem)}</h1>
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
+      ${proofConditions.length ? `<span class="badge cat-conditional" style="font-size:.9rem;padding:.3rem .9rem"
+        title="The formal proof depends on an unproven assumption">Conditional</span>` : ''}
     </header>
 
     ${moduleDocSection}
@@ -514,6 +525,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
     ${docSection}
 
     ${codeSection}
+
+    ${proofConditionsSection}
 
     ${contributorsSection}
 

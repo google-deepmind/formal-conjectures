@@ -233,6 +233,7 @@ jobs:
               formalProofKind: c.formalProofKind || null,
               formalProofLink: c.formalProofLink || null,
               hasSorryFreeProof: false,
+              proofConditions: c.proofConditions || [],
             }));
             fs.writeFileSync(
               'site/data/conjectures.json',

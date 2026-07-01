@@ -97,7 +97,7 @@ theorem artin_primitive_roots.parts.i (a : ℤ) (ha : ¬IsSquare a) (ha' : a ≠
 /--
 **Artin's Conjecture on Primitive Roots**, first half, conditional on GRH.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, proof_condition "GRH"]
 theorem conditional_artin_primitive_roots.parts.i (a : ℤ) (ha : ¬IsSquare a) (ha' : a ≠ -1)
     (h : type_of% generalized_riemann_hypothesis) :
     ∃ x > 0, (S a).HasDensity x {p | p.Prime} := by
@@ -122,7 +122,7 @@ theorem artin_primitive_roots.parts.ii
 /--
 **Artin's Conjecture on Primitive Roots**, second half, conditional on GRH.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, proof_condition "GRH"]
 theorem conditional_artin_primitive_roots.parts.ii
     (a a_0 b : ℤ) (ha : a = a_0 * b ^ 2)
     (ha' : ∀ n m, m ≠ 1 → a ≠ n ^ m) (ha_0 : Squarefree a_0)
@@ -161,7 +161,7 @@ theorem artin_primitive_roots.variants.part_ii_power_squarefreePart_not_modeq_on
 /--
 **Artin's Conjecture on Primitive Roots**, second half, power version, conditional on GRH
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, proof_condition "GRH"]
 theorem conditional_artin_primitive_roots.variants.part_ii_power_squarefreePart_not_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
     (hm₂ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4])
@@ -191,7 +191,7 @@ theorem artin_primitive_roots.variants.part_ii_power_squarefreePart_modeq_one
 /--
 **Artin's Conjecture on Primitive Roots**, second half, power version, conditional on GRH.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, proof_condition "GRH"]
 theorem conditional_artin_primitive_roots.variants.part_ii_power_squarefreePart_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
     (hm₂ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4])

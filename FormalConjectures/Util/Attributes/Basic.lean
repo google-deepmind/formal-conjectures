@@ -83,6 +83,30 @@ theorem a_test_to_sanity_check_some_definition : ¬ FermatLastTheoremWith 1 := b
   sorry
 ```
 
+## The Proof Condition Attribute:
+
+### Overview
+Records an unproven assumption that a formal proof depends on. This is the
+structured counterpart to the `conditional_*` naming convention already used in
+the repository (e.g. `conditional_artin_primitive_roots`): a proof can be
+`sorry`-free and still establish the statement only under a hypothesis such as
+GRH, so a reader and the site can see the condition rather than infer it from a
+declaration name.
+
+Use it alongside `formal_proof` when the proof it points to is conditional. The
+attribute is repeatable, one condition per application.
+
+### Values
+- `@[proof_condition "GRH"]` : the proof holds under the Generalized Riemann Hypothesis.
+- `@[proof_condition "Maynard–Tao"]` : the proof assumes the Maynard–Tao theorem.
+
+### Usage example
+```
+@[category research solved, proof_condition "GRH"]
+theorem conditional_result (h : type_of% generalized_riemann_hypothesis) : ... := by
+  sorry
+```
+
 ## The Problem Subject Attribute
 
 Provides information about the subject of a mathematical problem, via a
@@ -211,6 +235,28 @@ def addFormalProofEntry {m : Type → Type} [MonadEnv m]
   modifyEnv (formalProofExt.addEntry ·
     { declName := declName, proofKind := kind, proofLink := link })
 
+/-- A tag recording an unproven assumption a formal proof depends on. -/
+structure ProofConditionTag where
+  /-- The name of the declaration with the given tag. -/
+  declName : Name
+  /-- A human-readable description of the condition (e.g. "GRH"). -/
+  condition : String
+  deriving Inhabited, BEq, Hashable, ToExpr
+
+/-- Defines the `proofConditionExt` extension for recording the unproven
+assumptions a formal proof depends on. -/
+initialize proofConditionExt :
+    SimplePersistentEnvExtension ProofConditionTag (Std.HashSet ProofConditionTag) ←
+  registerSimplePersistentEnvExtension {
+    addImportedFn := fun as => as.foldl Std.HashSet.insertMany {}
+    addEntryFn := .insert
+  }
+
+def addProofConditionEntry {m : Type → Type} [MonadEnv m]
+    (declName : Name) (condition : String) : m Unit :=
+  modifyEnv (proofConditionExt.addEntry ·
+    { declName := declName, condition := condition })
+
 structure SubjectTag where
   /-- The name of the declaration with the given tag. -/
   declName : Name
@@ -317,6 +363,25 @@ initialize Lean.registerBuiltinAttribute {
   applicationTime := .afterTypeChecking
 }
 
+syntax (name := ProofCondition_attr) "proof_condition" str : attr
+
+/-- Records an unproven assumption a formal proof depends on.
+
+Use alongside `formal_proof` when the proof it points to is conditional. The
+attribute is repeatable, one condition per application.
+
+Usage: `@[proof_condition "<condition>"]`, e.g. `@[proof_condition "GRH"]`. -/
+initialize Lean.registerBuiltinAttribute {
+  name := `ProofCondition_attr
+  descr := "Annotation of an unproven assumption a formal proof depends on."
+  add := fun decl stx _attrKind => do
+    match stx with
+    | `(attr| proof_condition $cond) =>
+      addProofConditionEntry decl cond.getString
+    | _ => throwUnsupportedSyntax
+  applicationTime := .afterTypeChecking
+}
+
 syntax subjectList := many(num)
 
 /-- Converts a syntax node to an array of `AMS` subjects.
@@ -394,6 +459,14 @@ def getFormalProofTags : m (Array FormalProofTag) := do
 def getFormalProofTag (declName : Name) : m (Option FormalProofTag) := do
   let tags ← getFormalProofTags
   return tags.find? (·.declName == declName)
+
+def getProofConditionTags : m (Array ProofConditionTag) := do
+  return proofConditionExt.getState (← MonadEnv.getEnv) |>.toArray
+
+/-- Get the conditions a given declaration's proof depends on. -/
+def getProofConditions (declName : Name) : m (Array String) := do
+  let tags ← getProofConditionTags
+  return (tags.filter (·.declName == declName)).map (·.condition)
 
 end Helper
 

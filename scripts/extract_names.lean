@@ -128,6 +128,7 @@ structure TheoremInfo where
   hasSorryFreeProof : Bool
   subsets : List String
   answerKinds : List String
+  proofConditions : List String
   fileFirstAdded : Option String
   fileLastModified : Option String
 
@@ -150,6 +151,8 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
     ++ (if exclude.contains "answerKinds" then [] else
         [("answerKinds", toJson info.answerKinds)])
+    ++ (if info.proofConditions.isEmpty then [] else
+        [("proofConditions", toJson info.proofConditions)])
     ++ (if exclude.contains "fileFirstAdded" then [] else
         [("fileFirstAdded", toJson info.fileFirstAdded)])
     ++ (if exclude.contains "fileLastModified" then [] else
@@ -228,6 +231,7 @@ unsafe def main (args : List String) : IO Unit := do
     let tags ← getTags
     let subjectTags ← getSubjectTags
     let formalProofTags ← getFormalProofTags
+    let proofConditionTags ← getProofConditionTags
 
     -- Create maps for quick lookup
     let mut categoryMap : Std.HashMap Name (List String) := {}
@@ -240,6 +244,12 @@ unsafe def main (args : List String) : IO Unit := do
     let mut formalProofMap : Std.HashMap Name FormalProofTag := {}
     for tag in formalProofTags do
       formalProofMap := formalProofMap.insert tag.declName tag
+
+    -- Create proof condition map (a declaration may carry several conditions)
+    let mut proofConditionMap : Std.HashMap Name (List String) := {}
+    for tag in proofConditionTags do
+      proofConditionMap := proofConditionMap.insert tag.declName
+        (tag.condition :: proofConditionMap.getD tag.declName [])
 
     let mut subjectMap : Std.HashMap Name (List String) := {}
     for tag in subjectTags do
@@ -301,6 +311,8 @@ unsafe def main (args : List String) : IO Unit := do
                   IO.eprintln s!"WARNING: Theorem {name} is categorised as `API` but has no sorry-free proof"
                 | _, _ => pure ()
               let subsets := (theoremToSubsets.getD name []).toArray.qsort (· < ·) |>.toList
+              let proofConditions :=
+                (proofConditionMap.getD name []).toArray.qsort (· < ·) |>.toList
               -- Determine answerKinds from the elaborated type
               let answerKinds ← Meta.MetaM.run'
                 (getAnswerKinds info.type)
@@ -318,6 +330,7 @@ unsafe def main (args : List String) : IO Unit := do
                 hasSorryFreeProof := hasSorryFreeProof,
                 subsets := subsets
                 answerKinds := answerKinds
+                proofConditions := proofConditions
                 fileFirstAdded := fileFirstAdded
                 fileLastModified := fileLastModified
               } :: allResults
