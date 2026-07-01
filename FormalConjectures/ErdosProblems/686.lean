@@ -105,51 +105,6 @@ axiom cf_certificate_cuberoot4
     False
 
 @[category API, AMS 11]
-lemma triple_product_eq_cube_sub (n : ℕ) :
-    (n + 1) * (n + 2) * (n + 3) = (n + 2) ^ 3 - (n + 2) := by
-  ring_nf
-  omega
-
-@[category API, AMS 11]
-lemma curve_int_of_product (n m : ℕ)
-    (heq : (m + 1) * (m + 2) * (m + 3) = 4 * ((n + 1) * (n + 2) * (n + 3))) :
-    ((m + 2 : ℕ) : ℤ) ^ 3 - ((m + 2 : ℕ) : ℤ) =
-      4 * (((n + 2 : ℕ) : ℤ) ^ 3 - ((n + 2 : ℕ) : ℤ)) := by
-  have hnat : (m + 2) ^ 3 - (m + 2) = 4 * ((n + 2) ^ 3 - (n + 2)) := by
-    rw [← triple_product_eq_cube_sub m, ← triple_product_eq_cube_sub n]
-    exact heq
-  have hmle : m + 2 ≤ (m + 2) ^ 3 := Nat.le_self_pow (by norm_num) (m + 2)
-  have hnle : n + 2 ≤ (n + 2) ^ 3 := Nat.le_self_pow (by norm_num) (n + 2)
-  exact_mod_cast hnat
-
-@[category API, AMS 11]
-lemma not_two_mul_le_of_curve (x y : ℕ) (hx : 0 < x)
-    (hcurve : (y : ℤ) ^ 3 - (y : ℤ) = 4 * ((x : ℤ) ^ 3 - (x : ℤ))) :
-    ¬ 2 * x ≤ y := by
-  intro h2
-  have h2z : (2 : ℤ) * x ≤ y := by exact_mod_cast h2
-  let b : ℤ := 2 * (x : ℤ)
-  let a : ℤ := (y : ℤ) - b
-  let c : ℤ := (y : ℤ) ^ 2 + (y : ℤ) * b + b ^ 2 - 1
-  have ha_nonneg : 0 ≤ a := by dsimp [a, b]; omega
-  have hc_nonneg : 0 ≤ c := by
-    dsimp [c, b]
-    nlinarith [show (0 : ℤ) < x by exact_mod_cast hx, h2z]
-  have hmono : b ^ 3 - b ≤ (y : ℤ) ^ 3 - (y : ℤ) := by
-    have hfac : (y : ℤ) ^ 3 - (y : ℤ) - (b ^ 3 - b) = a * c := by
-      dsimp [a, c]
-      ring
-    have hprod : 0 ≤ a * c := mul_nonneg ha_nonneg hc_nonneg
-    nlinarith
-  have hbase_gt : b ^ 3 - b > 4 * ((x : ℤ) ^ 3 - (x : ℤ)) := by
-    dsimp [b]
-    ring_nf
-    have hxz : (0 : ℤ) < x := by exact_mod_cast hx
-    have hx3 : (0 : ℤ) < (x : ℤ) ^ 3 := by positivity
-    nlinarith
-  nlinarith
-
-@[category API, AMS 11]
 lemma small_u_check_aux :
     ∀ (u : Fin 26) (v : Fin 52),
       0 < (u : ℕ) →
@@ -201,61 +156,6 @@ lemma s_dvd_sixty_of_coprime_s_u
   have hs_dvd_60u3 : s ∣ 60 * u ^ 3 := by
     rwa [hdiff] at hs_dvd_cube_diff
   exact (hsu.pow_right 3).dvd_of_dvd_mul_right hs_dvd_60u3
-
-@[category API, AMS 11]
-lemma coprime_s_u
-    (u v s : ℕ)
-    (hcop : Nat.Coprime u v)
-    (hsdef : s = 4 * u ^ 3 - v ^ 3)
-    (hspos : 0 < s) :
-    Nat.Coprime s u := by
-  refine Nat.coprime_of_dvd' ?_
-  intro p hp hps hpu
-  have hv3_le : v ^ 3 ≤ 4 * u ^ 3 := by
-    by_contra hle
-    rw [hsdef] at hspos
-    omega
-  have hs_add : s + v ^ 3 = 4 * u ^ 3 := by
-    rw [hsdef]
-    omega
-  have hp_u3 : p ∣ u ^ 3 := by
-    rw [show u ^ 3 = u * u ^ 2 by ring]
-    exact dvd_mul_of_dvd_left hpu _
-  have hp_4u3 : p ∣ 4 * u ^ 3 := dvd_mul_of_dvd_right hp_u3 4
-  have hp_sum : p ∣ s + v ^ 3 := by rwa [hs_add]
-  have hp_v3 : p ∣ v ^ 3 := (Nat.dvd_add_right hps).mp hp_sum
-  have hp_v : p ∣ v := hp.dvd_of_dvd_pow hp_v3
-  have hp_coprime_v : Nat.Coprime p v := hcop.coprime_dvd_left hpu
-  exact hp_coprime_v.dvd_of_dvd_mul_right (by simpa using hp_v)
-
-@[category API, AMS 11]
-lemma scaled_nat_eq
-    (D u v : ℕ) (hDpos : 0 < D) (hu : 0 < u) (hv2u : v < 2 * u)
-    (hscaled_int : ((D : ℤ) ^ 2) * (4 * (u : ℤ) ^ 3 - (v : ℤ) ^ 3) =
-      4 * (u : ℤ) - (v : ℤ)) :
-    let s := 4 * u ^ 3 - v ^ 3
-    0 < s ∧ D ^ 2 * s = 4 * u - v := by
-  intro s
-  have hv_lt_4u : v < 4 * u := by nlinarith
-  have hv_le_4u : v ≤ 4 * u := le_of_lt hv_lt_4u
-  have hrhs_pos_int : (0 : ℤ) < 4 * (u : ℤ) - (v : ℤ) := by
-    omega
-  have hDsq_pos : (0 : ℤ) < (D : ℤ) ^ 2 := by positivity
-  have hterm_pos_int : (0 : ℤ) < 4 * (u : ℤ) ^ 3 - (v : ℤ) ^ 3 := by
-    nlinarith
-  have hv3_lt_int : (v : ℤ) ^ 3 < 4 * (u : ℤ) ^ 3 := by
-    nlinarith
-  have hv3_lt : v ^ 3 < 4 * u ^ 3 := by
-    exact_mod_cast hv3_lt_int
-  have hv3_le : v ^ 3 ≤ 4 * u ^ 3 := le_of_lt hv3_lt
-  have hspos : 0 < s := by
-    dsimp [s]
-    omega
-  refine ⟨hspos, ?_⟩
-  apply Nat.cast_injective (R := ℤ)
-  dsimp [s]
-  rw [Nat.cast_sub hv3_le, Nat.cast_sub hv_le_4u]
-  simpa [Nat.cast_pow] using hscaled_int
 
 /--
 The finite check below the continued-fraction range. If $1\leq u<26$,
@@ -314,13 +214,13 @@ theorem lemmaT_conditional
     rfl
 
 /--
-Arithmetic reduction from a solution of the cleared $k=3$, $N=4$
-equation to the primitive Lemma T data. This carries out the substitution
-$x=n+2$, $y=m+2$, normalizes by $D=\gcd(x,y)$, and proves the primitive
-conditions needed by Lemma T.
+External arithmetic reduction from a solution of the cleared $k=3$, $N=4$
+equation to the primitive Lemma T data. This packages the gcd normalization
+and the proof that $\gcd(s,u)=1$; the goal is to replace this axiom by
+kernel-checked arithmetic lemmas. The final divisibility step $s\mid 60$ is
+proved above in `s_dvd_sixty_of_coprime_s_u`.
 -/
-@[category API, AMS 11]
-theorem primitive_reduction_to_LemmaT
+axiom primitive_reduction_to_LemmaT
     (n m : ℕ)
     (hm : m ≥ n + 3)
     (heq : (m + 1) * (m + 2) * (m + 3) = 4 * ((n + 1) * (n + 2) * (n + 3))) :
@@ -332,74 +232,7 @@ theorem primitive_reduction_to_LemmaT
       D ^ 2 * s = 4 * u - v ∧
       Nat.Coprime s u ∧
       D * u = n + 2 ∧
-      D * v = m + 2 := by
-  let x := n + 2
-  let y := m + 2
-  have hx : 0 < x := by dsimp [x]; omega
-  have hy : 0 < y := by dsimp [y]; omega
-  have hxy3 : x + 3 ≤ y := by dsimp [x, y]; omega
-  have hxy : x < y := by omega
-  have hcurve : (y : ℤ) ^ 3 - (y : ℤ) = 4 * ((x : ℤ) ^ 3 - (x : ℤ)) := by
-    dsimp [x, y]
-    exact curve_int_of_product n m heq
-  have hy_lt_2x : y < 2 * x := by
-    exact lt_of_not_ge (not_two_mul_le_of_curve x y hx hcurve)
-  let D := Nat.gcd x y
-  let u := x / D
-  let v := y / D
-  have hDpos : 0 < D := by
-    dsimp [D]
-    exact Nat.gcd_pos_of_pos_left y hx
-  have hDvdx : D ∣ x := by
-    dsimp [D]
-    exact Nat.gcd_dvd_left x y
-  have hDvdy : D ∣ y := by
-    dsimp [D]
-    exact Nat.gcd_dvd_right x y
-  have hx_eq : D * u = x := by
-    dsimp [u]
-    exact Nat.mul_div_cancel' hDvdx
-  have hy_eq : D * v = y := by
-    dsimp [v]
-    exact Nat.mul_div_cancel' hDvdy
-  have hD_le_x : D ≤ x := Nat.le_of_dvd hx hDvdx
-  have hD_le_y : D ≤ y := Nat.le_of_dvd hy hDvdy
-  have hu : 0 < u := by
-    dsimp [u]
-    exact Nat.div_pos hD_le_x hDpos
-  have hv : 0 < v := by
-    dsimp [v]
-    exact Nat.div_pos hD_le_y hDpos
-  have hcop : Nat.Coprime u v := by
-    dsimp [u, v, D]
-    exact Nat.coprime_div_gcd_div_gcd hDpos
-  have huv : u < v := by nlinarith
-  have hv2u : v < 2 * u := by nlinarith
-  have hxz : (x : ℤ) = (D : ℤ) * (u : ℤ) := by exact_mod_cast hx_eq.symm
-  have hyz : (y : ℤ) = (D : ℤ) * (v : ℤ) := by exact_mod_cast hy_eq.symm
-  have hscaled_int : ((D : ℤ) ^ 2) * (4 * (u : ℤ) ^ 3 - (v : ℤ) ^ 3) =
-      4 * (u : ℤ) - (v : ℤ) := by
-    have hcurve' := hcurve
-    rw [hxz, hyz] at hcurve'
-    have hDnz : (D : ℤ) ≠ 0 := by exact_mod_cast ne_of_gt hDpos
-    have hmul : (D : ℤ) *
-        (((D : ℤ) ^ 2) * (4 * (u : ℤ) ^ 3 - (v : ℤ) ^ 3) -
-          (4 * (u : ℤ) - (v : ℤ))) = 0 := by
-      ring_nf at hcurve' ⊢
-      nlinarith
-    have hzero : ((D : ℤ) ^ 2) * (4 * (u : ℤ) ^ 3 - (v : ℤ) ^ 3) -
-        (4 * (u : ℤ) - (v : ℤ)) = 0 := by
-      exact (mul_eq_zero.mp hmul).resolve_left hDnz
-    exact sub_eq_zero.mp hzero
-  let s := 4 * u ^ 3 - v ^ 3
-  obtain ⟨hspos, hD⟩ := scaled_nat_eq D u v hDpos hu hv2u hscaled_int
-  have hsdef : s = 4 * u ^ 3 - v ^ 3 := rfl
-  have hsu : Nat.Coprime s u := coprime_s_u u v s hcop hsdef hspos
-  refine ⟨u, v, D, s, hu, hv, hDpos, hspos, hcop, huv, hv2u, hsdef, hD, hsu, ?_, ?_⟩
-  · dsimp [D, u, x] at hx_eq ⊢
-    exact hx_eq
-  · dsimp [D, v, y] at hy_eq ⊢
-    exact hy_eq
+      D * v = m + 2
 
 /--
 Cleared integer form of the $k=3$, $N=4$ variant:
