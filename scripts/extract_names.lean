@@ -113,8 +113,8 @@ def getFileLastModified (file : System.FilePath) : IO (Option String) :=
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
   ["docstring", "statement", "subjects", "formalProofKind", "formalProofLink",
-   "hasSorryFreeProof", "moduleDocstrings", "answerKinds", "fileFirstAdded",
-   "fileLastModified"]
+   "hasSorryFreeProof", "moduleDocstrings", "answerKinds", "proofConditions",
+   "fileFirstAdded", "fileLastModified"]
 
 structure TheoremInfo where
   «theorem» : String
@@ -151,7 +151,7 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
     ++ (if exclude.contains "answerKinds" then [] else
         [("answerKinds", toJson info.answerKinds)])
-    ++ (if info.proofConditions.isEmpty then [] else
+    ++ (if exclude.contains "proofConditions" || info.proofConditions.isEmpty then [] else
         [("proofConditions", toJson info.proofConditions)])
     ++ (if exclude.contains "fileFirstAdded" then [] else
         [("fileFirstAdded", toJson info.fileFirstAdded)])
