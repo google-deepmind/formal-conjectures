@@ -319,9 +319,11 @@ Follow [Mathlib's naming conventions](https://leanprover-community.github.io/con
    ```
 
 3. **Functions** are named the same way as their return values:
-   - A function `A → B → C` is named as though it's a term of type `C`
-   - If `C` is a `Prop`, use `snake_case`
-   - If `C` is a `Type`, use `lowerCamelCase`
+   - A function `A → B → C` is named as though it's a term of type `C`.
+   - A function `A → B → Prop` or `A → B → Type _` should be named in `UpperCamelCase`.
+   - A function `A → B → C` where `C : Type _` and `C` isn't itself `Type _` should be named in
+    `lowerCamelCase`.
+   - A function `A → B → C` where `C : Prop` should be named in `snake_case`.
 
 4. **All other terms of Types** use `lowerCamelCase`:
 
