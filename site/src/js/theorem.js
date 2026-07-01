@@ -38,6 +38,8 @@ async function init() {
   }
 
   document.title = `${theorem.displayTheorem} — Formal Conjectures`;
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.content = theorem.theorem;
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
   const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
   const contributors = data.contributors?.[theorem.githubPath] || [];
@@ -541,6 +543,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <a href="${FC.escapeHTML(theorem.githubUrl)}" class="btn btn-outline" target="_blank" rel="noopener">
         View on GitHub ↗
       </a>
+      <a href="${_base}/about/#comments" class="btn btn-outline">About comments and votes</a>
     </nav>
   `;
 
