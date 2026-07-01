@@ -19,12 +19,6 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 987
 
-The full Lean proofs of every statement below are available at
-[Marti2203/formal-conjectures](https://github.com/Marti2203/formal-conjectures/blob/19c63d48acce3099c242b059518c49bf8dc0eab8/FormalConjectures/ErdosProblems/987.lean).
-That file is too large to inline here, so this file keeps only the problem statements
-(with `sorry` placeholders) and tags each with `formal_proof using lean4 at` pointing to the
-external proof.
-
 *References:*
 - [erdosproblems.com/987](https://www.erdosproblems.com/987)
 - [APSSV26b] B. Alexeev, M. Putterman, M. Sawhney, M. Sellke, and G. Valiant,
