@@ -255,6 +255,10 @@ def apply_fixes(mismatches):
             print(f"Skipping auto-fix for {num}: requires manual formal_proof link update (lean={lean_st}, yaml={yaml_st})", file=sys.stderr)
             continue
             
+        if target_cat == "open" and lean_st == "formally solved":
+            print(f"Skipping auto-fix for {num}: cannot safely downgrade formally solved to open without losing proof link", file=sys.stderr)
+            continue
+            
         filepath = os.path.join(ERDOS_DIR, f"{num}.lean")
         if not os.path.exists(filepath):
             print(f"Cannot auto-fix {num}: file {filepath} not found", file=sys.stderr)
