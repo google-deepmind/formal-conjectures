@@ -33,8 +33,6 @@ namespace OeisA175386
 set_option linter.style.ams_attribute false
 set_option linter.style.category_attribute false
 
-open scoped BigOperators
-
 /--
 A175386: $a(n)$ is the denominator of the sum
 $$\sum_{i=1}^n \frac{1}{i} \binom{2n-i-1}{i-1}$$
@@ -52,38 +50,6 @@ def S (n : ℕ) : ℚ :=
   Finset.sum (Finset.Icc 1 n) fun i : ℕ =>
     let num : ℕ := Nat.choose (2 * n - (i + 1)) (i - 1)
     (num : ℚ) / (i : ℚ)
-
-open MeasureTheory
-
-open Polynomial
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
 
 -- EVOLVE-BLOCK-START
 def lucas : ℕ → ℤ

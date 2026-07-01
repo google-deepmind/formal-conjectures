@@ -35,8 +35,6 @@ set_option linter.style.category_attribute false
 
 open Nat
 
-open scoped BigOperators
-
 /--
 A289411: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
 $\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.
@@ -47,38 +45,6 @@ def A289411 (n : ℕ) : ℕ :=
   (Finset.range (n + 1)).sum (fun k =>
     Int.sign ((digital_sum_ten (5 * k) : ℤ) - (digital_sum_ten k : ℤ)))
   |>.toNat
-
-open MeasureTheory
-
-open Polynomial
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
-
-open scoped Topology
 
 -- EVOLVE-BLOCK-START
 def S (n : ℕ) : ℕ := (Nat.digits 10 n).sum

@@ -38,37 +38,7 @@ namespace OeisA51293
 set_option linter.style.ams_attribute false
 set_option linter.style.category_attribute false
 
-open MeasureTheory
-
 open Polynomial
-
-open scoped BigOperators
-
-open scoped Classical
-
-open scoped ENNReal
-
-open scoped EuclideanGeometry
-
-open scoped InnerProductSpace
-
-open scoped intervalIntegral
-
-open scoped List
-
-open scoped Matrix
-
-open scoped Nat
-
-open scoped NNReal
-
-open scoped Pointwise
-
-open scoped ProbabilityTheory
-
-open scoped Real
-
-open scoped symmDiff
 
 open scoped Topology
 

@@ -7,7 +7,6 @@ When contributing to or reviewing formalizations in this directory, please follo
 ## File Naming & Work-in-Progress (WIP) Status
 
 - **Naming**: Files must be named after their OEIS number **without leading zeros** (e.g., `56777.lean`, `308734.lean`).
-- **WIP Files**: Newly added automated formalizations or unpolished problems should use the `.wip.lean` extension (e.g., `28859.wip.lean`). Once fully verified, degolfed, and audited, they can be renamed to `.lean`.
 
 ## Namespaces
 
@@ -49,7 +48,6 @@ To ensure the formalized definition behaves correctly and matches the official O
 - **Computable Definitions**: If the sequence definition is kernel-computable, prove the term theorems using `by rfl`, `by decide`, `by norm_num`, or by unfolding the definition.
 - **Noncomputable Definitions**: For complex or `noncomputable` definitions where kernel evaluation is not possible:
   - Use appropriate helper lemmas to establish values rigorously (e.g., `csInf_eq_of_forall_ge_of_forall_gt_exists_lt` for `sInf`-based definitions, or `Int.floor_eq_iff` for real number bounds).
-  - If the proof is still a work in progress in a `.wip.lean` file, `by sorry` is acceptable for the test lemmas until a full proof is constructed.
 
 ```lean
 @[category test, AMS 11]
@@ -58,29 +56,3 @@ lemma test_a_0 : a 0 = 1 := by rfl
 @[category test, AMS 11]
 lemma test_a_1 : a 1 = 1 := by rfl
 ```
-
-## Linter Control for Supporting Lemmas
-
-Supporting definitions and helper lemmas should not be cluttered with `category` or `AMS` attributes. Instead, silence the style linters at the top of the namespace, and explicitly annotate only the term theorems (`category test`) and the main conjecture (`category research open` or `category research solved`).
-
-```lean
-namespace OeisA62567
-
-set_option linter.style.ams_attribute false
-set_option linter.style.category_attribute false
-
--- [Supporting definitions and helper lemmas here...]
-
-@[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by ...
-
-@[category research solved, AMS 11]
-theorem target_theorem_0 : ... := by ...
-
-end OeisA62567
-```
-
-## Mathematical Faithfulness & Implementation Best Practices
-
-- **Avoid Tautologies**: Ensure the main conjecture is not a trivial restatement of a recursive definition or a placeholder function. The formalization must be a faithful representation of the actual open or solved mathematical problem.
-- **Rigorous Fuel**: When implementing bounded searches or trial division to keep functions kernel-computable, use mathematically rigorous fuel (e.g., bounding the search via Euclid's theorem or known mathematical limits) rather than arbitrary large constants like `100000`. This ensures both clean structural recursion and absolute mathematical correctness for proofs.
