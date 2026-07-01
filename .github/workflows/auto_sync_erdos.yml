@@ -1,0 +1,40 @@
+name: Auto Sync Erdos Statuses
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly on Sundays at midnight
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run auto-fixer
+        run: python scripts/check_erdos_status.py --auto-fix
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(erdos): auto-sync Erdos problem statuses"
+          title: "chore(erdos): auto-sync Erdos problem statuses"
+          body: |
+            This PR automatically synchronizes the `@[category research ...]` attributes in `.lean` files with the upstream status from `erdosproblems.com`.
+            
+            _This PR was created automatically by the Auto Sync Erdos Statuses workflow._
+          branch: chore/auto-sync-erdos-status
+          labels: erdos-status-sync
