@@ -30,6 +30,26 @@ noncomputable def matchingNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ
   let matchings := { M : Subgraph G | M.IsMatching }
   sSup (Set.image (fun M => (M.edgeSet.toFinset.card : ℝ)) matchings)
 
+/-- A finite set of edges `M` is a *matching* of `G` if every element of `M` is
+an edge of `G` and any two edges of `M` are equal or share no vertex (no vertex
+is covered twice). -/
+def IsEdgeMatching (G : SimpleGraph α) (M : Finset (Sym2 α)) : Prop :=
+  (∀ e ∈ M, e ∈ G.edgeSet) ∧
+    ∀ e₁ ∈ M, ∀ e₂ ∈ M, e₁ = e₂ ∨ ∀ v : α, ¬ (v ∈ e₁ ∧ v ∈ e₂)
+
+instance (G : SimpleGraph α) [DecidableRel G.Adj] (M : Finset (Sym2 α)) :
+    Decidable (G.IsEdgeMatching M) := by
+  unfold IsEdgeMatching; infer_instance
+
+/-- A matching `M` of `G` is *maximal* if no further edge of `G` can be added to
+`M` while keeping the matching property. -/
+def IsMaximalEdgeMatching (G : SimpleGraph α) (M : Finset (Sym2 α)) : Prop :=
+  G.IsEdgeMatching M ∧
+    ∀ e ∈ G.edgeSet, e ∉ M → ¬ G.IsEdgeMatching (insert e M)
+
+instance (G : SimpleGraph α) [DecidableRel G.Adj] (M : Finset (Sym2 α)) :
+    Decidable (G.IsMaximalEdgeMatching M) := by
+  unfold IsMaximalEdgeMatching; infer_instance
 
 /-- In a finite graph, twice the number of edges of any matching is at most the number of
 vertices: each edge contributes two distinct vertices, and a matching's edges are vertex-disjoint. -/
