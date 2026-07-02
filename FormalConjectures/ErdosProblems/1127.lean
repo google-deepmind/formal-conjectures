@@ -19,25 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1127
 
-*Reference:* [erdosproblems.com/1127](https://www.erdosproblems.com/1127)
-
-Can $\mathbb{R}^n$ be decomposed into countably many sets such that within each
-set all the pairwise distances are distinct?
-
-The answer is independent of ZFC.
-
-Assuming the continuum hypothesis, the answer is yes: Erdős and Kakutani [ErKa43]
-proved that the continuum hypothesis is equivalent to the statement that
-$\mathbb{R}$ is the union of countably many sets each linearly independent over
-$\mathbb{Q}$ (which gives the case $n = 1$); Davies [Da72] proved the case
-$n = 2$, and Kunen [Ku87] proved it for all $n$.
-
-Conversely, some hypothesis beyond ZFC is necessary: Erdős and Hajnal showed
-that if the continuum hypothesis fails, then in any decomposition of
-$\mathbb{R}$ into finitely many sets, one of the sets contains four points
-determining only four distances (in particular, with a repeated distance).
-
 *References:*
+- [erdosproblems.com/1127](https://www.erdosproblems.com/1127)
 - [ErKa43] Erdős, P. and Kakutani, S., _On non-denumerable graphs_,
   Bull. Amer. Math. Soc. 49 (1943), 457–461.
 - [Da72] Davies, R. O., _Partitioning the plane into denumerably many sets
@@ -54,18 +37,9 @@ open scoped Cardinal
 namespace Erdos1127
 
 /--
-A set $A$ in a metric space has **pairwise distinct distances** if any two pairs of
-distinct points of $A$ realising the same distance are equal as unordered pairs:
-whenever $x, y, z, w \in A$ with $x \neq y$, $z \neq w$ and
-$d(x, y) = d(z, w)$, we have $\{x, y\} = \{z, w\}$.
--/
-def PairwiseDistinctDistances {X : Type*} [MetricSpace X] (A : Set X) : Prop :=
-  ∀ x ∈ A, ∀ y ∈ A, ∀ z ∈ A, ∀ w ∈ A,
-    x ≠ y → z ≠ w → dist x y = dist z w → (x = z ∧ y = w) ∨ (x = w ∧ y = z)
-
-/--
 `Decomposable n` states that $\mathbb{R}^n$ can be decomposed into countably many
-sets each of which has pairwise distinct distances.
+sets each of which has pairwise distinct distances (`PairwiseDistinctDistances`, from
+`FormalConjecturesForMathlib.Geometry.Metric`).
 -/
 def Decomposable (n : ℕ) : Prop :=
   ∃ A : ℕ → Set (EuclideanSpace ℝ (Fin n)),
