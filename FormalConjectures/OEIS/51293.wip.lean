@@ -1,5 +1,5 @@
 /-
-Copyright 2025 Google LLC
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Conjectures associated with A51293
 
-A051293: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
+a: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
 
 `S_real n k` is the number of $k$-element subsets of $\{1, 2, \dots, n\}$ whose sum is divisible by $k$.
 By the roots of unity filter, this exact count can be written as:
@@ -61,15 +61,15 @@ limitations under the License.
 open Finset Nat Real Filter Asymptotics
 
 /--
-A051293: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
+a: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
 -/
-def A051293 (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   Finset.card (
     (Finset.Icc 1 n).powerset.filter fun S : Finset ℕ =>
       S.Nonempty ∧ S.card ∣ S.sum id
   )
 
-noncomputable def a_real (n : ℕ) : ℝ := A051293 n
+noncomputable def a_real (n : ℕ) : ℝ := a n
 
 -- EVOLVE-BLOCK-START
 noncomputable def I_sum (n : ℕ) : ℝ := ∑ k ∈ Finset.Icc 1 n, (1 : ℝ) / k * (Nat.choose n k : ℝ)
@@ -260,7 +260,7 @@ noncomputable def S_real (n k : ℕ) : ℝ :=
 
 lemma a_real_eq_sum_S_real (n : ℕ) : a_real n = ∑ k ∈ Finset.Icc 1 n, S_real n k := by
   delta and S_real a_real
-  push_cast[ Finset.card_filter, A051293, false,id]
+  push_cast[ Finset.card_filter, a, false,id]
   exact ( Finset.sum_comm.trans ( Finset.sum_congr rfl fun and β=>by norm_num[ (and.card_mono (Finset.mem_powerset.1 β)).trans,ite_and,Nat.succ_sub_one _,Nat.succ_le])).symm
 
 /--
@@ -485,19 +485,19 @@ lemma a_real_diff : Tendsto (fun n : ℕ => (a_real n - I_sum n) / (((2 : ℝ) ^
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : A051293 1 = 1 := by rfl
+lemma test_a_1 : a 1 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : A051293 2 = 2 := by rfl
+lemma test_a_2 : a 2 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : A051293 3 = 5 := by rfl
+lemma test_a_3 : a 3 = 5 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : A051293 4 = 8 := by rfl
+lemma test_a_4 : a 4 = 8 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_5 : A051293 5 = 15 := by rfl
+lemma test_a_5 : a 5 = 15 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

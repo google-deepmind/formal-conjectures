@@ -17,16 +17,16 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A282779
+# Conjectures associated with a
 
-A282779: Period of cubes mod $n$.
+a: Period of cubes mod $n$.
 The $n$-th term $a(n)$ is the smallest positive integer $T$ such that $\forall k \in \mathbb{N}$, $(k+T)^3 \equiv k^3 \pmod n$.
 
 The length of the minimal positive period of the sequence $k^p \pmod n$.
 $a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equiv k^p \pmod n \}$.
 
 *References:*
-- [A282779](https://oeis.org/A282779)
+- [a](https://oeis.org/a)
 -/
 
 namespace OeisA282779
@@ -37,10 +37,10 @@ set_option linter.style.category_attribute false
 open Nat Set Classical
 
 /--
-A282779: Period of cubes mod $n$.
+a: Period of cubes mod $n$.
 The $n$-th term $a(n)$ is the smallest positive integer $T$ such that $\forall k \in \mathbb{N}$, $(k+T)^3 \equiv k^3 \pmod n$.
 -/
-noncomputable def A282779 (n : ℕ) : ℕ :=
+noncomputable def a (n : ℕ) : ℕ :=
   if n = 0 then 0 -- Handle the non-sequence index n=0
   else
     -- sInf computes the infimum of the set, which is the minimum since ℕ is well-ordered.
@@ -115,18 +115,18 @@ theorem target_theorem_0
 
 
 @[category test, AMS 11]
-lemma test_a_1 : A282779 1 = 1 := by exact target_theorem_0 3 1 (by decide) (by decide)
+lemma test_a_1 : a 1 = 1 := by exact target_theorem_0 3 1 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma test_a_2 : A282779 2 = 2 := by exact target_theorem_0 3 2 (by decide) (by decide)
+lemma test_a_2 : a 2 = 2 := by exact target_theorem_0 3 2 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma test_a_3 : A282779 3 = 3 := by exact target_theorem_0 3 3 (by decide) (by decide)
+lemma test_a_3 : a 3 = 3 := by exact target_theorem_0 3 3 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma test_a_4 : A282779 4 = 4 := by exact target_theorem_0 3 4 (by decide) (by decide)
+lemma test_a_4 : a 4 = 4 := by exact target_theorem_0 3 4 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma test_a_5 : A282779 5 = 5 := by exact target_theorem_0 3 5 (by decide) (by decide)
+lemma test_a_5 : a 5 = 5 := by exact target_theorem_0 3 5 (by decide) (by decide)
 
 end OeisA282779

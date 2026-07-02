@@ -17,15 +17,15 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A363347
+# Conjectures associated with a
 
-Helper function for A363347, which computes the denominator $R_k(n)$ of the continued fraction expression.
+Helper function for a, which computes the denominator $R_k(n)$ of the continued fraction expression.
 For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:
 $$R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$$
 The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
 
 *References:*
-- [A363347](https://oeis.org/A363347)
+- [a](https://oeis.org/a)
 -/
 
 namespace OeisA363347
@@ -36,7 +36,7 @@ set_option linter.style.category_attribute false
 open Rat Nat
 
 /--
-Helper function for A363347, which computes the denominator $R_k(n)$ of the continued fraction expression.
+Helper function for a, which computes the denominator $R_k(n)$ of the continued fraction expression.
 For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:
 $$R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$$
 The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
@@ -59,12 +59,12 @@ def continued_fraction_denominator (n k : ℕ) : ℚ :=
 termination_by n - k
 
 /--
-A363347: Denominator of the continued fraction
+a: Denominator of the continued fraction
 $$\frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \frac{n}{-4}}}}}} $$
 The value of the continued fraction is $C_n = 1/R_2(n)$. If $R_2(n) = N/D$ in reduced form, $C_n = D/N$.
 The sequence $a(n)$ is the denominator of the final fraction, which is $\vert N \vert$.
 -/
-noncomputable def A363347 (n : ℕ) : ℕ :=
+noncomputable def a (n : ℕ) : ℕ :=
   if n ≤ 2 then 0 -- The sequence is indexed starting from $n=3$.
   else
     let R2 := continued_fraction_denominator n 2
@@ -493,8 +493,8 @@ lemma Rat_num_natAbs_eq (a b : ℤ) (hb : b ≠ 0) :
   exact (Int.natAbs_ediv_of_dvd (Int.natCast_dvd.2 (by simp_all[Nat.gcd_dvd]))).trans (by cases Ne.lt_or_gt hb with simp_all[b.sign_eq_neg_one_of_neg,b.sign_eq_one_of_pos,Int.gcd])
 
 lemma A363347_eq_reduced (n : ℕ) (hn : n ≥ 3) :
-  A363347 n = (A_int n 2).natAbs / Int.gcd (A_int n 2) (A_int n 3) := by
-  unfold A363347
+  a n = (A_int n 2).natAbs / Int.gcd (A_int n 2) (A_int n 3) := by
+  unfold a
   have h1 : ¬(n ≤ 2) := by omega
   simp [h1]
   have hk1 : 2 ≤ 2 := by omega
@@ -772,7 +772,7 @@ lemma p_not_dvd_A3 (n p k : ℕ) (hp : p.Prime) (hn : n ≥ 3) (hn_lt : n < p)
 
 lemma A363347_eval (n p k : ℕ) (hp : p.Prime) (hn : n ≥ 3) (hn_lt : n < p)
   (h_A2 : (A_int n 2).natAbs = k * p) (hk_pos : k > 0)
-  (h_k_dvd : (k : ℤ) ∣ A_int n 3) (h_p_not_dvd : ¬ ((p : ℤ) ∣ A_int n 3)) : A363347 n = p := by
+  (h_k_dvd : (k : ℤ) ∣ A_int n 3) (h_p_not_dvd : ¬ ((p : ℤ) ∣ A_int n 3)) : a n = p := by
   have h_reduced := A363347_eq_reduced n hn
   rw [h_reduced]
   rw [h_A2]
@@ -784,7 +784,7 @@ lemma A363347_eval (n p k : ℕ) (hp : p.Prime) (hn : n ≥ 3) (hn_lt : n < p)
   exact Nat.mul_div_cancel_left p hk_pos
 
 lemma A363347_achieves_prime (p : ℕ) (hp : p.Prime) (hmod : p ≡ 1 [MOD 10] ∨ p ≡ 9 [MOD 10]) :
-  ∃ n : ℕ, A363347 n = p := by
+  ∃ n : ℕ, a n = p := by
   have h_p_ge_11 : p ≥ 11 := by match p with |1|9|10=>contradiction | S +11=>omega
   have hx := exists_sq_eq_five p hp hmod
   rcases hx with ⟨x, hx_le, hx_sq⟩
@@ -807,23 +807,23 @@ lemma A363347_achieves_prime (p : ℕ) (hp : p.Prime) (hmod : p ≡ 1 [MOD 10] �
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_3 : A363347 3 = 11 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+lemma test_a_3 : a 3 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma test_a_4 : A363347 4 = 5 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+lemma test_a_4 : a 4 = 5 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma test_a_5 : A363347 5 = 31 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+lemma test_a_5 : a 5 = 31 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma test_a_6 : A363347 6 = 11 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+lemma test_a_6 : a 6 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma test_a_7 : A363347 7 = 59 := by delta A363347; repeat rw [continued_fraction_denominator]; norm_num
+lemma test_a_7 : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
-  : ∀ p : ℕ, (p.Prime ∧ (p ≡ 1 [MOD 10] ∨ p ≡ 9 [MOD 10])) → ∃ n : ℕ, A363347 n = p := by
+  : ∀ p : ℕ, (p.Prime ∧ (p ≡ 1 [MOD 10] ∨ p ≡ 9 [MOD 10])) → ∃ n : ℕ, a n = p := by
   -- EVOLVE-BLOCK-START
   intro p hp
   exact A363347_achieves_prime p hp.1 hp.2

@@ -17,13 +17,13 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A256012
+# Conjectures associated with a
 
-A256012: Number of partitions of $n$ into distinct parts that are not squarefree.
+a: Number of partitions of $n$ into distinct parts that are not squarefree.
 This is the number of finite subsets of positive integers $P$ such that $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
 
 *References:*
-- [A256012](https://oeis.org/A256012)
+- [a](https://oeis.org/a)
 -/
 
 namespace OeisA256012
@@ -34,10 +34,10 @@ set_option linter.style.category_attribute false
 open Nat Finset
 
 /--
-A256012: Number of partitions of $n$ into distinct parts that are not squarefree.
+a: Number of partitions of $n$ into distinct parts that are not squarefree.
 This is the number of finite subsets of positive integers $P$ such that $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
 -/
-def A256012 (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   -- The parts must be $\le n$ to sum to $n$.
   -- This is $\{1, 2, \dots, n\}$
   let potential_parts : Finset ℕ := range (n + 1) \ {0}
@@ -73,25 +73,25 @@ lemma not_sq_27 : ¬ Squarefree 27 := by
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_0 : A256012 0 = 1 := by decide
+lemma test_a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : A256012 1 = 0 := by native_decide
+lemma test_a_1 : a 1 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : A256012 2 = 0 := by native_decide
+lemma test_a_2 : a 2 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : A256012 3 = 0 := by native_decide
+lemma test_a_3 : a 3 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : A256012 4 = 1 := by native_decide
+lemma test_a_4 : a 4 = 1 := by native_decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
-  (n : ℕ) (hn : n > 23) : A256012 n > 0 := by
+  (n : ℕ) (hn : n > 23) : a n > 0 := by
   -- EVOLVE-BLOCK-START
-  rw [A256012]
+  rw [a]
   apply Finset.card_pos.mpr
   have h_cases : n % 4 = 0 ∨ n % 4 = 1 ∨ n % 4 = 2 ∨ n % 4 = 3 := by omega
   rcases h_cases with h0 | h1 | h2 | h3

@@ -17,14 +17,14 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A382590
+# Conjectures associated with a
 
-Helper function for A382590, computing the pair $(a(n), b(n))$ such that:
+Helper function for a, computing the pair $(a(n), b(n))$ such that:
 $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
 $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 
 *References:*
-- [A382590](https://oeis.org/A382590)
+- [a](https://oeis.org/a)
 -/
 
 namespace OeisA382590
@@ -37,7 +37,7 @@ open scoped Classical
 open Int
 
 /--
-Helper function for A382590, computing the pair $(a(n), b(n))$ such that:
+Helper function for a, computing the pair $(a(n), b(n))$ such that:
 $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
 $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 -/
@@ -50,12 +50,12 @@ def A382590_pair : ℕ → ℤ × ℤ
   (a_n_plus_1 * b_n + a_n * b_n_plus_1, a_n_plus_1 * b_n - a_n * b_n_plus_1)
 
 /--
-A382590: $a(n)$ is the sequence defined by the mutual recurrence relations:
+a: $a(n)$ is the sequence defined by the mutual recurrence relations:
 $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$ and $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 starting with $a(0) = b(0) = b(1) = 1$ and a(1) = 2.
 The terms are in $\mathbb{Z}$ due to negative values.
 -/
-def A382590 (n : ℕ) : ℤ := (A382590_pair n).fst
+def a (n : ℕ) : ℤ := (A382590_pair n).fst
 
 open Nat
 
@@ -263,23 +263,23 @@ lemma kth_prime_factor_eq_2 (k : ℕ) (n : ℤ) (hk : k ≥ 2) (hn : n ≠ 0) (h
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_0 : A382590 0 = 1 := by rfl
+lemma test_a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : A382590 1 = 2 := by rfl
+lemma test_a_1 : a 1 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : A382590 2 = 3 := by rfl
+lemma test_a_2 : a 2 = 3 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : A382590 3 = 5 := by rfl
+lemma test_a_3 : a 3 = 5 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : A382590 4 = 8 := by rfl
+lemma test_a_4 : a 4 = 8 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
-  : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧ ∀ n : ℕ, n ≥ N₀ → kth_prime_factor k (A382590 (n + p)) = kth_prime_factor k (A382590 n) := by
+  : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧ ∀ n : ℕ, n ≥ N₀ → kth_prime_factor k (a (n + p)) = kth_prime_factor k (a n) := by
   -- EVOLVE-BLOCK-START
   intros k hk
   use k + 4, 1
@@ -291,10 +291,10 @@ theorem target_theorem_0
   have ha_div := a_n_div_2_pow n k hn_ge
   have ha1_nz := a_n_not_zero (n + 1)
   have ha_nz := a_n_not_zero n
-  have h1 : kth_prime_factor k (A382590 (n + 1)) = 2 := by
-    exact kth_prime_factor_eq_2 k (A382590 (n + 1)) hk ha1_nz ha1_div
-  have h2 : kth_prime_factor k (A382590 n) = 2 := by
-    exact kth_prime_factor_eq_2 k (A382590 n) hk ha_nz ha_div
+  have h1 : kth_prime_factor k (a (n + 1)) = 2 := by
+    exact kth_prime_factor_eq_2 k (a (n + 1)) hk ha1_nz ha1_div
+  have h2 : kth_prime_factor k (a n) = 2 := by
+    exact kth_prime_factor_eq_2 k (a n) hk ha_nz ha_div
   rw [h1, h2]
   -- EVOLVE-BLOCK-END
 

@@ -17,15 +17,15 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A278070
+# Conjectures associated with a
 
-A278070: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
+a: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
 This is equivalent to the combinatorial sum:
 $$a(n) = \sum_{k=0}^n \binom{n}{k} \binom{n+k-1}{k} k!$$
 The expression uses $\mathbb{N}$ arithmetic throughout, safely handling the subtraction via `Nat.pred`.
 
 *References:*
-- [A278070](https://oeis.org/A278070)
+- [a](https://oeis.org/a)
 -/
 
 namespace OeisA278070
@@ -36,12 +36,12 @@ set_option linter.style.category_attribute false
 open Nat Finset
 
 /--
-A278070: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
+a: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
 This is equivalent to the combinatorial sum:
 $$a(n) = \sum_{k=0}^n \binom{n}{k} \binom{n+k-1}{k} k!$$
 The expression uses $\mathbb{N}$ arithmetic throughout, safely handling the subtraction via `Nat.pred`.
 -/
-def A278070 (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   (Finset.range (n + 1)).sum fun k =>
     (n.choose k) * ((n + k).pred.choose k) * (k.factorial)
 
@@ -50,25 +50,25 @@ def A278070 (n : ℕ) : ℕ :=
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_0 : A278070 0 = 1 := by rfl
+lemma test_a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : A278070 1 = 2 := by rfl
+lemma test_a_1 : a 1 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : A278070 2 = 11 := by rfl
+lemma test_a_2 : a 2 = 11 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : A278070 3 = 106 := by rfl
+lemma test_a_3 : a 3 = 106 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : A278070 4 = 1457 := by rfl
+lemma test_a_4 : a 4 = 1457 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
-  : ∀ (n k : ℕ), Nat.ModEq k (A278070 (n + k)) (A278070 n) := by
+  : ∀ (n k : ℕ), Nat.ModEq k (a (n + k)) (a n) := by
   -- EVOLVE-BLOCK-START
-  norm_num [ A278070]
+  norm_num [ a]
   refine fun and (R) => if a : R=0 then(a)▸rfl else((( Finset.sum_nat_mod _ _ _).trans) ? _).trans (by rw [ Finset.sum_nat_mod])
   replace a x: (and+R).choose x*(and+R+x-1).choose x*x !%R=and.choose x*(and+x-1).choose x*x !%R:=add_comm and R▸R.add_choose_eq _ _▸?_
   · exact (congr_arg) (.%R) ((funext a).symm▸(Finset.sum_subset (List.range_subset.2 (by valid)) fun and A B=>by rw [Nat.choose_eq_zero_of_lt (not_lt.1 (B.comp (List.mem_range.2))), zero_mul, zero_mul, R.zero_mod]).symm)

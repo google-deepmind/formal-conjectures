@@ -17,16 +17,16 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A224515
+# Conjectures associated with a
 
-A224515: $a(n) = \text{least } k \text{ such that } \sqrt{k^2 \operatorname{XOR} (k+1)^2} = 2n+1, \text{ } a(n) = -1 \text{ if there is no such } k$.
+a: $a(n) = \text{least } k \text{ such that } \sqrt{k^2 \operatorname{XOR} (k+1)^2} = 2n+1, \text{ } a(n) = -1 \text{ if there is no such } k$.
 This is equivalent to finding the smallest $k \in \mathbb{N}$ such that $k^2 \oplus (k+1)^2 = (2n+1)^2$.
 We use the set infimum ($\operatorname{sInf}$) to denote the least element of the set of natural numbers satisfying the condition.
 Since Mathlib's `sInf` on a subset of `ℕ` gives a result in `ℕ`, this definition is only completely faithful to the OEIS when the set is non-empty.
 The OEIS definition implies that the set of k's is non-empty for all n.
 
 *References:*
-- [A224515](https://oeis.org/A224515)
+- [a](https://oeis.org/a)
 -/
 
 namespace OeisA224515
@@ -37,13 +37,13 @@ set_option linter.style.category_attribute false
 open Nat Set
 
 /--
-A224515: $a(n) = \text{least } k \text{ such that } \sqrt{k^2 \operatorname{XOR} (k+1)^2} = 2n+1, \text{ } a(n) = -1 \text{ if there is no such } k$.
+a: $a(n) = \text{least } k \text{ such that } \sqrt{k^2 \operatorname{XOR} (k+1)^2} = 2n+1, \text{ } a(n) = -1 \text{ if there is no such } k$.
 This is equivalent to finding the smallest $k \in \mathbb{N}$ such that $k^2 \oplus (k+1)^2 = (2n+1)^2$.
 We use the set infimum ($\operatorname{sInf}$) to denote the least element of the set of natural numbers satisfying the condition.
 Since Mathlib's `sInf` on a subset of `ℕ` gives a result in `ℕ`, this definition is only completely faithful to the OEIS when the set is non-empty.
 The OEIS definition implies that the set of k's is non-empty for all n.
 -/
-noncomputable def A224515 (n : ℕ) : ℕ :=
+noncomputable def a (n : ℕ) : ℕ :=
   -- The term (2*n + 1)^2 is the target value.
   let target_sq : ℕ := (2 * n + 1) ^ 2
   -- Define the set of candidate k's.
@@ -229,8 +229,8 @@ lemma exists_k_from_x (M S x : ℕ) (hS : S = 2 * M + 1) (hx_le : x ≤ S)
 -- EVOLVE-BLOCK-END
 
 lemma A224515_eq (n val : ℕ) (h_in : Nat.xor (val ^ 2) ((val + 1) ^ 2) = (2 * n + 1) ^ 2)
-  (h_min : ∀ k < val, Nat.xor (k ^ 2) ((k + 1) ^ 2) ≠ (2 * n + 1) ^ 2) : A224515 n = val := by
-  unfold A224515
+  (h_min : ∀ k < val, Nat.xor (k ^ 2) ((k + 1) ^ 2) ≠ (2 * n + 1) ^ 2) : a n = val := by
+  unfold a
   dsimp only
   refine csInf_eq_of_forall_ge_of_forall_gt_exists_lt ⟨val, h_in⟩ ?_ ?_
   · intro a ha
@@ -240,27 +240,27 @@ lemma A224515_eq (n val : ℕ) (h_in : Nat.xor (val ^ 2) ((val + 1) ^ 2) = (2 * 
     exact ⟨val, h_in, hw⟩
 
 @[category test, AMS 11]
-lemma test_a_0 : A224515 0 = 0 := by
+lemma test_a_0 : a 0 = 0 := by
   apply A224515_eq 0 0 (by decide)
   intro k hk; omega
 
 @[category test, AMS 11]
-lemma test_a_1 : A224515 1 = 4 := by
+lemma test_a_1 : a 1 = 4 := by
   apply A224515_eq 1 4 (by decide)
   intro k hk; interval_cases k <;> decide
 
 @[category test, AMS 11]
-lemma test_a_2 : A224515 2 = 3 := by
+lemma test_a_2 : a 2 = 3 := by
   apply A224515_eq 2 3 (by decide)
   intro k hk; interval_cases k <;> decide
 
 @[category test, AMS 11]
-lemma test_a_3 : A224515 3 = 24 := by
+lemma test_a_3 : a 3 = 24 := by
   apply A224515_eq 3 24 (by decide)
   intro k hk; interval_cases k <;> decide
 
 @[category test, AMS 11]
-lemma test_a_4 : A224515 4 = 23 := by
+lemma test_a_4 : a 4 = 23 := by
   apply A224515_eq 4 23 (by decide)
   intro k hk; interval_cases k <;> decide
 

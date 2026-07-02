@@ -17,15 +17,15 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A340737
+# Conjectures associated with a
 
-A340737: Numerators of a sequence of fractions converging to $e$.
+a: Numerators of a sequence of fractions converging to $e$.
 $$a(1) = 3, a(2) = 5$$
 For $n > 2$:
 $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) - \left(\frac{n-2}{2}\right) a(n-3) & \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 
 *References:*
-- [A340737](https://oeis.org/A340737)
+- [a](https://oeis.org/a)
 - [A340738](https://oeis.org/A340738)
 -/
 
@@ -41,12 +41,12 @@ open scoped Real
 open Nat
 
 /--
-A340737: Numerators of a sequence of fractions converging to $e$.
+a: Numerators of a sequence of fractions converging to $e$.
 $$a(1) = 3, a(2) = 5$$
 For $n > 2$:
 $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) - \left(\frac{n-2}{2}\right) a(n-3) & \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 -/
-noncomputable def A340737 (n : ℕ) : ℕ :=
+noncomputable def a (n : ℕ) : ℕ :=
   match n with
   | 0 => 0 -- Required for total function, O(1,1) suggests 0 is not relevant.
   | 1 => 3
@@ -54,9 +54,9 @@ noncomputable def A340737 (n : ℕ) : ℕ :=
   | n' + 3 => -- n $\ge$ 3
     let n := n' + 3
 
-    let a_nm1 := A340737 (n - 1)
-    let a_nm2 := A340737 (n - 2)
-    let a_nm3 := A340737 (n - 3)
+    let a_nm1 := a (n - 1)
+    let a_nm2 := a (n - 2)
+    let a_nm3 := a (n - 3)
 
     if n % 2 = 0 then
       -- n is even, n $\ge$ 4
@@ -73,7 +73,7 @@ termination_by n
 
 /--
 A340738: Denominators of a sequence of fractions converging to $e$.
-This sequence is defined by the same recurrence relation as A340737 but with initial values $b(1)=1, b(2)=2$.
+This sequence is defined by the same recurrence relation as a but with initial values $b(1)=1, b(2)=2$.
 $$b(1) = 1, b(2) = 2$$
 For $n > 2$:
 $$b(n) = \begin{cases} \left(\frac{n+2}{2}\right) b(n-1) - b(n-2) - \left(\frac{n-2}{2}\right) b(n-3) & \text{if } n \text{ is even} \\ 2 b(n-1) + n b(n-2) & \text{if } n \text{ is odd} \end{cases}$$
@@ -212,12 +212,12 @@ noncomputable def seqV : ℕ → ℝ
 | (k+2) => (4 * (k + 2 : ℝ) - 2) * seqV (k+1) + seqV k
 
 lemma A_match_all (n : ℕ) :
-  (A340737 (2*n + 1) : ℝ) = seqU (n + 1) ∧
-  (A340737 (2*n + 2) : ℝ) = ((2*n + 3) * seqU (n + 1) + seqU n) / 2 := by
+  (a (2*n + 1) : ℝ) = seqU (n + 1) ∧
+  (a (2*n + 2) : ℝ) = ((2*n + 3) * seqU (n + 1) + seqU n) / 2 := by
   induction n with
-  | zero => norm_num only [seqU, A340737, and_self_iff]
+  | zero => norm_num only [seqU, a, and_self_iff]
   | succ n ih => simp_all![seqU, mul_add, add_assoc, add_mul,add_div]
-                 simp_all![(A340737 ·)]
+                 simp_all![(a ·)]
                  ring_nf at*
                  norm_num[*, add_div]
                  simp_all[(by valid: (4+n*2 : Int)/2=2+n)]
@@ -344,14 +344,14 @@ lemma tendsto_seqU_div_seqV : Filter.Tendsto (fun k => seqU k / seqV k) Filter.a
 lemma tendsto_shift {α : Type*} {f : ℕ → α} {l : Filter α} (h : Filter.Tendsto f Filter.atTop l) : Filter.Tendsto (fun k => f (k + 1)) Filter.atTop l := by
   rwa[l.tendsto_add_atTop_iff_nat]
 
-lemma A_even_eq_seqU (k : ℕ) : (A340737 (2*k + 2) : ℝ) = ((2*k + 3) * seqU (k + 1) + seqU k) / 2 := by
+lemma A_even_eq_seqU (k : ℕ) : (a (2*k + 2) : ℝ) = ((2*k + 3) * seqU (k + 1) + seqU k) / 2 := by
   exact (A_match_all k).2
 
 lemma B_even_eq_seqV (k : ℕ) : (A340738 (2*k + 2) : ℝ) = ((2*k + 3) * seqV (k + 1) + seqV k) / 2 := by
   exact (B_match_all k).2
 
 lemma A_even_div_B_even_eq (k : ℕ) :
-  (A340737 (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ) =
+  (a (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ) =
   ((2*k + 3) * seqU (k + 1) + seqU k) / ((2*k + 3) * seqV (k + 1) + seqV k) := by
   have h1 := A_even_eq_seqU k
   have h2 := B_even_eq_seqV k
@@ -362,9 +362,9 @@ lemma A_even_div_B_even_eq (k : ℕ) :
   exact h_half _ _
 
 lemma A_even_div_B_even_eq_e_add (k : ℕ) :
-  (A340737 (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ) =
+  (a (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ) =
   Real.exp 1 + ((2*(k:ℝ) + 3) * seqE (k + 1) + seqE k) / ((2*(k:ℝ) + 3) * seqV (k + 1) + seqV k) := by
-  have heq : (A340737 (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ) = ((2*(k:ℝ) + 3) * seqU (k + 1) + seqU k) / ((2*(k:ℝ) + 3) * seqV (k + 1) + seqV k) := by
+  have heq : (a (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ) = ((2*(k:ℝ) + 3) * seqU (k + 1) + seqU k) / ((2*(k:ℝ) + 3) * seqV (k + 1) + seqV k) := by
     have h1 := A_even_div_B_even_eq k
     push_cast at h1
     exact h1
@@ -399,8 +399,8 @@ lemma tendsto_even_error_term : Filter.Tendsto (fun k : ℕ => ((2*(k:ℝ) + 3) 
   rw [add_zero] at h_sum
   exact tendsto_zero_of_abs_le abs_even_error_term_le h_sum
 
-lemma tendsto_A_even_div_B_even : Filter.Tendsto (fun k => (A340737 (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
-  have h_eq : (fun (k:ℕ) => (A340737 (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ)) =
+lemma tendsto_A_even_div_B_even : Filter.Tendsto (fun k => (a (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
+  have h_eq : (fun (k:ℕ) => (a (2*k + 2) : ℝ) / (A340738 (2*k + 2) : ℝ)) =
               (fun (k:ℕ) => Real.exp 1 + ((2 * (k:ℝ) + 3) * seqE (k + 1) + seqE k) / ((2 * (k:ℝ) + 3) * seqV (k + 1) + seqV k)) := by
     ext k
     exact A_even_div_B_even_eq_e_add k
@@ -420,28 +420,28 @@ lemma tendsto_even_odd_pos {α : Type*} [TopologicalSpace α] {f : ℕ → α} {
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : A340737 1 = 3 := by unfold A340737; rfl
+lemma test_a_1 : a 1 = 3 := by unfold a; rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : A340737 2 = 5 := by unfold A340737; rfl
+lemma test_a_2 : a 2 = 5 := by unfold a; rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : A340737 3 = 19 := by unfold A340737; unfold A340737; unfold A340737; simp
+lemma test_a_3 : a 3 = 19 := by unfold a; unfold a; unfold a; simp
 
 @[category test, AMS 11]
-lemma test_a_4 : A340737 4 = 49 := by unfold A340737; unfold A340737; unfold A340737; unfold A340737; simp
+lemma test_a_4 : a 4 = 49 := by unfold a; unfold a; unfold a; unfold a; simp
 
 @[category test, AMS 11]
-lemma test_a_5 : A340737 5 = 193 := by unfold A340737; unfold A340737; unfold A340737; unfold A340737; unfold A340737; simp
+lemma test_a_5 : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; simp
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
-  : Filter.Tendsto (fun n : ℕ => (A340737 n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
+  : Filter.Tendsto (fun n : ℕ => (a n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
   -- EVOLVE-BLOCK-START
-  have h_odd : Filter.Tendsto (fun k => (A340737 (2 * k + 1) : ℝ) / (A340738 (2 * k + 1) : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
-    have h_eq : (fun k => (A340737 (2 * k + 1) : ℝ) / (A340738 (2 * k + 1) : ℝ)) = (fun k => seqU (k + 1) / seqV (k + 1)) := by
+  have h_odd : Filter.Tendsto (fun k => (a (2 * k + 1) : ℝ) / (A340738 (2 * k + 1) : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
+    have h_eq : (fun k => (a (2 * k + 1) : ℝ) / (A340738 (2 * k + 1) : ℝ)) = (fun k => seqU (k + 1) / seqV (k + 1)) := by
       ext k
-      have h1 : (A340737 (2 * k + 1) : ℝ) = seqU (k + 1) := (A_match_all k).1
+      have h1 : (a (2 * k + 1) : ℝ) = seqU (k + 1) := (A_match_all k).1
       have h2 : (A340738 (2 * k + 1) : ℝ) = seqV (k + 1) := (B_match_all k).1
       rw [h1, h2]
     rw [h_eq]

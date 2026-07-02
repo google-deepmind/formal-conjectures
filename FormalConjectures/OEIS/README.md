@@ -8,6 +8,10 @@ When contributing to or reviewing formalizations in this directory, please follo
 
 - **Naming**: Files must be named after their OEIS number **without leading zeros** (e.g., `56777.lean`, `308734.lean`).
 
+## Sequence Definition Naming
+
+The primary defining sequence in each OEIS file must be named `a` (e.g., `def a (n : ℕ) : ℕ := ...`). Do not name the function after the OEIS number (`A224515`) or use uppercase letters. Secondary auxiliary sequences (such as denominators) may be named `b`, `c`, etc.
+
 ## Namespaces
 
 Every file must enclose all its declarations within a dedicated namespace matching `OeisA[Number]` (without leading zeros). This namespace should open immediately after the imports and module docstring, and close at the very end of the file.

@@ -17,17 +17,17 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A258667
+# Conjectures associated with a
 
-The inner sum of the formula used in A258667:
+The inner sum of the formula used in a:
 $$\sum_{\max(k-n+5, 0) \le j \le \min(k,4)} \binom{8-j}{j}\binom{2n-k+j-10}{k-j}$$
 
-A258667: A total of $n$ married couples, including a mathematician M and his wife, are to be seated at the $2n$ chairs around a circular table, with no man seated next to his wife. After the ladies are seated at every other chair, M is the first man allowed to choose one of the remaining chairs. The sequence gives the number of ways of seating the other men, with no man seated next to his wife, if M chooses the chair that is 9 seats clockwise from his wife's chair.
+a: A total of $n$ married couples, including a mathematician M and his wife, are to be seated at the $2n$ chairs around a circular table, with no man seated next to his wife. After the ladies are seated at every other chair, M is the first man allowed to choose one of the remaining chairs. The sequence gives the number of ways of seating the other men, with no man seated next to his wife, if M chooses the chair that is 9 seats clockwise from his wife's chair.
 
 $$a(n) = \begin{cases} 0 & \text{if } n \le 5 \\ \sum_{k=0}^{n-1}(-1)^k(n-k-1)! \sum_{\max(k-n+5, 0) \le j \le \min(k,4)} \binom{8-j}{j}\binom{2n-k+j-10}{k-j} & \text{if } n > 5 \end{cases}$$
 
 *References:*
-- [A258667](https://oeis.org/A258667)
+- [a](https://oeis.org/a)
 -/
 
 namespace OeisA258667
@@ -40,7 +40,7 @@ open scoped Topology
 open BigOperators Nat Int Real Asymptotics Filter
 
 /--
-The inner sum of the formula used in A258667:
+The inner sum of the formula used in a:
 $$\sum_{\max(k-n+5, 0) \le j \le \min(k,4)} \binom{8-j}{j}\binom{2n-k+j-10}{k-j}$$
 -/
 private def A258667_inner_sum (n k : ℕ) : ℤ :=
@@ -53,11 +53,11 @@ private def A258667_inner_sum (n k : ℕ) : ℤ :=
     ofNat term1 * ofNat term2
 
 /--
-A258667: A total of $n$ married couples, including a mathematician M and his wife, are to be seated at the $2n$ chairs around a circular table, with no man seated next to his wife. After the ladies are seated at every other chair, M is the first man allowed to choose one of the remaining chairs. The sequence gives the number of ways of seating the other men, with no man seated next to his wife, if M chooses the chair that is 9 seats clockwise from his wife's chair.
+a: A total of $n$ married couples, including a mathematician M and his wife, are to be seated at the $2n$ chairs around a circular table, with no man seated next to his wife. After the ladies are seated at every other chair, M is the first man allowed to choose one of the remaining chairs. The sequence gives the number of ways of seating the other men, with no man seated next to his wife, if M chooses the chair that is 9 seats clockwise from his wife's chair.
 
 $$a(n) = \begin{cases} 0 & \text{if } n \le 5 \\ \sum_{k=0}^{n-1}(-1)^k(n-k-1)! \sum_{\max(k-n+5, 0) \le j \le \min(k,4)} \binom{8-j}{j}\binom{2n-k+j-10}{k-j} & \text{if } n > 5 \end{cases}$$
 -/
-def A258667 (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   if h : n ≤ 5 then 0 else
   (Finset.sum (Finset.range n) fun k =>
     let sign : ℤ := if k % 2 = 0 then 1 else -1
@@ -87,7 +87,7 @@ noncomputable def A258667_asymptotic_sum_part (n : ℕ) : ℝ :=
       if denom = 0 then 0
       else ((-1 : ℝ) ^ k) / denom
 
-/-- The proposed asymptotic expression for A258667(n). -/
+/-- The proposed asymptotic expression for a(n). -/
 noncomputable def A258667_asymptotic_term (n : ℕ) : ℝ :=
   if n ≤ 2 then 0 -- Avoid division by zero, irrelevant for n -> infinity
   else
@@ -202,8 +202,8 @@ noncomputable def seq_sum (n : ℕ) : ℤ :=
     (if k % 2 = 0 then 1 else -1) * (Nat.factorial (n - 1 - k) : ℤ) * A258667_inner_sum n k
 
 lemma seq_def_eventually :
-  ∀ᶠ n in atTop, (A258667 n : ℝ) = |(seq_sum n : ℝ)| := by
-  delta and A258667 seq_sum
+  ∀ᶠ n in atTop, (a n : ℝ) = |(seq_sum n : ℝ)| := by
+  delta and a seq_sum
   exact (Filter.eventually_gt_atTop _).mono fun and(S) =>dif_neg S.not_ge▸.trans (Int.cast_inj.2<|Int.cast_natAbs _) ↑(Int.cast_abs)
 
 noncomputable def seq_sum_ratio (n : ℕ) : ℝ :=
@@ -400,7 +400,7 @@ lemma seq_sum_abs_equiv :
   exact h1.elim fun and⟨A, B⟩=>⟨_, A.norm.trans (by rw [norm_one]),B.mono fun and x =>(congr_arg abs x).trans ((norm_mul _ _).trans (congr_arg _ (Real.norm_of_nonneg (by positivity))))⟩
 
 lemma seq_equiv :
-  IsEquivalent atTop (fun n : ℕ => (A258667 n : ℝ)) (fun n => exp (-2) * nat_fac_to_real (n - 1)) := by
+  IsEquivalent atTop (fun n : ℕ => (a n : ℝ)) (fun n => exp (-2) * nat_fac_to_real (n - 1)) := by
   have h1 := seq_def_eventually
   have h2 := seq_sum_abs_equiv
   simp_rw [mul_comm, Asymptotics.isEquivalent_iff_exists_eq_mul]at *
@@ -409,23 +409,23 @@ lemma seq_equiv :
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : A258667 1 = 0 := by rfl
+lemma test_a_1 : a 1 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : A258667 2 = 0 := by rfl
+lemma test_a_2 : a 2 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : A258667 3 = 0 := by rfl
+lemma test_a_3 : a 3 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : A258667 4 = 0 := by rfl
+lemma test_a_4 : a 4 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_5 : A258667 5 = 0 := by rfl
+lemma test_a_5 : a 5 = 0 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
-  : IsEquivalent atTop (fun n : ℕ => (A258667 n : ℝ)) A258667_asymptotic_term := by
+  : IsEquivalent atTop (fun n : ℕ => (a n : ℝ)) A258667_asymptotic_term := by
   -- EVOLVE-BLOCK-START
   have h1 := seq_equiv
   have h2 := asymp_term_equiv

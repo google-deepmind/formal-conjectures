@@ -17,14 +17,14 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Conjectures associated with A289411
+# Conjectures associated with a
 
-A289411: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
+a: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
 $\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.
 The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mathbb{N}$.
 
 *References:*
-- [A289411](https://oeis.org/A289411)
+- [a](https://oeis.org/a)
 - [A007953](https://oeis.org/A007953)
 -/
 
@@ -36,11 +36,11 @@ set_option linter.style.category_attribute false
 open Nat
 
 /--
-A289411: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
+a: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
 $\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.
 The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mathbb{N}$.
 -/
-def A289411 (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   let digital_sum_ten (m : ℕ) : ℕ := (Nat.digits 10 m).sum
   (Finset.range (n + 1)).sum (fun k =>
     Int.sign ((digital_sum_ten (5 * k) : ℤ) - (digital_sum_ten k : ℤ)))
@@ -149,36 +149,38 @@ lemma sum_symm_zero (H k : ℕ) (hk : 0 < k) (hH : H = 10^k / 2) (i : ℕ) (hi :
 
 
 @[category test, AMS 11]
-lemma test_a_0 : A289411 0 = 0 := by native_decide
+lemma test_a_0 : a 0 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : A289411 1 = 1 := by native_decide
+lemma test_a_1 : a 1 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : A289411 2 = 0 := by native_decide
+lemma test_a_2 : a 2 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : A289411 3 = 1 := by native_decide
+lemma test_a_3 : a 3 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : A289411 4 = 0 := by native_decide
+lemma test_a_4 : a 4 = 0 := by native_decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0
   (k : ℕ) (hk : 0 < k) :
     let m_k : ℕ := (10 ^ k) / 2 - 1
-    ∀ i : ℕ, i ≤ m_k → A289411 (m_k - i) = A289411 (m_k + i) := by
+    ∀ i : ℕ, i ≤ m_k → a (m_k - i) = a (m_k + i) := by
   -- EVOLVE-BLOCK-START
   intro m_k i hi
   have hH : m_k + 1 = 10^k / 2 := by exact (Nat.sub_add_cancel ((2).div_pos (.trans (by decide) (pow_right_monotone (by decide) (hk))) (by decide)))
   have h_sum : ∑ j ∈ Finset.Ico (m_k + 1 - i) (m_k + 1 + i), sign_f j = 0 := by
     apply sum_symm_zero (m_k + 1) k hk hH i
     refine le_add_right hi
-  have h_A1 : A289411 (m_k + i) = (∑ j ∈ Finset.range (m_k + i + 1), sign_f j).toNat := by delta sign_f A289411
-                                                                                           zify [ f]
-                                                                                           zify[S]
-  have h_A2 : A289411 (m_k - i) = (∑ j ∈ Finset.range (m_k - i + 1), sign_f j).toNat := by delta sign_f A289411 at*
-                                                                                           rfl
+  have h_A1 : a (m_k + i) = (∑ j ∈ Finset.range (m_k + i + 1), sign_f j).toNat := by
+    delta sign_f a
+    zify [f]
+    zify [S]
+  have h_A2 : a (m_k - i) = (∑ j ∈ Finset.range (m_k - i + 1), sign_f j).toNat := by
+    delta sign_f a at *
+    rfl
   have h_range_split : ∑ j ∈ Finset.range (m_k + i + 1), sign_f j =
       (∑ j ∈ Finset.range (m_k - i + 1), sign_f j) + ∑ j ∈ Finset.Ico (m_k - i + 1) (m_k + i + 1), sign_f j := by
     exact ( Finset.sum_range_add_sum_Ico sign_f (by(omega))).symm
