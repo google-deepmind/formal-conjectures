@@ -231,7 +231,6 @@ unsafe def main (args : List String) : IO Unit := do
     let tags ← getTags
     let subjectTags ← getSubjectTags
     let formalProofTags ← getFormalProofTags
-    let proofConditionTags ← getProofConditionTags
 
     -- Create maps for quick lookup
     let mut categoryMap : Std.HashMap Name (List String) := {}
@@ -244,12 +243,6 @@ unsafe def main (args : List String) : IO Unit := do
     let mut formalProofMap : Std.HashMap Name FormalProofTag := {}
     for tag in formalProofTags do
       formalProofMap := formalProofMap.insert tag.declName tag
-
-    -- Create proof condition map (a declaration may carry several conditions)
-    let mut proofConditionMap : Std.HashMap Name (List String) := {}
-    for tag in proofConditionTags do
-      proofConditionMap := proofConditionMap.insert tag.declName
-        (tag.condition :: proofConditionMap.getD tag.declName [])
 
     let mut subjectMap : Std.HashMap Name (List String) := {}
     for tag in subjectTags do
@@ -311,8 +304,10 @@ unsafe def main (args : List String) : IO Unit := do
                   IO.eprintln s!"WARNING: Theorem {name} is categorised as `API` but has no sorry-free proof"
                 | _, _ => pure ()
               let subsets := (theoremToSubsets.getD name []).toArray.qsort (· < ·) |>.toList
+              -- The unproven hypotheses a conditional formal proof assumes,
+              -- as declaration names.
               let proofConditions :=
-                (proofConditionMap.getD name []).toArray.qsort (· < ·) |>.toList
+                ((formalProofMap.get? name).map (·.conditions.map Name.toString)).getD []
               -- Determine answerKinds from the elaborated type
               let answerKinds ← Meta.MetaM.run'
                 (getAnswerKinds info.type)

@@ -58,6 +58,20 @@ This is independent of the category attribute and can be used with any category.
 - `@[formal_proof using other_system at "link"]` : formally proved in another system
   (Roqc, Isabelle, Lean 3, HOL, etc.)
 
+### Conditional formal proofs
+A formal proof that only establishes the statement under an unproven hypothesis
+(such as GRH) is marked with the `conditional` modifier. Each hypothesis is stated
+as a declaration in the same file (with a `sorry` proof) and named in the
+`assuming` clause:
+- `@[conditional formal_proof using lean4 at "link" assuming grh]` : formally proved
+  in Lean 4 elsewhere, assuming the statement of the declaration `grh`.
+
+This is the structured counterpart to the `conditional_*` naming convention already
+used in the repository (e.g. `conditional_artin_primitive_roots`): a proof can be
+`sorry`-free and still establish the statement only under an unproven hypothesis,
+so a reader and the site can see exactly what is assumed rather than infer it from
+a declaration name.
+
 ### Usage examples
 The tag should be used as follows:
 ```
@@ -78,32 +92,18 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
 theorem a_solved_problem_with_formal_proof : ... := by
   sorry
 
+/-- The unproven hypothesis assumed by the conditional proof below (statement only). -/
+@[category research open]
+theorem grh : ... := by
+  sorry
+
+@[category research solved,
+  conditional formal_proof using lean4 at "https://example.com/proof" assuming grh]
+theorem a_conditionally_proved_problem : ... := by
+  sorry
+
 @[category test]
 theorem a_test_to_sanity_check_some_definition : ¬ FermatLastTheoremWith 1 := by
-  sorry
-```
-
-## The Proof Condition Attribute:
-
-### Overview
-Records an unproven assumption that a formal proof depends on. This is the
-structured counterpart to the `conditional_*` naming convention already used in
-the repository (e.g. `conditional_artin_primitive_roots`): a proof can be
-`sorry`-free and still establish the statement only under a hypothesis such as
-GRH, so a reader and the site can see the condition rather than infer it from a
-declaration name.
-
-Use it alongside `formal_proof` when the proof it points to is conditional. The
-attribute is repeatable, one condition per application.
-
-### Values
-- `@[proof_condition "GRH"]` : the proof holds under the Generalized Riemann Hypothesis.
-- `@[proof_condition "Maynard–Tao"]` : the proof assumes the Maynard–Tao theorem.
-
-### Usage example
-```
-@[category research solved, proof_condition "GRH"]
-theorem conditional_result (h : type_of% generalized_riemann_hypothesis) : ... := by
   sorry
 ```
 
@@ -220,6 +220,9 @@ structure FormalProofTag where
   proofKind : FormalProofKind
   /-- A link to the formal proof. -/
   proofLink : String
+  /-- Declarations (stated in the same file, with `sorry` proofs) for the unproven
+  hypotheses the proof assumes. Empty for an unconditional proof. -/
+  conditions : List Name := []
   deriving Inhabited, BEq, Hashable, ToExpr
 
 /-- Defines the `formalProofExt` extension for recording formal proof annotations. -/
@@ -231,31 +234,11 @@ initialize formalProofExt :
   }
 
 def addFormalProofEntry {m : Type → Type} [MonadEnv m]
-    (declName : Name) (kind : FormalProofKind) (link : String) : m Unit :=
+    (declName : Name) (kind : FormalProofKind) (link : String)
+    (conditions : List Name := []) : m Unit :=
   modifyEnv (formalProofExt.addEntry ·
-    { declName := declName, proofKind := kind, proofLink := link })
-
-/-- A tag recording an unproven assumption a formal proof depends on. -/
-structure ProofConditionTag where
-  /-- The name of the declaration with the given tag. -/
-  declName : Name
-  /-- A human-readable description of the condition (e.g. "GRH"). -/
-  condition : String
-  deriving Inhabited, BEq, Hashable, ToExpr
-
-/-- Defines the `proofConditionExt` extension for recording the unproven
-assumptions a formal proof depends on. -/
-initialize proofConditionExt :
-    SimplePersistentEnvExtension ProofConditionTag (Std.HashSet ProofConditionTag) ←
-  registerSimplePersistentEnvExtension {
-    addImportedFn := fun as => as.foldl Std.HashSet.insertMany {}
-    addEntryFn := .insert
-  }
-
-def addProofConditionEntry {m : Type → Type} [MonadEnv m]
-    (declName : Name) (condition : String) : m Unit :=
-  modifyEnv (proofConditionExt.addEntry ·
-    { declName := declName, condition := condition })
+    { declName := declName, proofKind := kind, proofLink := link,
+      conditions := conditions })
 
 structure SubjectTag where
   /-- The name of the declaration with the given tag. -/
@@ -330,7 +313,9 @@ initialize Lean.registerBuiltinAttribute {
   applicationTime := .afterTypeChecking
 }
 
-syntax (name := FormalProof_attr) "formal_proof" &"using" formalProofKind &"at" str : attr
+syntax (name := FormalProof_attr)
+  (&"conditional")? "formal_proof" &"using" formalProofKind &"at" str
+  (&"assuming" ident,+)? : attr
 
 /-- Records the existence and location of a formal proof for a statement.
 
@@ -339,46 +324,54 @@ This is independent of the `category` attribute and can be used with any categor
 Usage: `@[formal_proof using <kind> at "<link>"]` where `<kind>` is one of:
 - `formal_conjectures` : formally proved in this repository.
 - `lean4` : formally proved in Lean 4 elsewhere (e.g. Mathlib).
-- `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.) -/
+- `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.)
+
+A proof that only establishes the statement under unproven hypotheses is marked
+`conditional` and names the hypotheses, each stated as a declaration in the same
+file (with a `sorry` proof):
+`@[conditional formal_proof using <kind> at "<link>" assuming <decl>, ...]`. -/
 initialize Lean.registerBuiltinAttribute {
   name := `FormalProof_attr
   descr := "Annotation of the existence and location of a formal proof."
   add := fun decl stx _attrKind => do
-    match stx with
-    | `(attr| formal_proof using $kind at $link) => do
-      let some n := formalProofKind.toName kind | throwUnsupportedSyntax
-      let pfKind ← Lean.Meta.MetaM.run' <|
-        unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
-      Elab.addConstInfo kind n
-      -- Warn if this is attached to a `research open` problem.
-      let env ← getEnv
-      let catTags := categoryExt.getState env
-      if catTags.toArray.any fun tag => tag.declName == decl &&
-          tag.category == .research .open then
-        logWarning
-          "A `formal_proof` annotation on a `research open` problem is suspicious. \
-           If a formal proof exists, the problem should not be categorised as `open`."
-      addFormalProofEntry decl pfKind link.getString
-    | _ => throwUnsupportedSyntax
-  applicationTime := .afterTypeChecking
-}
-
-syntax (name := ProofCondition_attr) "proof_condition" str : attr
-
-/-- Records an unproven assumption a formal proof depends on.
-
-Use alongside `formal_proof` when the proof it points to is conditional. The
-attribute is repeatable, one condition per application.
-
-Usage: `@[proof_condition "<condition>"]`, e.g. `@[proof_condition "GRH"]`. -/
-initialize Lean.registerBuiltinAttribute {
-  name := `ProofCondition_attr
-  descr := "Annotation of an unproven assumption a formal proof depends on."
-  add := fun decl stx _attrKind => do
-    match stx with
-    | `(attr| proof_condition $cond) =>
-      addProofConditionEntry decl cond.getString
-    | _ => throwUnsupportedSyntax
+    let (kind, link, conds) ← match stx with
+      | `(attr| formal_proof using $kind at $link) =>
+        pure (kind, link, #[])
+      | `(attr| conditional formal_proof using $kind at $link assuming $conds,*) =>
+        pure (kind, link, conds.getElems)
+      | `(attr| conditional formal_proof using $_ at $_) =>
+        throwError
+          "a `conditional` formal proof must name the hypotheses it assumes: \
+           state each hypothesis as a declaration in this file (with a `sorry` proof) \
+           and reference it as `conditional formal_proof using <kind> at \"<link>\" \
+           assuming <decl>`."
+      | `(attr| formal_proof using $_ at $_ assuming $_,*) =>
+        throwError
+          "an `assuming` clause requires the `conditional` modifier: \
+           `conditional formal_proof using <kind> at \"<link>\" assuming <decl>`."
+      | _ => throwUnsupportedSyntax
+    let some n := formalProofKind.toName kind | throwUnsupportedSyntax
+    let pfKind ← Lean.Meta.MetaM.run' <|
+      unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
+    Elab.addConstInfo kind n
+    let env ← getEnv
+    -- Resolve each assumed hypothesis to a declaration (so it is checked to exist
+    -- and hovering it jumps to the statement).
+    let conditions ← conds.toList.mapM fun (c : TSyntax `ident) => do
+      let condName ← resolveGlobalConstNoOverload c.raw
+      Elab.addConstInfo c.raw condName
+      if (env.find? condName).bind (·.value?) |>.any (!·.hasSorry) then
+        logWarning m!"The assumed hypothesis `{condName}` has a sorry-free proof, \
+          so the formal proof may no longer need to be marked `conditional`."
+      return condName
+    -- Warn if this is attached to a `research open` problem.
+    let catTags := categoryExt.getState env
+    if catTags.toArray.any fun tag => tag.declName == decl &&
+        tag.category == .research .open then
+      logWarning
+        "A `formal_proof` annotation on a `research open` problem is suspicious. \
+         If a formal proof exists, the problem should not be categorised as `open`."
+    addFormalProofEntry decl pfKind link.getString conditions
   applicationTime := .afterTypeChecking
 }
 
@@ -460,13 +453,11 @@ def getFormalProofTag (declName : Name) : m (Option FormalProofTag) := do
   let tags ← getFormalProofTags
   return tags.find? (·.declName == declName)
 
-def getProofConditionTags : m (Array ProofConditionTag) := do
-  return proofConditionExt.getState (← MonadEnv.getEnv) |>.toArray
-
-/-- Get the conditions a given declaration's proof depends on. -/
-def getProofConditions (declName : Name) : m (Array String) := do
-  let tags ← getProofConditionTags
-  return (tags.filter (·.declName == declName)).map (·.condition)
+/-- Get the unproven hypotheses a given declaration's formal proof assumes.
+Empty when there is no formal proof or the proof is unconditional. -/
+def getProofConditions (declName : Name) : m (List Name) := do
+  let tag ← getFormalProofTag declName
+  return (tag.map (·.conditions)).getD []
 
 end Helper
 

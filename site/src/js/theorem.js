@@ -489,13 +489,15 @@ function renderDetail(theorem, siblings, verso, contributors) {
       </div>
     </div>` : '';
 
-  // Proof conditions: unproven assumptions the formal proof depends on.
+  // Unproven hypotheses a conditional formal proof assumes, as the names of
+  // declarations stated (with sorry proofs) in the same file.
   const proofConditions = theorem.proofConditions || [];
   const proofConditionsSection = proofConditions.length ? `
     <div class="theorem-detail__section">
-      <div class="detail-label">Proof conditions</div>
-      <div class="detail-value">The formal proof holds under
-        ${proofConditions.map(c => `<code>${FC.escapeHTML(c)}</code>`).join(', ')}.</div>
+      <div class="detail-label">Assumes</div>
+      <div class="detail-value">The formal proof assumes
+        ${proofConditions.map(c => `<code>${FC.escapeHTML(c)}</code>`).join(', ')},
+        stated in this file.</div>
     </div>` : '';
 
   const contributorsSection = contributors.length ? `
