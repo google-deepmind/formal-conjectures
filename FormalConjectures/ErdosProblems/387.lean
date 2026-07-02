@@ -24,17 +24,22 @@ import FormalConjectures.Util.ProblemImports
  - [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
  - [Fa66] Faulkner, M. "On a theorem of Sylvester and Schur." Journal of the London Mathematical
     Society 1.1 (1966): 107-110.
- -
+ - [BNPZ26] Bui, H., Naprienko, S., Pratt, K., and Zaharescu, A. Binomial coefficients with
+    divisors avoiding an interval. arXiv:2605.21221 (2026).
 -/
 
 open Filter
 
 namespace Erdos387
 
-/-- Is there an absolute constant `c > 0` such that, for all `1 ≤ k < n`, the binomial coefficient
-`n.choose k` has a divisor in `(cn, n]`? -/
-@[category research open, AMS 11]
-theorem erdos_387 : answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧ ∀ n k : ℕ, 1 ≤ k → k < n →
+/--
+Is there an absolute constant $c > 0$ such that, for all $1 \leq k < n$, the binomial coefficient
+$\binom{n}{k}$ has a divisor in $(cn, n]$?
+
+Bui, Naprienko, Pratt, and Zaharescu [BNPZ26] answered this negatively.
+-/
+@[category research solved, AMS 11]
+theorem erdos_387 : answer(False) ↔ ∃ c : ℝ, 0 < c ∧ ∀ n k : ℕ, 1 ≤ k → k < n →
     ∃ d : ℕ, (d : ℝ) ∈ Set.Ioc (c * n) n ∧ d ∣ n.choose k := by
   sorry
 
@@ -62,10 +67,15 @@ theorem erdos_387.variants.easy {n : ℕ} {k : ℕ} (hn : 1 ≤ n) (hk : k ≤ n
     · cases n <;> cases k <;> simp_all [Nat.add_one_mul_choose_eq]
   · exact Nat.le_of_dvd (by linarith) (gcd_dvd_right _ _)
 
-/-- Is it true for any `c < 1` and all `n` sufficiently large, for all `1 ≤ k < n`, `n.choose k`
-has a divisor in `(cn, n]`? This is a variant of `erdos_387` and appears in [Gu04]. -/
-@[category research open, AMS 11]
-theorem erdos_387.variants.guy : answer(sorry) ↔ ∀ c : ℝ, c < 1 → ∀ᶠ n : ℕ in atTop, ∀ k : ℕ, 1 ≤ k →
+/--
+Is it true for any $c < 1$ and all $n$ sufficiently large, for all $1 \leq k < n$,
+$\binom{n}{k}$ has a divisor in $(cn, n]$?
+
+This variant appears in [Gu04]. Bui, Naprienko, Pratt, and Zaharescu [BNPZ26] answered it
+negatively.
+-/
+@[category research solved, AMS 11]
+theorem erdos_387.variants.guy : answer(False) ↔ ∀ c : ℝ, c < 1 → ∀ᶠ n : ℕ in atTop, ∀ k : ℕ, 1 ≤ k →
     k < n → ∃ d : ℕ, (d : ℝ) ∈ Set.Ioc (c * n) n ∧ d ∣ n.choose k := by
   sorry
 
