@@ -101,6 +101,16 @@ lemma T0_pos (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
   refine if a :_ then (if_pos a▸ (p.div_pos (p.le_of_dvd @hn ↑(dvd_of_mul_left_dvd a)) hp.pos))else (if_neg a▸hn)
 -- EVOLVE-BLOCK-END
 
+
+/--
+a: Period of cubes mod $n$.
+The $n$-th term $a(n)$ is the smallest positive integer $T$ such that $\forall k \in \mathbb{N}$, $(k+T)^3 \equiv k^3 \pmod n$.
+
+The length of the minimal positive period of the sequence $k^p \pmod n$.
+$a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equiv k^p \pmod n \}$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/282779.wip.lean#L104"]
 theorem target_theorem_0

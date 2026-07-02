@@ -164,6 +164,14 @@ lemma a_three : a 3 = 1 := by native_decide
 @[category test, AMS 11]
 lemma a_four : a 4 = 0 := by native_decide
 
+
+/--
+a: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
+$\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.
+The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mathbb{N}$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/289411.wip.lean#L167"]
 theorem target_theorem_0

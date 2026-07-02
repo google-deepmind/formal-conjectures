@@ -185,6 +185,14 @@ lemma a_five : a 5 = 21 := by
   rw [h2]
   rfl
 
+
+/--
+The constant $r = (2 + \sqrt{5})/2$.
+
+The constant $r^2$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/341254.wip.lean#L188"]
 theorem target_theorem_0

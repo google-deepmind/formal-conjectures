@@ -695,6 +695,16 @@ lemma a_four : a 4 = 674708032182398976 := by
   have h : a = a_comp := by unfold a a_comp A005259' A005259_comp; rfl
   rw [h]; native_decide
 
+
+/--
+A005259: The auxiliary sequence used for the Hankel matrix, defined as
+$$\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$$
+
+A228143: Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with $(i,j)$-entry equal to A005259$(i+j)$ for all $i,j = 0,\dots,n$.
+The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/228143.wip.lean#L698"]
 theorem target_theorem_0

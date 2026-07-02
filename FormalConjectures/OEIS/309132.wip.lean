@@ -350,6 +350,14 @@ lemma a_four : a 4 = 16 := by delta a; norm_num [bernoulli]
 @[category test, AMS 11]
 lemma a_five : a 5 = 1 := by delta a; norm_num [bernoulli]
 
+
+/--
+A309132: a(n) is the denominator of F(n) = A027641(n-1)/n + A027642(n-1)/n^2.
+
+Definition of a Carmichael number $n$: a composite number s.t. $b^{n-1} \equiv 1 \pmod n$ for all $b$ coprime to $n$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/309132.wip.lean#L353"]
 theorem target_theorem_0

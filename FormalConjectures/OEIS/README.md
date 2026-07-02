@@ -43,6 +43,24 @@ where $a, b, c, d, x, y$ are nonnegative integers.
 -/
 ```
 
+## Main Theorem Docstrings
+
+The main problem or conjecture (typically the last theorem in the file) must have a dedicated docstring (`/-- ... -/`).
+- **Verbatim Citation**: The docstring must cite the conjecture from OEIS verbatim.
+- **Proof Attribution**: For solved problems where an AI-driven formal proof was found, the bottom of the docstring must include the following attribution line:
+  `A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).`
+
+```lean
+/--
+Any integer $n > 1$ can be written as $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$
+where $a, b, c, d, x, y$ are nonnegative integers.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at ...]
+theorem target_theorem_0 : ...
+```
+
 ## Term Theorems (`category test`)
 
 To ensure the formalized definition behaves correctly and matches the official OEIS sequence, every file **must include term theorems verifying the first few values of the sequence** (typically the first 5 values).

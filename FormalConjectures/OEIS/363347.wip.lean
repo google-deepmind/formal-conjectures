@@ -822,6 +822,15 @@ lemma a_six : a 6 = 11 := by delta a; repeat rw [continued_fraction_denominator]
 @[category test, AMS 11]
 lemma a_seven : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
+
+/--
+Helper function for a, which computes the denominator $R_k(n)$ of the continued fraction expression.
+For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:
+$$R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$$
+The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/363347.wip.lean#L825"]
 theorem target_theorem_0

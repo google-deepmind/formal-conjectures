@@ -127,6 +127,15 @@ lemma a_three : a 3 = 3136 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = -15616 := by rfl
 
+
+/--
+A113254: Corresponds to $m = 8$ in a family of 4th-order linear recurrence sequences.
+
+The sequence $a(n)$ is defined by the initial conditions $a(0)=-1, a(1)=4, a(2)=176, a(3)=3136$,
+and the linear recurrence relation $a(n) = -4 * a (n-1) + 256 * a (n-3) + 4096 * a (n-4)$ for $n \ge 4$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/113254.wip.lean#L130"]
 theorem target_theorem_0

@@ -278,6 +278,14 @@ lemma a_three : a 3 = 5 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = 8 := by rfl
 
+
+/--
+Helper function for a, computing the pair $(a(n), b(n))$ such that:
+$a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
+$b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/382590.wip.lean#L281"]
 theorem target_theorem_0

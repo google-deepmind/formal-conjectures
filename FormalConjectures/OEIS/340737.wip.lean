@@ -435,6 +435,15 @@ lemma a_four : a 4 = 49 := by unfold a; unfold a; unfold a; unfold a; simp
 @[category test, AMS 11]
 lemma a_five : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; simp
 
+
+/--
+a: Numerators of a sequence of fractions converging to $e$.
+$$a(1) = 3, a(2) = 5$$
+For $n > 2$:
+$$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) - \left(\frac{n-2}{2}\right) a(n-3) & \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/340737.wip.lean#L438"]
 theorem target_theorem_0

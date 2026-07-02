@@ -215,6 +215,16 @@ lemma a_three : a 3 = 0 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = -2 := by rfl
 
+
+/--
+A103311: A transform of the Fibonacci numbers.
+The sequence $a(n)$ satisfies the linear recurrence relation:
+$$a(n) = 3a(n-1) - 4a(n-2) + 2a(n-3) - a(n-4)$$
+with initial terms $a(0)=0, a(1)=1, a(2)=1, a(3)=0$.
+The sequence takes values in $\mathbb{Z}$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/103311.wip.lean#L218"]
 theorem target_theorem_0

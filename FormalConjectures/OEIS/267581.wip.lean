@@ -187,6 +187,16 @@ lemma a_three : a 3 = 13 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = 26 := by rfl
 
+
+/--
+The rule function for Rule 167. Inputs must be 0 or 1.
+
+The state of the Rule 167 elementary cellular automaton at time $t$ and position $x$.
+The initial condition is a single ON cell at $x=0$.
+$C(t, x)$ is structurally recursive on $t$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/267581.wip.lean#L190"]
 theorem target_theorem_0

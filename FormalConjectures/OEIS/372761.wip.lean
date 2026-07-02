@@ -730,6 +730,15 @@ lemma a_six : a 6 = 13 := by delta a continued_fraction_val; repeat rw [continue
 @[category test, AMS 11]
 lemma a_seven : a 7 = 31 := by delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
 
+
+/--
+Recursive function to compute $A_k(n)$, the denominator tail $k - \frac{k+1}{A_{k+1}(n)}$.
+The base case is at $k = n - 1$, where $A_{n-1} = (n-1) - \frac{n}{n+4}$.
+
+The total value of the continued fraction $C_n$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/372761.wip.lean#L733"]
 theorem target_theorem_0

@@ -137,6 +137,14 @@ lemma a_four : a 4 = 8910 := by rfl
 @[category test, AMS 11]
 lemma a_five : a 5 = -91090 := by rfl
 
+
+/--
+A243106: The sequence
+$$a(n) = \sum_{k=1}^n (-1)^{\operatorname{isprime}(k)} 10^k$$
+where the sign is $-1$ if $k$ is prime, and $1$ if $k$ is not prime.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/243106.wip.lean#L140"]
 theorem target_theorem_0

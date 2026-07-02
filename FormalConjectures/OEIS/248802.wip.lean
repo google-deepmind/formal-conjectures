@@ -205,6 +205,14 @@ lemma a_three : a 3 = 13 := by native_decide
 @[category test, AMS 11]
 lemma a_four : a 4 = 262147 := by native_decide
 
+
+/--
+A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
+
+An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting a(k)=67.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/248802.wip.lean#L208"]
 theorem target_theorem_0

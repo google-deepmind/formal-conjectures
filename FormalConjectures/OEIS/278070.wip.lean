@@ -65,6 +65,15 @@ lemma a_three : a 3 = 106 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = 1457 := by rfl
 
+
+/--
+a: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
+This is equivalent to the combinatorial sum:
+$$a(n) = \sum_{k=0}^n \binom{n}{k} \binom{n+k-1}{k} k!$$
+The expression uses $\mathbb{N}$ arithmetic throughout, safely handling the subtraction via `Nat.pred`.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/278070.wip.lean#L68"]
 theorem target_theorem_0

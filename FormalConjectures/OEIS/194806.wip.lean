@@ -469,6 +469,15 @@ lemma a_four : a 4 = 3 := by rfl
 @[category test, AMS 11]
 lemma a_five : a 5 = 4 := by rfl
 
+
+/--
+The set of all products of elements from a Finset S.
+
+A194806: Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$ such that $S \cdot S$ contains $T$,
+where $S \cdot S$ is the set of all products of elements of $S$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/194806.wip.lean#L472"]
 theorem target_theorem_0

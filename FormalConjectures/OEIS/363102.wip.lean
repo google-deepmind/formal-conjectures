@@ -280,6 +280,18 @@ lemma a_six : a 6 = 17 := by rfl
 @[category test, AMS 11]
 lemma a_seven : a 7 = 47 := by rfl
 
+
+/--
+Auxiliary sequence A051403, defined as
+$$\frac{(n+2) \sum_{k=0}^n k!}{2}$$
+
+A363102: Denominator of the continued fraction $1/(2-3/(3-4/(4-5/(...(n-1)-n/(-2)))))$.
+The sequence is defined by the formula:
+$$a(n) = \frac{n^2 - 2}{\gcd(n^2 - 2, 2 \cdot A051403(n-3) + n \cdot A051403(n-4))}$$
+The formula is valid for $n \ge 3$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/363102.wip.lean#L283"]
 theorem target_theorem_0

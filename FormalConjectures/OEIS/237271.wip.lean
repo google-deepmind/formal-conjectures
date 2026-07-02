@@ -99,6 +99,16 @@ lemma a_four : a 4 = 1 := by native_decide
 @[category test, AMS 11]
 lemma a_five : a 5 = 2 := by native_decide
 
+
+/--
+A237271: Number of parts in the symmetric representation of $\sigma(n)$.
+a(n) is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
+such that $d_{k+1}$ is odd and $d_{k+1} \ge 2 d_k$.
+
+The formula used is $1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of divisors of } n \mid d_{k+1} \text{ is odd and } d_{k+1} \ge 2 d_k\}|$, which is a known characterization of the sequence.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/237271.wip.lean#L102"]
 theorem target_theorem_0

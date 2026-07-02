@@ -155,6 +155,14 @@ lemma a_three : a 3 = 6700034035890000 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = 928978310614152999200 := by rfl
 
+
+/--
+A368692:
+$$a(n) = \frac{(12n + 6)! \cdot (6n + 9)!}{108 \cdot (4n + 2)! \cdot (2n + 3)! \cdot ((6n + 5)!)^2}$$
+It is conjectured that $a(n)$ are integers.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/368692.wip.lean#L158"]
 theorem target_theorem_0

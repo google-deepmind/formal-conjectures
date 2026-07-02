@@ -240,6 +240,17 @@ lemma a_three : a 3 = 43880754270176401422739454033276880 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = 38113558705192522309151157825210540422513019720 := by rfl
 
+
+/--
+Integral factorial ratio sequence:
+$$a(n) = \frac{(30n)! n!}{(15n)! (10n)! (6n)!}$$
+
+The product term in the denominator of the general conjecture:
+$$\prod_{i = 1..r, i \text{ coprime to } 30} (30n - i)$$
+We define this in ℤ to handle the $n=0$ case where $30n-i$ in the product might be negative.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/211417.wip.lean#L243"]
 theorem target_theorem_0

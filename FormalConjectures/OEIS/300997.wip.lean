@@ -1150,6 +1150,13 @@ lemma a_five : a 5 = 6 := by
   rw [hp] at h
   omega
 
+
+/--
+A300997: $a(n)$ is the number of steps needed to reach a stable configuration in the 1D cellular automaton initialized with one cell with mass $n$ and based on the rule "each cell gives half of its mass, rounded down, to its right neighbor".
+The stable configuration is $n$ cells with mass 1.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/300997.wip.lean#L1153"]
 theorem target_theorem_0

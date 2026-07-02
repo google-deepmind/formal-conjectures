@@ -405,6 +405,17 @@ lemma a_three : a 3 = 8000 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = 343000 := by rfl
 
+
+/--
+The sequence $a(n)$ is defined by $a(n) = \binom{2n}{n}^3$.
+We use `Nat.choose (2 * n) n` for the central binomial coefficient.
+
+The finsupp corresponding to the monomial $x^n y^n z^n$.
+This is the map $\lambda i. n$. Since `Fin 3` is finite, this function is finitely supported.
+We mark it noncomputable as it builds a mathematical object defined in terms of finite support.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/2897.wip.lean#L408"]
 theorem target_theorem_0

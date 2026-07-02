@@ -321,6 +321,14 @@ lemma a_four : a 4 = 4 := by apply a_eq_self 4 (by omega) (by rw [reverse_nat_of
 @[category test, AMS 11]
 lemma a_five : a 5 = 5 := by apply a_eq_self 5 (by omega) (by rw [reverse_nat_of_lt 5 (by decide) (by decide)])
 
+
+/--
+The number whose digits in base 10 are $n$'s digits reversed.
+
+A062567: First multiple of $n$ whose reverse is also divisible by $n$, or 0 if no such multiple exists.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/62567.wip.lean#L324"]
 theorem target_theorem_0

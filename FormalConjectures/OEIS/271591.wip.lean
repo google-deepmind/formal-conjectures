@@ -494,6 +494,16 @@ lemma a_seven : a 7 = 1 := by rfl
 @[category test, AMS 11]
 lemma a_eight : a 8 = 1 := by rfl
 
+
+/--
+The Tribonacci numbers $T_n$ (A000073).
+$T_0=0, T_1=0, T_2=1$, and $T_n = T_{n-1} + T_{n-2} + T_{n-3}$ for $n \ge 3$.
+
+A271591: Second most significant bit of the tribonacci number A000073(n).
+This is formalized by extracting the bit at position $\lfloor \log_2 T_n \rfloor - 1$.
+
+A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+-/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/271591.wip.lean#L497"]
 theorem target_theorem_0
