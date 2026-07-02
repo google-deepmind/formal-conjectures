@@ -77,9 +77,9 @@ def gen_states : ℕ → List (List ℕ) × List (List ℕ)
 def gen_G (n : ℕ) : List (List ℕ) := (gen_states n).1
 
 @[category test, AMS 11]
-lemma a_0 : a 0 = 1 := by zify[a]
+lemma a_zero : a 0 = 1 := by zify[a]
 @[category test, AMS 11]
-lemma a_1 : a 1 = 3 := by push_cast[a]
+lemma a_one : a 1 = 3 := by push_cast[a]
 lemma a_add_2 (n : ℕ) : a (n + 2) = 2 * a (n + 1) + 2 * a n := by delta and a
                                                                   apply WellFounded.Nat.fix_eq
 
@@ -390,13 +390,13 @@ lemma S_subset_F (n : ℕ) (σ : Fin (n + 1) → ℕ) : S_pred_seq n σ → σ �
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 8 := by native_decide
+lemma a_two : a 2 = 8 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 22 := by native_decide
+lemma a_three : a 3 = 22 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 60 := by native_decide
+lemma a_four : a 4 = 60 := by native_decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

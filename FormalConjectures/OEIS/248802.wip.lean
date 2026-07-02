@@ -190,19 +190,19 @@ lemma dvd_67 (n : ℕ) : 67 ∣ (2 ^ (2 ^ (10 * n + 2) + 2) + 3) := by
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 11 := by native_decide
+lemma a_zero : a 0 = 11 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 19 := by native_decide
+lemma a_one : a 1 = 19 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 67 := by native_decide
+lemma a_two : a 2 = 67 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 13 := by native_decide
+lemma a_three : a 3 = 13 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 262147 := by native_decide
+lemma a_four : a 4 = 262147 := by native_decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

@@ -232,19 +232,19 @@ lemma prim_root_of_prime (n : ℕ) (hn : n > 2) (hprime : Nat.Prime n) (hdiv : n
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by rfl
+lemma a_one : a 1 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by rfl
+lemma a_two : a 2 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 2 := by rfl
+lemma a_three : a 3 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 7 := by rfl
+lemma a_four : a 4 = 7 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 42 := by rfl
+lemma a_five : a 5 = 42 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

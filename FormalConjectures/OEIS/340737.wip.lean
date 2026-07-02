@@ -420,19 +420,19 @@ lemma tendsto_even_odd_pos {α : Type*} [TopologicalSpace α] {f : ℕ → α} {
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 3 := by unfold a; rfl
+lemma a_one : a 1 = 3 := by unfold a; rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 5 := by unfold a; rfl
+lemma a_two : a 2 = 5 := by unfold a; rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 19 := by unfold a; unfold a; unfold a; simp
+lemma a_three : a 3 = 19 := by unfold a; unfold a; unfold a; simp
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 49 := by unfold a; unfold a; unfold a; unfold a; simp
+lemma a_four : a 4 = 49 := by unfold a; unfold a; unfold a; unfold a; simp
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; simp
+lemma a_five : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; simp
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

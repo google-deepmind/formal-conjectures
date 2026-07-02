@@ -485,19 +485,19 @@ lemma a_real_diff : Tendsto (fun n : ℕ => (a_real n - I_sum n) / (((2 : ℝ) ^
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by rfl
+lemma a_one : a 1 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by rfl
+lemma a_two : a 2 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 5 := by rfl
+lemma a_three : a 3 = 5 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 8 := by rfl
+lemma a_four : a 4 = 8 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 15 := by rfl
+lemma a_five : a 5 = 15 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

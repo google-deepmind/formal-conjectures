@@ -225,19 +225,19 @@ lemma target_nat (n : ℕ) (hn : n > 0) : (30 * n - 1) ∣ a n := by
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by rfl
+lemma a_zero : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 77636318760 := by rfl
+lemma a_one : a 1 = 77636318760 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 53837289804317953893960 := by rfl
+lemma a_two : a 2 = 53837289804317953893960 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 43880754270176401422739454033276880 := by rfl
+lemma a_three : a 3 = 43880754270176401422739454033276880 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 38113558705192522309151157825210540422513019720 := by rfl
+lemma a_four : a 4 = 38113558705192522309151157825210540422513019720 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

@@ -149,19 +149,19 @@ lemma sum_symm_zero (H k : ℕ) (hk : 0 < k) (hH : H = 10^k / 2) (i : ℕ) (hi :
 
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by native_decide
+lemma a_zero : a 0 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by native_decide
+lemma a_one : a 1 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 0 := by native_decide
+lemma a_two : a 2 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 1 := by native_decide
+lemma a_three : a 3 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 0 := by native_decide
+lemma a_four : a 4 = 0 := by native_decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

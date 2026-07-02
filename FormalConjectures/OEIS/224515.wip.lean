@@ -240,27 +240,27 @@ lemma A224515_eq (n val : ℕ) (h_in : Nat.xor (val ^ 2) ((val + 1) ^ 2) = (2 * 
     exact ⟨val, h_in, hw⟩
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by
+lemma a_zero : a 0 = 0 := by
   apply A224515_eq 0 0 (by decide)
   intro k hk; omega
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 4 := by
+lemma a_one : a 1 = 4 := by
   apply A224515_eq 1 4 (by decide)
   intro k hk; interval_cases k <;> decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 3 := by
+lemma a_two : a 2 = 3 := by
   apply A224515_eq 2 3 (by decide)
   intro k hk; interval_cases k <;> decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 24 := by
+lemma a_three : a 3 = 24 := by
   apply A224515_eq 3 24 (by decide)
   intro k hk; interval_cases k <;> decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 23 := by
+lemma a_four : a 4 = 23 := by
   apply A224515_eq 4 23 (by decide)
   intro k hk; interval_cases k <;> decide
 

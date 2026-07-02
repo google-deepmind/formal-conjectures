@@ -140,19 +140,19 @@ lemma lem_div (n : ℕ) : 6 * (6 * n + 5) * (6 * n + 4) ∣ M n * (6 * n + 7) * 
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 14 := by rfl
+lemma a_zero : a 0 = 14 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 563108 := by rfl
+lemma a_one : a 1 = 563108 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 54231252075 := by rfl
+lemma a_two : a 2 = 54231252075 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 6700034035890000 := by rfl
+lemma a_three : a 3 = 6700034035890000 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 928978310614152999200 := by rfl
+lemma a_four : a 4 = 928978310614152999200 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

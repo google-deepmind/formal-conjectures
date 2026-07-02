@@ -148,19 +148,19 @@ lemma fixed_point_imp (N : ℕ) (p : ℕ × ℕ) (hp : p ∈ V N) (hI : I_map N 
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by rfl
+lemma a_zero : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 2 := by rfl
+lemma a_one : a 1 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 3 := by rfl
+lemma a_two : a 2 = 3 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 4 := by rfl
+lemma a_three : a 3 = 4 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 6 := by rfl
+lemma a_four : a 4 = 6 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

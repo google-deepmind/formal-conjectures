@@ -115,18 +115,18 @@ theorem target_theorem_0
 
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by exact target_theorem_0 3 1 (by decide) (by decide)
+lemma a_one : a 1 = 1 := by exact target_theorem_0 3 1 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by exact target_theorem_0 3 2 (by decide) (by decide)
+lemma a_two : a 2 = 2 := by exact target_theorem_0 3 2 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3 := by exact target_theorem_0 3 3 (by decide) (by decide)
+lemma a_three : a 3 = 3 := by exact target_theorem_0 3 3 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 4 := by exact target_theorem_0 3 4 (by decide) (by decide)
+lemma a_four : a 4 = 4 := by exact target_theorem_0 3 4 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 5 := by exact target_theorem_0 3 5 (by decide) (by decide)
+lemma a_five : a 5 = 5 := by exact target_theorem_0 3 5 (by decide) (by decide)
 
 end OeisA282779

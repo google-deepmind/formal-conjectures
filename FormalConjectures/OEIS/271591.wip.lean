@@ -479,19 +479,19 @@ lemma run_1_main (n L : ℕ) (hn : n ≥ 9) (h : is_maximal_run 1 n L) : L = 3 �
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 0 := by rfl
+lemma a_four : a 4 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 0 := by rfl
+lemma a_five : a 5 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_6 : a 6 = 1 := by rfl
+lemma a_six : a 6 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_7 : a 7 = 1 := by rfl
+lemma a_seven : a 7 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_8 : a 8 = 1 := by rfl
+lemma a_eight : a 8 = 1 := by rfl
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

@@ -1064,7 +1064,7 @@ lemma chip_pos (n : ℕ) (hn : 1 ≤ n) : n - P n (a n) = 1 ∨ n - P n (a n) = 
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 0 := by
+lemma a_one : a 1 = 0 := by
   have h1 : F 1 0 = TargetF 1 := by
     funext i
     dsimp [F, TargetF]
@@ -1073,7 +1073,7 @@ lemma test_a_1 : a 1 = 0 := by
   omega
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by
+lemma a_two : a 2 = 1 := by
   have h1 : F 2 1 = TargetF 2 := by
     funext i
     have h_cases : i = 0 ∨ i = 1 ∨ i ≥ 2 := by omega
@@ -1099,7 +1099,7 @@ lemma test_a_2 : a 2 = 1 := by
   omega
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3 := by
+lemma a_three : a 3 = 3 := by
   have h1 : F 3 3 = TargetF 3 := by
     funext i
     have h_cases : i = 0 ∨ i = 1 ∨ i = 2 ∨ i ≥ 3 := by omega
@@ -1134,17 +1134,17 @@ lemma test_a_3 : a 3 = 3 := by
   omega
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 4 := by
-  have h := coupling_diff 3 (by omega) (by rw [test_a_3]; decide)
-  rw [test_a_3] at h
+lemma a_four : a 4 = 4 := by
+  have h := coupling_diff 3 (by omega) (by rw [a_three]; decide)
+  rw [a_three] at h
   have hp : P 3 3 = 2 := by decide
   rw [hp] at h
   omega
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 6 := by
-  have h := coupling_diff 4 (by omega) (by rw [test_a_4]; decide)
-  rw [test_a_4] at h
+lemma a_five : a 5 = 6 := by
+  have h := coupling_diff 4 (by omega) (by rw [a_four]; decide)
+  rw [a_four] at h
   have hp : P 4 4 = 2 := by decide
   rw [hp] at h
   omega

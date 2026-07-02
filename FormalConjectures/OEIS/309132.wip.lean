@@ -335,19 +335,19 @@ lemma squarefree_prod_primes (m : ℕ) :
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by delta a; norm_num [bernoulli]
+lemma a_one : a 1 = 1 := by delta a; norm_num [bernoulli]
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by delta a; norm_num [bernoulli]
+lemma a_two : a 2 = 1 := by delta a; norm_num [bernoulli]
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 1 := by delta a; norm_num [bernoulli]
+lemma a_three : a 3 = 1 := by delta a; norm_num [bernoulli]
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 16 := by delta a; norm_num [bernoulli]
+lemma a_four : a 4 = 16 := by delta a; norm_num [bernoulli]
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 1 := by delta a; norm_num [bernoulli]
+lemma a_five : a 5 = 1 := by delta a; norm_num [bernoulli]
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

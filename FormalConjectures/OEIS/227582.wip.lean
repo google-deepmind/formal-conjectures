@@ -45,7 +45,7 @@ def A227582_base (n : ℕ) : ℤ :=
   -- Coefficients $c_i$ for the recurrence $u_{n+7} = \sum_{i=0}^6 c_i u_{n+i}$.
   -- This corresponds to the OEIS signature $(2, -1, 0, 0, 1, -2, 1)$ which means $c_i = s_{7-i}$.
   let coeffs : Fin order → ℤ := ![1, -2, 1, 0, 0, -1, 2]
-  -- Initial values $a_0$ through $a_6$. These are {2, 7, 14, 23, 35, 50, 67}.
+  -- Initial values $a_zero$ through $a_6$. These are {2, 7, 14, 23, 35, 50, 67}.
   let init : Fin order → ℤ := ![2, 7, 14, 23, 35, 50, 67]
   let E : LinearRecurrence ℤ := { order := order, coeffs := coeffs }
   E.mkSol init n
@@ -267,16 +267,16 @@ lemma x_seq_one_bounds : 1 / 3 < x_seq 1 ∧ x_seq 1 ≤ 1 / 2 := by simp_rw [x_
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 7 := by dsimp [a]; native_decide
+lemma a_two : a 2 = 7 := by dsimp [a]; native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 14 := by dsimp [a]; native_decide
+lemma a_three : a 3 = 14 := by dsimp [a]; native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 23 := by dsimp [a]; native_decide
+lemma a_four : a 4 = 23 := by dsimp [a]; native_decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 35 := by dsimp [a]; native_decide
+lemma a_five : a 5 = 35 := by dsimp [a]; native_decide
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

@@ -807,19 +807,19 @@ lemma A363347_achieves_prime (p : ℕ) (hp : p.Prime) (hmod : p ≡ 1 [MOD 10] �
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_three : a 3 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 5 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_four : a 4 = 5 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 31 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_five : a 5 = 31 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma test_a_6 : a 6 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_six : a 6 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma test_a_7 : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_seven : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category research solved, AMS 11]
 theorem target_theorem_0

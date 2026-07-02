@@ -94,7 +94,7 @@ lemma int_add_floor (z : ℤ) (x : ℝ) : (Int.floor ((z : ℝ) + x) : ℝ) = (z
 -- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 4 := by
+lemma a_one : a 1 = 4 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -113,7 +113,7 @@ lemma test_a_1 : a 1 = 4 := by
   rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 8 := by
+lemma a_two : a 2 = 8 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -131,7 +131,7 @@ lemma test_a_2 : a 2 = 8 := by
   rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 12 := by
+lemma a_three : a 3 = 12 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -149,7 +149,7 @@ lemma test_a_3 : a 3 = 12 := by
   rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 16 := by
+lemma a_four : a 4 = 16 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -167,7 +167,7 @@ lemma test_a_4 : a 4 = 16 := by
   rfl
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 21 := by
+lemma a_five : a 5 = 21 := by
   unfold a r_const
   dsimp only
   push_cast
