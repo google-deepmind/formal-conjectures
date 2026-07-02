@@ -278,7 +278,8 @@ lemma a_four : a 4 = 23 := by dsimp [a]; native_decide
 @[category test, AMS 11]
 lemma a_five : a 5 = 35 := by dsimp [a]; native_decide
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/227582.wip.lean#L282"]
 theorem target_theorem_0
   (n : ℕ) (hn : 0 < n) : a n = (Int.floor (1 / (2 * (↑(harmonic n) : ℝ) - (↑(harmonic (n * n + n - 1)) : ℝ) - Real.eulerMascheroniConstant))).toNat := by
   -- EVOLVE-BLOCK-START

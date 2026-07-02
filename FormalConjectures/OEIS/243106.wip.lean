@@ -136,7 +136,8 @@ lemma a_four : a 4 = 8910 := by rfl
 @[category test, AMS 11]
 lemma a_five : a 5 = -91090 := by rfl
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/243106.wip.lean#L140"]
 theorem target_theorem_0
   (b n : ℕ) (hb : b ≥ 5) :
     ∀ (σ : ℕ → Int) (hσ : ∀ k ∈ Icc 1 n, σ k = 1 ∨ σ k = -1),

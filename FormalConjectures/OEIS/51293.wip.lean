@@ -499,7 +499,8 @@ lemma a_four : a 4 = 8 := by rfl
 @[category test, AMS 11]
 lemma a_five : a 5 = 15 := by rfl
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/51293.wip.lean#L503"]
 theorem target_theorem_0
   : Tendsto (fun n : ℕ => (a_real n - ((2 : ℝ) ^ (n + 1) / (n : ℝ)) * ((1 : ℝ) + 1 / (n : ℝ) + 3 / ((n : ℝ) ^ 2) + 13 / ((n : ℝ) ^ 3) + 75 / ((n : ℝ) ^ 4) + 541 / ((n : ℝ) ^ 5))) / (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))) atTop (nhds 0) := by
   -- EVOLVE-BLOCK-START

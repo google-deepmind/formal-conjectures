@@ -821,7 +821,8 @@ lemma a_six : a 6 = 11 := by delta a; repeat rw [continued_fraction_denominator]
 @[category test, AMS 11]
 lemma a_seven : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/363347.wip.lean#L825"]
 theorem target_theorem_0
   : ∀ p : ℕ, (p.Prime ∧ (p ≡ 1 [MOD 10] ∨ p ≡ 9 [MOD 10])) → ∃ n : ℕ, a n = p := by
   -- EVOLVE-BLOCK-START

@@ -694,7 +694,8 @@ lemma a_four : a 4 = 674708032182398976 := by
   have h : a = a_comp := by unfold a a_comp A005259' A005259_comp; rfl
   rw [h]; native_decide
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/228143.wip.lean#L698"]
 theorem target_theorem_0
   : ∃ C : PowerSeries ℤ, (PowerSeries.map (Int.castRingHom ℚ)) (C ^ 8) = OGF_A_scaled := by
   -- EVOLVE-BLOCK-START

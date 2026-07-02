@@ -434,7 +434,8 @@ lemma a_four : a 4 = 49 := by unfold a; unfold a; unfold a; unfold a; simp
 @[category test, AMS 11]
 lemma a_five : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; simp
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/340737.wip.lean#L438"]
 theorem target_theorem_0
   : Filter.Tendsto (fun n : ℕ => (a n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
   -- EVOLVE-BLOCK-START

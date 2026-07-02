@@ -98,7 +98,8 @@ lemma a_four : a 4 = 1 := by native_decide
 @[category test, AMS 11]
 lemma a_five : a 5 = 2 := by native_decide
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/237271.wip.lean#L102"]
 theorem target_theorem_0
   (n : ℕ) : a n = num_2_dense_sublists n := by
   -- EVOLVE-BLOCK-START

@@ -729,7 +729,8 @@ lemma a_six : a 6 = 13 := by delta a continued_fraction_val; repeat rw [continue
 @[category test, AMS 11]
 lemma a_seven : a 7 = 31 := by delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/372761.wip.lean#L733"]
 theorem target_theorem_0
   : ∀ p : ℕ, Nat.Prime p ∧ p % 2 = 1 ∧ p ≠ 3 ∧ p ≠ 5 → ∃! n, n ≥ 3 ∧ a n = p := by
   -- EVOLVE-BLOCK-START

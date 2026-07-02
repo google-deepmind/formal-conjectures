@@ -251,7 +251,8 @@ lemma a_three : a 3 = 5 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = 14 := by rfl
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/108.wip.lean#L255"]
 theorem target_theorem_0
   : ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄, oeis_108_index_cond j₁ k₁ → oeis_108_index_cond j₂ k₂ → (j₁, k₁) ≠ (j₂, k₂) → frac_part (catalan_reciprocal_sum j₁ k₁) ≠ frac_part (catalan_reciprocal_sum j₂ k₂) := by
   -- EVOLVE-BLOCK-START

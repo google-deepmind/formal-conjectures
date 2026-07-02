@@ -214,7 +214,8 @@ lemma a_three : a 3 = 0 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = -2 := by rfl
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/103311.wip.lean#L218"]
 theorem target_theorem_0
   (n : ℕ) : ∃ m : ℕ, Int.natAbs (a n) = Nat.fib m := by
   -- EVOLVE-BLOCK-START

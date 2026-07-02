@@ -1149,7 +1149,8 @@ lemma a_five : a 5 = 6 := by
   rw [hp] at h
   omega
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/300997.wip.lean#L1153"]
 theorem target_theorem_0
   : ∀ n : ℕ, 1 ≤ n → a (n + 1) = a n + 1 ∨ a (n + 1) = a n + 2 := by
   -- EVOLVE-BLOCK-START

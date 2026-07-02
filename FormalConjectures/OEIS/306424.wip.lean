@@ -272,7 +272,8 @@ lemma a_four : a 4 = 4 := by delta a; apply nth_of_forall; intro n' hn'; apply (
 @[category test, AMS 11]
 lemma a_five : a 5 = 5 := by delta a; apply nth_of_forall; intro n' hn'; apply (check_cond_eq n').mpr; interval_cases n' <;> decide
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/306424.wip.lean#L276"]
 theorem target_theorem_0
   : A306424_condition 43 ∧ ∀ k : ℕ, 43 < k → ¬A306424_condition k := by
   -- EVOLVE-BLOCK-START

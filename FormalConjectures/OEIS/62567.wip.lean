@@ -320,7 +320,8 @@ lemma a_four : a 4 = 4 := by apply a_eq_self 4 (by omega) (by rw [reverse_nat_of
 @[category test, AMS 11]
 lemma a_five : a 5 = 5 := by apply a_eq_self 5 (by omega) (by rw [reverse_nat_of_lt 5 (by decide) (by decide)])
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/62567.wip.lean#L324"]
 theorem target_theorem_0
   (n : ℕ) : 2 ≤ n → (a (3 ^ n) = 10 ^ (3 ^ (n - 2)) - 1 ↔ n = 2 ∨ n = 3 ∨ n = 4) := by
   -- EVOLVE-BLOCK-START

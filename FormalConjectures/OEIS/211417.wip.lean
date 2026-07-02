@@ -239,7 +239,8 @@ lemma a_three : a 3 = 43880754270176401422739454033276880 := by rfl
 @[category test, AMS 11]
 lemma a_four : a 4 = 38113558705192522309151157825210540422513019720 := by rfl
 
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/211417.wip.lean#L243"]
 theorem target_theorem_0
   (n : ℕ) : (30 * (n : ℤ) - 1) ∣ (a n : ℤ) := by
   -- EVOLVE-BLOCK-START
