@@ -83,6 +83,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.UnitDistancePlaneGraph
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.DFA
 public import FormalConjecturesForMathlib.Computability.Encoding
