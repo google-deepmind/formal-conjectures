@@ -77,8 +77,8 @@ theorem erdos_686.variants.four_two :
 
 /--
 The number $4$ cannot be written as
-$$4=\frac{\prod_{1\leq i\leq 2}(m+i)}{\prod_{1\leq i\leq 2}(n+i)}$$
-for $m≥n+2$!
+$$4=\frac{\prod_{1\leq i\leq 3}(m+i)}{\prod_{1\leq i\leq 3}(n+i)}$$
+for $m≥n+3$!
 
 See [comment section on erdosproblems.com](https://www.erdosproblems.com/forum/thread/686#post-4599)
 -/
