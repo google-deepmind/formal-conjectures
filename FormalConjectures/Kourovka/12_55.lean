@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjectures.Paper.gnu
 
 /-!
 # Conjecture 12.55
@@ -31,13 +30,13 @@ namespace Kourovka.«12.55»
 Let $f(n, p)$ denote the number of groups of order $p^n$. Is $f(n, p)$,
 for fixed $n \geq 5$, an increasing function of $p$?
 
-Here $f(n, p)$ is `gnu (p ^ n)`, the number of non-isomorphic groups of order `p ^ n`.
+Here $f(n, p)$ is `groupNumber (p ^ n)`, the number of non-isomorphic groups of order $p^n$.
 -/
 @[category research open, AMS 20]
 theorem kourovka.«12.55» : answer(sorry) ↔
     ∀ n : ℕ, 5 ≤ n →
       ∀ᵉ (p : ℕ) (q : ℕ) (_ : p.Prime) (_ : q.Prime), p < q →
-        gnu (p ^ n) < gnu (q ^ n) := by
+        groupNumber (p ^ n) < groupNumber (q ^ n) := by
   sorry
 
 end Kourovka.«12.55»
