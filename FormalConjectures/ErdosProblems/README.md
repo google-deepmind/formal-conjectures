@@ -48,3 +48,28 @@ An example of this would be:
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
 ```
+
+## Before requesting review
+
+A checklist of the corrections that come up most often in review. Ticking
+these off first (yourself, or whatever agent prepared the PR) usually saves a
+review round trip:
+
+1. **Docstrings quote the website verbatim.** Copy the LaTeX from
+   erdosproblems.com rather than rephrasing it. Only deviate to fix a genuine
+   error or inaccuracy in the original formulation.
+2. **Solved problems cite the solution.** The text below the problem box
+   typically explains who solved it and in which paper; copy that sentence
+   verbatim into the docstring as well.
+3. **Search before defining.** Check `FormalConjecturesForMathlib` and
+   neighboring problem files for existing definitions, API, and notation
+   before introducing your own. If something you need seems generally useful,
+   it belongs in `FormalConjecturesForMathlib`, not inlined in the problem
+   file.
+4. **Keep commentary out of the Lean file.** Notes to reviewers, formalization
+   choices, and caveats belong in the pull request description, not the
+   source.
+5. **Use LaTeX, not backticks, for mathematics in docstrings.** See
+   `AGENTS.md` for the exceptions on the Lean-API side.
+6. **Add sanity tests for new definitions.** A nontrivial definition should
+   come with at least one `@[category test]` statement exercising it.
