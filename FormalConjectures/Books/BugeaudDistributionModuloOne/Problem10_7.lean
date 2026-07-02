@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
     of real numbers close to 1." Mathematische Zeitschrift 271.3 (2012): 627-637.
 -/
 
-namespace Bugeaud
+namespace Bugeaud07
 
 /--
 Problem 10.7. Let $\varepsilon$ be a positive real number. Are there arbitrarily
@@ -40,4 +40,4 @@ theorem problem_10_7 : answer(sorry) ↔
       ∃ c : ℝ, ∀ n : ℕ, 1 ≤ n → Int.fract (α ^ n) ∈ Set.Icc c (c + ε / α) := by
   sorry
 
-end Bugeaud
+end Bugeaud07
