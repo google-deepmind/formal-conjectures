@@ -26,7 +26,8 @@ Since Mathlib's `sInf` on a subset of `ℕ` gives a result in `ℕ`, this defini
 The OEIS definition implies that the set of k's is non-empty for all n.
 
 *References:*
-- [a](https://oeis.org/a)
+- [A224515](https://oeis.org/A224515)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA224515

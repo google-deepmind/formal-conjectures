@@ -27,6 +27,7 @@ The sequence takes values in $\mathbb{Z}$.
 
 *References:*
 - [A103311](https://oeis.org/A103311)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA103311

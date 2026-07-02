@@ -27,7 +27,8 @@ a: A total of $n$ married couples, including a mathematician M and his wife, are
 $$a(n) = \begin{cases} 0 & \text{if } n \le 5 \\ \sum_{k=0}^{n-1}(-1)^k(n-k-1)! \sum_{\max(k-n+5, 0) \le j \le \min(k,4)} \binom{8-j}{j}\binom{2n-k+j-10}{k-j} & \text{if } n > 5 \end{cases}$$
 
 *References:*
-- [a](https://oeis.org/a)
+- [A258667](https://oeis.org/A258667)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA258667

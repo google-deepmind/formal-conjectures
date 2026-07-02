@@ -25,6 +25,7 @@ Definition of a Carmichael number $n$: a composite number s.t. $b^{n-1} \equiv 1
 
 *References:*
 - [A309132](https://oeis.org/A309132)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A027641](https://oeis.org/A027641)
 - [A027642](https://oeis.org/A027642)
 -/

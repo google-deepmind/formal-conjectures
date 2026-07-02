@@ -28,6 +28,7 @@ where $j = \frac{N - n(k+1)}{n+1}$.
 
 *References:*
 - [A325046](https://oeis.org/A325046)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA325046

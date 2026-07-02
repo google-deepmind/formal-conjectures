@@ -24,7 +24,8 @@ $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
 $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 
 *References:*
-- [a](https://oeis.org/a)
+- [A382590](https://oeis.org/A382590)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA382590

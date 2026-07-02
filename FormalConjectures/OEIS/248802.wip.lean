@@ -25,6 +25,7 @@ An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting
 
 *References:*
 - [A248802](https://oeis.org/A248802)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA248802

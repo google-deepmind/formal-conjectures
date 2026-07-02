@@ -25,6 +25,7 @@ where the sign is $-1$ if $k$ is prime, and $1$ if $k$ is not prime.
 
 *References:*
 - [A243106](https://oeis.org/A243106)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA243106

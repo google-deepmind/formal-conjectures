@@ -25,7 +25,8 @@ $$a(n) = \sum_{k=0}^n \binom{n}{k} \binom{n+k-1}{k} k!$$
 The expression uses $\mathbb{N}$ arithmetic throughout, safely handling the subtraction via `Nat.pred`.
 
 *References:*
-- [a](https://oeis.org/a)
+- [A278070](https://oeis.org/A278070)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA278070

@@ -24,7 +24,8 @@ $\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.
 The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mathbb{N}$.
 
 *References:*
-- [a](https://oeis.org/a)
+- [A289411](https://oeis.org/A289411)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A007953](https://oeis.org/A007953)
 -/
 

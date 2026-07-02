@@ -27,6 +27,7 @@ The formula used is $1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of diviso
 
 *References:*
 - [A237271](https://oeis.org/A237271)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA237271

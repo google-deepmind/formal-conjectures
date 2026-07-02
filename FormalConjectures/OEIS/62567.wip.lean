@@ -25,6 +25,7 @@ A062567: First multiple of $n$ whose reverse is also divisible by $n$, or 0 if n
 
 *References:*
 - [A62567](https://oeis.org/A62567)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA62567

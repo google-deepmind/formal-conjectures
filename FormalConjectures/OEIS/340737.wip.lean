@@ -25,7 +25,8 @@ For $n > 2$:
 $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) - \left(\frac{n-2}{2}\right) a(n-3) & \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 
 *References:*
-- [a](https://oeis.org/a)
+- [A340737](https://oeis.org/A340737)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A340738](https://oeis.org/A340738)
 -/
 

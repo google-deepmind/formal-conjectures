@@ -24,6 +24,7 @@ The sequence $a(n)$ is composed of natural numbers, thus we define it as a funct
 
 *References:*
 - [A91669](https://oeis.org/A91669)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA91669

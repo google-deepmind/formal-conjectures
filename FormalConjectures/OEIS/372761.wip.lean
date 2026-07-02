@@ -26,6 +26,7 @@ The total value of the continued fraction $C_n$.
 
 *References:*
 - [A372761](https://oeis.org/A372761)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA372761

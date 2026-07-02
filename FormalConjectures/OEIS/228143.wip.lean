@@ -27,6 +27,7 @@ The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+
 
 *References:*
 - [A228143](https://oeis.org/A228143)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A005259](https://oeis.org/A005259)
 -/
 

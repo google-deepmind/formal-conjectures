@@ -26,6 +26,7 @@ The sum which A175386 $a(n)$ is the denominator of.
 
 *References:*
 - [A175386](https://oeis.org/A175386)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA175386

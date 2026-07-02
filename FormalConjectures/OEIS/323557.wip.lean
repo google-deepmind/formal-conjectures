@@ -26,6 +26,7 @@ where $j = \frac{m - n(k+1)}{n+1}$, and the term is zero unless $j$ is a natural
 
 *References:*
 - [A323557](https://oeis.org/A323557)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA323557

@@ -25,7 +25,8 @@ $$R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$$
 The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
 
 *References:*
-- [a](https://oeis.org/a)
+- [A363347](https://oeis.org/A363347)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA363347

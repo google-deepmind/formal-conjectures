@@ -27,6 +27,7 @@ The sequence is 1-indexed in OEIS, so $a(n)$ is the $(n-1)$-th term of the 0-ind
 
 *References:*
 - [A227582](https://oeis.org/A227582)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA227582

@@ -27,6 +27,7 @@ $C(t, x)$ is structurally recursive on $t$.
 
 *References:*
 - [A267581](https://oeis.org/A267581)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA267581

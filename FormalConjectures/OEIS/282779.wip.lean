@@ -26,7 +26,8 @@ The length of the minimal positive period of the sequence $k^p \pmod n$.
 $a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equiv k^p \pmod n \}$.
 
 *References:*
-- [a](https://oeis.org/a)
+- [A282779](https://oeis.org/A282779)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA282779

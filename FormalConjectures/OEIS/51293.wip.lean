@@ -31,6 +31,7 @@ which bounds the error term magnitude strictly by $2 \cdot 2^{n/2}$.
 
 *References:*
 - [A51293](https://oeis.org/A51293)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA51293

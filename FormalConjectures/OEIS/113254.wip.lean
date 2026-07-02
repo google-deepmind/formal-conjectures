@@ -26,6 +26,7 @@ and the linear recurrence relation $a(n) = -4 * a (n-1) + 256 * a (n-3) + 4096 *
 
 *References:*
 - [A113254](https://oeis.org/A113254)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA113254

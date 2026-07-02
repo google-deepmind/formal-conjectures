@@ -26,6 +26,7 @@ where $S \cdot S$ is the set of all products of elements of $S$.
 
 *References:*
 - [A194806](https://oeis.org/A194806)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA194806

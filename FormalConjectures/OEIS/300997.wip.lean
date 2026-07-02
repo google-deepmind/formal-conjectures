@@ -24,6 +24,7 @@ The stable configuration is $n$ cells with mass 1.
 
 *References:*
 - [A300997](https://oeis.org/A300997)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA300997

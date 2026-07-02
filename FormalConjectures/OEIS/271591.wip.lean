@@ -27,6 +27,7 @@ This is formalized by extracting the bit at position $\lfloor \log_2 T_n \rfloor
 
 *References:*
 - [A271591](https://oeis.org/A271591)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A000073](https://oeis.org/A000073)
 -/
 

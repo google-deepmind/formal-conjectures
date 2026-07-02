@@ -28,6 +28,7 @@ We mark it noncomputable as it builds a mathematical object defined in terms of 
 
 *References:*
 - [A2897](https://oeis.org/A2897)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA2897

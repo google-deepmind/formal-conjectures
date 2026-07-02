@@ -23,7 +23,8 @@ a: Number of partitions of $n$ into distinct parts that are not squarefree.
 This is the number of finite subsets of positive integers $P$ such that $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
 
 *References:*
-- [a](https://oeis.org/a)
+- [A256012](https://oeis.org/A256012)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA256012

@@ -25,6 +25,7 @@ The constant $r^2$.
 
 *References:*
 - [A341254](https://oeis.org/A341254)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA341254

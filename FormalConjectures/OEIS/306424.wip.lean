@@ -25,6 +25,7 @@ The sequence A306424: Numbers $k$ such that the base $b$ expansion of $k$ for ea
 
 *References:*
 - [A306424](https://oeis.org/A306424)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA306424

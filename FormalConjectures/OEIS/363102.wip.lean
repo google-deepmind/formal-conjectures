@@ -29,6 +29,7 @@ The formula is valid for $n \ge 3$.
 
 *References:*
 - [A363102](https://oeis.org/A363102)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A051403](https://oeis.org/A051403)
 -/
 

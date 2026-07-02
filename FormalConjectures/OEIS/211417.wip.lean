@@ -28,6 +28,7 @@ We define this in ℤ to handle the $n=0$ case where $30n-i$ in the product migh
 
 *References:*
 - [A211417](https://oeis.org/A211417)
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
 namespace OeisA211417
