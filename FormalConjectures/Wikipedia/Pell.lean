@@ -20,8 +20,8 @@ import FormalConjectures.Util.ProblemImports
 # Infinitude of Pell number primes
 
 *References:*
- - [Wikipedia](https://en.wikipedia.org/wiki/Pell_number#Primes_and_squares)
- - [A86383](https://oeis.org/A86383)
+- [Wikipedia](https://en.wikipedia.org/wiki/Pell_number#Primes_and_squares)
+- [A86383](https://oeis.org/A86383)
 
 The Pell numbers $P_n$ are defined by $P_0 = 0$,
 $P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$. [OEIS A129](https://oeis.org/A129)

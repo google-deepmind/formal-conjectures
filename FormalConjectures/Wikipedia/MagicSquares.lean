@@ -21,10 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 
-* [Magic Square of Squares - Wikipedia](https://en.wikipedia.org/wiki/Magic_square_of_squares)
-* [multimagie.com](http://www.multimagie.com/English/SquaresOfSquaresSearch.htm)
-* [Semi-Magic Square of Cubes](https://unsolvedproblems.org/index_files/SquareofCubes.htm)
-* [Magic Square of Squares](https://static.nsta.org/pdfs/QuantumV6N3.pdf)
+- [Magic Square of Squares - Wikipedia](https://en.wikipedia.org/wiki/Magic_square_of_squares)
+- [multimagie.com](http://www.multimagie.com/English/SquaresOfSquaresSearch.htm)
+- [Semi-Magic Square of Cubes](https://unsolvedproblems.org/index_files/SquareofCubes.htm)
+- [Magic Square of Squares](https://static.nsta.org/pdfs/QuantumV6N3.pdf)
 -/
 
 namespace MagicSquares

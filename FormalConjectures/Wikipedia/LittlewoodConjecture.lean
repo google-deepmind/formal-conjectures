@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Littlewood_conjecture)
-- [Bernard Mathan and Olivier Touli´e, *Problem`emes diophantiens simultan´es*][mathantoilie2004]
+- [Bernard de Mathan and Olivier Teulié, *Problèmes diophantiens simultanés*](https://doi.org/10.1007/s00605-003-0199-y)
 -/
 
 open Filter

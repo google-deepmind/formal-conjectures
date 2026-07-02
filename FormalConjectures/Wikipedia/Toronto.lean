@@ -26,8 +26,8 @@ It is conjectured that every T2, Toronto space is discrete.
 W.R. Brian proved that this holds under GCH.
 
 *References:*
- - [Wikipedia](https://en.wikipedia.org/wiki/Toronto_space)
- - [The Toronto problem](https://wrbrian.wordpress.com/wp-content/uploads/2012/01/thetorontoproblem.pdf) by *W.R. Brian*
+- [Wikipedia](https://en.wikipedia.org/wiki/Toronto_space)
+- [The Toronto problem](https://wrbrian.wordpress.com/wp-content/uploads/2012/01/thetorontoproblem.pdf) by *W.R. Brian*
 -/
 
 namespace Toronto

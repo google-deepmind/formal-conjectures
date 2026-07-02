@@ -25,8 +25,8 @@ whether any of the classical constants $\pi$, $e$, $\sqrt{2}$, $\ln 2$, or $\var
 normal in any base.
 
 *References:*
-* [Wikipedia (Normal number)](https://en.wikipedia.org/wiki/Normal_number)
-* [Wikipedia (Pi)](https://en.wikipedia.org/wiki/Pi)
+- [Wikipedia (Normal number)](https://en.wikipedia.org/wiki/Normal_number)
+- [Wikipedia (Pi)](https://en.wikipedia.org/wiki/Pi)
 -/
 
 open Real
