@@ -25,14 +25,9 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open ArithmeticFunction Filter
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos1053
-
-/--
-Call a number $k$-perfect if $\sigma(n)=kn$, where $\sigma(n)$ is the sum of the divisors of $n$.
--/
-def IsKPerfect (k n : ℕ) : Prop :=
-  0 < n ∧ sigma 1 n = k * n
 
 /--
 Must $k=o(\log\log n)$?
@@ -42,7 +37,7 @@ A question of Erdős, as reported in problem B2 of Guy's collection [Gu04].
 @[category research open, AMS 11]
 theorem erdos_1053 :
     answer(sorry) ↔
-      (fun n : ℕ ↦ (sigma 1 n : ℝ) / (n : ℝ)) =o[atTop ⊓ 𝓟 {n : ℕ | ∃ k, IsKPerfect k n}]
+      (fun n : ℕ ↦ (σ 1 n : ℝ) / (n : ℝ)) =o[atTop ⊓ 𝓟 {n : ℕ | ∃ k, Nat.IsPerfectFor n 1 k}]
       (fun n : ℕ ↦ Real.log (Real.log (n : ℝ))) := by
   sorry
 
@@ -52,7 +47,7 @@ numbers with $k\geq 3$.'
 -/
 @[category research open, AMS 11]
 theorem erdos_1053.variants.guy :
-    answer(sorry) ↔ ∀ k ≥ 3, { n : ℕ | IsKPerfect k n }.Finite := by
+    answer(sorry) ↔ ∀ k ≥ 3, { n : ℕ | Nat.IsPerfectFor n 1 k }.Finite := by
   sorry
 
 end Erdos1053
