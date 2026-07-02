@@ -20,7 +20,8 @@ import FormalConjectures.Util.ProblemImports
 # Conjectures associated with a
 
 a: Number of partitions of $n$ into distinct parts that are not squarefree.
-This is the number of finite subsets of positive integers $P$ such that $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
+This is the number of finite subsets of positive integers $P$ such that
+$\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
 
 *References:*
 - [A256012](https://oeis.org/A256012)
@@ -29,14 +30,13 @@ This is the number of finite subsets of positive integers $P$ such that $\sum_{k
 
 namespace OeisA256012
 
-set_option linter.style.ams_attribute false
-set_option linter.style.category_attribute false
 
 open Nat Finset
 
 /--
 a: Number of partitions of $n$ into distinct parts that are not squarefree.
-This is the number of finite subsets of positive integers $P$ such that $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
+This is the number of finite subsets of positive integers $P$ such that
+$\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
 -/
 def a (n : ℕ) : ℕ :=
   -- The parts must be $\le n$ to sum to $n$.
@@ -49,29 +49,6 @@ def a (n : ℕ) : ℕ :=
     (∀ k ∈ P, ¬ Squarefree k)
   ) (powerset potential_parts)
 
--- EVOLVE-BLOCK-START
-lemma not_squarefree_of_dvd_sq (k x : ℕ) (hx : x > 1) (h : x * x ∣ k) : ¬ Squarefree k := by
-  intro hsq
-  have h_unit := hsq x h
-  have h_eq_one : x = 1 := Nat.isUnit_iff.mp h_unit
-  omega
-
-lemma not_squarefree_of_mod_4_eq_0 (k : ℕ) (h : k % 4 = 0) : ¬ Squarefree k := by
-  apply not_squarefree_of_dvd_sq k 2 (by omega)
-  exact Nat.dvd_of_mod_eq_zero h
-
-lemma not_sq_9 : ¬ Squarefree 9 := by
-  apply not_squarefree_of_dvd_sq 9 3 (by omega)
-  norm_num
-
-lemma not_sq_18 : ¬ Squarefree 18 := by
-  apply not_squarefree_of_dvd_sq 18 3 (by omega)
-  norm_num
-
-lemma not_sq_27 : ¬ Squarefree 27 := by
-  apply not_squarefree_of_dvd_sq 27 3 (by omega)
-  norm_num
--- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
 lemma a_zero : a 0 = 1 := by decide
@@ -91,7 +68,8 @@ lemma a_four : a 4 = 1 := by native_decide
 
 /--
 a: Number of partitions of $n$ into distinct parts that are not squarefree.
-This is the number of finite subsets of positive integers $P$ such that $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
+This is the number of finite subsets of positive integers $P$ such that
+$\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
@@ -99,108 +77,6 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/256012.wip.lean#L91"]
 theorem target_theorem_0
   (n : ℕ) (hn : n > 23) : a n > 0 := by
-  -- EVOLVE-BLOCK-START
-  rw [a]
-  apply Finset.card_pos.mpr
-  have h_cases : n % 4 = 0 ∨ n % 4 = 1 ∨ n % 4 = 2 ∨ n % 4 = 3 := by omega
-  rcases h_cases with h0 | h1 | h2 | h3
-  · use {n}
-    simp only [mem_filter, mem_powerset]
-    refine ⟨?_, ?_, ?_⟩
-    · intro x hx
-      simp only [mem_singleton] at hx
-      subst hx
-      simp [mem_sdiff, mem_range]
-      omega
-    · simp only [sum_singleton, id_eq]
-    · intro k hk
-      simp only [mem_singleton] at hk
-      subst hk
-      exact not_squarefree_of_mod_4_eq_0 k h0
-  · use {9, n - 9}
-    simp only [mem_filter, mem_powerset]
-    refine ⟨?_, ?_, ?_⟩
-    · intro x hx
-      simp only [mem_insert, mem_singleton] at hx
-      rcases hx with rfl | rfl
-      · simp [mem_sdiff, mem_range]
-        omega
-      · simp [mem_sdiff, mem_range]
-        omega
-    · have h_distinct : 9 ∉ ({n - 9} : Finset ℕ) := by
-        simp only [mem_singleton]
-        intro h
-        omega
-      rw [sum_insert h_distinct, sum_singleton]
-      simp only [id_eq]
-      omega
-    · intro k hk
-      simp only [mem_insert, mem_singleton] at hk
-      rcases hk with rfl | rfl
-      · exact not_sq_9
-      · apply not_squarefree_of_mod_4_eq_0
-        omega
-  · use {18, n - 18}
-    simp only [mem_filter, mem_powerset]
-    refine ⟨?_, ?_, ?_⟩
-    · intro x hx
-      simp only [mem_insert, mem_singleton] at hx
-      rcases hx with rfl | rfl
-      · simp [mem_sdiff, mem_range]
-        omega
-      · simp [mem_sdiff, mem_range]
-        omega
-    · have h_distinct : 18 ∉ ({n - 18} : Finset ℕ) := by
-        simp only [mem_singleton]
-        intro h
-        omega
-      rw [sum_insert h_distinct, sum_singleton]
-      simp only [id_eq]
-      omega
-    · intro k hk
-      simp only [mem_insert, mem_singleton] at hk
-      rcases hk with rfl | rfl
-      · exact not_sq_18
-      · apply not_squarefree_of_mod_4_eq_0
-        omega
-  · by_cases hn27 : n = 27
-    · use {27}
-      simp only [mem_filter, mem_powerset]
-      refine ⟨?_, ?_, ?_⟩
-      · intro x hx
-        simp only [mem_singleton] at hx
-        subst hx
-        simp [mem_sdiff, mem_range]
-        omega
-      · simp only [sum_singleton, id_eq]
-        omega
-      · intro k hk
-        simp only [mem_singleton] at hk
-        subst hk
-        exact not_sq_27
-    · use {27, n - 27}
-      simp only [mem_filter, mem_powerset]
-      refine ⟨?_, ?_, ?_⟩
-      · intro x hx
-        simp only [mem_insert, mem_singleton] at hx
-        rcases hx with rfl | rfl
-        · simp [mem_sdiff, mem_range]
-          omega
-        · simp [mem_sdiff, mem_range]
-          omega
-      · have h_distinct : 27 ∉ ({n - 27} : Finset ℕ) := by
-          simp only [mem_singleton]
-          intro h
-          omega
-        rw [sum_insert h_distinct, sum_singleton]
-        simp only [id_eq]
-        omega
-      · intro k hk
-        simp only [mem_insert, mem_singleton] at hk
-        rcases hk with rfl | rfl
-        · exact not_sq_27
-        · apply not_squarefree_of_mod_4_eq_0
-          omega
-  -- EVOLVE-BLOCK-END
+    sorry
 
 end OeisA256012

@@ -23,7 +23,10 @@ A237271: Number of parts in the symmetric representation of $\sigma(n)$.
 a(n) is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
 such that $d_{k+1}$ is odd and $d_{k+1} \ge 2 d_k$.
 
-The formula used is $1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of divisors of } n \mid d_{k+1} \text{ is odd and } d_{k+1} \ge 2 d_k\}|$, which is a known characterization of the sequence.
+The formula used is
+$1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of divisors of } n \mid
+d_{k+1} \text{ is odd and } d_{k+1} \ge 2 d_k\}|$,
+which is a known characterization of the sequence.
 
 *References:*
 - [A237271](https://oeis.org/A237271)
@@ -32,8 +35,6 @@ The formula used is $1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of diviso
 
 namespace OeisA237271
 
-set_option linter.style.ams_attribute false
-set_option linter.style.category_attribute false
 
 open Nat Finset List
 
@@ -42,7 +43,10 @@ A237271: Number of parts in the symmetric representation of $\sigma(n)$.
 a(n) is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
 such that $d_{k+1}$ is odd and $d_{k+1} \ge 2 d_k$.
 
-The formula used is $1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of divisors of } n \mid d_{k+1} \text{ is odd and } d_{k+1} \ge 2 d_k\}|$, which is a known characterization of the sequence.
+The formula used is
+$1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of divisors of } n \mid
+d_{k+1} \text{ is odd and } d_{k+1} \ge 2 d_k\}|$,
+which is a known characterization of the sequence.
 -/
 def a (n : ℕ) : ℕ :=
   -- Get the list of divisors of n, sorted ascendingly.
@@ -80,9 +84,6 @@ def num_2_dense_sublists (n : ℕ) : ℕ :=
 
   1 + num_jumps
 
--- EVOLVE-BLOCK-START
--- You can put your definitions and lemmas here.
--- EVOLVE-BLOCK-END
 
 @[category test, AMS 11]
 lemma a_one : a 1 = 1 := by native_decide
@@ -105,7 +106,10 @@ A237271: Number of parts in the symmetric representation of $\sigma(n)$.
 a(n) is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
 such that $d_{k+1}$ is odd and $d_{k+1} \ge 2 d_k$.
 
-The formula used is $1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of divisors of } n \mid d_{k+1} \text{ is odd and } d_{k+1} \ge 2 d_k\}|$, which is a known characterization of the sequence.
+The formula used is
+$1 + |\{(d_k, d_{k+1}) \in \text{consecutive pairs of divisors of } n \mid
+d_{k+1} \text{ is odd and } d_{k+1} \ge 2 d_k\}|$,
+which is a known characterization of the sequence.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
@@ -113,16 +117,6 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/237271.wip.lean#L102"]
 theorem target_theorem_0
   (n : ℕ) : a n = num_2_dense_sublists n := by
-  -- EVOLVE-BLOCK-START
-  rw [←eq_comm, a,num_2_dense_sublists]
-  push_cast[sorted_divisors_list, two_mul,List.countP_eq_length_filter, add_left_cancel_iff,.≥.,.>·]
-  rw [←List.ofFn_get ↑(.zip _ _)]
-  norm_num [ ← two_mul,←List.toFinset_card_of_nodup ((List.nodup_finRange @_).filter _),List.ofFn_eq_map,List.filter_map]
-  refine ((congr_arg _)).comp Finset.filter_congr fun and x => ⟨fun S => ⟨Nat.not_even_iff_odd.mp (mt (·.two_dvd) ? _), S.le⟩, fun and => and.2.lt_of_ne (and.1.elim (by valid))⟩
-  use fun⟨A, B⟩=>absurd (n.divisors.sort_sorted (.≤.)) fun and' =>((List.get_of_mem (( Finset.mem_sort (.≤.)).mpr (Nat.mem_divisors.2 ⟨show A ∣(n) from(? _),?_⟩))).elim) ?_
-  · exact (dvd_of_mul_left_dvd (B▸Nat.mem_divisors.1 (( Finset.mem_sort _).mp ↑(List.getElem_mem _) ) ).1)
-  · use (by cases.▸and.pos)
-  · exact (fun R M=>B.not_lt (lt_of_le_of_lt (and'.rel_get_of_le ((monotone_iff_forall_lt.2 (List.pairwise_iff_get.1 and')).reflect_lt (M▸Nat.lt_of_mul_lt_mul_left (B▸S)))) (by linarith)))
-  -- EVOLVE-BLOCK-END
+    sorry
 
 end OeisA237271
