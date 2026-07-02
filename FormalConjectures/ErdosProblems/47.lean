@@ -32,10 +32,6 @@ namespace Erdos47
 open Filter
 open scoped BigOperators
 
-/-- The reciprocal sum of a finite set of natural numbers. -/
-noncomputable def reciprocalSum (A : Finset ℕ) : ℝ :=
-  ∑ a ∈ A, (1 : ℝ) / a
-
 /--
 If $\delta>0$ and $N$ is sufficiently large in terms of $\delta$, and $A\subseteq\{1,\ldots,N\}$ is such that $\sum_{a\in A}\frac{1}{a}>\delta \log N$ then must there exist $S\subseteq A$ such that $\sum_{n\in S}\frac{1}{n}=1$?
 
@@ -46,8 +42,8 @@ Bloom [Bl21] proved this in the affirmative.
 theorem erdos_47 : answer(True) ↔
     ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℕ,
       A ⊆ Finset.Icc 1 N →
-      δ * Real.log (N : ℝ) < reciprocalSum A →
-      ∃ S : Finset ℕ, S ⊆ A ∧ reciprocalSum S = 1 := by
+      δ * Real.log (N : ℝ) < A.reciprocalSum →
+      ∃ S : Finset ℕ, S ⊆ A ∧ S.reciprocalSum = 1 := by
   sorry
 
 end Erdos47
