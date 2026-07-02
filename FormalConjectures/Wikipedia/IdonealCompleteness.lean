@@ -54,10 +54,44 @@ def knownIdonealNumbers : Finset ℕ :=
    112, 120, 130, 133, 165, 168, 177, 190, 210, 232, 240, 253, 273, 280, 312,
    330, 345, 357, 385, 408, 462, 520, 760, 840, 1320, 1365, 1848}
 
+/--
+Reduces the unbounded search for a representation `n = a*b + b*c + a*c` (with
+`0 < a < b < c`) to a *bounded, decidable* double search over `a, b ∈ range (n+1)`.
+
+The third variable is not searched: for a fixed pair `a, b` the equation
+`n = a*b + c*(a+b)` pins down `c = (n - a*b) / (a+b)`, so the witness `c` is
+recovered by exact division. The forward direction uses `a, b ≤ n` (each pairwise
+product is at most `n`) to land the pair in `range (n+1)`.
+-/
+@[category API, AMS 11]
+private theorem exists_triple_iff_bounded (n : ℕ) :
+    (∃ a b c : ℕ, 0 < a ∧ a < b ∧ b < c ∧ n = a * b + b * c + a * c) ↔
+      (∃ a ∈ Finset.range (n + 1), ∃ b ∈ Finset.range (n + 1),
+        0 < a ∧ a < b ∧ b < (n - a * b) / (a + b) ∧
+          n = a * b + b * ((n - a * b) / (a + b)) + a * ((n - a * b) / (a + b))) := by
+  constructor
+  · rintro ⟨a, b, c, ha, hab, hbc, heq⟩
+    have hbn : b ≤ n := by nlinarith
+    have han : a ≤ n := by nlinarith
+    have hsum : n - a * b = c * (a + b) := by
+      have : n = a * b + c * (a + b) := by ring_nf; ring_nf at heq; linarith
+      omega
+    have hpos : 0 < a + b := by omega
+    have hc : (n - a * b) / (a + b) = c := by rw [hsum]; exact Nat.mul_div_cancel _ hpos
+    exact ⟨a, Finset.mem_range.mpr (by omega), b, Finset.mem_range.mpr (by omega),
+      ha, hab, hc ▸ hbc, hc ▸ heq⟩
+  · rintro ⟨a, _, b, _, ha, hab, hbc, heq⟩
+    exact ⟨a, b, (n - a * b) / (a + b), ha, hab, hbc, heq⟩
+
+set_option maxRecDepth 4096 in
 /-- All 65 known idoneal numbers are indeed idoneal. -/
 @[category test, AMS 11]
 theorem knownIdonealNumbers_are_idoneal : ∀ n ∈ knownIdonealNumbers, IsIdoneal n := by
-  sorry
+  intro n hn
+  fin_cases hn <;>
+    refine ⟨by norm_num, ?_⟩ <;>
+    rw [exists_triple_iff_bounded] <;>
+    native_decide
 
 /--
 Idoneal numbers completeness conjecture.
