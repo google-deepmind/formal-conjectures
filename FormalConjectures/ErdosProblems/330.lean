@@ -46,7 +46,7 @@ Does there exist a minimal basis $A \subset \mathbb{N}$ with positive density
 such that, for any $n \in A$, the (upper) density of integers which
 cannot be represented without using $n$ is positive?
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_330_statement :
     answer(sorry) ↔ ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧ A.HasPosDensity ∧
     ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n h) := by

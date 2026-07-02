@@ -51,7 +51,7 @@ to hold for the complete balanced bipartite graph $K_{\lceil n/2 \rceil, \lfloor
 The conjecture is resolved up to a finite check: Fan [Fa87] verified it for $n \leq 24$ and
 $n = 26$, and Füredi [Fü92] proved it for all sufficiently large $n$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_742 :
     answer(sorry) ↔ ∀ (V : Type*) [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj], IsDiameter2Critical G →
