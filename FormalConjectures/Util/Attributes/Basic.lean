@@ -313,8 +313,11 @@ initialize Lean.registerBuiltinAttribute {
   applicationTime := .afterTypeChecking
 }
 
-syntax (name := FormalProof_attr)
-  (&"conditional")? "formal_proof" &"using" formalProofKind &"at" str
+syntax (name := FormalProof_attr) "formal_proof" &"using" formalProofKind &"at" str
+  (&"assuming" ident,+)? : attr
+
+syntax (name := conditional)
+  "conditional " "formal_proof" &"using" formalProofKind &"at" str
   (&"assuming" ident,+)? : attr
 
 /-- Records the existence and location of a formal proof for a statement.
@@ -330,48 +333,57 @@ A proof that only establishes the statement under unproven hypotheses is marked
 `conditional` and names the hypotheses, each stated as a declaration in the same
 file (with a `sorry` proof):
 `@[conditional formal_proof using <kind> at "<link>" assuming <decl>, ...]`. -/
+private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit := do
+  let (kind, link, conds) ← match stx with
+    | `(attr| formal_proof using $kind at $link) =>
+      pure (kind, link, #[])
+    | `(attr| conditional formal_proof using $kind at $link assuming $conds,*) =>
+      pure (kind, link, conds.getElems)
+    | `(attr| conditional formal_proof using $_ at $_) =>
+      throwError
+        "a `conditional` formal proof must name the hypotheses it assumes: \
+         state each hypothesis as a declaration in this file (with a `sorry` proof) \
+         and reference it as `conditional formal_proof using <kind> at \"<link>\" \
+         assuming <decl>`."
+    | `(attr| formal_proof using $_ at $_ assuming $_,*) =>
+      throwError
+        "an `assuming` clause requires the `conditional` modifier: \
+         `conditional formal_proof using <kind> at \"<link>\" assuming <decl>`."
+    | _ => throwUnsupportedSyntax
+  let some n := formalProofKind.toName kind | throwUnsupportedSyntax
+  let pfKind ← Lean.Meta.MetaM.run' <|
+    unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
+  Elab.addConstInfo kind n
+  let env ← getEnv
+  -- Resolve each assumed hypothesis to a declaration (so it is checked to exist
+  -- and hovering it jumps to the statement).
+  let conditions ← conds.toList.mapM fun (c : TSyntax `ident) => do
+    let condName ← resolveGlobalConstNoOverload c.raw
+    Elab.addConstInfo c.raw condName
+    if (env.find? condName).bind (·.value?) |>.any (!·.hasSorry) then
+      logWarning m!"The assumed hypothesis `{condName}` has a sorry-free proof, \
+        so the formal proof may no longer need to be marked `conditional`."
+    return condName
+  -- Warn if this is attached to a `research open` problem.
+  let catTags := categoryExt.getState env
+  if catTags.toArray.any fun tag => tag.declName == decl &&
+      tag.category == .research .open then
+    logWarning
+      "A `formal_proof` annotation on a `research open` problem is suspicious. \
+       If a formal proof exists, the problem should not be categorised as `open`."
+  addFormalProofEntry decl pfKind link.getString conditions
+
 initialize Lean.registerBuiltinAttribute {
   name := `FormalProof_attr
   descr := "Annotation of the existence and location of a formal proof."
-  add := fun decl stx _attrKind => do
-    let (kind, link, conds) ← match stx with
-      | `(attr| formal_proof using $kind at $link) =>
-        pure (kind, link, #[])
-      | `(attr| conditional formal_proof using $kind at $link assuming $conds,*) =>
-        pure (kind, link, conds.getElems)
-      | `(attr| conditional formal_proof using $_ at $_) =>
-        throwError
-          "a `conditional` formal proof must name the hypotheses it assumes: \
-           state each hypothesis as a declaration in this file (with a `sorry` proof) \
-           and reference it as `conditional formal_proof using <kind> at \"<link>\" \
-           assuming <decl>`."
-      | `(attr| formal_proof using $_ at $_ assuming $_,*) =>
-        throwError
-          "an `assuming` clause requires the `conditional` modifier: \
-           `conditional formal_proof using <kind> at \"<link>\" assuming <decl>`."
-      | _ => throwUnsupportedSyntax
-    let some n := formalProofKind.toName kind | throwUnsupportedSyntax
-    let pfKind ← Lean.Meta.MetaM.run' <|
-      unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
-    Elab.addConstInfo kind n
-    let env ← getEnv
-    -- Resolve each assumed hypothesis to a declaration (so it is checked to exist
-    -- and hovering it jumps to the statement).
-    let conditions ← conds.toList.mapM fun (c : TSyntax `ident) => do
-      let condName ← resolveGlobalConstNoOverload c.raw
-      Elab.addConstInfo c.raw condName
-      if (env.find? condName).bind (·.value?) |>.any (!·.hasSorry) then
-        logWarning m!"The assumed hypothesis `{condName}` has a sorry-free proof, \
-          so the formal proof may no longer need to be marked `conditional`."
-      return condName
-    -- Warn if this is attached to a `research open` problem.
-    let catTags := categoryExt.getState env
-    if catTags.toArray.any fun tag => tag.declName == decl &&
-        tag.category == .research .open then
-      logWarning
-        "A `formal_proof` annotation on a `research open` problem is suspicious. \
-         If a formal proof exists, the problem should not be categorised as `open`."
-    addFormalProofEntry decl pfKind link.getString conditions
+  add := fun decl stx _attrKind => addFormalProofAttribute decl stx
+  applicationTime := .afterTypeChecking
+}
+
+initialize Lean.registerBuiltinAttribute {
+  name := `conditional
+  descr := "Annotation of a conditional formal proof and its assumed hypotheses."
+  add := fun decl stx _attrKind => addFormalProofAttribute decl stx
   applicationTime := .afterTypeChecking
 }
 
