@@ -19,9 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 474
 
-*Reference:* [erdosproblems.com/474](https://www.erdosproblems.com/474)
-
 *References:*
+- [erdosproblems.com/474](https://www.erdosproblems.com/474)
 - [Er95d] Erdős, P. *Some of my favourite problems which recently have been solved.*
   In Proc. of the Conf. Topology and Measure VII (Wustrow, 1994), p. 64 (1995).
 - [Sh88] Shelah, S. *Consistency of positive partition theorems for graphs and models.*
@@ -29,34 +28,12 @@ import FormalConjectures.Util.ProblemImports
 - [Va99] Vaughan, J.E. *Open problems in topology II*, problem 7.81 (1999).
 -/
 
-open Cardinal
+open Cardinal Combinatorics
 open scoped Cardinal
 
 namespace Erdos474
 
 universe u
-
-/- ### The bracket partition relation -/
-
-/--
-`CardinalBracketRamsey2 α β r` asserts the **bracket partition relation**
-$\alpha \to [\beta]^2_r$:
-
-For any $r$-coloring of unordered pairs from a set of cardinality $\alpha$, there is
-a subset of cardinality $\beta$ on which some color is missing.
-
-The bracket form is weaker than the round-bracket Ramsey property
-$\alpha \to (\beta)^2_r$ (which would require a *monochromatic* $\beta$-sized subset);
-here we only require that the coloring restricted to the $\beta$-sized subset is not
-surjective onto the $r$ colors.
-
-The coloring is given as a symmetric function `f : X → X → Fin r`; the value on a
-diagonal `f x x` is irrelevant (we never quantify over diagonal pairs).
--/
-def CardinalBracketRamsey2 (α β : Cardinal.{u}) (r : ℕ) : Prop :=
-  ∀ (X : Type u), #X = α →
-    ∀ (f : X → X → Fin r), (∀ x y, f x y = f y x) →
-      ∃ Y : Set X, #Y = β ∧ ∃ c : Fin r, ∀ x ∈ Y, ∀ y ∈ Y, x ≠ y → f x y ≠ c
 
 /- ### The main open problem -/
 
@@ -72,7 +49,7 @@ relation is consistent assuming $\mathfrak{c} = \aleph_2$.
 -/
 @[category research open, AMS 3]
 theorem erdos_474 :
-    answer(sorry) ↔ ¬ CardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
+    answer(sorry) ↔ ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
   sorry
 
 /- ### Known results -/
@@ -89,7 +66,7 @@ $2^{\aleph_0} \to (\aleph_1)^2_2$. This negative direction is a ZFC theorem due 
 Sierpinski and (independently) Kurepa.
 -/
 @[category research solved, AMS 3]
-theorem sierpinski_kurepa : ¬ CardinalBracketRamsey2 (𝔠) (ℵ_ 1) 2 := by
+theorem sierpinski_kurepa : ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 2 := by
   sorry
 
 /--
@@ -101,7 +78,7 @@ question without assuming CH.
 -/
 @[category research solved, AMS 3]
 theorem erdos_under_ch (hCH : 𝔠 = ℵ_ 1) :
-    ¬ CardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
+    ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
   sorry
 
 /--
@@ -110,12 +87,12 @@ $\mathfrak{c}$) that $2^{\aleph_0} \to [\aleph_1]^2_3$ holds.
 
 Stated here as the existence of a witnessing setting: Shelah constructs a forcing
 extension in which the positive bracket partition relation holds. We express this as
-"`CardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3` is consistent" by stating it as a *possible*
+"`cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3` is consistent" by stating it as a *possible*
 property (not provable nor refutable in ZFC). The Lean-side encoding is the
 mathematical statement, with the consistency aspect documented above.
 -/
 @[category research solved, AMS 3]
-theorem shelah_consistent : answer(sorry) ↔ CardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
+theorem shelah_consistent : answer(sorry) ↔ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
   sorry
 
 /--
@@ -128,7 +105,7 @@ between Erdős's CH case and Shelah's very-large-$\mathfrak{c}$ case).
 -/
 @[category research open, AMS 3]
 theorem vaughan_aleph_two :
-    answer(sorry) ↔ (𝔠 = ℵ_ 2 ∧ ¬ CardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3) := by
+    answer(sorry) ↔ (𝔠 = ℵ_ 2 ∧ ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3) := by
   sorry
 
 end erdos_474.variants
@@ -139,8 +116,8 @@ end erdos_474.variants
 it holds with any $r' \ge r$ colors: more colors only make missing one easier. -/
 @[category test, AMS 3]
 theorem cardinalBracketRamsey2_mono_colors {α β : Cardinal.{u}} {r r' : ℕ}
-    (h : CardinalBracketRamsey2 α β r) (hrr' : r ≤ r') :
-    CardinalBracketRamsey2 α β r' := by
+    (h : cardinalBracketRamsey2 α β r) (hrr' : r ≤ r') :
+    cardinalBracketRamsey2 α β r' := by
   intro X hX f hsym
   -- Compose `f` with the inclusion `Fin r → Fin r'` (via `Fin.castLE`) to reduce to the
   -- `r`-color case. Any `Y` witnessing the `r`-version still misses the same color in
@@ -151,8 +128,8 @@ theorem cardinalBracketRamsey2_mono_colors {α β : Cardinal.{u}} {r r' : ℕ}
 it holds for any $\beta' \le \beta$: smaller target is easier. -/
 @[category test, AMS 3]
 theorem cardinalBracketRamsey2_mono_target {α β β' : Cardinal.{u}} {r : ℕ}
-    (h : CardinalBracketRamsey2 α β r) (hβ : β' ≤ β) :
-    CardinalBracketRamsey2 α β' r := by
+    (h : cardinalBracketRamsey2 α β r) (hβ : β' ≤ β) :
+    cardinalBracketRamsey2 α β' r := by
   intro X hX f hsym
   obtain ⟨Y, hY, c, hc⟩ := h X hX f hsym
   obtain ⟨Z, hZsub, hZcard⟩ := (Cardinal.le_mk_iff_exists_subset).mp (hY ▸ hβ)
