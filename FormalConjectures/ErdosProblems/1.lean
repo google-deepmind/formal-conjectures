@@ -89,7 +89,9 @@ theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ �
 A number of improvements of the constant $\frac{1}{4}$ have been given, with the current
 record $\sqrt{2 / \pi}$ first provied in unpublished work of Elkies and Gleason.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/MyTH-zyxeon/formal-conjectures/blob/362eed1a8864d142ae65f51af7981a7c7530956e/FormalConjectures/Scratch/HarperCompression.lean#L2174"]
 theorem erdos_1.variants.lb_strong : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
     ∀ (N : ℕ) (A : Finset ℕ) (h : IsSumDistinctSet A N),
       (√(2 / π) - o A.card) * 2 ^ A.card / (A.card : ℝ).sqrt ≤ N := by
