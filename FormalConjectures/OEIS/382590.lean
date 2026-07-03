@@ -98,8 +98,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/382590.wip.lean#L281"]
-theorem target_theorem_0
-  : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧
+theorem kth_prime_factor_periodic : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧
     ∀ n : ℕ, n ≥ N₀ → kth_prime_factor k (a (n + p)) = kth_prime_factor k (a n) := by
     sorry
 

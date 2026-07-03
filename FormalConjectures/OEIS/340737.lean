@@ -138,8 +138,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/340737.wip.lean#L438"]
-theorem target_theorem_0
-  : Filter.Tendsto (fun n : ℕ => (a n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
+theorem tendsto_exp_one :
+    Filter.Tendsto (fun n : ℕ => (a n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
     sorry
 
 end OeisA340737

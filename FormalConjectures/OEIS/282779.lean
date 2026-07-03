@@ -70,25 +70,24 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/282779.wip.lean#L104"]
-theorem target_theorem_0
-  (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
+theorem period_of_power_mod_eq (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
     period_of_power_mod p n = if p ^ 2 ∣ n then n / p else n := by
     sorry
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by exact target_theorem_0 3 1 (by decide) (by decide)
+lemma a_one : a 1 = 1 := by exact period_of_power_mod_eq 3 1 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 2 := by exact target_theorem_0 3 2 (by decide) (by decide)
+lemma a_two : a 2 = 2 := by exact period_of_power_mod_eq 3 2 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 3 := by exact target_theorem_0 3 3 (by decide) (by decide)
+lemma a_three : a 3 = 3 := by exact period_of_power_mod_eq 3 3 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 4 := by exact target_theorem_0 3 4 (by decide) (by decide)
+lemma a_four : a 4 = 4 := by exact period_of_power_mod_eq 3 4 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 5 := by exact target_theorem_0 3 5 (by decide) (by decide)
+lemma a_five : a 5 = 5 := by exact period_of_power_mod_eq 3 5 (by decide) (by decide)
 
 end OeisA282779

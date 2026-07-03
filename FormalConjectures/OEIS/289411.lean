@@ -72,8 +72,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/289411.wip.lean#L167"]
-theorem target_theorem_0
-  (k : ℕ) (hk : 0 < k) :
+theorem a_symm (k : ℕ) (hk : 0 < k) :
     let m_k : ℕ := (10 ^ k) / 2 - 1
     ∀ i : ℕ, i ≤ m_k → a (m_k - i) = a (m_k + i) := by
     sorry

@@ -92,8 +92,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/228143.wip.lean#L698"]
-theorem target_theorem_0
-  : ∃ C : PowerSeries ℤ, (PowerSeries.map (Int.castRingHom ℚ)) (C ^ 8) = OGF_A_scaled := by
+theorem exists_power_series_eighth_pow_eq : ∃ C : PowerSeries ℤ,
+    (PowerSeries.map (Int.castRingHom ℚ)) (C ^ 8) = OGF_A_scaled := by
     sorry
 
 end OeisA228143

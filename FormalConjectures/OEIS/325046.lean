@@ -93,8 +93,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/325046.wip.lean#L166"]
-theorem target_theorem_0
-  (N : ℕ) : a N % 2 = 1 → ∃ k : ℕ, N = k * (k + 1) := by
+theorem odd_a_implies_pronic (N : ℕ) : a N % 2 = 1 → ∃ k : ℕ, N = k * (k + 1) := by
     sorry
 
 end OeisA325046

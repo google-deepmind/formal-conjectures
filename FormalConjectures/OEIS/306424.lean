@@ -77,8 +77,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/306424.wip.lean#L276"]
-theorem target_theorem_0
-  : A306424_condition 43 ∧ ∀ k : ℕ, 43 < k → ¬A306424_condition k := by
+theorem forty_three_is_max : A306424_condition 43 ∧ ∀ k : ℕ, 43 < k → ¬A306424_condition k := by
     sorry
 
 end OeisA306424

@@ -143,8 +143,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/258667.wip.lean#L427"]
-theorem target_theorem_0
-  : IsEquivalent atTop (fun n : ℕ => (a n : ℝ)) A258667_asymptotic_term := by
+theorem a_is_equivalent_asymptotic_term :
+    IsEquivalent atTop (fun n : ℕ => (a n : ℝ)) A258667_asymptotic_term := by
     sorry
 
 end OeisA258667

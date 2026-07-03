@@ -85,8 +85,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/307865.wip.lean#L190"]
-theorem target_theorem_0
-  (h : IsAbsoluteEulerPseudoprime (2 * n + 1)) : a n = 0 := by
+theorem a_eq_zero_of_pseudoprime (h : IsAbsoluteEulerPseudoprime (2 * n + 1)) : a n = 0 := by
     sorry
 
 end OeisA307865

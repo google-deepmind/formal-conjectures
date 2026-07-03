@@ -73,8 +73,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/248802.wip.lean#L208"]
-theorem target_theorem_0
-  (n : ℕ) : a (10 * n + 2) = 67 := by
+theorem a_ten_mul_add_two_eq (n : ℕ) : a (10 * n + 2) = 67 := by
     sorry
 
 
@@ -87,8 +86,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/248802.wip.lean#L982"]
-theorem target_theorem_4
-  (n : ℕ) : (¬covered_by_C1 (58 * n + 26) ∧ ¬covered_by_C2 (58 * n + 26) ∧
+theorem a_fifty_eight_mul_add_twenty_six_eq (n : ℕ) :
+    (¬covered_by_C1 (58 * n + 26) ∧ ¬covered_by_C2 (58 * n + 26) ∧
     ¬covered_by_C3 (58 * n + 26)) → a (58 * n + 26) = 1399 := by
     sorry
 

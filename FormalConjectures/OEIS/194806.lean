@@ -113,8 +113,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/194806.wip.lean#L472"]
-theorem target_theorem_0
-  : ∃ C : ℝ, ∀ n : ℕ, 2 ≤ n → (a n : ℝ) / (Nat.primeCounting n : ℝ) ≤ C := by
+theorem a_div_prime_counting_bounded : ∃ C : ℝ,
+    ∀ n : ℕ, 2 ≤ n → (a n : ℝ) / (Nat.primeCounting n : ℝ) ≤ C := by
     sorry
 
 end OeisA194806
