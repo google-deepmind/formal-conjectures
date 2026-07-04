@@ -21,6 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/34](https://www.erdosproblems.com/34)
+- [Er77c] Erdős, Paul, *Problems and results on combinatorial number theory. III*. Number theory day
+  (Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43-72.
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
 - [He86] Hegyvári, N., *On consecutive sums in sequences*. Acta Math. Hungar. (1986),
   193--200.
 - [Ko15] Konieczny, J., *On consecutive sums in permutations*. arXiv:1504.07156 (2015).
