@@ -24,6 +24,10 @@ import FormalConjectures.Util.ProblemImports
 - [Bo77] Bollobás, Béla, *Cycles modulo $k$*. Bull. London Math. Soc. (1977), 97-98.
 - [Er82e] Erdős, Paul, *Some of my favourite problems which recently have been solved*.
   (1982), 59--79.
+- [Er95] Erdős, Paul, *Some of my favourite problems in number theory, combinatorics, and
+  geometry*. Resenhas (1995), 165-186.
+- [Er97b] Erdős, Paul, *Some old and new problems in various branches of combinatorics*.
+  Discrete Math. (1997), 227-231.
 -/
 
 namespace Erdos71

@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/512](https://www.erdosproblems.com/512)
+- [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl.
+  (1961), 221-254.
 - [Ko81] Konyagin, S. V., *On the Littlewood problem*. Izv. Akad. Nauk SSSR Ser. Mat. (1981),
   243-265, 463.
 - [MPS81] McGehee, O. Carruth and Pigno, Louis and Smith, Brent, *Hardy's inequality and the

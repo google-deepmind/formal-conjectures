@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/621](https://www.erdosproblems.com/621)
 - [EGT96] Erdős, Paul and Gallai, Tibor and Tuza, Zsolt, *Covering and independence in triangle
   structures*. Discrete Math. (1996), 89-101.
+- [Er99] Erdős, Paul, *A selection of problems and results in combinatorics*.
+  Combin. Probab. Comput. (1999), 1-6.
 - [NoSu16] S. Norin and Y.-R. Sun, *Triangle-free independent sets vs. cuts*. arXiv:1602.04370
   (2016).
 -/

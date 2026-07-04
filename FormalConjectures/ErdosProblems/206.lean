@@ -21,6 +21,15 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/206](https://www.erdosproblems.com/206)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+  number theory*. Monographies de L'Enseignement Mathématique (1980).
+- [Cu22] Curtiss, D. R., *On Kellogg's Diophantine Problem*. Amer. Math. Monthly (1922),
+  380-387.
+- [Er50b] Erdős, Pál, *On a Diophantine equation*. Mat. Lapok (1950), 192-210.
+- [Na23] Nathanson, M., *Underapproximation by Egyptian fractions*. J. Number Theory (2023),
+  208-234.
+- [Ch23b] Chu, H. V., *A threshold for the best two-term underapproximation by Egyptian
+  fractions*. arXiv:2306.12564 (2023).
 - [Ko24b] Kovač, V., *On eventually greedy best underapproximations by Egyptian fractions*.
   arXiv:2406.07218 (2024).
 -/

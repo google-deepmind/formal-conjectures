@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/353](https://www.erdosproblems.com/353)
+- [Er83d] Erdős, Paul, *Some combinatorial, geometric and set theoretic problems in measure
+  theory*. Measure Theory, Oberwolfach 1983 (1984), 321-327.
 - [Ko23] Kovač, V., *Coloring and density theorems for configurations of a given volume*.
   arXiv:2309.09973 (2023).
 - [KoPr24] Kovač, V. and B. Predojević, *Polygons of unit area with vertices in sets of infinite

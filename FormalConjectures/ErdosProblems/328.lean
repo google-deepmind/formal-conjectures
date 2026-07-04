@@ -21,6 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/328](https://www.erdosproblems.com/328)
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*.
+  Ann. Discrete Math. (1980), 89-115.
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+  number theory*. Monographies de L'Enseignement Mathématique (1980).
 - [Er80e] Erdős, P., *Some applications of Ramsey's theorem to additive number theory*.
   European J. Combin. (1980), 43-46.
 - [NeRo85] J. Nešetřil and V. Rödl, *Two proofs in combinatorial number theory*.

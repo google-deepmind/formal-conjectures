@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/639](https://www.erdosproblems.com/639)
+- [Er97d] Erdős, Paul, *Some recent problems and results in graph theory*. Discrete Math.
+  (1997), 81-85.
 - [KeSu04] Keevash, Peter and Sudakov, Benny, *On the number of edges not covered by monochromatic
   copies of a fixed graph*. J. Combin. Theory Ser. B (2004), 41-53.
 - [Py86] Pyber, L., *Clique covering of graphs*. Combinatorica (1986), 393-398.

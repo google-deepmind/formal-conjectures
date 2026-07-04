@@ -21,6 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/648](https://www.erdosproblems.com/648)
+- [Er95c] Erdős, Paul, *Some problems in number theory*. Octogon Math. Mag. (1995), 3-5.
 - [Ca25b] S. Cambie, *On Erdős problem #648*. arXiv:2503.22691 (2025).
 -/
 
@@ -59,8 +60,7 @@ The sequence $a_1<a_2<\cdots<a_t$ is packaged as a strictly monotone map `a : Fi
 with $2\leq a_i<n$, the greatest prime factor $P$ is `Nat.maxPrimeFac`, and $g(n)$ is the
 supremum in `ℕ` of the achievable lengths $t$.
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos648.lean"]
+@[category research solved, AMS 11]
 theorem erdos_648 :
     (fun n => (g n : ℝ)) =Θ[atTop] fun n => Real.sqrt ((n : ℝ) / Real.log (n : ℝ)) := by
   sorry

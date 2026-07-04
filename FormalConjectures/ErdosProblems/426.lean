@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/426](https://www.erdosproblems.com/426)
+- [Er76b] Erdős, P., *Problems and results in graph theory and combinatorial analysis*.
+  Proceedings of the Fifth British Combinatorial Conference (1976), 169-192.
 - [EnEr72] Entringer, R. C. and Erdős, Paul, *On the number of unique subgraphs of a graph*.
   J. Combinatorial Theory Ser. B (1972), 112-115.
 - [HaSc73] Harary, Frank and Schwenk, Allen J., *On the number of unique subgraphs*.

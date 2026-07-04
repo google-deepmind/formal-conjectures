@@ -21,6 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/464](https://www.erdosproblems.com/464)
+- [Er75i] Erdős, P., *Répartition modulo $1$*. (1975), iv+258.
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+  number theory*. Monographies de L'Enseignement Mathématique (1980).
+- [Er82e] Erdős, Paul, *Some of my favourite problems which recently have been solved*.
+  (1982), 59--79.
 - [AkMo04] Akhunzhanov, R. K. and Moshchevitin, N. G., *On the chromatic number of a distance
   graph associated with a lacunary sequence*. Dokl. Akad. Nauk (2004), 295-296.
 - [Du06] Dubickas, Artūras, *On the fractional parts of lacunary sequences*. Math. Scand. (2006),

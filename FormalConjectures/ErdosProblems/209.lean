@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/209](https://www.erdosproblems.com/209)
+- [Er84] Erdős, P., *Research problems*. Period. Math. Hungar. (1984), 101-103.
+- [ErPu95b] Erdős, Paul and Purdy, George, *Extremal problems in combinatorial geometry*.
+  Handbook of combinatorics, Vol. 1, 2 (1995), 809-874.
 - [FuPa84] Füredi, Z. and Palásti, I., *Arrangements of lines with a large number of triangles*.
   Proc. Amer. Math. Soc. (1984), 561-566.
 - [Es16] Escudero, Juan García, *Gallai triangles in configurations of lines in the projective

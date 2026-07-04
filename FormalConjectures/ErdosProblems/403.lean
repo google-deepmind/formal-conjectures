@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/403](https://www.erdosproblems.com/403)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+  number theory*. Monographies de L'Enseignement Mathématique (1980).
 - [Li76] Lin, S., *On two problems of Erdős concerning sums of distinct factorials*.
   Bell Laboratories internal memorandum (1960).
 -/
