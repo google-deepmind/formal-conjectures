@@ -43,8 +43,7 @@ necessarily distinct) earlier entries. The step condition is phrased with the sa
 def IsAdditionChain (c : List ℕ) : Prop :=
   c.head? = some 1 ∧
   c.Pairwise (· < ·) ∧
-  ∀ i, i ≠ 0 → i < c.length →
-    ∃ j k, j < i ∧ k < i ∧ getElem? c i = (· + ·) <$> getElem? c j <*> getElem? c k
+  ∀ x ∈ c, x ≠ 1 → ∃ y ∈ c, ∃ z ∈ c, x = y + z
 
 /-- The length `ℓ(n)` of `n`: the minimal number of addition steps (number of entries
 minus one) over all addition chains ending at `n`. -/
