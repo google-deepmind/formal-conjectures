@@ -56,8 +56,6 @@ local notation "ℓ(" n ")" => additionChainLength n
 The Scholz conjecture, also known as the Scholz-Brauer conjecture, asserts that
 for every positive integer $n$, the addition-chain length of $2^n - 1$ is at most
 $n - 1 + \ell(n)$.
-
-References: Wikipedia and MathWorld.
 -/
 @[category research open, AMS 11 68]
 theorem scholz_conjecture (n : ℕ) (hn : 0 < n) :
