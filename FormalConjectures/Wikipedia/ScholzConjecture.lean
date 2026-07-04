@@ -33,7 +33,7 @@ $$\ell(2^n - 1) \le n - 1 + \ell(n).$$
 - [MathWorld](https://mathworld.wolfram.com/ScholzConjecture.html)
 -/
 
-namespace Scholz
+namespace ScholzConjecture
 
 /-- `IsAdditionChain c` asserts that the list `c` is an addition chain: it starts at
 `1`, is strictly increasing, and every entry after the first is the sum of two (not
