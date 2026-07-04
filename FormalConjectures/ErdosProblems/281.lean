@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/281](https://www.erdosproblems.com/281)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
 - [DaEr36] Davenport, H. and Erdős, P., *On sequences of positive integers*. Acta
   Arithmetica (1936), 147-151.
 - [HaRo66] Halberstam, H. and Roth, K. F., *Sequences. Vol. I*. (1966), xx+291.

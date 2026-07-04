@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/419](https://www.erdosproblems.com/419)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
 - [EGIP96] Erdős, Paul and Graham, S. W. and Ivić, Aleksandar and Pomerance, Carl,
   *On the number of divisors of $n!$*. (1996), 337--355.
 -/

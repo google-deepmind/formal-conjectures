@@ -21,6 +21,18 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/540](https://www.erdosproblems.com/540)
+- [Er65b] Erdős, Paul, *Some recent advances and current problems in number theory*. Lectures on
+  Modern Mathematics, Vol. III (1965), 196-244.
+- [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of combinatorial
+  theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
+- [Ol68] Olson, John E., *An addition theorem modulo {$p$}*. J. Combinatorial Theory (1968), 45--52.
+- [Ba12] Balandraud, Éric, *An addition theorem and maximal zero-sum free sets in
+  $\mathbb{Z}/p\mathbb{Z}$*. Israel J. Math. (2012), 405-429.
+- [HaZe96] Hamidoune, Yahya Ould and Zémor, Gilles, *On zero-free subset sums*. Acta Arith. (1996),
+  143--152.
+- [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 - [ErHe64] Erdős, P. and Heilbronn, H., *On the addition of residue classes
   mod $p$*. Acta Arith. (1964), 149--159.
 - [Sz70] Szemerédi, E., *On a conjecture of Erdős and Heilbronn*. Acta Arith.

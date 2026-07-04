@@ -21,6 +21,16 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/519](https://www.erdosproblems.com/519)
+- [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961),
+  221-254.
+- [Er65b] Erdős, Paul, *Some recent advances and current problems in number theory*. Lectures on
+  Modern Mathematics, Vol. III (1965), 196-244.
+- [Bi94] Biró, A., *On a problem of Turán concerning sums of powers of complex numbers*. Acta Math.
+  Hungar. (1994), 209-216.
+- [Bi00] Biró, András, *An improved estimate in a power sum problem of Turán*. Indag. Math. (N.S.)
+  (2000), 343-358.
+- [Bi00b] Biró, A., *An upper estimate in Turán's pure power sum problem*. Indag. Math. (N.S.)
+  (2000), 499--508.
 - [At61b] Atkinson, F. V., *On sums of powers of complex numbers*. Acta Math. Acad.
   Sci. Hungar. (1961), 185-188.
 -/

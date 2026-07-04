@@ -21,6 +21,17 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/453](https://www.erdosproblems.com/453)
+- [Er70b] Erdős, P., *Some applications of graph theory to number theory*. Proc. Second Chapel Hill
+  Conf. on Combinatorial Mathematics and its Applications (Univ. North Carolina, Chapel Hill, N.C.,
+  1970) (1970), 136-145.
+- [Er74b] Erdős, P., *Remarks on some problems in number theory*. Math. Balkanica (1974), 197-202.
+- [Er77c] Erdős, Paul, *Problems and results on combinatorial number theory. III*. Number theory day
+  (Proc. Conf., Rockefeller Univ., New York, 1976) (1977), 43-72.
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
+- [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 - [Po79] Pomerance, Carl, *The prime number graph*. Math. Comp. (1979), 399-408.
 -/
 

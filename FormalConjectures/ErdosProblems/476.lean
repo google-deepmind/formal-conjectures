@@ -21,6 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/476](https://www.erdosproblems.com/476)
+- [Er65b] Erdős, Paul, *Some recent advances and current problems in number theory*. Lectures on
+  Modern Mathematics, Vol. III (1965), 196-244.
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
+- [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 - [dSHa94] Dias da Silva, J. A. and Hamidoune, Y. O., *Cyclic spaces for Grassmann
   derivatives and additive theory*. Bull. London Math. Soc. (1994), 140-146.
 -/
