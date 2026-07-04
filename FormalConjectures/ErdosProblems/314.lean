@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/314](https://www.erdosproblems.com/314)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
 - [LiSt24] J. Lim and Steinerberger, S., *On differences of two harmonic numbers*.
   arXiv:2405.11354 (2024).
 -/

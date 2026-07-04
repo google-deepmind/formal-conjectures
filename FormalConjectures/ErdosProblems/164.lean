@@ -21,6 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/164](https://www.erdosproblems.com/164)
+- [Er76g] Erdős, P., *Problems and results on combinatorial number theory. II*. J. Indian Math. Soc.
+  (N.S.) (1976), 285-298.
+- [Er86] Erdős, P., *Problémes et résultats en théorie des nombres*. (1986).
+- [Va99] Various, *Some of Paul's favorite problems*. Booklet produced for the conference "Paul
+  Erdős and his mathematics", Budapest, July 1999 (1999).
 - [ABLLPSTT26] B. Alexeev, K. Barreto, Y. Li, J. D. Lichtman, L. Price, J. I. Shah, Q. Tang, and
   T. Tao, *Primitive sets and Von Mangoldt Chains: Erdős problem #1196 and beyond*.
   arXiv:2605.00301 (2026).

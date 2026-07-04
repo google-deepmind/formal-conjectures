@@ -21,6 +21,12 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/369](https://www.erdosproblems.com/369)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
+- [EgSe76] Eggleton, R. B. and Selfridge, J. L., *Consecutive integers with no large prime factors*.
+  J. Austral. Math. Soc. Ser. A (1976), 1--11.
+- [BFMW20] Bober, J. W. and Fretwell, D. and Martin, G. and Wooley, T. D., *Smooth values of
+  polynomials*. J. Aust. Math. Soc. (2020), 245--261.
 - [BaWo98] Balog, Antal and Wooley, Trevor D., *On strings of consecutive integers with no large
   prime factors*. J. Austral. Math. Soc. Ser. A (1998), 266-276.
 -/

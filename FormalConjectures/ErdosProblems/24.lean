@@ -21,6 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/24](https://www.erdosproblems.com/24)
+- [Er90] Erdős, Paul, *Some of my favourite unsolved problems*. A tribute to Paul Erdős (1990),
+  467-478.
+- [Er97b] Erdős, Paul, *Some old and new problems in various branches of combinatorics*. Discrete
+  Math. (1997), 227-231.
 - [Er92b] Erdős, Paul, *Some of my favourite problems in various branches of combinatorics*.
   Matematiche (Catania) (1992), 231-240.
 - [Er97f] Erdős, Paul, *Some unsolved problems*. Combinatorics, geometry and probability

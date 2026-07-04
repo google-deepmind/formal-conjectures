@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/429](https://www.erdosproblems.com/429)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
 - [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*.
   Ann. Discrete Math. (1980), 89-115.
 - [We24] D. Weisenberg, *Sparse Admissible Sets and a Problem of Erdős and Graham*.
