@@ -37,7 +37,7 @@ size at least $\frac{5}{8}N+C$ then there are distinct $a,b,c\in A$ such that $a
 A problem of Erdős and Sós (also earlier considered by Choi, Erdős, and Szemerédi [CES75], but Erdős
 had forgotten this).
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem erdos_865 :
     ∃ C > 0, ∀ᶠ (N : ℕ) in atTop,
       ∀ A ⊆ Icc 1 N, A.card ≥ (5 / 8 : ℝ) * N + C →
