@@ -21,6 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/487](https://www.erdosproblems.com/487)
+- [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961),
+  221-254.
+- [Er65b] Erdős, Paul, *Some recent advances and current problems in number theory*. Lectures on
+  Modern Mathematics, Vol. III (1965), 196-244.
 - [DaEr36] Davenport, H. and Erdős, P., *On sequences of positive integers*. Acta Arithmetica
   (1936), 147-151.
 - [Kl71] Kleitman, Daniel, *Collections of subsets containing no two sets and their union*.

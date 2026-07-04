@@ -21,6 +21,9 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/646](https://www.erdosproblems.com/646)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
+- [Er97e] Erdős, Paul, *Some of my favourite unsolved problems*. Math. Japon. (1997), 527-537.
 - [Be97] Berend, Daniel, *On the parity of exponents in the factorization of $n!$*.
   J. Number Theory (1997), 13-19.
 -/

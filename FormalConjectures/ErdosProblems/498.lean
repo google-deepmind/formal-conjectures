@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/498](https://www.erdosproblems.com/498)
+- [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961),
+  221-254.
 - [Er45] Erdős, P., _On a lemma of Littlewood and Offord_. Bull. Amer. Math. Soc. (1945), 898-902.
 - [Kl65] Kleitman, Daniel J., _On a lemma of Littlewood and Offord on the distribution of certain
   sums_. Math. Z. (1965), 251-259.

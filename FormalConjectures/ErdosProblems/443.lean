@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/443](https://www.erdosproblems.com/443)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
 - [He25] Hegyvári, Norbert, *An elementary question of Erdős and Graham*.
   arXiv:2503.24201 (2025).
 -/

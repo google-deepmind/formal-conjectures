@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/502](https://www.erdosproblems.com/502)
+- [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961),
+  221-254.
 - [BBS83] Bannai, Eiichi and Bannai, Etsuko and Stanton, Dennis, *An upper bound for the
   cardinality of an $s$-distance subset in real Euclidean space. II*. Combinatorica (1983),
   147-152.

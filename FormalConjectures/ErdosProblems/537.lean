@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/537](https://www.erdosproblems.com/537)
+- [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of combinatorial
+  theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
 -/
 
 open Filter

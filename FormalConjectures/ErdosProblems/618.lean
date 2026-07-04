@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/618](https://www.erdosproblems.com/618)
+- [Er99] Erdős, Paul, *A selection of problems and results in combinatorics*. Combin. Probab.
+  Comput. (1999), 1-6.
 - [EGR98] Erdős, Paul and Gyárfás, András and Ruszinkó, Miklós, *How to decrease the diameter
   of triangle-free graphs*. Combinatorica (1998), 493-501.
 -/

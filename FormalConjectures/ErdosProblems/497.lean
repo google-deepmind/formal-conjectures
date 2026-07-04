@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/497](https://www.erdosproblems.com/497)
+- [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961),
+  221-254.
 - [Kl69] Kleitman, Daniel, *On Dedekind's problem: The number of monotone Boolean functions*.
   Proc. Amer. Math. Soc. (1969), 677-682.
 -/

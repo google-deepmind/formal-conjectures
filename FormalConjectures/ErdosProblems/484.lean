@@ -21,6 +21,10 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/484](https://www.erdosproblems.com/484)
+- [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961),
+  221-254.
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
 - [ESS89] Erdős, P., Sárközy, A., and Sós, V. T., *On a conjecture of Roth and some related
   problems. I*. (1989), 47-59.
 -/
