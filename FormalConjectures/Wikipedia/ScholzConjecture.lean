@@ -64,4 +64,4 @@ theorem scholz_conjecture (n : ℕ) (hn : 0 < n) :
     ℓ(2 ^ n - 1) ≤ n - 1 + ℓ(n) := by
   sorry
 
-end Scholz
+end ScholzConjecture
