@@ -23,6 +23,10 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/865](https://www.erdosproblems.com/865)
 - [CES75] Choi, S. L. G. and Erdős, P. and Szemerédi, E., Some additive and multiplicative problems
   in number theory. Acta Arith. (1975), 37--50.
+- [Ci26] R. Cipollini, [A sharp $5/8$ bound for an Erdős–Sós pairwise-sums problem](https://arxiv.org/html/2606.29361)
+  (2026).
+- [CiLe26] R. Cipollini, [Lean formalization of a $5/8$ bound for Erdős Problem 865](https://github.com/mrricky22/erdos-865-lean)
+  (2026).
 -/
 
 open Finset Filter
@@ -36,8 +40,12 @@ size at least $\frac{5}{8}N+C$ then there are distinct $a,b,c\in A$ such that $a
 
 A problem of Erdős and Sós (also earlier considered by Choi, Erdős, and Szemerédi [CES75], but Erdős
 had forgotten this).
+
+This was resolved unconditionally by Cipollini [Ci26]. A conditional Lean 4 formalization of the
+reduction (assuming a coarse $2/3$ upper bound) appears in [CiLe26].
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/mrricky22/erdos-865-lean/blob/main/RequestProject/Main.lean"]
 theorem erdos_865 :
     ∃ C > 0, ∀ᶠ (N : ℕ) in atTop,
       ∀ A ⊆ Icc 1 N, A.card ≥ (5 / 8 : ℝ) * N + C →
