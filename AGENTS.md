@@ -461,8 +461,8 @@ Before considering your work complete, verify:
 - [ ] Docstrings present for main definitions
 - [ ] `research open`, `textbook` and `research solved` docstrings include a concise description
 - [ ] Code properly formatted and readable
-- [ ] Searched `FormalConjecturesForMathlib` and neighboring files for existing definitions, API, and notation before adding new ones
-- [ ] Notes to reviewers (formalization choices, caveats) are in the PR description, not the Lean file
+- [ ] Searched mathlib and `FormalConjecturesForMathlib` and neighboring files for existing definitions, API, and notation before adding new ones
+- [ ] Notes to reviewers (formalization choices, caveats, AI support used) are in the PR description, not the Lean file
 
 ### Testing Definitions
 
@@ -492,7 +492,7 @@ theorem myNewClass_sanity_check :
 - Add large proofs (this is a benchmark repository, not a proof repository)
 - Use camelCase for theorem names
 - Create placeholder definitions in FormalConjecturesForMathlib/
-- Redefine notation or API that already exists in `FormalConjecturesForMathlib` or a neighboring problem file
+- Redefine notation or API that already exists in mathlib, `FormalConjecturesForMathlib` or a neighboring problem file
 - Put meta-commentary or notes-to-reviewers in Lean files (they belong in the PR description)
 
 ✅ **DO:**
