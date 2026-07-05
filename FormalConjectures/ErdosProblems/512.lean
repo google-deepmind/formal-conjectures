@@ -31,9 +31,6 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos512
 
-/-- Shorthand for the additive character $e(x) = e^{2\pi i x}$. -/
-noncomputable def e (x : ℝ) : ℂ := Complex.exp ((2 * Real.pi * x : ℝ) * Complex.I)
-
 /--
 Is it true that, if $A\subset \mathbb{Z}$ is a finite set of size $N$, then
 \[\int_0^1 \left\lvert \sum_{n\in A}e(n\theta)\right\rvert \mathrm{d}\theta \gg \log N,\]

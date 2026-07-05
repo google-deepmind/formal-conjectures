@@ -46,11 +46,6 @@ formulation 1-indexing was used. This change does not affect the meaning of the 
 In the description of the problem below we remain faithful to the original one.
 -/
 
-/-- Shorthand for the additive character $e(x) = e^{2 \pi i x}$.
-(Matches `Real.fourierChar` / `𝐞` from `Mathlib/Analysis/Complex/Circle.lean`, but
-kept as a local definition for readability across the many sites that use it.) -/
-noncomputable def e (x : ℝ) : ℂ := Complex.exp ((2 * Real.pi * x : ℝ) * Complex.I)
-
 /--
 For an infinite sequence $x_1, x_2, \ldots \in (0, 1)$, define
 $$A_k = \limsup_{n \to \infty} \left\lvert \sum_{j \le n} e(k x_j) \right\rvert,$$

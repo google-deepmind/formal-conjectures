@@ -33,26 +33,17 @@ import FormalConjectures.Util.ProblemImports
 - [BrCh24] Bradač, D. and Christoph, M., *Unique subgraphs are rare*. arXiv:2410.16233 (2024).
 -/
 
-open Filter
+open Filter SimpleGraph
 
 namespace Erdos426
 
-/--
-`G` is a **unique subgraph** of `H` if there is exactly one subgraph of `H` isomorphic to `G`.
-Subgraphs of `H` are taken in the spanning sense: elements `G' ≤ H` of the lattice
-`SimpleGraph (Fin n)`, i.e. subsets of the edges of `H` (not necessarily induced).
--/
-def IsUniqueSubgraph {n : ℕ} (G H : SimpleGraph (Fin n)) : Prop :=
-  ∃! G' : SimpleGraph (Fin n), G' ≤ H ∧ Nonempty (G.Iso G')
-
-/--
-The number of distinct unique subgraphs of `H`: the number of isomorphism classes of graphs
-that occur exactly once as a subgraph of `H`. Each such class contains exactly one subgraph
-`G ≤ H` (uniqueness forbids a second isomorphic copy), so counting those representatives
-counts the classes.
--/
-noncomputable def uniqueSubgraphCount {n : ℕ} (H : SimpleGraph (Fin n)) : ℕ :=
-  {G : SimpleGraph (Fin n) | G ≤ H ∧ IsUniqueSubgraph G H}.ncard
+/-- Sanity check: the empty graph `⊥` is a unique subgraph of itself. Its only subgraph is `⊥`
+(everything `≤ ⊥` equals `⊥`), which is isomorphic to `⊥` via the identity. -/
+@[category test, AMS 5]
+theorem isUniqueSubgraph_bot_bot {V : Type*} : IsUniqueSubgraph (⊥ : SimpleGraph V) ⊥ := by
+  refine ⟨⊥, ⟨le_refl _, ⟨Iso.refl⟩⟩, ?_⟩
+  rintro G' ⟨hle, -⟩
+  exact le_bot_iff.mp hle
 
 /--
 We say $H$ is a unique subgraph of $G$ if there is exactly one way to find $H$ as a subgraph
