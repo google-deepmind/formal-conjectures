@@ -24,8 +24,6 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 - [erdosproblems.com/884](https://www.erdosproblems.com/884)
 - [Tao25](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf)
 - [Larsen](https://github.com/Larsen-Daniel/Erdos-884/blob/main/884.pdf)
-- [CF26] Claude Fable 5 (with minor guidance from R. J. Honicky),
-  [Lean formalisation of Erdős problem 884](https://github.com/honicky/erdos884) (2026)
 -/
 
 namespace Erdos884
@@ -80,14 +78,12 @@ This conjecture has been **disproved**:
 - Daniel Larsen subsequently gave an
   [unconditional disproof](https://github.com/Larsen-Daniel/Erdos-884/blob/main/884.pdf).
 
-Larsen's unconditional disproof has been formalised in Lean 4 (over Mathlib) by Claude Fable 5,
-with minor guidance from R. J. Honicky [CF26]; the linked development proves `¬ Erdos884Prop`, in
-the exact `answer(False) ↔ Erdos884Prop` shape of this statement (see `erdos_884_iff_false` there).
+This was formalized in lean by Honicky using Claude Fable 5.
 
 *Reference:* [erdosproblems.com/884](https://www.erdosproblems.com/884)
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/honicky/erdos884"]
+  "https://github.com/honicky/erdos884/blob/main/Erdos884.lean"]
 theorem erdos_884 :
     answer(False) ↔ Erdos884Prop := by
   sorry
