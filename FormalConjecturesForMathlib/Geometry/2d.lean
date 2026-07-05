@@ -204,11 +204,11 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
   ring
 
 /--
-Given a finite set of points in the plane, we define the number of distinct distances between pairs
-of points.
+Given a finite set of points in a metric space, we define the number of distinct distances
+between pairs of points.
 -/
-noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  #(points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2)
+noncomputable def distinctDistances {E : Type*} [MetricSpace E] (points : Finset E) : ℕ :=
+  #(points.offDiag.image fun (pair : E × E) => dist pair.1 pair.2)
 
 /--
 The minimum number of distinct distances guaranteed for any set of $n$ points.
