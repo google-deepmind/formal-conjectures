@@ -19,7 +19,11 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Erdős Problem 1050
 
-*Reference:* [erdosproblems.com/1050](https://www.erdosproblems.com/1050)
+*References:* 
+- [erdosproblems.com/1050](https://www.erdosproblems.com/1050)
+- [Bo91] Borwein, Peter B., On the irrationality of {$\sum(1/(q^n+r))$}. J. Number Theory (1991), 253--259.
+- [Er48] Erdős, P., On arithmetical properties of Lambert series. J. Indian Math. Soc. (N.S.) (1948), 63-66.
+- [Er88c] Erdős, P., On the irrationality of certain series: problems and results. New advances in transcendence theory (Durham, 1986) (1988), 102-109.
 
 Is $\sum_{n=1}^\infty \frac{1}{2^n - 3}$ irrational?
 
