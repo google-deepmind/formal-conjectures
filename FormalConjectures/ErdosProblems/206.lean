@@ -54,15 +54,11 @@ namespace Erdos206
 
 /-- The Egyptian fraction sum: `∑_{m ∈ S} 1/m` for a finset of natural numbers. -/
 noncomputable def egyptianSum (S : Finset ℕ) : ℝ :=
-  S.sum (fun m => (1 : ℝ) / m)
+  ∑ m ∈ S, (1 : ℝ) / m
 
-/-- All elements of the finset are positive (valid denominators). -/
-def ValidEgyptian (S : Finset ℕ) : Prop :=
-  ∀ m ∈ S, 0 < m
-
-/-- `S` is an Egyptian underapproximation of `x`: valid denominators and sum < x. -/
+/-- `S` is an Egyptian underapproximation of `x`: valid denominators (all positive) and sum < x. -/
 def IsUnderapprox (S : Finset ℕ) (x : ℝ) : Prop :=
-  ValidEgyptian S ∧ egyptianSum S < x
+  (∀ m ∈ S, 0 < m) ∧ egyptianSum S < x
 
 /-- `S` achieves the best `n`-term Egyptian underapproximation of `x`,
 i.e. `egyptianSum S` realises $R_n(x)$. -/

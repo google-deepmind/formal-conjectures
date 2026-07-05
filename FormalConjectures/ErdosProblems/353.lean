@@ -38,18 +38,6 @@ open scoped Real
 namespace Erdos353
 
 /--
-`a b c d` are the vertices, in counter-clockwise order, of an isosceles trapezoid:
-they are in strictly convex position, the side `ab` is parallel to the side `cd`
-(the two bases), and the diagonals `ac` and `bd` have equal length. One pair of
-parallel sides together with equal diagonals is the classical characterization of
-an isosceles trapezoid; in particular it rules out non-rectangular parallelograms.
--/
-def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
-  IsCcwConvexPolygon ![a, b, c, d] ∧
-  line[ℝ, a, b] ∥ line[ℝ, c, d] ∧
-  dist a c = dist b d
-
-/--
 Let $A\subseteq \mathbb{R}^2$ be a measurable set with infinite measure. Must $A$ contain the
 vertices of an isosceles trapezoid of area $1$? What about an isosceles triangle, or a
 right-angled triangle, or a cyclic quadrilateral, or a convex polygon with congruent sides?
@@ -85,7 +73,7 @@ non-degeneracy hypothesis is needed.
 theorem erdos_353.variants.isosceles_triangle :
     ∀ A : Set ℝ², MeasurableSet A → volume A = ⊤ →
       ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A,
-        (dist a b = dist a c ∨ dist b a = dist b c ∨ dist c a = dist c b) ∧
+        IsIsosceles a b c ∧
         volume (convexHull ℝ {a, b, c}) = 1 := by
   sorry
 
@@ -104,7 +92,7 @@ non-degeneracy hypothesis is needed.
 theorem erdos_353.variants.right_angled_triangle :
     ∀ A : Set ℝ², MeasurableSet A → volume A = ⊤ →
       ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A,
-        (∠ b a c = π / 2 ∨ ∠ a b c = π / 2 ∨ ∠ b c a = π / 2) ∧
+        IsRightAngled a b c ∧
         volume (convexHull ℝ {a, b, c}) = 1 := by
   sorry
 

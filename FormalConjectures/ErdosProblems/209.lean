@@ -34,9 +34,9 @@ open EuclideanGeometry Affine
 
 namespace Erdos209
 
-/-- A line in the plane: the affine span of two distinct points. -/
+/-- A line in the plane: an affine subspace whose direction is one-dimensional. -/
 def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
-  ∃ p q : ℝ², p ≠ q ∧ L = affineSpan ℝ {p, q}
+  Module.finrank ℝ L.direction = 1
 
 /-- The number of lines from `A` that pass through the point `p`. -/
 noncomputable def pointMultiplicity (A : Finset (AffineSubspace ℝ ℝ²)) (p : ℝ²) : ℕ :=
