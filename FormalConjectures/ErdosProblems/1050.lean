@@ -39,10 +39,10 @@ Claude Code and Harmonic's Aristotle.
 
 namespace Erdos1050
 
-/-- **Erdős Problem 1050.** The series `∑_{n ≥ 1} 1/(2ⁿ − 3)` is irrational.
+/-- **Erdős Problem 1050.** The series $\sum_{n=1}^\infty \frac{1}{2^n - 3}$ is irrational.
 
-The source sum runs over `n ≥ 1`; as a `tsum` over `ℕ` (which starts at `0`) it is reindexed
-`n ↦ n + 1`, i.e. `∑' n : ℕ, 1/(2^(n+1) − 3)`. -/
+The source sum runs over $n \ge 1$; as a `tsum` over `ℕ` (which starts at $0$) it is reindexed
+$n \mapsto n + 1$, i.e. $\sum_{n=0}^\infty 1/(2^{n+1} - 3)$. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/gotrevor/lean-gallery/blob/main/LeanGallery/NumberTheory/Erdos1050/Statement.lean"]
