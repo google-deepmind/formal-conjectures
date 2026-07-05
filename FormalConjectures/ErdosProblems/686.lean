@@ -18,7 +18,11 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 686
-*Reference:* [erdosproblems.com/686](https://www.erdosproblems.com/686)
+
+*References:*
+- [erdosproblems.com/686](https://www.erdosproblems.com/686)
+- [Er79d] Erdős, P., *Some unconventional problems in number theory*. Acta Math.
+  Acad. Sci. Hungar. (1979), 71-80.
 -/
 
 namespace Erdos686
