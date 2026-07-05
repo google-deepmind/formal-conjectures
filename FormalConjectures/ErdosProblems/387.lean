@@ -21,6 +21,13 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
  - [erdosproblems.com/387](https://www.erdosproblems.com/387)
+ - [ErGr76b] Erdős, P. and Graham, R. L., *On the prime factors of
+   ${n \choose k}$*. Fibonacci Quart. (1976), 348-352.
+ - [Er78g] Erdős, Pál, *On prime factors of binomial coefficients. II*. Mat. Lapok
+   (1978/82), 307-316.
+ - [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
+   number theory*. Monographies de L'Enseignement Mathematique (1980).
+ - [Sc58] Schinzel, A., *Sur un problème de P. Erdős*. Colloq. Math. (1958), 198-204.
  - [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
  - [Fa66] Faulkner, M. "On a theorem of Sylvester and Schur." Journal of the London Mathematical
     Society 1.1 (1966): 107-110.
