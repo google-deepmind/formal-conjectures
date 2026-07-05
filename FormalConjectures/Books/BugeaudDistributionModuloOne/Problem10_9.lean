@@ -34,9 +34,8 @@ See also FormalConjectures/Wikipedia/Mahler32.lean.
 namespace Bugeaud09
 
 /--
-Problem 10.9. There are no real numbers $\xi$ such that
-$0 \le \{\xi (3/2)^n\} < 1/2$ for every positive integer $n$,
-i.e. no Z-number exists. Posed by Mahler [Mah68].
+Problem 10.9. There are no real numbers $\xi$ such that $0 \le \{\xi (3/2)^n\} < 1/2$
+for every positive integer $n$, i.e. no Z-number exists. Posed by Mahler [Mah68].
 -/
 @[category research open, AMS 11]
 theorem problem_10_9 : type_of% Mahler32.mahler_conjecture := by
