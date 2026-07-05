@@ -22,15 +22,14 @@ import FormalConjectures.Util.ProblemImports
 *References:* 
 - [erdosproblems.com/1050](https://www.erdosproblems.com/1050)
 - [Bo91] Borwein, Peter B., On the irrationality of {$\sum(1/(q^n+r))$}. J. Number Theory (1991), 253--259.
+- [Bo92] Borwein, Peter B., On the irrationality of certain series. Math. Proc. Camb. Phil. Soc. (1992), 141--146.
 - [Er48] Erdős, P., On arithmetical properties of Lambert series. J. Indian Math. Soc. (N.S.) (1948), 63-66.
 - [Er88c] Erdős, P., On the irrationality of certain series: problems and results. New advances in transcendence theory (Durham, 1986) (1988), 102-109.
 
 Is $\sum_{n=1}^\infty \frac{1}{2^n - 3}$ irrational?
 
-The answer is **yes**, proved by P. B. Borwein, *On the irrationality of $\sum 1/(q^n + r)$*,
-J. Number Theory **37** (1991) 253-259 (cleaner self-contained proof in *On the irrationality of
-certain series*, Math. Proc. Camb. Phil. Soc. **112** (1992) 141-146), specialized to $q = 2$,
-$r = -3$.
+The answer is **yes**, proved by P. B. Borwein [Bo91] (with a cleaner self-contained proof in [Bo92]),
+specialized to $q = 2$, $r = -3$.
 
 A formal Lean proof is given in an external repository,
 [`gotrevor/lean-gallery`](https://github.com/gotrevor/lean-gallery), formalized by Trevor Morris with
