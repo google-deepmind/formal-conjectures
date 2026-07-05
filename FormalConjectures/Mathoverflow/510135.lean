@@ -157,12 +157,36 @@ private def _8_7_positions : Finset (ℕ × ℕ) :=
     (6, 0), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7),
     (7, 0), (7, 1), (7, 2), (7, 4), (7, 5), (7, 6), (7, 7)}
 
+open Matrix
+
+-- A simple utility to convert a matrix to a readable string format
+def matrixToString {m n : Nat} {α : Type} [ToString α] (A : Matrix (Fin m) (Fin n) α) : String :=
+  let rows := List.range m
+  let cols := List.range n
+  let formatRow (i : Nat) : String :=
+    let rowElems := cols.map (fun j => toString (A ⟨i, sorry⟩ ⟨j, sorry⟩))
+    ("  ".intercalate rowElems)
+  "\n".intercalate (rows.map formatRow)
+
+#eval! IO.println (matrixToString (board_of_positions _8_1_positions))
 #eval satisfies_placement_conjecture_bool 8 1 (board_of_positions _8_1_positions)
+
+#eval! IO.println (matrixToString (board_of_positions _8_2_positions))
 #eval satisfies_placement_conjecture_bool 8 2 (board_of_positions _8_2_positions)
+
+#eval! IO.println (matrixToString (board_of_positions _8_3_positions))
 #eval satisfies_placement_conjecture_bool 8 3 (board_of_positions _8_3_positions)
+
+#eval! IO.println (matrixToString (board_of_positions _8_4_positions))
 #eval satisfies_placement_conjecture_bool 8 4 (board_of_positions _8_4_positions)
+
+#eval! IO.println (matrixToString (board_of_positions _8_5_positions))
 #eval satisfies_placement_conjecture_bool 8 5 (board_of_positions _8_5_positions)
+
+#eval! IO.println (matrixToString (board_of_positions _8_6_positions))
 #eval satisfies_placement_conjecture_bool 8 6 (board_of_positions _8_6_positions)
+
+#eval! IO.println (matrixToString (board_of_positions _8_7_positions))
 #eval satisfies_placement_conjecture_bool 8 7 (board_of_positions _8_7_positions)
 
 end Mathoverflow510135
