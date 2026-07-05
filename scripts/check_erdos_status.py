@@ -111,7 +111,7 @@ def scan_lean_files():
         if not file_number.isdigit():
             continue
         filepath = os.path.join(ERDOS_DIR, fname)
-        with open(filepath) as f:
+        with open(filepath, encoding="utf-8") as f:
             content = f.read()
 
         # Check if file has any formal_proof attribute
@@ -235,12 +235,73 @@ def create_issues(mismatches):
         subprocess.run(cmd)
 
 
+def apply_fixes(mismatches):
+    """Automatically update @[category research ...] attributes where possible.
+    
+    Skips cases where the only difference is the presence/absence of a formal_proof
+    attribute (e.g. lean='solved', yaml='formally solved'), as fixing these requires
+    finding the actual proof link.
+    """
+    fixed_count = 0
+    for m in mismatches:
+        num = m["number"]
+        lean_st = m["lean_status"]
+        yaml_st = m["yaml_status"]
+        
+        target_cat = "solved" if yaml_st in ("solved", "formally solved") else "open"
+        current_cat = "solved" if lean_st in ("solved", "formally solved") else "open"
+        
+        if target_cat == current_cat:
+            print(f"Skipping auto-fix for {num}: requires manual formal_proof link update (lean={lean_st}, yaml={yaml_st})", file=sys.stderr)
+            continue
+            
+        if target_cat == "open" and lean_st == "formally solved":
+            print(f"Skipping auto-fix for {num}: cannot safely downgrade formally solved to open without losing proof link", file=sys.stderr)
+            continue
+            
+        filepath = os.path.join(ERDOS_DIR, f"{num}.lean")
+        if not os.path.exists(filepath):
+            print(f"Cannot auto-fix {num}: file {filepath} not found", file=sys.stderr)
+            continue
+            
+        with open(filepath, "r", encoding="utf-8") as f:
+            content = f.read()
+            
+        def repl(match):
+            cat = match.group(1)
+            n = match.group(2)
+            suffix = match.group(3)
+            
+            if n == num and (suffix == "" or suffix == ":" or not is_variant(suffix)):
+                full_text = match.group(0)
+                new_text = full_text.replace(f"@[category research {cat}", f"@[category research {target_cat}", 1)
+                return new_text
+            return match.group(0)
+
+        new_content = CATEGORY_THEN_THEOREM.sub(repl, content)
+        
+        if new_content != content:
+            with open(filepath, "w", encoding="utf-8") as f:
+                f.write(new_content)
+            print(f"Auto-fixed {num}: changed base category to {target_cat}", file=sys.stderr)
+            fixed_count += 1
+        else:
+            print(f"Failed to auto-fix {num}: could not find a matching main theorem to replace", file=sys.stderr)
+            
+    print(f"\nSuccessfully auto-fixed {fixed_count} files.", file=sys.stderr)
+
+
 def main():
     mismatches = find_mismatches()
+    
+    # We still print the JSON to stdout as before, for script composition
     json.dump(mismatches, sys.stdout, indent=2)
     print()  # trailing newline
 
-    if "--create-issues" in sys.argv and mismatches:
+    if "--auto-fix" in sys.argv and mismatches:
+        apply_fixes(mismatches)
+        # Note: after auto-fixing, some mismatches (like missing formal_proof links) may still remain
+    elif "--create-issues" in sys.argv and mismatches:
         create_issues(mismatches)
 
     return 1 if mismatches else 0
