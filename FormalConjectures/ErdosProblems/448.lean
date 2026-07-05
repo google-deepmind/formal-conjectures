@@ -21,6 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/448](https://www.erdosproblems.com/448)
+- [OEIS A397433](https://oeis.org/A397433): the integer sequence $\tau^+(n)$
+  (the constant $\alpha$ in Ford's asymptotic is [OEIS A074738](https://oeis.org/A074738)).
 - [Er79] Erdős, Paul, Some unconventional problems in number theory. Math. Mag. (1979), 67-70.
 - [Er79e] Erdős, Paul, Some unconventional problems in number theory. Astérisque (1979), 73-82.
 - [HaTe88] Hall, Richard R. and Tenenbaum, Gérald, Divisors. (1988), xvi+167.
