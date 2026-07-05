@@ -21,14 +21,11 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/132](https://www.erdosproblems.com/132)
-- [HoPa34] Hopf, H. and Pannwitz, E., _Aufgabe 167_. Jber. Deutsch. Math. Verein. (1934), 114.
-- [ErFi95] Erdős, Paul and Fishburn, Peter C., _Multiplicities of interpoint distances in finite
-  planar sets_. Discrete Appl. Math. (1995), 141-147.
-- [CDL25] F. Clemen, A. Dumitrescu, and D. Liu, _On multiplicities of interpoint distances_.
-  [arXiv:2505.04283](https://arxiv.org/abs/2505.04283) (2025).
-- [Er84c] Erdős, Paul, _Some old and new problems in combinatorial geometry_. Convexity and
-  graph theory (Jerusalem, 1981) (1984), 129-136.
-- [Er97e] Erdős, Paul, _Some of my favourite unsolved problems_. Math. Japon. (1997), 527-537.
+- [CDL25] F. Clemen, A. Dumitrescu, and D. Liu, On multiplicities of interpoint distances. arXiv:2505.04283 (2025).
+- [Er84c] Erdős, Paul, Some old and new problems in combinatorial geometry. Convexity and graph theory (Jerusalem, 1981) (1984), 129-136.
+- [Er97e] Erdős, Paul, Some of my favourite unsolved problems. Math. Japon. (1997), 527-537.
+- [ErFi95] Erdős, Paul and Fishburn, Peter C., Multiplicities of interpoint distances in finite planar sets. Discrete Appl. Math. (1995), 141--147.
+- [HoPa34] Hopf, H. and Pannwitz, E., Aufgabe 167. Jber. Deutsch. Math. Verein. (1934), 114.
 -/
 
 open Filter EuclideanGeometry
@@ -118,9 +115,7 @@ theorem erdos_132.variants.erdos_fishburn (P : Finset ℝ²)
   sorry
 
 /--
-Clemen, Dumitrescu, and Liu [CDL25] have proved that there are always at least two such
-distances if $A$ is in convex position (that is, no point lies inside the convex hull of the
-others).
+Clemen, Dumitrescu, and Liu [CDL25] have proved that there are always at least two such distances if $A$ is in convex position (that is, no point lies inside the convex hull of the others). They also prove it is true if the set $A$ is 'not too convex', in a specific technical sense.
 
 [CDL25, Theorem 1.2] states this for all point sets in convex position with $n \geq 5$; the
 hypothesis $n \geq 5$ is necessary, as the four-point configuration of
@@ -133,7 +128,7 @@ theorem erdos_132.variants.convex_position (P : Finset ℝ²) (hcard : 5 ≤ P.c
   sorry
 
 /--
-It may be true that there are at least $n^{1-o(1)}$ many such distances.
+It may be true that there are at least $n^{1-o(1)}$ many such distances. In [Er97e] Erdős offers \$100 for 'any nontrivial result'.
 -/
 @[category research open, AMS 52]
 theorem erdos_132.variants.polynomial_count : answer(sorry) ↔
