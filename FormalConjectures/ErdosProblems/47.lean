@@ -21,26 +21,41 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/47](https://www.erdosproblems.com/47)
-- [Bl21] Bloom, T. F., On a density conjecture about unit fractions. arXiv:2112.03726 (2021).
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
+- [Er92c] Erdős, P., *Some of my forgotten problems in number theory*. Hardy-Ramanujan J. (1992),
+  34-50.
+- [Er95] Erdős, Paul, *Some of my favourite problems in number theory, combinatorics, and geometry*.
+  Resenhas (1995), 165-186.
+- [Er96b] Erdős, Paul, *Some problems I presented or planned to present in my short talk*. Analytic
+  number theory, Vol. 1 (Allerton Park, IL, 1995) (1996), 333-335.
+- [Er97c] Erdős, Paul, *Some of my favorite problems and results*. The mathematics of Paul Erdős, I
+  (1997), 47-67.
+- [Bl21] Bloom, T. F., *On a density conjecture about unit fractions*. arXiv:2112.03726
+  (2021).
+- [LiSa24] Liu, Y. and Sawhney, M., *On further questions regarding unit fractions*.
+  arXiv:2404.07113 (2024).
 -/
 
 namespace Erdos47
 
-/--
-If $\delta > 0$ and $N$ is sufficiently large in terms of $\delta$, and
-$A \subseteq \{1,\ldots,N\}$ is such that $\sum_{a\in A} 1/a > \delta \log N$,
-then there exists $S \subseteq A$ such that $\sum_{n\in S} 1/n = 1$.
+open Filter
+open scoped BigOperators
 
-This was proved by Bloom [Bl21].
+/--
+If $\delta>0$ and $N$ is sufficiently large in terms of $\delta$, and $A\subseteq\{1,\ldots,N\}$ is such that $\sum_{a\in A}\frac{1}{a}>\delta \log N$ then must there exist $S\subseteq A$ such that $\sum_{n\in S}\frac{1}{n}=1$?
+
+Bloom [Bl21] proved this in the affirmative.
 -/
 @[category research solved, AMS 11,
-formal_proof using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.30.0/ErdosProblems/Erdos47.lean#L495"]
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.30.0/ErdosProblems/Erdos47.lean#L495"]
 theorem erdos_47 : answer(True) ↔
-    ∀ δ > 0, ∃ N₀ : ℕ, ∀ N ≥ N₀, ∀ A : Finset ℕ,
+    ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℕ,
       A ⊆ Finset.Icc 1 N →
-      δ * Real.log (N : ℝ) < ∑ n ∈ A, (1 : ℝ) / n →
-      ∃ S ⊆ A, ∑ n ∈ S, (1 : ℝ) / n = 1 := by
+      δ * Real.log (N : ℝ) < A.reciprocalSum →
+      ∃ S : Finset ℕ, S ⊆ A ∧ S.reciprocalSum = 1 := by
   sorry
 
 end Erdos47
