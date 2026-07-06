@@ -89,9 +89,8 @@ theorem erdos_1083.variants.lower_bound_cegsw :
   sorry
 
 /--
-Aronov, Pach, Sharir, and Tardos [APST04] proved
-$f_d(n) \gg n^{\frac{1}{d - 90/77} - o(1)}$ for any $d \geq 3$
-(for example, $f_3(n) \gg n^{0.546}$).
+Aronov, Pach, Sharir, and Tardos [APST04] in Corollary 1.3 proved
+$f_d(n) \gg n^{\frac{1}{d - 90/77} - o(1)}$ for any $d \geq 3$.
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_1083.variants.lower_bound_apst (d : ℕ) (hd : 3 ≤ d) :
@@ -100,7 +99,8 @@ theorem erdos_1083.variants.lower_bound_apst (d : ℕ) (hd : 3 ≤ d) :
   sorry
 
 /--
-Solymosi and Vu [SoVu08] proved $f_d(n) \gg_d n^{\frac{2}{d} - \frac{2}{d(d+2)}}$ for $d \geq 3$.
+Solymosi and Vu [SoVu08] in Theorem 1.1 proved $f_d(n) \gg_d n^{\frac{2}{d} - \frac{2}{d(d+2)}}$,
+for $d \geq 3$.
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_1083.variants.lower_bound_solymosi_vu (d : ℕ) (hd : 3 ≤ d) :
@@ -109,9 +109,7 @@ theorem erdos_1083.variants.lower_bound_solymosi_vu (d : ℕ) (hd : 3 ≤ d) :
   sorry
 
 /--
-Solymosi and Vu [SoVu08, Corollary 1.2] proved $f_3(n) \gg n^{0.5643}$, obtained by applying
-their recursive bound [SoVu08, Theorem 1.1] with the planar bound $f_2(n) \gg n^{0.8635}$ of
-Tardos as input.
+Solymosi and Vu [SoVu08, Corollary 1.2] proved $f_3(n) \gg n^{0.5643}$.
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_1083.variants.lower_bound_solymosi_vu_dim_three :
