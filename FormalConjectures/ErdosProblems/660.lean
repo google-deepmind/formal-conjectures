@@ -58,15 +58,25 @@ theorem erdos_660 :
   sorry
 
 /--
-The planar analogue, proved by Altman [Al63]: the $n$ vertices of a convex polygon in the plane
-(points in convex position, affinely spanning the plane) determine at least $\lfloor n/2 \rfloor$
-distinct distances.
+For the similar problem in $\mathbb{R}^2$ there are always at least $n/2$ distances, as proved by
+Altman [Al63].
 -/
 @[category research solved, AMS 51 52]
 theorem erdos_660.variants.altman_planar (n : ℕ) (P : Finset ℝ²)
     (hcard : P.card = n) (hconv : ConvexIndependent ℝ ((↑) : ↥(P : Set ℝ²) → ℝ²))
     (haff : affineSpan ℝ (P : Set ℝ²) = ⊤) :
     n / 2 ≤ EuclideanGeometry.distinctDistances P := by
+  sorry
+
+/--
+In [Er75f] Erdős claims that Altman proved that the vertices determine $\gg n$ many distinct
+distances, but gives no reference.
+-/
+@[category research open, AMS 51 52]
+theorem erdos_660.variants.Er75f :
+    answer(sorry) ↔ ∃ c > (0 : ℝ), ∀ᶠ n in Filter.atTop, ∀ P : Finset ℝ³,
+      P.card = n → IsPolyhedronVertices P →
+      c * n ≤ (EuclideanGeometry.distinctDistances P : ℝ) := by
   sorry
 
 end Erdos660
