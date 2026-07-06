@@ -42,50 +42,124 @@ A board is encoded as a `Matrix (Fin n) (Fin n) ℕ`
   `0` indicates no coin being present
 -/
 
-def satisfies_placement_conjecture_bool (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
-  let rc (i : Fin n) :=
-    ∑ j : Fin n, board i j
-  let cc (i : Fin n) :=
-    ∑ j : Fin n, board j i
-  let ddc (k : Fin (2 * n - 1)) :=
-    ∑ i : Fin n, ∑ j : Fin n, (if i.1 + j.1 = k.1 then board i j else 0)
-  let udc (k : Fin (2 * n - 1)) :=
-    ∑ i : Fin n, ∑ j : Fin n,
-      (if (i.1 : ℤ) - j.1 = (k.1 : ℤ) - (n - 1) then board i j else 0)
-  let bc :=
-    ∑ i : Fin n, ∑ j : Fin n, board i j
-  let cells_ok : Bool :=
-    decide (∀ i j : Fin n, 0 ≤ board i j ∧ board i j ≤ 1)
-  let rows_ok : Bool :=
-    decide (∀ i : Fin n, rc i ≤ c)
-  let cols_ok : Bool :=
-    decide (∀ i : Fin n, cc i ≤ c)
-  let dds_ok : Bool :=
-    decide (∀ k : Fin (2 * n - 1), ddc k ≤ c)
-  let uds_ok : Bool :=
-    decide (∀ k : Fin (2 * n - 1), udc k ≤ c)
-  let count_ok : Bool :=
-    decide (bc = n * c)
-  cells_ok && rows_ok && cols_ok && dds_ok && uds_ok && count_ok
+-- row count
+def rc (n : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) (i : Fin n) : ℕ :=
+  ∑ j : Fin n, board i j
 
-def satisfies_placement_conjecture (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Prop :=
-  satisfies_placement_conjecture_bool n c board = true
+-- column count
+def cc (n : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) (i : Fin n) : ℕ :=
+  ∑ j : Fin n, board j i
+
+-- downward diagonal count
+def ddc (n : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) (k : Fin (2 * n - 1)) : ℕ :=
+  ∑ i : Fin n, ∑ j : Fin n, (if i.1 + j.1 = k.1 then board i j else 0)
+
+-- upward diagonal count
+def udc (n : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) (k : Fin (2 * n - 1)) : ℕ :=
+  ∑ i : Fin n, ∑ j : Fin n,
+    (if (i.1 : ℤ) - j.1 = (k.1 : ℤ) - (n - 1) then board i j else 0)
+
+-- board count
+def bc (n : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : ℕ :=
+  ∑ i : Fin n, ∑ j : Fin n, board i j
+
+def cells_ok_prop (n : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Prop :=
+  ∀ i j : Fin n, 0 ≤ board i j ∧ board i j ≤ 1
+
+def rows_ok_prop (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Prop :=
+  ∀ i : Fin n, rc n board i ≤ c
+
+def cols_ok_prop (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Prop :=
+  ∀ i : Fin n, cc n board i ≤ c
+
+def dds_ok_prop (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Prop :=
+  ∀ k : Fin (2 * n - 1), ddc n board k ≤ c
+
+def uds_ok_prop (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Prop :=
+  ∀ k : Fin (2 * n - 1), udc n board k ≤ c
+
+def bc_ok_prop (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Prop :=
+  bc n board = n * c
+
+def n_c_placement_conjecture_prop (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Prop :=
+  cells_ok_prop n board ∧
+  rows_ok_prop n c board ∧
+  cols_ok_prop n c board ∧
+  dds_ok_prop n c board ∧
+  uds_ok_prop n c board ∧
+  bc_ok_prop n c board
 
 /--
-Can every such placement problem be solved for every $n \ge 4$ and $0 \le c \le n$?
+Can the coins placement problem be solved for every $n \ge 4$ and $0 \le c \le n$?
 -/
 @[category research open, AMS 5]
 theorem n_c_coins_placement_conjecture : answer(sorry) ↔
   ∀ᵉ (n : ℕ) (c : ℕ) (hn : n ≥ 4) (hc : c ≤ n),
-    ∃ board : Matrix (Fin n) (Fin n) ℕ, satisfies_placement_conjecture n c board := by
+    ∃ board : Matrix (Fin n) (Fin n) ℕ,
+    n_c_placement_conjecture_prop n c board := by
   sorry
 
-/--
-Let's check some boards satifying the conjecture.
+/-
+Let's check some solutions.
+Note that I duplicate code to avoid `Decidable` issues.
 -/
+
+def cells_ok_bool (n : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
+  decide (∀ i j : Fin n, 0 ≤ board i j ∧ board i j ≤ 1)
+
+def rows_ok_bool (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
+  decide (∀ i : Fin n, rc n board i ≤ c)
+
+def cols_ok_bool (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
+  decide (∀ i : Fin n, cc n board i ≤ c)
+
+def dds_ok_bool (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
+  decide (∀ k : Fin (2 * n - 1), ddc n board k ≤ c)
+
+def uds_ok_bool (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
+  decide (∀ k : Fin (2 * n - 1), udc n board k ≤ c)
+
+def bc_ok_bool (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
+  decide (bc n board = n * c)
+
+def n_c_placement_conjecture_bool (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
+  cells_ok_bool n board &&
+  rows_ok_bool n c board &&
+  cols_ok_bool n c board &&
+  dds_ok_bool n c board &&
+  uds_ok_bool n c board &&
+  bc_ok_bool n c board
 
 private def board_of_positions (positions : Finset (ℕ × ℕ)) : Matrix (Fin 8) (Fin 8) ℕ :=
   fun i j => if (i.1, j.1) ∈ positions then 1 else 0
+
+/-
+
+0  0  0  0  0  0  0  0
+0  0  0  0  0  0  0  0
+0  0  0  0  0  0  0  0
+0  0  0  0  0  0  0  0
+0  0  0  0  0  0  0  0
+0  0  0  0  0  0  0  0
+0  0  0  0  0  0  0  0
+0  0  0  0  0  0  0  0
+
+-/
+
+private def _8_0_positions : Finset (ℕ × ℕ) := ∅
+
+/-
+
+0  1  0  0  0  0  0  0
+0  0  0  1  0  0  0  0
+0  0  0  0  0  1  0  0
+0  0  0  0  0  0  0  1
+0  0  1  0  0  0  0  0
+1  0  0  0  0  0  0  0
+0  0  0  0  0  0  1  0
+0  0  0  0  1  0  0  0
+
+-/
 
 private def _8_1_positions : Finset (ℕ × ℕ) :=
   {(0, 1),
@@ -97,6 +171,19 @@ private def _8_1_positions : Finset (ℕ × ℕ) :=
    (6, 6),
    (7, 4)}
 
+/-
+
+0  0  0  1  0  1  0  0
+0  1  0  0  0  0  1  0
+0  1  0  1  0  0  0  0
+0  0  0  0  0  1  0  1
+1  0  0  0  1  0  0  0
+0  0  1  0  0  0  0  1
+1  0  0  0  1  0  0  0
+0  0  1  0  0  0  1  0
+
+-/
+
 private def _8_2_positions : Finset (ℕ × ℕ) :=
   {(0, 3), (0, 5),
    (1, 1), (1, 6),
@@ -106,6 +193,19 @@ private def _8_2_positions : Finset (ℕ × ℕ) :=
    (5, 2), (5, 7),
    (6, 0), (6, 4),
    (7, 2), (7, 6)}
+
+/-
+
+0  0  1  1  1  0  0  0
+0  0  0  0  1  1  1  0
+1  0  1  0  0  0  0  1
+1  0  0  1  0  0  0  1
+0  1  0  1  0  0  1  0
+0  1  0  0  0  1  1  0
+0  0  1  0  0  1  0  1
+1  1  0  0  1  0  0  0
+
+-/
 
 private def _8_3_positions : Finset (ℕ × ℕ) :=
   {(0, 2), (0, 3), (0, 4),
@@ -117,6 +217,19 @@ private def _8_3_positions : Finset (ℕ × ℕ) :=
    (6, 2), (6, 5), (6, 7),
    (7, 0), (7, 1), (7, 4)}
 
+/-
+
+0  1  0  0  1  1  1  0
+1  0  0  1  1  1  0  0
+1  0  1  0  0  0  1  1
+1  0  0  0  1  1  0  1
+0  1  1  0  0  0  1  1
+0  1  1  1  0  0  1  0
+0  0  0  1  1  1  0  1
+1  1  1  1  0  0  0  0
+
+-/
+
 private def _8_4_positions : Finset (ℕ × ℕ) :=
   {(0, 1), (0, 4), (0, 5), (0, 6),
    (1, 0), (1, 3), (1, 4), (1, 5),
@@ -126,6 +239,19 @@ private def _8_4_positions : Finset (ℕ × ℕ) :=
    (5, 1), (5, 2), (5, 3), (5, 6),
    (6, 3), (6, 4), (6, 5), (6, 7),
    (7, 0), (7, 1), (7, 2), (7, 3)}
+
+/-
+
+1  0  1  0  1  1  1  0
+1  1  0  1  0  1  1  0
+1  0  1  1  1  0  0  1
+1  0  1  0  0  1  1  1
+1  1  0  1  1  0  0  1
+0  1  0  1  0  1  1  1
+0  1  1  0  1  1  0  1
+0  1  1  1  1  0  1  0
+
+-/
 
 private def _8_5_positions : Finset (ℕ × ℕ) :=
   {(0, 0), (0, 2), (0, 4), (0, 5), (0, 6),
@@ -137,65 +263,91 @@ private def _8_5_positions : Finset (ℕ × ℕ) :=
    (6, 1), (6, 2), (6, 4), (6, 5), (6, 7),
    (7, 1), (7, 2), (7, 3), (7, 4), (7, 6)}
 
+/-
+
+1  0  1  0  1  1  1  1
+1  1  1  1  0  1  1  0
+1  1  1  1  1  0  0  1
+1  1  1  0  0  1  1  1
+0  1  0  1  1  1  1  1
+0  1  1  1  1  0  1  1
+1  0  1  1  1  1  1  0
+1  1  0  1  1  1  0  1
+
+-/
+
  private def _8_6_positions : Finset (ℕ × ℕ) :=
-  {(0, 0), (0, 2), (0, 4), (0, 5), (0, 6), (0, 7),
-   (1, 0), (1, 1), (1, 2), (1, 3), (1, 5), (1, 6),
-   (2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (2, 7),
-   (3, 0), (3, 1), (3, 2), (3, 5), (3, 6), (3, 7),
-   (4, 1), (4, 3), (4, 4), (4, 5), (4, 6), (4, 7),
-   (5, 1), (5, 2), (5, 3), (5, 4), (5, 6), (5, 7),
-   (6, 0), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6),
-   (7, 0), (7, 1), (7, 3), (7, 4), (7, 5), (7, 7)}
+   {(0, 0), (0, 2), (0, 4), (0, 5), (0, 6), (0, 7),
+    (1, 0), (1, 1), (1, 2), (1, 3), (1, 5), (1, 6),
+    (2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (2, 7),
+    (3, 0), (3, 1), (3, 2), (3, 5), (3, 6), (3, 7),
+    (4, 1), (4, 3), (4, 4), (4, 5), (4, 6), (4, 7),
+    (5, 1), (5, 2), (5, 3), (5, 4), (5, 6), (5, 7),
+    (6, 0), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6),
+    (7, 0), (7, 1), (7, 3), (7, 4), (7, 5), (7, 7)}
+
+/-
+
+0  1  1  1  1  1  1  1
+1  1  1  1  1  1  1  0
+1  1  1  1  0  1  1  1
+1  1  0  1  1  1  1  1
+1  1  1  1  1  1  0  1
+1  1  1  1  1  0  1  1
+1  0  1  1  1  1  1  1
+1  1  1  0  1  1  1  1
+
+-/
 
 private def _8_7_positions : Finset (ℕ × ℕ) :=
   {(0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7),
    (1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),
-    (2, 0), (2, 1), (2, 2), (2, 3), (2, 5), (2, 6), (2, 7),
-    (3, 0), (3, 1), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7),
-    (4, 0), (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 7),
-    (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 6), (5, 7),
-    (6, 0), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7),
-    (7, 0), (7, 1), (7, 2), (7, 4), (7, 5), (7, 6), (7, 7)}
+   (2, 0), (2, 1), (2, 2), (2, 3), (2, 5), (2, 6), (2, 7),
+   (3, 0), (3, 1), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7),
+   (4, 0), (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 7),
+   (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 6), (5, 7),
+   (6, 0), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7),
+   (7, 0), (7, 1), (7, 2), (7, 4), (7, 5), (7, 6), (7, 7)}
 
-open Matrix
+/-
 
--- A simple utility to convert a matrix to a readable string format
-def matrixToString {m n : Nat} {α : Type} [ToString α] (A : Matrix (Fin m) (Fin n) α) : String :=
-  let rows := List.finRange m
-  let cols := List.finRange n
-  let formatRow (i : Fin m) : String :=
-    let rowElems := cols.map (fun j => toString (A i j))
-    ("  ".intercalate rowElems)
-  "\n" ++ ("\n".intercalate (rows.map formatRow))
+1  1  1  1  1  1  1  1
+1  1  1  1  1  1  1  1
+1  1  1  1  1  1  1  1
+1  1  1  1  1  1  1  1
+1  1  1  1  1  1  1  1
+1  1  1  1  1  1  1  1
+1  1  1  1  1  1  1  1
+1  1  1  1  1  1  1  1
+1  1  1  1  1  0  1  1
+-/
 
+private def _8_8_positions : Finset (ℕ × ℕ) :=
+  {(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7),
+   (1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7),
+   (2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7),
+   (3, 0), (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7),
+   (4, 0), (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6), (4, 7),
+   (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6), (5, 7),
+   (6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7),
+   (7, 0), (7, 1), (7, 2), (7, 3), (7, 4), (7, 5), (7, 6), (7 ,7)}
 
-#eval! IO.println (matrixToString (board_of_positions _8_1_positions))
-#eval satisfies_placement_conjecture_bool 8 1 (board_of_positions _8_1_positions)
-#eval IO.println ""
+#eval n_c_placement_conjecture_bool 8 0 (board_of_positions _8_0_positions)
 
-#eval! IO.println (matrixToString (board_of_positions _8_2_positions))
-#eval satisfies_placement_conjecture_bool 8 2 (board_of_positions _8_2_positions)
-#eval IO.println ""
+#eval n_c_placement_conjecture_bool 8 1 (board_of_positions _8_1_positions)
 
-#eval! IO.println (matrixToString (board_of_positions _8_3_positions))
-#eval satisfies_placement_conjecture_bool 8 3 (board_of_positions _8_3_positions)
-#eval IO.println ""
+#eval n_c_placement_conjecture_bool 8 2 (board_of_positions _8_2_positions)
 
-#eval! IO.println (matrixToString (board_of_positions _8_4_positions))
-#eval satisfies_placement_conjecture_bool 8 4 (board_of_positions _8_4_positions)
-#eval IO.println ""
+#eval n_c_placement_conjecture_bool 8 3 (board_of_positions _8_3_positions)
 
-#eval! IO.println (matrixToString (board_of_positions _8_5_positions))
-#eval satisfies_placement_conjecture_bool 8 5 (board_of_positions _8_5_positions)
-#eval IO.println ""
+#eval n_c_placement_conjecture_bool 8 4 (board_of_positions _8_4_positions)
 
-#eval! IO.println (matrixToString (board_of_positions _8_6_positions))
-#eval satisfies_placement_conjecture_bool 8 6 (board_of_positions _8_6_positions)
-#eval IO.println ""
+#eval n_c_placement_conjecture_bool 8 5 (board_of_positions _8_5_positions)
 
-#eval! IO.println (matrixToString (board_of_positions _8_7_positions))
-#eval satisfies_placement_conjecture_bool 8 7 (board_of_positions _8_7_positions)
-#eval IO.println ""
+#eval n_c_placement_conjecture_bool 8 6 (board_of_positions _8_6_positions)
+
+#eval n_c_placement_conjecture_bool 8 7 (board_of_positions _8_7_positions)
+
+#eval n_c_placement_conjecture_bool 8 8 (board_of_positions _8_8_positions)
 
 end Mathoverflow510135
-
