@@ -68,7 +68,7 @@ theorem erdos_1083 : answer(sorry) ↔ ∀ d : ℕ, 3 ≤ d →
 Erdős [Er46b] proved $f_d(n) \ll_d n^{2/d}$.
 -/
 @[category research solved, AMS 5 52]
-theorem erdos_1083.variants.grid_upper_bound (d : ℕ) (hd : 3 ≤ d) :
+theorem variants.grid_upper_bound (d : ℕ) (hd : 3 ≤ d) :
     (minimalDistinctDistances d · : ℕ → ℝ) =O[atTop] (· ^ (2 / (d : ℝ)) : ℕ → ℝ) := by
   sorry
 
@@ -76,7 +76,7 @@ theorem erdos_1083.variants.grid_upper_bound (d : ℕ) (hd : 3 ≤ d) :
 Erdős [Er46b] proved the lower bound $n^{1/d} \ll_d f_d(n)$.
 -/
 @[category research solved, AMS 5 52]
-theorem erdos_1083.variants.erdos_lower_bound (d : ℕ) (hd : 3 ≤ d) :
+theorem variants.erdos_lower_bound (d : ℕ) (hd : 3 ≤ d) :
     (· ^ (1 / (d : ℝ)) : ℕ → ℝ) =O[atTop] (minimalDistinctDistances d · : ℕ → ℝ) := by
   sorry
 
@@ -84,7 +84,7 @@ theorem erdos_1083.variants.erdos_lower_bound (d : ℕ) (hd : 3 ≤ d) :
 Clarkson, Edelsbrunner, Guibas, Sharir, and Welzl [CEGSW90] proved $f_3(n) \gg n^{1/2}$.
 -/
 @[category research solved, AMS 5 52]
-theorem erdos_1083.variants.lower_bound_cegsw :
+theorem variants.lower_bound_cegsw :
     (· ^ (1 / 2 : ℝ) : ℕ → ℝ) =O[atTop] (minimalDistinctDistances 3 · : ℕ → ℝ) := by
   sorry
 
@@ -93,7 +93,7 @@ Aronov, Pach, Sharir, and Tardos [APST04] in Corollary 1.3 proved
 $f_d(n) \gg n^{\frac{1}{d - 90/77} - o(1)}$ for any $d \geq 3$.
 -/
 @[category research solved, AMS 5 52]
-theorem erdos_1083.variants.lower_bound_apst (d : ℕ) (hd : 3 ≤ d) :
+theorem variants.lower_bound_apst (d : ℕ) (hd : 3 ≤ d) :
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       (n : ℝ) ^ (1 / ((d : ℝ) - 90 / 77) - ε) ≤ minimalDistinctDistances d n := by
   sorry
@@ -103,7 +103,7 @@ Solymosi and Vu [SoVu08] in Theorem 1.1 proved $f_d(n) \gg_d n^{\frac{2}{d} - \f
 for $d \geq 3$.
 -/
 @[category research solved, AMS 5 52]
-theorem erdos_1083.variants.lower_bound_solymosi_vu (d : ℕ) (hd : 3 ≤ d) :
+theorem variants.lower_bound_solymosi_vu (d : ℕ) (hd : 3 ≤ d) :
     ((· : ℕ → ℝ) ^ (2 / (d : ℝ) - 2 / ((d : ℝ) * ((d : ℝ) + 2)))) =O[atTop]
       (minimalDistinctDistances d · : ℕ → ℝ) := by
   sorry
@@ -112,7 +112,7 @@ theorem erdos_1083.variants.lower_bound_solymosi_vu (d : ℕ) (hd : 3 ≤ d) :
 Solymosi and Vu [SoVu08, Corollary 1.2] proved $f_3(n) \gg n^{0.5643}$.
 -/
 @[category research solved, AMS 5 52]
-theorem erdos_1083.variants.lower_bound_solymosi_vu_dim_three :
+theorem variants.lower_bound_solymosi_vu_dim_three :
     (· ^ (0.5643 : ℝ) : ℕ → ℝ) =O[atTop] ((minimalDistinctDistances 3 ·) : _ → ℝ) := by
   sorry
 
