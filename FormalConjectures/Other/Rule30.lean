@@ -39,8 +39,6 @@ model-relative and has no canonical model-independent phrasing. All three are op
 - [Wikipedia: Rule 30](https://en.wikipedia.org/wiki/Rule_30).
 -/
 
-open Filter Topology
-
 namespace Rule30
 
 /-- The Rule 30 local update on a bi-infinite row `row : ℤ → Bool`.
@@ -73,9 +71,6 @@ theorem centerColumn_prefix :
     (List.range 8).map centerColumn = [true, true, false, true, true, true, false, false] := by
   decide
 
-/-- The center-column value at time `t` as a real number (`1` for black, `0` for white). -/
-def centerReal (t : ℕ) : ℝ := if centerColumn t then 1 else 0
-
 /-- **Rule 30 Prize, Problem 1 (non-periodicity).** The center column of Rule 30 is not
 eventually periodic: there is no positive period `p` and threshold `N` past which the column
 repeats with period `p`. -/
@@ -86,13 +81,11 @@ theorem centerColumn_not_eventually_periodic :
   sorry
 
 /-- **Rule 30 Prize, Problem 2 (equal frequency).** Each color occurs on average equally often
-in the center column: the running average of the center-column values converges, and its limit
-is `1 / 2`. Equivalently, in Wolfram's phrasing, the discrete limit of `Total[c[t]] / t` as
-`t → ∞` is `1 / 2`. -/
+in the center column: the set of times at which it is black has natural density `1 / 2`. This is
+Wolfram's phrasing that the discrete limit of `Total[c[t]] / t` as `t → ∞` is `1 / 2`. -/
 @[category research open, AMS 37 68]
 theorem centerColumn_frequency_half :
-    answer(sorry) ↔
-      Tendsto (fun t : ℕ => (∑ s ∈ Finset.range t, centerReal s) / t) atTop (𝓝 (1 / 2)) := by
+    answer(sorry) ↔ {t : ℕ | centerColumn t}.HasDensity (1 / 2) := by
   sorry
 
 end Rule30
