@@ -65,4 +65,26 @@ theorem groupNumber_surjective_of_exists_squarefree
   intro y
   grind [h y]
 
+/-
+Initial values of the sequence
+-/
+
+@[category textbook, AMS 20]
+theorem groupNumber_0 : groupNumber 0 = 0 := sorry
+
+@[category textbook, AMS 20]
+theorem groupNumber_1 : groupNumber 1 = 1 := sorry
+
+@[category textbook, AMS 20]
+theorem groupNumber_2 : groupNumber 2 = 1 := sorry
+
+@[category textbook, AMS 20]
+theorem groupNumber_3 : groupNumber 3 = 1 := sorry
+
+@[category textbook, AMS 20]
+theorem groupNumber_4 : groupNumber 4 = 2 := sorry
+
+@[category textbook, AMS 20]
+theorem groupNumber_ofPrime (p : ℕ) (hprim : p.Prime): groupNumber p = 1 := sorry
+
 end OeisA1
