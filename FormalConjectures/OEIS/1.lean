@@ -69,21 +69,27 @@ theorem groupNumber_surjective_of_exists_squarefree
 Initial values of the sequence
 -/
 
+/-- There are no groups of order `0`, so `groupNumber 0 = 0`. -/
 @[category textbook, AMS 20]
 theorem groupNumber_0 : groupNumber 0 = 0 := sorry
 
+/-- There is exactly one group of order `1` (the trivial group). -/
 @[category textbook, AMS 20]
 theorem groupNumber_1 : groupNumber 1 = 1 := sorry
 
+/-- There is exactly one group of order `2`. -/
 @[category textbook, AMS 20]
 theorem groupNumber_2 : groupNumber 2 = 1 := sorry
 
+/-- There is exactly one group of order `3`. -/
 @[category textbook, AMS 20]
 theorem groupNumber_3 : groupNumber 3 = 1 := sorry
 
+/-- There are exactly two groups of order `4`: the cyclic group and the Klein four-group. -/
 @[category textbook, AMS 20]
 theorem groupNumber_4 : groupNumber 4 = 2 := sorry
 
+/-- For any prime `p`, there is exactly one group of order `p` (the cyclic group). -/
 @[category textbook, AMS 20]
 theorem groupNumber_ofPrime (p : ℕ) (hprim : p.Prime): groupNumber p = 1 := sorry
 
