@@ -46,10 +46,11 @@ degree vertices is 8/3."
 -/
 @[category research solved, AMS 5]
 theorem conjecture32 : answer(False) ↔
-    ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+      (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let A : Finset α := Finset.univ.filter (fun v => G.degree v = G.minDegree)
       let M : Finset α := Finset.univ.filter (fun v => G.degree v = G.maxDegree)
-      let eccavg (S : Finset α) : ℝ := (∑ v ∈ S, (G.eccentricity v).toNat) / (S.card : ℝ)
+      let eccavg (S : Finset α) : ℝ := (∑ v ∈ S, (G.eccent v).toNat) / (S.card : ℝ)
       distavg G A + (1 / 2 : ℝ) * eccavg M ≤ (path G : ℝ) := by
   sorry
 

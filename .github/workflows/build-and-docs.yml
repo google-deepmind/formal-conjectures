@@ -74,7 +74,9 @@ jobs:
           # Avoid including Test files from `Util/` to avoid inflating the
           # stats. This stop-gap should be removed after doing the TODO at
           # `fetchStatsMarkdown` in `docbuild/overwrite-index.lean`.
-          grep -v "FormalConjectures\.Util\." FormalConjectures.lean > FormalConjectures/All.lean
+          grep -v -E "FormalConjectures\.Util\.|FormalConjectures\.All" FormalConjectures.lean > FormalConjectures/All.lean
+          echo "" >> FormalConjectures/All.lean
+          echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
 
       - name: Restore ~/.cache/mathlib
         if: steps.mode.outputs.website_only != 'true'
@@ -213,6 +215,9 @@ jobs:
           mkdir -p site/data _literate_html docbuild/out
           echo "Downloading conjectures data from $LIVE_URL ..."
           curl -sfL "$LIVE_URL/data/conjectures.json" -o /tmp/live_conjectures.json
+          echo "Downloading growth plots from $LIVE_URL ..."
+          curl -sfL "$LIVE_URL/doc/file_counts_white.html" -o docbuild/out/file_counts_white.html || true
+          curl -sfL "$LIVE_URL/doc/file_counts_dark.html" -o docbuild/out/file_counts_dark.html || true
           node -e "
             const fs = require('fs');
             const data = JSON.parse(fs.readFileSync('/tmp/live_conjectures.json', 'utf8'));
