@@ -106,7 +106,7 @@ def regularExtension (a b c : ℕ) : ℕ := a + b + c + 2*a*b*c + 2*Nat.sqrt ((a
 example : regularExtension 1 3 8 = 120 := by norm_num [regularExtension]
 
 /--
-The property that a diophantine 3-tuple has a unique extension
+The property that a diophantine 3-tuple can only be extended in a unique way
 -/
 def HasUniqueExtension (a b c : ℕ) : Prop :=
   (IsIntegralDiophantineTuple { a, b, c }) ∧
