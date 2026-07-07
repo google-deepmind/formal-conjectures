@@ -42,7 +42,7 @@ eccentricity and `l(G)` is the independence number of neighbourhoods.
 -/
 @[category research open, AMS 5]
 theorem conjecture19 (G : SimpleGraph α) [Nontrivial α] (h_conn : G.Connected) :
-    ⌊(∑ v ∈ Finset.univ, ((G.eccentricity v).toNat : ℝ)) / (Fintype.card α : ℝ) +
+    ⌊(∑ v ∈ Finset.univ, ((G.eccent v).toNat : ℝ)) / (Fintype.card α : ℝ) +
       sSup (Set.range (indepNeighbors G))⌋ ≤ b G := by
   sorry
 
