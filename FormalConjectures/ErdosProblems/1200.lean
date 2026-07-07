@@ -70,9 +70,9 @@ Of course if the answer is yes then this disproves [erdosproblems.com/1200].
 theorem erdos_1200.variants.erdos_ruzsa_question : answer(sorry) ↔
     ∀ C : ℝ, C > 0 → ∃ c : ℝ, c > 0 ∧
       ∀ᶠ (x : ℝ) in atTop, ∀ S : Finset ℕ, ∀ a : ℕ → ℕ,
-        (∀ p ∈ S, p.Prime) ∧
-        (∀ p ∈ S, p < x) ∧
-        (∑ p ∈ S, (1 : ℝ) / p ≤ C) ∧
+        (∀ p ∈ S, p.Prime) →
+        (∀ p ∈ S, p < x) →
+        (∑ p ∈ S, (1 : ℝ) / p ≤ C) →
         (filter (fun (m : ℕ) ↦ AvoidsCongruences S a m) <|
           Icc (1 : ℕ) (Int.toNat <| Int.floor x)).card ≥ c * x := by
   sorry
