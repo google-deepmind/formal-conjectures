@@ -53,8 +53,8 @@ for every positive integer $n$, the addition-chain length of $2^n - 1$ is at mos
 $n - 1 + \ell(n)$.
 -/
 @[category research open, AMS 11 68]
-theorem scholz_conjecture (n : ℕ) (hn : 0 < n) :
-    ℓ(2 ^ n - 1) ≤ n - 1 + ℓ(n) := by
+theorem scholz_conjecture :
+    answer(sorry) ↔ ∀ (n : ℕ), 0 < n → ℓ(2 ^ n - 1) ≤ n - 1 + ℓ(n) := by
   sorry
 
 end ScholzConjecture
