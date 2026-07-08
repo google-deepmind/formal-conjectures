@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Combinatorics.Additive.GowersNorm
 
 /-!
 # Ben Green's Open Problem 55
@@ -38,21 +39,12 @@ open Complex
 local macro "𝔽ₚⁿ" : term => `(𝔽 $(Lean.mkIdent `p) $(Lean.mkIdent `n))
 
 /--
-The fourth power of the box norm of a function $g : G \times G \to \mathbb{C}$ on a finite type $G$,
-see [GrTa10, Appendix B.1].
+The fourth power of the box norm of a function $g : G \times G \to \mathbb{C}$ on a finite type $G$.
+See [GrTa10, Appendix B.1].
 -/
 noncomputable def boxNorm4 {G : Type*} [Fintype G] (g : G × G → ℂ) : ℝ :=
   (1 / (Nat.card G : ℝ)^4) * (∑ x₁ : G, ∑ x₂ : G, ∑ y₁ : G, ∑ y₂ : G,
     g (x₁, y₁) * star (g (x₁, y₂)) * star (g (x₂, y₁)) * g (x₂, y₂)).re
-
-/--
-The multiplicative derivative $\Delta_{(h,h)} f (x, y) = f(x, y) \overline{f(x+h, y+h)}$.
-[Au14, Section 1.3 p.15]
-
-NOTE: the original problem statement from [Gr24] has a typo and conjugates the whole product.
--/
-noncomputable def delta {G : Type*} [AddGroup G] (h : G) (f : G × G → ℂ) : G × G → ℂ :=
-  fun (x, y) ↦ f (x, y) * star (f (x + h, y + h))
 
 /--
 Let $p$ be an odd prime and suppose that $f : \mathbb{F}_p^n \times \mathbb{F}_p^n \to \mathbb{C}$
@@ -79,7 +71,7 @@ theorem green_55 :
       -- rendering the entire implication trivially true.
       (hδ_le : δ ≤ 1)
 
-      (h_bound : (1 / (p^n : ℝ)) * ∑ h : 𝔽ₚⁿ, boxNorm4 (delta h f) ≥ δ),
+      (h_bound : (1 / (p^n : ℝ)) * ∑ h : 𝔽ₚⁿ, boxNorm4 (multiplicativeDerivative (h, h) f) ≥ δ),
       ∃ (a b c : 𝔽ₚⁿ → ℂ) (q : 𝔽ₚⁿ × 𝔽ₚⁿ → ℤ),
 
         -- Common assumption for inverse Gowers norm theorems, prevents trivial solutions by
