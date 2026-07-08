@@ -46,7 +46,7 @@ theorem erdos_60 :
 /- ## Variants and partial results -/
 
 /--
-He, Ma, and Yang proved the conjecture when $n = q^2 + q + 1$ for some even integer $q$.
+He, Ma, and Yang [HeMaYa21] proved the conjecture when $n = q^2 + q + 1$ for some even integer $q$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_60.variants.he_ma_yang :
