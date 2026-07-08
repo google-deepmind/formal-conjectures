@@ -52,7 +52,7 @@ theorem erdos_628 (V : Type*) [Fintype V] (G : SimpleGraph V) (k : ℕ)
 /- ## Variants and partial results -/
 
 /--
-Erdős originally asked about $a=b=3$ which was proved by Brown and Jung.
+Erdős [Er68b] originally asked about $a=b=3$ which was proved by Brown and Jung [BrJu69] (who in fact prove that $G$ must contain two vertex disjoint odd cycles)..
 -/
 @[category research solved, AMS 5]
 theorem erdos_628.variants.k_5_a_3_b_3 (V : Type*) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
