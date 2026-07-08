@@ -60,3 +60,18 @@ lemma multiplicativeDerivative_comm (h1 h2 : G) (f : G → ℂ) :
   ext x
   simp [multiplicativeDerivative, add_right_comm]
   ring
+
+/--
+The multiplicative derivative of a linear phase (a unitary character) is a constant function.
+This captures the property that taking the derivative of a phase annihilates the variable x.
+-/
+lemma multiplicativeDerivative_phase (h : G) (f : G → ℂ)
+    (h_add : ∀ a b, f (a + b) = f a * f b)
+    (h_unit : ∀ a, f a * star (f a) = 1) :
+    multiplicativeDerivative h f = fun _ ↦ star (f h) := by
+  ext x
+  simp only [multiplicativeDerivative, h_add, star_mul]
+  calc
+    f x * (star (f h) * star (f x)) = (f x * star (f x)) * star (f h) := by ring
+    _ = 1 * star (f h) := by rw [h_unit x]
+    _ = star (f h) := by ring
