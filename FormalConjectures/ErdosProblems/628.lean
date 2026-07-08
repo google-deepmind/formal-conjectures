@@ -64,7 +64,7 @@ theorem erdos_628.variants.k_5_a_3_b_3 (V : Type*) [Fintype V] (G : SimpleGraph 
   sorry
 
 /--
-Balogh, Kostochka, Prince, and Stiebitz proved the conjecture for quasi-line graphs.
+Balogh, Kostochka, Prince, and Stiebitz [BKPS09] proved the conjecture for quasi-line graphs.
 -/
 @[category research solved, AMS 5]
 theorem erdos_628.variants.quasi_line (V : Type*) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
