@@ -79,7 +79,7 @@ theorem erdos_628.variants.quasi_line (V : Type*) [Fintype V] (G : SimpleGraph V
   sorry
 
 /--
-Balogh, Kostochka, Prince, and Stiebitz proved the conjecture for graphs with independence number 2.
+Balogh, Kostochka, Prince, and Stiebitz [BKPS09] proved the conjecture for graphs with independence number 2.
 -/
 @[category research solved, AMS 5]
 theorem erdos_628.variants.independence_number_2 (V : Type*) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
