@@ -59,12 +59,11 @@ This ensures `sSup` is well-defined.
 @[category test, AMS 52]
 theorem possible_f_values_BddAbove (n : ℕ) : BddAbove (possible_f_values n) := by
   refine ⟨n, fun k hk => ?_⟩
-  obtain ⟨points, hcard, hne, hall⟩ := hk
-  obtain ⟨x, hx⟩ := hne
+  obtain ⟨points, hcard, ⟨x, hx⟩, hall⟩ := hk
   refine (hall x hx).trans ?_
   unfold maxEquidistantPointsAt
   refine csSup_le' fun m hm => ?_
-  simp only [Finset.mem_coe, Finset.mem_image] at hm
+  rw [Finset.mem_coe, Finset.mem_image] at hm
   obtain ⟨d, hd, rfl⟩ := hm
   calc ((points.erase x).filter fun p => dist x p = d).card
       ≤ (points.erase x).card := Finset.card_filter_le _ _
