@@ -58,9 +58,7 @@ is dropped. This is the termination measure for the well-founded `residueAux` be
 -/
 theorem havelHakimiStep_length_cons (d : ℕ) (rest : List ℕ) :
     (havelHakimiStep (d :: rest)).length = rest.length := by
-  simp only [havelHakimiStep, List.splitAt_eq, List.length_mergeSort,
-    List.length_append, List.length_map, List.length_take, List.length_drop]
-  omega
+  grind [havelHakimiStep, List.length_mergeSort]
 
 /--
 Auxiliary function to calculate the residue recursively.
