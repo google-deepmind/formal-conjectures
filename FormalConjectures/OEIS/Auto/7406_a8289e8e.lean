@@ -25,12 +25,10 @@ def a (n : ℕ) : ℕ :=
   (Finset.sum (Finset.Icc 1 n) fun k : ℕ => (1 : ℚ) / (k : ℚ) ^ 2).num.natAbs
 
 /--
-A089026: Largest $k$ such that $k^2$ divides $n$. Equivalently, $\sqrt{\text{largest square factor of } n}$.
-This is $\sqrt{\text{Nat.squarePart } n}$.
-We define this using `Nat.sqrt` of `Nat.squarePart`, which is the largest square factor.
+A089026: $a(n) = n$ if $n$ is prime, else $1$.
 -/
 def a089026 (n : ℕ) : ℕ :=
-  Nat.sqrt n.squarePart
+  if n.Prime then n else 1
 
 /--
 %C A007406 Conjecture: for n > 3, gcd(n, a(n-1)) = A089026(n).
