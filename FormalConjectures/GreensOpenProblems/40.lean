@@ -115,7 +115,8 @@ theorem green_40.variants.arbitrary_subsets_sanity_f_tilde_two : f_tilde 2 = 1 :
   sorry
 
 /-- We evidently have $\tilde{f}(r) \le f(r)$ [Gr24]. -/
-@[category research solved, AMS 5 94]
+@[category research solved, AMS 5 94, formal_proof using formal_conjectures at
+  "https://github.com/Solarys431/formal-conjectures/blob/36457e70a378d8adfe37e99f9aa7885edc03150d/FormalConjectures/GreensOpenProblems/40.lean#L119"]
 theorem green_40.f_tilde_le_f (r : ℕ) : f_tilde r ≤ f r := by
   sorry
 
