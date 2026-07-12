@@ -26,11 +26,7 @@ divisor `d ∣ n` with `d > 1` and `d ≡ 1 (mod p)`. Is it true that there is a
 constant `c > 0` such that
 `|A ∩ [1,N]| / N = exp(-(c + o(1)) √(log N) · log log N)`?
 
-Note on the statement: the condition `d > 1` is required — allowing `d = 1`
-would make the condition hold vacuously for every `n`. This is the intended
-reading: the number of Sylow `p`-subgroups of a nonabelian finite simple group
-`G` divides `|G|`, is `≡ 1 (mod p)`, and is `≠ 1`, so `|G| ∈ A`; the bounds
-Erdős proved for this problem also fail without `d > 1`.
+Note that 1 ∈ A vacuously, and that the condition d > 1 is essential: with d = 1 permitted the condition would hold for every n (the number of Sylow p-subgroups of a nonabelian finite simple group is ≡ 1 (mod p) and ≠ 1).
 
 Resolved by Li [Li26]: the limit exists and equals `1/(2√(log 2))`.
 The proof was formalised in Lean by Li using Aristotle (Harmonic); the
