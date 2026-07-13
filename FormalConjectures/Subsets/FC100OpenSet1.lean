@@ -221,6 +221,6 @@ end Subsets.FC100OpenSet1
 
 open Lean Meta ProblemAttributes in
 #eval verifyCategoryCounts Subsets.FC100OpenSet1.problems [
-  ("research open", 95),
-  ("research solved", 5)
+  ("research open", 94),
+  ("research solved", 6)
 ]
