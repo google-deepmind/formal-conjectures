@@ -35,7 +35,8 @@ Let `G` be a simple connected graph and let `P` denote the set of pendant vertic
 (vertices of degree 1). If `|P| ≥ deg_avg(Gᶜ)`, then `G` is well totally dominated,
 where `deg_avg(Gᶜ)` is the average degree of the complement of `G`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/KitaKen1/wowii-graph-conjecture-316-lean/blob/3335e07151bc43e86d5c104dd30fee3596f06410/GraphConjecture316.lean"]
 theorem conjecture316 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
     (h : (averageDegree Gᶜ : ℚ) ≤ (pendantVertices G).card) :
     IsWellTotallyDominated G := by
