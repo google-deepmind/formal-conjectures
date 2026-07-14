@@ -90,6 +90,25 @@ so `goodmanBound f 1 n = n * ‖coeff f 1‖`.
 @[category test, AMS 30]
 theorem goodmanBound_one (f : ℂ → ℂ) (n : ℕ) (hn : 1 < n) :
     goodmanBound f 1 n = n * ‖coeff f 1‖ := by
-  sorry
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 2 := ⟨n - 2, by omega⟩
+  rw [goodmanBound, Finset.Icc_self, Finset.sum_singleton]
+  congr 1
+  have e3 : (m + 2 - 1 - 1 : ℕ) = m := by omega
+  have e4 : (m + 2 + 1 : ℕ) = m + 3 := by omega
+  rw [e3, e4]
+  have hfact : ((m + 3).factorial : ℝ) = (m + 3) * (m + 2) * (m + 1) * (m.factorial : ℝ) := by
+    have h1 : (m + 3).factorial = (m + 3) * (m + 2).factorial := rfl
+    have h2 : (m + 2).factorial = (m + 2) * (m + 1).factorial := rfl
+    have h3 : (m + 1).factorial = (m + 1) * m.factorial := rfl
+    rw [h1, h2, h3]; push_cast; ring
+  rw [hfact]
+  have hmf : (m.factorial : ℝ) ≠ 0 := by exact_mod_cast (Nat.factorial_pos m).ne'
+  have hm1 : ((m : ℝ) + 1) ≠ 0 := by positivity
+  have hm3 : ((m : ℝ) + 3) ≠ 0 := by positivity
+  have hsq : ((m : ℝ) + 2) ^ 2 - (1 : ℝ) ^ 2 = ((m : ℝ) + 1) * ((m : ℝ) + 3) := by ring
+  push_cast
+  rw [hsq]
+  field_simp
+  ring
 
 end GoodmanConjecture
