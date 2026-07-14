@@ -71,7 +71,7 @@ theorem finiteAdditiveConvolution_monic' (n : ℕ) (p q : ℝ[X]) (hn : 0 < n)
     (p (⊞_n) q).Monic := by
   have hc0 : ∑ ij ∈ antidiagonal 0, ((n - ij.1)! * (n - ij.2)! : ℝ) / (n ! * (n - 0)! : ℝ) *
       p.coeff (n - ij.1) * q.coeff (n - ij.2) = 1 := by
-    rw [antidiagonal_zero]
+    rw [Finset.Nat.antidiagonal_zero]
     simp
     have hp1 : p.coeff n = 1 := by
       have : p.natDegree = n := natDegree_eq_of_degree_eq_some hp_deg
