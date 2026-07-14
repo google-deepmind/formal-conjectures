@@ -35,6 +35,9 @@ functions have vanishing integral over every congruent ball; the open direction 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Pompeiu_problem)
 - [Encyclopedia of Mathematics](https://encyclopediaofmath.org/wiki/Pompeiu_problem)
+- [BST73] Brown, L., Schreiber, B. M. and Taylor, B. A., *Spectral synthesis and the Pompeiu
+  problem*, Ann. Inst. Fourier 23 (1973), 125–154. (Proves a ball fails the Pompeiu property;
+  for a ball of radius `R` the witness is `f(x) = sin(a x₁)` with `J_{n/2}(a R) = 0`.)
 - Zalcman, L., *A bibliographic survey of the Pompeiu problem*, in Approximation by
   Solutions of Partial Differential Equations, NATO ASI Ser. 365 (1992), 185–194.
 -/
@@ -93,9 +96,10 @@ theorem pompeiu_conjecture (Ω : Set (EuclideanSpace ℝ (Fin (N + 1))))
   sorry
 
 /--
-The classical (easy) direction: a Euclidean ball fails to have the Pompeiu property. The witnesses
-are radial functions built from Bessel functions, whose integrals over every congruent ball
-vanish.
+The classical (easy) direction, proved by Brown–Schreiber–Taylor [BST73]: a Euclidean ball fails
+to have the Pompeiu property. For a ball of radius `R`, an explicit witness is `f(x) = sin(a x₁)`
+where `a > 0` is chosen so that the Bessel function `J_{n/2}(a R) = 0`; its integral over every
+congruent ball vanishes.
 -/
 @[category research solved, AMS 42]
 theorem ball_not_hasPompeiuProperty (Ω : Set (EuclideanSpace ℝ (Fin (N + 1))))
