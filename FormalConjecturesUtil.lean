@@ -17,15 +17,15 @@ module
 
 public import Mathlib
 public import FormalConjecturesForMathlib
-public import FormalConjectures.Util.Answer
-public import FormalConjectures.Util.Linters.AMSLinter
-public import FormalConjectures.Util.Linters.AnswerLinter
-public import FormalConjectures.Util.Linters.CategoryDocstringLinter
-public import FormalConjectures.Util.Linters.CategoryLinter
-public import FormalConjectures.Util.Linters.CopyrightLinter
-public import FormalConjectures.Util.Linters.ExistsImplicationLinter
-public import FormalConjectures.Util.Linters.ModuleDocstringLinter
-public import FormalConjectures.Util.Linters.NamespaceLinter
+public import FormalConjecturesUtil.Answer
+public import FormalConjecturesUtil.Linters.AMSLinter
+public import FormalConjecturesUtil.Linters.AnswerLinter
+public import FormalConjecturesUtil.Linters.CategoryDocstringLinter
+public import FormalConjecturesUtil.Linters.CategoryLinter
+public import FormalConjecturesUtil.Linters.CopyrightLinter
+public import FormalConjecturesUtil.Linters.ExistsImplicationLinter
+public import FormalConjecturesUtil.Linters.ModuleDocstringLinter
+public import FormalConjecturesUtil.Linters.NamespaceLinter
 
 /-!
 # Standard imports for open problems
