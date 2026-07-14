@@ -31,12 +31,10 @@ We might eventually want to replace these with his more general versions.
 see: https://leanprover.zulipchat.com/#narrow/channel/116395-maths/topic/Formalise.20the.20proposition.20P.20.E2.89.A0NP/with/453031558
 -/
 
-def finEncodingListBool : Computability.FinEncoding (List Bool) where
-  Γ := Bool
+def encodingListBool : Encoding (List Bool) Bool where
   encode := id
   decode := Option.some
   decode_encode _ := rfl
-  ΓFin := Bool.fintype
 
 @[simp]
 lemma splitOnP_isNone_map_some {α : Type} (l : List α) :
@@ -53,8 +51,7 @@ lemma splitOnP_append_cons' {α : Type} (l1 l2 : List α)
     = List.splitOnP P l1 ++ List.splitOnP P l2 :=
   List.splitOnP_append_cons l1 l2 hPa
 
-def finEncodingListBoolProdListBool : Computability.FinEncoding (List Bool × List Bool) where
-  Γ := Option Bool
+def encodingListBoolProdListBool : Encoding (List Bool × List Bool) (Option Bool) where
   encode := fun ⟨l1, l2⟩ ↦ (l1.map some) ++ [none] ++ (l2.map some)
   decode := fun l ↦
     match l.splitOnP Option.isNone with
@@ -63,6 +60,5 @@ def finEncodingListBoolProdListBool : Computability.FinEncoding (List Bool × Li
   decode_encode := by
     intro (l1, l2)
     simp
-  ΓFin := instFintypeOption
 
 end Encodings
