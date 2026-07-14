@@ -15,29 +15,16 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Nat.Factors
+public import Mathlib.NumberTheory.AlmostPrime
+
 
 @[expose] public section
 
-/-!
-# Semiprimes
-
-A semiprime is a natural number that is the product of exactly two prime factors (counting multiplicity).
-
-*References:*
-- [Wikipedia, Semiprime](https://en.wikipedia.org/wiki/Semiprime)
-- [OEIS A001358](https://oeis.org/A001358)
--/
-
 namespace Nat
 
-/--
-A natural number `n` is a *semiprime* if it has exactly two prime factors counting multiplicity,
-that is, $\Omega(n) = 2$.
--/
-def IsSemiprime (n : ℕ) : Prop :=
-  n > 1 ∧ n.primeFactorsList.length = 2
+instance (k n : ℕ) : Decidable (IsAlmostPrime k n) := by unfold IsAlmostPrime; infer_instance
 
-instance (n : ℕ) : Decidable n.IsSemiprime := inferInstanceAs <| Decidable <| _ ∧ _
+instance (k n : ℕ) : Decidable (IsAtMostAlmostPrime k n) := by
+  unfold IsAtMostAlmostPrime; infer_instance
 
 end Nat
