@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,13 +42,16 @@ asymptotic formula
     = \tfrac{1}{2} x(1-x) f''(x).
 \]
 
-## Known Results
+## Known Results and Proposed Answer
 * For $\alpha = 1$, the asymptotics are completely understood.
-* Numerical experiments indicate that for $\alpha \neq 1$ the quantity
-    \[
-        \sqrt{n}\,\bigl( B_{n,\alpha} f(x) - f(x) \bigr)
-    \]
-    may converge to a non-zero limit.
+* For $\alpha \neq 1$, the declarations below record the proposed explicit
+  first-order limit
+  \[
+    \mu_\alpha\sqrt{x(1-x)}\,f'(x),
+  \]
+  where $\mu_\alpha$ is defined by a standard-normal integral. The declarations
+  remain categorized as open pending field acceptance; no formal proof is
+  asserted here.
 
 ## The Problem
 Determine the asymptotic behaviour of the Bézier-type Bernstein operators for $\alpha > 0$,
@@ -68,7 +71,7 @@ $\alpha \neq 1$:
 * [Voronovskaja-type Formula for the Bézier Variant of the Bernstein Operators](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf),
   by *Ulrich Abel*, in *Constructive Theory of Functions, Sozopol 2010*.
 -/
-open Topology Filter Real unitInterval Polynomial
+open Topology Filter MeasureTheory ProbabilityTheory Real unitInterval Polynomial
 namespace VoronovskajaTypeFormula
 
 /--
@@ -93,6 +96,21 @@ noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ → ℝ) (x : �
   ∑ k ∈ Finset.range (n + 1),
     f (k / n) * ((bernsteinTail n k).eval x ^ α - (bernsteinTail n (k + 1)).eval x ^ α)
 
+/-- The distribution function $\Phi$ of a standard normal random variable. -/
+noncomputable def standardGaussianCDF (t : ℝ) : ℝ :=
+  ∫ z in Set.Iic t, gaussianPDFReal 0 1 z
+
+/--
+The first-order bias constant for the Bézier--Bernstein operator:
+\[
+\mu_\alpha = \int_0^\infty
+  \bigl((1-\Phi(t))^\alpha + \Phi(t)^\alpha - 1\bigr)\,dt.
+\]
+-/
+noncomputable def bezierBias (α : ℝ) : ℝ :=
+  ∫ t in Set.Ioi 0,
+    (1 - standardGaussianCDF t) ^ α + standardGaussianCDF t ^ α - 1
+
 /--
 Classical Voronovskaja theorem (α = 1).
 
@@ -114,14 +132,19 @@ theorem voronovskaja_theorem.bernstein_operators
   sorry
 
 /--
-Conjecture: Voronovskaja-type formula for Bézier-Bernstein operators
-with shape parameter $\alpha > 0$, $\alpha \neq 1$.
+Voronovskaja-type formula for Bézier--Bernstein operators with shape parameter
+$\alpha > 0$, $\alpha \neq 1$:
+\[
+\sqrt n\,(B_{n,\alpha}f(x)-f(x))
+\longrightarrow
+\mu_\alpha\sqrt{x(1-x)}\,f'(x).
+\]
 
-The source asks for sufficiently smooth functions. This concrete version uses
-`ContDiffOn ℝ 2 f I` as a readable baseline regularity assumption; since the
-domain is the compact interval $[0,1]$, this also explains why no separate
-boundedness assumption is included here. The variants below record the unknown
-smoothness threshold more explicitly.
+The source asks for sufficiently smooth functions. This concrete version keeps
+the existing formalization's $C^2$ baseline, although the proposed argument
+only requires $C^1$ regularity.
+
+*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators
@@ -129,18 +152,21 @@ theorem voronovskaja_theorem.bezier_bernstein_operators
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
     (hf : ContDiffOn ℝ 2 f I) :
     Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
-      (𝓝 answer(sorry)) := by
+      (𝓝 answer(bezierBias α * Real.sqrt (x * (1 - x)) *
+        iteratedDerivWithin 1 f I x)) := by
   sorry
 
 /--
-Variant of the Bézier-Bernstein Voronovskaja problem which treats "sufficiently smooth" as an
-eventual condition in the smoothness order $m$: for all sufficiently large finite $m$, every
-$C^m$ function on $[0,1]$ should have the asserted asymptotic formula.
+For every sufficiently large finite smoothness order $m$ (in fact, every
+$m\geq1$), all $C^m$ functions have the same explicit first-order formula.
+
+*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
-    let limitFormula : (ℝ → ℝ) → ℝ → ℝ := answer(sorry)
+    let limitFormula : (ℝ → ℝ) → ℝ → ℝ := answer(fun f x =>
+      bezierBias α * Real.sqrt (x * (1 - x)) * iteratedDerivWithin 1 f I x)
     ∀ᶠ m : ℕ in atTop,
       ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
         Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
@@ -148,9 +174,9 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
   sorry
 
 /--
-Existence-only version of the eventual-smoothness variant. This separates the first part of the
-source problem, proving that the scaled sequence has some limit, from the stronger task of finding
-an explicit expression for that limit.
+Existence-only consequence of the explicit eventual-smoothness formula.
+
+*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth.limit_exists
@@ -163,14 +189,18 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
   sorry
 
 /--
-Variant of the Bézier-Bernstein Voronovskaja problem with the required smoothness order itself
-left as an answer. Replacing `(answer(sorry) : ℕ × ((ℝ → ℝ) → ℝ → ℝ))` by a concrete value lets one
-state the conjecture for a chosen regularity threshold.
+The proposed answer supplies smoothness order one and the corresponding
+explicit limit formula. The theorem type records sufficiency; the separate
+sharpness argument showing that order zero cannot suffice uniformly is not
+encoded in this declaration.
+
+*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.answer_smoothness
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
-    let p : ℕ × ((ℝ → ℝ) → ℝ → ℝ) := answer(sorry)
+    let p : ℕ × ((ℝ → ℝ) → ℝ → ℝ) := answer((1, fun f x =>
+      bezierBias α * Real.sqrt (x * (1 - x)) * iteratedDerivWithin 1 f I x))
     let m := p.1
     let limitFormula := p.2
     ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
