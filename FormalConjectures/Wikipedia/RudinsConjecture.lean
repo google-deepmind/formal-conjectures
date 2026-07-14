@@ -68,6 +68,39 @@ theorem isNontrivial_24_1 : IsNontrivial 24 1 := by
 theorem Q_zero (q a : ℕ) : Q 0 q a = 0 := by
   simp [Q]
 
+/-- Sanity check pinning `Q` to a concrete value: among the first `6` terms of `24 n + 1`, namely
+`1, 25, 49, 73, 97, 121`, exactly four are perfect squares (`1, 25, 49, 121`), so
+`Q 6 24 1 = 4`. This validates the definition of `Q` and matches the claim that `24 n + 1` is the
+extremal progression. -/
+@[category test, AMS 11]
+theorem Q_six_twentyfour_one : Q 6 24 1 = 4 := by
+  show ({n : ℕ | n < 6 ∧ IsSquare (24 * n + 1)}).ncard = 4
+  have hset : {n : ℕ | n < 6 ∧ IsSquare (24 * n + 1)} = ({0, 1, 2, 5} : Set ℕ) := by
+    ext n
+    simp only [Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
+    constructor
+    · rintro ⟨hn, hsq⟩
+      interval_cases n
+      · omega
+      · omega
+      · omega
+      · exfalso; obtain ⟨r, hr⟩ := hsq
+        have hb : r < 9 := by nlinarith
+        interval_cases r <;> omega
+      · exfalso; obtain ⟨r, hr⟩ := hsq
+        have hb : r < 10 := by nlinarith
+        interval_cases r <;> omega
+      · omega
+    · rintro (rfl | rfl | rfl | rfl)
+      · exact ⟨by norm_num, 1, by norm_num⟩
+      · exact ⟨by norm_num, 5, by norm_num⟩
+      · exact ⟨by norm_num, 7, by norm_num⟩
+      · exact ⟨by norm_num, 11, by norm_num⟩
+  rw [hset]
+  have hcoe : ({0, 1, 2, 5} : Set ℕ) = ↑({0, 1, 2, 5} : Finset ℕ) := by simp
+  rw [hcoe, Set.ncard_coe_finset]
+  decide
+
 /--
 **Rudin's conjecture.** The maximal number of squares among the first $N$ terms of a non-trivial
 arithmetic progression grows at most like $\sqrt{N}$:
