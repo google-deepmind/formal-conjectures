@@ -15,9 +15,10 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Algebra.GCDMonoid.Finset
-public import Mathlib.Algebra.GCDMonoid.Nat
-public import Mathlib.Data.Nat.Factorization.Defs
+public meta import Mathlib.Algebra.GCDMonoid.Finset
+public meta import Mathlib.Algebra.GCDMonoid.Nat
+public meta import Mathlib.Data.Nat.Factorization.Defs
+
 import Mathlib.Tactic
 
 @[expose] public section
