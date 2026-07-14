@@ -39,7 +39,19 @@ theorem green_66 :
     answer(sorry) ↔
       ∀ᶠ X : ℝ in atTop,
         ∃ n : ℕ, IsSumOfTwoSquares n ∧
-          X - (1 / 10 : ℝ) * X ^ ((1 : ℝ) / 4) ≤ n ∧ (n : ℝ) ≤ X := by
+          (n : ℝ) ∈ Set.Icc (X - (1 / 10 : ℝ) * X ^ (1 / 4 : ℝ)) X := by
+  sorry
+
+/--
+Green notes that a well-known, almost trivial argument gives an $O(X^{1/4})$ bound on the left.
+-/
+@[category research solved, AMS 11]
+theorem green_66.variants.trivial_bound :
+    ∃ C > (0 : ℝ), ∀ᶠ X : ℝ in atTop,
+      ∃ n : ℕ, IsSumOfTwoSquares n ∧
+        (n : ℝ) ∈ Set.Icc (X - C * X ^ (1 / 4 : ℝ)) X := by
+  -- Subtract the greatest square `u ^ 2` below `X`, then the greatest square `v ^ 2`
+  -- below `X - u ^ 2`.
   sorry
 
 end Green66
