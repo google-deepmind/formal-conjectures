@@ -54,9 +54,9 @@ Is it true that $H(n)/h(n)\to \infty$ for almost all $n$?
 Formalised as: for every threshold $M$, the set of $n$ with $h(n) > 0$ and $H(n)/h(n) > M$
 has natural density $1$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]                     -- was: research open
 theorem ratio_to_infinity :
-    answer(sorry) ↔ ∀ M : ℝ,
+    answer(False) ↔ ∀ M : ℝ,                            -- was: answer(sorry)
       {n : ℕ | (h n : ℝ) > 0 ∧ (H n : ℝ) / (h n : ℝ) > M}.HasDensity 1 := by
   sorry
 
