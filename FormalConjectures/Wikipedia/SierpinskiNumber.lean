@@ -50,7 +50,27 @@ form $78557 \cdot 2^n + 1$ have a factor in the covering set $\{3, 5, 7, 13, 19,
 -/
 @[category research solved, AMS 11]
 theorem selfridge_78557 : Nat.IsSierpinskiNumber 78557 := by
-  sorry
+  refine ⟨by decide, fun n => ⟨?_, ?_⟩⟩
+  · have h : 1 ≤ 2 ^ n := Nat.one_le_pow n 2 (by norm_num)
+    nlinarith [h]
+  · have hcov : ∃ p ∈ ([3,5,7,13,19,37,73] : List ℕ), p ∣ (78557 * 2 ^ n + 1) := by
+      have base : ∀ r, r < 36 → ∃ p ∈ ([3,5,7,13,19,37,73] : List ℕ),
+          p ∣ (78557 * 2 ^ r + 1) := by native_decide
+      obtain ⟨p, hpmem, hpdvd⟩ := base (n % 36) (Nat.mod_lt _ (by norm_num))
+      refine ⟨p, hpmem, ?_⟩
+      have hp36 : (2 : ℕ) ^ 36 ≡ 1 [MOD p] := by fin_cases hpmem <;> native_decide
+      have e2 : (2 : ℕ) ^ n ≡ 2 ^ (n % 36) [MOD p] := by
+        conv_lhs => rw [← Nat.div_add_mod n 36, pow_add, pow_mul]
+        calc ((2 : ℕ) ^ 36) ^ (n / 36) * 2 ^ (n % 36)
+            ≡ 1 ^ (n / 36) * 2 ^ (n % 36) [MOD p] := Nat.ModEq.mul_right _ (hp36.pow _)
+          _ = 2 ^ (n % 36) := by rw [one_pow, one_mul]
+      have e3 : 78557 * 2 ^ n + 1 ≡ 78557 * 2 ^ (n % 36) + 1 [MOD p] :=
+        (e2.mul_left 78557).add_right 1
+      exact (Nat.modEq_zero_iff_dvd).mp
+        (e3.trans ((Nat.modEq_zero_iff_dvd).mpr hpdvd))
+    intro hprime
+    obtain ⟨p, hpmem, hpdvd⟩ := hcov
+    rcases hprime.eq_one_or_self_of_dvd p hpdvd with h | h <;> fin_cases hpmem <;> omega
 
 /--
 **The Sierpiński problem (Selfridge's conjecture).** Is 78557 the smallest Sierpiński number?

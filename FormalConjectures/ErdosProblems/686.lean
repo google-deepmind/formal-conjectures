@@ -18,7 +18,11 @@ import FormalConjectures.Util.ProblemImports
 
 /-!
 # Erdős Problem 686
-*Reference:* [erdosproblems.com/686](https://www.erdosproblems.com/686)
+
+*References:*
+- [erdosproblems.com/686](https://www.erdosproblems.com/686)
+- [Er79d] Erdős, P., *Some unconventional problems in number theory*. Acta Math.
+  Acad. Sci. Hungar. (1979), 71-80.
 -/
 
 namespace Erdos686
@@ -77,8 +81,8 @@ theorem erdos_686.variants.four_two :
 
 /--
 The number $4$ cannot be written as
-$$4=\frac{\prod_{1\leq i\leq 2}(m+i)}{\prod_{1\leq i\leq 2}(n+i)}$$
-for $m≥n+2$!
+$$4=\frac{\prod_{1\leq i\leq 3}(m+i)}{\prod_{1\leq i\leq 3}(n+i)}$$
+for $m≥n+3$!
 
 See [comment section on erdosproblems.com](https://www.erdosproblems.com/forum/thread/686#post-4599)
 -/
@@ -97,7 +101,10 @@ for some $k≥2$ and $m≥n+k$?
 theorem erdos_686.variants.nine :
     answer(True) ↔ ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (9 : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
-  sorry
+  -- Witness: k = 3, n = 11, m = 25, since (26·27·28)/(12·13·14) = 19656/2184 = 9.
+  simp only [true_iff]
+  refine ⟨3, by norm_num, 11, 25, by norm_num, ?_⟩
+  norm_num [Finset.prod_Icc_succ_top, Finset.Icc_self, Finset.prod_singleton]
 
 /--
 Can $25$ be written as
