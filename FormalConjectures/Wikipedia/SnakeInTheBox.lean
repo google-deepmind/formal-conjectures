@@ -68,9 +68,9 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
-    simp_all
+    simp_all [Walk.Nil.length_eq_zero]
   · rw [h]
-    use (⊤ : Subgraph _), by simp, ∅, ∅
+    use ⊤, by simp, ∅, ∅, .nil
     simp
 
 open List

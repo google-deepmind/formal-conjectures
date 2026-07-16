@@ -565,7 +565,7 @@ theorem sidorenko_tree {V W : Type} [Fintype V] [Fintype W]
     (hTree : H.IsTree) :
     homDensity (completeGraph (Fin 2)) G ^ (H.edgeFinset.card) ≤ homDensity H G := by
   -- A tree's vertex set is nonempty.
-  haveI : Nonempty V := hTree.isConnected.nonempty
+  have : Nonempty V := hTree.nonempty
   -- Split on whether `V` is a subsingleton.
   by_cases hSub : Subsingleton V
   · -- Base case: `|V| ≤ 1`, so `H` has no edges and both sides equal `1`.

@@ -98,7 +98,7 @@ since no vertex has a neighbor in the empty edge set. -/
 @[category test, AMS 5]
 example : ¬IsTotalDominatingSet (⊥ : SimpleGraph (Fin 2)) Finset.univ := by
   unfold IsTotalDominatingSet
-  push_neg
+  push Not
   exact ⟨0, fun w _ => by simp⟩
 
 end WrittenOnTheWallII.GraphConjecture315

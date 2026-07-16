@@ -100,7 +100,7 @@ $$27^5+84^5+110^5+133^5=144^5$$.
 @[category research solved, AMS 11]
 theorem erdos_939.variants.euler : ¬ (∀ k ≥ 4, ∀ S : Finset ℕ, S.card = k - 1 →
     ¬ (∃ q, ∑ s ∈ S, s ^ k = q ^k)) := by
-  push_neg
+  push Not
   use 5
   norm_num
   use {27, 84, 110, 133}

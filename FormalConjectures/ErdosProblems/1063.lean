@@ -84,8 +84,7 @@ theorem erdos_1063.variants.small_values :
     · apply le_csInf ⟨9, by decide⟩
       rintro b hb
       have hb8 : 8 ≤ b := by have := hb.1; omega
-      by_contra h
-      push_neg at h
+      by_contra! h
       interval_cases b
       · exact absurd hb (by decide)
   · -- n 5 = 12 : the candidates below 12 are m = 10, 11, both of which fail
@@ -94,8 +93,7 @@ theorem erdos_1063.variants.small_values :
     · apply le_csInf ⟨12, by decide⟩
       rintro b hb
       have hb10 : 10 ≤ b := by have := hb.1; omega
-      by_contra h
-      push_neg at h
+      by_contra! h
       interval_cases b
       · exact absurd hb (by decide)
       · exact absurd hb (by decide)

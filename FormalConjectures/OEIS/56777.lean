@@ -115,7 +115,7 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
     n % 72 = 65 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
   have hp5 : 5 ≤ p := by
-    by_contra hlt; push_neg at hlt
+    by_contra hlt; push Not at hlt
     interval_cases p <;> simp_all (config := { decide := true })
   have h2 : ¬ (2 ∣ p) := by
     intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega
@@ -149,7 +149,7 @@ theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFr
     n % 100 = 9 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
   have hp5 : 5 ≤ p := by
-    by_contra hlt; push_neg at hlt
+    by_contra hlt; push Not at hlt
     interval_cases p <;> simp_all (config := { decide := true })
   have h2 : ¬ (2 ∣ p) := by
     intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega
