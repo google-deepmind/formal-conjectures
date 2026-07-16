@@ -80,7 +80,7 @@ theorem hasCasasAlveroProp_iffᵣ {P : K[X]} [IsAlgClosed K] :
   refine ⟨?_, HasCasasAlveroPropᵣ.hasCasasAlveroProp⟩
   simp_rw [HasCasasAlveroProp, HasCasasAlveroPropᵣ,
     isCoprime_iff_aeval_ne_zero_of_isAlgClosed K K, coe_aeval_eq_eval]
-  push_neg
+  push Not
   exact (· · ·)
 
 universe u in

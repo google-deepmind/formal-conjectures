@@ -44,7 +44,7 @@ theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
 
 end
 
- /-
+/-
 ## Diagonal orbits over function fields (Huang–Shi, Theorem 1.2)
 
 We now formulate a Lean version of the main theorem of Huang–Shi.
@@ -70,6 +70,7 @@ variable (F : Type u) [Field F] [Fintype F]
 noncomputable def polyToLaurent : F[X] →+* F⸨X⸩ :=
   (HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom
 
+set_option synthInstance.maxHeartbeats 40000 in
 /-- **Huang–Shi, Theorem 1.2**
 
 Let `F` be a finite field of characteristic `p ∈ {3, 5, 7, 11}`, and set

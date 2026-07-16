@@ -36,8 +36,8 @@ assumption that `p ∤ N`, in order to give an equivalent statement.
 
 namespace ModularityConjecture
 
-open Complex CongruenceSubgroup ModularFormClass ModularityConjecture
-open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
+open Complex CongruenceSubgroup ModularFormClass ModularityConjecture UpperHalfPlane
+open scoped Real ModularForm CongruenceSubgroup
 
 /-- The `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
 noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
