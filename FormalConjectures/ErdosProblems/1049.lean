@@ -248,7 +248,7 @@ theorem lambert_series_eq_num_divisor_sum : ∀ t : ℚ,
   intro t
   by_cases ht : 1 < |(t : ℝ)|
   · exact lambert_convergent (t : ℝ) ht
-  · push_neg at ht
+  · push Not at ht
     exact lambert_divergent (t : ℝ) ht
 
 end Erdos1049

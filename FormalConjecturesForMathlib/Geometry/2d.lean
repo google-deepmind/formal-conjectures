@@ -191,6 +191,7 @@ theorem isConvexPolygon_triangle (t : Affine.Triangle ℝ P) : IsConvexPolygon t
 noncomputable def triangle_area (a b c : P) : ℝ :=
   positiveOrientation.areaForm (a -ᵥ c) (b -ᵥ c) / 2
 
+set_option backward.isDefEq.respectTransparency false in
 lemma triangle_area_eq_det (a b c : ℝ²) :
     triangle_area a b c =
     Matrix.det !![a 0, b 0, c 0;

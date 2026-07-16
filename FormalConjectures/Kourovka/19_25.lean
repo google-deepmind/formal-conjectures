@@ -35,7 +35,7 @@ where $\phi$ is the Euler totient function. Suppose that $G$ is simple. Is
 $H$ necessarily simple?
 -/
 @[category research open, AMS 20]
-theorem kourovka.«19.25» : answer(sorry) ↔
+theorem kourovka_19_25 : answer(sorry) ↔
     ∀ (G H : Type) [Group G] [Group H] [Fintype G] [Fintype H],
        ∑ g : G, φ (orderOf g) = ∑ h : H, φ (orderOf h) →
        IsSimpleGroup G → IsSimpleGroup H := by

@@ -69,7 +69,7 @@ such that
 (2) Exactly one set among $S$ and $T$ belongs to $F$.
 -/
 def boundaryCount (n : ℕ) (F : Finset (Finset (Fin n))) (S : Finset (Fin n)) : ℕ :=
-  (Finset.univ.filter fun i : Fin n ↦ Xor' (S ∈ F) (symmDiff S {i} ∈ F)).card
+  (Finset.univ.filter fun i : Fin n ↦ Xor (S ∈ F) (symmDiff S {i} ∈ F)).card
 
 /--
 Test lemma showing that `boundaryCount` is equivalent to counting subsets $T$
@@ -78,7 +78,7 @@ that differ from $S$ in exactly one element and exactly one of $S, T$ belongs to
 @[category test, AMS 5]
 theorem boundaryCount_equiv (n : ℕ) (F : Finset (Finset (Fin n))) (S : Finset (Fin n)) :
     boundaryCount n F S = (Finset.univ.filter fun T : Finset (Fin n) ↦
-      (symmDiff S T).card = 1 ∧ Xor' (S ∈ F) (T ∈ F)).card := by
+      (symmDiff S T).card = 1 ∧ Xor (S ∈ F) (T ∈ F)).card := by
   unfold boundaryCount
   have h_cancel : ∀ (A : Finset (Fin n)), symmDiff S (symmDiff S A) = A := by
     intro A
@@ -233,7 +233,7 @@ theorem μFamily_univ (n : ℕ) (p : ℝ) :
 @[category test, AMS 5]
 theorem boundaryCount_empty (n : ℕ) (S : Finset (Fin n)) :
     boundaryCount n ∅ S = 0 := by
-  simp [boundaryCount, Xor', filter_false]
+  simp [boundaryCount, filter_false]
 
 /-- The edge boundary is zero for the empty family. -/
 @[category test, AMS 5]
@@ -245,7 +245,7 @@ theorem edgeBoundary_empty (n : ℕ) (p : ℝ) :
 @[category test, AMS 5]
 theorem boundaryCount_univ (n : ℕ) (S : Finset (Fin n)) :
     boundaryCount n Finset.univ S = 0 := by
-  simp [boundaryCount, Xor', filter_false]
+  simp [boundaryCount, filter_false]
 
 /-- The edge boundary is zero for the full family. -/
 @[category test, AMS 5]

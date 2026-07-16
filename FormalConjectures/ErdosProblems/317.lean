@@ -68,7 +68,7 @@ $$\frac{1}{2}-\frac{1}{3}-\frac{1}{4}=-\frac{1}{12}.$$
 theorem erdos_317.variants.counterexample : ¬ (∀  δ : (Fin 4) → ℚ, δ '' Set.univ ⊆ {-1,0,1} →
     letI lhs := |∑ k, ((δ k : ℚ) / (k + 1))|
     lhs ≠ 0 → lhs > (1 : ℚ) / ((Icc 1 4).lcm id : ℕ)) := by
-  push_neg
+  push Not
   use ![0, 1, -1, -1]
   norm_num [Finset.sum]
   exact ⟨by grind, by simp; rfl⟩

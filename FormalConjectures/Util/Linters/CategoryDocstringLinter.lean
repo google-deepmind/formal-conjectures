@@ -34,7 +34,7 @@ register_option linter.style.category_docstring : Bool := {
 }
 
 -- FIXME: False positive
-set_option linter.style.docString.empty false
+-- set_option linter.style.docString.empty false
 
 namespace CategoryDocstringLinter
 
