@@ -24,10 +24,10 @@ close curve in ℝ²) admits an inscribed square, i.e. a square whose vertices a
 There are several open and solved variants of this conjecture.
 
 *References:*
- - [Wikipedia](https://en.wikipedia.org/wiki/Inscribed_square_problem)
- - [A Survey on the Square Peg Problem](https://www.researchgate.net/publication/274622766_A_Survey_on_the_Square_Peg_Problem)
+- [Wikipedia](https://en.wikipedia.org/wiki/Inscribed_square_problem)
+- [A Survey on the Square Peg Problem](https://www.researchgate.net/publication/274622766_A_Survey_on_the_Square_Peg_Problem)
    by *Benjamin Matschke*
- - [arxiv/2005.09193](https://arxiv.org/abs/2005.09193)
+- [arxiv/2005.09193](https://arxiv.org/abs/2005.09193)
 -/
 
 open Topology ContDiff Manifold

@@ -23,8 +23,8 @@ An integer `n : ℤ` is `(m,k)-perfect` if `σᵐ(n) = kn` where `σᵐ` is the 
 sum of divisors function.
 
 *References:*
- - [Wikipedia](https://en.wikipedia.org/wiki/Superperfect_number#Generalizations)
- - [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
+- [Wikipedia](https://en.wikipedia.org/wiki/Superperfect_number#Generalizations)
+- [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
 
 open ArithmeticFunction.sigma

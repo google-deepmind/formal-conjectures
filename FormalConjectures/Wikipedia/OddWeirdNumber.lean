@@ -21,7 +21,6 @@ import FormalConjectures.ErdosProblems.«470»
 # Existence of Odd Weird Numbers
 
 *References:*
-- [Wikipedia] (https://en.wikipedia.org/wiki/Weird_number)
-- [A006037] (https://oeis.org/A006037)
+- [Wikipedia](https://en.wikipedia.org/wiki/Weird_number)
+- [OEIS A006037](https://oeis.org/A006037)
 -/
-

@@ -19,8 +19,7 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # Gromov's theorem on groups of polynomial growth
 
-*Reference:*
- - [Wikipedia](https://en.wikipedia.org/wiki/Gromov%27s_theorem_on_groups_of_polynomial_growth)
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gromov%27s_theorem_on_groups_of_polynomial_growth)
 -/
 
 /-

@@ -30,7 +30,7 @@ assumption that `p ∤ N`, in order to give an equivalent statement.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
-- [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
+- [F. Diamond and J. Shurman, *A First Course in Modular Forms*](https://link.springer.com/book/10.1007/978-0-387-27226-9)
 
 -/
 
