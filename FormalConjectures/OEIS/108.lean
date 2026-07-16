@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+<<<<<<< HEAD
 import FormalConjecturesUtil
 
 /-!
@@ -26,10 +27,22 @@ The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers.
 *References:*
 - [A000108](https://oeis.org/A000108)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
+=======
+import FormalConjectures.Util.ProblemImports
+
+/-!
+# Catalan numbers
+
+Catalan numbers: $C(n) = \binom{2n}{n}/(n+1)$.
+
+*References:*
+- [A000108](https://oeis.org/A000108)
+>>>>>>> abbc48a2 (Process the next 25 files.)
 -/
 
 namespace OeisA108
 
+<<<<<<< HEAD
 
 open Nat Real Finset
 
@@ -47,10 +60,29 @@ def catalanReciprocalSum (j k : ℕ) : ℚ :=
 /-- The index condition on $(j, k)$ from the conjecture: $0 < \min\{2,k\} \le j \le k$.
 Since j and k are natural numbers, $0 < \min\{2,k\}$ is equivalent to $1 \le k$. -/
 def IndexCond (j k : ℕ) : Prop :=
+=======
+open Nat Real Finset
+
+/-- The primary defining sequence `a`.
+Catalan numbers: $C(n) = \binom{2n}{n}/(n+1)$. -/
+def a (n : ℕ) : ℕ := (Nat.choose (2 * n) n) / (n + 1)
+
+-- Reciprocal of the n-th Catalan number as a rational number.
+def a_rat (n : ℕ) : ℚ := (a n : ℚ)⁻¹
+
+/-- The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers. -/
+def catalan_reciprocal_sum (j k : ℕ) : ℚ :=
+  (Finset.Icc j k).sum a_rat
+
+/-- The index condition on $(j, k)$ from the conjecture: $0 < \min\{2,k\} \le j \le k$.
+Since j and k are natural numbers, $0 < \min\{2,k\}$ is equivalent to $1 \le k$. -/
+def oeis_108_index_cond (j k : ℕ) : Prop :=
+>>>>>>> abbc48a2 (Process the next 25 files.)
   1 ≤ k ∧ min 2 k ≤ j ∧ j ≤ k
 
 open Int (fract)
 
+<<<<<<< HEAD
 /-- The fractional part of a rational number. -/
 def fracPart (q : ℚ) : ℚ := fract q
 
@@ -85,5 +117,38 @@ theorem catalanReciprocalSum_fracPart_inj : ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄,
     (j₁, k₁) ≠ (j₂, k₂) →
     fracPart (catalanReciprocalSum j₁ k₁) ≠ fracPart (catalanReciprocalSum j₂ k₂) := by
     sorry
+=======
+/-- The fractional part of a rational number, viewed as a real number. Must be noncomputable
+due to dependence on the real floor function. -/
+noncomputable def frac_part (q : ℚ) : ℝ := fract (q : ℝ)
+
+/-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
+@[category test, AMS 11]
+lemma test_a_0 : a 0 = 1 := by decide
+
+@[category test, AMS 11]
+lemma test_a_1 : a 1 = 1 := by decide
+
+@[category test, AMS 11]
+lemma test_a_2 : a 2 = 2 := by decide
+
+@[category test, AMS 11]
+lemma test_a_3 : a 3 = 5 := by decide
+
+@[category test, AMS 11]
+lemma test_a_4 : a 4 = 14 := by decide
+
+/--
+A000108 Conjecture: All the rational numbers $\sum_{i=j..k} 1/a(i)$ with $0 < \min\{2,k\} \le j \le k$ have pairwise distinct fractional parts. - _Zhi-Wei Sun_, Sep 24 2015
+-/
+@[category research open, AMS 11]
+theorem main_conjecture :
+  ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄,
+     oeis_108_index_cond j₁ k₁ →
+     oeis_108_index_cond j₂ k₂ →
+     (j₁, k₁) ≠ (j₂, k₂) →
+     frac_part (catalan_reciprocal_sum j₁ k₁) ≠ frac_part (catalan_reciprocal_sum j₂ k₂)
+  := by sorry
+>>>>>>> abbc48a2 (Process the next 25 files.)
 
 end OeisA108
