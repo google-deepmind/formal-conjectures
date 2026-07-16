@@ -17,6 +17,7 @@ module
 
 public import Mathlib
 public import FormalConjecturesForMathlib
+public import FormalConjecturesForMathlib.Combinatorics.Additive.GowersNorm
 public import FormalConjectures.Util.Answer
 public import FormalConjectures.Util.Linters.AMSLinter
 public import FormalConjectures.Util.Linters.AnswerLinter
