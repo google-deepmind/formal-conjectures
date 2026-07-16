@@ -15,18 +15,7 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+public import Mathlib.Data.Bool.Basic
 
-@[expose] public section
-
-namespace SimpleGraph
-open Classical
-
-variable {α : Type*} [Fintype α] [DecidableEq α]
-
-/-- The cycle rank of `G` (or cyclomatic number) is the minimum number of edges
-    that must be removed to eliminate all cycles. -/
-noncomputable def cycleRank (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  G.edgeFinset.card + Fintype.card G.ConnectedComponent - Fintype.card α
-
-end SimpleGraph
+@[simp] lemma decide_le_decide {p q : Prop} [Decidable p] [Decidable q] :
+    decide p ≤ decide q ↔ (p → q) := by by_cases p <;> by_cases q <;> simp [*]
