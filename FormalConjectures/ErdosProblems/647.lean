@@ -209,6 +209,87 @@ theorem candidate_iff_full_depth_survivor (n : ℕ) :
   · rintro ⟨hn24, H⟩
     exact ⟨hn24, fun k hk0 hkn => H k hk0 (by omega) hkn⟩
 
+/-- Candidacy is already determined by the square-root prefix of the shift
+budgets.  Every later shift is automatically safe because a positive integer
+`x` has at most `2 * Nat.sqrt x` divisors. -/
+@[category API, AMS 11]
+theorem candidate_iff_sqrt_prefix_shift_budgets (n : ℕ) :
+    Candidate n ↔
+      24 < n ∧
+        ∀ k : ℕ, 0 < k → k < n → k < 2 * Nat.sqrt n →
+          σ 0 (n - k) ≤ k + 2 := by
+  have hdivisor : ∀ x : ℕ, 0 < x →
+      x.divisors.card ≤ 2 * Nat.sqrt x := by
+    intro x hx
+    let f : ℕ → ℕ × Bool := fun d =>
+      if d ≤ Nat.sqrt x then (d - 1, false) else (x / d - 1, true)
+    let target : Finset (ℕ × Bool) :=
+      (Finset.range (Nat.sqrt x)).product (Finset.univ : Finset Bool)
+    have hmaps :
+        Set.MapsTo f (x.divisors : Set ℕ) (target : Set (ℕ × Bool)) := by
+      intro d hd
+      have hdmem : d ∈ x.divisors := hd
+      have hdpos : 0 < d := Nat.pos_of_mem_divisors hdmem
+      have hddvd : d ∣ x := Nat.dvd_of_mem_divisors hdmem
+      by_cases hsmall : d ≤ Nat.sqrt x
+      · simp [f, target, hsmall]
+        omega
+      · have hmul : d * (x / d) = x := Nat.mul_div_cancel' hddvd
+        have hpair := Nat.le_sqrt_of_eq_mul hmul.symm
+        have hquot : x / d ≤ Nat.sqrt x := by
+          rcases hpair with hd | hq
+          · exact False.elim (hsmall hd)
+          · exact hq
+        have hqpos : 0 < x / d :=
+          Nat.div_pos (Nat.le_of_dvd hx hddvd) hdpos
+        simp [f, target, hsmall]
+        omega
+    have hinj : Set.InjOn f (x.divisors : Set ℕ) := by
+      intro a ha b hb hab
+      have hamem : a ∈ x.divisors := ha
+      have hbmem : b ∈ x.divisors := hb
+      have hapos : 0 < a := Nat.pos_of_mem_divisors hamem
+      have hbpos : 0 < b := Nat.pos_of_mem_divisors hbmem
+      have hadvd : a ∣ x := Nat.dvd_of_mem_divisors hamem
+      have hbdvd : b ∣ x := Nat.dvd_of_mem_divisors hbmem
+      by_cases haS : a ≤ Nat.sqrt x
+      · by_cases hbS : b ≤ Nat.sqrt x
+        · simp [f, haS, hbS] at hab
+          omega
+        · simp [f, haS, hbS] at hab
+      · by_cases hbS : b ≤ Nat.sqrt x
+        · simp [f, haS, hbS] at hab
+        · have haqpos : 0 < x / a :=
+            Nat.div_pos (Nat.le_of_dvd hx hadvd) hapos
+          have hbqpos : 0 < x / b :=
+            Nat.div_pos (Nat.le_of_dvd hx hbdvd) hbpos
+          have hq : x / a = x / b := by
+            simp [f, haS, hbS] at hab
+            omega
+          have hmula : a * (x / a) = x := Nat.mul_div_cancel' hadvd
+          have hmulb : b * (x / b) = x := Nat.mul_div_cancel' hbdvd
+          have hmuleq : a * (x / a) = b * (x / a) := by
+            rw [hmula, hq, hmulb]
+          exact Nat.eq_of_mul_eq_mul_right haqpos hmuleq
+    have hcard := Finset.card_le_card_of_injOn f hmaps hinj
+    dsimp [target] at hcard
+    simpa [Finset.card_product, Nat.mul_comm] using hcard
+  rw [Candidate, full_max_iff_shift_budgets]
+  constructor
+  · rintro ⟨hn24, H⟩
+    exact ⟨hn24, fun k hk0 hkn _ => H k hk0 hkn⟩
+  · rintro ⟨hn24, H⟩
+    refine ⟨hn24, ?_⟩
+    intro k hk0 hkn
+    by_cases hk : k < 2 * Nat.sqrt n
+    · exact H k hk0 hkn hk
+    · have hpos : 0 < n - k := by omega
+      have hcard := hdivisor (n - k) hpos
+      have hsqrt : Nat.sqrt (n - k) ≤ Nat.sqrt n :=
+        Nat.sqrt_le_sqrt (Nat.sub_le n k)
+      rw [ArithmeticFunction.sigma_zero_apply]
+      omega
+
 /-- Above `24`, non-candidacy is exactly witnessed by one failed shift budget. -/
 @[category API, AMS 11]
 theorem not_candidate_iff_exists_shift_failure {n : ℕ} (hn : 24 < n) :
