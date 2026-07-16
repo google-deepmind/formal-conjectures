@@ -137,8 +137,8 @@ theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : 
     le_trans (Set.ncard_le_ncard (Set.subset_univ _) (Set.toFinite _))
     (by simp [Set.ncard_univ, Nat.card_eq_fintype_card, ZMod.card])
   have h_off_ncard_le : (↑B : Set ℕ).offDiag.ncard ≤ n := by
-    have := Set.ncard_image_of_injOn hB.injOn
-    rw [Set.BijOn.image_eq hB] at this
+    have := hB.injOn.ncard_image
+    rw [hB.image_eq] at this
     linarith [this, h_target]
   have h_off_le : B.offDiag.card ≤ n := by
     rwa [← Finset.coe_offDiag, ncard_coe_finset] at h_off_ncard_le
