@@ -24,7 +24,8 @@ Prime-th recurrence with reversal at each step.
 $$a(n) = \operatorname{reversal}(p_{a(n-1)})$$
 with $a(0)=1$, where $p_k$ is the $k$-th prime number.
 
-*References:* [A100475](https://oeis.org/A100475)
+*References:*
+- [A100475](https://oeis.org/A100475)
 -/
 
 namespace OeisA100475

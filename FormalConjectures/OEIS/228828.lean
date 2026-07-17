@@ -19,7 +19,8 @@ import FormalConjectures.Util.ProblemImports
 /-!
 Numbers n such that $n^2 + \pi(n)$ is prime.
 
-*Reference:* [A228828](https://oeis.org/A228828)
+*References:*
+- [A228828](https://oeis.org/A228828)
 -/
 
 namespace OeisA228828

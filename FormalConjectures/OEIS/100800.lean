@@ -21,7 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 Let $f(n) = n + \text{sum of the digits of } n$. If $f(n)$ is multiple of $n$ then $a(n)= f(n)$ else $a(n) = f(f(f(n)))\dots$ until one gets a multiple of $n$; $a(n) = 0$ if no such number exists.
 
-*References:* [A100800](https://oeis.org/A100800)
+*References:*
+- [A100800](https://oeis.org/A100800)
 -/
 
 namespace OeisA100800

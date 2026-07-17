@@ -21,7 +21,8 @@ import FormalConjectures.Util.ProblemImports
 
 $a(n)$ is the least $k \in \mathbb{N}$ such that $k^n(k^n-1)-1$ is a prime number.
 
-*References:* [A101406](https://oeis.org/A101406)
+*References:*
+- [A101406](https://oeis.org/A101406)
 -/
 
 namespace OeisA101406
