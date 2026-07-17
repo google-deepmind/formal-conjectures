@@ -59,4 +59,11 @@ theorem scholz_conjecture :
 
 -- TODO(eyang07): add solved variants. See Wikipedia reference.
 
+/-- The first few values of $\ell(n)$. See [OEIS A003313](https://oeis.org/A003313). -/
+@[category test, AMS 11]
+theorem additionChainLength_first_values :
+    [ℓ(1), ℓ(2), ℓ(3), ℓ(4), ℓ(5), ℓ(6), ℓ(7), ℓ(8), ℓ(9), ℓ(10)] =
+    [0, 1, 2, 2, 3, 3, 4, 3, 4, 4] := by
+  sorry
+  
 end ScholzConjecture
