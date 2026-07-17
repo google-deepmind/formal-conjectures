@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 `a(n)` is the least `k` such that all of `k, 2k+1, 3k+2, ..., nk+n-1` are primes, or `0` if no such `k` is found.
 It is conjectured `k` always exists.
 
-*Reference:* [A101779](https://oeis.org/A101779)
+*References:* [A101779](https://oeis.org/A101779)
 -/
 
 namespace OeisA101779

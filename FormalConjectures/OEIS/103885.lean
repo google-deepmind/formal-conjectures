@@ -24,7 +24,7 @@ The sequence is given by the combinatorial identity:
 $a(n) = \sum_{k = 0}^n \binom{n}{k} \binom{2n+k-1}{n-1}$
 with $a(0) = 1$.
 
-*Reference:*
+*References:*
 - [A103885](https://oeis.org/A103885)
 -/
 

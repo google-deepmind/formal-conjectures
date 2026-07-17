@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 a(1) = 2; a(2n) = lcm of all previous terms + 1; a(2n+1) = lcm of all previous terms - 1.
 
-*Reference:*
+*References:*
 - [A109845](https://oeis.org/A109845)
 -/
 

@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 Array read by upward antidiagonals: row $n$ ($n \ge 0$) contains the numbers $m^2 - n^2$, $m \ge n+1$.
 
-*Reference:*
+*References:*
 - [A105020](https://oeis.org/A105020)
 -/
 

@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 a(1) = 1; a(n) is the smallest integer such that a(n) + a(n-1) has the first n distinct prime factors not used before in this construction.
 
-*Reference:*
+*References:*
 - [A100474](https://oeis.org/A100474)
 -/
 
@@ -167,8 +167,8 @@ theorem main_conjecture : answer(sorry) ↔ ∃ n > 2, Nat.Prime (a n) := by
 What is the next semiprime in the sequence after a(11)?
 -/
 @[category research open, AMS 11]
-theorem next_semiprime_index :
-    answer(sorry) = sInf {n : ℕ | 11 < n ∧ IsSemiprime (a n)} := by
+theorem next_semiprime :
+    answer(sorry) = a (sInf {n : ℕ | 11 < n ∧ IsSemiprime (a n)}) := by
   sorry
 
 end OeisA100474

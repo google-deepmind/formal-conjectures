@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 Pentanacci $\pi$ sequence: $a(1)=a(2)=a(3)=a(4)=a(5)=1$;
 for $n>5$, $a(n) = \pi(\sum_{j=1}^5 a(n-j))$ where $\pi = A000720$.
 
-*Reference:* [A100478](https://oeis.org/A100478)
+*References:* [A100478](https://oeis.org/A100478)
 -/
 
 namespace OeisA100478

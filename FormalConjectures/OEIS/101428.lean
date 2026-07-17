@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 a(n) is the number of ways to write $n$ as an ordered sum of a triangular number and a square.
 
-*Reference:* [A101428](https://oeis.org/A101428)
+*References:* [A101428](https://oeis.org/A101428)
 -/
 
 namespace OeisA101428

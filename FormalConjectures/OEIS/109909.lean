@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 a(n) = number of primes of the form k*(n-k)-1.
 
-*Reference:*
+*References:*
 - [A109909](https://oeis.org/A109909)
 -/
 

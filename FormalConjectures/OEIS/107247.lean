@@ -88,8 +88,8 @@ theorem known_prime_and_semiprimes :
 Primes in this sequence include: a(8) = 2, which is next?
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
-    answer(sorry) ↔ ∃ n > 8, Nat.Prime (a n) ∧ ∀ m, 8 < m → m < n → ¬ Nat.Prime (a m) := by
+theorem conjecture1 :
+    answer(sorry) = a (sInf {n : ℕ | 8 < n ∧ Nat.Prime (a n)}) := by
   sorry
 
 end OeisA107247

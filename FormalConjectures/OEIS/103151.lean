@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 A103151: Number of decompositions of 2n+1 into 2p+q, where p and q are both odd primes.
 
-*Reference:*
+*References:*
 - [A103151](https://oeis.org/A103151)
 -/
 
