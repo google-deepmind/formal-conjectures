@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 a(n) = greatest prime of the form k(n-k)-1, or 0 if no such prime exists.
 
-*Reference:*
+*References:*
 - [A109908](https://oeis.org/A109908)
 -/
 
