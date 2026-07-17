@@ -25,6 +25,7 @@ import FormalConjectures.Util.ProblemImports
 - [Tall22](https://arxiv.org/abs/2210.13812) Amadou Tall. "The Scholz conjecture on addition
   chain is true for infinitely many integers with $\ell(2n) = \ell(n)$." _arXiv:2210.13812_ (2022).
   Also available as [ePrint 2023/020](https://eprint.iacr.org/2023/020).
+- [OEIS A003313](https://oeis.org/A003313)
 -/
 
 namespace ScholzConjecture
