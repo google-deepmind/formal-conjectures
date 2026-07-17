@@ -40,7 +40,8 @@ $\sigma(G) = G.\mathrm{secondSmallestDegree}$ is the **second-smallest degree**
 of $G$'s degree sequence (per WOWII defEntry 65). We state the inequality in
 denominator-free form to avoid the $\sigma = 0$ corner case ($n \le 1$).
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/AlperTheKing/formal-conjectures/blob/6aab64fe70c1309463435260d104863dcef93807/FormalConjectures/WrittenOnTheWallII/GraphConjecture143.lean#L44-L71"]
 theorem conjecture143 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hσ : 0 < secondSmallestDegree G) :
     (G.girth : ℝ) + 1 ≤ (largestInducedTreeSize G : ℝ) * (secondSmallestDegree G : ℝ) := by
