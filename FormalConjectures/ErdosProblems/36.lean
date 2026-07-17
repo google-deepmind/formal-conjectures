@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 36
@@ -51,6 +51,33 @@ noncomputable def M (n : ℕ) : ℕ :=
     (_union : A ∪ B = Finset.Icc (1 : ℤ) (2 * n))
     (_same_card : A.card = B.card)}
 
+/-- A small API lemma: every pair `(a, b) ∈ A × B` contributes to `Overlap A B (a - b)`. -/
+@[category API, AMS 5 11]
+private lemma one_le_overlap {A B : Finset ℤ} {a b : ℤ}
+    (ha : a ∈ A) (hb : b ∈ B) : 1 ≤ Overlap A B (a - b) :=
+  Finset.card_pos.mpr ⟨(a, b), Finset.mem_filter.mpr
+    ⟨Finset.mem_product.mpr ⟨ha, hb⟩, rfl⟩⟩
+
+/-- `MaxOverlap {1} {2} = 1`: the only nonzero overlap is at `k = -1`. -/
+@[category API, AMS 5 11]
+private lemma maxOverlap_singleton_one_two :
+    MaxOverlap ({1} : Finset ℤ) ({2} : Finset ℤ) = 1 := by
+  apply le_antisymm
+  · rw [show (1 : ℕ) = ({(1, 2)} : Finset (ℤ × ℤ)).card from by decide]
+    refine ciSup_le ?_
+    intro k
+    apply Finset.card_le_card
+    intro p hp
+    obtain ⟨hp1, _⟩ := Finset.mem_filter.mp hp
+    obtain ⟨ha, hb⟩ := Finset.mem_product.mp hp1
+    simp only [Finset.mem_singleton] at ha hb
+    exact Finset.mem_singleton.mpr (Prod.ext ha hb)
+  · refine le_ciSup_of_le ?_ (-1) ?_
+    · refine ⟨1, ?_⟩
+      rintro x ⟨k, rfl⟩
+      exact (Finset.card_filter_le _ _).trans (by decide)
+    · decide
+
 /--
 This example calculates the value of $M 1$. The set is $\{1, 2\}$, so the only partition is
 $A = \{1\}, B = \{2\}$ (or vice versa). The possible differences are $1 - 2 = -1$ and $2 - 1 = 1$.
@@ -60,9 +87,37 @@ Thus, $M 1 = 1$.
 -/
 @[category test, AMS 5 11]
 theorem M_one : M 1 = 1 := by
-  sorry
+  apply le_antisymm
+  · apply Nat.sInf_le
+    refine ⟨{1}, {2}, by decide, by decide, by decide, maxOverlap_singleton_one_two⟩
+  · apply le_csInf
+    · exact ⟨_, {1}, {2}, by decide, by decide, by decide,
+        maxOverlap_singleton_one_two⟩
+    rintro x ⟨A, B, hd, hu, hsc, rfl⟩
+    -- |A ∪ B| = 2 ∧ |A| = |B| ⇒ each is a singleton.
+    have hcardsum : A.card + B.card = 2 := by
+      rw [← Finset.card_union_of_disjoint hd, hu]; decide
+    have hca : A.card = 1 := by omega
+    have hcb : B.card = 1 := by omega
+    obtain ⟨a, rfl⟩ := Finset.card_eq_one.mp hca
+    obtain ⟨b, rfl⟩ := Finset.card_eq_one.mp hcb
+    -- MaxOverlap ≥ Overlap at `k = a - b`, and that's ≥ 1.
+    refine le_ciSup_of_le ?_ (a - b) ?_
+    · refine ⟨1, ?_⟩
+      rintro x ⟨k, rfl⟩
+      refine (Finset.card_filter_le _ _).trans ?_
+      rw [Finset.product_eq_sprod, Finset.card_product,
+        Finset.card_singleton, Finset.card_singleton]
+    · exact one_le_overlap (Finset.mem_singleton.mpr rfl)
+        (Finset.mem_singleton.mpr rfl)
 
-@[category test, AMS 5 11]
+/--
+For $n = 2$, the set is $\{1, 2, 3, 4\}$. The balanced partition $A = \{1, 4\}, B = \{2, 3\}$
+has all four pairwise differences ($\pm 1, \pm 2$) distinct, so `MaxOverlap = 1`.
+Any balanced partition has both pieces nonempty, so `MaxOverlap \geq 1`.
+-/
+@[category test, AMS 5 11, formal_proof using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/pull/4153/commits/2ce2d6345d0fcf3b023fe35fde9a9a490b131a86"]
 theorem M_two : M 2 = 1 := by
   sorry
 

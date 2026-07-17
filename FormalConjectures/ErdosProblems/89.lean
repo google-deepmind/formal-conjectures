@@ -14,12 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 89
 
-*Reference:* [erdosproblems.com/89](https://www.erdosproblems.com/89)
+*References:*
+- [erdosproblems.com/89](https://www.erdosproblems.com/89)
+- [Er46] Erdős, Paul. On sets of distances of $n$ points. Amer. Math. Monthly
+  53 (1946), 248--250.
+- [GuKa15] Guth, Larry and Katz, Nets Hawk. On the Erdős distinct distances
+  problem in the plane. Ann. of Math. (2) 181 (2015), 155--190.
+- [Mo52] Moser, Leo. On the different distances determined by $n$ points.
+  Amer. Math. Monthly 59 (1952), 85--91.
+
+### AI disclosure
+
+Lean 4 code in this file was drafted with assistance from OpenAI Codex.
+The mathematical content and references are the author's own work.
 -/
 
 open Filter
@@ -28,8 +40,8 @@ open EuclideanGeometry
 namespace Erdos89
 
 /--
-Does every set of $n$ distinct points in $\mathbb{R}^2$ determine $\gg \frac{n}{\sqrt{\log n}}$
-many distinct distances?
+Erdős [Er46] asked whether every set of $n$ distinct points in $\mathbb{R}^2$
+determines $\gg \frac{n}{\sqrt{\log n}}$ many distinct distances.
 -/
 @[category research open, AMS 52]
 theorem erdos_89 :
@@ -37,13 +49,24 @@ theorem erdos_89 :
   sorry
 
 /--
-Guth and Katz [GuKa15] proved that there are always $\gg \frac{n}{\log n}$ many distinct distances.
-
-[GuKa15] Guth, Larry and Katz, Nets Hawk, On the Erdős distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190.
+Guth and Katz [GuKa15] proved that there are always $\gg \frac{n}{\log n}$
+many distinct distances.
 -/
 @[category research solved, AMS 52]
 theorem erdos_89.variants.n_dvd_log_n :
     (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+  sorry
+
+/--
+The square grid construction, going back to Erdős and Moser, shows that
+$\frac{n}{\sqrt{\log n}}$ is the correct order if the conjecture is true:
+there are configurations whose number of distinct distances is
+$O(\frac{n}{\sqrt{\log n}})$.
+-/
+@[category research solved, AMS 52]
+theorem erdos_89.variants.grid_upper_bound :
+    (fun n => (minimalDistinctDistances n : ℝ)) =O[atTop]
+      (fun (n : ℕ) => n/(n : ℝ).log.sqrt) := by
   sorry
 
 /--
@@ -63,6 +86,6 @@ theorem erdos_89.variants.implies_n_dvd_log_n (h : type_of% erdos_89) :
   · simp_rw [Function.comp, div_mul, ← Real.sqrt_eq_rpow, Real.div_sqrt]
 
 
--- TODO(firsching): formalize the rest of the remarks
+-- TODO(firsching): formalize any remaining remarks from the erdosproblems.com page.
 
 end Erdos89

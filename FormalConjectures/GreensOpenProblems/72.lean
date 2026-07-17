@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 72
@@ -37,7 +37,7 @@ which lie on a common line. -/
 structure AllowedSet (k : ℕ) (N : ℕ) (s : Finset (ℕ × ℕ)) : Prop where
   is_bounded : ∀ i ∈ s, i.1 < N ∧ i.2 < N
   not_collinear : ∀ ⦃t : Finset (ℕ × ℕ)⦄, t ⊆ s → t.card = k →
-    Collinear ℝ ({r | ∃ i ∈ s, r = ((↑i.1 : ℝ), (↑i.2 : ℝ))} : Set (ℝ × ℝ))
+    ¬ Collinear ℝ ({r | ∃ i ∈ t, r = ((↑i.1 : ℝ), (↑i.2 : ℝ))} : Set (ℝ × ℝ))
 
 /-- The maximal size of an allowed set -/
 noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
@@ -55,11 +55,11 @@ def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
   AllowedSetSize k N = (k - 1) * N
 
 /-- The **no-k-in-line problem**:
-For $N \geq k$ and $k > 1$, the AllowedSetSize in $(k - 1) * N$, i. e. on an $N \times N$ subset,
-there is a set of $k * N$ points for which no $k$ lie on a line (and not such a set of bigger size).
+For $N \geq k$ and $k > 2$, the AllowedSetSize is $(k - 1) N$, i. e. on an $N \times N$ subset,
+there is a set of $(k - 1) N$ points for which no $k$ lie on a line (and not such a set of bigger size).
 -/
 @[category research open, AMS 5 52]
-theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 1 < k) (h : k ≤ N) : NoKInLineFor k N := by
+theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 2 < k) (h : k ≤ N) : NoKInLineFor k N := by
   sorry
 
 /-- **Green's Open Problem 72 / No-three-in-line problem**:

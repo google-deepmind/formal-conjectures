@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1052
@@ -71,7 +71,7 @@ theorem isUnitaryPerfect_87360 : IsUnitaryPerfect 87360 := by
   norm_num [IsUnitaryPerfect, properUnitaryDivisors]
   decide +kernel
 
-@[category test, AMS 11]
+@[category test, AMS 11, formal_proof using formal_conjectures at "https://github.com/Sanexxxx777/formal-conjectures/blob/be8aed15e8888a08bbe723170698e26c046412a4/FormalConjectures/ErdosProblems/1052.lean#L346"]
 theorem isUnitaryPerfect_146361946186458562560000 : IsUnitaryPerfect 146361946186458562560000 := by
   sorry
 

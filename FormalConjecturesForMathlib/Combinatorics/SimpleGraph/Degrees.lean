@@ -15,10 +15,12 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.ENat.Lattice
 public import Mathlib.Data.Multiset.Sort
 public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Real.Sqrt
 public import Mathlib.Data.Set.Card
 public import Mathlib.Order.CompletePartialOrder
 
@@ -78,5 +80,26 @@ noncomputable def S (G : SimpleGraph α) : ℝ :=
     let degrees := Multiset.ofList (List.map (fun v => G.degree v) Finset.univ.toList)
     let sorted_degrees := degrees.sort (· ≤ ·)
     ↑((sorted_degrees[card - 2]?).getD 0)
+
+/-- The **second-smallest degree** of `G`'s degree sequence — DeLaVina's `σ(G)`
+per the WOWII definitions popup (defEntry 65): "order the degree sequence in
+nondecreasing order `d₁ ≤ d₂ ≤ … ≤ dₙ`, the second smallest degree of the
+sequence is the 2nd entry". For graphs with `n ≤ 1` we conventionally
+return `0`. -/
+noncomputable def secondSmallestDegree (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  (degreeSequence G).getD 1 0
+
+/-- The number of triangles (3-cliques) of `G` incident to vertex `v`:
+the number of 3-element cliques containing `v`. -/
+noncomputable def numTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] (v : α) : ℕ :=
+  ((G.cliqueFinset 3).filter (fun s => v ∈ s)).card
+
+/-- The length of a graph: the square root of the sum of the squares of degrees. -/
+noncomputable def degreeL2Norm (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
+  Real.sqrt (∑ v, (G.degree v : ℝ) ^ 2)
+
+/-- The number of vertices of degree k in `G`. -/
+def countDegreeK (G : SimpleGraph α) [DecidableRel G.Adj] (k : ℕ) : ℕ :=
+  (Finset.univ.filter (fun v => G.degree v = k)).card
 
 end SimpleGraph

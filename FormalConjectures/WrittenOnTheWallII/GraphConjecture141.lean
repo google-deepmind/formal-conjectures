@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 141
@@ -39,9 +39,9 @@ where `tree(G)` is the number of vertices of a largest induced tree subgraph,
 `l(v) = indepNeighbors G v` is the independence number of the neighbourhood of `v`.
 -/
 @[category research open, AMS 5]
-theorem conjecture141 (G : SimpleGraph α) (h : G.Connected) :
-    G.girth / 2 - 1 + (Finset.univ.sup (indepNeighborsCard G)) ≤
-    largestInducedTreeSize G := by
+theorem conjecture141 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
+    (G.girth / 2 : ℤ) - 1 + ((Finset.univ.sup (indepNeighborsCard G) : ℕ) : ℤ) ≤
+    (largestInducedTreeSize G : ℤ) := by
   sorry
 
 -- Sanity checks
@@ -52,6 +52,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ largestInducedTreeSize G := Nat.zero_l
 
 /-- The path graph `P₃` has 3 vertices; `n P₃ = 3`. -/
 @[category test, AMS 5]
-example : n (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) = 3 := by simp [n]
+example : Fintype.card (Fin 3) = 3 := by decide
 
 end WrittenOnTheWallII.GraphConjecture141

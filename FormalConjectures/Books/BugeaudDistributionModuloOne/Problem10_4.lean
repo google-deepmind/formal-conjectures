@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Spectrum of Sequence
 *References:*
@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
     Séminaire Delange-Pisot-Poitou 15.1 (1973): 1-6.
 -/
 
-namespace Bugeaud
+namespace Bugeaud04
 
 /--
 The spectrum of a sequence $(x_n)_{n \ge 1}$ of real numbers is the set of
@@ -45,4 +45,4 @@ lemma spectrum_xi_alpha_pow_countable (ξ : ℝ) (hξ : ξ ≠ 0) (α : ℝ) (h�
     (Spectrum (fun n => ξ * α ^ n)).Countable := by
   sorry
 
-end Bugeaud
+end Bugeaud04

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 61 -- Erdős–Hajnal Conjecture
@@ -70,6 +70,32 @@ $f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H > 0$ depende
 theorem erdos_61.variants.bnss23 :
     ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
       ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => exp (c * sqrt (log n * log (log n)))) := by
+  sorry
+
+/--
+Nguyen, Scott, and Seymour [NSS23] proved the conjecture for $H = P_5$, the path on five
+vertices: every $P_5$-free graph on $n$ vertices has a clique or independent set of
+polynomial size.
+
+[NSS23] Nguyen, T., Scott, A. and Seymour, P., Induced subgraph density. VII. The
+five-vertex path. [arXiv:2312.15333](https://arxiv.org/abs/2312.15333)
+-/
+@[category research solved, AMS 5]
+theorem erdos_61.variants.p5 :
+    ∃ c > (0 : ℝ), IsErdosHajnalLowerBound (pathGraph 5) (fun n : ℕ => (n : ℝ) ^ c) := by
+  sorry
+
+/--
+Chudnovsky, Scott, Seymour, and Spirkl [CSSS23] proved the conjecture for $H = C_5$, the
+cycle on five vertices: every graph with no induced five-cycle has a clique or independent
+set of polynomial size.
+
+[CSSS23] Chudnovsky, M., Scott, A., Seymour, P. and Spirkl, S., Erdős–Hajnal for graphs with
+no 5-hole. Proc. Lond. Math. Soc. (3) 126 (2023), 997–1014.
+-/
+@[category research solved, AMS 5]
+theorem erdos_61.variants.c5 :
+    ∃ c > (0 : ℝ), IsErdosHajnalLowerBound (cycleGraph 5) (fun n : ℕ => (n : ℝ) ^ c) := by
   sorry
 
 end Erdos61

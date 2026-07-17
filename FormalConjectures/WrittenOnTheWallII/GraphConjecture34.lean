@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 34
@@ -40,7 +40,8 @@ and `dist_avg(S, V)` is the average distance from all vertices to the set `S`.
 @[category research solved, AMS 5]
 theorem conjecture34 :
   answer(sorry) ↔
-    ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+      (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let C : Set α := center G
       let M : Set α := {v | G.degree v = G.maxDegree}
       Int.ceil (distavg G C + distavg G M) ≤ (path G : ℤ) := by

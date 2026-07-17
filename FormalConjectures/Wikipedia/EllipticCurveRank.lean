@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 /-!
 # Some conjectures about ranks of elliptic curves over ℚ
 
@@ -49,9 +49,8 @@ open Module (finrank)
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank. -/
 @[category research solved, AMS 11 14]
-instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic]
-    [AddCommMonoid E⟮K⟯] [Module ℤ E⟮K⟯] :
-      Module.Finite ℤ E⟮K⟯ := by
+instance {K} [Field K] [NumberField K] [DecidableEq K] (E : WeierstrassCurve K) [E.IsElliptic] :
+    Module.Finite ℤ E⟮K⟯ := by
   sorry
 
 namespace RatEllipticCurve

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 18
@@ -64,13 +64,97 @@ theorem practicalH_two : practicalH 2 = 1 := by
 m=4 or m=5, each requiring 2 divisors: 4=1+3, 5=2+3. -/
 @[category test, AMS 11]
 theorem practicalH_six : practicalH 6 = 2 := by
-  sorry
+  have hdiv : Nat.divisors 6 = ({1, 2, 3, 6} : Finset ℕ) := by decide
+  apply le_antisymm
+  · -- practicalH 6 ≤ 2 : each m in [1,6] is a sum of at most two divisors of 6.
+    apply Finset.sup_le
+    intro m hm
+    rw [Finset.mem_Icc] at hm
+    obtain ⟨hm1, hm2⟩ := hm
+    interval_cases m
+    · exact Nat.sInf_le ⟨{1, 2}, by rw [hdiv]; decide, by decide, {1}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 2}, by rw [hdiv]; decide, by decide, {2}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 2}, by rw [hdiv]; decide, by decide, {1, 2}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 3}, by rw [hdiv]; decide, by decide, {1, 3}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{2, 3}, by rw [hdiv]; decide, by decide, {2, 3}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 6}, by rw [hdiv]; decide, by decide, {6}, by simp, by decide⟩
+  · -- 2 ≤ practicalH 6, witnessed by m = 4 (which needs two divisors: 4 = 1 + 3).
+    have h4 : (4 : ℕ) ∈ Finset.Icc 1 6 := by decide
+    refine le_trans ?_ (Finset.le_sup h4)
+    apply le_csInf
+    · exact ⟨2, {1, 3}, by rw [hdiv]; decide, by decide, {1, 3}, by simp, by decide⟩
+    · rintro k ⟨D, hDsub, hDcard, B, hBsub, hBsum⟩
+      by_contra hk
+      push_neg at hk
+      interval_cases k
+      · -- D.card = 0 : D = ∅, so B = ∅ and the sum is 0 ≠ 4.
+        rw [Finset.card_eq_zero] at hDcard
+        subst hDcard
+        rw [Finset.coe_empty, Set.subset_empty_iff, Finset.coe_eq_empty] at hBsub
+        subst hBsub
+        simp at hBsum
+      · -- D.card = 1 : D = {d} with d ∣ 6, so the sum is 0 or d, neither equal to 4.
+        rw [Finset.card_eq_one] at hDcard
+        obtain ⟨d, rfl⟩ := hDcard
+        have hd : d ∈ Nat.divisors 6 := hDsub (by simp)
+        rw [hdiv] at hd
+        rw [Finset.coe_subset, Finset.subset_singleton_iff] at hBsub
+        fin_cases hd <;>
+          rcases hBsub with h | h <;> subst h <;> simp at hBsum
 
 /-- $h(12) = 3$: divisors are {1, 2, 3, 4, 6, 12}. The hardest m is
 m=11, requiring 3 divisors: 11=1+4+6. -/
 @[category test, AMS 11]
 theorem practicalH_twelve : practicalH 12 = 3 := by
-  sorry
+  have hdiv : Nat.divisors 12 = ({1, 2, 3, 4, 6, 12} : Finset ℕ) := by decide
+  apply le_antisymm
+  · -- practicalH 12 ≤ 3 : each m in [1,12] is a sum of at most three divisors of 12.
+    apply Finset.sup_le
+    intro m hm
+    rw [Finset.mem_Icc] at hm
+    obtain ⟨hm1, hm2⟩ := hm
+    interval_cases m
+    · exact Nat.sInf_le ⟨{1, 2, 3}, by rw [hdiv]; decide, by decide, {1}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 2, 3}, by rw [hdiv]; decide, by decide, {2}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 2, 3}, by rw [hdiv]; decide, by decide, {3}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 4, 6}, by rw [hdiv]; decide, by decide, {4}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 4, 6}, by rw [hdiv]; decide, by decide, {1, 4}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 2, 3}, by rw [hdiv]; decide, by decide, {1, 2, 3}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 4, 6}, by rw [hdiv]; decide, by decide, {1, 6}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{2, 4, 6}, by rw [hdiv]; decide, by decide, {2, 6}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{3, 4, 6}, by rw [hdiv]; decide, by decide, {3, 6}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{4, 6, 12}, by rw [hdiv]; decide, by decide, {4, 6}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{1, 4, 6}, by rw [hdiv]; decide, by decide, {1, 4, 6}, by simp, by decide⟩
+    · exact Nat.sInf_le ⟨{2, 4, 6}, by rw [hdiv]; decide, by decide, {2, 4, 6}, by simp, by decide⟩
+  · -- 3 ≤ practicalH 12, witnessed by m = 11 (needs three divisors: 11 = 1 + 4 + 6).
+    have h11 : (11 : ℕ) ∈ Finset.Icc 1 12 := by decide
+    refine le_trans ?_ (Finset.le_sup h11)
+    apply le_csInf
+    · exact ⟨3, {1, 4, 6}, by rw [hdiv]; decide, by decide, {1, 4, 6}, by simp, by decide⟩
+    · rintro k ⟨D, hDsub, hDcard, B, hBsub, hBsum⟩
+      by_contra hk
+      push_neg at hk
+      interval_cases k
+      · rw [Finset.card_eq_zero] at hDcard
+        subst hDcard
+        rw [Finset.coe_empty, Set.subset_empty_iff, Finset.coe_eq_empty] at hBsub
+        subst hBsub
+        simp at hBsum
+      · rw [Finset.card_eq_one] at hDcard
+        obtain ⟨d, rfl⟩ := hDcard
+        have hd : d ∈ Nat.divisors 12 := hDsub (by simp)
+        rw [hdiv] at hd
+        rw [Finset.coe_subset, Finset.subset_singleton_iff] at hBsub
+        fin_cases hd <;> rcases hBsub with h | h <;> subst h <;> simp at hBsum
+      · rw [Finset.card_eq_two] at hDcard
+        obtain ⟨a, b, hab, rfl⟩ := hDcard
+        have ha : a ∈ Nat.divisors 12 := hDsub (by simp)
+        have hb : b ∈ Nat.divisors 12 := hDsub (by simp)
+        rw [hdiv] at ha hb
+        have hBp : B ⊆ ({a, b} : Finset ℕ) := Finset.coe_subset.mp hBsub
+        have key : ∀ S ∈ ({a, b} : Finset ℕ).powerset, S.sum (fun x => x) ≠ 11 := by
+          fin_cases ha <;> fin_cases hb <;> decide
+        exact key B (Finset.mem_powerset.mpr hBp) hBsum.symm
 
 /-- For any practical number $n$, $h(n) ≤ number of divisors of $n$. -/
 @[category test, AMS 11]

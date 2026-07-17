@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conjectures about Weakly First Countable spaces
@@ -44,8 +44,10 @@ $N : X → ℕ → Set X, such that:
 * $O ⊆ X$ is open iff $∀ x ∈ O, ∃ n : ℕ, V x n ⊆ O$
 -/
 class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
-  nhds_countable_weak_basis : ∃ V : X → ℕ → Set X, (∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x n)
-    ∧ ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
+  nhds_countable_weak_basis :
+    ∃ V : X → ℕ → Set X,
+      (∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x n) ∧
+        ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
 
 /-- There are weakly first countable spaces which are not first countable,
 for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
@@ -76,28 +78,37 @@ instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [Topolo
     exact mem_of_superset (HasAntitoneBasis.mem (hU x) n) hn
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
-countable compact space X such that $𝔠 < |X|$. -/
+countable compact Hausdorff space X such that $𝔠 < |X|$.
+
+Note: [Ar2013] uses a blanket convention that all spaces are
+Tychonoff and "compact" means compact Hausdorff. -/
 @[category research open, AMS 54]
 theorem existsWeaklyFirstCountableCompactBig : answer(sorry) ↔
     ∃ (X : Type) (_ : TopologicalSpace X),
-      WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ 𝔠 < #X := by sorry
+      WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ T2Space X ∧
+        𝔠 < #X := by
+  sorry
 
 /-- Problem 3 in [Ar2013]: Give an example in ZFC of a weakly first-
-countable compact space which is not first countable. -/
-def ExistsWeaklyFirstCountableCompactNotFirstCountable : Prop :=
-    ∃ (X : Type) (_ : TopologicalSpace X), WeaklyFirstCountableTopology X ∧ CompactSpace X ∧
-      ¬ FirstCountableTopology X
+countable compact Hausdorff space which is not first countable.
 
-/-- Problem 3 in [Ar2013]: Give an example in ZFC of a weakly first-
-countable compact space which is not first countable. -/
+Note: [Ar2013] uses a blanket convention that all spaces are
+Tychonoff and "compact" means compact Hausdorff. -/
 @[category research open, AMS 54]
 theorem existsWeaklyFirstCountableCompactNotFirstCountable :
-    ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
+    ∃ (X : Type) (_ : TopologicalSpace X),
+      WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ T2Space X ∧
+        ¬ FirstCountableTopology X := by
+  sorry
 
-/-- Under CH, such a space exists as constructed in [Ya1976] by Yakovlev. -/
+/-- Under CH, such a space (for Problem 3 in [Ar2013]) exists as
+constructed in [Ya1976] by Yakovlev. -/
 @[category research solved, AMS 54]
-theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable [Fact (ℵ₁ = 𝔠)] :
-    ExistsWeaklyFirstCountableCompactNotFirstCountable := by sorry
+theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable
+    [Fact (ℵ₁ = 𝔠)] :
+    ∃ (X : Type) (_ : TopologicalSpace X),
+      WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ T2Space X ∧
+        ¬ FirstCountableTopology X := by sorry
 
 -- TODO: add Problem 4 in [Ar2013]
 
