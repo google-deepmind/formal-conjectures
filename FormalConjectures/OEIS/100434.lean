@@ -101,7 +101,7 @@ lemma test_a_4 : a 4 = 99 := by rfl
 /--
 For all $n \ge 0$, we have $a(2n) = - c(2n+1)$.
 -/
-@[category textbook, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/OEIS/100434.lean"]
+@[category textbook, AMS 11]
 theorem a_even (n : ℕ) : a (2 * n) = - c (2 * n + 1) := by
   induction n using Nat.twoStepInduction with
   | zero =>
@@ -126,7 +126,7 @@ theorem a_even (n : ℕ) : a (2 * n) = - c (2 * n + 1) := by
 /--
 For all $n \ge 0$, we have $a(2n+1) = d(2n+1)$.
 -/
-@[category textbook, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/OEIS/100434.lean"]
+@[category textbook, AMS 11]
 theorem a_odd (n : ℕ) : a (2 * n + 1) = d (2 * n + 1) := by
   induction n using Nat.twoStepInduction with
   | zero =>
