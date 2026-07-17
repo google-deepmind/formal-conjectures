@@ -90,7 +90,7 @@ lemma test_a_4 : a 4 = 0 := by eval_a
 @[category test, AMS 11]
 lemma test_a_5 : a 5 = 1 := by eval_a
 
-/-- %C A102722 Conjecture: a(n) ~ (1-EulerGamma)n. -/
+/-- A102722 Conjecture: a(n) ~ (1-EulerGamma)n. -/
 @[category research open, AMS 11]
 theorem main_conjecture :
     Asymptotics.IsEquivalent Filter.atTop
