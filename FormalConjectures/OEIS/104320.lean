@@ -21,7 +21,7 @@ import FormalConjectures.Util.ProblemImports
 
 `a n` is the number of zeros in the ternary representation of $2^n$.
 
-*Reference:*
+*References:*
 - [A104320](https://oeis.org/A104320)
 -/
 

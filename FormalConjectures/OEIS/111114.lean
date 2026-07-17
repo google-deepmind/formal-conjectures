@@ -23,7 +23,7 @@ import Mathlib.Data.Nat.Prime.Nth
 Integer part of $\mathrm{prime}(n)/\pi(n)$.
 Here $\mathrm{prime}(n)$ is the $n$-th prime number, and $\pi(n)$ is the prime-counting function.
 
-*Reference:*
+*References:*
 - [A111114](https://oeis.org/A111114)
 -/
 
