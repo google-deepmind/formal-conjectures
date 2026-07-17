@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Beck–Fiala theorem and conjecture
@@ -37,7 +37,7 @@ The Komlós conjecture (see `KomlosConjecture.lean`) would imply the Beck–Fial
 conjecture, since scaling the incidence vectors of a degree-$t$ system by $1/\sqrt{t}$
 produces vectors of Euclidean norm at most $1$.
 
-*References:* 
+*References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Beck%E2%80%93Fiala_theorem)
 - [J. Beck and T. Fiala, *"Integer-making" theorems*,
   Discrete Applied Mathematics **3** (1981), 1–8](https://doi.org/10.1016/0166-218X(81)90022-6)
