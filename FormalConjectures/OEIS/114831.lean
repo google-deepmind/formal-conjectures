@@ -62,26 +62,13 @@ lemma test_a_4 : a 4 = 5 := by
   norm_num [a, Rat.floor, Int.toNat]
 
 /--
-The sequence grows exponentially. There exist constants $c > 1$ and $C > 0$ such that $a(n) \ge C \cdot c^n$.
--/
-@[category research open, AMS 11]
-theorem conjecture1 :
-    ∃ (c C : ℝ), 1 < c ∧ 0 < C ∧ ∀ n ≥ 1, C * c ^ n ≤ (a n : ℝ) := by
-  sorry
-
-/--
-Assuming the limit of the ratio of consecutive terms exists, it must be $\sqrt{3}$.
--/
-@[category research open, AMS 11]
-theorem conjecture2 (L : ℝ)
-    (hL : Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (nhds L)) :
-    L = Real.sqrt 3 := by
-  sorry
-
-/--
 Conjecture based on OEIS A114831: What is this sequence, asymptotically?
-The ratio of consecutive terms tends to $\sqrt{3}$.
-$$ \lim_{n \to \infty} \frac{a(n+1)}{a(n)} = \sqrt{3} $$
+If the limit exists, the ratio of consecutive terms must tend to $\sqrt{3}$:
+$$ \lim_{n \to \infty} \frac{a(n+1)}{a(n)} = \sqrt{3}. $$
+That's because a(n) is positive, monotonically increasing ($a(n) > a(n-1)$)
+and $a(n+2) \geq a(n+1) + a(n)$. So $a(n)$ grows exponentially, at least as fast as the Fibonnaci numbers.
+Assuming $\frac{a(n+1)}{a(n)}$ tend to a limit L, solving for L in the definition of $a(n)$
+gives $L=\sqrt{3}$.
 -/
 @[category research open, AMS 11]
 theorem conjecture3 :
