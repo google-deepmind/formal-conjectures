@@ -39,7 +39,8 @@ is the length of the shortest cycle ($0$ if acyclic), $B$ is the set of
 boundary vertices (those of maximum eccentricity), and $\mathrm{ecc}(B)$ is
 the eccentricity of the set $B$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at "https://github.com/AlperTheKing/formal-conjectures/blob/46bf39015f5c3c3ba3bfcf9f752b4b1e49b584ac/FormalConjectures/WrittenOnTheWallII/GraphConjecture142.lean#L44"]
 theorem conjecture142 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let B : Set α := (maxEccentricityVertices G : Set α)
     (2 : ℝ) / 3 * (G.girth : ℝ) + (eccSet G B : ℝ) ≤ (largestInducedTreeSize G : ℝ) := by
