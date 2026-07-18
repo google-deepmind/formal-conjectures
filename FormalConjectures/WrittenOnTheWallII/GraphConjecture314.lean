@@ -65,7 +65,7 @@ invariant, but that is the *floor of the average distance*, not the size of a
 largest induced path — a different quantity that makes Conjecture 314 vacuous
 in many cases.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/glyaea/wow-ii-314/blob/7b35f1252e4aaae3c787faf8091f9c7cd4edc41f/solution.lean"]
 theorem conjecture314 [Nontrivial α] (G : SimpleGraph α) [DecidableRel G.Adj]
     (hG : G.Connected)
     (hTriFree : ∀ a b c : α, G.Adj a b → G.Adj b c → G.Adj c a → False)
