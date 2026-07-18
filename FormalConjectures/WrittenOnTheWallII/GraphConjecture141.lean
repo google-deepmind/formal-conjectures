@@ -38,7 +38,8 @@ where `tree(G)` is the number of vertices of a largest induced tree subgraph,
 `girth(G)` is the length of the shortest cycle (0 if acyclic), and
 `l(v) = indepNeighbors G v` is the independence number of the neighbourhood of `v`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/AlperTheKing/formal-conjectures/blob/2628d6e4c444c8b5655e1cc40ad5ad760b579abf/FormalConjectures/WrittenOnTheWallII/GraphConjecture141.lean#L42-L65"]
 theorem conjecture141 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     (G.girth / 2 : ℤ) - 1 + ((Finset.univ.sup (indepNeighborsCard G) : ℕ) : ℤ) ≤
     (largestInducedTreeSize G : ℤ) := by
