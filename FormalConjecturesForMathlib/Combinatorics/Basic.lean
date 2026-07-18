@@ -33,6 +33,17 @@ if the equation $a + b = c$ has no solution with $a, b, c \in A$.
 def IsSumFree (A : Set α) : Prop := Disjoint (A + A) A
 
 /--
+A set $S$ is said to be product-free if the product set $S \cdot S$ is disjoint from $S$,
+i.e. if the equation $x \cdot y = z$ has no solution with $x, y, z \in S$.
+-/
+def IsProductFree {M : Type*} [Mul M] (S : Set M) : Prop := Disjoint (S * S) S
+
+theorem isProductFree_iff {M : Type*} [Mul M] {S : Set M} :
+    IsProductFree S ↔ ∀ x ∈ S, ∀ y ∈ S, x * y ∉ S := by
+  simp [IsProductFree, Set.disjoint_left, Set.mem_mul]
+  aesop
+
+/--
 `allUniqueSums A` is the set of elements in `α` that can be written as the sum of exactly one
 unordered pair of elements from `A`.
 -/
