@@ -182,8 +182,9 @@ def IsEntirelyAddComplete (A : Set ℤ) : Prop :=
   ∀ k : ℤ, 1 ≤ k → k ∈ subsetSums A
 
 /-- **Glue.** Entire completeness implies (eventual) completeness: if every $k \ge 1$ is a subset
-sum, then in particular all sufficiently large $k$ are. -/
-@[category research solved, AMS 11]
+sum, then in particular all sufficiently large $k$ are. Textbook-level: an immediate consequence
+of the definitions, not itself a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
 theorem isEntirelyAddComplete_imp_isAddComplete {A : Set ℤ}
     (h : IsEntirelyAddComplete A) : IsAddComplete A :=
   Filter.eventually_atTop.mpr ⟨1, fun k hk => h k hk⟩
@@ -194,8 +195,10 @@ hence the range of $a$ is not entirely additively complete.
 
 This is the pure-$\mathbb{Z}$ core of `alpha_gt_two_not_isGoodPair`'s
 `by_cases ∃ b ∈ B, a (r+1) ≤ b` case-split, with $m$ *given* rather than constructed via
-`Tendsto` (strictly easier, and enough for the band $5/3 \le \alpha < 2$ below). -/
-@[category research solved, AMS 11,
+`Tendsto` (strictly easier, and enough for the band $5/3 \le \alpha < 2$ below). A textbook-level
+combinatorial fact about monotone integer sequences, phrased abstractly (no $t, \alpha$); the
+research content of Erdős Problem 349 is in its application below. -/
+@[category textbook, AMS 11,
   formal_proof using formal_conjectures at
   "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-entire-gap-criterion-proof/FormalConjectures/ErdosProblems/349.lean"]
 theorem entire_gap_not_complete (a : ℕ → ℤ) (hmono : Monotone a) (hnn : ∀ n, 0 ≤ a n)
@@ -204,18 +207,21 @@ theorem entire_gap_not_complete (a : ℕ → ℤ) (hmono : Monotone a) (hnn : �
     ¬ IsEntirelyAddComplete (Set.range a) := by
   sorry
 
-/-- The $0$-th term of $\lfloor t\alpha^n\rfloor$ is $\lfloor t\rfloor$ (since $\alpha^0 = 1$). -/
-@[category research solved, AMS 11]
+/-- The $0$-th term of $\lfloor t\alpha^n\rfloor$ is $\lfloor t\rfloor$ (since $\alpha^0 = 1$).
+Textbook-level: a one-line simplification, not a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
 theorem floorSeq_zero (t α : ℝ) : ⌊t * α ^ (0 : ℕ)⌋ = ⌊t⌋ := by
   simp [pow_zero, mul_one]
 
-/-- The $1$-st term of $\lfloor t\alpha^n\rfloor$ is $\lfloor t\alpha\rfloor$. -/
-@[category research solved, AMS 11]
+/-- The $1$-st term of $\lfloor t\alpha^n\rfloor$ is $\lfloor t\alpha\rfloor$. Textbook-level:
+a one-line simplification, not a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
 theorem floorSeq_one (t α : ℝ) : ⌊t * α ^ (1 : ℕ)⌋ = ⌊t * α⌋ := by
   simp [pow_one]
 
-/-- $n \mapsto \lfloor t\alpha^n\rfloor$ is monotone when $0 \le t$ and $1 \le \alpha$. -/
-@[category research solved, AMS 11]
+/-- $n \mapsto \lfloor t\alpha^n\rfloor$ is monotone when $0 \le t$ and $1 \le \alpha$.
+Textbook-level: elementary monotonicity of `Int.floor` composed with a monotone power. -/
+@[category textbook, AMS 11]
 theorem floorSeq_monotone (t α : ℝ) (ht : 0 ≤ t) (hα : 1 ≤ α) :
     Monotone (fun n => ⌊t * α ^ n⌋) := by
   intro n m hnm
@@ -224,8 +230,9 @@ theorem floorSeq_monotone (t α : ℝ) (ht : 0 ≤ t) (hα : 1 ≤ α) :
   apply mul_le_mul_of_nonneg_left _ ht
   exact pow_le_pow_right₀ hα hnm
 
-/-- $n \mapsto \lfloor t\alpha^n\rfloor$ is nonnegative when $0 \le t$ and $0 \le \alpha$. -/
-@[category research solved, AMS 11]
+/-- $n \mapsto \lfloor t\alpha^n\rfloor$ is nonnegative when $0 \le t$ and $0 \le \alpha$.
+Textbook-level: an immediate `positivity` consequence, not a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
 theorem floorSeq_nonneg (t α : ℝ) (ht : 0 ≤ t) (hα : 0 ≤ α) (n : ℕ) :
     0 ≤ (fun n => ⌊t * α ^ n⌋) n := by
   simp only
