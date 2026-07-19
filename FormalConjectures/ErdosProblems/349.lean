@@ -106,8 +106,9 @@ theorem alpha_le_one_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα0 : 0 < α) (h
 
 /-- **Binary expansion.** Every natural number $k$ is a sum of distinct powers of two: there is
 a finite set $E$ of exponents with $k = \sum_{i \in E} 2^i$. Proved by strong induction:
-subtract the largest power $2^m \le k$, recurse on the remainder. -/
-@[category research solved, AMS 11,
+subtract the largest power $2^m \le k$, recurse on the remainder. A textbook-level building
+block for `one_two_isGoodPair` below; it says nothing about `IsGoodPair` itself. -/
+@[category textbook, AMS 11,
   formal_proof using formal_conjectures at
   "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
 theorem exists_finset_sum_two_pow (k : ℕ) :
