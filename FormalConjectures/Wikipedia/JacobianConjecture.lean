@@ -80,27 +80,29 @@ def JacobianConjectureProp (k σ : Type) [CommRing k] [Fintype σ] [DecidableEq 
     ∃ (G : RegularFunction k σ σ), G.comp F = id k σ ∧
     F.comp G = id k σ
 
+variable (k : Type) [Field k]
+
+name_poly_vars X, Y, Z over k
+
 /-- Alpöge/Fable's counterexample: a polynomial self-map of `k³` with Jacobian
 determinant `1` which is not injective. -/
-noncomputable def F (k : Type) [Field k] : RegularFunction k (Fin 3) (Fin 3) :=
-  ![(1 + C 2 * X 0 * X 1) ^ 3 * X 2
-      + C 4 * X 1 ^ 2 * (1 + C 2 * X 0 * X 1) * (C 2 + C 3 * (X 0 * X 1)),
-    X 1 + C 3 * X 0 * (1 + C 2 * X 0 * X 1) ^ 2 * X 2
-      + C 12 * X 0 * X 1 ^ 2 * (C 2 + C 3 * (X 0 * X 1)),
-    -X 0 + C 3 * X 0 ^ 2 * X 1 + X 0 ^ 3 * X 2]
+noncomputable def F : RegularFunction k (Fin 3) (Fin 3) :=
+  ![(1 + 2 * X * Y) ^ 3 * Z + 4 * Y ^ 2 * (1 + 2 * X * Y) * (2 + 3 * (X * Y)),
+    Y + 3 * X * (1 + 2 * X * Y) ^ 2 * Z + 12 * X * Y ^ 2 * (2 + 3 * (X * Y)),
+    -X + 3 * X ^ 2 * Y + X ^ 3 * Z]
 
 @[category API, AMS 14]
-lemma det_jacobian_F (k : Type) [Field k] : (F k).Jacobian.det = 1 := by
-  simp only [F, Jacobian, Matrix.det_fin_three, Matrix.of_apply, Matrix.cons_val_zero,
-    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, map_add,
-    map_neg, Derivation.map_one_eq_zero, pderiv_mul, pderiv_pow, pderiv_C, pderiv_X_self,
-    pderiv_X_of_ne, ne_eq, Fin.reduceEq, not_false_eq_true]
+lemma det_jacobian_F : (F k).Jacobian.det = 1 := by
+  simp only [F, Jacobian, ← map_ofNat (C : k →+* MvPolynomial (Fin 3) k), Matrix.det_fin_three,
+    Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons, map_add, map_neg, Derivation.map_one_eq_zero, pderiv_mul,
+    pderiv_pow, pderiv_C, pderiv_X_self, pderiv_X_of_ne, ne_eq, Fin.reduceEq, not_false_eq_true]
   simp only [map_ofNat]
   ring
 
 /-- `F` identifies the two distinct points `(1, -3/4, 13/4)` and `(-1, 3/4, 13/4)`. -/
 @[category API, AMS 14]
-lemma aeval_F_eq (k : Type) [Field k] [CharZero k] :
+lemma aeval_F_eq [CharZero k] :
     (F k).aeval ![1, -(3 / 4), (13 / 4 : k)] = (F k).aeval ![-1, 3 / 4, 13 / 4] := by
   funext i
   fin_cases i <;> simp [RegularFunction.aeval, F] <;> field_simp <;> ring
