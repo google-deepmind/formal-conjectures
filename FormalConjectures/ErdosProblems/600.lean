@@ -1,0 +1,79 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjecturesUtil
+
+/-!
+# Erdős Problem 600
+*Reference:*
+- [erdosproblems.com/600](https://www.erdosproblems.com/600)
+- [erdosproblems.com/80](https://www.erdosproblems.com/80)
+- [Er87] Erdős, P., _Some problems on finite and infinite graphs_. Logic and combinatorics (Arcata, Calif., 1985) (1987), 223-228.
+- [RuSz78] Ruzsa, I. Z. and Szemerédi, E., _Triple systems with no six points carrying three triangles_. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
+-/
+
+open Classical Filter
+open scoped Topology
+
+namespace Erdos600
+
+/--
+Let $e(n,r)$ be minimal such that every graph on $n$ vertices with at least $e(n,r)$ edges,
+each edge contained in at least one triangle, must have an edge contained in at least
+$r$ triangles.
+-/
+private noncomputable def trianglesContaining
+  {α : Type*}
+  (G : SimpleGraph α)
+  (uv : Sym2 α)
+  [Fintype α] :
+  Finset (Finset α) :=
+  (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
+
+def Erdos600Prop (n : ℕ) (e : ℕ) (r : ℕ) : Prop :=
+  ∀ G : SimpleGraph (Fin n), G.edgeFinset.card ≥ e →
+  (∀ uv ∈ G.edgeFinset, (trianglesContaining G uv).Nonempty) →
+  ∃ uv ∈ G.edgeFinset, r ≤ (trianglesContaining G uv).card
+
+noncomputable def eFunction (n : ℕ) (r : ℕ) : ℕ := sInf {e : ℕ | Erdos600Prop n e r}
+
+/--
+Let $r \geq 2$. Is it true that $e(n,r+1) - e(n,r) \to \infty$ as $n \to \infty$?
+-/
+@[category research open, AMS 5]
+theorem erdos_600.parts.i :
+    answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r →
+      Tendsto (fun (n : ℕ) ↦ (eFunction n (r + 1) : ℝ) - (eFunction n r : ℝ)) atTop atTop := by
+  sorry
+
+/--
+Let $r \geq 2$. Is it true that $\frac{e(n,r+1)}{e(n,r)} \to 1$ as $n \to \infty$?
+-/
+@[category research open, AMS 5]
+theorem erdos_600.parts.ii :
+    answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r →
+      Tendsto (fun (n : ℕ) ↦ (eFunction n (r + 1) : ℝ) / (eFunction n r : ℝ)) atTop (𝓝 1) := by
+  sorry
+
+/--
+Ruzsa and Szemerédi [RuSz78] proved that $e(n,r)=o(n^2)$ for any fixed $r$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_600.variants.ruzsa_szemeredi_upper_bound :
+    ∀ r : ℕ, (fun (n : ℕ) ↦ (eFunction n r : ℝ)) =o[atTop] (fun (n : ℕ) ↦ (n : ℝ)^2) := by
+  sorry
+
+end Erdos600
