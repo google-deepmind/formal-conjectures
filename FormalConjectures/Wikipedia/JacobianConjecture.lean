@@ -52,14 +52,14 @@ noncomputable def id : RegularFunction k σ σ := MvPolynomial.X
 
 /-- The evaluation of a regular function `f` over `k` at some point `a`
 with coordinates in some algebra over `k`-/
-noncomputable def aeval {σ τ : Type*} [Fintype σ] {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
+noncomputable def aeval {σ τ : Type*} {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
     (F : RegularFunction k σ τ) : (σ → S₁) → τ → S₁ :=
   fun a t ↦ MvPolynomial.aeval a (F t)
 
 /--`aeval` is compatible with composition of regular functions. -/
 @[category API, AMS 14]
 lemma comp_aeval
-    {σ τ ι : Type*} [Fintype σ] [Fintype τ]
+    {σ τ ι : Type*}
     (F : RegularFunction k σ τ) (G : RegularFunction k τ ι)
     (a : σ → k) : (F.comp G).aeval a = G.aeval (F.aeval a) := by
   ext i
@@ -70,11 +70,9 @@ end RegularFunction
 
 end Prelims
 
-variable {k : Type*} [Field k] [CharZero k]
-
 section Conjecture
 
-open RegularFunction
+open RegularFunction MvPolynomial
 
 def JacobianConjectureProp (k σ : Type) [CommRing k] [Fintype σ] [DecidableEq σ] :
     Prop :=
@@ -82,207 +80,52 @@ def JacobianConjectureProp (k σ : Type) [CommRing k] [Fintype σ] [DecidableEq 
     ∃ (G : RegularFunction k σ σ), G.comp F = id k σ ∧
     F.comp G = id k σ
 
+/-- Alpöge/Fable's counterexample: a polynomial self-map of `k³` with Jacobian
+determinant `1` which is not injective. -/
+noncomputable def F (k : Type) [Field k] : RegularFunction k (Fin 3) (Fin 3) :=
+  ![(1 + C 2 * X 0 * X 1) ^ 3 * X 2
+      + C 4 * X 1 ^ 2 * (1 + C 2 * X 0 * X 1) * (C 2 + C 3 * (X 0 * X 1)),
+    X 1 + C 3 * X 0 * (1 + C 2 * X 0 * X 1) ^ 2 * X 2
+      + C 12 * X 0 * X 1 ^ 2 * (C 2 + C 3 * (X 0 * X 1)),
+    -X 0 + C 3 * X 0 ^ 2 * X 1 + X 0 ^ 3 * X 2]
+
+@[category API, AMS 14]
+lemma det_jacobian_F (k : Type) [Field k] : (F k).Jacobian.det = 1 := by
+  simp only [F, Jacobian, Matrix.det_fin_three, Matrix.of_apply, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, map_add,
+    map_neg, Derivation.map_one_eq_zero, pderiv_mul, pderiv_pow, pderiv_C, pderiv_X_self,
+    pderiv_X_of_ne, ne_eq, Fin.reduceEq, not_false_eq_true]
+  simp only [map_ofNat]
+  ring
+
+/-- `F` identifies the two distinct points `(1, -3/4, 13/4)` and `(-1, 3/4, 13/4)`. -/
+@[category API, AMS 14]
+lemma aeval_F_eq (k : Type) [Field k] [CharZero k] :
+    (F k).aeval ![1, -(3 / 4), (13 / 4 : k)] = (F k).aeval ![-1, 3 / 4, 13 / 4] := by
+  funext i
+  fin_cases i <;> simp [RegularFunction.aeval, F] <;> field_simp <;> ring
+
 set_option linter.style.answer_attribute false in
-set_option maxHeartbeats 0 in
 /-- The **Jacobian Conjecture**: any regular function
 (i.e. vector valued polynomial function from) `kⁿ → kᵐ`
 whose Jacobian is a non-zero constant has an inverse that
-is given by a regular function, where `k` is a field of characteristic `0`-/
-@[category research open, AMS 14]
+is given by a regular function, where `k` is a field of characteristic `0`.
+
+This is false: `F` has Jacobian determinant `1` but identifies
+two distinct points, so it admits no inverse. -/
+@[category research solved, AMS 14]
 theorem jacobian_conjecture {k : Type} [Field k] [CharZero k] :
     answer(False) ↔ ∀ {σ : Type} [Fintype σ] [DecidableEq σ],
       JacobianConjectureProp k σ := by
-  simp
-  use Fin 3
-  set x := MvPolynomial.X (R := k) (0 : Fin 3) with hx
-  set y := MvPolynomial.X (R := k) (1 : Fin 3) with hy
-  set z := MvPolynomial.X (R := k) (2 : Fin 3) with hz
-
-  let F : RegularFunction k (Fin 3) (Fin 3) :=
-      ![(MvPolynomial.C 1 + x * y)^3 * z + y ^ 2 * (MvPolynomial.C  1 + x * y) * (MvPolynomial.C 4 + MvPolynomial.C 3 * x * y),
-        y + MvPolynomial.C 3 * x * (MvPolynomial.C 1 + x * y) ^ 2 * z + MvPolynomial.C 3 * x * y ^ 2 * (MvPolynomial.C 4 + MvPolynomial.C 3 * x * y),
-        MvPolynomial.C 2 * x - MvPolynomial.C 3 * x ^ 2 * y - x ^ 3 * z]
-
-  have F_det : F.Jacobian.det = .C (-2) := by
-    have hC2 : MvPolynomial.C (σ := Fin 3) (2 : k) =
-        (2 : MvPolynomial (Fin 3) k) := by
-      simpa using map_ofNat (MvPolynomial.C : k →+* MvPolynomial (Fin 3) k) 2
-    have hC3 : MvPolynomial.C (σ := Fin 3) (3 : k) =
-        (3 : MvPolynomial (Fin 3) k) := by
-      simpa using map_ofNat (MvPolynomial.C : k →+* MvPolynomial (Fin 3) k) 3
-    have hC4 : MvPolynomial.C (σ := Fin 3) (4 : k) =
-        (4 : MvPolynomial (Fin 3) k) := by
-      simpa using map_ofNat (MvPolynomial.C : k →+* MvPolynomial (Fin 3) k) 4
-    have hCneg2 :
-        MvPolynomial.C (σ := Fin 3) (-2 : k) = (-2 : MvPolynomial (Fin 3) k) := by
-      rw [map_neg]
-      exact congrArg Neg.neg hC2
-    let t := 1 + x * y
-    let h := t ^ 2 * z + y ^ 2 * (4 + 3 * x * y)
-    let r := 2 * x - 3 * x ^ 2 * y - x ^ 3 * z
-    let G : RegularFunction k (Fin 3) (Fin 3) :=
-      ![t * h, y + 3 * x * h, r]
-    have hF : F = G := by
-      funext i
-      fin_cases i <;> simp [F, G, t, h, r, hC2, hC3, hC4] <;> ring
-    rw [hF]
-    rw [hCneg2]
-
-    let a := MvPolynomial.pderiv (0 : Fin 3) h
-    let b := MvPolynomial.pderiv (1 : Fin 3) h
-    let rx := 2 - 6 * x * y - 3 * x ^ 2 * z
-    have hx_x : MvPolynomial.pderiv (0 : Fin 3) x = 1 := by simp [hx]
-    have hx_y : MvPolynomial.pderiv (1 : Fin 3) x = 0 := by simp [hx]
-    have hx_z : MvPolynomial.pderiv (2 : Fin 3) x = 0 := by simp [hx]
-    have hy_x : MvPolynomial.pderiv (0 : Fin 3) y = 0 := by simp [hy]
-    have hy_y : MvPolynomial.pderiv (1 : Fin 3) y = 1 := by simp [hy]
-    have hy_z : MvPolynomial.pderiv (2 : Fin 3) y = 0 := by simp [hy]
-    have hz_x : MvPolynomial.pderiv (0 : Fin 3) z = 0 := by simp [hz]
-    have hz_y : MvPolynomial.pderiv (1 : Fin 3) z = 0 := by simp [hz]
-    have hpderiv2 (i : Fin 3) :
-        MvPolynomial.pderiv i (2 : MvPolynomial (Fin 3) k) = 0 := by
-      rw [← hC2, MvPolynomial.pderiv_C]
-    have hpderiv3 (i : Fin 3) :
-        MvPolynomial.pderiv i (3 : MvPolynomial (Fin 3) k) = 0 := by
-      rw [← hC3, MvPolynomial.pderiv_C]
-    have hpderiv4 (i : Fin 3) :
-        MvPolynomial.pderiv i (4 : MvPolynomial (Fin 3) k) = 0 := by
-      rw [← hC4, MvPolynomial.pderiv_C]
-    have ht_x : MvPolynomial.pderiv (0 : Fin 3) t = y := by
-      simp [t, hx, hy]
-    have ht_y : MvPolynomial.pderiv (1 : Fin 3) t = x := by
-      simp [t, hx, hy]
-    have ht_z : MvPolynomial.pderiv (2 : Fin 3) t = 0 := by
-      simp [t, hx, hy]
-    have hz_h_left : MvPolynomial.pderiv (2 : Fin 3) (t ^ 2 * z) = t ^ 2 := by
-      rw [MvPolynomial.pderiv_mul, MvPolynomial.pderiv_pow, ht_z, hz]
-      simp
-    have hz_h_right : MvPolynomial.pderiv (2 : Fin 3)
-        (y ^ 2 * (4 + 3 * x * y)) = 0 := by
-      rw [hx, hy]
-      simp [hpderiv3, hpderiv4]
-    have hz_h : MvPolynomial.pderiv (2 : Fin 3) h = t ^ 2 := by
-      dsimp only [h]
-      rw [map_add, hz_h_left, hz_h_right, add_zero]
-
-    have hf_x : MvPolynomial.pderiv (0 : Fin 3) (t * h) = y * h + t * a := by
-      dsimp only [a]
-      rw [MvPolynomial.pderiv_mul, ht_x]
-    have hf_y : MvPolynomial.pderiv (1 : Fin 3) (t * h) = x * h + t * b := by
-      dsimp only [b]
-      rw [MvPolynomial.pderiv_mul, ht_y]
-    have hf_z : MvPolynomial.pderiv (2 : Fin 3) (t * h) = t ^ 3 := by
-      rw [MvPolynomial.pderiv_mul, ht_z, hz_h]
-      ring
-    have hg_x : MvPolynomial.pderiv (0 : Fin 3)
-        (y + 3 * x * h) = 3 * h + 3 * x * a := by
-      dsimp only [a]
-      rw [map_add, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_mul,
-        hy_x, hpderiv3, hx_x]
-      ring
-    have hg_y : MvPolynomial.pderiv (1 : Fin 3)
-        (y + 3 * x * h) = 1 + 3 * x * b := by
-      dsimp only [b]
-      rw [map_add, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_mul,
-        hy_y, hpderiv3, hx_y]
-      ring
-    have hg_z : MvPolynomial.pderiv (2 : Fin 3)
-        (y + 3 * x * h) = 3 * x * t ^ 2 := by
-      rw [map_add, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_mul,
-        hy_z, hpderiv3, hx_z, hz_h]
-      ring
-    have hr_x : MvPolynomial.pderiv (0 : Fin 3) r = rx := by
-      simp [r, rx, hx, hy, hz, hpderiv2, hpderiv3]
-      ring
-    have hr_y : MvPolynomial.pderiv (1 : Fin 3) r = -3 * x ^ 2 := by
-      simp [r, hx, hy, hz, hpderiv2, hpderiv3]
-    have hr_z : MvPolynomial.pderiv (2 : Fin 3) r = -x ^ 3 := by
-      simp [r, hx, hy, hz, hpderiv2, hpderiv3]
-    have hJac : G.Jacobian =
-        !![y * h + t * a, 3 * h + 3 * x * a, rx;
-           x * h + t * b, 1 + 3 * x * b, -3 * x ^ 2;
-           t ^ 3, 3 * x * t ^ 2, -x ^ 3] := by
-      apply Matrix.ext
-      intro i j
-      fin_cases i <;> fin_cases j <;>
-        simp only [RegularFunction.Jacobian, Matrix.of_apply, G, Matrix.cons_val_zero,
-          Matrix.cons_val_one, Matrix.cons_val_two]
-      all_goals assumption
-    rw [hJac]
-    rw [Matrix.det_fin_three]
-    simp
-
-    have ha : x ^ 3 * a =
-        2 * t - 2 * t * y * r - t ^ 2 * rx - 3 * x ^ 2 * h := by
-      dsimp only [a, h]
-      simp [ht_x, hx_x, hy_x, hz_x, hpderiv3, hpderiv4, r, rx]
-      ring
-    have hb : x ^ 3 * b =
-        x ^ 2 - 2 * t * x * r + 3 * t ^ 2 * x ^ 2 := by
-      dsimp only [b, h]
-      simp [ht_y, hx_y, hy_y, hz_y, hpderiv3, hpderiv4, r]
-      ring
-    have hr : t ^ 2 * r + x ^ 3 * h = x * (t + 1) := by
-      simp [t, h, r]
-      ring
-    have hr' : t ^ 2 * r = x * (t + 1) - x ^ 3 * h := by
-      rw [eq_sub_iff_add_eq]
-      exact hr
-
-    calc
-      _ = (3 * x ^ 2 * h - t) * (x ^ 3 * a) +
-            3 * h * (x ^ 3 * b) + x ^ 3 * y * h * (-1 + 9 * t ^ 2) +
-            3 * x ^ 4 * h ^ 2 - 9 * x ^ 2 * h * t ^ 3 +
-            rx * t ^ 2 * (3 * x ^ 2 * h - t) := by ring
-      _ = -2 * t ^ 2 + (8 * t + 4) * x ^ 2 * h - 6 * x ^ 4 * h ^ 2 -
-            6 * t ^ 2 * x * h * r + 2 * t ^ 2 * y * r := by
-          rw [ha, hb]
-          dsimp only [t]
-          ring
-      _ = -2 * t ^ 2 + (8 * t + 4) * x ^ 2 * h - 6 * x ^ 4 * h ^ 2 +
-            (-6 * x * h + 2 * y) * (t ^ 2 * r) := by ring
-      _ = -2 := by
-          rw [hr']
-          dsimp only [t]
-          ring
-  suffices ¬ (Function.Injective (RegularFunction.aeval (S₁ := k) F)) by
-    use inferInstance, inferInstance
-    unfold JacobianConjectureProp
-    push ¬ _
-    use F
-    constructor
-    · rw [F_det, MvPolynomial.isUnit_iff_eq_C_of_isReduced]
-      use -2
-      simp
-    · intro x hx HxF
-      apply this
-      intro a b hab
-      calc
-        a = aeval (RegularFunction.id k (Fin 3)) a := by
-          unfold aeval RegularFunction.id
-          simp
-        _ = aeval (F.comp x) a := by
-          rw [HxF]
-        _ = aeval x (aeval F a) := by
-          rw [comp_aeval]
-        _ = aeval x (aeval F b) := by
-          rw [hab]
-        _ = aeval (F.comp x) b := by
-          rw [comp_aeval]
-        _ = b := by
-          rw [HxF]
-          unfold aeval RegularFunction.id
-          simp
-  simp [F]
-  rw [Function.not_injective_iff]
-  use ![0, 0, -1/4], ![1, -3/2, 13/2]
-  unfold RegularFunction.aeval
-  simp
-  ext t
-  fin_cases t
-  all_goals
-    simp [MvPolynomial.eval_X, hx, hy, hz]
-    grind
+  rw [false_iff]
+  intro h
+  obtain ⟨G, -, hFG⟩ := h (F k) (det_jacobian_F k ▸ isUnit_one)
+  have hleft : Function.LeftInverse (G.aeval (S₁ := k)) ((F k).aeval) := fun a => by
+    rw [← RegularFunction.comp_aeval, hFG]
+    funext t
+    simp [RegularFunction.aeval, RegularFunction.id]
+  have h1 : (1 : k) = -1 := congrFun (hleft.injective (aeval_F_eq k)) 0
+  norm_num at h1
 
 end Conjecture
 
@@ -298,9 +141,7 @@ variable {k σ τ ι : Type} [Fintype σ] [Fintype τ] [DecidableEq σ] [Decidab
 lemma sanity_check_condition_1 (F : RegularFunction k σ σ) :
     IsUnit F.Jacobian.det ↔ (∃ (c : k), c ≠ 0 ∧
         F.Jacobian.det = .C c) := by
-  -- TODO(lezeau): this is a little annoying to prove since this depends on a general statement that
-  -- seems to be something missing from Mathlib
-  sorry
+  simp [MvPolynomial.isUnit_iff_eq_C_of_isReduced, isUnit_iff_ne_zero]
 
 
 -- Let's apply the conjecture to a trivial case to make sure things
