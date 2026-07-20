@@ -50,8 +50,7 @@ where $a, b, c, d, x, y$ are nonnegative integers.
 
 The main problem or conjecture (typically the last theorem in the file) must have a dedicated docstring (`/-- ... -/`).
 - **Verbatim Citation**: The docstring must cite the conjecture from OEIS verbatim.
-- **Proof Attribution**: For solved problems where an AI-driven formal proof was found, the bottom of the docstring must include the following attribution line:
-  `A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).`
+- **Proof Attribution**: For solved problems where a formal proof is referenced via `@[formal_proof ...]`, the bottom of the docstring should give attribution explaining where the proof comes from or what methods were used (whether AI-generated or human-authored). This can be a link or something like "solved by [name of AI system] prompted by [name of human].
 
 ```lean
 /--
@@ -61,7 +60,7 @@ where $a, b, c, d, x, y$ are nonnegative integers.
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at ...]
-theorem target_theorem_0 : ...
+theorem conjecture (n : ℕ) (hn : 1 < n) : A n := by
 ```
 
 ## Term Theorems (`category test`)
