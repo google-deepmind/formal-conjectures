@@ -35,9 +35,9 @@ $$\sum_{n \geq 0} a_n x^n = \frac{1}{1-x} + \frac{x}{(1-x)^2}\left(\frac{1}{1-x}
 - N. J. A. Sloane and Simon Plouffe, *The Encyclopedia of Integer Sequences*, Academic Press, 1995.
 -/
 
-open PowerSeries WithPiTopology List
-
 namespace OeisA6697
+
+open PowerSeries WithPiTopology List
 
 /-- The morphism σ on {a, b} defined by a ↦ aab, b ↦ b, represented on Bool where
 `false` = a and `true` = b. -/

@@ -10,7 +10,10 @@ When contributing to or reviewing formalizations in this directory, please follo
 
 ## Sequence Definition Naming
 
-The primary defining sequence in each OEIS file must be named `a` (e.g., `def a (n : ℕ) : ℕ := ...`). Do not name the function after the OEIS number (`A224515`) or use uppercase letters. Secondary auxiliary sequences (such as denominators) may be named `b`, `c`, etc.
+The primary sequence in each OEIS file must follow exact Mathlib capitalization conventions based on its return type:
+- **Value sequences (`ℕ → ℕ`, etc.)**: Use lowercase `a` (`def a (n : ℕ) : ℕ := ...`). Secondary auxiliary sequences may be named `b`, `c`, etc.
+- **Predicate sequences (`ℕ → Prop`)**: Definitions returning `Prop` define properties/propositions and must use capital `A` (`def A (n : ℕ) : Prop := ...`). Secondary auxiliary predicates may be named `B`, `C`, etc.
+Do not name the sequence function after the OEIS number itself (e.g. do not use `A224515`).
 
 ## Namespaces
 
@@ -65,6 +68,7 @@ theorem target_theorem_0 : ...
 
 To ensure the formalized definition behaves correctly and matches the official OEIS sequence, every file **must include term theorems verifying the first few values of the sequence** (typically the first 5 values).
 
+- **Naming**: Every term verification theorem for sequence `a` (or predicate `A`) must be named strictly `a_0`, `a_1`, `a_2`, etc., according to the index (`a_[n]`). Note that even when testing an `UpperCamelCase` property definition like `A`, Mathlib naming rules mandate lowercasing it right inside `snake_case` theorem names (`a_0 : A 0`, `a_1 : A 1`).
 - **Official Alignment**: Verify the starting index ($n=0, 1, 2, \dots$) and exact initial values against the official OEIS `b-file` (`https://oeis.org/A[padded_number]/b[padded_number].txt`).
 - **Attributes**: Every term theorem must be tagged with `@[category test, AMS 11]` (or another appropriate AMS subject).
 - **Computable Definitions**: If the sequence definition is kernel-computable, prove the term theorems using `by rfl`, `by decide`, `by norm_num`, or by unfolding the definition.
@@ -73,8 +77,8 @@ To ensure the formalized definition behaves correctly and matches the official O
 
 ```lean
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by rfl
+theorem a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by rfl
+theorem a_1 : a 1 = 1 := by rfl
 ```

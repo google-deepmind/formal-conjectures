@@ -16,8 +16,10 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
+# Factor bounds for Fermat numbers
+
 $a(n)$ is the minimum integer $k$ such that the smallest prime factor of the
-$n$-th Fermat number exceeds $2^(2^n - k)$.
+$n$-th Fermat number exceeds $2^{2^n - k}$.
 
 *References:*
 - [A358684](https://oeis.org/A358684)
@@ -97,32 +99,29 @@ theorem a_equiv_a' (n : ℕ) : a n = a' n := by
     omega
 
 @[category test, AMS 11]
-theorem zero : a 0 = 0 := by norm_num [a]; simp [log2_def]
+theorem a_0 : a 0 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem one : a 1 = 0 := by norm_num [a]; simp [log2_def]
+theorem a_1 : a 1 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem two : a 2 = 0 := by norm_num [a]; simp [log2_def]
+theorem a_2 : a 2 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem three : a 3 = 0 := by
+theorem a_3 : a 3 = 0 := by
   norm_num only [a, Nat.log2_eq_log_two,Nat.fermatNumber]
 
 @[category test, AMS 11]
-theorem four : a 0 = 0 := by norm_num [a]; simp [log2_def]
+theorem a_4 : a 4 = 0 := by
+  norm_num [a, fermatNumber, Nat.log2_eq_log_two]
 
 @[category test, AMS 11]
-theorem five : a 5 = 23 := by
+theorem a_5 : a 5 = 23 := by
   norm_num [a, fermatNumber,Nat.log2_eq_log_two]
 
 @[category test, AMS 11]
-theorem six : a 6 = 46 := by
+theorem a_6 : a 6 = 46 := by
   decide +native
-
-@[category test, AMS 11]
-theorem seven : a 7 = 73 := by
-  sorry
 
 /--
 Conjecture: the dyadic valuation of A93179(n) - 1 does not exceed 2^n - a(n).
