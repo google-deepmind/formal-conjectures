@@ -127,6 +127,13 @@ theorem jacobian_conjecture {k : Type} [Field k] [CharZero k] :
   have h1 : (1 : k) = -1 := congrFun (hleft.injective (aeval_F_eq k)) 0
   norm_num at h1
 
+set_option linter.style.answer_attribute false in
+/-- Does the Jacobian conjecture hold in the two variable case? -/
+@[category research open, AMS 14]
+theorem jacobian_conjecture_two_variables {k : Type} [Field k] [CharZero k] :
+    answer(sorry) ↔ JacobianConjectureProp k (Fin 2) := by
+  sorry
+
 end Conjecture
 
 section Tests
