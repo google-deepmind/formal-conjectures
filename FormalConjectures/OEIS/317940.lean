@@ -98,23 +98,23 @@ noncomputable def a (n : ℕ) : ℤ :=
   (f n).num
 
 @[category test, AMS 11]
-theorem test_a_1 : a 1 = 1 := by
+theorem a_1 : a 1 = 1 := by
   sorry
 
 @[category test, AMS 11]
-theorem test_a_2 : a 2 = 1 := by
+theorem a_2 : a 2 = 1 := by
   sorry
 
 @[category test, AMS 11]
-theorem test_a_3 : a 3 = 1 := by
+theorem a_3 : a 3 = 1 := by
   sorry
 
 @[category test, AMS 11]
-theorem test_a_4 : a 4 = 7 := by
+theorem a_4 : a 4 = 7 := by
   sorry
 
 @[category test, AMS 11]
-theorem test_a_5 : a 5 = 1 := by
+theorem a_5 : a 5 = 1 := by
   sorry
 
 /--
