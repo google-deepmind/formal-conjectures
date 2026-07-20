@@ -53,9 +53,9 @@ differential equation.
 - [A005187](https://oeis.org/A005187)
 -/
 
-open Nat Finset
-
 namespace OeisA317940
+
+open Nat Finset
 
 /--
 A005187: the sum of $\lfloor e / 2^k \rfloor$ over $k \ge 0$.
