@@ -325,4 +325,130 @@ theorem isGoodPair_one_alpha_of_lt_three_halves (α : ℝ) (hα_lo : 1 < α) (h�
     IsGoodPair 1 α := by
   sorry
 
+/-- **First-term value for $1 \le t < 2$.** The $0$-th term of the floor sequence is
+$\lfloor t\alpha^0\rfloor = \lfloor t\rfloor = 1$. Textbook-level: an immediate consequence of
+`floorSeq_zero` and `Int.floor_eq_iff`, not itself a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
+theorem floorSeq_zero_eq_one_of_lt_two (t α : ℝ) (ht1 : 1 ≤ t) (ht2 : t < 2) :
+    ⌊t * α ^ (0 : ℕ)⌋ = 1 := by
+  simp only [pow_zero, mul_one]
+  rw [Int.floor_eq_iff]
+  constructor
+  · push_cast; linarith
+  · push_cast; linarith
+
+/-- **Doubling bound for a general floor power sequence.** For $1 < \alpha < 3/2$, $1 \le t$, and
+any $n \ge 0$, $\lfloor t\alpha^{n+1}\rfloor \le 2\lfloor t\alpha^n\rfloor$.
+
+Generalizes `floor_pow_succ_le_two_mul_floor_pow` (the $t = 1$ case) to every $t \ge 1$: the
+argument only needs $\lfloor t\alpha^n\rfloor \ge 1$, which now comes from $t \ge 1$ rather than
+from $\alpha > 1$ alone. Textbook-level floor/inequality fact, not itself a partial result on
+Erdős Problem 349. -/
+@[category textbook, AMS 11]
+theorem floor_mul_pow_succ_le_two_mul (t α : ℝ) (hα_lo : 1 < α) (hα_hi : α < 3 / 2)
+    (ht1 : 1 ≤ t) (n : ℕ) :
+    ⌊t * α ^ (n + 1)⌋ ≤ 2 * ⌊t * α ^ n⌋ := by
+  have hpos : (0 : ℝ) < α ^ n := by positivity
+  have hone : (1 : ℝ) ≤ α ^ n := one_le_pow₀ hα_lo.le
+  have htpow : (1 : ℝ) ≤ t * α ^ n := by nlinarith [ht1, hone]
+  have hm1 : (1 : ℤ) ≤ ⌊t * α ^ n⌋ := by rw [Int.le_floor]; push_cast; linarith
+  have hflo : (↑(⌊t * α ^ n⌋) : ℝ) ≤ t * α ^ n := Int.floor_le _
+  have hfle : (t * α ^ n) - 1 < (↑(⌊t * α ^ n⌋) : ℝ) := by
+    linarith [Int.sub_one_lt_floor (t * α ^ n)]
+  rw [Int.floor_le_iff]
+  push_cast
+  have hsucc : t * α ^ (n + 1) = α * (t * α ^ n) := by ring
+  rw [hsucc]
+  have hm1r : (1 : ℝ) ≤ (↑(⌊t * α ^ n⌋) : ℝ) := by exact_mod_cast hm1
+  nlinarith [mul_pos (by linarith : (0 : ℝ) < α) (by nlinarith [htpow] : (0 : ℝ) < t * α ^ n),
+    hflo, hfle, hm1r]
+
+/-- **Erdős Problem 349, sharp entire completeness for $1 \le t < 2$ on the strip
+$1 < \alpha < 3/2$.**
+
+The sequence $\lfloor t\alpha^n\rfloor$ is *entirely* additively complete: every positive
+integer $k \ge 1$ is a finite subset sum of distinct terms.
+
+A **partial result** on the open Erdős Problem 349 and on the named open conjecture
+`complete_for_alpha_in_Ioo_one_to_goldenRatio` (restricted to $\alpha < 3/2$, entire sense, and
+$t < 2$). Sharpens `isGoodPair_one_alpha_of_lt_three_halves` (its $t = 1$ special case) by taking
+$t < 2$ as a direct hypothesis instead of deriving it from $t\alpha < 2$: the doubling bound
+`floor_mul_pow_succ_le_two_mul` already holds for every $1 \le t$ on this strip, so the widening
+is free. E.g. $(t, \alpha) = (1.7, 1.4)$ has $t\alpha = 2.38 > 2$ yet is covered here.
+
+Proof: instantiate `entirely_complete_of_doubling` with $a_n = \lfloor t\alpha^n\rfloor$, using
+`floorSeq_zero_eq_one_of_lt_two` for $a_0 = 1$ and `floor_mul_pow_succ_le_two_mul` for the
+doubling bound.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/fc02fb6d4045478b070742b7d04d09ceed561183/FormalConjectures/ErdosProblems/349.lean#L949"]
+theorem isEntirelyAddComplete_of_one_le_lt_two (t α : ℝ) (hα_lo : 1 < α) (hα_hi : α < 3 / 2)
+    (ht1 : 1 ≤ t) (ht2 : t < 2) :
+    IsEntirelyAddComplete (Set.range (fun n : ℕ ↦ ⌊t * α ^ n⌋)) := by
+  sorry
+
+/-- **Erdős Problem 349, good pair for $1 \le t < 2$ on the strip $1 < \alpha < 3/2$.**
+
+Corollary of `isEntirelyAddComplete_of_one_le_lt_two`, lifted from entire to eventual
+completeness via `isEntirelyAddComplete_imp_isAddComplete`. A partial result on the named open
+conjecture `complete_for_alpha_in_Ioo_one_to_goldenRatio`, restricted to $\alpha < 3/2$ and
+$t < 2$.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline (it depends on a linked theorem). -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/fc02fb6d4045478b070742b7d04d09ceed561183/FormalConjectures/ErdosProblems/349.lean#L983"]
+theorem isGoodPair_of_one_le_lt_two (t α : ℝ) (hα_lo : 1 < α) (hα_hi : α < 3 / 2)
+    (ht1 : 1 ≤ t) (ht2 : t < 2) :
+    IsGoodPair t α := by
+  sorry
+
+/-- **Erdős Problem 349, not entirely complete for $2 \le t$.**
+
+For $2 \le t$ and $1 \le \alpha$, every term $\lfloor t\alpha^n\rfloor \ge \lfloor t\rfloor \ge 2$,
+so every subset sum of the range is $0$ (empty subset) or $\ge 2$ (nonempty subset of values each
+$\ge 2$): the value $1$ is never a subset sum, so the range is not entirely additively complete.
+
+This is the DeepMind-faithful "only if" direction of the sharp threshold ($t \ge 2$), and it
+matters to state precisely: the superficially plausible stronger claim "$t\alpha \ge 2 \Rightarrow$
+not entirely complete" is FALSE under this repository's $n = 0$ indexing — e.g.
+$(t, \alpha) = (3/2, 7/5)$ has $t\alpha = 2.1 \ge 2$ yet IS entirely complete, because
+$a_0 = \lfloor t\rfloor = 1$ already saves it. The correct sharp threshold is on $t$ alone, not on
+$t\alpha$; that is exactly `entirelyComplete_floorSeq_iff_lt_two` below.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/fc02fb6d4045478b070742b7d04d09ceed561183/FormalConjectures/ErdosProblems/349.lean#L1006"]
+theorem not_entirelyComplete_of_two_le (t α : ℝ) (ht : 2 ≤ t) (hα : 1 ≤ α) :
+    ¬ IsEntirelyAddComplete (Set.range (fun n : ℕ ↦ ⌊t * α ^ n⌋)) := by
+  sorry
+
+/-- **Erdős Problem 349, sharp entire characterization on the strip $1 < \alpha < 3/2$.**
+
+For $1 \le t$ and $1 < \alpha < 3/2$:
+$$\text{IsEntirelyAddComplete}\big(\operatorname{range}(n \mapsto \lfloor t\alpha^n\rfloor)\big)
+\iff t < 2.$$
+Assembles `isEntirelyAddComplete_of_one_le_lt_two` and `not_entirelyComplete_of_two_le`, split on
+$t < 2 \lor 2 \le t$. The threshold is exactly $t = 2$: that is where the front term $a_0$ jumps
+from $1$ to $2$ and blocks the value $1$. A partial result on the named open conjecture
+`complete_for_alpha_in_Ioo_one_to_goldenRatio`, sharp on the sub-strip $1 < \alpha < 3/2$ (in the
+entire sense).
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline (it depends on two linked theorems). -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/fc02fb6d4045478b070742b7d04d09ceed561183/FormalConjectures/ErdosProblems/349.lean#L1041"]
+theorem entirelyComplete_floorSeq_iff_lt_two (t α : ℝ) (hα_lo : 1 < α) (hα_hi : α < 3 / 2)
+    (ht1 : 1 ≤ t) :
+    IsEntirelyAddComplete (Set.range (fun n : ℕ ↦ ⌊t * α ^ n⌋)) ↔ t < 2 := by
+  sorry
+
+
 end Erdos349
