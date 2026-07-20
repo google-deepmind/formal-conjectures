@@ -67,7 +67,7 @@ theorem a_5 : a 5 = 1335793103 := by
 /--
 We have  $a(p-1) \equiv 0 \pmod{p^4}$ for all primes $p \ge 3$ except $p=7$.
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+proved by AlphaProof
 -/
 @[category research solved, AMS 11,
 formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/commit/9c7f21e7d4445637538bc1817b058b9b3f31bd2b"]
