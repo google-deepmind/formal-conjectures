@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Nonnegativity of the Dirichlet square root of A046644
@@ -125,7 +125,8 @@ positive index. Informally, the proof constructs a strictly positive
 multiplicative square root prime-power by prime-power using formal power
 series, and then identifies it with the recursively defined sequence `f`.
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
