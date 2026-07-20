@@ -125,8 +125,13 @@ positive index. Informally, the proof constructs a strictly positive
 multiplicative square root prime-power by prime-power using formal power
 series, and then identifies it with the recursively defined sequence `f`.
 
-A formal proof has been found with the methods described in
-[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+The proof was obtained by exploiting the multiplicativity of A046644 and
+reducing the problem to its values on prime powers. The resulting convolution
+recurrence for the prime-power coefficients was recognized as a
+formal-power-series identity. A positive coefficient sequence was constructed
+through a differential equation for the generating series, extended
+multiplicatively to all positive integers, and finally identified with the
+recursively defined Dirichlet square root by uniqueness.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
