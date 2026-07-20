@@ -61,7 +61,7 @@ def generate_lean_file(
     return (
         f"{COPYRIGHT}\n"
         f"\n"
-        f"import FormalConjectures.Util.DeclName\n"
+        f"import FormalConjecturesUtil.DeclName\n"
         f"{imports}\n"
         f"\n"
         f"/-!\n"
