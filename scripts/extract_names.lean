@@ -15,8 +15,8 @@ limitations under the License.
 -/
 
 import Lean
-import FormalConjectures.Util.Attributes.Basic
-import FormalConjectures.Util.Answer
+import FormalConjecturesUtil.Attributes.Basic
+import FormalConjecturesUtil.Answer
 
 /-!
 # Extract Names
