@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Non-Power-of-2 Almost Perfect Numbers Conjecture
@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Almost_perfect_number)
 - [mathworld](https://mathworld.wolfram.com/AlmostPerfectNumber.html)
-- 
+-
 -/
 
 namespace AlmostPerfectNumbers
@@ -31,8 +31,8 @@ open Nat
 
 open scoped ArithmeticFunction.sigma
 
-/-- 
-A number is almost perfect if the sum of its divisors is equal to $2n - 1$. 
+/--
+A number is almost perfect if the sum of its divisors is equal to $2n - 1$.
 -/
 def AlmostPerfect (n : ℕ) : Prop :=
   1 + σ 1 n = 2 * n
