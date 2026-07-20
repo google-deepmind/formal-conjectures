@@ -627,4 +627,331 @@ theorem isGoodPair_of_pos_of_lt_one (t α : ℝ) (ht : 0 < t) (ht1 : t < 1)
     (hα1 : 1 < α) (hα2 : α < 3 / 2) : IsGoodPair t α := by
   sorry
 
+/- ## Good pairs deep in the open zone `1 < α < 3/2` for `t ≥ 2`
+
+The results below extend the partial characterization of Erdős Problem 349 with 21 concrete good
+pairs $(t, \alpha)$ satisfying $t \ge 2$, reaching well beyond the strip $\alpha \le 1 +
+1/(2\lfloor t\rfloor + 2)$ already covered by `isGoodPair_of_pos_of_lt_two` above (which only
+handles $t < 2$).
+
+The engine is a **reduction theorem**, `isGoodPair_of_run`: the whole (still open) band $t \ge
+2$, $1 < \alpha < 3/2$ collapses to a single finite combinatorial certificate — a rank $N_0$ at
+which the floor sequence produces a *new* value whose predecessors' subset sums already cover a
+run of length $\ge a_{N_0}$. It is proved by adding a *deficit* parameter to the base-window
+engine `eventuallyComplete_of_brown_of_base_window` above (letting the covered window sit
+strictly inside $[L, C\ a\ N_0]$ instead of filling it exactly), then instantiated below with 21
+explicit finite certificates, each kernel-checked by `decide` on concrete `Finset ℤ` literals.
+
+**Why this does not close the band.** The reduction does not narrow the band itself: at its
+$\alpha \to 3/2^-$ endpoint, the arithmetic core of the (RUN) certificate — the existence of a
+$t$ making every $\lfloor t\alpha^n\rfloor$ share a nontrivial common structure forever — is
+literally Mahler's $3/2$ problem (non-existence of "$Z$-numbers"), open since 1968. What *is*
+proved here is that the band can be filled **arbitrarily close to $3/2$, point by point**: the
+barrier obstructs only the universal statement over the whole band, not any single concrete
+pair. -/
+
+/-- **Subset-sum witness constructor.** If $B \subseteq A$ (as finite sets of integers) and
+$k = \sum_{i \in B} i$, then $k$ is a subset sum of $A$. A trivial repackaging of the definition
+of `subsetSums`, used throughout the finite window certificates below. Textbook-level. -/
+@[category textbook, AMS 11]
+theorem mem_subsetSums_of_subset {A B : Finset ℤ} (hsub : B ⊆ A) {k : ℤ}
+    (hk : k = ∑ i ∈ B, i) : k ∈ subsetSums ((A : Finset ℤ) : Set ℤ) :=
+  ⟨B, by exact_mod_cast Finset.coe_subset.mpr hsub, hk⟩
+
+/-- **Eventual-completeness engine with an interior deficit window.** Generalizes
+`eventuallyComplete_of_brown_of_base_window` above by letting the covered base window sit
+*strictly inside* $[L, C\ a\ N_0]$, at distance $D$ from its right end. Let $a : \mathbb{N} \to
+\mathbb{Z}$ be nonnegative, monotone and unbounded, and suppose there are $N_0 : \mathbb{N}$ and
+$L, D \in \mathbb{Z}$ such that: (i) *interior base window* — every $k$ with $L \le k \le C\ a\
+N_0 - D$ is already a subset sum of $\{a_0, \ldots, a_{N_0-1}\}$; (ii) *shifted Brown margin* —
+$a_n + L + D \le 1 + C\ a\ n$ for every $n \ge N_0$. Then $\operatorname{range} a$ is additively
+complete in the eventual sense.
+
+Taking $D = 0$ recovers `eventuallyComplete_of_brown_of_base_window` exactly. The deficit $D$ is
+what lets `isGoodPair_of_run` below reduce goodness to a *finite* certificate: taking
+$D := C\ a\ N_0 - U$ for an explicit run $[L, U]$ collapses (i) to the run hypothesis and the base
+case of (ii) to a single arithmetic inequality on $a_{N_0}$.
+
+Textbook-level: a purely combinatorial merge-induction on monotone integer sequences (no $t,
+\alpha$), directly analogous to `eventuallyComplete_of_brown_of_base_window`; the research content
+of Erdős Problem 349 is in `isGoodPair_of_run` below.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L682"]
+theorem eventuallyComplete_of_brown_of_deficit_window (a : ℕ → ℤ)
+    (hnn : ∀ n, 0 ≤ a n)
+    (hmono : Monotone a)
+    (hub : ∀ M : ℤ, ∃ n, M ≤ a n)
+    (N₀ : ℕ) (L D : ℤ)
+    (hbase : ∀ k : ℤ, L ≤ k → k ≤ C a N₀ - D →
+      k ∈ subsetSums (((Finset.range N₀).image a : Finset ℤ) : Set ℤ))
+    (hbrown : ∀ n : ℕ, N₀ ≤ n → a n + L + D ≤ 1 + C a n) :
+    IsAddComplete (Set.range a) := by
+  sorry
+
+/-- **Shifted Brown margin propagates from a doubling bound.** For a monotone sequence $a$
+satisfying the doubling bound $a_{n+1} \le 2 a_n$, if $a_{N_0}$ is a new value (not among $a_0,
+\ldots, a_{N_0-1}$) and the base inequality $a_{N_0} + L + D \le 1 + C\ a\ N_0$ holds, then the
+shifted margin $a_n + L + D \le 1 + C\ a\ n$ propagates to every $n \ge N_0$.
+
+Textbook-level: a purely combinatorial induction on monotone integer sequences (no $t, \alpha$);
+its instantiation `floorSeq_brown_shifted` below (for $a_n = \lfloor t\alpha^n\rfloor$) supplies
+hypothesis (ii) of `eventuallyComplete_of_brown_of_deficit_window` for `isGoodPair_of_run`.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L768"]
+theorem brown_shifted_of_doubling (a : ℕ → ℤ) (L D : ℤ) (N₀ : ℕ)
+    (hmono : Monotone a)
+    (hdouble : ∀ n, a (n + 1) ≤ 2 * a n)
+    (hnew : a N₀ ∉ (Finset.range N₀).image a)
+    (hbase : a N₀ + L + D ≤ 1 + C a N₀) :
+    ∀ n : ℕ, N₀ ≤ n → a n + L + D ≤ 1 + C a n := by
+  sorry
+
+/-- **Shifted Brown margin for the floor sequence.** Instance of `brown_shifted_of_doubling` for
+$a_n = \lfloor t\alpha^n\rfloor$, whose doubling bound is `floor_mul_pow_succ_le_two_mul` above
+(valid for $1 \le t$, $1 < \alpha < 3/2$). A building block for `isGoodPair_of_run` below.
+Textbook-level. -/
+@[category textbook, AMS 11]
+theorem floorSeq_brown_shifted (t α : ℝ) (L D : ℤ) (N₀ : ℕ)
+    (ht : 1 ≤ t) (hα1 : 1 < α) (hα2 : α < 3 / 2)
+    (hnew : ⌊t * α ^ N₀⌋ ∉ (Finset.range N₀).image (fun n : ℕ => ⌊t * α ^ n⌋))
+    (hbase : ⌊t * α ^ N₀⌋ + L + D ≤ 1 + C (fun n : ℕ => ⌊t * α ^ n⌋) N₀) :
+    ∀ n : ℕ, N₀ ≤ n →
+      ⌊t * α ^ n⌋ + L + D ≤ 1 + C (fun n : ℕ => ⌊t * α ^ n⌋) n :=
+  brown_shifted_of_doubling (fun n : ℕ => ⌊t * α ^ n⌋) L D N₀
+    (floorSeq_monotone t α (by linarith) hα1.le)
+    (fun n => floor_mul_pow_succ_le_two_mul t α hα1 hα2 ht n)
+    hnew hbase
+
+/-- **The Reduction Theorem for Erdős Problem 349, `t ≥ 2` regime.** Let $t, \alpha \in
+\mathbb{R}$ with $1 \le t$, $1 < \alpha < 3/2$, and write $a_n = \lfloor t\alpha^n\rfloor$. If
+there are $N_0 \in \mathbb{N}$ and $L, U \in \mathbb{Z}$ such that
+
+* $a_{N_0}$ is a *new* value (not among $a_0, \ldots, a_{N_0-1}$);
+* every integer of $[L, U]$ is a subset sum of $\{a_0, \ldots, a_{N_0-1}\}$;
+* $a_{N_0} \le U - L + 1$ (the run already covered is at least as long as the next term needs),
+
+then $(t, \alpha)$ is a good pair.
+
+This is the honest permanent statement of what remains open about the band $t \ge 2$, $1 < \alpha
+< 3/2$: it is *exactly* the collection of pairs admitting such a run certificate, and no
+soft/metric criterion can imply the certificate in general — its arithmetic core at $\alpha \to
+3/2^-$ is Mahler's $3/2$ problem, open since 1968. Instantiated below for 21 explicit pairs, never
+asserted for a whole region.
+
+Proof: instantiate `eventuallyComplete_of_brown_of_deficit_window` with $a_n = \lfloor
+t\alpha^n\rfloor$ and deficit $D := C\ a\ N_0 - U$; then $C\ a\ N_0 - D = U$, the interior base
+window collapses to exactly the run hypothesis, and the base case of the shifted Brown margin
+(`floorSeq_brown_shifted`) collapses to exactly $a_{N_0} \le U - L + 1$.
+
+A **partial result** on the open Erdős Problem 349, in the same family as
+`isGoodPair_of_pos_of_lt_two` above but for the $t \ge 2$ regime that theorem does not cover.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L846"]
+theorem isGoodPair_of_run (t α : ℝ) (ht : 1 ≤ t) (hα1 : 1 < α) (hα2 : α < 3 / 2)
+    (N₀ : ℕ) (L U : ℤ)
+    (hnew : ⌊t * α ^ N₀⌋ ∉ (Finset.range N₀).image (fun n : ℕ => ⌊t * α ^ n⌋))
+    (hrun : ∀ k : ℤ, L ≤ k → k ≤ U →
+      k ∈ subsetSums (((Finset.range N₀).image (fun n : ℕ => ⌊t * α ^ n⌋) : Finset ℤ) : Set ℤ))
+    (hfit : ⌊t * α ^ N₀⌋ ≤ U - L + 1) :
+    IsGoodPair t α := by
+  sorry
+
+/-- Every integer of $[2, 7]$ is a subset sum of $\{2, 3, 4\}$ (6 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11]
+theorem window_two_four : ∀ k : ℤ, 2 ≤ k → k ≤ 7 →
+    k ∈ subsetSums ((({2, 3, 4} : Finset ℤ)) : Set ℤ) := by
+  intro k hk1 hk2
+  have h : k = 2 ∨ k = 3 ∨ k = 4 ∨ k = 5 ∨ k = 6 ∨ k = 7 := by omega
+  rcases h with rfl | rfl | rfl | rfl | rfl | rfl
+  · exact mem_subsetSums_of_subset (B := {2}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {3}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {4}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {2, 3}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {2, 4}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {3, 4}) (by decide) (by decide)
+
+/-- Every integer of $[7, 21]$ is a subset sum of $\{3, 4, 5, 7, 9\}$ (15 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L881"]
+theorem window_three_nine : ∀ k : ℤ, 7 ≤ k → k ≤ 21 →
+    k ∈ subsetSums ((({3, 4, 5, 7, 9} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[8, 49]$ is a subset sum of $\{2, 4, 6, 9, 14, 22\}$ (42 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L906"]
+theorem window_W1 : ∀ k : ℤ, 8 ≤ k → k ≤ 49 →
+    k ∈ subsetSums ((({2, 4, 6, 9, 14, 22} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[14, 79]$ is a subset sum of $\{2, 4, 6, 10, 15, 22, 34\}$ (66 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L956"]
+theorem window_W2 : ∀ k : ℤ, 14 ≤ k → k ≤ 79 →
+    k ∈ subsetSums ((({2, 4, 6, 10, 15, 22, 34} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[23, 77]$ is a subset sum of $\{2, 3, 5, 7, 11, 16, 23, 33\}$ (55 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1030"]
+theorem window_W3 : ∀ k : ℤ, 23 ≤ k → k ≤ 77 →
+    k ∈ subsetSums ((({2, 3, 5, 7, 11, 16, 23, 33} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[25, 93]$ is a subset sum of $\{2, 3, 5, 8, 12, 18, 28, 42\}$ (69 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1093"]
+theorem window_W4 : ∀ k : ℤ, 25 ≤ k → k ≤ 93 →
+    k ∈ subsetSums ((({2, 3, 5, 8, 12, 18, 28, 42} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[12, 45]$ is a subset sum of $\{3, 4, 6, 9, 14, 21\}$ (34 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1170"]
+theorem window_W5 : ∀ k : ℤ, 12 ≤ k → k ≤ 45 →
+    k ∈ subsetSums ((({3, 4, 6, 9, 14, 21} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[34, 111]$ is a subset sum of $\{3, 4, 6, 10, 15, 22, 34, 51\}$ (78 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1212"]
+theorem window_W6 : ∀ k : ℤ, 34 ≤ k → k ≤ 111 →
+    k ∈ subsetSums ((({3, 4, 6, 10, 15, 22, 34, 51} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[31, 120]$ is a subset sum of $\{4, 5, 8, 11, 16, 24, 34, 49\}$ (90 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1298"]
+theorem window_W7 : ∀ k : ℤ, 31 ≤ k → k ≤ 120 →
+    k ∈ subsetSums ((({4, 5, 8, 11, 16, 24, 34, 49} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[47, 146]$ is a subset sum of $\{5, 7, 10, 14, 21, 30, 43, 63\}$ (100 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1396"]
+theorem window_W8 : ∀ k : ℤ, 47 ≤ k → k ≤ 146 →
+    k ∈ subsetSums ((({5, 7, 10, 14, 21, 30, 43, 63} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[42, 117]$ is a subset sum of $\{7, 9, 13, 18, 26, 36, 50\}$ (76 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1504"]
+theorem window_W9 : ∀ k : ℤ, 42 ≤ k → k ≤ 117 →
+    k ∈ subsetSums ((({7, 9, 13, 18, 26, 36, 50} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- Every integer of $[69, 136]$ is a subset sum of $\{10, 12, 15, 20, 25, 32, 40, 51\}$ (68 explicit witnesses, kernel-checked by `decide` on concrete `Finset ℤ` literals). A finite building block for `isGoodPair_of_run`'s run hypothesis. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1588"]
+theorem window_W10 : ∀ k : ℤ, 69 ≤ k → k ≤ 136 →
+    k ∈ subsetSums ((({10, 12, 15, 20, 25, 32, 40, 51} : Finset ℤ)) : Set ℤ) := by
+  sorry
+
+/-- **First good pair strictly outside the near-one strip.** $(5/2, 7/5)$ is a good pair:
+$N_0 = 3$, the floor sequence gives the distinct values $\{2, 3, 4\}$, then $a_3 = 6$ exactly
+fits the run $[2, 7]$ (`window_two_four`). Since $\lfloor 5/2\rfloor = 2$, the strip
+`isGoodPair_of_pos_of_lt_two` only reaches $\alpha \le 1 + 1/(2\cdot 2+2) = 7/6 \approx 1.167$;
+here $\alpha = 7/5 = 1.4$ is $70\%$ of the way across the open interval $(7/6, 3/2)$. Instance of
+`isGoodPair_of_run`. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1669"]
+theorem isGoodPair_five_halves_seven_fifths : IsGoodPair (5 / 2 : ℝ) (7 / 5 : ℝ) := by
+  sorry
+
+/-- **Reaching $\alpha = 1.4999$, deep toward the $3/2$ endpoint (headline, $t = 2$).**
+$(2, 14999/10000)$ is a good pair: $N_0 = 8$, distinct values
+$\{2, 4, 6, 10, 15, 22, 34\}$, then $a_8 = 51$ fits the run $[14, 79]$ (`window_W2`). Instance of
+`isGoodPair_of_run`, showing the band can be filled arbitrarily close to $3/2$ point by point even
+though the full band $t \ge 2$, $1 < \alpha < 3/2$ remains open. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1689"]
+theorem isGoodPair_two_alpha_1_4999 : IsGoodPair (2 : ℝ) (14999 / 10000 : ℝ) := by
+  sorry
+
+/-- **Reaching $\alpha = 1.4999$, deep toward the $3/2$ endpoint (headline, $t = 5/2$).**
+$(5/2, 14999/10000)$ is a good pair: $N_0 = 8$, distinct values
+$\{2, 3, 5, 8, 12, 18, 28, 42\}$, then $a_8 = 64$ fits the run $[25, 93]$ (`window_W4`). Instance
+of `isGoodPair_of_run`; see `isGoodPair_two_alpha_1_4999` for the significance of this frontier. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1713"]
+theorem isGoodPair_five_halves_alpha_1_4999 : IsGoodPair (5 / 2 : ℝ) (14999 / 10000 : ℝ) := by
+  sorry
+
+/-- **Reaching $\alpha = 1.4999$, deep toward the $3/2$ endpoint (headline, $t = 3$).**
+$(3, 14999/10000)$ is a good pair: $N_0 = 8$, distinct values
+$\{3, 4, 6, 10, 15, 22, 34, 51\}$, then $a_8 = 76$ fits the run $[34, 111]$ (`window_W6`). Instance
+of `isGoodPair_of_run`; see `isGoodPair_two_alpha_1_4999` for the significance of this frontier. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1737"]
+theorem isGoodPair_three_alpha_1_4999 : IsGoodPair (3 : ℝ) (14999 / 10000 : ℝ) := by
+  sorry
+
+/-- **Seventeen further good pairs, same reduction, compactly bundled.** All instantiate
+`isGoodPair_of_run` exactly like the four headline results above (explicit floor values up to a
+new rank $N_0$, matched against a finite window certificate); bundled into one statement so the
+family is reviewed as a single declaration rather than seventeen near-identical ones. In the order
+listed: $t = 5/2$ at $\alpha = 4/3$; $t = 2$ at $\alpha \in \{4/3, 5/4, 112/75, 299/200,
+1499/1000\}$; $t = 5/2$ at $\alpha \in \{29/20, 449/300\}$; $t = 3$ at $\alpha \in \{4/3, 5/4,
+37/25, 89/60, 1499/1000\}$; $t = 4$ at $\alpha = 76/53$; $t = 5$ at $\alpha = 79/55$; $t = 7$ at
+$\alpha = 71/51$; $t = 10$ at $\alpha = 43/34$. Together with the four headline pairs, this gives
+**21 good pairs total** with $t \in \{2, 5/2, 3, 4, 5, 7, 10\}$ and $\alpha$ ranging from $5/4$ up
+to $14999/10000$, all strictly outside the strip $\alpha \le 1 + 1/(2\lfloor t\rfloor+2)$ covered
+by `isGoodPair_of_pos_of_lt_two`.
+
+A **partial result** on the open Erdős Problem 349: these are 17 more explicit instances of
+`isGoodPair_of_run`, never a claim about a whole region. The full band $t \ge 2$, $1 < \alpha <
+3/2$ remains open.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/ed8779b1a3cc906098b201569aa14c1f3b7a2993/FormalConjectures/ErdosProblems/349.lean#L1775"]
+theorem isGoodPair_run_further_instances :
+    IsGoodPair (5 / 2 : ℝ) (4 / 3 : ℝ) ∧
+    IsGoodPair (2 : ℝ) (4 / 3 : ℝ) ∧
+    IsGoodPair (2 : ℝ) (5 / 4 : ℝ) ∧
+    IsGoodPair (3 : ℝ) (4 / 3 : ℝ) ∧
+    IsGoodPair (3 : ℝ) (5 / 4 : ℝ) ∧
+    IsGoodPair (2 : ℝ) (112 / 75 : ℝ) ∧
+    IsGoodPair (2 : ℝ) (299 / 200 : ℝ) ∧
+    IsGoodPair (2 : ℝ) (1499 / 1000 : ℝ) ∧
+    IsGoodPair (5 / 2 : ℝ) (29 / 20 : ℝ) ∧
+    IsGoodPair (5 / 2 : ℝ) (449 / 300 : ℝ) ∧
+    IsGoodPair (3 : ℝ) (37 / 25 : ℝ) ∧
+    IsGoodPair (3 : ℝ) (89 / 60 : ℝ) ∧
+    IsGoodPair (3 : ℝ) (1499 / 1000 : ℝ) ∧
+    IsGoodPair (4 : ℝ) (76 / 53 : ℝ) ∧
+    IsGoodPair (5 : ℝ) (79 / 55 : ℝ) ∧
+    IsGoodPair (7 : ℝ) (71 / 51 : ℝ) ∧
+    IsGoodPair (10 : ℝ) (43 / 34 : ℝ) := by
+  sorry
+
 end Erdos349
