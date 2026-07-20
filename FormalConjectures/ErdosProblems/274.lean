@@ -69,7 +69,7 @@ than one cosets of different sizes? (i.e. each element is contained in exactly o
 of the cosets.)
 -/
 @[category research solved, AMS 20,
-  formal_proof using lean4 at "https://github.com/Jostamon/erdos274-hs-abelian/blob/7f3c28f11a698486c955a333f684bbc761ec4454/Erdos274/Main.lean"]
+  formal_proof using lean4 at "https://github.com/Jostamon/erdos274-hs-abelian/blob/2ab8a2e39e7dd7836adf577b52555f069244466f/Erdos274/Main.lean"]
 theorem erdos_274.variants.abelian {G : Type*} [Fintype G] [CommGroup G]
     (hG : 1 < Fintype.card G) {ι : Type*} [Fintype ι] (P : Group.ExactCovering G ι)
     (hι : 1 < Fintype.card ι) :
