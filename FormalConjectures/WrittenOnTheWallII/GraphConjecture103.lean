@@ -27,50 +27,6 @@ namespace WrittenOnTheWallII.GraphConjecture103
 
 open Classical SimpleGraph
 
-/-- An induced subgraph is bipartite exactly when its vertices admit a two-coloring. -/
-@[category API, AMS 5]
-theorem induce_isBipartite_iff_exists_coloring {α : Type*} [DecidableEq α]
-    (G : SimpleGraph α) (s : Finset α) :
-    (G.induce s).IsBipartite ↔
-      ∃ c : α → Fin 2, ∀ u ∈ s, ∀ v ∈ s, G.Adj u v → c u ≠ c v := by
-  constructor
-  · rintro ⟨c⟩
-    refine ⟨fun v => if hv : v ∈ s then c ⟨v, hv⟩ else 0, ?_⟩
-    intro u hu v hv huv
-    simp only [dif_pos hu, dif_pos hv]
-    exact c.valid huv
-  · rintro ⟨c, hc⟩
-    exact ⟨Coloring.mk (fun v => c v) fun {u v} huv => hc u u.prop v v.prop huv⟩
-
-/-- Computable largest induced bipartite subgraph size via powerset enumeration. -/
-def computableLargestInducedBipartiteSubgraphSize {α : Type*} [Fintype α] [DecidableEq α]
-    (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  (Finset.univ.powerset.filter fun s : Finset α =>
-    ∃ c : α → Fin 2, ∀ u ∈ s, ∀ v ∈ s, G.Adj u v → c u ≠ c v).sup Finset.card
-
-/-- The computable largest induced bipartite subgraph size agrees with the `sSup` definition. -/
-@[category API, AMS 5]
-theorem largestInducedBipartiteSubgraphSize_eq_computable
-    {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α) [DecidableRel G.Adj] :
-    G.largestInducedBipartiteSubgraphSize = computableLargestInducedBipartiteSubgraphSize G := by
-  unfold SimpleGraph.largestInducedBipartiteSubgraphSize
-    computableLargestInducedBipartiteSubgraphSize
-  apply le_antisymm
-  · apply csSup_le
-    · refine ⟨0, ∅, ?_, rfl⟩
-      rw [induce_isBipartite_iff_exists_coloring]
-      exact ⟨fun _ => 0, by simp⟩
-    · rintro n ⟨s, hs, rfl⟩
-      apply Finset.le_sup
-      exact Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr (Finset.subset_univ s),
-        (induce_isBipartite_iff_exists_coloring G s).mp hs⟩
-  · apply Finset.sup_le
-    intro s hs
-    apply le_csSup
-    · exact ⟨Fintype.card α, fun n ⟨t, _, ht⟩ => ht ▸ t.card_le_univ⟩
-    · exact ⟨s, (induce_isBipartite_iff_exists_coloring G s).mpr
-        (Finset.mem_filter.mp hs).2, rfl⟩
-
 /-- The 11-vertex counterexample: a triangle with four leaves on each of two vertices. -/
 abbrev wowii103Counterexample : SimpleGraph (Fin 11) :=
   SimpleGraph.fromEdgeSet {
@@ -131,8 +87,7 @@ This conjecture is false. The graph `wowii103Counterexample` has independence nu
 largest induced bipartite subgraph size $10$, and average eccentricity $30/11$. Since
 $1 < \ln(30/11) < 2$, the proposed upper bound is $8$.
 -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at
-  "https://github.com/CinnamonRolls1/formal-conjectures/blob/f403989abe71687597f21d72b72505b2c8133511/FormalConjectures/WrittenOnTheWallII/GraphConjecture103.lean#L135-L149"]
+@[category research solved, AMS 5]
 theorem conjecture103 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) (_h : G.Connected),
