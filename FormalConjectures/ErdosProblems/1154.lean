@@ -33,72 +33,73 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open scoped ENNReal Cardinal
-open Set MeasureTheory Polynomial
+open Set MeasureTheory
 
 namespace Erdos1154
 
 /--
-For every $a \in [0, 1]$, there exists a group in $\mathbb{R}$ with Hausdorff dimension $a$. This is
-proved in [ErVo66].
+Does there exist, for every $\alpha \in [0, 1]$, a ring in $\mathbb{R}$ with Hausdorff dimension
+$\alpha$?
+-/
+@[category research open, AMS 28]
+theorem erdos_1154.parts.i :
+    answer(sorry) ↔
+      ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subring ℝ, dimH (R : Set ℝ) = a := by
+  sorry
+
+/--
+Does there exist, for every $\alpha \in [0, 1]$, a field in $\mathbb{R}$ with Hausdorff dimension
+$\alpha$?
+-/
+@[category research open, AMS 28]
+theorem erdos_1154.parts.ii :
+    answer(sorry) ↔
+      ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subfield ℝ, dimH (R : Set ℝ) = a := by
+  sorry
+
+/--
+For every $\alpha \in [0, 1]$, there exists an additive group in $\mathbb{R}$ with Hausdorff
+dimension $\alpha$. This is proved in [ErVo66].
 -/
 @[category research solved, AMS 28]
-theorem erdos_1154.group {a : ℝ≥0∞} (ha : a ∈ Icc 0 1) :
-    ∃ R : AddSubgroup ℝ, dimH R.carrier = a := by
+theorem erdos_1154.variants.group {a : ℝ≥0∞} (ha : a ∈ Icc 0 1) :
+    ∃ R : AddSubgroup ℝ, dimH (R : Set ℝ) = a := by
   sorry
 
 /--
 If a subring is analytic, then it is either equal to $\mathbb{R}$ or its Hausdorff dimension is
-equal to $0$. This is proved in [EdMi03].
+equal to $0$. This is proved in [EdMi03], superseding the earlier result of [EdMi01] that a real
+closed analytic subfield of $\mathbb{R}$ has Hausdorff dimension $0$ or $1$: every subfield is a
+subring, so the statement below yields [EdMi01] without using real closedness.
 -/
 @[category research solved, AMS 28]
-theorem erdos_1154.analytic_ring {R : Subring ℝ} (hR : AnalyticSet R.carrier) :
-    R = ⊤ ∨ dimH R.carrier = 0 := by
+theorem erdos_1154.variants.analytic_ring {R : Subring ℝ} (hR : AnalyticSet (R : Set ℝ)) :
+    R = ⊤ ∨ dimH (R : Set ℝ) = 0 := by
   sorry
 
 /--
-Does there exist, for every $a \in [0, 1]$, a ring in $\mathbb{R}$ with Hausdorff dimension $a$?
--/
-@[category research open, AMS 28]
-theorem erdos_1154.ring :
-    answer(sorry) ↔
-      ∀ a ∈ Set.Icc (0 : ℝ≥0∞) 1, ∃ R : Subring ℝ, dimH R.carrier = a := by
-  sorry
-
-/-- A field `R` is real closed if
-    1. `R` is real
-    2. for all `x ∈ R`, either `x` or `-x` is a square
-    3. every odd-degree polynomial has a root.
--/
-class IsRealClosed (R : Type*) [Field R] : Prop extends IsSemireal R where
-  isSquare_or_isSquare_neg (x : R) : IsSquare x ∨ IsSquare (-x)
-  exists_isRoot_of_odd_natDegree {f : R[X]} (hf : Odd f.natDegree) : ∃ x, f.IsRoot x
-
-/--
-If a subfield is real closed and analytic, then it is either equal to $\mathbb{R}$ or its
-Hausdorff dimension is equal to $0$. This is proved in [EdMi01].
+Assume the continuum hypothesis, then for every $\alpha \in [0, 1]$, there exists a field in
+$\mathbb{R}$ with Hausdorff dimension $\alpha$. This is proved in [Ma16b].
 -/
 @[category research solved, AMS 28]
-theorem erdos_1154.real_closed_analytic_field {R : Subfield ℝ} [IsRealClosed R]
-    (hR : AnalyticSet R.carrier) :
-    R = ⊤ ∨ dimH R.carrier = 0 := by
+theorem erdos_1154.variants.continuumHypothesis_field {a : ℝ≥0∞} (ha : a ∈ Icc 0 1)
+    [Fact (ℵ₁ = 𝔠)] :
+    ∃ R : Subfield ℝ, dimH (R : Set ℝ) = a := by
   sorry
 
-/--
-Assume the continuum hypothesis, then for every $a \in [0, 1]$, there exists a field in $\mathbb{R}$
-with Hausdorff dimension $a$.
--/
-@[category research solved, AMS 28]
-theorem erdos_1154.continuumHypothesis_field {a : ℝ≥0∞} (ha : a ∈ Icc 0 1) [Fact (ℵ₁ = 𝔠)] :
-    ∃ R : Subfield ℝ, dimH R.carrier = a := by
-  sorry
+/-- The endpoint $\alpha = 0$ of `erdos_1154.parts.ii` is witnessed by $\mathbb{Q}$. -/
+@[category test, AMS 28]
+theorem erdos_1154.variants.exists_subfield_dimH_eq_zero :
+    ∃ R : Subfield ℝ, dimH (R : Set ℝ) = 0 := by
+  refine ⟨⊥, Set.Countable.dimH_zero <| (countable_range ((↑) : ℚ → ℝ)).mono ?_⟩
+  simpa using SetLike.coe_subset_coe.2 (bot_le : ⊥ ≤ (Rat.castHom ℝ).fieldRange)
 
-/--
-Does there exist, for every $a \in [0, 1]$, a field in $\mathbb{R}$ with Hausdorff dimension $a$?
--/
-@[category research open, AMS 28]
-theorem erdos_1154.field :
-    answer(sorry) ↔
-      ∀ a ∈ Set.Icc (0 : ℝ≥0∞) 1, ∃ R : Subfield ℝ, dimH R.carrier = a := by
-  sorry
+/-- The endpoint $\alpha = 1$ of `erdos_1154.parts.ii` is witnessed by $\mathbb{R}$. -/
+@[category test, AMS 28]
+theorem erdos_1154.variants.exists_subfield_dimH_eq_one :
+    ∃ R : Subfield ℝ, dimH (R : Set ℝ) = 1 := by
+  refine ⟨⊤, ?_⟩
+  rw [Subfield.coe_top]
+  exact Real.dimH_univ
 
 end Erdos1154
