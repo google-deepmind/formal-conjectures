@@ -19,18 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Rudin's conjecture on squares in arithmetic progressions
 
-For $q, a \ge 1$, let $Q(N; q, a)$ denote the number of perfect squares among the first $N$ terms
-$\{qn + a : 0 \le n < N\}$ of the arithmetic progression with common difference $q$ and initial
-term $a$. Let
-$$Q(N) = \max Q(N; q, a),$$
-where the maximum is taken over all *non-trivial* progressions, i.e. those with $\gcd(q, a) = 1$
-and $(q, a) \neq (1, 1)$. (The excluded progression $n \mapsto n + 1$ trivially consists of every
-positive integer, so it contains $\sim \sqrt{N}$ squares but is not of interest.)
-
-**Rudin's conjecture** [Ru60] asserts that
-$$Q(N) = O(\sqrt{N}).$$
-A stronger form states that for $N \ge 6$ the progression $24n + 1$ attains the maximum, and is
-the unique progression (up to equivalence) doing so.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Rudin%27s_conjecture)
