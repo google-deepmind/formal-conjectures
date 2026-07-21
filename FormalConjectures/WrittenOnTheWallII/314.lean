@@ -79,7 +79,7 @@ argument and Lean formalization; all formal claims were checked by the pinned
 Lean compiler.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture314.lean"]
+  formal_proof using lean4 at "https://github.com/DomTheDeveloper/formal-conjectures/blob/a5e35542007274589f7b88a1fd0244048abb7abd/FormalConjectures/WrittenOnTheWallII/314.lean"]
 theorem conjecture314 [Nontrivial α] (G : SimpleGraph α) [DecidableRel G.Adj]
     (hG : G.Connected)
     (hTriFree : ∀ a b c : α, G.Adj a b → G.Adj b c → G.Adj c a → False)
