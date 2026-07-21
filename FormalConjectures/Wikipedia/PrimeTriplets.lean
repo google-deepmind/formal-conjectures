@@ -18,6 +18,7 @@ import FormalConjecturesUtil
 
 /-!
 # Prime Triplet Conjecture
+
 *Reference:* [Prime Triplet Wikipedia Page](https://en.wikipedia.org/wiki/Prime_triplet#Conjecture_on_prime_triplets)
 -/
 
