@@ -24,7 +24,7 @@ import FormalConjecturesUtil
 namespace PrimeTriplets
 
 /--
-Are there infinitely many tuples of three consecutive primes (p, q, r) such that r - p = 6?
+Are there infinitely many tuples of three consecutive primes $(p, q, r)$ such that $r - p = 6$?
 -/
 @[category research open, AMS 11]
 theorem prime_triplets :
