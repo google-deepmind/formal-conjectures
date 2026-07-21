@@ -21,4 +21,7 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 
 /-- The additive character `e(x) = e ^ (2 * π * i * x)`, a shorthand used across several
 exponential-sum problems. -/
-noncomputable def e (x : ℝ) : ℂ := Complex.exp ((2 * Real.pi * x : ℝ) * Complex.I)
+noncomputable def additiveChar (x : ℝ) : ℂ := Complex.exp ((2 * Real.pi * x : ℝ) * Complex.I)
+
+@[inherit_doc]
+scoped[ExponentialSum] notation "e" => additiveChar

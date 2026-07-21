@@ -37,6 +37,7 @@ import FormalConjecturesUtil
 -/
 
 open Filter Finset Asymptotics
+open scoped ExponentialSum
 
 namespace Erdos987
 
