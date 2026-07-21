@@ -58,7 +58,7 @@ ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the formal
 development; all formal claims were checked by the pinned Lean compiler.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/DomTheDeveloper/formal-conjectures/blob/24bf0e034072c8ee86f7804be2c7af8cc8e0aae0/FormalConjectures/WrittenOnTheWallII/GraphConjecture322.lean"]
+  formal_proof using lean4 at "https://github.com/DomTheDeveloper/formal-conjectures/blob/012f8ab26f9a577751a0bfa31b45d9e0455b4d42/FormalConjectures/WrittenOnTheWallII/322.lean"]
 theorem conjecture322 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
     (hn : 5 ≤ Fintype.card α)
     (h : ∀ v : α, indepNeighborsCard Gᶜ v ≤ 1) :
