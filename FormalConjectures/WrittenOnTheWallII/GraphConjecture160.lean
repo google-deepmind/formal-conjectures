@@ -38,6 +38,10 @@ trees of $G$ (exposed as `SimpleGraph.Ls G : ℝ`).
 
 The earlier formalization used the number of induced four-cycles. The historical
 conjecture instead uses this binary $C_4$-free indicator.
+
+**Provenance.** Corrected by Dominic Dabish. ProofOrchestrator, using OpenAI
+GPT-5.6 Thinking, assisted with source comparison and Lean formalization; the
+corrected statement was checked by the pinned Lean compiler.
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture160
