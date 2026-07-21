@@ -56,8 +56,26 @@ where `α(G) = G.indepNum` is the independence number,
 `max_v l(v)` is the maximum over all vertices of the independence number of
 the neighbourhood (in `G`), and `degreeL2Norm(Gᶜ)` is the square root of the
 sum of the squares of the degrees in the complement `Gᶜ`.
+
+**Proof outline.** Choose a maximum independent set `S`, write `A = |S|`, let
+`T` be its complement, and let `L` be the maximum neighbourhood independence
+number. Connectedness gives at least one edge from every vertex of `S` into
+`T`, while each vertex of `T` has at most `L` neighbours in `S`; double
+counting therefore gives `A ≤ |T|L`. In the complement graph, `S` is a clique.
+The missing cross-edges force explicit lower bounds on the complement degrees
+of vertices in both `S` and `T`. Summing their squares gives a lower bound for
+`degreeL2Norm(Gᶜ)²`, and the resulting quadratic inequality rearranges to the
+stated ceiling bound.
+
+**Provenance.** Solved by Dominic Dabish.
+
+ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the mathematical
+argument and Lean formalization; all formal claims were checked by the pinned
+Lean compiler.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/DomTheDeveloper/formal-conjectures/blob/0a0d23bdfcea605892146b039dfbdd4896229b32/FormalConjectures/WrittenOnTheWallII/100.lean"]
 theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
     (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (degreeL2Norm Gᶜ : ℝ)) / 2⌉ := by
