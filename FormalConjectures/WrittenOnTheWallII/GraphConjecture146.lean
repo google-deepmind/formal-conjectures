@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import FormalConjecturesForMathlib.WrittenOnTheWallII.GraphConjecture146.GraphConjecture146Proof
 
 /-!
 # Written on the Wall II - Conjecture 146
@@ -56,12 +57,13 @@ graph of $G$.
 We state the inequality in the form
 $\mathrm{tree}(G) \cdot \mathrm{rad}(G^2) \ge 2 \cdot \mathrm{ecc}(B)$ to avoid division.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/akakabrian/WOW-146/commit/0b750ac1ac987d7085fff796b4ea91a0cf4ecd70"]
 theorem conjecture146 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hrad : 0 < graphSquareRadius G) :
     2 * eccSet G (maxEccentricityVertices G : Set α) ≤
     largestInducedTreeSize G * graphSquareRadius G := by
-  sorry
+  unfold graphSquareRadius at hrad ⊢
+  exact Proof.conjecture146 G h hrad
 
 -- Sanity checks
 
