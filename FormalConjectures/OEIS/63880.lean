@@ -27,7 +27,7 @@ The conjectures state that all members satisfy $n \equiv 108 \pmod{216}$, and th
 primitive terms (those whose proper divisors aren't in the sequence) are powerful numbers,
 with $108$ being the only primitive term.
 
-*Reference:* [A63880](https://oeis.org/A63880)
+*References:* [A63880](https://oeis.org/A63880)
 -/
 
 namespace OeisA63880

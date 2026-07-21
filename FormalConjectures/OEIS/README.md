@@ -42,7 +42,7 @@ where $a, b, c, d, x, y$ are nonnegative integers.
 
 *References:*
 - [A308734](https://oeis.org/A308734)
-- Z.-W. Sun, "Refining Lagrange's four-square theorem," *J. Number Theory* **175** (2017), 167-190.
+- Z.-W. Sun, ["Refining Lagrange's four-square theorem"](https://doi.org/10.1016/j.jnt.2016.11.008), *J. Number Theory* **175** (2017), 167-190.
 -/
 ```
 
