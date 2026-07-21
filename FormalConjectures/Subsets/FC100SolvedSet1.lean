@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.DeclName
+import FormalConjecturesUtil.DeclName
 import FormalConjectures.Arxiv.«1308.0994».BoxdotConjecture
 import FormalConjectures.Arxiv.«1609.08688».sIncreasingrTuples
 import FormalConjectures.Arxiv.«2602.05192».FirstProof4

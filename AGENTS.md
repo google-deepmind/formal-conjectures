@@ -260,7 +260,7 @@ When the problem is solved:
    For a single reference, `*Reference:*` (singular) is also acceptable.
 
 4. **Import structure**:
-   - Problem files: Import `FormalConjectures.Util.ProblemImports`
+   - Problem files: Import `FormalConjecturesUtil`
    - ForMathlib files: Import only necessary Mathlib modules
 5. If a problem fits in several directories then it should stated in one directory rather than copied
    accross several. In other directories, one can simply add a file with a declaration pointing
@@ -319,9 +319,11 @@ Follow [Mathlib's naming conventions](https://leanprover-community.github.io/con
    ```
 
 3. **Functions** are named the same way as their return values:
-   - A function `A → B → C` is named as though it's a term of type `C`
-   - If `C` is a `Prop`, use `snake_case`
-   - If `C` is a `Type`, use `lowerCamelCase`
+   - A function `A → B → C` is named as though it's a term of type `C`.
+   - A function `A → B → Prop` or `A → B → Type _` should be named in `UpperCamelCase`.
+   - A function `A → B → C` where `C : Type _` and `C` isn't itself `Type _` should be named in
+    `lowerCamelCase`.
+   - A function `A → B → C` where `C : Prop` should be named in `snake_case`.
 
 4. **All other terms of Types** use `lowerCamelCase`:
 
@@ -399,7 +401,7 @@ Some rare exceptions exist for consistency:
 
 - Be specific with imports - don't import more than needed
 - In FormalConjecturesForMathlib, import only from Mathlib
-- In problem files, import only `FormalConjectures.Util.ProblemImports`, unless you are adding a
+- In problem files, import only `FormalConjecturesUtil`, unless you are adding a
   pointer to another problem or need to state an implication.
 
 ## Agent-Specific Requirements
@@ -529,7 +531,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Problem Name
