@@ -954,7 +954,6 @@ theorem isGoodPair_run_further_instances :
     IsGoodPair (10 : ℝ) (43 / 34 : ℝ) := by
   sorry
 
-
 /- ## The block-run lemma: from 21 pointwise certificates to an infinite family
 
 `isGoodPair_of_run` above reduces goodness of a single pair $(t, \alpha)$ to a *finite*
