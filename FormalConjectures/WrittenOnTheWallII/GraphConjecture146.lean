@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjecturesForMathlib.WrittenOnTheWallII.GraphConjecture146.GraphConjecture146Proof
 
 /-!
 # Written on the Wall II - Conjecture 146
@@ -56,14 +55,28 @@ graph of $G$.
 
 We state the inequality in the form
 $\mathrm{tree}(G) \cdot \mathrm{rad}(G^2) \ge 2 \cdot \mathrm{ecc}(B)$ to avoid division.
+
+## Informal proof
+
+Write $t$ for the largest induced-tree order, $r$ and $d$ for the radius and
+diameter of $G$, and $p$ for the eccentricity of its peripheral set.  First,
+the distance in the graph square is
+$\operatorname{dist}_{G^2}(u,v)=\lceil\operatorname{dist}_G(u,v)/2\rceil$,
+so $\operatorname{rad}(G^2)=\lceil r/2\rceil$.  A diametral geodesic is an
+induced path, giving $t\ge d+1$, while $p\le d-1$.  These bounds settle every
+case except $r=2$, $d=4$, and $p=3$.  In that remaining configuration, choose
+a centre and shortest paths to two diametral vertices and to a vertex at
+distance three from the peripheral set.  A finite case analysis on the two
+possible cross-arm edges (and then the possible chords) always produces an
+induced tree on at least six vertices.  Hence $t\,\operatorname{rad}(G^2)
+\ge 2p$ in the exceptional case as well.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/akakabrian/WOW-146/commit/0b750ac1ac987d7085fff796b4ea91a0cf4ecd70"]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/akakabrian/WOW-146/blob/f9e0ad75d829170804ce1d8f9fd4c1d4a0085203/WOW146/Conjecture146.lean"]
 theorem conjecture146 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hrad : 0 < graphSquareRadius G) :
     2 * eccSet G (maxEccentricityVertices G : Set α) ≤
     largestInducedTreeSize G * graphSquareRadius G := by
-  unfold graphSquareRadius at hrad ⊢
-  exact Proof.conjecture146 G h hrad
+  sorry
 
 -- Sanity checks
 
