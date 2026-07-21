@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,8 +20,16 @@ import FormalConjectures.Util.ProblemImports
 
 *References:*
 - [erdosproblems.com/123](https://www.erdosproblems.com/123)
-- [ErLe96] Erdős, P. and Lewin, Mordechai, _$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
-- [Er92b] Erdős, Paul, _Some of my favourite problems in various branches of combinatorics_. Matematiche (Catania) (1992), 231-240.
+- [ChYu23b] Chen, Yong-Gao and Yu, Wang-Xing, On {$d$}-complete sequences of integers, {II}. Acta
+  Arith. (2023), 161--181.
+- [Er92b] Erdős, Paul, Some of my favourite problems in various branches of combinatorics.
+  Matematiche (Catania) (1992), 231-240.
+- [Er97] Erdős, Paul, Problems in number theory. New Zealand J. Math. (1997), 155-160.
+- [Er97e] Erdős, Paul, Some of my favourite unsolved problems. Math. Japon. (1997), 527-537.
+- [ErLe96] Erdős, P. and Lewin, Mordechai, $d$-complete sequences of integers. Math. Comp. (1996),
+  837-840.
+- [MaCh16] Ma, Mi-Mi and Chen, Yong-Gao, On {$d$}-complete sequences of integers. J. Number Theory
+  (2016), 1--12.
 -/
 
 open Filter
@@ -31,10 +39,9 @@ open scoped Pointwise
 namespace Erdos123
 
 /--
-A set `A` of natural numbers is **d-complete** if every sufficiently large integer
-is the sum of distinct elements of `A` such that no element divides another.
-
-Reference: [ErLe96] Erdős, P. and Lewin, M., _$d$-complete sequences of integers_. Math. Comp. (1996).
+A sequence is said to be $d$-complete if every large integer is the sum of distinct integers from the
+sequence, none of which divide any other. This particular case of $d$-completeness was conjectured by
+Erdős and Lewin [ErLe96], who (among other related results) prove this when $a=3$, $b=5$, and $c=7$.
 -/
 def IsDComplete (A : Set ℕ) : Prop :=
   ∀ᶠ n in atTop, ∃ s : Finset ℕ,
@@ -60,8 +67,6 @@ Requires all three input values to be pairwise coprime to each other.
 def PairwiseCoprime (a b c : ℕ) : Prop := Pairwise (Nat.Coprime.onFun ![a, b, c])
 
 /--
-**Erdős Problem #123**
-
 Let $a, b, c$ be three integers which are pairwise coprime. Is every large integer
 the sum of distinct integers of the form $a^k b^l c^m$ ($k, l, m ≥ 0$), none of which
 divide any other?
@@ -70,16 +75,20 @@ Equivalently: is the set $\{a^k b^l c^m : k, l, m \geq 0\}$ d-complete?
 
 Note: For this not to reduce to the two-integer case, we need the integers
 to be greater than one and distinct.
+
+The prize of $250 is offered by Erdős in [Er97] and [Er97e] for a 'proof or disproof'.
+
+The main problem was resolved in the affirmative by GPT 5.6 (prompted by Snyder).
+
+This was formalized in Lean by Alexeev.
 -/
-@[category research open, AMS 11]
-theorem erdos_123 : answer(sorry) ↔ ∀ a > 1, ∀ b > 1, ∀ c > 1, PairwiseCoprime a b c →
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/a28a04b6b8ce43d5260a7466677c1f23833bfc38/src/latest/ErdosProblems/Erdos123.lean"]
+theorem erdos_123 : answer(True) ↔ ∀ a > 1, ∀ b > 1, ∀ c > 1, PairwiseCoprime a b c →
     IsDComplete (↑(powers a) * ↑(powers b) * ↑(powers c)) := by sorry
 
 /--
-Erdős and Lewin proved this conjecture when $a = 3$, $b = 5$, and $c = 7$.
-
-Reference: [ErLe96] Erdős, P. and Lewin, Mordechai,
-_$d$-complete sequences of integers_. Math. Comp. (1996), 837-840.
+Erdős and Lewin [ErLe96] proved this conjecture when $a = 3$, $b = 5$, and $c = 7$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_123.variants.erdos_lewin_3_5_7 :
@@ -93,18 +102,14 @@ problem, but it was quickly proven by Jansen and others using a simple inductive
 - If $n = 2m$ is even, apply the inductive hypothesis to $m$ and double all summands.
 - If $n$ is odd, let $3^k$ be the largest power of $3$ with $3^k ≤ n$, and apply the
   inductive hypothesis to $n - 3^k$ (which is even).
-
-Reference: [Er92b] Erdős, Paul, _Some of my favourite problems in various branches
-of combinatorics_. Matematiche (Catania) (1992), 231-240.
 -/
 @[category research solved, AMS 11]
 theorem erdos_123.variants.powers_2_3 : IsDComplete (↑(powers 2) * ↑(powers 3)) := by sorry
 
 /--
-A stronger conjecture for numbers of the form $2^k 3^l 5^j$.
-
-For any $ε > 0$, all large integers $n$ can be written as the sum of distinct integers
-$b_1 < ... < b_t$ of the form $2^k 3^l 5^j$ where $b_t < (1 + ϵ) b_1$.
+In [Er92b] Erdős makes the stronger conjecture (for $a=2$, $b=3$, and $c=5$) that, for any
+$\epsilon>0$, all large integers $n$ can be written as the sum of distinct integers
+$b_1<\cdots <b_t$ of the form $2^k3^l5^m$ where $b_t<(1+\epsilon)b_1$.
 -/
 @[category research open, AMS 11]
 theorem erdos_123.variants.powers_2_3_5_snug :
