@@ -52,7 +52,9 @@ complete graph every minimal total dominating set has cardinality two.
 
 **Provenance.** The corrected statement and core argument were first submitted by
 Samuel Schlesinger in PR #4430. This Lean formalization was completed by Dominic
-Dabish. ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the formal
+Dabish.
+
+ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the formal
 development; all formal claims were checked by the pinned Lean compiler.
 -/
 @[category research solved, AMS 5,
