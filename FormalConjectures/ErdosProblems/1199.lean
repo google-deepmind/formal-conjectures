@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1199
@@ -23,7 +23,7 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/1199](https://www.erdosproblems.com/1199)
 - [Hi79] Hindman, Neil, Partitions and sums of integers with repetition.
   J. Combin. Theory Ser. A (1979), 19--32.
-- [Ow74] J. Owings, E2494. Amer. Math. Monthly (1974), 902. 
+- [Ow74] J. Owings, E2494. Amer. Math. Monthly (1974), 902.
 -/
 
 open Pointwise
@@ -40,7 +40,7 @@ A conjecture of Owings [Ow74].
 theorem erdos_1199 :
     answer(sorry) ↔
     ∀ (color : ℕ → Fin 2), ∃ (A : Set ℕ),
-    A.Infinite ∧ ∀ n ∈ (A+A), ∀ m ∈ (A+A), color n = color m := by 
+    A.Infinite ∧ ∀ n ∈ (A+A), ∀ m ∈ (A+A), color n = color m := by
   sorry
 
 /--
@@ -49,7 +49,7 @@ Hindman [Hi79] has shown that this is false for 3-colourings.
 @[category research solved, AMS 5]
 theorem erdos_1199.variants.three :
     ∃ (color : ℕ → Fin 3), ∀ (A : Set ℕ),
-    A.Infinite → ∃ n ∈ (A+A), ∃ m ∈ (A+A), color n ≠ color m := by 
+    A.Infinite → ∃ n ∈ (A+A), ∃ m ∈ (A+A), color n ≠ color m := by
   sorry
 
 end Erdos1199

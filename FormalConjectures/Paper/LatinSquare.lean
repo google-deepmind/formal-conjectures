@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conjectures about Latin Squares
@@ -31,6 +31,24 @@ This file formalizes some conjectures and theorems around latin squares.
 namespace LatinSquare
 
 variable {n : ℕ}
+
+/--
+Two latin squares of the same order are orthogonal if superimposing them gives each ordered pair of
+symbols at most once.
+-/
+def Orthogonal (L M : LatinSquare n) : Prop :=
+  Function.Injective fun p : Fin n × Fin n => (L.mat p.1 p.2, M.mat p.1 p.2)
+
+/-- A family of latin squares is mutually orthogonal if any two distinct members are orthogonal. -/
+def MutuallyOrthogonal {k n : ℕ} (L : Fin k → LatinSquare n) : Prop :=
+  ∀ ⦃i j : Fin k⦄, i ≠ j → Orthogonal (L i) (L j)
+
+/--
+A complete set of mutually orthogonal latin squares (MOLS) of order `n` consists of `n - 1`
+latin squares of order `n`, pairwise orthogonal to each other.
+-/
+def HasCompleteMOLS (n : ℕ) : Prop :=
+  0 < n ∧ ∃ L : Fin (n - 1) → LatinSquare n, MutuallyOrthogonal L
 
 /--
 Conjecture 3.2 in [Wa2011]:
@@ -181,6 +199,25 @@ theorem maxTransversalsBound :
     let c := Real.sqrt ((3 - Real.sqrt 3) / 6) * Real.exp (Real.sqrt 3 / 6)
     ∀ n : ℕ, n ≥ 5 →
       (T n : ℝ) ∈ Set.Icc ((15 : ℝ) ^ ((n : ℝ) / 5)) (c ^ n * Real.sqrt n * n.factorial) := by
+  sorry
+
+/--
+MOLS existence problem: determine exactly which orders `n` admit a complete set of `n - 1`
+mutually orthogonal latin squares.
+
+Equivalently, this asks for which orders affine planes of order `n` exist. Complete sets are known
+for prime-power orders; the smallest currently unresolved order is `12`.
+-/
+@[category research open, AMS 5]
+theorem molsExistenceProblem : answer(sorry) = {n : ℕ | HasCompleteMOLS n} := by
+  sorry
+
+/--
+The smallest unresolved case of the MOLS existence problem: whether there are `11` mutually
+orthogonal latin squares of order `12`.
+-/
+@[category research open, AMS 5]
+theorem molsOrder12 : answer(sorry) ↔ HasCompleteMOLS 12 := by
   sorry
 
 /-

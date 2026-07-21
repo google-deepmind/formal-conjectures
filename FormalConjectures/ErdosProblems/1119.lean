@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1119
 
-*References:* 
+*References:*
 - [erdosproblems.com/1119](https://www.erdosproblems.com/1119)
 - [Ha74] Hayman, W. K., Research problems in function theory: new problems. (1974), 155--180.
 - [Er64g] Erdős, P., An interpolation problem associated with the continuum hypothesis.

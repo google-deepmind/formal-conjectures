@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 594
 
-*References:* 
+*References:*
 - [erdosproblems.com/594](https://www.erdosproblems.com/594)
 - [ErHa66] Erdős, P. and Hajnal, A., On chromatic number of graphs and set-systems.
   Acta Math. Acad. Sci. Hungar. (1966), 61-99.
