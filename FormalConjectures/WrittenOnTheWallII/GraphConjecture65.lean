@@ -42,6 +42,10 @@ vertex set has an edge crossing to its complement, so both distance-minimum
 terms are at most one. Hence the left-hand side is at most two. A nontrivial
 connected graph contains an edge, and its two endpoints induce a forest, so the
 largest induced forest has at least two vertices.
+
+**Provenance.** Solved by Dominic Dabish. ProofOrchestrator, using OpenAI GPT-5.6
+Thinking, assisted with the mathematical argument and Lean formalization; all
+formal claims were checked by the pinned Lean compiler.
 -/
 @[category research solved, AMS 5,
   formal_proof using formal_conjectures at "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture65.lean"]
