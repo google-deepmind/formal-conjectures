@@ -36,8 +36,15 @@ For a simple connected graph $G$, the size $f(G)$ of a largest induced forest sa
 $f(G) \ge \operatorname{dist\_min}(A) + \lceil \operatorname{dist\_min}(M) / 3 \rceil$,
 where $A$ is the set of minimum-degree vertices, $M$ is the set of maximum-degree vertices,
 and $\operatorname{dist\_min}(S) = \min_{v \notin S} \operatorname{dist}(v, S)$ (see `distMin`).
+
+The proof uses two universal bounds. In a connected graph, every nonempty proper
+vertex set has an edge crossing to its complement, so both distance-minimum
+terms are at most one. Hence the left-hand side is at most two. A nontrivial
+connected graph contains an edge, and its two endpoints induce a forest, so the
+largest induced forest has at least two vertices.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture65.lean"]
 theorem conjecture65 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let A : Set α := {v | G.degree v = G.minDegree}
     let M : Set α := {v | G.degree v = G.maxDegree}
