@@ -123,6 +123,10 @@ theorem a_5 : a 5 = 23 := by
 theorem a_6 : a 6 = 46 := by
   decide +native
 
+@[category test, AMS 11]
+theorem a_7 : a 7 = 73 := by
+  sorry
+
 /--
 Conjecture: the dyadic valuation of A93179(n) - 1 does not exceed 2^n - a(n).
 
