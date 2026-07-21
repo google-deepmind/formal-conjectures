@@ -58,16 +58,13 @@ noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
   else 0
 
-/-- The minimum, over all vertices $v \notin S$, of the distance from $v$ to the set $S$:
-$\min_{v \notin S} \operatorname{dist}(v, S)$. Returns `0` when $S = \mathrm{univ}$ (no
-vertex outside $S$).
-
-Counterpart to `ecc`: the outer minimum (instead of maximum) of the
-distance-to-set function, restricted to vertices outside $S$. -/
+/-- The minimum distance between distinct vertices of $S$:
+$\min \{\operatorname{dist}_G(u, v) \mid u, v \in S, u \ne v\}$. Returns `0` when $S$
+contains fewer than two vertices. -/
 noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
-  let outside := Finset.univ.filter (fun v : α => v ∉ S)
-  if h : outside.Nonempty then
-    (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
+  let pairs := (S.toFinset ×ˢ S.toFinset).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => G.dist p.1 p.2)).min' (Finset.Nonempty.image h _)
   else 0
 
 /-- The **eccentricity of a set** `S`: the maximum, over all vertices `v` of `G`, of the

@@ -35,7 +35,8 @@ WOWII [Conjecture 65](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/):
 For a simple connected graph $G$, the size $f(G)$ of a largest induced forest satisfies
 $f(G) \ge \operatorname{dist\_min}(A) + \lceil \operatorname{dist\_min}(M) / 3 \rceil$,
 where $A$ is the set of minimum-degree vertices, $M$ is the set of maximum-degree vertices,
-and $\operatorname{dist\_min}(S) = \min_{v \notin S} \operatorname{dist}(v, S)$ (see `distMin`).
+and $\operatorname{dist\_min}(S)$ is the minimum distance between two distinct vertices of $S$
+(see `distMin`).
 -/
 @[category research open, AMS 5]
 theorem conjecture65 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
@@ -59,15 +60,28 @@ example : (⊤ : SimpleGraph (Fin 3)).minDegree = (⊤ : SimpleGraph (Fin 3)).ma
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) (S : Set (Fin 3)) : 0 ≤ distMin G S := Nat.zero_le _
 
-/-- `distToSet G v S` is always nonneg. -/
+/-- In $K_2$, the minimum distance between its two vertices is $1$. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) (v : Fin 3) (S : Set (Fin 3)) : 0 ≤ distToSet G v S :=
-  Nat.zero_le _
+example : distMin (⊤ : SimpleGraph (Fin 2)) ({0, 1} : Set (Fin 2)) = 1 := by
+  unfold distMin
+  dsimp only
+  split_ifs with h
+  · rw [Finset.min'_eq_iff]
+    constructor
+    · refine Finset.mem_image.mpr ⟨(0, 1), ?_, ?_⟩
+      · simp
+      · simp
+    · intro d hd
+      obtain ⟨p, hp, rfl⟩ := Finset.mem_image.mp hd
+      have hne : p.1 ≠ p.2 := (Finset.mem_filter.mp hp).2
+      simp [SimpleGraph.dist_top_of_ne hne]
+  · exfalso
+    apply h
+    exact ⟨(0, 1), by simp⟩
 
-/-- In `K₃`, `distMin G Set.univ = 0` because there is no vertex outside `Set.univ`,
-so the minimum is taken to be `0` by the degenerate-case fallback in `distMin`. -/
+/-- A singleton contains no distinct pair, so `distMin` uses its degenerate-case fallback. -/
 @[category test, AMS 5]
-example : distMin (⊤ : SimpleGraph (Fin 3)) Set.univ ≤
-    distMin (⊤ : SimpleGraph (Fin 3)) Set.univ := le_refl _
+example : distMin (⊤ : SimpleGraph (Fin 3)) ({0} : Set (Fin 3)) = 0 := by
+  simp [distMin]
 
 end WrittenOnTheWallII.GraphConjecture65
