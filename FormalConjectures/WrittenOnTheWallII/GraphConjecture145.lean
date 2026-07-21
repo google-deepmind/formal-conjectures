@@ -71,8 +71,17 @@ independence number of the complement graph.
 We state the inequality in the form
 $\mathrm{tree}(G) \cdot \mathrm{lMin}(\overline{G}) \ge 2 \cdot \mathrm{ecc}(B)$
 to avoid division.
+
+## Provenance
+
+Solved by Dominic Dabish.
+
+ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the mathematical
+argument and Lean formalization; all formal claims were checked by the pinned
+Lean compiler.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/DomTheDeveloper/crl/blob/2ee448baa80c98f0c8b9a0c1c3d9421200f99aa5/math/wowii145/WOW145/145.lean"]
 theorem conjecture145 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hlMin : 0 < localIndependenceMin Gᶜ) :
     2 * eccSet G (maxEccentricityVertices G : Set α) ≤
