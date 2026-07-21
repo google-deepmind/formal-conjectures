@@ -954,4 +954,314 @@ theorem isGoodPair_run_further_instances :
     IsGoodPair (10 : ℝ) (43 / 34 : ℝ) := by
   sorry
 
+
+/- ## The block-run lemma: from 21 pointwise certificates to an infinite family
+
+`isGoodPair_of_run` above reduces goodness of a single pair $(t, \alpha)$ to a *finite*
+combinatorial certificate at one rank $N_0$. It was instantiated 21 times above, each time by
+hand-picking a concrete finite window (`window_two_four`, `window_W1`, ..., `window_W10`) for one
+specific pair. The lemma below, `interval_block_run`, produces such a certificate **uniformly**,
+for every block $[m, M]$ of consecutive integers with $m \ge 2$ and $M \ge 2m$ — turning the
+21 isolated points into the whole near-one sub-band $1 < \alpha \le 1 + 1/(2\lfloor t\rfloor + 2)$
+of the band $t \ge 2$, $1 < \alpha < 3/2$, for **every** $t \ge 2$ at once
+(`isGoodPair_of_two_le` below).
+
+This does not close the open band itself: at $\alpha \to (3/2)^-$ the arithmetic core of a
+run certificate is Mahler's $3/2$ problem (open since 1968), so no uniform argument can reach the
+whole band this way — only, as here, closer and closer sub-bands as $\alpha \to (3/2)^-$ point by
+point (already witnessed above by `isGoodPair_two_alpha_1_4999` etc.), or, as here, a full
+neighbourhood of $\alpha = 1$ whose width shrinks like $1/(2t)$ as $t \to \infty$. -/
+
+/-- **The merge fact.** If every integer of the window $[L, U]$ is a subset sum of the finite set
+$S$, and $v \notin S$ is at most one more than the window's width ($v \le U - L + 1$), then every
+integer of the widened window $[L, U + v]$ is a subset sum of $S \cup \{v\}$.
+
+For $k \le U$ reuse the old witness; for $k > U$ the shifted point $k - v$ lands back in
+$[L, U]$ (using $v \le U - L + 1$), and adjoining $v$ to its witness gives the sum $v + (k-v) = k$.
+A textbook-level fact about `subsetSums`, the combinatorial core of `interval_block_run` below. -/
+@[category textbook, AMS 11]
+theorem merge_fact (L U : ℤ) (S : Finset ℤ) (v : ℤ)
+    (hLU : ∀ k : ℤ, L ≤ k → k ≤ U → k ∈ subsetSums (S : Set ℤ))
+    (hvS : v ∉ S) (hv : v ≤ U - L + 1) :
+    ∀ k : ℤ, L ≤ k → k ≤ U + v → k ∈ subsetSums ((insert v S : Finset ℤ) : Set ℤ) := by
+  intro k hk₁ hk₂
+  by_cases hkU : k ≤ U
+  · obtain ⟨B, hB₁, hB₂⟩ := hLU k hk₁ hkU
+    refine ⟨B, hB₁.trans ?_, hB₂⟩
+    rw [Finset.coe_insert]
+    exact Set.subset_insert v _
+  · obtain ⟨B, hB₁, hB₂⟩ := hLU (k - v) (by omega) (by omega)
+    have hvB : v ∉ B := fun hmem => hvS (by simpa using hB₁ (Finset.mem_coe.mpr hmem))
+    refine ⟨insert v B, ?_, ?_⟩
+    · rw [Finset.coe_insert, Finset.coe_insert]
+      exact Set.insert_subset_insert hB₁
+    · rw [Finset.sum_insert hvB, ← hB₂]; ring
+
+/-- **Block-run lemma.** For integers $m, M$ with $2 \le m$ and $2m \le M$, put $M_1 := \lfloor
+M/2\rfloor$ and $S_1 := \sum_{v \in [m, M_1]} v$. Then every integer of the interval
+$[M_1 + 1,\ M + S_1]$ is a finite subset sum of the *distinct* integers $m, m+1, \ldots, M$.
+
+Proved by the downward invariant $P(p) : [M_1+1,\, M + \sum_{v \in [p, M_1]} v] \subseteq
+\operatorname{subsetSums}[p, M]$ for $m \le p \le M_1 + 1$, with base $P(M_1+1)$ the singleton
+interval $[M_1+1, M]$ and step $P(p+1) \to P(p)$ merging the new value $v := p$ via `merge_fact`
+(realised as an upward `Nat` induction on $M_1 + 1 - p$).
+
+This is the genuinely new combinatorial content behind `isGoodPair_of_two_le` below: it supplies
+`isGoodPair_of_run`'s finite certificate simultaneously for every admissible $(m, M)$, rather than
+one hand-picked window per pair as in the 21 instances above.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/9cdf79b3fb41bf4535fc153b77d5580786a5b8f8/FormalConjectures/ErdosProblems/349.lean#L2122"]
+theorem interval_block_run (m M : ℤ) (hm : 2 ≤ m) (hM : 2 * m ≤ M) :
+    ∀ k : ℤ, M / 2 + 1 ≤ k → k ≤ M + ∑ v ∈ Finset.Icc m (M / 2), v →
+      k ∈ subsetSums ((Finset.Icc m M : Finset ℤ) : Set ℤ) := by
+  sorry
+
+/-- The near-one hypothesis $\alpha \le 1 + 1/M$, cleared of denominators: $M(\alpha - 1) \le 1$.
+A textbook-level algebraic rewriting, a building block for the near-one strip lemmas below. -/
+@[category textbook, AMS 11]
+theorem mul_sub_one_le_one_of_near_one (α : ℝ) (M : ℤ) (hM : 1 ≤ M)
+    (hα : α ≤ 1 + 1 / (M : ℝ)) : (M : ℝ) * (α - 1) ≤ 1 := by
+  have hMR : (0:ℝ) < (M : ℝ) := by exact_mod_cast hM
+  have h := mul_le_mul_of_nonneg_left (by linarith : α - 1 ≤ 1 / (M : ℝ)) hMR.le
+  rwa [mul_one_div, div_self (ne_of_gt hMR)] at h
+
+/-- **Contiguity step.** On the near-one strip $1 < \alpha \le 1 + 1/M$, as long as the floor
+sequence $a_n = \lfloor t\alpha^n\rfloor$ stays at most $M - 1$ it can increase by at most $1$
+at the next step: $a_n \le M - 1$ gives $t\alpha^n < M$, hence $t\alpha^{n+1} = t\alpha^n +
+t\alpha^n(\alpha - 1) < t\alpha^n + M(\alpha - 1) \le t\alpha^n + 1 < a_n + 2$. A building block
+for `floorSeq_covers_Icc` below. -/
+@[category textbook, AMS 11]
+theorem floorSeq_succ_le_succ_of_lt (t α : ℝ) (M : ℤ) (n : ℕ)
+    (ht : 0 ≤ t) (hM : 1 ≤ M) (hα1 : 1 < α) (hα : α ≤ 1 + 1 / (M : ℝ))
+    (h : ⌊t * α ^ n⌋ ≤ M - 1) :
+    ⌊t * α ^ (n + 1)⌋ ≤ ⌊t * α ^ n⌋ + 1 := by
+  have hα0 : (0:ℝ) < α := by linarith
+  have hx0 : (0:ℝ) ≤ t * α ^ n := mul_nonneg ht (pow_nonneg hα0.le n)
+  have hxM : t * α ^ n < (M : ℝ) := Int.floor_lt.mp (by omega)
+  have hMa := mul_sub_one_le_one_of_near_one α M hM hα
+  have hkey : (t * α ^ n) * (α - 1) < 1 := by
+    nlinarith [mul_pos (sub_pos.mpr hxM) (sub_pos.mpr hα1)]
+  have hfl : t * α ^ n < (⌊t * α ^ n⌋ : ℝ) + 1 := Int.lt_floor_add_one _
+  have hlt : t * α ^ (n + 1) < ((⌊t * α ^ n⌋ + 2 : ℤ) : ℝ) := by
+    have hsucc : t * α ^ (n + 1) = t * α ^ n + (t * α ^ n) * (α - 1) := by ring
+    push_cast
+    rw [hsucc]
+    linarith
+  have := Int.floor_lt.mpr hlt
+  omega
+
+/-- **The term just past a cut.** On the near-one strip, one step after a term that is at most
+$M$ the sequence is at most $M + 2$: $a_n \le M$ gives $t\alpha^n < M+1$, hence $t\alpha^{n+1} <
+(M+1) + (M(\alpha-1) + (\alpha - 1)) \le (M+1) + 2 = M+3$. A building block for
+`isGoodPair_of_two_le_of_window` below. -/
+@[category textbook, AMS 11]
+theorem floorSeq_le_add_two_at_cut (t α : ℝ) (M : ℤ) (n : ℕ)
+    (ht : 0 ≤ t) (hM : 1 ≤ M) (hα1 : 1 < α) (hα : α ≤ 1 + 1 / (M : ℝ))
+    (h : ⌊t * α ^ n⌋ ≤ M) :
+    ⌊t * α ^ (n + 1)⌋ ≤ M + 2 := by
+  have hα0 : (0:ℝ) < α := by linarith
+  have hMR : (1:ℝ) ≤ (M : ℝ) := by exact_mod_cast hM
+  have hx0 : (0:ℝ) ≤ t * α ^ n := mul_nonneg ht (pow_nonneg hα0.le n)
+  have hxM : t * α ^ n < (M : ℝ) + 1 := by
+    have : t * α ^ n < ((M + 1 : ℤ) : ℝ) := Int.floor_lt.mp (by omega)
+    push_cast at this; linarith
+  have hMa := mul_sub_one_le_one_of_near_one α M hM hα
+  have hsmall : α - 1 ≤ 1 := by nlinarith
+  have hkey : (t * α ^ n) * (α - 1) < 2 := by
+    nlinarith [mul_pos (sub_pos.mpr hxM) (sub_pos.mpr hα1)]
+  have hlt : t * α ^ (n + 1) < ((M + 3 : ℤ) : ℝ) := by
+    have hsucc : t * α ^ (n + 1) = t * α ^ n + (t * α ^ n) * (α - 1) := by ring
+    push_cast
+    rw [hsucc]
+    linarith
+  have := Int.floor_lt.mpr hlt
+  omega
+
+/-- **The block is swept (discrete IVT).** On the near-one strip $1 < \alpha \le 1 + 1/M$, every
+integer $v$ of the block $[\lfloor t\rfloor, M]$ is attained by the floor sequence. Take the
+least $n$ with $v \le a_n$: if $n = 0$ then $v \le a_0 = \lfloor t\rfloor \le v$; otherwise
+$n = k+1$ with $a_k \le v - 1 \le M - 1$, so `floorSeq_succ_le_succ_of_lt` gives $a_{k+1} \le
+a_k + 1 \le v$, and minimality gives $v \le a_{k+1}$. A building block for
+`floorSeq_image_range_cut` below. -/
+@[category textbook, AMS 11]
+theorem floorSeq_covers_Icc (t α : ℝ) (M : ℤ)
+    (ht : 0 < t) (hM : 1 ≤ M) (hα1 : 1 < α) (hα : α ≤ 1 + 1 / (M : ℝ))
+    (v : ℤ) (hv1 : ⌊t⌋ ≤ v) (hv2 : v ≤ M) :
+    ∃ n : ℕ, ⌊t * α ^ n⌋ = v := by
+  classical
+  have hex : ∃ n : ℕ, v ≤ ⌊t * α ^ n⌋ := floorSeq_unbounded t α ht hα1 v
+  obtain ⟨N, hN, hmin⟩ : ∃ N : ℕ, v ≤ ⌊t * α ^ N⌋ ∧ ∀ j, j < N → ⌊t * α ^ j⌋ < v :=
+    ⟨Nat.find hex, Nat.find_spec hex, fun j hj => by have := Nat.find_min hex hj; omega⟩
+  refine ⟨N, ?_⟩
+  cases N with
+  | zero =>
+    rw [floorSeq_zero] at hN ⊢
+    omega
+  | succ k =>
+    have hk : ⌊t * α ^ k⌋ < v := hmin k (Nat.lt_succ_self k)
+    have hstep := floorSeq_succ_le_succ_of_lt t α M k ht.le hM hα1 hα (by omega)
+    omega
+
+/-- **The clean cut.** Let $N_0$ be the first rank at which the floor sequence exceeds $M$ (given
+by its two defining properties, so that no `Nat.find` appears in the statement). Then the
+distinct values produced before the cut are exactly the block $[\lfloor t\rfloor, M]$: $\subseteq$
+is monotonicity plus minimality of $N_0$, and $\supseteq$ is `floorSeq_covers_Icc`. A building
+block for `isGoodPair_of_two_le_of_window` below. -/
+@[category textbook, AMS 11]
+theorem floorSeq_image_range_cut (t α : ℝ) (M : ℤ)
+    (ht : 0 < t) (hM : 1 ≤ M) (hα1 : 1 < α) (hα : α ≤ 1 + 1 / (M : ℝ))
+    (N₀ : ℕ) (hN₀ : M < ⌊t * α ^ N₀⌋) (hN₀min : ∀ j, j < N₀ → ⌊t * α ^ j⌋ ≤ M) :
+    (Finset.range N₀).image (fun n : ℕ => ⌊t * α ^ n⌋) = Finset.Icc ⌊t⌋ M := by
+  have hmono := floorSeq_monotone t α ht.le hα1.le
+  ext v
+  simp only [Finset.mem_image, Finset.mem_range, Finset.mem_Icc]
+  constructor
+  · rintro ⟨j, hj, rfl⟩
+    refine ⟨?_, hN₀min j hj⟩
+    have h0 : ⌊t * α ^ (0 : ℕ)⌋ ≤ ⌊t * α ^ j⌋ := hmono (Nat.zero_le j)
+    rw [floorSeq_zero] at h0
+    exact h0
+  · rintro ⟨hv1, hv2⟩
+    obtain ⟨n, hn⟩ := floorSeq_covers_Icc t α M ht hM hα1 hα v hv1 hv2
+    refine ⟨n, ?_, hn⟩
+    by_contra hcon
+    have hle : ⌊t * α ^ N₀⌋ ≤ ⌊t * α ^ n⌋ := hmono (by omega)
+    omega
+
+/-- **Erdős Problem 349, the near-one strip for all $t \ge 2$, modulo an explicit window.** For
+$t \ge 2$, an integer $M \ge 2\lfloor t\rfloor + 2$ and $1 < \alpha \le 1 + 1/M$, the pair
+$(t, \alpha)$ is good **as soon as** the central window $[M/2 + 1,\, M + \sum_{v \in [\lfloor
+t\rfloor, M/2]} v]$ is covered by the subset sums of the block $[\lfloor t\rfloor, M]$.
+
+Locates the cut rank $N_0$ (first index past $M$), identifies the pre-cut image with the block
+$[\lfloor t\rfloor, M]$ (`floorSeq_image_range_cut`) and bounds the term just past the cut by
+$M + 2$ (`floorSeq_le_add_two_at_cut`), then feeds `isGoodPair_of_run` above with $L = M/2+1$,
+$U = M + \sum_{v \in [\lfloor t\rfloor, M/2]} v$: `hrun` is `hwin` transported along the image
+identification, and `hfit` reduces to $M + 2 \le U - L + 1$, i.e. $\sum_{v \in [\lfloor t\rfloor,
+M/2]} v \ge M/2 + 2$ — true because the two largest elements $M/2 - 1, M/2$ of that range alone
+already sum to $\ge M/2 - 1 + M/2$ (using $\lfloor t\rfloor \le M/2 - 1$, from $M \ge
+2\lfloor t\rfloor + 2$).
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/9cdf79b3fb41bf4535fc153b77d5580786a5b8f8/FormalConjectures/ErdosProblems/349.lean#L2293"]
+theorem isGoodPair_of_two_le_of_window (t α : ℝ) (M : ℤ)
+    (ht : 2 ≤ t) (hM : 2 * ⌊t⌋ + 2 ≤ M)
+    (hα1 : 1 < α) (hα : α ≤ 1 + 1 / (M : ℝ))
+    (hwin : ∀ k : ℤ, M / 2 + 1 ≤ k → k ≤ M + ∑ v ∈ Finset.Icc ⌊t⌋ (M / 2), v →
+      k ∈ subsetSums ((Finset.Icc ⌊t⌋ M : Finset ℤ) : Set ℤ)) :
+    IsGoodPair t α := by
+  sorry
+
+/-- **Erdős Problem 349, THE THEOREM for all $t \ge 2$, $M$-parametrised, unconditional.** For
+every $t \ge 2$ and every integer $M \ge 2\lfloor t\rfloor + 2$, if $1 < \alpha \le 1 + 1/M$ then
+$(t, \alpha)$ is good. Instantiates `isGoodPair_of_two_le_of_window` above with the block-run
+lemma `interval_block_run`, which discharges its `hwin` hypothesis unconditionally. A **partial**
+result on the open Erdős Problem 349: only *eventual* completeness is claimed, and only on the
+strip $\alpha \le 1 + 1/M$; the full band $t \ge 2$, $1 < \alpha < 3/2$ remains open. -/
+@[category research solved, AMS 11]
+theorem isGoodPair_of_two_le_of_near_one (t α : ℝ) (M : ℤ)
+    (ht : 2 ≤ t) (hM : 2 * ⌊t⌋ + 2 ≤ M)
+    (hα1 : 1 < α) (hα : α ≤ 1 + 1 / (M : ℝ)) :
+    IsGoodPair t α := by
+  have hm2 : (2:ℤ) ≤ ⌊t⌋ := Int.le_floor.mpr (by exact_mod_cast ht)
+  exact isGoodPair_of_two_le_of_window t α M ht hM hα1 hα
+    (interval_block_run ⌊t⌋ M hm2 (by omega))
+
+/-- **Erdős Problem 349, THE HEADLINE THEOREM: $(t, \alpha)$ is a good pair for all $t \ge 2$ and
+$1 < \alpha \le 1 + \frac{1}{2\lfloor t\rfloor + 2}$.**
+
+The instance $M = 2\lfloor t\rfloor + 2$ of `isGoodPair_of_two_le_of_near_one` above, the widest
+strip this argument gives (at $t = 2$ the base inequality of `isGoodPair_of_two_le_of_window` is
+tangent, with slack exactly $0$, so the constant $2\lfloor t\rfloor+2$ is not improvable by this
+method).
+
+A **partial result** on the open Erdős Problem 349, and on the named open conjecture
+`complete_for_alpha_in_Ioo_one_to_goldenRatio`: it gives, for **every** $t \ge 2$, a
+sub-strip of positive width around $\alpha = 1$ whose width $1/(2\lfloor t\rfloor+2)$ shrinks like
+$1/(2t)$ as $t \to \infty$. Together with `isGoodPair_of_pos_of_lt_two` above ($0 < t < 2$), the
+good region provably contains, for **every** $t > 0$, a strip of positive width around
+$\alpha = 1$.
+
+**What is NOT claimed:** the full band $t \ge 2$, $1 < \alpha < 3/2$ remains **open** — nothing
+here extends outside the strip $\alpha \le 1 + 1/(2\lfloor t\rfloor+2)$ (see
+`isGoodPair_two_alpha_1_4999` etc. above for pointwise progress deeper into that band); no
+*entire* completeness is claimed (for $t \ge 2$, $1$ is never a subset sum, since every term is
+$\ge \lfloor t\rfloor \ge 2$); and no converse ("only if") of any kind is stated. -/
+@[category research solved, AMS 11]
+theorem isGoodPair_of_two_le (t α : ℝ)
+    (ht : 2 ≤ t) (hα1 : 1 < α) (hα : α ≤ 1 + 1 / ((2 * ⌊t⌋ + 2 : ℤ) : ℝ)) :
+    IsGoodPair t α :=
+  isGoodPair_of_two_le_of_near_one t α (2 * ⌊t⌋ + 2) ht le_rfl hα1 hα
+
+/-- **Finite check: every integer of $[4, 11]$ is a subset sum of $\{2,3,4,5,6\}$.** Witnesses:
+$4, 5, 6$ alone, $7 = 3+4$, $8 = 2+6$, $9 = 4+5$, $10 = 4+6$, $11 = 5+6$. The $m=2, M=6$ instance
+of the block-run family, checked directly (no induction needed at this size) as a warm-up sanity
+check for `isGoodPair_of_two_le` restricted to $2 \le t < 3$. -/
+@[category textbook, AMS 11]
+theorem window_two_six (k : ℤ) (hk1 : 4 ≤ k) (hk2 : k ≤ 11) :
+    k ∈ subsetSums ((Finset.Icc (2 : ℤ) 6 : Finset ℤ) : Set ℤ) := by
+  have hIcc : Finset.Icc (2 : ℤ) 6 = {2, 3, 4, 5, 6} := by
+    ext x; simp only [Finset.mem_Icc, Finset.mem_insert, Finset.mem_singleton]; omega
+  rw [hIcc]
+  have h : k = 4 ∨ k = 5 ∨ k = 6 ∨ k = 7 ∨ k = 8 ∨ k = 9 ∨ k = 10 ∨ k = 11 := by omega
+  rcases h with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+  · exact mem_subsetSums_of_subset (B := {4}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {5}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {6}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {3, 4}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {2, 6}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {4, 5}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {4, 6}) (by decide) (by decide)
+  · exact mem_subsetSums_of_subset (B := {5, 6}) (by decide) (by decide)
+
+/-- **Erdős Problem 349, the $2 \le t < 3$ warm-up, unconditional.** For $2 \le t < 3$ and
+$1 < \alpha \le 7/6$, the pair $(t, \alpha)$ is good. The $2 \le t < 3$ instance of
+`isGoodPair_of_two_le` above, reproved independently from the finite check `window_two_six`
+rather than the general `interval_block_run`, as a sanity check that the general theorem
+specializes correctly. A **partial result** on the open Erdős Problem 349. -/
+@[category research solved, AMS 11]
+theorem isGoodPair_of_two_le_lt_three_of_near_one (t α : ℝ)
+    (ht : 2 ≤ t) (ht3 : t < 3) (hα1 : 1 < α) (hα : α ≤ 7 / 6) :
+    IsGoodPair t α := by
+  have hfl : ⌊t⌋ = 2 := by
+    rw [Int.floor_eq_iff]
+    refine ⟨by exact_mod_cast ht, ?_⟩
+    push_cast; linarith
+  have h62 : (6 : ℤ) / 2 = 3 := by norm_num
+  have hsum : ∑ v ∈ Finset.Icc (2:ℤ) 3, v = 5 := by
+    have h : Finset.Icc (2 : ℤ) 3 = {2, 3} := by
+      ext x; simp only [Finset.mem_Icc, Finset.mem_insert, Finset.mem_singleton]; omega
+    rw [h]; decide
+  refine isGoodPair_of_two_le_of_window t α 6 ht (by omega) hα1 (by push_cast; linarith) ?_
+  rw [hfl, h62, hsum]
+  intro k hk1 hk2
+  exact window_two_six k (by omega) (by omega)
+
+/-- **Non-vacuity, inside the $2 \le t < 3$ warm-up.** $(t, \alpha) = (5/2, 9/8)$: $9/8 \le 7/6$.
+-/
+@[category test, AMS 11]
+example : IsGoodPair (5 / 2 : ℝ) (9 / 8 : ℝ) :=
+  isGoodPair_of_two_le_lt_three_of_near_one (5 / 2) (9 / 8) (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num)
+
+/-- **Non-vacuity, strictly outside the $2 \le t < 3$ warm-up — the critical witness.**
+$(t, \alpha) = (5, 13/12)$, with $t = 5 \ge 3$: the warm-up above does not apply, so this pair is
+good only by the general theorem `isGoodPair_of_two_le`, i.e. only because `interval_block_run`
+is proved for general blocks, not just $\{2,\ldots,6\}$. Bound check: $\lfloor 5\rfloor = 5$, so
+$2\lfloor t\rfloor + 2 = 12$ and the strip bound is $1 + 1/12 = 13/12$; $\alpha = 13/12$ meets it
+with **equality**, the extreme admissible value at $t = 5$. This shows `isGoodPair_of_two_le`
+provably exceeds the $t < 3$ warm-up: it is not merely a repackaging of `window_two_six`. -/
+@[category test, AMS 11]
+example : IsGoodPair (5 : ℝ) (13 / 12 : ℝ) := by
+  have hfl : ⌊(5 : ℝ)⌋ = 5 := by norm_num
+  refine isGoodPair_of_two_le 5 (13 / 12) (by norm_num) (by norm_num) ?_
+  rw [hfl]
+  norm_num
 end Erdos349
