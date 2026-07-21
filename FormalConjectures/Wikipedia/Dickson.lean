@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-open Polynomial
+import FormalConjecturesUtil
 
 /-!
 # Dickson's conjecture
@@ -28,7 +27,7 @@ open Polynomial
 - [Leonard Eugene Dickson, *History of the Theory of Numbers, Vol. I: Divisibility and Primality*](https://archive.org/details/historyoftheoryo01dickuoft)
 - [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
-
+open Polynomial
 namespace Dickson
 
 /--

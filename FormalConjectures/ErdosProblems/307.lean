@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 307
@@ -55,10 +55,11 @@ $$
 1=\left(1+\frac{1}{41}\right)\left(\frac{1}{2}+\frac{1}{3}+\frac{1}{7}\right).
 $$
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem erdos_307.variants.coprime : answer(True) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
     Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
+  show True ↔ _
   simp only [Finset.mem_inter, not_and, true_iff]
   use {1, 5}, {2, 3}
   norm_num +decide
@@ -70,6 +71,22 @@ There are no examples known of the weakened coprime version if we insist that $1
 theorem erdos_307.variants.coprime_one_notMem : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 ∉ P ∪ Q ∧
     1 < #P ∧ 1 < #Q ∧ Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
+  sorry
+
+/--
+A machine-checked **barrier** for Erdős 307 (Bonfioli, 2026): any solution with `Q` nonempty uses at
+least 59 primes in total, and `(∏_{p ∈ P} p)² ≥ 4·10¹¹²` — i.e. `∏_{p ∈ P} p ≥ 2·10⁵⁶` (and, by
+symmetry, the same for `∏ Q`); so no solution lies below a prime-product of `2.09·10⁵⁶`. The full
+`sorry`-free proof is in the linked repository (`Closed.lean` at tag `v1.0.0`): the left conjunct is
+`card_ge_59`, the right is `erdos307_barrier_closed`. The only non-logical input is a `native_decide`
+evaluation of the first 59 primes; the axioms are `propext, Classical.choice, Quot.sound` together
+with that `native_decide`.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ElVec1o/erdos307/blob/v1.0.0/lean/Erdos307/Closed.lean"]
+theorem erdos_307.barrier {P Q : Finset ℕ}
+    (hP : ∀ p ∈ P, p.Prime) (hQ : ∀ q ∈ Q, q.Prime) (hQne : Q.Nonempty)
+    (heq : 1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) :
+    59 ≤ #(P ∪ Q) ∧ (4 * 10 ^ 112 : ℚ) ≤ (∏ p ∈ P, (p : ℚ)) ^ 2 := by
   sorry
 
 end Erdos307

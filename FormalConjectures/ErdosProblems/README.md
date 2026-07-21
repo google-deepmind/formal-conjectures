@@ -35,6 +35,8 @@ Choose a name that is descriptive of the variant. A common case is when the vari
 ## Docstrings
 Please keep docstrings as close as possible to the text on the Erdős Problems website. You should generally be able to copy and paste the LaTeX statements into the docstrings with only minor formatting adjustments.
 
+The verbatim problem text should appear **only once** — in the theorem docstring, not repeated in the module header docstring (`/-! ... -/`). The module header should contain the problem title and references only.
+
 ## References
 If the website lists references, include them at the top of the file and reference them via their citation. You can copy these directly from the "View the LaTeX source" section of the website.
 An example of this would be:

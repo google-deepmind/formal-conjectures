@@ -14,19 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
-/-! # The length of an $s$-increasing sequence of $r$-tuples
+/-!
+# The length of an $s$-increasing sequence of $r$-tuples
 
 This file contains the formalisation of [GoLo21] up to and
-including Conjecture 1.8
-
-[GoLo21] W.T. Gowers and J. Long, _The length of an $s$-increasing sequence of $r$-tuples_,
-Combinatorics, Probability and Computing (2021), 686-721.
+including Conjecture 1.8.
 
 *References:*
- - [arxiv/1609.08688](https://arxiv.org/abs/1609.08688) **The length of an $s$-increasing sequence of $r$-tuples** by *W. T. Gowers, J. Long*
- - [GoLo21]( https://www.cambridge.org/core/journals/combinatorics-probability-and-computing/article/abs/length-of-an-sincreasing-sequence-of-rtuples/7301418D47DB1ECD6BE71C20E8A98D0A) **The length of an $s$-increasing sequence of $r$-tuples** by *W. T. Gowers, J. Long*, 2021
+- [arxiv/1609.08688](https://arxiv.org/abs/1609.08688)
+  **The length of an $s$-increasing sequence of $r$-tuples** by *W. T. Gowers, J. Long*
+- [GoLo21](https://www.cambridge.org/core/journals/combinatorics-probability-and-computing/article/abs/length-of-an-sincreasing-sequence-of-rtuples/7301418D47DB1ECD6BE71C20E8A98D0A)
+  **The length of an $s$-increasing sequence of $r$-tuples**
+  by *W. T. Gowers, J. Long*, Combinatorics, Probability and Computing (2021), 686-721
 -/
 
 namespace Arxiv.«1609.08688»
@@ -155,10 +156,27 @@ theorem maximalLength_four : maximalLength 4 = 8 := by
 /-- In a set of more than $n^2$ triples with coordinates from $\{1, ..., n\}$ we must
 have two triples that are equal in their first two coordinates. -/
 @[category API, AMS 5]
-lemma exists_pair_of_mem_Icc {s : List (Fin 3 → ℕ)} {n : ℕ} (hn : 2 ≤ n)
+lemma exists_pair_of_mem_Icc {s : List (Fin 3 → ℕ)} {n : ℕ} (_hn : 2 ≤ n)
     (hs₁ : ∀ a ∈ s, Set.range a ⊆ Set.Icc 1 n) (hs₂ : s.length > n ^ 2) :
     ∃ (i j : Fin s.length), i ≠ j ∧ s[i] 0 = s[j] 0 ∧ s[i] 1 = s[j] 1 := by
-  sorry
+  classical
+  let f : Fin s.length → ℕ × ℕ := fun k => (s[k] 0, s[k] 1)
+  let t : Finset (ℕ × ℕ) := Finset.Icc 1 n ×ˢ Finset.Icc 1 n
+  have ht_card : t.card < (Finset.univ : Finset (Fin s.length)).card := by
+    simp only [t, Finset.card_univ, Fintype.card_fin, Finset.card_product,
+      Nat.card_Icc, Nat.add_sub_cancel, ← sq]
+    exact hs₂
+  have hf : ∀ k ∈ (Finset.univ : Finset (Fin s.length)), f k ∈ t := by
+    intro k _
+    have hmem : s[k] ∈ s := List.getElem_mem k.isLt
+    have h0 := hs₁ _ hmem ⟨0, rfl⟩
+    have h1 := hs₁ _ hmem ⟨1, rfl⟩
+    rw [Set.mem_Icc] at h0 h1
+    simp only [t, f, Finset.mem_product, Finset.mem_Icc]
+    exact ⟨h0, h1⟩
+  obtain ⟨i, _, j, _, hij, hfij⟩ :=
+    Finset.exists_ne_map_eq_of_card_lt_of_maps_to ht_card hf
+  exact ⟨i, j, hij, congrArg Prod.fst hfij, congrArg Prod.snd hfij⟩
 
 /-- For all $n$ we have $F(n) \leq n^2$. -/
 @[category research solved, AMS 5]

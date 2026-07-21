@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # (m,k)-perfect numbers
@@ -32,9 +32,9 @@ open ArithmeticFunction.sigma
 namespace Superperfect
 
 /--
-An integer $n$ is $(m,k)$-perfect if $\sigma^m(n) = kn$ where $\sigma^m$ is the $m$-th iterate of $σ$.
+A positive integer $n$ is $(m,k)$-perfect if $\sigma^m(n) = kn$ where $\sigma^m$ is the $m$-th iterate of $σ$.
 -/
-def PerfectFor (n m k : ℕ) : Prop := Nat.iterate (fun x => σ 1 x) m n = k * n
+def PerfectFor (n m k : ℕ) : Prop := 0 < n ∧ Nat.iterate (fun x => σ 1 x) m n = k * n
 
 /-- There does not exist a $(2,5)$-perfect number -/
 @[category research open, AMS 11]

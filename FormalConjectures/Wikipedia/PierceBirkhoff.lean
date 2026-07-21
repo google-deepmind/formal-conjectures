@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Pierce–Birkhoff conjecture
@@ -28,6 +28,8 @@ Melvin Henriksen and John R. Isbell.
 
 The conjecture has been proved for `n = 1` and `n = 2` by Louis Mahé.
 -/
+
+namespace PierceBirkhoff
 
 /--
 A set is semi-algebraic in `ℝⁿ` if it can be described by a finite union of sets defined by
@@ -109,3 +111,5 @@ theorem pierce_birkhoff_conjecture_dim_two
     ∃ (ι κ : Type) (g : ι → κ → MvPolynomial (Fin 2) ℝ), Finite ι ∧ Finite κ ∧
       ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
   sorry
+
+end PierceBirkhoff

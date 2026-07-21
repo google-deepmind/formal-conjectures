@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-open Polynomial
+import FormalConjecturesUtil
 
 /-!
 # Hypothesis H
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schinzel%27s_hypothesis_H)
 -/
-
+open Polynomial
 namespace Schinzel
 
 /--

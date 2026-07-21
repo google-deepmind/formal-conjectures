@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 200
@@ -40,7 +40,7 @@ A Hamiltonian path is a walk visiting every vertex exactly once.
 -/
 @[category research open, AMS 5]
 theorem conjecture200 (G : SimpleGraph α) (h : G.Connected)
-    (htree : (largestInducedTreeSize G : ℝ) = ⌈1 + l G⌉) :
+    (htree : (largestInducedTreeSize G : ℝ) = ⌈1 + averageIndepNeighbors G⌉) :
     ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by
   sorry
 
@@ -50,10 +50,10 @@ theorem conjecture200 (G : SimpleGraph α) (h : G.Connected)
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ largestInducedTreeSize G := Nat.zero_le _
 
-/-- The average indep-neighbors `l G` is nonneg. -/
+/-- The average indep-neighbors is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ l G := by
-  unfold l averageIndepNeighbors
+example (G : SimpleGraph (Fin 3)) : 0 ≤ averageIndepNeighbors G := by
+  unfold averageIndepNeighbors
   apply div_nonneg
   · apply Finset.sum_nonneg; intro v _; exact Nat.cast_nonneg _
   · exact Nat.cast_nonneg _

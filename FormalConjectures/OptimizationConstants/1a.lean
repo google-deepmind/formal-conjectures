@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets
@@ -38,27 +38,27 @@ noncomputable def C1a : ℝ :=
     ≤ sSup {∫ x, f (t - x) * f x | t ∈ Icc (1 / 2 : ℝ) 1}}
 
 /-- The best known lower bound, proven by Matolcsi-Vinuesa in [M2010]-/
-@[category research solved, AMS 05 11 26]
+@[category research solved, AMS 5 11 26]
 theorem c1a_lower_bound : 1.2748 ≤ C1a := by
   sorry
 
 /-- The best known upper bound, proven by Yuksekgonul et al. in [Y2026] -/
-@[category research solved, AMS 05 11 26]
+@[category research solved, AMS 5 11 26]
 theorem c1a_upper_bound : C1a ≤ 1.5029 := by
   sorry
 
 /-- How can the upper bound be improved? -/
-@[category research open, AMS 05 11 26]
+@[category research open, AMS 5 11 26]
 theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.5029 := by
   sorry
 
 /-- How can the lower bound be improved? -/
-@[category research open, AMS 05 11 26]
+@[category research open, AMS 5 11 26]
 theorem mem_Ioc_c1a : answer(sorry) ∈ Set.Ioc 1.2748 C1a := by
   sorry
 
 /-- What is the exact value of the constant? -/
-@[category research open, AMS 05 11 26]
+@[category research open, AMS 5 11 26]
 theorem c1a_eq : C1a = answer(sorry) := by
   sorry
 

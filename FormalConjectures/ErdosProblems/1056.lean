@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Nat
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1056
 
 *Reference:* [erdosproblems.com/1056](https://www.erdosproblems.com/1056)
 -/
-
+open Nat
 namespace Erdos1056
 
 /--
@@ -48,7 +46,7 @@ theorem erdos_1056 : answer(sorry) ↔
 This is problem A15 in Guy's collection [Gu04], where he reports that in a letter in 1979
 Erdős observed that $3 * 4 \equiv 5 * 6 * 7 \equiv 1 \mod 11$.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_1056.variants.k2 :
     AllModProdEqualsOne 11 ![3, 5, 8] := by
   unfold AllModProdEqualsOne
@@ -58,7 +56,7 @@ theorem erdos_1056.variants.k2 :
 Makowski [Ma83] found, for $k=3$:
 $2 * 3 * 4 * 5 \equiv 6 * 7 * 8 * 9 * 10 * 11 \equiv 12 * 13 * 14 * 15 \equiv 1 \mod 17$.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_1056.variants.k3 :
     AllModProdEqualsOne 17 ![2, 6, 12, 16] := by
   unfold AllModProdEqualsOne

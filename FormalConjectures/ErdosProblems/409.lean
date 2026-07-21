@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 409
@@ -43,7 +43,25 @@ reaches a prime. -/
 @[category test, AMS 11]
 theorem erdos_409.variants.termination (n : ℕ) (hn : 0 < n) :
     ∃ i, (φ · + 1)^[i] n |>.Prime := by
-  sorry
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+    by_cases hp : n.Prime
+    · exact ⟨0, by simpa using hp⟩
+    · have h1 : n = 1 ∨ 1 < n := by omega
+      rcases h1 with h1 | h1
+      · subst h1
+        refine ⟨1, ?_⟩
+        norm_num [Function.iterate_one, Nat.totient_one]
+      · have hlt : φ n < n := Nat.totient_lt n h1
+        have hne : φ n ≠ n - 1 := by
+          intro h
+          exact hp ((Nat.totient_eq_iff_prime hn).1 h)
+        have hdec : φ n + 1 < n := by omega
+        have hpos : 0 < φ n + 1 := by positivity
+        obtain ⟨i, hi⟩ := ih (φ n + 1) hdec hpos
+        refine ⟨i + 1, ?_⟩
+        rw [Function.iterate_succ_apply]
+        exact hi
 
 -- Formalisation note: it's possible that solution to `erdos_409.parts.i` needs to be
 -- expressed asymptotically. To handle this we include `IsTheta`, `IsBigO`
@@ -108,8 +126,10 @@ theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1) :
     IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } answer(sorry) := by
   sorry
 
-/-- If $n > 1$ then the iteration $n\mapsto\sigma(n) - 1$ necessarily reaches a prime. -/
-@[category test, AMS 11]
+/-- If $n > 1$ then the iteration $n\mapsto\sigma(n) - 1$ necessarily reaches a prime.
+Note: this is open — it is not clear that the σ iteration always terminates,
+since it is non-decreasing (unlike the φ iteration which is strictly decreasing). -/
+@[category research open, AMS 11]
 theorem erdos_409.variants.sigma_termination (n : ℕ) (hn : n > 1) :
     ∃ i, (σ 1 · - 1)^[i] n |>.Prime := by
   sorry

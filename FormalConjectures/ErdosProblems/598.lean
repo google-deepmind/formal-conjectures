@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 598
@@ -39,7 +39,7 @@ Let $m$ be an infinite cardinal and $\kappa$ be the successor cardinal of $2^{\a
 Can one colour the countable subsets of $m$ using $\kappa$ many colours so that every
 $X \subseteq m$ with $|X| = \kappa$ contains subsets of all possible colours?
 -/
-@[category research open, AMS 03 05]
+@[category research open, AMS 3 5]
 theorem erdos_598 : answer(sorry) ↔
     ∃ c : { s : Set m // s.Countable } → κ.out,
     ∀ X : Set m, #X = κ →

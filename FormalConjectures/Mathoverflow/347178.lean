@@ -14,10 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Real Set
-open scoped EuclideanGeometry
+import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 347178
@@ -25,7 +22,8 @@ open scoped EuclideanGeometry
 *Reference:* [mathoverflow/347178](https://mathoverflow.net/questions/347178)
 asked by user [*Biagio Ricceri*](https://mathoverflow.net/users/149235/biagio-ricceri)
 -/
-
+open Real Set
+open scoped EuclideanGeometry
 namespace Mathoverflow347178
 
 /--

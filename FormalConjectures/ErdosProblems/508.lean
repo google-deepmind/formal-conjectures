@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
@@ -35,15 +35,7 @@ open scoped EuclideanGeometry
 
 namespace Erdos508
 
-/--
-The unit-distance graph in the plane, i.e. the graph whose vertices are points in the plane
-and whose edges connect points that are exactly 1 unit apart.
--/
-def UnitDistancePlaneGraph : SimpleGraph ℝ² where
-  Adj x y := dist x y = 1
-  symm _ _ := by simp [_root_.dist_comm]
-
-scoped notation "χ(ℝ²)" => UnitDistancePlaneGraph.chromaticNumber
+scoped notation "χ(ℝ²)" => SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)
 
 /--
 The Hadwiger–Nelson problem asks: How many colors are required to color the plane
@@ -85,7 +77,7 @@ Soifer, Alexander (2008), The Mathematical Coloring Book: Mathematics of Colorin
 
 An alternative approach that uses square tiling was highlighted by László Székely.
 -/
-@[category high_school, AMS 52]
+@[category textbook, AMS 52]
 theorem HadwigerNelsonAtMostSeven :
     χ(ℝ²) ≤ 7 := by
   sorry
@@ -93,9 +85,12 @@ theorem HadwigerNelsonAtMostSeven :
 /-- The chromatic number of the plane is at least 3.
 
 This is proven by considering an equilateral triangle in the plane. -/
-@[category high_school, AMS 5]
+@[category textbook, AMS 5]
 theorem HadwigerNelsonAtLeastThree : 3 ≤ χ(ℝ²) :=
-  le_chromaticNumber_of_pairwise_adj (by simp) ![!₂[0, 0], !₂[1, 0], !₂[0.5, Real.sqrt 3 / 2]] <| by
+  le_chromaticNumber_of_pairwise_adj (by simp)
+    ![(⟨!₂[0, 0], Set.mem_univ _⟩ : ↥(Set.univ : Set (EuclideanSpace ℝ (Fin 2)))),
+      (⟨!₂[1, 0], Set.mem_univ _⟩ : ↥(Set.univ : Set (EuclideanSpace ℝ (Fin 2)))),
+      (⟨!₂[0.5, Real.sqrt 3 / 2], Set.mem_univ _⟩ : ↥(Set.univ : Set (EuclideanSpace ℝ (Fin 2))))] <| by
     simp [pairwise_fin_succ_iff_of_isSymm, Fin.forall_fin_succ]
-    simp [UnitDistancePlaneGraph, PiLp.dist_eq_of_L2, Real.dist_eq, div_pow]
+    simp [UnitDistancePlaneGraph, PiLp.dist_eq_of_L2, Real.dist_eq, div_pow, Subtype.dist_eq]
     norm_num

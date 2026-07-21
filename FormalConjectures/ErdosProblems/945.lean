@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 945
@@ -66,7 +66,7 @@ theorem erdos_945.variants.constant : answer(sorry) ↔ Erdos945Constant := by
 /--
 The two ways of phrasing the conjecture are equivalent.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_945.variants.equivalence : Erdos945Prop ↔ Erdos945Constant := by
   sorry
 

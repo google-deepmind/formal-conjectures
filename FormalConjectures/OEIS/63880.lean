@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A063880
@@ -85,7 +85,7 @@ theorem mod_216_of_a {n : ℕ} (h : a n) : n % 216 = 108 := by
   sorry
 
 /-- All primitive terms are powerful numbers. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem powerful_of_isPrimitiveTerm {n : ℕ} (h : isPrimitiveTerm n) : n.Powerful := by
   sorry
 
@@ -96,7 +96,7 @@ theorem unique_primitive_108 {n : ℕ} (h : isPrimitiveTerm n) : n = 108 := by
 
 /-- If $m$ is a primitive term and $s$ is squarefree with $\gcd(m, s) = 1$, then $m \cdot s$
 is in the sequence. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem a_of_primitive_mul_squarefree (m s : ℕ) (hm : isPrimitiveTerm m)
     (hs : Squarefree s) (hcoprime : m.Coprime s) : a (m * s) := by
   sorry

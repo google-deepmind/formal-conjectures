@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 470
@@ -59,9 +59,30 @@ theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity
 /--
 The smallest weird number is 70.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_470.variants.smallest_weird_eq_70 : (∀ n < 70, ¬n.Weird) ∧ (70).Weird := by
-  sorry
+  refine ⟨?_, Nat.weird_seventy⟩
+  rintro n hn ⟨ha, hnp⟩
+  unfold Nat.Abundant at ha
+  apply hnp
+  -- For non-abundant `n`, `ha` is contradictory; for each abundant `n < 70`, exhibit an explicit
+  -- subset of its proper divisors summing to `n` (so `n` is pseudoperfect, hence not weird).
+  interval_cases n <;>
+    first
+    | exact absurd ha (by decide)
+    | exact ⟨by decide, ({2, 4, 6} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({3, 6, 9} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({1, 4, 5, 10} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({4, 8, 12} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({5, 10, 15} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({6, 12, 18} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({2, 8, 10, 20} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({7, 14, 21} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({8, 16, 24} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({9, 18, 27} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({2, 4, 8, 14, 28} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({10, 20, 30} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({11, 22, 33} : Finset ℕ), by decide, by decide⟩
 
 /--
 Melfi [Me15](https://mathscinet.ams.org/mathscinet/relay-station?mr=3276337) has proved that there
@@ -71,7 +92,7 @@ well-known conjectures concerning prime gaps.
 -/
 @[category research solved, AMS 11]
 theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
-    ∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10 →
+    (∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10) →
       Set.Infinite PrimitiveWeird := by
   sorry
 

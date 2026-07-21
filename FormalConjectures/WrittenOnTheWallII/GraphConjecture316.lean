@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 316
 
@@ -32,12 +32,12 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 WOWII [Conjecture 316](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 Let `G` be a simple connected graph and let `P` denote the set of pendant vertices
-(vertices of degree 1). If `|P| ≥ deg_avg(G)`, then `G` is well totally dominated,
-where `deg_avg(G)` is the average degree of `G`.
+(vertices of degree 1). If `|P| ≥ deg_avg(Gᶜ)`, then `G` is well totally dominated,
+where `deg_avg(Gᶜ)` is the average degree of the complement of `G`.
 -/
 @[category research open, AMS 5]
 theorem conjecture316 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
-    (h : (averageDegree G : ℚ) ≤ (pendantVertices G).card) :
+    (h : (averageDegree Gᶜ : ℚ) ≤ (pendantVertices G).card) :
     IsWellTotallyDominated G := by
   sorry
 

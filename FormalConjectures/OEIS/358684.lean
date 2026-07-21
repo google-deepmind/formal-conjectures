@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 $a(n)$ is the minimum integer $k$ such that the smallest prime factor of the
@@ -61,7 +61,7 @@ noncomputable def a' (n : ℕ) : ℕ :=
 /--
 The log2 of the smallest prime factor of $F_n$ is at most $2^n$.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 private lemma log2_minFac_le (n : ℕ) : log2 (fermatNumber n).minFac ≤ 2^n := by
   rw [log2_eq_log_two]
   refine (log_mono_right (minFac_le (by rw [fermatNumber]; norm_num))).trans_eq ?_

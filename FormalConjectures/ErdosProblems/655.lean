@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 655
@@ -31,22 +31,28 @@ no circle whose centre is one of the $x_i$ contains three other points. -/
 def IsValid (X : Finset ℝ²) : Prop :=
   ∀ᵉ (x ∈ X) (r > 0), ¬3 ≤ (Metric.sphere x r ∩ X).ncard
 
-/-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ be such that no circle whose centre is one
+/--
+Let $x_1,\ldots,x_n\in \mathbb{R}^2$ be such that no circle whose centre is one
 of the $x_i$ contains three other points. Are there at least
-\[(1+c)\frac{n}{2}\]
+$$(1+c)\frac{n}{2}$$
 distinct distances determined between the $x_i$, for some constant $c>0$ and
 all $n$ sufficiently large?
 
-Zach Hunter has observed that taking $n$ points equally spaced on a circle
-disproves this conjecture. -/
-@[category research solved, AMS 5 52]
+The answer is **no**: as Zach Hunter observed, the regular `n`-gon (`n` points equally spaced on a
+circle) is valid and determines only `⌊n/2⌋ < (1+c)n/2` distinct distances, for every `c > 0`.
+(In the spirit of related conjectures of Erdős and others, presumably some kind of assumption that
+the points are in general position was intended; see `erdos_655.variants.general_position`.)
+
+The disproof — the regular `n`-gon construction together with its supporting lemmas — is formalised
+at the linked commit. -/
+@[category research solved, AMS 5 52, formal_proof using formal_conjectures at "https://github.com/AlperTheKing/formal-conjectures/blob/4aaaf544b6ed0ef22580787a8d8a19e85dc49556/FormalConjectures/ErdosProblems/655.lean"]
 theorem erdos_655 :
     answer(False) ↔ ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ (X : Finset ℝ²), #X = n → IsValid X →
       (1 + c) * n / 2 ≤ distinctDistances X := by
   sorry
 
 /-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ be such that no circle whose centre is one
-of the $x_i$ contains three other points. Are there at least\[(1+c)\frac{n}{2}\]
+of the $x_i$ contains three other points. Are there at least$$(1+c)\frac{n}{2}$$
 distinct distances determined between the $x_i$, for some constant $c>0$ and
 all $n$ sufficiently large?
 

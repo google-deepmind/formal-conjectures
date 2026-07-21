@@ -14,20 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-namespace Arxiv.«0911.2077»
+import FormalConjecturesUtil
 
 /-!
-# Conjecture 6.3
+# Central Binomial Tail Bounds, Conjecture 6.3
 
 *Reference:* [arxiv/0911.2077](https://arxiv.org/abs/0911.2077)
 **Central Binomial Tail Bounds**
 by *Matus Telgarsky*
 -/
-
+namespace Arxiv.«0911.2077»
 open NNReal ENNReal ProbabilityTheory
-
 
 /-- As usual, let $\Phi$ be the distribution function of the standard normal. -/
 local notation "Φ" => cdf (gaussianReal 0 1)

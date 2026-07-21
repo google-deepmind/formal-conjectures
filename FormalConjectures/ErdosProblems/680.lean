@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 680
@@ -29,9 +29,9 @@ open Real
 
 /--
 Is it true that, for all sufficiently large $n$, there exists some $k$ such that
-\[
+$$
 p(n+k)>k^2+1,
-\]
+$$
 where $p(m)$ denotes the least prime factor of $m$?
 -/
 @[category research open, AMS 11]

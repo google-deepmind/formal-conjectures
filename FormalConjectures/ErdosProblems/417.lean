@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 417
@@ -31,7 +31,7 @@ open scoped Topology
 namespace Erdos417
 
 /--
-Let\[V'(x)=\#\{\phi(m) : 1\leq m\leq x\}\]and\[V(x)=\#\{\phi(m) \leq x : 1\leq m\}.\]
+Let$$V'(x)=\#\{\phi(m) : 1\leq m\leq x\}$$and$$V(x)=\#\{\phi(m) \leq x : 1\leq m\}.$$
 Does $\lim V(x)/V'(x)$ exist?
 
 Formalization note: We formalize the limit of the inverse fraction V'(x)/V(x)

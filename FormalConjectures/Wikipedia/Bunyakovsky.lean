@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-open Polynomial
+import FormalConjecturesUtil
 
 /-!
 # Bunyakovsky conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Bunyakovsky_conjecture)
 -/
-
+open Polynomial
 namespace Bunyakovsky
 
 /--

@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open scoped Pointwise
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 58
 
 *Reference:* [Ben Green's Open Problem 58](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 58)
 -/
-
+open scoped Pointwise
 namespace Green58
 
 /--

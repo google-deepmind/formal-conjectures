@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Filter
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 62
@@ -28,7 +26,7 @@ This is a problem of Erdős, Odlyzko, and Sárközy [105] from 1987.
 
 *Reference:* [Ben Green's Open Problem 62](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.62)
 -/
-
+open Filter
 namespace Green62
 
 /--
