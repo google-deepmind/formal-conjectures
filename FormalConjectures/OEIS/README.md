@@ -31,7 +31,7 @@ end OeisA308734
 
 Every file must include a descriptive module docstring (`/-! ... -/`) immediately following the imports.
 - **Content**: The docstring should clearly explain the sequence definition and the statement of the conjecture or theorem being formalized.
-- **References**: It must conclude with a standardized `*References:*` (or `*Reference:*` for a single item) section containing a Markdown link to the official OEIS page, along with any other papers or articles necessary to formulate the problem.
+- **References**: It must conclude with a standardized `*References:*` section containing a Markdown link to the official OEIS page, along with any other papers or articles necessary to formulate the problem.
 
 ```lean
 /-!
@@ -65,8 +65,9 @@ theorem conjecture (n : ℕ) (hn : 1 < n) : A n := by
 
 ## Term Theorems (`category test`)
 
-To ensure the formalized definition behaves correctly and matches the official OEIS sequence, every file **must include term theorems verifying the first few values of the sequence** (typically the first 5 values).
+To ensure the formalized definition behaves correctly and matches the official OEIS sequence, every file **must include term theorems verifying the initial values of the sequence**.
 
+- **Quantity**: Aim for around 5 test theorems, or more if all leading terms are zero (to ensure non-zero values are verified as well).
 - **Naming**: Every term verification theorem for sequence `a` (or predicate `A`) must be named strictly `a_0`, `a_1`, `a_2`, etc., according to the index (`a_[n]`). Note that even when testing an `UpperCamelCase` property definition like `A`, Mathlib naming rules mandate lowercasing it right inside `snake_case` theorem names (`a_0 : A 0`, `a_1 : A 1`).
 - **Official Alignment**: Verify the starting index ($n=0, 1, 2, \dots$) and exact initial values against the official OEIS `b-file` (`https://oeis.org/A[padded_number]/b[padded_number].txt`).
 - **Attributes**: Every term theorem must be tagged with `@[category test, AMS 11]` (or another appropriate AMS subject).
