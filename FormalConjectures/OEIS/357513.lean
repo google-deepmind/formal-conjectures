@@ -20,7 +20,8 @@ import FormalConjecturesUtil
 Numerator of $sum_{k = 1}^n \frac{1}{k^3} * \binom{n}{k}^2 * \binom{n+k}{k}^2 for $n \ge 1$
 with $a(0) = 0$.
 
-*Reference:* [A357513](https://oeis.org/A357513)
+*References:*
+- [A357513](https://oeis.org/A357513)
 -/
 open Nat
 namespace OeisA357513
