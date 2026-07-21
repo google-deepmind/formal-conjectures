@@ -44,6 +44,16 @@ the neighborhood `N(v)` of `v` — is at most 1, then `G` is well totally domina
 
 Here `l(v) = α(Gᶜ[N(v)])` is the independence number of the subgraph induced by the
 open neighborhood of `v` in `Gᶜ`.
+
+**Proof outline.** The local-independence hypothesis forces every open neighborhood
+in `Gᶜ` to be a clique. Connectedness then allows paths to be shortened until every
+pair of distinct vertices is adjacent, so the relevant graph is complete. In a
+complete graph every minimal total dominating set has cardinality two.
+
+**Provenance.** The corrected statement and core argument were first submitted by
+Samuel Schlesinger in PR #4430. This Lean formalization was completed by Dominic
+Dabish. ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the formal
+development; all formal claims were checked by the pinned Lean compiler.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/DomTheDeveloper/formal-conjectures/blob/24bf0e034072c8ee86f7804be2c7af8cc8e0aae0/FormalConjectures/WrittenOnTheWallII/GraphConjecture322.lean"]
