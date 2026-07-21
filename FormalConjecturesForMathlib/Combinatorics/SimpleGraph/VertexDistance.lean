@@ -137,6 +137,13 @@ def computable_dist (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) : ℕ :
   if u = v then 0
   else bfs_dist_aux G v (Fintype.card α) 1 (bfs_expand G {u})
 
+/-- A computable version of `distMin` for a `Finset` of vertices. -/
+def computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : ℕ :=
+  let pairs := (S ×ˢ S).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => computable_dist G p.1 p.2)).min' (Finset.Nonempty.image h _)
+  else 0
+
 /-- Computable average distance as a rational. -/
 def computable_avg_dist (G : SimpleGraph α) [DecidableRel G.Adj] : ℚ :=
   if Fintype.card α > 1 then
@@ -272,6 +279,22 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
             · exact h_not_found d (by omega)
             · subst hd; rwa [h_inv] at hv)
           (by omega)
+
+/-- `computableDistMin` agrees with `distMin` on a finite vertex set. -/
+theorem distMin_eq_computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj]
+    (S : Finset α) : distMin G (S : Set α) = computableDistMin G S := by
+  unfold distMin computableDistMin
+  simp only [Finset.toFinset_coe]
+  split_ifs
+  · congr 1
+    ext n
+    simp only [Finset.mem_image]
+    constructor
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, (dist_eq_computable G p.1 p.2).symm⟩
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, dist_eq_computable G p.1 p.2⟩
+  · rfl
 
 theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     averageDistance G = (computable_avg_dist G : ℝ) := by
