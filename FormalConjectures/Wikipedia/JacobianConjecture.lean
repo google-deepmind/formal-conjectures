@@ -132,8 +132,8 @@ theorem jacobian_conjecture {k : Type} [Field k] [CharZero k] :
 set_option linter.style.answer_attribute false in
 /-- Does the Jacobian conjecture hold in the two variable case? -/
 @[category research open, AMS 14]
-theorem jacobian_conjecture_two_variables {k : Type} [Field k] [CharZero k] :
-    answer(sorry) ↔ JacobianConjectureProp k (Fin 2) := by
+theorem jacobian_conjecture_two_variables :
+    answer(sorry) ↔ ∀ (k : Type) [Field k] [CharZero k], JacobianConjectureProp k (Fin 2) := by
   sorry
 
 end Conjecture
