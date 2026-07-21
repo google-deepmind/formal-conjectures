@@ -39,19 +39,31 @@ Zhi-Wei Sun has offered a $3,500 prize for the first proof.
 namespace OeisA303656
 
 /-- The predicate that `n` can be written as $a^2 + b^2 + 3^c + 5^d$ for nonnegative integers. -/
-def IsSumOfTwoSquaresAndPowersOf3And5 (n : ℕ) : Prop :=
+def A (n : ℕ) : Prop :=
   ∃ a b c d : ℕ, n = a ^ 2 + b ^ 2 + 3 ^ c + 5 ^ d
 
 @[category test, AMS 11]
-theorem isSumOfTwoSquaresAndPowersOf3And5_2 : IsSumOfTwoSquaresAndPowersOf3And5 2 :=
+theorem a_2 : A 2 :=
   ⟨0, 0, 0, 0, by norm_num⟩
 
 @[category test, AMS 11]
-theorem isSumOfTwoSquaresAndPowersOf3And5_5 : IsSumOfTwoSquaresAndPowersOf3And5 5 :=
+theorem a_3 : A 3 :=
+  ⟨1, 0, 0, 0, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_4 : A 4 :=
+  ⟨1, 1, 0, 0, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_5 : A 5 :=
   ⟨0, 1, 1, 0, by norm_num⟩
 
 @[category test, AMS 11]
-theorem isSumOfTwoSquaresAndPowersOf3And5_25 : IsSumOfTwoSquaresAndPowersOf3And5 25 :=
+theorem a_6 : A 6 :=
+  ⟨0, 0, 0, 1, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_25 : A 25 :=
   ⟨1, 4, 1, 1, by norm_num⟩
 
 /--
@@ -59,7 +71,7 @@ theorem isSumOfTwoSquaresAndPowersOf3And5_25 : IsSumOfTwoSquaresAndPowersOf3And5
 squares, a power of 3, and a power of 5.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 1 < n) : IsSumOfTwoSquaresAndPowersOf3And5 n := by
+theorem conjecture (n : ℕ) (hn : 1 < n) : A n := by
   sorry
 
 end OeisA303656
