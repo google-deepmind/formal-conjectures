@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Sum of two numbers with prime conditions
@@ -35,20 +35,36 @@ namespace OeisA231201
 
 /-- The predicate that `n` can be written as $x + y$ with $x,y >0$ such that
 $2^x + y$ is prime -/
-def PrimeCondition (n : ℕ) : Prop :=
+def A (n : ℕ) : Prop :=
   ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ n = x + y ∧ (2^x + y).Prime
 
 @[category test, AMS 11]
-theorem primeCondition_8 : PrimeCondition 8 :=
+theorem a_2 : A 2 :=
+  ⟨1, 1, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_3 : A 3 :=
+  ⟨2, 1, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_4 : A 4 :=
+  ⟨1, 3, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_5 : A 5 :=
+  ⟨2, 3, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_8 : A 8 :=
   ⟨3, 5, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 @[category test, AMS 11]
-theorem primeCondition_53 : PrimeCondition 53 :=
+theorem a_53 : A 53 :=
   ⟨20, 33, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 /-- The conjecture for sequence A231201: for any $n > 1$, there exist $x, y > 0$ such that $n = x + y$ and $2^x + y$ is prime. -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 1 < n) : PrimeCondition n := by
+theorem conjecture (n : ℕ) (hn : 1 < n) : A n := by
   sorry
 
 end OeisA231201

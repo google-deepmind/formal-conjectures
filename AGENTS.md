@@ -260,7 +260,7 @@ When the problem is solved:
    For a single reference, `*Reference:*` (singular) is also acceptable.
 
 4. **Import structure**:
-   - Problem files: Import `FormalConjectures.Util.ProblemImports`
+   - Problem files: Import `FormalConjecturesUtil`
    - ForMathlib files: Import only necessary Mathlib modules
 5. If a problem fits in several directories then it should stated in one directory rather than copied
    accross several. In other directories, one can simply add a file with a declaration pointing
@@ -401,7 +401,7 @@ Some rare exceptions exist for consistency:
 
 - Be specific with imports - don't import more than needed
 - In FormalConjecturesForMathlib, import only from Mathlib
-- In problem files, import only `FormalConjectures.Util.ProblemImports`, unless you are adding a
+- In problem files, import only `FormalConjecturesUtil`, unless you are adding a
   pointer to another problem or need to state an implication.
 
 ## Agent-Specific Requirements
@@ -531,7 +531,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Problem Name
