@@ -69,8 +69,7 @@ theorem erdos_1154.variants.group {a : ℝ≥0∞} (ha : a ∈ Icc 0 1) :
 /--
 If a subring is analytic, then it is either equal to $\mathbb{R}$ or its Hausdorff dimension is
 equal to $0$. This is proved in [EdMi03], superseding the earlier result of [EdMi01] that a real
-closed analytic subfield of $\mathbb{R}$ has Hausdorff dimension $0$ or $1$: every subfield is a
-subring, so the statement below yields [EdMi01] without using real closedness.
+closed analytic subfield of $\mathbb{R}$ has Hausdorff dimension $0$ or $1$.
 -/
 @[category research solved, AMS 28]
 theorem erdos_1154.variants.analytic_ring {R : Subring ℝ} (hR : AnalyticSet (R : Set ℝ)) :
