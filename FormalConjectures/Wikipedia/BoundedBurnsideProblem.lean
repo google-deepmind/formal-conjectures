@@ -26,11 +26,12 @@ namespace BoundedBurnsideProblem
 
 /--
 Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
-$g^n = 1$. Is $G$ necessarily finite?
+$g^n = 1$. The answer is negative: infinite finitely generated groups of bounded exponent exist.
+See [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem).
 -/
-@[category research open, AMS 20]
+@[category research solved, AMS 20]
 theorem bounded_burnside_problem :
-    answer(sorry) ↔ ∀ (G : Type) [Group G] (fin_gen : Group.FG G)
+    answer(False) ↔ ∀ (G : Type) [Group G] (fin_gen : Group.FG G)
       (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G := by
   sorry
 
