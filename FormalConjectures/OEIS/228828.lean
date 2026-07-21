@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjectures.Util.ProblemImports
 
 /-!
-# Numbers n such that n² + π(n) is prime
-
-Numbers $n$ such that $n^2 + \pi(n)$ is prime.
+# Numbers $n$ such that $n^2 + \pi(n)$ is prime.
 
 *Reference:* [A228828](https://oeis.org/A228828)
 -/
