@@ -46,11 +46,8 @@ def usigma (n : ℕ) : ℕ :=
 def A (n : ℕ) : Prop :=
   0 < n ∧ σ 1 n = 2 * usigma n
 
-/-- The set of numbers in the sequence A063880. -/
-def a : Set ℕ := {n | A n}
-
 /-- A term $n$ is primitive if no proper divisor of $n$ is in the sequence. -/
-abbrev IsPrimitiveTerm (n : ℕ) : Prop := a.IsPrimitive n
+abbrev IsPrimitiveTerm (n : ℕ) : Prop := {n | A n}.IsPrimitive n
 
 /-- $108$ is in the sequence A063880. -/
 @[category test, AMS 11]
@@ -77,7 +74,7 @@ theorem isPrimitiveTerm_108 : IsPrimitiveTerm 108 := by
   refine ⟨a_108, ?_⟩
   intro d hd
   have ⟨hdvd, hlt⟩ := Nat.mem_properDivisors.mp hd
-  interval_cases d <;> simp_all [A, a] <;> decide
+  interval_cases d <;> simp_all [A] <;> decide
 
 /-- All members of the sequence satisfy $n \equiv 108 \pmod{216}$. -/
 @[category research open, AMS 11]
