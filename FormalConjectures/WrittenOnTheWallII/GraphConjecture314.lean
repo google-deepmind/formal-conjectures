@@ -72,9 +72,11 @@ an induced $C_5$. In each case, the resulting rigid neighborhood structure
 allows the minimal total dominating sets to be classified directly, and all of
 them have the same cardinality. Hence $G$ is well totally dominated.
 
-**Provenance.** Solved by Dominic Dabish. ProofOrchestrator, using OpenAI GPT-5.6
-Thinking, assisted with the mathematical argument and Lean formalization; all
-formal claims were checked by the pinned Lean compiler.
+**Provenance.** Solved by Dominic Dabish.
+
+ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the mathematical
+argument and Lean formalization; all formal claims were checked by the pinned
+Lean compiler.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture314.lean"]
