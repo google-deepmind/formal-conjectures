@@ -50,7 +50,7 @@ argument and Lean formalization; all formal claims were checked by the pinned
 Lean compiler.
 -/
 @[category research solved, AMS 5,
-  formal_proof using formal_conjectures at "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture65.lean"]
+  formal_proof using formal_conjectures at "https://github.com/DomTheDeveloper/formal-conjectures/blob/93900e4d3378a799ab41b9192050a41820de1b6f/FormalConjectures/WrittenOnTheWallII/65.lean"]
 theorem conjecture65 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let A : Set α := {v | G.degree v = G.minDegree}
     let M : Set α := {v | G.degree v = G.maxDegree}
