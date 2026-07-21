@@ -64,6 +64,17 @@ largest induced path** in $G$, defined locally above.
 invariant, but that is the *floor of the average distance*, not the size of a
 largest induced path — a different quantity that makes Conjecture 314 vacuous
 in many cases.
+
+**Proof outline.** The hypothesis on the largest induced path excludes induced
+copies of $P_5$. The proof classifies connected triangle-free $P_5$-free graphs
+into two structural cases: a bipartite chain graph, or a nonbipartite blow-up of
+an induced $C_5$. In each case, the resulting rigid neighborhood structure
+allows the minimal total dominating sets to be classified directly, and all of
+them have the same cardinality. Hence $G$ is well totally dominated.
+
+**Provenance.** Solved by Dominic Dabish, prompting OpenAI GPT-5.6 Thinking; the
+resulting mathematical argument and Lean formalization were checked by the
+pinned Lean compiler.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture314.lean"]
