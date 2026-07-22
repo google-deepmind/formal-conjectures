@@ -41,7 +41,7 @@ and no points from $B$?
 This has been disproved by Xichuan in the comments, who has found three explicit
 counterexamples.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos105.lean"]
 theorem erdos_105 : answer(False) ↔
     ∀ A B : Finset ℝ², Disjoint A B → A.card = B.card + 3 →
       ¬ Collinear ℝ (A : Set ℝ²) →

@@ -36,7 +36,7 @@ $1=\sum \frac{1}{n_i}$ with $2\leq n_1<\cdots <n_k$?
 The answer is yes, as proved by Croot [Cr03] - indeed, there are infinitely many disjoint such
 monochromatic solutions.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos46.lean"]
 theorem erdos_46 :
     answer(True) ↔
     -- For any finite colouring of the integers

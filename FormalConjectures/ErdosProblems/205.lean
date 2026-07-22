@@ -89,7 +89,7 @@ In fact there are infinitely many $n$ such that, for all $k$ with $2^k<n$, $n-2^
 \[\gg \left(\frac{\log n}{\log\log n}\right)^{1/2}\]
 many prime factors.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos205.lean"]
 theorem erdos_205.variants.many_prime_factors : ∃ c > (0 : ℝ),
     {n : ℕ | ∀ k : ℕ, 2 ^ k < n →
       c * Real.sqrt (Real.log n / Real.log (Real.log n)) ≤ (Ω (n - 2 ^ k) : ℝ)}.Infinite := by

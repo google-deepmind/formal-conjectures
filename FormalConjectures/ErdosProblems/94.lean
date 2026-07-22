@@ -56,7 +56,7 @@ points. Then
 
 In [Er97c] Erdős claims that Fishburn solved this, but gives no reference.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos94.lean"]
 theorem erdos_94 : ∃ C > (0 : ℝ), ∀ P : Finset ℝ², ConvexIndep (P : Set ℝ²) →
     ∑ u ∈ distanceSet P, (distanceMultiplicity P u : ℝ) ^ 2 ≤ C * (P.card : ℝ) ^ 3 := by
   sorry

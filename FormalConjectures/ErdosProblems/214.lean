@@ -57,7 +57,7 @@ complement of $S$ contain four points which form a unit square?
 The answer is yes, proved by Juhász [Ju79], who proved more generally that the complement of $S$
 must contain a congruent copy of any set of four points.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos214.lean"]
 theorem erdos_214 : answer(True) ↔
     ∀ S : Set ℝ², UnitDistanceAvoiding S →
       ∃ p : Fin 4 → ℝ², (∀ i, p i ∈ Sᶜ) ∧ (p ≅ unitSquare) := by
