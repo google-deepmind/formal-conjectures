@@ -27,17 +27,16 @@ open scoped Pointwise
 variable {α : Type*} [AddCommMonoid α]
 
 /--
-A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
-if the equation $a + b = c$ has no solution with $a, b, c \in A$.
--/
-def IsSumFree (A : Set α) : Prop := Disjoint (A + A) A
-
-/--
 A set $S$ is said to be product-free if the product set $S \cdot S$ is disjoint from $S$,
 i.e. if the equation $x \cdot y = z$ has no solution with $x, y, z \in S$.
 -/
+@[to_additive IsSumFree /--
+A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
+if the equation $a + b = c$ has no solution with $a, b, c \in A$.
+-/]
 def IsProductFree {M : Type*} [Mul M] (S : Set M) : Prop := Disjoint (S * S) S
 
+@[to_additive isSumFree_iff]
 theorem isProductFree_iff {M : Type*} [Mul M] {S : Set M} :
     IsProductFree S ↔ ∀ x ∈ S, ∀ y ∈ S, x * y ∉ S := by
   simp [IsProductFree, Set.disjoint_left, Set.mem_mul]

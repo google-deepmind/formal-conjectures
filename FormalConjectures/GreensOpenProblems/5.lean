@@ -21,6 +21,8 @@ import FormalConjecturesUtil
 
 *References:*
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.5)
+- [BaSo85] Babai L, Sós VT. Sidon sets in groups and induced subgraphs of Cayley graphs.
+  European Journal of Combinatorics. 1985 Jun 1;6(2):101-14.
 - [Ke97] Kedlaya, K. S., *Large product-free subsets of finite groups*, J. Combin. Theory
   Ser. A 77 (1997), no. 2, 339–343.
 - [Ke09] Kedlaya, K. S., *Product-free subsets of groups, then and now*, Contemp. Math., 479,
@@ -31,12 +33,14 @@ import FormalConjecturesUtil
 
 open scoped MatrixGroups
 
+local notation "SL₂" p => SL(2, ZMod p)
+
 namespace Green5
 
 /--
 Which finite groups have the smallest biggest product-free sets?
 
-We formalise this as: determine the largest exponent $\alpha$ such that every nontrivial
+We formalise this as: determine the supremum of exponents $\alpha$ such that every nontrivial
 finite group of order $n$ contains a product-free set of size $\geq c n^{\alpha}$ for some
 absolute constant $c > 0$. (The trivial group is excluded since its only product-free subset
 is empty.) Kedlaya [Ke97] showed that $\alpha = 11/14$ is admissible, and Green suggests this
@@ -45,14 +49,14 @@ $q = 3^{2m+1}$.
 -/
 @[category research open, AMS 5 20]
 theorem green_5 :
-    IsGreatest {α : ℝ | ∃ c > (0 : ℝ), ∀ (G : Type) [Group G] [Fintype G], Nontrivial G →
+    IsLUB {α : ℝ | ∃ c > (0 : ℝ), ∀ (G : Type) [Group G] [Fintype G], Nontrivial G →
       ∃ S : Finset G, IsProductFree (S : Set G) ∧
         c * (Fintype.card G : ℝ) ^ α ≤ (S.card : ℝ)}
       answer(sorry) := by
   sorry
 
 /--
-Kedlaya [Ke97] observed, refining some work of Babai and Sós, that it follows from the
+Kedlaya [Ke97] observed, refining some work of Babai and Sós [BaSo85], that it follows from the
 classification of finite simple groups that every finite group $G$ of order $n$ has a
 product-free subset of size $\gg n^{11/14}$.
 -/
@@ -63,14 +67,16 @@ theorem green_5.variants.kedlaya :
         c * (Fintype.card G : ℝ) ^ ((11 : ℝ) / 14) ≤ (S.card : ℝ) := by
   sorry
 
+-- TODO(theebayuser): implement Ree groups variant (candidate sharp example for `green_5`)
+
 /--
 A good model problem would be to determine the largest product-free subsets of
 $\mathrm{SL}_2(\mathbb{F}_p)$.
 -/
 @[category research open, AMS 5 20]
 theorem green_5.variants.sl_two (p : ℕ) [Fact p.Prime] :
-    let S : ∀ q : ℕ, Set (SL(2, ZMod q)) := answer(sorry)
-    MaximalFor (IsProductFree (M := SL(2, ZMod p))) Set.ncard (S p) := by
+    let S : Finset (SL₂ p) := answer(sorry)
+    MaximalFor (IsProductFree (M := SL₂ p)) Set.ncard (S : Set (SL₂ p)) := by
   sorry
 
 /--
@@ -79,9 +85,9 @@ best-known upper bound is $O(n^{8/9})$, due to Gowers [Go08].
 -/
 @[category research solved, AMS 5 20]
 theorem green_5.variants.gowers_sl_two :
-    ∃ C > (0 : ℝ), ∀ (p : ℕ) [Fact p.Prime], ∀ S : Finset SL(2, ZMod p),
-      IsProductFree (S : Set SL(2, ZMod p)) →
-      (S.card : ℝ) ≤ C * (Fintype.card SL(2, ZMod p) : ℝ) ^ ((8 : ℝ) / 9) := by
+    ∃ C > (0 : ℝ), ∀ (p : ℕ) [Fact p.Prime], ∀ S : Finset (SL₂ p),
+      IsProductFree (S : Set (SL₂ p)) →
+      (S.card : ℝ) ≤ C * (Fintype.card (SL₂ p) : ℝ) ^ ((8 : ℝ) / 9) := by
   sorry
 
 end Green5
