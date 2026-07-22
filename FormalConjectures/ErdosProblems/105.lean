@@ -62,7 +62,7 @@ A result independently proved by Beck [Be83] and Szemerédi and Trotter [SzTr83]
 implies it is true with $n-3$ replaced by $cn$ for some constant $c>0$.
 -/
 @[category research solved, AMS 5 52]
-theorem erdos_105.variants.beck_szemerediTrotter : ∃ c > (0 : ℝ),
+theorem erdos_105.variants.beck_szemeredi_trotter : ∃ c > (0 : ℝ),
     ∀ A B : Finset ℝ², Disjoint A B → (B.card : ℝ) ≤ c * A.card →
       ¬ Collinear ℝ (A : Set ℝ²) →
       ∃ p ∈ A, ∃ q ∈ A, p ≠ q ∧ ∀ b ∈ B, b ∉ line[ℝ, p, q] := by

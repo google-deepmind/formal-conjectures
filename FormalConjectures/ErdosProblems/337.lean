@@ -37,15 +37,6 @@ open Filter Set Asymptotics
 
 open scoped Pointwise
 
-/-- The $h$-fold sumset $hA=\{a_1+\cdots+a_h : a_1,\ldots,a_h\in A\}$. -/
-def sumsetOfOrder (A : Set ℕ) (h : ℕ) : Set ℕ :=
-  {n | ∃ f : Fin h → ℕ, (∀ i, f i ∈ A) ∧ ∑ i, f i = n}
-
-/-- `sumsetOfOrder A 2` is the sumset `A + A`. -/
-@[category API, AMS 5 11]
-theorem sumsetOfOrder_two (A : Set ℕ) : sumsetOfOrder A 2 = A + A := by
-  sorry
-
 /--
 Let $A\subseteq \mathbb{N}$ be an additive basis (of any finite order) such that
 $\lvert A\cap \{1,\ldots,N\}\rvert=o(N)$. Is it true that
@@ -75,7 +66,7 @@ theorem erdos_337.variants.h_fold : ∀ h : ℕ, 2 ≤ h →
     ∃ A : Set ℕ, A.IsAddBasis ∧
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) ∧
       ¬ Tendsto (fun N : ℕ ↦
-          ((sumsetOfOrder A h ∩ Icc 1 N).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
+          ((h • A ∩ Icc 1 N).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
         atTop atTop := by
   sorry
 
