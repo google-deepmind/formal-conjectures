@@ -48,7 +48,7 @@ Pommerenke [Po61] proved the answer is no for $r>1$, showing that if $f(z)=z^n-r
 $\{ z: \lvert f(z)\rvert \leq 1\}$ has $n$ connected components, all with diameter
 $\to 0$ as $n\to \infty$.
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1048.lean"]
 theorem erdos_1048 : answer(False) ↔
     ∀ (r : ℝ) (f : ℂ[X]), r < 2 → f.Monic → f.degree ≥ 1 → (∀ z ∈ f.roots, ‖z‖ ≤ r) →
       ∃ z ∈ openLevelSet f, ENNReal.ofReal (2 - r) <

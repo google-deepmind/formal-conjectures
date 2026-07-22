@@ -58,7 +58,7 @@ The resolution of [202] by GPT-5.4 Pro implies via the same reduction that
 \[\epsilon_m=L(m)^{-1+o(1)},\]
 where $L(m)=\exp(\sqrt{\log m\log\log m})$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1190.lean"]
 theorem erdos_1190 : ∀ ε : ℝ, 0 < ε → ∀ᶠ m : ℕ in atTop,
     L m ^ (-1 - ε : ℝ) < eps m ∧ eps m < L m ^ (-1 + ε : ℝ) := by
   sorry

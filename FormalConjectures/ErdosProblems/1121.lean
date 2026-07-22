@@ -42,7 +42,7 @@ higher dimensions). A generalisation to convex bodies was proved by Hadwiger [Ha
 
 An alternative proof is given by Bezdek and Litvak [BeLi16].
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1121.lean"]
 theorem erdos_1121 {n : ℕ} (c : Fin n → ℝ²) (r : Fin n → ℝ) (hr : ∀ i, 0 < r i)
     (hsep : ∀ (v : ℝ²) (t : ℝ), v ≠ 0 →
       (∀ i, ∀ p ∈ Metric.closedBall (c i) (r i), inner ℝ v p ≠ t) →

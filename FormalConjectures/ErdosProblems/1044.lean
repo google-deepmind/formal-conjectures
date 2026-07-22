@@ -70,7 +70,7 @@ theorem erdos_1044 :
 This has been resolved by Tang, who proved that the infimum of $\Lambda(f)$ over all such $f$
 is $2$.
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1044.lean"]
 theorem erdos_1044.variants.infimum_eq_two :
     IsGLB {L : ℝ≥0∞ | ∃ f : ℂ[X], IsAdmissible f ∧ maxBoundaryLength f = L} 2 := by
   sorry

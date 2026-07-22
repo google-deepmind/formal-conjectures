@@ -66,7 +66,7 @@ theorem erdos_1193.parts.ii : answer(False) ↔
 /--
 Indeed if $A=\mathbb{N}$ (assuming $0\in\mathbb{N}$) then $1_A\ast 1_A(n)=n+1$ for all $n$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1193.lean"]
 theorem erdos_1193.variants.sumRep_univ (n : ℕ) : sumRep (Set.univ : Set ℕ) n = n + 1 := by
   sorry
 
