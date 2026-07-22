@@ -72,10 +72,11 @@ not convex.
 -/
 @[category research solved, AMS 30 52]
 theorem erdos_1047.variants.pommerenke :
-    ∀ᶠ k : ℕ in Filter.atTop, ∀ δ : ℝ, 0 < δ → ∃ a : ℝ,
-      |a - (1 + 1 / (k : ℝ)) * (k : ℝ) ^ ((1 : ℝ) / ((k : ℝ) + 1))| < δ ∧
-        (componentsIn (sublevelSet (X ^ k * (X - C (a : ℂ))) 1)).ncard = 2 ∧
-        ¬ Convex ℝ (connectedComponentIn (sublevelSet (X ^ k * (X - C (a : ℂ))) 1) 0) := by
+    ∀ᶠ k : ℕ in Filter.atTop, ∃ δ : ℝ, 0 < δ ∧ ∀ a : ℝ,
+      (1 + 1 / (k : ℝ)) * (k : ℝ) ^ ((1 : ℝ) / ((k : ℝ) + 1)) < a →
+        a < (1 + 1 / (k : ℝ)) * (k : ℝ) ^ ((1 : ℝ) / ((k : ℝ) + 1)) + δ →
+          (componentsIn (sublevelSet (X ^ k * (X - C (a : ℂ))) 1)).ncard = 2 ∧
+          ¬ Convex ℝ (connectedComponentIn (sublevelSet (X ^ k * (X - C (a : ℂ))) 1) 0) := by
   sorry
 
 /--
