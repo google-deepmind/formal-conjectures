@@ -70,7 +70,7 @@ theorem erdos_1007 :
 /--
 The smallest number of edges in a graph of dimension $4$ is $9$.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1007.lean"]
 theorem erdos_1007.variants.dimension_four :
     IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), HasDimension G 4 ∧ G.edgeSet.ncard = m}
       9 := by

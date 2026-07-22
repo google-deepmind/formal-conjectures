@@ -132,7 +132,7 @@ This stronger conjecture appears to have been first proved by Tidor, Wang, and Y
 and is also implicit in work of Wagner [Wa17]. A proof was given and formalised by Aristotle
 (see the comments), with an alternative proof provided by Chan.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1026.lean"]
 theorem erdos_1026.variants.weighted_erdos_szekeres (k : ℕ) (hk : 0 < k) (x : Fin (k ^ 2) → ℝ)
     (hx : Function.Injective x) (hx' : ∀ i, 0 < x i) (hsum : (∑ i, x i) = 1) :
     ∃ S ∈ monotonicSubsequenceSums x, 1 / (k : ℝ) ≤ S := by

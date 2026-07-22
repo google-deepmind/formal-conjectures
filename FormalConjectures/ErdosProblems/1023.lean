@@ -54,7 +54,7 @@ $c>0$ such that
 Hunter observes in the comments that this follows from the solution to [447], which implies
 $F(n)\sim \binom{n}{n/2}$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1023.lean"]
 theorem erdos_1023 : answer(True) ↔
     ∃ c : ℝ, 0 < c ∧
       ((fun n : ℕ => (F n : ℝ)) ~[atTop]

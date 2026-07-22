@@ -53,7 +53,7 @@ Erdős [Er63d] proved
 \[\frac{n}{4}\leq H(n) \ll n^{3/2}.\]
 Erdős and Spencer [ErSp71] proved that $H(n)\gg n^{3/2}$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1028.lean"]
 theorem erdos_1028 :
     (fun n => (H n : ℝ)) =Θ[atTop]
       fun n : ℕ => (n : ℝ) ^ (3 / 2 : ℝ) := by
