@@ -48,25 +48,25 @@ def a (n : ℕ) : ℕ :=
 termination_by n
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by native_decide
+theorem a_2 : a 2 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 2 := by native_decide
+theorem a_3 : a 3 = 2 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 1 := by native_decide
+theorem a_4 : a 4 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 1 := by native_decide
+theorem a_5 : a 5 = 1 := by native_decide
 
 /--
 Does the sequence contain every positive integer (cf. A169741)?
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     answer(sorry) ↔ ∀ m : ℕ, 0 < m → ∃ n : ℕ, 0 < n ∧ a n = m := by
   sorry
 

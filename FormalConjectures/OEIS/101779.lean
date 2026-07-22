@@ -45,25 +45,25 @@ noncomputable def a (n : ℕ) : ℕ :=
   sInf { k : ℕ | is_a101779_k n k }
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 2 := by
+theorem a_1 : a 1 = 2 := by
   push_cast [a]
   norm_num[is_a101779_k]
   apply Nat.isLeast_find ⟨2, by decide⟩ |>.csInf_eq
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by
+theorem a_2 : a 2 = 2 := by
   norm_num [a]
   delta is_a101779_k
   exact IsLeast.csInf_eq ⟨ fun and =>And.elim (by decide +revert), (·.one_mul▸. (1) (by decide) |>.two_le)⟩
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3 := by
+theorem a_3 : a 3 = 3 := by
   norm_num [a]
   norm_num[is_a101779_k, Eq.comm]
   exact (IsLeast.csInf_eq (by use (by decide),fun a s => (one_mul a▸s (1) (by constructor) (by decide)).two_le.lt_of_ne (by cases· with((contradiction))))).symm
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 5 := by
+theorem a_4 : a 4 = 5 := by
   delta a
   norm_num[is_a101779_k]
   apply ((Nat.isLeast_find ⟨5,by decide⟩)).csInf_eq
@@ -72,7 +72,7 @@ lemma test_a_4 : a 4 = 5 := by
 It is conjectured k always exists.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ (n : ℕ), 1 ≤ n → ∃ k : ℕ, is_a101779_k n k := by
+theorem conjecture : ∀ (n : ℕ), 1 ≤ n → ∃ k : ℕ, is_a101779_k n k := by
   sorry
 
 end OeisA101779

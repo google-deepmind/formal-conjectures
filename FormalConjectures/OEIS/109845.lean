@@ -44,25 +44,25 @@ def a : ℕ → ℕ
       prev * prev + prev + 1
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 2 := by rfl
+theorem a_0 : a 0 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 3 := by rfl
+theorem a_1 : a 1 = 3 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 5 := by rfl
+theorem a_2 : a 2 = 5 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 31 := by rfl
+theorem a_3 : a 3 = 31 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 929 := by rfl
+theorem a_4 : a 4 = 929 := by rfl
 
 /--
 Conjecture: There are infinitely many primes in this sequence.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : Set.Infinite {n : ℕ | Nat.Prime (a n)} := by
+theorem conjecture : Set.Infinite {n : ℕ | Nat.Prime (a n)} := by
   sorry
 
 end OeisA109845

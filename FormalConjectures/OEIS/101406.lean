@@ -56,19 +56,19 @@ macro "eval_a" : tactic =>
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 3 := by eval_a
+theorem a_1 : a 1 = 3 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by eval_a
+theorem a_2 : a 2 = 2 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3 := by eval_a
+theorem a_3 : a 3 = 3 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 2 := by eval_a
+theorem a_4 : a 4 = 2 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 2 := by eval_a
+theorem a_5 : a 5 = 2 := by eval_a
 
 /--
 Under the Bunyakovsky conjecture, a(n) exists for every n.
@@ -78,7 +78,7 @@ $k^n(k^n-1)-1$ is prime is non-empty. This non-emptiness ensures that $a(n)$
 is a well-defined least element of a non-empty set of natural numbers.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     ∀ n : ℕ, n > 0 → ∃ k : ℕ, k > 1 ∧ (k ^ n * (k ^ n - 1) - 1).Prime := by
   sorry
 

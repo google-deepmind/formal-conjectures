@@ -35,19 +35,19 @@ def a : ℕ → ℕ
   | k + 2 => 3 * a (k + 1) + 3 * a k
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by decide
+theorem a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 6 := by decide
+theorem a_1 : a 1 = 6 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 21 := by decide
+theorem a_2 : a 2 = 21 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 81 := by decide
+theorem a_3 : a 3 = 81 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 306 := by decide
+theorem a_4 : a 4 = 306 := by decide
 
 open Matrix
 
@@ -97,7 +97,7 @@ def gen_matrix (a b : ℕ) : Matrix (Fin 2) (Fin 2) ℕ :=
 The conjecture: The INVERT transform of a sequence starting (1, a, a*b, a*b^2, a*b^3, ...) is equivalent to extracting the upper left terms of powers of the 2x2 matrix [(1,a); (1,b)].
 -/
 @[category research open, AMS 11]
-theorem main_conjecture (a_val b_val n : ℕ) :
+theorem conjecture (a_val b_val n : ℕ) :
     invert_seq_d a_val b_val n = (gen_matrix a_val b_val ^ n) 0 0 := by
   sorry
 

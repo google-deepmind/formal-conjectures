@@ -50,16 +50,16 @@ noncomputable def a (n : ℕ) : ℕ :=
     Q_n.num.natAbs
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 2 := by
+theorem a_0 : a 0 = 2 := by
   congr
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 2 := by
+theorem a_1 : a 1 = 2 := by
   simp_all [a]
   norm_num only [bernoulli_eq_bernoulli'_of_ne_one, bernoulli'_four, bernoulli'_two, Nat.choose]
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 6 := by
+theorem a_2 : a 2 = 6 := by
   delta a
   norm_num +decide [bernoulli_eq_bernoulli'_of_ne_one, bernoulli'_eq_zero_of_odd, Int.natAbs_eq_iff, Nat.choose]
   rw [bernoulli'_def]
@@ -67,7 +67,7 @@ lemma test_a_2 : a 2 = 6 := by
   norm_num only [←eq_sub_of_add_eq' (α _ ▸ Finset.sum_range_succ _ _).symm ▸ mul_div_cancel_left₀ _, Finset.sum_range_succ, or_false, or_true, Nat.choose]
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 691 := by
+theorem a_3 : a 3 = 691 := by
   delta and a
   norm_num [bernoulli_eq_bernoulli'_of_ne_one, two_mul, Nat.cast_choose]
   rw [bernoulli'_def, bernoulli'_def]

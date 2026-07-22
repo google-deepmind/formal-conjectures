@@ -43,25 +43,25 @@ def a (n : ℕ) : ℕ :=
   num_digits ^ digital_root
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by native_decide
+theorem a_0 : a 0 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by native_decide
+theorem a_2 : a 2 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 1 := by native_decide
+theorem a_3 : a 3 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 1 := by native_decide
+theorem a_4 : a 4 = 1 := by native_decide
 
 /--
 n=1 and 32 are fixed points. Are there any others?
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : answer(sorry) ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 := by
+theorem conjecture : answer(sorry) ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 := by
   sorry
 
 end OeisA113019

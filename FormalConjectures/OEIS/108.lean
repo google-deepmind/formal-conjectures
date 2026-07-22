@@ -53,19 +53,19 @@ noncomputable def frac_part (q : ℚ) : ℝ := fract (q : ℝ)
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by decide
+theorem a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by decide
+theorem a_2 : a 2 = 2 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 5 := by decide
+theorem a_3 : a 3 = 5 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 14 := by decide
+theorem a_4 : a 4 = 14 := by decide
 
 /--
 A000108 Conjecture: All the rational numbers $\sum_{i=j..k} 1/a(i)$ with $0 < \min\{2,k\} \le j \le k$ have pairwise distinct fractional parts. - _Zhi-Wei Sun_, Sep 24 2015

@@ -43,7 +43,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 Sierpinski's conjecture (1958) is precisely that a(n) >= n for all n.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ n > 0, a n ≥ n := by
+theorem conjecture : ∀ n > 0, a n ≥ n := by
   sorry
 
 end OeisA110835

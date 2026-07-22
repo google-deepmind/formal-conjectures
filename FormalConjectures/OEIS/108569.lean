@@ -36,7 +36,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 /-- Conjecture: Except for the first term all terms are even. -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ n, 0 < n → Even (a n) := by
+theorem conjecture : ∀ n, 0 < n → Even (a n) := by
   sorry
 
 end OeisA108569

@@ -45,19 +45,19 @@ def a : ℕ → ℤ
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by decide
+theorem a_0 : a 0 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by decide
+theorem a_2 : a 2 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 0 := by decide
+theorem a_3 : a 3 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = -2 := by decide
+theorem a_4 : a 4 = -2 := by decide
 
 /--
 Conjecture: all elements in absolute value are Fibonacci numbers.
@@ -65,7 +65,7 @@ Conjecture: all elements in absolute value are Fibonacci numbers.
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/google-deepmind/alphaproof-nexus-results/blob/main/APNOutputs/OEIS/oeis_103311_conjecture_0.lean"]
-theorem main_conjecture (n : ℕ) : ∃ m : ℕ, Int.natAbs (a n) = Nat.fib m := by
+theorem conjecture (n : ℕ) : ∃ m : ℕ, Int.natAbs (a n) = Nat.fib m := by
   sorry
 
 end OeisA103311

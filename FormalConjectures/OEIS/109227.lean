@@ -49,7 +49,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 Conjecture A109227 a(2) and a(121) are primes. Are there any more?
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     answer(sorry) ↔ ∃ n > 0, n ≠ 2 ∧ n ≠ 121 ∧ Nat.Prime (a n) := by
   sorry
 

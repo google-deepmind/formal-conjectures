@@ -80,23 +80,23 @@ def g (n : ℕ) : ℤ :=
 
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 3 := by rfl
+theorem a_0 : a 0 = 3 := by rfl
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 4 := by rfl
+theorem a_1 : a 1 = 4 := by rfl
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = -17 := by rfl
+theorem a_2 : a 2 = -17 := by rfl
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = -24 := by rfl
+theorem a_3 : a 3 = -24 := by rfl
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 99 := by rfl
+theorem a_4 : a 4 = 99 := by rfl
 
 /--
 For all $n \ge 0$, we have $a(2n) = - c(2n+1)$.
