@@ -50,7 +50,7 @@ Is 1155 the last odd number in this sequence?
 (1155 is the 59th term starting from 1, corresponding to `a 58 = 1155`).
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     answer(sorry) ↔ ∀ n > 58, Even (a n) := by
   sorry
 

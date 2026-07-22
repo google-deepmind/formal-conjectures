@@ -48,24 +48,24 @@ noncomputable def a (n : ℕ) : ℕ :=
   sInf (collatz_steps_to_four n)
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by
+theorem a_1 : a 1 = 1 := by
   norm_num[a]
   delta collatz_steps_to_four
   exact (Nat.isLeast_find ⟨1,↑rfl⟩).csInf_eq
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by
+theorem a_2 : a 2 = 2 := by
   norm_num [a]
   delta collatz_steps_to_four
   apply Nat.isLeast_find ⟨2,by decide⟩ |>.csInf_eq
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 5 := by
+theorem a_3 : a 3 = 5 := by
   norm_num [a]
   use IsLeast.csInf_eq <| Nat.isLeast_find ⟨5,by tauto⟩
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 0 := by
+theorem a_4 : a 4 = 0 := by
   norm_num[a]
   norm_num [collatz_steps_to_four]
 
@@ -74,7 +74,7 @@ Conjecture: a(n) = number of iterations of the Collatz 3*x+1 map applied to n un
 This is the statement that the value `a n` is well-defined for all positive integers $n$.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ (n : ℕ), 1 ≤ n → (collatz_steps_to_four n).Nonempty := by
+theorem conjecture : ∀ (n : ℕ), 1 ≤ n → (collatz_steps_to_four n).Nonempty := by
   sorry
 
 end OeisA112695

@@ -45,19 +45,19 @@ def a (n : ℕ) : ℕ :=
   ).toNat
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by decide
+theorem a_0 : a 0 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 0 := by decide
+theorem a_2 : a 2 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 6 := by decide
+theorem a_3 : a 3 = 6 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 4 := by decide
+theorem a_4 : a 4 = 4 := by decide
 
 /--
 `T n k` is the array defined as $T(1,1) = 1$, $T(i,j) = 0$ if $i<1$ or $j<1$,
@@ -74,7 +74,7 @@ termination_by n + k
 Conjecture: Starting with n=1, a(n) is the main diagonal of the array T(n, k).
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ (n : ℕ), n ≥ 1 → (a n : ℤ) = T n n := by
+theorem conjecture : ∀ (n : ℕ), n ≥ 1 → (a n : ℤ) = T n n := by
   sorry
 
 end OeisA112521

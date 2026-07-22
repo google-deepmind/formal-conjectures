@@ -43,7 +43,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 It is conjectured that every odd number occurs in this sequence.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   ∀ m : ℕ, Odd m → ∃ n > 0, a n = m := by
   sorry
 

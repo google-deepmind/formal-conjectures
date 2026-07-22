@@ -42,18 +42,18 @@ noncomputable def a (n : ℕ) : ℕ :=
     sum_val / (2 ^ nu_2)
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by
+theorem a_0 : a 0 = 0 := by
   rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by
+theorem a_1 : a 1 = 1 := by
   simp [a]
 
 /--
 Is a(33900) the last term equal to 1?
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   answer(sorry) ↔ ∀ n > 33900, a n ≠ 1 := by
   sorry
 

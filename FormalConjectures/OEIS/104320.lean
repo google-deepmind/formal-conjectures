@@ -36,25 +36,25 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by native_decide
+theorem a_0 : a 0 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 0 := by native_decide
+theorem a_1 : a 1 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 0 := by native_decide
+theorem a_2 : a 2 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 0 := by native_decide
+theorem a_3 : a 3 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 0 := by native_decide
+theorem a_4 : a 4 = 0 := by native_decide
 
 /--
 Conjecture from N. J. A. Sloane: a(n) > 0 for n > 15.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ n : ℕ, 15 < n → a n > 0 := by
+theorem conjecture : ∀ n : ℕ, 15 < n → a n > 0 := by
   sorry
 
 end OeisA104320

@@ -35,19 +35,19 @@ def a (n : ℕ) : ℕ := 16 * n ^ 2 + 1
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 17 := by decide
+theorem a_1 : a 1 = 17 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 65 := by decide
+theorem a_2 : a 2 = 65 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 145 := by decide
+theorem a_3 : a 3 = 145 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 257 := by decide
+theorem a_4 : a 4 = 257 := by decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 401 := by decide
+theorem a_5 : a 5 = 401 := by decide
 
 open Real
 
@@ -55,7 +55,7 @@ open Real
 Conjecture: a(n) = floor(1/(1/(4*n) - log(2) + 1/(n+1) + 1/(n+2) + ... + 1/(2*n))).
 -/
 @[category research open, AMS 11]
-theorem main_conjecture (n : ℕ) (hn : n > 0) :
+theorem conjecture (n : ℕ) (hn : n > 0) :
     (a n : ℝ) = (⌊ 1 / ((4 * n : ℝ)⁻¹ - log 2 + Finset.sum (Finset.Icc (n + 1) (2 * n)) fun k => (k : ℝ)⁻¹) ⌋ : ℝ) := by
   sorry
 

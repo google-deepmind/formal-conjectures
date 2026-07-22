@@ -37,25 +37,25 @@ def a (n : ℕ) : ℕ :=
   |>.sup id
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 0 := by decide
+theorem a_1 : a 1 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 0 := by decide
+theorem a_2 : a 2 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 0 := by decide
+theorem a_3 : a 3 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 3 := by decide
+theorem a_4 : a 4 = 3 := by decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 5 := by decide
+theorem a_5 : a 5 = 5 := by decide
 
 /--
 Conjecture: a(n) > 0 for n > 3.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ n > 3, a n > 0 := by
+theorem conjecture : ∀ n > 3, a n > 0 := by
   sorry
 
 end OeisA109908

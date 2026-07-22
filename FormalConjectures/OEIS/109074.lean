@@ -46,19 +46,19 @@ def a (n : ℕ) : ℕ :=
   (frac n).num.natAbs
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by native_decide
+theorem a_0 : a 0 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 3 := by native_decide
+theorem a_2 : a 2 = 3 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 26 := by native_decide
+theorem a_3 : a 3 = 26 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 323 := by native_decide
+theorem a_4 : a 4 = 323 := by native_decide
 
 /--
 A005156: The sequence of values $\frac{1}{2n+1} \binom{3n}{n}$.
@@ -72,7 +72,7 @@ def b (n : ℕ) : ℕ :=
 It is conjectured that binomial(6*n-2,2*n)/(2 * binomial(4*n-1,2*n)) = A005156(n+1)/A005156(n).
 -/
 @[category research open, AMS 11]
-theorem main_conjecture (n : ℕ) (h_pos : n ≥ 1) :
+theorem conjecture (n : ℕ) (h_pos : n ≥ 1) :
     frac n = (b (n + 1) : ℚ) / (b n : ℚ) := by
   sorry
 

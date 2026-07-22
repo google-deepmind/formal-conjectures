@@ -101,11 +101,11 @@ lemma nth_prime_thirteen : Nat.nth Nat.Prime 13 = 43 := by
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by rfl
+theorem a_1 : a 1 = 1 := by rfl
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 5 := by
+theorem a_2 : a 2 = 5 := by
   change (Finset.Ico 0 2).prod (Nat.nth Nat.Prime) - a 1 = 5
   rw [Finset.prod_Ico_succ_top (by decide)]
   rw [Finset.prod_Ico_succ_top (by decide)]
@@ -115,7 +115,7 @@ lemma test_a_2 : a 2 = 5 := by
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 380 := by
+theorem a_3 : a 3 = 380 := by
   change (Finset.Ico 2 5).prod (Nat.nth Nat.Prime) - a 2 = 380
   rw [test_a_2]
   rw [Finset.prod_Ico_succ_top (by decide)]
@@ -127,7 +127,7 @@ lemma test_a_3 : a 3 = 380 := by
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 96197 := by
+theorem a_4 : a 4 = 96197 := by
   change (Finset.Ico 5 9).prod (Nat.nth Nat.Prime) - a 3 = 96197
   rw [test_a_3]
   rw [Finset.prod_Ico_succ_top (by decide)]
@@ -140,7 +140,7 @@ lemma test_a_4 : a 4 = 96197 := by
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 58546472 := by
+theorem a_5 : a 5 = 58546472 := by
   change (Finset.Ico 9 14).prod (Nat.nth Nat.Prime) - a 4 = 58546472
   rw [test_a_4]
   rw [Finset.prod_Ico_succ_top (by decide)]
@@ -160,7 +160,7 @@ def IsSemiprime (n : ℕ) : Prop :=
 After a(2) = 5, is there another prime?
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : answer(sorry) ↔ ∃ n > 2, Nat.Prime (a n) := by
+theorem conjecture : answer(sorry) ↔ ∃ n > 2, Nat.Prime (a n) := by
   sorry
 
 /--

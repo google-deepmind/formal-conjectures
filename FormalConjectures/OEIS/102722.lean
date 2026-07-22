@@ -76,23 +76,23 @@ macro "eval_a" : tactic => `(tactic| (
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 0 := by eval_a
+theorem a_1 : a 1 = 0 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 0 := by eval_a
+theorem a_2 : a 2 = 0 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 0 := by eval_a
+theorem a_3 : a 3 = 0 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 0 := by eval_a
+theorem a_4 : a 4 = 0 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 1 := by eval_a
+theorem a_5 : a 5 = 1 := by eval_a
 
 /-- A102722 Conjecture: a(n) ~ (1-EulerGamma)n. -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     Asymptotics.IsEquivalent Filter.atTop
       (fun n : ℕ => (a n : ℝ))
       (fun n : ℕ => (1 - Real.eulerMascheroniConstant) * (n : ℝ)) := by

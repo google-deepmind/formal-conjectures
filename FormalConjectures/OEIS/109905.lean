@@ -38,25 +38,25 @@ def a (n : ℕ) : ℕ :=
   |>.sup id
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 0 := by decide
+theorem a_1 : a 1 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by decide
+theorem a_2 : a 2 = 2 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3 := by decide
+theorem a_3 : a 3 = 3 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 5 := by decide
+theorem a_4 : a 4 = 5 := by decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 7 := by decide
+theorem a_5 : a 5 = 7 := by decide
 
 /--
 a(n)=0 for n = 1, 6, 30 and 54. Are there any others?
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : answer(sorry) ↔ {n : ℕ | n > 0 ∧ a n = 0} = {1, 6, 30, 54} := by
+theorem conjecture : answer(sorry) ↔ {n : ℕ | n > 0 ∧ a n = 0} = {1, 6, 30, 54} := by
   sorry
 
 end OeisA109905

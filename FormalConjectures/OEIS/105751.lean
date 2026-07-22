@@ -39,23 +39,23 @@ noncomputable def a (n : ℕ) : ℤ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by
+theorem a_0 : a 0 = 0 := by
   delta a; norm_num [Finset.prod]
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by
+theorem a_1 : a 1 = 1 := by
   delta a; norm_num [Finset.prod]
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 3 := by
+theorem a_2 : a 2 = 3 := by
   delta a; norm_num [Finset.prod]
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 0 := by
+theorem a_3 : a 3 = 0 := by
   delta a; norm_num [Finset.prod]
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = -40 := by
+theorem a_4 : a 4 = -40 := by
   delta a; norm_num [Finset.prod]
 
 /--
@@ -75,7 +75,7 @@ Moll's conjecture 5.5 extends to this sequence and takes the form:
 (i) the 2-adic valuation v_2(a(n)) ~ n/4 as n -> oo.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     Tendsto (fun n ↦ (4 : ℚ) * (padicValInt 2 (a n) : ℚ) / (n : ℚ)) atTop (nhds 1) := by
   sorry
 
@@ -86,7 +86,7 @@ Moll's conjecture 5.5 extends to this sequence and takes the form:
 (Type 2 primes consists of primes p == 1 (mod 4))
 -/
 @[category research open, AMS 11]
-theorem main_conjecture.variants.moll_p_mod_4_eq_1 {p : ℕ} (hp : p.Prime) (h_mod : p % 4 = 1) :
+theorem conjecture.variants.moll_p_mod_4_eq_1 {p : ℕ} (hp : p.Prime) (h_mod : p % 4 = 1) :
     Tendsto (fun n ↦ ((p - 1 : ℚ) * (padicValInt p (a n) : ℚ)) / (n : ℚ)) atTop (nhds 1) := by
   sorry
 

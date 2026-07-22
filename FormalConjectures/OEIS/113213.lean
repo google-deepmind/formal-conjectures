@@ -38,25 +38,25 @@ def a (n : ℕ) : ℕ :=
   S.headD 0
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 0 := by native_decide
+theorem a_1 : a 1 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by native_decide
+theorem a_2 : a 2 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3 := by native_decide
+theorem a_3 : a 3 = 3 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 3 := by native_decide
+theorem a_4 : a 4 = 3 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 9 := by native_decide
+theorem a_5 : a 5 = 9 := by native_decide
 
 /--
 Conjecture: a(n) = O(n^3).
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     Asymptotics.IsBigO Filter.atTop (fun n : ℕ => (a n : ℝ)) (fun n : ℕ => (n ^ 3 : ℝ)) := by
   sorry
 

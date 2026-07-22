@@ -48,17 +48,17 @@ noncomputable def a : ℕ → ℕ
   an_1 + harmonic_term_floor
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by norm_num [a]
+theorem a_1 : a 1 = 1 := by norm_num [a]
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by rw [a]
+theorem a_2 : a 2 = 2 := by rw [a]
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3 := by
+theorem a_3 : a 3 = 3 := by
   norm_num [a, Rat.floor, Int.toNat]
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 5 := by
+theorem a_4 : a 4 = 5 := by
   norm_num [a, Rat.floor, Int.toNat]
 
 /--

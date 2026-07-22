@@ -45,19 +45,19 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by decide
+theorem a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 2 := by decide
+theorem a_1 : a 1 = 2 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 16 := by decide
+theorem a_2 : a 2 = 16 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 146 := by decide
+theorem a_3 : a 3 = 146 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 1408 := by decide
+theorem a_4 : a 4 = 1408 := by decide
 
 -- The sequence b(n) = a(m*n) lifted to ℝ
 noncomputable def a_subsequence_real (m n : ℕ) : ℝ :=
@@ -83,7 +83,7 @@ The recurrence given below can be rewritten in the form
 More generally, for fixed m = 1,2,3,..., we conjecture that the sequence b(n) := a(m*n) satisfies a recurrence of the form ( Product_{k = 1..2*m} (2*m*n + k) ) * P(2*m,n)*b(n+1) + (-1)^m*( Product_{k = 1..2*m} (2*m*n - k) ) * P(2*m,-n)*b(n-1) = Q(2*m,n^2)*b(n), where the polynomials P(2*m,n) and Q(2*m,n) have degree 2*m. Conjecturally, the polynomial P(2*m,n) = P(2*m,1-n) and has real zeros in the interval [0, 1]. The 4*m zeros of the polynomial Q(2*m,n^2) seem to belong to the interval [-1, 1] and 4*m - 2 of these zeros appear to be approximated by the rational numbers +- k/(3*m), where 1 <= k <= 3*m - 2, k not a multiple of 3.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture (m : ℕ) (hm : 1 ≤ m) :
+theorem conjecture (m : ℕ) (hm : 1 ≤ m) :
     ∃ (P Q : Polynomial ℝ),
       -- P and Q have degree 2m
       P.degree = (2 * m : ℕ) ∧ Q.degree = (2 * m : ℕ) ∧

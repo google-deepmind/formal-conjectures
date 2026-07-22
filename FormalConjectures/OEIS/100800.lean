@@ -55,13 +55,13 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 2 := by
+theorem a_1 : a 1 = 2 := by
   delta a
   norm_num[f,bot_unique ∘Nat.find_min' _,id]
   norm_num[sum_digits]
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 4 := by
+theorem a_2 : a 2 = 4 := by
   rw [←eq_comm, a]
   delta f
   norm_num[sum_digits,Exists.intro 1,Nat.find_eq_iff]
@@ -69,14 +69,14 @@ lemma test_a_2 : a 2 = 4 := by
   decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 6 := by
+theorem a_3 : a 3 = 6 := by
   norm_num[a]
   delta f
   norm_num[sum_digits,Exists.intro 0,Function.comp,Nat.find_eq_iff]
   exact (congr_arg₂ _ ↑(bot_unique ↑(Nat.find_min' _ (by(norm_num)))) rfl )
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 8 := by
+theorem a_4 : a 4 = 8 := by
   (inhabit ℝ)
   norm_num[a]
   delta f
@@ -84,7 +84,7 @@ lemma test_a_4 : a 4 = 8 := by
   exact (congr_arg₂ _ (bot_unique (Nat.find_min' _ (by norm_num[Function.iterate_succ_apply _ _]))) rfl )
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 10 := by
+theorem a_5 : a 5 = 10 := by
   (inhabit ℝ)
   norm_num[a]
   delta f
@@ -93,7 +93,7 @@ lemma test_a_5 : a 5 = 10 := by
 
 /-- A100800 Conjecture: No term is zero. -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ (n : ℕ), n ≠ 0 → a n ≠ 0 := by
+theorem conjecture : ∀ (n : ℕ), n ≠ 0 → a n ≠ 0 := by
   sorry
 
 end OeisA100800

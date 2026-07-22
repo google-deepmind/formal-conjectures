@@ -46,7 +46,7 @@ noncomputable def a (n : ℕ) : ℤ :=
     0
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = -1 := by
+theorem a_1 : a 1 = -1 := by
   dsimp [a]
   rw [Nat.nth_prime_zero_eq_two]
   rw [Nat.nth_prime_one_eq_three]
@@ -76,7 +76,7 @@ Formalized as: The sequence of ratios P(N)/Neg(N) converges to a limit L,
 and L is in the interval (0.8, 0.9).
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   ∃ L : ℝ, Tendsto ratio_seq atTop (nhds L) ∧ 0.8 < L ∧ L < 0.9 :=
 by sorry
 

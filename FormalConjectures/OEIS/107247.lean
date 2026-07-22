@@ -47,19 +47,19 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by decide
+theorem a_0 : a 0 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 0 := by decide
+theorem a_1 : a 1 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 0 := by decide
+theorem a_2 : a 2 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 0 := by decide
+theorem a_3 : a 3 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 0 := by decide
+theorem a_4 : a 4 = 0 := by decide
 
 /--
 A natural number is a semiprime if it is the product of exactly two primes (not necessarily distinct).
@@ -88,7 +88,7 @@ theorem known_prime_and_semiprimes :
 Primes in this sequence include: a(8) = 2, which is next?
 -/
 @[category research open, AMS 11]
-theorem conjecture1 :
+theorem conjecture :
     answer(sorry) = a (sInf {n : ℕ | 8 < n ∧ Nat.Prime (a n)}) := by
   sorry
 

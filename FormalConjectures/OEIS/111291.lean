@@ -42,16 +42,16 @@ def a (n : ℕ) : ℕ :=
   count_refactorable_nat (10 ^ n)
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by native_decide
+theorem a_0 : a 0 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 4 := by native_decide
+theorem a_1 : a 1 = 4 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 16 := by native_decide
+theorem a_2 : a 2 = 16 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 92 := by native_decide
+theorem a_3 : a 3 = 92 := by native_decide
 
 /--
 `count_refactorable x` is the number of refactorable numbers $\le x$.
@@ -66,7 +66,7 @@ noncomputable def count_refactorable (x : ℝ) : ℕ :=
 Simon Colton conjectures that the number of refactorables less than x is at least x/(2 log(x)).
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ (x : ℝ), x > 1 →
+theorem conjecture : ∀ (x : ℝ), x > 1 →
     (count_refactorable x : ℝ) ≥ x / (2 * Real.log x) := by
   sorry
 

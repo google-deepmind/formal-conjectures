@@ -34,16 +34,16 @@ a(n) = 2^(2^n).
 def a (n : ℕ) : ℕ := 2 ^ (2 ^ n)
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 2 := by rfl
+theorem a_0 : a 0 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 4 := by rfl
+theorem a_1 : a 1 = 4 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 16 := by rfl
+theorem a_2 : a 2 = 16 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 256 := by rfl
+theorem a_3 : a 3 = 256 := by rfl
 
 @[category API, AMS 11]
 lemma n_add_two_le_two_pow (n : ℕ) (hn : 2 ≤ n) : n + 2 ≤ 2 ^ n := by
@@ -86,7 +86,7 @@ I conjecture that { a(n) ; n>1 } are the numbers such that n^4-1 divides 2^n-1, 
 This formalizes the reverse direction.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 :
+theorem conjecture :
   ∀ k : ℕ, ((k^4 - 1) : ℕ) ∣ (2^k - 1 : ℕ) → k > 1 → ∃ n : ℕ, 2 ≤ n ∧ k = a n := by
   sorry
 

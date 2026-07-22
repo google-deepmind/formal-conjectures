@@ -43,19 +43,19 @@ def a : ℕ → ℕ
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by rfl
+theorem a_1 : a 1 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by rfl
+theorem a_2 : a 2 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 7 := by rfl
+theorem a_3 : a 3 = 7 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 12 := by rfl
+theorem a_4 : a 4 = 12 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 29 := by rfl
+theorem a_5 : a 5 = 29 := by rfl
 
 /-- A105033: The number of positive integers $k$ such that $2^k$ divides $n-k$.
 This is defined as the cardinality of the set of such $k$. The set is finite
@@ -71,7 +71,7 @@ as we assume $\operatorname{A105033}(\mathbb{N})$ is defined on $\mathbb{N}$.
 We include the case $n=1$ which relies on $A105033(0)$, which is 0.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : answer(sorry) ↔ ∀ n : ℕ, 0 < n → a n = 2^n - 1 - a105033 (n - 1) := by
+theorem conjecture : answer(sorry) ↔ ∀ n : ℕ, 0 < n → a n = 2^n - 1 - a105033 (n - 1) := by
   sorry
 
 end OeisA102371

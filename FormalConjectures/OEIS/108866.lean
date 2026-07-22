@@ -38,19 +38,19 @@ local macro "eval_a" : tactic => `(tactic| (delta a; norm_num))
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by decide
+theorem a_0 : a 0 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 2 := by eval_a
+theorem a_1 : a 1 = 2 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 4 := by eval_a
+theorem a_2 : a 2 = 4 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 20 := by eval_a
+theorem a_3 : a 3 = 20 := by eval_a
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 32 := by eval_a
+theorem a_4 : a 4 = 32 := by eval_a
 
 /--
 The rational number inside the numerator function in the conjecture.
@@ -66,7 +66,7 @@ noncomputable def rat_expression (n : ℕ) : Rat :=
 Conjecture: for n > 3, numerator(-2/n + Sum_{k=1..n} 2^k/k) == 0 (mod n^2) if and only if n is prime.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture {n : ℕ} (hn : n > 3) :
+theorem conjecture {n : ℕ} (hn : n > 3) :
     (rat_expression n).num ≡ 0 [ZMOD (n^2 : ℤ)] ↔ Nat.Prime n := by
   sorry
 

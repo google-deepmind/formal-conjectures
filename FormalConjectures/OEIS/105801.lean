@@ -39,23 +39,23 @@ def a : ℕ → ℕ
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 2 := by decide
+theorem a_2 : a 2 = 2 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 10 := by decide
+theorem a_3 : a 3 = 10 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 6 := by decide
+theorem a_4 : a 4 = 6 := by decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 8 := by decide
+theorem a_5 : a 5 = 8 := by decide
 
 /-- Conjecture: for every $k > 0$ there is an index $m$ such that all the $a(n)$ with $n > m$ have the same residue $\bmod 3^k$. -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     ∀ k : ℕ, 0 < k → ∃ m : ℕ, ∀ n : ℕ, m < n → a n ≡ a (m + 1) [MOD (3^k)] := by
   sorry
 

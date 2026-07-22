@@ -36,19 +36,19 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 5]
-lemma test_a_0 : a 0 = 1 := by decide
+theorem a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 5]
-lemma test_a_1 : a 1 = 2 := by decide
+theorem a_1 : a 1 = 2 := by decide
 
 @[category test, AMS 5]
-lemma test_a_2 : a 2 = 7 := by decide
+theorem a_2 : a 2 = 7 := by decide
 
 @[category test, AMS 5]
-lemma test_a_3 : a 3 = 25 := by decide
+theorem a_3 : a 3 = 25 := by decide
 
 @[category test, AMS 5]
-lemma test_a_4 : a 4 = 92 := by decide
+theorem a_4 : a 4 = 92 := by decide
 
 /-- Words are finite sequences of integers. -/
 abbrev Word := List ℤ

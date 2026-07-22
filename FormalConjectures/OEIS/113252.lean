@@ -39,26 +39,26 @@ def a : ℕ → ℤ
 | n + 4 => -4 * a (n + 3) + 144 * a (n + 1) + 1296 * a n
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = -1 := by rfl
+theorem a_0 : a 0 = -1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 4 := by rfl
+theorem a_1 : a 1 = 4 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 92 := by rfl
+theorem a_2 : a 2 = 92 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 784 := by rfl
+theorem a_3 : a 3 = 784 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = -3856 := by rfl
+theorem a_4 : a 4 = -3856 := by rfl
 
 /--
 Conjecture: a(m, 2*n+1) is a perfect square for all m, n (see A113249).
 Specialized for m=6, which is A113252.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∀ n : ℕ, ∃ k : ℤ, a (2 * n + 1) = k ^ 2 := by
+theorem conjecture : ∀ n : ℕ, ∃ k : ℤ, a (2 * n + 1) = k ^ 2 := by
   sorry
 
 end OeisA113252

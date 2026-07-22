@@ -36,19 +36,19 @@ def a (n : ℕ) : ℕ :=
   Finset.sum (Finset.range (n + 1)) fun i => 2 ^ (i * 2 ^ (n - i))
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by rfl
+theorem a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 3 := by rfl
+theorem a_1 : a 1 = 3 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 9 := by rfl
+theorem a_2 : a 2 = 9 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 41 := by rfl
+theorem a_3 : a 3 = 41 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 593 := by rfl
+theorem a_4 : a 4 = 593 := by rfl
 
 /--
 The smallest primes in this (always odd) sequence are a(1) = 3, a(3) = 41 and a(5) = 543. What is the next prime?

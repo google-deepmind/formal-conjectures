@@ -71,30 +71,30 @@ macro "eval_a" : tactic => `(tactic| (
 
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 0 := by
+theorem a_0 : a 0 = 0 := by
   rw [a, if_pos rfl]
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 5 := by
+theorem a_1 : a 1 = 5 := by
   rw [a, if_neg (by decide)]
   eval_a
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 15 := by
+theorem a_2 : a 2 = 15 := by
   rw [a, if_neg (by decide)]
   eval_a
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 36 := by
+theorem a_3 : a 3 = 36 := by
   rw [a, if_neg (by decide)]
   eval_a
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 67 := by
+theorem a_4 : a 4 = 67 := by
   rw [a, if_neg (by decide)]
   eval_a
 
@@ -103,7 +103,7 @@ Terms are squares at only(?) three values of n = 3, 6, 4072:
 corresponding terms are 6^2, 13^2, and 15735^2.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     ∀ n : ℕ, 0 < n → ((∃ m : ℕ, a n = m * m) ↔ (n = 3 ∨ n = 6 ∨ n = 4072)) := by
   sorry
 

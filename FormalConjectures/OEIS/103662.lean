@@ -50,23 +50,23 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by
+theorem a_0 : a 0 = 1 := by
   constructor
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 2 := by
+theorem a_1 : a 1 = 2 := by
   simp_all[a]
   norm_num[Iff,is_valid_zeroless_power]
   exact ( IsLeast.csInf_eq ⟨.symm (by norm_num), fun and => And.left⟩)
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 4 := by
+theorem a_2 : a 2 = 4 := by
   norm_num[a]
   delta is_valid_zeroless_power
   exact (congr_arg) (.^2) (IsLeast.csInf_eq ⟨.symm (by norm_num), fun and=>And.left⟩)
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 8 := by
+theorem a_3 : a 3 = 8 := by
   norm_num[a]
   delta is_valid_zeroless_power
   exact (.trans (by rw [IsLeast.csInf_eq (by use ⟨by constructor,by norm_num⟩, fun and' => And.left)]) ( (by constructor)))
@@ -77,7 +77,7 @@ This is formalized as the assertion that for large enough $n$, no valid zeroless
 which in our definition results in $a(n) = 0$.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : ∃ N : ℕ, ∀ n : ℕ, n > N → a n = 0 := by
+theorem conjecture : ∃ N : ℕ, ∀ n : ℕ, n > N → a n = 0 := by
   sorry
 
 /--
@@ -86,7 +86,7 @@ a(40), if it exists, is not known.
 This claim is rooted in the finiteness conjecture. The most direct mathematical expression of the open problem concerning $a(40)$ is the negation of the existence of a valid base.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture.variants.a_40 :
+theorem conjecture.variants.a_40 :
   ¬ ∃ (b : ℕ), is_valid_zeroless_power 40 b := by
   sorry
 
