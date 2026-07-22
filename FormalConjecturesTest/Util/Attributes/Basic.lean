@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.Attributes.Basic
+import FormalConjecturesUtil.Attributes.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.NumberTheory.FLT.Basic
 import Mathlib.RingTheory.Algebraic.Defs

@@ -3,7 +3,7 @@
 		"scope": "lean4",
 		"prefix": "erdos problem",
 		"body": [
-      "import FormalConjectures.Util.ProblemImports",
+      "import FormalConjecturesUtil",
       "",
       "/-!",
       "# Erdős Problem $1",

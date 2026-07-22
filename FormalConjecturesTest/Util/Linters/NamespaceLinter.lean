@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.Linters.NamespaceLinter
+import FormalConjecturesUtil.Linters.NamespaceLinter
 
 -- Declarations in a namespace should not trigger the linter
 namespace Foo
