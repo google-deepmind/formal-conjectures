@@ -68,7 +68,10 @@ Erdős [Er80] seems to credit Mirsky and Newman with the result that $\epsilon_m
 reference.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_1190.variants.lt_one (m : ℕ) (hm : 1 ≤ m) : eps m < 1 := by
+theorem erdos_1190.variants.lt_one (m : ℕ) (hm : 1 ≤ m) (S : Finset ℕ) (a : ℕ → ℤ)
+    (hS : ∀ n ∈ S, m < n)
+    (hdisj : ∀ n ∈ S, ∀ n' ∈ S, n ≠ n' → ¬ ∃ x : ℤ, x ≡ a n [ZMOD n] ∧ x ≡ a n' [ZMOD n']) :
+    (∑ n ∈ S, (n : ℝ)⁻¹) < 1 := by
   sorry
 
 /--
