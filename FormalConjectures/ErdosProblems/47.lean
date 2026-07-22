@@ -1,0 +1,61 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjecturesUtil
+
+/-!
+# Erdős Problem 47
+
+*References:*
+- [erdosproblems.com/47](https://www.erdosproblems.com/47)
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
+- [Er92c] Erdős, P., *Some of my forgotten problems in number theory*. Hardy-Ramanujan J. (1992),
+  34-50.
+- [Er95] Erdős, Paul, *Some of my favourite problems in number theory, combinatorics, and geometry*.
+  Resenhas (1995), 165-186.
+- [Er96b] Erdős, Paul, *Some problems I presented or planned to present in my short talk*. Analytic
+  number theory, Vol. 1 (Allerton Park, IL, 1995) (1996), 333-335.
+- [Er97c] Erdős, Paul, *Some of my favorite problems and results*. The mathematics of Paul Erdős, I
+  (1997), 47-67.
+- [Bl21] Bloom, T. F., *On a density conjecture about unit fractions*. arXiv:2112.03726
+  (2021).
+- [LiSa24] Liu, Y. and Sawhney, M., *On further questions regarding unit fractions*.
+  arXiv:2404.07113 (2024).
+-/
+
+namespace Erdos47
+
+open Filter
+open scoped BigOperators
+
+/--
+If $\delta>0$ and $N$ is sufficiently large in terms of $\delta$, and $A\subseteq\{1,\ldots,N\}$ is such that $\sum_{a\in A}\frac{1}{a}>\delta \log N$ then must there exist $S\subseteq A$ such that $\sum_{n\in S}\frac{1}{n}=1$?
+
+Bloom [Bl21] proved this in the affirmative.
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos47.lean"]
+theorem erdos_47 : answer(True) ↔
+    ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℕ,
+      A ⊆ Finset.Icc 1 N →
+      δ * Real.log (N : ℝ) < A.reciprocalSum →
+      ∃ S : Finset ℕ, S ⊆ A ∧ S.reciprocalSum = 1 := by
+  sorry
+
+end Erdos47

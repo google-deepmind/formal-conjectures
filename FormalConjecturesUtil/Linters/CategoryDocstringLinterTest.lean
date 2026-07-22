@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.Linters.CategoryDocstringLinter
+import FormalConjecturesUtil.Linters.CategoryDocstringLinter
 
 /-!
 # Tests for the category docstring linter
