@@ -68,7 +68,7 @@ short circular arc on a circle of radius $1$, together with the centre, are also
 theorem erdos_958 : answer(False) ↔
     ∀ (n : ℕ) (A : Finset ℝ²), #A = n →
       ((#(distanceSet A) = n - 1 ∧
-            (distanceSet A).image (distanceMultiplicity A) = Finset.Icc 1 (n - 1)) ↔
+            (distanceSet A).image (distanceMultiplicity A) = Finset.Icc 1 (n - 1)) →
         (IsEquidistantOnLine A ∨ IsEquidistantOnCircle A)) := by
   sorry
 
