@@ -58,22 +58,4 @@ theorem erdos_497 :
       ∀ n : ℕ, (antichainCount n : ℝ) = 2 ^ ((1 + o n) * (n.choose (n / 2) : ℝ)) := by
   sorry
 
--- Divergences from the hosted formalizations (statement-only lane):
---
--- * vs plby (Erdos497.lean, pinned above): plby's final `erdos_497` states
---   `Real.logb 2 (A n) ~[atTop] (n.choose (n / 2) : ℝ)` (`Asymptotics.IsEquivalent`).
---   We state the source's exponential form `A(n) = 2^{(1+o(1))·binom(n,⌊n/2⌋)}` directly,
---   with `o(1)` as `o =o[atTop] 1` per FC house style (cf. FC 285). The two are equivalent
---   since `antichainCount n ≥ 1` and `n.choose (n / 2) ≥ 1` for all `n`.
--- * vs plby and jayyhk: both define `A n` as `((univ.powerset).powerset.filter
---   (IsAntichain (· ⊆ ·) ·)).card` (classical decidability); we take `Nat.card` of the
---   corresponding subtype — the same count, with no `Decidable` instance needed. Their
---   auxiliary apparatus (the comparability graph `G n`, symmetric chain decompositions,
---   containers) belongs to the proof and is omitted here.
--- * vs jayyhk: jayyhk's final theorem writes `∃ ε, Filter.Tendsto ε atTop (nhds 0) ∧ …`;
---   `o =o[atTop] 1` is the same condition (`Asymptotics.isLittleO_one_iff`).
--- * vs problem text: `[n]` is rendered as `Fin n`, and the antichain condition is imposed
---   on distinct pairs only (see `antichainCount` docstring); both match the hosted
---   formalizations.
-
 end Erdos497

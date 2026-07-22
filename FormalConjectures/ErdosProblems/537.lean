@@ -29,17 +29,6 @@ open Filter
 
 namespace Erdos537
 
-/- Formalization notes:
-- "$N$ be sufficiently large" is rendered as `∀ᶠ N in atTop`; both hosted disproofs
-  (plby, jayyhk) use the equivalent explicit-threshold form `∃ N₀, ∀ N ≥ N₀`.
-- `A ⊆ Finset.Icc 1 N` matches the problem's $A\subseteq \{1,\ldots,N\}$ (as does jayyhk);
-  the plby hosted theorem instead uses `A ⊆ Finset.range (N + 1)`, which admits `0 ∈ A`.
-- Only the primes $p_1,p_2,p_3$ are required pairwise distinct, exactly as in the problem
-  text; the $a_i$ carry no distinctness hypothesis.
-- The question is stated positively and equated to `answer(False)` (FC house style for a
-  disproved yes/no question); both hosted theorems state the outright negation `¬(∀ …)`.
--/
-
 /--
 Let $\epsilon>0$ and $N$ be sufficiently large. If $A\subseteq \{1,\ldots,N\}$ has
 $\lvert A\rvert \geq \epsilon N$ then must there exist $a_1,a_2,a_3\in A$ and distinct primes

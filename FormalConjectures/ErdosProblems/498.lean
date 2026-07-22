@@ -32,23 +32,6 @@ import FormalConjecturesUtil
 
 namespace Erdos498
 
--- Formalization notes.
---
--- * "an arbitrary disc of radius $1$" is formalized as the OPEN disc `Metric.ball c 1`. With the
---   verbatim hypothesis `1 ≤ ‖z i‖` the closed-disc reading is false (for `n = 1`, `z 0 = 1` the
---   closed unit disc centred at `0` contains both sums `±1`, while `Nat.choose 1 0 = 1`), and
---   Kleitman's theorem [Kl65] is about the interior of a circle of radius 1.
--- * "the number of sums" counts sign patterns `ε` (i.e. sums with multiplicity), the standard
---   reading in the Littlewood-Offord literature; it implies the bound for distinct sum values.
---
--- Divergences from the hosted proofs:
--- * plby (`littlewood_offord_complex_bound`) strengthens the norm hypothesis to `1 < ‖z i‖` and
---   uses the closed disc `Metric.closedBall c 1`; the problem text has `1 ≤ |z_i|`, which forces
---   the open disc (see above). It also binds the signs via a `let`-bound `Finset ℤ`.
--- * jayyhk (`erdos_498`) matches this statement mathematically (`1 ≤ ‖z i‖`, `Metric.ball c 1`,
---   `Set.ncard` over sign vectors, bound `n.choose (n / 2)`) but states the bound directly with
---   `let`-bound sets instead of the FC `answer(True) ↔` form.
-
 /--
 Let $z_1,\ldots,z_n\in\mathbb{C}$ with $1\leq \lvert z_i\rvert$ for $1\leq i\leq n$. Let $D$ be an
 arbitrary disc of radius $1$. Is it true that the number of sums of the shape

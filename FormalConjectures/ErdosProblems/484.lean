@@ -45,15 +45,6 @@ The $k$-colouring of $\{1,\ldots,N\}$ is formalised as a function `f : ℕ → F
 values on `Finset.Icc 1 N` are inspected, and the monochromatic sums counted are those landing
 back in `Finset.Icc 1 N`.
 -/
--- Divergences from the hosted theorems (plby and jayyhk state the identical
--- `monochromatic_sums_linear` / `erdos_484` over an auxiliary `monochromaticSumSet`):
--- * hosted bound is `(monochromaticSumSet N k f).card ≥ ⌊c * (N : ℝ)⌋₊`; here the bound is
---   stated directly over ℝ as `c * N ≤ card`, matching the problem's "at least $cN$".
---   The two forms are equivalent up to rescaling the existentially quantified `c`.
--- * hosted proofs define `monochromaticSumSet` as a classical `Finset.filter`; here the same
---   filter predicate is inlined verbatim (same `Finset.Icc 1 N` window, same
---   `a ≠ b ∧ f a = f b ∧ a + b = n` condition), so no auxiliary definition is needed.
--- * `0 < k` here vs `k ≥ 1` hosted (definitionally equal on ℕ).
 @[category research solved, AMS 5 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos484.lean"]
 theorem erdos_484 :

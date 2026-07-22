@@ -58,12 +58,6 @@ $G$ with maximum degree $\gg n^{1/2}$ and $h_2(G)\gg n^2$. Alon has observed thi
 essentially identical to [134], and his solution in
 [this note](https://web.math.princeton.edu/~nalon/PDFS/remark1901.pdf) also solves this
 problem in the affirmative.
-
-Formalization notes: $h(G)$ in the question is read as $h_2(G)$ (as in the problem's own
-definition); "has diameter $2$" is read as diameter at most $2$ (the two coincide for
-triangle-free graphs on at least $3$ vertices, since a complete graph is not triangle-free);
-and the asymptotic hypothesis and conclusion are read along a family of triangle-free graphs
-`G n` on `n` vertices, as in [134].
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos618.lean"]

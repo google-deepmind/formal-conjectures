@@ -81,17 +81,4 @@ theorem erdos_582 : answer(True) ↔
       G.CliqueFree 4 ∧ EdgeRamseyTriangle G := by
   sorry
 
--- Divergences from the hosted formalisations (used as shape priors only):
--- * plby states `G.cliqueNum = 3`; the problem text asks only that $G$ "contains no $K_4$",
---   i.e. `G.CliqueFree 4` (jayyhk agrees). `cliqueNum = 3` is strictly stronger (it also
---   asserts that a triangle exists) and implies our conjunct.
--- * both hosted theorems are bare existentials; we wrap in `answer(True) ↔` per FC house
---   style for solved yes/no problems.
--- * both hosted theorems colour with `c : G.edgeSet → Bool`; we use `Fin 2`, the FC
---   convention for $r$-colourings (cf. ErdosProblems/617.lean).
--- * both hosted theorems carry an extra `(_ : DecidableEq V)` binder; dropped as
---   proof-irrelevant.
--- * both hosted theorems quantify `V : Type`; we use `V : Type*` following the FC precedent
---   in ErdosProblems/595.lean (the infinite version of this problem).
-
 end Erdos582

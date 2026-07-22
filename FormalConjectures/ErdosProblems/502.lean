@@ -48,9 +48,6 @@ construction of Alweiss (see [503]). We formalise the Bannai–Bannai–Stanton 
 is the content of the linked formal proof: any finite $A\subseteq\mathbb{R}^n$ whose elements
 determine exactly two distinct distances satisfies $\lvert A\rvert \leq \binom{n+2}{2}$.
 -/
--- Divergences from the hosted proofs: plby's `bannai_bannai_stanton` is stated for general
--- `s`-distance sets with a `Fintype A` instance and `Fintype.card`; we specialise to `s = 2`
--- and use `Set.Finite`/`Set.ncard` per house style, inlining the two-distance-set predicate.
 @[category research solved, AMS 51 52,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos502.lean"]
 theorem erdos_502 (n : ℕ) (A : Set (ℝ^n)) (hA : A.Finite)

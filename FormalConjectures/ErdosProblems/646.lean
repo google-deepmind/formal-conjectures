@@ -32,20 +32,6 @@ open scoped Nat
 
 namespace Erdos646
 
-/-
-Divergences from the hosted theorems (details in statements/646/draft.json):
-- distinct primes as `S : Finset ℕ` (distinctness inherent), following jayyhk; plby uses an
-  injective family `p : Fin k → ℕ` — equivalent via its image.
-- parity as `Even (padicValNat p (n !))`, byte-parallel to jayyhk; plby writes
-  `partial_sum k p n i = 0` with `partial_sum k p n i = (padicValNat (p i) n ! : ZMod 2)`,
-  the same condition via `ZMod.natCast_self_eq_zero`-style parity.
-- the prime set is quantified inside `answer(True) ↔` (both hosted take it as parameters)
-  because the FC yes/no form needs a closed proposition.
-- "divisible by an even power" is read as "the exponent of p_i in n! is even" (Berend's
-  parity-of-exponents reading, shared by both hosted theorems), not the trivially-true
-  literal `∃ even e, p^e ∣ n!` with e = 0 allowed.
--/
-
 /--
 Let $p_1,\ldots,p_k$ be distinct primes. Are there infinitely many $n$ such that $n!$ is
 divisible by an even power of each of the $p_i$?
