@@ -50,6 +50,8 @@ def minimumDualDegree [Nonempty α] (G : SimpleGraph α) : ℝ :=
 def distanceMatrix (G : SimpleGraph α) : Matrix α α ℝ :=
   fun u v ↦ G.dist u v
 
+/-- The real distance matrix is Hermitian. -/
+@[category API, AMS 5]
 lemma distanceMatrix_isHermitian (G : SimpleGraph α) : (distanceMatrix G).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro u v
