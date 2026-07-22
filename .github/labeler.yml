@@ -16,7 +16,7 @@ green-problems:
 
 linter:
   - changed-files:
-    - any-glob-to-any-file: 'FormalConjectures/Util/Linters/**'
+    - any-glob-to-any-file: 'FormalConjecturesUtil/Linters/**'
 
 mathoverflow:
   - changed-files:
