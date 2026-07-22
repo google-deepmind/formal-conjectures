@@ -36,29 +36,35 @@ open scoped BigOperators
 
 noncomputable section
 
-variable {α : Type*} [Fintype α]
+/-- The degree of a vertex in a finite graph. -/
+def vertexDegree {α : Type*} [Fintype α] (G : SimpleGraph α) (v : α) : ℕ :=
+  letI : Fintype ↑(G.neighborSet v) := Fintype.ofFinite _
+  G.degree v
 
 /-- The average degree of the neighbors of a vertex. -/
-def dualDegree (G : SimpleGraph α) (v : α) : ℝ :=
-  (∑ u ∈ G.neighborFinset v, (G.degree u : ℝ)) / G.degree v
+def dualDegree {α : Type*} [Fintype α] (G : SimpleGraph α) (v : α) : ℝ :=
+  letI : Fintype ↑(G.neighborSet v) := Fintype.ofFinite _
+  (∑ u ∈ G.neighborFinset v, (vertexDegree G u : ℝ)) / vertexDegree G v
 
 /-- The minimum dual degree of a nonempty finite graph. -/
-def minimumDualDegree [Nonempty α] (G : SimpleGraph α) : ℝ :=
+def minimumDualDegree {α : Type*} [Fintype α] [Nonempty α] (G : SimpleGraph α) : ℝ :=
   Finset.univ.inf' Finset.univ_nonempty (dualDegree G)
 
 /-- The real distance matrix of a finite graph. -/
-def distanceMatrix (G : SimpleGraph α) : Matrix α α ℝ :=
+def distanceMatrix {α : Type*} (G : SimpleGraph α) : Matrix α α ℝ :=
   fun u v ↦ G.dist u v
 
 /-- The real distance matrix is Hermitian. -/
 @[category API, AMS 5]
-lemma distanceMatrix_isHermitian (G : SimpleGraph α) : (distanceMatrix G).IsHermitian := by
+lemma distanceMatrix_isHermitian {α : Type*} (G : SimpleGraph α) :
+    (distanceMatrix G).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro u v
   simp [distanceMatrix, SimpleGraph.dist_comm]
 
 /-- The least eigenvalue of the real distance matrix of a nonempty finite graph. -/
-def leastDistanceEigenvalue [DecidableEq α] [Nonempty α] (G : SimpleGraph α) : ℝ :=
+def leastDistanceEigenvalue {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
+    (G : SimpleGraph α) : ℝ :=
   Finset.univ.inf' Finset.univ_nonempty (distanceMatrix_isHermitian G).eigenvalues
 
 /--
