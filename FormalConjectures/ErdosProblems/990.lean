@@ -75,7 +75,7 @@ zero of multiplicity $n-1$, whence letting $I=[0,c/d]$ for a suitably small $c>0
 \left\lvert (\# \theta_i \in I) - \frac{\lvert I\rvert}{2\pi}d\right\rvert \geq n-1.
 \]
 -/
-@[category research solved, AMS 12 30]
+@[category research solved, AMS 12 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos990.lean"]
 theorem erdos_990 : answer(False) ↔
     ∃ C : ℝ, ∀ f : ℂ[X], f.coeff 0 ≠ 0 → ∀ α β : ℝ, 0 ≤ α → α ≤ β → β ≤ 2 * π →
       |(rootArgCount f (Set.Icc α β) : ℝ) - (β - α) / (2 * π) * (f.natDegree : ℝ)| ≤

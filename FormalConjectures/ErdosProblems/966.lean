@@ -35,7 +35,7 @@ monochromatic non-trivial arithmetic progression of length $k$?
 Erdős [Er75b] reported that 'Spencer has recently shown that such a sequence exists', but gives
 no reference.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos966.lean"]
 theorem erdos_966 : answer(True) ↔
     ∀ k r : ℕ, 2 ≤ k → 2 ≤ r → ∃ A : Set ℕ, A.IsAPOfLengthFree (k + 1) ∧
       ∀ coloring : A → Fin r, ContainsMonoAPofLength coloring k := by

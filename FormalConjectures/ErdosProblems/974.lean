@@ -53,7 +53,7 @@ two regular $(n/2)$-gons with the same circumscribed circle centred at the origi
 proved by Tijdeman [Ti66]. An independent proof of this was given in the comments section by Hu,
 Tang, and Zhang.
 -/
-@[category research solved, AMS 11 30]
+@[category research solved, AMS 11 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos974.lean"]
 theorem erdos_974 {n : ℕ} [NeZero n] (z : Fin n → ℂ) (hz : z 0 = 1)
     (hs : Set.Infinite {k : ℕ | ∀ j < n - 1, ∑ i, z i ^ (k + j) = 0}) :
     IsTuranConfiguration z := by

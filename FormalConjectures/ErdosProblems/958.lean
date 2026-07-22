@@ -64,7 +64,7 @@ Erdős conjectured that the answer is no, and other such configurations exist.
 This was proved by Clemen, Dumitrescu, and Liu [CDL25], who observed that equidistant points on a
 short circular arc on a circle of radius $1$, together with the centre, are also an example.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos958.lean"]
 theorem erdos_958 : answer(False) ↔
     ∀ (n : ℕ) (A : Finset ℝ²), #A = n →
       ((#(distanceSet A) = n - 1 ∧

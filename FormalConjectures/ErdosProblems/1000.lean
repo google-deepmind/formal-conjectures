@@ -66,7 +66,7 @@ Is there a sequence $A$ such that
 This was solved by Haight [Ha] who proved that such a sequence does exist (contrary to Erdős'
 expectations).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1000.lean"]
 theorem erdos_1000 : answer(True) ↔
     ∃ n : ℕ → ℕ, StrictMono n ∧ 0 < n 0 ∧
       Tendsto (phiAvg n) atTop (𝓝 0) := by

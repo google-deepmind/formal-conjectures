@@ -39,7 +39,7 @@ Hajnal and Szemerédi [HaSz70] proved this for all $r\geq 4$.
 
 A shorter proof was given by Kierstead and Kostochka [KiKo08].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos914.lean"]
 theorem erdos_914 {r m : ℕ} (hr : 2 ≤ r) (hm : 1 ≤ m) {V : Type*} [Fintype V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hV : Fintype.card V = r * m)
     (hdeg : m * (r - 1) ≤ G.minDegree) :

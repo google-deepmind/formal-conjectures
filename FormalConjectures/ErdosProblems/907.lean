@@ -35,7 +35,7 @@ for some continuous $g$ and additive $h$ (i.e. $h(x+y)=h(x)+h(y)$)?
 
 A conjecture of Erdős from the early 1950s. Answered in the affirmative by de Bruijn [dB51].
 -/
-@[category research solved, AMS 26 39]
+@[category research solved, AMS 26 39, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos907.lean"]
 theorem erdos_907 : answer(True) ↔
     ∀ f : ℝ → ℝ, (∀ h : ℝ, 0 < h → Continuous fun x => f (x + h) - f x) →
       ∃ g a : ℝ → ℝ, Continuous g ∧ (∀ x y, a (x + y) = a x + a y) ∧ f = g + a := by

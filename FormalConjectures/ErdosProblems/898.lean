@@ -40,7 +40,7 @@ where the perpendicular from $P$ to $AB$ meets the triangle, and similarly for $
 Conjectured by Erdős in 1932 (according to [Er82e]) and proved by Mordell soon afterwards, now
 known as the Erdős-Mordell inequality.
 -/
-@[category research solved, AMS 51]
+@[category research solved, AMS 51, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos898.lean"]
 theorem erdos_898 (A B C P L M N : ℝ²) (hABC : AffineIndependent ℝ ![A, B, C])
     (hP : P ∈ interior (convexHull ℝ ({A, B, C} : Set ℝ²)))
     (hN : N ∈ line[ℝ, A, B]) (hPN : line[ℝ, P, N].direction ⟂ line[ℝ, A, B].direction)

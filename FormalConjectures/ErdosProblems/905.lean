@@ -43,7 +43,7 @@ triangles.
 A conjecture of Bollobás and Erdős. This was proved independently by Edwards (unpublished) and
 Khadzhiivanov and Nikiforov [KhNi79].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos905.lean"]
 theorem erdos_905 (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (hG : (n : ℝ) ^ 2 / 4 < (#G.edgeFinset : ℝ)) :
     ∃ e ∈ G.edgeFinset, (n : ℝ) / 6 ≤ (#(trianglesContaining G e) : ℝ) := by
