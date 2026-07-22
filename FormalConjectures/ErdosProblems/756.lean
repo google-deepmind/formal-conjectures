@@ -67,7 +67,7 @@ theorem erdos_756 : answer(True) ↔
 Bhowmick [Bh24] constructs a set of $n$ points in $\mathbb{R}^2$ such that
 $\lfloor\frac{n}{4}\rfloor$ distances occur at least $n+1$ times.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos756.lean"]
 theorem erdos_756.variants.bhowmick (n : ℕ) :
     ∃ A : Finset ℝ², A.card = n ∧ n / 4 ≤ (richDistances A (n + 1)).card := by
   sorry

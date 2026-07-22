@@ -21,7 +21,6 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/649](https://www.erdosproblems.com/649)
-- [Er95c] Erdős, Paul, *Some problems in number theory*. Octogon Math. Mag. (1995), 3-5.
 - [Ma35] Mahler, Kurt, *Über den grössten Primteiler spezieller Polynome zweiten Grades*. Archiv
   für math. og naturvid (1935).
 - [Ro64b] Rotkiewicz, André, *Sur les nombres naturels $n$ et $k$ tels que les nombres $n$ et $nk$
@@ -40,7 +39,7 @@ solutions to $2^k\equiv -1\pmod{7}$, and hence this fails with $p=2$ and $q=7$. 
 that Erdős meant to exclude such obstructions, by amending this to 'odd primes' or 'all
 sufficiently large primes' or such.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos649.lean"]
 theorem erdos_649 : answer(False) ↔
     ∀ p q : ℕ, p.Prime → q.Prime →
       ∃ n : ℕ, n.maxPrimeFac = p ∧ (n + 1).maxPrimeFac = q := by

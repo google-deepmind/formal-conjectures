@@ -54,7 +54,7 @@ many edges contains a $C_6$?
 The answer to this problem is no: Chung [Ch92] and Brouwer, Dejter, and Thomassen [BDT93]
 constructed an edge-partition of $Q_n$ into four subgraphs, each containing no $C_6$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos666.lean"]
 theorem erdos_666 : answer(False) ↔
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, ∀ H : SimpleGraph (Fin n → Bool), H ≤ Q n →
       ε * n * 2 ^ (n - 1 : ℕ) ≤ (H.edgeSet.ncard : ℝ) → (cycleGraph 6 ⊑ H) := by

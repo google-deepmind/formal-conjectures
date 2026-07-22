@@ -61,7 +61,7 @@ there are no solutions to $A\cup B=C$ with distinct $A,B,C\in \mathcal{F}$. Perh
 Solved by Kleitman [Kl71], who proved
 \[\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}.\]
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos447.lean"]
 theorem erdos_447.parts.ii : answer(True) ↔
     ∃ c : ℕ → ℝ, (c =o[atTop] (1 : ℕ → ℝ)) ∧ ∀ᶠ n : ℕ in atTop,
       (maxUnionFree n : ℝ) < (1 + c n) * (n.choose (n / 2) : ℝ) := by

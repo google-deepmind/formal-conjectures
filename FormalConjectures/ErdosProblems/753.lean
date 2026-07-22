@@ -59,7 +59,7 @@ such that
 \[\chi_L(G)+\chi_L(G^c)\ll (n\log n)^{1/2},\]
 where the implied constant is absolute.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos753.lean"]
 theorem erdos_753 : answer(False) ↔
     ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 0 < n → ∀ G : SimpleGraph (Fin n),
       (n : ℝ) ^ ((1 : ℝ) / 2 + c) <

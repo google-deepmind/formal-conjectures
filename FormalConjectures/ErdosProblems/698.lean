@@ -74,7 +74,7 @@ This was resolved by Bergman [Be11], who proved that for any $2\leq i<j\leq n/2$
 \[\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \gg n^{1/2}\frac{2^i}{i^{3/2}},\]
 where the implied constant is absolute.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos698.lean"]
 theorem erdos_698.variants.bergman :
     ∃ c : ℝ, 0 < c ∧ ∀ n i j : ℕ, 2 ≤ i → i < j → j ≤ n / 2 →
       c * (Real.sqrt (n : ℝ) * (2 : ℝ) ^ i / ((i : ℝ) * Real.sqrt (i : ℝ))) ≤
