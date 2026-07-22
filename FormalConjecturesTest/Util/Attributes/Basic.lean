@@ -72,7 +72,7 @@ theorem a_conditionally_formally_solved_problem : 4 + 4 = 8 := by
 #guard_msgs in
 @[category research solved,
   conditional formal_proof using lean4 at "https://github.com/example/two-hypotheses"
-    assuming conditional_formal_proof_hypothesis, another_conditional_formal_proof_hypothesis]
+    assuming conditional_formal_proof_hypothesis another_conditional_formal_proof_hypothesis]
 theorem a_conditionally_formally_solved_problem_with_two_hypotheses : 5 + 5 = 10 := by
   rfl
 

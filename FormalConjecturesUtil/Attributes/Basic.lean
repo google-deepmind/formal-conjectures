@@ -313,12 +313,8 @@ initialize Lean.registerBuiltinAttribute {
   applicationTime := .afterTypeChecking
 }
 
-syntax (name := FormalProof_attr) "formal_proof" &"using" formalProofKind &"at" str
-  (&"assuming" ident,+)? : attr
-
-syntax (name := conditional)
-  "conditional " "formal_proof" &"using" formalProofKind &"at" str
-  (&"assuming" ident,+)? : attr
+syntax (name := FormalProof_attr) (&"conditional ")? "formal_proof" &"using" formalProofKind
+  &"at" str (&"assuming" ident+)? : attr
 
 /-- Records the existence and location of a formal proof for a statement.
 
@@ -332,20 +328,20 @@ Usage: `@[formal_proof using <kind> at "<link>"]` where `<kind>` is one of:
 A proof that only establishes the statement under unproven hypotheses is marked
 `conditional` and names the hypotheses, each stated as a declaration in the same
 file (with a `sorry` proof):
-`@[conditional formal_proof using <kind> at "<link>" assuming <decl>, ...]`. -/
+`@[conditional formal_proof using <kind> at "<link>" assuming <decl> ...]`. -/
 private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit := do
   let (kind, link, conds) ← match stx with
     | `(attr| formal_proof using $kind at $link) =>
       pure (kind, link, #[])
-    | `(attr| conditional formal_proof using $kind at $link assuming $conds,*) =>
-      pure (kind, link, conds.getElems)
+    | `(attr| conditional formal_proof using $kind at $link assuming $conds*) =>
+      pure (kind, link, conds)
     | `(attr| conditional formal_proof using $_ at $_) =>
       throwError
         "a `conditional` formal proof must name the hypotheses it assumes: \
          state each hypothesis as a declaration in this file (with a `sorry` proof) \
          and reference it as `conditional formal_proof using <kind> at \"<link>\" \
          assuming <decl>`."
-    | `(attr| formal_proof using $_ at $_ assuming $_,*) =>
+    | `(attr| formal_proof using $_ at $_ assuming $_*) =>
       throwError
         "an `assuming` clause requires the `conditional` modifier: \
          `conditional formal_proof using <kind> at \"<link>\" assuming <decl>`."
@@ -376,13 +372,6 @@ private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit :=
 initialize Lean.registerBuiltinAttribute {
   name := `FormalProof_attr
   descr := "Annotation of the existence and location of a formal proof."
-  add := fun decl stx _attrKind => addFormalProofAttribute decl stx
-  applicationTime := .afterTypeChecking
-}
-
-initialize Lean.registerBuiltinAttribute {
-  name := `conditional
-  descr := "Annotation of a conditional formal proof and its assumed hypotheses."
   add := fun decl stx _attrKind => addFormalProofAttribute decl stx
   applicationTime := .afterTypeChecking
 }
