@@ -46,8 +46,7 @@ arbitrary Hilbert spaces [Kl70].
 
 See also [395].
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos498.lean"]
+@[category research solved, AMS 5]
 theorem erdos_498 : answer(True) ↔
     ∀ (n : ℕ) (z : Fin n → ℂ), (∀ i, 1 ≤ ‖z i‖) → ∀ c : ℂ,
       {ε : Fin n → ℤ | (∀ i, ε i = -1 ∨ ε i = 1) ∧

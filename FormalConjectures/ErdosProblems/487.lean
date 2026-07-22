@@ -42,10 +42,6 @@ This is true, a consequence of the positive solution to [447] by Kleitman [Kl71]
 Davenport and Erdős [DaEr36] showed that there must exist an infinite sequence $a_1<a_2\cdots$
 in $A$ such that $a_i\mid a_j$ for all $i\leq j$, under the assumption that the upper logarithmic
 density of $A$ is positive.
-
-"Positive density" is formalised literally as `Set.HasPosDensity`, i.e. the natural density of
-$A$ exists and is positive. The linked formal proof establishes the stronger statement in which
-only the lower density of $A$ is assumed positive.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos487.lean"]

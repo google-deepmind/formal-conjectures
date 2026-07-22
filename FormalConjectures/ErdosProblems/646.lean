@@ -38,10 +38,6 @@ divisible by an even power of each of the $p_i$?
 
 The answer is yes, proved by Berend [Be97], who further proved that the sequence of such $n$
 has bounded gaps (where the bound depends on the initial set of primes).
-
-The distinct primes $p_1, \ldots, p_k$ are packaged as a finite set of primes, and "$n!$ is
-divisible by an even power of $p_i$" is formalized as in [Be97]: the exponent of $p_i$ in the
-prime factorization of $n!$ (that is, `padicValNat p (n !)`) is even.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos646.lean"]

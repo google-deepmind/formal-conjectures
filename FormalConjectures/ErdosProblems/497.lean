@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.Wikipedia.DedekindNumber
 import FormalConjecturesUtil
 
 /-!
@@ -32,16 +33,6 @@ open Filter
 namespace Erdos497
 
 /--
-The number of antichains in the power set of $[n]$: the number of families `𝒜` of subsets of
-`Fin n` such that no member of `𝒜` is a subset of another. Note that `IsAntichain (· ⊆ ·)`
-imposes the non-containment condition on distinct members only, which is the standard reading
-of the problem (the literal condition applied with $A = B$ would be unsatisfiable, as
-$A \subseteq A$).
--/
-noncomputable def antichainCount (n : ℕ) : ℕ :=
-  Nat.card {𝒜 : Finset (Finset (Fin n)) // IsAntichain (· ⊆ ·) (𝒜 : Set (Finset (Fin n)))}
-
-/--
 How many antichains in $[n]$ are there? That is, how many families of subsets of $[n]$ are
 there such that, if $\mathcal{F}$ is such a family and $A,B\in \mathcal{F}$, then
 $A\not\subseteq B$?
@@ -55,7 +46,7 @@ number of such families is
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos497.lean"]
 theorem erdos_497 :
     ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
-      ∀ n : ℕ, (antichainCount n : ℝ) = 2 ^ ((1 + o n) * (n.choose (n / 2) : ℝ)) := by
+      ∀ n : ℕ, (DedekindNumber.M' n : ℝ) = 2 ^ ((1 + o n) * (n.choose (n / 2) : ℝ)) := by
   sorry
 
 end Erdos497

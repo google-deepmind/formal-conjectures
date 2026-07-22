@@ -44,10 +44,7 @@ Asked to Erdős by Coxeter. Bannai, Bannai, and Stanton [BBS83] have proved that
 A simple proof of this upper bound was given by Petrov and Pohoata [PePo21].
 
 The exact maximum is not known in general: a lower bound of $\binom{n+1}{2}$ follows from the
-construction of Alweiss (see [503]). We formalise the Bannai–Bannai–Stanton upper bound, which
-is the content of the linked formal proof: any finite $A\subseteq\mathbb{R}^n$ whose elements
-determine exactly two distinct distances satisfies $\lvert A\rvert \leq \binom{n+2}{2}$.
--/
+construction of Alweiss (see [503]). -/
 @[category research solved, AMS 51 52,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos502.lean"]
 theorem erdos_502 (n : ℕ) (A : Set (ℝ^n)) (hA : A.Finite)

@@ -68,11 +68,6 @@ by Folkman [Fo70], but with very poor quantitative bounds. (As a result these qu
 often called Folkman numbers.) The current best bounds on the minimal number of vertices $N$ of
 such a graph are $21 \leq N \leq 786$, where the lower bound is due to Bikov and Nenov [BiNe20]
 and the upper bound is due to Lange, Radziszowski, and Xu [LRX14].
-
-We ask for a graph on a finite vertex type, following the quantitative discussion above (Folkman
-numbers count the vertices of finite examples); the problem text itself does not stipulate
-finiteness. A $2$-colouring of the edges is a map `G.edgeSet → Fin 2`, and "contains no $K_4$"
-is `G.CliqueFree 4`.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos582.lean"]

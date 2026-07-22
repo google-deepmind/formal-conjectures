@@ -31,9 +31,6 @@ namespace Erdos443
 
 /--
 The set $\{k(m-k) : 1\leq k\leq m/2\}$, where `m / 2` is `ℕ` floor division.
-
-Since $k(m-k)$ is symmetric under $k \mapsto m-k$, this is the same set of values as
-$\{r(m-r) : 1 \leq r \leq m-1\}$, the parametrisation used in the linked formal proof.
 -/
 def A (m : ℕ) : Finset ℕ := (Finset.Icc 1 (m / 2)).image fun k => k * (m - k)
 
@@ -47,15 +44,6 @@ $m>n$ then the set in question has size
 \[\leq m^{O(1/\log\log m)},\]
 and that for any integer $s$ there exist infinitely many pairs $(m,n)$ such that the set in
 question has size $s$.
-
-The answer to both questions is yes. Writing `A m` for $\{k(m-k) : 1\leq k\leq m/2\}$, the
-first conjunct says the intersection can be made arbitrarily large, and the second renders
-the $(mn)^{o(1)}$ bound: for every $\varepsilon > 0$ the intersection has size less than
-$(mn)^\varepsilon$ whenever $m > n$ are both sufficiently large.
-
-Both parts restrict to $n < m$: for $m = n$ the intersection is all of `A n`, which has size
-on the order of $n/2$, so the $(mn)^{o(1)}$ bound is meant for $m \neq n$ — by symmetry of
-the intersection, WLOG $n < m$ (the ordering under which [He25] proves the bound).
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos443.lean"]

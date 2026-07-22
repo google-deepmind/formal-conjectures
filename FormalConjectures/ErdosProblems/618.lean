@@ -32,11 +32,6 @@ namespace Erdos618
 open Filter Asymptotics
 
 open scoped Classical in
-/-- The maximum degree of a simple graph on `Fin n` (`0` when `n = 0`). -/
-noncomputable def maxDegree {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
-  Finset.univ.sup fun v => G.degree v
-
-open scoped Classical in
 /-- For a graph `G` on `Fin n`, `h2 G` is the smallest number of edges that need to be added
 to `G` so that the resulting supergraph has diameter at most `2` (every two distinct vertices
 are adjacent or have a common neighbour) and is still triangle-free (`CliqueFree 3`).
@@ -48,6 +43,7 @@ noncomputable def h2 {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
     (∀ x y : Fin n, x ≠ y → H.Adj x y ∨ ∃ z, H.Adj x z ∧ H.Adj z y) ∧
     (H.edgeFinset \ G.edgeFinset).card = k}
 
+open scoped Classical in
 /--
 For a triangle-free graph $G$ let $h_2(G)$ be the smallest number of edges that need to be
 added to $G$ so that it has diameter $2$ and is still triangle-free. Is it true that if $G$
@@ -64,7 +60,7 @@ problem in the affirmative.
 theorem erdos_618 : answer(True) ↔
     ∀ (G : ∀ n : ℕ, SimpleGraph (Fin n)),
       (∀ n, (G n).CliqueFree 3) →
-      (fun n => (maxDegree (G n) : ℝ)) =o[atTop] (fun n => (n : ℝ) ^ ((1 : ℝ) / 2)) →
+      (fun n => ((G n).maxDegree : ℝ)) =o[atTop] (fun n => (n : ℝ) ^ ((1 : ℝ) / 2)) →
       (fun n => (h2 (G n) : ℝ)) =o[atTop] (fun n => (n : ℝ) ^ 2) := by
   sorry
 
