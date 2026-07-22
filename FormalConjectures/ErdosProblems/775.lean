@@ -66,7 +66,8 @@ $f_k(n)\to \infty$ as $n\to \infty$.
 @[category research solved, AMS 5]
 theorem erdos_775.variants.gao :
     ∃ f : ℕ → ℕ, Tendsto f atTop atTop ∧
-      ∀ n : ℕ, ∀ H : ThreeUniformHypergraph (Fin n), (cliqueSizes H).ncard ≤ n - f n := by
+      ∀ᶠ n : ℕ in atTop, ∀ H : ThreeUniformHypergraph (Fin n),
+        (cliqueSizes H).ncard + f n ≤ n := by
   sorry
 
 /--

@@ -79,8 +79,8 @@ Freud [Fr93] constructed a sequence with density $\geq 19/36$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_867.variants.freud :
-    ∃ C : ℝ, ∀ N : ℕ, ∃ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A ∧
-      ((19 / 36 : ℝ) * (N : ℝ) - C ≤ (A.card : ℝ)) := by
+    ∀ ε : ℝ, 0 < ε → ∀ᶠ N : ℕ in atTop, ∃ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A ∧
+      (((19 / 36 : ℝ) - ε) * (N : ℝ) ≤ (A.card : ℝ)) := by
   sorry
 
 /--
