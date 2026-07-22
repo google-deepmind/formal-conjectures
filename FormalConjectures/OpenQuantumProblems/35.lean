@@ -805,10 +805,15 @@ theorem ame_11_3_open :
     answer(sorry) ↔ ExistsAME 11 3 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(11,4)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- Open benchmark statement: does an $\mathrm{AME}(11,4)$ state exist?
+
+Anwer: AME(11, 4) exists. The graph state defined by the circulant matrix Gamma
+    over GF(4) with first row (0, 0, 0, 1, ω, ω, ω, ω, 1, 0, 0) is an
+    absolutely maximally entangled state of 11 ququarts. -/
+@[category research solved, AMS 5 15 81 94, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/91bed229b434b68d66f5fd35cdcfee19a79985e8/FormalConjectures/OpenQuantumProblems/35.lean#L1861"]
 theorem ame_11_4_open :
-    answer(sorry) ↔ ExistsAME 11 4 := by
+    answer(True) ↔ ExistsAME 11 4 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(11,5)$ state exist?
