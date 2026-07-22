@@ -119,6 +119,10 @@ theorem colorable_iff_induce_eq_bot (G : SimpleGraph V) (n : ℕ) :
     hG ▸ fun a ↦ a
   exact this h_adj
 
+/--
+`G.Cocolorable n` means that the vertices of `G` can be colored with `n` colors so that each
+color class induces either an independent set or a complete graph.
+-/
 def Cocolorable (G : SimpleGraph V) (n : ℕ) : Prop := ∃ coloring : V → Fin n,
   ∀ i, G.induce {v | coloring v = i} = ⊥ ∨ G.induce {v | coloring v = i} = ⊤
 
@@ -127,10 +131,11 @@ example (G : SimpleGraph V) (n : ℕ) : G.Colorable n → SimpleGraph.Cocolorabl
   aesop
 
 /--
-The chromatic number of a graph is the minimal number of colors needed to color it.
-This is `⊤` (infinity) iff `G` isn't colorable with finitely many colors.
+The cochromatic number of a graph is the minimal number of colors needed to color its vertices
+so that each color class induces either an independent set or a complete graph.
+This is `⊤` (infinity) iff `G` isn't cocolorable with finitely many colors.
 
-If `G` is colorable, then `ENat.toNat G.chromaticNumber` is the `ℕ`-valued chromatic number.
+If `G` is cocolorable, then `ENat.toNat G.cochromaticNumber` is the `ℕ`-valued cochromatic number.
 -/
 noncomputable def cochromaticNumber (G : SimpleGraph V) : ℕ∞ := ⨅ n ∈ setOf G.Cocolorable, (n : ℕ∞)
 
