@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # A101406: Least $k \in \mathbb{N}$ such that $k^n(k^n-1)-1$ is a prime number.
