@@ -49,7 +49,7 @@ The current best bounds are due to Coppersmith and Phillips [CoPh96], who prove 
 maximal size of such an $A$ satisfies
 \[\frac{13}{24}N -O(1)\leq \lvert A\rvert \leq \left(\frac{2}{3}-\frac{1}{512}\right)N+\log N.\]
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos867.lean"]
 theorem erdos_867 : answer(False) ↔
     ∃ C : ℝ, ∀ N : ℕ, ∀ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A →
       (A.card : ℝ) ≤ (N : ℝ) / 2 + C := by

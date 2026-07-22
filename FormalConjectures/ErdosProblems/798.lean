@@ -60,7 +60,7 @@ A problem of Erdős and Purdy, who proved $t(n) \gg n^{2/3}$.
 
 Resolved by Alon [Al91] who proved $t(n) \ll n^{2/3}\log n$.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos798.lean"]
 theorem erdos_798 : answer(True) ↔
     (fun n : ℕ => (t n : ℝ)) =o[atTop] (fun n : ℕ => (n : ℝ)) := by
   sorry

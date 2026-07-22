@@ -39,7 +39,7 @@ Is it true that if $G$ has no $K_5$ and $\zeta(G)\geq 4$ then $\chi(G) \leq \zet
 This has been disproved by Steiner [St24b], who constructed a graph $G$ with $\omega(G)=4$,
 $\zeta(G)=4$, and $\chi(G)=7$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos762.lean"]
 theorem erdos_762 : answer(False) ↔
     ∀ (V : Type*) [Fintype V] (G : SimpleGraph V),
       G.CliqueFree 5 → 4 ≤ G.cochromaticNumber →

@@ -52,7 +52,7 @@ The answer is no, as proved by Gao [Ga25]: more generally, for any $k\geq 3$, ev
 hypergraph on $n$ vertices contains at most $n-f_k(n)$ different sizes of cliques, where
 $f_k(n)\to \infty$ as $n\to \infty$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos775.lean"]
 theorem erdos_775 : answer(False) ↔
     ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : ThreeUniformHypergraph (Fin n),
       n - C ≤ (cliqueSizes H).ncard := by

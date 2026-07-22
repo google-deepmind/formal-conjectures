@@ -38,7 +38,7 @@ This was proved by Solymosi [So09d], in the strong form
 \[\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{\log \lvert A\rvert}.\]
 See also [52].
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos818.lean"]
 theorem erdos_818 : answer(True) ↔
     ∀ K : ℝ, 0 < K → ∃ C : ℝ, 0 < C ∧ ∃ c : ℝ, 0 < c ∧
       ∀ A : Finset ℤ, 2 ≤ A.card → ((A + A).card : ℝ) ≤ K * (A.card : ℝ) →

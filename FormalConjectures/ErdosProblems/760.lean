@@ -45,7 +45,7 @@ The proposed bound would be best possible, as shown by taking $G$ to be a comple
 
 The answer is yes, proved by Alon, Krivelevich, and Sudakov.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos760.lean"]
 theorem erdos_760 : answer(True) ↔
     ∃ c > (0 : ℝ), ∀ (V : Type*) [Finite V] (G : SimpleGraph V) (m : ℕ),
       G.chromaticNumber = (m : ℕ∞) →

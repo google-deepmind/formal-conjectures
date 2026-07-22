@@ -60,7 +60,7 @@ Harris has provided the following simple counterexample to the problem as stated
 $3$-uniform graph on $\{1,\ldots,9\}$ with $28$ edges, formed by taking $27$ edges by choosing
 one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge $\{1,2,3\}$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos794.lean"]
 theorem erdos_794 : answer(False) ↔
     ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), IsThreeUniform H →
       n ^ 3 + 1 ≤ H.card → ContainsSubgraph H 4 3 ∨ ContainsSubgraph H 5 7 := by

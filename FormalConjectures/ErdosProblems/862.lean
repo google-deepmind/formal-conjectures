@@ -49,7 +49,7 @@ $2^{(1.16+o(1))N^{1/2}}$. Since each Sidon set is contained in a maximal Sidon s
 maximal Sidon set contains at most $2^{(1+o(1))N^{1/2}}$ Sidon sets, it follows that
 \[A_1(N) \geq 2^{(0.16+o(1))N^{1/2}}.\]
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos862.lean"]
 theorem erdos_862.parts.i : answer(False) ↔
     (fun N : ℕ => Real.logb 2 (numMaximalSidonSets N : ℝ)) =o[atTop]
       (fun N : ℕ => (N : ℝ) ^ (1 / 2 : ℝ)) := by
@@ -65,7 +65,7 @@ $2^{(1.16+o(1))N^{1/2}}$. Since each Sidon set is contained in a maximal Sidon s
 maximal Sidon set contains at most $2^{(1+o(1))N^{1/2}}$ Sidon sets, it follows that
 \[A_1(N) \geq 2^{(0.16+o(1))N^{1/2}}.\]
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos862.lean"]
 theorem erdos_862.parts.ii : answer(True) ↔
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ N : ℕ in atTop,
       (2 : ℝ) ^ ((N : ℝ) ^ c) < (numMaximalSidonSets N : ℝ) := by
