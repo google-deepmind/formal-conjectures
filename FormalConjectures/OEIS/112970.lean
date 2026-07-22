@@ -48,19 +48,19 @@ def a (n : ℕ) : ℕ :=
 termination_by n
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by unfold a; rfl
+theorem a_0 : a 0 = 1 := by unfold a; rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by unfold a; rfl
+theorem a_1 : a 1 = 1 := by unfold a; rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by unfold a; unfold a; unfold a; rfl
+theorem a_2 : a 2 = 1 := by unfold a; unfold a; unfold a; rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 1 := by unfold a; unfold a; rfl
+theorem a_3 : a 3 = 1 := by unfold a; unfold a; rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 2 := by unfold a; unfold a; unfold a; unfold a; rfl
+theorem a_4 : a 4 = 2 := by unfold a; unfold a; unfold a; unfold a; rfl
 
 /-- Conjectures: a(2^n)=a(2^(n+1)+1)=A033638(n). This formalizes the equality a(2^n) = a(2^(n+1)+1). -/
 @[category research open, AMS 11]

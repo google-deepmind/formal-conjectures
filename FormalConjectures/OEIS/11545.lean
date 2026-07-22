@@ -34,22 +34,22 @@ noncomputable def a (n : ℕ) : ℕ :=
   (floor (Real.pi * (10 : ℝ) ^ n.cast)).toNat
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 3 := by
+theorem a_0 : a 0 = 3 := by
   delta a
   norm_num[((Int.floor_eq_iff.mpr _) :⌊ π⌋ = ↑3),Int.toNat, false,le_of_lt Real.pi_gt_three,Real.pi_lt_four]
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 31 := by
+theorem a_1 : a 1 = 31 := by
   simp_all[a]
   exact (congr_arg _) ((Int.floor_eq_iff.2 ⟨by linear_combination 10 * (.pi_gt_d20),by ·linear_combination 10 *.pi_lt_d20⟩):⌊_⌋ = 31)
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 314 := by
+theorem a_2 : a 2 = 314 := by
   simp_all[a]
   exact (congr_arg _) ((Int.floor_eq_iff.mpr ⟨by ·linear_combination 100 *.pi_gt_d20,by·linear_combination 100 *.pi_lt_d20⟩ ) ) |>.trans (Int.toNat_natCast _)
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 3141 := by
+theorem a_3 : a 3 = 3141 := by
   symm
   norm_num[a]
   exact (.symm ((congr_arg _) ((Int.floor_eq_iff.2 ⟨by linear_combination 1000*.pi_gt_d20,by linear_combination 1000*.pi_lt_d20⟩):⌊_⌋=3141)))

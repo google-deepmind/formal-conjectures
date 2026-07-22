@@ -32,19 +32,19 @@ def a (n : ℕ) : ℕ :=
   Finset.sum (Finset.Icc 1 n) (fun i ↦ (i ^ 2) ^ ((n - i + 1) ^ 2))
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 5 := by decide
+theorem a_2 : a 2 = 5 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 266 := by decide
+theorem a_3 : a 3 = 266 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 268722 := by decide
+theorem a_4 : a 4 = 268722 := by decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 4682453347 := by decide
+theorem a_5 : a 5 = 4682453347 := by decide
 
 /--
 The smallest prime in this sequence is a(2) = 5. What is the next prime?

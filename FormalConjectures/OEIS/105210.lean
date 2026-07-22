@@ -45,19 +45,19 @@ termination_by n => n
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 393 := by native_decide
+theorem a_1 : a 1 = 393 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 528 := by native_decide
+theorem a_2 : a 2 = 528 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 545 := by native_decide
+theorem a_3 : a 3 = 545 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 660 := by native_decide
+theorem a_4 : a 4 = 660 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 682 := by native_decide
+theorem a_5 : a 5 = 682 := by native_decide
 
 /-- The transition function for these sequences: $f(n) = n + 1 + S(n)$. -/
 def next_term_fn (n : ℕ) : ℕ :=
@@ -79,7 +79,7 @@ def sequence_set (k : ℕ) : Set ℕ :=
 This suggests that there may be infinitely many different (non-merging) sequences obtained by choosing different starting values.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   ∃ K : Set ℕ,
     Set.Infinite K ∧
     (∀ k ∈ K, 1 ≤ k) ∧

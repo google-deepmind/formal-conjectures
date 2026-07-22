@@ -42,19 +42,19 @@ def a : ℕ → ℕ
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by decide
+theorem a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 3 := by decide
+theorem a_1 : a 1 = 3 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 5 := by decide
+theorem a_2 : a 2 = 5 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 15 := by decide
+theorem a_3 : a 3 = 15 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 41 := by decide
+theorem a_4 : a 4 = 41 := by decide
 
 def IsWeightedTribonacci (a b c : ℤ) (x : ℕ → ℤ) : Prop :=
   ∀ n, x (n + 3) = a * x (n + 2) + b * x (n + 1) + c * x n
@@ -64,7 +64,7 @@ def IsWeightedTribonacci (a b c : ℤ) (x : ℕ → ℤ) : Prop :=
 -/
 
 @[category research open, AMS 11]
-theorem main_conjecture : answer(sorry) ↔
+theorem conjecture : answer(sorry) ↔
     ∃ (a b c : ℤ) (x : ℕ → ℤ),
       Nat.gcd (Int.gcd a b) c.natAbs = 1 ∧
       IsWeightedTribonacci a b c x ∧

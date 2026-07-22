@@ -42,17 +42,17 @@ def a (n : ℕ) : ℕ :=
       (Finset.Icc 1 (10 ^ n))
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by native_decide
+theorem a_0 : a 0 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 9 := by native_decide
+theorem a_1 : a 1 = 9 := by native_decide
 
 /--
 Conjecture: a(n)/A006880(n) -> 1.77...
 where A006880(n) is the number of primes <= 10^n.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
     ∃ L : ℝ,
       Tendsto (fun n : ℕ => (a n : ℝ) / (Nat.primeCounting' (10 ^ n) : ℝ)) atTop (nhds L) ∧
       1.77 ≤ L ∧ L ≤ 1.78 := by

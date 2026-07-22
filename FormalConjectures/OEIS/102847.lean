@@ -35,19 +35,19 @@ def a : ℕ → ℕ
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by rfl
+theorem a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 3 := by rfl
+theorem a_1 : a 1 = 3 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 11 := by rfl
+theorem a_2 : a 2 = 11 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 123 := by rfl
+theorem a_3 : a 3 = 123 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 15131 := by rfl
+theorem a_4 : a 4 = 15131 := by rfl
 
 /--
 Prime for a(1)=3, a(2)=11, a(4)=15131; semiprime for a(3) = 123 = 3 * 41, a(5) = 228947163 = 3 * 76315721.
@@ -55,7 +55,7 @@ a(6), added by Jonathan Vos Post, has 4 prime factors. a(7) = 41 * 811^2 * 10669
 When is the next prime in the sequence?
 -/
 @[category research open, AMS 11]
-theorem main_conjecture : answer(sorry) = sInf {n : ℕ | 4 < n ∧ Nat.Prime (a n)} := by
+theorem conjecture : answer(sorry) = sInf {n : ℕ | 4 < n ∧ Nat.Prime (a n)} := by
   sorry
 
 end OeisA102847

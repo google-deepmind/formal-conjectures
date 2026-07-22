@@ -41,7 +41,7 @@ noncomputable def a (n : ℕ) : ℤ :=
   else p (2 * n + 2) - p (2 * n + 1) - p (2 * n) + p (2 * n - 1)
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by
+theorem a_1 : a 1 = 1 := by
   dsimp [a]
   norm_num
 
@@ -51,7 +51,7 @@ A004275 is the set of all differences between two prime numbers.
 The conjecture asks whether every possible difference between two prime numbers occurs as the absolute value of some term $a(n)$.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   ∀ d > 0, (∃ p1 p2 : ℕ, p1.Prime ∧ p2.Prime ∧ d = (p1 - p2 : ℤ).natAbs) →
   ∃ n > 0, d = (a n).natAbs := by
   sorry

@@ -35,19 +35,19 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 3 := by native_decide
+theorem a_0 : a 0 = 3 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 5 := by native_decide
+theorem a_1 : a 1 = 5 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 8 := by native_decide
+theorem a_2 : a 2 = 8 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 14 := by native_decide
+theorem a_3 : a 3 = 14 := by native_decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 26 := by native_decide
+theorem a_4 : a 4 = 26 := by native_decide
 
 /-- a(0), a(1), a(5), a(6), a(7) and a(11) are primes. -/
 @[category textbook, AMS 11]
@@ -58,7 +58,7 @@ theorem primes_in_a :
 
 /-- a(0), a(1), a(5), a(6), a(7) and a(11) are primes. Are there any more? -/
 @[category research open, AMS 11]
-theorem main_conjecture : answer(sorry) ↔ ∃ n > 11, Nat.Prime (a n) := by
+theorem conjecture : answer(sorry) ↔ ∃ n > 11, Nat.Prime (a n) := by
   sorry
 
 end OeisA108301

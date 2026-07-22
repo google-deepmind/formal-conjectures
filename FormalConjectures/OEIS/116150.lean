@@ -34,19 +34,19 @@ def a (n : ℕ) : ℕ :=
   (Finset.sum (Finset.Icc 1 n) (fun j : ℕ => (3 : ℤ) ^ j + ((-2) : ℤ) ^ j)).toNat
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 1 := by decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 14 := by decide
+theorem a_2 : a 2 = 14 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 33 := by decide
+theorem a_3 : a 3 = 33 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 130 := by decide
+theorem a_4 : a 4 = 130 := by decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 341 := by decide
+theorem a_5 : a 5 = 341 := by decide
 
 /--
 First primes are a(11)=264353 and a(17)=193622861.
@@ -54,7 +54,7 @@ Additional primes: a(71), a(91), a(431).
 What is the next prime?
 -/
 @[category research open, AMS 11]
-theorem conjecture1 : answer(sorry) = a (sInf {n : ℕ | 431 < n ∧ Nat.Prime (a n)}) := by
+theorem conjecture : answer(sorry) = a (sInf {n : ℕ | 431 < n ∧ Nat.Prime (a n)}) := by
   sorry
 
 end OeisA116150

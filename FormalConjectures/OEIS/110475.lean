@@ -53,7 +53,7 @@ It is conjectured that 1,2,3,4,5,6,7,9,11 are the only positive integers
 which cannot be represented as the sum of two elements of indices $n$ such that $a(n) = 1$.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   ∀ m > 0, m ∉ exceptional_set ↔ ∃ x y : ℕ, a x = 1 ∧ a y = 1 ∧ m = x + y := by
   sorry
 

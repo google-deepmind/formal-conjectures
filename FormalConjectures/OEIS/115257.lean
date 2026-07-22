@@ -38,16 +38,16 @@ def a (n : ℕ) : ℕ :=
   (Finset.range (n + 1)).sum (fun k => (Nat.centralBinom k) ^ 2)
 
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by rfl
+theorem a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 5 := by rfl
+theorem a_1 : a 1 = 5 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 41 := by rfl
+theorem a_2 : a 2 = 41 := by rfl
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 441 := by rfl
+theorem a_3 : a 3 = 441 := by rfl
 
 /-- The polynomial $\sum_{k=0}^{n} \binom{2k}{k}^2 x^k$ over $\mathbb{Q}$. -/
 noncomputable
@@ -63,7 +63,7 @@ def poly_Q (n : ℕ) : Polynomial ℚ :=
 Conjecture: For any positive integer n, the polynomials Sum_{k=0}^n binomial(2k,k)^2*x^k and Sum_{k=0}^n binomial(2k,k)^2*x^k/(k+1) are irreducible over the field of rational numbers. - Zhi-Wei Sun, Mar 23 2013
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   ∀ (n : ℕ), 1 ≤ n → Irreducible (poly_P n) ∧ Irreducible (poly_Q n) := by
   sorry
 

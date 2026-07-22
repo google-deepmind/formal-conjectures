@@ -53,19 +53,19 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 0 := by decide
+theorem a_1 : a 1 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 1 := by decide
+theorem a_2 : a 2 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 1 := by decide
+theorem a_3 : a 3 = 1 := by decide
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 0 := by decide
+theorem a_4 : a 4 = 0 := by decide
 
 @[category test, AMS 11]
-lemma test_a_5 : a 5 = 1 := by decide
+theorem a_5 : a 5 = 1 := by decide
 
 /-- The golden ratio $\phi = (1 + \sqrt{5})/2$. -/
 noncomputable def phi : Real := goldenRatio
@@ -84,7 +84,7 @@ noncomputable def s (n : ℕ) : Real :=
 Conjecture: $\beta-2 < S(n)-\alpha n < \beta-1$. The constants $\alpha$ and $\beta$ are as defined in the formula section.
 -/
 @[category research open, AMS 11]
-theorem main_conjecture (n : ℕ) (hn : 1 ≤ n) :
+theorem conjecture (n : ℕ) (hn : 1 ≤ n) :
     beta_const - 2 < s n - alpha_const * (n : Real) ∧ s n - alpha_const * (n : Real) < beta_const - 1 := by
   sorry
 

@@ -51,27 +51,27 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-lemma test_a_0 : a 0 = 1 := by
+theorem a_0 : a 0 = 1 := by
   unfold a antidiagonalIndex triangularNumber
   norm_num
 
 @[category test, AMS 11]
-lemma test_a_1 : a 1 = 3 := by
+theorem a_1 : a 1 = 3 := by
   unfold a antidiagonalIndex triangularNumber
   norm_num
 
 @[category test, AMS 11]
-lemma test_a_2 : a 2 = 4 := by
+theorem a_2 : a 2 = 4 := by
   unfold a antidiagonalIndex triangularNumber
   norm_num
 
 @[category test, AMS 11]
-lemma test_a_3 : a 3 = 5 := by
+theorem a_3 : a 3 = 5 := by
   unfold a antidiagonalIndex triangularNumber
   norm_num
 
 @[category test, AMS 11]
-lemma test_a_4 : a 4 = 8 := by
+theorem a_4 : a 4 = 8 := by
   unfold a antidiagonalIndex triangularNumber
   norm_num
 
@@ -81,7 +81,7 @@ def IsSemiprime (k : ℕ) : Prop :=
 
 /-- A "Goldbach Conjecture" for this sequence: when there are n terms between consecutive odd integers (2n+1) and (2n+3) for n > 0, at least one will be the product of 2 primes (not necessarily distinct). Example: n=3 for consecutive odd integers a(7)=7 and a(11)=9 and of the 3 sequence entries a(8)=12, a(9)=15 and a(10)=16 between them, one is the product of 2 primes a(9)=15=3*5. - _Michael Hiebl_, Jul 15 2007 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   ∀ (n i j : ℕ), 1 ≤ n →
     a i = 2 * n + 1 →
     a j = 2 * n + 3 →

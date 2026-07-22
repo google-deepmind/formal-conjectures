@@ -49,7 +49,7 @@ def a (n : ℕ) : ℕ :=
 (25,27) is the smallest pair of prime powers (q,q+2) such that both q and q+2 are not primes, conjecture: there are more (but not < 10^6).
 -/
 @[category research open, AMS 11]
-theorem main_conjecture :
+theorem conjecture :
   answer(sorry) ↔ ∃ q ≥ 1000000,
     is_oeis_prime_power q ∧ is_oeis_prime_power (q + 2) ∧
     ¬ Nat.Prime q ∧ ¬ Nat.Prime (q + 2) := by
