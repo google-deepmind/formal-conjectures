@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import FormalConjecturesUtil
 
 /-!
@@ -29,6 +30,9 @@ The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers.
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 =======
 import FormalConjectures.Util.ProblemImports
+=======
+import FormalConjecturesUtil
+>>>>>>> 1f708f7d (Fix imports to FormalConjecturesUtil)
 
 /-!
 # Catalan numbers
