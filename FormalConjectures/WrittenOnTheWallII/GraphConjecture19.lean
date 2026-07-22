@@ -21,6 +21,9 @@ import FormalConjecturesUtil
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+
+*Proof:*
+[Informal proof and verification report](https://github.com/akakabrian/WOW-19/blob/0697235f5211a82667b9b281bf61b50f2ed8df0c/submission/WOWII_Conjecture_19_Submission.pdf)
 -/
 
 
@@ -40,7 +43,8 @@ satisfies
 `b(G) ≥ FLOOR((∑ ecc(v))/(|V|) + sSup (range (l G)))`, where `ecc(v)` denotes
 eccentricity and `l(G)` is the independence number of neighbourhoods.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/akakabrian/WOW-19/blob/0697235f5211a82667b9b281bf61b50f2ed8df0c/generated/GraphConjecture19Solved.lean"]
 theorem conjecture19 (G : SimpleGraph α) [Nontrivial α] (h_conn : G.Connected) :
     ⌊(∑ v ∈ Finset.univ, ((G.eccent v).toNat : ℝ)) / (Fintype.card α : ℝ) +
       sSup (Set.range (indepNeighbors G))⌋ ≤ b G := by
