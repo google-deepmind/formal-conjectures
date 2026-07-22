@@ -19,7 +19,10 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 674
 
-*Reference:* [erdosproblems.com/674](https://www.erdosproblems.com/674)
+*References:*
+- [erdosproblems.com/674](https://www.erdosproblems.com/674)
+- [Ko40] Ko, Chao, *Note on the Diophantine equation $x^xy^y=z^z$*. J. Chinese Math. Soc.
+  (1940), 31-39.
 -/
 
 namespace Erdos674
