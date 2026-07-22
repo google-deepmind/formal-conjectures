@@ -43,7 +43,7 @@ def UnitDistanceAvoiding (S : Set ℝ²) : Prop := ∀ x ∈ S, ∀ y ∈ S, dis
 /-- Any unit-distance-avoiding colouring contains a congruent red copy of every set of `n`
 points. -/
 def HasRedCopies (n : ℕ) : Prop :=
-  ∀ S : Set ℝ², UnitDistanceAvoiding S → ∀ K : Fin n → ℝ²,
+  ∀ S : Set ℝ², UnitDistanceAvoiding S → ∀ K : Fin n → ℝ², Function.Injective K →
     ∃ p : Fin n → ℝ², (∀ i, p i ∈ Sᶜ) ∧ (p ≅ K)
 
 /-- The largest integer `k` such that any unit-distance-avoiding colouring contains a congruent
