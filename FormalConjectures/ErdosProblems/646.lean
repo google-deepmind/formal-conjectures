@@ -39,8 +39,7 @@ divisible by an even power of each of the $p_i$?
 The answer is yes, proved by Berend [Be97], who further proved that the sequence of such $n$
 has bounded gaps (where the bound depends on the initial set of primes).
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos646.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos646.lean"]
 theorem erdos_646 : answer(True) ↔
     ∀ S : Finset ℕ, (∀ p ∈ S, p.Prime) →
       {n : ℕ | ∀ p ∈ S, Even (padicValNat p (n !))}.Infinite := by

@@ -42,8 +42,7 @@ This is also known as Dedekind's problem. Resolved by Kleitman [Kl69], who prove
 number of such families is
 \[2^{(1+o(1))\binom{n}{\lfloor n/2\rfloor}}.\]
 -/
-@[category research solved, AMS 5 6,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos497.lean"]
+@[category research solved, AMS 5 6, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos497.lean"]
 theorem erdos_497 :
     ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
       ∀ n : ℕ, (DedekindNumber.M' n : ℝ) = 2 ^ ((1 + o n) * (n.choose (n / 2) : ℝ)) := by

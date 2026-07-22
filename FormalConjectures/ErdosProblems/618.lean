@@ -55,8 +55,7 @@ essentially identical to [134], and his solution in
 [this note](https://web.math.princeton.edu/~nalon/PDFS/remark1901.pdf) also solves this
 problem in the affirmative.
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos618.lean"]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos618.lean"]
 theorem erdos_618 : answer(True) ↔
     ∀ (G : ∀ n : ℕ, SimpleGraph (Fin n)),
       (∀ n, (G n).CliqueFree 3) →

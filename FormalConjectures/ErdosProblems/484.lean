@@ -41,8 +41,7 @@ where $a,b\in \{1,\ldots,N\}$ are in the same colour class and $a\neq b$).
 A conjecture of Roth. Solved by Erdős, Sárközy, and Sós [ESS89], who in fact prove that
 there are at least $\frac{N}{2}-O(N^{1-1/2^{k+1}})$ many even numbers which are of this form.
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos484.lean"]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos484.lean"]
 theorem erdos_484 :
     ∃ c : ℝ, 0 < c ∧ ∀ k : ℕ, 0 < k → ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → ∀ f : ℕ → Fin k,
       c * N ≤ (((Finset.Icc 1 N).filter fun n =>

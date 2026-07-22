@@ -43,8 +43,7 @@ Davenport and Erdős [DaEr36] showed that there must exist an infinite sequence 
 in $A$ such that $a_i\mid a_j$ for all $i\leq j$, under the assumption that the upper logarithmic
 density of $A$ is positive.
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos487.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos487.lean"]
 theorem erdos_487 : answer(True) ↔
     ∀ A : Set ℕ, A.HasPosDensity →
       ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, a ≠ b ∧ b ≠ c ∧ a ≠ c ∧ Nat.lcm a b = c := by
