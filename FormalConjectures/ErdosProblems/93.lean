@@ -52,14 +52,9 @@ If $n$ distinct points in $\mathbb{R}^2$ form a convex polygon then they determi
 $\lfloor \frac{n}{2}\rfloor$ distinct distances.
 
 Solved by Altman [Al63].
-
-We formalise the hypothesis as: $A$ is a finite set of at least three points in $\mathbb{R}^2$
-in convex position (`ConvexIndep`), i.e. $A$ is the vertex set of a convex polygon.
 -/
-@[category research solved, AMS 52,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos93.lean"]
-theorem erdos_93 (A : Finset ℝ²) (hA_card : 3 ≤ A.card)
-    (hA : ConvexIndep (A : Set ℝ²)) :
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos93.lean"]
+theorem erdos_93 (A : Finset ℝ²) (hA : ConvexIndep (A : Set ℝ²)) :
     A.card / 2 ≤ distinctDistances A := by
   sorry
 

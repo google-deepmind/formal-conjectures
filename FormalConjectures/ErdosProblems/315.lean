@@ -57,13 +57,8 @@ This is true, and was proved independently by Kamio [Ka25] and Li and Tang [LiTa
 An earlier interpretation of this question on this site defined $u_1=2$ and
 $u_{n+1}=u_n^2-u_n+1$ (Sylvester's sequence), which is the same sequence shifted by $1$; we use
 the phrasing above as more faithful to [ErGr80]. The constant $c_0$ is called the Vardi constant.
-
-Formalisation note: `a i` and `u i` denote $a_{i+1}$ and $u_{i+1}$, so the exponent $1/2^n$
-becomes `(1 / 2) ^ (i + 1)`, and "any other sequence" is expressed as `∃ i, a i ≠ u i + 1`, the
-sequence $(u_k+1)_{k\geq 1}$ being the given decomposition with $\sum_{k\geq 1}\frac{1}{u_k+1}=1$.
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos315.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos315.lean"]
 theorem erdos_315 : answer(True) ↔
     ∀ a : ℕ → ℕ, (∀ i, 0 < a i) → StrictMono a → (∃ i, a i ≠ u i + 1) →
       ∑' i, (1 : ℝ) / a i = 1 →

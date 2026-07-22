@@ -45,12 +45,8 @@ Does every triangle-free graph on $5n$ vertices contain at most $n^5$ copies of 
 
 Győri proved this with $1.03n^5$, which has been improved by Füredi. The answer is yes, as proved
 independently by Grzesik [Gr12] and Hatami, Hladky, Král, Norine, and Razborov [HHKNR13].
-
-Copies of $C_5$ are counted as subgraphs isomorphic to the cycle graph on five vertices,
-i.e. by `SimpleGraph.copyCount`.
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos24.lean"]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos24.lean"]
 theorem erdos_24 : answer(True) ↔
     ∀ (n : ℕ) (G : SimpleGraph (Fin (5 * n))), G.CliqueFree 3 →
       G.copyCount (cycleGraph 5) ≤ n ^ 5 := by

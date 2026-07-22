@@ -54,8 +54,7 @@ $\delta>0$, there exist infinitely many $n$ and $m$ such that
 Erdős and Graham (and also Lim and Steinerberger) believe that the exponent of $2$ is best
 possible here, in that $\liminf \epsilon(n) n^{2+\delta}=\infty$ for all $\delta>0$.
 -/
-@[category research solved, AMS 11 40,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos314.lean"]
+@[category research solved, AMS 11 40, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos314.lean"]
 theorem erdos_314 : answer(True) ↔
     atTop.liminf (fun n : ℕ => (n : ℝ) ^ 2 * epsilon n) = 0 := by
   sorry

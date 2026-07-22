@@ -39,13 +39,8 @@ If $n=\prod p_k^{a_k}$ then the largest integer not of this form is
 \[\sum_k \left( \sum_{1\leq d\leq a_k}\binom{n}{p_k^d}\right)(p_k-1)-n.\]
 This was first proved by Hwang and Song [HwSo24]. Independently this was found in the comment
 section by Peake and Cambie.
-
-The statement below works in $\mathbb{Z}$, encoding the nonnegative coefficients as
-$c : \mathbb{N} \to \mathbb{N}$; negative integers are never of the given form, so the greatest
-element over $\mathbb{Z}$ is the classical Frobenius number.
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos435.lean"]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos435.lean"]
 theorem erdos_435 (n : ℕ) (hn : n ≠ 0)
     (hpk : ∀ p k : ℕ, p.Prime → n ≠ p ^ k) :
     IsGreatest

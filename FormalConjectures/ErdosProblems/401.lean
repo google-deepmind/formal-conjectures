@@ -42,12 +42,8 @@ statement.
 
 The answer is yes: Barreto and Leeham have used ChatGPT to provide a proof of the stated problem
 (in fact essentially the same construction as their solution to [729]).
-
-The statement below writes $p_i$ for the $i$-th prime, so that
-$2^n3^n\cdots p_r^n=(p_1p_2\cdots p_r)^n$, and takes $a_1,a_2$ to be positive integers.
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos401.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos401.lean"]
 theorem erdos_401 : answer(True) ↔
     ∃ f : ℕ → ℝ, Tendsto f atTop atTop ∧
       ∀ (r : ℕ) (hr : 1 ≤ r),

@@ -45,8 +45,7 @@ this seems to have been overlooked by Erdős and Graham.
 
 See also [806].
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos333.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos333.lean"]
 theorem erdos_333 : answer(False) ↔
     ∀ A : Set ℕ, A.HasDensity 0 →
       ∃ B : Set ℕ, A ⊆ B + B ∧

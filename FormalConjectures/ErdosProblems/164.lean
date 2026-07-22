@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.ErdosProblems.«1196»
 import FormalConjecturesUtil
 
 /-!
@@ -36,10 +37,6 @@ import FormalConjecturesUtil
 
 namespace Erdos164
 
-/-- A set `A ⊆ ℕ` is *primitive* if no member of `A` divides another. -/
-def IsPrimitive (A : Set ℕ) : Prop :=
-  ∀ a ∈ A, ∀ b ∈ A, a ∣ b → a = b
-
 /--
 A set $A\subset \mathbb{N}$ is primitive if no member of $A$ divides another. Is the sum
 \[\sum_{n\in A}\frac{1}{n\log n}\]
@@ -48,17 +45,12 @@ maximised over all primitive sets when $A$ is the set of primes?
 Erdős [Er35] proved that this sum always converges for a primitive set. Lichtman [Li23] proved
 that the answer is yes. An alternative, simpler, proof is given by Alexeev, Barreto, Li, Lichtman,
 Price, Shah, Tang, and Tao [ABLLPSTT26].
-
-Following the convention of [Li23] we require the members of a primitive set to be greater than
-one; this excludes $A = \{1\}$, for which the summand $\frac{1}{1\cdot\log 1}$ is not defined.
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos164.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos164.lean"]
 theorem erdos_164 : answer(True) ↔
-    IsPrimitive {p : ℕ | p.Prime} ∧
-      ∀ A : Set ℕ, (∀ a ∈ A, 2 ≤ a) → IsPrimitive A →
-        (∑' a : A, 1 / ((a : ℕ) * Real.log (a : ℕ))) ≤
-          ∑' p : {p : ℕ | p.Prime}, 1 / ((p : ℕ) * Real.log (p : ℕ)) := by
+    ∀ A : Set ℕ, (∀ a ∈ A, 2 ≤ a) → Erdos1196.IsPrimitive A →
+      (∑' a : A, 1 / ((a : ℕ) * Real.log (a : ℕ))) ≤
+        ∑' p : {p : ℕ | p.Prime}, 1 / ((p : ℕ) * Real.log (p : ℕ)) := by
   sorry
 
 end Erdos164

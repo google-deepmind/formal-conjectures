@@ -46,13 +46,8 @@ consecutive integers sought for) must be in $[n/2,n]$. In this case a positive a
 follows directly from the result of Balog and Wooley [BaWo98] for infinitely many $n$. Proving
 this is true for all large $n$ does not follow immediately from [BaWo98], but can be deduced
 using a similar construction, as shown by SkyYang.
-
-The statement below takes the $k$ consecutive integers as $a+1,\ldots,a+k$ with
-$\lfloor n/2\rfloor\leq a+1$ and $a+k\leq n$, and renders "$n^\epsilon$-smooth" as: every prime
-factor is at most $n^\epsilon$.
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos369.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos369.lean"]
 theorem erdos_369 : answer(True) ↔
     ∀ (ε : ℝ) (hε : 0 < ε) (k : ℕ) (hk : 2 ≤ k),
       ∀ᶠ (n : ℕ) in atTop, ∃ a : ℕ, n / 2 ≤ a + 1 ∧ a + k ≤ n ∧
