@@ -654,10 +654,15 @@ theorem eqSystem4_no_solution_ge4_int :
   sorry
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{Z}$?
+
+This is proved by reduction modulo two and an exhaustive check of the 47 relevant support-graph
+orbits under the action of $S_6$.
+-/
+@[category research solved, AMS 5 14 81, formal_proof using formal_conjectures at
+"https://github.com/infinityscroll/formal-conjectures/blob/659f56434fab24463b115cb54538a854331c1c80/QuantumGraphN6D3/QuantumGraphGlobal.lean#L53-L57"]
 theorem eqSystem6_no_solution_d3_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 3 ℤ, EqSystemN 6 3 W := by
   sorry
 
@@ -723,10 +728,14 @@ theorem eqSystem4_no_solution_ge4_trinary_int :
   sorry
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$?
+
+This follows from the unrestricted integer result.
+-/
+@[category research solved, AMS 5 14 81, formal_proof using formal_conjectures at
+"https://github.com/infinityscroll/formal-conjectures/blob/659f56434fab24463b115cb54538a854331c1c80/QuantumGraphN6D3/QuantumGraphGlobal.lean#L59-L64"]
 theorem eqSystem6_no_solution_d3_trinary_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 3 ℤ,
           (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
             EqSystemN 6 3 W := by
