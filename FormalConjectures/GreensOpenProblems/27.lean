@@ -25,7 +25,7 @@ References:
 - [St76] Straus, E. G. "Differences of residues (mod p)." Journal of Number Theory 8.1 (1976): 40-42.
 -/
 
-open Asymptotics Filter
+open Asymptotics Filter UniqueSums
 
 namespace Green27
 
@@ -80,11 +80,55 @@ theorem green_27.variants.lower_be23 :
       ω p * Real.log (p : ℝ) ≤ m p := by
   sorry
 
+/-- Sanity check: `repCount` counts ordered pairs, so `1 = 0 + 1 = 1 + 0` has two
+representations in `{0, 1} ⊆ ZMod 5`. -/
+@[category test, AMS 5 11]
+theorem repCount_pair_test : Finset.repCount ({0, 1} : Finset (ZMod 5)) 1 = 2 := by
+  decide
+
+/-- Sanity check: Straus's simple set in `ZMod 11` is `{0, ±5, ±2, ±1}`, of size
+`7 = 2 * Nat.log 2 11 + 1`. -/
+@[category test, AMS 5 11]
+theorem strausSet_eleven_test :
+    strausSet 11 = ({0, 5, 2, 1, -5, -2, -1} : Finset (ZMod 11)) := by
+  decide
+
 /-- Upper bound: $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.upper_be23 :
   m =O[primesAtTop] upperBest := by
-  sorry
+  rw [Asymptotics.isBigO_iff]
+  refine ⟨36, ?_⟩
+  rw [primesAtTop, Filter.eventually_inf_principal]
+  filter_upwards [Filter.eventually_ge_atTop (2 ^ 30)] with p hpN hpprime
+  letI : Fact p.Prime := ⟨hpprime⟩
+  have hsize : ((strausSet p).card ^ 2) ^ 2 < p := strausSet_size_gate hpN
+  rcases exists_hasNoUniqueRepresentation_card_le (by omega) hsize with
+    ⟨A, hA2, hAnur, hAcard⟩
+  have hbdd : BddBelow
+      { (B.card : ℝ) | (B : Finset (ZMod p)) (_ : 2 ≤ B.card)
+        (_ : HasNoUniqueRepresentation B) } := by
+    refine ⟨0, ?_⟩
+    intro y hy
+    rcases hy with ⟨B, _, _, rfl⟩
+    positivity
+  have hmem : (A.card : ℝ) ∈
+      { (B.card : ℝ) | (B : Finset (ZMod p)) (_ : 2 ≤ B.card)
+        (_ : HasNoUniqueRepresentation B) } := ⟨A, hA2, hAnur, rfl⟩
+  have hm_le : m p ≤ (A.card : ℝ) := by
+    rw [m]
+    exact csInf_le hbdd hmem
+  have hm_nonneg : 0 ≤ m p := by
+    rw [m]
+    apply Real.sInf_nonneg
+    intro y hy
+    rcases hy with ⟨B, _, _, rfl⟩
+    positivity
+  have hAcardR : (A.card : ℝ) ≤ (2 * (Nat.log 2 p : ℝ) + 1) ^ 2 := by
+    exact_mod_cast hAcard
+  rw [Real.norm_of_nonneg hm_nonneg, upperBest,
+    Real.norm_of_nonneg (sq_nonneg (Real.log (p : ℝ)))]
+  exact hm_le.trans (hAcardR.trans (natLog_sq_bound (by omega)))
 
 /-- Previous best-known lower bound $\log p \ll m(p)$ from [St76]. -/
 @[category research solved, AMS 5 11]
