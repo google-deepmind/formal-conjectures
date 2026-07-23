@@ -58,6 +58,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CycleRank
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DistEven
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SzegedIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
