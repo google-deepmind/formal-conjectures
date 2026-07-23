@@ -67,41 +67,41 @@ noncomputable def scaledDefect (n : ℕ) : ℝ :=
 
 /--
 For $x_1,\ldots,x_n\in [-1,1]$ let
-\[
+$$
 l_k(x)=\frac{\prod_{i\neq k}(x-x_i)}{\prod_{i\neq k}(x_k-x_i)},
-\]
+$$
 which are such that $l_k(x_k)=1$ and $l_k(x_i)=0$ for $i\neq k$.
 
 What is the minimal value of
-\[
+$$
 I(x_1,\ldots,x_n)=\int_{-1}^1 \sum_k \lvert l_k(x)\rvert^2\mathrm{d}x?
-\]
+$$
 In particular, is it true that
-\[
+$$
 \min I =2-(1+o(1))\frac{1}{n}?
-\]
+$$
 
 Erdős first conjectured this minimum was achieved by taking the $x_i$ to be the roots of
 the integral of the Legendre polynomial, since Fejér [Fe32] had earlier shown these to be
 minimisers of
-\[
+$$
 \max_{x\in [-1,1]}\sum_k \lvert l_k(x)\rvert^2.
-\]
+$$
 This was disproved by Szabados [Sz66] for every $n>3$.
 
 Erdős, Szabados, Varma, and Vértesi [ESVV94] proved that
-\[
+$$
 2-O\left(\frac{(\log n)^2}{n}\right)\leq \min I\leq 2-\frac{2}{2n-1},
-\]
+$$
 where the upper bound is witnessed by the roots of the integral of the Legendre polynomial
 as above.
 
 The asymptotic subquestion has a negative answer. The linked formal proof uses the roots of
 $T_n-\frac16T_{n-2}$ as an explicit admissible comparison family and proves that, for every
 $N\geq 24780$,
-\[
+$$
 \frac{106}{105}\leq (N+1)(2-M(N+1)),
-\]
+$$
 so the scaled defect cannot tend to $1$.
 -/
 @[category research solved, AMS 28 41 65,
