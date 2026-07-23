@@ -9,7 +9,7 @@ the database (either `open` or `resolved`).
    number of leaves of a spanning tree `Ls(G)` satisfies
    `Ls(G) ≥ n(G) + 1 − 2·m(G)`, where `n(G)` is the number of vertices and
    `m(G)` is the size of a maximum matching.
-2. **Conjecture 2 (open).** For a simple connected graph `G`,
+2. **Conjecture 2 (resolved).** For a simple connected graph `G`,
    `Ls(G) ≥ 2·(l(G) − 1)`, where `l(G)` denotes the average independence
    number of the neighbourhoods of the vertices of `G`.
 3. **Conjecture 3 (resolved).** If `G` is connected, then
