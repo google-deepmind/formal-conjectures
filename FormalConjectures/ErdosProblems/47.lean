@@ -50,7 +50,7 @@ If $\delta>0$ and $N$ is sufficiently large in terms of $\delta$, and $A\subsete
 Bloom [Bl21] proved this in the affirmative.
 -/
 @[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos47.lean"]
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.30.0/ErdosProblems/Erdos47.lean#L495"]
 theorem erdos_47 : answer(True) ↔
     ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℕ,
       A ⊆ Finset.Icc 1 N →
