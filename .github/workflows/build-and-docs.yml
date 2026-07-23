@@ -83,10 +83,19 @@ jobs:
           lake exe cache unpack
           lake exe cache get
 
+      - name: Generate All.lean
+        if: steps.mode.outputs.website_only != 'true'
+        run: |
+          rm -f FormalConjectures/All.lean
+          lake exe mk_all --lib FormalConjectures || true
+          mv FormalConjectures.lean FormalConjectures/All.lean
+          echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
+
       - name: Build project
         if: steps.mode.outputs.website_only != 'true'
         run: |
           lake --wfail build
+          rm -f FormalConjectures/All.lean
 
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true'
