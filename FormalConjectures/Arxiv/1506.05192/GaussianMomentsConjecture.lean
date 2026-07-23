@@ -30,22 +30,14 @@ open MeasureTheory ProbabilityTheory
 
 namespace GaussianMomentsConjecture
 
-abbrev Polynomial2 := MvPolynomial (Fin 2) ℂ
+abbrev Poly := MvPolynomial (Fin 2) ℂ
 
-noncomputable def polynomialEval (P : Polynomial2) (p : ℝ × ℝ) : ℂ :=
+/-- Index of the first polynomial variable. -/
+def zIdx : Fin 2 := ⟨0, by decide⟩
+
+noncomputable def realPolynomialEval (P : Poly) (p : ℝ × ℝ) : ℂ :=
   MvPolynomial.eval₂ (RingHom.id ℂ)
-    (fun i => if i = (0 : Fin 2) then (p.1 : ℂ) else (p.2 : ℂ)) P
-
-noncomputable def gaussianExpectation (P : Polynomial2) : ℂ :=
-  ∫ p : ℝ × ℝ, polynomialEval P p
-    ∂(gaussianReal 0 1).prod (gaussianReal 0 1)
-
-def AllMomentsZero (P : Polynomial2) : Prop :=
-  ∀ m : ℕ, 1 ≤ m → gaussianExpectation (P ^ m) = 0
-
-def EventuallyMixedZero (Q P : Polynomial2) : Prop :=
-  ∃ N : ℕ, ∀ m : ℕ, N ≤ m →
-    gaussianExpectation (Q * P ^ m) = 0
+    (fun i => if i = zIdx then (p.1 : ℂ) else (p.2 : ℂ)) P
 
 /--
 The Gaussian Moments Conjecture of Derksen, van den Essen, and Zhao,
@@ -55,8 +47,13 @@ specialized to two independent standard real Gaussian variables.
   formal_proof using lean4 at
     "https://github.com/MurrellGroup/GMC-2-lean/blob/1fc9242372915ee48a3a989cacf3c27675923b3b/GMC2/RealGaussian.lean#L743"]
 theorem gaussianMomentsConjectureTwo :
-    ∀ P : Polynomial2, AllMomentsZero P →
-      ∀ Q : Polynomial2, EventuallyMixedZero Q P := by
+    ∀ P : Poly,
+      (∀ m : ℕ, 1 ≤ m →
+        (∫ p : ℝ × ℝ, realPolynomialEval (P ^ m) p
+          ∂(gaussianReal 0 1).prod (gaussianReal 0 1)) = 0) →
+      ∀ Q : Poly, ∃ N : ℕ, ∀ m : ℕ, N ≤ m →
+        (∫ p : ℝ × ℝ, realPolynomialEval (Q * P ^ m) p
+          ∂(gaussianReal 0 1).prod (gaussianReal 0 1)) = 0 := by
   sorry
 
 end GaussianMomentsConjecture
