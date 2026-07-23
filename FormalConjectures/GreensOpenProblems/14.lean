@@ -214,7 +214,9 @@ theorem W_3_19 : W 3 19 = 349 := by sorry
 
 -- Conjectured lower bounds for W(3,r) from [AKS14, Table 2].
 /-- $W(3, 20) \ge 389$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/DomTheDeveloper/formal-conjectures/blob/013a0f04de0057d2bd1034c7cc4caf10ac8dc2cf/FormalConjectures/GreensOpenProblems/Green14FastKernel20.lean"]
 theorem W_3_20_lower : answer(sorry) ↔ W 3 20 ≥ 389 := sorry
 
 /-- $W(3, 21) \ge 416$ from [AKS14, Table 2]. -/
