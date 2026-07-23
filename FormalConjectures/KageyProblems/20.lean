@@ -94,7 +94,9 @@ ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the mathematical
 argument, Lean formalization, compatibility repair, and verification. All
 formal claims were checked by the repository-pinned Lean compiler.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/DomTheDeveloper/formal-conjectures/blob/cb8de9921fc62810991a0384ee412cfed0ad8e7c/Scratch/A263135Final.lean"]
 theorem conjecture (n : ℕ) (hn : 0 < n) :
     ∃ r : ℕ, IsNatCeilSqrt (3 * n) r ∧
       IsMaximumContact (2 * n) (3 * n - r) := by
