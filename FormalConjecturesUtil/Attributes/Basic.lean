@@ -312,6 +312,18 @@ initialize Lean.registerBuiltinAttribute {
         logWarning
           "A `formal_proof` annotation on a `research open` problem is suspicious. \
            If a formal proof exists, the problem should not be categorised as `open`."
+      -- Validate the proof link. A `lean4` or `other_system` proof lives outside
+      -- this repository and must be locatable, so its link is required; a
+      -- `formal_conjectures` proof is in this repository, so its link may be empty.
+      -- Any link that is given should be a URL.
+      let linkStr := link.getString
+      if linkStr.isEmpty then
+        if pfKind == .lean4 || pfKind == .otherSystem then
+          logWarningAt link
+            "A `lean4` or `other_system` `formal_proof` should include a link to the proof."
+      else if !(linkStr.toLower.startsWith "http://" || linkStr.toLower.startsWith "https://") then
+        logWarningAt link
+          s!"A `formal_proof` link should be a URL (http:// or https://), but got: \"{linkStr}\"."
       addFormalProofEntry decl pfKind link.getString
     | _ => throwUnsupportedSyntax
   applicationTime := .afterTypeChecking
