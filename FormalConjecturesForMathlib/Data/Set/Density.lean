@@ -101,6 +101,19 @@ def HasPosDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) : Prop :=
   ∃ α > 0, S.HasDensity α A
 
+/--
+A set `S` in an order `β` where all intervals bounded above are finite is said to have
+positive *lower* density (relative to a set `A`) if its lower density is positive.
+
+This is weaker than `Set.HasPosDensity`, which additionally requires the density to *exist*
+(lower density equals upper density). As Erdős' informal "positive density" most often means
+"positive lower density", this is usually the faithful reading. See
+[erdosproblems.com/424](https://www.erdosproblems.com/424).
+-/
+def HasPosLowerDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
+    (S : Set β) (A : Set β := Set.univ) : Prop :=
+  0 < S.lowerDensity A
+
 open Classical in
 /--
 The two-sided partial natural density of a set of integers, counted inside the interval

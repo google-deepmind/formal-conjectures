@@ -50,9 +50,12 @@ def generatedSet : Set ℕ := ⋃ n : ℕ, sequenceSet n
 Let $a_1 = 2$ and $a_2 = 3$ and continue the sequence by appending to $a_1, \ldots, a_n$ all possible
 values of $a_i a_j - 1$ with $i \neq j$.
 Is it true that the set of integers which eventually appear has positive density?
+
+Here "positive density" is read as *positive lower density* (the usual meaning of Erdős'
+informal "positive density"), rather than requiring the density to exist.
 -/
 @[category research open, AMS 11]
-theorem erdos_424 : answer(sorry) ↔ generatedSet.HasPosDensity := by
+theorem erdos_424 : answer(sorry) ↔ generatedSet.HasPosLowerDensity := by
   sorry
 
 -- TODO(firsching): formalize the statements from the additional material
