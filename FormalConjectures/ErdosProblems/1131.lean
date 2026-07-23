@@ -106,7 +106,7 @@ so the scaled defect cannot tend to $1$.
 -/
 @[category research solved, AMS 28 41 65,
   formal_proof using lean4 at "https://github.com/seanm27lol/erdos-1131-lean/blob/31574acf09ae50430c08da92288800fe7d26c7fd/Erdos1131/Main.lean"]
-theorem erdos_1131 :
+theorem erdos_1131.parts.ii :
     answer(False) ↔ Tendsto scaledDefect atTop (nhds 1) := by
   sorry
 
