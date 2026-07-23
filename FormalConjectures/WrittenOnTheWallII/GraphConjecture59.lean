@@ -19,8 +19,9 @@ import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 59
 
-*Reference:*
-[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+*References:*
+- [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+- [Z. Zhang, A Structured Counterexample to WOWII 59](https://github.com/QDKStorm/wowii59-counterexample)
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture59
@@ -39,10 +40,16 @@ after applying the Havel-Hakimi algorithm to the degree sequence until terminati
 and $b(G)$ is the size of a largest induced bipartite subgraph.
 
 See: Favaron, Mahéo, Saclé (1991) for the residue; DeLaVina's Graffiti.pc for the conjecture.
+
+This conjecture is false. There is a connected counterexample on 123 vertices
+with `residue G = 101`, `b G = 122`, and `G.largestInducedForestSize = 111`.
+Indeed, `101 * 122 = 12322 = 111 ^ 2 + 1`, so the conjectured lower bound is 112.
 -/
-@[category research open, AMS 5]
-theorem conjecture59 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    ⌈Real.sqrt ((residue G : ℝ) * b G)⌉ ≤ (G.largestInducedForestSize : ℝ) := by
+@[category research solved, AMS 5]
+theorem conjecture59 : answer(False) ↔
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+      (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected),
+      ⌈Real.sqrt ((residue G : ℝ) * b G)⌉ ≤ (G.largestInducedForestSize : ℝ) := by
   sorry
 
 -- Sanity checks
@@ -56,5 +63,19 @@ step gives $[0]$, leaving a single zero. -/
 @[category test, AMS 5]
 example : residue (⊤ : SimpleGraph (Fin 2)) = 1 := by
   unfold residue; decide +native
+
+/-- The invariant values of the counterexample violate the conjectured inequality. -/
+@[category test, AMS 5]
+example : ¬(⌈Real.sqrt ((101 : ℝ) * 122)⌉ ≤ (111 : ℝ)) := by
+  have hceil : ⌈Real.sqrt ((101 : ℝ) * 122)⌉ = (112 : ℤ) := by
+    rw [Int.ceil_eq_iff]
+    have hsquare : Real.sqrt (12322 : ℝ) ^ 2 = 12322 := by
+      rw [Real.sq_sqrt]
+      norm_num
+    have hsqrt_nonneg : 0 ≤ Real.sqrt (12322 : ℝ) := Real.sqrt_nonneg _
+    norm_num
+    constructor <;> nlinarith
+  rw [hceil]
+  norm_num
 
 end WrittenOnTheWallII.GraphConjecture59
