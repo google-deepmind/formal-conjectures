@@ -41,7 +41,7 @@ Let $A\subseteq \mathbb{N}$ be such that $\lvert A\cap [1,2x]\rvert -\lvert A\ca
 (0,1)$, where $\{x\}$ is the distance of $x$ from the nearest integer. Then every sufficiently large
 integer is the sum of distinct elements of $A$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/main/starfleet/erdos-254/Research/Basic.lean"]
 theorem erdos_254 :
     ∀ (A : Set ℕ),
       (Tendsto (fun x : ℕ ↦ (A ∩ Icc 1 (2 * x)).ncard - (A ∩ Icc 1 x).ncard) atTop atTop) ∧
