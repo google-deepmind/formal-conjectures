@@ -31,7 +31,7 @@ namespace Erdos532
 
 /--
 If $\mathbb{N}$ is 2-coloured then is there some infinite set $A\subseteq \mathbb{N}$ such that
-all finite subset sums\[ \sum_{n\in S}n\](as $S$ ranges over all non-empty finite subsets of $A$)
+all finite subset sums$$ \sum_{n\in S}n$$(as $S$ ranges over all non-empty finite subsets of $A$)
 are monochromatic?
 
 Asked by Graham and Rothschild. Proved by Hindman [Hi74] (for any number of colours).
