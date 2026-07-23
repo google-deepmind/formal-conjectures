@@ -106,8 +106,9 @@ theorem alpha_le_one_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα0 : 0 < α) (h
 
 /-- **Binary expansion.** Every natural number $k$ is a sum of distinct powers of two: there is
 a finite set $E$ of exponents with $k = \sum_{i \in E} 2^i$. Proved by strong induction:
-subtract the largest power $2^m \le k$, recurse on the remainder. -/
-@[category research solved, AMS 11,
+subtract the largest power $2^m \le k$, recurse on the remainder. A textbook-level building
+block for `one_two_isGoodPair` below; it says nothing about `IsGoodPair` itself. -/
+@[category textbook, AMS 11,
   formal_proof using formal_conjectures at
   "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
 theorem exists_finset_sum_two_pow (k : ℕ) :
@@ -154,6 +155,20 @@ $t \ge 2$ fails. -/
   "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
 theorem integer_isGoodPair_iff (t α : ℤ) (ht : 1 ≤ t) (hα : 1 ≤ α) :
     IsGoodPair (t : ℝ) (α : ℝ) ↔ t = 1 ∧ α = 2 := by
+  sorry
+
+/-- **The pair $(3/2, 2)$ is NOT good.** The negative companion of `dyadic_two_isGoodPair`:
+while every dyadic coefficient $1/2^k$ gives a good pair at $\alpha = 2$, the non-dyadic rational
+$t = 3/2$ does not. The sequence $\lfloor (3/2)\cdot 2^n\rfloor = 1, 3, 6, 12, 24, \ldots$ is not
+additively complete because every term but the first $\lfloor 3/2\rfloor = 1$ is a multiple of
+$3$ (namely $\lfloor (3/2)\cdot 2^{n+1}\rfloor = 3\cdot 2^n$), so every subset sum is
+$\equiv 0$ or $1 \pmod 3$; the infinitely many integers $\equiv 2 \pmod 3$ are never reached.
+A partial result on Erdős Problem 349 in the same divisibility family as
+`int_coeff_ge_two_not_isGoodPair` (here the modulus is $3$). -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-three-halves-fiber-proof/FormalConjectures/ErdosProblems/349.lean"]
+theorem three_halves_two_not_isGoodPair : ¬ IsGoodPair (3 / 2) 2 := by
   sorry
 
 end Erdos349
