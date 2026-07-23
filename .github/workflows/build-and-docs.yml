@@ -91,13 +91,16 @@ jobs:
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true'
         run: |
+          cd docbuild
+          export MATHLIB_NO_CACHE_ON_UPDATE=1
+          lake update formal_conjectures
           # Some modules crash verso-literate (e.g. metaprogramming-heavy util files),
           # so we make this best-effort: render whatever succeeds.
           # TODO(firsching): examine exactly what fails and fix or report as bug to verso
           lake build FormalConjectures:literate || true
           # Remove empty/corrupt JSON files left by failed builds
           find .lake/build/literate -name "*.json" -empty -delete 2>/dev/null || true
-          lake exe verso-html .lake/build/literate _literate_html || true
+          lake exe verso-html .lake/build/literate ../_literate_html || true
 
       - name: Post-process literate HTML
         if: steps.mode.outputs.website_only != 'true'

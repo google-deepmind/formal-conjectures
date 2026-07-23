@@ -105,9 +105,13 @@ lake exe extract_names --exclude=statement,docstring,moduleDocstrings > site/dat
 # (Optional) Generate Verso literate fragments for rendered docstrings.
 # Without this, theorem detail pages will lack formatted docstrings and source links.
 # Warning: the literate build step can take a long time (30+ minutes).
+cd docbuild
+export MATHLIB_NO_CACHE_ON_UPDATE=1
+lake update formal_conjectures
 lake build FormalConjectures:literate || true
 find .lake/build/literate -name "*.json" -empty -delete 2>/dev/null || true
-lake exe verso-html .lake/build/literate _literate_html || true
+lake exe verso-html .lake/build/literate ../_literate_html || true
+cd ..
 python3 site/fix_literate_html.py _literate_html
 python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
 
