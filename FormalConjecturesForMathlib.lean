@@ -59,6 +59,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGrap
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CycleRank
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SzegedIndex
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LovaszTheta
@@ -74,6 +75,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.PathCover
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Saturation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LargestInducedTree
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
