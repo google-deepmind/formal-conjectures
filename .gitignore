@@ -11,3 +11,7 @@ _literate_html/
 site/site/
 # Conjectures Data gets added by CI
 site/data/conjectures.json
+
+# Generated all-imports file
+FormalConjectures.lean
+FormalConjectures/All.lean

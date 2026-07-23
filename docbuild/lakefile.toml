@@ -8,23 +8,6 @@ name = "formal_conjectures"
 path = "../"
 
 [[require]]
-scope = "leanprover"
-name = "doc-gen4"
-rev = "v4.27.0"
-
-[[require]]
 name = "verso"
 git = "https://github.com/leanprover/verso.git"
 rev = "v4.27.0"
-
-[[lean_lib]]
-name = "OverwriteIndexLib"
-srcDir = "scripts"
-roots = ["overwrite_index"]
-
-[[lean_exe]]
-name = "overwrite_index"
-srcDir = "scripts"
-root = "overwrite_index"
-exeName = "overwrite_index"
-supportInterpreter = true
