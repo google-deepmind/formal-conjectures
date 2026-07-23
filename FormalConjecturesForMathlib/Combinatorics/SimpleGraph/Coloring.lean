@@ -153,7 +153,7 @@ noncomputable def indepNumK (G : SimpleGraph V) (k : ℕ) : ℕ :=
 by natural numbers such that for all `k > 0`, the number of
 vertices with color `< k` equals the maximum size of
 the union of `k` independent sets. -/
-def CDSColorable [Fintype α] {G : SimpleGraph α} : Prop :=
+def CDSColorable [Fintype α] (G : SimpleGraph α) : Prop :=
     ∃ (C : G.Coloring Nat), ∀ k : Nat,
    ∑ i < k, (C.colorClass i).ncard = indepNumK G k
 
@@ -166,4 +166,4 @@ def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →
 The anti-Ramsey number $\mathrm{AR}(n, H)$: maximum colors to edge-color $K_n$ without rainbow $H$.
 -/
 noncomputable def antiRamseyNum {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
-  sSup {k | ∃ c : Sym2 (Fin n) → Fin k, ∀ f : H →g ⊤, ¬IsRainbow f c}
+  sSup {k | ∃ c : Sym2 (Fin n) → Fin k, Function.Surjective c ∧ ∀ f : H →g ⊤, ¬IsRainbow f c}
