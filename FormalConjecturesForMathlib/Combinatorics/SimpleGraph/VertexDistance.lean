@@ -58,16 +58,13 @@ noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
   else 0
 
-/-- The minimum, over all vertices $v \notin S$, of the distance from $v$ to the set $S$:
-$\min_{v \notin S} \operatorname{dist}(v, S)$. Returns `0` when $S = \mathrm{univ}$ (no
-vertex outside $S$).
-
-Counterpart to `ecc`: the outer minimum (instead of maximum) of the
-distance-to-set function, restricted to vertices outside $S$. -/
+/-- The minimum distance between distinct vertices of $S$:
+$\min \{\operatorname{dist}_G(u, v) \mid u, v \in S, u \ne v\}$. Returns `0` when $S$
+contains fewer than two vertices. -/
 noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
-  let outside := Finset.univ.filter (fun v : α => v ∉ S)
-  if h : outside.Nonempty then
-    (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
+  let pairs := (S.toFinset ×ˢ S.toFinset).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => G.dist p.1 p.2)).min' (Finset.Nonempty.image h _)
   else 0
 
 /-- The **eccentricity of a set** `S`: the maximum, over all vertices `v` of `G`, of the
@@ -139,6 +136,13 @@ Returns 0 if u = v or if v is unreachable from u. -/
 def computable_dist (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) : ℕ :=
   if u = v then 0
   else bfs_dist_aux G v (Fintype.card α) 1 (bfs_expand G {u})
+
+/-- A computable version of `distMin` for a `Finset` of vertices. -/
+def computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : ℕ :=
+  let pairs := (S ×ˢ S).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => computable_dist G p.1 p.2)).min' (Finset.Nonempty.image h _)
+  else 0
 
 /-- Computable average distance as a rational. -/
 def computable_avg_dist (G : SimpleGraph α) [DecidableRel G.Adj] : ℚ :=
@@ -275,6 +279,22 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
             · exact h_not_found d (by omega)
             · subst hd; rwa [h_inv] at hv)
           (by omega)
+
+/-- `computableDistMin` agrees with `distMin` on a finite vertex set. -/
+theorem distMin_eq_computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj]
+    (S : Finset α) : distMin G (S : Set α) = computableDistMin G S := by
+  unfold distMin computableDistMin
+  simp only [Finset.toFinset_coe]
+  split_ifs
+  · congr 1
+    ext n
+    simp only [Finset.mem_image]
+    constructor
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, (dist_eq_computable G p.1 p.2).symm⟩
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, dist_eq_computable G p.1 p.2⟩
+  · rfl
 
 theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     averageDistance G = (computable_avg_dist G : ℝ) := by
