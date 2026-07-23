@@ -67,7 +67,9 @@ noncomputable def predictedDensity (j : ℕ) : ℝ :=
 For every squarefree $j \geq 2$, the positive indices where $j$ is the least
 successful radicand have the predicted natural density.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/DomTheDeveloper/formal-conjectures/blob/796f5e8919a844d78e8bb683d1974e118aa263ee/FormalConjectures/OEIS/261865FinalAudit.lean"]
 theorem density_formula (j : ℕ) (hj : 2 ≤ j) (hsq : Squarefree j) :
     {n : ℕ | 0 < n ∧ IsValue n j}.HasDensity (predictedDensity j) := by
   sorry
