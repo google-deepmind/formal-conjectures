@@ -45,7 +45,9 @@ All unitary perfect numbers are even.
 
 Formal proof linked here provided by AlphaProof.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/b70a2ddf5e55f743aac9d4f4a907786b39bc9807/FormalConjectures/ErdosProblems/1052.lean#L46"]
+@[category research solved, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/b70a2ddf5e55f743aac9d4f4a907786b39bc9807/FormalConjectures/ErdosProblems/1052.lean#L46",
+formal_proof using lean4 at "https://github.com/Mnehmos/llm-driven-proof-search/blob/5a70abe2ebad1438f328d3cd5201488c815d4c9f/lean-checker/LeanChecker/Erdos/Erdos1052.lean"]
 theorem even_of_isUnitaryPerfect (n : ℕ) (hn : IsUnitaryPerfect n) : Even n := by
   sorry
 
@@ -64,14 +66,17 @@ theorem isUnitaryPerfect_90 : IsUnitaryPerfect 90 := by
   norm_num [IsUnitaryPerfect, properUnitaryDivisors]
   decide +kernel
 
-@[category test, AMS 11]
+@[category test, AMS 11,
+formal_proof using lean4 at "https://github.com/Mnehmos/llm-driven-proof-search/blob/b03fb75a15519e5e886544e898afb4c7565054c7/lean-checker/LeanChecker/Erdos/Erdos1052.lean#L532"]
 theorem isUnitaryPerfect_87360 : IsUnitaryPerfect 87360 := by
   -- TODO: Find a quicker proof. This one is too slow.
+  -- A fast (multiplicative) Lean 4 proof of this exact statement is linked above.
   stop
   norm_num [IsUnitaryPerfect, properUnitaryDivisors]
   decide +kernel
 
-@[category test, AMS 11, formal_proof using formal_conjectures at "https://github.com/Sanexxxx777/formal-conjectures/blob/be8aed15e8888a08bbe723170698e26c046412a4/FormalConjectures/ErdosProblems/1052.lean#L346"]
+@[category test, AMS 11, formal_proof using formal_conjectures at "https://github.com/Sanexxxx777/formal-conjectures/blob/be8aed15e8888a08bbe723170698e26c046412a4/FormalConjectures/ErdosProblems/1052.lean#L346",
+formal_proof using lean4 at "https://github.com/Mnehmos/llm-driven-proof-search/blob/b03fb75a15519e5e886544e898afb4c7565054c7/lean-checker/LeanChecker/Erdos/Erdos1052.lean#L539"]
 theorem isUnitaryPerfect_146361946186458562560000 : IsUnitaryPerfect 146361946186458562560000 := by
   sorry
 
