@@ -45,13 +45,32 @@ theorem a_formally_solved_problem : 2 + 2 = 4 := by
 
 -- formal_proof on non-research categories
 #guard_msgs in
-@[category graduate, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]
+@[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]
 theorem a_graduate_problem_with_formal_proof : 1 + 1 = 2 := by
   rfl
 
 #guard_msgs in
 @[category test, formal_proof using formal_conjectures at ""]
 theorem a_test_with_formal_proof : 3 + 3 = 6 := by
+  rfl
+
+-- A `formal_proof` link is validated: external kinds must link to the proof, and
+-- any link that is given must be a URL.
+
+/--
+warning: A `lean4` or `other_system` `formal_proof` should include a link to the proof.
+-/
+#guard_msgs in
+@[category test, formal_proof using lean4 at ""]
+theorem a_lean4_proof_with_empty_link : 4 + 4 = 8 := by
+  rfl
+
+/--
+warning: A `formal_proof` link should be a URL (http:// or https://), but got: "not-a-url".
+-/
+#guard_msgs in
+@[category test, formal_proof using lean4 at "not-a-url"]
+theorem a_formal_proof_with_malformed_link : 5 + 5 = 10 := by
   rfl
 
 -- The `#AMS` command
