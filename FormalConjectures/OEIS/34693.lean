@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
+# Smallest number k such that kn + 1 is prime
+
 Smallest number $k$ such that $kn + 1$ is prime.
 
 *Reference:* [A34693](https://oeis.org/A34693)
@@ -30,26 +32,26 @@ open Filter
 noncomputable def a (n : ℕ) : ℕ := Nat.nth (fun k ↦ (k * n + 1).Prime) 0
 
 @[category test, AMS 11]
-theorem zero : a 0 = 0 := by
+theorem a_0 : a 0 = 0 := by
   simpa [a] using Nat.nth_eq_zero.2 <| .inr ⟨by convert Set.finite_empty; aesop, by aesop⟩
 
 @[category test, AMS 11]
-theorem one : a 1 = 1 := by
+theorem a_1 : a 1 = 1 := by
   conv_rhs => rw [← Nat.nth_count (p := fun k ↦ (k + 1).Prime) (n := 1) (by norm_num)]
   aesop (add simp [a])
 
 @[category test, AMS 11]
-theorem two : a 2 = 1 := by
+theorem a_2 : a 2 = 1 := by
   conv_rhs => rw [← Nat.nth_count (p := fun k ↦ (k * 2 + 1).Prime) (n := 1) (by norm_num)]
   aesop (add simp [a])
 
 @[category test, AMS 11]
-theorem three : a 3 = 2 := by
+theorem a_3 : a 3 = 2 := by
   conv_rhs => rw [← Nat.nth_count (p := fun k ↦ (k * 3 + 1).Prime) (n := 2) (by norm_num)]
   aesop (add simp [a])
 
 @[category test, AMS 11]
-theorem seven : a 7 = 4 := by
+theorem a_7 : a 7 = 4 := by
   conv_rhs => rw [← Nat.nth_count (p := fun k ↦ (k * 7 + 1).Prime) (n := 4) (by norm_num)]
   aesop (add simp [a])
 
@@ -69,7 +71,24 @@ theorem exists_k_stronger {n : ℕ} (hn : 0 < n) : ∃ k : ℕ,
 @[category research solved, AMS 11]
 theorem exists_k_best_possible : ∃ n > (0 : ℕ), ∀ (k : ℕ),
     k < 1 + (Real.nthRoot 100 n) ^ 74 → ¬(n * k + 1).Prime := by
-  sorry
+  refine ⟨19, by norm_num, ?_⟩
+  have hy : Real.nthRoot 100 ((19 : ℕ) : ℝ) = (19 : ℝ) ^ (((100 : ℕ) : ℝ))⁻¹ := by
+    simp only [Real.nthRoot]
+    rw [if_pos (by decide : Even 100)]
+    norm_num
+  have h100 : (Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ (100 : ℕ) = 19 := by
+    rw [hy]; exact Real.rpow_inv_natCast_pow (by norm_num) (by norm_num)
+  have hb : (Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ 74 ≤ 9 := by
+    apply le_of_pow_le_pow_left₀ (n := 100) (by norm_num) (by norm_num)
+    have e : ((Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ (74 : ℕ)) ^ (100 : ℕ)
+        = ((Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ (100 : ℕ)) ^ (74 : ℕ) := by
+      rw [← pow_mul, ← pow_mul, Nat.mul_comm]
+    rw [e, h100]
+    norm_num
+  intro k hk
+  have hk10 : (k : ℝ) < 10 := by linarith
+  have hk10' : k < 10 := by exact_mod_cast hk10
+  interval_cases k <;> norm_num
 
 /-- Conjecture: $a(n) = O(\log(n)\log(\log(n)))$. -/
 @[category research open, AMS 11]

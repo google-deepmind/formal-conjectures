@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.DeclName
+import FormalConjecturesUtil.DeclName
 import FormalConjectures.Arxiv.«0912.2382».CurlingNumberConjecture
 import FormalConjectures.Arxiv.«1601.03081».UniqueCrystalComponents
 import FormalConjectures.Arxiv.«2501.03234».ArithmeticSumS
@@ -221,6 +221,6 @@ end Subsets.FC100OpenSet1
 
 open Lean Meta ProblemAttributes in
 #eval verifyCategoryCounts Subsets.FC100OpenSet1.problems [
-  ("research open", 95),
-  ("research solved", 5)
+  ("research open", 94),
+  ("research solved", 6)
 ]

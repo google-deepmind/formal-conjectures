@@ -48,3 +48,16 @@ An example of this would be:
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
 ```
+
+## Before requesting review
+
+The general checklist lives in
+[`AGENTS.md`](../../AGENTS.md#quality-checklist). Two corrections specific to
+Erdős problems come up most often in review:
+
+1. **Docstrings quote the website verbatim.** Copy the LaTeX from
+   erdosproblems.com rather than rephrasing it. Only deviate to fix a genuine
+   error or inaccuracy in the original formulation.
+2. **Solved problems cite the solution.** The text below the problem box
+   typically explains who solved it and in which paper; copy that sentence
+   verbatim into the docstring as well.
