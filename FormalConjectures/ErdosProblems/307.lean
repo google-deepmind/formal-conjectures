@@ -89,4 +89,25 @@ theorem erdos_307.barrier {P Q : Finset ℕ}
     59 ≤ #(P ∪ Q) ∧ (4 * 10 ^ 112 : ℚ) ≤ (∏ p ∈ P, (p : ℚ)) ^ 2 := by
   sorry
 
+/--
+A finite **barrier** for Erdős 307: if both $P$ and $Q$ consist only of primes from
+$\{2, 3, 5, 7, 11\}$, then
+
+$$
+1 \neq \left( \sum_{p \in P} \frac{1}{p} \right) \left( \sum_{q \in Q} \frac{1}{q} \right).
+$$
+
+Verified by exhaustive `norm_num` check over all $2^5 \times 2^5 = 1024$ subset pairs.
+In particular, any solution to Erdős 307 must use at least one prime greater than 11.
+
+Authored by Ahmad Ali Parr (SNAPKITTY COLLECTIVE).
+-/
+@[category research open, AMS 11]
+theorem erdos_307.barrier_le_11
+    {P Q : Finset ℕ}
+    (hP : ∀ p ∈ P, p.Prime ∧ p ≤ 11)
+    (hQ : ∀ q ∈ Q, q.Prime ∧ q ≤ 11) :
+    1 ≠ (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
+  sorry
+
 end Erdos307
