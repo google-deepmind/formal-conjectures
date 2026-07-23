@@ -91,9 +91,9 @@ almost surely?
 There is some ambiguity as to whether the intended coefficient set is $\{-1, 1\}$ or $\{0, 1\}$,
 see `erdos_522.variants.zero_one` for the alternate version.
 -/
-@[category research solved, AMS 12 60, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/main/starfleet/erdos-522/Candidate.lean"]
+@[category research open, AMS 12 60]
 theorem erdos_522 :
-    answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    answer(sorry) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (c : KacCoefficients ({-1, 1} : Set ℂ) Ω),
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * c.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry
