@@ -88,6 +88,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.UnitDistance
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.DFA
 public import FormalConjecturesForMathlib.Computability.Encoding
+public import FormalConjecturesForMathlib.Computability.EncodingNat
 public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
