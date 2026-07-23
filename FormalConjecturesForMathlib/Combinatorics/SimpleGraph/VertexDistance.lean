@@ -51,6 +51,68 @@ noncomputable def path (G : SimpleGraph α) : ℕ :=
     ∃ l : List α, l.toFinset = s ∧ isInducedPath G l)
   (induced_paths.image Finset.card).max.getD 0
 
+/-- An explicit induced path witnesses a lower bound for `path`. -/
+theorem length_le_path_of_isInducedPath (G : SimpleGraph α) (l : List α)
+    (hl : G.isInducedPath l) : l.length ≤ path G := by
+  unfold path
+  let inducedPaths := Finset.univ.filter (fun s : Finset α ↦
+    ∃ vertices : List α, vertices.toFinset = s ∧ G.isInducedPath vertices)
+  have hmem : l.toFinset ∈ inducedPaths := by
+    simp only [inducedPaths, Finset.mem_filter, Finset.mem_univ, true_and]
+    exact ⟨l, rfl, hl⟩
+  have hcard : l.toFinset.card ∈ inducedPaths.image Finset.card :=
+    Finset.mem_image.mpr ⟨l.toFinset, hmem, rfl⟩
+  change l.length ≤ (inducedPaths.image Finset.card).max.getD 0
+  rw [← List.toFinset_card_of_nodup hl.1]
+  have hle := Finset.le_max hcard
+  cases hmaximum : (inducedPaths.image Finset.card).max with
+  | bot => simp [hmaximum] at hle
+  | coe maximum =>
+      rw [hmaximum] at hle
+      have hleNat : l.toFinset.card ≤ maximum := WithBot.coe_le_coe.mp hle
+      simpa [hmaximum] using hleNat
+
+/-- A uniform upper bound on the lengths of induced paths bounds `path`. -/
+theorem path_le_of_isInducedPath_length_le (G : SimpleGraph α) (k : ℕ)
+    (h : ∀ l : List α, G.isInducedPath l → l.length ≤ k) : path G ≤ k := by
+  unfold path
+  let inducedPaths := Finset.univ.filter (fun s : Finset α ↦
+    ∃ vertices : List α, vertices.toFinset = s ∧ G.isInducedPath vertices)
+  change (inducedPaths.image Finset.card).max.getD 0 ≤ k
+  have hmax : (inducedPaths.image Finset.card).max ≤ (k : WithBot ℕ) := by
+    apply Finset.max_le
+    intro cardinality hcardinality
+    obtain ⟨s, hs, rfl⟩ := Finset.mem_image.mp hcardinality
+    obtain ⟨_, vertices, rfl, hvertices⟩ := Finset.mem_filter.mp hs
+    rw [List.toFinset_card_of_nodup hvertices.1]
+    exact WithBot.coe_le_coe.mpr (h vertices hvertices)
+  cases hmaximum : (inducedPaths.image Finset.card).max with
+  | bot => exact Nat.zero_le k
+  | coe maximum =>
+      have : maximum ≤ k := by
+        rw [hmaximum] at hmax
+        exact WithBot.coe_le_coe.mp hmax
+      simpa [hmaximum] using this
+
+/-- If `G` has no induced path on `k + 1` vertices, then `path G ≤ k`. -/
+theorem path_le_of_not_exists_inducedPath_succ (G : SimpleGraph α) (k : ℕ)
+    (h : ¬ ∃ e : Fin (k + 1) → α, Function.Injective e ∧
+      ∀ i j : Fin (k + 1), G.Adj (e i) (e j) ↔
+        i.val + 1 = j.val ∨ j.val + 1 = i.val) : path G ≤ k := by
+  apply path_le_of_isInducedPath_length_le G k
+  intro l hl
+  by_contra hlength
+  have hprefix : k + 1 ≤ l.length := by omega
+  apply h
+  let e : Fin (k + 1) → α := fun i ↦ l.get ⟨i.val, lt_of_lt_of_le i.isLt hprefix⟩
+  refine ⟨e, ?_, ?_⟩
+  · intro i j hij
+    apply Fin.ext
+    exact congrArg (fun n : Fin l.length ↦ n.val) (hl.1.injective_get hij)
+  · intro i j
+    simpa only [e] using
+      hl.2 ⟨i.val, lt_of_lt_of_le i.isLt hprefix⟩ ⟨j.val, lt_of_lt_of_le j.isLt hprefix⟩
+
 /-- Auxiliary quantity `ecc` used in conjecture 34. -/
 noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
   let s_comp := Finset.univ.filter (fun v => v ∉ S)
