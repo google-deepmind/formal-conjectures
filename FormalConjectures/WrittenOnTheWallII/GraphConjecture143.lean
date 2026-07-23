@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 143
@@ -39,8 +39,17 @@ is the length of the shortest cycle, and
 $\sigma(G) = G.\mathrm{secondSmallestDegree}$ is the **second-smallest degree**
 of $G$'s degree sequence (per WOWII defEntry 65). We state the inequality in
 denominator-free form to avoid the $\sigma = 0$ corner case ($n \le 1$).
+
+The proof splits into the acyclic case and two cyclic cases. For an acyclic
+graph the girth is zero. If $\sigma \ge 2$, deleting two consecutive edges from
+a shortest cycle leaves an induced tree on $\mathrm{girth}(G)-1$ vertices, and
+the factor $\sigma \ge 2$ yields the required inequality. If $\sigma = 1$,
+there are two degree-one vertices. A maximal induced tree containing them must
+have an external vertex with two attachments; those attachments create a cycle
+whose length forces the tree to contain at least $\mathrm{girth}(G)+1$ vertices.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at "https://github.com/DomTheDeveloper/formal-conjectures/blob/693e9aa206a5c6c98598aa4e6e5f3db0994a79b7/FormalConjectures/WrittenOnTheWallII/Proofs/GraphConjecture143.lean"]
 theorem conjecture143 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hσ : 0 < secondSmallestDegree G) :
     (G.girth : ℝ) + 1 ≤ (largestInducedTreeSize G : ℝ) * (secondSmallestDegree G : ℝ) := by

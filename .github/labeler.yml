@@ -2,21 +2,37 @@ arxiv:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/Arxiv/**'
 
+books:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Books/**'
+
 erdos-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/ErdosProblems/**'
 
-kourovka:
+for-mathlib:
   - changed-files:
-    - any-glob-to-any-file: 'FormalConjectures/Kourovka/**'
+    - any-glob-to-any-file: 'FormalConjecturesForMathlib/**'
 
 green-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/GreensOpenProblems/**'
 
+hilbert-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/HilbertProblems/**'
+
+kourovka:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Kourovka/**'
+
 linter:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/Util/Linters/**'
+
+litt-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/LittProblems/**'
 
 mathoverflow:
   - changed-files:
@@ -30,6 +46,26 @@ oeis:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/OEIS/**'
 
+open-quantum-problems:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/OpenQuantumProblems/**'
+
+optimization-constants:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/OptimizationConstants/**'
+
+other:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Other/**'
+
+paper:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/Paper/**'
+
 wikipedia:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/Wikipedia/**'
+
+written-on-the-wall-ii:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjectures/WrittenOnTheWallII/**'

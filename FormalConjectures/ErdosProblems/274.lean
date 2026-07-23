@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 274
@@ -68,7 +68,8 @@ If `G` is a finite abelian group then there cannot exist an exact covering of `G
 than one cosets of different sizes? (i.e. each element is contained in exactly one
 of the cosets.)
 -/
-@[category research solved, AMS 20]
+@[category research solved, AMS 20,
+  formal_proof using lean4 at "https://github.com/Jostamon/erdos274-hs-abelian/blob/2ab8a2e39e7dd7836adf577b52555f069244466f/Erdos274/Main.lean"]
 theorem erdos_274.variants.abelian {G : Type*} [Fintype G] [CommGroup G]
     (hG : 1 < Fintype.card G) {ι : Type*} [Fintype ι] (P : Group.ExactCovering G ι)
     (hι : 1 < Fintype.card ι) :

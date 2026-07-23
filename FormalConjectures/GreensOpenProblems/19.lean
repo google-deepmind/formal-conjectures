@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 19
@@ -51,8 +51,6 @@ noncomputable def S (d : G) (A : Finset (G × G)) : Finset (G × G) :=
 
 end GroupDefs
 
-/-- The group $G = \mathbb{F}_2^n = (Z/2Z)^n$. -/
-abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 
 /--
 True if the given exponent satisfies Green's conditions [Gr26].

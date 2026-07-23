@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 109
@@ -26,22 +26,25 @@ import FormalConjectures.Util.ProblemImports
 namespace WrittenOnTheWallII.GraphConjecture109
 
 open Classical SimpleGraph
-
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
 /--
 WOWII [Conjecture 109](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph $G$, the independence number $\alpha(G)$ satisfies
+For a simple connected graph $G$, the independence number $\alpha(G)$ was
+conjectured to satisfy
 $\alpha(G) \le \lfloor (\mathrm{residue}(G) + 2 \cdot b(G)) / 3 \rfloor$, where
-$\mathrm{residue}(G)$ is the Havel-Hakimi residue and $b(G)$ is the size of a
+$\mathrm{residue}(G)$ is the Havel--Hakimi residue and $b(G)$ is the size of a
 largest induced bipartite subgraph.
 
-See: Favaron, Mahéo, Saclé (1991) for the residue; DeLaVina's Graffiti.pc for the conjecture.
+This is false. A connected graph on 21 vertices has an independent set of size
+15, residue 8, and no induced bipartite subgraph with more than 18 vertices, so
+the conjectured right-hand side is at most 14.
 -/
-@[category research open, AMS 5]
-theorem conjecture109 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    (G.indepNum : ℝ) ≤ ⌊((residue G : ℝ) + 2 * b G) / 3⌋ := by
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture109.lean"]
+theorem conjecture109 : answer(False) ↔
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+      (G : SimpleGraph α) [DecidableRel G.Adj] (_h : G.Connected),
+      (G.indepNum : ℝ) ≤ ⌊((residue G : ℝ) + 2 * b G) / 3⌋ := by
   sorry
 
 -- Sanity checks
@@ -54,6 +57,7 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 step gives $[0]$, leaving a single zero. -/
 @[category test, AMS 5]
 example : residue (⊤ : SimpleGraph (Fin 2)) = 1 := by
-  unfold residue; decide +native
+  unfold residue
+  decide +native
 
 end WrittenOnTheWallII.GraphConjecture109

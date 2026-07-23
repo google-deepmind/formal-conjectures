@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.Linters.ExistsImplicationLinter
+import FormalConjecturesUtil.Linters.ExistsImplicationLinter
 import Mathlib
 
 /--
