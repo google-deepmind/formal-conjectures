@@ -43,7 +43,7 @@ Let $r\geq 2$ and let $t_r(n)$ be the Turán number (the maximal number of edges
 vertices with no $K_{r+1}$).
 
 If $G$ is a graph with $n$ vertices and $m\geq t_r(n)$ edges there exists a clique on $r$ vertices,
-say $x_1,\ldots,x_r$, such that\[d(x_1)+\cdots+d(x_r)\geq \frac{2rm}{n}.\]
+say $x_1,\ldots,x_r$, such that $$d(x_1)+\cdots+d(x_r)\geq \frac{2rm}{n}.$$
 
 A conjecture of Bollobás and Erdős. This was conjectured in [Er75] only in the special case $r=3$. Edwards [Ed78] proved the conjecture for $2\leq r\leq 8$ (under the additional assumption that $n\geq r^2$). Faudree [Fa92] proved the conjecture for all $r\geq 2$ provided $n>\frac{r-1}{4}r^2$. The full conjecture was proved by Bollobás and Nikiforov [BoNi05].
 -/

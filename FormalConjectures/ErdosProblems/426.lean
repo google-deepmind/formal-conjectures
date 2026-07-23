@@ -48,12 +48,12 @@ theorem isUniqueSubgraph_bot_bot {V : Type*} : IsUniqueSubgraph (⊥ : SimpleGra
 /--
 We say $H$ is a unique subgraph of $G$ if there is exactly one way to find $H$ as a subgraph
 (not necessarily induced) of $G$. Is there a graph on $n$ vertices with
-\[\gg \frac{2^{\binom{n}{2}}}{n!}\]
+$$\gg \frac{2^{\binom{n}{2}}}{n!}$$
 many distinct unique subgraphs?
 
 Bradač and Christoph [BrCh24] have proved the answer is no: if $f(n)$ is the maximum number of
 unique subgraphs in a graph on $n$ vertices then
-\[f(n) = o\left(\frac{2^{\binom{n}{2}}}{n!}\right).\]
+$$f(n) = o\left(\frac{2^{\binom{n}{2}}}{n!}\right).$$
 
 The $\gg$ below is read as: some constant $c>0$ works for arbitrarily large $n$. The negation
 of the proposition on the right is then exactly $f(n) = o(2^{\binom{n}{2}}/n!)$, the form in
