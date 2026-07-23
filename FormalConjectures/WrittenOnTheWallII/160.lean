@@ -30,9 +30,16 @@ i.e., the number of pairs of neighbors of $v$ that are themselves adjacent.
 
 The invariant `maxTrianglesAtVertex G` is the maximum of $T(v)$ over all vertices.
 
-Conjecture 160 uses both $\max_v T(v)$ and $c_{C_4}(G)$ (the number of induced
-4-cycles) to lower bound the WOWII invariant $L_s(G)$, the maximum number of
-leaves over all spanning trees of $G$ (exposed as `SimpleGraph.Ls G : ℝ`).
+Conjecture 160 uses both $\max_v T(v)$ and $\chi_{C_4}(G)$, the $C_4$-free
+characteristic function: it is `1` when $G$ contains no cycle of length four
+and `0` otherwise. The cycle need not be induced. These invariants lower-bound
+the WOWII invariant $L_s(G)$, the maximum number of leaves over all spanning
+trees of $G$ (exposed as `SimpleGraph.Ls G : ℝ`).
+
+The earlier formalization used the number of induced four-cycles. The historical
+conjecture instead uses this binary $C_4$-free indicator.
+
+**Provenance.** Statement corrected by Dominic Dabish.
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture160
@@ -49,20 +56,26 @@ noncomputable def maxTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj]
 WOWII [Conjecture 160](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 For a simple connected graph $G$,
-$L_s(G) \ge \max_v l(v) + \max_v T(v) \cdot c_{C_4}(G)$
+$L_s(G) \ge \max_v l(v) + \max_v T(v) \cdot \chi_{C_4}(G)$
 where:
 
 - $L_s(G) = \mathrm{SimpleGraph.Ls}\, G$ is the maximum number of leaves over all
   spanning trees of $G$,
 - $\max_v l(v)$ is the maximum local independence number over vertices,
 - $\max_v T(v)$ is the maximum number of triangles incident to any vertex,
-- $c_{C_4}(G)$ is the number of induced 4-cycles in $G$.
+- $\chi_{C_4}(G)$ is `1` if $G$ has no cycle of length four and `0` otherwise.
+
+A formal proof joins a closest pair of a local-independence maximizer and a
+triangle-count maximizer by a shortest path and applies the connected-seed
+spanning-tree bound developed for Conjecture 2.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/41d6835ad4325077c04122af476a08193110a933/WOWII160Proof.lean#L735"]
 theorem conjecture160 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
     let maxT := maxTrianglesAtVertex G
-    let cC4 := countInducedC4 G
+    let cC4 : ℕ := if ∃ v : α, ∃ c : G.Walk v v, c.IsCycle ∧ c.length = 4 then 0 else 1
     (maxL : ℝ) + (maxT : ℝ) * (cC4 : ℝ) ≤ Ls G := by
   sorry
 
@@ -86,12 +99,6 @@ So $T(1) = 0$. -/
 example : numTrianglesAtVertex
     (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) (1 : Fin 3) = 0 := by
   unfold numTrianglesAtVertex
-  decide +native
-
-/-- In $K_3$, `countInducedC4 = 0` (no induced 4-cycles in a 3-vertex graph). -/
-@[category test, AMS 5]
-example : countInducedC4 (⊤ : SimpleGraph (Fin 3)) = 0 := by
-  unfold countInducedC4 isInducedC4
   decide +native
 
 end WrittenOnTheWallII.GraphConjecture160
