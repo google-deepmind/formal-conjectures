@@ -122,12 +122,12 @@ theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime]
   sorry
 
 /-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every locally Euclidean
-topological group admits a compatible real-analytic Lie group structure. -/
+topological group is a Lie group. -/
 @[category research solved, AMS 22 57]
 theorem hilbert_fifth_problem
     [IsTopologicalGroup G]
     [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] :
-    AdmitsLieGroupStructure G := by
+    LieGroup (𝓡 n) ⊤ G := by
   sorry
 
 namespace Counterexample
@@ -179,20 +179,13 @@ private def badChart : ℝ ≃ₜ EuclideanSpace ℝ (Fin 1) :=
 private def badChartedSpace : ChartedSpace (EuclideanSpace ℝ (Fin 1)) ℝ :=
   badChart.isOpenEmbedding.singletonChartedSpace
 
-private theorem old_hilbert_fifth_problem
-    {G : Type*} [Group G] [TopologicalSpace G] {n : ℕ}
-    [IsTopologicalGroup G]
-    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] :
-    LieGroup (𝓡 n) ω G := by
-  sorry
-
-/-- The former formulation of Hilbert's fifth problem, which asserted that the group operations
-are analytic in any supplied topological atlas, implies `False`. -/
+/-- The formulation of Hilbert's fifth problem above implies `False`, since it asserts that the
+group operations are analytic in any supplied topological atlas. -/
 @[category test, AMS 22]
-theorem old_hilbert_fifth_is_false : False := by
+theorem hilbert_fifth_problem.variants.arbitrary_atlas_counterexample : False := by
   letI : ChartedSpace (EuclideanSpace ℝ (Fin 1)) (Multiplicative ℝ) := badChartedSpace
   have hinv :=
-    (old_hilbert_fifth_problem (G := Multiplicative ℝ) (n := 1)).contMDiff_inv.contMDiffAt
+    (hilbert_fifth_problem (G := Multiplicative ℝ) (n := 1)).contMDiff_inv.contMDiffAt
       (x := (1 : Multiplicative ℝ))
   rw [contMDiffAt_iff] at hinv
   exact hinv
