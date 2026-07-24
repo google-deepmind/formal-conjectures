@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 31
@@ -137,8 +137,8 @@ where $N = 2^n$ [Gr24].
 -/
 @[category research open, AMS 5 11]
 theorem green_31.variants.sidon_01n : answer(sorry) ↔
-    ∃ S : (n : ℕ) → Finset (Fin n → ZMod 2),
-      (∀ n, IsSidon (S n : Set (Fin n → ZMod 2))) ∧
+    ∃ S : (n : ℕ) → Finset (𝔽₂ n),
+      (∀ n, IsSidon (S n : Set (𝔽₂ n))) ∧
       ∀ᶠ n in atTop, ((2 : ℝ) ^ n) ^ (0.51 : ℝ) ≤ (S n).card := by
   sorry
 
@@ -147,8 +147,8 @@ The best-known upper bound for a Sidon subset of $\{0, 1\}^n$ ($N = 2^n$) is $N^
 -/
 @[category research solved, AMS 5 11]
 theorem green_31.variants.sidon_01n_clz01 :
-    ∃ C : ℝ, ∀ n, ∀ S : Finset (Fin n → ZMod 2),
-      IsSidon (S : Set (Fin n → ZMod 2)) → (S.card : ℝ) ≤ C * ((2 : ℝ) ^ n) ^ (0.5753 : ℝ) := by
+    ∃ C : ℝ, ∀ n, ∀ S : Finset (𝔽₂ n),
+      IsSidon (S : Set (𝔽₂ n)) → (S.card : ℝ) ≤ C * ((2 : ℝ) ^ n) ^ (0.5753 : ℝ) := by
   sorry
 
 end Green31

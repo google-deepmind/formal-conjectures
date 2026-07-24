@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 340
@@ -118,7 +118,9 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 @[category research solved, AMS 5]
 theorem erdos_340.variants._22_mem_sub :
     22 ∈ Set.range greedySidon - Set.range greedySidon := by
-  sorry
+  have h : (22 : ℕ) = greedySidon 14 - greedySidon 13 := by decide +native
+  rw [h]
+  exact Set.sub_mem_sub (Set.mem_range_self 14) (Set.mem_range_self 13)
 
 /--
 The smallest integer which is unknown to be in $A - A$ is $33$.

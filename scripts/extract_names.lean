@@ -15,8 +15,8 @@ limitations under the License.
 -/
 
 import Lean
-import FormalConjectures.Util.Attributes.Basic
-import FormalConjectures.Util.Answer
+import FormalConjecturesUtil.Attributes.Basic
+import FormalConjecturesUtil.Answer
 
 /-!
 # Extract Names
@@ -91,10 +91,30 @@ def getAnswerKinds (type : Expr) : MetaM (List String) := do
     else
       return "non-Prop"
 
+/-- Run a git command and return its stdout, trimmed. Returns `none` on failure. -/
+def gitOutput (args : Array String) : IO (Option String) := do
+  try
+    let out ← IO.Process.output { cmd := "git", args := args }
+    if out.exitCode == 0 then
+      let s := out.stdout.trimAscii.toString
+      return if s.isEmpty then none else some s
+    else return none
+  catch _ => return none
+
+/-- Get the ISO 8601 timestamp of when a file was first added to the repo. -/
+def getFileFirstAdded (file : System.FilePath) : IO (Option String) :=
+  gitOutput #["log", "--diff-filter=A", "--follow", "--format=%aI", "--", file.toString]
+    <&> (·.bind (·.splitOn "\n" |>.getLast?))
+
+/-- Get the ISO 8601 timestamp of the most recent commit that modified a file. -/
+def getFileLastModified (file : System.FilePath) : IO (Option String) :=
+  gitOutput #["log", "-1", "--format=%aI", "--", file.toString]
+
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
   ["docstring", "statement", "subjects", "formalProofKind", "formalProofLink",
-   "hasSorryFreeProof", "moduleDocstrings", "answerKinds"]
+   "hasSorryFreeProof", "moduleDocstrings", "answerKinds", "fileFirstAdded",
+   "fileLastModified"]
 
 structure TheoremInfo where
   «theorem» : String
@@ -108,6 +128,8 @@ structure TheoremInfo where
   hasSorryFreeProof : Bool
   subsets : List String
   answerKinds : List String
+  fileFirstAdded : Option String
+  fileLastModified : Option String
 
 
 /-- Serialize `TheoremInfo` to JSON, omitting fields whose keys are in `exclude`. -/
@@ -128,6 +150,10 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
     ++ (if exclude.contains "answerKinds" then [] else
         [("answerKinds", toJson info.answerKinds)])
+    ++ (if exclude.contains "fileFirstAdded" then [] else
+        [("fileFirstAdded", toJson info.fileFirstAdded)])
+    ++ (if exclude.contains "fileLastModified" then [] else
+        [("fileLastModified", toJson info.fileLastModified)])
   Json.mkObj fields
 
 instance : ToJson TheoremInfo where
@@ -185,11 +211,16 @@ unsafe def main (args : List String) : IO Unit := do
         "this script so that `answerKind` metadata is extracted correctly."
       throw <| IO.userError usageMsg
 
+  -- Pre-compute git timestamps for each file and build module name array
   let mut moduleNames := #[]
+  let mut fileTimestamps : Std.HashMap Name (Option String × Option String) := {}
   for file in leanFiles do
     try
       let modName ← getModuleNameFromFile file
       moduleNames := moduleNames.push modName
+      let firstAdded ← getFileFirstAdded file
+      let lastModified ← getFileLastModified file
+      fileTimestamps := fileTimestamps.insert modName (firstAdded, lastModified)
     catch _ => pure ()
 
   runWithImports moduleNames do
@@ -273,6 +304,8 @@ unsafe def main (args : List String) : IO Unit := do
               -- Determine answerKinds from the elaborated type
               let answerKinds ← Meta.MetaM.run'
                 (getAnswerKinds info.type)
+              let (fileFirstAdded, fileLastModified) :=
+                fileTimestamps.getD modName (none, none)
               allResults := {
                 «theorem» := name.toString,
                 module := modName.toString,
@@ -285,6 +318,8 @@ unsafe def main (args : List String) : IO Unit := do
                 hasSorryFreeProof := hasSorryFreeProof,
                 subsets := subsets
                 answerKinds := answerKinds
+                fileFirstAdded := fileFirstAdded
+                fileLastModified := fileLastModified
               } :: allResults
         | _ => pure ()
 

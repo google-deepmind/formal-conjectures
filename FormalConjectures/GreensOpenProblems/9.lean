@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 9
@@ -59,7 +59,7 @@ Problem 9 (iii): is $r_4(\mathbf{F}_5^n) \ll N^{1-c}$, where $N=5^n$?
 -/
 @[category research open, AMS 5]
 theorem green_9_iii : answer(sorry) ↔
-    ∃ c > (0 : ℝ), (fun (n : ℕ) ↦ ((Finset.univ : Finset (Fin n → ZMod 5)).maxAPFreeCard 4 : ℝ))
+    ∃ c > (0 : ℝ), (fun (n : ℕ) ↦ ((Finset.univ : Finset (𝔽₅ n)).maxAPFreeCard 4 : ℝ))
       ≪ fun (n : ℕ) ↦ ((5 : ℝ) ^ n) ^ (1 - c) := by
   sorry
 

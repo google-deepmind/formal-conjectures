@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 829
@@ -32,6 +32,18 @@ namespace Erdos829
 /-- The set of perfect cubes in $\mathbb{N}$. -/
 def cubes : Set ℕ := {n | ∃ k, k ^ 3 = n}
 
+/-- Membership in `cubes` can be witnessed by a bounded cube root, which makes it
+decidable for concrete values. -/
+@[category API, AMS 11]
+lemma mem_cubes_iff (m : ℕ) : m ∈ cubes ↔ ∃ k, k < m + 1 ∧ k ^ 3 = m := by
+  constructor
+  · rintro ⟨k, rfl⟩
+    refine ⟨k, ?_, rfl⟩
+    have : k ≤ k ^ 3 := Nat.le_self_pow (by norm_num) k
+    omega
+  · rintro ⟨k, _, rfl⟩
+    exact ⟨k, rfl⟩
+
 /--
 **Erdős Problem 829 (open).**  Let $A \subseteq \mathbb{N}$ be the set of perfect cubes.  Is
 it true that $(1_A \ast 1_A)(n) \ll (\log n)^{O(1)}$?  That is, does there exist a natural
@@ -48,23 +60,27 @@ theorem erdos_829 :
 /-- There is exactly one ordered pair of cubes summing to $0$, namely $(0, 0)$. -/
 @[category test, AMS 11]
 theorem sumRep_cubes_zero : sumRep cubes 0 = 1 := by
-  sorry
+  simp only [sumRep_def, mem_cubes_iff]
+  decide
 
 /-- The only ordered pair of cubes summing to $2$ is $(1, 1)$. -/
 @[category test, AMS 11]
 theorem sumRep_cubes_two : sumRep cubes 2 = 1 := by
-  sorry
+  simp only [sumRep_def, mem_cubes_iff]
+  decide
 
 /-- The integer $3$ is not the sum of two cubes. -/
 @[category test, AMS 11]
 theorem sumRep_cubes_three : sumRep cubes 3 = 0 := by
-  sorry
+  simp only [sumRep_def, mem_cubes_iff]
+  decide
 
 /-- The Hardy-Ramanujan taxicab number satisfies $1729 = 1^3 + 12^3 = 9^3 + 10^3$, giving
 the four ordered representations $(1, 1728), (1728, 1), (729, 1000), (1000, 729)$. -/
 @[category test, AMS 11]
 theorem sumRep_cubes_taxicab : sumRep cubes 1729 = 4 := by
-  sorry
+  simp only [sumRep_def, mem_cubes_iff]
+  decide +native
 
 namespace variants
 
