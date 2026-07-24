@@ -31,12 +31,12 @@ namespace Erdos403
 
 /--
 Does the equation
-\[2^m=a_1!+\cdots+a_k!\]
+$$2^m=a_1!+\cdots+a_k!$$
 with $a_1<a_2<\cdots <a_k$ have only finitely many solutions?
 
 Asked by Burr and Erdős. Frankl and Lin [Li76] independently showed that the answer is yes, and
 the largest solution is
-\[2^7=2!+3!+5!.\]
+$$2^7=2!+3!+5!.$$
 In fact Lin showed that the largest power of $2$ which can divide a sum of distinct factorials
 containing $2$ is $2^{254}$, and that there are only 5 solutions to $3^m=a_1!+\cdots+a_k!$
 (when $m=0,1,2,3,6$).

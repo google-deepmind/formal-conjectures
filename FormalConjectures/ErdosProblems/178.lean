@@ -34,7 +34,7 @@ open Finset BigOperators
 /--
 Let $A_1,A_2,\ldots$ be an infinite collection of infinite sets of integers, say
 $A_i=\{a_{i1}<a_{i2}<\cdots\}$. Does there exist some $f:\mathbb{N}\to\{-1,1\}$ such that
-\[\max_{m, 1\leq i\leq d} \left\lvert \sum_{1\leq j\leq m} f(a_{ij})\right\rvert \ll_d 1\]
+$$\max_{m, 1\leq i\leq d} \left\lvert \sum_{1\leq j\leq m} f(a_{ij})\right\rvert \ll_d 1$$
 for all $d\geq 1$?
 
 Erdős remarks 'it seems certain that the answer is affirmative'. This was solved by Beck [Be81]. Recently Beck [Be17] proved that one can replace $\ll_d 1$ with $\ll d^{4+\epsilon}$ for any $\epsilon>0$.
