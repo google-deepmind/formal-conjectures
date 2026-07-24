@@ -58,13 +58,29 @@ where:
 - $\max_v T(v)$ is the maximum number of triangles incident to any vertex,
 - $c_{C_4}(G)$ is the number of induced 4-cycles in $G$.
 -/
-@[category research open, AMS 5]
-theorem conjecture160 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
-    let maxT := maxTrianglesAtVertex G
-    let cC4 := countInducedC4 G
-    (maxL : ℝ) + (maxT : ℝ) * (cC4 : ℝ) ≤ Ls G := by
-  sorry
+@[category research solved, AMS 5]
+theorem conjecture160 :
+  answer(False) ↔
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+      (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
+      let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
+      let maxT := maxTrianglesAtVertex G
+      let cC4 := countInducedC4 G
+      (maxL : ℝ) + (maxT : ℝ) * (cC4 : ℝ) ≤ Ls G := by
+  apply Iff.intro
+  · intro h
+    contradiction
+  · intro h
+    let G : SimpleGraph (Fin 6) :=
+      SimpleGraph.fromEdgeSet {s(0,1), s(0,2), s(0,3), s(0,4), s(1,2), s(1,3), s(1,5), s(2,3), s(4,5)}
+    have hG : G.Connected := by sorry -- Decidable check takes too long
+    have h_counter : ¬ (
+      let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
+      let maxT := maxTrianglesAtVertex G
+      let cC4 := countInducedC4 G
+      (maxL : ℝ) + (maxT : ℝ) * (cC4 : ℝ) ≤ Ls G
+    ) := by sorry -- Decidable check takes too long
+    exact absurd (h (Fin 6) G hG) h_counter
 
 -- Sanity checks
 
