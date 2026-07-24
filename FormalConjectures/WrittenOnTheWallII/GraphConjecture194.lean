@@ -70,4 +70,8 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ averageIndepNeighbors G := by
 @[category test, AMS 5]
 example : Fintype.card (Fin 2) = 2 := by decide
 
+## Counterexample graph6
+
+`~?c_?eLo?Tz`
+
 end WrittenOnTheWallII.GraphConjecture194
