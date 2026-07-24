@@ -41,8 +41,7 @@ A subgraph `G'` is a 'snake' of length `k` in graph `G` if it is an induced path
 -/
 def IsSnakeInGraphOfLength {V : Type u} [DecidableEq V] (G : SimpleGraph V) (G' : Subgraph G)
     (k : ℕ) : Prop :=
-  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = {v | v ∈ P.support} ∧
-  P.length = k
+  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G' = P.toSubgraph ∧ P.length = k
 
 /--
 The length of the longest induced path (or 'snake') in a graph `G`.
@@ -64,14 +63,21 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
   convert csSup_singleton 0
   ext n
-  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
+  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSubgraph, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_,
+    fun h ↦ ?_⟩
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
     simp_all
   · rw [h]
-    use (⊤ : Subgraph _), by simp, ∅, ∅
-    simp
+    let P : (fromRel fun a b : Finset (Fin 0) => (a ∆ b).card = 1).Walk ∅ ∅ := .nil
+    refine ⟨P.toSubgraph, ?_, ∅, ∅, P, ?_⟩
+    · intro v hv w hw hadj
+      simp [P] at hv hw
+      subst v
+      subst w
+      exact hadj.ne rfl
+    · simp [P]
 
 open List
 
