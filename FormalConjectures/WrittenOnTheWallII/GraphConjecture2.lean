@@ -36,8 +36,13 @@ WOWII [Conjecture 2](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 For a simple connected graph `G`,
 `Ls(G) ≥ 2 · (l(G) - 1)` where `l(G)` is the average independence number of
 the neighbourhoods of the vertices of `G`.
+
+A formal proof combines a spanning-tree leaf bound from connected domination
+with an ordered-pair double-counting argument for adjacent neighbourhoods.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/kingcharlezz/formal-conjectures/blob/7d88e8b7946791ff53c322651f73de8d4df0ba53/FormalConjectures/WrittenOnTheWallII/Proofs/GraphConjecture2.lean#L622"]
 theorem conjecture2 (G : SimpleGraph α) (h : G.Connected) :
   2 * (averageIndepNeighbors G - 1) ≤ Ls G := by sorry
 
