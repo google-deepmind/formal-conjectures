@@ -130,4 +130,75 @@ theorem hilbert_fifth_problem
     AdmitsLieGroupStructure G := by
   sorry
 
+namespace Counterexample
+
+noncomputable section
+
+private def twist (x : ℝ) : ℝ := if 0 ≤ x then x else 2 * x
+
+private def untwist (x : ℝ) : ℝ := if 0 ≤ x then x else x / 2
+
+private def twistHomeomorph : ℝ ≃ₜ ℝ where
+  toFun := twist
+  invFun := untwist
+  left_inv x := by
+    simp only [twist, untwist]
+    split_ifs with h₁ h₂ <;> simp_all <;> linarith
+  right_inv x := by
+    simp only [twist, untwist]
+    split_ifs with h₁ h₂ <;> simp_all <;> linarith
+  continuous_toFun := by
+    apply Continuous.if_le continuous_id (continuous_const.mul continuous_id)
+        continuous_const continuous_id
+    intro x hx
+    simp only [id_eq] at hx ⊢
+    subst x
+    ring
+  continuous_invFun := by
+    apply Continuous.if_le continuous_id (continuous_id.div_const 2)
+        continuous_const continuous_id
+    intro x hx
+    simp only [id_eq] at hx ⊢
+    subst x
+    ring
+
+private def realToEuclideanOne : ℝ ≃ₜ EuclideanSpace ℝ (Fin 1) where
+  toFun x := PiLp.toLp 2 fun _ => x
+  invFun x := x 0
+  left_inv x := by simp
+  right_inv x := by
+    ext i
+    fin_cases i
+    simp
+  continuous_toFun := by fun_prop
+  continuous_invFun := by fun_prop
+
+private def badChart : ℝ ≃ₜ EuclideanSpace ℝ (Fin 1) :=
+  twistHomeomorph.trans realToEuclideanOne
+
+private def badChartedSpace : ChartedSpace (EuclideanSpace ℝ (Fin 1)) ℝ :=
+  badChart.isOpenEmbedding.singletonChartedSpace
+
+private theorem old_hilbert_fifth_problem
+    {G : Type*} [Group G] [TopologicalSpace G] {n : ℕ}
+    [IsTopologicalGroup G]
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] :
+    LieGroup (𝓡 n) ω G := by
+  sorry
+
+/-- The former formulation of Hilbert's fifth problem, which asserted that the group operations
+are analytic in any supplied topological atlas, implies `False`. -/
+@[category test, AMS 22]
+theorem old_hilbert_fifth_is_false : False := by
+  letI : ChartedSpace (EuclideanSpace ℝ (Fin 1)) (Multiplicative ℝ) := badChartedSpace
+  have hinv :=
+    (old_hilbert_fifth_problem (G := Multiplicative ℝ) (n := 1)).contMDiff_inv.contMDiffAt
+      (x := (1 : Multiplicative ℝ))
+  rw [contMDiffAt_iff] at hinv
+  exact hinv
+
+end
+
+end Counterexample
+
 end Hilbert5
