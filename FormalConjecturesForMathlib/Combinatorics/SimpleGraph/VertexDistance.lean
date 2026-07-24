@@ -76,11 +76,22 @@ which contribute distance `0`.) Returns `0` when `S` is empty.
 
 Unlike `ecc`, which restricts the outer maximum to vertices `v ∉ S`, `eccSet` does
 not exclude any vertex; it is the conventional definition of "set eccentricity"
-used in DeLaVina's WOWII conjectures 18, 145 and 146.
+used in DeLaVina's WOWII conjectures 142, 145 and 146.
 -/
 noncomputable def eccSet (G : SimpleGraph α) (S : Set α) : ℕ :=
   let dists := Finset.univ.image (fun v => distToSet G v S)
   if h : dists.Nonempty then dists.max' h else 0
+
+/-- The maximum distance between two vertices of a set `S`:
+$\operatorname{dist}_{\max}(S) = \max\{\operatorname{dist}_G(u,v) \mid u, v \in S\}$.
+Returns `0` when `S` is empty or a singleton.
+
+This is DeLaVina's `dist_max(S)` invariant ("distance between maximum degree
+vertices" when `S = M`), used in WOWII conjecture 18. It is distinct from
+`eccSet`, which measures distances from arbitrary vertices *to* the set. -/
+noncomputable def distMaxSet (G : SimpleGraph α) (S : Set α) : ℕ :=
+  let members := Finset.univ.filter (fun v : α => v ∈ S)
+  (members ×ˢ members).sup (fun p => G.dist p.1 p.2)
 
 /-- Average distance from all vertices to a given set. -/
 noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
