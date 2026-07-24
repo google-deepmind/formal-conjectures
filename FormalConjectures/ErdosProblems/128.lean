@@ -29,10 +29,14 @@ namespace Erdos128
 /--
 Let G be a graph with n vertices such that every subgraph on ≥ $n/2$
 vertices has more than $n^2/50$ edges. Must G contain a triangle?
+
+The literal formal statement below is false: `K₂`, with `V'` equal to the full
+vertex set, satisfies the displayed premises but is triangle-free.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/Kuberwastaken/formal-conjectures-counterexamples/blob/d2af9fe927ef93d6402f4f7dbb3943898a255047/lean/Erdos128Check.lean#L20-L45"]
 theorem erdos_128 :
-    answer(sorry) ↔ ∀ (V : Type) [Fintype V] (G : SimpleGraph V) (V' : Set V),
+    answer(False) ↔ ∀ (V : Type) [Fintype V] (G : SimpleGraph V) (V' : Set V),
       2 * V'.ncard + 1 ≥ Fintype.card V →
         50 * (G.induce V').edgeSet.ncard > Fintype.card V ^ 2 → ¬ G.CliqueFree 3 := by
   sorry

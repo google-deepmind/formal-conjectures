@@ -134,9 +134,14 @@ theorem green_31.variants.abelian : answer(sorry) ↔
 /--
 Another very nice old problem is whether there is a Sidon subset of $\{0, 1\}^n$ of size $N^{0.51}$,
 where $N = 2^n$ [Gr24].
+
+For the literal `IsSidon` predicate below, this is false: diagonal pairs are
+included, so in exponent two the equality `x + x = y + y` forces every Sidon
+finset to have at most one element.
 -/
-@[category research open, AMS 5 11]
-theorem green_31.variants.sidon_01n : answer(sorry) ↔
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/Kuberwastaken/formal-conjectures-counterexamples/blob/d2af9fe927ef93d6402f4f7dbb3943898a255047/lean/Green31F2SidonCheck.lean#L44-L61"]
+theorem green_31.variants.sidon_01n : answer(False) ↔
     ∃ S : (n : ℕ) → Finset (𝔽₂ n),
       (∀ n, IsSidon (S n : Set (𝔽₂ n))) ∧
       ∀ᶠ n in atTop, ((2 : ℝ) ^ n) ^ (0.51 : ℝ) ≤ (S n).card := by
