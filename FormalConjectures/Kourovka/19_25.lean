@@ -37,6 +37,7 @@ $H$ necessarily simple?
 @[category research open, AMS 20]
 theorem kourovka.«19.25» : answer(sorry) ↔
     ∀ (G H : Type) [Group G] [Group H] [Fintype G] [Fintype H],
+       Fintype.card G = Fintype.card H →
        ∑ g : G, φ (orderOf g) = ∑ h : H, φ (orderOf h) →
        IsSimpleGroup G → IsSimpleGroup H := by
   sorry
