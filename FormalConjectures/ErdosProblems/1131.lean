@@ -76,38 +76,28 @@ What is the minimal value of
 $$
 I(x_1,\ldots,x_n)=\int_{-1}^1 \sum_k \lvert l_k(x)\rvert^2\mathrm{d}x?
 $$
+-/
+@[category research open, AMS 28 41 65]
+theorem erdos_1131.parts.i (n : ℕ) :
+    M n = answer(sorry) := by
+  sorry
+
+/--
 In particular, is it true that
 $$
 \min I =2-(1+o(1))\frac{1}{n}?
 $$
-
-Erdős first conjectured this minimum was achieved by taking the $x_i$ to be the roots of
-the integral of the Legendre polynomial, since Fejér [Fe32] had earlier shown these to be
-minimisers of
-$$
-\max_{x\in [-1,1]}\sum_k \lvert l_k(x)\rvert^2.
-$$
-This was disproved by Szabados [Sz66] for every $n>3$.
-
-Erdős, Szabados, Varma, and Vértesi [ESVV94] proved that
-$$
-2-O\left(\frac{(\log n)^2}{n}\right)\leq \min I\leq 2-\frac{2}{2n-1},
-$$
-where the upper bound is witnessed by the roots of the integral of the Legendre polynomial
-as above.
-
-The asymptotic subquestion has a negative answer. The linked formal proof uses the roots of
-$T_n-\frac16T_{n-2}$ as an explicit admissible comparison family and proves that, for every
-$N\geq 24780$,
-$$
-\frac{106}{105}\leq (N+1)(2-M(N+1)),
-$$
-so the scaled defect cannot tend to $1$.
 -/
 @[category research solved, AMS 28 41 65,
   formal_proof using lean4 at "https://github.com/seanm27lol/erdos-1131-lean/blob/31574acf09ae50430c08da92288800fe7d26c7fd/Erdos1131/Main.lean"]
 theorem erdos_1131.parts.ii :
     answer(False) ↔ Tendsto scaledDefect atTop (nhds 1) := by
   sorry
+
+-- TODO: Formalize `erdos_1131.variants.szabados`, Szabados' [Sz66] result that for every
+-- `n > 3` the roots of the integral of the Legendre polynomial do not minimize `functional`.
+-- TODO: Formalize `erdos_1131.variants.esvv94_lower_bound` and
+-- `erdos_1131.variants.esvv94_upper_bound`, the bounds from [ESVV94], including that the
+-- upper bound is witnessed by the roots of the integral of the Legendre polynomial.
 
 end Erdos1131
