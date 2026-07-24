@@ -28,8 +28,7 @@ connected finite-dimensional topological manifold.
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Hilbert%E2%80%93Smith_conjecture)
 - [Tao's blog](https://terrytao.wordpress.com/2011/08/13/the-hilbert-smith-conjecture/)
-- [Pardon, *The Hilbert–Smith conjecture for three-manifolds*, JAMS 26 (2013)]
-  (https://www.ams.org/journals/jams/2013-26-03/S0894-0347-2013-00766-3/)
+- [Pardon 2013, arXiv:1112.2324](https://arxiv.org/abs/1112.2324)
 - [van den Dries–Goldbring, *Hilbert's Fifth Problem*]
   (https://ems.press/journals/lem/articles/13621)
 - [arXiv:math/0103145](https://arxiv.org/abs/math/0103145)
@@ -107,8 +106,7 @@ theorem hilbert_smith_conjecture.variants.riemannian
   sorry
 
 /-- Pardon (2013): the Hilbert–Smith conjecture holds for 3-dimensional manifolds.
-See [Pardon, Theorem 1.5]
-(https://www.ams.org/journals/jams/2013-26-03/S0894-0347-2013-00766-3/). -/
+See [arXiv:1112.2324](https://arxiv.org/abs/1112.2324). -/
 @[category research solved, AMS 22 57 58]
 theorem hilbert_smith_conjecture.variants.dimension_three {X : Type*}
     [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
@@ -116,17 +114,6 @@ theorem hilbert_smith_conjecture.variants.dimension_three {X : Type*}
     [IsTopologicalGroup G] [LocallyCompactSpace G]
     [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X] :
     AdmitsLieGroupStructure G := by
-  sorry
-
-/-- Pardon (2013), Theorem 1.5: the $p$-adic integers cannot act continuously and faithfully
-on a connected 3-manifold. -/
-@[category research solved, AMS 20 22 54 57]
-theorem hilbert_smith_padic_formulation.variants.dimension_three (p : ℕ) [Fact p.Prime]
-    {X : Type*} [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
-    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) X]
-    [AddAction (PadicInt p) X] [ContinuousVAdd (PadicInt p) X]
-    [FaithfulVAdd (PadicInt p) X] :
-    False := by
   sorry
 
 /-- Equivalent p-adic formulation: the p-adic integers `ℤ_[p]` cannot act continuously and
