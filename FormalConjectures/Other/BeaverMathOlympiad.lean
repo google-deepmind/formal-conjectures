@@ -228,7 +228,7 @@ using `answer(sorry) ↔`.
 -/
 @[category research open, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_8 : answer(sorry) ↔
-    ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
+    ∀ᵉ (a : ℕ → ℤ) (b : ℕ → ℤ)
     (a_ini : a 0 = 10)
     (a_rec : ∀ n, a (n + 1) =
       if b n / 2 < a n then a n - b n / 2 - 3 else 3 * a n + 5)
