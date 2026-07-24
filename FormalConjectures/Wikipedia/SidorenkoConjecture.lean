@@ -16,6 +16,11 @@ limitations under the License.
 
 import FormalConjecturesUtil
 import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
+import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon
+import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Tournamenton
+import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
+import Mathlib.Combinatorics.SimpleGraph.Circulant
+import Mathlib.Combinatorics.SimpleGraph.Metric
 
 /-!
 # Sidorenko's conjecture (1993)
@@ -28,18 +33,21 @@ import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
   *Geom. Funct. Anal.* 22, pp. 1191--1256.
 * [KLL18] Kim, J.H., Lee, C., Lee, J. (2018). "Two approaches to Sidorenko's conjecture."
   *Trans. Amer. Math. Soc.* 370, pp. 8515--8552.
+* [ArXiv2605] [arXiv:2605.14138](https://arxiv.org/abs/2605.14138)
 -/
 
-open Classical Finset SimpleGraph
+open Classical Finset SimpleGraph LimitObjects MeasureTheory
 
 namespace SidorenkoConjecture
+
+open LimitObjects
 
 /- ## Homomorphism density
 
 We use `SimpleGraph.homCount` / `SimpleGraph.homDensity` from
-`FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity`. The extension to
-infinite hosts uses the same formula with `Fintype.card` replaced by measure-theoretic
-integrals; we do not need that generality for Sidorenko. -/
+`FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity` for finite host graphs,
+and `graphonHomDensity` / `graphonEdgeDensity` from
+`FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon` for graphons on measure spaces. -/
 
 variable {V W : Type*}
 
@@ -59,6 +67,148 @@ theorem sidorenko_conjecture : answer(sorry) ↔
       [DecidableRel H.Adj] [DecidableRel G.Adj],
       H.IsBipartite →
       homDensity (completeGraph (Fin 2)) G ^ H.edgeFinset.card ≤ homDensity H G := by
+  sorry
+
+/--
+**Sidorenko's conjecture for graphons (1993).**
+
+For every finite bipartite simple graph $H$ and every graphon $W$ on $[0, 1]$ with Lebesgue measure:
+$t(H, W) \ge t(K_2, W)^{e(H)}$, where $t(K_2, W) = p(W)$ is the edge density of $W$,
+and $t(H, W)$ is the graphon homomorphism density of $H$ in $W$.
+-/
+@[category research open, AMS 5]
+theorem sidorenko_conjecture_graphon : answer(sorry) ↔
+    ∀ {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj],
+      H.IsBipartite →
+      ∀ (W : Graphon),
+        (graphonEdgeDensity W) ^ H.edgeFinset.card ≤ graphonHomDensity H W := by
+  sorry
+
+/- ## Proved graphon special cases -/
+
+/--
+**Case: `H` is a tree (Sidorenko 1993, graphon version).**
+
+If `H` is a finite tree then Sidorenko's inequality holds for all graphons on $[0, 1]$.
+-/
+@[category research solved, AMS 5]
+theorem sidorenko_tree_graphon {V : Type*} [Fintype V] [DecidableEq V]
+    (H : SimpleGraph V) [DecidableRel H.Adj] (hTree : H.IsTree)
+    (W : LimitObjects.Graphon) :
+    (graphonEdgeDensity W) ^ H.edgeFinset.card ≤ graphonHomDensity H W := by
+  sorry
+
+/--
+**Case: `H = C_{2k}` is an even cycle (Sidorenko 1993, graphon version).**
+
+Every even cycle $C_{2k}$ satisfies Sidorenko's inequality for all graphons on $[0, 1]$.
+-/
+@[category research solved, AMS 5]
+theorem sidorenko_even_cycle_graphon (k : ℕ) (hk : 1 ≤ k)
+    (W : LimitObjects.Graphon) :
+    (graphonEdgeDensity W) ^ (cycleGraph (2 * k)).edgeFinset.card ≤
+      graphonHomDensity (cycleGraph (2 * k)) W := by
+  sorry
+
+/--
+**Case: `H = K_{a,b}` is a complete bipartite graph (Sidorenko 1993, graphon version).**
+
+Every complete bipartite graph $K_{a,b}$ satisfies Sidorenko's inequality for all graphons on $[0, 1]$.
+-/
+@[category research solved, AMS 5]
+theorem sidorenko_completeBipartiteGraph_graphon {A B : Type*} [Fintype A] [Fintype B]
+    [DecidableEq A] [DecidableEq B] (W : LimitObjects.Graphon) :
+    (graphonEdgeDensity W) ^ (completeBipartiteGraph A B).edgeFinset.card ≤
+      graphonHomDensity (completeBipartiteGraph A B) W := by
+  sorry
+
+/- ## Tournament Anti-Sidorenko (TAS) Trees Conjecture -/
+
+/--
+**Tournament Anti-Sidorenko (TAS) Trees Conjecture.**
+
+For every finite undirected tree $T$, there exists an orientation $\vec{T}$ of its edges such that
+for any finite tournament $G$, the homomorphism density satisfies:
+$$ t_{\vec{T}}(G) \le 2^{-e(T)} $$
+where $e(T)$ is the total number of edges in $T$.
+-/
+@[category research open, AMS 5]
+theorem tournament_anti_sidorenko_trees_conjecture : answer(sorry) ↔
+    ∀ {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj],
+      T.IsTree →
+      ∃ (D : Digraph V),
+        D.IsOrientation T ∧
+        ∀ {W : Type*} [Fintype W] [DecidableEq W] [Nonempty W]
+          (G : Digraph W) [DecidableRel G.Adj],
+          G.IsTournament →
+          Digraph.homDensity D G ≤ (1 / 2 : ℝ) ^ T.edgeFinset.card := by
+  sorry
+
+/--
+**Tournament Anti-Sidorenko (TAS) Trees Conjecture (Tournamenton limit version).**
+
+For every finite undirected tree $T$, there exists an orientation $\vec{T}$ of its edges such that
+for every tournamenton $W : [0, 1]^2 \to [0, 1]$, the homomorphism density satisfies:
+$$ t_{\vec{T}}(W) \le 2^{-e(T)} $$
+where $e(T)$ is the total number of edges in $T$.
+-/
+@[category research open, AMS 5]
+theorem tournament_anti_sidorenko_trees_conjecture_tournamenton : answer(sorry) ↔
+    ∀ {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj],
+      T.IsTree →
+      ∃ (D : Digraph V),
+        D.IsOrientation T ∧
+        ∀ (W : LimitObjects.Tournamenton),
+          tournamentonHomDensity D W ≤ (1 / 2 : ℝ) ^ T.edgeFinset.card := by
+  sorry
+
+/--
+**TAS Trees Conjecture: Trees with a single even-degree vertex.**
+
+Proven case of TAS Trees Conjecture: any tree containing exactly one vertex of even degree
+possesses an orientation satisfying the Tournament Anti-Sidorenko inequality $t_{\vec{T}}(G) \le 2^{-e(T)}$.
+-/
+@[category research solved, AMS 5]
+theorem tournament_anti_sidorenko_single_even_degree_tree {V : Type*} [Fintype V] [DecidableEq V]
+    (T : SimpleGraph V) [DecidableRel T.Adj] (hTree : T.IsTree)
+    (hEven : (Finset.univ.filter (fun v => Even (T.degree v))).card = 1) :
+    ∃ (D : Digraph V),
+      D.IsOrientation T ∧
+      ∀ {W : Type*} [Fintype W] [DecidableEq W] [Nonempty W]
+        (G : Digraph W) [DecidableRel G.Adj],
+        G.IsTournament →
+        Digraph.homDensity D G ≤ (1 / 2 : ℝ) ^ T.edgeFinset.card := by
+  sorry
+
+/--
+**The $(2,3,4)$-spider tree.**
+A tree composed of three paths of lengths 2, 3, and 4 joined at a single central vertex.
+-/
+def IsSpider234 {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) : Prop :=
+  T.IsTree ∧ Fintype.card V = 10 ∧
+  ∃ (center l₁ l₂ l₃ : V),
+    T.degree center = 3 ∧
+    l₁ ≠ l₂ ∧ l₁ ≠ l₃ ∧ l₂ ≠ l₃ ∧
+    T.degree l₁ = 1 ∧ T.degree l₂ = 1 ∧ T.degree l₃ = 1 ∧
+    ({T.dist center l₁, T.dist center l₂, T.dist center l₃} : Multiset ℕ) = {2, 3, 4}
+
+/--
+**TAS Trees Conjecture: The $(2,3,4)$-spider tree (Solved case).**
+
+The $(2,3,4)$-spider tree satisfies the Tournament Anti-Sidorenko Trees Conjecture.
+
+*Reference:*
+* [ArXiv 2605.14138](https://arxiv.org/abs/2605.14138)
+-/
+@[category research solved, AMS 5]
+theorem tournament_anti_sidorenko_spider234 {V : Type*} [Fintype V] [DecidableEq V]
+    (T : SimpleGraph V) [DecidableRel T.Adj] (hSpider : IsSpider234 T) :
+    ∃ (D : Digraph V),
+      D.IsOrientation T ∧
+      ∀ {W : Type*} [Fintype W] [DecidableEq W] [Nonempty W]
+        (G : Digraph W) [DecidableRel G.Adj],
+        G.IsTournament →
+        Digraph.homDensity D G ≤ (1 / 2 : ℝ) ^ T.edgeFinset.card := by
   sorry
 
 /- ## Proved special cases -/
