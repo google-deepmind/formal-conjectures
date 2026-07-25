@@ -59,7 +59,6 @@ noncomputable def coeff (f : ℂ → ℂ) (n : ℕ) : ℂ := iteratedDeriv n f 0
 /-- Goodman's normalisation `f z = z + ∑_{n ≥ 2} b_n zⁿ`, i.e. `f 0 = 0` and `f'(0) = 1`. -/
 structure IsNormalized (f : ℂ → ℂ) : Prop where
   map_zero   : f 0 = 0
-  deriv_zero : deriv f 0 = 1
 
 /-- The Goodman bound
 $$\sum_{k=1}^{p} \frac{2k (n+p)!}{(p-k)!\,(p+k)!\,(n-p-1)!\,(n^2-k^2)} |b_k|,$$
